@@ -53,16 +53,24 @@ export default async function HermandadDetailPage({ params }) {
         </div>
       </section>
 
-      <nav className="section-nav brotherhood-nav"><div className="shell nav-scroll">
-        <a href="#resumen">Resumen</a><a href="#titulares">Titulares</a><a href="#pasos">Pasos</a>
-        <a href="#historia">Historia</a><a href="#tunica">Túnica</a><a href="#salidas">Salidas</a>
-        <a href="#cultos">Cultos</a>
-        {h.estrenos?.length > 0 && <a href="#estrenos">Novedades</a>}
-        {h.patrimonioMusical?.length > 0 && <a href="#musica">Patrimonio musical</a>}
-        {h.acompanamientos?.length > 0 && <a href="#acompanamientos">Acompañamientos</a>}
-        {h.noticias?.length > 0 && <a href="#noticias">Noticias</a>}
-        <a href="#curiosidades">Curiosidades</a>
-      </div></nav>
+      <nav className="section-nav brotherhood-nav">
+        <div className="shell">
+          <div className="brotherhood-nav-panel nav-scroll">
+            <a className="brotherhood-nav-link" href="#resumen"><small>01</small><span>Resumen</span></a>
+            <a className="brotherhood-nav-link" href="#titulares"><small>02</small><span>Titulares</span></a>
+            <a className="brotherhood-nav-link" href="#pasos"><small>03</small><span>Pasos</span></a>
+            <a className="brotherhood-nav-link" href="#historia"><small>04</small><span>Historia</span></a>
+            <a className="brotherhood-nav-link" href="#tunica"><small>05</small><span>Túnica</span></a>
+            <a className="brotherhood-nav-link" href="#salidas"><small>06</small><span>Salidas</span></a>
+            <a className="brotherhood-nav-link" href="#cultos"><small>07</small><span>Cultos</span></a>
+            {h.estrenos?.length > 0 && <a className="brotherhood-nav-link" href="#estrenos"><small>08</small><span>Novedades</span></a>}
+            {h.patrimonioMusical?.length > 0 && <a className="brotherhood-nav-link" href="#musica"><small>09</small><span>Patrimonio musical</span></a>}
+            {h.acompanamientos?.length > 0 && <a className="brotherhood-nav-link" href="#acompanamientos"><small>10</small><span>Acompañamientos</span></a>}
+            {h.noticias?.length > 0 && <a className="brotherhood-nav-link" href="#noticias"><small>11</small><span>Noticias</span></a>}
+            <a className="brotherhood-nav-link" href="#curiosidades"><small>12</small><span>Curiosidades</span></a>
+          </div>
+        </div>
+      </nav>
 
       <section className="section" id="resumen"><div className="shell content-grid">
         <div><SectionTitle eyebrow="De un vistazo" title={h.nombrePopular} /><p className="body-large">{h.resumen}</p><p>{h.historia}</p></div>
