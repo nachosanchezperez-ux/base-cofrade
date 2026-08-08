@@ -568,3 +568,183 @@ button, input { font: inherit; }
   .music-list article>strong{grid-column:2}
   .music-play,.music-pending{grid-column:2}
 }
+
+
+/* Base Cofrade v0.4.3 Â· salidas agrupadas + recorrido anual */
+.outing-grid{
+  grid-template-columns:1fr 1fr;
+}
+.outing-card-featured{
+  grid-column:1 / -1;
+  grid-template-columns:150px 1fr;
+  border-color:rgba(21,59,105,.18);
+}
+.outing-content{min-width:0}
+
+.outing-movements{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:20px;
+}
+.outing-movement{
+  padding:16px 18px;
+  border-radius:13px;
+  background:#f5f7f9;
+  border:1px solid #e4e9ee;
+}
+.outing-movement strong{
+  display:block;
+  margin-bottom:6px;
+  color:var(--bc-red);
+  text-transform:uppercase;
+  letter-spacing:.07em;
+  font-size:11px;
+}
+.outing-movement p{
+  margin:0;
+  color:var(--ink-soft);
+}
+.outing-movement small{
+  display:block;
+  margin-top:7px;
+  color:var(--bc-blue);
+  font-weight:800;
+}
+
+.route-edition{
+  margin-top:24px;
+  border-radius:17px;
+  overflow:hidden;
+  border:1px solid #dbe3ea;
+  background:#fff;
+}
+.route-edition-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:28px;
+  padding:20px 22px;
+  background:#f4f7fa;
+}
+.route-edition-head>span{
+  color:var(--bc-blue);
+  font-weight:900;
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+.route-times{
+  display:flex;
+  align-items:center;
+  gap:18px;
+}
+.route-times>div{
+  min-width:82px;
+}
+.route-times small{
+  display:block;
+  margin-bottom:3px;
+  color:#77828d;
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.07em;
+}
+.route-times strong{
+  color:var(--bc-blue);
+  font-family:Georgia,serif;
+  font-size:23px;
+  white-space:nowrap;
+}
+.route-line{
+  width:38px;
+  height:1px;
+  background:var(--bc-red);
+  position:relative;
+}
+.route-line::after{
+  content:'';
+  position:absolute;
+  right:-1px;
+  top:-3px;
+  width:7px;
+  height:7px;
+  border-top:1px solid var(--bc-red);
+  border-right:1px solid var(--bc-red);
+  transform:rotate(45deg);
+}
+
+.route-details{
+  border-top:1px solid #dbe3ea;
+}
+.route-details summary{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  padding:17px 22px;
+  cursor:pointer;
+  list-style:none;
+  color:var(--bc-blue);
+  font-weight:900;
+}
+.route-details summary::-webkit-details-marker{display:none}
+.route-details summary span{
+  font-size:19px;
+  transition:transform .2s ease;
+}
+.route-details[open] summary span{
+  transform:rotate(45deg);
+}
+.route-path{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:8px;
+  padding:0 22px 22px;
+}
+.route-path span{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  color:#596674;
+  font-size:13px;
+}
+.route-path span:not(:last-child)::after{
+  content:'â†’';
+  color:#a7b1ba;
+}
+.route-path .route-official{
+  padding:5px 9px;
+  border-radius:7px;
+  background:var(--bc-blue);
+  color:#fff;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:.045em;
+}
+.route-path .route-official::after{
+  color:#fff!important;
+}
+
+@media(max-width:760px){
+  .outing-card-featured{
+    grid-template-columns:1fr;
+  }
+  .outing-movements{
+    grid-template-columns:1fr;
+  }
+  .route-edition-head{
+    display:block;
+  }
+  .route-times{
+    margin-top:16px;
+    justify-content:flex-start;
+  }
+}
+@media(max-width:620px){
+  .outing-grid{grid-template-columns:1fr}
+  .outing-card-featured{grid-column:auto}
+  .route-times strong{font-size:20px}
+  .route-line{width:24px}
+}
