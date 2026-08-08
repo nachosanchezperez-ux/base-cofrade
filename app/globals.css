@@ -250,3 +250,41 @@ button, input { font: inherit; }
 .history-timeline{max-width:920px;margin-top:42px}.history-timeline article{display:grid;grid-template-columns:100px 34px 1fr;gap:18px;min-height:150px}.history-year{font-family:Georgia,serif;color:var(--bc-red);font-size:31px;font-weight:700}.history-line{position:relative;display:flex;justify-content:center}.history-line:before{content:"";position:absolute;top:16px;bottom:-1px;width:1px;background:#cbd7e3}.history-line span{margin-top:8px;width:17px;height:17px;border-radius:50%;background:var(--bc-blue);border:5px solid #dce7f1;z-index:1}.history-copy{padding-bottom:34px}.history-copy h3{font-family:Georgia,serif;font-size:28px;margin:0 0 7px}.history-copy p{color:var(--ink-soft);margin:0}.history-copy small{display:inline-block;margin-top:12px;color:#7d8791;background:#f2f4f6;border-radius:999px;padding:4px 9px}
 .brotherhood-dark{background:linear-gradient(130deg,#0c2847,var(--bc-blue));color:#fff}.brotherhood-dark .eyebrow{color:#ffb9c3}.brotherhood-dark .section-heading p{color:#c8d7e6}.brotherhood-habit{display:grid;grid-template-columns:76px 1fr;gap:24px;background:rgba(255,255,255,.055)}.habit-swatch{display:flex;justify-content:center}.habit-swatch span{width:34px;height:145px;border-radius:20px 20px 5px 5px;background:#1e5790;border:2px solid rgba(255,255,255,.35);position:relative}.habit-swatch span:after{content:"";position:absolute;width:7px;top:20px;bottom:8px;left:50%;transform:translateX(-50%);border-radius:8px}.habit-red .habit-swatch span:after{background:var(--bc-red)}.habit-white .habit-swatch span:after{background:#fff}.brotherhood-timeline .timeline-dot{background:var(--bc-red)}.brotherhood-timeline small,.brotherhood-cults article>span{color:var(--bc-red)}.brotherhood-curiosity{border-left:5px solid var(--bc-blue)}.brotherhood-curiosity .curiosity-mark{background:var(--bc-red)}
 @media(max-width:900px){.brotherhood-hero-grid{grid-template-columns:1fr}.processional-grid{grid-template-columns:1fr}.brotherhood-visual{max-width:560px}.brotherhood-crest{right:10px}}@media(max-width:620px){.brotherhood-hero h1{font-size:62px}.brotherhood-visual{min-height:240px}.hero-photo-placeholder{min-height:230px}.brotherhood-facts{grid-template-columns:1fr 1fr}.history-timeline article{grid-template-columns:72px 24px 1fr;gap:10px}.history-year{font-size:24px}.brotherhood-habit{grid-template-columns:1fr}.habit-swatch{justify-content:flex-start}.habit-swatch span{height:70px}}
+
+
+.brotherhood-breadcrumb{display:flex;align-items:center;gap:12px;font-size:13px;margin-bottom:34px}
+.brotherhood-breadcrumb .breadcrumb-accent{width:28px;height:3px;background:var(--bc-red);border-radius:3px}
+.brotherhood-breadcrumb a{color:rgba(255,255,255,.66);text-decoration:none;text-transform:uppercase;letter-spacing:.12em;font-size:10px;font-weight:900}
+.brotherhood-breadcrumb a:hover{color:#fff}
+.brotherhood-breadcrumb .breadcrumb-arrow{color:rgba(255,255,255,.38)}
+.brotherhood-breadcrumb strong{color:#fff;font-weight:800}
+.step-current-data{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0;padding:16px;background:#f5f7f9;border-radius:14px}
+.step-current-data small,.step-facts small{display:block;text-transform:uppercase;letter-spacing:.08em;font-size:9px;color:#7a8692}
+.step-current-data strong,.step-facts strong{display:block;margin-top:4px;color:var(--bc-blue)}
+.current-music-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px}
+.current-music-card{padding:26px;border-radius:18px;background:#fff;border-top:4px solid var(--bc-red);box-shadow:0 12px 35px rgba(21,59,105,.06)}
+.current-music-position{display:block;color:var(--bc-red);font-weight:900;text-transform:uppercase;letter-spacing:.08em;font-size:10px}
+.current-music-card h3{font-family:Georgia,serif;font-size:24px;margin:10px 0 6px}
+.current-music-card p{margin:0;color:var(--ink-soft)}
+.step-detail-hero{background:linear-gradient(120deg,#0d2949,var(--bc-blue));color:#fff;padding:42px 0 56px;border-bottom:5px solid var(--bc-red)}
+.step-detail-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+.step-detail-grid h1{font-family:Georgia,serif;font-size:clamp(44px,6vw,78px);line-height:.95;letter-spacing:-.035em;margin:18px 0}
+.step-detail-grid p{color:#d6e2ed;max-width:720px;font-size:18px}
+.step-photo-placeholder{min-height:310px;border-radius:24px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);display:grid;place-items:center;color:rgba(255,255,255,.65);font-family:Georgia,serif;font-size:25px}
+.step-facts{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:26px}
+.step-facts>div{padding:18px;background:#f5f7f9;border-radius:14px}
+.step-images-list{display:grid;gap:10px;margin-top:14px}
+.step-images-list a{display:block;padding:12px 0;border-top:1px solid #dfe6ec;color:var(--bc-blue);font-weight:900;text-decoration:none}
+.step-images-list a span{display:block;font-weight:400;color:#7b8792;font-size:12px;margin-top:3px}
+@media(max-width:900px){.current-music-grid{grid-template-columns:1fr}.step-detail-grid{grid-template-columns:1fr}.step-current-data{grid-template-columns:1fr}}
+@media(max-width:620px){.brotherhood-breadcrumb{gap:8px;flex-wrap:wrap}.brotherhood-breadcrumb .breadcrumb-accent{width:18px}.step-facts{grid-template-columns:1fr}}
+
+
+.cofrade-type-badges{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.cofrade-type-badge{display:inline-flex;align-items:center;gap:8px;padding:7px 11px 7px 7px;border:1px solid rgba(21,59,105,.14);border-radius:999px;background:#fff;color:var(--bc-blue);font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.07em}
+.cofrade-type-icon{width:31px;height:31px;border-radius:50%;display:grid;place-items:center;background:var(--bc-blue);color:#fff;flex:0 0 auto}
+.cofrade-type-badges.is-compact{gap:7px}
+.cofrade-type-badges.is-compact .cofrade-type-badge{padding:4px 8px 4px 4px;font-size:9px}
+.cofrade-type-badges.is-compact .cofrade-type-icon{width:25px;height:25px}
+.brotherhood-page .cofrade-type-icon{background:var(--bc-red)}
+.brotherhood-page .cofrade-type-badge{border-color:rgba(21,59,105,.16)}
