@@ -31,7 +31,8 @@ export default async function PasoDetailPage({params}){
             <strong>{paso.tipo}</strong>
           </div>
           <div className="step-detail-grid">
-            <div>
+            <div className="step-detail-copy">
+              <span className="step-kicker">Paso procesional</span>
               <span className="pill brotherhood-pill">{paso.tipo}</span>
               <h1>{paso.nombre}</h1>
               <p>{paso.descripcion}</p>
@@ -48,7 +49,7 @@ export default async function PasoDetailPage({params}){
             <div><small>Hermandad</small><strong>{hermandad.nombrePopular}</strong></div>
             <div><small>Tipo</small><strong>{paso.tipo}</strong></div>
             <div><small>Capataz actual</small><strong>{paso.capatazActual || 'Pendiente de incorporar'}</strong></div>
-            <div><small>Acompañamiento musical actual</small><strong>{paso.acompanamientoActual || 'Pendiente de incorporar'}</strong></div>
+            <div><small>Acompañamiento musical</small><strong>{paso.acompanamientoActual || 'Pendiente de incorporar'}</strong></div>
           </div>
         </div>
         <aside className="brotherhood-summary-card">
