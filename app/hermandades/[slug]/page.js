@@ -141,7 +141,7 @@ export default async function HermandadDetailPage({ params }) {
         ))}</div>
       </div></section>
 
-      <section className="section" id="salidas"><div className="shell">
+      <section className="section brotherhood-white" id="salidas"><div className="shell">
         <SectionTitle eyebrow="En la calle" title="Salidas" description="Estación de penitencia, procesiones, rosarios, vía crucis y traslados forman parte del histórico de salidas de cada hermandad." />
         <div className="outing-grid">{h.salidas.map((s) => (
           <article className="outing-card" key={s.id}>
@@ -158,7 +158,7 @@ export default async function HermandadDetailPage({ params }) {
         ))}</div>
       </div></section>
 
-      {h.estrenos?.length > 0 && <section className="section" id="estrenos"><div className="shell">
+      {h.estrenos?.length > 0 && <section className="section brotherhood-white" id="estrenos"><div className="shell">
         <SectionTitle eyebrow="Actualidad patrimonial" title="Novedades · Estrenos" description="Estrenos, restauraciones y novedades incorporadas por la Hermandad. Este módulo solo aparece cuando existen registros." />
         <div className="release-grid">{h.estrenos.map((e) => (
           <article className="release-card" key={e.id}><span className="release-year">{e.ano}</span><span className="pill">{e.tipo}</span><h3>{e.titulo}</h3><p>{e.descripcion}</p><small>{e.autoria}</small></article>
@@ -173,21 +173,21 @@ export default async function HermandadDetailPage({ params }) {
         ))}</div>
       </div></section>}
 
-      {h.acompanamientos?.length > 0 && <section className="section" id="acompanamientos"><div className="shell">
+      {h.acompanamientos?.length > 0 && <section className="section brotherhood-soft" id="acompanamientos"><div className="shell">
         <SectionTitle eyebrow="Memoria sonora" title="Acompañamientos Musicales Históricos" description="Una cronología por paso para conocer qué formaciones musicales han acompañado a la Hermandad." />
         <div className="music-history-grid">{h.acompanamientos.map((a) => (
           <article key={a.id}><span className="music-period">{a.periodo}</span><h3>{a.banda}</h3><p>{a.paso}</p><small>{a.tipo}</small></article>
         ))}</div>
       </div></section>}
 
-      {h.noticias?.length > 0 && <section className="section brotherhood-soft" id="noticias"><div className="shell">
+      {h.noticias?.length > 0 && <section className="section brotherhood-white" id="noticias"><div className="shell">
         <SectionTitle eyebrow="Última hora" title="Noticias relacionadas" description="Actualidad vinculada directamente con la Hermandad, sus titulares, patrimonio y vida corporativa." />
         <div className="news-grid">{h.noticias.map((n) => (
           <article className="news-card" key={n.id}><div className="news-image-placeholder">Noticia</div><div><small>{n.fecha} · {n.categoria}</small><h3>{n.titulo}</h3><p>{n.extracto}</p>{n.url ? <a href={n.url} target="_blank" rel="noreferrer" className="text-link">Leer noticia ↗</a> : <span className="text-link muted-link">Enlace pendiente</span>}</div></article>
         ))}</div>
       </div></section>}
 
-      <section className="section" id="curiosidades"><div className="shell">
+      <section className="section brotherhood-soft" id="curiosidades"><div className="shell">
         <SectionTitle eyebrow="¿Sabías que…?" title="Curiosidades" description="Datos singulares y divulgativos que solo se publicarán cuando estén documentados." />
         {h.curiosidades.map((c) => <div className="curiosity-card brotherhood-curiosity" key={c.id}><span className="curiosity-mark">?</span><div><span className="eyebrow">{c.categoria}</span><h3>{c.titulo}</h3><p>{c.texto}</p></div></div>)}
       </div></section>
