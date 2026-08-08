@@ -95,7 +95,7 @@ export default async function HermandadDetailPage({ params }) {
             <div className="processional-body"><span className="pill">{paso.tipo}</span><h3>{paso.nombre}</h3><p>{paso.descripcion}</p>
               <div className="step-current-data">
                 <div><small>Capataz actual</small><strong>{paso.capatazActual || 'Pendiente de incorporar'}</strong></div>
-                <div><small>Acompañamiento musical actual</small><strong>{paso.acompanamientoActual || 'Pendiente de incorporar'}</strong></div>
+                <div><small>Acompañamiento musical</small><strong>{paso.acompanamientoActual || 'Pendiente de incorporar'}</strong></div>
               </div>
               <div className="related-row"><small>Imágenes que procesionan</small><div>{paso.imagenes.map((id) => {
                 const imagen = imagenMap.get(id); return imagen ? <Link key={id} href={`/imagenes/${imagen.slug}`}>{imagen.nombre}</Link> : null;
@@ -106,8 +106,8 @@ export default async function HermandadDetailPage({ params }) {
         ))}</div>
       </div></section>
 
-      {h.acompanamientoActual?.length > 0 && <section className="section brotherhood-soft" id="acompanamiento-actual"><div className="shell">
-        <SectionTitle eyebrow="Semana Santa" title="Acompañamiento musical actual" description="La configuración musical de la cofradía se organiza por Cruz de Guía, paso de Cristo o misterio y paso de palio." />
+      {h.acompanamientoActual?.length > 0 && <section className="section brotherhood-soft" id="acompanamiento-musical"><div className="shell">
+        <SectionTitle eyebrow="Semana Santa" title="Acompañamiento musical" description="La configuración musical de la cofradía se organiza por Cruz de Guía, Paso de Misterio y Paso de Palio." />
         <div className="current-music-grid">
           {h.acompanamientoActual.map((a) => (
             <article className="current-music-card" key={a.id}>
@@ -144,9 +144,57 @@ export default async function HermandadDetailPage({ params }) {
       <section className="section brotherhood-white" id="salidas"><div className="shell">
         <SectionTitle eyebrow="En la calle" title="Salidas" description="Estación de penitencia, procesiones, rosarios, vía crucis y traslados forman parte del histórico de salidas de cada hermandad." />
         <div className="outing-grid">{h.salidas.map((s) => (
-          <article className="outing-card" key={s.id}>
-            <div className="outing-type"><span>{s.tipo}</span><small>{s.caracter}</small></div>
-            <div><h3>{s.nombre}</h3>{s.titulares && <p className="outing-subject">{s.titulares}</p>}<p>{s.momento}</p>{s.destino && <small className="outing-destination">{s.destino}</small>}</div>
+          <article className={`outing-card ${s.ediciones?.length ? 'outing-card-featured' : ''}`} key={s.id}>
+            <div className="outing-type">
+              <span>{s.tipo}</span>
+              {s.caracter && <small>{s.caracter}</small>}
+            </div>
+
+            <div className="outing-content">
+              <h3>{s.nombre}</h3>
+              {s.titulares && <p className="outing-subject">{s.titulares}</p>}
+              {s.momento && <p>{s.momento}</p>}
+              {s.destino && <small className="outing-destination">{s.destino}</small>}
+
+              {s.movimientos?.length > 0 && (
+                <div className="outing-movements">
+                  {s.movimientos.map((movimiento) => (
+                    <div className="outing-movement" key={`${s.id}-${movimiento.sentido}`}>
+                      <strong>{movimiento.sentido}</strong>
+                      <p>{movimiento.momento}</p>
+                      {movimiento.destino && <small>{movimiento.destino}</small>}
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {s.ediciones?.map((edicion) => (
+                <div className="route-edition" key={`${s.id}-${edicion.ano}`}>
+                  <div className="route-edition-head">
+                    <span>Recorrido · {edicion.ano}</span>
+                    <div className="route-times">
+                      <div><small>Salida</small><strong>{edicion.salida}</strong></div>
+                      <span className="route-line" />
+                      <div><small>Entrada</small><strong>{edicion.entrada}</strong></div>
+                    </div>
+                  </div>
+
+                  <details className="route-details">
+                    <summary>Ver recorrido completo <span>＋</span></summary>
+                    <div className="route-path">
+                      {edicion.recorrido.map((calle, index) => (
+                        <span
+                          className={calle.toLowerCase() === 'carrera oficial' ? 'route-official' : ''}
+                          key={`${edicion.ano}-${calle}-${index}`}
+                        >
+                          {calle}
+                        </span>
+                      ))}
+                    </div>
+                  </details>
+                </div>
+              ))}
+            </div>
           </article>
         ))}</div>
       </div></section>
