@@ -1565,3 +1565,442 @@ button, input { font: inherit; }
     font-size:20px;
   }
 }
+
+
+/* Base Cofrade v0.4.10 Â· rediseÃ±o adaptativo de Datos clave */
+
+.key-data-card{
+  position:relative;
+  overflow:hidden;
+  padding:30px;
+  border:1px solid rgba(21,59,105,.10);
+  border-top:0;
+  border-radius:24px;
+  background:#fff;
+  box-shadow:0 20px 55px rgba(21,59,105,.055);
+}
+.key-data-card::before{
+  content:'';
+  position:absolute;
+  inset:0 0 auto;
+  height:5px;
+  background:linear-gradient(90deg,var(--bc-red) 0 30%,var(--bc-blue) 30% 100%);
+}
+
+.key-data-heading{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  margin-bottom:26px;
+}
+.key-data-heading .eyebrow{
+  margin:0;
+}
+.key-data-year{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:54px;
+  height:31px;
+  padding:0 11px;
+  border-radius:999px;
+  background:rgba(21,59,105,.07);
+  color:var(--bc-blue);
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.08em;
+}
+
+.key-data-identity{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
+  gap:20px;
+  align-items:end;
+  padding-bottom:23px;
+}
+.key-data-identity>div,
+.key-data-location>div{
+  min-width:0;
+}
+.key-data-identity small,
+.key-data-location small{
+  display:block;
+  margin-bottom:8px;
+  color:#7a8794;
+  font-size:10px;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:.095em;
+}
+.key-data-identity strong{
+  display:block;
+  color:var(--bc-blue);
+  font-size:clamp(17px,1.55vw,21px);
+  line-height:1.18;
+}
+
+.key-data-metrics{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  padding:22px 0;
+  border-top:1px solid rgba(21,59,105,.10);
+  border-bottom:1px solid rgba(21,59,105,.10);
+}
+.key-data-metrics>div{
+  min-width:0;
+  padding:0 17px;
+}
+.key-data-metrics>div:first-child{
+  padding-left:0;
+}
+.key-data-metrics>div:last-child{
+  padding-right:0;
+}
+.key-data-metrics>div+div{
+  border-left:1px solid rgba(21,59,105,.10);
+}
+.key-data-metrics strong{
+  display:block;
+  color:var(--bc-blue);
+  font-family:Georgia,serif;
+  font-size:clamp(25px,2.25vw,34px);
+  line-height:.98;
+  letter-spacing:-.025em;
+  overflow-wrap:anywhere;
+}
+.key-data-metrics span{
+  display:block;
+  margin-top:8px;
+  color:#7a8794;
+  font-size:9px;
+  font-weight:900;
+  line-height:1.25;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+
+.key-data-location{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
+  gap:22px;
+  padding-top:22px;
+}
+.key-data-location strong{
+  display:block;
+  color:var(--bc-blue);
+  font-size:15px;
+  line-height:1.28;
+}
+
+.key-data-source{
+  display:inline-flex;
+  align-items:center;
+  margin-top:22px;
+  color:var(--bc-red);
+  font-size:10px;
+  font-weight:900;
+  line-height:1.3;
+  text-decoration:none;
+}
+.key-data-source:hover{
+  text-decoration:underline;
+}
+
+/* Neutraliza reglas antiguas de Ficha esencial */
+.key-data-card.essential-card,
+.key-data-card .essential-top,
+.key-data-card .essential-stats,
+.key-data-card .essential-location{
+  all:unset;
+}
+
+@media(max-width:1120px){
+  .key-data-card{
+    padding:26px;
+  }
+  .key-data-metrics{
+    grid-template-columns:repeat(auto-fit,minmax(105px,1fr));
+  }
+  .key-data-metrics>div{
+    padding:0 12px;
+  }
+}
+
+@media(max-width:760px){
+  .key-data-card{
+    padding:24px;
+    border-radius:20px;
+  }
+  .key-data-heading{
+    margin-bottom:22px;
+  }
+  .key-data-metrics{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:0;
+  }
+  .key-data-metrics>div{
+    padding:15px 0;
+  }
+  .key-data-metrics>div+div{
+    border-left:0;
+  }
+  .key-data-metrics>div:nth-child(odd){
+    padding-right:16px;
+  }
+  .key-data-metrics>div:nth-child(even){
+    padding-left:16px;
+    border-left:1px solid rgba(21,59,105,.10);
+  }
+  .key-data-metrics>div:last-child:nth-child(odd){
+    grid-column:1 / -1;
+    padding-right:0;
+    border-top:1px solid rgba(21,59,105,.10);
+  }
+}
+
+@media(max-width:480px){
+  .key-data-card{
+    padding:21px;
+  }
+  .key-data-identity,
+  .key-data-location{
+    grid-template-columns:1fr;
+    gap:17px;
+  }
+  .key-data-metrics{
+    grid-template-columns:1fr;
+    padding:12px 0;
+  }
+  .key-data-metrics>div,
+  .key-data-metrics>div:nth-child(odd),
+  .key-data-metrics>div:nth-child(even),
+  .key-data-metrics>div:last-child:nth-child(odd){
+    grid-column:auto;
+    padding:12px 0;
+    border-left:0;
+  }
+  .key-data-metrics>div+div{
+    border-top:1px solid rgba(21,59,105,.10);
+  }
+  .key-data-metrics strong{
+    font-size:29px;
+  }
+}
+
+
+
+/* Base Cofrade v0.4.11 Â· Hermanos + Fuentes al final */
+
+/* DATOS CLAVE: cuatro mÃ©tricas en escritorio */
+.key-data-metrics-four{
+  grid-template-columns:repeat(4,minmax(0,1fr));
+}
+.key-data-metrics-four>div{
+  padding-left:13px;
+  padding-right:13px;
+}
+.key-data-metrics-four strong{
+  font-size:clamp(23px,1.8vw,31px);
+}
+.key-data-metrics-four span{
+  font-size:8px;
+  letter-spacing:.07em;
+}
+
+/* La fuente ya no aparece dentro del panel */
+.key-data-source{
+  display:none!important;
+}
+
+/* FUENTES */
+.sources-section{
+  background:#fff;
+  border-top:1px solid rgba(21,59,105,.08);
+}
+.sources-heading{
+  display:grid;
+  grid-template-columns:minmax(220px,.7fr) minmax(300px,1fr);
+  gap:50px;
+  align-items:end;
+  margin-bottom:30px;
+}
+.sources-heading h2{
+  margin:8px 0 0;
+  font-family:Georgia,serif;
+  font-size:clamp(36px,4vw,54px);
+  line-height:.95;
+  letter-spacing:-.035em;
+}
+.sources-heading p{
+  max-width:600px;
+  margin:0;
+  color:#69737d;
+  line-height:1.55;
+}
+
+.sources-list{
+  border-top:1px solid rgba(21,59,105,.12);
+}
+.source-row{
+  display:grid;
+  grid-template-columns:44px minmax(0,1fr) 34px;
+  gap:18px;
+  align-items:center;
+  padding:20px 0;
+  border-bottom:1px solid rgba(21,59,105,.10);
+  color:inherit;
+  text-decoration:none;
+}
+.source-number{
+  color:var(--bc-red);
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.1em;
+}
+.source-copy{
+  min-width:0;
+}
+.source-copy strong{
+  display:block;
+  color:var(--bc-blue);
+  font-size:15px;
+  line-height:1.25;
+}
+.source-copy p{
+  margin:5px 0 0;
+  color:#747e88;
+  font-size:12px;
+  line-height:1.45;
+}
+.source-arrow{
+  display:grid;
+  place-items:center;
+  width:32px;
+  height:32px;
+  border-radius:50%;
+  background:rgba(21,59,105,.06);
+  color:var(--bc-blue);
+  font-size:16px;
+  transition:background .18s ease,color .18s ease,transform .18s ease;
+}
+.source-row:hover .source-arrow{
+  background:var(--bc-blue);
+  color:#fff;
+  transform:translate(2px,-2px);
+}
+
+/* RESPONSIVE */
+@media(max-width:1120px){
+  .key-data-metrics-four{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  .key-data-metrics-four>div{
+    padding:16px 0;
+  }
+  .key-data-metrics-four>div:nth-child(even){
+    padding-left:18px;
+    border-left:1px solid rgba(21,59,105,.10);
+  }
+  .key-data-metrics-four>div:nth-child(odd){
+    padding-right:18px;
+    border-left:0;
+  }
+  .key-data-metrics-four>div:nth-child(n+3){
+    border-top:1px solid rgba(21,59,105,.10);
+  }
+  .key-data-metrics-four strong{
+    font-size:29px;
+  }
+}
+
+@media(max-width:760px){
+  .sources-heading{
+    grid-template-columns:1fr;
+    gap:14px;
+  }
+  .source-row{
+    grid-template-columns:32px minmax(0,1fr) 30px;
+    gap:12px;
+  }
+}
+
+@media(max-width:480px){
+  .key-data-metrics-four{
+    grid-template-columns:1fr;
+  }
+  .key-data-metrics-four>div,
+  .key-data-metrics-four>div:nth-child(even),
+  .key-data-metrics-four>div:nth-child(odd),
+  .key-data-metrics-four>div:nth-child(n+3){
+    padding:13px 0;
+    border-left:0;
+  }
+  .key-data-metrics-four>div+div{
+    border-top:1px solid rgba(21,59,105,.10);
+  }
+  .source-copy p{
+    font-size:11px;
+  }
+}
+
+
+
+/* Base Cofrade v0.4.12 Â· fuentes con capirotes + datos clave mÃ¡s limpios */
+
+/* DATOS CLAVE: sin borde cromÃ¡tico superior para una lectura mÃ¡s limpia */
+.key-data-card{
+  border:1px solid rgba(21,59,105,.08);
+  box-shadow:0 16px 42px rgba(21,59,105,.045);
+}
+.key-data-card::before{
+  display:none;
+}
+
+/* FUENTES: sustituimos la numeraciÃ³n por un pequeÃ±o capirote */
+.source-row{
+  grid-template-columns:24px minmax(0,1fr) 34px;
+  gap:20px;
+}
+.source-capirote{
+  position:relative;
+  display:block;
+  width:18px;
+  height:22px;
+  margin-left:1px;
+}
+.source-capirote::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:var(--bc-red);
+  clip-path:polygon(50% 0, 100% 100%, 0 100%);
+  border-radius:2px 2px 3px 3px;
+}
+.source-capirote::after{
+  content:'';
+  position:absolute;
+  left:50%;
+  top:36%;
+  width:4px;
+  height:4px;
+  background:#fff;
+  border-radius:50%;
+  transform:translateX(-50%);
+  box-shadow:0 6px 0 #fff;
+  opacity:.95;
+}
+
+/* neutraliza nÃºmeros antiguos si existiesen */
+.source-number{display:none!important;}
+
+@media(max-width:760px){
+  .source-row{
+    grid-template-columns:20px minmax(0,1fr) 30px;
+    gap:12px;
+  }
+  .source-capirote{
+    width:15px;
+    height:19px;
+  }
+}
