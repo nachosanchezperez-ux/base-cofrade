@@ -61,7 +61,6 @@ export default async function HermandadDetailPage({ params }) {
             <a href="#titulares">Titulares</a>
             <a href="#pasos">Pasos</a>
             <a href="#historia">Historia</a>
-            {h.viaCrucisHermandades?.length > 0 && <a href="#via-crucis">Vía Crucis</a>}
             <a href="#tunica">Túnica</a>
             <a href="#salidas">Salidas</a>
             <a href="#cultos">Cultos</a>
@@ -75,7 +74,35 @@ export default async function HermandadDetailPage({ params }) {
       </nav>
 
       <section className="section" id="resumen"><div className="shell content-grid">
-        <div><SectionTitle eyebrow="De un vistazo" title={h.nombrePopular} /><p className="body-large">{h.resumen}</p><p>{h.historia}</p></div>
+        <div>
+          <SectionTitle eyebrow="De un vistazo" title={h.nombrePopular} />
+          <p className="body-large">{h.resumen}</p><p>{h.historia}</p>
+
+          {h.participacionesConsejo?.length > 0 && (
+            <div className="council-participations">
+              <span className="eyebrow">En la historia del Consejo</span>
+              {h.participacionesConsejo.map((participacion) => (
+                <article className="council-participation-card" key={participacion.id}>
+                  {participacion.imagen ? (
+                    <img className="council-participation-photo" src={participacion.imagen} alt={participacion.titulo} />
+                  ) : (
+                    <div className="council-participation-photo council-photo-placeholder">
+                      <span>Fotografía</span><small>{participacion.ano}</small>
+                    </div>
+                  )}
+                  <div className="council-participation-copy">
+                    <div className="council-participation-meta">
+                      <span>{participacion.categoria}</span><strong>{participacion.ano}</strong>
+                    </div>
+                    <h3>{participacion.titulo}</h3>
+                    <p className="council-participation-protagonists">{participacion.protagonistas}</p>
+                    <p>{participacion.resumen}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
+        </div>
         <aside className="brotherhood-summary-card"><span className="eyebrow">Ficha esencial</span><dl>
           <div><dt>Tipo</dt><dd><CofradeTypeBadges tipos={h.tipos} compact /></dd></div>
           <div><dt>Día</dt><dd>{h.diaSalida}</dd></div>
@@ -139,25 +166,6 @@ export default async function HermandadDetailPage({ params }) {
         ))}</div>
       </div></section>
 
-      {h.viaCrucisHermandades?.length > 0 && <section className="section via-crucis-section" id="via-crucis"><div className="shell">
-        <SectionTitle eyebrow="Historia penitencial" title="Vía Crucis de las Hermandades" description="Participaciones de la cofradía en el Vía Crucis organizado por el Consejo General de Hermandades y Cofradías de Sevilla." />
-        <div className="via-crucis-grid">{h.viaCrucisHermandades.map((v) => (
-          <article className="via-crucis-card" key={v.id}>
-            <div className="via-crucis-year"><small>Vía Crucis</small><strong>{v.ano}</strong></div>
-            <div className="via-crucis-copy">
-              <span className="eyebrow">Consejo de Hermandades</span>
-              <h3>{v.titulo}</h3>
-              <p className="via-crucis-images">{v.imagenes}</p>
-              <p>{v.descripcion}</p>
-              {v.lugar && <div className="via-crucis-place"><small>Lugar</small><strong>{v.lugar}</strong></div>}
-              <div className="via-crucis-sources">
-                {v.fuenteConsejo && <a href={v.fuenteConsejo} target="_blank" rel="noreferrer">Fuente · Consejo de Hermandades ↗</a>}
-                {v.fuenteHermandad && <a href={v.fuenteHermandad} target="_blank" rel="noreferrer">Fuente · Hermandad del Baratillo ↗</a>}
-              </div>
-            </div>
-          </article>
-        ))}</div>
-      </div></section>}
 
       <section className="section brotherhood-dark" id="tunica"><div className="shell">
         <SectionTitle eyebrow="Estación de penitencia" title="Túnica" description="El azul identifica la túnica; rojo y blanco distinguen los cortejos de los dos pasos." />
