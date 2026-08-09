@@ -2280,3 +2280,49 @@ button, input { font: inherit; }
     line-height:1.2;
   }
 }
+
+/* Base Cofrade v0.4.16 Â· tratamiento especÃ­fico de Carrera Oficial */
+
+.key-data-time .career-time{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:2px;
+  white-space:normal;
+  line-height:.92;
+}
+
+.key-data-time .career-time>span{
+  display:block;
+  margin:0;
+  color:var(--bc-blue);
+  font-family:Georgia,serif;
+  font-size:inherit;
+  font-weight:700;
+  line-height:.92;
+  text-transform:none;
+  letter-spacing:-.025em;
+  white-space:nowrap;
+}
+
+/* La segunda lÃ­nea es ligeramente menor para reforzar la lectura de duraciÃ³n */
+.key-data-time .career-time>span+span{
+  font-size:.76em;
+  margin-top:4px;
+}
+
+/* En los cuatro bloques, centramos mejor visualmente el dato */
+.key-data-metrics-four>div{
+  justify-content:center;
+}
+
+/* El bloque de tiempo nunca debe desbordar horizontalmente */
+.key-data-time{
+  overflow:hidden;
+}
+
+@media(max-width:700px){
+  .key-data-time .career-time>span+span{
+    margin-top:3px;
+  }
+}
