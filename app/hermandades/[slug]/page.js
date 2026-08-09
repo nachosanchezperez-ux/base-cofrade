@@ -13,6 +13,7 @@ export default async function HermandadDetailPage({ params }) {
   const h = getHermandadBySlug(slug);
   if (!h) notFound();
   const imagenMap = new Map(h.imagenes.map((imagen) => [imagen.id, imagen]));
+  const carreraOficialParts = h.datosJornada?.tiempoCarreraOficial?.match(/^(.*?\bh)\s+(.+)$/i);
 
   return (
     <main className="brotherhood-page" style={{
@@ -133,8 +134,15 @@ export default async function HermandadDetailPage({ params }) {
                 <strong>{h.datosJornada.totalNazarenos}</strong>
                 <span>Nazarenos</span>
               </div>
-              <div>
-                <strong>{h.datosJornada.tiempoCarreraOficial}</strong>
+              <div className="key-data-time">
+                <strong className="career-time">
+                  {carreraOficialParts ? (
+                    <>
+                      <span>{carreraOficialParts[1]}</span>
+                      <span>{carreraOficialParts[2]}</span>
+                    </>
+                  ) : h.datosJornada.tiempoCarreraOficial}
+                </strong>
                 <span>Carrera Oficial</span>
               </div>
             </div>
