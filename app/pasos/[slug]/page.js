@@ -32,7 +32,7 @@ export default async function PasoDetailPage({params}){
           </div>
           <div className="step-detail-grid">
             <div className="step-detail-copy">
-              <span className="step-kicker">Paso procesional</span>
+              <span className="step-kicker">Ficha del paso</span>
               <span className="pill brotherhood-pill">{paso.tipo}</span>
               <h1>{paso.nombre}</h1>
               <p>{paso.descripcion}</p>
