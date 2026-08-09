@@ -1199,3 +1199,369 @@ button, input { font: inherit; }
   .council-participation-photo{height:180px;min-height:0}
   .council-participation-meta{align-items:flex-start}
 }
+
+
+/* ===== v0.4.7.css ===== */
+
+
+/* Base Cofrade v0.4.7 Â· ficha esencial, pasos y fechas de cultos */
+
+/* FICHA ESENCIAL: menos lÃ­neas, mÃ¡s jerarquÃ­a */
+.essential-card{
+  padding:28px;
+}
+.essential-card>.eyebrow{
+  display:block;
+  margin-bottom:22px;
+}
+.essential-top{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  margin-bottom:16px;
+}
+.essential-primary{
+  min-height:88px;
+  padding:16px;
+  border-radius:15px;
+  background:#fff;
+  border:1px solid rgba(21,59,105,.07);
+}
+.essential-primary>small,
+.essential-stats small,
+.essential-location small{
+  display:block;
+  margin-bottom:7px;
+  color:#7a8794;
+  font-size:10px;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+.essential-primary>strong{
+  color:var(--bc-blue);
+  font-size:18px;
+  line-height:1.2;
+}
+.essential-stats{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:8px;
+  margin-bottom:16px;
+}
+.essential-stats>div{
+  padding:14px 11px;
+  border-radius:13px;
+  background:rgba(21,59,105,.055);
+}
+.essential-stats strong{
+  display:block;
+  color:var(--bc-blue);
+  font-family:Georgia,serif;
+  font-size:20px;
+  line-height:1.05;
+}
+.essential-location{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+  padding:6px 2px 2px;
+}
+.essential-location strong{
+  display:block;
+  color:var(--bc-blue);
+  font-size:15px;
+  line-height:1.25;
+}
+.essential-source{
+  display:inline-flex;
+  margin-top:20px;
+  color:var(--bc-red);
+  font-size:11px;
+  font-weight:800;
+  text-decoration:none;
+}
+.essential-source:hover{text-decoration:underline}
+
+/* Elimina visualmente la antigua sensaciÃ³n de listado rayado */
+.essential-card dl,
+.essential-card dl>div{
+  border:0!important;
+}
+
+/* PASOS: nomenclatura y breadcrumb coherentes */
+.processional-body>.pill,
+.step-detail-copy>.brotherhood-pill{
+  text-transform:uppercase;
+  letter-spacing:.045em;
+}
+.step-detail-hero .brotherhood-breadcrumb,
+.step-detail-hero .brotherhood-breadcrumb a,
+.step-detail-hero .brotherhood-breadcrumb strong{
+  text-transform:uppercase;
+}
+.step-detail-hero .brotherhood-breadcrumb{
+  letter-spacing:.075em;
+  font-size:11px;
+}
+.step-kicker{
+  text-transform:uppercase;
+}
+
+/* CULTOS: la fecha se convierte en un dato visual, no en una columna de texto */
+.cult-calendar article{
+  grid-template-columns:128px minmax(0,1fr);
+  gap:24px;
+  min-height:170px;
+  padding:20px;
+}
+.cult-date{
+  align-self:stretch;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:18px 14px;
+  border:0;
+  border-radius:14px;
+  background:linear-gradient(145deg,#0d2949,var(--bc-blue));
+  text-align:left;
+  color:#fff;
+}
+.cult-date-label{
+  display:block;
+  margin-bottom:10px;
+  color:#b7c8da;
+  font-size:9px;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:.14em;
+}
+.cult-date strong{
+  color:#fff;
+  font-family:Georgia,serif;
+  font-size:clamp(17px,1.7vw,23px);
+  line-height:1.05;
+  text-wrap:balance;
+}
+.cult-date small{
+  display:block;
+  margin-top:11px;
+  padding-top:10px;
+  border-top:1px solid rgba(255,255,255,.18);
+  color:#ffd4da;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:.09em;
+}
+.cult-copy{
+  align-self:center;
+  padding-right:6px;
+}
+.cult-copy h3{
+  font-size:21px;
+  line-height:1.12;
+}
+.cult-copy p{
+  margin-top:9px;
+  color:#69737d;
+}
+
+@media(max-width:900px){
+  .essential-stats{
+    grid-template-columns:1fr;
+  }
+  .essential-stats>div{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+  }
+  .essential-stats small{
+    margin:0;
+  }
+  .cult-calendar article{
+    grid-template-columns:115px 1fr;
+  }
+}
+
+@media(max-width:620px){
+  .essential-top,
+  .essential-location{
+    grid-template-columns:1fr;
+  }
+  .essential-primary{
+    min-height:0;
+  }
+  .cult-calendar article{
+    grid-template-columns:1fr;
+    min-height:0;
+  }
+  .cult-date{
+    min-height:115px;
+  }
+}
+
+
+/* ===== v0.4.8.css ===== */
+
+
+/* Base Cofrade v0.4.8 Â· ajuste final de presentaciÃ³n y cultos */
+
+/* El bloque del Consejo entra directamente como contenido de presentaciÃ³n */
+.council-participations{
+  margin-top:34px;
+  padding-top:0;
+  border-top:0;
+}
+.council-participation-card{
+  margin-top:0;
+}
+.council-participation-copy>p:last-child{
+  max-width:780px;
+  font-size:15px;
+  line-height:1.5;
+}
+
+/* CULTOS: tÃ­tulos largos mejor contenidos dentro de las tarjetas */
+.cult-calendar article{
+  grid-template-columns:116px minmax(0,1fr);
+  gap:18px;
+  min-height:154px;
+  padding:17px;
+}
+.cult-date{
+  padding:15px 12px;
+}
+.cult-date-label{
+  margin-bottom:8px;
+}
+.cult-date strong{
+  font-size:clamp(15px,1.35vw,20px);
+  line-height:1.04;
+  overflow-wrap:normal;
+  word-break:normal;
+}
+.cult-date small{
+  margin-top:9px;
+  padding-top:8px;
+  font-size:8px;
+}
+.cult-copy{
+  padding-right:2px;
+}
+.cult-copy h3{
+  margin:0;
+  font-size:clamp(17px,1.35vw,20px);
+  line-height:1.08;
+  letter-spacing:-.012em;
+  text-wrap:pretty;
+}
+.cult-copy p{
+  margin:7px 0 0;
+  font-size:14px;
+  line-height:1.3;
+}
+
+@media(max-width:1100px){
+  .cult-calendar article{
+    grid-template-columns:108px minmax(0,1fr);
+    gap:15px;
+  }
+  .cult-copy h3{
+    font-size:17px;
+  }
+}
+@media(max-width:900px){
+  .cult-calendar article{
+    grid-template-columns:112px minmax(0,1fr);
+  }
+}
+@media(max-width:620px){
+  .cult-calendar article{
+    grid-template-columns:1fr;
+    min-height:0;
+  }
+  .cult-date{
+    min-height:105px;
+  }
+  .cult-copy h3{
+    font-size:19px;
+  }
+}
+
+
+/* ===== v0.4.9.css ===== */
+
+
+/* Base Cofrade v0.4.9 Â· correcciÃ³n definitiva de fechas en Cultos */
+
+/* MÃ¡s ancho Ãºtil para que las fechas no se corten */
+.cult-calendar article{
+  grid-template-columns:146px minmax(0,1fr);
+}
+
+/* El texto nunca debe escapar del bloque azul */
+.cult-date{
+  min-width:0;
+  overflow:hidden;
+}
+.cult-date strong{
+  display:block;
+  width:100%;
+  max-width:100%;
+  white-space:normal;
+  word-break:normal;
+  overflow-wrap:normal;
+  text-wrap:balance;
+}
+
+/* TamaÃ±o adaptativo segÃºn la longitud del texto */
+.cult-date-short strong{
+  font-size:21px;
+}
+.cult-date-medium strong{
+  font-size:17px;
+  line-height:1.04;
+}
+.cult-date-long strong{
+  font-size:14px;
+  line-height:1.08;
+  letter-spacing:-.015em;
+}
+
+/* Mantener las palabras completas y permitir salto solo por espacios */
+.cult-date-long,
+.cult-date-medium{
+  hyphens:none;
+}
+
+@media(max-width:1100px){
+  .cult-calendar article{
+    grid-template-columns:138px minmax(0,1fr);
+  }
+  .cult-date-short strong{font-size:20px}
+  .cult-date-medium strong{font-size:16px}
+  .cult-date-long strong{font-size:13px}
+}
+
+@media(max-width:900px){
+  .cult-calendar article{
+    grid-template-columns:140px minmax(0,1fr);
+  }
+}
+
+@media(max-width:620px){
+  .cult-calendar article{
+    grid-template-columns:1fr;
+  }
+  .cult-date{
+    width:100%;
+    min-height:auto;
+    padding:16px 18px;
+  }
+  .cult-date-short strong,
+  .cult-date-medium strong,
+  .cult-date-long strong{
+    font-size:20px;
+  }
+}
