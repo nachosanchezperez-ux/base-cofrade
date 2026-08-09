@@ -54,20 +54,22 @@ export default async function HermandadDetailPage({ params }) {
       </section>
 
       <nav className="section-nav brotherhood-nav">
-        <div className="shell">
-          <div className="brotherhood-nav-panel nav-scroll">
-            <a className="brotherhood-nav-link" href="#resumen"><small>01</small><span>Resumen</span></a>
-            <a className="brotherhood-nav-link" href="#titulares"><small>02</small><span>Titulares</span></a>
-            <a className="brotherhood-nav-link" href="#pasos"><small>03</small><span>Pasos</span></a>
-            <a className="brotherhood-nav-link" href="#historia"><small>04</small><span>Historia</span></a>
-            <a className="brotherhood-nav-link" href="#tunica"><small>05</small><span>Túnica</span></a>
-            <a className="brotherhood-nav-link" href="#salidas"><small>06</small><span>Salidas</span></a>
-            <a className="brotherhood-nav-link" href="#cultos"><small>07</small><span>Cultos</span></a>
-            {h.estrenos?.length > 0 && <a className="brotherhood-nav-link" href="#estrenos"><small>08</small><span>Novedades</span></a>}
-            {h.patrimonioMusical?.length > 0 && <a className="brotherhood-nav-link" href="#musica"><small>09</small><span>Patrimonio musical</span></a>}
-            {h.acompanamientos?.length > 0 && <a className="brotherhood-nav-link" href="#acompanamientos"><small>10</small><span>Acompañamientos</span></a>}
-            {h.noticias?.length > 0 && <a className="brotherhood-nav-link" href="#noticias"><small>11</small><span>Noticias</span></a>}
-            <a className="brotherhood-nav-link" href="#curiosidades"><small>12</small><span>Curiosidades</span></a>
+        <div className="shell brotherhood-nav-shell">
+          <span className="brotherhood-nav-label">Explorar ficha</span>
+          <div className="brotherhood-nav-list nav-scroll">
+            <a href="#resumen">Resumen</a>
+            <a href="#titulares">Titulares</a>
+            <a href="#pasos">Pasos</a>
+            <a href="#historia">Historia</a>
+            {h.viaCrucisHermandades?.length > 0 && <a href="#via-crucis">Vía Crucis</a>}
+            <a href="#tunica">Túnica</a>
+            <a href="#salidas">Salidas</a>
+            <a href="#cultos">Cultos</a>
+            {h.estrenos?.length > 0 && <a href="#estrenos">Novedades</a>}
+            {h.patrimonioMusical?.length > 0 && <a href="#musica">Patrimonio musical</a>}
+            {h.acompanamientos?.length > 0 && <a href="#acompanamientos">Acompañamientos</a>}
+            {h.noticias?.length > 0 && <a href="#noticias">Noticias</a>}
+            <a href="#curiosidades">Curiosidades</a>
           </div>
         </div>
       </nav>
@@ -136,6 +138,26 @@ export default async function HermandadDetailPage({ params }) {
           </article>
         ))}</div>
       </div></section>
+
+      {h.viaCrucisHermandades?.length > 0 && <section className="section via-crucis-section" id="via-crucis"><div className="shell">
+        <SectionTitle eyebrow="Historia penitencial" title="Vía Crucis de las Hermandades" description="Participaciones de la cofradía en el Vía Crucis organizado por el Consejo General de Hermandades y Cofradías de Sevilla." />
+        <div className="via-crucis-grid">{h.viaCrucisHermandades.map((v) => (
+          <article className="via-crucis-card" key={v.id}>
+            <div className="via-crucis-year"><small>Vía Crucis</small><strong>{v.ano}</strong></div>
+            <div className="via-crucis-copy">
+              <span className="eyebrow">Consejo de Hermandades</span>
+              <h3>{v.titulo}</h3>
+              <p className="via-crucis-images">{v.imagenes}</p>
+              <p>{v.descripcion}</p>
+              {v.lugar && <div className="via-crucis-place"><small>Lugar</small><strong>{v.lugar}</strong></div>}
+              <div className="via-crucis-sources">
+                {v.fuenteConsejo && <a href={v.fuenteConsejo} target="_blank" rel="noreferrer">Fuente · Consejo de Hermandades ↗</a>}
+                {v.fuenteHermandad && <a href={v.fuenteHermandad} target="_blank" rel="noreferrer">Fuente · Hermandad del Baratillo ↗</a>}
+              </div>
+            </div>
+          </article>
+        ))}</div>
+      </div></section>}
 
       <section className="section brotherhood-dark" id="tunica"><div className="shell">
         <SectionTitle eyebrow="Estación de penitencia" title="Túnica" description="El azul identifica la túnica; rojo y blanco distinguen los cortejos de los dos pasos." />
