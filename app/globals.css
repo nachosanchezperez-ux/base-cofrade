@@ -2561,3 +2561,374 @@ button, input { font: inherit; }
     padding: 28px 24px;
   }
 }
+
+/* =========================================================
+   Base Cofrade v0.4.18
+   Ficha de ImÃ¡genes + criterios globales de breadcrumb/fuentes
+   ========================================================= */
+
+/* CRITERIO GLOBAL Â· breadcrumb */
+.brotherhood-hero .brotherhood-breadcrumb strong,
+.step-detail-hero .brotherhood-breadcrumb strong,
+.image-detail-hero-v2 .brotherhood-breadcrumb strong{
+  text-transform:uppercase;
+  letter-spacing:.045em;
+}
+
+/* FICHA DE IMAGEN Â· hero */
+.image-detail-hero-v2{
+  background:
+    radial-gradient(circle at 78% 18%,rgba(255,255,255,.10),transparent 22%),
+    linear-gradient(120deg,#0d2949,var(--bc-blue));
+  color:#fff;
+  padding:42px 0 58px;
+  border-bottom:5px solid var(--bc-red);
+}
+
+.image-detail-hero-grid-v2{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(300px,.78fr);
+  gap:58px;
+  align-items:center;
+}
+
+.image-detail-hero-copy-v2 h1{
+  max-width:12ch;
+  margin:0 0 20px;
+  font-family:Georgia,'Times New Roman',serif;
+  font-size:clamp(46px,6vw,78px);
+  line-height:.92;
+  letter-spacing:-.045em;
+}
+
+.image-detail-hero-copy-v2 p{
+  max-width:650px;
+  margin:0;
+  color:#d4dfeb;
+  font-size:18px;
+  line-height:1.55;
+}
+
+.image-detail-photo-v2{
+  min-height:390px;
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:28px;
+  background:linear-gradient(155deg,rgba(255,255,255,.13),rgba(255,255,255,.035));
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  color:rgba(255,255,255,.72);
+}
+
+.image-detail-photo-v2>span{
+  width:132px;
+  height:132px;
+  border:1px solid rgba(255,255,255,.24);
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  font-family:Georgia,'Times New Roman',serif;
+  font-size:40px;
+  color:#fff;
+}
+
+.image-detail-photo-v2 small{
+  margin-top:15px;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  font-size:10px;
+}
+
+/* FICHA DE IMAGEN Â· de un vistazo */
+.image-overview-grid-v2{
+  display:grid;
+  grid-template-columns:minmax(0,1.02fr) minmax(430px,.98fr);
+  gap:54px;
+  align-items:start;
+}
+
+.image-overview-copy-v2 h2,
+.image-section-title-v2{
+  margin:10px 0 22px;
+  font-family:Georgia,'Times New Roman',serif;
+  font-size:clamp(40px,4.3vw,56px);
+  line-height:.96;
+  letter-spacing:-.035em;
+}
+
+.image-overview-copy-v2 p{
+  max-width:690px;
+  margin:0;
+  color:#555e67;
+  font-size:18px;
+  line-height:1.65;
+}
+
+.image-facts-v2{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+}
+
+.image-facts-v2>article{
+  min-height:106px;
+  padding:20px 22px;
+  background:#fff;
+  border:1px solid #dfe5ea;
+  border-radius:18px;
+}
+
+.image-facts-v2 small{
+  display:block;
+  margin-bottom:9px;
+  color:#7c8793;
+  text-transform:uppercase;
+  letter-spacing:.09em;
+  font-size:9px;
+  font-weight:900;
+}
+
+.image-facts-v2>article>strong,
+.image-facts-v2>article>a{
+  color:var(--bc-blue);
+  font-size:18px;
+  line-height:1.25;
+  font-weight:800;
+}
+
+.image-facts-v2>article>a{
+  color:var(--bc-red);
+}
+
+/* CoronaciÃ³n Â· dos fechas con el mismo peso visual */
+.image-coronation-v2{
+  grid-column:1/-1;
+  min-height:auto!important;
+  padding:22px 24px!important;
+}
+
+.image-coronation-v2>small{
+  margin-bottom:18px;
+}
+
+.image-coronation-events-v2{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+}
+
+.image-coronation-event-v2{
+  padding:4px 26px 4px 0;
+}
+
+.image-coronation-event-v2+.image-coronation-event-v2{
+  padding:4px 0 4px 26px;
+  border-left:1px solid #dfe5ea;
+}
+
+.image-coronation-event-v2>span{
+  display:block;
+  margin-bottom:7px;
+  color:#7c8793;
+  text-transform:uppercase;
+  letter-spacing:.09em;
+  font-size:9px;
+  font-weight:900;
+}
+
+.image-coronation-event-v2>strong{
+  display:block;
+  margin-bottom:8px;
+  color:var(--bc-blue);
+  font-family:Georgia,'Times New Roman',serif;
+  font-size:20px;
+  line-height:1.15;
+  letter-spacing:-.02em;
+}
+
+.image-coronation-event-v2+.image-coronation-event-v2>strong{
+  color:var(--bc-red);
+}
+
+.image-coronation-event-v2 p{
+  margin:0;
+  color:#69737d;
+  font-size:12px;
+  line-height:1.5;
+}
+
+/* Vida de la imagen */
+.image-life-grid-v2{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:34px;
+  margin-top:30px;
+}
+
+.image-life-grid-v2 article{
+  padding:28px 0 0;
+  border-top:1px solid rgba(21,59,105,.13);
+}
+
+.image-life-grid-v2 h3{
+  margin:8px 0 10px;
+  font-family:Georgia,'Times New Roman',serif;
+  font-size:32px;
+  line-height:1;
+}
+
+.image-life-grid-v2 p{
+  max-width:560px;
+  margin:0;
+  color:#69737d;
+  font-size:16px;
+  line-height:1.5;
+}
+
+.image-life-grid-v2 small{
+  display:inline-block;
+  margin-top:14px;
+  color:var(--bc-blue);
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  font-size:10px;
+  font-weight:900;
+}
+
+/* CronologÃ­a de la imagen */
+.image-timeline-v2{
+  max-width:960px;
+  margin-top:30px;
+  padding-left:24px;
+  border-left:2px solid rgba(21,59,105,.13);
+}
+
+.image-timeline-v2 article{
+  position:relative;
+  padding:0 0 30px 20px;
+}
+
+.image-timeline-v2 article::before{
+  content:'';
+  position:absolute;
+  left:-30px;
+  top:6px;
+  width:10px;
+  height:10px;
+  background:var(--bc-red);
+  border-radius:50%;
+  box-shadow:0 0 0 5px #fff;
+}
+
+.image-timeline-v2 article>strong{
+  color:var(--bc-red);
+  font-family:Georgia,'Times New Roman',serif;
+  font-size:20px;
+  line-height:1.15;
+}
+
+.image-timeline-v2 h3{
+  margin:6px 0 6px;
+  font-family:Georgia,'Times New Roman',serif;
+  font-size:24px;
+  line-height:1.08;
+}
+
+.image-timeline-v2 p{
+  max-width:880px;
+  margin:0;
+  color:#666f78;
+  line-height:1.5;
+}
+
+/* FUENTES Â· criterio Ãºnico para Hermandad, Pasos e ImÃ¡genes */
+.sources-heading{
+  display:block;
+  margin-bottom:22px;
+}
+
+.sources-heading>p{
+  display:none!important;
+}
+
+.sources-heading h2{
+  margin-top:7px;
+}
+
+.source-row{
+  grid-template-columns:24px minmax(0,1fr)!important;
+  gap:14px!important;
+  padding:14px 0!important;
+}
+
+.source-copy p,
+.source-arrow{
+  display:none!important;
+}
+
+.source-copy strong{
+  color:var(--bc-blue);
+  font-size:14px;
+  line-height:1.35;
+}
+
+/* Responsive */
+@media(max-width:980px){
+  .image-detail-hero-grid-v2,
+  .image-overview-grid-v2{
+    grid-template-columns:1fr;
+  }
+
+  .image-detail-hero-copy-v2 h1{
+    max-width:15ch;
+  }
+
+  .image-detail-photo-v2{
+    max-width:620px;
+    min-height:320px;
+  }
+}
+
+@media(max-width:700px){
+  .image-detail-hero-v2{
+    padding:34px 0 46px;
+  }
+
+  .image-detail-hero-copy-v2 h1{
+    max-width:none;
+    font-size:clamp(38px,10vw,52px);
+  }
+
+  .image-detail-hero-copy-v2 p{
+    font-size:16px;
+  }
+
+  .image-detail-photo-v2{
+    min-height:260px;
+  }
+
+  .image-facts-v2{
+    grid-template-columns:1fr;
+  }
+
+  .image-coronation-v2{
+    grid-column:auto;
+  }
+
+  .image-coronation-events-v2,
+  .image-life-grid-v2{
+    grid-template-columns:1fr;
+  }
+
+  .image-coronation-event-v2,
+  .image-coronation-event-v2+.image-coronation-event-v2{
+    padding:0;
+    border-left:0;
+  }
+
+  .image-coronation-event-v2+.image-coronation-event-v2{
+    margin-top:18px;
+    padding-top:18px;
+    border-top:1px solid #dfe5ea;
+  }
+}
