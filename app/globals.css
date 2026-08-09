@@ -2326,3 +2326,238 @@ button, input { font: inherit; }
     margin-top:3px;
   }
 }
+
+
+/* Base Cofrade v0.4.17 Â· estilo grÃ¡fico para fichas de imÃ¡genes */
+
+.image-record-page {
+  --image-accent: #8a2f42;
+  --image-accent-soft: #f7f2f2;
+  --image-ink: #163e73;
+  --image-line: #e1d7d1;
+  --image-shell: #fbf8f7;
+}
+
+.breadcrumbs--record {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 28px;
+  color: #7f7f86;
+}
+
+.breadcrumbs--record a,
+.breadcrumbs--record span:last-child {
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.breadcrumbs--record span {
+  color: #ab9a94;
+}
+
+.image-record-hero {
+  display: grid;
+  grid-template-columns: minmax(260px, 420px) 1fr;
+  gap: 56px;
+  align-items: center;
+}
+
+.image-record-visual {
+  background: linear-gradient(180deg, #f7eeec 0%, #edd7d9 100%);
+  border: 1px solid var(--image-line);
+  border-radius: 38px;
+  min-height: 560px;
+  padding: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-record-portrait {
+  width: min(100%, 420px);
+  aspect-ratio: 4 / 5.3;
+  border-radius: 240px 240px 32px 32px;
+  background: linear-gradient(180deg, #e7d0d1 0%, #caa8ac 100%);
+  border: 1px solid rgba(138, 47, 66, .18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: inset 0 18px 60px rgba(255,255,255,.22);
+}
+
+.image-record-monogram {
+  width: 168px;
+  height: 168px;
+  border-radius: 50%;
+  border: 1px solid rgba(138, 47, 66, .26);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Georgia, serif;
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 700;
+  color: var(--image-accent);
+  background: rgba(255,255,255,.08);
+}
+
+.image-record-kicker {
+  color: var(--image-accent);
+  margin-bottom: 16px;
+}
+
+.image-record-title {
+  max-width: 11ch;
+  font-size: clamp(50px, 7vw, 100px);
+  line-height: .9;
+  letter-spacing: -.04em;
+  margin-bottom: 18px;
+}
+
+.image-record-lead {
+  max-width: 28ch;
+  margin-bottom: 28px;
+  color: #655f62;
+}
+
+.image-record-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.image-record-summary article {
+  background: #fff;
+  border: 1px solid var(--image-line);
+  border-radius: 22px;
+  padding: 22px 24px;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.image-record-summary small {
+  display: block;
+  margin-bottom: 10px;
+  color: #7f8086;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .08em;
+}
+
+.image-record-summary strong,
+.image-record-summary a {
+  font-size: clamp(22px, 2.2vw, 34px);
+  line-height: 1.03;
+  font-family: Georgia, serif;
+  font-weight: 700;
+  color: #111;
+  letter-spacing: -.03em;
+}
+
+.image-record-summary a {
+  color: var(--image-accent);
+  text-decoration: none;
+}
+
+.image-record-actions {
+  margin-top: 24px;
+}
+
+.image-record-actions .arrow-link {
+  color: var(--image-accent);
+}
+
+.image-record-modules {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 56px;
+}
+
+.image-record-module {
+  border: 1px solid var(--image-line);
+  border-radius: 30px;
+  background: #fff;
+  padding: 32px 34px;
+  min-height: 280px;
+}
+
+.image-record-module:nth-child(2) {
+  background: var(--image-shell);
+}
+
+.image-record-module .eyebrow {
+  color: var(--image-accent);
+  margin-bottom: 18px;
+}
+
+.image-record-module h2 {
+  font-family: Georgia, serif;
+  font-size: clamp(34px, 3.2vw, 54px);
+  line-height: .95;
+  margin: 0 0 18px;
+  letter-spacing: -.03em;
+}
+
+.image-record-module p {
+  margin: 0;
+  color: #645f63;
+  font-size: 18px;
+  line-height: 1.5;
+  max-width: 26ch;
+}
+
+@media (max-width: 1100px) {
+  .image-record-hero {
+    grid-template-columns: 1fr;
+    gap: 34px;
+  }
+
+  .image-record-visual {
+    min-height: 420px;
+  }
+
+  .image-record-title,
+  .image-record-lead {
+    max-width: none;
+  }
+
+  .image-record-modules {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .image-record-visual {
+    min-height: auto;
+    padding: 18px;
+  }
+
+  .image-record-portrait {
+    max-width: 360px;
+  }
+
+  .image-record-monogram {
+    width: 124px;
+    height: 124px;
+  }
+
+  .image-record-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .image-record-summary article {
+    min-height: auto;
+  }
+
+  .image-record-module {
+    min-height: auto;
+    padding: 28px 24px;
+  }
+}
