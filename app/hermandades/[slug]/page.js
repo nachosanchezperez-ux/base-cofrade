@@ -102,47 +102,55 @@ export default async function HermandadDetailPage({ params }) {
             </div>
           )}
         </div>
-        <aside className="brotherhood-summary-card essential-card">
-          <span className="eyebrow">Ficha esencial</span>
+        <aside className="brotherhood-summary-card key-data-card">
+          <div className="key-data-heading">
+            <span className="eyebrow">Datos clave</span>
+            {h.datosJornada && <span className="key-data-year">{h.datosJornada.ano}</span>}
+          </div>
 
-          <div className="essential-top">
-            <div className="essential-primary">
+          <div className="key-data-identity">
+            <div>
               <small>Tipo</small>
               <CofradeTypeBadges tipos={h.tipos} compact />
             </div>
-            <div className="essential-primary">
-              <small>Día</small>
+            <div>
+              <small>Día de salida</small>
               <strong>{h.diaSalida}</strong>
             </div>
           </div>
 
           {h.datosJornada && (
-            <div className="essential-stats">
+            <div className="key-data-metrics key-data-metrics-four">
               <div>
-                <small>Orden · {h.datosJornada.ano}</small>
                 <strong>{h.datosJornada.ordenJornada}</strong>
+                <span>Orden en la jornada</span>
               </div>
               <div>
-                <small>Nazarenos · {h.datosJornada.ano}</small>
+                <strong>{h.datosJornada.totalHermanos}</strong>
+                <span>Hermanos</span>
+              </div>
+              <div>
                 <strong>{h.datosJornada.totalNazarenos}</strong>
+                <span>Nazarenos</span>
               </div>
               <div>
-                <small>Carrera Oficial · {h.datosJornada.ano}</small>
                 <strong>{h.datosJornada.tiempoCarreraOficial}</strong>
+                <span>Carrera Oficial</span>
               </div>
             </div>
           )}
 
-          <div className="essential-location">
-            <div><small>Sede</small><strong>{h.sede}</strong></div>
-            <div><small>Localidad</small><strong>{h.localidad}</strong></div>
+          <div className="key-data-location">
+            <div>
+              <small>Sede</small>
+              <strong>{h.sede}</strong>
+            </div>
+            <div>
+              <small>Localidad</small>
+              <strong>{h.localidad}</strong>
+            </div>
           </div>
 
-          {h.datosJornada?.fuenteEstadisticas && (
-            <a className="essential-source" href={h.datosJornada.fuenteEstadisticas} target="_blank" rel="noreferrer">
-              Datos {h.datosJornada.ano} · Semana Santa Open Data ↗
-            </a>
-          )}
         </aside>
       </div></section>
 
@@ -325,6 +333,33 @@ export default async function HermandadDetailPage({ params }) {
         <SectionTitle eyebrow="¿Sabías que…?" title="Curiosidades" description="Datos singulares y divulgativos que solo se publicarán cuando estén documentados." />
         {h.curiosidades.map((c) => <div className="curiosity-card brotherhood-curiosity" key={c.id}><span className="curiosity-mark">?</span><div><span className="eyebrow">{c.categoria}</span><h3>{c.titulo}</h3><p>{c.texto}</p></div></div>)}
       </div></section>
+
+      {h.fuentesFicha?.length > 0 && (
+        <section className="section sources-section" id="fuentes">
+          <div className="shell">
+            <div className="sources-heading">
+              <div>
+                <span className="eyebrow">Documentación</span>
+                <h2>Fuentes</h2>
+              </div>
+              <p>Referencias utilizadas para documentar y actualizar los datos de esta ficha.</p>
+            </div>
+
+            <div className="sources-list">
+              {h.fuentesFicha.map((fuente) => (
+                <a className="source-row" href={fuente.url} target="_blank" rel="noreferrer" key={fuente.id}>
+                  <span className="source-capirote" aria-hidden="true"></span>
+                  <div className="source-copy">
+                    <strong>{fuente.nombre}</strong>
+                    <p>{fuente.descripcion}</p>
+                  </div>
+                  <span className="source-arrow">↗</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
     </main>
   );
 }
