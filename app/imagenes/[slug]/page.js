@@ -31,6 +31,10 @@ export default async function ImagenPage({ params }) {
         texto: 'Fecha asociada actualmente a la ficha de esta imagen.'
       }];
 
+  const otrasImagenes = hermandad.imagenes.filter(
+    (otraImagen) => otraImagen.slug !== imagen.slug
+  );
+
   return (
     <main
       className="brotherhood-page image-detail-v2"
@@ -54,7 +58,7 @@ export default async function ImagenPage({ params }) {
               <h1>{imagen.nombre}</h1>
               <p>
                 Imagen titular de {hermandad.nombrePopular}. Su ficha reúne
-                autoría, historia, restauraciones, acontecimientos y evolución.
+                autoría, historia y evolución.
               </p>
             </div>
 
@@ -73,7 +77,7 @@ export default async function ImagenPage({ params }) {
             <h2>La imagen</h2>
             <p>
               Cada titular mantiene una ficha propia conectada con su hermandad,
-              autoría, paso procesional, restauraciones y acontecimientos históricos.
+              autoría y acontecimientos históricos.
             </p>
           </div>
 
@@ -123,34 +127,41 @@ export default async function ImagenPage({ params }) {
         </div>
       </section>
 
-      <section className="section brotherhood-soft image-life-v2">
-        <div className="shell">
-          <span className="eyebrow">Historia material y devocional</span>
-          <h2 className="image-section-title-v2">Vida de la imagen</h2>
-
-          <div className="image-life-grid-v2">
-            <article>
-              <span className="eyebrow">Patrimonio</span>
-              <h3>Restauraciones</h3>
-              <p>
-                Intervenciones ordenadas por año, restaurador, descripción de los
-                trabajos y documentación relacionada.
-              </p>
-              <small>Pendiente de incorporar</small>
-            </article>
-
-            <article>
-              <span className="eyebrow">Acontecimientos</span>
-              <h3>Hitos destacados</h3>
-              <p>
-                Salidas extraordinarias, Vía Crucis, Pregón de las Glorias,
-                aniversarios y otros acontecimientos vinculados al titular.
-              </p>
-              <small>Pendiente de incorporar</small>
-            </article>
+      {imagen.restauraciones?.length > 0 && (
+        <section className="section brotherhood-soft">
+          <div className="shell">
+            <span className="eyebrow">Patrimonio</span>
+            <h2 className="image-section-title-v2">Restauraciones</h2>
+            <div className="image-record-list-v2">
+              {imagen.restauraciones.map((restauracion, index) => (
+                <article key={`${restauracion.fecha || index}-${index}`}>
+                  <strong>{restauracion.fecha}</strong>
+                  <h3>{restauracion.titulo}</h3>
+                  <p>{restauracion.texto}</p>
+                </article>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
+
+      {imagen.acontecimientos?.length > 0 && (
+        <section className="section">
+          <div className="shell">
+            <span className="eyebrow">Acontecimientos</span>
+            <h2 className="image-section-title-v2">Hitos destacados</h2>
+            <div className="image-record-list-v2">
+              {imagen.acontecimientos.map((acontecimiento, index) => (
+                <article key={`${acontecimiento.fecha || index}-${index}`}>
+                  <strong>{acontecimiento.fecha}</strong>
+                  <h3>{acontecimiento.titulo}</h3>
+                  <p>{acontecimiento.texto}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       <section className="section image-timeline-section-v2">
         <div className="shell">
@@ -168,6 +179,32 @@ export default async function ImagenPage({ params }) {
           </div>
         </div>
       </section>
+
+      {otrasImagenes.length > 0 && (
+        <section className="related-titulares-section">
+          <div className="shell">
+            <div className="related-titulares-head">
+              <span className="eyebrow">Relaciones</span>
+              <h2>Otras imágenes titulares</h2>
+            </div>
+
+            <div className="related-titulares-list">
+              {otrasImagenes.map((otraImagen) => (
+                <Link
+                  className="related-titular"
+                  href={`/imagenes/${otraImagen.slug}`}
+                  key={otraImagen.id}
+                >
+                  <span className="related-titular-avatar">
+                    {otraImagen.iniciales}
+                  </span>
+                  <strong>{otraImagen.nombre}</strong>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {imagen.fuentes?.length > 0 && (
         <section className="section sources-section" id="fuentes">
