@@ -80,7 +80,6 @@ export default async function HermandadDetailPage({ params }) {
 
           {h.participacionesConsejo?.length > 0 && (
             <div className="council-participations">
-              <span className="eyebrow">En la historia del Consejo</span>
               {h.participacionesConsejo.map((participacion) => (
                 <article className="council-participation-card" key={participacion.id}>
                   {participacion.imagen ? (
@@ -103,15 +102,48 @@ export default async function HermandadDetailPage({ params }) {
             </div>
           )}
         </div>
-        <aside className="brotherhood-summary-card"><span className="eyebrow">Ficha esencial</span><dl>
-          <div><dt>Tipo</dt><dd><CofradeTypeBadges tipos={h.tipos} compact /></dd></div>
-          <div><dt>Día</dt><dd>{h.diaSalida}</dd></div>
-          {h.datosJornada && <div><dt>Orden en la jornada · {h.datosJornada.ano}</dt><dd>{h.datosJornada.ordenJornada}</dd></div>}
-          {h.datosJornada && <div><dt>Nazarenos · {h.datosJornada.ano}</dt><dd>{h.datosJornada.totalNazarenos}</dd></div>}
-          {h.datosJornada && <div><dt>Tiempo en Carrera Oficial · {h.datosJornada.ano}</dt><dd>{h.datosJornada.tiempoCarreraOficial}</dd></div>}
-          <div><dt>Sede</dt><dd>{h.sede}</dd></div><div><dt>Localidad</dt><dd>{h.localidad}</dd></div>
-          {h.datosJornada?.fuenteEstadisticas && <div className="summary-source"><dt>Fuente estadísticas · {h.datosJornada.ano}</dt><dd><a href={h.datosJornada.fuenteEstadisticas} target="_blank" rel="noreferrer">Semana Santa Open Data ↗</a></dd></div>}
-        </dl></aside>
+        <aside className="brotherhood-summary-card essential-card">
+          <span className="eyebrow">Ficha esencial</span>
+
+          <div className="essential-top">
+            <div className="essential-primary">
+              <small>Tipo</small>
+              <CofradeTypeBadges tipos={h.tipos} compact />
+            </div>
+            <div className="essential-primary">
+              <small>Día</small>
+              <strong>{h.diaSalida}</strong>
+            </div>
+          </div>
+
+          {h.datosJornada && (
+            <div className="essential-stats">
+              <div>
+                <small>Orden · {h.datosJornada.ano}</small>
+                <strong>{h.datosJornada.ordenJornada}</strong>
+              </div>
+              <div>
+                <small>Nazarenos · {h.datosJornada.ano}</small>
+                <strong>{h.datosJornada.totalNazarenos}</strong>
+              </div>
+              <div>
+                <small>Carrera Oficial · {h.datosJornada.ano}</small>
+                <strong>{h.datosJornada.tiempoCarreraOficial}</strong>
+              </div>
+            </div>
+          )}
+
+          <div className="essential-location">
+            <div><small>Sede</small><strong>{h.sede}</strong></div>
+            <div><small>Localidad</small><strong>{h.localidad}</strong></div>
+          </div>
+
+          {h.datosJornada?.fuenteEstadisticas && (
+            <a className="essential-source" href={h.datosJornada.fuenteEstadisticas} target="_blank" rel="noreferrer">
+              Datos {h.datosJornada.ano} · Semana Santa Open Data ↗
+            </a>
+          )}
+        </aside>
       </div></section>
 
       <section className="section brotherhood-soft" id="titulares"><div className="shell">
@@ -240,7 +272,23 @@ export default async function HermandadDetailPage({ params }) {
       <section className="section brotherhood-soft" id="cultos"><div className="shell">
         <SectionTitle eyebrow="Vida de hermandad" title="Cultos" description="Calendario de los principales cultos y celebraciones de la corporación." />
         <div className="cult-calendar">{h.cultos.map((c) => (
-          <article key={c.id}><div className="cult-date"><strong>{c.fechaCorta || c.referencia}</strong><small>{c.tipo}</small></div><div><h3>{c.nombre}</h3><p>{c.referencia}</p></div></article>
+          <article key={c.id}>
+            <div className={`cult-date ${
+              (c.fechaCorta || c.referencia).length > 13
+                ? 'cult-date-long'
+                : (c.fechaCorta || c.referencia).length > 8
+                  ? 'cult-date-medium'
+                  : 'cult-date-short'
+            }`}>
+              <span className="cult-date-label">Fecha</span>
+              <strong>{c.fechaCorta || c.referencia}</strong>
+              <small>{c.tipo}</small>
+            </div>
+            <div className="cult-copy">
+              <h3>{c.nombre}</h3>
+              <p>{c.referencia}</p>
+            </div>
+          </article>
         ))}</div>
       </div></section>
 
