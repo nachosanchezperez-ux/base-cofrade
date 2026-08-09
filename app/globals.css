@@ -2004,3 +2004,221 @@ button, input { font: inherit; }
     height:19px;
   }
 }
+
+
+/* Base Cofrade v0.4.13 Â· Datos clave realmente responsive */
+
+.key-data-card{
+  width:100%;
+  min-width:0;
+  padding:28px;
+}
+
+/* Tipo y dÃ­a */
+.key-data-identity{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:18px;
+  align-items:end;
+}
+.key-data-identity>div{min-width:0}
+.key-data-identity strong{
+  font-size:clamp(17px,1.35vw,21px);
+  overflow-wrap:normal;
+  word-break:normal;
+}
+
+/* Cuatro mÃ©tricas en 2 x 2 */
+.key-data-metrics,
+.key-data-metrics-four{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+  padding:18px 0;
+  border-top:1px solid rgba(21,59,105,.09);
+  border-bottom:1px solid rgba(21,59,105,.09);
+}
+
+.key-data-metrics>div,
+.key-data-metrics-four>div,
+.key-data-metrics-four>div:nth-child(odd),
+.key-data-metrics-four>div:nth-child(even),
+.key-data-metrics-four>div:nth-child(n+3){
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  min-width:0;
+  min-height:108px;
+  padding:18px!important;
+  border:0!important;
+  border-radius:16px;
+  background:#f4f7fa;
+}
+
+.key-data-metrics strong,
+.key-data-metrics-four strong{
+  display:block;
+  max-width:100%;
+  color:var(--bc-blue);
+  font-family:Georgia,serif;
+  font-size:clamp(27px,2.4vw,36px);
+  line-height:1;
+  letter-spacing:-.025em;
+  white-space:nowrap;
+  word-break:keep-all;
+  overflow-wrap:normal;
+}
+
+.key-data-metrics span,
+.key-data-metrics-four span{
+  display:block;
+  margin-top:9px;
+  color:#758291;
+  font-size:9px;
+  font-weight:900;
+  line-height:1.25;
+  text-transform:uppercase;
+  letter-spacing:.075em;
+}
+
+/* Sede y localidad */
+.key-data-location{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:22px;
+  padding-top:22px;
+}
+.key-data-location>div{min-width:0}
+
+/* PortÃ¡til */
+@media(max-width:1100px){
+  .key-data-card{padding:25px}
+  .key-data-metrics strong,
+  .key-data-metrics-four strong{
+    font-size:clamp(25px,3vw,32px);
+  }
+}
+
+/* Tablet y mÃ³vil */
+@media(max-width:700px){
+  .key-data-card{
+    padding:22px;
+    border-radius:20px;
+  }
+  .key-data-heading{margin-bottom:22px}
+  .key-data-identity{
+    grid-template-columns:1fr;
+    gap:17px;
+  }
+  .key-data-metrics,
+  .key-data-metrics-four{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:10px;
+    padding:17px 0;
+  }
+  .key-data-metrics>div,
+  .key-data-metrics-four>div,
+  .key-data-metrics-four>div:nth-child(odd),
+  .key-data-metrics-four>div:nth-child(even),
+  .key-data-metrics-four>div:nth-child(n+3){
+    min-height:100px;
+    padding:15px!important;
+  }
+  .key-data-metrics strong,
+  .key-data-metrics-four strong{
+    font-size:clamp(24px,7vw,31px);
+  }
+  .key-data-location{
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+  }
+}
+
+/* MÃ³viles estrechos */
+@media(max-width:430px){
+  .key-data-card{padding:18px}
+
+  .key-data-metrics,
+  .key-data-metrics-four{gap:8px}
+
+  .key-data-metrics>div,
+  .key-data-metrics-four>div,
+  .key-data-metrics-four>div:nth-child(odd),
+  .key-data-metrics-four>div:nth-child(even),
+  .key-data-metrics-four>div:nth-child(n+3){
+    min-height:94px;
+    padding:13px!important;
+  }
+
+  .key-data-metrics strong,
+  .key-data-metrics-four strong{
+    font-size:clamp(22px,6.6vw,28px);
+  }
+
+  .key-data-metrics span,
+  .key-data-metrics-four span{
+    font-size:8px;
+  }
+
+  .key-data-location{
+    grid-template-columns:1fr;
+  }
+}
+
+/* Solo mÃ³viles excepcionalmente estrechos */
+@media(max-width:330px){
+  .key-data-metrics,
+  .key-data-metrics-four{
+    grid-template-columns:1fr;
+  }
+  .key-data-metrics strong,
+  .key-data-metrics-four strong{
+    font-size:28px;
+  }
+}
+
+
+
+/* Base Cofrade v0.4.14 Â· alineaciÃ³n de Tipo y DÃ­a de salida */
+
+.key-data-identity{
+  align-items:start;
+}
+
+.key-data-identity>div{
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+  min-width:0;
+}
+
+.key-data-identity small{
+  min-height:14px;
+  margin-bottom:10px;
+}
+
+/* Badge y dÃ­a comienzan exactamente en la misma lÃ­nea visual */
+.key-data-identity .cofrade-type-badges,
+.key-data-identity>div>strong{
+  margin-top:0;
+}
+
+.key-data-identity>div>strong{
+  display:flex;
+  align-items:center;
+  min-height:39px;
+  line-height:1.15;
+}
+
+/* El contenedor del tipo conserva la misma altura visual que el dÃ­a */
+.key-data-identity .cofrade-type-badges{
+  min-height:39px;
+  display:flex;
+  align-items:center;
+}
+
+@media(max-width:700px){
+  .key-data-identity{
+    align-items:start;
+  }
+}
