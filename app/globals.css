@@ -289,7 +289,7 @@ button, input { font: inherit; }
 .brotherhood-page .cofrade-type-icon{background:var(--bc-red)}
 .brotherhood-page .cofrade-type-badge{border-color:rgba(21,59,105,.16)}
 
-/* Base Cofrade v0.4.2 Ã‚Â· recuperaciÃƒÂ³n de mÃƒÂ³dulos + ritmo de fondos */
+/* Base Cofrade v0.4.2 Ãƒâ€šÃ‚Â· recuperaciÃƒÆ’Ã‚Â³n de mÃƒÆ’Ã‚Â³dulos + ritmo de fondos */
 .brotherhood-white{background:#fff}
 .brotherhood-soft{background:#f3f6f9}
 
@@ -389,7 +389,7 @@ button, input { font: inherit; }
   font-weight:800;
 }
 
-/* PATRIMONIO MUSICAL Ã¢â‚¬â€ bloque destacado azul */
+/* PATRIMONIO MUSICAL ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â bloque destacado azul */
 .music-section{
   background:linear-gradient(130deg,#0c2847,var(--bc-blue));
   color:#fff;
@@ -437,7 +437,7 @@ button, input { font: inherit; }
   text-align:right;
 }
 
-/* ACOMPAÃƒâ€˜AMIENTOS HISTÃƒâ€œRICOS */
+/* ACOMPAÃƒÆ’Ã¢â‚¬ËœAMIENTOS HISTÃƒÆ’Ã¢â‚¬Å“RICOS */
 .music-history-grid{
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
@@ -502,7 +502,7 @@ button, input { font: inherit; }
 }
 .news-card p{color:var(--ink-soft)}
 
-/* SeparaciÃƒÂ³n visual entre grandes mÃƒÂ³dulos */
+/* SeparaciÃƒÆ’Ã‚Â³n visual entre grandes mÃƒÆ’Ã‚Â³dulos */
 .brotherhood-page > .section{
   border-top:1px solid rgba(21,59,105,.045);
 }
@@ -532,7 +532,7 @@ button, input { font: inherit; }
 }
 
 
-/* Base Cofrade v0.4.3 Ã‚Â· salidas agrupadas + recorrido anual */
+/* Base Cofrade v0.4.3 Ãƒâ€šÃ‚Â· salidas agrupadas + recorrido anual */
 .outing-grid{
   grid-template-columns:1fr 1fr;
 }
@@ -673,7 +673,7 @@ button, input { font: inherit; }
   font-size:13px;
 }
 .route-path span:not(:last-child)::after{
-  content:"Ã¢â€ â€™";
+  content:"ÃƒÂ¢Ã¢â‚¬ Ã¢â‚¬â„¢";
   color:#a7b1ba;
 }
 .route-path .route-official{
@@ -712,7 +712,7 @@ button, input { font: inherit; }
 }
 
 
-/* Base Cofrade v0.4.4 Ã‚Â· menÃƒÂº mÃƒÂ¡s visual + cabecera de ficha de paso equilibrada */
+/* Base Cofrade v0.4.4 Ãƒâ€šÃ‚Â· menÃƒÆ’Ã‚Âº mÃƒÆ’Ã‚Â¡s visual + cabecera de ficha de paso equilibrada */
 
 
 
@@ -803,7 +803,7 @@ button, input { font: inherit; }
 
 
 
-/* Base Cofrade v0.4.5 Ã‚Â· navegaciÃƒÂ³n compacta + VÃƒÂ­a Crucis */
+/* Base Cofrade v0.4.5 Ãƒâ€šÃ‚Â· navegaciÃƒÆ’Ã‚Â³n compacta + VÃƒÆ’Ã‚Â­a Crucis */
 
 
 
@@ -928,7 +928,7 @@ button, input { font: inherit; }
 }
 
 
-/* Base Cofrade v0.4.6 Ã‚Â· participaciÃƒÂ³n del Consejo integrada en la presentaciÃƒÂ³n */
+/* Base Cofrade v0.4.6 Ãƒâ€šÃ‚Â· participaciÃƒÆ’Ã‚Â³n del Consejo integrada en la presentaciÃƒÆ’Ã‚Â³n */
 .council-participations{
   margin-top:34px;
   padding-top:26px;
@@ -1035,9 +1035,9 @@ button, input { font: inherit; }
 /* ===== v0.4.7.css ===== */
 
 
-/* Base Cofrade v0.4.7 Ã‚Â· ficha esencial, pasos y fechas de cultos */
+/* Base Cofrade v0.4.7 Ãƒâ€šÃ‚Â· ficha esencial, pasos y fechas de cultos */
 
-/* FICHA ESENCIAL: menos lÃƒÂ­neas, mÃƒÂ¡s jerarquÃƒÂ­a */
+/* FICHA ESENCIAL: menos lÃƒÆ’Ã‚Â­neas, mÃƒÆ’Ã‚Â¡s jerarquÃƒÆ’Ã‚Â­a */
 .essential-card{
   padding:28px;
 }
@@ -1114,7 +1114,7 @@ button, input { font: inherit; }
 }
 .essential-source:hover{text-decoration:underline}
 
-/* Elimina visualmente la antigua sensaciÃƒÂ³n de listado rayado */
+/* Elimina visualmente la antigua sensaciÃƒÆ’Ã‚Â³n de listado rayado */
 .essential-card dl,
 .essential-card dl>div{
   border:0!important;
@@ -1174,9 +1174,9 @@ button, input { font: inherit; }
 /* ===== v0.4.8.css ===== */
 
 
-/* Base Cofrade v0.4.8 Ã‚Â· ajuste final de presentaciÃƒÂ³n y cultos */
+/* Base Cofrade v0.4.8 Ãƒâ€šÃ‚Â· ajuste final de presentaciÃƒÆ’Ã‚Â³n y cultos */
 
-/* El bloque del Consejo entra directamente como contenido de presentaciÃƒÂ³n */
+/* El bloque del Consejo entra directamente como contenido de presentaciÃƒÆ’Ã‚Â³n */
 .council-participations{
   margin-top:34px;
   padding-top:0;
@@ -1191,7 +1191,7 @@ button, input { font: inherit; }
   line-height:1.5;
 }
 
-/* CULTOS: tÃƒÂ­tulos largos mejor contenidos dentro de las tarjetas */
+/* CULTOS: tÃƒÆ’Ã‚Â­tulos largos mejor contenidos dentro de las tarjetas */
 
 
 
@@ -1209,16 +1209,16 @@ button, input { font: inherit; }
 /* ===== v0.4.9.css ===== */
 
 
-/* Base Cofrade v0.4.9 Ã‚Â· correcciÃƒÂ³n definitiva de fechas en Cultos */
+/* Base Cofrade v0.4.9 Ãƒâ€šÃ‚Â· correcciÃƒÆ’Ã‚Â³n definitiva de fechas en Cultos */
 
-/* MÃƒÂ¡s ancho ÃƒÂºtil para que las fechas no se corten */
+/* MÃƒÆ’Ã‚Â¡s ancho ÃƒÆ’Ã‚Âºtil para que las fechas no se corten */
 
 
 /* El texto nunca debe escapar del bloque azul */
 
 
 
-/* TamaÃƒÂ±o adaptativo segÃƒÂºn la longitud del texto */
+/* TamaÃƒÆ’Ã‚Â±o adaptativo segÃƒÆ’Ã‚Âºn la longitud del texto */
 
 
 
@@ -1233,7 +1233,7 @@ button, input { font: inherit; }
 
 
 
-/* Base Cofrade v0.4.10 Ã‚Â· rediseÃƒÂ±o adaptativo de Datos clave */
+/* Base Cofrade v0.4.10 Ãƒâ€šÃ‚Â· rediseÃƒÆ’Ã‚Â±o adaptativo de Datos clave */
 
 
 
@@ -1272,9 +1272,9 @@ button, input { font: inherit; }
 
 
 
-/* Base Cofrade v0.4.11 Ã‚Â· Hermanos + Fuentes al final */
+/* Base Cofrade v0.4.11 Ãƒâ€šÃ‚Â· Hermanos + Fuentes al final */
 
-/* DATOS CLAVE: cuatro mÃƒÂ©tricas en escritorio */
+/* DATOS CLAVE: cuatro mÃƒÆ’Ã‚Â©tricas en escritorio */
 
 
 
@@ -1312,34 +1312,34 @@ button, input { font: inherit; }
 
 
 
-/* Base Cofrade v0.4.12 Ã‚Â· fuentes con capirotes + datos clave mÃƒÂ¡s limpios */
+/* Base Cofrade v0.4.12 Ãƒâ€šÃ‚Â· fuentes con capirotes + datos clave mÃƒÆ’Ã‚Â¡s limpios */
 
-/* DATOS CLAVE: sin borde cromÃƒÂ¡tico superior para una lectura mÃƒÂ¡s limpia */
-
-
-
-/* FUENTES: sustituimos la numeraciÃƒÂ³n por un pequeÃƒÂ±o capirote */
+/* DATOS CLAVE: sin borde cromÃƒÆ’Ã‚Â¡tico superior para una lectura mÃƒÆ’Ã‚Â¡s limpia */
 
 
 
+/* FUENTES: sustituimos la numeraciÃƒÆ’Ã‚Â³n por un pequeÃƒÆ’Ã‚Â±o capirote */
 
 
-/* neutraliza nÃƒÂºmeros antiguos si existiesen */
+
+
+
+/* neutraliza nÃƒÆ’Ã‚Âºmeros antiguos si existiesen */
 .source-number{display:none!important;}
 
 
 
 
-/* Base Cofrade v0.4.13 Ã‚Â· Datos clave realmente responsive */
+/* Base Cofrade v0.4.13 Ãƒâ€šÃ‚Â· Datos clave realmente responsive */
 
 
 
-/* Tipo y dÃƒÂ­a */
+/* Tipo y dÃƒÆ’Ã‚Â­a */
 
 
 
 
-/* Cuatro mÃƒÂ©tricas en 2 x 2 */
+/* Cuatro mÃƒÆ’Ã‚Â©tricas en 2 x 2 */
 
 
 
@@ -1352,63 +1352,63 @@ button, input { font: inherit; }
 
 
 
-/* PortÃƒÂ¡til */
+/* PortÃƒÆ’Ã‚Â¡til */
 
 
-/* Tablet y mÃƒÂ³vil */
+/* Tablet y mÃƒÆ’Ã‚Â³vil */
 
 
-/* MÃƒÂ³viles estrechos */
+/* MÃƒÆ’Ã‚Â³viles estrechos */
 
 
-/* Solo mÃƒÂ³viles excepcionalmente estrechos */
-
-
-
-
-/* Base Cofrade v0.4.14 Ã‚Â· alineaciÃƒÂ³n de Tipo y DÃƒÂ­a de salida */
+/* Solo mÃƒÆ’Ã‚Â³viles excepcionalmente estrechos */
 
 
 
 
-
-
-
-/* Badge y dÃƒÂ­a comienzan exactamente en la misma lÃƒÂ­nea visual */
-
-
-
-
-/* El contenedor del tipo conserva la misma altura visual que el dÃƒÂ­a */
+/* Base Cofrade v0.4.14 Ãƒâ€šÃ‚Â· alineaciÃƒÆ’Ã‚Â³n de Tipo y DÃƒÆ’Ã‚Â­a de salida */
 
 
 
 
 
-/* Base Cofrade v0.4.15 Ã‚Â· ajuste de tamaÃƒÂ±o en Datos clave */
-
-/* Reducimos el tamaÃƒÂ±o general de las cifras para que no se desborden */
 
 
-/* Damos algo mÃƒÂ¡s de aire interior a los bloques */
+/* Badge y dÃƒÆ’Ã‚Â­a comienzan exactamente en la misma lÃƒÆ’Ã‚Â­nea visual */
 
 
-/* Ajuste intermedio para portÃƒÂ¡til/tablet */
 
 
-/* MÃƒÂ³vil */
-
-
-/* MÃƒÂ³viles estrechos */
-
-
-/* Base Cofrade v0.4.16 Ã‚Â· tratamiento especÃƒÂ­fico de Carrera Oficial */
+/* El contenedor del tipo conserva la misma altura visual que el dÃƒÆ’Ã‚Â­a */
 
 
 
 
 
-/* La segunda lÃƒÂ­nea es ligeramente menor para reforzar la lectura de duraciÃƒÂ³n */
+/* Base Cofrade v0.4.15 Ãƒâ€šÃ‚Â· ajuste de tamaÃƒÆ’Ã‚Â±o en Datos clave */
+
+/* Reducimos el tamaÃƒÆ’Ã‚Â±o general de las cifras para que no se desborden */
+
+
+/* Damos algo mÃƒÆ’Ã‚Â¡s de aire interior a los bloques */
+
+
+/* Ajuste intermedio para portÃƒÆ’Ã‚Â¡til/tablet */
+
+
+/* MÃƒÆ’Ã‚Â³vil */
+
+
+/* MÃƒÆ’Ã‚Â³viles estrechos */
+
+
+/* Base Cofrade v0.4.16 Ãƒâ€šÃ‚Â· tratamiento especÃƒÆ’Ã‚Â­fico de Carrera Oficial */
+
+
+
+
+
+/* La segunda lÃƒÆ’Ã‚Â­nea es ligeramente menor para reforzar la lectura de duraciÃƒÆ’Ã‚Â³n */
 
 
 /* En los cuatro bloques, centramos mejor visualmente el dato */
@@ -1421,13 +1421,13 @@ button, input { font: inherit; }
 
 /* =========================================================
    Base Cofrade v0.4.18
-   Ficha de ImÃƒÂ¡genes + criterios globales de breadcrumb/fuentes
+   Ficha de ImÃƒÆ’Ã‚Â¡genes + criterios globales de breadcrumb/fuentes
    ========================================================= */
 
-/* CRITERIO GLOBAL Ã‚Â· breadcrumb */
+/* CRITERIO GLOBAL Ãƒâ€šÃ‚Â· breadcrumb */
 
 
-/* FICHA DE IMAGEN Ã‚Â· hero */
+/* FICHA DE IMAGEN Ãƒâ€šÃ‚Â· hero */
 .image-detail-hero-v2{
   background:
     radial-gradient(circle at 78% 18%,rgba(255,255,255,.10),transparent 22%),
@@ -1492,7 +1492,7 @@ button, input { font: inherit; }
   font-size:10px;
 }
 
-/* FICHA DE IMAGEN Ã‚Â· de un vistazo */
+/* FICHA DE IMAGEN Ãƒâ€šÃ‚Â· de un vistazo */
 .image-overview-grid-v2{
   display:grid;
   grid-template-columns:minmax(0,1.02fr) minmax(430px,.98fr);
@@ -1553,7 +1553,7 @@ button, input { font: inherit; }
   color:var(--bc-red);
 }
 
-/* CoronaciÃƒÂ³n Ã‚Â· dos fechas con el mismo peso visual */
+/* CoronaciÃƒÆ’Ã‚Â³n Ãƒâ€šÃ‚Â· dos fechas con el mismo peso visual */
 .image-coronation-v2{
   grid-column:1/-1;
   min-height:auto!important;
@@ -1647,7 +1647,7 @@ button, input { font: inherit; }
   font-weight:900;
 }
 
-/* CronologÃƒÂ­a de la imagen */
+/* CronologÃƒÆ’Ã‚Â­a de la imagen */
 .image-timeline-v2{
   max-width:960px;
   margin-top:30px;
@@ -1693,7 +1693,7 @@ button, input { font: inherit; }
   line-height:1.5;
 }
 
-/* FUENTES Ã‚Â· criterio ÃƒÂºnico para Hermandad, Pasos e ImÃƒÂ¡genes */
+/* FUENTES Ãƒâ€šÃ‚Â· criterio ÃƒÆ’Ã‚Âºnico para Hermandad, Pasos e ImÃƒÆ’Ã‚Â¡genes */
 
 
 
@@ -1769,10 +1769,10 @@ button, input { font: inherit; }
 
 /* =========================================================
    Base Cofrade v0.4.19
-   Relaciones compactas entre imÃƒÂ¡genes titulares
+   Relaciones compactas entre imÃƒÆ’Ã‚Â¡genes titulares
    ========================================================= */
 
-/* Los mÃƒÂ³dulos sin registros reales no se muestran desde page.js.
+/* Los mÃƒÆ’Ã‚Â³dulos sin registros reales no se muestran desde page.js.
    Estas reglas preparan los listados para cuando existan datos. */
 .image-record-list-v2{
   max-width:960px;
@@ -1804,7 +1804,7 @@ button, input { font: inherit; }
   line-height:1.5;
 }
 
-/* NavegaciÃƒÂ³n compacta entre titulares */
+/* NavegaciÃƒÆ’Ã‚Â³n compacta entre titulares */
 .related-titulares-section{
   padding:42px 0 46px;
   border-top:1px solid #dfe5ea;
@@ -1883,11 +1883,11 @@ button, input { font: inherit; }
 }
 
 /* =========================================================
-   Base Cofrade v0.5.2 Â· componentes consolidados
-   Breadcrumb Â· navegaciÃ³n Â· Datos clave Â· Cultos Â· Fuentes
+   Base Cofrade v0.5.2 Ã‚Â· componentes consolidados
+   Breadcrumb Ã‚Â· navegaciÃƒÂ³n Ã‚Â· Datos clave Ã‚Â· Cultos Ã‚Â· Fuentes
    ========================================================= */
 
-/* BREADCRUMB CONTEXTUAL Â· el Ãºltimo nivel siempre es la pÃ¡gina actual */
+/* BREADCRUMB CONTEXTUAL Ã‚Â· el ÃƒÂºltimo nivel siempre es la pÃƒÂ¡gina actual */
 .brotherhood-breadcrumb{
   display:flex;
   align-items:center;
@@ -2104,10 +2104,11 @@ button, input { font: inherit; }
   flex-direction:column;
   justify-content:center;
   min-width:0;
-  min-height:102px;
-  padding:14px;
+  min-height:96px;
+  padding:13px;
   border-radius:16px;
   background:#f4f7fa;
+  overflow:hidden;
 }
 .key-data-metrics strong,
 .key-data-metrics-four strong{
@@ -2115,8 +2116,8 @@ button, input { font: inherit; }
   max-width:100%;
   color:var(--bc-blue);
   font-family:Georgia,'Times New Roman',serif;
-  font-size:clamp(22px,1.9vw,30px);
-  line-height:.98;
+  font-size:clamp(20px,1.45vw,24px);
+  line-height:1;
   letter-spacing:-.03em;
   white-space:nowrap;
   word-break:keep-all;
@@ -2134,10 +2135,21 @@ button, input { font: inherit; }
   letter-spacing:.075em;
 }
 .key-data-time .career-time{
-  font-size:clamp(19px,1.65vw,25px);
+  font-size:clamp(17px,1.25vw,19px);
   line-height:1;
   white-space:nowrap;
   letter-spacing:-.025em;
+}
+.key-data-time .career-time>span{
+  display:inline;
+  margin:0;
+  color:inherit;
+  font:inherit;
+  letter-spacing:inherit;
+  text-transform:none;
+}
+.key-data-time .career-time>span+span::before{
+  content:' ';
 }
 .key-data-location{
   display:grid;
@@ -2160,7 +2172,7 @@ button, input { font: inherit; }
 }
 .cult-calendar article{
   display:grid;
-  grid-template-columns:136px minmax(0,1fr);
+  grid-template-columns:146px minmax(0,1fr);
   gap:20px;
   min-width:0;
   min-height:154px;
@@ -2177,7 +2189,7 @@ button, input { font: inherit; }
   display:flex;
   flex-direction:column;
   justify-content:center;
-  padding:22px 14px 16px;
+  padding:20px 14px 16px;
   border-radius:15px;
   background:radial-gradient(circle at 85% 12%,rgba(255,255,255,.12),transparent 22%),linear-gradient(155deg,#0d2949,var(--bc-blue));
   color:#fff;
@@ -2187,9 +2199,9 @@ button, input { font: inherit; }
   position:absolute;
   top:13px;
   right:13px;
-  width:18px;
-  height:17px;
-  border:1.4px solid rgba(255,255,255,.48);
+  width:17px;
+  height:16px;
+  border:1.3px solid rgba(255,255,255,.48);
   border-radius:4px;
 }
 .cult-calendar-mark::before{
@@ -2214,15 +2226,15 @@ button, input { font: inherit; }
 .cult-date strong{
   display:block;
   max-width:100%;
-  padding-right:18px;
+  padding-right:0;
   color:#fff;
   font-family:Georgia,'Times New Roman',serif;
   letter-spacing:-.025em;
   text-wrap:balance;
 }
-.cult-date-short strong{font-size:24px;line-height:1}
-.cult-date-medium strong{font-size:18px;line-height:1.04}
-.cult-date-long strong{font-size:15px;line-height:1.08}
+.cult-date-short strong{font-size:21px;line-height:1}
+.cult-date-medium strong{font-size:16px;line-height:1.04}
+.cult-date-long strong{font-size:14px;line-height:1.08}
 .cult-date small{
   display:block;
   margin-top:8px;
@@ -2256,7 +2268,7 @@ button, input { font: inherit; }
   letter-spacing:.07em;
 }
 
-/* FUENTES Â· componente transversal para cualquier entidad */
+/* FUENTES Ã‚Â· componente transversal para cualquier entidad */
 .sources-section{
   border-top:1px solid #dfe5ea;
 }
@@ -2310,6 +2322,27 @@ button, input { font: inherit; }
 }
 .source-capirote::before{left:3px}
 .source-capirote::after{right:3px}
+
+/* PENITENCIA Â· reutiliza el mismo capirote visual que Fuentes */
+.cofrade-type-icon.is-source-capirote{
+  width:16px;
+  height:18px;
+  flex:0 0 16px;
+  border-radius:0;
+  background:transparent!important;
+  color:inherit;
+}
+.cofrade-type-capirote.source-capirote{
+  width:13px;
+  height:16px;
+  flex:0 0 13px;
+}
+.cofrade-type-capirote.source-capirote::before,
+.cofrade-type-capirote.source-capirote::after{
+  top:9px;
+}
+.cofrade-type-capirote.source-capirote::before{left:3.5px}
+.cofrade-type-capirote.source-capirote::after{right:3.5px}
 .source-copy{min-width:0}
 .source-copy strong{
   color:var(--bc-blue);
@@ -2320,10 +2353,10 @@ button, input { font: inherit; }
 .source-row:hover .source-copy strong{text-decoration:underline}
 
 @media(max-width:1100px){
-  .cult-calendar article{grid-template-columns:130px minmax(0,1fr)}
-  .cult-date-short strong{font-size:22px}
-  .cult-date-medium strong{font-size:17px}
-  .cult-date-long strong{font-size:14px}
+  .cult-calendar article{grid-template-columns:140px minmax(0,1fr)}
+  .cult-date-short strong{font-size:20px}
+  .cult-date-medium strong{font-size:15px}
+  .cult-date-long strong{font-size:13px}
   .cult-copy h3{font-size:17px}
 }
 
@@ -2332,7 +2365,7 @@ button, input { font: inherit; }
   .brotherhood-nav-label{display:none}
   .brotherhood-nav-list{width:100%}
   .cult-calendar{grid-template-columns:1fr}
-  .cult-calendar article{grid-template-columns:136px minmax(0,1fr)}
+  .cult-calendar article{grid-template-columns:146px minmax(0,1fr)}
 }
 
 @media(max-width:700px){
@@ -2340,8 +2373,8 @@ button, input { font: inherit; }
   .key-data-identity{grid-template-columns:1fr;gap:17px}
   .key-data-metrics,.key-data-metrics-four{gap:10px;padding:17px 0}
   .key-data-metrics>div,.key-data-metrics-four>div{min-height:92px;padding:12px}
-  .key-data-metrics strong,.key-data-metrics-four strong{font-size:clamp(20px,5.3vw,24px)}
-  .key-data-time .career-time{font-size:clamp(18px,4.8vw,22px)}
+  .key-data-metrics strong,.key-data-metrics-four strong{font-size:clamp(18px,4.7vw,22px)}
+  .key-data-time .career-time{font-size:clamp(16px,4.1vw,19px)}
   .key-data-location{grid-template-columns:1fr 1fr;gap:16px}
 }
 
@@ -2366,8 +2399,8 @@ button, input { font: inherit; }
   .key-data-card{padding:18px}
   .key-data-metrics,.key-data-metrics-four{gap:8px}
   .key-data-metrics>div,.key-data-metrics-four>div{min-height:90px;padding:12px}
-  .key-data-metrics strong,.key-data-metrics-four strong{font-size:clamp(18px,6vw,22px)}
-  .key-data-time .career-time{font-size:clamp(16px,5.2vw,19px)}
+  .key-data-metrics strong,.key-data-metrics-four strong{font-size:clamp(17px,5.4vw,20px)}
+  .key-data-time .career-time{font-size:clamp(15px,4.7vw,18px)}
   .key-data-metrics span,.key-data-metrics-four span{font-size:8px}
   .key-data-location{grid-template-columns:1fr}
 }
