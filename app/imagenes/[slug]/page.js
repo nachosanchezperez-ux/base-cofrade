@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getImagenBySlug, hermandades } from '@/lib/data';
+import SourcesBlock from '@/components/SourcesBlock';
 
 export function generateStaticParams() {
   return hermandades.flatMap((hermandad) =>
@@ -208,35 +209,7 @@ export default async function ImagenPage({ params }) {
         </section>
       )}
 
-      {imagen.fuentes?.length > 0 && (
-        <section className="section sources-section" id="fuentes">
-          <div className="shell">
-            <div className="sources-heading">
-              <div>
-                <span className="eyebrow">Documentación</span>
-                <h2>Fuentes</h2>
-              </div>
-            </div>
-
-            <div className="sources-list">
-              {imagen.fuentes.map((fuente) => (
-                <a
-                  className="source-row"
-                  href={fuente.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  key={fuente.id}
-                >
-                  <span className="source-capirote" aria-hidden="true" />
-                  <div className="source-copy">
-                    <strong>{fuente.nombre}</strong>
-                  </div>
-                </a>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
+      <SourcesBlock sources={imagen.fuentes} />
     </main>
   );
 }
