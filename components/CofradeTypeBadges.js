@@ -3,12 +3,10 @@ export function CofradeIcon({ tipo, size = 22, className = '' }) {
 
   if (key.includes('penitencia')) {
     return (
-      <svg className={className} width={size} height={size} viewBox="0 0 64 64" fill="none" aria-hidden="true">
-        <path d="M32 5 22 31h20L32 5Z" stroke="currentColor" strokeWidth="3.2" strokeLinejoin="round"/>
-        <path d="M27 31v7l-9 19h28l-9-19v-7" stroke="currentColor" strokeWidth="3.2" strokeLinejoin="round"/>
-        <path d="M23 40h18" stroke="currentColor" strokeWidth="3.2" strokeLinecap="round"/>
-        <path d="M49 27v30M46 30h6" stroke="currentColor" strokeWidth="3" strokeLinecap="round"/>
-      </svg>
+      <span
+        className={`source-capirote cofrade-type-capirote ${className}`.trim()}
+        aria-hidden="true"
+      />
     );
   }
 
@@ -40,12 +38,18 @@ export function CofradeIcon({ tipo, size = 22, className = '' }) {
 export default function CofradeTypeBadges({ tipos = [], compact = false }) {
   return (
     <div className={`cofrade-type-badges ${compact ? 'is-compact' : ''}`}>
-      {tipos.map((tipo) => (
-        <span className="cofrade-type-badge" key={tipo}>
-          <span className="cofrade-type-icon"><CofradeIcon tipo={tipo} size={compact ? 17 : 21} /></span>
-          <span>{tipo}</span>
-        </span>
-      ))}
+      {tipos.map((tipo) => {
+        const isPenitencia = (tipo || '').toLowerCase().includes('penitencia');
+
+        return (
+          <span className="cofrade-type-badge" key={tipo}>
+            <span className={`cofrade-type-icon ${isPenitencia ? 'is-source-capirote' : ''}`}>
+              <CofradeIcon tipo={tipo} size={compact ? 17 : 21} />
+            </span>
+            <span>{tipo}</span>
+          </span>
+        );
+      })}
     </div>
   );
 }
