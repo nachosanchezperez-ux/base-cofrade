@@ -280,25 +280,49 @@ export default async function HermandadDetailPage({ params }) {
 
       <section className="section brotherhood-soft" id="cultos"><div className="shell">
         <SectionTitle eyebrow="Vida de hermandad" title="Cultos" description="Calendario de los principales cultos y celebraciones de la corporación." />
-        <div className="cult-calendar">{h.cultos.map((c) => (
-          <article key={c.id}>
-            <div className={`cult-date ${
-              (c.fechaCorta || c.referencia).length > 13
-                ? 'cult-date-long'
-                : (c.fechaCorta || c.referencia).length > 8
-                  ? 'cult-date-medium'
-                  : 'cult-date-short'
-            }`}>
-              <span className="cult-calendar-mark" aria-hidden="true" />
-              <strong>{c.fechaCorta || c.referencia}</strong>
-              {c.fechaDetalle && <small>{c.fechaDetalle}</small>}
-            </div>
-            <div className="cult-copy">
-              <h3>{c.nombre}</h3>
-              <p>{c.tipo}</p>
-            </div>
-          </article>
-        ))}</div>
+        <div className="bc-cult-grid">{h.cultos.map((c) => {
+          const fecha = c.fechaCorta || c.referencia;
+          const fechaExacta = /^(\d{1,2})\s+([A-ZÁÉÍÓÚÑ]+)$/i.exec(fecha || '');
+          const esRelativa = Boolean(c.fechaDetalle);
+
+          return (
+            <article className="bc-cult-item" key={c.id}>
+              <div className={`bc-cult-date ${
+                fechaExacta
+                  ? 'bc-cult-date--exact'
+                  : esRelativa
+                    ? 'bc-cult-date--relative'
+                    : 'bc-cult-date--period'
+              }`}>
+                <span className="bc-cult-bindings" aria-hidden="true"><i /><i /></span>
+
+                {fechaExacta ? (
+                  <>
+                    <strong className="bc-cult-day">{fechaExacta[1]}</strong>
+                    <span className="bc-cult-month">
+                      {fechaExacta[2] === 'MAR' ? 'MARZO' : fechaExacta[2] === 'AGO' ? 'AGOSTO' : fechaExacta[2]}
+                    </span>
+                  </>
+                ) : esRelativa ? (
+                  <>
+                    <strong className="bc-cult-main">{fecha}</strong>
+                    <span className="bc-cult-sub">{c.fechaDetalle}</span>
+                  </>
+                ) : (
+                  <>
+                    <strong className="bc-cult-main">{fecha}</strong>
+                    <span className="bc-cult-period-mark" aria-hidden="true" />
+                  </>
+                )}
+              </div>
+
+              <div className="bc-cult-copy">
+                <h3>{c.nombre}</h3>
+                <p>{c.tipo}</p>
+              </div>
+            </article>
+          );
+        })}</div>
       </div></section>
 
       {h.estrenos?.length > 0 && <section className="section brotherhood-white" id="estrenos"><div className="shell">
