@@ -2,6 +2,7 @@ import Link from 'next/link';
 import CofradeTypeBadges from '@/components/CofradeTypeBadges';
 import { notFound } from 'next/navigation';
 import SectionTitle from '@/components/SectionTitle';
+import SourcesBlock from '@/components/SourcesBlock';
 import { getHermandadBySlug, hermandades } from '@/lib/data';
 
 export function generateStaticParams() {
@@ -359,29 +360,7 @@ export default async function HermandadDetailPage({ params }) {
         {h.curiosidades.map((c) => <div className="curiosity-card brotherhood-curiosity" key={c.id}><span className="curiosity-mark">?</span><div><span className="eyebrow">{c.categoria}</span><h3>{c.titulo}</h3><p>{c.texto}</p></div></div>)}
       </div></section>
 
-      {h.fuentesFicha?.length > 0 && (
-        <section className="section sources-section" id="fuentes">
-          <div className="shell">
-            <div className="sources-heading">
-              <div>
-                <span className="eyebrow">Documentación</span>
-                <h2>Fuentes</h2>
-              </div>
-            </div>
-
-            <div className="sources-list">
-              {h.fuentesFicha.map((fuente) => (
-                <a className="source-row" href={fuente.url} target="_blank" rel="noreferrer" key={fuente.id}>
-                  <span className="source-capirote" aria-hidden="true"></span>
-                  <div className="source-copy">
-                    <strong>{fuente.nombre}</strong>
-                  </div>
-                </a>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
+      <SourcesBlock sources={h.fuentesFicha} />
     </main>
   );
 }
