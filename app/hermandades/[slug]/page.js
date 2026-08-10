@@ -282,16 +282,25 @@ export default async function HermandadDetailPage({ params }) {
         <SectionTitle eyebrow="Vida de hermandad" title="Cultos" description="Calendario de los principales cultos y celebraciones de la corporación." />
         <div className="cult-calendar">{h.cultos.map((c) => (
           <article key={c.id}>
-            <div className={`cult-date ${
-              (c.fechaCorta || c.referencia).length > 13
-                ? 'cult-date-long'
-                : (c.fechaCorta || c.referencia).length > 8
-                  ? 'cult-date-medium'
-                  : 'cult-date-short'
-            }`}>
-              <span className="cult-calendar-mark" aria-hidden="true" />
-              <strong>{c.fechaCorta || c.referencia}</strong>
-              {c.fechaDetalle && <small>{c.fechaDetalle}</small>}
+            <div className={`cult-date cult-date-${c.fechaTipo || 'periodo'}`}>
+              <span className="cult-date-bindings" aria-hidden="true"><i /><i /></span>
+
+              {c.fechaTipo === 'exacta' ? (
+                <>
+                  <strong className="cult-date-day">{c.fechaDia}</strong>
+                  <span className="cult-date-month">{c.fechaMes}</span>
+                </>
+              ) : c.fechaTipo === 'relativa' ? (
+                <>
+                  <strong className="cult-date-main">{c.fechaCorta || c.referencia}</strong>
+                  {c.fechaDetalle && <small>{c.fechaDetalle}</small>}
+                </>
+              ) : (
+                <>
+                  <strong className="cult-date-main">{c.fechaCorta || c.referencia}</strong>
+                  <span className="cult-date-period-mark" aria-hidden="true" />
+                </>
+              )}
             </div>
             <div className="cult-copy">
               <h3>{c.nombre}</h3>
