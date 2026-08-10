@@ -50,7 +50,9 @@ export default async function ImagenPage({ params }) {
             <span className="breadcrumb-accent" />
             <Link href="/hermandades">Hermandades</Link>
             <span className="breadcrumb-arrow">→</span>
-            <strong>{hermandad.nombrePopular}</strong>
+            <Link href={`/hermandades/${hermandad.slug}`}>{hermandad.nombrePopular}</Link>
+            <span className="breadcrumb-arrow">→</span>
+            <strong>{imagen.nombre}</strong>
           </div>
 
           <div className="image-detail-hero-grid-v2">
