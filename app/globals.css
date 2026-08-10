@@ -2164,109 +2164,7 @@ button, input { font: inherit; }
   line-height:1.18;
 }
 
-/* CULTOS */
-.cult-calendar{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:16px;
-}
-.cult-calendar article{
-  display:grid;
-  grid-template-columns:146px minmax(0,1fr);
-  gap:20px;
-  min-width:0;
-  min-height:154px;
-  padding:17px;
-  border:1px solid #dfe5ea;
-  border-radius:18px;
-  background:#fff;
-}
-.cult-date{
-  position:relative;
-  min-width:0;
-  overflow:hidden;
-  align-self:stretch;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  padding:20px 14px 16px;
-  border-radius:15px;
-  background:radial-gradient(circle at 85% 12%,rgba(255,255,255,.12),transparent 22%),linear-gradient(155deg,#0d2949,var(--bc-blue));
-  color:#fff;
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.055);
-}
-.cult-calendar-mark{
-  position:absolute;
-  top:13px;
-  right:13px;
-  width:17px;
-  height:16px;
-  border:1.3px solid rgba(255,255,255,.48);
-  border-radius:4px;
-}
-.cult-calendar-mark::before{
-  content:'';
-  position:absolute;
-  left:3px;
-  right:3px;
-  top:5px;
-  border-top:1.2px solid rgba(255,255,255,.45);
-}
-.cult-calendar-mark::after{
-  content:'';
-  position:absolute;
-  width:3px;
-  height:3px;
-  left:4px;
-  top:-3px;
-  border-radius:2px;
-  background:rgba(255,255,255,.72);
-  box-shadow:7px 0 0 rgba(255,255,255,.72);
-}
-.cult-date strong{
-  display:block;
-  max-width:100%;
-  padding-right:0;
-  color:#fff;
-  font-family:Georgia,'Times New Roman',serif;
-  letter-spacing:-.025em;
-  text-wrap:balance;
-}
-.cult-date-short strong{font-size:21px;line-height:1}
-.cult-date-medium strong{font-size:16px;line-height:1.04}
-.cult-date-long strong{font-size:14px;line-height:1.08}
-.cult-date small{
-  display:block;
-  margin-top:8px;
-  color:#c9d8e6;
-  font-size:8px;
-  line-height:1.25;
-  font-weight:900;
-  letter-spacing:.055em;
-  text-transform:uppercase;
-}
-.cult-copy{
-  min-width:0;
-  align-self:center;
-  padding-right:4px;
-}
-.cult-copy h3{
-  margin:0;
-  font-family:Georgia,'Times New Roman',serif;
-  font-size:clamp(17px,1.35vw,20px);
-  line-height:1.08;
-  letter-spacing:-.012em;
-  text-wrap:pretty;
-}
-.cult-copy p{
-  margin:8px 0 0;
-  color:var(--bc-red);
-  font-size:10px;
-  line-height:1.3;
-  font-weight:900;
-  text-transform:uppercase;
-  letter-spacing:.07em;
-}
+/* CULTOS Â· componente antiguo retirado en v0.5.3 */
 
 /* FUENTES Ãƒâ€šÃ‚Â· componente transversal para cualquier entidad */
 .sources-section{
@@ -2353,19 +2251,12 @@ button, input { font: inherit; }
 .source-row:hover .source-copy strong{text-decoration:underline}
 
 @media(max-width:1100px){
-  .cult-calendar article{grid-template-columns:140px minmax(0,1fr)}
-  .cult-date-short strong{font-size:20px}
-  .cult-date-medium strong{font-size:15px}
-  .cult-date-long strong{font-size:13px}
-  .cult-copy h3{font-size:17px}
 }
 
 @media(max-width:900px){
   .brotherhood-nav-shell{gap:0}
   .brotherhood-nav-label{display:none}
   .brotherhood-nav-list{width:100%}
-  .cult-calendar{grid-template-columns:1fr}
-  .cult-calendar article{grid-template-columns:146px minmax(0,1fr)}
 }
 
 @media(max-width:700px){
@@ -2389,10 +2280,6 @@ button, input { font: inherit; }
   .brotherhood-page:not(:has(section:target)) .brotherhood-nav-list a[href="#resumen"]::after,
   .brotherhood-page:has(section:target) .brotherhood-nav-list a::after{left:12px;right:12px}
   .brotherhood-page section[id]{scroll-margin-top:138px}
-  .cult-calendar article{grid-template-columns:1fr;min-height:0}
-  .cult-date{min-height:auto;padding:20px 18px 18px}
-  .cult-date-short strong,.cult-date-medium strong,.cult-date-long strong{font-size:20px}
-  .cult-copy h3{font-size:19px}
 }
 
 @media(max-width:430px){
