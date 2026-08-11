@@ -1,19 +1,21 @@
-import HermandadSearch from '@/components/HermandadSearch';
+import HermandadesDirectory from '@/components/HermandadesDirectory';
 import { hermandades } from '@/lib/data';
 
-export const metadata = { title: 'Hermandades' };
+export const metadata = {
+  title: 'Hermandades de Sevilla',
+  description: 'Hermandades de Sevilla capital en Hilo Cofrade, organizadas por día de salida y conectadas con sus imágenes, pasos y patrimonio',
+};
 
 export default function HermandadesPage() {
   return (
     <section className="section page-top">
       <div className="shell">
-        <span className="eyebrow">Explorar</span>
-        <h1 className="page-title">Hermandades</h1>
+        <span className="eyebrow">Sevilla capital</span>
+        <h1 className="page-title">Hermandades de Sevilla</h1>
         <p className="page-lead">
-          Busca por nombre, localidad o día de salida. En esta versión inicial solo está cargada
-          la hermandad piloto.
+          Busca por nombre, sede o día de salida y entra directamente en la ficha de cada hermandad
         </p>
-        <HermandadSearch hermandades={hermandades} />
+        <HermandadesDirectory hermandades={hermandades} />
       </div>
     </section>
   );
