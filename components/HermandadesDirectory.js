@@ -71,16 +71,21 @@ export default function HermandadesDirectory({ hermandades }) {
       <div className={styles.dayBlock}>
         <span className={styles.dayLabel}>Día de salida</span>
         <div className={styles.days}>
-          {JORNADAS.map((day) => (
-            <button
-              type="button"
-              key={day}
-              className={jornada === day ? styles.activeDay : ''}
-              onClick={() => setJornada(day)}
-            >
-              {day}
-            </button>
-          ))}
+          {JORNADAS.map((day) => {
+            const isActive = jornada === day;
+            return (
+              <button
+                type="button"
+                key={day}
+                className={`${styles.dayButton} ${isActive ? styles.activeDay : ''}`}
+                onClick={() => setJornada(day)}
+                aria-pressed={isActive}
+              >
+                {isActive ? <span className={styles.activeDot} aria-hidden="true" /> : null}
+                <span className={styles.dayText}>{day}</span>
+              </button>
+            );
+          })}
         </div>
       </div>
 
