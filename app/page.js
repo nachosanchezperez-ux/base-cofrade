@@ -1,95 +1,225 @@
 import Link from 'next/link';
+import HiloSearch from '@/components/HiloSearch';
 import { hermandades } from '@/lib/data';
+import styles from './home.module.css';
+
+export const dynamic = 'force-dynamic';
+
+function getTodayLabel() {
+  const formatter = new Intl.DateTimeFormat('es-ES', {
+    timeZone: 'Europe/Madrid',
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
+  const parts = formatter.formatToParts(new Date());
+  const value = (type) => parts.find((part) => part.type === type)?.value || '';
+  const weekday = value('weekday');
+  const day = value('day');
+  const month = value('month');
+  const year = value('year');
+  return `${weekday.charAt(0).toUpperCase()}${weekday.slice(1)} · ${day} de ${month} de ${year}`;
+}
+
+function buildSearchItems() {
+  return hermandades.flatMap((hermandad) => [
+    {
+      type: 'Hermandad',
+      title: hermandad.nombrePopular,
+      subtitle: `${hermandad.localidad} · ${hermandad.diaSalida}`,
+      href: `/hermandades/${hermandad.slug}`,
+    },
+    ...hermandad.imagenes.map((imagen) => ({
+      type: 'Imagen',
+      title: imagen.nombre,
+      subtitle: `${imagen.autor} · ${imagen.fecha}`,
+      href: `/imagenes/${imagen.slug}`,
+    })),
+    ...hermandad.pasos.map((paso) => ({
+      type: 'Paso',
+      title: paso.nombre,
+      subtitle: `${paso.tipo} · ${hermandad.nombrePopular}`,
+      href: `/pasos/${paso.slug}`,
+    })),
+  ]);
+}
 
 export default function HomePage() {
-  const featured = hermandades[0];
+  const today = getTodayLabel();
+  const searchItems = buildSearchItems();
 
   return (
     <>
-      <section className="hero">
-        <div className="shell hero-grid">
-          <div className="hero-copy">
-            <span className="eyebrow">Enciclopedia digital cofrade</span>
-            <h1>Todo está relacionado.</h1>
-            <p>
-              Hermandades, titulares, pasos, patrimonio, música, cultos y acontecimientos
-              conectados en una única base de conocimiento interactiva.
-            </p>
-            <div className="hero-actions">
-              <Link className="button button-primary" href="/hermandades">
-                Explorar hermandades
+      <div className={styles.home}>
+        <section className={styles.hero} id="inicio">
+          <div className="shell">
+            <div className={styles.heroCopy}>
+              <span className={styles.kicker}>Sevilla y su provincia</span>
+              <h1>Hilo Cofrade, <span>todo en las cofradías está relacionado</span></h1>
+              <p>
+                Consulta, descubre y sigue las conexiones entre hermandades, imágenes,
+                bandas, marchas, autores y patrimonio
+              </p>
+            </div>
+
+            <aside className={styles.searchBox} id="tiradelhilo">
+              <div className={styles.searchInner}>
+                <span className={styles.searchLabel}>Tira del hilo</span>
+                <h2>¿Qué quieres descubrir?</h2>
+                <p>Busca una entidad y empieza a recorrer las relaciones ya documentadas en Hilo Cofrade</p>
+                <HiloSearch items={searchItems} />
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section className={`${styles.section} ${styles.today}`} id="hoy">
+          <div className="shell">
+            <div className={styles.todayHeader}>
+              <span className={styles.todayDate}>{today}</span>
+              <h2 className={styles.todayTitle}>Hoy en Hilo Cofrade</h2>
+              <p className={styles.todaySub}>Una selección diaria para descubrir, consultar y seguir tirando del hilo</p>
+            </div>
+
+            <div className={styles.todayGrid}>
+              <article className={styles.dailyCard}>
+                <span className={styles.dailyIcon}>EF</span>
+                <div>
+                  <span className={styles.dailyType}>Efeméride</span>
+                  <h3>Una fecha para entrar en la historia cofrade</h3>
+                  <p>Este módulo se alimentará de acontecimientos documentados y de sus protagonistas relacionados</p>
+                  <span className={styles.dailyLink}>Contenido diario en preparación</span>
+                </div>
+              </article>
+
+              <article className={styles.dailyCard}>
+                <span className={styles.dailyIcon}>DC</span>
+                <div>
+                  <span className={styles.dailyType}>Dato Cofrade</span>
+                  <h3>2.292 nazarenos en la estación de penitencia del Baratillo en 2026</h3>
+                  <p>Un dato puede llevarte a la hermandad, su jornada, sus imágenes y sus pasos</p>
+                  <Link className={styles.dailyLink} href="/hermandades/el-baratillo">Descubrir →</Link>
+                </div>
+              </article>
+
+              <article className={styles.dailyCard}>
+                <span className={styles.dailyIcon}>CU</span>
+                <div>
+                  <span className={styles.dailyType}>Curiosidad</span>
+                  <h3>San José es titular del Baratillo aunque no forma parte de sus pasos procesionales</h3>
+                  <p>Una relación que permite distinguir entre titularidad y presencia procesional</p>
+                  <Link className={styles.dailyLink} href="/imagenes/patriarca-bendito-senor-san-jose">Seguir el hilo →</Link>
+                </div>
+              </article>
+            </div>
+
+            <article className={styles.musicCard}>
+              <div className={styles.musicHead}>
+                <div className={styles.musicTop}>
+                  <span className={styles.dailyType}>Marcha del día</span>
+                  <span className={styles.musicPill}>Escuchar</span>
+                </div>
+                <h3>“Plegaria a la Virgen de la Asunción”</h3>
+                <p>Manuel López Farfán · 1926 · Virgen de la Asunción de Cantillana</p>
+              </div>
+              <div className={styles.videoWrap}>
+                <iframe
+                  src="https://www.youtube-nocookie.com/embed/nOcty-P2C0E?rel=0"
+                  title="Plegaria a la Virgen de la Asunción"
+                  loading="lazy"
+                  allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
+              <div className={styles.musicInfo}>
+                <div className={styles.musicMeta}>
+                  <span>Manuel López Farfán</span>
+                  <span>1926</span>
+                  <span>Cantillana</span>
+                </div>
+                <span className={styles.musicLink}>Ficha musical próximamente</span>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section className={`${styles.section} ${styles.extraSection}`} id="extraordinarias">
+          <div className="shell">
+            <div className={styles.extraBox}>
+              <div className={styles.extraHead}>
+                <span className={styles.eyebrow}>Próximamente</span>
+                <h2>Salidas extraordinarias</h2>
+                <p>Solo aparecerán aquí las próximas citas que estén documentadas</p>
+              </div>
+              <div className={styles.extraEmpty}>
+                <strong>No hay salidas extraordinarias publicadas en esta versión beta</strong>
+                <span>Cuando incorporemos una próxima salida, este bloque mostrará directamente su fecha, motivo y relaciones principales</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className={styles.section} id="enciclopedia">
+          <div className="shell">
+            <div className={styles.sectionHead}>
+              <span className={styles.eyebrow}>Enciclopedia</span>
+              <h2 className={styles.sectionTitle}>Entra por donde quieras</h2>
+              <p className={styles.sectionDescription}>Acceso compacto a las principales entidades de Hilo Cofrade</p>
+            </div>
+
+            <div className={styles.exploreList}>
+              <Link className={styles.exploreRow} href="/hermandades">
+                <span className={styles.exploreIcon}>H</span>
+                <span className={styles.exploreCopy}><strong>Hermandades</strong><span>Historia · cultos · salidas · relaciones</span></span>
+                <span className={styles.exploreArrow}>→</span>
               </Link>
-              <a className="button button-ghost" href="#prototipo">
-                Ver el prototipo
-              </a>
+              <div className={`${styles.exploreRow} ${styles.disabled}`}>
+                <span className={styles.exploreIcon}>I</span>
+                <span className={styles.exploreCopy}><strong>Imágenes</strong><span>Autoría · cronología · restauraciones</span></span>
+                <span className={styles.status}>Próximamente</span>
+              </div>
+              <div className={`${styles.exploreRow} ${styles.disabled}`}>
+                <span className={styles.exploreIcon}>P</span>
+                <span className={styles.exploreCopy}><strong>Pasos</strong><span>Patrimonio · autores · acompañamiento</span></span>
+                <span className={styles.status}>Próximamente</span>
+              </div>
+              <div className={`${styles.exploreRow} ${styles.disabled}`}>
+                <span className={styles.exploreIcon}>B</span>
+                <span className={styles.exploreCopy}><strong>Bandas</strong><span>Historia · acompañamientos · relaciones</span></span>
+                <span className={styles.status}>Próximamente</span>
+              </div>
+              <div className={`${styles.exploreRow} ${styles.disabled}`}>
+                <span className={styles.exploreIcon}>A</span>
+                <span className={styles.exploreCopy}><strong>Autores</strong><span>Obras · intervenciones · relaciones</span></span>
+                <span className={styles.status}>Próximamente</span>
+              </div>
+              <div className={`${styles.exploreRow} ${styles.disabled}`}>
+                <span className={styles.exploreIcon}>M</span>
+                <span className={styles.exploreCopy}><strong>Marchas</strong><span>Autor · dedicatoria · fecha · relaciones</span></span>
+                <span className={styles.status}>Próximamente</span>
+              </div>
             </div>
-          </div>
-          <div className="hero-panel" aria-hidden="true">
-            <div className="orbit orbit-one" />
-            <div className="orbit orbit-two" />
-            <div className="network-node node-main">BC</div>
-            <div className="network-node node-a">H</div>
-            <div className="network-node node-b">I</div>
-            <div className="network-node node-c">P</div>
-            <div className="network-node node-d">M</div>
-          </div>
-        </div>
-      </section>
 
-      <section className="section stats-strip">
-        <div className="shell stat-grid">
-          <div><strong>1</strong><span>Hermandad piloto</span></div>
-          <div><strong>4</strong><span>Imágenes relacionadas</span></div>
-          <div><strong>2</strong><span>Pasos procesionales</span></div>
-          <div><strong>v0.1</strong><span>Prototipo funcional</span></div>
-        </div>
-      </section>
-
-      <section className="section" id="prototipo">
-        <div className="shell split-heading">
-          <div>
-            <span className="eyebrow">Primera ficha</span>
-            <h2>Empezamos por El Baratillo.</h2>
+            <aside className={styles.collab} id="colabora">
+              <span className={styles.eyebrow}>Participa</span>
+              <h3>Ayúdanos a completar el hilo</h3>
+              <p>Las aportaciones pasarán por revisión y documentación antes de incorporarse a Hilo Cofrade</p>
+              <div className={styles.flow}>
+                <span>1 · Envías</span><span>2 · Revisamos</span><span>3 · Documentamos</span><span>4 · Publicamos</span>
+              </div>
+              <Link className={styles.collabButton} href="/colabora">Proponer información</Link>
+            </aside>
           </div>
-          <p>
-            Esta primera versión valida la navegación y la jerarquía de contenidos antes de
-            conectar la aplicación a Supabase.
-          </p>
-        </div>
+        </section>
+      </div>
 
-        <div className="shell featured-card">
-          <div className="featured-symbol">EB</div>
-          <div className="featured-main">
-            <div className="tag-row">
-              {featured.tipos.map((tipo) => <span className="pill" key={tipo}>{tipo}</span>)}
-              <span className="pill pill-muted">{featured.localidad}</span>
-            </div>
-            <h3>{featured.nombrePopular}</h3>
-            <p>{featured.resumen}</p>
-            <div className="featured-facts">
-              <span><small>Sede</small>{featured.sede}</span>
-              <span><small>Fundación</small>{featured.fundacion}</span>
-              <span><small>Salida</small>{featured.diaSalida}</span>
-            </div>
-          </div>
-          <Link className="arrow-link" href={`/hermandades/${featured.slug}`}>
-            Abrir ficha <span>→</span>
-          </Link>
+      <footer className={styles.footer}>
+        <div className={`shell ${styles.footerInner}`}>
+          <div className={styles.footerBrand}><span />Hilo Cofrade</div>
+          <small>Proyecto creado por Nacho Sánchez · @desdeelarenal</small>
         </div>
-      </section>
-
-      <section className="section section-soft">
-        <div className="shell">
-          <span className="eyebrow">La idea</span>
-          <h2 className="wide-title">Una ficha es solo el comienzo.</h2>
-          <div className="concept-grid">
-            <article><span>01</span><h3>Hermandad</h3><p>La puerta de entrada a su identidad, historia y actividad.</p></article>
-            <article><span>02</span><h3>Imágenes</h3><p>Cada titular tendrá biografía, restauraciones y acontecimientos propios.</p></article>
-            <article><span>03</span><h3>Pasos</h3><p>Patrimonio, autores, reformas y composición conectados entre sí.</p></article>
-            <article><span>04</span><h3>Relaciones</h3><p>Autores, bandas y obras podrán recorrerse transversalmente.</p></article>
-          </div>
-        </div>
-      </section>
+      </footer>
     </>
   );
 }
