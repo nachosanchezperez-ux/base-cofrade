@@ -527,7 +527,31 @@
   font-weight: 700;
 }
 
-.savedNotice { color: #176a4a; background: #e7f6ef; }
+.savedNotice {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 15px 18px;
+  border: 1px solid #a8dec6;
+  color: #125c40;
+  background: #e1f7ec;
+  box-shadow: 0 8px 22px rgb(23 106 74 / 10%);
+  font-size: 13px;
+}
+
+.savedNotice::before {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  background: #17855d;
+  content: '✓';
+  font-size: 13px;
+  font-weight: 900;
+}
 .readOnlyNotice { color: #7c5b10; background: #fff3d5; }
 
 .sectionTabs {
