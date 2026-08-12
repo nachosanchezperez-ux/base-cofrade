@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import CofradeTypeBadges from '@/components/CofradeTypeBadges';
 import { notFound } from 'next/navigation';
 import SectionTitle from '@/components/SectionTitle';
@@ -47,7 +48,21 @@ export default async function HermandadDetailPage({ params }) {
             </div>
             <div className="brotherhood-visual">
               <div className="hero-photo-placeholder"><span>{h.imagenes[0]?.nombre || 'Fotografía principal'}</span><small>Titular de la hermandad</small></div>
-              <div className="crest-placeholder brotherhood-crest"><span>{h.escudoIniciales || h.nombrePopular.slice(0, 2).toUpperCase()}</span><small>Escudo</small></div>
+              {h.escudoPath ? (
+                <div className="crest-placeholder brotherhood-crest brotherhood-crest-image-wrap">
+                  <Image
+                    className="brotherhood-crest-image"
+                    src={h.escudoPath}
+                    alt={`Escudo de ${h.nombrePopular}`}
+                    width={160}
+                    height={190}
+                    sizes="160px"
+                    priority
+                  />
+                </div>
+              ) : (
+                <div className="crest-placeholder brotherhood-crest"><span>{h.escudoIniciales || h.nombrePopular.slice(0, 2).toUpperCase()}</span><small>Escudo</small></div>
+              )}
             </div>
           </div>
           <div className="brotherhood-facts">

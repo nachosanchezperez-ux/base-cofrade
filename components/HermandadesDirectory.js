@@ -1,11 +1,11 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useMemo, useState } from 'react';
 import styles from './HermandadesDirectory.module.css';
 
-const JORNADAS = [
-  'Todas',
+const JORNADAS_BASE = [
   'Viernes de Dolores',
   'Sábado de Pasión',
   'Domingo de Ramos',
@@ -19,8 +19,9 @@ const JORNADAS = [
   'Domingo de Resurrección',
 ];
 
-function crestFor(slug) {
-  if (slug === 'el-baratillo') return '/escudos/el-baratillo.svg';
+function crestFor(hermandad) {
+  if (hermandad.escudoPath) return hermandad.escudoPath;
+  if (hermandad.slug === 'el-baratillo') return '/escudos/el-baratillo.svg';
   return null;
 }
 
@@ -28,14 +29,15 @@ export default function HermandadesDirectory({ hermandades }) {
   const [query, setQuery] = useState('');
   const [jornada, setJornada] = useState('Todas');
 
-  const sevilla = useMemo(
-    () => hermandades.filter((item) => item.localidad?.toLowerCase() === 'sevilla'),
-    [hermandades]
-  );
+  const jornadas = useMemo(() => {
+    const extras = [...new Set(hermandades.map((item) => item.diaSalida).filter(Boolean))]
+      .filter((day) => !JORNADAS_BASE.includes(day));
+    return ['Todas', ...JORNADAS_BASE, ...extras];
+  }, [hermandades]);
 
   const filtered = useMemo(() => {
     const value = query.trim().toLowerCase();
-    return sevilla.filter((item) => {
+    return hermandades.filter((item) => {
       const matchesDay = jornada === 'Todas' || item.diaSalida === jornada;
       const haystack = [
         item.nombrePopular,
@@ -51,7 +53,7 @@ export default function HermandadesDirectory({ hermandades }) {
       const matchesQuery = !value || haystack.includes(value);
       return matchesDay && matchesQuery;
     });
-  }, [query, jornada, sevilla]);
+  }, [query, jornada, hermandades]);
 
   return (
     <div className={styles.directory}>
@@ -71,7 +73,7 @@ export default function HermandadesDirectory({ hermandades }) {
       <div className={styles.dayBlock}>
         <span className={styles.dayLabel}>Día de salida</span>
         <div className={styles.days}>
-          {JORNADAS.map((day) => {
+          {jornadas.map((day) => {
             const isActive = jornada === day;
             return (
               <button
@@ -92,7 +94,7 @@ export default function HermandadesDirectory({ hermandades }) {
       <div className={styles.resultHead}>
         <div>
           <strong>{filtered.length} {filtered.length === 1 ? 'hermandad' : 'hermandades'}</strong>
-          <span>Sevilla capital</span>
+          <span>Sevilla capital y provincia</span>
         </div>
         {jornada !== 'Todas' ? (
           <button type="button" onClick={() => setJornada('Todas')}>Ver todas</button>
@@ -102,7 +104,7 @@ export default function HermandadesDirectory({ hermandades }) {
       {filtered.length ? (
         <div className={styles.list}>
           {filtered.map((hermandad) => {
-            const crest = crestFor(hermandad.slug);
+            const crest = crestFor(hermandad);
             return (
               <Link
                 href={`/hermandades/${hermandad.slug}`}
@@ -111,7 +113,14 @@ export default function HermandadesDirectory({ hermandades }) {
               >
                 <span className={styles.crestWrap}>
                   {crest ? (
-                    <img src={crest} alt={`Escudo de ${hermandad.nombrePopular}`} />
+                    <Image
+                      className={styles.crestImage}
+                      src={crest}
+                      alt={`Escudo de ${hermandad.nombrePopular}`}
+                      width={72}
+                      height={92}
+                      sizes="72px"
+                    />
                   ) : (
                     <span className={styles.monogram}>{hermandad.nombrePopular.slice(0, 2).toUpperCase()}</span>
                   )}
@@ -123,7 +132,7 @@ export default function HermandadesDirectory({ hermandades }) {
                     <span className={styles.day}>{hermandad.diaSalida}</span>
                   </span>
                   <strong className={styles.name}>{hermandad.nombrePopular}</strong>
-                  <span className={styles.meta}>{hermandad.sede}</span>
+                  <span className={styles.meta}>{[hermandad.sede, hermandad.localidad].filter(Boolean).join(' · ')}</span>
                 </span>
 
                 <span className={styles.arrow} aria-hidden="true">→</span>
