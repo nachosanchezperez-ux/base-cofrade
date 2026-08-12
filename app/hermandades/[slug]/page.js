@@ -3,7 +3,10 @@ import CofradeTypeBadges from '@/components/CofradeTypeBadges';
 import { notFound } from 'next/navigation';
 import SectionTitle from '@/components/SectionTitle';
 import SourcesBlock from '@/components/SourcesBlock';
-import { getHermandadBySlug, hermandades } from '@/lib/data';
+import { hermandades } from '@/lib/data';
+import { getHermandadPageBySlug } from '@/lib/supabase/brotherhoods';
+
+export const dynamic = 'force-dynamic';
 
 export function generateStaticParams() {
   return hermandades.map((item) => ({ slug: item.slug }));
@@ -11,7 +14,7 @@ export function generateStaticParams() {
 
 export default async function HermandadDetailPage({ params }) {
   const { slug } = await params;
-  const h = getHermandadBySlug(slug);
+  const h = await getHermandadPageBySlug(slug);
   if (!h) notFound();
   const imagenMap = new Map(h.imagenes.map((imagen) => [imagen.id, imagen]));
 
