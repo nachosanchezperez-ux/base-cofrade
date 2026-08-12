@@ -48,6 +48,8 @@ export default function HiloHeader() {
 
   const hrefFor = (id) => (pathname === '/' ? `#${id}` : `/#${id}`);
 
+  if (pathname.startsWith('/panel')) return null;
+
   return (
     <>
       <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
