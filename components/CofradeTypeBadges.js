@@ -1,55 +1,72 @@
+import Image from 'next/image';
+
+const TYPE_CONFIG = [
+  {
+    key: 'penitencia',
+    label: 'Penitencia',
+    icon: '/iconos/hermandades/penitencia.png',
+  },
+  {
+    key: 'gloria',
+    label: 'Gloria',
+    icon: '/iconos/hermandades/gloria.png',
+  },
+  {
+    key: 'sacramental',
+    label: 'Sacramental',
+    icon: '/iconos/hermandades/sacramental.png',
+  },
+];
+
+function typeConfig(tipo) {
+  const value = String(tipo || '').trim();
+  const key = value.toLowerCase();
+  return TYPE_CONFIG.find((item) => key.includes(item.key)) || {
+    key,
+    label: value,
+    icon: null,
+  };
+}
+
 export function CofradeIcon({ tipo, size = 22, className = '' }) {
-  const key = (tipo || '').toLowerCase();
+  const config = typeConfig(tipo);
+  if (!config.icon) return null;
 
-  if (key.includes('penitencia')) {
-    return (
-      <span
-        className={`source-capirote cofrade-type-capirote ${className}`.trim()}
-        aria-hidden="true"
-      />
-    );
-  }
-
-  if (key.includes('gloria')) {
-    return (
-      <svg className={className} width={size} height={size} viewBox="0 0 64 64" fill="none" aria-hidden="true">
-        <path d="M13 51 22 14l10 25 10-25 9 37" stroke="currentColor" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M17 42h30M32 10v38" stroke="currentColor" strokeWidth="3" strokeLinecap="round"/>
-        <path d="m26 17 6-7 6 7" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M21 54h22" stroke="currentColor" strokeWidth="3.2" strokeLinecap="round"/>
-      </svg>
-    );
-  }
-
-  if (key.includes('sacramental')) {
-    return (
-      <svg className={className} width={size} height={size} viewBox="0 0 64 64" fill="none" aria-hidden="true">
-        <circle cx="32" cy="27" r="12" stroke="currentColor" strokeWidth="3.2"/>
-        <circle cx="32" cy="27" r="5" stroke="currentColor" strokeWidth="2.5"/>
-        <path d="M32 4v8M32 42v9M9 27h8M47 27h8M16 11l6 6M42 37l6 6M48 11l-6 6M22 37l-6 6" stroke="currentColor" strokeWidth="3" strokeLinecap="round"/>
-        <path d="M26 51h12l5 7H21l5-7Z" stroke="currentColor" strokeWidth="3.2" strokeLinejoin="round"/>
-      </svg>
-    );
-  }
-
-  return null;
+  return (
+    <Image
+      className={className}
+      src={config.icon}
+      alt=""
+      width={size}
+      height={size}
+      sizes={`${size}px`}
+    />
+  );
 }
 
 export default function CofradeTypeBadges({ tipos = [], compact = false }) {
-  return (
-    <div className={`cofrade-type-badges ${compact ? 'is-compact' : ''}`}>
-      {tipos.map((tipo) => {
-        const isPenitencia = (tipo || '').toLowerCase().includes('penitencia');
+  const normalizedTypes = [...new Map(
+    tipos
+      .filter(Boolean)
+      .map(typeConfig)
+      .map((item) => [item.key, item])
+  ).values()].slice(0, 3);
 
-        return (
-          <span className="cofrade-type-badge" key={tipo}>
-            <span className={`cofrade-type-icon ${isPenitencia ? 'is-source-capirote' : ''}`}>
-              <CofradeIcon tipo={tipo} size={compact ? 17 : 21} />
+  return (
+    <div
+      className={`cofrade-type-badges ${compact ? 'is-compact' : ''}`}
+      data-count={normalizedTypes.length}
+    >
+      {normalizedTypes.map((tipo) => (
+        <span className="cofrade-type-badge" key={tipo.key}>
+          {tipo.icon ? (
+            <span className="cofrade-type-icon">
+              <CofradeIcon tipo={tipo.key} size={compact ? 30 : 44} />
             </span>
-            <span>{tipo}</span>
-          </span>
-        );
-      })}
+          ) : null}
+          <span>{tipo.label}</span>
+        </span>
+      ))}
     </div>
   );
 }
