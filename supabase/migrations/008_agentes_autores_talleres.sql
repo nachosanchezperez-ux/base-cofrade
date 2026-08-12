@@ -1,17 +1,17 @@
--- Hilo Cofrade · Agentes, autores y talleres
+-- Hilo Cofrade · Autores y talleres
 -- Migración 008
 --
--- Unifica personas, talleres, empresas e instituciones para evitar duplicados.
--- Una misma entidad puede intervenir en imágenes, pasos, restauraciones,
--- marchas, bandas o responsabilidades procesionales.
+-- Personas, talleres, empresas e instituciones se mantienen como agentes internos
+-- reutilizables, pero sus fichas editoriales se centran en las obras y trabajos
+-- documentados. Un taller no se modela como un directorio de integrantes.
+-- Colaboraciones entre autores/talleres se documentan en cada obra o intervención.
 
 -- -----------------------------------------------------------------------------
 -- Ajuste de terminología de conservación de pasos
 -- -----------------------------------------------------------------------------
 
--- Relación con la hermandad se deduce de brotherhood_steps y sus fechas:
--- Paso actual / Paso antiguo.
--- El estado de conservación queda limitado a tres situaciones claras.
+-- Relación con la hermandad: Paso actual / Paso antiguo.
+-- Estado de conservación: Se conserva / Se conserva parcialmente / No se conserva.
 alter table public.steps
   drop constraint if exists steps_current_condition_check;
 
@@ -32,7 +32,7 @@ alter table public.steps
   );
 
 -- -----------------------------------------------------------------------------
--- Datos adicionales del agente
+-- Datos adicionales del autor/taller
 -- -----------------------------------------------------------------------------
 
 alter table public.agents
@@ -67,7 +67,7 @@ create table public.agent_names (
 create index agent_names_agent_idx on public.agent_names(agent_entity_id, is_current);
 
 -- -----------------------------------------------------------------------------
--- Disciplinas
+-- Especialidades internas para clasificación y búsqueda
 -- -----------------------------------------------------------------------------
 
 create table public.agent_disciplines (
@@ -82,35 +82,10 @@ create table public.agent_disciplines (
 create index agent_disciplines_agent_idx on public.agent_disciplines(agent_entity_id);
 create index agent_disciplines_name_idx on public.agent_disciplines(discipline);
 
--- Ejemplos previstos: Imaginería, Escultura, Restauración, Bordado,
--- Orfebrería, Talla, Dorado, Diseño, Carpintería, Composición,
--- Dirección musical, Capataz, Fotografía, Pintura.
-
--- -----------------------------------------------------------------------------
--- Vinculación entre personas y talleres / empresas / instituciones
--- -----------------------------------------------------------------------------
-
-create table public.agent_affiliations (
-  id uuid primary key default gen_random_uuid(),
-  member_agent_entity_id uuid not null references public.entities(id) on delete cascade,
-  organization_agent_entity_id uuid not null references public.entities(id) on delete cascade,
-  role_name text,
-  date_from date,
-  date_from_text text,
-  date_to date,
-  date_to_text text,
-  is_current boolean not null default false,
-  notes text,
-  status text not null default 'published' check (status in ('draft','review','published','archived')),
-  created_at timestamptz not null default now(),
-  constraint agent_affiliations_not_self check (member_agent_entity_id <> organization_agent_entity_id),
-  unique (member_agent_entity_id, organization_agent_entity_id, role_name, date_from)
-);
-
-create index agent_affiliations_member_idx
-  on public.agent_affiliations(member_agent_entity_id, is_current);
-create index agent_affiliations_org_idx
-  on public.agent_affiliations(organization_agent_entity_id, is_current);
+-- Estas disciplinas sirven para búsqueda, filtrado y rotulación breve bajo el nombre.
+-- No implican una pestaña pública propia.
+-- Ejemplos: Imaginería, Escultura, Restauración, Bordado, Orfebrería,
+-- Talla, Dorado, Diseño, Carpintería, Composición, Fotografía, Pintura.
 
 -- -----------------------------------------------------------------------------
 -- Fuentes específicas
@@ -118,8 +93,7 @@ create index agent_affiliations_org_idx
 
 alter table public.source_links
   add column if not exists agent_name_id uuid references public.agent_names(id) on delete cascade,
-  add column if not exists agent_role_id uuid references public.agent_roles(id) on delete cascade,
-  add column if not exists agent_affiliation_id uuid references public.agent_affiliations(id) on delete cascade;
+  add column if not exists agent_role_id uuid references public.agent_roles(id) on delete cascade;
 
 alter table public.source_links
   drop constraint if exists source_links_one_target;
@@ -145,8 +119,7 @@ alter table public.source_links
       brotherhood_step_id,
       image_step_id,
       agent_name_id,
-      agent_role_id,
-      agent_affiliation_id
+      agent_role_id
     ) = 1
   );
 
@@ -156,7 +129,6 @@ alter table public.source_links
 
 alter table public.agent_names enable row level security;
 alter table public.agent_disciplines enable row level security;
-alter table public.agent_affiliations enable row level security;
 
 create policy "Public agent names"
 on public.agent_names for select
@@ -176,21 +148,17 @@ using (
   )
 );
 
-create policy "Published agent affiliations"
-on public.agent_affiliations for select
-using (status = 'published');
-
 -- -----------------------------------------------------------------------------
--- Vistas de actividad
+-- Catálogo de obras y trabajos
 -- -----------------------------------------------------------------------------
 
--- Obras e intervenciones vinculadas a cada agente. La vista no pretende
--- homogeneizar todos los campos, sino permitir construir una ficha pública
--- de autor/taller con bloques por tipo de actividad.
+-- Esta vista es el corazón de la ficha de autor/taller.
+-- Las obras no se cargan de nuevo en su perfil: aparecen desde las relaciones
+-- creadas en Imágenes, Pasos, Restauraciones, Marchas, etc.
 create or replace view public.agent_activity as
 select
   ia.agent_entity_id,
-  'image_authorship'::text as activity_type,
+  'image'::text as activity_type,
   ia.image_entity_id as related_entity_id,
   ie.name as related_entity_name,
   ia.role_name as role_name,
@@ -205,7 +173,7 @@ union all
 
 select
   spa.agent_entity_id,
-  'step_phase'::text,
+  'step'::text,
   sp.step_entity_id,
   se.name,
   coalesce(spa.role_name, spa.discipline),
@@ -221,7 +189,7 @@ union all
 
 select
   hi.agent_entity_id,
-  'heritage_intervention'::text,
+  'intervention'::text,
   hi.target_entity_id,
   te.name,
   coalesce(hi.intervention_type, hi.discipline),
@@ -236,7 +204,7 @@ union all
 
 select
   ma.agent_entity_id,
-  'march_authorship'::text,
+  'march'::text,
   ma.march_entity_id,
   me.name,
   ma.author_role,
@@ -244,38 +212,9 @@ select
   null::text,
   ma.notes
 from public.march_authors ma
-join public.entities me on me.id = ma.march_entity_id
+join public.entities me on me.id = ma.march_entity_id;
 
-union all
-
-select
-  ba.agent_entity_id,
-  'band_role'::text,
-  ba.band_entity_id,
-  be.name,
-  ba.role_name,
-  ba.date_from,
-  ba.date_from_text,
-  ba.notes
-from public.band_agents ba
-join public.entities be on be.id = ba.band_entity_id
-
-union all
-
-select
-  spp.agent_entity_id,
-  'step_personnel'::text,
-  spp.step_entity_id,
-  se.name,
-  spp.role_name,
-  spp.date_from,
-  coalesce(spp.date_from_text, spp.year_from::text),
-  spp.notes
-from public.step_personnel_periods spp
-join public.entities se on se.id = spp.step_entity_id
-where spp.status = 'published';
-
--- Resumen básico para buscador/ficha.
+-- Resumen para buscador y cabecera de ficha.
 create or replace view public.agent_profile_summary as
 select
   a.entity_id,
@@ -291,3 +230,8 @@ left join public.municipalities m on m.id = a.municipality_id
 left join public.agent_disciplines ad on ad.agent_entity_id = a.entity_id
 where e.status = 'published'
 group by a.entity_id, e.name, a.agent_kind, m.name, a.foundation_or_birth_text, a.death_or_end_text;
+
+-- Nota funcional:
+-- Un taller no tiene un módulo de integrantes.
+-- Cuando una obra tenga varios autores, colaboradores o talleres, cada uno se
+-- relaciona directamente con esa obra/fase/intervención con su papel concreto.
