@@ -13,15 +13,16 @@ export async function signInAction(_previousState, formData) {
   }
 
   const supabase = await createClient()
-  const { error } = await supabase.auth.signInWithPassword({ email, password })
+  const { data: authData, error } = await supabase.auth.signInWithPassword({ email, password })
 
-  if (error) {
+  if (error || !authData.user?.id) {
     return { error: 'No hemos podido validar esos datos de acceso.' }
   }
 
   const { data: profile, error: profileError } = await supabase
     .from('panel_users')
     .select('active')
+    .eq('user_id', authData.user.id)
     .maybeSingle()
 
   if (profileError || !profile?.active) {

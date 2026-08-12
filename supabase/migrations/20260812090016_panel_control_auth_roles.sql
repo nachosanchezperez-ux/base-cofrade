@@ -51,7 +51,7 @@ stable
 security definer
 set search_path = ''
 as $$
-  select public.current_panel_role() in ('admin', 'editor', 'collaborator')
+  select public.current_panel_role() in ('admin', 'editor')
 $$;
 
 create or replace function public.can_publish_panel()
@@ -130,8 +130,8 @@ begin
 end
 $$;
 
--- Registros con estado editorial: colaboradores trabajan con borradores y
--- revisiones; editores y administradores pueden publicar.
+-- Registros con estado editorial: editores y administradores pueden crear,
+-- revisar y publicar. Los colaboradores conservan acceso de solo lectura.
 do $$
 declare
   table_name text;
@@ -143,9 +143,9 @@ begin
   ]
   loop
     execute format('create policy %I on public.%I for insert to authenticated with check ((select public.can_edit_panel()) and (status <> ''published'' or (select public.can_publish_panel())))',
-      'Panel members can create ' || table_name, table_name);
+      'Editors can create ' || table_name, table_name);
     execute format('create policy %I on public.%I for update to authenticated using ((select public.can_edit_panel()) and (status <> ''published'' or (select public.can_publish_panel()))) with check ((select public.can_edit_panel()) and (status <> ''published'' or (select public.can_publish_panel())))',
-      'Panel members can update ' || table_name, table_name);
+      'Editors can update ' || table_name, table_name);
     execute format('create policy %I on public.%I for delete to authenticated using ((select public.can_admin_panel()))',
       'Admins can delete ' || table_name, table_name);
     execute format('grant insert, update, delete on public.%I to authenticated', table_name);
