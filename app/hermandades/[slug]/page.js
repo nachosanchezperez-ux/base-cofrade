@@ -18,6 +18,7 @@ export default async function HermandadDetailPage({ params }) {
   const h = await getHermandadPageBySlug(slug);
   if (!h) notFound();
   const imagenMap = new Map(h.imagenes.map((imagen) => [imagen.id, imagen]));
+  const tiposHermandad = h.tipos || [];
 
   return (
     <main className="brotherhood-page" style={{
@@ -131,11 +132,11 @@ export default async function HermandadDetailPage({ params }) {
           </div>
 
           <div className="key-data-identity">
-            <div>
-              <small>Tipo</small>
-              <CofradeTypeBadges tipos={h.tipos} compact />
+            <div className="key-data-types">
+              <small>{tiposHermandad.length === 1 ? 'Tipo' : 'Tipos'}</small>
+              <CofradeTypeBadges tipos={tiposHermandad} compact />
             </div>
-            <div>
+            <div className="key-data-day">
               <small>Día de salida</small>
               <strong>{h.diaSalida}</strong>
             </div>
