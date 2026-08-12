@@ -32,6 +32,10 @@ function integer(formData, name) {
   return Number.isFinite(parsed) ? parsed : null
 }
 
+function checked(formData, name) {
+  return formData.get(name) === 'on'
+}
+
 function uuid(formData, name) {
   const candidate = value(formData, name)
   if (!UUID_PATTERN.test(candidate)) throw new Error(`Identificador no válido: ${name}`)
@@ -92,6 +96,18 @@ async function refreshBrotherhood(supabase, brotherhoodId) {
 
 function redirectSaved(brotherhoodId, section) {
   redirect(`/panel/hermandades/${brotherhoodId}?saved=${section}#${section}`)
+}
+
+async function requireBrotherhoodAsset(supabase, brotherhoodId, assetId) {
+  const result = await supabase
+    .from('heritage_assets')
+    .select('entity_id')
+    .eq('entity_id', assetId)
+    .eq('parent_entity_id', brotherhoodId)
+    .maybeSingle()
+  if (result.error) throw new Error(`No se pudo validar la pieza patrimonial: ${result.error.message}`)
+  if (!result.data) throw new Error('La pieza patrimonial no pertenece a esta hermandad.')
+  return result.data
 }
 
 export async function updateBrotherhoodAction(formData) {
@@ -329,10 +345,162 @@ export async function archiveHeritageAction(formData) {
   redirectSaved(brotherhoodId, 'patrimonio')
 }
 
+export async function saveHeritageAssetAction(formData) {
+  const user = await requirePanelEditor()
+  const supabase = await createClient()
+  const brotherhoodId = uuid(formData, 'brotherhood_id')
+  const currentAssetId = optionalUuid(formData, 'asset_entity_id')
+  const assetId = currentAssetId || randomUUID()
+  const assetStatus = status(formData)
+  const assetSlug = required(formData, 'asset_slug', 'El slug de la pieza')
+  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(assetSlug)) {
+    throw new Error('El slug de la pieza solo puede contener minúsculas, números y guiones simples.')
+  }
+
+  const entityPayload = {
+    name: required(formData, 'asset_name', 'El nombre de la pieza'),
+    slug: assetSlug,
+    summary: nullable(formData, 'asset_summary'),
+    status: assetStatus,
+  }
+  const assetPayload = {
+    parent_entity_id: brotherhoodId,
+    asset_type: required(formData, 'asset_type', 'El tipo de pieza'),
+    description: nullable(formData, 'asset_description'),
+    technique: nullable(formData, 'technique'),
+    materials: nullable(formData, 'materials'),
+    dimensions_text: nullable(formData, 'dimensions_text'),
+    iconography: nullable(formData, 'iconography'),
+    historical_context: nullable(formData, 'historical_context'),
+    provenance_text: nullable(formData, 'provenance_text'),
+    blessing_date: nullable(formData, 'blessing_date'),
+    blessing_date_text: nullable(formData, 'blessing_date_text'),
+    date_from: nullable(formData, 'date_from'),
+    date_from_text: nullable(formData, 'date_from_text'),
+    current_condition: nullable(formData, 'current_condition'),
+    is_current: checked(formData, 'is_current'),
+    origin_notes: nullable(formData, 'origin_notes'),
+    display_order: integer(formData, 'display_order') || 0,
+    is_featured: checked(formData, 'is_featured'),
+    notes: nullable(formData, 'asset_notes'),
+  }
+
+  if (currentAssetId) {
+    await requireBrotherhoodAsset(supabase, brotherhoodId, currentAssetId)
+    assertMutation(
+      await supabase.from('entities').update(entityPayload).eq('id', currentAssetId).eq('entity_type', 'heritage_asset'),
+      'No se pudo actualizar la entidad patrimonial'
+    )
+    assertMutation(
+      await supabase.from('heritage_assets').update(assetPayload).eq('entity_id', currentAssetId).eq('parent_entity_id', brotherhoodId),
+      'No se pudo actualizar la pieza patrimonial'
+    )
+  } else {
+    assertMutation(
+      await supabase.from('entities').insert({ id: assetId, entity_type: 'heritage_asset', ...entityPayload }),
+      'No se pudo crear la entidad patrimonial'
+    )
+    const assetResult = await supabase.from('heritage_assets').insert({ entity_id: assetId, ...assetPayload })
+    if (assetResult.error) {
+      await supabase.from('entities').delete().eq('id', assetId)
+      throw new Error(`No se pudo crear la pieza patrimonial: ${assetResult.error.message}`)
+    }
+  }
+
+  await audit(supabase, user, {
+    action_type: currentAssetId ? 'update' : 'create',
+    object_type: 'heritage_asset',
+    object_id: assetId,
+    entity_id: brotherhoodId,
+    summary: `${currentAssetId ? 'Pieza actualizada' : 'Pieza creada'}: ${entityPayload.name}`,
+    changed_fields: { ...entityPayload, ...assetPayload },
+  })
+  await refreshBrotherhood(supabase, brotherhoodId)
+  redirectSaved(brotherhoodId, 'patrimonio')
+}
+
+export async function archiveHeritageAssetAction(formData) {
+  const user = await requirePanelEditor()
+  const supabase = await createClient()
+  const brotherhoodId = uuid(formData, 'brotherhood_id')
+  const assetId = uuid(formData, 'asset_entity_id')
+  await requireBrotherhoodAsset(supabase, brotherhoodId, assetId)
+  const saved = assertMutation(
+    await supabase.from('entities').update({ status: 'archived' }).eq('id', assetId).eq('entity_type', 'heritage_asset').select('id, name').single(),
+    'No se pudo archivar la pieza patrimonial'
+  )
+  await audit(supabase, user, { action_type: 'archive', object_type: 'heritage_asset', object_id: saved.id, entity_id: brotherhoodId, summary: `Pieza archivada: ${saved.name}` })
+  await refreshBrotherhood(supabase, brotherhoodId)
+  redirectSaved(brotherhoodId, 'patrimonio')
+}
+
+export async function saveAssetContributionAction(formData) {
+  const user = await requirePanelEditor()
+  const supabase = await createClient()
+  const brotherhoodId = uuid(formData, 'brotherhood_id')
+  const assetId = uuid(formData, 'asset_entity_id')
+  const contributionId = optionalUuid(formData, 'contribution_id')
+  const agentId = uuid(formData, 'agent_entity_id')
+  await requireBrotherhoodAsset(supabase, brotherhoodId, assetId)
+
+  const agentResult = await supabase.from('entities').select('id, name').eq('id', agentId).eq('entity_type', 'agent').maybeSingle()
+  if (agentResult.error) throw new Error(`No se pudo validar el autor o taller: ${agentResult.error.message}`)
+  if (!agentResult.data) throw new Error('Selecciona un autor o taller válido.')
+
+  const payload = {
+    target_entity_id: assetId,
+    agent_entity_id: agentId,
+    discipline: required(formData, 'discipline', 'La disciplina'),
+    element_name: nullable(formData, 'element_name'),
+    intervention_type: nullable(formData, 'intervention_type') || 'Creación',
+    phase: nullable(formData, 'phase'),
+    date_from: nullable(formData, 'contribution_date_from'),
+    date_from_text: nullable(formData, 'contribution_date_from_text'),
+    date_to: nullable(formData, 'contribution_date_to'),
+    date_to_text: nullable(formData, 'contribution_date_to_text'),
+    description: nullable(formData, 'contribution_description'),
+    status: status(formData),
+  }
+  const result = contributionId
+    ? await supabase.from('heritage_interventions').update(payload).eq('id', contributionId).eq('target_entity_id', assetId).select('id').single()
+    : await supabase.from('heritage_interventions').insert(payload).select('id').single()
+  const saved = assertMutation(result, 'No se pudo guardar la autoría o intervención')
+  await audit(supabase, user, {
+    action_type: contributionId ? 'update' : 'create',
+    object_type: 'heritage_intervention',
+    object_id: saved.id,
+    entity_id: brotherhoodId,
+    summary: `${contributionId ? 'Relación actualizada' : 'Relación creada'}: ${agentResult.data.name} · ${payload.discipline}`,
+    changed_fields: payload,
+  })
+  await refreshBrotherhood(supabase, brotherhoodId)
+  redirectSaved(brotherhoodId, 'patrimonio')
+}
+
+export async function archiveAssetContributionAction(formData) {
+  const user = await requirePanelEditor()
+  const supabase = await createClient()
+  const brotherhoodId = uuid(formData, 'brotherhood_id')
+  const assetId = uuid(formData, 'asset_entity_id')
+  const contributionId = uuid(formData, 'contribution_id')
+  await requireBrotherhoodAsset(supabase, brotherhoodId, assetId)
+  const saved = assertMutation(
+    await supabase.from('heritage_interventions').update({ status: 'archived' }).eq('id', contributionId).eq('target_entity_id', assetId).select('id, discipline').single(),
+    'No se pudo archivar la autoría o intervención'
+  )
+  await audit(supabase, user, { action_type: 'archive', object_type: 'heritage_intervention', object_id: saved.id, entity_id: brotherhoodId, summary: `Relación patrimonial archivada: ${saved.discipline}` })
+  await refreshBrotherhood(supabase, brotherhoodId)
+  redirectSaved(brotherhoodId, 'patrimonio')
+}
+
 export async function uploadMediaAction(formData) {
   const user = await requirePanelEditor()
   const supabase = await createClient()
   const brotherhoodId = uuid(formData, 'brotherhood_id')
+  const mediaEntityId = optionalUuid(formData, 'media_entity_id') || brotherhoodId
+  if (mediaEntityId !== brotherhoodId) {
+    await requireBrotherhoodAsset(supabase, brotherhoodId, mediaEntityId)
+  }
   const file = formData.get('file')
   if (!(file instanceof File) || file.size === 0) throw new Error('Selecciona una imagen para subir.')
   if (!['image/jpeg', 'image/png', 'image/webp', 'image/gif'].includes(file.type)) throw new Error('La imagen debe ser JPG, PNG, WEBP o GIF.')
@@ -368,7 +536,7 @@ export async function uploadMediaAction(formData) {
   }
   const asset = assetResult.data
   const linkResult = await supabase.from('entity_media').insert({
-      entity_id: brotherhoodId,
+      entity_id: mediaEntityId,
       media_asset_id: asset.id,
       relation_type: value(formData, 'relation_type') || 'gallery',
       sort_order: integer(formData, 'sort_order') || 0,
