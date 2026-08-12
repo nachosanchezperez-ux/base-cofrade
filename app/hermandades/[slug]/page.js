@@ -22,7 +22,9 @@ export default async function HermandadDetailPage({ params }) {
     <main className="brotherhood-page" style={{
       '--brotherhood-primary': h.colores?.primario || '#153B69',
       '--brotherhood-secondary': h.colores?.secundario || '#A71930',
-      '--brotherhood-light': h.colores?.claro || '#FFFFFF'
+      '--brotherhood-light': h.colores?.claro || '#FFFFFF',
+      '--brotherhood-dark': h.colores?.oscuro || '#0D2949',
+      '--brotherhood-on-secondary': h.colores?.sobreSecundario || '#FFFFFF'
     }}>
       <section className="brotherhood-hero">
         <div className="shell">
@@ -44,8 +46,8 @@ export default async function HermandadDetailPage({ params }) {
               <p className="official-name">{h.nombreOficial}</p>
             </div>
             <div className="brotherhood-visual">
-              <div className="hero-photo-placeholder"><span>Fotografía principal</span><small>Espacio preparado para imagen</small></div>
-              <div className="crest-placeholder brotherhood-crest"><span>EB</span><small>Escudo</small></div>
+              <div className="hero-photo-placeholder"><span>{h.imagenes[0]?.nombre || 'Fotografía principal'}</span><small>Titular de la hermandad</small></div>
+              <div className="crest-placeholder brotherhood-crest"><span>{h.escudoIniciales || h.nombrePopular.slice(0, 2).toUpperCase()}</span><small>Escudo</small></div>
             </div>
           </div>
           <div className="brotherhood-facts">
@@ -64,15 +66,15 @@ export default async function HermandadDetailPage({ params }) {
             <a href="#resumen">Resumen</a>
             <a href="#titulares">Titulares</a>
             <a href="#pasos">Pasos</a>
-            <a href="#historia">Historia</a>
-            <a href="#tunica">Túnica</a>
-            <a href="#salidas">Salidas</a>
-            <a href="#cultos">Cultos</a>
-            {h.estrenos?.length > 0 && <a href="#estrenos">Novedades</a>}
+            {h.cronologia?.length > 0 && <a href="#historia">Historia</a>}
+            {h.habitos?.length > 0 && <a href="#tunica">Túnica</a>}
+            {h.salidas?.length > 0 && <a href="#salidas">Salidas</a>}
+            {h.cultos?.length > 0 && <a href="#cultos">Cultos</a>}
+            {h.estrenos?.length > 0 && <a href="#estrenos">Patrimonio</a>}
             {h.patrimonioMusical?.length > 0 && <a href="#musica">Patrimonio musical</a>}
             {h.acompanamientos?.length > 0 && <a href="#acompanamientos">Acompañamientos</a>}
             {h.noticias?.length > 0 && <a href="#noticias">Noticias</a>}
-            <a href="#curiosidades">Curiosidades</a>
+            {h.curiosidades?.length > 0 && <a href="#curiosidades">Curiosidades</a>}
             {h.fuentesFicha?.length > 0 && <a href="#fuentes">Fuentes</a>}
           </div>
         </div>
@@ -160,13 +162,40 @@ export default async function HermandadDetailPage({ params }) {
       </div></section>
 
       <section className="section brotherhood-soft" id="titulares"><div className="shell">
-        <SectionTitle eyebrow={`${h.imagenes.length} titulares`} title="Sagrados Titulares" description="Cada titular tendrá una ficha propia con autoría, historia, restauraciones, acontecimientos y salidas extraordinarias." />
-        <div className="image-grid">{h.imagenes.map((imagen) => (
-          <Link href={`/imagenes/${imagen.slug}`} className="image-card brotherhood-image-card" key={imagen.id}>
-            <div className="portrait-placeholder brotherhood-portrait"><span>{imagen.iniciales}</span></div>
-            <div className="image-card-body"><span className="eyebrow">{imagen.tipo}</span><h3>{imagen.nombre}</h3><p>{imagen.autor} · {imagen.fecha}</p><span className="text-link">Descubrir titular →</span></div>
-          </Link>
-        ))}</div>
+        <SectionTitle eyebrow={`${h.imagenes.length} titulares`} title="Sagrados Titulares" description="Autoría, datación, descripción material e iconografía documentadas para cada imagen." />
+        <div className="image-grid">{h.imagenes.map((imagen) => {
+          const card = (
+            <>
+              <div className="portrait-placeholder brotherhood-portrait"><span>{imagen.iniciales}</span></div>
+              <div className="image-card-body">
+                <span className="eyebrow">{imagen.tipo}</span>
+                <h3>{imagen.nombre}</h3>
+                <p className="image-card-authorship">{imagen.autor} · {imagen.fecha}</p>
+                {imagen.descripcion && <p className="image-card-description">{imagen.descripcion}</p>}
+                {(imagen.tecnica || imagen.material || imagen.dimensiones) && (
+                  <div className="image-card-details">
+                    {imagen.tecnica && <span>{imagen.tecnica}</span>}
+                    {imagen.material && <span>{imagen.material}</span>}
+                    {imagen.dimensiones && <span>{imagen.dimensiones}</span>}
+                  </div>
+                )}
+                {imagen.iconografia && (
+                  <details className="image-iconography">
+                    <summary>Iconografía <span>＋</span></summary>
+                    <p>{imagen.iconografia}</p>
+                  </details>
+                )}
+                {imagen.fichaDisponible && <span className="text-link">Descubrir titular →</span>}
+              </div>
+            </>
+          );
+
+          return imagen.fichaDisponible ? (
+            <Link href={`/imagenes/${imagen.slug}`} className="image-card brotherhood-image-card" key={imagen.id}>{card}</Link>
+          ) : (
+            <article className="image-card brotherhood-image-card" key={imagen.id}>{card}</article>
+          );
+        })}</div>
       </div></section>
 
       <section className="section" id="pasos"><div className="shell">
@@ -175,14 +204,41 @@ export default async function HermandadDetailPage({ params }) {
           <article className="processional-card" key={paso.id}>
             <div className="processional-photo"><span>0{index + 1}</span><small>Fotografía del paso</small></div>
             <div className="processional-body"><span className="pill">{paso.tipo}</span><h3>{paso.nombre}</h3><p>{paso.descripcion}</p>
-              <div className="step-current-data">
-                <div><small>Capataz actual</small><strong>{paso.capatazActual || 'Pendiente de incorporar'}</strong></div>
-                <div><small>Acompañamiento musical</small><strong>{paso.acompanamientoActual || 'Pendiente de incorporar'}</strong></div>
-              </div>
+              {(paso.capatazActual || paso.acompanamientoActual) && (
+                <div className="step-current-data">
+                  <div><small>Capataz actual</small><strong>{paso.capatazActual || 'Pendiente de incorporar'}</strong></div>
+                  <div><small>Acompañamiento musical</small><strong>{paso.acompanamientoActual || 'Pendiente de incorporar'}</strong></div>
+                </div>
+              )}
+              {(paso.ejecucion || paso.sistemaPortadores || paso.materiales) && (
+                <div className="step-technical-data">
+                  {paso.ejecucion && <div><small>Ejecución</small><strong>{paso.ejecucion}</strong></div>}
+                  {paso.sistemaPortadores && <div><small>Sistema de portadores</small><strong>{paso.sistemaPortadores}</strong></div>}
+                  {paso.materiales && <div className="step-technical-wide"><small>Materiales</small><strong>{paso.materiales}</strong></div>}
+                </div>
+              )}
+              {paso.estadoActual && <p className="step-current-state">{paso.estadoActual}</p>}
               <div className="related-row"><small>Imágenes que procesionan</small><div>{paso.imagenes.map((id) => {
-                const imagen = imagenMap.get(id); return imagen ? <Link key={id} href={`/imagenes/${imagen.slug}`}>{imagen.nombre}</Link> : null;
+                const imagen = imagenMap.get(id);
+                if (!imagen) return null;
+                return imagen.fichaDisponible
+                  ? <Link key={id} href={`/imagenes/${imagen.slug}`}>{imagen.nombre}</Link>
+                  : <span className="related-name" key={id}>{imagen.nombre}</span>;
               })}</div></div>
-              <Link href={`/pasos/${paso.slug}`} className="text-link">Ver ficha del paso →</Link>
+              {paso.fases?.length > 0 && (
+                <div className="step-phases">
+                  <div className="step-phases-heading"><small>Evolución histórica</small><strong>{paso.fases.length} fases documentadas</strong></div>
+                  {paso.fases.map((fase) => (
+                    <article className="step-phase" key={fase.id}>
+                      <div className="step-phase-date"><strong>{fase.periodo}</strong><span>{fase.tipo}</span></div>
+                      <div><h4>{fase.nombre}</h4><p>{fase.descripcion}</p>
+                        {fase.agentes?.length > 0 && <small>{fase.agentes.map((agente) => `${agente.nombre} · ${agente.rol}`).join(' / ')}</small>}
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              )}
+              {paso.fichaDisponible && <Link href={`/pasos/${paso.slug}`} className="text-link">Ver ficha del paso →</Link>}
             </div>
           </article>
         ))}</div>
@@ -202,17 +258,17 @@ export default async function HermandadDetailPage({ params }) {
         </div>
       </div></section>}
 
-      <section className="section history-section" id="historia"><div className="shell">
+      {h.cronologia?.length > 0 && <section className="section history-section" id="historia"><div className="shell">
         <SectionTitle eyebrow="Cronología" title="Historia" description="Una línea temporal para recorrer los grandes hitos y conectarlos con titulares, pasos y acontecimientos." />
         <div className="history-timeline">{h.cronologia.map((item) => (
           <article key={`${item.fecha}-${item.titulo}`}><div className="history-year">{item.fecha}</div><div className="history-line"><span /></div>
             <div className="history-copy"><h3>{item.titulo}</h3><p>{item.texto}</p>{item.estado && <small>{item.estado}</small>}</div>
           </article>
         ))}</div>
-      </div></section>
+      </div></section>}
 
 
-      <section className="section brotherhood-dark" id="tunica"><div className="shell">
+      {h.habitos?.length > 0 && <section className="section brotherhood-dark" id="tunica"><div className="shell">
         <SectionTitle eyebrow="Estación de penitencia" title="Túnica" description="El azul identifica la túnica; rojo y blanco distinguen los cortejos de los dos pasos." />
         <div className="habit-grid">{h.habitos.map((item, index) => (
           <article className={`habit-card brotherhood-habit ${index === 0 ? 'habit-red' : 'habit-white'}`} key={item.id}>
@@ -222,9 +278,9 @@ export default async function HermandadDetailPage({ params }) {
             </dl></div>
           </article>
         ))}</div>
-      </div></section>
+      </div></section>}
 
-      <section className="section brotherhood-white" id="salidas"><div className="shell">
+      {h.salidas?.length > 0 && <section className="section brotherhood-white" id="salidas"><div className="shell">
         <SectionTitle eyebrow="En la calle" title="Salidas" description="Estación de penitencia, procesiones, rosarios, vía crucis y traslados forman parte del histórico de salidas de cada hermandad." />
         <div className="outing-grid">{h.salidas.map((s) => (
           <article className={`outing-card ${s.ediciones?.length ? 'outing-card-featured' : ''}`} key={s.id}>
@@ -280,9 +336,9 @@ export default async function HermandadDetailPage({ params }) {
             </div>
           </article>
         ))}</div>
-      </div></section>
+      </div></section>}
 
-      <section className="section brotherhood-soft" id="cultos"><div className="shell">
+      {h.cultos?.length > 0 && <section className="section brotherhood-soft" id="cultos"><div className="shell">
         <SectionTitle eyebrow="Vida de hermandad" title="Cultos" description="Calendario de los principales cultos y celebraciones de la corporación." />
         <div className="bc-cult-grid">{h.cultos.map((c) => {
           const fecha = c.fechaCorta || c.referencia;
@@ -323,14 +379,15 @@ export default async function HermandadDetailPage({ params }) {
               <div className="bc-cult-copy">
                 <h3>{c.nombre}</h3>
                 <p>{c.tipo}</p>
+                {c.descripcion && <small>{c.descripcion}</small>}
               </div>
             </article>
           );
         })}</div>
-      </div></section>
+      </div></section>}
 
       {h.estrenos?.length > 0 && <section className="section brotherhood-white" id="estrenos"><div className="shell">
-        <SectionTitle eyebrow="Actualidad patrimonial" title="Novedades · Estrenos" description="Estrenos, restauraciones y novedades incorporadas por la Hermandad. Este módulo solo aparece cuando existen registros." />
+        <SectionTitle eyebrow="Memoria material" title="Patrimonio · Intervenciones" description="Estrenos y restauraciones documentados, con sus responsables y disciplinas cuando constan en las fuentes." />
         <div className="release-grid">{h.estrenos.map((e) => (
           <article className="release-card" key={e.id}><span className="release-year">{e.ano}</span><span className="pill">{e.tipo}</span><h3>{e.titulo}</h3><p>{e.descripcion}</p><small>{e.autoria}</small></article>
         ))}</div>
@@ -358,10 +415,10 @@ export default async function HermandadDetailPage({ params }) {
         ))}</div>
       </div></section>}
 
-      <section className="section brotherhood-soft" id="curiosidades"><div className="shell">
+      {h.curiosidades?.length > 0 && <section className="section brotherhood-soft" id="curiosidades"><div className="shell">
         <SectionTitle eyebrow="¿Sabías que…?" title="Curiosidades" description="Datos singulares y divulgativos que solo se publicarán cuando estén documentados." />
         {h.curiosidades.map((c) => <div className="curiosity-card brotherhood-curiosity" key={c.id}><span className="curiosity-mark">?</span><div><span className="eyebrow">{c.categoria}</span><h3>{c.titulo}</h3><p>{c.texto}</p></div></div>)}
-      </div></section>
+      </div></section>}
 
       <SourcesBlock sources={h.fuentesFicha} />
     </main>
