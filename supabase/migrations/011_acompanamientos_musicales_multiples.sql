@@ -1,0 +1,10 @@
+-- Hilo Cofrade · Acompañamientos musicales múltiples
+-- Migración 011
+--
+-- Permite representar en una misma salida:
+-- - una banda abriendo el cortejo
+-- - otra detrás de un paso
+-- - dos o más bandas alternándose en la misma posición
+-- - acompañamientos por tramos solo cuando estén documentados
+--
+-- Principio editorial: los tramos son opcionales. No se exige precisión que
