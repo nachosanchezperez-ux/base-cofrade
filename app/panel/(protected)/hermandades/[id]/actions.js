@@ -11,6 +11,11 @@ import { createClient } from '@/lib/supabase/server'
 // en esas posiciones para que sus familias sean reconocibles.
 const UUID_PATTERN = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i
 const STATUSES = new Set(['draft', 'review', 'published', 'archived'])
+const BROTHERHOOD_TYPES = new Map([
+  ['penitencia', 'Penitencia'],
+  ['gloria', 'Gloria'],
+  ['sacramental', 'Sacramental'],
+])
 
 function value(formData, name) {
   return String(formData.get(name) || '').trim()
@@ -50,6 +55,16 @@ function status(formData) {
   const candidate = value(formData, 'status') || 'draft'
   if (!STATUSES.has(candidate)) throw new Error('Estado editorial no válido.')
   return candidate
+}
+
+function brotherhoodTypes(formData) {
+  const submitted = formData.getAll('brotherhood_types').map((item) => String(item).trim())
+  if (submitted.some((item) => !BROTHERHOOD_TYPES.has(item.toLowerCase()))) {
+    throw new Error('Se ha recibido un tipo de hermandad no válido.')
+  }
+  const selected = [...new Set(submitted.map((item) => BROTHERHOOD_TYPES.get(item.toLowerCase())))]
+  if (!selected.length) throw new Error('Selecciona al menos un tipo de hermandad.')
+  return selected
 }
 
 function assertMutation(result, label) {
@@ -104,7 +119,7 @@ export async function updateBrotherhoodAction(formData) {
     website_url: nullable(formData, 'website_url'),
     instagram_url: nullable(formData, 'instagram_url'),
     crest_path: nullable(formData, 'crest_path'),
-    brotherhood_types: value(formData, 'brotherhood_types').split(',').map((item) => item.trim()).filter(Boolean),
+    brotherhood_types: brotherhoodTypes(formData),
     current_procession_day: nullable(formData, 'current_procession_day'),
     notes: nullable(formData, 'notes'),
   }

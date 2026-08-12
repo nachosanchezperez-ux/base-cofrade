@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import BrotherhoodTypeSelector from '@/components/panel/BrotherhoodTypeSelector'
 import { requirePanelUser } from '@/lib/panel/auth'
 import { getBrotherhoodEditorData } from '@/lib/panel/data'
 import {
@@ -238,7 +239,7 @@ export default async function BrotherhoodEditorPage({ params, searchParams }) {
             <label><span>Localidad</span><select name="municipality_id" defaultValue={data.brotherhood?.municipality_id || ''}><option value="">Sin localidad</option>{data.municipalities.map((municipality) => <option key={municipality.id} value={municipality.id}>{municipality.name} · {municipality.province}</option>)}</select></label>
             <label><span>Sede canónica</span><PlaceSelect places={data.places} name="canonical_see_place_id" defaultValue={data.brotherhood?.canonical_see_place_id} /></label>
             <label><span>Barrio</span><input name="neighborhood" defaultValue={data.brotherhood?.neighborhood || ''} /></label>
-            <label><span>Tipos</span><input name="brotherhood_types" defaultValue={(data.brotherhood?.brotherhood_types || []).join(', ')} placeholder="penitencia, gloria" /></label>
+            <BrotherhoodTypeSelector selected={data.brotherhood?.brotherhood_types || []} />
             <label className={styles.fieldWide}><span>Ruta o URL del escudo</span><input name="crest_path" defaultValue={data.brotherhood?.crest_path || ''} /></label>
             <label><span>Web</span><input name="website_url" type="url" defaultValue={data.brotherhood?.website_url || ''} /></label>
             <label><span>Instagram</span><input name="instagram_url" defaultValue={data.brotherhood?.instagram_url || ''} /></label>
