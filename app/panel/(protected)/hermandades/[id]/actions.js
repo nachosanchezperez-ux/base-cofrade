@@ -6,7 +6,10 @@ import { redirect } from 'next/navigation'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
 
-const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+// PostgreSQL acepta UUID con cualquier valor hexadecimal en los campos de
+// versión y variante. Los identificadores documentales sembrados usan ceros
+// en esas posiciones para que sus familias sean reconocibles.
+const UUID_PATTERN = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i
 const STATUSES = new Set(['draft', 'review', 'published', 'archived'])
 
 function value(formData, name) {
