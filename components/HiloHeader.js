@@ -58,7 +58,8 @@ export default function HiloHeader() {
               <span className={styles.brandNode} />
             </span>
             <span className={styles.brandWord}>
-              <strong>Hilo</strong><i />Cofrade
+              <strong>Hilo</strong>
+              <span>Cofrade</span>
             </span>
           </Link>
 
