@@ -61,7 +61,7 @@ export default function CofradeTypeBadges({ tipos = [], compact = false }) {
         <span className="cofrade-type-badge" key={tipo.key}>
           {tipo.icon ? (
             <span className="cofrade-type-icon">
-              <CofradeIcon tipo={tipo.key} size={compact ? 38 : 44} />
+              <CofradeIcon tipo={tipo.key} size={compact ? 30 : 44} />
             </span>
           ) : null}
           <span>{tipo.label}</span>

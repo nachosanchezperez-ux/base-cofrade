@@ -131,7 +131,7 @@ export default async function HermandadDetailPage({ params }) {
             {h.datosJornada && <span className="key-data-year">{h.datosJornada.ano}</span>}
           </div>
 
-          <div className="key-data-identity">
+          <div className="key-data-identity" data-type-count={Math.min(tiposHermandad.length, 3)}>
             <div className="key-data-types">
               <small>{tiposHermandad.length === 1 ? 'Tipo' : 'Tipos'}</small>
               <CofradeTypeBadges tipos={tiposHermandad} compact />
