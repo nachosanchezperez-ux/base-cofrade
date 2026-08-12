@@ -713,6 +713,12 @@ button, input { font: inherit; }
 .image-iconography{margin:16px 0;border-top:1px solid #e2e8ed;border-bottom:1px solid #e2e8ed}
 .image-iconography summary{display:flex;justify-content:space-between;padding:12px 0;color:var(--bc-blue);font-size:10px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
 .image-iconography p{margin:0 0 14px;color:var(--ink-soft);line-height:1.55}
+.image-grid>.brotherhood-image-card:only-child{grid-column:1 / -1;display:grid;grid-template-columns:minmax(280px,.72fr) minmax(0,1.45fr);width:min(100%,920px);margin-inline:auto}
+.image-grid>.brotherhood-image-card:only-child .brotherhood-portrait{min-height:100%}
+.image-grid>.brotherhood-image-card:only-child .image-card-body{padding:34px}
+.image-grid>.brotherhood-image-card:only-child .image-card-body h3{font-size:32px}
+.image-grid>.brotherhood-image-card:only-child .image-card-description{font-size:15px}
+.outing-grid>.outing-card:only-child{grid-column:1 / -1;width:min(100%,820px);margin-inline:auto}
 .step-technical-data{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:20px 0;padding:16px;background:color-mix(in srgb,var(--bc-blue) 8%,#fff);border-radius:14px}
 .step-technical-data small{display:block;color:#6f7d88;font-size:9px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
 .step-technical-data strong{display:block;margin-top:5px;color:var(--bc-dark);line-height:1.35}
@@ -732,6 +738,11 @@ button, input { font: inherit; }
 .bc-cult-copy>small{display:block;margin-top:10px;color:var(--ink-soft);line-height:1.45}
 
 @media(max-width:620px){
+  .image-grid>.brotherhood-image-card:only-child{grid-template-columns:1fr;width:100%}
+  .image-grid>.brotherhood-image-card:only-child .brotherhood-portrait{min-height:240px}
+  .image-grid>.brotherhood-image-card:only-child .image-card-body{padding:22px}
+  .image-grid>.brotherhood-image-card:only-child .image-card-body h3{font-size:23px}
+  .image-grid>.brotherhood-image-card:only-child .image-card-description{font-size:13px}
   .step-technical-data{grid-template-columns:1fr}
   .step-technical-wide{grid-column:auto}
   .step-phases-heading{align-items:flex-start;flex-direction:column;gap:5px}
