@@ -214,7 +214,7 @@ insert into public.steps (entity_id, step_type, current_condition, description)
 values (
   '34000000-0000-0000-0000-000000000001',
   'Paso procesional de Gloria',
-  'in_use',
+  'preserved',
   'Paso procesional de Nuestra Señora de la Asunción de Cantillana.'
 )
 on conflict (entity_id) do nothing;
@@ -565,4 +565,3 @@ insert into public.source_links (source_id, outing_id, scope) values
   'Procesión anual del 15 de agosto'
 )
 on conflict do nothing;
-
