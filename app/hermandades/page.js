@@ -7,13 +7,13 @@ export const dynamic = 'force-dynamic';
 
 export const metadata = {
   title: 'Hermandades de Sevilla y provincia',
-  description: 'Hermandades de Sevilla capital y provincia en Hilo Cofrade, organizadas por día de salida y conectadas con sus imágenes, pasos y patrimonio',
+  description: 'Directorio de hermandades de Semana Santa, Gloria y Sacramentales de Sevilla capital y provincia, organizado por localidad, jornada y mes.',
   alternates: {
     canonical: '/hermandades',
   },
   openGraph: {
-    title: pageTitle('Hermandades de Sevilla y provincia'),
-    description: 'Consulta las hermandades de Sevilla capital y provincia y descubre sus imágenes, pasos, cultos, salidas, patrimonio y relaciones documentadas.',
+    title: pageTitle('Directorio de hermandades'),
+    description: 'Consulta las hermandades de Semana Santa, Gloria y Sacramentales de Sevilla capital y provincia.',
     url: '/hermandades',
   },
 };
@@ -25,7 +25,7 @@ export default async function HermandadesPage() {
     '@type': 'CollectionPage',
     '@id': `${absoluteUrl('/hermandades')}#collection`,
     url: absoluteUrl('/hermandades'),
-    name: 'Hermandades de Sevilla y provincia',
+    name: 'Directorio de hermandades',
     inLanguage: 'es',
     isPartOf: {
       '@id': `${absoluteUrl('/')}#website`,
@@ -50,10 +50,10 @@ export default async function HermandadesPage() {
       ])} />
       <JsonLd data={directoryJsonLd} />
       <div className="shell">
-        <span className="eyebrow">Sevilla capital y provincia</span>
-        <h1 className="page-title">Hermandades de Sevilla y provincia</h1>
+        <span className="eyebrow">Enciclopedia cofrade</span>
+        <h1 className="page-title">Directorio de hermandades</h1>
         <p className="page-lead">
-          Busca por nombre, sede o día de salida y entra directamente en la ficha de cada hermandad
+          Recorre las hermandades de Sevilla capital y su provincia por su naturaleza, localidad y momento principal del calendario.
         </p>
         <HermandadesDirectory hermandades={hermandades} />
       </div>
