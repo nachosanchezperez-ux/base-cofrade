@@ -1,10 +1,52 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import JsonLd from '@/components/JsonLd';
 import SectionTitle from '@/components/SectionTitle';
 import { getPasoBySlug, hermandades } from '@/lib/data';
+import {
+  absoluteUrl,
+  breadcrumbJsonLd,
+  pageTitle,
+  seoDescription,
+} from '@/lib/seo';
 
 export function generateStaticParams(){
   return hermandades.flatMap((h)=>h.pasos.map((p)=>({slug:p.slug})));
+}
+
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  const result = getPasoBySlug(slug);
+
+  if (!result) {
+    return {
+      title: 'Paso no encontrado',
+      robots: { index: false, follow: false },
+    };
+  }
+
+  const { paso, hermandad } = result;
+  const title = paso.nombre;
+  const description = seoDescription(
+    `Ficha de ${paso.nombre}, de ${hermandad.nombrePopular}: imágenes que procesionan, configuración, patrimonio, autorías y evolución histórica.`
+  );
+  const canonical = `/pasos/${paso.slug}`;
+
+  return {
+    title,
+    description,
+    alternates: { canonical },
+    openGraph: {
+      type: 'article',
+      title: pageTitle(title),
+      description,
+      url: canonical,
+    },
+    twitter: {
+      title: pageTitle(title),
+      description,
+    },
+  };
 }
 
 export default async function PasoDetailPage({params}){
@@ -13,6 +55,7 @@ export default async function PasoDetailPage({params}){
   if(!result) notFound();
   const {paso,hermandad}=result;
   const imagenes=paso.imagenes.map((id)=>hermandad.imagenes.find((i)=>i.id===id)).filter(Boolean);
+  const canonicalPath = `/pasos/${paso.slug}`;
 
   return (
     <main className="brotherhood-page" style={{
@@ -20,6 +63,24 @@ export default async function PasoDetailPage({params}){
       '--brotherhood-secondary': hermandad.colores?.secundario || '#A71930',
       '--brotherhood-light': hermandad.colores?.claro || '#FFFFFF'
     }}>
+      <JsonLd data={breadcrumbJsonLd([
+        { name: 'Inicio', path: '/' },
+        { name: 'Hermandades', path: '/hermandades' },
+        { name: hermandad.nombrePopular, path: `/hermandades/${hermandad.slug}` },
+        { name: paso.nombre, path: canonicalPath },
+      ])} />
+      <JsonLd data={{
+        '@context': 'https://schema.org',
+        '@type': 'CreativeWork',
+        '@id': `${absoluteUrl(canonicalPath)}#work`,
+        url: absoluteUrl(canonicalPath),
+        name: paso.nombre,
+        description: paso.descripcion,
+        isPartOf: {
+          '@type': 'Organization',
+          name: hermandad.nombreOficial || hermandad.nombrePopular,
+        },
+      }} />
       <section className="step-detail-hero">
         <div className="shell">
           <div className="brotherhood-breadcrumb">

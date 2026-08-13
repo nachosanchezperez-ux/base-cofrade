@@ -1,3 +1,7 @@
+export const metadata = {
+  robots: { index: false, follow: false },
+};
+
 export default function PruebaNextPage() {
   return (
     <main style={{ padding: '40px', fontFamily: 'sans-serif' }}>
