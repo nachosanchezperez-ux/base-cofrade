@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import JsonLd from '@/components/JsonLd'
+import SourcesBlock from '@/components/SourcesBlock'
 import { getBandBySlug, youtubeEmbedUrl } from '@/lib/supabase/bands'
 import { absoluteUrl } from '@/lib/seo'
 import styles from '../bandas.module.css'
@@ -110,6 +111,7 @@ export default async function BandDetailPage({ params }) {
             <a href="#extraordinarias">Extraordinarias</a>
             <a href="#estrenos">Estrenos</a>
             <a href="#direccion">Dirección</a>
+            {band.sources?.length ? <a href="#fuentes">Fuentes</a> : null}
           </div>
         </div>
       </nav>
@@ -175,6 +177,8 @@ export default async function BandDetailPage({ params }) {
           {band.direction.length ? <div className={styles.directionGrid}>{band.direction.map((item) => <article key={item.id}><span>{item.role}</span><h3>{item.name}</h3>{item.notes ? <p>{item.notes}</p> : null}</article>)}</div> : <div className={styles.emptyBlock}>El equipo de dirección se incorporará conforme quede documentado.</div>}
         </div>
       </section>
+
+      <SourcesBlock sources={band.sources} />
     </main>
   )
 }

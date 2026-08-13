@@ -136,14 +136,20 @@
 .bandPage:has(#acompanamientos:target) .navList a[href="#acompanamientos"],
 .bandPage:has(#extraordinarias:target) .navList a[href="#extraordinarias"],
 .bandPage:has(#estrenos:target) .navList a[href="#estrenos"],
-.bandPage:has(#direccion:target) .navList a[href="#direccion"] { color: #fff; font-weight: 600; }
+.bandPage:has(#direccion:target) .navList a[href="#direccion"],
+.bandPage:has(#fuentes:target) .navList a[href="#fuentes"] { color: #fff; font-weight: 600; }
 .bandPage:not(:has(section:target)) .navList a[href="#resumen"]::after,
 .bandPage:has(#resumen:target) .navList a[href="#resumen"]::after,
 .bandPage:has(#acompanamientos:target) .navList a[href="#acompanamientos"]::after,
 .bandPage:has(#extraordinarias:target) .navList a[href="#extraordinarias"]::after,
 .bandPage:has(#estrenos:target) .navList a[href="#estrenos"]::after,
-.bandPage:has(#direccion:target) .navList a[href="#direccion"]::after { position: absolute; right: 14px; bottom: 0; left: 14px; height: 3px; border-radius: 2px 2px 0 0; background: var(--band-primary); content: ''; }
+.bandPage:has(#direccion:target) .navList a[href="#direccion"]::after,
+.bandPage:has(#fuentes:target) .navList a[href="#fuentes"]::after { position: absolute; right: 14px; bottom: 0; left: 14px; height: 3px; border-radius: 2px 2px 0 0; background: var(--band-primary); content: ''; }
 .bandPage section[id] { scroll-margin-top: 148px; }
+.module :global(.sources-section) { border-top-color: var(--band-line); background: #fff; }
+.module :global(.sources-heading h2) { color: var(--band-secondary); font-family: 'Open Sans', Arial, sans-serif; font-weight: 700; }
+.module :global(.source-capirote) { background: var(--band-primary); }
+.module :global(.source-copy strong) { color: var(--band-secondary); font-family: 'Open Sans', Arial, sans-serif; font-weight: 600; }
 .sectionHeading { max-width: 800px; margin-bottom: 31px; }
 .sectionHeading h2 { margin: 8px 0 10px; color: var(--band-secondary); font-size: clamp(34px, 5vw, 58px); line-height: 1; letter-spacing: -.045em; }
 .sectionHeading p { margin: 0; color: var(--band-muted); font-size: 14px; line-height: 1.65; }

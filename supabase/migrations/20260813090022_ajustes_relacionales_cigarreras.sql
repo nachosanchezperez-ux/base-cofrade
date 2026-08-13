@@ -82,6 +82,7 @@ update public.bands
 set
   band_type = 'Cornetas y Tambores',
   municipality_id = (select id from public.municipalities where slug = 'sevilla'),
+  website_url = 'https://lascigarreras.net/',
   linked_brotherhood_name = 'Hermandad de Las Cigarreras'
 where entity_id = 'b1000000-0000-0000-0000-000000000001';
 
