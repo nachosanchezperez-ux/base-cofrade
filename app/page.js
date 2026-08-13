@@ -1,9 +1,25 @@
 import Link from 'next/link';
 import HiloSearch from '@/components/HiloSearch';
 import { hermandades } from '@/lib/data';
+import { DEFAULT_DESCRIPTION, HOME_TITLE } from '@/lib/seo';
 import styles from './home.module.css';
 
 export const dynamic = 'force-dynamic';
+
+export const metadata = {
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    title: HOME_TITLE,
+    description: DEFAULT_DESCRIPTION,
+    url: '/',
+  },
+  twitter: {
+    title: HOME_TITLE,
+    description: DEFAULT_DESCRIPTION,
+  },
+};
 
 function getTodayLabel() {
   const formatter = new Intl.DateTimeFormat('es-ES', {
