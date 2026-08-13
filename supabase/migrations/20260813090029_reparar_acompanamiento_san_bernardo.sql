@@ -87,8 +87,8 @@ begin
     'e1600000-0000-0000-0000-000000000001',
     'curiosity',
     '¿Sabías que…?',
-    'Las Cigarreras acompañó al Cristo de la Salud de la Hermandad de San Bernardo desde 1993 hasta 2003. De esta vinculación nace la marcha «Refúgiame», de Francis González Ríos.',
-    'Las Cigarreras acompañó al Cristo de la Salud de la Hermandad de San Bernardo desde 1993 hasta 2003. De esta vinculación nace la marcha «Refúgiame», de Francis González Ríos.',
+    'De esta vinculación nació la marcha «Refúgiame», compuesta por Francis González Ríos.',
+    'De esta vinculación nació la marcha «Refúgiame», compuesta por Francis González Ríos.',
     false,
     'published'
   )

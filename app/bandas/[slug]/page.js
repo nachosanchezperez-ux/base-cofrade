@@ -62,6 +62,20 @@ function creditedName(item) {
   return [item.name, ...(item.aliases || [])].join(' · ')
 }
 
+function HistoricalIcon() {
+  return <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+    <path d="M3.6 12a8.4 8.4 0 1 0 2.46-5.94L3.6 8.52" />
+    <path d="M3.6 4.8v3.72h3.72M12 7.8V12l2.88 1.68" />
+  </svg>
+}
+
+function CuriosityIcon() {
+  return <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+    <path d="M12 3.4c.48 3.2 2 4.72 5.2 5.2-3.2.48-4.72 2-5.2 5.2-.48-3.2-2-4.72-5.2-5.2 3.2-.48 4.72-2 5.2-5.2Z" />
+    <path d="M18.2 14.7c.24 1.62 1 2.38 2.62 2.62-1.62.24-2.38 1-2.62 2.62-.24-1.62-1-2.38-2.62-2.62 1.62-.24 2.38-1 2.62-2.62ZM5.25 14.2c.18 1.2.75 1.77 1.95 1.95-1.2.18-1.77.75-1.95 1.95-.18-1.2-.75-1.77-1.95-1.95 1.2-.18 1.77-.75 1.95-1.95Z" />
+  </svg>
+}
+
 export async function generateMetadata({ params }) {
   const { slug } = await params
   const band = await getBandBySlug(slug)
@@ -295,13 +309,14 @@ export default async function BandDetailPage({ params }) {
               {historicalAccompaniments.map((item) => (
                 <article className={styles.historicalCard} key={item.id}>
                   <div className={styles.historicalPeriod}>
-                    <span>Periodo</span>
+                    <span className={styles.historicalIcon}><HistoricalIcon /></span>
+                    <span>Periodo histórico</span>
                     <strong>{yearRange(item)}</strong>
                   </div>
                   <div className={styles.historicalCopy}>
                     <span>{item.outingType || 'Salida procesional'}</span>
                     <h3>{item.brotherhoodName}</h3>
-                    <p>{item.position || 'Acompañamiento musical'}{item.stepName ? <><small> · </small>{item.stepName}</> : null}</p>
+                    <p>{item.position || item.stepName || 'Acompañamiento musical'}</p>
                     {item.notes ? <small>{item.notes}</small> : null}
                     {item.brotherhoodSlug && item.brotherhoodPageReady
                       ? <Link href={`/hermandades/${item.brotherhoodSlug}`}>Ver ficha de la hermandad <span>→</span></Link>
@@ -313,7 +328,10 @@ export default async function BandDetailPage({ params }) {
             {curiosities.length ? <div className={styles.curiosityStack}>
               {curiosities.map((item) => (
                 <aside className={styles.curiosityCard} key={item.id}>
-                  <span>{item.title || '¿Sabías que…?'}</span>
+                  <div className={styles.curiosityLabel}>
+                    <span className={styles.curiosityIcon}><CuriosityIcon /></span>
+                    <span>{item.title || '¿Sabías que…?'}</span>
+                  </div>
                   <p>{item.body || item.summary}</p>
                 </aside>
               ))}
