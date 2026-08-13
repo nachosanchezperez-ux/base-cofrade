@@ -35,7 +35,7 @@ export default async function PanelDashboardPage() {
           <div className={styles.moduleList}>
             <div><span>Salidas documentadas</span><strong>{dashboard.modules.outings}</strong></div>
             <div><span>Cultos registrados</span><strong>{dashboard.modules.cults}</strong></div>
-            <div><span>Estrenos y restauraciones</span><strong>{dashboard.modules.heritage}</strong></div>
+            <div><span>Patrimonio documentado</span><strong>{dashboard.modules.heritage}</strong></div>
             <div><span>Contenido archivado</span><strong>{dashboard.entities.archived}</strong></div>
           </div>
         </section>

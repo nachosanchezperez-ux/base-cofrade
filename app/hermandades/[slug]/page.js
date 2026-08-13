@@ -161,7 +161,7 @@ export default async function HermandadDetailPage({ params }) {
             {h.habitos?.length > 0 && <a href="#tunica">Túnica</a>}
             {h.salidas?.length > 0 && <a href="#salidas">Salidas</a>}
             {h.cultos?.length > 0 && <a href="#cultos">Cultos</a>}
-            {h.estrenos?.length > 0 && <a href="#estrenos">Patrimonio</a>}
+            {(h.patrimonio?.length > 0 || h.estrenos?.length > 0) && <a href="#patrimonio">Patrimonio</a>}
             {h.patrimonioMusical?.length > 0 && <a href="#musica">Patrimonio musical</a>}
             {h.acompanamientos?.length > 0 && <a href="#acompanamientos">Acompañamientos</a>}
             {h.noticias?.length > 0 && <a href="#noticias">Noticias</a>}
@@ -477,11 +477,80 @@ export default async function HermandadDetailPage({ params }) {
         })}</div>
       </div></section>}
 
-      {h.estrenos?.length > 0 && <section className="section brotherhood-white" id="estrenos"><div className="shell">
-        <SectionTitle eyebrow="Memoria material" title="Patrimonio · Intervenciones" description="Estrenos y restauraciones documentados, con sus responsables y disciplinas cuando constan en las fuentes." />
-        <div className="release-grid">{h.estrenos.map((e) => (
-          <article className="release-card" key={e.id}><span className="release-year">{e.ano}</span><span className="pill">{e.tipo}</span><h3>{e.titulo}</h3><p>{e.descripcion}</p><small>{e.autoria}</small></article>
-        ))}</div>
+      {(h.patrimonio?.length > 0 || h.estrenos?.length > 0) && <section className="section heritage-section" id="patrimonio"><div className="shell">
+        <SectionTitle eyebrow="Memoria material" title="Patrimonio" description="Obras, enseres y espacios documentados como piezas vivas: su historia, sus autores y las intervenciones que han definido su aspecto." />
+
+        {h.patrimonio?.length > 0 && (
+          <div className="heritage-catalog">
+            {h.patrimonio.map((pieza, index) => (
+              <article className={`heritage-work ${pieza.destacado ? 'heritage-work-featured' : ''}`} key={pieza.id}>
+                <div className={`heritage-work-visual ${pieza.imagen ? 'has-image' : ''}`}>
+                  {pieza.imagen ? (
+                    <>
+                      <Image
+                        src={pieza.imagen.src}
+                        alt={pieza.imagen.alt}
+                        fill
+                        sizes="(max-width: 699px) calc(100vw - 40px), (max-width: 1099px) calc(50vw - 30px), 275px"
+                      />
+                      {(pieza.imagen.pie || pieza.imagen.autor) && <small>{[pieza.imagen.pie, pieza.imagen.autor].filter(Boolean).join(' · ')}</small>}
+                    </>
+                  ) : (
+                    <div className="heritage-work-placeholder" aria-hidden="true">
+                      <span>{String(index + 1).padStart(2, '0')}</span>
+                      <strong>{pieza.tipo}</strong>
+                    </div>
+                  )}
+                </div>
+
+                <div className="heritage-work-copy">
+                  <div className="heritage-work-meta">
+                    <span>{pieza.tipo}</span>
+                    {pieza.fecha && <strong>{pieza.fecha}</strong>}
+                  </div>
+                  <h3>{pieza.nombre}</h3>
+                  <p className="heritage-work-lead">{pieza.resumen || pieza.descripcion}</p>
+
+                  {(pieza.bendicion || pieza.procedencia) && (
+                    <dl className="heritage-work-facts">
+                      {pieza.bendicion && <div><dt>Bendición</dt><dd>{pieza.bendicion}</dd></div>}
+                      {pieza.procedencia && <div><dt>Procedencia</dt><dd>{pieza.procedencia}</dd></div>}
+                    </dl>
+                  )}
+
+                  {pieza.agentes?.length > 0 && (
+                    <div className="heritage-work-agents">
+                      <small>Autores y responsables</small>
+                      <div>{pieza.agentes.map((agente) => <span key={`${pieza.id}-${agente.id}-${agente.rol}`}><strong>{agente.nombre}</strong><em>{agente.rol}</em></span>)}</div>
+                    </div>
+                  )}
+
+                  {(pieza.descripcion || pieza.iconografia || pieza.contexto || pieza.origen || pieza.tecnica || pieza.materiales || pieza.dimensiones) && (
+                    <details className="heritage-work-details">
+                      <summary>Conocer la pieza <span>＋</span></summary>
+                      <div className="heritage-work-story">
+                        {pieza.descripcion && pieza.descripcion !== pieza.resumen && <p>{pieza.descripcion}</p>}
+                        {pieza.contexto && <div><small>Contexto histórico</small><p>{pieza.contexto}</p></div>}
+                        {pieza.iconografia && <div><small>Diseño e iconografía</small><p>{pieza.iconografia}</p></div>}
+                        {pieza.origen && <div><small>Origen y evolución</small><p>{pieza.origen}</p></div>}
+                        {(pieza.tecnica || pieza.materiales || pieza.dimensiones) && <p className="heritage-work-tech">{[pieza.tecnica, pieza.materiales, pieza.dimensiones].filter(Boolean).join(' · ')}</p>}
+                      </div>
+                    </details>
+                  )}
+                </div>
+              </article>
+            ))}
+          </div>
+        )}
+
+        {h.estrenos?.length > 0 && (
+          <div className="heritage-timeline-block">
+            <div className="heritage-subheading"><span className="eyebrow">Evolución documentada</span><h3>Estrenos y restauraciones</h3></div>
+            <div className="release-grid">{h.estrenos.map((e) => (
+              <article className="release-card" key={e.id}><span className="release-year">{e.ano}</span><span className="pill">{e.tipo}</span><h3>{e.titulo}</h3><p>{e.descripcion}</p><small>{e.autoria}</small></article>
+            ))}</div>
+          </div>
+        )}
       </div></section>}
 
       {h.patrimonioMusical?.length > 0 && <section className="section music-section" id="musica"><div className="shell">
