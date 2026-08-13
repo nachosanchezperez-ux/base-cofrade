@@ -9,6 +9,7 @@ import { createClient } from '@/lib/supabase/server'
 const UUID_PATTERN = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i
 const STATUSES = new Set(['draft', 'review', 'published', 'archived'])
 const PARTICIPATION_MODES = new Set(['full_route', 'segment', 'alternating', 'unspecified'])
+const SOCIAL_PLATFORMS = new Set(['website', 'facebook', 'instagram', 'x', 'youtube', 'spotify', 'tiktok', 'whatsapp'])
 
 function value(formData, name) { return String(formData.get(name) || '').trim() }
 function nullable(formData, name) { return value(formData, name) || null }
@@ -151,9 +152,6 @@ export async function updateBandAction(formData) {
     band_type: required(formData, 'band_type', 'El tipo de formación'),
     municipality_id: optionalUuid(formData, 'municipality_id'),
     foundation_text: nullable(formData, 'foundation_text'),
-    website_url: url(formData, 'website_url', 'La web oficial'),
-    youtube_url: url(formData, 'youtube_url', 'El canal de YouTube'),
-    instagram_url: url(formData, 'instagram_url', 'El enlace de Instagram'),
     description: nullable(formData, 'description'),
     primary_color: color(formData, 'primary_color'),
     secondary_color: color(formData, 'secondary_color'),
@@ -173,6 +171,23 @@ export async function updateBandAction(formData) {
   await audit(supabase, user, { action_type: entityPayload.status === 'published' ? 'publish' : 'update', object_type: 'band', object_id: bandId, entity_id: bandId, summary: `Ficha actualizada: ${popularName}`, changed_fields: { entity: entityPayload, band: bandPayload, linked_brotherhood_entity_id: linkedBrotherhoodId } })
   await refreshBand(supabase, bandId)
   redirectSaved(bandId, 'general')
+}
+
+export async function saveBandSocialLinkAction(formData) {
+  const user = await requirePanelEditor()
+  const supabase = await createClient()
+  const bandId = uuid(formData, 'band_id')
+  const linkId = optionalUuid(formData, 'link_id')
+  const platform = required(formData, 'platform', 'La plataforma')
+  if (!SOCIAL_PLATFORMS.has(platform)) throw new Error('Plataforma no válida.')
+  const payload = { entity_id: bandId, platform, url: url(formData, 'url', 'La URL', true), label: nullable(formData, 'label'), display_order: integer(formData, 'display_order') || 0, is_public: checked(formData, 'is_public') }
+  const result = linkId
+    ? await supabase.from('entity_social_links').update(payload).eq('id', linkId).eq('entity_id', bandId).select('id').single()
+    : await supabase.from('entity_social_links').insert(payload).select('id').single()
+  const saved = assertMutation(result, 'No se pudo guardar el enlace de interés')
+  await audit(supabase, user, { action_type: linkId ? 'update' : 'create', object_type: 'entity_social_link', object_id: saved.id, entity_id: bandId, summary: `${linkId ? 'Enlace actualizado' : 'Enlace creado'}: ${platform}`, changed_fields: payload })
+  await refreshBand(supabase, bandId)
+  redirectSaved(bandId, 'enlaces')
 }
 
 export async function saveBandDirectionAction(formData) {

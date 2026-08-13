@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import JsonLd from '@/components/JsonLd'
 import SourcesBlock from '@/components/SourcesBlock'
+import OfficialLinks from '@/components/OfficialLinks'
 import { getBandBySlug, youtubeEmbedUrl } from '@/lib/supabase/bands'
 import { absoluteUrl } from '@/lib/seo'
 import styles from '../bandas.module.css'
@@ -106,6 +107,7 @@ export default async function BandDetailPage({ params }) {
     foundingDate: band.foundation || undefined,
     foundingLocation: band.municipality || undefined,
     image: band.heroImagePath ? absoluteUrl(band.heroImagePath) : undefined,
+    sameAs: band.interestLinks.map((link) => link.url),
   }
 
   return (
@@ -132,10 +134,6 @@ export default async function BandDetailPage({ params }) {
             <div className={styles.heroCopy}>
               <h1>{band.popularName}</h1>
               <p className={styles.officialName}>{band.officialName}</p>
-              <div className={styles.heroLinks}>
-                {band.websiteUrl ? <a href={band.websiteUrl} target="_blank" rel="noreferrer">Web oficial ↗</a> : null}
-                {band.instagramUrl ? <a href={band.instagramUrl} target="_blank" rel="noreferrer">Instagram ↗</a> : null}
-              </div>
             </div>
             <div className={styles.identityBlock}>
               {band.logoPath ? <Image src={band.logoPath} alt={`Logotipo de ${band.popularName}`} width={150} height={225} priority sizes="150px" /> : <strong>{band.popularName.slice(0, 2).toUpperCase()}</strong>}
@@ -155,6 +153,7 @@ export default async function BandDetailPage({ params }) {
             {hasPremieres ? <a href="#repertorio">Repertorio</a> : null}
             {hasDirection ? <a href="#direccion">Dirección</a> : null}
             {band.sources?.length ? <a href="#fuentes">Fuentes</a> : null}
+            {band.interestLinks.length ? <a href="#enlaces-de-interes">Enlaces de interés</a> : null}
           </div>
         </div>
       </nav>
@@ -345,6 +344,7 @@ export default async function BandDetailPage({ params }) {
       </section> : null}
 
       <SourcesBlock sources={band.sources} />
+      <OfficialLinks links={band.interestLinks} />
     </main>
   )
 }
