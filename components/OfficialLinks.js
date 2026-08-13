@@ -4,6 +4,7 @@ const PLATFORM_LABELS = {
   instagram: 'Instagram',
   x: 'X / Twitter',
   youtube: 'YouTube',
+  spotify: 'Spotify',
   tiktok: 'TikTok',
   whatsapp: 'Canal de WhatsApp',
 }
@@ -14,6 +15,7 @@ const PLATFORM_MARKS = {
   instagram: 'IG',
   x: 'X',
   youtube: '▶',
+  spotify: '♫',
   tiktok: '♪',
   whatsapp: 'WA',
 }
@@ -22,11 +24,11 @@ export default function OfficialLinks({ links = [] }) {
   if (!links.length) return null
 
   return (
-    <section className="section official-links-section" id="enlaces-oficiales">
+    <section className="section official-links-section" id="enlaces-de-interes">
       <div className="shell">
         <div className="official-links-heading">
-          <div><span className="eyebrow">Información verificada</span><h2>Web y redes oficiales</h2></div>
-          <p>Canales publicados por la propia hermandad.</p>
+          <div><span className="eyebrow">Para saber más</span><h2>Enlaces de interés</h2></div>
+          <p>Web, redes y canales oficiales publicados por la entidad.</p>
         </div>
         <div className="official-links-grid">
           {links.map((link) => (
