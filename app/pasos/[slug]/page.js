@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import JsonLd from '@/components/JsonLd';
 import SectionTitle from '@/components/SectionTitle';
-import { getPasoBySlug, hermandades } from '@/lib/data';
+import { getPasoPageBySlug } from '@/lib/supabase/brotherhoods';
 import {
   absoluteUrl,
   breadcrumbJsonLd,
@@ -10,13 +10,9 @@ import {
   seoDescription,
 } from '@/lib/seo';
 
-export function generateStaticParams(){
-  return hermandades.flatMap((h)=>h.pasos.map((p)=>({slug:p.slug})));
-}
-
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const result = getPasoBySlug(slug);
+  const result = await getPasoPageBySlug(slug);
 
   if (!result) {
     return {
@@ -51,7 +47,7 @@ export async function generateMetadata({ params }) {
 
 export default async function PasoDetailPage({params}){
   const {slug}=await params;
-  const result=getPasoBySlug(slug);
+  const result=await getPasoPageBySlug(slug);
   if(!result) notFound();
   const {paso,hermandad}=result;
   const imagenes=paso.imagenes.map((id)=>hermandad.imagenes.find((i)=>i.id===id)).filter(Boolean);

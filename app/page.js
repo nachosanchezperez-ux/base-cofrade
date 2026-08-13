@@ -1,8 +1,7 @@
 import Link from 'next/link';
 import HiloSearch from '@/components/HiloSearch';
-import { hermandades } from '@/lib/data';
 import { DEFAULT_DESCRIPTION, HOME_TITLE } from '@/lib/seo';
-import { getBandsDirectory } from '@/lib/supabase/bands';
+import { getGlobalSearchItems } from '@/lib/supabase/search';
 import styles from './home.module.css';
 
 export const dynamic = 'force-dynamic';
@@ -39,41 +38,9 @@ function getTodayLabel() {
   return `${weekday.charAt(0).toUpperCase()}${weekday.slice(1)} · ${day} de ${month} de ${year}`;
 }
 
-function buildSearchItems(bands) {
-  return [
-    ...hermandades.flatMap((hermandad) => [
-    {
-      type: 'Hermandad',
-      title: hermandad.nombrePopular,
-      subtitle: `${hermandad.localidad} · ${hermandad.diaSalida}`,
-      href: `/hermandades/${hermandad.slug}`,
-    },
-    ...hermandad.imagenes.map((imagen) => ({
-      type: 'Imagen',
-      title: imagen.nombre,
-      subtitle: `${imagen.autor} · ${imagen.fecha}`,
-      href: `/imagenes/${imagen.slug}`,
-    })),
-    ...hermandad.pasos.map((paso) => ({
-      type: 'Paso',
-      title: paso.nombre,
-      subtitle: `${paso.tipo} · ${hermandad.nombrePopular}`,
-      href: `/pasos/${paso.slug}`,
-    })),
-    ]),
-    ...bands.map((band) => ({
-      type: 'Banda',
-      title: band.popularName,
-      subtitle: `${band.type} · ${band.municipality}`,
-      href: `/bandas/${band.slug}`,
-    })),
-  ];
-}
-
 export default async function HomePage() {
   const today = getTodayLabel();
-  const bands = await getBandsDirectory();
-  const searchItems = buildSearchItems(bands);
+  const searchItems = await getGlobalSearchItems();
 
   return (
     <div className={styles.home}>

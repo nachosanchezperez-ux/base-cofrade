@@ -1,11 +1,11 @@
 import { createClient } from '@supabase/supabase-js';
-import { hermandades } from '@/lib/data';
 import { absoluteUrl } from '@/lib/seo';
 
 export const revalidate = 3600;
 
 const fallbackEntities = [
-  ...hermandades.map(({ slug }) => ({ slug, updated_at: null, entity_type: 'brotherhood' })),
+  { slug: 'el-baratillo', updated_at: null, entity_type: 'brotherhood' },
+  { slug: 'asuncion-de-cantillana', updated_at: null, entity_type: 'brotherhood' },
   { slug: 'las-cigarreras', updated_at: null, entity_type: 'band' },
 ];
 
@@ -28,7 +28,7 @@ async function publishedEntities() {
     const { data, error } = await supabase
       .from('entities')
       .select('slug, updated_at, entity_type')
-      .in('entity_type', ['brotherhood', 'band'])
+      .in('entity_type', ['brotherhood', 'band', 'image', 'step'])
       .eq('status', 'published')
       .not('slug', 'is', null);
 
@@ -46,6 +46,8 @@ export default async function sitemap() {
   const entities = await publishedEntities();
   const brotherhoods = entities.filter((item) => item.entity_type === 'brotherhood');
   const bands = entities.filter((item) => item.entity_type === 'band');
+  const images = entities.filter((item) => item.entity_type === 'image');
+  const steps = entities.filter((item) => item.entity_type === 'step');
   const entries = [
     {
       url: absoluteUrl('/'),
@@ -79,18 +81,18 @@ export default async function sitemap() {
       changeFrequency: 'weekly',
       priority: 0.8,
     })),
-    ...hermandades.flatMap((hermandad) => [
-      ...hermandad.imagenes.map((imagen) => ({
-        url: absoluteUrl(`/imagenes/${imagen.slug}`),
-        changeFrequency: 'monthly',
-        priority: 0.7,
-      })),
-      ...hermandad.pasos.map((paso) => ({
-        url: absoluteUrl(`/pasos/${paso.slug}`),
-        changeFrequency: 'monthly',
-        priority: 0.7,
-      })),
-    ]),
+    ...images.map((image) => ({
+      url: absoluteUrl(`/imagenes/${image.slug}`),
+      ...(image.updated_at ? { lastModified: new Date(image.updated_at) } : {}),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    })),
+    ...steps.map((step) => ({
+      url: absoluteUrl(`/pasos/${step.slug}`),
+      ...(step.updated_at ? { lastModified: new Date(step.updated_at) } : {}),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    })),
   ];
 
   return [...new Map(entries.map((entry) => [entry.url, entry])).values()];
