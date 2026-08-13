@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getImagenBySlug, hermandades } from '@/lib/data';
 import JsonLd from '@/components/JsonLd';
 import SourcesBlock from '@/components/SourcesBlock';
+import { getImagenPageBySlug } from '@/lib/supabase/brotherhoods';
 import {
   absoluteUrl,
   breadcrumbJsonLd,
@@ -10,15 +10,9 @@ import {
   seoDescription,
 } from '@/lib/seo';
 
-export function generateStaticParams() {
-  return hermandades.flatMap((hermandad) =>
-    hermandad.imagenes.map((imagen) => ({ slug: imagen.slug }))
-  );
-}
-
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const result = getImagenBySlug(slug);
+  const result = await getImagenPageBySlug(slug);
 
   if (!result) {
     return {
@@ -54,7 +48,7 @@ export async function generateMetadata({ params }) {
 
 export default async function ImagenPage({ params }) {
   const { slug } = await params;
-  const result = getImagenBySlug(slug);
+  const result = await getImagenPageBySlug(slug);
 
   if (!result) notFound();
 
