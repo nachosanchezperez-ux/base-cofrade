@@ -398,9 +398,9 @@ button, input { font: inherit; }
 }
 .heritage-catalog{
   display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
+  grid-template-columns:repeat(2,minmax(0,1fr));
   align-items:stretch;
-  gap:16px;
+  gap:24px;
   margin-top:38px;
 }
 .heritage-work{
@@ -416,7 +416,7 @@ button, input { font: inherit; }
 }
 .heritage-work-visual{
   position:relative;
-  height:clamp(300px,31vw,360px);
+  height:clamp(360px,36vw,420px);
   flex:0 0 auto;
   overflow:hidden;
   background:
@@ -477,7 +477,7 @@ button, input { font: inherit; }
   display:flex;
   flex:1;
   flex-direction:column;
-  padding:24px 22px 22px;
+  padding:30px 30px 26px;
 }
 .heritage-work-meta{
   display:flex;
@@ -489,6 +489,7 @@ button, input { font: inherit; }
   font-weight:900;
   letter-spacing:.13em;
   text-transform:uppercase;
+  min-height:32px;
 }
 .heritage-work-meta strong{
   color:var(--bc-blue);
@@ -499,32 +500,36 @@ button, input { font: inherit; }
 }
 .heritage-work-copy>h3{
   max-width:680px;
-  margin:14px 0 11px;
+  min-height:2em;
+  margin:12px 0 10px;
   color:var(--bc-dark);
   font-family:Georgia,serif;
-  font-size:clamp(25px,2.15vw,31px);
+  font-size:clamp(30px,3vw,38px);
   line-height:1;
   letter-spacing:-.035em;
 }
 .heritage-work-lead{
   max-width:700px;
+  min-height:5em;
   margin:0;
   color:#536475;
   font-family:Georgia,serif;
-  font-size:14px;
-  line-height:1.55;
+  font-size:15px;
+  line-height:1.6;
 }
 .heritage-work-facts{
   display:grid;
-  grid-template-columns:1fr;
-  gap:0;
-  margin:22px 0 0;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  align-content:start;
+  min-height:112px;
+  margin:24px 0 0;
   padding:0;
   border-top:1px solid #e3e9ee;
   border-bottom:1px solid #e3e9ee;
 }
-.heritage-work-facts div{padding:14px 0}
-.heritage-work-facts div+div{border-top:1px solid #e3e9ee}
+.heritage-work-facts div{padding:16px 18px 16px 0}
+.heritage-work-facts div+div{padding-left:18px;border-left:1px solid #e3e9ee}
+.heritage-work-facts div:only-child{grid-column:1/-1;padding-right:0}
 .heritage-work-facts dt,
 .heritage-work-agents>small,
 .heritage-work-story small{
@@ -541,9 +546,10 @@ button, input { font: inherit; }
   font-weight:800;
   line-height:1.45;
 }
-.heritage-work-agents{margin-top:20px}
+.heritage-work-agents{min-height:105px;margin-top:22px}
 .heritage-work-agents>div{
   display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
   gap:7px;
   margin-top:9px;
 }
@@ -555,6 +561,7 @@ button, input { font: inherit; }
   border-radius:11px;
   background:rgba(21,59,105,.035);
 }
+.heritage-work-agents>div>span:only-child{grid-column:1/-1}
 .heritage-work-agents strong{color:var(--bc-blue);font-size:11px}
 .heritage-work-agents em{color:#778591;font-size:9px;font-style:normal}
 .heritage-work-details{margin-top:auto;padding-top:20px;border-top:0}
@@ -713,22 +720,28 @@ button, input { font: inherit; }
   border-top:0;
 }
 
-@media(max-width:1099px){
-  .heritage-catalog{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
-}
 @media(max-width:900px){
   .outing-grid{grid-template-columns:1fr}
   .release-grid,.music-history-grid,.news-grid{grid-template-columns:1fr 1fr}
   .music-list article{grid-template-columns:45px 1fr 70px}
   .music-play,.music-pending{grid-column:2/4;text-align:left}
 }
-@media(max-width:699px){
+@media(max-width:820px){
   .heritage-catalog{grid-template-columns:1fr;gap:18px}
   .heritage-work{border-radius:18px}
   .heritage-work-visual{height:clamp(300px,88vw,390px)}
   .heritage-work-copy{padding:25px 22px 23px}
+  .heritage-work-meta,
+  .heritage-work-copy>h3,
+  .heritage-work-lead,
+  .heritage-work-facts,
+  .heritage-work-agents{min-height:0}
   .heritage-work-copy>h3{font-size:32px}
-  .heritage-work-lead{font-size:15px}
+  .heritage-work-facts{grid-template-columns:1fr}
+  .heritage-work-facts div{padding:14px 0}
+  .heritage-work-facts div+div{padding-left:0;border-top:1px solid #e3e9ee;border-left:0}
+  .heritage-work-agents>div{grid-template-columns:1fr}
+  .heritage-work-agents>div>span:only-child{grid-column:auto}
 }
 @media(max-width:620px){
   .outing-card{grid-template-columns:1fr}
