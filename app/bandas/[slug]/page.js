@@ -187,7 +187,7 @@ export default async function BandDetailPage({ params }) {
                   <strong>{band.municipality}</strong>
                   {band.municipalitySlug ? <Link href={`/bandas?localidad=${band.municipalitySlug}`}>Bandas de {band.municipality} →</Link> : null}
                 </article>
-                <article className={styles.roleCardWide}>
+                <article>
                   <span>Hermandad</span>
                   <strong>{band.linkedBrotherhood || 'Por documentar'}</strong>
                   {band.linkedBrotherhoodSlug ? <Link href={`/hermandades/${band.linkedBrotherhoodSlug}`}>Ver ficha de la hermandad →</Link> : null}
@@ -206,7 +206,7 @@ export default async function BandDetailPage({ params }) {
                   </div>
                   <div className={styles.impactMetrics}>
                     {band.accompaniments.length ? <a href="#acompanamientos"><strong>{band.accompaniments.length}</strong><span>{band.accompaniments.length === 1 ? 'hermandad en Semana Santa' : 'hermandades en Semana Santa'}</span></a> : null}
-                    {currentPremieres.length ? <a href="#repertorio"><strong>{currentPremieres.length}</strong><span>{currentPremieres.length === 1 ? 'estreno en 2026' : 'estrenos en 2026'}</span></a> : null}
+                    {currentPremieres.length ? <a href="#repertorio"><strong>{currentPremieres.length}</strong><span>{currentPremieres.length === 1 ? `estreno en ${currentYear}` : `estrenos en ${currentYear}`}</span></a> : null}
                     {band.outings.length ? <a href="#extraordinarias"><strong>{band.outings.length}</strong><span>{band.outings.length === 1 ? 'salida extraordinaria' : 'salidas extraordinarias'}</span></a> : null}
                   </div>
                 </div>
@@ -264,7 +264,6 @@ export default async function BandDetailPage({ params }) {
                 <strong>{yearRange(item)}</strong>
               </div>
               <div className={styles.relationshipIdentity}>
-                <span>Hermandad</span>
                 <h3>{item.brotherhoodName}</h3>
               </div>
               <div className={styles.relationshipStep}>
@@ -320,7 +319,7 @@ export default async function BandDetailPage({ params }) {
                   <article className={styles.premiereCard} key={item.id}>
                     {embed ? <div className={styles.videoWrap}><iframe src={embed} title={`${item.title}, de ${item.composerName}`} loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen /></div> : null}
                     <div className={styles.premiereCopy}>
-                      <span>Estreno · {item.year}</span>
+                      <span>Estreno</span>
                       <h4>{item.title}</h4>
                       {item.credits?.length ? (
                         <div className={styles.premiereCredits}>
