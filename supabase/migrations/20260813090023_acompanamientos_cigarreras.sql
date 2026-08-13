@@ -56,7 +56,7 @@ values
 on conflict (slug) do update set name = excluded.name;
 
 insert into public.steps (entity_id, step_type, current_condition)
-select e.id, 'Misterio', 'in_use'
+select e.id, 'Misterio', 'preserved'
 from public.entities e
 where e.slug in (
   'paso-misterio-jesus-mision-sevilla',
@@ -99,15 +99,24 @@ on conflict (id) do update set
   relation_type = excluded.relation_type,
   status = excluded.status;
 
+-- Etiquetas públicas deliberadas. Permiten mostrar el nombre de la hermandad
+-- y del paso sin conceder acceso público a entidades que siguen en borrador.
+alter table public.music_accompaniment_periods
+  add column if not exists public_brotherhood_name text,
+  add column if not exists public_step_name text;
+
 insert into public.music_accompaniment_periods (
-  id, brotherhood_entity_id, band_entity_id, step_entity_id, position,
-  outing_type, year_from, is_current, notes, status
+  id, brotherhood_entity_id, band_entity_id, step_entity_id,
+  public_brotherhood_name, public_step_name, position, outing_type,
+  year_from, is_current, notes, status
 )
 select
   v.id::uuid,
   h.id,
   b.id,
   s.id,
+  h.name,
+  s.name,
   'Tras el paso de misterio',
   v.outing_type,
   v.year_from,
@@ -131,6 +140,8 @@ on conflict (id) do update set
   brotherhood_entity_id = excluded.brotherhood_entity_id,
   band_entity_id = excluded.band_entity_id,
   step_entity_id = excluded.step_entity_id,
+  public_brotherhood_name = excluded.public_brotherhood_name,
+  public_step_name = excluded.public_step_name,
   position = excluded.position,
   outing_type = excluded.outing_type,
   year_from = excluded.year_from,
@@ -180,39 +191,3 @@ on conflict (id) do update set
   source_id = excluded.source_id,
   music_accompaniment_period_id = excluded.music_accompaniment_period_id,
   scope = excluded.scope;
-
--- Expone únicamente las etiquetas necesarias para las tarjetas públicas. De
--- este modo, las entidades en borrador pueden alimentar relaciones sin crear
--- enlaces a fichas todavía incompletas.
-create or replace function public.get_public_band_accompaniments(target_band_id uuid)
-returns table (
-  id uuid,
-  brotherhood_entity_id uuid,
-  brotherhood_name text,
-  brotherhood_slug text,
-  step_entity_id uuid,
-  step_name text
-)
-language sql
-stable
-security definer
-set search_path = ''
-as $$
-  select
-    map.id,
-    h.id,
-    h.name,
-    case when h.status = 'published' then h.slug else null end,
-    s.id,
-    s.name
-  from public.music_accompaniment_periods map
-  join public.entities b on b.id = map.band_entity_id and b.status = 'published'
-  join public.entities h on h.id = map.brotherhood_entity_id
-  left join public.entities s on s.id = map.step_entity_id
-  where map.band_entity_id = target_band_id
-    and map.status = 'published'
-    and map.is_current = true;
-$$;
-
-revoke all on function public.get_public_band_accompaniments(uuid) from public;
-grant execute on function public.get_public_band_accompaniments(uuid) to anon, authenticated;
