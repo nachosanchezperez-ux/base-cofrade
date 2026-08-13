@@ -324,7 +324,7 @@ export default async function BandDetailPage({ params }) {
 
       {hasOutings ? <section className={styles.contentSection} id="extraordinarias">
         <div className="shell">
-          <div className={styles.sectionHeading}><span className={styles.eyebrow}>Próximas citas</span><h2>Salidas extraordinarias</h2></div>
+          <div className={styles.sectionHeading}><span className={styles.eyebrow}>Agenda</span><h2>Próximas salidas extraordinarias</h2></div>
           <div className={styles.outingList}>{band.outings.map((item) => {
             const event = eventDate(item.date)
             return (
