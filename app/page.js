@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import HiloSearch from '@/components/HiloSearch';
 import { DEFAULT_DESCRIPTION, HOME_TITLE } from '@/lib/seo';
+import { getUpcomingExtraordinaryOutings } from '@/lib/supabase/home';
 import { getGlobalSearchItems } from '@/lib/supabase/search';
 import styles from './home.module.css';
 
@@ -40,7 +41,10 @@ function getTodayLabel() {
 
 export default async function HomePage() {
   const today = getTodayLabel();
-  const searchItems = await getGlobalSearchItems();
+  const [searchItems, extraordinaryOutings] = await Promise.all([
+    getGlobalSearchItems(),
+    getUpcomingExtraordinaryOutings(),
+  ]);
 
   return (
     <div className={styles.home}>
@@ -140,14 +144,36 @@ export default async function HomePage() {
         <div className="shell">
           <div className={styles.extraBox}>
             <div className={styles.extraHead}>
-              <span className={styles.eyebrow}>Próximamente</span>
-              <h2>Salidas extraordinarias</h2>
-              <p>Solo aparecerán aquí las próximas citas que estén documentadas</p>
+              <span className={styles.eyebrow}>Agenda</span>
+              <h2>Próximas salidas extraordinarias</h2>
+              <p>Las próximas citas documentadas y publicadas en Hilo Cofrade</p>
             </div>
-            <div className={styles.extraEmpty}>
-              <strong>No hay salidas extraordinarias publicadas en esta versión beta</strong>
-              <span>Cuando incorporemos una próxima salida, este bloque mostrará directamente su fecha, motivo y relaciones principales</span>
-            </div>
+            {extraordinaryOutings.length ? (
+              <div className={styles.todayGrid}>
+                {extraordinaryOutings.map((outing) => (
+                  <article className={styles.dailyCard} key={outing.id}>
+                    <span className={styles.dailyIcon}>{outing.dateParts.day}</span>
+                    <div>
+                      <span className={styles.dailyType}>{outing.dateParts.month} {outing.dateParts.year}</span>
+                      <h3>{outing.title}</h3>
+                      <p>{[outing.brotherhoodName, outing.municipality].filter(Boolean).join(' · ')}</p>
+                      {outing.reason ? <p>{outing.reason}</p> : null}
+                      <div className={styles.musicMeta}>
+                        {outing.departureTime ? <span>Salida · {outing.departureTime}</span> : null}
+                        {outing.origin ? <span>Desde · {outing.origin}</span> : null}
+                        {outing.destination ? <span>Hasta · {outing.destination}</span> : null}
+                      </div>
+                      {outing.routeSummary ? <span className={styles.dailyLink}>{outing.routeSummary}</span> : null}
+                    </div>
+                  </article>
+                ))}
+              </div>
+            ) : (
+              <div className={styles.extraEmpty}>
+                <strong>No hay próximas salidas extraordinarias publicadas</strong>
+                <span>Este bloque se actualizará automáticamente cuando exista una nueva cita anunciada en la base de datos.</span>
+              </div>
+            )}
           </div>
         </div>
       </section>
