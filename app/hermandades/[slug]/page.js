@@ -1,24 +1,93 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { cache } from 'react';
 import CofradeTypeBadges from '@/components/CofradeTypeBadges';
 import { notFound } from 'next/navigation';
+import JsonLd from '@/components/JsonLd';
 import SectionTitle from '@/components/SectionTitle';
 import SourcesBlock from '@/components/SourcesBlock';
 import { hermandades } from '@/lib/data';
 import { getHermandadPageBySlug } from '@/lib/supabase/brotherhoods';
+import {
+  absoluteUrl,
+  breadcrumbJsonLd,
+  brotherhoodSeoDescription,
+  brotherhoodSeoTitle,
+  pageTitle,
+} from '@/lib/seo';
 
 export const dynamic = 'force-dynamic';
+const getHermandad = cache(getHermandadPageBySlug);
 
 export function generateStaticParams() {
   return hermandades.map((item) => ({ slug: item.slug }));
 }
 
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  const h = await getHermandad(slug);
+
+  if (!h) {
+    return {
+      title: 'Hermandad no encontrada',
+      robots: { index: false, follow: false },
+    };
+  }
+
+  const title = brotherhoodSeoTitle(h);
+  const description = brotherhoodSeoDescription(h);
+  const canonical = `/hermandades/${h.slug}`;
+
+  return {
+    title,
+    description,
+    alternates: { canonical },
+    openGraph: {
+      type: 'article',
+      title: pageTitle(title),
+      description,
+      url: canonical,
+    },
+    twitter: {
+      title: pageTitle(title),
+      description,
+    },
+  };
+}
+
 export default async function HermandadDetailPage({ params }) {
   const { slug } = await params;
-  const h = await getHermandadPageBySlug(slug);
+  const h = await getHermandad(slug);
   if (!h) notFound();
   const imagenMap = new Map(h.imagenes.map((imagen) => [imagen.id, imagen]));
   const tiposHermandad = h.tipos || [];
+  const canonicalPath = `/hermandades/${h.slug}`;
+  const description = brotherhoodSeoDescription(h);
+  const pageJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': `${absoluteUrl(canonicalPath)}#webpage`,
+    url: absoluteUrl(canonicalPath),
+    name: pageTitle(brotherhoodSeoTitle(h)),
+    description,
+    inLanguage: 'es',
+    isPartOf: {
+      '@id': `${absoluteUrl('/')}#website`,
+    },
+    about: {
+      '@type': 'Organization',
+      name: h.nombreOficial || h.nombrePopular,
+      alternateName: h.nombrePopular,
+      ...(h.localidad ? {
+        address: {
+          '@type': 'PostalAddress',
+          addressLocality: h.localidad,
+          addressRegion: h.provincia || 'Sevilla',
+          addressCountry: 'ES',
+        },
+      } : {}),
+    },
+  };
 
   return (
     <main className="brotherhood-page" style={{
@@ -28,6 +97,12 @@ export default async function HermandadDetailPage({ params }) {
       '--brotherhood-dark': h.colores?.oscuro || '#0D2949',
       '--brotherhood-on-secondary': h.colores?.sobreSecundario || '#FFFFFF'
     }}>
+      <JsonLd data={breadcrumbJsonLd([
+        { name: 'Inicio', path: '/' },
+        { name: 'Hermandades', path: '/hermandades' },
+        { name: h.nombrePopular, path: canonicalPath },
+      ])} />
+      <JsonLd data={pageJsonLd} />
       <section className="brotherhood-hero">
         <div className="shell">
           <div className="brotherhood-breadcrumb">

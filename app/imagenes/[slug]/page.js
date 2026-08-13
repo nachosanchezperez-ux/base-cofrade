@@ -1,7 +1,14 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getImagenBySlug, hermandades } from '@/lib/data';
+import JsonLd from '@/components/JsonLd';
 import SourcesBlock from '@/components/SourcesBlock';
+import {
+  absoluteUrl,
+  breadcrumbJsonLd,
+  pageTitle,
+  seoDescription,
+} from '@/lib/seo';
 
 export function generateStaticParams() {
   return hermandades.flatMap((hermandad) =>
@@ -13,7 +20,36 @@ export async function generateMetadata({ params }) {
   const { slug } = await params;
   const result = getImagenBySlug(slug);
 
-  return result ? { title: result.imagen.nombre } : {};
+  if (!result) {
+    return {
+      title: 'Imagen no encontrada',
+      robots: { index: false, follow: false },
+    };
+  }
+
+  const { imagen, hermandad } = result;
+  const title = imagen.nombre;
+  const description = seoDescription(
+    imagen.descripcion,
+    `Ficha de ${imagen.nombre}, titular de ${hermandad.nombrePopular}: autoría, datación, historia, restauraciones, cronología y fuentes documentales.`
+  );
+  const canonical = `/imagenes/${imagen.slug}`;
+
+  return {
+    title,
+    description,
+    alternates: { canonical },
+    openGraph: {
+      type: 'article',
+      title: pageTitle(title),
+      description,
+      url: canonical,
+    },
+    twitter: {
+      title: pageTitle(title),
+      description,
+    },
+  };
 }
 
 export default async function ImagenPage({ params }) {
@@ -23,6 +59,7 @@ export default async function ImagenPage({ params }) {
   if (!result) notFound();
 
   const { imagen, hermandad } = result;
+  const canonicalPath = `/imagenes/${imagen.slug}`;
 
   const cronologia = imagen.cronologia?.length
     ? imagen.cronologia
@@ -45,6 +82,27 @@ export default async function ImagenPage({ params }) {
         '--brotherhood-light': hermandad.colores?.claro || '#FFFFFF'
       }}
     >
+      <JsonLd data={breadcrumbJsonLd([
+        { name: 'Inicio', path: '/' },
+        { name: 'Hermandades', path: '/hermandades' },
+        { name: hermandad.nombrePopular, path: `/hermandades/${hermandad.slug}` },
+        { name: imagen.nombre, path: canonicalPath },
+      ])} />
+      <JsonLd data={{
+        '@context': 'https://schema.org',
+        '@type': 'VisualArtwork',
+        '@id': `${absoluteUrl(canonicalPath)}#artwork`,
+        url: absoluteUrl(canonicalPath),
+        name: imagen.nombre,
+        artform: imagen.tipologia || imagen.tipo,
+        ...(imagen.material ? { artMedium: imagen.material } : {}),
+        ...(imagen.autor && !/pendiente|desconocido|anónimo/i.test(imagen.autor) ? {
+          creator: {
+            '@type': 'Person',
+            name: imagen.autor,
+          },
+        } : {}),
+      }} />
       <section className="image-detail-hero-v2">
         <div className="shell">
           <div className="brotherhood-breadcrumb">
