@@ -128,14 +128,14 @@
 .bandPage:has(#resumen:target) .navList a[href="#resumen"],
 .bandPage:has(#acompanamientos:target) .navList a[href="#acompanamientos"],
 .bandPage:has(#extraordinarias:target) .navList a[href="#extraordinarias"],
-.bandPage:has(#estrenos:target) .navList a[href="#estrenos"],
+.bandPage:has(#repertorio:target) .navList a[href="#repertorio"],
 .bandPage:has(#direccion:target) .navList a[href="#direccion"],
 .bandPage:has(#fuentes:target) .navList a[href="#fuentes"] { color: #fff; font-weight: 600; }
 .bandPage:not(:has(section:target)) .navList a[href="#resumen"]::after,
 .bandPage:has(#resumen:target) .navList a[href="#resumen"]::after,
 .bandPage:has(#acompanamientos:target) .navList a[href="#acompanamientos"]::after,
 .bandPage:has(#extraordinarias:target) .navList a[href="#extraordinarias"]::after,
-.bandPage:has(#estrenos:target) .navList a[href="#estrenos"]::after,
+.bandPage:has(#repertorio:target) .navList a[href="#repertorio"]::after,
 .bandPage:has(#direccion:target) .navList a[href="#direccion"]::after,
 .bandPage:has(#fuentes:target) .navList a[href="#fuentes"]::after { position: absolute; right: 14px; bottom: 0; left: 14px; height: 3px; border-radius: 2px 2px 0 0; background: var(--band-primary); content: ''; }
 .bandPage section[id] { scroll-margin-top: 148px; }
@@ -190,7 +190,7 @@
 .directionGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
 .relationshipCard,
 .directionGrid article { position: relative; padding: 24px; overflow: hidden; border: 1px solid var(--band-line); border-radius: 17px; background: #fff; }
-.relationshipCard { display: flex; min-height: 292px; flex-direction: column; box-shadow: 0 14px 36px rgb(41 39 44 / 6%); }
+.relationshipCard { display: flex; min-height: 270px; flex-direction: column; box-shadow: 0 14px 36px rgb(41 39 44 / 6%); }
 .relationshipCard::before { position: absolute; top: 0; right: 0; left: 0; height: 4px; background: linear-gradient(90deg, var(--band-primary), var(--band-secondary)); content: ''; }
 .relationshipCard > span,
 .directionGrid span { color: var(--band-primary); font-size: 9px; font-weight: 600; letter-spacing: .11em; text-transform: uppercase; }
@@ -199,9 +199,8 @@
 .relationshipCard p,
 .directionGrid p { margin: 0; color: var(--band-muted); font-size: 12px; line-height: 1.55; }
 .relationshipCard > p > strong { display: block; margin-bottom: 4px; color: var(--band-secondary); font-size: 10px; }
-.relationshipPeriod { display: grid; gap: 3px; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--band-line); }
-.relationshipPeriod small { color: var(--band-muted); font-size: 8px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
-.relationshipPeriod strong { color: var(--band-secondary); font-size: 12px; }
+.relationshipPeriod { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--band-line); }
+.relationshipPeriod strong { color: var(--band-primary); font-size: 12px; }
 .relationshipNote { margin-top: 10px!important; font-size: 10px!important; }
 .relationshipLinks { display: flex; gap: 10px; flex-wrap: wrap; margin-top: auto; padding-top: 17px; }
 .relationshipLinks a { color: var(--band-primary); font-size: 9px; font-weight: 600; }
@@ -242,7 +241,6 @@
 .premiereCopy h4 { margin: 8px 0 4px; color: #fff; font-size: 24px; line-height: 1.12; }
 .premiereCopy > strong { color: rgb(255 255 255 / 73%); font-size: 12px; }
 .premiereCopy p { margin: 13px 0 0; color: rgb(255 255 255 / 60%); font-size: 11px; line-height: 1.65; }
-.premiereCopy a { display: inline-block; margin-top: 17px; color: #fff; font-size: 10px; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
 .directionGrid article { min-height: 145px; }
 
 @media (max-width: 900px) {
