@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import HiloSearch from '@/components/HiloSearch';
 import { DEFAULT_DESCRIPTION, HOME_TITLE } from '@/lib/seo';
-import { getUpcomingExtraordinaryOutings } from '@/lib/supabase/home';
+import { getTodayHomeContent, getUpcomingExtraordinaryOutings } from '@/lib/supabase/home';
 import { getGlobalSearchItems } from '@/lib/supabase/search';
 import styles from './home.module.css';
 
@@ -41,8 +41,9 @@ function getTodayLabel() {
 
 export default async function HomePage() {
   const today = getTodayLabel();
-  const [searchItems, extraordinaryOutings] = await Promise.all([
+  const [searchItems, todayContent, extraordinaryOutings] = await Promise.all([
     getGlobalSearchItems(),
+    getTodayHomeContent(),
     getUpcomingExtraordinaryOutings(),
   ]);
 
@@ -79,64 +80,66 @@ export default async function HomePage() {
           </div>
 
           <div className={styles.todayGrid}>
-            <article className={styles.dailyCard}>
-              <span className={styles.dailyIcon}>EF</span>
-              <div>
-                <span className={styles.dailyType}>Efeméride</span>
-                <h3>Una fecha para entrar en la historia cofrade</h3>
-                <p>Este módulo se alimentará de acontecimientos documentados y de sus protagonistas relacionados</p>
-                <span className={styles.dailyLink}>Contenido diario en preparación</span>
-              </div>
-            </article>
-
-            <article className={styles.dailyCard}>
-              <span className={styles.dailyIcon}>DC</span>
-              <div>
-                <span className={styles.dailyType}>Dato Cofrade</span>
-                <h3>2.292 nazarenos en la estación de penitencia del Baratillo en 2026</h3>
-                <p>Un dato puede llevarte a la hermandad, su jornada, sus imágenes y sus pasos</p>
-                <Link className={styles.dailyLink} href="/hermandades/el-baratillo">Descubrir →</Link>
-              </div>
-            </article>
-
-            <article className={styles.dailyCard}>
-              <span className={styles.dailyIcon}>CU</span>
-              <div>
-                <span className={styles.dailyType}>Curiosidad</span>
-                <h3>San José es titular del Baratillo aunque no forma parte de sus pasos procesionales</h3>
-                <p>Una relación que permite distinguir entre titularidad y presencia procesional</p>
-                <Link className={styles.dailyLink} href="/imagenes/patriarca-bendito-senor-san-jose">Seguir el hilo →</Link>
-              </div>
-            </article>
+            {[
+              ['EF', 'Efeméride', todayContent.ephemeris, 'Una fecha para entrar en la historia cofrade'],
+              ['DC', 'Dato Cofrade', todayContent.fact, 'Un dato para seguir tirando del hilo'],
+              ['CU', 'Curiosidad', todayContent.curiosity, 'Una relación cofrade por descubrir'],
+            ].map(([icon, label, item, emptyTitle]) => (
+              <article className={styles.dailyCard} key={label}>
+                <span className={styles.dailyIcon}>{icon}</span>
+                <div>
+                  <span className={styles.dailyType}>{label}</span>
+                  <h3>{item?.title || emptyTitle}</h3>
+                  <p>{item?.summary || 'Este contenido se mostrará cuando exista una relación documentada y publicada para esta categoría.'}</p>
+                  {item?.href
+                    ? <Link className={styles.dailyLink} href={item.href}>{item.linkLabel}</Link>
+                    : <span className={styles.dailyLink}>Contenido en preparación</span>}
+                </div>
+              </article>
+            ))}
           </div>
 
-          <article className={styles.musicCard}>
-            <div className={styles.musicHead}>
-              <div className={styles.musicTop}>
-                <span className={styles.dailyType}>Marcha del día</span>
-                <span className={styles.musicPill}>Escuchar</span>
+          {todayContent.march ? (
+            <article className={styles.musicCard}>
+              <div className={styles.musicHead}>
+                <div className={styles.musicTop}>
+                  <span className={styles.dailyType}>Marcha del día</span>
+                  {todayContent.march.videoUrl ? <span className={styles.musicPill}>Escuchar</span> : null}
+                </div>
+                <h3>“{todayContent.march.title}”</h3>
+                <p>{[todayContent.march.composer, todayContent.march.year, todayContent.march.dedicatee].filter(Boolean).join(' · ')}</p>
               </div>
-              <h3>“Plegaria a la Virgen de la Asunción”</h3>
-              <p>Manuel López Farfán · 1926 · Virgen de la Asunción de Cantillana</p>
-            </div>
-            <div className={styles.videoWrap}>
-              <iframe
-                src="https://www.youtube-nocookie.com/embed/nOcty-P2C0E?rel=0"
-                title="Plegaria a la Virgen de la Asunción"
-                loading="lazy"
-                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-              />
-            </div>
-            <div className={styles.musicInfo}>
-              <div className={styles.musicMeta}>
-                <span>Manuel López Farfán</span>
-                <span>1926</span>
-                <span>Cantillana</span>
+              {todayContent.march.videoUrl ? (
+                <div className={styles.videoWrap}>
+                  <iframe
+                    src={todayContent.march.videoUrl}
+                    title={todayContent.march.title}
+                    loading="lazy"
+                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                </div>
+              ) : null}
+              <div className={styles.musicInfo}>
+                <div className={styles.musicMeta}>
+                  {todayContent.march.composer ? <span>{todayContent.march.composer}</span> : null}
+                  {todayContent.march.year ? <span>{todayContent.march.year}</span> : null}
+                  {todayContent.march.dedicatee ? <span>{todayContent.march.dedicatee}</span> : null}
+                </div>
+                <span className={styles.musicLink}>Ficha musical próximamente</span>
               </div>
-              <span className={styles.musicLink}>Ficha musical próximamente</span>
-            </div>
-          </article>
+            </article>
+          ) : (
+            <article className={styles.musicCard}>
+              <div className={styles.musicHead}>
+                <div className={styles.musicTop}>
+                  <span className={styles.dailyType}>Marcha del día</span>
+                </div>
+                <h3>Repertorio en preparación</h3>
+                <p>La selección musical aparecerá automáticamente entre las marchas publicadas y elegibles.</p>
+              </div>
+            </article>
+          )}
         </div>
       </section>
 
