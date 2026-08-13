@@ -207,10 +207,19 @@ export async function saveBandAccompanimentAction(formData) {
   const periodId = optionalUuid(formData, 'period_id')
   const yearFrom = integer(formData, 'year_from')
   if (!yearFrom) throw new Error('El año de inicio es obligatorio.')
+  const brotherhoodId = uuid(formData, 'brotherhood_entity_id')
+  const stepId = optionalUuid(formData, 'step_entity_id')
+  const publicEntities = assertMutation(
+    await supabase.from('entities').select('id, name').in('id', [brotherhoodId, stepId].filter(Boolean)),
+    'No se pudieron consultar las etiquetas públicas del acompañamiento'
+  )
+  const publicName = (entityId) => publicEntities.find((item) => item.id === entityId)?.name || null
   const payload = {
     band_entity_id: bandId,
-    brotherhood_entity_id: uuid(formData, 'brotherhood_entity_id'),
-    step_entity_id: optionalUuid(formData, 'step_entity_id'),
+    brotherhood_entity_id: brotherhoodId,
+    step_entity_id: stepId,
+    public_brotherhood_name: publicName(brotherhoodId),
+    public_step_name: publicName(stepId),
     position: required(formData, 'position', 'La ubicación'),
     outing_type: required(formData, 'outing_type', 'La jornada o salida'),
     year_from: yearFrom,
