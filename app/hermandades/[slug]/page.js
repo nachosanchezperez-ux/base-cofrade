@@ -496,7 +496,7 @@ export default async function HermandadDetailPage({ params }) {
                         src={pieza.imagen.src}
                         alt={pieza.imagen.alt}
                         fill
-                        sizes="(max-width: 699px) calc(100vw - 40px), (max-width: 1099px) calc(50vw - 30px), 275px"
+                        sizes="(max-width: 820px) calc(100vw - 40px), (max-width: 1199px) calc(50vw - 32px), 565px"
                       />
                       {(pieza.imagen.pie || pieza.imagen.autor) && <small>{[pieza.imagen.pie, pieza.imagen.autor].filter(Boolean).join(' · ')}</small>}
                     </>
