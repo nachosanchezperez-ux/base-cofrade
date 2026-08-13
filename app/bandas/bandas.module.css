@@ -112,7 +112,7 @@
 .bandBreadcrumb strong { font-weight: 700; }
 .heroGrid { display: grid; grid-template-columns: minmax(0, 1fr) 210px; gap: 48px; align-items: center; padding: 55px 0 48px; }
 .bandHero .eyebrow { color: rgb(255 255 255 / 74%); }
-.heroCopy h1 { max-width: 800px; margin: 13px 0 17px; font-size: clamp(58px, 9vw, 112px); line-height: .9; letter-spacing: -.045em; }
+.heroCopy h1 { max-width: 800px; margin: 0 0 17px; font-size: clamp(58px, 9vw, 112px); line-height: .9; letter-spacing: -.045em; }
 .officialName { max-width: 800px; margin: 0; color: rgb(255 255 255 / 76%); font-size: 16px; line-height: 1.45; }
 .heroLinks { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px; }
 .heroLinks a { padding: 8px 12px; border: 1px solid rgb(255 255 255 / 27%); border-radius: 999px; background: rgb(255 255 255 / 7%); font-size: 10px; font-weight: 600; }
@@ -122,10 +122,11 @@
 
 .sectionNav { top: 76px; border: 0; background: linear-gradient(90deg, var(--band-secondary), color-mix(in srgb, var(--band-secondary) 68%, var(--band-primary))); box-shadow: 0 10px 28px rgb(41 39 44 / 18%); }
 .sectionNav a { font-weight: 600; }
-.navLabel { font-weight: 600; }
+.navLabel { color: var(--band-primary); font-weight: 700; }
 .navList a { color: rgb(255 255 255 / 64%); }
 .bandPage:not(:has(section:target)) .navList a[href="#resumen"],
 .bandPage:has(#resumen:target) .navList a[href="#resumen"],
+.bandPage:has(#patrimonio:target) .navList a[href="#patrimonio"],
 .bandPage:has(#acompanamientos:target) .navList a[href="#acompanamientos"],
 .bandPage:has(#extraordinarias:target) .navList a[href="#extraordinarias"],
 .bandPage:has(#repertorio:target) .navList a[href="#repertorio"],
@@ -133,6 +134,7 @@
 .bandPage:has(#fuentes:target) .navList a[href="#fuentes"] { color: #fff; font-weight: 600; }
 .bandPage:not(:has(section:target)) .navList a[href="#resumen"]::after,
 .bandPage:has(#resumen:target) .navList a[href="#resumen"]::after,
+.bandPage:has(#patrimonio:target) .navList a[href="#patrimonio"]::after,
 .bandPage:has(#acompanamientos:target) .navList a[href="#acompanamientos"]::after,
 .bandPage:has(#extraordinarias:target) .navList a[href="#extraordinarias"]::after,
 .bandPage:has(#repertorio:target) .navList a[href="#repertorio"]::after,
@@ -185,25 +187,48 @@
 .impactMetrics a:hover { background: rgb(255 255 255 / 6%); }
 .impactMetrics strong { color: #fff; font-size: 30px; line-height: 1; }
 .impactMetrics span { color: rgb(255 255 255 / 69%); font-size: 10px; line-height: 1.35; }
+.heritageSection { color: #fff; background: #121014; }
+.heritageFeature { display: grid; grid-template-columns: minmax(330px, .8fr) minmax(0, 1.2fr); gap: clamp(44px, 7vw, 90px); align-items: center; }
+.heritagePhoto { position: relative; min-height: 720px; margin: 0; overflow: hidden; border: 1px solid rgb(255 255 255 / 10%); border-radius: 28px; background: #000; box-shadow: 0 30px 80px rgb(0 0 0 / 35%); }
+.heritagePhoto > div { position: absolute; inset: 0; }
+.heritagePhoto img { object-fit: contain; }
+.heritagePhoto figcaption { position: absolute; right: 18px; bottom: 16px; padding: 7px 10px; border: 1px solid rgb(255 255 255 / 13%); border-radius: 999px; color: rgb(255 255 255 / 62%); background: rgb(0 0 0 / 55%); font-size: 9px; font-weight: 600; backdrop-filter: blur(8px); }
+.heritageCopy .sectionHeading { max-width: 660px; margin-bottom: 43px; }
+.heritageCopy .sectionHeading h2 { color: #fff; font-size: clamp(46px, 6vw, 76px); }
+.heritageCopy .sectionHeading p { color: rgb(255 255 255 / 61%); font-size: 14px; }
+.heritageTimeline { display: grid; border-bottom: 1px solid rgb(255 255 255 / 12%); }
+.heritageTimeline > section { display: grid; grid-template-columns: 145px minmax(0, 1fr); gap: 24px; padding: 24px 0; border-top: 1px solid rgb(255 255 255 / 12%); }
+.heritageMoment { display: grid; align-content: start; gap: 6px; }
+.heritageMoment span { color: color-mix(in srgb, var(--band-primary) 45%, white); font-size: 9px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
+.heritageMoment strong { color: #fff; font-size: 38px; font-weight: 700; line-height: 1; letter-spacing: -.04em; }
+.heritageCredits { display: grid; gap: 16px; }
+.heritageCredits > div { display: grid; gap: 4px; }
+.heritageCredits span { color: rgb(255 255 255 / 48%); font-size: 9px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+.heritageCredits strong { color: rgb(255 255 255 / 91%); font-size: 17px; line-height: 1.3; }
 .softSection { background: var(--band-soft); }
 .relationshipGrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
 .directionGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
 .relationshipCard,
 .directionGrid article { position: relative; padding: 24px; overflow: hidden; border: 1px solid var(--band-line); border-radius: 17px; background: #fff; }
-.relationshipCard { display: flex; min-height: 270px; flex-direction: column; box-shadow: 0 14px 36px rgb(41 39 44 / 6%); }
-.relationshipCard::before { position: absolute; top: 0; right: 0; left: 0; height: 4px; background: linear-gradient(90deg, var(--band-primary), var(--band-secondary)); content: ''; }
-.relationshipCard > span,
+.relationshipCard { display: flex; min-height: 330px; flex-direction: column; padding: 0; box-shadow: 0 14px 36px rgb(41 39 44 / 6%); transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease; }
+.relationshipCard:hover { transform: translateY(-3px); border-color: color-mix(in srgb, var(--band-primary) 27%, white); box-shadow: 0 22px 46px rgb(41 39 44 / 11%); }
+.relationshipTop { display: flex; min-height: 66px; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 18px; color: #fff; background: linear-gradient(125deg, var(--band-primary), color-mix(in srgb, var(--band-primary) 30%, var(--band-secondary))); }
+.relationshipTop span { max-width: 125px; font-size: 9px; font-weight: 700; letter-spacing: .09em; line-height: 1.35; text-transform: uppercase; }
+.relationshipTop strong { flex: 0 0 auto; padding: 6px 8px; border: 1px solid rgb(255 255 255 / 20%); border-radius: 999px; color: #fff; background: rgb(255 255 255 / 8%); font-size: 9px; }
+.relationshipIdentity { padding: 20px 20px 16px; }
+.relationshipIdentity > span,
 .directionGrid span { color: var(--band-primary); font-size: 9px; font-weight: 600; letter-spacing: .11em; text-transform: uppercase; }
 .relationshipCard h3,
-.directionGrid h3 { margin: 12px 0 7px; color: var(--band-secondary); font-size: 21px; line-height: 1.15; }
+.directionGrid h3 { margin: 8px 0 0; color: var(--band-secondary); font-size: 21px; line-height: 1.15; }
+.relationshipStep { display: grid; gap: 5px; margin: 0 20px; padding: 14px 0 16px; border-top: 1px solid var(--band-line); }
+.relationshipStep span { color: var(--band-muted); font-size: 8px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+.relationshipStep strong { color: var(--band-secondary); font-size: 12px; font-weight: 600; line-height: 1.45; }
 .relationshipCard p,
 .directionGrid p { margin: 0; color: var(--band-muted); font-size: 12px; line-height: 1.55; }
-.relationshipCard > p > strong { display: block; margin-bottom: 4px; color: var(--band-secondary); font-size: 10px; }
-.relationshipPeriod { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--band-line); }
-.relationshipPeriod strong { color: var(--band-primary); font-size: 12px; }
-.relationshipNote { margin-top: 10px!important; font-size: 10px!important; }
-.relationshipLinks { display: flex; gap: 10px; flex-wrap: wrap; margin-top: auto; padding-top: 17px; }
-.relationshipLinks a { color: var(--band-primary); font-size: 9px; font-weight: 600; }
+.relationshipNote { margin: 0 20px 14px!important; font-size: 10px!important; }
+.relationshipLinks { display: flex; min-height: 48px; align-items: center; margin-top: auto; padding: 12px 20px; border-top: 1px solid var(--band-line); background: color-mix(in srgb, var(--band-primary) 3%, white); }
+.relationshipLinks a { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 10px; color: var(--band-primary); font-size: 9px; font-weight: 700; }
+.relationshipLinks > span { color: #9a949e; font-size: 8px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
 .relationshipLinks a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .emptyBlock { padding: 24px; border: 1px dashed #ccc4cf; border-radius: 16px; color: var(--band-muted); background: rgb(255 255 255 / 55%); font-size: 13px; }
 .outingList { display: grid; gap: 16px; }
@@ -241,6 +266,10 @@
 .premiereCopy h4 { margin: 8px 0 4px; color: #fff; font-size: 24px; line-height: 1.12; }
 .premiereCopy > strong { color: rgb(255 255 255 / 73%); font-size: 12px; }
 .premiereCopy p { margin: 13px 0 0; color: rgb(255 255 255 / 60%); font-size: 11px; line-height: 1.65; }
+.premiereCredits { display: grid; gap: 8px; margin-top: 12px; }
+.premiereCredits > div { display: grid; grid-template-columns: 78px minmax(0, 1fr); gap: 9px; align-items: baseline; }
+.premiereCredits span { color: color-mix(in srgb, var(--band-primary) 42%, white); font-size: 8px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+.premiereCredits strong { color: rgb(255 255 255 / 78%); font-size: 12px; }
 .directionGrid article { min-height: 145px; }
 
 @media (max-width: 900px) {
@@ -249,6 +278,8 @@
   .identityBlock img { height: 180px; }
   .overviewGrid { grid-template-columns: 1fr; gap: 38px; }
   .featurePhoto { min-height: 560px; }
+  .heritageFeature { grid-template-columns: minmax(280px, .85fr) minmax(0, 1.15fr); gap: 38px; }
+  .heritagePhoto { min-height: 620px; }
   .relationshipGrid,
   .directionGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
@@ -282,6 +313,12 @@
   .impactMetrics a { padding: 14px; }
   .impactMetrics strong { font-size: 27px; }
   .impactMetrics span { font-size: 9px; }
+  .heritageFeature { grid-template-columns: 1fr; }
+  .heritagePhoto { min-height: min(135vw, 650px); border-radius: 21px; }
+  .heritageCopy .sectionHeading { margin-bottom: 28px; }
+  .heritageTimeline > section { grid-template-columns: 105px minmax(0, 1fr); gap: 16px; }
+  .heritageMoment strong { font-size: 31px; }
+  .heritageCredits strong { font-size: 14px; }
   .relationshipGrid,
   .directionGrid,
   .premiereGrid { grid-template-columns: 1fr; }

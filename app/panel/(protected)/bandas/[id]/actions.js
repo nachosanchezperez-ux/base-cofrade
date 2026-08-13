@@ -61,6 +61,15 @@ function assertMutation(result, label) {
   return result.data
 }
 
+function slugify(valueToSlug) {
+  return String(valueToSlug || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '')
+}
+
 async function audit(supabase, user, entry) {
   const { error } = await supabase.from('audit_log').insert({ actor_user_id: user.id, actor_label: user.name, ...entry })
   if (error) console.error('[Hilo Cofrade] No se pudo registrar la auditoría', error)
@@ -210,7 +219,7 @@ export async function saveBandAccompanimentAction(formData) {
   const brotherhoodId = uuid(formData, 'brotherhood_entity_id')
   const stepId = optionalUuid(formData, 'step_entity_id')
   const publicEntities = assertMutation(
-    await supabase.from('entities').select('id, name').in('id', [brotherhoodId, stepId].filter(Boolean)),
+    await supabase.from('entities').select('id, name, slug').in('id', [brotherhoodId, stepId].filter(Boolean)),
     'No se pudieron consultar las etiquetas públicas del acompañamiento'
   )
   const publicName = (entityId) => publicEntities.find((item) => item.id === entityId)?.name || null
@@ -219,6 +228,7 @@ export async function saveBandAccompanimentAction(formData) {
     brotherhood_entity_id: brotherhoodId,
     step_entity_id: stepId,
     public_brotherhood_name: publicName(brotherhoodId),
+    public_brotherhood_slug: publicEntities.find((item) => item.id === brotherhoodId)?.slug || null,
     public_step_name: publicName(stepId),
     position: required(formData, 'position', 'La ubicación'),
     outing_type: required(formData, 'outing_type', 'La jornada o salida'),
@@ -314,6 +324,71 @@ async function saveSource(supabase, formData) {
   return assertMutation(result, 'No se pudo guardar la fuente').id
 }
 
+async function ensureAgentByName(supabase, agentName, description) {
+  if (!agentName) return null
+  const agentSlug = slugify(agentName)
+  const existing = assertMutation(
+    await supabase.from('entities').select('id').eq('entity_type', 'agent').eq('slug', agentSlug).maybeSingle(),
+    'No se pudo consultar el autor'
+  )
+  if (existing?.id) return existing.id
+
+  const agentId = randomUUID()
+  assertMutation(
+    await supabase.from('entities').insert({ id: agentId, entity_type: 'agent', name: agentName, slug: agentSlug, summary: description, status: 'published' }),
+    'No se pudo crear el autor'
+  )
+  assertMutation(
+    await supabase.from('agents').insert({ entity_id: agentId, agent_kind: 'person', description }),
+    'No se pudo completar la ficha del autor'
+  )
+  return agentId
+}
+
+async function savePremiereMarch(supabase, { marchId, title, premiereYear, composerName, adapterName, publishStatus }) {
+  const nextMarchId = marchId || randomUUID()
+  const marchSlug = `marcha-${slugify(title)}`
+  const entityPayload = {
+    name: title,
+    slug: marchSlug,
+    summary: `Marcha estrenada en ${premiereYear}.`,
+    status: publishStatus,
+  }
+  if (marchId) {
+    assertMutation(await supabase.from('entities').update(entityPayload).eq('id', marchId).eq('entity_type', 'march'), 'No se pudo actualizar la marcha')
+    assertMutation(await supabase.from('marches').update({ music_type: adapterName ? 'Adaptación para cornetas y tambores' : 'Marcha procesional' }).eq('entity_id', marchId), 'No se pudo actualizar la ficha musical')
+  } else {
+    assertMutation(await supabase.from('entities').insert({ id: nextMarchId, entity_type: 'march', ...entityPayload }), 'No se pudo crear la marcha')
+    assertMutation(await supabase.from('marches').insert({ entity_id: nextMarchId, music_type: adapterName ? 'Adaptación para cornetas y tambores' : 'Marcha procesional' }), 'No se pudo crear la ficha musical')
+  }
+
+  const composerId = await ensureAgentByName(supabase, composerName, 'Compositor de música procesional.')
+  const adapterId = await ensureAgentByName(supabase, adapterName, 'Compositor y adaptador de música procesional.')
+  const existingCredits = assertMutation(
+    await supabase.from('march_authors').select('id, agent_entity_id, author_role').eq('march_entity_id', nextMarchId),
+    'No se pudieron consultar las autorías de la marcha'
+  ) || []
+
+  for (const credit of existingCredits) {
+    const expectedAgent = credit.author_role === 'composer' ? composerId : credit.author_role === 'adapter' ? adapterId : credit.agent_entity_id
+    if (!expectedAgent || expectedAgent !== credit.agent_entity_id) {
+      assertMutation(await supabase.from('march_authors').update({ status: 'archived' }).eq('id', credit.id), 'No se pudo archivar una autoría anterior')
+    }
+  }
+
+  const credits = [
+    composerId ? { agentId: composerId, role: 'composer', notes: null } : null,
+    adapterId ? { agentId: adapterId, role: 'adapter', notes: 'Adaptación para cornetas y tambores.' } : null,
+  ].filter(Boolean)
+  for (const credit of credits) {
+    assertMutation(
+      await supabase.from('march_authors').upsert({ march_entity_id: nextMarchId, agent_entity_id: credit.agentId, author_role: credit.role, notes: credit.notes, status: publishStatus }, { onConflict: 'march_entity_id,agent_entity_id,author_role' }),
+      'No se pudo guardar la autoría de la marcha'
+    )
+  }
+  return nextMarchId
+}
+
 export async function saveBandPremiereAction(formData) {
   const user = await requirePanelEditor()
   const supabase = await createClient()
@@ -321,11 +396,24 @@ export async function saveBandPremiereAction(formData) {
   const premiereId = optionalUuid(formData, 'premiere_id')
   const premiereYear = integer(formData, 'premiere_year')
   if (!premiereYear) throw new Error('El año del estreno es obligatorio.')
+  const title = required(formData, 'title', 'El título de la marcha')
+  const composerName = required(formData, 'composer_name', 'El compositor')
+  const adapterName = nullable(formData, 'adapter_name')
+  const editorialStatus = status(formData)
+  const marchEntityId = await savePremiereMarch(supabase, {
+    marchId: optionalUuid(formData, 'march_entity_id'),
+    title,
+    premiereYear,
+    composerName,
+    adapterName,
+    publishStatus: editorialStatus,
+  })
   const sourceId = await saveSource(supabase, formData)
   const payload = {
     band_entity_id: bandId,
-    title: required(formData, 'title', 'El título de la marcha'),
-    composer_name: required(formData, 'composer_name', 'El compositor'),
+    march_entity_id: marchEntityId,
+    title,
+    composer_name: composerName,
     premiere_year: premiereYear,
     premiere_date: nullable(formData, 'premiere_date'),
     venue_text: nullable(formData, 'venue_text'),
@@ -333,7 +421,7 @@ export async function saveBandPremiereAction(formData) {
     video_url: url(formData, 'video_url', 'El enlace de YouTube'),
     description: nullable(formData, 'description'),
     source_id: sourceId,
-    status: status(formData),
+    status: editorialStatus,
     display_order: integer(formData, 'display_order') || 0,
   }
   const result = premiereId
@@ -355,8 +443,118 @@ export async function archiveBandPremiereAction(formData) {
   const supabase = await createClient()
   const bandId = uuid(formData, 'band_id')
   const premiereId = uuid(formData, 'premiere_id')
+  const premiere = assertMutation(await supabase.from('band_premieres').select('march_entity_id').eq('id', premiereId).eq('band_entity_id', bandId).single(), 'No se pudo consultar el estreno')
   assertMutation(await supabase.from('band_premieres').update({ status: 'archived' }).eq('id', premiereId).eq('band_entity_id', bandId), 'No se pudo archivar el estreno')
+  if (premiere?.march_entity_id) {
+    assertMutation(await supabase.from('entities').update({ status: 'archived' }).eq('id', premiere.march_entity_id).eq('entity_type', 'march'), 'No se pudo archivar la marcha')
+    assertMutation(await supabase.from('march_authors').update({ status: 'archived' }).eq('march_entity_id', premiere.march_entity_id), 'No se pudieron archivar las autorías')
+  }
   await audit(supabase, user, { action_type: 'archive', object_type: 'band_premiere', object_id: premiereId, entity_id: bandId, summary: 'Estreno archivado' })
   await refreshBand(supabase, bandId)
   redirectSaved(bandId, 'estrenos')
+}
+
+async function requireBandAsset(supabase, bandId, assetId) {
+  const asset = assertMutation(
+    await supabase.from('heritage_assets').select('entity_id').eq('entity_id', assetId).eq('parent_entity_id', bandId).maybeSingle(),
+    'No se pudo consultar la pieza patrimonial'
+  )
+  if (!asset) throw new Error('La pieza patrimonial no pertenece a esta banda.')
+  return asset
+}
+
+export async function saveBandHeritageAssetAction(formData) {
+  const user = await requirePanelEditor()
+  const supabase = await createClient()
+  const bandId = uuid(formData, 'band_id')
+  const currentAssetId = optionalUuid(formData, 'asset_entity_id')
+  const assetId = currentAssetId || randomUUID()
+  const assetStatus = status(formData)
+  const assetName = required(formData, 'asset_name', 'El nombre de la pieza')
+  const assetSlug = required(formData, 'asset_slug', 'El slug de la pieza')
+  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(assetSlug)) throw new Error('El slug solo puede contener minúsculas, números y guiones simples.')
+  const entityPayload = { name: assetName, slug: assetSlug, summary: nullable(formData, 'asset_summary'), status: assetStatus }
+  const assetPayload = {
+    parent_entity_id: bandId,
+    asset_type: required(formData, 'asset_type', 'El tipo de pieza'),
+    description: nullable(formData, 'asset_description'),
+    technique: nullable(formData, 'technique'),
+    date_from: nullable(formData, 'date_from'),
+    date_from_text: nullable(formData, 'date_from_text'),
+    is_current: checked(formData, 'is_current'),
+    origin_notes: nullable(formData, 'origin_notes'),
+    display_order: integer(formData, 'display_order') || 0,
+    is_featured: checked(formData, 'is_featured'),
+    public_image_path: nullable(formData, 'public_image_path'),
+    public_image_alt: nullable(formData, 'public_image_alt'),
+    public_image_credit: nullable(formData, 'public_image_credit'),
+    notes: nullable(formData, 'asset_notes'),
+  }
+  if (currentAssetId) {
+    await requireBandAsset(supabase, bandId, currentAssetId)
+    assertMutation(await supabase.from('entities').update(entityPayload).eq('id', currentAssetId).eq('entity_type', 'heritage_asset'), 'No se pudo actualizar la pieza')
+    assertMutation(await supabase.from('heritage_assets').update(assetPayload).eq('entity_id', currentAssetId).eq('parent_entity_id', bandId), 'No se pudo actualizar el patrimonio')
+  } else {
+    assertMutation(await supabase.from('entities').insert({ id: assetId, entity_type: 'heritage_asset', ...entityPayload }), 'No se pudo crear la pieza')
+    assertMutation(await supabase.from('heritage_assets').insert({ entity_id: assetId, ...assetPayload }), 'No se pudo crear la ficha patrimonial')
+  }
+  await audit(supabase, user, { action_type: currentAssetId ? 'update' : 'create', object_type: 'heritage_asset', object_id: assetId, entity_id: bandId, summary: `${currentAssetId ? 'Pieza actualizada' : 'Pieza creada'}: ${assetName}`, changed_fields: { ...entityPayload, ...assetPayload } })
+  await refreshBand(supabase, bandId)
+  redirectSaved(bandId, 'patrimonio')
+}
+
+export async function archiveBandHeritageAssetAction(formData) {
+  const user = await requirePanelEditor()
+  const supabase = await createClient()
+  const bandId = uuid(formData, 'band_id')
+  const assetId = uuid(formData, 'asset_entity_id')
+  await requireBandAsset(supabase, bandId, assetId)
+  assertMutation(await supabase.from('entities').update({ status: 'archived' }).eq('id', assetId).eq('entity_type', 'heritage_asset'), 'No se pudo archivar la pieza')
+  await audit(supabase, user, { action_type: 'archive', object_type: 'heritage_asset', object_id: assetId, entity_id: bandId, summary: 'Pieza patrimonial archivada' })
+  await refreshBand(supabase, bandId)
+  redirectSaved(bandId, 'patrimonio')
+}
+
+export async function saveBandAssetContributionAction(formData) {
+  const user = await requirePanelEditor()
+  const supabase = await createClient()
+  const bandId = uuid(formData, 'band_id')
+  const assetId = uuid(formData, 'asset_entity_id')
+  const contributionId = optionalUuid(formData, 'contribution_id')
+  const agentId = uuid(formData, 'agent_entity_id')
+  await requireBandAsset(supabase, bandId, assetId)
+  const agent = assertMutation(await supabase.from('entities').select('id, name').eq('id', agentId).eq('entity_type', 'agent').maybeSingle(), 'No se pudo validar el autor o taller')
+  if (!agent) throw new Error('Selecciona un autor o taller válido.')
+  const payload = {
+    target_entity_id: assetId,
+    agent_entity_id: agentId,
+    discipline: required(formData, 'discipline', 'La disciplina'),
+    element_name: nullable(formData, 'element_name'),
+    intervention_type: nullable(formData, 'intervention_type') || 'Realización',
+    phase: nullable(formData, 'phase'),
+    date_from: nullable(formData, 'contribution_date_from'),
+    date_from_text: nullable(formData, 'contribution_date_from_text'),
+    description: nullable(formData, 'contribution_description'),
+    status: status(formData),
+  }
+  const result = contributionId
+    ? await supabase.from('heritage_interventions').update(payload).eq('id', contributionId).eq('target_entity_id', assetId).select('id').single()
+    : await supabase.from('heritage_interventions').insert(payload).select('id').single()
+  const saved = assertMutation(result, 'No se pudo guardar la intervención')
+  await audit(supabase, user, { action_type: contributionId ? 'update' : 'create', object_type: 'heritage_intervention', object_id: saved.id, entity_id: bandId, summary: `${payload.intervention_type}: ${agent.name}`, changed_fields: payload })
+  await refreshBand(supabase, bandId)
+  redirectSaved(bandId, 'patrimonio')
+}
+
+export async function archiveBandAssetContributionAction(formData) {
+  const user = await requirePanelEditor()
+  const supabase = await createClient()
+  const bandId = uuid(formData, 'band_id')
+  const assetId = uuid(formData, 'asset_entity_id')
+  const contributionId = uuid(formData, 'contribution_id')
+  await requireBandAsset(supabase, bandId, assetId)
+  assertMutation(await supabase.from('heritage_interventions').update({ status: 'archived' }).eq('id', contributionId).eq('target_entity_id', assetId), 'No se pudo archivar la intervención')
+  await audit(supabase, user, { action_type: 'archive', object_type: 'heritage_intervention', object_id: contributionId, entity_id: bandId, summary: 'Intervención patrimonial archivada' })
+  await refreshBand(supabase, bandId)
+  redirectSaved(bandId, 'patrimonio')
 }

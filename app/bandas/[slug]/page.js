@@ -47,6 +47,20 @@ function yearRange(item) {
   return item.yearTo ? `${item.yearFrom}–${item.yearTo}` : `Desde ${item.yearFrom}`
 }
 
+function groupContributions(items = []) {
+  return items.reduce((groups, item) => {
+    const key = `${item.interventionType || 'Intervención'} · ${item.year || 'Fecha por documentar'}`
+    const group = groups.find((entry) => entry.key === key)
+    if (group) group.items.push(item)
+    else groups.push({ key, type: item.interventionType || 'Intervención', year: item.year || '', items: [item] })
+    return groups
+  }, [])
+}
+
+function creditedName(item) {
+  return [item.name, ...(item.aliases || [])].join(' · ')
+}
+
 export async function generateMetadata({ params }) {
   const { slug } = await params
   const band = await getBandBySlug(slug)
@@ -80,6 +94,7 @@ export default async function BandDetailPage({ params }) {
   const hasOutings = band.outings.length > 0
   const hasPremieres = band.premieres.length > 0
   const hasDirection = band.direction.length > 0
+  const hasHeritage = band.heritage?.length > 0
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'MusicGroup',
@@ -115,7 +130,6 @@ export default async function BandDetailPage({ params }) {
           </nav>
           <div className={styles.heroGrid}>
             <div className={styles.heroCopy}>
-              <span className={styles.eyebrow}>Ficha de banda</span>
               <h1>{band.popularName}</h1>
               <p className={styles.officialName}>{band.officialName}</p>
               <div className={styles.heroLinks}>
@@ -135,6 +149,7 @@ export default async function BandDetailPage({ params }) {
           <span className={`brotherhood-nav-label ${styles.navLabel}`}>Explorar ficha</span>
           <div className={`brotherhood-nav-list nav-scroll ${styles.navList}`}>
             <a href="#resumen">De un vistazo</a>
+            {hasHeritage ? <a href="#patrimonio">Patrimonio</a> : null}
             {hasAccompaniments ? <a href="#acompanamientos">Semana Santa</a> : null}
             {hasOutings ? <a href="#extraordinarias">Extraordinarias</a> : null}
             {hasPremieres ? <a href="#repertorio">Repertorio</a> : null}
@@ -159,7 +174,6 @@ export default async function BandDetailPage({ params }) {
             ) : null}
             <div className={styles.overviewCopy}>
               <div className={styles.sectionHeading}>
-                <span className={styles.eyebrow}>Identidad</span>
                 <h2>{band.popularName}, de un vistazo</h2>
               </div>
               <div className={styles.roleGrid}>
@@ -180,7 +194,7 @@ export default async function BandDetailPage({ params }) {
                 </article>
                 <article className={styles.trajectoryCard}>
                   <span>Trayectoria</span>
-                  <strong>{band.foundation ? `Desde ${band.foundation}` : 'Por documentar'}</strong>
+                  <strong>{band.foundation ? `Fundación: ${band.foundation}` : 'Fundación por documentar'}</strong>
                   {band.headquarters && band.headquarters !== band.municipality ? <small>{band.headquarters}</small> : null}
                 </article>
               </div>
@@ -202,17 +216,69 @@ export default async function BandDetailPage({ params }) {
         </div>
       </section>
 
+      {hasHeritage ? <section className={`${styles.contentSection} ${styles.heritageSection}`} id="patrimonio">
+        <div className="shell">
+          {band.heritage.map((asset) => (
+            <article className={styles.heritageFeature} key={asset.id}>
+              {asset.imagePath ? (
+                <figure className={styles.heritagePhoto}>
+                  <div><Image src={asset.imagePath} alt={asset.imageAlt || asset.name} fill sizes="(max-width: 900px) calc(100vw - 32px), 42vw" /></div>
+                  {asset.imageCredit ? <figcaption>{asset.imageCredit}</figcaption> : null}
+                </figure>
+              ) : null}
+              <div className={styles.heritageCopy}>
+                <div className={styles.sectionHeading}>
+                  <span className={styles.eyebrow}>Patrimonio</span>
+                  <h2>{asset.type === 'Banderín' ? 'El banderín' : asset.name}</h2>
+                  {asset.description ? <p>{asset.description}</p> : null}
+                </div>
+                <div className={styles.heritageTimeline}>
+                  {groupContributions(asset.contributions).map((group) => (
+                    <section key={group.key}>
+                      <div className={styles.heritageMoment}>
+                        <span>{group.type}</span>
+                        <strong>{group.year}</strong>
+                      </div>
+                      <div className={styles.heritageCredits}>
+                        {group.items.map((item) => (
+                          <div key={item.id}>
+                            <span>{item.discipline}</span>
+                            <strong>{creditedName(item)}</strong>
+                          </div>
+                        ))}
+                      </div>
+                    </section>
+                  ))}
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section> : null}
+
       {hasAccompaniments ? <section className={`${styles.contentSection} ${styles.softSection}`} id="acompanamientos">
         <div className="shell">
           <div className={styles.sectionHeading}><span className={styles.eyebrow}>Semana Santa</span><h2>Hermandades a las que acompaña</h2></div>
           <div className={styles.relationshipGrid}>{orderedAccompaniments.map((item) => (
             <article className={styles.relationshipCard} key={item.id}>
-              <span>{item.outingType || 'Salida procesional'}</span>
-              <h3>{item.brotherhoodName}</h3>
-              {item.stepName ? <p><strong>{item.position}</strong>{item.stepName}</p> : <p><strong>{item.position}</strong></p>}
-              <div className={styles.relationshipPeriod}><strong>{yearRange(item)}</strong></div>
+              <div className={styles.relationshipTop}>
+                <span>{item.outingType || 'Salida procesional'}</span>
+                <strong>{yearRange(item)}</strong>
+              </div>
+              <div className={styles.relationshipIdentity}>
+                <span>Hermandad</span>
+                <h3>{item.brotherhoodName}</h3>
+              </div>
+              <div className={styles.relationshipStep}>
+                <span>{item.position || 'Acompañamiento musical'}</span>
+                {item.stepName ? <strong>{item.stepName}</strong> : null}
+              </div>
               {item.notes && item.brotherhoodName !== band.linkedBrotherhood ? <p className={styles.relationshipNote}>{item.notes}</p> : null}
-              {item.brotherhoodSlug ? <div className={styles.relationshipLinks}><Link href={`/hermandades/${item.brotherhoodSlug}`}>Ver hermandad →</Link></div> : null}
+              <div className={styles.relationshipLinks}>
+                {item.brotherhoodSlug && item.brotherhoodPageReady
+                  ? <Link href={`/hermandades/${item.brotherhoodSlug}`}>Ver ficha de la hermandad <span>→</span></Link>
+                  : <span>Ficha de hermandad en preparación</span>}
+              </div>
             </article>
           ))}</div>
         </div>
@@ -255,7 +321,17 @@ export default async function BandDetailPage({ params }) {
                 return (
                   <article className={styles.premiereCard} key={item.id}>
                     {embed ? <div className={styles.videoWrap}><iframe src={embed} title={`${item.title}, de ${item.composerName}`} loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen /></div> : null}
-                    <div className={styles.premiereCopy}><span>Estreno · {item.year}</span><h4>{item.title}</h4><strong>{item.composerName}</strong>{item.date || item.venue || item.municipality ? <p>{[dateLabel(item.date), item.venue, item.municipality].filter(Boolean).join(' · ')}</p> : null}{item.description ? <p>{item.description}</p> : null}</div>
+                    <div className={styles.premiereCopy}>
+                      <span>Estreno · {item.year}</span>
+                      <h4>{item.title}</h4>
+                      {item.credits?.length ? (
+                        <div className={styles.premiereCredits}>
+                          {item.credits.map((credit) => <div key={`${credit.id}-${credit.role}`}><span>{credit.label}</span><strong>{credit.name}</strong></div>)}
+                        </div>
+                      ) : <strong>{item.composerName}</strong>}
+                      {item.date || item.venue || item.municipality ? <p>{[dateLabel(item.date), item.venue, item.municipality].filter(Boolean).join(' · ')}</p> : null}
+                      {item.description ? <p>{item.description}</p> : null}
+                    </div>
                   </article>
                 )
               })}</div>
