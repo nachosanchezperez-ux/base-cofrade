@@ -62,6 +62,20 @@ function creditedName(item) {
   return [item.name, ...(item.aliases || [])].join(' · ')
 }
 
+function HistoricalIcon() {
+  return <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+    <path d="M3.6 12a8.4 8.4 0 1 0 2.46-5.94L3.6 8.52" />
+    <path d="M3.6 4.8v3.72h3.72M12 7.8V12l2.88 1.68" />
+  </svg>
+}
+
+function CuriosityIcon() {
+  return <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+    <path d="M12 3.4c.48 3.2 2 4.72 5.2 5.2-3.2.48-4.72 2-5.2 5.2-.48-3.2-2-4.72-5.2-5.2 3.2-.48 4.72-2 5.2-5.2Z" />
+    <path d="M18.2 14.7c.24 1.62 1 2.38 2.62 2.62-1.62.24-2.38 1-2.62 2.62-.24-1.62-1-2.38-2.62-2.62 1.62-.24 2.38-1 2.62-2.62ZM5.25 14.2c.18 1.2.75 1.77 1.95 1.95-1.2.18-1.77.75-1.95 1.95-.18-1.2-.75-1.77-1.95-1.95 1.2-.18 1.77-.75 1.95-1.95Z" />
+  </svg>
+}
+
 export async function generateMetadata({ params }) {
   const { slug } = await params
   const band = await getBandBySlug(slug)
@@ -91,7 +105,10 @@ export default async function BandDetailPage({ params }) {
     const bIndex = OUTING_ORDER.indexOf(b.outingType)
     return (aIndex === -1 ? OUTING_ORDER.length : aIndex) - (bIndex === -1 ? OUTING_ORDER.length : bIndex)
   })
+  const historicalAccompaniments = [...(band.historicalAccompaniments || [])].sort((a, b) => (b.yearTo || b.yearFrom || 0) - (a.yearTo || a.yearFrom || 0))
+  const curiosities = band.curiosities || []
   const hasAccompaniments = band.accompaniments.length > 0
+  const hasHistoricalAccompaniments = historicalAccompaniments.length > 0
   const hasOutings = band.outings.length > 0
   const hasPremieres = band.premieres.length > 0
   const hasDirection = band.direction.length > 0
@@ -149,6 +166,7 @@ export default async function BandDetailPage({ params }) {
             <a href="#resumen">De un vistazo</a>
             {banderin ? <a href="#banderin">Banderín</a> : null}
             {hasAccompaniments ? <a href="#acompanamientos">Semana Santa</a> : null}
+            {hasHistoricalAccompaniments ? <a href="#acompanamientos-historicos">Histórico</a> : null}
             {hasOutings ? <a href="#extraordinarias">Extraordinarias</a> : null}
             {hasPremieres ? <a href="#repertorio">Repertorio</a> : null}
             {hasDirection ? <a href="#direccion">Dirección</a> : null}
@@ -280,9 +298,51 @@ export default async function BandDetailPage({ params }) {
         </div>
       </section> : null}
 
+      {hasHistoricalAccompaniments ? <section className={`${styles.contentSection} ${styles.historicalSection}`} id="acompanamientos-historicos">
+        <div className="shell">
+          <div className={styles.sectionHeading}>
+            <span className={styles.eyebrow}>Memoria musical</span>
+            <h2>Acompañamientos históricos</h2>
+          </div>
+          <div className={styles.historicalLayout}>
+            <div className={styles.historicalList}>
+              {historicalAccompaniments.map((item) => (
+                <article className={styles.historicalCard} key={item.id}>
+                  <div className={styles.historicalPeriod}>
+                    <span className={styles.historicalIcon}><HistoricalIcon /></span>
+                    <span>Periodo histórico</span>
+                    <strong>{yearRange(item)}</strong>
+                  </div>
+                  <div className={styles.historicalCopy}>
+                    <span>{item.outingType || 'Salida procesional'}</span>
+                    <h3>{item.brotherhoodName}</h3>
+                    <p>{item.position || item.stepName || 'Acompañamiento musical'}</p>
+                    {item.notes ? <small>{item.notes}</small> : null}
+                    {item.brotherhoodSlug && item.brotherhoodPageReady
+                      ? <Link href={`/hermandades/${item.brotherhoodSlug}`}>Ver ficha de la hermandad <span>→</span></Link>
+                      : null}
+                  </div>
+                </article>
+              ))}
+            </div>
+            {curiosities.length ? <div className={styles.curiosityStack}>
+              {curiosities.map((item) => (
+                <aside className={styles.curiosityCard} key={item.id}>
+                  <div className={styles.curiosityLabel}>
+                    <span className={styles.curiosityIcon}><CuriosityIcon /></span>
+                    <span>{item.title || '¿Sabías que…?'}</span>
+                  </div>
+                  <p>{item.body || item.summary}</p>
+                </aside>
+              ))}
+            </div> : null}
+          </div>
+        </div>
+      </section> : null}
+
       {hasOutings ? <section className={styles.contentSection} id="extraordinarias">
         <div className="shell">
-          <div className={styles.sectionHeading}><span className={styles.eyebrow}>Próximas citas</span><h2>Salidas extraordinarias</h2></div>
+          <div className={styles.sectionHeading}><span className={styles.eyebrow}>Agenda</span><h2>Próximas salidas extraordinarias</h2></div>
           <div className={styles.outingList}>{band.outings.map((item) => {
             const event = eventDate(item.date)
             return (
