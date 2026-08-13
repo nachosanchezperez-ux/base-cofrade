@@ -259,7 +259,8 @@ export async function saveBandAccompanimentAction(formData) {
   const saved = assertMutation(result, 'No se pudo guardar el acompañamiento')
   await audit(supabase, user, { action_type: periodId ? 'update' : 'create', object_type: 'music_accompaniment_period', object_id: saved.id, entity_id: bandId, summary: 'Acompañamiento musical guardado', changed_fields: payload })
   await refreshBand(supabase, bandId)
-  redirectSaved(bandId, 'acompanamientos')
+  const returnSection = value(formData, 'return_section') === 'acompanamientos-historicos' ? 'acompanamientos-historicos' : 'acompanamientos'
+  redirectSaved(bandId, returnSection)
 }
 
 export async function archiveBandAccompanimentAction(formData) {
@@ -270,7 +271,8 @@ export async function archiveBandAccompanimentAction(formData) {
   assertMutation(await supabase.from('music_accompaniment_periods').update({ status: 'archived', is_current: false }).eq('id', periodId).eq('band_entity_id', bandId), 'No se pudo archivar el acompañamiento')
   await audit(supabase, user, { action_type: 'archive', object_type: 'music_accompaniment_period', object_id: periodId, entity_id: bandId, summary: 'Acompañamiento archivado' })
   await refreshBand(supabase, bandId)
-  redirectSaved(bandId, 'acompanamientos')
+  const returnSection = value(formData, 'return_section') === 'acompanamientos-historicos' ? 'acompanamientos-historicos' : 'acompanamientos'
+  redirectSaved(bandId, returnSection)
 }
 
 export async function saveBandOutingAction(formData) {

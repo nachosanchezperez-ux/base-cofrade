@@ -91,7 +91,10 @@ export default async function BandDetailPage({ params }) {
     const bIndex = OUTING_ORDER.indexOf(b.outingType)
     return (aIndex === -1 ? OUTING_ORDER.length : aIndex) - (bIndex === -1 ? OUTING_ORDER.length : bIndex)
   })
+  const historicalAccompaniments = [...(band.historicalAccompaniments || [])].sort((a, b) => (b.yearTo || b.yearFrom || 0) - (a.yearTo || a.yearFrom || 0))
+  const curiosities = band.curiosities || []
   const hasAccompaniments = band.accompaniments.length > 0
+  const hasHistoricalAccompaniments = historicalAccompaniments.length > 0
   const hasOutings = band.outings.length > 0
   const hasPremieres = band.premieres.length > 0
   const hasDirection = band.direction.length > 0
@@ -149,6 +152,7 @@ export default async function BandDetailPage({ params }) {
             <a href="#resumen">De un vistazo</a>
             {banderin ? <a href="#banderin">Banderín</a> : null}
             {hasAccompaniments ? <a href="#acompanamientos">Semana Santa</a> : null}
+            {hasHistoricalAccompaniments ? <a href="#acompanamientos-historicos">Histórico</a> : null}
             {hasOutings ? <a href="#extraordinarias">Extraordinarias</a> : null}
             {hasPremieres ? <a href="#repertorio">Repertorio</a> : null}
             {hasDirection ? <a href="#direccion">Dirección</a> : null}
@@ -277,6 +281,44 @@ export default async function BandDetailPage({ params }) {
               </div>
             </article>
           ))}</div>
+        </div>
+      </section> : null}
+
+      {hasHistoricalAccompaniments ? <section className={`${styles.contentSection} ${styles.historicalSection}`} id="acompanamientos-historicos">
+        <div className="shell">
+          <div className={styles.sectionHeading}>
+            <span className={styles.eyebrow}>Memoria musical</span>
+            <h2>Acompañamientos históricos</h2>
+          </div>
+          <div className={styles.historicalLayout}>
+            <div className={styles.historicalList}>
+              {historicalAccompaniments.map((item) => (
+                <article className={styles.historicalCard} key={item.id}>
+                  <div className={styles.historicalPeriod}>
+                    <span>Periodo</span>
+                    <strong>{yearRange(item)}</strong>
+                  </div>
+                  <div className={styles.historicalCopy}>
+                    <span>{item.outingType || 'Salida procesional'}</span>
+                    <h3>{item.brotherhoodName}</h3>
+                    <p>{item.position || 'Acompañamiento musical'}{item.stepName ? <><small> · </small>{item.stepName}</> : null}</p>
+                    {item.notes ? <small>{item.notes}</small> : null}
+                    {item.brotherhoodSlug && item.brotherhoodPageReady
+                      ? <Link href={`/hermandades/${item.brotherhoodSlug}`}>Ver ficha de la hermandad <span>→</span></Link>
+                      : null}
+                  </div>
+                </article>
+              ))}
+            </div>
+            {curiosities.length ? <div className={styles.curiosityStack}>
+              {curiosities.map((item) => (
+                <aside className={styles.curiosityCard} key={item.id}>
+                  <span>{item.title || '¿Sabías que…?'}</span>
+                  <p>{item.body || item.summary}</p>
+                </aside>
+              ))}
+            </div> : null}
+          </div>
         </div>
       </section> : null}
 

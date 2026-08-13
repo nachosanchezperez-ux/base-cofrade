@@ -128,6 +128,7 @@
 .bandPage:has(#resumen:target) .navList a[href="#resumen"],
 .bandPage:has(#banderin:target) .navList a[href="#banderin"],
 .bandPage:has(#acompanamientos:target) .navList a[href="#acompanamientos"],
+.bandPage:has(#acompanamientos-historicos:target) .navList a[href="#acompanamientos-historicos"],
 .bandPage:has(#extraordinarias:target) .navList a[href="#extraordinarias"],
 .bandPage:has(#repertorio:target) .navList a[href="#repertorio"],
 .bandPage:has(#direccion:target) .navList a[href="#direccion"],
@@ -136,6 +137,7 @@
 .bandPage:has(#resumen:target) .navList a[href="#resumen"]::after,
 .bandPage:has(#banderin:target) .navList a[href="#banderin"]::after,
 .bandPage:has(#acompanamientos:target) .navList a[href="#acompanamientos"]::after,
+.bandPage:has(#acompanamientos-historicos:target) .navList a[href="#acompanamientos-historicos"]::after,
 .bandPage:has(#extraordinarias:target) .navList a[href="#extraordinarias"]::after,
 .bandPage:has(#repertorio:target) .navList a[href="#repertorio"]::after,
 .bandPage:has(#direccion:target) .navList a[href="#direccion"]::after,
@@ -228,6 +230,30 @@
 .relationshipLinks a { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 10px; color: var(--band-primary); font-size: 9px; font-weight: 700; }
 .relationshipLinks > span { color: #9a949e; font-size: 8px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
 .relationshipLinks a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.historicalSection {
+  background:
+    radial-gradient(circle at 92% 5%, color-mix(in srgb, var(--band-primary) 11%, white), transparent 28%),
+    #fff;
+}
+.historicalLayout { display: grid; grid-template-columns: minmax(0, 1.22fr) minmax(320px, .78fr); gap: 18px; align-items: stretch; }
+.historicalList,
+.curiosityStack { display: grid; gap: 14px; }
+.historicalCard { display: grid; grid-template-columns: 170px minmax(0, 1fr); min-height: 250px; overflow: hidden; border: 1px solid var(--band-line); border-radius: 22px; background: #fff; box-shadow: 0 18px 45px rgb(41 39 44 / 7%); }
+.historicalPeriod { display: grid; align-content: center; justify-items: center; gap: 10px; padding: 25px 18px; color: #fff; background: linear-gradient(155deg, var(--band-primary), color-mix(in srgb, var(--band-primary) 28%, var(--band-secondary))); text-align: center; }
+.historicalPeriod span { color: rgb(255 255 255 / 62%); font-size: 9px; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; }
+.historicalPeriod strong { max-width: 120px; color: #fff; font-size: 32px; line-height: 1; letter-spacing: -.04em; }
+.historicalCopy { display: flex; min-width: 0; flex-direction: column; justify-content: center; padding: 28px 30px; }
+.historicalCopy > span { color: var(--band-primary); font-size: 9px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+.historicalCopy h3 { margin: 8px 0 14px; color: var(--band-secondary); font-size: clamp(25px, 3vw, 34px); line-height: 1.08; letter-spacing: -.035em; }
+.historicalCopy p { margin: 0; color: var(--band-muted); font-size: 13px; line-height: 1.65; }
+.historicalCopy p small { color: color-mix(in srgb, var(--band-muted) 55%, white); font-size: inherit; }
+.historicalCopy > small { margin-top: 10px; color: var(--band-muted); font-size: 10px; line-height: 1.5; }
+.historicalCopy > a { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 22px; padding-top: 15px; border-top: 1px solid var(--band-line); color: var(--band-primary); font-size: 10px; font-weight: 700; }
+.historicalCopy > a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.curiosityCard { position: relative; display: flex; min-height: 250px; flex-direction: column; justify-content: center; padding: 34px; overflow: hidden; border-radius: 22px; color: #fff; background: linear-gradient(145deg, var(--band-secondary), color-mix(in srgb, var(--band-secondary) 62%, var(--band-primary))); box-shadow: 0 20px 48px rgb(41 39 44 / 16%); }
+.curiosityCard::after { position: absolute; top: -62px; right: -42px; width: 180px; height: 180px; border: 1px solid rgb(255 255 255 / 10%); border-radius: 50%; content: ''; }
+.curiosityCard > span { position: relative; z-index: 1; color: color-mix(in srgb, var(--band-primary) 38%, white); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.curiosityCard p { position: relative; z-index: 1; margin: 16px 0 0; color: rgb(255 255 255 / 88%); font-size: clamp(18px, 2.2vw, 24px); line-height: 1.48; letter-spacing: -.015em; }
 .emptyBlock { padding: 24px; border: 1px dashed #ccc4cf; border-radius: 16px; color: var(--band-muted); background: rgb(255 255 255 / 55%); font-size: 13px; }
 .outingList { display: grid; gap: 16px; }
 .outingList article { display: grid; grid-template-columns: 156px minmax(0, 1fr); min-height: 218px; overflow: hidden; border: 1px solid var(--band-line); border-radius: 23px; background: #fff; box-shadow: 0 18px 44px rgb(41 39 44 / 8%); }
@@ -280,6 +306,7 @@
   .heritagePhoto { min-height: 620px; }
   .relationshipGrid,
   .directionGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .historicalLayout { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 680px) {
@@ -318,6 +345,13 @@
   .relationshipGrid,
   .directionGrid,
   .premiereGrid { grid-template-columns: 1fr; }
+  .historicalCard { grid-template-columns: 112px minmax(0, 1fr); min-height: 230px; }
+  .historicalPeriod { padding: 20px 10px; }
+  .historicalPeriod strong { font-size: 25px; }
+  .historicalCopy { padding: 24px 19px; }
+  .historicalCopy h3 { font-size: 24px; }
+  .curiosityCard { min-height: 0; padding: 28px 24px; }
+  .curiosityCard p { font-size: 18px; }
   .outingList article { grid-template-columns: 106px minmax(0, 1fr); min-height: 218px; border-radius: 21px; }
   .outingList time { padding: 18px 10px; }
   .outingList time strong { font-size: 48px; }
