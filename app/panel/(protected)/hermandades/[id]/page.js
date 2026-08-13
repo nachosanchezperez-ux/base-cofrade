@@ -15,6 +15,7 @@ import {
   saveHeritageAssetAction,
   saveMovementAction,
   saveOutingSeriesAction,
+  saveSocialLinkAction,
   updateBrotherhoodAction,
   uploadMediaAction,
 } from './actions'
@@ -22,6 +23,15 @@ import styles from '@/app/panel/panel.module.css'
 
 const STATUS_LABELS = { published: 'Publicado', review: 'En revisión', draft: 'Borrador', archived: 'Archivado' }
 const MONTHS = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
+const SOCIAL_PLATFORMS = [
+  ['website', 'Web oficial'],
+  ['facebook', 'Facebook'],
+  ['instagram', 'Instagram'],
+  ['x', 'X / Twitter'],
+  ['youtube', 'YouTube'],
+  ['tiktok', 'TikTok'],
+  ['whatsapp', 'Canal de WhatsApp'],
+]
 
 export const metadata = { title: 'Editar hermandad · Panel' }
 
@@ -60,6 +70,24 @@ function SaveBar({ label = 'Guardar cambios', canEdit = true }) {
       <small>{canEdit ? 'Los cambios publicados se reflejan en la ficha pública.' : 'Tu perfil tiene acceso de consulta.'}</small>
       {canEdit ? <button className={styles.primaryButton} type="submit">{label}</button> : null}
     </div>
+  )
+}
+
+function SocialLinkForm({ item, entityId, canEdit }) {
+  const isNew = !item?.id
+  return (
+    <form action={saveSocialLinkAction} className={`${styles.editorItem} ${styles.editorForm}`}>
+      <input type="hidden" name="brotherhood_id" value={entityId} />
+      <input type="hidden" name="link_id" value={item?.id || ''} />
+      <div className={styles.formGrid}>
+        <label><span>Plataforma</span><select name="platform" defaultValue={item?.platform || 'website'} disabled={!isNew}><option value="">Selecciona una plataforma</option>{SOCIAL_PLATFORMS.map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select>{!isNew ? <input type="hidden" name="platform" value={item.platform} /> : null}</label>
+        <label><span>Nombre visible</span><input name="label" defaultValue={item?.label || ''} placeholder="Web oficial" /></label>
+        <label className={styles.fieldWide}><span>URL oficial</span><input name="url" type="url" defaultValue={item?.url || ''} placeholder="https://…" required /></label>
+        <label><span>Orden</span><input name="display_order" type="number" defaultValue={item?.display_order ?? 0} /></label>
+        <label className={styles.checkField}><input name="is_public" type="checkbox" defaultChecked={item?.is_public ?? true} /><span>Mostrar públicamente</span></label>
+      </div>
+      <SaveBar label={isNew ? 'Añadir enlace' : 'Guardar enlace'} canEdit={canEdit} />
+    </form>
   )
 }
 
@@ -310,7 +338,7 @@ export default async function BrotherhoodEditorPage({ params, searchParams }) {
       {!canEdit ? <div className={styles.readOnlyNotice}>Estás consultando la ficha como colaborador. Un editor debe realizar los cambios.</div> : null}
 
       <nav className={styles.sectionTabs} aria-label="Secciones de la ficha">
-        <a href="#general">General</a><a href="#imagenes">Imágenes</a><a href="#salidas">Salidas</a><a href="#cultos">Cultos</a><a href="#patrimonio">Patrimonio</a>
+        <a href="#general">General</a><a href="#redes">Web y redes</a><a href="#imagenes">Imágenes</a><a href="#salidas">Salidas</a><a href="#cultos">Cultos</a><a href="#patrimonio">Patrimonio</a>
       </nav>
 
       <section className={styles.editorSection} id="general">
@@ -331,8 +359,6 @@ export default async function BrotherhoodEditorPage({ params, searchParams }) {
             <label><span>Barrio</span><input name="neighborhood" defaultValue={data.brotherhood?.neighborhood || ''} /></label>
             <BrotherhoodTypeSelector selected={data.brotherhood?.brotherhood_types || []} />
             <label className={styles.fieldWide}><span>Ruta o URL del escudo</span><input name="crest_path" defaultValue={data.brotherhood?.crest_path || ''} /></label>
-            <label><span>Web</span><input name="website_url" type="url" defaultValue={data.brotherhood?.website_url || ''} /></label>
-            <label><span>Instagram</span><input name="instagram_url" defaultValue={data.brotherhood?.instagram_url || ''} /></label>
             <label className={styles.fieldWide}><span>Notas documentales</span><textarea name="notes" defaultValue={data.brotherhood?.notes || ''} rows="4" /></label>
           </div>
           <fieldset className={styles.colorFieldset}>
@@ -348,6 +374,14 @@ export default async function BrotherhoodEditorPage({ params, searchParams }) {
           </fieldset>
           <SaveBar canEdit={canEdit} />
         </form>
+      </section>
+
+      <section className={styles.editorSection} id="redes">
+        <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>Canales oficiales</span><h2>Web y redes sociales</h2></div><p>Solo se publican los enlaces verificados y marcados como visibles.</p></div>
+        <div className={styles.editorStack}>
+          {data.socialLinks.map((item) => <SocialLinkForm key={item.id} item={item} entityId={data.entity.id} canEdit={canEdit} />)}
+          {canEdit ? <SocialLinkForm entityId={data.entity.id} canEdit /> : null}
+        </div>
       </section>
 
       <section className={styles.editorSection} id="imagenes">

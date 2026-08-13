@@ -16,6 +16,7 @@ const BROTHERHOOD_TYPES = new Map([
   ['gloria', 'Gloria'],
   ['sacramental', 'Sacramental'],
 ])
+const SOCIAL_PLATFORMS = new Set(['website', 'facebook', 'instagram', 'x', 'youtube', 'tiktok', 'whatsapp'])
 
 function value(formData, name) {
   return String(formData.get(name) || '').trim()
@@ -53,6 +54,20 @@ function required(formData, name, label) {
   const candidate = value(formData, name)
   if (!candidate) throw new Error(`${label} es obligatorio.`)
   return candidate
+}
+
+function officialUrl(formData, name = 'url') {
+  const candidate = required(formData, name, 'La URL')
+  let parsed
+  try {
+    parsed = new URL(candidate)
+  } catch {
+    throw new Error('La URL del enlace oficial no es válida.')
+  }
+  if (!['http:', 'https:'].includes(parsed.protocol)) {
+    throw new Error('La URL debe comenzar por http:// o https://.')
+  }
+  return parsed.toString()
 }
 
 function status(formData) {
@@ -132,8 +147,6 @@ export async function updateBrotherhoodAction(formData) {
     municipality_id: optionalUuid(formData, 'municipality_id'),
     canonical_see_place_id: optionalUuid(formData, 'canonical_see_place_id'),
     neighborhood: nullable(formData, 'neighborhood'),
-    website_url: nullable(formData, 'website_url'),
-    instagram_url: nullable(formData, 'instagram_url'),
     crest_path: nullable(formData, 'crest_path'),
     brotherhood_types: brotherhoodTypes(formData),
     current_procession_day: nullable(formData, 'current_procession_day'),
@@ -186,6 +199,39 @@ export async function updateBrotherhoodAction(formData) {
   })
   await refreshBrotherhood(supabase, brotherhoodId)
   redirectSaved(brotherhoodId, 'general')
+}
+
+export async function saveSocialLinkAction(formData) {
+  const user = await requirePanelEditor()
+  const supabase = await createClient()
+  const brotherhoodId = uuid(formData, 'brotherhood_id')
+  const linkId = optionalUuid(formData, 'link_id')
+  const platform = required(formData, 'platform', 'La plataforma')
+  if (!SOCIAL_PLATFORMS.has(platform)) throw new Error('Plataforma no válida.')
+
+  const payload = {
+    entity_id: brotherhoodId,
+    platform,
+    url: officialUrl(formData),
+    label: nullable(formData, 'label'),
+    display_order: integer(formData, 'display_order') || 0,
+    is_public: checked(formData, 'is_public'),
+  }
+  const result = linkId
+    ? await supabase.from('entity_social_links').update(payload).eq('id', linkId).eq('entity_id', brotherhoodId).select('id').single()
+    : await supabase.from('entity_social_links').insert(payload).select('id').single()
+  const saved = assertMutation(result, 'No se pudo guardar el enlace oficial')
+
+  await audit(supabase, user, {
+    action_type: linkId ? 'update' : 'create',
+    object_type: 'entity_social_link',
+    object_id: saved.id,
+    entity_id: brotherhoodId,
+    summary: `${linkId ? 'Enlace actualizado' : 'Enlace creado'}: ${platform}`,
+    changed_fields: payload,
+  })
+  await refreshBrotherhood(supabase, brotherhoodId)
+  redirectSaved(brotherhoodId, 'redes')
 }
 
 export async function saveOutingSeriesAction(formData) {

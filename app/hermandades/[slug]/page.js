@@ -4,6 +4,7 @@ import { cache } from 'react';
 import CofradeTypeBadges from '@/components/CofradeTypeBadges';
 import { notFound } from 'next/navigation';
 import JsonLd from '@/components/JsonLd';
+import OfficialLinks from '@/components/OfficialLinks';
 import SectionTitle from '@/components/SectionTitle';
 import SourcesBlock from '@/components/SourcesBlock';
 import { hermandades } from '@/lib/data';
@@ -78,6 +79,9 @@ export default async function HermandadDetailPage({ params }) {
       '@type': 'Organization',
       name: h.nombreOficial || h.nombrePopular,
       alternateName: h.nombrePopular,
+      ...(h.enlacesOficiales?.length ? {
+        sameAs: h.enlacesOficiales.map((link) => link.url),
+      } : {}),
       ...(h.localidad ? {
         address: {
           '@type': 'PostalAddress',
@@ -166,6 +170,7 @@ export default async function HermandadDetailPage({ params }) {
             {h.acompanamientos?.length > 0 && <a href="#acompanamientos">Acompañamientos</a>}
             {h.noticias?.length > 0 && <a href="#noticias">Noticias</a>}
             {h.curiosidades?.length > 0 && <a href="#curiosidades">Curiosidades</a>}
+            {h.enlacesOficiales?.length > 0 && <a href="#enlaces-oficiales">Web y redes</a>}
             {h.fuentesFicha?.length > 0 && <a href="#fuentes">Fuentes</a>}
           </div>
         </div>
@@ -580,6 +585,7 @@ export default async function HermandadDetailPage({ params }) {
         {h.curiosidades.map((c) => <div className="curiosity-card brotherhood-curiosity" key={c.id}><span className="curiosity-mark">?</span><div><span className="eyebrow">{c.categoria}</span><h3>{c.titulo}</h3><p>{c.texto}</p></div></div>)}
       </div></section>}
 
+      <OfficialLinks links={h.enlacesOficiales} />
       <SourcesBlock sources={h.fuentesFicha} />
     </main>
   );
