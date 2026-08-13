@@ -2,6 +2,7 @@ import Link from 'next/link';
 import HiloSearch from '@/components/HiloSearch';
 import { hermandades } from '@/lib/data';
 import { DEFAULT_DESCRIPTION, HOME_TITLE } from '@/lib/seo';
+import { getBandsDirectory } from '@/lib/supabase/bands';
 import styles from './home.module.css';
 
 export const dynamic = 'force-dynamic';
@@ -38,8 +39,9 @@ function getTodayLabel() {
   return `${weekday.charAt(0).toUpperCase()}${weekday.slice(1)} · ${day} de ${month} de ${year}`;
 }
 
-function buildSearchItems() {
-  return hermandades.flatMap((hermandad) => [
+function buildSearchItems(bands) {
+  return [
+    ...hermandades.flatMap((hermandad) => [
     {
       type: 'Hermandad',
       title: hermandad.nombrePopular,
@@ -58,12 +60,20 @@ function buildSearchItems() {
       subtitle: `${paso.tipo} · ${hermandad.nombrePopular}`,
       href: `/pasos/${paso.slug}`,
     })),
-  ]);
+    ]),
+    ...bands.map((band) => ({
+      type: 'Banda',
+      title: band.popularName,
+      subtitle: `${band.type} · ${band.municipality}`,
+      href: `/bandas/${band.slug}`,
+    })),
+  ];
 }
 
-export default function HomePage() {
+export default async function HomePage() {
   const today = getTodayLabel();
-  const searchItems = buildSearchItems();
+  const bands = await getBandsDirectory();
+  const searchItems = buildSearchItems(bands);
 
   return (
     <div className={styles.home}>
@@ -199,11 +209,11 @@ export default function HomePage() {
               <span className={styles.exploreCopy}><strong>Pasos</strong><span>Patrimonio · autores · acompañamiento</span></span>
               <span className={styles.status}>Próximamente</span>
             </div>
-            <div className={`${styles.exploreRow} ${styles.disabled}`}>
+            <Link className={styles.exploreRow} href="/bandas">
               <span className={styles.exploreIcon}>B</span>
               <span className={styles.exploreCopy}><strong>Bandas</strong><span>Historia · acompañamientos · relaciones</span></span>
-              <span className={styles.status}>Próximamente</span>
-            </div>
+              <span className={styles.exploreArrow}>→</span>
+            </Link>
             <div className={`${styles.exploreRow} ${styles.disabled}`}>
               <span className={styles.exploreIcon}>A</span>
               <span className={styles.exploreCopy}><strong>Autores</strong><span>Obras · intervenciones · relaciones</span></span>

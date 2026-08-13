@@ -4,12 +4,17 @@ import { absoluteUrl } from '@/lib/seo';
 
 export const revalidate = 3600;
 
-async function publishedBrotherhoods() {
+const fallbackEntities = [
+  ...hermandades.map(({ slug }) => ({ slug, updated_at: null, entity_type: 'brotherhood' })),
+  { slug: 'las-cigarreras', updated_at: null, entity_type: 'band' },
+];
+
+async function publishedEntities() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 
   if (!url || !key) {
-    return hermandades.map(({ slug }) => ({ slug, updated_at: null }));
+    return fallbackEntities;
   }
 
   try {
@@ -22,8 +27,8 @@ async function publishedBrotherhoods() {
     });
     const { data, error } = await supabase
       .from('entities')
-      .select('slug, updated_at')
-      .eq('entity_type', 'brotherhood')
+      .select('slug, updated_at, entity_type')
+      .in('entity_type', ['brotherhood', 'band'])
       .eq('status', 'published')
       .not('slug', 'is', null);
 
@@ -33,12 +38,14 @@ async function publishedBrotherhoods() {
     console.error('[Hilo Cofrade] No se pudo generar el sitemap desde Supabase', {
       error: error instanceof Error ? error.message : String(error),
     });
-    return hermandades.map(({ slug }) => ({ slug, updated_at: null }));
+    return fallbackEntities;
   }
 }
 
 export default async function sitemap() {
-  const brotherhoods = await publishedBrotherhoods();
+  const entities = await publishedEntities();
+  const brotherhoods = entities.filter((item) => item.entity_type === 'brotherhood');
+  const bands = entities.filter((item) => item.entity_type === 'band');
   const entries = [
     {
       url: absoluteUrl('/'),
@@ -51,6 +58,11 @@ export default async function sitemap() {
       priority: 0.9,
     },
     {
+      url: absoluteUrl('/bandas'),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
       url: absoluteUrl('/colabora'),
       changeFrequency: 'monthly',
       priority: 0.4,
@@ -58,6 +70,12 @@ export default async function sitemap() {
     ...brotherhoods.map((brotherhood) => ({
       url: absoluteUrl(`/hermandades/${brotherhood.slug}`),
       ...(brotherhood.updated_at ? { lastModified: new Date(brotherhood.updated_at) } : {}),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    })),
+    ...bands.map((band) => ({
+      url: absoluteUrl(`/bandas/${band.slug}`),
+      ...(band.updated_at ? { lastModified: new Date(band.updated_at) } : {}),
       changeFrequency: 'weekly',
       priority: 0.8,
     })),
