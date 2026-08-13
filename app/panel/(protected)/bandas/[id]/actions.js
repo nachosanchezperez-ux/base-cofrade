@@ -143,6 +143,7 @@ export async function updateBandAction(formData) {
     municipality_id: optionalUuid(formData, 'municipality_id'),
     foundation_text: nullable(formData, 'foundation_text'),
     website_url: url(formData, 'website_url', 'La web oficial'),
+    youtube_url: url(formData, 'youtube_url', 'El canal de YouTube'),
     instagram_url: url(formData, 'instagram_url', 'El enlace de Instagram'),
     description: nullable(formData, 'description'),
     primary_color: color(formData, 'primary_color'),
