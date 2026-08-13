@@ -59,13 +59,24 @@ export default async function BandDetailPage({ params }) {
 
   return (
     <main
-      className={styles.module}
-      style={{ '--band-primary': band.primaryColor, '--band-secondary': band.secondaryColor }}
+      className={`${styles.module} ${styles.bandPage}`}
+      style={{
+        '--band-primary': band.primaryColor,
+        '--band-secondary': band.secondaryColor,
+        '--bc-red': band.primaryColor,
+        '--bc-blue': band.secondaryColor,
+        '--bc-dark': band.secondaryColor,
+      }}
     >
       <JsonLd data={jsonLd} />
       <section className={styles.bandHero}>
         <div className={`shell ${styles.heroShell}`}>
-          <nav className={styles.breadcrumbs} aria-label="Migas de pan"><Link href="/bandas">Bandas</Link><span>/</span><strong>{band.popularName}</strong></nav>
+          <nav className={`brotherhood-breadcrumb ${styles.bandBreadcrumb}`} aria-label="Migas de pan">
+            <span className="breadcrumb-accent" />
+            <Link href="/bandas">Bandas</Link>
+            <span className="breadcrumb-arrow">→</span>
+            <strong>{band.popularName}</strong>
+          </nav>
           <div className={styles.heroGrid}>
             <div className={styles.heroCopy}>
               <span className={styles.eyebrow}>{band.type} · {band.municipality}</span>
@@ -83,25 +94,34 @@ export default async function BandDetailPage({ params }) {
           </div>
           <div className={styles.heroFacts}>
             <div><small>Fundación</small><strong>{band.foundation || 'Por documentar'}</strong></div>
-            <div><small>Localidad</small><strong>{band.municipality}</strong></div>
-            <div><small>Formación</small><strong>{band.type}</strong></div>
-            <div><small>Vinculación</small><strong>{band.linkedBrotherhood || 'Por documentar'}</strong></div>
+            <div><small>Localidad</small>{band.municipalitySlug ? <Link href={`/bandas?localidad=${band.municipalitySlug}`}>{band.municipality}</Link> : <strong>{band.municipality}</strong>}</div>
+            <div><small>Formación</small><Link href={`/bandas?tipo=${band.typeSlug}`}>{band.type}</Link></div>
+            <div><small>Vinculación</small>{band.linkedBrotherhoodSlug ? <Link href={`/hermandades/${band.linkedBrotherhoodSlug}`}>{band.linkedBrotherhood}</Link> : <strong>{band.linkedBrotherhood || 'Por documentar'}</strong>}</div>
           </div>
         </div>
       </section>
 
-      <nav className={styles.sectionNav} aria-label="Secciones de la ficha">
-        <div className="shell"><a href="#historia">Historia</a><a href="#acompanamientos">Acompañamientos</a><a href="#extraordinarias">Extraordinarias</a><a href="#estrenos">Estrenos</a><a href="#direccion">Dirección</a></div>
+      <nav className={`section-nav brotherhood-nav ${styles.sectionNav}`} aria-label="Secciones de la ficha">
+        <div className="shell brotherhood-nav-shell">
+          <span className={`brotherhood-nav-label ${styles.navLabel}`}>Explorar ficha</span>
+          <div className={`brotherhood-nav-list nav-scroll ${styles.navList}`}>
+            <a href="#resumen">Resumen</a>
+            <a href="#acompanamientos">Acompañamientos</a>
+            <a href="#extraordinarias">Extraordinarias</a>
+            <a href="#estrenos">Estrenos</a>
+            <a href="#direccion">Dirección</a>
+          </div>
+        </div>
       </nav>
 
-      <section className={styles.contentSection} id="historia">
+      <section className={styles.contentSection} id="resumen">
         <div className="shell">
           <div className={styles.sectionHeading}><span className={styles.eyebrow}>Identidad y trayectoria</span><h2>Una banda con identidad propia</h2></div>
           <div className={styles.storyGrid}>
             <div className={styles.storyText}><p>{band.description || band.summary}</p>{band.headquarters ? <p><strong>Sede o lugar de ensayo:</strong> {band.headquarters}</p> : null}</div>
             {band.heroImagePath ? (
               <figure className={styles.heroPhoto}>
-                <div><Image src={band.heroImagePath} alt={band.heroImageAlt || `Fotografía de ${band.popularName}`} fill sizes="(max-width: 760px) 100vw, 44vw" priority /></div>
+                <div><Image src={band.heroImagePath} alt={band.heroImageAlt || `Fotografía de ${band.popularName}`} fill sizes="(max-width: 760px) calc(100vw - 32px), 460px" /></div>
                 {band.heroImageCredit ? <figcaption>{band.heroImageCredit}</figcaption> : null}
               </figure>
             ) : null}
@@ -124,7 +144,7 @@ export default async function BandDetailPage({ params }) {
         <div className="shell">
           <div className={styles.sectionHeading}><span className={styles.eyebrow}>Agenda</span><h2>Próximas salidas extraordinarias</h2><p>Solo se muestran citas futuras publicadas y no canceladas.</p></div>
           {band.outings.length ? <div className={styles.outingList}>{band.outings.map((item) => (
-            <article key={item.id}><time dateTime={item.date}><strong>{dateLabel(item.date)}</strong>{timeLabel(item.time) ? <span>{timeLabel(item.time)} h</span> : null}</time><div><small>{item.type}</small><h3>{item.title}</h3><p>{[item.municipality, item.position, item.reason].filter(Boolean).join(' · ')}</p></div></article>
+            <article key={item.id}><time dateTime={item.date}><strong>{dateLabel(item.date)}</strong>{timeLabel(item.time) ? <span>{timeLabel(item.time)} h</span> : null}</time><div><small>{item.type}</small><h3>{item.title}</h3>{item.organizerName ? <strong className={styles.outingOrganizer}>{item.organizerName}</strong> : null}<p>{[item.municipality, item.position, item.reason].filter(Boolean).join(' · ')}</p></div></article>
           ))}</div> : <div className={styles.emptyBlock}>No hay próximas salidas extraordinarias publicadas.</div>}
         </div>
       </section>

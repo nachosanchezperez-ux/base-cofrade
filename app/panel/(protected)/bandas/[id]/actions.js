@@ -8,6 +8,7 @@ import { createClient } from '@/lib/supabase/server'
 
 const UUID_PATTERN = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i
 const STATUSES = new Set(['draft', 'review', 'published', 'archived'])
+const PARTICIPATION_MODES = new Set(['full_route', 'segment', 'alternating', 'unspecified'])
 
 function value(formData, name) { return String(formData.get(name) || '').trim() }
 function nullable(formData, name) { return value(formData, name) || null }
@@ -88,6 +89,39 @@ async function saveBandName(supabase, { id, bandId, name, shortName, type }) {
   }
 }
 
+async function saveLinkedBrotherhood(supabase, bandId, brotherhoodId) {
+  const existing = assertMutation(
+    await supabase
+      .from('entity_relations')
+      .select('id')
+      .eq('source_entity_id', bandId)
+      .eq('relation_type', 'belongs_to_brotherhood')
+      .limit(1)
+      .maybeSingle(),
+    'No se pudo consultar la vinculación con la hermandad'
+  )
+
+  if (!brotherhoodId) {
+    if (existing?.id) {
+      assertMutation(await supabase.from('entity_relations').update({ status: 'archived' }).eq('id', existing.id), 'No se pudo retirar la vinculación')
+    }
+    return null
+  }
+
+  const payload = {
+    source_entity_id: bandId,
+    relation_type: 'belongs_to_brotherhood',
+    target_entity_id: brotherhoodId,
+    status: 'published',
+  }
+  if (existing?.id) {
+    assertMutation(await supabase.from('entity_relations').update(payload).eq('id', existing.id), 'No se pudo actualizar la vinculación')
+    return existing.id
+  }
+  const relation = assertMutation(await supabase.from('entity_relations').insert(payload).select('id').single(), 'No se pudo crear la vinculación')
+  return relation.id
+}
+
 export async function updateBandAction(formData) {
   const user = await requirePanelEditor()
   const supabase = await createClient()
@@ -96,6 +130,13 @@ export async function updateBandAction(formData) {
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(entitySlug)) throw new Error('El slug solo puede contener minúsculas, números y guiones simples.')
   const popularName = required(formData, 'popular_name', 'El nombre popular')
   const officialName = required(formData, 'official_name', 'El nombre oficial')
+  const linkedBrotherhoodId = optionalUuid(formData, 'linked_brotherhood_entity_id')
+  const linkedBrotherhood = linkedBrotherhoodId
+    ? assertMutation(
+        await supabase.from('entities').select('name').eq('id', linkedBrotherhoodId).eq('entity_type', 'brotherhood').single(),
+        'No se pudo consultar la hermandad vinculada'
+      )
+    : null
   const entityPayload = { name: popularName, slug: entitySlug, summary: nullable(formData, 'summary'), status: status(formData) }
   const bandPayload = {
     band_type: required(formData, 'band_type', 'El tipo de formación'),
@@ -110,7 +151,7 @@ export async function updateBandAction(formData) {
     hero_image_path: nullable(formData, 'hero_image_path'),
     hero_image_alt: nullable(formData, 'hero_image_alt'),
     hero_image_credit: nullable(formData, 'hero_image_credit'),
-    linked_brotherhood_name: nullable(formData, 'linked_brotherhood_name'),
+    linked_brotherhood_name: linkedBrotherhood?.name || null,
     headquarters_text: nullable(formData, 'headquarters_text'),
   }
 
@@ -118,7 +159,8 @@ export async function updateBandAction(formData) {
   assertMutation(await supabase.from('bands').update(bandPayload).eq('entity_id', bandId), 'No se pudo actualizar la ficha')
   await saveBandName(supabase, { id: optionalUuid(formData, 'popular_name_id'), bandId, name: popularName, shortName: popularName, type: 'popular' })
   await saveBandName(supabase, { id: optionalUuid(formData, 'official_name_id'), bandId, name: officialName, shortName: nullable(formData, 'official_short_name'), type: 'official' })
-  await audit(supabase, user, { action_type: entityPayload.status === 'published' ? 'publish' : 'update', object_type: 'band', object_id: bandId, entity_id: bandId, summary: `Ficha actualizada: ${popularName}`, changed_fields: { entity: entityPayload, band: bandPayload } })
+  await saveLinkedBrotherhood(supabase, bandId, linkedBrotherhoodId)
+  await audit(supabase, user, { action_type: entityPayload.status === 'published' ? 'publish' : 'update', object_type: 'band', object_id: bandId, entity_id: bandId, summary: `Ficha actualizada: ${popularName}`, changed_fields: { entity: entityPayload, band: bandPayload, linked_brotherhood_entity_id: linkedBrotherhoodId } })
   await refreshBand(supabase, bandId)
   redirectSaved(bandId, 'general')
 }
@@ -203,8 +245,10 @@ export async function saveBandOutingAction(formData) {
   const outingId = optionalUuid(formData, 'outing_id')
   const positionId = optionalUuid(formData, 'position_id')
   const assignmentId = optionalUuid(formData, 'assignment_id')
+  const participationMode = PARTICIPATION_MODES.has(value(formData, 'participation_mode')) ? value(formData, 'participation_mode') : 'unspecified'
   const outingPayload = {
-    brotherhood_entity_id: uuid(formData, 'brotherhood_entity_id'),
+    brotherhood_entity_id: optionalUuid(formData, 'brotherhood_entity_id'),
+    organizer_name: nullable(formData, 'organizer_name'),
     outing_type: required(formData, 'outing_type', 'El tipo de salida'),
     character: 'extraordinary',
     title: required(formData, 'title', 'El título'),
@@ -220,12 +264,12 @@ export async function saveBandOutingAction(formData) {
     ? await supabase.from('outings').update(outingPayload).eq('id', outingId).select('id').single()
     : await supabase.from('outings').insert(outingPayload).select('id').single()
   const outing = assertMutation(outingResult, 'No se pudo guardar la salida')
-  const positionPayload = { outing_id: outing.id, position_code: 'behind_step', position_label: required(formData, 'position_label', 'La ubicación de la banda'), sequence_no: 1, status: outingPayload.status }
+  const positionPayload = { outing_id: outing.id, position_code: 'other', position_label: nullable(formData, 'position_label'), sequence_no: 1, status: outingPayload.status }
   const positionResult = positionId
     ? await supabase.from('outing_music_positions').update(positionPayload).eq('id', positionId).select('id').single()
     : await supabase.from('outing_music_positions').insert(positionPayload).select('id').single()
   const position = assertMutation(positionResult, 'No se pudo guardar la posición musical')
-  const assignmentPayload = { music_position_id: position.id, band_entity_id: bandId, participation_mode: 'full_route', sequence_no: 1, status: outingPayload.status }
+  const assignmentPayload = { music_position_id: position.id, band_entity_id: bandId, participation_mode: participationMode, sequence_no: 1, status: outingPayload.status }
   if (assignmentId) assertMutation(await supabase.from('outing_music_assignments').update(assignmentPayload).eq('id', assignmentId), 'No se pudo actualizar la participación')
   else assertMutation(await supabase.from('outing_music_assignments').insert(assignmentPayload), 'No se pudo crear la participación')
   await audit(supabase, user, { action_type: outingId ? 'update' : 'create', object_type: 'outing', object_id: outing.id, entity_id: bandId, summary: `${outingId ? 'Salida actualizada' : 'Salida creada'}: ${outingPayload.title}`, changed_fields: outingPayload })

@@ -6,8 +6,9 @@
   --band-line: #e5e1e8;
   --band-soft: #f6f4f7;
   color: var(--band-ink);
-  font-family: 'Open Sans Variable', 'Open Sans', Arial, sans-serif;
+  font-family: 'Open Sans', Arial, sans-serif;
   font-weight: 400;
+  font-synthesis: none;
 }
 
 .module h1 { font-weight: 800; }
@@ -58,6 +59,7 @@
 .resultHeading div { display: grid; gap: 3px; }
 .resultHeading strong { color: var(--band-secondary); font-size: 15px; }
 .resultHeading span { color: var(--band-muted); font-size: 11px; }
+.clearFilter { align-self: center; color: var(--band-primary); font-size: 11px; font-weight: 600; }
 .bandGrid { display: grid; gap: 13px; }
 
 .bandCard {
@@ -105,11 +107,12 @@
 }
 
 .heroShell { position: relative; z-index: 1; padding-top: 42px; }
-.breadcrumbs { display: flex; gap: 8px; color: rgb(255 255 255 / 68%); font-size: 10px; }
-.breadcrumbs strong { color: #fff; }
+.bandBreadcrumb { margin-bottom: 0; }
+.bandBreadcrumb a { font-weight: 600; }
+.bandBreadcrumb strong { font-weight: 700; }
 .heroGrid { display: grid; grid-template-columns: minmax(0, 1fr) 210px; gap: 48px; align-items: center; padding: 55px 0 48px; }
 .bandHero .eyebrow { color: rgb(255 255 255 / 74%); }
-.heroCopy h1 { max-width: 800px; margin: 13px 0 17px; font-size: clamp(58px, 9vw, 112px); line-height: .86; letter-spacing: -.06em; }
+.heroCopy h1 { max-width: 800px; margin: 13px 0 17px; font-size: clamp(58px, 9vw, 112px); line-height: .9; letter-spacing: -.045em; }
 .officialName { max-width: 800px; margin: 0; color: rgb(255 255 255 / 76%); font-size: 16px; line-height: 1.45; }
 .heroLead { max-width: 690px; margin: 19px 0 0; color: rgb(255 255 255 / 88%); font-size: 14px; line-height: 1.7; }
 .heroLinks { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px; }
@@ -121,20 +124,35 @@
 .heroFacts div { min-width: 0; padding: 22px 20px 24px 0; }
 .heroFacts small { display: block; color: rgb(255 255 255 / 56%); font-size: 9px; letter-spacing: .12em; text-transform: uppercase; }
 .heroFacts strong { display: block; margin-top: 4px; overflow: hidden; font-size: 12px; line-height: 1.45; text-overflow: ellipsis; }
+.heroFacts a { display: block; margin-top: 4px; overflow: hidden; color: #fff; font-size: 12px; font-weight: 600; line-height: 1.45; text-decoration: underline; text-decoration-color: rgb(255 255 255 / 28%); text-underline-offset: 3px; text-overflow: ellipsis; }
+.heroFacts a:hover { text-decoration-color: #fff; }
 
-.sectionNav { position: sticky; z-index: 40; top: 76px; border-bottom: 1px solid var(--band-line); background: rgb(255 255 255 / 94%); backdrop-filter: blur(15px); }
-.sectionNav > div { display: flex; gap: 25px; overflow-x: auto; scrollbar-width: none; }
-.sectionNav a { padding: 16px 0; color: var(--band-muted); font-size: 11px; white-space: nowrap; }
-.sectionNav a:hover { color: var(--band-primary); }
+.sectionNav { top: 76px; border: 0; background: linear-gradient(90deg, var(--band-secondary), color-mix(in srgb, var(--band-secondary) 68%, var(--band-primary))); box-shadow: 0 10px 28px rgb(41 39 44 / 18%); }
+.sectionNav a { font-weight: 600; }
+.navLabel { font-weight: 600; }
+.navList a { color: rgb(255 255 255 / 64%); }
+.bandPage:not(:has(section:target)) .navList a[href="#resumen"],
+.bandPage:has(#resumen:target) .navList a[href="#resumen"],
+.bandPage:has(#acompanamientos:target) .navList a[href="#acompanamientos"],
+.bandPage:has(#extraordinarias:target) .navList a[href="#extraordinarias"],
+.bandPage:has(#estrenos:target) .navList a[href="#estrenos"],
+.bandPage:has(#direccion:target) .navList a[href="#direccion"] { color: #fff; font-weight: 600; }
+.bandPage:not(:has(section:target)) .navList a[href="#resumen"]::after,
+.bandPage:has(#resumen:target) .navList a[href="#resumen"]::after,
+.bandPage:has(#acompanamientos:target) .navList a[href="#acompanamientos"]::after,
+.bandPage:has(#extraordinarias:target) .navList a[href="#extraordinarias"]::after,
+.bandPage:has(#estrenos:target) .navList a[href="#estrenos"]::after,
+.bandPage:has(#direccion:target) .navList a[href="#direccion"]::after { position: absolute; right: 14px; bottom: 0; left: 14px; height: 3px; border-radius: 2px 2px 0 0; background: var(--band-primary); content: ''; }
+.bandPage section[id] { scroll-margin-top: 148px; }
 .sectionHeading { max-width: 800px; margin-bottom: 31px; }
 .sectionHeading h2 { margin: 8px 0 10px; color: var(--band-secondary); font-size: clamp(34px, 5vw, 58px); line-height: 1; letter-spacing: -.045em; }
 .sectionHeading p { margin: 0; color: var(--band-muted); font-size: 14px; line-height: 1.65; }
-.storyGrid { display: grid; grid-template-columns: 1fr .85fr; gap: 62px; align-items: center; }
+.storyGrid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(340px, 460px); gap: 62px; align-items: center; }
 .storyText p { margin: 0 0 18px; color: #4c4750; font-size: 17px; line-height: 1.85; }
 .storyText strong { color: var(--band-secondary); }
-.heroPhoto { margin: 0; }
-.heroPhoto > div { position: relative; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 22px; box-shadow: 0 20px 52px rgb(41 39 44 / 17%); }
-.heroPhoto img { object-fit: cover; }
+.heroPhoto { width: 100%; max-width: 460px; margin: 0; justify-self: end; }
+.heroPhoto > div { position: relative; aspect-ratio: 1; overflow: hidden; border: 10px solid #fff; border-radius: 26px; background: var(--band-secondary); box-shadow: 0 20px 52px rgb(41 39 44 / 17%); }
+.heroPhoto img { object-fit: contain; object-position: center; }
 .heroPhoto figcaption { margin-top: 9px; color: var(--band-muted); font-size: 9px; text-align: right; }
 .softSection { background: var(--band-soft); }
 .relationshipGrid,
@@ -157,6 +175,7 @@
 .outingList time span { color: var(--band-muted); font-size: 10px; }
 .outingList small { color: var(--band-primary); font-size: 9px; letter-spacing: .1em; text-transform: uppercase; }
 .outingList h3 { margin: 6px 0 4px; color: var(--band-secondary); font-size: 22px; }
+.outingOrganizer { display: block; margin-bottom: 5px; color: var(--band-ink); font-size: 12px; }
 .outingList p { margin: 0; color: var(--band-muted); font-size: 12px; }
 
 .premiereSection { color: #fff; background: linear-gradient(145deg, color-mix(in srgb, var(--band-secondary) 91%, black), var(--band-secondary)); }
@@ -205,7 +224,8 @@
   .identityBlock img { height: 132px; }
   .heroFacts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .heroFacts div:nth-child(odd) { border-right: 1px solid rgb(255 255 255 / 14%); }
-  .sectionNav { top: 70px; }
+  .sectionNav { top: 76px; }
+  .bandPage section[id] { scroll-margin-top: 138px; }
   .storyGrid { grid-template-columns: 1fr; }
   .storyText p { font-size: 15px; }
   .relationshipGrid,

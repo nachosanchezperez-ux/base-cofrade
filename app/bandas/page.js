@@ -11,8 +11,18 @@ export const metadata = {
   alternates: { canonical: '/bandas' },
 }
 
-export default async function BandasPage() {
+export default async function BandasPage({ searchParams }) {
   const bands = await getBandsDirectory()
+  const filters = await searchParams
+  const type = String(filters?.tipo || '')
+  const municipality = String(filters?.localidad || '')
+  const visibleBands = bands.filter((band) => (
+    (!type || band.typeSlug === type)
+    && (!municipality || band.municipalitySlug === municipality)
+  ))
+  const activeFilter = type
+    ? bands.find((band) => band.typeSlug === type)?.type
+    : bands.find((band) => band.municipalitySlug === municipality)?.municipality
 
   return (
     <main className={styles.module}>
@@ -27,10 +37,11 @@ export default async function BandasPage() {
       <section className={styles.directorySection}>
         <div className="shell">
           <div className={styles.resultHeading}>
-            <div><strong>{bands.length} {bands.length === 1 ? 'banda publicada' : 'bandas publicadas'}</strong><span>Sevilla capital y provincia</span></div>
+            <div><strong>{visibleBands.length} {visibleBands.length === 1 ? 'banda publicada' : 'bandas publicadas'}</strong><span>{activeFilter ? `Filtro: ${activeFilter}` : 'Sevilla capital y provincia'}</span></div>
+            {activeFilter ? <Link className={styles.clearFilter} href="/bandas">Ver todas</Link> : null}
           </div>
           <div className={styles.bandGrid}>
-            {bands.map((band) => (
+            {visibleBands.map((band) => (
               <Link
                 href={`/bandas/${band.slug}`}
                 className={styles.bandCard}
@@ -50,6 +61,7 @@ export default async function BandasPage() {
                 <span className={styles.cardArrow}>→</span>
               </Link>
             ))}
+            {!visibleBands.length ? <div className={styles.emptyBlock}>No hay bandas publicadas con este filtro.</div> : null}
           </div>
         </div>
       </section>
