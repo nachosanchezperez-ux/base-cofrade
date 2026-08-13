@@ -412,7 +412,12 @@ export default async function HermandadDetailPage({ params }) {
                 <div className={`heritage-work-visual ${pieza.imagen ? 'has-image' : ''}`}>
                   {pieza.imagen ? (
                     <>
-                      <Image src={pieza.imagen.src} alt={pieza.imagen.alt} fill sizes="(max-width: 900px) 100vw, 46vw" />
+                      <Image
+                        src={pieza.imagen.src}
+                        alt={pieza.imagen.alt}
+                        fill
+                        sizes="(max-width: 699px) calc(100vw - 40px), (max-width: 1099px) calc(50vw - 30px), 275px"
+                      />
                       {(pieza.imagen.pie || pieza.imagen.autor) && <small>{[pieza.imagen.pie, pieza.imagen.autor].filter(Boolean).join(' · ')}</small>}
                     </>
                   ) : (
