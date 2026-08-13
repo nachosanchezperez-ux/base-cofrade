@@ -126,7 +126,7 @@
 .navList a { color: rgb(255 255 255 / 64%); }
 .bandPage:not(:has(section:target)) .navList a[href="#resumen"],
 .bandPage:has(#resumen:target) .navList a[href="#resumen"],
-.bandPage:has(#patrimonio:target) .navList a[href="#patrimonio"],
+.bandPage:has(#banderin:target) .navList a[href="#banderin"],
 .bandPage:has(#acompanamientos:target) .navList a[href="#acompanamientos"],
 .bandPage:has(#extraordinarias:target) .navList a[href="#extraordinarias"],
 .bandPage:has(#repertorio:target) .navList a[href="#repertorio"],
@@ -134,7 +134,7 @@
 .bandPage:has(#fuentes:target) .navList a[href="#fuentes"] { color: #fff; font-weight: 600; }
 .bandPage:not(:has(section:target)) .navList a[href="#resumen"]::after,
 .bandPage:has(#resumen:target) .navList a[href="#resumen"]::after,
-.bandPage:has(#patrimonio:target) .navList a[href="#patrimonio"]::after,
+.bandPage:has(#banderin:target) .navList a[href="#banderin"]::after,
 .bandPage:has(#acompanamientos:target) .navList a[href="#acompanamientos"]::after,
 .bandPage:has(#extraordinarias:target) .navList a[href="#extraordinarias"]::after,
 .bandPage:has(#repertorio:target) .navList a[href="#repertorio"]::after,

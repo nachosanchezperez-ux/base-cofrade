@@ -456,10 +456,10 @@ export async function archiveBandPremiereAction(formData) {
 
 async function requireBandAsset(supabase, bandId, assetId) {
   const asset = assertMutation(
-    await supabase.from('heritage_assets').select('entity_id').eq('entity_id', assetId).eq('parent_entity_id', bandId).maybeSingle(),
-    'No se pudo consultar la pieza patrimonial'
+    await supabase.from('heritage_assets').select('entity_id').eq('entity_id', assetId).eq('parent_entity_id', bandId).eq('asset_type', 'Banderín').maybeSingle(),
+    'No se pudo consultar el banderín'
   )
-  if (!asset) throw new Error('La pieza patrimonial no pertenece a esta banda.')
+  if (!asset) throw new Error('El banderín no pertenece a esta banda.')
   return asset
 }
 
@@ -470,13 +470,20 @@ export async function saveBandHeritageAssetAction(formData) {
   const currentAssetId = optionalUuid(formData, 'asset_entity_id')
   const assetId = currentAssetId || randomUUID()
   const assetStatus = status(formData)
-  const assetName = required(formData, 'asset_name', 'El nombre de la pieza')
-  const assetSlug = required(formData, 'asset_slug', 'El slug de la pieza')
+  const assetName = required(formData, 'asset_name', 'El nombre del banderín')
+  const assetSlug = required(formData, 'asset_slug', 'El slug del banderín')
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(assetSlug)) throw new Error('El slug solo puede contener minúsculas, números y guiones simples.')
+  if (!currentAssetId) {
+    const existingBanderin = assertMutation(
+      await supabase.from('heritage_assets').select('entity_id').eq('parent_entity_id', bandId).eq('asset_type', 'Banderín').limit(1).maybeSingle(),
+      'No se pudo comprobar el banderín de la banda'
+    )
+    if (existingBanderin) throw new Error('Esta banda ya tiene un banderín asociado.')
+  }
   const entityPayload = { name: assetName, slug: assetSlug, summary: nullable(formData, 'asset_summary'), status: assetStatus }
   const assetPayload = {
     parent_entity_id: bandId,
-    asset_type: required(formData, 'asset_type', 'El tipo de pieza'),
+    asset_type: 'Banderín',
     description: nullable(formData, 'asset_description'),
     technique: nullable(formData, 'technique'),
     date_from: nullable(formData, 'date_from'),
@@ -492,15 +499,16 @@ export async function saveBandHeritageAssetAction(formData) {
   }
   if (currentAssetId) {
     await requireBandAsset(supabase, bandId, currentAssetId)
-    assertMutation(await supabase.from('entities').update(entityPayload).eq('id', currentAssetId).eq('entity_type', 'heritage_asset'), 'No se pudo actualizar la pieza')
-    assertMutation(await supabase.from('heritage_assets').update(assetPayload).eq('entity_id', currentAssetId).eq('parent_entity_id', bandId), 'No se pudo actualizar el patrimonio')
+    assertMutation(await supabase.from('entities').update(entityPayload).eq('id', currentAssetId).eq('entity_type', 'heritage_asset'), 'No se pudo actualizar el banderín')
+    assertMutation(await supabase.from('heritage_assets').update(assetPayload).eq('entity_id', currentAssetId).eq('parent_entity_id', bandId), 'No se pudo actualizar la ficha del banderín')
   } else {
-    assertMutation(await supabase.from('entities').insert({ id: assetId, entity_type: 'heritage_asset', ...entityPayload }), 'No se pudo crear la pieza')
-    assertMutation(await supabase.from('heritage_assets').insert({ entity_id: assetId, ...assetPayload }), 'No se pudo crear la ficha patrimonial')
+    assertMutation(await supabase.from('entities').insert({ id: assetId, entity_type: 'heritage_asset', ...entityPayload }), 'No se pudo crear el banderín')
+    assertMutation(await supabase.from('heritage_assets').insert({ entity_id: assetId, ...assetPayload }), 'No se pudo crear la ficha del banderín')
   }
-  await audit(supabase, user, { action_type: currentAssetId ? 'update' : 'create', object_type: 'heritage_asset', object_id: assetId, entity_id: bandId, summary: `${currentAssetId ? 'Pieza actualizada' : 'Pieza creada'}: ${assetName}`, changed_fields: { ...entityPayload, ...assetPayload } })
+  assertMutation(await supabase.from('bands').update({ banderin_entity_id: assetId }).eq('entity_id', bandId), 'No se pudo vincular el banderín con la banda')
+  await audit(supabase, user, { action_type: currentAssetId ? 'update' : 'create', object_type: 'heritage_asset', object_id: assetId, entity_id: bandId, summary: `${currentAssetId ? 'Banderín actualizado' : 'Banderín creado'}: ${assetName}`, changed_fields: { ...entityPayload, ...assetPayload } })
   await refreshBand(supabase, bandId)
-  redirectSaved(bandId, 'patrimonio')
+  redirectSaved(bandId, 'banderin')
 }
 
 export async function archiveBandHeritageAssetAction(formData) {
@@ -509,10 +517,11 @@ export async function archiveBandHeritageAssetAction(formData) {
   const bandId = uuid(formData, 'band_id')
   const assetId = uuid(formData, 'asset_entity_id')
   await requireBandAsset(supabase, bandId, assetId)
-  assertMutation(await supabase.from('entities').update({ status: 'archived' }).eq('id', assetId).eq('entity_type', 'heritage_asset'), 'No se pudo archivar la pieza')
-  await audit(supabase, user, { action_type: 'archive', object_type: 'heritage_asset', object_id: assetId, entity_id: bandId, summary: 'Pieza patrimonial archivada' })
+  assertMutation(await supabase.from('entities').update({ status: 'archived' }).eq('id', assetId).eq('entity_type', 'heritage_asset'), 'No se pudo archivar el banderín')
+  assertMutation(await supabase.from('bands').update({ banderin_entity_id: null }).eq('entity_id', bandId).eq('banderin_entity_id', assetId), 'No se pudo retirar el banderín de la banda')
+  await audit(supabase, user, { action_type: 'archive', object_type: 'heritage_asset', object_id: assetId, entity_id: bandId, summary: 'Banderín archivado' })
   await refreshBand(supabase, bandId)
-  redirectSaved(bandId, 'patrimonio')
+  redirectSaved(bandId, 'banderin')
 }
 
 export async function saveBandAssetContributionAction(formData) {
@@ -543,7 +552,7 @@ export async function saveBandAssetContributionAction(formData) {
   const saved = assertMutation(result, 'No se pudo guardar la intervención')
   await audit(supabase, user, { action_type: contributionId ? 'update' : 'create', object_type: 'heritage_intervention', object_id: saved.id, entity_id: bandId, summary: `${payload.intervention_type}: ${agent.name}`, changed_fields: payload })
   await refreshBand(supabase, bandId)
-  redirectSaved(bandId, 'patrimonio')
+  redirectSaved(bandId, 'banderin')
 }
 
 export async function archiveBandAssetContributionAction(formData) {
@@ -556,5 +565,5 @@ export async function archiveBandAssetContributionAction(formData) {
   assertMutation(await supabase.from('heritage_interventions').update({ status: 'archived' }).eq('id', contributionId).eq('target_entity_id', assetId), 'No se pudo archivar la intervención')
   await audit(supabase, user, { action_type: 'archive', object_type: 'heritage_intervention', object_id: contributionId, entity_id: bandId, summary: 'Intervención patrimonial archivada' })
   await refreshBand(supabase, bandId)
-  redirectSaved(bandId, 'patrimonio')
+  redirectSaved(bandId, 'banderin')
 }

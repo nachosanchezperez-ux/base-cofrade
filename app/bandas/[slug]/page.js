@@ -94,7 +94,7 @@ export default async function BandDetailPage({ params }) {
   const hasOutings = band.outings.length > 0
   const hasPremieres = band.premieres.length > 0
   const hasDirection = band.direction.length > 0
-  const hasHeritage = band.heritage?.length > 0
+  const banderin = band.heritage?.find((item) => item.type === 'Banderín') || null
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'MusicGroup',
@@ -149,7 +149,7 @@ export default async function BandDetailPage({ params }) {
           <span className={`brotherhood-nav-label ${styles.navLabel}`}>Explorar ficha</span>
           <div className={`brotherhood-nav-list nav-scroll ${styles.navList}`}>
             <a href="#resumen">De un vistazo</a>
-            {hasHeritage ? <a href="#patrimonio">Patrimonio</a> : null}
+            {banderin ? <a href="#banderin">Banderín</a> : null}
             {hasAccompaniments ? <a href="#acompanamientos">Semana Santa</a> : null}
             {hasOutings ? <a href="#extraordinarias">Extraordinarias</a> : null}
             {hasPremieres ? <a href="#repertorio">Repertorio</a> : null}
@@ -216,24 +216,23 @@ export default async function BandDetailPage({ params }) {
         </div>
       </section>
 
-      {hasHeritage ? <section className={`${styles.contentSection} ${styles.heritageSection}`} id="patrimonio">
+      {banderin ? <section className={`${styles.contentSection} ${styles.heritageSection}`} id="banderin">
         <div className="shell">
-          {band.heritage.map((asset) => (
-            <article className={styles.heritageFeature} key={asset.id}>
-              {asset.imagePath ? (
+            <article className={styles.heritageFeature}>
+              {banderin.imagePath ? (
                 <figure className={styles.heritagePhoto}>
-                  <div><Image src={asset.imagePath} alt={asset.imageAlt || asset.name} fill sizes="(max-width: 900px) calc(100vw - 32px), 42vw" /></div>
-                  {asset.imageCredit ? <figcaption>{asset.imageCredit}</figcaption> : null}
+                  <div><Image src={banderin.imagePath} alt={banderin.imageAlt || banderin.name} fill sizes="(max-width: 900px) calc(100vw - 32px), 42vw" /></div>
+                  {banderin.imageCredit ? <figcaption>{banderin.imageCredit}</figcaption> : null}
                 </figure>
               ) : null}
               <div className={styles.heritageCopy}>
                 <div className={styles.sectionHeading}>
-                  <span className={styles.eyebrow}>Patrimonio</span>
-                  <h2>{asset.type === 'Banderín' ? 'El banderín' : asset.name}</h2>
-                  {asset.description ? <p>{asset.description}</p> : null}
+                  <span className={styles.eyebrow}>Banderín</span>
+                  <h2>El banderín</h2>
+                  {banderin.description ? <p>{banderin.description}</p> : null}
                 </div>
                 <div className={styles.heritageTimeline}>
-                  {groupContributions(asset.contributions).map((group) => (
+                  {groupContributions(banderin.contributions).map((group) => (
                     <section key={group.key}>
                       <div className={styles.heritageMoment}>
                         <span>{group.type}</span>
@@ -252,7 +251,6 @@ export default async function BandDetailPage({ params }) {
                 </div>
               </div>
             </article>
-          ))}
         </div>
       </section> : null}
 
