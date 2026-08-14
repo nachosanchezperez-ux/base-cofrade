@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { requirePanelUser } from '@/lib/panel/auth'
 import { getPanelBrotherhoods } from '@/lib/panel/data'
 import styles from '@/app/panel/panel.module.css'
 
@@ -10,12 +11,17 @@ export default async function PanelBrotherhoodsPage({ searchParams }) {
   const query = await searchParams
   const q = String(query?.q || '').trim()
   const status = ['published', 'review', 'draft', 'archived'].includes(query?.status) ? query.status : ''
-  const brotherhoods = await getPanelBrotherhoods({ query: q, status })
+  const [user, brotherhoods] = await Promise.all([
+    requirePanelUser(),
+    getPanelBrotherhoods({ query: q, status }),
+  ])
+  const canEdit = ['admin', 'editor'].includes(user.role)
 
   return (
     <div className={styles.pageWrap}>
       <header className={styles.pageHeader}>
         <div><span className={styles.eyebrow}>Enciclopedia</span><h1>Hermandades</h1><p>Identidad, titulares, salidas, cultos, patrimonio y archivo visual en una sola ficha.</p></div>
+        {canEdit ? <Link className={styles.primaryButton} href="/panel/hermandades/nueva">Nueva hermandad</Link> : null}
       </header>
 
       <form className={styles.filters}>
