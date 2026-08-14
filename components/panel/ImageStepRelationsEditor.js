@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import EntityPicker from '@/components/panel/EntityPicker'
+import RelationSourcesEditor from '@/components/panel/RelationSourcesEditor'
 import {
   addImageStepRelationAction,
   archiveImageStepRelationAction,
@@ -111,6 +112,16 @@ export default function ImageStepRelationsEditor({ data, canEdit }) {
                       <button type="submit">Retirar relación sin borrar entidades</button>
                     </form>
                   ) : null}
+
+                  <RelationSourcesEditor
+                    relationKind="image_step"
+                    relationId={relation.id}
+                    contextEntityId={relation.image_entity_id}
+                    sourceOptions={data.sourceOptions}
+                    links={relation.sourceLinks || []}
+                    returnPath="/panel/relaciones/imagen-paso"
+                    canEdit={canEdit}
+                  />
                 </article>
               )
             })}
