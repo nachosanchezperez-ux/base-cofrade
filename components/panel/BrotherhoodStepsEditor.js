@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import EntityPicker from '@/components/panel/EntityPicker'
+import RelationSourcesEditor from '@/components/panel/RelationSourcesEditor'
 import {
   addBrotherhoodStepRelationAction,
   archiveBrotherhoodStepRelationAction,
@@ -105,6 +106,16 @@ export default function BrotherhoodStepsEditor({ data, canEdit }) {
                       <button type="submit">Retirar relación sin borrar el Paso</button>
                     </form>
                   ) : null}
+
+                  <RelationSourcesEditor
+                    relationKind="brotherhood_step"
+                    relationId={relation.id}
+                    contextEntityId={data.entity.id}
+                    sourceOptions={data.sourceOptions}
+                    links={relation.sourceLinks || []}
+                    returnPath={`/panel/hermandades/${data.entity.id}/pasos`}
+                    canEdit={canEdit}
+                  />
                 </article>
               )
             })}
