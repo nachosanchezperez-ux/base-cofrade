@@ -9,6 +9,7 @@ import styles from '@/app/panel/panel.module.css'
 const baseItems = [
   { href: '/panel', label: 'Resumen', mark: 'R' },
   { href: '/panel/hermandades', label: 'Hermandades', mark: 'H' },
+  { href: '/panel/imagenes', label: 'Imágenes', mark: 'I' },
   { href: '/panel/bandas', label: 'Bandas', mark: 'B' },
 ]
 
