@@ -31,6 +31,7 @@ export default async function ImageEditorPage({ params, searchParams }) {
           </div>
           <div className={styles.editorHeaderActions}>
             <span className={`${styles.statusBadge} ${styles[data.entity.status]}`}>{STATUS_LABELS[data.entity.status]}</span>
+            <Link className={styles.secondaryButton} href={`/panel/imagenes/${data.entity.id}/intervenciones`}>Intervenciones</Link>
             {data.entity.status === 'published' && data.entity.slug ? (
               <Link className={styles.secondaryButton} href={`/imagenes/${data.entity.slug}`} target="_blank" rel="noreferrer">Ver ficha pública ↗</Link>
             ) : null}
