@@ -1,6 +1,6 @@
 import HermandadesDirectory from '@/components/HermandadesDirectory';
 import JsonLd from '@/components/JsonLd';
-import { getHermandadesDirectory } from '@/lib/supabase/brotherhoods';
+import { getHermandadesDirectory } from '@/lib/supabase/brotherhood-directory';
 import { absoluteUrl, breadcrumbJsonLd, pageTitle } from '@/lib/seo';
 
 export const dynamic = 'force-dynamic';
