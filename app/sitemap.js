@@ -60,6 +60,16 @@ export default async function sitemap() {
       priority: 0.9,
     },
     {
+      url: absoluteUrl('/imagenes'),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: absoluteUrl('/pasos'),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
       url: absoluteUrl('/bandas'),
       changeFrequency: 'weekly',
       priority: 0.9,

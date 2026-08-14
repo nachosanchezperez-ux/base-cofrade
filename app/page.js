@@ -195,16 +195,16 @@ export default async function HomePage() {
               <span className={styles.exploreCopy}><strong>Hermandades</strong><span>Historia · cultos · salidas · relaciones</span></span>
               <span className={styles.exploreArrow}>→</span>
             </Link>
-            <div className={`${styles.exploreRow} ${styles.disabled}`}>
+            <Link className={styles.exploreRow} href="/imagenes">
               <span className={styles.exploreIcon}>I</span>
               <span className={styles.exploreCopy}><strong>Imágenes</strong><span>Autoría · cronología · restauraciones</span></span>
-              <span className={styles.status}>Próximamente</span>
-            </div>
-            <div className={`${styles.exploreRow} ${styles.disabled}`}>
+              <span className={styles.exploreArrow}>→</span>
+            </Link>
+            <Link className={styles.exploreRow} href="/pasos">
               <span className={styles.exploreIcon}>P</span>
               <span className={styles.exploreCopy}><strong>Pasos</strong><span>Patrimonio · autores · acompañamiento</span></span>
-              <span className={styles.status}>Próximamente</span>
-            </div>
+              <span className={styles.exploreArrow}>→</span>
+            </Link>
             <Link className={styles.exploreRow} href="/bandas">
               <span className={styles.exploreIcon}>B</span>
               <span className={styles.exploreCopy}><strong>Bandas</strong><span>Historia · acompañamientos · relaciones</span></span>
