@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import JsonLd from '@/components/JsonLd';
 import SourcesBlock from '@/components/SourcesBlock';
-import { getImagenPageBySlug } from '@/lib/supabase/brotherhoods';
+import { getImagenPageBySlug } from '@/lib/supabase/public-entity-pages';
 import {
   absoluteUrl,
   breadcrumbJsonLd,
@@ -25,7 +25,9 @@ export async function generateMetadata({ params }) {
   const title = imagen.nombre;
   const description = seoDescription(
     imagen.descripcion,
-    `Ficha de ${imagen.nombre}, titular de ${hermandad.nombrePopular}: autoría, datación, historia, restauraciones, cronología y fuentes documentales.`
+    hermandad
+      ? `Ficha de ${imagen.nombre}, titular de ${hermandad.nombrePopular}: autoría, datación, historia, restauraciones, cronología y fuentes documentales.`
+      : `Ficha de ${imagen.nombre}: autoría, datación, descripción material y fuentes documentales.`
   );
   const canonical = `/imagenes/${imagen.slug}`;
 
@@ -54,34 +56,41 @@ export default async function ImagenPage({ params }) {
 
   const { imagen, hermandad } = result;
   const canonicalPath = `/imagenes/${imagen.slug}`;
-
   const cronologia = imagen.cronologia?.length
     ? imagen.cronologia
-    : [{
-        fecha: imagen.fecha,
-        titulo: 'Datación',
-        texto: 'Fecha asociada actualmente a la ficha de esta imagen.'
-      }];
-
-  const otrasImagenes = hermandad.imagenes.filter(
+    : imagen.fecha
+      ? [{
+          fecha: imagen.fecha,
+          titulo: 'Datación',
+          texto: 'Fecha asociada actualmente a la ficha de esta imagen.'
+        }]
+      : [];
+  const otrasImagenes = hermandad?.imagenes?.filter(
     (otraImagen) => otraImagen.slug !== imagen.slug
-  );
+  ) || [];
+  const breadcrumbs = hermandad
+    ? [
+        { name: 'Inicio', path: '/' },
+        { name: 'Hermandades', path: '/hermandades' },
+        { name: hermandad.nombrePopular, path: `/hermandades/${hermandad.slug}` },
+        { name: imagen.nombre, path: canonicalPath },
+      ]
+    : [
+        { name: 'Inicio', path: '/' },
+        { name: 'Imágenes', path: '/imagenes' },
+        { name: imagen.nombre, path: canonicalPath },
+      ];
 
   return (
     <main
       className="brotherhood-page image-detail-v2"
       style={{
-        '--brotherhood-primary': hermandad.colores?.primario || '#153B69',
-        '--brotherhood-secondary': hermandad.colores?.secundario || '#A71930',
-        '--brotherhood-light': hermandad.colores?.claro || '#FFFFFF'
+        '--brotherhood-primary': hermandad?.colores?.primario || '#153B69',
+        '--brotherhood-secondary': hermandad?.colores?.secundario || '#A71930',
+        '--brotherhood-light': hermandad?.colores?.claro || '#FFFFFF'
       }}
     >
-      <JsonLd data={breadcrumbJsonLd([
-        { name: 'Inicio', path: '/' },
-        { name: 'Hermandades', path: '/hermandades' },
-        { name: hermandad.nombrePopular, path: `/hermandades/${hermandad.slug}` },
-        { name: imagen.nombre, path: canonicalPath },
-      ])} />
+      <JsonLd data={breadcrumbJsonLd(breadcrumbs)} />
       <JsonLd data={{
         '@context': 'https://schema.org',
         '@type': 'VisualArtwork',
@@ -101,9 +110,15 @@ export default async function ImagenPage({ params }) {
         <div className="shell">
           <div className="brotherhood-breadcrumb">
             <span className="breadcrumb-accent" />
-            <Link href="/hermandades">Hermandades</Link>
-            <span className="breadcrumb-arrow">→</span>
-            <Link href={`/hermandades/${hermandad.slug}`}>{hermandad.nombrePopular}</Link>
+            {hermandad ? (
+              <>
+                <Link href="/hermandades">Hermandades</Link>
+                <span className="breadcrumb-arrow">→</span>
+                <Link href={`/hermandades/${hermandad.slug}`}>{hermandad.nombrePopular}</Link>
+              </>
+            ) : (
+              <Link href="/imagenes">Imágenes</Link>
+            )}
             <span className="breadcrumb-arrow">→</span>
             <strong>{imagen.nombre}</strong>
           </div>
@@ -112,8 +127,9 @@ export default async function ImagenPage({ params }) {
             <div className="image-detail-hero-copy-v2">
               <h1>{imagen.nombre}</h1>
               <p>
-                Imagen titular de {hermandad.nombrePopular}. Su ficha reúne
-                autoría, historia y evolución.
+                {hermandad
+                  ? `Imagen titular de ${hermandad.nombrePopular}. Su ficha reúne autoría, historia y evolución.`
+                  : 'Ficha propia de la imagen, con su autoría, datación y datos documentados.'}
               </p>
             </div>
 
@@ -131,17 +147,21 @@ export default async function ImagenPage({ params }) {
             <span className="eyebrow">De un vistazo</span>
             <h2>La imagen</h2>
             <p>
-              Cada titular mantiene una ficha propia conectada con su hermandad,
-              autoría y acontecimientos históricos.
+              Cada imagen mantiene una ficha propia y puede conectarse con Hermandades,
+              autorías, pasos y acontecimientos sin depender de esas relaciones para existir.
             </p>
           </div>
 
           <div className="image-facts-v2">
             <article>
               <small>Hermandad</small>
-              <Link href={`/hermandades/${hermandad.slug}`}>
-                {hermandad.nombrePopular}
-              </Link>
+              {hermandad ? (
+                <Link href={`/hermandades/${hermandad.slug}`}>
+                  {hermandad.nombrePopular}
+                </Link>
+              ) : (
+                <strong>Sin vinculación publicada</strong>
+              )}
             </article>
 
             <article>
@@ -218,22 +238,24 @@ export default async function ImagenPage({ params }) {
         </section>
       )}
 
-      <section className="section image-timeline-section-v2">
-        <div className="shell">
-          <span className="eyebrow">Evolución</span>
-          <h2 className="image-section-title-v2">Cronología</h2>
+      {cronologia.length > 0 && (
+        <section className="section image-timeline-section-v2">
+          <div className="shell">
+            <span className="eyebrow">Evolución</span>
+            <h2 className="image-section-title-v2">Cronología</h2>
 
-          <div className="image-timeline-v2">
-            {cronologia.map((item, index) => (
-              <article key={`${item.fecha}-${item.titulo}-${index}`}>
-                <strong>{item.fecha}</strong>
-                <h3>{item.titulo}</h3>
-                <p>{item.texto}</p>
-              </article>
-            ))}
+            <div className="image-timeline-v2">
+              {cronologia.map((item, index) => (
+                <article key={`${item.fecha}-${item.titulo}-${index}`}>
+                  <strong>{item.fecha}</strong>
+                  <h3>{item.titulo}</h3>
+                  <p>{item.texto}</p>
+                </article>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {otrasImagenes.length > 0 && (
         <section className="related-titulares-section">
