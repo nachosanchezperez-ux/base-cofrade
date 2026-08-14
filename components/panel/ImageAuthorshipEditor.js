@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import EntityPicker from '@/components/panel/EntityPicker'
+import RelationSourcesEditor from '@/components/panel/RelationSourcesEditor'
 import {
   addImageAuthorshipAction,
   archiveImageAuthorshipAction,
@@ -132,6 +133,16 @@ export default function ImageAuthorshipEditor({ data, canEdit }) {
                       <button type="submit">Retirar autoría sin borrar entidades</button>
                     </form>
                   ) : null}
+
+                  <RelationSourcesEditor
+                    relationKind="image_authorship"
+                    relationId={relation.id}
+                    contextEntityId={data.entity.id}
+                    sourceOptions={data.sourceOptions}
+                    links={relation.sourceLinks || []}
+                    returnPath={`/panel/imagenes/${data.entity.id}/autorias`}
+                    canEdit={canEdit}
+                  />
                 </article>
               )
             })}

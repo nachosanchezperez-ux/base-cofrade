@@ -1,6 +1,7 @@
 'use client'
 
 import { useMemo, useState } from 'react'
+import RelationSourcesEditor from '@/components/panel/RelationSourcesEditor'
 import {
   addBrotherhoodImageRelationAction,
   archiveBrotherhoodImageRelationAction,
@@ -207,6 +208,16 @@ export default function BrotherhoodImagesEditor({ data, canEdit }) {
                       </form>
                     </>
                   ) : null}
+
+                  <RelationSourcesEditor
+                    relationKind="brotherhood_image"
+                    relationId={relation.id}
+                    contextEntityId={data.entity.id}
+                    sourceOptions={data.sourceOptions}
+                    links={relation.sourceLinks || []}
+                    returnPath={`/panel/hermandades/${data.entity.id}/titulares`}
+                    canEdit={canEdit}
+                  />
                 </article>
               )
             })}
