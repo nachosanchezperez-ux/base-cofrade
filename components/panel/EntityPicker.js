@@ -22,15 +22,24 @@ export default function EntityPicker({
       .toLowerCase()
       .trim()
 
-    if (!normalized) return items
-    return items.filter((item) => (
-      `${item.name || ''} ${item.meta || ''} ${item.slug || ''}`
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .toLowerCase()
-        .includes(normalized)
-    ))
-  }, [items, query])
+    const matches = normalized
+      ? items.filter((item) => (
+          `${item.name || ''} ${item.meta || ''} ${item.slug || ''}`
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .toLowerCase()
+            .includes(normalized)
+        ))
+      : items
+
+    const selectedItem = selected
+      ? items.find((item) => item.id === selected)
+      : null
+
+    return selectedItem && !matches.some((item) => item.id === selectedItem.id)
+      ? [selectedItem, ...matches]
+      : matches
+  }, [items, query, selected])
 
   return (
     <div className={className} style={{ display: 'grid', gap: 7 }}>

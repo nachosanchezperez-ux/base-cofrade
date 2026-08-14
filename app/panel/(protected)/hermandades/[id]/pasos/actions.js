@@ -57,9 +57,9 @@ async function relationConflicts(supabase, {
   const sameStart = existing.find((item) => (item.date_from || null) === (dateFrom || null))
   const openActive = existing.find((item) => item.status !== 'archived' && !item.date_to)
 
+  if (!dateTo && openActive) throw new Error('Ya existe una relación abierta del mismo tipo para este Paso.')
   if (!excludeId && sameStart?.status === 'archived') return { restorable: sameStart }
   if (sameStart) throw new Error('Este Paso ya tiene una relación equivalente con la Hermandad.')
-  if (!dateTo && openActive) throw new Error('Ya existe una relación abierta del mismo tipo para este Paso.')
   return { restorable: null }
 }
 
