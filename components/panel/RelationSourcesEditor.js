@@ -46,6 +46,10 @@ export default function RelationSourcesEditor({
                 <small style={{ color: '#68788a' }}>
                   {[link.source.source_type, link.source.author_or_publisher].filter(Boolean).join(' · ') || 'Fuente'}
                 </small>
+                {link.scope && !String(link.scope).startsWith('relation:') ? (
+                  <small style={{ display: 'block', marginTop: 4 }}><strong>Aspecto:</strong> {link.scope}</small>
+                ) : null}
+                {link.notes ? <small style={{ display: 'block', marginTop: 4 }}>{link.notes}</small> : null}
                 {link.source.url ? (
                   <div>
                     <a href={link.source.url} target="_blank" rel="noreferrer" className={styles.rowLink}>
@@ -97,9 +101,17 @@ export default function RelationSourcesEditor({
                 placeholder="Nombre, tipo, autor o URL…"
                 emptyLabel="Selecciona una Fuente existente"
               />
+              <label>
+                <span>Aspecto que respalda</span>
+                <input name="source_scope" placeholder="Ej. fecha de intervención" />
+              </label>
+              <label className={styles.fieldWide}>
+                <span>Nota documental</span>
+                <input name="source_notes" placeholder="Ej. esta fuente fecha la intervención en 1983" />
+              </label>
             </div>
             <div className={styles.formActions}>
-              <small>Solo se crea el vínculo documental con esta relación concreta.</small>
+              <small>Dos Fuentes pueden respaldar aspectos o fechas discrepantes sin forzar una resolución editorial.</small>
               <button className={styles.primaryButton} type="submit">Vincular Fuente</button>
             </div>
           </form>
