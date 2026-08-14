@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { requirePanelEditor } from '@/lib/panel/auth'
-import { relationSourceScope } from '@/lib/panel/relation-sources'
+import { relationSourceScope, relationSourceTargetField } from '@/lib/panel/relation-sources'
 import { createClient } from '@/lib/supabase/server'
 
 const UUID_PATTERN = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i
@@ -12,6 +12,9 @@ const RELATION_CONFIG = {
   brotherhood_step: { table: 'brotherhood_steps', contextField: 'brotherhood_entity_id' },
   image_step: { table: 'image_steps', contextField: 'image_entity_id' },
   image_authorship: { table: 'image_authorships', contextField: 'image_entity_id' },
+  entity_relation: { table: 'entity_relations', contextField: 'source_entity_id' },
+  intervention: { table: 'heritage_interventions', contextField: 'target_entity_id' },
+  music_accompaniment_period: { table: 'music_accompaniment_periods', contextField: 'brotherhood_entity_id' },
 }
 
 function value(formData, name) {
@@ -90,32 +93,45 @@ export async function linkRelationSourceAction(formData) {
   const contextEntityId = uuid(formData, 'context_entity_id')
   const sourceId = uuid(formData, 'source_id')
   const returnTo = returnPath(formData)
+  const targetField = relationSourceTargetField(kind)
   const scope = relationSourceScope(kind, relationId)
+  const notes = value(formData, 'source_notes') || null
 
   const [relation, source] = await Promise.all([
     loadRelation(supabase, kind, relationId, contextEntityId),
     loadSource(supabase, sourceId),
   ])
 
-  const existing = await supabase
-    .from('source_links')
-    .select('id')
-    .eq('source_id', source.id)
-    .eq('entity_id', contextEntityId)
-    .eq('scope', scope)
-    .limit(1)
-    .maybeSingle()
+  const [directExisting, legacyExisting] = await Promise.all([
+    supabase
+      .from('source_links')
+      .select('id')
+      .eq('source_id', source.id)
+      .eq(targetField, relationId)
+      .limit(1)
+      .maybeSingle(),
+    supabase
+      .from('source_links')
+      .select('id')
+      .eq('source_id', source.id)
+      .eq('entity_id', contextEntityId)
+      .eq('scope', scope)
+      .limit(1)
+      .maybeSingle(),
+  ])
 
-  if (existing.error) throw new Error(`No se pudo comprobar el vínculo de Fuente: ${existing.error.message}`)
+  if (directExisting.error) throw new Error(`No se pudo comprobar el vínculo directo de Fuente: ${directExisting.error.message}`)
+  if (legacyExisting.error) throw new Error(`No se pudo comprobar el vínculo legacy de Fuente: ${legacyExisting.error.message}`)
 
-  if (!existing.data) {
+  if (!directExisting.data && !legacyExisting.data) {
     const created = assertRow(
       await supabase
         .from('source_links')
         .insert({
           source_id: source.id,
-          entity_id: contextEntityId,
-          scope,
+          [targetField]: relationId,
+          scope: value(formData, 'source_scope') || null,
+          notes,
         })
         .select('id')
         .single(),
@@ -132,7 +148,9 @@ export async function linkRelationSourceAction(formData) {
         source_id: source.id,
         relation_kind: kind,
         relation_id: relation.id,
-        scope,
+        target_field: targetField,
+        scope: value(formData, 'source_scope') || null,
+        notes,
       },
     })
   }
@@ -149,20 +167,23 @@ export async function unlinkRelationSourceAction(formData) {
   const contextEntityId = uuid(formData, 'context_entity_id')
   const linkId = uuid(formData, 'link_id')
   const returnTo = returnPath(formData)
-  const scope = relationSourceScope(kind, relationId)
+  const targetField = relationSourceTargetField(kind)
+  const legacyScope = relationSourceScope(kind, relationId)
 
   await loadRelation(supabase, kind, relationId, contextEntityId)
 
   const link = assertRow(
     await supabase
       .from('source_links')
-      .select('id, source_id, entity_id, scope')
+      .select(`id, source_id, entity_id, scope, ${targetField}`)
       .eq('id', linkId)
-      .eq('entity_id', contextEntityId)
-      .eq('scope', scope)
       .maybeSingle(),
-    'El vínculo de Fuente no existe o no corresponde a esta relación.'
+    'El vínculo de Fuente no existe.'
   )
+  const isDirect = link[targetField] === relationId
+  const isLegacy = link.entity_id === contextEntityId && link.scope === legacyScope
+  if (!isDirect && !isLegacy) throw new Error('El vínculo de Fuente no corresponde a esta relación.')
+
   const source = await loadSource(supabase, link.source_id)
 
   assertRow(
@@ -170,8 +191,6 @@ export async function unlinkRelationSourceAction(formData) {
       .from('source_links')
       .delete()
       .eq('id', link.id)
-      .eq('entity_id', contextEntityId)
-      .eq('scope', scope)
       .select('id')
       .single(),
     'No se pudo retirar la Fuente de la relación'
@@ -187,7 +206,8 @@ export async function unlinkRelationSourceAction(formData) {
       source_id: source.id,
       relation_kind: kind,
       relation_id: relationId,
-      scope,
+      target_field: targetField,
+      legacy_scope: isLegacy ? legacyScope : null,
     },
   })
 
