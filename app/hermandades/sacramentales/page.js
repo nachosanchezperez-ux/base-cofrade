@@ -1,5 +1,5 @@
 import HermandadesCategoryDirectory from '@/components/HermandadesCategoryDirectory'
-import { getHermandadesDirectory } from '@/lib/supabase/brotherhoods'
+import { getHermandadesDirectory } from '@/lib/supabase/brotherhood-directory'
 
 export const dynamic = 'force-dynamic'
 
