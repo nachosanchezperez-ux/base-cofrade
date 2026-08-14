@@ -13,11 +13,16 @@ export default async function BrotherhoodEditorLayout({ children, params }) {
         >
           <div>
             <span className={styles.eyebrow}>Relaciones de conocimiento</span>
-            <strong style={{ display: 'block', marginTop: 5 }}>Imágenes vinculadas a la Hermandad</strong>
+            <strong style={{ display: 'block', marginTop: 5 }}>Imágenes y Pasos vinculados a la Hermandad</strong>
           </div>
-          <Link className={styles.primaryButton} href={`/panel/hermandades/${id}/titulares`}>
-            Añadir imagen/titular
-          </Link>
+          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+            <Link className={styles.secondaryButton} href={`/panel/hermandades/${id}/titulares`}>
+              Imágenes y titulares
+            </Link>
+            <Link className={styles.primaryButton} href={`/panel/hermandades/${id}/pasos`}>
+              Añadir Paso
+            </Link>
+          </div>
         </section>
       </div>
       {children}
