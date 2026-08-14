@@ -19,7 +19,10 @@ export default async function PanelDashboardPage() {
     <div className={styles.pageWrap}>
       <header className={styles.pageHeader}>
         <div><span className={styles.eyebrow}>Panel de control</span><h1>Hola, {user.name.split(' ')[0]}</h1><p>Una visión clara del archivo y del trabajo editorial pendiente.</p></div>
-        <Link className={styles.primaryButton} href="/panel/hermandades">Gestionar hermandades</Link>
+        <div className={styles.editorHeaderActions}>
+          <Link className={styles.primaryButton} href="/panel/hermandades">Gestionar hermandades</Link>
+          <Link className={styles.secondaryButton} href="/panel/pasos">Gestionar pasos</Link>
+        </div>
       </header>
 
       <section className={styles.metricGrid} aria-label="Estado editorial">
