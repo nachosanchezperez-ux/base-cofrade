@@ -85,7 +85,7 @@ function relationStatus(brotherhood, image) {
     : 'draft'
 }
 
-async function ensureNoDuplicate(supabase, {
+async function relationConflict(supabase, {
   brotherhoodId,
   imageId,
   relationType,
@@ -104,14 +104,23 @@ async function ensureNoDuplicate(supabase, {
   if (excludeId) query = query.neq('id', excludeId)
   const existing = assertRows(await query, 'No se pudieron comprobar las relaciones existentes')
 
-  const sameStart = existing.find((item) => (item.date_from || null) === (dateFrom || null))
-  if (sameStart) {
-    throw new Error('Esta Imagen ya tiene una relación equivalente con la Hermandad.')
+  const equivalent = existing.find((item) => (item.date_from || null) === (dateFrom || null))
+  if (equivalent) return { relation: equivalent, reason: 'equivalent' }
+
+  if (!dateTo) {
+    const openRelation = existing.find((item) => !item.date_to)
+    if (openRelation) return { relation: openRelation, reason: 'open' }
   }
 
-  if (!dateTo && existing.some((item) => !item.date_to)) {
-    throw new Error('Ya existe una relación abierta del mismo tipo para esta Imagen.')
+  return null
+}
+
+function assertNoRelationConflict(conflict) {
+  if (!conflict) return
+  if (conflict.reason === 'equivalent') {
+    throw new Error('Esta Imagen ya tiene una relación equivalente con la Hermandad.')
   }
+  throw new Error('Ya existe una relación abierta del mismo tipo para esta Imagen.')
 }
 
 async function audit(supabase, user, entry) {
@@ -154,13 +163,18 @@ export async function addBrotherhoodImageRelationAction(formData) {
   validateDateOrder(dateFrom, dateTo)
 
   const { brotherhood, image } = await loadEndpoints(supabase, brotherhoodId, imageId)
-  await ensureNoDuplicate(supabase, {
+  const conflict = await relationConflict(supabase, {
     brotherhoodId,
     imageId,
     relationType,
     dateFrom,
     dateTo,
   })
+
+  if (conflict) {
+    await refreshRelation(supabase, brotherhoodId, imageId)
+    redirectSaved(brotherhoodId, 'existing')
+  }
 
   const payload = {
     brotherhood_entity_id: brotherhoodId,
@@ -209,7 +223,7 @@ export async function updateBrotherhoodImageRelationAction(formData) {
   if (relation.status === 'archived') throw new Error('Una relación retirada no puede modificarse.')
 
   const { brotherhood, image } = await loadEndpoints(supabase, brotherhoodId, relation.image_entity_id)
-  await ensureNoDuplicate(supabase, {
+  const conflict = await relationConflict(supabase, {
     brotherhoodId,
     imageId: relation.image_entity_id,
     relationType,
@@ -217,6 +231,7 @@ export async function updateBrotherhoodImageRelationAction(formData) {
     dateTo,
     excludeId: relationId,
   })
+  assertNoRelationConflict(conflict)
 
   const payload = {
     relation_type: relationType,
