@@ -9,6 +9,7 @@ export const metadata = { title: 'Imágenes y titulares · Panel' }
 
 const SAVED_MESSAGES = {
   linked: 'La Imagen se ha relacionado correctamente con la Hermandad.',
+  existing: 'La Imagen ya estaba relacionada con la Hermandad. No se ha creado ningún duplicado.',
   updated: 'La relación se ha actualizado correctamente.',
   closed: 'El periodo de la relación se ha cerrado sin borrar la Imagen.',
   archived: 'La relación se ha retirado. La Imagen continúa existiendo de forma independiente.',
