@@ -97,9 +97,11 @@ export async function updateImageAction(formData) {
   const imageName = required(formData, 'name', 'El nombre de la imagen')
   const entitySlug = slugify(required(formData, 'slug', 'El slug'))
   const imageType = nullable(formData, 'image_type')
+  const advocationId = nullable(formData, 'advocation_entity_id')
 
   if (!entitySlug) throw new Error('No se ha podido generar un slug válido.')
   if (entitySlug.length > 160) throw new Error('El slug es demasiado largo.')
+  if (advocationId && !UUID_PATTERN.test(advocationId)) throw new Error('La identidad devocional seleccionada no es válida.')
 
   const current = assertQuery(
     await supabase
@@ -116,6 +118,20 @@ export async function updateImageAction(formData) {
     throw new Error('El slug de una imagen publicada no puede cambiarse desde este editor básico.')
   }
 
+  if (advocationId) {
+    const advocation = assertQuery(
+      await supabase
+        .from('entities')
+        .select('id, status')
+        .eq('id', advocationId)
+        .eq('entity_type', 'advocation')
+        .neq('status', 'archived')
+        .maybeSingle(),
+      'No se pudo comprobar la identidad devocional'
+    )
+    if (!advocation) throw new Error('La identidad devocional ya no existe o está archivada.')
+  }
+
   await ensureUniqueIdentity(supabase, {
     imageId,
     name: imageName,
@@ -128,6 +144,7 @@ export async function updateImageAction(formData) {
   }
   const imagePayload = {
     image_type: imageType,
+    advocation_entity_id: advocationId,
   }
 
   assertMutation(
