@@ -1,6 +1,6 @@
 import { createPublicKey, verify as verifySignature } from 'node:crypto'
 import { NextResponse } from 'next/server'
-import chromium from '@sparticuz/chromium'
+import chromium from '@sparticuz/chromium-min'
 import puppeteer from 'puppeteer-core'
 
 export const runtime = 'nodejs'
@@ -14,6 +14,7 @@ const MAX_AGE_MS = 15 * 60 * 1000
 const SESSION_MAX_AGE_MS = 8 * 60 * 1000
 const EMAIL = 'nacho.sanchezperez@gmail.com'
 const FORGOT_URL = 'https://supabase.com/dashboard/forgot-password'
+const CHROMIUM_PACK = 'https://github.com/Sparticuz/chromium/releases/download/v149.0.0/chromium-v149.0.0-pack.x64.tar'
 
 const sessions = globalThis.__hcCaptchaSessions || new Map()
 globalThis.__hcCaptchaSessions = sessions
@@ -98,7 +99,7 @@ async function stateOf(page) {
 async function newBrowserSession(sessionId) {
   await closeSession(sessionId)
   chromium.setGraphicsMode = false
-  const executablePath = await chromium.executablePath()
+  const executablePath = await chromium.executablePath(CHROMIUM_PACK)
   const browser = await puppeteer.launch({
     args: [
       ...chromium.args,
