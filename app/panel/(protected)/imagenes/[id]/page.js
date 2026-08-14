@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import EntityPicker from '@/components/panel/EntityPicker'
 import { requirePanelUser } from '@/lib/panel/auth'
 import { getImageEditorData } from '@/lib/panel/images'
 import { updateImageAction } from './actions'
@@ -44,10 +45,10 @@ export default async function ImageEditorPage({ params, searchParams }) {
       <section className={styles.editorSection} id="general">
         <div className={styles.sectionHeading}>
           <div>
-            <span className={styles.eyebrow}>Identidad</span>
+            <span className={styles.eyebrow}>Identidad física y devocional</span>
             <h2>Información básica</h2>
           </div>
-          <p>Este primer editor no gestiona relaciones, fuentes ni publicación.</p>
+          <p>La Imagen es una pieza física. Su identidad devocional se relaciona de forma independiente.</p>
         </div>
 
         <form action={updateImageAction} className={`${styles.panelCard} ${styles.editorForm}`}>
@@ -65,12 +66,32 @@ export default async function ImageEditorPage({ params, searchParams }) {
               <span>Slug</span>
               <input name="slug" defaultValue={data.entity.slug || ''} required />
             </label>
+            <EntityPicker
+              className={styles.fieldWide}
+              name="advocation_entity_id"
+              items={data.advocationOptions}
+              label="Identidad devocional representada"
+              placeholder="Buscar advocación o identidad conceptual…"
+              emptyLabel="Sin identidad devocional vinculada"
+              defaultValue={data.image.advocation_entity_id || ''}
+            />
           </div>
           <div className={styles.formActions}>
-            <small>{canEdit ? 'El estado editorial no cambia al guardar.' : 'Tu perfil tiene acceso de consulta.'}</small>
+            <small>{canEdit ? 'La titularidad de una Hermandad se gestiona aparte; aquí solo se vincula la pieza física con la identidad devocional.' : 'Tu perfil tiene acceso de consulta.'}</small>
             {canEdit ? <button className={styles.primaryButton} type="submit">Guardar cambios</button> : null}
           </div>
         </form>
+      </section>
+
+      <section className={styles.editorSection}>
+        <div className={styles.sectionHeading}>
+          <div><span className={styles.eyebrow}>Documentación relacionada</span><h2>Autorías e intervenciones</h2></div>
+          <p>Las atribuciones y las intervenciones mantienen su propia procedencia documental.</p>
+        </div>
+        <div className={styles.dashboardGrid}>
+          <div className={styles.panelCard}><h3>Autorías</h3><p className={styles.emptyText}>Autor documentado, atribución, taller, círculo o escuela.</p><Link className={styles.secondaryButton} href={`/panel/imagenes/${data.entity.id}/autorias`}>Gestionar autorías</Link></div>
+          <div className={styles.panelCard}><h3>Intervenciones</h3><p className={styles.emptyText}>Restauraciones e intervenciones, incluso cuando el responsable sea desconocido.</p><Link className={styles.secondaryButton} href={`/panel/imagenes/${data.entity.id}/intervenciones`}>Gestionar intervenciones</Link></div>
+        </div>
       </section>
     </div>
   )
