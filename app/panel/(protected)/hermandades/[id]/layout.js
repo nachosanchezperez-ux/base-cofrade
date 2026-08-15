@@ -12,13 +12,10 @@ export default async function BrotherhoodEditorLayout({ children, params }) {
           style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 18 }}
         >
           <div>
-            <span className={styles.eyebrow}>Edición y relaciones</span>
-            <strong style={{ display: 'block', marginTop: 5 }}>Identidad, presencia y conocimiento conectado de la Hermandad</strong>
+            <span className={styles.eyebrow}>Relaciones de conocimiento</span>
+            <strong style={{ display: 'block', marginTop: 5 }}>Imágenes y Pasos vinculados a la Hermandad</strong>
           </div>
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
-            <Link className={styles.secondaryButton} href={`/panel/hermandades/${id}/identidad`}>
-              Identidad y presencia
-            </Link>
             <Link className={styles.secondaryButton} href={`/panel/hermandades/${id}/titulares`}>
               Imágenes y titulares
             </Link>
