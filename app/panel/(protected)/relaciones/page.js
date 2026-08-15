@@ -48,6 +48,23 @@ export default function PanelRelationsPage() {
             </Link>
           </div>
         </section>
+
+        <section className={styles.panelCard}>
+          <div className={styles.cardHeading}>
+            <div>
+              <span className={styles.eyebrow}>Titularidad</span>
+              <h2>Hermandad → identidad devocional</h2>
+            </div>
+          </div>
+          <p className={styles.emptyText}>
+            Registra titulares mediante <code>has_titular</code> sin exigir que exista una Imagen física asociada.
+          </p>
+          <div style={{ marginTop: 20 }}>
+            <Link className={styles.primaryButton} href="/panel/relaciones/titulares">
+              Gestionar titulares
+            </Link>
+          </div>
+        </section>
       </div>
     </div>
   )
