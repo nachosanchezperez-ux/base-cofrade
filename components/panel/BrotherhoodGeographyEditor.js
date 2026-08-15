@@ -1,11 +1,7 @@
 'use client'
 
-import { useParams, useState } from 'react'
+import { useState } from 'react'
 import SearchableSelect from '@/components/panel/SearchableSelect'
-import {
-  createMunicipalityAction as createMunicipality,
-  createPlaceAction as createPlace,
-} from '@/app/panel/(protected)/hermandades/[id]/geography-actions'
 import styles from '@/app/panel/panel.module.css'
 
 function municipalityOptions(items) {
@@ -25,16 +21,15 @@ function placeOptions(items) {
 }
 
 export function BrotherhoodGeographyFields({
+  brotherhoodId,
   municipalities,
   places,
   selectedMunicipalityId,
   selectedPlaceId,
   canEdit = true,
-  createMunicipalityAction = createMunicipality,
-  createPlaceAction = createPlace,
+  createMunicipalityAction,
+  createPlaceAction,
 }) {
-  const params = useParams()
-  const brotherhoodId = String(params?.id || '')
   const [municipalityId, setMunicipalityId] = useState(selectedMunicipalityId || '')
   const [placeId, setPlaceId] = useState(selectedPlaceId || '')
   const [newMunicipalityName, setNewMunicipalityName] = useState('')
