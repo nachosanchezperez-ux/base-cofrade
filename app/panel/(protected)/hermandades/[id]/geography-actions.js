@@ -21,7 +21,7 @@ function required(formData, name, label) {
   return candidate
 }
 
-function uuid(formData, name) {
+function uuidValue(formData, name) {
   const candidate = value(formData, name)
   if (!UUID_PATTERN.test(candidate)) throw new Error(`Identificador no válido: ${name}`)
   return candidate
@@ -91,15 +91,58 @@ function editorUrl(brotherhoodId, params = {}) {
   return `/panel/hermandades/${brotherhoodId}${suffix}#general`
 }
 
+async function assignMunicipality(supabase, brotherhoodId, municipalityId) {
+  const { data: brotherhood, error } = await supabase
+    .from('brotherhoods')
+    .select('canonical_see_place_id')
+    .eq('entity_id', brotherhoodId)
+    .maybeSingle()
+  if (error) throw new Error(`No se pudo validar la Hermandad: ${error.message}`)
+  if (!brotherhood) throw new Error('La Hermandad no existe.')
+
+  let canonicalSeePlaceId = brotherhood.canonical_see_place_id
+  if (canonicalSeePlaceId) {
+    const { data: place, error: placeError } = await supabase
+      .from('places')
+      .select('municipality_id')
+      .eq('id', canonicalSeePlaceId)
+      .maybeSingle()
+    if (placeError) throw new Error(`No se pudo validar la Sede actual: ${placeError.message}`)
+    if (!place || place.municipality_id !== municipalityId) canonicalSeePlaceId = null
+  }
+
+  assertMutation(
+    await supabase
+      .from('brotherhoods')
+      .update({ municipality_id: municipalityId, canonical_see_place_id: canonicalSeePlaceId })
+      .eq('entity_id', brotherhoodId)
+      .select('entity_id')
+      .single(),
+    'No se pudo asignar la Localidad a la Hermandad'
+  )
+}
+
+async function assignCanonicalPlace(supabase, brotherhoodId, placeId, municipalityId) {
+  assertMutation(
+    await supabase
+      .from('brotherhoods')
+      .update({ municipality_id: municipalityId, canonical_see_place_id: placeId })
+      .eq('entity_id', brotherhoodId)
+      .select('entity_id')
+      .single(),
+    'No se pudo asignar la Sede canónica a la Hermandad'
+  )
+}
+
 export async function createMunicipalityAction(formData) {
   const user = await requirePanelEditor()
   const supabase = await createClient()
-  const brotherhoodId = uuid(formData, 'brotherhood_id')
+  const brotherhoodId = uuidValue(formData, 'brotherhood_id')
   const payload = {
-    name: required(formData, 'name', 'El nombre de la localidad'),
-    province: required(formData, 'province', 'La provincia'),
-    autonomous_community: required(formData, 'autonomous_community', 'La comunidad autónoma'),
-    country: required(formData, 'country', 'El país'),
+    name: required(formData, 'new_municipality_name', 'El nombre de la localidad'),
+    province: required(formData, 'new_municipality_province', 'La provincia'),
+    autonomous_community: required(formData, 'new_municipality_autonomous_community', 'La comunidad autónoma'),
+    country: required(formData, 'new_municipality_country', 'El país'),
   }
 
   const { data: municipalities, error } = await supabase
@@ -107,34 +150,42 @@ export async function createMunicipalityAction(formData) {
     .select('id, name, province, autonomous_community, country')
   if (error) throw new Error(`No se pudieron comprobar las localidades existentes: ${error.message}`)
 
-  const existing = (municipalities || []).find((item) => (
+  let municipality = (municipalities || []).find((item) => (
     normalized(item.name) === normalized(payload.name)
     && normalized(item.province) === normalized(payload.province)
     && normalized(item.autonomous_community) === normalized(payload.autonomous_community)
     && normalized(item.country) === normalized(payload.country)
-  ))
-  if (existing) redirect(editorUrl(brotherhoodId, { municipality: existing.id, reused: 'municipality' }))
+  )) || null
+  const reused = Boolean(municipality)
 
-  const slug = await uniqueSlug(supabase, 'municipalities', payload.name, payload.province)
-  const municipality = assertMutation(
-    await supabase.from('municipalities').insert({ ...payload, slug }).select('id').single(),
-    'No se pudo crear la localidad'
-  )
+  if (!municipality) {
+    const slug = await uniqueSlug(supabase, 'municipalities', payload.name, payload.province)
+    municipality = assertMutation(
+      await supabase.from('municipalities').insert({ ...payload, slug }).select('id, name').single(),
+      'No se pudo crear la localidad'
+    )
+    await audit(supabase, user, {
+      action_type: 'create', object_type: 'municipality', object_id: municipality.id, entity_id: brotherhoodId,
+      summary: `Localidad creada: ${payload.name}`, changed_fields: { ...payload, slug },
+    })
+  }
 
+  await assignMunicipality(supabase, brotherhoodId, municipality.id)
   await audit(supabase, user, {
-    action_type: 'create', object_type: 'municipality', object_id: municipality.id, entity_id: brotherhoodId,
-    summary: `Localidad creada: ${payload.name}`, changed_fields: { ...payload, slug },
+    action_type: 'update', object_type: 'brotherhood', object_id: brotherhoodId, entity_id: brotherhoodId,
+    summary: `Localidad asignada: ${payload.name}`,
+    changed_fields: { municipality_id: municipality.id },
   })
   await refreshBrotherhood(supabase, brotherhoodId)
-  redirect(editorUrl(brotherhoodId, { municipality: municipality.id, saved: 'municipality' }))
+  redirect(editorUrl(brotherhoodId, { saved: 'municipality', reused: reused ? 'municipality' : '' }))
 }
 
 export async function createPlaceAction(formData) {
   const user = await requirePanelEditor()
   const supabase = await createClient()
-  const brotherhoodId = uuid(formData, 'brotherhood_id')
-  const municipalityId = uuid(formData, 'municipality_id')
-  const name = required(formData, 'name', 'El nombre del Lugar')
+  const brotherhoodId = uuidValue(formData, 'brotherhood_id')
+  const municipalityId = uuidValue(formData, 'new_place_municipality_id')
+  const name = required(formData, 'new_place_name', 'El nombre del Lugar')
 
   const [{ data: municipality, error: municipalityError }, { data: places, error: placesError }] = await Promise.all([
     supabase.from('municipalities').select('id, name, slug').eq('id', municipalityId).maybeSingle(),
@@ -144,39 +195,47 @@ export async function createPlaceAction(formData) {
   if (!municipality) throw new Error('La localidad seleccionada no existe.')
   if (placesError) throw new Error(`No se pudieron comprobar los Lugares existentes: ${placesError.message}`)
 
-  const existing = (places || []).find((item) => normalized(item.name) === normalized(name))
-  if (existing) redirect(editorUrl(brotherhoodId, { municipality: municipalityId, place: existing.id, reused: 'place' }))
+  let place = (places || []).find((item) => normalized(item.name) === normalized(name)) || null
+  const reused = Boolean(place)
 
-  const slug = await uniqueSlug(supabase, 'places', name, municipality.slug || municipality.name)
-  const payload = {
-    municipality_id: municipalityId,
-    name,
-    slug,
-    place_type: nullable(formData, 'place_type'),
-    address: nullable(formData, 'address'),
-    opening_hours_text: nullable(formData, 'opening_hours_text'),
-    opening_hours_verified_at: nullable(formData, 'opening_hours_verified_at'),
+  if (!place) {
+    const slug = await uniqueSlug(supabase, 'places', name, municipality.slug || municipality.name)
+    const payload = {
+      municipality_id: municipalityId,
+      name,
+      slug,
+      place_type: nullable(formData, 'new_place_type'),
+      address: nullable(formData, 'new_place_address'),
+      opening_hours_text: nullable(formData, 'new_place_opening_hours_text'),
+      opening_hours_verified_at: nullable(formData, 'new_place_opening_hours_verified_at'),
+    }
+    place = assertMutation(
+      await supabase.from('places').insert(payload).select('id, name').single(),
+      'No se pudo crear el Lugar'
+    )
+    await audit(supabase, user, {
+      action_type: 'create', object_type: 'place', object_id: place.id, entity_id: brotherhoodId,
+      summary: `Lugar creado: ${name} · ${municipality.name}`, changed_fields: payload,
+    })
   }
-  const place = assertMutation(
-    await supabase.from('places').insert(payload).select('id').single(),
-    'No se pudo crear el Lugar'
-  )
 
+  await assignCanonicalPlace(supabase, brotherhoodId, place.id, municipalityId)
   await audit(supabase, user, {
-    action_type: 'create', object_type: 'place', object_id: place.id, entity_id: brotherhoodId,
-    summary: `Lugar creado: ${name} · ${municipality.name}`, changed_fields: payload,
+    action_type: 'update', object_type: 'brotherhood', object_id: brotherhoodId, entity_id: brotherhoodId,
+    summary: `Sede canónica asignada: ${place.name || name}`,
+    changed_fields: { municipality_id: municipalityId, canonical_see_place_id: place.id },
   })
   await refreshBrotherhood(supabase, brotherhoodId)
-  redirect(editorUrl(brotherhoodId, { municipality: municipalityId, place: place.id, saved: 'place' }))
+  redirect(editorUrl(brotherhoodId, { saved: 'place', reused: reused ? 'place' : '' }))
 }
 
 export async function updatePlaceAction(formData) {
   const user = await requirePanelEditor()
   const supabase = await createClient()
-  const brotherhoodId = uuid(formData, 'brotherhood_id')
-  const placeId = uuid(formData, 'place_id')
-  const municipalityId = uuid(formData, 'municipality_id')
-  const name = required(formData, 'name', 'El nombre del Lugar')
+  const brotherhoodId = uuidValue(formData, 'brotherhood_id')
+  const placeId = uuidValue(formData, 'place_id')
+  const municipalityId = uuidValue(formData, 'place_municipality_id')
+  const name = required(formData, 'place_name', 'El nombre del Lugar')
 
   const { data: siblings, error } = await supabase
     .from('places')
@@ -190,19 +249,29 @@ export async function updatePlaceAction(formData) {
     municipality_id: municipalityId,
     name,
     place_type: nullable(formData, 'place_type'),
-    address: nullable(formData, 'address'),
-    opening_hours_text: nullable(formData, 'opening_hours_text'),
-    opening_hours_verified_at: nullable(formData, 'opening_hours_verified_at'),
+    address: nullable(formData, 'place_address'),
+    opening_hours_text: nullable(formData, 'place_opening_hours_text'),
+    opening_hours_verified_at: nullable(formData, 'place_opening_hours_verified_at'),
   }
   assertMutation(
     await supabase.from('places').update(payload).eq('id', placeId).select('id').single(),
     'No se pudo actualizar el Lugar'
   )
 
+  const { data: brotherhood, error: brotherhoodError } = await supabase
+    .from('brotherhoods')
+    .select('canonical_see_place_id')
+    .eq('entity_id', brotherhoodId)
+    .maybeSingle()
+  if (brotherhoodError) throw new Error(`No se pudo validar la Hermandad: ${brotherhoodError.message}`)
+  if (brotherhood?.canonical_see_place_id === placeId) {
+    await assignCanonicalPlace(supabase, brotherhoodId, placeId, municipalityId)
+  }
+
   await audit(supabase, user, {
     action_type: 'update', object_type: 'place', object_id: placeId, entity_id: brotherhoodId,
     summary: `Lugar actualizado: ${name}`, changed_fields: payload,
   })
   await refreshBrotherhood(supabase, brotherhoodId)
-  redirect(editorUrl(brotherhoodId, { municipality: municipalityId, place: placeId, saved: 'place-updated' }))
+  redirect(editorUrl(brotherhoodId, { saved: 'place-updated' }))
 }
