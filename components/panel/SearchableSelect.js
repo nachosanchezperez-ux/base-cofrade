@@ -1,6 +1,7 @@
 'use client'
 
 import { useMemo, useState } from 'react'
+import styles from '@/app/panel/panel.module.css'
 
 function normalize(value = '') {
   return String(value)
@@ -46,7 +47,7 @@ export default function SearchableSelect({
   return (
     <div className={className}>
       <label>
-        <span>{label}</span>
+        <span>Buscar {label}</span>
         <input type="hidden" name={name} value={selected} />
         <input
           type="search"
@@ -59,25 +60,25 @@ export default function SearchableSelect({
       </label>
 
       <div style={{ marginTop: 8, display: 'grid', gap: 6 }}>
-        <small>{selectedOption ? `Seleccionado: ${selectedOption.label}` : emptyLabel}</small>
-        {selectedOption ? <button type="button" className="linkLikeButton" onClick={() => onChange?.('')}>Quitar selección</button> : null}
+        <small><strong>{selectedOption ? 'Seleccionado:' : 'Valor actual:'}</strong> {selectedOption ? selectedOption.label : emptyLabel}</small>
+        {selectedOption ? <button type="button" className={styles.secondaryButton} onClick={() => onChange?.('')}>Quitar selección</button> : null}
       </div>
 
       {query ? (
         <div style={{ marginTop: 10, display: 'grid', gap: 6 }} role="listbox" aria-label={`Resultados de ${label.toLowerCase()}`}>
           {filtered.map((option) => (
-            <button key={option.value} type="button" className="linkLikeButton" onClick={() => choose(option)}>
-              {option.label}
+            <button key={option.value} type="button" className={styles.secondaryButton} onClick={() => choose(option)}>
+              Seleccionar · {option.label}
             </button>
           ))}
           {!filtered.length && onCreate ? (
-            <button type="button" className="linkLikeButton" onClick={create}>
+            <button type="button" className={styles.primaryButton} onClick={create}>
               + {createLabel} “{query.trim()}”
             </button>
           ) : null}
           {!filtered.length && !onCreate ? <small>No hay coincidencias.</small> : null}
         </div>
-      ) : <small style={{ display: 'block', marginTop: 8 }}>Escribe para buscar y pulsa un resultado para seleccionarlo.</small>}
+      ) : <small style={{ display: 'block', marginTop: 8 }}>El texto de búsqueda no se guarda: pulsa un resultado para seleccionarlo.</small>}
     </div>
   )
 }
