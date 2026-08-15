@@ -14,45 +14,70 @@ export default function SearchableSelect({
   name,
   label,
   options = [],
-  defaultValue = '',
+  value = '',
+  onChange,
   emptyLabel = 'Sin seleccionar',
   searchPlaceholder = 'Buscar…',
-  required = false,
+  onCreate,
+  createLabel = 'Crear',
   className,
 }) {
   const [query, setQuery] = useState('')
-  const selected = String(defaultValue || '')
+  const selected = String(value || '')
+  const selectedOption = options.find((option) => String(option.value) === selected) || null
 
   const filtered = useMemo(() => {
     const needle = normalize(query)
-    if (!needle) return options
+    if (!needle) return []
+    return options.filter((option) => normalize(`${option.label} ${option.searchText || ''}`).includes(needle))
+  }, [options, query])
 
-    const matches = options.filter((option) => normalize(`${option.label} ${option.searchText || ''}`).includes(needle))
-    const selectedOption = options.find((option) => String(option.value) === selected)
-    if (selectedOption && !matches.some((option) => String(option.value) === selected)) {
-      return [selectedOption, ...matches]
-    }
-    return matches
-  }, [options, query, selected])
+  const choose = (option) => {
+    onChange?.(String(option.value))
+    setQuery('')
+  }
+
+  const create = () => {
+    const candidate = query.trim()
+    if (!candidate) return
+    onCreate?.(candidate)
+  }
 
   return (
-    <label className={className}>
-      <span>{label}</span>
-      <input
-        type="search"
-        value={query}
-        onChange={(event) => setQuery(event.target.value)}
-        placeholder={searchPlaceholder}
-        aria-label={`Buscar ${label.toLowerCase()}`}
-        autoComplete="off"
-      />
-      <select name={name} defaultValue={selected} required={required}>
-        <option value="">{emptyLabel}</option>
-        {filtered.map((option) => (
-          <option key={option.value} value={option.value}>{option.label}</option>
-        ))}
-      </select>
-      {query && !filtered.length ? <small>No hay coincidencias. Puedes crear un nuevo registro debajo.</small> : null}
-    </label>
+    <div className={className}>
+      <label>
+        <span>{label}</span>
+        <input type="hidden" name={name} value={selected} />
+        <input
+          type="search"
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+          placeholder={searchPlaceholder}
+          aria-label={`Buscar ${label.toLowerCase()}`}
+          autoComplete="off"
+        />
+      </label>
+
+      <div style={{ marginTop: 8, display: 'grid', gap: 6 }}>
+        <small>{selectedOption ? `Seleccionado: ${selectedOption.label}` : emptyLabel}</small>
+        {selectedOption ? <button type="button" className="linkLikeButton" onClick={() => onChange?.('')}>Quitar selección</button> : null}
+      </div>
+
+      {query ? (
+        <div style={{ marginTop: 10, display: 'grid', gap: 6 }} role="listbox" aria-label={`Resultados de ${label.toLowerCase()}`}>
+          {filtered.map((option) => (
+            <button key={option.value} type="button" className="linkLikeButton" onClick={() => choose(option)}>
+              {option.label}
+            </button>
+          ))}
+          {!filtered.length && onCreate ? (
+            <button type="button" className="linkLikeButton" onClick={create}>
+              + {createLabel} “{query.trim()}”
+            </button>
+          ) : null}
+          {!filtered.length && !onCreate ? <small>No hay coincidencias.</small> : null}
+        </div>
+      ) : <small style={{ display: 'block', marginTop: 8 }}>Escribe para buscar y pulsa un resultado para seleccionarlo.</small>}
+    </div>
   )
 }
