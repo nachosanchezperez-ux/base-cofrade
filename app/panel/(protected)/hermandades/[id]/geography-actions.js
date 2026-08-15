@@ -156,7 +156,6 @@ export async function createMunicipalityAction(formData) {
     && normalized(item.autonomous_community) === normalized(payload.autonomous_community)
     && normalized(item.country) === normalized(payload.country)
   )) || null
-  const reused = Boolean(municipality)
 
   if (!municipality) {
     const slug = await uniqueSlug(supabase, 'municipalities', payload.name, payload.province)
@@ -177,7 +176,7 @@ export async function createMunicipalityAction(formData) {
     changed_fields: { municipality_id: municipality.id },
   })
   await refreshBrotherhood(supabase, brotherhoodId)
-  redirect(editorUrl(brotherhoodId, { saved: 'municipality', reused: reused ? 'municipality' : '' }))
+  redirect(editorUrl(brotherhoodId, { saved: 'municipality' }))
 }
 
 export async function createPlaceAction(formData) {
@@ -196,7 +195,6 @@ export async function createPlaceAction(formData) {
   if (placesError) throw new Error(`No se pudieron comprobar los Lugares existentes: ${placesError.message}`)
 
   let place = (places || []).find((item) => normalized(item.name) === normalized(name)) || null
-  const reused = Boolean(place)
 
   if (!place) {
     const slug = await uniqueSlug(supabase, 'places', name, municipality.slug || municipality.name)
@@ -226,7 +224,7 @@ export async function createPlaceAction(formData) {
     changed_fields: { municipality_id: municipalityId, canonical_see_place_id: place.id },
   })
   await refreshBrotherhood(supabase, brotherhoodId)
-  redirect(editorUrl(brotherhoodId, { saved: 'place', reused: reused ? 'place' : '' }))
+  redirect(editorUrl(brotherhoodId, { saved: 'place' }))
 }
 
 export async function updatePlaceAction(formData) {
