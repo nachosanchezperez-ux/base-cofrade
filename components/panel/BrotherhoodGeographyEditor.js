@@ -1,3 +1,6 @@
+'use client'
+
+import { useState } from 'react'
 import SearchableSelect from '@/components/panel/SearchableSelect'
 import styles from '@/app/panel/panel.module.css'
 
@@ -12,30 +15,125 @@ function municipalityOptions(items) {
 function placeOptions(items) {
   return items.map((item) => ({
     value: item.id,
-    label: `${item.name}${item.municipality?.name ? ` · ${item.municipality.name}` : ''}`,
-    searchText: `${item.place_type || ''} ${item.address || ''}`,
+    label: `${item.name} · ${item.place_type || 'Lugar'} · ${item.municipality?.name || 'Sin localidad'}`,
+    searchText: item.address || '',
   }))
 }
 
-export function BrotherhoodGeographyFields({ municipalities, places, selectedMunicipalityId, selectedPlaceId }) {
+export function BrotherhoodGeographyFields({
+  brotherhoodId,
+  canEdit,
+  municipalities,
+  places,
+  selectedMunicipalityId,
+  selectedPlaceId,
+  createMunicipalityAction,
+  createPlaceAction,
+}) {
+  const [municipalityId, setMunicipalityId] = useState(selectedMunicipalityId || '')
+  const [placeId, setPlaceId] = useState(selectedPlaceId || '')
+  const [newMunicipalityName, setNewMunicipalityName] = useState('')
+  const [newPlaceName, setNewPlaceName] = useState('')
+  const [newPlaceMunicipalityId, setNewPlaceMunicipalityId] = useState(selectedMunicipalityId || '')
+
+  const municipalityChoices = municipalityOptions(municipalities)
+  const visiblePlaces = municipalityId
+    ? places.filter((place) => place.municipality_id === municipalityId)
+    : places
+  const placeChoices = placeOptions(visiblePlaces)
+
+  const chooseMunicipality = (nextId) => {
+    setMunicipalityId(nextId)
+    setNewPlaceMunicipalityId(nextId)
+    const currentPlace = places.find((place) => place.id === placeId)
+    if (currentPlace && nextId && currentPlace.municipality_id !== nextId) setPlaceId('')
+  }
+
+  const choosePlace = (nextId) => {
+    setPlaceId(nextId)
+    const place = places.find((item) => item.id === nextId)
+    if (place?.municipality_id) {
+      setMunicipalityId(place.municipality_id)
+      setNewPlaceMunicipalityId(place.municipality_id)
+    }
+  }
+
   return (
     <>
-      <SearchableSelect
-        name="municipality_id"
-        label="Localidad"
-        options={municipalityOptions(municipalities)}
-        defaultValue={selectedMunicipalityId}
-        emptyLabel="Sin localidad"
-        searchPlaceholder="Buscar localidad existente…"
-      />
-      <SearchableSelect
-        name="canonical_see_place_id"
-        label="Sede canónica"
-        options={placeOptions(places)}
-        defaultValue={selectedPlaceId}
-        emptyLabel="Sin Sede canónica"
-        searchPlaceholder="Buscar Lugar por nombre, localidad o dirección…"
-      />
+      <div className={styles.fieldWide}>
+        <SearchableSelect
+          name="municipality_id"
+          label="Localidad"
+          options={municipalityChoices}
+          value={municipalityId}
+          onChange={chooseMunicipality}
+          emptyLabel="Sin localidad seleccionada"
+          searchPlaceholder="Buscar localidad existente…"
+          onCreate={canEdit ? setNewMunicipalityName : undefined}
+          createLabel="Crear Localidad"
+        />
+        {newMunicipalityName && canEdit ? (
+          <div className={styles.editorItem} style={{ marginTop: 12 }}>
+            <strong>Crear Localidad</strong>
+            <p className={styles.emptyText}>No hay coincidencias. Completa el alta y se usará directamente en esta Hermandad.</p>
+            <div className={styles.formGrid}>
+              <label><span>Nombre</span><input name="new_municipality_name" defaultValue={newMunicipalityName} required /></label>
+              <label><span>Provincia</span><input name="new_municipality_province" defaultValue="Sevilla" required /></label>
+              <label><span>Comunidad autónoma</span><input name="new_municipality_autonomous_community" defaultValue="Andalucía" required /></label>
+              <label><span>País</span><input name="new_municipality_country" defaultValue="España" required /></label>
+            </div>
+            <div className={styles.formActions}>
+              <button type="button" className={styles.secondaryButton} onClick={() => setNewMunicipalityName('')}>Cancelar</button>
+              <button type="submit" formAction={createMunicipalityAction} formNoValidate className={styles.primaryButton}>Crear y usar Localidad</button>
+            </div>
+          </div>
+        ) : null}
+      </div>
+
+      <div className={styles.fieldWide}>
+        <SearchableSelect
+          name="canonical_see_place_id"
+          label="Sede canónica"
+          options={placeChoices}
+          value={placeId}
+          onChange={choosePlace}
+          emptyLabel="Sin Sede canónica seleccionada"
+          searchPlaceholder="Buscar Sede por nombre…"
+          onCreate={canEdit ? (name) => {
+            setNewPlaceName(name)
+            setNewPlaceMunicipalityId(municipalityId || selectedMunicipalityId || '')
+          } : undefined}
+          createLabel="Crear"
+        />
+        {newPlaceName && canEdit ? (
+          <div className={styles.editorItem} style={{ marginTop: 12 }}>
+            <strong>Crear “{newPlaceName}”</strong>
+            <p className={styles.emptyText}>La nueva Sede se creará o reutilizará y quedará asignada automáticamente.</p>
+            <div className={styles.formGrid}>
+              <label className={styles.fieldWide}><span>Nombre</span><input name="new_place_name" defaultValue={newPlaceName} required /></label>
+              <div className={styles.fieldWide}>
+                <SearchableSelect
+                  name="new_place_municipality_id"
+                  label="Localidad"
+                  options={municipalityChoices}
+                  value={newPlaceMunicipalityId}
+                  onChange={setNewPlaceMunicipalityId}
+                  emptyLabel="Selecciona una localidad"
+                  searchPlaceholder="Buscar localidad existente…"
+                />
+              </div>
+              <label><span>Tipo de lugar</span><input name="new_place_type" placeholder="Parroquia" /></label>
+              <label><span>Dirección</span><input name="new_place_address" placeholder="Opcional" /></label>
+              <label className={styles.fieldWide}><span>Horario habitual</span><textarea name="new_place_opening_hours_text" rows="3" placeholder="Texto documentado del horario habitual" /></label>
+              <label><span>Fecha de comprobación</span><input name="new_place_opening_hours_verified_at" type="date" /></label>
+            </div>
+            <div className={styles.formActions}>
+              <button type="button" className={styles.secondaryButton} onClick={() => setNewPlaceName('')}>Cancelar</button>
+              <button type="submit" formAction={createPlaceAction} formNoValidate className={styles.primaryButton}>Crear y usar como Sede canónica</button>
+            </div>
+          </div>
+        ) : null}
+      </div>
     </>
   )
 }
@@ -45,84 +143,34 @@ export function BrotherhoodGeographyInlineTools({
   canEdit,
   municipalities,
   places,
-  selectedMunicipalityId,
   selectedPlaceId,
-  createMunicipalityAction,
-  createPlaceAction,
   updatePlaceAction,
 }) {
   if (!canEdit) return null
-  const municipalitiesForSelect = municipalityOptions(municipalities)
   const selectedPlace = places.find((item) => item.id === selectedPlaceId) || null
+  if (!selectedPlace) return null
 
   return (
     <div className={styles.editorStack} style={{ marginTop: 16 }}>
       <details className={styles.addDetails}>
-        <summary>Crear Localidad si no existe <span>＋</span></summary>
-        <form action={createMunicipalityAction} className={`${styles.editorItem} ${styles.editorForm}`}>
+        <summary>Editar datos de la Sede seleccionada <span>＋</span></summary>
+        <form action={updatePlaceAction} className={`${styles.editorItem} ${styles.editorForm}`}>
           <input type="hidden" name="brotherhood_id" value={brotherhoodId} />
+          <input type="hidden" name="place_id" value={selectedPlace.id} />
           <div className={styles.formGrid}>
-            <label><span>Nombre</span><input name="name" placeholder="Sevilla" required /></label>
-            <label><span>Provincia</span><input name="province" defaultValue="Sevilla" required /></label>
-            <label><span>Comunidad autónoma</span><input name="autonomous_community" defaultValue="Andalucía" required /></label>
-            <label><span>País</span><input name="country" defaultValue="España" required /></label>
+            <label className={styles.fieldWide}><span>Nombre</span><input name="place_name" defaultValue={selectedPlace.name} required /></label>
+            <label><span>Localidad</span><select name="place_municipality_id" defaultValue={selectedPlace.municipality_id || ''} required><option value="">Selecciona una localidad</option>{municipalities.map((item) => <option key={item.id} value={item.id}>{item.name} · {item.province}</option>)}</select></label>
+            <label><span>Tipo de lugar</span><input name="place_type" defaultValue={selectedPlace.place_type || ''} /></label>
+            <label><span>Dirección</span><input name="place_address" defaultValue={selectedPlace.address || ''} /></label>
+            <label className={styles.fieldWide}><span>Horario habitual</span><textarea name="place_opening_hours_text" rows="3" defaultValue={selectedPlace.opening_hours_text || ''} /></label>
+            <label><span>Fecha de comprobación</span><input name="place_opening_hours_verified_at" type="date" defaultValue={selectedPlace.opening_hours_verified_at || ''} /></label>
           </div>
           <div className={styles.formActions}>
-            <small>Se busca antes de crear y el registro resultante vuelve seleccionado en Información general.</small>
-            <button className={styles.secondaryButton} type="submit">Buscar o crear Localidad</button>
+            <small>El Lugar es compartido y estos datos podrán reutilizarse desde otras entidades.</small>
+            <button className={styles.secondaryButton} type="submit">Guardar Lugar</button>
           </div>
         </form>
       </details>
-
-      <details className={styles.addDetails}>
-        <summary>Crear Lugar / Sede si no existe <span>＋</span></summary>
-        <form action={createPlaceAction} className={`${styles.editorItem} ${styles.editorForm}`}>
-          <input type="hidden" name="brotherhood_id" value={brotherhoodId} />
-          <div className={styles.formGrid}>
-            <SearchableSelect
-              className={styles.fieldWide}
-              name="municipality_id"
-              label="Localidad del Lugar"
-              options={municipalitiesForSelect}
-              defaultValue={selectedMunicipalityId}
-              emptyLabel="Selecciona una localidad"
-              searchPlaceholder="Buscar localidad…"
-              required
-            />
-            <label className={styles.fieldWide}><span>Nombre del Lugar</span><input name="name" placeholder="Parroquia de San Benito Abad" required /></label>
-            <label><span>Tipo de lugar</span><input name="place_type" placeholder="Parroquia" /></label>
-            <label><span>Dirección</span><input name="address" placeholder="Opcional" /></label>
-            <label className={styles.fieldWide}><span>Horario habitual</span><textarea name="opening_hours_text" rows="3" placeholder="Texto documentado del horario habitual" /></label>
-            <label><span>Horario comprobado</span><input name="opening_hours_verified_at" type="date" /></label>
-          </div>
-          <div className={styles.formActions}>
-            <small>Se evita duplicar por nombre + localidad. El horario pertenece al Lugar.</small>
-            <button className={styles.secondaryButton} type="submit">Buscar o crear Lugar</button>
-          </div>
-        </form>
-      </details>
-
-      {selectedPlace ? (
-        <details className={styles.addDetails}>
-          <summary>Editar datos de la Sede seleccionada <span>＋</span></summary>
-          <form action={updatePlaceAction} className={`${styles.editorItem} ${styles.editorForm}`}>
-            <input type="hidden" name="brotherhood_id" value={brotherhoodId} />
-            <input type="hidden" name="place_id" value={selectedPlace.id} />
-            <div className={styles.formGrid}>
-              <SearchableSelect name="municipality_id" label="Localidad" options={municipalitiesForSelect} defaultValue={selectedPlace.municipality_id || ''} required emptyLabel="Selecciona una localidad" />
-              <label className={styles.fieldWide}><span>Nombre</span><input name="name" defaultValue={selectedPlace.name} required /></label>
-              <label><span>Tipo de lugar</span><input name="place_type" defaultValue={selectedPlace.place_type || ''} /></label>
-              <label><span>Dirección</span><input name="address" defaultValue={selectedPlace.address || ''} /></label>
-              <label className={styles.fieldWide}><span>Horario habitual</span><textarea name="opening_hours_text" rows="3" defaultValue={selectedPlace.opening_hours_text || ''} /></label>
-              <label><span>Horario comprobado</span><input name="opening_hours_verified_at" type="date" defaultValue={selectedPlace.opening_hours_verified_at || ''} /></label>
-            </div>
-            <div className={styles.formActions}>
-              <small>El Lugar es compartido: estos datos podrán reutilizarse desde otras entidades.</small>
-              <button className={styles.secondaryButton} type="submit">Guardar Lugar</button>
-            </div>
-          </form>
-        </details>
-      ) : null}
     </div>
   )
 }
