@@ -103,20 +103,24 @@ export default function BandDiscographySection({ releases = [], artistSpotifyUrl
               <summary className={styles.releaseSummary}>
                 <div className={styles.cover}>
                   {release.coverImagePath ? (
-                    <Image src={release.coverImagePath} alt={release.coverImageAlt || `Portada de ${release.title}`} fill sizes="(max-width: 760px) 78px, 110px" />
+                    <Image src={release.coverImagePath} alt={release.coverImageAlt || `Portada de ${release.title}`} fill sizes="(max-width: 760px) 72px, 110px" />
                   ) : (
                     <div className={styles.coverPlaceholder} aria-hidden="true"><span>{release.year || 'HC'}</span></div>
                   )}
                 </div>
                 <div className={styles.summaryCopy}>
+                  <h3>{release.title}</h3>
                   <div className={styles.meta}>
                     {release.year ? <strong>{release.year}</strong> : null}
+                    <span>{release.tracks.length} {release.tracks.length === 1 ? 'pista' : 'pistas'}</span>
                     {ordinalLabel(release.ordinalNumber) ? <span>{ordinalLabel(release.ordinalNumber)}</span> : null}
                   </div>
-                  <h3>{release.title}</h3>
-                  <small>{release.tracks.length} {release.tracks.length === 1 ? 'pista' : 'pistas'}</small>
                 </div>
-                <span className={styles.releaseToggle}><em>Ver pistas</em><b aria-hidden="true">+</b></span>
+                <span className={styles.releaseToggle}>
+                  <em className={styles.toggleClosed}>Ver pistas</em>
+                  <em className={styles.toggleOpen}>Ocultar pistas</em>
+                  <b aria-hidden="true">+</b>
+                </span>
               </summary>
 
               <div className={styles.releaseDetail}>
