@@ -1,6 +1,8 @@
 .section {
   padding: 5.5rem 0;
-  background: #f7f3ee;
+  background:
+    radial-gradient(circle at 8% 8%, color-mix(in srgb, var(--band-primary) 9%, transparent), transparent 28%),
+    linear-gradient(180deg, color-mix(in srgb, var(--band-primary) 2.5%, #f7f3ee), #f7f3ee 42%, #f7f3ee);
 }
 
 .heading {
@@ -11,7 +13,38 @@
   margin-bottom: 2.5rem;
 }
 
-.heading > div:first-child > span {
+.headingIdentity {
+  display: flex;
+  min-width: 0;
+  align-items: flex-end;
+  gap: 1.15rem;
+}
+
+.bandMark {
+  display: grid;
+  width: 72px;
+  height: 88px;
+  flex: 0 0 auto;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--band-primary) 20%, white);
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--band-primary) 4%, white);
+  box-shadow: 0 12px 30px color-mix(in srgb, var(--band-secondary) 10%, transparent);
+}
+
+.bandMark img {
+  width: auto;
+  max-width: 60px;
+  height: 76px;
+  object-fit: contain;
+}
+
+.headingTitle {
+  min-width: 0;
+}
+
+.headingTitle > span {
   display: block;
   margin-bottom: 0.55rem;
   color: var(--band-primary);
@@ -23,10 +56,20 @@
 
 .heading h2 {
   margin: 0;
+  color: var(--band-secondary);
   font-size: clamp(2.2rem, 5vw, 4.3rem);
   font-weight: 800;
   line-height: 0.98;
   letter-spacing: -0.045em;
+}
+
+.headingTitle small {
+  display: block;
+  margin-top: 0.55rem;
+  color: color-mix(in srgb, var(--band-secondary) 72%, #777069);
+  font-size: 0.76rem;
+  font-weight: 700;
+  line-height: 1.35;
 }
 
 .headingAside {
@@ -50,11 +93,12 @@
   min-height: 42px;
   padding: 0.65rem 1rem;
   border-radius: 999px;
-  background: #181614;
+  background: var(--band-secondary);
   color: #fff;
   font-size: 0.82rem;
   font-weight: 800;
   text-decoration: none;
+  box-shadow: 0 8px 22px color-mix(in srgb, var(--band-secondary) 16%, transparent);
 }
 
 .artistSpotifyLink:hover {
@@ -68,17 +112,19 @@
 
 .release {
   overflow: hidden;
-  border: 1px solid rgba(24, 22, 20, 0.12);
+  border: 1px solid color-mix(in srgb, var(--band-primary) 13%, #ded8d2);
   border-radius: 1.2rem;
   background: #fff;
-  box-shadow: 0 12px 34px rgba(24, 22, 20, 0.045);
+  box-shadow: 0 12px 34px color-mix(in srgb, var(--band-secondary) 5%, transparent);
 }
 
 .release[open] {
-  box-shadow: 0 20px 55px rgba(24, 22, 20, 0.08);
+  border-color: color-mix(in srgb, var(--band-primary) 30%, #ded8d2);
+  box-shadow: 0 20px 55px color-mix(in srgb, var(--band-secondary) 9%, transparent);
 }
 
 .releaseSummary {
+  position: relative;
   display: grid;
   grid-template-columns: 108px minmax(0, 1fr) auto;
   gap: 1.25rem;
@@ -87,6 +133,24 @@
   padding: 0.75rem 1.1rem 0.75rem 0.75rem;
   cursor: pointer;
   list-style: none;
+}
+
+.releaseSummary::before {
+  position: absolute;
+  inset: 18px auto 18px 0;
+  width: 3px;
+  border-radius: 0 999px 999px 0;
+  background: var(--band-primary);
+  opacity: 0.38;
+  content: '';
+}
+
+.release[open] .releaseSummary {
+  background: linear-gradient(90deg, color-mix(in srgb, var(--band-primary) 6%, white), white 56%);
+}
+
+.release[open] .releaseSummary::before {
+  opacity: 1;
 }
 
 .releaseSummary::-webkit-details-marker {
@@ -98,7 +162,7 @@
 }
 
 .releaseSummary:hover {
-  background: color-mix(in srgb, var(--band-primary) 3%, white);
+  background: color-mix(in srgb, var(--band-primary) 4%, white);
 }
 
 .cover {
@@ -106,6 +170,7 @@
   width: 108px;
   aspect-ratio: 1;
   overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--band-primary) 12%, #e5dfd8);
   border-radius: 0.85rem;
   background: #ece7e1;
 }
@@ -134,7 +199,7 @@
 
 .summaryCopy h3 {
   margin: 0;
-  color: #181614;
+  color: var(--band-secondary);
   font-size: clamp(1.45rem, 2.5vw, 2.15rem);
   font-weight: 800;
   line-height: 1.04;
@@ -157,8 +222,8 @@
   min-height: 25px;
   padding: 0.28rem 0.48rem;
   border-radius: 999px;
-  background: #f4f1ed;
-  color: #716a63;
+  background: color-mix(in srgb, var(--band-secondary) 5%, #f4f1ed);
+  color: color-mix(in srgb, var(--band-secondary) 70%, #716a63);
   font-size: 0.64rem;
   font-weight: 800;
   letter-spacing: 0.055em;
@@ -167,7 +232,7 @@
 }
 
 .meta strong {
-  background: color-mix(in srgb, var(--band-primary) 8%, white);
+  background: color-mix(in srgb, var(--band-primary) 9%, white);
   color: var(--band-primary);
 }
 
@@ -202,8 +267,9 @@
   width: 34px;
   height: 34px;
   place-items: center;
-  border: 1px solid color-mix(in srgb, var(--band-primary) 25%, white);
+  border: 1px solid color-mix(in srgb, var(--band-primary) 27%, white);
   border-radius: 50%;
+  background: color-mix(in srgb, var(--band-primary) 3%, white);
   font-size: 1.15rem;
   line-height: 1;
   transition: transform 0.18s ease, background 0.18s ease;
@@ -211,19 +277,19 @@
 
 .release[open] .releaseToggle b {
   transform: rotate(45deg);
-  background: color-mix(in srgb, var(--band-primary) 7%, white);
+  background: color-mix(in srgb, var(--band-primary) 10%, white);
 }
 
 .releaseDetail {
   display: grid;
   grid-template-columns: minmax(240px, 0.72fr) minmax(0, 1.28fr);
-  border-top: 1px solid rgba(24, 22, 20, 0.1);
+  border-top: 1px solid color-mix(in srgb, var(--band-primary) 11%, #e2ddd7);
 }
 
 .releaseInfo {
   padding: 1.5rem;
-  border-right: 1px solid rgba(24, 22, 20, 0.1);
-  background: color-mix(in srgb, var(--band-primary) 2.5%, white);
+  border-right: 1px solid color-mix(in srgb, var(--band-primary) 11%, #e2ddd7);
+  background: color-mix(in srgb, var(--band-primary) 3.5%, white);
 }
 
 .releaseInfo p {
@@ -257,9 +323,9 @@
   align-items: center;
   min-height: 40px;
   padding: 0.58rem 0.9rem;
-  border: 1px solid rgba(24, 22, 20, 0.18);
+  border: 1px solid color-mix(in srgb, var(--band-secondary) 18%, #d6d0ca);
   border-radius: 999px;
-  color: #181614;
+  color: var(--band-secondary);
   background: transparent;
   font-size: 0.78rem;
   font-weight: 800;
@@ -282,7 +348,7 @@
   gap: 1rem;
   align-items: baseline;
   padding-bottom: 0.9rem;
-  border-bottom: 1px solid rgba(24, 22, 20, 0.12);
+  border-bottom: 1px solid color-mix(in srgb, var(--band-secondary) 10%, #ded8d2);
 }
 
 .trackHeading span {
@@ -294,6 +360,7 @@
 }
 
 .trackHeading strong {
+  color: var(--band-secondary);
   font-size: 0.8rem;
 }
 
@@ -309,7 +376,7 @@
   gap: 0.8rem;
   align-items: center;
   padding: 0.95rem 0;
-  border-bottom: 1px solid rgba(24, 22, 20, 0.08);
+  border-bottom: 1px solid color-mix(in srgb, var(--band-secondary) 7%, #eee9e4);
 }
 
 .trackList li:last-child {
@@ -330,13 +397,14 @@
 }
 
 .trackTitle {
-  color: #181614;
+  color: var(--band-secondary);
   font-size: 0.96rem;
   line-height: 1.3;
   text-decoration: none;
 }
 
 a.trackTitle:hover {
+  color: var(--band-primary);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
@@ -366,6 +434,7 @@ a.trackTitle:hover {
 }
 
 .relationshipLine a:hover {
+  color: var(--band-primary);
   text-decoration: underline;
   text-underline-offset: 2px;
 }
@@ -392,7 +461,7 @@ a.trackTitle:hover {
   min-height: 36px;
   padding: 0.48rem 0.72rem;
   border-radius: 999px;
-  background: #181614;
+  background: var(--band-secondary);
   color: #fff;
   font-size: 0.72rem;
   font-weight: 800;
@@ -422,7 +491,7 @@ a.trackTitle:hover {
 
   .releaseInfo {
     border-right: 0;
-    border-bottom: 1px solid rgba(24, 22, 20, 0.1);
+    border-bottom: 1px solid color-mix(in srgb, var(--band-primary) 11%, #e2ddd7);
   }
 }
 
@@ -437,8 +506,34 @@ a.trackTitle:hover {
     margin-bottom: 1.5rem;
   }
 
+  .headingIdentity {
+    align-items: center;
+    gap: 0.85rem;
+  }
+
+  .bandMark {
+    width: 52px;
+    height: 64px;
+    border-radius: 0.75rem;
+  }
+
+  .bandMark img {
+    max-width: 44px;
+    height: 54px;
+  }
+
   .heading h2 {
     font-size: 2.7rem;
+  }
+
+  .headingTitle > span {
+    margin-bottom: 0.35rem;
+    font-size: 0.66rem;
+  }
+
+  .headingTitle small {
+    margin-top: 0.35rem;
+    font-size: 0.68rem;
   }
 
   .headingAside {
@@ -461,6 +556,10 @@ a.trackTitle:hover {
     gap: 0.8rem;
     min-height: 94px;
     padding: 0.65rem;
+  }
+
+  .releaseSummary::before {
+    inset: 14px auto 14px 0;
   }
 
   .cover {
@@ -573,6 +672,24 @@ a.trackTitle:hover {
 }
 
 @media (max-width: 430px) {
+  .headingIdentity {
+    gap: 0.7rem;
+  }
+
+  .bandMark {
+    width: 46px;
+    height: 56px;
+  }
+
+  .bandMark img {
+    max-width: 38px;
+    height: 47px;
+  }
+
+  .heading h2 {
+    font-size: 2.45rem;
+  }
+
   .releaseSummary {
     grid-template-columns: 64px minmax(0, 1fr) 32px;
     gap: 0.65rem;
