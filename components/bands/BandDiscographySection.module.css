@@ -5,13 +5,13 @@
 
 .heading {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(260px, 0.75fr);
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.78fr);
   gap: 2rem;
   align-items: end;
   margin-bottom: 2.5rem;
 }
 
-.heading span {
+.heading > div:first-child > span {
   display: block;
   margin-bottom: 0.55rem;
   color: var(--band-primary);
@@ -29,42 +29,84 @@
   letter-spacing: -0.045em;
 }
 
-.heading p {
+.headingAside {
+  display: grid;
+  gap: 1rem;
+  justify-items: start;
+}
+
+.headingAside p {
   margin: 0;
-  max-width: 36rem;
+  max-width: 38rem;
   color: #615d58;
   font-size: 1rem;
   line-height: 1.65;
 }
 
+.artistSpotifyLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 42px;
+  padding: 0.65rem 1rem;
+  border-radius: 999px;
+  background: #181614;
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.artistSpotifyLink:hover {
+  background: var(--band-primary);
+}
+
 .releaseList {
   display: grid;
-  gap: 1.5rem;
+  gap: 0.8rem;
 }
 
 .release {
-  display: grid;
-  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
   overflow: hidden;
   border: 1px solid rgba(24, 22, 20, 0.12);
-  border-radius: 1.25rem;
+  border-radius: 1.2rem;
   background: #fff;
-  box-shadow: 0 18px 50px rgba(24, 22, 20, 0.07);
+  box-shadow: 0 12px 34px rgba(24, 22, 20, 0.045);
 }
 
-.releaseIdentity {
+.release[open] {
+  box-shadow: 0 20px 55px rgba(24, 22, 20, 0.08);
+}
+
+.releaseSummary {
   display: grid;
-  grid-template-columns: 210px minmax(0, 1fr);
-  gap: 1.6rem;
-  padding: 1.5rem;
-  border-right: 1px solid rgba(24, 22, 20, 0.1);
+  grid-template-columns: 108px minmax(0, 1fr) auto;
+  gap: 1.25rem;
+  align-items: center;
+  min-height: 132px;
+  padding: 0.75rem 1.1rem 0.75rem 0.75rem;
+  cursor: pointer;
+  list-style: none;
+}
+
+.releaseSummary::-webkit-details-marker {
+  display: none;
+}
+
+.releaseSummary::marker {
+  content: '';
+}
+
+.releaseSummary:hover {
+  background: color-mix(in srgb, var(--band-primary) 3%, white);
 }
 
 .cover {
   position: relative;
+  width: 108px;
   aspect-ratio: 1;
   overflow: hidden;
-  border-radius: 0.8rem;
+  border-radius: 0.85rem;
   background: #ece7e1;
 }
 
@@ -82,16 +124,12 @@
 }
 
 .coverPlaceholder span {
-  font-size: 2.8rem;
+  font-size: 1.8rem;
   font-weight: 800;
 }
 
-.releaseCopy {
-  display: flex;
+.summaryCopy {
   min-width: 0;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
 }
 
 .meta {
@@ -99,12 +137,12 @@
   flex-wrap: wrap;
   gap: 0.55rem;
   align-items: center;
-  margin-bottom: 0.65rem;
+  margin-bottom: 0.4rem;
 }
 
 .meta strong,
 .meta span {
-  font-size: 0.75rem;
+  font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -118,53 +156,112 @@
   color: #756f69;
 }
 
-.releaseCopy h3 {
+.summaryCopy h3 {
   margin: 0;
-  font-size: clamp(1.8rem, 3vw, 2.7rem);
+  color: #181614;
+  font-size: clamp(1.45rem, 2.5vw, 2.15rem);
   font-weight: 800;
-  line-height: 1.03;
+  line-height: 1.04;
   letter-spacing: -0.035em;
 }
 
-.releaseCopy p {
-  margin: 0.9rem 0 0;
-  color: #5f5a55;
-  line-height: 1.55;
+.summaryCopy small {
+  display: block;
+  margin-top: 0.45rem;
+  color: #837c75;
+  font-size: 0.74rem;
+  font-weight: 700;
 }
 
-.releaseCopy small {
+.releaseToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: var(--band-primary);
+  font-size: 0.76rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.releaseToggle em {
+  font-style: normal;
+}
+
+.releaseToggle b {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--band-primary) 25%, white);
+  border-radius: 50%;
+  font-size: 1.15rem;
+  line-height: 1;
+  transition: transform 0.18s ease, background 0.18s ease;
+}
+
+.release[open] .releaseToggle b {
+  transform: rotate(45deg);
+  background: color-mix(in srgb, var(--band-primary) 7%, white);
+}
+
+.release[open] .releaseToggle em::after {
+  content: ' abiertas';
+}
+
+.releaseDetail {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.72fr) minmax(0, 1.28fr);
+  border-top: 1px solid rgba(24, 22, 20, 0.1);
+}
+
+.releaseInfo {
+  padding: 1.5rem;
+  border-right: 1px solid rgba(24, 22, 20, 0.1);
+  background: color-mix(in srgb, var(--band-primary) 2.5%, white);
+}
+
+.releaseInfo p {
+  margin: 0;
+  color: #5f5a55;
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+.releaseInfo small {
+  display: block;
   margin-top: 0.8rem;
   color: #8a837c;
+  line-height: 1.45;
+}
+
+.dateText {
+  color: var(--band-primary) !important;
+  font-weight: 700;
 }
 
 .actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
-  margin-top: 1.2rem;
+  gap: 0.65rem;
+  margin-top: 1.15rem;
 }
 
-.spotifyLink,
 .secondaryLink {
   display: inline-flex;
-  gap: 0.5rem;
   align-items: center;
-  min-height: 42px;
+  min-height: 40px;
+  padding: 0.58rem 0.9rem;
+  border: 1px solid rgba(24, 22, 20, 0.18);
   border-radius: 999px;
-  padding: 0.65rem 1rem;
-  font-size: 0.86rem;
+  color: #181614;
+  font-size: 0.78rem;
   font-weight: 800;
   text-decoration: none;
 }
 
-.spotifyLink {
-  background: #181614;
-  color: #fff;
-}
-
-.secondaryLink {
-  border: 1px solid rgba(24, 22, 20, 0.18);
-  color: #181614;
+.secondaryLink:hover {
+  border-color: var(--band-primary);
+  color: var(--band-primary);
 }
 
 .trackList {
@@ -183,14 +280,14 @@
 
 .trackHeading span {
   color: #777069;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
 .trackHeading strong {
-  font-size: 0.86rem;
+  font-size: 0.8rem;
 }
 
 .trackList ol {
@@ -204,7 +301,7 @@
   grid-template-columns: 2rem minmax(0, 1fr) auto;
   gap: 0.8rem;
   align-items: center;
-  padding: 1rem 0;
+  padding: 0.95rem 0;
   border-bottom: 1px solid rgba(24, 22, 20, 0.08);
 }
 
@@ -216,7 +313,7 @@
   align-self: start;
   padding-top: 0.12rem;
   color: var(--band-primary);
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 900;
   letter-spacing: 0.08em;
 }
@@ -227,7 +324,7 @@
 
 .trackTitle {
   color: #181614;
-  font-size: 1rem;
+  font-size: 0.96rem;
   line-height: 1.3;
   text-decoration: none;
 }
@@ -241,15 +338,15 @@ a.trackTitle:hover {
   display: grid;
   grid-template-columns: 6.2rem minmax(0, 1fr);
   gap: 0.6rem;
-  margin-top: 0.45rem;
+  margin-top: 0.42rem;
   color: #68615b;
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   line-height: 1.4;
 }
 
 .relationshipLine > span {
   color: #98918a;
-  font-size: 0.68rem;
+  font-size: 0.64rem;
   font-weight: 800;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -276,7 +373,7 @@ a.trackTitle:hover {
 
 .duration {
   color: #817a73;
-  font-size: 0.76rem;
+  font-size: 0.72rem;
   font-variant-numeric: tabular-nums;
 }
 
@@ -311,12 +408,12 @@ a.trackTitle:hover {
   font-style: normal;
 }
 
-@media (max-width: 1040px) {
-  .release {
+@media (max-width: 900px) {
+  .releaseDetail {
     grid-template-columns: 1fr;
   }
 
-  .releaseIdentity {
+  .releaseInfo {
     border-right: 0;
     border-bottom: 1px solid rgba(24, 22, 20, 0.1);
   }
@@ -337,38 +434,86 @@ a.trackTitle:hover {
     font-size: 2.7rem;
   }
 
-  .releaseIdentity {
-    grid-template-columns: 118px minmax(0, 1fr);
-    gap: 1rem;
-    padding: 1rem;
+  .headingAside {
+    gap: 0.8rem;
   }
 
-  .releaseCopy h3 {
-    font-size: 1.65rem;
+  .headingAside p {
+    font-size: 0.88rem;
+    line-height: 1.55;
   }
 
-  .releaseCopy p {
-    display: none;
-  }
-
-  .actions {
-    margin-top: 0.85rem;
-  }
-
-  .spotifyLink,
-  .secondaryLink {
+  .artistSpotifyLink {
     min-height: 38px;
     padding: 0.55rem 0.8rem;
-    font-size: 0.78rem;
+    font-size: 0.76rem;
   }
 
+  .releaseSummary {
+    grid-template-columns: 78px minmax(0, 1fr) 34px;
+    gap: 0.85rem;
+    min-height: 98px;
+    padding: 0.65rem;
+  }
+
+  .cover {
+    width: 78px;
+  }
+
+  .coverPlaceholder span {
+    font-size: 1.25rem;
+  }
+
+  .meta {
+    gap: 0.35rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .meta strong,
+  .meta span {
+    font-size: 0.58rem;
+  }
+
+  .summaryCopy h3 {
+    font-size: 1.18rem;
+  }
+
+  .summaryCopy small {
+    margin-top: 0.3rem;
+    font-size: 0.66rem;
+  }
+
+  .releaseToggle {
+    width: 34px;
+  }
+
+  .releaseToggle em {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .releaseToggle b {
+    width: 34px;
+    height: 34px;
+  }
+
+  .releaseInfo,
   .trackList {
     padding: 1rem;
   }
 
+  .releaseInfo p {
+    font-size: 0.82rem;
+  }
+
   .trackList li {
-    grid-template-columns: 1.8rem minmax(0, 1fr) auto;
-    gap: 0.65rem;
+    grid-template-columns: 1.65rem minmax(0, 1fr) auto;
+    gap: 0.6rem;
   }
 
   .trackActions {
@@ -398,17 +543,26 @@ a.trackTitle:hover {
 
   .relationshipLine {
     grid-template-columns: 1fr;
-    gap: 0.15rem;
+    gap: 0.12rem;
   }
 }
 
 @media (max-width: 430px) {
-  .releaseIdentity {
-    grid-template-columns: 94px minmax(0, 1fr);
+  .releaseSummary {
+    grid-template-columns: 68px minmax(0, 1fr) 32px;
+    gap: 0.7rem;
+  }
+
+  .cover {
+    width: 68px;
+  }
+
+  .summaryCopy h3 {
+    font-size: 1.05rem;
   }
 
   .trackList li {
-    grid-template-columns: 1.55rem minmax(0, 1fr) 34px;
+    grid-template-columns: 1.45rem minmax(0, 1fr) 34px;
   }
 
   .trackSpotifyLink {
