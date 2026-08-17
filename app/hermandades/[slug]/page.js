@@ -2,6 +2,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { cache } from 'react';
 import CofradeTypeBadges from '@/components/CofradeTypeBadges';
+import {
+  BrotherhoodConceptualTitulars,
+  BrotherhoodOwnBands,
+  BrotherhoodTitularCount,
+} from '@/components/BrotherhoodRelationalExtras';
 import { notFound } from 'next/navigation';
 import JsonLd from '@/components/JsonLd';
 import OfficialLinks from '@/components/OfficialLinks';
@@ -148,7 +153,7 @@ export default async function HermandadDetailPage({ params }) {
           <div className="brotherhood-facts">
             <div><small>Fundación</small><strong>{h.fundacion}</strong></div>
             <div><small>Sede canónica</small><strong>{h.sede}</strong></div>
-            <div><small>Titulares</small><strong>{h.imagenes.length}</strong></div>
+            <div><small>Titulares</small><strong><BrotherhoodTitularCount brotherhoodId={h.id} imageCount={h.imagenes.length} /></strong></div>
             <div><small>Pasos</small><strong>{h.pasos.length}</strong></div>
           </div>
         </div>
@@ -258,7 +263,7 @@ export default async function HermandadDetailPage({ params }) {
       </div></section>
 
       <section className="section brotherhood-soft" id="titulares"><div className="shell">
-        <SectionTitle eyebrow={`${h.imagenes.length} titulares`} title="Sagrados Titulares" description="Autoría, datación, descripción material e iconografía documentadas para cada imagen." />
+        <SectionTitle eyebrow="Titularidad" title="Sagrados Titulares" description="Imágenes e identidades devocionales que conforman la titularidad documentada de la Hermandad." />
         <div className="image-grid">{h.imagenes.map((imagen) => {
           const card = (
             <>
@@ -292,6 +297,7 @@ export default async function HermandadDetailPage({ params }) {
             <article className="image-card brotherhood-image-card" key={imagen.id}>{card}</article>
           );
         })}</div>
+        <BrotherhoodConceptualTitulars brotherhoodId={h.id} />
       </div></section>
 
       <section className="section" id="pasos"><div className="shell">
@@ -339,6 +345,8 @@ export default async function HermandadDetailPage({ params }) {
           </article>
         ))}</div>
       </div></section>
+
+      <BrotherhoodOwnBands brotherhoodId={h.id} />
 
       {h.acompanamientoActual?.length > 0 && <section className="section brotherhood-soft" id="acompanamiento-musical"><div className="shell">
         <SectionTitle eyebrow="Semana Santa" title="Acompañamiento musical" description="La configuración musical de la cofradía se organiza por Cruz de Guía, Paso de Misterio y Paso de Palio." />
