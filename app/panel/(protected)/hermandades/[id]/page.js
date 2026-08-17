@@ -1,8 +1,10 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import BrotherhoodTypeSelector from '@/components/panel/BrotherhoodTypeSelector'
+import { BrotherhoodGeographyFields, BrotherhoodGeographyInlineTools } from '@/components/panel/BrotherhoodGeographyEditor'
 import { requirePanelUser } from '@/lib/panel/auth'
 import { getBrotherhoodEditorData } from '@/lib/panel/data'
+import { getBrotherhoodPresenceData } from '@/lib/panel/brotherhood-presence'
 import {
   archiveAssetContributionAction,
   archiveCultAction,
@@ -19,6 +21,7 @@ import {
   updateBrotherhoodAction,
   uploadMediaAction,
 } from './actions'
+import { createMunicipalityAction, createPlaceAction, updatePlaceAction } from './geography-actions'
 import styles from '@/app/panel/panel.module.css'
 
 const STATUS_LABELS = { published: 'Publicado', review: 'En revisión', draft: 'Borrador', archived: 'Archivado' }
@@ -30,8 +33,9 @@ const SOCIAL_PLATFORMS = [
   ['x', 'X / Twitter'],
   ['youtube', 'YouTube'],
   ['tiktok', 'TikTok'],
-  ['whatsapp', 'Canal de WhatsApp'],
+  ['whatsapp', 'WhatsApp'],
 ]
+const PLATFORM_LABELS = Object.fromEntries(SOCIAL_PLATFORMS)
 
 export const metadata = { title: 'Editar hermandad · Panel' }
 
@@ -73,20 +77,34 @@ function SaveBar({ label = 'Guardar cambios', canEdit = true }) {
   )
 }
 
-function SocialLinkForm({ item, entityId, canEdit }) {
+function SocialLinkForm({ item, entityId, canEdit, excludedPlatforms = [] }) {
   const isNew = !item?.id
+  const platforms = isNew
+    ? SOCIAL_PLATFORMS.filter(([value]) => !excludedPlatforms.includes(value))
+    : SOCIAL_PLATFORMS
+
   return (
     <form action={saveSocialLinkAction} className={`${styles.editorItem} ${styles.editorForm}`}>
       <input type="hidden" name="brotherhood_id" value={entityId} />
       <input type="hidden" name="link_id" value={item?.id || ''} />
       <div className={styles.formGrid}>
-        <label><span>Plataforma</span><select name="platform" defaultValue={item?.platform || 'website'} disabled={!isNew}><option value="">Selecciona una plataforma</option>{SOCIAL_PLATFORMS.map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select>{!isNew ? <input type="hidden" name="platform" value={item.platform} /> : null}</label>
-        <label><span>Nombre visible</span><input name="label" defaultValue={item?.label || ''} placeholder="Web oficial" /></label>
+        <label>
+          <span>Plataforma</span>
+          <select name="platform" defaultValue={item?.platform || ''} disabled={!isNew} required>
+            <option value="">Selecciona una plataforma</option>
+            {platforms.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
+          </select>
+          {!isNew ? <input type="hidden" name="platform" value={item.platform} /> : null}
+        </label>
+        <label><span>Nombre visible</span><input name="label" defaultValue={item?.label || ''} placeholder="Ej. Instagram oficial" /></label>
         <label className={styles.fieldWide}><span>URL oficial</span><input name="url" type="url" defaultValue={item?.url || ''} placeholder="https://…" required /></label>
         <label><span>Orden</span><input name="display_order" type="number" defaultValue={item?.display_order ?? 0} /></label>
         <label className={styles.checkField}><input name="is_public" type="checkbox" defaultChecked={item?.is_public ?? true} /><span>Mostrar públicamente</span></label>
       </div>
-      <SaveBar label={isNew ? 'Añadir enlace' : 'Guardar enlace'} canEdit={canEdit} />
+      <div className={styles.formActions}>
+        <small>{isNew ? 'Elige la plataforma; las que ya existen no vuelven a ofrecerse.' : `Editando ${PLATFORM_LABELS[item.platform] || item.platform}.`}</small>
+        {canEdit ? <button className={isNew ? styles.primaryButton : styles.secondaryButton} type="submit">{isNew ? 'Añadir enlace' : 'Guardar enlace'}</button> : null}
+      </div>
     </form>
   )
 }
@@ -318,11 +336,28 @@ function HeritageAssetForm({ item, data, canEdit }) {
 
 export default async function BrotherhoodEditorPage({ params, searchParams }) {
   const [{ id }, query, user] = await Promise.all([params, searchParams, requirePanelUser()])
-  const data = await getBrotherhoodEditorData(id)
-  if (!data) notFound()
+  const [data, geography] = await Promise.all([
+    getBrotherhoodEditorData(id),
+    getBrotherhoodPresenceData(id),
+  ])
+  if (!data || !geography) notFound()
   const canEdit = ['admin', 'editor'].includes(user.role)
   const colorRows = [...data.colors]
   while (colorRows.length < 3) colorRows.push({ id: '', color_name: '', hex_value: '', color_role: 'identity' })
+
+  const requestedMunicipality = geography.municipalities.some((item) => item.id === query?.municipality)
+    ? query.municipality
+    : null
+  const requestedPlace = geography.places.some((item) => item.id === query?.place)
+    ? query.place
+    : null
+  const selectedPlaceId = requestedPlace || data.brotherhood?.canonical_see_place_id || ''
+  const selectedPlace = geography.places.find((item) => item.id === selectedPlaceId) || null
+  const selectedMunicipalityId = requestedMunicipality
+    || selectedPlace?.municipality_id
+    || data.brotherhood?.municipality_id
+    || ''
+  const usedSocialPlatforms = data.socialLinks.map((item) => item.platform)
 
   return (
     <div className={styles.pageWrap}>
@@ -335,6 +370,8 @@ export default async function BrotherhoodEditorPage({ params, searchParams }) {
       </header>
 
       {query?.saved ? <div className={styles.savedNotice} role="status">Cambios guardados correctamente.</div> : null}
+      {query?.reused === 'municipality' ? <div className={styles.savedNotice} role="status">La Localidad ya existía: se reutiliza y queda seleccionada para guardar.</div> : null}
+      {query?.reused === 'place' ? <div className={styles.savedNotice} role="status">El Lugar ya existía en esa localidad: se reutiliza y queda seleccionado como Sede para guardar.</div> : null}
       {!canEdit ? <div className={styles.readOnlyNotice}>Estás consultando la ficha como colaborador. Un editor debe realizar los cambios.</div> : null}
 
       <nav className={styles.sectionTabs} aria-label="Secciones de la ficha">
@@ -354,8 +391,12 @@ export default async function BrotherhoodEditorPage({ params, searchParams }) {
             <label className={styles.fieldWide}><span>Resumen</span><textarea name="summary" defaultValue={data.entity.summary || ''} rows="4" /></label>
             <label><span>Fundación</span><input name="foundation_text" defaultValue={data.brotherhood?.foundation_text || ''} /></label>
             <label><span>Día de salida</span><input name="current_procession_day" defaultValue={data.brotherhood?.current_procession_day || ''} /></label>
-            <label><span>Localidad</span><select name="municipality_id" defaultValue={data.brotherhood?.municipality_id || ''}><option value="">Sin localidad</option>{data.municipalities.map((municipality) => <option key={municipality.id} value={municipality.id}>{municipality.name} · {municipality.province}</option>)}</select></label>
-            <label><span>Sede canónica</span><PlaceSelect places={data.places} name="canonical_see_place_id" defaultValue={data.brotherhood?.canonical_see_place_id} /></label>
+            <BrotherhoodGeographyFields
+              municipalities={geography.municipalities}
+              places={geography.places}
+              selectedMunicipalityId={selectedMunicipalityId}
+              selectedPlaceId={selectedPlaceId}
+            />
             <label><span>Barrio</span><input name="neighborhood" defaultValue={data.brotherhood?.neighborhood || ''} /></label>
             <BrotherhoodTypeSelector selected={data.brotherhood?.brotherhood_types || []} />
             <label className={styles.fieldWide}><span>Ruta o URL del escudo</span><input name="crest_path" defaultValue={data.brotherhood?.crest_path || ''} /></label>
@@ -374,13 +415,25 @@ export default async function BrotherhoodEditorPage({ params, searchParams }) {
           </fieldset>
           <SaveBar canEdit={canEdit} />
         </form>
+
+        <BrotherhoodGeographyInlineTools
+          brotherhoodId={data.entity.id}
+          canEdit={canEdit}
+          municipalities={geography.municipalities}
+          places={geography.places}
+          selectedMunicipalityId={selectedMunicipalityId}
+          selectedPlaceId={selectedPlaceId}
+          createMunicipalityAction={createMunicipalityAction}
+          createPlaceAction={createPlaceAction}
+          updatePlaceAction={updatePlaceAction}
+        />
       </section>
 
       <section className={styles.editorSection} id="redes">
-        <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>Canales oficiales</span><h2>Web y redes sociales</h2></div><p>Solo se publican los enlaces verificados y marcados como visibles.</p></div>
+        <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>Canales oficiales</span><h2>Web y redes sociales</h2></div><p>Selecciona plataforma → añade URL → indica el nombre visible → controla la visibilidad pública.</p></div>
         <div className={styles.editorStack}>
           {data.socialLinks.map((item) => <SocialLinkForm key={item.id} item={item} entityId={data.entity.id} canEdit={canEdit} />)}
-          {canEdit ? <SocialLinkForm entityId={data.entity.id} canEdit /> : null}
+          {canEdit && usedSocialPlatforms.length < SOCIAL_PLATFORMS.length ? <SocialLinkForm entityId={data.entity.id} canEdit excludedPlatforms={usedSocialPlatforms} /> : null}
         </div>
       </section>
 
