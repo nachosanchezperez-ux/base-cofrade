@@ -78,7 +78,7 @@ export default async function HomePage() {
                       src={featuredExtraordinary.heroImagePath}
                       alt={featuredExtraordinary.heroImageAlt}
                       fill
-                      sizes="(max-width: 859px) calc(100vw - 32px), 38vw"
+                      sizes="(max-width: 859px) calc(100vw - 32px), 33vw"
                       priority
                     />
                   </div>
@@ -93,8 +93,11 @@ export default async function HomePage() {
                   <span className={styles.eyebrow}>Próxima extraordinaria</span>
                   <h2 id="proxima-extraordinaria-title">{featuredExtraordinary.title}</h2>
                   <div className={styles.featuredExtraordinaryMeta}>
-                    {featuredExtraordinary.municipality ? <span>{featuredExtraordinary.municipality}</span> : null}
-                    <strong>{featuredExtraordinary.dateParts.weekdayLabel || featuredExtraordinary.dateParts.label}</strong>
+                    <strong>
+                      {[featuredExtraordinary.municipality, featuredExtraordinary.dateParts.weekdayLabel || featuredExtraordinary.dateParts.label]
+                        .filter(Boolean)
+                        .join(' · ')}
+                    </strong>
                   </div>
                   {featuredExtraordinary.reason ? <p>{featuredExtraordinary.reason}</p> : null}
                 </div>
@@ -126,7 +129,9 @@ export default async function HomePage() {
                       <div className={styles.briefingRows}>
                         {featuredBriefing.bands.map((band) => (
                           <div className={styles.bandRow} key={band.id}>
-                            <strong>{band.name}</strong>
+                            {band.href
+                              ? <Link className={styles.bandEntityLink} href={band.href}>{band.name}</Link>
+                              : <strong>{band.name}</strong>}
                             {band.context ? <small>{band.context}</small> : null}
                           </div>
                         ))}
