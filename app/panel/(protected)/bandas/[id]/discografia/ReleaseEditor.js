@@ -30,6 +30,7 @@ function TrackForm({ item, bandId, releaseId, marches, canEdit, next }) {
         <label className={styles.fieldWide}><span>Título</span><input name="title" defaultValue={item?.title || ''} required /></label>
         <label className={styles.fieldWide}><span>Marcha relacionada</span><select name="march_entity_id" defaultValue={item?.march_entity_id || ''}><option value="">Todavía sin entidad Marcha</option>{marches.map((march) => <option key={march.id} value={march.id}>{march.name} · {STATUS_LABELS[march.status]}</option>)}</select></label>
         <label><span>Duración</span><input name="duration_text" defaultValue={item?.duration_text || ''} placeholder="4:12" /></label>
+        <label className={styles.fieldWide}><span>Spotify de esta pista</span><input name="spotify_url" type="url" defaultValue={item?.spotify_url || ''} placeholder="https://open.spotify.com/track/…" /></label>
         <label className={styles.fieldWide}><span>Notas internas</span><textarea name="notes" defaultValue={item?.notes || ''} rows="2" /></label>
       </div>
       <SaveBar label={isNew ? 'Añadir pista' : 'Guardar pista'} canEdit={canEdit} />
@@ -81,7 +82,7 @@ export default function DiscographyReleaseEditor({ item, data, canEdit }) {
       <SaveBar label={isNew ? 'Crear lanzamiento' : 'Guardar lanzamiento'} canEdit={canEdit} />
     </form>
     {!isNew ? <>
-      <div className={styles.contributionBlock}><div className={styles.subsectionHeading}><div><span className={styles.eyebrow}>Relaciones</span><h4>Pistas y Marchas</h4></div><p>Al enlazar una Marcha, compositor y dedicatoria se resolverán desde esa entidad.</p></div><div className={styles.editorStack}>{item.tracks.map((track) => <TrackForm key={track.id} item={track} bandId={data.entity.id} releaseId={id} marches={data.marches} canEdit={canEdit} />)}{canEdit ? <TrackForm bandId={data.entity.id} releaseId={id} marches={data.marches} canEdit next={item.tracks.length + 1} /> : null}</div></div>
+      <div className={styles.contributionBlock}><div className={styles.subsectionHeading}><div><span className={styles.eyebrow}>Relaciones</span><h4>Pistas y Marchas</h4></div><p>Cada pista puede abrir su grabación concreta en Spotify; al enlazar una Marcha, compositor y dedicatoria se resuelven desde esa entidad.</p></div><div className={styles.editorStack}>{item.tracks.map((track) => <TrackForm key={track.id} item={track} bandId={data.entity.id} releaseId={id} marches={data.marches} canEdit={canEdit} />)}{canEdit ? <TrackForm bandId={data.entity.id} releaseId={id} marches={data.marches} canEdit next={item.tracks.length + 1} /> : null}</div></div>
       <SourceBlock release={item} bandId={data.entity.id} sources={data.sources} canEdit={canEdit} />
       {canEdit && item.status !== 'archived' ? <form action={archiveBandReleaseAction} className={styles.archiveForm}><input type="hidden" name="band_id" value={data.entity.id} /><input type="hidden" name="release_id" value={id} /><button type="submit">Archivar este lanzamiento</button></form> : null}
     </> : null}
