@@ -47,6 +47,12 @@ function roleName(formData) {
   return candidate
 }
 
+function chronologyText(formData, name, label) {
+  const candidate = formValue(formData, name)
+  if (candidate.length > 160) throw new Error(`${label} es demasiado larga.`)
+  return candidate || null
+}
+
 async function loadEndpoints(supabase, imageId, agentId) {
   const [imageResult, agentResult] = await Promise.all([
     supabase
@@ -116,6 +122,8 @@ export async function addImageAuthorshipAction(formData) {
   const certaintyValue = certainty(formData, type)
   const dateFrom = optionalDate(formData, 'date_from', 'La fecha inicial')
   const dateTo = optionalDate(formData, 'date_to', 'La fecha final')
+  const dateFromText = chronologyText(formData, 'date_from_text', 'La cronología inicial')
+  const dateToText = chronologyText(formData, 'date_to_text', 'La cronología final')
   validateDateOrder(dateFrom, dateTo)
 
   const { image, agent } = await loadEndpoints(supabase, imageId, agentId)
@@ -136,7 +144,9 @@ export async function addImageAuthorshipAction(formData) {
     role_name: role,
     certainty: certaintyValue,
     date_from: dateFrom,
+    date_from_text: dateFromText,
     date_to: dateTo,
+    date_to_text: dateToText,
     status: relationalStatus(image, agent),
   }
   const saved = equivalent
@@ -180,6 +190,8 @@ export async function updateImageAuthorshipAction(formData) {
   const certaintyValue = certainty(formData, type)
   const dateFrom = optionalDate(formData, 'date_from', 'La fecha inicial')
   const dateTo = optionalDate(formData, 'date_to', 'La fecha final')
+  const dateFromText = chronologyText(formData, 'date_from_text', 'La cronología inicial')
+  const dateToText = chronologyText(formData, 'date_to_text', 'La cronología final')
   validateDateOrder(dateFrom, dateTo)
 
   const relation = assertRow(
@@ -208,7 +220,9 @@ export async function updateImageAuthorshipAction(formData) {
     role_name: role,
     certainty: certaintyValue,
     date_from: dateFrom,
+    date_from_text: dateFromText,
     date_to: dateTo,
+    date_to_text: dateToText,
     status: relation.status === 'review' ? 'review' : relationalStatus(image, agent),
   }
   assertRow(
@@ -230,7 +244,7 @@ export async function updateImageAuthorshipAction(formData) {
     changed_fields: payload,
   }, 'la autoría de la Imagen')
   await refreshRelation(supabase, imageId, relation.agent_entity_id)
-  redirectSaved(imageId, dateTo ? 'closed' : 'updated')
+  redirectSaved(imageId, dateTo || dateToText ? 'closed' : 'updated')
 }
 
 export async function archiveImageAuthorshipAction(formData) {
