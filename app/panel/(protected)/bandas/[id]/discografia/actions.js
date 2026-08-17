@@ -232,6 +232,7 @@ export async function saveBandReleaseTrackAction(formData) {
     title: required(formData, 'title', 'El título de la pista'),
     march_entity_id: marchEntityId,
     duration_text: nullable(formData, 'duration_text'),
+    spotify_url: optionalUrl(formData, 'spotify_url', 'La URL de Spotify de la pista'),
     notes: nullable(formData, 'notes'),
   }
 
