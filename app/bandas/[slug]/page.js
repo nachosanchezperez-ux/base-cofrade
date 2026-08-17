@@ -4,7 +4,9 @@ import { notFound } from 'next/navigation'
 import JsonLd from '@/components/JsonLd'
 import SourcesBlock from '@/components/SourcesBlock'
 import OfficialLinks from '@/components/OfficialLinks'
+import BandDiscographySection from '@/components/bands/BandDiscographySection'
 import { getBandBySlug, youtubeEmbedUrl } from '@/lib/supabase/bands'
+import { getBandDiscography } from '@/lib/supabase/bandDiscography'
 import { absoluteUrl } from '@/lib/seo'
 import styles from '../bandas.module.css'
 
@@ -97,6 +99,7 @@ export default async function BandDetailPage({ params }) {
   const { slug } = await params
   const band = await getBandBySlug(slug)
   if (!band) notFound()
+  const discography = await getBandDiscography(band.id)
   const years = [...new Set(band.premieres.map((item) => item.year))].sort((a, b) => b - a)
   const currentYear = new Date().getFullYear()
   const currentPremieres = band.premieres.filter((item) => item.year === currentYear)
@@ -111,6 +114,7 @@ export default async function BandDetailPage({ params }) {
   const hasHistoricalAccompaniments = historicalAccompaniments.length > 0
   const hasOutings = band.outings.length > 0
   const hasPremieres = band.premieres.length > 0
+  const hasDiscography = discography.length > 0
   const hasDirection = band.direction.length > 0
   const banderin = band.heritage?.find((item) => item.type === 'Banderín') || null
   const jsonLd = {
@@ -169,6 +173,7 @@ export default async function BandDetailPage({ params }) {
             {hasHistoricalAccompaniments ? <a href="#acompanamientos-historicos">Histórico</a> : null}
             {hasOutings ? <a href="#extraordinarias">Extraordinarias</a> : null}
             {hasPremieres ? <a href="#repertorio">Repertorio</a> : null}
+            {hasDiscography ? <a href="#discografia">Discografía</a> : null}
             {hasDirection ? <a href="#direccion">Dirección</a> : null}
             {band.sources?.length ? <a href="#fuentes">Fuentes</a> : null}
             {band.interestLinks.length ? <a href="#enlaces-de-interes">Enlaces de interés</a> : null}
@@ -395,6 +400,8 @@ export default async function BandDetailPage({ params }) {
           ))}
         </div>
       </section> : null}
+
+      <BandDiscographySection releases={discography} />
 
       {hasDirection ? <section className={`${styles.contentSection} ${styles.softSection}`} id="direccion">
         <div className="shell">
