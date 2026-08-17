@@ -132,30 +132,6 @@
   min-width: 0;
 }
 
-.meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.55rem;
-  align-items: center;
-  margin-bottom: 0.4rem;
-}
-
-.meta strong,
-.meta span {
-  font-size: 0.68rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.meta strong {
-  color: var(--band-primary);
-}
-
-.meta span {
-  color: #756f69;
-}
-
 .summaryCopy h3 {
   margin: 0;
   color: #181614;
@@ -163,14 +139,36 @@
   font-weight: 800;
   line-height: 1.04;
   letter-spacing: -0.035em;
+  text-wrap: balance;
 }
 
-.summaryCopy small {
-  display: block;
-  margin-top: 0.45rem;
-  color: #837c75;
-  font-size: 0.74rem;
-  font-weight: 700;
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+  margin-top: 0.65rem;
+}
+
+.meta strong,
+.meta span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 25px;
+  padding: 0.28rem 0.48rem;
+  border-radius: 999px;
+  background: #f4f1ed;
+  color: #716a63;
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.055em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.meta strong {
+  background: color-mix(in srgb, var(--band-primary) 8%, white);
+  color: var(--band-primary);
 }
 
 .releaseToggle {
@@ -185,6 +183,18 @@
 
 .releaseToggle em {
   font-style: normal;
+}
+
+.toggleOpen {
+  display: none;
+}
+
+.release[open] .toggleClosed {
+  display: none;
+}
+
+.release[open] .toggleOpen {
+  display: inline;
 }
 
 .releaseToggle b {
@@ -202,10 +212,6 @@
 .release[open] .releaseToggle b {
   transform: rotate(45deg);
   background: color-mix(in srgb, var(--band-primary) 7%, white);
-}
-
-.release[open] .releaseToggle em::after {
-  content: ' abiertas';
 }
 
 .releaseDetail {
@@ -254,6 +260,7 @@
   border: 1px solid rgba(24, 22, 20, 0.18);
   border-radius: 999px;
   color: #181614;
+  background: transparent;
   font-size: 0.78rem;
   font-weight: 800;
   text-decoration: none;
@@ -450,37 +457,36 @@ a.trackTitle:hover {
   }
 
   .releaseSummary {
-    grid-template-columns: 78px minmax(0, 1fr) 34px;
-    gap: 0.85rem;
-    min-height: 98px;
+    grid-template-columns: 72px minmax(0, 1fr) 34px;
+    gap: 0.8rem;
+    min-height: 94px;
     padding: 0.65rem;
   }
 
   .cover {
-    width: 78px;
+    width: 72px;
   }
 
   .coverPlaceholder span {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
+  }
+
+  .summaryCopy h3 {
+    font-size: 1.2rem;
+    line-height: 1.08;
   }
 
   .meta {
-    gap: 0.35rem;
-    margin-bottom: 0.25rem;
+    gap: 0.3rem;
+    margin-top: 0.48rem;
   }
 
   .meta strong,
   .meta span {
-    font-size: 0.58rem;
-  }
-
-  .summaryCopy h3 {
-    font-size: 1.18rem;
-  }
-
-  .summaryCopy small {
-    margin-top: 0.3rem;
-    font-size: 0.66rem;
+    min-height: 22px;
+    padding: 0.24rem 0.4rem;
+    font-size: 0.54rem;
+    letter-spacing: 0.045em;
   }
 
   .releaseToggle {
@@ -511,9 +517,28 @@ a.trackTitle:hover {
     font-size: 0.82rem;
   }
 
+  .actions {
+    gap: 0.5rem;
+  }
+
+  .secondaryLink {
+    min-height: 36px;
+    padding: 0.5rem 0.72rem;
+    font-size: 0.7rem;
+  }
+
+  .trackHeading {
+    padding-bottom: 0.72rem;
+  }
+
   .trackList li {
     grid-template-columns: 1.65rem minmax(0, 1fr) auto;
     gap: 0.6rem;
+    padding: 0.82rem 0;
+  }
+
+  .trackTitle {
+    font-size: 0.9rem;
   }
 
   .trackActions {
@@ -549,16 +574,21 @@ a.trackTitle:hover {
 
 @media (max-width: 430px) {
   .releaseSummary {
-    grid-template-columns: 68px minmax(0, 1fr) 32px;
-    gap: 0.7rem;
+    grid-template-columns: 64px minmax(0, 1fr) 32px;
+    gap: 0.65rem;
   }
 
   .cover {
-    width: 68px;
+    width: 64px;
   }
 
   .summaryCopy h3 {
-    font-size: 1.05rem;
+    font-size: 1.08rem;
+  }
+
+  .meta span:last-child {
+    flex-basis: 100%;
+    width: fit-content;
   }
 
   .trackList li {
