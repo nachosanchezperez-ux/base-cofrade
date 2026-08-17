@@ -63,12 +63,28 @@ function AuthorshipFields({ relation }) {
         <input name="role_name" defaultValue={relation?.role_name || 'autor'} required />
       </label>
       <label>
-        <span>Fecha inicial</span>
+        <span>Fecha inicial exacta</span>
         <input name="date_from" type="date" defaultValue={relation?.date_from || ''} />
       </label>
       <label>
-        <span>Fecha final</span>
+        <span>Fecha final exacta</span>
         <input name="date_to" type="date" defaultValue={relation?.date_to || ''} />
+      </label>
+      <label>
+        <span>Cronología inicial (texto)</span>
+        <input
+          name="date_from_text"
+          defaultValue={relation?.date_from_text || ''}
+          placeholder="1928, hacia 1928, siglo XVIII…"
+        />
+      </label>
+      <label>
+        <span>Cronología final (texto)</span>
+        <input
+          name="date_to_text"
+          defaultValue={relation?.date_to_text || ''}
+          placeholder="Opcional: 1930, antes de 1940…"
+        />
       </label>
     </div>
   )
@@ -120,7 +136,7 @@ export default function ImageAuthorshipEditor({ data, canEdit }) {
                       <input type="hidden" name="relation_id" value={relation.id} />
                       <AuthorshipFields relation={relation} />
                       <div className={styles.formActions}>
-                        <small>Para información incierta usa «Atribuida a», «Taller», «Círculo» o «Escuela».</small>
+                        <small>Usa fecha exacta solo cuando esté documentada; para años, periodos o dataciones imprecisas usa la cronología en texto.</small>
                         {canEdit ? <button className={styles.primaryButton} type="submit">Guardar autoría</button> : null}
                       </div>
                     </form>
@@ -176,7 +192,7 @@ export default function ImageAuthorshipEditor({ data, canEdit }) {
             </div>
             <AuthorshipFields />
             <div className={styles.formActions}>
-              <small>«Autoría documentada» exige certeza documentada; las atribuciones conservan su categoría propia.</small>
+              <small>«Autoría documentada» exige certeza documentada. Usa cronología textual para años o periodos sin fabricar una fecha exacta.</small>
               <button className={styles.primaryButton} type="submit">Añadir autoría</button>
             </div>
           </form>
