@@ -27,7 +27,7 @@ export default function BandDiscographySection({ releases = [] }) {
             <span>Patrimonio sonoro</span>
             <h2>Discografía</h2>
           </div>
-          <p>Grabaciones publicadas por la formación y las marchas que forman parte de ellas.</p>
+          <p>Elige una marcha para escuchar su grabación o explora las relaciones documentadas de cada obra.</p>
         </header>
 
         <div className={styles.releaseList}>
@@ -51,7 +51,7 @@ export default function BandDiscographySection({ releases = [] }) {
                   {release.description ? <p>{release.description}</p> : null}
                   {release.coverImageCredit ? <small>{release.coverImageCredit}</small> : null}
                   <div className={styles.actions}>
-                    {release.spotifyUrl ? <a href={release.spotifyUrl} target="_blank" rel="noopener noreferrer" className={styles.spotifyLink}><span aria-hidden="true">▶</span> Escuchar en Spotify</a> : null}
+                    {release.spotifyUrl ? <a href={release.spotifyUrl} target="_blank" rel="noopener noreferrer" className={styles.secondaryLink}>Álbum completo en Spotify ↗</a> : null}
                     {release.externalUrl ? <a href={release.externalUrl} target="_blank" rel="noopener noreferrer" className={styles.secondaryLink}>Más información ↗</a> : null}
                   </div>
                 </div>
@@ -59,7 +59,7 @@ export default function BandDiscographySection({ releases = [] }) {
 
               {release.tracks.length ? (
                 <div className={styles.trackList}>
-                  <div className={styles.trackHeading}><span>Contenido</span><strong>{release.tracks.length} {release.tracks.length === 1 ? 'marcha' : 'marchas'}</strong></div>
+                  <div className={styles.trackHeading}><span>Elige qué escuchar</span><strong>{release.tracks.length} {release.tracks.length === 1 ? 'marcha' : 'marchas'}</strong></div>
                   <ol>
                     {release.tracks.map((track) => (
                       <li key={track.id}>
@@ -73,7 +73,22 @@ export default function BandDiscographySection({ releases = [] }) {
                             <div className={styles.relationshipLine}><span>Dedicada a</span><div>{track.dedications.map((dedication, index) => { const href = entityHref(dedication); return <span key={`${dedication.id}-${index}`}>{index ? ' · ' : ''}{href ? <Link href={href}>{dedication.name || dedication.text}</Link> : dedication.name || dedication.text}</span> })}</div></div>
                           ) : null}
                         </div>
-                        {track.durationText ? <small className={styles.duration}>{track.durationText}</small> : null}
+                        <div className={styles.trackActions}>
+                          {track.durationText ? <small className={styles.duration}>{track.durationText}</small> : null}
+                          {track.spotifyUrl ? (
+                            <a
+                              href={track.spotifyUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className={styles.trackSpotifyLink}
+                              aria-label={`Escuchar ${track.title} en Spotify`}
+                              title={`Escuchar ${track.title} en Spotify`}
+                            >
+                              <span aria-hidden="true">▶</span>
+                              <em>Escuchar</em>
+                            </a>
+                          ) : null}
+                        </div>
                       </li>
                     ))}
                   </ol>
