@@ -111,8 +111,8 @@ select
   '2026-08-22',
   2026,
   m.id,
-  'Con motivo del 450.º aniversario de la erección canónica de la Hermandad de Santiago.',
-  'Procesión extraordinaria de María Santísima de las Angustias por las calles de Aznalcázar dentro de los actos del 450.º aniversario de la erección canónica de la Hermandad de Santiago.',
+  'Con motivo del 450.º aniversario fundacional de la Hermandad de Santiago.',
+  'Procesión extraordinaria de María Santísima de las Angustias por las calles de Aznalcázar el 22 de agosto de 2026, fecha en la que se conmemora el 450.º aniversario de la erección canónica de la Hermandad de Santiago.',
   'announced',
   'published',
   '/extraordinarias/angustias-aznalcazar-2026.jpg',
@@ -137,7 +137,7 @@ on conflict (id) do update set
   hero_image_alt = excluded.hero_image_alt,
   hero_image_credit = excluded.hero_image_credit;
 
--- Fuentes del acontecimiento. La primera fija la identidad de la corporación;
+-- Fuentes de la salida. La primera fija la identidad de la corporación;
 -- la segunda documenta fecha, carácter extraordinario y motivo conmemorativo.
 insert into public.sources (
   id, name, url, source_type, author_or_publisher, accessed_at
@@ -169,11 +169,11 @@ insert into public.source_links (source_id, outing_id, scope) values
 (
   'a2208260-0000-0000-0000-000000000003',
   'a2208260-0000-0000-0000-000000000002',
-  'Identidad de la Hermandad organizadora'
+  'Identidad de la Hermandad organizadora y denominación oficial del 450.º aniversario'
 ),
 (
   'a2208260-0000-0000-0000-000000000004',
   'a2208260-0000-0000-0000-000000000002',
-  'Fecha, carácter extraordinario y 450.º aniversario de la erección canónica'
+  'Fecha, carácter extraordinario y contexto del 450.º aniversario fundacional'
 )
 on conflict do nothing;
