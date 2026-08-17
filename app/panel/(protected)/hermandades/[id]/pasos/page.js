@@ -9,6 +9,7 @@ export const metadata = { title: 'Pasos de la Hermandad · Panel' }
 
 const SAVED_MESSAGES = {
   linked: 'El Paso se ha relacionado correctamente con la Hermandad.',
+  'already-linked': 'El Paso ya estaba relacionado con la Hermandad. No se ha creado un duplicado.',
   restored: 'La relación histórica se ha restaurado correctamente.',
   updated: 'La relación se ha actualizado correctamente.',
   closed: 'El periodo se ha cerrado sin borrar el Paso.',
