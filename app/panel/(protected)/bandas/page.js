@@ -16,7 +16,7 @@ export default async function PanelBandsPage({ searchParams }) {
   return (
     <div className={styles.pageWrap}>
       <header className={styles.pageHeader}>
-        <div><span className={styles.eyebrow}>Enciclopedia musical</span><h1>Bandas</h1><p>Identidad, acompañamientos, salidas, dirección y estrenos en una sola ficha editorial.</p></div>
+        <div><span className={styles.eyebrow}>Enciclopedia musical</span><h1>Bandas</h1><p>Identidad, acompañamientos, salidas, dirección, estrenos y discografía conectada en una sola ficha editorial.</p></div>
       </header>
 
       <form className={styles.filters}>
@@ -34,7 +34,7 @@ export default async function PanelBandsPage({ searchParams }) {
                 <span className={styles.listMonogram}>{item.logoPath ? <Image src={item.logoPath} alt="" width={34} height={40} /> : item.popularName.slice(0, 2).toUpperCase()}</span>
                 <div className={styles.listIdentity}><strong>{item.popularName}</strong><span>{item.officialName}</span><small>{item.municipality} · {item.type}</small></div>
                 <span className={`${styles.statusBadge} ${styles[item.status]}`}>{STATUS_LABELS[item.status]}</span>
-                <Link className={styles.rowLink} href={`/panel/bandas/${item.id}`}>Editar <span>→</span></Link>
+                <div style={{ display: 'grid', gap: '4px', justifyItems: 'end' }}><Link className={styles.rowLink} href={`/panel/bandas/${item.id}`}>Editar <span>→</span></Link><Link className={styles.rowLink} href={`/panel/bandas/${item.id}/discografia`}>Discografía <span>→</span></Link></div>
               </article>
             ))}
           </div>
