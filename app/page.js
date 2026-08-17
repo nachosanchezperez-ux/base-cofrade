@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import HiloSearch from '@/components/HiloSearch';
 import { DEFAULT_DESCRIPTION, HOME_TITLE } from '@/lib/seo';
@@ -44,8 +45,10 @@ export default async function HomePage() {
   const [searchItems, todayContent, extraordinaryOutings] = await Promise.all([
     getGlobalSearchItems(),
     getTodayHomeContent(),
-    getUpcomingExtraordinaryOutings(),
+    getUpcomingExtraordinaryOutings(5),
   ]);
+  const featuredExtraordinary = extraordinaryOutings[0] || null;
+  const followingExtraordinaryOutings = extraordinaryOutings.slice(1);
 
   return (
     <div className={styles.home}>
@@ -70,6 +73,40 @@ export default async function HomePage() {
           </aside>
         </div>
       </section>
+
+      {featuredExtraordinary ? (
+        <section className={`${styles.section} ${styles.featuredExtraordinary}`} aria-labelledby="proxima-extraordinaria-title">
+          <div className="shell">
+            <article className={styles.featuredExtraordinaryCard}>
+              {featuredExtraordinary.heroImagePath ? (
+                <figure className={styles.featuredExtraordinaryMedia}>
+                  <div className={styles.featuredExtraordinaryImageFrame}>
+                    <Image
+                      src={featuredExtraordinary.heroImagePath}
+                      alt={featuredExtraordinary.heroImageAlt}
+                      fill
+                      sizes="(max-width: 859px) calc(100vw - 32px), 55vw"
+                    />
+                  </div>
+                  {featuredExtraordinary.heroImageCredit ? (
+                    <figcaption>{featuredExtraordinary.heroImageCredit}</figcaption>
+                  ) : null}
+                </figure>
+              ) : null}
+
+              <div className={styles.featuredExtraordinaryCopy}>
+                <span className={styles.eyebrow}>Próxima extraordinaria</span>
+                <h2 id="proxima-extraordinaria-title">{featuredExtraordinary.title}</h2>
+                <div className={styles.featuredExtraordinaryMeta}>
+                  {featuredExtraordinary.municipality ? <span>{featuredExtraordinary.municipality}</span> : null}
+                  <strong>{featuredExtraordinary.dateParts.weekdayLabel || featuredExtraordinary.dateParts.label}</strong>
+                </div>
+                {featuredExtraordinary.reason ? <p>{featuredExtraordinary.reason}</p> : null}
+              </div>
+            </article>
+          </div>
+        </section>
+      ) : null}
 
       <section className={`${styles.section} ${styles.today}`} id="hoy">
         <div className="shell">
@@ -143,17 +180,17 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className={`${styles.section} ${styles.extraSection}`} id="extraordinarias">
-        <div className="shell">
-          <div className={styles.extraBox}>
-            <div className={styles.extraHead}>
-              <span className={styles.eyebrow}>Agenda</span>
-              <h2>Próximas salidas extraordinarias</h2>
-              <p>Las próximas citas documentadas y publicadas en Hilo Cofrade</p>
-            </div>
-            {extraordinaryOutings.length ? (
+      {followingExtraordinaryOutings.length ? (
+        <section className={`${styles.section} ${styles.extraSection}`} id="extraordinarias">
+          <div className="shell">
+            <div className={styles.extraBox}>
+              <div className={styles.extraHead}>
+                <span className={styles.eyebrow}>Agenda</span>
+                <h2>Próximas salidas extraordinarias</h2>
+                <p>Las siguientes citas documentadas y publicadas en Hilo Cofrade</p>
+              </div>
               <div className={styles.todayGrid}>
-                {extraordinaryOutings.map((outing) => (
+                {followingExtraordinaryOutings.map((outing) => (
                   <article className={styles.dailyCard} key={outing.id}>
                     <span className={styles.dailyIcon}>{outing.dateParts.day}</span>
                     <div>
@@ -171,15 +208,10 @@ export default async function HomePage() {
                   </article>
                 ))}
               </div>
-            ) : (
-              <div className={styles.extraEmpty}>
-                <strong>No hay próximas salidas extraordinarias publicadas</strong>
-                <span>Este bloque se actualizará automáticamente cuando exista una nueva cita anunciada en la base de datos.</span>
-              </div>
-            )}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      ) : null}
 
       <section className={styles.section} id="enciclopedia">
         <div className="shell">
