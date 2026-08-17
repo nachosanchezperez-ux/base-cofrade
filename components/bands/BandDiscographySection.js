@@ -72,8 +72,10 @@ function TrackList({ tracks }) {
   )
 }
 
-export default function BandDiscographySection({ releases = [], artistSpotifyUrl = '', bandName = 'la banda' }) {
+export default function BandDiscographySection({ releases = [], artistSpotifyUrl = '', bandName = '' }) {
   if (!releases.length) return null
+  const spotifyArtist = artistSpotifyUrl || releases[0]?.artistSpotifyUrl || ''
+  const displayBandName = bandName || releases[0]?.bandName || ''
 
   return (
     <section className={styles.section} id="discografia">
@@ -87,9 +89,9 @@ export default function BandDiscographySection({ releases = [], artistSpotifyUrl
             <p>{releases.length > 1
               ? `${releases.length} lanzamientos documentados. Abre el que quieras para explorar sus pistas y relaciones.`
               : 'Elige una marcha para escuchar su grabación o explora las relaciones documentadas de cada obra.'}</p>
-            {artistSpotifyUrl ? (
-              <a href={artistSpotifyUrl} target="_blank" rel="noopener noreferrer" className={styles.artistSpotifyLink}>
-                <span aria-hidden="true">▶</span> Escuchar a {bandName} en Spotify
+            {spotifyArtist ? (
+              <a href={spotifyArtist} target="_blank" rel="noopener noreferrer" className={styles.artistSpotifyLink}>
+                <span aria-hidden="true">▶</span> {displayBandName ? `Escuchar a ${displayBandName} en Spotify` : 'Escuchar perfil en Spotify'}
               </a>
             ) : null}
           </div>
