@@ -3,24 +3,16 @@ import Link from 'next/link';
 import HiloSearch from '@/components/HiloSearch';
 import { DEFAULT_DESCRIPTION, HOME_TITLE } from '@/lib/seo';
 import { getTodayHomeContent, getUpcomingExtraordinaryOutings } from '@/lib/supabase/home';
+import { getOutingBriefing } from '@/lib/supabase/outing-briefing';
 import { getGlobalSearchItems } from '@/lib/supabase/search';
 import styles from './home.module.css';
 
 export const dynamic = 'force-dynamic';
 
 export const metadata = {
-  alternates: {
-    canonical: '/',
-  },
-  openGraph: {
-    title: HOME_TITLE,
-    description: DEFAULT_DESCRIPTION,
-    url: '/',
-  },
-  twitter: {
-    title: HOME_TITLE,
-    description: DEFAULT_DESCRIPTION,
-  },
+  alternates: { canonical: '/' },
+  openGraph: { title: HOME_TITLE, description: DEFAULT_DESCRIPTION, url: '/' },
+  twitter: { title: HOME_TITLE, description: DEFAULT_DESCRIPTION },
 };
 
 function getTodayLabel() {
@@ -34,10 +26,7 @@ function getTodayLabel() {
   const parts = formatter.formatToParts(new Date());
   const value = (type) => parts.find((part) => part.type === type)?.value || '';
   const weekday = value('weekday');
-  const day = value('day');
-  const month = value('month');
-  const year = value('year');
-  return `${weekday.charAt(0).toUpperCase()}${weekday.slice(1)} · ${day} de ${month} de ${year}`;
+  return `${weekday.charAt(0).toUpperCase()}${weekday.slice(1)} · ${value('day')} de ${value('month')} de ${value('year')}`;
 }
 
 export default async function HomePage() {
@@ -49,6 +38,9 @@ export default async function HomePage() {
   ]);
   const featuredExtraordinary = extraordinaryOutings[0] || null;
   const followingExtraordinaryOutings = extraordinaryOutings.slice(1);
+  const featuredBriefing = featuredExtraordinary
+    ? await getOutingBriefing(featuredExtraordinary.id)
+    : { schedule: [], bands: [], liturgicalMusic: [], places: [] };
 
   return (
     <div className={styles.home}>
@@ -57,10 +49,7 @@ export default async function HomePage() {
           <div className={styles.heroCopy}>
             <span className={styles.kicker}>Sevilla y su provincia</span>
             <h1>Hilo Cofrade, <span>todo en las cofradías está relacionado</span></h1>
-            <p>
-              Consulta, descubre y sigue las conexiones entre hermandades, imágenes,
-              bandas, marchas, autores y patrimonio
-            </p>
+            <p>Consulta, descubre y sigue las conexiones entre hermandades, imágenes, bandas, marchas, autores y patrimonio</p>
           </div>
 
           <aside className={styles.searchBox} id="tiradelhilo">
@@ -75,7 +64,11 @@ export default async function HomePage() {
       </section>
 
       {featuredExtraordinary ? (
-        <section className={`${styles.section} ${styles.featuredExtraordinary}`} aria-labelledby="proxima-extraordinaria-title">
+        <section
+          className={`${styles.section} ${styles.featuredExtraordinary}`}
+          id="extraordinarias"
+          aria-labelledby="proxima-extraordinaria-title"
+        >
           <div className="shell">
             <article className={styles.featuredExtraordinaryCard}>
               {featuredExtraordinary.heroImagePath ? (
@@ -85,7 +78,8 @@ export default async function HomePage() {
                       src={featuredExtraordinary.heroImagePath}
                       alt={featuredExtraordinary.heroImageAlt}
                       fill
-                      sizes="(max-width: 859px) calc(100vw - 32px), 55vw"
+                      sizes="(max-width: 859px) calc(100vw - 32px), 38vw"
+                      priority
                     />
                   </div>
                   {featuredExtraordinary.heroImageCredit ? (
@@ -95,13 +89,60 @@ export default async function HomePage() {
               ) : null}
 
               <div className={styles.featuredExtraordinaryCopy}>
-                <span className={styles.eyebrow}>Próxima extraordinaria</span>
-                <h2 id="proxima-extraordinaria-title">{featuredExtraordinary.title}</h2>
-                <div className={styles.featuredExtraordinaryMeta}>
-                  {featuredExtraordinary.municipality ? <span>{featuredExtraordinary.municipality}</span> : null}
-                  <strong>{featuredExtraordinary.dateParts.weekdayLabel || featuredExtraordinary.dateParts.label}</strong>
+                <div className={styles.featuredExtraordinaryIntro}>
+                  <span className={styles.eyebrow}>Próxima extraordinaria</span>
+                  <h2 id="proxima-extraordinaria-title">{featuredExtraordinary.title}</h2>
+                  <div className={styles.featuredExtraordinaryMeta}>
+                    {featuredExtraordinary.municipality ? <span>{featuredExtraordinary.municipality}</span> : null}
+                    <strong>{featuredExtraordinary.dateParts.weekdayLabel || featuredExtraordinary.dateParts.label}</strong>
+                  </div>
+                  {featuredExtraordinary.reason ? <p>{featuredExtraordinary.reason}</p> : null}
                 </div>
-                {featuredExtraordinary.reason ? <p>{featuredExtraordinary.reason}</p> : null}
+
+                <div className={styles.extraordinaryBriefing}>
+                  {featuredBriefing.schedule.length ? (
+                    <section className={styles.briefingBlock} aria-labelledby="briefing-horarios">
+                      <span className={styles.briefingLabel} id="briefing-horarios">Horarios</span>
+                      <div className={styles.briefingRows}>
+                        {featuredBriefing.schedule.map((item) => (
+                          <div className={styles.briefingRow} key={item.id}>
+                            <strong>{item.time}</strong>
+                            <span>
+                              <b>{item.label}</b>
+                              {item.place ? <small>{item.place}</small> : null}
+                              {item.label === 'Misa estacional' && featuredBriefing.liturgicalMusic[0]?.name
+                                ? <small>Música · {featuredBriefing.liturgicalMusic[0].name}</small>
+                                : null}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </section>
+                  ) : null}
+
+                  {featuredBriefing.bands.length ? (
+                    <section className={styles.briefingBlock} aria-labelledby="briefing-bandas">
+                      <span className={styles.briefingLabel} id="briefing-bandas">Bandas</span>
+                      <div className={styles.briefingRows}>
+                        {featuredBriefing.bands.map((band) => (
+                          <div className={styles.bandRow} key={band.id}>
+                            <strong>{band.name}</strong>
+                            {band.context ? <small>{band.context}</small> : null}
+                          </div>
+                        ))}
+                      </div>
+                    </section>
+                  ) : null}
+
+                  {featuredBriefing.places.length ? (
+                    <section className={`${styles.briefingBlock} ${styles.briefingPlaces}`} aria-labelledby="briefing-lugares">
+                      <span className={styles.briefingLabel} id="briefing-lugares">Lugares clave</span>
+                      <div className={styles.placePills}>
+                        {featuredBriefing.places.map((place) => <span key={place.id}>{place.name}</span>)}
+                      </div>
+                    </section>
+                  ) : null}
+                </div>
               </div>
             </article>
           </div>
@@ -169,9 +210,7 @@ export default async function HomePage() {
           ) : (
             <article className={styles.musicCard}>
               <div className={styles.musicHead}>
-                <div className={styles.musicTop}>
-                  <span className={styles.dailyType}>Marcha del día</span>
-                </div>
+                <div className={styles.musicTop}><span className={styles.dailyType}>Marcha del día</span></div>
                 <h3>Repertorio en preparación</h3>
                 <p>La selección musical aparecerá automáticamente entre las marchas publicadas y elegibles.</p>
               </div>
@@ -181,33 +220,25 @@ export default async function HomePage() {
       </section>
 
       {followingExtraordinaryOutings.length ? (
-        <section className={`${styles.section} ${styles.extraSection}`} id="extraordinarias">
+        <section className={`${styles.section} ${styles.nextExtraSection}`}>
           <div className="shell">
-            <div className={styles.extraBox}>
-              <div className={styles.extraHead}>
-                <span className={styles.eyebrow}>Agenda</span>
-                <h2>Próximas salidas extraordinarias</h2>
-                <p>Las siguientes citas documentadas y publicadas en Hilo Cofrade</p>
-              </div>
-              <div className={styles.todayGrid}>
-                {followingExtraordinaryOutings.map((outing) => (
-                  <article className={styles.dailyCard} key={outing.id}>
-                    <span className={styles.dailyIcon}>{outing.dateParts.day}</span>
-                    <div>
-                      <span className={styles.dailyType}>{outing.dateParts.month} {outing.dateParts.year}</span>
-                      <h3>{outing.title}</h3>
-                      <p>{[outing.brotherhoodName, outing.municipality].filter(Boolean).join(' · ')}</p>
-                      {outing.reason ? <p>{outing.reason}</p> : null}
-                      <div className={styles.musicMeta}>
-                        {outing.departureTime ? <span>Salida · {outing.departureTime}</span> : null}
-                        {outing.origin ? <span>Desde · {outing.origin}</span> : null}
-                        {outing.destination ? <span>Hasta · {outing.destination}</span> : null}
-                      </div>
-                      {outing.routeSummary ? <span className={styles.dailyLink}>{outing.routeSummary}</span> : null}
-                    </div>
-                  </article>
-                ))}
-              </div>
+            <div className={styles.nextExtraHead}>
+              <span className={styles.eyebrow}>Después</span>
+              <h2>Las siguientes extraordinarias</h2>
+            </div>
+            <div className={styles.nextExtraList}>
+              {followingExtraordinaryOutings.map((outing) => (
+                <article className={styles.nextExtraRow} key={outing.id}>
+                  <time dateTime={outing.date}>
+                    <strong>{outing.dateParts.day}</strong>
+                    <span>{outing.dateParts.month}</span>
+                  </time>
+                  <div>
+                    <h3>{outing.title}</h3>
+                    <p>{[outing.municipality, outing.reason].filter(Boolean).join(' · ')}</p>
+                  </div>
+                </article>
+              ))}
             </div>
           </div>
         </section>
