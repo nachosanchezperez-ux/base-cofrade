@@ -72,18 +72,33 @@ function TrackList({ tracks }) {
   )
 }
 
-export default function BandDiscographySection({ releases = [], artistSpotifyUrl = '', bandName = '' }) {
+export default function BandDiscographySection({ releases = [], artistSpotifyUrl = '', bandName = '', logoPath = '' }) {
   if (!releases.length) return null
   const spotifyArtist = artistSpotifyUrl || releases[0]?.artistSpotifyUrl || ''
   const displayBandName = bandName || releases[0]?.bandName || ''
+  const displayLogoPath = logoPath || releases[0]?.bandLogoPath || ''
 
   return (
     <section className={styles.section} id="discografia">
       <div className="shell">
         <header className={styles.heading}>
-          <div>
-            <span>Patrimonio sonoro</span>
-            <h2>Discografía</h2>
+          <div className={styles.headingIdentity}>
+            {displayLogoPath ? (
+              <div className={styles.bandMark}>
+                <Image
+                  src={displayLogoPath}
+                  alt={`Logotipo de ${displayBandName || 'la banda'}`}
+                  width={70}
+                  height={86}
+                  sizes="(max-width: 760px) 48px, 70px"
+                />
+              </div>
+            ) : null}
+            <div className={styles.headingTitle}>
+              <span>Patrimonio sonoro</span>
+              <h2>Discografía</h2>
+              {displayBandName ? <small>{displayBandName}</small> : null}
+            </div>
           </div>
           <div className={styles.headingAside}>
             <p>{releases.length > 1
