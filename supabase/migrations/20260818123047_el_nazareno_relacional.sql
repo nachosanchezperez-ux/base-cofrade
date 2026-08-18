@@ -114,7 +114,7 @@ from public.entities image
 where image.entity_type = 'image'
   and image.slug = 'nuestro-padre-jesus-de-nazaret-pino-montano'
 on conflict (entity_id) do update set
-  description = coalesce(public.images.description, excluded.description);
+  description = coalesce(images.description, excluded.description);
 
 insert into public.brotherhood_images (
   id, brotherhood_entity_id, image_entity_id, relation_type, notes, status
@@ -310,3 +310,67 @@ where brotherhood.slug = 'hermandad-de-pino-montano'
     where existing.source_id = 'f4700000-0000-0000-0000-000000000010'
       and existing.brotherhood_image_id = relation.id
   );
+
+-- -----------------------------------------------------------------------------
+-- Validación explícita · no aceptar Success con cero filas útiles
+-- -----------------------------------------------------------------------------
+
+do $$
+declare
+  track_matches integer;
+begin
+  select count(*)
+  into track_matches
+  from public.band_release_tracks track
+  join public.band_releases release on release.id = track.release_id
+  join public.entities march on march.id = track.march_entity_id
+  where release.band_entity_id = 'cb04a5d8-e81e-4405-a001-9d5a60840924'
+    and release.title = 'Hijos de la Encarnación'
+    and track.sequence_no = 4
+    and track.title = 'El Nazareno'
+    and march.slug = 'marcha-el-nazareno'
+    and track.spotify_url = 'https://open.spotify.com/intl-es/track/0fTyW2v53sD9VRgXUz0eiu?si=7689227cafba479e';
+
+  if track_matches <> 1 then
+    raise exception '047: no se pudo cerrar exactamente una pista El Nazareno en Hijos de la Encarnación';
+  end if;
+
+  if not exists (
+    select 1
+    from public.march_authors author
+    join public.entities march on march.id = author.march_entity_id
+    join public.entities composer on composer.id = author.agent_entity_id
+    where march.slug = 'marcha-el-nazareno'
+      and composer.slug = 'francisco-david-alvarez-barroso'
+      and author.author_role = 'composer'
+      and author.status = 'published'
+  ) then
+    raise exception '047: falta la autoría documentada de El Nazareno';
+  end if;
+
+  if not exists (
+    select 1
+    from public.march_dedications dedication
+    join public.entities march on march.id = dedication.march_entity_id
+    join public.entities image on image.id = dedication.dedicatee_entity_id
+    where march.slug = 'marcha-el-nazareno'
+      and image.slug = 'nuestro-padre-jesus-de-nazaret-pino-montano'
+      and dedication.status = 'published'
+  ) then
+    raise exception '047: falta la dedicatoria estructurada de El Nazareno';
+  end if;
+
+  if not exists (
+    select 1
+    from public.brotherhood_images relation
+    join public.entities brotherhood on brotherhood.id = relation.brotherhood_entity_id
+    join public.entities image on image.id = relation.image_entity_id
+    where brotherhood.slug = 'hermandad-de-pino-montano'
+      and image.slug = 'nuestro-padre-jesus-de-nazaret-pino-montano'
+      and relation.relation_type = 'titular'
+      and relation.status <> 'archived'
+  ) then
+    raise exception '047: falta el contexto Hermandad de Pino Montano → Nuestro Padre Jesús de Nazaret';
+  end if;
+end
+$$;
