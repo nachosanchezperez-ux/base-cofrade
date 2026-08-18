@@ -90,6 +90,9 @@ export default async function DocumentImportReviewPage({ params, searchParams })
   const supportedRelations = relations.filter((relation) => classifyImportRelation(relation, typeByRef, target)).length
   const status = STATUS[item.status] || [item.status, 'review']
   const applied = item.application_summary || {}
+  const pendingDiscography = Number(applied.discography_tracks_ambiguous || 0)
+    + Number(applied.discography_tracks_unmatched || 0)
+    + Number(applied.discography_tracks_conflicts || 0)
 
   return (
     <div className={styles.pageWrap}>
@@ -157,6 +160,18 @@ export default async function DocumentImportReviewPage({ params, searchParams })
               <div><span>Relaciones nuevas</span><strong>{applied.created_relations || 0}</strong></div>
               <div><span>Relaciones reutilizadas</span><strong>{applied.reused_relations || 0}</strong></div>
               <div><span>Relaciones no aplicadas</span><strong>{applied.skipped_relations || 0}</strong></div>
+              <div>
+                <span>Pistas enlazadas</span>
+                <strong>{applied.discography_tracks_linked || 0}</strong>
+                <small>{applied.discography_tracks_reused || 0} ya estaban relacionadas con la misma Marcha</small>
+              </div>
+              <div>
+                <span>Pistas pendientes</span>
+                <strong>{pendingDiscography}</strong>
+                <small>
+                  {applied.discography_tracks_ambiguous || 0} ambiguas · {applied.discography_tracks_unmatched || 0} sin coincidencia · {applied.discography_tracks_conflicts || 0} conflictos
+                </small>
+              </div>
             </div>
           </div>
         </section>
@@ -282,7 +297,7 @@ export default async function DocumentImportReviewPage({ params, searchParams })
               <p>La operación es transaccional: si algo falla, no se deja una carga parcial. Nunca cambia estados a publicado.</p>
             </div>
             <div className={styles.formActions}>
-              <small>Los atributos extraídos se aplican a entidades nuevas solo mediante una lista controlada. Las fichas existentes no se sobrescriben automáticamente.</small>
+              <small>Los atributos extraídos se aplican a entidades nuevas solo mediante una lista controlada. Las fichas existentes no se sobrescriben automáticamente. En una importación discográfica, Hilo solo enlaza una Marcha a una pista cuando la coincidencia es única.</small>
               {canEdit ? <button className={styles.primaryButton} type="submit">Crear borrador con lo revisado</button> : null}
             </div>
           </section>
