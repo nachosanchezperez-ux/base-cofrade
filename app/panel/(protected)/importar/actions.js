@@ -9,6 +9,7 @@ import {
   fetchDocumentSource,
   normalizeSourceUrl,
 } from '@/lib/panel/document-import'
+import { guardIntraImportDuplicates } from '@/lib/panel/document-import-guard'
 import { createClient } from '@/lib/supabase/server'
 
 const UUID_PATTERN = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i
@@ -117,7 +118,8 @@ export async function analyzeDocumentAction(formData) {
     const target = await loadTarget(supabase, targetId)
     const source = await fetchDocumentSource(sourceUrl)
     const result = await analyzeDocumentSource({ source, target })
-    const analysis = await enrichAnalysisWithMatches(supabase, result.analysis)
+    const matchedAnalysis = await enrichAnalysisWithMatches(supabase, result.analysis)
+    const analysis = guardIntraImportDuplicates(matchedAnalysis)
 
     const inserted = await supabase
       .from('document_imports')
@@ -177,6 +179,11 @@ export async function applyDocumentImportAction(formData) {
       const localId = String(candidate.local_id || '')
       if (!localId) continue
       const resolution = value(formData, `resolution_${localId}`) || 'ignore'
+
+      if (candidate.intra_import_conflict && resolution === 'new') {
+        throw new Error(`No se puede crear automáticamente «${candidate.name}» porque aparece más de una vez en esta extracción.`)
+      }
+
       if (resolution === 'ignore' || resolution === 'new') {
         resolutions[localId] = resolution
       } else if (resolution.startsWith('existing:')) {
