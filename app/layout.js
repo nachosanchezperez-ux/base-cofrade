@@ -1,4 +1,9 @@
+import '@fontsource/open-sans/400.css';
+import '@fontsource/open-sans/600.css';
+import '@fontsource/open-sans/700.css';
+import '@fontsource/open-sans/800.css';
 import './globals.css';
+import './typography.css';
 import HiloHeader from '@/components/HiloHeader';
 import HiloFooter from '@/components/HiloFooter';
 import JsonLd from '@/components/JsonLd';
