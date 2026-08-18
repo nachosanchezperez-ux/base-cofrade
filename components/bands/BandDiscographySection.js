@@ -12,7 +12,6 @@ function entityHref(item) {
   if (item.entityType === 'image') return `/imagenes/${item.slug}`
   if (item.entityType === 'brotherhood') return `/hermandades/${item.slug}`
   if (item.entityType === 'band') return `/bandas/${item.slug}`
-  if (item.entityType === 'event') return `/acontecimientos/${item.slug}`
   return ''
 }
 
@@ -30,13 +29,11 @@ function TrackList({ tracks }) {
           <li key={track.id}>
             <span className={styles.trackNumber}>{String(track.sequenceNo).padStart(2, '0')}</span>
             <div className={styles.trackCopy}>
-              {track.marchSlug
-                ? <Link href={`/marchas/${track.marchSlug}`} className={styles.trackTitle}>{track.title}</Link>
-                : <strong className={styles.trackTitle}>{track.title}</strong>}
+              <strong className={styles.trackTitle}>{track.title}</strong>
               {track.composers.length ? (
                 <div className={styles.relationshipLine}>
                   <span>Composición</span>
-                  <div>{track.composers.map((composer, index) => <span key={composer.id}>{index ? ' · ' : ''}{composer.slug ? <Link href={`/autores/${composer.slug}`}>{composer.name}</Link> : composer.name}</span>)}</div>
+                  <div>{track.composers.map((composer, index) => <span key={composer.id}>{index ? ' · ' : ''}{composer.name}</span>)}</div>
                 </div>
               ) : null}
               {track.dedications.length ? (
