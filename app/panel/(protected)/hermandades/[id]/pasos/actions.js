@@ -54,13 +54,22 @@ async function relationConflicts(supabase, {
 
   if (excludeId) query = query.neq('id', excludeId)
   const existing = assertRows(await query, 'No se pudieron comprobar las relaciones existentes')
+  const samePeriod = existing.find((item) => (
+    (item.date_from || null) === (dateFrom || null)
+    && (item.date_to || null) === (dateTo || null)
+  ))
   const sameStart = existing.find((item) => (item.date_from || null) === (dateFrom || null))
   const openActive = existing.find((item) => item.status !== 'archived' && !item.date_to)
 
+  if (!excludeId && samePeriod?.status === 'archived') {
+    return { restorable: samePeriod, existingEquivalent: null }
+  }
+  if (!excludeId && samePeriod && samePeriod.status !== 'archived') {
+    return { restorable: null, existingEquivalent: samePeriod }
+  }
   if (!dateTo && openActive) throw new Error('Ya existe una relación abierta del mismo tipo para este Paso.')
-  if (!excludeId && sameStart?.status === 'archived') return { restorable: sameStart }
   if (sameStart) throw new Error('Este Paso ya tiene una relación equivalente con la Hermandad.')
-  return { restorable: null }
+  return { restorable: null, existingEquivalent: null }
 }
 
 async function refreshRelation(supabase, brotherhoodId, stepId) {
@@ -99,13 +108,19 @@ export async function addBrotherhoodStepRelationAction(formData) {
   validateDateOrder(dateFrom, dateTo)
 
   const { brotherhood, step } = await loadEndpoints(supabase, brotherhoodId, stepId)
-  const { restorable } = await relationConflicts(supabase, {
+  const { restorable, existingEquivalent } = await relationConflicts(supabase, {
     brotherhoodId,
     stepId,
     relationType,
     dateFrom,
     dateTo,
   })
+
+  if (existingEquivalent) {
+    await refreshRelation(supabase, brotherhoodId, stepId)
+    redirectSaved(brotherhoodId, 'already-linked')
+  }
+
   const status = relationalStatus(brotherhood, step)
   const payload = {
     brotherhood_entity_id: brotherhoodId,
