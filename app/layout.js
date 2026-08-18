@@ -65,7 +65,7 @@ const websiteJsonLd = {
 export default function RootLayout({ children }) {
   return (
     <html lang="es">
-      <body>
+      <body id="hc-app">
         <JsonLd data={websiteJsonLd} />
         <HiloHeader />
         <main>{children}</main>
