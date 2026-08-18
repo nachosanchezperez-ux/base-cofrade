@@ -14,6 +14,7 @@ const baseItems = [
   { href: '/panel/agentes', label: 'Agentes', mark: 'A' },
   { href: '/panel/bandas', label: 'Bandas', mark: 'B' },
   { href: '/panel/fuentes', label: 'Fuentes', mark: 'F' },
+  { href: '/panel/importar', label: 'Importar', mark: '↓' },
   { href: '/panel/relaciones', label: 'Relaciones', mark: '↔' },
 ]
 
