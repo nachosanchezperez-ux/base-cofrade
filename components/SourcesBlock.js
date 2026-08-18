@@ -5,7 +5,7 @@ export default function SourcesBlock({
   if (!sources?.length) return null;
 
   return (
-    <section className="section sources-section" id={id}>
+    <section className="section sources-section" id={id} data-hilo-section="sources">
       <div className="shell">
         <div className="sources-heading">
           <div>
@@ -22,6 +22,9 @@ export default function SourcesBlock({
               target="_blank"
               rel="noreferrer"
               key={fuente.id}
+              data-hilo-event="source_open"
+              data-hilo-section="sources"
+              data-hilo-scope="external"
             >
               <span className="source-capirote" aria-hidden="true" />
               <div className="source-copy">

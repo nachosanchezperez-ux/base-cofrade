@@ -56,6 +56,9 @@ function TrackList({ tracks }) {
                   className={styles.trackSpotifyLink}
                   aria-label={`Escuchar ${track.title} en Spotify`}
                   title={`Escuchar ${track.title} en Spotify`}
+                  data-hilo-event="spotify_click"
+                  data-hilo-section="discography"
+                  data-hilo-scope="track"
                 >
                   <span aria-hidden="true">▶</span>
                   <em>Escuchar</em>
@@ -76,7 +79,7 @@ export default function BandDiscographySection({ releases = [], artistSpotifyUrl
   const displayLogoPath = logoPath || releases[0]?.bandLogoPath || ''
 
   return (
-    <section className={styles.section} id="discografia">
+    <section className={styles.section} id="discografia" data-hilo-section="discography">
       <div className="shell">
         <header className={styles.heading}>
           <div className={styles.headingIdentity}>
@@ -102,7 +105,15 @@ export default function BandDiscographySection({ releases = [], artistSpotifyUrl
               ? `${releases.length} lanzamientos documentados. Abre el que quieras para explorar sus pistas y relaciones.`
               : 'Elige una marcha para escuchar su grabación o explora las relaciones documentadas de cada obra.'}</p>
             {spotifyArtist ? (
-              <a href={spotifyArtist} target="_blank" rel="noopener noreferrer" className={styles.artistSpotifyLink}>
+              <a
+                href={spotifyArtist}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.artistSpotifyLink}
+                data-hilo-event="spotify_click"
+                data-hilo-section="discography"
+                data-hilo-scope="artist"
+              >
                 <span aria-hidden="true">▶</span> {displayBandName ? `Escuchar a ${displayBandName} en Spotify` : 'Escuchar perfil en Spotify'}
               </a>
             ) : null}
@@ -112,7 +123,12 @@ export default function BandDiscographySection({ releases = [], artistSpotifyUrl
         <div className={styles.releaseList}>
           {releases.map((release, index) => (
             <details className={styles.release} key={release.id} open={index === 0}>
-              <summary className={styles.releaseSummary}>
+              <summary
+                className={styles.releaseSummary}
+                data-hilo-event="discography_open"
+                data-hilo-section="discography"
+                data-hilo-scope="release"
+              >
                 <div className={styles.cover}>
                   {release.coverImagePath ? (
                     <Image src={release.coverImagePath} alt={release.coverImageAlt || `Portada de ${release.title}`} fill sizes="(max-width: 760px) 72px, 110px" />
@@ -141,7 +157,17 @@ export default function BandDiscographySection({ releases = [], artistSpotifyUrl
                   {release.dateText ? <small className={styles.dateText}>{release.dateText}</small> : null}
                   {release.coverImageCredit ? <small>{release.coverImageCredit}</small> : null}
                   <div className={styles.actions}>
-                    {release.spotifyUrl ? <a href={release.spotifyUrl} target="_blank" rel="noopener noreferrer" className={styles.secondaryLink}>Álbum completo en Spotify ↗</a> : null}
+                    {release.spotifyUrl ? (
+                      <a
+                        href={release.spotifyUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.secondaryLink}
+                        data-hilo-event="spotify_click"
+                        data-hilo-section="discography"
+                        data-hilo-scope="release"
+                      >Álbum completo en Spotify ↗</a>
+                    ) : null}
                     {release.externalUrl ? <a href={release.externalUrl} target="_blank" rel="noopener noreferrer" className={styles.secondaryLink}>Más información ↗</a> : null}
                   </div>
                 </div>
