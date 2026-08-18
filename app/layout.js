@@ -2,6 +2,7 @@ import './globals.css';
 import HiloHeader from '@/components/HiloHeader';
 import HiloFooter from '@/components/HiloFooter';
 import JsonLd from '@/components/JsonLd';
+import HiloAnalytics from '@/components/analytics/HiloAnalytics';
 import {
   DEFAULT_DESCRIPTION,
   HOME_TITLE,
@@ -63,6 +64,7 @@ export default function RootLayout({ children }) {
         <HiloHeader />
         <main>{children}</main>
         <HiloFooter />
+        <HiloAnalytics />
       </body>
     </html>
   );
