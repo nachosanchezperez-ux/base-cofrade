@@ -1,0 +1,66 @@
+:root {
+  --font-sans: 'Open Sans', Arial, Helvetica, sans-serif;
+  --font-weight-regular: 400;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+  --tracking-display: -0.045em;
+  --tracking-heading: -0.035em;
+  --tracking-card: -0.025em;
+  --tracking-data: -0.015em;
+  --tracking-eyebrow: 0.16em;
+}
+
+html,
+body,
+button,
+input,
+select,
+textarea {
+  font-family: var(--font-sans);
+}
+
+/*
+ * HC-009 · Migración tipográfica global
+ *
+ * El proyecto acumulaba declaraciones serif locales en módulos históricos.
+ * Esta capa garantiza Open Sans en toda la interfaz pública y privada sin
+ * alterar todavía tamaños, espacios o composición. Se excluyen elementos de
+ * código para preservar cualquier representación monoespaciada futura.
+ */
+body *:not(code):not(pre):not(kbd):not(samp) {
+  font-family: var(--font-sans) !important;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2 {
+  font-weight: var(--font-weight-extrabold);
+}
+
+h1 {
+  letter-spacing: var(--tracking-display);
+}
+
+h2 {
+  letter-spacing: var(--tracking-heading);
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-weight: var(--font-weight-bold);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
