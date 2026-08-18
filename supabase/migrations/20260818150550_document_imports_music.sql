@@ -164,13 +164,14 @@ begin
         v_march_entity_id := v_source_entity_id;
       end if;
 
+      -- La clave de identidad de march_authors ya es Marcha + Agente + rol.
+      -- No dependemos de created_at y reutilizamos también una relación archivada
+      -- para evitar chocar con su restricción unique.
       select id into v_relation_id
       from public.march_authors
       where march_entity_id = v_march_entity_id
         and agent_entity_id = v_target_entity_id
         and author_role = 'composer'
-        and status <> 'archived'
-      order by created_at
       limit 1;
 
       if v_relation_id is null then
@@ -193,6 +194,16 @@ begin
         )
         returning id into v_relation_id;
         v_relation_created := true;
+      else
+        update public.march_authors
+        set
+          status = case when status = 'archived' then 'draft' else status end,
+          notes = coalesce(
+            nullif(notes, ''),
+            nullif(v_relation->>'notes', ''),
+            nullif(v_relation->>'evidence', '')
+          )
+        where id = v_relation_id;
       end if;
 
       -- source_links todavía no tiene destino march_author. Conservamos la
@@ -219,13 +230,13 @@ begin
 
       v_march_entity_id := v_source_entity_id;
 
+      -- La dedicatoria tiene identidad única aunque esté archivada; si el editor
+      -- acepta de nuevo una fuente que la documenta, se reactiva en borrador.
       select id into v_relation_id
       from public.march_dedications
       where march_entity_id = v_march_entity_id
         and dedicatee_entity_id = v_target_entity_id
         and dedication_type = 'dedicated_to'
-        and status <> 'archived'
-      order by created_at
       limit 1;
 
       if v_relation_id is null then
@@ -252,6 +263,16 @@ begin
         where target.id = v_target_entity_id
         returning id into v_relation_id;
         v_relation_created := true;
+      else
+        update public.march_dedications
+        set
+          status = case when status = 'archived' then 'draft' else status end,
+          notes = coalesce(
+            nullif(notes, ''),
+            nullif(v_relation->>'notes', ''),
+            nullif(v_relation->>'evidence', '')
+          )
+        where id = v_relation_id;
       end if;
 
       if not exists (
