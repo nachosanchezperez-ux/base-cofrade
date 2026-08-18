@@ -11,6 +11,24 @@ function normalize(value = '') {
     .toLowerCase();
 }
 
+function analyticsEntityType(value = '') {
+  const type = normalize(value);
+  if (type.includes('hermandad')) return 'brotherhood';
+  if (type.includes('imagen')) return 'image';
+  if (type.includes('paso')) return 'step';
+  if (type.includes('banda')) return 'band';
+  if (type.includes('marcha')) return 'march';
+  if (type.includes('autor') || type.includes('agente')) return 'agent';
+  if (type.includes('acontecimiento')) return 'event';
+  return 'other';
+}
+
+function resultBucket(count) {
+  if (!count) return '0';
+  if (count <= 3) return '1-3';
+  return '4-6';
+}
+
 export default function HiloSearch({ items = [] }) {
   const [query, setQuery] = useState('');
   const [submitted, setSubmitted] = useState(false);
@@ -34,9 +52,19 @@ export default function HiloSearch({ items = [] }) {
     setSubmitted(true);
   };
 
+  const hasQuery = query.trim().length > 0;
+  const outcome = hasQuery ? (results.length ? 'results' : 'empty') : 'empty_query';
+
   return (
-    <div className={styles.wrap}>
-      <form className={styles.form} onSubmit={submit}>
+    <div className={styles.wrap} data-hilo-section="home_search">
+      <form
+        className={styles.form}
+        onSubmit={submit}
+        data-hilo-event="hilo_search"
+        data-hilo-origin="form"
+        data-hilo-outcome={outcome}
+        data-hilo-result-bucket={resultBucket(results.length)}
+      >
         <label className={styles.srOnly} htmlFor="hilo-search">Buscar en Hilo Cofrade</label>
         <input
           id="hilo-search"
@@ -52,16 +80,41 @@ export default function HiloSearch({ items = [] }) {
       </form>
 
       <div className={styles.suggestions} aria-label="Búsquedas sugeridas">
-        <button type="button" onClick={() => useSuggestion('El Baratillo')}>El Baratillo</button>
-        <button type="button" onClick={() => useSuggestion('Virgen de la Piedad')}>Virgen de la Piedad</button>
-        <button type="button" onClick={() => useSuggestion('Paso de palio')}>Paso de palio</button>
+        <button
+          type="button"
+          onClick={() => useSuggestion('El Baratillo')}
+          data-hilo-event="hilo_search"
+          data-hilo-origin="suggestion"
+          data-hilo-outcome="suggestion"
+        >El Baratillo</button>
+        <button
+          type="button"
+          onClick={() => useSuggestion('Virgen de la Piedad')}
+          data-hilo-event="hilo_search"
+          data-hilo-origin="suggestion"
+          data-hilo-outcome="suggestion"
+        >Virgen de la Piedad</button>
+        <button
+          type="button"
+          onClick={() => useSuggestion('Paso de palio')}
+          data-hilo-event="hilo_search"
+          data-hilo-origin="suggestion"
+          data-hilo-outcome="suggestion"
+        >Paso de palio</button>
       </div>
 
       {(submitted || query.trim().length > 1) && (
         <div className={styles.results} aria-live="polite">
           {results.length > 0 ? (
             results.map((item) => (
-              <Link href={item.href} className={styles.result} key={`${item.type}-${item.href}`}>
+              <Link
+                href={item.href}
+                className={styles.result}
+                key={`${item.type}-${item.href}`}
+                data-hilo-event="search_result_open"
+                data-hilo-origin="home_search"
+                data-hilo-target-type={analyticsEntityType(item.type)}
+              >
                 <span className={styles.resultType}>{item.type}</span>
                 <span className={styles.resultCopy}>
                   <strong>{item.title}</strong>
