@@ -3,7 +3,7 @@ import { requirePanelEditor } from '@/lib/panel/auth'
 import { createAgentAction } from './actions'
 import styles from '@/app/panel/panel.module.css'
 
-export const metadata = { title: 'Nuevo Agente · Panel' }
+export const metadata = { title: 'Nueva ficha · Personas · Panel' }
 
 export default async function NewAgentPage() {
   await requirePanelEditor()
@@ -12,14 +12,14 @@ export default async function NewAgentPage() {
     <div className={styles.pageWrap}>
       <header className={styles.editorHeader}>
         <div className={styles.breadcrumb}>
-          <Link href="/panel/agentes">Agentes</Link>
+          <Link href="/panel/agentes">Personas</Link>
           <span>→</span>
-          <strong>Nuevo Agente</strong>
+          <strong>Nueva ficha</strong>
         </div>
         <div className={styles.editorTitleRow}>
           <div>
             <span className={styles.eyebrow}>Alta mínima</span>
-            <h1>Nuevo Agente</h1>
+            <h1>Nueva ficha</h1>
             <p>Personas, talleres, empresas e instituciones reutilizables en todo el grafo.</p>
           </div>
           <span className={`${styles.statusBadge} ${styles.draft}`}>Borrador</span>
@@ -42,7 +42,7 @@ export default async function NewAgentPage() {
               <input name="name" required autoFocus placeholder="Ej. Juan Pérez / Taller Pérez" />
             </label>
             <label>
-              <span>Tipo de Agente</span>
+              <span>Tipo de registro</span>
               <select name="agent_kind" defaultValue="person" required>
                 <option value="person">Persona</option>
                 <option value="workshop">Taller</option>
@@ -56,8 +56,8 @@ export default async function NewAgentPage() {
             </label>
           </div>
           <div className={styles.formActions}>
-            <small>Se crearán la entidad y su ficha de Agente con estado borrador.</small>
-            <button className={styles.primaryButton} type="submit">Crear Agente</button>
+            <small>Se crearán la entidad y su ficha con estado borrador.</small>
+            <button className={styles.primaryButton} type="submit">Crear ficha</button>
           </div>
         </form>
       </section>
