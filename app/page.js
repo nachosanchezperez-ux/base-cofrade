@@ -19,6 +19,9 @@ export const metadata = {
   twitter: { title: HOME_TITLE, description: DEFAULT_DESCRIPTION },
 };
 
+const regularEyebrowStyle = { fontWeight: 400 };
+const stackedNextExtraHeadStyle = { alignItems: 'flex-start', flexDirection: 'column', gap: 4 };
+
 function getTodayLabel() {
   const formatter = new Intl.DateTimeFormat('es-ES', {
     timeZone: 'Europe/Madrid',
@@ -101,7 +104,7 @@ export default async function HomePage() {
 
               <div className={styles.featuredExtraordinaryCopy}>
                 <div className={styles.featuredExtraordinaryIntro}>
-                  <span className={styles.eyebrow}>Próxima extraordinaria</span>
+                  <span className={styles.eyebrow} style={regularEyebrowStyle}>Próxima extraordinaria</span>
                   <h2 id="proxima-extraordinaria-title">{featuredExtraordinary.title}</h2>
                   <div className={styles.featuredExtraordinaryMeta}>
                     <strong>
@@ -260,8 +263,8 @@ export default async function HomePage() {
       {followingExtraordinaryOutings.length ? (
         <section className={`${styles.section} ${styles.nextExtraSection}`}>
           <div className="shell">
-            <div className={styles.nextExtraHead}>
-              <span className={styles.eyebrow}>Después</span>
+            <div className={styles.nextExtraHead} style={stackedNextExtraHeadStyle}>
+              <span className={styles.eyebrow} style={regularEyebrowStyle}>Después</span>
               <h2>Las siguientes extraordinarias</h2>
             </div>
             <div className={styles.nextExtraList}>
@@ -285,7 +288,7 @@ export default async function HomePage() {
       <section className={styles.section} id="enciclopedia">
         <div className="shell">
           <div className={styles.sectionHead}>
-            <span className={styles.eyebrow}>Enciclopedia</span>
+            <span className={styles.eyebrow} style={regularEyebrowStyle}>Enciclopedia</span>
             <h2 className={styles.sectionTitle}>Entra por donde quieras</h2>
             <p className={styles.sectionDescription}>Acceso compacto a las principales entidades de Hilo Cofrade</p>
           </div>
@@ -324,7 +327,7 @@ export default async function HomePage() {
           </div>
 
           <aside className={styles.collab} id="colabora">
-            <span className={styles.eyebrow}>Participa</span>
+            <span className={styles.eyebrow} style={regularEyebrowStyle}>Participa</span>
             <h3>Ayúdanos a completar el hilo</h3>
             <p>Las aportaciones pasarán por revisión y documentación antes de incorporarse a Hilo Cofrade</p>
             <div className={styles.flow}>
