@@ -12,6 +12,16 @@ const nextConfig = {
         hostname: 'www.amencarnacion.com',
         pathname: '/wp-content/uploads/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'hermandaddesanbenito.net',
+        pathname: '/wp-content/uploads/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn.palbincdn.com',
+        pathname: '/users/**',
+      },
     ],
   },
 }

@@ -4,7 +4,7 @@ import styles from './BandDiscographySection.module.css'
 
 function ordinalLabel(value) {
   if (!value) return ''
-  return `${value}.º trabajo discográfico`
+  return `${value}.º trabajo`
 }
 
 function entityHref(item) {
@@ -15,14 +15,25 @@ function entityHref(item) {
   return ''
 }
 
+function catalogLabel(releases) {
+  const years = releases
+    .map((release) => Number(release.year))
+    .filter((year) => Number.isFinite(year))
+
+  const count = `${releases.length} ${releases.length === 1 ? 'trabajo documentado' : 'trabajos documentados'}`
+  if (!years.length) return count
+
+  return `${count} · ${Math.min(...years)}—${Math.max(...years)}`
+}
+
 function TrackList({ tracks }) {
   if (!tracks.length) return null
 
   return (
     <div className={styles.trackList}>
       <div className={styles.trackHeading}>
-        <span>Elige qué escuchar</span>
-        <strong>{tracks.length} {tracks.length === 1 ? 'pista' : 'pistas'}</strong>
+        <span>Pistas</span>
+        <strong>{tracks.length}</strong>
       </div>
       <ol>
         {tracks.map((track) => (
@@ -41,7 +52,12 @@ function TrackList({ tracks }) {
                   <span>Dedicada a</span>
                   <div>{track.dedications.map((dedication, index) => {
                     const href = entityHref(dedication)
-                    return <span key={`${dedication.id}-${index}`}>{index ? ' · ' : ''}{href ? <Link href={href}>{dedication.name || dedication.text}</Link> : dedication.name || dedication.text}</span>
+                    return (
+                      <span key={`${dedication.id}-${index}`}>
+                        {index ? ' · ' : ''}
+                        {href ? <Link href={href}>{dedication.name || dedication.text}</Link> : dedication.name || dedication.text}
+                      </span>
+                    )
                   })}</div>
                 </div>
               ) : null}
@@ -74,9 +90,11 @@ function TrackList({ tracks }) {
 
 export default function BandDiscographySection({ releases = [], artistSpotifyUrl = '', bandName = '', logoPath = '' }) {
   if (!releases.length) return null
+
   const spotifyArtist = artistSpotifyUrl || releases[0]?.artistSpotifyUrl || ''
   const displayBandName = bandName || releases[0]?.bandName || ''
   const displayLogoPath = logoPath || releases[0]?.bandLogoPath || ''
+  const catalog = catalogLabel(releases)
 
   return (
     <section className={styles.section} id="discografia" data-hilo-section="discography">
@@ -88,22 +106,23 @@ export default function BandDiscographySection({ releases = [], artistSpotifyUrl
                 <Image
                   src={displayLogoPath}
                   alt={`Logotipo de ${displayBandName || 'la banda'}`}
-                  width={70}
-                  height={86}
-                  sizes="(max-width: 760px) 48px, 70px"
+                  width={66}
+                  height={82}
+                  sizes="(max-width: 760px) 44px, 66px"
                 />
               </div>
             ) : null}
             <div className={styles.headingTitle}>
               <span>Patrimonio sonoro</span>
               <h2>Discografía</h2>
-              {displayBandName ? <small>{displayBandName}</small> : null}
+              <div className={styles.catalogMeta}>
+                {displayBandName ? <strong>{displayBandName}</strong> : null}
+                <small>{catalog}</small>
+              </div>
             </div>
           </div>
           <div className={styles.headingAside}>
-            <p>{releases.length > 1
-              ? `${releases.length} lanzamientos documentados. Abre el que quieras para explorar sus pistas y relaciones.`
-              : 'Elige una marcha para escuchar su grabación o explora las relaciones documentadas de cada obra.'}</p>
+            <p>Abre un disco para explorar sus pistas, relaciones documentadas y enlaces de escucha.</p>
             {spotifyArtist ? (
               <a
                 href={spotifyArtist}
@@ -114,15 +133,16 @@ export default function BandDiscographySection({ releases = [], artistSpotifyUrl
                 data-hilo-section="discography"
                 data-hilo-scope="artist"
               >
-                <span aria-hidden="true">▶</span> {displayBandName ? `Escuchar a ${displayBandName} en Spotify` : 'Escuchar perfil en Spotify'}
+                <span aria-hidden="true">▶</span>
+                {displayBandName ? `Escuchar a ${displayBandName} en Spotify` : 'Escuchar perfil en Spotify'}
               </a>
             ) : null}
           </div>
         </header>
 
         <div className={styles.releaseList}>
-          {releases.map((release, index) => (
-            <details className={styles.release} key={release.id} open={index === 0}>
+          {releases.map((release) => (
+            <details className={styles.release} key={release.id}>
               <summary
                 className={styles.releaseSummary}
                 data-hilo-event="discography_open"
@@ -131,7 +151,12 @@ export default function BandDiscographySection({ releases = [], artistSpotifyUrl
               >
                 <div className={styles.cover}>
                   {release.coverImagePath ? (
-                    <Image src={release.coverImagePath} alt={release.coverImageAlt || `Portada de ${release.title}`} fill sizes="(max-width: 760px) 72px, 110px" />
+                    <Image
+                      src={release.coverImagePath}
+                      alt={release.coverImageAlt || `Portada de ${release.title}`}
+                      fill
+                      sizes="(max-width: 760px) 64px, 84px"
+                    />
                   ) : (
                     <div className={styles.coverPlaceholder} aria-hidden="true"><span>{release.year || 'HC'}</span></div>
                   )}
@@ -140,13 +165,13 @@ export default function BandDiscographySection({ releases = [], artistSpotifyUrl
                   <h3>{release.title}</h3>
                   <div className={styles.meta}>
                     {release.year ? <strong>{release.year}</strong> : null}
-                    <span>{release.tracks.length} {release.tracks.length === 1 ? 'pista' : 'pistas'}</span>
                     {ordinalLabel(release.ordinalNumber) ? <span>{ordinalLabel(release.ordinalNumber)}</span> : null}
+                    <span>{release.tracks.length} {release.tracks.length === 1 ? 'pista' : 'pistas'}</span>
                   </div>
                 </div>
                 <span className={styles.releaseToggle}>
-                  <em className={styles.toggleClosed}>Ver pistas</em>
-                  <em className={styles.toggleOpen}>Ocultar pistas</em>
+                  <em className={styles.toggleClosed}>Abrir</em>
+                  <em className={styles.toggleOpen}>Cerrar</em>
                   <b aria-hidden="true">+</b>
                 </span>
               </summary>
@@ -156,20 +181,22 @@ export default function BandDiscographySection({ releases = [], artistSpotifyUrl
                   {release.description ? <p>{release.description}</p> : null}
                   {release.dateText ? <small className={styles.dateText}>{release.dateText}</small> : null}
                   {release.coverImageCredit ? <small>{release.coverImageCredit}</small> : null}
-                  <div className={styles.actions}>
-                    {release.spotifyUrl ? (
-                      <a
-                        href={release.spotifyUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={styles.secondaryLink}
-                        data-hilo-event="spotify_click"
-                        data-hilo-section="discography"
-                        data-hilo-scope="release"
-                      >Álbum completo en Spotify ↗</a>
-                    ) : null}
-                    {release.externalUrl ? <a href={release.externalUrl} target="_blank" rel="noopener noreferrer" className={styles.secondaryLink}>Más información ↗</a> : null}
-                  </div>
+                  {(release.spotifyUrl || release.externalUrl) ? (
+                    <div className={styles.actions}>
+                      {release.spotifyUrl ? (
+                        <a
+                          href={release.spotifyUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={styles.secondaryLink}
+                          data-hilo-event="spotify_click"
+                          data-hilo-section="discography"
+                          data-hilo-scope="release"
+                        >Álbum completo en Spotify ↗</a>
+                      ) : null}
+                      {release.externalUrl ? <a href={release.externalUrl} target="_blank" rel="noopener noreferrer" className={styles.secondaryLink}>Más información ↗</a> : null}
+                    </div>
+                  ) : null}
                 </div>
                 <TrackList tracks={release.tracks} />
               </div>
