@@ -166,7 +166,9 @@ export default function BandDiscographySection({ releases = [], artistSpotifyUrl
                   <div className={styles.meta}>
                     {release.year ? <strong>{release.year}</strong> : null}
                     {ordinalLabel(release.ordinalNumber) ? <span>{ordinalLabel(release.ordinalNumber)}</span> : null}
-                    <span>{release.tracks.length} {release.tracks.length === 1 ? 'pista' : 'pistas'}</span>
+                    {release.tracks.length ? (
+                      <span>{release.tracks.length} {release.tracks.length === 1 ? 'pista' : 'pistas'}</span>
+                    ) : null}
                   </div>
                 </div>
                 <span className={styles.releaseToggle}>
