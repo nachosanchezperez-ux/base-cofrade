@@ -121,7 +121,6 @@ export default async function BandDetailPage({ params }) {
   const hasDiscography = discography.length > 0
   const hasDirection = band.direction.length > 0
   const banderin = band.heritage?.find((item) => item.type === 'Banderín') || null
-  const paletteLabel = colors.map((item) => item.name).join(' · ')
   const accentColor = colors.find((item) => item.role === 'accent')?.hexValue || band.primaryColor
   const identityColor = colors.find((item) => item.role === 'identity')?.hexValue || '#FFFFFF'
   const jsonLd = {
@@ -221,31 +220,6 @@ export default async function BandDetailPage({ params }) {
                   <strong>{band.linkedBrotherhood}</strong>
                   {band.linkedBrotherhoodSlug ? <Link href={`/hermandades/${band.linkedBrotherhoodSlug}`}>Ver ficha de la hermandad →</Link> : null}
                 </article> : null}
-                {colors.length ? <article>
-                  <span>Colores</span>
-                  <strong>{paletteLabel}</strong>
-                  <div
-                    aria-label={`Colores de la banda: ${paletteLabel}`}
-                    style={{ display: 'flex', gap: 7, marginTop: 'auto', paddingTop: 17 }}
-                  >
-                    {colors.filter((color) => color.hexValue).map((color) => (
-                      <span
-                        key={color.id}
-                        title={`${color.name} · ${color.hexValue}`}
-                        aria-hidden="true"
-                        style={{
-                          display: 'block',
-                          width: 19,
-                          height: 19,
-                          border: '1px solid rgb(34 32 38 / 18%)',
-                          borderRadius: '50%',
-                          background: color.hexValue,
-                          boxShadow: '0 1px 3px rgb(34 32 38 / 10%)',
-                        }}
-                      />
-                    ))}
-                  </div>
-                </article> : null}
                 <article className={styles.trajectoryCard}>
                   <span>Trayectoria</span>
                   <strong>{band.foundation ? `Fundación: ${band.foundation}` : 'Fundación por documentar'}</strong>
@@ -260,7 +234,7 @@ export default async function BandDetailPage({ params }) {
                   </div>
                   <div className={styles.impactMetrics}>
                     {band.accompaniments.length ? <a href="#acompanamientos"><strong>{band.accompaniments.length}</strong><span>{band.accompaniments.length === 1 ? 'hermandad en Semana Santa' : 'hermandades en Semana Santa'}</span></a> : null}
-                    {currentPremieres.length ? <a href="#repertorio"><strong>{currentPremieres.length}</strong><span>{currentPremieres.length === 1 ? `estreno en ${currentYear}` : `estrenos en ${currentYear}`}</span></a> : null}
+                    {currentPremieres.length ? <a href="#repertorio"><strong>{currentPremieres.length}</strong><span>{band.premieres.filter((item) => item.year === currentYear).length === 1 ? `estreno en ${currentYear}` : `estrenos en ${currentYear}`}</span></a> : null}
                     {band.outings.length ? <a href="#extraordinarias"><strong>{band.outings.length}</strong><span>{band.outings.length === 1 ? 'salida extraordinaria' : 'salidas extraordinarias'}</span></a> : null}
                   </div>
                 </div>
