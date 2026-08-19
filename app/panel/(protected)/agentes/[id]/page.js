@@ -12,7 +12,7 @@ const STATUS_LABELS = {
   archived: 'Archivado',
 }
 
-export const metadata = { title: 'Editar Agente · Panel' }
+export const metadata = { title: 'Editar ficha · Personas · Panel' }
 
 export default async function AgentEditorPage({ params, searchParams }) {
   const [{ id }, query, user] = await Promise.all([params, searchParams, requirePanelUser()])
@@ -24,15 +24,15 @@ export default async function AgentEditorPage({ params, searchParams }) {
     <div className={styles.pageWrap}>
       <header className={styles.editorHeader}>
         <div className={styles.breadcrumb}>
-          <Link href="/panel/agentes">Agentes</Link>
+          <Link href="/panel/agentes">Personas</Link>
           <span>→</span>
           <strong>{data.entity.name}</strong>
         </div>
         <div className={styles.editorTitleRow}>
           <div>
-            <span className={styles.eyebrow}>Editar Agente</span>
+            <span className={styles.eyebrow}>Editar ficha</span>
             <h1>{data.entity.name}</h1>
-            <p>{AGENT_KIND_LABELS[data.agent.agent_kind] || 'Agente'}</p>
+            <p>{AGENT_KIND_LABELS[data.agent.agent_kind] || 'Registro'}</p>
           </div>
           <span className={`${styles.statusBadge} ${styles[data.entity.status]}`}>
             {STATUS_LABELS[data.entity.status]}
@@ -41,7 +41,7 @@ export default async function AgentEditorPage({ params, searchParams }) {
       </header>
 
       {query?.saved ? <div className={styles.savedNotice} role="status">Cambios guardados correctamente.</div> : null}
-      {!canEdit ? <div className={styles.readOnlyNotice}>Estás consultando el Agente como colaborador.</div> : null}
+      {!canEdit ? <div className={styles.readOnlyNotice}>Estás consultando esta ficha como colaborador.</div> : null}
 
       <section className={styles.editorSection}>
         <div className={styles.sectionHeading}>
@@ -60,7 +60,7 @@ export default async function AgentEditorPage({ params, searchParams }) {
               <input name="name" defaultValue={data.entity.name} required />
             </label>
             <label>
-              <span>Tipo de Agente</span>
+              <span>Tipo de registro</span>
               <select name="agent_kind" defaultValue={data.agent.agent_kind} required>
                 <option value="person">Persona</option>
                 <option value="workshop">Taller</option>

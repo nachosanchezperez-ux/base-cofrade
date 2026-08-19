@@ -11,7 +11,7 @@ const baseItems = [
   { href: '/panel/hermandades', label: 'Hermandades', mark: 'H' },
   { href: '/panel/imagenes', label: 'Imágenes', mark: 'I' },
   { href: '/panel/pasos', label: 'Pasos', mark: 'P' },
-  { href: '/panel/agentes', label: 'Agentes', mark: 'A' },
+  { href: '/panel/agentes', label: 'Personas', mark: 'Pe' },
   { href: '/panel/bandas', label: 'Bandas', mark: 'B' },
   { href: '/panel/fuentes', label: 'Fuentes', mark: 'F' },
   { href: '/panel/relaciones', label: 'Relaciones', mark: '↔' },

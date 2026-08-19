@@ -69,7 +69,7 @@ async function ensureUniqueIdentity(supabase, { name, slug, customSlug }) {
       .find((item) => normalizeIdentity(item.name) === normalizedName)
 
     if (duplicate) {
-      throw new Error(`Ya existe un Agente con ese nombre: ${duplicate.name}. Usa un slug específico solo si es otra persona o entidad.`)
+      throw new Error(`Ya existe una persona o entidad con ese nombre: ${duplicate.name}. Usa un slug específico solo si se trata de otra ficha.`)
     }
   }
 }
@@ -86,12 +86,12 @@ async function audit(supabase, user, entry) {
 export async function createAgentAction(formData) {
   const user = await requirePanelEditor()
   const supabase = await createClient()
-  const agentName = required(formData, 'name', 'El nombre del Agente')
+  const agentName = required(formData, 'name', 'El nombre')
   const submittedSlug = value(formData, 'slug')
   const entitySlug = slugify(submittedSlug || agentName)
   const agentKind = value(formData, 'agent_kind')
 
-  if (!AGENT_KINDS.has(agentKind)) throw new Error('El tipo de Agente no es válido.')
+  if (!AGENT_KINDS.has(agentKind)) throw new Error('El tipo de registro no es válido.')
   if (!entitySlug) throw new Error('No se ha podido generar un slug válido.')
   if (entitySlug.length > 160) throw new Error('El slug es demasiado largo.')
 
@@ -116,7 +116,7 @@ export async function createAgentAction(formData) {
 
   assertMutation(
     await supabase.from('entities').insert(entityPayload).select('id').single(),
-    'No se pudo crear la entidad del Agente'
+    'No se pudo crear la entidad'
   )
 
   const agentResult = await supabase
@@ -138,7 +138,7 @@ export async function createAgentAction(formData) {
         rollbackError: rollback.error.message,
       })
     }
-    throw new Error(`No se pudo crear la ficha del Agente: ${agentResult.error.message}`)
+    throw new Error(`No se pudo crear la ficha: ${agentResult.error.message}`)
   }
 
   await audit(supabase, user, {
@@ -146,7 +146,7 @@ export async function createAgentAction(formData) {
     object_type: 'agent',
     object_id: agentId,
     entity_id: agentId,
-    summary: `Agente creado como borrador: ${agentName}`,
+    summary: `Ficha creada como borrador: ${agentName}`,
     changed_fields: { entity: entityPayload, agent: agentPayload },
   })
 

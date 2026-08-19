@@ -74,7 +74,7 @@ async function ensureUniqueIdentity(supabase, { agentId, name, slug }) {
     .find((item) => normalizeIdentity(item.name) === normalizeIdentity(name))
 
   if (duplicate && slug === slugify(name)) {
-    throw new Error(`Ya existe un Agente con ese nombre: ${duplicate.name}. Usa un slug específico solo si es otra persona o entidad.`)
+    throw new Error(`Ya existe una persona o entidad con ese nombre: ${duplicate.name}. Usa un slug específico solo si se trata de otra ficha.`)
   }
 }
 
@@ -91,11 +91,11 @@ export async function updateAgentAction(formData) {
   const user = await requirePanelEditor()
   const supabase = await createClient()
   const agentId = uuid(formData, 'agent_id')
-  const agentName = required(formData, 'name', 'El nombre del Agente')
+  const agentName = required(formData, 'name', 'El nombre')
   const entitySlug = slugify(required(formData, 'slug', 'El slug'))
   const agentKind = value(formData, 'agent_kind')
 
-  if (!AGENT_KINDS.has(agentKind)) throw new Error('El tipo de Agente no es válido.')
+  if (!AGENT_KINDS.has(agentKind)) throw new Error('El tipo de registro no es válido.')
   if (!entitySlug) throw new Error('No se ha podido generar un slug válido.')
   if (entitySlug.length > 160) throw new Error('El slug es demasiado largo.')
 
@@ -106,12 +106,12 @@ export async function updateAgentAction(formData) {
       .eq('id', agentId)
       .eq('entity_type', 'agent')
       .maybeSingle(),
-    'No se pudo comprobar el Agente'
+    'No se pudo comprobar la ficha'
   )
 
-  if (!current) throw new Error('El Agente ya no existe.')
+  if (!current) throw new Error('La ficha ya no existe.')
   if (current.status === 'published' && current.slug !== entitySlug) {
-    throw new Error('El slug de un Agente publicado no puede cambiarse desde este editor básico.')
+    throw new Error('El slug de una ficha publicada no puede cambiarse desde este editor básico.')
   }
 
   await ensureUniqueIdentity(supabase, {
@@ -129,14 +129,14 @@ export async function updateAgentAction(formData) {
       .update(entityPayload)
       .eq('id', agentId)
       .eq('entity_type', 'agent'),
-    'No se pudo actualizar la entidad del Agente'
+    'No se pudo actualizar la entidad'
   )
   assertMutation(
     await supabase
       .from('agents')
       .update(agentPayload)
       .eq('entity_id', agentId),
-    'No se pudo actualizar la ficha del Agente'
+    'No se pudo actualizar la ficha'
   )
 
   await audit(supabase, user, {
@@ -144,7 +144,7 @@ export async function updateAgentAction(formData) {
     object_type: 'agent',
     object_id: agentId,
     entity_id: agentId,
-    summary: `Agente actualizado: ${agentName}`,
+    summary: `Ficha actualizada: ${agentName}`,
     changed_fields: { entity: entityPayload, agent: agentPayload },
   })
 
