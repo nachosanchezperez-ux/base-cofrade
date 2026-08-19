@@ -2,7 +2,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import HiloSearch from '@/components/HiloSearch';
 import { DEFAULT_DESCRIPTION, HOME_TITLE } from '@/lib/seo';
-import { getTodayHomeContent, getUpcomingExtraordinaryOutings } from '@/lib/supabase/home';
+import {
+  getHomeDiscoveryThreads,
+  getTodayHomeContent,
+  getUpcomingExtraordinaryOutings,
+} from '@/lib/supabase/home';
 import { getOutingBriefing } from '@/lib/supabase/outing-briefing';
 import { getGlobalSearchItems } from '@/lib/supabase/search';
 import styles from './home.module.css';
@@ -31,16 +35,23 @@ function getTodayLabel() {
 
 export default async function HomePage() {
   const today = getTodayLabel();
-  const [searchItems, todayContent, extraordinaryOutings] = await Promise.all([
+  const [searchItems, todayContent, extraordinaryOutings, discoveryThreads] = await Promise.all([
     getGlobalSearchItems(),
     getTodayHomeContent(),
     getUpcomingExtraordinaryOutings(5),
+    getHomeDiscoveryThreads(3),
   ]);
   const featuredExtraordinary = extraordinaryOutings[0] || null;
   const followingExtraordinaryOutings = extraordinaryOutings.slice(1);
   const featuredBriefing = featuredExtraordinary
     ? await getOutingBriefing(featuredExtraordinary.id)
     : { schedule: [], bands: [], liturgicalMusic: [], places: [] };
+  const todayItems = [
+    ['EF', 'Efeméride', todayContent.ephemeris],
+    ['DC', 'Dato Cofrade', todayContent.fact],
+    ['CU', 'Curiosidad', todayContent.curiosity],
+  ].filter(([, , item]) => Boolean(item));
+  const hasTodayContent = todayItems.length > 0 || Boolean(todayContent.march);
 
   return (
     <div className={styles.home}>
@@ -154,75 +165,97 @@ export default async function HomePage() {
         </section>
       ) : null}
 
-      <section className={`${styles.section} ${styles.today}`} id="hoy">
-        <div className="shell">
-          <div className={styles.todayHeader}>
-            <span className={styles.todayDate}>{today}</span>
-            <h2 className={styles.todayTitle}>Hoy en Hilo Cofrade</h2>
-            <p className={styles.todaySub}>Una selección diaria para descubrir, consultar y seguir tirando del hilo</p>
-          </div>
+      {hasTodayContent ? (
+        <section className={`${styles.section} ${styles.today}`} id="hoy">
+          <div className="shell">
+            <div className={styles.todayHeader}>
+              <span className={styles.todayDate}>{today}</span>
+              <h2 className={styles.todayTitle}>Hoy en Hilo Cofrade</h2>
+              <p className={styles.todaySub}>Una selección diaria para descubrir, consultar y seguir tirando del hilo</p>
+            </div>
 
-          <div className={styles.todayGrid}>
-            {[
-              ['EF', 'Efeméride', todayContent.ephemeris, 'Una fecha para entrar en la historia cofrade'],
-              ['DC', 'Dato Cofrade', todayContent.fact, 'Un dato para seguir tirando del hilo'],
-              ['CU', 'Curiosidad', todayContent.curiosity, 'Una relación cofrade por descubrir'],
-            ].map(([icon, label, item, emptyTitle]) => (
-              <article className={styles.dailyCard} key={label}>
-                <span className={styles.dailyIcon}>{icon}</span>
-                <div>
-                  <span className={styles.dailyType}>{label}</span>
-                  <h3>{item?.title || emptyTitle}</h3>
-                  <p>{item?.summary || 'Este contenido se mostrará cuando exista una relación documentada y publicada para esta categoría.'}</p>
-                  {item?.href
-                    ? <Link className={styles.dailyLink} href={item.href}>{item.linkLabel}</Link>
-                    : <span className={styles.dailyLink}>Contenido en preparación</span>}
+            {todayItems.length ? (
+              <div className={styles.todayGrid}>
+                {todayItems.map(([icon, label, item]) => (
+                  <article className={styles.dailyCard} key={label}>
+                    <span className={styles.dailyIcon}>{icon}</span>
+                    <div>
+                      <span className={styles.dailyType}>{label}</span>
+                      <h3>{item.title}</h3>
+                      {item.summary ? <p>{item.summary}</p> : null}
+                      {item.href ? <Link className={styles.dailyLink} href={item.href}>{item.linkLabel}</Link> : null}
+                    </div>
+                  </article>
+                ))}
+              </div>
+            ) : null}
+
+            {todayContent.march ? (
+              <article className={styles.musicCard}>
+                <div className={styles.musicHead}>
+                  <div className={styles.musicTop}>
+                    <span className={styles.dailyType}>Marcha del día</span>
+                    {todayContent.march.listenUrl ? <span className={styles.musicPill}>Escuchar</span> : null}
+                  </div>
+                  <h3>“{todayContent.march.title}”</h3>
+                  <p>{[todayContent.march.composer, todayContent.march.year, todayContent.march.dedicatee].filter(Boolean).join(' · ')}</p>
+                </div>
+                {todayContent.march.whyToday ? (
+                  <div className={styles.musicWhy}>
+                    <span>Por qué escucharla hoy</span>
+                    <p>{todayContent.march.whyToday}</p>
+                  </div>
+                ) : null}
+                <div className={styles.musicInfo}>
+                  <div className={styles.musicMeta}>
+                    {todayContent.march.composer ? <span>{todayContent.march.composer}</span> : null}
+                    {todayContent.march.year ? <span>{todayContent.march.year}</span> : null}
+                    {todayContent.march.dedicatee ? <span>{todayContent.march.dedicatee}</span> : null}
+                  </div>
+                  {todayContent.march.listenUrl ? (
+                    <a
+                      className={styles.musicListen}
+                      href={todayContent.march.listenUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      ▶ Escuchar
+                    </a>
+                  ) : null}
                 </div>
               </article>
-            ))}
+            ) : null}
           </div>
+        </section>
+      ) : null}
 
-          {todayContent.march ? (
-            <article className={styles.musicCard}>
-              <div className={styles.musicHead}>
-                <div className={styles.musicTop}>
-                  <span className={styles.dailyType}>Marcha del día</span>
-                  {todayContent.march.videoUrl ? <span className={styles.musicPill}>Escuchar</span> : null}
-                </div>
-                <h3>“{todayContent.march.title}”</h3>
-                <p>{[todayContent.march.composer, todayContent.march.year, todayContent.march.dedicatee].filter(Boolean).join(' · ')}</p>
-              </div>
-              {todayContent.march.videoUrl ? (
-                <div className={styles.videoWrap}>
-                  <iframe
-                    src={todayContent.march.videoUrl}
-                    title={todayContent.march.title}
-                    loading="lazy"
-                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowFullScreen
-                  />
-                </div>
-              ) : null}
-              <div className={styles.musicInfo}>
-                <div className={styles.musicMeta}>
-                  {todayContent.march.composer ? <span>{todayContent.march.composer}</span> : null}
-                  {todayContent.march.year ? <span>{todayContent.march.year}</span> : null}
-                  {todayContent.march.dedicatee ? <span>{todayContent.march.dedicatee}</span> : null}
-                </div>
-                <span className={styles.musicLink}>Ficha musical próximamente</span>
-              </div>
-            </article>
-          ) : (
-            <article className={styles.musicCard}>
-              <div className={styles.musicHead}>
-                <div className={styles.musicTop}><span className={styles.dailyType}>Marcha del día</span></div>
-                <h3>Repertorio en preparación</h3>
-                <p>La selección musical aparecerá automáticamente entre las marchas publicadas y elegibles.</p>
-              </div>
-            </article>
-          )}
-        </div>
-      </section>
+      {discoveryThreads.length ? (
+        <section className={`${styles.section} ${styles.threadsSection}`} id="ultimos-hilos">
+          <div className="shell">
+            <div className={styles.threadsHead}>
+              <span className={styles.threadsEyebrow}>Conocimiento en movimiento</span>
+              <h2>Últimos hilos incorporados</h2>
+              <p>Relaciones nuevas o enriquecidas que ya puedes recorrer dentro de la enciclopedia.</p>
+            </div>
+            <div className={styles.threadRail}>
+              {discoveryThreads.map((thread) => (
+                <Link className={styles.threadCard} href={thread.href} key={thread.id}>
+                  <span className={styles.threadLabel}>{thread.label}</span>
+                  <h3>{thread.title}</h3>
+                  <strong className={styles.threadMetric}>{thread.metric}</strong>
+                  <p>{thread.summary}</p>
+                  <div className={styles.threadPath} aria-label={`Ruta de descubrimiento: ${thread.path.join(', ')}`}>
+                    {thread.path.map((step, index) => (
+                      <span key={`${thread.id}-${step}`}>{index ? '→ ' : ''}{step}</span>
+                    ))}
+                  </div>
+                  <span className={styles.threadCta}>{thread.cta}</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       {followingExtraordinaryOutings.length ? (
         <section className={`${styles.section} ${styles.nextExtraSection}`}>
