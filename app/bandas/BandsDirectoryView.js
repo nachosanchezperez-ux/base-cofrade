@@ -28,7 +28,7 @@ export default function BandsDirectoryView({ visibleBands, activeFilter = '' }) 
             </span>
             <span className={styles.cardCopy}>
               <small>{band.type}</small>
-              <strong>{band.popularName}</strong>
+              <strong style={{ color: 'var(--band-ink)' }}>{band.popularName}</strong>
               <span>{band.officialName}</span>
               <em>{band.municipality}{band.foundation ? ` · Desde ${band.foundation}` : ''}</em>
             </span>
