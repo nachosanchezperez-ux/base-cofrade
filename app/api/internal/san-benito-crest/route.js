@@ -11,12 +11,14 @@ export async function GET() {
     return new Response('No se pudo obtener el escudo oficial', { status: 502 })
   }
 
-  const body = await response.arrayBuffer()
-  return new Response(body, {
+  const bytes = Buffer.from(await response.arrayBuffer())
+  return new Response(bytes.toString('base64'), {
     status: 200,
     headers: {
-      'content-type': response.headers.get('content-type') || 'image/png',
+      'content-type': 'text/plain; charset=utf-8',
       'cache-control': 'no-store',
+      'x-source-content-type': response.headers.get('content-type') || 'image/png',
+      'x-source-bytes': String(bytes.length),
     },
   })
 }
