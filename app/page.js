@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import HiloSearch from '@/components/HiloSearch';
+import HomeMarchPlayer from '@/components/HomeMarchPlayer';
 import { DEFAULT_DESCRIPTION, HOME_TITLE } from '@/lib/seo';
 import {
   getHomeDiscoveryThreads,
@@ -61,14 +62,14 @@ export default async function HomePage() {
       <section className={styles.hero} id="inicio">
         <div className="shell">
           <div className={styles.heroCopy}>
-            <span className={styles.kicker}>Sevilla y su provincia</span>
+            <span className={styles.kicker} style={regularEyebrowStyle}>Sevilla y su provincia</span>
             <h1>Hilo Cofrade, <span>todo en las cofradías está relacionado</span></h1>
             <p>Consulta, descubre y sigue las conexiones entre hermandades, imágenes, bandas, marchas, autores y patrimonio</p>
           </div>
 
           <aside className={styles.searchBox} id="tiradelhilo">
             <div className={styles.searchInner}>
-              <span className={styles.searchLabel}>Tira del hilo</span>
+              <span className={styles.searchLabel} style={regularEyebrowStyle}>Tira del hilo</span>
               <h2>¿Qué quieres descubrir?</h2>
               <p>Busca una entidad y empieza a recorrer las relaciones ya documentadas en Hilo Cofrade</p>
               <HiloSearch items={searchItems} />
@@ -172,7 +173,7 @@ export default async function HomePage() {
         <section className={`${styles.section} ${styles.today}`} id="hoy">
           <div className="shell">
             <div className={styles.todayHeader}>
-              <span className={styles.todayDate}>{today}</span>
+              <span className={styles.todayDate} style={regularEyebrowStyle}>{today}</span>
               <h2 className={styles.todayTitle}>Hoy en Hilo Cofrade</h2>
               <p className={styles.todaySub}>Una selección diaria para descubrir, consultar y seguir tirando del hilo</p>
             </div>
@@ -183,7 +184,7 @@ export default async function HomePage() {
                   <article className={styles.dailyCard} key={label}>
                     <span className={styles.dailyIcon}>{icon}</span>
                     <div>
-                      <span className={styles.dailyType}>{label}</span>
+                      <span className={styles.dailyType} style={regularEyebrowStyle}>{label}</span>
                       <h3>{item.title}</h3>
                       {item.summary ? <p>{item.summary}</p> : null}
                       {item.href ? <Link className={styles.dailyLink} href={item.href}>{item.linkLabel}</Link> : null}
@@ -196,36 +197,21 @@ export default async function HomePage() {
             {todayContent.march ? (
               <article className={styles.musicCard}>
                 <div className={styles.musicHead}>
-                  <div className={styles.musicTop}>
-                    <span className={styles.dailyType}>Marcha del día</span>
-                    {todayContent.march.listenUrl ? <span className={styles.musicPill}>Escuchar</span> : null}
-                  </div>
+                  <span className={styles.dailyType} style={regularEyebrowStyle}>Marcha del día</span>
                   <h3>“{todayContent.march.title}”</h3>
                   <p>{[todayContent.march.composer, todayContent.march.year, todayContent.march.dedicatee].filter(Boolean).join(' · ')}</p>
                 </div>
                 {todayContent.march.whyToday ? (
                   <div className={styles.musicWhy}>
-                    <span>Por qué escucharla hoy</span>
+                    <span style={regularEyebrowStyle}>Por qué escucharla hoy</span>
                     <p>{todayContent.march.whyToday}</p>
                   </div>
                 ) : null}
-                <div className={styles.musicInfo}>
-                  <div className={styles.musicMeta}>
-                    {todayContent.march.composer ? <span>{todayContent.march.composer}</span> : null}
-                    {todayContent.march.year ? <span>{todayContent.march.year}</span> : null}
-                    {todayContent.march.dedicatee ? <span>{todayContent.march.dedicatee}</span> : null}
-                  </div>
-                  {todayContent.march.listenUrl ? (
-                    <a
-                      className={styles.musicListen}
-                      href={todayContent.march.listenUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      ▶ Escuchar
-                    </a>
-                  ) : null}
-                </div>
+                <HomeMarchPlayer
+                  videoId={todayContent.march.videoId}
+                  listenUrl={todayContent.march.listenUrl}
+                  title={todayContent.march.title}
+                />
               </article>
             ) : null}
           </div>
@@ -236,14 +222,14 @@ export default async function HomePage() {
         <section className={`${styles.section} ${styles.threadsSection}`} id="ultimos-hilos">
           <div className="shell">
             <div className={styles.threadsHead}>
-              <span className={styles.threadsEyebrow}>Conocimiento en movimiento</span>
+              <span className={styles.threadsEyebrow} style={regularEyebrowStyle}>Conocimiento en movimiento</span>
               <h2>Últimos hilos incorporados</h2>
               <p>Relaciones nuevas o enriquecidas que ya puedes recorrer dentro de la enciclopedia.</p>
             </div>
             <div className={styles.threadRail}>
               {discoveryThreads.map((thread) => (
                 <Link className={styles.threadCard} href={thread.href} key={thread.id}>
-                  <span className={styles.threadLabel}>{thread.label}</span>
+                  <span className={styles.threadLabel} style={regularEyebrowStyle}>{thread.label}</span>
                   <h3>{thread.title}</h3>
                   <strong className={styles.threadMetric}>{thread.metric}</strong>
                   <p>{thread.summary}</p>
