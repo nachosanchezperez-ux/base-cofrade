@@ -22,6 +22,21 @@ const nextConfig = {
         hostname: 'cdn.palbincdn.com',
         pathname: '/users/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'lascigarreras.net',
+        pathname: '/wp-content/uploads/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'm.media-amazon.com',
+        pathname: '/images/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'coverartarchive.org',
+        pathname: '/release/**',
+      },
     ],
   },
 }
