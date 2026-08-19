@@ -7,6 +7,7 @@ import OfficialLinks from '@/components/OfficialLinks'
 import BandDiscographySection from '@/components/bands/BandDiscographySection'
 import { getBandBySlug, youtubeEmbedUrl } from '@/lib/supabase/bands'
 import { getBandDiscography } from '@/lib/supabase/bandDiscography'
+import { getPublishedBandColors } from '@/lib/supabase/bandColors'
 import { absoluteUrl } from '@/lib/seo'
 import styles from '../bandas.module.css'
 
@@ -99,7 +100,10 @@ export default async function BandDetailPage({ params }) {
   const { slug } = await params
   const band = await getBandBySlug(slug)
   if (!band) notFound()
-  const discography = await getBandDiscography(band.id)
+  const [discography, colors] = await Promise.all([
+    getBandDiscography(band.id),
+    getPublishedBandColors(band.id),
+  ])
   const years = [...new Set(band.premieres.map((item) => item.year))].sort((a, b) => b - a)
   const currentYear = new Date().getFullYear()
   const currentPremieres = band.premieres.filter((item) => item.year === currentYear)
@@ -117,6 +121,9 @@ export default async function BandDetailPage({ params }) {
   const hasDiscography = discography.length > 0
   const hasDirection = band.direction.length > 0
   const banderin = band.heritage?.find((item) => item.type === 'Banderín') || null
+  const paletteLabel = colors.map((item) => item.name).join(' · ')
+  const accentColor = colors.find((item) => item.role === 'accent')?.hexValue || band.primaryColor
+  const identityColor = colors.find((item) => item.role === 'identity')?.hexValue || '#FFFFFF'
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'MusicGroup',
@@ -137,7 +144,7 @@ export default async function BandDetailPage({ params }) {
       style={{
         '--band-primary': band.primaryColor,
         '--band-secondary': band.secondaryColor,
-        '--bc-red': band.primaryColor,
+        '--bc-red': accentColor,
         '--bc-blue': band.secondaryColor,
         '--bc-dark': band.secondaryColor,
       }}
@@ -156,7 +163,7 @@ export default async function BandDetailPage({ params }) {
               <h1>{band.popularName}</h1>
               <p className={styles.officialName}>{band.officialName}</p>
             </div>
-            <div className={styles.identityBlock}>
+            <div className={styles.identityBlock} style={{ background: identityColor }}>
               {band.logoPath ? <Image src={band.logoPath} alt={`Logotipo de ${band.popularName}`} width={150} height={225} priority sizes="150px" /> : <strong>{band.popularName.slice(0, 2).toUpperCase()}</strong>}
             </div>
           </div>
@@ -209,11 +216,36 @@ export default async function BandDetailPage({ params }) {
                   <strong>{band.municipality}</strong>
                   {band.municipalitySlug ? <Link href={`/bandas?localidad=${band.municipalitySlug}`}>Bandas de {band.municipality} →</Link> : null}
                 </article>
-                <article>
+                {band.linkedBrotherhood ? <article>
                   <span>Hermandad</span>
-                  <strong>{band.linkedBrotherhood || 'Por documentar'}</strong>
+                  <strong>{band.linkedBrotherhood}</strong>
                   {band.linkedBrotherhoodSlug ? <Link href={`/hermandades/${band.linkedBrotherhoodSlug}`}>Ver ficha de la hermandad →</Link> : null}
-                </article>
+                </article> : null}
+                {colors.length ? <article>
+                  <span>Colores</span>
+                  <strong>{paletteLabel}</strong>
+                  <div
+                    aria-label={`Colores de la banda: ${paletteLabel}`}
+                    style={{ display: 'flex', gap: 7, marginTop: 'auto', paddingTop: 17 }}
+                  >
+                    {colors.filter((color) => color.hexValue).map((color) => (
+                      <span
+                        key={color.id}
+                        title={`${color.name} · ${color.hexValue}`}
+                        aria-hidden="true"
+                        style={{
+                          display: 'block',
+                          width: 19,
+                          height: 19,
+                          border: '1px solid rgb(34 32 38 / 18%)',
+                          borderRadius: '50%',
+                          background: color.hexValue,
+                          boxShadow: '0 1px 3px rgb(34 32 38 / 10%)',
+                        }}
+                      />
+                    ))}
+                  </div>
+                </article> : null}
                 <article className={styles.trajectoryCard}>
                   <span>Trayectoria</span>
                   <strong>{band.foundation ? `Fundación: ${band.foundation}` : 'Fundación por documentar'}</strong>
