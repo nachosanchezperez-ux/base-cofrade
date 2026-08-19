@@ -376,9 +376,25 @@ export default async function HermandadDetailPage({ params }) {
         <SectionTitle eyebrow="Estación de penitencia" title="Túnica" description="El azul identifica la túnica; rojo y blanco distinguen los cortejos de los dos pasos." />
         <div className="habit-grid">{h.habitos.map((item, index) => (
           <article className={`habit-card brotherhood-habit ${index === 0 ? 'habit-red' : 'habit-white'}`} key={item.id}>
-            <div className="habit-swatch"><span /></div><div><h3>{item.nombre}</h3><dl>
+            <div className="habit-visual">
+              {item.imagenPath ? (
+                <Image
+                  className="habit-image"
+                  src={item.imagenPath}
+                  alt={item.imagenAlt || `Túnica de nazareno: ${item.nombre}`}
+                  width={800}
+                  height={1800}
+                  sizes="(max-width: 620px) 68vw, 240px"
+                />
+              ) : (
+                <div className="habit-swatch"><span /></div>
+              )}
+            </div>
+            <div className="habit-copy"><h3>{item.nombre}</h3><dl>
               <div><dt>Túnica</dt><dd>{item.tunica}</dd></div><div><dt>Antifaz</dt><dd>{item.antifaz}</dd></div>
-              <div><dt>Cordón</dt><dd>{item.cordon}</dd></div><div><dt>Botonadura</dt><dd>{item.botonadura}</dd></div><div><dt>Calzado</dt><dd>{item.calzado}</dd></div>
+              <div><dt>Cíngulo</dt><dd>{item.cordon}</dd></div><div><dt>Botonadura</dt><dd>{item.botonadura}</dd></div>
+              {item.escudo && <div><dt>Escudo</dt><dd>{item.escudo}</dd></div>}
+              <div><dt>Calzado</dt><dd>{item.calzado}</dd></div>
             </dl></div>
           </article>
         ))}</div>
