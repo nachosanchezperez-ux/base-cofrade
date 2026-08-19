@@ -20,7 +20,6 @@ export const metadata = {
   twitter: { title: HOME_TITLE, description: DEFAULT_DESCRIPTION },
 };
 
-const regularEyebrowStyle = { fontWeight: 400 };
 const stackedNextExtraHeadStyle = { alignItems: 'flex-start', flexDirection: 'column', gap: 4 };
 
 function getTodayLabel() {
@@ -62,14 +61,14 @@ export default async function HomePage() {
       <section className={styles.hero} id="inicio">
         <div className="shell">
           <div className={styles.heroCopy}>
-            <span className={styles.kicker} style={regularEyebrowStyle}>Sevilla y su provincia</span>
+            <span className={styles.kicker}>Sevilla y su provincia</span>
             <h1>Hilo Cofrade, <span>todo en las cofradías está relacionado</span></h1>
             <p>Consulta, descubre y sigue las conexiones entre hermandades, imágenes, bandas, marchas, autores y patrimonio</p>
           </div>
 
           <aside className={styles.searchBox} id="tiradelhilo">
             <div className={styles.searchInner}>
-              <span className={styles.searchLabel} style={regularEyebrowStyle}>Tira del hilo</span>
+              <span className={styles.searchLabel}>Tira del hilo</span>
               <h2>¿Qué quieres descubrir?</h2>
               <p>Busca una entidad y empieza a recorrer las relaciones ya documentadas en Hilo Cofrade</p>
               <HiloSearch items={searchItems} />
@@ -105,7 +104,7 @@ export default async function HomePage() {
 
               <div className={styles.featuredExtraordinaryCopy}>
                 <div className={styles.featuredExtraordinaryIntro}>
-                  <span className={styles.eyebrow} style={regularEyebrowStyle}>Próxima extraordinaria</span>
+                  <span className={styles.eyebrow}>Próxima extraordinaria</span>
                   <h2 id="proxima-extraordinaria-title">{featuredExtraordinary.title}</h2>
                   <div className={styles.featuredExtraordinaryMeta}>
                     <strong>
@@ -173,7 +172,7 @@ export default async function HomePage() {
         <section className={`${styles.section} ${styles.today}`} id="hoy">
           <div className="shell">
             <div className={styles.todayHeader}>
-              <span className={styles.todayDate} style={regularEyebrowStyle}>{today}</span>
+              <span className={styles.todayDate}>{today}</span>
               <h2 className={styles.todayTitle}>Hoy en Hilo Cofrade</h2>
               <p className={styles.todaySub}>Una selección diaria para descubrir, consultar y seguir tirando del hilo</p>
             </div>
@@ -184,7 +183,7 @@ export default async function HomePage() {
                   <article className={styles.dailyCard} key={label}>
                     <span className={styles.dailyIcon}>{icon}</span>
                     <div>
-                      <span className={styles.dailyType} style={regularEyebrowStyle}>{label}</span>
+                      <span className={styles.dailyType}>{label}</span>
                       <h3>{item.title}</h3>
                       {item.summary ? <p>{item.summary}</p> : null}
                       {item.href ? <Link className={styles.dailyLink} href={item.href}>{item.linkLabel}</Link> : null}
@@ -197,13 +196,17 @@ export default async function HomePage() {
             {todayContent.march ? (
               <article className={styles.musicCard}>
                 <div className={styles.musicHead}>
-                  <span className={styles.dailyType} style={regularEyebrowStyle}>Marcha del día</span>
-                  <h3>“{todayContent.march.title}”</h3>
-                  <p>{[todayContent.march.composer, todayContent.march.year, todayContent.march.dedicatee].filter(Boolean).join(' · ')}</p>
+                  <span className={styles.dailyType}>Marcha del día</span>
+                  <h3>{todayContent.march.title}</h3>
+                  <p>
+                    {todayContent.march.composer ? <strong>{todayContent.march.composer}</strong> : null}
+                    {todayContent.march.year ? <> · {todayContent.march.year}</> : null}
+                    {todayContent.march.dedicatee ? <> · Dedicada a <strong>{todayContent.march.dedicatee}</strong></> : null}
+                  </p>
                 </div>
                 {todayContent.march.whyToday ? (
                   <div className={styles.musicWhy}>
-                    <span style={regularEyebrowStyle}>Por qué escucharla hoy</span>
+                    <span>Por qué escucharla hoy</span>
                     <p>{todayContent.march.whyToday}</p>
                   </div>
                 ) : null}
@@ -222,14 +225,14 @@ export default async function HomePage() {
         <section className={`${styles.section} ${styles.threadsSection}`} id="ultimos-hilos">
           <div className="shell">
             <div className={styles.threadsHead}>
-              <span className={styles.threadsEyebrow} style={regularEyebrowStyle}>Conocimiento en movimiento</span>
+              <span className={styles.threadsEyebrow}>Conocimiento en movimiento</span>
               <h2>Últimos hilos incorporados</h2>
               <p>Relaciones nuevas o enriquecidas que ya puedes recorrer dentro de la enciclopedia.</p>
             </div>
             <div className={styles.threadRail}>
               {discoveryThreads.map((thread) => (
                 <Link className={styles.threadCard} href={thread.href} key={thread.id}>
-                  <span className={styles.threadLabel} style={regularEyebrowStyle}>{thread.label}</span>
+                  <span className={styles.threadLabel}>{thread.label}</span>
                   <h3>{thread.title}</h3>
                   <strong className={styles.threadMetric}>{thread.metric}</strong>
                   <p>{thread.summary}</p>
@@ -250,7 +253,7 @@ export default async function HomePage() {
         <section className={`${styles.section} ${styles.nextExtraSection}`}>
           <div className="shell">
             <div className={styles.nextExtraHead} style={stackedNextExtraHeadStyle}>
-              <span className={styles.eyebrow} style={regularEyebrowStyle}>Después</span>
+              <span className={styles.eyebrow}>Después</span>
               <h2>Las siguientes extraordinarias</h2>
             </div>
             <div className={styles.nextExtraList}>
@@ -274,7 +277,7 @@ export default async function HomePage() {
       <section className={styles.section} id="enciclopedia">
         <div className="shell">
           <div className={styles.sectionHead}>
-            <span className={styles.eyebrow} style={regularEyebrowStyle}>Enciclopedia</span>
+            <span className={styles.eyebrow}>Enciclopedia</span>
             <h2 className={styles.sectionTitle}>Entra por donde quieras</h2>
             <p className={styles.sectionDescription}>Acceso compacto a las principales entidades de Hilo Cofrade</p>
           </div>
@@ -313,7 +316,7 @@ export default async function HomePage() {
           </div>
 
           <aside className={styles.collab} id="colabora">
-            <span className={styles.eyebrow} style={regularEyebrowStyle}>Participa</span>
+            <span className={styles.eyebrow}>Participa</span>
             <h3>Ayúdanos a completar el hilo</h3>
             <p>Las aportaciones pasarán por revisión y documentación antes de incorporarse a Hilo Cofrade</p>
             <div className={styles.flow}>
