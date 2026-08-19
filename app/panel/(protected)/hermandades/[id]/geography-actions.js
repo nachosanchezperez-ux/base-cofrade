@@ -1,6 +1,7 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
+import { PUBLIC_CACHE_TAGS, revalidatePublicData } from '@/lib/cache/public-cache'
 import { redirect } from 'next/navigation'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
@@ -83,6 +84,7 @@ async function refreshBrotherhood(supabase, brotherhoodId) {
   revalidatePath('/panel/hermandades')
   revalidatePath('/hermandades')
   if (data?.slug) revalidatePath(`/hermandades/${data.slug}`)
+  revalidatePublicData(PUBLIC_CACHE_TAGS.BROTHERHOODS)
 }
 
 function editorUrl(brotherhoodId, params = {}) {

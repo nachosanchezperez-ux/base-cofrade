@@ -1,6 +1,7 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
+import { PUBLIC_CACHE_TAGS, revalidatePublicData } from '@/lib/cache/public-cache'
 import { redirect } from 'next/navigation'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
@@ -17,6 +18,12 @@ const PUBLIC_ROUTES = {
   brotherhood: 'hermandades',
   image: 'imagenes',
   step: 'pasos',
+}
+const PUBLIC_CACHE_BY_ENTITY_TYPE = {
+  brotherhood: PUBLIC_CACHE_TAGS.BROTHERHOODS,
+  image: PUBLIC_CACHE_TAGS.IMAGES,
+  step: PUBLIC_CACHE_TAGS.STEPS,
+  agent: PUBLIC_CACHE_TAGS.AGENTS,
 }
 
 function value(formData, name) {
@@ -143,6 +150,7 @@ async function ensureSourceLink(supabase, sourceId, entityId) {
 
 async function refreshSourceViews(supabase, entityId = null) {
   revalidatePath('/panel/fuentes')
+  revalidatePublicData(PUBLIC_CACHE_TAGS.SOURCES)
   if (!entityId) return
   const result = await supabase
     .from('entities')
@@ -156,6 +164,7 @@ async function refreshSourceViews(supabase, entityId = null) {
 
   const publicRoute = PUBLIC_ROUTES[result.data.entity_type]
   if (publicRoute && result.data.slug) revalidatePath(`/${publicRoute}/${result.data.slug}`)
+  revalidatePublicData(PUBLIC_CACHE_BY_ENTITY_TYPE[result.data.entity_type])
 }
 
 function redirectSaved(result) {

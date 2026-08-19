@@ -2,6 +2,7 @@
 
 import { randomUUID } from 'node:crypto'
 import { revalidatePath } from 'next/cache'
+import { PUBLIC_CACHE_TAGS, revalidatePublicData } from '@/lib/cache/public-cache'
 import { redirect } from 'next/navigation'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
@@ -159,5 +160,6 @@ export async function createStepAction(formData) {
   revalidatePath('/panel')
   revalidatePath('/panel/pasos')
   revalidatePath(`/panel/pasos/${stepId}`)
+  revalidatePublicData(PUBLIC_CACHE_TAGS.STEPS)
   redirect(`/panel/pasos/${stepId}?saved=created`)
 }

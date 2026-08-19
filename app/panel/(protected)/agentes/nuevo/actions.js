@@ -2,6 +2,7 @@
 
 import { randomUUID } from 'node:crypto'
 import { revalidatePath } from 'next/cache'
+import { PUBLIC_CACHE_TAGS, revalidatePublicData } from '@/lib/cache/public-cache'
 import { redirect } from 'next/navigation'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
@@ -153,5 +154,6 @@ export async function createAgentAction(formData) {
   revalidatePath('/panel')
   revalidatePath('/panel/agentes')
   revalidatePath(`/panel/agentes/${agentId}`)
+  revalidatePublicData(PUBLIC_CACHE_TAGS.AGENTS)
   redirect(`/panel/agentes/${agentId}?saved=created`)
 }

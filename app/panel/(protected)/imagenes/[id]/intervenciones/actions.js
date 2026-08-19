@@ -1,6 +1,7 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
+import { PUBLIC_CACHE_TAGS, revalidatePublicData } from '@/lib/cache/public-cache'
 import { redirect } from 'next/navigation'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import {
@@ -31,6 +32,7 @@ function editableStatus(formData) {
 function refresh(imageId) {
   revalidatePath(`/panel/imagenes/${imageId}`)
   revalidatePath(`/panel/imagenes/${imageId}/intervenciones`)
+  revalidatePublicData(PUBLIC_CACHE_TAGS.IMAGES)
 }
 
 async function loadImage(supabase, imageId) {

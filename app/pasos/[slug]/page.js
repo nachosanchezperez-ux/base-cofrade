@@ -6,9 +6,11 @@ import { getPasoPageBySlug } from '@/lib/supabase/public-entity-pages';
 import {
   absoluteUrl,
   breadcrumbJsonLd,
-  pageTitle,
   seoDescription,
+  socialMetadata,
 } from '@/lib/seo';
+
+export const revalidate = 3600;
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -24,6 +26,7 @@ export async function generateMetadata({ params }) {
   const { paso, hermandad } = result;
   const title = paso.nombre;
   const description = seoDescription(
+    paso.descripcion,
     hermandad
       ? `Ficha de ${paso.nombre}, de ${hermandad.nombrePopular}: imágenes que procesionan, configuración, patrimonio, autorías y evolución histórica.`
       : `Ficha de ${paso.nombre}: imágenes que procesionan, configuración y evolución patrimonial documentada.`
@@ -33,17 +36,7 @@ export async function generateMetadata({ params }) {
   return {
     title,
     description,
-    alternates: { canonical },
-    openGraph: {
-      type: 'article',
-      title: pageTitle(title),
-      description,
-      url: canonical,
-    },
-    twitter: {
-      title: pageTitle(title),
-      description,
-    },
+    ...socialMetadata({ title, description, path: canonical, type: 'article' }),
   };
 }
 

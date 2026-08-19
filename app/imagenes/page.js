@@ -1,19 +1,18 @@
 import JsonLd from '@/components/JsonLd'
 import RelationalEntityDirectory from '@/components/RelationalEntityDirectory'
 import { getImagesDirectory } from '@/lib/supabase/directories'
-import { absoluteUrl, breadcrumbJsonLd, pageTitle } from '@/lib/seo'
+import { absoluteUrl, breadcrumbJsonLd, socialMetadata } from '@/lib/seo'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 3600
 
 export const metadata = {
   title: 'Imágenes cofrades de Sevilla y provincia',
   description: 'Directorio de imágenes cofrades de Sevilla y su provincia: autoría, datación, hermandad, ubicación y relaciones históricas.',
-  alternates: { canonical: '/imagenes' },
-  openGraph: {
-    title: pageTitle('Directorio de imágenes'),
+  ...socialMetadata({
+    title: 'Directorio de imágenes',
     description: 'Consulta imágenes cofrades documentadas y sus relaciones con hermandades, autores, lugares y pasos.',
-    url: '/imagenes',
-  },
+    path: '/imagenes',
+  }),
 }
 
 export default async function ImagenesPage() {

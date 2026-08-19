@@ -6,9 +6,11 @@ import { getImagenPageBySlug } from '@/lib/supabase/public-entity-pages';
 import {
   absoluteUrl,
   breadcrumbJsonLd,
-  pageTitle,
   seoDescription,
+  socialMetadata,
 } from '@/lib/seo';
+
+export const revalidate = 3600;
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -34,17 +36,7 @@ export async function generateMetadata({ params }) {
   return {
     title,
     description,
-    alternates: { canonical },
-    openGraph: {
-      type: 'article',
-      title: pageTitle(title),
-      description,
-      url: canonical,
-    },
-    twitter: {
-      title: pageTitle(title),
-      description,
-    },
+    ...socialMetadata({ title, description, path: canonical, type: 'article' }),
   };
 }
 
@@ -100,10 +92,10 @@ export default async function ImagenPage({ params }) {
         artform: imagen.tipologia || imagen.tipo,
         ...(imagen.material ? { artMedium: imagen.material } : {}),
         ...(imagen.autor && !/pendiente|desconocido|anónimo/i.test(imagen.autor) ? {
-          creator: {
+          creator: imagen.autor.split(' · ').map((name) => ({
             '@type': 'Person',
-            name: imagen.autor,
-          },
+            name,
+          })),
         } : {}),
       }} />
       <section className="image-detail-hero-v2">

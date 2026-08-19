@@ -1,12 +1,14 @@
 import Link from 'next/link';
+import { socialMetadata } from '@/lib/seo';
 import styles from './page.module.css';
 
+const title = 'Colabora';
+const description = 'Ayuda a completar Hilo Cofrade proponiendo información, correcciones, nuevas entidades o fuentes documentales para su revisión.';
+
 export const metadata = {
-  title: 'Colabora',
-  description: 'Ayuda a completar Hilo Cofrade proponiendo información, correcciones, nuevas entidades o fuentes documentales para su revisión.',
-  alternates: {
-    canonical: '/colabora',
-  },
+  title,
+  description,
+  ...socialMetadata({ title, description, path: '/colabora' }),
 };
 
 export default function ColaboraPage() {

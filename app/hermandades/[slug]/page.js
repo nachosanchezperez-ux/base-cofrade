@@ -20,9 +20,10 @@ import {
   brotherhoodSeoDescription,
   brotherhoodSeoTitle,
   pageTitle,
+  socialMetadata,
 } from '@/lib/seo';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 3600;
 const getHermandad = cache(getHermandadPageBySlug);
 
 export function generateStaticParams() {
@@ -47,17 +48,7 @@ export async function generateMetadata({ params }) {
   return {
     title,
     description,
-    alternates: { canonical },
-    openGraph: {
-      type: 'article',
-      title: pageTitle(title),
-      description,
-      url: canonical,
-    },
-    twitter: {
-      title: pageTitle(title),
-      description,
-    },
+    ...socialMetadata({ title, description, path: canonical, type: 'article' }),
   };
 }
 

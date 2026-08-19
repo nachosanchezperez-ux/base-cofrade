@@ -1,6 +1,7 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
+import { PUBLIC_CACHE_TAGS, revalidatePublicData } from '@/lib/cache/public-cache'
 import { redirect } from 'next/navigation'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import { relationSourceScope } from '@/lib/panel/relation-sources'
@@ -80,6 +81,7 @@ async function audit(supabase, user, entry) {
 function refresh(returnTo) {
   revalidatePath(returnTo)
   revalidatePath('/panel/fuentes')
+  revalidatePublicData(PUBLIC_CACHE_TAGS.SOURCES)
 }
 
 export async function linkRelationSourceAction(formData) {

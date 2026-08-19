@@ -1,6 +1,7 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
+import { PUBLIC_CACHE_TAGS, revalidatePublicData } from '@/lib/cache/public-cache'
 import { redirect } from 'next/navigation'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
@@ -165,5 +166,6 @@ export async function updateImageAction(formData) {
     revalidatePath('/imagenes')
     revalidatePath(`/imagenes/${current.slug}`)
   }
+  revalidatePublicData(PUBLIC_CACHE_TAGS.IMAGES)
   redirect(`/panel/imagenes/${imageId}?saved=general`)
 }

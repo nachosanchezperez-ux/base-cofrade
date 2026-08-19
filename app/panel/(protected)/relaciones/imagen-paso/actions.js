@@ -1,6 +1,7 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
+import { PUBLIC_CACHE_TAGS, revalidatePublicData } from '@/lib/cache/public-cache'
 import { redirect } from 'next/navigation'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
@@ -80,6 +81,7 @@ async function refreshRelation(supabase, imageId, stepId) {
   revalidatePath('/pasos')
   if (imageResult.data?.slug) revalidatePath(`/imagenes/${imageResult.data.slug}`)
   if (stepResult.data?.slug) revalidatePath(`/pasos/${stepResult.data.slug}`)
+  revalidatePublicData(PUBLIC_CACHE_TAGS.IMAGES, PUBLIC_CACHE_TAGS.STEPS)
 }
 
 function redirectSaved(result) {

@@ -1,19 +1,18 @@
 import JsonLd from '@/components/JsonLd'
 import RelationalEntityDirectory from '@/components/RelationalEntityDirectory'
 import { getStepsDirectory } from '@/lib/supabase/directories'
-import { absoluteUrl, breadcrumbJsonLd, pageTitle } from '@/lib/seo'
+import { absoluteUrl, breadcrumbJsonLd, socialMetadata } from '@/lib/seo'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 3600
 
 export const metadata = {
   title: 'Pasos cofrades de Sevilla y provincia',
   description: 'Directorio de pasos cofrades de Sevilla y su provincia: hermandad, imágenes, tipología, autores, talleres y evolución patrimonial.',
-  alternates: { canonical: '/pasos' },
-  openGraph: {
-    title: pageTitle('Directorio de pasos'),
+  ...socialMetadata({
+    title: 'Directorio de pasos',
     description: 'Consulta pasos procesionales documentados y sus relaciones con hermandades, imágenes, autores, talleres y patrimonio.',
-    url: '/pasos',
-  },
+    path: '/pasos',
+  }),
 }
 
 export default async function PasosPage() {

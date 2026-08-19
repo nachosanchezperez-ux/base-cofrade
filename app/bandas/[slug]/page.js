@@ -5,13 +5,24 @@ import JsonLd from '@/components/JsonLd'
 import SourcesBlock from '@/components/SourcesBlock'
 import OfficialLinks from '@/components/OfficialLinks'
 import BandDiscographySection from '@/components/bands/BandDiscographySection'
-import { getBandBySlug, youtubeEmbedUrl } from '@/lib/supabase/bands'
+import { getBandBySlug, getBandsDirectory, youtubeEmbedUrl } from '@/lib/supabase/bands'
 import { getBandDiscography } from '@/lib/supabase/bandDiscography'
 import { getPublishedBandColors } from '@/lib/supabase/bandColors'
-import { absoluteUrl } from '@/lib/seo'
+import {
+  absoluteUrl,
+  bandSeoTitle,
+  breadcrumbJsonLd,
+  seoDescription,
+  socialMetadata,
+} from '@/lib/seo'
 import styles from '../bandas.module.css'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 3600
+
+export async function generateStaticParams() {
+  const bands = await getBandsDirectory()
+  return bands.map((band) => ({ slug: band.slug }))
+}
 
 const OUTING_ORDER = [
   'Viernes de Dolores',
@@ -82,17 +93,28 @@ function CuriosityIcon() {
 export async function generateMetadata({ params }) {
   const { slug } = await params
   const band = await getBandBySlug(slug)
-  if (!band) return {}
+  if (!band) return {
+    title: 'Banda no encontrada',
+    robots: { index: false, follow: false },
+  }
+  const title = bandSeoTitle(band)
+  const description = seoDescription(
+    band.summary,
+    `Ficha de ${band.popularName}: historia, formación, acompañamientos, repertorio, dirección, patrimonio musical y fuentes.`,
+  )
+  const path = `/bandas/${band.slug}`
   return {
-    title: band.popularName,
-    description: band.summary,
-    alternates: { canonical: `/bandas/${slug}` },
-    openGraph: {
-      title: band.popularName,
-      description: band.summary,
-      url: `/bandas/${slug}`,
-      images: band.heroImagePath ? [{ url: band.heroImagePath, alt: band.heroImageAlt }] : undefined,
-    },
+    title,
+    description,
+    ...socialMetadata({
+      title,
+      description,
+      path,
+      type: 'article',
+      images: band.heroImagePath
+        ? [{ url: band.heroImagePath, alt: band.heroImageAlt || `Fotografía de ${band.popularName}` }]
+        : undefined,
+    }),
   }
 }
 
@@ -148,6 +170,11 @@ export default async function BandDetailPage({ params }) {
         '--bc-dark': band.secondaryColor,
       }}
     >
+      <JsonLd data={breadcrumbJsonLd([
+        { name: 'Inicio', path: '/' },
+        { name: 'Bandas', path: '/bandas' },
+        { name: band.popularName, path: `/bandas/${band.slug}` },
+      ])} />
       <JsonLd data={jsonLd} />
       <section className={styles.bandHero}>
         <div className={`shell ${styles.heroShell}`}>

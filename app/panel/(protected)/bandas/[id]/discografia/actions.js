@@ -1,6 +1,7 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
+import { PUBLIC_CACHE_TAGS, revalidatePublicData } from '@/lib/cache/public-cache'
 import { redirect } from 'next/navigation'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
@@ -116,6 +117,7 @@ async function refreshDiscography(supabase, bandId) {
   revalidatePath(`/panel/bandas/${bandId}/discografia`)
   revalidatePath('/bandas')
   if (band.slug) revalidatePath(`/bandas/${band.slug}`)
+  revalidatePublicData(PUBLIC_CACHE_TAGS.BANDS)
   return band
 }
 

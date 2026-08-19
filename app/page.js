@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import HiloSearch from '@/components/HiloSearch';
 import HomeMarchPlayer from '@/components/HomeMarchPlayer';
-import { DEFAULT_DESCRIPTION, HOME_TITLE } from '@/lib/seo';
+import { DEFAULT_DESCRIPTION, HOME_TITLE, socialMetadata } from '@/lib/seo';
 import {
   getHomeDiscoveryThreads,
   getTodayHomeContent,
@@ -12,12 +12,10 @@ import { getOutingBriefing } from '@/lib/supabase/outing-briefing';
 import { getGlobalSearchItems } from '@/lib/supabase/search';
 import styles from './home.module.css';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 3600;
 
 export const metadata = {
-  alternates: { canonical: '/' },
-  openGraph: { title: HOME_TITLE, description: DEFAULT_DESCRIPTION, url: '/' },
-  twitter: { title: HOME_TITLE, description: DEFAULT_DESCRIPTION },
+  ...socialMetadata({ title: HOME_TITLE, description: DEFAULT_DESCRIPTION, path: '/' }),
 };
 
 const stackedNextExtraHeadStyle = { alignItems: 'flex-start', flexDirection: 'column', gap: 4 };

@@ -2,6 +2,7 @@
 
 import { randomUUID } from 'node:crypto'
 import { revalidatePath } from 'next/cache'
+import { PUBLIC_CACHE_TAGS, revalidatePublicData } from '@/lib/cache/public-cache'
 import { redirect } from 'next/navigation'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
@@ -84,6 +85,7 @@ async function refreshBand(supabase, bandId) {
   revalidatePath('/bandas')
   revalidatePath('/')
   if (data?.slug) revalidatePath(`/bandas/${data.slug}`)
+  revalidatePublicData(PUBLIC_CACHE_TAGS.BANDS)
 }
 
 function redirectSaved(bandId, section) {

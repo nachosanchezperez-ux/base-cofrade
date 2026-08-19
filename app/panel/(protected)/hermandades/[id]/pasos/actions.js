@@ -1,6 +1,7 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
+import { PUBLIC_CACHE_TAGS, revalidatePublicData } from '@/lib/cache/public-cache'
 import { redirect } from 'next/navigation'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
@@ -88,6 +89,7 @@ async function refreshRelation(supabase, brotherhoodId, stepId) {
   revalidatePath('/pasos')
   if (brotherhoodResult.data?.slug) revalidatePath(`/hermandades/${brotherhoodResult.data.slug}`)
   if (stepResult.data?.slug) revalidatePath(`/pasos/${stepResult.data.slug}`)
+  revalidatePublicData(PUBLIC_CACHE_TAGS.BROTHERHOODS, PUBLIC_CACHE_TAGS.STEPS)
 }
 
 function redirectSaved(brotherhoodId, result) {

@@ -1,5 +1,11 @@
+import { cache } from 'react'
 import Link from 'next/link'
-import { createClient } from '@/lib/supabase/server'
+import {
+  getCachedPublicData,
+  PUBLIC_CACHE_TAGS,
+  publicEntityTag,
+} from '@/lib/cache/public-cache'
+import { createPublicClient } from '@/lib/supabase/public'
 
 function assertRows(result, label) {
   if (result.error) throw new Error(`${label}: ${result.error.message}`)
@@ -91,71 +97,73 @@ async function loadOwnBands(supabase, brotherhoodId) {
   })
 }
 
+const getConceptualTitulars = cache((brotherhoodId) => getCachedPublicData({
+  key: ['brotherhood-conceptual-titulars', brotherhoodId],
+  tags: [
+    PUBLIC_CACHE_TAGS.BROTHERHOODS,
+    PUBLIC_CACHE_TAGS.IMAGES,
+    publicEntityTag('brotherhood-id', brotherhoodId),
+  ],
+  loader: () => loadConceptualTitulars(createPublicClient(), brotherhoodId),
+}))
+
+const getOwnBands = cache((brotherhoodId) => getCachedPublicData({
+  key: ['brotherhood-own-bands', brotherhoodId],
+  tags: [
+    PUBLIC_CACHE_TAGS.BROTHERHOODS,
+    PUBLIC_CACHE_TAGS.BANDS,
+    publicEntityTag('brotherhood-id', brotherhoodId),
+  ],
+  loader: () => loadOwnBands(createPublicClient(), brotherhoodId),
+}))
+
 export async function BrotherhoodTitularCount({ brotherhoodId, imageCount = 0 }) {
-  try {
-    const supabase = await createClient()
-    const conceptualTitulars = await loadConceptualTitulars(supabase, brotherhoodId)
-    return imageCount + conceptualTitulars.length
-  } catch (error) {
-    console.error('[Hilo Cofrade] No se pudo completar el contador de titulares', error)
-    return imageCount
-  }
+  const conceptualTitulars = await getConceptualTitulars(brotherhoodId)
+  return imageCount + conceptualTitulars.length
 }
 
 export async function BrotherhoodConceptualTitulars({ brotherhoodId }) {
-  try {
-    const supabase = await createClient()
-    const titulars = await loadConceptualTitulars(supabase, brotherhoodId)
-    if (!titulars.length) return null
+  const titulars = await getConceptualTitulars(brotherhoodId)
+  if (!titulars.length) return null
 
-    return (
-      <div className="image-grid" style={{ marginTop: '1.25rem' }}>
-        {titulars.map((titular) => (
-          <article className="image-card brotherhood-image-card" key={titular.id}>
-            <div className="portrait-placeholder brotherhood-portrait"><span>✦</span></div>
-            <div className="image-card-body">
-              <span className="eyebrow">{titular.tipo}</span>
-              <h3>{titular.nombre}</h3>
-              {titular.descripcion && <p className="image-card-description">{titular.descripcion}</p>}
-              <small>Identidad devocional titular independiente de una Imagen física.</small>
-            </div>
-          </article>
-        ))}
-      </div>
-    )
-  } catch (error) {
-    console.error('[Hilo Cofrade] No se pudieron mostrar los titulares devocionales', error)
-    return null
-  }
+  return (
+    <div className="image-grid" style={{ marginTop: '1.25rem' }}>
+      {titulars.map((titular) => (
+        <article className="image-card brotherhood-image-card" key={titular.id}>
+          <div className="portrait-placeholder brotherhood-portrait"><span>✦</span></div>
+          <div className="image-card-body">
+            <span className="eyebrow">{titular.tipo}</span>
+            <h3>{titular.nombre}</h3>
+            {titular.descripcion && <p className="image-card-description">{titular.descripcion}</p>}
+            <small>Identidad devocional titular independiente de una Imagen física.</small>
+          </div>
+        </article>
+      ))}
+    </div>
+  )
 }
 
 export async function BrotherhoodOwnBands({ brotherhoodId }) {
-  try {
-    const supabase = await createClient()
-    const bands = await loadOwnBands(supabase, brotherhoodId)
-    if (!bands.length) return null
+  const bands = await getOwnBands(brotherhoodId)
+  if (!bands.length) return null
 
-    return (
-      <section className="section brotherhood-soft" id="bandas-propias">
-        <div className="shell">
-          <span className="eyebrow">Vínculo institucional</span>
-          <h2>Bandas de la Hermandad</h2>
-          <p className="body-large">Formaciones vinculadas institucionalmente a la Hermandad, con independencia de sus acompañamientos procesionales concretos.</p>
-          <div className="current-music-grid">
-            {bands.map((band) => (
-              <Link className="current-music-card" href={`/bandas/${band.slug}`} key={band.id}>
-                <span className="current-music-position">Banda propia</span>
-                <h3>{band.nombre}</h3>
-                <p>{band.tipo}</p>
-                {band.descripcion && <small>{band.descripcion}</small>}
-              </Link>
-            ))}
-          </div>
+  return (
+    <section className="section brotherhood-soft" id="bandas-propias">
+      <div className="shell">
+        <span className="eyebrow">Vínculo institucional</span>
+        <h2>Bandas de la Hermandad</h2>
+        <p className="body-large">Formaciones vinculadas institucionalmente a la Hermandad, con independencia de sus acompañamientos procesionales concretos.</p>
+        <div className="current-music-grid">
+          {bands.map((band) => (
+            <Link className="current-music-card" href={`/bandas/${band.slug}`} key={band.id}>
+              <span className="current-music-position">Banda propia</span>
+              <h3>{band.nombre}</h3>
+              <p>{band.tipo}</p>
+              {band.descripcion && <small>{band.descripcion}</small>}
+            </Link>
+          ))}
         </div>
-      </section>
-    )
-  } catch (error) {
-    console.error('[Hilo Cofrade] No se pudieron mostrar las bandas propias', error)
-    return null
-  }
+      </div>
+    </section>
+  )
 }

@@ -1,21 +1,18 @@
 import HermandadesDirectory from '@/components/HermandadesDirectory';
 import JsonLd from '@/components/JsonLd';
 import { getHermandadesDirectory } from '@/lib/supabase/brotherhood-directory';
-import { absoluteUrl, breadcrumbJsonLd, pageTitle } from '@/lib/seo';
+import { absoluteUrl, breadcrumbJsonLd, socialMetadata } from '@/lib/seo';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 3600;
 
 export const metadata = {
   title: 'Hermandades de Sevilla y provincia',
   description: 'Directorio de hermandades de Semana Santa, Gloria y Sacramentales de Sevilla capital y provincia, organizado por localidad, jornada y mes.',
-  alternates: {
-    canonical: '/hermandades',
-  },
-  openGraph: {
-    title: pageTitle('Directorio de hermandades'),
+  ...socialMetadata({
+    title: 'Directorio de hermandades',
     description: 'Consulta las hermandades de Semana Santa, Gloria y Sacramentales de Sevilla capital y provincia.',
-    url: '/hermandades',
-  },
+    path: '/hermandades',
+  }),
 };
 
 export default async function HermandadesPage() {
