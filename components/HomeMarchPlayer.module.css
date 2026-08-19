@@ -1,0 +1,83 @@
+.root {
+  display: flex;
+  justify-content: flex-end;
+  padding: 14px 17px 17px;
+}
+
+.playing {
+  display: block;
+}
+
+.listenButton {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 15px;
+  border: 0;
+  border-radius: 999px;
+  color: #fff;
+  background: #123a67;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.listenButton:hover {
+  background: #0f2742;
+}
+
+.playerFrame {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 14px;
+  background: #07182b;
+}
+
+.playerFrame iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.playerFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 9px;
+}
+
+.playerFooter span {
+  color: #68788a;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.playerFooter button {
+  padding: 0;
+  border: 0;
+  color: #123a67;
+  background: transparent;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+@media (max-width: 640px) {
+  .root {
+    justify-content: stretch;
+    padding: 13px 17px 17px;
+  }
+
+  .listenButton {
+    width: 100%;
+  }
+}
