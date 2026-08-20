@@ -21,12 +21,21 @@
 }
 
 .processional-photo.has-image .processional-photo-image[src*="piedad-d-posada"] {
+  z-index: 1;
+  display: block;
+  visibility: visible;
+  opacity: 1;
   object-fit: contain;
   object-position: center center !important;
 }
 
 .processional-photo.has-image:has(.processional-photo-image[src*="piedad-d-posada"])::after {
+  z-index: 2;
   background: linear-gradient(180deg, rgba(3, 12, 22, .04), transparent 62%, rgba(3, 12, 22, .68));
+}
+
+.processional-photo.has-image:has(.processional-photo-image[src*="piedad-d-posada"]) .processional-photo-credit {
+  z-index: 3;
 }
 
 /* Ficha propia del Paso: composición editorial para fotografía vertical. */
@@ -45,8 +54,20 @@
 }
 
 .step-hero-photo .step-hero-photo-image[src*="piedad-d-posada"] {
+  z-index: 1;
+  display: block;
+  visibility: visible;
+  opacity: 1;
   object-fit: contain;
   object-position: center center !important;
+}
+
+.step-hero-photo:has(.step-hero-photo-image[src*="piedad-d-posada"])::after {
+  z-index: 2;
+}
+
+.step-hero-photo:has(.step-hero-photo-image[src*="piedad-d-posada"]) figcaption {
+  z-index: 3;
 }
 
 @media (max-width: 900px) {
