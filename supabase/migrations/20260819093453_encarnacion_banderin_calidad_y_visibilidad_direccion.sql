@@ -1,12 +1,3 @@
--- Hilo Cofrade · La Encarnación: calidad del banderín y visibilidad de dirección
--- Migración 053
---
--- 1. Sustituye la miniatura local de 320x480 del banderín por la imagen
---    oficial de mayor resolución publicada por la propia Agrupación Musical.
--- 2. Introduce visibilidad pública independiente para responsables de banda.
---    El dato de dirección puede conservarse en Panel/base interna sin mostrarse
---    necesariamente en la ficha pública.
-
 alter table public.band_agents
   add column if not exists is_public boolean not null default true;
 
@@ -29,14 +20,11 @@ using (
   )
 );
 
--- Mantiene la dirección actual de La Encarnación en la base y en el Panel,
--- pero deja de exponerla en la ficha pública.
 update public.band_agents
 set is_public = false
 where band_entity_id = 'cb04a5d8-e81e-4405-a001-9d5a60840924'
   and is_current = true;
 
--- Mejora la calidad visual del banderín usando la imagen oficial de la banda.
 do $$
 declare
   asset_id uuid;
