@@ -37,6 +37,16 @@ const nextConfig = {
         hostname: 'coverartarchive.org',
         pathname: '/release/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'image-cdn-ak.spotifycdn.com',
+        pathname: '/image/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'image-cdn-fa.spotifycdn.com',
+        pathname: '/image/**',
+      },
     ],
   },
 }
