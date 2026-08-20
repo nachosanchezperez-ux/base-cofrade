@@ -52,9 +52,12 @@ function eventDate(value) {
 }
 
 function yearRange(item) {
+  if (item.yearFrom && item.yearTo) {
+    return item.yearFrom === item.yearTo ? `Año ${item.yearFrom}` : `${item.yearFrom}–${item.yearTo}`
+  }
   if (item.periodText) return item.periodText
   if (!item.yearFrom) return 'Periodo por documentar'
-  return item.yearTo ? `${item.yearFrom}–${item.yearTo}` : `Desde ${item.yearFrom}`
+  return `Desde ${item.yearFrom}`
 }
 
 function groupContributions(items = []) {
