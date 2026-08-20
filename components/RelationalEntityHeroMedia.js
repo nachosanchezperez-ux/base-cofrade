@@ -16,12 +16,31 @@ export default function RelationalEntityHeroMedia({
 }) {
   const [photoError, setPhotoError] = useState(false);
   const [crestError, setCrestError] = useState(false);
+  const [isPortrait, setIsPortrait] = useState(false);
   const hasPhoto = Boolean(photoSrc) && !photoError;
   const hasCrest = Boolean(crestSrc) && !crestError;
+  const usePortraitStepLayout = variant === 'step' && isPortrait;
+
+  const photoStyle = {
+    zIndex: 1,
+    visibility: 'visible',
+    opacity: 1,
+    ...(usePortraitStepLayout
+      ? { objectFit: 'contain', objectPosition: 'center center' }
+      : focusPosition
+        ? { objectPosition: focusPosition }
+        : {}),
+  };
 
   return (
-    <figure className={`${styles.media} ${styles[`media_${variant}`]}`}>
-      <div className={styles.mediaFrame}>
+    <figure
+      className={`${styles.media} ${styles[`media_${variant}`]}`}
+      style={usePortraitStepLayout ? { maxWidth: '440px' } : undefined}
+    >
+      <div
+        className={styles.mediaFrame}
+        style={usePortraitStepLayout ? { aspectRatio: '2 / 3' } : undefined}
+      >
         {hasPhoto ? (
           <Image
             className={styles.photo}
@@ -29,10 +48,15 @@ export default function RelationalEntityHeroMedia({
             alt={photoAlt}
             fill
             preload
-            style={focusPosition ? { objectPosition: focusPosition } : undefined}
+            style={photoStyle}
             sizes={variant === 'image'
               ? '(max-width: 980px) min(100vw - 40px, 560px), 440px'
               : '(max-width: 980px) min(100vw - 40px, 680px), 520px'}
+            onLoad={(event) => {
+              if (variant !== 'step') return;
+              const image = event.currentTarget;
+              setIsPortrait(image.naturalHeight > image.naturalWidth * 1.12);
+            }}
             onError={() => setPhotoError(true)}
           />
         ) : hasCrest ? (
@@ -56,7 +80,7 @@ export default function RelationalEntityHeroMedia({
           </div>
         )}
 
-        {hasPhoto ? <span className={styles.photoShade} aria-hidden="true" /> : null}
+        {hasPhoto ? <span className={styles.photoShade} style={{ zIndex: 2 }} aria-hidden="true" /> : null}
       </div>
 
       {hasPhoto && hasCrest ? (
