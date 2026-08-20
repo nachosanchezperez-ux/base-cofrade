@@ -69,7 +69,11 @@ export default async function PanelAgentsPage({ searchParams }) {
                   <small>{item.slug || 'Slug por documentar'}</small>
                 </div>
                 <span className={`${styles.statusBadge} ${styles[item.status]}`}>{STATUS_LABELS[item.status]}</span>
-                <Link className={styles.rowLink} href={`/panel/agentes/${item.id}`}>Editar <span>→</span></Link>
+                {item.isEditable ? (
+                  <Link className={styles.rowLink} href={`/panel/agentes/${item.id}`}>Editar <span>→</span></Link>
+                ) : (
+                  <span className={styles.rowNote} title={item.referenceReason}>Nodo de referencia</span>
+                )}
               </article>
             ))}
           </div>

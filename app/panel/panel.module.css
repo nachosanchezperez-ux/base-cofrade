@@ -499,6 +499,15 @@
 
 .rowLink span { color: var(--panel-red); }
 
+.rowNote {
+  color: var(--panel-muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-align: right;
+  text-transform: uppercase;
+}
+
 .editorHeader { margin-bottom: 26px; }
 
 .breadcrumb {
@@ -1039,7 +1048,8 @@
   .filters { grid-template-columns: 1fr; }
   .brotherhoodList article { grid-template-columns: 42px minmax(0, 1fr) auto; gap: 10px; }
   .brotherhoodList .statusBadge { display: none; }
-  .rowLink { grid-column: 2 / -1; text-align: left; }
+  .rowLink,
+  .rowNote { grid-column: 2 / -1; text-align: left; }
   .panelCard,
   .editorItem { padding: 18px; }
   .editorHeaderActions { flex-wrap: wrap; }
