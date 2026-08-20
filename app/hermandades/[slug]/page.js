@@ -5,11 +5,12 @@ import CofradeTypeBadges from '@/components/CofradeTypeBadges';
 import {
   BrotherhoodConceptualTitulars,
   BrotherhoodOwnBands,
-  BrotherhoodTitularCount,
 } from '@/components/BrotherhoodRelationalExtras';
+import EntitySectionNav from '@/components/EntitySectionNav';
 import { notFound } from 'next/navigation';
 import JsonLd from '@/components/JsonLd';
 import OfficialLinks from '@/components/OfficialLinks';
+import RelationalEntityHero from '@/components/RelationalEntityHero';
 import SectionTitle from '@/components/SectionTitle';
 import SourcesBlock from '@/components/SourcesBlock';
 import { hermandades } from '@/lib/data';
@@ -72,11 +73,15 @@ export default async function HermandadDetailPage({ params }) {
   if (!h) notFound();
   const entityCoverMedia = await getPublishedEntityCoverMediaMap(
     [
+      h.id,
       ...h.imagenes.map((imagen) => imagen.id),
       ...h.pasos.map((paso) => paso.id),
       ...(h.participacionesConsejo || []).map((participacion) => participacion.id),
     ]
   );
+  const heroMedia = entityCoverMedia.get(h.id)
+    || h.imagenes.map((imagen) => entityCoverMedia.get(imagen.id)).find(Boolean)
+    || null;
   const imagenMap = new Map(h.imagenes.map((imagen) => [imagen.id, imagen]));
   const tiposHermandad = h.tipos || [];
   const canonicalPath = `/hermandades/${h.slug}`;
@@ -124,74 +129,47 @@ export default async function HermandadDetailPage({ params }) {
         { name: h.nombrePopular, path: canonicalPath },
       ])} />
       <JsonLd data={pageJsonLd} />
-      <section className="brotherhood-hero">
-        <div className="shell">
-          <div className="brotherhood-breadcrumb">
-            <span className="breadcrumb-accent" />
-            <Link href="/hermandades">Hermandades</Link>
-            <span className="breadcrumb-arrow">→</span>
-            <strong>{h.nombrePopular}</strong>
-          </div>
-          <div className="brotherhood-hero-grid">
-            <div>
-              <div className="tag-row">
-                {h.tipos.map((tipo) => <span className="pill brotherhood-pill" key={tipo}>{tipo}</span>)}
-                <span className="pill brotherhood-pill-outline">{h.localidad}</span>
-                <span className="pill brotherhood-pill-outline">{h.diaSalida}</span>
-              </div>
-              <span className="brotherhood-kicker">Hermandad</span>
-              <h1>{h.nombrePopular}</h1>
-              <p className="official-name">{h.nombreOficial}</p>
-            </div>
-            <div className="brotherhood-visual">
-              <div className="hero-photo-placeholder"><span>{h.imagenes[0]?.nombre || 'Fotografía principal'}</span><small>Titular de la hermandad</small></div>
-              {h.escudoPath ? (
-                <div className="crest-placeholder brotherhood-crest brotherhood-crest-image-wrap">
-                  <Image
-                    className="brotherhood-crest-image"
-                    src={h.escudoPath}
-                    alt={`Escudo de ${h.nombrePopular}`}
-                    width={160}
-                    height={190}
-                    sizes="160px"
-                    priority
-                  />
-                </div>
-              ) : (
-                <div className="crest-placeholder brotherhood-crest"><span>{h.escudoIniciales || h.nombrePopular.slice(0, 2).toUpperCase()}</span><small>Escudo</small></div>
-              )}
-            </div>
-          </div>
-          <div className="brotherhood-facts">
-            <div><small>Fundación</small><strong>{h.fundacion}</strong></div>
-            <div><small>Sede canónica</small><strong>{h.sede}</strong></div>
-            <div><small>Titulares</small><strong><BrotherhoodTitularCount brotherhoodId={h.id} imageCount={h.imagenes.length} /></strong></div>
-            <div><small>Pasos</small><strong>{h.pasos.length}</strong></div>
-          </div>
-        </div>
-      </section>
+      <RelationalEntityHero
+        variant="brotherhood"
+        entityType="Hermandad"
+        title={h.nombrePopular}
+        subtitle={h.nombreOficial}
+        breadcrumbItems={[
+          { label: 'Hermandades', href: '/hermandades' },
+          { label: h.localidad || 'Ficha' },
+        ]}
+        badges={[...(h.tipos || []), h.localidad]}
+        facts={[
+          { label: 'Fundación', value: h.fundacion },
+          { label: 'Sede canónica', value: h.sede },
+          { label: 'Día de salida', value: h.diaSalida },
+        ]}
+        media={{
+          photoSrc: heroMedia?.path || '',
+          photoAlt: heroMedia?.alt || `Titular de ${h.nombrePopular}`,
+          credit: heroMedia?.credit || '',
+          initials: h.escudoIniciales || h.nombrePopular.slice(0, 2).toUpperCase(),
+          crestSrc: h.escudoPath || '',
+          crestAlt: `Escudo de ${h.nombrePopular}`,
+        }}
+      />
 
-      <nav className="section-nav brotherhood-nav">
-        <div className="shell brotherhood-nav-shell">
-          <span className="brotherhood-nav-label">Explorar ficha</span>
-          <div className="brotherhood-nav-list nav-scroll">
-            <a href="#resumen">Resumen</a>
-            <a href="#titulares">Titulares</a>
-            <a href="#pasos">Pasos</a>
-            {h.cronologia?.length > 0 && <a href="#historia">Historia</a>}
-            {h.habitos?.length > 0 && <a href="#tunica">Túnica</a>}
-            {h.salidas?.length > 0 && <a href="#salidas">Salidas</a>}
-            {h.cultos?.length > 0 && <a href="#cultos">Cultos</a>}
-            {(h.patrimonio?.length > 0 || h.estrenos?.length > 0) && <a href="#patrimonio">Patrimonio</a>}
-            {h.patrimonioMusical?.length > 0 && <a href="#musica">Patrimonio musical</a>}
-            {h.acompanamientos?.length > 0 && <a href="#acompanamientos">Acompañamientos</a>}
-            {h.noticias?.length > 0 && <a href="#noticias">Noticias</a>}
-            {h.curiosidades?.length > 0 && <a href="#curiosidades">Curiosidades</a>}
-            {h.enlacesOficiales?.length > 0 && <a href="#enlaces-oficiales">Web y redes</a>}
-            {h.fuentesFicha?.length > 0 && <a href="#fuentes">Fuentes</a>}
-          </div>
-        </div>
-      </nav>
+      <EntitySectionNav items={[
+        { href: '#resumen', label: 'Resumen' },
+        { href: '#titulares', label: 'Titulares' },
+        { href: '#pasos', label: 'Pasos' },
+        h.cronologia?.length > 0 && { href: '#historia', label: 'Historia' },
+        h.habitos?.length > 0 && { href: '#tunica', label: 'Túnica' },
+        h.salidas?.length > 0 && { href: '#salidas', label: 'Salidas' },
+        h.cultos?.length > 0 && { href: '#cultos', label: 'Cultos' },
+        (h.patrimonio?.length > 0 || h.estrenos?.length > 0) && { href: '#patrimonio', label: 'Patrimonio' },
+        h.patrimonioMusical?.length > 0 && { href: '#musica', label: 'Patrimonio musical' },
+        h.acompanamientos?.length > 0 && { href: '#acompanamientos', label: 'Acompañamientos' },
+        h.noticias?.length > 0 && { href: '#noticias', label: 'Noticias' },
+        h.curiosidades?.length > 0 && { href: '#curiosidades', label: 'Curiosidades' },
+        h.enlacesOficiales?.length > 0 && { href: '#enlaces-oficiales', label: 'Web y redes' },
+        h.fuentesFicha?.length > 0 && { href: '#fuentes', label: 'Fuentes' },
+      ]} />
 
       <section className="section" id="resumen"><div className="shell content-grid">
         <div>

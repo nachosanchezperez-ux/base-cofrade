@@ -1,8 +1,9 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import EntityHeroPortrait from '@/components/EntityHeroPortrait';
+import EntitySectionNav from '@/components/EntitySectionNav';
 import EntityMediaGallery from '@/components/EntityMediaGallery';
 import JsonLd from '@/components/JsonLd';
+import RelationalEntityHero from '@/components/RelationalEntityHero';
 import SourcesBlock from '@/components/SourcesBlock';
 import {
   getPublishedEntityCoverMedia,
@@ -102,7 +103,9 @@ export default async function ImagenPage({ params }) {
       style={{
         '--brotherhood-primary': hermandad?.colores?.primario || '#153B69',
         '--brotherhood-secondary': hermandad?.colores?.secundario || '#A71930',
-        '--brotherhood-light': hermandad?.colores?.claro || '#FFFFFF'
+        '--brotherhood-light': hermandad?.colores?.claro || '#FFFFFF',
+        '--brotherhood-dark': hermandad?.colores?.oscuro || '#0D2949',
+        '--brotherhood-on-secondary': hermandad?.colores?.sobreSecundario || '#FFFFFF'
       }}
     >
       <JsonLd data={breadcrumbJsonLd(breadcrumbs)} />
@@ -124,45 +127,51 @@ export default async function ImagenPage({ params }) {
           },
         } : {}),
       }} />
-      <section className="image-detail-hero-v2">
-        <div className="shell">
-          <div className="brotherhood-breadcrumb">
-            <span className="breadcrumb-accent" />
-            {hermandad ? (
-              <>
-                <Link href="/hermandades">Hermandades</Link>
-                <span className="breadcrumb-arrow">→</span>
-                <Link href={`/hermandades/${hermandad.slug}`}>{hermandad.nombrePopular}</Link>
-              </>
-            ) : (
-              <Link href="/imagenes">Imágenes</Link>
-            )}
-            <span className="breadcrumb-arrow">→</span>
-            <strong>{imagen.nombre}</strong>
-          </div>
+      <RelationalEntityHero
+        variant="image"
+        entityType={hermandad ? 'Imagen titular' : 'Imagen'}
+        title={imagen.nombre}
+        breadcrumbItems={hermandad
+          ? [
+              { label: 'Hermandades', href: '/hermandades' },
+              { label: hermandad.nombrePopular, href: `/hermandades/${hermandad.slug}` },
+              { label: 'Imagen' },
+            ]
+          : [
+              { label: 'Enciclopedia', href: '/imagenes' },
+              { label: 'Imagen' },
+            ]}
+        badges={[imagen.tipologia || imagen.tipo]}
+        relation={hermandad ? {
+          label: 'Pertenece a',
+          name: hermandad.nombrePopular,
+          href: `/hermandades/${hermandad.slug}`,
+          crestSrc: hermandad.escudoPath || '',
+        } : null}
+        facts={[
+          { label: 'Autoría', value: imagen.autor },
+          { label: 'Datación', value: imagen.fecha },
+          { label: 'Tipología', value: imagen.tipologia || imagen.tipo },
+        ]}
+        media={{
+          photoSrc: coverMedia?.path || '',
+          photoAlt: coverMedia?.alt || `Fotografía de ${imagen.nombre}`,
+          credit: coverMedia?.credit || '',
+          initials: imagen.iniciales,
+        }}
+      />
 
-          <div className="image-detail-hero-grid-v2">
-            <div className="image-detail-hero-copy-v2">
-              <h1>{imagen.nombre}</h1>
-              <p>
-                {hermandad
-                  ? `Imagen titular de ${hermandad.nombrePopular}. Su ficha reúne autoría, historia y evolución.`
-                  : 'Ficha propia de la imagen, con su autoría, datación y datos documentados.'}
-              </p>
-            </div>
+      <EntitySectionNav items={[
+        { href: '#resumen', label: 'Resumen' },
+        galleryMedia.length > 0 && { href: '#galeria', label: 'Galería' },
+        imagen.restauraciones?.length > 0 && { href: '#restauraciones', label: 'Restauraciones' },
+        imagen.acontecimientos?.length > 0 && { href: '#hitos', label: 'Hitos' },
+        cronologia.length > 0 && { href: '#cronologia', label: 'Cronología' },
+        otrasImagenes.length > 0 && { href: '#relaciones', label: 'Relaciones' },
+        imagen.fuentes?.length > 0 && { href: '#fuentes', label: 'Fuentes' },
+      ]} />
 
-            <EntityHeroPortrait
-              key={coverMedia?.path || imagen.id}
-              src={coverMedia?.path || ''}
-              alt={coverMedia?.alt || `Fotografía de ${imagen.nombre}`}
-              credit={coverMedia?.credit || ''}
-              initials={imagen.iniciales}
-            />
-          </div>
-        </div>
-      </section>
-
-      <section className="section image-overview-v2">
+      <section className="section image-overview-v2" id="resumen">
         <div className="shell image-overview-grid-v2">
           <div className="image-overview-copy-v2">
             <span className="eyebrow">De un vistazo</span>
@@ -223,10 +232,10 @@ export default async function ImagenPage({ params }) {
         </div>
       </section>
 
-      <EntityMediaGallery items={galleryMedia} />
+      <EntityMediaGallery items={galleryMedia} id="galeria" />
 
       {imagen.restauraciones?.length > 0 && (
-        <section className="section brotherhood-soft">
+        <section className="section brotherhood-soft" id="restauraciones">
           <div className="shell">
             <span className="eyebrow">Patrimonio</span>
             <h2 className="image-section-title-v2">Restauraciones</h2>
@@ -244,7 +253,7 @@ export default async function ImagenPage({ params }) {
       )}
 
       {imagen.acontecimientos?.length > 0 && (
-        <section className="section">
+        <section className="section" id="hitos">
           <div className="shell">
             <span className="eyebrow">Acontecimientos</span>
             <h2 className="image-section-title-v2">Hitos destacados</h2>
@@ -262,7 +271,7 @@ export default async function ImagenPage({ params }) {
       )}
 
       {cronologia.length > 0 && (
-        <section className="section image-timeline-section-v2">
+        <section className="section image-timeline-section-v2" id="cronologia">
           <div className="shell">
             <span className="eyebrow">Evolución</span>
             <h2 className="image-section-title-v2">Cronología</h2>
@@ -281,7 +290,7 @@ export default async function ImagenPage({ params }) {
       )}
 
       {otrasImagenes.length > 0 && (
-        <section className="related-titulares-section">
+        <section className="related-titulares-section" id="relaciones">
           <div className="shell">
             <div className="related-titulares-head">
               <span className="eyebrow">Relaciones</span>
