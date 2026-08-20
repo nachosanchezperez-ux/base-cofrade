@@ -70,6 +70,7 @@ export default async function HermandadDetailPage({ params }) {
     [
       ...h.imagenes.map((imagen) => imagen.id),
       ...h.pasos.map((paso) => paso.id),
+      ...(h.participacionesConsejo || []).map((participacion) => participacion.id),
     ]
   );
   const imagenMap = new Map(h.imagenes.map((imagen) => [imagen.id, imagen]));
@@ -195,25 +196,40 @@ export default async function HermandadDetailPage({ params }) {
 
           {h.participacionesConsejo?.length > 0 && (
             <div className="council-participations">
-              {h.participacionesConsejo.map((participacion) => (
-                <article className="council-participation-card" key={participacion.id}>
-                  {participacion.imagen ? (
-                    <img className="council-participation-photo" src={participacion.imagen} alt={participacion.titulo} />
-                  ) : (
-                    <div className="council-participation-photo council-photo-placeholder">
-                      <span>Fotografía</span><small>{participacion.ano}</small>
+              {h.participacionesConsejo.map((participacion) => {
+                const eventMedia = entityCoverMedia.get(participacion.id);
+                const imagePath = eventMedia?.path || participacion.imagen;
+                const imageCredit = eventMedia?.credit || participacion.imagenCredito;
+
+                return (
+                  <article className="council-participation-card" key={participacion.id}>
+                    {imagePath ? (
+                      <figure className="council-participation-visual">
+                        <Image
+                          className="council-participation-photo"
+                          src={imagePath}
+                          alt={eventMedia?.alt || participacion.titulo}
+                          fill
+                          sizes="(max-width: 560px) calc(100vw - 40px), (max-width: 900px) 42vw, 360px"
+                        />
+                        {imageCredit ? <figcaption>{imageCredit}</figcaption> : null}
+                      </figure>
+                    ) : (
+                      <div className="council-participation-photo council-photo-placeholder">
+                        <span>Fotografía</span><small>{participacion.ano}</small>
+                      </div>
+                    )}
+                    <div className="council-participation-copy">
+                      <div className="council-participation-meta">
+                        <span>{participacion.categoria}</span><strong>{participacion.ano}</strong>
+                      </div>
+                      <h3>{participacion.titulo}</h3>
+                      <p className="council-participation-protagonists">{participacion.protagonistas}</p>
+                      <p>{participacion.resumen}</p>
                     </div>
-                  )}
-                  <div className="council-participation-copy">
-                    <div className="council-participation-meta">
-                      <span>{participacion.categoria}</span><strong>{participacion.ano}</strong>
-                    </div>
-                    <h3>{participacion.titulo}</h3>
-                    <p className="council-participation-protagonists">{participacion.protagonistas}</p>
-                    <p>{participacion.resumen}</p>
-                  </div>
-                </article>
-              ))}
+                  </article>
+                );
+              })}
             </div>
           )}
         </div>
