@@ -373,7 +373,7 @@ export default async function HermandadDetailPage({ params }) {
 
 
       {h.habitos?.length > 0 && <section className="section brotherhood-dark" id="tunica"><div className="shell">
-        <SectionTitle eyebrow="Estación de penitencia" title="Túnica" description="El azul identifica la túnica; rojo y blanco distinguen los cortejos de los dos pasos." />
+        <SectionTitle eyebrow="Estación de penitencia" title="Túnica" description="Descripción documentada de la indumentaria nazarena de la Hermandad." />
         <div className="habit-grid">{h.habitos.map((item, index) => (
           <article className={`habit-card brotherhood-habit ${index === 0 ? 'habit-red' : 'habit-white'}`} key={item.id}>
             <div className="habit-visual">
@@ -382,8 +382,8 @@ export default async function HermandadDetailPage({ params }) {
                   className="habit-image"
                   src={item.imagenPath}
                   alt={item.imagenAlt || `Túnica de nazareno: ${item.nombre}`}
-                  width={800}
-                  height={1800}
+                  width={1024}
+                  height={1536}
                   sizes="(max-width: 620px) 68vw, 240px"
                 />
               ) : (
