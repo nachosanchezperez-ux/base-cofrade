@@ -66,8 +66,11 @@ export default async function HermandadDetailPage({ params }) {
   const { slug } = await params;
   const h = await getHermandad(slug);
   if (!h) notFound();
-  const titularCoverMedia = await getPublishedEntityCoverMediaMap(
-    h.imagenes.map((imagen) => imagen.id)
+  const entityCoverMedia = await getPublishedEntityCoverMediaMap(
+    [
+      ...h.imagenes.map((imagen) => imagen.id),
+      ...h.pasos.map((paso) => paso.id),
+    ]
   );
   const imagenMap = new Map(h.imagenes.map((imagen) => [imagen.id, imagen]));
   const tiposHermandad = h.tipos || [];
@@ -269,7 +272,7 @@ export default async function HermandadDetailPage({ params }) {
       <section className="section brotherhood-soft" id="titulares"><div className="shell">
         <SectionTitle eyebrow="Titularidad" title="Sagrados Titulares" description="Imágenes e identidades devocionales que conforman la titularidad documentada de la Hermandad." />
         <div className="image-grid">{h.imagenes.map((imagen) => {
-          const coverMedia = titularCoverMedia.get(imagen.id);
+          const coverMedia = entityCoverMedia.get(imagen.id);
           const card = (
             <>
               {coverMedia?.path ? (
@@ -348,7 +351,24 @@ export default async function HermandadDetailPage({ params }) {
         <SectionTitle eyebrow={`${h.pasos.length} pasos`} title="Pasos procesionales" description="Imágenes, diseño, talla, orfebrería, bordados, reformas y evolución histórica." />
         <div className="processional-grid">{h.pasos.map((paso, index) => (
           <article className="processional-card" key={paso.id}>
-            <div className="processional-photo"><span>0{index + 1}</span><small>Fotografía del paso</small></div>
+            {entityCoverMedia.get(paso.id)?.path ? (
+              <div className="processional-photo has-image">
+                <Image
+                  src={entityCoverMedia.get(paso.id).path}
+                  alt={entityCoverMedia.get(paso.id).alt || `Fotografía de ${paso.nombre}`}
+                  fill
+                  sizes="(max-width: 900px) calc(100vw - 40px), 50vw"
+                />
+                <span className="processional-photo-index">0{index + 1}</span>
+                {entityCoverMedia.get(paso.id).credit ? (
+                  <small className="processional-photo-credit">
+                    {entityCoverMedia.get(paso.id).credit}
+                  </small>
+                ) : null}
+              </div>
+            ) : (
+              <div className="processional-photo"><span>0{index + 1}</span><small>Fotografía del paso</small></div>
+            )}
             <div className="processional-body"><span className="pill">{paso.tipo}</span><h3>{paso.nombre}</h3><p>{paso.descripcion}</p>
               {(paso.capatazActual || paso.acompanamientoActual) && (
                 <div className="step-current-data">

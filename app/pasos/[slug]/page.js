@@ -2,6 +2,8 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import JsonLd from '@/components/JsonLd';
 import SectionTitle from '@/components/SectionTitle';
+import StepHeroPhoto from '@/components/StepHeroPhoto';
+import { getPublishedEntityCoverMedia } from '@/lib/supabase/entity-media';
 import { getPasoPageBySlug } from '@/lib/supabase/public-entity-pages';
 import {
   absoluteUrl,
@@ -22,6 +24,7 @@ export async function generateMetadata({ params }) {
   }
 
   const { paso, hermandad } = result;
+  const coverMedia = await getPublishedEntityCoverMedia(paso.id);
   const title = paso.nombre;
   const description = seoDescription(
     hermandad
@@ -39,10 +42,22 @@ export async function generateMetadata({ params }) {
       title: pageTitle(title),
       description,
       url: canonical,
+      ...(coverMedia?.path ? {
+        images: [{
+          url: coverMedia.path,
+          alt: coverMedia.alt || `Fotografía de ${paso.nombre}`,
+        }],
+      } : {}),
     },
     twitter: {
       title: pageTitle(title),
       description,
+      ...(coverMedia?.path ? {
+        images: [{
+          url: coverMedia.path,
+          alt: coverMedia.alt || `Fotografía de ${paso.nombre}`,
+        }],
+      } : {}),
     },
   };
 }
@@ -52,6 +67,7 @@ export default async function PasoDetailPage({params}){
   const result=await getPasoPageBySlug(slug);
   if(!result) notFound();
   const {paso,hermandad,imagenes=[]}=result;
+  const coverMedia = await getPublishedEntityCoverMedia(paso.id);
   const canonicalPath = `/pasos/${paso.slug}`;
   const breadcrumbs = hermandad
     ? [
@@ -80,6 +96,7 @@ export default async function PasoDetailPage({params}){
         url: absoluteUrl(canonicalPath),
         name: paso.nombre,
         description: paso.descripcion,
+        ...(coverMedia?.path ? { image: absoluteUrl(coverMedia.path) } : {}),
         ...(hermandad ? {
           isPartOf: {
             '@type': 'Organization',
@@ -110,7 +127,12 @@ export default async function PasoDetailPage({params}){
               <h1>{paso.nombre}</h1>
               <p>{paso.descripcion}</p>
             </div>
-            <div className="step-photo-placeholder">Fotografía del paso</div>
+            <StepHeroPhoto
+              key={coverMedia?.path || paso.id}
+              src={coverMedia?.path || ''}
+              alt={coverMedia?.alt || `Fotografía de ${paso.nombre}`}
+              credit={coverMedia?.credit || ''}
+            />
           </div>
         </div>
       </section>
