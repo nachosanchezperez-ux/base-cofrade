@@ -1,8 +1,3 @@
--- Hilo Cofrade · Jesús Presentado al Pueblo · San Benito
--- Fotografía principal aportada expresamente para su publicación.
--- Normaliza además el criterio visual de créditos fotográficos:
--- "Fotografía • Nombre del autor".
-
 do $$
 declare
   image_id uuid;
@@ -76,7 +71,6 @@ begin
     is_cover = excluded.is_cover,
     notes = excluded.notes;
 
-  -- Criterio visual común de créditos fotográficos ya existentes.
   update public.bands
   set hero_image_credit = regexp_replace(hero_image_credit, '^Fotografía\s*[·•]\s*', 'Fotografía • ')
   where hero_image_credit ~ '^Fotografía\s*[·•]';

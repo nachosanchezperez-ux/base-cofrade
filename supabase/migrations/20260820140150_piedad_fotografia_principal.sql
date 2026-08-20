@@ -1,6 +1,3 @@
--- Hilo Cofrade · Nuestra Señora de la Piedad
--- Fotografía principal aportada expresamente para su publicación.
-
 do $$
 declare
   image_id uuid;

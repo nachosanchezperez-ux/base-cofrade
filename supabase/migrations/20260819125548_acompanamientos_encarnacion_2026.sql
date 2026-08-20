@@ -1,14 +1,3 @@
--- Hilo Cofrade · La Encarnación: acompañamientos musicales vigentes 2026
--- Migración 056
---
--- Completa la ficha pública de la Agrupación Musical Nuestra Señora de la
--- Encarnación con dos vinculaciones actuales verificadas que faltaban:
---   · Miércoles Santo · Oración en el Huerto · El Puerto de Santa María
---   · Sábado Santo · Santo Entierro · Castilblanco de los Arroyos
---
--- Las hermandades y pasos auxiliares se crean como entidades draft para mantener
--- el grafo relacional sin publicar fichas todavía incompletas.
-
 do $$
 declare
   band_id uuid;
@@ -34,7 +23,6 @@ begin
     raise exception 'No existe la banda La Encarnación';
   end if;
 
-  -- Localidades auxiliares del grafo.
   insert into public.municipalities (name, slug, province, autonomous_community, country)
   values ('El Puerto de Santa María', 'el-puerto-de-santa-maria', 'Cádiz', 'Andalucía', 'España')
   on conflict (slug) do update set
@@ -59,7 +47,6 @@ begin
   from public.municipalities
   where slug = 'castilblanco-de-los-arroyos';
 
-  -- Hermandad y paso · El Puerto de Santa María.
   insert into public.entities (entity_type, name, slug, status)
   values (
     'brotherhood',
@@ -119,7 +106,6 @@ begin
     );
   end if;
 
-  -- Hermandad y paso · Castilblanco de los Arroyos.
   insert into public.entities (entity_type, name, slug, status)
   values (
     'brotherhood',
@@ -179,7 +165,6 @@ begin
     );
   end if;
 
-  -- Acompañamiento vigente · El Puerto de Santa María.
   select id into el_puerto_period_id
   from public.music_accompaniment_periods
   where band_entity_id = band_id
@@ -226,7 +211,6 @@ begin
     where id = el_puerto_period_id;
   end if;
 
-  -- Acompañamiento vigente · Castilblanco de los Arroyos.
   select id into castilblanco_period_id
   from public.music_accompaniment_periods
   where band_entity_id = band_id
@@ -273,7 +257,6 @@ begin
     where id = castilblanco_period_id;
   end if;
 
-  -- Fuentes · El Puerto.
   select id into source_el_puerto_current_id
   from public.sources
   where url = 'https://www.elpuertodesantamaria.es/semana-santa-2026'
@@ -311,7 +294,6 @@ begin
     ) returning id into source_el_puerto_start_id;
   end if;
 
-  -- Fuentes · Castilblanco.
   select id into source_castilblanco_current_id
   from public.sources
   where url = 'https://www.castilblancodelosarroyos.es/es/actualidad/noticias/Castilblanco-encara-sus-dias-grandes-recorridos-horarios-y-novedades-de-la-recta-final-de-la-Semana-Santa-2026/'
@@ -349,7 +331,6 @@ begin
     ) returning id into source_castilblanco_start_id;
   end if;
 
-  -- Enlaces fuente → periodo musical.
   if not exists (
     select 1 from public.source_links
     where source_id = source_el_puerto_current_id

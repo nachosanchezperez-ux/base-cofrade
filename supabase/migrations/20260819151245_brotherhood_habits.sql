@@ -212,4 +212,3 @@ where source.url = 'https://hermandadelbaratillo.es/'
     where existing.source_id = source.id
       and existing.brotherhood_habit_id = habit.id
   );
-

@@ -1,9 +1,3 @@
--- Hilo Cofrade · Fotografías originales de La Encarnación
--- Migración 055
---
--- Sustituye las versiones comprimidas/externas por copias locales de las
--- fotografías aportadas por la Agrupación Musical, manteniendo sus créditos.
-
 do $$
 declare
   updated_band integer;
