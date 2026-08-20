@@ -11,10 +11,10 @@
   margin-top: 22px;
 }
 
-/* La fotografía del Paso de la Piedad es vertical. Evitamos forzarla a una
-   ventana panorámica que recorte el paso y la firma del autor. */
+/* La fotografía del Paso de la Piedad es vertical. En el resumen mantenemos
+   la proporción compacta de las tarjetas, pero mostramos la imagen completa
+   en lugar de recortarla para forzarla a un formato panorámico. */
 .processional-photo.has-image:has(.processional-photo-image[src*="piedad-d-posada"]) {
-  aspect-ratio: 4 / 5;
   background:
     radial-gradient(circle at 50% 42%, rgba(255, 255, 255, .07), transparent 48%),
     #071a2d;
@@ -39,7 +39,7 @@
 .step-hero-photo:has(.step-hero-photo-image[src*="piedad-d-posada"]) {
   width: min(100%, 440px);
   min-height: 0;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 2 / 3;
   justify-self: end;
   background: #071a2d;
 }
@@ -61,8 +61,7 @@
 }
 
 @media (max-width: 620px) {
-  .processional-photo.has-image:has(.processional-photo-image[src*="piedad-d-posada"]),
   .step-hero-photo:has(.step-hero-photo-image[src*="piedad-d-posada"]) {
-    aspect-ratio: 4 / 5;
+    width: min(100%, 420px);
   }
 }
