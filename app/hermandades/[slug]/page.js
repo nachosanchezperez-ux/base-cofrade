@@ -392,19 +392,6 @@ export default async function HermandadDetailPage({ params }) {
                   ? <Link key={id} href={`/imagenes/${imagen.slug}`}>{imagen.nombre}</Link>
                   : <span className="related-name" key={id}>{imagen.nombre}</span>;
               })}</div></div>
-              {paso.fases?.length > 0 && (
-                <div className="step-phases">
-                  <div className="step-phases-heading"><small>Evolución histórica</small><strong>{paso.fases.length} fases documentadas</strong></div>
-                  {paso.fases.map((fase) => (
-                    <article className="step-phase" key={fase.id}>
-                      <div className="step-phase-date"><strong>{fase.periodo}</strong><span>{fase.tipo}</span></div>
-                      <div><h4>{fase.nombre}</h4><p>{fase.descripcion}</p>
-                        {fase.agentes?.length > 0 && <small>{fase.agentes.map((agente) => `${agente.nombre} · ${agente.rol}`).join(' / ')}</small>}
-                      </div>
-                    </article>
-                  ))}
-                </div>
-              )}
               {paso.fichaDisponible && <Link href={`/pasos/${paso.slug}`} className="text-link">Ver ficha del paso →</Link>}
             </div>
           </article>
