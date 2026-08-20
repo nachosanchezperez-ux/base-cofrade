@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
-export default function StepHeroPhoto({ src, alt, credit }) {
+export default function StepHeroPhoto({ src, alt, credit, focusPosition }) {
   const [hasError, setHasError] = useState(false);
   const hasImage = Boolean(src) && !hasError;
 
@@ -20,6 +20,7 @@ export default function StepHeroPhoto({ src, alt, credit }) {
         fill
         priority
         sizes="(max-width: 900px) 100vw, 46vw"
+        style={focusPosition ? { objectPosition: focusPosition } : undefined}
         onError={() => setHasError(true)}
       />
       {credit ? <figcaption>{credit}</figcaption> : null}
