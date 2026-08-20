@@ -11,6 +11,11 @@ export const metadata = {
   alternates: { canonical: '/bandas' },
 }
 
+const FULL_BLEED_LOGO_SLUGS = new Set([
+  'banda-del-sol',
+  'sangre-de-san-benito',
+])
+
 export default async function BandasPage({ searchParams }) {
   const bands = await getBandsDirectory()
   const filters = await searchParams
@@ -49,7 +54,7 @@ export default async function BandasPage({ searchParams }) {
                 style={{ '--band-primary': band.primaryColor, '--band-secondary': band.secondaryColor }}
               >
                 <span className={styles.cardStripe} />
-                <span className={`${styles.cardLogo} ${band.slug === 'banda-del-sol' ? styles.fullBleedLogo : ''}`}>
+                <span className={`${styles.cardLogo} ${FULL_BLEED_LOGO_SLUGS.has(band.slug) ? styles.fullBleedLogo : ''}`}>
                   {band.logoPath ? <Image src={band.logoPath} alt="" width={100} height={126} sizes="100px" /> : band.popularName.slice(0, 2).toUpperCase()}
                 </span>
                 <span className={styles.cardCopy}>

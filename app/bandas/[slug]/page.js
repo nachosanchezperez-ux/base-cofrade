@@ -27,6 +27,11 @@ const OUTING_ORDER = [
   'Domingo de Resurrección',
 ]
 
+const FULL_BLEED_LOGO_SLUGS = new Set([
+  'banda-del-sol',
+  'sangre-de-san-benito',
+])
+
 function dateLabel(value) {
   if (!value) return ''
   return new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/Madrid' }).format(new Date(`${value}T12:00:00`))
@@ -163,7 +168,7 @@ export default async function BandDetailPage({ params }) {
               <h1>{band.popularName}</h1>
               <p className={styles.officialName}>{band.officialName}</p>
             </div>
-            <div className={`${styles.identityBlock} ${band.slug === 'banda-del-sol' ? styles.fullBleedLogo : ''}`} style={{ background: identityColor }}>
+            <div className={`${styles.identityBlock} ${FULL_BLEED_LOGO_SLUGS.has(band.slug) ? styles.fullBleedLogo : ''}`} style={{ background: identityColor }}>
               {band.logoPath ? <Image src={band.logoPath} alt={`Logotipo de ${band.popularName}`} width={150} height={225} priority sizes="150px" /> : <strong>{band.popularName.slice(0, 2).toUpperCase()}</strong>}
             </div>
           </div>
@@ -408,7 +413,10 @@ export default async function BandDetailPage({ params }) {
         </div>
       </section> : null}
 
-      <BandDiscographySection releases={discography} />
+      <BandDiscographySection
+        releases={discography}
+        fullBleedLogo={FULL_BLEED_LOGO_SLUGS.has(band.slug)}
+      />
 
       {hasDirection ? <section className={`${styles.contentSection} ${styles.softSection}`} id="direccion">
         <div className="shell">
