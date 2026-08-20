@@ -23,7 +23,7 @@
     padding: 38px 46px;
   }
 
-  .habit-grid > .brotherhood-habit:only-child .habit-card dl div {
+  .habit-grid > .brotherhood-habit:only-child dl div {
     grid-template-columns: 118px minmax(0, 1fr);
     gap: 22px;
   }
