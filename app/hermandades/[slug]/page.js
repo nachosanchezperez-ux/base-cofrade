@@ -241,8 +241,8 @@ export default async function HermandadDetailPage({ params }) {
                 <span>Orden en la jornada</span>
               </div>
               <div>
-                <strong>{h.datosJornada.totalHermanos}</strong>
-                <span>Hermanos</span>
+                <strong>{h.datosJornada.totalHermanos || h.datosJornada.totalCortejo}</strong>
+                <span>{h.datosJornada.totalHermanos ? 'Hermanos' : 'Cortejo'}</span>
               </div>
               <div>
                 <strong>{h.datosJornada.totalNazarenos}</strong>
