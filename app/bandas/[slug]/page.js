@@ -47,6 +47,7 @@ function eventDate(value) {
 }
 
 function yearRange(item) {
+  if (item.periodText) return item.periodText
   if (!item.yearFrom) return 'Periodo por documentar'
   return item.yearTo ? `${item.yearFrom}–${item.yearTo}` : `Desde ${item.yearFrom}`
 }
@@ -216,7 +217,7 @@ export default async function BandDetailPage({ params }) {
                   {band.municipalitySlug ? <Link href={`/bandas?localidad=${band.municipalitySlug}`}>Bandas de {band.municipality} →</Link> : null}
                 </article>
                 {band.linkedBrotherhood ? <article>
-                  <span>Hermandad</span>
+                  <span>{band.linkedBrotherhoodRelationType === 'associated_with_brotherhood' ? 'Hermandad asociada' : 'Hermandad'}</span>
                   <strong>{band.linkedBrotherhood}</strong>
                   {band.linkedBrotherhoodSlug ? <Link href={`/hermandades/${band.linkedBrotherhoodSlug}`}>Ver ficha de la hermandad →</Link> : null}
                 </article> : null}

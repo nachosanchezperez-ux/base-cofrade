@@ -354,7 +354,7 @@ export default async function HermandadDetailPage({ params }) {
           {h.acompanamientoActual.map((a) => (
             <article className="current-music-card" key={a.id}>
               <span className="current-music-position">{a.posicion}</span>
-              <h3>{a.banda || 'Pendiente de incorporar'}</h3>
+              <h3>{a.bandaSlug ? <Link href={`/bandas/${a.bandaSlug}`}>{a.banda}</Link> : a.banda || 'Pendiente de incorporar'}</h3>
               <p>{a.tipo || ''}</p>
               {a.observaciones && <small>{a.observaciones}</small>}
             </article>
