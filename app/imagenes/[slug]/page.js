@@ -1,6 +1,6 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import EntityHeroPortrait from '@/components/EntityHeroPortrait';
 import JsonLd from '@/components/JsonLd';
 import SourcesBlock from '@/components/SourcesBlock';
 import { getPublishedEntityCoverMedia } from '@/lib/supabase/entity-media';
@@ -143,57 +143,13 @@ export default async function ImagenPage({ params }) {
               </p>
             </div>
 
-            {coverMedia?.path ? (
-              <figure
-                className="image-detail-photo-v2"
-                style={{
-                  position: 'relative',
-                  aspectRatio: '4 / 5',
-                  minHeight: 0,
-                  margin: 0,
-                  overflow: 'hidden',
-                  background: '#081d33',
-                }}
-              >
-                <Image
-                  src={coverMedia.path}
-                  alt={coverMedia.alt || `Fotografía de ${imagen.nombre}`}
-                  fill
-                  priority
-                  sizes="(max-width: 980px) min(620px, calc(100vw - 40px)), 38vw"
-                  style={{ objectFit: 'cover', objectPosition: 'center top' }}
-                />
-                {coverMedia.credit ? (
-                  <figcaption
-                    style={{
-                      position: 'absolute',
-                      right: 16,
-                      bottom: 16,
-                      left: 16,
-                      zIndex: 1,
-                      width: 'fit-content',
-                      maxWidth: 'calc(100% - 32px)',
-                      padding: '8px 11px',
-                      borderRadius: 999,
-                      color: '#fff',
-                      background: 'rgba(5, 18, 31, .76)',
-                      backdropFilter: 'blur(10px)',
-                      fontSize: 10,
-                      fontWeight: 800,
-                      letterSpacing: '.08em',
-                      textTransform: 'uppercase',
-                    }}
-                  >
-                    {coverMedia.credit}
-                  </figcaption>
-                ) : null}
-              </figure>
-            ) : (
-              <div className="image-detail-photo-v2">
-                <span>{imagen.iniciales}</span>
-                <small>Fotografía del titular</small>
-              </div>
-            )}
+            <EntityHeroPortrait
+              key={coverMedia?.path || imagen.id}
+              src={coverMedia?.path || ''}
+              alt={coverMedia?.alt || `Fotografía de ${imagen.nombre}`}
+              credit={coverMedia?.credit || ''}
+              initials={imagen.iniciales}
+            />
           </div>
         </div>
       </section>

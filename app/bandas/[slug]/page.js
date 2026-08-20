@@ -232,7 +232,12 @@ export default async function BandDetailPage({ params }) {
                 <article className={styles.trajectoryCard}>
                   <span>Trayectoria</span>
                   <strong>{band.foundation ? `Fundación: ${band.foundation}` : 'Fundación por documentar'}</strong>
-                  {band.headquarters && band.headquarters !== band.municipality ? <small>{band.headquarters}</small> : null}
+                  {band.headquarters && band.headquarters !== band.municipality ? (
+                    <div className={styles.trajectoryLocation}>
+                      <span>Sede / local de ensayo</span>
+                      <strong>{band.headquarters}</strong>
+                    </div>
+                  ) : null}
                 </article>
               </div>
               {(band.accompaniments.length || currentPremieres.length || band.outings.length) ? (
