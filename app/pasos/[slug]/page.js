@@ -5,6 +5,8 @@ import SectionTitle from '@/components/SectionTitle';
 import StepHeroPhoto from '@/components/StepHeroPhoto';
 import { getPublishedEntityCoverMedia } from '@/lib/supabase/entity-media';
 import { getPasoPageBySlug } from '@/lib/supabase/public-entity-pages';
+import { getPublishedStepHeritage } from '@/lib/supabase/step-heritage';
+import styles from './step.module.css';
 import {
   absoluteUrl,
   breadcrumbJsonLd,
@@ -67,7 +69,10 @@ export default async function PasoDetailPage({params}){
   const result=await getPasoPageBySlug(slug);
   if(!result) notFound();
   const {paso,hermandad,imagenes=[]}=result;
-  const coverMedia = await getPublishedEntityCoverMedia(paso.id);
+  const [coverMedia, heritage] = await Promise.all([
+    getPublishedEntityCoverMedia(paso.id),
+    getPublishedStepHeritage(paso.id),
+  ]);
   const canonicalPath = `/pasos/${paso.slug}`;
   const breadcrumbs = hermandad
     ? [
@@ -147,6 +152,7 @@ export default async function PasoDetailPage({params}){
             </div>
             <div><small>Tipo</small><strong>{paso.tipo}</strong></div>
             <div><small>Ejecución</small><strong>{paso.ejecucion || 'Pendiente de incorporar'}</strong></div>
+            {paso.materiales ? <div><small>Materiales</small><strong>{paso.materiales}</strong></div> : null}
             <div><small>Sistema de portadores</small><strong>{paso.sistemaPortadores || 'Pendiente de incorporar'}</strong></div>
           </div>
         </div>
@@ -160,9 +166,57 @@ export default async function PasoDetailPage({params}){
         </aside>
       </div></section>
 
-      <section className="section brotherhood-soft"><div className="shell">
-        <SectionTitle eyebrow="Próximamente" title="Patrimonio y evolución" description="Esta ficha irá incorporando diseño, talla, dorado, orfebrería, bordados, restauraciones, reformas, capataces y acompañamientos musicales históricos." />
-      </div></section>
+      <section className={`section brotherhood-soft ${styles.heritageSection}`} id="patrimonio">
+        <div className="shell">
+          <div className={styles.heritageIntro}>
+            <SectionTitle
+              eyebrow="Patrimonio documentado"
+              title="Patrimonio y evolución"
+              description={heritage.phases.length
+                ? 'Diseño, talla, dorados, piezas singulares y restauraciones que explican la configuración actual del paso.'
+                : 'La evolución patrimonial de este paso está pendiente de documentar.'}
+            />
+          </div>
+
+          {heritage.phases.length ? (
+            <div className={styles.timeline}>
+              {heritage.phases.map((phase) => (
+                <article className={styles.phase} key={phase.id}>
+                  <div className={styles.date}>{phase.date}</div>
+                  <div className={styles.card}>
+                    <div className={styles.meta}>
+                      <span className={styles.type}>{phase.type}</span>
+                    </div>
+                    <h3>{phase.title}</h3>
+                    {phase.description ? <p className={styles.description}>{phase.description}</p> : null}
+                    {phase.responsibles.length ? (
+                      <div className={styles.people} aria-label={`Responsables de ${phase.title}`}>
+                        {phase.responsibles.map((person) => (
+                          <div className={styles.person} key={person.id}>
+                            <strong>{person.name}</strong>
+                            <small>{[person.role, person.discipline].filter(Boolean).join(' · ')}</small>
+                          </div>
+                        ))}
+                      </div>
+                    ) : null}
+                  </div>
+                </article>
+              ))}
+            </div>
+          ) : null}
+
+          {heritage.sources.length ? (
+            <div className={styles.sources}>
+              <strong>Documentación:</strong>
+              {heritage.sources.map((source) => source.url ? (
+                <a key={source.id} href={source.url} target="_blank" rel="noreferrer">{source.name}</a>
+              ) : (
+                <span key={source.id}>{source.type || source.name}</span>
+              ))}
+            </div>
+          ) : null}
+        </div>
+      </section>
     </main>
   );
 }
