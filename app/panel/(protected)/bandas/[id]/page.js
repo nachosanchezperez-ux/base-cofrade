@@ -74,7 +74,8 @@ function AccompanimentForm({ item, data, canEdit, defaultCurrent = true, section
         <label><span>Hermandad</span><BrotherhoodSelect brotherhoods={data.brotherhoods} defaultValue={item?.brotherhood_entity_id} /></label>
         <label><span>Jornada o salida</span><input name="outing_type" defaultValue={item?.outing_type || ''} placeholder="Domingo de Ramos" required /></label>
         <label><span>Ubicación en el cortejo</span><input name="position" defaultValue={item?.position || 'Tras el paso'} required /></label>
-        <label><span>Año de inicio</span><input name="year_from" type="number" min="1800" max="2200" defaultValue={item?.year_from ?? ''} required /></label>
+        <label><span>Año de inicio</span><input name="year_from" type="number" min="1800" max="2200" defaultValue={item?.year_from ?? ''} placeholder="Solo si está documentado" /></label>
+        <label><span>Datación textual</span><input name="date_from_text" defaultValue={item?.date_from_text || ''} placeholder="Vigente en 2026" /></label>
         <label><span>Año de finalización</span><input name="year_to" type="number" min="1800" max="2200" defaultValue={item?.year_to ?? ''} placeholder="Vacío si continúa" /></label>
         <label className={styles.checkField}><input name="is_current" type="checkbox" defaultChecked={isCurrent} /><span>Acompañamiento actual</span></label>
         <label><span>Estado editorial</span><StatusSelect defaultValue={item?.status || 'draft'} /></label>
