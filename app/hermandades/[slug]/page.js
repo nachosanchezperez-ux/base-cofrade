@@ -199,7 +199,7 @@ export default async function HermandadDetailPage({ params }) {
               {h.participacionesConsejo.map((participacion) => {
                 const eventMedia = entityCoverMedia.get(participacion.id);
                 const imagePath = eventMedia?.path || participacion.imagen;
-                const imageCredit = eventMedia?.credit || participacion.imagenCredito;
+                const imageCredit = participacion.imagenCredito || eventMedia?.credit;
 
                 return (
                   <article className="council-participation-card" key={participacion.id}>
