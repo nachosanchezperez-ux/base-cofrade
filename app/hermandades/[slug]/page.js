@@ -26,6 +26,9 @@ import {
 
 export const dynamic = 'force-dynamic';
 const getHermandad = cache(getHermandadPageBySlug);
+const councilParticipationPhotoCreditBySlug = {
+  'via-crucis-hermandades-1985-baratillo': 'Fotografía · Hermandad',
+};
 
 export function generateStaticParams() {
   return hermandades.map((item) => ({ slug: item.slug }));
@@ -200,7 +203,9 @@ export default async function HermandadDetailPage({ params }) {
               {h.participacionesConsejo.map((participacion) => {
                 const eventMedia = entityCoverMedia.get(participacion.id);
                 const imagePath = eventMedia?.path || participacion.imagen;
-                const imageCredit = participacion.imagenCredito || eventMedia?.credit;
+                const imageCredit = councilParticipationPhotoCreditBySlug[participacion.slug]
+                  || participacion.imagenCredito
+                  || eventMedia?.credit;
 
                 return (
                   <article className="council-participation-card" key={participacion.id}>
