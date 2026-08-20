@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import JsonLd from '@/components/JsonLd';
 import SectionTitle from '@/components/SectionTitle';
 import StepHeroPhoto from '@/components/StepHeroPhoto';
+import { getStepPhotoFraming } from '@/lib/step-photo-framing';
 import { getPublishedEntityCoverMedia } from '@/lib/supabase/entity-media';
 import { getPasoPageBySlug } from '@/lib/supabase/public-entity-pages';
 import { getPublishedStepHeritage } from '@/lib/supabase/step-heritage';
@@ -137,6 +138,7 @@ export default async function PasoDetailPage({params}){
               src={coverMedia?.path || ''}
               alt={coverMedia?.alt || `Fotografía de ${paso.nombre}`}
               credit={coverMedia?.credit || ''}
+              focusPosition={getStepPhotoFraming(paso.slug).hero}
             />
           </div>
         </div>
