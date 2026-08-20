@@ -163,7 +163,7 @@ export default async function BandDetailPage({ params }) {
               <h1>{band.popularName}</h1>
               <p className={styles.officialName}>{band.officialName}</p>
             </div>
-            <div className={styles.identityBlock} style={{ background: identityColor }}>
+            <div className={`${styles.identityBlock} ${band.slug === 'banda-del-sol' ? styles.fullBleedLogo : ''}`} style={{ background: identityColor }}>
               {band.logoPath ? <Image src={band.logoPath} alt={`Logotipo de ${band.popularName}`} width={150} height={225} priority sizes="150px" /> : <strong>{band.popularName.slice(0, 2).toUpperCase()}</strong>}
             </div>
           </div>
