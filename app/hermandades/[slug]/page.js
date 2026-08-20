@@ -359,7 +359,6 @@ export default async function HermandadDetailPage({ params }) {
                   fill
                   sizes="(max-width: 900px) calc(100vw - 40px), 50vw"
                 />
-                <span className="processional-photo-index">0{index + 1}</span>
                 {entityCoverMedia.get(paso.id).credit ? (
                   <small className="processional-photo-credit">
                     {entityCoverMedia.get(paso.id).credit}
