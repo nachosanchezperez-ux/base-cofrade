@@ -40,6 +40,12 @@
   background: #07182b;
 }
 
+.spotifyFrame {
+  height: 152px;
+  aspect-ratio: auto;
+  background: transparent;
+}
+
 .playerFrame iframe {
   width: 100%;
   height: 100%;
