@@ -2609,6 +2609,11 @@ button, input { font: inherit; }
 .brotherhood-page:has(#acompanamientos:target) .brotherhood-nav-list a[href="#acompanamientos"],
 .brotherhood-page:has(#noticias:target) .brotherhood-nav-list a[href="#noticias"],
 .brotherhood-page:has(#curiosidades:target) .brotherhood-nav-list a[href="#curiosidades"],
+.brotherhood-page:has(#galeria:target) .brotherhood-nav-list a[href="#galeria"],
+.brotherhood-page:has(#restauraciones:target) .brotherhood-nav-list a[href="#restauraciones"],
+.brotherhood-page:has(#hitos:target) .brotherhood-nav-list a[href="#hitos"],
+.brotherhood-page:has(#cronologia:target) .brotherhood-nav-list a[href="#cronologia"],
+.brotherhood-page:has(#relaciones:target) .brotherhood-nav-list a[href="#relaciones"],
 .brotherhood-page:has(#fuentes:target) .brotherhood-nav-list a[href="#fuentes"]{
   color:#fff;
   font-weight:850;
@@ -2626,6 +2631,11 @@ button, input { font: inherit; }
 .brotherhood-page:has(#acompanamientos:target) .brotherhood-nav-list a[href="#acompanamientos"]::after,
 .brotherhood-page:has(#noticias:target) .brotherhood-nav-list a[href="#noticias"]::after,
 .brotherhood-page:has(#curiosidades:target) .brotherhood-nav-list a[href="#curiosidades"]::after,
+.brotherhood-page:has(#galeria:target) .brotherhood-nav-list a[href="#galeria"]::after,
+.brotherhood-page:has(#restauraciones:target) .brotherhood-nav-list a[href="#restauraciones"]::after,
+.brotherhood-page:has(#hitos:target) .brotherhood-nav-list a[href="#hitos"]::after,
+.brotherhood-page:has(#cronologia:target) .brotherhood-nav-list a[href="#cronologia"]::after,
+.brotherhood-page:has(#relaciones:target) .brotherhood-nav-list a[href="#relaciones"]::after,
 .brotherhood-page:has(#fuentes:target) .brotherhood-nav-list a[href="#fuentes"]::after{
   content:'';
   position:absolute;

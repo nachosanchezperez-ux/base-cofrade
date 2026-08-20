@@ -1,8 +1,9 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import EntitySectionNav from '@/components/EntitySectionNav';
 import JsonLd from '@/components/JsonLd';
+import RelationalEntityHero from '@/components/RelationalEntityHero';
 import SectionTitle from '@/components/SectionTitle';
-import StepHeroPhoto from '@/components/StepHeroPhoto';
 import { getStepPhotoFraming } from '@/lib/step-photo-framing';
 import { getPublishedEntityCoverMedia } from '@/lib/supabase/entity-media';
 import { getPasoPageBySlug } from '@/lib/supabase/public-entity-pages';
@@ -92,7 +93,9 @@ export default async function PasoDetailPage({params}){
     <main className="brotherhood-page" style={{
       '--brotherhood-primary': hermandad?.colores?.primario || '#153B69',
       '--brotherhood-secondary': hermandad?.colores?.secundario || '#A71930',
-      '--brotherhood-light': hermandad?.colores?.claro || '#FFFFFF'
+      '--brotherhood-light': hermandad?.colores?.claro || '#FFFFFF',
+      '--brotherhood-dark': hermandad?.colores?.oscuro || '#0D2949',
+      '--brotherhood-on-secondary': hermandad?.colores?.sobreSecundario || '#FFFFFF'
     }}>
       <JsonLd data={breadcrumbJsonLd(breadcrumbs)} />
       <JsonLd data={{
@@ -110,43 +113,53 @@ export default async function PasoDetailPage({params}){
           },
         } : {}),
       }} />
-      <section className="step-detail-hero">
-        <div className="shell">
-          <div className="brotherhood-breadcrumb">
-            <span className="breadcrumb-accent" />
-            {hermandad ? (
-              <>
-                <Link href="/hermandades">Hermandades</Link>
-                <span className="breadcrumb-arrow">→</span>
-                <Link href={`/hermandades/${hermandad.slug}`}>{hermandad.nombrePopular}</Link>
-              </>
-            ) : (
-              <Link href="/pasos">Pasos</Link>
-            )}
-            <span className="breadcrumb-arrow">→</span>
-            <strong>{paso.tipo}</strong>
-          </div>
-          <div className="step-detail-grid">
-            <div className="step-detail-copy">
-              <span className="step-kicker">Ficha del paso</span>
-              <span className="pill brotherhood-pill">{paso.tipo}</span>
-              <h1>{paso.nombre}</h1>
-              <p>{paso.descripcion}</p>
-            </div>
-            <StepHeroPhoto
-              key={coverMedia?.path || paso.id}
-              src={coverMedia?.path || ''}
-              alt={coverMedia?.alt || `Fotografía de ${paso.nombre}`}
-              credit={coverMedia?.credit || ''}
-              focusPosition={getStepPhotoFraming(paso.slug).hero}
-            />
-          </div>
-        </div>
-      </section>
+      <RelationalEntityHero
+        variant="step"
+        entityType="Paso procesional"
+        title={paso.nombre}
+        breadcrumbItems={hermandad
+          ? [
+              { label: 'Hermandades', href: '/hermandades' },
+              { label: hermandad.nombrePopular, href: `/hermandades/${hermandad.slug}` },
+              { label: 'Paso' },
+            ]
+          : [
+              { label: 'Enciclopedia', href: '/pasos' },
+              { label: 'Paso' },
+            ]}
+        badges={[
+          paso.tipo,
+          imagenes.length ? `${imagenes.length} ${imagenes.length === 1 ? 'imagen vinculada' : 'imágenes vinculadas'}` : '',
+        ]}
+        relation={hermandad ? {
+          label: 'Pertenece a',
+          name: hermandad.nombrePopular,
+          href: `/hermandades/${hermandad.slug}`,
+          crestSrc: hermandad.escudoPath || '',
+        } : null}
+        facts={[
+          { label: 'Ejecución', value: paso.ejecucion },
+          { label: 'Sistema de portadores', value: paso.sistemaPortadores },
+          { label: 'Imágenes', value: imagenes.length || '' },
+        ]}
+        media={{
+          photoSrc: coverMedia?.path || '',
+          photoAlt: coverMedia?.alt || `Fotografía de ${paso.nombre}`,
+          credit: coverMedia?.credit || '',
+          initials: paso.nombre.slice(0, 2).toUpperCase(),
+          focusPosition: getStepPhotoFraming(paso.slug).hero,
+        }}
+      />
 
-      <section className="section"><div className="shell content-grid">
+      <EntitySectionNav items={[
+        { href: '#resumen', label: 'Resumen' },
+        { href: '#patrimonio', label: 'Patrimonio y evolución' },
+      ]} />
+
+      <section className="section" id="resumen"><div className="shell content-grid">
         <div>
           <SectionTitle eyebrow="Configuración actual" title="Datos del paso" />
+          {paso.descripcion ? <p className="body-large">{paso.descripcion}</p> : null}
           <div className="step-facts">
             <div>
               <small>Hermandad</small>

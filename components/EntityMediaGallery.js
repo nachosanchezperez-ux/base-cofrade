@@ -1,10 +1,10 @@
 import Image from 'next/image';
 
-export default function EntityMediaGallery({ items = [] }) {
+export default function EntityMediaGallery({ items = [], id }) {
   if (!items.length) return null;
 
   return (
-    <section className="section entity-media-gallery-section">
+    <section className="section entity-media-gallery-section" id={id}>
       <div className="shell">
         <div className="entity-media-gallery-heading">
           <span className="eyebrow">Galería</span>
