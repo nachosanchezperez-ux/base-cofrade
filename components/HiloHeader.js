@@ -27,6 +27,27 @@ export default function HiloHeader() {
   }, []);
 
   useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!open) return undefined;
+
+    const previousOverflow = document.body.style.overflow;
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') setOpen(false);
+    };
+
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', onKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, [open]);
+
+  useEffect(() => {
     if (pathname !== '/') return undefined;
     const elements = sections
       .map(([id]) => document.getElementById(id))
@@ -86,6 +107,7 @@ export default function HiloHeader() {
             type="button"
             aria-label={open ? 'Cerrar menú' : 'Abrir menú'}
             aria-expanded={open}
+            aria-controls="hilo-mobile-menu"
             onClick={() => setOpen((value) => !value)}
           >
             {open ? '×' : '☰'}
@@ -94,7 +116,11 @@ export default function HiloHeader() {
         <div className={styles.accent} />
       </header>
 
-      <div className={`${styles.mobilePanel} ${open ? styles.panelOpen : ''}`}>
+      <div
+        id="hilo-mobile-menu"
+        className={`${styles.mobilePanel} ${open ? styles.panelOpen : ''}`}
+        aria-hidden={!open}
+      >
         <div className="shell">
           <nav className={styles.mobileLinks} aria-label="Menú móvil">
             {sections.map(([id, label]) => (
