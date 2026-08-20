@@ -39,6 +39,18 @@
   object-fit: contain;
 }
 
+.bandMark.fullBleedMark {
+  width: 84px;
+  height: 84px;
+}
+
+.bandMark.fullBleedMark img {
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  object-fit: cover;
+}
+
 .headingTitle {
   min-width: 0;
 }
@@ -540,6 +552,17 @@
   .bandMark img {
     max-width: 40px;
     height: 50px;
+  }
+
+  .bandMark.fullBleedMark {
+    width: 60px;
+    height: 60px;
+  }
+
+  .bandMark.fullBleedMark img {
+    width: 100%;
+    max-width: none;
+    height: 100%;
   }
 
   .heading h2 {

@@ -88,7 +88,7 @@ function TrackList({ tracks }) {
   )
 }
 
-export default function BandDiscographySection({ releases = [], artistSpotifyUrl = '', bandName = '', logoPath = '' }) {
+export default function BandDiscographySection({ releases = [], artistSpotifyUrl = '', bandName = '', logoPath = '', fullBleedLogo = false }) {
   if (!releases.length) return null
 
   const spotifyArtist = artistSpotifyUrl || releases[0]?.artistSpotifyUrl || ''
@@ -102,7 +102,7 @@ export default function BandDiscographySection({ releases = [], artistSpotifyUrl
         <header className={styles.heading}>
           <div className={styles.headingIdentity}>
             {displayLogoPath ? (
-              <div className={styles.bandMark}>
+              <div className={`${styles.bandMark} ${fullBleedLogo ? styles.fullBleedMark : ''}`}>
                 <Image
                   src={displayLogoPath}
                   alt={`Logotipo de ${displayBandName || 'la banda'}`}
