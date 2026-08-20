@@ -276,38 +276,16 @@ export default async function HermandadDetailPage({ params }) {
           const card = (
             <>
               {coverMedia?.path ? (
-                <div
-                  className="portrait-placeholder brotherhood-portrait"
-                  style={{ position: 'relative', overflow: 'hidden' }}
-                >
+                <div className="portrait-placeholder brotherhood-portrait has-image">
                   <Image
+                    className="brotherhood-portrait-image"
                     src={coverMedia.path}
                     alt={coverMedia.alt || `Fotografía de ${imagen.nombre}`}
                     fill
                     sizes="(max-width: 620px) calc(100vw - 40px), (max-width: 980px) 50vw, 25vw"
-                    style={{ objectFit: 'cover', objectPosition: 'center top' }}
                   />
                   {coverMedia.credit ? (
-                    <small
-                      style={{
-                        position: 'absolute',
-                        right: 12,
-                        bottom: 12,
-                        left: 12,
-                        zIndex: 1,
-                        width: 'fit-content',
-                        maxWidth: 'calc(100% - 24px)',
-                        padding: '6px 9px',
-                        borderRadius: 999,
-                        color: '#fff',
-                        background: 'rgba(5, 18, 31, .76)',
-                        backdropFilter: 'blur(8px)',
-                        fontSize: 9,
-                        fontWeight: 800,
-                        letterSpacing: '.06em',
-                        textTransform: 'uppercase',
-                      }}
-                    >
+                    <small className="brotherhood-portrait-credit">
                       {coverMedia.credit}
                     </small>
                   ) : null}
