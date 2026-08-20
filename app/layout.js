@@ -6,6 +6,7 @@ import './globals.css';
 import './typography.css';
 import './crest.css';
 import './habit-layout.css';
+import './step-preview.css';
 import HiloHeader from '@/components/HiloHeader';
 import HiloFooter from '@/components/HiloFooter';
 import JsonLd from '@/components/JsonLd';
