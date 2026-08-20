@@ -1,7 +1,9 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import JsonLd from '@/components/JsonLd';
 import SourcesBlock from '@/components/SourcesBlock';
+import { getPublishedEntityCoverMedia } from '@/lib/supabase/entity-media';
 import { getImagenPageBySlug } from '@/lib/supabase/public-entity-pages';
 import {
   absoluteUrl,
@@ -22,6 +24,7 @@ export async function generateMetadata({ params }) {
   }
 
   const { imagen, hermandad } = result;
+  const coverMedia = await getPublishedEntityCoverMedia(imagen.id);
   const title = imagen.nombre;
   const description = seoDescription(
     imagen.descripcion,
@@ -30,6 +33,9 @@ export async function generateMetadata({ params }) {
       : `Ficha de ${imagen.nombre}: autoría, datación, descripción material y fuentes documentales.`
   );
   const canonical = `/imagenes/${imagen.slug}`;
+  const socialImage = coverMedia?.path
+    ? [{ url: coverMedia.path, alt: coverMedia.alt || `Fotografía de ${imagen.nombre}` }]
+    : undefined;
 
   return {
     title,
@@ -40,10 +46,12 @@ export async function generateMetadata({ params }) {
       title: pageTitle(title),
       description,
       url: canonical,
+      ...(socialImage ? { images: socialImage } : {}),
     },
     twitter: {
       title: pageTitle(title),
       description,
+      ...(socialImage ? { images: socialImage } : {}),
     },
   };
 }
@@ -55,6 +63,7 @@ export default async function ImagenPage({ params }) {
   if (!result) notFound();
 
   const { imagen, hermandad } = result;
+  const coverMedia = await getPublishedEntityCoverMedia(imagen.id);
   const canonicalPath = `/imagenes/${imagen.slug}`;
   const cronologia = imagen.cronologia?.length
     ? imagen.cronologia
@@ -98,6 +107,7 @@ export default async function ImagenPage({ params }) {
         url: absoluteUrl(canonicalPath),
         name: imagen.nombre,
         artform: imagen.tipologia || imagen.tipo,
+        ...(coverMedia?.path ? { image: absoluteUrl(coverMedia.path) } : {}),
         ...(imagen.material ? { artMedium: imagen.material } : {}),
         ...(imagen.autor && !/pendiente|desconocido|anónimo/i.test(imagen.autor) ? {
           creator: {
@@ -133,10 +143,57 @@ export default async function ImagenPage({ params }) {
               </p>
             </div>
 
-            <div className="image-detail-photo-v2">
-              <span>{imagen.iniciales}</span>
-              <small>Fotografía del titular</small>
-            </div>
+            {coverMedia?.path ? (
+              <figure
+                className="image-detail-photo-v2"
+                style={{
+                  position: 'relative',
+                  aspectRatio: '4 / 5',
+                  minHeight: 0,
+                  margin: 0,
+                  overflow: 'hidden',
+                  background: '#081d33',
+                }}
+              >
+                <Image
+                  src={coverMedia.path}
+                  alt={coverMedia.alt || `Fotografía de ${imagen.nombre}`}
+                  fill
+                  priority
+                  sizes="(max-width: 980px) min(620px, calc(100vw - 40px)), 38vw"
+                  style={{ objectFit: 'cover', objectPosition: 'center top' }}
+                />
+                {coverMedia.credit ? (
+                  <figcaption
+                    style={{
+                      position: 'absolute',
+                      right: 16,
+                      bottom: 16,
+                      left: 16,
+                      zIndex: 1,
+                      width: 'fit-content',
+                      maxWidth: 'calc(100% - 32px)',
+                      padding: '8px 11px',
+                      borderRadius: 999,
+                      color: '#fff',
+                      background: 'rgba(5, 18, 31, .76)',
+                      backdropFilter: 'blur(10px)',
+                      fontSize: 10,
+                      fontWeight: 800,
+                      letterSpacing: '.08em',
+                      textTransform: 'uppercase',
+                    }}
+                  >
+                    {coverMedia.credit}
+                  </figcaption>
+                ) : null}
+              </figure>
+            ) : (
+              <div className="image-detail-photo-v2">
+                <span>{imagen.iniciales}</span>
+                <small>Fotografía del titular</small>
+              </div>
+            )}
           </div>
         </div>
       </section>
