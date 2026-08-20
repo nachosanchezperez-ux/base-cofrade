@@ -14,6 +14,16 @@ export default function StepHeroPhoto({ src, alt, credit }) {
   return (
     <figure className="step-hero-photo">
       <Image
+        className="step-hero-photo-backdrop"
+        src={src}
+        alt=""
+        fill
+        priority
+        sizes="(max-width: 900px) 100vw, 46vw"
+        aria-hidden="true"
+      />
+      <Image
+        className="step-hero-photo-image"
         src={src}
         alt={alt}
         fill
