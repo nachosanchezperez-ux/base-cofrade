@@ -1,9 +1,13 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import EntityHeroPortrait from '@/components/EntityHeroPortrait';
+import EntityMediaGallery from '@/components/EntityMediaGallery';
 import JsonLd from '@/components/JsonLd';
 import SourcesBlock from '@/components/SourcesBlock';
-import { getPublishedEntityCoverMedia } from '@/lib/supabase/entity-media';
+import {
+  getPublishedEntityCoverMedia,
+  getPublishedEntityMedia,
+} from '@/lib/supabase/entity-media';
 import { getImagenPageBySlug } from '@/lib/supabase/public-entity-pages';
 import {
   absoluteUrl,
@@ -63,7 +67,9 @@ export default async function ImagenPage({ params }) {
   if (!result) notFound();
 
   const { imagen, hermandad } = result;
-  const coverMedia = await getPublishedEntityCoverMedia(imagen.id);
+  const entityMedia = await getPublishedEntityMedia(imagen.id);
+  const coverMedia = entityMedia.find((item) => item.isCover) || null;
+  const galleryMedia = entityMedia.filter((item) => !item.isCover);
   const canonicalPath = `/imagenes/${imagen.slug}`;
   const cronologia = imagen.cronologia?.length
     ? imagen.cronologia
@@ -107,7 +113,9 @@ export default async function ImagenPage({ params }) {
         url: absoluteUrl(canonicalPath),
         name: imagen.nombre,
         artform: imagen.tipologia || imagen.tipo,
-        ...(coverMedia?.path ? { image: absoluteUrl(coverMedia.path) } : {}),
+        ...(entityMedia.length ? {
+          image: entityMedia.map((item) => absoluteUrl(item.path)),
+        } : {}),
         ...(imagen.material ? { artMedium: imagen.material } : {}),
         ...(imagen.autor && !/pendiente|desconocido|anónimo/i.test(imagen.autor) ? {
           creator: {
@@ -214,6 +222,8 @@ export default async function ImagenPage({ params }) {
           </div>
         </div>
       </section>
+
+      <EntityMediaGallery items={galleryMedia} />
 
       {imagen.restauraciones?.length > 0 && (
         <section className="section brotherhood-soft">
