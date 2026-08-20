@@ -354,14 +354,6 @@ export default async function HermandadDetailPage({ params }) {
             {entityCoverMedia.get(paso.id)?.path ? (
               <div className="processional-photo has-image">
                 <Image
-                  className="processional-photo-backdrop"
-                  src={entityCoverMedia.get(paso.id).path}
-                  alt=""
-                  fill
-                  sizes="(max-width: 900px) calc(100vw - 40px), 50vw"
-                  aria-hidden="true"
-                />
-                <Image
                   className="processional-photo-image"
                   src={entityCoverMedia.get(paso.id).path}
                   alt={entityCoverMedia.get(paso.id).alt || `Fotografía de ${paso.nombre}`}
