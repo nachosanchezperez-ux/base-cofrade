@@ -14,6 +14,7 @@ import SectionTitle from '@/components/SectionTitle';
 import SourcesBlock from '@/components/SourcesBlock';
 import { hermandades } from '@/lib/data';
 import { getHermandadPageBySlug } from '@/lib/supabase/brotherhoods';
+import { getPublishedEntityCoverMediaMap } from '@/lib/supabase/entity-media';
 import {
   absoluteUrl,
   breadcrumbJsonLd,
@@ -65,6 +66,9 @@ export default async function HermandadDetailPage({ params }) {
   const { slug } = await params;
   const h = await getHermandad(slug);
   if (!h) notFound();
+  const titularCoverMedia = await getPublishedEntityCoverMediaMap(
+    h.imagenes.map((imagen) => imagen.id)
+  );
   const imagenMap = new Map(h.imagenes.map((imagen) => [imagen.id, imagen]));
   const tiposHermandad = h.tipos || [];
   const canonicalPath = `/hermandades/${h.slug}`;
@@ -265,9 +269,49 @@ export default async function HermandadDetailPage({ params }) {
       <section className="section brotherhood-soft" id="titulares"><div className="shell">
         <SectionTitle eyebrow="Titularidad" title="Sagrados Titulares" description="Imágenes e identidades devocionales que conforman la titularidad documentada de la Hermandad." />
         <div className="image-grid">{h.imagenes.map((imagen) => {
+          const coverMedia = titularCoverMedia.get(imagen.id);
           const card = (
             <>
-              <div className="portrait-placeholder brotherhood-portrait"><span>{imagen.iniciales}</span></div>
+              {coverMedia?.path ? (
+                <div
+                  className="portrait-placeholder brotherhood-portrait"
+                  style={{ position: 'relative', overflow: 'hidden' }}
+                >
+                  <Image
+                    src={coverMedia.path}
+                    alt={coverMedia.alt || `Fotografía de ${imagen.nombre}`}
+                    fill
+                    sizes="(max-width: 620px) calc(100vw - 40px), (max-width: 980px) 50vw, 25vw"
+                    style={{ objectFit: 'cover', objectPosition: 'center top' }}
+                  />
+                  {coverMedia.credit ? (
+                    <small
+                      style={{
+                        position: 'absolute',
+                        right: 12,
+                        bottom: 12,
+                        left: 12,
+                        zIndex: 1,
+                        width: 'fit-content',
+                        maxWidth: 'calc(100% - 24px)',
+                        padding: '6px 9px',
+                        borderRadius: 999,
+                        color: '#fff',
+                        background: 'rgba(5, 18, 31, .76)',
+                        backdropFilter: 'blur(8px)',
+                        fontSize: 9,
+                        fontWeight: 800,
+                        letterSpacing: '.06em',
+                        textTransform: 'uppercase',
+                      }}
+                    >
+                      {coverMedia.credit}
+                    </small>
+                  ) : null}
+                </div>
+              ) : (
+                <div className="portrait-placeholder brotherhood-portrait"><span>{imagen.iniciales}</span></div>
+              )}
               <div className="image-card-body">
                 <span className="eyebrow">{imagen.tipo}</span>
                 <h3>{imagen.nombre}</h3>
@@ -437,7 +481,6 @@ export default async function HermandadDetailPage({ params }) {
                       <div><small>Entrada</small><strong>{edicion.entrada}</strong></div>
                     </div>
                   </div>
-
                   <details className="route-details">
                     <summary>Ver recorrido completo <span>＋</span></summary>
                     <div className="route-path">
