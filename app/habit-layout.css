@@ -1,0 +1,30 @@
+/* Ajuste responsive de la indumentaria nazarena.
+   Las hermandades con un único hábito aprovechan todo el ancho en escritorio
+   sin alterar las composiciones de dos variantes ni el comportamiento móvil. */
+
+@media (min-width: 901px) {
+  .habit-grid > .brotherhood-habit:only-child {
+    grid-column: 1 / -1;
+    grid-template-columns: minmax(300px, .82fr) minmax(0, 1.18fr);
+  }
+
+  .habit-grid > .brotherhood-habit:only-child .habit-visual {
+    min-height: 520px;
+    align-items: center;
+    padding: 26px 30px;
+  }
+
+  .habit-grid > .brotherhood-habit:only-child .habit-image {
+    height: min(500px, 46vw);
+    max-height: 500px;
+  }
+
+  .habit-grid > .brotherhood-habit:only-child .habit-copy {
+    padding: 38px 46px;
+  }
+
+  .habit-grid > .brotherhood-habit:only-child dl div {
+    grid-template-columns: 118px minmax(0, 1fr);
+    gap: 22px;
+  }
+}
