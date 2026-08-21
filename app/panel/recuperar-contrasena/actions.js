@@ -33,12 +33,19 @@ export async function requestPasswordRecoveryAction(_previousState, formData) {
   })
 
   if (error) {
-    // No se traslada el resultado del proveedor al usuario para evitar enumerar cuentas.
+    // No exponemos detalles del proveedor ni si la cuenta existe.
     console.error('[Hilo Cofrade] Falló la solicitud de recuperación de contraseña', {
       code: error.code || null,
       status: error.status || null,
       message: error.message,
     })
+
+    return {
+      sent: false,
+      error: error.status === 429 || error.code === 'over_email_send_rate_limit'
+        ? 'Se han solicitado varios enlaces seguidos. Espera unos minutos y vuelve a intentarlo.'
+        : 'No hemos podido enviar otro enlace ahora. Espera unos minutos y vuelve a intentarlo.',
+    }
   }
 
   // Respuesta deliberadamente genérica para no revelar si una dirección tiene cuenta.
