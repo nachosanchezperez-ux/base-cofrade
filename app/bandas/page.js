@@ -1,7 +1,7 @@
-import Image from 'next/image'
-import Link from 'next/link'
+import JsonLd from '@/components/JsonLd'
+import RelationalEntityDirectory from '@/components/RelationalEntityDirectory'
 import { getBandsDirectory } from '@/lib/supabase/bands'
-import styles from './bandas.module.css'
+import { absoluteUrl, breadcrumbJsonLd, pageTitle } from '@/lib/seo'
 
 export const dynamic = 'force-dynamic'
 
@@ -9,68 +9,75 @@ export const metadata = {
   title: 'Bandas de Sevilla y provincia',
   description: 'Directorio de bandas cofrades de Sevilla y su provincia: historia, acompañamientos, dirección, salidas y estrenos.',
   alternates: { canonical: '/bandas' },
+  openGraph: {
+    title: pageTitle('Directorio de bandas'),
+    description: 'Consulta formaciones musicales y sus relaciones documentadas con hermandades, pasos, salidas, responsables y patrimonio musical.',
+    url: '/bandas',
+  },
 }
 
-const FULL_BLEED_LOGO_SLUGS = new Set([
-  'banda-del-sol',
-  'banda-de-musica-nuestra-senora-de-la-soledad-cantillana',
-  'sangre-de-san-benito',
-])
-
 export default async function BandasPage({ searchParams }) {
-  const bands = await getBandsDirectory()
-  const filters = await searchParams
+  const [bands, filters] = await Promise.all([
+    getBandsDirectory(),
+    searchParams,
+  ])
   const type = String(filters?.tipo || '')
   const municipality = String(filters?.localidad || '')
-  const visibleBands = bands.filter((band) => (
-    (!type || band.typeSlug === type)
-    && (!municipality || band.municipalitySlug === municipality)
-  ))
-  const activeFilter = type
-    ? bands.find((band) => band.typeSlug === type)?.type
-    : bands.find((band) => band.municipalitySlug === municipality)?.municipality
+  const items = bands.map((band) => ({
+    id: band.id,
+    name: band.popularName,
+    officialName: band.officialName,
+    href: `/bandas/${band.slug}`,
+    type: band.type,
+    typeSlug: band.typeSlug,
+    municipality: band.municipality,
+    municipalitySlug: band.municipalitySlug,
+    foundation: band.foundation,
+    linkedBrotherhood: band.linkedBrotherhood,
+    logoPath: band.logoPath,
+    primaryColor: band.primaryColor,
+    secondaryColor: band.secondaryColor,
+    keywords: [band.officialShortName, band.summary, band.linkedBrotherhood].filter(Boolean),
+  }))
+  const collection = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    '@id': `${absoluteUrl('/bandas')}#collection`,
+    url: absoluteUrl('/bandas'),
+    name: 'Directorio de bandas',
+    inLanguage: 'es',
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: items.length,
+      itemListElement: items.map((item, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: item.name,
+        url: absoluteUrl(item.href),
+      })),
+    },
+  }
 
   return (
-    <main className={styles.module}>
-      <section className={styles.directoryHero}>
-        <div className="shell">
-          <span className={styles.eyebrow}>Enciclopedia musical</span>
-          <h1>Directorio de bandas</h1>
-          <p>Formaciones identificadas por sus propios colores y conectadas con hermandades, pasos, salidas, responsables y patrimonio musical.</p>
-        </div>
-      </section>
-
-      <section className={styles.directorySection}>
-        <div className="shell">
-          <div className={styles.resultHeading}>
-            <div><strong>{visibleBands.length} {visibleBands.length === 1 ? 'banda publicada' : 'bandas publicadas'}</strong><span>{activeFilter ? `Filtro: ${activeFilter}` : 'Sevilla capital y provincia'}</span></div>
-            {activeFilter ? <Link className={styles.clearFilter} href="/bandas">Ver todas</Link> : null}
-          </div>
-          <div className={styles.bandGrid}>
-            {visibleBands.map((band) => (
-              <Link
-                href={`/bandas/${band.slug}`}
-                className={styles.bandCard}
-                key={band.id}
-                style={{ '--band-primary': band.primaryColor, '--band-secondary': band.secondaryColor }}
-              >
-                <span className={styles.cardStripe} />
-                <span className={`${styles.cardLogo} ${FULL_BLEED_LOGO_SLUGS.has(band.slug) ? styles.fullBleedLogo : ''}`}>
-                  {band.logoPath ? <Image src={band.logoPath} alt="" width={100} height={126} sizes="100px" /> : band.popularName.slice(0, 2).toUpperCase()}
-                </span>
-                <span className={styles.cardCopy}>
-                  <small>{band.type}</small>
-                  <strong style={{ color: 'var(--band-ink)' }}>{band.popularName}</strong>
-                  <span>{band.officialName}</span>
-                  <em>{band.municipality}{band.foundation ? ` · Desde ${band.foundation}` : ''}</em>
-                </span>
-                <span className={styles.cardArrow}>→</span>
-              </Link>
-            ))}
-            {!visibleBands.length ? <div className={styles.emptyBlock}>No hay bandas publicadas con este filtro.</div> : null}
-          </div>
-        </div>
-      </section>
-    </main>
+    <section className="section page-top">
+      <JsonLd data={breadcrumbJsonLd([
+        { name: 'Inicio', path: '/' },
+        { name: 'Bandas', path: '/bandas' },
+      ])} />
+      <JsonLd data={collection} />
+      <div className="shell">
+        <span className="eyebrow">Enciclopedia musical</span>
+        <h1 className="page-title">Directorio de bandas</h1>
+        <p className="page-lead">
+          Formaciones conectadas con hermandades, pasos, salidas, responsables y patrimonio musical.
+        </p>
+        <RelationalEntityDirectory
+          items={items}
+          kind="band"
+          initialTypeSlug={type}
+          initialMunicipalitySlug={municipality}
+        />
+      </div>
+    </section>
   )
 }

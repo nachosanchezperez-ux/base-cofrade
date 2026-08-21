@@ -8,7 +8,7 @@ import BandDiscographySection from '@/components/bands/BandDiscographySection'
 import { getBandBySlug, youtubeEmbedUrl } from '@/lib/supabase/bands'
 import { getBandDiscography } from '@/lib/supabase/bandDiscography'
 import { getPublishedBandColors } from '@/lib/supabase/bandColors'
-import { absoluteUrl } from '@/lib/seo'
+import { absoluteUrl, breadcrumbJsonLd } from '@/lib/seo'
 import {
   groupGloryAccompaniments,
   partitionAccompanimentsBySeason,
@@ -93,7 +93,11 @@ function AccompanimentCard({ item, band, showLocation = false }) {
       </div>
       <div className={styles.relationshipStep}>
         <span>{item.position || 'Acompañamiento musical'}</span>
-        {item.stepName ? <strong>{item.stepName}</strong> : null}
+        {item.stepName ? (
+          item.stepPageReady && item.stepSlug
+            ? <Link href={`/pasos/${item.stepSlug}`}>{item.stepName} <b aria-hidden="true">→</b></Link>
+            : <strong>{item.stepName}</strong>
+        ) : null}
       </div>
       {item.notes && item.brotherhoodName !== band.linkedBrotherhood ? <p className={styles.relationshipNote}>{item.notes}</p> : null}
       <div className={styles.relationshipLinks}>
@@ -194,6 +198,11 @@ export default async function BandDetailPage({ params }) {
         '--bc-dark': band.secondaryColor,
       }}
     >
+      <JsonLd data={breadcrumbJsonLd([
+        { name: 'Inicio', path: '/' },
+        { name: 'Bandas', path: '/bandas' },
+        { name: band.popularName, path: `/bandas/${band.slug}` },
+      ])} />
       <JsonLd data={jsonLd} />
       <section className={styles.bandHero}>
         <div className={`shell ${styles.heroShell}`}>

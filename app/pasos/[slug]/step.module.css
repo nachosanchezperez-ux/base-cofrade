@@ -2,6 +2,64 @@
   overflow: hidden;
 }
 
+.accompanimentSection {
+  background: #fff;
+}
+
+.accompanimentGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.accompanimentCard {
+  position: relative;
+  display: grid;
+  gap: 6px;
+  min-height: 148px;
+  padding: 22px 52px 22px 22px;
+  border: 1px solid #dce5ec;
+  border-top: 4px solid var(--brotherhood-secondary, #a71930);
+  border-radius: 17px;
+  background: #f8fafc;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.accompanimentCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 34px rgba(15, 39, 66, .08);
+}
+
+.accompanimentCard span {
+  color: var(--brotherhood-secondary, #a71930);
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.accompanimentCard strong {
+  color: #132d49;
+  font-size: 18px;
+  line-height: 1.22;
+}
+
+.accompanimentCard small {
+  color: #6f7d8b;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.accompanimentCard em {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  color: var(--brotherhood-secondary, #a71930);
+  font-size: 20px;
+  font-style: normal;
+}
+
 .heritageIntro {
   max-width: 760px;
 }
@@ -140,6 +198,10 @@
 }
 
 @media (max-width: 720px) {
+  .accompanimentGrid {
+    grid-template-columns: 1fr;
+  }
+
   .phase {
     grid-template-columns: 1fr;
     gap: 8px;

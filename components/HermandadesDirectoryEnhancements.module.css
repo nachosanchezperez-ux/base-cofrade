@@ -1,0 +1,44 @@
+.directoryFilters {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 11px;
+}
+
+.directoryFilters select {
+  min-height: 34px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 999px;
+  background: #fff;
+  color: #123a67;
+  padding: 0 12px;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.territories {
+  margin-top: 0;
+}
+
+.contextAfterName {
+  margin-top: 5px;
+  margin-bottom: 0;
+}
+
+@media (max-width: 840px) {
+  .directoryFilters {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .directoryFilters select {
+    width: 100%;
+  }
+}
+
+@media (max-width: 620px) {
+  .directoryFilters select {
+    border-radius: 12px;
+  }
+}

@@ -38,7 +38,12 @@ export default function HiloSearch({ items = [] }) {
     if (!term) return [];
 
     return items
-      .filter((item) => normalize(`${item.title} ${item.subtitle || ''} ${item.type || ''}`).includes(term))
+      .filter((item) => normalize([
+        item.title,
+        item.subtitle,
+        item.type,
+        ...(item.keywords || []),
+      ].filter(Boolean).join(' ')).includes(term))
       .slice(0, 6);
   }, [items, query]);
 

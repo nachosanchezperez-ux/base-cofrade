@@ -67,7 +67,7 @@ export default async function ImagenPage({ params }) {
 
   if (!result) notFound();
 
-  const { imagen, hermandad } = result;
+  const { imagen, hermandad, pasos = [] } = result;
   const entityMedia = await getPublishedEntityMedia(imagen.id);
   const coverMedia = entityMedia.find((item) => item.isCover) || null;
   const galleryMedia = entityMedia.filter((item) => !item.isCover);
@@ -84,18 +84,12 @@ export default async function ImagenPage({ params }) {
   const otrasImagenes = hermandad?.imagenes?.filter(
     (otraImagen) => otraImagen.slug !== imagen.slug
   ) || [];
-  const breadcrumbs = hermandad
-    ? [
-        { name: 'Inicio', path: '/' },
-        { name: 'Hermandades', path: '/hermandades' },
-        { name: hermandad.nombrePopular, path: `/hermandades/${hermandad.slug}` },
-        { name: imagen.nombre, path: canonicalPath },
-      ]
-    : [
-        { name: 'Inicio', path: '/' },
-        { name: 'Imágenes', path: '/imagenes' },
-        { name: imagen.nombre, path: canonicalPath },
-      ];
+  const hasRelatedEntities = pasos.length > 0 || otrasImagenes.length > 0;
+  const breadcrumbs = [
+    { name: 'Inicio', path: '/' },
+    { name: 'Imágenes', path: '/imagenes' },
+    { name: imagen.nombre, path: canonicalPath },
+  ];
 
   return (
     <main
@@ -131,16 +125,10 @@ export default async function ImagenPage({ params }) {
         variant="image"
         entityType={hermandad ? 'Imagen titular' : 'Imagen'}
         title={imagen.nombre}
-        breadcrumbItems={hermandad
-          ? [
-              { label: 'Hermandades', href: '/hermandades' },
-              { label: hermandad.nombrePopular, href: `/hermandades/${hermandad.slug}` },
-              { label: 'Imagen' },
-            ]
-          : [
-              { label: 'Enciclopedia', href: '/imagenes' },
-              { label: 'Imagen' },
-            ]}
+        breadcrumbItems={[
+          { label: 'Imágenes', href: '/imagenes' },
+          { label: 'Ficha' },
+        ]}
         badges={[imagen.tipologia || imagen.tipo]}
         relation={hermandad ? {
           label: 'Pertenece a',
@@ -167,7 +155,7 @@ export default async function ImagenPage({ params }) {
         imagen.restauraciones?.length > 0 && { href: '#restauraciones', label: 'Restauraciones' },
         imagen.acontecimientos?.length > 0 && { href: '#hitos', label: 'Hitos' },
         cronologia.length > 0 && { href: '#cronologia', label: 'Cronología' },
-        otrasImagenes.length > 0 && { href: '#relaciones', label: 'Relaciones' },
+        hasRelatedEntities && { href: '#relaciones', label: 'Relaciones' },
         imagen.fuentes?.length > 0 && { href: '#fuentes', label: 'Fuentes' },
       ]} />
 
@@ -289,28 +277,54 @@ export default async function ImagenPage({ params }) {
         </section>
       )}
 
-      {otrasImagenes.length > 0 && (
+      {hasRelatedEntities && (
         <section className="related-titulares-section" id="relaciones">
           <div className="shell">
-            <div className="related-titulares-head">
-              <span className="eyebrow">Relaciones</span>
-              <h2>Otras imágenes titulares</h2>
-            </div>
+            {pasos.length > 0 && (
+              <>
+                <div className="related-titulares-head">
+                  <span className="eyebrow">Procesiona en</span>
+                  <h2>Pasos relacionados</h2>
+                </div>
 
-            <div className="related-titulares-list">
-              {otrasImagenes.map((otraImagen) => (
-                <Link
-                  className="related-titular"
-                  href={`/imagenes/${otraImagen.slug}`}
-                  key={otraImagen.id}
-                >
-                  <span className="related-titular-avatar">
-                    {otraImagen.iniciales}
-                  </span>
-                  <strong>{otraImagen.nombre}</strong>
-                </Link>
-              ))}
-            </div>
+                <div className="related-titulares-list">
+                  {pasos.map((paso) => (
+                    <Link
+                      className="related-titular"
+                      href={`/pasos/${paso.slug}`}
+                      key={paso.id}
+                    >
+                      <span className="related-titular-avatar">P</span>
+                      <strong>{paso.nombre}</strong>
+                    </Link>
+                  ))}
+                </div>
+              </>
+            )}
+
+            {otrasImagenes.length > 0 && (
+              <>
+                <div className="related-titulares-head">
+                  <span className="eyebrow">Relaciones</span>
+                  <h2>Otras imágenes titulares</h2>
+                </div>
+
+                <div className="related-titulares-list">
+                  {otrasImagenes.map((otraImagen) => (
+                    <Link
+                      className="related-titular"
+                      href={`/imagenes/${otraImagen.slug}`}
+                      key={otraImagen.id}
+                    >
+                      <span className="related-titular-avatar">
+                        {otraImagen.iniciales}
+                      </span>
+                      <strong>{otraImagen.nombre}</strong>
+                    </Link>
+                  ))}
+                </div>
+              </>
+            )}
           </div>
         </section>
       )}

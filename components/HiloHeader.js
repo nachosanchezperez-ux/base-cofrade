@@ -10,7 +10,13 @@ const sections = [
   ['tiradelhilo', 'Tira del hilo'],
   ['hoy', 'Hoy'],
   ['extraordinarias', 'Extraordinarias'],
-  ['enciclopedia', 'Enciclopedia'],
+];
+
+const directoryLinks = [
+  ['/hermandades', 'Hermandades'],
+  ['/imagenes', 'Imágenes'],
+  ['/pasos', 'Pasos'],
+  ['/bandas', 'Bandas'],
 ];
 
 export default function HiloHeader() {
@@ -68,6 +74,7 @@ export default function HiloHeader() {
   }, [pathname]);
 
   const hrefFor = (id) => (pathname === '/' ? `#${id}` : `/#${id}`);
+  const isDirectoryActive = directoryLinks.some(([href]) => pathname.startsWith(href));
 
   if (pathname.startsWith('/panel')) return null;
 
@@ -96,6 +103,21 @@ export default function HiloHeader() {
                 {label}
               </a>
             ))}
+            <details className={styles.exploreMenu}>
+              <summary className={isDirectoryActive ? styles.active : ''}>Explorar</summary>
+              <div className={styles.directoryPopover}>
+                {directoryLinks.map(([href, label]) => (
+                  <Link
+                    href={href}
+                    key={href}
+                    className={pathname.startsWith(href) ? styles.currentDirectory : ''}
+                    onClick={(event) => event.currentTarget.closest('details')?.removeAttribute('open')}
+                  >
+                    {label}<span>→</span>
+                  </Link>
+                ))}
+              </div>
+            </details>
           </nav>
 
           <a className={styles.collabButton} href={pathname === '/' ? '#colabora' : '/#colabora'}>
@@ -134,6 +156,21 @@ export default function HiloHeader() {
               </a>
             ))}
           </nav>
+          <div className={styles.mobileDirectories}>
+            <span>Enciclopedia</span>
+            <nav aria-label="Directorios de la enciclopedia">
+              {directoryLinks.map(([href, label]) => (
+                <Link
+                  href={href}
+                  key={href}
+                  className={pathname.startsWith(href) ? styles.activeMobile : ''}
+                  onClick={() => setOpen(false)}
+                >
+                  {label}<span>→</span>
+                </Link>
+              ))}
+            </nav>
+          </div>
           <div className={styles.mobileCta}>
             <a href={pathname === '/' ? '#colabora' : '/#colabora'} onClick={() => setOpen(false)}>
               Colabora con Hilo Cofrade <span>→</span>
