@@ -227,12 +227,20 @@ export default async function HomePage() {
             <div className={styles.threadsHead}>
               <span className={styles.threadsEyebrow}>Conocimiento en movimiento</span>
               <h2>Últimos hilos incorporados</h2>
-              <p>Relaciones nuevas o enriquecidas que ya puedes recorrer dentro de la enciclopedia.</p>
+              <p>Lo último que ha crecido dentro de la enciclopedia: nuevas relaciones, patrimonio y conexiones ya publicadas.</p>
             </div>
             <div className={styles.threadRail}>
               {discoveryThreads.map((thread) => (
                 <Link className={styles.threadCard} href={thread.href} key={thread.id}>
-                  <span className={styles.threadLabel}>{thread.label}</span>
+                  <div className={styles.threadTopline}>
+                    <span className={styles.threadLabel}>{thread.label}</span>
+                    <span className={styles.threadActivity}>
+                      <strong>{thread.activityStatus}</strong>
+                      {thread.dateLabel ? (
+                        <time dateTime={thread.dateTime}>{thread.dateLabel}</time>
+                      ) : null}
+                    </span>
+                  </div>
                   <h3>{thread.title}</h3>
                   <strong className={styles.threadMetric}>{thread.metric}</strong>
                   <p>{thread.summary}</p>
