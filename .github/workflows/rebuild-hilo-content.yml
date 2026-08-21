@@ -1,0 +1,42 @@
+name: Rebuild Hilo content media
+on:
+  push:
+    branches:
+      - content/cristo-sangre-cartel-pastora-2024
+
+permissions:
+  contents: write
+
+jobs:
+  rebuild:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Rebuild WebP files
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p public/imagenes/san-benito
+          mkdir -p public/hermandades/pastora-de-cantillana/carteles
+          cat .hilo-upload/cristo.part* | tr -d '\n' | base64 -d > public/imagenes/san-benito/cristo-de-la-sangre-luis-romero.webp
+          cat .hilo-upload/cartel.part* | tr -d '\n' | base64 -d > public/hermandades/pastora-de-cantillana/carteles/cartel-fiestas-mayores-2024.webp
+          test "$(head -c 4 public/imagenes/san-benito/cristo-de-la-sangre-luis-romero.webp)" = "RIFF"
+          test "$(dd if=public/imagenes/san-benito/cristo-de-la-sangre-luis-romero.webp bs=1 skip=8 count=4 status=none)" = "WEBP"
+          test "$(head -c 4 public/hermandades/pastora-de-cantillana/carteles/cartel-fiestas-mayores-2024.webp)" = "RIFF"
+          test "$(dd if=public/hermandades/pastora-de-cantillana/carteles/cartel-fiestas-mayores-2024.webp bs=1 skip=8 count=4 status=none)" = "WEBP"
+          rm -rf .hilo-upload
+          rm -f .github/workflows/rebuild-hilo-content.yml
+
+      - name: Commit rebuilt media
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Publica foto del Cristo de la Sangre y repara cartel Pastora 2024"
+          git push origin HEAD:${GITHUB_REF_NAME}
