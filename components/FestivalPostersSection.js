@@ -61,22 +61,21 @@ export default function FestivalPostersSection({ posters = [] }) {
 
                   {poster.descripcion && poster.descripcion !== poster.resumen ? <p>{poster.descripcion}</p> : null}
 
-                  {(poster.iconografia || poster.contexto || poster.origen) ? (
-                    <div className="festival-poster-reading">
-                      {poster.contexto ? <div><small>Contexto</small><p>{poster.contexto}</p></div> : null}
-                      {poster.iconografia ? <div><small>Claves de la obra</small><p>{poster.iconografia}</p></div> : null}
-                      {poster.origen ? <div><small>Lectura simbólica</small><p>{poster.origen}</p></div> : null}
-                    </div>
-                  ) : null}
-
                   {technicalDetails.length ? (
                     <p className="festival-poster-tech">{technicalDetails.join(' · ')}</p>
                   ) : null}
 
-                  {poster.explicacionAutor ? (
+                  {(poster.explicacionAutor || poster.iconografia || poster.contexto || poster.origen) ? (
                     <details className="festival-poster-statement">
-                      <summary>Leer la explicación completa del autor <span>＋</span></summary>
+                      <summary>Leer la explicación y las claves de la obra <span>＋</span></summary>
                       <div>
+                        {(poster.iconografia || poster.contexto || poster.origen) ? (
+                          <div className="festival-poster-reading">
+                            {poster.contexto ? <div><small>Contexto</small><p>{poster.contexto}</p></div> : null}
+                            {poster.iconografia ? <div><small>Claves de la obra</small><p>{poster.iconografia}</p></div> : null}
+                            {poster.origen ? <div><small>Lectura simbólica</small><p>{poster.origen}</p></div> : null}
+                          </div>
+                        ) : null}
                         {paragraphs(poster.explicacionAutor).map((paragraph, index) => (
                           <p key={`${poster.id}-statement-${index}`}>{paragraph}</p>
                         ))}
