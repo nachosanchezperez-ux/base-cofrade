@@ -1,5 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async redirects() {
+    return [
+      {
+        source: '/bandas/escolania-salesiana-capilla-musical-maria-auxiliadora',
+        destination: '/bandas/escolania-salesiana-maria-auxiliadora-sevilla',
+        permanent: true,
+      },
+    ]
+  },
   images: {
     remotePatterns: [
       {

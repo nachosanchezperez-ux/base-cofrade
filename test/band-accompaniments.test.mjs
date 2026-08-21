@@ -2,12 +2,32 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 import {
   groupGloryAccompaniments,
+  partitionAccompanimentsBySeason,
   resolveAccompanimentLocation,
   sortGloryAccompaniments,
   sortHolyWeekAccompaniments,
   splitCurrentAccompaniments,
   summarizeGloryTypes,
 } from '../lib/bands/accompaniments.js'
+
+test('retira automáticamente de la temporada los contratos que ya han finalizado', () => {
+  const periods = partitionAccompanimentsBySeason([
+    { id: 'mairena', yearFrom: 2017, yearTo: 2026 },
+    { id: 'carmen', yearFrom: 2026, yearTo: null },
+  ], [{ id: 'san-bernardo', yearTo: 2003 }], 2027)
+
+  assert.deepEqual(periods.current.map((item) => item.id), ['carmen'])
+  assert.deepEqual(periods.historical.map((item) => item.id), ['san-bernardo', 'mairena'])
+})
+
+test('conserva el contrato durante su último año de vigencia', () => {
+  const periods = partitionAccompanimentsBySeason([
+    { id: 'mairena', yearFrom: 2017, yearTo: 2026 },
+  ], [], 2026)
+
+  assert.deepEqual(periods.current.map((item) => item.id), ['mairena'])
+  assert.deepEqual(periods.historical, [])
+})
 
 test('conserva la localidad pública cuando la hermandad vinculada sigue en borrador', () => {
   const location = resolveAccompanimentLocation({
