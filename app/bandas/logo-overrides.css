@@ -1,0 +1,52 @@
+/*
+ * La Puebla y Maestro Tejera deben mostrarse como identidad gráfica,
+ * sin placa ni fondo rasterizado alrededor del logotipo.
+ * Los recursos originales se mantienen como dato y estas vistas usan
+ * versiones WebP con transparencia real.
+ */
+
+a[href="/bandas/banda-municipal-de-musica-de-la-puebla-del-rio"] > span:first-child,
+a[href="/bandas/banda-de-musica-del-maestro-tejera"] > span:first-child {
+  overflow: visible !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+a[href="/bandas/banda-municipal-de-musica-de-la-puebla-del-rio"] > span:first-child {
+  background: transparent url('/bandas/la-puebla/imagotipo-transparent.webp') center / contain no-repeat !important;
+}
+
+a[href="/bandas/banda-de-musica-del-maestro-tejera"] > span:first-child {
+  background: transparent url('/bandas/maestro-tejera/logotipo-transparent.webp') center / contain no-repeat !important;
+}
+
+a[href="/bandas/banda-municipal-de-musica-de-la-puebla-del-rio"] > span:first-child img,
+a[href="/bandas/banda-de-musica-del-maestro-tejera"] > span:first-child img {
+  opacity: 0 !important;
+  padding: 0 !important;
+}
+
+/* En la ficha, el logotipo flota directamente sobre el hero, sin tarjeta propia. */
+main > section:first-of-type div:has(> img[src*="la-puebla"][src*="imagotipo"]),
+main > section:first-of-type div:has(> img[src*="maestro-tejera"][src*="logotipo"]) {
+  height: 248px !important;
+  overflow: visible !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+main > section:first-of-type div:has(> img[src*="la-puebla"][src*="imagotipo"]) {
+  background: transparent url('/bandas/la-puebla/imagotipo-transparent.webp') center / contain no-repeat !important;
+}
+
+main > section:first-of-type div:has(> img[src*="maestro-tejera"][src*="logotipo"]) {
+  background: transparent url('/bandas/maestro-tejera/logotipo-transparent.webp') center / contain no-repeat !important;
+}
+
+main > section:first-of-type div:has(> img[src*="la-puebla"][src*="imagotipo"]) > img,
+main > section:first-of-type div:has(> img[src*="maestro-tejera"][src*="logotipo"]) > img {
+  width: 160px !important;
+  height: 218px !important;
+  object-fit: contain !important;
+  opacity: 0 !important;
+}
