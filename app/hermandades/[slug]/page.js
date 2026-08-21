@@ -163,13 +163,6 @@ export default async function HermandadDetailPage({ params }) {
           mobileFocusY: heroMedia?.mobileFocusY,
           fitMode: heroMedia?.fitMode,
         }}
-        identity={{
-          crestSrc: h.escudoPath || '',
-          crestAlt: `Escudo de ${h.nombrePopular}`,
-          name: h.nombreOficial || h.nombrePopular,
-          detail: [h.sede, h.localidad].filter(Boolean).join(' · '),
-          links: h.enlacesOficiales || [],
-        }}
       />
 
       <EntitySectionNav items={[

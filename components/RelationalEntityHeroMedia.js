@@ -37,6 +37,7 @@ export default function RelationalEntityHeroMedia({
     <figure
       className={`${styles.media} ${styles[`media_${variant}`]}`}
       data-fit={resolvedFit}
+      data-orientation={isPortrait ? 'portrait' : 'landscape'}
       style={{
         '--hero-focus-x': `${focusX}%`,
         '--hero-focus-y': `${focusY}%`,
