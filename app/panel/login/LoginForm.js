@@ -1,8 +1,10 @@
 'use client'
 
+import Link from 'next/link'
 import { useActionState } from 'react'
 import { signInAction } from './actions'
 import styles from '@/app/panel/panel.module.css'
+import authStyles from './auth.module.css'
 
 const initialState = { error: '' }
 
@@ -20,6 +22,11 @@ export default function LoginForm({ next = '/panel' }) {
         <span>Contraseña</span>
         <input name="password" type="password" autoComplete="current-password" required />
       </label>
+      <div className={authStyles.helpRow}>
+        <Link href="/panel/recuperar-contrasena" className={authStyles.helpLink}>
+          ¿Has olvidado tu contraseña?
+        </Link>
+      </div>
       {state?.error ? <p className={styles.formError} role="alert">{state.error}</p> : null}
       <button className={styles.primaryButton} type="submit" disabled={pending}>
         {pending ? 'Comprobando…' : 'Entrar al panel'}
