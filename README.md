@@ -41,3 +41,5 @@ Abre `http://localhost:3000`.
 ## Nota de contenido
 
 Este prototipo utiliza datos de ejemplo y estructura de trabajo. Antes de la publicación pública definitiva, cada dato histórico debe revisarse y vincularse a sus fuentes documentales.
+
+<!-- deployment refresh: 2026-08-21 -->
