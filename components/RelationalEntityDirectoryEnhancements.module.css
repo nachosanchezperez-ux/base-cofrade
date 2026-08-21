@@ -23,12 +23,23 @@
 }
 
 .bandMedia {
-  background: color-mix(in srgb, var(--entity-accent) 7%, white);
+  background: var(--logo-background, color-mix(in srgb, var(--entity-accent) 7%, white));
 }
 
 .bandMedia img {
   object-fit: contain;
+  object-position: center;
   padding: 7px;
+}
+
+.bandMediaIntegrated {
+  border-color: color-mix(in srgb, var(--logo-background) 58%, #e3eaf0);
+  background: var(--logo-background, var(--entity-secondary));
+}
+
+.bandMediaIntegrated img {
+  object-fit: contain;
+  padding: 0;
 }
 
 .card {
