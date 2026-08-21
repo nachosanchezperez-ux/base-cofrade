@@ -9,7 +9,6 @@ import {
   getTodayHomeContentV2,
 } from '@/lib/supabase/home-v2'
 import { getOutingBriefing } from '@/lib/supabase/outing-briefing'
-import { getGlobalSearchItems } from '@/lib/supabase/search'
 
 export const dynamic = 'force-dynamic'
 
@@ -36,13 +35,11 @@ function getTodayLabel() {
 export default async function HomePage() {
   const today = getTodayLabel()
   const [
-    searchItems,
     todayContent,
     extraordinaryOutings,
     discoveryThreads,
     exploreStats,
   ] = await Promise.all([
-    getGlobalSearchItems(),
     getTodayHomeContentV2(),
     getUpcomingExtraordinaryOutings(5),
     getHomeDiscoveryThreads(3),
@@ -57,7 +54,6 @@ export default async function HomePage() {
   return (
     <HomePageV2
       today={today}
-      searchItems={searchItems}
       todayContent={todayContent}
       extraordinaryOutings={extraordinaryOutings}
       featuredBriefing={featuredBriefing}
