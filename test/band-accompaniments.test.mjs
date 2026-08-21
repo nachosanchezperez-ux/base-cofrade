@@ -2,11 +2,27 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 import {
   groupGloryAccompaniments,
+  resolveAccompanimentLocation,
   sortGloryAccompaniments,
   sortHolyWeekAccompaniments,
   splitCurrentAccompaniments,
   summarizeGloryTypes,
 } from '../lib/bands/accompaniments.js'
+
+test('conserva la localidad pública cuando la hermandad vinculada sigue en borrador', () => {
+  const location = resolveAccompanimentLocation({
+    public_municipality_name: 'Camas',
+    public_municipality_slug: 'camas',
+    public_province: 'Sevilla',
+  })
+
+  assert.deepEqual(location, {
+    brotherhoodTypes: [],
+    municipality: 'Camas',
+    municipalitySlug: 'camas',
+    province: 'Sevilla',
+  })
+})
 
 test('separa Semana Santa de Glorias y cultos externos', () => {
   const items = [
