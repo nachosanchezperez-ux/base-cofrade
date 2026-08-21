@@ -1,8 +1,50 @@
-/* Ajuste responsive de la indumentaria nazarena.
-   Las hermandades con un único hábito aprovechan todo el ancho en escritorio
-   sin alterar las composiciones de dos variantes ni el comportamiento móvil. */
+/* Presentación responsive de la indumentaria nazarena.
+   Las ilustraciones incluyen aire transparente en el lienzo original: la capa visual
+   permite que ese lienzo desborde y se recorte, dando protagonismo al nazareno
+   sin modificar los archivos fuente ni perder detalle. */
+
+.habit-visual {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(255,255,255,.12), transparent 34%),
+    linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.018));
+}
+
+.habit-visual:has(.habit-image) {
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0;
+}
+
+.habit-image {
+  width: auto;
+  height: 540px;
+  max-width: none;
+  flex: 0 0 auto;
+  object-fit: contain;
+  object-position: center bottom;
+  filter: drop-shadow(0 20px 24px rgba(0,0,0,.28));
+}
+
+.habit-visual:has(.habit-swatch) {
+  align-items: center;
+  padding: 26px;
+}
 
 @media (min-width: 901px) {
+  .habit-grid > .brotherhood-habit:not(:only-child) {
+    grid-template-columns: minmax(210px, .82fr) minmax(0, 1.18fr);
+  }
+
+  .habit-grid > .brotherhood-habit:not(:only-child) .habit-visual {
+    min-height: 450px;
+  }
+
+  .habit-grid > .brotherhood-habit:not(:only-child) .habit-image {
+    height: 555px;
+  }
+
   .habit-grid > .brotherhood-habit:only-child {
     grid-column: 1 / -1;
     grid-template-columns: minmax(300px, .82fr) minmax(0, 1.18fr);
@@ -10,13 +52,13 @@
 
   .habit-grid > .brotherhood-habit:only-child .habit-visual {
     min-height: 520px;
-    align-items: center;
-    padding: 26px 30px;
+    padding: 0;
   }
 
   .habit-grid > .brotherhood-habit:only-child .habit-image {
-    height: min(500px, 46vw);
-    max-height: 500px;
+    height: min(590px, 50vw);
+    max-height: 590px;
+    max-width: none;
   }
 
   .habit-grid > .brotherhood-habit:only-child .habit-copy {
@@ -26,5 +68,45 @@
   .habit-grid > .brotherhood-habit:only-child dl div {
     grid-template-columns: 118px minmax(0, 1fr);
     gap: 22px;
+  }
+}
+
+@media (min-width: 621px) and (max-width: 900px) {
+  .habit-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .brotherhood-habit {
+    grid-template-columns: minmax(245px, .85fr) minmax(0, 1.15fr);
+  }
+
+  .habit-visual {
+    min-height: 440px;
+  }
+
+  .habit-image {
+    height: 535px;
+  }
+}
+
+@media (max-width: 620px) {
+  .brotherhood-habit {
+    grid-template-columns: 1fr;
+  }
+
+  .habit-visual {
+    min-height: 360px;
+    padding: 0;
+    border-right: 0;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+  }
+
+  .habit-image {
+    height: 450px;
+    max-width: none;
+  }
+
+  .habit-copy {
+    padding: 24px;
   }
 }
