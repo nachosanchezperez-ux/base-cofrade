@@ -4,18 +4,35 @@ import styles from './BrotherhoodMusicalHeritage.module.css';
 
 const INITIAL_VISIBLE_MARCHES = 5;
 const GROUPS = [
+  { key: 'Agrupación Musical', label: 'Agrupación musical', short: 'AM' },
   { key: 'Cornetas y Tambores', label: 'Cornetas y tambores', short: 'CT' },
   { key: 'Banda de Música', label: 'Banda de música', short: 'BM' },
 ];
 
 function AuthorLine({ item }) {
   const composerNames = item.composers.map((author) => author.name).join(' · ');
-  const adapterNames = item.adapters.map((author) => author.name).join(' · ');
+  const adapterGroups = item.adapters.reduce((groups, author) => {
+    const label = author.label || 'Adaptación';
+    const names = groups.get(label) || [];
+    names.push(author.name);
+    groups.set(label, names);
+    return groups;
+  }, new Map());
+
+  if (!composerNames && !adapterGroups.size) {
+    return (
+      <div className={styles.authorship}>
+        <span>Autoría por documentar</span>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.authorship}>
-      <span>{composerNames || 'Autoría por documentar'}</span>
-      {adapterNames ? <small>Instrumentación · {adapterNames}</small> : null}
+      {composerNames ? <span>{composerNames}</span> : null}
+      {[...adapterGroups.entries()].map(([label, names]) => (
+        <small key={label}>{label} · {names.join(' · ')}</small>
+      ))}
     </div>
   );
 }
