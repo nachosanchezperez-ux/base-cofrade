@@ -4,6 +4,7 @@ import EntitySectionNav from '@/components/EntitySectionNav';
 import EntityMediaGallery from '@/components/EntityMediaGallery';
 import JsonLd from '@/components/JsonLd';
 import RelationalEntityHero from '@/components/RelationalEntityHero';
+import RelationalThread from '@/components/RelationalThread';
 import SourcesBlock from '@/components/SourcesBlock';
 import {
   getPublishedEntityCoverMedia,
@@ -84,7 +85,30 @@ export default async function ImagenPage({ params }) {
   const otrasImagenes = hermandad?.imagenes?.filter(
     (otraImagen) => otraImagen.slug !== imagen.slug
   ) || [];
-  const hasRelatedEntities = pasos.length > 0 || otrasImagenes.length > 0;
+  const relationalItems = [
+    ...(hermandad ? [{
+      kind: 'Hermandad',
+      relation: 'Pertenece a',
+      title: hermandad.nombrePopular,
+      href: `/hermandades/${hermandad.slug}`,
+      context: 'Ficha matriz de la corporación',
+    }] : []),
+    ...pasos.map((paso) => ({
+      kind: 'Paso',
+      relation: 'Procesiona en',
+      title: paso.nombre,
+      href: `/pasos/${paso.slug}`,
+      context: paso.tipo || 'Paso procesional relacionado',
+    })),
+    ...otrasImagenes.map((otraImagen) => ({
+      kind: 'Imagen',
+      relation: 'Comparte hermandad',
+      title: otraImagen.nombre,
+      href: `/imagenes/${otraImagen.slug}`,
+      context: [otraImagen.tipo, otraImagen.fecha].filter(Boolean).join(' · '),
+    })),
+  ];
+  const hasRelatedEntities = relationalItems.length > 0;
   const breadcrumbs = [
     { name: 'Inicio', path: '/' },
     { name: 'Imágenes', path: '/imagenes' },
@@ -151,11 +175,11 @@ export default async function ImagenPage({ params }) {
 
       <EntitySectionNav items={[
         { href: '#resumen', label: 'Resumen' },
+        hasRelatedEntities && { href: '#tira-del-hilo', label: 'Tira del hilo' },
         galleryMedia.length > 0 && { href: '#galeria', label: 'Galería' },
         imagen.restauraciones?.length > 0 && { href: '#restauraciones', label: 'Restauraciones' },
         imagen.acontecimientos?.length > 0 && { href: '#hitos', label: 'Hitos' },
         cronologia.length > 0 && { href: '#cronologia', label: 'Cronología' },
-        hasRelatedEntities && { href: '#relaciones', label: 'Relaciones' },
         imagen.fuentes?.length > 0 && { href: '#fuentes', label: 'Fuentes' },
       ]} />
 
@@ -220,6 +244,14 @@ export default async function ImagenPage({ params }) {
         </div>
       </section>
 
+      <RelationalThread
+        currentName={imagen.nombre}
+        currentMeta={[imagen.tipologia || imagen.tipo, imagen.fecha].filter(Boolean).join(' · ')}
+        items={relationalItems}
+        title="Desde esta imagen, sigue tirando del hilo"
+        description="Salta a su Hermandad, al paso donde procesiona o a otras imágenes vinculadas. La relación permanece visible para que la navegación tenga siempre contexto."
+      />
+
       <EntityMediaGallery items={galleryMedia} id="galeria" />
 
       {imagen.restauraciones?.length > 0 && (
@@ -273,58 +305,6 @@ export default async function ImagenPage({ params }) {
                 </article>
               ))}
             </div>
-          </div>
-        </section>
-      )}
-
-      {hasRelatedEntities && (
-        <section className="related-titulares-section" id="relaciones">
-          <div className="shell">
-            {pasos.length > 0 && (
-              <>
-                <div className="related-titulares-head">
-                  <span className="eyebrow">Procesiona en</span>
-                  <h2>Pasos relacionados</h2>
-                </div>
-
-                <div className="related-titulares-list">
-                  {pasos.map((paso) => (
-                    <Link
-                      className="related-titular"
-                      href={`/pasos/${paso.slug}`}
-                      key={paso.id}
-                    >
-                      <span className="related-titular-avatar">P</span>
-                      <strong>{paso.nombre}</strong>
-                    </Link>
-                  ))}
-                </div>
-              </>
-            )}
-
-            {otrasImagenes.length > 0 && (
-              <>
-                <div className="related-titulares-head">
-                  <span className="eyebrow">Relaciones</span>
-                  <h2>Otras imágenes titulares</h2>
-                </div>
-
-                <div className="related-titulares-list">
-                  {otrasImagenes.map((otraImagen) => (
-                    <Link
-                      className="related-titular"
-                      href={`/imagenes/${otraImagen.slug}`}
-                      key={otraImagen.id}
-                    >
-                      <span className="related-titular-avatar">
-                        {otraImagen.iniciales}
-                      </span>
-                      <strong>{otraImagen.nombre}</strong>
-                    </Link>
-                  ))}
-                </div>
-              </>
-            )}
           </div>
         </section>
       )}

@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import EntitySectionNav from '@/components/EntitySectionNav';
 import JsonLd from '@/components/JsonLd';
 import RelationalEntityHero from '@/components/RelationalEntityHero';
+import RelationalThread from '@/components/RelationalThread';
 import SectionTitle from '@/components/SectionTitle';
 import { getStepPhotoFraming } from '@/lib/step-photo-framing';
 import { getPublishedEntityCoverMedia } from '@/lib/supabase/entity-media';
@@ -75,6 +76,29 @@ export default async function PasoDetailPage({params}){
     getPublishedEntityCoverMedia(paso.id),
     getPublishedStepHeritage(paso.id),
   ]);
+  const relationalItems = [
+    ...(hermandad ? [{
+      kind: 'Hermandad',
+      relation: 'Pertenece a',
+      title: hermandad.nombrePopular,
+      href: `/hermandades/${hermandad.slug}`,
+      context: 'Ficha matriz de la corporación',
+    }] : []),
+    ...imagenes.map((imagen) => ({
+      kind: 'Imagen',
+      relation: 'Procesiona aquí',
+      title: imagen.nombre,
+      href: `/imagenes/${imagen.slug}`,
+      context: [imagen.autor, imagen.fecha].filter(Boolean).join(' · '),
+    })),
+    ...bandas.map((banda) => ({
+      kind: 'Banda',
+      relation: banda.posicion || 'Acompañamiento',
+      title: banda.nombre,
+      href: `/bandas/${banda.slug}`,
+      context: [banda.salida, banda.periodo].filter(Boolean).join(' · '),
+    })),
+  ];
   const canonicalPath = `/pasos/${paso.slug}`;
   const breadcrumbs = [
     { name: 'Inicio', path: '/' },
@@ -140,6 +164,7 @@ export default async function PasoDetailPage({params}){
 
       <EntitySectionNav items={[
         { href: '#resumen', label: 'Resumen' },
+        relationalItems.length > 0 && { href: '#tira-del-hilo', label: 'Tira del hilo' },
         bandas.length > 0 && { href: '#acompanamiento', label: 'Acompañamiento' },
         { href: '#patrimonio', label: 'Patrimonio y evolución' },
       ]} />
@@ -168,6 +193,14 @@ export default async function PasoDetailPage({params}){
           </div>
         </aside>
       </div></section>
+
+      <RelationalThread
+        currentName={paso.nombre}
+        currentMeta={[paso.tipo, paso.ejecucion].filter(Boolean).join(' · ')}
+        items={relationalItems}
+        title="Este paso conecta patrimonio, imágenes y música"
+        description="Desde aquí puedes volver a la Hermandad, abrir las fichas de las imágenes que procesionan o continuar hacia las formaciones musicales vinculadas actualmente."
+      />
 
       {bandas.length > 0 && (
         <section className={`section ${styles.accompanimentSection}`} id="acompanamiento">

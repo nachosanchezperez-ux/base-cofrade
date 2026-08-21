@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import JsonLd from '@/components/JsonLd'
 import SourcesBlock from '@/components/SourcesBlock'
 import OfficialLinks from '@/components/OfficialLinks'
+import RelationalThread from '@/components/RelationalThread'
 import BandDiscographySection from '@/components/bands/BandDiscographySection'
 import { getBandBySlug, youtubeEmbedUrl } from '@/lib/supabase/bands'
 import { getBandDiscography } from '@/lib/supabase/bandDiscography'
@@ -173,6 +174,32 @@ export default async function BandDetailPage({ params }) {
   const banderin = band.heritage?.find((item) => item.type === 'Banderín') || null
   const accentColor = colors.find((item) => item.role === 'accent')?.hexValue || band.primaryColor
   const identityColor = colors.find((item) => item.role === 'identity')?.hexValue || '#FFFFFF'
+  const currentRelations = [...orderedAccompaniments, ...gloryAccompaniments]
+  const bandThreadItems = [
+    ...(band.linkedBrotherhoodSlug ? [{
+      kind: 'Hermandad',
+      relation: band.linkedBrotherhoodRelationType === 'associated_with_brotherhood' ? 'Hermandad asociada' : 'Vínculo institucional',
+      title: band.linkedBrotherhood,
+      href: `/hermandades/${band.linkedBrotherhoodSlug}`,
+      context: 'Relación institucional de la formación',
+    }] : []),
+    ...currentRelations.flatMap((item) => [
+      ...(item.stepPageReady && item.stepSlug && item.stepName ? [{
+        kind: 'Paso',
+        relation: item.position || 'Acompañamiento',
+        title: item.stepName,
+        href: `/pasos/${item.stepSlug}`,
+        context: [item.brotherhoodName, item.outingType, yearRange(item)].filter(Boolean).join(' · '),
+      }] : []),
+      ...(item.brotherhoodPageReady && item.brotherhoodSlug ? [{
+        kind: 'Hermandad',
+        relation: item.outingType || 'Acompañamiento',
+        title: item.brotherhoodName,
+        href: `/hermandades/${item.brotherhoodSlug}`,
+        context: [item.municipality, yearRange(item)].filter(Boolean).join(' · '),
+      }] : []),
+    ]),
+  ]
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'MusicGroup',
@@ -229,6 +256,7 @@ export default async function BandDetailPage({ params }) {
           <span className={`brotherhood-nav-label ${styles.navLabel}`}>Explorar ficha</span>
           <div className={`brotherhood-nav-list nav-scroll ${styles.navList}`}>
             <a href="#resumen">De un vistazo</a>
+            {bandThreadItems.length ? <a href="#tira-del-hilo">Tira del hilo</a> : null}
             {banderin ? <a href="#banderin">Banderín</a> : null}
             {hasAccompaniments ? <a href="#acompanamientos">Semana Santa</a> : null}
             {hasGloryAccompaniments ? <a href="#glorias">Glorias y eucarísticas</a> : null}
@@ -305,6 +333,15 @@ export default async function BandDetailPage({ params }) {
           </div>
         </div>
       </section>
+
+      <RelationalThread
+        currentLabel="Banda"
+        currentName={band.popularName}
+        currentMeta={[band.type, band.municipality].filter(Boolean).join(' · ')}
+        items={bandThreadItems}
+        title="De la banda al paso y a la Hermandad"
+        description="Prioriza los vínculos institucionales y los acompañamientos vigentes para que una formación musical no sea un destino aislado, sino una puerta de entrada al resto de la enciclopedia."
+      />
 
       {banderin ? <section className={`${styles.contentSection} ${styles.heritageSection}`} id="banderin">
         <div className="shell">
