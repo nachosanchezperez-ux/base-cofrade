@@ -32,8 +32,8 @@ export default function HomePageV2({
           <aside className={styles.searchBox} id="tiradelhilo">
             <div className={styles.searchInner}>
               <span className={styles.searchLabel}>Tira del hilo</span>
-              <h2>¿Qué quieres descubrir?</h2>
-              <p>Busca una entidad y empieza a recorrer las relaciones ya documentadas en Hilo Cofrade</p>
+              <h2>Pregunta a Hilo Cofrade</h2>
+              <p>Escribe como hablarías con otra persona. La respuesta se construye únicamente con datos y relaciones ya documentados en Hilo Cofrade.</p>
               <HiloSearch items={searchItems} />
             </div>
           </aside>
