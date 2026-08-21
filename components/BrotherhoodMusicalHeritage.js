@@ -2,7 +2,6 @@ import Link from 'next/link';
 import SectionTitle from './SectionTitle';
 import styles from './BrotherhoodMusicalHeritage.module.css';
 
-const FEATURED_ITEMS = 3;
 const GROUPS = [
   { key: 'Agrupación Musical', label: 'Agrupación musical', short: 'AM', noun: 'marchas' },
   { key: 'Cornetas y Tambores', label: 'Cornetas y tambores', short: 'CT', noun: 'marchas' },
@@ -63,13 +62,16 @@ function MusicRow({ item }) {
 export default function BrotherhoodMusicalHeritage({ items = [] }) {
   if (!items.length) return null;
 
-  const groups = GROUPS.map((group) => ({
-    ...group,
-    items: items.filter((item) => item.musicType === group.key),
-  })).filter((group) => group.items.length);
-
-  const featuredItems = items.slice(0, FEATURED_ITEMS);
-  const hasMore = items.length > featuredItems.length;
+  const groups = GROUPS.map((group) => {
+    const groupItems = items.filter((item) => item.musicType === group.key);
+    return {
+      ...group,
+      items: groupItems,
+      repertoireBandContext: groupItems
+        .map((item) => item.repertoireBandContext)
+        .find((context) => context?.name) || null,
+    };
+  }).filter((group) => group.items.length);
 
   return (
     <section className={`section ${styles.section}`} id="musica">
@@ -78,7 +80,7 @@ export default function BrotherhoodMusicalHeritage({ items = [] }) {
           <SectionTitle
             eyebrow="Sonidos propios"
             title="Patrimonio musical"
-            description="Una lectura resumida de las composiciones vinculadas a la Hermandad y a sus titulares. El repertorio completo queda disponible sin alargar la ficha principal."
+            description="Composiciones vinculadas a la Hermandad y a sus titulares, organizadas por estilo para consultar cada repertorio sin alargar la ficha."
           />
           <div className={styles.summary} aria-label="Resumen del patrimonio musical">
             <strong>{items.length}</strong>
@@ -87,35 +89,29 @@ export default function BrotherhoodMusicalHeritage({ items = [] }) {
           </div>
         </div>
 
-        <div className={styles.list}>
-          {featuredItems.map((item) => <MusicRow item={item} key={item.id} />)}
+        <div className={styles.groups}>
+          {groups.map((group) => (
+            <details className={styles.group} key={group.key}>
+              <summary className={styles.groupSummary}>
+                <span className={styles.groupMark} aria-hidden="true">{group.short}</span>
+                <span className={styles.groupHeading}>
+                  <strong>{group.label}</strong>
+                  <small>{group.items.length} {group.noun} documentadas</small>
+                  {group.repertoireBandContext?.name ? (
+                    <span className={styles.groupContext}>
+                      <small>{group.repertoireBandContext.label}</small>
+                      <b>{group.repertoireBandContext.name}</b>
+                    </span>
+                  ) : null}
+                </span>
+                <span className={styles.groupToggle} aria-hidden="true">＋</span>
+              </summary>
+              <div className={styles.list}>
+                {group.items.map((item) => <MusicRow item={item} key={item.id} />)}
+              </div>
+            </details>
+          ))}
         </div>
-
-        {hasMore ? (
-          <details className={styles.more}>
-            <summary>
-              <span className={styles.moreClosed}>Ver patrimonio musical completo</span>
-              <span className={styles.moreOpen}>Ocultar patrimonio musical completo</span>
-              <span className={styles.moreIcon} aria-hidden="true">＋</span>
-            </summary>
-            <div className={styles.moreList}>
-              {groups.map((group) => (
-                <section className={styles.group} key={group.key} aria-labelledby={`music-${group.short.toLowerCase()}`}>
-                  <header className={styles.groupHeader}>
-                    <span className={styles.groupMark} aria-hidden="true">{group.short}</span>
-                    <div>
-                      <h3 id={`music-${group.short.toLowerCase()}`}>{group.label}</h3>
-                      <p>{group.items.length} {group.noun} documentadas</p>
-                    </div>
-                  </header>
-                  <div className={styles.list}>
-                    {group.items.map((item) => <MusicRow item={item} key={item.id} />)}
-                  </div>
-                </section>
-              ))}
-            </div>
-          </details>
-        ) : null}
       </div>
     </section>
   );
