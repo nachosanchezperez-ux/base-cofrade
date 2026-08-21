@@ -1,11 +1,17 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import RelationalThread from '@/components/RelationalThread'
 import { getPublishedEntityCoverMediaMap } from '@/lib/supabase/entity-media'
 import { createClient } from '@/lib/supabase/server'
 
 function assertRows(result, label) {
   if (result.error) throw new Error(`${label}: ${result.error.message}`)
   return result.data || []
+}
+
+function assertRow(result, label) {
+  if (result.error) throw new Error(`${label}: ${result.error.message}`)
+  return result.data || null
 }
 
 async function loadConceptualTitulars(supabase, brotherhoodId) {
@@ -93,6 +99,59 @@ async function loadOwnBands(supabase, brotherhoodId) {
   })
 }
 
+async function loadBrotherhoodThreadData(supabase, brotherhoodId) {
+  const [brotherhoodResult, imageLinksResult, stepLinksResult] = await Promise.all([
+    supabase
+      .from('entities')
+      .select('id, name, slug')
+      .eq('id', brotherhoodId)
+      .eq('entity_type', 'brotherhood')
+      .eq('status', 'published')
+      .maybeSingle(),
+    supabase
+      .from('brotherhood_images')
+      .select('image_entity_id')
+      .eq('brotherhood_entity_id', brotherhoodId)
+      .eq('status', 'published'),
+    supabase
+      .from('brotherhood_steps')
+      .select('step_entity_id')
+      .eq('brotherhood_entity_id', brotherhoodId)
+      .eq('status', 'published'),
+  ])
+
+  const brotherhood = assertRow(brotherhoodResult, 'No se pudo consultar la Hermandad para Tira del hilo')
+  const imageLinks = assertRows(imageLinksResult, 'No se pudieron consultar las Imágenes de la Hermandad')
+  const stepLinks = assertRows(stepLinksResult, 'No se pudieron consultar los Pasos de la Hermandad')
+  const imageIds = imageLinks.map((item) => item.image_entity_id).filter(Boolean)
+  const stepIds = stepLinks.map((item) => item.step_entity_id).filter(Boolean)
+
+  const [imagesResult, stepsResult] = await Promise.all([
+    imageIds.length
+      ? supabase
+          .from('entities')
+          .select('id, name, slug')
+          .eq('entity_type', 'image')
+          .eq('status', 'published')
+          .in('id', imageIds)
+      : Promise.resolve({ data: [], error: null }),
+    stepIds.length
+      ? supabase
+          .from('entities')
+          .select('id, name, slug')
+          .eq('entity_type', 'step')
+          .eq('status', 'published')
+          .in('id', stepIds)
+      : Promise.resolve({ data: [], error: null }),
+  ])
+
+  return {
+    brotherhood,
+    images: assertRows(imagesResult, 'No se pudieron consultar las Imágenes publicadas de la Hermandad'),
+    steps: assertRows(stepsResult, 'No se pudieron consultar los Pasos publicados de la Hermandad'),
+  }
+}
+
 export async function BrotherhoodTitularCount({ brotherhoodId, imageCount = 0 }) {
   try {
     const supabase = await createClient()
@@ -154,30 +213,70 @@ export async function BrotherhoodConceptualTitulars({ brotherhoodId }) {
 export async function BrotherhoodOwnBands({ brotherhoodId }) {
   try {
     const supabase = await createClient()
-    const bands = await loadOwnBands(supabase, brotherhoodId)
-    if (!bands.length) return null
+    const [bands, threadData] = await Promise.all([
+      loadOwnBands(supabase, brotherhoodId),
+      loadBrotherhoodThreadData(supabase, brotherhoodId),
+    ])
+    const threadItems = [
+      ...threadData.images.slice(0, 3).map((image) => ({
+        kind: 'Imagen',
+        relation: 'Titular',
+        title: image.name,
+        href: `/imagenes/${image.slug}`,
+        context: 'Imagen vinculada a la Hermandad',
+      })),
+      ...threadData.steps.slice(0, 3).map((step) => ({
+        kind: 'Paso',
+        relation: 'Procesiona con',
+        title: step.name,
+        href: `/pasos/${step.slug}`,
+        context: 'Paso procesional de la Hermandad',
+      })),
+      ...bands.slice(0, 2).map((band) => ({
+        kind: 'Banda',
+        relation: 'Vínculo institucional',
+        title: band.nombre,
+        href: `/bandas/${band.slug}`,
+        context: band.tipo,
+      })),
+    ]
+
+    if (!threadItems.length && !bands.length) return null
 
     return (
-      <section className="section brotherhood-soft" id="bandas-propias">
-        <div className="shell">
-          <span className="eyebrow">Vínculo institucional</span>
-          <h2>Bandas de la Hermandad</h2>
-          <p className="body-large">Formaciones vinculadas institucionalmente a la Hermandad, con independencia de sus acompañamientos procesionales concretos.</p>
-          <div className="current-music-grid">
-            {bands.map((band) => (
-              <Link className="current-music-card" href={`/bandas/${band.slug}`} key={band.id}>
-                <span className="current-music-position">Banda propia</span>
-                <h3>{band.nombre}</h3>
-                <p>{band.tipo}</p>
-                {band.descripcion && <small>{band.descripcion}</small>}
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
+      <>
+        <RelationalThread
+          currentLabel="Hermandad"
+          currentName={threadData.brotherhood?.name || 'Hermandad'}
+          currentMeta={`${threadData.images.length} imágenes · ${threadData.steps.length} pasos`}
+          items={threadItems}
+          title="La Hermandad como nodo de la enciclopedia"
+          description="Tira del hilo hacia sus imágenes, sus pasos y las formaciones con vínculo institucional. Esta capa prioriza relaciones navegables y deja el detalle completo en cada módulo específico."
+        />
+
+        {bands.length ? (
+          <section className="section brotherhood-soft" id="bandas-propias">
+            <div className="shell">
+              <span className="eyebrow">Vínculo institucional</span>
+              <h2>Bandas de la Hermandad</h2>
+              <p className="body-large">Formaciones vinculadas institucionalmente a la Hermandad, con independencia de sus acompañamientos procesionales concretos.</p>
+              <div className="current-music-grid">
+                {bands.map((band) => (
+                  <Link className="current-music-card" href={`/bandas/${band.slug}`} key={band.id}>
+                    <span className="current-music-position">Banda propia</span>
+                    <h3>{band.nombre}</h3>
+                    <p>{band.tipo}</p>
+                    {band.descripcion && <small>{band.descripcion}</small>}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </section>
+        ) : null}
+      </>
     )
   } catch (error) {
-    console.error('[Hilo Cofrade] No se pudieron mostrar las bandas propias de la hermandad', error)
+    console.error('[Hilo Cofrade] No se pudieron mostrar las relaciones principales de la hermandad', error)
     return null
   }
 }
