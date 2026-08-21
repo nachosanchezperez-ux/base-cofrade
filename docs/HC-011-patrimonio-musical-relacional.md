@@ -6,6 +6,11 @@ Las fichas de Hermandad pueden reunir composiciones dedicadas a la corporación 
 
 Los casos de El Baratillo y San Benito demuestran que estas relaciones no son equivalentes. Una marcha puede formar parte del patrimonio musical de una Hermandad aunque la banda que la estrenó o grabó no sea la que la acompaña actualmente, y una banda actual no debe quedar asociada automáticamente a todas las composiciones del repertorio.
 
+## Casos de validación
+
+- **El Baratillo**: el patrimonio dedicado reúne marchas relacionadas con distintas formaciones, mientras el acompañamiento actual corresponde a Banda del Sol y Carmen de Salteras. La pertenencia al patrimonio nace de la dedicatoria, no del contrato musical vigente.
+- **San Benito**: el Archivo musical oficial reúne repertorios de Agrupación Musical, Cornetas y Tambores y Banda de Música. Las formaciones actuales del mismo tipo aportan contexto de navegación, pero no se convierten automáticamente en intérpretes, bandas de estreno o grabadoras de todas las obras.
+
 ## Decisión
 
 El patrimonio musical dedicado se modela mediante entidades `Marcha` y relaciones de dedicatoria estructuradas (`march_dedications`) hacia la Hermandad o, cuando la fuente lo documente de forma inequívoca, hacia un titular concreto.
