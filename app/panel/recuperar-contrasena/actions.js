@@ -3,9 +3,18 @@
 import { createClient } from '@/lib/supabase/server'
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const PRODUCTION_RECOVERY_URL = 'https://hilocofrade.es/panel/auth/recuperacion'
 
 function getRecoveryRedirectUrl() {
-  let origin = process.env.NEXT_PUBLIC_SITE_URL || 'https://hilocofrade.es'
+  // La recuperación de producción siempre vuelve al dominio canónico. De este modo,
+  // una variable local heredada no puede enviar enlaces reales a localhost.
+  if (process.env.VERCEL_ENV === 'production') return PRODUCTION_RECOVERY_URL
+
+  const vercelHost = process.env.VERCEL_URL || process.env.NEXT_PUBLIC_VERCEL_URL
+  let origin = vercelHost
+    ? `https://${vercelHost}`
+    : (process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000')
+
   if (!origin.startsWith('http://') && !origin.startsWith('https://')) origin = `https://${origin}`
   origin = origin.replace(/\/+$/, '')
   return `${origin}/panel/auth/recuperacion`
