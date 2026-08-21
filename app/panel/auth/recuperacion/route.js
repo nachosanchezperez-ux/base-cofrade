@@ -22,6 +22,17 @@ export async function GET(request) {
   const { data: { user }, error: userError } = await supabase.auth.getUser()
   if (userError || !user) return invalidRecoveryRedirect(request)
 
+  const { data: profile, error: profileError } = await supabase
+    .from('panel_users')
+    .select('active')
+    .eq('user_id', user.id)
+    .maybeSingle()
+
+  if (profileError || !profile?.active) {
+    await supabase.auth.signOut()
+    return invalidRecoveryRedirect(request)
+  }
+
   const url = request.nextUrl.clone()
   url.pathname = '/panel/restablecer-contrasena'
   url.search = ''
