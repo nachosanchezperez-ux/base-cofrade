@@ -12,10 +12,12 @@ import {
   sortBrotherhoods,
 } from '@/lib/brotherhood-directory'
 import styles from './HermandadesDirectory.module.css'
+import enhancementStyles from './HermandadesDirectoryEnhancements.module.css'
 
 export default function HermandadesDirectory({ hermandades }) {
   const [query, setQuery] = useState('')
   const [territory, setTerritory] = useState('todos')
+  const [municipality, setMunicipality] = useState('todos')
 
   const counts = useMemo(() => Object.fromEntries(
     DIRECTORY_TYPES.map((type) => [
@@ -24,6 +26,10 @@ export default function HermandadesDirectory({ hermandades }) {
     ])
   ), [hermandades])
 
+  const municipalities = useMemo(() => [...new Set(
+    hermandades.map((item) => item.localidad).filter(Boolean)
+  )].sort((first, second) => first.localeCompare(second, 'es', { sensitivity: 'base' })), [hermandades])
+
   const filtered = useMemo(() => {
     const value = normalizeDirectoryValue(query)
     return sortBrotherhoods(hermandades.filter((item) => {
@@ -31,6 +37,8 @@ export default function HermandadesDirectory({ hermandades }) {
       const matchesTerritory = territory === 'todos'
         || (territory === 'sevilla-capital' && isCapital)
         || (territory === 'provincia' && !isCapital)
+      const matchesMunicipality = municipality === 'todos'
+        || normalizeDirectoryValue(item.localidad) === municipality
       const haystack = [
         displayName(item),
         item.nombreOficial,
@@ -41,9 +49,9 @@ export default function HermandadesDirectory({ hermandades }) {
         ...(item.tipos || []),
       ].filter(Boolean).join(' ')
 
-      return matchesTerritory && (!value || normalizeDirectoryValue(haystack).includes(value))
+      return matchesTerritory && matchesMunicipality && (!value || normalizeDirectoryValue(haystack).includes(value))
     }))
-  }, [query, territory, hermandades])
+  }, [query, territory, municipality, hermandades])
 
   return (
     <div className={styles.directory}>
@@ -80,22 +88,36 @@ export default function HermandadesDirectory({ hermandades }) {
             <span className={styles.searchIcon} aria-hidden="true">⌕</span>
           </label>
 
-          <div className={styles.territories} aria-label="Filtrar por territorio">
-            {[
-              ['todos', 'Todos'],
-              ['sevilla-capital', 'Sevilla capital'],
-              ['provincia', 'Provincia'],
-            ].map(([value, label]) => (
-              <button
-                type="button"
-                key={value}
-                className={territory === value ? styles.activeTerritory : ''}
-                onClick={() => setTerritory(value)}
-                aria-pressed={territory === value}
-              >
-                {label}
-              </button>
-            ))}
+          <div className={enhancementStyles.directoryFilters}>
+            <div className={`${styles.territories} ${enhancementStyles.territories}`} aria-label="Filtrar por territorio">
+              {[
+                ['todos', 'Todos'],
+                ['sevilla-capital', 'Sevilla capital'],
+                ['provincia', 'Provincia'],
+              ].map(([value, label]) => (
+                <button
+                  type="button"
+                  key={value}
+                  className={territory === value ? styles.activeTerritory : ''}
+                  onClick={() => setTerritory(value)}
+                  aria-pressed={territory === value}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+            <select
+              value={municipality}
+              onChange={(event) => setMunicipality(event.target.value)}
+              aria-label="Filtrar por localidad"
+            >
+              <option value="todos">Todas las localidades</option>
+              {municipalities.map((item) => (
+                <option value={normalizeDirectoryValue(item)} key={item}>
+                  {item === 'Sevilla' ? 'Sevilla capital' : item}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
 
@@ -104,12 +126,13 @@ export default function HermandadesDirectory({ hermandades }) {
             <strong>{filtered.length} {filtered.length === 1 ? 'hermandad' : 'hermandades'}</strong>
             <span>Sevilla capital y provincia</span>
           </div>
-          {query || territory !== 'todos' ? (
+          {query || territory !== 'todos' || municipality !== 'todos' ? (
             <button
               type="button"
               onClick={() => {
                 setQuery('')
                 setTerritory('todos')
+                setMunicipality('todos')
               }}
             >
               Limpiar filtros

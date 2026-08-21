@@ -3,6 +3,7 @@ import Link from 'next/link'
 import CofradeTypeBadges from '@/components/CofradeTypeBadges'
 import { displayName, localityLabel } from '@/lib/brotherhood-directory'
 import styles from './HermandadesDirectory.module.css'
+import enhancementStyles from './HermandadesDirectoryEnhancements.module.css'
 
 function crestFor(hermandad) {
   if (hermandad.escudoPath) return hermandad.escudoPath
@@ -34,10 +35,10 @@ export default function BrotherhoodDirectoryCard({ hermandad, contextLabel }) {
       </span>
 
       <span className={styles.itemMain}>
-        {contextLabel || hermandad.diaSalida ? (
-          <span className={styles.context}>{contextLabel || hermandad.diaSalida}</span>
-        ) : null}
         <strong className={styles.name}>{name}</strong>
+        {contextLabel || hermandad.diaSalida ? (
+          <span className={`${styles.context} ${enhancementStyles.contextAfterName}`}>{contextLabel || hermandad.diaSalida}</span>
+        ) : null}
         <span className={styles.see}>{hermandad.sede || 'Sede canónica por documentar'}</span>
         <span className={styles.place}>{placeLabel}</span>
         <span className={styles.types}>

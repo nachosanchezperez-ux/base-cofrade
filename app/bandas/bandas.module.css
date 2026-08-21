@@ -256,6 +256,9 @@
 .relationshipStep { display: grid; gap: 5px; margin: 0 20px; padding: 14px 0 16px; border-top: 1px solid var(--band-line); }
 .relationshipStep span { color: var(--band-muted); font-size: 8px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
 .relationshipStep strong { color: var(--band-secondary); font-size: 12px; font-weight: 600; line-height: 1.45; }
+.relationshipStep a { color: var(--band-secondary); font-size: 12px; font-weight: 700; line-height: 1.45; }
+.relationshipStep a:hover { color: var(--band-primary); }
+.relationshipStep a b { color: var(--band-primary); }
 .relationshipCard p,
 .directionGrid p { margin: 0; color: var(--band-muted); font-size: 12px; line-height: 1.55; }
 .relationshipNote { margin: 0 20px 14px!important; font-size: 10px!important; }

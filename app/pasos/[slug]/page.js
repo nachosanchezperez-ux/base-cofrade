@@ -70,24 +70,17 @@ export default async function PasoDetailPage({params}){
   const {slug}=await params;
   const result=await getPasoPageBySlug(slug);
   if(!result) notFound();
-  const {paso,hermandad,imagenes=[]}=result;
+  const {paso,hermandad,imagenes=[],bandas=[]}=result;
   const [coverMedia, heritage] = await Promise.all([
     getPublishedEntityCoverMedia(paso.id),
     getPublishedStepHeritage(paso.id),
   ]);
   const canonicalPath = `/pasos/${paso.slug}`;
-  const breadcrumbs = hermandad
-    ? [
-        { name: 'Inicio', path: '/' },
-        { name: 'Hermandades', path: '/hermandades' },
-        { name: hermandad.nombrePopular, path: `/hermandades/${hermandad.slug}` },
-        { name: paso.nombre, path: canonicalPath },
-      ]
-    : [
-        { name: 'Inicio', path: '/' },
-        { name: 'Pasos', path: '/pasos' },
-        { name: paso.nombre, path: canonicalPath },
-      ];
+  const breadcrumbs = [
+    { name: 'Inicio', path: '/' },
+    { name: 'Pasos', path: '/pasos' },
+    { name: paso.nombre, path: canonicalPath },
+  ];
 
   return (
     <main className="brotherhood-page" style={{
@@ -117,16 +110,10 @@ export default async function PasoDetailPage({params}){
         variant="step"
         entityType="Paso procesional"
         title={paso.nombre}
-        breadcrumbItems={hermandad
-          ? [
-              { label: 'Hermandades', href: '/hermandades' },
-              { label: hermandad.nombrePopular, href: `/hermandades/${hermandad.slug}` },
-              { label: 'Paso' },
-            ]
-          : [
-              { label: 'Enciclopedia', href: '/pasos' },
-              { label: 'Paso' },
-            ]}
+        breadcrumbItems={[
+          { label: 'Pasos', href: '/pasos' },
+          { label: 'Ficha' },
+        ]}
         badges={[
           paso.tipo,
           imagenes.length ? `${imagenes.length} ${imagenes.length === 1 ? 'imagen vinculada' : 'imágenes vinculadas'}` : '',
@@ -153,6 +140,7 @@ export default async function PasoDetailPage({params}){
 
       <EntitySectionNav items={[
         { href: '#resumen', label: 'Resumen' },
+        bandas.length > 0 && { href: '#acompanamiento', label: 'Acompañamiento' },
         { href: '#patrimonio', label: 'Patrimonio y evolución' },
       ]} />
 
@@ -180,6 +168,28 @@ export default async function PasoDetailPage({params}){
           </div>
         </aside>
       </div></section>
+
+      {bandas.length > 0 && (
+        <section className={`section ${styles.accompanimentSection}`} id="acompanamiento">
+          <div className="shell">
+            <SectionTitle
+              eyebrow="Relación actual"
+              title="Acompañamiento musical"
+              description="Formaciones vinculadas actualmente a este paso mediante acompañamientos documentados."
+            />
+            <div className={styles.accompanimentGrid}>
+              {bandas.map((banda) => (
+                <Link className={styles.accompanimentCard} href={`/bandas/${banda.slug}`} key={banda.id}>
+                  <span>{banda.posicion}</span>
+                  <strong>{banda.nombre}</strong>
+                  <small>{[banda.salida, banda.periodo].filter(Boolean).join(' · ')}</small>
+                  <em aria-hidden="true">→</em>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       <section className={`section brotherhood-soft ${styles.heritageSection}`} id="patrimonio">
         <div className="shell">

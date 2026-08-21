@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import BrotherhoodDirectoryCard from '@/components/BrotherhoodDirectoryCard'
 import {
+  directoryContextLabel,
   directoryPath,
   directoryPeriod,
   directoryType,
@@ -19,7 +20,7 @@ export default function HermandadesCategoryDirectory({ hermandades, typeKey }) {
     const label = [localityLabel(item), period].filter(Boolean).join(' · ')
     const href = directoryPath(item, typeKey)
     return [href, { href, label }]
-  })).values()]
+  }).filter(([href]) => Boolean(href))).values()]
 
   return (
     <section className={`section page-top ${styles.routePage}`}>
@@ -61,7 +62,11 @@ export default function HermandadesCategoryDirectory({ hermandades, typeKey }) {
         {items.length ? (
           <div className={styles.list}>
             {items.map((hermandad) => (
-              <BrotherhoodDirectoryCard key={hermandad.id} hermandad={hermandad} />
+              <BrotherhoodDirectoryCard
+                key={hermandad.id}
+                hermandad={hermandad}
+                contextLabel={directoryContextLabel(hermandad, typeKey)}
+              />
             ))}
           </div>
         ) : (
