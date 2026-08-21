@@ -8,6 +8,7 @@ import {
   BrotherhoodOwnBands,
 } from '@/components/BrotherhoodRelationalExtras';
 import EntitySectionNav from '@/components/EntitySectionNav';
+import FestivalPostersSection from '@/components/FestivalPostersSection';
 import { notFound } from 'next/navigation';
 import JsonLd from '@/components/JsonLd';
 import OfficialLinks from '@/components/OfficialLinks';
@@ -180,6 +181,7 @@ export default async function HermandadDetailPage({ params }) {
         h.habitos?.length > 0 && { href: '#tunica', label: 'Túnica' },
         h.salidas?.length > 0 && { href: '#salidas', label: 'Salidas' },
         h.cultos?.length > 0 && { href: '#cultos', label: 'Cultos' },
+        h.cartelesFiestas?.length > 0 && { href: '#carteles', label: 'Carteles' },
         (h.patrimonio?.length > 0 || h.estrenos?.length > 0) && { href: '#patrimonio', label: 'Patrimonio' },
         h.acompanamientos?.length > 0 && { href: '#acompanamientos', label: 'Histórico musical' },
         h.noticias?.length > 0 && { href: '#noticias', label: 'Noticias' },
@@ -563,6 +565,8 @@ export default async function HermandadDetailPage({ params }) {
           );
         })}</div>
       </div></section>}
+
+      <FestivalPostersSection posters={h.cartelesFiestas} />
 
       {(h.patrimonio?.length > 0 || h.estrenos?.length > 0) && <section className="section heritage-section" id="patrimonio"><div className="shell">
         <SectionTitle eyebrow="Memoria material" title="Patrimonio" description="Obras, enseres y espacios documentados como piezas vivas: su historia, sus autores y las intervenciones que han definido su aspecto." />
