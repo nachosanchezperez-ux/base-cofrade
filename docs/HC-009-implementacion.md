@@ -1,6 +1,6 @@
 # HC-009 · Implementación del sistema tipográfico de Hilo Cofrade
 
-**Estado:** EN VALIDACIÓN  
+**Estado:** IMPLEMENTADA  
 **Decisión de referencia:** `docs/HC-009-sistema-tipografico-hilo-cofrade.md`  
 **Ámbito:** web pública + Panel de control  
 **Base tipográfica:** Open Sans
@@ -11,7 +11,7 @@ Convertir la decisión HC-009 en una regla de interfaz efectiva, transversal y m
 
 ## Implementación
 
-### 1. Una sola familia
+### 1. Una sola familia cargada
 
 La interfaz carga únicamente **Open Sans** mediante `@fontsource` desde `app/layout.js`.
 
@@ -89,7 +89,7 @@ La eliminación física de esas declaraciones queda como **limpieza técnica pro
 - solo se carga Open Sans;
 - solo se cargan 400 / 600 / 700 / 800;
 - existe la escala canónica;
-- no aparece Georgia ni serif dentro de la propia capa HC-009;
+- no aparece Georgia ni Times New Roman dentro de la propia capa HC-009;
 - el Panel mantiene un ámbito tipográfico propio dentro del mismo sistema;
 - la interfaz conserva `font-synthesis: none`.
 
@@ -101,6 +101,50 @@ Ninguno.
 - No hay cambios de esquema.
 - No hay cambios de contenido editorial.
 
+## Validación de cierre · 21/08/2026
+
+Implementación principal:
+
+- PR **#134 · Implementa HC-009 · sistema tipográfico global**;
+- merge en `main`: `db5d5de83e61192e60231bf987cee799d62d313b`;
+- deployment funcional de producción: `dpl_BAobuwxFxnEyXi5sAyNs67HaF7h9`.
+
+Validación automática:
+
+- **17/17 tests** superados;
+- `npm run build` superado;
+- preview Vercel del head validado antes del merge;
+- build de producción sin errores.
+
+Smoke test sobre `hilocofrade.es`, sirviendo el deployment exacto de HC-009:
+
+- Home · 200;
+- directorio de Hermandades · 200;
+- ficha de El Baratillo · 200;
+- ficha de Nuestra Señora de la Piedad · 200;
+- ficha de Banda del Sol · 200;
+- acceso al Panel · 200;
+- `#hc-app` presente en la aplicación;
+- `#hc-panel` presente en el ámbito administrativo;
+- navegación y relaciones previas conservadas.
+
+Evidencia de CSS en producción:
+
+- Open Sans es la única familia cargada mediante `@font-face` por HC-009;
+- solo se cargan pesos 400 / 600 / 700 / 800;
+- los tokens canónicos están presentes en el bundle servido;
+- `#hc-app` aplica la familia y `font-synthesis: none`;
+- `#hc-panel` aplica la escala administrativa;
+- las reglas responsive de HC-009 están presentes.
+
+Runtime del deployment exacto `dpl_BAobuwxFxnEyXi5sAyNs67HaF7h9`:
+
+- **0 logs `error` / `fatal`** durante la validación.
+
+La consulta global del proyecto sí conserva dos respuestas 429 de Supabase Auth procedentes de un deployment anterior (`dpl_5jPR2a5wHWsnzjPAZCQmnygENDBu`); no corresponden al deployment de HC-009 y no se consideran regresión de esta decisión.
+
+La validación móvil de cierre es **estructural responsive**: viewport correcto y media queries canónicas servidas en producción. La limpieza visual pixel-perfect por navegador/dispositivo queda fuera del criterio de implementación de la decisión tipográfica.
+
 ## Criterios de cierre
 
 - [x] Open Sans es la única familia cargada por la aplicación.
@@ -110,7 +154,7 @@ Ninguno.
 - [x] El Panel dispone de una escala compacta explícita.
 - [x] La jerarquía responsive está definida.
 - [x] Existe protección automática frente a regresiones básicas.
-- [ ] CI y build de producción validados.
-- [ ] Smoke test final de web pública y Panel validado.
+- [x] CI y build de producción validados.
+- [x] Smoke test final de web pública y Panel validado.
 
-HC-009 solo pasará a **IMPLEMENTADA** cuando los dos últimos puntos se hayan verificado sobre el código integrado.
+**HC-009 queda IMPLEMENTADA.** La retirada física de declaraciones tipográficas heredadas se mantiene como deuda técnica de limpieza y no reabre la decisión mientras la capa canónica siga gobernando la interfaz.
