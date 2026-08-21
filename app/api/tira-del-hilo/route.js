@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { askHiloCofrade } from '@/lib/supabase/tira-del-hilo'
+import { askHiloCofradeV2 } from '@/lib/supabase/tira-del-hilo-v2'
 
 export const dynamic = 'force-dynamic'
 
@@ -23,7 +23,7 @@ export async function POST(request) {
       return NextResponse.json({ error: 'La consulta es demasiado larga.' }, { status: 400 })
     }
 
-    const response = await askHiloCofrade(question, context)
+    const response = await askHiloCofradeV2(question, context)
     return NextResponse.json(response, {
       headers: {
         'Cache-Control': 'no-store',
