@@ -23,6 +23,7 @@ export const dynamic = 'force-dynamic'
 const FULL_BLEED_LOGO_SLUGS = new Set([
   'banda-del-sol',
   'banda-de-musica-del-maestro-tejera',
+  'banda-de-musica-nuestra-senora-de-la-soledad-cantillana',
   'sangre-de-san-benito',
 ])
 
