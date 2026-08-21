@@ -1,0 +1,270 @@
+.section {
+  background:
+    radial-gradient(circle at 92% 8%, color-mix(in srgb, var(--bc-red) 8%, transparent), transparent 24%),
+    #f4f7fa;
+}
+
+.intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 32px;
+  align-items: end;
+  margin-bottom: 30px;
+}
+
+.summary {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: baseline;
+  gap: 2px 10px;
+  min-width: 210px;
+  padding: 18px 20px;
+  border: 1px solid rgba(21, 59, 105, .12);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, .78);
+  box-shadow: 0 14px 38px rgba(21, 59, 105, .06);
+}
+
+.summary strong {
+  grid-row: 1 / 3;
+  color: var(--bc-blue);
+  font-size: 40px;
+  line-height: 1;
+}
+
+.summary span {
+  color: #46596b;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.summary small {
+  color: #71808e;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.groups {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  align-items: start;
+}
+
+.group {
+  overflow: hidden;
+  border: 1px solid rgba(21, 59, 105, .12);
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 18px 48px rgba(21, 59, 105, .055);
+}
+
+.groupHeader {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 20px 22px;
+  border-bottom: 1px solid #e3e9ee;
+  background: linear-gradient(135deg, rgba(21, 59, 105, .055), rgba(167, 25, 48, .025));
+}
+
+.groupMark {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  place-items: center;
+  border-radius: 13px;
+  color: #fff;
+  background: var(--bc-blue);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .08em;
+}
+
+.groupHeader h3 {
+  margin: 0;
+  color: var(--bc-dark);
+  font-size: 20px;
+  line-height: 1.15;
+}
+
+.groupHeader p {
+  margin: 4px 0 0;
+  color: #778492;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+.list {
+  display: grid;
+}
+
+.march {
+  display: grid;
+  grid-template-columns: 50px minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: start;
+  padding: 17px 20px;
+  border-bottom: 1px solid #edf0f3;
+}
+
+.march:last-child {
+  border-bottom: 0;
+}
+
+.year {
+  padding-top: 2px;
+  color: var(--bc-red);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .04em;
+}
+
+.copy {
+  min-width: 0;
+}
+
+.copy h4 {
+  margin: 0;
+  color: #162d43;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.28;
+}
+
+.authorship {
+  display: grid;
+  gap: 2px;
+  margin-top: 4px;
+}
+
+.authorship span {
+  color: #657481;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.authorship small {
+  color: #8a959f;
+  font-size: 9px;
+  line-height: 1.35;
+}
+
+.bandRelation {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 7px;
+  margin-top: 9px;
+}
+
+.bandRelation small {
+  color: #89949e;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+
+.bandRelation a,
+.bandRelation strong {
+  color: var(--bc-blue);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.bandRelation a:hover,
+.bandRelation a:focus-visible {
+  color: var(--bc-red);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.bandRelation a span {
+  font-size: 10px;
+}
+
+.listen {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 30px;
+  margin-top: 1px;
+  padding: 0 9px;
+  border: 1px solid rgba(21, 59, 105, .14);
+  border-radius: 999px;
+  color: var(--bc-blue);
+  background: #f7f9fb;
+  font-size: 9px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.listen span {
+  color: var(--bc-red);
+  font-size: 8px;
+}
+
+.listen:hover,
+.listen:focus-visible {
+  border-color: rgba(167, 25, 48, .28);
+  color: var(--bc-red);
+  background: #fff;
+}
+
+@media (max-width: 900px) {
+  .intro {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .summary {
+    width: min(100%, 330px);
+  }
+
+  .groups {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  .intro {
+    gap: 18px;
+    margin-bottom: 22px;
+  }
+
+  .summary {
+    width: 100%;
+    min-width: 0;
+    padding: 14px 16px;
+  }
+
+  .summary strong {
+    font-size: 34px;
+  }
+
+  .group {
+    border-radius: 17px;
+  }
+
+  .groupHeader {
+    padding: 16px;
+  }
+
+  .march {
+    grid-template-columns: 44px minmax(0, 1fr);
+    gap: 10px;
+    padding: 15px 16px;
+  }
+
+  .listen {
+    grid-column: 2;
+    width: fit-content;
+    margin-top: 6px;
+  }
+}
