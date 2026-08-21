@@ -2,11 +2,13 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { cache } from 'react';
 import CofradeTypeBadges from '@/components/CofradeTypeBadges';
+import BrotherhoodMusicalHeritage from '@/components/BrotherhoodMusicalHeritage';
 import {
   BrotherhoodConceptualTitulars,
   BrotherhoodOwnBands,
 } from '@/components/BrotherhoodRelationalExtras';
 import EntitySectionNav from '@/components/EntitySectionNav';
+import FestivalPostersSection from '@/components/FestivalPostersSection';
 import { notFound } from 'next/navigation';
 import JsonLd from '@/components/JsonLd';
 import OfficialLinks from '@/components/OfficialLinks';
@@ -14,6 +16,7 @@ import RelationalEntityHero from '@/components/RelationalEntityHero';
 import SectionTitle from '@/components/SectionTitle';
 import SourcesBlock from '@/components/SourcesBlock';
 import { hermandades } from '@/lib/data';
+import { getBrotherhoodMusicalHeritage } from '@/lib/supabase/brotherhood-musical-heritage';
 import { getHermandadPageBySlug } from '@/lib/supabase/brotherhoods';
 import { getPublishedEntityCoverMediaMap } from '@/lib/supabase/entity-media';
 import {
@@ -70,14 +73,18 @@ export default async function HermandadDetailPage({ params }) {
   const { slug } = await params;
   const h = await getHermandad(slug);
   if (!h) notFound();
-  const entityCoverMedia = await getPublishedEntityCoverMediaMap(
-    [
-      h.id,
-      ...h.imagenes.map((imagen) => imagen.id),
-      ...h.pasos.map((paso) => paso.id),
-      ...(h.participacionesConsejo || []).map((participacion) => participacion.id),
-    ]
-  );
+
+  const [entityCoverMedia, musicalHeritage] = await Promise.all([
+    getPublishedEntityCoverMediaMap(
+      [
+        h.id,
+        ...h.imagenes.map((imagen) => imagen.id),
+        ...h.pasos.map((paso) => paso.id),
+        ...(h.participacionesConsejo || []).map((participacion) => participacion.id),
+      ]
+    ),
+    getBrotherhoodMusicalHeritage(h.id),
+  ]);
   const heroMedia = entityCoverMedia.get(h.id) || null;
   const imagenMap = new Map(h.imagenes.map((imagen) => [imagen.id, imagen]));
   const tiposHermandad = h.tipos || [];
@@ -150,6 +157,10 @@ export default async function HermandadDetailPage({ params }) {
           { label: 'Sede canónica', value: h.sede },
           { label: 'Día de salida', value: h.diaSalida },
         ]}
+        mark={h.escudoPath ? {
+          src: h.escudoPath,
+          alt: `Escudo de ${h.nombrePopular}`,
+        } : null}
         media={{
           photoSrc: heroMedia?.path || '',
           photoAlt: heroMedia?.alt || `Titular de ${h.nombrePopular}`,
@@ -169,13 +180,15 @@ export default async function HermandadDetailPage({ params }) {
         { href: '#resumen', label: 'Resumen' },
         { href: '#titulares', label: 'Titulares' },
         { href: '#pasos', label: 'Pasos' },
+        h.acompanamientoActual?.length > 0 && { href: '#acompanamiento-musical', label: 'Acompañamiento' },
+        (musicalHeritage.length > 0 || h.patrimonioMusical?.length > 0) && { href: '#musica', label: 'Patrimonio musical' },
         h.cronologia?.length > 0 && { href: '#historia', label: 'Historia' },
         h.habitos?.length > 0 && { href: '#tunica', label: 'Túnica' },
         h.salidas?.length > 0 && { href: '#salidas', label: 'Salidas' },
         h.cultos?.length > 0 && { href: '#cultos', label: 'Cultos' },
+        h.cartelesFiestas?.length > 0 && { href: '#carteles', label: 'Carteles' },
         (h.patrimonio?.length > 0 || h.estrenos?.length > 0) && { href: '#patrimonio', label: 'Patrimonio' },
-        h.patrimonioMusical?.length > 0 && { href: '#musica', label: 'Patrimonio musical' },
-        h.acompanamientos?.length > 0 && { href: '#acompanamientos', label: 'Acompañamientos' },
+        h.acompanamientos?.length > 0 && { href: '#acompanamientos', label: 'Histórico musical' },
         h.noticias?.length > 0 && { href: '#noticias', label: 'Noticias' },
         h.curiosidades?.length > 0 && { href: '#curiosidades', label: 'Curiosidades' },
         h.enlacesOficiales?.length > 0 && { href: '#enlaces-oficiales', label: 'Web y redes' },
@@ -408,6 +421,18 @@ export default async function HermandadDetailPage({ params }) {
         </div>
       </div></section>}
 
+      {musicalHeritage.length > 0 ? (
+        <BrotherhoodMusicalHeritage items={musicalHeritage} />
+      ) : h.patrimonioMusical?.length > 0 ? (
+        <section className="section music-section" id="musica"><div className="shell">
+          <SectionTitle eyebrow="Sonidos propios" title="Patrimonio Musical" description="Marchas dedicadas a la Hermandad y a sus titulares, conectadas con sus autores y registros audiovisuales." />
+          <div className="music-list">{h.patrimonioMusical.map((m) => (
+            <article key={m.id}><div className="music-index">♪</div><div><h3>{m.nombre}</h3><p>{m.autor}</p></div><strong>{m.ano}</strong>
+            {m.youtube ? <a href={m.youtube} target="_blank" rel="noreferrer" className="music-play">YouTube ↗</a> : <span className="music-pending">Enlace pendiente</span>}</article>
+          ))}</div>
+        </div></section>
+      ) : null}
+
       {h.cronologia?.length > 0 && <section className="section history-section" id="historia"><div className="shell">
         <SectionTitle eyebrow="Cronología" title="Historia" description="Una línea temporal para recorrer los grandes hitos y conectarlos con titulares, pasos y acontecimientos." />
         <div className="history-timeline">{h.cronologia.map((item) => (
@@ -551,6 +576,8 @@ export default async function HermandadDetailPage({ params }) {
         })}</div>
       </div></section>}
 
+      <FestivalPostersSection posters={h.cartelesFiestas} />
+
       {(h.patrimonio?.length > 0 || h.estrenos?.length > 0) && <section className="section heritage-section" id="patrimonio"><div className="shell">
         <SectionTitle eyebrow="Memoria material" title="Patrimonio" description="Obras, enseres y espacios documentados como piezas vivas: su historia, sus autores y las intervenciones que han definido su aspecto." />
 
@@ -625,14 +652,6 @@ export default async function HermandadDetailPage({ params }) {
             ))}</div>
           </div>
         )}
-      </div></section>}
-
-      {h.patrimonioMusical?.length > 0 && <section className="section music-section" id="musica"><div className="shell">
-        <SectionTitle eyebrow="Sonidos propios" title="Patrimonio Musical" description="Marchas dedicadas a la Hermandad y a sus titulares, conectadas con sus autores y registros audiovisuales." />
-        <div className="music-list">{h.patrimonioMusical.map((m) => (
-          <article key={m.id}><div className="music-index">♪</div><div><h3>{m.nombre}</h3><p>{m.autor}</p></div><strong>{m.ano}</strong>
-          {m.youtube ? <a href={m.youtube} target="_blank" rel="noreferrer" className="music-play">YouTube ↗</a> : <span className="music-pending">Enlace pendiente</span>}</article>
-        ))}</div>
       </div></section>}
 
       {h.acompanamientos?.length > 0 && <section className="section brotherhood-soft" id="acompanamientos"><div className="shell">

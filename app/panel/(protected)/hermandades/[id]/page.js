@@ -383,7 +383,7 @@ export default async function BrotherhoodEditorPage({ params, searchParams }) {
       </nav>
 
       <section className={styles.editorSection} id="portada">
-        <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>Presentación visual</span><h2>Portada</h2></div><p>La fotografía construye el impacto; el escudo aparece después como firma institucional.</p></div>
+        <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>Presentación visual</span><h2>Portada</h2></div><p>La fotografía presenta la ficha; el escudo identifica la hermandad sin competir con la portada.</p></div>
         <EntityCoverEditor entity={{ id: data.entity.id, type: 'brotherhood' }} cover={cover} canEdit={canEdit} action={saveEntityCoverAction} />
       </section>
 

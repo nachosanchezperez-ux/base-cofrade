@@ -151,7 +151,7 @@ export default function EntityCoverEditor({
           </label>
           <p className={styles.coverHint}>
             {entity.type === 'brotherhood'
-              ? 'El escudo queda reservado para la franja de identidad y nunca tapa la fotografía.'
+              ? 'El escudo funciona como identificador junto al nombre y nunca tapa la fotografía.'
               : `La portada se adapta al lenguaje visual de la ${ENTITY_LABELS[entity.type]}.`}
           </p>
         </div>

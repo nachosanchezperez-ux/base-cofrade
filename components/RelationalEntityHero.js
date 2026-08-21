@@ -59,8 +59,9 @@ export default function RelationalEntityHero({
   relation = null,
   facts = [],
   media = {},
+  mark = null,
 }) {
-  const visibleBadges = badges.filter(Boolean).slice(0, 2);
+  const visibleBadges = badges.filter(Boolean).slice(0, 4);
   const visibleFacts = facts.filter((fact) => fact?.label && fact?.value).slice(0, 3);
 
   return (
@@ -69,9 +70,16 @@ export default function RelationalEntityHero({
         <Breadcrumb items={breadcrumbItems} />
         <div className={styles.grid}>
           <div className={styles.copy}>
-            <div className={styles.identityRow}>
-              <span className={styles.entityType}>{entityType}</span>
-              {visibleBadges.map((badge) => <span className={styles.badge} key={badge}>{badge}</span>)}
+            <div className={styles.identityLead}>
+              {mark?.src ? (
+                <span className={styles.identityMark}>
+                  <Image src={mark.src} alt={mark.alt || ''} width={52} height={60} sizes="52px" />
+                </span>
+              ) : null}
+              <div className={styles.identityRow}>
+                <span className={styles.entityType}>{entityType}</span>
+                {visibleBadges.map((badge) => <span className={styles.badge} key={badge}>{badge}</span>)}
+              </div>
             </div>
 
             <h1 id="entity-hero-title" data-scale={titleScale(title)}>{title}</h1>

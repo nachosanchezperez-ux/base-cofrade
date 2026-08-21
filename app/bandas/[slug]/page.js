@@ -11,6 +11,7 @@ import { getPublishedBandColors } from '@/lib/supabase/bandColors'
 import { absoluteUrl } from '@/lib/seo'
 import {
   groupGloryAccompaniments,
+  partitionAccompanimentsBySeason,
   sortGloryAccompaniments,
   sortHolyWeekAccompaniments,
   splitCurrentAccompaniments,
@@ -23,6 +24,7 @@ export const dynamic = 'force-dynamic'
 const FULL_BLEED_LOGO_SLUGS = new Set([
   'banda-del-sol',
   'banda-de-musica-del-maestro-tejera',
+  'banda-de-musica-nuestra-senora-de-la-soledad-cantillana',
   'sangre-de-san-benito',
 ])
 
@@ -76,7 +78,7 @@ function AccompanimentCard({ item, band, showLocation = false }) {
       : item.province || ''
 
   return (
-    <article className={`${styles.relationshipCard} ${showLocation ? styles.gloryRelationshipCard : ''}`}>
+    <article className={`${styles.relationshipCard} ${showLocation ? styles.locatedRelationshipCard : ''}`}>
       <div className={styles.relationshipTop}>
         <span>{item.outingType || 'Salida procesional'}</span>
         <strong>{yearRange(item)}</strong>
@@ -145,12 +147,17 @@ export default async function BandDetailPage({ params }) {
   const years = [...new Set(band.premieres.map((item) => item.year))].sort((a, b) => b - a)
   const currentYear = new Date().getFullYear()
   const currentPremieres = band.premieres.filter((item) => item.year === currentYear)
-  const accompanimentGroups = splitCurrentAccompaniments(band.accompaniments)
+  const seasonalAccompaniments = partitionAccompanimentsBySeason(
+    band.accompaniments,
+    band.historicalAccompaniments,
+    currentYear
+  )
+  const accompanimentGroups = splitCurrentAccompaniments(seasonalAccompaniments.current)
   const orderedAccompaniments = sortHolyWeekAccompaniments(accompanimentGroups.holyWeek)
   const gloryAccompaniments = sortGloryAccompaniments(accompanimentGroups.glories)
   const gloryGroups = groupGloryAccompaniments(gloryAccompaniments)
   const gloryTypeSummary = summarizeGloryTypes(gloryAccompaniments)
-  const historicalAccompaniments = [...(band.historicalAccompaniments || [])].sort((a, b) => (b.yearTo || b.yearFrom || 0) - (a.yearTo || a.yearFrom || 0))
+  const historicalAccompaniments = seasonalAccompaniments.historical.sort((a, b) => (b.yearTo || b.yearFrom || 0) - (a.yearTo || a.yearFrom || 0))
   const curiosities = band.curiosities || []
   const hasAccompaniments = orderedAccompaniments.length > 0
   const hasGloryAccompaniments = gloryAccompaniments.length > 0
@@ -330,9 +337,13 @@ export default async function BandDetailPage({ params }) {
 
       {hasAccompaniments ? <section className={`${styles.contentSection} ${styles.softSection}`} id="acompanamientos">
         <div className="shell">
-          <div className={styles.sectionHeading}><span className={styles.eyebrow}>Semana Santa</span><h2>Hermandades a las que acompaña</h2></div>
+          <div className={styles.sectionHeading}>
+            <span className={styles.eyebrow}>Temporada {currentYear}</span>
+            <h2>Contratos de Semana Santa</h2>
+            <p>Acompañamientos procesionales, ordenados por jornada y con su localidad exacta.</p>
+          </div>
           <div className={styles.relationshipGrid}>{orderedAccompaniments.map((item) => (
-            <AccompanimentCard item={item} band={band} key={item.id} />
+            <AccompanimentCard item={item} band={band} key={item.id} showLocation />
           ))}</div>
         </div>
       </section> : null}
@@ -341,7 +352,7 @@ export default async function BandDetailPage({ params }) {
         <div className="shell">
           <div className={styles.sectionHeading}>
             <span className={styles.eyebrow}>Sevilla y provincia</span>
-            <h2>Glorias y procesiones eucarísticas</h2>
+            <h2>Glorias, eucarísticas y cultos externos</h2>
             <p>Acompañamientos documentados para la temporada 2026, organizados por ámbito y naturaleza de la salida.</p>
           </div>
           <div className={styles.gloryTypeSummary} aria-label="Tipos de procesiones documentadas">
