@@ -9,23 +9,14 @@ import { getBandBySlug, youtubeEmbedUrl } from '@/lib/supabase/bands'
 import { getBandDiscography } from '@/lib/supabase/bandDiscography'
 import { getPublishedBandColors } from '@/lib/supabase/bandColors'
 import { absoluteUrl } from '@/lib/seo'
+import {
+  sortGloryAccompaniments,
+  sortHolyWeekAccompaniments,
+  splitCurrentAccompaniments,
+} from '@/lib/bands/accompaniments'
 import styles from '../bandas.module.css'
 
 export const dynamic = 'force-dynamic'
-
-const OUTING_ORDER = [
-  'Viernes de Dolores',
-  'Sábado de Pasión',
-  'Domingo de Ramos',
-  'Lunes Santo',
-  'Martes Santo',
-  'Miércoles Santo',
-  'Jueves Santo',
-  'Madrugada',
-  'Viernes Santo',
-  'Sábado Santo',
-  'Domingo de Resurrección',
-]
 
 const FULL_BLEED_LOGO_SLUGS = new Set([
   'banda-del-sol',
@@ -74,6 +65,30 @@ function creditedName(item) {
   return [item.name, ...(item.aliases || [])].join(' · ')
 }
 
+function AccompanimentCard({ item, band }) {
+  return (
+    <article className={styles.relationshipCard}>
+      <div className={styles.relationshipTop}>
+        <span>{item.outingType || 'Salida procesional'}</span>
+        <strong>{yearRange(item)}</strong>
+      </div>
+      <div className={styles.relationshipIdentity}>
+        <h3>{item.brotherhoodName}</h3>
+      </div>
+      <div className={styles.relationshipStep}>
+        <span>{item.position || 'Acompañamiento musical'}</span>
+        {item.stepName ? <strong>{item.stepName}</strong> : null}
+      </div>
+      {item.notes && item.brotherhoodName !== band.linkedBrotherhood ? <p className={styles.relationshipNote}>{item.notes}</p> : null}
+      <div className={styles.relationshipLinks}>
+        {item.brotherhoodSlug && item.brotherhoodPageReady
+          ? <Link href={`/hermandades/${item.brotherhoodSlug}`}>Ver ficha de la hermandad <span>→</span></Link>
+          : <span>Ficha de hermandad en preparación</span>}
+      </div>
+    </article>
+  )
+}
+
 function HistoricalIcon() {
   return <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
     <path d="M3.6 12a8.4 8.4 0 1 0 2.46-5.94L3.6 8.52" />
@@ -116,14 +131,13 @@ export default async function BandDetailPage({ params }) {
   const years = [...new Set(band.premieres.map((item) => item.year))].sort((a, b) => b - a)
   const currentYear = new Date().getFullYear()
   const currentPremieres = band.premieres.filter((item) => item.year === currentYear)
-  const orderedAccompaniments = [...band.accompaniments].sort((a, b) => {
-    const aIndex = OUTING_ORDER.indexOf(a.outingType)
-    const bIndex = OUTING_ORDER.indexOf(b.outingType)
-    return (aIndex === -1 ? OUTING_ORDER.length : aIndex) - (bIndex === -1 ? OUTING_ORDER.length : bIndex)
-  })
+  const accompanimentGroups = splitCurrentAccompaniments(band.accompaniments)
+  const orderedAccompaniments = sortHolyWeekAccompaniments(accompanimentGroups.holyWeek)
+  const gloryAccompaniments = sortGloryAccompaniments(accompanimentGroups.glories)
   const historicalAccompaniments = [...(band.historicalAccompaniments || [])].sort((a, b) => (b.yearTo || b.yearFrom || 0) - (a.yearTo || a.yearFrom || 0))
   const curiosities = band.curiosities || []
-  const hasAccompaniments = band.accompaniments.length > 0
+  const hasAccompaniments = orderedAccompaniments.length > 0
+  const hasGloryAccompaniments = gloryAccompaniments.length > 0
   const hasHistoricalAccompaniments = historicalAccompaniments.length > 0
   const hasOutings = band.outings.length > 0
   const hasPremieres = band.premieres.length > 0
@@ -185,13 +199,14 @@ export default async function BandDetailPage({ params }) {
             <a href="#resumen">De un vistazo</a>
             {banderin ? <a href="#banderin">Banderín</a> : null}
             {hasAccompaniments ? <a href="#acompanamientos">Semana Santa</a> : null}
+            {hasGloryAccompaniments ? <a href="#glorias">Glorias y cultos externos</a> : null}
             {hasHistoricalAccompaniments ? <a href="#acompanamientos-historicos">Histórico</a> : null}
             {hasOutings ? <a href="#extraordinarias">Extraordinarias</a> : null}
             {hasPremieres ? <a href="#repertorio">Repertorio</a> : null}
             {hasDiscography ? <a href="#discografia">Discografía</a> : null}
             {hasDirection ? <a href="#direccion">Dirección</a> : null}
-            {band.sources?.length ? <a href="#fuentes">Fuentes</a> : null}
             {band.interestLinks.length ? <a href="#enlaces-de-interes">Enlaces de interés</a> : null}
+            {band.sources?.length ? <a href="#fuentes">Fuentes</a> : null}
           </div>
         </div>
       </nav>
@@ -240,14 +255,15 @@ export default async function BandDetailPage({ params }) {
                   ) : null}
                 </article>
               </div>
-              {(band.accompaniments.length || currentPremieres.length || band.outings.length) ? (
+              {(hasAccompaniments || hasGloryAccompaniments || currentPremieres.length || band.outings.length) ? (
                 <div className={styles.impactPanel}>
                   <div className={styles.impactHeading}>
                     <span>En cifras</span>
                     <strong>{currentYear}</strong>
                   </div>
                   <div className={styles.impactMetrics}>
-                    {band.accompaniments.length ? <a href="#acompanamientos"><strong>{band.accompaniments.length}</strong><span>{band.accompaniments.length === 1 ? 'hermandad en Semana Santa' : 'hermandades en Semana Santa'}</span></a> : null}
+                    {hasAccompaniments ? <a href="#acompanamientos"><strong>{orderedAccompaniments.length}</strong><span>{orderedAccompaniments.length === 1 ? 'contrato de Semana Santa' : 'contratos de Semana Santa'}</span></a> : null}
+                    {hasGloryAccompaniments ? <a href="#glorias"><strong>{gloryAccompaniments.length}</strong><span>{gloryAccompaniments.length === 1 ? 'contrato de Gloria o culto externo' : 'contratos de Glorias y cultos externos'}</span></a> : null}
                     {currentPremieres.length ? <a href="#repertorio"><strong>{currentPremieres.length}</strong><span>{band.premieres.filter((item) => item.year === currentYear).length === 1 ? `estreno en ${currentYear}` : `estrenos en ${currentYear}`}</span></a> : null}
                     {band.outings.length ? <a href="#extraordinarias"><strong>{band.outings.length}</strong><span>{band.outings.length === 1 ? 'salida extraordinaria' : 'salidas extraordinarias'}</span></a> : null}
                   </div>
@@ -300,25 +316,20 @@ export default async function BandDetailPage({ params }) {
         <div className="shell">
           <div className={styles.sectionHeading}><span className={styles.eyebrow}>Semana Santa</span><h2>Hermandades a las que acompaña</h2></div>
           <div className={styles.relationshipGrid}>{orderedAccompaniments.map((item) => (
-            <article className={styles.relationshipCard} key={item.id}>
-              <div className={styles.relationshipTop}>
-                <span>{item.outingType || 'Salida procesional'}</span>
-                <strong>{yearRange(item)}</strong>
-              </div>
-              <div className={styles.relationshipIdentity}>
-                <h3>{item.brotherhoodName}</h3>
-              </div>
-              <div className={styles.relationshipStep}>
-                <span>{item.position || 'Acompañamiento musical'}</span>
-                {item.stepName ? <strong>{item.stepName}</strong> : null}
-              </div>
-              {item.notes && item.brotherhoodName !== band.linkedBrotherhood ? <p className={styles.relationshipNote}>{item.notes}</p> : null}
-              <div className={styles.relationshipLinks}>
-                {item.brotherhoodSlug && item.brotherhoodPageReady
-                  ? <Link href={`/hermandades/${item.brotherhoodSlug}`}>Ver ficha de la hermandad <span>→</span></Link>
-                  : <span>Ficha de hermandad en preparación</span>}
-              </div>
-            </article>
+            <AccompanimentCard item={item} band={band} key={item.id} />
+          ))}</div>
+        </div>
+      </section> : null}
+
+      {hasGloryAccompaniments ? <section className={styles.contentSection} id="glorias">
+        <div className="shell">
+          <div className={styles.sectionHeading}>
+            <span className={styles.eyebrow}>Sevilla y provincia</span>
+            <h2>Glorias y cultos externos</h2>
+            <p>Procesiones de gloria, sacramentales y extraordinarias documentadas para la temporada 2026.</p>
+          </div>
+          <div className={styles.relationshipGrid}>{gloryAccompaniments.map((item) => (
+            <AccompanimentCard item={item} band={band} key={item.id} />
           ))}</div>
         </div>
       </section> : null}
@@ -433,8 +444,8 @@ export default async function BandDetailPage({ params }) {
         </div>
       </section> : null}
 
-      <SourcesBlock sources={band.sources} />
       <OfficialLinks links={band.interestLinks} />
+      <SourcesBlock sources={band.sources} />
     </main>
   )
 }
