@@ -84,6 +84,16 @@ export default async function HermandadDetailPage({ params }) {
     || null;
   const imagenMap = new Map(h.imagenes.map((imagen) => [imagen.id, imagen]));
   const tiposHermandad = h.tipos || [];
+  const esHermandadDePenitencia = tiposHermandad.includes('Penitencia');
+  const acompanamientoMusicalCopy = esHermandadDePenitencia
+    ? {
+      eyebrow: 'Semana Santa',
+      description: 'La configuración musical de la cofradía se organiza por Cruz de Guía, Paso de Misterio y Paso de Palio.',
+    }
+    : {
+      eyebrow: 'Música procesional',
+      description: 'El acompañamiento musical actual se documenta según las salidas y los actos de culto propios de la Hermandad.',
+    };
   const canonicalPath = `/hermandades/${h.slug}`;
   const description = brotherhoodSeoDescription(h);
   const pageJsonLd = {
@@ -379,7 +389,7 @@ export default async function HermandadDetailPage({ params }) {
       <BrotherhoodOwnBands brotherhoodId={h.id} />
 
       {h.acompanamientoActual?.length > 0 && <section className="section brotherhood-soft" id="acompanamiento-musical"><div className="shell">
-        <SectionTitle eyebrow="Semana Santa" title="Acompañamiento musical" description="La configuración musical de la cofradía se organiza por Cruz de Guía, Paso de Misterio y Paso de Palio." />
+        <SectionTitle eyebrow={acompanamientoMusicalCopy.eyebrow} title="Acompañamiento musical" description={acompanamientoMusicalCopy.description} />
         <div className="current-music-grid">
           {h.acompanamientoActual.map((a) => (
             <article className="current-music-card" key={a.id}>
