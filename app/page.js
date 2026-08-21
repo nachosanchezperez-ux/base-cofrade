@@ -258,7 +258,7 @@ export default async function HomePage() {
       ) : null}
 
       {followingExtraordinaryOutings.length ? (
-        <section className={`${styles.section} ${styles.nextExtraSection}`}>
+        <section className={`${styles.section} ${styles.nextExtraSection}`} id="siguientes-extraordinarias">
           <div className="shell">
             <div className={styles.nextExtraHead} style={stackedNextExtraHeadStyle}>
               <span className={styles.eyebrow}>Después</span>
