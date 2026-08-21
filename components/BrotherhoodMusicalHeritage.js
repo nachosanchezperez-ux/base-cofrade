@@ -55,10 +55,16 @@ function MarchRow({ item }) {
 export default function BrotherhoodMusicalHeritage({ items = [] }) {
   if (!items.length) return null;
 
-  const groups = GROUPS.map((group) => ({
-    ...group,
-    items: items.filter((item) => item.musicType === group.key),
-  })).filter((group) => group.items.length);
+  const groups = GROUPS.map((group) => {
+    const groupItems = items.filter((item) => item.musicType === group.key);
+    return {
+      ...group,
+      items: groupItems,
+      repertoireBandContext: groupItems
+        .map((item) => item.repertoireBandContext)
+        .find((context) => context?.name) || null,
+    };
+  }).filter((group) => group.items.length);
 
   return (
     <section className={`section ${styles.section}`} id="musica">
@@ -86,6 +92,18 @@ export default function BrotherhoodMusicalHeritage({ items = [] }) {
                 <div>
                   <h3 id={`music-${group.short.toLowerCase()}`}>{group.label}</h3>
                   <p>{group.items.length} marchas documentadas</p>
+                  {group.repertoireBandContext?.name ? (
+                    <div className={styles.groupContext}>
+                      <small>{group.repertoireBandContext.label}</small>
+                      {group.repertoireBandContext.slug ? (
+                        <Link href={`/bandas/${group.repertoireBandContext.slug}`}>
+                          {group.repertoireBandContext.name} <span>↗</span>
+                        </Link>
+                      ) : (
+                        <strong>{group.repertoireBandContext.name}</strong>
+                      )}
+                    </div>
+                  ) : null}
                 </div>
               </header>
               <div className={styles.list}>
