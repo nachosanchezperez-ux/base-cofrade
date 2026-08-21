@@ -11,6 +11,7 @@ import { getPublishedBandColors } from '@/lib/supabase/bandColors'
 import { absoluteUrl } from '@/lib/seo'
 import {
   groupGloryAccompaniments,
+  partitionAccompanimentsBySeason,
   sortGloryAccompaniments,
   sortHolyWeekAccompaniments,
   splitCurrentAccompaniments,
@@ -146,12 +147,17 @@ export default async function BandDetailPage({ params }) {
   const years = [...new Set(band.premieres.map((item) => item.year))].sort((a, b) => b - a)
   const currentYear = new Date().getFullYear()
   const currentPremieres = band.premieres.filter((item) => item.year === currentYear)
-  const accompanimentGroups = splitCurrentAccompaniments(band.accompaniments)
+  const seasonalAccompaniments = partitionAccompanimentsBySeason(
+    band.accompaniments,
+    band.historicalAccompaniments,
+    currentYear
+  )
+  const accompanimentGroups = splitCurrentAccompaniments(seasonalAccompaniments.current)
   const orderedAccompaniments = sortHolyWeekAccompaniments(accompanimentGroups.holyWeek)
   const gloryAccompaniments = sortGloryAccompaniments(accompanimentGroups.glories)
   const gloryGroups = groupGloryAccompaniments(gloryAccompaniments)
   const gloryTypeSummary = summarizeGloryTypes(gloryAccompaniments)
-  const historicalAccompaniments = [...(band.historicalAccompaniments || [])].sort((a, b) => (b.yearTo || b.yearFrom || 0) - (a.yearTo || a.yearFrom || 0))
+  const historicalAccompaniments = seasonalAccompaniments.historical.sort((a, b) => (b.yearTo || b.yearFrom || 0) - (a.yearTo || a.yearFrom || 0))
   const curiosities = band.curiosities || []
   const hasAccompaniments = orderedAccompaniments.length > 0
   const hasGloryAccompaniments = gloryAccompaniments.length > 0
@@ -334,7 +340,7 @@ export default async function BandDetailPage({ params }) {
           <div className={styles.sectionHeading}>
             <span className={styles.eyebrow}>Temporada {currentYear}</span>
             <h2>Contratos de Semana Santa</h2>
-            <p>Acompañamientos tras pasos, ordenados por jornada y con su localidad exacta.</p>
+            <p>Acompañamientos procesionales, ordenados por jornada y con su localidad exacta.</p>
           </div>
           <div className={styles.relationshipGrid}>{orderedAccompaniments.map((item) => (
             <AccompanimentCard item={item} band={band} key={item.id} showLocation />
@@ -346,7 +352,7 @@ export default async function BandDetailPage({ params }) {
         <div className="shell">
           <div className={styles.sectionHeading}>
             <span className={styles.eyebrow}>Sevilla y provincia</span>
-            <h2>Glorias y procesiones eucarísticas</h2>
+            <h2>Glorias, eucarísticas y cultos externos</h2>
             <p>Acompañamientos documentados para la temporada 2026, organizados por ámbito y naturaleza de la salida.</p>
           </div>
           <div className={styles.gloryTypeSummary} aria-label="Tipos de procesiones documentadas">
