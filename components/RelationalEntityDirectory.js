@@ -57,6 +57,11 @@ const KIND_COPY = {
   },
 }
 
+function bandMediaClass(item) {
+  if (item.logoPresentationMode === 'integrated') return enhancementStyles.bandMediaIntegrated
+  return ''
+}
+
 export default function RelationalEntityDirectory({
   items,
   kind,
@@ -187,6 +192,7 @@ export default function RelationalEntityDirectory({
             const mediaPath = item.coverPath || (isBand ? item.logoPath : '')
             const imageNames = compactNames(item.imageNames)
             const authorNames = compactNames(item.authorNames)
+            const presentationClass = isBand ? bandMediaClass(item) : ''
 
             return (
               <Link
@@ -196,9 +202,10 @@ export default function RelationalEntityDirectory({
                 style={isBand ? {
                   '--entity-accent': item.primaryColor || '#63358B',
                   '--entity-secondary': item.secondaryColor || '#29272C',
+                  '--logo-background': item.logoBackgroundColor || undefined,
                 } : undefined}
               >
-                <span className={`${enhancementStyles.media} ${isBand ? enhancementStyles.bandMedia : ''}`}>
+                <span className={`${enhancementStyles.media} ${isBand ? enhancementStyles.bandMedia : ''} ${presentationClass}`}>
                   {mediaPath ? (
                     <Image src={mediaPath} alt="" fill sizes="(max-width: 620px) 58px, 78px" />
                   ) : (
