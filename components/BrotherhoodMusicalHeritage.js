@@ -2,11 +2,13 @@ import Link from 'next/link';
 import SectionTitle from './SectionTitle';
 import styles from './BrotherhoodMusicalHeritage.module.css';
 
-const INITIAL_VISIBLE_MARCHES = 5;
+const INITIAL_VISIBLE_ITEMS = 5;
 const GROUPS = [
-  { key: 'Agrupación Musical', label: 'Agrupación musical', short: 'AM' },
-  { key: 'Cornetas y Tambores', label: 'Cornetas y tambores', short: 'CT' },
-  { key: 'Banda de Música', label: 'Banda de música', short: 'BM' },
+  { key: 'Agrupación Musical', label: 'Agrupación musical', short: 'AM', noun: 'marchas' },
+  { key: 'Cornetas y Tambores', label: 'Cornetas y tambores', short: 'CT', noun: 'marchas' },
+  { key: 'Banda de Música', label: 'Banda de música', short: 'BM', noun: 'marchas' },
+  { key: 'Música de capilla', label: 'Música de capilla', short: 'CAP', noun: 'piezas' },
+  { key: 'Copla', label: 'Coplas para cultos internos', short: 'COP', noun: 'coplas' },
 ];
 
 function AuthorLine({ item }) {
@@ -22,7 +24,7 @@ function AuthorLine({ item }) {
   if (!composerNames && !adapterGroups.size) {
     return (
       <div className={styles.authorship}>
-        <span>Autoría por documentar</span>
+        <span>{item.authorshipText || 'Autoría por documentar'}</span>
       </div>
     );
   }
@@ -37,7 +39,7 @@ function AuthorLine({ item }) {
   );
 }
 
-function MarchRow({ item }) {
+function MusicRow({ item }) {
   return (
     <article className={styles.march}>
       <div className={styles.year}>{item.year || '—'}</div>
@@ -91,11 +93,11 @@ export default function BrotherhoodMusicalHeritage({ items = [] }) {
           <SectionTitle
             eyebrow="Sonidos propios"
             title="Patrimonio musical"
-            description="Marchas dedicadas a la Hermandad y a sus titulares. La dedicatoria forma parte de su patrimonio con independencia de qué banda la estrene, la grabe o acompañe actualmente a la cofradía."
+            description="Composiciones dedicadas a la Hermandad y a sus titulares: marchas procesionales, música de capilla y coplas para cultos internos, relacionadas con sus autores, intérpretes y grabaciones cuando están documentados."
           />
           <div className={styles.summary} aria-label="Resumen del patrimonio musical">
             <strong>{items.length}</strong>
-            <span>marchas documentadas</span>
+            <span>composiciones documentadas</span>
             {groups.map((group) => (
               <small key={group.key}>{group.items.length} · {group.short}</small>
             ))}
@@ -104,8 +106,8 @@ export default function BrotherhoodMusicalHeritage({ items = [] }) {
 
         <div className={styles.groups}>
           {groups.map((group) => {
-            const visibleItems = group.items.slice(0, INITIAL_VISIBLE_MARCHES);
-            const remainingItems = group.items.slice(INITIAL_VISIBLE_MARCHES);
+            const visibleItems = group.items.slice(0, INITIAL_VISIBLE_ITEMS);
+            const remainingItems = group.items.slice(INITIAL_VISIBLE_ITEMS);
 
             return (
               <section className={styles.group} key={group.key} aria-labelledby={`music-${group.short.toLowerCase()}`}>
@@ -113,7 +115,7 @@ export default function BrotherhoodMusicalHeritage({ items = [] }) {
                   <span className={styles.groupMark} aria-hidden="true">{group.short}</span>
                   <div>
                     <h3 id={`music-${group.short.toLowerCase()}`}>{group.label}</h3>
-                    <p>{group.items.length} marchas documentadas</p>
+                    <p>{group.items.length} {group.noun} documentadas</p>
                     {group.repertoireBandContext?.name ? (
                       <div className={styles.groupContext}>
                         <small>{group.repertoireBandContext.label}</small>
@@ -130,18 +132,18 @@ export default function BrotherhoodMusicalHeritage({ items = [] }) {
                 </header>
 
                 <div className={styles.list}>
-                  {visibleItems.map((item) => <MarchRow item={item} key={item.id} />)}
+                  {visibleItems.map((item) => <MusicRow item={item} key={item.id} />)}
                 </div>
 
                 {remainingItems.length ? (
                   <details className={styles.more}>
                     <summary>
-                      <span className={styles.moreClosed}>Ver {remainingItems.length} marchas más</span>
+                      <span className={styles.moreClosed}>Ver {remainingItems.length} {group.noun} más</span>
                       <span className={styles.moreOpen}>Ocultar repertorio ampliado</span>
                       <span className={styles.moreIcon} aria-hidden="true">＋</span>
                     </summary>
                     <div className={styles.moreList}>
-                      {remainingItems.map((item) => <MarchRow item={item} key={item.id} />)}
+                      {remainingItems.map((item) => <MusicRow item={item} key={item.id} />)}
                     </div>
                   </details>
                 ) : null}
