@@ -151,13 +151,20 @@ export default async function ImagenPage({ params }) {
         facts={[
           { label: 'Autoría', value: imagen.autor },
           { label: 'Datación', value: imagen.fecha },
-          { label: 'Tipología', value: imagen.tipologia || imagen.tipo },
+          { label: imagen.material ? 'Material' : imagen.tecnica ? 'Técnica' : 'Tipología', value: imagen.material || imagen.tecnica || imagen.tipologia || imagen.tipo },
         ]}
         media={{
           photoSrc: coverMedia?.path || '',
           photoAlt: coverMedia?.alt || `Fotografía de ${imagen.nombre}`,
           credit: coverMedia?.credit || '',
           initials: imagen.iniciales,
+          width: coverMedia?.width,
+          height: coverMedia?.height,
+          focusX: coverMedia?.focusX,
+          focusY: coverMedia?.focusY,
+          mobileFocusX: coverMedia?.mobileFocusX,
+          mobileFocusY: coverMedia?.mobileFocusY,
+          fitMode: coverMedia?.fitMode,
         }}
       />
 

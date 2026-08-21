@@ -14,7 +14,6 @@ import RelationalEntityHero from '@/components/RelationalEntityHero';
 import SectionTitle from '@/components/SectionTitle';
 import SourcesBlock from '@/components/SourcesBlock';
 import { hermandades } from '@/lib/data';
-import { getStepPhotoFraming } from '@/lib/step-photo-framing';
 import { getHermandadPageBySlug } from '@/lib/supabase/brotherhoods';
 import { getPublishedEntityCoverMediaMap } from '@/lib/supabase/entity-media';
 import {
@@ -79,9 +78,7 @@ export default async function HermandadDetailPage({ params }) {
       ...(h.participacionesConsejo || []).map((participacion) => participacion.id),
     ]
   );
-  const heroMedia = entityCoverMedia.get(h.id)
-    || h.imagenes.map((imagen) => entityCoverMedia.get(imagen.id)).find(Boolean)
-    || null;
+  const heroMedia = entityCoverMedia.get(h.id) || null;
   const imagenMap = new Map(h.imagenes.map((imagen) => [imagen.id, imagen]));
   const tiposHermandad = h.tipos || [];
   const esHermandadDePenitencia = tiposHermandad.includes('Penitencia');
@@ -143,7 +140,6 @@ export default async function HermandadDetailPage({ params }) {
         variant="brotherhood"
         entityType="Hermandad"
         title={h.nombrePopular}
-        subtitle={h.nombreOficial}
         breadcrumbItems={[
           { label: 'Hermandades', href: '/hermandades' },
           { label: h.localidad || 'Ficha' },
@@ -159,8 +155,20 @@ export default async function HermandadDetailPage({ params }) {
           photoAlt: heroMedia?.alt || `Titular de ${h.nombrePopular}`,
           credit: heroMedia?.credit || '',
           initials: h.escudoIniciales || h.nombrePopular.slice(0, 2).toUpperCase(),
+          width: heroMedia?.width,
+          height: heroMedia?.height,
+          focusX: heroMedia?.focusX,
+          focusY: heroMedia?.focusY,
+          mobileFocusX: heroMedia?.mobileFocusX,
+          mobileFocusY: heroMedia?.mobileFocusY,
+          fitMode: heroMedia?.fitMode,
+        }}
+        identity={{
           crestSrc: h.escudoPath || '',
           crestAlt: `Escudo de ${h.nombrePopular}`,
+          name: h.nombreOficial || h.nombrePopular,
+          detail: [h.sede, h.localidad].filter(Boolean).join(' · '),
+          links: h.enlacesOficiales || [],
         }}
       />
 
@@ -337,21 +345,26 @@ export default async function HermandadDetailPage({ params }) {
 
       <section className="section" id="pasos"><div className="shell">
         <SectionTitle eyebrow={`${h.pasos.length} pasos`} title="Pasos procesionales" description="Imágenes, diseño, talla, orfebrería, bordados, reformas y evolución histórica." />
-        <div className="processional-grid">{h.pasos.map((paso, index) => (
+        <div className="processional-grid">{h.pasos.map((paso, index) => {
+          const stepMedia = entityCoverMedia.get(paso.id);
+          return (
           <article className="processional-card" key={paso.id}>
-            {entityCoverMedia.get(paso.id)?.path ? (
+            {stepMedia?.path ? (
               <div className="processional-photo has-image">
                 <Image
                   className="processional-photo-image"
-                  src={entityCoverMedia.get(paso.id).path}
-                  alt={entityCoverMedia.get(paso.id).alt || `Fotografía de ${paso.nombre}`}
+                  src={stepMedia.path}
+                  alt={stepMedia.alt || `Fotografía de ${paso.nombre}`}
                   fill
                   sizes="(max-width: 900px) calc(100vw - 40px), 50vw"
-                  style={{ objectPosition: getStepPhotoFraming(paso.slug).card }}
+                  style={{
+                    objectFit: stepMedia.fitMode === 'contain' ? 'contain' : 'cover',
+                    objectPosition: stepMedia.focusPosition,
+                  }}
                 />
-                {entityCoverMedia.get(paso.id).credit ? (
+                {stepMedia.credit ? (
                   <small className="processional-photo-credit">
-                    {entityCoverMedia.get(paso.id).credit}
+                    {stepMedia.credit}
                   </small>
                 ) : null}
               </div>
@@ -383,7 +396,7 @@ export default async function HermandadDetailPage({ params }) {
               {paso.fichaDisponible && <Link href={`/pasos/${paso.slug}`} className="text-link">Ver ficha del paso →</Link>}
             </div>
           </article>
-        ))}</div>
+        )})}</div>
       </div></section>
 
       <BrotherhoodOwnBands brotherhoodId={h.id} />

@@ -2,9 +2,12 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import BrotherhoodTypeSelector from '@/components/panel/BrotherhoodTypeSelector'
 import { BrotherhoodGeographyFields, BrotherhoodGeographyInlineTools } from '@/components/panel/BrotherhoodGeographyEditor'
+import EntityCoverEditor from '@/components/panel/EntityCoverEditor'
 import { requirePanelUser } from '@/lib/panel/auth'
 import { getBrotherhoodEditorData } from '@/lib/panel/data'
 import { getBrotherhoodPresenceData } from '@/lib/panel/brotherhood-presence'
+import { getPanelEntityCover } from '@/lib/panel/entity-cover'
+import { saveEntityCoverAction } from '../../media-actions'
 import {
   archiveAssetContributionAction,
   archiveCultAction,
@@ -336,9 +339,10 @@ function HeritageAssetForm({ item, data, canEdit }) {
 
 export default async function BrotherhoodEditorPage({ params, searchParams }) {
   const [{ id }, query, user] = await Promise.all([params, searchParams, requirePanelUser()])
-  const [data, geography] = await Promise.all([
+  const [data, geography, cover] = await Promise.all([
     getBrotherhoodEditorData(id),
     getBrotherhoodPresenceData(id),
+    getPanelEntityCover(id),
   ])
   if (!data || !geography) notFound()
   const canEdit = ['admin', 'editor'].includes(user.role)
@@ -375,8 +379,13 @@ export default async function BrotherhoodEditorPage({ params, searchParams }) {
       {!canEdit ? <div className={styles.readOnlyNotice}>Estás consultando la ficha como colaborador. Un editor debe realizar los cambios.</div> : null}
 
       <nav className={styles.sectionTabs} aria-label="Secciones de la ficha">
-        <a href="#general">General</a><a href="#redes">Web y redes</a><a href="#imagenes">Imágenes</a><a href="#salidas">Salidas</a><a href="#cultos">Cultos</a><a href="#patrimonio">Patrimonio</a>
+        <a href="#portada">Portada</a><a href="#general">General</a><a href="#redes">Web y redes</a><a href="#imagenes">Imágenes</a><a href="#salidas">Salidas</a><a href="#cultos">Cultos</a><a href="#patrimonio">Patrimonio</a>
       </nav>
+
+      <section className={styles.editorSection} id="portada">
+        <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>Presentación visual</span><h2>Portada</h2></div><p>La fotografía construye el impacto; el escudo aparece después como firma institucional.</p></div>
+        <EntityCoverEditor entity={{ id: data.entity.id, type: 'brotherhood' }} cover={cover} canEdit={canEdit} action={saveEntityCoverAction} />
+      </section>
 
       <section className={styles.editorSection} id="general">
         <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>Identidad</span><h2>Información general</h2></div><p>Los datos esenciales que encabezan la ficha pública.</p></div>
@@ -455,9 +464,8 @@ export default async function BrotherhoodEditorPage({ params, searchParams }) {
               <label><span>Fuente</span><input name="source_name" /></label>
               <label><span>URL de fuente</span><input name="source_url" type="url" /></label>
               <label><span>Vincular a</span><select name="media_entity_id" defaultValue={data.entity.id}><option value={data.entity.id}>Ficha de la hermandad</option>{data.assets.map((asset) => <option key={asset.entity.id} value={asset.entity.id}>{asset.entity.name}</option>)}</select></label>
-              <label><span>Relación</span><select name="relation_type" defaultValue="gallery"><option value="gallery">Galería</option><option value="cover">Portada</option><option value="crest">Escudo</option><option value="document">Documento</option></select></label>
+              <label><span>Relación</span><select name="relation_type" defaultValue="gallery"><option value="gallery">Galería</option><option value="crest">Escudo</option><option value="document">Documento</option></select></label>
               <label><span>Orden</span><input name="sort_order" type="number" defaultValue="0" /></label>
-              <label className={styles.checkField}><input name="is_cover" type="checkbox" /><span>Marcar como imagen de portada</span></label>
               <label className={styles.fieldWide}><span>Notas de permiso</span><textarea name="permission_notes" rows="2" /></label>
             </div>
             <SaveBar label="Subir y vincular imagen" canEdit />

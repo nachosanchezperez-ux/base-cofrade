@@ -1,7 +1,10 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import EntityCoverEditor from '@/components/panel/EntityCoverEditor'
 import { requirePanelUser } from '@/lib/panel/auth'
+import { getPanelEntityCover } from '@/lib/panel/entity-cover'
 import { getImageEditorData } from '@/lib/panel/images'
+import { saveEntityCoverAction } from '../../media-actions'
 import { updateImageAction } from './actions'
 import styles from '@/app/panel/panel.module.css'
 
@@ -11,7 +14,10 @@ export const metadata = { title: 'Editar imagen · Panel' }
 
 export default async function ImageEditorPage({ params, searchParams }) {
   const [{ id }, query, user] = await Promise.all([params, searchParams, requirePanelUser()])
-  const data = await getImageEditorData(id)
+  const [data, cover] = await Promise.all([
+    getImageEditorData(id),
+    getPanelEntityCover(id),
+  ])
   if (!data) notFound()
   const canEdit = ['admin', 'editor'].includes(user.role)
 
@@ -41,6 +47,14 @@ export default async function ImageEditorPage({ params, searchParams }) {
 
       {query?.saved ? <div className={styles.savedNotice} role="status">Cambios guardados correctamente.</div> : null}
       {!canEdit ? <div className={styles.readOnlyNotice}>Estás consultando la imagen como colaborador. Un editor debe realizar los cambios.</div> : null}
+
+      <section className={styles.editorSection} id="portada">
+        <div className={styles.sectionHeading}>
+          <div><span className={styles.eyebrow}>Presentación visual</span><h2>Portada</h2></div>
+          <p>Fotografía, encuadre y derechos para escritorio y móvil.</p>
+        </div>
+        <EntityCoverEditor entity={{ id: data.entity.id, type: 'image' }} cover={cover} canEdit={canEdit} action={saveEntityCoverAction} />
+      </section>
 
       <section className={styles.editorSection} id="general">
         <div className={styles.sectionHeading}>

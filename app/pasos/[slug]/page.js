@@ -4,7 +4,6 @@ import EntitySectionNav from '@/components/EntitySectionNav';
 import JsonLd from '@/components/JsonLd';
 import RelationalEntityHero from '@/components/RelationalEntityHero';
 import SectionTitle from '@/components/SectionTitle';
-import { getStepPhotoFraming } from '@/lib/step-photo-framing';
 import { getPublishedEntityCoverMedia } from '@/lib/supabase/entity-media';
 import { getPasoPageBySlug } from '@/lib/supabase/public-entity-pages';
 import { getPublishedStepHeritage } from '@/lib/supabase/step-heritage';
@@ -138,16 +137,22 @@ export default async function PasoDetailPage({params}){
           crestSrc: hermandad.escudoPath || '',
         } : null}
         facts={[
+          { label: 'Estilo', value: paso.estilo },
           { label: 'Ejecución', value: paso.ejecucion },
           { label: 'Sistema de portadores', value: paso.sistemaPortadores },
-          { label: 'Imágenes', value: imagenes.length || '' },
         ]}
         media={{
           photoSrc: coverMedia?.path || '',
           photoAlt: coverMedia?.alt || `Fotografía de ${paso.nombre}`,
           credit: coverMedia?.credit || '',
           initials: paso.nombre.slice(0, 2).toUpperCase(),
-          focusPosition: getStepPhotoFraming(paso.slug).hero,
+          width: coverMedia?.width,
+          height: coverMedia?.height,
+          focusX: coverMedia?.focusX,
+          focusY: coverMedia?.focusY,
+          mobileFocusX: coverMedia?.mobileFocusX,
+          mobileFocusY: coverMedia?.mobileFocusY,
+          fitMode: coverMedia?.fitMode,
         }}
       />
 

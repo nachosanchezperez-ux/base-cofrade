@@ -1,7 +1,10 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import EntityCoverEditor from '@/components/panel/EntityCoverEditor'
 import { requirePanelUser } from '@/lib/panel/auth'
+import { getPanelEntityCover } from '@/lib/panel/entity-cover'
 import { getStepEditorData } from '@/lib/panel/steps'
+import { saveEntityCoverAction } from '../../media-actions'
 import { updateStepAction } from './actions'
 import styles from '@/app/panel/panel.module.css'
 
@@ -11,7 +14,10 @@ export const metadata = { title: 'Editar paso · Panel' }
 
 export default async function StepEditorPage({ params, searchParams }) {
   const [{ id }, query, user] = await Promise.all([params, searchParams, requirePanelUser()])
-  const data = await getStepEditorData(id)
+  const [data, cover] = await Promise.all([
+    getStepEditorData(id),
+    getPanelEntityCover(id),
+  ])
   if (!data) notFound()
   const canEdit = ['admin', 'editor'].includes(user.role)
 
@@ -40,6 +46,14 @@ export default async function StepEditorPage({ params, searchParams }) {
 
       {query?.saved ? <div className={styles.savedNotice} role="status">Cambios guardados correctamente.</div> : null}
       {!canEdit ? <div className={styles.readOnlyNotice}>Estás consultando el paso como colaborador. Un editor debe realizar los cambios.</div> : null}
+
+      <section className={styles.editorSection} id="portada">
+        <div className={styles.sectionHeading}>
+          <div><span className={styles.eyebrow}>Presentación visual</span><h2>Portada</h2></div>
+          <p>Controla el plano general del paso y evita recortes por ficha o por slug.</p>
+        </div>
+        <EntityCoverEditor entity={{ id: data.entity.id, type: 'step' }} cover={cover} canEdit={canEdit} action={saveEntityCoverAction} />
+      </section>
 
       <section className={styles.editorSection} id="general">
         <div className={styles.sectionHeading}>
