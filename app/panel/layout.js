@@ -12,5 +12,5 @@ export const metadata = {
 }
 
 export default function PanelLayout({ children }) {
-  return children
+  return <div id="hc-panel">{children}</div>
 }
