@@ -175,6 +175,7 @@ export default async function HermandadDetailPage({ params }) {
         { href: '#resumen', label: 'Resumen' },
         { href: '#titulares', label: 'Titulares' },
         { href: '#pasos', label: 'Pasos' },
+        (h.imagenes?.length > 0 || h.pasos?.length > 0) && { href: '#tira-del-hilo', label: 'Tira del hilo' },
         h.acompanamientoActual?.length > 0 && { href: '#acompanamiento-musical', label: 'Acompañamiento' },
         (musicalHeritage.length > 0 || h.patrimonioMusical?.length > 0) && { href: '#musica', label: 'Patrimonio musical' },
         h.cronologia?.length > 0 && { href: '#historia', label: 'Historia' },
