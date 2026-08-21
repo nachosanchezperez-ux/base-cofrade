@@ -198,6 +198,7 @@ export default async function PasoDetailPage({params}){
         currentName={paso.nombre}
         currentMeta={[paso.tipo, paso.ejecucion].filter(Boolean).join(' · ')}
         items={relationalItems}
+        priorityProfile="paso"
         title="Este paso conecta patrimonio, imágenes y música"
         description="Desde aquí puedes volver a la Hermandad, abrir las fichas de las imágenes que procesionan o continuar hacia las formaciones musicales vinculadas actualmente."
       />

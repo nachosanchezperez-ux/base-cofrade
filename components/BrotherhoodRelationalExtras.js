@@ -99,6 +99,59 @@ async function loadOwnBands(supabase, brotherhoodId) {
   })
 }
 
+async function loadCurrentAccompaniments(supabase, brotherhoodId) {
+  const periods = assertRows(
+    await supabase
+      .from('music_accompaniment_periods')
+      .select('id, band_entity_id, step_entity_id, position, outing_type, date_from_text, year_from, notes')
+      .eq('brotherhood_entity_id', brotherhoodId)
+      .eq('is_current', true)
+      .eq('status', 'published')
+      .order('position'),
+    'No se pudieron consultar los acompañamientos actuales'
+  )
+
+  const bandIds = [...new Set(periods.map((item) => item.band_entity_id).filter(Boolean))]
+  if (!bandIds.length) return []
+
+  const [entitiesResult, bandsResult] = await Promise.all([
+    supabase
+      .from('entities')
+      .select('id, name, slug')
+      .eq('entity_type', 'band')
+      .eq('status', 'published')
+      .in('id', bandIds),
+    supabase
+      .from('bands')
+      .select('entity_id, band_type')
+      .in('entity_id', bandIds),
+  ])
+
+  const entities = assertRows(entitiesResult, 'No se pudieron consultar las bandas de acompañamiento')
+  const bands = assertRows(bandsResult, 'No se pudieron consultar los tipos de banda')
+  const entityById = new Map(entities.map((item) => [item.id, item]))
+  const bandById = new Map(bands.map((item) => [item.entity_id, item]))
+
+  return periods
+    .map((period) => {
+      const entity = entityById.get(period.band_entity_id)
+      const band = bandById.get(period.band_entity_id) || {}
+      if (!entity?.slug) return null
+
+      return {
+        id: period.id,
+        slug: entity.slug,
+        nombre: entity.name,
+        posicion: period.position || 'Acompañamiento musical',
+        tipo: band.band_type || 'Formación musical',
+        salida: period.outing_type || '',
+        periodo: period.date_from_text || (period.year_from ? `Desde ${period.year_from}` : ''),
+        observaciones: period.notes || '',
+      }
+    })
+    .filter(Boolean)
+}
+
 async function loadBrotherhoodThreadData(supabase, brotherhoodId) {
   const [brotherhoodResult, imageLinksResult, stepLinksResult] = await Promise.all([
     supabase
@@ -213,45 +266,64 @@ export async function BrotherhoodConceptualTitulars({ brotherhoodId }) {
 export async function BrotherhoodOwnBands({ brotherhoodId }) {
   try {
     const supabase = await createClient()
-    const [bands, threadData] = await Promise.all([
+    const [bands, threadData, currentAccompaniments] = await Promise.all([
       loadOwnBands(supabase, brotherhoodId),
       loadBrotherhoodThreadData(supabase, brotherhoodId),
+      loadCurrentAccompaniments(supabase, brotherhoodId),
     ])
     const threadItems = [
-      ...threadData.images.slice(0, 3).map((image) => ({
+      ...threadData.images.map((image) => ({
         kind: 'Imagen',
         relation: 'Titular',
         title: image.name,
         href: `/imagenes/${image.slug}`,
         context: 'Imagen vinculada a la Hermandad',
+        priority: 10,
       })),
-      ...threadData.steps.slice(0, 3).map((step) => ({
+      ...threadData.steps.map((step) => ({
         kind: 'Paso',
         relation: 'Procesiona con',
         title: step.name,
         href: `/pasos/${step.slug}`,
         context: 'Paso procesional de la Hermandad',
+        priority: 20,
       })),
-      ...bands.slice(0, 2).map((band) => ({
+      ...bands.map((band) => ({
         kind: 'Banda',
         relation: 'Vínculo institucional',
         title: band.nombre,
         href: `/bandas/${band.slug}`,
         context: band.tipo,
+        priority: 30,
+      })),
+      ...currentAccompaniments.map((band) => ({
+        kind: 'Banda',
+        relation: 'Acompañamiento actual',
+        title: band.nombre,
+        href: `/bandas/${band.slug}`,
+        context: [band.posicion, band.salida, band.periodo].filter(Boolean).join(' · ') || band.tipo,
+        priority: 40,
       })),
     ]
 
     if (!threadItems.length && !bands.length) return null
+
+    const currentBandCount = new Set(currentAccompaniments.map((item) => item.slug).filter(Boolean)).size
+    const meta = [
+      `${threadData.images.length} imágenes`,
+      `${threadData.steps.length} pasos`,
+      currentBandCount ? `${currentBandCount} bandas actuales` : '',
+    ].filter(Boolean).join(' · ')
 
     return (
       <>
         <RelationalThread
           currentLabel="Hermandad"
           currentName={threadData.brotherhood?.name || 'Hermandad'}
-          currentMeta={`${threadData.images.length} imágenes · ${threadData.steps.length} pasos`}
+          currentMeta={meta}
           items={threadItems}
           title="La Hermandad como nodo de la enciclopedia"
-          description="Tira del hilo hacia sus imágenes, sus pasos y las formaciones con vínculo institucional. Esta capa prioriza relaciones navegables y deja el detalle completo en cada módulo específico."
+          description="Tira del hilo hacia sus imágenes, sus pasos y su música vinculada. Los vínculos institucionales y los acompañamientos actuales se etiquetan de forma distinta para no confundir pertenencia con contrato procesional."
         />
 
         {bands.length ? (

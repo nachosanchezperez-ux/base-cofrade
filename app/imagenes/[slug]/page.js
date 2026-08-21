@@ -248,6 +248,7 @@ export default async function ImagenPage({ params }) {
         currentName={imagen.nombre}
         currentMeta={[imagen.tipologia || imagen.tipo, imagen.fecha].filter(Boolean).join(' · ')}
         items={relationalItems}
+        priorityProfile="imagen"
         title="Desde esta imagen, sigue tirando del hilo"
         description="Salta a su Hermandad, al paso donde procesiona o a otras imágenes vinculadas. La relación permanece visible para que la navegación tenga siempre contexto."
       />
