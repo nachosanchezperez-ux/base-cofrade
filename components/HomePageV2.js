@@ -9,7 +9,6 @@ const stackedNextExtraHeadStyle = { alignItems: 'flex-start', flexDirection: 'co
 
 export default function HomePageV2({
   today,
-  searchItems,
   todayContent,
   extraordinaryOutings,
   featuredBriefing,
@@ -34,7 +33,7 @@ export default function HomePageV2({
               <span className={styles.searchLabel}>Tira del hilo</span>
               <h2>Pregunta a Hilo Cofrade</h2>
               <p>Escribe como hablarías con otra persona. La respuesta se construye únicamente con datos y relaciones ya documentados en Hilo Cofrade.</p>
-              <HiloSearch items={searchItems} />
+              <HiloSearch />
             </div>
           </aside>
         </div>

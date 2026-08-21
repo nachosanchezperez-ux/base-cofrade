@@ -1,14 +1,14 @@
 'use client';
 
 import Link from 'next/link';
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './HiloSearch.module.css';
 
 const starterQuestions = [
   '¿Quién compuso Refúgiame?',
   '¿Qué pasos dirige Antonio Santiago?',
-  '¿Qué bandas acompañan a la Pastora de Cantillana?',
+  '¿Qué bandas acompañan a hermandades de gloria en Cantillana?',
 ];
 
 function normalize(value = '') {
@@ -32,26 +32,6 @@ function analyticsEntityType(value = '') {
   if (type.includes('acontecimiento')) return 'event';
   if (type.includes('patrimonio')) return 'heritage_asset';
   return 'other';
-}
-
-function resultScore(item, term) {
-  const title = normalize(item.title);
-  const query = normalize(term);
-  if (!query) return 0;
-  if (title === query) return 1000;
-  if (title.startsWith(query)) return 850;
-  if (title.includes(query)) return 760;
-
-  const subtitle = normalize(item.subtitle);
-  if (subtitle.includes(query)) return 520;
-
-  const keywords = normalize((item.keywords || []).join(' '));
-  if (keywords.includes(query)) return 420;
-
-  const queryTokens = query.split(' ').filter((token) => token.length > 2);
-  const haystack = `${title} ${subtitle} ${keywords}`;
-  const overlap = queryTokens.filter((token) => haystack.includes(token)).length;
-  return overlap ? overlap * 70 : 0;
 }
 
 function looksLikeQuestion(value = '') {
@@ -135,31 +115,57 @@ function AssistantAnswer({ message, onFollowUp }) {
   );
 }
 
-export default function HiloSearch({ items = [] }) {
+export default function HiloSearch() {
   const router = useRouter();
   const [query, setQuery] = useState('');
+  const [results, setResults] = useState([]);
+  const [searching, setSearching] = useState(false);
   const [messages, setMessages] = useState([]);
   const [context, setContext] = useState(null);
   const [loading, setLoading] = useState(false);
   const sequence = useRef(0);
 
-  const results = useMemo(() => {
+  useEffect(() => {
     const term = query.trim();
-    if (term.length < 2) return [];
+    if (term.length < 2 || looksLikeQuestion(query)) {
+      setResults([]);
+      setSearching(false);
+      return undefined;
+    }
 
-    return items
-      .map((item) => ({ item, score: resultScore(item, term) }))
-      .filter(({ score }) => score > 0)
-      .sort((a, b) => b.score - a.score || a.item.title.localeCompare(b.item.title, 'es'))
-      .slice(0, 6)
-      .map(({ item }) => item);
-  }, [items, query]);
+    const controller = new AbortController();
+    const timer = window.setTimeout(async () => {
+      setSearching(true);
+      try {
+        const request = await fetch(`/api/tira-del-hilo/search?q=${encodeURIComponent(term)}`, {
+          method: 'GET',
+          signal: controller.signal,
+          headers: { Accept: 'application/json' },
+        });
+        const payload = await request.json();
+        if (!request.ok) throw new Error(payload?.error || 'No se pudo buscar');
+        setResults(Array.isArray(payload?.items) ? payload.items : []);
+      } catch (error) {
+        if (error?.name !== 'AbortError') {
+          console.error('[Hilo Cofrade] Error en autocompletado', error);
+          setResults([]);
+        }
+      } finally {
+        if (!controller.signal.aborted) setSearching(false);
+      }
+    }, 180);
+
+    return () => {
+      window.clearTimeout(timer);
+      controller.abort();
+    };
+  }, [query]);
 
   const ask = async (value) => {
     const question = String(value || query).trim();
     if (!question || loading) return;
 
-    const exact = items.find((item) => normalize(item.title) === normalize(question));
+    const exact = results.find((item) => normalize(item.title) === normalize(question));
     if (exact?.href && !looksLikeQuestion(question)) {
       router.push(exact.href);
       return;
@@ -169,6 +175,7 @@ export default function HiloSearch({ items = [] }) {
     const assistantId = `a-${++sequence.current}`;
     setMessages((current) => [...current, { id: userId, role: 'user', text: question }]);
     setQuery('');
+    setResults([]);
     setLoading(true);
 
     try {
@@ -179,9 +186,7 @@ export default function HiloSearch({ items = [] }) {
       });
       const response = await request.json();
 
-      if (!request.ok && response?.error) {
-        throw new Error(response.error);
-      }
+      if (!request.ok && response?.error) throw new Error(response.error);
 
       setMessages((current) => [...current, { id: assistantId, role: 'assistant', response }]);
       if (response?.context) setContext(response.context);
@@ -287,11 +292,11 @@ export default function HiloSearch({ items = [] }) {
         </div>
       ) : null}
 
-      {query.trim().length > 1 && results.length > 0 ? (
+      {query.trim().length > 1 && !looksLikeQuestion(query) && (results.length > 0 || searching) ? (
         <div className={styles.results} aria-label="Coincidencias del grafo">
           <div className={styles.resultsHead}>
-            <span>Coincidencias</span>
-            <small>También puedes escribir una pregunta completa</small>
+            <span>{searching ? 'Buscando…' : 'Coincidencias'}</span>
+            <small>El índice se consulta al escribir; la Home ya no descarga todo el grafo</small>
           </div>
           {results.map((item) => item.href ? (
             <Link
