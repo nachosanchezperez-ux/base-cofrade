@@ -1,7 +1,5 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import BrotherhoodMusicalHeritage from '@/components/BrotherhoodMusicalHeritage'
-import { getBrotherhoodMusicalHeritage } from '@/lib/supabase/brotherhood-musical-heritage'
 import { getPublishedEntityCoverMediaMap } from '@/lib/supabase/entity-media'
 import { createClient } from '@/lib/supabase/server'
 
@@ -156,39 +154,30 @@ export async function BrotherhoodConceptualTitulars({ brotherhoodId }) {
 export async function BrotherhoodOwnBands({ brotherhoodId }) {
   try {
     const supabase = await createClient()
-    const [bands, musicalHeritage] = await Promise.all([
-      loadOwnBands(supabase, brotherhoodId),
-      getBrotherhoodMusicalHeritage(brotherhoodId),
-    ])
-
-    if (!bands.length && !musicalHeritage.length) return null
+    const bands = await loadOwnBands(supabase, brotherhoodId)
+    if (!bands.length) return null
 
     return (
-      <>
-        {bands.length ? (
-          <section className="section brotherhood-soft" id="bandas-propias">
-            <div className="shell">
-              <span className="eyebrow">Vínculo institucional</span>
-              <h2>Bandas de la Hermandad</h2>
-              <p className="body-large">Formaciones vinculadas institucionalmente a la Hermandad, con independencia de sus acompañamientos procesionales concretos.</p>
-              <div className="current-music-grid">
-                {bands.map((band) => (
-                  <Link className="current-music-card" href={`/bandas/${band.slug}`} key={band.id}>
-                    <span className="current-music-position">Banda propia</span>
-                    <h3>{band.nombre}</h3>
-                    <p>{band.tipo}</p>
-                    {band.descripcion && <small>{band.descripcion}</small>}
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </section>
-        ) : null}
-        <BrotherhoodMusicalHeritage items={musicalHeritage} />
-      </>
+      <section className="section brotherhood-soft" id="bandas-propias">
+        <div className="shell">
+          <span className="eyebrow">Vínculo institucional</span>
+          <h2>Bandas de la Hermandad</h2>
+          <p className="body-large">Formaciones vinculadas institucionalmente a la Hermandad, con independencia de sus acompañamientos procesionales concretos.</p>
+          <div className="current-music-grid">
+            {bands.map((band) => (
+              <Link className="current-music-card" href={`/bandas/${band.slug}`} key={band.id}>
+                <span className="current-music-position">Banda propia</span>
+                <h3>{band.nombre}</h3>
+                <p>{band.tipo}</p>
+                {band.descripcion && <small>{band.descripcion}</small>}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
     )
   } catch (error) {
-    console.error('[Hilo Cofrade] No se pudieron mostrar las relaciones musicales de la hermandad', error)
+    console.error('[Hilo Cofrade] No se pudieron mostrar las bandas propias de la hermandad', error)
     return null
   }
 }
