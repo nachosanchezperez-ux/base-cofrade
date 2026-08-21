@@ -133,21 +133,25 @@
 .bandPage:has(#resumen:target) .navList a[href="#resumen"],
 .bandPage:has(#banderin:target) .navList a[href="#banderin"],
 .bandPage:has(#acompanamientos:target) .navList a[href="#acompanamientos"],
+.bandPage:has(#glorias:target) .navList a[href="#glorias"],
 .bandPage:has(#acompanamientos-historicos:target) .navList a[href="#acompanamientos-historicos"],
 .bandPage:has(#extraordinarias:target) .navList a[href="#extraordinarias"],
 .bandPage:has(#repertorio:target) .navList a[href="#repertorio"],
 .bandPage:has(#discografia:target) .navList a[href="#discografia"],
 .bandPage:has(#direccion:target) .navList a[href="#direccion"],
+.bandPage:has(#enlaces-de-interes:target) .navList a[href="#enlaces-de-interes"],
 .bandPage:has(#fuentes:target) .navList a[href="#fuentes"] { color: #fff; font-weight: 600; }
 .bandPage:not(:has(section:target)) .navList a[href="#resumen"]::after,
 .bandPage:has(#resumen:target) .navList a[href="#resumen"]::after,
 .bandPage:has(#banderin:target) .navList a[href="#banderin"]::after,
 .bandPage:has(#acompanamientos:target) .navList a[href="#acompanamientos"]::after,
+.bandPage:has(#glorias:target) .navList a[href="#glorias"]::after,
 .bandPage:has(#acompanamientos-historicos:target) .navList a[href="#acompanamientos-historicos"]::after,
 .bandPage:has(#extraordinarias:target) .navList a[href="#extraordinarias"]::after,
 .bandPage:has(#repertorio:target) .navList a[href="#repertorio"]::after,
 .bandPage:has(#discografia:target) .navList a[href="#discografia"]::after,
 .bandPage:has(#direccion:target) .navList a[href="#direccion"]::after,
+.bandPage:has(#enlaces-de-interes:target) .navList a[href="#enlaces-de-interes"]::after,
 .bandPage:has(#fuentes:target) .navList a[href="#fuentes"]::after { position: absolute; right: 14px; bottom: 0; left: 14px; height: 3px; border-radius: 2px 2px 0 0; background: var(--band-primary); content: ''; }
 .bandPage section[id] { scroll-margin-top: 148px; }
 .module :global(.sources-section) { border-top-color: var(--band-line); background: #fff; }
