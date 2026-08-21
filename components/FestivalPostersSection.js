@@ -8,6 +8,37 @@ function paragraphs(text = '') {
     .filter(Boolean);
 }
 
+const POSTER_SERIES = [
+  { key: 'fiestas', eyebrow: '8 de septiembre', title: 'Carteles de las Fiestas Mayores' },
+  { key: 'romeria', eyebrow: 'Romería', title: 'Carteles de la Romería y Besamanos' },
+  { key: 'otros', eyebrow: 'Archivo gráfico', title: 'Otros carteles' },
+];
+
+function normalizedPosterType(value = '') {
+  return value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase();
+}
+
+function posterSeries(posters = []) {
+  const groups = posters.reduce((result, poster) => {
+    const type = normalizedPosterType(poster.tipo);
+    const key = type.includes('romeria')
+      ? 'romeria'
+      : type.includes('fiestas')
+        ? 'fiestas'
+        : 'otros';
+
+    result[key].push(poster);
+    return result;
+  }, { fiestas: [], romeria: [], otros: [] });
+
+  return POSTER_SERIES
+    .map((series) => ({ ...series, posters: groups[series.key] }))
+    .filter((series) => series.posters.length);
+}
+
 export default function FestivalPostersSection({ posters = [] }) {
   if (!posters.length) return null;
 
@@ -16,12 +47,19 @@ export default function FestivalPostersSection({ posters = [] }) {
       <div className="shell">
         <SectionTitle
           eyebrow="Memoria gráfica"
-          title="Carteles de las Fiestas"
-          description="Un archivo anual de las obras que anuncian las celebraciones de la Hermandad y conservan su memoria visual."
+          title="Carteles de la Hermandad"
+          description="Un archivo anual de las obras que anuncian sus Fiestas Mayores, romerías y celebraciones, y conservan su memoria visual."
         />
 
-        <div className="festival-posters-list">
-          {posters.map((poster) => {
+        <div className="festival-posters-series">
+          {posterSeries(posters).map((series) => (
+            <div className="festival-posters-group" key={series.key}>
+              <div className="heritage-subheading festival-posters-group-heading">
+                <span className="eyebrow">{series.eyebrow}</span>
+                <h3>{series.title}</h3>
+              </div>
+              <div className="festival-posters-list">
+                {series.posters.map((poster) => {
             const author = poster.agentes?.[0]?.nombre || poster.imagen?.autor || '';
             const technicalDetails = [poster.tecnica, poster.materiales, poster.dimensiones].filter(Boolean);
 
@@ -85,7 +123,10 @@ export default function FestivalPostersSection({ posters = [] }) {
                 </div>
               </article>
             );
-          })}
+                })}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
