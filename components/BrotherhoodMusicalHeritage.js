@@ -82,10 +82,9 @@ export default function BrotherhoodMusicalHeritage({ items = [] }) {
             title="Patrimonio musical"
             description="Composiciones vinculadas a la Hermandad y a sus titulares, organizadas por estilo para consultar cada repertorio sin alargar la ficha."
           />
-          <div className={styles.summary} aria-label="Resumen del patrimonio musical">
+          <div className={styles.summary} aria-label={`${items.length} composiciones documentadas`}>
             <strong>{items.length}</strong>
             <span>composiciones documentadas</span>
-            {groups.map((group) => <small key={group.key}>{group.items.length} · {group.short}</small>)}
           </div>
         </div>
 
