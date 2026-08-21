@@ -1,9 +1,11 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import {
+  groupGloryAccompaniments,
   sortGloryAccompaniments,
   sortHolyWeekAccompaniments,
   splitCurrentAccompaniments,
+  summarizeGloryTypes,
 } from '../lib/bands/accompaniments.js'
 
 test('separa Semana Santa de Glorias y cultos externos', () => {
@@ -34,4 +36,31 @@ test('ordena Semana Santa por jornada y Glorias alfabéticamente', () => {
 
   assert.deepEqual(holyWeek.map((item) => item.outingType), ['Domingo de Ramos', 'Lunes Santo', 'Viernes Santo'])
   assert.deepEqual(glories.map((item) => item.brotherhoodName), ['Araceli', 'Reina de Todos los Santos'])
+})
+
+test('agrupa los acompañamientos de Glorias entre Sevilla capital y provincia', () => {
+  const groups = groupGloryAccompaniments([
+    { brotherhoodName: 'Araceli', municipality: 'Sevilla', municipalitySlug: 'sevilla', province: 'Sevilla' },
+    { brotherhoodName: 'Dolores', municipality: 'Camas', municipalitySlug: 'camas', province: 'Sevilla' },
+    { brotherhoodName: 'Nieves', municipality: 'Benacazón', municipalitySlug: 'benacazon', province: 'Sevilla' },
+  ])
+
+  assert.deepEqual(groups.map((group) => group.key), ['sevilla-capital', 'provincia-sevilla'])
+  assert.deepEqual(groups[0].items.map((item) => item.brotherhoodName), ['Araceli'])
+  assert.deepEqual(groups[1].items.map((item) => item.municipality), ['Benacazón', 'Camas'])
+})
+
+test('resume las Glorias por tipo de procesión', () => {
+  const summary = summarizeGloryTypes([
+    { outingType: 'Procesión de gloria' },
+    { outingType: 'Procesión eucarística' },
+    { outingType: 'Procesión de gloria' },
+    { outingType: 'Procesión extraordinaria' },
+  ])
+
+  assert.deepEqual(summary, [
+    { type: 'Procesión de gloria', label: 'Procesiones de gloria', count: 2 },
+    { type: 'Procesión eucarística', label: 'Procesiones eucarísticas', count: 1 },
+    { type: 'Procesión extraordinaria', label: 'Procesiones extraordinarias', count: 1 },
+  ])
 })
