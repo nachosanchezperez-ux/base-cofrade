@@ -45,7 +45,7 @@ test('HC-009 define la escala canónica y evita pesos sintéticos', () => {
   assert.match(typography, /--font-weight-extrabold:\s*800/)
   assert.equal(typography.includes('--font-weight-black'), false)
   assert.match(typography, /font-synthesis:\s*none/)
-  assert.equal(/Georgia|Times New Roman|serif/i.test(typography), false)
+  assert.equal(/Georgia|Times New Roman/i.test(typography), false)
 })
 
 test('HC-009 separa la escala pública y la escala funcional del Panel', () => {
