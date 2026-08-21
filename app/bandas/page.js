@@ -13,6 +13,7 @@ export const metadata = {
 
 const FULL_BLEED_LOGO_SLUGS = new Set([
   'banda-del-sol',
+  'banda-de-musica-nuestra-senora-de-la-soledad-cantillana',
   'sangre-de-san-benito',
 ])
 
