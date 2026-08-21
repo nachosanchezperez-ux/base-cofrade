@@ -77,7 +77,7 @@ function AccompanimentCard({ item, band, showLocation = false }) {
       : item.province || ''
 
   return (
-    <article className={`${styles.relationshipCard} ${showLocation ? styles.gloryRelationshipCard : ''}`}>
+    <article className={`${styles.relationshipCard} ${showLocation ? styles.locatedRelationshipCard : ''}`}>
       <div className={styles.relationshipTop}>
         <span>{item.outingType || 'Salida procesional'}</span>
         <strong>{yearRange(item)}</strong>
@@ -331,9 +331,13 @@ export default async function BandDetailPage({ params }) {
 
       {hasAccompaniments ? <section className={`${styles.contentSection} ${styles.softSection}`} id="acompanamientos">
         <div className="shell">
-          <div className={styles.sectionHeading}><span className={styles.eyebrow}>Semana Santa</span><h2>Hermandades a las que acompaña</h2></div>
+          <div className={styles.sectionHeading}>
+            <span className={styles.eyebrow}>Temporada {currentYear}</span>
+            <h2>Contratos de Semana Santa</h2>
+            <p>Acompañamientos tras pasos, ordenados por jornada y con su localidad exacta.</p>
+          </div>
           <div className={styles.relationshipGrid}>{orderedAccompaniments.map((item) => (
-            <AccompanimentCard item={item} band={band} key={item.id} />
+            <AccompanimentCard item={item} band={band} key={item.id} showLocation />
           ))}</div>
         </div>
       </section> : null}
