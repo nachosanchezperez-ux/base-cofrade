@@ -233,6 +233,56 @@
   transform: translate(3px, -50%);
 }
 
+.more {
+  margin-left: calc(28% + 28px);
+  border-top: 1px solid color-mix(in srgb, var(--thread-accent) 16%, #d7dce2);
+}
+
+.more summary {
+  display: grid;
+  min-height: 50px;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 10px;
+  padding: 0 4px;
+  color: var(--thread-dark);
+  cursor: pointer;
+  list-style: none;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.more summary::-webkit-details-marker {
+  display: none;
+}
+
+.more summary small {
+  color: var(--thread-accent);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.more summary b {
+  color: var(--thread-accent);
+  font-size: 1rem;
+  transition: transform 180ms ease;
+}
+
+.more[open] summary b {
+  transform: rotate(45deg);
+}
+
+.moreGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  padding-top: 4px;
+}
+
+.moreGrid .cardNode {
+  display: none;
+}
+
 @media (max-width: 900px) {
   .heading {
     grid-template-columns: 1fr;
@@ -266,6 +316,10 @@
   .cardNode {
     left: -21px;
   }
+
+  .more {
+    margin-left: 34px;
+  }
 }
 
 @media (max-width: 620px) {
@@ -277,11 +331,16 @@
     gap: 26px;
   }
 
-  .destinations {
+  .destinations,
+  .moreGrid {
     grid-template-columns: 1fr;
   }
 
   .card {
     min-height: 132px;
+  }
+
+  .more {
+    margin-left: 0;
   }
 }
