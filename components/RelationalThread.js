@@ -28,6 +28,15 @@ function sendTelemetry(payload) {
   }).catch(() => {});
 }
 
+function normalizeCountGrammar(value) {
+  if (!value) return '';
+
+  return String(value)
+    .replace(/\b1 imágenes\b/g, '1 imagen')
+    .replace(/\b1 pasos\b/g, '1 paso')
+    .replace(/\b1 bandas actuales\b/g, '1 banda actual');
+}
+
 function RelationCard({ item, sourceType, sourceName }) {
   return (
     <Link
@@ -75,6 +84,7 @@ export default function RelationalThread({
     profile: sourceType,
     maxItems,
   });
+  const normalizedMeta = normalizeCountGrammar(currentMeta);
 
   if (!currentName || visibleItems.length === 0) return null;
 
@@ -94,7 +104,7 @@ export default function RelationalThread({
             <span className={styles.originNode} aria-hidden="true" />
             <small>{currentLabel}</small>
             <strong>{currentName}</strong>
-            {currentMeta ? <span>{currentMeta}</span> : null}
+            {normalizedMeta ? <span>{normalizedMeta}</span> : null}
           </div>
 
           <div className={styles.destinations}>
