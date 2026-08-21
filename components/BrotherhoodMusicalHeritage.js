@@ -2,6 +2,7 @@ import Link from 'next/link';
 import SectionTitle from './SectionTitle';
 import styles from './BrotherhoodMusicalHeritage.module.css';
 
+const INITIAL_VISIBLE_MARCHES = 5;
 const GROUPS = [
   { key: 'Cornetas y Tambores', label: 'Cornetas y tambores', short: 'CT' },
   { key: 'Banda de Música', label: 'Banda de música', short: 'BM' },
@@ -73,7 +74,7 @@ export default function BrotherhoodMusicalHeritage({ items = [] }) {
           <SectionTitle
             eyebrow="Sonidos propios"
             title="Patrimonio musical"
-            description="Marchas dedicadas a la Hermandad y a sus titulares. La dedicatoria forma parte del patrimonio del Baratillo con independencia de qué banda la estrene, la grabe o acompañe actualmente a la cofradía."
+            description="Marchas dedicadas a la Hermandad y a sus titulares. La dedicatoria forma parte de su patrimonio con independencia de qué banda la estrene, la grabe o acompañe actualmente a la cofradía."
           />
           <div className={styles.summary} aria-label="Resumen del patrimonio musical">
             <strong>{items.length}</strong>
@@ -85,32 +86,51 @@ export default function BrotherhoodMusicalHeritage({ items = [] }) {
         </div>
 
         <div className={styles.groups}>
-          {groups.map((group) => (
-            <section className={styles.group} key={group.key} aria-labelledby={`music-${group.short.toLowerCase()}`}>
-              <header className={styles.groupHeader}>
-                <span className={styles.groupMark} aria-hidden="true">{group.short}</span>
-                <div>
-                  <h3 id={`music-${group.short.toLowerCase()}`}>{group.label}</h3>
-                  <p>{group.items.length} marchas documentadas</p>
-                  {group.repertoireBandContext?.name ? (
-                    <div className={styles.groupContext}>
-                      <small>{group.repertoireBandContext.label}</small>
-                      {group.repertoireBandContext.slug ? (
-                        <Link href={`/bandas/${group.repertoireBandContext.slug}`}>
-                          {group.repertoireBandContext.name} <span>↗</span>
-                        </Link>
-                      ) : (
-                        <strong>{group.repertoireBandContext.name}</strong>
-                      )}
-                    </div>
-                  ) : null}
+          {groups.map((group) => {
+            const visibleItems = group.items.slice(0, INITIAL_VISIBLE_MARCHES);
+            const remainingItems = group.items.slice(INITIAL_VISIBLE_MARCHES);
+
+            return (
+              <section className={styles.group} key={group.key} aria-labelledby={`music-${group.short.toLowerCase()}`}>
+                <header className={styles.groupHeader}>
+                  <span className={styles.groupMark} aria-hidden="true">{group.short}</span>
+                  <div>
+                    <h3 id={`music-${group.short.toLowerCase()}`}>{group.label}</h3>
+                    <p>{group.items.length} marchas documentadas</p>
+                    {group.repertoireBandContext?.name ? (
+                      <div className={styles.groupContext}>
+                        <small>{group.repertoireBandContext.label}</small>
+                        {group.repertoireBandContext.slug ? (
+                          <Link href={`/bandas/${group.repertoireBandContext.slug}`}>
+                            {group.repertoireBandContext.name} <span>↗</span>
+                          </Link>
+                        ) : (
+                          <strong>{group.repertoireBandContext.name}</strong>
+                        )}
+                      </div>
+                    ) : null}
+                  </div>
+                </header>
+
+                <div className={styles.list}>
+                  {visibleItems.map((item) => <MarchRow item={item} key={item.id} />)}
                 </div>
-              </header>
-              <div className={styles.list}>
-                {group.items.map((item) => <MarchRow item={item} key={item.id} />)}
-              </div>
-            </section>
-          ))}
+
+                {remainingItems.length ? (
+                  <details className={styles.more}>
+                    <summary>
+                      <span className={styles.moreClosed}>Ver {remainingItems.length} marchas más</span>
+                      <span className={styles.moreOpen}>Ocultar repertorio ampliado</span>
+                      <span className={styles.moreIcon} aria-hidden="true">＋</span>
+                    </summary>
+                    <div className={styles.moreList}>
+                      {remainingItems.map((item) => <MarchRow item={item} key={item.id} />)}
+                    </div>
+                  </details>
+                ) : null}
+              </section>
+            );
+          })}
         </div>
       </div>
     </section>
