@@ -10,9 +10,11 @@ import { getBandDiscography } from '@/lib/supabase/bandDiscography'
 import { getPublishedBandColors } from '@/lib/supabase/bandColors'
 import { absoluteUrl } from '@/lib/seo'
 import {
+  groupGloryAccompaniments,
   sortGloryAccompaniments,
   sortHolyWeekAccompaniments,
   splitCurrentAccompaniments,
+  summarizeGloryTypes,
 } from '@/lib/bands/accompaniments'
 import styles from '../bandas.module.css'
 
@@ -20,6 +22,7 @@ export const dynamic = 'force-dynamic'
 
 const FULL_BLEED_LOGO_SLUGS = new Set([
   'banda-del-sol',
+  'banda-de-musica-del-maestro-tejera',
   'sangre-de-san-benito',
 ])
 
@@ -65,13 +68,24 @@ function creditedName(item) {
   return [item.name, ...(item.aliases || [])].join(' · ')
 }
 
-function AccompanimentCard({ item, band }) {
+function AccompanimentCard({ item, band, showLocation = false }) {
+  const locationScope = item.municipalitySlug === 'sevilla'
+    ? 'Sevilla capital'
+    : item.province === 'Sevilla'
+      ? 'Provincia de Sevilla'
+      : item.province || ''
+
   return (
-    <article className={styles.relationshipCard}>
+    <article className={`${styles.relationshipCard} ${showLocation ? styles.gloryRelationshipCard : ''}`}>
       <div className={styles.relationshipTop}>
         <span>{item.outingType || 'Salida procesional'}</span>
         <strong>{yearRange(item)}</strong>
       </div>
+      {showLocation ? <div className={styles.relationshipLocation}>
+        <span>Localidad</span>
+        <strong>{item.municipality || 'Por documentar'}</strong>
+        {locationScope ? <small>{locationScope}</small> : null}
+      </div> : null}
       <div className={styles.relationshipIdentity}>
         <h3>{item.brotherhoodName}</h3>
       </div>
@@ -134,6 +148,8 @@ export default async function BandDetailPage({ params }) {
   const accompanimentGroups = splitCurrentAccompaniments(band.accompaniments)
   const orderedAccompaniments = sortHolyWeekAccompaniments(accompanimentGroups.holyWeek)
   const gloryAccompaniments = sortGloryAccompaniments(accompanimentGroups.glories)
+  const gloryGroups = groupGloryAccompaniments(gloryAccompaniments)
+  const gloryTypeSummary = summarizeGloryTypes(gloryAccompaniments)
   const historicalAccompaniments = [...(band.historicalAccompaniments || [])].sort((a, b) => (b.yearTo || b.yearFrom || 0) - (a.yearTo || a.yearFrom || 0))
   const curiosities = band.curiosities || []
   const hasAccompaniments = orderedAccompaniments.length > 0
@@ -199,7 +215,7 @@ export default async function BandDetailPage({ params }) {
             <a href="#resumen">De un vistazo</a>
             {banderin ? <a href="#banderin">Banderín</a> : null}
             {hasAccompaniments ? <a href="#acompanamientos">Semana Santa</a> : null}
-            {hasGloryAccompaniments ? <a href="#glorias">Glorias y cultos externos</a> : null}
+            {hasGloryAccompaniments ? <a href="#glorias">Glorias y eucarísticas</a> : null}
             {hasHistoricalAccompaniments ? <a href="#acompanamientos-historicos">Histórico</a> : null}
             {hasOutings ? <a href="#extraordinarias">Extraordinarias</a> : null}
             {hasPremieres ? <a href="#repertorio">Repertorio</a> : null}
@@ -325,12 +341,32 @@ export default async function BandDetailPage({ params }) {
         <div className="shell">
           <div className={styles.sectionHeading}>
             <span className={styles.eyebrow}>Sevilla y provincia</span>
-            <h2>Glorias y cultos externos</h2>
-            <p>Procesiones de gloria, sacramentales y extraordinarias documentadas para la temporada 2026.</p>
+            <h2>Glorias y procesiones eucarísticas</h2>
+            <p>Acompañamientos documentados para la temporada 2026, organizados por ámbito y naturaleza de la salida.</p>
           </div>
-          <div className={styles.relationshipGrid}>{gloryAccompaniments.map((item) => (
-            <AccompanimentCard item={item} band={band} key={item.id} />
-          ))}</div>
+          <div className={styles.gloryTypeSummary} aria-label="Tipos de procesiones documentadas">
+            {gloryTypeSummary.map((item) => <article key={item.type}>
+              <strong>{item.count}</strong>
+              <span>{item.label}</span>
+            </article>)}
+          </div>
+          <div className={styles.gloryGroups}>
+            {gloryGroups.map((group) => <section className={styles.gloryGroup} key={group.key}>
+              <header className={styles.gloryGroupHeading}>
+                <div>
+                  <span>Ámbito</span>
+                  <h3>{group.label}</h3>
+                  <p>{group.detail}</p>
+                </div>
+                <strong>{group.items.length}</strong>
+              </header>
+              <div className={`${styles.relationshipGrid} ${styles.gloryRelationshipGrid}`}>
+                {group.items.map((item) => (
+                  <AccompanimentCard item={item} band={band} key={item.id} showLocation />
+                ))}
+              </div>
+            </section>)}
+          </div>
         </div>
       </section> : null}
 

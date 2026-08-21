@@ -229,6 +229,25 @@
 .relationshipTop { display: flex; min-height: 66px; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 18px; color: #fff; background: linear-gradient(125deg, var(--band-primary), color-mix(in srgb, var(--band-primary) 30%, var(--band-secondary))); }
 .relationshipTop span { max-width: 125px; font-size: 9px; font-weight: 700; letter-spacing: .09em; line-height: 1.35; text-transform: uppercase; }
 .relationshipTop strong { flex: 0 0 auto; padding: 6px 8px; border: 1px solid rgb(255 255 255 / 20%); border-radius: 999px; color: #fff; background: rgb(255 255 255 / 8%); font-size: 9px; }
+.gloryTypeSummary { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; margin: -4px 0 42px; }
+.gloryTypeSummary article { display: flex; min-height: 88px; align-items: center; gap: 16px; padding: 17px 20px; border: 1px solid var(--band-line); border-radius: 17px; background: color-mix(in srgb, var(--band-primary) 4%, white); }
+.gloryTypeSummary strong { color: var(--band-primary); font-size: 34px; line-height: 1; }
+.gloryTypeSummary span { color: var(--band-secondary); font-size: 11px; font-weight: 700; line-height: 1.35; }
+.gloryGroups { display: grid; gap: 52px; }
+.gloryGroup { display: grid; gap: 19px; }
+.gloryGroupHeading { display: flex; align-items: flex-end; justify-content: space-between; gap: 28px; padding-bottom: 16px; border-bottom: 1px solid var(--band-line); }
+.gloryGroupHeading > div > span { color: var(--band-primary); font-size: 9px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
+.gloryGroupHeading h3 { margin: 4px 0 3px; color: var(--band-secondary); font-size: clamp(29px, 3.5vw, 42px); line-height: 1; letter-spacing: -.04em; }
+.gloryGroupHeading p { margin: 0; color: var(--band-muted); font-size: 11px; line-height: 1.5; }
+.gloryGroupHeading > strong { display: grid; width: 52px; height: 52px; flex: 0 0 52px; place-items: center; border-radius: 50%; color: #fff; background: var(--band-primary); font-size: 21px; box-shadow: 0 10px 24px color-mix(in srgb, var(--band-primary) 28%, transparent); }
+.gloryRelationshipGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.gloryRelationshipCard { min-height: 390px; }
+.gloryRelationshipCard .relationshipTop { min-height: 74px; }
+.gloryRelationshipCard .relationshipTop span { max-width: 155px; font-size: 10px; }
+.relationshipLocation { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; align-items: center; padding: 14px 20px; border-bottom: 1px solid var(--band-line); background: color-mix(in srgb, var(--band-primary) 6%, white); }
+.relationshipLocation > span { grid-column: 1 / -1; color: var(--band-primary); font-size: 8px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+.relationshipLocation > strong { color: var(--band-secondary); font-size: 16px; line-height: 1.2; }
+.relationshipLocation > small { color: var(--band-muted); font-size: 8px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
 .relationshipIdentity { padding: 20px; }
 .directionGrid span { color: var(--band-primary); font-size: 9px; font-weight: 600; letter-spacing: .11em; text-transform: uppercase; }
 .relationshipCard h3,
@@ -328,6 +347,7 @@
   .heritagePhoto { min-height: 620px; }
   .relationshipGrid,
   .directionGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .gloryRelationshipGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .historicalLayout { grid-template-columns: 1fr; }
 }
 
@@ -374,6 +394,13 @@
   .relationshipGrid,
   .directionGrid,
   .premiereGrid { grid-template-columns: 1fr; }
+  .gloryTypeSummary { grid-template-columns: 1fr; gap: 8px; margin-bottom: 34px; }
+  .gloryTypeSummary article { min-height: 72px; }
+  .gloryGroups { gap: 42px; }
+  .gloryGroupHeading { align-items: center; }
+  .gloryGroupHeading p { max-width: 250px; }
+  .gloryRelationshipGrid { grid-template-columns: 1fr; }
+  .gloryRelationshipCard { min-height: 0; }
   .historicalSection { padding: 52px 0; }
   .historicalSection .sectionHeading { margin-bottom: 18px; }
   .historicalCard { grid-template-columns: 96px minmax(0, 1fr); min-height: 184px; }
