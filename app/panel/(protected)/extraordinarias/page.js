@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import { requirePanelUser } from '@/lib/panel/auth'
+import { getExtraordinaryCreateOptions } from '@/lib/panel/extraordinary-create'
 import { getPanelExtraordinaryOutings } from '@/lib/panel/extraordinary-outings'
+import { createExtraordinaryAction } from './actions'
 import styles from '@/app/panel/panel.module.css'
 import extraStyles from './extraordinarias.module.css'
 
@@ -28,9 +30,10 @@ export default async function PanelExtraordinaryOutingsPage({ searchParams }) {
   const query = await searchParams
   const q = String(query?.q || '').trim()
   const eventStatus = ['announced', 'held', 'cancelled'].includes(query?.estado) ? query.estado : ''
-  const [user, outings] = await Promise.all([
+  const [user, outings, createOptions] = await Promise.all([
     requirePanelUser(),
     getPanelExtraordinaryOutings({ query: q, eventStatus }),
+    getExtraordinaryCreateOptions(),
   ])
   const canEdit = ['admin', 'editor'].includes(user.role)
 
@@ -40,11 +43,11 @@ export default async function PanelExtraordinaryOutingsPage({ searchParams }) {
         <div>
           <span className={styles.eyebrow}>Agenda especial</span>
           <h1>Extraordinarias</h1>
-          <p>Gestiona cada salida, su fotografía principal, cartel oficial y galería desde un único lugar.</p>
+          <p>Crea y mantiene cada salida: datos generales, horarios, música, fuentes y multimedia desde el mismo espacio editorial.</p>
         </div>
       </header>
 
-      {!canEdit ? <div className={styles.readOnlyNotice}>Puedes consultar las Extraordinarias, pero un editor debe modificar la multimedia.</div> : null}
+      {!canEdit ? <div className={styles.readOnlyNotice}>Puedes consultar las Extraordinarias, pero un editor debe realizar los cambios.</div> : null}
 
       <section className={`${styles.panelCard} ${extraStyles.measureGuide}`}>
         <div>
@@ -111,7 +114,7 @@ export default async function PanelExtraordinaryOutingsPage({ searchParams }) {
                   </div>
                   <span className={`${extraStyles.eventStatus} ${extraStyles[item.event_status] || ''}`}>{EVENT_STATUS_LABELS[item.event_status] || item.event_status}</span>
                   <span className={`${extraStyles.photoBadge} ${coverage === 3 ? extraStyles.photoBadgeReady : ''}`}>{visualSummary(item)}</span>
-                  <Link className={styles.rowLink} href={`/panel/extraordinarias/${item.id}`}>Editar <span>→</span></Link>
+                  <Link className={styles.rowLink} href={`/panel/extraordinarias/${item.id}/general`}>Editar <span>→</span></Link>
                 </article>
               )
             })}
@@ -120,6 +123,23 @@ export default async function PanelExtraordinaryOutingsPage({ searchParams }) {
           <p className={styles.emptyText}>No hay extraordinarias que coincidan con estos filtros.</p>
         )}
       </section>
+
+      {canEdit ? (
+        <section className={styles.editorSection}>
+          <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>Nueva salida</span><h2>Crear extraordinaria</h2></div><p>Se crea como borrador. Después entrarás en la ficha completa para añadir horarios, música, fuentes y multimedia.</p></div>
+          <form action={createExtraordinaryAction} className={`${styles.panelCard} ${styles.editorForm}`}>
+            <div className={styles.formGrid}>
+              <label className={styles.fieldWide}><span>Titular / título</span><input name="title" required placeholder="María Santísima de…" /></label>
+              <label><span>Fecha</span><input name="outing_date" type="date" /></label>
+              <label><span>Tipo</span><input name="outing_type" defaultValue="Procesión extraordinaria" /></label>
+              <label><span>Localidad</span><select name="municipality_id" defaultValue=""><option value="">Por documentar</option>{createOptions.municipalities.map((item) => <option value={item.id} key={item.id}>{item.name}</option>)}</select></label>
+              <label><span>Hermandad relacionada</span><select name="brotherhood_entity_id" defaultValue=""><option value="">Sin ficha relacionada</option>{createOptions.brotherhoods.map((item) => <option value={item.id} key={item.id}>{item.name}</option>)}</select></label>
+              <label className={styles.fieldWide}><span>Organizador visible</span><input name="organizer_name" placeholder="Nombre literal de Hermandad / entidad" /></label>
+            </div>
+            <div className={styles.formActions}><small>Se guardará como borrador y anunciada.</small><button className={styles.primaryButton} type="submit">Crear extraordinaria</button></div>
+          </form>
+        </section>
+      ) : null}
     </div>
   )
 }
