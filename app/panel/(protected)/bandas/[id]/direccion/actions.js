@@ -121,10 +121,14 @@ async function createPersonAgent(supabase, personName) {
     }),
     'No se pudo crear la Persona'
   )
-  assertMutation(
-    await supabase.from('agents').insert({ entity_id: agentId, agent_kind: 'person' }),
-    'No se pudo crear la ficha especializada de Persona'
-  )
+
+  const specialized = await supabase.from('agents').insert({ entity_id: agentId, agent_kind: 'person' })
+  if (specialized.error) {
+    const rollback = await supabase.from('entities').delete().eq('id', agentId).eq('entity_type', 'agent')
+    if (rollback.error) console.error('[Hilo Cofrade] No se pudo revertir una Persona incompleta', rollback.error)
+    throw new Error(`No se pudo crear la ficha especializada de Persona: ${specialized.error.message}`)
+  }
+
   return { id: agentId, name: personName }
 }
 
