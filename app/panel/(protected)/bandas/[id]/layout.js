@@ -1,32 +1,22 @@
-import Link from 'next/link'
-import styles from '@/app/panel/panel.module.css'
+import EntityWorkspaceNav from '@/components/panel/EntityWorkspaceNav'
 
 export default async function BandEditorLayout({ children, params }) {
   const { id } = await params
+  const root = `/panel/bandas/${id}`
+  const items = [
+    { href: root, label: 'General', mark: 'G', match: 'exact' },
+    { href: `${root}/multimedia`, label: 'Multimedia', mark: 'M' },
+    { href: `${root}/discografia`, label: 'Discografía', mark: 'D' },
+    { href: `/panel/fuentes?entity=${id}`, label: 'Fuentes', mark: 'F', activePath: '/panel/fuentes', tool: true },
+  ]
 
   return (
     <>
-      <div
-        style={{
-          width: 'min(1180px, calc(100% - 56px))',
-          margin: '18px auto -18px',
-          display: 'flex',
-          justifyContent: 'flex-end',
-          gap: 8,
-          flexWrap: 'wrap',
-        }}
-        aria-label="Edición de la banda"
-      >
-        <Link className={styles.secondaryButton} href={`/panel/bandas/${id}`}>
-          Ficha de banda
-        </Link>
-        <Link className={styles.secondaryButton} href={`/panel/bandas/${id}/multimedia`}>
-          Multimedia
-        </Link>
-        <Link className={styles.primaryButton} href={`/panel/bandas/${id}/discografia`}>
-          Editar discografía
-        </Link>
-      </div>
+      <EntityWorkspaceNav
+        eyebrow="Ficha de Banda"
+        description="Identidad, acompañamientos, repertorio, discografía, archivo visual y documentación."
+        items={items}
+      />
       {children}
     </>
   )
