@@ -23,6 +23,7 @@ const NAV_GROUPS = [
       { href: '/panel/pasos', label: 'Pasos', mark: 'P' },
       { href: '/panel/bandas', label: 'Bandas', mark: 'B' },
       { href: '/panel/marchas', label: 'Marchas', mark: 'Ma' },
+      { href: '/panel/extraordinarias', label: 'Extraordinarias', mark: 'Ex' },
       { href: '/panel/acontecimientos', label: 'Acontecimientos', mark: 'A' },
     ],
   },
