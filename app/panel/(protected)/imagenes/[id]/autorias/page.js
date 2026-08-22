@@ -13,6 +13,7 @@ const SAVED_MESSAGES = {
   updated: 'La autoría se ha actualizado correctamente.',
   closed: 'El periodo se ha cerrado sin borrar la Imagen ni el Agente.',
   archived: 'La autoría se ha retirado. Ambas entidades continúan existiendo.',
+  anonymous: 'La autoría desconocida se ha documentado sin crear un Agente ficticio.',
 }
 
 export default async function ImageAuthorshipPage({ params, searchParams }) {
