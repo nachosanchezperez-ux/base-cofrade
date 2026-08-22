@@ -186,7 +186,7 @@ export default function ExtraordinaryDirectory({ outings }) {
 
         <div className={styles.resultHead}>
           <div>
-            <strong>{plural(list.length, 'extraordinaria', 'extraordinarias')}</strong>
+            <strong>{plural(filtered.length, 'extraordinaria', 'extraordinarias')}</strong>
             <span>{status === 'upcoming' ? 'por celebrar' : 'ya celebradas'} · Sevilla y provincia</span>
           </div>
           {territory !== 'all' || year !== 'all' ? (
