@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import styles from './ExtraordinaryDirectory.module.css'
 
@@ -96,7 +97,7 @@ export default function ExtraordinaryDirectory({ outings }) {
 
           <div className={styles.featuredCopy}>
             <span className={styles.featuredLocation}>{featured.municipality || 'Sevilla y provincia'}</span>
-            <h2>{featured.title}</h2>
+            <h2><Link href={`/extraordinarias/${featured.slug}`}>{featured.title}</Link></h2>
             <strong className={styles.featuredContext}>{featured.brotherhoodName}</strong>
             {featured.reason ? <p>{featured.reason}</p> : null}
 
@@ -137,9 +138,14 @@ export default function ExtraordinaryDirectory({ outings }) {
               </div>
             ) : null}
 
-            <a className={styles.featuredJump} href="#calendario-extraordinarias">
-              Ver próximas fechas <span>↓</span>
-            </a>
+            <div className={styles.featuredActions}>
+              <Link className={styles.featuredGuide} href={`/extraordinarias/${featured.slug}`}>
+                Ver guía completa <span>→</span>
+              </Link>
+              <a className={styles.featuredJump} href="#calendario-extraordinarias">
+                Próximas fechas <span>↓</span>
+              </a>
+            </div>
           </div>
         </article>
       ) : null}
@@ -240,7 +246,7 @@ export default function ExtraordinaryDirectory({ outings }) {
                           <span>{outing.municipality || 'Localidad por documentar'}</span>
                           <small data-status={outing.eventStatus}>{statusLabel(outing)}</small>
                         </div>
-                        <h4>{outing.title}</h4>
+                        <h4><Link href={`/extraordinarias/${outing.slug}`}>{outing.title}</Link></h4>
                         <strong className={styles.organizer}>{outing.brotherhoodName}</strong>
                         {outing.reason ? <p>{outing.reason}</p> : null}
 
@@ -268,6 +274,9 @@ export default function ExtraordinaryDirectory({ outings }) {
                             {outing.music.length ? <span>Música confirmada</span> : null}
                           </div>
                         </div>
+                        <Link className={styles.cardDetailLink} href={`/extraordinarias/${outing.slug}`}>
+                          Ver guía <span>→</span>
+                        </Link>
                       </div>
                     </article>
                   ))}
