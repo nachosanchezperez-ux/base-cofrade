@@ -56,6 +56,28 @@ test('reconoce filtros y operaciones sobre el conjunto anterior', () => {
   )
 })
 
+test('encadena autoría y dedicatoria de una marcha sin IA', () => {
+  assert.deepEqual(
+    planFreeCompoundQuestion(
+      '¿Quién compuso Refúgiame y a quién está dedicada?'
+    )?.queries,
+    [
+      '¿Quién compuso Refúgiame',
+      'a quién está dedicada?',
+    ]
+  )
+
+  assert.deepEqual(
+    planFreeCompoundQuestion(
+      '¿De qué año es Refúgiame y cuándo se estrenó?'
+    )?.queries,
+    [
+      '¿De qué año es Refúgiame',
+      'cuándo se estrenó?',
+    ]
+  )
+})
+
 test('fusiona la consulta compuesta manteniendo el contexto del último paso', () => {
   const first = {
     kind: 'answer',
@@ -87,4 +109,28 @@ test('fusiona la consulta compuesta manteniendo el contexto del último paso', (
   assert.equal(merged.freePlan.used, true)
   assert.equal(merged.freePlan.partial, false)
   assert.equal(merged.semantic, undefined)
+})
+
+test('no oculta un dato ausente cuando otro paso sí se ha resuelto', () => {
+  const first = {
+    kind: 'answer',
+    answer: '«Refúgiame» está compuesta por Francis González Ríos.',
+    context: { entityId: 'm1', entityType: 'march', name: 'Refúgiame' },
+  }
+  const second = {
+    kind: 'not_documented',
+    answer: 'La dedicatoria de «Refúgiame» todavía no está documentada en Hilo Cofrade.',
+    context: { entityId: 'm1', entityType: 'march', name: 'Refúgiame' },
+  }
+
+  const merged = mergeFreeCompoundResponses([first, second], {
+    mode: 'sequential',
+    queries: ['¿Quién compuso Refúgiame?', '¿A quién está dedicada?'],
+  })
+
+  assert.equal(merged.kind, 'answer')
+  assert.match(merged.answer, /Francis González Ríos/)
+  assert.match(merged.answer, /todavía no está documentada/)
+  assert.equal(merged.freePlan.partial, true)
+  assert.equal(merged.context.entityType, 'march')
 })
