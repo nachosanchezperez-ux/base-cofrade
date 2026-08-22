@@ -1,7 +1,7 @@
 import JsonLd from '@/components/JsonLd'
 import RelationalEntityDirectory from '@/components/RelationalEntityDirectory'
 import { getBandsDirectory } from '@/lib/supabase/bands'
-import { absoluteUrl, breadcrumbJsonLd, pageTitle } from '@/lib/seo'
+import { breadcrumbJsonLd, collectionPageJsonLd, socialMetadata } from '@/lib/seo'
 
 export const dynamic = 'force-dynamic'
 
@@ -30,15 +30,17 @@ function logoPresentationFor(band) {
   }
 }
 
+const title = 'Bandas de Sevilla y provincia'
+const description = 'Directorio de bandas cofrades de Sevilla y su provincia: historia, acompañamientos, dirección, salidas y estrenos.'
+
 export const metadata = {
-  title: 'Bandas de Sevilla y provincia',
-  description: 'Directorio de bandas cofrades de Sevilla y su provincia: historia, acompañamientos, dirección, salidas y estrenos.',
-  alternates: { canonical: '/bandas' },
-  openGraph: {
-    title: pageTitle('Directorio de bandas'),
+  title,
+  description,
+  ...socialMetadata({
+    title: 'Directorio de bandas',
     description: 'Consulta formaciones musicales y sus relaciones documentadas con hermandades, pasos, salidas, responsables y patrimonio musical.',
-    url: '/bandas',
-  },
+    path: '/bandas',
+  }),
 }
 
 export default async function BandasPage({ searchParams }) {
@@ -70,24 +72,6 @@ export default async function BandasPage({ searchParams }) {
       keywords: [band.officialShortName, band.summary, band.linkedBrotherhood].filter(Boolean),
     }
   })
-  const collection = {
-    '@context': 'https://schema.org',
-    '@type': 'CollectionPage',
-    '@id': `${absoluteUrl('/bandas')}#collection`,
-    url: absoluteUrl('/bandas'),
-    name: 'Directorio de bandas',
-    inLanguage: 'es',
-    mainEntity: {
-      '@type': 'ItemList',
-      numberOfItems: items.length,
-      itemListElement: items.map((item, index) => ({
-        '@type': 'ListItem',
-        position: index + 1,
-        name: item.name,
-        url: absoluteUrl(item.href),
-      })),
-    },
-  }
 
   return (
     <section className="section page-top">
@@ -95,7 +79,12 @@ export default async function BandasPage({ searchParams }) {
         { name: 'Inicio', path: '/' },
         { name: 'Bandas', path: '/bandas' },
       ])} />
-      <JsonLd data={collection} />
+      <JsonLd data={collectionPageJsonLd({
+        path: '/bandas',
+        name: 'Directorio de bandas',
+        description,
+        items: items.map((item) => ({ name: item.name, path: item.href })),
+      })} />
       <div className="shell">
         <span className="eyebrow">Enciclopedia musical</span>
         <h1 className="page-title">Directorio de bandas</h1>
