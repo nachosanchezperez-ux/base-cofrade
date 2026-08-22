@@ -1,0 +1,107 @@
+.coverEditor {
+  display: grid;
+  gap: 26px;
+  overflow: hidden;
+}
+
+.coverWorkspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, .65fr);
+  gap: 28px;
+  align-items: start;
+}
+
+.coverPreviews {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 146px;
+  gap: 12px;
+  align-items: end;
+  padding: 14px;
+  border-radius: 15px;
+  background: #0f2742;
+}
+
+.coverPreviews > div {
+  display: grid;
+  gap: 8px;
+}
+
+.coverPreviews > div > span {
+  color: rgb(255 255 255 / 58%);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.coverPreview {
+  position: relative;
+  display: grid;
+  aspect-ratio: 16 / 10;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 14%);
+  border-radius: 8px;
+  color: rgb(255 255 255 / 58%);
+  background: linear-gradient(135deg, rgb(255 255 255 / 8%), transparent), #091b2e;
+  font-size: 11px;
+}
+
+.coverPreview_image { aspect-ratio: 4 / 5; max-height: 430px; justify-self: center; }
+.coverPreview_step { aspect-ratio: 16 / 9; }
+.coverPreviewMobile { aspect-ratio: 4 / 5; }
+.coverPreview img { width: 100%; height: 100%; }
+
+.coverControls {
+  display: grid;
+  gap: 18px;
+}
+
+.coverControls small { color: #68788a; font-size: 9px; }
+
+.coverRangeGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 13px;
+}
+
+.coverRangeGrid label {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 7px 10px;
+}
+
+.coverRangeGrid label > span { grid-column: 1 / -1; }
+.coverRangeGrid input { min-height: 20px; padding: 0; }
+.coverRangeGrid output { color: #123a67; font-size: 10px; font-weight: 800; }
+
+.coverHint {
+  align-self: end;
+  margin: 0;
+  padding: 12px 14px;
+  border-left: 3px solid #b71f37;
+  color: #68788a;
+  background: #f3f7fa;
+  font-size: 10px;
+  line-height: 1.55;
+}
+
+.coverMetadata {
+  padding-top: 24px;
+  border-top: 1px solid #dfe7ef;
+}
+
+.formError {
+  color: #a71930;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+@media (max-width: 760px) {
+  .coverWorkspace { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 460px) {
+  .coverPreviews { grid-template-columns: 1fr 92px; }
+  .coverRangeGrid { grid-template-columns: 1fr; }
+}
