@@ -64,10 +64,52 @@ function contextLabel(context) {
   return `${count} ${count === 1 ? nouns[0] : nouns[1]}`;
 }
 
-function AssistantAnswer({ message, onFollowUp }) {
+function AnswerListItem({ item, index }) {
+  const content = (
+    <>
+      <span>
+        <strong>{item.label}</strong>
+        {item.meta ? <small>{item.meta}</small> : null}
+      </span>
+      {item.href ? <b aria-hidden="true">→</b> : null}
+    </>
+  );
+
+  if (item.href && item.external) {
+    return (
+      <a
+        href={item.href}
+        className={styles.answerListItem}
+        key={`${item.label}-${index}`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {content}
+      </a>
+    );
+  }
+
+  if (item.href) {
+    return (
+      <Link href={item.href} className={styles.answerListItem} key={`${item.label}-${index}`}>
+        {content}
+      </Link>
+    );
+  }
+
+  return (
+    <div className={styles.answerListItem} key={`${item.label}-${index}`}>
+      {content}
+    </div>
+  );
+}
+
+function AssistantAnswer({ message, onFollowUp, compact = false }) {
   const response = message.response || {};
-  const hasEntities = (response.entities || []).length > 0;
-  const hasItems = (response.items || []).length > 0;
+  const visibleItems = compact ? (response.items || []).slice(0, 3) : (response.items || []);
+  const visibleEntities = compact ? (response.entities || []).slice(0, 3) : (response.entities || []);
+  const hasEntities = visibleEntities.length > 0;
+  const hasItems = visibleItems.length > 0;
   const isGraphPath = isGraphPathResponse(response);
 
   return (
@@ -88,32 +130,19 @@ function AssistantAnswer({ message, onFollowUp }) {
         </div>
       ) : null}
 
-      {isGraphPath ? (
+      {isGraphPath && !compact ? (
         <HiloGraphPath response={response} />
       ) : hasItems ? (
         <div className={styles.answerList}>
-          {response.items.map((item, index) => item.href ? (
-            <Link href={item.href} className={styles.answerListItem} key={`${item.label}-${index}`}>
-              <span>
-                <strong>{item.label}</strong>
-                {item.meta ? <small>{item.meta}</small> : null}
-              </span>
-              <b aria-hidden="true">→</b>
-            </Link>
-          ) : (
-            <div className={styles.answerListItem} key={`${item.label}-${index}`}>
-              <span>
-                <strong>{item.label}</strong>
-                {item.meta ? <small>{item.meta}</small> : null}
-              </span>
-            </div>
+          {visibleItems.map((item, index) => (
+            <AnswerListItem item={item} index={index} key={`${item.label}-${index}`} />
           ))}
         </div>
       ) : null}
 
-      {hasEntities && !isGraphPath ? (
+      {hasEntities && (!isGraphPath || compact) ? (
         <div className={styles.answerEntities} aria-label="Entidades relacionadas">
-          {response.entities.map((entity) => entity.href ? (
+          {visibleEntities.map((entity) => entity.href ? (
             <Link href={entity.href} key={entity.id} className={styles.entityChip}>
               <span>{entity.type}</span>
               <strong>{entity.name}</strong>
@@ -127,10 +156,10 @@ function AssistantAnswer({ message, onFollowUp }) {
         </div>
       ) : null}
 
-      <HiloEvidence items={response.evidence || []} />
-      <HiloReferences items={response.references || []} note={response.referencesNote || ''} />
+      {!compact ? <HiloEvidence items={response.evidence || []} /> : null}
+      {!compact ? <HiloReferences items={response.references || []} note={response.referencesNote || ''} /> : null}
 
-      {(response.followUps || []).length > 0 ? (
+      {!compact && (response.followUps || []).length > 0 ? (
         <div className={styles.followUps}>
           <span>También puedes preguntar</span>
           <div>
@@ -144,7 +173,7 @@ function AssistantAnswer({ message, onFollowUp }) {
   );
 }
 
-export default function HiloSearch({ fullPage = false, initialQuestion = '' }) {
+export default function HiloSearch({ fullPage = false, initialQuestion = '', homeCompact = false }) {
   const router = useRouter();
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
@@ -155,6 +184,7 @@ export default function HiloSearch({ fullPage = false, initialQuestion = '' }) {
   const [sessionReady, setSessionReady] = useState(false);
   const sequence = useRef(0);
   const initialHandled = useRef(false);
+  const compact = homeCompact && !fullPage;
 
   useEffect(() => {
     try {
@@ -312,18 +342,20 @@ export default function HiloSearch({ fullPage = false, initialQuestion = '' }) {
 
   const hasConversation = messages.length > 0;
   const activeContextLabel = contextLabel(context);
+  const visibleMessages = compact ? messages.slice(-2) : messages;
+  const showComposer = !hasConversation || !compact;
 
   return (
     <div className={`${styles.wrap} ${fullPage ? styles.fullMode : ''}`} data-hilo-section={fullPage ? 'conversation_search' : 'home_search'}>
       {hasConversation ? (
         <div className={styles.conversation} aria-live="polite">
-          {messages.map((message) => message.role === 'user' ? (
+          {visibleMessages.map((message) => message.role === 'user' ? (
             <div className={styles.userMessage} key={message.id}>
               <span>Tú</span>
               <p>{message.text}</p>
             </div>
           ) : (
-            <AssistantAnswer message={message} key={message.id} onFollowUp={ask} />
+            <AssistantAnswer message={message} key={message.id} onFollowUp={ask} compact={compact} />
           ))}
           {loading ? (
             <div className={`${styles.assistantMessage} ${styles.loadingMessage}`}>
@@ -346,27 +378,29 @@ export default function HiloSearch({ fullPage = false, initialQuestion = '' }) {
         </div>
       ) : null}
 
-      <form
-        className={`${styles.form} ${hasConversation ? styles.formAfterConversation : ''}`}
-        onSubmit={submit}
-        data-hilo-event="hilo_search"
-        data-hilo-origin={fullPage ? 'conversation_form' : 'form'}
-      >
-        <label className={styles.srOnly} htmlFor={fullPage ? 'hilo-search-full' : 'hilo-search'}>Pregunta a Hilo Cofrade</label>
-        <textarea
-          id={fullPage ? 'hilo-search-full' : 'hilo-search'}
-          rows={1}
-          value={query}
-          onChange={(event) => setQuery(event.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder={activeContextLabel ? `Sigue preguntando sobre ${activeContextLabel}…` : 'Pregunta sobre hermandades, imágenes, pasos, bandas, marchas, autores…'}
-          autoComplete="off"
-          disabled={loading}
-        />
-        <button type="submit" aria-label="Enviar pregunta" disabled={loading || !query.trim()}>
-          <span aria-hidden="true">↑</span>
-        </button>
-      </form>
+      {showComposer ? (
+        <form
+          className={`${styles.form} ${hasConversation ? styles.formAfterConversation : ''}`}
+          onSubmit={submit}
+          data-hilo-event="hilo_search"
+          data-hilo-origin={fullPage ? 'conversation_form' : 'form'}
+        >
+          <label className={styles.srOnly} htmlFor={fullPage ? 'hilo-search-full' : 'hilo-search'}>Pregunta a Hilo Cofrade</label>
+          <textarea
+            id={fullPage ? 'hilo-search-full' : 'hilo-search'}
+            rows={1}
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder={activeContextLabel ? `Sigue preguntando sobre ${activeContextLabel}…` : 'Pregunta sobre hermandades, imágenes, pasos, bandas, marchas, autores…'}
+            autoComplete="off"
+            disabled={loading}
+          />
+          <button type="submit" aria-label="Enviar pregunta" disabled={loading || !query.trim()}>
+            <span aria-hidden="true">↑</span>
+          </button>
+        </form>
+      ) : null}
 
       {!hasConversation && !query.trim() ? (
         <div className={styles.suggestions} aria-label="Preguntas sugeridas">
@@ -383,7 +417,7 @@ export default function HiloSearch({ fullPage = false, initialQuestion = '' }) {
         </div>
       ) : null}
 
-      {query.trim().length > 1 && !looksLikeQuestion(query) && (results.length > 0 || searching) ? (
+      {showComposer && query.trim().length > 1 && !looksLikeQuestion(query) && (results.length > 0 || searching) ? (
         <div className={styles.results} aria-label="Coincidencias del grafo">
           <div className={styles.resultsHead}>
             <span>{searching ? 'Buscando…' : 'Coincidencias'}</span>
@@ -428,7 +462,7 @@ export default function HiloSearch({ fullPage = false, initialQuestion = '' }) {
 
       {!fullPage ? (
         <Link className={styles.expandLink} href="/pregunta">
-          <span>Abrir conversación completa</span>
+          <span>{compact && hasConversation ? 'Seguir conversando y ver todas las fuentes' : 'Abrir conversación completa'}</span>
           <b aria-hidden="true">↗</b>
         </Link>
       ) : null}

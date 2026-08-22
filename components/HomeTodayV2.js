@@ -13,7 +13,7 @@ export default function HomeTodayV2({ today, content }) {
         <header className={styles.header}>
           <span className={styles.date}>{today}</span>
           <h2>Hoy en Hilo Cofrade</h2>
-          <p>Una selección diaria del conocimiento ya documentado, no un registro de lo último que hemos incorporado.</p>
+          <p>Una selección diaria para descubrir historias, relaciones, datos y música de la enciclopedia.</p>
         </header>
 
         {cards.length ? (

@@ -7,6 +7,17 @@ import styles from '@/app/home.module.css'
 
 const stackedNextExtraHeadStyle = { alignItems: 'flex-start', flexDirection: 'column', gap: 4 }
 
+function madridDateKey(date = new Date()) {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Europe/Madrid',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).formatToParts(date)
+  const value = (type) => parts.find((part) => part.type === type)?.value || ''
+  return `${value('year')}-${value('month')}-${value('day')}`
+}
+
 export default function HomePageV2({
   today,
   todayContent,
@@ -17,6 +28,15 @@ export default function HomePageV2({
 }) {
   const featuredExtraordinary = extraordinaryOutings[0] || null
   const followingExtraordinaryOutings = extraordinaryOutings.slice(1)
+  const featuredIsToday = featuredExtraordinary?.date === madridDateKey()
+  const featuredDateLabel = featuredIsToday
+    ? 'Hoy'
+    : featuredExtraordinary?.dateParts?.weekdayLabel || featuredExtraordinary?.dateParts?.label || ''
+  const featuredMeta = [
+    featuredExtraordinary?.municipality,
+    featuredDateLabel,
+    featuredIsToday && featuredExtraordinary?.departureTime ? `Salida · ${featuredExtraordinary.departureTime}` : '',
+  ].filter(Boolean).join(' · ')
 
   return (
     <div className={styles.home}>
@@ -33,7 +53,7 @@ export default function HomePageV2({
               <span className={styles.searchLabel}>Tira del hilo</span>
               <h2>Pregunta a Hilo Cofrade</h2>
               <p>Escribe como hablarías con otra persona. La respuesta se construye únicamente con datos y relaciones ya documentados en Hilo Cofrade.</p>
-              <HiloSearch />
+              <HiloSearch homeCompact />
             </div>
           </aside>
         </div>
@@ -66,14 +86,10 @@ export default function HomePageV2({
 
               <div className={styles.featuredExtraordinaryCopy}>
                 <div className={styles.featuredExtraordinaryIntro}>
-                  <span className={styles.eyebrow}>Próxima extraordinaria</span>
+                  <span className={styles.eyebrow}>{featuredIsToday ? 'Hoy · Extraordinaria' : 'Próxima extraordinaria'}</span>
                   <h2 id="proxima-extraordinaria-title">{featuredExtraordinary.title}</h2>
                   <div className={styles.featuredExtraordinaryMeta}>
-                    <strong>
-                      {[featuredExtraordinary.municipality, featuredExtraordinary.dateParts.weekdayLabel || featuredExtraordinary.dateParts.label]
-                        .filter(Boolean)
-                        .join(' · ')}
-                    </strong>
+                    <strong>{featuredMeta}</strong>
                   </div>
                   {featuredExtraordinary.reason ? <p>{featuredExtraordinary.reason}</p> : null}
                 </div>
@@ -88,6 +104,7 @@ export default function HomePageV2({
                             <strong>{item.time}</strong>
                             <span>
                               <b>{item.label}</b>
+                              {item.dayLabel ? <small>{item.dayLabel}</small> : null}
                               {item.place ? <small>{item.place}</small> : null}
                               {item.label === 'Misa estacional' && featuredBriefing.liturgicalMusic[0]?.name
                                 ? <small>Música · {featuredBriefing.liturgicalMusic[0].name}</small>
@@ -126,6 +143,29 @@ export default function HomePageV2({
                 </div>
               </div>
             </article>
+
+            {followingExtraordinaryOutings.length ? (
+              <div className={styles.nextExtraSection} id="siguientes-extraordinarias">
+                <div className={styles.nextExtraHead} style={stackedNextExtraHeadStyle}>
+                  <span className={styles.eyebrow}>Después</span>
+                  <h2>Las siguientes extraordinarias</h2>
+                </div>
+                <div className={styles.nextExtraList}>
+                  {followingExtraordinaryOutings.map((outing) => (
+                    <article className={styles.nextExtraRow} key={outing.id}>
+                      <time dateTime={outing.date}>
+                        <strong>{outing.dateParts.day}</strong>
+                        <span>{outing.dateParts.month}</span>
+                      </time>
+                      <div>
+                        <h3>{outing.title}</h3>
+                        <p>{[outing.municipality, outing.reason].filter(Boolean).join(' · ')}</p>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </div>
+            ) : null}
           </div>
         </section>
       ) : null}
@@ -162,31 +202,6 @@ export default function HomePageV2({
                   </div>
                   <span className={styles.threadCta}>{thread.cta}</span>
                 </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-      ) : null}
-
-      {followingExtraordinaryOutings.length ? (
-        <section className={`${styles.section} ${styles.nextExtraSection}`} id="siguientes-extraordinarias">
-          <div className="shell">
-            <div className={styles.nextExtraHead} style={stackedNextExtraHeadStyle}>
-              <span className={styles.eyebrow}>Después</span>
-              <h2>Las siguientes extraordinarias</h2>
-            </div>
-            <div className={styles.nextExtraList}>
-              {followingExtraordinaryOutings.map((outing) => (
-                <article className={styles.nextExtraRow} key={outing.id}>
-                  <time dateTime={outing.date}>
-                    <strong>{outing.dateParts.day}</strong>
-                    <span>{outing.dateParts.month}</span>
-                  </time>
-                  <div>
-                    <h3>{outing.title}</h3>
-                    <p>{[outing.municipality, outing.reason].filter(Boolean).join(' · ')}</p>
-                  </div>
-                </article>
               ))}
             </div>
           </div>
