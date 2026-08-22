@@ -100,7 +100,10 @@ export default function ExtraordinaryDirectory({ outings }) {
             <strong className={styles.featuredContext}>{featured.brotherhoodName}</strong>
             {featured.reason ? <p>{featured.reason}</p> : null}
 
-            <div className={`${styles.featuredEssentials} ${featured.returnTime ? styles.featuredEssentialsWithEntry : ''}`}>
+            <div
+              className={styles.featuredEssentials}
+              style={featured.returnTime ? { gridTemplateColumns: '1.35fr .65fr .65fr' } : undefined}
+            >
               <div>
                 <span>Cuándo</span>
                 <strong>{featured.dateParts.weekdayLabel || featured.dateParts.label}</strong>
@@ -239,7 +242,7 @@ export default function ExtraordinaryDirectory({ outings }) {
                         {outing.reason ? <p>{outing.reason}</p> : null}
 
                         {outing.music.length ? (
-                          <div className={styles.cardMusic}>
+                          <div className={styles.featuredMusic}>
                             <span>{outing.music.length === 1 ? 'Banda' : 'Bandas'}</span>
                             <div>
                               {outing.music.map((band) => (
