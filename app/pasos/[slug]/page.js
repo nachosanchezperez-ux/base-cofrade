@@ -158,7 +158,14 @@ export default async function PasoDetailPage({params}){
           photoAlt: coverMedia?.alt || `Fotografía de ${paso.nombre}`,
           credit: coverMedia?.credit || '',
           initials: paso.nombre.slice(0, 2).toUpperCase(),
-          focusPosition: getStepPhotoFraming(paso.slug).hero,
+          width: coverMedia?.width,
+          height: coverMedia?.height,
+          focusX: coverMedia?.focusX,
+          focusY: coverMedia?.focusY,
+          mobileFocusX: coverMedia?.mobileFocusX,
+          mobileFocusY: coverMedia?.mobileFocusY,
+          fitMode: coverMedia?.fitMode,
+          focusPosition: coverMedia?.focusPosition || getStepPhotoFraming(paso.slug).hero,
         }}
       />
 

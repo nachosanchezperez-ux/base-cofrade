@@ -1,0 +1,9 @@
+.focusedPhoto {
+  object-position: var(--hero-desktop-focus, center center);
+}
+
+@media (max-width: 620px) {
+  .focusedPhoto {
+    object-position: var(--hero-mobile-focus, var(--hero-desktop-focus, center center));
+  }
+}
