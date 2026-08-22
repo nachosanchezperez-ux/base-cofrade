@@ -31,6 +31,18 @@
   padding: 26px;
 }
 
+/*
+   Cuando hay varias variantes, la altura de la tarjeta la marca a menudo la ficha
+   de texto. Si la ilustración se apoya siempre abajo, todo ese sobrante queda arriba
+   y genera un vacío visual innecesario. En tablet y escritorio la figura se centra
+   verticalmente dentro de su panel, manteniendo tamaño, escala y encuadre.
+*/
+@media (min-width: 621px) {
+  .habit-grid > .brotherhood-habit:not(:only-child) .habit-visual:has(.habit-image) {
+    align-items: center;
+  }
+}
+
 /* Una sola variante: conserva la presentación amplia ya consolidada. */
 @media (min-width: 901px) {
   .habit-grid > .brotherhood-habit:only-child {
