@@ -38,3 +38,23 @@ test('encode y decode mantienen el contrato saneado', () => {
   const encoded = encodeTiraSession({ messages: [{ role: 'user', text: 'Hola' }] })
   assert.equal(decodeTiraSession(encoded).messages[0].text, 'Hola')
 })
+
+test('elimina enlaces peligrosos de una sesión manipulada', () => {
+  const session = sanitizeTiraSession({
+    messages: [{
+      role: 'assistant',
+      response: {
+        kind: 'answer',
+        answer: 'Resultado',
+        entities: [{ id: 'e1', entityType: 'band', type: 'Banda', name: 'Banda', href: 'javascript:alert(1)' }],
+        items: [{ label: 'Ficha', href: 'javascript:alert(1)' }],
+        references: [{ id: 's1', name: 'Fuente', url: 'javascript:alert(1)' }],
+      },
+    }],
+  })
+
+  const response = session.messages[0].response
+  assert.equal(response.entities[0].href, '')
+  assert.equal(response.items[0].href, '')
+  assert.equal(response.references[0].url, '')
+})
