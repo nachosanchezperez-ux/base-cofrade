@@ -170,6 +170,13 @@ export default async function ImagenPage({ params }) {
           photoAlt: coverMedia?.alt || `Fotografía de ${imagen.nombre}`,
           credit: coverMedia?.credit || '',
           initials: imagen.iniciales,
+          width: coverMedia?.width,
+          height: coverMedia?.height,
+          focusX: coverMedia?.focusX,
+          focusY: coverMedia?.focusY,
+          mobileFocusX: coverMedia?.mobileFocusX,
+          mobileFocusY: coverMedia?.mobileFocusY,
+          fitMode: coverMedia?.fitMode,
         }}
       />
 
