@@ -1,7 +1,6 @@
 /* Presentación responsive de la indumentaria nazarena.
-   Las ilustraciones incluyen aire transparente en el lienzo original: la capa visual
-   permite que ese lienzo desborde y se recorte, dando protagonismo al nazareno
-   sin modificar los archivos fuente ni perder detalle. */
+   La sección prioriza la lectura del hábito completo: una ilustración no debe
+   quedar recortada para conservar dos tarjetas en paralelo. */
 
 .habit-visual {
   position: relative;
@@ -32,46 +31,8 @@
   padding: 26px;
 }
 
+/* Una sola variante: conserva la presentación amplia ya consolidada. */
 @media (min-width: 901px) {
-  /* En fichas con varias variantes, la columna visual gana algo de ancho.
-     Así las siluetas anchas (capas, cirios o colas) respiran sin obligar a
-     reducir también las ilustraciones más estrechas. */
-  .habit-grid > .brotherhood-habit:not(:only-child) {
-    grid-template-columns: minmax(230px, .90fr) minmax(0, 1.10fr);
-  }
-
-  .habit-grid > .brotherhood-habit:not(:only-child) .habit-visual {
-    min-height: 450px;
-  }
-
-  /* Escala óptica común para variantes múltiples. Se conserva el ancho intrínseco
-     del archivo y una altura moderada para mantener presencia sin pegar la figura
-     a los límites de la columna. */
-  .habit-grid > .brotherhood-habit:not(:only-child) .habit-image {
-    width: auto;
-    height: 510px;
-    max-width: none;
-    object-fit: contain;
-    object-position: center bottom;
-  }
-
-  /* En fichas con varias variantes, todos los bloques de texto arrancan arriba
-     y reservan la misma altura de título para mantener el ritmo entre tarjetas. */
-  .habit-grid > .brotherhood-habit:not(:only-child) .habit-copy {
-    align-self: stretch;
-    padding: 30px;
-  }
-
-  .habit-grid > .brotherhood-habit:not(:only-child) .habit-copy h3 {
-    min-height: 72px;
-    margin-bottom: 20px;
-  }
-
-  .habit-grid > .brotherhood-habit:not(:only-child) dl div {
-    grid-template-columns: 104px minmax(0, 1fr);
-    gap: 14px;
-  }
-
   .habit-grid > .brotherhood-habit:only-child {
     grid-column: 1 / -1;
     grid-template-columns: minmax(300px, .82fr) minmax(0, 1.18fr);
@@ -95,6 +56,87 @@
   .habit-grid > .brotherhood-habit:only-child dl div {
     grid-template-columns: 118px minmax(0, 1fr);
     gap: 22px;
+  }
+}
+
+/*
+   Varias variantes en pantallas medias y portátiles.
+   Éste era el punto conflictivo: con dos tarjetas en paralelo cada tarjeta quedaba
+   demasiado estrecha para una ilustración vertical 2:3 con capa o cirio. En este
+   rango se muestran en una sola columna, manteniendo imagen y ficha lado a lado.
+*/
+@media (min-width: 901px) and (max-width: 1180px) {
+  .habit-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .habit-grid > .brotherhood-habit:not(:only-child) {
+    grid-template-columns: minmax(320px, .82fr) minmax(0, 1.18fr);
+  }
+
+  .habit-grid > .brotherhood-habit:not(:only-child) .habit-visual {
+    min-height: 500px;
+  }
+
+  .habit-grid > .brotherhood-habit:not(:only-child) .habit-image {
+    width: auto;
+    height: min(510px, 46vw);
+    max-height: 510px;
+    max-width: none;
+    object-fit: contain;
+    object-position: center bottom;
+  }
+
+  .habit-grid > .brotherhood-habit:not(:only-child) .habit-copy {
+    align-self: stretch;
+    padding: 32px 36px;
+  }
+
+  .habit-grid > .brotherhood-habit:not(:only-child) .habit-copy h3 {
+    min-height: 72px;
+    margin-bottom: 20px;
+  }
+
+  .habit-grid > .brotherhood-habit:not(:only-child) dl div {
+    grid-template-columns: 112px minmax(0, 1fr);
+    gap: 18px;
+  }
+}
+
+/*
+   Escritorios realmente anchos: caben dos variantes en paralelo. La imagen baja
+   de escala porque el ancho máximo de la shell limita cada tarjeta a ~570 px.
+*/
+@media (min-width: 1181px) {
+  .habit-grid > .brotherhood-habit:not(:only-child) {
+    grid-template-columns: minmax(230px, .90fr) minmax(0, 1.10fr);
+  }
+
+  .habit-grid > .brotherhood-habit:not(:only-child) .habit-visual {
+    min-height: 430px;
+  }
+
+  .habit-grid > .brotherhood-habit:not(:only-child) .habit-image {
+    width: auto;
+    height: 380px;
+    max-width: none;
+    object-fit: contain;
+    object-position: center bottom;
+  }
+
+  .habit-grid > .brotherhood-habit:not(:only-child) .habit-copy {
+    align-self: stretch;
+    padding: 28px;
+  }
+
+  .habit-grid > .brotherhood-habit:not(:only-child) .habit-copy h3 {
+    min-height: 72px;
+    margin-bottom: 20px;
+  }
+
+  .habit-grid > .brotherhood-habit:not(:only-child) dl div {
+    grid-template-columns: 96px minmax(0, 1fr);
+    gap: 12px;
   }
 }
 
