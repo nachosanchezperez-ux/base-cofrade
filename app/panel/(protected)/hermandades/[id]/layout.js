@@ -9,19 +9,19 @@ export default async function BrotherhoodEditorLayout({ children, params }) {
       <div className={styles.pageWrap} style={{ paddingBottom: 0 }}>
         <section
           className={styles.panelCard}
-          style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 18 }}
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 18, flexWrap: 'wrap' }}
         >
           <div>
-            <span className={styles.eyebrow}>Relaciones de conocimiento</span>
-            <strong style={{ display: 'block', marginTop: 5 }}>Imágenes y Pasos vinculados a la Hermandad</strong>
+            <span className={styles.eyebrow}>Ficha conectada</span>
+            <strong style={{ display: 'block', marginTop: 5 }}>Titulares, Pasos, Hábito, jornada, multimedia y documentación</strong>
           </div>
-          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
-            <Link className={styles.secondaryButton} href={`/panel/hermandades/${id}/titulares`}>
-              Imágenes y titulares
-            </Link>
-            <Link className={styles.primaryButton} href={`/panel/hermandades/${id}/pasos`}>
-              Añadir Paso
-            </Link>
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+            <Link className={styles.secondaryButton} href={`/panel/hermandades/${id}/titulares`}>Titulares</Link>
+            <Link className={styles.secondaryButton} href={`/panel/hermandades/${id}/pasos`}>Pasos</Link>
+            <Link className={styles.secondaryButton} href={`/panel/hermandades/${id}/habito`}>Hábito</Link>
+            <Link className={styles.secondaryButton} href={`/panel/hermandades/${id}/jornada`}>Datos de jornada</Link>
+            <Link className={styles.secondaryButton} href={`/panel/multimedia?entity=${id}`}>Multimedia</Link>
+            <Link className={styles.primaryButton} href={`/panel/fuentes?entity=${id}`}>Fuentes</Link>
           </div>
         </section>
       </div>
