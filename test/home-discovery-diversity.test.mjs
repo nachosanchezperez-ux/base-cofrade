@@ -42,3 +42,25 @@ test('rellena con el mismo universo si no existen alternativas suficientes', () 
     ['a', 'c', 'b']
   )
 })
+
+test('prefiere relaciones distintas cuando existen alternativas recientes', () => {
+  const candidates = [
+    { id: 'gran-poder-capataces', activityKind: 'step_personnel' },
+    { id: 'pastora-capataces', activityKind: 'step_personnel' },
+    { id: 'cigarreras-capataces', activityKind: 'step_personnel' },
+    { id: 'baratillo-musica', activityKind: 'musical_heritage' },
+    { id: 'cena-titulares', activityKind: 'titularity' },
+  ]
+  const families = new Map([
+    ['gran-poder-capataces', 'brotherhood:gran-poder'],
+    ['pastora-capataces', 'brotherhood:pastora'],
+    ['cigarreras-capataces', 'brotherhood:cigarreras'],
+    ['baratillo-musica', 'brotherhood:baratillo'],
+    ['cena-titulares', 'brotherhood:cena'],
+  ])
+
+  assert.deepEqual(
+    selectDiverseHomeThreads(candidates, families, 3).map((item) => item.id),
+    ['gran-poder-capataces', 'baratillo-musica', 'cena-titulares']
+  )
+})
