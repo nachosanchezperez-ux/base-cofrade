@@ -57,6 +57,9 @@ export default async function HomeProgrammingPage({ searchParams }) {
   const ephemeris = data.overrideByType.get('ephemeris') || null
   const march = data.overrideByType.get('march') || null
   const editorial = data.editorialOverride
+  const requestedContent = String(query?.content || '')
+  const requestedContentExists = data.editorialOptions.some((item) => item.id === requestedContent)
+  const editorialContentDefault = editorial?.editorial_content_id || (requestedContentExists ? requestedContent : '')
 
   return (
     <div className={styles.pageWrap}>
@@ -66,6 +69,7 @@ export default async function HomeProgrammingPage({ searchParams }) {
       </header>
 
       {savedMessage ? <div className={styles.savedNotice} role="status">{savedMessage}</div> : null}
+      {requestedContentExists && !editorial?.editorial_content_id ? <div className={styles.savedNotice} role="status">Contenido del Banco preseleccionado. Guarda el bloque «Contenido editorial» para programarlo en {data.selectedDate}.</div> : null}
       {data.editorialOverrideConflict ? <div className={styles.readOnlyNotice}>Hay más de un override editorial antiguo activo para esta fecha. Al guardar el bloque «Contenido editorial», el Panel conservará uno solo y archivará los demás.</div> : null}
       {!canEdit ? <div className={styles.readOnlyNotice}>Tu perfil tiene acceso de consulta.</div> : null}
       <HomeDateFilter selectedDate={data.selectedDate} />
@@ -88,7 +92,7 @@ export default async function HomeProgrammingPage({ searchParams }) {
 
           <OverrideShell title="Contenido editorial" eyebrow={editorial?.status === 'published' ? 'Programación manual' : 'Modo automático'} hint="La Home tiene un único slot editorial: muestra un Dato Cofrade o una Curiosidad, nunca ambos a la vez." item={editorial} data={data} canEdit={canEdit} order={1} saveAction={saveEditorialDailyOverrideAction}>
             <div className={styles.formGrid}>
-              <EntityPicker className={styles.fieldWide} name="editorial_content_id" items={data.editorialOptions} label="Contenido del Banco (recomendado)" emptyLabel="Sin contenido del Banco · usar modo manual" required={false} defaultValue={editorial?.editorial_content_id || ''} />
+              <EntityPicker className={styles.fieldWide} name="editorial_content_id" items={data.editorialOptions} label="Contenido del Banco (recomendado)" emptyLabel="Sin contenido del Banco · usar modo manual" required={false} defaultValue={editorialContentDefault} />
               <label><span>Tipo manual</span><select name="content_type" defaultValue={editorial?.content_type || 'curiosity'}><option value="fact">Dato Cofrade</option><option value="curiosity">Curiosidad</option></select></label>
               <EntityPicker className={styles.fieldWide} name="entity_id" items={data.entityOptions} label="Entidad relacionada (solo modo manual)" emptyLabel="Sin entidad concreta" required={false} defaultValue={editorial?.entity_id || ''} />
               <label className={styles.fieldWide}><span>Título manual</span><input name="title" defaultValue={editorial?.title || ''} placeholder="Solo si no seleccionas contenido del Banco" /></label>
