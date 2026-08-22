@@ -5,6 +5,7 @@ import JsonLd from '@/components/JsonLd'
 import SourcesBlock from '@/components/SourcesBlock'
 import OfficialLinks from '@/components/OfficialLinks'
 import RelationalThread from '@/components/RelationalThread'
+import RelationalEntityHero from '@/components/RelationalEntityHero'
 import BandDiscographySection from '@/components/bands/BandDiscographySection'
 import { getBandBySlug, youtubeEmbedUrl } from '@/lib/supabase/bands'
 import { getBandDiscography } from '@/lib/supabase/bandDiscography'
@@ -215,6 +216,9 @@ export default async function BandDetailPage({ params }) {
         '--bc-red': accentColor,
         '--bc-blue': band.secondaryColor,
         '--bc-dark': band.secondaryColor,
+        '--brotherhood-primary': band.primaryColor,
+        '--brotherhood-secondary': accentColor,
+        '--brotherhood-dark': band.secondaryColor,
       }}
     >
       <JsonLd data={breadcrumbJsonLd([
@@ -223,25 +227,38 @@ export default async function BandDetailPage({ params }) {
         { name: band.popularName, path: `/bandas/${band.slug}` },
       ])} />
       <JsonLd data={jsonLd} />
-      <section className={styles.bandHero}>
-        <div className={`shell ${styles.heroShell}`}>
-          <nav className={`brotherhood-breadcrumb ${styles.bandBreadcrumb}`} aria-label="Migas de pan">
-            <span className="breadcrumb-accent" />
-            <Link href="/bandas">Bandas</Link>
-            <span className="breadcrumb-arrow">→</span>
-            <strong>{band.popularName}</strong>
-          </nav>
-          <div className={styles.heroGrid}>
-            <div className={styles.heroCopy}>
-              <h1>{band.popularName}</h1>
-              <p className={styles.officialName}>{band.officialName}</p>
-            </div>
-            <div className={styles.identityBlock}>
-              {band.logoPath ? <Image src={band.logoPath} alt={`Logotipo de ${band.popularName}`} width={150} height={225} priority sizes="150px" /> : <strong>{band.popularName.slice(0, 2).toUpperCase()}</strong>}
-            </div>
-          </div>
-        </div>
-      </section>
+
+      <RelationalEntityHero
+        variant="band"
+        entityType="Banda"
+        title={band.popularName}
+        subtitle={band.officialName}
+        breadcrumbItems={[
+          { label: 'Bandas', href: '/bandas' },
+          { label: band.popularName },
+        ]}
+        badges={[band.type, band.municipality]}
+        relation={band.linkedBrotherhoodSlug ? {
+          label: band.linkedBrotherhoodRelationType === 'associated_with_brotherhood'
+            ? 'Hermandad asociada'
+            : 'Vínculo institucional',
+          name: band.linkedBrotherhood,
+          href: `/hermandades/${band.linkedBrotherhoodSlug}`,
+        } : null}
+        facts={[
+          { label: 'Formación', value: band.type },
+          { label: 'Localidad', value: band.municipality },
+          { label: 'Fundación', value: band.foundation || '' },
+        ]}
+        media={{
+          photoSrc: band.heroImagePath,
+          photoAlt: band.heroImageAlt || `Fotografía de ${band.popularName}`,
+          credit: band.heroImageCredit,
+          crestSrc: band.logoPath,
+          crestAlt: `Logotipo de ${band.popularName}`,
+          initials: band.popularName.slice(0, 2).toUpperCase(),
+        }}
+      />
 
       <nav className={`section-nav brotherhood-nav ${styles.sectionNav}`} aria-label="Secciones de la ficha">
         <div className="shell brotherhood-nav-shell">
@@ -265,17 +282,7 @@ export default async function BandDetailPage({ params }) {
 
       <section className={`${styles.contentSection} ${styles.overviewSection}`} id="resumen">
         <div className="shell">
-          <div className={styles.overviewGrid}>
-            {band.heroImagePath ? (
-              <figure className={styles.featurePhoto}>
-                <div><Image src={band.heroImagePath} alt={band.heroImageAlt || `Fotografía de ${band.popularName}`} fill sizes="(max-width: 900px) calc(100vw - 32px), 52vw" /></div>
-                <figcaption>
-                  <span>Formación</span>
-                  <strong>{band.type}</strong>
-                  {band.heroImageCredit ? <small>{band.heroImageCredit}</small> : null}
-                </figcaption>
-              </figure>
-            ) : null}
+          <div className={styles.overviewGrid} style={{ gridTemplateColumns: '1fr' }}>
             <div className={styles.overviewCopy}>
               <div className={styles.sectionHeading}>
                 <h2>{band.popularName}, de un vistazo</h2>
