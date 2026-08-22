@@ -1,6 +1,6 @@
 'use server'
 
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, updateTag } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
@@ -44,6 +44,7 @@ async function requireEditorial(supabase, id) {
 }
 
 async function refreshHome() {
+  updateTag('home-public')
   revalidatePath('/panel')
   revalidatePath('/panel/hoy')
   revalidatePath('/panel/hoy/programacion')

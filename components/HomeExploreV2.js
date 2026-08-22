@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import styles from './HomeExploreV2.module.css'
 
@@ -16,6 +17,39 @@ const marks = {
   band: 'B',
 }
 
+function isSvg(path = '') {
+  return String(path).toLowerCase().endsWith('.svg')
+}
+
+function DirectoryVisual({ item }) {
+  const spotlight = item.spotlight
+  const visual = spotlight?.visual
+  if (!visual?.path) return null
+  const photo = visual.kind === 'photo'
+
+  return (
+    <div className={`${styles.visual} ${photo ? styles.visualPhoto : styles.visualIdentity}`}>
+      <Image
+        src={visual.path}
+        alt={visual.alt || ''}
+        fill
+        sizes="(max-width: 859px) calc(100vw - 36px), 360px"
+        className={photo ? styles.visualPhotoImage : styles.visualIdentityImage}
+        unoptimized={isSvg(visual.path)}
+      />
+      <div className={styles.visualTopline}>
+        <span className={styles.mark} aria-hidden="true">{marks[item.key] || '·'}</span>
+        <span className={styles.count}>{countLabel(item)}</span>
+      </div>
+      <div className={styles.visualCaption}>
+        <span>Ahora en el hilo</span>
+        <strong>{spotlight.name}</strong>
+        {visual.kind === 'context-crest' && visual.contextName ? <small>{visual.contextName}</small> : null}
+      </div>
+    </div>
+  )
+}
+
 export default function HomeExploreV2({ stats }) {
   const directories = stats?.directories || []
   const graph = stats?.graph || []
@@ -31,14 +65,19 @@ export default function HomeExploreV2({ stats }) {
 
         <div className={styles.grid}>
           {directories.map((item) => (
-            <Link className={styles.card} href={item.href} key={item.key}>
-              <div className={styles.cardTop}>
-                <span className={styles.mark} aria-hidden="true">{marks[item.key] || '·'}</span>
-                <span className={styles.count}>{countLabel(item)}</span>
+            <Link className={`${styles.card} ${item.spotlight?.visual?.path ? styles.cardVisual : ''}`} href={item.href} key={item.key}>
+              <DirectoryVisual item={item} />
+              {!item.spotlight?.visual?.path ? (
+                <div className={styles.cardTop}>
+                  <span className={styles.mark} aria-hidden="true">{marks[item.key] || '·'}</span>
+                  <span className={styles.count}>{countLabel(item)}</span>
+                </div>
+              ) : null}
+              <div className={styles.cardBody}>
+                <h3>{item.label}</h3>
+                <p>{item.detail}</p>
+                <span className={styles.cta}>Explorar {item.label.toLowerCase()} →</span>
               </div>
-              <h3>{item.label}</h3>
-              <p>{item.detail}</p>
-              <span className={styles.cta}>Explorar {item.label.toLowerCase()} →</span>
             </Link>
           ))}
         </div>

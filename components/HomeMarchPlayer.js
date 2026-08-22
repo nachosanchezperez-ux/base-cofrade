@@ -8,16 +8,17 @@ function spotifyTrackIdFromUrl(url = '') {
   return match?.[1] || '';
 }
 
-export default function HomeMarchPlayer({ videoId, listenUrl, title }) {
+export default function HomeMarchPlayer({ videoId, listenUrl, title, variant = 'default' }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const spotifyTrackId = spotifyTrackIdFromUrl(listenUrl);
   const canEmbed = Boolean(videoId || spotifyTrackId);
+  const rootClass = `${styles.root} ${variant === 'inverse' ? styles.inverse : ''}`;
 
   if (!videoId && !listenUrl) return null;
 
   if (!canEmbed) {
     return (
-      <div className={styles.root}>
+      <div className={rootClass}>
         <a className={styles.listenButton} href={listenUrl} target="_blank" rel="noopener noreferrer">
           Escuchar en la plataforma ↗
         </a>
@@ -27,7 +28,7 @@ export default function HomeMarchPlayer({ videoId, listenUrl, title }) {
 
   if (!isPlaying) {
     return (
-      <div className={styles.root}>
+      <div className={rootClass}>
         <button className={styles.listenButton} type="button" onClick={() => setIsPlaying(true)}>
           <span aria-hidden="true">▶</span>
           Escuchar aquí
@@ -41,7 +42,7 @@ export default function HomeMarchPlayer({ videoId, listenUrl, title }) {
     : `https://open.spotify.com/embed/track/${encodeURIComponent(spotifyTrackId)}?utm_source=generator`;
 
   return (
-    <div className={`${styles.root} ${styles.playing}`}>
+    <div className={`${rootClass} ${styles.playing}`}>
       <div className={`${styles.playerFrame} ${spotifyTrackId && !videoId ? styles.spotifyFrame : ''}`}>
         <iframe
           src={embedUrl}

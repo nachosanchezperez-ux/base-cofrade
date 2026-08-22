@@ -3,7 +3,9 @@ import Link from 'next/link'
 import HiloSearch from '@/components/HiloSearch'
 import HomeTodayV2 from '@/components/HomeTodayV2'
 import HomeExploreV2 from '@/components/HomeExploreV2'
+import { getExtraordinaryLiveState } from '@/lib/home-live-status'
 import styles from '@/app/home.module.css'
+import liveStyles from './HomeExtraordinaryLive.module.css'
 
 const stackedNextExtraHeadStyle = { alignItems: 'flex-start', flexDirection: 'column', gap: 4 }
 const heroThread = ['Hermandades', 'Imágenes', 'Pasos', 'Bandas', 'Marchas', 'Autores']
@@ -30,14 +32,30 @@ export default function HomePageV2({
   const featuredExtraordinary = extraordinaryOutings[0] || null
   const followingExtraordinaryOutings = extraordinaryOutings.slice(1)
   const featuredIsToday = featuredExtraordinary?.date === madridDateKey()
-  const featuredDateLabel = featuredIsToday
-    ? 'Hoy'
-    : featuredExtraordinary?.dateParts?.weekdayLabel || featuredExtraordinary?.dateParts?.label || ''
+  const liveState = featuredExtraordinary
+    ? getExtraordinaryLiveState(featuredExtraordinary.date, featuredBriefing.schedule)
+    : { state: 'upcoming', eyebrow: 'Próxima extraordinaria', nextId: '', pastIds: [] }
+  const nextScheduleItem = liveState.nextId
+    ? featuredBriefing.schedule.find((item) => item.id === liveState.nextId) || null
+    : null
+  const featuredDateLabel = liveState.state === 'live'
+    ? 'En curso'
+    : liveState.state === 'done'
+      ? 'Celebrada hoy'
+      : featuredIsToday
+        ? 'Hoy'
+        : featuredExtraordinary?.dateParts?.weekdayLabel || featuredExtraordinary?.dateParts?.label || ''
+  const featuredTimingLabel = nextScheduleItem?.time
+    ? `${liveState.state === 'live' ? 'Siguiente' : 'Comienza'} · ${nextScheduleItem.time}`
+    : featuredIsToday && featuredExtraordinary?.departureTime
+      ? `Salida · ${featuredExtraordinary.departureTime}`
+      : ''
   const featuredMeta = [
     featuredExtraordinary?.municipality,
     featuredDateLabel,
-    featuredIsToday && featuredExtraordinary?.departureTime ? `Salida · ${featuredExtraordinary.departureTime}` : '',
+    featuredTimingLabel,
   ].filter(Boolean).join(' · ')
+  const pastScheduleIds = new Set(liveState.pastIds || [])
 
   return (
     <div className={styles.home}>
@@ -75,7 +93,7 @@ export default function HomePageV2({
           aria-labelledby="proxima-extraordinaria-title"
         >
           <div className="shell">
-            <article className={styles.featuredExtraordinaryCard}>
+            <article className={`${styles.featuredExtraordinaryCard} ${liveState.state === 'live' ? liveStyles.featuredExtraordinaryLive : ''}`}>
               {featuredExtraordinary.heroImagePath ? (
                 <figure className={styles.featuredExtraordinaryMedia}>
                   <div className={styles.featuredExtraordinaryImageFrame}>
@@ -86,6 +104,9 @@ export default function HomePageV2({
                       sizes="(max-width: 859px) calc(100vw - 32px), 33vw"
                       priority
                     />
+                    {liveState.state === 'live' ? (
+                      <span className={liveStyles.liveImageBadge}><i aria-hidden="true" /> En curso</span>
+                    ) : null}
                   </div>
                   {featuredExtraordinary.heroImageCredit ? (
                     <figcaption>{featuredExtraordinary.heroImageCredit}</figcaption>
@@ -95,7 +116,7 @@ export default function HomePageV2({
 
               <div className={styles.featuredExtraordinaryCopy}>
                 <div className={styles.featuredExtraordinaryIntro}>
-                  <span className={styles.eyebrow}>{featuredIsToday ? 'Hoy · Extraordinaria' : 'Próxima extraordinaria'}</span>
+                  <span className={`${styles.eyebrow} ${liveState.state === 'live' ? liveStyles.liveEyebrow : ''}`}>{liveState.eyebrow}</span>
                   <h2 id="proxima-extraordinaria-title">{featuredExtraordinary.title}</h2>
                   <div className={styles.featuredExtraordinaryMeta}>
                     <strong>{featuredMeta}</strong>
@@ -108,19 +129,29 @@ export default function HomePageV2({
                     <section className={styles.briefingBlock} aria-labelledby="briefing-horarios">
                       <span className={styles.briefingLabel} id="briefing-horarios">Horarios</span>
                       <div className={styles.briefingRows}>
-                        {featuredBriefing.schedule.map((item) => (
-                          <div className={styles.briefingRow} key={item.id}>
-                            <strong>{item.time}</strong>
-                            <span>
-                              <b>{item.label}</b>
-                              {item.dayLabel ? <small>{item.dayLabel}</small> : null}
-                              {item.place ? <small>{item.place}</small> : null}
-                              {item.label === 'Misa estacional' && featuredBriefing.liturgicalMusic[0]?.name
-                                ? <small>Música · {featuredBriefing.liturgicalMusic[0].name}</small>
-                                : null}
-                            </span>
-                          </div>
-                        ))}
+                        {featuredBriefing.schedule.map((item) => {
+                          const isNext = item.id === liveState.nextId
+                          const isPast = pastScheduleIds.has(item.id)
+                          return (
+                            <div
+                              className={`${styles.briefingRow} ${isNext ? liveStyles.briefingRowNext : ''} ${isPast ? liveStyles.briefingRowPast : ''}`}
+                              key={item.id}
+                            >
+                              <strong>{item.time}</strong>
+                              <span>
+                                <span className={liveStyles.briefingTitleLine}>
+                                  <b>{item.label}</b>
+                                  {isNext ? <em className={liveStyles.briefingStatus}>{liveState.state === 'live' ? 'Siguiente' : 'Primer hito'}</em> : null}
+                                </span>
+                                {item.dayLabel ? <small>{item.dayLabel}</small> : null}
+                                {item.place ? <small>{item.place}</small> : null}
+                                {item.label === 'Misa estacional' && featuredBriefing.liturgicalMusic[0]?.name
+                                  ? <small>Música · {featuredBriefing.liturgicalMusic[0].name}</small>
+                                  : null}
+                              </span>
+                            </div>
+                          )
+                        })}
                       </div>
                     </section>
                   ) : null}
