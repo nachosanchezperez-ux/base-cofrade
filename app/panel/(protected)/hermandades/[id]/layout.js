@@ -16,6 +16,7 @@ export default async function BrotherhoodEditorLayout({ children, params }) {
             <strong style={{ display: 'block', marginTop: 5 }}>Titulares, Pasos, agenda, memoria histórica, multimedia y documentación</strong>
           </div>
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+            <Link className={styles.secondaryButton} href={`/panel/hermandades/${id}/historia`}>Historia</Link>
             <Link className={styles.secondaryButton} href={`/panel/hermandades/${id}/titulares`}>Titulares</Link>
             <Link className={styles.secondaryButton} href={`/panel/hermandades/${id}/pasos`}>Pasos</Link>
             <Link className={styles.secondaryButton} href={`/panel/hermandades/${id}/salidas`}>Salidas</Link>
