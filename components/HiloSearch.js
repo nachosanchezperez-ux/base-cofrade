@@ -7,9 +7,18 @@ import styles from './HiloSearch.module.css';
 
 const starterQuestions = [
   '¿Qué imágenes de La Cena son anteriores al siglo XX?',
-  '¿Qué pasos dirige Antonio Santiago?',
+  '¿Qué autores han trabajado en más de un paso?',
   '¿Qué bandas acompañan a hermandades de gloria en Cantillana?',
 ];
+
+const contextNouns = {
+  brotherhood: ['hermandad', 'hermandades'],
+  image: ['imagen', 'imágenes'],
+  step: ['paso', 'pasos'],
+  band: ['banda', 'bandas'],
+  march: ['marcha', 'marchas'],
+  agent: ['autor o profesional', 'autores o profesionales'],
+};
 
 function normalize(value = '') {
   return String(value)
@@ -39,6 +48,15 @@ function looksLikeQuestion(value = '') {
   return /^(quien|que|cual|cuales|cuanto|cuantos|cuantas|donde|como|por que|cuando|dime|cuentame|ensename|muestrame|hay|tiene|tienen)\b/.test(text)
     || value.includes('?')
     || value.includes('¿');
+}
+
+function contextLabel(context) {
+  const set = context?.resultSet;
+  if (!set?.entityType || !Array.isArray(set.entityIds) || !set.entityIds.length) return '';
+  if (set.label) return set.label;
+  const count = Number(set.count) || set.entityIds.length;
+  const nouns = contextNouns[set.entityType] || ['entidad', 'entidades'];
+  return `${count} ${count === 1 ? nouns[0] : nouns[1]}`;
 }
 
 function AssistantAnswer({ message, onFollowUp }) {
@@ -231,7 +249,16 @@ export default function HiloSearch() {
     ask(`Cuéntame sobre ${item.title}`);
   };
 
+  const resetConversation = () => {
+    setMessages([]);
+    setContext(null);
+    setQuery('');
+    setResults([]);
+    setSearching(false);
+  };
+
   const hasConversation = messages.length > 0;
+  const activeContextLabel = contextLabel(context);
 
   return (
     <div className={styles.wrap} data-hilo-section="home_search">
@@ -257,6 +284,15 @@ export default function HiloSearch() {
         </div>
       ) : null}
 
+      {hasConversation ? (
+        <div className={styles.contextToolbar}>
+          {activeContextLabel ? (
+            <span className={styles.contextPill}><i aria-hidden="true" />Siguiendo · {activeContextLabel}</span>
+          ) : <span />}
+          <button type="button" onClick={resetConversation} disabled={loading}>Nueva consulta</button>
+        </div>
+      ) : null}
+
       <form
         className={`${styles.form} ${hasConversation ? styles.formAfterConversation : ''}`}
         onSubmit={submit}
@@ -270,7 +306,7 @@ export default function HiloSearch() {
           value={query}
           onChange={(event) => setQuery(event.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Pregunta sobre hermandades, imágenes, pasos, bandas, marchas, autores…"
+          placeholder={activeContextLabel ? `Sigue preguntando sobre ${activeContextLabel}…` : 'Pregunta sobre hermandades, imágenes, pasos, bandas, marchas, autores…'}
           autoComplete="off"
           disabled={loading}
         />
