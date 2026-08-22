@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { redirect } from 'next/navigation'
 import { requirePanelUser } from '@/lib/panel/auth'
 import { getPanelMasterData } from '@/lib/panel/master-data'
 import { getPanelDataHealth } from '@/lib/panel/data-health'
@@ -10,7 +11,11 @@ function ModuleRow({ href, label, count, note }) {
 
 export const metadata = { title: 'Datos · Panel' }
 
-export default async function PanelMasterDataPage() {
+export default async function PanelMasterDataPage({ searchParams }) {
+  const query = await searchParams
+  const savedRoute = { advocaciones: 'advocaciones', municipios: 'municipios', lugares: 'lugares' }[query?.saved]
+  if (savedRoute) redirect(`/panel/datos/${savedRoute}?saved=${query.saved}`)
+
   await requirePanelUser()
   const [data, health] = await Promise.all([getPanelMasterData(), getPanelDataHealth()])
   const openIssues = health.issues.length
