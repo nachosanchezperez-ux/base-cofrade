@@ -198,7 +198,7 @@ export async function applyBulkImportChunkAction(importIdInput) {
     const { error: auditError } = await supabase.from('audit_log').insert({
       actor_user_id: user.id,
       actor_label: user.name,
-      action_type: 'bulk_import',
+      action_type: 'update',
       object_type: 'bulk_import',
       object_id: importId,
       summary: `Importación masiva finalizada: ${batch.label}`,
