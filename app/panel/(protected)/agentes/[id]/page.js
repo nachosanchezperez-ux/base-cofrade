@@ -35,10 +35,7 @@ export default async function AgentEditorPage({ params, searchParams }) {
         <div className={styles.breadcrumb}><Link href="/panel/agentes">Personas</Link><span>→</span><strong>{entity.name}</strong></div>
         <div className={styles.editorTitleRow}>
           <div><span className={styles.eyebrow}>Resumen de ficha</span><h1>{entity.name}</h1><p>{AGENT_KIND_LABELS[agent.agent_kind] || 'Registro'}</p></div>
-          <div className={styles.editorHeaderActions}>
-            <span className={`${styles.statusBadge} ${styles[entity.status]}`}>{STATUS_LABELS[entity.status]}</span>
-            {entity.status === 'published' && entity.slug ? <Link className={styles.secondaryButton} href={`/agentes/${entity.slug}`} target="_blank" rel="noreferrer">Ver ficha pública ↗</Link> : null}
-          </div>
+          <span className={`${styles.statusBadge} ${styles[entity.status]}`}>{STATUS_LABELS[entity.status]}</span>
         </div>
       </header>
 
