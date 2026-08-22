@@ -8,15 +8,64 @@ import styles from '@/app/home.module.css'
 const stackedNextExtraHeadStyle = { alignItems: 'flex-start', flexDirection: 'column', gap: 4 }
 const heroThread = ['Hermandades', 'Imágenes', 'Pasos', 'Bandas', 'Marchas', 'Autores']
 
-function madridDateKey(date = new Date()) {
+function madridParts(date = new Date()) {
   const parts = new Intl.DateTimeFormat('en-CA', {
     timeZone: 'Europe/Madrid',
     year: 'numeric',
     month: '2-digit',
     day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hourCycle: 'h23',
   }).formatToParts(date)
   const value = (type) => parts.find((part) => part.type === type)?.value || ''
-  return `${value('year')}-${value('month')}-${value('day')}`
+  return {
+    date: `${value('year')}-${value('month')}-${value('day')}`,
+    time: `${value('hour')}:${value('minute')}`,
+  }
+}
+
+function madridDateKey(date = new Date()) {
+  return madridParts(date).date
+}
+
+function exactScheduleStamp(item, fallbackDate = '') {
+  const match = String(item?.time || '').match(/^(\d{1,2}):(\d{2})$/)
+  const date = item?.itemDate || fallbackDate
+  if (!date || !match) return ''
+  return `${date}T${match[1].padStart(2, '0')}:${match[2]}`
+}
+
+function scheduleWithLiveState(schedule = [], outingDate = '', now = new Date()) {
+  const madrid = madridParts(now)
+  const nowStamp = `${madrid.date}T${madrid.time}`
+  const stamps = schedule.map((item) => exactScheduleStamp(item, outingDate))
+  const nextIndex = stamps.findIndex((stamp) => stamp && stamp >= nowStamp)
+
+  return schedule.map((item, index) => ({
+    ...item,
+    isPast: Boolean(stamps[index] && stamps[index] < nowStamp),
+    isNext: index === nextIndex,
+  }))
+}
+
+function ThreadMedia({ media }) {
+  if (!media?.path) return null
+  const isSymbol = media.kind === 'crest' || media.kind === 'logo'
+  return (
+    <span className={styles.threadMedia} data-kind={media.kind || 'photo'}>
+      <Image
+        src={media.path}
+        alt={media.alt || media.name || ''}
+        fill
+        sizes="72px"
+        style={{
+          objectFit: isSymbol ? 'contain' : 'cover',
+          objectPosition: media.focusPosition || '50% 50%',
+        }}
+      />
+    </span>
+  )
 }
 
 export default function HomePageV2({
@@ -30,13 +79,21 @@ export default function HomePageV2({
   const featuredExtraordinary = extraordinaryOutings[0] || null
   const followingExtraordinaryOutings = extraordinaryOutings.slice(1)
   const featuredIsToday = featuredExtraordinary?.date === madridDateKey()
+  const liveSchedule = featuredIsToday
+    ? scheduleWithLiveState(featuredBriefing.schedule, featuredExtraordinary?.date)
+    : featuredBriefing.schedule
+  const nextScheduleItem = featuredIsToday ? liveSchedule.find((item) => item.isNext) : null
   const featuredDateLabel = featuredIsToday
     ? 'Hoy'
     : featuredExtraordinary?.dateParts?.weekdayLabel || featuredExtraordinary?.dateParts?.label || ''
   const featuredMeta = [
     featuredExtraordinary?.municipality,
     featuredDateLabel,
-    featuredIsToday && featuredExtraordinary?.departureTime ? `Salida · ${featuredExtraordinary.departureTime}` : '',
+    featuredIsToday && nextScheduleItem
+      ? `Siguiente · ${nextScheduleItem.time} · ${nextScheduleItem.label}`
+      : featuredIsToday && featuredExtraordinary?.departureTime
+        ? `Salida · ${featuredExtraordinary.departureTime}`
+        : '',
   ].filter(Boolean).join(' · ')
 
   return (
@@ -99,20 +156,27 @@ export default function HomePageV2({
                   <h2 id="proxima-extraordinaria-title">{featuredExtraordinary.title}</h2>
                   <div className={styles.featuredExtraordinaryMeta}>
                     <strong>{featuredMeta}</strong>
+                    {featuredIsToday && nextScheduleItem ? <span className={styles.liveBadge}>Agenda viva</span> : null}
                   </div>
                   {featuredExtraordinary.reason ? <p>{featuredExtraordinary.reason}</p> : null}
                 </div>
 
                 <div className={styles.extraordinaryBriefing}>
-                  {featuredBriefing.schedule.length ? (
+                  {liveSchedule.length ? (
                     <section className={styles.briefingBlock} aria-labelledby="briefing-horarios">
                       <span className={styles.briefingLabel} id="briefing-horarios">Horarios</span>
                       <div className={styles.briefingRows}>
-                        {featuredBriefing.schedule.map((item) => (
-                          <div className={styles.briefingRow} key={item.id}>
+                        {liveSchedule.map((item) => (
+                          <div
+                            className={`${styles.briefingRow} ${item.isPast ? styles.briefingRowPast : ''} ${item.isNext ? styles.briefingRowNext : ''}`}
+                            key={item.id}
+                          >
                             <strong>{item.time}</strong>
                             <span>
-                              <b>{item.label}</b>
+                              <b>
+                                {item.label}
+                                {item.isNext ? <em className={styles.nextBadge}>Siguiente</em> : null}
+                              </b>
                               {item.dayLabel ? <small>{item.dayLabel}</small> : null}
                               {item.place ? <small>{item.place}</small> : null}
                               {item.label === 'Misa estacional' && featuredBriefing.liturgicalMusic[0]?.name
@@ -201,9 +265,15 @@ export default function HomePageV2({
                       ) : null}
                     </span>
                   </div>
-                  <h3>{thread.title}</h3>
-                  <strong className={styles.threadMetric}>{thread.metric}</strong>
+                  <div className={styles.threadIdentity}>
+                    <ThreadMedia media={thread.media} />
+                    <div>
+                      <h3>{thread.title}</h3>
+                      <strong className={styles.threadMetric}>{thread.metric}</strong>
+                    </div>
+                  </div>
                   <p>{thread.summary}</p>
+                  {thread.media?.credit ? <small className={styles.threadCredit}>{thread.media.credit}</small> : null}
                   <div className={styles.threadPath} aria-label={`Ruta de descubrimiento: ${thread.path.join(', ')}`}>
                     {thread.path.map((step, index) => (
                       <span key={`${thread.id}-${step}`}>{index ? '→ ' : ''}{step}</span>
