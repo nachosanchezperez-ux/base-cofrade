@@ -183,9 +183,9 @@
 .featuredExtraordinaryCard {
   overflow: hidden;
   border: 1px solid #dce5ee;
-  border-radius: 20px;
+  border-radius: 22px;
   background: #fff;
-  box-shadow: 0 12px 30px rgba(18, 58, 103, .07);
+  box-shadow: 0 14px 34px rgba(18, 58, 103, .075);
 }
 
 .featuredExtraordinaryMedia {
@@ -199,6 +199,15 @@
   width: 100%;
   aspect-ratio: 16 / 10;
   background: #07182b;
+}
+
+.featuredExtraordinaryImageFrame::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 34%;
+  background: linear-gradient(to top, rgba(5, 18, 32, .28), transparent);
+  pointer-events: none;
 }
 
 .featuredExtraordinaryImageFrame img {
@@ -229,7 +238,9 @@
 
 .featuredExtraordinaryMeta {
   display: flex;
+  gap: 8px;
   align-items: center;
+  flex-wrap: wrap;
   margin-top: 2px;
 }
 
@@ -244,6 +255,31 @@
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: -.015em;
+}
+
+.liveBadge {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  padding: 6px 8px;
+  border: 1px solid #f0ccd2;
+  border-radius: 999px;
+  color: #9e1930;
+  background: #faebee;
+  font-size: 9px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.liveBadge::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #b71f37;
+  box-shadow: 0 0 0 4px rgba(183, 31, 55, .1);
 }
 
 .featuredExtraordinaryIntro p {
@@ -281,13 +317,26 @@
 }
 
 .briefingRow {
+  position: relative;
   display: grid;
   grid-template-columns: 74px 1fr;
   gap: 10px;
   align-items: start;
   padding: 10px 11px;
+  border: 1px solid transparent;
   border-radius: 12px;
   background: #f6f9fc;
+  transition: opacity .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease;
+}
+
+.briefingRowPast {
+  opacity: .55;
+}
+
+.briefingRowNext {
+  border-color: #e2b4bc;
+  background: linear-gradient(135deg, #fff7f8 0%, #f7fafc 100%);
+  box-shadow: 0 8px 20px rgba(183, 31, 55, .065);
 }
 
 .briefingRow > strong {
@@ -298,16 +347,38 @@
   letter-spacing: -.015em;
 }
 
+.briefingRowNext > strong {
+  color: #b71f37;
+}
+
 .briefingRow span {
   min-width: 0;
 }
 
 .briefingRow b {
-  display: block;
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  flex-wrap: wrap;
   color: #0f2742;
   font-size: 13px;
   font-weight: 700;
   line-height: 1.3;
+}
+
+.nextBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 6px;
+  border-radius: 999px;
+  color: #b71f37;
+  background: #fae9ec;
+  font-size: 8px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: .08em;
+  text-transform: uppercase;
 }
 
 .briefingRow small,
@@ -322,6 +393,7 @@
 
 .bandRow {
   padding: 10px 11px;
+  border: 1px solid transparent;
   border-radius: 12px;
   background: #f6f9fc;
 }
@@ -440,11 +512,13 @@
 .threadsSection {
   overflow: hidden;
   color: #fff;
-  background: #0f2742;
+  background:
+    radial-gradient(circle at 85% 12%, rgba(41, 91, 137, .28), transparent 29%),
+    #0f2742;
 }
 
 .threadsHead {
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 }
 
 .threadsEyebrow {
@@ -487,13 +561,14 @@
 
 .threadCard {
   display: flex;
-  min-height: 300px;
+  min-height: 318px;
   flex-direction: column;
   padding: 19px;
   border: 1px solid rgba(255, 255, 255, .12);
-  border-radius: 19px;
+  border-radius: 20px;
   color: #fff;
-  background: #153553;
+  background: rgba(21, 53, 83, .92);
+  box-shadow: 0 12px 28px rgba(2, 14, 28, .12);
   scroll-snap-align: start;
   transition: transform .18s ease, border-color .18s ease, background .18s ease;
 }
@@ -551,29 +626,72 @@
   border-left: 1px solid rgba(255, 255, 255, .16);
 }
 
-.threadCard h3 {
-  margin: 14px 0 6px;
+.threadIdentity {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.threadIdentity > div {
+  min-width: 0;
+}
+
+.threadMedia {
+  position: relative;
+  overflow: hidden;
+  width: 66px;
+  height: 66px;
+  flex: none;
+  border: 1px solid rgba(255, 255, 255, .14);
+  border-radius: 17px;
+  background: rgba(255, 255, 255, .08);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, .12);
+}
+
+.threadMedia[data-kind="crest"],
+.threadMedia[data-kind="logo"] {
+  background: rgba(255, 255, 255, .95);
+}
+
+.threadMedia[data-kind="crest"] img,
+.threadMedia[data-kind="logo"] img {
+  padding: 9px;
+}
+
+.threadIdentity h3 {
+  margin: 0 0 5px;
   color: #fff;
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 800;
-  line-height: 1.1;
+  line-height: 1.08;
   letter-spacing: -.03em;
 }
 
 .threadMetric {
   display: block;
   color: #fff;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
   line-height: 1.35;
   letter-spacing: -.015em;
 }
 
 .threadCard p {
-  margin: 10px 0 0;
+  margin: 12px 0 0;
   color: rgba(255, 255, 255, .74);
   font-size: 14px;
   line-height: 1.55;
+}
+
+.threadCredit {
+  display: block;
+  margin-top: 7px;
+  color: rgba(255, 255, 255, .45);
+  font-size: 9px;
+  font-weight: 600;
+  line-height: 1.35;
 }
 
 .threadPath {
@@ -624,18 +742,18 @@
   }
 
   .section {
-    padding: 40px 0;
+    padding: 44px 0;
   }
 
   .featuredExtraordinary {
-    padding-top: 22px;
-    padding-bottom: 38px;
+    padding-top: 24px;
+    padding-bottom: 42px;
   }
 
   .featuredExtraordinaryCard {
     display: grid;
-    grid-template-columns: minmax(290px, 33%) minmax(0, 67%);
-    min-height: 390px;
+    grid-template-columns: minmax(290px, 34%) minmax(0, 66%);
+    min-height: 400px;
   }
 
   .featuredExtraordinaryMedia {
@@ -647,7 +765,7 @@
 
   .featuredExtraordinaryImageFrame {
     height: 100%;
-    min-height: 362px;
+    min-height: 374px;
     aspect-ratio: auto;
   }
 
@@ -655,17 +773,17 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 24px 30px;
+    padding: 26px 31px;
   }
 
   .featuredExtraordinaryIntro h2 {
     max-width: 720px;
-    font-size: 32px;
+    font-size: 33px;
   }
 
   .featuredExtraordinaryMeta strong {
     padding: 8px 12px;
-    font-size: 18px;
+    font-size: 17px;
   }
 
   .extraordinaryBriefing {
@@ -679,7 +797,7 @@
   }
 
   .threadsHead h2 {
-    font-size: 38px;
+    font-size: 39px;
   }
 
   .threadRail {
@@ -692,12 +810,16 @@
   }
 
   .threadCard {
-    min-height: 320px;
+    min-height: 342px;
     padding: 22px;
   }
 
+  .threadIdentity h3 {
+    font-size: 23px;
+  }
+
   .nextExtraSection {
-    padding-top: 32px;
+    padding-top: 34px;
     padding-bottom: 8px;
   }
 
@@ -745,5 +867,12 @@
     min-height: 100%;
     padding: 32px;
     border-radius: 27px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .briefingRow,
+  .threadCard {
+    transition: none;
   }
 }
