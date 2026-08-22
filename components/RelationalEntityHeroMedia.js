@@ -35,6 +35,7 @@ export default function RelationalEntityHeroMedia({
   const autoContain = variant === 'step' && isPortrait;
   const resolvedFit = fitMode === 'auto' ? (autoContain ? 'contain' : 'cover') : fitMode;
   const usePortraitStepLayout = variant === 'step' && resolvedFit === 'contain' && isPortrait;
+  const fallbackLabel = variant === 'band' ? 'Logotipo de la banda' : 'Escudo de la hermandad';
 
   const desktopFocus = focusPosition || `${focusX ?? 50}% ${focusY ?? 50}%`;
   const mobileFocus = `${mobileFocusX ?? focusX ?? 50}% ${mobileFocusY ?? focusY ?? 50}%`;
@@ -52,7 +53,7 @@ export default function RelationalEntityHeroMedia({
 
   return (
     <figure
-      className={`${styles.media} ${styles[`media_${variant}`]} ${polishStyles.media} ${polishStyles[`media_${variant}`] || ''}`}
+      className={`${styles.media} ${styles[`media_${variant}`] || ''} ${polishStyles.media} ${polishStyles[`media_${variant}`] || ''}`}
       style={figureStyle}
     >
       <div
@@ -89,7 +90,7 @@ export default function RelationalEntityHeroMedia({
               preload
               onError={() => setCrestError(true)}
             />
-            <small>Escudo de la hermandad</small>
+            <small>{fallbackLabel}</small>
           </div>
         ) : (
           <div className={styles.initialsFallback}>
