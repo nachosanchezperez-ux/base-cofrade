@@ -21,6 +21,25 @@ function madridDateKey(date = new Date()) {
   return `${value('year')}-${value('month')}-${value('day')}`
 }
 
+function ThreadVisual({ visual }) {
+  if (!visual?.path) return null
+  const identity = visual.kind !== 'photo'
+  const unoptimized = /\.svg(?:$|\?)/i.test(visual.path)
+
+  return (
+    <span className={styles.threadVisual} data-kind={visual.kind || 'photo'} aria-hidden="true">
+      <Image
+        src={visual.path}
+        alt=""
+        fill
+        sizes="70px"
+        unoptimized={unoptimized}
+        style={{ objectFit: identity ? 'contain' : 'cover' }}
+      />
+    </span>
+  )
+}
+
 export default function HomePageV2({
   today,
   todayContent,
@@ -221,28 +240,39 @@ export default function HomePageV2({
               <p>Lo último que ha crecido dentro de la enciclopedia: nuevas relaciones, patrimonio y conexiones ya publicadas.</p>
             </div>
             <div className={styles.threadRail}>
-              {discoveryThreads.map((thread) => (
-                <Link className={styles.threadCard} href={thread.href} key={thread.id}>
-                  <div className={styles.threadTopline}>
-                    <span className={styles.threadLabel}>{thread.label}</span>
-                    <span className={styles.threadActivity}>
-                      <strong>{thread.activityStatus}</strong>
-                      {thread.dateLabel ? (
-                        <time dateTime={thread.dateTime}>{thread.dateLabel}</time>
-                      ) : null}
-                    </span>
-                  </div>
-                  <h3>{thread.title}</h3>
-                  <strong className={styles.threadMetric}>{thread.metric}</strong>
-                  <p>{thread.summary}</p>
-                  <div className={styles.threadPath} aria-label={`Ruta de descubrimiento: ${thread.path.join(', ')}`}>
-                    {thread.path.map((step, index) => (
-                      <span key={`${thread.id}-${step}`}>{index ? '→ ' : ''}{step}</span>
-                    ))}
-                  </div>
-                  <span className={styles.threadCta}>{thread.cta}</span>
-                </Link>
-              ))}
+              {discoveryThreads.map((thread) => {
+                const visualContext = thread.visual?.contextName && thread.visual.contextName !== thread.title
+                  ? thread.visual.contextName
+                  : ''
+                return (
+                  <Link className={styles.threadCard} href={thread.href} key={thread.id}>
+                    <div className={styles.threadTopline}>
+                      <span className={styles.threadLabel}>{thread.label}</span>
+                      <span className={styles.threadActivity}>
+                        <strong>{thread.activityStatus}</strong>
+                        {thread.dateLabel ? (
+                          <time dateTime={thread.dateTime}>{thread.dateLabel}</time>
+                        ) : null}
+                      </span>
+                    </div>
+                    <div className={`${styles.threadIdentity} ${thread.visual?.path ? styles.threadIdentityVisual : ''}`}>
+                      <ThreadVisual visual={thread.visual} />
+                      <div className={styles.threadIdentityCopy}>
+                        {visualContext ? <span className={styles.threadContext}>En {visualContext}</span> : null}
+                        <h3>{thread.title}</h3>
+                        <strong className={styles.threadMetric}>{thread.metric}</strong>
+                      </div>
+                    </div>
+                    <p>{thread.summary}</p>
+                    <div className={styles.threadPath} aria-label={`Ruta de descubrimiento: ${thread.path.join(', ')}`}>
+                      {thread.path.map((step, index) => (
+                        <span key={`${thread.id}-${step}`}>{index ? '→ ' : ''}{step}</span>
+                      ))}
+                    </div>
+                    <span className={styles.threadCta}>{thread.cta}</span>
+                  </Link>
+                )
+              })}
             </div>
           </div>
         </section>
