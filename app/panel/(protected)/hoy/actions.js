@@ -46,6 +46,8 @@ async function requireEditorial(supabase, id) {
 async function refreshHome() {
   revalidatePath('/panel')
   revalidatePath('/panel/hoy')
+  revalidatePath('/panel/hoy/programacion')
+  revalidatePath('/panel/hoy/banco')
   revalidatePath('/')
 }
 
@@ -53,7 +55,8 @@ function redirectDate(date, saved = '', extra = '') {
   const params = new URLSearchParams({ fecha: date })
   if (saved) params.set('saved', saved)
   if (extra) params.set('content', extra)
-  redirect(`/panel/hoy?${params.toString()}`)
+  const destination = saved.startsWith('content') ? '/panel/hoy/banco' : '/panel/hoy/programacion'
+  redirect(`${destination}?${params.toString()}`)
 }
 
 export async function saveEditorialContentAction(formData) {
@@ -140,19 +143,28 @@ export async function saveDailyOverrideAction(formData) {
   const supabase = await createClient()
   const overrideId = uuid(formData, 'override_id', true)
   const publishDate = dateValue(formData, 'publish_date', true)
-  const contentType = required(formData, 'content_type', 'El tipo de bloque')
+  let contentType = required(formData, 'content_type', 'El tipo de bloque')
   if (!OVERRIDE_TYPES.has(contentType)) throw new Error('Bloque diario no válido.')
+
+  let editorialContentId = EDITORIAL_TYPES.has(contentType) ? uuid(formData, 'editorial_content_id', true) : null
+  let editorialContent = null
+  if (editorialContentId) {
+    editorialContent = await requireEditorial(supabase, editorialContentId)
+    if (!EDITORIAL_TYPES.has(editorialContent.content_type) || editorialContent.status !== 'published') throw new Error('El contenido del Banco debe estar publicado para programarlo.')
+    contentType = editorialContent.content_type
+  }
+
   const eventId = contentType === 'ephemeris' ? uuid(formData, 'event_entity_id') : null
   const marchId = contentType === 'march' ? uuid(formData, 'march_entity_id') : null
-  const entityId = ['fact', 'curiosity'].includes(contentType) ? uuid(formData, 'entity_id', true) : null
+  const entityId = EDITORIAL_TYPES.has(contentType) && !editorialContentId ? uuid(formData, 'entity_id', true) : null
   if (eventId) await requireEntity(supabase, eventId, ['event'])
   if (marchId) await requireEntity(supabase, marchId, ['march'])
   if (entityId) await requireEntity(supabase, entityId)
 
-  const title = nullable(formData, 'title')
-  const summary = nullable(formData, 'summary')
+  const title = editorialContentId ? null : nullable(formData, 'title')
+  const summary = editorialContentId ? null : nullable(formData, 'summary')
   if (contentType === 'ephemeris' && !title) throw new Error('La efeméride manual necesita un título visible.')
-  if (['fact', 'curiosity'].includes(contentType) && !title && !entityId) throw new Error('El contenido manual necesita un título o una entidad relacionada.')
+  if (EDITORIAL_TYPES.has(contentType) && !editorialContentId && !title && !entityId) throw new Error('El contenido manual necesita un título, una entidad relacionada o un contenido del Banco.')
 
   const payload = {
     publish_date: publishDate,
@@ -160,7 +172,7 @@ export async function saveDailyOverrideAction(formData) {
     title,
     summary,
     entity_id: entityId,
-    editorial_content_id: null,
+    editorial_content_id: editorialContentId,
     march_entity_id: marchId,
     event_entity_id: eventId,
     reason: nullable(formData, 'reason'),
@@ -170,10 +182,22 @@ export async function saveDailyOverrideAction(formData) {
 
   let resolvedId = overrideId
   if (!resolvedId) {
-    const existing = await supabase.from('daily_overrides').select('id').eq('publish_date', publishDate).eq('content_type', contentType).limit(1).maybeSingle()
+    let existingQuery = supabase.from('daily_overrides').select('id').eq('publish_date', publishDate)
+    existingQuery = EDITORIAL_TYPES.has(contentType)
+      ? existingQuery.in('content_type', [...EDITORIAL_TYPES])
+      : existingQuery.eq('content_type', contentType)
+    const existing = await existingQuery.order('sort_order').limit(1).maybeSingle()
     if (existing.error) throw new Error(`No se pudo comprobar la programación diaria: ${existing.error.message}`)
     resolvedId = existing.data?.id || null
   }
+
+  if (EDITORIAL_TYPES.has(contentType)) {
+    let clear = supabase.from('daily_overrides').update({ status: 'archived' }).eq('publish_date', publishDate).in('content_type', [...EDITORIAL_TYPES]).neq('status', 'archived')
+    if (resolvedId) clear = clear.neq('id', resolvedId)
+    const cleared = await clear
+    if (cleared.error) throw new Error(`No se pudieron retirar overrides editoriales duplicados: ${cleared.error.message}`)
+  }
+
   const result = resolvedId
     ? await supabase.from('daily_overrides').update(payload).eq('id', resolvedId).select('id').single()
     : await supabase.from('daily_overrides').insert(payload).select('id').single()
