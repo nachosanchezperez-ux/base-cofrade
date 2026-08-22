@@ -21,7 +21,7 @@ export default async function PanelMasterDataPage({ searchParams }) {
   const openIssues = health.issues.length
 
   return <div className={styles.pageWrap}>
-    <header className={styles.pageHeader}><div><span className={styles.eyebrow}>Calidad y estructura</span><h1>Datos</h1><p>Centro de control de datos maestros, referencias pendientes y salud del grafo de Hilo Cofrade.</p></div></header>
+    <header className={styles.pageHeader}><div><span className={styles.eyebrow}>Calidad y estructura</span><h1>Datos</h1><p>Centro de control de datos maestros, importaciones, referencias pendientes y salud del grafo de Hilo Cofrade.</p></div></header>
 
     <section className={styles.metricGrid} aria-label="Resumen de Datos">
       <article className={styles.metricCard}><span>Salud</span><strong>{openIssues}</strong><small>incidencias accionables</small></article>
@@ -37,6 +37,13 @@ export default async function PanelMasterDataPage({ searchParams }) {
       <div className={styles.panelCard}><div className={styles.moduleList}>
         <ModuleRow href="/panel/datos/salud" label="Salud del grafo" count={openIssues} note={`${health.bySeverity.critical} prioritarias · ${health.bySeverity.warning} para revisar · ${health.bySeverity.info} mejoras`} />
         <ModuleRow href="/panel/datos/referencias" label="Nodos de referencia" count={data.referenceNodes.length} note="Personas, Pasos y Hermandades que existen en relaciones pero aún no tienen ficha especializada" />
+      </div></div>
+    </section>
+
+    <section className={styles.editorSection}>
+      <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>Operaciones de datos</span><h2>Carga de contenido</h2></div><p>Prepara grandes volúmenes sin saltarte la validación editorial ni la trazabilidad.</p></div>
+      <div className={styles.panelCard}><div className={styles.moduleList}>
+        <ModuleRow href="/panel/datos/importar" label="Importación masiva" count="CSV · JSON" note="Carga por lotes, preflight, referencias relacionales y aplicación parcial de registros válidos" />
       </div></div>
     </section>
 
