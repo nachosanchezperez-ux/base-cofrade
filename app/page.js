@@ -4,10 +4,8 @@ import {
   getHomeDiscoveryThreads,
   getUpcomingExtraordinaryOutings,
 } from '@/lib/supabase/home'
-import {
-  getHomeExploreStats,
-  getTodayHomeContentV2,
-} from '@/lib/supabase/home-v2'
+import { getHomeExploreStats } from '@/lib/supabase/home-v2'
+import { getTodayHomeContentV2 } from '@/lib/supabase/home-effective-editorial'
 import { getOutingBriefing } from '@/lib/supabase/outing-briefing'
 
 export const dynamic = 'force-dynamic'
