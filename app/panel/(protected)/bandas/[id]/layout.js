@@ -20,6 +20,9 @@ export default async function BandEditorLayout({ children, params }) {
         <Link className={styles.secondaryButton} href={`/panel/bandas/${id}`}>
           Ficha de banda
         </Link>
+        <Link className={styles.secondaryButton} href={`/panel/bandas/${id}/multimedia`}>
+          Multimedia
+        </Link>
         <Link className={styles.primaryButton} href={`/panel/bandas/${id}/discografia`}>
           Editar discografía
         </Link>
