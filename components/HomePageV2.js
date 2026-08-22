@@ -150,6 +150,10 @@ export default function HomePageV2({
                     </section>
                   ) : null}
                 </div>
+
+                <Link className={styles.collabButton} href="/extraordinarias">
+                  Ver todas las extraordinarias →
+                </Link>
               </div>
             </article>
 
@@ -173,6 +177,9 @@ export default function HomePageV2({
                     </article>
                   ))}
                 </div>
+                <Link className={styles.dailyLink} href="/extraordinarias">
+                  Ver calendario completo →
+                </Link>
               </div>
             ) : null}
           </div>
