@@ -1,10 +1,10 @@
 import Link from 'next/link'
-import { notFound } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import { requirePanelUser } from '@/lib/panel/auth'
 import { AGENT_KIND_LABELS, getAgentEditorData } from '@/lib/panel/agents'
 import { getAgentRelationsData } from '@/lib/panel/agent-relations'
 import { STATUS_LABELS, StatusSelect } from '@/components/panel/agent/AgentEditorPrimitives'
-import { updateAgentAction } from './actions'
+import { saveAgentGeneralAction } from './general-action'
 import styles from '@/app/panel/panel.module.css'
 
 export const metadata = { title: 'Editar ficha · Personas · Panel' }
@@ -22,6 +22,10 @@ export default async function AgentEditorPage({ params, searchParams }) {
   const [{ id }, query, user] = await Promise.all([params, searchParams, requirePanelUser()])
   const [data, relationData] = await Promise.all([getAgentEditorData(id), getAgentRelationsData(id)])
   if (!data || !relationData) notFound()
+
+  const savedRoute = { nombres: 'nombres', disciplinas: 'disciplinas', roles: 'roles' }[query?.saved]
+  if (savedRoute) redirect(`/panel/agentes/${id}/${savedRoute}?saved=${query.saved}`)
+
   const canEdit = ['admin', 'editor'].includes(user.role)
   const { entity, agent, coverage } = data
 
@@ -51,7 +55,7 @@ export default async function AgentEditorPage({ params, searchParams }) {
 
       <section className={styles.editorSection} id="general">
         <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>Fuente de verdad</span><h2>Información general</h2></div><p>Identidad, biografía o trayectoria y datos públicos del registro.</p></div>
-        <form action={updateAgentAction} className={`${styles.panelCard} ${styles.editorForm}`}>
+        <form action={saveAgentGeneralAction} className={`${styles.panelCard} ${styles.editorForm}`}>
           <input type="hidden" name="agent_id" value={entity.id} />
           <div className={styles.formGrid}>
             <label className={styles.fieldWide}><span>Nombre principal</span><input name="name" defaultValue={entity.name} required /></label>
