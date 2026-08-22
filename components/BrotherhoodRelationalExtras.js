@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import RelationalThread from '@/components/RelationalThread'
+import styles from '@/components/BrotherhoodCurrentMusic.module.css'
 import { getPublishedEntityCoverMediaMap } from '@/lib/supabase/entity-media'
 import { createClient } from '@/lib/supabase/server'
 
@@ -12,6 +13,17 @@ function assertRows(result, label) {
 function assertRow(result, label) {
   if (result.error) throw new Error(`${label}: ${result.error.message}`)
   return result.data || null
+}
+
+function processionRank(position = '') {
+  const value = String(position).toLowerCase()
+  if (value.includes('cruz de guía') || value.includes('cruz de guia')) return 10
+  if (value.includes('delante')) return 15
+  if (value.includes('misterio')) return 20
+  if (value.includes('cristo') || value.includes('sangre')) return 30
+  if (value.includes('palio') || value.includes('virgen')) return 40
+  if (value.includes('tras')) return 50
+  return 35
 }
 
 async function loadConceptualTitulars(supabase, brotherhoodId) {
@@ -106,8 +118,7 @@ async function loadCurrentAccompaniments(supabase, brotherhoodId) {
       .select('id, band_entity_id, step_entity_id, position, outing_type, date_from_text, year_from, notes')
       .eq('brotherhood_entity_id', brotherhoodId)
       .eq('is_current', true)
-      .eq('status', 'published')
-      .order('position'),
+      .eq('status', 'published'),
     'No se pudieron consultar los acompañamientos actuales'
   )
 
@@ -123,7 +134,7 @@ async function loadCurrentAccompaniments(supabase, brotherhoodId) {
       .in('id', bandIds),
     supabase
       .from('bands')
-      .select('entity_id, band_type')
+      .select('entity_id, band_type, logo_path')
       .in('entity_id', bandIds),
   ])
 
@@ -144,12 +155,27 @@ async function loadCurrentAccompaniments(supabase, brotherhoodId) {
         nombre: entity.name,
         posicion: period.position || 'Acompañamiento musical',
         tipo: band.band_type || 'Formación musical',
+        logo: band.logo_path || '',
         salida: period.outing_type || '',
         periodo: period.date_from_text || (period.year_from ? `Desde ${period.year_from}` : ''),
         observaciones: period.notes || '',
       }
     })
     .filter(Boolean)
+    .sort((a, b) => processionRank(a.posicion) - processionRank(b.posicion) || a.posicion.localeCompare(b.posicion, 'es'))
+}
+
+async function loadBrotherhoodTypes(supabase, brotherhoodId) {
+  const row = assertRow(
+    await supabase
+      .from('brotherhoods')
+      .select('brotherhood_types')
+      .eq('entity_id', brotherhoodId)
+      .maybeSingle(),
+    'No se pudo consultar el tipo de Hermandad'
+  )
+
+  return row?.brotherhood_types || []
 }
 
 async function loadBrotherhoodThreadData(supabase, brotherhoodId) {
@@ -263,13 +289,71 @@ export async function BrotherhoodConceptualTitulars({ brotherhoodId }) {
   }
 }
 
+function CurrentMusicSequence({ items, penitencia }) {
+  if (!items.length) return null
+
+  const description = penitencia
+    ? 'Las formaciones que ponen música al discurrir de la Hermandad durante la estación de penitencia.'
+    : 'Las formaciones que acompañan musicalmente a la Hermandad en sus salidas procesionales.'
+
+  return (
+    <section className={`${styles.section} brotherhood-current-music-sequence`} id="acompanamiento-musical">
+      <div className="shell">
+        <div className={styles.header}>
+          <div className={styles.copy}>
+            <span className="eyebrow">{penitencia ? 'Semana Santa' : 'Música procesional'}</span>
+            <h2>Acompañamiento musical</h2>
+            <p>{description}</p>
+          </div>
+          <div className={styles.count} aria-label={`${items.length} acompañamientos actuales`}>
+            <strong>{items.length}</strong>
+            <span>{items.length === 1 ? 'formación actual' : 'formaciones actuales'}</span>
+          </div>
+        </div>
+
+        <div className={styles.sequence}>
+          {items.map((item, index) => (
+            <article className={styles.item} key={item.id}>
+              <span className={styles.number}>{String(index + 1).padStart(2, '0')}</span>
+              <div className={styles.logoWrap}>
+                {item.logo ? (
+                  <Image
+                    className={styles.logo}
+                    src={item.logo}
+                    alt={`Logotipo de ${item.nombre}`}
+                    fill
+                    sizes="64px"
+                  />
+                ) : (
+                  <span className={styles.logoFallback}>{item.nombre.split(/\s+/).filter(Boolean).slice(0, 2).map((word) => word[0]).join('').toUpperCase()}</span>
+                )}
+              </div>
+              <div className={styles.main}>
+                <span className={styles.position}>{item.posicion}</span>
+                <h3><Link href={`/bandas/${item.slug}`}>{item.nombre}</Link></h3>
+                <div className={styles.meta}>
+                  <span>{item.tipo}</span>
+                  {item.periodo ? <span>{item.periodo}</span> : null}
+                  {item.salida ? <span>{item.salida}</span> : null}
+                </div>
+              </div>
+              <Link className={styles.link} href={`/bandas/${item.slug}`}>Ver banda →</Link>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
 export async function BrotherhoodOwnBands({ brotherhoodId }) {
   try {
     const supabase = await createClient()
-    const [bands, threadData, currentAccompaniments] = await Promise.all([
+    const [bands, threadData, currentAccompaniments, brotherhoodTypes] = await Promise.all([
       loadOwnBands(supabase, brotherhoodId),
       loadBrotherhoodThreadData(supabase, brotherhoodId),
       loadCurrentAccompaniments(supabase, brotherhoodId),
+      loadBrotherhoodTypes(supabase, brotherhoodId),
     ])
     const threadItems = [
       ...threadData.images.map((image) => ({
@@ -306,7 +390,7 @@ export async function BrotherhoodOwnBands({ brotherhoodId }) {
       })),
     ]
 
-    if (!threadItems.length && !bands.length) return null
+    if (!threadItems.length && !bands.length && !currentAccompaniments.length) return null
 
     const currentBandCount = new Set(currentAccompaniments.map((item) => item.slug).filter(Boolean)).size
     const meta = [
@@ -314,6 +398,7 @@ export async function BrotherhoodOwnBands({ brotherhoodId }) {
       `${threadData.steps.length} pasos`,
       currentBandCount ? `${currentBandCount} bandas actuales` : '',
     ].filter(Boolean).join(' · ')
+    const penitencia = brotherhoodTypes.includes('Penitencia')
 
     return (
       <>
@@ -345,6 +430,8 @@ export async function BrotherhoodOwnBands({ brotherhoodId }) {
             </div>
           </section>
         ) : null}
+
+        <CurrentMusicSequence items={currentAccompaniments} penitencia={penitencia} />
       </>
     )
   } catch (error) {
