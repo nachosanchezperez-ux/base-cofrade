@@ -93,8 +93,11 @@ async function ensureSpecializedAgent(supabase, agentId) {
     'La Persona seleccionada no existe.'
   )
 
-  const existing = await supabase.from('agents').select('entity_id').eq('entity_id', agentId).maybeSingle()
+  const existing = await supabase.from('agents').select('entity_id, agent_kind').eq('entity_id', agentId).maybeSingle()
   if (existing.error) throw new Error(`No se pudo comprobar la ficha de Persona: ${existing.error.message}`)
+  if (existing.data?.agent_kind && existing.data.agent_kind !== 'person') {
+    throw new Error('La Dirección de una Banda debe vincularse a una Persona, no a un taller, empresa o institución.')
+  }
   if (!existing.data) {
     assertMutation(
       await supabase.from('agents').insert({ entity_id: agentId, agent_kind: 'person' }),
