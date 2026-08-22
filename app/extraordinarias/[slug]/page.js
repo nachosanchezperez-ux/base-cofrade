@@ -6,6 +6,7 @@ import JsonLd from '@/components/JsonLd'
 import { getExtraordinaryDetail } from '@/lib/supabase/extraordinary-detail'
 import { absoluteUrl, breadcrumbJsonLd, pageTitle, seoDescription } from '@/lib/seo'
 import styles from './extraordinary-detail.module.css'
+import mediaStyles from './extraordinary-media.module.css'
 
 export const dynamic = 'force-dynamic'
 
@@ -239,6 +240,8 @@ export default async function ExtraordinaryDetailPage({ params }) {
           {item.schedule.length ? <a href="#horarios">Horarios</a> : null}
           {item.processionalMusic.length ? <a href="#musica">Acompañamiento</a> : null}
           {item.routeSummary ? <a href="#recorrido">Recorrido</a> : null}
+          {item.poster ? <a href="#cartel">Cartel</a> : null}
+          {item.gallery.length ? <a href="#galeria">Galería</a> : null}
           {item.sources.length ? <a href="#fuentes">Fuentes</a> : null}
         </div>
       </nav>
@@ -323,6 +326,55 @@ export default async function ExtraordinaryDetailPage({ params }) {
             </header>
             {item.description ? <p>{item.description}</p> : null}
             {item.publicNotes ? <p>{item.publicNotes}</p> : null}
+          </section>
+        ) : null}
+
+        {item.poster ? (
+          <section className={`${styles.section} ${mediaStyles.mediaSection}`} id="cartel">
+            <header className={styles.sectionHead}>
+              <span>Imagen oficial</span>
+              <h2>Cartel</h2>
+              <p>Pieza anunciadora documentada para esta extraordinaria.</p>
+            </header>
+            <div className={mediaStyles.posterWrap}>
+              <figure className={mediaStyles.posterFigure}>
+                <div className={mediaStyles.posterFrame}>
+                  <Image src={item.poster.path} alt={item.poster.alt} fill sizes="(max-width: 620px) calc(100vw - 40px), 520px" />
+                </div>
+                {item.poster.credit ? <figcaption>{item.poster.credit}</figcaption> : null}
+              </figure>
+              <div className={mediaStyles.posterCopy}>
+                <span>Cartel oficial</span>
+                <h3>{item.poster.title || item.title}</h3>
+                <p>El cartel se conserva completo, sin aplicar recortes editoriales.</p>
+              </div>
+            </div>
+          </section>
+        ) : null}
+
+        {item.gallery.length ? (
+          <section className={styles.section} id="galeria">
+            <header className={styles.sectionHead}>
+              <span>Archivo visual</span>
+              <h2>Galería</h2>
+              <p>Imágenes complementarias vinculadas a esta extraordinaria.</p>
+            </header>
+            <div className={mediaStyles.galleryGrid}>
+              {item.gallery.map((media) => (
+                <figure className={mediaStyles.galleryItem} key={media.id}>
+                  <a className={mediaStyles.galleryLink} href={media.path} target="_blank" rel="noreferrer">
+                    <div className={mediaStyles.galleryFrame}>
+                      <Image src={media.path} alt={media.alt} fill sizes="(max-width: 620px) calc(100vw - 40px), (max-width: 900px) 50vw, 33vw" />
+                    </div>
+                  </a>
+                  <figcaption>
+                    {media.credit ? <strong>{media.credit}</strong> : null}
+                    <small>{media.alt}</small>
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+            <p className={mediaStyles.galleryHint}>Pulsa una fotografía para verla completa.</p>
           </section>
         ) : null}
 
