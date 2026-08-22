@@ -54,6 +54,16 @@ test('reconoce filtros y operaciones sobre el conjunto anterior', () => {
       'enséñame solo los orfebres?',
     ]
   )
+
+  assert.deepEqual(
+    planFreeCompoundQuestion(
+      '¿Quién compuso Refúgiame y a quién está dedicada?'
+    )?.queries,
+    [
+      '¿Quién compuso Refúgiame',
+      'a quién está dedicada?',
+    ]
+  )
 })
 
 test('fusiona la consulta compuesta manteniendo el contexto del último paso', () => {
