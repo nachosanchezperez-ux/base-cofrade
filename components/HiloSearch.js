@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import HiloEvidence from './HiloEvidence';
 import HiloGraphPath, { isGraphPathResponse } from './HiloGraphPath';
+import HiloReferences from './HiloReferences';
 import styles from './HiloSearch.module.css';
 
 const starterQuestions = [
@@ -126,6 +127,7 @@ function AssistantAnswer({ message, onFollowUp }) {
       ) : null}
 
       <HiloEvidence items={response.evidence || []} />
+      <HiloReferences items={response.references || []} note={response.referencesNote || ''} />
 
       {(response.followUps || []).length > 0 ? (
         <div className={styles.followUps}>
