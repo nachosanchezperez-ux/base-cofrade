@@ -1,7 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 
-import { freeDirectIntent } from '../lib/tira-free-direct.js'
+import { dedicationTypeLabel, freeDirectIntent } from '../lib/tira-free-direct.js'
 
 test('reconoce dedicatorias de marchas', () => {
   assert.equal(freeDirectIntent('¿A quién está dedicada Refúgiame?'), 'march_dedication')
@@ -19,6 +19,12 @@ test('reconoce estreno y clasificación musical', () => {
   assert.equal(freeDirectIntent('¿Cuándo se estrenó Refúgiame?'), 'march_premiere')
   assert.equal(freeDirectIntent('¿Dónde se estrenó Refúgiame?'), 'march_premiere')
   assert.equal(freeDirectIntent('¿Qué tipo de marcha es Refúgiame?'), 'march_type')
+})
+
+test('normaliza las etiquetas internas de dedicatoria antes de mostrarlas', () => {
+  assert.equal(dedicationTypeLabel('dedicated_to'), 'Dedicada a')
+  assert.equal(dedicationTypeLabel('associated_with'), 'Vinculada a')
+  assert.equal(dedicationTypeLabel('in_honor_of'), 'En honor de')
 })
 
 test('no secuestra preguntas que ya pertenecen al motor relacional', () => {
