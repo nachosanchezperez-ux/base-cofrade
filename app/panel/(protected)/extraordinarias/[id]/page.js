@@ -146,7 +146,7 @@ export default async function PanelExtraordinaryEditorPage({ params, searchParam
             </label>
           </div>
           <div className={styles.formActions}>
-            <small>La nueva imagen se publica en los tres espacios automáticamente.</small>
+            <small>La nueva imagen se publica en Home, directorio y guía individual automáticamente.</small>
             <button className={styles.primaryButton} type="submit" disabled={!canEdit}>{data.hero_image_path ? 'Guardar / reemplazar foto' : 'Subir fotografía'}</button>
           </div>
         </form>
