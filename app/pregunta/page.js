@@ -27,8 +27,8 @@ export default async function PreguntaPage({ searchParams }) {
             <span className={styles.eyebrow}>Tira del hilo</span>
             <h1>Conversa con la enciclopedia</h1>
             <p>
-              Pregunta con lenguaje natural, continúa sobre los resultados anteriores y recorre las conexiones
-              documentadas del grafo. Hilo Cofrade no completa con datos que no estén publicados.
+              Pregunta con lenguaje natural, continúa sobre los resultados anteriores, recorre conexiones documentadas
+              o pide que Hilo Cofrade tire de un hilo curioso por ti. Nunca completa con datos que no estén publicados.
             </p>
           </header>
 
