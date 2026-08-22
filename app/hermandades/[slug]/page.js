@@ -18,8 +18,8 @@ import SourcesBlock from '@/components/SourcesBlock';
 import { hermandades } from '@/lib/data';
 import { getStepPhotoFraming } from '@/lib/step-photo-framing';
 import { getBrotherhoodMusicalHeritage } from '@/lib/supabase/brotherhood-musical-heritage';
+import { getHermandadPageBySlug } from '@/lib/supabase/brotherhood-display';
 import { getPublishedBrotherhoodCrestPath } from '@/lib/supabase/brotherhood-public-authority';
-import { getHermandadPageBySlug } from '@/lib/supabase/brotherhoods';
 import { getPublishedEntityCoverMediaMap } from '@/lib/supabase/entity-media';
 import {
   absoluteUrl,
@@ -380,13 +380,15 @@ export default async function HermandadDetailPage({ params }) {
                 </div>
               )}
               {paso.estadoActual && <p className="step-current-state">{paso.estadoActual}</p>}
-              <div className="related-row"><small>Imágenes que procesionan</small><div>{paso.imagenes.map((id) => {
-                const imagen = imagenMap.get(id);
-                if (!imagen) return null;
-                return imagen.fichaDisponible
-                  ? <Link key={id} href={`/imagenes/${imagen.slug}`}>{imagen.nombre}</Link>
-                  : <span className="related-name" key={id}>{imagen.nombre}</span>;
-              })}</div></div>
+              <div className="related-row"><small>Imágenes que procesionan</small><div>{(
+                paso.imagenesDetalle?.length
+                  ? paso.imagenesDetalle
+                  : paso.imagenes.map((id) => imagenMap.get(id)).filter(Boolean)
+              ).map((imagen) => (
+                imagen.fichaDisponible
+                  ? <Link key={imagen.id} href={`/imagenes/${imagen.slug}`}>{imagen.nombre}</Link>
+                  : <span className="related-name" key={imagen.id}>{imagen.nombre}</span>
+              ))}</div></div>
               {paso.fichaDisponible && <Link href={`/pasos/${paso.slug}`} className="text-link">Ver ficha del paso →</Link>}
             </div>
           </article>
