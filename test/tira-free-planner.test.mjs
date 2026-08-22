@@ -56,6 +56,28 @@ test('reconoce filtros y operaciones sobre el conjunto anterior', () => {
   )
 })
 
+test('encadena autoría y dedicatoria de una marcha sin IA', () => {
+  assert.deepEqual(
+    planFreeCompoundQuestion(
+      '¿Quién compuso Refúgiame y a quién está dedicada?'
+    )?.queries,
+    [
+      '¿Quién compuso Refúgiame',
+      'a quién está dedicada?',
+    ]
+  )
+
+  assert.deepEqual(
+    planFreeCompoundQuestion(
+      '¿De qué año es Refúgiame y cuándo se estrenó?'
+    )?.queries,
+    [
+      '¿De qué año es Refúgiame',
+      'cuándo se estrenó?',
+    ]
+  )
+})
+
 test('fusiona la consulta compuesta manteniendo el contexto del último paso', () => {
   const first = {
     kind: 'answer',
