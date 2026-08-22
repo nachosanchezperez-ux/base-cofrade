@@ -3,12 +3,14 @@
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import HiloGraphPath, { isGraphPathResponse } from './HiloGraphPath';
 import styles from './HiloSearch.module.css';
 
 const starterQuestions = [
   '¿Qué imágenes de La Cena son anteriores al siglo XX?',
   '¿Qué autores han trabajado en más de un paso?',
   '¿Qué bandas acompañan a hermandades de gloria en Cantillana?',
+  'Busca alguna conexión entre El Baratillo y La Cena',
 ];
 
 const contextNouns = {
@@ -45,7 +47,7 @@ function analyticsEntityType(value = '') {
 
 function looksLikeQuestion(value = '') {
   const text = normalize(value);
-  return /^(quien|que|cual|cuales|cuanto|cuantos|cuantas|donde|como|por que|cuando|dime|cuentame|ensename|muestrame|hay|tiene|tienen)\b/.test(text)
+  return /^(quien|que|cual|cuales|cuanto|cuantos|cuantas|donde|como|por que|cuando|dime|cuentame|ensename|muestrame|hay|tiene|tienen|busca)\b/.test(text)
     || value.includes('?')
     || value.includes('¿');
 }
@@ -63,6 +65,7 @@ function AssistantAnswer({ message, onFollowUp }) {
   const response = message.response || {};
   const hasEntities = (response.entities || []).length > 0;
   const hasItems = (response.items || []).length > 0;
+  const isGraphPath = isGraphPathResponse(response);
 
   return (
     <div className={styles.assistantMessage}>
@@ -74,7 +77,7 @@ function AssistantAnswer({ message, onFollowUp }) {
 
       <p className={styles.answerText}>{response.answer}</p>
 
-      {(response.path || []).length > 0 ? (
+      {!isGraphPath && (response.path || []).length > 0 ? (
         <div className={styles.answerPath} aria-label={`Ruta: ${response.path.join(', ')}`}>
           {response.path.map((step, index) => (
             <span key={`${message.id}-${step}`}>{index ? '→ ' : ''}{step}</span>
@@ -82,7 +85,9 @@ function AssistantAnswer({ message, onFollowUp }) {
         </div>
       ) : null}
 
-      {hasItems ? (
+      {isGraphPath ? (
+        <HiloGraphPath response={response} />
+      ) : hasItems ? (
         <div className={styles.answerList}>
           {response.items.map((item, index) => item.href ? (
             <Link href={item.href} className={styles.answerListItem} key={`${item.label}-${index}`}>
@@ -103,7 +108,7 @@ function AssistantAnswer({ message, onFollowUp }) {
         </div>
       ) : null}
 
-      {hasEntities ? (
+      {hasEntities && !isGraphPath ? (
         <div className={styles.answerEntities} aria-label="Entidades relacionadas">
           {response.entities.map((entity) => entity.href ? (
             <Link href={entity.href} key={entity.id} className={styles.entityChip}>
