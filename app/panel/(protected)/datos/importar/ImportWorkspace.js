@@ -17,7 +17,7 @@ function inferFormat(name) {
   if (lower.endsWith('.csv')) return 'csv'
   if (lower.endsWith('.jsonl') || lower.endsWith('.ndjson')) return 'jsonl'
   if (lower.endsWith('.json')) return 'json'
-  return 'auto'
+  return null
 }
 
 function statusLabel(status) {
@@ -72,7 +72,7 @@ export default function ImportWorkspace({ initialImports, canEdit }) {
   const [text, setText] = useState('')
   const [sourceName, setSourceName] = useState('')
   const [label, setLabel] = useState('')
-  const [format, setFormat] = useState('auto')
+  const [format, setFormat] = useState('json')
   const [csvTable, setCsvTable] = useState('entities')
   const [csvOperation, setCsvOperation] = useState('upsert')
   const [csvConflict, setCsvConflict] = useState('slug')
@@ -106,7 +106,7 @@ export default function ImportWorkspace({ initialImports, canEdit }) {
     setSourceName(file.name)
     setLabel((current) => current || file.name.replace(/\.[^.]+$/, ''))
     const inferred = inferFormat(file.name)
-    if (inferred !== 'auto') setFormat(inferred)
+    if (inferred) setFormat(inferred)
     setText(await file.text())
   }
 
@@ -204,7 +204,7 @@ export default function ImportWorkspace({ initialImports, canEdit }) {
 
       <div className={styles.gridTwo}>
         <label className={styles.field}>Nombre del lote<input value={label} onChange={(event) => setLabel(event.target.value)} placeholder="Ej. Extraordinarias Sevilla 2026" disabled={!canEdit || working} /></label>
-        <label className={styles.field}>Formato<select value={format} onChange={(event) => { setFormat(event.target.value); resetResult() }} disabled={!canEdit || working}><option value="auto">Detectar automáticamente</option><option value="json">JSON relacional</option><option value="jsonl">JSONL / NDJSON</option><option value="csv">CSV de una tabla</option></select></label>
+        <label className={styles.field}>Formato<select value={format} onChange={(event) => { setFormat(event.target.value); resetResult() }} disabled={!canEdit || working}><option value="json">JSON relacional</option><option value="jsonl">JSONL / NDJSON</option><option value="csv">CSV de una tabla</option></select></label>
       </div>
 
       {format === 'csv' ? <div className={styles.csvOptions}>
@@ -213,7 +213,7 @@ export default function ImportWorkspace({ initialImports, canEdit }) {
         <label className={styles.field}>Clave de conflicto<input value={csvConflict} onChange={(event) => { setCsvConflict(event.target.value); resetResult() }} placeholder="slug o entity_id" disabled={!canEdit || working || csvOperation !== 'upsert'} /></label>
       </div> : null}
 
-      <label className={styles.fileDrop}>Seleccionar archivo<input type="file" accept=".csv,.json,.jsonl,.ndjson,text/csv,application/json" onChange={handleFile} disabled={!canEdit || working} /><small>También funciona desde Archivos en iPhone/iPad. El fichero se lee en el navegador y se envía al servidor por bloques.</small></label>
+      <label className={styles.fileDrop}>Seleccionar archivo<input type="file" accept=".csv,.json,.jsonl,.ndjson,text/csv,application/json" onChange={handleFile} disabled={!canEdit || working} /><small>También funciona desde Archivos en iPhone/iPad. El formato se selecciona por la extensión del archivo; si pegas datos, elige el formato antes de analizarlos.</small></label>
 
       <label className={styles.field}>Contenido<textarea rows={12} value={text} onChange={(event) => { setText(event.target.value); resetResult() }} placeholder="Pega aquí un CSV, un JSON o un JSONL…" disabled={!canEdit || working} /></label>
       <div className={styles.actions}><button type="button" className={styles.secondaryButton} onClick={analyse} disabled={!canEdit || working || !text.trim()}>Analizar contenido</button>{analysis ? <button type="button" className={styles.primaryButton} onClick={prepareBatch} disabled={!canEdit || working}>Preparar lote</button> : null}</div>
