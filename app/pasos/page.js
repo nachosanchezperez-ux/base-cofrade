@@ -1,41 +1,25 @@
 import JsonLd from '@/components/JsonLd'
 import RelationalEntityDirectory from '@/components/RelationalEntityDirectory'
 import { getStepsDirectory } from '@/lib/supabase/directories'
-import { absoluteUrl, breadcrumbJsonLd, pageTitle } from '@/lib/seo'
+import { breadcrumbJsonLd, collectionPageJsonLd, socialMetadata } from '@/lib/seo'
 
 export const dynamic = 'force-dynamic'
 
+const title = 'Pasos cofrades de Sevilla y provincia'
+const description = 'Directorio de pasos cofrades de Sevilla y su provincia: hermandad, imágenes, tipología, autores, talleres y evolución patrimonial.'
+
 export const metadata = {
-  title: 'Pasos cofrades de Sevilla y provincia',
-  description: 'Directorio de pasos cofrades de Sevilla y su provincia: hermandad, imágenes, tipología, autores, talleres y evolución patrimonial.',
-  alternates: { canonical: '/pasos' },
-  openGraph: {
-    title: pageTitle('Directorio de pasos'),
+  title,
+  description,
+  ...socialMetadata({
+    title: 'Directorio de pasos',
     description: 'Consulta pasos procesionales documentados y sus relaciones con hermandades, imágenes, autores, talleres y patrimonio.',
-    url: '/pasos',
-  },
+    path: '/pasos',
+  }),
 }
 
 export default async function PasosPage() {
   const steps = await getStepsDirectory()
-  const collection = {
-    '@context': 'https://schema.org',
-    '@type': 'CollectionPage',
-    '@id': `${absoluteUrl('/pasos')}#collection`,
-    url: absoluteUrl('/pasos'),
-    name: 'Directorio de pasos',
-    inLanguage: 'es',
-    mainEntity: {
-      '@type': 'ItemList',
-      numberOfItems: steps.length,
-      itemListElement: steps.map((item, index) => ({
-        '@type': 'ListItem',
-        position: index + 1,
-        name: item.name,
-        url: absoluteUrl(item.href),
-      })),
-    },
-  }
 
   return (
     <section className="section page-top">
@@ -43,7 +27,12 @@ export default async function PasosPage() {
         { name: 'Inicio', path: '/' },
         { name: 'Pasos', path: '/pasos' },
       ])} />
-      <JsonLd data={collection} />
+      <JsonLd data={collectionPageJsonLd({
+        path: '/pasos',
+        name: 'Directorio de pasos',
+        description,
+        items: steps.map((item) => ({ name: item.name, path: item.href })),
+      })} />
       <div className="shell">
         <span className="eyebrow">Patrimonio procesional</span>
         <h1 className="page-title">Directorio de pasos</h1>
