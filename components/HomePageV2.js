@@ -6,6 +6,7 @@ import HomeExploreV2 from '@/components/HomeExploreV2'
 import styles from '@/app/home.module.css'
 
 const stackedNextExtraHeadStyle = { alignItems: 'flex-start', flexDirection: 'column', gap: 4 }
+const heroThread = ['Hermandades', 'Imágenes', 'Pasos', 'Bandas', 'Marchas', 'Autores']
 
 function madridDateKey(date = new Date()) {
   const parts = new Intl.DateTimeFormat('en-CA', {
@@ -45,7 +46,15 @@ export default function HomePageV2({
           <div className={styles.heroCopy}>
             <span className={styles.kicker}>Sevilla y su provincia</span>
             <h1>Hilo Cofrade, <span>todo en las cofradías está relacionado</span></h1>
-            <p>Consulta, descubre y sigue las conexiones entre hermandades, imágenes, bandas, marchas, autores y patrimonio</p>
+            <p>Consulta, descubre y sigue las conexiones entre hermandades, imágenes, bandas, marchas, autores y patrimonio.</p>
+            <div className={styles.heroThread} aria-label="Recorrido del conocimiento relacionado de Hilo Cofrade">
+              {heroThread.map((item, index) => (
+                <span key={item}>
+                  <b>{item}</b>
+                  {index < heroThread.length - 1 ? <i aria-hidden="true">→</i> : null}
+                </span>
+              ))}
+            </div>
           </div>
 
           <aside className={styles.searchBox} id="tiradelhilo">
