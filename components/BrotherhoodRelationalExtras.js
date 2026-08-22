@@ -2,6 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import RelationalThread from '@/components/RelationalThread'
 import styles from '@/components/BrotherhoodCurrentMusic.module.css'
+import discoveryStyles from '@/components/BrotherhoodRelationalDiscovery.module.css'
 import { getPublishedEntityCoverMediaMap } from '@/lib/supabase/entity-media'
 import { createClient } from '@/lib/supabase/server'
 
@@ -13,6 +14,10 @@ function assertRows(result, label) {
 function assertRow(result, label) {
   if (result.error) throw new Error(`${label}: ${result.error.message}`)
   return result.data || null
+}
+
+function unique(values = []) {
+  return [...new Set(values.filter(Boolean))]
 }
 
 function processionRank(position = '') {
@@ -128,7 +133,7 @@ async function loadCurrentAccompaniments(supabase, brotherhoodId) {
     'No se pudieron consultar los acompañamientos actuales'
   )
 
-  const bandIds = [...new Set(periods.map((item) => item.band_entity_id).filter(Boolean))]
+  const bandIds = unique(periods.map((item) => item.band_entity_id))
   if (!bandIds.length) return []
 
   const [entitiesResult, bandsResult] = await Promise.all([
@@ -157,6 +162,7 @@ async function loadCurrentAccompaniments(supabase, brotherhoodId) {
 
       return {
         id: period.id,
+        bandId: period.band_entity_id,
         slug: entity.slug,
         nombre: entity.name,
         posicion: period.position || 'Acompañamiento musical',
@@ -237,6 +243,76 @@ async function loadBrotherhoodThreadData(supabase, brotherhoodId) {
   }
 }
 
+async function loadBrotherhoodDiscoveryData(supabase, brotherhoodId, threadData, currentAccompaniments) {
+  const imageIds = threadData.images.map((item) => item.id).filter(Boolean)
+  const stepIds = threadData.steps.map((item) => item.id).filter(Boolean)
+  const bandIds = unique(currentAccompaniments.map((item) => item.bandId))
+  const dedicateeIds = unique([brotherhoodId, ...imageIds])
+
+  const [dedicationsResult, authorshipsResult, personnelResult, networkResult] = await Promise.all([
+    dedicateeIds.length
+      ? supabase
+          .from('march_dedications')
+          .select('march_entity_id')
+          .in('dedicatee_entity_id', dedicateeIds)
+          .eq('status', 'published')
+      : Promise.resolve({ data: [], error: null }),
+    imageIds.length
+      ? supabase
+          .from('image_authorships')
+          .select('agent_entity_id')
+          .in('image_entity_id', imageIds)
+          .eq('status', 'published')
+      : Promise.resolve({ data: [], error: null }),
+    stepIds.length
+      ? supabase
+          .from('step_personnel_periods')
+          .select('agent_entity_id')
+          .in('step_entity_id', stepIds)
+          .eq('is_current', true)
+          .eq('status', 'published')
+      : Promise.resolve({ data: [], error: null }),
+    bandIds.length
+      ? supabase
+          .from('music_accompaniment_periods')
+          .select('brotherhood_entity_id')
+          .in('band_entity_id', bandIds)
+          .eq('is_current', true)
+          .eq('status', 'published')
+      : Promise.resolve({ data: [], error: null }),
+  ])
+
+  const marchIds = unique(assertRows(dedicationsResult, 'No se pudieron consultar las dedicatorias musicales').map((item) => item.march_entity_id))
+  const personIds = unique([
+    ...assertRows(authorshipsResult, 'No se pudieron consultar las autorías de los titulares').map((item) => item.agent_entity_id),
+    ...assertRows(personnelResult, 'No se pudieron consultar los responsables actuales de los pasos').map((item) => item.agent_entity_id),
+  ])
+  const otherBrotherhoodIds = unique(
+    assertRows(networkResult, 'No se pudo ampliar la red musical de la Hermandad')
+      .map((item) => item.brotherhood_entity_id)
+      .filter((id) => id && id !== brotherhoodId)
+  )
+  const relatedIds = unique([...marchIds, ...personIds, ...otherBrotherhoodIds])
+  const publishedEntities = relatedIds.length
+    ? assertRows(
+        await supabase
+          .from('entities')
+          .select('id, entity_type')
+          .in('id', relatedIds)
+          .eq('status', 'published'),
+        'No se pudieron resolver las relaciones de segundo grado'
+      )
+    : []
+  const typeById = new Map(publishedEntities.map((item) => [item.id, item.entity_type]))
+
+  return {
+    dedicatedMarches: marchIds.filter((id) => typeById.get(id) === 'march').length,
+    connectedPeople: personIds.filter((id) => typeById.get(id) === 'agent').length,
+    currentBands: bandIds.length,
+    otherBrotherhoodsViaMusic: otherBrotherhoodIds.filter((id) => typeById.get(id) === 'brotherhood').length,
+  }
+}
+
 export async function BrotherhoodTitularCount({ brotherhoodId, imageCount = 0 }) {
   try {
     const supabase = await createClient()
@@ -293,6 +369,70 @@ export async function BrotherhoodConceptualTitulars({ brotherhoodId }) {
     console.error('[Hilo Cofrade] No se pudieron mostrar los titulares devocionales', error)
     return null
   }
+}
+
+function BrotherhoodDiscoveryPaths({ brotherhoodName, data }) {
+  const routes = [
+    data.dedicatedMarches > 0 ? {
+      key: 'marches',
+      label: 'Ruta musical',
+      count: `${data.dedicatedMarches} ${data.dedicatedMarches === 1 ? 'marcha' : 'marchas'}`,
+      trail: 'Titulares → Marchas → Autores',
+      description: 'De la devoción a su patrimonio musical y, desde cada composición, a quienes la firmaron.',
+      question: `¿Qué marchas están dedicadas a ${brotherhoodName} y a sus titulares, y quiénes son sus autores?`,
+    } : null,
+    data.connectedPeople > 0 ? {
+      key: 'people',
+      label: 'Personas conectadas',
+      count: `${data.connectedPeople} ${data.connectedPeople === 1 ? 'persona' : 'personas'}`,
+      trail: 'Imágenes y pasos → Personas → otras obras',
+      description: 'Sigue las autorías de sus imágenes y los responsables actuales de sus pasos hacia el resto del grafo.',
+      question: `¿Qué autores y capataces están relacionados con ${brotherhoodName}, y qué otras obras o pasos tienen documentados en Hilo Cofrade?`,
+    } : null,
+    data.currentBands > 0 && data.otherBrotherhoodsViaMusic > 0 ? {
+      key: 'music-network',
+      label: 'Red musical',
+      count: `${data.currentBands} ${data.currentBands === 1 ? 'banda' : 'bandas'} · ${data.otherBrotherhoodsViaMusic} ${data.otherBrotherhoodsViaMusic === 1 ? 'Hermandad' : 'Hermandades'}`,
+      trail: 'Bandas → Acompañamientos → Hermandades',
+      description: 'Continúa por las formaciones actuales para descubrir en qué otros cortejos y salidas están presentes.',
+      question: `¿Dónde más tocan actualmente las bandas que acompañan a ${brotherhoodName}?`,
+    } : null,
+  ].filter(Boolean)
+
+  if (!routes.length) return null
+
+  return (
+    <section className={discoveryStyles.section} aria-label="Rutas para seguir tirando del hilo">
+      <div className={`shell ${discoveryStyles.shell}`}>
+        <header className={discoveryStyles.header}>
+          <div className={discoveryStyles.heading}>
+            <span className={discoveryStyles.eyebrow}>Descubrimiento relacional</span>
+            <h2>Sigue tirando del hilo</h2>
+          </div>
+          <p>Da un paso más: de sus titulares a la música, de sus pasos a las personas y de sus bandas a otras Hermandades.</p>
+        </header>
+
+        <div className={discoveryStyles.grid}>
+          {routes.map((route) => (
+            <Link
+              className={discoveryStyles.card}
+              href={`/pregunta?q=${encodeURIComponent(route.question)}`}
+              key={route.key}
+            >
+              <div className={discoveryStyles.topline}>
+                <span>{route.label}</span>
+                <strong>2º grado</strong>
+              </div>
+              <strong className={discoveryStyles.metric}>{route.count}</strong>
+              <span className={discoveryStyles.trail}>{route.trail}</span>
+              <p>{route.description}</p>
+              <span className={discoveryStyles.cta}>Explorar con Hilo <span aria-hidden="true">→</span></span>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
 }
 
 function CurrentMusicSequence({ items, penitencia }) {
@@ -366,6 +506,12 @@ export async function BrotherhoodOwnBands({ brotherhoodId }) {
       loadCurrentAccompaniments(supabase, brotherhoodId),
       loadBrotherhoodTypes(supabase, brotherhoodId),
     ])
+    const discoveryData = await loadBrotherhoodDiscoveryData(
+      supabase,
+      brotherhoodId,
+      threadData,
+      currentAccompaniments
+    )
     const threadItems = [
       ...threadData.images.map((image) => ({
         kind: 'Imagen',
@@ -401,7 +547,10 @@ export async function BrotherhoodOwnBands({ brotherhoodId }) {
       })),
     ]
 
-    if (!threadItems.length && !bands.length && !currentAccompaniments.length) return null
+    const hasDiscovery = discoveryData.dedicatedMarches > 0
+      || discoveryData.connectedPeople > 0
+      || (discoveryData.currentBands > 0 && discoveryData.otherBrotherhoodsViaMusic > 0)
+    if (!threadItems.length && !bands.length && !currentAccompaniments.length && !hasDiscovery) return null
 
     const currentBandCount = new Set(currentAccompaniments.map((item) => item.slug).filter(Boolean)).size
     const meta = [
@@ -410,17 +559,20 @@ export async function BrotherhoodOwnBands({ brotherhoodId }) {
       currentBandCount ? `${currentBandCount} bandas actuales` : '',
     ].filter(Boolean).join(' · ')
     const penitencia = brotherhoodTypes.includes('Penitencia')
+    const brotherhoodName = threadData.brotherhood?.name || 'Hermandad'
 
     return (
       <>
         <RelationalThread
           currentLabel="Hermandad"
-          currentName={threadData.brotherhood?.name || 'Hermandad'}
+          currentName={brotherhoodName}
           currentMeta={meta}
           items={threadItems}
           title="La Hermandad como nodo de la enciclopedia"
           description="Tira del hilo hacia sus imágenes, sus pasos y su música vinculada. Los vínculos institucionales y los acompañamientos actuales se etiquetan de forma distinta para no confundir pertenencia con contrato procesional."
         />
+
+        <BrotherhoodDiscoveryPaths brotherhoodName={brotherhoodName} data={discoveryData} />
 
         {bands.length ? (
           <section className="section brotherhood-soft" id="bandas-propias">

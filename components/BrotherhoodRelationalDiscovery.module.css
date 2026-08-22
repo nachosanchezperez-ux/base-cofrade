@@ -1,0 +1,206 @@
+.section {
+  padding: 0 0 clamp(58px, 7vw, 88px);
+  background: linear-gradient(180deg, #fafafa 0%, #fff 100%);
+}
+
+.shell {
+  display: grid;
+  gap: clamp(24px, 3vw, 34px);
+  padding: clamp(26px, 4vw, 42px);
+  overflow: hidden;
+  border-radius: 28px;
+  color: #fff;
+  background:
+    radial-gradient(circle at 88% 4%, color-mix(in srgb, var(--brotherhood-secondary, #a71930) 42%, transparent), transparent 33%),
+    linear-gradient(135deg, var(--brotherhood-dark, #0d2949), color-mix(in srgb, var(--brotherhood-dark, #0d2949) 76%, #05080d));
+  box-shadow: 0 26px 64px rgb(13 41 73 / 18%);
+}
+
+.header {
+  display: grid;
+  grid-template-columns: minmax(0, .8fr) minmax(300px, .7fr);
+  gap: 30px;
+  align-items: end;
+}
+
+.heading {
+  min-width: 0;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 10px;
+  color: color-mix(in srgb, var(--brotherhood-secondary, #a71930) 52%, white);
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.eyebrow::before {
+  width: 28px;
+  height: 2px;
+  background: currentColor;
+  content: '';
+}
+
+.header h2 {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(1.75rem, 3.2vw, 2.8rem);
+  line-height: 1.02;
+  letter-spacing: -.035em;
+}
+
+.header p {
+  max-width: 620px;
+  margin: 0;
+  color: rgb(255 255 255 / 68%);
+  font-size: .94rem;
+  line-height: 1.65;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  min-height: 214px;
+  flex-direction: column;
+  padding: 22px;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 11%);
+  border-radius: 20px;
+  color: inherit;
+  background: rgb(255 255 255 / 6%);
+  text-decoration: none;
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.card::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: var(--brotherhood-secondary, #a71930);
+  opacity: 0;
+  transform: scaleX(.35);
+  transform-origin: left;
+  transition: opacity 180ms ease, transform 180ms ease;
+  content: '';
+}
+
+.card:hover,
+.card:focus-visible {
+  border-color: color-mix(in srgb, var(--brotherhood-secondary, #a71930) 44%, transparent);
+  background: rgb(255 255 255 / 9%);
+  transform: translateY(-2px);
+}
+
+.card:hover::after,
+.card:focus-visible::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: rgb(255 255 255 / 54%);
+  font-size: .64rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.topline strong {
+  color: color-mix(in srgb, var(--brotherhood-secondary, #a71930) 42%, white);
+  font-size: .65rem;
+}
+
+.metric {
+  margin-top: 18px;
+  color: #fff;
+  font-size: clamp(1.8rem, 3vw, 2.55rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -.045em;
+}
+
+.trail {
+  margin-top: 10px;
+  color: rgb(255 255 255 / 72%);
+  font-size: .76rem;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.card p {
+  margin: 13px 0 0;
+  color: rgb(255 255 255 / 58%);
+  font-size: .79rem;
+  line-height: 1.55;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 20px;
+  color: #fff;
+  font-size: .74rem;
+  font-weight: 800;
+}
+
+.cta span {
+  color: color-mix(in srgb, var(--brotherhood-secondary, #a71930) 45%, white);
+  font-size: 1rem;
+  transition: transform 180ms ease;
+}
+
+.card:hover .cta span,
+.card:focus-visible .cta span {
+  transform: translateX(3px);
+}
+
+@media (max-width: 900px) {
+  .header {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .section {
+    padding-bottom: 54px;
+  }
+
+  .shell {
+    gap: 24px;
+    padding: 22px 18px;
+    border-radius: 22px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    min-height: 190px;
+    padding: 20px;
+  }
+}
