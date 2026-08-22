@@ -60,6 +60,13 @@ export default async function ImageEditorPage({ params, searchParams }) {
               <label className={styles.fieldWide}><span>Nombre de la imagen</span><input name="name" defaultValue={entity.name} required /></label>
               <label><span>Tipo de imagen</span><input name="image_type" defaultValue={image.image_type || ''} placeholder="Cristo, Virgen, Santo…" /></label>
               <label><span>Tipología</span><input name="anatomical_type" defaultValue={image.anatomical_type || ''} placeholder="Talla completa, busto…" /></label>
+              <label className={styles.fieldWide}>
+                <span>Advocación</span>
+                <select name="advocation_entity_id" defaultValue={image.advocation_entity_id || ''}>
+                  <option value="">Sin Advocación vinculada</option>
+                  {data.advocationOptions.map((item) => <option key={item.id} value={item.id}>{item.name} · {item.type}</option>)}
+                </select>
+              </label>
               <label><span>Slug público</span><input name="slug" defaultValue={entity.slug || ''} required /></label>
               <label>
                 <span>Estado editorial</span>

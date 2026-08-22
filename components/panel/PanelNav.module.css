@@ -1,0 +1,14 @@
+@media (max-width: 720px) {
+  .scrollNav {
+    justify-content: flex-start !important;
+    gap: 8px !important;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .scrollNav::-webkit-scrollbar { display: none; }
+  .scrollNav > a { flex: 0 0 70px; }
+}
