@@ -1,9 +1,7 @@
 import HomePageV2 from '@/components/HomePageV2'
 import { DEFAULT_DESCRIPTION, HOME_TITLE } from '@/lib/seo'
-import {
-  getHomeDiscoveryThreads,
-  getUpcomingExtraordinaryOutings,
-} from '@/lib/supabase/home'
+import { getUpcomingExtraordinaryOutings } from '@/lib/supabase/home'
+import { getDiverseHomeDiscoveryThreads } from '@/lib/supabase/home-discovery-diverse'
 import { getHomeExploreStats } from '@/lib/supabase/home-v2'
 import { getTodayHomeContentV2 } from '@/lib/supabase/home-effective-editorial'
 import { getOutingBriefing } from '@/lib/supabase/outing-briefing'
@@ -40,13 +38,13 @@ export default async function HomePage() {
   ] = await Promise.all([
     getTodayHomeContentV2(),
     getUpcomingExtraordinaryOutings(5),
-    getHomeDiscoveryThreads(3),
+    getDiverseHomeDiscoveryThreads(3),
     getHomeExploreStats(),
   ])
 
   const featuredExtraordinary = extraordinaryOutings[0] || null
   const featuredBriefing = featuredExtraordinary
-    ? await getOutingBriefing(featuredExtraordinary.id)
+    ? await getOutingBriefing(featuredExtraordinary.id, featuredExtraordinary.date)
     : { schedule: [], bands: [], liturgicalMusic: [], places: [] }
 
   return (
