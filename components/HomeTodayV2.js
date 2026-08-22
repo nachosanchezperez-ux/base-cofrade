@@ -1,6 +1,29 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import HomeMarchPlayer from '@/components/HomeMarchPlayer'
 import styles from './HomeTodayV2.module.css'
+
+function isSvg(path = '') {
+  return String(path).toLowerCase().endsWith('.svg')
+}
+
+function CardVisual({ visual }) {
+  if (!visual?.path) return null
+  const photo = visual.kind === 'photo'
+
+  return (
+    <div className={`${styles.visual} ${photo ? styles.visualPhoto : styles.visualIdentity}`}>
+      <Image
+        src={visual.path}
+        alt={visual.alt || ''}
+        fill
+        sizes={photo ? '(max-width: 859px) 96px, 112px' : '78px'}
+        className={photo ? styles.visualPhotoImage : styles.visualIdentityImage}
+        unoptimized={isSvg(visual.path)}
+      />
+    </div>
+  )
+}
 
 export default function HomeTodayV2({ today, content }) {
   const cards = [content?.ephemeris, content?.editorial, content?.discovery].filter(Boolean)
@@ -20,7 +43,7 @@ export default function HomeTodayV2({ today, content }) {
           <div className={styles.grid}>
             {cards.map((card) => (
               <article
-                className={`${styles.card} ${card.kind === 'discovery' ? styles.discoveryCard : ''}`}
+                className={`${styles.card} ${card.kind === 'discovery' ? styles.discoveryCard : ''} ${card.visual?.path ? styles.cardWithVisual : ''}`}
                 key={`${card.kind}-${card.id}`}
               >
                 <span className={styles.icon} aria-hidden="true">{card.icon}</span>
@@ -29,12 +52,16 @@ export default function HomeTodayV2({ today, content }) {
                     <span className={styles.type}>{card.label}</span>
                     {card.kicker ? <span className={styles.kicker}>{card.kicker}</span> : null}
                   </div>
+                  {card.visual?.kind === 'context-crest' && card.visual.contextName ? (
+                    <span className={styles.context}>En {card.visual.contextName}</span>
+                  ) : null}
                   <h3>{card.title}</h3>
                   {card.summary ? <p>{card.summary}</p> : null}
                   {card.href ? (
                     <Link className={styles.link} href={card.href}>{card.linkLabel}</Link>
                   ) : null}
                 </div>
+                <CardVisual visual={card.visual} />
               </article>
             ))}
           </div>
@@ -42,6 +69,9 @@ export default function HomeTodayV2({ today, content }) {
 
         {content?.march ? (
           <article className={styles.musicCard}>
+            <div className={styles.musicAccent} aria-hidden="true">
+              <span>♪</span>
+            </div>
             <div className={styles.musicCopy}>
               <span className={styles.type}>Marcha del día</span>
               <h3>{content.march.title}</h3>
