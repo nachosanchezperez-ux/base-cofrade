@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import styles from './RelationalEntityHero.module.css';
 import focusStyles from './RelationalEntityHeroMedia.module.css';
+import polishStyles from './RelationalEntityHeroPolish.module.css';
 
 export default function RelationalEntityHeroMedia({
   variant = 'image',
@@ -50,8 +51,14 @@ export default function RelationalEntityHeroMedia({
   };
 
   return (
-    <figure className={`${styles.media} ${styles[`media_${variant}`]}`} style={figureStyle}>
-      <div className={styles.mediaFrame} style={usePortraitStepLayout ? { aspectRatio: '2 / 3' } : undefined}>
+    <figure
+      className={`${styles.media} ${styles[`media_${variant}`]} ${polishStyles.media} ${polishStyles[`media_${variant}`] || ''}`}
+      style={figureStyle}
+    >
+      <div
+        className={`${styles.mediaFrame} ${polishStyles.mediaFrame}`}
+        style={usePortraitStepLayout ? { aspectRatio: '2 / 3' } : undefined}
+      >
         {hasPhoto ? (
           <Image
             className={`${styles.photo} ${focusStyles.focusedPhoto}`}
@@ -61,8 +68,8 @@ export default function RelationalEntityHeroMedia({
             preload
             style={photoStyle}
             sizes={variant === 'image'
-              ? '(max-width: 980px) min(100vw - 40px, 560px), 470px'
-              : '(max-width: 980px) min(100vw - 40px, 720px), 640px'}
+              ? '(max-width: 980px) min(100vw - 40px, 560px), 500px'
+              : '(max-width: 980px) min(100vw - 40px, 720px), 700px'}
             onLoad={(event) => {
               if (variant !== 'step' || hasDimensions) return;
               const image = event.currentTarget;
@@ -91,14 +98,10 @@ export default function RelationalEntityHeroMedia({
           </div>
         )}
 
-        {hasPhoto ? <span className={styles.photoShade} style={{ zIndex: 2 }} aria-hidden="true" /> : null}
+        {hasPhoto ? (
+          <span className={`${styles.photoShade} ${polishStyles.photoShade}`} style={{ zIndex: 2 }} aria-hidden="true" />
+        ) : null}
       </div>
-
-      {variant !== 'brotherhood' && hasPhoto && hasCrest ? (
-        <span className={styles.crestOverlay}>
-          <Image src={crestSrc} alt="" width={92} height={108} sizes="92px" onError={() => setCrestError(true)} />
-        </span>
-      ) : null}
 
       {hasPhoto && credit ? <figcaption>{credit}</figcaption> : null}
     </figure>
