@@ -13,6 +13,7 @@ const baseItems = [
   { href: '/panel/pasos', label: 'Pasos', mark: 'P' },
   { href: '/panel/agentes', label: 'Personas', mark: 'Pe' },
   { href: '/panel/bandas', label: 'Bandas', mark: 'B' },
+  { href: '/panel/multimedia', label: 'Multimedia', mark: 'M' },
   { href: '/panel/fuentes', label: 'Fuentes', mark: 'F' },
   { href: '/panel/relaciones', label: 'Relaciones', mark: '↔' },
 ]
