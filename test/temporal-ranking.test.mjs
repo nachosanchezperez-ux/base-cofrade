@@ -25,5 +25,6 @@ test('ordena por antigüedad dejando sin datar al margen', () => {
 test('entiende extremos y órdenes temporales', () => {
   assert.deepEqual(temporalIntent('¿Cuál es la más antigua?'), { direction: 'oldest', mode: 'extreme' })
   assert.deepEqual(temporalIntent('Ordénalas de más antigua a más reciente'), { direction: 'oldest', mode: 'sort' })
+  assert.deepEqual(temporalIntent('Ordénalas de más reciente a más antigua'), { direction: 'newest', mode: 'sort' })
   assert.deepEqual(temporalIntent('¿Cuál es la más reciente?'), { direction: 'newest', mode: 'extreme' })
 })
