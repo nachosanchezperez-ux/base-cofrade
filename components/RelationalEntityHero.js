@@ -56,6 +56,16 @@ function ParentRelation({ relation }) {
   );
 }
 
+function BrotherhoodCrest({ src, alt }) {
+  if (!src) return null;
+
+  return (
+    <span className={styles.identityCrest}>
+      <Image src={src} alt={alt || ''} width={104} height={122} sizes="104px" priority />
+    </span>
+  );
+}
+
 export default function RelationalEntityHero({
   variant = 'image',
   entityType,
@@ -69,23 +79,37 @@ export default function RelationalEntityHero({
 }) {
   const visibleBadges = badges.filter(Boolean).slice(0, 4);
   const visibleFacts = facts.filter((fact) => fact?.label && fact?.value).slice(0, 3);
+  const isBrotherhood = variant === 'brotherhood';
+
+  const heading = (
+    <div className={styles.titleBody}>
+      <div className={styles.identityRow}>
+        <span className={styles.entityType}>{entityType}</span>
+        {visibleBadges.map((badge) => (
+          <span className={styles.badge} key={badge}>{badge}</span>
+        ))}
+      </div>
+
+      <h1 id="entity-hero-title">{title}</h1>
+      {subtitle ? <p className={styles.subtitle}>{subtitle}</p> : null}
+    </div>
+  );
 
   return (
     <section className={`${styles.hero} ${styles[`hero_${variant}`]}`} aria-labelledby="entity-hero-title">
+      <div className={styles.texture} aria-hidden="true" />
       <div className="shell">
         <Breadcrumb items={breadcrumbItems} />
 
         <div className={styles.grid}>
           <div className={styles.copy}>
-            <div className={styles.identityRow}>
-              <span className={styles.entityType}>{entityType}</span>
-              {visibleBadges.map((badge) => (
-                <span className={styles.badge} key={badge}>{badge}</span>
-              ))}
-            </div>
+            {isBrotherhood ? (
+              <div className={styles.brotherhoodLockup}>
+                <BrotherhoodCrest src={media.crestSrc} alt={media.crestAlt} />
+                {heading}
+              </div>
+            ) : heading}
 
-            <h1 id="entity-hero-title">{title}</h1>
-            {subtitle ? <p className={styles.subtitle}>{subtitle}</p> : null}
             <ParentRelation relation={relation} />
 
             {visibleFacts.length ? (
