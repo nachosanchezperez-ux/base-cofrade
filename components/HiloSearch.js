@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import HiloEvidence from './HiloEvidence';
 import HiloGraphPath, { isGraphPathResponse } from './HiloGraphPath';
 import HiloReferences from './HiloReferences';
+import { decodeTiraSession, encodeTiraSession, TIRA_SESSION_KEY } from '@/lib/tira-session';
 import styles from './HiloSearch.module.css';
 
 const starterQuestions = [
@@ -143,7 +144,7 @@ function AssistantAnswer({ message, onFollowUp }) {
   );
 }
 
-export default function HiloSearch() {
+export default function HiloSearch({ fullPage = false, initialQuestion = '' }) {
   const router = useRouter();
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
@@ -151,7 +152,37 @@ export default function HiloSearch() {
   const [messages, setMessages] = useState([]);
   const [context, setContext] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [sessionReady, setSessionReady] = useState(false);
   const sequence = useRef(0);
+  const initialHandled = useRef(false);
+
+  useEffect(() => {
+    try {
+      const restored = decodeTiraSession(window.sessionStorage.getItem(TIRA_SESSION_KEY) || '');
+      if (restored.messages.length) {
+        setMessages(restored.messages);
+        sequence.current = restored.messages.length + 1;
+      }
+      if (restored.context) setContext(restored.context);
+    } catch (error) {
+      console.error('[Hilo Cofrade] No se pudo restaurar la sesión de Tira del hilo', error);
+    } finally {
+      setSessionReady(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!sessionReady) return;
+    try {
+      if (!messages.length && !context) {
+        window.sessionStorage.removeItem(TIRA_SESSION_KEY);
+      } else {
+        window.sessionStorage.setItem(TIRA_SESSION_KEY, encodeTiraSession({ messages, context }));
+      }
+    } catch (error) {
+      console.error('[Hilo Cofrade] No se pudo guardar la sesión de Tira del hilo', error);
+    }
+  }, [messages, context, sessionReady]);
 
   useEffect(() => {
     const term = query.trim();
@@ -199,8 +230,9 @@ export default function HiloSearch() {
       return;
     }
 
-    const userId = `u-${++sequence.current}`;
-    const assistantId = `a-${++sequence.current}`;
+    const stamp = Date.now();
+    const userId = `u-${stamp}-${++sequence.current}`;
+    const assistantId = `a-${stamp}-${++sequence.current}`;
     setMessages((current) => [...current, { id: userId, role: 'user', text: question }]);
     setQuery('');
     setResults([]);
@@ -239,6 +271,13 @@ export default function HiloSearch() {
     }
   };
 
+  useEffect(() => {
+    const firstQuestion = String(initialQuestion || '').trim().slice(0, 320);
+    if (!sessionReady || initialHandled.current || !firstQuestion || messages.length || loading) return;
+    initialHandled.current = true;
+    void ask(firstQuestion);
+  }, [initialQuestion, sessionReady, messages.length, loading]);
+
   const submit = (event) => {
     event.preventDefault();
     ask(query);
@@ -265,13 +304,17 @@ export default function HiloSearch() {
     setQuery('');
     setResults([]);
     setSearching(false);
+    initialHandled.current = true;
+    try {
+      window.sessionStorage.removeItem(TIRA_SESSION_KEY);
+    } catch {}
   };
 
   const hasConversation = messages.length > 0;
   const activeContextLabel = contextLabel(context);
 
   return (
-    <div className={styles.wrap} data-hilo-section="home_search">
+    <div className={`${styles.wrap} ${fullPage ? styles.fullMode : ''}`} data-hilo-section={fullPage ? 'conversation_search' : 'home_search'}>
       {hasConversation ? (
         <div className={styles.conversation} aria-live="polite">
           {messages.map((message) => message.role === 'user' ? (
@@ -307,11 +350,11 @@ export default function HiloSearch() {
         className={`${styles.form} ${hasConversation ? styles.formAfterConversation : ''}`}
         onSubmit={submit}
         data-hilo-event="hilo_search"
-        data-hilo-origin="form"
+        data-hilo-origin={fullPage ? 'conversation_form' : 'form'}
       >
-        <label className={styles.srOnly} htmlFor="hilo-search">Pregunta a Hilo Cofrade</label>
+        <label className={styles.srOnly} htmlFor={fullPage ? 'hilo-search-full' : 'hilo-search'}>Pregunta a Hilo Cofrade</label>
         <textarea
-          id="hilo-search"
+          id={fullPage ? 'hilo-search-full' : 'hilo-search'}
           rows={1}
           value={query}
           onChange={(event) => setQuery(event.target.value)}
@@ -352,7 +395,7 @@ export default function HiloSearch() {
               className={styles.result}
               key={`${item.entityId || item.type}-${item.title}`}
               data-hilo-event="search_result_open"
-              data-hilo-origin="home_search"
+              data-hilo-origin={fullPage ? 'conversation_search' : 'home_search'}
               data-hilo-target-type={analyticsEntityType(item.type)}
             >
               <span className={styles.resultType}>{item.type}</span>
@@ -369,7 +412,7 @@ export default function HiloSearch() {
               key={`${item.entityId || item.type}-${item.title}`}
               onClick={() => useResult(item)}
               data-hilo-event="search_result_ask"
-              data-hilo-origin="home_search"
+              data-hilo-origin={fullPage ? 'conversation_search' : 'home_search'}
               data-hilo-target-type={analyticsEntityType(item.type)}
             >
               <span className={styles.resultType}>{item.type}</span>
@@ -381,6 +424,13 @@ export default function HiloSearch() {
             </button>
           ))}
         </div>
+      ) : null}
+
+      {!fullPage ? (
+        <Link className={styles.expandLink} href="/pregunta">
+          <span>Abrir conversación completa</span>
+          <b aria-hidden="true">↗</b>
+        </Link>
       ) : null}
 
       {hasConversation ? (
