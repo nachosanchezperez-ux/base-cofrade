@@ -213,3 +213,31 @@ export async function applyBulkImportChunkAction(importIdInput) {
   revalidatePath('/')
   return { id: importId, status, done, counts, processed: queue.length }
 }
+
+export async function retryBulkImportFailuresAction(importIdInput) {
+  await requirePanelEditor()
+  const supabase = await createClient()
+  const importId = assertImportId(importIdInput)
+  const batch = await loadBatch(supabase, importId)
+  if (!batch.failed_items) return { id: importId, status: batch.status, counts: batchCounts(batch) }
+  if (!['ready', 'processing', 'completed_with_errors'].includes(batch.status)) throw new Error('Este lote no admite reintentos en su estado actual.')
+
+  const now = new Date().toISOString()
+  assertResult(
+    await supabase
+      .from('bulk_import_items')
+      .update({ status: 'valid', error_text: null, result: null, applied_at: null, updated_at: now })
+      .eq('import_id', importId)
+      .eq('status', 'failed'),
+    'No se pudieron reactivar los registros fallidos',
+  )
+
+  const counts = await refreshBulkImportCounts(supabase, importId)
+  assertResult(
+    await supabase.from('bulk_imports').update({ status: 'ready', completed_at: null, updated_at: now }).eq('id', importId),
+    'No se pudo reabrir el lote',
+  )
+  revalidatePath('/panel/datos/importar')
+  revalidatePath(`/panel/datos/importar/${importId}`)
+  return { id: importId, status: 'ready', counts }
+}
