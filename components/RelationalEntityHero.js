@@ -3,6 +3,7 @@ import Link from 'next/link';
 import RelationalEntityHeroMedia from './RelationalEntityHeroMedia';
 import styles from './RelationalEntityHero.module.css';
 import polishStyles from './RelationalEntityHeroPolish.module.css';
+import brotherhoodStyles from './RelationalEntityHeroBrotherhood.module.css';
 
 function Breadcrumb({ items = [] }) {
   if (!items.length) return null;
@@ -61,8 +62,16 @@ function BrotherhoodCrest({ src, alt }) {
   if (!src) return null;
 
   return (
-    <span className={`${styles.identityCrest} ${polishStyles.identityCrest}`}>
-      <Image src={src} alt={alt || ''} width={104} height={122} sizes="104px" priority />
+    <span className={`${styles.identityCrest} ${polishStyles.identityCrest} ${brotherhoodStyles.crest}`}>
+      <Image
+        className={brotherhoodStyles.crestImage}
+        src={src}
+        alt={alt || ''}
+        width={154}
+        height={180}
+        sizes="(max-width: 390px) 68px, (max-width: 620px) 80px, (max-width: 1120px) 124px, 154px"
+        priority
+      />
     </span>
   );
 }
@@ -108,7 +117,7 @@ export default function RelationalEntityHero({
   );
 
   const identityHeading = isBrotherhood ? (
-    <div className={`${styles.brotherhoodLockup} ${polishStyles.brotherhoodLockup}`}>
+    <div className={`${styles.brotherhoodLockup} ${polishStyles.brotherhoodLockup} ${brotherhoodStyles.lockup}`}>
       <BrotherhoodCrest src={media.crestSrc} alt={media.crestAlt} />
       {heading}
     </div>
