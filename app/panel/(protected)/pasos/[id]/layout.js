@@ -1,24 +1,22 @@
-import Link from 'next/link'
-import styles from '@/app/panel/panel.module.css'
+import EntityWorkspaceNav from '@/components/panel/EntityWorkspaceNav'
 
 export default async function StepEditorLayout({ children, params }) {
   const { id } = await params
+  const root = `/panel/pasos/${id}`
+  const items = [
+    { href: root, label: 'General', mark: 'G', match: 'exact' },
+    { href: `/panel/multimedia?entity=${id}`, label: 'Multimedia', mark: 'M', activePath: '/panel/multimedia', tool: true },
+    { href: `/panel/fuentes?entity=${id}`, label: 'Fuentes', mark: 'F', activePath: '/panel/fuentes', tool: true },
+    { href: '/panel/relaciones/imagen-paso', label: 'Imagen ↔ Paso', mark: '↔', activePath: '/panel/relaciones/imagen-paso', tool: true },
+  ]
 
   return (
     <>
-      <div className={styles.pageWrap} style={{ paddingBottom: 0 }}>
-        <section className={styles.panelCard} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 18, flexWrap: 'wrap' }}>
-          <div>
-            <span className={styles.eyebrow}>Ficha conectada</span>
-            <strong style={{ display: 'block', marginTop: 5 }}>Imágenes, personas, música, patrimonio, multimedia y Fuentes</strong>
-          </div>
-          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
-            <Link className={styles.secondaryButton} href={`/panel/multimedia?entity=${id}`}>Multimedia</Link>
-            <Link className={styles.secondaryButton} href={`/panel/fuentes?entity=${id}`}>Fuentes</Link>
-            <Link className={styles.primaryButton} href="/panel/relaciones/imagen-paso">Imagen ↔ Paso</Link>
-          </div>
-        </section>
-      </div>
+      <EntityWorkspaceNav
+        eyebrow="Ficha de Paso"
+        description="Configuración, Imágenes, responsables, música, patrimonio y documentación."
+        items={items}
+      />
       {children}
     </>
   )
