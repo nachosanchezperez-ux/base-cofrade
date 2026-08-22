@@ -161,17 +161,31 @@
 .meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 5px 10px;
+  gap: 6px 9px;
+  align-items: center;
   margin-top: 7px;
   color: #71808e;
   font-size: 10px;
   font-weight: 700;
 }
 
-.meta span + span::before {
-  content: '·';
-  margin-right: 10px;
-  color: #adb6bf;
+.meta span:nth-child(2) {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 0 8px;
+  border: 1px solid rgba(21, 59, 105, .13);
+  border-radius: 999px;
+  color: var(--bc-blue);
+  background: rgba(21, 59, 105, .065);
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .02em;
+}
+
+.meta span:nth-child(2)::before {
+  content: none;
+  margin: 0;
 }
 
 .arrow {
@@ -327,6 +341,12 @@
   .meta {
     margin-top: 5px;
     font-size: 9.5px;
+  }
+
+  .meta span:nth-child(2) {
+    min-height: 22px;
+    padding: 0 7px;
+    font-size: 8.7px;
   }
 
   .arrow {
