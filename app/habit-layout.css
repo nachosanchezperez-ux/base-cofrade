@@ -41,8 +41,13 @@
     min-height: 450px;
   }
 
+  /* Caja óptica común para variantes múltiples: mantiene la altura de referencia
+     y reserva aire lateral para capas, cirios o siluetas especialmente anchas. */
   .habit-grid > .brotherhood-habit:not(:only-child) .habit-image {
+    width: calc(100% - 32px);
     height: 555px;
+    object-fit: contain;
+    object-position: center bottom;
   }
 
   /* En fichas con varias variantes, todos los bloques de texto arrancan arriba
