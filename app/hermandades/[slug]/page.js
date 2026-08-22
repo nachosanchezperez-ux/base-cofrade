@@ -18,8 +18,8 @@ import SourcesBlock from '@/components/SourcesBlock';
 import { hermandades } from '@/lib/data';
 import { getStepPhotoFraming } from '@/lib/step-photo-framing';
 import { getBrotherhoodMusicalHeritage } from '@/lib/supabase/brotherhood-musical-heritage';
+import { getHermandadPageBySlug } from '@/lib/supabase/brotherhood-display';
 import { getPublishedBrotherhoodCrestPath } from '@/lib/supabase/brotherhood-public-authority';
-import { getHermandadPageBySlug } from '@/lib/supabase/brotherhoods';
 import { getPublishedEntityCoverMediaMap } from '@/lib/supabase/entity-media';
 import {
   absoluteUrl,
