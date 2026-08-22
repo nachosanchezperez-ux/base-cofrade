@@ -44,12 +44,12 @@
 }
 
 /*
- * Separamos visualmente logo y contenido, pero sin convertir esa separación
- * en una columna vacía. El espacio se reduce de forma progresiva por viewport.
+ * Separamos visualmente logo y contenido sin crear una columna vacía.
+ * El hueco se mantiene contenido y se reduce progresivamente por viewport.
  */
 .card.bandCard {
   grid-template-columns: 86px minmax(0, 1fr) 28px;
-  column-gap: 21px;
+  column-gap: 17px;
   row-gap: 0;
   padding: 19px 22px 19px 20px;
 }
@@ -103,7 +103,7 @@
 @media (max-width: 1100px) {
   .card.bandCard {
     grid-template-columns: 80px minmax(0, 1fr) 26px;
-    column-gap: 19px;
+    column-gap: 16px;
     padding: 18px 19px;
   }
 
@@ -125,7 +125,7 @@
 
   .card.bandCard {
     grid-template-columns: 76px minmax(0, 1fr) 24px;
-    column-gap: 17px;
+    column-gap: 15px;
   }
 
   .card.bandCard > .media.bandMedia {
@@ -146,7 +146,7 @@
   .card.bandCard {
     min-height: 120px;
     grid-template-columns: 58px minmax(0, 1fr) 20px;
-    column-gap: 13px;
+    column-gap: 12px;
     padding: 14px 12px 14px 13px;
   }
 
