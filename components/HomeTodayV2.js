@@ -92,6 +92,7 @@ export default function HomeTodayV2({ today, content }) {
                 videoId={content.march.videoId}
                 listenUrl={content.march.listenUrl}
                 title={content.march.title}
+                variant="inverse"
               />
             </div>
           </article>
