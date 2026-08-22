@@ -18,6 +18,7 @@ import SourcesBlock from '@/components/SourcesBlock';
 import { hermandades } from '@/lib/data';
 import { getStepPhotoFraming } from '@/lib/step-photo-framing';
 import { getBrotherhoodMusicalHeritage } from '@/lib/supabase/brotherhood-musical-heritage';
+import { getPublishedBrotherhoodCrestPath } from '@/lib/supabase/brotherhood-public-authority';
 import { getHermandadPageBySlug } from '@/lib/supabase/brotherhoods';
 import { getPublishedEntityCoverMediaMap } from '@/lib/supabase/entity-media';
 import {
@@ -30,9 +31,6 @@ import {
 
 export const dynamic = 'force-dynamic';
 const getHermandad = cache(getHermandadPageBySlug);
-const councilParticipationPhotoCreditBySlug = {
-  'via-crucis-hermandades-1985-baratillo': 'Fotografía · Hermandad',
-};
 
 export function generateStaticParams() {
   return hermandades.map((item) => ({ slug: item.slug }));
@@ -75,7 +73,7 @@ export default async function HermandadDetailPage({ params }) {
   const h = await getHermandad(slug);
   if (!h) notFound();
 
-  const [entityCoverMedia, musicalHeritage] = await Promise.all([
+  const [entityCoverMedia, musicalHeritage, authoritativeCrestPath] = await Promise.all([
     getPublishedEntityCoverMediaMap(
       [
         h.id,
@@ -85,6 +83,7 @@ export default async function HermandadDetailPage({ params }) {
       ]
     ),
     getBrotherhoodMusicalHeritage(h.id),
+    getPublishedBrotherhoodCrestPath(h.id),
   ]);
   const heroMedia = entityCoverMedia.get(h.id)
     || h.imagenes.map((imagen) => entityCoverMedia.get(imagen.id)).find(Boolean)
@@ -166,7 +165,7 @@ export default async function HermandadDetailPage({ params }) {
           photoAlt: heroMedia?.alt || `Titular de ${h.nombrePopular}`,
           credit: heroMedia?.credit || '',
           initials: h.escudoIniciales || h.nombrePopular.slice(0, 2).toUpperCase(),
-          crestSrc: h.escudoPath || '',
+          crestSrc: authoritativeCrestPath,
           crestAlt: `Escudo de ${h.nombrePopular}`,
         }}
       />
@@ -201,9 +200,7 @@ export default async function HermandadDetailPage({ params }) {
               {h.participacionesConsejo.map((participacion) => {
                 const eventMedia = entityCoverMedia.get(participacion.id);
                 const imagePath = eventMedia?.path || participacion.imagen;
-                const imageCredit = councilParticipationPhotoCreditBySlug[participacion.slug]
-                  || participacion.imagenCredito
-                  || eventMedia?.credit;
+                const imageCredit = eventMedia?.credit || participacion.imagenCredito;
 
                 return (
                   <article className="council-participation-card" key={participacion.id}>
