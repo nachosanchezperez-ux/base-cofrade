@@ -1,33 +1,28 @@
-import Link from 'next/link'
-import styles from '@/app/panel/panel.module.css'
+import EntityWorkspaceNav from '@/components/panel/EntityWorkspaceNav'
 
 export default async function BrotherhoodEditorLayout({ children, params }) {
   const { id } = await params
+  const root = `/panel/hermandades/${id}`
+  const items = [
+    { href: root, label: 'General', mark: 'G', match: 'exact' },
+    { href: `${root}/historia`, label: 'Historia', mark: 'Hi' },
+    { href: `${root}/titulares`, label: 'Titulares', mark: 'T' },
+    { href: `${root}/pasos`, label: 'Pasos', mark: 'P' },
+    { href: `${root}/salidas`, label: 'Salidas', mark: 'S' },
+    { href: `${root}/habito`, label: 'Hábito', mark: 'Há' },
+    { href: `${root}/jornada`, label: 'Jornada', mark: 'J' },
+    { href: `/panel/acontecimientos?entity=${id}`, label: 'Acontecimientos', mark: 'A', activePath: '/panel/acontecimientos' },
+    { href: `/panel/multimedia?entity=${id}`, label: 'Multimedia', mark: 'M', activePath: '/panel/multimedia', tool: true },
+    { href: `/panel/fuentes?entity=${id}`, label: 'Fuentes', mark: 'F', activePath: '/panel/fuentes', tool: true },
+  ]
 
   return (
     <>
-      <div className={styles.pageWrap} style={{ paddingBottom: 0 }}>
-        <section
-          className={styles.panelCard}
-          style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 18, flexWrap: 'wrap' }}
-        >
-          <div>
-            <span className={styles.eyebrow}>Ficha conectada</span>
-            <strong style={{ display: 'block', marginTop: 5 }}>Titulares, Pasos, agenda, memoria histórica, multimedia y documentación</strong>
-          </div>
-          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
-            <Link className={styles.secondaryButton} href={`/panel/hermandades/${id}/historia`}>Historia</Link>
-            <Link className={styles.secondaryButton} href={`/panel/hermandades/${id}/titulares`}>Titulares</Link>
-            <Link className={styles.secondaryButton} href={`/panel/hermandades/${id}/pasos`}>Pasos</Link>
-            <Link className={styles.secondaryButton} href={`/panel/hermandades/${id}/salidas`}>Salidas</Link>
-            <Link className={styles.secondaryButton} href={`/panel/acontecimientos?entity=${id}`}>Acontecimientos</Link>
-            <Link className={styles.secondaryButton} href={`/panel/hermandades/${id}/habito`}>Hábito</Link>
-            <Link className={styles.secondaryButton} href={`/panel/hermandades/${id}/jornada`}>Jornada</Link>
-            <Link className={styles.secondaryButton} href={`/panel/multimedia?entity=${id}`}>Multimedia</Link>
-            <Link className={styles.primaryButton} href={`/panel/fuentes?entity=${id}`}>Fuentes</Link>
-          </div>
-        </section>
-      </div>
+      <EntityWorkspaceNav
+        eyebrow="Ficha de Hermandad"
+        description="Identidad, memoria, cortejo, patrimonio, agenda y documentación conectados."
+        items={items}
+      />
       {children}
     </>
   )
