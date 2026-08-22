@@ -1,26 +1,38 @@
 .section {
-  padding: 82px 0;
+  padding: 78px 0;
   background: #f4f7fa;
 }
 
+.header,
+.sequence {
+  width: min(100%, 1180px);
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .header {
-  margin-bottom: 26px;
+  margin-bottom: 28px;
+}
+
+.copy {
+  max-width: 820px;
 }
 
 .copy h2 {
   margin: 7px 0 10px;
   color: var(--bc-dark);
   font-family: Georgia, serif;
-  font-size: clamp(34px, 4vw, 48px);
-  line-height: 1;
+  font-size: clamp(36px, 3.15vw, 46px);
+  line-height: 1.02;
   letter-spacing: -.035em;
 }
 
 .copy p {
-  max-width: 680px;
+  max-width: 760px;
   margin: 0;
   color: #667685;
   font-size: 15px;
+  line-height: 1.58;
 }
 
 .context {
@@ -28,7 +40,7 @@
   flex-wrap: wrap;
   gap: 7px 18px;
   align-items: center;
-  margin-top: 15px;
+  margin-top: 17px;
   color: #6d7d8c;
   font-size: 11px;
   font-weight: 800;
@@ -57,34 +69,34 @@
 
 .item {
   display: grid;
-  gap: 18px;
+  gap: 20px;
   align-items: center;
-  min-height: 92px;
-  padding: 18px 10px 18px 4px;
+  min-height: 104px;
+  padding: 19px 14px 19px 6px;
   border-bottom: 1px solid rgba(21, 59, 105, .12);
   transition: background .18s ease, padding .18s ease;
 }
 
 .withLogo {
-  grid-template-columns: 62px minmax(0, 1fr) auto;
+  grid-template-columns: 76px minmax(0, 1fr) 34px;
 }
 
 .withoutLogo {
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) 34px;
   padding-left: 0;
 }
 
 .item:hover,
 .item:focus-visible {
-  padding-left: 12px;
-  background: rgba(255, 255, 255, .72);
+  padding-left: 14px;
+  background: rgba(255, 255, 255, .7);
   outline: none;
 }
 
 .logoWrap {
   position: relative;
-  width: 58px;
-  height: 58px;
+  width: 70px;
+  height: 70px;
 }
 
 .logo {
@@ -98,7 +110,7 @@
 
 .position {
   display: block;
-  margin-bottom: 4px;
+  margin-bottom: 5px;
   color: var(--bc-red);
   font-size: 9px;
   font-weight: 900;
@@ -107,9 +119,10 @@
 }
 
 .main h3 {
+  max-width: 780px;
   margin: 0;
   color: #162d43;
-  font-size: 18px;
+  font-size: 19px;
   line-height: 1.22;
 }
 
@@ -117,7 +130,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 5px 10px;
-  margin-top: 6px;
+  margin-top: 7px;
   color: #71808e;
   font-size: 10px;
   font-weight: 700;
@@ -131,9 +144,10 @@
 
 .arrow {
   display: grid;
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   place-items: center;
+  justify-self: end;
   border-radius: 50%;
   color: var(--bc-blue);
   font-size: 19px;
@@ -151,24 +165,139 @@
   display: none;
 }
 
+@media (max-width: 1100px) {
+  .header,
+  .sequence {
+    width: min(100%, 920px);
+  }
+
+  .withLogo {
+    grid-template-columns: 66px minmax(0, 1fr) 32px;
+    gap: 17px;
+  }
+
+  .logoWrap {
+    width: 60px;
+    height: 60px;
+  }
+
+  .main h3 {
+    font-size: 18px;
+  }
+}
+
 @media (max-width: 760px) {
-  .section { padding: 70px 0; }
-  .header { margin-bottom: 22px; }
-  .withLogo { grid-template-columns: 54px minmax(0, 1fr) 30px; gap: 13px; }
-  .withoutLogo { grid-template-columns: minmax(0, 1fr) 30px; }
-  .item { min-height: 84px; padding-top: 16px; padding-bottom: 16px; }
-  .logoWrap { width: 50px; height: 50px; }
-  .main h3 { font-size: 16px; }
-  .arrow { width: 30px; height: 30px; font-size: 17px; }
+  .section {
+    padding: 62px 0;
+  }
+
+  .header {
+    margin-bottom: 20px;
+  }
+
+  .copy h2 {
+    font-size: clamp(31px, 9vw, 38px);
+  }
+
+  .copy p {
+    max-width: 34rem;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .context {
+    margin-top: 14px;
+    gap: 6px 16px;
+  }
+
+  .item {
+    min-height: 88px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+
+  .withLogo {
+    grid-template-columns: 54px minmax(0, 1fr) 28px;
+    gap: 13px;
+  }
+
+  .withoutLogo {
+    grid-template-columns: minmax(0, 1fr) 28px;
+  }
+
+  .logoWrap {
+    width: 50px;
+    height: 50px;
+  }
+
+  .main h3 {
+    font-size: 16px;
+    line-height: 1.24;
+  }
+
+  .arrow {
+    width: 28px;
+    height: 28px;
+    font-size: 17px;
+  }
 }
 
 @media (max-width: 480px) {
-  .copy p { font-size: 14px; }
-  .context { margin-top: 13px; }
-  .withLogo { grid-template-columns: 48px minmax(0, 1fr) 26px; gap: 11px; }
-  .logoWrap { width: 44px; height: 44px; }
-  .item { padding-right: 2px; }
-  .main h3 { font-size: 15px; }
-  .meta { margin-top: 5px; }
-  .arrow { width: 26px; height: 26px; }
+  .section {
+    padding: 56px 0;
+  }
+
+  .copy h2 {
+    font-size: 32px;
+  }
+
+  .copy p {
+    font-size: 13.5px;
+  }
+
+  .context {
+    margin-top: 13px;
+    font-size: 10px;
+  }
+
+  .context strong {
+    font-size: 11px;
+  }
+
+  .withLogo {
+    grid-template-columns: 48px minmax(0, 1fr) 24px;
+    gap: 11px;
+  }
+
+  .withoutLogo {
+    grid-template-columns: minmax(0, 1fr) 24px;
+  }
+
+  .logoWrap {
+    width: 44px;
+    height: 44px;
+  }
+
+  .item {
+    min-height: 82px;
+    padding-right: 0;
+  }
+
+  .position {
+    font-size: 8.5px;
+  }
+
+  .main h3 {
+    font-size: 15px;
+  }
+
+  .meta {
+    margin-top: 5px;
+    font-size: 9.5px;
+  }
+
+  .arrow {
+    width: 24px;
+    height: 24px;
+  }
 }
