@@ -138,7 +138,7 @@ export default async function PanelExtraordinaryEditorPage({ params, searchParam
             </label>
             <label className={styles.fieldWide}>
               <span>Descripción accesible</span>
-              <input name="hero_image_alt" defaultValue={data.hero_image_alt || ''} placeholder={`Ej. ${data.title || 'Titular'} durante su salida extraordinaria`} required={Boolean(data.hero_image_path)} disabled={!canEdit} />
+              <input name="hero_image_alt" defaultValue={data.hero_image_alt || ''} placeholder={`Ej. ${data.title || 'Titular'} durante su salida extraordinaria`} required disabled={!canEdit} />
             </label>
             <label className={styles.fieldWide}>
               <span>Crédito de la fotografía</span>
