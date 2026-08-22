@@ -61,8 +61,8 @@ export default function RelationalEntityHeroMedia({
             preload
             style={photoStyle}
             sizes={variant === 'image'
-              ? '(max-width: 980px) min(100vw - 40px, 560px), 440px'
-              : '(max-width: 980px) min(100vw - 40px, 680px), 520px'}
+              ? '(max-width: 980px) min(100vw - 40px, 560px), 470px'
+              : '(max-width: 980px) min(100vw - 40px, 720px), 640px'}
             onLoad={(event) => {
               if (variant !== 'step' || hasDimensions) return;
               const image = event.currentTarget;
@@ -72,7 +72,16 @@ export default function RelationalEntityHeroMedia({
           />
         ) : hasCrest ? (
           <div className={styles.crestFallback}>
-            <Image className={styles.crestFallbackImage} src={crestSrc} alt={crestAlt} width={220} height={260} sizes="220px" preload onError={() => setCrestError(true)} />
+            <Image
+              className={styles.crestFallbackImage}
+              src={crestSrc}
+              alt={crestAlt}
+              width={220}
+              height={260}
+              sizes="220px"
+              preload
+              onError={() => setCrestError(true)}
+            />
             <small>Escudo de la hermandad</small>
           </div>
         ) : (
@@ -85,7 +94,7 @@ export default function RelationalEntityHeroMedia({
         {hasPhoto ? <span className={styles.photoShade} style={{ zIndex: 2 }} aria-hidden="true" /> : null}
       </div>
 
-      {hasPhoto && hasCrest ? (
+      {variant !== 'brotherhood' && hasPhoto && hasCrest ? (
         <span className={styles.crestOverlay}>
           <Image src={crestSrc} alt="" width={92} height={108} sizes="92px" onError={() => setCrestError(true)} />
         </span>
