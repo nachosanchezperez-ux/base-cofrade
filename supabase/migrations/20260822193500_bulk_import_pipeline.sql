@@ -47,32 +47,46 @@ create index if not exists bulk_import_items_queue_idx
 alter table public.bulk_imports enable row level security;
 alter table public.bulk_import_items enable row level security;
 
+-- Desde 2026 Supabase puede no exponer tablas nuevas a la Data API por defecto.
+-- El Panel usa supabase-js con sesión autenticada: concedemos solo los privilegios
+-- necesarios a authenticated y retiramos cualquier grant implícito de anon.
+revoke all on table public.bulk_imports from anon;
+revoke all on table public.bulk_import_items from anon;
+grant select, insert, update, delete on table public.bulk_imports to authenticated;
+grant select, insert, update, delete on table public.bulk_import_items to authenticated;
+
 create policy "Panel members can read bulk imports"
   on public.bulk_imports for select
+  to authenticated
   using (public.is_panel_member());
 
 create policy "Editors can create bulk imports"
   on public.bulk_imports for insert
+  to authenticated
   with check (
     public.can_edit_panel()
-    and (created_by is null or created_by = auth.uid())
+    and (created_by is null or created_by = (select auth.uid()))
   );
 
 create policy "Editors can update bulk imports"
   on public.bulk_imports for update
+  to authenticated
   using (public.can_edit_panel())
   with check (public.can_edit_panel());
 
 create policy "Admins can delete bulk imports"
   on public.bulk_imports for delete
+  to authenticated
   using (public.can_admin_panel());
 
 create policy "Panel members can read bulk import items"
   on public.bulk_import_items for select
+  to authenticated
   using (public.is_panel_member());
 
 create policy "Editors can create bulk import items"
   on public.bulk_import_items for insert
+  to authenticated
   with check (
     public.can_edit_panel()
     and exists (
@@ -82,11 +96,13 @@ create policy "Editors can create bulk import items"
 
 create policy "Editors can update bulk import items"
   on public.bulk_import_items for update
+  to authenticated
   using (public.can_edit_panel())
   with check (public.can_edit_panel());
 
 create policy "Admins can delete bulk import items"
   on public.bulk_import_items for delete
+  to authenticated
   using (public.can_admin_panel());
 
 comment on table public.bulk_imports is 'Cabecera y progreso de cargas masivas desde el Panel.';
