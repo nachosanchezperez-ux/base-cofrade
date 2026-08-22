@@ -19,3 +19,16 @@ test('la autoría desconocida no necesita un Agente ficticio', () => {
   assert.match(editor, /Documentar autor desconocido/)
   assert.match(editor, /No crea una Persona llamada «Anónimo»/)
 })
+
+test('el Front publica la autoría anónima desde la relación canónica', () => {
+  const publicPages = source('lib/supabase/public-entity-pages.js')
+  const brotherhoodDisplay = source('lib/supabase/brotherhood-display.js')
+
+  assert.match(publicPages, /authorship\.authorship_type === 'anonymous'/)
+  assert.match(publicPages, /return 'Autor desconocido'/)
+  assert.match(publicPages, /const legacyAgentIds = authorships\.length \? \[\] :/)
+  assert.doesNotMatch(publicPages, /\/autor desconocido\/i\.test\(image\.notes/)
+
+  assert.match(brotherhoodDisplay, /authorship\.authorship_type === 'anonymous'/)
+  assert.match(brotherhoodDisplay, /return 'Autor desconocido'/)
+})
