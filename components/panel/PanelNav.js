@@ -16,6 +16,7 @@ const baseItems = [
   { href: '/panel/acontecimientos', label: 'Acontecimientos', mark: 'A' },
   { href: '/panel/multimedia', label: 'Multimedia', mark: 'M' },
   { href: '/panel/fuentes', label: 'Fuentes', mark: 'F' },
+  { href: '/panel/importar', label: 'Importar', mark: '↓' },
   { href: '/panel/relaciones', label: 'Relaciones', mark: '↔' },
 ]
 
