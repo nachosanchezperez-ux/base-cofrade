@@ -71,14 +71,14 @@
   display: grid;
   gap: 20px;
   align-items: center;
-  min-height: 104px;
-  padding: 19px 14px 19px 6px;
+  min-height: 112px;
+  padding: 12px 14px 12px 6px;
   border-bottom: 1px solid rgba(21, 59, 105, .12);
   transition: background .18s ease, padding .18s ease;
 }
 
 .withLogo {
-  grid-template-columns: 76px minmax(0, 1fr) 34px;
+  grid-template-columns: 90px minmax(0, 1fr) 34px;
 }
 
 .withoutLogo {
@@ -95,14 +95,46 @@
 
 .logoWrap {
   position: relative;
-  width: 70px;
-  height: 70px;
+  width: 72px;
+  height: 88px;
+  overflow: hidden;
+  border: 1px solid #e3eaf0;
+  border-radius: 15px;
+  background: #f1f5f8;
 }
 
 .logo {
   object-fit: contain;
   object-position: center;
+  padding: 7px;
 }
+
+/* Reproduce la presentación del Directorio de Bandas para los logotipos
+   que necesitan un fondo integrado o un soporte cromático específico. */
+.item[href="/bandas/banda-del-sol"] .logoWrap {
+  border-color: color-mix(in srgb, #061D59 58%, #e3eaf0);
+  background: #061D59;
+}
+.item[href="/bandas/banda-del-sol"] .logo { padding: 0; }
+
+.item[href="/bandas/sangre-de-san-benito"] .logoWrap {
+  border-color: color-mix(in srgb, #65121A 58%, #e3eaf0);
+  background: #65121A;
+}
+.item[href="/bandas/sangre-de-san-benito"] .logo { padding: 0; }
+
+.item[href="/bandas/banda-de-musica-nuestra-senora-de-la-soledad-cantillana"] .logoWrap {
+  border-color: color-mix(in srgb, #111216 58%, #e3eaf0);
+  background: #111216;
+}
+.item[href="/bandas/banda-de-musica-nuestra-senora-de-la-soledad-cantillana"] .logo { padding: 0; }
+
+.item[href="/bandas/banda-de-musica-del-maestro-tejera"] .logoWrap { background: #EAF4FF; }
+.item[href="/bandas/banda-municipal-de-musica-de-la-puebla-del-rio"] .logoWrap { background: #FCEBEC; }
+.item[href="/bandas/carmen-de-salteras"] .logoWrap { background: color-mix(in srgb, #8B451F 7%, white); }
+.item[href="/bandas/agrupacion-musical-nuestra-senora-de-la-encarnacion"] .logoWrap { background: color-mix(in srgb, #1B82B4 7%, white); }
+.item[href="/bandas/escolania-salesiana-maria-auxiliadora-sevilla"] .logoWrap { background: color-mix(in srgb, #DC001B 7%, white); }
+.item[href="/bandas/las-cigarreras"] .logoWrap { background: color-mix(in srgb, #63358B 7%, white); }
 
 .main {
   min-width: 0;
@@ -172,13 +204,13 @@
   }
 
   .withLogo {
-    grid-template-columns: 66px minmax(0, 1fr) 32px;
+    grid-template-columns: 78px minmax(0, 1fr) 32px;
     gap: 17px;
   }
 
   .logoWrap {
-    width: 60px;
-    height: 60px;
+    width: 64px;
+    height: 78px;
   }
 
   .main h3 {
@@ -211,13 +243,13 @@
   }
 
   .item {
-    min-height: 88px;
-    padding-top: 16px;
-    padding-bottom: 16px;
+    min-height: 92px;
+    padding-top: 12px;
+    padding-bottom: 12px;
   }
 
   .withLogo {
-    grid-template-columns: 54px minmax(0, 1fr) 28px;
+    grid-template-columns: 62px minmax(0, 1fr) 28px;
     gap: 13px;
   }
 
@@ -226,8 +258,9 @@
   }
 
   .logoWrap {
-    width: 50px;
-    height: 50px;
+    width: 54px;
+    height: 68px;
+    border-radius: 15px;
   }
 
   .main h3 {
@@ -265,8 +298,8 @@
   }
 
   .withLogo {
-    grid-template-columns: 48px minmax(0, 1fr) 24px;
-    gap: 11px;
+    grid-template-columns: 60px minmax(0, 1fr) 24px;
+    gap: 10px;
   }
 
   .withoutLogo {
@@ -274,12 +307,12 @@
   }
 
   .logoWrap {
-    width: 44px;
-    height: 44px;
+    width: 52px;
+    height: 66px;
   }
 
   .item {
-    min-height: 82px;
+    min-height: 90px;
     padding-right: 0;
   }
 
