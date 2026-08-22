@@ -19,7 +19,8 @@ test('Dirección de Bandas reutiliza Personas completas y admite Fuentes por rel
   assert.doesNotMatch(page, /name="person_name" defaultValue=\{item\?\.agent\?\.name/)
 
   assert.match(actions, /from\('agents'\)\.insert\(\{ entity_id: agentId, agent_kind: 'person' \}\)/)
-  assert.match(actions, /existing\.data\?\.agent_kind !== 'person'/)
+  assert.match(actions, /select\('entity_id, agent_kind'\)/)
+  assert.match(actions, /agent_kind !== 'person'/)
   assert.match(actions, /date_from:/)
   assert.match(actions, /date_to_text:/)
   assert.doesNotMatch(actions, /from\('entities'\)\.update\(\{ name: personName \}/)
