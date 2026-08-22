@@ -10,7 +10,7 @@ const UUID_PATTERN = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i
 const RIGHTS_STATUSES = new Set(['pending', 'owned', 'authorized', 'licensed', 'public_domain', 'restricted'])
 const PUBLICATION_RIGHTS = new Set(['owned', 'authorized', 'licensed', 'public_domain'])
 const FIT_MODES = new Set(['auto', 'cover', 'contain'])
-const IMAGE_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp', 'image/gif'])
+const IMAGE_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/avif'])
 const PANEL_ROUTES = {
   brotherhood: 'hermandades',
   image: 'imagenes',
@@ -110,6 +110,87 @@ async function clearPreviousCover(supabase, entityId, exceptLinkId = null) {
   if (result.error) throw new Error(`No se pudo actualizar la portada anterior: ${result.error.message}`)
 }
 
+function assetPublicUrl(supabase, storagePath = '') {
+  if (!storagePath) return ''
+  if (storagePath.startsWith('/')) return storagePath
+  return supabase.storage.from('hilo-media').getPublicUrl(storagePath).data.publicUrl || ''
+}
+
+function legacyRole(entityType, relationType, isCover) {
+  if (entityType === 'brotherhood' && relationType === 'crest') return 'brotherhood_crest'
+  if (entityType === 'band' && relationType === 'logo') return 'band_logo'
+  if (entityType === 'band' && (isCover || ['cover', 'hero', 'principal'].includes(relationType))) return 'band_hero'
+  return ''
+}
+
+async function clearLegacyPointer(supabase, entity, role, publicUrl) {
+  if (!role || !publicUrl) return
+
+  if (role === 'brotherhood_crest') {
+    const current = await supabase.from('brotherhoods').select('crest_path').eq('entity_id', entity.id).maybeSingle()
+    if (current.error) throw new Error(`No se pudo comprobar el escudo actual: ${current.error.message}`)
+    if (current.data?.crest_path === publicUrl) {
+      const result = await supabase.from('brotherhoods').update({ crest_path: null }).eq('entity_id', entity.id)
+      if (result.error) throw new Error(`No se pudo retirar el escudo público: ${result.error.message}`)
+    }
+  }
+
+  if (role === 'band_logo') {
+    const current = await supabase.from('bands').select('logo_path').eq('entity_id', entity.id).maybeSingle()
+    if (current.error) throw new Error(`No se pudo comprobar el logotipo actual: ${current.error.message}`)
+    if (current.data?.logo_path === publicUrl) {
+      const result = await supabase.from('bands').update({ logo_path: null }).eq('entity_id', entity.id)
+      if (result.error) throw new Error(`No se pudo retirar el logotipo público: ${result.error.message}`)
+    }
+  }
+
+  if (role === 'band_hero') {
+    const current = await supabase.from('bands').select('hero_image_path').eq('entity_id', entity.id).maybeSingle()
+    if (current.error) throw new Error(`No se pudo comprobar la fotografía principal: ${current.error.message}`)
+    if (current.data?.hero_image_path === publicUrl) {
+      const result = await supabase
+        .from('bands')
+        .update({ hero_image_path: null, hero_image_alt: null, hero_image_credit: null })
+        .eq('entity_id', entity.id)
+      if (result.error) throw new Error(`No se pudo retirar la fotografía principal: ${result.error.message}`)
+    }
+  }
+}
+
+async function syncLegacyPointer(supabase, entity, linkPayload, asset) {
+  const publicUrl = assetPublicUrl(supabase, asset.storage_path)
+  if (!publicUrl) return
+  const role = legacyRole(entity.entity_type, linkPayload.relation_type, linkPayload.is_cover)
+  if (!role) return
+
+  if (!PUBLICATION_RIGHTS.has(asset.rights_status)) {
+    await clearLegacyPointer(supabase, entity, role, publicUrl)
+    return
+  }
+
+  if (role === 'brotherhood_crest') {
+    const result = await supabase.from('brotherhoods').update({ crest_path: publicUrl }).eq('entity_id', entity.id)
+    if (result.error) throw new Error(`No se pudo sincronizar el escudo público: ${result.error.message}`)
+  }
+
+  if (role === 'band_logo') {
+    const result = await supabase.from('bands').update({ logo_path: publicUrl }).eq('entity_id', entity.id)
+    if (result.error) throw new Error(`No se pudo sincronizar el logotipo público: ${result.error.message}`)
+  }
+
+  if (role === 'band_hero') {
+    const result = await supabase
+      .from('bands')
+      .update({
+        hero_image_path: publicUrl,
+        hero_image_alt: asset.alt_text || null,
+        hero_image_credit: asset.author_name || null,
+      })
+      .eq('entity_id', entity.id)
+    if (result.error) throw new Error(`No se pudo sincronizar la fotografía principal: ${result.error.message}`)
+  }
+}
+
 async function refreshEntity(supabase, entityId) {
   revalidatePath('/panel')
   revalidatePath('/panel/multimedia')
@@ -179,7 +260,7 @@ export async function uploadEntityMediaAction(formData) {
   const file = formData.get('file')
 
   if (!(file instanceof File) || file.size === 0) throw new Error('Selecciona una imagen para subir.')
-  if (!IMAGE_TYPES.has(file.type)) throw new Error('La imagen debe ser JPG, PNG, WEBP o GIF.')
+  if (!IMAGE_TYPES.has(file.type)) throw new Error('La imagen debe ser JPG, PNG, WEBP, GIF o AVIF.')
   if (file.size > 10 * 1024 * 1024) throw new Error('La imagen no puede superar 10 MB.')
 
   const assetPayload = mediaMetadata(formData)
@@ -204,7 +285,7 @@ export async function uploadEntityMediaAction(formData) {
       ...assetPayload,
       title: assetPayload.title || file.name,
     })
-    .select('id')
+    .select('id, storage_path, title, alt_text, author_name, rights_status')
     .single()
 
   if (assetResult.error) {
@@ -231,6 +312,7 @@ export async function uploadEntityMediaAction(formData) {
     throw new Error(`No se pudo vincular la imagen: ${linkResult.error.message}`)
   }
 
+  await syncLegacyPointer(supabase, entity, linkPayload, assetResult.data)
   await audit(supabase, user, {
     action_type: 'link',
     object_type: 'entity_media',
@@ -250,7 +332,11 @@ export async function linkExistingMediaAction(formData) {
   const mediaAssetId = uuid(formData, 'media_asset_id')
   const entity = await loadEntity(supabase, entityId)
   const asset = assertRow(
-    await supabase.from('media_assets').select('id, title, rights_status').eq('id', mediaAssetId).maybeSingle(),
+    await supabase
+      .from('media_assets')
+      .select('id, storage_path, title, alt_text, author_name, rights_status')
+      .eq('id', mediaAssetId)
+      .maybeSingle(),
     'El archivo multimedia seleccionado no existe.'
   )
   if (!PUBLICATION_RIGHTS.has(asset.rights_status)) {
@@ -262,7 +348,7 @@ export async function linkExistingMediaAction(formData) {
 
   const existing = await supabase
     .from('entity_media')
-    .select('id')
+    .select('id, relation_type, is_cover')
     .eq('entity_id', entityId)
     .eq('media_asset_id', mediaAssetId)
     .eq('relation_type', payload.relation_type)
@@ -280,6 +366,7 @@ export async function linkExistingMediaAction(formData) {
         'No se pudo vincular el archivo multimedia'
       )
 
+  await syncLegacyPointer(supabase, entity, payload, asset)
   await audit(supabase, user, {
     action_type: existing.data ? 'update' : 'link',
     object_type: 'entity_media',
@@ -303,7 +390,7 @@ export async function updateEntityMediaAction(formData) {
   const link = assertRow(
     await supabase
       .from('entity_media')
-      .select('id, entity_id, media_asset_id')
+      .select('id, entity_id, media_asset_id, relation_type, is_cover, media_assets(storage_path, rights_status)')
       .eq('id', linkId)
       .eq('entity_id', entityId)
       .eq('media_asset_id', mediaAssetId)
@@ -311,6 +398,9 @@ export async function updateEntityMediaAction(formData) {
     'El vínculo multimedia no existe o ya no pertenece a esta entidad.'
   )
 
+  const previousAsset = Array.isArray(link.media_assets) ? link.media_assets[0] : link.media_assets
+  const previousPublicUrl = assetPublicUrl(supabase, previousAsset?.storage_path || '')
+  const previousRole = legacyRole(entity.entity_type, link.relation_type, link.is_cover)
   const assetPayload = mediaMetadata(formData)
   const linkPayload = linkMetadata(formData)
   if (linkPayload.is_cover) await clearPreviousCover(supabase, entityId, link.id)
@@ -323,6 +413,17 @@ export async function updateEntityMediaAction(formData) {
     await supabase.from('entity_media').update(linkPayload).eq('id', link.id),
     'No se pudo actualizar la relación multimedia'
   )
+
+  const nextRole = legacyRole(entity.entity_type, linkPayload.relation_type, linkPayload.is_cover)
+  if (previousRole && previousRole !== nextRole) {
+    await clearLegacyPointer(supabase, entity, previousRole, previousPublicUrl)
+  }
+  await syncLegacyPointer(supabase, entity, linkPayload, {
+    storage_path: previousAsset?.storage_path || '',
+    rights_status: assetPayload.rights_status,
+    alt_text: assetPayload.alt_text,
+    author_name: assetPayload.author_name,
+  })
 
   await audit(supabase, user, {
     action_type: 'update',
@@ -345,17 +446,21 @@ export async function unlinkEntityMediaAction(formData) {
   const link = assertRow(
     await supabase
       .from('entity_media')
-      .select('id, media_asset_id, relation_type')
+      .select('id, media_asset_id, relation_type, is_cover, media_assets(storage_path)')
       .eq('id', linkId)
       .eq('entity_id', entityId)
       .maybeSingle(),
     'El vínculo multimedia no existe.'
   )
+  const asset = Array.isArray(link.media_assets) ? link.media_assets[0] : link.media_assets
+  const publicUrl = assetPublicUrl(supabase, asset?.storage_path || '')
+  const role = legacyRole(entity.entity_type, link.relation_type, link.is_cover)
 
   assertRow(
     await supabase.from('entity_media').delete().eq('id', link.id).select('id').single(),
     'No se pudo retirar el vínculo multimedia'
   )
+  await clearLegacyPointer(supabase, entity, role, publicUrl)
 
   await audit(supabase, user, {
     action_type: 'unlink',
