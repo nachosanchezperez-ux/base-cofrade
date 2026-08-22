@@ -236,7 +236,10 @@ export default function ImportWorkspace({ initialImports, canEdit }) {
       {initialImports.length ? <div className={styles.historyList}>{initialImports.map((batch) => <article key={batch.id}>
         <div className={styles.historyMain}><div><strong>{batch.label}</strong><span>{batch.source_name || batch.source_format.toUpperCase()} · {formatDate(batch.created_at)}</span></div><span className={styles.status}>{statusLabel(batch.status)}</span></div>
         <div className={styles.historyMetrics}><span><b>{batch.staged_items}</b> preparados</span><span><b>{batch.applied_items}</b> aplicados</span><span><b>{batch.invalid_items}</b> inválidos</span><span><b>{batch.failed_items}</b> fallidos</span></div>
-        {canEdit && ['ready', 'processing'].includes(batch.status) && batch.valid_items > batch.applied_items + batch.failed_items ? <button type="button" className={styles.primaryButton} onClick={() => applyBatch(batch.id)} disabled={working}>Aplicar registros válidos</button> : null}
+        <div className={styles.actions}>
+          <a className={styles.secondaryButton} style={{ textDecoration: 'none' }} href={`/panel/datos/importar/${batch.id}`}>Ver detalle</a>
+          {canEdit && ['ready', 'processing'].includes(batch.status) && batch.valid_items > batch.applied_items + batch.failed_items ? <button type="button" className={styles.primaryButton} onClick={() => applyBatch(batch.id)} disabled={working}>Aplicar registros válidos</button> : null}
+        </div>
       </article>)}</div> : <p className={styles.muted}>Todavía no hay importaciones masivas.</p>}
     </section>
 
