@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import RelationalEntityHeroMedia from './RelationalEntityHeroMedia';
 import styles from './RelationalEntityHero.module.css';
+import polishStyles from './RelationalEntityHeroPolish.module.css';
 
 function Breadcrumb({ items = [] }) {
   if (!items.length) return null;
@@ -33,7 +34,7 @@ function ParentRelation({ relation }) {
   if (!relation?.name || !relation?.href) return null;
 
   return (
-    <Link className={styles.relation} href={relation.href}>
+    <Link className={`${styles.relation} ${polishStyles.relation}`} href={relation.href}>
       {relation.crestSrc ? (
         <span className={styles.relationCrest}>
           <Image
@@ -60,7 +61,7 @@ function BrotherhoodCrest({ src, alt }) {
   if (!src) return null;
 
   return (
-    <span className={styles.identityCrest}>
+    <span className={`${styles.identityCrest} ${polishStyles.identityCrest}`}>
       <Image src={src} alt={alt || ''} width={104} height={122} sizes="104px" priority />
     </span>
   );
@@ -91,20 +92,23 @@ export default function RelationalEntityHero({
       </div>
 
       <h1 id="entity-hero-title">{title}</h1>
-      {subtitle ? <p className={styles.subtitle}>{subtitle}</p> : null}
+      {subtitle ? <p className={`${styles.subtitle} ${polishStyles.subtitle}`}>{subtitle}</p> : null}
     </div>
   );
 
   return (
-    <section className={`${styles.hero} ${styles[`hero_${variant}`]}`} aria-labelledby="entity-hero-title">
+    <section
+      className={`${styles.hero} ${styles[`hero_${variant}`]} ${polishStyles.hero} ${polishStyles[`hero_${variant}`] || ''}`}
+      aria-labelledby="entity-hero-title"
+    >
       <div className={styles.texture} aria-hidden="true" />
       <div className="shell">
         <Breadcrumb items={breadcrumbItems} />
 
-        <div className={styles.grid}>
-          <div className={styles.copy}>
+        <div className={`${styles.grid} ${polishStyles.grid}`}>
+          <div className={`${styles.copy} ${polishStyles.copy}`}>
             {isBrotherhood ? (
-              <div className={styles.brotherhoodLockup}>
+              <div className={`${styles.brotherhoodLockup} ${polishStyles.brotherhoodLockup}`}>
                 <BrotherhoodCrest src={media.crestSrc} alt={media.crestAlt} />
                 {heading}
               </div>
@@ -113,7 +117,7 @@ export default function RelationalEntityHero({
             <ParentRelation relation={relation} />
 
             {visibleFacts.length ? (
-              <dl className={styles.facts} data-count={visibleFacts.length}>
+              <dl className={`${styles.facts} ${polishStyles.facts}`} data-count={visibleFacts.length}>
                 {visibleFacts.map((fact) => (
                   <div key={fact.label}>
                     <dt>{fact.label}</dt>
