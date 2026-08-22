@@ -5,6 +5,7 @@ import HomeTodayV2 from '@/components/HomeTodayV2'
 import HomeExploreV2 from '@/components/HomeExploreV2'
 import { getExtraordinaryLiveState } from '@/lib/home-live-status'
 import styles from '@/app/home.module.css'
+import liveStyles from './HomeExtraordinaryLive.module.css'
 
 const stackedNextExtraHeadStyle = { alignItems: 'flex-start', flexDirection: 'column', gap: 4 }
 const heroThread = ['Hermandades', 'Imágenes', 'Pasos', 'Bandas', 'Marchas', 'Autores']
@@ -111,7 +112,7 @@ export default function HomePageV2({
           aria-labelledby="proxima-extraordinaria-title"
         >
           <div className="shell">
-            <article className={styles.featuredExtraordinaryCard} data-live-state={liveState.state}>
+            <article className={`${styles.featuredExtraordinaryCard} ${liveState.state === 'live' ? liveStyles.featuredExtraordinaryLive : ''}`} data-live-state={liveState.state}>
               {featuredExtraordinary.heroImagePath ? (
                 <figure className={styles.featuredExtraordinaryMedia}>
                   <div className={styles.featuredExtraordinaryImageFrame}>
@@ -123,7 +124,7 @@ export default function HomePageV2({
                       priority
                     />
                     {liveState.state === 'live' ? (
-                      <span className={styles.liveImageBadge}><i aria-hidden="true" /> En curso</span>
+                      <span className={liveStyles.liveImageBadge}><i aria-hidden="true" /> En curso</span>
                     ) : null}
                   </div>
                   {featuredExtraordinary.heroImageCredit ? (
@@ -134,7 +135,7 @@ export default function HomePageV2({
 
               <div className={styles.featuredExtraordinaryCopy}>
                 <div className={styles.featuredExtraordinaryIntro}>
-                  <span className={styles.eyebrow}>{liveState.eyebrow}</span>
+                  <span className={`${styles.eyebrow} ${liveState.state === 'live' ? liveStyles.liveEyebrow : ''}`}>{liveState.eyebrow}</span>
                   <h2 id="proxima-extraordinaria-title">{featuredExtraordinary.title}</h2>
                   <div className={styles.featuredExtraordinaryMeta}>
                     <strong>{featuredMeta}</strong>
