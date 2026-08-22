@@ -10,6 +10,18 @@ const EVENT_STATUS_LABELS = {
   cancelled: 'Cancelada',
 }
 
+function visualCoverage(item) {
+  return Number(item.hasPhoto) + Number(item.hasPoster) + Number(item.galleryCount > 0)
+}
+
+function visualSummary(item) {
+  return [
+    `Foto ${item.hasPhoto ? '✓' : '—'}`,
+    `Cartel ${item.hasPoster ? '✓' : '—'}`,
+    `Galería ${item.galleryCount || '—'}`,
+  ].join(' · ')
+}
+
 export const metadata = { title: 'Extraordinarias · Panel' }
 
 export default async function PanelExtraordinaryOutingsPage({ searchParams }) {
@@ -28,27 +40,32 @@ export default async function PanelExtraordinaryOutingsPage({ searchParams }) {
         <div>
           <span className={styles.eyebrow}>Agenda especial</span>
           <h1>Extraordinarias</h1>
-          <p>Gestiona las salidas extraordinarias y su imagen principal para Home, directorio y guía individual.</p>
+          <p>Gestiona cada salida, su fotografía principal, cartel oficial y galería desde un único lugar.</p>
         </div>
       </header>
 
-      {!canEdit ? <div className={styles.readOnlyNotice}>Puedes consultar las Extraordinarias, pero un editor debe modificar las fotografías.</div> : null}
+      {!canEdit ? <div className={styles.readOnlyNotice}>Puedes consultar las Extraordinarias, pero un editor debe modificar la multimedia.</div> : null}
 
       <section className={`${styles.panelCard} ${extraStyles.measureGuide}`}>
         <div>
-          <span>Foto maestra recomendada</span>
-          <strong>1800 × 1200 px</strong>
-          <small>Proporción 3:2 · mínimo 1200 × 800 px</small>
+          <span>Foto principal</span>
+          <strong>1800 × 1200</strong>
+          <small>3:2 · mínimo 1200 × 800 · zona segura 70% central.</small>
         </div>
         <div>
-          <span>Zona segura</span>
-          <strong>70% central</strong>
-          <small>Deja aire alrededor del titular para los recortes responsive.</small>
+          <span>Cartel</span>
+          <strong>1080 × 1350</strong>
+          <small>4:5 · mínimo 800 × 1000 · se muestra completo.</small>
+        </div>
+        <div>
+          <span>Galería</span>
+          <strong>1600 × 1200</strong>
+          <small>4:3 · mínimo 1200 × 900 · hasta 12 fotografías.</small>
         </div>
         <div>
           <span>Archivo</span>
           <strong>JPG · WEBP · PNG · AVIF</strong>
-          <small>Objetivo 2–5 MB · máximo 10 MB.</small>
+          <small>Recomendado 1–5 MB según uso · máximo 10 MB.</small>
         </div>
       </section>
 
@@ -72,26 +89,32 @@ export default async function PanelExtraordinaryOutingsPage({ searchParams }) {
       <section className={styles.panelCard}>
         <div className={styles.listHeading}>
           <strong>{outings.length} extraordinarias</strong>
-          <small>La foto principal se reutiliza automáticamente en Home, directorio y ficha.</small>
+          <small>Cobertura 3/3 = fotografía principal + cartel + al menos una imagen de galería.</small>
         </div>
 
         {outings.length ? (
           <div className={extraStyles.outingList}>
-            {outings.map((item) => (
-              <article key={item.id}>
-                <div className={`${extraStyles.photoState} ${item.hasPhoto ? extraStyles.photoReady : extraStyles.photoMissing}`} aria-label={item.hasPhoto ? 'Con fotografía' : 'Sin fotografía'}>
-                  {item.hasPhoto ? 'Foto' : '—'}
-                </div>
-                <div className={extraStyles.outingIdentity}>
-                  <span>{[item.municipality, item.outing_date].filter(Boolean).join(' · ')}</span>
-                  <strong>{item.title || item.outing_type || 'Extraordinaria'}</strong>
-                  <small>{item.organizer_name || item.reference_code || 'Entidad por documentar'}</small>
-                </div>
-                <span className={`${extraStyles.eventStatus} ${extraStyles[item.event_status] || ''}`}>{EVENT_STATUS_LABELS[item.event_status] || item.event_status}</span>
-                <span className={`${extraStyles.photoBadge} ${item.hasPhoto ? extraStyles.photoBadgeReady : ''}`}>{item.hasPhoto ? 'Imagen lista' : 'Falta imagen'}</span>
-                <Link className={styles.rowLink} href={`/panel/extraordinarias/${item.id}`}>Editar <span>→</span></Link>
-              </article>
-            ))}
+            {outings.map((item) => {
+              const coverage = visualCoverage(item)
+              return (
+                <article key={item.id}>
+                  <div
+                    className={`${extraStyles.photoState} ${coverage === 3 ? extraStyles.photoReady : extraStyles.photoMissing}`}
+                    aria-label={`Cobertura visual ${coverage} de 3`}
+                  >
+                    {coverage}/3
+                  </div>
+                  <div className={extraStyles.outingIdentity}>
+                    <span>{[item.municipality, item.outing_date].filter(Boolean).join(' · ')}</span>
+                    <strong>{item.title || item.outing_type || 'Extraordinaria'}</strong>
+                    <small>{item.organizer_name || item.reference_code || 'Entidad por documentar'}</small>
+                  </div>
+                  <span className={`${extraStyles.eventStatus} ${extraStyles[item.event_status] || ''}`}>{EVENT_STATUS_LABELS[item.event_status] || item.event_status}</span>
+                  <span className={`${extraStyles.photoBadge} ${coverage === 3 ? extraStyles.photoBadgeReady : ''}`}>{visualSummary(item)}</span>
+                  <Link className={styles.rowLink} href={`/panel/extraordinarias/${item.id}`}>Editar <span>→</span></Link>
+                </article>
+              )
+            })}
           </div>
         ) : (
           <p className={styles.emptyText}>No hay extraordinarias que coincidan con estos filtros.</p>
