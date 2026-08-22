@@ -121,13 +121,16 @@ export default function ExtraordinaryDirectory({ outings }) {
             </div>
 
             {featured.music.length ? (
-              <div className={styles.featuredMusic}>
-                <span>{featured.music.length === 1 ? 'Banda' : 'Bandas'}</span>
+              <div className={`${styles.featuredMusic} ${styles.featuredMusicSpotlight}`}>
+                <span>Acompañamiento musical</span>
                 <div>
-                  {featured.music.map((band) => (
+                  {featured.music.map((band, index) => (
                     <p key={band.id || `${featured.id}-${band.name}`}>
-                      <strong>{band.name}</strong>
-                      {band.context ? <small>{band.context}</small> : null}
+                      <i aria-hidden="true">{String(index + 1).padStart(2, '0')}</i>
+                      <span>
+                        <strong>{band.name}</strong>
+                        {band.context ? <small>{band.context}</small> : null}
+                      </span>
                     </p>
                   ))}
                 </div>
@@ -242,8 +245,8 @@ export default function ExtraordinaryDirectory({ outings }) {
                         {outing.reason ? <p>{outing.reason}</p> : null}
 
                         {outing.music.length ? (
-                          <div className={styles.featuredMusic}>
-                            <span>{outing.music.length === 1 ? 'Banda' : 'Bandas'}</span>
+                          <div className={styles.cardMusic}>
+                            <span>Música</span>
                             <div>
                               {outing.music.map((band) => (
                                 <p key={band.id || `${outing.id}-${band.name}`}>
