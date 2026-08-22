@@ -33,6 +33,7 @@ const directoryLinks = [
 function routeActive(pathname) {
   if (pathname === '/') return 'inicio';
   if (pathname.startsWith('/pregunta')) return 'tiradelhilo';
+  if (pathname.startsWith('/extraordinarias')) return 'extraordinarias';
   return '';
 }
 
@@ -134,7 +135,10 @@ export default function HiloHeader() {
     };
   }, [pathname]);
 
-  const hrefFor = (id) => (pathname === '/' ? `#${id}` : `/#${id}`);
+  const hrefFor = (id) => {
+    if (id === 'extraordinarias') return '/extraordinarias';
+    return pathname === '/' ? `#${id}` : `/#${id}`;
+  };
   const isDirectoryActive = directoryLinks.some(([href]) => pathname.startsWith(href));
   const isExploreActive = active === 'explorar' || isDirectoryActive;
   const closeExplore = () => exploreRef.current?.removeAttribute('open');
