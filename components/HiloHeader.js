@@ -30,12 +30,18 @@ const directoryLinks = [
   ['/bandas', 'Bandas'],
 ];
 
+function routeActive(pathname) {
+  if (pathname === '/') return 'inicio';
+  if (pathname.startsWith('/pregunta')) return 'tiradelhilo';
+  return '';
+}
+
 export default function HiloHeader() {
   const pathname = usePathname();
   const headerRef = useRef(null);
   const exploreRef = useRef(null);
   const [open, setOpen] = useState(false);
-  const [active, setActive] = useState(pathname === '/' ? 'inicio' : '');
+  const [active, setActive] = useState(routeActive(pathname));
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -48,7 +54,7 @@ export default function HiloHeader() {
   useEffect(() => {
     setOpen(false);
     exploreRef.current?.removeAttribute('open');
-    if (pathname !== '/') setActive('');
+    if (pathname !== '/') setActive(routeActive(pathname));
   }, [pathname]);
 
   useEffect(() => {
