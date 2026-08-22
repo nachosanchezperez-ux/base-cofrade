@@ -8,9 +8,13 @@ export default async function BrotherhoodEditorLayout({ children, params }) {
     { href: `${root}/historia`, label: 'Historia', mark: 'Hi' },
     { href: `${root}/titulares`, label: 'Titulares', mark: 'T' },
     { href: `${root}/pasos`, label: 'Pasos', mark: 'P' },
-    { href: `${root}/salidas`, label: 'Salidas', mark: 'S' },
+    { href: `${root}/salidas`, label: 'Salidas', mark: 'S', match: 'exact' },
+    { href: `${root}/salidas/recurrentes`, label: 'Series', mark: 'Sr' },
+    { href: `${root}/cultos`, label: 'Cultos', mark: 'C' },
+    { href: `${root}/patrimonio`, label: 'Patrimonio', mark: 'Pa' },
     { href: `${root}/habito`, label: 'Hábito', mark: 'Há' },
     { href: `${root}/jornada`, label: 'Jornada', mark: 'J' },
+    { href: `${root}/canales`, label: 'Canales', mark: 'Ca' },
     { href: `/panel/acontecimientos?entity=${id}`, label: 'Acontecimientos', mark: 'A', activePath: '/panel/acontecimientos' },
     { href: `/panel/multimedia?entity=${id}`, label: 'Multimedia', mark: 'M', activePath: '/panel/multimedia', tool: true },
     { href: `/panel/fuentes?entity=${id}`, label: 'Fuentes', mark: 'F', activePath: '/panel/fuentes', tool: true },
@@ -18,11 +22,7 @@ export default async function BrotherhoodEditorLayout({ children, params }) {
 
   return (
     <>
-      <EntityWorkspaceNav
-        eyebrow="Ficha de Hermandad"
-        description="Identidad, memoria, cortejo, patrimonio, agenda y documentación conectados."
-        items={items}
-      />
+      <EntityWorkspaceNav eyebrow="Ficha de Hermandad" description="Identidad, memoria, cortejo, patrimonio, agenda y documentación conectados." items={items} />
       {children}
     </>
   )

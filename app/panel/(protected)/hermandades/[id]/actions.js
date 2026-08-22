@@ -105,12 +105,26 @@ async function refreshBrotherhood(supabase, brotherhoodId) {
   revalidatePath('/panel')
   revalidatePath('/panel/hermandades')
   revalidatePath(`/panel/hermandades/${brotherhoodId}`)
+  revalidatePath(`/panel/hermandades/${brotherhoodId}/canales`)
+  revalidatePath(`/panel/hermandades/${brotherhoodId}/cultos`)
+  revalidatePath(`/panel/hermandades/${brotherhoodId}/patrimonio`)
+  revalidatePath(`/panel/hermandades/${brotherhoodId}/salidas`)
+  revalidatePath(`/panel/hermandades/${brotherhoodId}/salidas/recurrentes`)
   revalidatePath('/hermandades')
   if (data?.slug) revalidatePath(`/hermandades/${data.slug}`)
 }
 
 function redirectSaved(brotherhoodId, section) {
-  redirect(`/panel/hermandades/${brotherhoodId}?saved=${section}#${section}`)
+  const routes = {
+    general: `/panel/hermandades/${brotherhoodId}`,
+    redes: `/panel/hermandades/${brotherhoodId}/canales`,
+    salidas: `/panel/hermandades/${brotherhoodId}/salidas/recurrentes`,
+    cultos: `/panel/hermandades/${brotherhoodId}/cultos`,
+    patrimonio: `/panel/hermandades/${brotherhoodId}/patrimonio`,
+    imagenes: `/panel/multimedia?entity=${brotherhoodId}`,
+  }
+  const target = routes[section] || `/panel/hermandades/${brotherhoodId}`
+  redirect(`${target}${target.includes('?') ? '&' : '?'}saved=${section}`)
 }
 
 async function requireBrotherhoodAsset(supabase, brotherhoodId, assetId) {
