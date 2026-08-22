@@ -36,3 +36,12 @@ test('las relaciones son transitables en ambos sentidos', () => {
   const path = shortestGraphPath(graph, 'b', 'a', 1)
   assert.deepEqual(path.nodes, ['b', 'a'])
 })
+
+test('conserva el soporte documental en ambos sentidos', () => {
+  const graph = new Map()
+  const support = { kind: 'brotherhood_step', id: 'rel-1' }
+  addUndirectedEdge(graph, 'h', 's', 'Paso de la hermandad', '', support)
+
+  assert.deepEqual(shortestGraphPath(graph, 'h', 's', 1).edges[0].support, support)
+  assert.deepEqual(shortestGraphPath(graph, 's', 'h', 1).edges[0].support, support)
+})
