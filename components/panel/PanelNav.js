@@ -5,14 +5,17 @@ import { usePathname } from 'next/navigation'
 import { signOutAction } from '@/app/panel/login/actions'
 import { PANEL_ROLES } from '@/lib/panel/roles'
 import styles from '@/app/panel/panel.module.css'
+import navStyles from './PanelNav.module.css'
 
 const baseItems = [
   { href: '/panel', label: 'Resumen', mark: 'R' },
+  { href: '/panel/hoy', label: 'Hoy', mark: 'Ho' },
   { href: '/panel/hermandades', label: 'Hermandades', mark: 'H' },
   { href: '/panel/imagenes', label: 'Imágenes', mark: 'I' },
   { href: '/panel/pasos', label: 'Pasos', mark: 'P' },
   { href: '/panel/agentes', label: 'Personas', mark: 'Pe' },
   { href: '/panel/bandas', label: 'Bandas', mark: 'B' },
+  { href: '/panel/marchas', label: 'Marchas', mark: 'Ma' },
   { href: '/panel/acontecimientos', label: 'Acontecimientos', mark: 'A' },
   { href: '/panel/datos', label: 'Datos', mark: 'D' },
   { href: '/panel/multimedia', label: 'Multimedia', mark: 'M' },
@@ -33,7 +36,7 @@ export default function PanelNav({ user }) {
         <span><strong>Hilo</strong> Cofrade<small>Panel editorial</small></span>
       </Link>
 
-      <nav className={styles.panelNav} aria-label="Navegación del panel">
+      <nav className={`${styles.panelNav} ${navStyles.scrollNav}`} aria-label="Navegación del panel">
         {items.map((item) => {
           const active = item.href === '/panel'
             ? pathname === '/panel'
