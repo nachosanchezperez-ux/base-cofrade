@@ -4,6 +4,7 @@ import RelationalEntityHeroMedia from './RelationalEntityHeroMedia';
 import styles from './RelationalEntityHero.module.css';
 import polishStyles from './RelationalEntityHeroPolish.module.css';
 import brotherhoodStyles from './RelationalEntityHeroBrotherhood.module.css';
+import bandStyles from './RelationalEntityHeroBand.module.css';
 
 function Breadcrumb({ items = [] }) {
   if (!items.length) return null;
@@ -76,13 +77,26 @@ function BrotherhoodCrest({ src, alt }) {
   );
 }
 
-function BandMark({ src, alt }) {
-  if (!src) return null;
-
+function BandIdentity({ src, alt, initials = '' }) {
   return (
-    <span className={polishStyles.bandIdentity}>
-      <Image src={src} alt={alt || ''} width={112} height={112} sizes="112px" priority />
-    </span>
+    <div className={bandStyles.identityStage} aria-label={alt || 'Identidad visual de la formación'}>
+      <span className={bandStyles.identityAura} aria-hidden="true" />
+      <div className={bandStyles.logoStage}>
+        {src ? (
+          <Image
+            className={bandStyles.logo}
+            src={src}
+            alt={alt || ''}
+            width={360}
+            height={320}
+            sizes="(max-width: 620px) 210px, (max-width: 900px) 270px, 340px"
+            priority
+          />
+        ) : (
+          <span className={bandStyles.initials} aria-hidden="true">{initials || 'HC'}</span>
+        )}
+      </div>
+    </div>
   );
 }
 
@@ -121,30 +135,25 @@ export default function RelationalEntityHero({
       <BrotherhoodCrest src={media.crestSrc} alt={media.crestAlt} />
       {heading}
     </div>
-  ) : isBand ? (
-    <div className={`${styles.brotherhoodLockup} ${polishStyles.bandLockup}`}>
-      <BandMark src={media.crestSrc} alt={media.crestAlt} />
-      {heading}
-    </div>
   ) : heading;
 
   return (
     <section
-      className={`${styles.hero} ${styles[`hero_${variant}`] || ''} ${polishStyles.hero} ${polishStyles[`hero_${variant}`] || ''}`}
+      className={`${styles.hero} ${styles[`hero_${variant}`] || ''} ${polishStyles.hero} ${polishStyles[`hero_${variant}`] || ''} ${isBand ? bandStyles.heroBand : ''}`}
       aria-labelledby="entity-hero-title"
     >
       <div className={styles.texture} aria-hidden="true" />
       <div className="shell">
         <Breadcrumb items={breadcrumbItems} />
 
-        <div className={`${styles.grid} ${polishStyles.grid}`}>
-          <div className={`${styles.copy} ${polishStyles.copy}`}>
+        <div className={`${styles.grid} ${polishStyles.grid} ${isBand ? bandStyles.bandGrid : ''}`}>
+          <div className={`${styles.copy} ${polishStyles.copy} ${isBand ? bandStyles.bandCopy : ''}`}>
             {identityHeading}
 
             <ParentRelation relation={relation} />
 
             {visibleFacts.length ? (
-              <dl className={`${styles.facts} ${polishStyles.facts}`} data-count={visibleFacts.length}>
+              <dl className={`${styles.facts} ${polishStyles.facts} ${isBand ? bandStyles.bandFacts : ''}`} data-count={visibleFacts.length}>
                 {visibleFacts.map((fact) => (
                   <div key={fact.label}>
                     <dt>{fact.label}</dt>
@@ -157,7 +166,15 @@ export default function RelationalEntityHero({
             ) : null}
           </div>
 
-          <RelationalEntityHeroMedia variant={variant} {...media} />
+          {isBand ? (
+            <BandIdentity
+              src={media.crestSrc}
+              alt={media.crestAlt}
+              initials={media.initials}
+            />
+          ) : (
+            <RelationalEntityHeroMedia variant={variant} {...media} />
+          )}
         </div>
       </div>
     </section>
