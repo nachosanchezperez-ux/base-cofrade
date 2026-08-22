@@ -105,12 +105,27 @@ async function refreshBrotherhood(supabase, brotherhoodId) {
   revalidatePath('/panel')
   revalidatePath('/panel/hermandades')
   revalidatePath(`/panel/hermandades/${brotherhoodId}`)
+  revalidatePath(`/panel/hermandades/${brotherhoodId}/canales`)
+  revalidatePath(`/panel/hermandades/${brotherhoodId}/cultos`)
+  revalidatePath(`/panel/hermandades/${brotherhoodId}/patrimonio`)
+  revalidatePath(`/panel/hermandades/${brotherhoodId}/salidas`)
+  revalidatePath(`/panel/hermandades/${brotherhoodId}/salidas/recurrentes`)
   revalidatePath('/hermandades')
   if (data?.slug) revalidatePath(`/hermandades/${data.slug}`)
 }
 
 function redirectSaved(brotherhoodId, section) {
-  redirect(`/panel/hermandades/${brotherhoodId}?saved=${section}#${section}`)
+  const routeBySection = {
+    general: `/panel/hermandades/${brotherhoodId}`,
+    redes: `/panel/hermandades/${brotherhoodId}/canales`,
+    salidas: `/panel/hermandades/${brotherhoodId}/salidas/recurrentes`,
+    cultos: `/panel/hermandades/${brotherhoodId}/cultos`,
+    patrimonio: `/panel/hermandades/${brotherhoodId}/patrimonio`,
+    imagenes: `/panel/multimedia?entity=${brotherhoodId}`,
+  }
+  const target = routeBySection[section] || `/panel/hermandades/${brotherhoodId}`
+  const separator = target.includes('?') ? '&' : '?'
+  redirect(`${target}${separator}saved=${section}`)
 }
 
 async function requireBrotherhoodAsset(supabase, brotherhoodId, assetId) {
@@ -153,14 +168,8 @@ export async function updateBrotherhoodAction(formData) {
     notes: nullable(formData, 'notes'),
   }
 
-  assertMutation(
-    await supabase.from('entities').update(entityPayload).eq('id', brotherhoodId).eq('entity_type', 'brotherhood'),
-    'No se pudo actualizar la entidad'
-  )
-  assertMutation(
-    await supabase.from('brotherhoods').update(brotherhoodPayload).eq('entity_id', brotherhoodId),
-    'No se pudo actualizar la ficha'
-  )
+  assertMutation(await supabase.from('entities').update(entityPayload).eq('id', brotherhoodId).eq('entity_type', 'brotherhood'), 'No se pudo actualizar la entidad')
+  assertMutation(await supabase.from('brotherhoods').update(brotherhoodPayload).eq('entity_id', brotherhoodId), 'No se pudo actualizar la ficha')
 
   const colorIds = formData.getAll('color_id').map(String)
   const colorNames = formData.getAll('color_name').map(String)
@@ -182,21 +191,13 @@ export async function updateBrotherhoodAction(formData) {
     }
     const colorId = colorIds[index]
     if (UUID_PATTERN.test(colorId)) {
-      assertMutation(
-        await supabase.from('brotherhood_colors').update(colorPayload).eq('id', colorId).eq('brotherhood_entity_id', brotherhoodId),
-        'No se pudo actualizar un color'
-      )
+      assertMutation(await supabase.from('brotherhood_colors').update(colorPayload).eq('id', colorId).eq('brotherhood_entity_id', brotherhoodId), 'No se pudo actualizar un color')
     } else {
       assertMutation(await supabase.from('brotherhood_colors').insert(colorPayload), 'No se pudo añadir un color')
     }
   }
 
-  await audit(supabase, user, {
-    action_type: entityStatus === 'published' ? 'publish' : 'update',
-    object_type: 'brotherhood', object_id: brotherhoodId, entity_id: brotherhoodId,
-    summary: `Ficha actualizada: ${entityPayload.name}`,
-    changed_fields: { entity: entityPayload, brotherhood: brotherhoodPayload },
-  })
+  await audit(supabase, user, { action_type: entityStatus === 'published' ? 'publish' : 'update', object_type: 'brotherhood', object_id: brotherhoodId, entity_id: brotherhoodId, summary: `Ficha actualizada: ${entityPayload.name}`, changed_fields: { entity: entityPayload, brotherhood: brotherhoodPayload } })
   await refreshBrotherhood(supabase, brotherhoodId)
   redirectSaved(brotherhoodId, 'general')
 }
@@ -208,28 +209,10 @@ export async function saveSocialLinkAction(formData) {
   const linkId = optionalUuid(formData, 'link_id')
   const platform = required(formData, 'platform', 'La plataforma')
   if (!SOCIAL_PLATFORMS.has(platform)) throw new Error('Plataforma no válida.')
-
-  const payload = {
-    entity_id: brotherhoodId,
-    platform,
-    url: officialUrl(formData),
-    label: nullable(formData, 'label'),
-    display_order: integer(formData, 'display_order') || 0,
-    is_public: checked(formData, 'is_public'),
-  }
-  const result = linkId
-    ? await supabase.from('entity_social_links').update(payload).eq('id', linkId).eq('entity_id', brotherhoodId).select('id').single()
-    : await supabase.from('entity_social_links').insert(payload).select('id').single()
+  const payload = { entity_id: brotherhoodId, platform, url: officialUrl(formData), label: nullable(formData, 'label'), display_order: integer(formData, 'display_order') || 0, is_public: checked(formData, 'is_public') }
+  const result = linkId ? await supabase.from('entity_social_links').update(payload).eq('id', linkId).eq('entity_id', brotherhoodId).select('id').single() : await supabase.from('entity_social_links').insert(payload).select('id').single()
   const saved = assertMutation(result, 'No se pudo guardar el enlace oficial')
-
-  await audit(supabase, user, {
-    action_type: linkId ? 'update' : 'create',
-    object_type: 'entity_social_link',
-    object_id: saved.id,
-    entity_id: brotherhoodId,
-    summary: `${linkId ? 'Enlace actualizado' : 'Enlace creado'}: ${platform}`,
-    changed_fields: payload,
-  })
+  await audit(supabase, user, { action_type: linkId ? 'update' : 'create', object_type: 'entity_social_link', object_id: saved.id, entity_id: brotherhoodId, summary: `${linkId ? 'Enlace actualizado' : 'Enlace creado'}: ${platform}`, changed_fields: payload })
   await refreshBrotherhood(supabase, brotherhoodId)
   redirectSaved(brotherhoodId, 'redes')
 }
@@ -239,35 +222,10 @@ export async function saveOutingSeriesAction(formData) {
   const supabase = await createClient()
   const brotherhoodId = uuid(formData, 'brotherhood_id')
   const seriesId = optionalUuid(formData, 'series_id')
-  const payload = {
-    brotherhood_entity_id: brotherhoodId,
-    outing_type: required(formData, 'outing_type', 'El tipo de salida'),
-    character: value(formData, 'character') === 'extraordinary' ? 'extraordinary' : 'ordinary',
-    title: required(formData, 'title', 'El título'),
-    month: integer(formData, 'month'),
-    date_rule: nullable(formData, 'date_rule'),
-    time_text: nullable(formData, 'time_text'),
-    municipality_id: optionalUuid(formData, 'municipality_id'),
-    origin_place_id: optionalUuid(formData, 'origin_place_id'),
-    destination_place_id: optionalUuid(formData, 'destination_place_id'),
-    route_summary: nullable(formData, 'route_summary'),
-    description: nullable(formData, 'description'),
-    display_order: integer(formData, 'display_order'),
-    status: status(formData),
-    notes: nullable(formData, 'notes'),
-  }
-
-  const result = seriesId
-    ? await supabase.from('outing_series').update(payload).eq('id', seriesId).eq('brotherhood_entity_id', brotherhoodId).select('id').single()
-    : await supabase.from('outing_series').insert(payload).select('id').single()
+  const payload = { brotherhood_entity_id: brotherhoodId, outing_type: required(formData, 'outing_type', 'El tipo de salida'), character: value(formData, 'character') === 'extraordinary' ? 'extraordinary' : 'ordinary', title: required(formData, 'title', 'El título'), month: integer(formData, 'month'), date_rule: nullable(formData, 'date_rule'), time_text: nullable(formData, 'time_text'), municipality_id: optionalUuid(formData, 'municipality_id'), origin_place_id: optionalUuid(formData, 'origin_place_id'), destination_place_id: optionalUuid(formData, 'destination_place_id'), route_summary: nullable(formData, 'route_summary'), description: nullable(formData, 'description'), display_order: integer(formData, 'display_order'), status: status(formData), notes: nullable(formData, 'notes') }
+  const result = seriesId ? await supabase.from('outing_series').update(payload).eq('id', seriesId).eq('brotherhood_entity_id', brotherhoodId).select('id').single() : await supabase.from('outing_series').insert(payload).select('id').single()
   const saved = assertMutation(result, 'No se pudo guardar la salida recurrente')
-
-  await audit(supabase, user, {
-    action_type: seriesId ? 'update' : 'create', object_type: 'outing_series',
-    object_id: saved.id, entity_id: brotherhoodId,
-    summary: `${seriesId ? 'Salida actualizada' : 'Salida creada'}: ${payload.title}`,
-    changed_fields: payload,
-  })
+  await audit(supabase, user, { action_type: seriesId ? 'update' : 'create', object_type: 'outing_series', object_id: saved.id, entity_id: brotherhoodId, summary: `${seriesId ? 'Salida actualizada' : 'Salida creada'}: ${payload.title}`, changed_fields: payload })
   await refreshBrotherhood(supabase, brotherhoodId)
   redirectSaved(brotherhoodId, 'salidas')
 }
@@ -277,10 +235,7 @@ export async function archiveOutingSeriesAction(formData) {
   const supabase = await createClient()
   const brotherhoodId = uuid(formData, 'brotherhood_id')
   const seriesId = uuid(formData, 'series_id')
-  const saved = assertMutation(
-    await supabase.from('outing_series').update({ status: 'archived' }).eq('id', seriesId).eq('brotherhood_entity_id', brotherhoodId).select('id, title').single(),
-    'No se pudo archivar la salida'
-  )
+  const saved = assertMutation(await supabase.from('outing_series').update({ status: 'archived' }).eq('id', seriesId).eq('brotherhood_entity_id', brotherhoodId).select('id, title').single(), 'No se pudo archivar la salida')
   await audit(supabase, user, { action_type: 'archive', object_type: 'outing_series', object_id: saved.id, entity_id: brotherhoodId, summary: `Salida archivada: ${saved.title}` })
   await refreshBrotherhood(supabase, brotherhoodId)
   redirectSaved(brotherhoodId, 'salidas')
@@ -292,20 +247,8 @@ export async function saveMovementAction(formData) {
   const brotherhoodId = uuid(formData, 'brotherhood_id')
   const seriesId = uuid(formData, 'series_id')
   const movementId = optionalUuid(formData, 'movement_id')
-  const payload = {
-    outing_series_id: seriesId,
-    sequence_no: integer(formData, 'sequence_no') || 1,
-    direction: required(formData, 'direction', 'La dirección del movimiento'),
-    date_rule: nullable(formData, 'date_rule'),
-    time_text: nullable(formData, 'time_text'),
-    origin_place_id: optionalUuid(formData, 'origin_place_id'),
-    destination_place_id: optionalUuid(formData, 'destination_place_id'),
-    route_summary: nullable(formData, 'route_summary'),
-    description: nullable(formData, 'description'),
-  }
-  const result = movementId
-    ? await supabase.from('outing_series_movements').update(payload).eq('id', movementId).eq('outing_series_id', seriesId).select('id').single()
-    : await supabase.from('outing_series_movements').insert(payload).select('id').single()
+  const payload = { outing_series_id: seriesId, sequence_no: integer(formData, 'sequence_no') || 1, direction: required(formData, 'direction', 'La dirección del movimiento'), date_rule: nullable(formData, 'date_rule'), time_text: nullable(formData, 'time_text'), origin_place_id: optionalUuid(formData, 'origin_place_id'), destination_place_id: optionalUuid(formData, 'destination_place_id'), route_summary: nullable(formData, 'route_summary'), description: nullable(formData, 'description') }
+  const result = movementId ? await supabase.from('outing_series_movements').update(payload).eq('id', movementId).eq('outing_series_id', seriesId).select('id').single() : await supabase.from('outing_series_movements').insert(payload).select('id').single()
   const saved = assertMutation(result, 'No se pudo guardar el movimiento')
   await audit(supabase, user, { action_type: movementId ? 'update' : 'create', object_type: 'outing_series_movement', object_id: saved.id, entity_id: brotherhoodId, summary: `Movimiento ${movementId ? 'actualizado' : 'creado'} en ${value(formData, 'series_title')}` })
   await refreshBrotherhood(supabase, brotherhoodId)
@@ -317,25 +260,8 @@ export async function saveCultAction(formData) {
   const supabase = await createClient()
   const brotherhoodId = uuid(formData, 'brotherhood_id')
   const cultId = optionalUuid(formData, 'cult_id')
-  const payload = {
-    brotherhood_entity_id: brotherhoodId,
-    cult_type: required(formData, 'cult_type', 'El tipo de culto'),
-    title: required(formData, 'title', 'El título'),
-    cult_date: nullable(formData, 'cult_date'),
-    date_rule: nullable(formData, 'date_rule'),
-    month: integer(formData, 'month'),
-    time_text: nullable(formData, 'time_text'),
-    place_id: optionalUuid(formData, 'place_id'),
-    description: nullable(formData, 'description'),
-    is_recurring: formData.get('is_recurring') === 'on',
-    recurrence_label: nullable(formData, 'recurrence_label'),
-    display_order: integer(formData, 'display_order'),
-    status: status(formData),
-    notes: nullable(formData, 'notes'),
-  }
-  const result = cultId
-    ? await supabase.from('cults').update(payload).eq('id', cultId).eq('brotherhood_entity_id', brotherhoodId).select('id').single()
-    : await supabase.from('cults').insert(payload).select('id').single()
+  const payload = { brotherhood_entity_id: brotherhoodId, cult_type: required(formData, 'cult_type', 'El tipo de culto'), title: required(formData, 'title', 'El título'), cult_date: nullable(formData, 'cult_date'), date_rule: nullable(formData, 'date_rule'), month: integer(formData, 'month'), time_text: nullable(formData, 'time_text'), place_id: optionalUuid(formData, 'place_id'), description: nullable(formData, 'description'), is_recurring: formData.get('is_recurring') === 'on', recurrence_label: nullable(formData, 'recurrence_label'), display_order: integer(formData, 'display_order'), status: status(formData), notes: nullable(formData, 'notes') }
+  const result = cultId ? await supabase.from('cults').update(payload).eq('id', cultId).eq('brotherhood_entity_id', brotherhoodId).select('id').single() : await supabase.from('cults').insert(payload).select('id').single()
   const saved = assertMutation(result, 'No se pudo guardar el culto')
   await audit(supabase, user, { action_type: cultId ? 'update' : 'create', object_type: 'cult', object_id: saved.id, entity_id: brotherhoodId, summary: `${cultId ? 'Culto actualizado' : 'Culto creado'}: ${payload.title}`, changed_fields: payload })
   await refreshBrotherhood(supabase, brotherhoodId)
@@ -358,22 +284,9 @@ export async function saveHeritageAction(formData) {
   const supabase = await createClient()
   const brotherhoodId = uuid(formData, 'brotherhood_id')
   const updateId = optionalUuid(formData, 'update_id')
-  const payload = {
-    brotherhood_entity_id: brotherhoodId,
-    update_type: value(formData, 'update_type') === 'restauracion' ? 'restauracion' : 'estreno',
-    title: required(formData, 'title', 'El título'),
-    update_date: nullable(formData, 'update_date'),
-    year: integer(formData, 'year'),
-    target_entity_id: optionalUuid(formData, 'target_entity_id'),
-    element_name: nullable(formData, 'element_name'),
-    discipline: nullable(formData, 'discipline'),
-    description: nullable(formData, 'description'),
-    status: status(formData),
-  }
+  const payload = { brotherhood_entity_id: brotherhoodId, update_type: value(formData, 'update_type') === 'restauracion' ? 'restauracion' : 'estreno', title: required(formData, 'title', 'El título'), update_date: nullable(formData, 'update_date'), year: integer(formData, 'year'), target_entity_id: optionalUuid(formData, 'target_entity_id'), element_name: nullable(formData, 'element_name'), discipline: nullable(formData, 'discipline'), description: nullable(formData, 'description'), status: status(formData) }
   if (!payload.update_date && !payload.year) throw new Error('Indica la fecha o el año de la novedad patrimonial.')
-  const result = updateId
-    ? await supabase.from('heritage_updates').update(payload).eq('id', updateId).eq('brotherhood_entity_id', brotherhoodId).select('id').single()
-    : await supabase.from('heritage_updates').insert(payload).select('id').single()
+  const result = updateId ? await supabase.from('heritage_updates').update(payload).eq('id', updateId).eq('brotherhood_entity_id', brotherhoodId).select('id').single() : await supabase.from('heritage_updates').insert(payload).select('id').single()
   const saved = assertMutation(result, 'No se pudo guardar la novedad patrimonial')
   await audit(supabase, user, { action_type: updateId ? 'update' : 'create', object_type: 'heritage_update', object_id: saved.id, entity_id: brotherhoodId, summary: `${updateId ? 'Novedad actualizada' : 'Novedad creada'}: ${payload.title}`, changed_fields: payload })
   await refreshBrotherhood(supabase, brotherhoodId)
@@ -399,68 +312,19 @@ export async function saveHeritageAssetAction(formData) {
   const assetId = currentAssetId || randomUUID()
   const assetStatus = status(formData)
   const assetSlug = required(formData, 'asset_slug', 'El slug de la pieza')
-  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(assetSlug)) {
-    throw new Error('El slug de la pieza solo puede contener minúsculas, números y guiones simples.')
-  }
-
-  const entityPayload = {
-    name: required(formData, 'asset_name', 'El nombre de la pieza'),
-    slug: assetSlug,
-    summary: nullable(formData, 'asset_summary'),
-    status: assetStatus,
-  }
-  const assetPayload = {
-    parent_entity_id: brotherhoodId,
-    asset_type: required(formData, 'asset_type', 'El tipo de pieza'),
-    description: nullable(formData, 'asset_description'),
-    technique: nullable(formData, 'technique'),
-    materials: nullable(formData, 'materials'),
-    dimensions_text: nullable(formData, 'dimensions_text'),
-    iconography: nullable(formData, 'iconography'),
-    historical_context: nullable(formData, 'historical_context'),
-    provenance_text: nullable(formData, 'provenance_text'),
-    blessing_date: nullable(formData, 'blessing_date'),
-    blessing_date_text: nullable(formData, 'blessing_date_text'),
-    date_from: nullable(formData, 'date_from'),
-    date_from_text: nullable(formData, 'date_from_text'),
-    current_condition: nullable(formData, 'current_condition'),
-    is_current: checked(formData, 'is_current'),
-    origin_notes: nullable(formData, 'origin_notes'),
-    display_order: integer(formData, 'display_order') || 0,
-    is_featured: checked(formData, 'is_featured'),
-    notes: nullable(formData, 'asset_notes'),
-  }
-
+  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(assetSlug)) throw new Error('El slug de la pieza solo puede contener minúsculas, números y guiones simples.')
+  const entityPayload = { name: required(formData, 'asset_name', 'El nombre de la pieza'), slug: assetSlug, summary: nullable(formData, 'asset_summary'), status: assetStatus }
+  const assetPayload = { parent_entity_id: brotherhoodId, asset_type: required(formData, 'asset_type', 'El tipo de pieza'), description: nullable(formData, 'asset_description'), technique: nullable(formData, 'technique'), materials: nullable(formData, 'materials'), dimensions_text: nullable(formData, 'dimensions_text'), iconography: nullable(formData, 'iconography'), historical_context: nullable(formData, 'historical_context'), provenance_text: nullable(formData, 'provenance_text'), blessing_date: nullable(formData, 'blessing_date'), blessing_date_text: nullable(formData, 'blessing_date_text'), date_from: nullable(formData, 'date_from'), date_from_text: nullable(formData, 'date_from_text'), current_condition: nullable(formData, 'current_condition'), is_current: checked(formData, 'is_current'), origin_notes: nullable(formData, 'origin_notes'), display_order: integer(formData, 'display_order') || 0, is_featured: checked(formData, 'is_featured'), notes: nullable(formData, 'asset_notes') }
   if (currentAssetId) {
     await requireBrotherhoodAsset(supabase, brotherhoodId, currentAssetId)
-    assertMutation(
-      await supabase.from('entities').update(entityPayload).eq('id', currentAssetId).eq('entity_type', 'heritage_asset'),
-      'No se pudo actualizar la entidad patrimonial'
-    )
-    assertMutation(
-      await supabase.from('heritage_assets').update(assetPayload).eq('entity_id', currentAssetId).eq('parent_entity_id', brotherhoodId),
-      'No se pudo actualizar la pieza patrimonial'
-    )
+    assertMutation(await supabase.from('entities').update(entityPayload).eq('id', currentAssetId).eq('entity_type', 'heritage_asset'), 'No se pudo actualizar la entidad patrimonial')
+    assertMutation(await supabase.from('heritage_assets').update(assetPayload).eq('entity_id', currentAssetId).eq('parent_entity_id', brotherhoodId), 'No se pudo actualizar la pieza patrimonial')
   } else {
-    assertMutation(
-      await supabase.from('entities').insert({ id: assetId, entity_type: 'heritage_asset', ...entityPayload }),
-      'No se pudo crear la entidad patrimonial'
-    )
+    assertMutation(await supabase.from('entities').insert({ id: assetId, entity_type: 'heritage_asset', ...entityPayload }), 'No se pudo crear la entidad patrimonial')
     const assetResult = await supabase.from('heritage_assets').insert({ entity_id: assetId, ...assetPayload })
-    if (assetResult.error) {
-      await supabase.from('entities').delete().eq('id', assetId)
-      throw new Error(`No se pudo crear la pieza patrimonial: ${assetResult.error.message}`)
-    }
+    if (assetResult.error) { await supabase.from('entities').delete().eq('id', assetId); throw new Error(`No se pudo crear la pieza patrimonial: ${assetResult.error.message}`) }
   }
-
-  await audit(supabase, user, {
-    action_type: currentAssetId ? 'update' : 'create',
-    object_type: 'heritage_asset',
-    object_id: assetId,
-    entity_id: brotherhoodId,
-    summary: `${currentAssetId ? 'Pieza actualizada' : 'Pieza creada'}: ${entityPayload.name}`,
-    changed_fields: { ...entityPayload, ...assetPayload },
-  })
+  await audit(supabase, user, { action_type: currentAssetId ? 'update' : 'create', object_type: 'heritage_asset', object_id: assetId, entity_id: brotherhoodId, summary: `${currentAssetId ? 'Pieza actualizada' : 'Pieza creada'}: ${entityPayload.name}`, changed_fields: { ...entityPayload, ...assetPayload } })
   await refreshBrotherhood(supabase, brotherhoodId)
   redirectSaved(brotherhoodId, 'patrimonio')
 }
@@ -471,10 +335,7 @@ export async function archiveHeritageAssetAction(formData) {
   const brotherhoodId = uuid(formData, 'brotherhood_id')
   const assetId = uuid(formData, 'asset_entity_id')
   await requireBrotherhoodAsset(supabase, brotherhoodId, assetId)
-  const saved = assertMutation(
-    await supabase.from('entities').update({ status: 'archived' }).eq('id', assetId).eq('entity_type', 'heritage_asset').select('id, name').single(),
-    'No se pudo archivar la pieza patrimonial'
-  )
+  const saved = assertMutation(await supabase.from('entities').update({ status: 'archived' }).eq('id', assetId).eq('entity_type', 'heritage_asset').select('id, name').single(), 'No se pudo archivar la pieza patrimonial')
   await audit(supabase, user, { action_type: 'archive', object_type: 'heritage_asset', object_id: saved.id, entity_id: brotherhoodId, summary: `Pieza archivada: ${saved.name}` })
   await refreshBrotherhood(supabase, brotherhoodId)
   redirectSaved(brotherhoodId, 'patrimonio')
@@ -488,37 +349,13 @@ export async function saveAssetContributionAction(formData) {
   const contributionId = optionalUuid(formData, 'contribution_id')
   const agentId = uuid(formData, 'agent_entity_id')
   await requireBrotherhoodAsset(supabase, brotherhoodId, assetId)
-
   const agentResult = await supabase.from('entities').select('id, name').eq('id', agentId).eq('entity_type', 'agent').maybeSingle()
   if (agentResult.error) throw new Error(`No se pudo validar el autor o taller: ${agentResult.error.message}`)
   if (!agentResult.data) throw new Error('Selecciona un autor o taller válido.')
-
-  const payload = {
-    target_entity_id: assetId,
-    agent_entity_id: agentId,
-    discipline: required(formData, 'discipline', 'La disciplina'),
-    element_name: nullable(formData, 'element_name'),
-    intervention_type: nullable(formData, 'intervention_type') || 'Creación',
-    phase: nullable(formData, 'phase'),
-    date_from: nullable(formData, 'contribution_date_from'),
-    date_from_text: nullable(formData, 'contribution_date_from_text'),
-    date_to: nullable(formData, 'contribution_date_to'),
-    date_to_text: nullable(formData, 'contribution_date_to_text'),
-    description: nullable(formData, 'contribution_description'),
-    status: status(formData),
-  }
-  const result = contributionId
-    ? await supabase.from('heritage_interventions').update(payload).eq('id', contributionId).eq('target_entity_id', assetId).select('id').single()
-    : await supabase.from('heritage_interventions').insert(payload).select('id').single()
+  const payload = { target_entity_id: assetId, agent_entity_id: agentId, discipline: required(formData, 'discipline', 'La disciplina'), element_name: nullable(formData, 'element_name'), intervention_type: nullable(formData, 'intervention_type') || 'Creación', phase: nullable(formData, 'phase'), date_from: nullable(formData, 'contribution_date_from'), date_from_text: nullable(formData, 'contribution_date_from_text'), date_to: nullable(formData, 'contribution_date_to'), date_to_text: nullable(formData, 'contribution_date_to_text'), description: nullable(formData, 'contribution_description'), status: status(formData) }
+  const result = contributionId ? await supabase.from('heritage_interventions').update(payload).eq('id', contributionId).eq('target_entity_id', assetId).select('id').single() : await supabase.from('heritage_interventions').insert(payload).select('id').single()
   const saved = assertMutation(result, 'No se pudo guardar la autoría o intervención')
-  await audit(supabase, user, {
-    action_type: contributionId ? 'update' : 'create',
-    object_type: 'heritage_intervention',
-    object_id: saved.id,
-    entity_id: brotherhoodId,
-    summary: `${contributionId ? 'Relación actualizada' : 'Relación creada'}: ${agentResult.data.name} · ${payload.discipline}`,
-    changed_fields: payload,
-  })
+  await audit(supabase, user, { action_type: contributionId ? 'update' : 'create', object_type: 'heritage_intervention', object_id: saved.id, entity_id: brotherhoodId, summary: `${contributionId ? 'Relación actualizada' : 'Relación creada'}: ${agentResult.data.name} · ${payload.discipline}`, changed_fields: payload })
   await refreshBrotherhood(supabase, brotherhoodId)
   redirectSaved(brotherhoodId, 'patrimonio')
 }
@@ -530,10 +367,7 @@ export async function archiveAssetContributionAction(formData) {
   const assetId = uuid(formData, 'asset_entity_id')
   const contributionId = uuid(formData, 'contribution_id')
   await requireBrotherhoodAsset(supabase, brotherhoodId, assetId)
-  const saved = assertMutation(
-    await supabase.from('heritage_interventions').update({ status: 'archived' }).eq('id', contributionId).eq('target_entity_id', assetId).select('id, discipline').single(),
-    'No se pudo archivar la autoría o intervención'
-  )
+  const saved = assertMutation(await supabase.from('heritage_interventions').update({ status: 'archived' }).eq('id', contributionId).eq('target_entity_id', assetId).select('id, discipline').single(), 'No se pudo archivar la autoría o intervención')
   await audit(supabase, user, { action_type: 'archive', object_type: 'heritage_intervention', object_id: saved.id, entity_id: brotherhoodId, summary: `Relación patrimonial archivada: ${saved.discipline}` })
   await refreshBrotherhood(supabase, brotherhoodId)
   redirectSaved(brotherhoodId, 'patrimonio')
@@ -544,55 +378,23 @@ export async function uploadMediaAction(formData) {
   const supabase = await createClient()
   const brotherhoodId = uuid(formData, 'brotherhood_id')
   const mediaEntityId = optionalUuid(formData, 'media_entity_id') || brotherhoodId
-  if (mediaEntityId !== brotherhoodId) {
-    await requireBrotherhoodAsset(supabase, brotherhoodId, mediaEntityId)
-  }
+  if (mediaEntityId !== brotherhoodId) await requireBrotherhoodAsset(supabase, brotherhoodId, mediaEntityId)
   const file = formData.get('file')
   if (!(file instanceof File) || file.size === 0) throw new Error('Selecciona una imagen para subir.')
   if (!['image/jpeg', 'image/png', 'image/webp', 'image/gif'].includes(file.type)) throw new Error('La imagen debe ser JPG, PNG, WEBP o GIF.')
   if (file.size > 10 * 1024 * 1024) throw new Error('La imagen no puede superar 10 MB.')
   const altText = required(formData, 'alt_text', 'El texto alternativo')
   const rightsStatus = value(formData, 'rights_status')
-  if (!['owned', 'authorized', 'licensed', 'public_domain'].includes(rightsStatus)) {
-    throw new Error('Solo se pueden subir imágenes cuyos derechos permitan su publicación.')
-  }
-
+  if (!['owned', 'authorized', 'licensed', 'public_domain'].includes(rightsStatus)) throw new Error('Solo se pueden subir imágenes cuyos derechos permitan su publicación.')
   const extension = file.name.split('.').pop()?.toLowerCase().replace(/[^a-z0-9]/g, '') || 'jpg'
   const storagePath = `${brotherhoodId}/${randomUUID()}.${extension}`
   const uploadResult = await supabase.storage.from('hilo-media').upload(storagePath, file, { contentType: file.type, upsert: false })
   assertMutation(uploadResult, 'No se pudo subir la imagen')
-
-  const assetResult = await supabase.from('media_assets').insert({
-      storage_path: storagePath,
-      media_type: 'image',
-      title: nullable(formData, 'title') || file.name,
-      caption: nullable(formData, 'caption'),
-      alt_text: altText,
-      author_name: nullable(formData, 'author_name'),
-      source_name: nullable(formData, 'source_name'),
-      source_url: nullable(formData, 'source_url'),
-      rights_status: rightsStatus,
-      rights_holder: nullable(formData, 'rights_holder'),
-      license: nullable(formData, 'license'),
-      permission_notes: nullable(formData, 'permission_notes'),
-    }).select('id').single()
-  if (assetResult.error) {
-    await supabase.storage.from('hilo-media').remove([storagePath])
-    throw new Error(`No se pudo registrar la imagen: ${assetResult.error.message}`)
-  }
+  const assetResult = await supabase.from('media_assets').insert({ storage_path: storagePath, media_type: 'image', title: nullable(formData, 'title') || file.name, caption: nullable(formData, 'caption'), alt_text: altText, author_name: nullable(formData, 'author_name'), source_name: nullable(formData, 'source_name'), source_url: nullable(formData, 'source_url'), rights_status: rightsStatus, rights_holder: nullable(formData, 'rights_holder'), license: nullable(formData, 'license'), permission_notes: nullable(formData, 'permission_notes') }).select('id').single()
+  if (assetResult.error) { await supabase.storage.from('hilo-media').remove([storagePath]); throw new Error(`No se pudo registrar la imagen: ${assetResult.error.message}`) }
   const asset = assetResult.data
-  const linkResult = await supabase.from('entity_media').insert({
-      entity_id: mediaEntityId,
-      media_asset_id: asset.id,
-      relation_type: value(formData, 'relation_type') || 'gallery',
-      sort_order: integer(formData, 'sort_order') || 0,
-      is_cover: formData.get('is_cover') === 'on',
-    }).select('id').single()
-  if (linkResult.error) {
-    await supabase.from('media_assets').delete().eq('id', asset.id)
-    await supabase.storage.from('hilo-media').remove([storagePath])
-    throw new Error(`No se pudo vincular la imagen a la hermandad: ${linkResult.error.message}`)
-  }
+  const linkResult = await supabase.from('entity_media').insert({ entity_id: mediaEntityId, media_asset_id: asset.id, relation_type: value(formData, 'relation_type') || 'gallery', sort_order: integer(formData, 'sort_order') || 0, is_cover: formData.get('is_cover') === 'on' }).select('id').single()
+  if (linkResult.error) { await supabase.from('media_assets').delete().eq('id', asset.id); await supabase.storage.from('hilo-media').remove([storagePath]); throw new Error(`No se pudo vincular la imagen a la hermandad: ${linkResult.error.message}`) }
   const link = linkResult.data
   await audit(supabase, user, { action_type: 'link', object_type: 'entity_media', object_id: link.id, entity_id: brotherhoodId, summary: `Imagen incorporada: ${nullable(formData, 'title') || file.name}` })
   await refreshBrotherhood(supabase, brotherhoodId)
