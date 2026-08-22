@@ -97,6 +97,25 @@ export async function saveAdvocationAction(formData) {
   redirectSaved('advocaciones')
 }
 
+export async function saveImageAdvocationAction(formData) {
+  const user = await requirePanelEditor()
+  const supabase = await createClient()
+  const imageId = optionalUuid(formData, 'image_id')
+  if (!imageId) throw new Error('Selecciona una Imagen.')
+  const advocationId = optionalUuid(formData, 'advocation_id')
+
+  const imageEntity = assertMutation(await supabase.from('entities').select('id, name, slug').eq('id', imageId).eq('entity_type', 'image').single(), 'La Imagen seleccionada no es válida')
+  if (advocationId) {
+    assertMutation(await supabase.from('advocations').select('entity_id').eq('entity_id', advocationId).single(), 'La Advocación seleccionada no es válida')
+  }
+
+  assertMutation(await supabase.from('images').update({ advocation_entity_id: advocationId }).eq('entity_id', imageId), 'No se pudo actualizar la Advocación de la Imagen')
+  await audit(supabase, user, { action_type: 'update', object_type: 'image', object_id: imageId, entity_id: imageId, summary: `${advocationId ? 'Advocación asignada' : 'Advocación retirada'}: ${imageEntity.name}`, changed_fields: { advocation_entity_id: advocationId } })
+  refreshMasterData()
+  if (imageEntity.slug) revalidatePath(`/imagenes/${imageEntity.slug}`)
+  redirectSaved('advocaciones')
+}
+
 export async function saveMunicipalityAction(formData) {
   const user = await requirePanelEditor()
   const supabase = await createClient()
