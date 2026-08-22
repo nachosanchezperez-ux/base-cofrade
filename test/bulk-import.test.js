@@ -12,7 +12,7 @@ test('acepta CSV separado por punto y coma con campos entrecomillados', () => {
 })
 
 test('convierte un CSV simple en operaciones de importación', () => {
-  const parsed = parseBulkImportText('slug;name;active\nsevilla;Sevilla;true', {
+  const parsed = parseBulkImportText('slug;name;province\nsevilla;Sevilla;Sevilla', {
     format: 'csv',
     table: 'municipalities',
     operation: 'upsert',
@@ -23,7 +23,7 @@ test('convierte un CSV simple en operaciones de importación', () => {
     table: 'municipalities',
     operation: 'upsert',
     on_conflict: 'slug',
-    data: { slug: 'sevilla', name: 'Sevilla', active: true },
+    data: { slug: 'sevilla', name: 'Sevilla', province: 'Sevilla' },
     refs: {},
   })
 })
@@ -60,6 +60,30 @@ test('bloquea columnas de referencia no previstas', () => {
     },
   })
   assert.match(result.errors.join(' '), /solo puede ser id o entity_id/)
+})
+
+test('exige una clave estable para los upsert', () => {
+  const result = validateBulkImportRecord({
+    table: 'entities',
+    operation: 'upsert',
+    data: { name: 'Entidad sin clave', entity_type: 'brotherhood' },
+  })
+  assert.match(result.errors.join(' '), /necesita on_conflict o una clave primaria/)
+})
+
+test('impide sustituir el UUID al actualizar una entidad por slug', () => {
+  const result = validateBulkImportRecord({
+    table: 'entities',
+    operation: 'upsert',
+    on_conflict: 'slug',
+    data: {
+      id: '11111111-1111-1111-1111-111111111111',
+      slug: 'el-baratillo',
+      name: 'El Baratillo',
+      entity_type: 'brotherhood',
+    },
+  })
+  assert.match(result.errors.join(' '), /podría cambiar el UUID/)
 })
 
 test('divide lotes grandes antes de enviarlos al servidor', () => {
