@@ -100,7 +100,7 @@ export default function ExtraordinaryDirectory({ outings }) {
             <strong className={styles.featuredContext}>{featured.brotherhoodName}</strong>
             {featured.reason ? <p>{featured.reason}</p> : null}
 
-            <div className={styles.featuredEssentials}>
+            <div className={`${styles.featuredEssentials} ${featured.returnTime ? styles.featuredEssentialsWithEntry : ''}`}>
               <div>
                 <span>Cuándo</span>
                 <strong>{featured.dateParts.weekdayLabel || featured.dateParts.label}</strong>
@@ -109,11 +109,17 @@ export default function ExtraordinaryDirectory({ outings }) {
                 <span>Salida</span>
                 <strong>{featured.departureTime || 'Por confirmar'}</strong>
               </div>
+              {featured.returnTime ? (
+                <div>
+                  <span>Entrada</span>
+                  <strong>{featured.returnTime}</strong>
+                </div>
+              ) : null}
             </div>
 
             {featured.music.length ? (
               <div className={styles.featuredMusic}>
-                <span>Música</span>
+                <span>{featured.music.length === 1 ? 'Banda' : 'Bandas'}</span>
                 <div>
                   {featured.music.map((band) => (
                     <p key={band.id || `${featured.id}-${band.name}`}>
@@ -232,11 +238,24 @@ export default function ExtraordinaryDirectory({ outings }) {
                         <strong className={styles.organizer}>{outing.brotherhoodName}</strong>
                         {outing.reason ? <p>{outing.reason}</p> : null}
 
+                        {outing.music.length ? (
+                          <div className={styles.cardMusic}>
+                            <span>{outing.music.length === 1 ? 'Banda' : 'Bandas'}</span>
+                            <div>
+                              {outing.music.map((band) => (
+                                <p key={band.id || `${outing.id}-${band.name}`}>
+                                  <strong>{band.name}</strong>
+                                  {band.context ? <small>{band.context}</small> : null}
+                                </p>
+                              ))}
+                            </div>
+                          </div>
+                        ) : null}
+
                         <div className={styles.cardFooter}>
                           <div className={styles.cardFacts}>
                             {outing.departureTime ? <span><b>Salida</b>{outing.departureTime}</span> : null}
                             {outing.returnTime ? <span><b>Entrada</b>{outing.returnTime}</span> : null}
-                            {outing.music.length ? <span><b>Música</b>{outing.musicSummary}</span> : null}
                           </div>
                           <div className={styles.signals} aria-label="Información disponible">
                             {outing.routeSummary ? <span>Recorrido publicado</span> : null}
