@@ -29,12 +29,37 @@ function Node({ name, entity, position }) {
   );
 }
 
+function RelationReference({ references = [] }) {
+  const first = references[0];
+  if (!first) return null;
+  const content = (
+    <>
+      <b>Fuente exacta</b>
+      <span>{first.name}</span>
+      {references.length > 1 ? <small>+{references.length - 1}</small> : null}
+    </>
+  );
+
+  return first.url ? (
+    <a className={styles.relationReference} href={first.url} target="_blank" rel="noopener noreferrer">
+      {content}
+    </a>
+  ) : (
+    <span className={styles.relationReference}>{content}</span>
+  );
+}
+
 export default function HiloGraphPath({ response }) {
   const items = response?.items || [];
   const byName = nodeByName(response?.entities || []);
   const edges = items.map((item) => {
     const [from = '', to = ''] = String(item.label || '').split(' → ');
-    return { from, to, meta: item.meta || '' };
+    return {
+      from,
+      to,
+      meta: item.meta || '',
+      relationReferences: item.relationReferences || [],
+    };
   });
 
   if (!edges.length) return null;
@@ -52,7 +77,10 @@ export default function HiloGraphPath({ response }) {
           <div className={styles.segment} key={`${edge.from}-${edge.to}-${index}`}>
             <div className={styles.connector} aria-label={edge.meta || 'Relación documentada'}>
               <i aria-hidden="true" />
-              <span>{edge.meta || 'Relación documentada'}</span>
+              <div className={styles.connectorCopy}>
+                <span>{edge.meta || 'Relación documentada'}</span>
+                <RelationReference references={edge.relationReferences} />
+              </div>
               <i aria-hidden="true" />
             </div>
             <Node name={edge.to} entity={byName.get(edge.to)} position="next" />
@@ -60,7 +88,10 @@ export default function HiloGraphPath({ response }) {
         ))}
       </div>
 
-      <footer>El camino se construye únicamente con relaciones publicadas en el grafo.</footer>
+      <footer>
+        El camino se construye únicamente con relaciones publicadas en el grafo.
+        {response.exactRelationReferenceCount ? ` ${response.exactRelationReferenceCount} fuentes están enlazadas directamente a los registros utilizados.` : ''}
+      </footer>
     </section>
   );
 }
