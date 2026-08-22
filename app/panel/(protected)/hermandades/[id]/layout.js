@@ -13,13 +13,15 @@ export default async function BrotherhoodEditorLayout({ children, params }) {
         >
           <div>
             <span className={styles.eyebrow}>Ficha conectada</span>
-            <strong style={{ display: 'block', marginTop: 5 }}>Titulares, Pasos, Hábito, jornada, multimedia y documentación</strong>
+            <strong style={{ display: 'block', marginTop: 5 }}>Titulares, Pasos, agenda, memoria histórica, multimedia y documentación</strong>
           </div>
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
             <Link className={styles.secondaryButton} href={`/panel/hermandades/${id}/titulares`}>Titulares</Link>
             <Link className={styles.secondaryButton} href={`/panel/hermandades/${id}/pasos`}>Pasos</Link>
+            <Link className={styles.secondaryButton} href={`/panel/hermandades/${id}/salidas`}>Salidas</Link>
+            <Link className={styles.secondaryButton} href={`/panel/acontecimientos?entity=${id}`}>Acontecimientos</Link>
             <Link className={styles.secondaryButton} href={`/panel/hermandades/${id}/habito`}>Hábito</Link>
-            <Link className={styles.secondaryButton} href={`/panel/hermandades/${id}/jornada`}>Datos de jornada</Link>
+            <Link className={styles.secondaryButton} href={`/panel/hermandades/${id}/jornada`}>Jornada</Link>
             <Link className={styles.secondaryButton} href={`/panel/multimedia?entity=${id}`}>Multimedia</Link>
             <Link className={styles.primaryButton} href={`/panel/fuentes?entity=${id}`}>Fuentes</Link>
           </div>
