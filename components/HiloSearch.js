@@ -75,7 +75,7 @@ function AssistantAnswer({ message, onFollowUp }) {
       <div className={styles.assistantMeta}>
         <span className={styles.assistantDot} aria-hidden="true" />
         <strong>Hilo Cofrade</strong>
-        <span>Respuesta documentada</span>
+        <span>{response.semantic?.used ? 'Síntesis semántica · datos verificados' : 'Respuesta documentada'}</span>
       </div>
 
       <p className={styles.answerText}>{response.answer}</p>
