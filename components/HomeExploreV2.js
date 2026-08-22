@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import styles from './HomeExploreV2.module.css'
 
@@ -16,6 +17,40 @@ const marks = {
   band: 'B',
 }
 
+function DirectoryVisual({ item }) {
+  const media = item.sample?.media
+  const isSymbol = media?.kind === 'crest' || media?.kind === 'logo'
+
+  return (
+    <div className={styles.visual} data-kind={media?.kind || 'fallback'}>
+      {media?.path ? (
+        <Image
+          src={media.path}
+          alt={media.alt || item.sample?.name || ''}
+          fill
+          sizes="(max-width: 859px) calc(100vw - 32px), 28vw"
+          style={{
+            objectFit: isSymbol ? 'contain' : 'cover',
+            objectPosition: media.focusPosition || '50% 50%',
+          }}
+        />
+      ) : (
+        <div className={styles.visualFallback} aria-hidden="true">
+          <span>{marks[item.key] || '·'}</span>
+          <i></i>
+          <b></b>
+        </div>
+      )}
+      {item.sample?.name ? (
+        <span className={styles.visualLabel}>
+          <small>Una ficha del directorio</small>
+          <strong>{item.sample.name}</strong>
+        </span>
+      ) : null}
+    </div>
+  )
+}
+
 export default function HomeExploreV2({ stats }) {
   const directories = stats?.directories || []
   const graph = stats?.graph || []
@@ -32,13 +67,16 @@ export default function HomeExploreV2({ stats }) {
         <div className={styles.grid}>
           {directories.map((item) => (
             <Link className={styles.card} href={item.href} key={item.key}>
-              <div className={styles.cardTop}>
-                <span className={styles.mark} aria-hidden="true">{marks[item.key] || '·'}</span>
-                <span className={styles.count}>{countLabel(item)}</span>
+              <DirectoryVisual item={item} />
+              <div className={styles.cardBody}>
+                <div className={styles.cardTop}>
+                  <span className={styles.mark} aria-hidden="true">{marks[item.key] || '·'}</span>
+                  <span className={styles.count}>{countLabel(item)}</span>
+                </div>
+                <h3>{item.label}</h3>
+                <p>{item.detail}</p>
+                <span className={styles.cta}>Explorar {item.label.toLowerCase()} →</span>
               </div>
-              <h3>{item.label}</h3>
-              <p>{item.detail}</p>
-              <span className={styles.cta}>Explorar {item.label.toLowerCase()} →</span>
             </Link>
           ))}
         </div>
@@ -48,6 +86,9 @@ export default function HomeExploreV2({ stats }) {
             <span className={styles.eyebrow}>El hilo sigue</span>
             <h3>Los directorios son solo la entrada</h3>
             <p>Marchas, autores, patrimonio y acontecimientos se descubren relacionados con las entidades principales, sin convertir la Home en un catálogo de tablas.</p>
+            <div className={styles.graphRoute} aria-hidden="true">
+              <span>Hermandad</span><i>→</i><span>Paso</span><i>→</i><span>Autor</span><i>→</i><span>Obra</span>
+            </div>
           </div>
           <div className={styles.metrics}>
             {graph.map((item) => (
