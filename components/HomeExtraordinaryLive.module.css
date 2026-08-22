@@ -1,0 +1,61 @@
+.featuredExtraordinaryLive {
+  border-color: rgba(183, 31, 55, .22);
+  box-shadow: 0 18px 44px rgba(18, 58, 103, .10), 0 0 0 1px rgba(183, 31, 55, .035);
+}
+
+.liveImageBadge {
+  position: absolute;
+  z-index: 2;
+  top: 13px;
+  left: 13px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 10px;
+  border: 1px solid rgba(255, 255, 255, .22);
+  border-radius: 999px;
+  color: #fff;
+  background: rgba(12, 34, 59, .68);
+  backdrop-filter: blur(9px);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  box-shadow: 0 7px 18px rgba(4, 19, 33, .18);
+}
+
+.liveImageBadge i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #f2a5b1;
+  box-shadow: 0 0 0 4px rgba(242, 165, 177, .14);
+  animation: livePulse 1.6s ease-in-out infinite;
+}
+
+.liveEyebrow {
+  color: #b71f37 !important;
+}
+
+.liveEyebrow::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 7px;
+  border-radius: 50%;
+  vertical-align: 1px;
+  background: #b71f37;
+  box-shadow: 0 0 0 4px rgba(183, 31, 55, .08);
+}
+
+@keyframes livePulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(.72); opacity: .62; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .liveImageBadge i {
+    animation: none;
+  }
+}
