@@ -92,7 +92,7 @@ export default async function HomeEditorialBankPage({ searchParams }) {
                 </div>
               </div>
 
-              {canEdit ? <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 12 }}><Link className={styles.secondaryButton} href={`/panel/hoy/programacion?fecha=${data.selectedDate}`}>Programar este contenido</Link><form action={archiveBankEditorialContentAction} className={styles.archiveForm}><input type="hidden" name="content_id" value={item.id} /><input type="hidden" name="return_date" value={data.selectedDate} /><button type="submit">Archivar contenido</button></form></div> : null}
+              {canEdit ? <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 12 }}><Link className={styles.secondaryButton} href={`/panel/hoy/programacion?fecha=${data.selectedDate}&content=${item.id}`}>Programar este contenido</Link><form action={archiveBankEditorialContentAction} className={styles.archiveForm}><input type="hidden" name="content_id" value={item.id} /><input type="hidden" name="return_date" value={data.selectedDate} /><button type="submit">Archivar contenido</button></form></div> : null}
             </article>
           ))}
           {!data.editorial.length ? <div className={styles.emptyPanel}>Todavía no hay contenidos en el Banco editorial.</div> : null}
