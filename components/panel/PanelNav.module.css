@@ -1,14 +1,528 @@
-@media (max-width: 720px) {
-  .scrollNav {
-    justify-content: flex-start !important;
-    gap: 8px !important;
-    overflow-x: auto;
-    overflow-y: hidden;
-    overscroll-behavior-inline: contain;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
+.sidebar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  height: 100vh;
+  padding: 24px 18px 20px;
+  overflow-y: auto;
+  color: #fff;
+  background:
+    radial-gradient(circle at 0 100%, rgb(183 31 55 / 18%), transparent 36%),
+    linear-gradient(155deg, #102e4f 0%, #0b2037 100%);
+}
+
+.panelBrand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.brandRail {
+  position: relative;
+  display: block;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+}
+
+.brandRail i {
+  position: absolute;
+  top: 16px;
+  left: 0;
+  width: 34px;
+  height: 2px;
+  background: var(--panel-red);
+}
+
+.brandRail b {
+  position: absolute;
+  top: 10px;
+  left: 13px;
+  width: 13px;
+  height: 13px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background: var(--panel-red);
+}
+
+.brandCopy {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px;
+  font-size: 21px;
+  letter-spacing: -.035em;
+}
+
+.brandCopy small {
+  flex-basis: 100%;
+  margin-top: 3px;
+  color: rgb(255 255 255 / 58%);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.desktopNav {
+  display: grid;
+  gap: 24px;
+  margin-top: 42px;
+}
+
+.navGroup {
+  display: grid;
+  gap: 8px;
+}
+
+.groupLabel,
+.mobileGroupLabel {
+  padding: 0 11px;
+  color: rgb(255 255 255 / 38%);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .17em;
+  text-transform: uppercase;
+}
+
+.groupLinks {
+  display: grid;
+  gap: 4px;
+}
+
+.navLink {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-width: 0;
+  padding: 10px 11px;
+  border: 0;
+  border-radius: 11px;
+  color: rgb(255 255 255 / 70%);
+  background: transparent;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 750;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .18s ease, color .18s ease;
+}
+
+.navLink:hover {
+  color: #fff;
+  background: rgb(255 255 255 / 7%);
+}
+
+.navActive {
+  color: #fff;
+  background: rgb(255 255 255 / 10%);
+}
+
+.navActive::after {
+  width: 6px;
+  height: 6px;
+  margin-left: auto;
+  flex: 0 0 6px;
+  border-radius: 50%;
+  background: var(--panel-red);
+  content: '';
+}
+
+.navMark {
+  display: grid;
+  width: 27px;
+  height: 27px;
+  flex: 0 0 27px;
+  place-items: center;
+  border: 1px solid rgb(255 255 255 / 14%);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 850;
+  line-height: 1;
+}
+
+.navLabel {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sidebarFoot {
+  display: grid;
+  gap: 14px;
+  margin-top: auto;
+  padding-top: 26px;
+}
+
+.userCard {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-width: 0;
+}
+
+.sidebarFoot .userCard {
+  padding-top: 18px;
+  border-top: 1px solid rgb(255 255 255 / 10%);
+}
+
+.avatar {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  background: var(--panel-red);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.userCopy {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.userCopy strong {
+  overflow: hidden;
+  font-size: 13px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.userCopy small {
+  color: rgb(255 255 255 / 55%);
+  font-size: 10px;
+}
+
+.signOut,
+.mobileSignOut {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+}
+
+.signOut {
+  color: rgb(255 255 255 / 52%);
+  font-size: 11px;
+}
+
+.signOut:hover { color: #fff; }
+
+.mobileBar,
+.mobileBackdrop,
+.mobileMenu {
+  display: none;
+}
+
+@media (max-width: 980px) {
+  .sidebar { padding: 22px 10px 18px; }
+  .panelBrand { justify-content: center; }
+
+  .brandCopy,
+  .groupLabel,
+  .userCopy,
+  .signOut { display: none; }
+
+  .desktopNav {
+    gap: 11px;
+    margin-top: 34px;
   }
 
-  .scrollNav::-webkit-scrollbar { display: none; }
-  .scrollNav > a { flex: 0 0 70px; }
+  .navGroup,
+  .groupLinks { gap: 5px; }
+
+  .navLink {
+    justify-content: center;
+    padding: 9px;
+  }
+
+  .navLabel {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+
+  .navActive::after {
+    position: absolute;
+    right: 4px;
+    width: 5px;
+    height: 5px;
+  }
+
+  .sidebarFoot .userCard { justify-content: center; }
+}
+
+@media (max-width: 720px) {
+  .sidebar {
+    position: fixed;
+    z-index: 60;
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    min-height: 0;
+    height: 70px;
+    padding: 0;
+    overflow: visible;
+    box-shadow: 0 -10px 30px rgb(5 20 35 / 18%);
+  }
+
+  .panelBrand,
+  .desktopNav,
+  .sidebarFoot { display: none; }
+
+  .mobileBar {
+    position: relative;
+    z-index: 3;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    width: 100%;
+    height: 70px;
+    padding: 6px 7px 7px;
+    background: linear-gradient(155deg, #102e4f 0%, #0b2037 100%);
+  }
+
+  .mobilePrimaryLink,
+  .mobileMenuButton {
+    display: grid;
+    min-width: 0;
+    align-content: center;
+    justify-items: center;
+    gap: 3px;
+    min-height: 55px;
+    padding: 3px 4px;
+    border: 0;
+    border-radius: 10px;
+    color: rgb(255 255 255 / 66%);
+    background: transparent;
+    font: inherit;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .mobilePrimaryLink .navMark,
+  .mobileMenuButton .navMark {
+    width: 25px;
+    height: 25px;
+    flex-basis: 25px;
+    margin: 0;
+    border-radius: 7px;
+    font-size: 8px;
+  }
+
+  .mobilePrimaryLink .navLabel,
+  .mobileMenuButton .navLabel {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip: auto;
+    color: inherit;
+    font-size: 8px;
+    font-weight: 800;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .mobilePrimaryLink.navActive,
+  .mobileMenuButtonActive {
+    color: #fff;
+    background: rgb(255 255 255 / 9%);
+  }
+
+  .mobilePrimaryLink.navActive::after { display: none; }
+
+  .mobileBackdrop {
+    position: fixed;
+    z-index: 1;
+    inset: 0 0 70px;
+    display: block;
+    width: 100%;
+    border: 0;
+    background: rgb(5 18 31 / 45%);
+    backdrop-filter: blur(2px);
+  }
+
+  .mobileMenu {
+    position: fixed;
+    z-index: 2;
+    right: 0;
+    bottom: 70px;
+    left: 0;
+    display: block;
+    max-height: min(72vh, 620px);
+    padding: 18px 16px 16px;
+    overflow-y: auto;
+    border: 1px solid #dfe7ef;
+    border-bottom: 0;
+    border-radius: 20px 20px 0 0;
+    color: var(--panel-ink);
+    background: #fff;
+    box-shadow: 0 -18px 46px rgb(5 20 35 / 24%);
+  }
+
+  .mobileMenuHead {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 18px;
+  }
+
+  .mobileMenuHead > div {
+    display: grid;
+    gap: 3px;
+  }
+
+  .mobileMenuHead span {
+    color: var(--panel-red);
+    font-size: 8px;
+    font-weight: 850;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+  }
+
+  .mobileMenuHead strong {
+    color: var(--panel-navy);
+    font-size: 20px;
+    letter-spacing: -.035em;
+  }
+
+  .mobileMenuHead button {
+    display: grid;
+    width: 34px;
+    height: 34px;
+    place-items: center;
+    border: 1px solid var(--panel-line);
+    border-radius: 10px;
+    color: var(--panel-muted);
+    background: #fff;
+    font: inherit;
+    font-size: 22px;
+    cursor: pointer;
+  }
+
+  .mobileGroups {
+    display: grid;
+    gap: 18px;
+  }
+
+  .mobileGroup {
+    display: grid;
+    gap: 8px;
+  }
+
+  .mobileGroupLabel {
+    padding: 0;
+    color: #8190a0;
+    font-size: 8px;
+  }
+
+  .mobileGroupLinks {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .mobileGroupLinks .navLink {
+    justify-content: flex-start;
+    gap: 9px;
+    min-height: 48px;
+    padding: 9px 10px;
+    border: 1px solid #e1e8ef;
+    border-radius: 12px;
+    color: var(--panel-blue);
+    background: #f8fafc;
+  }
+
+  .mobileGroupLinks .navLink:hover,
+  .mobileGroupLinks .navActive {
+    border-color: #c8d7e5;
+    color: var(--panel-navy);
+    background: #edf4fa;
+  }
+
+  .mobileGroupLinks .navMark {
+    border-color: #d3dfeb;
+    color: var(--panel-blue);
+    background: #fff;
+  }
+
+  .mobileGroupLinks .navLabel {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip: auto;
+    color: inherit;
+    font-size: 10px;
+    white-space: normal;
+  }
+
+  .mobileGroupLinks .navActive::after {
+    position: static;
+    display: block;
+    margin-left: auto;
+    background: var(--panel-red);
+  }
+
+  .mobileUserRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--panel-line);
+  }
+
+  .mobileUserRow .avatar {
+    width: 34px;
+    height: 34px;
+    flex-basis: 34px;
+  }
+
+  .mobileUserRow .userCopy { display: grid; }
+
+  .mobileUserRow .userCopy strong {
+    color: var(--panel-navy);
+    font-size: 11px;
+  }
+
+  .mobileUserRow .userCopy small {
+    color: var(--panel-muted);
+    font-size: 9px;
+  }
+
+  .mobileSignOut {
+    color: #8b5360;
+    font-size: 10px;
+    font-weight: 750;
+  }
+}
+
+@media (max-width: 420px) {
+  .mobileBar { padding-inline: 4px; }
+
+  .mobilePrimaryLink .navLabel,
+  .mobileMenuButton .navLabel { font-size: 7.5px; }
+
+  .mobileGroupLinks { grid-template-columns: 1fr; }
 }
