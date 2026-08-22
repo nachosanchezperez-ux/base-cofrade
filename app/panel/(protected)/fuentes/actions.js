@@ -6,17 +6,29 @@ import { requirePanelEditor } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
 
 const UUID_PATTERN = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i
-const ENTITY_TYPES = ['brotherhood', 'image', 'step', 'agent']
+const ENTITY_TYPES = [
+  'brotherhood',
+  'image',
+  'step',
+  'band',
+  'agent',
+  'heritage_asset',
+  'march',
+  'event',
+  'advocation',
+]
 const PANEL_ROUTES = {
   brotherhood: 'hermandades',
   image: 'imagenes',
   step: 'pasos',
+  band: 'bandas',
   agent: 'agentes',
 }
 const PUBLIC_ROUTES = {
   brotherhood: 'hermandades',
   image: 'imagenes',
   step: 'pasos',
+  band: 'bandas',
 }
 
 function value(formData, name) {
@@ -83,7 +95,7 @@ async function audit(supabase, user, entry) {
 }
 
 async function loadTarget(supabase, entityId) {
-  const target = assertRow(
+  return assertRow(
     await supabase
       .from('entities')
       .select('id, entity_type, name, slug, status')
@@ -93,7 +105,6 @@ async function loadTarget(supabase, entityId) {
       .maybeSingle(),
     'La entidad seleccionada no existe o no está disponible.'
   )
-  return target
 }
 
 async function loadSource(supabase, sourceId) {
@@ -143,6 +154,7 @@ async function ensureSourceLink(supabase, sourceId, entityId) {
 
 async function refreshSourceViews(supabase, entityId = null) {
   revalidatePath('/panel/fuentes')
+  revalidatePath('/')
   if (!entityId) return
   const result = await supabase
     .from('entities')
@@ -158,8 +170,10 @@ async function refreshSourceViews(supabase, entityId = null) {
   if (publicRoute && result.data.slug) revalidatePath(`/${publicRoute}/${result.data.slug}`)
 }
 
-function redirectSaved(result) {
-  redirect(`/panel/fuentes?saved=${result}`)
+function redirectSaved(result, entityId = null) {
+  const params = new URLSearchParams({ saved: result })
+  if (entityId) params.set('entity', entityId)
+  redirect(`/panel/fuentes?${params.toString()}`)
 }
 
 export async function createSourceAction(formData) {
@@ -192,7 +206,7 @@ export async function createSourceAction(formData) {
         })
       }
       await refreshSourceViews(supabase, target.id)
-      redirectSaved(link.created ? 'reused-linked' : 'already-linked')
+      redirectSaved(link.created ? 'reused-linked' : 'already-linked', target.id)
     }
     redirectSaved('duplicate-url')
   }
@@ -225,7 +239,7 @@ export async function createSourceAction(formData) {
     changed_fields: payload,
   })
   await refreshSourceViews(supabase, target?.id || null)
-  redirectSaved(link?.created ? 'created-linked' : 'created')
+  redirectSaved(link?.created ? 'created-linked' : 'created', target?.id || null)
 }
 
 export async function linkExistingSourceAction(formData) {
@@ -251,7 +265,7 @@ export async function linkExistingSourceAction(formData) {
   }
 
   await refreshSourceViews(supabase, target.id)
-  redirectSaved(link.created ? 'linked' : 'already-linked')
+  redirectSaved(link.created ? 'linked' : 'already-linked', target.id)
 }
 
 export async function unlinkSourceAction(formData) {
@@ -285,5 +299,5 @@ export async function unlinkSourceAction(formData) {
     changed_fields: { source_id: source.id, entity_id: target.id },
   })
   await refreshSourceViews(supabase, target.id)
-  redirectSaved('unlinked')
+  redirectSaved('unlinked', target.id)
 }
