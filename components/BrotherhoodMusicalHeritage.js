@@ -2,7 +2,6 @@ import Link from 'next/link';
 import SectionTitle from './SectionTitle';
 import styles from './BrotherhoodMusicalHeritage.module.css';
 
-const INITIAL_VISIBLE_ITEMS = 5;
 const GROUPS = [
   { key: 'Agrupación Musical', label: 'Agrupación musical', short: 'AM', noun: 'marchas' },
   { key: 'Cornetas y Tambores', label: 'Cornetas y tambores', short: 'CT', noun: 'marchas' },
@@ -22,11 +21,7 @@ function AuthorLine({ item }) {
   }, new Map());
 
   if (!composerNames && !adapterGroups.size) {
-    return (
-      <div className={styles.authorship}>
-        <span>{item.authorshipText || 'Autoría por documentar'}</span>
-      </div>
-    );
+    return <div className={styles.authorship}><span>{item.authorshipText || 'Autoría por documentar'}</span></div>;
   }
 
   return (
@@ -51,20 +46,12 @@ function MusicRow({ item }) {
             <small>{item.bandRelation.label}</small>
             {item.bandRelation.slug ? (
               <Link href={`/bandas/${item.bandRelation.slug}`}>{item.bandRelation.name} <span>↗</span></Link>
-            ) : (
-              <strong>{item.bandRelation.name}</strong>
-            )}
+            ) : <strong>{item.bandRelation.name}</strong>}
           </div>
         ) : null}
       </div>
       {item.listening?.url ? (
-        <a
-          className={styles.listen}
-          href={item.listening.url}
-          target="_blank"
-          rel="noreferrer"
-          aria-label={`Escuchar ${item.name} en ${item.listening.provider}`}
-        >
+        <a className={styles.listen} href={item.listening.url} target="_blank" rel="noreferrer" aria-label={`Escuchar ${item.name} en ${item.listening.provider}`}>
           <span>▶</span>{item.listening.provider}
         </a>
       ) : null}
@@ -93,63 +80,36 @@ export default function BrotherhoodMusicalHeritage({ items = [] }) {
           <SectionTitle
             eyebrow="Sonidos propios"
             title="Patrimonio musical"
-            description="Composiciones dedicadas a la Hermandad y a sus titulares: marchas procesionales, música de capilla y coplas para cultos internos, relacionadas con sus autores, intérpretes y grabaciones cuando están documentados."
+            description="Composiciones vinculadas a la Hermandad y a sus titulares, organizadas por estilo para consultar cada repertorio sin alargar la ficha."
           />
-          <div className={styles.summary} aria-label="Resumen del patrimonio musical">
+          <div className={styles.summary} aria-label={`${items.length} composiciones documentadas`}>
             <strong>{items.length}</strong>
             <span>composiciones documentadas</span>
-            {groups.map((group) => (
-              <small key={group.key}>{group.items.length} · {group.short}</small>
-            ))}
           </div>
         </div>
 
         <div className={styles.groups}>
-          {groups.map((group) => {
-            const visibleItems = group.items.slice(0, INITIAL_VISIBLE_ITEMS);
-            const remainingItems = group.items.slice(INITIAL_VISIBLE_ITEMS);
-
-            return (
-              <section className={styles.group} key={group.key} aria-labelledby={`music-${group.short.toLowerCase()}`}>
-                <header className={styles.groupHeader}>
-                  <span className={styles.groupMark} aria-hidden="true">{group.short}</span>
-                  <div>
-                    <h3 id={`music-${group.short.toLowerCase()}`}>{group.label}</h3>
-                    <p>{group.items.length} {group.noun} documentadas</p>
-                    {group.repertoireBandContext?.name ? (
-                      <div className={styles.groupContext}>
-                        <small>{group.repertoireBandContext.label}</small>
-                        {group.repertoireBandContext.slug ? (
-                          <Link href={`/bandas/${group.repertoireBandContext.slug}`}>
-                            {group.repertoireBandContext.name} <span>↗</span>
-                          </Link>
-                        ) : (
-                          <strong>{group.repertoireBandContext.name}</strong>
-                        )}
-                      </div>
-                    ) : null}
-                  </div>
-                </header>
-
-                <div className={styles.list}>
-                  {visibleItems.map((item) => <MusicRow item={item} key={item.id} />)}
-                </div>
-
-                {remainingItems.length ? (
-                  <details className={styles.more}>
-                    <summary>
-                      <span className={styles.moreClosed}>Ver {remainingItems.length} {group.noun} más</span>
-                      <span className={styles.moreOpen}>Ocultar repertorio ampliado</span>
-                      <span className={styles.moreIcon} aria-hidden="true">＋</span>
-                    </summary>
-                    <div className={styles.moreList}>
-                      {remainingItems.map((item) => <MusicRow item={item} key={item.id} />)}
-                    </div>
-                  </details>
-                ) : null}
-              </section>
-            );
-          })}
+          {groups.map((group) => (
+            <details className={styles.group} key={group.key}>
+              <summary className={styles.groupSummary}>
+                <span className={styles.groupMark} aria-hidden="true">{group.short}</span>
+                <span className={styles.groupHeading}>
+                  <strong>{group.label}</strong>
+                  <small>{group.items.length} {group.noun} documentadas</small>
+                  {group.repertoireBandContext?.name ? (
+                    <span className={styles.groupContext}>
+                      <small>{group.repertoireBandContext.label}</small>
+                      <b>{group.repertoireBandContext.name}</b>
+                    </span>
+                  ) : null}
+                </span>
+                <span className={styles.groupToggle} aria-hidden="true">＋</span>
+              </summary>
+              <div className={styles.list}>
+                {group.items.map((item) => <MusicRow item={item} key={item.id} />)}
+              </div>
+            </details>
+          ))}
         </div>
       </div>
     </section>
