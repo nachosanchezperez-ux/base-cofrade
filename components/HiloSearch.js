@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import HiloEvidence from './HiloEvidence';
 import HiloGraphPath, { isGraphPathResponse } from './HiloGraphPath';
 import styles from './HiloSearch.module.css';
 
@@ -123,6 +124,8 @@ function AssistantAnswer({ message, onFollowUp }) {
           ))}
         </div>
       ) : null}
+
+      <HiloEvidence items={response.evidence || []} />
 
       {(response.followUps || []).length > 0 ? (
         <div className={styles.followUps}>
