@@ -33,8 +33,11 @@
 }
 
 @media (min-width: 901px) {
+  /* En fichas con varias variantes, la columna visual gana algo de ancho.
+     Así las siluetas anchas (capas, cirios o colas) respiran sin obligar a
+     reducir también las ilustraciones más estrechas. */
   .habit-grid > .brotherhood-habit:not(:only-child) {
-    grid-template-columns: minmax(210px, .82fr) minmax(0, 1.18fr);
+    grid-template-columns: minmax(230px, .90fr) minmax(0, 1.10fr);
   }
 
   .habit-grid > .brotherhood-habit:not(:only-child) .habit-visual {
@@ -42,8 +45,8 @@
   }
 
   /* Escala óptica común para variantes múltiples. Se conserva el ancho intrínseco
-     del archivo y se reduce ligeramente la altura para dar aire a capas y cirios
-     sin forzar el lienzo al ancho de la columna. */
+     del archivo y una altura moderada para mantener presencia sin pegar la figura
+     a los límites de la columna. */
   .habit-grid > .brotherhood-habit:not(:only-child) .habit-image {
     width: auto;
     height: 510px;
