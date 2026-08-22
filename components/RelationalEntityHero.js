@@ -67,6 +67,16 @@ function BrotherhoodCrest({ src, alt }) {
   );
 }
 
+function BandMark({ src, alt }) {
+  if (!src) return null;
+
+  return (
+    <span className={polishStyles.bandIdentity}>
+      <Image src={src} alt={alt || ''} width={112} height={112} sizes="112px" priority />
+    </span>
+  );
+}
+
 export default function RelationalEntityHero({
   variant = 'image',
   entityType,
@@ -81,6 +91,7 @@ export default function RelationalEntityHero({
   const visibleBadges = badges.filter(Boolean).slice(0, 4);
   const visibleFacts = facts.filter((fact) => fact?.label && fact?.value).slice(0, 3);
   const isBrotherhood = variant === 'brotherhood';
+  const isBand = variant === 'band';
 
   const heading = (
     <div className={styles.titleBody}>
@@ -96,9 +107,21 @@ export default function RelationalEntityHero({
     </div>
   );
 
+  const identityHeading = isBrotherhood ? (
+    <div className={`${styles.brotherhoodLockup} ${polishStyles.brotherhoodLockup}`}>
+      <BrotherhoodCrest src={media.crestSrc} alt={media.crestAlt} />
+      {heading}
+    </div>
+  ) : isBand ? (
+    <div className={`${styles.brotherhoodLockup} ${polishStyles.bandLockup}`}>
+      <BandMark src={media.crestSrc} alt={media.crestAlt} />
+      {heading}
+    </div>
+  ) : heading;
+
   return (
     <section
-      className={`${styles.hero} ${styles[`hero_${variant}`]} ${polishStyles.hero} ${polishStyles[`hero_${variant}`] || ''}`}
+      className={`${styles.hero} ${styles[`hero_${variant}`] || ''} ${polishStyles.hero} ${polishStyles[`hero_${variant}`] || ''}`}
       aria-labelledby="entity-hero-title"
     >
       <div className={styles.texture} aria-hidden="true" />
@@ -107,12 +130,7 @@ export default function RelationalEntityHero({
 
         <div className={`${styles.grid} ${polishStyles.grid}`}>
           <div className={`${styles.copy} ${polishStyles.copy}`}>
-            {isBrotherhood ? (
-              <div className={`${styles.brotherhoodLockup} ${polishStyles.brotherhoodLockup}`}>
-                <BrotherhoodCrest src={media.crestSrc} alt={media.crestAlt} />
-                {heading}
-              </div>
-            ) : heading}
+            {identityHeading}
 
             <ParentRelation relation={relation} />
 
