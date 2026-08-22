@@ -3,11 +3,13 @@ import EntityPicker from '@/components/panel/EntityPicker'
 import { requirePanelUser } from '@/lib/panel/auth'
 import { getHomeEditorialPanelData } from '@/lib/panel/home-editorial'
 import {
-  archiveEditorialContentAction,
   removeEditorialContentLinkAction,
-  saveEditorialContentAction,
   saveEditorialContentLinkAction,
 } from '../actions'
+import {
+  archiveBankEditorialContentAction,
+  saveBankEditorialContentAction,
+} from './actions'
 import { STATUS_LABELS, StatusSelect } from '@/components/panel/home/HomeEditorialPrimitives'
 import styles from '@/app/panel/panel.module.css'
 
@@ -58,7 +60,7 @@ export default async function HomeEditorialBankPage({ searchParams }) {
               <div className={styles.itemHeading}><div><span className={styles.eyebrow}>{item.content_type === 'fact' ? 'Dato Cofrade' : 'Curiosidad'}</span><h3>{item.title}</h3><p>{item.summary}</p></div><span className={`${styles.statusBadge} ${styles[item.status]}`}>{STATUS_LABELS[item.status]}</span></div>
 
               {canEdit ? (
-                <form action={saveEditorialContentAction} className={styles.editorForm}>
+                <form action={saveBankEditorialContentAction} className={styles.editorForm}>
                   <input type="hidden" name="content_id" value={item.id} /><input type="hidden" name="return_date" value={data.selectedDate} />
                   <div className={styles.formGrid}>
                     <label><span>Tipo</span><select name="content_type" defaultValue={item.content_type}><option value="fact">Dato Cofrade</option><option value="curiosity">Curiosidad</option></select></label>
@@ -90,7 +92,7 @@ export default async function HomeEditorialBankPage({ searchParams }) {
                 </div>
               </div>
 
-              {canEdit ? <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 12 }}><Link className={styles.secondaryButton} href={`/panel/hoy/programacion?fecha=${data.selectedDate}`}>Programar este contenido</Link><form action={archiveEditorialContentAction} className={styles.archiveForm}><input type="hidden" name="content_id" value={item.id} /><input type="hidden" name="return_date" value={data.selectedDate} /><button type="submit">Archivar contenido</button></form></div> : null}
+              {canEdit ? <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 12 }}><Link className={styles.secondaryButton} href={`/panel/hoy/programacion?fecha=${data.selectedDate}`}>Programar este contenido</Link><form action={archiveBankEditorialContentAction} className={styles.archiveForm}><input type="hidden" name="content_id" value={item.id} /><input type="hidden" name="return_date" value={data.selectedDate} /><button type="submit">Archivar contenido</button></form></div> : null}
             </article>
           ))}
           {!data.editorial.length ? <div className={styles.emptyPanel}>Todavía no hay contenidos en el Banco editorial.</div> : null}
@@ -100,7 +102,7 @@ export default async function HomeEditorialBankPage({ searchParams }) {
       {canEdit ? (
         <section className={styles.editorSection}>
           <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>Nuevo contenido</span><h2>Añadir Dato o Curiosidad</h2></div><p>Puede quedar como borrador o entrar directamente en la rotación automática.</p></div>
-          <form action={saveEditorialContentAction} className={`${styles.panelCard} ${styles.editorForm}`}>
+          <form action={saveBankEditorialContentAction} className={`${styles.panelCard} ${styles.editorForm}`}>
             <input type="hidden" name="return_date" value={data.selectedDate} />
             <div className={styles.formGrid}>
               <label><span>Tipo</span><select name="content_type" defaultValue="curiosity"><option value="fact">Dato Cofrade</option><option value="curiosity">Curiosidad</option></select></label>
