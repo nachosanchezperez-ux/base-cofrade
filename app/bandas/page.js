@@ -1,6 +1,6 @@
 import JsonLd from '@/components/JsonLd'
 import RelationalEntityDirectory from '@/components/RelationalEntityDirectory'
-import { getBandsDirectory } from '@/lib/supabase/bands'
+import { getPublicBandsDirectory } from '@/lib/supabase/bands-directory-public'
 import { breadcrumbJsonLd, collectionPageJsonLd, socialMetadata } from '@/lib/seo'
 
 export const dynamic = 'force-dynamic'
@@ -45,7 +45,7 @@ export const metadata = {
 
 export default async function BandasPage({ searchParams }) {
   const [bands, filters] = await Promise.all([
-    getBandsDirectory(),
+    getPublicBandsDirectory(),
     searchParams,
   ])
   const type = String(filters?.tipo || '')
