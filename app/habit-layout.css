@@ -1,6 +1,7 @@
 /* Presentación responsive de la indumentaria nazarena.
-   La sección prioriza la lectura del hábito completo: una ilustración no debe
-   quedar recortada para conservar dos tarjetas en paralelo. */
+   La sección prioriza la lectura completa del hábito y una proporción equilibrada
+   entre ilustración y ficha. Las reglas específicas de varias variantes son comunes
+   a todas las hermandades: no hay excepciones por slug ni por imagen. */
 
 .habit-visual {
   position: relative;
@@ -31,15 +32,32 @@
   padding: 26px;
 }
 
-/*
-   Cuando hay varias variantes, la altura de la tarjeta la marca a menudo la ficha
-   de texto. Si la ilustración se apoya siempre abajo, todo ese sobrante queda arriba
-   y genera un vacío visual innecesario. En tablet y escritorio la figura se centra
-   verticalmente dentro de su panel, manteniendo tamaño, escala y encuadre.
-*/
+/* Varias variantes: la tarjeta no debe crecer por una tipografía excesivamente
+   abierta. Se compacta la ficha y la ilustración queda centrada en su panel. */
 @media (min-width: 621px) {
   .habit-grid > .brotherhood-habit:not(:only-child) .habit-visual:has(.habit-image) {
     align-items: center;
+  }
+
+  .habit-grid > .brotherhood-habit:not(:only-child) .habit-copy h3 {
+    font-size: 27px;
+    line-height: 1.15;
+  }
+
+  .habit-grid > .brotherhood-habit:not(:only-child) dl div {
+    padding-top: 9px;
+    padding-bottom: 9px;
+  }
+
+  .habit-grid > .brotherhood-habit:not(:only-child) dt {
+    font-size: 10.5px;
+    line-height: 1.35;
+  }
+
+  .habit-grid > .brotherhood-habit:not(:only-child) dd {
+    font-size: 15px;
+    line-height: 1.42;
+    font-weight: 700;
   }
 }
 
@@ -71,84 +89,88 @@
   }
 }
 
-/*
-   Varias variantes en pantallas medias y portátiles.
-   Éste era el punto conflictivo: con dos tarjetas en paralelo cada tarjeta quedaba
-   demasiado estrecha para una ilustración vertical 2:3 con capa o cirio. En este
-   rango se muestran en una sola columna, manteniendo imagen y ficha lado a lado.
-*/
+/* Portátiles y pantallas medias: una variante por fila. Así cada hábito conserva
+   presencia y la ficha mantiene una anchura de lectura cómoda. */
 @media (min-width: 901px) and (max-width: 1180px) {
   .habit-grid {
     grid-template-columns: 1fr;
   }
 
   .habit-grid > .brotherhood-habit:not(:only-child) {
-    grid-template-columns: minmax(320px, .82fr) minmax(0, 1.18fr);
+    grid-template-columns: minmax(300px, .78fr) minmax(0, 1.22fr);
   }
 
   .habit-grid > .brotherhood-habit:not(:only-child) .habit-visual {
-    min-height: 500px;
+    min-height: 470px;
   }
 
   .habit-grid > .brotherhood-habit:not(:only-child) .habit-image {
     width: auto;
-    height: min(510px, 46vw);
-    max-height: 510px;
+    height: min(455px, 44vw);
+    max-height: 455px;
     max-width: none;
-    object-fit: contain;
-    object-position: center bottom;
   }
 
   .habit-grid > .brotherhood-habit:not(:only-child) .habit-copy {
     align-self: stretch;
-    padding: 32px 36px;
+    padding: 26px 30px;
   }
 
   .habit-grid > .brotherhood-habit:not(:only-child) .habit-copy h3 {
-    min-height: 72px;
-    margin-bottom: 20px;
+    min-height: 62px;
+    margin-bottom: 14px;
   }
 
   .habit-grid > .brotherhood-habit:not(:only-child) dl div {
-    grid-template-columns: 112px minmax(0, 1fr);
-    gap: 18px;
+    grid-template-columns: 104px minmax(0, 1fr);
+    gap: 16px;
   }
 }
 
-/*
-   Escritorios realmente anchos: caben dos variantes en paralelo. La imagen baja
-   de escala porque el ancho máximo de la shell limita cada tarjeta a ~570 px.
-*/
+/* Escritorios anchos: dos variantes en paralelo, pero con una ficha más compacta.
+   El objetivo es que la altura de la tarjeta se acerque a la altura real del hábito,
+   evitando grandes zonas vacías sin reducir el tamaño de las ilustraciones. */
 @media (min-width: 1181px) {
   .habit-grid > .brotherhood-habit:not(:only-child) {
-    grid-template-columns: minmax(230px, .90fr) minmax(0, 1.10fr);
+    grid-template-columns: minmax(235px, .86fr) minmax(0, 1.14fr);
   }
 
   .habit-grid > .brotherhood-habit:not(:only-child) .habit-visual {
-    min-height: 430px;
+    min-height: 455px;
   }
 
   .habit-grid > .brotherhood-habit:not(:only-child) .habit-image {
     width: auto;
     height: 380px;
     max-width: none;
-    object-fit: contain;
-    object-position: center bottom;
   }
 
   .habit-grid > .brotherhood-habit:not(:only-child) .habit-copy {
     align-self: stretch;
-    padding: 28px;
+    padding: 22px 24px;
   }
 
   .habit-grid > .brotherhood-habit:not(:only-child) .habit-copy h3 {
-    min-height: 72px;
-    margin-bottom: 20px;
+    min-height: 62px;
+    margin-bottom: 14px;
+    font-size: 26px;
+    line-height: 1.14;
   }
 
   .habit-grid > .brotherhood-habit:not(:only-child) dl div {
-    grid-template-columns: 96px minmax(0, 1fr);
+    grid-template-columns: 84px minmax(0, 1fr);
     gap: 12px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  .habit-grid > .brotherhood-habit:not(:only-child) dt {
+    font-size: 10px;
+  }
+
+  .habit-grid > .brotherhood-habit:not(:only-child) dd {
+    font-size: 15px;
+    line-height: 1.4;
   }
 }
 
@@ -158,15 +180,24 @@
   }
 
   .brotherhood-habit {
-    grid-template-columns: minmax(245px, .85fr) minmax(0, 1.15fr);
+    grid-template-columns: minmax(230px, .8fr) minmax(0, 1.2fr);
   }
 
   .habit-visual {
-    min-height: 440px;
+    min-height: 420px;
   }
 
   .habit-image {
-    height: 535px;
+    height: 440px;
+  }
+
+  .habit-grid > .brotherhood-habit:not(:only-child) .habit-copy {
+    padding: 24px;
+  }
+
+  .habit-grid > .brotherhood-habit:not(:only-child) dl div {
+    grid-template-columns: 96px minmax(0, 1fr);
+    gap: 14px;
   }
 }
 
