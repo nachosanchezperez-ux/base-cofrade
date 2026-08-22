@@ -1,4 +1,5 @@
 import ExtraordinaryDirectory from '@/components/ExtraordinaryDirectory'
+import styles from '@/components/ExtraordinaryDirectory.module.css'
 import JsonLd from '@/components/JsonLd'
 import { getExtraordinaryDirectory } from '@/lib/supabase/extraordinary-directory'
 import { breadcrumbJsonLd, collectionPageJsonLd, pageTitle } from '@/lib/seo'
@@ -38,7 +39,7 @@ export default async function ExtraordinariasPage() {
   })
 
   return (
-    <section className="section page-top">
+    <section className={`section page-top ${styles.page}`}>
       <JsonLd data={breadcrumbJsonLd([
         { name: 'Inicio', path: '/' },
         { name: 'Extraordinarias', path: '/extraordinarias' },
@@ -46,11 +47,15 @@ export default async function ExtraordinariasPage() {
       <JsonLd data={directoryJsonLd} />
 
       <div className="shell">
-        <span className="eyebrow">Agenda cofrade</span>
-        <h1 className="page-title">Extraordinarias</h1>
-        <p className="page-lead">
-          Las próximas salidas extraordinarias de Sevilla capital y su provincia, ordenadas para consultar rápido y conectadas con los datos ya documentados en Hilo Cofrade.
-        </p>
+        <header className={styles.pageIntro}>
+          <div>
+            <span className="eyebrow">Sevilla y provincia</span>
+            <h1>Extraordinarias</h1>
+          </div>
+          <p>
+            Qué viene, cuándo sale y qué música llevará. Una agenda rápida para consultar las extraordinarias documentadas en Hilo Cofrade.
+          </p>
+        </header>
 
         <ExtraordinaryDirectory outings={outings} />
       </div>
