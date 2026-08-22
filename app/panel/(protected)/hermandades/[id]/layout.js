@@ -8,7 +8,7 @@ export default async function BrotherhoodEditorLayout({ children, params }) {
     { href: `${root}/historia`, label: 'Historia', mark: 'Hi' },
     { href: `${root}/titulares`, label: 'Titulares', mark: 'T' },
     { href: `${root}/pasos`, label: 'Pasos', mark: 'P' },
-    { href: `${root}/salidas`, label: 'Salidas', mark: 'S' },
+    { href: `${root}/salidas`, label: 'Salidas', mark: 'S', match: 'exact' },
     { href: `${root}/salidas/recurrentes`, label: 'Series', mark: 'Sr' },
     { href: `${root}/cultos`, label: 'Cultos', mark: 'C' },
     { href: `${root}/patrimonio`, label: 'Patrimonio', mark: 'Pa' },
