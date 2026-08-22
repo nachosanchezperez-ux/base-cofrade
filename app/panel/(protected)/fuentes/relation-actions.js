@@ -21,6 +21,7 @@ const RELATION_CONFIG = {
   outing_series: { table: 'outing_series', contextField: 'brotherhood_entity_id' },
   band_premiere: { table: 'band_premieres', contextField: 'band_entity_id' },
   brotherhood_habit: { table: 'brotherhood_habits', contextField: 'brotherhood_entity_id' },
+  entity_relation: { table: 'entity_relations', contextField: 'source_entity_id' },
 }
 
 function value(formData, name) {
