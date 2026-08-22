@@ -45,6 +45,23 @@
     height: 555px;
   }
 
+  /* En fichas con varias variantes, todos los bloques de texto arrancan arriba
+     y reservan la misma altura de título para mantener el ritmo entre tarjetas. */
+  .habit-grid > .brotherhood-habit:not(:only-child) .habit-copy {
+    align-self: stretch;
+    padding: 30px;
+  }
+
+  .habit-grid > .brotherhood-habit:not(:only-child) .habit-copy h3 {
+    min-height: 72px;
+    margin-bottom: 20px;
+  }
+
+  .habit-grid > .brotherhood-habit:not(:only-child) dl div {
+    grid-template-columns: 104px minmax(0, 1fr);
+    gap: 14px;
+  }
+
   .habit-grid > .brotherhood-habit:only-child {
     grid-column: 1 / -1;
     grid-template-columns: minmax(300px, .82fr) minmax(0, 1.18fr);
