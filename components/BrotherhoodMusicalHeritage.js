@@ -80,7 +80,7 @@ export default function BrotherhoodMusicalHeritage({ items = [] }) {
           <SectionTitle
             eyebrow="Sonidos propios"
             title="Patrimonio musical"
-            description="Composiciones vinculadas a la Hermandad y a sus titulares, organizadas por estilo para consultar cada repertorio sin alargar la ficha."
+            description="Marchas, coplas y sonidos que forman parte de la memoria musical de la Hermandad y de sus Titulares, reunidos aquí por estilos."
           />
           <div className={styles.summary} aria-label={`${items.length} composiciones documentadas`}>
             <strong>{items.length}</strong>
