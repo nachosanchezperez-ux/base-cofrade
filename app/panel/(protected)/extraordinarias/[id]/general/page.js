@@ -7,6 +7,10 @@ import styles from '@/app/panel/panel.module.css'
 import editorStyles from '../editor.module.css'
 
 const EVENT_STATUS_LABELS = { announced: 'Anunciada', held: 'Celebrada', cancelled: 'Cancelada' }
+const SAVED_MESSAGES = {
+  created: 'Extraordinaria creada como borrador. Completa ahora la ficha y publícala cuando esté lista.',
+  general: 'Datos generales guardados correctamente.',
+}
 
 function timeInput(value) {
   return value ? String(value).slice(0, 5) : ''
@@ -38,7 +42,7 @@ export default async function ExtraordinaryGeneralPage({ params, searchParams })
         </div>
       </header>
 
-      {query?.saved === 'general' ? <div className={styles.savedNotice} role="status">Datos generales guardados correctamente.</div> : null}
+      {SAVED_MESSAGES[query?.saved] ? <div className={styles.savedNotice} role="status">{SAVED_MESSAGES[query.saved]}</div> : null}
       {!canEdit ? <div className={styles.readOnlyNotice}>Estás consultando la ficha como colaborador. Un editor debe realizar los cambios.</div> : null}
 
       <div className={editorStyles.summaryGrid}>
