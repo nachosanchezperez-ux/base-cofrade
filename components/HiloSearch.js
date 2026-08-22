@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import styles from './HiloSearch.module.css';
 
 const starterQuestions = [
-  '¿Quién compuso Refúgiame?',
+  '¿Qué imágenes de La Cena son anteriores al siglo XX?',
   '¿Qué pasos dirige Antonio Santiago?',
   '¿Qué bandas acompañan a hermandades de gloria en Cantillana?',
 ];
@@ -189,7 +189,9 @@ export default function HiloSearch() {
       if (!request.ok && response?.error) throw new Error(response.error);
 
       setMessages((current) => [...current, { id: assistantId, role: 'assistant', response }]);
-      if (response?.context) setContext(response.context);
+      if (Object.prototype.hasOwnProperty.call(response || {}, 'context')) {
+        setContext(response?.context || null);
+      }
     } catch (error) {
       setMessages((current) => [...current, {
         id: assistantId,
