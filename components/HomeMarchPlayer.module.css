@@ -77,6 +77,21 @@
   cursor: pointer;
 }
 
+.inverse .listenButton {
+  color: #123a67;
+  background: #fff;
+  box-shadow: 0 9px 24px rgba(3, 17, 30, .16);
+}
+
+.inverse .listenButton:hover {
+  background: #edf4fa;
+}
+
+.inverse .playerFooter span,
+.inverse .playerFooter button {
+  color: rgba(255, 255, 255, .78);
+}
+
 @media (max-width: 640px) {
   .root {
     justify-content: stretch;
