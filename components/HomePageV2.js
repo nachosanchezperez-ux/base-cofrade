@@ -6,6 +6,7 @@ import HomeExploreV2 from '@/components/HomeExploreV2'
 import { getExtraordinaryLiveState } from '@/lib/home-live-status'
 import styles from '@/app/home.module.css'
 import liveStyles from './HomeExtraordinaryLive.module.css'
+import threadStyles from './HomeThreadsVisual.module.css'
 
 const stackedNextExtraHeadStyle = { alignItems: 'flex-start', flexDirection: 'column', gap: 4 }
 const heroThread = ['Hermandades', 'Imágenes', 'Pasos', 'Bandas', 'Marchas', 'Autores']
@@ -27,7 +28,7 @@ function ThreadVisual({ visual }) {
   const unoptimized = /\.svg(?:$|\?)/i.test(visual.path)
 
   return (
-    <span className={styles.threadVisual} data-kind={visual.kind || 'photo'} aria-hidden="true">
+    <span className={threadStyles.visual} data-kind={visual.kind || 'photo'} aria-hidden="true">
       <Image
         src={visual.path}
         alt=""
@@ -255,10 +256,10 @@ export default function HomePageV2({
                         ) : null}
                       </span>
                     </div>
-                    <div className={`${styles.threadIdentity} ${thread.visual?.path ? styles.threadIdentityVisual : ''}`}>
+                    <div className={`${threadStyles.identity} ${thread.visual?.path ? threadStyles.identityVisual : ''}`}>
                       <ThreadVisual visual={thread.visual} />
-                      <div className={styles.threadIdentityCopy}>
-                        {visualContext ? <span className={styles.threadContext}>En {visualContext}</span> : null}
+                      <div className={threadStyles.identityCopy}>
+                        {visualContext ? <span className={threadStyles.context}>En {visualContext}</span> : null}
                         <h3>{thread.title}</h3>
                         <strong className={styles.threadMetric}>{thread.metric}</strong>
                       </div>
