@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import EntityPicker from '@/components/panel/EntityPicker'
+import RelationSourcesEditor from '@/components/panel/RelationSourcesEditor'
 import { requirePanelUser } from '@/lib/panel/auth'
 import { getImageInterventionsData } from '@/lib/panel/image-interventions'
 import {
@@ -37,6 +38,7 @@ export default async function ImageInterventionsPage({ params, searchParams }) {
   const data = await getImageInterventionsData(id)
   if (!data) notFound()
   const canEdit = ['admin', 'editor'].includes(user.role)
+  const returnPath = `/panel/imagenes/${data.entity.id}/intervenciones`
 
   return (
     <div className={styles.pageWrap}>
@@ -96,6 +98,16 @@ export default async function ImageInterventionsPage({ params, searchParams }) {
                   <small>Estado: {item.status}</small>
                 </>
               )}
+
+              <RelationSourcesEditor
+                relationKind="heritage_intervention"
+                relationId={item.id}
+                contextEntityId={data.entity.id}
+                sourceOptions={data.sourceOptions}
+                links={item.sourceLinks || []}
+                returnPath={returnPath}
+                canEdit={canEdit}
+              />
             </article>
           )) : <p className={styles.emptyText}>Todavía no hay intervenciones registradas.</p>}
         </div>
