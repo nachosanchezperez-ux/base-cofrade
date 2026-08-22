@@ -19,7 +19,7 @@
 }
 
 .bandCard {
-  min-height: 164px;
+  min-height: 154px;
   border-top: 3px solid var(--entity-accent);
 }
 
@@ -44,20 +44,19 @@
 }
 
 /*
- * El directorio base también define columnas y gap. Usamos una regla más
- * específica para Bandas para que el espacio entre logotipo y texto no dependa
- * del orden de carga de los CSS Modules.
+ * Separamos visualmente logo y contenido, pero sin convertir esa separación
+ * en una columna vacía. El espacio se reduce de forma progresiva por viewport.
  */
 .card.bandCard {
-  grid-template-columns: 90px minmax(0, 1fr) 30px;
-  column-gap: 30px;
+  grid-template-columns: 86px minmax(0, 1fr) 28px;
+  column-gap: 21px;
   row-gap: 0;
-  padding: 21px 24px 21px 22px;
+  padding: 19px 22px 19px 20px;
 }
 
 .card.bandCard > .media.bandMedia {
-  width: 84px;
-  height: 104px;
+  width: 80px;
+  height: 98px;
   align-self: center;
 }
 
@@ -74,7 +73,7 @@
 }
 
 .card.bandCard .cardCopy {
-  padding-left: 2px;
+  padding-left: 0;
 }
 
 .cardCopy strong {
@@ -83,15 +82,15 @@
 }
 
 .cardCopy small {
-  margin-top: 8px;
+  margin-top: 7px;
 }
 
 .cardCopy :global(.context) {
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
 .cardCopy :global(.details) {
-  margin-top: 6px;
+  margin-top: 5px;
 }
 
 .clamped {
@@ -103,14 +102,14 @@
 
 @media (max-width: 1100px) {
   .card.bandCard {
-    grid-template-columns: 84px minmax(0, 1fr) 28px;
-    column-gap: 25px;
-    padding: 19px 20px;
+    grid-template-columns: 80px minmax(0, 1fr) 26px;
+    column-gap: 19px;
+    padding: 18px 19px;
   }
 
   .card.bandCard > .media.bandMedia {
-    width: 78px;
-    height: 96px;
+    width: 74px;
+    height: 90px;
   }
 }
 
@@ -125,13 +124,13 @@
   }
 
   .card.bandCard {
-    grid-template-columns: 82px minmax(0, 1fr) 26px;
-    column-gap: 23px;
+    grid-template-columns: 76px minmax(0, 1fr) 24px;
+    column-gap: 17px;
   }
 
   .card.bandCard > .media.bandMedia {
-    width: 76px;
-    height: 92px;
+    width: 70px;
+    height: 86px;
   }
 }
 
@@ -145,27 +144,23 @@
   }
 
   .card.bandCard {
-    min-height: 124px;
-    grid-template-columns: 60px minmax(0, 1fr) 22px;
-    column-gap: 17px;
-    padding: 15px 13px 15px 14px;
+    min-height: 120px;
+    grid-template-columns: 58px minmax(0, 1fr) 20px;
+    column-gap: 13px;
+    padding: 14px 12px 14px 13px;
   }
 
   .card.bandCard > .media.bandMedia {
-    width: 58px;
-    height: 72px;
+    width: 56px;
+    height: 70px;
     border-radius: 14px;
   }
 
-  .card.bandCard .cardCopy {
-    padding-left: 1px;
-  }
-
   .cardCopy small {
-    margin-top: 6px;
+    margin-top: 5px;
   }
 
   .cardCopy :global(.context) {
-    margin-top: 8px;
+    margin-top: 7px;
   }
 }
