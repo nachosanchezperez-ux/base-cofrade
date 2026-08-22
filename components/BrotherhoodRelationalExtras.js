@@ -20,10 +20,16 @@ function processionRank(position = '') {
   if (value.includes('cruz de guía') || value.includes('cruz de guia')) return 10
   if (value.includes('delante')) return 15
   if (value.includes('misterio')) return 20
-  if (value.includes('cristo') || value.includes('sangre')) return 30
+  if (value.includes('cristo') || value.includes('sangre')) return 25
+  if (value.includes('paso') && !value.includes('palio') && !value.includes('virgen')) return 30
+  if (value.includes('tras') && !value.includes('palio') && !value.includes('virgen')) return 30
   if (value.includes('palio') || value.includes('virgen')) return 40
-  if (value.includes('tras')) return 50
   return 35
+}
+
+function publicPeriod(period = '') {
+  const value = String(period).trim()
+  return /^desde\s+\d{4}\b/i.test(value) ? value : ''
 }
 
 async function loadConceptualTitulars(supabase, brotherhoodId) {
@@ -295,6 +301,8 @@ function CurrentMusicSequence({ items, penitencia }) {
   const description = penitencia
     ? 'Las formaciones que ponen música al discurrir de la Hermandad durante la estación de penitencia.'
     : 'Las formaciones que acompañan musicalmente a la Hermandad en sus salidas procesionales.'
+  const outingNames = [...new Set(items.map((item) => item.salida).filter(Boolean))]
+  const sharedOuting = outingNames.length === 1 ? outingNames[0] : ''
 
   return (
     <section className={`${styles.section} brotherhood-current-music-sequence`} id="acompanamiento-musical">
@@ -304,42 +312,45 @@ function CurrentMusicSequence({ items, penitencia }) {
             <span className="eyebrow">{penitencia ? 'Semana Santa' : 'Música procesional'}</span>
             <h2>Acompañamiento musical</h2>
             <p>{description}</p>
-          </div>
-          <div className={styles.count} aria-label={`${items.length} acompañamientos actuales`}>
-            <strong>{items.length}</strong>
-            <span>{items.length === 1 ? 'formación actual' : 'formaciones actuales'}</span>
+            <div className={styles.context}>
+              {sharedOuting ? <strong>{sharedOuting}</strong> : null}
+              <span>{items.length} {items.length === 1 ? 'formación' : 'formaciones'}</span>
+            </div>
           </div>
         </div>
 
         <div className={styles.sequence}>
-          {items.map((item, index) => (
-            <article className={styles.item} key={item.id}>
-              <span className={styles.number}>{String(index + 1).padStart(2, '0')}</span>
-              <div className={styles.logoWrap}>
+          {items.map((item) => {
+            const period = publicPeriod(item.periodo)
+            return (
+              <Link
+                className={`${styles.item} ${item.logo ? styles.withLogo : styles.withoutLogo}`}
+                href={`/bandas/${item.slug}`}
+                key={item.id}
+              >
                 {item.logo ? (
-                  <Image
-                    className={styles.logo}
-                    src={item.logo}
-                    alt={`Logotipo de ${item.nombre}`}
-                    fill
-                    sizes="64px"
-                  />
-                ) : (
-                  <span className={styles.logoFallback}>{item.nombre.split(/\s+/).filter(Boolean).slice(0, 2).map((word) => word[0]).join('').toUpperCase()}</span>
-                )}
-              </div>
-              <div className={styles.main}>
-                <span className={styles.position}>{item.posicion}</span>
-                <h3><Link href={`/bandas/${item.slug}`}>{item.nombre}</Link></h3>
-                <div className={styles.meta}>
-                  <span>{item.tipo}</span>
-                  {item.periodo ? <span>{item.periodo}</span> : null}
-                  {item.salida ? <span>{item.salida}</span> : null}
+                  <div className={styles.logoWrap}>
+                    <Image
+                      className={styles.logo}
+                      src={item.logo}
+                      alt={`Logotipo de ${item.nombre}`}
+                      fill
+                      sizes="58px"
+                    />
+                  </div>
+                ) : null}
+                <div className={styles.main}>
+                  <span className={styles.position}>{item.posicion}</span>
+                  <h3>{item.nombre}</h3>
+                  <div className={styles.meta}>
+                    <span>{item.tipo}</span>
+                    {period ? <span>{period}</span> : null}
+                  </div>
                 </div>
-              </div>
-              <Link className={styles.link} href={`/bandas/${item.slug}`}>Ver banda →</Link>
-            </article>
-          ))}
+                <span className={styles.arrow} aria-hidden="true">→</span>
+              </Link>
+            )
+          })}
         </div>
       </div>
     </section>
