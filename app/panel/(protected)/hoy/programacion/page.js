@@ -3,6 +3,7 @@ import EntityPicker from '@/components/panel/EntityPicker'
 import { requirePanelUser } from '@/lib/panel/auth'
 import { getHomeEditorialPanelData } from '@/lib/panel/home-editorial'
 import { archiveDailyOverrideAction, saveDailyOverrideAction } from '../actions'
+import { saveEditorialDailyOverrideAction } from './actions'
 import { EffectiveHomePreview, HomeDateFilter, STATUS_LABELS, StatusSelect } from '@/components/panel/home/HomeEditorialPrimitives'
 import styles from '@/app/panel/panel.module.css'
 
@@ -11,7 +12,7 @@ const SAVED_MESSAGES = {
   'override-archived': 'Ese bloque vuelve a selección automática para la fecha indicada.',
 }
 
-function OverrideShell({ title, eyebrow, hint, item, data, canEdit, children, contentType, order }) {
+function OverrideShell({ title, eyebrow, hint, item, data, canEdit, children, contentType, order, saveAction = saveDailyOverrideAction }) {
   const isActive = item && item.status !== 'archived'
   return (
     <article className={styles.editorItem}>
@@ -20,7 +21,7 @@ function OverrideShell({ title, eyebrow, hint, item, data, canEdit, children, co
         {item ? <span className={`${styles.statusBadge} ${styles[item.status]}`}>{STATUS_LABELS[item.status]}</span> : null}
       </div>
       {canEdit ? (
-        <form action={saveDailyOverrideAction} className={styles.editorForm}>
+        <form action={saveAction} className={styles.editorForm}>
           <input type="hidden" name="override_id" value={item?.id || ''} />
           <input type="hidden" name="publish_date" value={data.selectedDate} />
           {contentType ? <input type="hidden" name="content_type" value={contentType} /> : null}
@@ -85,7 +86,7 @@ export default async function HomeProgrammingPage({ searchParams }) {
             </div>
           </OverrideShell>
 
-          <OverrideShell title="Contenido editorial" eyebrow={editorial?.status === 'published' ? 'Programación manual' : 'Modo automático'} hint="La Home tiene un único slot editorial: muestra un Dato Cofrade o una Curiosidad, nunca ambos a la vez." item={editorial} data={data} canEdit={canEdit} order={1}>
+          <OverrideShell title="Contenido editorial" eyebrow={editorial?.status === 'published' ? 'Programación manual' : 'Modo automático'} hint="La Home tiene un único slot editorial: muestra un Dato Cofrade o una Curiosidad, nunca ambos a la vez." item={editorial} data={data} canEdit={canEdit} order={1} saveAction={saveEditorialDailyOverrideAction}>
             <div className={styles.formGrid}>
               <EntityPicker className={styles.fieldWide} name="editorial_content_id" items={data.editorialOptions} label="Contenido del Banco (recomendado)" emptyLabel="Sin contenido del Banco · usar modo manual" required={false} defaultValue={editorial?.editorial_content_id || ''} />
               <label><span>Tipo manual</span><select name="content_type" defaultValue={editorial?.content_type || 'curiosity'}><option value="fact">Dato Cofrade</option><option value="curiosity">Curiosidad</option></select></label>
