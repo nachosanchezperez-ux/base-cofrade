@@ -4,12 +4,16 @@ import { getPanelDataHealth } from '@/lib/panel/data-health'
 import styles from '@/app/panel/panel.module.css'
 
 const SEVERITY_LABELS = { critical: 'Prioritario', warning: 'Revisar', info: 'Mejora' }
+const CATEGORIES = ['Estructura', 'Documentación', 'Relaciones', 'Visual']
 
 export const metadata = { title: 'Salud del grafo · Datos · Panel' }
 
-export default async function DataHealthPage() {
-  await requirePanelUser()
-  const data = await getPanelDataHealth()
+export default async function DataHealthPage({ searchParams }) {
+  const [query, user, data] = await Promise.all([searchParams, requirePanelUser(), getPanelDataHealth()])
+  void user
+  const severity = ['critical', 'warning', 'info'].includes(String(query?.nivel || '')) ? String(query.nivel) : ''
+  const category = CATEGORIES.includes(String(query?.categoria || '')) ? String(query.categoria) : ''
+  const issues = data.issues.filter((item) => (!severity || item.severity === severity) && (!category || item.category === category))
 
   return (
     <div className={styles.pageWrap}>
@@ -24,11 +28,18 @@ export default async function DataHealthPage() {
         <article className={styles.metricCard}><span>Mejoras</span><strong>{data.bySeverity.info}</strong><small>completitud recomendada</small></article>
       </section>
 
+      <form className={styles.filters} style={{ gridTemplateColumns: '220px 220px auto 1fr' }}>
+        <label><span className={styles.srOnly}>Prioridad</span><select name="nivel" defaultValue={severity}><option value="">Todas las prioridades</option><option value="critical">Prioritarias</option><option value="warning">Revisar</option><option value="info">Mejoras</option></select></label>
+        <label><span className={styles.srOnly}>Categoría</span><select name="categoria" defaultValue={category}><option value="">Todas las categorías</option>{CATEGORIES.map((item) => <option value={item} key={item}>{item}</option>)}</select></label>
+        <button className={styles.secondaryButton} type="submit">Filtrar</button>
+        <small style={{ alignSelf: 'center', color: '#68788a' }}>{issues.length} de {data.issues.length} incidencias visibles.</small>
+      </form>
+
       <section className={styles.editorSection}>
-        <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>Diagnóstico</span><h2>Incidencias abiertas</h2></div><p>{data.issues.length} incidencia{data.issues.length === 1 ? '' : 's'} detectada{data.issues.length === 1 ? '' : 's'}.</p></div>
-        {data.issues.length ? (
+        <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>Diagnóstico</span><h2>Incidencias abiertas</h2></div><p>{issues.length} incidencia{issues.length === 1 ? '' : 's'} en la vista actual.</p></div>
+        {issues.length ? (
           <div className={styles.editorStack}>
-            {data.issues.map((item) => (
+            {issues.map((item) => (
               <article className={styles.editorItem} key={item.id}>
                 <div className={styles.itemHeading}>
                   <div>
@@ -43,7 +54,7 @@ export default async function DataHealthPage() {
               </article>
             ))}
           </div>
-        ) : <div className={styles.savedNotice}>No se han detectado incidencias en las comprobaciones activas.</div>}
+        ) : <div className={styles.savedNotice}>No hay incidencias que coincidan con estos filtros.</div>}
       </section>
 
       <section className={styles.editorSection}>
