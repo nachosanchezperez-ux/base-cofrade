@@ -1,6 +1,11 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { parseBulkImportText, parseCsvRows, splitImportPayload } from '../lib/panel/bulk-import-parser.js'
+import {
+  DEFAULT_IMPORT_CHUNK_BYTES,
+  parseBulkImportText,
+  parseCsvRows,
+  splitImportPayload,
+} from '../lib/panel/bulk-import-parser.js'
 import { validateBulkImportRecord } from '../lib/panel/bulk-import-config.js'
 
 test('acepta CSV separado por punto y coma con campos entrecomillados', () => {
@@ -90,4 +95,19 @@ test('divide lotes grandes antes de enviarlos al servidor', () => {
   const records = Array.from({ length: 161 }, (_, index) => ({ table: 'entities', data: { name: `Entidad ${index}` } }))
   const batches = splitImportPayload(records, { maxItems: 75, maxBytes: 10_000_000 })
   assert.deepEqual(batches.map((batch) => batch.length), [75, 75, 11])
+})
+
+test('el transporte por defecto se mantiene holgadamente por debajo de un megabyte', () => {
+  assert.ok(DEFAULT_IMPORT_CHUNK_BYTES < 1_000_000)
+  const records = Array.from({ length: 3 }, (_, index) => ({
+    table: 'entities',
+    operation: 'insert',
+    data: { name: `Entidad ${index}`, summary: 'x'.repeat(250_000) },
+  }))
+  const batches = splitImportPayload(records)
+  assert.deepEqual(batches.map((batch) => batch.length), [2, 1])
+  for (const batch of batches) {
+    const bytes = batch.reduce((total, record) => total + new TextEncoder().encode(JSON.stringify(record)).length, 0)
+    assert.ok(bytes <= DEFAULT_IMPORT_CHUNK_BYTES)
+  }
 })
