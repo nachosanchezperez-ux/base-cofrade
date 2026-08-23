@@ -4,15 +4,16 @@
 
 ## Baseline operativo verificado
 
-- Revisión: **2026-08-23 · noche (CEST)**.
+- Revisión: **2026-08-24 · madrugada (CEST)**.
 - Repositorio: `nachosanchezperez-ux/base-cofrade`.
 - Rama principal: `main`.
-- `main` al cerrar Personas / agentes: `966c37afb2055c5d050853a08c181c1c1750875c` — **Reconcilia el cierre final de Personas con Supabase (#289)**.
+- `main` verificado: `ea6b5ff3548d7089b05e7737693daad230207947` — **Cierra las regresiones estructurales del smoke público (#298)**.
 - Proyecto Vercel: `base-cofrade`.
-- Producción verificada: **READY** en `dpl_G3WY7a5y4EK14zAawgM2WU5qe1Pb`, alineada con `966c37afb2055c5d050853a08c181c1c1750875c`.
-- Smoke público de Personas: **HTTP 200** en ficha de Imagen, ficha de Paso y buscador de Tira del hilo.
-- Runtime del deployment de cierre: **sin logs `error` / `fatal` tras los smokes**.
-- Supabase: `Hilocofrade` (`kcevwkucqzcyrqaimyhl`) → **ACTIVE_HEALTHY**.
+- Producción verificada: **READY** en `dpl_5X3Hgx9ViWT1wzKHMoseTm4hNLcL`, alineada con `ea6b5ff3548d7089b05e7737693daad230207947`.
+- Runtime del deployment de cierre: **sin logs `error` / `fatal`** tras las consultas de producción.
+- Agregación de errores de Vercel en la última hora comprobada: **0 errores de runtime**.
+- Supabase: `Hilocofrade` (`kcevwkucqzcyrqaimyhl`) → **ACTIVE_HEALTHY** en la última comprobación aplicable.
+- El cierre #298 no incorpora migraciones, cambios de datos, RLS ni mutaciones manuales en Supabase.
 - Migraciones de Personas reconciliadas entre Git y Supabase:
   - `20260823211405_public_agent_relation_integrity`;
   - `20260823211610_harden_public_agent_relations`.
@@ -28,9 +29,9 @@ Los SHA, deployments y estados anteriores son una fotografía operativa. Antes d
 
 ### Arquitectura pública / separación Front ↔ Panel
 
-**ARQUITECTURA PÚBLICA / FRONT ↔ PANEL → 🟢 CERRADA**
+**ARQUITECTURA PÚBLICA / FRONT ↔ PANEL → 🟢 CERRADA**.
 
-Cortes incluidos en el cierre:
+Cortes incluidos en el baseline:
 
 - Home → **🟢 CERRADO**.
 - Hermandades → **🟢 CERRADO**.
@@ -42,7 +43,161 @@ Cortes incluidos en el cierre:
 - Marchas → **🟢 CERRADO**.
 - Personas / agentes → **🟢 CERRADO**.
 
-La arquitectura pública queda cerrada como baseline técnico. Cualquier nueva superficie pública deberá respetar desde su diseño la misma frontera y no reabrir estos cortes salvo regresión real.
+La arquitectura pública queda fijada como baseline técnico. Cualquier nueva superficie pública debe respetar desde su diseño la misma frontera y no reabrir estos cortes salvo regresión real demostrada.
+
+## Smoke transversal post-arquitectura
+
+**BASELINE PÚBLICO POST-ARQUITECTURA → 🟢 VALIDADO**.
+
+El primer recorrido transversal detectó cuatro regresiones comunes. No se declaró un cierre ficticio: se corrigieron de forma sistémica mediante la PR **#298**, se añadió una barrera automática y se repitió el smoke sobre el deployment real de producción `dpl_5X3Hgx9ViWT1wzKHMoseTm4hNLcL`.
+
+### Regresiones cerradas por #298
+
+1. **Landmarks semánticos**
+   - `app/layout.js` conserva el único landmark `<main>` de la aplicación;
+   - las páginas interiores utilizan contenedores neutros;
+   - la regresión queda protegida transversalmente en `test/public-semantic-smoke-boundary.test.mjs`.
+
+2. **Navegación de Web y redes**
+   - la navegación de las fichas de Hermandad y `OfficialLinks` comparten la ancla canónica `#enlaces-de-interes`;
+   - se elimina el enlace heredado roto `#enlaces-oficiales`.
+
+3. **Acompañamiento musical de Hermandades**
+   - se elimina la presentación heredada duplicada;
+   - `BrotherhoodOwnBands` conserva la única sección pública del acompañamiento actual;
+   - queda un solo `id="acompanamiento-musical"` por documento.
+
+4. **Fuentes sin URL**
+   - las fuentes externas continúan siendo enlaces;
+   - las aportaciones directas o fuentes sin dirección se representan como filas documentales no interactivas;
+   - ya no reciben `target`, seguimiento de apertura ni semántica de enlace externo.
+
+Validación del corte funcional:
+
+`regresión automática → npm test → npm run build → preview READY → fusión #298 → producción READY → smoke HTTP real → runtime limpio`.
+
+### Home
+
+Verificados en el recorrido transversal:
+
+- Hero;
+- Tira del hilo;
+- Hoy;
+- Extraordinarias;
+- Marcha del día;
+- Últimos hilos;
+- `Entra por donde quieras`;
+- contadores públicos del grafo;
+- contratos y reglas responsive integradas.
+
+La Home conserva los módulos de Home 2.7 y Home 2.8.
+
+### Directorios
+
+HTTP 200 y contenido público correcto en:
+
+- `/hermandades`;
+- `/imagenes`;
+- `/pasos`;
+- `/bandas`;
+- `/extraordinarias`.
+
+Se comprobaron búsqueda, filtros publicados, segmentación territorial o tipológica y separación de próximas y celebradas en Extraordinarias.
+
+### Fichas y relaciones cruzadas
+
+Muestras finales comprobadas sobre el deployment de cierre:
+
+- Hermandad: `/hermandades/el-baratillo`;
+- Imagen Wikimedia: `/imagenes/maria-santisima-mayor-dolor-traspaso-gran-poder`;
+- Paso: `/pasos/paso-de-la-piedad`;
+- Banda: `/bandas/banda-del-sol`;
+- Extraordinaria: `/extraordinarias/gerena-sangre-2026`.
+
+Las cinco responden HTTP 200 y conservan, cuando corresponde:
+
+- Hero y metadatos;
+- canonical y datos estructurados;
+- relaciones cruzadas y `Tira del hilo`;
+- responsables, acompañamientos y patrimonio;
+- discografía y contenidos musicales;
+- media y créditos;
+- Fuentes documentales.
+
+En la ficha de El Baratillo se verificó expresamente:
+
+- un único landmark `<main>` global;
+- una sola sección de acompañamiento musical;
+- navegación `Web y redes` hacia `#enlaces-de-interes`;
+- aportación directa sin URL como fila no interactiva;
+- fuentes externas conservadas como enlaces.
+
+### Extraordinarias
+
+Verificados:
+
+- directorio `/extraordinarias`;
+- separación de próximas y celebradas;
+- búsqueda y filtros;
+- guía real `/extraordinarias/gerena-sangre-2026`;
+- horarios;
+- recorrido;
+- acompañamiento musical;
+- otros momentos musicales;
+- portada alojada en Supabase;
+- Fuentes externas documentadas;
+- estructura semántica sin un segundo `<main>`.
+
+### Media
+
+Verificados caminos reales de publicación:
+
+- fotografía local o alojada en Supabase;
+- fotografía servida directamente desde Wikimedia Commons;
+- portada y metadato social;
+- crédito público;
+- licencia y enlace de procedencia cuando corresponde.
+
+La muestra Wikimedia final conserva render directo desde `upload.wikimedia.org`, crédito `Josecarlosrosadom`, licencia `CC0 1.0` y enlace a la ficha original de Commons.
+
+No se considera que el mero alojamiento en Wikimedia autorice automáticamente una imagen; la licencia concreta continúa siendo obligatoria.
+
+### Tira del hilo
+
+Comprobado en el baseline:
+
+- buscador público de entidades bajo lectura stateless;
+- resultados públicos de Hermandades, Marchas y Personas;
+- estado vacío documentado para consultas sin coincidencias;
+- relaciones `Tira del hilo` renderizadas en Hermandad, Imagen, Paso y Banda;
+- evidencia y Fuentes públicas preservadas en las fichas relacionadas;
+- comportamiento `not_documented` protegido cuando una consulta no puede resolverse con datos publicados.
+
+**Limitación documentada:** el flujo conversacional completo usa `POST /api/tira-del-hilo` desde navegador cliente. El entorno de auditoría disponible no permitió ejecutar una interacción visual completa contra producción. No se declara una simulación inexistente: el cierre se apoya en lecturas HTTP reales, autocompletado público, relaciones renderizadas, contrato del endpoint y barreras automáticas integradas.
+
+### Responsive / móvil
+
+Se han validado:
+
+- markup y contratos responsive presentes en producción;
+- reglas y `sizes` móviles de Home, directorios, fichas y Extraordinarias;
+- barreras de regresión responsive existentes;
+- compilación y render del producto real.
+
+El entorno de auditoría no sustituyó una revisión visual manual en un dispositivo físico. Esta limitación no bloquea el baseline técnico, pero debe mantenerse separada de futuras revisiones puramente visuales o de usabilidad.
+
+### Vercel
+
+- CI de la PR #298 → **correcto**;
+- pruebas automatizadas → **correctas**;
+- build de Next.js → **correcto**;
+- preview → **READY**;
+- producción `dpl_5X3Hgx9ViWT1wzKHMoseTm4hNLcL` → **READY**;
+- muestras públicas finales → **HTTP 200**;
+- runtime tras el smoke → **0 logs `error` / `fatal`**;
+- agregación de errores de la última hora → **0 errores**.
+
+Conclusión: **SMOKE TRANSVERSAL DE CIERRE → 🟢 CERRADO**.
 
 ## Personas / agentes · autoridad pública → 🟢 cerrado
 
@@ -50,8 +205,8 @@ PR **#287 · Cierra la autoridad pública de Personas y agentes** → **fusionad
 
 Hallazgos y cambio funcional:
 
-- `lib/supabase/search-live.js` y `lib/supabase/search.js` todavía dependían del cliente cookie-aware aunque alimentaban búsquedas públicas;
-- ambos pasan al cliente público stateless;
+- `lib/supabase/search-live.js` y `lib/supabase/search.js` dependían del cliente cookie-aware aunque alimentaban búsquedas públicas;
+- ambos usan ahora el cliente público stateless;
 - las relaciones públicas con autores, compositores, capataces, restauradores, artesanos, responsables patrimoniales y agentes relacionados quedan condicionadas a extremos publicables;
 - no se creó una ruta pública nueva para Personas ni se alteró el modelo de datos.
 
@@ -59,16 +214,9 @@ PR **#289 · Reconcilia el cierre final de Personas con Supabase** → **fusiona
 
 Cierre de reconciliación:
 
-- versiona en Git la migración remota `20260823211610_harden_public_agent_relations.sql`, ya aplicada previamente en Supabase;
+- versiona en Git la migración remota `20260823211610_harden_public_agent_relations.sql`, aplicada previamente en Supabase;
 - amplía `test/agent-public-authority-boundary.test.mjs` para impedir regresiones hacia `@/lib/supabase/server`, `@supabase/ssr`, `next/headers` o `cookies()` en las superficies públicas auditadas;
-- protege expresamente `agent_roles`, `band_agents`, autorías de Imágenes, autores de Marchas, responsables de Pasos, fases, intervenciones, novedades patrimoniales y relaciones genéricas.
-
-Supabase verificado:
-
-- RLS activa en `entities`, `agent_roles`, `band_agents`, `entity_relations`, `heritage_interventions`, `heritage_update_agents`, `image_authorships`, `march_authors`, `step_personnel_periods` y `step_phase_agents`;
-- vistas públicas relevantes (`current_image_locations`, `image_authorship_details`, `step_brotherhood_history`, `step_image_history`, `step_phase_details`) con `security_invoker=true`;
-- bajo rol `anon`: **0 relaciones inválidas visibles** hacia extremos no publicables en las nueve superficies auditadas;
-- recuentos públicos conservados: 11 roles de agente, 27 relaciones Banda↔agente, 52 relaciones genéricas, 53 intervenciones, 7 responsables de novedades, 36 autorías de Imagen, 210 autorías de Marcha, 27 periodos de personal y 66 responsables de fases.
+- protege `agent_roles`, `band_agents`, autorías de Imágenes, autores de Marchas, responsables de Pasos, fases, intervenciones, novedades patrimoniales y relaciones genéricas.
 
 Validación final:
 
@@ -95,7 +243,10 @@ En concreto:
 - una lectura pública no debe depender de cookies, sesión editorial ni del cliente SSR autenticado;
 - las relaciones públicas solo pueden exponer extremos publicables;
 - las vistas públicas deben respetar RLS, usando `security_invoker=true` cuando corresponda;
-- el Panel conserva las políticas y la sesión autenticada necesarias para edición, borradores y publicación.
+- el Panel conserva las políticas y la sesión autenticada necesarias para edición, borradores y publicación;
+- el layout raíz es el propietario del landmark principal de la aplicación;
+- un mismo contenido público no debe montarse por dos caminos heredados simultáneos;
+- una Fuente sin URL no debe simular ser un enlace externo.
 
 ## Cierres recientes incorporados al baseline
 
@@ -109,91 +260,36 @@ En concreto:
 - **#285 · Home 2.8** → fusionada.
 - **#287 · Personas / agentes · autoridad pública** → fusionada.
 - **#289 · reconciliación final Personas ↔ Supabase** → fusionada.
+- **#291 · Arquitectura pública / Front ↔ Panel** → fusionada.
+- **#293 · navegación del Panel** → fusionada.
+- **#294 · navegación rápida global del Panel** → fusionada.
+- **#296 · jerarquía y densidad de formularios del Panel** → fusionada.
+- **#298 · cierre de regresiones estructurales del smoke público** → fusionada.
 
 ## Orden exacto de Dirección
 
 1. Reconciliar `ESTADO-PROYECTO` → **🟢 CERRADO**.
 2. Auditar y cerrar Personas / agentes → **🟢 CERRADO**.
-3. Declarar Arquitectura pública / Front ↔ Panel → **🟢 CERRADO con este corte documental**.
-4. **Ejecutar smoke transversal de cierre → SIGUIENTE ACCIÓN ÚNICA**.
-5. Obtener y priorizar la primera cola de Salud del grafo.
+3. Declarar Arquitectura pública / Front ↔ Panel → **🟢 CERRADO**.
+4. Ejecutar y cerrar el smoke transversal → **🟢 CERRADO**.
+5. **Obtener y priorizar la primera cola de Salud del grafo → SIGUIENTE ACCIÓN ÚNICA**.
 6. Resolver un único patrón sistémico completo y medir su reducción.
 7. Auditar el protocolo editorial de Wikimedia / media abierta.
 8. Sincronizar el registro de decisiones HC con la arquitectura real.
 9. Mantener #49 aparcada.
 10. Realizar una nueva fotografía global y elegir un solo gran frente.
 
-**No abrir una nueva fase ni otro frente estructural antes de completar esta secuencia.**
+**No abrir una nueva fase estructural antes de completar esta secuencia.**
 
-## Siguiente control · smoke transversal de cierre
+## Siguiente acción · Salud del grafo
 
-El siguiente paso debe validar el producto real, no reabrir arquitectura ya cerrada.
+Obtener una fotografía actual del sistema y clasificar incidencias:
 
-Comprobar:
-
-### Home
-- Hero;
-- Tira del hilo;
-- Hoy;
-- Extraordinarias;
-- Marcha del día;
-- Últimos hilos;
-- Entra por donde quieras;
-- móvil especialmente.
-
-### Directorios
-- Hermandades;
-- Imágenes;
-- Pasos;
-- Bandas;
-- búsqueda;
-- filtros;
-- responsive.
-
-### Fichas
-- una Hermandad;
-- una Imagen;
-- un Paso;
-- una Banda;
-- relaciones cruzadas.
-
-### Extraordinarias
-- directorio;
-- guía;
-- música;
-- horarios;
-- Fuentes.
-
-### Media
-- fotografía local / Supabase;
-- fotografía Wikimedia;
-- atribución y licencia;
-- enlace de procedencia;
-- portada y galería.
-
-### Tira del hilo
-- consulta simple;
-- consulta relacional;
-- fuente / evidencia;
-- respuesta sin resultado.
-
-### Vercel
-- deployment READY;
-- ausencia de errores estructurales en runtime.
-
-Resultado esperado:
-
-**BASELINE PÚBLICO POST-ARQUITECTURA → 🟢 VALIDADO**.
-
-## Después del smoke · Salud del grafo
-
-Solo después del smoke transversal obtener una fotografía actual y clasificar incidencias:
-
-- 🔴 prioritarias: relaciones rotas, huérfanos e incoherencias de publicación;
+- 🔴 prioritarias: relaciones rotas, huérfanos, extremos inexistentes o no publicables e incoherencias de publicación;
 - 🟠 cobertura: ficha básica, autorías, responsables, acompañamientos y Fuentes;
 - 🔵 enriquecimiento: escudos, logotipos, fotografías, multimedia y campos secundarios.
 
-Dirección elegirá **un solo patrón sistémico**. No se perseguirá “cero incidencias”, sino el ciclo:
+Dirección debe elegir **un solo patrón sistémico** para el primer ciclo. No se perseguirá “cero incidencias”, sino:
 
 `incidencia → patrón → solución sistémica → validación`.
 
@@ -214,7 +310,8 @@ Consultar el registro vigente antes de asignar nuevos números. Revisar la forma
 - Salud del grafo;
 - media externa licenciada;
 - atribución y derechos;
-- arquitectura de Extraordinarias.
+- arquitectura de Extraordinarias;
+- semántica estructural y accesibilidad del layout público.
 
 ## #49 · Importador documental asistido
 
@@ -237,4 +334,4 @@ La importación masiva vigente tiene su propia arquitectura. Si en el futuro se 
 3. Descartar los pasos ya cerrados.
 4. Devolver **una única acción ejecutable**.
 
-**Siguiente acción actual: ejecutar el smoke transversal de cierre del baseline público post-arquitectura.**
+**Siguiente acción actual: obtener la fotografía de Salud del grafo, priorizarla por patrón y seleccionar un solo patrón sistémico para el primer ciclo.**
