@@ -4,11 +4,11 @@ export default async function ExtraordinaryEditorLayout({ children, params }) {
   const { id } = await params
   const root = `/panel/extraordinarias/${id}`
   const items = [
-    { href: `${root}/general`, label: 'General', mark: 'G' },
-    { href: `${root}/horarios`, label: 'Horarios', mark: 'H' },
-    { href: `${root}/musica`, label: 'Música', mark: 'M' },
-    { href: `${root}/fuentes`, label: 'Fuentes', mark: 'F' },
-    { href: root, label: 'Multimedia', mark: 'Mu', match: 'exact' },
+    { href: `${root}/general`, label: 'General', group: 'Ficha' },
+    { href: `${root}/horarios`, label: 'Horarios', group: 'Salida' },
+    { href: `${root}/musica`, label: 'Música', group: 'Salida' },
+    { href: `${root}/fuentes`, label: 'Fuentes', group: 'Archivo' },
+    { href: root, label: 'Multimedia', group: 'Archivo', match: 'exact' },
   ]
 
   return (

@@ -4,6 +4,7 @@
   z-index: 30;
   display: flex;
   flex-direction: column;
+  width: 100%;
   min-height: 100vh;
   height: 100vh;
   padding: 24px 18px 20px;
@@ -71,28 +72,28 @@
 
 .desktopNav {
   display: grid;
-  gap: 24px;
-  margin-top: 42px;
+  gap: 20px;
+  margin-top: 38px;
 }
 
 .navGroup {
   display: grid;
-  gap: 8px;
+  gap: 7px;
 }
 
 .groupLabel,
 .mobileGroupLabel {
   padding: 0 11px;
-  color: rgb(255 255 255 / 38%);
+  color: rgb(255 255 255 / 40%);
   font-size: 9px;
-  font-weight: 800;
+  font-weight: 850;
   letter-spacing: .17em;
   text-transform: uppercase;
 }
 
 .groupLinks {
   display: grid;
-  gap: 4px;
+  gap: 3px;
 }
 
 .navLink {
@@ -101,22 +102,28 @@
   align-items: center;
   gap: 11px;
   min-width: 0;
-  padding: 10px 11px;
+  min-height: 42px;
+  padding: 8px 10px;
   border: 0;
   border-radius: 11px;
-  color: rgb(255 255 255 / 70%);
+  color: rgb(255 255 255 / 72%);
   background: transparent;
   font: inherit;
   font-size: 13px;
   font-weight: 750;
   text-decoration: none;
   cursor: pointer;
-  transition: background .18s ease, color .18s ease;
+  transition: background .18s ease, color .18s ease, transform .18s ease;
 }
 
 .navLink:hover {
   color: #fff;
   background: rgb(255 255 255 / 7%);
+}
+
+.navLink:focus-visible {
+  outline: 2px solid rgb(255 255 255 / 34%);
+  outline-offset: 2px;
 }
 
 .navActive {
@@ -226,48 +233,66 @@
   display: none;
 }
 
-@media (max-width: 980px) {
-  .sidebar { padding: 22px 10px 18px; }
-  .panelBrand { justify-content: center; }
-
-  .brandCopy,
-  .groupLabel,
-  .userCopy,
-  .signOut { display: none; }
-
-  .desktopNav {
-    gap: 11px;
-    margin-top: 34px;
-  }
-
-  .navGroup,
-  .groupLinks { gap: 5px; }
-
-  .navLink {
-    justify-content: center;
-    padding: 9px;
-  }
-
-  .navLabel {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-  }
-
-  .navActive::after {
-    position: absolute;
-    right: 4px;
-    width: 5px;
-    height: 5px;
-  }
-
-  .sidebarFoot .userCard { justify-content: center; }
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 1180px) {
+  .sidebar {
+    padding: 22px 14px 18px;
+  }
+
+  .brandCopy {
+    font-size: 18px;
+  }
+
+  .brandCopy small {
+    font-size: 8.5px;
+  }
+
+  .desktopNav {
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  .groupLabel {
+    padding-inline: 9px;
+    font-size: 8px;
+  }
+
+  .navLink {
+    gap: 9px;
+    min-height: 39px;
+    padding: 7px 8px;
+    font-size: 12px;
+  }
+
+  .navMark {
+    width: 25px;
+    height: 25px;
+    flex-basis: 25px;
+    font-size: 8px;
+  }
+
+  .avatar {
+    width: 34px;
+    height: 34px;
+    flex-basis: 34px;
+  }
+
+  .userCopy strong {
+    font-size: 11.5px;
+  }
+}
+
+@media (max-width: 860px) {
   .sidebar {
     position: fixed;
     z-index: 60;
@@ -278,7 +303,7 @@
     display: block;
     width: 100%;
     min-height: 0;
-    height: 70px;
+    height: 72px;
     padding: 0;
     overflow: visible;
     box-shadow: 0 -10px 30px rgb(5 20 35 / 18%);
@@ -286,16 +311,18 @@
 
   .panelBrand,
   .desktopNav,
-  .sidebarFoot { display: none; }
+  .sidebarFoot {
+    display: none;
+  }
 
   .mobileBar {
     position: relative;
     z-index: 3;
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     width: 100%;
-    height: 70px;
-    padding: 6px 7px 7px;
+    height: 72px;
+    padding: 6px 8px 8px;
     background: linear-gradient(155deg, #102e4f 0%, #0b2037 100%);
   }
 
@@ -306,11 +333,11 @@
     align-content: center;
     justify-items: center;
     gap: 3px;
-    min-height: 55px;
-    padding: 3px 4px;
+    min-height: 56px;
+    padding: 3px 5px;
     border: 0;
     border-radius: 10px;
-    color: rgb(255 255 255 / 66%);
+    color: rgb(255 255 255 / 68%);
     background: transparent;
     font: inherit;
     text-decoration: none;
@@ -324,7 +351,7 @@
     flex-basis: 25px;
     margin: 0;
     border-radius: 7px;
-    font-size: 8px;
+    font-size: 9px;
   }
 
   .mobilePrimaryLink .navLabel,
@@ -335,7 +362,7 @@
     overflow: visible;
     clip: auto;
     color: inherit;
-    font-size: 8px;
+    font-size: 9px;
     font-weight: 800;
     line-height: 1;
     white-space: nowrap;
@@ -347,16 +374,18 @@
     background: rgb(255 255 255 / 9%);
   }
 
-  .mobilePrimaryLink.navActive::after { display: none; }
+  .mobilePrimaryLink.navActive::after {
+    display: none;
+  }
 
   .mobileBackdrop {
     position: fixed;
     z-index: 1;
-    inset: 0 0 70px;
+    inset: 0 0 72px;
     display: block;
     width: 100%;
     border: 0;
-    background: rgb(5 18 31 / 45%);
+    background: rgb(5 18 31 / 48%);
     backdrop-filter: blur(2px);
   }
 
@@ -364,10 +393,10 @@
     position: fixed;
     z-index: 2;
     right: 0;
-    bottom: 70px;
+    bottom: 72px;
     left: 0;
     display: block;
-    max-height: min(72vh, 620px);
+    max-height: min(76vh, 680px);
     padding: 18px 16px 16px;
     overflow-y: auto;
     border: 1px solid #dfe7ef;
@@ -383,7 +412,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 16px;
-    margin-bottom: 18px;
+    margin-bottom: 13px;
   }
 
   .mobileMenuHead > div {
@@ -407,8 +436,8 @@
 
   .mobileMenuHead button {
     display: grid;
-    width: 34px;
-    height: 34px;
+    width: 36px;
+    height: 36px;
     place-items: center;
     border: 1px solid var(--panel-line);
     border-radius: 10px;
@@ -417,6 +446,30 @@
     font: inherit;
     font-size: 22px;
     cursor: pointer;
+  }
+
+  .mobileSearch {
+    display: block;
+    margin-bottom: 17px;
+  }
+
+  .mobileSearch input {
+    width: 100%;
+    min-height: 46px;
+    padding: 10px 13px;
+    border: 1px solid #cbd8e3;
+    border-radius: 12px;
+    outline: none;
+    color: var(--panel-ink);
+    background: #f8fafc;
+    font: inherit;
+    font-size: 16px;
+  }
+
+  .mobileSearch input:focus {
+    border-color: var(--panel-blue);
+    background: #fff;
+    box-shadow: 0 0 0 3px rgb(18 58 103 / 9%);
   }
 
   .mobileGroups {
@@ -444,7 +497,7 @@
   .mobileGroupLinks .navLink {
     justify-content: flex-start;
     gap: 9px;
-    min-height: 48px;
+    min-height: 49px;
     padding: 9px 10px;
     border: 1px solid #e1e8ef;
     border-radius: 12px;
@@ -472,7 +525,7 @@
     overflow: visible;
     clip: auto;
     color: inherit;
-    font-size: 10px;
+    font-size: 11px;
     white-space: normal;
   }
 
@@ -481,6 +534,17 @@
     display: block;
     margin-left: auto;
     background: var(--panel-red);
+  }
+
+  .mobileEmpty {
+    margin: 0;
+    padding: 18px;
+    border: 1px dashed #d4dee7;
+    border-radius: 12px;
+    color: var(--panel-muted);
+    background: #fafcfd;
+    font-size: 13px;
+    text-align: center;
   }
 
   .mobileUserRow {
@@ -499,7 +563,9 @@
     flex-basis: 34px;
   }
 
-  .mobileUserRow .userCopy { display: grid; }
+  .mobileUserRow .userCopy {
+    display: grid;
+  }
 
   .mobileUserRow .userCopy strong {
     color: var(--panel-navy);
@@ -519,10 +585,16 @@
 }
 
 @media (max-width: 420px) {
-  .mobileBar { padding-inline: 4px; }
+  .mobileBar {
+    padding-inline: 4px;
+  }
 
   .mobilePrimaryLink .navLabel,
-  .mobileMenuButton .navLabel { font-size: 7.5px; }
+  .mobileMenuButton .navLabel {
+    font-size: 8.5px;
+  }
 
-  .mobileGroupLinks { grid-template-columns: 1fr; }
+  .mobileGroupLinks {
+    grid-template-columns: 1fr;
+  }
 }
