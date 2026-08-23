@@ -95,16 +95,17 @@
     border-radius: 10px;
   }
 
-  .compactCard :global(.EntityDirectoryExplorer-module__GTfYTa__cardCopy) > strong {
+  .compactCard > span:nth-child(2) > strong {
+    margin-top: 3px;
     font-size: 15px;
     line-height: 1.08;
   }
 
-  .compactCard :global(.EntityDirectoryExplorer-module__GTfYTa__cardMeta) {
+  .compactCard > span:nth-child(2) > span:first-child {
     gap: 5px;
   }
 
-  .compactCard :global(.EntityDirectoryExplorer-module__GTfYTa__context) {
+  .compactCard > span:nth-child(2) > span:nth-of-type(2) {
     margin-top: 4px;
     font-size: 9px;
   }
