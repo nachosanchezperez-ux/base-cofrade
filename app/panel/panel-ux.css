@@ -132,9 +132,16 @@
   transform: translateY(-2px);
 }
 
-[data-panel-main] .panelMetricLink:focus-visible {
-  outline: 3px solid rgb(18 58 103 / 13%);
-  outline-offset: 2px;
+[data-panel-main] .panelMetricOverlay {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  border-radius: inherit;
+}
+
+[data-panel-main] .panelMetricOverlay:focus-visible {
+  outline: 3px solid rgb(18 58 103 / 15%);
+  outline-offset: 3px;
 }
 
 [data-panel-main] .panelMetricArrow {
@@ -150,10 +157,12 @@
   background: #edf4fa;
   font-size: 14px !important;
   font-weight: 900;
+  pointer-events: none;
   transition: transform .16s ease, background .16s ease;
 }
 
-[data-panel-main] .panelMetricLink:hover .panelMetricArrow {
+[data-panel-main] .panelMetricLink:hover .panelMetricArrow,
+[data-panel-main] .panelMetricLink:has(.panelMetricOverlay:focus-visible) .panelMetricArrow {
   background: #e4eef6;
   transform: translateX(2px);
 }
