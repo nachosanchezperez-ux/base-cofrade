@@ -78,6 +78,12 @@ function enhanceMetric(card, pathname) {
   card.dataset.panelMetricEnhanced = 'true'
   card.classList.add('panelMetricLink')
 
+  const arrow = document.createElement('span')
+  arrow.className = 'panelMetricArrow'
+  arrow.setAttribute('aria-hidden', 'true')
+  arrow.textContent = '→'
+  card.appendChild(arrow)
+
   const overlay = document.createElement('a')
   overlay.href = href
   overlay.className = 'panelMetricOverlay'
@@ -108,7 +114,7 @@ export default function PanelMetricNavigation() {
     return () => {
       observer?.disconnect()
       window.cancelAnimationFrame(frame)
-      document.querySelectorAll('[data-panel-main] .panelMetricOverlay').forEach((overlay) => overlay.remove())
+      document.querySelectorAll('[data-panel-main] .panelMetricOverlay, [data-panel-main] .panelMetricArrow').forEach((node) => node.remove())
       document.querySelectorAll('[data-panel-main] [data-panel-metric-enhanced="true"]').forEach((card) => {
         card.classList.remove('panelMetricLink')
         delete card.dataset.panelMetricEnhanced
