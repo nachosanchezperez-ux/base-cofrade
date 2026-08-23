@@ -58,13 +58,13 @@ export default async function DataHealthPage({ searchParams }) {
       </section>
 
       <section className={styles.editorSection}>
-        <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>Alcance</span><h2>Qué se está comprobando</h2></div><p>Las reglas se centran en datos necesarios para que el grafo sea navegable y documentado.</p></div>
+        <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>Alcance</span><h2>Qué se está comprobando</h2></div><p>Las reglas se centran en datos necesarios para que el grafo sea navegable, documentado y editorialmente útil.</p></div>
         <div className={styles.panelCard}>
           <div className={styles.moduleList}>
-            <div><span><strong>Estructura</strong><small style={{ display: 'block', marginTop: 3 }}>Nodos de referencia sin ficha especializada.</small></span><b>{data.byCategory.Estructura || 0}</b></div>
-            <div><span><strong>Documentación</strong><small style={{ display: 'block', marginTop: 3 }}>Entidades públicas principales sin Fuente directa.</small></span><b>{data.byCategory.Documentación || 0}</b></div>
-            <div><span><strong>Relaciones</strong><small style={{ display: 'block', marginTop: 3 }}>Autorías, responsables, dirección y acompañamientos esenciales.</small></span><b>{data.byCategory.Relaciones || 0}</b></div>
-            <div><span><strong>Visual</strong><small style={{ display: 'block', marginTop: 3 }}>Solo se exige recurso visual donde forma parte inseparable de la entidad: Imágenes.</small></span><b>{data.byCategory.Visual || 0}</b></div>
+            <div><span><strong>Estructura</strong><small style={{ display: 'block', marginTop: 3 }}>Nodos de referencia publicados sin ficha especializada.</small></span><b>{data.byCategory.Estructura || 0}</b></div>
+            <div><span><strong>Documentación</strong><small style={{ display: 'block', marginTop: 3 }}>Fuentes directas y campos básicos de Hermandades, Imágenes, Pasos y Bandas.</small></span><b>{data.byCategory.Documentación || 0}</b></div>
+            <div><span><strong>Relaciones</strong><small style={{ display: 'block', marginTop: 3 }}>Titulares, pertenencia, Pasos, autorías, responsables, dirección y acompañamientos esenciales.</small></span><b>{data.byCategory.Relaciones || 0}</b></div>
+            <div><span><strong>Visual</strong><small style={{ display: 'block', marginTop: 3 }}>Recurso visual obligatorio para Imágenes y mejoras de identidad como escudos o logotipos.</small></span><b>{data.byCategory.Visual || 0}</b></div>
           </div>
         </div>
       </section>
