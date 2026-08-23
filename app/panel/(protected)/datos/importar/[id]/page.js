@@ -17,6 +17,14 @@ function statusLabel(status) {
   }[status] || status
 }
 
+function operationCounts(batch) {
+  const counts = batch?.metadata?.operation_counts || {}
+  return {
+    insert: Number(counts.insert) || 0,
+    upsert: Number(counts.upsert) || 0,
+  }
+}
+
 export default async function BulkImportDetailPage({ params }) {
   const { id } = await params
   const user = await requirePanelUser()
@@ -26,6 +34,7 @@ export default async function BulkImportDetailPage({ params }) {
   const { batch, issues } = detail
   const canEdit = ['admin', 'editor'].includes(user.role)
   const retryAction = retryBulkImportFailuresAction.bind(null, batch.id)
+  const operations = operationCounts(batch)
 
   return <div className={panelStyles.pageWrap}>
     <header className={panelStyles.pageHeader}>
@@ -46,6 +55,8 @@ export default async function BulkImportDetailPage({ params }) {
           <div><span>Aplicados</span><strong>{batch.applied_items}</strong></div>
           <div><span>Incidencias</span><strong>{batch.invalid_items + batch.failed_items}</strong></div>
         </div>
+        {batch.metadata?.operation_counts || batch.metadata?.transport_chunks ? <p className={styles.muted}>Perfil del lote: {operations.insert} insert · {operations.upsert} upsert{batch.metadata?.transport_chunks ? ` · ${batch.metadata.transport_chunks} envíos de preparación` : ''}.</p> : null}
+        {operations.upsert > 0 && ['ready', 'processing'].includes(batch.status) ? <div className={styles.warningBox}>{operations.upsert} registro{operations.upsert === 1 ? '' : 's'} usa{operations.upsert === 1 ? '' : 'n'} <code>upsert</code> y puede{operations.upsert === 1 ? '' : 'n'} actualizar filas existentes cuando coincida la clave de conflicto.</div> : null}
         {canEdit && batch.failed_items > 0 ? <form action={retryAction}><button type="submit" className={styles.secondaryButton}>Reintentar {batch.failed_items} fallido{batch.failed_items === 1 ? '' : 's'}</button></form> : null}
       </section>
 
