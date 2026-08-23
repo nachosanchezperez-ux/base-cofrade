@@ -15,7 +15,7 @@ test('la publicación de una relación bloquea ambos extremos mientras valida su
   assert.match(sql, /security definer/i)
   assert.match(sql, /set search_path = ''/i)
 
-  const shareLocks = sql.match(/for share/gi) || []
+  const shareLocks = sql.match(/\n\s*for share;/gi) || []
   assert.equal(shareLocks.length, 2)
 
   assert.match(sql, /source_status is distinct from 'published'/i)
