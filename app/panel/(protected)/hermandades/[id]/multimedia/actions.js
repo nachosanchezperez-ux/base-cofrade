@@ -9,6 +9,7 @@ import { createClient } from '@/lib/supabase/server'
 const UUID_PATTERN = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i
 const IMAGE_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/avif'])
 const PUBLICATION_RIGHTS = new Set(['owned', 'authorized', 'licensed', 'public_domain'])
+const TARGET_KINDS = new Set(['entity', 'cult'])
 
 function value(formData, name) {
   return String(formData.get(name) || '').trim()
@@ -42,6 +43,26 @@ async function loadEntity(supabase, entityId, label) {
   if (result.error) throw new Error(`${label}: ${result.error.message}`)
   if (!result.data) throw new Error(label)
   return result.data
+}
+
+async function loadCult(supabase, cultId, brotherhoodId) {
+  const result = await supabase
+    .from('cults')
+    .select('id, brotherhood_entity_id, title, status')
+    .eq('id', cultId)
+    .eq('brotherhood_entity_id', brotherhoodId)
+    .neq('status', 'archived')
+    .maybeSingle()
+
+  if (result.error) throw new Error(`No se pudo comprobar el Culto: ${result.error.message}`)
+  if (!result.data) throw new Error('El Culto seleccionado no pertenece a esta Hermandad.')
+
+  return {
+    id: result.data.id,
+    name: result.data.title,
+    entity_type: 'cult',
+    slug: '',
+  }
 }
 
 async function assertBrotherhoodTarget(supabase, brotherhoodId, target) {
@@ -95,18 +116,27 @@ async function audit(supabase, user, entry) {
   if (error) console.error('[Hilo Cofrade] No se pudo registrar la subida rápida', error)
 }
 
+async function rollbackNewAsset(supabase, mediaAssetId, storagePath) {
+  if (mediaAssetId) await supabase.from('media_assets').delete().eq('id', mediaAssetId)
+  if (storagePath) await supabase.storage.from('hilo-media').remove([storagePath])
+}
+
 export async function uploadBrotherhoodRelatedMediaAction(formData) {
   const user = await requirePanelEditor()
   const supabase = await createClient()
   const brotherhoodId = uuid(formData, 'brotherhood_id')
-  const targetId = uuid(formData, 'entity_id')
-  const [brotherhood, target] = await Promise.all([
-    loadEntity(supabase, brotherhoodId, 'La Hermandad no existe o está archivada.'),
-    loadEntity(supabase, targetId, 'La ficha de destino no existe o está archivada.'),
-  ])
+  const targetId = uuid(formData, 'target_id')
+  const targetKind = value(formData, 'target_kind') || 'entity'
+  if (!TARGET_KINDS.has(targetKind)) throw new Error('El tipo de destino de la imagen no es válido.')
 
+  const brotherhood = await loadEntity(supabase, brotherhoodId, 'La Hermandad no existe o está archivada.')
   if (brotherhood.entity_type !== 'brotherhood') throw new Error('La ficha de contexto no es una Hermandad.')
-  await assertBrotherhoodTarget(supabase, brotherhoodId, target)
+
+  const target = targetKind === 'cult'
+    ? await loadCult(supabase, targetId, brotherhoodId)
+    : await loadEntity(supabase, targetId, 'La ficha de destino no existe o está archivada.')
+
+  if (targetKind === 'entity') await assertBrotherhoodTarget(supabase, brotherhoodId, target)
 
   const file = formData.get('file')
   if (!(file instanceof File) || file.size === 0) throw new Error('Selecciona una imagen para subir.')
@@ -118,7 +148,10 @@ export async function uploadBrotherhoodRelatedMediaAction(formData) {
   if (!altText) throw new Error('La descripción accesible es obligatoria.')
   if (!PUBLICATION_RIGHTS.has(rightsStatus)) throw new Error('El estado de derechos no permite publicar esta imagen.')
 
-  const storagePath = `${targetId}/${randomUUID()}.${mediaExtension(file)}`
+  const storageRoot = targetKind === 'cult'
+    ? `${brotherhoodId}/cultos/${targetId}`
+    : targetId
+  const storagePath = `${storageRoot}/${randomUUID()}.${mediaExtension(file)}`
   const uploaded = await supabase.storage.from('hilo-media').upload(storagePath, file, {
     contentType: file.type,
     upsert: false,
@@ -144,62 +177,77 @@ export async function uploadBrotherhoodRelatedMediaAction(formData) {
     throw new Error(`No se pudo registrar la imagen: ${assetResult.error.message}`)
   }
 
+  const relationTable = targetKind === 'cult' ? 'cult_media' : 'entity_media'
+  const targetColumn = targetKind === 'cult' ? 'cult_id' : 'entity_id'
   const previousCoverResult = await supabase
-    .from('entity_media')
+    .from(relationTable)
     .select('id')
-    .eq('entity_id', targetId)
+    .eq(targetColumn, targetId)
     .eq('is_cover', true)
+
   if (previousCoverResult.error) {
-    await supabase.from('media_assets').delete().eq('id', assetResult.data.id)
-    await supabase.storage.from('hilo-media').remove([storagePath])
+    await rollbackNewAsset(supabase, assetResult.data.id, storagePath)
     throw new Error(`No se pudo comprobar la fotografía principal anterior: ${previousCoverResult.error.message}`)
   }
 
   const previousCoverIds = (previousCoverResult.data || []).map((item) => item.id)
   if (previousCoverIds.length) {
     const previousCover = await supabase
-      .from('entity_media')
+      .from(relationTable)
       .update({ is_cover: false })
       .in('id', previousCoverIds)
     if (previousCover.error) {
-      await supabase.from('media_assets').delete().eq('id', assetResult.data.id)
-      await supabase.storage.from('hilo-media').remove([storagePath])
+      await rollbackNewAsset(supabase, assetResult.data.id, storagePath)
       throw new Error(`No se pudo actualizar la fotografía principal anterior: ${previousCover.error.message}`)
     }
   }
 
+  const linkPayload = targetKind === 'cult'
+    ? {
+        cult_id: targetId,
+        media_asset_id: assetResult.data.id,
+        role: 'cover',
+        sort_order: 0,
+        is_cover: true,
+        focus_x: 50,
+        focus_y: 50,
+        fit_mode: 'cover',
+      }
+    : {
+        entity_id: targetId,
+        media_asset_id: assetResult.data.id,
+        relation_type: 'cover',
+        sort_order: 0,
+        is_cover: true,
+        focus_x: 50,
+        focus_y: 50,
+        fit_mode: 'auto',
+      }
+
   const linkResult = await supabase
-    .from('entity_media')
-    .insert({
-      entity_id: targetId,
-      media_asset_id: assetResult.data.id,
-      relation_type: 'cover',
-      sort_order: 0,
-      is_cover: true,
-      focus_x: 50,
-      focus_y: 50,
-      fit_mode: 'auto',
-    })
+    .from(relationTable)
+    .insert(linkPayload)
     .select('id')
     .single()
 
   if (linkResult.error) {
     if (previousCoverIds.length) {
-      await supabase.from('entity_media').update({ is_cover: true }).in('id', previousCoverIds)
+      await supabase.from(relationTable).update({ is_cover: true }).in('id', previousCoverIds)
     }
-    await supabase.from('media_assets').delete().eq('id', assetResult.data.id)
-    await supabase.storage.from('hilo-media').remove([storagePath])
+    await rollbackNewAsset(supabase, assetResult.data.id, storagePath)
     throw new Error(`No se pudo vincular la imagen: ${linkResult.error.message}`)
   }
 
   await audit(supabase, user, {
     action_type: 'link',
-    object_type: 'entity_media',
+    object_type: relationTable,
     object_id: linkResult.data.id,
-    entity_id: targetId,
+    entity_id: targetKind === 'cult' ? brotherhoodId : targetId,
     summary: `Imagen principal incorporada a ${target.name} desde ${brotherhood.name}`,
     changed_fields: {
       brotherhood_id: brotherhoodId,
+      target_kind: targetKind,
+      target_id: targetId,
       media_asset_id: assetResult.data.id,
       relation_type: 'cover',
     },
@@ -210,6 +258,7 @@ export async function uploadBrotherhoodRelatedMediaAction(formData) {
   revalidatePath(`/panel/hermandades/${brotherhoodId}`)
   revalidatePath(`/panel/hermandades/${brotherhoodId}/multimedia`)
   revalidatePath(`/panel/hermandades/${brotherhoodId}/patrimonio`)
+  revalidatePath(`/panel/hermandades/${brotherhoodId}/cultos`)
   if (brotherhood.slug) revalidatePath(`/hermandades/${brotherhood.slug}`)
 
   if (target.entity_type === 'step') {
