@@ -116,7 +116,7 @@ export default async function ImagenPage({ params }) {
   ];
 
   return (
-    <main
+    <div
       className="brotherhood-page image-detail-v2"
       style={{
         '--brotherhood-primary': hermandad?.colores?.primario || '#153B69',
@@ -318,6 +318,6 @@ export default async function ImagenPage({ params }) {
       )}
 
       <SourcesBlock sources={imagen.fuentes} />
-    </main>
+    </div>
   );
 }
