@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
+import contractStyles from './DirectoryCardContract.module.css'
 import enhancementStyles from './RelationalEntityDirectoryEnhancements.module.css'
 import styles from './RelationalEntityDirectory.module.css'
 
@@ -196,7 +197,7 @@ export default function RelationalEntityDirectory({
 
             return (
               <Link
-                className={`${styles.card} ${enhancementStyles.card} ${isBand ? enhancementStyles.bandCard : ''}`}
+                className={`${styles.card} ${contractStyles.contract} ${enhancementStyles.card} ${isBand ? enhancementStyles.bandCard : ''}`}
                 href={item.href}
                 key={item.id}
                 style={isBand ? {
@@ -205,14 +206,14 @@ export default function RelationalEntityDirectory({
                   '--logo-background': item.logoBackgroundColor || undefined,
                 } : undefined}
               >
-                <span className={`${enhancementStyles.media} ${isBand ? enhancementStyles.bandMedia : ''} ${presentationClass}`}>
+                <span className={`${enhancementStyles.media} ${contractStyles.media} ${isBand ? enhancementStyles.bandMedia : ''} ${presentationClass}`}>
                   {mediaPath ? (
-                    <Image src={mediaPath} alt="" fill sizes="(max-width: 620px) 58px, 78px" />
+                    <Image src={mediaPath} alt="" fill sizes="(max-width: 620px) 58px, 72px" />
                   ) : (
                     <span className={`${styles.monogram} ${enhancementStyles.monogram}`}>{initials(item.name)}</span>
                   )}
                 </span>
-                <span className={`${styles.cardCopy} ${enhancementStyles.cardCopy}`}>
+                <span className={`${styles.cardCopy} ${contractStyles.copy} ${enhancementStyles.cardCopy}`}>
                   <strong>{item.name}</strong>
                   <small>{[item.type, item.date].filter(Boolean).join(' · ')}</small>
                   {isBand ? (
@@ -241,7 +242,7 @@ export default function RelationalEntityDirectory({
                     </>
                   )}
                 </span>
-                <span className={styles.arrow} aria-hidden="true">→</span>
+                <span className={`${styles.arrow} ${contractStyles.action}`} aria-hidden="true">→</span>
               </Link>
             )
           })}
