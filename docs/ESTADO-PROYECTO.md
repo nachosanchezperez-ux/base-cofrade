@@ -4,14 +4,18 @@
 
 ## Baseline operativo verificado
 
-- Revisión: **2026-08-23 · noche (CEST)**.
+- Revisión: **2026-08-24 · madrugada (CEST)**.
 - Repositorio: `nachosanchezperez-ux/base-cofrade`.
 - Rama principal: `main`.
-- `main` de referencia al iniciar el smoke transversal: `fe9af11197a3a1b840d876f42be61f583bb23ba3` — **Declara cerrada la Arquitectura pública (#291)**.
+- `main` funcional verificado antes de este corte documental: `f1b6699716b80cf5d9e51c41ba97cff6a9649863` — **Añade navegación rápida global al Panel (#294)**.
 - Proyecto Vercel: `base-cofrade`.
-- Producción verificada durante el smoke: **READY** en `dpl_25snjk3QCH3DT3a1vDfScSRrd1QA`.
-- Runtime del deployment durante el smoke: **sin logs `error` / `fatal`**.
+- Producción vigente verificada: **READY** en `dpl_BkzTw262px3J7chjzffBnniT2zor`, alineada con `f1b6699716b80cf5d9e51c41ba97cff6a9649863`.
+- Deployment utilizado para el smoke transversal post-arquitectura: **READY** en `dpl_25snjk3QCH3DT3a1vDfScSRrd1QA`.
+- Runtime de ambos controles: **sin logs `error` / `fatal`** en las ventanas comprobadas.
 - Supabase: `Hilocofrade` (`kcevwkucqzcyrqaimyhl`) → **ACTIVE_HEALTHY** en la última comprobación aplicable.
+- Migraciones de Personas reconciliadas entre Git y Supabase:
+  - `20260823211405_public_agent_relation_integrity`;
+  - `20260823211610_harden_public_agent_relations`.
 - PR estructural histórica: **#49 · Importador documental asistido** → **⚪ APARCADA** y no utilizable como base técnica.
 
 Los SHA, deployments y estados anteriores son una fotografía operativa. Antes de cualquier tarea significativa deben refrescarse GitHub, Vercel y Supabase cuando corresponda.
@@ -44,7 +48,7 @@ La arquitectura pública queda cerrada como baseline técnico. Cualquier nueva s
 
 **BASELINE PÚBLICO POST-ARQUITECTURA → 🟢 VALIDADO**.
 
-Smoke ejecutado sobre producción real del deployment `dpl_25snjk3QCH3DT3a1vDfScSRrd1QA`.
+Smoke ejecutado sobre producción real del deployment `dpl_25snjk3QCH3DT3a1vDfScSRrd1QA` y contrastado posteriormente con la producción vigente de `main` tras #294.
 
 #### Home
 
@@ -57,7 +61,7 @@ Verificados:
 - Marcha del día;
 - Últimos hilos;
 - `Entra por donde quieras`;
-- contratos/clases responsive integrados para móvil.
+- contratos y clases responsive integrados para móvil.
 
 La Home conserva los contadores públicos del grafo y los módulos de Home 2.7 / 2.8.
 
@@ -70,7 +74,7 @@ HTTP 200 y contenido público correcto en:
 - `/pasos`;
 - `/bandas`.
 
-Se comprobaron búsqueda, filtros publicados, segmentación territorial/tipológica y contratos responsive presentes en el render.
+Se comprobaron búsqueda, filtros publicados, segmentación territorial o tipológica y contratos responsive presentes en el render.
 
 #### Fichas y relaciones cruzadas
 
@@ -88,7 +92,7 @@ Las cuatro conservan sus relaciones cruzadas públicas, `Tira del hilo`, respons
 Verificados:
 
 - directorio `/extraordinarias`;
-- separación de próximas / celebradas;
+- separación de próximas y celebradas;
 - búsqueda y filtros;
 - guía real `/extraordinarias/gerena-sangre-2026`;
 - horarios;
@@ -111,7 +115,7 @@ La fotografía Wikimedia conserva:
 - licencia `CC BY-SA 4.0`;
 - crédito público;
 - enlace a la ficha original de Commons;
-- uso como portada / metadato social de la ficha.
+- uso como portada y metadato social de la ficha.
 
 No se considera que el mero alojamiento en Wikimedia autorice automáticamente una imagen; la licencia concreta continúa siendo obligatoria.
 
@@ -122,26 +126,27 @@ Comprobado en el baseline:
 - buscador público de entidades bajo lectura stateless;
 - búsqueda pública de Personas ya validada en el cierre anterior;
 - relaciones `Tira del hilo` renderizadas en Hermandad, Imagen, Paso y Banda;
-- evidencia/Fuentes públicas preservadas en las fichas relacionadas;
+- evidencia y Fuentes públicas preservadas en las fichas relacionadas;
 - comportamiento `not_documented` protegido en el componente cuando una consulta no puede resolverse con datos publicados.
 
-**Limitación de este smoke:** el flujo conversacional completo usa `POST /api/tira-del-hilo` desde un navegador cliente. El entorno de auditoría actual no permite ejecutar una interacción visual/browser real contra producción. Por ello no se declara una simulación inexistente: el cierre se apoya en lectura HTTP real de producción, buscador público, relaciones renderizadas y barreras automáticas ya integradas.
+**Limitación de este smoke:** el flujo conversacional completo usa `POST /api/tira-del-hilo` desde un navegador cliente. El entorno de auditoría actual no permite ejecutar una interacción visual real contra producción. No se declara una simulación inexistente: el cierre se apoya en lectura HTTP real de producción, buscador público, relaciones renderizadas y barreras automáticas ya integradas.
 
 #### Responsive / móvil
 
 El entorno de auditoría no permite abrir un navegador real con viewport móvil contra producción. Se han validado:
 
 - markup y contratos responsive presentes en producción;
-- reglas/sizes móviles de directorios, Home, fichas y Extraordinarias;
+- reglas y `sizes` móviles de directorios, Home, fichas y Extraordinarias;
 - CI y barreras de regresión responsive integradas.
 
 Esto no sustituye una futura revisión visual manual en dispositivo real, pero no bloquea el baseline técnico post-arquitectura.
 
 #### Vercel
 
-- deployment de cierre → **READY**;
-- consultas públicas anteriores → HTTP 200;
-- runtime consultado tras los smokes → **0 logs `error` / `fatal`**.
+- deployment de smoke → **READY**;
+- producción vigente posterior a #294 → **READY**;
+- consultas públicas realizadas → HTTP 200;
+- runtime consultado tras los controles → **0 logs `error` / `fatal`**.
 
 Conclusión: **SMOKE TRANSVERSAL DE CIERRE → 🟢 CERRADO**.
 
@@ -198,6 +203,21 @@ En concreto:
 - las vistas públicas deben respetar RLS, usando `security_invoker=true` cuando corresponda;
 - el Panel conserva las políticas y la sesión autenticada necesarias para edición, borradores y publicación.
 
+## Cierres recientes incorporados al baseline
+
+- **#272 · Bandas · autoridad pública** → fusionada.
+- **#273 · Extraordinarias · autoridad pública** → fusionada.
+- **#280 · Tira del hilo · autoridad pública** → fusionada.
+- **#281 · Marchas · autoridad pública** → fusionada.
+- **#282 · Wikimedia Commons · licencias y atribución** → fusionada.
+- **#283 · Home 2.7** → fusionada.
+- **#284 · Wikimedia Commons · render directo** → fusionada.
+- **#285 · Home 2.8** → fusionada.
+- **#287 · Personas / agentes · autoridad pública** → fusionada.
+- **#289 · reconciliación final Personas ↔ Supabase** → fusionada.
+- **#291 · Arquitectura pública / Front ↔ Panel** → fusionada.
+- **#294 · navegación rápida global del Panel** → fusionada.
+
 ## Orden exacto de Dirección
 
 1. Reconciliar `ESTADO-PROYECTO` → **🟢 CERRADO**.
@@ -217,7 +237,7 @@ En concreto:
 
 Obtener una fotografía actual del sistema y clasificar incidencias:
 
-- 🔴 prioritarias: relaciones rotas, huérfanos, extremos inexistentes/no publicables e incoherencias de publicación;
+- 🔴 prioritarias: relaciones rotas, huérfanos, extremos inexistentes o no publicables e incoherencias de publicación;
 - 🟠 cobertura: ficha básica, autorías, responsables, acompañamientos y Fuentes;
 - 🔵 enriquecimiento: escudos, logotipos, fotografías, multimedia y campos secundarios.
 
