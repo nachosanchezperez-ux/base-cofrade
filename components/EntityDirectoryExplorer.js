@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
 import styles from './EntityDirectoryExplorer.module.css'
 import mobileStyles from './EntityDirectoryMobile.module.css'
+import facetStyles from './EntityDirectoryFacets.module.css'
 
 const DEFAULT_LIMIT = 24
 const LIMIT_STEP = 24
@@ -16,6 +17,25 @@ const KINDS = [
   { value: 'image', label: 'Imágenes' },
   { value: 'step', label: 'Pasos' },
   { value: 'band', label: 'Bandas' },
+]
+
+const HOLY_WEEK_DAYS = [
+  'Viernes de Dolores',
+  'Sábado de Pasión',
+  'Domingo de Ramos',
+  'Lunes Santo',
+  'Martes Santo',
+  'Miércoles Santo',
+  'Jueves Santo',
+  'Madrugada',
+  'Viernes Santo',
+  'Sábado Santo',
+  'Domingo de Resurrección',
+]
+
+const MONTHS = [
+  'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+  'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre',
 ]
 
 function normalize(value) {
@@ -97,12 +117,41 @@ function DirectoryCard({ item, compact = false }) {
   )
 }
 
+function FacetGroup({ label, hint, options, value, onChange }) {
+  if (!options.length) return null
+
+  return (
+    <div className={facetStyles.facetGroup}>
+      <div className={facetStyles.facetLabel}>
+        <strong>{label}</strong>
+        <span>{hint}</span>
+      </div>
+      <div className={facetStyles.pills}>
+        {options.map((option) => (
+          <button
+            type="button"
+            key={`${label}-${option.value}`}
+            className={`${facetStyles.pill} ${value === option.value ? facetStyles.active : ''}`}
+            aria-pressed={value === option.value}
+            onClick={() => onChange(option.value)}
+          >
+            {option.label}
+            <small>{option.count}</small>
+          </button>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 export default function EntityDirectoryExplorer({ items, initialState = {} }) {
   const [query, setQuery] = useState(initialState.query || '')
   const [kind, setKind] = useState(KINDS.some((item) => item.value === initialState.kind) ? initialState.kind : 'all')
   const [territory, setTerritory] = useState(initialState.territory || 'todos')
   const [municipality, setMunicipality] = useState(initialState.municipality || 'todos')
   const [subtype, setSubtype] = useState(initialState.subtype || 'todos')
+  const [holyWeekDay, setHolyWeekDay] = useState(initialState.holyWeekDay || 'todos')
+  const [gloryMonth, setGloryMonth] = useState(initialState.gloryMonth || 'todos')
   const [limit, setLimit] = useState(parseLimit(initialState.limit))
   const [filtersOpen, setFiltersOpen] = useState(Boolean(
     initialState.territory && initialState.territory !== 'todos'
@@ -131,6 +180,80 @@ export default function EntityDirectoryExplorer({ items, initialState = {} }) {
     scopedItems.flatMap((item) => item.subtypeValues || []).filter(Boolean)
   )].sort((a, b) => a.localeCompare(b, 'es', { sensitivity: 'base' })), [scopedItems])
 
+  const locationValue = municipality !== 'todos'
+    ? `municipality:${municipality}`
+    : territory
+
+  const locationOptions = useMemo(() => {
+    if (!['brotherhood', 'image'].includes(kind)) return []
+
+    const options = [{ value: 'todos', label: 'Todas', count: scopedItems.length }]
+    const capitalCount = scopedItems.filter((item) => normalize(item.municipality) === 'sevilla').length
+    const provinceItems = scopedItems.filter((item) => item.municipality && normalize(item.municipality) !== 'sevilla')
+
+    if (capitalCount) options.push({ value: 'sevilla-capital', label: 'Sevilla', count: capitalCount })
+    if (provinceItems.length) options.push({ value: 'provincia', label: 'Provincia', count: provinceItems.length })
+
+    const provinceMunicipalities = [...new Set(provinceItems.map((item) => item.municipality))]
+      .sort((a, b) => a.localeCompare(b, 'es', { sensitivity: 'base' }))
+
+    for (const locality of provinceMunicipalities) {
+      options.push({
+        value: `municipality:${locality}`,
+        label: locality,
+        count: provinceItems.filter((item) => item.municipality === locality).length,
+      })
+    }
+
+    return options
+  }, [kind, scopedItems])
+
+  const holyWeekOptions = useMemo(() => {
+    if (!['brotherhood', 'image'].includes(kind)) return []
+    const available = scopedItems.filter((item) => item.holyWeekDay)
+    if (!available.length) return []
+
+    return [
+      { value: 'todos', label: 'Todos', count: available.length },
+      ...HOLY_WEEK_DAYS
+        .map((day) => ({
+          value: day,
+          label: day,
+          count: available.filter((item) => item.holyWeekDay === day).length,
+        }))
+        .filter((option) => option.count),
+    ]
+  }, [kind, scopedItems])
+
+  const gloryOptions = useMemo(() => {
+    if (!['brotherhood', 'image'].includes(kind)) return []
+    const available = scopedItems.filter((item) => item.gloryMonth)
+    if (!available.length) return []
+
+    return [
+      { value: 'todos', label: 'Todos', count: available.length },
+      ...MONTHS
+        .map((month) => ({
+          value: month,
+          label: month,
+          count: available.filter((item) => item.gloryMonth === month).length,
+        }))
+        .filter((option) => option.count),
+    ]
+  }, [kind, scopedItems])
+
+  const typeFacetOptions = useMemo(() => {
+    if (!['band', 'step'].includes(kind) || subtypes.length < 2) return []
+    return [
+      { value: 'todos', label: 'Todos', count: scopedItems.length },
+      ...subtypes.map((type) => ({
+        value: type,
+        label: type,
+        count: scopedItems.filter((item) => (item.subtypeValues || []).includes(type)).length,
+      })),
+    ]
+  }, [kind, scopedItems, subtypes])
+
   const filtered = useMemo(() => {
     const needle = normalize(query)
     const normalizedMunicipality = normalize(municipality)
@@ -153,6 +276,9 @@ export default function EntityDirectoryExplorer({ items, initialState = {} }) {
           if (!values.includes(normalizedSubtype)) return false
         }
 
+        if (holyWeekDay !== 'todos' && item.holyWeekDay !== holyWeekDay) return false
+        if (gloryMonth !== 'todos' && item.gloryMonth !== gloryMonth) return false
+
         if (!needle) return true
         const haystack = normalize([
           item.name,
@@ -160,6 +286,8 @@ export default function EntityDirectoryExplorer({ items, initialState = {} }) {
           item.label,
           item.subtype,
           item.municipality,
+          item.holyWeekDay,
+          item.gloryMonth,
           item.context,
           item.relation,
           ...(item.keywords || []),
@@ -171,13 +299,15 @@ export default function EntityDirectoryExplorer({ items, initialState = {} }) {
         if (scoreDifference) return scoreDifference
         return a.name.localeCompare(b.name, 'es', { sensitivity: 'base' })
       })
-  }, [items, query, kind, territory, municipality, subtype])
+  }, [items, query, kind, territory, municipality, subtype, holyWeekDay, gloryMonth])
 
   const visibleItems = filtered.slice(0, limit)
   const activeSecondaryFilters = [
     territory !== 'todos',
     municipality !== 'todos',
     kind !== 'all' && subtype !== 'todos',
+    holyWeekDay !== 'todos',
+    gloryMonth !== 'todos',
   ].filter(Boolean).length
   const mobileOverviewMode = kind === 'all' && !query.trim() && activeSecondaryFilters === 0
 
@@ -196,18 +326,48 @@ export default function EntityDirectoryExplorer({ items, initialState = {} }) {
     if (territory !== 'todos') params.set('territorio', territory)
     if (municipality !== 'todos') params.set('localidad', slugify(municipality))
     if (kind !== 'all' && subtype !== 'todos') params.set('subtipo', slugify(subtype))
+    if (holyWeekDay !== 'todos') params.set('dia', slugify(holyWeekDay))
+    if (gloryMonth !== 'todos') params.set('mes', slugify(gloryMonth))
     if (limit > DEFAULT_LIMIT) params.set('limite', String(limit))
 
     const queryString = params.toString()
     const nextUrl = queryString ? `/directorio?${queryString}` : '/directorio'
     window.history.replaceState(window.history.state, '', nextUrl)
-  }, [query, kind, territory, municipality, subtype, limit])
+  }, [query, kind, territory, municipality, subtype, holyWeekDay, gloryMonth, limit])
+
+  const resetResultLimit = () => setLimit(DEFAULT_LIMIT)
 
   const changeKind = (nextKind) => {
     setKind(nextKind)
+    setTerritory('todos')
     setMunicipality('todos')
     setSubtype('todos')
-    setLimit(DEFAULT_LIMIT)
+    setHolyWeekDay('todos')
+    setGloryMonth('todos')
+    resetResultLimit()
+  }
+
+  const changeLocation = (value) => {
+    if (value.startsWith('municipality:')) {
+      setTerritory('todos')
+      setMunicipality(value.slice('municipality:'.length))
+    } else {
+      setMunicipality('todos')
+      setTerritory(value)
+    }
+    resetResultLimit()
+  }
+
+  const changeHolyWeekDay = (value) => {
+    setHolyWeekDay(value)
+    if (value !== 'todos') setGloryMonth('todos')
+    resetResultLimit()
+  }
+
+  const changeGloryMonth = (value) => {
+    setGloryMonth(value)
+    if (value !== 'todos') setHolyWeekDay('todos')
+    resetResultLimit()
   }
 
   const clearAll = () => {
@@ -216,11 +376,15 @@ export default function EntityDirectoryExplorer({ items, initialState = {} }) {
     setTerritory('todos')
     setMunicipality('todos')
     setSubtype('todos')
-    setLimit(DEFAULT_LIMIT)
+    setHolyWeekDay('todos')
+    setGloryMonth('todos')
+    resetResultLimit()
     setFiltersOpen(false)
   }
 
   const hasAnyFilter = Boolean(query) || kind !== 'all' || activeSecondaryFilters > 0
+  const showCalendarFacets = ['brotherhood', 'image'].includes(kind)
+  const showTypeFacet = ['band', 'step'].includes(kind)
 
   return (
     <div className={styles.directory}>
@@ -237,7 +401,7 @@ export default function EntityDirectoryExplorer({ items, initialState = {} }) {
           value={query}
           onChange={(event) => {
             setQuery(event.target.value)
-            setLimit(DEFAULT_LIMIT)
+            resetResultLimit()
           }}
           placeholder="Buscar hermandad, imagen, paso, banda…"
           autoComplete="off"
@@ -248,7 +412,7 @@ export default function EntityDirectoryExplorer({ items, initialState = {} }) {
             className={styles.clearSearch}
             onClick={() => {
               setQuery('')
-              setLimit(DEFAULT_LIMIT)
+              resetResultLimit()
             }}
             aria-label="Borrar búsqueda"
           >
@@ -272,6 +436,47 @@ export default function EntityDirectoryExplorer({ items, initialState = {} }) {
         ))}
       </div>
 
+      {showCalendarFacets ? (
+        <div className={facetStyles.facets} aria-label={`Explorar ${kind === 'image' ? 'imágenes' : 'hermandades'} por categorías`}>
+          <FacetGroup
+            label="Ubicación"
+            hint="Capital y provincia"
+            options={locationOptions}
+            value={locationValue}
+            onChange={changeLocation}
+          />
+          <FacetGroup
+            label="Semana Santa"
+            hint="Día de salida"
+            options={holyWeekOptions}
+            value={holyWeekDay}
+            onChange={changeHolyWeekDay}
+          />
+          <FacetGroup
+            label="Glorias"
+            hint="Mes de salida"
+            options={gloryOptions}
+            value={gloryMonth}
+            onChange={changeGloryMonth}
+          />
+        </div>
+      ) : null}
+
+      {showTypeFacet && typeFacetOptions.length ? (
+        <div className={facetStyles.facets} aria-label={kind === 'band' ? 'Explorar bandas por estilo' : 'Explorar pasos por tipo'}>
+          <FacetGroup
+            label={kind === 'band' ? 'Estilo' : 'Tipo de paso'}
+            hint={kind === 'band' ? 'Formación musical' : 'Tipología procesional'}
+            options={typeFacetOptions}
+            value={subtype}
+            onChange={(value) => {
+              setSubtype(value)
+              resetResultLimit()
+            }}
+          />
+        </div>
+      ) : null}
+
       <div className={styles.toolbar}>
         <div className={styles.resultCopy} aria-live="polite">
           <strong>{filtered.length} {filtered.length === 1 ? 'resultado' : 'resultados'}</strong>
@@ -290,7 +495,7 @@ export default function EntityDirectoryExplorer({ items, initialState = {} }) {
             aria-expanded={filtersOpen}
             aria-controls="entity-directory-filters"
           >
-            Filtros{activeSecondaryFilters ? ` · ${activeSecondaryFilters}` : ''}
+            Más filtros{activeSecondaryFilters ? ` · ${activeSecondaryFilters}` : ''}
             <span aria-hidden="true">{filtersOpen ? '−' : '+'}</span>
           </button>
         </div>
@@ -313,7 +518,8 @@ export default function EntityDirectoryExplorer({ items, initialState = {} }) {
                   aria-pressed={territory === value}
                   onClick={() => {
                     setTerritory(value)
-                    setLimit(DEFAULT_LIMIT)
+                    if (value !== 'todos') setMunicipality('todos')
+                    resetResultLimit()
                   }}
                 >
                   {label}
@@ -328,7 +534,8 @@ export default function EntityDirectoryExplorer({ items, initialState = {} }) {
               value={municipality}
               onChange={(event) => {
                 setMunicipality(event.target.value)
-                setLimit(DEFAULT_LIMIT)
+                if (event.target.value !== 'todos') setTerritory('todos')
+                resetResultLimit()
               }}
             >
               <option value="todos">Todas las localidades</option>
@@ -338,14 +545,14 @@ export default function EntityDirectoryExplorer({ items, initialState = {} }) {
             </select>
           </label>
 
-          {kind !== 'all' && subtypes.length > 1 ? (
+          {kind !== 'all' && !['band', 'step'].includes(kind) && subtypes.length > 1 ? (
             <label className={styles.selectField}>
               <span>Tipología</span>
               <select
                 value={subtype}
                 onChange={(event) => {
                   setSubtype(event.target.value)
-                  setLimit(DEFAULT_LIMIT)
+                  resetResultLimit()
                 }}
               >
                 <option value="todos">Todas las tipologías</option>
@@ -366,7 +573,7 @@ export default function EntityDirectoryExplorer({ items, initialState = {} }) {
                   <span>{counts[section.value] || 0}</span>
                 </div>
                 <button type="button" onClick={() => changeKind(section.value)}>
-                  Ver todas <span aria-hidden="true">→</span>
+                  Explorar <span aria-hidden="true">→</span>
                 </button>
               </div>
               <div className={mobileStyles.mobileSectionList}>
