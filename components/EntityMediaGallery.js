@@ -1,5 +1,13 @@
 import Image from 'next/image';
 
+function isWikimediaUpload(photoSrc = '') {
+  try {
+    return new URL(photoSrc).hostname === 'upload.wikimedia.org';
+  } catch {
+    return false;
+  }
+}
+
 export default function EntityMediaGallery({ items = [], id }) {
   if (!items.length) return null;
 
@@ -20,6 +28,7 @@ export default function EntityMediaGallery({ items = [], id }) {
                   src={item.path}
                   alt={item.alt || item.title || 'Fotografía de detalle'}
                   fill
+                  unoptimized={isWikimediaUpload(item.path)}
                   sizes="(max-width: 700px) calc(100vw - 40px), 520px"
                 />
               </div>
