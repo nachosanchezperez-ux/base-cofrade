@@ -27,10 +27,11 @@ function targetAlt(target, kind) {
   return target.public_image_alt || target.name
 }
 
-function targetLabel(kind, hasImage) {
-  if (kind === 'step') return hasImage ? 'Subir otra como principal' : 'Subir fotografía del Paso'
-  if (kind === 'image') return hasImage ? 'Subir otra como principal' : 'Subir fotografía del Titular'
-  return hasImage ? 'Subir otra imagen principal' : 'Subir imagen del cartel o pieza'
+function targetLabel(kind, { hasCanonicalImage, hasLegacyImage }) {
+  if (hasLegacyImage) return 'Migrar esta imagen al Panel'
+  if (kind === 'step') return hasCanonicalImage ? 'Subir otra como principal' : 'Subir fotografía del Paso'
+  if (kind === 'image') return hasCanonicalImage ? 'Subir otra como principal' : 'Subir fotografía del Titular'
+  return hasCanonicalImage ? 'Subir otra imagen principal' : 'Subir imagen del cartel o pieza'
 }
 
 function MediaTargetCard({ target, kind, brotherhoodId }) {
@@ -62,8 +63,8 @@ function MediaTargetCard({ target, kind, brotherhoodId }) {
         </div>
       </div>
 
-      <details className={mediaStyles.uploadDetails} open={!currentPath}>
-        <summary>{targetLabel(kind, Boolean(currentPath))}<span aria-hidden="true">⌄</span></summary>
+      <details className={mediaStyles.uploadDetails} open={!hasCanonicalImage}>
+        <summary>{targetLabel(kind, { hasCanonicalImage, hasLegacyImage })}<span aria-hidden="true">⌄</span></summary>
         <form action={uploadBrotherhoodRelatedMediaAction} className={mediaStyles.uploadForm}>
           <input type="hidden" name="brotherhood_id" value={brotherhoodId} />
           <input type="hidden" name="entity_id" value={target.id} />
