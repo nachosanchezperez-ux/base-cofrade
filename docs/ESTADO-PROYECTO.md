@@ -4,13 +4,13 @@
 
 ## Baseline observado
 
-- Comprobación: **2026-08-23 15:55 CEST**.
+- Comprobación: **2026-08-23 16:10 CEST**.
 - Repositorio: `nachosanchezperez-ux/base-cofrade`.
 - Rama principal: `main`.
-- `main`: `41bf6e1958401012c5fe72c187538af5a9374427`.
-- Último frente integrado: **#252 · Auditoría e integridad de importaciones relacionales**.
+- `main`: `87905706674edc7857f34325f644eecef8d5a03c`.
+- Último frente integrado: **#254 · Blindaje de la autoridad pública de Home**.
 - Proyecto Vercel: `base-cofrade`.
-- Producción: **READY** en `dpl_9UdAw1S7jhsaXYcXFceW38toFqq4`, alineada con `41bf6e1958401012c5fe72c187538af5a9374427`.
+- Producción: **READY** en `dpl_3VA2DruVaxoVjKggkxUJ99BPVmLH`, alineada con `87905706674edc7857f34325f644eecef8d5a03c`.
 - Supabase: proyecto `Hilocofrade` (`kcevwkucqzcyrqaimyhl`) **ACTIVE_HEALTHY**.
 - Última migración remota verificada: `20260823134318_mass_import_relational_integrity`.
 
@@ -25,7 +25,9 @@ La fase actual prioriza cierre y consolidación. No abrir nuevos frentes estruct
 3. Fichas de Hermandad (#245) → **🟢 CERRADO**.
 4. Limpieza del backlog estructural → **🟢 CERRADO**.
 5. Auditoría de carga masiva / cargas relacionales recientes → **🟢 CERRADO**.
-6. **Arquitectura pública / separación Front ↔ Panel → SIGUIENTE PUNTO ACTIVO**.
+6. **Arquitectura pública / separación Front ↔ Panel → EN CURSO**.
+   - Home → **🟢 CERRADO**.
+   - Hermandades → **SIGUIENTE CORTE**.
 7. Salud del grafo.
 8. Registro y formalización de decisiones HC.
 9. Elegir un único siguiente gran frente.
@@ -95,7 +97,7 @@ No se ha impuesto unicidad global por nombre: existen homónimos legítimos en e
 - Gran Poder: la autoría anónima del Mayor Dolor y Traspaso queda enlazada por `image_authorship_id` real.
 - Pruebas negativas: intentar recrear la Escolanía duplicada o asignar un segundo propietario vigente al paso de la Corona es bloqueado por la base de datos y no deja residuos.
 - CI de #252: **success**.
-- Producción: `dpl_9UdAw1S7jhsaXYcXFceW38toFqq4` **READY** sobre `41bf6e1958401012c5fe72c187538af5a9374427`.
+- Producción funcional de #252: `dpl_9UdAw1S7jhsaXYcXFceW38toFqq4` **READY** sobre `41bf6e1958401012c5fe72c187538af5a9374427`.
 - Runtime tras smoke: sin errores `error`/`fatal` ni clusters de error detectados.
 - Smoke público: San Esteban, Bendición y Esperanza, Gran Poder, Cristo de la Corona y la Escolanía canónica responden correctamente.
 - Rutas legacy `/hermandades/la-corona` y `/bandas/escolania-maria-auxiliadora-sevilla`: **404 real**, como corresponde tras consolidar los duplicados.
@@ -137,14 +139,14 @@ No se declara todavía el importador como transaccional de lote completo: su apl
 - No degradar entidades reales a texto libre cuando existe relación estructurada.
 - Tratar duplicados por identidad contextual, no mediante unicidad global de nombres.
 
-## Punto activo siguiente · Arquitectura pública
+## Punto activo · Arquitectura pública
 
-Con los puntos anteriores cerrados, el siguiente frente único es **separar completamente las lecturas públicas de la sesión/cookie editorial del Panel**.
+El frente único activo es **separar completamente las lecturas públicas de la sesión/cookie editorial del Panel**.
 
 Orden de auditoría:
 
-1. Home.
-2. Hermandades.
+1. Home → **🟢 CERRADO**.
+2. Hermandades → **SIGUIENTE CORTE**.
 3. Imágenes.
 4. Pasos.
 5. Bandas.
@@ -162,7 +164,35 @@ Método por corte pequeño:
 6. smoke público sin sesión;
 7. producción + runtime.
 
-El trabajo ya integrado de #214 sirve como precedente conceptual y como corte existente para Hermandades, pero **no** se debe reabrir su rama antigua ni asumir que el resto de dominios ya cumplen el mismo patrón.
+### Home · cierre verificado
+
+La auditoría de Home confirmó que la arquitectura funcional ya era correcta y no necesitaba una reescritura:
+
+- `app/page.js` entra en datos mediante `getHomeSnapshot()`;
+- la cadena pública de loaders de Home usa `lib/supabase/public-server.js`;
+- `public-server.js` usa `@supabase/supabase-js` + publishable key, sin `@supabase/ssr`, sin `next/headers` y con sesión no persistente;
+- `lib/supabase/server.js` continúa siendo el cliente cookie-aware para contexto editorial/autenticado, pero no forma parte de la cadena de Home;
+- las vistas consumidas por Home (`today_ephemeris_candidates`, `daily_editorial_candidates`, `daily_march_candidates`, `home_knowledge_threads`, `upcoming_extraordinary_outings`, `outing_music_details`, `step_image_history`) tienen `security_invoker=true`;
+- las tablas base consultadas por Home tienen RLS activa y políticas de lectura pública limitadas a contenido publicable/publicado;
+- un smoke SQL con `SET ROLE anon` leyó correctamente entidades, contenidos diarios, hilos, extraordinarias, música de salidas y multimedia.
+
+PR **#254 · Blinda la autoridad pública de Home** → **🟢 FUSIONADA**.
+
+El cambio no reescribe loaders: añade `test/home-public-authority.test.mjs` como barrera de regresión para impedir que Home vuelva a importar el cliente de sesión, `next/headers` o un cliente Supabase distinto del público explícito.
+
+Comprobaciones:
+
+- CI de #254: **success**;
+- preview Vercel: **READY**;
+- `main` tras merge: `87905706674edc7857f34325f644eecef8d5a03c`;
+- producción: `dpl_3VA2DruVaxoVjKggkxUJ99BPVmLH` **READY** y alineada con ese commit;
+- `/`: **HTTP 200** en producción sobre ese deployment;
+- smoke público sin sesión: Tira del hilo, próxima Extraordinaria, `Hoy en Hilo Cofrade`, Últimos hilos y métricas públicas renderizados con datos reales;
+- runtime: sin clusters de error y sin logs `error`/`fatal` en la comprobación posterior.
+
+Conclusión: **HOME · AUTORIDAD PÚBLICA → 🟢 CERRADO**.
+
+El trabajo ya integrado de #214 sirve como precedente conceptual y como corte existente para Hermandades, pero **no** se debe reabrir su rama antigua ni asumir que toda la ruta de Hermandades ya cumple el mismo patrón sin auditar sus loaders actuales.
 
 ## Protocolo de nueva tarea
 
@@ -200,4 +230,4 @@ El trabajo ya integrado de #214 sirve como precedente conceptual y como corte ex
 
 No generar una lluvia de ideas. Refrescar el estado, localizar el punto de la secuencia y devolver una sola acción ejecutable.
 
-**Siguiente acción actual: iniciar el punto de Arquitectura pública auditando Home para detectar cualquier dependencia de sesión/cookies editoriales y, si existe, corregirla mediante cliente público explícito + pruebas + preview + producción.**
+**Siguiente acción actual: auditar Hermandades de extremo a extremo para detectar cualquier loader público que aún dependa de sesión/cookies, partiendo del `main` actual y reutilizando la arquitectura ya integrada de #214 sin reabrir su rama antigua.**
