@@ -1,3 +1,7 @@
+[data-panel-shell] {
+  grid-template-columns: 260px minmax(0, 1fr);
+}
+
 [data-panel-main] {
   font-size: 15px;
 }
@@ -191,15 +195,31 @@
   gap: 10px;
 }
 
+@media (max-width: 1180px) {
+  [data-panel-shell] {
+    grid-template-columns: 224px minmax(0, 1fr);
+  }
+}
+
 @media (max-width: 900px) {
   [data-panel-main] section[aria-label="Cobertura de la extraordinaria"] {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 860px) {
+  [data-panel-shell] {
+    display: block;
+    padding-bottom: 82px;
+  }
+
   [data-panel-main] {
     font-size: 14px;
+  }
+
+  [data-panel-main] [class*="pageWrap"] {
+    width: min(100% - 28px, 760px) !important;
+    padding: 28px 0 56px !important;
   }
 
   [data-panel-main] input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
