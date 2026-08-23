@@ -3,7 +3,11 @@
 import { useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { IMPORTABLE_TABLES, validateBulkImportRecord } from '@/lib/panel/bulk-import-config'
-import { parseBulkImportText, splitImportPayload } from '@/lib/panel/bulk-import-parser'
+import {
+  DEFAULT_IMPORT_CHUNK_BYTES,
+  parseBulkImportText,
+  splitImportPayload,
+} from '@/lib/panel/bulk-import-parser'
 import {
   appendBulkImportItemsAction,
   applyBulkImportChunkAction,
@@ -34,6 +38,26 @@ function statusLabel(status) {
 function formatDate(value) {
   if (!value) return '—'
   return new Intl.DateTimeFormat('es-ES', { dateStyle: 'short', timeStyle: 'short' }).format(new Date(value))
+}
+
+function operationCounts(records = []) {
+  return records.reduce((counts, record) => {
+    const operation = record?.operation === 'upsert' ? 'upsert' : 'insert'
+    counts[operation] += 1
+    return counts
+  }, { insert: 0, upsert: 0 })
+}
+
+function savedOperationCounts(batch) {
+  const counts = batch?.metadata?.operation_counts || {}
+  return {
+    insert: Number(counts.insert) || 0,
+    upsert: Number(counts.upsert) || 0,
+  }
+}
+
+function pendingValidItems(batch) {
+  return Math.max(0, (batch.valid_items || 0) - (batch.applied_items || 0) - (batch.failed_items || 0))
 }
 
 const JSON_EXAMPLE = `{
@@ -81,6 +105,7 @@ export default function ImportWorkspace({ initialImports, canEdit }) {
   const [error, setError] = useState('')
   const [working, setWorking] = useState(false)
   const [progress, setProgress] = useState(null)
+  const [confirmingImportId, setConfirmingImportId] = useState(null)
 
   const tableSummary = useMemo(() => {
     if (!analysis) return []
@@ -122,9 +147,19 @@ export default function ImportWorkspace({ initialImports, canEdit }) {
       })
       if (!parsed.records.length) throw new Error('No se han encontrado registros.')
       const validations = parsed.records.map(validateBulkImportRecord)
+      const records = validations.map((item) => item.record)
       const invalid = validations.filter((item) => item.errors.length)
-      setAnalysis({ ...parsed, records: validations.map((item) => item.record), validations, invalidCount: invalid.length })
-      setMessage(`Análisis terminado: ${parsed.records.length} registros · ${invalid.length} con incidencias de estructura.`)
+      const transportChunks = splitImportPayload(records).length
+      const operations = operationCounts(records)
+      setAnalysis({
+        ...parsed,
+        records,
+        validations,
+        invalidCount: invalid.length,
+        transportChunks,
+        operationCounts: operations,
+      })
+      setMessage(`Análisis terminado: ${parsed.records.length} registros · ${invalid.length} con incidencias de estructura · ${transportChunks} envíos protegidos.`)
     } catch (caught) {
       setAnalysis(null)
       setError(caught instanceof Error ? caught.message : 'No se pudo analizar el contenido.')
@@ -143,7 +178,12 @@ export default function ImportWorkspace({ initialImports, canEdit }) {
         sourceName: sourceName || null,
         sourceFormat: analysis.format,
         expectedItems: analysis.records.length,
-        metadata: { table_counts: Object.fromEntries(tableSummary) },
+        metadata: {
+          table_counts: Object.fromEntries(tableSummary),
+          operation_counts: analysis.operationCounts,
+          transport_chunks: batches.length,
+          transport_max_bytes: DEFAULT_IMPORT_CHUNK_BYTES,
+        },
       })
 
       let offset = 0
@@ -154,7 +194,7 @@ export default function ImportWorkspace({ initialImports, canEdit }) {
       }
       const final = await finalizeBulkImportAction(batch.id)
       setProgress({ phase: 'ready', current: offset, total: analysis.records.length })
-      setMessage(`Lote preparado: ${final.counts.valid_items} válidos · ${final.counts.invalid_items} con incidencias. Revisa el resumen y aplica los registros válidos cuando quieras.`)
+      setMessage(`Lote preparado en ${batches.length} envíos: ${final.counts.valid_items} válidos · ${final.counts.invalid_items} con incidencias. Revisa el resumen antes de confirmar la escritura en el grafo.`)
       router.refresh()
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : 'No se pudo preparar el lote.')
@@ -165,6 +205,7 @@ export default function ImportWorkspace({ initialImports, canEdit }) {
 
   async function applyBatch(importId) {
     if (!canEdit) return
+    setConfirmingImportId(null)
     setWorking(true)
     setError('')
     setMessage('')
@@ -222,6 +263,8 @@ export default function ImportWorkspace({ initialImports, canEdit }) {
     {analysis ? <section className={styles.card}>
       <div className={styles.cardHeading}><div><span className={styles.kicker}>02 · Preflight</span><h2>Vista previa y validación</h2></div><strong className={analysis.invalidCount ? styles.warning : styles.success}>{analysis.records.length - analysis.invalidCount}/{analysis.records.length} válidos</strong></div>
       <div className={styles.summaryGrid}>{tableSummary.slice(0, 8).map(([table, count]) => <div key={table}><span>{table}</span><strong>{count}</strong></div>)}</div>
+      <p className={styles.muted}>Transporte seguro: {analysis.transportChunks} bloque{analysis.transportChunks === 1 ? '' : 's'} · máximo {Math.round(DEFAULT_IMPORT_CHUNK_BYTES / 1000)} KB por envío · {analysis.operationCounts.insert} insert · {analysis.operationCounts.upsert} upsert.</p>
+      {analysis.operationCounts.upsert > 0 ? <div className={styles.warningBox}>{analysis.operationCounts.upsert} registro{analysis.operationCounts.upsert === 1 ? '' : 's'} usa{analysis.operationCounts.upsert === 1 ? '' : 'n'} <code>upsert</code>: al aplicar el lote pueden actualizar filas existentes cuando coincida su clave estable.</div> : null}
       {analysis.invalidCount ? <div className={styles.warningBox}>Los registros inválidos se conservarán en el lote para revisión, pero no se aplicarán. El resto sí podrá importarse.</div> : <div className={styles.successBox}>La estructura del lote es válida. Las restricciones y referencias se volverán a comprobar al aplicar cada registro.</div>}
       <div className={styles.previewList}>{analysis.validations.slice(0, 6).map((item, index) => <article key={index} className={item.errors.length ? styles.previewError : ''}><div><b>#{index + 1}</b><strong>{item.record?.table || 'sin tabla'}</strong><span>{item.record?.operation || '—'}</span></div><code>{JSON.stringify(item.record?.data || {}).slice(0, 320)}</code>{item.errors.length ? <small>{item.errors.join(' ')}</small> : null}</article>)}</div>
       {analysis.records.length > 6 ? <p className={styles.muted}>Se muestran 6 registros de {analysis.records.length}. El lote completo se valida al prepararlo.</p> : null}
@@ -233,14 +276,23 @@ export default function ImportWorkspace({ initialImports, canEdit }) {
 
     <section className={styles.card}>
       <div className={styles.cardHeading}><div><span className={styles.kicker}>03 · Historial</span><h2>Últimos lotes</h2></div><span className={styles.formatPill}>{initialImports.length}</span></div>
-      {initialImports.length ? <div className={styles.historyList}>{initialImports.map((batch) => <article key={batch.id}>
-        <div className={styles.historyMain}><div><strong>{batch.label}</strong><span>{batch.source_name || batch.source_format.toUpperCase()} · {formatDate(batch.created_at)}</span></div><span className={styles.status}>{statusLabel(batch.status)}</span></div>
-        <div className={styles.historyMetrics}><span><b>{batch.staged_items}</b> preparados</span><span><b>{batch.applied_items}</b> aplicados</span><span><b>{batch.invalid_items}</b> inválidos</span><span><b>{batch.failed_items}</b> fallidos</span></div>
-        <div className={styles.actions}>
-          <a className={styles.secondaryButton} style={{ textDecoration: 'none' }} href={`/panel/datos/importar/${batch.id}`}>Ver detalle</a>
-          {canEdit && ['ready', 'processing'].includes(batch.status) && batch.valid_items > batch.applied_items + batch.failed_items ? <button type="button" className={styles.primaryButton} onClick={() => applyBatch(batch.id)} disabled={working}>Aplicar registros válidos</button> : null}
-        </div>
-      </article>)}</div> : <p className={styles.muted}>Todavía no hay importaciones masivas.</p>}
+      {initialImports.length ? <div className={styles.historyList}>{initialImports.map((batch) => {
+        const pending = pendingValidItems(batch)
+        const operations = savedOperationCounts(batch)
+        const canApply = canEdit && ['ready', 'processing'].includes(batch.status) && pending > 0
+        return <article key={batch.id}>
+          <div className={styles.historyMain}><div><strong>{batch.label}</strong><span>{batch.source_name || batch.source_format.toUpperCase()} · {formatDate(batch.created_at)}</span></div><span className={styles.status}>{statusLabel(batch.status)}</span></div>
+          <div className={styles.historyMetrics}><span><b>{batch.staged_items}</b> preparados</span><span><b>{batch.applied_items}</b> aplicados</span><span><b>{batch.invalid_items}</b> inválidos</span><span><b>{batch.failed_items}</b> fallidos</span>{operations.upsert ? <span><b>{operations.upsert}</b> upsert</span> : null}{batch.metadata?.transport_chunks ? <span><b>{batch.metadata.transport_chunks}</b> envíos</span> : null}</div>
+          <div className={styles.actions}>
+            <a className={styles.secondaryButton} style={{ textDecoration: 'none' }} href={`/panel/datos/importar/${batch.id}`}>Ver detalle</a>
+            {canApply && confirmingImportId !== batch.id ? <button type="button" className={styles.primaryButton} onClick={() => setConfirmingImportId(batch.id)} disabled={working}>Revisar y aplicar</button> : null}
+          </div>
+          {canApply && confirmingImportId === batch.id ? <div className={styles.warningBox}>
+            <strong>Confirmación antes de escribir</strong><br />Se aplicarán {pending} registros válidos. {operations.upsert > 0 ? `${operations.upsert} usan upsert y pueden actualizar filas existentes si coincide su clave.` : 'Este lote no registra upserts en sus metadatos.'}
+            <div className={styles.actions}><button type="button" className={styles.secondaryButton} onClick={() => setConfirmingImportId(null)} disabled={working}>Cancelar</button><button type="button" className={styles.primaryButton} onClick={() => applyBatch(batch.id)} disabled={working}>Confirmar aplicación</button></div>
+          </div> : null}
+        </article>
+      })}</div> : <p className={styles.muted}>Todavía no hay importaciones masivas.</p>}
     </section>
 
     <details className={styles.card}>
