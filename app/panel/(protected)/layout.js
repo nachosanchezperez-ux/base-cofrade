@@ -13,7 +13,7 @@ export default async function ProtectedPanelLayout({ children }) {
   const user = await requirePanelUser()
 
   return (
-    <div className={styles.panelShell}>
+    <div className={styles.panelShell} data-panel-shell>
       <PanelNav user={user} />
       <div className={styles.panelMain} data-panel-main>{children}</div>
       <Suspense fallback={null}>
