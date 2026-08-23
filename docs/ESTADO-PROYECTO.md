@@ -4,15 +4,17 @@
 
 ## Baseline observado
 
-- Comprobación: **2026-08-23 16:50 CEST**.
+- Comprobación: **2026-08-23 17:02 CEST**.
 - Repositorio: `nachosanchezperez-ux/base-cofrade`.
 - Rama principal: `main`.
-- `main` funcional: `c577ae24073cbff8a35963101d495437e263988a`.
+- `main`: `932abe7882e12438c97102abb186b606c695a917`.
 - Último frente funcional integrado: **#257 · Completa la autoridad pública relacional de Hermandades**.
+- Último cierre documental integrado: **Registra el cierre de Hermandades públicas**.
 - Proyecto Vercel: `base-cofrade`.
-- Producción funcional: **READY** en `dpl_HJubBDVLcYoBHC46RsF83aSStXdr`, alineada con `c577ae24073cbff8a35963101d495437e263988a`.
-- Supabase: proyecto `Hilocofrade` (`kcevwkucqzcyrqaimyhl`) **ACTIVE_HEALTHY**.
+- Producción: **READY** en `dpl_8nWzAo4yrryQ31aFZ5r6FUXnfchC`, alineada con `932abe7882e12438c97102abb186b606c695a917`.
+- Supabase: proyecto `Hilocofrade` (`kcevwkucqzcyrqaimyhl`) **ACTIVE_HEALTHY** en la última comprobación aplicable.
 - Última migración remota verificada: `20260823134318_mass_import_relational_integrity`.
+- PR abierta estructuralmente relevante: **#49**, antigua, en draft y **APARCADA**; no usar su rama como base técnica.
 
 Antes de cada tarea significativa el Orquestador debe refrescar de nuevo `main`, PR abiertas, Vercel y Supabase cuando proceda. Estos identificadores son un baseline y no referencias permanentes.
 
@@ -31,7 +33,102 @@ Antes de cada tarea significativa el Orquestador debe refrescar de nuevo `main`,
 8. Registro y formalización de decisiones HC.
 9. Elegir un único siguiente gran frente.
 
-No abrir nuevos frentes estructurales fuera de esta secuencia mientras el punto activo no esté cerrado.
+La regla «no abrir nuevos frentes estructurales» se mantiene, pero desde este punto se autoriza trabajo paralelo **no estructural** mediante los carriles definidos a continuación.
+
+## Carriles paralelos autorizados
+
+Hilo Orquestador puede coordinar hasta tres carriles simultáneos siempre que no compartan autoridad técnica ni modifiquen la misma superficie sensible.
+
+### Carril A · Técnico crítico
+
+Responsable principal: **Hilo Tech**, con Hilo Supabase / Datos / QA cuando proceda.
+
+Objetivo actual:
+
+- cerrar **Arquitectura pública** entidad por entidad;
+- orden vigente: Imágenes → Pasos → Bandas → Extraordinarias → Marchas → Personas/agentes.
+
+Este carril tiene **prioridad de bloqueo** sobre la entidad que esté auditando.
+
+Mientras una entidad esté activa en Carril A, ningún otro carril puede modificar sin coordinación explícita:
+
+- sus loaders públicos;
+- RLS o políticas relacionadas;
+- vistas / RPC que formen parte de su lectura pública;
+- contratos o shape de datos consumidos por el Front;
+- rutas públicas de esa entidad;
+- componentes transversales incluidos en la barrera de regresión del corte.
+
+### Carril B · Producto y operación
+
+Responsables habituales: **Hilo Design + Hilo Tech + Hilo Datos**.
+
+Puede avanzar en paralelo sobre:
+
+- Panel de control y su usabilidad;
+- importación masiva **vigente** (`bulk_imports` / `bulk_import_items`);
+- experiencia de validación previa, detección de duplicados y resumen de cambios;
+- mensajes de éxito/error;
+- navegación y responsive del Panel;
+- SEO, diseño o UX que no alteren la autoridad pública de la entidad activa en Carril A.
+
+No puede, mientras Carril A audita una entidad:
+
+- cambiar su loader público;
+- cambiar RLS/esquema/contrato de datos de esa entidad;
+- introducir una segunda fuente de autoridad;
+- reactivar la arquitectura técnica de la PR #49.
+
+Si Carril B descubre que necesita un cambio estructural bloqueado, debe devolverlo al Orquestador y **encolarlo** hasta que Carril A cierre el corte o reordene explícitamente la secuencia.
+
+### Carril C · Contenido y enriquecimiento
+
+Responsable principal: **Hilo Datos**.
+
+Puede avanzar en paralelo con:
+
+- incorporación y enriquecimiento de Hermandades;
+- Imágenes, Pasos, Bandas, capataces y acompañamientos;
+- fuentes y trazabilidad;
+- extraordinarias;
+- patrimonio e históricos;
+- escudos, fotografías, hábitos y media;
+- relaciones del grafo ya soportadas por el modelo vigente.
+
+Debe utilizar exclusivamente el modelo actual y sus writers válidos.
+
+Puede editar datos de una entidad que esté siendo auditada por Carril A **solo si**:
+
+- utiliza campos y relaciones ya existentes;
+- no requiere migración;
+- no cambia RLS;
+- no cambia loaders, contratos ni componentes públicos;
+- preserva IDs, históricos y relaciones canónicas.
+
+Si el contenido revela una carencia de modelo, no improvisar un campo o tabla: elevarla al Orquestador para decidir el momento correcto.
+
+### Regla de coordinación entre carriles
+
+Antes de iniciar una tarea paralela, el Orquestador debe etiquetarla internamente como **A, B o C** y comprobar solape por:
+
+1. archivos;
+2. tablas/vistas/RPC;
+3. contratos de datos;
+4. entidad pública activa;
+5. migraciones;
+6. componentes compartidos.
+
+Si hay solape sensible, gana Carril A y el otro trabajo se reordena.
+
+Si no existe solape sensible, los carriles pueden avanzar simultáneamente y fusionarse de forma independiente sobre el `main` real actualizado.
+
+### Paralelismo vigente ahora
+
+- **Carril A:** Imágenes · auditoría completa de autoridad pública.
+- **Carril B:** subida masiva / operación del Panel, sin cambios de esquema ni autoridad pública de Imágenes.
+- **Carril C:** carga sistemática de contenido, relaciones, fuentes y media usando el modelo vigente.
+
+Esta distribución es la referencia por defecto hasta que el Orquestador cambie el mapa de coordinación.
 
 ## Backlog estructural · cierre
 
@@ -196,7 +293,8 @@ Conclusión: **HERMANDADES · AUTORIDAD PÚBLICA → 🟢 CERRADO**.
 
 - [ ] Leer `docs/HILO-ORQUESTADOR.md` y este registro.
 - [ ] Refrescar `main` y PR abiertas.
-- [ ] Detectar archivos/áreas compartidas.
+- [ ] Identificar el carril de trabajo: A, B o C.
+- [ ] Detectar archivos/áreas compartidas y bloqueos del Carril A.
 - [ ] Comprobar Vercel.
 - [ ] Comprobar Supabase si afecta a datos, RLS o esquema.
 - [ ] Clasificar riesgo y responsable.
@@ -204,6 +302,7 @@ Conclusión: **HERMANDADES · AUTORIDAD PÚBLICA → 🟢 CERRADO**.
 ### Durante
 
 - [ ] Mantener el cambio aislado.
+- [ ] Respetar los límites del carril asignado.
 - [ ] Evitar hardcodes y excepciones por entidad.
 - [ ] Preservar IDs, relaciones e históricos.
 - [ ] No duplicar modelos ni fuentes de autoridad.
@@ -211,6 +310,7 @@ Conclusión: **HERMANDADES · AUTORIDAD PÚBLICA → 🟢 CERRADO**.
 ### Antes de integrar
 
 - [ ] Reconciliar con el `main` real.
+- [ ] Revalidar que otro carril no haya modificado la misma superficie sensible.
 - [ ] Ejecutar pruebas y build.
 - [ ] Revisar preview.
 - [ ] Revisar responsive si hay UI.
@@ -224,6 +324,10 @@ Conclusión: **HERMANDADES · AUTORIDAD PÚBLICA → 🟢 CERRADO**.
 
 ## Regla para «¿Qué toca ahora?»
 
-No generar una lluvia de ideas. Refrescar el estado, localizar el punto de la secuencia y devolver una sola acción ejecutable.
+No generar una lluvia de ideas. Refrescar el estado, localizar el punto de la secuencia y devolver una sola acción ejecutable **por carril activo** cuando exista paralelismo autorizado.
 
-**Siguiente acción actual: auditar Imágenes de extremo a extremo para detectar cualquier loader público que aún dependa de sesión/cookies, verificando RLS/vistas, cliente público explícito, CI, preview, smoke público y runtime antes de dar el corte por cerrado.**
+Acciones actuales:
+
+- **Carril A:** auditar Imágenes de extremo a extremo para detectar cualquier loader público que aún dependa de sesión/cookies, verificando RLS/vistas, cliente público explícito, CI, preview, smoke público y runtime antes de dar el corte por cerrado.
+- **Carril B:** preparar y probar el flujo operativo del importador masivo vigente sin cambiar esquema ni la autoridad pública de Imágenes.
+- **Carril C:** continuar la carga sistemática de contenido y relaciones sobre el modelo vigente, preservando IDs, fuentes e históricos.
