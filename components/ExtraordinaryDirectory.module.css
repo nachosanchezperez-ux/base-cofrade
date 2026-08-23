@@ -96,5 +96,123 @@
 .empty{padding:24px;border:1px dashed #cfdce6;border-radius:16px;background:#f7fafc}
 .empty strong{display:block;color:#123a67;font-size:12px}
 .empty span{display:block;margin-top:4px;color:#74818d;font-size:9px;line-height:1.5}
+@media(min-width:1100px){
+.explorer{gap:22px}
+.filters{padding:12px 14px;gap:10px;border-radius:18px}
+.segmented button{min-height:38px;padding:0 14px;font-size:11px}
+.segmented button small{font-size:9px}
+.yearFilter select{min-height:38px;padding-left:13px;font-size:11px}
+.resultHead strong{font-size:15px}
+.resultHead span{margin-top:3px;font-size:10px}
+.months{gap:42px}
+.monthGroup{grid-template-columns:1fr;gap:14px}
+.monthHeading{position:static;top:auto;padding-top:10px;border-top:3px solid #123a67}
+.monthHeading h3{margin:0;color:#123a67;font-size:15px;letter-spacing:.1em}
+.monthHeading span{width:30px;height:30px;margin:0;font-size:10px}
+.list{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;grid-auto-rows:1fr}
+.card{position:relative;grid-template-columns:86px minmax(0,1fr);gap:18px;align-items:start;min-height:290px;height:100%;padding:20px;border-radius:21px;border-color:#dce5ec;box-shadow:0 10px 28px rgba(18,58,103,.055)}
+.card:hover{transform:translateY(-3px);box-shadow:0 16px 34px rgba(18,58,103,.09)}
+.dateBlock{min-height:96px;border-radius:18px;background:#123a67;color:#fff;box-shadow:0 10px 22px rgba(18,58,103,.17)}
+.dateBlock strong{font-size:39px;line-height:.9}
+.dateBlock span{margin-top:7px;color:#ffd9df;font-size:10px}
+.cardMain{display:flex;flex-direction:column;min-width:0;min-height:250px}
+.cardTopline{order:1;align-items:flex-start;gap:10px}
+.cardTopline>span{padding-top:4px;font-size:10px}
+.cardTopline>small{min-height:26px;padding:0 9px;font-size:8px}
+.card h4{order:2;margin:8px 0 0;font-size:27px;line-height:1.02;letter-spacing:-.042em}
+.organizer{display:none}
+.cardMain>p{order:3;display:-webkit-box;margin:9px 0 0;overflow:hidden;color:#75818d;font-size:13px;line-height:1.45;-webkit-box-orient:vertical;-webkit-line-clamp:2}
+.cardFooter{order:4;display:flex;align-items:center;justify-content:flex-start;gap:10px;margin-top:14px}
+.cardFacts{gap:7px}
+.cardFacts span{min-height:34px;padding:0 11px;border-radius:11px;background:#eef3f7;color:#334b61;font-size:11px;font-weight:700}
+.cardFacts b{margin-right:1px;color:#123a67;font-size:9px;letter-spacing:.05em}
+.signals{display:none}
+.cardMusic{order:5;grid-template-columns:56px minmax(0,1fr);gap:10px;margin-top:14px;padding:13px 0 0;border-top:1px solid #e4eaf0;border-radius:0;background:transparent}
+.cardMusic>span{padding-top:2px;font-size:9px;letter-spacing:.1em}
+.cardMusic>div{display:grid;gap:2px}
+.cardMusic p{display:none}
+.cardMusic p:first-child{display:block}
+.cardMusic p strong{font-size:13px;line-height:1.32}
+.cardMusic p small{margin-top:3px;font-size:10px;line-height:1.35}
+.cardMusic>div:has(p:nth-child(2))::after{content:"Más acompañamientos en la guía";margin-top:4px;color:#7b8894;font-size:10px;font-weight:700}
+.cardDetailLink{order:6;display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:auto;padding-top:14px;border-top:1px solid #e4eaf0;color:#123a67;font-size:14px;font-weight:900}
+.cardDetailLink span{color:#b71f37;font-size:17px}
+}
 @media(max-width:920px){.pageIntro{grid-template-columns:1fr;gap:9px}.featured{grid-template-columns:1fr}.featuredMedia{min-height:390px}.featuredCopy{padding:32px}.explorerHead{grid-template-columns:1fr;gap:8px}.monthGroup{grid-template-columns:1fr;gap:10px}.monthHeading{position:static}.monthHeading h3{margin-top:7px}.filters{top:70px}.cardFooter{display:grid;gap:8px}.signals{justify-content:flex-start}}
-@media(max-width:620px){.page{padding-top:32px}.pageIntro{margin-bottom:16px;padding-bottom:16px}.pageIntro h1{font-size:46px}.pageIntro p{font-size:12px}.directory{gap:30px}.featured{border-radius:21px;min-height:0}.featuredMedia{min-height:305px}.featuredCopy{padding:25px 20px 26px}.featuredCopy h2{font-size:34px}.featuredCopy>p{font-size:11px}.featuredEssentials{grid-template-columns:1fr 92px;margin-top:20px}.featuredEssentials strong{font-size:12px}.featuredMusic{grid-template-columns:1fr;gap:7px;padding:12px 13px}.featuredMusicSpotlight{padding:15px 14px 13px;border-left-width:3px}.featuredMusicSpotlight p{grid-template-columns:27px 1fr;gap:9px;padding:9px 0}.featuredMusicSpotlight p i{width:24px;height:24px;font-size:7px}.featuredMusicSpotlight p strong{font-size:12px}.featuredMusicSpotlight p small{font-size:9px}.featuredDate{right:14px;bottom:14px;width:68px;min-height:74px}.featuredDate strong{font-size:27px}.liveBadge{top:14px;left:14px}.filters{top:66px;margin:0 -4px;padding:8px;gap:6px;overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none}.filters::-webkit-scrollbar,.segmented::-webkit-scrollbar{display:none}.segmented{flex:0 0 auto}.segmented button{min-height:32px;padding:0 10px}.yearFilter{flex:0 0 auto;margin-left:0}.yearFilter select{min-height:32px}.monthGroup{gap:8px}.months{gap:25px}.card{grid-template-columns:55px 1fr;gap:11px;padding:12px}.dateBlock{min-height:62px}.dateBlock strong{font-size:24px}.card h4{font-size:19px}.cardTopline>small{font-size:6px;padding:0 6px}.cardMain>p{font-size:9px}.cardMusic{grid-template-columns:1fr;gap:4px;padding:8px}.cardMusic>div{gap:5px}.cardFacts span{font-size:7px}.signals{display:none}.explorerHead h2{font-size:31px}.explorerHead>p{font-size:10px}}
+@media(max-width:620px){
+.page{padding-top:28px}
+.pageIntro{margin-bottom:16px;padding-bottom:16px}
+.pageIntro h1{font-size:46px}
+.pageIntro p{font-size:13px;line-height:1.55}
+.directory{gap:30px}
+.featured{border-radius:21px;min-height:0}
+.featuredMedia{min-height:305px}
+.featuredCopy{padding:25px 20px 26px}
+.featuredCopy h2{font-size:34px}
+.featuredCopy>p{font-size:12px;line-height:1.55}
+.featuredEssentials{grid-template-columns:1fr 92px;margin-top:20px}
+.featuredEssentials span,.featuredMusic>span{font-size:9px}
+.featuredEssentials strong{font-size:13px}
+.featuredMusic{grid-template-columns:1fr;gap:7px;padding:12px 13px}
+.featuredMusicSpotlight{padding:15px 14px 13px;border-left-width:3px}
+.featuredMusicSpotlight p{grid-template-columns:27px 1fr;gap:9px;padding:9px 0}
+.featuredMusicSpotlight p i{width:24px;height:24px;font-size:8px}
+.featuredMusicSpotlight p strong{font-size:13px}
+.featuredMusicSpotlight p small{font-size:10px}
+.featuredDate{right:14px;bottom:14px;width:68px;min-height:74px}
+.featuredDate strong{font-size:27px}
+.liveBadge{top:14px;left:14px}
+.explorer{gap:13px}
+.explorerHead h2{font-size:31px}
+.explorerHead>p{font-size:11px;line-height:1.5}
+.filters{top:66px;margin:0 -6px;padding:8px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px;overflow:visible;flex-wrap:unset;border-radius:17px}
+.segmented{display:grid;gap:5px;min-width:0}
+.segmented:first-child{grid-template-columns:repeat(2,minmax(0,1fr))}
+.segmented:nth-child(2){grid-column:1/-1;grid-template-columns:repeat(3,minmax(0,1fr))}
+.segmented button{min-height:40px;padding:0 10px;font-size:13px;letter-spacing:-.01em}
+.segmented button small{margin-left:3px;font-size:10px}
+.segmented:nth-child(2) button:nth-child(2){font-size:0}
+.segmented:nth-child(2) button:nth-child(2)::after{content:"Sevilla";font-size:13px}
+.yearFilter{grid-column:2;grid-row:1;margin-left:0}
+.yearFilter select{width:82px;min-height:40px;padding:0 24px 0 9px;font-size:12px}
+.resultHead{align-items:flex-start;padding:4px 2px 0}
+.resultHead strong{font-size:18px;line-height:1.1}
+.resultHead span{margin-top:4px;font-size:12px}
+.resultHead button{font-size:11px}
+.monthGroup{gap:10px}
+.months{gap:28px}
+.monthHeading{padding-top:7px;border-top-width:3px}
+.monthHeading h3{margin-top:7px;font-size:15px;letter-spacing:.08em}
+.monthHeading span{width:30px;height:30px;margin-top:4px;font-size:11px}
+.list{gap:10px}
+.card{position:relative;grid-template-columns:64px minmax(0,1fr);gap:12px;padding:16px 14px 15px;border-radius:20px;border-color:#dce5ec;box-shadow:0 8px 24px rgba(18,58,103,.055)}
+.card:hover{transform:none;box-shadow:0 8px 24px rgba(18,58,103,.055)}
+.dateBlock{min-height:72px;border-radius:16px;background:#123a67;color:#fff;box-shadow:0 8px 18px rgba(18,58,103,.16)}
+.dateBlock strong{font-size:31px;line-height:.9}
+.dateBlock span{margin-top:6px;color:#ffd9df;font-size:10px}
+.cardMain{display:flex;flex-direction:column;min-width:0}
+.cardTopline{order:1;align-items:flex-start;gap:8px}
+.cardTopline>span{padding-top:3px;font-size:12px;letter-spacing:.09em}
+.cardTopline>small{min-height:28px;padding:0 8px;font-size:9px;letter-spacing:.06em}
+.card h4{order:2;margin:6px 0 0;font-size:25px;line-height:1.05;letter-spacing:-.04em}
+.organizer{display:none}
+.cardMain>p{order:3;display:-webkit-box;margin:8px 0 0;overflow:hidden;color:#697886;font-size:13px;line-height:1.42;-webkit-box-orient:vertical;-webkit-line-clamp:2}
+.cardFooter{order:4;display:block;margin-top:12px}
+.cardFacts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.cardFacts span{display:grid;align-content:center;gap:2px;min-height:48px;padding:8px 10px;border-radius:12px;background:#eef3f7;color:#334b61;font-size:13px;font-weight:800;line-height:1.15}
+.cardFacts span:only-child{grid-column:1/-1}
+.cardFacts b{display:block;margin:0;color:#123a67;font-size:9px;letter-spacing:.07em;text-transform:uppercase}
+.signals{display:none}
+.cardMusic{order:5;grid-template-columns:1fr;gap:5px;margin-top:12px;padding:12px 0 0;border-top:1px solid #e4eaf0;border-radius:0;background:transparent}
+.cardMusic>span{display:flex;align-items:center;gap:7px;padding:0;font-size:10px;letter-spacing:.1em}
+.cardMusic>span::before{content:"";width:6px;height:6px;flex:0 0 6px;border-radius:50%;background:#b71f37}
+.cardMusic>div{display:grid;gap:2px}
+.cardMusic p{display:none}
+.cardMusic p:first-child{display:block}
+.cardMusic p strong{font-size:15px;line-height:1.32}
+.cardMusic p small{margin-top:3px;font-size:12px;line-height:1.32}
+.cardMusic>div:has(p:nth-child(2))::after{content:"Más acompañamientos en la guía";margin-top:4px;color:#6f7d8a;font-size:12px;font-weight:700}
+.cardDetailLink{order:6;display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:13px;padding:12px 13px;border:0;border-radius:12px;background:#eef3f7;color:#123a67;font-size:15px;font-weight:900}
+.cardDetailLink:active{background:#e3ebf1}
+.cardDetailLink span{color:#b71f37;font-size:18px}
+}
