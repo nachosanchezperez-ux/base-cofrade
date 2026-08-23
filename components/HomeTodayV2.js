@@ -16,6 +16,7 @@ function CardVisual({ visual }) {
     <div
       className={`${styles.visual} ${photo ? styles.visualPhoto : styles.visualIdentity} ${polishStyles.todayVisual}`}
       title={photo && visual.credit ? visual.credit : undefined}
+      data-home-visual-kind={visual.kind || 'identity'}
     >
       <Image
         src={visual.path}

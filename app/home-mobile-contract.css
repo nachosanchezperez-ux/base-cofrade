@@ -40,16 +40,33 @@
     scroll-snap-align: start;
   }
 
-  /* Hoy: el escudo o logotipo permanece en su columna y no cae bajo el texto. */
+  /*
+   * Hoy: en móvil los escudos y logotipos no aportan información suficiente
+   * para justificar una tercera columna. Las fotografías reales sí se conservan.
+   */
   #hc-app #hoy > .shell > div > article {
     min-height: 0;
   }
 
-  #hc-app #hoy > .shell > div > article:has(> div:nth-of-type(2)) {
+  #hc-app #hoy > .shell > div > article:has(> [data-home-visual-kind="crest"]),
+  #hc-app #hoy > .shell > div > article:has(> [data-home-visual-kind="logo"]),
+  #hc-app #hoy > .shell > div > article:has(> [data-home-visual-kind="context-crest"]),
+  #hc-app #hoy > .shell > div > article:has(> [data-home-visual-kind="identity"]) {
+    grid-template-columns: 34px minmax(0, 1fr);
+  }
+
+  #hc-app #hoy [data-home-visual-kind="crest"],
+  #hc-app #hoy [data-home-visual-kind="logo"],
+  #hc-app #hoy [data-home-visual-kind="context-crest"],
+  #hc-app #hoy [data-home-visual-kind="identity"] {
+    display: none;
+  }
+
+  #hc-app #hoy > .shell > div > article:has(> [data-home-visual-kind="photo"]) {
     grid-template-columns: 34px minmax(0, 1fr) 58px;
   }
 
-  #hc-app #hoy > .shell > div > article:has(> div:nth-of-type(2)) > div:nth-of-type(2) {
+  #hc-app #hoy [data-home-visual-kind="photo"] {
     grid-column: 3;
     grid-row: 1;
     align-self: start;
@@ -65,6 +82,41 @@
     overflow: hidden;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
+  }
+
+  /*
+   * Enciclopedia: el dato principal es la cifra. El sustantivo completo queda
+   * disponible para lectores de pantalla, pero no fuerza píldoras de dos líneas.
+   */
+  #hc-app #enciclopedia [data-home-count-label] {
+    display: none;
+  }
+
+  #hc-app #enciclopedia span:has(> [data-home-count-label]) {
+    min-width: 34px;
+    max-width: none;
+    padding: 5px 8px;
+    white-space: nowrap;
+    text-align: center;
+    line-height: 1;
+  }
+
+  #hc-app #enciclopedia span:has(> [data-home-count-label]) > strong {
+    font-size: 10px;
+    font-weight: 800;
+  }
+
+  #hc-app #enciclopedia > .shell > div > a p {
+    display: -webkit-box;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  #hc-app #enciclopedia > .shell > div > a h3,
+  #hc-app #enciclopedia > .shell > div > a span {
+    overflow-wrap: anywhere;
   }
 
   /*
