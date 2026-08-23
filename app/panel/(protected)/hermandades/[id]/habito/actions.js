@@ -80,8 +80,9 @@ async function refresh(supabase, brotherhoodId) {
   if (entity.slug) revalidatePath(`/hermandades/${entity.slug}`)
 }
 
-function redirectSaved(brotherhoodId, saved) {
-  redirect(`/panel/hermandades/${brotherhoodId}/habito?saved=${saved}`)
+function redirectSaved(brotherhoodId, saved, anchor = '') {
+  const hash = anchor ? `#${anchor}` : ''
+  redirect(`/panel/hermandades/${brotherhoodId}/habito?saved=${saved}${hash}`)
 }
 
 function storagePathFromPublicUrl(publicUrl = '') {
@@ -127,7 +128,7 @@ export async function saveBrotherhoodHabitAction(formData) {
     changed_fields: payload,
   })
   await refresh(supabase, brotherhoodId)
-  redirectSaved(brotherhoodId, habitId ? 'updated' : 'created')
+  redirectSaved(brotherhoodId, habitId ? 'updated' : 'created', `habit-${saved.id}`)
 }
 
 export async function archiveBrotherhoodHabitAction(formData) {
@@ -141,7 +142,7 @@ export async function archiveBrotherhoodHabitAction(formData) {
   )
   await audit(supabase, user, { action_type: 'archive', object_type: 'brotherhood_habit', object_id: saved.id, entity_id: brotherhoodId, summary: `Hábito archivado: ${saved.name}` })
   await refresh(supabase, brotherhoodId)
-  redirectSaved(brotherhoodId, 'archived')
+  redirectSaved(brotherhoodId, 'archived', 'habitos')
 }
 
 export async function uploadBrotherhoodHabitImageAction(formData) {
@@ -187,5 +188,5 @@ export async function uploadBrotherhoodHabitImageAction(formData) {
     changed_fields: { image_path: publicUrl, image_alt: imageAlt },
   })
   await refresh(supabase, brotherhoodId)
-  redirectSaved(brotherhoodId, 'image')
+  redirectSaved(brotherhoodId, 'image', `habit-${habitId}`)
 }
