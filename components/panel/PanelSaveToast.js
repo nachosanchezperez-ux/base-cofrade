@@ -24,12 +24,14 @@ export default function PanelSaveToast() {
     .map((key) => `${key}:${searchParams.get(key) || ''}`)
     .filter((value) => !value.endsWith(':'))
     .join('|')
+  const fallbackMessage = defaultMessage(searchParams)
 
   useEffect(() => {
     if (!feedbackSignal) return undefined
 
     const seen = new WeakSet()
     let fallbackTimer = null
+    let animationFrame = null
 
     function showToast(nextMessage) {
       if (!nextMessage) return
@@ -55,19 +57,20 @@ export default function PanelSaveToast() {
     const observer = new MutationObserver(() => scanForPageNotice())
     observer.observe(document.body, { childList: true, subtree: true })
 
-    requestAnimationFrame(() => {
+    animationFrame = requestAnimationFrame(() => {
       if (!scanForPageNotice()) {
         fallbackTimer = window.setTimeout(() => {
-          if (!scanForPageNotice()) showToast(defaultMessage(searchParams))
+          if (!scanForPageNotice()) showToast(fallbackMessage)
         }, 80)
       }
     })
 
     return () => {
       observer.disconnect()
+      cancelAnimationFrame(animationFrame)
       window.clearTimeout(fallbackTimer)
     }
-  }, [pathname, feedbackSignal, searchParams])
+  }, [pathname, feedbackSignal, fallbackMessage])
 
   useEffect(() => () => window.clearTimeout(hideTimer.current), [])
 
