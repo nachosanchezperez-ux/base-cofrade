@@ -1,0 +1,135 @@
+.facets {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid #e0e7ec;
+  border-radius: 18px;
+  background: #f8fafb;
+}
+
+.facetGroup {
+  display: grid;
+  grid-template-columns: 132px minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.facetGroup + .facetGroup {
+  padding-top: 10px;
+  border-top: 1px solid #e5ebef;
+}
+
+.facetLabel {
+  display: grid;
+  gap: 2px;
+}
+
+.facetLabel strong {
+  color: #123a67;
+  font-size: 11px;
+  line-height: 1.2;
+}
+
+.facetLabel span {
+  color: #8a96a0;
+  font-size: 8px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.pills {
+  display: flex;
+  gap: 6px;
+  min-width: 0;
+  overflow-x: auto;
+  padding: 2px 1px 4px;
+  scrollbar-width: none;
+}
+
+.pills::-webkit-scrollbar {
+  display: none;
+}
+
+.pill {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 0 11px;
+  border: 1px solid #d9e2e8;
+  border-radius: 999px;
+  background: #fff;
+  color: #455b6d;
+  font: inherit;
+  font-size: 9px;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.pill small {
+  color: #9aa5ae;
+  font-size: 8px;
+  font-weight: 800;
+}
+
+.active {
+  border-color: #123a67;
+  background: #123a67;
+  color: #fff;
+}
+
+.active small {
+  color: #dce7f0;
+}
+
+@media (max-width: 760px) {
+  .facets {
+    gap: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+  }
+
+  .facetGroup {
+    grid-template-columns: 1fr;
+    gap: 7px;
+    padding: 12px 0;
+    border-bottom: 1px solid #e4eaee;
+  }
+
+  .facetGroup + .facetGroup {
+    padding-top: 12px;
+    border-top: 0;
+  }
+
+  .facetLabel {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 0 1px;
+  }
+
+  .facetLabel strong {
+    font-size: 13px;
+  }
+
+  .facetLabel span {
+    font-size: 9px;
+  }
+
+  .pills {
+    margin-right: -18px;
+    padding-right: 18px;
+  }
+
+  .pill {
+    min-height: 40px;
+    padding: 0 12px;
+    font-size: 10px;
+  }
+}
