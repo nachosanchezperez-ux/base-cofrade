@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import styles from './HomeExploreV2.module.css'
 
@@ -10,50 +9,11 @@ function countLabel(item) {
   return String(item.count)
 }
 
-const marks = {
-  brotherhood: 'H',
-  image: 'I',
-  step: 'P',
-  band: 'B',
-}
-
-function isSvg(path = '') {
-  return String(path).toLowerCase().endsWith('.svg')
-}
-
-function DirectoryVisual({ item }) {
-  const spotlight = item.spotlight
-  const visual = spotlight?.visual
-  if (!visual?.path) return null
-  const photo = visual.kind === 'photo'
-  const secondary = visual.kind === 'context-crest' && visual.contextName
-    ? visual.contextName
-    : photo && visual.credit
-      ? visual.credit
-      : ''
-
-  return (
-    <div className={`${styles.visual} ${photo ? styles.visualPhoto : styles.visualIdentity}`}>
-      <Image
-        src={visual.path}
-        alt={visual.alt || ''}
-        fill
-        sizes="(max-width: 859px) calc(100vw - 36px), 360px"
-        className={photo ? styles.visualPhotoImage : styles.visualIdentityImage}
-        style={photo && visual.focusPosition ? { objectPosition: visual.focusPosition } : undefined}
-        unoptimized={isSvg(visual.path)}
-      />
-      <div className={styles.visualTopline}>
-        <span className={styles.mark} aria-hidden="true">{marks[item.key] || '·'}</span>
-        <span className={styles.count}>{countLabel(item)}</span>
-      </div>
-      <div className={styles.visualCaption}>
-        <span>Ahora en el hilo</span>
-        <strong>{spotlight.name}</strong>
-        {secondary ? <small>{secondary}</small> : null}
-      </div>
-    </div>
-  )
+const directoryOrder = {
+  brotherhood: '01',
+  image: '02',
+  step: '03',
+  band: '04',
 }
 
 export default function HomeExploreV2({ stats }) {
@@ -66,23 +26,23 @@ export default function HomeExploreV2({ stats }) {
         <header className={styles.header}>
           <span className={styles.eyebrow}>Enciclopedia</span>
           <h2>Entra por donde quieras</h2>
-          <p>Cuatro grandes puertas para empezar. El resto del conocimiento aparece al tirar del hilo dentro de cada ficha.</p>
+          <p>Cuatro puertas para empezar a recorrer Hilo Cofrade. Cada directorio abre después sus relaciones con imágenes, pasos, música, autores y patrimonio.</p>
         </header>
 
         <div className={styles.grid}>
           {directories.map((item) => (
-            <Link className={`${styles.card} ${item.spotlight?.visual?.path ? styles.cardVisual : ''}`} href={item.href} key={item.key}>
-              <DirectoryVisual item={item} />
-              {!item.spotlight?.visual?.path ? (
-                <div className={styles.cardTop}>
-                  <span className={styles.mark} aria-hidden="true">{marks[item.key] || '·'}</span>
-                  <span className={styles.count}>{countLabel(item)}</span>
-                </div>
-              ) : null}
+            <Link className={styles.card} href={item.href} key={item.key}>
+              <div className={styles.cardTop}>
+                <span className={styles.sequence}>{directoryOrder[item.key] || '·'}</span>
+                <span className={styles.count}>{countLabel(item)}</span>
+              </div>
               <div className={styles.cardBody}>
                 <h3>{item.label}</h3>
                 <p>{item.detail}</p>
-                <span className={styles.cta}>Explorar {item.label.toLowerCase()} →</span>
+                <span className={styles.cta}>
+                  <span>Explorar {item.label.toLowerCase()}</span>
+                  <b aria-hidden="true">→</b>
+                </span>
               </div>
             </Link>
           ))}
