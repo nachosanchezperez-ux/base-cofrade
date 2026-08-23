@@ -151,7 +151,7 @@ export async function saveExtraordinaryImageAction(formData) {
   })
 
   refresh(outing)
-  redirect(`/panel/extraordinarias/${outing.id}?saved=image`)
+  redirect(`/panel/extraordinarias/${outing.id}?saved=image#fotografia`)
 }
 
 export async function removeExtraordinaryImageAction(formData) {
@@ -181,7 +181,7 @@ export async function removeExtraordinaryImageAction(formData) {
   })
 
   refresh(outing)
-  redirect(`/panel/extraordinarias/${outing.id}?saved=removed`)
+  redirect(`/panel/extraordinarias/${outing.id}?saved=removed#fotografia`)
 }
 
 export async function saveOutingMediaAction(formData) {
@@ -297,7 +297,7 @@ export async function saveOutingMediaAction(formData) {
   })
 
   refresh(outing)
-  redirect(`/panel/extraordinarias/${outing.id}?saved=${role}`)
+  redirect(`/panel/extraordinarias/${outing.id}?saved=${role}#${role === 'poster' ? 'cartel' : 'galeria'}`)
 }
 
 export async function removeOutingMediaAction(formData) {
@@ -329,5 +329,5 @@ export async function removeOutingMediaAction(formData) {
   })
 
   refresh(outing)
-  redirect(`/panel/extraordinarias/${outing.id}?saved=media-removed`)
+  redirect(`/panel/extraordinarias/${outing.id}?saved=media-removed#${current.data.role === 'poster' ? 'cartel' : 'galeria'}`)
 }

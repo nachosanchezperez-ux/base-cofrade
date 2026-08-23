@@ -50,7 +50,14 @@ function returnPath(formData) {
   if (!candidate.startsWith('/panel/') || candidate.includes('://') || candidate.includes('\\')) {
     throw new Error('Ruta de retorno no válida.')
   }
-  return candidate.split('?')[0]
+
+  const [rawPath, rawHash = ''] = candidate.split('#', 2)
+  const path = rawPath.split('?')[0]
+  const hash = rawHash.replace(/[^a-zA-Z0-9_-]/g, '')
+  return {
+    path,
+    href: hash ? `${path}#${hash}` : path,
+  }
 }
 
 function assertRow(result, label) {
@@ -93,7 +100,7 @@ async function audit(supabase, user, entry) {
 }
 
 function refresh(returnTo) {
-  revalidatePath(returnTo)
+  revalidatePath(returnTo.path)
   revalidatePath('/panel/fuentes')
   revalidatePath('/')
 }
@@ -177,7 +184,7 @@ export async function linkRelationSourceAction(formData) {
   }
 
   refresh(returnTo)
-  redirect(returnTo)
+  redirect(returnTo.href)
 }
 
 export async function unlinkRelationSourceAction(formData) {
@@ -212,5 +219,5 @@ export async function unlinkRelationSourceAction(formData) {
   })
 
   refresh(returnTo)
-  redirect(returnTo)
+  redirect(returnTo.href)
 }

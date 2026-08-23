@@ -63,7 +63,7 @@ export default function EntityWorkspaceNav({ eyebrow = 'Espacio de trabajo', des
   ].filter(Boolean).join(' ')
 
   return (
-    <section className={styles.shell} aria-label="Navegación de la ficha">
+    <section className={styles.shell} aria-label="Navegación de la ficha" data-panel-workspace-nav>
       <div className={styles.copy}>
         <span>{eyebrow}</span>
         {description ? <p>{description}</p> : null}
