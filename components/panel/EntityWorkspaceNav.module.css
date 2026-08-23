@@ -3,43 +3,31 @@
   z-index: 18;
   top: 10px;
   display: grid;
-  grid-template-columns: minmax(210px, .31fr) minmax(0, 1fr);
+  grid-template-columns: minmax(210px, .3fr) minmax(0, 1fr);
   align-items: center;
-  gap: 16px;
+  gap: 14px;
   width: min(1180px, calc(100% - 56px));
   margin: 22px auto -10px;
-  padding: 12px;
+  padding: 12px 14px;
   border: 1px solid var(--panel-line);
   border-radius: 16px;
-  background: rgb(255 255 255 / 95%);
+  background: rgb(255 255 255 / 96%);
   box-shadow: 0 14px 34px rgb(15 39 66 / 8%);
   backdrop-filter: blur(16px);
-}
-
-.dense {
-  grid-template-columns: 1fr;
-  gap: 9px;
 }
 
 .copy {
   display: grid;
   gap: 4px;
   min-width: 0;
-  padding: 0 7px;
-}
-
-.dense .copy {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
+  padding: 0 5px;
 }
 
 .copy > span {
-  flex: 0 0 auto;
   color: var(--panel-red);
   font-size: 10px;
   font-weight: 850;
-  letter-spacing: .16em;
+  letter-spacing: .15em;
   text-transform: uppercase;
 }
 
@@ -53,10 +41,6 @@
   white-space: nowrap;
 }
 
-.dense .copy p {
-  flex: 1;
-}
-
 .navFrame {
   position: relative;
   min-width: 0;
@@ -64,99 +48,82 @@
 
 .nav {
   display: flex;
-  gap: 6px;
+  gap: 4px;
   min-width: 0;
   padding: 2px;
   overflow-x: auto;
   overscroll-behavior-inline: contain;
   scroll-behavior: smooth;
-  scroll-padding-inline: 44px;
+  scroll-padding-inline: 40px;
   scrollbar-width: none;
   transition: padding .16s ease;
   -webkit-overflow-scrolling: touch;
 }
 
-.hasLeft { padding-left: 38px; }
-.hasRight { padding-right: 38px; }
+.hasLeft { padding-left: 36px; }
+.hasRight { padding-right: 36px; }
 
 .nav::-webkit-scrollbar { display: none; }
 
 .link {
+  position: relative;
   display: inline-flex;
   flex: 0 0 auto;
   align-items: center;
-  gap: 8px;
   min-height: 42px;
   padding: 0 12px;
   border: 1px solid transparent;
-  border-radius: 10px;
-  color: var(--panel-muted);
+  border-radius: 9px;
+  color: #68788a;
   background: transparent;
-  font-size: 11.5px;
+  font-size: 12.5px;
   text-decoration: none;
   transition: border-color .16s ease, background .16s ease, color .16s ease, box-shadow .16s ease;
 }
 
+.link strong {
+  font-size: inherit;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
 .link:hover,
 .link:focus-visible {
-  border-color: var(--panel-line);
+  border-color: #e0e8ef;
   outline: none;
   color: var(--panel-blue);
-  background: var(--panel-soft);
+  background: #f7fafc;
 }
 
 .link:focus-visible {
   box-shadow: 0 0 0 3px rgb(18 58 103 / 10%);
 }
 
-.link > span {
-  display: grid;
-  width: 24px;
-  height: 24px;
-  flex: 0 0 24px;
-  place-items: center;
-  border-radius: 7px;
-  color: var(--panel-blue);
-  background: #edf3f8;
-  font-size: 9px;
-  font-weight: 900;
-  line-height: 1;
-}
-
-.link strong {
-  font-size: inherit;
-  font-weight: 800;
-  white-space: nowrap;
-}
-
 .active {
-  border-color: rgb(18 58 103 / 16%);
-  color: var(--panel-blue);
-  background: #edf4fa;
-  box-shadow: inset 0 -2px 0 var(--panel-blue);
+  border-color: #d4e0ea;
+  color: var(--panel-navy);
+  background: #eef4f8;
+  box-shadow: inset 0 -3px 0 var(--panel-blue);
 }
 
-.active > span {
-  color: #fff;
-  background: var(--panel-blue);
+.active strong {
+  font-weight: 850;
 }
 
 .tool {
-  border-color: #e7dce0;
-  color: #7d4350;
-  background: #fbf5f6;
-}
-
-.tool > span {
-  color: #8f3043;
-  background: #f5e5e9;
+  color: #7b5260;
 }
 
 .tool:hover,
-.tool:focus-visible {
-  border-color: #dcbcc4;
-  color: #8f3043;
-  background: #fbf1f3;
+.tool:focus-visible,
+.tool.active {
+  color: #7b3041;
+  background: #fbf6f7;
+}
+
+.tool.active {
+  border-color: #ead9de;
+  box-shadow: inset 0 -3px 0 #8f3043;
 }
 
 .scrollButton {
@@ -164,22 +131,22 @@
   z-index: 3;
   top: 50%;
   display: grid;
-  width: 32px;
+  width: 30px;
   height: 36px;
   padding: 0;
   place-items: center;
   transform: translateY(-50%);
   border: 1px solid #d5e0e9;
-  border-radius: 10px;
+  border-radius: 9px;
   color: var(--panel-blue);
-  background: rgb(255 255 255 / 97%);
-  box-shadow: 0 6px 18px rgb(15 39 66 / 14%);
+  background: rgb(255 255 255 / 98%);
+  box-shadow: 0 6px 16px rgb(15 39 66 / 13%);
   cursor: pointer;
 }
 
 .scrollButton span {
   transform: translateY(-1px);
-  font-size: 23px;
+  font-size: 22px;
   font-weight: 600;
   line-height: 1;
 }
@@ -219,7 +186,7 @@
     width: min(100% - 28px, 680px);
     margin-top: 12px;
     margin-bottom: -14px;
-    padding: 9px;
+    padding: 8px;
     border-radius: 13px;
   }
 
@@ -230,22 +197,15 @@
   .nav,
   .hasLeft,
   .hasRight {
-    gap: 5px;
+    gap: 3px;
     padding: 2px;
     scroll-padding-inline: 12px;
   }
 
   .link {
-    min-height: 38px;
-    padding: 0 10px;
-    font-size: 11px;
-  }
-
-  .link > span {
-    width: 22px;
-    height: 22px;
-    flex-basis: 22px;
-    font-size: 8px;
+    min-height: 40px;
+    padding: 0 11px;
+    font-size: 12px;
   }
 
   .scrollButton {
