@@ -13,7 +13,7 @@ test('Salud amplía la completitud sin exigir multimedia genérica', () => {
   assert.match(health, /key: 'brotherhood-crest'/)
   assert.match(health, /key: 'brotherhood-image-link'/)
   assert.match(health, /key: 'image-profile'/)
-  assert.match(health, /key: 'image-brotherhood'/)
+  assert.match(health, /key: 'image-context'/)
   assert.match(health, /key: 'step-profile'/)
   assert.match(health, /key: 'step-brotherhood'/)
   assert.match(health, /key: 'step-image'/)
@@ -27,6 +27,16 @@ test('Salud amplía la completitud sin exigir multimedia genérica', () => {
   assert.doesNotMatch(health, /hero_image_path/)
   assert.doesNotMatch(health, /key: 'step-media'/)
   assert.doesNotMatch(health, /key: 'band-media'/)
+})
+
+test('Salud reconoce Hermandad directa o a través de un Paso', () => {
+  const health = source('lib/panel/data-health.js')
+
+  assert.match(health, /const imageWithBrotherhoodContextIds = new Set\(brotherhoodImages/)
+  assert.match(health, /for \(const relation of imageSteps\)/)
+  assert.match(health, /stepWithBrotherhoodIds\.has\(relation\.step_entity_id\)/)
+  assert.match(health, /imageWithBrotherhoodContextIds\.add\(relation\.image_entity_id\)/)
+  assert.doesNotMatch(health, /key: 'image-brotherhood'/)
 })
 
 test('Salud agrupa campos editoriales para evitar una incidencia por campo', () => {
