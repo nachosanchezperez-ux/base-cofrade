@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import CofradeTypeBadges from '@/components/CofradeTypeBadges'
 import { displayName, localityLabel } from '@/lib/brotherhood-directory'
+import contractStyles from './DirectoryCardContract.module.css'
 import styles from './HermandadesDirectory.module.css'
 import enhancementStyles from './HermandadesDirectoryEnhancements.module.css'
 
@@ -18,23 +19,23 @@ export default function BrotherhoodDirectoryCard({ hermandad, contextLabel }) {
   const placeLabel = [localityLabel(hermandad), hermandad.barrio].filter(Boolean).join(' · ')
 
   return (
-    <Link href={`/hermandades/${hermandad.slug}`} className={styles.item}>
-      <span className={styles.crestWrap}>
+    <Link href={`/hermandades/${hermandad.slug}`} className={`${styles.item} ${contractStyles.contract}`}>
+      <span className={`${styles.crestWrap} ${contractStyles.media}`}>
         {crest ? (
           <Image
             className={styles.crestImage}
             src={crest}
             alt={`Escudo de ${name}`}
-            width={76}
-            height={96}
-            sizes="76px"
+            width={72}
+            height={92}
+            sizes="(max-width: 620px) 58px, 72px"
           />
         ) : (
           <span className={styles.monogram}>{name.slice(0, 2).toUpperCase()}</span>
         )}
       </span>
 
-      <span className={styles.itemMain}>
+      <span className={`${styles.itemMain} ${contractStyles.copy}`}>
         <strong className={styles.name}>{name}</strong>
         {contextLabel || hermandad.diaSalida ? (
           <span className={`${styles.context} ${enhancementStyles.contextAfterName}`}>{contextLabel || hermandad.diaSalida}</span>
@@ -46,7 +47,7 @@ export default function BrotherhoodDirectoryCard({ hermandad, contextLabel }) {
         </span>
       </span>
 
-      <span className={styles.arrow} aria-hidden="true">→</span>
+      <span className={`${styles.arrow} ${contractStyles.action}`} aria-hidden="true">→</span>
     </Link>
   )
 }
