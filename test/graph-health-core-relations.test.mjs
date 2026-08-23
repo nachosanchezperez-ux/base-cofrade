@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 import { readFile } from 'node:fs/promises'
 
-const MIGRATION_PATH = '../supabase/migrations/20260824001500_guard_core_public_relations.sql'
+const MIGRATION_PATH = '../supabase/migrations/20260823230534_guard_core_public_relations.sql'
 
 async function migrationSource() {
   return readFile(new URL(MIGRATION_PATH, import.meta.url), 'utf8')
