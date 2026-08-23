@@ -72,8 +72,12 @@
   scroll-behavior: smooth;
   scroll-padding-inline: 44px;
   scrollbar-width: none;
+  transition: padding .16s ease;
   -webkit-overflow-scrolling: touch;
 }
+
+.hasLeft { padding-left: 38px; }
+.hasRight { padding-right: 38px; }
 
 .nav::-webkit-scrollbar { display: none; }
 
@@ -223,8 +227,11 @@
     display: none;
   }
 
-  .nav {
+  .nav,
+  .hasLeft,
+  .hasRight {
     gap: 5px;
+    padding: 2px;
     scroll-padding-inline: 12px;
   }
 
