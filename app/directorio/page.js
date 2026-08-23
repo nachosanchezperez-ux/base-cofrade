@@ -2,6 +2,7 @@ import EntityDirectoryExplorer from '@/components/EntityDirectoryExplorer'
 import JsonLd from '@/components/JsonLd'
 import { getPublicEntityDirectory } from '@/lib/supabase/public-entity-directory'
 import { absoluteUrl, breadcrumbJsonLd, socialMetadata } from '@/lib/seo'
+import styles from './directorio.module.css'
 
 export const dynamic = 'force-dynamic'
 
@@ -88,7 +89,7 @@ export default async function DirectorioPage({ searchParams }) {
   }
 
   return (
-    <section className="section page-top">
+    <section className={`section page-top ${styles.page}`}>
       <JsonLd data={breadcrumbJsonLd([
         { name: 'Inicio', path: '/' },
         { name: 'Directorio', path: '/directorio' },
