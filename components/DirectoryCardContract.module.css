@@ -1,0 +1,22 @@
+.contract {
+  --hc-directory-media-column: 82px;
+  --hc-directory-media-width: 72px;
+  --hc-directory-media-height: 92px;
+  --hc-directory-card-gap: 17px;
+  --hc-directory-card-padding-y: 18px;
+  --hc-directory-card-padding-x: 20px;
+  --hc-directory-arrow-size: 21px;
+  min-width: 0;
+}
+
+@media (max-width: 620px) {
+  .contract {
+    --hc-directory-media-column: 64px;
+    --hc-directory-media-width: 58px;
+    --hc-directory-media-height: 76px;
+    --hc-directory-card-gap: 12px;
+    --hc-directory-card-padding-y: 14px;
+    --hc-directory-card-padding-x: 13px;
+    --hc-directory-arrow-size: 20px;
+  }
+}
