@@ -1,248 +1,169 @@
 # Estado operativo de Hilo Cofrade
 
-> Registro vivo para Hilo Orquestador. GitHub, Vercel y Supabase son la fuente de verdad. Este documento guarda el último baseline observado y las decisiones de coordinación activas; si existe discrepancia, prevalece siempre el estado real de las herramientas.
+> Registro vivo para Hilo Orquestador. GitHub, Vercel y Supabase son la fuente de verdad. Si existe discrepancia, prevalece siempre el estado real de las herramientas.
 
 ## Baseline observado
 
-- Comprobación: **2026-08-23 12:46 CEST**
+- Comprobación: **2026-08-23 13:02 CEST**
 - Repositorio: `nachosanchezperez-ux/base-cofrade`
 - Rama principal: `main`
-- `main`: `1c6a4a7cd9c963c4afab96022ccc9af6f21f5947`
-- Último cambio integrado: **#245 · Correcciones varias de fichas de Hermandad**
-- #242 · Directorio unificado: **fusionada** antes de #245.
+- `main`: `eb9894d585e756f462a6777c2db652fea5144f9a`
+- Último frente integrado: **#214 · Autoridad pública de Hermandades**
+- #242 · Directorio unificado: **fusionada**.
+- #245 · Fichas de Hermandad: **fusionada**.
 - Proyecto Vercel: `base-cofrade`
-- Producción: **READY** sobre `1c6a4a7cd9c963c4afab96022ccc9af6f21f5947`
-- Supabase: proyecto `Hilocofrade` (`kcevwkucqzcyrqaimyhl`) **ACTIVE_HEALTHY**.
+- Producción: **READY** sobre `eb9894d585e756f462a6777c2db652fea5144f9a`.
+- Supabase: proyecto `Hilocofrade` (`kcevwkucqzcyrqaimyhl`) **ACTIVE_HEALTHY** en la última comprobación.
 
-El SHA anterior no pretende ser permanente. Antes de actuar, el Orquestador debe consultar de nuevo `main` y tomar el SHA real como nueva referencia operativa.
+Antes de cada tarea significativa el Orquestador debe refrescar de nuevo `main`, PR abiertas, Vercel y Supabase cuando proceda. Este SHA es un baseline, no una referencia permanente.
 
-## Regla de uso
+## Secuencia de Dirección activa
 
-Antes de una tarea significativa:
+La fase actual prioriza cierre y consolidación. No abrir nuevos frentes estructurales fuera de esta secuencia.
 
-1. refrescar `main`;
-2. consultar PR abiertas;
-3. identificar archivos o áreas compartidas;
-4. comprobar Vercel;
-5. comprobar Supabase/migraciones si la tarea toca datos;
-6. clasificar riesgo y decidir secuencia de trabajo.
+1. Smoke transversal de producción → **🟢 CERRADO**.
+2. #242 · Directorio unificado → **🟢 CERRADO**.
+3. #245 · Fichas de Hermandad → **🟢 CERRADO**.
+4. Limpieza del backlog estructural → **EN CURSO**.
+5. Auditoría de carga masiva → bloqueada hasta cerrar el punto 4.
+6. Arquitectura pública → después del punto 4 y de la auditoría de carga, salvo los cortes antiguos ya clasificados dentro de la limpieza.
+7. Salud del grafo.
+8. Formalizar decisiones HC.
+9. Elegir un único siguiente gran frente.
 
-Al terminar una tarea que cambie ramas, PR, migraciones, bloqueos o producción, actualizar este registro solo si la información modifica decisiones futuras.
+## Backlog estructural · estado actual
 
-## Auditoría del backlog · 2026-08-23
+Estados operativos:
 
-Estados operativos usados en esta limpieza:
+- **🟢 FUSIONAR**: línea vigente; reconciliar con `main`, probar, preview y smoke antes de integrar.
+- **🔵 RECONSTRUIR**: intención válida, rama desfasada; rehacer sobre `main` preservando la arquitectura actual.
+- **⚪ APARCAR**: trabajo válido pero no pertenece al cierre actual o tiene prerrequisitos pendientes.
+- **⚫ CERRAR POR SUPERADO**: objetivo ya absorbido o sustituido.
 
-- **🟢 FUSIONAR**: la línea sigue vigente y no requiere reconstrucción conceptual. Antes de integrar debe reconciliarse con el `main` real del momento, pasar pruebas y generar preview nuevo.
-- **🔵 RECONSTRUIR**: la intención sigue siendo válida, pero la rama debe rehacerse sobre el `main` actual para preservar cambios posteriores y evitar deuda.
-- **⚪ APARCAR**: trabajo válido pero bloqueado o no listo para producción. No se integra hasta resolver sus prerrequisitos.
-- **⚫ CERRAR POR SUPERADO**: el objetivo ya fue absorbido o sustituido por otra implementación. En esta auditoría no hay ninguna PR en este estado.
-
-| PR | Área | Estado operativo | Evidencia / decisión |
+| PR | Área | Estado operativo | Decisión vigente |
 |---|---|---|---|
-| #214 · Autoridad pública de Hermandades | Supabase público / autoridad editorial | 🟢 **FUSIONAR** | Mergeable. Vercel verde. Solo cambia `brotherhood-authority.js` y documentación. Supabase confirma lectura pública de `brotherhood_section_authority`, lectura de Hermandades publicadas y `current_step_personnel` con `security_invoker=true`. |
-| #232 · Calendario responsive de Extraordinarias | UI Extraordinarias | 🟢 **FUSIONAR** | Mergeable. Vercel verde. Único archivo: `components/ExtraordinaryDirectory.module.css`. Sin datos, Panel ni migraciones. |
-| #211 · Cabecera de Bandas | UI Bandas / directorio | 🟢 **FUSIONAR** | Mergeable. Vercel verde. El `main` actual todavía usa el tratamiento anterior de Bandas en `RelationalEntityHero`; #242 no toca ninguno de los cuatro archivos de #211. No está superada. |
-| #234 · También en Hilo Cofrade | Grafo relacional / Tira del hilo | 🟢 **FUSIONAR** | Mergeable. Vercel verde. El patch sigue alineado con el `RelationalThread` actual, usa cliente público, filtra `published` y enriquece solo nodos visibles para limitar consultas. |
-| #239 · Sede y visita | Hermandades, Panel, Lugares | 🔵 **RECONSTRUIR** | Aunque GitHub la marca mergeable, está 12 commits por detrás y toca `lib/supabase/brotherhood-display.js`, modificado por #245. Rehacer sobre `main` preservando las reglas de patrimonio/salidas de #245 y la integración de Directorio. |
-| #168 · Tira del hilo 2.11 | Grafo / API / Pregunta | 🔵 **RECONSTRUIR** | No mergeable y 218 commits por detrás. La intención de descubrimiento guiado sigue sin estar absorbida por `/pregunta`, pero debe reimplantarse sobre el Graph Reasoning y la UX actuales. |
-| #49 · Importador documental MVP | Panel, IA, Supabase, ingesta | ⚪ **APARCAR** | Draft, no mergeable y 463 commits por detrás. Las tres migraciones del branch siguen sin aplicar en Supabase. El preview verde de su HEAD antiguo no basta para producción. Requiere rediseño/reconciliación antes de retomar. |
+| #214 · Autoridad pública de Hermandades | Supabase público / autoridad editorial | ✅ **FUSIONADA** | Integrada en `main` como `eb9894d585e756f462a6777c2db652fea5144f9a`. `applyBrotherhoodAuthority()` usa ya `createPublicClient()`. |
+| #232 · Calendario responsive de Extraordinarias | UI Extraordinarias | 🟢 **FUSIONAR** | **Siguiente acción única.** Cambio localizado en `components/ExtraordinaryDirectory.module.css`; reconciliar, validar móvil/escritorio y producción. |
+| #211 · Cabecera de Bandas | UI Bandas / directorio | 🟢 **FUSIONAR** | Sigue aportando una hero específica de Bandas. Integrar después de #232, comprobando que no degrade el Directorio ya canónico. |
+| #234 · También en Hilo Cofrade | Grafo relacional / Tira del hilo | 🟢 **FUSIONAR** | Integrar después de #211, con smoke de Hermandad, Imagen, Paso y Banda y revisión de latencia. |
+| #239 · Sede y visita | Hermandades, Panel, Lugares | 🔵 **RECONSTRUIR** | Rehacer sobre el `main` resultante, preservando #245 y #214. No fusionar la rama antigua tal cual. |
+| #168 · Tira del hilo 2.11 | Grafo / API / Pregunta | 🔵 **RECONSTRUIR** | Rehacer después de #234 para reutilizar una única base de grafo y descubrimiento. |
+| #49 · Importador documental MVP | Panel, IA, Supabase, ingesta | ⚪ **APARCAR** | Draft y no mergeable. No aplicar sus migraciones antiguas de forma automática. Reauditar desde `main` cuando se retome ingesta. |
 
-## Comparación contra `main`
+No hay actualmente ninguna de estas siete líneas clasificada como **⚫ CERRAR POR SUPERADO**.
 
-Referencia de comparación: `1c6a4a7cd9c963c4afab96022ccc9af6f21f5947`.
+## #214 · cierre verificado
 
-| PR | Ahead | Behind | Archivos que aún difieren |
-|---|---:|---:|---:|
-| #214 | 2 | 107 | 2 |
-| #232 | 8 | 24 | 1 |
-| #211 | 7 | 131 | 4 |
-| #234 | 4 | 20 | 4 |
-| #239 | 9 | 12 | 8 |
-| #168 | 6 | 218 | 6 |
-| #49 | 15 | 463 | 9 |
+La rama original estaba desfasada y dejó de ser mergeable contra el `main` vigente. Se reconstruyó sobre `2c6c3a63c157cf22f3de54140695db77839c149f`, reaplicando únicamente dos cambios:
 
-El número de commits por detrás no determina por sí solo la decisión. Se prioriza el solape real de archivos, la vigencia conceptual, la mergeabilidad, el estado de Vercel y el riesgo de regresión.
+- `lib/supabase/brotherhood-authority.js`: cliente público en lugar del cliente cookie-aware;
+- `docs/FASE-A-hermandad-autoridad-publica.md`: auditoría y alcance del corte.
 
-## Decisiones por frente
+Comprobaciones realizadas:
 
-### #214 · Autoridad pública de Hermandades
+- `brotherhood_section_authority`, `brotherhoods` y `step_personnel_periods`: RLS activa;
+- lectura pública limitada a datos publicados;
+- `current_step_personnel`: `security_invoker=true`;
+- preview Vercel: **READY**;
+- producción Vercel: **READY** sobre `eb9894d585e756f462a6777c2db652fea5144f9a`;
+- `/hermandades/san-benito`: HTTP 200 en producción;
+- `/hermandades/el-baratillo`: HTTP 200 en producción;
+- runtime del deployment tras los smokes: sin errores `error`/`fatal` detectados.
 
-El `main` actual todavía crea un cliente de servidor dependiente de sesión en `lib/supabase/brotherhood-authority.js`. #214 lo sustituye por `createPublicClient()` sin tocar RLS ni esquema.
+Conclusión: **#214 → 🟢 CERRADO**.
 
-Auditoría directa de Supabase:
+## Orden operativo del backlog
 
-- `brotherhood_section_authority`: política `anon` de lectura limitada a Hermandades publicadas;
-- `brotherhoods`: política pública de lectura limitada a entidades publicadas;
-- `current_step_personnel`: `security_invoker=true`.
-
-Decisión: **integración ordinaria, no reconstrucción**.
-
-### #232 · Extraordinarias responsive
-
-Cambio puramente visual y localizado. No se cruza con los cambios recientes de Home ni con Directorio.
-
-Decisión: **integración ordinaria** con smoke móvil/escritorio de `/extraordinarias`.
-
-### #211 · Cabecera de Bandas
-
-La implementación sigue aportando una diferencia no presente en `main`: logotipo como protagonista de la hero, fallback por iniciales y tratamiento específico de Bandas. #242 no toca `app/bandas/page.js`, `RelationalEntityHero.js` ni sus CSS asociados.
-
-Decisión: **integración ordinaria**, verificando antes Las Cigarreras, Maestro Tejera, La Puebla y una banda sin logotipo.
-
-### #234 · También en Hilo Cofrade
-
-La línea no está absorbida por `main`. Convierte `RelationalThread` en servidor para resolver presencia relacional y conserva la interacción/telemetría en un cliente separado.
-
-La capa `relational-presence.js`:
-
-- usa `createPublicClient()`;
-- trabaja solo con entidades y relaciones `published`;
-- resuelve por lotes;
-- enriquece únicamente los nodos visibles;
-- falla de forma segura devolviendo los items originales si una consulta no puede resolverse.
-
-Decisión: **integración ordinaria**, con smoke de Hermandad, Imagen, Paso y Banda y revisión de latencia.
-
-### #239 · Sede y visita
-
-Es una línea válida y además coherente con el modelo relacional de Hilo Cofrade: el Lugar es el nodo y varias Hermandades pueden compartirlo. No debe cerrarse.
-
-Sin embargo, su rama nació antes de #242 y #245 y vuelve a modificar la ficha pública y `brotherhood-display.js`. Por protocolo, no se integra tal cual.
-
-Decisión: **reconstruir sobre el `main` vigente**, reaplicando solo su funcionalidad propia y conservando íntegramente las reglas de #245.
-
-### #168 · Tira del hilo 2.11
-
-La capacidad de pedir `otro hilo`, `sorpréndeme` o una conexión curiosa sigue sin estar incorporada en la página `/pregunta` actual. El concepto continúa siendo válido, pero la rama está demasiado separada del grafo y de la API actuales y GitHub la marca no mergeable.
-
-Decisión: **reconstruir**, preferiblemente después de #234 para que ambas capas del descubrimiento relacional se diseñen sobre una única base.
-
-### #49 · Importador documental MVP
-
-El objetivo sigue siendo estratégico, pero la rama no está lista para producción.
-
-Estado real de Supabase: no aparecen aplicadas las migraciones:
-
-- `20260818134549_document_imports.sql`;
-- `20260818150550_document_imports_music.sql`;
-- `20260818235551_document_imports_agent_guard.sql`.
-
-Además, la rama está 463 commits por detrás y modifica navegación del Panel, lógica de ingesta y tres migraciones.
-
-Decisión: **aparcar el PR actual**. Cuando se retome la ingesta masiva, evaluar primero el diseño del MVP contra el Panel y el modelo relacional actuales y reconstruir desde `main`; no aplicar migraciones antiguas de forma automática.
-
-## Orden operativo aprobado
-
-1. **#214** · autoridad pública de Hermandades.
-2. **#232** · Extraordinarias responsive.
-3. **#211** · cabecera de Bandas.
-4. **#234** · También en Hilo Cofrade.
-5. **Reconstruir #239** sobre el `main` resultante.
-6. **Reconstruir #168** después de estabilizar #234.
-7. **#49 permanece aparcada** hasta abrir un frente específico de ingesta masiva.
+1. **#232** · Extraordinarias responsive.
+2. **#211** · cabecera de Bandas.
+3. **#234** · También en Hilo Cofrade.
+4. **Reconstruir #239** sobre el `main` resultante.
+5. **Reconstruir #168** después de estabilizar #234.
+6. **#49 permanece aparcada**.
 
 Antes de cada fusión:
 
 1. refrescar `main`;
-2. reconciliar la rama;
-3. ejecutar pruebas relevantes;
-4. generar preview nuevo en Vercel;
-5. hacer smoke funcional;
-6. fusionar solo si producción puede quedar verde.
-
-## Vercel
-
-### Producción observada
-
-- Estado: **READY**
-- Rama: `main`
-- SHA: `1c6a4a7cd9c963c4afab96022ccc9af6f21f5947`
-- Framework: Next.js
-- Build: Turbopack
-
-### Estado de los HEAD auditados
-
-Los HEAD actuales de #214, #232, #211, #234, #239, #168 y #49 tienen estado Vercel `success`. Esto solo acredita que esos commits compilaron en su momento; no sustituye el preview obligatorio después de reconciliar cada rama con el `main` vigente.
+2. comparar la rama contra el árbol actual;
+3. reconstruir si existe deuda de rama o solape peligroso;
+4. ejecutar pruebas relevantes;
+5. comprobar build y preview Vercel;
+6. hacer smoke funcional;
+7. fusionar únicamente si producción puede quedar verde.
 
 ## Supabase y migraciones
 
-Estado observado:
+Estado de coordinación vigente:
 
-- proyecto `Hilocofrade`: **ACTIVE_HEALTHY**;
-- #214 no necesita migración y sus premisas RLS se han comprobado directamente;
 - #232, #211, #234, #239 y #168 no declaran migraciones en su alcance actual;
-- #49 contiene tres migraciones de ingesta y **ninguna figura aplicada** en `supabase_migrations.schema_migrations`.
+- #214 no ha requerido cambios de esquema ni RLS;
+- #49 contiene las migraciones de ingesta `20260818134549_document_imports.sql`, `20260818150550_document_imports_music.sql` y `20260818235551_document_imports_agent_guard.sql`; en la última auditoría no figuraban aplicadas en `supabase_migrations.schema_migrations`.
 
 Reglas permanentes:
 
-- antes de tocar esquema, comparar historial local y remoto;
-- no modificar una migración ya aplicada en remoto;
+- comparar historial local y remoto antes de tocar esquema;
+- no modificar una migración ya aplicada;
 - no aplicar las migraciones de #49 hasta reconstruir y volver a auditar el importador.
 
 ## Zonas sensibles
 
 ### Hermandades
 
-- #245 ya está integrado y es parte del `main` canónico.
-- #214 puede entrar como corte técnico aislado.
-- #239 debe reconstruirse sobre la ficha pública y loader actuales.
+- #245 y #214 forman ya parte del `main` canónico.
+- #239 debe reconstruirse preservando ambas capas.
+- No añadir lógica específica por slug para resolver casos de ficha.
 
 ### Directorios
 
-#242 ya está integrado y pasa a ser la arquitectura canónica del Directorio. Nuevos cambios de directorios deben partir de esa base.
+#242 es la arquitectura canónica de Directorio. Cualquier cambio posterior en listados, navegación o Bandas debe partir de ella.
+
+### Extraordinarias
+
+#232 es el siguiente corte a cerrar. Debe mantenerse intacto el dominio editorial y las fichas ya estables; el alcance esperado es responsive/presentación del calendario secundario.
 
 ### Tira del hilo
 
-- #234 puede integrarse primero como enriquecimiento visible de nodos.
-- #168 debe reconstruirse después para que el descubrimiento guiado reutilice el grafo actual y no cree una segunda lógica paralela.
+- #234 entra antes que #168.
+- #168 no debe crear una segunda lógica de grafo paralela al sistema actual.
 
 ### Ingesta masiva
 
-#49 queda aparcada como referencia de producto y experimentación. No es una base técnica integrable en su estado actual.
+#49 queda como referencia de producto, no como base técnica integrable. La auditoría de carga masiva de la fase de Dirección debe buscar patrones sistémicos y no limitarse a corregir casos individuales.
 
 ## Protocolo de nueva tarea
 
 ### Antes
 
-- [ ] Leer este registro.
-- [ ] Consultar `main` real y guardar el nuevo baseline de trabajo.
-- [ ] Leer PR abiertas relacionadas.
-- [ ] Comparar archivos si existe solape.
+- [ ] Leer `docs/HILO-ORQUESTADOR.md` y este registro.
+- [ ] Refrescar `main` y PR abiertas.
+- [ ] Detectar archivos/áreas compartidas.
 - [ ] Comprobar Vercel.
-- [ ] Comprobar Supabase si hay datos/esquema.
-- [ ] Clasificar riesgo: verde, ámbar o rojo.
-- [ ] Asignar responsable y apoyos según `HILO-ORQUESTADOR.md`.
+- [ ] Comprobar Supabase si afecta a datos, RLS o esquema.
+- [ ] Clasificar riesgo y responsable.
 
 ### Durante
 
 - [ ] Mantener el cambio aislado.
-- [ ] Evitar excepciones específicas por entidad.
+- [ ] Evitar hardcodes y excepciones por entidad.
 - [ ] Preservar IDs, relaciones e históricos.
-- [ ] No modificar migraciones remotas ya aplicadas.
+- [ ] No duplicar modelos ni fuentes de autoridad.
 
 ### Antes de integrar
 
-- [ ] Reconciliar con el `main` real del momento.
-- [ ] Ejecutar pruebas relevantes.
-- [ ] Ejecutar build.
-- [ ] Revisar preview Vercel.
-- [ ] Revisar móvil/escritorio si hay UI.
-- [ ] Verificar datos y relaciones si hay cambios de modelo.
+- [ ] Reconciliar con el `main` real.
+- [ ] Ejecutar pruebas y build.
+- [ ] Revisar preview.
+- [ ] Revisar responsive si hay UI.
+- [ ] Verificar datos/relaciones si procede.
 
 ### Después
 
-- [ ] Confirmar estado final de PR o `main`.
-- [ ] Confirmar producción si se fusionó.
-- [ ] Actualizar este registro si cambió el mapa operativo.
+- [ ] Confirmar PR/`main` final.
+- [ ] Confirmar producción.
+- [ ] Actualizar este registro solo cuando cambie decisiones futuras.
 
-## Qué debe registrarse
+## Regla para «¿Qué toca ahora?»
 
-Este archivo no es un diario de commits. Solo debe conservar información que cambie decisiones de coordinación:
+No generar una lluvia de ideas. Refrescar el estado, localizar el punto de la secuencia y devolver una sola acción ejecutable.
 
-- baseline reciente de `main` y producción;
-- PR activas relevantes;
-- conflictos de archivos;
-- migraciones pendientes/aplicadas;
-- bloqueos;
-- decisiones de secuenciación.
+**Siguiente acción actual: cerrar #232 · Calendario responsive de Extraordinarias.**
