@@ -7,6 +7,7 @@ import { getExtraordinaryLiveState } from '@/lib/home-live-status'
 import styles from '@/app/home.module.css'
 import liveStyles from './HomeExtraordinaryLive.module.css'
 import threadStyles from './HomeThreadsVisual.module.css'
+import navStyles from './HomeExtraordinaryNav.module.css'
 
 const stackedNextExtraHeadStyle = { alignItems: 'flex-start', flexDirection: 'column', gap: 4 }
 const heroThread = ['Hermandades', 'Imágenes', 'Pasos', 'Bandas', 'Marchas', 'Autores']
@@ -51,6 +52,7 @@ export default function HomePageV2({
 }) {
   const featuredExtraordinary = extraordinaryOutings[0] || null
   const followingExtraordinaryOutings = extraordinaryOutings.slice(1)
+  const featuredGuideHref = featuredExtraordinary?.href || '/extraordinarias'
   const featuredIsToday = featuredExtraordinary?.date === madridDateKey()
   const liveState = featuredExtraordinary
     ? getExtraordinaryLiveState(featuredExtraordinary.date, featuredBriefing.schedule)
@@ -202,9 +204,14 @@ export default function HomePageV2({
                   ) : null}
                 </div>
 
-                <Link className={styles.collabButton} href="/extraordinarias">
-                  Ver todas las extraordinarias →
-                </Link>
+                <div className={navStyles.actions}>
+                  <Link className={navStyles.primary} href={featuredGuideHref}>
+                    Abrir guía completa <span aria-hidden="true">→</span>
+                  </Link>
+                  <Link className={navStyles.secondary} href="/extraordinarias">
+                    Ver todas las extraordinarias
+                  </Link>
+                </div>
               </div>
             </article>
 
@@ -216,7 +223,12 @@ export default function HomePageV2({
                 </div>
                 <div className={styles.nextExtraList}>
                   {followingExtraordinaryOutings.map((outing) => (
-                    <article className={styles.nextExtraRow} key={outing.id}>
+                    <Link
+                      className={`${styles.nextExtraRow} ${navStyles.row}`}
+                      href={outing.href || '/extraordinarias'}
+                      key={outing.id}
+                      aria-label={`Abrir guía de ${outing.title}`}
+                    >
                       <time dateTime={outing.date}>
                         <strong>{outing.dateParts.day}</strong>
                         <span>{outing.dateParts.month}</span>
@@ -225,11 +237,11 @@ export default function HomePageV2({
                         <h3>{outing.title}</h3>
                         <p>{[outing.municipality, outing.reason].filter(Boolean).join(' · ')}</p>
                       </div>
-                    </article>
+                    </Link>
                   ))}
                 </div>
-                <Link className={styles.dailyLink} href="/extraordinarias">
-                  Ver calendario completo →
+                <Link className={navStyles.calendar} href="/extraordinarias">
+                  Ver calendario completo <span aria-hidden="true">→</span>
                 </Link>
               </div>
             ) : null}
