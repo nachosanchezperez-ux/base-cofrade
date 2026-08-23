@@ -26,6 +26,11 @@ function DirectoryVisual({ item }) {
   const visual = spotlight?.visual
   if (!visual?.path) return null
   const photo = visual.kind === 'photo'
+  const secondary = visual.kind === 'context-crest' && visual.contextName
+    ? visual.contextName
+    : photo && visual.credit
+      ? visual.credit
+      : ''
 
   return (
     <div className={`${styles.visual} ${photo ? styles.visualPhoto : styles.visualIdentity}`}>
@@ -35,6 +40,7 @@ function DirectoryVisual({ item }) {
         fill
         sizes="(max-width: 859px) calc(100vw - 36px), 360px"
         className={photo ? styles.visualPhotoImage : styles.visualIdentityImage}
+        style={photo && visual.focusPosition ? { objectPosition: visual.focusPosition } : undefined}
         unoptimized={isSvg(visual.path)}
       />
       <div className={styles.visualTopline}>
@@ -44,7 +50,7 @@ function DirectoryVisual({ item }) {
       <div className={styles.visualCaption}>
         <span>Ahora en el hilo</span>
         <strong>{spotlight.name}</strong>
-        {visual.kind === 'context-crest' && visual.contextName ? <small>{visual.contextName}</small> : null}
+        {secondary ? <small>{secondary}</small> : null}
       </div>
     </div>
   )
