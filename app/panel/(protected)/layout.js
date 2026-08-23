@@ -1,5 +1,6 @@
 import { Suspense } from 'react'
 import PanelEditState from '@/components/panel/PanelEditState'
+import PanelMetricNavigation from '@/components/panel/PanelMetricNavigation'
 import PanelNav from '@/components/panel/PanelNav'
 import PanelSaveToast from '@/components/panel/PanelSaveToast'
 import { requirePanelUser } from '@/lib/panel/auth'
@@ -18,6 +19,7 @@ export default async function ProtectedPanelLayout({ children }) {
       <Suspense fallback={null}>
         <PanelSaveToast />
         <PanelEditState />
+        <PanelMetricNavigation />
       </Suspense>
     </div>
   )
