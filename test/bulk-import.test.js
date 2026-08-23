@@ -6,7 +6,10 @@ import {
   parseCsvRows,
   splitImportPayload,
 } from '../lib/panel/bulk-import-parser.js'
-import { validateBulkImportRecord } from '../lib/panel/bulk-import-config.js'
+import {
+  findBulkImportTargetCollisions,
+  validateBulkImportRecord,
+} from '../lib/panel/bulk-import-config.js'
 
 test('acepta CSV separado por punto y coma con campos entrecomillados', () => {
   const rows = parseCsvRows('slug;name;summary\nbaratillo;El Baratillo;"Texto, con coma"')
@@ -89,6 +92,90 @@ test('impide sustituir el UUID al actualizar una entidad por slug', () => {
     },
   })
   assert.match(result.errors.join(' '), /podría cambiar el UUID/)
+})
+
+test('detecta dos upserts a la misma entidad por slug', () => {
+  const records = [
+    {
+      table: 'entities',
+      operation: 'upsert',
+      on_conflict: 'slug',
+      data: { slug: 'el-baratillo', name: 'El Baratillo', entity_type: 'brotherhood' },
+    },
+    {
+      table: 'entities',
+      operation: 'upsert',
+      on_conflict: 'slug',
+      data: { slug: 'el-baratillo', name: 'Hermandad del Baratillo', entity_type: 'brotherhood' },
+    },
+  ]
+
+  const collisions = findBulkImportTargetCollisions(records)
+  assert.equal(collisions.length, 1)
+  assert.equal(collisions[0].table, 'entities')
+  assert.match(collisions[0].target, /slug=el-baratillo/)
+  assert.deepEqual(collisions[0].positions, [1, 2])
+})
+
+test('detecta dos extensiones relacionales que resuelven el mismo entity_id', () => {
+  const records = [
+    {
+      table: 'brotherhoods',
+      operation: 'upsert',
+      on_conflict: 'entity_id',
+      refs: { entity_id: { table: 'entities', match: { slug: 'san-benito' } } },
+      data: { official_name: 'Hermandad de San Benito' },
+    },
+    {
+      table: 'brotherhoods',
+      operation: 'upsert',
+      on_conflict: 'entity_id',
+      refs: { entity_id: { table: 'entities', match: { slug: 'san-benito' } } },
+      data: { official_name: 'Hermandad Sacramental de San Benito' },
+    },
+  ]
+
+  const collisions = findBulkImportTargetCollisions(records)
+  assert.equal(collisions.length, 1)
+  assert.equal(collisions[0].table, 'brotherhoods')
+  assert.match(collisions[0].target, /entity_id→entities\(slug=san-benito\)/)
+  assert.deepEqual(collisions[0].positions, [1, 2])
+})
+
+test('no marca claves estables diferentes como colisión', () => {
+  const collisions = findBulkImportTargetCollisions([
+    {
+      table: 'entities',
+      operation: 'upsert',
+      on_conflict: 'slug',
+      data: { slug: 'el-baratillo', name: 'El Baratillo', entity_type: 'brotherhood' },
+    },
+    {
+      table: 'entities',
+      operation: 'upsert',
+      on_conflict: 'slug',
+      data: { slug: 'san-benito', name: 'San Benito', entity_type: 'brotherhood' },
+    },
+  ])
+  assert.deepEqual(collisions, [])
+})
+
+test('ignora registros inválidos al calcular colisiones aplicables', () => {
+  const validations = [
+    validateBulkImportRecord({
+      table: 'entities',
+      operation: 'upsert',
+      on_conflict: 'slug',
+      data: { slug: 'el-baratillo', name: 'El Baratillo', entity_type: 'brotherhood' },
+    }),
+    validateBulkImportRecord({
+      table: 'panel_users',
+      operation: 'upsert',
+      on_conflict: 'slug',
+      data: { slug: 'el-baratillo', name: 'No permitido' },
+    }),
+  ]
+  assert.deepEqual(findBulkImportTargetCollisions(validations), [])
 })
 
 test('divide lotes grandes antes de enviarlos al servidor', () => {

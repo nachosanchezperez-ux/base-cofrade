@@ -2,7 +2,11 @@
 
 import { useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { IMPORTABLE_TABLES, validateBulkImportRecord } from '@/lib/panel/bulk-import-config'
+import {
+  IMPORTABLE_TABLES,
+  findBulkImportTargetCollisions,
+  validateBulkImportRecord,
+} from '@/lib/panel/bulk-import-config'
 import {
   DEFAULT_IMPORT_CHUNK_BYTES,
   parseBulkImportText,
@@ -152,6 +156,7 @@ export default function ImportWorkspace({ initialImports, canEdit }) {
       const records = validations.map((item) => item.record)
       const invalid = validations.filter((item) => item.errors.length)
       const validRecords = validations.filter((item) => !item.errors.length).map((item) => item.record)
+      const collisions = findBulkImportTargetCollisions(validations)
       const transportChunks = splitImportPayload(records).length
       const operations = operationCounts(validRecords)
       setAnalysis({
@@ -159,10 +164,11 @@ export default function ImportWorkspace({ initialImports, canEdit }) {
         records,
         validations,
         invalidCount: invalid.length,
+        collisions,
         transportChunks,
         operationCounts: operations,
       })
-      setMessage(`Análisis terminado: ${parsed.records.length} registros · ${invalid.length} con incidencias de estructura · ${transportChunks} envíos protegidos.`)
+      setMessage(`Análisis terminado: ${parsed.records.length} registros · ${invalid.length} con incidencias de estructura · ${collisions.length} colisiones de clave · ${transportChunks} envíos protegidos.`)
     } catch (caught) {
       setAnalysis(null)
       setError(caught instanceof Error ? caught.message : 'No se pudo analizar el contenido.')
@@ -171,6 +177,11 @@ export default function ImportWorkspace({ initialImports, canEdit }) {
 
   async function prepareBatch() {
     if (!analysis || !canEdit) return
+    if (analysis.collisions?.length) {
+      setError('Corrige las colisiones de clave estable antes de preparar el lote.')
+      return
+    }
+
     let createdBatchId = null
     setWorking(true)
     setError('')
@@ -187,6 +198,7 @@ export default function ImportWorkspace({ initialImports, canEdit }) {
           operation_counts: analysis.operationCounts,
           transport_chunks: batches.length,
           transport_max_bytes: DEFAULT_IMPORT_CHUNK_BYTES,
+          collision_preflight: { checked: true, collisions: 0 },
         },
       })
       createdBatchId = batch.id
@@ -270,6 +282,7 @@ export default function ImportWorkspace({ initialImports, canEdit }) {
   }
 
   const progressPercent = progress?.total ? Math.min(100, Math.round((progress.current / progress.total) * 100)) : 0
+  const hasCollisions = Boolean(analysis?.collisions?.length)
 
   return <div className={styles.workspace}>
     <section className={styles.card}>
@@ -292,15 +305,23 @@ export default function ImportWorkspace({ initialImports, canEdit }) {
       <label className={styles.fileDrop}>Seleccionar archivo<input type="file" accept=".csv,.json,.jsonl,.ndjson,text/csv,application/json" onChange={handleFile} disabled={!canEdit || working} /><small>También funciona desde Archivos en iPhone/iPad. El formato se selecciona por la extensión del archivo; si pegas datos, elige el formato antes de analizarlos.</small></label>
 
       <label className={styles.field}>Contenido<textarea rows={12} value={text} onChange={(event) => { setText(event.target.value); resetResult() }} placeholder="Pega aquí un CSV, un JSON o un JSONL…" disabled={!canEdit || working} /></label>
-      <div className={styles.actions}><button type="button" className={styles.secondaryButton} onClick={analyse} disabled={!canEdit || working || !text.trim()}>Analizar contenido</button>{analysis ? <button type="button" className={styles.primaryButton} onClick={prepareBatch} disabled={!canEdit || working}>Preparar lote</button> : null}</div>
+      <div className={styles.actions}><button type="button" className={styles.secondaryButton} onClick={analyse} disabled={!canEdit || working || !text.trim()}>Analizar contenido</button>{analysis ? <button type="button" className={styles.primaryButton} onClick={prepareBatch} disabled={!canEdit || working || hasCollisions}>Preparar lote</button> : null}</div>
     </section>
 
     {analysis ? <section className={styles.card}>
-      <div className={styles.cardHeading}><div><span className={styles.kicker}>02 · Preflight</span><h2>Vista previa y validación</h2></div><strong className={analysis.invalidCount ? styles.warning : styles.success}>{analysis.records.length - analysis.invalidCount}/{analysis.records.length} válidos</strong></div>
+      <div className={styles.cardHeading}><div><span className={styles.kicker}>02 · Preflight</span><h2>Vista previa y validación</h2></div><strong className={analysis.invalidCount || hasCollisions ? styles.warning : styles.success}>{analysis.records.length - analysis.invalidCount}/{analysis.records.length} válidos</strong></div>
       <div className={styles.summaryGrid}>{tableSummary.slice(0, 8).map(([table, count]) => <div key={table}><span>{table}</span><strong>{count}</strong></div>)}</div>
       <p className={styles.muted}>Transporte seguro: {analysis.transportChunks} bloque{analysis.transportChunks === 1 ? '' : 's'} · máximo {Math.round(DEFAULT_IMPORT_CHUNK_BYTES / 1000)} KB por envío · {analysis.operationCounts.insert} insert · {analysis.operationCounts.upsert} upsert aplicables.</p>
       {analysis.operationCounts.upsert > 0 ? <div className={styles.warningBox}>{analysis.operationCounts.upsert} registro{analysis.operationCounts.upsert === 1 ? '' : 's'} válido{analysis.operationCounts.upsert === 1 ? '' : 's'} usa{analysis.operationCounts.upsert === 1 ? '' : 'n'} <code>upsert</code>: al aplicar el lote pueden actualizar filas existentes cuando coincida su clave estable.</div> : null}
-      {analysis.invalidCount ? <div className={styles.warningBox}>Los registros inválidos se conservarán en el lote para revisión, pero no se aplicarán. El resto sí podrá importarse.</div> : <div className={styles.successBox}>La estructura del lote es válida. Las restricciones y referencias se volverán a comprobar al aplicar cada registro.</div>}
+      {hasCollisions ? <div className={styles.warningBox}>
+        <strong>{analysis.collisions.length} colisión{analysis.collisions.length === 1 ? '' : 'es'} de clave estable</strong><br />Dos o más registros válidos intentan actualizar el mismo destino. Corrige estas repeticiones antes de preparar el lote.
+        <div className={styles.previewList}>{analysis.collisions.slice(0, 5).map((collision) => <article key={collision.signature} className={styles.previewError}>
+          <div><strong>{collision.table}</strong><span>registros {collision.positions.map((position) => `#${position}`).join(', ')}</span></div>
+          <code>{collision.target}</code>
+        </article>)}</div>
+        {analysis.collisions.length > 5 ? <small>Hay {analysis.collisions.length - 5} colisiones adicionales.</small> : null}
+      </div> : null}
+      {analysis.invalidCount ? <div className={styles.warningBox}>Los registros inválidos se conservarán en el lote para revisión, pero no se aplicarán. El resto sí podrá importarse.</div> : !hasCollisions ? <div className={styles.successBox}>La estructura del lote es válida y no contiene destinos de upsert repetidos. Las restricciones y referencias se volverán a comprobar al aplicar cada registro.</div> : null}
       <div className={styles.previewList}>{analysis.validations.slice(0, 6).map((item, index) => <article key={index} className={item.errors.length ? styles.previewError : ''}><div><b>#{index + 1}</b><strong>{item.record?.table || 'sin tabla'}</strong><span>{item.record?.operation || '—'}</span></div><code>{JSON.stringify(item.record?.data || {}).slice(0, 320)}</code>{item.errors.length ? <small>{item.errors.join(' ')}</small> : null}</article>)}</div>
       {analysis.records.length > 6 ? <p className={styles.muted}>Se muestran 6 registros de {analysis.records.length}. El lote completo se valida al prepararlo.</p> : null}
     </section> : null}
