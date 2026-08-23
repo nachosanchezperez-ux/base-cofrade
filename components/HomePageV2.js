@@ -113,7 +113,7 @@ export default function HomePageV2({
           aria-labelledby="proxima-extraordinaria-title"
         >
           <div className="shell">
-            <article className={`${styles.featuredExtraordinaryCard} ${liveState.state === 'live' ? liveStyles.featuredExtraordinaryLive : ''}`}>
+            <article className={`${styles.featuredExtraordinaryCard} ${liveState.state === 'live' ? liveStyles.featuredExtraordinaryLive : ''} ${featuredExtraordinary.heroImagePath ? '' : liveStyles.featuredExtraordinaryNoMedia}`}>
               {featuredExtraordinary.heroImagePath ? (
                 <figure className={styles.featuredExtraordinaryMedia}>
                   <div className={styles.featuredExtraordinaryImageFrame}>
