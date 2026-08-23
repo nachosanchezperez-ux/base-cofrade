@@ -57,6 +57,12 @@ export default function EntityWorkspaceNav({ eyebrow = 'Espacio de trabajo', des
     })
   }
 
+  const navClassName = [
+    styles.nav,
+    scrollState.left ? styles.hasLeft : '',
+    scrollState.right ? styles.hasRight : '',
+  ].filter(Boolean).join(' ')
+
   return (
     <section className={`${styles.shell} ${dense ? styles.dense : ''}`.trim()} aria-label="Navegación de la ficha">
       <div className={styles.copy}>
@@ -69,7 +75,7 @@ export default function EntityWorkspaceNav({ eyebrow = 'Espacio de trabajo', des
             <span aria-hidden="true">‹</span>
           </button>
         ) : null}
-        <nav ref={navRef} className={styles.nav} aria-label="Secciones de la entidad">
+        <nav ref={navRef} className={navClassName} aria-label="Secciones de la entidad">
           {items.map((item) => {
             const active = isActive(pathname, item)
             return (
