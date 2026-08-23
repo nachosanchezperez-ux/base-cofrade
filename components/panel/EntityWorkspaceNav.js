@@ -15,7 +15,6 @@ export default function EntityWorkspaceNav({ eyebrow = 'Espacio de trabajo', des
   const pathname = usePathname()
   const navRef = useRef(null)
   const [scrollState, setScrollState] = useState({ left: false, right: false })
-  const dense = items.length > 7
 
   const updateScrollState = useCallback(() => {
     const nav = navRef.current
@@ -64,7 +63,7 @@ export default function EntityWorkspaceNav({ eyebrow = 'Espacio de trabajo', des
   ].filter(Boolean).join(' ')
 
   return (
-    <section className={`${styles.shell} ${dense ? styles.dense : ''}`.trim()} aria-label="Navegación de la ficha">
+    <section className={styles.shell} aria-label="Navegación de la ficha">
       <div className={styles.copy}>
         <span>{eyebrow}</span>
         {description ? <p>{description}</p> : null}
@@ -85,7 +84,6 @@ export default function EntityWorkspaceNav({ eyebrow = 'Espacio de trabajo', des
                 className={`${styles.link} ${active ? styles.active : ''} ${item.tool ? styles.tool : ''}`.trim()}
                 aria-current={active ? 'page' : undefined}
               >
-                {item.mark ? <span aria-hidden="true">{item.mark}</span> : null}
                 <strong>{item.label}</strong>
               </Link>
             )
