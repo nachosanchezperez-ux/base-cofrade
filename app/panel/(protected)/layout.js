@@ -1,8 +1,10 @@
 import { Suspense } from 'react'
+import PanelEditState from '@/components/panel/PanelEditState'
 import PanelNav from '@/components/panel/PanelNav'
 import PanelSaveToast from '@/components/panel/PanelSaveToast'
 import { requirePanelUser } from '@/lib/panel/auth'
 import styles from '@/app/panel/panel.module.css'
+import '@/app/panel/panel-ux.css'
 
 export const dynamic = 'force-dynamic'
 
@@ -12,9 +14,10 @@ export default async function ProtectedPanelLayout({ children }) {
   return (
     <div className={styles.panelShell}>
       <PanelNav user={user} />
-      <div className={styles.panelMain}>{children}</div>
+      <div className={styles.panelMain} data-panel-main>{children}</div>
       <Suspense fallback={null}>
         <PanelSaveToast />
+        <PanelEditState />
       </Suspense>
     </div>
   )
