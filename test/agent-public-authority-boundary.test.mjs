@@ -58,23 +58,38 @@ test('el autocompletado de Tira del hilo conserva el wrapper público y no inven
   assert.match(liveSearch, /NAVIGABLE_TYPES = new Set\(\['brotherhood', 'image', 'step', 'band'\]\)/)
 })
 
-test('la migración pública exige endpoints publicados en las relaciones de agentes', async () => {
-  const migration = await source('supabase/migrations/20260823211405_public_agent_relation_integrity.sql')
+test('el historial conserva la migración inicial y la política final endurece todas las relaciones públicas de agentes', async () => {
+  const initialMigration = await source('supabase/migrations/20260823211405_public_agent_relation_integrity.sql')
+  const hardenedMigration = await source('supabase/migrations/20260823211610_harden_public_agent_relations.sql')
+
+  assert.match(initialMigration, /on public\.heritage_update_agents/i)
 
   for (const relation of [
+    'agent_roles',
     'image_authorships',
-    'heritage_interventions',
+    'march_authors',
     'step_personnel_periods',
     'step_phase_agents',
+    'heritage_interventions',
     'heritage_update_agents',
-    'march_authors',
+    'band_agents',
     'entity_relations',
   ]) {
-    assert.match(migration, new RegExp(`ON public\\.${relation}`))
+    assert.match(hardenedMigration, new RegExp(`on public\\.${relation}`, 'i'))
   }
 
-  assert.match(migration, /agent_entity\.status = 'published'/)
-  assert.match(migration, /step_entity\.status = 'published'/)
-  assert.match(migration, /source_entity\.status = 'published'/)
-  assert.match(migration, /target_entity\.status = 'published'/)
+  const publicSelectPolicies = hardenedMigration.match(/for select\s+to anon,\s*authenticated/gi) || []
+  assert.equal(publicSelectPolicies.length, 9)
+
+  assert.match(hardenedMigration, /agent\.entity_type = 'agent'/)
+  assert.match(hardenedMigration, /image\.entity_type = 'image'/)
+  assert.match(hardenedMigration, /march\.entity_type = 'march'/)
+  assert.match(hardenedMigration, /step\.entity_type = 'step'/)
+  assert.match(hardenedMigration, /band\.entity_type = 'band'/)
+  assert.match(hardenedMigration, /brotherhood\.entity_type = 'brotherhood'/)
+  assert.match(hardenedMigration, /brotherhood\.status = 'published'/)
+  assert.match(hardenedMigration, /heritage_update\.target_entity_id is null/)
+  assert.match(hardenedMigration, /target\.status = 'published'/)
+  assert.match(hardenedMigration, /source\.status = 'published'/)
+  assert.match(hardenedMigration, /\bis_public\b/)
 })
