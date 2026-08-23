@@ -1,0 +1,443 @@
+.section {
+  padding: clamp(58px, 7vw, 92px) 0;
+  border-block: 1px solid rgba(17, 24, 39, 0.08);
+  background:
+    radial-gradient(circle at 10% 18%, color-mix(in srgb, var(--brotherhood-secondary) 9%, transparent), transparent 32%),
+    linear-gradient(180deg, #f7f5f1 0%, #fbfaf8 100%);
+}
+
+.shell {
+  display: grid;
+  gap: 30px;
+}
+
+.header {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(300px, 0.75fr);
+  gap: 34px;
+  align-items: end;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 10px;
+  color: var(--brotherhood-secondary);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.eyebrow::before {
+  content: '';
+  width: 28px;
+  height: 2px;
+  background: currentColor;
+}
+
+.header h2 {
+  margin: 0;
+  color: var(--brotherhood-dark);
+  font-size: clamp(2rem, 4vw, 3.6rem);
+  line-height: 1;
+  letter-spacing: -0.045em;
+}
+
+.header p {
+  max-width: 620px;
+  margin: 0;
+  color: rgba(17, 24, 39, 0.65);
+  font-size: 0.96rem;
+  line-height: 1.65;
+}
+
+.mainGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(320px, 0.75fr);
+  gap: 16px;
+}
+
+.placeCard,
+.hoursCard {
+  min-height: 305px;
+  border: 1px solid rgba(17, 24, 39, 0.09);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 20px 48px rgba(17, 24, 39, 0.06);
+}
+
+.placeCard {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: clamp(24px, 3vw, 34px);
+  overflow: hidden;
+}
+
+.placeTopline,
+.hoursHeader {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.placeTopline span,
+.hoursHeader > span {
+  color: var(--brotherhood-secondary);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.placeTopline small {
+  color: rgba(17, 24, 39, 0.5);
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.placeIdentity {
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr);
+  gap: 20px;
+  align-items: center;
+  padding: 34px 0 28px;
+}
+
+.pin {
+  position: relative;
+  display: grid;
+  width: 58px;
+  height: 58px;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--brotherhood-secondary) 22%, #d8dce1);
+  border-radius: 18px 18px 18px 5px;
+  background: color-mix(in srgb, var(--brotherhood-secondary) 8%, #fff);
+  transform: rotate(-45deg);
+}
+
+.pin i {
+  width: 13px;
+  height: 13px;
+  border: 4px solid #fff;
+  border-radius: 999px;
+  background: var(--brotherhood-secondary);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--brotherhood-secondary) 38%, transparent);
+  transform: rotate(45deg);
+}
+
+.placeIdentity h3 {
+  max-width: 720px;
+  margin: 0;
+  color: var(--brotherhood-dark);
+  font-size: clamp(1.45rem, 2.5vw, 2.2rem);
+  line-height: 1.06;
+  letter-spacing: -0.035em;
+}
+
+.placeIdentity p {
+  margin: 10px 0 0;
+  color: rgba(17, 24, 39, 0.62);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.placeIdentity .pending {
+  color: rgba(17, 24, 39, 0.42);
+  font-style: italic;
+}
+
+.placeActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 18px;
+  align-items: center;
+  padding-top: 20px;
+  border-top: 1px solid rgba(17, 24, 39, 0.08);
+}
+
+.primaryAction {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  gap: 10px;
+  padding: 0 16px;
+  border-radius: 999px;
+  background: var(--brotherhood-dark);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-decoration: none;
+  transition: transform 160ms ease, opacity 160ms ease;
+}
+
+.primaryAction:hover,
+.primaryAction:focus-visible {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+
+.coordinates {
+  color: rgba(17, 24, 39, 0.46);
+  font-size: 0.72rem;
+  font-weight: 650;
+}
+
+.hoursCard {
+  display: grid;
+  align-content: start;
+  gap: 20px;
+  padding: clamp(24px, 3vw, 32px);
+}
+
+.hoursHeader small {
+  padding: 6px 9px;
+  border-radius: 999px;
+  font-size: 0.65rem;
+  font-weight: 800;
+}
+
+.verified {
+  background: #edf7ef;
+  color: #2f6940;
+}
+
+.stale {
+  background: #f6f0e6;
+  color: #8a641d;
+}
+
+.hoursText {
+  margin: 0;
+  white-space: pre-line;
+  color: var(--brotherhood-dark);
+  font-size: clamp(1rem, 1.5vw, 1.14rem);
+  font-weight: 700;
+  line-height: 1.65;
+}
+
+.hoursPending {
+  display: grid;
+  gap: 7px;
+  padding: 18px 0;
+}
+
+.hoursPending strong {
+  color: var(--brotherhood-dark);
+  font-size: 1.08rem;
+}
+
+.hoursPending p {
+  margin: 0;
+  color: rgba(17, 24, 39, 0.55);
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+
+.hoursFootnote {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: 1px solid rgba(17, 24, 39, 0.08);
+  color: rgba(17, 24, 39, 0.5);
+}
+
+.hoursFootnote > span {
+  color: var(--brotherhood-secondary);
+}
+
+.hoursFootnote p {
+  margin: 0;
+  font-size: 0.73rem;
+  line-height: 1.55;
+}
+
+.shared {
+  display: grid;
+  grid-template-columns: minmax(190px, 0.3fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+  padding: 22px 0 0;
+  border-top: 1px solid rgba(17, 24, 39, 0.09);
+}
+
+.sharedHeading {
+  display: grid;
+  gap: 5px;
+}
+
+.sharedHeading span {
+  color: var(--brotherhood-dark);
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.sharedHeading small {
+  color: rgba(17, 24, 39, 0.48);
+  font-size: 0.7rem;
+}
+
+.sharedLinks {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.sharedLinks a {
+  display: flex;
+  min-height: 54px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 15px;
+  border: 1px solid rgba(17, 24, 39, 0.08);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--brotherhood-dark);
+  font-size: 0.82rem;
+  font-weight: 750;
+  text-decoration: none;
+}
+
+.sharedLinks b {
+  color: var(--brotherhood-secondary);
+}
+
+.history {
+  border-top: 1px solid rgba(17, 24, 39, 0.09);
+}
+
+.history summary {
+  display: grid;
+  min-height: 58px;
+  grid-template-columns: 1fr auto auto;
+  gap: 12px;
+  align-items: center;
+  cursor: pointer;
+  list-style: none;
+  color: var(--brotherhood-dark);
+}
+
+.history summary::-webkit-details-marker {
+  display: none;
+}
+
+.history summary > span {
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.history summary small {
+  color: rgba(17, 24, 39, 0.48);
+  font-size: 0.7rem;
+}
+
+.history summary b {
+  color: var(--brotherhood-secondary);
+  transition: transform 160ms ease;
+}
+
+.history[open] summary b {
+  transform: rotate(45deg);
+}
+
+.historyList {
+  display: grid;
+  gap: 0;
+  padding-bottom: 8px;
+}
+
+.historyList article {
+  display: grid;
+  grid-template-columns: minmax(130px, 0.26fr) minmax(0, 1fr);
+  gap: 18px;
+  padding: 16px 0;
+  border-top: 1px solid rgba(17, 24, 39, 0.07);
+}
+
+.historyList article > span {
+  color: var(--brotherhood-secondary);
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.historyList strong {
+  color: var(--brotherhood-dark);
+  font-size: 0.88rem;
+}
+
+.historyList p {
+  margin: 4px 0 0;
+  color: rgba(17, 24, 39, 0.54);
+  font-size: 0.76rem;
+}
+
+@media (max-width: 900px) {
+  .header,
+  .mainGrid,
+  .shared {
+    grid-template-columns: 1fr;
+  }
+
+  .header {
+    gap: 14px;
+  }
+
+  .mainGrid {
+    gap: 12px;
+  }
+
+  .placeCard,
+  .hoursCard {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 620px) {
+  .section {
+    padding: 48px 0;
+  }
+
+  .placeCard,
+  .hoursCard {
+    border-radius: 20px;
+  }
+
+  .placeIdentity {
+    grid-template-columns: 46px minmax(0, 1fr);
+    gap: 14px;
+    padding: 26px 0 22px;
+  }
+
+  .pin {
+    width: 46px;
+    height: 46px;
+    border-radius: 14px 14px 14px 4px;
+  }
+
+  .sharedLinks {
+    grid-template-columns: 1fr;
+  }
+
+  .history summary {
+    grid-template-columns: 1fr auto;
+  }
+
+  .history summary small {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    margin-top: -10px;
+    padding-bottom: 10px;
+  }
+
+  .historyList article {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+}

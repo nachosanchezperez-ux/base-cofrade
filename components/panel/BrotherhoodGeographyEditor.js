@@ -126,9 +126,15 @@ export function BrotherhoodGeographyFields({
                 />
               </div>
               <label><span>Tipo de lugar</span><input name="new_place_type" placeholder="Parroquia" /></label>
-              <label><span>Dirección</span><input name="new_place_address" placeholder="Opcional" /></label>
-              <label className={styles.fieldWide}><span>Horario habitual</span><textarea name="new_place_opening_hours_text" rows="3" placeholder="Texto documentado del horario habitual" /></label>
-              <label><span>Fecha de comprobación</span><input name="new_place_opening_hours_verified_at" type="date" /></label>
+              <label><span>Dirección</span><input name="new_place_address" placeholder="Calle y número" /></label>
+              <label><span>Latitud</span><input name="new_place_latitude" inputMode="decimal" placeholder="37.388" /></label>
+              <label><span>Longitud</span><input name="new_place_longitude" inputMode="decimal" placeholder="-5.99" /></label>
+              <label className={styles.fieldWide}>
+                <span>Horario de apertura / visita</span>
+                <textarea name="new_place_opening_hours_text" rows="3" placeholder="Texto documentado del horario habitual de apertura" />
+                <small>Misas, cultos y celebraciones se gestionan por separado en Cultos.</small>
+              </label>
+              <label><span>Fecha de comprobación del horario</span><input name="new_place_opening_hours_verified_at" type="date" /></label>
             </div>
             <div className={styles.formActions}>
               <button type="button" className={styles.secondaryButton} onClick={() => setNewPlaceName('')}>Cancelar</button>
@@ -165,11 +171,17 @@ export function BrotherhoodGeographyInlineTools({
             <label><span>Localidad</span><select name="place_municipality_id" defaultValue={selectedPlace.municipality_id || ''} required><option value="">Selecciona una localidad</option>{municipalities.map((item) => <option key={item.id} value={item.id}>{item.name} · {item.province}</option>)}</select></label>
             <label><span>Tipo de lugar</span><input name="place_type" defaultValue={selectedPlace.place_type || ''} /></label>
             <label><span>Dirección</span><input name="place_address" defaultValue={selectedPlace.address || ''} /></label>
-            <label className={styles.fieldWide}><span>Horario habitual</span><textarea name="place_opening_hours_text" rows="3" defaultValue={selectedPlace.opening_hours_text || ''} /></label>
-            <label><span>Fecha de comprobación</span><input name="place_opening_hours_verified_at" type="date" defaultValue={selectedPlace.opening_hours_verified_at || ''} /></label>
+            <label><span>Latitud</span><input name="place_latitude" inputMode="decimal" defaultValue={selectedPlace.latitude ?? ''} placeholder="37.388" /></label>
+            <label><span>Longitud</span><input name="place_longitude" inputMode="decimal" defaultValue={selectedPlace.longitude ?? ''} placeholder="-5.99" /></label>
+            <label className={styles.fieldWide}>
+              <span>Horario de apertura / visita</span>
+              <textarea name="place_opening_hours_text" rows="3" defaultValue={selectedPlace.opening_hours_text || ''} />
+              <small>Misas, cultos y celebraciones se gestionan por separado en el módulo Cultos.</small>
+            </label>
+            <label><span>Fecha de comprobación del horario</span><input name="place_opening_hours_verified_at" type="date" defaultValue={selectedPlace.opening_hours_verified_at || ''} /></label>
           </div>
           <div className={styles.formActions}>
-            <small>El Lugar es compartido y estos datos podrán reutilizarse desde otras entidades.</small>
+            <small>El Lugar es compartido: dirección, coordenadas y horario se reutilizan automáticamente desde otras entidades que usen esta misma Sede.</small>
             <button className={styles.secondaryButton} type="submit">Guardar Lugar</button>
           </div>
         </form>

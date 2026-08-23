@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { cache } from 'react';
 import CofradeTypeBadges from '@/components/CofradeTypeBadges';
 import BrotherhoodMusicalHeritage from '@/components/BrotherhoodMusicalHeritage';
+import BrotherhoodSeatSection from '@/components/BrotherhoodSeatSection';
 import {
   BrotherhoodConceptualTitulars,
   BrotherhoodOwnBands,
@@ -172,6 +173,7 @@ export default async function HermandadDetailPage({ params }) {
 
       <EntitySectionNav items={[
         { href: '#resumen', label: 'Resumen' },
+        h.sedeDetalle && { href: '#sede', label: 'Sede y visita' },
         { href: '#titulares', label: 'Titulares' },
         { href: '#pasos', label: 'Pasos' },
         (h.imagenes?.length > 0 || h.pasos?.length > 0) && { href: '#tira-del-hilo', label: 'Tira del hilo' },
@@ -285,6 +287,8 @@ export default async function HermandadDetailPage({ params }) {
 
         </aside>
       </div></section>
+
+      <BrotherhoodSeatSection seat={h.sedeDetalle} />
 
       <section className="section brotherhood-soft" id="titulares"><div className="shell">
         <SectionTitle eyebrow="Titularidad" title="Sagrados Titulares" description="Imágenes e identidades devocionales que conforman la titularidad documentada de la Hermandad." />

@@ -15,6 +15,16 @@ function nullable(formData, name) {
   return value(formData, name) || null
 }
 
+function numericNullable(formData, name, { min = -Infinity, max = Infinity } = {}) {
+  const raw = value(formData, name)
+  if (!raw) return null
+
+  const number = Number(raw.replace(',', '.'))
+  if (!Number.isFinite(number)) throw new Error(`${name} debe ser un número válido.`)
+  if (number < min || number > max) throw new Error(`${name} está fuera del rango permitido.`)
+  return number
+}
+
 function required(formData, name, label) {
   const candidate = value(formData, name)
   if (!candidate) throw new Error(`${label} es obligatorio.`)
@@ -204,6 +214,8 @@ export async function createPlaceAction(formData) {
       slug,
       place_type: nullable(formData, 'new_place_type'),
       address: nullable(formData, 'new_place_address'),
+      latitude: numericNullable(formData, 'new_place_latitude', { min: -90, max: 90 }),
+      longitude: numericNullable(formData, 'new_place_longitude', { min: -180, max: 180 }),
       opening_hours_text: nullable(formData, 'new_place_opening_hours_text'),
       opening_hours_verified_at: nullable(formData, 'new_place_opening_hours_verified_at'),
     }
@@ -248,6 +260,8 @@ export async function updatePlaceAction(formData) {
     name,
     place_type: nullable(formData, 'place_type'),
     address: nullable(formData, 'place_address'),
+    latitude: numericNullable(formData, 'place_latitude', { min: -90, max: 90 }),
+    longitude: numericNullable(formData, 'place_longitude', { min: -180, max: 180 }),
     opening_hours_text: nullable(formData, 'place_opening_hours_text'),
     opening_hours_verified_at: nullable(formData, 'place_opening_hours_verified_at'),
   }
