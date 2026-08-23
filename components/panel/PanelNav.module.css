@@ -70,10 +70,61 @@
   text-transform: uppercase;
 }
 
+.quickSearch {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 42px;
+  margin-top: 24px;
+  padding: 7px 9px;
+  border: 1px solid rgb(255 255 255 / 11%);
+  border-radius: 11px;
+  color: rgb(255 255 255 / 72%);
+  background: rgb(255 255 255 / 5%);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.quickSearch:hover,
+.quickSearch:focus-visible {
+  border-color: rgb(255 255 255 / 22%);
+  outline: none;
+  color: #fff;
+  background: rgb(255 255 255 / 9%);
+}
+
+.quickSearch > span {
+  font-size: 18px;
+  line-height: 1;
+  text-align: center;
+}
+
+.quickSearch strong {
+  overflow: hidden;
+  font-size: 11.5px;
+  font-weight: 750;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.quickSearch kbd {
+  padding: 3px 5px;
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 6px;
+  color: rgb(255 255 255 / 55%);
+  background: rgb(0 0 0 / 8%);
+  font: inherit;
+  font-size: 8.5px;
+  font-weight: 850;
+}
+
 .desktopNav {
   display: grid;
   gap: 20px;
-  margin-top: 38px;
+  margin-top: 24px;
 }
 
 .navGroup {
@@ -257,9 +308,17 @@
     font-size: 8.5px;
   }
 
+  .quickSearch {
+    margin-top: 19px;
+  }
+
+  .quickSearch kbd {
+    display: none;
+  }
+
   .desktopNav {
     gap: 16px;
-    margin-top: 32px;
+    margin-top: 20px;
   }
 
   .groupLabel {
@@ -310,6 +369,7 @@
   }
 
   .panelBrand,
+  .quickSearch,
   .desktopNav,
   .sidebarFoot {
     display: none;
@@ -319,14 +379,15 @@
     position: relative;
     z-index: 3;
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     width: 100%;
     height: 72px;
-    padding: 6px 8px 8px;
+    padding: 6px 7px 8px;
     background: linear-gradient(155deg, #102e4f 0%, #0b2037 100%);
   }
 
   .mobilePrimaryLink,
+  .mobileCommandButton,
   .mobileMenuButton {
     display: grid;
     min-width: 0;
@@ -334,7 +395,7 @@
     justify-items: center;
     gap: 3px;
     min-height: 56px;
-    padding: 3px 5px;
+    padding: 3px 3px;
     border: 0;
     border-radius: 10px;
     color: rgb(255 255 255 / 68%);
@@ -344,7 +405,13 @@
     cursor: pointer;
   }
 
+  .mobileCommandButton:disabled {
+    opacity: .35;
+    cursor: not-allowed;
+  }
+
   .mobilePrimaryLink .navMark,
+  .mobileCommandButton .navMark,
   .mobileMenuButton .navMark {
     width: 25px;
     height: 25px;
@@ -355,6 +422,7 @@
   }
 
   .mobilePrimaryLink .navLabel,
+  .mobileCommandButton .navLabel,
   .mobileMenuButton .navLabel {
     position: static;
     width: auto;
@@ -362,7 +430,7 @@
     overflow: visible;
     clip: auto;
     color: inherit;
-    font-size: 9px;
+    font-size: 8.5px;
     font-weight: 800;
     line-height: 1;
     white-space: nowrap;
@@ -586,12 +654,13 @@
 
 @media (max-width: 420px) {
   .mobileBar {
-    padding-inline: 4px;
+    padding-inline: 3px;
   }
 
   .mobilePrimaryLink .navLabel,
+  .mobileCommandButton .navLabel,
   .mobileMenuButton .navLabel {
-    font-size: 8.5px;
+    font-size: 7.5px;
   }
 
   .mobileGroupLinks {

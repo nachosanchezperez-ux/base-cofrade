@@ -12,7 +12,7 @@ const NAV_GROUPS = [
     label: 'Inicio',
     items: [
       { href: '/panel', label: 'Resumen', mobileLabel: 'Inicio', mark: '⌂' },
-      { href: '/panel/hoy', label: 'Hoy', mobileLabel: 'Hoy', mark: '24' },
+      { href: '/panel/hoy', label: 'Hoy', mark: '24' },
     ],
   },
   {
@@ -23,7 +23,7 @@ const NAV_GROUPS = [
       { href: '/panel/pasos', label: 'Pasos', mark: 'P' },
       { href: '/panel/bandas', label: 'Bandas', mark: 'B' },
       { href: '/panel/marchas', label: 'Marchas', mark: '♫' },
-      { href: '/panel/extraordinarias', label: 'Extraordinarias', mobileLabel: 'Agenda', mark: '✦' },
+      { href: '/panel/extraordinarias', label: 'Extraordinarias', mark: '✦' },
       { href: '/panel/acontecimientos', label: 'Acontecimientos', mark: 'A' },
     ],
   },
@@ -43,8 +43,6 @@ const NAV_GROUPS = [
     ],
   },
 ]
-
-const MOBILE_PRIMARY = new Set(['/panel', '/panel/hoy', '/panel/extraordinarias'])
 
 function normalize(value = '') {
   return value
@@ -74,10 +72,20 @@ function NavLink({ item, pathname, className = '', onClick, mobile = false }) {
   )
 }
 
+function MobileCommand({ mark, label, onClick, disabled = false }) {
+  return (
+    <button className={styles.mobileCommandButton} type="button" onClick={onClick} disabled={disabled}>
+      <span className={styles.navMark} aria-hidden="true">{mark}</span>
+      <span className={styles.navLabel}>{label}</span>
+    </button>
+  )
+}
+
 export default function PanelNav({ user }) {
   const pathname = usePathname()
   const [mobileOpen, setMobileOpen] = useState(false)
   const [moduleQuery, setModuleQuery] = useState('')
+  const canEdit = ['admin', 'editor'].includes(user.role)
 
   const groups = useMemo(() => NAV_GROUPS.map((group) => {
     if (group.label !== 'Sistema' || user.role !== 'admin') return group
@@ -87,9 +95,6 @@ export default function PanelNav({ user }) {
     }
   }), [user.role])
 
-  const items = groups.flatMap((group) => group.items)
-  const primaryItems = items.filter((item) => MOBILE_PRIMARY.has(item.href))
-  const moreActive = items.some((item) => !MOBILE_PRIMARY.has(item.href) && isActive(pathname, item.href))
   const normalizedQuery = normalize(moduleQuery)
   const visibleGroups = groups
     .map((group) => ({
@@ -99,6 +104,8 @@ export default function PanelNav({ user }) {
         : group.items,
     }))
     .filter((group) => group.items.length)
+  const homeItem = groups[0].items[0]
+  const moreActive = pathname !== '/panel'
 
   useEffect(() => {
     setMobileOpen(false)
@@ -110,12 +117,23 @@ export default function PanelNav({ user }) {
     setModuleQuery('')
   }
 
+  function openCommand(mode) {
+    closeMobileMenu()
+    window.dispatchEvent(new CustomEvent('panel-command-open', { detail: { mode } }))
+  }
+
   return (
     <aside className={styles.sidebar}>
       <Link href="/panel" className={styles.panelBrand} aria-label="Hilo Cofrade, panel">
         <span className={styles.brandRail} aria-hidden="true"><i /><b /></span>
         <span className={styles.brandCopy}><strong>Hilo</strong> Cofrade<small>Panel editorial</small></span>
       </Link>
+
+      <button className={styles.quickSearch} type="button" onClick={() => openCommand('search')}>
+        <span aria-hidden="true">⌕</span>
+        <strong>Buscar en el Panel</strong>
+        <kbd>⌘K</kbd>
+      </button>
 
       <nav className={styles.desktopNav} aria-label="Navegación del panel">
         {groups.map((group) => (
@@ -139,9 +157,10 @@ export default function PanelNav({ user }) {
       </div>
 
       <nav className={styles.mobileBar} aria-label="Navegación rápida del panel">
-        {primaryItems.map((item) => (
-          <NavLink key={item.href} item={item} pathname={pathname} className={styles.mobilePrimaryLink} mobile />
-        ))}
+        <NavLink item={homeItem} pathname={pathname} className={styles.mobilePrimaryLink} mobile />
+        <MobileCommand mark="⌕" label="Buscar" onClick={() => openCommand('search')} />
+        <MobileCommand mark="↺" label="Recientes" onClick={() => openCommand('recent')} />
+        <MobileCommand mark="＋" label="Nuevo" onClick={() => openCommand('new')} disabled={!canEdit} />
         <button
           className={`${styles.mobileMenuButton} ${(mobileOpen || moreActive) ? styles.mobileMenuButtonActive : ''}`}
           type="button"
