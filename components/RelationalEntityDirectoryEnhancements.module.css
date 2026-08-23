@@ -18,6 +18,21 @@
   object-position: center;
 }
 
+/*
+ * Imágenes y Pasos comparten la tarjeta base. La columna visual debe reservar
+ * exactamente el ancho real de la miniatura para que nunca invada el título.
+ */
+.card:not(.bandCard) {
+  grid-template-columns: 76px minmax(0, 1fr) 24px;
+  column-gap: 14px;
+}
+
+.card:not(.bandCard) > .media {
+  width: 76px;
+  height: 92px;
+  align-self: center;
+}
+
 .bandCard {
   min-height: 154px;
   border-top: 3px solid var(--entity-accent);
@@ -123,6 +138,18 @@
     width: 100%;
   }
 
+  .card:not(.bandCard) {
+    grid-template-columns: 68px minmax(0, 1fr) 22px;
+    column-gap: 13px;
+    padding: 15px 14px;
+  }
+
+  .card:not(.bandCard) > .media {
+    width: 68px;
+    height: 84px;
+    border-radius: 15px;
+  }
+
   .card.bandCard {
     grid-template-columns: 76px minmax(0, 1fr) 24px;
     column-gap: 15px;
@@ -141,6 +168,30 @@
 
   .selects select {
     border-radius: 12px;
+  }
+
+  .card:not(.bandCard) {
+    min-height: 104px;
+    grid-template-columns: 58px minmax(0, 1fr) 18px;
+    column-gap: 11px;
+    row-gap: 0;
+    padding: 13px 12px;
+  }
+
+  .card:not(.bandCard) > .media {
+    width: 58px;
+    height: 72px;
+    border-radius: 13px;
+  }
+
+  .card:not(.bandCard) .cardCopy {
+    overflow: hidden;
+  }
+
+  .card:not(.bandCard) .cardCopy strong {
+    font-size: 19px;
+    line-height: 1.08;
+    overflow-wrap: anywhere;
   }
 
   .card.bandCard {
@@ -162,5 +213,22 @@
 
   .cardCopy :global(.context) {
     margin-top: 7px;
+  }
+}
+
+@media (max-width: 380px) {
+  .card:not(.bandCard) {
+    grid-template-columns: 54px minmax(0, 1fr) 16px;
+    column-gap: 10px;
+    padding: 12px 11px;
+  }
+
+  .card:not(.bandCard) > .media {
+    width: 54px;
+    height: 68px;
+  }
+
+  .card:not(.bandCard) .cardCopy strong {
+    font-size: 18px;
   }
 }
