@@ -104,14 +104,14 @@
   font-size: 11px !important;
 }
 
-[data-panel-main] [class*="rowLink"]::before {
+[data-panel-main] [class*="brotherhoodList"] [class*="rowLink"]::before {
   position: absolute;
   inset: 0;
   border-radius: 11px;
   content: '';
 }
 
-[data-panel-main] [class*="rowLink"]:focus-visible {
+[data-panel-main] [class*="brotherhoodList"] [class*="rowLink"]:focus-visible {
   outline: none;
 }
 
