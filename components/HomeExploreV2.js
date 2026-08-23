@@ -3,8 +3,8 @@ import styles from './HomeExploreV2.module.css'
 import polishStyles from './HomeResponsivePolish.module.css'
 
 function countLabel(item) {
-  if (item.key === 'step') return `${item.count} ${item.count === 1 ? 'publicado' : 'publicados'}`
-  return `${item.count} ${item.count === 1 ? 'publicada' : 'publicadas'}`
+  if (item.key === 'step') return item.count === 1 ? 'publicado' : 'publicados'
+  return item.count === 1 ? 'publicada' : 'publicadas'
 }
 
 function countAriaLabel(item) {
@@ -44,7 +44,8 @@ export default function HomeExploreV2({ stats }) {
                   className={`${styles.count} ${polishStyles.exploreCount}`}
                   aria-label={countAriaLabel(item)}
                 >
-                  {countLabel(item)}
+                  <strong>{item.count}</strong>
+                  <span data-home-count-label>{countLabel(item)}</span>
                 </span>
               </div>
               <div className={`${styles.cardBody} ${polishStyles.exploreCardBody}`}>
