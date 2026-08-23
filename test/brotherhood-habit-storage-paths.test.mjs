@@ -67,3 +67,15 @@ test('el flujo de hábitos guarda rutas internas y las resuelve solo al visualiz
   assert.match(panelPage, /defaultValue=\{item\?\.image_path/)
   assert.match(publicLoader, /imagenPath:\s*resolveHiloMediaReference/)
 })
+
+test('versiona la migración remota que normaliza y blinda image_path', async () => {
+  const migration = await source(
+    'supabase/migrations/20260823232506_normalize_brotherhood_habit_media_paths.sql'
+  )
+
+  assert.match(migration, /update public\.brotherhood_habits/)
+  assert.match(migration, /set image_path = regexp_replace/)
+  assert.match(migration, /storage\/v1\/object\/public\/hilo-media/)
+  assert.match(migration, /brotherhood_habits_image_path_internal_reference/)
+  assert.match(migration, /image_path !~\*/)
+})
