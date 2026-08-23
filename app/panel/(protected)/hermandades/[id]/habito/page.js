@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import PanelFormGroup from '@/components/panel/PanelFormGroup'
 import RelationSourcesEditor from '@/components/panel/RelationSourcesEditor'
 import { requirePanelUser } from '@/lib/panel/auth'
 import { getBrotherhoodHabitsEditorData } from '@/lib/panel/brotherhood-habits'
@@ -32,20 +33,40 @@ function StatusSelect({ defaultValue = 'draft' }) {
 
 function HabitFields({ item = null }) {
   return (
-    <div className={`${styles.formGrid} ${habitStyles.fields}`}>
-      <label className={habitStyles.full}><span>Nombre del hábito</span><input name="name" defaultValue={item?.name || ''} placeholder="Hábito nazareno" required /></label>
-      <label><span>Túnica</span><textarea name="tunic_description" defaultValue={item?.tunic_description || ''} rows="3" placeholder="Color, tejido, cola, recogido…" /></label>
-      <label><span>Antifaz / capirote</span><textarea name="hood_description" defaultValue={item?.hood_description || ''} rows="3" /></label>
-      <label><span>Cíngulo, cinturón o esparto</span><textarea name="cord_description" defaultValue={item?.cord_description || ''} rows="3" /></label>
-      <label><span>Botonadura</span><textarea name="buttons_description" defaultValue={item?.buttons_description || ''} rows="3" /></label>
-      <label><span>Escudo</span><textarea name="shield_description" defaultValue={item?.shield_description || ''} rows="3" /></label>
-      <label><span>Calzado y complementos</span><textarea name="footwear_description" defaultValue={item?.footwear_description || ''} rows="3" /></label>
-      <label className={habitStyles.full}><span>Ruta o URL de la ilustración</span><input name="image_path" defaultValue={item?.image_path || ''} placeholder="También puedes subirla desde el bloque visual" /></label>
-      <label className={habitStyles.full}><span>Texto alternativo</span><input name="image_alt" defaultValue={item?.image_alt || ''} /></label>
-      <label><span>Orden</span><input name="sort_order" type="number" min="0" defaultValue={item?.sort_order ?? 0} /></label>
-      <label><span>Estado editorial</span><StatusSelect defaultValue={item?.status || 'draft'} /></label>
-      <label className={habitStyles.full}><span>Notas internas</span><textarea name="notes" defaultValue={item?.notes || ''} rows="3" /></label>
-    </div>
+    <>
+      <PanelFormGroup
+        eyebrow="Identidad"
+        title="Nombre y publicación"
+        description="Controla cómo se identifica y ordena este hábito dentro de la ficha."
+      >
+        <label className={styles.fieldWide}><span>Nombre del hábito</span><input name="name" defaultValue={item?.name || ''} placeholder="Hábito nazareno" required /></label>
+        <label><span>Orden</span><input name="sort_order" type="number" min="0" defaultValue={item?.sort_order ?? 0} /></label>
+        <label><span>Estado editorial</span><StatusSelect defaultValue={item?.status || 'draft'} /></label>
+      </PanelFormGroup>
+
+      <PanelFormGroup
+        eyebrow="Indumentaria"
+        title="Descripción del hábito"
+        description="Separa cada pieza para que la información sea precisa, comparable y fácil de mantener."
+      >
+        <label><span>Túnica</span><textarea name="tunic_description" defaultValue={item?.tunic_description || ''} rows="3" placeholder="Color, tejido, cola, recogido…" /></label>
+        <label><span>Antifaz / capirote</span><textarea name="hood_description" defaultValue={item?.hood_description || ''} rows="3" /></label>
+        <label><span>Cíngulo, cinturón o esparto</span><textarea name="cord_description" defaultValue={item?.cord_description || ''} rows="3" /></label>
+        <label><span>Botonadura</span><textarea name="buttons_description" defaultValue={item?.buttons_description || ''} rows="3" /></label>
+        <label><span>Escudo</span><textarea name="shield_description" defaultValue={item?.shield_description || ''} rows="3" /></label>
+        <label><span>Calzado y complementos</span><textarea name="footwear_description" defaultValue={item?.footwear_description || ''} rows="3" /></label>
+      </PanelFormGroup>
+
+      <PanelFormGroup
+        eyebrow="Archivo visual"
+        title="Ilustración y notas"
+        description="La subida visual se gestiona en la columna izquierda; estos campos conservan la referencia y su descripción."
+      >
+        <label className={styles.fieldWide}><span>Ruta o URL de la ilustración</span><input name="image_path" defaultValue={item?.image_path || ''} placeholder="También puedes subirla desde el bloque visual" /></label>
+        <label className={styles.fieldWide}><span>Texto alternativo</span><input name="image_alt" defaultValue={item?.image_alt || ''} /></label>
+        <label className={styles.fieldWide}><span>Notas internas</span><textarea name="notes" defaultValue={item?.notes || ''} rows="3" /></label>
+      </PanelFormGroup>
+    </>
   )
 }
 
