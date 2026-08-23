@@ -43,5 +43,5 @@ test('la paleta se monta una sola vez en el layout protegido y tiene adaptación
   assert.match(layout, /canEdit=\{canEdit\}/)
   assert.match(paletteStyles, /z-index: 120/)
   assert.match(paletteStyles, /@media \(max-width: 860px\)/)
-  assert.match(paletteStyles, /role/) === undefined
+  assert.match(paletteStyles, /max-height: min\(78vh, 720px\)/)
 })
