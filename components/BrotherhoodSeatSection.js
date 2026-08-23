@@ -54,6 +54,7 @@ export default function BrotherhoodSeatSection({ seat }) {
   const verification = verifiedLabel(seat.horarioVerificadoEn)
   const mapUrl = directionsUrl(seat)
   const hasCoordinates = Number.isFinite(seat.latitud) && Number.isFinite(seat.longitud)
+  const hasOpeningHours = Boolean(seat.horarioApertura)
 
   return (
     <section className={styles.section} id="sede">
@@ -69,7 +70,7 @@ export default function BrotherhoodSeatSection({ seat }) {
           </p>
         </header>
 
-        <div className={styles.mainGrid}>
+        <div className={`${styles.mainGrid} ${hasOpeningHours ? '' : styles.mainGridSingle}`}>
           <article className={styles.placeCard}>
             <div className={styles.placeTopline}>
               <span>{titleCase(seat.tipo)}</span>
@@ -80,7 +81,7 @@ export default function BrotherhoodSeatSection({ seat }) {
               <span className={styles.pin} aria-hidden="true"><i /></span>
               <div>
                 <h3>{seat.nombre}</h3>
-                {seat.direccion ? <p>{seat.direccion}</p> : <p className={styles.pending}>Dirección pendiente de documentar</p>}
+                {seat.direccion ? <p>{seat.direccion}</p> : null}
               </div>
             </div>
 
@@ -92,34 +93,27 @@ export default function BrotherhoodSeatSection({ seat }) {
               ) : null}
               {hasCoordinates ? (
                 <span className={styles.coordinates}>{seat.latitud.toFixed(5)} · {seat.longitud.toFixed(5)}</span>
-              ) : (
-                <span className={styles.coordinates}>Ubicación exacta pendiente</span>
-              )}
-            </div>
-          </article>
-
-          <article className={styles.hoursCard}>
-            <div className={styles.hoursHeader}>
-              <span>Horario de apertura</span>
-              {verification ? (
-                <small className={verification.stale ? styles.stale : styles.verified}>{verification.text}</small>
               ) : null}
             </div>
-
-            {seat.horarioApertura ? (
-              <p className={styles.hoursText}>{seat.horarioApertura}</p>
-            ) : (
-              <div className={styles.hoursPending}>
-                <strong>Pendiente de documentar</strong>
-                <p>El horario habitual de apertura todavía no está publicado en Hilo Cofrade.</p>
-              </div>
-            )}
-
-            <div className={styles.hoursFootnote}>
-              <span aria-hidden="true">✦</span>
-              <p>Este horario se refiere a la apertura habitual del templo. Misas, cultos y actos extraordinarios se documentan por separado.</p>
-            </div>
           </article>
+
+          {hasOpeningHours ? (
+            <article className={styles.hoursCard}>
+              <div className={styles.hoursHeader}>
+                <span>Horario de apertura</span>
+                {verification ? (
+                  <small className={verification.stale ? styles.stale : styles.verified}>{verification.text}</small>
+                ) : null}
+              </div>
+
+              <p className={styles.hoursText}>{seat.horarioApertura}</p>
+
+              <div className={styles.hoursFootnote}>
+                <span aria-hidden="true">✦</span>
+                <p>Este horario se refiere a la apertura habitual del templo. Misas, cultos y actos extraordinarios se documentan por separado.</p>
+              </div>
+            </article>
+          ) : null}
         </div>
 
         {seat.hermandadesCompartidas?.length > 0 ? (
