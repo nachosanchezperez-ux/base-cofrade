@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic'
 const BAND_LOGO_PRESENTATION = {
   'banda-del-sol': { mode: 'integrated', background: 'secondary' },
   'sangre-de-san-benito': { mode: 'integrated', background: 'primary' },
-  'banda-de-musica-del-maestro-tejera': { mode: 'contained', color: '#EAF4FF' },
+  'banda-de-musica-del-maestro-tejera': { mode: 'integrated', background: 'secondary' },
   'banda-municipal-de-musica-de-la-puebla-del-rio': { mode: 'contained', color: '#FCEBEC' },
   'banda-de-musica-nuestra-senora-de-la-soledad-cantillana': { mode: 'integrated', background: 'secondary' },
 }

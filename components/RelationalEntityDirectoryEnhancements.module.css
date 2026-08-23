@@ -5,11 +5,11 @@
 
 .media {
   position: relative;
-  width: 72px;
-  height: 88px;
+  width: 76px;
+  height: 92px;
   overflow: hidden;
   border: 1px solid #e3eaf0;
-  border-radius: 15px;
+  border-radius: 16px;
   background: #f1f5f8;
 }
 
@@ -19,6 +19,7 @@
 }
 
 .bandCard {
+  min-height: 154px;
   border-top: 3px solid var(--entity-accent);
 }
 
@@ -29,7 +30,7 @@
 .bandMedia img {
   object-fit: contain;
   object-position: center;
-  padding: 7px;
+  padding: 8px;
 }
 
 .bandMediaIntegrated {
@@ -42,8 +43,21 @@
   padding: 0;
 }
 
-.card {
-  grid-template-columns: 78px 1fr auto;
+/*
+ * Separamos visualmente logo y contenido sin crear una columna vacía.
+ * El hueco se mantiene contenido y se reduce progresivamente por viewport.
+ */
+.card.bandCard {
+  grid-template-columns: 86px minmax(0, 1fr) 28px;
+  column-gap: 17px;
+  row-gap: 0;
+  padding: 19px 22px 19px 20px;
+}
+
+.card.bandCard > .media.bandMedia {
+  width: 80px;
+  height: 98px;
+  align-self: center;
 }
 
 .monogram {
@@ -51,12 +65,32 @@
   height: 100%;
 }
 
+.cardCopy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card.bandCard .cardCopy {
+  padding-left: 0;
+}
+
 .cardCopy strong {
   margin-top: 0;
+  text-wrap: balance;
 }
 
 .cardCopy small {
-  margin-top: 6px;
+  margin-top: 7px;
+}
+
+.cardCopy :global(.context) {
+  margin-top: 8px;
+}
+
+.cardCopy :global(.details) {
+  margin-top: 5px;
 }
 
 .clamped {
@@ -64,6 +98,19 @@
   overflow: hidden;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+}
+
+@media (max-width: 1100px) {
+  .card.bandCard {
+    grid-template-columns: 80px minmax(0, 1fr) 26px;
+    column-gap: 16px;
+    padding: 18px 19px;
+  }
+
+  .card.bandCard > .media.bandMedia {
+    width: 74px;
+    height: 90px;
+  }
 }
 
 @media (max-width: 840px) {
@@ -74,6 +121,16 @@
 
   .selects select {
     width: 100%;
+  }
+
+  .card.bandCard {
+    grid-template-columns: 76px minmax(0, 1fr) 24px;
+    column-gap: 15px;
+  }
+
+  .card.bandCard > .media.bandMedia {
+    width: 70px;
+    height: 86px;
   }
 }
 
@@ -86,12 +143,24 @@
     border-radius: 12px;
   }
 
-  .card {
-    grid-template-columns: 58px 1fr auto;
+  .card.bandCard {
+    min-height: 120px;
+    grid-template-columns: 58px minmax(0, 1fr) 20px;
+    column-gap: 12px;
+    padding: 14px 12px 14px 13px;
   }
 
-  .media {
-    width: 54px;
-    height: 68px;
+  .card.bandCard > .media.bandMedia {
+    width: 56px;
+    height: 70px;
+    border-radius: 14px;
+  }
+
+  .cardCopy small {
+    margin-top: 5px;
+  }
+
+  .cardCopy :global(.context) {
+    margin-top: 7px;
   }
 }
