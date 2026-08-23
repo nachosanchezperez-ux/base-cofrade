@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import BrotherhoodTypeSelector from '@/components/panel/BrotherhoodTypeSelector'
 import { BrotherhoodGeographyFields, BrotherhoodGeographyInlineTools } from '@/components/panel/BrotherhoodGeographyEditor'
+import PanelFormGroup from '@/components/panel/PanelFormGroup'
 import { SaveBar, StatusSelect, STATUS_LABELS } from '@/components/panel/brotherhood/BrotherhoodEditorPrimitives'
 import { requirePanelUser } from '@/lib/panel/auth'
 import { getBrotherhoodEditorData } from '@/lib/panel/data'
@@ -61,32 +62,52 @@ export default async function BrotherhoodEditorPage({ params, searchParams }) {
         <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>Identidad</span><h2>Información general</h2></div><p>Solo los datos estructurales que definen y encabezan la ficha pública.</p></div>
         <form action={updateBrotherhoodAction} className={`${styles.panelCard} ${styles.editorForm}`}>
           <input type="hidden" name="brotherhood_id" value={data.entity.id} />
-          <div className={styles.formGrid}>
+
+          <PanelFormGroup
+            eyebrow="Identidad pública"
+            title="Nombre y publicación"
+            description="Los campos que identifican la Hermandad en directorios, búsquedas y cabecera pública."
+          >
             <label><span>Nombre popular</span><input name="popular_name" defaultValue={data.brotherhood?.popular_name || ''} required /></label>
             <label><span>Nombre corto de entidad</span><input name="name" defaultValue={data.entity.name} required /></label>
             <label className={styles.fieldWide}><span>Nombre oficial</span><input name="official_name" defaultValue={data.brotherhood?.official_name || ''} required /></label>
             <label><span>Slug público</span><input name="slug" defaultValue={data.entity.slug || ''} required /></label>
             <label><span>Estado editorial</span><StatusSelect defaultValue={data.entity.status} /></label>
             <label className={styles.fieldWide}><span>Resumen</span><textarea name="summary" defaultValue={data.entity.summary || ''} rows="4" /></label>
+          </PanelFormGroup>
+
+          <PanelFormGroup
+            eyebrow="Territorio y calendario"
+            title="Sede, clasificación y salida"
+            description="Ubicación canónica y datos de calendario que ordenan la Hermandad en el conjunto de Hilo Cofrade."
+          >
             <label><span>Fundación</span><input name="foundation_text" defaultValue={data.brotherhood?.foundation_text || ''} /></label>
             <label><span>Día de salida</span><input name="current_procession_day" defaultValue={data.brotherhood?.current_procession_day || ''} /></label>
             <BrotherhoodGeographyFields municipalities={geography.municipalities} places={geography.places} selectedMunicipalityId={selectedMunicipalityId} selectedPlaceId={selectedPlaceId} />
             <label><span>Barrio</span><input name="neighborhood" defaultValue={data.brotherhood?.neighborhood || ''} /></label>
             <BrotherhoodTypeSelector selected={data.brotherhood?.brotherhood_types || []} />
+          </PanelFormGroup>
+
+          <PanelFormGroup
+            eyebrow="Identidad visual"
+            title="Escudo, colores y control documental"
+            description="Recursos visuales y notas internas que completan la identificación editorial."
+          >
             <label className={styles.fieldWide}><span>Ruta o URL del escudo</span><input name="crest_path" defaultValue={data.brotherhood?.crest_path || ''} /></label>
+            <fieldset className={`${styles.colorFieldset} ${styles.fieldWide}`}>
+              <legend>Colores identitarios</legend>
+              {colorRows.map((color, index) => (
+                <div className={styles.colorRow} key={color.id || `new-${index}`}>
+                  <input type="hidden" name="color_id" value={color.id || ''} />
+                  <label><span>Nombre</span><input name="color_name" defaultValue={color.color_name || ''} placeholder="Azul" /></label>
+                  <label><span>Hexadecimal</span><div className={styles.colorInput}><i style={{ backgroundColor: color.hex_value || '#edf1f5' }} aria-hidden="true" /><input name="color_hex" defaultValue={color.hex_value || ''} placeholder="#123A67" /></div></label>
+                  <label><span>Uso</span><select name="color_role" defaultValue={color.color_role || 'identity'}><option value="primary">Principal</option><option value="secondary">Secundario</option><option value="accent">Acento</option><option value="identity">Identidad</option></select></label>
+                </div>
+              ))}
+            </fieldset>
             <label className={styles.fieldWide}><span>Notas documentales</span><textarea name="notes" defaultValue={data.brotherhood?.notes || ''} rows="4" /></label>
-          </div>
-          <fieldset className={styles.colorFieldset}>
-            <legend>Colores identitarios</legend>
-            {colorRows.map((color, index) => (
-              <div className={styles.colorRow} key={color.id || `new-${index}`}>
-                <input type="hidden" name="color_id" value={color.id || ''} />
-                <label><span>Nombre</span><input name="color_name" defaultValue={color.color_name || ''} placeholder="Azul" /></label>
-                <label><span>Hexadecimal</span><div className={styles.colorInput}><i style={{ backgroundColor: color.hex_value || '#edf1f5' }} aria-hidden="true" /><input name="color_hex" defaultValue={color.hex_value || ''} placeholder="#123A67" /></div></label>
-                <label><span>Uso</span><select name="color_role" defaultValue={color.color_role || 'identity'}><option value="primary">Principal</option><option value="secondary">Secundario</option><option value="accent">Acento</option><option value="identity">Identidad</option></select></label>
-              </div>
-            ))}
-          </fieldset>
+          </PanelFormGroup>
+
           <SaveBar canEdit={canEdit} />
         </form>
 
