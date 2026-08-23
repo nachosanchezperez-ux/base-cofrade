@@ -6,6 +6,7 @@ import styles from './PanelEditState.module.css'
 
 const FEEDBACK_KEYS = ['saved', 'created', 'updated', 'archived', 'deleted', 'removed', 'restored', 'uploaded']
 const DESTRUCTIVE_LABEL = /eliminar|retirar|borrar|archivar|desvincular/i
+const UNSAVED_MESSAGE = 'Hay cambios sin guardar. ¿Quieres salir sin guardarlos?'
 
 function isEditableControl(target) {
   if (!(target instanceof HTMLElement)) return false
@@ -29,6 +30,18 @@ function canQuickSave(form) {
   return !DESTRUCTIVE_LABEL.test(label)
 }
 
+function isSameDocumentAnchor(anchor) {
+  try {
+    const destination = new URL(anchor.href, window.location.href)
+    return destination.origin === window.location.origin
+      && destination.pathname === window.location.pathname
+      && destination.search === window.location.search
+      && Boolean(destination.hash)
+  } catch {
+    return false
+  }
+}
+
 export default function PanelEditState() {
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -37,8 +50,14 @@ export default function PanelEditState() {
   const previousPathRef = useRef(pathname)
   const fallbackTimerRef = useRef(null)
   const savedTimerRef = useRef(null)
+  const stateRef = useRef('idle')
   const [state, setState] = useState('idle')
   const [quickSaveAvailable, setQuickSaveAvailable] = useState(false)
+
+  function updateState(nextState) {
+    stateRef.current = nextState
+    setState(nextState)
+  }
 
   const feedbackSignal = useMemo(() => {
     const params = new URLSearchParams(queryKey)
@@ -57,7 +76,7 @@ export default function PanelEditState() {
 
       activeFormRef.current = form
       setQuickSaveAvailable(canQuickSave(form))
-      setState('dirty')
+      updateState('dirty')
     }
 
     function markPending(event) {
@@ -66,19 +85,68 @@ export default function PanelEditState() {
 
       activeFormRef.current = form
       setQuickSaveAvailable(false)
-      setState('pending')
+      updateState('pending')
       window.clearTimeout(fallbackTimerRef.current)
-      fallbackTimerRef.current = window.setTimeout(() => setState('idle'), 15000)
+      fallbackTimerRef.current = window.setTimeout(() => updateState('idle'), 15000)
+    }
+
+    function handleKeyboardSave(event) {
+      if (!(event.metaKey || event.ctrlKey) || event.key.toLowerCase() !== 's') return
+      if (stateRef.current !== 'dirty') return
+      const form = activeFormRef.current
+      if (!form || !canQuickSave(form)) return
+
+      event.preventDefault()
+      form.requestSubmit()
+    }
+
+    function protectNavigation(event) {
+      if (stateRef.current !== 'dirty') return
+      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return
+
+      const anchor = event.target instanceof Element ? event.target.closest('a[href]') : null
+      if (!anchor || anchor.target === '_blank' || anchor.hasAttribute('download') || isSameDocumentAnchor(anchor)) return
+
+      let destination
+      try {
+        destination = new URL(anchor.href, window.location.href)
+      } catch {
+        return
+      }
+      if (destination.origin !== window.location.origin) return
+      if (destination.pathname === window.location.pathname && destination.search === window.location.search) return
+
+      if (!window.confirm(UNSAVED_MESSAGE)) {
+        event.preventDefault()
+        event.stopPropagation()
+        return
+      }
+
+      activeFormRef.current = null
+      setQuickSaveAvailable(false)
+      updateState('idle')
+    }
+
+    function protectUnload(event) {
+      if (stateRef.current !== 'dirty') return
+      event.preventDefault()
+      event.returnValue = ''
     }
 
     document.addEventListener('input', markDirty, true)
     document.addEventListener('change', markDirty, true)
     document.addEventListener('submit', markPending, true)
+    document.addEventListener('keydown', handleKeyboardSave, true)
+    document.addEventListener('click', protectNavigation, true)
+    window.addEventListener('beforeunload', protectUnload)
 
     return () => {
       document.removeEventListener('input', markDirty, true)
       document.removeEventListener('change', markDirty, true)
       document.removeEventListener('submit', markPending, true)
+      document.removeEventListener('keydown', handleKeyboardSave, true)
+      document.removeEventListener('click', protectNavigation, true)
+      window.removeEventListener('beforeunload', protectUnload)
       window.clearTimeout(fallbackTimerRef.current)
     }
   }, [])
@@ -90,8 +158,8 @@ export default function PanelEditState() {
     window.clearTimeout(savedTimerRef.current)
     activeFormRef.current = null
     setQuickSaveAvailable(false)
-    setState('saved')
-    savedTimerRef.current = window.setTimeout(() => setState('idle'), 3000)
+    updateState('saved')
+    savedTimerRef.current = window.setTimeout(() => updateState('idle'), 3000)
 
     return () => window.clearTimeout(savedTimerRef.current)
   }, [feedbackSignal])
@@ -101,7 +169,7 @@ export default function PanelEditState() {
     previousPathRef.current = pathname
     activeFormRef.current = null
     setQuickSaveAvailable(false)
-    if (!feedbackSignal) setState('idle')
+    if (!feedbackSignal) updateState('idle')
   }, [pathname, feedbackSignal])
 
   useEffect(() => () => {
@@ -111,7 +179,7 @@ export default function PanelEditState() {
 
   function quickSave() {
     const form = activeFormRef.current
-    if (!form || !canQuickSave(form) || state !== 'dirty') return
+    if (!form || !canQuickSave(form) || stateRef.current !== 'dirty') return
     form.requestSubmit()
   }
 
@@ -124,7 +192,9 @@ export default function PanelEditState() {
         {state === 'dirty' ? 'Cambios sin guardar' : state === 'pending' ? 'Guardando cambios…' : 'Guardado'}
       </strong>
       {state === 'dirty' && quickSaveAvailable ? (
-        <button type="button" onClick={quickSave}>Guardar cambios</button>
+        <button type="button" onClick={quickSave}>
+          Guardar cambios <span className={styles.shortcut} aria-hidden="true">⌘/Ctrl S</span>
+        </button>
       ) : null}
       {state === 'saved' ? <span className={styles.savedCheck} aria-hidden="true">✓</span> : null}
     </div>
