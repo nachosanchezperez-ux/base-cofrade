@@ -6,7 +6,7 @@ import { absoluteUrl, breadcrumbJsonLd, socialMetadata } from '@/lib/seo'
 export const dynamic = 'force-dynamic'
 
 const title = 'Directorio cofrade de Sevilla y provincia'
-const description = 'Busca y explora hermandades, imágenes, pasos y bandas documentadas en Hilo Cofrade, con filtros sencillos por tipo, localidad y ámbito.'
+const description = 'Busca y explora hermandades, imágenes, pasos y bandas documentadas en Hilo Cofrade, con navegación por ubicación, calendario y estilo.'
 
 export const metadata = {
   title,
@@ -45,6 +45,8 @@ export default async function DirectorioPage({ searchParams }) {
   const scopedItems = kind === 'all' ? items : items.filter((item) => item.kind === kind)
   const municipalities = [...new Set(scopedItems.map((item) => item.municipality).filter(Boolean))]
   const subtypeValues = [...new Set(scopedItems.flatMap((item) => item.subtypeValues || []).filter(Boolean))]
+  const holyWeekDays = [...new Set(scopedItems.map((item) => item.holyWeekDay).filter(Boolean))]
+  const gloryMonths = [...new Set(scopedItems.map((item) => item.gloryMonth).filter(Boolean))]
 
   const initialState = {
     query: String(params?.q || ''),
@@ -54,6 +56,8 @@ export default async function DirectorioPage({ searchParams }) {
       : 'todos',
     municipality: resolveOption(municipalities, params?.localidad),
     subtype: kind === 'all' ? 'todos' : resolveOption(subtypeValues, params?.subtipo),
+    holyWeekDay: kind === 'all' ? 'todos' : resolveOption(holyWeekDays, params?.dia),
+    gloryMonth: kind === 'all' ? 'todos' : resolveOption(gloryMonths, params?.mes),
     limit: String(params?.limite || ''),
   }
 
@@ -94,7 +98,7 @@ export default async function DirectorioPage({ searchParams }) {
         <span className="eyebrow">Enciclopedia cofrade</span>
         <h1 className="page-title">Directorio</h1>
         <p className="page-lead">
-          Busca y explora hermandades, imágenes, pasos y bandas de Sevilla capital y provincia desde un único lugar.
+          Busca y explora Hilo Cofrade por entidad, ubicación, calendario procesional y estilo musical.
         </p>
         <EntityDirectoryExplorer items={items} initialState={initialState} />
       </div>
