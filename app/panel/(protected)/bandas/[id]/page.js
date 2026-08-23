@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { notFound, redirect } from 'next/navigation'
+import PanelFormGroup from '@/components/panel/PanelFormGroup'
 import { requirePanelUser } from '@/lib/panel/auth'
 import { getBandEditorData } from '@/lib/panel/data'
 import {
@@ -75,7 +76,12 @@ export default async function BandEditorPage({ params, searchParams }) {
           <input type="hidden" name="band_id" value={data.entity.id} />
           <input type="hidden" name="official_name_id" value={data.officialName?.id || ''} />
           <input type="hidden" name="popular_name_id" value={data.popularName?.id || ''} />
-          <div className={styles.formGrid}>
+
+          <PanelFormGroup
+            eyebrow="Identidad pública"
+            title="Nombre y publicación"
+            description="Cómo se identifica y clasifica la formación en directorios, búsquedas y ficha pública."
+          >
             <label><span>Nombre popular</span><input name="popular_name" defaultValue={displayName} required /></label>
             <label><span>Nombre corto oficial</span><input name="official_short_name" defaultValue={data.officialName?.short_name || ''} /></label>
             <label className={styles.fieldWide}><span>Nombre oficial</span><input name="official_name" defaultValue={data.officialName?.name || ''} required /></label>
@@ -83,18 +89,40 @@ export default async function BandEditorPage({ params, searchParams }) {
             <label><span>Estado editorial</span><StatusSelect defaultValue={data.entity.status} /></label>
             <label><span>Tipo de formación</span><select name="band_type" defaultValue={data.band?.band_type || 'Cornetas y Tambores'}><option value="Cornetas y Tambores">Cornetas y Tambores</option><option value="Agrupación Musical">Agrupación Musical</option><option value="Banda de Música">Banda de Música</option><option value="Capilla Musical">Capilla Musical</option><option value="Otra">Otra</option></select></label>
             <label><span>Fundación</span><input name="foundation_text" defaultValue={data.band?.foundation_text || ''} /></label>
-            <label><span>Localidad</span><MunicipalitySelect municipalities={data.municipalities} defaultValue={data.band?.municipality_id} /></label>
             <label className={styles.fieldWide}><span>Resumen</span><textarea name="summary" defaultValue={data.entity.summary || ''} rows="3" /></label>
+          </PanelFormGroup>
+
+          <PanelFormGroup
+            eyebrow="Territorio y vínculos"
+            title="Localidad, sede y Hermandad"
+            description="Ubicación operativa de la Banda y relación institucional cuando existe una Hermandad propia."
+          >
+            <label><span>Localidad</span><MunicipalitySelect municipalities={data.municipalities} defaultValue={data.band?.municipality_id} /></label>
             <label className={styles.fieldWide}><span>Hermandad vinculada</span><BrotherhoodSelect name="linked_brotherhood_entity_id" brotherhoods={data.brotherhoods} defaultValue={data.linkedBrotherhoodRelation?.target_entity_id} required={false} /></label>
             <label className={styles.fieldWide}><span>Sede o local de ensayo</span><input name="headquarters_text" defaultValue={data.band?.headquarters_text || ''} /></label>
+          </PanelFormGroup>
+
+          <PanelFormGroup
+            eyebrow="Identidad visual"
+            title="Colores, logotipo y fotografía"
+            description="Recursos maestros que alimentan la cabecera, tarjetas y archivo visual de la Banda."
+          >
             <label><span>Color principal</span><input name="primary_color" defaultValue={data.band?.primary_color || ''} placeholder="#63358B" /></label>
             <label><span>Color secundario</span><input name="secondary_color" defaultValue={data.band?.secondary_color || ''} placeholder="#29272C" /></label>
             <label className={styles.fieldWide}><span>Ruta pública del logotipo</span><input name="logo_path" defaultValue={data.band?.logo_path || ''} /></label>
             <label className={styles.fieldWide}><span>Ruta pública de la fotografía principal</span><input name="hero_image_path" defaultValue={data.band?.hero_image_path || ''} /></label>
             <label className={styles.fieldWide}><span>Descripción accesible de la fotografía</span><input name="hero_image_alt" defaultValue={data.band?.hero_image_alt || ''} /></label>
             <label className={styles.fieldWide}><span>Crédito de la fotografía</span><input name="hero_image_credit" defaultValue={data.band?.hero_image_credit || ''} /></label>
+          </PanelFormGroup>
+
+          <PanelFormGroup
+            eyebrow="Trayectoria"
+            title="Historia breve"
+            description="Síntesis pública de la formación; la cronología detallada puede crecer después en módulos propios."
+          >
             <label className={styles.fieldWide}><span>Historia breve</span><textarea name="description" defaultValue={data.band?.description || ''} rows="6" /></label>
-          </div>
+          </PanelFormGroup>
+
           <SaveBar label="Guardar información general" canEdit={canEdit} />
         </form>
       </section>
