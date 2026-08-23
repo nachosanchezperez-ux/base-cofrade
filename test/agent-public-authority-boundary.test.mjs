@@ -24,7 +24,9 @@ test('las superficies públicas que muestran personas no dependen de la sesión 
   for (const path of AGENT_PUBLIC_MODULES) {
     const code = await source(path)
     assert.doesNotMatch(code, /@\/lib\/supabase\/server(?:['"]|\/)/, `${path} no debe depender del cliente cookie-aware`)
+    assert.doesNotMatch(code, /@supabase\/ssr/, `${path} no debe crear una sesión SSR pública`)
     assert.doesNotMatch(code, /from\s+['"]next\/headers['"]/, `${path} no debe leer cookies o headers editoriales`)
+    assert.doesNotMatch(code, /\bcookies\s*\(/, `${path} no debe consultar cookies`)
   }
 })
 
@@ -58,7 +60,7 @@ test('el autocompletado de Tira del hilo conserva el wrapper público y no inven
   assert.match(liveSearch, /NAVIGABLE_TYPES = new Set\(\['brotherhood', 'image', 'step', 'band'\]\)/)
 })
 
-test('la migración pública exige endpoints publicados en las relaciones de agentes', async () => {
+test('la primera migración pública exige endpoints publicados en las relaciones de agentes', async () => {
   const migration = await source('supabase/migrations/20260823211405_public_agent_relation_integrity.sql')
 
   for (const relation of [
@@ -70,11 +72,42 @@ test('la migración pública exige endpoints publicados en las relaciones de age
     'march_authors',
     'entity_relations',
   ]) {
-    assert.match(migration, new RegExp(`ON public\\.${relation}`))
+    assert.match(migration, new RegExp(`ON public\\.${relation}`, 'i'))
   }
 
   assert.match(migration, /agent_entity\.status = 'published'/)
   assert.match(migration, /step_entity\.status = 'published'/)
   assert.match(migration, /source_entity\.status = 'published'/)
   assert.match(migration, /target_entity\.status = 'published'/)
+})
+
+test('el endurecimiento final de Personas cubre roles, bandas y extremos publicables', async () => {
+  const migration = await source('supabase/migrations/20260823211610_harden_public_agent_relations.sql')
+
+  for (const policy of [
+    'Public agent roles',
+    'Published image authorships',
+    'Published march authors',
+    'Published step personnel periods',
+    'Public step phase agents',
+    'Published heritage interventions',
+    'Public heritage update agents',
+    'Public band agents',
+    'Published entity relations',
+  ]) {
+    assert.match(migration, new RegExp(`create policy "${policy}"`, 'i'), `falta proteger ${policy}`)
+  }
+
+  assert.match(migration, /to anon, authenticated/)
+  assert.match(migration, /agent\.entity_type = 'agent'/)
+  assert.match(migration, /agent\.status = 'published'/)
+  assert.match(migration, /image\.status = 'published'/)
+  assert.match(migration, /march\.status = 'published'/)
+  assert.match(migration, /step\.status = 'published'/)
+  assert.match(migration, /band\.status = 'published'/)
+  assert.match(migration, /source\.status = 'published'/)
+  assert.match(migration, /target\.status = 'published'/)
+  assert.doesNotMatch(migration, /\binsert\s+into\b/i)
+  assert.doesNotMatch(migration, /\bupdate\s+public\./i)
+  assert.doesNotMatch(migration, /\bdelete\s+from\b/i)
 })
