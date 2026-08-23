@@ -34,15 +34,19 @@ export default function PanelEditState() {
   const searchParams = useSearchParams()
   const queryKey = searchParams.toString()
   const activeFormRef = useRef(null)
+  const previousPathRef = useRef(pathname)
   const fallbackTimerRef = useRef(null)
   const savedTimerRef = useRef(null)
   const [state, setState] = useState('idle')
   const [quickSaveAvailable, setQuickSaveAvailable] = useState(false)
 
-  const feedbackSignal = useMemo(() => FEEDBACK_KEYS
-    .map((key) => `${key}:${new URLSearchParams(queryKey).get(key) || ''}`)
-    .filter((value) => !value.endsWith(':'))
-    .join('|'), [queryKey])
+  const feedbackSignal = useMemo(() => {
+    const params = new URLSearchParams(queryKey)
+    return FEEDBACK_KEYS
+      .map((key) => `${key}:${params.get(key) || ''}`)
+      .filter((value) => !value.endsWith(':'))
+      .join('|')
+  }, [queryKey])
 
   useEffect(() => {
     function markDirty(event) {
@@ -93,10 +97,12 @@ export default function PanelEditState() {
   }, [feedbackSignal])
 
   useEffect(() => {
+    if (previousPathRef.current === pathname) return
+    previousPathRef.current = pathname
     activeFormRef.current = null
     setQuickSaveAvailable(false)
-    setState('idle')
-  }, [pathname])
+    if (!feedbackSignal) setState('idle')
+  }, [pathname, feedbackSignal])
 
   useEffect(() => () => {
     window.clearTimeout(fallbackTimerRef.current)
