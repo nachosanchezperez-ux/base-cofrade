@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import HomeMarchPlayer from '@/components/HomeMarchPlayer'
 import styles from './HomeTodayV2.module.css'
+import polishStyles from './HomeResponsivePolish.module.css'
 
 function isSvg(path = '') {
   return String(path).toLowerCase().endsWith('.svg')
@@ -13,7 +14,7 @@ function CardVisual({ visual }) {
 
   return (
     <div
-      className={`${styles.visual} ${photo ? styles.visualPhoto : styles.visualIdentity}`}
+      className={`${styles.visual} ${photo ? styles.visualPhoto : styles.visualIdentity} ${polishStyles.todayVisual}`}
       title={photo && visual.credit ? visual.credit : undefined}
     >
       <Image
@@ -35,22 +36,22 @@ export default function HomeTodayV2({ today, content }) {
   if (!hasContent) return null
 
   return (
-    <section className={styles.section} id="hoy">
+    <section className={`${styles.section} ${polishStyles.todaySection}`} id="hoy">
       <div className="shell">
-        <header className={styles.header}>
+        <header className={`${styles.header} ${polishStyles.todayHeader}`}>
           <span className={styles.date}>{today}</span>
           <h2>Hoy en Hilo Cofrade</h2>
           <p>Una selección diaria para descubrir historias, relaciones, datos y música de la enciclopedia.</p>
         </header>
 
         {cards.length ? (
-          <div className={styles.grid}>
+          <div className={`${styles.grid} ${polishStyles.todayGrid}`}>
             {cards.map((card) => (
               <article
-                className={`${styles.card} ${card.kind === 'discovery' ? styles.discoveryCard : ''} ${card.visual?.path ? styles.cardWithVisual : ''}`}
+                className={`${styles.card} ${polishStyles.todayCard} ${card.kind === 'discovery' ? styles.discoveryCard : ''} ${card.visual?.path ? `${styles.cardWithVisual} ${polishStyles.todayCardWithVisual}` : ''}`}
                 key={`${card.kind}-${card.id}`}
               >
-                <span className={styles.icon} aria-hidden="true">{card.icon}</span>
+                <span className={`${styles.icon} ${polishStyles.todayIcon}`} aria-hidden="true">{card.icon}</span>
                 <div className={styles.copy}>
                   <div className={styles.topline}>
                     <span className={styles.type}>{card.label}</span>
@@ -62,7 +63,7 @@ export default function HomeTodayV2({ today, content }) {
                   <h3>{card.title}</h3>
                   {card.summary ? <p>{card.summary}</p> : null}
                   {card.href ? (
-                    <Link className={styles.link} href={card.href}>{card.linkLabel}</Link>
+                    <Link className={`${styles.link} ${polishStyles.todayLink}`} href={card.href}>{card.linkLabel}</Link>
                   ) : null}
                 </div>
                 <CardVisual visual={card.visual} />
@@ -72,11 +73,11 @@ export default function HomeTodayV2({ today, content }) {
         ) : null}
 
         {content?.march ? (
-          <article className={styles.musicCard}>
+          <article className={`${styles.musicCard} ${polishStyles.todayMusic}`}>
             <div className={styles.musicAccent} aria-hidden="true">
               <span>♪</span>
             </div>
-            <div className={styles.musicCopy}>
+            <div className={`${styles.musicCopy} ${polishStyles.todayMusicCopy}`}>
               <span className={styles.type}>Marcha del día</span>
               <h3>{content.march.title}</h3>
               <p>
@@ -85,13 +86,13 @@ export default function HomeTodayV2({ today, content }) {
                 {content.march.dedicatee ? <> · Dedicada a <strong>{content.march.dedicatee}</strong></> : null}
               </p>
               {content.march.whyToday ? (
-                <div className={styles.whyToday}>
+                <div className={`${styles.whyToday} ${polishStyles.todayWhy}`}>
                   <span>Por qué escucharla hoy</span>
                   <p>{content.march.whyToday}</p>
                 </div>
               ) : null}
             </div>
-            <div className={styles.player}>
+            <div className={`${styles.player} ${polishStyles.todayPlayer}`}>
               <HomeMarchPlayer
                 videoId={content.march.videoId}
                 listenUrl={content.march.listenUrl}
