@@ -1,4 +1,6 @@
+import { Suspense } from 'react'
 import PanelNav from '@/components/panel/PanelNav'
+import PanelSaveToast from '@/components/panel/PanelSaveToast'
 import { requirePanelUser } from '@/lib/panel/auth'
 import styles from '@/app/panel/panel.module.css'
 
@@ -11,6 +13,9 @@ export default async function ProtectedPanelLayout({ children }) {
     <div className={styles.panelShell}>
       <PanelNav user={user} />
       <div className={styles.panelMain}>{children}</div>
+      <Suspense fallback={null}>
+        <PanelSaveToast />
+      </Suspense>
     </div>
   )
 }
