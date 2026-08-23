@@ -33,11 +33,18 @@ SUBIDA AL PANEL
 
 ## Compatibilidad
 
-El lector acepta durante la transición:
+El lector acepta:
 
-- URLs públicas antiguas de Hilo Media;
 - rutas internas nuevas;
 - rutas locales;
-- URLs externas.
+- URLs externas;
+- URLs públicas antiguas de Hilo Media durante cualquier transición o edición pendiente.
 
-La normalización de los registros existentes se ejecutará únicamente después de desplegar el lector compatible, para no interrumpir las imágenes actuales en producción.
+## Estado aplicado
+
+- El lector y el escritor compatibles quedaron integrados en `main` mediante la PR #304.
+- La migración remota `20260823232506_normalize_brotherhood_habit_media_paths` normalizó los tres registros que conservaban la URL pública completa.
+- La base de datos contiene ahora cero URL completas de Hilo Media en `brotherhood_habits.image_path`.
+- La restricción `brotherhood_habits_image_path_internal_reference` impide volver a guardar una URL pública completa del bucket.
+- Las rutas locales y las URLs externas continúan permitidas.
+- La ficha pública sigue resolviendo la dirección real del archivo al renderizar, sin alterar la imagen visible.
