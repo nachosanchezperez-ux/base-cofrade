@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import PanelFormGroup from '@/components/panel/PanelFormGroup'
 import { requirePanelUser } from '@/lib/panel/auth'
 import { getExtraordinaryGeneralEditorData } from '@/lib/panel/extraordinary-outings'
 import { saveExtraordinaryGeneralAction } from './actions'
@@ -56,35 +57,64 @@ export default async function ExtraordinaryGeneralPage({ params, searchParams })
         <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>Ficha base</span><h2>Datos generales</h2></div><p>Edita aquí la identidad de la salida, fechas, lugares, motivo y textos públicos.</p></div>
         <form action={saveExtraordinaryGeneralAction} className={`${styles.panelCard} ${styles.editorForm}`}>
           <input type="hidden" name="outing_id" value={outing.id} />
-          <div className={styles.formGrid}>
+
+          <PanelFormGroup
+            eyebrow="Identidad"
+            title="Título y publicación"
+            description="Datos que identifican la salida en Home, directorio, buscador y guía individual."
+          >
             <label className={styles.fieldWide}><span>Titular / título</span><input name="title" defaultValue={outing.title || ''} required disabled={!canEdit} /></label>
             <label><span>Tipo</span><input name="outing_type" defaultValue={outing.outing_type || ''} placeholder="Procesión extraordinaria" required disabled={!canEdit} /></label>
             <label><span>REF</span><input name="reference_code" defaultValue={outing.reference_code || ''} placeholder="SEVILLA-TITULAR-2027" disabled={!canEdit} /></label>
             <label className={styles.fieldWide}><span>Slug público</span><input name="slug" defaultValue={outing.slug || ''} placeholder="Se conserva o se genera automáticamente" disabled={!canEdit} /></label>
+            <label><span>Estado del evento</span><select name="event_status" defaultValue={outing.event_status || 'announced'} disabled={!canEdit}><option value="announced">Anunciada</option><option value="held">Celebrada</option><option value="cancelled">Cancelada</option></select></label>
+            <label><span>Estado editorial</span><select name="status" defaultValue={outing.status || 'draft'} disabled={!canEdit}><option value="draft">Borrador</option><option value="review">En revisión</option><option value="published">Publicado</option></select></label>
+          </PanelFormGroup>
 
+          <PanelFormGroup
+            eyebrow="Cronología"
+            title="Fecha y horarios"
+            description="Hitos básicos de la jornada, incluidos los casos que terminan después de medianoche."
+          >
             <label><span>Fecha</span><input name="outing_date" type="date" defaultValue={outing.outing_date || ''} disabled={!canEdit} /></label>
             <label><span>Hora de salida</span><input name="departure_time" type="time" defaultValue={timeInput(outing.departure_time)} disabled={!canEdit} /></label>
             <label><span>Fecha de entrada</span><input name="return_date" type="date" defaultValue={outing.return_date || ''} disabled={!canEdit} /></label>
             <label><span>Hora de entrada</span><input name="return_time" type="time" defaultValue={timeInput(outing.return_time)} disabled={!canEdit} /></label>
+          </PanelFormGroup>
 
+          <PanelFormGroup
+            eyebrow="Organización"
+            title="Localidad y entidad responsable"
+            description="Relaciona la salida con su Hermandad cuando existe ficha y conserva el nombre literal cuando no."
+          >
             <label><span>Localidad</span><select name="municipality_id" defaultValue={outing.municipality_id || ''} disabled={!canEdit}><option value="">Por documentar</option>{data.municipalities.map((item) => <option value={item.id} key={item.id}>{item.name}</option>)}</select></label>
             <label><span>Hermandad relacionada</span><select name="brotherhood_entity_id" defaultValue={outing.brotherhood_entity_id || ''} disabled={!canEdit}><option value="">Sin ficha relacionada</option>{data.brotherhoods.map((item) => <option value={item.id} key={item.id}>{item.name}</option>)}</select></label>
             <label className={styles.fieldWide}><span>Organizador visible</span><input name="organizer_name" defaultValue={outing.organizer_name || ''} placeholder="Nombre literal si la Hermandad no tiene ficha" disabled={!canEdit} /></label>
             <label className={styles.fieldWide}><span>Notas internas del organizador</span><textarea name="organizer_notes" rows="2" defaultValue={outing.organizer_notes || ''} disabled={!canEdit} /></label>
+          </PanelFormGroup>
 
+          <PanelFormGroup
+            eyebrow="Geografía"
+            title="Origen y destino"
+            description="Prioriza Lugares normalizados, manteniendo texto libre cuando el punto todavía no existe en el catálogo."
+          >
             <label><span>Origen normalizado</span><select name="origin_place_id" defaultValue={outing.origin_place_id || ''} disabled={!canEdit}><option value="">Sin Lugar relacionado</option>{data.places.map((item) => <option value={item.id} key={item.id}>{optionLabel(item)}</option>)}</select></label>
             <label><span>Destino normalizado</span><select name="destination_place_id" defaultValue={outing.destination_place_id || ''} disabled={!canEdit}><option value="">Sin Lugar relacionado</option>{data.places.map((item) => <option value={item.id} key={item.id}>{optionLabel(item)}</option>)}</select></label>
             <label><span>Origen en texto</span><input name="origin_text" defaultValue={outing.origin_text || ''} placeholder="Si aún no existe como Lugar" disabled={!canEdit} /></label>
             <label><span>Destino en texto</span><input name="destination_text" defaultValue={outing.destination_text || ''} placeholder="Si aún no existe como Lugar" disabled={!canEdit} /></label>
+          </PanelFormGroup>
 
+          <PanelFormGroup
+            eyebrow="Guía pública"
+            title="Motivo, recorrido y contexto"
+            description="Textos informativos que ayudan al cofrade a comprender y seguir la salida."
+          >
             <label className={styles.fieldWide}><span>Motivo</span><textarea name="reason" rows="2" defaultValue={outing.reason || ''} disabled={!canEdit} /></label>
             <label className={styles.fieldWide}><span>Recorrido</span><textarea name="route_summary" rows="5" defaultValue={outing.route_summary || ''} placeholder="Recorrido completo o resumen publicado" disabled={!canEdit} /></label>
             <label className={styles.fieldWide}><span>Descripción / contexto</span><textarea name="description" rows="4" defaultValue={outing.description || ''} disabled={!canEdit} /></label>
             <label className={styles.fieldWide}><span>Notas públicas</span><textarea name="public_notes" rows="3" defaultValue={outing.public_notes || ''} disabled={!canEdit} /></label>
+          </PanelFormGroup>
 
-            <label><span>Estado del evento</span><select name="event_status" defaultValue={outing.event_status || 'announced'} disabled={!canEdit}><option value="announced">Anunciada</option><option value="held">Celebrada</option><option value="cancelled">Cancelada</option></select></label>
-            <label><span>Estado editorial</span><select name="status" defaultValue={outing.status || 'draft'} disabled={!canEdit}><option value="draft">Borrador</option><option value="review">En revisión</option><option value="published">Publicado</option></select></label>
-          </div>
           <div className={styles.formActions}>
             <small>Los cambios publicados se reflejan en Home, directorio y guía individual.</small>
             <button className={styles.primaryButton} type="submit" disabled={!canEdit}>Guardar datos generales</button>
