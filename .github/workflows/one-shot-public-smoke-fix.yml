@@ -1,0 +1,44 @@
+name: One-shot public smoke fix
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: write
+
+jobs:
+  apply-and-verify:
+    if: github.actor != 'github-actions[bot]' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+          persist-credentials: true
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Aplicar el cierre estructural del smoke
+        run: python3 scripts/one_shot_public_smoke_fix.py
+
+      - name: Verificar diff y aplicación
+        run: |
+          git diff --check
+          npm ci
+          npm test
+          npm run build
+
+      - name: Guardar el corte verificado
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add app components test
+          git commit -m 'Cierra las regresiones estructurales del smoke público'
+          git push origin HEAD:${{ github.head_ref }}
