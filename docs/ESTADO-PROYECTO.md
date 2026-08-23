@@ -4,13 +4,13 @@
 
 ## Baseline operativo
 
-- Revisión: **2026-08-23 17:14 CEST**.
+- Revisión: **2026-08-23 17:38 CEST**.
 - Repositorio: `nachosanchezperez-ux/base-cofrade`.
 - Rama principal observada al cerrar el corte funcional: `main`.
-- Commit funcional de Arquitectura pública: `41dc3d2576aa1c2e97ea8766c3b08c1dea8b924d`.
-- Último frente funcional integrado: **#261 · Blinda la autoridad pública de Imágenes**.
+- `main`: `c37a29711f8bdc7791d303f8182b130fd3f0d7fe`.
+- Último frente funcional de Arquitectura pública: **#267 · Blinda la autoridad pública de Pasos**.
 - Proyecto Vercel: `base-cofrade`.
-- Producción funcional: **READY** en `dpl_DHVcsgRXk9GfJmKEqz2WSiKAF1Qv`, alineada con `41dc3d2576aa1c2e97ea8766c3b08c1dea8b924d`.
+- Producción funcional: **READY** en `dpl_A6Y4yCwkhQ92Y8XxwTnv6DPpAuXM`, alineada con `c37a29711f8bdc7791d303f8182b130fd3f0d7fe`.
 - Supabase: `Hilocofrade` (`kcevwkucqzcyrqaimyhl`) **ACTIVE_HEALTHY** en la última comprobación aplicable.
 - Última migración remota estructural verificada: `20260823134318_mass_import_relational_integrity`.
 - PR estructural antigua: **#49**, aparcada; no usar su rama como base técnica.
@@ -28,8 +28,8 @@ Antes de cada tarea significativa el Orquestador debe volver a refrescar `main`,
    - Home → **🟢 CERRADO**.
    - Hermandades → **🟢 CERRADO**.
    - Imágenes → **🟢 CERRADO**.
-   - **Pasos → SIGUIENTE CORTE**.
-   - Bandas.
+   - Pasos → **🟢 CERRADO**.
+   - **Bandas → SIGUIENTE CORTE**.
    - Extraordinarias.
    - Marchas.
    - Personas / agentes.
@@ -48,8 +48,8 @@ Responsable principal: **Hilo Tech**, con Hilo Supabase / Datos / QA cuando proc
 Objetivo actual:
 
 - cerrar Arquitectura pública entidad por entidad;
-- **corte activo: Pasos**;
-- orden posterior: Bandas → Extraordinarias → Marchas → Personas/agentes.
+- **corte activo: Bandas**;
+- orden posterior: Extraordinarias → Marchas → Personas/agentes.
 
 Carril A tiene prioridad de bloqueo sobre la entidad activa. Mientras una entidad esté en auditoría no modificar sin coordinación explícita:
 
@@ -64,42 +64,19 @@ Carril A tiene prioridad de bloqueo sobre la entidad activa. Mientras una entida
 
 Puede avanzar en paralelo sobre Panel, importación masiva vigente y UX operativa siempre que no toque la autoridad pública del corte activo.
 
-Puede trabajar en:
+La infraestructura vigente sigue siendo `app/panel/(protected)/datos/importar`, `lib/panel/bulk-import*.js` y `20260822204505_bulk_import_pipeline.sql`. Los endurecimientos operativos recientes del importador se integraron antes de #267 sin solape con Pasos.
 
-- `bulk_imports` / `bulk_import_items`;
-- validación previa y detección de duplicados;
-- resumen de cambios;
-- mensajes de éxito/error;
-- navegación y responsive del Panel;
-- mejoras de transporte/carga que no cambien modelo público, RLS ni contratos de la entidad activa.
-
-No debe reactivar la arquitectura técnica de #49.
+No reactivar la arquitectura técnica de #49.
 
 ### Carril C · Contenido y enriquecimiento
 
-Puede continuar cargando contenido y relaciones sobre el modelo vigente:
+Puede continuar cargando contenido y relaciones sobre el modelo vigente: Hermandades, Imágenes, Pasos, Bandas, capataces, acompañamientos, fuentes, extraordinarias, patrimonio, históricos y media.
 
-- Hermandades, Imágenes, Pasos y Bandas;
-- capataces y acompañamientos;
-- fuentes y trazabilidad;
-- extraordinarias;
-- patrimonio e históricos;
-- escudos, fotografías, hábitos y media.
-
-Debe preservar IDs, relaciones canónicas e históricos. Si una carga revela una carencia del modelo, elevarla al Orquestador; no improvisar nuevas tablas/campos durante el corte activo.
+Debe preservar IDs, relaciones canónicas e históricos. Si una carga revela una carencia del modelo, elevarla al Orquestador; no improvisar nuevas tablas o campos durante el corte activo.
 
 ### Regla de coordinación
 
-Antes de iniciar trabajo paralelo comprobar solape por:
-
-1. archivos;
-2. tablas / vistas / RPC;
-3. contratos de datos;
-4. entidad pública activa;
-5. migraciones;
-6. componentes compartidos.
-
-Si existe solape sensible, gana Carril A. Si no existe, los carriles pueden fusionar de forma independiente sobre el `main` real actualizado.
+Antes de iniciar trabajo paralelo comprobar solape por archivos, tablas/vistas/RPC, contratos de datos, entidad pública activa, migraciones y componentes compartidos. Si existe solape sensible, gana Carril A. Si no existe, los carriles pueden fusionar de forma independiente sobre el `main` real actualizado.
 
 ## Backlog estructural
 
@@ -117,9 +94,7 @@ Regla permanente: no conservar ramas caducadas por coste hundido. Si la intenci�
 
 PR **#252 · Audita y protege las importaciones relacionales** → **🟢 CERRADA**.
 
-Migración canónica:
-
-- `20260823134318_mass_import_relational_integrity.sql`.
+Migración canónica: `20260823134318_mass_import_relational_integrity.sql`.
 
 Resultado estable:
 
@@ -130,84 +105,65 @@ Resultado estable:
 - guardas contextuales de identidad de bandas dentro del mismo municipio;
 - no imponer unicidad global de nombre porque existen homónimos legítimos.
 
-La infraestructura masiva vigente está en `app/panel/(protected)/datos/importar`, `lib/panel/bulk-import*.js` y `20260822204505_bulk_import_pipeline.sql`.
-
 ## Arquitectura pública · cierres
 
 ### Home → 🟢 cerrado
 
-PR **#254** dejó barrera de regresión sobre una cadena que ya era pública/stateless.
-
-Verificado:
-
-- vistas `security_invoker=true`;
-- RLS y lectura pública;
-- rol `anon` correcto;
-- CI, preview, producción y runtime correctos.
+PR **#254** dejó barrera de regresión sobre una cadena pública/stateless. Vistas `security_invoker=true`, RLS/rol `anon`, CI, preview, producción y runtime verificados.
 
 ### Hermandades → 🟢 cerrado
 
-PR **#256** migró a cliente público:
+PR **#256** migró a cliente público `brotherhoods.js`, `brotherhood-display.js` y `brotherhood-musical-heritage.js`. PR **#257** eliminó la última dependencia cookie-aware en `BrotherhoodRelationalExtras.js` y extendió la barrera a la capa relacional.
 
-- `lib/supabase/brotherhoods.js`;
-- `lib/supabase/brotherhood-display.js`;
-- `lib/supabase/brotherhood-musical-heritage.js`.
-
-PR **#257** eliminó la última dependencia cookie-aware en `BrotherhoodRelationalExtras.js` y extendió la barrera a la capa relacional.
-
-Reglas canónicas a preservar:
-
-- Patrimonio general separado de Patrimonio musical;
-- Sede como relación canónica con `places`;
-- sin excepciones por slug;
-- ficha y enriquecimiento relacional públicos sin sesión/cookies editoriales.
+Reglas canónicas: Patrimonio general separado de Patrimonio musical; Sede como relación con `places`; sin excepciones por slug; ficha y enriquecimiento relacional públicos sin sesión editorial.
 
 ### Imágenes → 🟢 cerrado
 
-PR **#261 · Blinda la autoridad pública de Imágenes** → **🟢 FUSIONADA**.
+PR **#261** confirmó que directorio, ficha, media y enriquecimiento relacional ya utilizaban cliente público stateless. Se añadió `test/image-public-authority-boundary.test.mjs` y se verificaron RLS, rol `anon`, vistas `security_invoker`, CI, preview, producción y runtime.
 
-La auditoría completa confirmó que no era necesario reescribir loaders. La arquitectura funcional ya utilizaba cliente público stateless en:
+### Pasos → 🟢 cerrado
 
-- `app/imagenes/page.js` → `getImagesDirectory()`;
-- `app/imagenes/[slug]/page.js` → `getImagenPageBySlug()` y multimedia pública;
-- `lib/supabase/directories.js`;
-- `lib/supabase/public-entity-pages.js`;
-- `lib/supabase/entity-media.js`;
-- `lib/supabase/brotherhoods.js` como dependencia de la Hermandad relacionada;
-- `components/RelationalThread.js`;
-- `lib/supabase/relational-presence.js`.
+PR **#267 · Blinda la autoridad pública de Pasos** → **🟢 FUSIONADA**.
 
-Seguridad verificada:
+La auditoría completa de `/pasos` y `/pasos/[slug]` localizó una única dependencia cookie-aware directa:
 
-- `image_brotherhood_history` → `security_invoker=true`;
-- `current_image_locations` → `security_invoker=true`;
-- `image_authorship_details` → `security_invoker=true`;
-- tablas directas de la cadena con RLS activa y SELECT anónimo previsto;
-- las vistas no exponen imágenes no publicadas bajo rol `anon`;
-- lecturas `anon` devuelven correctamente hermandad, paso, autoría, intervenciones, media y fuentes según cada ficha.
+- `lib/supabase/step-heritage.js`.
 
 Cambio aplicado:
 
-- nuevo `test/image-public-authority-boundary.test.mjs`;
-- impide introducir `@/lib/supabase/server` o `next/headers` en la superficie pública;
-- exige cliente público explícito en los loaders que crean Supabase;
-- comprueba que `lib/supabase/public.js` siga siendo stateless;
-- protege también el enriquecimiento relacional de `Tira del hilo`.
+- `step-heritage.js` pasa de `@/lib/supabase/server` a `createPublicClient()` de `@/lib/supabase/public`;
+- no se alteraron consultas, filtros, shape, UI, rutas, datos, esquema ni políticas;
+- nuevo `test/step-public-authority-boundary.test.mjs` protege directorio, ficha, media, patrimonio, Hermandad relacionada, `Tira del hilo`, presencia relacional y el contrato stateless del cliente público.
 
-Verificación:
+Seguridad verificada:
 
-- #261: 1 archivo nuevo, sin cambios funcionales, datos, esquema, RLS, UI ni Panel;
-- CI: **success**;
-- preview Vercel: **READY**;
-- `/imagenes` en preview: **HTTP 200** y 36 imágenes publicadas;
-- las fichas individuales del preview estaban tras SSO de Vercel, por lo que no se declara smoke individual de preview;
-- producción funcional: `dpl_DHVcsgRXk9GfJmKEqz2WSiKAF1Qv` **READY**;
-- `/imagenes`: **HTTP 200**, 36 imágenes publicadas;
-- `/imagenes/maria-santisima-victoria-cigarreras`: **HTTP 200**, con Hermandad, paso, Tira del hilo, restauraciones y fuentes;
-- `/imagenes/divina-pastora-de-las-almas-de-cantillana`: **HTTP 200**, con fotografía, autoría atribuida, Hermandad, paso, Tira del hilo y fuente;
+- tablas directas de la cadena de Pasos con RLS activa y `SELECT` para `anon`;
+- `step_brotherhood_history` → `security_invoker=true`;
+- `step_image_history` → `security_invoker=true`;
+- `step_phase_details` → `security_invoker=true`;
+- rol `anon`: 25 entidades Paso publicadas, 31 relaciones Hermandad↔Paso, 30 Imagen↔Paso, 86 acompañamientos actuales, 46 fases patrimoniales y 67 responsables de fase;
+- Paso de la Piedad bajo `anon`: **11 fases, 17 responsables y 1 fuente**;
+- no se requirió migración ni modificación de políticas.
+
+Concurrencia:
+
+- #267 fue reconstruida sobre el `main` real cuando los trabajos paralelos del Carril B avanzaron;
+- las integraciones paralelas previas al merge solo afectaban Panel/importación masiva y no compartían archivos, RLS, rutas, loaders ni contratos de Pasos;
+- el head final se construyó sobre `6ab41a84a1915cf6e97fe8450fde504d5f7a2fa7` y se fusionó por squash como `c37a29711f8bdc7791d303f8182b130fd3f0d7fe`.
+
+Verificación técnica y pública:
+
+- CI de #267: **success**;
+- preview final: **READY**;
+- `/pasos` en preview: **HTTP 200**, 25 pasos publicados;
+- las fichas del preview quedaron detrás de SSO de Vercel, por lo que la comprobación rica se realizó en producción;
+- producción funcional: `dpl_A6Y4yCwkhQ92Y8XxwTnv6DPpAuXM` **READY**;
+- `/pasos`: **HTTP 200**, 25 pasos publicados;
+- `/pasos/paso-de-la-piedad`: **HTTP 200**, preservando Hermandad, dos imágenes, Banda del Sol, `Tira del hilo`, 11 fases patrimoniales, responsables y fuente;
+- `/pasos/paso-procesional-divina-pastora-cantillana`: **HTTP 200**, preservando Hermandad, imagen, Banda de la Soledad, `Tira del hilo`, fases de 1919 y 2008 y fuente;
 - runtime del deployment funcional: sin logs `error`/`fatal` tras los smokes.
 
-Conclusión: **IMÁGENES · AUTORIDAD PÚBLICA → 🟢 CERRADO**.
+Conclusión: **PASOS · AUTORIDAD PÚBLICA → 🟢 CERRADO**.
 
 ## Zonas sensibles permanentes
 
@@ -228,9 +184,9 @@ Conclusión: **IMÁGENES · AUTORIDAD PÚBLICA → 🟢 CERRADO**.
 
 ## Método obligatorio para el siguiente corte
 
-**Pasos** debe auditarse de extremo a extremo:
+**Bandas** debe auditarse de extremo a extremo:
 
-1. localizar todos los loaders/componentes usados por `/pasos` y `/pasos/[slug]`;
+1. localizar todos los loaders/componentes usados por `/bandas` y `/bandas/[slug]`;
 2. detectar dependencias de `@/lib/supabase/server`, `@supabase/ssr`, `next/headers` o sesión editorial;
 3. comprobar RLS, vistas y funciones implicadas;
 4. migrar solo las lecturas públicas que lo necesiten;
@@ -244,4 +200,4 @@ Conclusión: **IMÁGENES · AUTORIDAD PÚBLICA → 🟢 CERRADO**.
 
 No generar una lluvia de ideas. Refrescar el estado real, localizar el punto de la secuencia y devolver una sola acción ejecutable.
 
-**Siguiente acción actual: auditar Pasos de extremo a extremo para detectar cualquier dependencia pública de sesión/cookies, verificar RLS/vistas y dejar una barrera de regresión equivalente a Home, Hermandades e Imágenes.**
+**Siguiente acción actual: auditar Bandas de extremo a extremo para verificar su autoridad pública, RLS/vistas y ausencia de dependencias de sesión/cookies.**
