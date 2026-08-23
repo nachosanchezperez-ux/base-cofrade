@@ -12,12 +12,16 @@ const DRAFT_PREFIX = 'hilo-panel-draft:'
 function isEditableControl(target) {
   if (!(target instanceof HTMLElement)) return false
   if (!target.matches('input, select, textarea')) return false
-  if (target.matches('input[type="hidden"], input[type="file"], input[type="submit"], input[type="button"], input[type="reset"]')) return false
+  if (target.matches('input[type="hidden"], input[type="submit"], input[type="button"], input[type="reset"]')) return false
   return !target.hasAttribute('disabled') && !target.hasAttribute('readonly')
 }
 
-function editableControls(form) {
-  return [...form.elements].filter((element) => isEditableControl(element))
+function isPersistableControl(target) {
+  return isEditableControl(target) && !target.matches('input[type="file"]')
+}
+
+function persistableControls(form) {
+  return [...form.elements].filter((element) => isPersistableControl(element))
 }
 
 function isMutationForm(form) {
@@ -47,14 +51,14 @@ function formDraftKey(pathname, form) {
     .join('|')
   const submitter = form.querySelector('button[type="submit"], input[type="submit"]')
   const submitLabel = submitter?.textContent || submitter?.value || ''
-  const fieldSignature = editableControls(form).slice(0, 8).map((control) => control.name || control.type).join(',')
+  const fieldSignature = persistableControls(form).slice(0, 8).map((control) => control.name || control.type).join(',')
   const fallbackIndex = mutationForms().indexOf(form)
   const identity = `${hiddenIdentity}|${submitLabel}|${fieldSignature}|${fallbackIndex}`
   return `${DRAFT_PREFIX}${pathname}::${encodeURIComponent(identity)}`
 }
 
 function snapshotForm(form) {
-  return editableControls(form).map((control) => ({
+  return persistableControls(form).map((control) => ({
     name: control.name,
     type: control.type,
     value: control.value,
@@ -76,7 +80,7 @@ function persistDraft(pathname, form) {
 }
 
 function restoreForm(form, snapshot) {
-  const controls = editableControls(form)
+  const controls = persistableControls(form)
   if (!Array.isArray(snapshot?.fields) || snapshot.fields.length !== controls.length) return false
 
   snapshot.fields.forEach((field, index) => {
