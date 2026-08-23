@@ -1,203 +1,205 @@
 # Estado operativo de Hilo Cofrade
 
-> Registro vivo para Hilo Orquestador. GitHub, Vercel y Supabase son la fuente de verdad. Si existe discrepancia, prevalece siempre el estado real de las herramientas. Este documento resume decisiones vigentes, no actúa como diario de commits.
+> Registro vivo para Hilo Orquestador. GitHub, Vercel y Supabase son la fuente de verdad. Si existe discrepancia, prevalece siempre el estado real de las herramientas. Este documento resume el estado vigente y las reglas operativas; no sustituye la comprobación previa de las herramientas.
 
-## Baseline operativo
+## Baseline operativo verificado
 
-- Revisión: **2026-08-23 17:38 CEST**.
+- Revisión: **2026-08-23 · noche (CEST)**.
 - Repositorio: `nachosanchezperez-ux/base-cofrade`.
-- Rama principal observada al cerrar el corte funcional: `main`.
-- `main`: `c37a29711f8bdc7791d303f8182b130fd3f0d7fe`.
-- Último frente funcional de Arquitectura pública: **#267 · Blinda la autoridad pública de Pasos**.
+- Rama principal: `main`.
+- `main` verificado al iniciar este corte: `9723efa147ec7ad2b5ca3e617d83a0f7d6902f9c` — **Home 2.8: pulido visual final y accesibilidad (#285)**.
 - Proyecto Vercel: `base-cofrade`.
-- Producción funcional: **READY** en `dpl_A6Y4yCwkhQ92Y8XxwTnv6DPpAuXM`, alineada con `c37a29711f8bdc7791d303f8182b130fd3f0d7fe`.
-- Supabase: `Hilocofrade` (`kcevwkucqzcyrqaimyhl`) **ACTIVE_HEALTHY** en la última comprobación aplicable.
-- Última migración remota estructural verificada: `20260823134318_mass_import_relational_integrity`.
-- PR estructural antigua: **#49**, aparcada; no usar su rama como base técnica.
+- Producción verificada: **READY** en `dpl_7cDzH9Vi4yPXvoW8ATQKnkvzNHTR`, alineada con `9723efa147ec7ad2b5ca3e617d83a0f7d6902f9c`.
+- Runtime de producción, últimas seis horas verificadas: **sin errores detectados**.
+- Supabase: `Hilocofrade` (`kcevwkucqzcyrqaimyhl`) → **ACTIVE_HEALTHY**.
+- Única PR abierta observada: **#49 · Importador documental asistido**.
+- #49 permanece **⚪ APARCADA** y no puede utilizarse como base técnica.
 
-Antes de cada tarea significativa el Orquestador debe volver a refrescar `main`, PR abiertas, Vercel y Supabase cuando proceda. Los identificadores anteriores son un baseline funcional, no referencias permanentes.
+Los SHA, deployments y estados anteriores son una fotografía operativa. Antes de cualquier tarea significativa deben refrescarse GitHub, Vercel y Supabase cuando corresponda.
 
-## Secuencia de Dirección activa
+## Estado de la fase actual
 
-1. Smoke transversal de producción → **🟢 CERRADO**.
-2. Directorio unificado → **🟢 CERRADO**.
-3. Fichas de Hermandad → **🟢 CERRADO**.
-4. Limpieza del backlog estructural → **🟢 CERRADO**.
-5. Auditoría de cargas relacionales recientes → **🟢 CERRADO**.
-6. **Arquitectura pública / separación Front ↔ Panel → EN CURSO**.
-   - Home → **🟢 CERRADO**.
-   - Hermandades → **🟢 CERRADO**.
-   - Imágenes → **🟢 CERRADO**.
-   - Pasos → **🟢 CERRADO**.
-   - **Bandas → SIGUIENTE CORTE**.
-   - Extraordinarias.
-   - Marchas.
-   - Personas / agentes.
-7. Salud del grafo.
-8. Registro y formalización de decisiones HC.
-9. Elegir un único siguiente gran frente.
+### Reconciliación del registro
 
-No abrir otro frente estructural que compita con el corte activo del Carril A.
+**ESTADO-PROYECTO → 🟢 SINCRONIZADO** con el estado real posterior a Home 2.8.
 
-## Carriles paralelos autorizados
+### Arquitectura pública / separación Front ↔ Panel
 
-### Carril A · Técnico crítico
+**ARQUITECTURA PÚBLICA → EN CURSO**
 
-Responsable principal: **Hilo Tech**, con Hilo Supabase / Datos / QA cuando proceda.
+- Home → **🟢 CERRADO**.
+- Hermandades → **🟢 CERRADO**.
+- Imágenes → **🟢 CERRADO**.
+- Pasos → **🟢 CERRADO**.
+- Bandas → **🟢 CERRADO**.
+- Extraordinarias → **🟢 CERRADO**.
+- Tira del hilo → **🟢 CERRADO**.
+- Marchas → **🟢 CERRADO**.
+- **Personas / agentes → 🔴 ÚLTIMO CORTE PENDIENTE**.
 
-Objetivo actual:
+No declarar cerrada la Arquitectura pública hasta completar la auditoría, regresión, preview, smoke, producción y runtime de Personas / agentes.
 
-- cerrar Arquitectura pública entidad por entidad;
-- **corte activo: Bandas**;
-- orden posterior: Extraordinarias → Marchas → Personas/agentes.
+## Cierres recientes incorporados al baseline
 
-Carril A tiene prioridad de bloqueo sobre la entidad activa. Mientras una entidad esté en auditoría no modificar sin coordinación explícita:
+- **#272 · Bandas · autoridad pública** → fusionada.
+- **#273 · Extraordinarias · autoridad pública** → fusionada.
+- **#280 · Tira del hilo · autoridad pública** → fusionada.
+- **#281 · Marchas · autoridad pública** → fusionada.
+- **#282 · Wikimedia Commons · licencias y atribución** → fusionada.
+- **#283 · Home 2.7** → fusionada.
+- **#284 · Wikimedia Commons · render directo** → fusionada.
+- **#285 · Home 2.8** → fusionada.
 
-- loaders públicos;
-- RLS o políticas relacionadas;
-- vistas / RPC de su lectura pública;
-- contratos de datos consumidos por el Front;
-- rutas públicas de esa entidad;
-- componentes transversales incluidos en su barrera de regresión.
+## Orden exacto de Dirección
 
-### Carril B · Producto y operación
+1. Reconciliar `ESTADO-PROYECTO` → **🟢 CERRADO con este corte documental**.
+2. **Auditar y cerrar Personas / agentes → ÚNICO FRENTE ESTRUCTURAL ACTIVO**.
+3. Declarar Arquitectura pública / Front ↔ Panel → **🟢 CERRADA**.
+4. Ejecutar smoke transversal de cierre.
+5. Obtener y priorizar la primera cola de Salud del grafo.
+6. Resolver un único patrón sistémico completo y medir su reducción.
+7. Auditar el protocolo editorial de Wikimedia / media abierta.
+8. Sincronizar el registro de decisiones HC con la arquitectura real.
+9. Mantener #49 aparcada.
+10. Realizar una nueva fotografía global y elegir un solo gran frente.
 
-Puede avanzar en paralelo sobre Panel, importación masiva vigente y UX operativa siempre que no toque la autoridad pública del corte activo.
+**No abrir una nueva fase ni otro frente estructural antes de completar esta secuencia.**
 
-La infraestructura vigente sigue siendo `app/panel/(protected)/datos/importar`, `lib/panel/bulk-import*.js` y `20260822204505_bulk_import_pipeline.sql`. Los endurecimientos operativos recientes del importador se integraron antes de #267 sin solape con Pasos.
+## Único frente estructural activo
 
-No reactivar la arquitectura técnica de #49.
+### Personas / agentes · autoridad pública
 
-### Carril C · Contenido y enriquecimiento
+Responsable principal: **Hilo Tech**, con validación de Hilo Supabase, Hilo Datos y Hilo QA cuando proceda.
 
-Puede continuar cargando contenido y relaciones sobre el modelo vigente: Hermandades, Imágenes, Pasos, Bandas, capataces, acompañamientos, fuentes, extraordinarias, patrimonio, históricos y media.
+Auditar de extremo a extremo:
 
-Debe preservar IDs, relaciones canónicas e históricos. Si una carga revela una carencia del modelo, elevarla al Orquestador; no improvisar nuevas tablas o campos durante el corte activo.
+- loaders y superficies públicas de Personas / agentes;
+- relaciones Persona ↔ Paso;
+- autorías de Imágenes;
+- compositores de Marchas;
+- restauradores, artesanos y profesionales;
+- capataces y responsabilidades patrimoniales;
+- Tira del hilo y presencia relacional en fichas públicas;
+- cualquier directorio, componente, vista o RPC que consuma `agents`.
 
-### Regla de coordinación
+Buscar dependencias públicas de:
 
-Antes de iniciar trabajo paralelo comprobar solape por archivos, tablas/vistas/RPC, contratos de datos, entidad pública activa, migraciones y componentes compartidos. Si existe solape sensible, gana Carril A. Si no existe, los carriles pueden fusionar de forma independiente sobre el `main` real actualizado.
+- `@/lib/supabase/server`;
+- `@supabase/ssr`;
+- `next/headers`;
+- `cookies()`;
+- sesión editorial autenticada.
 
-## Backlog estructural
+Comprobar en Supabase:
 
-- #232 Extraordinarias responsive → **fusionada**.
-- #211 Cabecera de Bandas → **fusionada**.
-- #234 `También en Hilo Cofrade` → **fusionada**.
-- #239 Sede y visita → **reconstruida y fusionada**.
-- #168 Tira del hilo 2.11 → **cerrada por superada**.
-- #49 Importador documental MVP → **aparcada**. Si se recupera la idea URL → análisis → propuesta → revisión, reconstruir desde el `main` vigente.
-- #214 Autoridad pública de Hermandades → **integrada**; no reabrir su rama antigua.
+- RLS activa;
+- `SELECT` de `anon` correcto;
+- vistas con `security_invoker=true` cuando corresponda;
+- ausencia de registros `draft` en superficies públicas;
+- relaciones públicas únicamente hacia extremos publicables.
 
-Regla permanente: no conservar ramas caducadas por coste hundido. Si la intención sigue siendo válida, reconstruir sobre el `main` real.
+Si existe una dependencia cookie-aware, migrar únicamente la lectura pública necesaria a `createPublicClient()`. No cambiar el modelo, los datos, las rutas, las entidades ni hacer un refactor general.
 
-## Integridad de cargas relacionales
+La definición de cierre es:
 
-PR **#252 · Audita y protege las importaciones relacionales** → **🟢 CERRADA**.
+`RLS → anon → regresión automática → tests → build → preview → smoke público → producción → runtime`.
 
-Migración canónica: `20260823134318_mass_import_relational_integrity.sql`.
+## Regla arquitectónica permanente
 
-Resultado estable:
+La separación canónica del proyecto es:
 
-- duplicados de Cristo de la Corona y Escolanía Salesiana consolidados sin cambiar IDs canónicos;
-- fuentes relacionales reunificadas;
-- `source_links` legacy normalizados cuando existía correspondencia inequívoca;
-- guarda de propietario vigente único para pasos procesionales;
-- guardas contextuales de identidad de bandas dentro del mismo municipio;
-- no imponer unicidad global de nombre porque existen homónimos legítimos.
+```text
+FRONT PÚBLICO
+→ lectura stateless / rol anon
 
-## Arquitectura pública · cierres
+PANEL
+→ sesión editorial autenticada
+```
 
-### Home → 🟢 cerrado
+No mezclar ambos contextos salvo necesidad técnica expresamente justificada, documentada y protegida por una barrera de regresión.
 
-PR **#254** dejó barrera de regresión sobre una cadena pública/stateless. Vistas `security_invoker=true`, RLS/rol `anon`, CI, preview, producción y runtime verificados.
+## Restricción temporal de carriles
 
-### Hermandades → 🟢 cerrado
+Mientras Personas / agentes sea el último corte pendiente:
 
-PR **#256** migró a cliente público `brotherhoods.js`, `brotherhood-display.js` y `brotherhood-musical-heritage.js`. PR **#257** eliminó la última dependencia cookie-aware en `BrotherhoodRelationalExtras.js` y extendió la barrera a la capa relacional.
+- no abrir otro frente estructural;
+- no introducir nuevas tablas, vistas, RPC o rutas ajenas a ese cierre;
+- no iniciar una nueva campaña masiva de enriquecimiento;
+- no cambiar contratos de datos compartidos sin coordinación del Orquestador;
+- solo se permiten correcciones urgentes y claramente no solapadas.
 
-Reglas canónicas: Patrimonio general separado de Patrimonio musical; Sede como relación con `places`; sin excepciones por slug; ficha y enriquecimiento relacional públicos sin sesión editorial.
+Carril A tiene prioridad absoluta. Cualquier carencia descubierta por Producto o Contenido debe elevarse al Orquestador y esperar su turno.
 
-### Imágenes → 🟢 cerrado
+## Próximos controles después de Personas
 
-PR **#261** confirmó que directorio, ficha, media y enriquecimiento relacional ya utilizaban cliente público stateless. Se añadió `test/image-public-authority-boundary.test.mjs` y se verificaron RLS, rol `anon`, vistas `security_invoker`, CI, preview, producción y runtime.
+### Cierre formal de Arquitectura pública
 
-### Pasos → 🟢 cerrado
+Actualizar este registro para declarar cerrados conjuntamente:
 
-PR **#267 · Blinda la autoridad pública de Pasos** → **🟢 FUSIONADA**.
+- Home;
+- Hermandades;
+- Imágenes;
+- Pasos;
+- Bandas;
+- Extraordinarias;
+- Tira del hilo;
+- Marchas;
+- Personas / agentes.
 
-La auditoría completa de `/pasos` y `/pasos/[slug]` localizó una única dependencia cookie-aware directa:
+### Smoke transversal
 
-- `lib/supabase/step-heritage.js`.
+Validar el producto real en Home, directorios, fichas, Extraordinarias, media local/Wikimedia, Tira del hilo, responsive, producción y runtime.
 
-Cambio aplicado:
+### Salud del grafo
 
-- `step-heritage.js` pasa de `@/lib/supabase/server` a `createPublicClient()` de `@/lib/supabase/public`;
-- no se alteraron consultas, filtros, shape, UI, rutas, datos, esquema ni políticas;
-- nuevo `test/step-public-authority-boundary.test.mjs` protege directorio, ficha, media, patrimonio, Hermandad relacionada, `Tira del hilo`, presencia relacional y el contrato stateless del cliente público.
+Obtener una fotografía actual y clasificar incidencias:
 
-Seguridad verificada:
+- 🔴 prioritarias: relaciones rotas, huérfanos e incoherencias de publicación;
+- 🟠 cobertura: ficha básica, autorías, responsables, acompañamientos y Fuentes;
+- 🔵 enriquecimiento: escudos, logotipos, fotografías, multimedia y campos secundarios.
 
-- tablas directas de la cadena de Pasos con RLS activa y `SELECT` para `anon`;
-- `step_brotherhood_history` → `security_invoker=true`;
-- `step_image_history` → `security_invoker=true`;
-- `step_phase_details` → `security_invoker=true`;
-- rol `anon`: 25 entidades Paso publicadas, 31 relaciones Hermandad↔Paso, 30 Imagen↔Paso, 86 acompañamientos actuales, 46 fases patrimoniales y 67 responsables de fase;
-- Paso de la Piedad bajo `anon`: **11 fases, 17 responsables y 1 fuente**;
-- no se requirió migración ni modificación de políticas.
+Dirección elegirá **un solo patrón sistémico**. No se perseguirá “cero incidencias”, sino el ciclo:
 
-Concurrencia:
+`incidencia → patrón → solución sistémica → validación`.
 
-- #267 fue reconstruida sobre el `main` real cuando los trabajos paralelos del Carril B avanzaron;
-- las integraciones paralelas previas al merge solo afectaban Panel/importación masiva y no compartían archivos, RLS, rutas, loaders ni contratos de Pasos;
-- el head final se construyó sobre `6ab41a84a1915cf6e97fe8450fde504d5f7a2fa7` y se fusionó por squash como `c37a29711f8bdc7791d303f8182b130fd3f0d7fe`.
+### Wikimedia / media abierta
 
-Verificación técnica y pública:
+El soporte técnico de licencia, atribución y render directo está integrado. Antes de escalar cargas externas debe validarse el protocolo editorial: licencia concreta, autor, URL original, Fuente, crédito, enlace de atribución, derechos y uso como portada o galería.
 
-- CI de #267: **success**;
-- preview final: **READY**;
-- `/pasos` en preview: **HTTP 200**, 25 pasos publicados;
-- las fichas del preview quedaron detrás de SSO de Vercel, por lo que la comprobación rica se realizó en producción;
-- producción funcional: `dpl_A6Y4yCwkhQ92Y8XxwTnv6DPpAuXM` **READY**;
-- `/pasos`: **HTTP 200**, 25 pasos publicados;
-- `/pasos/paso-de-la-piedad`: **HTTP 200**, preservando Hermandad, dos imágenes, Banda del Sol, `Tira del hilo`, 11 fases patrimoniales, responsables y fuente;
-- `/pasos/paso-procesional-divina-pastora-cantillana`: **HTTP 200**, preservando Hermandad, imagen, Banda de la Soledad, `Tira del hilo`, fases de 1919 y 2008 y fuente;
-- runtime del deployment funcional: sin logs `error`/`fatal` tras los smokes.
+Que una imagen esté alojada en Wikimedia no implica automáticamente que pueda publicarse.
 
-Conclusión: **PASOS · AUTORIDAD PÚBLICA → 🟢 CERRADO**.
+### Decisiones HC
 
-## Zonas sensibles permanentes
+Consultar el registro vigente antes de asignar nuevos números. Revisar la formalización de:
 
-### Directorios
+- separación Front público ↔ Panel;
+- autoridad pública stateless;
+- protocolo visual de directorios;
+- importación masiva;
+- Salud del grafo;
+- media externa licenciada;
+- atribución y derechos;
+- arquitectura de Extraordinarias.
 
-`/directorio` y sus familias son la arquitectura canónica. Reutilizar sus filtros y segmentación; no crear listados paralelos.
+## #49 · Importador documental asistido
 
-### Tira del hilo
+Estado: **⚪ APARCADA**.
 
-#234 es la base integrada; #168 está superada. No crear una segunda lógica de grafo paralela.
+Reglas:
 
-### Datos
+- no fusionar;
+- no actualizar ahora;
+- no aplicar sus migraciones por inercia;
+- no salvar su rama por coste hundido;
+- no utilizarla como base técnica.
 
-- reutilizar entidades canónicas antes de crear nuevas;
-- preservar IDs, relaciones, fuentes e históricos;
-- no degradar entidades reales a texto libre cuando existe relación estructurada;
-- resolver identidad por contexto, no mediante unicidad global de nombres.
+La importación masiva vigente tiene su propia arquitectura. Si en el futuro se recupera el flujo `URL → extracción → IA → propuesta → revisión humana`, debe reconstruirse sobre el `main` vigente y el importador actual. #49 podrá entonces cerrarse como implementación histórica superada.
 
-## Método obligatorio para el siguiente corte
+## Regla para «¿Qué toca?»
 
-**Bandas** debe auditarse de extremo a extremo:
+1. Refrescar GitHub, Vercel y Supabase.
+2. Consultar esta secuencia.
+3. Descartar los pasos ya cerrados.
+4. Devolver **una única acción ejecutable**.
 
-1. localizar todos los loaders/componentes usados por `/bandas` y `/bandas/[slug]`;
-2. detectar dependencias de `@/lib/supabase/server`, `@supabase/ssr`, `next/headers` o sesión editorial;
-3. comprobar RLS, vistas y funciones implicadas;
-4. migrar solo las lecturas públicas que lo necesiten;
-5. añadir o ampliar barrera de regresión;
-6. CI + preview;
-7. smoke público sin sesión;
-8. producción + runtime;
-9. actualizar este registro si cambia el mapa de coordinación.
-
-## Regla para «¿Qué toca ahora?»
-
-No generar una lluvia de ideas. Refrescar el estado real, localizar el punto de la secuencia y devolver una sola acción ejecutable.
-
-**Siguiente acción actual: auditar Bandas de extremo a extremo para verificar su autoridad pública, RLS/vistas y ausencia de dependencias de sesión/cookies.**
+**Siguiente acción actual: auditar y cerrar Personas / agentes de extremo a extremo.**
