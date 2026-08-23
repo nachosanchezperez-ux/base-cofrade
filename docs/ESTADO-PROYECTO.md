@@ -4,21 +4,19 @@
 
 ## Baseline observado
 
-- Comprobación: **2026-08-23 16:10 CEST**.
+- Comprobación: **2026-08-23 16:50 CEST**.
 - Repositorio: `nachosanchezperez-ux/base-cofrade`.
 - Rama principal: `main`.
-- `main`: `87905706674edc7857f34325f644eecef8d5a03c`.
-- Último frente integrado: **#254 · Blindaje de la autoridad pública de Home**.
+- `main` funcional: `c577ae24073cbff8a35963101d495437e263988a`.
+- Último frente funcional integrado: **#257 · Completa la autoridad pública relacional de Hermandades**.
 - Proyecto Vercel: `base-cofrade`.
-- Producción: **READY** en `dpl_3VA2DruVaxoVjKggkxUJ99BPVmLH`, alineada con `87905706674edc7857f34325f644eecef8d5a03c`.
+- Producción funcional: **READY** en `dpl_HJubBDVLcYoBHC46RsF83aSStXdr`, alineada con `c577ae24073cbff8a35963101d495437e263988a`.
 - Supabase: proyecto `Hilocofrade` (`kcevwkucqzcyrqaimyhl`) **ACTIVE_HEALTHY**.
 - Última migración remota verificada: `20260823134318_mass_import_relational_integrity`.
 
-Antes de cada tarea significativa el Orquestador debe refrescar de nuevo `main`, PR abiertas, Vercel y Supabase cuando proceda. Este SHA es un baseline, no una referencia permanente.
+Antes de cada tarea significativa el Orquestador debe refrescar de nuevo `main`, PR abiertas, Vercel y Supabase cuando proceda. Estos identificadores son un baseline y no referencias permanentes.
 
 ## Secuencia de Dirección activa
-
-La fase actual prioriza cierre y consolidación. No abrir nuevos frentes estructurales fuera de esta secuencia.
 
 1. Smoke transversal de producción → **🟢 CERRADO**.
 2. Directorio unificado (#242) → **🟢 CERRADO**.
@@ -27,47 +25,31 @@ La fase actual prioriza cierre y consolidación. No abrir nuevos frentes estruct
 5. Auditoría de carga masiva / cargas relacionales recientes → **🟢 CERRADO**.
 6. **Arquitectura pública / separación Front ↔ Panel → EN CURSO**.
    - Home → **🟢 CERRADO**.
-   - Hermandades → **SIGUIENTE CORTE**.
+   - Hermandades → **🟢 CERRADO**.
+   - Imágenes → **SIGUIENTE CORTE**.
 7. Salud del grafo.
 8. Registro y formalización de decisiones HC.
 9. Elegir un único siguiente gran frente.
 
-## Limpieza del backlog · cierre
+No abrir nuevos frentes estructurales fuera de esta secuencia mientras el punto activo no esté cerrado.
 
-Estados resueltos:
+## Backlog estructural · cierre
 
 | PR | Área | Estado final | Resolución |
 |---|---|---|---|
 | #232 | Extraordinarias responsive | 🟢 **FUSIONADA** | Integrada y validada en producción. |
 | #211 | Cabecera de Bandas | 🟢 **FUSIONADA** | Integrada sin degradar el Directorio canónico. |
 | #234 | También en Hilo Cofrade | 🟢 **FUSIONADA** | Reconciliada sobre `main`, CI/preview/producción correctos. |
-| #239 | Sede y visita | 🟢 **RECONSTRUIDA Y FUSIONADA** | Rehecha sobre `main`, preservando #245 y la autoridad pública ya vigente. |
-| #168 | Tira del hilo 2.11 | ⚫ **CERRADA POR SUPERADA** | Su intención está absorbida por la arquitectura actual de Tira del hilo, ya evolucionada hasta V11/V12. |
-| #49 | Importador documental MVP | ⚪ **APARCADA** | La infraestructura técnica antigua fue sustituida por el importador masivo actual. Se conserva como referencia de producto para una futura experiencia URL → análisis → propuesta → revisión, reconstruida desde la arquitectura vigente. |
-| #214 | Autoridad pública de Hermandades | 🟢 **YA INTEGRADA** | El corte de autoridad pública forma parte de `main`; para el punto 6 no se debe reabrir ni reutilizar su rama antigua como base técnica. |
+| #239 | Sede y visita | 🟢 **RECONSTRUIDA Y FUSIONADA** | Rehecha sobre `main`, preservando #245 y autoridad pública. |
+| #168 | Tira del hilo 2.11 | ⚫ **CERRADA POR SUPERADA** | Su intención está absorbida por la arquitectura actual V11/V12. |
+| #49 | Importador documental MVP | ⚪ **APARCADA** | La base técnica antigua fue sustituida por el importador masivo actual. Conservar solo como referencia de producto para una futura experiencia URL → análisis → propuesta → revisión reconstruida desde `main`. |
+| #214 | Autoridad pública de Hermandades | 🟢 **INTEGRADA** | Precedente conceptual. No reabrir ni reutilizar su rama antigua. |
 
-Regla permanente: no conservar ramas viejas por coste hundido. Si una idea sigue siendo válida pero la rama ha caducado, reconstruir desde el `main` real.
+Regla permanente: no conservar ramas viejas por coste hundido. Si la intención sigue siendo válida pero la rama ha caducado, reconstruir sobre el `main` real.
 
-## Auditoría de carga masiva / cargas relacionales · cierre
+## Auditoría de cargas relacionales · cierre
 
-Muestras auditadas de extremo a extremo:
-
-1. **San Esteban**.
-2. **Bendición y Esperanza** como muestra de Viernes de Dolores.
-3. **Gran Poder** como carga reciente adicional.
-4. La auditoría se amplió a **Cristo de la Corona** y **Escolanía Salesiana María Auxiliadora de Sevilla** al aparecer una duplicidad sistémica.
-
-Recorrido comprobado: Hermandad → Titulares → Imágenes → Pasos → Capataces → Bandas → Acompañamientos → Fuentes → Front. La paridad con Panel se ha verificado a nivel de modelo/tablas y loaders; no se declara smoke visual autenticado del Panel cuando no se ha iniciado sesión editorial.
-
-### Hallazgos sistémicos corregidos
-
-- Existían dos nodos para la misma corporación de **Cristo de la Corona**: una ficha publicada y un nodo legacy `la-corona` en borrador, ambos enlazados al mismo paso procesional.
-- Existían dos nodos para la misma **Escolanía Salesiana María Auxiliadora**; la ficha rica/canónica ya contenía como denominación vigente el nombre usado por el duplicado.
-- El acompañamiento de la Escolanía a Cristo de la Corona estaba repartido entre ambos pares de nodos y sus fuentes.
-- Parte de los enlaces de Fuentes guardaba IDs de relaciones dentro de texto `scope` (`relation:image_authorship:<uuid>` y `relation:brotherhood_image:<uuid>`) en vez de usar las FK estructuradas de `source_links`.
-- **Bendición y Esperanza** tenía fuentes oficiales ya cargadas, pero faltaban enlaces relacionales desde Hermandad, titulares, autorías y paso.
-
-### Corrección aplicada
+Muestras auditadas: **San Esteban**, **Bendición y Esperanza**, **Gran Poder**, ampliada a **Cristo de la Corona** y **Escolanía Salesiana María Auxiliadora de Sevilla**.
 
 PR **#252 · Audita y protege las importaciones relacionales** → **🟢 FUSIONADA**.
 
@@ -75,54 +57,30 @@ Migración aplicada y versionada:
 
 - `20260823134318_mass_import_relational_integrity.sql`.
 
-La migración:
+Resultado estable:
 
-- consolida `la-corona` sobre la entidad canónica publicada `cristo-de-la-corona` sin cambiar el ID canónico;
-- consolida la Escolanía duplicada sobre `escolania-salesiana-maria-auxiliadora-sevilla` sin cambiar el ID canónico;
-- reúne y conserva las fuentes de los acompañamientos durante la consolidación;
-- normaliza `source_links` legacy hacia `image_authorship_id` y `brotherhood_image_id` reales cuando existe FK compatible;
-- completa la trazabilidad de Bendición y Esperanza usando fuentes oficiales ya incorporadas por el propio lote;
-- añade una guarda para impedir que un mismo `processional_step` tenga dos Hermandades vigentes simultáneamente sin cierre temporal;
-- añade guardas de identidad de bandas para impedir recrear una formación cuando su nombre coincide con el nombre o denominación vigente de otra formación del mismo municipio.
+- duplicado `la-corona` consolidado sobre `cristo-de-la-corona` sin cambiar el ID canónico;
+- duplicado de Escolanía consolidado sobre `escolania-salesiana-maria-auxiliadora-sevilla` sin perder sus cuatro acompañamientos;
+- fuentes reunificadas y `source_links` legacy normalizados hacia FK estructuradas cuando existía correspondencia inequívoca;
+- trazabilidad de Bendición y Esperanza completada con fuentes ya documentadas;
+- guarda de propietario vigente único para pasos procesionales;
+- guardas contextuales de identidad de bandas dentro del mismo municipio;
+- 0 pasos con dos Hermandades vigentes tras la corrección;
+- pruebas negativas de duplicación bloqueadas por la base de datos.
 
-No se ha impuesto unicidad global por nombre: existen homónimos legítimos en el dominio cofrade y las guardas se limitan a patrones donde la identidad es realmente incompatible.
+No imponer unicidad global por nombre: existen homónimos legítimos en el dominio cofrade.
 
-### Verificación posterior
-
-- Duplicados residuales `la-corona` / `escolania-maria-auxiliadora-sevilla`: **0**.
-- Pasos procesionales con más de un propietario vigente: **0**.
-- La Escolanía canónica conserva **4 acompañamientos**; no se perdieron relaciones.
-- El acompañamiento canónico de Cristo de la Corona conserva **2 fuentes** acumuladas.
-- Bendición y Esperanza: **0 huecos** de fuente en Hermandad, titulares, autorías y paso dentro del alcance auditado.
-- Gran Poder: la autoría anónima del Mayor Dolor y Traspaso queda enlazada por `image_authorship_id` real.
-- Pruebas negativas: intentar recrear la Escolanía duplicada o asignar un segundo propietario vigente al paso de la Corona es bloqueado por la base de datos y no deja residuos.
-- CI de #252: **success**.
-- Producción funcional de #252: `dpl_9UdAw1S7jhsaXYcXFceW38toFqq4` **READY** sobre `41bf6e1958401012c5fe72c187538af5a9374427`.
-- Runtime tras smoke: sin errores `error`/`fatal` ni clusters de error detectados.
-- Smoke público: San Esteban, Bendición y Esperanza, Gran Poder, Cristo de la Corona y la Escolanía canónica responden correctamente.
-- Rutas legacy `/hermandades/la-corona` y `/bandas/escolania-maria-auxiliadora-sevilla`: **404 real**, como corresponde tras consolidar los duplicados.
-
-### Incompletitud documentada que NO es error de integridad
-
-- San Esteban no tiene capataces cargados para sus dos pasos: el Front muestra **Pendiente de incorporar** y no inventa datos.
-- El Cristo de San Esteban mantiene autoría desconocida donde no existe atribución documentada estructurada.
-- En Gran Poder y otras fichas pueden existir campos de multimedia, horarios o acompañamientos todavía pendientes. Se consideran enriquecimiento/completitud, no inconsistencia roja.
-
-### Importador masivo actual
-
-La infraestructura de importación masiva vigente existe en `app/panel/(protected)/datos/importar`, `lib/panel/bulk-import*.js` y `20260822204505_bulk_import_pipeline.sql`.
-
-En la auditoría de 2026-08-23 las tablas `bulk_imports`, `bulk_import_items` y `document_imports` tenían **0 lotes reales**: San Esteban, Viernes de Dolores y las otras cargas recientes auditadas habían entrado principalmente mediante migraciones/semillas directas. Las nuevas guardas viven en el modelo de datos, por lo que protegen tanto futuras importaciones del Panel como escrituras procedentes de migraciones u otros writers.
-
-No se declara todavía el importador como transaccional de lote completo: su aplicación actual es por filas/chunks. Esa mejora queda fuera de este cierre porque no causó los defectos observados y abriría un nuevo frente de arquitectura de ingesta.
+La infraestructura de importación masiva vigente está en `app/panel/(protected)/datos/importar`, `lib/panel/bulk-import*.js` y `20260822204505_bulk_import_pipeline.sql`. Las guardas de integridad viven en el modelo y protegen cualquier writer.
 
 ## Zonas sensibles vigentes
 
 ### Hermandades
 
-- #245, autoridad pública y #239 forman parte del `main` canónico.
+- #245, #239, #214, #256 y #257 forman parte del estado canónico.
+- La ficha y su enriquecimiento relacional público no deben depender de sesión/cookies editoriales.
 - No añadir lógica específica por slug para resolver casos de ficha.
 - Mantener Patrimonio general separado de Patrimonio musical.
+- Conservar Sede y visita como relación canónica con `places`.
 
 ### Directorios
 
@@ -141,13 +99,13 @@ No se declara todavía el importador como transaccional de lote completo: su apl
 
 ## Punto activo · Arquitectura pública
 
-El frente único activo es **separar completamente las lecturas públicas de la sesión/cookie editorial del Panel**.
+Objetivo: **separar completamente las lecturas públicas de la sesión/cookie editorial del Panel**.
 
 Orden de auditoría:
 
 1. Home → **🟢 CERRADO**.
-2. Hermandades → **SIGUIENTE CORTE**.
-3. Imágenes.
+2. Hermandades → **🟢 CERRADO**.
+3. Imágenes → **SIGUIENTE CORTE**.
 4. Pasos.
 5. Bandas.
 6. Extraordinarias.
@@ -159,40 +117,78 @@ Método por corte pequeño:
 1. comprobar RLS y vistas/funciones implicadas;
 2. usar cliente público explícito en el loader público;
 3. eliminar dependencia accidental de cookie/sesión editorial;
-4. añadir o ajustar pruebas;
+4. añadir o ajustar pruebas de arquitectura;
 5. CI + preview;
 6. smoke público sin sesión;
-7. producción + runtime.
+7. producción + runtime;
+8. actualizar este registro únicamente cuando cambie el mapa de coordinación.
 
 ### Home · cierre verificado
 
-La auditoría de Home confirmó que la arquitectura funcional ya era correcta y no necesitaba una reescritura:
-
-- `app/page.js` entra en datos mediante `getHomeSnapshot()`;
-- la cadena pública de loaders de Home usa `lib/supabase/public-server.js`;
-- `public-server.js` usa `@supabase/supabase-js` + publishable key, sin `@supabase/ssr`, sin `next/headers` y con sesión no persistente;
-- `lib/supabase/server.js` continúa siendo el cliente cookie-aware para contexto editorial/autenticado, pero no forma parte de la cadena de Home;
-- las vistas consumidas por Home (`today_ephemeris_candidates`, `daily_editorial_candidates`, `daily_march_candidates`, `home_knowledge_threads`, `upcoming_extraordinary_outings`, `outing_music_details`, `step_image_history`) tienen `security_invoker=true`;
-- las tablas base consultadas por Home tienen RLS activa y políticas de lectura pública limitadas a contenido publicable/publicado;
-- un smoke SQL con `SET ROLE anon` leyó correctamente entidades, contenidos diarios, hilos, extraordinarias, música de salidas y multimedia.
-
 PR **#254 · Blinda la autoridad pública de Home** → **🟢 FUSIONADA**.
 
-El cambio no reescribe loaders: añade `test/home-public-authority.test.mjs` como barrera de regresión para impedir que Home vuelva a importar el cliente de sesión, `next/headers` o un cliente Supabase distinto del público explícito.
+Home ya utilizaba una cadena de loaders pública y stateless. Se añadió `test/home-public-authority.test.mjs` para impedir que futuros cambios introduzcan `@/lib/supabase/server`, `next/headers` o un cliente cookie-aware.
 
-Comprobaciones:
+Verificado:
 
-- CI de #254: **success**;
-- preview Vercel: **READY**;
-- `main` tras merge: `87905706674edc7857f34325f644eecef8d5a03c`;
-- producción: `dpl_3VA2DruVaxoVjKggkxUJ99BPVmLH` **READY** y alineada con ese commit;
-- `/`: **HTTP 200** en producción sobre ese deployment;
-- smoke público sin sesión: Tira del hilo, próxima Extraordinaria, `Hoy en Hilo Cofrade`, Últimos hilos y métricas públicas renderizados con datos reales;
-- runtime: sin clusters de error y sin logs `error`/`fatal` en la comprobación posterior.
+- vistas de Home con `security_invoker=true`;
+- tablas base con RLS y políticas públicas;
+- lectura equivalente con rol `anon` correcta;
+- CI y preview verdes;
+- producción y `/` HTTP 200;
+- sin errores `error`/`fatal` tras smoke.
 
 Conclusión: **HOME · AUTORIDAD PÚBLICA → 🟢 CERRADO**.
 
-El trabajo ya integrado de #214 sirve como precedente conceptual y como corte existente para Hermandades, pero **no** se debe reabrir su rama antigua ni asumir que toda la ruta de Hermandades ya cumple el mismo patrón sin auditar sus loaders actuales.
+### Hermandades · cierre verificado
+
+La auditoría del `main` actual detectó primero tres loaders de ficha que todavía importaban `@/lib/supabase/server`:
+
+- `lib/supabase/brotherhoods.js`;
+- `lib/supabase/brotherhood-display.js`;
+- `lib/supabase/brotherhood-musical-heritage.js`.
+
+PR **#256 · Aísla Hermandades de la sesión editorial** → **🟢 FUSIONADA**.
+
+#256 migró esos tres loaders a `@/lib/supabase/public` sin modificar consultas, filtros, fallbacks, relaciones, patrimonio, salidas, fuentes, Sede y visita, UI ni Panel. Añadió además `test/brotherhood-public-authority-boundary.test.mjs`.
+
+Durante el cierre apareció una concurrencia complementaria: **#257 · Completa la autoridad pública relacional de Hermandades** detectó la última dependencia transitive cookie-aware en:
+
+- `components/BrotherhoodRelationalExtras.js`.
+
+#257 la migró también al cliente público y amplió la barrera de regresión para cubrir:
+
+- `BrotherhoodRelationalExtras.js`;
+- `RelationalThread.js`;
+- `lib/supabase/relational-presence.js`;
+- la comprobación de paridad Front/Panel correspondiente.
+
+La concurrencia no se resolvió ignorando uno de los trabajos: se incorporó como parte del mismo corte y se revalidó el estado real antes del cierre.
+
+Seguridad comprobada:
+
+- tablas consumidas por la cadena pública: RLS activa y lectura anónima prevista;
+- `current_step_personnel`: `security_invoker=true`;
+- smoke SQL con `SET ROLE anon` correcto para San Benito, El Baratillo y Asunción de Cantillana;
+- no se requirió migración ni cambio de políticas.
+
+Verificación técnica y pública:
+
+- CI de #256: **success**;
+- CI de #257: **success**;
+- previews Vercel: **READY**;
+- `main` funcional: `c577ae24073cbff8a35963101d495437e263988a`;
+- producción funcional: `dpl_HJubBDVLcYoBHC46RsF83aSStXdr` **READY**;
+- `/hermandades`: **HTTP 200**, 14 hermandades publicadas;
+- `/hermandades/san-benito`: **HTTP 200**, preservando la separación Patrimonio / Patrimonio musical de #245;
+- `/hermandades/el-baratillo`: **HTTP 200**;
+- `/hermandades/asuncion-de-cantillana`: **HTTP 200**, manteniendo Sede compartida, titular, paso, capataz, música, patrimonio, fuentes y enriquecimiento relacional;
+- `/hermandades/semana-santa`: **HTTP 200**;
+- `/hermandades/gloria`: **HTTP 200**;
+- `/hermandades/sacramentales`: **HTTP 200**;
+- runtime posterior: sin clusters de error y sin logs `error`/`fatal` en el deployment funcional.
+
+Conclusión: **HERMANDADES · AUTORIDAD PÚBLICA → 🟢 CERRADO**.
 
 ## Protocolo de nueva tarea
 
@@ -230,4 +226,4 @@ El trabajo ya integrado de #214 sirve como precedente conceptual y como corte ex
 
 No generar una lluvia de ideas. Refrescar el estado, localizar el punto de la secuencia y devolver una sola acción ejecutable.
 
-**Siguiente acción actual: auditar Hermandades de extremo a extremo para detectar cualquier loader público que aún dependa de sesión/cookies, partiendo del `main` actual y reutilizando la arquitectura ya integrada de #214 sin reabrir su rama antigua.**
+**Siguiente acción actual: auditar Imágenes de extremo a extremo para detectar cualquier loader público que aún dependa de sesión/cookies, verificando RLS/vistas, cliente público explícito, CI, preview, smoke público y runtime antes de dar el corte por cerrado.**
