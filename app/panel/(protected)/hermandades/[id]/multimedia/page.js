@@ -24,6 +24,7 @@ function RightsSelect() {
 function targetAlt(target, kind) {
   if (kind === 'step') return `Fotografía de ${target.name}`
   if (kind === 'image') return `Fotografía de ${target.name}`
+  if (kind === 'cult') return `Fotografía del culto ${target.name}`
   return target.public_image_alt || target.name
 }
 
@@ -31,15 +32,24 @@ function targetLabel(kind, { hasCanonicalImage, hasLegacyImage }) {
   if (hasLegacyImage) return 'Migrar esta imagen al Panel'
   if (kind === 'step') return hasCanonicalImage ? 'Subir otra como principal' : 'Subir fotografía del Paso'
   if (kind === 'image') return hasCanonicalImage ? 'Subir otra como principal' : 'Subir fotografía del Titular'
+  if (kind === 'cult') return hasCanonicalImage ? 'Cambiar la foto de portada' : 'Subir foto de portada del Culto'
   return hasCanonicalImage ? 'Subir otra imagen principal' : 'Subir imagen del cartel o pieza'
+}
+
+function kindLabel(kind, target) {
+  if (kind === 'step') return 'Paso'
+  if (kind === 'image') return 'Titular'
+  if (kind === 'cult') return target.asset_type || 'Culto'
+  return target.asset_type || 'Patrimonio'
 }
 
 function MediaTargetCard({ target, kind, brotherhoodId }) {
   const currentPath = target.cover?.publicUrl || target.public_image_path || ''
   const currentAlt = target.cover?.asset?.alt_text || target.public_image_alt || target.name
   const hasCanonicalImage = Boolean(target.cover?.publicUrl)
-  const hasLegacyImage = !hasCanonicalImage && Boolean(target.public_image_path)
+  const hasLegacyImage = kind !== 'cult' && !hasCanonicalImage && Boolean(target.public_image_path)
   const anchor = `contenido-${target.id}`
+  const targetKind = kind === 'cult' ? 'cult' : 'entity'
 
   return (
     <article className={mediaStyles.targetCard} id={anchor}>
@@ -49,8 +59,8 @@ function MediaTargetCard({ target, kind, brotherhoodId }) {
         </div>
         <div className={mediaStyles.targetCopy}>
           <div className={mediaStyles.targetMeta}>
-            <span>{kind === 'step' ? 'Paso' : kind === 'image' ? 'Titular' : target.asset_type || 'Patrimonio'}</span>
-            {target.year ? <b>{target.year}</b> : null}
+            <span>{kindLabel(kind, target)}</span>
+            {target.year ? <b>{target.year}</b> : target.dateLabel ? <b>{target.dateLabel}</b> : null}
           </div>
           <h3>{target.name}</h3>
           <p>
@@ -58,7 +68,9 @@ function MediaTargetCard({ target, kind, brotherhoodId }) {
               ? `${target.media.length} imagen${target.media.length === 1 ? '' : 'es'} vinculada${target.media.length === 1 ? '' : 's'} · principal definida`
               : hasLegacyImage
                 ? 'Hay una imagen antigua. Súbela aquí para gestionarla ya desde el Panel.'
-                : 'Todavía no tiene una fotografía vinculada.'}
+                : kind === 'cult'
+                  ? 'Todavía no tiene una fotografía de portada para su tarjeta pública.'
+                  : 'Todavía no tiene una fotografía vinculada.'}
           </p>
         </div>
       </div>
@@ -67,7 +79,8 @@ function MediaTargetCard({ target, kind, brotherhoodId }) {
         <summary>{targetLabel(kind, { hasCanonicalImage, hasLegacyImage })}<span aria-hidden="true">⌄</span></summary>
         <form action={uploadBrotherhoodRelatedMediaAction} className={mediaStyles.uploadForm}>
           <input type="hidden" name="brotherhood_id" value={brotherhoodId} />
-          <input type="hidden" name="entity_id" value={target.id} />
+          <input type="hidden" name="target_id" value={target.id} />
+          <input type="hidden" name="target_kind" value={targetKind} />
           <input type="hidden" name="title" value={target.name} />
 
           <label className={mediaStyles.fileField}>
@@ -102,7 +115,7 @@ function MediaTargetCard({ target, kind, brotherhoodId }) {
           </label>
 
           <div className={mediaStyles.uploadActions}>
-            <small>Se guardará como imagen principal de esta ficha. La fotografía anterior seguirá disponible en el archivo.</small>
+            <small>{kind === 'cult' ? 'Se mostrará como portada de este culto en la ficha pública.' : 'Se guardará como imagen principal de esta ficha. La fotografía anterior seguirá disponible en el archivo.'}</small>
             <button className={styles.primaryButton} type="submit">Subir y vincular</button>
           </div>
         </form>
@@ -170,12 +183,24 @@ export default async function BrotherhoodMultimediaPage({ params, searchParams }
               <p>No necesitas buscar la entidad ni escribir el tipo de relación.</p>
             </div>
             <nav>
+              {data.cults.length ? <a href="#cultos-visuales"><strong>Foto de portada de un Culto</strong><span>{data.cults.length} documentado{data.cults.length === 1 ? '' : 's'} →</span></a> : null}
               <a href="#pasos"><strong>Fotografía de un Paso</strong><span>{data.steps.length} relacionado{data.steps.length === 1 ? '' : 's'} →</span></a>
               <a href="#carteles"><strong>Cartel</strong><span>{posters.length} documentado{posters.length === 1 ? '' : 's'} →</span></a>
               {data.images.length ? <a href="#titulares"><strong>Fotografía de un Titular</strong><span>{data.images.length} relacionado{data.images.length === 1 ? '' : 's'} →</span></a> : null}
               {otherHeritage.length ? <a href="#patrimonio-visual"><strong>Otra pieza patrimonial</strong><span>{otherHeritage.length} documentada{otherHeritage.length === 1 ? '' : 's'} →</span></a> : null}
             </nav>
           </section>
+
+          <TargetSection
+            id="cultos-visuales"
+            eyebrow="Cultos principales"
+            title="Fotos de portada para los Cultos"
+            description="Sube una fotografía real de cada celebración. Se mostrará como portada de su tarjeta en la ficha pública y mantendrá crédito, derechos y texto alternativo."
+            items={data.cults}
+            kind="cult"
+            brotherhoodId={id}
+            empty="Esta Hermandad no tiene todavía cultos documentados."
+          />
 
           <TargetSection
             id="pasos"
@@ -192,7 +217,7 @@ export default async function BrotherhoodMultimediaPage({ params, searchParams }
             id="carteles"
             eyebrow="Archivo gráfico"
             title="Carteles"
-            description="Selecciona el año o la pieza concreta. El cartel se mostrará completo dentro de su ficha patrimonial."
+            description="Selecciona el año o la pieza concreta. El marco público respeta la proporción real de cada cartel."
             items={posters}
             kind="heritage"
             brotherhoodId={id}
