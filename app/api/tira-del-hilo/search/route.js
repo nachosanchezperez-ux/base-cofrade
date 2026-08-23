@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { searchHiloEntities } from '@/lib/supabase/search-live'
+import { searchPublicHiloEntities } from '@/lib/supabase/tira-public'
 
 export const dynamic = 'force-dynamic'
 
@@ -10,7 +10,7 @@ export async function GET(request) {
   }
 
   try {
-    const items = await searchHiloEntities(term, 8)
+    const items = await searchPublicHiloEntities(term, 8)
     return NextResponse.json({ items }, { headers: { 'Cache-Control': 'no-store' } })
   } catch (error) {
     console.error('[Hilo Cofrade] Error en autocompletado de Tira del hilo', {
