@@ -149,8 +149,9 @@ export default function ImportWorkspace({ initialImports, canEdit }) {
       const validations = parsed.records.map(validateBulkImportRecord)
       const records = validations.map((item) => item.record)
       const invalid = validations.filter((item) => item.errors.length)
+      const validRecords = validations.filter((item) => !item.errors.length).map((item) => item.record)
       const transportChunks = splitImportPayload(records).length
-      const operations = operationCounts(records)
+      const operations = operationCounts(validRecords)
       setAnalysis({
         ...parsed,
         records,
@@ -263,8 +264,8 @@ export default function ImportWorkspace({ initialImports, canEdit }) {
     {analysis ? <section className={styles.card}>
       <div className={styles.cardHeading}><div><span className={styles.kicker}>02 · Preflight</span><h2>Vista previa y validación</h2></div><strong className={analysis.invalidCount ? styles.warning : styles.success}>{analysis.records.length - analysis.invalidCount}/{analysis.records.length} válidos</strong></div>
       <div className={styles.summaryGrid}>{tableSummary.slice(0, 8).map(([table, count]) => <div key={table}><span>{table}</span><strong>{count}</strong></div>)}</div>
-      <p className={styles.muted}>Transporte seguro: {analysis.transportChunks} bloque{analysis.transportChunks === 1 ? '' : 's'} · máximo {Math.round(DEFAULT_IMPORT_CHUNK_BYTES / 1000)} KB por envío · {analysis.operationCounts.insert} insert · {analysis.operationCounts.upsert} upsert.</p>
-      {analysis.operationCounts.upsert > 0 ? <div className={styles.warningBox}>{analysis.operationCounts.upsert} registro{analysis.operationCounts.upsert === 1 ? '' : 's'} usa{analysis.operationCounts.upsert === 1 ? '' : 'n'} <code>upsert</code>: al aplicar el lote pueden actualizar filas existentes cuando coincida su clave estable.</div> : null}
+      <p className={styles.muted}>Transporte seguro: {analysis.transportChunks} bloque{analysis.transportChunks === 1 ? '' : 's'} · máximo {Math.round(DEFAULT_IMPORT_CHUNK_BYTES / 1000)} KB por envío · {analysis.operationCounts.insert} insert · {analysis.operationCounts.upsert} upsert aplicables.</p>
+      {analysis.operationCounts.upsert > 0 ? <div className={styles.warningBox}>{analysis.operationCounts.upsert} registro{analysis.operationCounts.upsert === 1 ? '' : 's'} válido{analysis.operationCounts.upsert === 1 ? '' : 's'} usa{analysis.operationCounts.upsert === 1 ? '' : 'n'} <code>upsert</code>: al aplicar el lote pueden actualizar filas existentes cuando coincida su clave estable.</div> : null}
       {analysis.invalidCount ? <div className={styles.warningBox}>Los registros inválidos se conservarán en el lote para revisión, pero no se aplicarán. El resto sí podrá importarse.</div> : <div className={styles.successBox}>La estructura del lote es válida. Las restricciones y referencias se volverán a comprobar al aplicar cada registro.</div>}
       <div className={styles.previewList}>{analysis.validations.slice(0, 6).map((item, index) => <article key={index} className={item.errors.length ? styles.previewError : ''}><div><b>#{index + 1}</b><strong>{item.record?.table || 'sin tabla'}</strong><span>{item.record?.operation || '—'}</span></div><code>{JSON.stringify(item.record?.data || {}).slice(0, 320)}</code>{item.errors.length ? <small>{item.errors.join(' ')}</small> : null}</article>)}</div>
       {analysis.records.length > 6 ? <p className={styles.muted}>Se muestran 6 registros de {analysis.records.length}. El lote completo se valida al prepararlo.</p> : null}
@@ -288,7 +289,7 @@ export default function ImportWorkspace({ initialImports, canEdit }) {
             {canApply && confirmingImportId !== batch.id ? <button type="button" className={styles.primaryButton} onClick={() => setConfirmingImportId(batch.id)} disabled={working}>Revisar y aplicar</button> : null}
           </div>
           {canApply && confirmingImportId === batch.id ? <div className={styles.warningBox}>
-            <strong>Confirmación antes de escribir</strong><br />Se aplicarán {pending} registros válidos. {operations.upsert > 0 ? `${operations.upsert} usan upsert y pueden actualizar filas existentes si coincide su clave.` : 'Este lote no registra upserts en sus metadatos.'}
+            <strong>Confirmación antes de escribir</strong><br />Se aplicarán {pending} registros válidos. {operations.upsert > 0 ? `${operations.upsert} usan upsert y pueden actualizar filas existentes si coincide su clave.` : 'Este lote no registra upserts aplicables en sus metadatos.'}
             <div className={styles.actions}><button type="button" className={styles.secondaryButton} onClick={() => setConfirmingImportId(null)} disabled={working}>Cancelar</button><button type="button" className={styles.primaryButton} onClick={() => applyBatch(batch.id)} disabled={working}>Confirmar aplicación</button></div>
           </div> : null}
         </article>
