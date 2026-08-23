@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
 import styles from './EntityDirectoryExplorer.module.css'
+import mobileStyles from './EntityDirectoryMobile.module.css'
 
 const DEFAULT_LIMIT = 24
 const LIMIT_STEP = 24
@@ -65,7 +66,7 @@ function parseLimit(value) {
 function DirectoryCard({ item, compact = false }) {
   return (
     <Link
-      className={`${styles.card} ${compact ? styles.compactCard : ''}`}
+      className={`${styles.card} ${compact ? mobileStyles.compactCard : ''}`}
       href={item.href}
       key={`${item.kind}-${item.id}`}
     >
@@ -356,10 +357,10 @@ export default function EntityDirectoryExplorer({ items, initialState = {} }) {
       ) : null}
 
       {mobileOverviewMode ? (
-        <div className={styles.mobileOverview}>
+        <div className={mobileStyles.mobileOverview}>
           {mobileSections.map((section) => (
-            <section className={styles.mobileSection} key={section.value}>
-              <div className={styles.mobileSectionHead}>
+            <section className={mobileStyles.mobileSection} key={section.value}>
+              <div className={mobileStyles.mobileSectionHead}>
                 <div>
                   <strong>{section.label}</strong>
                   <span>{counts[section.value] || 0}</span>
@@ -368,7 +369,7 @@ export default function EntityDirectoryExplorer({ items, initialState = {} }) {
                   Ver todas <span aria-hidden="true">→</span>
                 </button>
               </div>
-              <div className={styles.mobileSectionList}>
+              <div className={mobileStyles.mobileSectionList}>
                 {section.items.map((item) => (
                   <DirectoryCard item={item} compact key={`${item.kind}-${item.id}`} />
                 ))}
@@ -378,7 +379,7 @@ export default function EntityDirectoryExplorer({ items, initialState = {} }) {
         </div>
       ) : null}
 
-      <div className={mobileOverviewMode ? styles.desktopResults : ''}>
+      <div className={mobileOverviewMode ? mobileStyles.desktopResults : ''}>
         {visibleItems.length ? (
           <div className={styles.grid}>
             {visibleItems.map((item) => (
