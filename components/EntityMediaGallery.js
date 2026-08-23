@@ -28,7 +28,13 @@ export default function EntityMediaGallery({ items = [], id }) {
                   <strong>{item.title || 'Fotografía de detalle'}</strong>
                   {item.caption ? <p>{item.caption}</p> : null}
                 </div>
-                {item.credit ? <small>{item.credit}</small> : null}
+                {item.credit ? (
+                  item.sourceUrl ? (
+                    <small>
+                      <a href={item.sourceUrl} target="_blank" rel="noreferrer">{item.credit}</a>
+                    </small>
+                  ) : <small>{item.credit}</small>
+                ) : null}
               </figcaption>
             </figure>
           ))}
