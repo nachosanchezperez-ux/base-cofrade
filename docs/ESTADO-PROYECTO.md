@@ -4,16 +4,15 @@
 
 ## Baseline observado
 
-- Comprobación: **2026-08-23 13:02 CEST**
-- Repositorio: `nachosanchezperez-ux/base-cofrade`
-- Rama principal: `main`
-- `main`: `eb9894d585e756f462a6777c2db652fea5144f9a`
-- Último frente integrado: **#214 · Autoridad pública de Hermandades**
-- #242 · Directorio unificado: **fusionada**.
-- #245 · Fichas de Hermandad: **fusionada**.
-- Proyecto Vercel: `base-cofrade`
-- Producción: **READY** sobre `eb9894d585e756f462a6777c2db652fea5144f9a`.
-- Supabase: proyecto `Hilocofrade` (`kcevwkucqzcyrqaimyhl`) **ACTIVE_HEALTHY** en la última comprobación.
+- Comprobación: **2026-08-23 15:55 CEST**.
+- Repositorio: `nachosanchezperez-ux/base-cofrade`.
+- Rama principal: `main`.
+- `main`: `41bf6e1958401012c5fe72c187538af5a9374427`.
+- Último frente integrado: **#252 · Auditoría e integridad de importaciones relacionales**.
+- Proyecto Vercel: `base-cofrade`.
+- Producción: **READY** en `dpl_9UdAw1S7jhsaXYcXFceW38toFqq4`, alineada con `41bf6e1958401012c5fe72c187538af5a9374427`.
+- Supabase: proyecto `Hilocofrade` (`kcevwkucqzcyrqaimyhl`) **ACTIVE_HEALTHY**.
+- Última migración remota verificada: `20260823134318_mass_import_relational_integrity`.
 
 Antes de cada tarea significativa el Orquestador debe refrescar de nuevo `main`, PR abiertas, Vercel y Supabase cuando proceda. Este SHA es un baseline, no una referencia permanente.
 
@@ -22,113 +21,148 @@ Antes de cada tarea significativa el Orquestador debe refrescar de nuevo `main`,
 La fase actual prioriza cierre y consolidación. No abrir nuevos frentes estructurales fuera de esta secuencia.
 
 1. Smoke transversal de producción → **🟢 CERRADO**.
-2. #242 · Directorio unificado → **🟢 CERRADO**.
-3. #245 · Fichas de Hermandad → **🟢 CERRADO**.
-4. Limpieza del backlog estructural → **EN CURSO**.
-5. Auditoría de carga masiva → bloqueada hasta cerrar el punto 4.
-6. Arquitectura pública → después del punto 4 y de la auditoría de carga, salvo los cortes antiguos ya clasificados dentro de la limpieza.
+2. Directorio unificado (#242) → **🟢 CERRADO**.
+3. Fichas de Hermandad (#245) → **🟢 CERRADO**.
+4. Limpieza del backlog estructural → **🟢 CERRADO**.
+5. Auditoría de carga masiva / cargas relacionales recientes → **🟢 CERRADO**.
+6. **Arquitectura pública / separación Front ↔ Panel → SIGUIENTE PUNTO ACTIVO**.
 7. Salud del grafo.
-8. Formalizar decisiones HC.
+8. Registro y formalización de decisiones HC.
 9. Elegir un único siguiente gran frente.
 
-## Backlog estructural · estado actual
+## Limpieza del backlog · cierre
 
-Estados operativos:
+Estados resueltos:
 
-- **🟢 FUSIONAR**: línea vigente; reconciliar con `main`, probar, preview y smoke antes de integrar.
-- **🔵 RECONSTRUIR**: intención válida, rama desfasada; rehacer sobre `main` preservando la arquitectura actual.
-- **⚪ APARCAR**: trabajo válido pero no pertenece al cierre actual o tiene prerrequisitos pendientes.
-- **⚫ CERRAR POR SUPERADO**: objetivo ya absorbido o sustituido.
-
-| PR | Área | Estado operativo | Decisión vigente |
+| PR | Área | Estado final | Resolución |
 |---|---|---|---|
-| #214 · Autoridad pública de Hermandades | Supabase público / autoridad editorial | ✅ **FUSIONADA** | Integrada en `main` como `eb9894d585e756f462a6777c2db652fea5144f9a`. `applyBrotherhoodAuthority()` usa ya `createPublicClient()`. |
-| #232 · Calendario responsive de Extraordinarias | UI Extraordinarias | 🟢 **FUSIONAR** | **Siguiente acción única.** Cambio localizado en `components/ExtraordinaryDirectory.module.css`; reconciliar, validar móvil/escritorio y producción. |
-| #211 · Cabecera de Bandas | UI Bandas / directorio | 🟢 **FUSIONAR** | Sigue aportando una hero específica de Bandas. Integrar después de #232, comprobando que no degrade el Directorio ya canónico. |
-| #234 · También en Hilo Cofrade | Grafo relacional / Tira del hilo | 🟢 **FUSIONAR** | Integrar después de #211, con smoke de Hermandad, Imagen, Paso y Banda y revisión de latencia. |
-| #239 · Sede y visita | Hermandades, Panel, Lugares | 🔵 **RECONSTRUIR** | Rehacer sobre el `main` resultante, preservando #245 y #214. No fusionar la rama antigua tal cual. |
-| #168 · Tira del hilo 2.11 | Grafo / API / Pregunta | 🔵 **RECONSTRUIR** | Rehacer después de #234 para reutilizar una única base de grafo y descubrimiento. |
-| #49 · Importador documental MVP | Panel, IA, Supabase, ingesta | ⚪ **APARCAR** | Draft y no mergeable. No aplicar sus migraciones antiguas de forma automática. Reauditar desde `main` cuando se retome ingesta. |
+| #232 | Extraordinarias responsive | 🟢 **FUSIONADA** | Integrada y validada en producción. |
+| #211 | Cabecera de Bandas | 🟢 **FUSIONADA** | Integrada sin degradar el Directorio canónico. |
+| #234 | También en Hilo Cofrade | 🟢 **FUSIONADA** | Reconciliada sobre `main`, CI/preview/producción correctos. |
+| #239 | Sede y visita | 🟢 **RECONSTRUIDA Y FUSIONADA** | Rehecha sobre `main`, preservando #245 y la autoridad pública ya vigente. |
+| #168 | Tira del hilo 2.11 | ⚫ **CERRADA POR SUPERADA** | Su intención está absorbida por la arquitectura actual de Tira del hilo, ya evolucionada hasta V11/V12. |
+| #49 | Importador documental MVP | ⚪ **APARCADA** | La infraestructura técnica antigua fue sustituida por el importador masivo actual. Se conserva como referencia de producto para una futura experiencia URL → análisis → propuesta → revisión, reconstruida desde la arquitectura vigente. |
+| #214 | Autoridad pública de Hermandades | 🟢 **YA INTEGRADA** | El corte de autoridad pública forma parte de `main`; para el punto 6 no se debe reabrir ni reutilizar su rama antigua como base técnica. |
 
-No hay actualmente ninguna de estas siete líneas clasificada como **⚫ CERRAR POR SUPERADO**.
+Regla permanente: no conservar ramas viejas por coste hundido. Si una idea sigue siendo válida pero la rama ha caducado, reconstruir desde el `main` real.
 
-## #214 · cierre verificado
+## Auditoría de carga masiva / cargas relacionales · cierre
 
-La rama original estaba desfasada y dejó de ser mergeable contra el `main` vigente. Se reconstruyó sobre `2c6c3a63c157cf22f3de54140695db77839c149f`, reaplicando únicamente dos cambios:
+Muestras auditadas de extremo a extremo:
 
-- `lib/supabase/brotherhood-authority.js`: cliente público en lugar del cliente cookie-aware;
-- `docs/FASE-A-hermandad-autoridad-publica.md`: auditoría y alcance del corte.
+1. **San Esteban**.
+2. **Bendición y Esperanza** como muestra de Viernes de Dolores.
+3. **Gran Poder** como carga reciente adicional.
+4. La auditoría se amplió a **Cristo de la Corona** y **Escolanía Salesiana María Auxiliadora de Sevilla** al aparecer una duplicidad sistémica.
 
-Comprobaciones realizadas:
+Recorrido comprobado: Hermandad → Titulares → Imágenes → Pasos → Capataces → Bandas → Acompañamientos → Fuentes → Front. La paridad con Panel se ha verificado a nivel de modelo/tablas y loaders; no se declara smoke visual autenticado del Panel cuando no se ha iniciado sesión editorial.
 
-- `brotherhood_section_authority`, `brotherhoods` y `step_personnel_periods`: RLS activa;
-- lectura pública limitada a datos publicados;
-- `current_step_personnel`: `security_invoker=true`;
-- preview Vercel: **READY**;
-- producción Vercel: **READY** sobre `eb9894d585e756f462a6777c2db652fea5144f9a`;
-- `/hermandades/san-benito`: HTTP 200 en producción;
-- `/hermandades/el-baratillo`: HTTP 200 en producción;
-- runtime del deployment tras los smokes: sin errores `error`/`fatal` detectados.
+### Hallazgos sistémicos corregidos
 
-Conclusión: **#214 → 🟢 CERRADO**.
+- Existían dos nodos para la misma corporación de **Cristo de la Corona**: una ficha publicada y un nodo legacy `la-corona` en borrador, ambos enlazados al mismo paso procesional.
+- Existían dos nodos para la misma **Escolanía Salesiana María Auxiliadora**; la ficha rica/canónica ya contenía como denominación vigente el nombre usado por el duplicado.
+- El acompañamiento de la Escolanía a Cristo de la Corona estaba repartido entre ambos pares de nodos y sus fuentes.
+- Parte de los enlaces de Fuentes guardaba IDs de relaciones dentro de texto `scope` (`relation:image_authorship:<uuid>` y `relation:brotherhood_image:<uuid>`) en vez de usar las FK estructuradas de `source_links`.
+- **Bendición y Esperanza** tenía fuentes oficiales ya cargadas, pero faltaban enlaces relacionales desde Hermandad, titulares, autorías y paso.
 
-## Orden operativo del backlog
+### Corrección aplicada
 
-1. **#232** · Extraordinarias responsive.
-2. **#211** · cabecera de Bandas.
-3. **#234** · También en Hilo Cofrade.
-4. **Reconstruir #239** sobre el `main` resultante.
-5. **Reconstruir #168** después de estabilizar #234.
-6. **#49 permanece aparcada**.
+PR **#252 · Audita y protege las importaciones relacionales** → **🟢 FUSIONADA**.
 
-Antes de cada fusión:
+Migración aplicada y versionada:
 
-1. refrescar `main`;
-2. comparar la rama contra el árbol actual;
-3. reconstruir si existe deuda de rama o solape peligroso;
-4. ejecutar pruebas relevantes;
-5. comprobar build y preview Vercel;
-6. hacer smoke funcional;
-7. fusionar únicamente si producción puede quedar verde.
+- `20260823134318_mass_import_relational_integrity.sql`.
 
-## Supabase y migraciones
+La migración:
 
-Estado de coordinación vigente:
+- consolida `la-corona` sobre la entidad canónica publicada `cristo-de-la-corona` sin cambiar el ID canónico;
+- consolida la Escolanía duplicada sobre `escolania-salesiana-maria-auxiliadora-sevilla` sin cambiar el ID canónico;
+- reúne y conserva las fuentes de los acompañamientos durante la consolidación;
+- normaliza `source_links` legacy hacia `image_authorship_id` y `brotherhood_image_id` reales cuando existe FK compatible;
+- completa la trazabilidad de Bendición y Esperanza usando fuentes oficiales ya incorporadas por el propio lote;
+- añade una guarda para impedir que un mismo `processional_step` tenga dos Hermandades vigentes simultáneamente sin cierre temporal;
+- añade guardas de identidad de bandas para impedir recrear una formación cuando su nombre coincide con el nombre o denominación vigente de otra formación del mismo municipio.
 
-- #232, #211, #234, #239 y #168 no declaran migraciones en su alcance actual;
-- #214 no ha requerido cambios de esquema ni RLS;
-- #49 contiene las migraciones de ingesta `20260818134549_document_imports.sql`, `20260818150550_document_imports_music.sql` y `20260818235551_document_imports_agent_guard.sql`; en la última auditoría no figuraban aplicadas en `supabase_migrations.schema_migrations`.
+No se ha impuesto unicidad global por nombre: existen homónimos legítimos en el dominio cofrade y las guardas se limitan a patrones donde la identidad es realmente incompatible.
 
-Reglas permanentes:
+### Verificación posterior
 
-- comparar historial local y remoto antes de tocar esquema;
-- no modificar una migración ya aplicada;
-- no aplicar las migraciones de #49 hasta reconstruir y volver a auditar el importador.
+- Duplicados residuales `la-corona` / `escolania-maria-auxiliadora-sevilla`: **0**.
+- Pasos procesionales con más de un propietario vigente: **0**.
+- La Escolanía canónica conserva **4 acompañamientos**; no se perdieron relaciones.
+- El acompañamiento canónico de Cristo de la Corona conserva **2 fuentes** acumuladas.
+- Bendición y Esperanza: **0 huecos** de fuente en Hermandad, titulares, autorías y paso dentro del alcance auditado.
+- Gran Poder: la autoría anónima del Mayor Dolor y Traspaso queda enlazada por `image_authorship_id` real.
+- Pruebas negativas: intentar recrear la Escolanía duplicada o asignar un segundo propietario vigente al paso de la Corona es bloqueado por la base de datos y no deja residuos.
+- CI de #252: **success**.
+- Producción: `dpl_9UdAw1S7jhsaXYcXFceW38toFqq4` **READY** sobre `41bf6e1958401012c5fe72c187538af5a9374427`.
+- Runtime tras smoke: sin errores `error`/`fatal` ni clusters de error detectados.
+- Smoke público: San Esteban, Bendición y Esperanza, Gran Poder, Cristo de la Corona y la Escolanía canónica responden correctamente.
+- Rutas legacy `/hermandades/la-corona` y `/bandas/escolania-maria-auxiliadora-sevilla`: **404 real**, como corresponde tras consolidar los duplicados.
 
-## Zonas sensibles
+### Incompletitud documentada que NO es error de integridad
+
+- San Esteban no tiene capataces cargados para sus dos pasos: el Front muestra **Pendiente de incorporar** y no inventa datos.
+- El Cristo de San Esteban mantiene autoría desconocida donde no existe atribución documentada estructurada.
+- En Gran Poder y otras fichas pueden existir campos de multimedia, horarios o acompañamientos todavía pendientes. Se consideran enriquecimiento/completitud, no inconsistencia roja.
+
+### Importador masivo actual
+
+La infraestructura de importación masiva vigente existe en `app/panel/(protected)/datos/importar`, `lib/panel/bulk-import*.js` y `20260822204505_bulk_import_pipeline.sql`.
+
+En la auditoría de 2026-08-23 las tablas `bulk_imports`, `bulk_import_items` y `document_imports` tenían **0 lotes reales**: San Esteban, Viernes de Dolores y las otras cargas recientes auditadas habían entrado principalmente mediante migraciones/semillas directas. Las nuevas guardas viven en el modelo de datos, por lo que protegen tanto futuras importaciones del Panel como escrituras procedentes de migraciones u otros writers.
+
+No se declara todavía el importador como transaccional de lote completo: su aplicación actual es por filas/chunks. Esa mejora queda fuera de este cierre porque no causó los defectos observados y abriría un nuevo frente de arquitectura de ingesta.
+
+## Zonas sensibles vigentes
 
 ### Hermandades
 
-- #245 y #214 forman ya parte del `main` canónico.
-- #239 debe reconstruirse preservando ambas capas.
+- #245, autoridad pública y #239 forman parte del `main` canónico.
 - No añadir lógica específica por slug para resolver casos de ficha.
+- Mantener Patrimonio general separado de Patrimonio musical.
 
 ### Directorios
 
-#242 es la arquitectura canónica de Directorio. Cualquier cambio posterior en listados, navegación o Bandas debe partir de ella.
-
-### Extraordinarias
-
-#232 es el siguiente corte a cerrar. Debe mantenerse intacto el dominio editorial y las fichas ya estables; el alcance esperado es responsive/presentación del calendario secundario.
+#242 es la arquitectura canónica de Directorio. Los cambios posteriores deben reutilizar sus familias, filtros y segmentación, no crear listados paralelos.
 
 ### Tira del hilo
 
-- #234 entra antes que #168.
-- #168 no debe crear una segunda lógica de grafo paralela al sistema actual.
+#234 es la base integrada. #168 está superada. No crear una segunda lógica de grafo paralela.
 
-### Ingesta masiva
+### Datos e importación
 
-#49 queda como referencia de producto, no como base técnica integrable. La auditoría de carga masiva de la fase de Dirección debe buscar patrones sistémicos y no limitarse a corregir casos individuales.
+- Reutilizar entidades canónicas antes de crear nuevas.
+- Preservar IDs, relaciones, fuentes e históricos.
+- No degradar entidades reales a texto libre cuando existe relación estructurada.
+- Tratar duplicados por identidad contextual, no mediante unicidad global de nombres.
+
+## Punto activo siguiente · Arquitectura pública
+
+Con los puntos anteriores cerrados, el siguiente frente único es **separar completamente las lecturas públicas de la sesión/cookie editorial del Panel**.
+
+Orden de auditoría:
+
+1. Home.
+2. Hermandades.
+3. Imágenes.
+4. Pasos.
+5. Bandas.
+6. Extraordinarias.
+7. Marchas.
+8. Personas/agentes.
+
+Método por corte pequeño:
+
+1. comprobar RLS y vistas/funciones implicadas;
+2. usar cliente público explícito en el loader público;
+3. eliminar dependencia accidental de cookie/sesión editorial;
+4. añadir o ajustar pruebas;
+5. CI + preview;
+6. smoke público sin sesión;
+7. producción + runtime.
+
+El trabajo ya integrado de #214 sirve como precedente conceptual y como corte existente para Hermandades, pero **no** se debe reabrir su rama antigua ni asumir que el resto de dominios ya cumplen el mismo patrón.
 
 ## Protocolo de nueva tarea
 
@@ -166,4 +200,4 @@ Reglas permanentes:
 
 No generar una lluvia de ideas. Refrescar el estado, localizar el punto de la secuencia y devolver una sola acción ejecutable.
 
-**Siguiente acción actual: cerrar #232 · Calendario responsive de Extraordinarias.**
+**Siguiente acción actual: iniciar el punto de Arquitectura pública auditando Home para detectar cualquier dependencia de sesión/cookies editoriales y, si existe, corregirla mediante cliente público explícito + pruebas + preview + producción.**
