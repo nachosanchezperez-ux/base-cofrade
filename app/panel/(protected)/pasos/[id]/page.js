@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { notFound, redirect } from 'next/navigation'
+import PanelFormGroup from '@/components/panel/PanelFormGroup'
 import { StatusSelect, STATUS_LABELS } from '@/components/panel/step/StepEditorPrimitives'
 import { requirePanelUser } from '@/lib/panel/auth'
 import { getStepEditorData } from '@/lib/panel/steps'
@@ -60,26 +61,53 @@ export default async function StepEditorPage({ params, searchParams }) {
         <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>Fuente de verdad</span><h2>Datos técnicos</h2></div><p>Identidad, configuración actual y estado editorial que alimentan el Front.</p></div>
         <form action={updateStepAction} className={`${styles.panelCard} ${styles.editorForm}`}>
           <input type="hidden" name="step_id" value={entity.id} />
-          <div className={styles.formGrid}>
+
+          <PanelFormGroup
+            eyebrow="Identidad pública"
+            title="Nombre y publicación"
+            description="Información principal del Paso en el directorio, la ficha y el buscador."
+          >
             <label className={styles.fieldWide}><span>Nombre del paso</span><input name="name" defaultValue={entity.name} required /></label>
             <label><span>Tipo de paso</span><input name="step_type" defaultValue={step.step_type || ''} placeholder="Misterio, palio, Cristo…" /></label>
             <label><span>Slug público</span><input name="slug" defaultValue={entity.slug || ''} required /></label>
             <label><span>Estado editorial</span><StatusSelect defaultValue={entity.status} /></label>
             <label className={styles.fieldWide}><span>Resumen SEO / directorio</span><textarea name="summary" defaultValue={entity.summary || ''} rows="3" /></label>
             <label className={styles.fieldWide}><span>Descripción pública</span><textarea name="description" defaultValue={step.description || ''} rows="5" /></label>
+          </PanelFormGroup>
+
+          <PanelFormGroup
+            eyebrow="Construcción"
+            title="Estilo, materiales y configuración"
+            description="Rasgos técnicos que describen la ejecución y la forma actual de procesionar."
+          >
             <label><span>Estilo</span><input name="style" defaultValue={step.style || ''} /></label>
             <label><span>Materiales</span><input name="materials" defaultValue={step.materials || ''} /></label>
             <label><span>Ejecución / datación</span><input name="execution_date_text" defaultValue={step.execution_date_text || ''} placeholder="1945, 1926–1927…" /></label>
             <label><span>Sistema de portadores</span><input name="carrier_system" defaultValue={step.carrier_system || ''} placeholder="Costaleros, ruedas…" /></label>
-            <label><span>Dimensiones en texto</span><input name="dimensions_text" defaultValue={step.dimensions_text || ''} /></label>
+          </PanelFormGroup>
+
+          <PanelFormGroup
+            eyebrow="Medidas"
+            title="Dimensiones y capacidad"
+            description="Medidas normalizadas y datos operativos del conjunto procesional."
+          >
+            <label className={styles.fieldWide}><span>Dimensiones en texto</span><input name="dimensions_text" defaultValue={step.dimensions_text || ''} /></label>
             <label><span>Largo (cm)</span><input name="length_cm" type="number" min="0" step="0.01" defaultValue={step.length_cm ?? ''} /></label>
             <label><span>Ancho (cm)</span><input name="width_cm" type="number" min="0" step="0.01" defaultValue={step.width_cm ?? ''} /></label>
             <label><span>Alto (cm)</span><input name="height_cm" type="number" min="0" step="0.01" defaultValue={step.height_cm ?? ''} /></label>
             <label><span>Número de trabajaderas</span><input name="workbenches_count" type="number" min="0" defaultValue={step.workbenches_count ?? ''} /></label>
+          </PanelFormGroup>
+
+          <PanelFormGroup
+            eyebrow="Conservación"
+            title="Estado actual y notas"
+            description="Separa la información pública del control documental interno."
+          >
             <label><span>Estado de conservación</span><input name="current_condition" defaultValue={step.current_condition || ''} /></label>
             <label className={styles.fieldWide}><span>Estado actual / observaciones públicas</span><textarea name="current_state_notes" defaultValue={step.current_state_notes || ''} rows="3" /></label>
             <label className={styles.fieldWide}><span>Notas internas</span><textarea name="notes" defaultValue={step.notes || ''} rows="3" /></label>
-          </div>
+          </PanelFormGroup>
+
           <div className={styles.formActions}><small>Las relaciones, música, responsables y evolución material se editan en módulos propios del workspace.</small>{canEdit ? <button className={styles.primaryButton} type="submit">Guardar ficha técnica</button> : null}</div>
         </form>
       </section>
