@@ -7,6 +7,7 @@ import styles from './EntityDirectoryExplorer.module.css'
 
 const DEFAULT_LIMIT = 24
 const LIMIT_STEP = 24
+const MOBILE_SECTION_LIMIT = 3
 
 const KINDS = [
   { value: 'all', label: 'Todos' },
@@ -59,6 +60,40 @@ function parseLimit(value) {
   const parsed = Number.parseInt(value, 10)
   if (!Number.isFinite(parsed) || parsed < DEFAULT_LIMIT) return DEFAULT_LIMIT
   return parsed
+}
+
+function DirectoryCard({ item, compact = false }) {
+  return (
+    <Link
+      className={`${styles.card} ${compact ? styles.compactCard : ''}`}
+      href={item.href}
+      key={`${item.kind}-${item.id}`}
+    >
+      <span className={`${styles.media} ${styles[item.mediaKind] || ''}`}>
+        {item.mediaPath ? (
+          <Image
+            src={item.mediaPath}
+            alt=""
+            fill
+            sizes={compact ? '56px' : '(max-width: 640px) 68px, (max-width: 1100px) 82px, 92px'}
+          />
+        ) : (
+          <span className={styles.monogram}>{initials(item.name)}</span>
+        )}
+      </span>
+
+      <span className={styles.cardCopy}>
+        <span className={styles.cardMeta}>
+          <small>{item.label}</small>
+          {item.subtype && item.subtype !== item.label ? <span>{item.subtype}</span> : null}
+        </span>
+        <strong>{item.name}</strong>
+        {item.context ? <span className={styles.context}>{item.context}</span> : null}
+        {!compact && item.relation ? <span className={styles.relation}>{item.relation}</span> : null}
+      </span>
+      <span className={styles.arrow} aria-hidden="true">→</span>
+    </Link>
+  )
 }
 
 export default function EntityDirectoryExplorer({ items, initialState = {} }) {
@@ -143,6 +178,15 @@ export default function EntityDirectoryExplorer({ items, initialState = {} }) {
     municipality !== 'todos',
     kind !== 'all' && subtype !== 'todos',
   ].filter(Boolean).length
+  const mobileOverviewMode = kind === 'all' && !query.trim() && activeSecondaryFilters === 0
+
+  const mobileSections = useMemo(() => KINDS.slice(1).map((option) => ({
+    ...option,
+    items: items
+      .filter((item) => item.kind === option.value)
+      .sort((a, b) => a.name.localeCompare(b.name, 'es', { sensitivity: 'base' }))
+      .slice(0, MOBILE_SECTION_LIMIT),
+  })), [items])
 
   useEffect(() => {
     const params = new URLSearchParams()
@@ -311,56 +355,57 @@ export default function EntityDirectoryExplorer({ items, initialState = {} }) {
         </div>
       ) : null}
 
-      {visibleItems.length ? (
-        <div className={styles.grid}>
-          {visibleItems.map((item) => (
-            <Link className={styles.card} href={item.href} key={`${item.kind}-${item.id}`}>
-              <span className={`${styles.media} ${styles[item.mediaKind] || ''}`}>
-                {item.mediaPath ? (
-                  <Image
-                    src={item.mediaPath}
-                    alt=""
-                    fill
-                    sizes="(max-width: 640px) 68px, (max-width: 1100px) 82px, 92px"
-                  />
-                ) : (
-                  <span className={styles.monogram}>{initials(item.name)}</span>
-                )}
-              </span>
-
-              <span className={styles.cardCopy}>
-                <span className={styles.cardMeta}>
-                  <small>{item.label}</small>
-                  {item.subtype && item.subtype !== item.label ? <span>{item.subtype}</span> : null}
-                </span>
-                <strong>{item.name}</strong>
-                {item.context ? <span className={styles.context}>{item.context}</span> : null}
-                {item.relation ? <span className={styles.relation}>{item.relation}</span> : null}
-              </span>
-              <span className={styles.arrow} aria-hidden="true">→</span>
-            </Link>
+      {mobileOverviewMode ? (
+        <div className={styles.mobileOverview}>
+          {mobileSections.map((section) => (
+            <section className={styles.mobileSection} key={section.value}>
+              <div className={styles.mobileSectionHead}>
+                <div>
+                  <strong>{section.label}</strong>
+                  <span>{counts[section.value] || 0}</span>
+                </div>
+                <button type="button" onClick={() => changeKind(section.value)}>
+                  Ver todas <span aria-hidden="true">→</span>
+                </button>
+              </div>
+              <div className={styles.mobileSectionList}>
+                {section.items.map((item) => (
+                  <DirectoryCard item={item} compact key={`${item.kind}-${item.id}`} />
+                ))}
+              </div>
+            </section>
           ))}
         </div>
-      ) : (
-        <div className={styles.empty}>
-          <strong>No encontramos resultados con esos criterios</strong>
-          <span>Prueba otra búsqueda o limpia alguno de los filtros.</span>
-          <button type="button" onClick={clearAll}>Ver todo el directorio</button>
-        </div>
-      )}
-
-      {visibleItems.length < filtered.length ? (
-        <div className={styles.loadMoreWrap}>
-          <button
-            type="button"
-            className={styles.loadMore}
-            onClick={() => setLimit((value) => value + LIMIT_STEP)}
-          >
-            Mostrar {Math.min(LIMIT_STEP, filtered.length - visibleItems.length)} más
-          </button>
-          <span>{visibleItems.length} de {filtered.length}</span>
-        </div>
       ) : null}
+
+      <div className={mobileOverviewMode ? styles.desktopResults : ''}>
+        {visibleItems.length ? (
+          <div className={styles.grid}>
+            {visibleItems.map((item) => (
+              <DirectoryCard item={item} key={`${item.kind}-${item.id}`} />
+            ))}
+          </div>
+        ) : (
+          <div className={styles.empty}>
+            <strong>No encontramos resultados con esos criterios</strong>
+            <span>Prueba otra búsqueda o limpia alguno de los filtros.</span>
+            <button type="button" onClick={clearAll}>Ver todo el directorio</button>
+          </div>
+        )}
+
+        {visibleItems.length < filtered.length ? (
+          <div className={styles.loadMoreWrap}>
+            <button
+              type="button"
+              className={styles.loadMore}
+              onClick={() => setLimit((value) => value + LIMIT_STEP)}
+            >
+              Mostrar {Math.min(LIMIT_STEP, filtered.length - visibleItems.length)} más
+            </button>
+            <span>{visibleItems.length} de {filtered.length}</span>
+          </div>
+        ) : null}
+      </div>
     </div>
   )
 }
