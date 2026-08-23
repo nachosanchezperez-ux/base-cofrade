@@ -118,7 +118,7 @@ export default function PanelEditState() {
   if (state === 'idle') return null
 
   return (
-    <div className={`${styles.dock} ${styles[state]}`} role="status" aria-live="polite">
+    <div className={`${styles.dock} ${styles[state]}`} role="status" aria-live="polite" data-panel-toast-root>
       <span className={styles.statusMark} aria-hidden="true" />
       <strong>
         {state === 'dirty' ? 'Cambios sin guardar' : state === 'pending' ? 'Guardando cambios…' : 'Guardado'}
