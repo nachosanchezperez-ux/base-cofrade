@@ -1,0 +1,364 @@
+.quickStart {
+  display: grid;
+  grid-template-columns: minmax(230px, .72fr) minmax(0, 1.28fr);
+  gap: 24px;
+  margin-bottom: 42px;
+  padding: 24px;
+  border: 1px solid #d9e3ec;
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 100% 0, rgb(18 58 103 / 8%), transparent 36%),
+    #fff;
+}
+
+.quickStart > div {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+}
+
+.quickStart h2 {
+  margin: 0;
+  color: var(--panel-navy);
+  font-size: 24px;
+  letter-spacing: -.035em;
+}
+
+.quickStart p {
+  margin: 0;
+  color: var(--panel-muted);
+}
+
+.quickStart nav {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.quickStart a {
+  display: grid;
+  gap: 6px;
+  min-height: 88px;
+  padding: 16px;
+  border: 1px solid #dbe5ed;
+  border-radius: 14px;
+  color: var(--panel-navy);
+  background: #f8fafc;
+  text-decoration: none;
+  transition: border-color .16s ease, background .16s ease, transform .16s ease;
+}
+
+.quickStart a:hover,
+.quickStart a:focus-visible {
+  border-color: #b8cad9;
+  outline: none;
+  background: #f1f6fa;
+  transform: translateY(-1px);
+}
+
+.quickStart a strong {
+  font-size: 14px;
+}
+
+.quickStart a span {
+  color: var(--panel-muted);
+  font-size: 11px;
+}
+
+.targetList {
+  display: grid;
+  gap: 14px;
+}
+
+.targetCard {
+  scroll-margin-top: 110px;
+  overflow: hidden;
+  border: 1px solid #dce5ed;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 7px 22px rgb(15 39 66 / 4%);
+}
+
+.targetSummary {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr);
+  align-items: center;
+  gap: 18px;
+  padding: 16px 18px;
+}
+
+.preview {
+  display: grid;
+  width: 110px;
+  height: 92px;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid #e0e7ed;
+  border-radius: 12px;
+  color: #6c7f90;
+  background: #f0f4f7;
+  font-size: 28px;
+}
+
+.preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #fff;
+}
+
+.targetCopy {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+}
+
+.targetMeta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.targetMeta span {
+  color: var(--panel-red);
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.targetMeta b {
+  display: inline-flex;
+  min-height: 22px;
+  align-items: center;
+  padding: 0 8px;
+  border-radius: 999px;
+  color: var(--panel-blue);
+  background: #edf4fa;
+  font-size: 10px;
+}
+
+.targetCopy h3 {
+  margin: 0;
+  overflow-wrap: anywhere;
+  color: var(--panel-navy);
+  font-size: 17px;
+  letter-spacing: -.025em;
+}
+
+.targetCopy p {
+  margin: 0;
+  color: var(--panel-muted);
+  font-size: 12px !important;
+}
+
+.uploadDetails {
+  border-top: 1px solid #e3e9ef;
+  background: #fafcfd;
+}
+
+.uploadDetails summary {
+  display: flex;
+  min-height: 50px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 18px;
+  color: var(--panel-blue);
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  list-style: none;
+}
+
+.uploadDetails summary::-webkit-details-marker {
+  display: none;
+}
+
+.uploadDetails[open] summary span {
+  transform: rotate(180deg);
+}
+
+.uploadForm {
+  display: grid;
+  gap: 15px;
+  padding: 18px;
+  border-top: 1px solid #e6ebf0;
+  background: #fff;
+}
+
+.uploadForm label {
+  display: grid;
+  gap: 7px;
+}
+
+.uploadForm label > span {
+  color: #4e6072;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.uploadForm input,
+.uploadForm select,
+.uploadForm textarea {
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 12px;
+  border: 1px solid #cbd8e3;
+  border-radius: 10px;
+  outline: none;
+  color: var(--panel-ink);
+  background: #fff;
+  font: inherit;
+  font-size: 14px;
+}
+
+.uploadForm textarea {
+  min-height: 72px;
+  resize: vertical;
+}
+
+.uploadForm input:focus,
+.uploadForm select:focus,
+.uploadForm textarea:focus {
+  border-color: var(--panel-blue);
+  box-shadow: 0 0 0 3px rgb(18 58 103 / 9%);
+}
+
+.fileField {
+  padding: 15px;
+  border: 1px dashed #b9cbd9;
+  border-radius: 13px;
+  background: #f5f9fc;
+}
+
+.fileField input[type='file'] {
+  min-height: 52px;
+  padding: 7px;
+  background: #fff;
+}
+
+.fileField input[type='file']::file-selector-button {
+  min-height: 36px;
+  margin-right: 10px;
+  padding: 0 13px;
+  border: 0;
+  border-radius: 8px;
+  color: #fff;
+  background: var(--panel-blue);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.fileField small {
+  color: var(--panel-muted);
+  font-size: 11px !important;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.uploadActions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding-top: 15px;
+  border-top: 1px solid #e3e9ef;
+}
+
+.uploadActions small {
+  max-width: 560px;
+  color: var(--panel-muted);
+  font-size: 11px !important;
+}
+
+.emptyState {
+  padding: 22px;
+  border: 1px dashed #cbd8e3;
+  border-radius: 14px;
+  color: var(--panel-muted);
+  background: #f8fafc;
+  text-align: center;
+}
+
+@media (max-width: 860px) {
+  .quickStart {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 20px;
+  }
+
+  .targetCard {
+    scroll-margin-top: 90px;
+  }
+
+  .uploadDetails summary {
+    min-height: 54px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 620px) {
+  .quickStart {
+    margin-bottom: 34px;
+    padding: 18px;
+    border-radius: 15px;
+  }
+
+  .quickStart nav {
+    grid-template-columns: 1fr;
+  }
+
+  .quickStart a {
+    min-height: 70px;
+  }
+
+  .targetSummary {
+    grid-template-columns: 78px minmax(0, 1fr);
+    gap: 13px;
+    padding: 14px;
+  }
+
+  .preview {
+    width: 78px;
+    height: 84px;
+  }
+
+  .targetCopy h3 {
+    font-size: 15px;
+  }
+
+  .targetCopy p {
+    font-size: 11px !important;
+  }
+
+  .uploadDetails summary,
+  .uploadForm {
+    padding-inline: 14px;
+  }
+
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .uploadForm input,
+  .uploadForm select,
+  .uploadForm textarea {
+    min-height: 48px;
+    font-size: 16px;
+  }
+
+  .uploadActions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .uploadActions button {
+    width: 100%;
+  }
+}
