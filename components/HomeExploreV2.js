@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import styles from './HomeExploreV2.module.css'
+import polishStyles from './HomeResponsivePolish.module.css'
 
 function countLabel(item) {
   if (item.key === 'brotherhood') return `${item.count} ${item.count === 1 ? 'hermandad publicada' : 'hermandades publicadas'}`
@@ -21,25 +22,25 @@ export default function HomeExploreV2({ stats }) {
   const graph = stats?.graph || []
 
   return (
-    <section className={styles.section} id="enciclopedia">
+    <section className={`${styles.section} ${polishStyles.exploreSection}`} id="enciclopedia">
       <div className="shell">
-        <header className={styles.header}>
+        <header className={`${styles.header} ${polishStyles.exploreHeader}`}>
           <span className={styles.eyebrow}>Enciclopedia</span>
           <h2>Entra por donde quieras</h2>
           <p>Cuatro puertas para empezar a recorrer Hilo Cofrade. Cada directorio abre después sus relaciones con imágenes, pasos, música, autores y patrimonio.</p>
         </header>
 
-        <div className={styles.grid}>
+        <div className={`${styles.grid} ${polishStyles.exploreGrid}`}>
           {directories.map((item) => (
-            <Link className={styles.card} href={item.href} key={item.key}>
-              <div className={styles.cardTop}>
+            <Link className={`${styles.card} ${polishStyles.exploreCard}`} href={item.href} key={item.key}>
+              <div className={`${styles.cardTop} ${polishStyles.exploreCardTop}`}>
                 <span className={styles.sequence}>{directoryOrder[item.key] || '·'}</span>
-                <span className={styles.count}>{countLabel(item)}</span>
+                <span className={`${styles.count} ${polishStyles.exploreCount}`}>{countLabel(item)}</span>
               </div>
-              <div className={styles.cardBody}>
+              <div className={`${styles.cardBody} ${polishStyles.exploreCardBody}`}>
                 <h3>{item.label}</h3>
                 <p>{item.detail}</p>
-                <span className={styles.cta}>
+                <span className={`${styles.cta} ${polishStyles.exploreCta}`}>
                   <span>Explorar {item.label.toLowerCase()}</span>
                   <b aria-hidden="true">→</b>
                 </span>
@@ -48,15 +49,15 @@ export default function HomeExploreV2({ stats }) {
           ))}
         </div>
 
-        <aside className={styles.graphStrip} aria-label="Dimensión del grafo público de Hilo Cofrade">
+        <aside className={`${styles.graphStrip} ${polishStyles.graphStrip}`} aria-label="Dimensión del grafo público de Hilo Cofrade">
           <div className={styles.graphIntro}>
             <span className={styles.eyebrow}>El hilo sigue</span>
             <h3>Los directorios son solo la entrada</h3>
             <p>Marchas, autores, patrimonio y acontecimientos se descubren relacionados con las entidades principales, sin convertir la Home en un catálogo de tablas.</p>
           </div>
-          <div className={styles.metrics}>
+          <div className={`${styles.metrics} ${polishStyles.graphMetrics}`}>
             {graph.map((item) => (
-              <div className={styles.metric} key={item.key}>
+              <div className={`${styles.metric} ${polishStyles.graphMetric}`} key={item.key}>
                 <strong>{item.count}</strong>
                 <span>{item.label}</span>
               </div>
@@ -64,20 +65,20 @@ export default function HomeExploreV2({ stats }) {
           </div>
         </aside>
 
-        <aside className={styles.collab} id="colabora">
+        <aside className={`${styles.collab} ${polishStyles.collab}`} id="colabora">
           <div>
             <span className={styles.eyebrow}>Participa</span>
             <h3>Ayúdanos a completar el hilo</h3>
             <p>Las aportaciones pasan por revisión y documentación antes de incorporarse a Hilo Cofrade.</p>
           </div>
           <div className={styles.collabActions}>
-            <div className={styles.flow} aria-label="Proceso de publicación">
+            <div className={`${styles.flow} ${polishStyles.collabFlow}`} aria-label="Proceso de publicación">
               <span>1 · Envías</span>
               <span>2 · Revisamos</span>
               <span>3 · Documentamos</span>
               <span>4 · Publicamos</span>
             </div>
-            <Link className={styles.collabButton} href="/colabora">Proponer información</Link>
+            <Link className={`${styles.collabButton} ${polishStyles.collabButton}`} href="/colabora">Proponer información</Link>
           </div>
         </aside>
       </div>
