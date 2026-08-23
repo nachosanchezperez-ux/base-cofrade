@@ -1,4 +1,4 @@
-.contract {
+.contract.contract {
   --hc-directory-media-column: 82px;
   --hc-directory-media-width: 72px;
   --hc-directory-media-height: 92px;
@@ -6,11 +6,39 @@
   --hc-directory-card-padding-y: 18px;
   --hc-directory-card-padding-x: 20px;
   --hc-directory-arrow-size: 21px;
+  display: grid;
   min-width: 0;
+  grid-template-columns: var(--hc-directory-media-column) minmax(0, 1fr) auto;
+  gap: var(--hc-directory-card-gap);
+  align-items: center;
+  padding: var(--hc-directory-card-padding-y) var(--hc-directory-card-padding-x);
+}
+
+.media.media {
+  position: relative;
+  width: var(--hc-directory-media-width);
+  height: var(--hc-directory-media-height);
+  max-width: 100%;
+  min-width: 0;
+  justify-self: start;
+  overflow: hidden;
+}
+
+.copy.copy {
+  min-width: 0;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+.action.action {
+  justify-self: end;
+  align-self: center;
+  font-size: var(--hc-directory-arrow-size);
+  line-height: 1;
 }
 
 @media (max-width: 620px) {
-  .contract {
+  .contract.contract {
     --hc-directory-media-column: 64px;
     --hc-directory-media-width: 58px;
     --hc-directory-media-height: 76px;
