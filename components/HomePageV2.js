@@ -3,10 +3,10 @@ import Link from 'next/link'
 import HiloSearch from '@/components/HiloSearch'
 import HomeTodayV2 from '@/components/HomeTodayV2'
 import HomeExploreV2 from '@/components/HomeExploreV2'
+import HomeKnowledgeThreads from '@/components/HomeKnowledgeThreads'
 import { getExtraordinaryLiveState } from '@/lib/home-live-status'
 import styles from '@/app/home.module.css'
 import liveStyles from './HomeExtraordinaryLive.module.css'
-import threadStyles from './HomeThreadsVisual.module.css'
 import navStyles from './HomeExtraordinaryNav.module.css'
 
 const stackedNextExtraHeadStyle = { alignItems: 'flex-start', flexDirection: 'column', gap: 4 }
@@ -21,25 +21,6 @@ function madridDateKey(date = new Date()) {
   }).formatToParts(date)
   const value = (type) => parts.find((part) => part.type === type)?.value || ''
   return `${value('year')}-${value('month')}-${value('day')}`
-}
-
-function ThreadVisual({ visual }) {
-  if (!visual?.path) return null
-  const identity = visual.kind !== 'photo'
-  const unoptimized = /\.svg(?:$|\?)/i.test(visual.path)
-
-  return (
-    <span className={threadStyles.visual} data-kind={visual.kind || 'photo'} aria-hidden="true">
-      <Image
-        src={visual.path}
-        alt=""
-        fill
-        sizes="70px"
-        unoptimized={unoptimized}
-        style={{ objectFit: identity ? 'contain' : 'cover' }}
-      />
-    </span>
-  )
 }
 
 export default function HomePageV2({
@@ -250,54 +231,7 @@ export default function HomePageV2({
       ) : null}
 
       <HomeTodayV2 today={today} content={todayContent} />
-
-      {discoveryThreads.length ? (
-        <section className={`${styles.section} ${styles.threadsSection}`} id="ultimos-hilos">
-          <div className="shell">
-            <div className={styles.threadsHead}>
-              <span className={styles.threadsEyebrow}>Conocimiento en movimiento</span>
-              <h2>Últimos hilos incorporados</h2>
-              <p>Lo último que ha crecido dentro de la enciclopedia: nuevas relaciones, patrimonio y conexiones ya publicadas.</p>
-            </div>
-            <div className={styles.threadRail}>
-              {discoveryThreads.map((thread) => {
-                const visualContext = thread.visual?.contextName && thread.visual.contextName !== thread.title
-                  ? thread.visual.contextName
-                  : ''
-                return (
-                  <Link className={styles.threadCard} href={thread.href} key={thread.id}>
-                    <div className={styles.threadTopline}>
-                      <span className={styles.threadLabel}>{thread.label}</span>
-                      <span className={styles.threadActivity}>
-                        <strong>{thread.activityStatus}</strong>
-                        {thread.dateLabel ? (
-                          <time dateTime={thread.dateTime}>{thread.dateLabel}</time>
-                        ) : null}
-                      </span>
-                    </div>
-                    <div className={`${threadStyles.identity} ${thread.visual?.path ? threadStyles.identityVisual : ''}`}>
-                      <ThreadVisual visual={thread.visual} />
-                      <div className={threadStyles.identityCopy}>
-                        {visualContext ? <span className={threadStyles.context}>En {visualContext}</span> : null}
-                        <h3>{thread.title}</h3>
-                        <strong className={styles.threadMetric}>{thread.metric}</strong>
-                      </div>
-                    </div>
-                    <p>{thread.summary}</p>
-                    <div className={styles.threadPath} aria-label={`Ruta de descubrimiento: ${thread.path.join(', ')}`}>
-                      {thread.path.map((step, index) => (
-                        <span key={`${thread.id}-${step}`}>{index ? '→ ' : ''}{step}</span>
-                      ))}
-                    </div>
-                    <span className={styles.threadCta}>{thread.cta}</span>
-                  </Link>
-                )
-              })}
-            </div>
-          </div>
-        </section>
-      ) : null}
-
+      <HomeKnowledgeThreads threads={discoveryThreads} />
       <HomeExploreV2 stats={exploreStats} />
     </div>
   )
