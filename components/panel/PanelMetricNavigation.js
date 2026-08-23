@@ -15,7 +15,8 @@ function destinationFor(pathname, label) {
       Canales: `${pathname}/canales`,
       Cultos: `${pathname}/cultos`,
       Patrimonio: `${pathname}/patrimonio`,
-      Multimedia: `/panel/multimedia?entity=${brotherhoodId}`,
+      Multimedia: `${pathname}/multimedia`,
+      'Fotos y carteles': `${pathname}/multimedia`,
     }
     return routes[label] || ''
   }
