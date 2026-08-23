@@ -12,13 +12,17 @@ function CardVisual({ visual }) {
   const photo = visual.kind === 'photo'
 
   return (
-    <div className={`${styles.visual} ${photo ? styles.visualPhoto : styles.visualIdentity}`}>
+    <div
+      className={`${styles.visual} ${photo ? styles.visualPhoto : styles.visualIdentity}`}
+      title={photo && visual.credit ? visual.credit : undefined}
+    >
       <Image
         src={visual.path}
         alt={visual.alt || ''}
         fill
         sizes={photo ? '(max-width: 859px) 96px, 112px' : '78px'}
         className={photo ? styles.visualPhotoImage : styles.visualIdentityImage}
+        style={photo && visual.focusPosition ? { objectPosition: visual.focusPosition } : undefined}
         unoptimized={isSvg(visual.path)}
       />
     </div>
