@@ -28,3 +28,13 @@ test('los créditos enlazan a la procedencia de la fotografía', async () => {
   assert.match(gallery, /item\.sourceUrl/);
   assert.match(gallery, /target="_blank" rel="noreferrer"/);
 });
+
+test('las imágenes de Wikimedia evitan el optimizador externo sin afectar a otros orígenes', async () => {
+  const hero = await read('components/RelationalEntityHeroMedia.js');
+  const gallery = await read('components/EntityMediaGallery.js');
+
+  assert.match(hero, /function isWikimediaUpload/);
+  assert.match(hero, /unoptimized=\{bypassImageOptimizer\}/);
+  assert.match(gallery, /function isWikimediaUpload/);
+  assert.match(gallery, /unoptimized=\{isWikimediaUpload\(item\.path\)\}/);
+});

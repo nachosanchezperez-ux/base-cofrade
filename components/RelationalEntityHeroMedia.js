@@ -6,6 +6,14 @@ import styles from './RelationalEntityHero.module.css';
 import focusStyles from './RelationalEntityHeroMedia.module.css';
 import polishStyles from './RelationalEntityHeroPolish.module.css';
 
+function isWikimediaUpload(photoSrc = '') {
+  try {
+    return new URL(photoSrc).hostname === 'upload.wikimedia.org';
+  } catch {
+    return false;
+  }
+}
+
 function resolveCreditHref(photoSrc = '') {
   try {
     const url = new URL(photoSrc);
@@ -48,6 +56,7 @@ export default function RelationalEntityHeroMedia({
   const usePortraitStepLayout = variant === 'step' && resolvedFit === 'contain' && isPortrait;
   const fallbackLabel = variant === 'band' ? 'Logotipo de la banda' : 'Escudo de la hermandad';
   const creditHref = resolveCreditHref(photoSrc);
+  const bypassImageOptimizer = isWikimediaUpload(photoSrc);
 
   const desktopFocus = focusPosition || `${focusX ?? 50}% ${focusY ?? 50}%`;
   const mobileFocus = `${mobileFocusX ?? focusX ?? 50}% ${mobileFocusY ?? focusY ?? 50}%`;
@@ -79,6 +88,7 @@ export default function RelationalEntityHeroMedia({
             alt={photoAlt}
             fill
             preload
+            unoptimized={bypassImageOptimizer}
             style={photoStyle}
             sizes={variant === 'image'
               ? '(max-width: 980px) min(100vw - 40px, 560px), 500px'
