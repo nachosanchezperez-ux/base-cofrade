@@ -16,6 +16,9 @@ const BROTHERHOOD_PUBLIC_MODULES = [
   'lib/supabase/brotherhood-public-authority.js',
   'lib/supabase/brotherhood-authority.js',
   'lib/supabase/entity-media.js',
+  'components/BrotherhoodRelationalExtras.js',
+  'components/RelationalThread.js',
+  'lib/supabase/relational-presence.js',
 ]
 
 const BROTHERHOOD_CLIENT_OWNERS = [
@@ -26,6 +29,8 @@ const BROTHERHOOD_CLIENT_OWNERS = [
   'lib/supabase/brotherhood-public-authority.js',
   'lib/supabase/brotherhood-authority.js',
   'lib/supabase/entity-media.js',
+  'components/BrotherhoodRelationalExtras.js',
+  'lib/supabase/relational-presence.js',
 ]
 
 async function source(path) {
