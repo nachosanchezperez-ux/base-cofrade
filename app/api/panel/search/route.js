@@ -26,20 +26,33 @@ export async function GET(request) {
   if (query.length < 2) return response({ results: [] })
 
   const supabase = await createClient()
-  const entitiesResult = await supabase
-    .from('entities')
-    .select('id, name, entity_type, status')
-    .in('entity_type', Object.keys(ROUTES))
-    .ilike('name', `%${query}%`)
-    .order('name')
-    .limit(16)
+  const [entitiesResult, outingsResult] = await Promise.all([
+    supabase
+      .from('entities')
+      .select('id, name, entity_type, status')
+      .in('entity_type', Object.keys(ROUTES))
+      .ilike('name', `%${query}%`)
+      .order('name')
+      .limit(14),
+    supabase
+      .from('outings')
+      .select('id, title, outing_type, event_status, status, outing_date')
+      .eq('character', 'extraordinary')
+      .ilike('title', `%${query}%`)
+      .order('outing_date', { ascending: false })
+      .limit(4),
+  ])
 
   if (entitiesResult.error) {
     console.error('[Hilo Cofrade] Error en la búsqueda rápida del Panel', entitiesResult.error)
     return response({ error: 'No se pudo buscar en el Panel.' }, 500)
   }
 
-  const results = (entitiesResult.data || []).map((item) => {
+  if (outingsResult.error) {
+    console.error('[Hilo Cofrade] Error buscando extraordinarias en el Panel', outingsResult.error)
+  }
+
+  const entities = (entitiesResult.data || []).map((item) => {
     const [typeLabel, segment] = ROUTES[item.entity_type]
     return {
       id: item.id,
@@ -51,5 +64,14 @@ export async function GET(request) {
     }
   })
 
-  return response({ results })
+  const outings = (outingsResult.data || []).map((item) => ({
+    id: item.id,
+    name: item.title || item.outing_type || 'Extraordinaria',
+    type: 'extraordinary',
+    typeLabel: 'Extraordinaria',
+    status: item.event_status || item.status || '',
+    href: `/panel/extraordinarias/${item.id}`,
+  }))
+
+  return response({ results: [...entities, ...outings].slice(0, 16) })
 }
