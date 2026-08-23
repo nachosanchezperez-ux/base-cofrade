@@ -58,7 +58,7 @@ function kindLabel(kind) {
 function parseLimit(value) {
   const parsed = Number.parseInt(value, 10)
   if (!Number.isFinite(parsed) || parsed < DEFAULT_LIMIT) return DEFAULT_LIMIT
-  return Math.min(parsed, 240)
+  return parsed
 }
 
 export default function EntityDirectoryExplorer({ items, initialState = {} }) {
@@ -354,7 +354,7 @@ export default function EntityDirectoryExplorer({ items, initialState = {} }) {
           <button
             type="button"
             className={styles.loadMore}
-            onClick={() => setLimit((value) => Math.min(value + LIMIT_STEP, 240))}
+            onClick={() => setLimit((value) => value + LIMIT_STEP)}
           >
             Mostrar {Math.min(LIMIT_STEP, filtered.length - visibleItems.length)} más
           </button>
