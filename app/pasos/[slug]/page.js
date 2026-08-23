@@ -107,7 +107,7 @@ export default async function PasoDetailPage({params}){
   ];
 
   return (
-    <main className="brotherhood-page" style={{
+    <div className="brotherhood-page" style={{
       '--brotherhood-primary': hermandad?.colores?.primario || '#153B69',
       '--brotherhood-secondary': hermandad?.colores?.secundario || '#A71930',
       '--brotherhood-light': hermandad?.colores?.claro || '#FFFFFF',
@@ -283,6 +283,6 @@ export default async function PasoDetailPage({params}){
           ) : null}
         </div>
       </section>
-    </main>
+    </div>
   );
 }

@@ -3391,3 +3391,8 @@ button, input { font: inherit; }
     padding:24px;
   }
 }
+
+/* Las aportaciones documentales sin URL no simulan ser enlaces. */
+.source-row-static{cursor:default}
+.source-row-static:hover .source-copy strong{text-decoration:none}
+

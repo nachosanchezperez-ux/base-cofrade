@@ -208,7 +208,7 @@ export default async function BandDetailPage({ params }) {
   }
 
   return (
-    <main
+    <div
       className={`${styles.module} ${styles.bandPage}`}
       style={{
         '--band-primary': band.primaryColor,
@@ -535,6 +535,6 @@ export default async function BandDetailPage({ params }) {
 
       <OfficialLinks links={band.interestLinks} />
       <SourcesBlock sources={band.sources} />
-    </main>
+    </div>
   )
 }

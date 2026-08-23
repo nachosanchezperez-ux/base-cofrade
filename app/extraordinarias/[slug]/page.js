@@ -177,7 +177,7 @@ export default async function ExtraordinaryDetailPage({ params }) {
   }
 
   return (
-    <main className={styles.page}>
+    <div className={styles.page}>
       <JsonLd data={breadcrumbJsonLd([
         { name: 'Inicio', path: '/' },
         { name: 'Extraordinarias', path: '/extraordinarias' },
@@ -403,6 +403,6 @@ export default async function ExtraordinaryDetailPage({ params }) {
           </section>
         ) : null}
       </div>
-    </main>
+    </div>
   )
 }
