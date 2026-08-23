@@ -47,3 +47,21 @@ test('la pieza visual prioriza fecha, operativa, capataces, bandas y claves', as
   assert.match(css, /--broadcast-primary/)
   assert.match(css, /@media \(max-width: 760px\)/)
 })
+
+test('la ficha no rellena con avisos los datos de visita que aún no existen', async () => {
+  const seat = await source('components/BrotherhoodSeatSection.js')
+  const seatCss = await source('components/BrotherhoodSeatSection.module.css')
+
+  assert.doesNotMatch(seat, /pendiente/i)
+  assert.match(seat, /hasOpeningHours/)
+  assert.match(seat, /styles\.mainGridSingle/)
+  assert.match(seatCss, /\.mainGridSingle/)
+})
+
+test('los créditos fotográficos no duplican la palabra Fotografía', async () => {
+  const media = await source('lib/supabase/entity-media.js')
+
+  assert.match(media, /normalizePhotoCredit/)
+  assert.match(media, /Fotografía · \$\{creditName\}/)
+  assert.doesNotMatch(media, /Fotografía • \$\{creditName\}/)
+})
