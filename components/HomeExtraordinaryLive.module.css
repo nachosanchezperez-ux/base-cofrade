@@ -114,7 +114,7 @@
     pointer-events: none;
   }
 
-  .noMediaCopy {
+  .featuredExtraordinaryNoMedia > div {
     position: relative;
     z-index: 1;
     display: grid !important;
@@ -128,26 +128,26 @@
     padding: 30px 34px 32px !important;
   }
 
-  .noMediaIntro {
+  .featuredExtraordinaryNoMedia > div > div:first-child {
     grid-area: intro;
     align-self: start;
     min-width: 0;
   }
 
-  .noMediaIntro h2 {
+  .featuredExtraordinaryNoMedia > div > div:first-child h2 {
     max-width: 470px;
     font-size: clamp(38px, 4vw, 50px) !important;
     line-height: .98 !important;
     letter-spacing: -.05em !important;
   }
 
-  .noMediaIntro p {
+  .featuredExtraordinaryNoMedia > div > div:first-child p {
     max-width: 440px;
     font-size: 14px !important;
     line-height: 1.55 !important;
   }
 
-  .noMediaBriefing {
+  .featuredExtraordinaryNoMedia > div > div:nth-child(2) {
     grid-area: briefing;
     align-self: stretch;
     margin-top: 0 !important;
@@ -158,25 +158,20 @@
     row-gap: 16px !important;
   }
 
-  .noMediaSchedule {
+  .featuredExtraordinaryNoMedia > div > div:nth-child(2) > section:first-child {
     grid-column: 1 / -1;
   }
 
-  .noMediaScheduleRows {
+  .featuredExtraordinaryNoMedia > div > div:nth-child(2) > section:first-child > div {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px !important;
   }
 
-  .noMediaScheduleRows > div {
+  .featuredExtraordinaryNoMedia > div > div:nth-child(2) > section:first-child > div > div {
     min-height: 82px;
   }
 
-  .noMediaPlaces {
-    grid-column: auto !important;
-    align-self: start;
-  }
-
-  .noMediaAction {
+  .featuredExtraordinaryNoMedia > div > a {
     grid-area: action;
     align-self: end;
     justify-self: start;
@@ -185,13 +180,13 @@
 }
 
 @media (min-width: 1180px) {
-  .noMediaCopy {
+  .featuredExtraordinaryNoMedia > div {
     grid-template-columns: minmax(300px, .62fr) minmax(0, 1.38fr);
     gap: 28px 50px;
     padding: 36px 40px 38px !important;
   }
 
-  .noMediaScheduleRows {
+  .featuredExtraordinaryNoMedia > div > div:nth-child(2) > section:first-child > div {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
