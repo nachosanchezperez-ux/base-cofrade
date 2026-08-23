@@ -1,4 +1,5 @@
 import { Suspense } from 'react'
+import PanelCommandPalette from '@/components/panel/PanelCommandPalette'
 import PanelEditState from '@/components/panel/PanelEditState'
 import PanelMetricNavigation from '@/components/panel/PanelMetricNavigation'
 import PanelNav from '@/components/panel/PanelNav'
@@ -11,12 +12,14 @@ export const dynamic = 'force-dynamic'
 
 export default async function ProtectedPanelLayout({ children }) {
   const user = await requirePanelUser()
+  const canEdit = ['admin', 'editor'].includes(user.role)
 
   return (
     <div className={styles.panelShell} data-panel-shell>
       <PanelNav user={user} />
       <div className={styles.panelMain} data-panel-main>{children}</div>
       <Suspense fallback={null}>
+        <PanelCommandPalette canEdit={canEdit} />
         <PanelSaveToast />
         <PanelEditState />
         <PanelMetricNavigation />
