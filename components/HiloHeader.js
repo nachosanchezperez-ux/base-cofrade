@@ -24,6 +24,7 @@ const homeScrollSections = [
 ];
 
 const directoryLinks = [
+  ['/directorio', 'Directorio'],
   ['/hermandades', 'Hermandades'],
   ['/imagenes', 'Imágenes'],
   ['/pasos', 'Pasos'],
