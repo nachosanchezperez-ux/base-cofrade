@@ -136,6 +136,55 @@ export async function finalizeBulkImportAction(importIdInput) {
   return { id: importId, status: 'ready', counts }
 }
 
+export async function cancelBulkImportAction(importIdInput, reasonInput = '') {
+  const user = await requirePanelEditor()
+  const supabase = await createClient()
+  const importId = assertImportId(importIdInput)
+  const batch = await loadBatch(supabase, importId)
+
+  if (batch.status === 'cancelled') return { id: importId, status: 'cancelled', counts: batchCounts(batch) }
+  if (!['staging', 'ready'].includes(batch.status)) {
+    throw new Error('Solo se puede cancelar un lote antes de iniciar su aplicación.')
+  }
+  if ((batch.applied_items || 0) > 0 || (batch.failed_items || 0) > 0) {
+    throw new Error('Este lote ya ha iniciado escrituras y no puede cancelarse como si estuviera intacto.')
+  }
+
+  const now = new Date().toISOString()
+  const reason = cleanText(reasonInput, 320) || 'Cancelado manualmente antes de aplicar registros.'
+  const metadata = batch.metadata && typeof batch.metadata === 'object' && !Array.isArray(batch.metadata)
+    ? { ...batch.metadata, cancellation_reason: reason }
+    : { cancellation_reason: reason }
+
+  const cancelled = await supabase
+    .from('bulk_imports')
+    .update({ status: 'cancelled', completed_at: now, updated_at: now, metadata })
+    .eq('id', importId)
+    .in('status', ['staging', 'ready'])
+    .eq('applied_items', 0)
+    .eq('failed_items', 0)
+    .select('id, status')
+    .maybeSingle()
+
+  if (cancelled.error) throw new Error(`No se pudo cancelar el lote: ${cancelled.error.message}`)
+  if (!cancelled.data) throw new Error('El lote cambió de estado antes de poder cancelarlo. Recarga el historial.')
+
+  const { error: auditError } = await supabase.from('audit_log').insert({
+    actor_user_id: user.id,
+    actor_label: user.name,
+    action_type: 'update',
+    object_type: 'bulk_import',
+    object_id: importId,
+    summary: `Importación masiva cancelada: ${batch.label}`,
+    changed_fields: { status: 'cancelled', reason },
+  })
+  if (auditError) console.error('[Hilo Cofrade] No se pudo auditar la cancelación de la importación masiva', auditError)
+
+  revalidatePath('/panel/datos/importar')
+  revalidatePath(`/panel/datos/importar/${importId}`)
+  return { id: importId, status: 'cancelled', counts: batchCounts(batch) }
+}
+
 export async function applyBulkImportChunkAction(importIdInput) {
   const user = await requirePanelEditor()
   const supabase = await createClient()

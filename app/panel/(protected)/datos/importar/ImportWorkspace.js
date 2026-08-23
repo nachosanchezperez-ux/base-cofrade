@@ -11,6 +11,7 @@ import {
 import {
   appendBulkImportItemsAction,
   applyBulkImportChunkAction,
+  cancelBulkImportAction,
   createBulkImportAction,
   finalizeBulkImportAction,
 } from './actions'
@@ -106,6 +107,7 @@ export default function ImportWorkspace({ initialImports, canEdit }) {
   const [working, setWorking] = useState(false)
   const [progress, setProgress] = useState(null)
   const [confirmingImportId, setConfirmingImportId] = useState(null)
+  const [cancellingImportId, setCancellingImportId] = useState(null)
 
   const tableSummary = useMemo(() => {
     if (!analysis) return []
@@ -169,6 +171,7 @@ export default function ImportWorkspace({ initialImports, canEdit }) {
 
   async function prepareBatch() {
     if (!analysis || !canEdit) return
+    let createdBatchId = null
     setWorking(true)
     setError('')
     setMessage('')
@@ -186,6 +189,7 @@ export default function ImportWorkspace({ initialImports, canEdit }) {
           transport_max_bytes: DEFAULT_IMPORT_CHUNK_BYTES,
         },
       })
+      createdBatchId = batch.id
 
       let offset = 0
       for (let index = 0; index < batches.length; index += 1) {
@@ -194,10 +198,19 @@ export default function ImportWorkspace({ initialImports, canEdit }) {
         offset += batches[index].length
       }
       const final = await finalizeBulkImportAction(batch.id)
+      createdBatchId = null
       setProgress({ phase: 'ready', current: offset, total: analysis.records.length })
       setMessage(`Lote preparado en ${batches.length} envíos: ${final.counts.valid_items} válidos · ${final.counts.invalid_items} con incidencias. Revisa el resumen antes de confirmar la escritura en el grafo.`)
       router.refresh()
     } catch (caught) {
+      if (createdBatchId) {
+        try {
+          await cancelBulkImportAction(createdBatchId, 'Preparación interrumpida antes de completar el staging.')
+        } catch (cancelError) {
+          console.error('[Hilo Cofrade] No se pudo autocancelar el lote interrumpido', cancelError)
+        }
+        router.refresh()
+      }
       setError(caught instanceof Error ? caught.message : 'No se pudo preparar el lote.')
     } finally {
       setWorking(false)
@@ -207,6 +220,7 @@ export default function ImportWorkspace({ initialImports, canEdit }) {
   async function applyBatch(importId) {
     if (!canEdit) return
     setConfirmingImportId(null)
+    setCancellingImportId(null)
     setWorking(true)
     setError('')
     setMessage('')
@@ -229,6 +243,26 @@ export default function ImportWorkspace({ initialImports, canEdit }) {
       router.refresh()
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : 'No se pudo aplicar el lote.')
+      router.refresh()
+    } finally {
+      setWorking(false)
+    }
+  }
+
+  async function cancelBatch(importId) {
+    if (!canEdit) return
+    setConfirmingImportId(null)
+    setCancellingImportId(null)
+    setWorking(true)
+    setError('')
+    setMessage('')
+    try {
+      await cancelBulkImportAction(importId, 'Cancelado desde el historial del Panel antes de aplicar registros.')
+      setProgress(null)
+      setMessage('Lote cancelado sin aplicar registros al grafo. Se conserva en el historial para trazabilidad.')
+      router.refresh()
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : 'No se pudo cancelar el lote.')
       router.refresh()
     } finally {
       setWorking(false)
@@ -281,13 +315,19 @@ export default function ImportWorkspace({ initialImports, canEdit }) {
         const pending = pendingValidItems(batch)
         const operations = savedOperationCounts(batch)
         const canApply = canEdit && ['ready', 'processing'].includes(batch.status) && pending > 0
+        const canCancel = canEdit && ['staging', 'ready'].includes(batch.status) && batch.applied_items === 0 && batch.failed_items === 0
         return <article key={batch.id}>
           <div className={styles.historyMain}><div><strong>{batch.label}</strong><span>{batch.source_name || batch.source_format.toUpperCase()} · {formatDate(batch.created_at)}</span></div><span className={styles.status}>{statusLabel(batch.status)}</span></div>
           <div className={styles.historyMetrics}><span><b>{batch.staged_items}</b> preparados</span><span><b>{batch.applied_items}</b> aplicados</span><span><b>{batch.invalid_items}</b> inválidos</span><span><b>{batch.failed_items}</b> fallidos</span>{operations.upsert ? <span><b>{operations.upsert}</b> upsert</span> : null}{batch.metadata?.transport_chunks ? <span><b>{batch.metadata.transport_chunks}</b> envíos</span> : null}</div>
           <div className={styles.actions}>
             <a className={styles.secondaryButton} style={{ textDecoration: 'none' }} href={`/panel/datos/importar/${batch.id}`}>Ver detalle</a>
-            {canApply && confirmingImportId !== batch.id ? <button type="button" className={styles.primaryButton} onClick={() => setConfirmingImportId(batch.id)} disabled={working}>Revisar y aplicar</button> : null}
+            {canCancel && cancellingImportId !== batch.id ? <button type="button" className={styles.secondaryButton} onClick={() => { setConfirmingImportId(null); setCancellingImportId(batch.id) }} disabled={working}>Cancelar lote</button> : null}
+            {canApply && confirmingImportId !== batch.id ? <button type="button" className={styles.primaryButton} onClick={() => { setCancellingImportId(null); setConfirmingImportId(batch.id) }} disabled={working}>Revisar y aplicar</button> : null}
           </div>
+          {canCancel && cancellingImportId === batch.id ? <div className={styles.warningBox}>
+            <strong>Cancelar sin escribir en el grafo</strong><br />El lote quedará marcado como cancelado y se conservará en el historial. Los registros ya preparados no se aplicarán.
+            <div className={styles.actions}><button type="button" className={styles.secondaryButton} onClick={() => setCancellingImportId(null)} disabled={working}>Volver</button><button type="button" className={styles.primaryButton} onClick={() => cancelBatch(batch.id)} disabled={working}>Confirmar cancelación</button></div>
+          </div> : null}
           {canApply && confirmingImportId === batch.id ? <div className={styles.warningBox}>
             <strong>Confirmación antes de escribir</strong><br />Se aplicarán {pending} registros válidos. {operations.upsert > 0 ? `${operations.upsert} usan upsert y pueden actualizar filas existentes si coincide su clave.` : 'Este lote no registra upserts aplicables en sus metadatos.'}
             <div className={styles.actions}><button type="button" className={styles.secondaryButton} onClick={() => setConfirmingImportId(null)} disabled={working}>Cancelar</button><button type="button" className={styles.primaryButton} onClick={() => applyBatch(batch.id)} disabled={working}>Confirmar aplicación</button></div>

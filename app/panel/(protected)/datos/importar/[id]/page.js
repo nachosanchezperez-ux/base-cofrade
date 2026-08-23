@@ -56,6 +56,7 @@ export default async function BulkImportDetailPage({ params }) {
           <div><span>Incidencias</span><strong>{batch.invalid_items + batch.failed_items}</strong></div>
         </div>
         {batch.metadata?.operation_counts || batch.metadata?.transport_chunks ? <p className={styles.muted}>Perfil del lote: {operations.insert} insert · {operations.upsert} upsert{batch.metadata?.transport_chunks ? ` · ${batch.metadata.transport_chunks} envíos de preparación` : ''}.</p> : null}
+        {batch.status === 'cancelled' && batch.metadata?.cancellation_reason ? <div className={styles.warningBox}><strong>Lote cancelado antes de aplicar registros</strong><br />{batch.metadata.cancellation_reason}</div> : null}
         {operations.upsert > 0 && ['ready', 'processing'].includes(batch.status) ? <div className={styles.warningBox}>{operations.upsert} registro{operations.upsert === 1 ? '' : 's'} usa{operations.upsert === 1 ? '' : 'n'} <code>upsert</code> y puede{operations.upsert === 1 ? '' : 'n'} actualizar filas existentes cuando coincida la clave de conflicto.</div> : null}
         {canEdit && batch.failed_items > 0 ? <form action={retryAction}><button type="submit" className={styles.secondaryButton}>Reintentar {batch.failed_items} fallido{batch.failed_items === 1 ? '' : 's'}</button></form> : null}
       </section>
