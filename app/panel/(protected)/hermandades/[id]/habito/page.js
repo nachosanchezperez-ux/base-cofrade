@@ -60,9 +60,9 @@ function HabitFields({ item = null }) {
       <PanelFormGroup
         eyebrow="Archivo visual"
         title="Ilustración y notas"
-        description="La subida visual se gestiona en la columna izquierda; estos campos conservan la referencia y su descripción."
+        description="La subida visual se gestiona en la columna izquierda; aquí se conserva la ruta interna de Hilo Media o una URL externa."
       >
-        <label className={styles.fieldWide}><span>Ruta o URL de la ilustración</span><input name="image_path" defaultValue={item?.image_path || ''} placeholder="También puedes subirla desde el bloque visual" /></label>
+        <label className={styles.fieldWide}><span>Ruta interna o URL externa</span><input name="image_path" defaultValue={item?.image_path || ''} placeholder="habitos/… o https://…" /></label>
         <label className={styles.fieldWide}><span>Texto alternativo</span><input name="image_alt" defaultValue={item?.image_alt || ''} /></label>
         <label className={styles.fieldWide}><span>Notas internas</span><textarea name="notes" defaultValue={item?.notes || ''} rows="3" /></label>
       </PanelFormGroup>
@@ -115,8 +115,8 @@ export default async function BrotherhoodHabitPage({ params, searchParams }) {
                   <aside className={habitStyles.visualColumn}>
                     <div className={habitStyles.previewPanel}>
                       <div className={habitStyles.previewFrame}>
-                        {item.image_path ? (
-                          <img src={item.image_path} alt={item.image_alt || item.name} />
+                        {item.image_url ? (
+                          <img src={item.image_url} alt={item.image_alt || item.name} />
                         ) : (
                           <div className={habitStyles.emptyVisual}>
                             <strong>Sin ilustración</strong>

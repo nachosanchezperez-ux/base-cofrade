@@ -4,6 +4,10 @@ import { randomUUID } from 'node:crypto'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { requirePanelEditor } from '@/lib/panel/auth'
+import {
+  getHiloMediaStoragePath,
+  normalizeHiloMediaReference,
+} from '@/lib/supabase/hilo-media-paths'
 import { createClient } from '@/lib/supabase/server'
 
 const UUID_PATTERN = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i
@@ -85,18 +89,13 @@ function redirectSaved(brotherhoodId, saved, anchor = '') {
   redirect(`/panel/hermandades/${brotherhoodId}/habito?saved=${saved}${hash}`)
 }
 
-function storagePathFromPublicUrl(publicUrl = '') {
-  const marker = '/storage/v1/object/public/hilo-media/'
-  const index = publicUrl.indexOf(marker)
-  return index >= 0 ? decodeURIComponent(publicUrl.slice(index + marker.length)) : ''
-}
-
 export async function saveBrotherhoodHabitAction(formData) {
   const user = await requirePanelEditor()
   const supabase = await createClient()
   const brotherhoodId = uuid(formData, 'brotherhood_id')
   const habitId = uuid(formData, 'habit_id', true)
   const brotherhood = await requireBrotherhood(supabase, brotherhoodId)
+  const imagePath = normalizeHiloMediaReference(nullable(formData, 'image_path')) || null
 
   const payload = {
     brotherhood_entity_id: brotherhoodId,
@@ -107,7 +106,7 @@ export async function saveBrotherhoodHabitAction(formData) {
     buttons_description: nullable(formData, 'buttons_description'),
     shield_description: nullable(formData, 'shield_description'),
     footwear_description: nullable(formData, 'footwear_description'),
-    image_path: nullable(formData, 'image_path'),
+    image_path: imagePath,
     image_alt: nullable(formData, 'image_alt'),
     sort_order: integer(formData, 'sort_order', 0),
     notes: nullable(formData, 'notes'),
@@ -160,12 +159,11 @@ export async function uploadBrotherhoodHabitImageAction(formData) {
   const storagePath = `habitos/${brotherhoodId}/${habitId}/${randomUUID()}.${extension}`
   const uploaded = await supabase.storage.from('hilo-media').upload(storagePath, file, { contentType: file.type, upsert: false })
   assertMutation(uploaded, 'No se pudo subir la imagen del hábito')
-  const publicUrl = supabase.storage.from('hilo-media').getPublicUrl(storagePath).data.publicUrl
   const imageAlt = required(formData, 'image_alt', 'El texto alternativo')
 
   const updated = await supabase
     .from('brotherhood_habits')
-    .update({ image_path: publicUrl, image_alt: imageAlt })
+    .update({ image_path: storagePath, image_alt: imageAlt })
     .eq('id', habitId)
     .eq('brotherhood_entity_id', brotherhoodId)
   if (updated.error) {
@@ -173,7 +171,7 @@ export async function uploadBrotherhoodHabitImageAction(formData) {
     throw new Error(`No se pudo asociar la imagen al hábito: ${updated.error.message}`)
   }
 
-  const previousStoragePath = storagePathFromPublicUrl(habit.image_path || '')
+  const previousStoragePath = getHiloMediaStoragePath(habit.image_path)
   if (previousStoragePath && previousStoragePath !== storagePath) {
     const removed = await supabase.storage.from('hilo-media').remove([previousStoragePath])
     if (removed.error) console.error('[Hilo Cofrade] No se pudo limpiar la imagen anterior del hábito', removed.error)
@@ -185,7 +183,7 @@ export async function uploadBrotherhoodHabitImageAction(formData) {
     object_id: habitId,
     entity_id: brotherhoodId,
     summary: `Imagen del hábito actualizada: ${habit.name}`,
-    changed_fields: { image_path: publicUrl, image_alt: imageAlt },
+    changed_fields: { image_path: storagePath, image_alt: imageAlt },
   })
   await refresh(supabase, brotherhoodId)
   redirectSaved(brotherhoodId, 'image', `habit-${habitId}`)
