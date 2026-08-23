@@ -89,6 +89,17 @@
   box-shadow: 0 0 0 4px rgb(23 136 95 / 11%);
 }
 
+.error {
+  border-color: #efc1c8;
+  color: #873246;
+  background: rgb(255 249 250 / 98%);
+}
+
+.error .statusMark {
+  background: #b71f37;
+  box-shadow: 0 0 0 4px rgb(183 31 55 / 10%);
+}
+
 .savedCheck {
   display: grid;
   width: 27px;
