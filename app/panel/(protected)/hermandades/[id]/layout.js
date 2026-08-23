@@ -4,20 +4,20 @@ export default async function BrotherhoodEditorLayout({ children, params }) {
   const { id } = await params
   const root = `/panel/hermandades/${id}`
   const items = [
-    { href: root, label: 'General', mark: 'G', match: 'exact' },
-    { href: `${root}/historia`, label: 'Historia', mark: 'Hi' },
-    { href: `${root}/titulares`, label: 'Titulares', mark: 'T' },
-    { href: `${root}/pasos`, label: 'Pasos', mark: 'P' },
-    { href: `${root}/salidas`, label: 'Salidas', mark: 'S', match: 'exact' },
-    { href: `${root}/salidas/recurrentes`, label: 'Series', mark: 'Sr' },
-    { href: `${root}/cultos`, label: 'Cultos', mark: 'C' },
-    { href: `${root}/patrimonio`, label: 'Patrimonio', mark: 'Pa' },
-    { href: `${root}/habito`, label: 'Hábito', mark: 'Há' },
-    { href: `${root}/jornada`, label: 'Jornada', mark: 'J' },
-    { href: `${root}/canales`, label: 'Canales', mark: 'Ca' },
-    { href: `/panel/acontecimientos?entity=${id}`, label: 'Acontecimientos', mark: 'A', activePath: '/panel/acontecimientos' },
-    { href: `/panel/multimedia?entity=${id}`, label: 'Multimedia', mark: 'M', activePath: '/panel/multimedia', tool: true },
-    { href: `/panel/fuentes?entity=${id}`, label: 'Fuentes', mark: 'F', activePath: '/panel/fuentes', tool: true },
+    { href: root, label: 'General', group: 'Ficha', match: 'exact' },
+    { href: `${root}/historia`, label: 'Historia', group: 'Ficha' },
+    { href: `${root}/titulares`, label: 'Titulares', group: 'Ficha' },
+    { href: `${root}/pasos`, label: 'Pasos', group: 'Cofradía' },
+    { href: `${root}/salidas`, label: 'Salidas', group: 'Cofradía', match: 'exact' },
+    { href: `${root}/salidas/recurrentes`, label: 'Series', group: 'Cofradía' },
+    { href: `${root}/cultos`, label: 'Cultos', group: 'Cofradía' },
+    { href: `${root}/habito`, label: 'Hábito', group: 'Cofradía' },
+    { href: `${root}/jornada`, label: 'Jornada', group: 'Cofradía' },
+    { href: `${root}/patrimonio`, label: 'Patrimonio', group: 'Archivo' },
+    { href: `${root}/canales`, label: 'Canales', group: 'Archivo' },
+    { href: `/panel/acontecimientos?entity=${id}`, label: 'Acontecimientos', group: 'Archivo', activePath: '/panel/acontecimientos' },
+    { href: `/panel/multimedia?entity=${id}`, label: 'Multimedia', group: 'Archivo', activePath: '/panel/multimedia', tool: true },
+    { href: `/panel/fuentes?entity=${id}`, label: 'Fuentes', group: 'Archivo', activePath: '/panel/fuentes', tool: true },
   ]
 
   return (
