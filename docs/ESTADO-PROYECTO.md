@@ -7,13 +7,16 @@
 - Revisión: **2026-08-23 · noche (CEST)**.
 - Repositorio: `nachosanchezperez-ux/base-cofrade`.
 - Rama principal: `main`.
-- `main` verificado al iniciar este corte: `9723efa147ec7ad2b5ca3e617d83a0f7d6902f9c` — **Home 2.8: pulido visual final y accesibilidad (#285)**.
+- `main` al cerrar Personas / agentes: `966c37afb2055c5d050853a08c181c1c1750875c` — **Reconcilia el cierre final de Personas con Supabase (#289)**.
 - Proyecto Vercel: `base-cofrade`.
-- Producción verificada: **READY** en `dpl_7cDzH9Vi4yPXvoW8ATQKnkvzNHTR`, alineada con `9723efa147ec7ad2b5ca3e617d83a0f7d6902f9c`.
-- Runtime de producción, últimas seis horas verificadas: **sin errores detectados**.
+- Producción verificada: **READY** en `dpl_G3WY7a5y4EK14zAawgM2WU5qe1Pb`, alineada con `966c37afb2055c5d050853a08c181c1c1750875c`.
+- Smoke público de Personas: **HTTP 200** en ficha de Imagen, ficha de Paso y buscador de Tira del hilo.
+- Runtime del deployment de cierre: **sin logs `error` / `fatal` tras los smokes**.
 - Supabase: `Hilocofrade` (`kcevwkucqzcyrqaimyhl`) → **ACTIVE_HEALTHY**.
-- Única PR abierta observada: **#49 · Importador documental asistido**.
-- #49 permanece **⚪ APARCADA** y no puede utilizarse como base técnica.
+- Migraciones de Personas reconciliadas entre Git y Supabase:
+  - `20260823211405_public_agent_relation_integrity`;
+  - `20260823211610_harden_public_agent_relations`.
+- PR estructural histórica: **#49 · Importador documental asistido** → **⚪ APARCADA** y no utilizable como base técnica.
 
 Los SHA, deployments y estados anteriores son una fotografía operativa. Antes de cualquier tarea significativa deben refrescarse GitHub, Vercel y Supabase cuando corresponda.
 
@@ -21,11 +24,13 @@ Los SHA, deployments y estados anteriores son una fotografía operativa. Antes d
 
 ### Reconciliación del registro
 
-**ESTADO-PROYECTO → 🟢 SINCRONIZADO** con el estado real posterior a Home 2.8.
+**ESTADO-PROYECTO → 🟢 SINCRONIZADO**.
 
 ### Arquitectura pública / separación Front ↔ Panel
 
-**ARQUITECTURA PÚBLICA → EN CURSO**
+**ARQUITECTURA PÚBLICA / FRONT ↔ PANEL → 🟢 CERRADA**
+
+Cortes incluidos en el cierre:
 
 - Home → **🟢 CERRADO**.
 - Hermandades → **🟢 CERRADO**.
@@ -35,74 +40,41 @@ Los SHA, deployments y estados anteriores son una fotografía operativa. Antes d
 - Extraordinarias → **🟢 CERRADO**.
 - Tira del hilo → **🟢 CERRADO**.
 - Marchas → **🟢 CERRADO**.
-- **Personas / agentes → 🔴 ÚLTIMO CORTE PENDIENTE**.
+- Personas / agentes → **🟢 CERRADO**.
 
-No declarar cerrada la Arquitectura pública hasta completar la auditoría, regresión, preview, smoke, producción y runtime de Personas / agentes.
+La arquitectura pública queda cerrada como baseline técnico. Cualquier nueva superficie pública deberá respetar desde su diseño la misma frontera y no reabrir estos cortes salvo regresión real.
 
-## Cierres recientes incorporados al baseline
+## Personas / agentes · autoridad pública → 🟢 cerrado
 
-- **#272 · Bandas · autoridad pública** → fusionada.
-- **#273 · Extraordinarias · autoridad pública** → fusionada.
-- **#280 · Tira del hilo · autoridad pública** → fusionada.
-- **#281 · Marchas · autoridad pública** → fusionada.
-- **#282 · Wikimedia Commons · licencias y atribución** → fusionada.
-- **#283 · Home 2.7** → fusionada.
-- **#284 · Wikimedia Commons · render directo** → fusionada.
-- **#285 · Home 2.8** → fusionada.
+PR **#287 · Cierra la autoridad pública de Personas y agentes** → **fusionada**.
 
-## Orden exacto de Dirección
+Hallazgos y cambio funcional:
 
-1. Reconciliar `ESTADO-PROYECTO` → **🟢 CERRADO con este corte documental**.
-2. **Auditar y cerrar Personas / agentes → ÚNICO FRENTE ESTRUCTURAL ACTIVO**.
-3. Declarar Arquitectura pública / Front ↔ Panel → **🟢 CERRADA**.
-4. Ejecutar smoke transversal de cierre.
-5. Obtener y priorizar la primera cola de Salud del grafo.
-6. Resolver un único patrón sistémico completo y medir su reducción.
-7. Auditar el protocolo editorial de Wikimedia / media abierta.
-8. Sincronizar el registro de decisiones HC con la arquitectura real.
-9. Mantener #49 aparcada.
-10. Realizar una nueva fotografía global y elegir un solo gran frente.
+- `lib/supabase/search-live.js` y `lib/supabase/search.js` todavía dependían del cliente cookie-aware aunque alimentaban búsquedas públicas;
+- ambos pasan al cliente público stateless;
+- las relaciones públicas con autores, compositores, capataces, restauradores, artesanos, responsables patrimoniales y agentes relacionados quedan condicionadas a extremos publicables;
+- no se creó una ruta pública nueva para Personas ni se alteró el modelo de datos.
 
-**No abrir una nueva fase ni otro frente estructural antes de completar esta secuencia.**
+PR **#289 · Reconcilia el cierre final de Personas con Supabase** → **fusionada**.
 
-## Único frente estructural activo
+Cierre de reconciliación:
 
-### Personas / agentes · autoridad pública
+- versiona en Git la migración remota `20260823211610_harden_public_agent_relations.sql`, ya aplicada previamente en Supabase;
+- amplía `test/agent-public-authority-boundary.test.mjs` para impedir regresiones hacia `@/lib/supabase/server`, `@supabase/ssr`, `next/headers` o `cookies()` en las superficies públicas auditadas;
+- protege expresamente `agent_roles`, `band_agents`, autorías de Imágenes, autores de Marchas, responsables de Pasos, fases, intervenciones, novedades patrimoniales y relaciones genéricas.
 
-Responsable principal: **Hilo Tech**, con validación de Hilo Supabase, Hilo Datos y Hilo QA cuando proceda.
+Supabase verificado:
 
-Auditar de extremo a extremo:
+- RLS activa en `entities`, `agent_roles`, `band_agents`, `entity_relations`, `heritage_interventions`, `heritage_update_agents`, `image_authorships`, `march_authors`, `step_personnel_periods` y `step_phase_agents`;
+- vistas públicas relevantes (`current_image_locations`, `image_authorship_details`, `step_brotherhood_history`, `step_image_history`, `step_phase_details`) con `security_invoker=true`;
+- bajo rol `anon`: **0 relaciones inválidas visibles** hacia extremos no publicables en las nueve superficies auditadas;
+- recuentos públicos conservados: 11 roles de agente, 27 relaciones Banda↔agente, 52 relaciones genéricas, 53 intervenciones, 7 responsables de novedades, 36 autorías de Imagen, 210 autorías de Marcha, 27 periodos de personal y 66 responsables de fases.
 
-- loaders y superficies públicas de Personas / agentes;
-- relaciones Persona ↔ Paso;
-- autorías de Imágenes;
-- compositores de Marchas;
-- restauradores, artesanos y profesionales;
-- capataces y responsabilidades patrimoniales;
-- Tira del hilo y presencia relacional en fichas públicas;
-- cualquier directorio, componente, vista o RPC que consuma `agents`.
+Validación final:
 
-Buscar dependencias públicas de:
+`RLS → anon → regresión automática → CI → build → preview → smoke público → producción READY → runtime limpio`.
 
-- `@/lib/supabase/server`;
-- `@supabase/ssr`;
-- `next/headers`;
-- `cookies()`;
-- sesión editorial autenticada.
-
-Comprobar en Supabase:
-
-- RLS activa;
-- `SELECT` de `anon` correcto;
-- vistas con `security_invoker=true` cuando corresponda;
-- ausencia de registros `draft` en superficies públicas;
-- relaciones públicas únicamente hacia extremos publicables.
-
-Si existe una dependencia cookie-aware, migrar únicamente la lectura pública necesaria a `createPublicClient()`. No cambiar el modelo, los datos, las rutas, las entidades ni hacer un refactor general.
-
-La definición de cierre es:
-
-`RLS → anon → regresión automática → tests → build → preview → smoke público → producción → runtime`.
+Conclusión: **PERSONAS / AGENTES · AUTORIDAD PÚBLICA → 🟢 CERRADA**.
 
 ## Regla arquitectónica permanente
 
@@ -118,41 +90,104 @@ PANEL
 
 No mezclar ambos contextos salvo necesidad técnica expresamente justificada, documentada y protegida por una barrera de regresión.
 
-## Restricción temporal de carriles
+En concreto:
 
-Mientras Personas / agentes sea el último corte pendiente:
+- una lectura pública no debe depender de cookies, sesión editorial ni del cliente SSR autenticado;
+- las relaciones públicas solo pueden exponer extremos publicables;
+- las vistas públicas deben respetar RLS, usando `security_invoker=true` cuando corresponda;
+- el Panel conserva las políticas y la sesión autenticada necesarias para edición, borradores y publicación.
 
-- no abrir otro frente estructural;
-- no introducir nuevas tablas, vistas, RPC o rutas ajenas a ese cierre;
-- no iniciar una nueva campaña masiva de enriquecimiento;
-- no cambiar contratos de datos compartidos sin coordinación del Orquestador;
-- solo se permiten correcciones urgentes y claramente no solapadas.
+## Cierres recientes incorporados al baseline
 
-Carril A tiene prioridad absoluta. Cualquier carencia descubierta por Producto o Contenido debe elevarse al Orquestador y esperar su turno.
+- **#272 · Bandas · autoridad pública** → fusionada.
+- **#273 · Extraordinarias · autoridad pública** → fusionada.
+- **#280 · Tira del hilo · autoridad pública** → fusionada.
+- **#281 · Marchas · autoridad pública** → fusionada.
+- **#282 · Wikimedia Commons · licencias y atribución** → fusionada.
+- **#283 · Home 2.7** → fusionada.
+- **#284 · Wikimedia Commons · render directo** → fusionada.
+- **#285 · Home 2.8** → fusionada.
+- **#287 · Personas / agentes · autoridad pública** → fusionada.
+- **#289 · reconciliación final Personas ↔ Supabase** → fusionada.
 
-## Próximos controles después de Personas
+## Orden exacto de Dirección
 
-### Cierre formal de Arquitectura pública
+1. Reconciliar `ESTADO-PROYECTO` → **🟢 CERRADO**.
+2. Auditar y cerrar Personas / agentes → **🟢 CERRADO**.
+3. Declarar Arquitectura pública / Front ↔ Panel → **🟢 CERRADO con este corte documental**.
+4. **Ejecutar smoke transversal de cierre → SIGUIENTE ACCIÓN ÚNICA**.
+5. Obtener y priorizar la primera cola de Salud del grafo.
+6. Resolver un único patrón sistémico completo y medir su reducción.
+7. Auditar el protocolo editorial de Wikimedia / media abierta.
+8. Sincronizar el registro de decisiones HC con la arquitectura real.
+9. Mantener #49 aparcada.
+10. Realizar una nueva fotografía global y elegir un solo gran frente.
 
-Actualizar este registro para declarar cerrados conjuntamente:
+**No abrir una nueva fase ni otro frente estructural antes de completar esta secuencia.**
 
-- Home;
+## Siguiente control · smoke transversal de cierre
+
+El siguiente paso debe validar el producto real, no reabrir arquitectura ya cerrada.
+
+Comprobar:
+
+### Home
+- Hero;
+- Tira del hilo;
+- Hoy;
+- Extraordinarias;
+- Marcha del día;
+- Últimos hilos;
+- Entra por donde quieras;
+- móvil especialmente.
+
+### Directorios
 - Hermandades;
 - Imágenes;
 - Pasos;
 - Bandas;
-- Extraordinarias;
-- Tira del hilo;
-- Marchas;
-- Personas / agentes.
+- búsqueda;
+- filtros;
+- responsive.
 
-### Smoke transversal
+### Fichas
+- una Hermandad;
+- una Imagen;
+- un Paso;
+- una Banda;
+- relaciones cruzadas.
 
-Validar el producto real en Home, directorios, fichas, Extraordinarias, media local/Wikimedia, Tira del hilo, responsive, producción y runtime.
+### Extraordinarias
+- directorio;
+- guía;
+- música;
+- horarios;
+- Fuentes.
 
-### Salud del grafo
+### Media
+- fotografía local / Supabase;
+- fotografía Wikimedia;
+- atribución y licencia;
+- enlace de procedencia;
+- portada y galería.
 
-Obtener una fotografía actual y clasificar incidencias:
+### Tira del hilo
+- consulta simple;
+- consulta relacional;
+- fuente / evidencia;
+- respuesta sin resultado.
+
+### Vercel
+- deployment READY;
+- ausencia de errores estructurales en runtime.
+
+Resultado esperado:
+
+**BASELINE PÚBLICO POST-ARQUITECTURA → 🟢 VALIDADO**.
+
+## Después del smoke · Salud del grafo
+
+Solo después del smoke transversal obtener una fotografía actual y clasificar incidencias:
 
 - 🔴 prioritarias: relaciones rotas, huérfanos e incoherencias de publicación;
 - 🟠 cobertura: ficha básica, autorías, responsables, acompañamientos y Fuentes;
@@ -162,13 +197,13 @@ Dirección elegirá **un solo patrón sistémico**. No se perseguirá “cero in
 
 `incidencia → patrón → solución sistémica → validación`.
 
-### Wikimedia / media abierta
+## Wikimedia / media abierta
 
 El soporte técnico de licencia, atribución y render directo está integrado. Antes de escalar cargas externas debe validarse el protocolo editorial: licencia concreta, autor, URL original, Fuente, crédito, enlace de atribución, derechos y uso como portada o galería.
 
 Que una imagen esté alojada en Wikimedia no implica automáticamente que pueda publicarse.
 
-### Decisiones HC
+## Decisiones HC
 
 Consultar el registro vigente antes de asignar nuevos números. Revisar la formalización de:
 
@@ -202,4 +237,4 @@ La importación masiva vigente tiene su propia arquitectura. Si en el futuro se 
 3. Descartar los pasos ya cerrados.
 4. Devolver **una única acción ejecutable**.
 
-**Siguiente acción actual: auditar y cerrar Personas / agentes de extremo a extremo.**
+**Siguiente acción actual: ejecutar el smoke transversal de cierre del baseline público post-arquitectura.**
