@@ -6,6 +6,17 @@ import styles from './RelationalEntityHero.module.css';
 import focusStyles from './RelationalEntityHeroMedia.module.css';
 import polishStyles from './RelationalEntityHeroPolish.module.css';
 
+function resolveCreditHref(photoSrc = '') {
+  try {
+    const url = new URL(photoSrc);
+    if (url.hostname !== 'upload.wikimedia.org') return '';
+    const fileName = decodeURIComponent(url.pathname.split('/').filter(Boolean).at(-1) || '');
+    return fileName ? `https://commons.wikimedia.org/wiki/File:${fileName}` : '';
+  } catch {
+    return '';
+  }
+}
+
 export default function RelationalEntityHeroMedia({
   variant = 'image',
   photoSrc = '',
@@ -36,6 +47,7 @@ export default function RelationalEntityHeroMedia({
   const resolvedFit = fitMode === 'auto' ? (autoContain ? 'contain' : 'cover') : fitMode;
   const usePortraitStepLayout = variant === 'step' && resolvedFit === 'contain' && isPortrait;
   const fallbackLabel = variant === 'band' ? 'Logotipo de la banda' : 'Escudo de la hermandad';
+  const creditHref = resolveCreditHref(photoSrc);
 
   const desktopFocus = focusPosition || `${focusX ?? 50}% ${focusY ?? 50}%`;
   const mobileFocus = `${mobileFocusX ?? focusX ?? 50}% ${mobileFocusY ?? focusY ?? 50}%`;
@@ -104,7 +116,13 @@ export default function RelationalEntityHeroMedia({
         ) : null}
       </div>
 
-      {hasPhoto && credit ? <figcaption>{credit}</figcaption> : null}
+      {hasPhoto && credit ? (
+        <figcaption>
+          {creditHref ? (
+            <a href={creditHref} target="_blank" rel="noreferrer">{credit}</a>
+          ) : credit}
+        </figcaption>
+      ) : null}
     </figure>
   );
 }
