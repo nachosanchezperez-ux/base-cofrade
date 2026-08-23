@@ -1,0 +1,69 @@
+[data-panel-main] {
+  font-size: 15px;
+}
+
+[data-panel-main] input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
+[data-panel-main] select,
+[data-panel-main] textarea {
+  min-height: 46px;
+  font-size: 14px !important;
+  line-height: 1.4;
+}
+
+[data-panel-main] textarea {
+  line-height: 1.55;
+}
+
+[data-panel-main] label > span,
+[data-panel-main] fieldset legend {
+  font-size: 12px !important;
+  line-height: 1.4;
+}
+
+[data-panel-main] p {
+  font-size: 15px !important;
+  line-height: 1.6;
+}
+
+[data-panel-main] small {
+  font-size: 12px !important;
+  line-height: 1.45;
+}
+
+[data-panel-main] h2 {
+  font-size: 24px !important;
+  line-height: 1.15;
+}
+
+[data-panel-main] h3 {
+  line-height: 1.25;
+}
+
+[data-panel-main] [data-panel-workspace-nav] + div {
+  padding-top: 36px !important;
+}
+
+[data-panel-main] [data-panel-workspace-nav] + div > header {
+  margin-bottom: 22px !important;
+}
+
+@media (max-width: 720px) {
+  [data-panel-main] {
+    font-size: 14px;
+  }
+
+  [data-panel-main] input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
+  [data-panel-main] select,
+  [data-panel-main] textarea {
+    min-height: 48px;
+    font-size: 16px !important;
+  }
+
+  [data-panel-main] p {
+    font-size: 14px !important;
+  }
+
+  [data-panel-main] [data-panel-workspace-nav] + div {
+    padding-top: 24px !important;
+  }
+}
