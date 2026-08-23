@@ -4,7 +4,7 @@ import RelationalThread from '@/components/RelationalThread'
 import styles from '@/components/BrotherhoodCurrentMusic.module.css'
 import discoveryStyles from '@/components/BrotherhoodRelationalDiscovery.module.css'
 import { getPublishedEntityCoverMediaMap } from '@/lib/supabase/entity-media'
-import { createClient } from '@/lib/supabase/server'
+import { createPublicClient } from '@/lib/supabase/public'
 
 function assertRows(result, label) {
   if (result.error) throw new Error(`${label}: ${result.error.message}`)
@@ -315,7 +315,7 @@ async function loadBrotherhoodDiscoveryData(supabase, brotherhoodId, threadData,
 
 export async function BrotherhoodTitularCount({ brotherhoodId, imageCount = 0 }) {
   try {
-    const supabase = await createClient()
+    const supabase = createPublicClient()
     const conceptualTitulars = await loadConceptualTitulars(supabase, brotherhoodId)
     return imageCount + conceptualTitulars.length
   } catch (error) {
@@ -326,7 +326,7 @@ export async function BrotherhoodTitularCount({ brotherhoodId, imageCount = 0 })
 
 export async function BrotherhoodConceptualTitulars({ brotherhoodId }) {
   try {
-    const supabase = await createClient()
+    const supabase = createPublicClient()
     const titulars = await loadConceptualTitulars(supabase, brotherhoodId)
     if (!titulars.length) return null
     const coverMedia = await getPublishedEntityCoverMediaMap(titulars.map((titular) => titular.id))
@@ -499,7 +499,7 @@ function CurrentMusicSequence({ items, penitencia }) {
 
 export async function BrotherhoodOwnBands({ brotherhoodId }) {
   try {
-    const supabase = await createClient()
+    const supabase = createPublicClient()
     const [bands, threadData, currentAccompaniments, brotherhoodTypes] = await Promise.all([
       loadOwnBands(supabase, brotherhoodId),
       loadBrotherhoodThreadData(supabase, brotherhoodId),
