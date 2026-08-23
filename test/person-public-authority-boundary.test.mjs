@@ -20,7 +20,7 @@ const PERSON_PUBLIC_CLIENT_OWNERS = [
   'components/BrotherhoodRelationalExtras.js',
 ]
 
-const PERSON_RLS_MIGRATION = 'supabase/migrations/20260823220500_harden_public_agent_relations.sql'
+const PERSON_RLS_MIGRATION = 'supabase/migrations/20260823211610_harden_public_agent_relations.sql'
 
 async function source(path) {
   return readFile(new URL(`../${path}`, import.meta.url), 'utf8')
