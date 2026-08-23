@@ -47,6 +47,80 @@
   margin-bottom: 22px !important;
 }
 
+[data-panel-main] [class*="breadcrumb"] {
+  gap: 10px;
+  font-size: 12.5px !important;
+  line-height: 1.35;
+}
+
+[data-panel-main] [class*="statusBadge"] {
+  min-height: 28px;
+  padding-inline: 10px;
+  font-size: 10px !important;
+}
+
+[data-panel-main] [class*="metricCard"] > span {
+  font-size: 13px !important;
+}
+
+[data-panel-main] [class*="metricCard"] small {
+  font-size: 11.5px !important;
+}
+
+[data-panel-main] section[aria-label="Cobertura de la extraordinaria"] {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+[data-panel-main] [class*="editorSection"] {
+  margin-bottom: 48px !important;
+}
+
+[data-panel-main] [class*="brotherhoodList"] article {
+  position: relative;
+  margin-inline: -10px;
+  padding-inline: 10px;
+  border-radius: 11px;
+  transition: background .14s ease, box-shadow .14s ease;
+}
+
+[data-panel-main] [class*="brotherhoodList"] article:hover {
+  background: #f8fafc;
+}
+
+[data-panel-main] [class*="brotherhoodList"] article:has([class*="rowLink"]:focus-visible) {
+  background: #f4f8fb;
+  box-shadow: 0 0 0 3px rgb(18 58 103 / 9%);
+}
+
+[data-panel-main] [class*="listIdentity"] strong {
+  font-size: 15px !important;
+}
+
+[data-panel-main] [class*="listIdentity"] span {
+  font-size: 12px !important;
+}
+
+[data-panel-main] [class*="listIdentity"] small {
+  font-size: 11px !important;
+}
+
+[data-panel-main] [class*="rowLink"]::before {
+  position: absolute;
+  inset: 0;
+  border-radius: 11px;
+  content: '';
+}
+
+[data-panel-main] [class*="rowLink"]:focus-visible {
+  outline: none;
+}
+
+@media (max-width: 900px) {
+  [data-panel-main] section[aria-label="Cobertura de la extraordinaria"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 720px) {
   [data-panel-main] {
     font-size: 14px;
@@ -65,5 +139,27 @@
 
   [data-panel-main] [data-panel-workspace-nav] + div {
     padding-top: 24px !important;
+  }
+
+  [data-panel-main] [class*="breadcrumb"] {
+    overflow-x: auto;
+    padding-bottom: 3px;
+    font-size: 12px !important;
+    white-space: nowrap;
+    scrollbar-width: none;
+  }
+
+  [data-panel-main] [class*="breadcrumb"]::-webkit-scrollbar {
+    display: none;
+  }
+
+  [data-panel-main] [class*="editorSection"] {
+    margin-bottom: 40px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  [data-panel-main] section[aria-label="Cobertura de la extraordinaria"] {
+    grid-template-columns: 1fr;
   }
 }
