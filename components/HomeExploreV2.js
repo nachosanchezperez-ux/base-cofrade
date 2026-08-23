@@ -3,6 +3,11 @@ import styles from './HomeExploreV2.module.css'
 import polishStyles from './HomeResponsivePolish.module.css'
 
 function countLabel(item) {
+  if (item.key === 'step') return `${item.count} ${item.count === 1 ? 'publicado' : 'publicados'}`
+  return `${item.count} ${item.count === 1 ? 'publicada' : 'publicadas'}`
+}
+
+function countAriaLabel(item) {
   if (item.key === 'brotherhood') return `${item.count} ${item.count === 1 ? 'hermandad publicada' : 'hermandades publicadas'}`
   if (item.key === 'image') return `${item.count} ${item.count === 1 ? 'imagen publicada' : 'imágenes publicadas'}`
   if (item.key === 'step') return `${item.count} ${item.count === 1 ? 'paso publicado' : 'pasos publicados'}`
@@ -35,7 +40,12 @@ export default function HomeExploreV2({ stats }) {
             <Link className={`${styles.card} ${polishStyles.exploreCard}`} href={item.href} key={item.key}>
               <div className={`${styles.cardTop} ${polishStyles.exploreCardTop}`}>
                 <span className={styles.sequence}>{directoryOrder[item.key] || '·'}</span>
-                <span className={`${styles.count} ${polishStyles.exploreCount}`}>{countLabel(item)}</span>
+                <span
+                  className={`${styles.count} ${polishStyles.exploreCount}`}
+                  aria-label={countAriaLabel(item)}
+                >
+                  {countLabel(item)}
+                </span>
               </div>
               <div className={`${styles.cardBody} ${polishStyles.exploreCardBody}`}>
                 <h3>{item.label}</h3>
