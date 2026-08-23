@@ -59,6 +59,14 @@
   gap: 16px;
 }
 
+.mainGridSingle {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.mainGridSingle .placeCard {
+  min-height: 260px;
+}
+
 .placeCard,
 .hoursCard {
   min-height: 305px;
@@ -145,11 +153,6 @@
   line-height: 1.5;
 }
 
-.placeIdentity .pending {
-  color: rgba(17, 24, 39, 0.42);
-  font-style: italic;
-}
-
 .placeActions {
   display: flex;
   flex-wrap: wrap;
@@ -217,24 +220,6 @@
   font-size: clamp(1rem, 1.5vw, 1.14rem);
   font-weight: 700;
   line-height: 1.65;
-}
-
-.hoursPending {
-  display: grid;
-  gap: 7px;
-  padding: 18px 0;
-}
-
-.hoursPending strong {
-  color: var(--brotherhood-dark);
-  font-size: 1.08rem;
-}
-
-.hoursPending p {
-  margin: 0;
-  color: rgba(17, 24, 39, 0.55);
-  font-size: 0.84rem;
-  line-height: 1.55;
 }
 
 .hoursFootnote {
