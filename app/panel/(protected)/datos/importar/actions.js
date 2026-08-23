@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
-import { bulkImportPriority, validateBulkImportRecord } from '@/lib/panel/bulk-import-config'
+import { bulkImportPriority, findBulkImportTargetCollisions, validateBulkImportRecord } from '@/lib/panel/bulk-import-config'
 import { applyBulkImportRecord, refreshBulkImportCounts } from '@/lib/panel/bulk-import'
 
 const UUID_PATTERN = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i
@@ -78,6 +78,13 @@ export async function appendBulkImportItemsAction(importIdInput, startPositionIn
   const startPosition = Number.parseInt(startPositionInput, 10)
   if (!Number.isInteger(startPosition) || startPosition < 0) throw new Error('Posición inicial de lote no válida.')
   if (!Array.isArray(inputRecords) || inputRecords.length < 1 || inputRecords.length > 75) throw new Error('Cada bloque debe contener entre 1 y 75 registros.')
+
+  const chunkCollisions = findBulkImportTargetCollisions(inputRecords)
+  if (chunkCollisions.length) {
+    const collision = chunkCollisions[0]
+    const positions = collision.positions.map((position) => startPosition + position).join(', ')
+    throw new Error(`El bloque repite la misma clave estable en ${collision.table} (${collision.target}) en los registros ${positions}.`)
+  }
 
   const batch = await loadBatch(supabase, importId)
   if (batch.status !== 'staging') throw new Error('Este lote ya no admite nuevos registros.')
