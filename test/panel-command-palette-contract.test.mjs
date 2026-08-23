@@ -35,7 +35,9 @@ test('el endpoint de búsqueda exige sesión editorial y limita las entidades na
   for (const type of ['brotherhood', 'image', 'step', 'band', 'march', 'agent']) {
     assert.match(searchRoute, new RegExp(`${type}:`))
   }
-  assert.match(searchRoute, /\.limit\(16\)/)
+  assert.match(searchRoute, /character', 'extraordinary'/)
+  assert.match(searchRoute, /\/panel\/extraordinarias\/\$\{item\.id\}/)
+  assert.match(searchRoute, /\.slice\(0, 16\)/)
 })
 
 test('la paleta se monta una sola vez en el layout protegido y tiene adaptación móvil', () => {
