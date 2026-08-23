@@ -1,0 +1,514 @@
+@media (max-width: 619px) {
+  .hero {
+    padding: 26px 0 22px;
+  }
+
+  .heroCopy {
+    margin-bottom: 16px;
+  }
+
+  .heroTitle {
+    margin: 8px 0 10px;
+    font-size: clamp(34px, 10.4vw, 42px);
+    line-height: .99;
+  }
+
+  .heroDescription {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .heroThread {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin-top: 14px;
+    margin-right: -20px;
+    padding: 0 20px 2px 0;
+    scrollbar-width: none;
+    overscroll-behavior-inline: contain;
+  }
+
+  .heroThread::-webkit-scrollbar {
+    display: none;
+  }
+
+  .heroThread > span {
+    flex: 0 0 auto;
+  }
+
+  .heroThread b {
+    padding: 6px 8px;
+    font-size: 9px;
+  }
+
+  .searchBox {
+    padding: 18px;
+    border-radius: 20px;
+    box-shadow: 0 16px 38px rgba(18, 58, 103, .16);
+  }
+
+  .searchTitle {
+    margin: 6px 0 6px;
+    font-size: 26px;
+  }
+
+  .searchDescription {
+    margin-bottom: 12px;
+    font-size: 12.5px;
+    line-height: 1.48;
+  }
+
+  .searchBox :global([aria-label="Preguntas sugeridas"]) {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(190px, 78%);
+    gap: 7px;
+    overflow-x: auto;
+    margin-right: -18px;
+    padding: 0 18px 2px 0;
+    flex-wrap: nowrap;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    overscroll-behavior-inline: contain;
+  }
+
+  .searchBox :global([aria-label="Preguntas sugeridas"]::-webkit-scrollbar) {
+    display: none;
+  }
+
+  .searchBox :global([aria-label="Preguntas sugeridas"] button) {
+    scroll-snap-align: start;
+    text-align: left;
+  }
+
+  .extraordinarySection {
+    padding-top: 14px;
+    padding-bottom: 26px;
+  }
+
+  .extraordinaryCard {
+    border-radius: 17px;
+    box-shadow: 0 9px 24px rgba(18, 58, 103, .055);
+  }
+
+  .extraordinaryImageFrame {
+    aspect-ratio: 16 / 9;
+  }
+
+  .extraordinaryCopy {
+    padding: 15px 14px 17px;
+  }
+
+  .extraordinaryCopy .extraordinaryTitle {
+    margin: 6px 0 8px;
+    font-size: 26px;
+  }
+
+  .extraordinaryMeta strong {
+    padding: 6px 9px;
+    font-size: 14px;
+    line-height: 1.28;
+  }
+
+  .extraordinaryBriefing {
+    gap: 11px;
+    margin-top: 14px;
+    padding-top: 13px;
+  }
+
+  .briefingRow {
+    grid-template-columns: 68px 1fr;
+    gap: 8px;
+    padding: 9px 10px;
+  }
+
+  .briefingRow > strong {
+    font-size: 14px;
+  }
+
+  .mobileScheduleHidden {
+    display: none;
+  }
+
+  .mobileScheduleNote {
+    display: block;
+    margin-top: 8px;
+    color: #7a8795;
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .placePills > span:nth-child(n + 4) {
+    display: none;
+  }
+
+  .nextExtraSection {
+    padding-top: 21px;
+    padding-bottom: 2px;
+  }
+
+  .nextExtraSection h2 {
+    font-size: 22px;
+  }
+
+  .nextExtraList > :nth-child(n + 3) {
+    display: none;
+  }
+
+  .nextExtraRow {
+    grid-template-columns: 46px 1fr;
+    gap: 11px;
+    padding: 11px 0;
+  }
+
+  .nextExtraRow time {
+    width: 44px;
+    height: 44px;
+    border-radius: 11px;
+  }
+
+  .nextExtraRow h3 {
+    font-size: 17px;
+  }
+
+  .nextExtraRow p {
+    margin-top: 3px;
+    font-size: 11.5px;
+    line-height: 1.4;
+  }
+
+  .todaySection {
+    padding: 30px 0;
+  }
+
+  .todayHeader {
+    margin-bottom: 15px;
+  }
+
+  .todayHeader h2 {
+    font-size: 29px;
+  }
+
+  .todayHeader p {
+    margin-top: 6px;
+    font-size: 12.5px;
+    line-height: 1.5;
+  }
+
+  .todayGrid {
+    gap: 9px;
+  }
+
+  .todayCard {
+    min-height: 0;
+    grid-template-columns: 34px minmax(0, 1fr);
+    gap: 10px;
+    padding: 14px;
+    border-radius: 16px;
+  }
+
+  .todayCardWithVisual {
+    grid-template-columns: 34px minmax(0, 1fr) 58px;
+  }
+
+  .todayIcon {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    font-size: 9px;
+  }
+
+  .todayCard h3 {
+    margin: 6px 0 5px;
+    font-size: 18px;
+    line-height: 1.16;
+  }
+
+  .todayCard p {
+    display: -webkit-box;
+    overflow: hidden;
+    font-size: 12.5px;
+    line-height: 1.48;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+
+  .todayLink {
+    margin-top: 8px;
+    font-size: 12px;
+  }
+
+  .todayVisual {
+    width: 58px;
+    min-height: 58px;
+    max-height: 76px;
+    align-self: start;
+    border-radius: 12px;
+  }
+
+  .todayMusic {
+    margin-top: 9px;
+    border-radius: 17px;
+  }
+
+  .todayMusicCopy {
+    padding: 16px 16px 12px;
+  }
+
+  .todayMusicCopy h3 {
+    margin-top: 6px;
+    font-size: 21px;
+  }
+
+  .todayMusicCopy > p {
+    font-size: 12px;
+    line-height: 1.48;
+  }
+
+  .todayWhy {
+    margin-top: 10px;
+    padding: 9px 10px;
+  }
+
+  .todayWhy p {
+    font-size: 12px;
+  }
+
+  .todayPlayer {
+    padding: 0 16px 16px;
+  }
+
+  .threadsSection {
+    padding: 30px 0 34px;
+  }
+
+  .threadsHeader {
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+
+  .threadsHeader h2 {
+    font-size: 29px;
+  }
+
+  .threadsHeader p {
+    font-size: 12.5px;
+    line-height: 1.5;
+  }
+
+  .threadsLayout {
+    gap: 9px;
+  }
+
+  .threadsLead {
+    min-height: 0;
+    padding: 17px;
+    border-radius: 17px;
+  }
+
+  .threadsLead h3 {
+    font-size: 22px;
+  }
+
+  .threadsSummary {
+    display: -webkit-box;
+    margin-top: 11px;
+    overflow: hidden;
+    font-size: 12.5px;
+    line-height: 1.5;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+
+  .threadsPath {
+    margin-top: 11px;
+    font-size: 10px;
+  }
+
+  .threadsLeadCta {
+    padding-top: 15px;
+    font-size: 12px;
+  }
+
+  .threadsMore {
+    padding-top: 14px;
+    border-radius: 17px;
+  }
+
+  .threadsCompact {
+    padding: 14px 48px 14px 15px;
+  }
+
+  .threadsCompact h3 {
+    font-size: 17px;
+  }
+
+  .threadsCompactPath {
+    display: none;
+  }
+
+  .exploreSection {
+    padding: 34px 0 38px;
+  }
+
+  .exploreHeader {
+    margin-bottom: 16px;
+  }
+
+  .exploreHeader h2 {
+    font-size: 30px;
+  }
+
+  .exploreHeader p {
+    margin-top: 7px;
+    font-size: 12.5px;
+    line-height: 1.5;
+  }
+
+  .exploreGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .exploreCard {
+    min-height: 168px;
+    padding: 14px;
+    border-radius: 16px;
+  }
+
+  .exploreCardTop {
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .exploreCount {
+    max-width: 98px;
+    padding: 4px 6px;
+    font-size: 8px;
+    line-height: 1.25;
+    text-align: right;
+    white-space: normal;
+  }
+
+  .exploreCardBody {
+    padding-top: 16px;
+  }
+
+  .exploreCard h3 {
+    font-size: 20px;
+  }
+
+  .exploreCard p {
+    margin-top: 5px;
+    font-size: 11.5px;
+    line-height: 1.38;
+  }
+
+  .exploreCta {
+    padding-top: 13px;
+    font-size: 11px;
+  }
+
+  .exploreCta b {
+    width: 27px;
+    height: 27px;
+  }
+
+  .graphStrip {
+    gap: 14px;
+    margin-top: 10px;
+    padding: 16px;
+    border-radius: 18px;
+  }
+
+  .graphStrip h3 {
+    font-size: 21px;
+  }
+
+  .graphStrip p {
+    font-size: 12px;
+    line-height: 1.48;
+  }
+
+  .graphMetrics {
+    gap: 6px;
+  }
+
+  .graphMetric {
+    padding: 10px;
+    border-radius: 12px;
+  }
+
+  .graphMetric strong {
+    font-size: 21px;
+  }
+
+  .graphMetric span {
+    font-size: 9px;
+  }
+
+  .collab {
+    gap: 12px;
+    margin-top: 10px;
+    padding: 16px;
+    border-radius: 17px;
+  }
+
+  .collab h3 {
+    font-size: 20px;
+  }
+
+  .collab p {
+    font-size: 12px;
+  }
+
+  .collabFlow {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .collabFlow span {
+    padding: 6px 7px;
+    font-size: 9px;
+    text-align: center;
+  }
+
+  .collabButton {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 350px) {
+  .exploreGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .exploreCard {
+    min-height: 142px;
+  }
+}
+
+@media (min-width: 620px) and (max-width: 859px) {
+  .hero {
+    padding: 42px 0 34px;
+  }
+
+  .extraordinarySection {
+    padding-top: 18px;
+    padding-bottom: 32px;
+  }
+
+  .todaySection,
+  .threadsSection {
+    padding-top: 38px;
+    padding-bottom: 40px;
+  }
+
+  .exploreSection {
+    padding-top: 42px;
+  }
+}
