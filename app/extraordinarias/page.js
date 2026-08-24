@@ -34,7 +34,7 @@ export default async function ExtraordinariasPage() {
     description,
     items: visibleOutings.map((outing) => ({
       name: `${outing.title} · ${outing.municipality}`,
-      path: outing.anchorHref,
+      path: outing.slug ? `/extraordinarias/${outing.slug}` : outing.anchorHref,
     })),
   })
 
