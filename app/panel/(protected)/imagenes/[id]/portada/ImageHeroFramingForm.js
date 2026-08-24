@@ -35,13 +35,24 @@ function FramingField({ label, name, value, onChange, optional = false }) {
 }
 
 function Preview({ item, fitMode, focusX, focusY, mobileFocusX, mobileFocusY, mobile = false }) {
+  const [detectedAspect, setDetectedAspect] = useState(null)
   const x = mobile ? (mobileFocusX ?? focusX) : focusX
   const y = mobile ? (mobileFocusY ?? focusY) : focusY
-  const objectFit = fitMode === 'contain' ? 'contain' : 'cover'
+  const knownWidth = Number(item.asset?.width_px)
+  const knownHeight = Number(item.asset?.height_px)
+  const knownAspect = knownWidth > 0 && knownHeight > 0 ? knownWidth / knownHeight : null
+  const aspect = knownAspect || detectedAspect
+  const autoContain = aspect === null ? true : aspect < 1.35
+  const objectFit = fitMode === 'contain' || (fitMode === 'auto' && autoContain) ? 'contain' : 'cover'
   const frameClass = mobile ? styles.mobilePreview : styles.desktopPreview
   const frameStyle = useMemo(() => ({
     '--image-cover-url': `url("${String(item.publicUrl || '').replaceAll('"', '%22')}")`,
   }), [item.publicUrl])
+  const presentationLabel = fitMode === 'auto'
+    ? (autoContain ? 'Automático · conserva la imagen' : 'Automático · llena la cabecera')
+    : fitMode === 'contain'
+      ? 'Mostrar completa'
+      : 'Cubrir'
 
   return (
     <figure className={`${styles.preview} ${frameClass}`} style={frameStyle}>
@@ -50,11 +61,19 @@ function Preview({ item, fitMode, focusX, focusY, mobileFocusX, mobileFocusY, mo
         src={item.publicUrl}
         alt={item.asset.alt_text || item.asset.title || ''}
         style={{ objectFit, objectPosition: `${x}% ${y}%` }}
+        onLoad={(event) => {
+          if (knownAspect) return
+          const image = event.currentTarget
+          if (image.naturalWidth > 0 && image.naturalHeight > 0) {
+            setDetectedAspect(image.naturalWidth / image.naturalHeight)
+          }
+        }}
       />
       <span className={styles.previewShade} aria-hidden="true" />
       <figcaption>
         <small>{mobile ? 'Móvil' : 'Escritorio'}</small>
         <strong>Portada de la ficha</strong>
+        <span>{presentationLabel}</span>
       </figcaption>
     </figure>
   )
@@ -65,7 +84,7 @@ export default function ImageHeroFramingForm({ imageId, item, action }) {
   const [focusY, setFocusY] = useState(initialNumber(item.focus_y, 50))
   const [mobileFocusX, setMobileFocusX] = useState(item.mobile_focus_x === null || item.mobile_focus_x === undefined ? null : initialNumber(item.mobile_focus_x, 50))
   const [mobileFocusY, setMobileFocusY] = useState(item.mobile_focus_y === null || item.mobile_focus_y === undefined ? null : initialNumber(item.mobile_focus_y, 50))
-  const [fitMode, setFitMode] = useState(item.fit_mode || 'cover')
+  const [fitMode, setFitMode] = useState(item.fit_mode || 'auto')
 
   return (
     <form action={action} className={`${panelStyles.panelCard} ${panelStyles.editorForm} ${styles.framingCard}`}>
@@ -96,9 +115,9 @@ export default function ImageHeroFramingForm({ imageId, item, action }) {
         <label>
           <span>Ajuste de la fotografía</span>
           <select name="fit_mode" value={fitMode} onChange={(event) => setFitMode(event.target.value)}>
+            <option value="auto">Automático · recomendado</option>
             <option value="cover">Cubrir la cabecera</option>
             <option value="contain">Mostrar la fotografía completa</option>
-            <option value="auto">Automático</option>
           </select>
         </label>
         <FramingField label="Foco general · horizontal" name="focus_x" value={focusX} onChange={setFocusX} />
@@ -108,7 +127,7 @@ export default function ImageHeroFramingForm({ imageId, item, action }) {
       </div>
 
       <div className={panelStyles.formActions}>
-        <small>El encuadre se guarda únicamente para la portada. El retrato del directorio y la galería conservan sus propios ajustes.</small>
+        <small>Automático detecta la proporción de la fotografía y elige la presentación más segura para PC y móvil. Solo ajusta los focos si el resultado lo necesita. El retrato del directorio y la galería conservan sus propios ajustes.</small>
         <button className={panelStyles.primaryButton} type="submit">Guardar encuadre</button>
       </div>
     </form>
