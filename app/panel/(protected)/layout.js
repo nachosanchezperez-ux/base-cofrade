@@ -1,4 +1,5 @@
 import { Suspense } from 'react'
+import MediaRightsGovernance from '@/components/panel/MediaRightsGovernance'
 import PanelCommandPalette from '@/components/panel/PanelCommandPalette'
 import PanelEditState from '@/components/panel/PanelEditState'
 import PanelMetricNavigation from '@/components/panel/PanelMetricNavigation'
@@ -17,7 +18,10 @@ export default async function ProtectedPanelLayout({ children }) {
   return (
     <div className={styles.panelShell} data-panel-shell>
       <PanelNav user={user} />
-      <div className={styles.panelMain} data-panel-main>{children}</div>
+      <div className={styles.panelMain} data-panel-main>
+        <MediaRightsGovernance canEdit={canEdit} />
+        {children}
+      </div>
       <Suspense fallback={null}>
         <PanelCommandPalette canEdit={canEdit} />
         <PanelSaveToast />
