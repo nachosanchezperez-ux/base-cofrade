@@ -121,8 +121,7 @@ async function rollbackNewAsset(supabase, mediaAssetId, storagePath) {
   if (storagePath) await supabase.storage.from('hilo-media').remove([storagePath])
 }
 
-async function persistBrotherhoodRelatedMedia(formData) {
-  const user = await requirePanelEditor()
+async function persistBrotherhoodRelatedMedia(formData, user) {
   const supabase = await createClient()
   const brotherhoodId = uuid(formData, 'brotherhood_id')
   const targetId = uuid(formData, 'target_id')
@@ -283,10 +282,11 @@ function uploadErrorMessage(error) {
 }
 
 export async function uploadBrotherhoodRelatedMediaAction(formData) {
+  const user = await requirePanelEditor()
   let destination
 
   try {
-    destination = await persistBrotherhoodRelatedMedia(formData)
+    destination = await persistBrotherhoodRelatedMedia(formData, user)
   } catch (error) {
     const message = uploadErrorMessage(error)
     console.error('[Hilo Cofrade] Error en la subida rápida de multimedia', error)

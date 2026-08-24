@@ -29,6 +29,17 @@ test('la subida rápida móvil conserva el formulario y devuelve los errores en 
   assert.match(css, /min-height: 48px/)
 })
 
+test('la autenticación queda fuera de la recuperación local de errores de subida', async () => {
+  const action = await source('app/panel/(protected)/hermandades/[id]/multimedia/actions.js')
+  const persistenceStart = action.indexOf('async function persistBrotherhoodRelatedMedia')
+  const persistenceEnd = action.indexOf('function uploadErrorMessage')
+  const persistenceBody = action.slice(persistenceStart, persistenceEnd)
+
+  assert.match(action, /export async function uploadBrotherhoodRelatedMediaAction\(formData\) \{\s*const user = await requirePanelEditor\(\)/)
+  assert.match(action, /persistBrotherhoodRelatedMedia\(formData, user\)/)
+  assert.doesNotMatch(persistenceBody, /requirePanelEditor/)
+})
+
 test('el Panel móvil respeta el área segura y mantiene una sola interfaz responsive', async () => {
   const layout = await source('app/panel/(protected)/layout.js')
   const mobileCss = await source('app/panel/panel-mobile.css')
