@@ -91,3 +91,15 @@ test('la Hero V2 adapta fotografía vertical, cuadrada y horizontal sin hardcode
   assert.match(room, /padding-top: 430px/)
   assert.equal(hero.includes("title === 'María Santísima de la Caridad en su Soledad'"), false)
 })
+
+test('la Hero móvil funde los bordes de fotos contenidas con el fondo ambiental', () => {
+  const hero = source('components/ImageHeroV2.js')
+  const room = source('components/ImageHeroV2Room.module.css')
+
+  assert.match(hero, /--image-aspect/)
+  assert.match(room, /\.contained \.subjectStage[\s\S]*aspect-ratio: var\(--image-aspect, \.82\)/)
+  assert.match(room, /-webkit-mask-image: linear-gradient\(90deg/)
+  assert.match(room, /mask-image: linear-gradient\(90deg/)
+  assert.match(room, /\.contained \.photoBackdrop[\s\S]*blur\(18px\)[\s\S]*brightness\(\.9\)/)
+  assert.equal(room.includes('background: #000'), false)
+})
