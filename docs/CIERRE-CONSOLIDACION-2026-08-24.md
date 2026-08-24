@@ -1,58 +1,159 @@
 # Cierre de la fase de consolidación
 
-> Acta operativa de Dirección. La fase solo se declarará cerrada después del smoke final de producción y de la actualización definitiva de `ESTADO-PROYECTO.md`.
+> Acta operativa definitiva de Dirección.
 
-- Fecha: **24 de agosto de 2026**.
-- Estado del documento: **EN CIERRE · pendiente de smoke final de producción**.
-- Baseline funcional auditado al abrir el corte: `main` en `0a38643ccb50c9e2b8a3f53097b4c12d44bb467c`.
-- Producción auditada al abrir el corte: `dpl_5dnhHspdGvsJu32fvU5tG28GHZXK` → `READY`.
-- Supabase: `ACTIVE_HEALTHY`; última migración `20260824003235_cult_media`.
+- Fecha de cierre: **24 de agosto de 2026**.
+- Estado: **CERRADA Y VALIDADA EN PRODUCCIÓN**.
+- Baseline funcional: `cd5cc70d1e0b85c80c69f4cd5bf41359bf954672` — PR #321.
+- Producción auditada: `dpl_2hZCHYuFtz6WVuEU4meGVa7AohQr` → **READY**.
+- Supabase: **ACTIVE_HEALTHY**; última migración `20260824003235_cult_media`.
 
 ## Resolución de los frentes documentales
 
 ### #314 · Media abierta
 
-La PR proponía un segundo protocolo vigente. No debe fusionarse como documento paralelo.
+La rama proponía un segundo protocolo vigente sobre un contrato que #311 ya había implantado y protegido.
 
-Su delta útil —verificación del sujeto, portada frente a galería, reutilización canónica, revisión humana y controles editoriales— queda consolidado en una sola fuente:
+No se fusionó. Su delta útil quedó consolidado en:
 
 `docs/MEDIA-ABIERTA.md`
 
-Resultado previsto:
+Incluye:
 
-**#314 → CERRADA POR SUPERADA**  
-**MEDIA ABIERTA → UNA ÚNICA FUENTE CANÓNICA**
+- licencias admitidas y excluidas;
+- autoría y titular de derechos;
+- licencia exacta y versión;
+- URL original o canónica;
+- Fuente y nota de permiso;
+- crédito público y atribución;
+- verificación exacta del sujeto;
+- portada frente a galería;
+- reutilización y deduplicación;
+- revisión humana;
+- controles de Salud del grafo.
+
+Resultado:
+
+**#314 → 🟢 CERRADA POR SUPERADA**  
+**MEDIA ABIERTA → 🟢 UNA ÚNICA FUENTE CANÓNICA**
 
 ### #315 · Decisiones HC
 
-La rama partía de una fotografía antigua y no recogía todo el registro existente.
+La rama partía de una fotografía antigua y no recogía el registro documental completo.
 
-El cierre canónico:
+Se reconstruyó sobre el producto real mediante:
 
-- inventaría las decisiones reales hasta HC-013;
-- fija HC-014 para media abierta;
-- formaliza HC-015, HC-016 y HC-017 con evidencia ya implantada;
-- no duplica Extraordinarias, tarjetas, directorios, logotipos ni patrimonio musical;
-- no reserva HC-018.
+- `docs/DECISIONES-HC.md`;
+- HC-014 · media abierta;
+- HC-015 · frontera Front público ↔ Panel;
+- HC-016 · importación masiva gobernada;
+- HC-017 · Salud del grafo como cola editorial.
 
-Resultado previsto:
+No se crearon decisiones duplicadas para Extraordinarias, tarjetas, directorios, logotipos, prioridad visual o patrimonio musical.
 
-**#315 → CERRADA POR SUPERADA**  
-**DECISIONES HC → SINCRONIZADAS**
+HC-008.1 quedó correctamente clasificada como extensión implementada de HC-008. HC-018 permanece disponible, no asignada ni reservada.
+
+Resultado:
+
+**#315 → 🟢 CERRADA POR SUPERADA**  
+**DECISIONES HC → 🟢 SINCRONIZADAS CON EL PRODUCTO REAL**
 
 ### #316 · Cierre y siguiente fase
 
-La prioridad se reevalúa sobre el producto real, incluyendo:
+La rama se creó antes de completar los cortes de Pastora, SEO y reconciliación final de `cult_media`; no podía actuar como fotografía definitiva.
 
-- arquitectura pública cerrada;
-- primer ciclo de Salud cerrado;
-- media abierta gobernada;
-- piloto de la Pastora integrado;
-- SEO técnico ampliado mediante #317 y corregido mediante #319;
-- `cult_media` reconciliada mediante #320;
-- #49 aparcada.
+La comparación se rehizo sobre el `main` real. La PR se cerró sin fusionar y el cierre quedó incorporado al acta canónica.
 
-La rama antigua no debe fusionarse como fotografía definitiva.
+Resultado:
+
+**#316 → 🟢 CERRADA POR SUPERADA**
+
+## Estado consolidado
+
+La fase deja fijado el siguiente baseline:
+
+- Arquitectura pública / Front ↔ Panel → cerrada.
+- Personas / agentes → cerradas.
+- Smoke transversal → cerrado.
+- Primer ciclo de Salud del grafo → cerrado.
+- Relaciones nucleares incoherentes → `0`.
+- Media abierta → gobernada en Panel, Supabase y Front.
+- Decisiones HC → sincronizadas hasta HC-017.
+- Piloto de Pastora → funcional y publicado.
+- SEO técnico → ampliado y corregido.
+- `cult_media` → reconciliada.
+- #49 → aparcada.
+- Producción → estable y READY.
+- Documentación operativa → canónica.
+
+## Smoke final de producción
+
+### Home
+
+- Home 2.8 → 200.
+- Hoy → presente.
+- Tira del hilo → presente y ruta pública 200.
+- Extraordinarias → presente y directorio 200.
+- Marcha del día → presente.
+- Explorar → presente.
+- Últimos hilos → presente.
+- viewport y menú móvil → presentes.
+
+### Directorios
+
+- Hermandades → 200.
+- Imágenes → 200.
+- Pasos → 200.
+- Bandas → 200.
+
+### Fichas
+
+- Pastora de Cantillana → 200.
+- Nuestro Padre Jesús del Gran Poder → 200.
+- Paso de Nuestro Padre Jesús del Gran Poder → 200.
+- Banda del Sol → 200.
+
+### Media
+
+- media de Supabase → renderizada.
+- media Wikimedia → renderizada directamente.
+- créditos → visibles.
+- licencia y autoría → visibles.
+- atribución → enlazada a la página canónica de Commons.
+- `alt_text` → presente en el caso de control.
+
+### Arquitectura pública
+
+- navegación sin sesión editorial → correcta.
+- lecturas públicas stateless → conservadas.
+- un único `<main>` → conservado.
+- canonical y metadatos → presentes.
+
+### Supabase
+
+```text
+media_assets                         34
+entity_media                         34
+recursos Wikimedia                    5
+media abierta inválida                0
+relaciones nucleares incoherentes     0
+```
+
+### Vercel
+
+```text
+Estado deployment       READY
+HTTP 200                 22
+HTTP 404                  1 · prueba deliberada de ruta inexistente
+HTTP 5xx                  0
+logs error/fatal          0
+```
+
+La petición 404 correspondió deliberadamente a un slug incompleto. La ruta canónica corregida respondió 200.
+
+### Alcance responsive
+
+La validación móvil de cierre es estructural: viewport, navegación, menú móvil, componentes adaptativos y contratos automatizados. La revisión pixel-perfect en dispositivo físico queda incorporada al siguiente corte funcional, no como deuda oculta del cierre.
 
 ## Comparación de siguientes grandes frentes
 
@@ -79,29 +180,30 @@ Escala cualitativa de 1 a 5.
 | Crecimiento territorial | 4 | 4 | 4 | 5 | 4 | 3,20 |
 | Importación documental asistida | 4 | 5 | 4 | 5 | 5 | 3,20 |
 
-## Única prioridad recomendada
+## Siguiente gran fase aprobada
 
-**SIGUIENTE GRAN FASE → EXPERIENCIA MÓVIL**
+**EXPERIENCIA MÓVIL**
 
-La decisión no implica un rediseño global ni una interfaz móvil separada.
+La fase no comienza con un rediseño global ni con una interfaz móvil separada.
 
-El primer corte será:
+Primer corte:
 
 **PANEL MÓVIL · OPERACIÓN REAL**
 
-Objetivo: completar desde un teléfono, sin perder contexto, el flujo:
+Flujo de aceptación:
 
 ```text
 abrir Hermandad
-→ localizar la sección correcta
+→ conservar contexto
+→ localizar multimedia
 → subir fotografía o cartel
 → indicar función, crédito, derechos y Fuente
 → guardar
-→ recibir confirmación clara
-→ recuperar un error sin perder el trabajo
+→ recibir feedback claro
+→ recuperar errores sin perder el trabajo
 ```
 
-Casos de validación:
+Casos reales:
 
 - Pastora de Cantillana;
 - San Benito;
@@ -110,22 +212,25 @@ Casos de validación:
 ## Límites del primer corte
 
 - no crear nuevas entidades;
-- no modificar RLS por conveniencia visual;
 - no reabrir la arquitectura pública;
+- no modificar RLS por comodidad visual;
 - no recuperar #49;
 - no introducir excepciones por `slug`;
 - no construir un Panel móvil separado;
-- no iniciar SEO, Tira del hilo o automatización en paralelo.
+- no iniciar SEO, Tira del hilo, analítica o automatización en paralelo.
 
-## Condiciones para declarar la fase cerrada
+## Condiciones de cierre
 
 - [x] Media abierta consolidada en una fuente.
 - [x] Decisiones HC reconstruidas contra el producto real.
-- [x] Siguiente fase evaluada y reducida a una prioridad.
-- [ ] PR antiguas #314, #315 y #316 cerradas.
-- [ ] `ESTADO-PROYECTO.md` actualizado sobre el `main` definitivo.
-- [ ] Smoke corto de producción superado.
-- [ ] Runtime de Vercel sin errores estructurales.
-- [ ] Consolidación declarada cerrada.
+- [x] #314, #315 y #316 cerradas.
+- [x] `ESTADO-PROYECTO.md` sincronizado.
+- [x] Smoke corto de producción superado.
+- [x] Runtime de Vercel sin errores estructurales.
+- [x] Supabase saludable y sin deriva de migraciones.
+- [x] Siguiente fase evaluada y reducida a una única prioridad.
+- [x] Consolidación declarada cerrada.
 
-**NO INICIAR EL PRIMER CORTE MÓVIL HASTA COMPLETAR LOS PUNTOS PENDIENTES.**
+**FASE DE CONSOLIDACIÓN → 🟢 VALIDADA EN PRODUCCIÓN**
+
+**SIGUIENTE ACCIÓN ÚNICA → ABRIR `PANEL MÓVIL · OPERACIÓN REAL`**
