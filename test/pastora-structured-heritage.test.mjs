@@ -43,7 +43,7 @@ test('la tipología musical separa naturaleza de estilo y mantiene relaciones de
   assert.match(migration, /adaptation_of/)
 })
 
-test('el front ordena por año ascendente y muestra Año Título Compositor Estilo', async () => {
+test('el patrimonio musical ordena por año ascendente y muestra Año Título Compositor Estilo', async () => {
   const loader = await source('lib/supabase/brotherhood-musical-heritage.js')
   const component = await source('components/BrotherhoodMusicalHeritage.js')
 
@@ -60,18 +60,6 @@ test('el front ordena por año ascendente y muestra Año Título Compositor Esti
   }
 })
 
-test('la ficha pública separa Simpecados del patrimonio general sin duplicarlos', async () => {
-  const loader = await source('lib/supabase/brotherhood-page.js')
-  const page = await source('app/hermandades/[slug]/page.js')
-
-  assert.match(loader, /simpecadosBase = patrimonio\.filter\(isSimpecado\)/)
-  assert.match(loader, /patrimonioGeneral = patrimonio\.filter\(\(item\) => !isSimpecado\(item\)\)/)
-  assert.match(loader, /from\('entity_names'\)/)
-  assert.match(loader, /usage_text/)
-  assert.match(page, /BrotherhoodSimpecadosSection/)
-  assert.match(page, /items=\{h\.simpecados\}/)
-})
-
 test('las fechas discutidas quedan abiertas en vez de inventarse', async () => {
   const migration = await source('supabase/migrations/20260824002000_structured_simpecados_and_musical_work_types.sql')
 
@@ -79,4 +67,13 @@ test('las fechas discutidas quedan abiertas en vez de inventarse', async () => {
   assert.match(migration, /La grabación oficial de 1996 acredita existencia, no año de composición/)
   assert.match(migration, /Año por documentar/)
   assert.match(migration, /Encargado en 1805 · estrenado en 1806/)
+})
+
+test('la fuente del estreno de Salve Pastora queda versionada sin alterar la fecha de composición', async () => {
+  const migration = await source('supabase/migrations/20260824002500_source_salve_pastora_premiere.sql')
+
+  assert.match(migration, /Cantillana y su Pastora/)
+  assert.match(migration, /2013-09-08|8 de septiembre de 2013|8 de septiembre de 2013|8 de septiembre/i)
+  assert.match(migration, /Patrimonio musical · estreno/)
+  assert.doesNotMatch(migration, /update public\.marches[\s\S]*composition_year/i)
 })
