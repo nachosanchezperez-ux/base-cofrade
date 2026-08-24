@@ -26,7 +26,7 @@ test('Supabase exige licencia abierta admitida y procedencia completa', async ()
   assert.match(migration, /open_media_provenance_is_valid/)
   assert.match(migration, /media_assets_open_provenance_check/)
   assert.match(migration, /CC BY-SA 4\.0/)
-  assert.match(migration, /CC0 1\.0/)
+  assert.match(migration, /'cc0 1\.0'/)
   assert.match(migration, /rights_holder/)
   assert.match(migration, /permission_notes/)
   assert.match(migration, /commons\[\.\]wikimedia\[\.\]org\/wiki\/\(File\|Archivo\):/)
@@ -51,7 +51,7 @@ test('el Panel explica y valida el mismo contrato antes de enviar', async () => 
 test('el protocolo documenta licencias admitidas, exclusiones y reacción ante faltas', async () => {
   const protocol = await read('docs/MEDIA-ABIERTA.md')
 
-  assert.match(protocol, /CC BY-SA 4\.0/)
+  assert.match(protocol, /CC BY-SA 1\.0, 2\.0, 2\.5, 3\.0 o 4\.0/)
   assert.match(protocol, /CC0 1\.0/)
   assert.match(protocol, /licencias NC/)
   assert.match(protocol, /licencias ND/)
