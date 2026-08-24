@@ -7,6 +7,7 @@ import { getExtraordinaryDetail } from '@/lib/supabase/extraordinary-detail'
 import { absoluteUrl, breadcrumbJsonLd, pageTitle, seoDescription } from '@/lib/seo'
 import styles from './extraordinary-detail.module.css'
 import mediaStyles from './extraordinary-media.module.css'
+import journeyStyles from './extraordinary-journey.module.css'
 
 export const dynamic = 'force-dynamic'
 
@@ -249,24 +250,24 @@ export default async function ExtraordinaryDetailPage({ params }) {
 
       <div className={`shell ${styles.content}`}>
         {item.journeyPhases.length ? (
-          <section className={`${styles.section} ${styles.journeySection}`} id="desarrollo">
+          <section className={`${styles.section} ${journeyStyles.journeySection}`} id="desarrollo">
             <header className={styles.sectionHead}>
               <span>Cómo se desarrolla</span>
               <h2>Desarrollo de la jornada</h2>
               <p>Los distintos momentos de la extraordinaria, ordenados para entender la jornada de un vistazo.</p>
             </header>
-            <div className={styles.journeyGrid}>
+            <div className={journeyStyles.journeyGrid}>
               {item.journeyPhases.map((phase, index) => (
-                <article className={styles.journeyCard} key={phase.id}>
-                  <div className={styles.journeyTopline}>
+                <article className={journeyStyles.journeyCard} key={phase.id}>
+                  <div className={journeyStyles.journeyTopline}>
                     <span>{String(index + 1).padStart(2, '0')}</span>
                     {phase.eyebrow ? <small>{phase.eyebrow}</small> : null}
                   </div>
                   <h3>{phase.title}</h3>
-                  {phase.time ? <strong className={styles.journeyTime}>{phase.time}</strong> : null}
+                  {phase.time ? <strong className={journeyStyles.journeyTime}>{phase.time}</strong> : null}
                   {phase.summary ? <p>{phase.summary}</p> : null}
                   {phase.places.length ? (
-                    <div className={styles.journeyPlaces}>
+                    <div className={journeyStyles.journeyPlaces}>
                       {phase.places.map((place) => <span key={`${phase.id}-${place}`}>{place}</span>)}
                     </div>
                   ) : null}
