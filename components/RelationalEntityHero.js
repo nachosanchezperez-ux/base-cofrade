@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import BrotherhoodHeroV2 from './BrotherhoodHeroV2';
 import RelationalEntityHeroMedia from './RelationalEntityHeroMedia';
 import styles from './RelationalEntityHero.module.css';
 import polishStyles from './RelationalEntityHeroPolish.module.css';
@@ -115,6 +116,21 @@ export default function RelationalEntityHero({
   const visibleFacts = facts.filter((fact) => fact?.label && fact?.value).slice(0, 3);
   const isBrotherhood = variant === 'brotherhood';
   const isBand = variant === 'band';
+
+  if (isBrotherhood && title === 'El Baratillo') {
+    return (
+      <BrotherhoodHeroV2
+        entityType={entityType}
+        title={title}
+        subtitle={subtitle}
+        breadcrumbItems={breadcrumbItems}
+        badges={visibleBadges}
+        facts={visibleFacts}
+        crestSrc={media.crestSrc}
+        crestAlt={media.crestAlt}
+      />
+    );
+  }
 
   const heading = (
     <div className={styles.titleBody}>
