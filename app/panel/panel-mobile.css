@@ -1,0 +1,36 @@
+@media (max-width: 860px) {
+  [data-panel-shell] {
+    padding-bottom: calc(82px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  [data-panel-shell] > aside {
+    height: calc(72px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  [data-panel-shell] > aside nav[aria-label='Navegación rápida del panel'] {
+    height: calc(72px + env(safe-area-inset-bottom, 0px)) !important;
+    padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  [data-panel-shell] > aside > button[aria-label='Cerrar menú'] {
+    bottom: calc(72px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  [data-panel-shell] > aside [role='dialog'] {
+    bottom: calc(72px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  [data-panel-main] form button[type='submit'],
+  [data-panel-main] details > summary,
+  [data-panel-main] a[class*='Button'] {
+    min-height: 44px;
+  }
+
+  [data-panel-toast-root][role='status'] {
+    bottom: calc(82px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  [data-panel-toast-root]:not([role]) {
+    padding-bottom: calc(92px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+}
