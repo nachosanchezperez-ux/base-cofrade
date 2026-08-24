@@ -38,6 +38,11 @@ const nextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'noticiasdoloresdelcerro.wordpress.com',
+        pathname: '/wp-content/uploads/**',
+      },
+      {
+        protocol: 'https',
         hostname: 'cdn.palbincdn.com',
         pathname: '/users/**',
       },
