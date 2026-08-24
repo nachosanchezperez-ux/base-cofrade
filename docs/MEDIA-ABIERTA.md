@@ -97,9 +97,11 @@ No se corrige automáticamente una licencia, no se inventa un autor y no se degr
 
 ## Auditoría inicial · 24 de agosto de 2026
 
-- Recursos multimedia auditados: **231**.
+- Registros canónicos auditados en `public.media_assets`: **34**.
+- Enlaces canónicos auditados en `public.entity_media`: **34**.
 - Recursos Wikimedia detectados: **5**.
 - Recursos Wikimedia con licencia, autoría, titular, Fuente, URL canónica, nota de permiso y texto alternativo completos: **5 de 5**.
-- Recursos `licensed` o `public_domain` sin licencia: **0**.
+- Recursos `licensed` o `public_domain` inválidos tras aplicar la guarda: **0**.
+- Recursos visibles para el rol público `anon`: **34**, incluidos los cinco de Wikimedia.
 
-El cierre no modifica ni elimina ninguno de esos cinco recursos. Añade una barrera preventiva para las cargas futuras.
+El cierre no modifica ni elimina ninguno de esos recursos. Añade una barrera preventiva para las cargas futuras.
