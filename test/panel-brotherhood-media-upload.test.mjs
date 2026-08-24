@@ -25,6 +25,8 @@ test('la subida móvil pide solo archivo, crédito, derechos y descripción', ()
   assert.match(uploadForm, /name="file"[\s\S]*type="file"[\s\S]*accept="image\/\*"/)
   assert.match(uploadForm, /Fototeca, Cámara o Archivos/)
   assert.match(uploadForm, /name="author_name"/)
+  assert.match(uploadForm, /placeholder="Autor o Hermandad"/)
+  assert.match(uploadForm, /Hilo Cofrade añade «Fotografía ·»/)
   assert.match(uploadForm, /name="rights_status"/)
   assert.match(uploadForm, /name="alt_text"/)
   assert.match(page, /Migrar esta imagen al Panel/)
@@ -33,6 +35,14 @@ test('la subida móvil pide solo archivo, crédito, derechos y descripción', ()
   assert.match(styles, /\.fileButton/)
   assert.match(styles, /@media \(max-width: 620px\)/)
   assert.match(styles, /\.uploadActions button\s*\{[\s\S]*width: 100%/)
+})
+
+test('el crédito se guarda como autor limpio y no duplica la etiqueta Fotografía', () => {
+  assert.match(actions, /function normalizeAuthorName/)
+  assert.match(actions, /replace\(\/\^fotograf/)
+  assert.match(actions, /authorName = normalizeAuthorName/)
+  assert.match(actions, /author_name: authorName \|\| null/)
+  assert.doesNotMatch(uploadForm, /placeholder="Fotografía · Autor \/ Hermandad"/)
 })
 
 test('el servidor solo permite destinos relacionados con la Hermandad', () => {
