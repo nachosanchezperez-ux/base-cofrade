@@ -1,6 +1,7 @@
 'use client'
 
 import { useMemo, useState } from 'react'
+import BrotherhoodInlineMedia from '@/components/panel/BrotherhoodInlineMedia'
 import RelationSourcesEditor from '@/components/panel/RelationSourcesEditor'
 import {
   addBrotherhoodImageRelationAction,
@@ -130,7 +131,7 @@ export default function BrotherhoodImagesEditor({ data, canEdit }) {
               <RelationDates />
             </div>
             <div className={styles.formActions}>
-              <small>Las fechas son opcionales. «Titular» es la relación principal.</small>
+              <small>Las fechas son opcionales. Al añadirla podrás cargar su fotografía aquí mismo.</small>
               <button className={styles.primaryButton} type="submit">Añadir imagen/titular</button>
             </div>
           </form>
@@ -172,6 +173,17 @@ export default function BrotherhoodImagesEditor({ data, canEdit }) {
                       {STATUS_LABELS[relation.status] || relation.status}
                     </span>
                   </div>
+
+                  {relation.image && canEdit && !isArchived ? (
+                    <BrotherhoodInlineMedia
+                      brotherhoodId={data.entity.id}
+                      targetId={relation.image.id}
+                      targetKind="entity"
+                      title={imageName}
+                      defaultAlt={imageName}
+                      returnSection="titulares"
+                    />
+                  ) : null}
 
                   {!isArchived && canEdit ? (
                     <>
