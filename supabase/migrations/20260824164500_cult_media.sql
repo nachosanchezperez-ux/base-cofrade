@@ -18,6 +18,7 @@ create table if not exists public.cult_media (
   constraint cult_media_focus_y_check check (focus_y between 0 and 100),
   constraint cult_media_mobile_focus_x_check check (mobile_focus_x is null or mobile_focus_x between 0 and 100),
   constraint cult_media_mobile_focus_y_check check (mobile_focus_y is null or mobile_focus_y between 0 and 100),
+  constraint cult_media_cover_role_check check (not is_cover or role = 'cover'),
   constraint cult_media_cult_asset_role_key unique (cult_id, media_asset_id, role)
 );
 
@@ -28,9 +29,17 @@ create unique index if not exists cult_media_single_cover_idx
   on public.cult_media (cult_id)
   where is_cover;
 
+drop trigger if exists set_cult_media_updated_at on public.cult_media;
+create trigger set_cult_media_updated_at
+  before update on public.cult_media
+  for each row execute function public.set_updated_at();
+
 alter table public.cult_media enable row level security;
 
-grant all on table public.cult_media to anon, authenticated, service_role;
+revoke all on table public.cult_media from anon, authenticated;
+grant select on table public.cult_media to anon;
+grant select, insert, update, delete on table public.cult_media to authenticated;
+grant all on table public.cult_media to service_role;
 
 drop policy if exists "Public cult media" on public.cult_media;
 create policy "Public cult media"
