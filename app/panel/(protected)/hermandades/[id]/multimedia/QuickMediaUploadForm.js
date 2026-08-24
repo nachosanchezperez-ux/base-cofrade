@@ -47,6 +47,7 @@ export default function QuickMediaUploadForm({
   defaultAlt = '',
   rightsHelp,
   uploadNote,
+  returnSection = 'multimedia',
 }) {
   const fileInputId = useId()
   const alertRef = useRef(null)
@@ -180,6 +181,7 @@ export default function QuickMediaUploadForm({
       <input type="hidden" name="target_id" value={targetId} />
       <input type="hidden" name="target_kind" value={targetKind} />
       <input type="hidden" name="title" value={title} />
+      <input type="hidden" name="return_section" value={returnSection} />
 
       <label className={mediaStyles.fileField} htmlFor={fileInputId}>
         <span>Fotografía</span>
