@@ -105,6 +105,7 @@ export default function ImageHeroV2({
     '--image-focus-y': `${desktopFocusY}%`,
     '--image-mobile-focus-x': `${mobileFocusX}%`,
     '--image-mobile-focus-y': `${mobileFocusY}%`,
+    '--image-aspect': String(aspect || 0.82),
   };
 
   const detectNaturalAspect = (event) => {
