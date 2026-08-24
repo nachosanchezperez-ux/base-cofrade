@@ -122,20 +122,47 @@
   to { transform: rotate(360deg); }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 860px) {
   .dock {
-    right: 14px;
-    bottom: 82px;
-    left: 14px;
+    right: 12px;
+    bottom: calc(82px + env(safe-area-inset-bottom, 0px));
+    left: 12px;
+    min-height: 56px;
     justify-content: center;
+    padding: 7px 8px 7px 12px;
+    border-radius: 13px;
+  }
+
+  .dock strong {
+    overflow: hidden;
+    font-size: 12px;
+    text-overflow: ellipsis;
   }
 
   .dock button {
+    min-height: 44px;
     margin-left: auto;
+    padding-inline: 14px;
+    touch-action: manipulation;
   }
 
   .shortcut {
     display: none;
+  }
+}
+
+@media (max-width: 420px) {
+  .dock {
+    gap: 8px;
+  }
+
+  .dock strong {
+    font-size: 11px;
+  }
+
+  .dock button {
+    padding-inline: 12px;
+    font-size: 11px;
   }
 }
 
