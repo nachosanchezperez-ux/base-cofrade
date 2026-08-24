@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { usePathname } from 'next/navigation'
 import HiloSearch from './HiloSearch'
 import styles from './GlobalHiloSearch.module.css'
@@ -48,6 +49,47 @@ export default function GlobalHiloSearch() {
   }, [open])
 
   const alternateFullPageMode = pathname === '/'
+  const dialog = open && typeof document !== 'undefined' ? createPortal(
+    <div
+      className={styles.backdrop}
+      onMouseDown={(event) => {
+        if (event.currentTarget === event.target) setOpen(false)
+      }}
+      data-global-hilo-search
+    >
+      <section
+        ref={panelRef}
+        className={styles.panel}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="global-hilo-search-title"
+      >
+        <header className={styles.header}>
+          <div>
+            <span>Buscador universal</span>
+            <h2 id="global-hilo-search-title">Busca o pregunta</h2>
+            <p>Encuentra una ficha directamente o haz una consulta sobre los datos publicados en Hilo Cofrade.</p>
+          </div>
+          <button type="button" className={styles.close} onClick={() => setOpen(false)} aria-label="Cerrar buscador">×</button>
+        </header>
+
+        <div className={styles.searchSurface}>
+          <HiloSearch
+            fullPage={alternateFullPageMode}
+            universal
+            onNavigate={() => setOpen(false)}
+          />
+        </div>
+
+        <footer className={styles.examples}>
+          <span>Prueba con</span>
+          <p>«Baratillo», «ficha del Baratillo», «Banda del Sol» o «¿qué pasos tiene San Benito?»</p>
+          <kbd>⌘ / Ctrl + K</kbd>
+        </footer>
+      </section>
+    </div>,
+    document.body
+  ) : null
 
   return (
     <>
@@ -66,47 +108,7 @@ export default function GlobalHiloSearch() {
           <path d="m16 16 4 4" />
         </svg>
       </button>
-
-      {open ? (
-        <div
-          className={styles.backdrop}
-          onMouseDown={(event) => {
-            if (event.currentTarget === event.target) setOpen(false)
-          }}
-          data-global-hilo-search
-        >
-          <section
-            ref={panelRef}
-            className={styles.panel}
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="global-hilo-search-title"
-          >
-            <header className={styles.header}>
-              <div>
-                <span>Buscador universal</span>
-                <h2 id="global-hilo-search-title">Busca o pregunta</h2>
-                <p>Encuentra una ficha directamente o haz una consulta sobre los datos publicados en Hilo Cofrade.</p>
-              </div>
-              <button type="button" className={styles.close} onClick={() => setOpen(false)} aria-label="Cerrar buscador">×</button>
-            </header>
-
-            <div className={styles.searchSurface}>
-              <HiloSearch
-                fullPage={alternateFullPageMode}
-                universal
-                onNavigate={() => setOpen(false)}
-              />
-            </div>
-
-            <footer className={styles.examples}>
-              <span>Prueba con</span>
-              <p>«Baratillo», «ficha del Baratillo», «Banda del Sol» o «¿qué pasos tiene San Benito?»</p>
-              <kbd>⌘ / Ctrl + K</kbd>
-            </footer>
-          </section>
-        </div>
-      ) : null}
+      {dialog}
     </>
   )
 }
