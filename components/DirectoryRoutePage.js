@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import BrotherhoodDirectoryCard from '@/components/BrotherhoodDirectoryCard'
+import JsonLd from '@/components/JsonLd'
 import { sortBrotherhoods } from '@/lib/brotherhood-directory'
+import { breadcrumbJsonLd, collectionPageJsonLd } from '@/lib/seo'
 import styles from './HermandadesDirectory.module.css'
 
 export default function DirectoryRoutePage({
@@ -8,13 +10,33 @@ export default function DirectoryRoutePage({
   title,
   description,
   hermandades,
+  path,
   breadcrumbs = [],
   contextLabel,
 }) {
   const items = sortBrotherhoods(hermandades)
+  const linkedBreadcrumbs = breadcrumbs
+    .filter((item) => Boolean(item.href))
+    .map((item) => ({ name: item.label, path: item.href }))
 
   return (
     <section className={`section page-top ${styles.routePage}`}>
+      <JsonLd data={breadcrumbJsonLd([
+        { name: 'Inicio', path: '/' },
+        { name: 'Hermandades', path: '/hermandades' },
+        ...linkedBreadcrumbs,
+        { name: title, path },
+      ])} />
+      <JsonLd data={collectionPageJsonLd({
+        path,
+        name: title,
+        description,
+        items: items.map((hermandad) => ({
+          name: hermandad.nombrePopular,
+          path: `/hermandades/${hermandad.slug}`,
+        })),
+      })} />
+
       <div className="shell">
         <nav className={styles.breadcrumbs} aria-label="Migas de pan">
           <Link href="/hermandades">Hermandades</Link>
