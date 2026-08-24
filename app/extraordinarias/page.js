@@ -1,5 +1,6 @@
 import ExtraordinaryDirectory from '@/components/ExtraordinaryDirectory'
 import styles from '@/components/ExtraordinaryDirectory.module.css'
+import seoStyles from '@/components/ExtraordinarySeo.module.css'
 import JsonLd from '@/components/JsonLd'
 import { getExtraordinaryDirectory } from '@/lib/supabase/extraordinary-directory'
 import { breadcrumbJsonLd, collectionPageJsonLd, pageTitle } from '@/lib/seo'
@@ -63,11 +64,11 @@ export default async function ExtraordinariasPage() {
           </p>
         </header>
 
-        <div className={styles.seoSummary} aria-label="Resumen del calendario de extraordinarias de 2026">
+        <div className={seoStyles.summary} aria-label="Resumen del calendario de extraordinarias de 2026">
           <p>
             Hilo Cofrade reúne en una sola agenda las <strong>salidas extraordinarias de Sevilla en 2026</strong>, tanto en la capital como en los municipios de la provincia. Cada cita dispone de una guía propia y se amplía a medida que se confirman el horario, el itinerario, las bandas y otros datos de interés.
           </p>
-          <div className={styles.seoStats}>
+          <div className={seoStyles.stats}>
             <span><strong>{yearOutings.length}</strong> documentadas en 2026</span>
             <span><strong>{upcomingCount}</strong> próximas</span>
             <span><strong>{capitalCount}</strong> en Sevilla capital</span>
@@ -77,7 +78,7 @@ export default async function ExtraordinariasPage() {
 
         <ExtraordinaryDirectory outings={outings} />
 
-        <section className={styles.seoGuide} aria-labelledby="guia-extraordinarias-sevilla">
+        <section className={seoStyles.guide} aria-labelledby="guia-extraordinarias-sevilla">
           <span className="eyebrow">Guía actualizada</span>
           <h2 id="guia-extraordinarias-sevilla">Extraordinarias en Sevilla: fechas, recorridos y bandas</h2>
           <p>
