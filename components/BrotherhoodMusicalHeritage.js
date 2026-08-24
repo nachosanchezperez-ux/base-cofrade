@@ -3,44 +3,31 @@ import SectionTitle from './SectionTitle';
 import styles from './BrotherhoodMusicalHeritage.module.css';
 
 const GROUPS = [
-  { key: 'Agrupación Musical', label: 'Agrupación musical', short: 'AM', noun: 'marchas' },
-  { key: 'Cornetas y Tambores', label: 'Cornetas y tambores', short: 'CT', noun: 'marchas' },
-  { key: 'Banda de Música', label: 'Banda de música', short: 'BM', noun: 'marchas' },
-  { key: 'Música de capilla', label: 'Música de capilla', short: 'CAP', noun: 'piezas' },
-  { key: 'Copla', label: 'Coplas para cultos internos', short: 'COP', noun: 'coplas' },
+  { key: 'Marcha procesional', label: 'Marchas procesionales', short: 'M', noun: 'marchas' },
+  { key: 'Himno', label: 'Himnos', short: 'H', noun: 'himnos' },
+  { key: 'Copla', label: 'Coplas', short: 'C', noun: 'coplas' },
+  { key: 'Adaptación', label: 'Adaptaciones', short: 'A', noun: 'adaptaciones' },
 ];
 
-function AuthorLine({ item }) {
-  const composerNames = item.composers.map((author) => author.name).join(' · ');
-  const adapterGroups = item.adapters.reduce((groups, author) => {
-    const label = author.label || 'Adaptación';
-    const names = groups.get(label) || [];
-    names.push(author.name);
-    groups.set(label, names);
-    return groups;
-  }, new Map());
-
-  if (!composerNames && !adapterGroups.size) {
-    return <div className={styles.authorship}><span>{item.authorshipText || 'Autoría por documentar'}</span></div>;
+function composerText(item) {
+  if (item.composers?.length) return item.composers.map((author) => author.name).join(' · ');
+  if (item.workType === 'Himno' && item.lyricists?.length) {
+    return `Texto: ${item.lyricists.map((author) => author.name).join(' · ')}`;
   }
-
-  return (
-    <div className={styles.authorship}>
-      {composerNames ? <span>{composerNames}</span> : null}
-      {[...adapterGroups.entries()].map(([label, names]) => (
-        <small key={label}>{label} · {names.join(' · ')}</small>
-      ))}
-    </div>
-  );
+  if (item.adapters?.length) return item.adapters.map((author) => author.name).join(' · ');
+  return item.authorshipText || 'Autoría por documentar';
 }
 
 function MusicRow({ item }) {
   return (
     <article className={styles.march}>
-      <div className={styles.year}>{item.year || '—'}</div>
+      <div className={styles.year}>
+        <small>Año</small>
+        <strong>{item.year || '—'}</strong>
+      </div>
       <div className={styles.copy}>
+        <small className={styles.fieldLabel}>Título</small>
         <h4>{item.name}</h4>
-        <AuthorLine item={item} />
         {item.bandRelation?.name ? (
           <div className={styles.bandRelation}>
             <small>{item.bandRelation.label}</small>
@@ -49,6 +36,17 @@ function MusicRow({ item }) {
             ) : <strong>{item.bandRelation.name}</strong>}
           </div>
         ) : null}
+      </div>
+      <div className={styles.authorColumn}>
+        <small className={styles.fieldLabel}>Compositor</small>
+        <strong>{composerText(item)}</strong>
+        {item.adapters?.length && item.composers?.length ? (
+          <span>{item.adapters.map((author) => `${author.label || 'Adaptación'} · ${author.name}`).join(' · ')}</span>
+        ) : null}
+      </div>
+      <div className={styles.styleColumn}>
+        <small className={styles.fieldLabel}>Estilo</small>
+        <strong>{item.musicType || 'Por documentar'}</strong>
       </div>
       {item.listening?.url ? (
         <a className={styles.listen} href={item.listening.url} target="_blank" rel="noreferrer" aria-label={`Escuchar ${item.name} en ${item.listening.provider}`}>
@@ -62,16 +60,10 @@ function MusicRow({ item }) {
 export default function BrotherhoodMusicalHeritage({ items = [] }) {
   if (!items.length) return null;
 
-  const groups = GROUPS.map((group) => {
-    const groupItems = items.filter((item) => item.musicType === group.key);
-    return {
-      ...group,
-      items: groupItems,
-      repertoireBandContext: groupItems
-        .map((item) => item.repertoireBandContext)
-        .find((context) => context?.name) || null,
-    };
-  }).filter((group) => group.items.length);
+  const groups = GROUPS.map((group) => ({
+    ...group,
+    items: items.filter((item) => (item.workType || 'Marcha procesional') === group.key),
+  })).filter((group) => group.items.length);
 
   return (
     <section className={`section ${styles.section}`} id="musica">
@@ -80,7 +72,7 @@ export default function BrotherhoodMusicalHeritage({ items = [] }) {
           <SectionTitle
             eyebrow="Sonidos propios"
             title="Patrimonio musical"
-            description="Marchas, coplas y sonidos que forman parte de la memoria musical de la Hermandad y de sus Titulares, reunidos aquí por estilos."
+            description="Obras relacionadas de forma independiente con la Hermandad, sus Titulares, autores, formaciones, estrenos y fuentes. Marchas, himnos, coplas y adaptaciones se conservan como tipos distintos."
           />
           <div className={styles.summary} aria-label={`${items.length} composiciones documentadas`}>
             <strong>{items.length}</strong>
@@ -90,22 +82,19 @@ export default function BrotherhoodMusicalHeritage({ items = [] }) {
 
         <div className={styles.groups}>
           {groups.map((group) => (
-            <details className={styles.group} key={group.key}>
+            <details className={styles.group} key={group.key} open={group.key === 'Marcha procesional'}>
               <summary className={styles.groupSummary}>
                 <span className={styles.groupMark} aria-hidden="true">{group.short}</span>
                 <span className={styles.groupHeading}>
                   <strong>{group.label}</strong>
                   <small>{group.items.length} {group.noun} documentadas</small>
-                  {group.repertoireBandContext?.name ? (
-                    <span className={styles.groupContext}>
-                      <small>{group.repertoireBandContext.label}</small>
-                      <b>{group.repertoireBandContext.name}</b>
-                    </span>
-                  ) : null}
                 </span>
                 <span className={styles.groupToggle} aria-hidden="true">＋</span>
               </summary>
               <div className={styles.list}>
+                <div className={styles.tableHead} aria-hidden="true">
+                  <span>Año</span><span>Título</span><span>Compositor</span><span>Estilo</span><span />
+                </div>
                 {group.items.map((item) => <MusicRow item={item} key={item.id} />)}
               </div>
             </details>
