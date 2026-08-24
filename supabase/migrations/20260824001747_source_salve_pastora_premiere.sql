@@ -1,0 +1,4 @@
+-- Reconciliación del historial remoto.
+-- La fuente del estreno de «Salve Pastora» fue aplicada en Supabase con esta versión.
+-- La definición idempotente y reproducible permanece en
+-- 20260824002500_source_salve_pastora_premiere.sql.
