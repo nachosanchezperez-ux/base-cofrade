@@ -55,7 +55,7 @@ No se incorporan automáticamente:
 
 - licencias NC o «No comercial»;
 - licencias ND o «Sin obras derivadas»;
-- `All rights reserved`;
+- `All rights reserved` o «Todos los derechos reservados»;
 - `fair use` o «uso justo»;
 - licencia desconocida, genérica o contradictoria;
 - capturas de redes sociales, resultados de buscadores o galerías sin ficha individual;
@@ -193,7 +193,7 @@ La garantía opera en tres niveles:
 
 1. **Panel:** informa del contrato y bloquea formularios abiertos incompletos o licencias no admitidas.
 2. **Supabase:** `open_media_provenance_is_valid(...)`, la restricción `media_assets_open_provenance_check` y RLS impiden guardar o exponer media abierta inválida.
-3. **Front:** solo presenta recursos que superan el contrato y conserva crédito, licencia y enlace de atribución.
+3. **Front / RLS:** solo presenta recursos que superan el contrato y conserva crédito, licencia y enlace de atribución.
 
 No se corrige automáticamente una licencia, no se inventa un autor y no se degrada silenciosamente un recurso a otro estado de derechos.
 
@@ -222,7 +222,7 @@ Auditoría canónica del 24 de agosto de 2026:
 - `public.media_assets`: **34** registros.
 - `public.entity_media`: **34** relaciones.
 - recursos Wikimedia detectados: **5**;
-- Wikimedia con autoría, titular, licencia, Fuente, URL canónica, permiso y `alt_text` completos: **5/5**;
+- Wikimedia con autoría, titular, licencia, Fuente, URL canónica, permiso y `alt_text` completos: **5 de 5**;
 - media `licensed` o `public_domain` inválida: **0**;
 - recursos visibles para `anon`: **34**, incluidos los cinco de Wikimedia.
 
