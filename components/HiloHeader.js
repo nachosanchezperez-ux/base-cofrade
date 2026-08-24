@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
+import GlobalHiloSearch from './GlobalHiloSearch';
 import styles from './HiloHeader.module.css';
 
 const sections = [
@@ -193,6 +194,8 @@ export default function HiloHeader() {
               </div>
             </details>
           </nav>
+
+          <GlobalHiloSearch />
 
           <a
             className={`${styles.collabButton} ${active === 'colabora' ? styles.collabButtonActive : ''}`}
