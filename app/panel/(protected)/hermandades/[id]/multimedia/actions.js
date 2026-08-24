@@ -17,6 +17,13 @@ function value(formData, name) {
   return String(formData.get(name) || '').trim()
 }
 
+function normalizeAuthorName(input) {
+  return String(input || '')
+    .trim()
+    .replace(/^fotograf(?:í|i)a\s*(?:[·•:|/–—-]\s*)?/i, '')
+    .trim()
+}
+
 function uuid(formData, name) {
   const candidate = value(formData, name)
   if (!UUID_PATTERN.test(candidate)) throw new Error(`Identificador no válido: ${name}`)
@@ -220,6 +227,7 @@ async function rollbackNewAsset(supabase, mediaAssetId, storagePath) {
 }
 
 async function persistBrotherhoodRelatedMedia(formData, context, user, storagePath) {
+  const authorName = normalizeAuthorName(value(formData, 'author_name'))
   const assetResult = await context.supabase
     .from('media_assets')
     .insert({
@@ -228,7 +236,7 @@ async function persistBrotherhoodRelatedMedia(formData, context, user, storagePa
       title: value(formData, 'title') || context.target.name || context.originalFileName,
       caption: value(formData, 'caption') || null,
       alt_text: context.altText,
-      author_name: value(formData, 'author_name') || null,
+      author_name: authorName || null,
       rights_status: context.rightsStatus,
     })
     .select('id')
