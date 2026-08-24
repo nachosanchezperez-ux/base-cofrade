@@ -144,12 +144,45 @@
     filter: blur(30px) saturate(.96) brightness(.78);
   }
 
+  .contained .photoBackdrop {
+    opacity: .98;
+    transform: scale(1.18);
+    filter: blur(18px) saturate(1.04) brightness(.9);
+  }
+
   .subjectStage {
     width: 100%;
   }
 
+  .contained .subjectStage {
+    inset: 0 auto 0 50%;
+    width: auto;
+    height: 100%;
+    aspect-ratio: var(--image-aspect, .82);
+    transform: translateX(-50%);
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg,
+      transparent 0%,
+      rgba(0, 0, 0, .58) 3%,
+      #000 7%,
+      #000 93%,
+      rgba(0, 0, 0, .58) 97%,
+      transparent 100%);
+    mask-image: linear-gradient(90deg,
+      transparent 0%,
+      rgba(0, 0, 0, .58) 3%,
+      #000 7%,
+      #000 93%,
+      rgba(0, 0, 0, .58) 97%,
+      transparent 100%);
+  }
+
   .subjectPhoto {
     padding: 2px 0 0;
+  }
+
+  .contained .subjectPhoto {
+    padding: 0;
   }
 
   .content {
