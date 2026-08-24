@@ -32,7 +32,7 @@ function percentage(formData, name, fallback = null) {
 }
 
 function fitMode(formData) {
-  const candidate = value(formData, 'fit_mode') || 'cover'
+  const candidate = value(formData, 'fit_mode') || 'auto'
   if (!FIT_MODES.has(candidate)) throw new Error('Modo de encaje no válido.')
   return candidate
 }
@@ -169,7 +169,7 @@ export async function selectImageHeroAction(formData) {
     mobile_focus_y: sourceLink.mobile_focus_y === null || sourceLink.mobile_focus_y === undefined
       ? null
       : Number(sourceLink.mobile_focus_y),
-    fit_mode: sourceLink.fit_mode || 'cover',
+    fit_mode: 'auto',
     sort_order: 0,
     is_cover: false,
     notes: 'Portada de la ficha',
@@ -209,6 +209,7 @@ export async function selectImageHeroAction(formData) {
       media_asset_id: sourceLink.media_asset_id,
       relation_type: HERO_RELATION,
       source_relation_type: sourceLink.relation_type,
+      fit_mode: 'auto',
     },
   })
   await refreshImage(supabase, imageId)
