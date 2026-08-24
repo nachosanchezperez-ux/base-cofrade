@@ -7,9 +7,11 @@ import { requirePanelEditor } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
 
 const UUID_PATTERN = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i
+const QUICK_UPLOAD_PATH_PATTERN = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}\.(?:jpg|png|webp|gif|avif)$/i
 const IMAGE_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/avif'])
 const QUICK_UPLOAD_RIGHTS = new Set(['owned', 'authorized'])
 const TARGET_KINDS = new Set(['entity', 'cult'])
+const MAX_FILE_SIZE = 10 * 1024 * 1024
 
 function value(formData, name) {
   return String(formData.get(name) || '').trim()
@@ -21,7 +23,16 @@ function uuid(formData, name) {
   return candidate
 }
 
-function mediaExtension(file) {
+function fileSize(formData) {
+  const candidate = Number(value(formData, 'file_size'))
+  if (!Number.isSafeInteger(candidate) || candidate <= 0) {
+    throw new Error('No se pudo comprobar el tamaño de la imagen.')
+  }
+  if (candidate > MAX_FILE_SIZE) throw new Error('La imagen no puede superar 10 MB.')
+  return candidate
+}
+
+function mediaExtension(fileType) {
   const byType = {
     'image/jpeg': 'jpg',
     'image/png': 'png',
@@ -29,7 +40,7 @@ function mediaExtension(file) {
     'image/gif': 'gif',
     'image/avif': 'avif',
   }
-  return byType[file.type] || file.name.split('.').pop()?.toLowerCase().replace(/[^a-z0-9]/g, '') || 'jpg'
+  return byType[fileType] || 'jpg'
 }
 
 async function loadEntity(supabase, entityId, label) {
@@ -107,21 +118,7 @@ async function assertBrotherhoodTarget(supabase, brotherhoodId, target) {
   throw new Error('El contenido seleccionado no pertenece a esta Hermandad.')
 }
 
-async function audit(supabase, user, entry) {
-  const { error } = await supabase.from('audit_log').insert({
-    actor_user_id: user.id,
-    actor_label: user.name,
-    ...entry,
-  })
-  if (error) console.error('[Hilo Cofrade] No se pudo registrar la subida rápida', error)
-}
-
-async function rollbackNewAsset(supabase, mediaAssetId, storagePath) {
-  if (mediaAssetId) await supabase.from('media_assets').delete().eq('id', mediaAssetId)
-  if (storagePath) await supabase.storage.from('hilo-media').remove([storagePath])
-}
-
-async function persistBrotherhoodRelatedMedia(formData, user) {
+async function loadUploadContext(formData) {
   const supabase = await createClient()
   const brotherhoodId = uuid(formData, 'brotherhood_id')
   const targetId = uuid(formData, 'target_id')
@@ -137,13 +134,14 @@ async function persistBrotherhoodRelatedMedia(formData, user) {
 
   if (targetKind === 'entity') await assertBrotherhoodTarget(supabase, brotherhoodId, target)
 
-  const file = formData.get('file')
-  if (!(file instanceof File) || file.size === 0) throw new Error('Selecciona una imagen para subir.')
-  if (!IMAGE_TYPES.has(file.type)) throw new Error('La imagen debe ser JPG, PNG, WEBP, GIF o AVIF.')
-  if (file.size > 10 * 1024 * 1024) throw new Error('La imagen no puede superar 10 MB.')
-
+  const fileType = value(formData, 'file_type')
+  const originalFileName = value(formData, 'file_name').slice(0, 255)
+  const originalFileSize = fileSize(formData)
   const altText = value(formData, 'alt_text')
   const rightsStatus = value(formData, 'rights_status') || 'authorized'
+
+  if (!IMAGE_TYPES.has(fileType)) throw new Error('La imagen debe ser JPG, PNG, WEBP, GIF o AVIF.')
+  if (!originalFileName) throw new Error('No se pudo identificar el archivo seleccionado.')
   if (!altText) throw new Error('La descripción accesible es obligatoria.')
   if (!QUICK_UPLOAD_RIGHTS.has(rightsStatus)) {
     throw new Error('La subida rápida solo admite material propio o autorizado. Para licencias abiertas o dominio público utiliza la Biblioteca multimedia.')
@@ -152,60 +150,123 @@ async function persistBrotherhoodRelatedMedia(formData, user) {
   const storageRoot = targetKind === 'cult'
     ? `${brotherhoodId}/cultos/${targetId}`
     : targetId
-  const storagePath = `${storageRoot}/${randomUUID()}.${mediaExtension(file)}`
-  const uploaded = await supabase.storage.from('hilo-media').upload(storagePath, file, {
-    contentType: file.type,
-    upsert: false,
-  })
-  if (uploaded.error) throw new Error(`No se pudo subir la imagen: ${uploaded.error.message}`)
 
-  const assetResult = await supabase
+  return {
+    supabase,
+    brotherhoodId,
+    targetId,
+    targetKind,
+    brotherhood,
+    target,
+    storageRoot,
+    fileType,
+    originalFileName,
+    originalFileSize,
+    altText,
+    rightsStatus,
+  }
+}
+
+function assertPreparedStoragePath(storagePath, context) {
+  const prefix = `${context.storageRoot}/`
+  const fileName = storagePath.startsWith(prefix) ? storagePath.slice(prefix.length) : ''
+
+  if (!storagePath || storagePath.startsWith('/') || storagePath.includes('..')) {
+    throw new Error('La ruta temporal de la imagen no es válida.')
+  }
+  if (!fileName || fileName.includes('/') || !QUICK_UPLOAD_PATH_PATTERN.test(fileName)) {
+    throw new Error('La ruta temporal de la imagen no pertenece al contenido seleccionado.')
+  }
+  if (!fileName.endsWith(`.${mediaExtension(context.fileType)}`)) {
+    throw new Error('El formato de la imagen no coincide con la ruta temporal.')
+  }
+}
+
+async function assertStoredUpload(context, storagePath) {
+  const segments = storagePath.split('/')
+  const fileName = segments.pop()
+  const folder = segments.join('/')
+  const result = await context.supabase.storage
+    .from('hilo-media')
+    .list(folder, { limit: 20, search: fileName })
+
+  if (result.error) throw new Error(`No se pudo comprobar la imagen subida: ${result.error.message}`)
+  const storedObject = (result.data || []).find((item) => item.name === fileName)
+  if (!storedObject) throw new Error('La imagen no llegó correctamente al almacenamiento.')
+
+  const storedSize = Number(storedObject.metadata?.size || storedObject.metadata?.contentLength || 0)
+  const storedType = String(storedObject.metadata?.mimetype || storedObject.metadata?.contentType || '')
+
+  if (storedSize && storedSize !== context.originalFileSize) {
+    throw new Error('El tamaño almacenado no coincide con el archivo seleccionado.')
+  }
+  if (storedType && storedType !== context.fileType) {
+    throw new Error('El formato almacenado no coincide con el archivo seleccionado.')
+  }
+}
+
+async function audit(supabase, user, entry) {
+  const { error } = await supabase.from('audit_log').insert({
+    actor_user_id: user.id,
+    actor_label: user.name,
+    ...entry,
+  })
+  if (error) console.error('[Hilo Cofrade] No se pudo registrar la subida rápida', error)
+}
+
+async function rollbackNewAsset(supabase, mediaAssetId, storagePath) {
+  if (mediaAssetId) await supabase.from('media_assets').delete().eq('id', mediaAssetId)
+  if (storagePath) await supabase.storage.from('hilo-media').remove([storagePath])
+}
+
+async function persistBrotherhoodRelatedMedia(formData, context, user, storagePath) {
+  const assetResult = await context.supabase
     .from('media_assets')
     .insert({
       storage_path: storagePath,
       media_type: 'image',
-      title: value(formData, 'title') || target.name || file.name,
+      title: value(formData, 'title') || context.target.name || context.originalFileName,
       caption: value(formData, 'caption') || null,
-      alt_text: altText,
+      alt_text: context.altText,
       author_name: value(formData, 'author_name') || null,
-      rights_status: rightsStatus,
+      rights_status: context.rightsStatus,
     })
     .select('id')
     .single()
 
   if (assetResult.error) {
-    await supabase.storage.from('hilo-media').remove([storagePath])
+    await context.supabase.storage.from('hilo-media').remove([storagePath])
     throw new Error(`No se pudo registrar la imagen: ${assetResult.error.message}`)
   }
 
-  const relationTable = targetKind === 'cult' ? 'cult_media' : 'entity_media'
-  const targetColumn = targetKind === 'cult' ? 'cult_id' : 'entity_id'
-  const previousCoverResult = await supabase
+  const relationTable = context.targetKind === 'cult' ? 'cult_media' : 'entity_media'
+  const targetColumn = context.targetKind === 'cult' ? 'cult_id' : 'entity_id'
+  const previousCoverResult = await context.supabase
     .from(relationTable)
     .select('id')
-    .eq(targetColumn, targetId)
+    .eq(targetColumn, context.targetId)
     .eq('is_cover', true)
 
   if (previousCoverResult.error) {
-    await rollbackNewAsset(supabase, assetResult.data.id, storagePath)
+    await rollbackNewAsset(context.supabase, assetResult.data.id, storagePath)
     throw new Error(`No se pudo comprobar la fotografía principal anterior: ${previousCoverResult.error.message}`)
   }
 
   const previousCoverIds = (previousCoverResult.data || []).map((item) => item.id)
   if (previousCoverIds.length) {
-    const previousCover = await supabase
+    const previousCover = await context.supabase
       .from(relationTable)
       .update({ is_cover: false })
       .in('id', previousCoverIds)
     if (previousCover.error) {
-      await rollbackNewAsset(supabase, assetResult.data.id, storagePath)
+      await rollbackNewAsset(context.supabase, assetResult.data.id, storagePath)
       throw new Error(`No se pudo actualizar la fotografía principal anterior: ${previousCover.error.message}`)
     }
   }
 
-  const linkPayload = targetKind === 'cult'
+  const linkPayload = context.targetKind === 'cult'
     ? {
-        cult_id: targetId,
+        cult_id: context.targetId,
         media_asset_id: assetResult.data.id,
         role: 'cover',
         sort_order: 0,
@@ -215,7 +276,7 @@ async function persistBrotherhoodRelatedMedia(formData, user) {
         fit_mode: 'cover',
       }
     : {
-        entity_id: targetId,
+        entity_id: context.targetId,
         media_asset_id: assetResult.data.id,
         relation_type: 'cover',
         sort_order: 0,
@@ -225,7 +286,7 @@ async function persistBrotherhoodRelatedMedia(formData, user) {
         fit_mode: 'auto',
       }
 
-  const linkResult = await supabase
+  const linkResult = await context.supabase
     .from(relationTable)
     .insert(linkPayload)
     .select('id')
@@ -233,47 +294,50 @@ async function persistBrotherhoodRelatedMedia(formData, user) {
 
   if (linkResult.error) {
     if (previousCoverIds.length) {
-      await supabase.from(relationTable).update({ is_cover: true }).in('id', previousCoverIds)
+      await context.supabase.from(relationTable).update({ is_cover: true }).in('id', previousCoverIds)
     }
-    await rollbackNewAsset(supabase, assetResult.data.id, storagePath)
+    await rollbackNewAsset(context.supabase, assetResult.data.id, storagePath)
     throw new Error(`No se pudo vincular la imagen: ${linkResult.error.message}`)
   }
 
-  await audit(supabase, user, {
+  await audit(context.supabase, user, {
     action_type: 'link',
     object_type: relationTable,
     object_id: linkResult.data.id,
-    entity_id: targetKind === 'cult' ? brotherhoodId : targetId,
-    summary: `Imagen principal incorporada a ${target.name} desde ${brotherhood.name}`,
+    entity_id: context.targetKind === 'cult' ? context.brotherhoodId : context.targetId,
+    summary: `Imagen principal incorporada a ${context.target.name} desde ${context.brotherhood.name}`,
     changed_fields: {
-      brotherhood_id: brotherhoodId,
-      target_kind: targetKind,
-      target_id: targetId,
+      brotherhood_id: context.brotherhoodId,
+      target_kind: context.targetKind,
+      target_id: context.targetId,
       media_asset_id: assetResult.data.id,
       relation_type: 'cover',
+      upload_mode: 'signed_direct',
     },
   })
 
+  const anchor = `contenido-${context.targetId}`
+  return `/panel/hermandades/${context.brotherhoodId}/multimedia?saved=uploaded#${anchor}`
+}
+
+function revalidateUploadedMedia(context) {
   revalidatePath('/panel')
   revalidatePath('/panel/multimedia')
-  revalidatePath(`/panel/hermandades/${brotherhoodId}`)
-  revalidatePath(`/panel/hermandades/${brotherhoodId}/multimedia`)
-  revalidatePath(`/panel/hermandades/${brotherhoodId}/patrimonio`)
-  revalidatePath(`/panel/hermandades/${brotherhoodId}/cultos`)
-  if (brotherhood.slug) revalidatePath(`/hermandades/${brotherhood.slug}`)
+  revalidatePath(`/panel/hermandades/${context.brotherhoodId}`)
+  revalidatePath(`/panel/hermandades/${context.brotherhoodId}/multimedia`)
+  revalidatePath(`/panel/hermandades/${context.brotherhoodId}/patrimonio`)
+  revalidatePath(`/panel/hermandades/${context.brotherhoodId}/cultos`)
+  if (context.brotherhood.slug) revalidatePath(`/hermandades/${context.brotherhood.slug}`)
 
-  if (target.entity_type === 'step') {
-    revalidatePath(`/panel/pasos/${targetId}`)
-    if (target.slug) revalidatePath(`/pasos/${target.slug}`)
+  if (context.target.entity_type === 'step') {
+    revalidatePath(`/panel/pasos/${context.targetId}`)
+    if (context.target.slug) revalidatePath(`/pasos/${context.target.slug}`)
   }
 
-  if (target.entity_type === 'image') {
-    revalidatePath(`/panel/imagenes/${targetId}`)
-    if (target.slug) revalidatePath(`/imagenes/${target.slug}`)
+  if (context.target.entity_type === 'image') {
+    revalidatePath(`/panel/imagenes/${context.targetId}`)
+    if (context.target.slug) revalidatePath(`/imagenes/${context.target.slug}`)
   }
-
-  const anchor = `contenido-${targetId}`
-  return `/panel/hermandades/${brotherhoodId}/multimedia?saved=uploaded#${anchor}`
 }
 
 function uploadErrorMessage(error) {
@@ -281,16 +345,63 @@ function uploadErrorMessage(error) {
   return 'No se ha podido subir la imagen. Revisa los datos e inténtalo de nuevo.'
 }
 
-export async function uploadBrotherhoodRelatedMediaAction(formData) {
-  const user = await requirePanelEditor()
-  let destination
+export async function prepareBrotherhoodRelatedMediaUploadAction(formData) {
+  await requirePanelEditor()
 
   try {
-    destination = await persistBrotherhoodRelatedMedia(formData, user)
+    const context = await loadUploadContext(formData)
+    const storagePath = `${context.storageRoot}/${randomUUID()}.${mediaExtension(context.fileType)}`
+    const signedUpload = await context.supabase.storage
+      .from('hilo-media')
+      .createSignedUploadUrl(storagePath, { upsert: false })
+
+    if (signedUpload.error) {
+      throw new Error(`No se pudo preparar la subida: ${signedUpload.error.message}`)
+    }
+    if (!signedUpload.data?.token) {
+      throw new Error('No se pudo generar el permiso temporal de subida.')
+    }
+
+    return {
+      upload: {
+        path: storagePath,
+        token: signedUpload.data.token,
+      },
+    }
   } catch (error) {
+    const message = uploadErrorMessage(error)
+    console.error('[Hilo Cofrade] Error al preparar la subida rápida de multimedia', error)
+    return { error: message }
+  }
+}
+
+export async function uploadBrotherhoodRelatedMediaAction(formData) {
+  const user = await requirePanelEditor()
+  let cleanupPath = ''
+  let destination
+  let context
+
+  try {
+    context = await loadUploadContext(formData)
+    const storagePath = value(formData, 'storage_path')
+    assertPreparedStoragePath(storagePath, context)
+    cleanupPath = storagePath
+    await assertStoredUpload(context, storagePath)
+    destination = await persistBrotherhoodRelatedMedia(formData, context, user, storagePath)
+    cleanupPath = ''
+  } catch (error) {
+    if (cleanupPath && context?.supabase) {
+      await context.supabase.storage.from('hilo-media').remove([cleanupPath])
+    }
     const message = uploadErrorMessage(error)
     console.error('[Hilo Cofrade] Error en la subida rápida de multimedia', error)
     return { error: message }
+  }
+
+  try {
+    revalidateUploadedMedia(context)
+  } catch (error) {
+    console.error('[Hilo Cofrade] La imagen se guardó, pero no se pudo revalidar toda la navegación', error)
   }
 
   redirect(destination)
