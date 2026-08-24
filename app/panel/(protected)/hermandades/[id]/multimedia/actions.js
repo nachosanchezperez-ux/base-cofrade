@@ -8,7 +8,7 @@ import { createClient } from '@/lib/supabase/server'
 
 const UUID_PATTERN = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i
 const IMAGE_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/avif'])
-const PUBLICATION_RIGHTS = new Set(['owned', 'authorized', 'licensed', 'public_domain'])
+const QUICK_UPLOAD_RIGHTS = new Set(['owned', 'authorized'])
 const TARGET_KINDS = new Set(['entity', 'cult'])
 
 function value(formData, name) {
@@ -146,7 +146,9 @@ export async function uploadBrotherhoodRelatedMediaAction(formData) {
   const altText = value(formData, 'alt_text')
   const rightsStatus = value(formData, 'rights_status') || 'authorized'
   if (!altText) throw new Error('La descripción accesible es obligatoria.')
-  if (!PUBLICATION_RIGHTS.has(rightsStatus)) throw new Error('El estado de derechos no permite publicar esta imagen.')
+  if (!QUICK_UPLOAD_RIGHTS.has(rightsStatus)) {
+    throw new Error('La subida rápida solo admite material propio o autorizado. Para licencias abiertas o dominio público utiliza la Biblioteca multimedia.')
+  }
 
   const storageRoot = targetKind === 'cult'
     ? `${brotherhoodId}/cultos/${targetId}`
