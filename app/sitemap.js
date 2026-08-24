@@ -1,4 +1,8 @@
-import { DIRECTORY_TYPES, directoryPath } from '@/lib/brotherhood-directory';
+import {
+  DIRECTORY_TYPES,
+  directoryPath,
+  hasDirectoryType,
+} from '@/lib/brotherhood-directory';
 import { absoluteUrl } from '@/lib/seo';
 import { getHermandadesDirectory } from '@/lib/supabase/brotherhood-directory';
 import { getExtraordinaryDirectory } from '@/lib/supabase/extraordinary-directory';
@@ -113,7 +117,9 @@ async function publishedEntities() {
 
 function directoryEntries(brotherhoods) {
   const paths = DIRECTORY_TYPES.flatMap(({ key }) => (
-    brotherhoods.map((brotherhood) => directoryPath(brotherhood, key))
+    brotherhoods
+      .filter((brotherhood) => hasDirectoryType(brotherhood, key))
+      .map((brotherhood) => directoryPath(brotherhood, key))
   )).filter(Boolean);
 
   return [...new Set(paths)].map((path) => ({
