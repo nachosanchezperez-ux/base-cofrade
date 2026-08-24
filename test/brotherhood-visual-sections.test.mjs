@@ -43,7 +43,7 @@ test('las fotografías de cultos tienen lectura pública y subida editorial prop
   assert.match(publicLoader, /createPublicClient/)
   assert.match(publicLoader, /PUBLIC_RIGHTS_STATUSES/)
   assert.match(panelAction, /targetKind === 'cult'/)
-  assert.match(panelAction, /relationTable = targetKind === 'cult' \? 'cult_media'/)
+  assert.match(panelAction, /relationTable = (?:context\.)?targetKind === 'cult' \? 'cult_media'/)
   assert.match(panelPage, /Fotos de portada para los Cultos/)
   assert.match(migration, /create table if not exists public\.cult_media/)
   assert.match(migration, /cult_media_single_cover_idx/)
