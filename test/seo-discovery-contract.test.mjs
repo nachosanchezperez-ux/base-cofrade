@@ -42,6 +42,14 @@ test('el sitemap descubre superficies públicas y rutas nacidas de datos', () =>
   assert.match(sitemap, /new Map\(entries\.map/)
 })
 
+test('el sitemap solo publica rutas segmentadas de la clasificación real', () => {
+  assert.match(sitemap, /hasDirectoryType/)
+  assert.match(
+    sitemap,
+    /\.filter\(\(brotherhood\) => hasDirectoryType\(brotherhood, key\)\)/
+  )
+})
+
 test('los directorios principales declaran canonical y metadatos sociales', () => {
   for (const page of categoryPages) {
     assert.match(page, /socialMetadata/)
