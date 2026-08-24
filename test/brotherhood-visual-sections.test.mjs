@@ -49,3 +49,21 @@ test('las fotografías de cultos tienen lectura pública y subida editorial prop
   assert.match(migration, /cult_media_single_cover_idx/)
   assert.match(migration, /Public cult media/)
 })
+
+test('la subida rápida respeta el gobierno de media abierta y cult_media aplica mínimo privilegio', async () => {
+  const panelAction = await source('app/panel/(protected)/hermandades/[id]/multimedia/actions.js')
+  const panelPage = await source('app/panel/(protected)/hermandades/[id]/multimedia/page.js')
+  const migration = await source('supabase/migrations/20260824164500_cult_media.sql')
+
+  assert.match(panelAction, /QUICK_UPLOAD_RIGHTS = new Set\(\['owned', 'authorized'\]\)/)
+  assert.match(panelAction, /solo admite material propio o autorizado/)
+  assert.doesNotMatch(panelPage, /option value="licensed"/)
+  assert.doesNotMatch(panelPage, /option value="public_domain"/)
+  assert.match(panelPage, /Biblioteca multimedia/)
+
+  assert.match(migration, /revoke all on table public\.cult_media from anon, authenticated/)
+  assert.match(migration, /grant select on table public\.cult_media to anon/)
+  assert.doesNotMatch(migration, /grant all on table public\.cult_media to anon/)
+  assert.match(migration, /set_cult_media_updated_at/)
+  assert.match(migration, /cult_media_cover_role_check/)
+})
