@@ -15,8 +15,8 @@ export default function BrotherhoodSimpecadosSection({ items = [] }) {
       <div className="shell">
         <SectionTitle
           eyebrow="Patrimonio devocional"
-          title="Los Simpecados de la Hermandad"
-          description="Piezas con identidad propia, documentadas por separado para conocer su autoría, historia, uso y presencia en los cultos y celebraciones de la corporación."
+          title="Simpecados"
+          description="Piezas patrimoniales con identidad propia: denominaciones, cronología, autorías, restauraciones, uso, fotografías y Fuentes permanecen estructurados y reutilizables en el grafo de Hilo Cofrade."
         />
 
         <div className={styles.grid}>
@@ -55,10 +55,14 @@ export default function BrotherhoodSimpecadosSection({ items = [] }) {
                     {item.fecha ? <strong>{item.fecha}</strong> : null}
                   </div>
                   <h3>{item.nombre}</h3>
+                  {item.denominaciones?.length ? (
+                    <p className={styles.aliases}>{item.denominaciones.join(' · ')}</p>
+                  ) : null}
                   <p className={styles.lead}>{item.resumen || item.descripcion}</p>
 
-                  {(item.bendicion || item.procedencia) ? (
+                  {(item.uso || item.bendicion || item.procedencia) ? (
                     <dl className={styles.facts}>
+                      {item.uso ? <div><dt>Uso</dt><dd>{item.uso}</dd></div> : null}
                       {item.bendicion ? <div><dt>Bendición</dt><dd>{item.bendicion}</dd></div> : null}
                       {item.procedencia ? <div><dt>Procedencia</dt><dd>{item.procedencia}</dd></div> : null}
                     </dl>
@@ -66,12 +70,14 @@ export default function BrotherhoodSimpecadosSection({ items = [] }) {
 
                   {authors.length ? (
                     <div className={styles.authors}>
-                      <small>Autoría y ejecución</small>
+                      <small>Autoría e intervenciones</small>
                       <div>
                         {authors.map((author) => (
-                          <span key={`${item.id}-${author.id}-${author.rol}`}>
+                          <span key={`${item.id}-${author.id}-${author.rol}-${author.fecha || ''}`}>
                             <strong>{author.nombre}</strong>
-                            {author.rol ? <em>{author.rol}</em> : null}
+                            {(author.intervencion || author.rol || author.fecha) ? (
+                              <em>{[author.intervencion, author.rol, author.fecha].filter(Boolean).join(' · ')}</em>
+                            ) : null}
                           </span>
                         ))}
                       </div>
