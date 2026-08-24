@@ -1,133 +1,112 @@
 # Revisión y sincronización de decisiones HC
 
-> Acta de Dirección y Documentación. No sustituye el registro canónico de decisiones ni asigna identificadores nuevos.
+> Acta de Dirección y Documentación. El resultado canónico de esta revisión se conserva en [`DECISIONES-HC.md`](./DECISIONES-HC.md).
 
 - Fecha: **24 de agosto de 2026**.
+- Baseline auditado: `main` en `13acdec7c07d1d974cab91b933e7d016aa19011b`.
 - Estado: **revisión operativa cerrada**.
-- Regla aplicada: no crear un nuevo número `HC-###` sin consultar y actualizar primero el registro canónico.
+- Alcance: documentos HC versionados, estado operativo, implementación presente en `main` y cierres recientes de arquitectura, grafo y media abierta.
 
-## 1 · Decisiones existentes
+## Hallazgos
 
-La numeración vigente recuperada del proyecto llega hasta `HC-008`:
+### 1 · La numeración no terminaba en HC-008
 
-| ID | Decisión | Lectura operativa actual |
-|---|---|---|
-| HC-001 | Enciclopedia relacional | El modelo relacional es ya el núcleo efectivo del producto. Continúa abierto a nuevas entidades y relaciones, pero su principio arquitectónico está consolidado. |
-| HC-002 | Identidad de Hilo Cofrade | Identidad aplicada y estable en el producto público. |
-| HC-003 | Stack tecnológico | Next.js, Vercel, Supabase y GitHub continúan como stack canónico. |
-| HC-004 | Datos estructurados | Modelo estructurado y relacional plenamente vigente; los contenidos no deben convertirse en excepciones hardcodeadas. |
-| HC-005 | Históricos | La temporalidad y los periodos históricos forman parte del modelo canónico. |
-| HC-006 | Acompañamientos musicales | Modelo vigente para acompañamientos actuales e históricos, con relaciones hacia bandas, pasos y Hermandades. |
-| HC-007 | Enlaces externos | Enlaces oficiales y Fuentes externas permanecen como información estructurada y verificable. La media externa licenciada amplía este ámbito, pero añade requisitos específicos de derechos y atribución. |
-| HC-008 | Organización de Hermandades | La organización pública y editorial de Hermandades tiene un baseline funcional; su UX puede evolucionar sin alterar el principio de información estructurada. |
+El repositorio ya contenía decisiones canónicas hasta **HC-013**:
 
-Esta tabla actualiza la **lectura operativa** de las decisiones, no reescribe su formulación original.
+- HC-005 · Históricos.
+- HC-006 · Acompañamientos musicales.
+- HC-008 · Organización y navegación relacional.
+- HC-009 · Sistema tipográfico.
+- HC-010 · Paletas cromáticas de Bandas.
+- HC-011 · Tira del hilo conversacional.
+- HC-012 · Sistema visual de logotipos de Bandas.
+- HC-013 · Patrimonio musical relacional.
 
-## 2 · Arquitectura real ya consolidada
+HC-001–004 y HC-007 constaban en el registro estratégico heredado, pero no disponen de un documento original independiente dentro de `docs/`. Se preservan como decisiones vigentes con formalización documental pendiente; no se inventa retrospectivamente su redacción.
 
-Desde la creación de HC-001…HC-008, Hilo Cofrade ha incorporado capacidades que ya forman parte del baseline técnico:
+### 2 · HC-009 no estaba duplicada
 
-- separación estricta entre Front público y Panel;
-- lecturas públicas stateless bajo rol `anon`;
-- sesión editorial autenticada únicamente en el Panel;
-- arquitectura vigente de importación masiva;
-- Salud del grafo como cola editorial continua;
-- soporte de media externa licenciada con atribución;
-- arquitectura pública de Extraordinarias;
-- protocolo visual y responsive de los directorios.
+Los archivos:
 
-Estas capacidades deben reflejarse en el registro de decisiones, pero no todas necesitan necesariamente un ID independiente.
+- `HC-009-sistema-tipografico-hilo-cofrade.md`;
+- `HC-009-implementacion.md`;
 
-## 3 · Candidatas a formalización futura
+representan, respectivamente, la decisión y su cierre técnico. Pertenecen al mismo identificador.
 
-### A · Frontera Front público ↔ Panel
+### 3 · HC-008.1 estaba implementada con una cabecera obsoleta
 
-**Recomendación:** formalización prioritaria como una única decisión arquitectónica.
+El hardening relacional figura en el historial de `main` y conserva implementación y regresión en:
 
-Debe incluir en la misma decisión:
+- `components/entity/RelationalThread.js`;
+- `components/entity/RelationalThread.module.css`;
+- `test/relational-thread-selector.test.mjs`.
 
-```text
-FRONT PÚBLICO
-→ lectura stateless / rol anon
+Se actualiza su estado documental de **EN VALIDACIÓN** a **IMPLEMENTADA**, sin reabrir HC-008 ni consumir un ID nuevo.
 
-PANEL
-→ sesión editorial autenticada
-```
+### 4 · Wikimedia y media abierta exigían una decisión propia
 
-La «autoridad pública stateless» no necesita otra decisión separada: es la consecuencia técnica principal de esta frontera.
+HC-007 cubre enlaces externos y Fuentes estructuradas, pero no resuelve por sí sola:
 
-### B · Importación masiva gobernada
+- derechos y licencia exacta;
+- autoría y titular;
+- procedencia canónica;
+- identidad del sujeto representado;
+- portada frente a galería;
+- deduplicación del recurso;
+- revisión humana y publicación pública.
 
-**Recomendación:** formalización propia.
+El contrato fusionado en la PR **#311**, documentado en [`MEDIA-ABIERTA.md`](./MEDIA-ABIERTA.md) y protegido por `20260824000215_guard_open_media_provenance`, queda registrado como:
 
-Elementos esenciales:
+> **HC-014 · Wikimedia Commons y media abierta con procedencia verificable → CERRADA**.
 
-- analizar antes de preparar;
-- revisar antes de aplicar;
-- detectar duplicados y colisiones internas;
-- preservar trazabilidad y recuperación de cargas;
-- no publicar por defecto;
-- mantener revisión humana.
+### 5 · Existían dos protocolos documentales competidores
 
-La antigua PR #49 no representa esta decisión y no debe citarse como implementación vigente.
+La PR #314 proponía un segundo documento vigente. Sus reglas editoriales no duplicadas —verificación del sujeto, rol de portada/galería, reutilización canónica y revisión humana— se consolidan en `MEDIA-ABIERTA.md`.
 
-### C · Salud del grafo como cola editorial
+La fuente canónica sigue siendo una sola:
 
-**Recomendación:** formalización propia como decisión de gobierno del dato.
+`docs/MEDIA-ABIERTA.md`
 
-Principio:
+## Registro resultante
 
-```text
-INCIDENCIA
-→ PATRÓN
-→ SOLUCIÓN SISTÉMICA
-→ VALIDACIÓN
-```
-
-No busca «cero incidencias», sino una mejora continua medible y transversal.
-
-### D · Media externa licenciada
-
-**Recomendación:** Dirección debe decidir si se formula como ampliación de HC-007 o como decisión nueva.
-
-No debe numerarse hasta resolver esa relación con HC-007. El protocolo operativo vigente queda documentado en:
-
-`docs/PROTOCOLO-MEDIA-ABIERTA-WIKIMEDIA.md`
-
-### E · Arquitectura de Extraordinarias
-
-**Recomendación:** no crear automáticamente una decisión nueva.
-
-Su diseño actual puede entenderse como aplicación de HC-001 y HC-004: acontecimientos estructurados, Fuentes, música, horarios, recorridos y relaciones. Solo requerirá una decisión propia si Dirección define una regla de producto o de modelo que no pueda derivarse de esas decisiones.
-
-### F · Protocolo visual de directorios
-
-**Recomendación:** mantenerlo como norma de diseño, no como decisión arquitectónica HC, salvo que el registro canónico incluya expresamente decisiones de UX.
-
-Debe seguir documentándose mediante patrones de componente, responsive y accesibilidad.
-
-## 4 · Lo que no debe hacerse
-
-- No asignar `HC-009`, `HC-010` o posteriores por orden de aparición en una conversación.
-- No convertir cada implementación o PR en una decisión arquitectónica.
-- No duplicar la frontera Front/Panel y la lectura stateless en dos decisiones distintas.
-- No presentar #49 como fundamento de la importación vigente.
-- No tratar el protocolo Wikimedia como una simple ampliación técnica sin resolver su relación con HC-007.
-- No cambiar la formulación original de HC-001…HC-008 sin consultar su registro canónico.
-
-## 5 · Resultado de la sincronización
-
-La arquitectura real y el registro de decisiones quedan reconciliados mediante esta clasificación:
-
-| Tema reciente | Tratamiento acordado |
+| Bloque | Estado |
 |---|---|
-| Front público ↔ Panel + autoridad stateless | Una futura decisión arquitectónica prioritaria |
-| Importación masiva | Futura decisión propia |
-| Salud del grafo | Futura decisión propia |
-| Media externa y derechos | Resolver primero si amplía HC-007 |
-| Extraordinarias | Aplicación de HC-001 y HC-004, salvo nueva regla no derivable |
-| Directorios | Norma de diseño, no ID automático |
+| HC-001–004 | Vigentes; documento independiente pendiente. |
+| HC-005–006 | Cerradas y documentadas. |
+| HC-007 | Vigente; documento independiente pendiente. |
+| HC-008 | Cerrada. |
+| HC-008.1 | Implementada como extensión de HC-008. |
+| HC-009–010 | Cerradas. |
+| HC-011 | Parcial. |
+| HC-012–014 | Cerradas. |
 
-No se ha reservado ni asignado ningún número nuevo.
+El próximo identificador disponible es **HC-015**, pero no queda asignado ni reservado en esta revisión.
 
-**DECISIONES HC → 🟢 SINCRONIZADAS SIN ALTERAR LA NUMERACIÓN VIGENTE**
+## Candidatas futuras sin numeración
+
+- frontera Front público stateless ↔ Panel autenticado;
+- importación masiva gobernada;
+- Salud del grafo como cola editorial continua;
+- nuevas reglas de Extraordinarias que no puedan derivarse de HC-001 y HC-004.
+
+El protocolo responsive de directorios continúa como norma de diseño, no como decisión nueva por defecto.
+
+## Trabajo paralelo observado
+
+Durante esta revisión Supabase contiene dos migraciones de la secuencia activa de la Pastora:
+
+- `20260824001013_structured_simpecados_and_musical_work_types`;
+- `20260824001747_source_salve_pastora_premiere`.
+
+Pertenecen a la PR #313 y no convierten esa rama en baseline hasta que Git, CI, preview y producción completen su ciclo. La PR #312 debe reconciliarse después de #313, según su orden operativo declarado.
+
+## Resultado
+
+- se crea un índice canónico único;
+- se corrige la lectura real de HC-009–013;
+- se cierra la obsolescencia documental de HC-008.1;
+- se registra HC-014 con evidencia técnica y editorial;
+- no se asignan IDs a candidatas futuras;
+- se evita mantener dos protocolos Wikimedia simultáneos.
+
+**DECISIONES HC → 🟢 SINCRONIZADAS CON LA ARQUITECTURA VIGENTE**
