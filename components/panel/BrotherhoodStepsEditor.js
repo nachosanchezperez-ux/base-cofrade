@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import EntityPicker from '@/components/panel/EntityPicker'
 import RelationSourcesEditor from '@/components/panel/RelationSourcesEditor'
+import BrotherhoodInlineMedia from '@/components/panel/BrotherhoodInlineMedia'
 import {
   addBrotherhoodStepRelationAction,
   archiveBrotherhoodStepRelationAction,
@@ -67,6 +68,17 @@ export default function BrotherhoodStepsEditor({ data, canEdit }) {
                     <Link className={styles.rowLink} href={`/panel/pasos/${relation.step.id}`}>
                       Abrir Paso <span>→</span>
                     </Link>
+                  ) : null}
+
+                  {relation.step && canEdit && !archived ? (
+                    <BrotherhoodInlineMedia
+                      brotherhoodId={data.entity.id}
+                      targetId={relation.step.id}
+                      targetKind="entity"
+                      title={stepName}
+                      defaultAlt={stepName}
+                      returnSection="pasos"
+                    />
                   ) : null}
 
                   {!archived ? (
@@ -165,7 +177,7 @@ export default function BrotherhoodStepsEditor({ data, canEdit }) {
               </label>
             </div>
             <div className={styles.formActions}>
-              <small>Las fechas son opcionales. El Paso no se duplica ni cambia de estado.</small>
+              <small>Las fechas son opcionales. Al añadirlo podrás cargar su fotografía aquí mismo.</small>
               <button className={styles.primaryButton} type="submit">Añadir Paso</button>
             </div>
           </form>
