@@ -3,6 +3,19 @@ import Link from 'next/link';
 import baratilloHeroPhoto from '@/components/preview/baratilloHeroPhoto';
 import styles from './BrotherhoodHeroV2.module.css';
 
+const projectTypography = {
+  fontFamily: 'var(--font-sans)',
+  fontSynthesis: 'none',
+};
+
+const projectTitleTypography = {
+  fontFamily: 'var(--font-sans)',
+  fontSize: 'var(--font-size-display)',
+  fontWeight: 'var(--font-weight-extrabold)',
+  lineHeight: 'var(--line-display)',
+  letterSpacing: 'var(--tracking-display)',
+};
+
 function Breadcrumb({ items = [] }) {
   if (!items.length) return null;
 
@@ -15,9 +28,14 @@ function Breadcrumb({ items = [] }) {
           return (
             <li key={`${item.label}-${index}`}>
               {item.href && !isCurrent ? (
-                <Link href={item.href}>{item.label}</Link>
+                <Link href={item.href} style={{ fontWeight: 'var(--font-weight-extrabold)' }}>{item.label}</Link>
               ) : (
-                <span aria-current={isCurrent ? 'page' : undefined}>{item.label}</span>
+                <span
+                  aria-current={isCurrent ? 'page' : undefined}
+                  style={{ fontWeight: 'var(--font-weight-extrabold)' }}
+                >
+                  {item.label}
+                </span>
               )}
               {!isCurrent ? <i aria-hidden="true">→</i> : null}
             </li>
@@ -45,7 +63,11 @@ export default function BrotherhoodHeroV2({
   const context = [processionDay, canonicalSeat].filter(Boolean).join(' · ');
 
   return (
-    <section className={styles.hero} aria-labelledby="entity-hero-title">
+    <section
+      className={styles.hero}
+      aria-labelledby="entity-hero-title"
+      style={projectTypography}
+    >
       <img
         className={styles.photo}
         src={baratilloHeroPhoto}
@@ -73,23 +95,48 @@ export default function BrotherhoodHeroV2({
             ) : null}
 
             <div className={styles.identityMeta}>
-              <span className={styles.entityType}>{entityType}</span>
+              <span
+                className={styles.entityType}
+                style={{ fontWeight: 'var(--font-weight-extrabold)', letterSpacing: 'var(--tracking-eyebrow)' }}
+              >
+                {entityType}
+              </span>
               <div className={styles.badges}>
-                {visibleBadges.map((badge) => <span key={badge}>{badge}</span>)}
+                {visibleBadges.map((badge) => (
+                  <span key={badge} style={{ fontWeight: 'var(--font-weight-semibold)' }}>{badge}</span>
+                ))}
               </div>
             </div>
           </div>
 
-          <h1 id="entity-hero-title">{title}</h1>
-          {context ? <p className={styles.context}>{context}</p> : null}
-          {subtitle ? <p className={styles.subtitle}>{subtitle}</p> : null}
+          <h1 id="entity-hero-title" style={projectTitleTypography}>{title}</h1>
+          {context ? (
+            <p
+              className={styles.context}
+              style={{ fontWeight: 'var(--font-weight-bold)', letterSpacing: 'var(--tracking-eyebrow)' }}
+            >
+              {context}
+            </p>
+          ) : null}
+          {subtitle ? (
+            <p
+              className={styles.subtitle}
+              style={{ fontWeight: 'var(--font-weight-regular)', lineHeight: 'var(--line-reading)' }}
+            >
+              {subtitle}
+            </p>
+          ) : null}
 
           {visibleFacts.length ? (
             <dl className={styles.facts} data-count={visibleFacts.length}>
               {visibleFacts.map((fact) => (
                 <div key={fact.label}>
-                  <dt>{fact.label}</dt>
-                  <dd>{fact.href ? <Link href={fact.href}>{fact.value}</Link> : fact.value}</dd>
+                  <dt style={{ fontWeight: 'var(--font-weight-extrabold)', letterSpacing: 'var(--tracking-eyebrow)' }}>
+                    {fact.label}
+                  </dt>
+                  <dd style={{ fontWeight: 'var(--font-weight-bold)' }}>
+                    {fact.href ? <Link href={fact.href}>{fact.value}</Link> : fact.value}
+                  </dd>
                 </div>
               ))}
             </dl>
@@ -97,7 +144,12 @@ export default function BrotherhoodHeroV2({
         </div>
       </div>
 
-      <span className={styles.credit}>Fotografía · Adolfo Sánchez</span>
+      <span
+        className={styles.credit}
+        style={{ fontWeight: 'var(--font-weight-extrabold)', letterSpacing: 'var(--tracking-eyebrow)' }}
+      >
+        Fotografía · Adolfo Sánchez
+      </span>
     </section>
   );
 }
