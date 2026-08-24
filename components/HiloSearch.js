@@ -1,11 +1,13 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import HiloEvidence from './HiloEvidence';
 import HiloGraphPath, { isGraphPathResponse } from './HiloGraphPath';
 import HiloReferences from './HiloReferences';
+import { hiloEntityKey, prioritizeHiloNavigationItems } from '@/lib/tira-search-intent';
 import { decodeTiraSession, encodeTiraSession, TIRA_SESSION_KEY } from '@/lib/tira-session';
 import styles from './HiloSearch.module.css';
 
@@ -23,6 +25,18 @@ const contextNouns = {
   band: ['banda', 'bandas'],
   march: ['marcha', 'marchas'],
   agent: ['autor o profesional', 'autores o profesionales'],
+};
+
+const searchResultMarks = {
+  brotherhood: 'H',
+  image: 'IM',
+  step: 'P',
+  band: 'B',
+  march: '♪',
+  agent: 'A',
+  event: 'AC',
+  heritage_asset: 'PT',
+  advocation: 'AV',
 };
 
 function normalize(value = '') {
@@ -104,6 +118,61 @@ function AnswerListItem({ item, index }) {
   );
 }
 
+function SearchResultVisual({ item }) {
+  const visual = item.visual || null;
+  const kindClass = visual?.kind === 'identity' ? styles.resultVisualIdentity : styles.resultVisualPhoto;
+  const fallbackType = item.entityType || analyticsEntityType(item.type);
+  const fallback = searchResultMarks[fallbackType] || 'HC';
+
+  return (
+    <span
+      className={`${styles.resultVisual} ${visual?.src ? kindClass : styles.resultVisualFallback}`}
+      aria-hidden="true"
+    >
+      {visual?.src ? (
+        <Image
+          src={visual.src}
+          alt=""
+          fill
+          sizes="58px"
+          unoptimized={/\.svg(?:$|[?#])/i.test(visual.src)}
+          style={{
+            objectFit: visual.fit === 'contain' ? 'contain' : 'cover',
+            objectPosition: visual.focusPosition || '50% 50%',
+          }}
+        />
+      ) : <strong>{fallback}</strong>}
+    </span>
+  );
+}
+
+function SearchResultContent({ item }) {
+  const descriptor = item.descriptor || item.subtitle || '';
+
+  return (
+    <>
+      <SearchResultVisual item={item} />
+      <span className={styles.resultCopy}>
+        <span className={styles.resultMeta}>
+          <span className={styles.resultType}>{item.type}</span>
+          {item.location ? (
+            <span className={styles.resultLocation}>
+              <i aria-hidden="true" />
+              {item.location}
+            </span>
+          ) : null}
+        </span>
+        <strong>{item.title}</strong>
+        {descriptor ? <small>{descriptor}</small> : null}
+      </span>
+      <span className={styles.resultAction}>
+        <small>{item.href ? 'Abrir ficha' : 'Preguntar'}</small>
+        <span className={styles.arrow} aria-hidden="true">{item.href ? '→' : '↗'}</span>
+      </span>
+    </>
+  );
+}
+
 function AssistantAnswer({ message, onFollowUp, compact = false }) {
   const response = message.response || {};
   const visibleItems = compact ? (response.items || []).slice(0, 3) : (response.items || []);
@@ -173,7 +242,13 @@ function AssistantAnswer({ message, onFollowUp, compact = false }) {
   );
 }
 
-export default function HiloSearch({ fullPage = false, initialQuestion = '', homeCompact = false }) {
+export default function HiloSearch({
+  fullPage = false,
+  initialQuestion = '',
+  homeCompact = false,
+  universal = false,
+  onNavigate,
+}) {
   const router = useRouter();
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
@@ -185,6 +260,8 @@ export default function HiloSearch({ fullPage = false, initialQuestion = '', hom
   const sequence = useRef(0);
   const initialHandled = useRef(false);
   const compact = homeCompact && !fullPage;
+  const searchOrigin = universal ? 'global_search' : fullPage ? 'conversation_search' : 'home_search';
+  const orderedResults = prioritizeHiloNavigationItems(results);
 
   useEffect(() => {
     try {
@@ -250,13 +327,21 @@ export default function HiloSearch({ fullPage = false, initialQuestion = '', hom
     };
   }, [query]);
 
+  const navigateTo = (href) => {
+    if (!href) return;
+    onNavigate?.();
+    router.push(href);
+  };
+
   const ask = async (value) => {
     const question = String(value || query).trim();
     if (!question || loading) return;
 
-    const exact = results.find((item) => normalize(item.title) === normalize(question));
+    const questionKey = hiloEntityKey(question);
+    const exactNavigation = orderedResults.find((item) => item.href && hiloEntityKey(item.title) === questionKey);
+    const exact = exactNavigation || results.find((item) => normalize(item.title) === normalize(question));
     if (exact?.href && !looksLikeQuestion(question)) {
-      router.push(exact.href);
+      navigateTo(exact.href);
       return;
     }
 
@@ -322,7 +407,7 @@ export default function HiloSearch({ fullPage = false, initialQuestion = '', hom
 
   const useResult = (item) => {
     if (item.href) {
-      router.push(item.href);
+      navigateTo(item.href);
       return;
     }
     ask(`Cuéntame sobre ${item.title}`);
@@ -344,6 +429,12 @@ export default function HiloSearch({ fullPage = false, initialQuestion = '', hom
   const activeContextLabel = contextLabel(context);
   const visibleMessages = compact ? messages.slice(-2) : messages;
   const showComposer = !hasConversation || !compact;
+  const composerLabel = universal ? 'Busca una ficha o pregunta a Hilo Cofrade' : 'Pregunta a Hilo Cofrade';
+  const composerPlaceholder = activeContextLabel
+    ? `Sigue preguntando sobre ${activeContextLabel}…`
+    : universal
+      ? 'Busca una ficha o pregunta sobre hermandades, imágenes, pasos, bandas, marchas…'
+      : 'Pregunta sobre hermandades, imágenes, pasos, bandas, marchas, autores…';
 
   return (
     <div className={`${styles.wrap} ${fullPage ? styles.fullMode : ''}`} data-hilo-section={fullPage ? 'conversation_search' : 'home_search'}>
@@ -383,16 +474,16 @@ export default function HiloSearch({ fullPage = false, initialQuestion = '', hom
           className={`${styles.form} ${hasConversation ? styles.formAfterConversation : ''}`}
           onSubmit={submit}
           data-hilo-event="hilo_search"
-          data-hilo-origin={fullPage ? 'conversation_form' : 'form'}
+          data-hilo-origin={universal ? 'global_form' : fullPage ? 'conversation_form' : 'form'}
         >
-          <label className={styles.srOnly} htmlFor={fullPage ? 'hilo-search-full' : 'hilo-search'}>Pregunta a Hilo Cofrade</label>
+          <label className={styles.srOnly} htmlFor={fullPage ? 'hilo-search-full' : 'hilo-search'}>{composerLabel}</label>
           <textarea
             id={fullPage ? 'hilo-search-full' : 'hilo-search'}
             rows={1}
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder={activeContextLabel ? `Sigue preguntando sobre ${activeContextLabel}…` : 'Pregunta sobre hermandades, imágenes, pasos, bandas, marchas, autores…'}
+            placeholder={composerPlaceholder}
             autoComplete="off"
             disabled={loading}
           />
@@ -418,45 +509,38 @@ export default function HiloSearch({ fullPage = false, initialQuestion = '', hom
       ) : null}
 
       {showComposer && query.trim().length > 1 && !looksLikeQuestion(query) && (results.length > 0 || searching) ? (
-        <div className={styles.results} aria-label="Coincidencias del grafo">
+        <div className={styles.results} aria-label="Fichas y coincidencias del grafo" aria-live="polite">
           <div className={styles.resultsHead}>
-            <span>{searching ? 'Buscando…' : 'Coincidencias'}</span>
-            <small>El índice se consulta al escribir; la Home ya no descarga todo el grafo</small>
+            <span>{searching ? 'Buscando…' : 'Fichas y coincidencias'}</span>
+            <small>Abre una ficha directamente o sigue tirando del hilo</small>
           </div>
-          {results.map((item) => item.href ? (
-            <Link
-              href={item.href}
-              className={styles.result}
-              key={`${item.entityId || item.type}-${item.title}`}
-              data-hilo-event="search_result_open"
-              data-hilo-origin={fullPage ? 'conversation_search' : 'home_search'}
-              data-hilo-target-type={analyticsEntityType(item.type)}
-            >
-              <span className={styles.resultType}>{item.type}</span>
-              <span className={styles.resultCopy}>
-                <strong>{item.title}</strong>
-                {item.subtitle ? <small>{item.subtitle}</small> : null}
-              </span>
-              <span className={styles.arrow}>→</span>
-            </Link>
-          ) : (
-            <button
-              type="button"
-              className={styles.result}
-              key={`${item.entityId || item.type}-${item.title}`}
-              onClick={() => useResult(item)}
-              data-hilo-event="search_result_ask"
-              data-hilo-origin={fullPage ? 'conversation_search' : 'home_search'}
-              data-hilo-target-type={analyticsEntityType(item.type)}
-            >
-              <span className={styles.resultType}>{item.type}</span>
-              <span className={styles.resultCopy}>
-                <strong>{item.title}</strong>
-                {item.subtitle ? <small>{item.subtitle}</small> : null}
-              </span>
-              <span className={styles.arrow}>↗</span>
-            </button>
-          ))}
+          <div className={styles.resultsList}>
+            {orderedResults.map((item, index) => item.href ? (
+              <Link
+                href={item.href}
+                className={`${styles.result} ${index === 0 ? styles.resultPrimary : ''}`}
+                key={`${item.entityId || item.type}-${item.title}`}
+                onClick={onNavigate}
+                data-hilo-event="search_result_open"
+                data-hilo-origin={searchOrigin}
+                data-hilo-target-type={analyticsEntityType(item.type)}
+              >
+                <SearchResultContent item={item} />
+              </Link>
+            ) : (
+              <button
+                type="button"
+                className={`${styles.result} ${styles.resultQuestion}`}
+                key={`${item.entityId || item.type}-${item.title}`}
+                onClick={() => useResult(item)}
+                data-hilo-event="search_result_ask"
+                data-hilo-origin={searchOrigin}
+                data-hilo-target-type={analyticsEntityType(item.type)}
+              >
+                <SearchResultContent item={item} />
+              </button>
+            ))}
+          </div>
         </div>
       ) : null}
 
