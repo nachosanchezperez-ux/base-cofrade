@@ -40,6 +40,22 @@ test('la ficha pública prioriza la portada explícita y conserva el retrato com
   assert.equal(page.includes("imagen.slug === 'maria-santisima-de-la-caridad-en-su-soledad'"), false)
 })
 
+test('la cabecera de Imagen usa la portada como ambiente y no como tarjeta lateral', () => {
+  const page = source('app/imagenes/[slug]/page.js')
+  const hero = source('components/ImageHeroV2.js')
+  const styles = source('components/ImageHeroV2.module.css')
+
+  assert.match(page, /import ImageHeroV2 from '@\/components\/ImageHeroV2'/)
+  assert.match(page, /<ImageHeroV2/)
+  assert.equal(page.includes('<RelationalEntityHero'), false)
+  assert.match(hero, /className=\{styles\.photoLayer\}/)
+  assert.match(hero, /useContainedPhoto/)
+  assert.match(styles, /\.photoVeil/)
+  assert.match(styles, /linear-gradient\(90deg/)
+  assert.match(styles, /--image-mobile-focus-x/)
+  assert.match(styles, /@media \(max-width: 780px\)/)
+})
+
 test('el encuadre de portada diferencia ordenador y móvil', () => {
   const editor = source('app/panel/(protected)/imagenes/[id]/portada/ImageHeroFramingForm.js')
 
