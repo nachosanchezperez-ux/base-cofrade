@@ -41,9 +41,20 @@ test('el servidor solo permite destinos relacionados con la Hermandad', () => {
   assert.match(actions, /\.from\('brotherhood_images'\)/)
   assert.match(actions, /\.from\('heritage_assets'\)/)
   assert.match(actions, /El contenido seleccionado no pertenece a esta Hermandad/)
+  assert.match(actions, /assertPreparedStoragePath/)
+  assert.match(actions, /assertStoredUpload/)
   assert.match(actions, /relation_type: 'cover'/)
   assert.match(actions, /is_cover: true/)
-  assert.match(actions, /10 \* 1024 \* 1024/)
+  assert.match(actions, /MAX_FILE_SIZE = 10 \* 1024 \* 1024/)
+})
+
+test('los bytes van directos a Storage y el Server Action solo recibe metadatos', () => {
+  assert.match(uploadForm, /metadata\.delete\('file'\)/)
+  assert.match(uploadForm, /uploadToSignedUrl/)
+  assert.match(actions, /createSignedUploadUrl/)
+  assert.match(actions, /storage_path/)
+  assert.doesNotMatch(actions, /formData\.get\('file'\)/)
+  assert.doesNotMatch(actions, /instanceof File/)
 })
 
 test('el workspace carga los destinos relacionados y prioriza carteles por año', () => {
