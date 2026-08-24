@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
-import { askPublicHiloCofrade } from '@/lib/supabase/tira-public'
+import { askPublicHiloCofrade, searchPublicHiloEntities } from '@/lib/supabase/tira-public'
+import { getHiloLookupIntent, selectHiloNavigationItems } from '@/lib/tira-search-intent'
 
 export const dynamic = 'force-dynamic'
 
@@ -57,6 +58,39 @@ function sanitizeContext(raw) {
   return context.entityId || context.resultSet ? context : null
 }
 
+function directLookupResponse(intent, matches) {
+  const selected = selectHiloNavigationItems(matches, intent.term, {
+    explicitNavigation: intent.explicitNavigation,
+    limit: 5,
+  })
+  if (!selected.length) return null
+
+  const primary = selected[0]
+  const entityId = safeUuid(primary.entityId)
+  const entityType = safeType(primary.entityType)
+  const directContext = selected.length === 1 && entityId && entityType
+    ? { entityId, entityType, name: String(primary.title || '').slice(0, 160) }
+    : null
+
+  return {
+    kind: 'search_results',
+    answer: selected.length === 1
+      ? `He encontrado esta ficha en Hilo Cofrade para «${intent.term}».`
+      : `He encontrado ${selected.length} fichas relacionadas con «${intent.term}».`,
+    path: ['Búsqueda directa'],
+    entities: [],
+    items: selected.map((item) => ({
+      label: item.title,
+      meta: [item.type, item.subtitle].filter(Boolean).join(' · '),
+      href: item.href,
+    })),
+    evidence: [],
+    references: [],
+    followUps: directContext ? [`Cuéntame sobre ${primary.title}`] : [],
+    context: directContext,
+  }
+}
+
 export async function POST(request) {
   try {
     const body = await request.json()
@@ -64,11 +98,24 @@ export async function POST(request) {
     const context = sanitizeContext(body?.context)
 
     if (!question) {
-      return NextResponse.json({ error: 'Escribe una pregunta para empezar.' }, { status: 400 })
+      return NextResponse.json({ error: 'Escribe una pregunta o búsqueda para empezar.' }, { status: 400 })
     }
 
     if (question.length > 320) {
       return NextResponse.json({ error: 'La consulta es demasiado larga.' }, { status: 400 })
+    }
+
+    const lookupIntent = getHiloLookupIntent(question)
+    if (lookupIntent) {
+      const matches = await searchPublicHiloEntities(lookupIntent.term, 8)
+      const directResponse = directLookupResponse(lookupIntent, matches)
+      if (directResponse) {
+        return NextResponse.json(directResponse, {
+          headers: {
+            'Cache-Control': 'no-store',
+          },
+        })
+      }
     }
 
     const response = await askPublicHiloCofrade(question, context)
