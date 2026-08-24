@@ -1,9 +1,13 @@
 'use client'
 
 import { useEffect, useId, useRef, useState, useTransition } from 'react'
-import { uploadBrotherhoodRelatedMediaAction } from './actions'
+import {
+  prepareBrotherhoodRelatedMediaUploadAction,
+  uploadBrotherhoodRelatedMediaAction,
+} from './actions'
 import panelStyles from '@/app/panel/panel.module.css'
 import mediaStyles from './media.module.css'
+import { createClient as createBrowserSupabaseClient } from '@/lib/supabase/client'
 
 const ACCEPTED_IMAGE_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/avif'])
 const MAX_FILE_SIZE = 10 * 1024 * 1024
@@ -23,6 +27,17 @@ function RightsSelect() {
   )
 }
 
+function pendingCopy(phase) {
+  if (phase === 'uploading') return 'Subiendo…'
+  if (phase === 'saving') return 'Vinculando…'
+  return 'Preparando…'
+}
+
+function errorMessage(error) {
+  if (error instanceof Error && error.message) return error.message
+  return 'No se ha podido subir la imagen. Revisa la conexión e inténtalo de nuevo.'
+}
+
 export default function QuickMediaUploadForm({
   brotherhoodId,
   targetId,
@@ -38,6 +53,7 @@ export default function QuickMediaUploadForm({
   const [selectedFile, setSelectedFile] = useState(null)
   const [previewUrl, setPreviewUrl] = useState('')
   const [error, setError] = useState('')
+  const [phase, setPhase] = useState('idle')
   const [pending, startTransition] = useTransition()
 
   useEffect(() => () => {
@@ -86,13 +102,59 @@ export default function QuickMediaUploadForm({
 
     const form = event.currentTarget
     if (!form.reportValidity()) return
+    if (!selectedFile) {
+      announceError('Selecciona una imagen para subir.')
+      return
+    }
 
-    const formData = new FormData(form)
+    const metadata = new FormData(form)
+    metadata.delete('file')
+    metadata.set('file_name', selectedFile.name)
+    metadata.set('file_type', selectedFile.type)
+    metadata.set('file_size', String(selectedFile.size))
     setError('')
 
     startTransition(async () => {
-      const result = await uploadBrotherhoodRelatedMediaAction(formData)
-      if (result?.error) announceError(result.error)
+      try {
+        setPhase('preparing')
+        const prepared = await prepareBrotherhoodRelatedMediaUploadAction(metadata)
+        if (prepared?.error) {
+          announceError(prepared.error)
+          return
+        }
+        if (!prepared?.upload?.path || !prepared?.upload?.token) {
+          announceError('No se pudo preparar la subida directa de la imagen.')
+          return
+        }
+
+        setPhase('uploading')
+        const supabase = createBrowserSupabaseClient()
+        const uploaded = await supabase.storage
+          .from('hilo-media')
+          .uploadToSignedUrl(
+            prepared.upload.path,
+            prepared.upload.token,
+            selectedFile,
+            {
+              cacheControl: '3600',
+              contentType: selectedFile.type,
+            }
+          )
+
+        if (uploaded.error) {
+          announceError(`No se pudo subir la imagen: ${uploaded.error.message}`)
+          return
+        }
+
+        setPhase('saving')
+        metadata.set('storage_path', prepared.upload.path)
+        const result = await uploadBrotherhoodRelatedMediaAction(metadata)
+        if (result?.error) announceError(result.error)
+      } catch (uploadError) {
+        announceError(errorMessage(uploadError))
+      } finally {
+        setPhase('idle')
+      }
     })
   }
 
@@ -101,7 +163,7 @@ export default function QuickMediaUploadForm({
 
   return (
     <form
-      action={uploadBrotherhoodRelatedMediaAction}
+      method="post"
       onSubmit={handleSubmit}
       className={mediaStyles.uploadForm}
       aria-busy={pending}
@@ -135,7 +197,7 @@ export default function QuickMediaUploadForm({
           </span>
           <span className={mediaStyles.fileButton} aria-hidden="true">{selectedFile ? 'Cambiar' : 'Elegir'}</span>
         </span>
-        <small id={fileHelpId}>JPG, PNG, WEBP, GIF o AVIF · máximo 10 MB. La imagen elegida se conserva si hay que corregir algún dato.</small>
+        <small id={fileHelpId}>JPG, PNG, WEBP, GIF o AVIF · máximo 10 MB. La imagen se envía directamente al archivo multimedia y se conserva si hay que corregir algún dato.</small>
       </label>
 
       <div className={mediaStyles.formGrid}>
@@ -175,7 +237,7 @@ export default function QuickMediaUploadForm({
       <div className={mediaStyles.uploadActions}>
         <small>{uploadNote}</small>
         <button className={panelStyles.primaryButton} type="submit" disabled={pending || !selectedFile}>
-          {pending ? <><span className={mediaStyles.pendingSpinner} aria-hidden="true" />Subiendo…</> : 'Subir y vincular'}
+          {pending ? <><span className={mediaStyles.pendingSpinner} aria-hidden="true" />{pendingCopy(phase)}</> : 'Subir y vincular'}
         </button>
       </div>
     </form>
