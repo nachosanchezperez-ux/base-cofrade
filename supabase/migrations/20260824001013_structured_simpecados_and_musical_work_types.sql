@@ -1,0 +1,5 @@
+-- Reconciliación del historial remoto.
+-- La migración estructural fue aplicada primero en Supabase con esta versión.
+-- La definición idempotente y reproducible del cambio permanece en
+-- 20260824002000_structured_simpecados_and_musical_work_types.sql para que
+-- entornos nuevos puedan construir el modelo completo sin depender del estado remoto.
