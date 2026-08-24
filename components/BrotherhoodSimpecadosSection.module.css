@@ -117,6 +117,14 @@
   text-wrap: balance;
 }
 
+.aliases {
+  margin: 12px 0 0;
+  color: var(--brotherhood-primary);
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1.45;
+}
+
 .lead {
   margin: 24px 0 0;
   color: #4f585e;
