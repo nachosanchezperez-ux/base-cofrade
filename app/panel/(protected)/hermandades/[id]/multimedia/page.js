@@ -15,8 +15,6 @@ function RightsSelect() {
     <select name="rights_status" defaultValue="authorized">
       <option value="authorized">Autorizada por la Hermandad o el autor</option>
       <option value="owned">Propiedad de Hilo Cofrade</option>
-      <option value="licensed">Publicación con licencia</option>
-      <option value="public_domain">Dominio público</option>
     </select>
   )
 }
@@ -101,6 +99,7 @@ function MediaTargetCard({ target, kind, brotherhoodId }) {
             <label>
               <span>Derechos</span>
               <RightsSelect />
+              <small>Para Wikimedia, licencias abiertas o dominio público utiliza la Biblioteca multimedia, que exige Fuente, licencia y atribución completas.</small>
             </label>
           </div>
 
