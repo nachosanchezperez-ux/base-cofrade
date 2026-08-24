@@ -120,10 +120,12 @@ export default function QuickMediaUploadForm({
         const prepared = await prepareBrotherhoodRelatedMediaUploadAction(metadata)
         if (prepared?.error) {
           announceError(prepared.error)
+          setPhase('idle')
           return
         }
         if (!prepared?.upload?.path || !prepared?.upload?.token) {
           announceError('No se pudo preparar la subida directa de la imagen.')
+          setPhase('idle')
           return
         }
 
@@ -143,16 +145,21 @@ export default function QuickMediaUploadForm({
 
         if (uploaded.error) {
           announceError(`No se pudo subir la imagen: ${uploaded.error.message}`)
+          setPhase('idle')
           return
         }
 
-        setPhase('saving')
         metadata.set('storage_path', prepared.upload.path)
-        const result = await uploadBrotherhoodRelatedMediaAction(metadata)
-        if (result?.error) announceError(result.error)
       } catch (uploadError) {
         announceError(errorMessage(uploadError))
-      } finally {
+        setPhase('idle')
+        return
+      }
+
+      setPhase('saving')
+      const result = await uploadBrotherhoodRelatedMediaAction(metadata)
+      if (result?.error) {
+        announceError(result.error)
         setPhase('idle')
       }
     })
