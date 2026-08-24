@@ -18,8 +18,6 @@ BEGIN
     RAISE EXCEPTION 'No se encontró la Hermandad pastora-de-cantillana';
   END IF;
 
-  -- Conserva la trazabilidad de cualquier color anterior, pero evita que siga
-  -- participando en la presentación pública de la ficha.
   UPDATE public.brotherhood_colors
   SET status = 'archived',
       updated_at = now()
