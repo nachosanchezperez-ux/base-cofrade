@@ -1,6 +1,10 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
 import styles from './ImageHeroV2.module.css';
+import roomStyles from './ImageHeroV2Room.module.css';
 
 function Breadcrumb({ items = [] }) {
   if (!items.length) return null;
@@ -72,13 +76,15 @@ export default function ImageHeroV2({
   facts = [],
   media = {},
 }) {
+  const [detectedPortrait, setDetectedPortrait] = useState(null);
   const visibleFacts = facts.filter((fact) => fact?.label && fact?.value).slice(0, 3);
   const photoSrc = media.photoSrc || '';
   const hasPhoto = Boolean(photoSrc);
   const hasDimensions = Number(media.width) > 0 && Number(media.height) > 0;
-  const isPortrait = hasDimensions && Number(media.height) > Number(media.width) * 1.12;
+  const portraitByDimensions = hasDimensions && Number(media.height) > Number(media.width) * 1.12;
   const fitMode = media.fitMode || 'auto';
-  const useContainedPhoto = fitMode === 'contain' || (fitMode === 'auto' && isPortrait);
+  const autoPortrait = hasDimensions ? portraitByDimensions : detectedPortrait !== false;
+  const useContainedPhoto = fitMode === 'contain' || (fitMode === 'auto' && autoPortrait);
   const bypassImageOptimizer = isWikimediaUpload(photoSrc);
   const initials = media.initials || title
     ?.split(/\s+/)
@@ -99,14 +105,20 @@ export default function ImageHeroV2({
     '--image-mobile-focus-y': `${mobileFocusY}%`,
   };
 
+  const detectNaturalOrientation = (event) => {
+    if (fitMode !== 'auto' || hasDimensions) return;
+    const image = event.currentTarget;
+    setDetectedPortrait(image.naturalHeight > image.naturalWidth * 1.12);
+  };
+
   return (
     <section
-      className={`${styles.hero} ${hasPhoto ? styles.hasPhoto : styles.noPhoto} ${useContainedPhoto ? styles.contained : styles.covered}`}
+      className={`${styles.hero} ${roomStyles.hero} ${hasPhoto ? styles.hasPhoto : styles.noPhoto} ${useContainedPhoto ? styles.contained : styles.covered}`}
       aria-labelledby="entity-hero-title"
       style={heroStyle}
     >
       {hasPhoto ? (
-        <div className={styles.photoLayer} aria-hidden="true">
+        <div className={`${styles.photoLayer} ${roomStyles.photoLayer}`} aria-hidden="true">
           {useContainedPhoto ? (
             <>
               <Image
@@ -118,21 +130,22 @@ export default function ImageHeroV2({
                 unoptimized={bypassImageOptimizer}
                 sizes="100vw"
               />
-              <div className={styles.subjectStage}>
+              <div className={`${styles.subjectStage} ${roomStyles.subjectStage}`}>
                 <Image
-                  className={styles.subjectPhoto}
+                  className={`${styles.subjectPhoto} ${roomStyles.subjectPhoto}`}
                   src={photoSrc}
                   alt=""
                   fill
                   priority
                   unoptimized={bypassImageOptimizer}
-                  sizes="(max-width: 780px) 100vw, 58vw"
+                  sizes="(max-width: 780px) 100vw, 70vw"
+                  onLoad={detectNaturalOrientation}
                 />
               </div>
             </>
           ) : (
             <Image
-              className={styles.coverPhoto}
+              className={`${styles.coverPhoto} ${roomStyles.coverPhoto}`}
               src={photoSrc}
               alt=""
               fill
@@ -146,26 +159,29 @@ export default function ImageHeroV2({
         <span className={styles.initialsBackdrop} aria-hidden="true">{initials}</span>
       )}
 
-      <span className={styles.photoVeil} aria-hidden="true" />
+      <span
+        className={`${styles.photoVeil} ${roomStyles.photoVeil} ${useContainedPhoto ? roomStyles.containedVeil : ''}`}
+        aria-hidden="true"
+      />
       <span className={styles.vignette} aria-hidden="true" />
       <span className={styles.texture} aria-hidden="true" />
 
       <div className={`shell ${styles.shell}`}>
         <Breadcrumb items={breadcrumbItems} />
 
-        <div className={styles.content}>
+        <div className={`${styles.content} ${roomStyles.content}`}>
           <div className={styles.entityMeta}>
             <span className={styles.entityLine} aria-hidden="true" />
             <span>{entityType}</span>
           </div>
 
-          <h1 id="entity-hero-title">{title}</h1>
+          <h1 className={roomStyles.title} id="entity-hero-title">{title}</h1>
           {subtitle ? <p className={styles.subtitle}>{subtitle}</p> : null}
 
           <ParentRelation relation={relation} />
 
           {visibleFacts.length ? (
-            <dl className={styles.facts} data-count={visibleFacts.length}>
+            <dl className={`${styles.facts} ${roomStyles.facts}`} data-count={visibleFacts.length}>
               {visibleFacts.map((fact) => (
                 <div key={fact.label}>
                   <dt>{fact.label}</dt>
@@ -180,7 +196,7 @@ export default function ImageHeroV2({
       </div>
 
       {hasPhoto && media.credit ? (
-        <span className={styles.credit}>{media.credit}</span>
+        <span className={`${styles.credit} ${roomStyles.credit}`}>{media.credit}</span>
       ) : null}
     </section>
   );
