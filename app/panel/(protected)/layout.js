@@ -8,6 +8,7 @@ import PanelSaveToast from '@/components/panel/PanelSaveToast'
 import { requirePanelUser } from '@/lib/panel/auth'
 import styles from '@/app/panel/panel.module.css'
 import '@/app/panel/panel-ux.css'
+import '@/app/panel/panel-mobile.css'
 
 export const dynamic = 'force-dynamic'
 

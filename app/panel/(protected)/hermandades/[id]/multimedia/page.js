@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { uploadBrotherhoodRelatedMediaAction } from './actions'
+import QuickMediaUploadForm from './QuickMediaUploadForm'
 import { requirePanelUser } from '@/lib/panel/auth'
 import { getBrotherhoodMediaWorkspaceData } from '@/lib/panel/brotherhood-media'
 import styles from '@/app/panel/panel.module.css'
@@ -8,15 +8,6 @@ import mediaStyles from './media.module.css'
 
 const SAVED_MESSAGES = {
   uploaded: 'La imagen se ha subido y ya queda vinculada a su ficha.',
-}
-
-function RightsSelect() {
-  return (
-    <select name="rights_status" defaultValue="authorized">
-      <option value="authorized">Autorizada por la Hermandad o el autor</option>
-      <option value="owned">Propiedad de Hilo Cofrade</option>
-    </select>
-  )
 }
 
 function targetAlt(target, kind) {
@@ -48,6 +39,10 @@ function MediaTargetCard({ target, kind, brotherhoodId }) {
   const hasLegacyImage = kind !== 'cult' && !hasCanonicalImage && Boolean(target.public_image_path)
   const anchor = `contenido-${target.id}`
   const targetKind = kind === 'cult' ? 'cult' : 'entity'
+  const rightsHelp = 'Para Wikimedia, licencias abiertas o dominio público utiliza la Biblioteca multimedia, que exige Fuente, licencia y atribución completas.'
+  const uploadNote = kind === 'cult'
+    ? 'Se mostrará como portada de este culto en la ficha pública.'
+    : 'Se guardará como imagen principal de esta ficha. La fotografía anterior seguirá disponible en el archivo.'
 
   return (
     <article className={mediaStyles.targetCard} id={anchor}>
@@ -75,49 +70,16 @@ function MediaTargetCard({ target, kind, brotherhoodId }) {
 
       <details className={mediaStyles.uploadDetails} open={!hasCanonicalImage}>
         <summary>{targetLabel(kind, { hasCanonicalImage, hasLegacyImage })}<span aria-hidden="true">⌄</span></summary>
-        <form action={uploadBrotherhoodRelatedMediaAction} className={mediaStyles.uploadForm}>
-          <input type="hidden" name="brotherhood_id" value={brotherhoodId} />
-          <input type="hidden" name="target_id" value={target.id} />
-          <input type="hidden" name="target_kind" value={targetKind} />
-          <input type="hidden" name="title" value={target.name} />
-
-          <label className={mediaStyles.fileField}>
-            <span>Fotografía</span>
-            <input name="file" type="file" accept="image/*" required />
-            <small>En el móvil podrás elegir Fototeca, Cámara o Archivos. JPG, PNG, WEBP, GIF o AVIF · máximo 10 MB.</small>
-          </label>
-
-          <div className={mediaStyles.formGrid}>
-            <label>
-              <span>Crédito / autor</span>
-              <input
-                name="author_name"
-                defaultValue={target.cover?.asset?.author_name || target.public_image_credit || ''}
-                placeholder="Fotografía · Autor / Hermandad"
-              />
-            </label>
-            <label>
-              <span>Derechos</span>
-              <RightsSelect />
-              <small>Para Wikimedia, licencias abiertas o dominio público utiliza la Biblioteca multimedia, que exige Fuente, licencia y atribución completas.</small>
-            </label>
-          </div>
-
-          <label>
-            <span>Descripción accesible</span>
-            <input name="alt_text" defaultValue={targetAlt(target, kind)} required />
-          </label>
-
-          <label>
-            <span>Pie opcional</span>
-            <textarea name="caption" rows="2" placeholder="Información que ayude a contextualizar la imagen." />
-          </label>
-
-          <div className={mediaStyles.uploadActions}>
-            <small>{kind === 'cult' ? 'Se mostrará como portada de este culto en la ficha pública.' : 'Se guardará como imagen principal de esta ficha. La fotografía anterior seguirá disponible en el archivo.'}</small>
-            <button className={styles.primaryButton} type="submit">Subir y vincular</button>
-          </div>
-        </form>
+        <QuickMediaUploadForm
+          brotherhoodId={brotherhoodId}
+          targetId={target.id}
+          targetKind={targetKind}
+          title={target.name}
+          defaultAuthor={target.cover?.asset?.author_name || target.public_image_credit || ''}
+          defaultAlt={targetAlt(target, kind)}
+          rightsHelp={rightsHelp}
+          uploadNote={uploadNote}
+        />
       </details>
     </article>
   )
