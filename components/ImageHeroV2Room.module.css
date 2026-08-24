@@ -1,0 +1,194 @@
+.hero {
+  min-height: clamp(680px, 54vw, 810px);
+}
+
+.coverPhoto {
+  transform: scale(1.006);
+}
+
+.subjectStage {
+  width: min(70vw, 1120px);
+}
+
+.subjectPhoto {
+  padding: 12px 0 4px;
+}
+
+.content {
+  width: min(100%, 660px);
+}
+
+.title {
+  max-width: 660px;
+  font-size: clamp(46px, 4.35vw, 74px);
+}
+
+.facts {
+  width: min(100%, 640px);
+}
+
+.photoVeil {
+  background:
+    linear-gradient(90deg,
+      rgba(3, 15, 29, .995) 0%,
+      rgba(3, 16, 31, .97) 19%,
+      rgba(3, 17, 32, .84) 32%,
+      rgba(3, 18, 34, .48) 45%,
+      rgba(3, 18, 34, .13) 59%,
+      rgba(3, 18, 34, .025) 78%,
+      rgba(3, 18, 34, 0) 100%),
+    linear-gradient(180deg,
+      rgba(2, 11, 22, .18) 0%,
+      rgba(2, 11, 22, .01) 47%,
+      rgba(2, 11, 22, .68) 100%);
+}
+
+.containedVeil {
+  background:
+    linear-gradient(90deg,
+      rgba(3, 15, 29, .995) 0%,
+      rgba(3, 16, 31, .97) 20%,
+      rgba(3, 17, 32, .82) 34%,
+      rgba(3, 18, 34, .4) 47%,
+      rgba(3, 18, 34, .08) 61%,
+      rgba(3, 18, 34, 0) 100%),
+    linear-gradient(180deg,
+      rgba(2, 11, 22, .14) 0%,
+      rgba(2, 11, 22, .02) 54%,
+      rgba(2, 11, 22, .7) 100%);
+}
+
+@media (max-width: 1120px) {
+  .hero {
+    min-height: 735px;
+  }
+
+  .subjectStage {
+    width: 67vw;
+  }
+
+  .content {
+    width: min(100%, 610px);
+  }
+
+  .title {
+    max-width: 620px;
+    font-size: clamp(44px, 5.8vw, 68px);
+  }
+
+  .facts {
+    width: min(100%, 600px);
+  }
+
+  .photoVeil {
+    background:
+      linear-gradient(90deg,
+        rgba(3, 15, 29, .99) 0%,
+        rgba(3, 16, 31, .94) 22%,
+        rgba(3, 17, 32, .74) 38%,
+        rgba(3, 18, 34, .32) 54%,
+        rgba(3, 18, 34, .07) 72%,
+        rgba(3, 18, 34, 0) 100%),
+      linear-gradient(180deg,
+        rgba(2, 11, 22, .16) 0%,
+        rgba(2, 11, 22, .02) 50%,
+        rgba(2, 11, 22, .7) 100%);
+  }
+
+  .containedVeil {
+    background:
+      linear-gradient(90deg,
+        rgba(3, 15, 29, .99) 0%,
+        rgba(3, 16, 31, .94) 23%,
+        rgba(3, 17, 32, .72) 40%,
+        rgba(3, 18, 34, .26) 56%,
+        rgba(3, 18, 34, .04) 76%,
+        rgba(3, 18, 34, 0) 100%),
+      linear-gradient(180deg,
+        rgba(2, 11, 22, .13) 0%,
+        rgba(2, 11, 22, .02) 54%,
+        rgba(2, 11, 22, .72) 100%);
+  }
+}
+
+@media (max-width: 780px) {
+  .hero {
+    min-height: 860px;
+  }
+
+  .photoLayer {
+    height: 65%;
+  }
+
+  .coverPhoto {
+    transform: scale(1.008);
+  }
+
+  .subjectStage {
+    width: 100%;
+  }
+
+  .subjectPhoto {
+    padding: 4px 0 0;
+  }
+
+  .content {
+    width: 100%;
+    padding-top: 420px;
+  }
+
+  .title {
+    max-width: 100%;
+    font-size: clamp(39px, 10.5vw, 55px);
+  }
+
+  .facts {
+    width: 100%;
+  }
+
+  .photoVeil,
+  .containedVeil {
+    background:
+      linear-gradient(180deg,
+        rgba(3, 14, 27, .035) 0%,
+        rgba(3, 14, 27, .015) 34%,
+        rgba(3, 15, 29, .26) 52%,
+        rgba(3, 15, 29, .76) 65%,
+        rgba(3, 15, 29, .97) 76%,
+        rgba(3, 15, 29, 1) 100%);
+  }
+
+  .credit {
+    top: calc(65% - 28px);
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    min-height: 875px;
+  }
+
+  .photoLayer {
+    height: 63%;
+  }
+
+  .content {
+    padding-top: 395px;
+  }
+
+  .photoVeil,
+  .containedVeil {
+    background:
+      linear-gradient(180deg,
+        rgba(3, 14, 27, .03) 0%,
+        rgba(3, 14, 27, .015) 32%,
+        rgba(3, 15, 29, .24) 49%,
+        rgba(3, 15, 29, .76) 61%,
+        rgba(3, 15, 29, .97) 72%,
+        rgba(3, 15, 29, 1) 100%);
+  }
+
+  .credit {
+    top: calc(63% - 25px);
+  }
+}
