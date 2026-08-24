@@ -48,7 +48,7 @@ test('la cabecera de Imagen usa la portada como ambiente y no como tarjeta later
   assert.match(page, /import ImageHeroV2 from '@\/components\/ImageHeroV2'/)
   assert.match(page, /<ImageHeroV2/)
   assert.equal(page.includes('<RelationalEntityHero'), false)
-  assert.match(hero, /className=\{styles\.photoLayer\}/)
+  assert.match(hero, /styles\.photoLayer/)
   assert.match(hero, /useContainedPhoto/)
   assert.match(styles, /\.photoVeil/)
   assert.match(styles, /linear-gradient\(90deg/)
@@ -64,4 +64,17 @@ test('el encuadre de portada diferencia ordenador y móvil', () => {
   assert.match(editor, /Escritorio/)
   assert.match(editor, /Móvil/)
   assert.match(editor, /El retrato del directorio y la galería conservan sus propios ajustes/)
+})
+
+test('la Hero V2 reserva más superficie para mostrar la Imagen completa', () => {
+  const hero = source('components/ImageHeroV2.js')
+  const room = source('components/ImageHeroV2Room.module.css')
+
+  assert.match(hero, /useState\(null\)/)
+  assert.match(hero, /naturalHeight > image\.naturalWidth \* 1\.12/)
+  assert.match(hero, /roomStyles\.subjectStage/)
+  assert.match(room, /width: min\(70vw, 1120px\)/)
+  assert.match(room, /height: 65%/)
+  assert.match(room, /padding-top: 420px/)
+  assert.equal(hero.includes("title === 'María Santísima de la Caridad en su Soledad'"), false)
 })
