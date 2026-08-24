@@ -206,8 +206,9 @@ export default function QuickMediaUploadForm({
           <input
             name="author_name"
             defaultValue={defaultAuthor}
-            placeholder="Fotografía · Autor / Hermandad"
+            placeholder="Autor o Hermandad"
           />
+          <small>Escribe solo el nombre. Hilo Cofrade añade «Fotografía ·» al mostrar el crédito.</small>
         </label>
         <label>
           <span>Derechos</span>
