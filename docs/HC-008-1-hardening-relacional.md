@@ -1,30 +1,34 @@
 # HC-008.1 · Hardening relacional de Tira del hilo
 
-**Estado:** EN VALIDACIÓN  
-**Decisión base:** HC-008 continúa **IMPLEMENTADA**  
+**Estado:** IMPLEMENTADA  
+**Fecha de cierre documental:** 24/08/2026  
+**Decisión base:** HC-008 continúa **CERRADA**  
 **Ámbito:** Hermandades, Imágenes, Pasos y Bandas públicas
 
 ## Objetivo
 
-Endurecer la navegación relacional ya implantada para que escale cuando una ficha acumule muchas relaciones, sin reabrir HC-008 ni alterar el modelo de datos.
+Endurecer la navegación relacional para que una ficha pueda acumular muchas relaciones sin perder claridad, destinos ni semántica.
 
-## Reglas
+HC-008.1 es una extensión de HC-008. No consume un identificador independiente.
 
-1. Ninguna relación navegable debe desaparecer de forma silenciosa por superar el límite visual inicial.
-2. La portada del hilo muestra un máximo compacto y el resto queda accesible mediante **Ver todas las relaciones**.
+## Reglas implementadas
+
+1. Ninguna relación navegable desaparece silenciosamente por superar el límite visual inicial.
+2. La portada del hilo muestra un conjunto compacto y el resto permanece accesible mediante **Ver todas las relaciones**.
 3. Los destinos se deduplican por `href`.
-4. Si un mismo destino tiene varias relaciones, prevalece la relación con mayor prioridad semántica.
-5. Hermandad distingue explícitamente **Vínculo institucional** de **Acompañamiento actual**.
-6. Un acompañamiento musical no implica pertenencia a la Hermandad.
+4. Cuando un destino reúne varias relaciones, prevalece la de mayor prioridad semántica.
+5. Hermandad distingue **Vínculo institucional** de **Acompañamiento actual**.
+6. Un acompañamiento musical no implica pertenencia institucional.
 7. Solo se enlazan destinos con ficha pública disponible.
+8. Si faltan categorías prioritarias, los cupos se rellenan con otras relaciones útiles.
 
-## Prioridad por entidad
+## Prioridades
 
 ### Hermandad
 
 `Imagen → Paso → Banda → Marcha → Autor`
 
-Cupo inicial recomendado: 3 Imágenes + 3 Pasos + 2 Bandas, rellenando huecos si faltan categorías.
+Cupo inicial: 3 Imágenes + 3 Pasos + 2 Bandas, con relleno si faltan categorías.
 
 ### Imagen
 
@@ -38,33 +42,29 @@ Cupo inicial recomendado: 3 Imágenes + 3 Pasos + 2 Bandas, rellenando huecos si
 
 `Paso → Hermandad → Marcha → Autor`
 
-La ficha de Banda recibe esta prioridad desde el componente común y no se modifica en esta rama para no interferir con la PR #132 de logotipos.
-
 ## Telemetría
 
-Los clics y aperturas del bloque se registran como eventos estructurados de Vercel:
+Se registran los eventos de navegación:
 
-- `relational_thread_click`
-- `relational_thread_expand`
+- `relational_thread_click`;
+- `relational_thread_expand`.
 
-Solo se envían datos de navegación del producto: tipo de origen, nombre de la ficha, tipo de destino, ruta, relación y número de relaciones ocultas. No se envían identificadores personales, cookies ni contenido de formularios.
+Solo contienen contexto de producto —origen, destino, ruta, relación y relaciones ocultas—, sin datos personales ni contenido editorial privado.
+
+## Evidencia
+
+Implementación vigente:
+
+- `components/RelationalThread.js`;
+- `components/RelationalThreadClient.js`;
+- `lib/relational-thread.js`;
+- `app/api/analytics/relational-thread/route.js`;
+- `test/relational-thread.test.mjs`.
+
+La regresión verifica prioridades, cupos, deduplicación y relleno de capacidad.
 
 ## Datos
 
 No requiere migraciones ni cambios de esquema.
 
-El acompañamiento musical actual de Hermandades se lee de `music_accompaniment_periods`, que ya es la fuente usada por la ficha pública.
-
-## Criterios de validación
-
-- [x] Dedupe estable por destino.
-- [x] Prioridad explícita por tipo de entidad.
-- [x] Cupos para evitar que una categoría monopolice la portada.
-- [x] Despliegue progresivo de relaciones sobrantes.
-- [x] Acompañamiento actual incorporado a Hermandad sin confundirlo con banda propia.
-- [x] Telemetría sin dependencia ni tabla nueva.
-- [x] Tests unitarios del selector relacional añadidos.
-- [ ] CI y build completos.
-- [ ] Preview Vercel exacta validada.
-- [ ] Regresión funcional: Baratillo, Asunción, La Cena, San Benito, Pastora y Banda del Sol.
-- [ ] Producción sin errores del deployment final.
+**HC-008.1 → 🟢 IMPLEMENTADA**
