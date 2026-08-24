@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import BrotherhoodInlineMedia from '@/components/panel/BrotherhoodInlineMedia'
 import { requirePanelUser } from '@/lib/panel/auth'
 import { getBrotherhoodEditorData } from '@/lib/panel/data'
 import { MonthSelect, PlaceSelect, SaveBar, StatusSelect, STATUS_LABELS } from '@/components/panel/brotherhood/BrotherhoodEditorPrimitives'
@@ -36,6 +37,18 @@ function CultForm({ item, data, canEdit }) {
         </div>
         <SaveBar label={isNew ? 'Crear culto' : 'Guardar culto'} canEdit={canEdit} />
       </form>
+
+      {!isNew && canEdit && item.status !== 'archived' ? (
+        <BrotherhoodInlineMedia
+          brotherhoodId={data.entity.id}
+          targetId={item.id}
+          targetKind="cult"
+          title={item.title}
+          defaultAlt={item.title}
+          returnSection="cultos"
+        />
+      ) : null}
+
       {!isNew && canEdit && item.status !== 'archived' ? (
         <form action={archiveCultAction} className={styles.archiveForm}>
           <input type="hidden" name="brotherhood_id" value={data.entity.id} />
@@ -52,6 +65,11 @@ export default async function BrotherhoodCultsPage({ params, searchParams }) {
   const data = await getBrotherhoodEditorData(id)
   if (!data) notFound()
   const canEdit = ['admin', 'editor'].includes(user.role)
+  const savedMessage = query?.saved === 'uploaded'
+    ? 'Fotografía del culto actualizada correctamente.'
+    : query?.saved
+      ? 'Cultos actualizados correctamente.'
+      : ''
 
   return (
     <div className={styles.pageWrap}>
@@ -63,7 +81,7 @@ export default async function BrotherhoodCultsPage({ params, searchParams }) {
         </div>
       </header>
 
-      {query?.saved ? <div className={styles.savedNotice} role="status">Cultos actualizados correctamente.</div> : null}
+      {savedMessage ? <div className={styles.savedNotice} role="status">{savedMessage}</div> : null}
       {!canEdit ? <div className={styles.readOnlyNotice}>Tu perfil tiene acceso de consulta.</div> : null}
 
       <section className={styles.editorSection}>
