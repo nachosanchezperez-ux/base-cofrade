@@ -2,8 +2,8 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import EntitySectionNav from '@/components/EntitySectionNav';
 import EntityMediaGallery from '@/components/EntityMediaGallery';
+import ImageHeroV2 from '@/components/ImageHeroV2';
 import JsonLd from '@/components/JsonLd';
-import RelationalEntityHero from '@/components/RelationalEntityHero';
 import RelationalThread from '@/components/RelationalThread';
 import SourcesBlock from '@/components/SourcesBlock';
 import { getPublishedEntityMedia } from '@/lib/supabase/entity-media';
@@ -152,8 +152,7 @@ export default async function ImagenPage({ params }) {
           },
         } : {}),
       }} />
-      <RelationalEntityHero
-        variant="image"
+      <ImageHeroV2
         entityType={hermandad ? 'Imagen titular' : 'Imagen'}
         title={imagen.nombre}
         breadcrumbItems={[
