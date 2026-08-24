@@ -6,21 +6,22 @@ import { breadcrumbJsonLd, collectionPageJsonLd, pageTitle } from '@/lib/seo'
 
 export const dynamic = 'force-dynamic'
 
-const description = 'Consulta las próximas salidas extraordinarias de Sevilla capital y provincia, con fecha, motivo, localidad, horarios y datos documentados en Hilo Cofrade.'
+const title = 'Procesiones y salidas extraordinarias de Sevilla 2026'
+const description = 'Calendario actualizado de procesiones y salidas extraordinarias de Sevilla capital y provincia en 2026: fechas, horarios, recorridos, bandas, motivos y guías.'
 
 export const metadata = {
-  title: 'Extraordinarias de Sevilla y provincia',
+  title,
   description,
   alternates: {
     canonical: '/extraordinarias',
   },
   openGraph: {
-    title: pageTitle('Extraordinarias de Sevilla y provincia'),
+    title: pageTitle(title),
     description,
     url: '/extraordinarias',
   },
   twitter: {
-    title: pageTitle('Extraordinarias de Sevilla y provincia'),
+    title: pageTitle(title),
     description,
   },
 }
@@ -28,9 +29,14 @@ export const metadata = {
 export default async function ExtraordinariasPage() {
   const outings = await getExtraordinaryDirectory()
   const visibleOutings = outings.filter((item) => !item.isCancelled)
+  const currentYear = 2026
+  const yearOutings = visibleOutings.filter((item) => item.year === currentYear)
+  const upcomingCount = yearOutings.filter((item) => item.isUpcoming).length
+  const capitalCount = yearOutings.filter((item) => item.scope === 'capital').length
+  const provinceCount = yearOutings.filter((item) => item.scope === 'province').length
   const directoryJsonLd = collectionPageJsonLd({
     path: '/extraordinarias',
-    name: 'Extraordinarias de Sevilla y provincia',
+    name: title,
     description,
     items: visibleOutings.map((outing) => ({
       name: `${outing.title} · ${outing.municipality}`,
@@ -49,15 +55,38 @@ export default async function ExtraordinariasPage() {
       <div className="shell">
         <header className={styles.pageIntro}>
           <div>
-            <span className="eyebrow">Sevilla y provincia</span>
-            <h1>Extraordinarias</h1>
+            <span className="eyebrow">Calendario cofrade · Sevilla y provincia</span>
+            <h1>Procesiones y salidas extraordinarias de Sevilla 2026</h1>
           </div>
           <p>
-            Qué viene, cuándo sale y qué música llevará. Una agenda rápida para consultar las extraordinarias documentadas en Hilo Cofrade.
+            Consulta las próximas procesiones extraordinarias de Sevilla capital y provincia: fechas, horarios, recorridos, acompañamientos musicales, motivos y fuentes documentales.
           </p>
         </header>
 
+        <div className={styles.seoSummary} aria-label="Resumen del calendario de extraordinarias de 2026">
+          <p>
+            Hilo Cofrade reúne en una sola agenda las <strong>salidas extraordinarias de Sevilla en 2026</strong>, tanto en la capital como en los municipios de la provincia. Cada cita dispone de una guía propia y se amplía a medida que se confirman el horario, el itinerario, las bandas y otros datos de interés.
+          </p>
+          <div className={styles.seoStats}>
+            <span><strong>{yearOutings.length}</strong> documentadas en 2026</span>
+            <span><strong>{upcomingCount}</strong> próximas</span>
+            <span><strong>{capitalCount}</strong> en Sevilla capital</span>
+            <span><strong>{provinceCount}</strong> en la provincia</span>
+          </div>
+        </div>
+
         <ExtraordinaryDirectory outings={outings} />
+
+        <section className={styles.seoGuide} aria-labelledby="guia-extraordinarias-sevilla">
+          <span className="eyebrow">Guía actualizada</span>
+          <h2 id="guia-extraordinarias-sevilla">Extraordinarias en Sevilla: fechas, recorridos y bandas</h2>
+          <p>
+            El calendario incluye procesiones extraordinarias, traslados y otros cultos externos de carácter excepcional que están documentados para Sevilla y su provincia. Las próximas citas aparecen primero y las ya celebradas permanecen disponibles como archivo de consulta.
+          </p>
+          <p>
+            En cada guía de Hilo Cofrade puedes consultar los datos confirmados de la jornada: motivo de la extraordinaria, lugar y hora de salida, entrada, recorrido, acompañamiento musical y fuentes utilizadas. Cuando un dato todavía no está publicado, se mantiene pendiente en lugar de completarlo sin documentación.
+          </p>
+        </section>
       </div>
     </section>
   )
