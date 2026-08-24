@@ -1,0 +1,13 @@
+.journeySection{background:linear-gradient(180deg,#fff 0,#f8fbfd 100%)}
+.journeyGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.journeyCard{min-width:0;padding:20px;border:1px solid #dfe7ed;border-radius:19px;background:#fff;box-shadow:0 10px 28px rgba(18,58,103,.055)}
+.journeyTopline{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.journeyTopline>span{display:grid;width:34px;height:34px;place-items:center;border-radius:11px;background:#123a67;color:#fff;font-size:9px;font-weight:900;letter-spacing:.06em}
+.journeyTopline>small{color:#b71f37;font-size:8px;font-weight:900;letter-spacing:.13em;text-align:right;text-transform:uppercase}
+.journeyCard h3{margin:14px 0 0;color:#102b47;font-size:23px;line-height:1.05;letter-spacing:-.035em}
+.journeyTime{display:block;margin-top:9px;color:#123a67;font-size:12px;font-weight:900}
+.journeyCard p{margin:9px 0 0;color:#627486;font-size:12px;line-height:1.58}
+.journeyPlaces{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;padding-top:12px;border-top:1px solid #e7edf2}
+.journeyPlaces span{padding:6px 8px;border-radius:999px;background:#eef4f8;color:#315572;font-size:9px;font-weight:800;line-height:1.25}
+@media(min-width:1060px){.journeyGrid{grid-template-columns:repeat(4,minmax(0,1fr))}.journeyCard{padding:18px}.journeyCard h3{font-size:20px}}
+@media(max-width:620px){.journeyGrid{grid-template-columns:1fr;gap:9px}.journeyCard{padding:16px;border-radius:17px}.journeyTopline>span{width:32px;height:32px}.journeyTopline>small{font-size:9px}.journeyCard h3{font-size:21px}.journeyTime{font-size:12px}.journeyCard p{font-size:12px}.journeyPlaces span{font-size:10px}}
