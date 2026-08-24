@@ -43,17 +43,15 @@
   /*
    * Hoy: en móvil los escudos y logotipos no aportan información suficiente
    * para justificar una tercera columna. Las fotografías reales sí se conservan.
-   * Los selectores se apoyan en el contrato semántico de cada tarjeta para que
-   * la Marcha del día pueda convivir dentro del mismo grid sin heredar estilos.
    */
-  #hc-app #hoy [data-home-today-card] {
+  #hc-app #hoy > .shell > div > article {
     min-height: 0;
   }
 
-  #hc-app #hoy [data-home-today-card]:has(> [data-home-visual-kind="crest"]),
-  #hc-app #hoy [data-home-today-card]:has(> [data-home-visual-kind="logo"]),
-  #hc-app #hoy [data-home-today-card]:has(> [data-home-visual-kind="context-crest"]),
-  #hc-app #hoy [data-home-today-card]:has(> [data-home-visual-kind="identity"]) {
+  #hc-app #hoy > .shell > div > article:has(> [data-home-visual-kind="crest"]),
+  #hc-app #hoy > .shell > div > article:has(> [data-home-visual-kind="logo"]),
+  #hc-app #hoy > .shell > div > article:has(> [data-home-visual-kind="context-crest"]),
+  #hc-app #hoy > .shell > div > article:has(> [data-home-visual-kind="identity"]) {
     grid-template-columns: 34px minmax(0, 1fr);
   }
 
@@ -64,7 +62,7 @@
     display: none;
   }
 
-  #hc-app #hoy [data-home-today-card]:has(> [data-home-visual-kind="photo"]) {
+  #hc-app #hoy > .shell > div > article:has(> [data-home-visual-kind="photo"]) {
     grid-template-columns: 34px minmax(0, 1fr) 58px;
   }
 
@@ -79,7 +77,7 @@
     margin-top: 0;
   }
 
-  #hc-app #hoy [data-home-today-card] > div:first-of-type > p {
+  #hc-app #hoy > .shell > div > article > div:first-of-type > p {
     display: -webkit-box;
     overflow: hidden;
     -webkit-box-orient: vertical;
