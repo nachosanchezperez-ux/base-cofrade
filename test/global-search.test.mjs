@@ -55,6 +55,17 @@ test('la cabecera usa el mismo motor de Tira del hilo como buscador global', asy
   assert.ok(apiRoute.indexOf('searchPublicHiloEntities') < apiRoute.lastIndexOf('askPublicHiloCofrade'))
 })
 
+test('el modal global se monta en body y no queda recortado por la cabecera sticky', async () => {
+  const [globalSearch, headerStyles] = await Promise.all([
+    readFile(new URL('../components/GlobalHiloSearch.js', import.meta.url), 'utf8'),
+    readFile(new URL('../components/HiloHeader.module.css', import.meta.url), 'utf8'),
+  ])
+
+  assert.match(headerStyles, /backdrop-filter:/)
+  assert.match(globalSearch, /createPortal/)
+  assert.match(globalSearch, /document\.body/)
+  assert.match(globalSearch, /typeof document !== ['"]undefined['"]/)
+})
 
 test('el autocompletado coloca las fichas navegables antes que otras coincidencias', async () => {
   const route = await readFile(new URL('../app/api/tira-del-hilo/search/route.js', import.meta.url), 'utf8')
