@@ -40,6 +40,7 @@ test('la ficha de Hermandad prioriza multimedia y escudo autoritativos', () => {
 
 test('la ficha de Hermandad usa autorías, historia, Sede e imágenes procesionales canónicas', () => {
   const display = source('lib/supabase/brotherhood-display.js')
+  const pageLoader = source('lib/supabase/brotherhood-page.js')
   const page = source('app/hermandades/[slug]/page.js')
 
   assert.match(display, /\.from\('image_authorships'\)/)
@@ -47,7 +48,9 @@ test('la ficha de Hermandad usa autorías, historia, Sede e imágenes procesiona
   assert.match(display, /\.select\('[^']*history_text[^']*'\)/)
   assert.match(display, /canonical_see_place_id/)
   assert.match(display, /\.from\('places'\)/)
-  assert.match(page, /from '@\/lib\/supabase\/brotherhood-display'/)
+  assert.match(pageLoader, /from '@\/lib\/supabase\/brotherhood-display'/)
+  assert.match(pageLoader, /enrichBrotherhoodVisualSections/)
+  assert.match(page, /from '@\/lib\/supabase\/brotherhood-page'/)
   assert.match(page, /BrotherhoodSeatSection/)
   assert.match(page, /paso\.imagenesDetalle\?\.length/)
 })
