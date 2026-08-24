@@ -6,12 +6,25 @@
   transform: scale(1.006);
 }
 
+.photoBackdrop {
+  opacity: .62;
+  transform: scale(1.22);
+  filter: blur(30px) saturate(.94) brightness(.7);
+}
+
+.contained .photoBackdrop {
+  opacity: .82;
+  transform: scale(1.3);
+  filter: blur(34px) saturate(.98) brightness(.76);
+}
+
 .subjectStage {
-  width: min(70vw, 1120px);
+  right: 0;
+  width: min(72vw, 1160px);
 }
 
 .subjectPhoto {
-  padding: 12px 0 4px;
+  padding: 10px 0 2px;
 }
 
 .content {
@@ -47,15 +60,15 @@
   background:
     linear-gradient(90deg,
       rgba(3, 15, 29, .995) 0%,
-      rgba(3, 16, 31, .97) 20%,
-      rgba(3, 17, 32, .82) 34%,
-      rgba(3, 18, 34, .4) 47%,
-      rgba(3, 18, 34, .08) 61%,
+      rgba(3, 16, 31, .965) 18%,
+      rgba(3, 17, 32, .78) 31%,
+      rgba(3, 18, 34, .34) 45%,
+      rgba(3, 18, 34, .05) 59%,
       rgba(3, 18, 34, 0) 100%),
     linear-gradient(180deg,
-      rgba(2, 11, 22, .14) 0%,
-      rgba(2, 11, 22, .02) 54%,
-      rgba(2, 11, 22, .7) 100%);
+      rgba(2, 11, 22, .1) 0%,
+      rgba(2, 11, 22, .015) 54%,
+      rgba(2, 11, 22, .64) 100%);
 }
 
 @media (max-width: 1120px) {
@@ -64,7 +77,7 @@
   }
 
   .subjectStage {
-    width: 67vw;
+    width: 69vw;
   }
 
   .content {
@@ -99,15 +112,15 @@
     background:
       linear-gradient(90deg,
         rgba(3, 15, 29, .99) 0%,
-        rgba(3, 16, 31, .94) 23%,
-        rgba(3, 17, 32, .72) 40%,
-        rgba(3, 18, 34, .26) 56%,
-        rgba(3, 18, 34, .04) 76%,
+        rgba(3, 16, 31, .93) 21%,
+        rgba(3, 17, 32, .68) 38%,
+        rgba(3, 18, 34, .22) 55%,
+        rgba(3, 18, 34, .03) 74%,
         rgba(3, 18, 34, 0) 100%),
       linear-gradient(180deg,
-        rgba(2, 11, 22, .13) 0%,
-        rgba(2, 11, 22, .02) 54%,
-        rgba(2, 11, 22, .72) 100%);
+        rgba(2, 11, 22, .1) 0%,
+        rgba(2, 11, 22, .015) 54%,
+        rgba(2, 11, 22, .66) 100%);
   }
 }
 
@@ -117,11 +130,18 @@
   }
 
   .photoLayer {
-    height: 65%;
+    height: 66%;
   }
 
   .coverPhoto {
     transform: scale(1.008);
+  }
+
+  .photoBackdrop,
+  .contained .photoBackdrop {
+    opacity: .86;
+    transform: scale(1.34);
+    filter: blur(30px) saturate(.96) brightness(.78);
   }
 
   .subjectStage {
@@ -129,12 +149,12 @@
   }
 
   .subjectPhoto {
-    padding: 4px 0 0;
+    padding: 2px 0 0;
   }
 
   .content {
     width: 100%;
-    padding-top: 420px;
+    padding-top: 430px;
   }
 
   .title {
@@ -150,16 +170,16 @@
   .containedVeil {
     background:
       linear-gradient(180deg,
-        rgba(3, 14, 27, .035) 0%,
-        rgba(3, 14, 27, .015) 34%,
-        rgba(3, 15, 29, .26) 52%,
-        rgba(3, 15, 29, .76) 65%,
-        rgba(3, 15, 29, .97) 76%,
+        rgba(3, 14, 27, .02) 0%,
+        rgba(3, 14, 27, .01) 36%,
+        rgba(3, 15, 29, .18) 53%,
+        rgba(3, 15, 29, .7) 66%,
+        rgba(3, 15, 29, .96) 78%,
         rgba(3, 15, 29, 1) 100%);
   }
 
   .credit {
-    top: calc(65% - 28px);
+    top: calc(66% - 28px);
   }
 }
 
@@ -169,26 +189,26 @@
   }
 
   .photoLayer {
-    height: 63%;
+    height: 64%;
   }
 
   .content {
-    padding-top: 395px;
+    padding-top: 405px;
   }
 
   .photoVeil,
   .containedVeil {
     background:
       linear-gradient(180deg,
-        rgba(3, 14, 27, .03) 0%,
-        rgba(3, 14, 27, .015) 32%,
-        rgba(3, 15, 29, .24) 49%,
-        rgba(3, 15, 29, .76) 61%,
-        rgba(3, 15, 29, .97) 72%,
+        rgba(3, 14, 27, .02) 0%,
+        rgba(3, 14, 27, .01) 34%,
+        rgba(3, 15, 29, .18) 50%,
+        rgba(3, 15, 29, .7) 63%,
+        rgba(3, 15, 29, .96) 74%,
         rgba(3, 15, 29, 1) 100%);
   }
 
   .credit {
-    top: calc(63% - 25px);
+    top: calc(64% - 25px);
   }
 }
