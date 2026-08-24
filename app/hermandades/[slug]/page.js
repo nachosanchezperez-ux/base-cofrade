@@ -2,10 +2,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { cache } from 'react';
 import CofradeTypeBadges from '@/components/CofradeTypeBadges';
-import BrotherhoodCultsSection from '@/components/BrotherhoodCultsSection';
 import BrotherhoodMusicalHeritage from '@/components/BrotherhoodMusicalHeritage';
 import BrotherhoodSeatSection from '@/components/BrotherhoodSeatSection';
-import BrotherhoodSimpecadosSection from '@/components/BrotherhoodSimpecadosSection';
 import {
   BrotherhoodConceptualTitulars,
   BrotherhoodOwnBands,
@@ -21,7 +19,7 @@ import SourcesBlock from '@/components/SourcesBlock';
 import { hermandades } from '@/lib/data';
 import { getStepPhotoFraming } from '@/lib/step-photo-framing';
 import { getBrotherhoodMusicalHeritage } from '@/lib/supabase/brotherhood-musical-heritage';
-import { getHermandadPageBySlug } from '@/lib/supabase/brotherhood-page';
+import { getHermandadPageBySlug } from '@/lib/supabase/brotherhood-display';
 import { getPublishedBrotherhoodCrestPath } from '@/lib/supabase/brotherhood-public-authority';
 import { getPublishedEntityCoverMediaMap } from '@/lib/supabase/entity-media';
 import {
@@ -175,7 +173,6 @@ export default async function HermandadDetailPage({ params }) {
         h.habitos?.length > 0 && { href: '#tunica', label: 'Túnica' },
         h.salidas?.length > 0 && { href: '#salidas', label: 'Salidas' },
         h.cultos?.length > 0 && { href: '#cultos', label: 'Cultos' },
-        h.simpecados?.length > 0 && { href: '#simpecados', label: 'Simpecados' },
         h.cartelesFiestas?.length > 0 && { href: '#carteles', label: 'Carteles' },
         (h.patrimonio?.length > 0 || h.estrenos?.length > 0) && { href: '#patrimonio', label: 'Patrimonio' },
         h.acompanamientos?.length > 0 && { href: '#acompanamientos', label: 'Histórico musical' },
@@ -502,9 +499,53 @@ export default async function HermandadDetailPage({ params }) {
         ))}</div>
       </div></section>}
 
-      <BrotherhoodCultsSection cults={h.cultos} />
+      {h.cultos?.length > 0 && <section className="section brotherhood-soft" id="cultos"><div className="shell">
+        <SectionTitle eyebrow="Vida de hermandad" title="Cultos" description="Calendario de los principales cultos y celebraciones de la corporación." />
+        <div className="bc-cult-grid">{h.cultos.map((c) => {
+          const fecha = c.fechaCorta || c.referencia;
+          const fechaExacta = /^(\d{1,2})\s+([A-ZÁÉÍÓÚÑ]+)$/i.exec(fecha || '');
+          const esRelativa = Boolean(c.fechaDetalle);
 
-      <BrotherhoodSimpecadosSection items={h.simpecados} />
+          return (
+            <article className="bc-cult-item" key={c.id}>
+              <div className={`bc-cult-date ${
+                fechaExacta
+                  ? 'bc-cult-date--exact'
+                  : esRelativa
+                    ? 'bc-cult-date--relative'
+                    : 'bc-cult-date--period'
+              }`}>
+                <span className="bc-cult-bindings" aria-hidden="true"><i /><i /></span>
+
+                {fechaExacta ? (
+                  <>
+                    <strong className="bc-cult-day">{fechaExacta[1]}</strong>
+                    <span className="bc-cult-month">
+                      {fechaExacta[2] === 'MAR' ? 'MARZO' : fechaExacta[2] === 'AGO' ? 'AGOSTO' : fechaExacta[2]}
+                    </span>
+                  </>
+                ) : esRelativa ? (
+                  <>
+                    <strong className="bc-cult-main">{fecha}</strong>
+                    <span className="bc-cult-sub">{c.fechaDetalle}</span>
+                  </>
+                ) : (
+                  <>
+                    <strong className="bc-cult-main">{fecha}</strong>
+                    <span className="bc-cult-period-mark" aria-hidden="true" />
+                  </>
+                )}
+              </div>
+
+              <div className="bc-cult-copy">
+                <h3>{c.nombre}</h3>
+                <p>{c.tipo}</p>
+                {c.descripcion && <small>{c.descripcion}</small>}
+              </div>
+            </article>
+          );
+        })}</div>
+      </div></section>}
 
       <FestivalPostersSection posters={h.cartelesFiestas} />
 
