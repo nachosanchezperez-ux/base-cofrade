@@ -92,7 +92,11 @@ export default function GlobalHiloSearch() {
             </header>
 
             <div className={styles.searchSurface}>
-              <HiloSearch fullPage={alternateFullPageMode} />
+              <HiloSearch
+                fullPage={alternateFullPageMode}
+                universal
+                onNavigate={() => setOpen(false)}
+              />
             </div>
 
             <footer className={styles.examples}>

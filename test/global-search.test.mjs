@@ -48,7 +48,47 @@ test('la cabecera usa el mismo motor de Tira del hilo como buscador global', asy
 
   assert.match(header, /<GlobalHiloSearch\s*\/>/)
   assert.match(globalSearch, /<HiloSearch/)
+  assert.match(globalSearch, /\buniversal\b/)
+  assert.match(globalSearch, /onNavigate=/)
   assert.match(globalSearch, /Buscar o preguntar en Hilo Cofrade/)
   assert.match(apiRoute, /searchPublicHiloEntities/)
   assert.ok(apiRoute.indexOf('searchPublicHiloEntities') < apiRoute.lastIndexOf('askPublicHiloCofrade'))
+})
+
+
+test('el autocompletado coloca las fichas navegables antes que otras coincidencias', async () => {
+  const route = await readFile(new URL('../app/api/tira-del-hilo/search/route.js', import.meta.url), 'utf8')
+
+  assert.match(route, /prioritizeHiloNavigationItems\(await searchPublicHiloEntities/)
+  assert.doesNotMatch(route, /if \(intent\?\.explicitNavigation\)/)
+})
+
+test('las coincidencias directas se presentan como mini fichas visuales y escalables', async () => {
+  const [loader, search, searchStyles] = await Promise.all([
+    readFile(new URL('../lib/supabase/search-live.js', import.meta.url), 'utf8'),
+    readFile(new URL('../components/HiloSearch.js', import.meta.url), 'utf8'),
+    readFile(new URL('../components/HiloSearch.module.css', import.meta.url), 'utf8'),
+  ])
+
+  assert.match(loader, /crest_path/)
+  assert.match(loader, /logo_path/)
+  assert.match(loader, /from\('entity_media'\)/)
+  assert.match(loader, /resolveHiloMediaReference/)
+  assert.match(loader, /location,/)
+  assert.match(loader, /descriptor,/)
+  assert.match(loader, /visual,/)
+
+  assert.match(search, /function SearchResultVisual/)
+  assert.match(search, /prioritizeHiloNavigationItems\(results\)/)
+  assert.match(search, /hiloEntityKey\(item\.title\)/)
+  assert.match(search, /styles\.resultLocation/)
+  assert.match(search, /Abrir ficha/)
+  assert.match(search, /Fichas y coincidencias/)
+  assert.match(searchStyles, /\.resultVisualIdentity/)
+  assert.match(searchStyles, /\.resultVisualPhoto/)
+  assert.match(searchStyles, /\.resultPrimary/)
+  assert.match(searchStyles, /\.resultAction/)
+
+  assert.doesNotMatch(search, /item\.title\s*===\s*['"]El Baratillo['"]/)
+  assert.doesNotMatch(loader, /entity\.slug\s*===\s*['"]el-baratillo['"]/)
 })
