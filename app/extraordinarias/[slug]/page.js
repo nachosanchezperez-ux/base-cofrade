@@ -7,6 +7,7 @@ import { getExtraordinaryDetail } from '@/lib/supabase/extraordinary-detail'
 import { absoluteUrl, breadcrumbJsonLd, pageTitle, seoDescription } from '@/lib/seo'
 import styles from './extraordinary-detail.module.css'
 import mediaStyles from './extraordinary-media.module.css'
+import journeyStyles from './extraordinary-journey.module.css'
 
 export const dynamic = 'force-dynamic'
 
@@ -237,6 +238,7 @@ export default async function ExtraordinaryDetailPage({ params }) {
 
       <nav className={styles.sectionNav} aria-label="Contenido de la guía">
         <div className="shell">
+          {item.journeyPhases.length ? <a href="#desarrollo">Desarrollo</a> : null}
           {item.schedule.length ? <a href="#horarios">Horarios</a> : null}
           {item.processionalMusic.length ? <a href="#musica">Acompañamiento</a> : null}
           {item.routeSummary ? <a href="#recorrido">Recorrido</a> : null}
@@ -247,6 +249,34 @@ export default async function ExtraordinaryDetailPage({ params }) {
       </nav>
 
       <div className={`shell ${styles.content}`}>
+        {item.journeyPhases.length ? (
+          <section className={`${styles.section} ${journeyStyles.journeySection}`} id="desarrollo">
+            <header className={styles.sectionHead}>
+              <span>Cómo se desarrolla</span>
+              <h2>Desarrollo de la jornada</h2>
+              <p>Los distintos momentos de la extraordinaria, ordenados para entender la jornada de un vistazo.</p>
+            </header>
+            <div className={journeyStyles.journeyGrid}>
+              {item.journeyPhases.map((phase, index) => (
+                <article className={journeyStyles.journeyCard} key={phase.id}>
+                  <div className={journeyStyles.journeyTopline}>
+                    <span>{String(index + 1).padStart(2, '0')}</span>
+                    {phase.eyebrow ? <small>{phase.eyebrow}</small> : null}
+                  </div>
+                  <h3>{phase.title}</h3>
+                  {phase.time ? <strong className={journeyStyles.journeyTime}>{phase.time}</strong> : null}
+                  {phase.summary ? <p>{phase.summary}</p> : null}
+                  {phase.places.length ? (
+                    <div className={journeyStyles.journeyPlaces}>
+                      {phase.places.map((place) => <span key={`${phase.id}-${place}`}>{place}</span>)}
+                    </div>
+                  ) : null}
+                </article>
+              ))}
+            </div>
+          </section>
+        ) : null}
+
         {item.schedule.length ? (
           <section className={styles.section} id="horarios">
             <header className={styles.sectionHead}>
