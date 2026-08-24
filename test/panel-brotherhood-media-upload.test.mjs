@@ -67,6 +67,26 @@ test('los bytes van directos a Storage y el Server Action solo recibe metadatos'
   assert.doesNotMatch(actions, /instanceof File/)
 })
 
+test('la redirección final de Next queda fuera de la captura local de errores', () => {
+  const transitionIndex = uploadForm.indexOf('startTransition(async () => {')
+  const tryIndex = uploadForm.indexOf('try {', transitionIndex)
+  const catchIndex = uploadForm.indexOf('} catch (uploadError) {', tryIndex)
+  const savingIndex = uploadForm.indexOf("setPhase('saving')", catchIndex)
+  const finalActionIndex = uploadForm.indexOf(
+    'const result = await uploadBrotherhoodRelatedMediaAction(metadata)',
+    savingIndex
+  )
+
+  assert.ok(transitionIndex >= 0)
+  assert.ok(tryIndex > transitionIndex)
+  assert.ok(catchIndex > tryIndex)
+  assert.ok(savingIndex > catchIndex)
+  assert.ok(finalActionIndex > savingIndex)
+  assert.doesNotMatch(uploadForm.slice(tryIndex, catchIndex), /uploadBrotherhoodRelatedMediaAction/)
+  assert.doesNotMatch(uploadForm, /NEXT_REDIRECT/)
+  assert.match(actions, /redirect\(destination\)/)
+})
+
 test('el workspace carga los destinos relacionados y prioriza carteles por año', () => {
   assert.match(loader, /getBrotherhoodMediaWorkspaceData/)
   assert.match(loader, /public_image_path/)
