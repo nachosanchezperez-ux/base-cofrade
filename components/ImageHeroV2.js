@@ -76,15 +76,17 @@ export default function ImageHeroV2({
   facts = [],
   media = {},
 }) {
-  const [detectedPortrait, setDetectedPortrait] = useState(null);
+  const [detectedAspect, setDetectedAspect] = useState(null);
   const visibleFacts = facts.filter((fact) => fact?.label && fact?.value).slice(0, 3);
   const photoSrc = media.photoSrc || '';
   const hasPhoto = Boolean(photoSrc);
-  const hasDimensions = Number(media.width) > 0 && Number(media.height) > 0;
-  const portraitByDimensions = hasDimensions && Number(media.height) > Number(media.width) * 1.12;
+  const width = Number(media.width);
+  const height = Number(media.height);
+  const knownAspect = width > 0 && height > 0 ? width / height : null;
+  const aspect = knownAspect || detectedAspect;
   const fitMode = media.fitMode || 'auto';
-  const autoPortrait = hasDimensions ? portraitByDimensions : detectedPortrait !== false;
-  const useContainedPhoto = fitMode === 'contain' || (fitMode === 'auto' && autoPortrait);
+  const autoContain = aspect === null ? true : aspect < 1.35;
+  const useContainedPhoto = fitMode === 'contain' || (fitMode === 'auto' && autoContain);
   const bypassImageOptimizer = isWikimediaUpload(photoSrc);
   const initials = media.initials || title
     ?.split(/\s+/)
@@ -105,15 +107,17 @@ export default function ImageHeroV2({
     '--image-mobile-focus-y': `${mobileFocusY}%`,
   };
 
-  const detectNaturalOrientation = (event) => {
-    if (fitMode !== 'auto' || hasDimensions) return;
+  const detectNaturalAspect = (event) => {
+    if (fitMode !== 'auto' || knownAspect) return;
     const image = event.currentTarget;
-    setDetectedPortrait(image.naturalHeight > image.naturalWidth * 1.12);
+    if (image.naturalWidth > 0 && image.naturalHeight > 0) {
+      setDetectedAspect(image.naturalWidth / image.naturalHeight);
+    }
   };
 
   return (
     <section
-      className={`${styles.hero} ${roomStyles.hero} ${hasPhoto ? styles.hasPhoto : styles.noPhoto} ${useContainedPhoto ? styles.contained : styles.covered}`}
+      className={`${styles.hero} ${roomStyles.hero} ${hasPhoto ? styles.hasPhoto : styles.noPhoto} ${useContainedPhoto ? `${styles.contained} ${roomStyles.contained}` : `${styles.covered} ${roomStyles.covered}`}`}
       aria-labelledby="entity-hero-title"
       style={heroStyle}
     >
@@ -122,7 +126,7 @@ export default function ImageHeroV2({
           {useContainedPhoto ? (
             <>
               <Image
-                className={styles.photoBackdrop}
+                className={`${styles.photoBackdrop} ${roomStyles.photoBackdrop}`}
                 src={photoSrc}
                 alt=""
                 fill
@@ -138,8 +142,8 @@ export default function ImageHeroV2({
                   fill
                   priority
                   unoptimized={bypassImageOptimizer}
-                  sizes="(max-width: 780px) 100vw, 70vw"
-                  onLoad={detectNaturalOrientation}
+                  sizes="(max-width: 780px) 100vw, 72vw"
+                  onLoad={detectNaturalAspect}
                 />
               </div>
             </>
@@ -152,6 +156,7 @@ export default function ImageHeroV2({
               priority
               unoptimized={bypassImageOptimizer}
               sizes="100vw"
+              onLoad={detectNaturalAspect}
             />
           )}
         </div>
