@@ -21,7 +21,7 @@ test('Git representa las migraciones remotas previas sin una versión duplicada 
 })
 
 test('Supabase exige licencia abierta admitida y procedencia completa', async () => {
-  const migration = await read('supabase/migrations/20260824015300_guard_open_media_provenance.sql')
+  const migration = await read('supabase/migrations/20260824000215_guard_open_media_provenance.sql')
 
   assert.match(migration, /open_media_provenance_is_valid/)
   assert.match(migration, /media_assets_open_provenance_check/)
@@ -31,6 +31,11 @@ test('Supabase exige licencia abierta admitida y procedencia completa', async ()
   assert.match(migration, /permission_notes/)
   assert.match(migration, /commons\[\.\]wikimedia\[\.\]org\/wiki\/\(File\|Archivo\):/)
   assert.match(migration, /create policy "Publishable media assets"/)
+
+  await assert.rejects(
+    read('supabase/migrations/20260824015300_guard_open_media_provenance.sql'),
+    /ENOENT/,
+  )
 })
 
 test('el Panel explica y valida el mismo contrato antes de enviar', async () => {
