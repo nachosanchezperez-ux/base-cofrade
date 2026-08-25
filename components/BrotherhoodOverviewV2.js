@@ -72,13 +72,6 @@ export default function BrotherhoodOverviewV2({ brotherhood }) {
                 ))}
               </dl>
             ) : null}
-
-            {brotherhood.historia ? (
-              <details className={styles.historyIntro}>
-                <summary>Contexto histórico <span aria-hidden="true">＋</span></summary>
-                <p>{brotherhood.historia}</p>
-              </details>
-            ) : null}
           </article>
 
           {seat?.nombre ? (
