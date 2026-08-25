@@ -43,6 +43,7 @@ function resolveCreditHref(photoSrc = '') {
 }
 
 export default function BrotherhoodProgramHero({
+  entityType = 'Hermandad',
   title,
   officialName = '',
   locality = '',
@@ -124,7 +125,7 @@ export default function BrotherhoodProgramHero({
               </span>
             ) : null}
             <div className={styles.identityCopy}>
-              <span>Hermandad de Penitencia</span>
+              <span>{entityType}</span>
               {locality ? <small>{locality}</small> : null}
             </div>
           </div>

@@ -15,7 +15,6 @@ import FestivalPostersSection from '@/components/FestivalPostersSection';
 import { notFound } from 'next/navigation';
 import JsonLd from '@/components/JsonLd';
 import OfficialLinks from '@/components/OfficialLinks';
-import RelationalEntityHero from '@/components/RelationalEntityHero';
 import SectionTitle from '@/components/SectionTitle';
 import SourcesBlock from '@/components/SourcesBlock';
 import { hermandades } from '@/lib/data';
@@ -94,7 +93,14 @@ export default async function HermandadDetailPage({ params }) {
   const imagenMap = new Map(h.imagenes.map((imagen) => [imagen.id, imagen]));
   const tiposHermandad = h.tipos || [];
   const isPenitencia = tiposHermandad.includes('Penitencia');
-  const programFacts = [
+  const brotherhoodTypeLabel = isPenitencia
+    ? 'Hermandad de Penitencia'
+    : tiposHermandad.includes('Gloria')
+      ? 'Hermandad de Gloria'
+      : tiposHermandad.includes('Sacramental')
+        ? 'Hermandad Sacramental'
+        : 'Hermandad';
+  const penitentialFacts = [
     { label: 'Salida', value: h.diaSalida },
     {
       label: h.datosJornada?.ano ? `Nazarenos · ${h.datosJornada.ano}` : 'Nazarenos',
@@ -103,6 +109,13 @@ export default async function HermandadDetailPage({ params }) {
     { label: 'Tiempo en Carrera Oficial', value: h.datosJornada?.tiempoCarreraOficial },
     { label: 'Pasos', value: h.pasos?.length ? String(h.pasos.length) : '' },
   ].filter((item) => item.value);
+  const gloryFacts = [
+    { label: 'Fundación', value: h.fundacion },
+    { label: 'Salida', value: h.diaSalida },
+    { label: 'Titulares', value: h.imagenes?.length ? String(h.imagenes.length) : '' },
+    { label: 'Pasos', value: h.pasos?.length ? String(h.pasos.length) : '' },
+  ].filter((item) => item.value);
+  const heroFacts = isPenitencia ? penitentialFacts : gloryFacts;
   const canonicalPath = `/hermandades/${h.slug}`;
   const description = brotherhoodSeoDescription(h);
   const pageJsonLd = {
@@ -149,67 +162,33 @@ export default async function HermandadDetailPage({ params }) {
       ])} />
       <JsonLd data={pageJsonLd} />
 
-      {isPenitencia ? (
-        <BrotherhoodProgramHero
-          title={h.nombrePopular}
-          officialName={h.nombreOficial}
-          locality={h.localidad}
-          seat={h.sede}
-          breadcrumbItems={[
-            { label: 'Hermandades', href: '/hermandades' },
-            { label: h.localidad || 'Ficha' },
-          ]}
-          facts={programFacts}
-          media={{
-            photoSrc: heroMedia?.path || '',
-            photoAlt: heroMedia?.alt || `Fotografía de ${h.nombrePopular}`,
-            credit: heroMedia?.credit || '',
-            width: heroMedia?.width,
-            height: heroMedia?.height,
-            focusX: heroMedia?.focusX,
-            focusY: heroMedia?.focusY,
-            mobileFocusX: heroMedia?.mobileFocusX,
-            mobileFocusY: heroMedia?.mobileFocusY,
-            focusPosition: heroMedia?.focusPosition,
-            fitMode: heroMedia?.fitMode,
-            crestSrc: authoritativeCrestPath,
-            crestAlt: `Escudo de ${h.nombrePopular}`,
-          }}
-        />
-      ) : (
-        <RelationalEntityHero
-          variant="brotherhood"
-          entityType="Hermandad"
-          title={h.nombrePopular}
-          subtitle={h.nombreOficial}
-          breadcrumbItems={[
-            { label: 'Hermandades', href: '/hermandades' },
-            { label: h.localidad || 'Ficha' },
-          ]}
-          badges={[...(h.tipos || []), h.localidad]}
-          facts={[
-            { label: 'Fundación', value: h.fundacion },
-            { label: 'Sede canónica', value: h.sede },
-            { label: 'Día de salida', value: h.diaSalida },
-          ]}
-          media={{
-            photoSrc: heroMedia?.path || '',
-            photoAlt: heroMedia?.alt || `Titular de ${h.nombrePopular}`,
-            credit: heroMedia?.credit || '',
-            width: heroMedia?.width,
-            height: heroMedia?.height,
-            focusX: heroMedia?.focusX,
-            focusY: heroMedia?.focusY,
-            mobileFocusX: heroMedia?.mobileFocusX,
-            mobileFocusY: heroMedia?.mobileFocusY,
-            focusPosition: heroMedia?.focusPosition,
-            fitMode: heroMedia?.fitMode,
-            initials: h.escudoIniciales || h.nombrePopular.slice(0, 2).toUpperCase(),
-            crestSrc: authoritativeCrestPath,
-            crestAlt: `Escudo de ${h.nombrePopular}`,
-          }}
-        />
-      )}
+      <BrotherhoodProgramHero
+        entityType={brotherhoodTypeLabel}
+        title={h.nombrePopular}
+        officialName={h.nombreOficial}
+        locality={h.localidad}
+        seat={h.sede}
+        breadcrumbItems={[
+          { label: 'Hermandades', href: '/hermandades' },
+          { label: h.localidad || 'Ficha' },
+        ]}
+        facts={heroFacts}
+        media={{
+          photoSrc: heroMedia?.path || '',
+          photoAlt: heroMedia?.alt || `Fotografía de ${h.nombrePopular}`,
+          credit: heroMedia?.credit || '',
+          width: heroMedia?.width,
+          height: heroMedia?.height,
+          focusX: heroMedia?.focusX,
+          focusY: heroMedia?.focusY,
+          mobileFocusX: heroMedia?.mobileFocusX,
+          mobileFocusY: heroMedia?.mobileFocusY,
+          focusPosition: heroMedia?.focusPosition,
+          fitMode: heroMedia?.fitMode,
+          crestSrc: authoritativeCrestPath,
+          crestAlt: `Escudo de ${h.nombrePopular}`,
+        }}
+      />
 
       <EntitySectionNav items={[
         { href: '#resumen', label: 'Resumen' },
