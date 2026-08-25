@@ -8,6 +8,7 @@ const navigation = read('lib/panel/navigation.js')
 const nav = read('components/panel/PanelNav.js')
 const page = read('app/panel/(protected)/page.js')
 const css = read('components/panel/PanelDashboardAccess.module.css')
+const mobile = read('app/panel/panel-mobile.css')
 
 const expectedRoutes = [
   '/panel/hoy',
@@ -35,21 +36,31 @@ test('inicio y menú comparten una única navegación canónica', () => {
   }
 })
 
-test('el inicio deja de privilegiar solo Hermandades y Pasos', () => {
+test('el inicio prioriza entidades principales sin ocultar el resto', () => {
   assert.doesNotMatch(page, /Gestionar hermandades/)
   assert.doesNotMatch(page, /Gestionar pasos/)
   assert.match(page, /Gestiona todo Hilo/)
   assert.match(page, /Los mismos módulos en móvil y escritorio/)
   assert.match(page, /accessGroups\.map/)
   assert.match(page, /item\.description/)
+  assert.match(navigation, /label: 'Principal'[\s\S]*\/panel\/hermandades[\s\S]*\/panel\/imagenes[\s\S]*\/panel\/pasos[\s\S]*\/panel\/bandas/)
+  assert.match(navigation, /label: 'Contenido'[\s\S]*\/panel\/marchas[\s\S]*\/panel\/extraordinarias[\s\S]*\/panel\/acontecimientos[\s\S]*\/panel\/hoy/)
 })
 
-test('los accesos directos son compactos en PC y dos columnas en móvil', () => {
+test('los accesos directos son compactos en PC y jerárquicos en móvil', () => {
   assert.match(css, /grid-template-columns:\s*repeat\(4, minmax\(0, 1fr\)\)/)
+  assert.match(css, /\.accessGroup:first-child \.accessCard[\s\S]*min-height:\s*86px/)
   assert.match(css, /@media \(max-width: 860px\)/)
   assert.match(css, /grid-template-columns:\s*repeat\(2, minmax\(0, 1fr\)\)/)
-  assert.match(css, /min-height:\s*88px/)
+  assert.match(css, /\.accessGroup:first-child \.accessCard[\s\S]*min-height:\s*72px/)
+  assert.match(css, /\.accessGroup:not\(:first-child\) \.accessCopy small[\s\S]*display:\s*none/)
   assert.match(css, /touch-action:\s*manipulation/)
+})
+
+test('el menú móvil sigue siendo exhaustivo pero reduce altura y aire vertical', () => {
+  assert.match(mobile, /\[role='dialog'\] \[class\*='mobileGroups'\][\s\S]*gap:\s*12px !important/)
+  assert.match(mobile, /\[role='dialog'\] \[class\*='mobileGroupLinks'\] a[\s\S]*min-height:\s*44px !important/)
+  assert.match(mobile, /\[role='dialog'\] \[class\*='mobileGroupLinks'\] a[\s\S]*padding:\s*6px 8px !important/)
 })
 
 test('Equipo solo se incorpora para administradores y el resumen no se enlaza consigo mismo', () => {
