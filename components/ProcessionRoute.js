@@ -40,20 +40,6 @@ function RouteLeg({ leg, circuit }) {
                   {badge ? <span className={styles.pointBadge}>{badge}</span> : null}
                 </div>
                 {point.detail ? <small>{point.detail}</small> : null}
-                {point.annotations?.length ? (
-                  <div className={styles.annotations}>
-                    {point.annotations.map((annotation, index) => (
-                      <span
-                        className={styles.annotation}
-                        data-type={annotation.type || 'note'}
-                        key={`${point.id}-${annotation.type}-${annotation.label}-${index}`}
-                      >
-                        {annotation.time ? <b>{annotation.time}</b> : null}
-                        {annotation.label ? <span>{annotation.label}</span> : null}
-                      </span>
-                    ))}
-                  </div>
-                ) : null}
               </div>
             </li>
           )
