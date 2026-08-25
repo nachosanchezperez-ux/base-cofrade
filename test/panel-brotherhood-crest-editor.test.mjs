@@ -18,16 +18,18 @@ test('la ficha de Hermandad permite gestionar el escudo sin editar una ruta téc
   assert.match(editor, /Retirar escudo/)
 })
 
-test('el editor muestra requisitos de formato, dimensiones y transparencia', async () => {
+test('el editor muestra requisitos de formato, resolución y encuadre útil', async () => {
   const editor = await source('components/panel/BrotherhoodCrestEditor.js')
 
   assert.match(editor, /SVG recomendado/)
   assert.match(editor, /PNG o WEBP/)
-  assert.match(editor, /1600 × 1600 px/)
-  assert.match(editor, /1000 × 1000/)
+  assert.match(editor, /1600 px lado mayor/)
+  assert.match(editor, /1000 px en raster/)
   assert.match(editor, /Transparente/)
+  assert.match(editor, /Lienzo ajustado al escudo, sin aire exterior/)
   assert.match(editor, /Máximo 10 MB/)
   assert.match(editor, /dimensionAdvice/)
+  assert.doesNotMatch(editor, /1600 × 1600 px/)
 })
 
 test('la subida del escudo mantiene la arquitectura signed direct del Panel móvil', async () => {
