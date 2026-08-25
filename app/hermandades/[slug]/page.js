@@ -279,6 +279,7 @@ export default async function HermandadDetailPage({ params }) {
         <SectionTitle eyebrow="Titularidad" title="Sagrados Titulares" description="Imágenes e identidades devocionales que conforman la titularidad documentada de la Hermandad." />
         <div className="image-grid">{h.imagenes.map((imagen) => {
           const coverMedia = entityCoverMedia.get(imagen.id);
+          const authorship = [imagen.autor, imagen.fecha].filter(Boolean).join(' · ');
           const card = (
             <>
               {coverMedia?.path ? (
@@ -302,7 +303,7 @@ export default async function HermandadDetailPage({ params }) {
               <div className="image-card-body">
                 <span className="eyebrow">{imagen.tipo}</span>
                 <h3>{imagen.nombre}</h3>
-                <p className="image-card-authorship">{imagen.autor} · {imagen.fecha}</p>
+                {authorship ? <p className="image-card-authorship">{authorship}</p> : null}
                 {imagen.descripcion && <p className="image-card-description">{imagen.descripcion}</p>}
                 {(imagen.tecnica || imagen.material || imagen.dimensiones) && (
                   <div className="image-card-details">
