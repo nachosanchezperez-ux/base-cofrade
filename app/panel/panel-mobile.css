@@ -34,12 +34,49 @@
 
   [data-panel-shell] > aside [role='dialog'] {
     bottom: calc(72px + env(safe-area-inset-bottom, 0px)) !important;
+    max-height: min(82dvh, 720px) !important;
+    padding: 14px 12px 12px !important;
   }
 
   [data-panel-shell] > aside [role='dialog'] button {
     min-width: 44px;
     min-height: 44px;
     touch-action: manipulation;
+  }
+
+  [data-panel-shell] > aside [role='dialog'] [class*='mobileSearch'] {
+    margin-bottom: 12px !important;
+  }
+
+  [data-panel-shell] > aside [role='dialog'] [class*='mobileGroups'] {
+    gap: 12px !important;
+  }
+
+  [data-panel-shell] > aside [role='dialog'] [class*='mobileGroup'] {
+    gap: 5px !important;
+  }
+
+  [data-panel-shell] > aside [role='dialog'] [class*='mobileGroupLinks'] {
+    gap: 6px !important;
+  }
+
+  [data-panel-shell] > aside [role='dialog'] [class*='mobileGroupLinks'] a {
+    min-height: 44px !important;
+    gap: 7px !important;
+    padding: 6px 8px !important;
+    border-radius: 10px !important;
+    touch-action: manipulation;
+  }
+
+  [data-panel-shell] > aside [role='dialog'] [class*='mobileGroupLinks'] [class*='navMark'] {
+    width: 27px !important;
+    height: 27px !important;
+    flex-basis: 27px !important;
+  }
+
+  [data-panel-shell] > aside [role='dialog'] [class*='mobileGroupLinks'] [class*='navLabel'] {
+    font-size: 10.5px !important;
+    line-height: 1.15 !important;
   }
 
   [data-panel-main] [class*='pageWrap'] {

@@ -4,6 +4,7 @@ import test from 'node:test'
 
 const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8')
 
+const panelNavigation = read('lib/panel/navigation.js')
 const panelNav = read('components/panel/PanelNav.js')
 const panelNavStyles = read('components/panel/PanelNav.module.css')
 const workspaceNav = read('components/panel/EntityWorkspaceNav.js')
@@ -12,9 +13,10 @@ const brotherhoodLayout = read('app/panel/(protected)/hermandades/[id]/layout.js
 
 test('la navegación principal usa grupos editoriales comprensibles', () => {
   for (const label of ['Inicio', 'Contenido', 'Documentación', 'Sistema']) {
-    assert.match(panelNav, new RegExp(`label: '${label}'`))
+    assert.match(panelNavigation, new RegExp(`label: '${label}'`))
   }
-  assert.doesNotMatch(panelNav, /label: 'Conocimiento'/)
+  assert.doesNotMatch(panelNavigation, /label: 'Conocimiento'/)
+  assert.match(panelNav, /getPanelNavigationGroups/)
 })
 
 test('el Panel evita el tramo intermedio de navegación solo con siglas', () => {
