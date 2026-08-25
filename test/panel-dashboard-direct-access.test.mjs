@@ -31,7 +31,7 @@ test('inicio y menú comparten una única navegación canónica', () => {
   assert.match(page, /getPanelDashboardGroups/)
 
   for (const route of expectedRoutes) {
-    assert.match(navigation, new RegExp(route.replaceAll('/', '\\/')))
+    assert.ok(navigation.includes(route), `falta el acceso ${route}`)
   }
 })
 
