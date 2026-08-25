@@ -42,6 +42,7 @@ test('la ficha de Hermandad usa autorías, historia, Sede e imágenes procesiona
   const display = source('lib/supabase/brotherhood-display.js')
   const pageLoader = source('lib/supabase/brotherhood-page.js')
   const page = source('app/hermandades/[slug]/page.js')
+  const overview = source('components/BrotherhoodOverviewV2.js')
 
   assert.match(display, /\.from\('image_authorships'\)/)
   assert.match(display, /\.from\('image_steps'\)/)
@@ -51,6 +52,8 @@ test('la ficha de Hermandad usa autorías, historia, Sede e imágenes procesiona
   assert.match(pageLoader, /from '@\/lib\/supabase\/brotherhood-display'/)
   assert.match(pageLoader, /enrichBrotherhoodVisualSections/)
   assert.match(page, /from '@\/lib\/supabase\/brotherhood-page'/)
-  assert.match(page, /BrotherhoodSeatSection/)
+  assert.match(page, /BrotherhoodOverviewV2/)
+  assert.match(overview, /brotherhood\.sedeDetalle/)
+  assert.match(overview, /seat\.horarioApertura/)
   assert.match(page, /paso\.imagenesDetalle\?\.length/)
 })
