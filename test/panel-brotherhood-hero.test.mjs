@@ -49,6 +49,21 @@ test('el Front prioriza hero solo para Hermandades y conserva is_cover en el res
   assert.match(page, /const heroMedia = entityCoverMedia\.get\(h\.id\)/)
 })
 
+test('los encuadres guardados gobiernan PC, móvil y modo de ajuste en el Front', () => {
+  const page = source('app/hermandades/[slug]/page.js')
+  const programHero = source('components/BrotherhoodProgramHero.js')
+  const programStyles = source('components/BrotherhoodProgramHero.module.css')
+
+  assert.match(page, /focusX: heroMedia\?\.focusX/)
+  assert.match(page, /mobileFocusX: heroMedia\?\.mobileFocusX/)
+  assert.match(page, /fitMode: heroMedia\?\.fitMode/)
+  assert.match(programHero, /--hero-desktop-focus/)
+  assert.match(programHero, /--hero-mobile-focus/)
+  assert.match(programHero, /resolvedFit/)
+  assert.match(programStyles, /var\(--hero-desktop-focus/)
+  assert.match(programStyles, /var\(--hero-mobile-focus/)
+})
+
 test('la portada de Hermandad no contiene excepciones por slug', () => {
   const workspace = source('lib/panel/brotherhood-hero.js')
   const actions = source('app/panel/(protected)/hermandades/[id]/portada/actions.js')
