@@ -23,6 +23,25 @@ function Breadcrumb({ items = [] }) {
   )
 }
 
+function isWikimediaUpload(photoSrc = '') {
+  try {
+    return new URL(photoSrc).hostname === 'upload.wikimedia.org'
+  } catch {
+    return false
+  }
+}
+
+function resolveCreditHref(photoSrc = '') {
+  try {
+    const url = new URL(photoSrc)
+    if (url.hostname !== 'upload.wikimedia.org') return ''
+    const fileName = decodeURIComponent(url.pathname.split('/').filter(Boolean).at(-1) || '')
+    return fileName ? `https://commons.wikimedia.org/wiki/File:${fileName}` : ''
+  } catch {
+    return ''
+  }
+}
+
 export default function BrotherhoodProgramHero({
   title,
   officialName = '',
@@ -49,6 +68,8 @@ export default function BrotherhoodProgramHero({
     '--hero-desktop-focus': desktopFocus,
     '--hero-mobile-focus': mobileFocus,
   }
+  const creditHref = resolveCreditHref(media.photoSrc)
+  const bypassImageOptimizer = isWikimediaUpload(media.photoSrc)
 
   return (
     <section
@@ -65,6 +86,7 @@ export default function BrotherhoodProgramHero({
               alt=""
               fill
               priority
+              unoptimized={bypassImageOptimizer}
               sizes="100vw"
               aria-hidden="true"
             />
@@ -75,6 +97,7 @@ export default function BrotherhoodProgramHero({
             alt={media.photoAlt || `Fotografía de ${title}`}
             fill
             priority
+            unoptimized={bypassImageOptimizer}
             sizes="100vw"
             style={{ objectFit: resolvedFit }}
           />
@@ -123,7 +146,13 @@ export default function BrotherhoodProgramHero({
         </div>
       </div>
 
-      {hasPhoto && media.credit ? <span className={styles.credit}>{media.credit}</span> : null}
+      {hasPhoto && media.credit ? (
+        creditHref ? (
+          <a className={styles.credit} href={creditHref} target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>{media.credit}</a>
+        ) : (
+          <span className={styles.credit}>{media.credit}</span>
+        )
+      ) : null}
     </section>
   )
 }
