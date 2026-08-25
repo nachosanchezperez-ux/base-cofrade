@@ -6,14 +6,17 @@ function source(path) {
   return readFileSync(new URL(`../${path}`, import.meta.url), 'utf8')
 }
 
-test('el programa de mano se aplica por tipo Penitencia sin excepciones por slug', () => {
+test('la portada inmersiva se aplica a todas las Hermandades sin excepciones por slug', () => {
   const page = source('app/hermandades/[slug]/page.js')
   const hero = source('components/BrotherhoodProgramHero.js')
 
   assert.match(page, /import BrotherhoodProgramHero from '@\/components\/BrotherhoodProgramHero'/)
   assert.match(page, /const isPenitencia = tiposHermandad\.includes\('Penitencia'\)/)
-  assert.match(page, /\{isPenitencia \? \(/)
   assert.match(page, /<BrotherhoodProgramHero/)
+  assert.match(page, /entityType=\{brotherhoodTypeLabel\}/)
+  assert.match(page, /tiposHermandad\.includes\('Gloria'\)/)
+  assert.equal(page.includes('<RelationalEntityHero'), false)
+  assert.equal(hero.includes('Hermandad de Penitencia'), false)
   assert.equal(/h\.slug\s*===/.test(page), false)
   assert.equal(hero.includes('El Baratillo'), false)
 })
@@ -28,6 +31,9 @@ test('la portada muestra datos útiles con semántica documentada', () => {
   assert.match(page, /label: 'Pasos'/)
   assert.match(page, /h\.datosJornada\?\.totalNazarenos/)
   assert.match(page, /h\.pasos\?\.length/)
+  assert.match(page, /label: 'Fundación'/)
+  assert.match(page, /label: 'Titulares'/)
+  assert.match(page, /const heroFacts = isPenitencia \? penitentialFacts : gloryFacts/)
   assert.equal(page.includes("label: 'Carrera Oficial', value: carreraOficial"), false)
   assert.equal(page.includes('de la jornada'), false)
 })
