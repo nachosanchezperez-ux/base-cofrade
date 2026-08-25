@@ -41,7 +41,7 @@ test('Glory pages keep directory and individual procession responsibilities sepa
   assert.match(detailPage, /breadcrumbJsonLd/)
   assert.match(directoryComponent, /Sevilla capital/)
   assert.match(directoryComponent, /Provincia/)
-  assert.match(directoryComponent, /Celebradas/)
+  assert.match(directoryComponent, /Archivo/)
 })
 
 test('Glory cards remain usable on mobile and do not fabricate missing times', async () => {
@@ -54,4 +54,27 @@ test('Glory cards remain usable on mobile and do not fabricate missing times', a
   assert.match(component, /featured\.returnTime \|\| 'Por confirmar'/)
   assert.match(css, /@media \(max-width: 560px\)/)
   assert.match(css, /font-size:\s*16px/)
+})
+
+test('Glory distinguishes a past date from an explicitly held procession', async () => {
+  const [loader, component, detail] = await Promise.all([
+    read('lib/supabase/glory-directory.js'),
+    read('components/GloryDirectory.js'),
+    read('app/procesiones-de-gloria/[slug]/page.js'),
+  ])
+
+  assert.match(loader, /const isCelebrated = row\.event_status === 'held'/)
+  assert.match(loader, /const isPast = Boolean\(date\) && date < today/)
+  assert.match(component, /if \(item\.isPast\) return 'Fecha pasada'/)
+  assert.match(component, /Archivo <small>/)
+  assert.match(detail, /if \(item\.isPast\) return 'Fecha pasada'/)
+})
+
+test('Glory serializes Madrid event times with the real seasonal UTC offset', async () => {
+  const detail = await read('app/procesiones-de-gloria/[slug]/page.js')
+
+  assert.match(detail, /timeZoneName: 'longOffset'/)
+  assert.match(detail, /startDate: madridDateTime\(item\.date, item\.departureTime\)/)
+  assert.match(detail, /endDate: madridDateTime\(item\.returnDate \|\| item\.date, item\.returnTime\)/)
+  assert.doesNotMatch(detail, /:00\+02:00/)
 })

@@ -44,7 +44,7 @@ export default async function ProcesionesDeGloriaPage() {
   const currentYear = currentMadridYear()
   const yearOutings = visibleOutings.filter((item) => item.year === currentYear)
   const upcomingCount = yearOutings.filter((item) => item.isUpcoming).length
-  const celebratedCount = yearOutings.filter((item) => item.isCelebrated).length
+  const archiveCount = yearOutings.filter((item) => item.isCelebrated || item.isPast).length
   const capitalCount = yearOutings.filter((item) => item.scope === 'capital').length
   const provinceCount = yearOutings.filter((item) => item.scope === 'province').length
   const directoryJsonLd = collectionPageJsonLd({
@@ -86,7 +86,7 @@ export default async function ProcesionesDeGloriaPage() {
           <div className={styles.stats}>
             <span><strong>{yearOutings.length}</strong> documentadas</span>
             <span><strong>{upcomingCount}</strong> próximas</span>
-            <span><strong>{celebratedCount}</strong> celebradas</span>
+            <span><strong>{archiveCount}</strong> en archivo</span>
             <span><strong>{capitalCount}</strong> capital · <strong>{provinceCount}</strong> provincia</span>
           </div>
         </div>

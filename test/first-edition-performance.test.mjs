@@ -4,12 +4,11 @@ import test from 'node:test'
 
 const read = (path) => readFile(new URL(`../${path}`, import.meta.url), 'utf8')
 
-test('public functions execute next to the Supabase region', async () => {
+test('public functions use one European region without Enterprise failover', async () => {
   const config = JSON.parse(await read('vercel.json'))
 
   assert.deepEqual(config.regions, ['dub1'])
-  assert.ok(config.functionFailoverRegions?.length)
-  assert.notEqual(config.functionFailoverRegions[0], config.regions[0])
+  assert.equal(config.functionFailoverRegions, undefined)
 })
 
 test('extraordinary source links have a targeted covering index', async () => {

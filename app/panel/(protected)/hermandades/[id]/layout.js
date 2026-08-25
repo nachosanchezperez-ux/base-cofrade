@@ -5,6 +5,7 @@ export default async function BrotherhoodEditorLayout({ children, params }) {
   const root = `/panel/hermandades/${id}`
   const items = [
     { href: root, label: 'General', group: 'Ficha', match: 'exact' },
+    { href: `${root}/portada`, label: 'Portada', group: 'Ficha' },
     { href: `${root}/historia`, label: 'Historia', group: 'Ficha' },
     { href: `${root}/titulares`, label: 'Titulares', group: 'Ficha' },
     { href: `${root}/pasos`, label: 'Pasos', group: 'Cofradía' },

@@ -4,47 +4,66 @@
 
 ## Estado verificado
 
-- Revisión: **25 de agosto de 2026 · cierre técnico de primera edición**.
+- Revisión: **25 de agosto de 2026 · puerta de QA recuperada y #342 cerrada**.
 - Repositorio: `nachosanchezperez-ux/base-cofrade`.
 - Rama principal: `main`.
-- `main` actual: `8d48a47a3ed6e43b7f1d096964c2fe25f3869ea5` — **Escudos: más tamaño y sin marco en el directorio (#346)**.
-- Producción: `dpl_EPbARXLyPRdB9sxZfXcDNWm5413D` → **READY**.
-- Runtime de producción: se detectaron timeouts en `/extraordinarias/[slug]` al consultar `source_links`; la causa quedó corregida en base con un índice específico y debe verificarse de nuevo tras desplegar el cierre de primera edición.
-- Supabase: `Hilocofrade` (`kcevwkucqzcyrqaimyhl`) → **ACTIVE_HEALTHY**.
-- Historial local y remoto de migraciones: **171 versiones alineadas**, desde `20260812090001` hasta `20260825141316`, sin versiones ausentes ni duplicados de timestamp detectados.
-- Migraciones remotas previamente divergentes:
-  - `20260824104227_extraordinaria_dolores_cerro_fotografia_fuente_oficial` → **RECONCILIADA EN GIT** mediante #347; SQL recuperado literalmente de `supabase_migrations.schema_migrations` y no reejecutado.
-  - `20260825094306_normaliza_textos_publicos_musica_extraordinarias` → **VERSIONADA EN GIT Y RECONCILIADA** mediante #345; el archivo coincide con la migración ya aplicada en remoto y no se reejecutó.
-- Última migración remota comprobada: `20260825141316_index_extraordinary_source_links`.
+- `main` actual: `ba5481cd81586c49c71111652d9b5b80d3cdb720` — **Hermandades: portada editable y programa de mano (#342)**.
+- Producción: `dpl_5zuNBzYN2ePdhEUnmn2ZqhGB4LkB` → **READY**.
+- Región real del deployment de producción: **`dub1`**.
+- Runtime de producción del deployment actual: **sin registros `error` ni `fatal`** tras el smoke público.
+- Supabase: `Hilocofrade` (`kcevwkucqzcyrqaimyhl`) → **ACTIVE_HEALTHY**, región `eu-west-1`.
+- Historial local y remoto de migraciones: **171 / 171 versiones alineadas**, desde `20260812090001` hasta `20260825141316`, sin versiones ausentes ni timestamps duplicados.
+- `20260824104227` y `20260825094306` continúan reconciliadas en Git y no se han reejecutado.
+
+## Vercel · configuración regional canónica
+
+- Plan observado: **Pro**.
+- Configuración versionada: una única región primaria mediante `regions: ["dub1"]`.
+- No existe `functionFailoverRegions` ni otra región pasiva versionada.
+- La configuración anterior `functionFailoverRegions: ["fra1"]` activaba las regiones pasivas de Serverless Functions, función restringida al plan Enterprise, y bloqueaba los previews automáticos.
+- #351 retiró únicamente la parte incompatible; no modificó lógica de aplicación ni infraestructura.
+- Preview de validación #351: `dpl_GxpUsBd1z18zxhjXYkme4ruSE4Fz` → **READY**, región real `dub1`.
+- Producción tras #351: `dpl_FrLuZYDnorpPk6unzLCKgscsWThu` → **READY**, región real `dub1`.
+- Preview de #342: `dpl_6s9axDQDYRPMBFHSDjgtdKvNoYiZ` → **READY**, región real `dub1`.
+- No volver a añadir regiones pasivas o failover de Functions sin comprobar primero las prestaciones del plan vigente.
+- Los deployments anteriores observados en `iad1` pertenecen al estado previo; no describen la configuración activa actual.
+
+**VERCEL · PUERTA DE QA → 🟢 RECUPERADA**
 
 ## Producción cerrada recientemente
 
-- #337 · Portada editorial + Hero V2 de Imágenes → **FUSIONADA Y DESPLEGADA**.
-- #339 · Panel V2 · fotografía contextual y operación móvil → **FUSIONADA Y DESPLEGADA**.
-- #340 / #341 · SEO de Extraordinarias → **FUSIONADAS Y DESPLEGADAS**.
-- #343 · Enlaces Hermandades/Bandas → Extraordinarias → **FUSIONADA Y DESPLEGADA**.
-- #344 · Edición contextual del escudo de Hermandad → **FUSIONADA Y DESPLEGADA**.
-- #345 · Visor reutilizable de recorridos + normalización editorial → **FUSIONADA Y DESPLEGADA**.
-- #347 · Reconciliación de migración remota `20260824104227` → **FUSIONADA**.
-- #346 · Escudos más grandes y sin marco en directorio → **FUSIONADA Y DESPLEGADA**.
+- #349 · Primera edición · cierre técnico, rendimiento y navegación → **FUSIONADA Y DESPLEGADA**.
+- #351 · Vercel · recuperar previews sin regiones pasivas Enterprise → **FUSIONADA Y DESPLEGADA**.
+- #342 · Hermandades · portada editable + programa de mano y resumen unificado → **FUSIONADA Y DESPLEGADA**.
+
+### Resultado de #342
+
+- CI #929 → **SUCCESS**; suite local → **318 / 318**; build Next.js 16.3 → **PASS**.
+- Reconciliada con el `main` real sin conflictos y con un diff efectivo de 14 archivos.
+- Smoke autenticado realizado en Pastora de Cantillana, San Benito y El Baratillo.
+- Selección, guardado, recarga, reemplazo, edición, retirada, modos `auto`/`cover`/`contain` y foco independiente para móvil validados.
+- Portada, escudo, galería y recurso original permanecen como usos distintos; derechos y créditos se conservan.
+- El reemplazo conserva la portada anterior hasta validar el nuevo uso y aplica rollback defensivo si falla la limpieza.
+- Las relaciones `hero` temporales del smoke se retiraron; las tres Hermandades quedaron restauradas a su estado inicial.
+- Auditor: **sin bloqueo estructural ni relevante**, sin hardcodes por slug, segunda arquitectura de media o subida pesada vía Vercel Function.
+- Producción posterior: `dpl_5zuNBzYN2ePdhEUnmn2ZqhGB4LkB` → **READY**; smoke público y runtime correctos.
 
 ## Frentes abiertos reales
 
-### #342 · Hermandades · portada editable + programa de mano y resumen unificado
+### #350 · Glorias · calendario y fichas de procesiones de Sevilla
 
-- **ABIERTA / DRAFT**.
-- Es el único frente estructural activo para cerrar la primera edición.
-- Incluye `Panel → Hermandades → Portada`, reutilización de `media_assets`, relación `hero`, encuadre PC/móvil y modos Automático/Cubrir/Completa.
-- No introduce migraciones, esquema ni RLS.
-- Está reconciliada con `main`, mergeable, con CI verde y preview READY en la última comprobación.
-- Requiere smoke autenticado real en Pastora de Cantillana, San Benito y El Baratillo.
-- Auditor debe bloquear cualquier excepción por `slug` o hardcode en la solución definitiva de Hermandades.
+- **ABIERTA / EN REEVALUACIÓN; NO FUSIONADA**.
+- Head observado antes de reconciliar: `01739af870bdbfbabaac7978eca128072ae53bae`.
+- Divergencia frente a `main`: **1 commit por delante y 2 por detrás**; GitHub la marca no fusionable hasta actualizarla.
+- CI histórico #926 → **SUCCESS**, pero el preview antiguo quedó bloqueado por la configuración regional Enterprise ya retirada de `main`.
+- Diff efectivo observado: 10 archivos, sin migraciones, esquema ni RLS y sin solape de archivos con #342.
+- Debe reconciliarse con el `main` actual, generar un preview automático nuevo y superar auditoría DATA/Product antes de decidir su fusión.
+- La auditoría debe confirmar que `Procesión de Gloria`, `salida`, `romería`, `traslado`, `extraordinaria` y `culto externo` no se mezclan ni generan una arquitectura paralela a `outings`.
 
 ### #49 · Importador documental asistido
 
 - **APARCADA**.
-- No utilizar como base.
-- No rebasar, fusionar ni aplicar sus migraciones 049/050 dentro del carril actual.
+- No utilizar como base; no actualizar, rebasar, fusionar ni aplicar sus migraciones.
 
 ## Migraciones · estado canónico
 
@@ -56,55 +75,33 @@ Timestamps remotos duplicados       0 detectados
 20260824104227 en Git               🟢 SÍ
 20260825094306 en Git               🟢 SÍ
 Historial completo alineado         🟢 SÍ
-Índice fuentes extraordinarias      🟢 APLICADO
+Cambios Supabase en #351 / #342     NINGUNO
 ```
-
-La reconciliación se realizó registrando como aplicadas las migraciones cuyos efectos ya estaban verificados en producción, sin reejecutar sus SQL. Después se aplicaron dos endurecimientos de permisos, una alineación del contrato SVG de Storage y un índice de rendimiento, todos versionados en Git.
-
-## Cierre técnico de primera edición en curso
-
-- Funciones de Vercel preparadas para ejecutarse en `dub1`, junto a Supabase `eu-west-1`, con `fra1` como failover.
-- Consulta de fuentes de Extraordinarias reducida a un único viaje y respaldada por `source_links_outing_idx`.
-- Permisos internos de funciones trigger retirados de `anon` y `authenticated`; importador documental aparcado también en ACL.
-- Bucket `hilo-media` alineado con el editor de escudos SVG saneados.
-- Home con dos accesos inequívocos de primera visita: Directorio y próximas Extraordinarias.
-- `robots.txt` reserva APIs, Panel y rutas técnicas de prueba.
-- Suite local: **306 tests verdes**. Build de Next.js 16.3: **verde**; los únicos avisos locales corresponden a la ausencia deliberada de variables de Supabase en el entorno de build.
-- Checklist canónica: `docs/PRIMERA-EDICION-LANZAMIENTO.md`.
-
-Advisors de seguridad restantes:
-
-- cinco avisos sobre helpers `SECURITY DEFINER` del Panel son intencionales: comprueban `auth.uid()` y son consumidos por las políticas RLS; revocar su ejecución a `authenticated` rompería el control editorial;
-- `completeness_rules` permanece cerrada por RLS y sin política pública de forma deliberada;
-- la protección contra contraseñas filtradas sigue desactivada y es la única acción manual de seguridad previa al lanzamiento.
 
 ## Panel V2 · principios vigentes
 
-- Front público stateless.
-- Panel autenticado/editorial.
-- `media_assets` es el archivo común; los usos se expresan mediante relaciones.
+- Front público stateless; Panel autenticado y editorial.
+- `media_assets` es el archivo común y los usos se expresan mediante relaciones.
+- `PORTADA ≠ GALERÍA ≠ ESCUDO ≠ OTROS RECURSOS`.
 - Todo recurso visible en una ficha debe tender a poder editarse desde el mismo contexto.
-- Carga de bytes directa desde navegador a Supabase Storage mediante URL firmada cuando corresponde.
+- Los bytes se cargan directamente desde navegador a Supabase Storage mediante URL firmada cuando corresponde.
 - Móvil: inputs de 16 px, objetivos táctiles adecuados, safe areas, navegación inferior y guardado contextual.
-- Escudo de Hermandad editable desde la ficha, sin introducir rutas técnicas manualmente.
 - Multimedia se conserva como biblioteca avanzada, no como paso obligatorio para tareas editoriales cotidianas.
 
-## Precauciones
+## Bloqueos y precauciones reales
 
-1. **No crear ni aplicar nuevas migraciones** sin refrescar primero el historial remoto/local completo.
-2. #49 continúa fuera de alcance.
-3. No desarrollar en paralelo dos soluciones para la cabecera/portada de Hermandades: #342 es el carril estructural designado.
-4. Antes de fusionar cualquier PR abierta, refrescar `main` y comprobar solapes reales.
+1. #350 aún no tiene preview actual ni auditoría conceptual cerrada tras reconciliar con `main`.
+2. No crear ni aplicar migraciones sin refrescar antes el historial local/remoto completo.
+3. #49 continúa fuera de alcance.
+4. No reintroducir `functionFailoverRegions` o regiones pasivas sin revisar el plan de Vercel.
+5. La protección contra contraseñas filtradas de Supabase Auth continúa como acción manual de seguridad previa al lanzamiento; no ha formado parte de esta tarea.
 
 ## Orden operativo vigente
 
-1. Desplegar y validar el corte técnico de primera edición en preview.
-2. Medir Home, Directorio, Extraordinarias y Pastora desde la nueva región; confirmar cero timeouts.
-3. Completar el smoke autenticado de #342: Pastora de Cantillana, San Benito y El Baratillo.
-4. Fusionar #342 únicamente si no hay bloqueo.
-5. Activar protección contra contraseñas filtradas en Supabase Auth.
-6. Ejecutar la matriz pública final de móvil/escritorio y accesibilidad esencial.
-7. Fusionar, verificar producción y congelar el alcance de la edición 1.0.
-8. Mover cualquier mejora no bloqueante al backlog posterior al lanzamiento.
+1. Reconciliar #350 con `main` `ba5481cd`.
+2. Ejecutar CI, build y preview automático en la configuración regional soportada.
+3. Auditar el modelo de Glorias contra `outings` y sus conceptos relacionados.
+4. Fusionar #350 solo si modelo, móvil, SEO, preview y Auditor quedan conformes.
+5. Validar producción y detenerse sin abrir otro frente.
 
-**ESTADO-PROYECTO → 🟢 GIT ↔ SUPABASE ALINEADOS · CIERRE TÉCNICO DE PRIMERA EDICIÓN EN VALIDACIÓN · #342 ÚNICO FRENTE ESTRUCTURAL**
+**ESTADO-PROYECTO → 🟢 QA VERCEL RECUPERADA · PRODUCCIÓN ESTABLE · GIT ↔ SUPABASE ALINEADOS · #342 CERRADA · #350 EN REEVALUACIÓN · #49 APARCADA**

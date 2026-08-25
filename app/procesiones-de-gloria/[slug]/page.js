@@ -36,6 +36,21 @@ function formatSeoDate(value) {
   }).format(new Date(`${value}T12:00:00`))
 }
 
+function madridUtcOffset(value) {
+  if (!value) return '+00:00'
+  const zone = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'Europe/Madrid',
+    timeZoneName: 'longOffset',
+  }).formatToParts(new Date(`${value}T12:00:00Z`))
+    .find((part) => part.type === 'timeZoneName')?.value || 'GMT+00:00'
+  return zone.replace('GMT', '') || '+00:00'
+}
+
+function madridDateTime(date, time) {
+  if (!date) return ''
+  return time ? `${date}T${time}:00${madridUtcOffset(date)}` : date
+}
+
 function entryLabel(item) {
   if (item.returnTime) return item.returnTime
   const row = item.schedule.find((scheduleItem) => {
@@ -51,6 +66,7 @@ function entryLabel(item) {
 function statusLabel(item) {
   if (item.isCancelled) return 'Cancelada'
   if (item.isCelebrated) return 'Celebrada'
+  if (item.isPast) return 'Fecha pasada'
   return item.urgencyLabel || 'Próxima'
 }
 
@@ -142,9 +158,9 @@ export default async function GloryDetailPage({ params }) {
     '@id': `${canonicalUrl}#event`,
     url: canonicalUrl,
     name: item.title,
-    startDate: item.departureTime ? `${item.date}T${item.departureTime}:00+02:00` : item.date,
+    startDate: madridDateTime(item.date, item.departureTime),
     ...(item.returnDate || item.returnTime ? {
-      endDate: `${item.returnDate || item.date}${item.returnTime ? `T${item.returnTime}:00+02:00` : ''}`,
+      endDate: madridDateTime(item.returnDate || item.date, item.returnTime),
     } : {}),
     description: item.description || pageDescription,
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
