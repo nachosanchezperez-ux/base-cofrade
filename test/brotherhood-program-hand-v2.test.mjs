@@ -22,7 +22,7 @@ test('la portada muestra los cuatro datos útiles de un programa de mano', () =>
 
   assert.match(page, /label: 'Salida'/)
   assert.match(page, /label: 'Carrera Oficial'/)
-  assert.match(page, /`Nazarenos · \$\{h\.datosJornada\?\.ano\}`/)
+  assert.match(page, /Nazarenos · \$\{h\.datosJornada\.ano\}/)
   assert.match(page, /label: 'Pasos'/)
   assert.match(page, /h\.datosJornada\?\.totalNazarenos/)
   assert.match(page, /h\.pasos\?\.length/)
