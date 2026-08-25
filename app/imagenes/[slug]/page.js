@@ -2,14 +2,11 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import EntitySectionNav from '@/components/EntitySectionNav';
 import EntityMediaGallery from '@/components/EntityMediaGallery';
+import ImageHeroV2 from '@/components/ImageHeroV2';
 import JsonLd from '@/components/JsonLd';
-import RelationalEntityHero from '@/components/RelationalEntityHero';
 import RelationalThread from '@/components/RelationalThread';
 import SourcesBlock from '@/components/SourcesBlock';
-import {
-  getPublishedEntityCoverMedia,
-  getPublishedEntityMedia,
-} from '@/lib/supabase/entity-media';
+import { getPublishedEntityMedia } from '@/lib/supabase/entity-media';
 import { getImagenPageBySlug } from '@/lib/supabase/public-entity-pages';
 import {
   absoluteUrl,
@@ -17,6 +14,12 @@ import {
   pageTitle,
   seoDescription,
 } from '@/lib/seo';
+
+function selectEditorialHero(items = []) {
+  return items.find((item) => item.relationType === 'hero')
+    || items.find((item) => item.isCover)
+    || null;
+}
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -30,7 +33,8 @@ export async function generateMetadata({ params }) {
   }
 
   const { imagen, hermandad } = result;
-  const coverMedia = await getPublishedEntityCoverMedia(imagen.id);
+  const media = await getPublishedEntityMedia(imagen.id);
+  const coverMedia = selectEditorialHero(media);
   const title = imagen.nombre;
   const description = seoDescription(
     imagen.descripcion,
@@ -70,8 +74,11 @@ export default async function ImagenPage({ params }) {
 
   const { imagen, hermandad, pasos = [] } = result;
   const entityMedia = await getPublishedEntityMedia(imagen.id);
-  const coverMedia = entityMedia.find((item) => item.isCover) || null;
-  const galleryMedia = entityMedia.filter((item) => !item.isCover);
+  const explicitHeroMedia = entityMedia.find((item) => item.relationType === 'hero') || null;
+  const portraitMedia = entityMedia.find((item) => item.isCover) || null;
+  const coverMedia = explicitHeroMedia || portraitMedia;
+  const galleryMedia = entityMedia.filter((item) => !item.isCover && item.relationType !== 'hero');
+  const primaryStep = pasos.find((paso) => paso.slug) || pasos[0] || null;
   const canonicalPath = `/imagenes/${imagen.slug}`;
   const cronologia = imagen.cronologia?.length
     ? imagen.cronologia
@@ -135,7 +142,7 @@ export default async function ImagenPage({ params }) {
         name: imagen.nombre,
         artform: imagen.tipologia || imagen.tipo,
         ...(entityMedia.length ? {
-          image: entityMedia.map((item) => absoluteUrl(item.path)),
+          image: [...new Set(entityMedia.map((item) => absoluteUrl(item.path)))],
         } : {}),
         ...(imagen.material ? { artMedium: imagen.material } : {}),
         ...(imagen.autor && !/pendiente|desconocido|anónimo/i.test(imagen.autor) ? {
@@ -145,17 +152,15 @@ export default async function ImagenPage({ params }) {
           },
         } : {}),
       }} />
-      <RelationalEntityHero
-        variant="image"
+      <ImageHeroV2
         entityType={hermandad ? 'Imagen titular' : 'Imagen'}
         title={imagen.nombre}
         breadcrumbItems={[
           { label: 'Imágenes', href: '/imagenes' },
           { label: 'Ficha' },
         ]}
-        badges={[imagen.tipologia || imagen.tipo]}
         relation={hermandad ? {
-          label: 'Pertenece a',
+          label: 'Titular de',
           name: hermandad.nombrePopular,
           href: `/hermandades/${hermandad.slug}`,
           crestSrc: hermandad.escudoPath || '',
@@ -163,7 +168,11 @@ export default async function ImagenPage({ params }) {
         facts={[
           { label: 'Autoría', value: imagen.autor },
           { label: 'Datación', value: imagen.fecha },
-          { label: 'Tipología', value: imagen.tipologia || imagen.tipo },
+          primaryStep ? {
+            label: 'Procesiona en',
+            value: primaryStep.nombre,
+            href: primaryStep.slug ? `/pasos/${primaryStep.slug}` : undefined,
+          } : null,
         ]}
         media={{
           photoSrc: coverMedia?.path || '',
