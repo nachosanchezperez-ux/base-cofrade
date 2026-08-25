@@ -75,12 +75,14 @@ test('filtra anotaciones musicales de recorridos estructurados para no duplicar 
   assert.deepEqual(plaza.annotations, [{ type: 'note', label: 'Petalá' }])
 })
 
-test('la ficha maestra no renderiza horarios ni música dentro del recorrido', () => {
+test('la ficha maestra reserva el recorrido exclusivamente para el itinerario', () => {
   const source = readFileSync(new URL('../components/ProcessionRoute.js', import.meta.url), 'utf8')
 
   assert.equal(source.includes('point.annotations'), false)
   assert.equal(source.includes('annotation.time'), false)
   assert.equal(source.includes('annotation.label'), false)
+  assert.equal(source.includes('departureTime'), false)
+  assert.equal(source.includes('entryTime'), false)
 })
 
 test('conserva el texto como fallback cuando no existe un itinerario separable', () => {
