@@ -59,6 +59,11 @@ function dimensionAdvice(width, height) {
   }
 }
 
+function syncHiddenCrestPath(nextPath) {
+  const input = document.querySelector('input[name="crest_path"]')
+  if (input instanceof HTMLInputElement) input.value = nextPath
+}
+
 export default function BrotherhoodCrestEditor({
   brotherhoodId,
   brotherhoodName,
@@ -66,7 +71,9 @@ export default function BrotherhoodCrestEditor({
   canEdit = true,
 }) {
   const inputId = useId()
+  const inputRef = useRef(null)
   const alertRef = useRef(null)
+  const [displayPath, setDisplayPath] = useState(currentPath)
   const [selectedFile, setSelectedFile] = useState(null)
   const [previewUrl, setPreviewUrl] = useState('')
   const [fileAdvice, setFileAdvice] = useState(null)
@@ -86,6 +93,7 @@ export default function BrotherhoodCrestEditor({
 
   function clearSelection() {
     if (previewUrl) URL.revokeObjectURL(previewUrl)
+    if (inputRef.current) inputRef.current.value = ''
     setSelectedFile(null)
     setPreviewUrl('')
     setFileAdvice(null)
@@ -187,7 +195,19 @@ export default function BrotherhoodCrestEditor({
         if (result?.error) {
           announceError(result.error)
           setPhase('idle')
+          return
         }
+        if (!result?.saved || !result.publicUrl) {
+          announceError('El escudo se subió, pero no se pudo confirmar su publicación.')
+          setPhase('idle')
+          return
+        }
+
+        setDisplayPath(result.publicUrl)
+        syncHiddenCrestPath(result.publicUrl)
+        clearSelection()
+        setFileAdvice({ tone: 'success', text: 'Escudo actualizado correctamente. Puedes seguir editando la ficha sin perder cambios.' })
+        setPhase('idle')
       } catch (uploadError) {
         announceError(errorMessage(uploadError))
         setPhase('idle')
@@ -196,7 +216,7 @@ export default function BrotherhoodCrestEditor({
   }
 
   function handleRemove() {
-    if (pending || !currentPath) return
+    if (pending || !displayPath) return
     if (!window.confirm('¿Retirar el escudo de la ficha? El archivo histórico solo se borrará si fue subido desde este editor.')) return
 
     const metadata = new FormData()
@@ -206,7 +226,23 @@ export default function BrotherhoodCrestEditor({
     startTransition(async () => {
       try {
         setPhase('removing')
-        await removeBrotherhoodCrestAction(metadata)
+        const result = await removeBrotherhoodCrestAction(metadata)
+        if (result?.error) {
+          announceError(result.error)
+          setPhase('idle')
+          return
+        }
+        if (!result?.removed) {
+          announceError('No se pudo confirmar la retirada del escudo.')
+          setPhase('idle')
+          return
+        }
+
+        clearSelection()
+        setDisplayPath('')
+        syncHiddenCrestPath('')
+        setFileAdvice({ tone: 'success', text: 'Escudo retirado correctamente. Puedes seguir editando la ficha.' })
+        setPhase('idle')
       } catch (removeError) {
         announceError(errorMessage(removeError))
         setPhase('idle')
@@ -214,7 +250,7 @@ export default function BrotherhoodCrestEditor({
     })
   }
 
-  const previewSource = previewUrl || currentPath
+  const previewSource = previewUrl || displayPath
 
   return (
     <section className={`${panelStyles.panelCard} ${styles.card}`} id="escudo" data-panel-crest-editor>
@@ -223,7 +259,7 @@ export default function BrotherhoodCrestEditor({
           <span className={panelStyles.eyebrow}>Identidad visual</span>
           <h3>Escudo de la hermandad</h3>
         </div>
-        <p>Sube, sustituye o retira el escudo desde aquí. La ficha pública se actualizará al guardar.</p>
+        <p>Sube, sustituye o retira el escudo desde aquí. La ficha pública se actualiza sin sacarte de la edición.</p>
       </div>
 
       <div className={styles.layout}>
@@ -243,8 +279,8 @@ export default function BrotherhoodCrestEditor({
             )}
           </div>
           <div className={styles.previewStatus}>
-            <strong>{previewUrl ? 'Nuevo escudo preparado' : currentPath ? 'Escudo publicado' : 'Escudo pendiente'}</strong>
-            <small>{selectedFile ? `${selectedFile.name} · ${formatFileSize(selectedFile.size)}` : currentPath ? 'Este es el recurso que usa ahora la ficha.' : 'Todavía no hay un recurso visual vinculado.'}</small>
+            <strong>{previewUrl ? 'Nuevo escudo preparado' : displayPath ? 'Escudo publicado' : 'Escudo pendiente'}</strong>
+            <small>{selectedFile ? `${selectedFile.name} · ${formatFileSize(selectedFile.size)}` : displayPath ? 'Este es el recurso que usa ahora la ficha.' : 'Todavía no hay un recurso visual vinculado.'}</small>
           </div>
         </div>
 
@@ -261,6 +297,7 @@ export default function BrotherhoodCrestEditor({
               <span>Archivo del escudo</span>
               <span className={styles.filePicker}>
                 <input
+                  ref={inputRef}
                   id={inputId}
                   name="crest_file"
                   type="file"
@@ -269,7 +306,7 @@ export default function BrotherhoodCrestEditor({
                   disabled={pending || !canEdit}
                 />
                 <span>
-                  <strong>{selectedFile ? selectedFile.name : currentPath ? 'Sustituir escudo' : 'Elegir escudo'}</strong>
+                  <strong>{selectedFile ? selectedFile.name : displayPath ? 'Sustituir escudo' : 'Elegir escudo'}</strong>
                   <small>{selectedFile ? 'Archivo preparado para subir' : 'Archivos, Fototeca o almacenamiento del dispositivo'}</small>
                 </span>
                 <b aria-hidden="true">{selectedFile ? 'Cambiar' : 'Elegir'}</b>
@@ -289,9 +326,9 @@ export default function BrotherhoodCrestEditor({
             <div className={styles.actions}>
               <small>SVG debe ser limpio y autocontenido. El Panel comprueba el archivo antes de publicarlo.</small>
               <div>
-                {currentPath ? <button className={panelStyles.secondaryButton} type="button" onClick={handleRemove} disabled={pending || !canEdit}>Retirar escudo</button> : null}
+                {displayPath ? <button className={panelStyles.secondaryButton} type="button" onClick={handleRemove} disabled={pending || !canEdit}>Retirar escudo</button> : null}
                 <button className={panelStyles.primaryButton} type="submit" disabled={pending || !selectedFile || !canEdit}>
-                  {pending ? pendingCopy(phase) : currentPath ? 'Sustituir escudo' : 'Subir escudo'}
+                  {pending ? pendingCopy(phase) : displayPath ? 'Sustituir escudo' : 'Subir escudo'}
                 </button>
               </div>
             </div>
