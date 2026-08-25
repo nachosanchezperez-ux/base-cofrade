@@ -9,7 +9,7 @@ test('Glory directory reuses the generic outings model without schema-specific h
 
   assert.match(loader, /\.from\('outings'\)/)
   assert.match(loader, /\.eq\('character', 'ordinary'\)/)
-  assert.match(loader, /\.eq\('outing_type', 'Procesión de Gloria'\)/)
+  assert.match(loader, /\.ilike\('outing_type', 'Procesión de Gloria'\)/)
   assert.match(loader, /\.eq\('status', 'published'\)/)
   assert.doesNotMatch(loader, /pastora-de-cantillana|asuncion-de-cantillana/i)
 })
