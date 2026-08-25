@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict'
+import { readFileSync } from 'node:fs'
 import test from 'node:test'
 import { buildProcessionRoute } from '../lib/procession-route.js'
 
@@ -27,14 +28,6 @@ test('detecta salida y entrada en el mismo lugar y separa ida y regreso', () => 
   assert.equal(route.legs[1].points[0].label, 'Plaza Fernández Velasco')
   assert.equal(route.legs[1].points.at(-1).label, 'Iglesia de San Benito Abad')
   assert.equal(route.legs[1].points.at(-1).role, 'end')
-  assert.deepEqual(
-    route.legs[0].points.at(-1).annotations,
-    [{ type: 'schedule', label: 'Entronización', time: '18:30' }]
-  )
-  assert.equal(
-    route.legs.flatMap((leg) => leg.points).flatMap((point) => point.annotations).some((annotation) => annotation.type === 'music'),
-    false
-  )
 })
 
 test('mantiene origen y destino separados cuando la extraordinaria es un traslado', () => {
@@ -80,6 +73,14 @@ test('filtra anotaciones musicales de recorridos estructurados para no duplicar 
 
   const plaza = route.legs[0].points.find((point) => point.label === 'Plaza Mayor')
   assert.deepEqual(plaza.annotations, [{ type: 'note', label: 'Petalá' }])
+})
+
+test('la ficha maestra no renderiza horarios ni música dentro del recorrido', () => {
+  const source = readFileSync(new URL('../components/ProcessionRoute.js', import.meta.url), 'utf8')
+
+  assert.equal(source.includes('point.annotations'), false)
+  assert.equal(source.includes('annotation.time'), false)
+  assert.equal(source.includes('annotation.label'), false)
 })
 
 test('conserva el texto como fallback cuando no existe un itinerario separable', () => {
