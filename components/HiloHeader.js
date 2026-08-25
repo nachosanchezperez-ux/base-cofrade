@@ -27,6 +27,7 @@ const homeScrollSections = [
 const directoryLinks = [
   ['/directorio', 'Directorio'],
   ['/hermandades', 'Hermandades'],
+  ['/procesiones-de-gloria', 'Procesiones de Gloria'],
   ['/imagenes', 'Imágenes'],
   ['/pasos', 'Pasos'],
   ['/bandas', 'Bandas'],

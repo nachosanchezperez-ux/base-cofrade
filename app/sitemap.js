@@ -6,6 +6,7 @@ import {
 import { absoluteUrl } from '@/lib/seo';
 import { getHermandadesDirectory } from '@/lib/supabase/brotherhood-directory';
 import { getExtraordinaryDirectory } from '@/lib/supabase/extraordinary-directory';
+import { getGloryDirectory } from '@/lib/supabase/glory-directory';
 import { createPublicClient } from '@/lib/supabase/public';
 
 export const revalidate = 3600;
@@ -66,6 +67,11 @@ const staticEntries = [
     url: absoluteUrl('/extraordinarias'),
     changeFrequency: 'daily',
     priority: 0.9,
+  },
+  {
+    url: absoluteUrl('/procesiones-de-gloria'),
+    changeFrequency: 'daily',
+    priority: 0.88,
   },
   {
     url: absoluteUrl('/pregunta'),
@@ -139,11 +145,22 @@ function extraordinaryEntries(outings) {
     }));
 }
 
+function gloryEntries(outings) {
+  return outings
+    .filter((outing) => Boolean(outing.detailHref))
+    .map((outing) => ({
+      url: absoluteUrl(outing.detailHref),
+      changeFrequency: outing.isUpcoming ? 'daily' : 'monthly',
+      priority: outing.isUpcoming ? 0.8 : 0.66,
+    }));
+}
+
 export default async function sitemap() {
-  const [entities, brotherhoodDirectory, extraordinaryOutings] = await Promise.all([
+  const [entities, brotherhoodDirectory, extraordinaryOutings, gloryOutings] = await Promise.all([
     publishedEntities(),
     getHermandadesDirectory(),
     getExtraordinaryDirectory(),
+    getGloryDirectory(),
   ]);
   const brotherhoods = entities.filter((item) => item.entity_type === 'brotherhood');
   const bands = entities.filter((item) => item.entity_type === 'band');
@@ -177,6 +194,7 @@ export default async function sitemap() {
     )),
     ...directoryEntries(brotherhoodDirectory),
     ...extraordinaryEntries(extraordinaryOutings),
+    ...gloryEntries(gloryOutings),
   ];
 
   return [...new Map(entries.map((entry) => [entry.url, entry])).values()];
