@@ -40,7 +40,7 @@ export default async function ImageEditorPage({ params, searchParams }) {
       {!canEdit ? <div className={styles.readOnlyNotice}>Estás consultando la imagen como colaborador. Un editor debe realizar los cambios.</div> : null}
 
       <section className={styles.metricGrid} aria-label="Cobertura de la ficha">
-        <article className={styles.metricCard}><span>Multimedia</span><strong>{coverage.media}</strong><small>{coverage.cover ? 'Portada definida' : 'Sin portada'}</small></article>
+        <article className={styles.metricCard}><span>Multimedia</span><strong>{coverage.media}</strong><small>{coverage.hero ? 'Portada de ficha definida' : coverage.cover ? 'Retrato disponible · portada pendiente' : 'Sin recursos principales'}</small></article>
         <article className={styles.metricCard}><span>Hermandades</span><strong>{coverage.brotherhoods}</strong><small>vínculos activos</small></article>
         <article className={styles.metricCard}><span>Pasos</span><strong>{coverage.steps}</strong><small>presencia procesional</small></article>
         <article className={styles.metricCard}><span>Fuentes</span><strong>{coverage.sources}</strong><small>Fuentes directas</small></article>
