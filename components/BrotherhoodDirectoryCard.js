@@ -21,7 +21,10 @@ export default function BrotherhoodDirectoryCard({ hermandad, contextLabel }) {
 
   return (
     <Link href={`/hermandades/${hermandad.slug}`} className={`${styles.item} ${contractStyles.contract}`}>
-      <span className={`${styles.crestWrap} ${contractStyles.media} ${crest ? crestStyles.crestMedia : crestStyles.fallbackMedia}`}>
+      <span
+        className={`${styles.crestWrap} ${contractStyles.media} ${crest ? crestStyles.crestMedia : crestStyles.fallbackMedia}`}
+        data-media-overflow={crest ? 'visible' : undefined}
+      >
         {crest ? (
           <BrotherhoodDirectoryCrestImage
             className={`${styles.crestImage} ${crestStyles.crestImage}`}
