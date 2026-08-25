@@ -2,7 +2,6 @@
 
 import { randomUUID } from 'node:crypto'
 import { revalidatePath } from 'next/cache'
-import { redirect } from 'next/navigation'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
 
@@ -246,6 +245,7 @@ export async function saveBrotherhoodCrestUploadAction(formData) {
     }
 
     revalidateBrotherhood(context)
+    return { saved: true, publicUrl }
   } catch (error) {
     if (cleanupPath && context?.supabase) {
       await context.supabase.storage.from('hilo-media').remove([cleanupPath])
@@ -254,8 +254,6 @@ export async function saveBrotherhoodCrestUploadAction(formData) {
     console.error('[Hilo Cofrade] Error al guardar el escudo', error)
     return { error: message }
   }
-
-  redirect(`/panel/hermandades/${context.brotherhoodId}?saved=crest#escudo`)
 }
 
 export async function removeBrotherhoodCrestAction(formData) {
@@ -263,50 +261,52 @@ export async function removeBrotherhoodCrestAction(formData) {
   const supabase = await createClient()
   const brotherhoodId = uuid(formData, 'brotherhood_id')
 
-  const entityResult = await supabase
-    .from('entities')
-    .select('id, name, slug, entity_type, status')
-    .eq('id', brotherhoodId)
-    .eq('entity_type', 'brotherhood')
-    .neq('status', 'archived')
-    .maybeSingle()
-  if (entityResult.error || !entityResult.data) throw new Error('No se pudo comprobar la Hermandad.')
+  try {
+    const entityResult = await supabase
+      .from('entities')
+      .select('id, name, slug, entity_type, status')
+      .eq('id', brotherhoodId)
+      .eq('entity_type', 'brotherhood')
+      .neq('status', 'archived')
+      .maybeSingle()
+    if (entityResult.error || !entityResult.data) throw new Error('No se pudo comprobar la Hermandad.')
 
-  const brotherhoodResult = await supabase
-    .from('brotherhoods')
-    .select('popular_name, crest_path')
-    .eq('entity_id', brotherhoodId)
-    .maybeSingle()
-  if (brotherhoodResult.error || !brotherhoodResult.data) throw new Error('No se pudo comprobar el escudo actual.')
+    const brotherhoodResult = await supabase
+      .from('brotherhoods')
+      .select('popular_name, crest_path')
+      .eq('entity_id', brotherhoodId)
+      .maybeSingle()
+    if (brotherhoodResult.error || !brotherhoodResult.data) throw new Error('No se pudo comprobar el escudo actual.')
 
-  const previousPath = brotherhoodResult.data.crest_path || ''
-  const updateResult = await supabase
-    .from('brotherhoods')
-    .update({ crest_path: null })
-    .eq('entity_id', brotherhoodId)
-    .select('entity_id')
-    .single()
-  if (updateResult.error) throw new Error(`No se pudo retirar el escudo: ${updateResult.error.message}`)
+    const previousPath = brotherhoodResult.data.crest_path || ''
+    const updateResult = await supabase
+      .from('brotherhoods')
+      .update({ crest_path: null })
+      .eq('entity_id', brotherhoodId)
+      .select('entity_id')
+      .single()
+    if (updateResult.error) throw new Error(`No se pudo retirar el escudo: ${updateResult.error.message}`)
 
-  await audit(supabase, user, {
-    action_type: 'update',
-    object_type: 'brotherhood',
-    object_id: brotherhoodId,
-    entity_id: brotherhoodId,
-    summary: `Escudo retirado: ${brotherhoodResult.data.popular_name || entityResult.data.name}`,
-    changed_fields: { crest_path: null, previous_crest_path: previousPath || null },
-  })
+    await audit(supabase, user, {
+      action_type: 'update',
+      object_type: 'brotherhood',
+      object_id: brotherhoodId,
+      entity_id: brotherhoodId,
+      summary: `Escudo retirado: ${brotherhoodResult.data.popular_name || entityResult.data.name}`,
+      changed_fields: { crest_path: null, previous_crest_path: previousPath || null },
+    })
 
-  const storagePath = managedStoragePath(previousPath, brotherhoodId)
-  if (storagePath) {
-    const removed = await supabase.storage.from('hilo-media').remove([storagePath])
-    if (removed.error) console.error('[Hilo Cofrade] No se pudo borrar el escudo retirado del almacenamiento', removed.error)
+    const storagePath = managedStoragePath(previousPath, brotherhoodId)
+    if (storagePath) {
+      const removed = await supabase.storage.from('hilo-media').remove([storagePath])
+      if (removed.error) console.error('[Hilo Cofrade] No se pudo borrar el escudo retirado del almacenamiento', removed.error)
+    }
+
+    revalidateBrotherhood({ brotherhoodId, entity: entityResult.data })
+    return { removed: true }
+  } catch (error) {
+    const message = crestErrorMessage(error)
+    console.error('[Hilo Cofrade] Error al retirar el escudo', error)
+    return { error: message }
   }
-
-  const context = {
-    brotherhoodId,
-    entity: entityResult.data,
-  }
-  revalidateBrotherhood(context)
-  redirect(`/panel/hermandades/${brotherhoodId}?saved=crest-removed#escudo`)
 }
