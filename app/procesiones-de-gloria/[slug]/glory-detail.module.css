@@ -1,11 +1,22 @@
 .page {
+  --hc-blue: #123a67;
+  --hc-blue-dark: #0f2742;
+  --hc-red: #b71f37;
+  --hc-surface: #f7fafc;
+  --hc-surface-strong: #eef4f8;
+  --hc-line: #dce5ec;
+  --hc-muted: #657586;
+  --hc-soft-text: #40586f;
   padding-bottom: clamp(76px, 9vw, 128px);
+  color: var(--hc-blue-dark);
 }
 
 .hero {
   padding: clamp(34px, 5vw, 64px) 0 clamp(46px, 7vw, 88px);
-  border-bottom: 1px solid rgba(33, 32, 28, .11);
-  background: linear-gradient(180deg, #faf8f2 0%, #fff 100%);
+  border-bottom: 1px solid var(--hc-line);
+  background:
+    radial-gradient(circle at 90% 4%, rgba(18, 58, 103, .07), transparent 30%),
+    linear-gradient(180deg, #f7fafc 0%, #fff 100%);
 }
 
 .heroGrid {
@@ -18,7 +29,7 @@
 .backLink {
   display: inline-flex;
   margin-bottom: 27px;
-  color: var(--muted);
+  color: var(--hc-soft-text);
   font-size: .78rem;
   font-weight: 700;
   letter-spacing: .02em;
@@ -29,6 +40,7 @@
 .brotherhood:hover,
 .infoGrid a:hover,
 .musicList a:hover {
+  color: var(--hc-blue);
   text-decoration: underline;
   text-underline-offset: 4px;
 }
@@ -45,19 +57,32 @@
 }
 
 .topline span:first-child {
-  color: var(--muted);
+  color: var(--hc-red);
 }
 
 .topline span:last-child {
   padding: 5px 9px;
   border-radius: 999px;
-  background: #efe7d2;
+  background: var(--hc-surface-strong);
+  color: #33536f;
+}
+
+.topline span:last-child[data-status='held'] {
+  background: #eef5ef;
+  color: #3e6b48;
+}
+
+.topline span:last-child[data-status='cancelled'] {
+  background: #fbeaec;
+  color: #a33041;
 }
 
 .heroCopy h1 {
   max-width: 920px;
   margin: 0;
+  color: var(--hc-blue-dark);
   font-size: clamp(2.2rem, 4.7vw, 4.6rem);
+  font-weight: 800;
   line-height: .98;
   letter-spacing: -.05em;
 }
@@ -65,7 +90,7 @@
 .brotherhood {
   display: inline-block;
   margin-top: 16px;
-  color: var(--ink);
+  color: var(--hc-soft-text);
   font-size: clamp(1rem, 1.5vw, 1.18rem);
   font-weight: 800;
   text-decoration: none;
@@ -74,7 +99,7 @@
 .lead {
   max-width: 770px;
   margin: 24px 0 0;
-  color: var(--muted);
+  color: var(--hc-muted);
   line-height: 1.72;
 }
 
@@ -84,9 +109,9 @@
   gap: 1px;
   margin-top: 32px;
   overflow: hidden;
-  border: 1px solid rgba(33, 32, 28, .1);
+  border: 1px solid var(--hc-line);
   border-radius: 20px;
-  background: rgba(33, 32, 28, .08);
+  background: var(--hc-line);
 }
 
 .keyFacts > div {
@@ -96,12 +121,12 @@
   justify-content: center;
   gap: 7px;
   padding: 15px 17px;
-  background: rgba(255, 255, 255, .92);
+  background: rgba(255, 255, 255, .96);
 }
 
 .keyFacts span,
 .infoGrid span {
-  color: var(--muted);
+  color: #8794a0;
   font-size: .68rem;
   font-weight: 800;
   letter-spacing: .08em;
@@ -109,6 +134,7 @@
 }
 
 .keyFacts strong {
+  color: var(--hc-blue);
   font-size: .96rem;
   line-height: 1.35;
 }
@@ -119,8 +145,12 @@
   min-height: 390px;
   place-items: center;
   overflow: hidden;
+  border: 1px solid var(--hc-line);
   border-radius: 30px;
-  background: #f1ede2;
+  background:
+    radial-gradient(circle at 80% 12%, rgba(183, 31, 55, .09), transparent 34%),
+    linear-gradient(145deg, #f7fafc, #eaf1f7);
+  box-shadow: 0 18px 44px rgba(18, 58, 103, .08);
 }
 
 .heroVisual > img:not(.crest) {
@@ -134,8 +164,8 @@
   z-index: 2;
   padding: 5px 8px;
   border-radius: 8px;
-  background: rgba(0, 0, 0, .62);
-  color: white;
+  background: rgba(7, 22, 37, .7);
+  color: #fff;
   font-size: .67rem;
 }
 
@@ -144,12 +174,14 @@
   height: auto;
   max-height: 315px;
   object-fit: contain;
+  filter: drop-shadow(0 16px 28px rgba(18, 58, 103, .1));
 }
 
 .datePoster {
   display: flex;
   flex-direction: column;
   align-items: center;
+  color: var(--hc-blue);
   line-height: .9;
 }
 
@@ -160,6 +192,7 @@
 
 .datePoster span {
   margin-top: 8px;
+  color: var(--hc-red);
   font-size: 1.55rem;
   font-weight: 800;
   letter-spacing: .13em;
@@ -167,7 +200,7 @@
 
 .datePoster small {
   margin-top: 12px;
-  color: var(--muted);
+  color: var(--hc-muted);
   font-weight: 700;
 }
 
@@ -180,7 +213,7 @@
   grid-template-columns: minmax(180px, .35fr) minmax(0, 1fr);
   gap: clamp(28px, 6vw, 86px);
   padding: clamp(48px, 7vw, 84px) 0;
-  border-bottom: 1px solid rgba(33, 32, 28, .1);
+  border-bottom: 1px solid var(--hc-line);
 }
 
 .section:last-child {
@@ -189,6 +222,7 @@
 
 .sectionHead h2 {
   margin: 8px 0 0;
+  color: var(--hc-blue-dark);
   font-size: clamp(1.65rem, 2.6vw, 2.45rem);
   line-height: 1.05;
   letter-spacing: -.035em;
@@ -207,13 +241,13 @@
   justify-content: center;
   gap: 8px;
   padding: 20px;
-  border: 1px solid rgba(33, 32, 28, .1);
+  border: 1px solid var(--hc-line);
   border-radius: 18px;
-  background: #fbfaf6;
+  background: var(--hc-surface);
 }
 
 .infoGrid a {
-  color: var(--ink);
+  color: var(--hc-blue);
   font-weight: 800;
   text-decoration: none;
 }
@@ -223,9 +257,11 @@
   grid-column: 1 / -1;
   margin: 12px 0 0;
   padding: 18px 20px;
+  border: 1px solid var(--hc-line);
+  border-left: 4px solid var(--hc-red);
   border-radius: 16px;
-  background: #f4f1e9;
-  color: var(--muted);
+  background: linear-gradient(135deg, #f8fafc, #eef4f8);
+  color: var(--hc-muted);
   line-height: 1.65;
 }
 
@@ -241,17 +277,23 @@
   gap: 16px;
   align-items: start;
   padding: 18px 0;
-  border-bottom: 1px solid rgba(33, 32, 28, .09);
+  border-bottom: 1px solid var(--hc-line);
 }
 
 .musicList article > span {
-  color: #aa8b45;
-  font-size: .78rem;
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--hc-blue);
+  color: #fff;
+  font-size: .72rem;
   font-weight: 800;
 }
 
 .musicList a {
-  color: var(--ink);
+  color: var(--hc-blue-dark);
   font-weight: 800;
   text-decoration: none;
 }
@@ -261,7 +303,7 @@
 .sources p,
 .sources small {
   margin: 5px 0 0;
-  color: var(--muted);
+  color: var(--hc-muted);
   line-height: 1.5;
 }
 
@@ -271,19 +313,26 @@
   gap: 24px;
   align-items: center;
   padding: 20px;
-  border: 1px solid rgba(33, 32, 28, .1);
+  border: 1px solid var(--hc-line);
   border-radius: 18px;
+  background: #fff;
 }
 
 .sources a {
   flex: 0 0 auto;
   padding: 10px 13px;
   border-radius: 11px;
-  background: #201f1b;
-  color: white;
+  background: var(--hc-blue);
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(18, 58, 103, .12);
   font-size: .75rem;
   font-weight: 800;
   text-decoration: none;
+}
+
+.sources a:hover,
+.sources a:focus-visible {
+  background: var(--hc-blue-dark);
 }
 
 @media (max-width: 900px) {
