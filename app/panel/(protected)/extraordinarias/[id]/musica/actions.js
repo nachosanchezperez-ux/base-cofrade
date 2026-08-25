@@ -8,9 +8,16 @@ import { createClient } from '@/lib/supabase/server'
 const UUID_PATTERN = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i
 const STATUSES = new Set(['draft', 'review', 'published', 'archived'])
 const PARTICIPATION_MODES = new Set(['full_route', 'segment', 'alternating', 'unspecified'])
+const SOURCE_FRAMING_PATTERN = /(?:\bseg[uú]n\s+(?:el|la)\s+(?:dossier|fuente|documento|programa)\b|\b(?:el|la)\s+(?:dossier|fuente|documento|programa)\s+(?:describe|recoge|indica|señala|senala|detalla|explica)\b)/i
 
 function value(formData, name) { return String(formData.get(name) || '').trim() }
-function nullable(formData, name) { return value(formData, name) || null }
+function nullable(formData, name) {
+  const candidate = value(formData, name)
+  if (name === 'notes' && candidate && SOURCE_FRAMING_PATTERN.test(candidate)) {
+    throw new Error('Normaliza el texto público: describe el dato directamente y deja la referencia documental para Fuentes.')
+  }
+  return candidate || null
+}
 function uuid(formData, name) {
   const candidate = value(formData, name)
   if (!UUID_PATTERN.test(candidate)) throw new Error(`Identificador no válido: ${name}`)
