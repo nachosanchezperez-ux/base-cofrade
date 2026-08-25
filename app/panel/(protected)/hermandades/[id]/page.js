@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import BrotherhoodCrestEditor from '@/components/panel/BrotherhoodCrestEditor'
 import BrotherhoodTypeSelector from '@/components/panel/BrotherhoodTypeSelector'
 import { BrotherhoodGeographyFields, BrotherhoodGeographyInlineTools } from '@/components/panel/BrotherhoodGeographyEditor'
 import PanelFormGroup from '@/components/panel/PanelFormGroup'
@@ -22,6 +23,13 @@ function ModuleRow({ href, label, count, note }) {
   )
 }
 
+function savedMessage(saved) {
+  if (saved === 'crest') return 'Escudo actualizado correctamente.'
+  if (saved === 'crest-removed') return 'Escudo retirado correctamente.'
+  if (saved) return 'Cambios guardados correctamente.'
+  return ''
+}
+
 export default async function BrotherhoodEditorPage({ params, searchParams }) {
   const [{ id }, query, user] = await Promise.all([params, searchParams, requirePanelUser()])
   const [data, geography] = await Promise.all([getBrotherhoodEditorData(id), getBrotherhoodPresenceData(id)])
@@ -35,18 +43,20 @@ export default async function BrotherhoodEditorPage({ params, searchParams }) {
   const selectedPlaceId = requestedPlace || data.brotherhood?.canonical_see_place_id || ''
   const selectedPlace = geography.places.find((item) => item.id === selectedPlaceId) || null
   const selectedMunicipalityId = requestedMunicipality || selectedPlace?.municipality_id || data.brotherhood?.municipality_id || ''
+  const feedback = savedMessage(query?.saved)
+  const displayName = data.brotherhood?.popular_name || data.entity.name
 
   return (
     <div className={styles.pageWrap}>
       <header className={styles.editorHeader}>
-        <div className={styles.breadcrumb}><Link href="/panel/hermandades">Hermandades</Link><span>→</span><strong>{data.brotherhood?.popular_name || data.entity.name}</strong></div>
+        <div className={styles.breadcrumb}><Link href="/panel/hermandades">Hermandades</Link><span>→</span><strong>{displayName}</strong></div>
         <div className={styles.editorTitleRow}>
-          <div><span className={styles.eyebrow}>Resumen de ficha</span><h1>{data.brotherhood?.popular_name || data.entity.name}</h1><p>{data.brotherhood?.official_name}</p></div>
+          <div><span className={styles.eyebrow}>Resumen de ficha</span><h1>{displayName}</h1><p>{data.brotherhood?.official_name}</p></div>
           <div className={styles.editorHeaderActions}><span className={`${styles.statusBadge} ${styles[data.entity.status]}`}>{STATUS_LABELS[data.entity.status]}</span>{data.entity.slug ? <Link className={styles.secondaryButton} href={`/hermandades/${data.entity.slug}`} target="_blank" rel="noreferrer">Ver ficha pública ↗</Link> : null}</div>
         </div>
       </header>
 
-      {query?.saved ? <div className={styles.savedNotice} role="status">Cambios guardados correctamente.</div> : null}
+      {feedback ? <div className={styles.savedNotice} role="status">{feedback}</div> : null}
       {query?.reused === 'municipality' ? <div className={styles.savedNotice} role="status">La Localidad ya existía y queda seleccionada.</div> : null}
       {query?.reused === 'place' ? <div className={styles.savedNotice} role="status">El Lugar ya existía y queda seleccionado como Sede.</div> : null}
       {!canEdit ? <div className={styles.readOnlyNotice}>Estás consultando la ficha como colaborador. Un editor debe realizar los cambios.</div> : null}
@@ -62,6 +72,7 @@ export default async function BrotherhoodEditorPage({ params, searchParams }) {
         <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>Identidad</span><h2>Información general</h2></div><p>Solo los datos estructurales que definen y encabezan la ficha pública.</p></div>
         <form action={updateBrotherhoodAction} className={`${styles.panelCard} ${styles.editorForm}`}>
           <input type="hidden" name="brotherhood_id" value={data.entity.id} />
+          <input type="hidden" name="crest_path" value={data.brotherhood?.crest_path || ''} />
 
           <PanelFormGroup
             eyebrow="Identidad pública"
@@ -90,10 +101,9 @@ export default async function BrotherhoodEditorPage({ params, searchParams }) {
 
           <PanelFormGroup
             eyebrow="Identidad visual"
-            title="Escudo, colores y control documental"
-            description="Recursos visuales y notas internas que completan la identificación editorial."
+            title="Colores y control documental"
+            description="Los colores completan la identidad editorial. El escudo se gestiona en el bloque visual de esta misma página."
           >
-            <label className={styles.fieldWide}><span>Ruta o URL del escudo</span><input name="crest_path" defaultValue={data.brotherhood?.crest_path || ''} /></label>
             <fieldset className={`${styles.colorFieldset} ${styles.fieldWide}`}>
               <legend>Colores identitarios</legend>
               {colorRows.map((color, index) => (
@@ -110,6 +120,13 @@ export default async function BrotherhoodEditorPage({ params, searchParams }) {
 
           <SaveBar canEdit={canEdit} />
         </form>
+
+        <BrotherhoodCrestEditor
+          brotherhoodId={data.entity.id}
+          brotherhoodName={displayName}
+          currentPath={data.brotherhood?.crest_path || ''}
+          canEdit={canEdit}
+        />
 
         <BrotherhoodGeographyInlineTools brotherhoodId={data.entity.id} canEdit={canEdit} municipalities={geography.municipalities} places={geography.places} selectedMunicipalityId={selectedMunicipalityId} selectedPlaceId={selectedPlaceId} createMunicipalityAction={createMunicipalityAction} createPlaceAction={createPlaceAction} updatePlaceAction={updatePlaceAction} />
       </section>
