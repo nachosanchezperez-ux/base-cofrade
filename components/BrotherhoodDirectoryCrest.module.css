@@ -1,11 +1,12 @@
 .crestMedia.crestMedia {
+  --hc-directory-media-width: 82px;
+  --hc-directory-media-height: 104px;
   width: 82px;
   height: 104px;
   padding: 0;
   border: 0;
   border-radius: 0;
   background: transparent;
-  overflow: visible;
   place-items: center;
 }
 
@@ -15,7 +16,9 @@
   height: 100%;
   object-fit: contain;
   object-position: center;
-  transform: scale(var(--crest-optical-scale, 1));
+  transform:
+    translate(var(--crest-optical-x, 0px), var(--crest-optical-y, 0px))
+    scale(var(--crest-optical-scale, 1));
   transform-origin: center;
   transition: transform .14s ease;
   will-change: transform;
@@ -42,6 +45,8 @@
 
 @media (max-width: 620px) {
   .crestMedia.crestMedia {
+    --hc-directory-media-width: 60px;
+    --hc-directory-media-height: 80px;
     width: 60px;
     height: 80px;
   }
