@@ -1,6 +1,6 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import CofradeTypeBadges from '@/components/CofradeTypeBadges'
+import BrotherhoodDirectoryCrestImage from '@/components/BrotherhoodDirectoryCrestImage'
 import { displayName, localityLabel } from '@/lib/brotherhood-directory'
 import contractStyles from './DirectoryCardContract.module.css'
 import styles from './HermandadesDirectory.module.css'
@@ -23,13 +23,10 @@ export default function BrotherhoodDirectoryCard({ hermandad, contextLabel }) {
     <Link href={`/hermandades/${hermandad.slug}`} className={`${styles.item} ${contractStyles.contract}`}>
       <span className={`${styles.crestWrap} ${contractStyles.media} ${crest ? crestStyles.crestMedia : crestStyles.fallbackMedia}`}>
         {crest ? (
-          <Image
+          <BrotherhoodDirectoryCrestImage
             className={`${styles.crestImage} ${crestStyles.crestImage}`}
             src={crest}
             alt={`Escudo de ${name}`}
-            width={82}
-            height={104}
-            sizes="(max-width: 620px) 60px, 82px"
           />
         ) : (
           <span className={`${styles.monogram} ${crestStyles.monogram}`}>{name.slice(0, 2).toUpperCase()}</span>
