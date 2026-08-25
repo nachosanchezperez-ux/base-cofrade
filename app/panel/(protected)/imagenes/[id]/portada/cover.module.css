@@ -1,0 +1,394 @@
+.framingCard {
+  display: grid;
+  gap: 22px;
+  overflow: hidden;
+}
+
+.previewGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(190px, .28fr);
+  gap: 18px;
+  align-items: end;
+}
+
+.preview,
+.currentPreview {
+  position: relative;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgb(214 225 234 / 88%);
+  border-radius: 18px;
+  background: #071a2f;
+  box-shadow: 0 18px 42px rgb(11 35 61 / 12%);
+  isolation: isolate;
+}
+
+.desktopPreview {
+  aspect-ratio: 16 / 7;
+}
+
+.mobilePreview {
+  width: min(100%, 250px);
+  aspect-ratio: 4 / 5;
+  justify-self: center;
+}
+
+.previewBackdrop,
+.currentBackdrop {
+  position: absolute;
+  z-index: -2;
+  inset: -22px;
+  background-image: var(--image-cover-url);
+  background-position: center;
+  background-size: cover;
+  filter: blur(22px) saturate(.85) brightness(.48);
+  transform: scale(1.08);
+}
+
+.preview img,
+.currentPreview img {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.previewShade,
+.currentShade {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgb(3 16 31 / 82%) 0%, rgb(3 16 31 / 28%) 55%, rgb(3 16 31 / 6%) 100%),
+    linear-gradient(180deg, transparent 42%, rgb(3 16 31 / 72%) 100%);
+  pointer-events: none;
+}
+
+.preview figcaption,
+.currentPreview figcaption {
+  position: absolute;
+  z-index: 1;
+  right: 20px;
+  bottom: 18px;
+  left: 20px;
+  display: grid;
+  gap: 3px;
+  color: #fff;
+}
+
+.preview figcaption small,
+.currentPreview figcaption small {
+  color: rgb(255 255 255 / 68%);
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+
+.preview figcaption strong,
+.currentPreview figcaption strong {
+  font-size: clamp(16px, 1.6vw, 23px);
+  line-height: 1.12;
+}
+
+.currentPreview figcaption span {
+  color: rgb(255 255 255 / 76%);
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.framingFields {
+  align-items: end;
+}
+
+.fallbackCard {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(260px, .6fr);
+  gap: 24px;
+  align-items: center;
+}
+
+.currentPreview {
+  min-height: 310px;
+}
+
+.fallbackPreview::after {
+  content: '';
+  position: absolute;
+  z-index: 2;
+  inset: 12px;
+  border: 1px dashed rgb(255 255 255 / 36%);
+  border-radius: 12px;
+  pointer-events: none;
+}
+
+.fallbackCopy {
+  display: grid;
+  gap: 10px;
+}
+
+.fallbackCopy h3 {
+  margin: 0;
+  color: var(--panel-navy);
+  font-size: clamp(22px, 2.1vw, 31px);
+  line-height: 1.08;
+}
+
+.fallbackCopy p {
+  margin: 0;
+  color: var(--panel-muted);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.emptyHero {
+  display: grid;
+  min-height: 280px;
+  padding: 30px;
+  place-content: center;
+  gap: 8px;
+  border: 1px dashed #cad8e4;
+  border-radius: 18px;
+  color: var(--panel-muted);
+  background:
+    linear-gradient(135deg, rgb(18 58 103 / 7%), transparent 55%),
+    #f7fafc;
+  text-align: center;
+}
+
+.emptyHero span {
+  color: var(--panel-red);
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.emptyHero strong {
+  color: var(--panel-navy);
+  font-size: 18px;
+}
+
+.removeForm {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-top: 14px;
+  padding: 14px 16px;
+  border: 1px solid #eadde0;
+  border-radius: 13px;
+  color: #72525a;
+  background: #fff9fa;
+}
+
+.removeForm span {
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.removeForm button {
+  flex: 0 0 auto;
+  padding: 9px 13px;
+  border: 0;
+  border-radius: 9px;
+  color: #8e3043;
+  background: #f4e6e9;
+  font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.headingActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  color: var(--panel-muted);
+  font-size: 11px;
+}
+
+.candidateGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.candidateCard {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--panel-line);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 12px 28px rgb(15 39 66 / 6%);
+  transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease;
+}
+
+.candidateCard:hover {
+  transform: translateY(-2px);
+  border-color: #bdcddd;
+  box-shadow: 0 18px 34px rgb(15 39 66 / 10%);
+}
+
+.selectedCandidate {
+  border-color: rgb(167 25 48 / 42%);
+  box-shadow: 0 0 0 2px rgb(167 25 48 / 7%), 0 18px 34px rgb(15 39 66 / 9%);
+}
+
+.candidateImage {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: #eaf0f5;
+}
+
+.candidateImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.candidateImage span {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  padding: 5px 8px;
+  border: 1px solid rgb(255 255 255 / 25%);
+  border-radius: 999px;
+  color: #fff;
+  background: rgb(5 22 41 / 78%);
+  box-shadow: 0 5px 14px rgb(0 0 0 / 18%);
+  font-size: 8px;
+  font-weight: 850;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  backdrop-filter: blur(8px);
+}
+
+.candidateCopy {
+  display: grid;
+  align-content: start;
+  gap: 5px;
+  padding: 15px 16px 12px;
+}
+
+.candidateCopy h3 {
+  margin: 0;
+  color: var(--panel-navy);
+  font-size: 15px;
+  line-height: 1.24;
+}
+
+.candidateCopy p,
+.candidateCopy small {
+  margin: 0;
+  color: var(--panel-muted);
+  font-size: 10.5px;
+  line-height: 1.45;
+}
+
+.candidateCopy small {
+  color: #738392;
+  font-weight: 700;
+}
+
+.candidateCard > form {
+  padding: 0 16px 16px;
+}
+
+.candidateCard > form button {
+  width: 100%;
+}
+
+.currentButton {
+  min-height: 38px;
+  width: 100%;
+  border: 1px solid #dfc5cb;
+  border-radius: 10px;
+  color: #8f3043;
+  background: #fbf2f4;
+  font-size: 11px;
+  font-weight: 850;
+}
+
+.roleGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.roleGrid article {
+  padding: 20px;
+  border: 1px solid var(--panel-line);
+  border-radius: 14px;
+  background: linear-gradient(145deg, #fff, #f8fafc);
+}
+
+.roleGrid strong {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--panel-navy);
+  font-size: 14px;
+}
+
+.roleGrid p {
+  margin: 0;
+  color: var(--panel-muted);
+  font-size: 11.5px;
+  line-height: 1.55;
+}
+
+@media (max-width: 980px) {
+  .previewGrid {
+    grid-template-columns: minmax(0, 1fr) minmax(160px, .32fr);
+  }
+
+  .fallbackCard {
+    grid-template-columns: 1fr;
+  }
+
+  .candidateGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 680px) {
+  .previewGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .desktopPreview {
+    aspect-ratio: 4 / 3;
+  }
+
+  .mobilePreview {
+    width: min(76vw, 300px);
+  }
+
+  .currentPreview {
+    min-height: 250px;
+  }
+
+  .candidateGrid,
+  .roleGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .headingActions,
+  .removeForm {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .headingActions {
+    justify-content: flex-start;
+  }
+
+  .removeForm button {
+    width: 100%;
+  }
+}
