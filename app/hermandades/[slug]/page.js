@@ -191,7 +191,7 @@ export default async function HermandadDetailPage({ params }) {
       />
 
       <EntitySectionNav items={[
-        { href: '#resumen', label: 'Resumen' },
+        { href: '#resumen', label: 'Información' },
         { href: '#titulares', label: 'Titulares' },
         { href: '#pasos', label: 'Pasos' },
         (h.imagenes?.length > 0 || h.pasos?.length > 0) && { href: '#tira-del-hilo', label: 'Tira del hilo' },
@@ -211,7 +211,10 @@ export default async function HermandadDetailPage({ params }) {
         h.fuentesFicha?.length > 0 && { href: '#fuentes', label: 'Fuentes' },
       ]} />
 
-      <BrotherhoodOverviewV2 brotherhood={h} />
+      <BrotherhoodOverviewV2
+        brotherhood={h}
+        heroFactLabels={heroFacts.map((fact) => fact.label)}
+      />
 
       {h.participacionesConsejo?.length > 0 && (
         <section className="section"><div className="shell">
