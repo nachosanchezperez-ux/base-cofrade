@@ -6,27 +6,30 @@ function source(path) {
   return readFileSync(new URL(`../${path}`, import.meta.url), 'utf8')
 }
 
-test('El Baratillo pilota una portada de programa de mano sin extender aún el contrato a todas las Penitencias', () => {
+test('el programa de mano se aplica por tipo Penitencia sin excepciones por slug', () => {
   const page = source('app/hermandades/[slug]/page.js')
   const hero = source('components/BrotherhoodProgramHero.js')
 
   assert.match(page, /import BrotherhoodProgramHero from '@\/components\/BrotherhoodProgramHero'/)
-  assert.match(page, /h\.slug === 'el-baratillo'/)
-  assert.match(page, /tiposHermandad\.includes\('Penitencia'\)/)
+  assert.match(page, /const isPenitencia = tiposHermandad\.includes\('Penitencia'\)/)
+  assert.match(page, /\{isPenitencia \? \(/)
   assert.match(page, /<BrotherhoodProgramHero/)
+  assert.equal(/h\.slug\s*===/.test(page), false)
   assert.equal(hero.includes('El Baratillo'), false)
 })
 
-test('la portada muestra los cuatro datos útiles de un programa de mano', () => {
+test('la portada muestra datos útiles con semántica documentada', () => {
   const page = source('app/hermandades/[slug]/page.js')
 
   assert.match(page, /label: 'Salida'/)
-  assert.match(page, /label: 'Carrera Oficial'/)
   assert.match(page, /Nazarenos · \$\{h\.datosJornada\.ano\}/)
+  assert.match(page, /label: 'Tiempo en Carrera Oficial'/)
+  assert.match(page, /h\.datosJornada\?\.tiempoCarreraOficial/)
   assert.match(page, /label: 'Pasos'/)
   assert.match(page, /h\.datosJornada\?\.totalNazarenos/)
   assert.match(page, /h\.pasos\?\.length/)
-  assert.match(page, /de la jornada/)
+  assert.equal(page.includes("label: 'Carrera Oficial', value: carreraOficial"), false)
+  assert.equal(page.includes('de la jornada'), false)
 })
 
 test('De un vistazo sustituye Datos clave e integra Sede y visita sin repetirlos como secciones básicas', () => {
