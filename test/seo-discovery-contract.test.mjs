@@ -79,7 +79,10 @@ test('Extraordinarias enlaza cada ItemList con su guía canónica', () => {
 })
 
 test('robots reserva las APIs y mantiene el noindex en superficies internas', () => {
-  assert.match(robots, /disallow:\s*\['\/api\/'\]/)
+  assert.match(robots, /disallow:\s*\[[^\]]*'\/api\/'/)
+  assert.match(robots, /'\/panel\/'/)
+  assert.match(robots, /'\/prueba-next'/)
+  assert.match(robots, /'\/prueba-supabase'/)
 
   for (const path of [
     'app/panel/layout.js',
