@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { cache } from 'react';
-import CofradeTypeBadges from '@/components/CofradeTypeBadges';
 import BrotherhoodCultsSection from '@/components/BrotherhoodCultsSection';
 import BrotherhoodMusicalHeritage from '@/components/BrotherhoodMusicalHeritage';
-import BrotherhoodSeatSection from '@/components/BrotherhoodSeatSection';
+import BrotherhoodOverviewV2 from '@/components/BrotherhoodOverviewV2';
+import BrotherhoodProgramHero from '@/components/BrotherhoodProgramHero';
 import BrotherhoodSimpecadosSection from '@/components/BrotherhoodSimpecadosSection';
 import {
   BrotherhoodConceptualTitulars,
@@ -93,6 +93,21 @@ export default async function HermandadDetailPage({ params }) {
     || null;
   const imagenMap = new Map(h.imagenes.map((imagen) => [imagen.id, imagen]));
   const tiposHermandad = h.tipos || [];
+  const isProgramHandPilot = h.slug === 'el-baratillo' && tiposHermandad.includes('Penitencia');
+  const carreraOficial = h.datosJornada?.ordenJornada
+    ? String(h.datosJornada.ordenJornada).includes(' de ')
+      ? h.datosJornada.ordenJornada
+      : `${h.datosJornada.ordenJornada} de la jornada`
+    : '';
+  const programFacts = [
+    { label: 'Salida', value: h.diaSalida },
+    { label: 'Carrera Oficial', value: carreraOficial },
+    {
+      label: h.datosJornada?.ano ? `Nazarenos · ${h.datosJornada.ano}` : 'Nazarenos',
+      value: h.datosJornada?.totalNazarenos,
+    },
+    { label: 'Pasos', value: h.pasos?.length ? String(h.pasos.length) : '' },
+  ].filter((item) => item.value);
   const canonicalPath = `/hermandades/${h.slug}`;
   const description = brotherhoodSeoDescription(h);
   const pageJsonLd = {
@@ -138,34 +153,55 @@ export default async function HermandadDetailPage({ params }) {
         { name: h.nombrePopular, path: canonicalPath },
       ])} />
       <JsonLd data={pageJsonLd} />
-      <RelationalEntityHero
-        variant="brotherhood"
-        entityType="Hermandad"
-        title={h.nombrePopular}
-        subtitle={h.nombreOficial}
-        breadcrumbItems={[
-          { label: 'Hermandades', href: '/hermandades' },
-          { label: h.localidad || 'Ficha' },
-        ]}
-        badges={[...(h.tipos || []), h.localidad]}
-        facts={[
-          { label: 'Fundación', value: h.fundacion },
-          { label: 'Sede canónica', value: h.sede },
-          { label: 'Día de salida', value: h.diaSalida },
-        ]}
-        media={{
-          photoSrc: heroMedia?.path || '',
-          photoAlt: heroMedia?.alt || `Titular de ${h.nombrePopular}`,
-          credit: heroMedia?.credit || '',
-          initials: h.escudoIniciales || h.nombrePopular.slice(0, 2).toUpperCase(),
-          crestSrc: authoritativeCrestPath,
-          crestAlt: `Escudo de ${h.nombrePopular}`,
-        }}
-      />
+
+      {isProgramHandPilot ? (
+        <BrotherhoodProgramHero
+          title={h.nombrePopular}
+          officialName={h.nombreOficial}
+          locality={h.localidad}
+          seat={h.sede}
+          breadcrumbItems={[
+            { label: 'Hermandades', href: '/hermandades' },
+            { label: h.localidad || 'Ficha' },
+          ]}
+          facts={programFacts}
+          media={{
+            photoSrc: heroMedia?.path || '',
+            photoAlt: heroMedia?.alt || `Fotografía de ${h.nombrePopular}`,
+            credit: heroMedia?.credit || '',
+            crestSrc: authoritativeCrestPath,
+            crestAlt: `Escudo de ${h.nombrePopular}`,
+          }}
+        />
+      ) : (
+        <RelationalEntityHero
+          variant="brotherhood"
+          entityType="Hermandad"
+          title={h.nombrePopular}
+          subtitle={h.nombreOficial}
+          breadcrumbItems={[
+            { label: 'Hermandades', href: '/hermandades' },
+            { label: h.localidad || 'Ficha' },
+          ]}
+          badges={[...(h.tipos || []), h.localidad]}
+          facts={[
+            { label: 'Fundación', value: h.fundacion },
+            { label: 'Sede canónica', value: h.sede },
+            { label: 'Día de salida', value: h.diaSalida },
+          ]}
+          media={{
+            photoSrc: heroMedia?.path || '',
+            photoAlt: heroMedia?.alt || `Titular de ${h.nombrePopular}`,
+            credit: heroMedia?.credit || '',
+            initials: h.escudoIniciales || h.nombrePopular.slice(0, 2).toUpperCase(),
+            crestSrc: authoritativeCrestPath,
+            crestAlt: `Escudo de ${h.nombrePopular}`,
+          }}
+        />
+      )}
 
       <EntitySectionNav items={[
         { href: '#resumen', label: 'Resumen' },
-        h.sedeDetalle && { href: '#sede', label: 'Sede y visita' },
         { href: '#titulares', label: 'Titulares' },
         { href: '#pasos', label: 'Pasos' },
         (h.imagenes?.length > 0 || h.pasos?.length > 0) && { href: '#tira-del-hilo', label: 'Tira del hilo' },
@@ -185,103 +221,48 @@ export default async function HermandadDetailPage({ params }) {
         h.fuentesFicha?.length > 0 && { href: '#fuentes', label: 'Fuentes' },
       ]} />
 
-      <section className="section" id="resumen"><div className="shell content-grid">
-        <div>
-          <SectionTitle eyebrow="De un vistazo" title={h.nombrePopular} />
-          <p className="body-large">{h.resumen}</p><p>{h.historia}</p>
+      <BrotherhoodOverviewV2 brotherhood={h} />
 
-          {h.participacionesConsejo?.length > 0 && (
-            <div className="council-participations">
-              {h.participacionesConsejo.map((participacion) => {
-                const eventMedia = entityCoverMedia.get(participacion.id);
-                const imagePath = eventMedia?.path || participacion.imagen;
-                const imageCredit = eventMedia?.credit || participacion.imagenCredito;
+      {h.participacionesConsejo?.length > 0 && (
+        <section className="section"><div className="shell">
+          <div className="council-participations">
+            {h.participacionesConsejo.map((participacion) => {
+              const eventMedia = entityCoverMedia.get(participacion.id);
+              const imagePath = eventMedia?.path || participacion.imagen;
+              const imageCredit = eventMedia?.credit || participacion.imagenCredito;
 
-                return (
-                  <article className="council-participation-card" key={participacion.id}>
-                    {imagePath ? (
-                      <figure className="council-participation-visual">
-                        <Image
-                          className="council-participation-photo"
-                          src={imagePath}
-                          alt={eventMedia?.alt || participacion.titulo}
-                          fill
-                          sizes="(max-width: 560px) calc(100vw - 40px), (max-width: 900px) 42vw, 360px"
-                        />
-                        {imageCredit ? <figcaption>{imageCredit}</figcaption> : null}
-                      </figure>
-                    ) : (
-                      <div className="council-participation-photo council-photo-placeholder">
-                        <span>Fotografía</span><small>{participacion.ano}</small>
-                      </div>
-                    )}
-                    <div className="council-participation-copy">
-                      <div className="council-participation-meta">
-                        <span>{participacion.categoria}</span><strong>{participacion.ano}</strong>
-                      </div>
-                      <h3>{participacion.titulo}</h3>
-                      <p className="council-participation-protagonists">{participacion.protagonistas}</p>
-                      <p>{participacion.resumen}</p>
+              return (
+                <article className="council-participation-card" key={participacion.id}>
+                  {imagePath ? (
+                    <figure className="council-participation-visual">
+                      <Image
+                        className="council-participation-photo"
+                        src={imagePath}
+                        alt={eventMedia?.alt || participacion.titulo}
+                        fill
+                        sizes="(max-width: 560px) calc(100vw - 40px), (max-width: 900px) 42vw, 360px"
+                      />
+                      {imageCredit ? <figcaption>{imageCredit}</figcaption> : null}
+                    </figure>
+                  ) : (
+                    <div className="council-participation-photo council-photo-placeholder">
+                      <span>Fotografía</span><small>{participacion.ano}</small>
                     </div>
-                  </article>
-                );
-              })}
-            </div>
-          )}
-        </div>
-        <aside className="brotherhood-summary-card key-data-card">
-          <div className="key-data-heading">
-            <span className="eyebrow">Datos clave</span>
-            {h.datosJornada && <span className="key-data-year">{h.datosJornada.ano}</span>}
+                  )}
+                  <div className="council-participation-copy">
+                    <div className="council-participation-meta">
+                      <span>{participacion.categoria}</span><strong>{participacion.ano}</strong>
+                    </div>
+                    <h3>{participacion.titulo}</h3>
+                    <p className="council-participation-protagonists">{participacion.protagonistas}</p>
+                    <p>{participacion.resumen}</p>
+                  </div>
+                </article>
+              );
+            })}
           </div>
-
-          <div className="key-data-identity" data-type-count={Math.min(tiposHermandad.length, 3)}>
-            <div className="key-data-types">
-              <small>{tiposHermandad.length === 1 ? 'Tipo' : 'Tipos'}</small>
-              <CofradeTypeBadges tipos={tiposHermandad} compact />
-            </div>
-            <div className="key-data-day">
-              <small>Día de salida</small>
-              <strong>{h.diaSalida}</strong>
-            </div>
-          </div>
-
-          {h.datosJornada && (
-            <div className="key-data-metrics key-data-metrics-four">
-              <div>
-                <strong>{h.datosJornada.ordenJornada}</strong>
-                <span>Orden en la jornada</span>
-              </div>
-              <div>
-                <strong>{h.datosJornada.totalHermanos || h.datosJornada.totalCortejo}</strong>
-                <span>{h.datosJornada.totalHermanos ? 'Hermanos' : 'Cortejo'}</span>
-              </div>
-              <div>
-                <strong>{h.datosJornada.totalNazarenos}</strong>
-                <span>Nazarenos</span>
-              </div>
-              <div className="key-data-time">
-                <strong className="career-time">{h.datosJornada.tiempoCarreraOficial}</strong>
-                <span>Carrera Oficial</span>
-              </div>
-            </div>
-          )}
-
-          <div className="key-data-location">
-            <div>
-              <small>Sede</small>
-              <strong>{h.sede}</strong>
-            </div>
-            <div>
-              <small>Localidad</small>
-              <strong>{h.localidad}</strong>
-            </div>
-          </div>
-
-        </aside>
-      </div></section>
-
-      <BrotherhoodSeatSection seat={h.sedeDetalle} />
+        </div></section>
+      )}
 
       <section className="section brotherhood-soft" id="titulares"><div className="shell">
         <SectionTitle eyebrow="Titularidad" title="Sagrados Titulares" description="Imágenes e identidades devocionales que conforman la titularidad documentada de la Hermandad." />
@@ -394,7 +375,6 @@ export default async function HermandadDetailPage({ params }) {
 
       <BrotherhoodOwnBands brotherhoodId={h.id} />
 
-
       {musicalHeritage.length > 0 ? (
         <BrotherhoodMusicalHeritage items={musicalHeritage} />
       ) : h.patrimonioMusical?.length > 0 ? (
@@ -415,7 +395,6 @@ export default async function HermandadDetailPage({ params }) {
           </article>
         ))}</div>
       </div></section>}
-
 
       {h.habitos?.length > 0 && <section className="section brotherhood-dark" id="tunica"><div className="shell">
         <SectionTitle eyebrow="Estación de penitencia" title="Túnica" description="Descripción documentada de la indumentaria nazarena de la Hermandad." />
