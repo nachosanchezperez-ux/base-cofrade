@@ -15,6 +15,10 @@
   height: 100%;
   object-fit: contain;
   object-position: center;
+  transform: scale(var(--crest-optical-scale, 1));
+  transform-origin: center;
+  transition: transform .14s ease;
+  will-change: transform;
 }
 
 .fallbackMedia.fallbackMedia {
