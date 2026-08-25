@@ -13,10 +13,13 @@ function roleLabel(role, legId, circuit) {
   return ''
 }
 
-function RouteLeg({ leg, circuit }) {
+function RouteLeg({ leg, route }) {
+  const lastIndex = leg.points.length - 1
   const visiblePoints = leg.points.filter((point, index) => {
-    if (circuit && leg.id === 'outbound' && index === 0) return false
-    if (circuit && leg.id === 'return' && index === leg.points.length - 1) return false
+    if (leg.id === 'outbound' && index === 0 && route.origin) return false
+    if (leg.id === 'outbound' && !route.circuit && index === lastIndex && route.destination) return false
+    if (leg.id === 'return' && !route.circuit && index === 0 && route.destination) return false
+    if (leg.id === 'return' && index === lastIndex && route.origin) return false
     return true
   })
 
@@ -30,7 +33,7 @@ function RouteLeg({ leg, circuit }) {
 
       <ol className={styles.routeList}>
         {visiblePoints.map((point) => {
-          const badge = roleLabel(point.role, leg.id, circuit)
+          const badge = roleLabel(point.role, leg.id, route.circuit)
           return (
             <li className={styles.routePoint} data-role={point.role} key={point.id}>
               <span className={styles.node} aria-hidden="true" />
@@ -49,19 +52,13 @@ function RouteLeg({ leg, circuit }) {
   )
 }
 
-function PlaceSummary({ route, departureTime, entryTime }) {
+function PlaceSummary({ route }) {
   if (route.circuit) {
     return (
       <div className={styles.placeSummary} data-circuit="true">
         <div className={styles.placeCard}>
           <span>Salida y entrada</span>
           <strong>{route.baseLocation || route.origin || route.destination || 'Lugar por documentar'}</strong>
-          {(departureTime || entryTime) ? (
-            <div className={styles.placeTimes}>
-              {departureTime ? <span>Salida <b>{departureTime}</b></span> : null}
-              {entryTime ? <span>Entrada <b>{entryTime}</b></span> : null}
-            </div>
-          ) : null}
         </div>
       </div>
     )
@@ -73,21 +70,19 @@ function PlaceSummary({ route, departureTime, entryTime }) {
         <div className={styles.placeCard}>
           <span>Salida</span>
           <strong>{route.origin}</strong>
-          {departureTime ? <div className={styles.placeTimes}><span>Hora <b>{departureTime}</b></span></div> : null}
         </div>
       ) : null}
       {route.destination ? (
         <div className={styles.placeCard}>
           <span>Destino</span>
           <strong>{route.destination}</strong>
-          {entryTime ? <div className={styles.placeTimes}><span>Entrada <b>{entryTime}</b></span></div> : null}
         </div>
       ) : null}
     </div>
   )
 }
 
-export default function ProcessionRoute({ route, departureTime = '', entryTime = '' }) {
+export default function ProcessionRoute({ route }) {
   const legs = route?.legs || []
   const [activeId, setActiveId] = useState(legs[0]?.id || '')
   const activeLeg = useMemo(
@@ -99,14 +94,12 @@ export default function ProcessionRoute({ route, departureTime = '', entryTime =
 
   return (
     <div className={styles.routeViewer}>
-      {(route.origin || route.destination) ? (
-        <PlaceSummary route={route} departureTime={departureTime} entryTime={entryTime} />
-      ) : null}
+      {(route.origin || route.destination) ? <PlaceSummary route={route} /> : null}
 
       {legs.length ? (
         <>
           <div className={styles.desktopRoutes} data-count={legs.length}>
-            {legs.map((leg) => <RouteLeg leg={leg} circuit={route.circuit} key={leg.id} />)}
+            {legs.map((leg) => <RouteLeg leg={leg} route={route} key={leg.id} />)}
           </div>
 
           <div className={styles.mobileRoutes}>
@@ -126,7 +119,7 @@ export default function ProcessionRoute({ route, departureTime = '', entryTime =
                 ))}
               </div>
             ) : null}
-            {activeLeg ? <RouteLeg leg={activeLeg} circuit={route.circuit} /> : null}
+            {activeLeg ? <RouteLeg leg={activeLeg} route={route} /> : null}
           </div>
         </>
       ) : route.summary ? (
