@@ -3,30 +3,63 @@
 import { useMemo, useState } from 'react'
 import styles from './ProcessionRoute.module.css'
 
-function roleLabel(role, legId, circuit) {
-  if (role === 'start') return legId === 'return' && circuit ? 'Punto de giro' : 'Salida'
+function normalizeText(value) {
+  return String(value || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-zA-Z0-9\s]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .toLocaleLowerCase('es')
+}
+
+function samePlace(first, second) {
+  const left = normalizeText(first)
+  const right = normalizeText(second)
+  if (!left || !right) return false
+  return left === right || left.includes(right) || right.includes(left)
+}
+
+function roleLabel(role) {
   if (role === 'turnaround') return 'Punto de giro'
-  if (role === 'end') {
-    if (legId === 'return') return 'Entrada'
-    return circuit ? 'Punto de giro' : 'Llegada'
-  }
   return ''
 }
 
-function RouteLeg({ leg, circuit }) {
+function visiblePoints(leg, route) {
+  const points = [...(leg.points || [])]
+  if (points.length <= 2) return points
+
+  const isOutbound = leg.id === 'outbound'
+  const isReturn = leg.id === 'return'
+  let start = 0
+  let end = points.length
+
+  if (route.circuit) {
+    if (isOutbound && samePlace(points[0]?.label, route.baseLocation)) start += 1
+    if (isReturn && samePlace(points.at(-1)?.label, route.baseLocation)) end -= 1
+  } else {
+    if (isOutbound && samePlace(points[0]?.label, route.origin)) start += 1
+    if (isOutbound && samePlace(points.at(-1)?.label, route.destination)) end -= 1
+    if (isReturn && samePlace(points[0]?.label, route.destination)) start += 1
+    if (isReturn && samePlace(points.at(-1)?.label, route.origin)) end -= 1
+  }
+
+  const trimmed = points.slice(start, end)
+  return trimmed.length ? trimmed : points
+}
+
+function RouteLeg({ leg, route }) {
+  const points = visiblePoints(leg, route)
+
   return (
     <article className={styles.legCard}>
       <header className={styles.legHead}>
-        <div>
-          <span>Tramo</span>
-          <h3>{leg.label}</h3>
-        </div>
-        <small>{leg.points.length} puntos</small>
+        <h3>{leg.label}</h3>
       </header>
 
       <ol className={styles.routeList}>
-        {leg.points.map((point) => {
-          const badge = roleLabel(point.role, leg.id, circuit)
+        {points.map((point) => {
+          const badge = roleLabel(point.role)
           return (
             <li className={styles.routePoint} data-role={point.role} key={point.id}>
               <span className={styles.node} aria-hidden="true" />
@@ -59,19 +92,13 @@ function RouteLeg({ leg, circuit }) {
   )
 }
 
-function PlaceSummary({ route, departureTime, entryTime }) {
+function PlaceSummary({ route }) {
   if (route.circuit) {
     return (
       <div className={styles.placeSummary} data-circuit="true">
         <div className={styles.placeCard}>
           <span>Salida y entrada</span>
           <strong>{route.baseLocation || route.origin || route.destination || 'Lugar por documentar'}</strong>
-          {(departureTime || entryTime) ? (
-            <div className={styles.placeTimes}>
-              {departureTime ? <span>Salida <b>{departureTime}</b></span> : null}
-              {entryTime ? <span>Entrada <b>{entryTime}</b></span> : null}
-            </div>
-          ) : null}
         </div>
       </div>
     )
@@ -83,21 +110,19 @@ function PlaceSummary({ route, departureTime, entryTime }) {
         <div className={styles.placeCard}>
           <span>Salida</span>
           <strong>{route.origin}</strong>
-          {departureTime ? <div className={styles.placeTimes}><span>Hora <b>{departureTime}</b></span></div> : null}
         </div>
       ) : null}
       {route.destination ? (
         <div className={styles.placeCard}>
           <span>Destino</span>
           <strong>{route.destination}</strong>
-          {entryTime ? <div className={styles.placeTimes}><span>Entrada <b>{entryTime}</b></span></div> : null}
         </div>
       ) : null}
     </div>
   )
 }
 
-export default function ProcessionRoute({ route, departureTime = '', entryTime = '' }) {
+export default function ProcessionRoute({ route }) {
   const legs = route?.legs || []
   const [activeId, setActiveId] = useState(legs[0]?.id || '')
   const activeLeg = useMemo(
@@ -109,14 +134,12 @@ export default function ProcessionRoute({ route, departureTime = '', entryTime =
 
   return (
     <div className={styles.routeViewer}>
-      {(route.origin || route.destination) ? (
-        <PlaceSummary route={route} departureTime={departureTime} entryTime={entryTime} />
-      ) : null}
+      {(route.origin || route.destination) ? <PlaceSummary route={route} /> : null}
 
       {legs.length ? (
         <>
           <div className={styles.desktopRoutes} data-count={legs.length}>
-            {legs.map((leg) => <RouteLeg leg={leg} circuit={route.circuit} key={leg.id} />)}
+            {legs.map((leg) => <RouteLeg leg={leg} route={route} key={leg.id} />)}
           </div>
 
           <div className={styles.mobileRoutes}>
@@ -136,18 +159,11 @@ export default function ProcessionRoute({ route, departureTime = '', entryTime =
                 ))}
               </div>
             ) : null}
-            {activeLeg ? <RouteLeg leg={activeLeg} circuit={route.circuit} /> : null}
+            {activeLeg ? <RouteLeg leg={activeLeg} route={route} /> : null}
           </div>
         </>
       ) : route.summary ? (
         <p className={styles.summaryFallback}>{route.summary}</p>
-      ) : null}
-
-      {route.mapReady ? (
-        <div className={styles.mapHint}>
-          <strong>Recorrido preparado para mapa</strong>
-          <span>Los puntos georreferenciados permitirán activar la vista cartográfica sin cambiar este componente.</span>
-        </div>
       ) : null}
     </div>
   )
