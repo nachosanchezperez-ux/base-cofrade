@@ -3,6 +3,8 @@ import Link from 'next/link'
 import { cache } from 'react'
 import { notFound } from 'next/navigation'
 import JsonLd from '@/components/JsonLd'
+import ProcessionRoute from '@/components/ProcessionRoute'
+import { buildProcessionRoute } from '@/lib/procession-route'
 import { getExtraordinaryDetail } from '@/lib/supabase/extraordinary-detail'
 import { absoluteUrl, breadcrumbJsonLd, pageTitle, seoDescription } from '@/lib/seo'
 import styles from './extraordinary-detail.module.css'
@@ -165,6 +167,13 @@ export default async function ExtraordinaryDetailPage({ params }) {
   const entry = entryLabel(item)
   const dateLabel = formatDate(item.date)
   const structuredTitle = seoTitle(item)
+  const processionRoute = buildProcessionRoute({
+    routeSummary: item.routeSummary,
+    origin: item.origin,
+    destination: item.destination,
+    schedule: item.schedule,
+    music: item.processionalMusic,
+  })
   const otherMusicGroups = [
     ['liturgical', item.liturgicalMusic],
     ['announcement', item.announcementMusic],
@@ -386,14 +395,13 @@ export default async function ExtraordinaryDetailPage({ params }) {
             <header className={styles.sectionHead}>
               <span>Por dónde verla</span>
               <h2>Recorrido</h2>
+              <p>Ida y regreso ordenados punto a punto para localizar rápidamente por dónde discurre la procesión.</p>
             </header>
-            {(item.origin || item.destination) ? (
-              <div className={styles.routeFacts}>
-                {item.origin ? <div><span>Origen</span><strong>{item.origin}</strong></div> : null}
-                {item.destination ? <div><span>Destino</span><strong>{item.destination}</strong></div> : null}
-              </div>
-            ) : null}
-            <p className={styles.routeText}>{item.routeSummary}</p>
+            <ProcessionRoute
+              route={processionRoute}
+              departureTime={item.departureTime}
+              entryTime={entry}
+            />
           </section>
         ) : null}
 
