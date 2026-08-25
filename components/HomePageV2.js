@@ -241,6 +241,14 @@ export default function HomePageV2({
             <span className={styles.kicker}>Sevilla y su provincia</span>
             <h1 className={polishStyles.heroTitle}>Hilo Cofrade, <span>todo en las cofradías está relacionado</span></h1>
             <p className={polishStyles.heroDescription}>Consulta, descubre y sigue las conexiones entre hermandades, imágenes, bandas, marchas, autores y patrimonio.</p>
+            <nav className={styles.heroActions} aria-label="Accesos principales">
+              <Link className={styles.heroPrimaryAction} href="/directorio">
+                Explorar la enciclopedia <span aria-hidden="true">→</span>
+              </Link>
+              <Link className={styles.heroSecondaryAction} href="/extraordinarias">
+                Ver próximas extraordinarias
+              </Link>
+            </nav>
             <div className={`${styles.heroThread} ${polishStyles.heroThread}`} aria-label="Recorrido del conocimiento relacionado de Hilo Cofrade">
               {heroThread.map((item, index) => (
                 <span key={item}>

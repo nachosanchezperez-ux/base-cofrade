@@ -76,6 +76,53 @@
   line-height: 1.62;
 }
 
+.heroActions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 17px;
+}
+
+.heroActions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 44px;
+  padding: 0 15px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.2;
+  transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+
+.heroActions a:hover {
+  transform: translateY(-1px);
+}
+
+.heroPrimaryAction {
+  color: #fff;
+  background: #123a67;
+  box-shadow: 0 9px 22px rgba(18, 58, 103, .15);
+}
+
+.heroPrimaryAction span {
+  color: #f3c8d0;
+}
+
+.heroSecondaryAction {
+  border: 1px solid #d7e2ec;
+  color: #123a67;
+  background: rgba(255, 255, 255, .88);
+}
+
+.heroSecondaryAction:hover {
+  border-color: #afc0d0;
+  box-shadow: 0 8px 20px rgba(15, 39, 66, .07);
+}
+
 .heroThread {
   display: flex;
   align-items: center;

@@ -18,6 +18,19 @@
     line-height: 1.5;
   }
 
+  .heroCopy :global(nav[aria-label="Accesos principales"]) {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  .heroCopy :global(nav[aria-label="Accesos principales"] a) {
+    width: 100%;
+    min-height: 48px;
+    font-size: 13px;
+  }
+
   .heroThread {
     flex-wrap: nowrap;
     overflow-x: auto;
