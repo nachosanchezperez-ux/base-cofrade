@@ -10,6 +10,9 @@ test('detecta salida y entrada en el mismo lugar y separa ida y regreso', () => 
     schedule: [
       { label: 'Entronización', time: '18:30', place: 'Plaza Fernández Velasco' },
     ],
+    music: [
+      { name: 'Banda de Música Municipal de Gerena', start: 'Iglesia de San Benito Abad', end: 'Plaza Fernández Velasco' },
+    ],
   })
 
   assert.equal(route.kind, 'circuit')
@@ -28,6 +31,10 @@ test('detecta salida y entrada en el mismo lugar y separa ida y regreso', () => 
     route.legs[0].points.at(-1).annotations,
     [{ type: 'schedule', label: 'Entronización', time: '18:30' }]
   )
+  assert.equal(
+    route.legs.flatMap((leg) => leg.points).flatMap((point) => point.annotations).some((annotation) => annotation.type === 'music'),
+    false
+  )
 })
 
 test('mantiene origen y destino separados cuando la extraordinaria es un traslado', () => {
@@ -44,6 +51,35 @@ test('mantiene origen y destino separados cuando la extraordinaria es un traslad
   assert.equal(route.legs[0].points.at(-1).label, 'Parroquia de San Lucas Evangelista')
   assert.equal(route.legs[1].points[0].label, 'Parroquia de San Lucas Evangelista')
   assert.equal(route.legs[1].points.at(-1).label, 'Parroquia de Nuestra Señora de los Dolores')
+})
+
+test('filtra anotaciones musicales de recorridos estructurados para no duplicar acompañamientos', () => {
+  const route = buildProcessionRoute({
+    origin: 'Templo A',
+    destination: 'Templo B',
+    route: {
+      legs: [
+        {
+          id: 'outbound',
+          label: 'Ida',
+          points: [
+            { label: 'Templo A' },
+            {
+              label: 'Plaza Mayor',
+              annotations: [
+                { type: 'music', label: 'Banda X' },
+                { type: 'note', label: 'Petalá' },
+              ],
+            },
+            { label: 'Templo B' },
+          ],
+        },
+      ],
+    },
+  })
+
+  const plaza = route.legs[0].points.find((point) => point.label === 'Plaza Mayor')
+  assert.deepEqual(plaza.annotations, [{ type: 'note', label: 'Petalá' }])
 })
 
 test('conserva el texto como fallback cuando no existe un itinerario separable', () => {
