@@ -30,54 +30,55 @@ function periodLabel(item) {
   return 'Periodo documentado'
 }
 
-export default function BrotherhoodOverviewV2({ brotherhood }) {
+export default function BrotherhoodOverviewV2({ brotherhood, heroFactLabels = [] }) {
   const seat = brotherhood.sedeDetalle
   const types = brotherhood.tipos || []
   const members = brotherhood.datosJornada?.totalHermanos || ''
   const titularCount = brotherhood.imagenes?.length || 0
   const mapUrl = directionsUrl(seat)
   const verified = verifiedLabel(seat?.horarioVerificadoEn)
+  const heroFacts = new Set(heroFactLabels)
 
   const identityFacts = [
     brotherhood.fundacion ? { label: 'Fundación', value: brotherhood.fundacion } : null,
     members ? { label: 'Hermanos', value: members } : null,
     titularCount ? { label: 'Titulares', value: String(titularCount) } : null,
-  ].filter(Boolean)
+  ].filter((fact) => fact && !heroFacts.has(fact.label))
+  const showIdentity = identityFacts.length > 0 || types.length > 1
 
   return (
     <section className={styles.section} id="resumen">
       <div className={`shell ${styles.shell}`}>
         <header className={styles.header}>
-          <div>
-            <span className={styles.eyebrow}>De un vistazo</span>
-            <h2>La Hermandad</h2>
-          </div>
-          {brotherhood.resumen ? <p>{brotherhood.resumen}</p> : null}
+          <span className={styles.eyebrow}>Información práctica</span>
+          <h2>Sede y visita</h2>
         </header>
 
-        <div className={`${styles.grid} ${seat?.nombre ? '' : styles.gridSingle}`}>
-          <article className={styles.identityCard}>
-            <div className={styles.cardTopline}>
-              <span>Identidad</span>
-              {types.length > 1 ? <CofradeTypeBadges tipos={types} compact /> : null}
-            </div>
+        <div className={`${styles.grid} ${showIdentity && seat?.nombre ? '' : styles.gridSingle}`}>
+          {showIdentity ? (
+            <article className={styles.identityCard}>
+              <div className={styles.cardTopline}>
+                <span>Datos complementarios</span>
+                {types.length > 1 ? <CofradeTypeBadges tipos={types} compact /> : null}
+              </div>
 
-            {identityFacts.length ? (
-              <dl className={styles.identityFacts} data-count={identityFacts.length}>
-                {identityFacts.map((fact) => (
-                  <div key={fact.label}>
-                    <dt>{fact.label}</dt>
-                    <dd>{fact.value}</dd>
-                  </div>
-                ))}
-              </dl>
-            ) : null}
-          </article>
+              {identityFacts.length ? (
+                <dl className={styles.identityFacts} data-count={identityFacts.length}>
+                  {identityFacts.map((fact) => (
+                    <div key={fact.label}>
+                      <dt>{fact.label}</dt>
+                      <dd>{fact.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+              ) : null}
+            </article>
+          ) : null}
 
           {seat?.nombre ? (
             <article className={styles.seatCard}>
               <div className={styles.cardTopline}>
-                <span>Sede y visita</span>
+                <span>Ubicación</span>
                 {seat.tipo ? <small>{String(seat.tipo).replaceAll('_', ' ')}</small> : null}
               </div>
 

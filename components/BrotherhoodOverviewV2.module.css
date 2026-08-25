@@ -9,10 +9,7 @@
 }
 
 .header {
-  display: grid;
-  grid-template-columns: minmax(0, .72fr) minmax(320px, 1.28fr);
-  align-items: end;
-  gap: 34px;
+  display: block;
 }
 
 .eyebrow {
@@ -32,14 +29,6 @@
   font-weight: 820;
   letter-spacing: -.035em;
   line-height: 1;
-}
-
-.header > p {
-  max-width: 760px;
-  margin: 0;
-  color: #617183;
-  font-size: 15px;
-  line-height: 1.7;
 }
 
 .grid {
@@ -344,17 +333,8 @@
 }
 
 @media (max-width: 900px) {
-  .header,
   .grid {
     grid-template-columns: 1fr;
-  }
-
-  .header {
-    gap: 12px;
-  }
-
-  .header > p {
-    max-width: 680px;
   }
 }
 
@@ -369,11 +349,6 @@
 
   .header h2 {
     font-size: 31px;
-  }
-
-  .header > p {
-    font-size: 13px;
-    line-height: 1.62;
   }
 
   .identityCard,
