@@ -47,6 +47,15 @@ test('la normalización óptica centra el contorno visible y conserva margen de 
   assert.match(css, /scale\(var\(--crest-optical-scale, 1\)\)/)
 })
 
+test('el contenedor común no recorta los escudos cuando se normalizan', async () => {
+  const card = await source('components/BrotherhoodDirectoryCard.js')
+  const contract = await source('components/DirectoryCardContract.module.css')
+
+  assert.match(card, /data-media-overflow=\{crest \? 'visible' : undefined\}/)
+  assert.match(contract, /\.media\.media\.media\.media\[data-media-overflow='visible'\]/)
+  assert.match(contract, /overflow:\s*visible/)
+})
+
 test('el fallback conserva una referencia visual sin imponer marco a los escudos reales', async () => {
   const card = await source('components/BrotherhoodDirectoryCard.js')
   const css = await source('components/BrotherhoodDirectoryCrest.module.css')
