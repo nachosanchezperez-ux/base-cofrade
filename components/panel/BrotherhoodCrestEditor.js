@@ -34,28 +34,25 @@ function errorMessage(error) {
 
 function dimensionAdvice(width, height) {
   if (!width || !height) return null
-  if (width < 1000 || height < 1000) {
+  const longestSide = Math.max(width, height)
+
+  if (longestSide < 1000) {
     return {
       tone: 'warning',
-      text: `${width} × ${height} px · válido, pero recomendamos al menos 1000 × 1000 px.`,
+      text: `${width} × ${height} px · válido, pero recomendamos al menos 1000 px en el lado mayor.`,
     }
   }
-  const ratio = width / height
-  if (ratio < 0.9 || ratio > 1.1) {
+
+  if (longestSide < 1600) {
     return {
       tone: 'neutral',
-      text: `${width} × ${height} px · válido. Para homogeneidad, recomendamos lienzo cuadrado de 1600 × 1600 px.`,
+      text: `${width} × ${height} px · resolución correcta. Para máxima nitidez, recomendamos 1600 px en el lado mayor.`,
     }
   }
-  if (width < 1600 || height < 1600) {
-    return {
-      tone: 'neutral',
-      text: `${width} × ${height} px · resolución correcta. Para máxima nitidez, 1600 × 1600 px.`,
-    }
-  }
+
   return {
     tone: 'success',
-    text: `${width} × ${height} px · resolución adecuada para el Panel y la ficha pública.`,
+    text: `${width} × ${height} px · resolución adecuada. Procura que el lienzo quede ajustado al contorno del escudo.`,
   }
 }
 
@@ -129,7 +126,10 @@ export default function BrotherhoodCrestEditor({
     setPreviewUrl(nextPreviewUrl)
 
     if (file.type === 'image/svg+xml') {
-      setFileAdvice({ tone: 'success', text: 'SVG vectorial · escalable y recomendado para el escudo maestro.' })
+      setFileAdvice({
+        tone: 'success',
+        text: 'SVG vectorial · recomendado. Exporta el viewBox ajustado al contorno del escudo, sin margen exterior innecesario.',
+      })
       return
     }
 
@@ -287,8 +287,8 @@ export default function BrotherhoodCrestEditor({
         <div className={styles.contentColumn}>
           <div className={styles.specGrid} aria-label="Requisitos del escudo">
             <div><span>Formato</span><strong>SVG recomendado</strong><small>También PNG o WEBP</small></div>
-            <div><span>Dimensiones</span><strong>1600 × 1600 px</strong><small>Mínimo 1000 × 1000 en raster</small></div>
-            <div><span>Fondo</span><strong>Transparente</strong><small>Escudo centrado y con margen</small></div>
+            <div><span>Dimensiones</span><strong>1600 px lado mayor</strong><small>Mínimo recomendado: 1000 px en raster</small></div>
+            <div><span>Fondo</span><strong>Transparente</strong><small>Lienzo ajustado al escudo, sin aire exterior</small></div>
             <div><span>Peso</span><strong>Máximo 10 MB</strong><small>Sin compresión destructiva</small></div>
           </div>
 
@@ -324,7 +324,7 @@ export default function BrotherhoodCrestEditor({
             ) : null}
 
             <div className={styles.actions}>
-              <small>SVG debe ser limpio y autocontenido. El Panel comprueba el archivo antes de publicarlo.</small>
+              <small>Recorta el lienzo al contorno útil del escudo. Hilo lo mostrará al máximo tamaño posible sin deformarlo ni recortarlo.</small>
               <div>
                 {displayPath ? <button className={panelStyles.secondaryButton} type="button" onClick={handleRemove} disabled={pending || !canEdit}>Retirar escudo</button> : null}
                 <button className={panelStyles.primaryButton} type="submit" disabled={pending || !selectedFile || !canEdit}>

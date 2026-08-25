@@ -24,6 +24,10 @@
   overflow: hidden;
 }
 
+.contract > .media.media.media.media[data-media-overflow='visible'] {
+  overflow: visible;
+}
+
 .contract > .copy.copy.copy {
   min-width: 0;
   overflow-wrap: break-word;

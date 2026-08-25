@@ -1,10 +1,11 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import CofradeTypeBadges from '@/components/CofradeTypeBadges'
+import BrotherhoodDirectoryCrestImage from '@/components/BrotherhoodDirectoryCrestImage'
 import { displayName, localityLabel } from '@/lib/brotherhood-directory'
 import contractStyles from './DirectoryCardContract.module.css'
 import styles from './HermandadesDirectory.module.css'
 import enhancementStyles from './HermandadesDirectoryEnhancements.module.css'
+import crestStyles from './BrotherhoodDirectoryCrest.module.css'
 
 function crestFor(hermandad) {
   if (hermandad.escudoPath) return hermandad.escudoPath
@@ -20,18 +21,18 @@ export default function BrotherhoodDirectoryCard({ hermandad, contextLabel }) {
 
   return (
     <Link href={`/hermandades/${hermandad.slug}`} className={`${styles.item} ${contractStyles.contract}`}>
-      <span className={`${styles.crestWrap} ${contractStyles.media}`}>
+      <span
+        className={`${styles.crestWrap} ${contractStyles.media} ${crest ? crestStyles.crestMedia : crestStyles.fallbackMedia}`}
+        data-media-overflow={crest ? 'visible' : undefined}
+      >
         {crest ? (
-          <Image
-            className={styles.crestImage}
+          <BrotherhoodDirectoryCrestImage
+            className={`${styles.crestImage} ${crestStyles.crestImage}`}
             src={crest}
             alt={`Escudo de ${name}`}
-            width={72}
-            height={92}
-            sizes="(max-width: 620px) 58px, 72px"
           />
         ) : (
-          <span className={styles.monogram}>{name.slice(0, 2).toUpperCase()}</span>
+          <span className={`${styles.monogram} ${crestStyles.monogram}`}>{name.slice(0, 2).toUpperCase()}</span>
         )}
       </span>
 
