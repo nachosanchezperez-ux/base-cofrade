@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import ExtraordinaryDirectory from '@/components/ExtraordinaryDirectory'
 import styles from '@/components/ExtraordinaryDirectory.module.css'
 import seoStyles from '@/components/ExtraordinarySeo.module.css'
@@ -9,6 +10,34 @@ export const dynamic = 'force-dynamic'
 
 const title = 'Procesiones y salidas extraordinarias de Sevilla 2026'
 const description = 'Calendario actualizado de procesiones y salidas extraordinarias de Sevilla capital y provincia en 2026: fechas, horarios, recorridos, bandas, motivos y guías.'
+
+function normalizeText(value) {
+  return String(value || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLocaleLowerCase('es')
+}
+
+function groupUpcomingByMonth(items) {
+  const groups = []
+  const index = new Map()
+
+  for (const item of items) {
+    if (!item.monthKey || !item.monthLabel || !item.slug) continue
+    if (!index.has(item.monthKey)) {
+      const group = { key: item.monthKey, label: item.monthLabel, items: [] }
+      index.set(item.monthKey, group)
+      groups.push(group)
+    }
+    index.get(item.monthKey).items.push(item)
+  }
+
+  return groups
+}
+
+function isCoronation(item) {
+  return normalizeText([item.title, item.reason, item.outingType].filter(Boolean).join(' ')).includes('coron')
+}
 
 export const metadata = {
   title,
@@ -32,9 +61,12 @@ export default async function ExtraordinariasPage() {
   const visibleOutings = outings.filter((item) => !item.isCancelled)
   const currentYear = 2026
   const yearOutings = visibleOutings.filter((item) => item.year === currentYear)
-  const upcomingCount = yearOutings.filter((item) => item.isUpcoming).length
+  const upcomingOutings = yearOutings.filter((item) => item.isUpcoming)
+  const upcomingCount = upcomingOutings.length
   const capitalCount = yearOutings.filter((item) => item.scope === 'capital').length
   const provinceCount = yearOutings.filter((item) => item.scope === 'province').length
+  const monthGroups = groupUpcomingByMonth(upcomingOutings)
+  const coronations = upcomingOutings.filter(isCoronation)
   const directoryJsonLd = collectionPageJsonLd({
     path: '/extraordinarias',
     name: title,
@@ -75,6 +107,52 @@ export default async function ExtraordinariasPage() {
             <span><strong>{provinceCount}</strong> en la provincia</span>
           </div>
         </div>
+
+        {monthGroups.length ? (
+          <section className={seoStyles.temporal} aria-labelledby="proximas-extraordinarias-meses">
+            <header>
+              <span className="eyebrow">Próximas citas</span>
+              <h2 id="proximas-extraordinarias-meses">Extraordinarias de Sevilla 2026 por meses</h2>
+              <p>Acceso directo a las próximas salidas extraordinarias de Sevilla capital y provincia, ordenadas por mes y enlazadas a su guía individual.</p>
+            </header>
+            <div className={seoStyles.monthGrid}>
+              {monthGroups.map((group) => (
+                <article key={group.key} className={seoStyles.monthCard}>
+                  <div className={seoStyles.monthHead}>
+                    <h3>{group.label}</h3>
+                    <span>{group.items.length}</span>
+                  </div>
+                  <div className={seoStyles.monthLinks}>
+                    {group.items.map((outing) => (
+                      <Link href={`/extraordinarias/${outing.slug}`} key={outing.id}>
+                        <span>{outing.dateParts?.day ? `${outing.dateParts.day} · ` : ''}{outing.title}</span>
+                        <small>{outing.municipality}</small>
+                      </Link>
+                    ))}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+        ) : null}
+
+        {coronations.length ? (
+          <section className={seoStyles.coronations} aria-labelledby="coronaciones-canonicas-sevilla-2026">
+            <header>
+              <span className="eyebrow">Citas destacadas</span>
+              <h2 id="coronaciones-canonicas-sevilla-2026">Coronaciones y salidas extraordinarias de 2026</h2>
+              <p>Guías de las próximas extraordinarias cuyo motivo o tipo documentado está relacionado con una coronación.</p>
+            </header>
+            <div className={seoStyles.coronationLinks}>
+              {coronations.map((outing) => (
+                <Link href={`/extraordinarias/${outing.slug}`} key={outing.id}>
+                  <strong>{outing.title}</strong>
+                  <span>{outing.dateParts?.label || outing.monthLabel} · {outing.municipality}</span>
+                </Link>
+              ))}
+            </div>
+          </section>
+        ) : null}
 
         <ExtraordinaryDirectory outings={outings} />
 
