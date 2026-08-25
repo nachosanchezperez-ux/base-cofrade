@@ -5,6 +5,8 @@
   }
 
   [data-panel-main] {
+    width: 100%;
+    max-width: 100%;
     min-width: 0;
     scroll-padding-bottom: calc(180px + env(safe-area-inset-bottom, 0px));
   }
@@ -81,8 +83,29 @@
 
   [data-panel-main] [class*='pageWrap'] {
     width: min(calc(100% - 24px), 760px) !important;
+    max-width: 100% !important;
     padding-top: 22px !important;
     padding-bottom: 48px !important;
+  }
+
+  [data-panel-main] [class*='filters'] {
+    width: 100% !important;
+    max-width: 100% !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+  }
+
+  [data-panel-main] [class*='filters'] > * {
+    min-width: 0;
+  }
+
+  [data-panel-main] [class*='filters'] > :first-child,
+  [data-panel-main] [class*='filters'] > button:last-child {
+    grid-column: 1 / -1;
+  }
+
+  [data-panel-main] [class*='filters'] > button:last-child {
+    width: 100% !important;
   }
 
   [data-panel-main] [class*='pageHeader'],
