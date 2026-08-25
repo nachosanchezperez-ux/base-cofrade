@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import BrotherhoodInlineMedia from '@/components/panel/BrotherhoodInlineMedia'
 import { requirePanelUser } from '@/lib/panel/auth'
 import { getBrotherhoodEditorData } from '@/lib/panel/data'
 import { SaveBar, StatusSelect, STATUS_LABELS } from '@/components/panel/brotherhood/BrotherhoodEditorPrimitives'
@@ -115,6 +116,17 @@ function HeritageAssetForm({ item, data, canEdit }) {
         <SaveBar label={isNew ? 'Crear pieza patrimonial' : 'Guardar pieza'} canEdit={canEdit} />
       </form>
 
+      {!isNew && canEdit && entity.status !== 'archived' ? (
+        <BrotherhoodInlineMedia
+          brotherhoodId={data.entity.id}
+          targetId={entity.id}
+          targetKind="entity"
+          title={entity.name}
+          defaultAlt={entity.name}
+          returnSection="patrimonio"
+        />
+      ) : null}
+
       {!isNew ? (
         <div className={styles.contributionBlock}>
           <div className={styles.subsectionHeading}><div><span className={styles.eyebrow}>Relaciones</span><h4>Autores, talleres e intervenciones</h4></div><p>Una pieza puede reunir diferentes responsables y disciplinas.</p></div>
@@ -132,6 +144,11 @@ export default async function BrotherhoodHeritagePage({ params, searchParams }) 
   const data = await getBrotherhoodEditorData(id)
   if (!data) notFound()
   const canEdit = ['admin', 'editor'].includes(user.role)
+  const savedMessage = query?.saved === 'uploaded'
+    ? 'Fotografía del elemento patrimonial actualizada correctamente.'
+    : query?.saved
+      ? 'Patrimonio actualizado correctamente.'
+      : ''
 
   return (
     <div className={styles.pageWrap}>
@@ -143,7 +160,7 @@ export default async function BrotherhoodHeritagePage({ params, searchParams }) 
         </div>
       </header>
 
-      {query?.saved ? <div className={styles.savedNotice} role="status">Patrimonio actualizado correctamente.</div> : null}
+      {savedMessage ? <div className={styles.savedNotice} role="status">{savedMessage}</div> : null}
       {!canEdit ? <div className={styles.readOnlyNotice}>Tu perfil tiene acceso de consulta.</div> : null}
 
       <section className={styles.editorSection}>
