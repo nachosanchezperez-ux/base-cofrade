@@ -4,11 +4,11 @@
 
 ## Estado verificado
 
-- Revisión: **25 de agosto de 2026 · puerta de QA recuperada y #342 cerrada**.
+- Revisión: **25 de agosto de 2026 · puerta de QA recuperada, #342 y #350 cerradas**.
 - Repositorio: `nachosanchezperez-ux/base-cofrade`.
 - Rama principal: `main`.
-- `main` actual: `ba5481cd81586c49c71111652d9b5b80d3cdb720` — **Hermandades: portada editable y programa de mano (#342)**.
-- Producción: `dpl_5zuNBzYN2ePdhEUnmn2ZqhGB4LkB` → **READY**.
+- `main` actual: `HEAD`; último commit funcional validado: `3e9e9d6122ce3c54735b84f3ce5625aac88c8063` — **Glorias · calendario y fichas de procesiones de Sevilla (#350)**. El commit que contiene este documento puede ser posterior y solo documental.
+- Producción funcional de #350: `dpl_AxnJnLQvciVwfmVHngpVzGaaFknA` → **READY**.
 - Región real del deployment de producción: **`dub1`**.
 - Runtime de producción del deployment actual: **sin registros `error` ni `fatal`** tras el smoke público.
 - Supabase: `Hilocofrade` (`kcevwkucqzcyrqaimyhl`) → **ACTIVE_HEALTHY**, región `eu-west-1`.
@@ -35,6 +35,7 @@
 - #349 · Primera edición · cierre técnico, rendimiento y navegación → **FUSIONADA Y DESPLEGADA**.
 - #351 · Vercel · recuperar previews sin regiones pasivas Enterprise → **FUSIONADA Y DESPLEGADA**.
 - #342 · Hermandades · portada editable + programa de mano y resumen unificado → **FUSIONADA Y DESPLEGADA**.
+- #350 · Glorias · calendario y fichas de procesiones de Sevilla → **FUSIONADA Y DESPLEGADA**.
 
 ### Resultado de #342
 
@@ -48,17 +49,19 @@
 - Auditor: **sin bloqueo estructural ni relevante**, sin hardcodes por slug, segunda arquitectura de media o subida pesada vía Vercel Function.
 - Producción posterior: `dpl_5zuNBzYN2ePdhEUnmn2ZqhGB4LkB` → **READY**; smoke público y runtime correctos.
 
+### Resultado de #350
+
+- Head auditado: `c36bfbdf6d0b0ff6946534bc5bbf87f2a3a137f0`; merge en `main`: `3e9e9d6122ce3c54735b84f3ce5625aac88c8063`.
+- CI #933 → **SUCCESS**; suite local → **324 / 324**; build Next.js 16.3 → **PASS**.
+- Preview automática: `dpl_Ae197XTYibbYMcGmkkLBHSyNxAsR` → **READY**, región real `dub1`; 76 respuestas 200 y ningún `error`/`fatal`.
+- Auditoría DATA/Product conforme: reutiliza `outings` y el grafo existente; no crea una arquitectura paralela ni mezcla Procesión de Gloria con romería, traslado, extraordinaria o culto externo.
+- El filtro conserva el concepto exacto `Procesión de Gloria` sin distinguir mayúsculas/minúsculas, evitando omisiones por variantes editoriales del Panel.
+- Sin migraciones, cambios de RLS, Storage, excepciones por slug ni hardcodes de Hermandades.
+- Home, Directorio, Extraordinarias, Hermandad, Imagen, Paso, Banda, listado y fichas de Glorias validados en preview.
+- Contratos responsive/mobile-first conformes y sin desbordamiento horizontal; el smoke visual final se completó en navegador de escritorio.
+- Producción: `dpl_AxnJnLQvciVwfmVHngpVzGaaFknA` → **READY**, región real `dub1`; 106 respuestas 200, sin 4xx, 5xx, `error` ni `fatal` tras el smoke.
+
 ## Frentes abiertos reales
-
-### #350 · Glorias · calendario y fichas de procesiones de Sevilla
-
-- **ABIERTA / EN REEVALUACIÓN; NO FUSIONADA**.
-- Head observado antes de reconciliar: `01739af870bdbfbabaac7978eca128072ae53bae`.
-- Divergencia frente a `main`: **1 commit por delante y 2 por detrás**; GitHub la marca no fusionable hasta actualizarla.
-- CI histórico #926 → **SUCCESS**, pero el preview antiguo quedó bloqueado por la configuración regional Enterprise ya retirada de `main`.
-- Diff efectivo observado: 10 archivos, sin migraciones, esquema ni RLS y sin solape de archivos con #342.
-- Debe reconciliarse con el `main` actual, generar un preview automático nuevo y superar auditoría DATA/Product antes de decidir su fusión.
-- La auditoría debe confirmar que `Procesión de Gloria`, `salida`, `romería`, `traslado`, `extraordinaria` y `culto externo` no se mezclan ni generan una arquitectura paralela a `outings`.
 
 ### #49 · Importador documental asistido
 
@@ -75,7 +78,7 @@ Timestamps remotos duplicados       0 detectados
 20260824104227 en Git               🟢 SÍ
 20260825094306 en Git               🟢 SÍ
 Historial completo alineado         🟢 SÍ
-Cambios Supabase en #351 / #342     NINGUNO
+Cambios Supabase en #351/#342/#350  NINGUNO
 ```
 
 ## Panel V2 · principios vigentes
@@ -90,18 +93,16 @@ Cambios Supabase en #351 / #342     NINGUNO
 
 ## Bloqueos y precauciones reales
 
-1. #350 aún no tiene preview actual ni auditoría conceptual cerrada tras reconciliar con `main`.
-2. No crear ni aplicar migraciones sin refrescar antes el historial local/remoto completo.
-3. #49 continúa fuera de alcance.
-4. No reintroducir `functionFailoverRegions` o regiones pasivas sin revisar el plan de Vercel.
-5. La protección contra contraseñas filtradas de Supabase Auth continúa como acción manual de seguridad previa al lanzamiento; no ha formado parte de esta tarea.
+1. No crear ni aplicar migraciones sin refrescar antes el historial local/remoto completo.
+2. #49 continúa fuera de alcance.
+3. No reintroducir `functionFailoverRegions` o regiones pasivas sin revisar el plan de Vercel.
+4. La protección contra contraseñas filtradas de Supabase Auth continúa como acción manual de seguridad previa al lanzamiento; no ha formado parte de esta tarea.
 
 ## Orden operativo vigente
 
-1. Reconciliar #350 con `main` `ba5481cd`.
-2. Ejecutar CI, build y preview automático en la configuración regional soportada.
-3. Auditar el modelo de Glorias contra `outings` y sus conceptos relacionados.
-4. Fusionar #350 solo si modelo, móvil, SEO, preview y Auditor quedan conformes.
-5. Validar producción y detenerse sin abrir otro frente.
+1. Detener la apertura automática de frentes: #342 y #350 están cerradas y #49 continúa aparcada.
+2. Mantener producción y previews en la configuración regional soportada de una sola región `dub1`.
+3. Resolver manualmente la protección contra contraseñas filtradas de Supabase Auth cuando Dirección priorice ese ajuste.
+4. Esperar una nueva decisión de Dirección antes de abrir otra fase funcional o estructural.
 
-**ESTADO-PROYECTO → 🟢 QA VERCEL RECUPERADA · PRODUCCIÓN ESTABLE · GIT ↔ SUPABASE ALINEADOS · #342 CERRADA · #350 EN REEVALUACIÓN · #49 APARCADA**
+**ESTADO-PROYECTO → 🟢 QA VERCEL RECUPERADA · PRODUCCIÓN ESTABLE · GIT ↔ SUPABASE ALINEADOS · #342 CERRADA · #350 CERRADA · #49 APARCADA · NUEVO FRENTE NO ABIERTO**
