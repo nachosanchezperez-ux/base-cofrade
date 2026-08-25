@@ -14,6 +14,7 @@ const SAVED_MESSAGES = {
   updated: 'La relación se ha actualizado correctamente.',
   closed: 'El periodo se ha cerrado sin borrar el Paso.',
   archived: 'La relación se ha retirado. El Paso continúa existiendo de forma independiente.',
+  uploaded: 'Fotografía principal del Paso actualizada correctamente.',
 }
 
 export default async function BrotherhoodStepsPage({ params, searchParams }) {

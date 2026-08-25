@@ -11,6 +11,7 @@ const QUICK_UPLOAD_PATH_PATTERN = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}\
 const IMAGE_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/avif'])
 const QUICK_UPLOAD_RIGHTS = new Set(['owned', 'authorized'])
 const TARGET_KINDS = new Set(['entity', 'cult'])
+const RETURN_SECTIONS = new Set(['multimedia', 'cultos', 'pasos', 'titulares', 'patrimonio'])
 const MAX_FILE_SIZE = 10 * 1024 * 1024
 
 function value(formData, name) {
@@ -130,7 +131,9 @@ async function loadUploadContext(formData) {
   const brotherhoodId = uuid(formData, 'brotherhood_id')
   const targetId = uuid(formData, 'target_id')
   const targetKind = value(formData, 'target_kind') || 'entity'
+  const returnSection = value(formData, 'return_section') || 'multimedia'
   if (!TARGET_KINDS.has(targetKind)) throw new Error('El tipo de destino de la imagen no es válido.')
+  if (!RETURN_SECTIONS.has(returnSection)) throw new Error('La sección de retorno de la imagen no es válida.')
 
   const brotherhood = await loadEntity(supabase, brotherhoodId, 'La Hermandad no existe o está archivada.')
   if (brotherhood.entity_type !== 'brotherhood') throw new Error('La ficha de contexto no es una Hermandad.')
@@ -163,6 +166,7 @@ async function loadUploadContext(formData) {
     brotherhoodId,
     targetId,
     targetKind,
+    returnSection,
     brotherhood,
     target,
     storageRoot,
@@ -321,11 +325,14 @@ async function persistBrotherhoodRelatedMedia(formData, context, user, storagePa
       media_asset_id: assetResult.data.id,
       relation_type: 'cover',
       upload_mode: 'signed_direct',
+      return_section: context.returnSection,
     },
   })
 
-  const anchor = `contenido-${context.targetId}`
-  return `/panel/hermandades/${context.brotherhoodId}/multimedia?saved=uploaded#${anchor}`
+  const anchor = context.returnSection === 'multimedia'
+    ? `contenido-${context.targetId}`
+    : `media-${context.targetId}`
+  return `/panel/hermandades/${context.brotherhoodId}/${context.returnSection}?saved=uploaded#${anchor}`
 }
 
 function revalidateUploadedMedia(context) {
@@ -335,6 +342,8 @@ function revalidateUploadedMedia(context) {
   revalidatePath(`/panel/hermandades/${context.brotherhoodId}/multimedia`)
   revalidatePath(`/panel/hermandades/${context.brotherhoodId}/patrimonio`)
   revalidatePath(`/panel/hermandades/${context.brotherhoodId}/cultos`)
+  revalidatePath(`/panel/hermandades/${context.brotherhoodId}/pasos`)
+  revalidatePath(`/panel/hermandades/${context.brotherhoodId}/titulares`)
   if (context.brotherhood.slug) revalidatePath(`/hermandades/${context.brotherhood.slug}`)
 
   if (context.target.entity_type === 'step') {

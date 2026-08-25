@@ -25,6 +25,17 @@ function formatDate(value, withYear = true) {
   }).format(date)
 }
 
+function formatSeoDate(value) {
+  if (!value) return ''
+  const date = new Date(`${value}T12:00:00`)
+  return new Intl.DateTimeFormat('es-ES', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'Europe/Madrid',
+  }).format(date)
+}
+
 function formatShortDate(value) {
   if (!value) return ''
   const date = new Date(`${value}T12:00:00`)
@@ -66,6 +77,24 @@ function musicTitle(section) {
   return 'Otros momentos musicales'
 }
 
+function seoCoverage(item) {
+  const coverage = ['fecha']
+  if (item.schedule.length || item.departureTime || item.returnTime) coverage.push('horarios')
+  if (item.routeSummary) coverage.push('recorrido')
+  if (item.processionalMusic.length) coverage.push('bandas')
+  if (item.poster) coverage.push('cartel')
+  return coverage.join(', ')
+}
+
+function seoTitle(item) {
+  return [
+    item.title,
+    item.outingType,
+    formatSeoDate(item.date),
+    item.municipality,
+  ].filter(Boolean).join(' · ')
+}
+
 function MusicRows({ items }) {
   if (!items.length) return null
   return (
@@ -95,14 +124,14 @@ export async function generateMetadata({ params }) {
     }
   }
 
-  const title = `${item.title} · ${item.municipality}`
+  const title = seoTitle(item)
   const description = seoDescription(
     [
-      `Guía de la ${item.outingType.toLocaleLowerCase('es')} de ${item.title}`,
-      item.municipality ? `en ${item.municipality}` : '',
+      `${item.title}${item.municipality ? ` en ${item.municipality}` : ''}`,
+      formatSeoDate(item.date),
       item.reason ? `con motivo de ${item.reason}` : '',
-      ': horarios, recorrido, música y fuentes.',
-    ].filter(Boolean).join(' ').replace(/\s+:/, ':')
+      `Guía con ${seoCoverage(item)} y fuentes documentadas.`,
+    ].filter(Boolean).join('. ').replace(/\.\s*\./g, '.')
   )
   const canonical = `/extraordinarias/${item.slug}`
 
@@ -132,8 +161,10 @@ export default async function ExtraordinaryDetailPage({ params }) {
   if (!item) notFound()
 
   const canonicalPath = `/extraordinarias/${item.slug}`
+  const canonicalUrl = absoluteUrl(canonicalPath)
   const entry = entryLabel(item)
   const dateLabel = formatDate(item.date)
+  const structuredTitle = seoTitle(item)
   const otherMusicGroups = [
     ['liturgical', item.liturgicalMusic],
     ['announcement', item.announcementMusic],
@@ -141,30 +172,48 @@ export default async function ExtraordinaryDetailPage({ params }) {
   ].filter(([, rows]) => rows.length)
 
   const pageDescription = seoDescription(
-    `${item.title}${item.municipality ? ` · ${item.municipality}` : ''}. ${item.reason || item.description || 'Salida extraordinaria documentada en Hilo Cofrade.'}`
+    [
+      `${item.title}${item.municipality ? ` · ${item.municipality}` : ''}`,
+      formatSeoDate(item.date),
+      item.reason || item.description || 'Salida extraordinaria documentada en Hilo Cofrade.',
+      `Información de ${seoCoverage(item)}.`,
+    ].filter(Boolean).join('. ').replace(/\.\s*\./g, '.')
   )
   const pageJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
-    '@id': `${absoluteUrl(canonicalPath)}#webpage`,
-    url: absoluteUrl(canonicalPath),
-    name: pageTitle(`${item.title} · ${item.municipality}`),
+    '@id': `${canonicalUrl}#webpage`,
+    url: canonicalUrl,
+    name: pageTitle(structuredTitle),
     description: pageDescription,
     inLanguage: 'es',
     isPartOf: { '@id': `${absoluteUrl('/')}#website` },
+    mainEntity: { '@id': `${canonicalUrl}#event` },
+    ...(item.heroImagePath ? { primaryImageOfPage: { '@type': 'ImageObject', url: absoluteUrl(item.heroImagePath) } } : {}),
   }
   const eventJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Event',
+    '@id': `${canonicalUrl}#event`,
+    url: canonicalUrl,
     name: `${item.outingType}: ${item.title}`,
-    startDate: item.departureTime ? `${item.date}T${item.departureTime}:00` : item.date,
+    startDate: item.departureTime ? `${item.date}T${item.departureTime}:00+02:00` : item.date,
     ...(item.returnDate || item.returnTime ? {
-      endDate: `${item.returnDate || item.date}${item.returnTime ? `T${item.returnTime}:00` : ''}`,
+      endDate: `${item.returnDate || item.date}${item.returnTime ? `T${item.returnTime}:00+02:00` : ''}`,
     } : {}),
     description: item.reason || item.description || pageDescription,
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
     ...(item.eventStatus === 'announced' ? { eventStatus: 'https://schema.org/EventScheduled' } : {}),
     ...(item.eventStatus === 'cancelled' ? { eventStatus: 'https://schema.org/EventCancelled' } : {}),
+    ...(item.heroImagePath ? { image: [absoluteUrl(item.heroImagePath)] } : {}),
+    ...(item.brotherhoodName ? {
+      organizer: {
+        '@type': 'Organization',
+        name: item.brotherhoodName,
+        ...(item.brotherhoodHref ? { url: absoluteUrl(item.brotherhoodHref) } : {}),
+      },
+    } : {}),
+    mainEntityOfPage: { '@id': `${canonicalUrl}#webpage` },
     location: {
       '@type': 'Place',
       name: item.origin || item.municipality || 'Sevilla',

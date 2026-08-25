@@ -4,15 +4,16 @@
 
 ## Último estado conocido
 
-- Revisión: **24 de agosto de 2026 · noche (CEST)**.
+- Revisión: **25 de agosto de 2026 · madrugada (CEST)**.
 - Repositorio: `nachosanchezperez-ux/base-cofrade`.
 - Rama principal: `main`.
-- `main` actual: `fb27fa7527fd2b1f89d65ce89b11b2949b5bbae2` — **Panel móvil · operación real (#323)**.
-- Producción: `dpl_Ga9jTkpNWNaKXeU7ombt8PFEyE5c` → **READY**, asociada a `hilocofrade.es` y `www.hilocofrade.es`.
+- `main` funcional publicado: `8fd1e6fbbb2c61a82dcf4a1366e463d509d75dea` — **Panel V2 · fotografía contextual y operación móvil optimizada (#339)**.
+- Producción funcional: `dpl_Efi89aViKJ2uiyvFY5LScgSgFJny` → **READY**, asociada a `hilocofrade.es` y `www.hilocofrade.es`.
 - Supabase: `Hilocofrade` (`kcevwkucqzcyrqaimyhl`) → **ACTIVE_HEALTHY**.
 - Última migración aplicada en remoto: `20260824104227_extraordinaria_dolores_cerro_fotografia_fuente_oficial`.
-- La migración remota `20260824104227` todavía **no está recuperada en `main`**. Es una divergencia conocida y debe reconciliarse en un carril independiente antes de iniciar nuevo trabajo de esquema o migraciones.
-- PR #323 → **FUSIONADA Y DESPLEGADA**.
+- La migración remota `20260824104227` todavía **no está recuperada en el repositorio**. Sigue siendo una divergencia conocida y debe reconciliarse en un carril independiente antes de iniciar nuevo trabajo de esquema o migraciones.
+- PR #339 → **FUSIONADA Y DESPLEGADA** · Panel V2.
+- PR #341 → **FUSIONADA Y DESPLEGADA** · SEO temporal de Extraordinarias.
 - PR #337 → **ABIERTA / frente activo** · Portada editorial + Hero V2 para las fichas de Imágenes.
 - PR #332 → **ABIERTA / piloto visual aislado** · Hero V2 de Hermandad con El Baratillo.
 - PR #49 → **APARCADA** · no usar como base ni aplicar sus migraciones.
@@ -21,11 +22,11 @@ El estado real de las herramientas prevalece sobre cualquier SHA o deployment re
 
 ## Última validación
 
-### Panel móvil · operación real
+### Panel V2 · fotografía contextual y operación móvil optimizada
 
-El primer corte funcional de Experiencia móvil quedó integrado mediante la PR #323.
+La PR #339 convierte la experiencia móvil en criterio base del Panel y evita que Multimedia sea un paso obligatorio para las operaciones editoriales habituales.
 
-Arquitectura validada:
+Flujo multimedia conservado:
 
 ```text
 TELÉFONO
@@ -40,69 +41,60 @@ MEDIA_ASSET
    ↓
 RELACIÓN
    ↓
-REDIRECCIÓN
+MISMA SECCIÓN DE EDICIÓN
 ```
 
 El archivo no atraviesa una Vercel Function. El navegador envía los bytes directamente a `hilo-media`; los Server Actions reciben y validan únicamente metadatos y contexto editorial.
 
-Validación técnica definitiva:
+Validación técnica definitiva de #339:
 
 ```text
-Head validado                         e795802f190eda95659910dd308bb1615cc74ad7
-Commit integrado en main              fb27fa7527fd2b1f89d65ce89b11b2949b5bbae2
-CI #823                               PASS
-npm test                              PASS
-npm run build                         PASS
-Preview exacta                        dpl_Gm9GGsfMtqdBFdn5NovvauFvk4SV · READY
-Producción                            dpl_Ga9jTkpNWNaKXeU7ombt8PFEyE5c · READY
-Runtime error/fatal                   0
-Migraciones de la PR                  0
-Archivos modificados                  9
+Head final reconciliado                fa54d13bdf639464aac8c624d4654996b2e0123c
+Commit integrado en main               8fd1e6fbbb2c61a82dcf4a1366e463d509d75dea
+CI #845                                PASS
+npm test                               PASS
+npm run build                          PASS
+Preview exacta                         dpl_AqwDzi1dLy2FcAXBx2PjtMDPQ4r8 · READY
+Producción funcional                   dpl_Efi89aViKJ2uiyvFY5LScgSgFJny · READY
+Runtime errors                         0
+Migraciones de la PR                   0
+Archivos funcionales modificados       14
 ```
 
-### Smoke físico
+Comprobación pública posterior al despliegue:
 
-El smoke se realizó desde iPhone y sesión editorial real:
+- `https://hilocofrade.es/panel` responde `200` desde `dpl_Efi89aViKJ2uiyvFY5LScgSgFJny`;
+- acceso no autenticado conduce correctamente al login privado;
+- Vercel no registra errores de runtime en la ventana posterior al despliegue.
+
+### Operación móvil V2
+
+Queda integrado:
+
+- modo móvil completo desde `860px`;
+- formularios a una columna en móvil/tablet estrecha;
+- inputs, selects y textareas a `16px` para evitar zoom automático de iOS;
+- objetivos táctiles de 44–48px;
+- guardado principal a ancho completo;
+- breadcrumbs y pestañas con desplazamiento horizontal táctil;
+- navegación inferior `Inicio · Buscar · Recientes · Nuevo · Menú`;
+- safe areas de iPhone;
+- guardado rápido por encima de la navegación inferior;
+- subida de fotografía principal en contexto dentro de Titulares, Pasos, Cultos y Patrimonio;
+- retorno a la misma sección tras subir la imagen;
+- `Multimedia` conservado como biblioteca y gestor avanzado.
+
+### Base física heredada del corte anterior
+
+El smoke físico de la PR #323 sigue siendo la referencia validada para la arquitectura de subida directa:
 
 | Caso | Resultado |
 |---|---|
 | Pastora de Cantillana | Subida contextual a Culto, relación `cult_media` y auditoría `upload_mode = signed_direct`. |
 | El Baratillo | Selección y vinculación contextual verificadas sobre Paso y patrimonio. |
-| San Benito | Subida directa de JPG de 7.851.726 bytes, sustitución de portada, navegación final y repetición tras corregir `NEXT_REDIRECT`. |
+| San Benito | Subida directa de JPG de 7.851.726 bytes, sustitución de portada y redirección final correcta. |
 
-Confirmación final del editor:
-
-```text
-SAN BENITO REDIRECCIÓN OK
-```
-
-Quedó demostrado:
-
-- archivo superior a 4,5 MB sin `413`;
-- subida mediante URL firmada;
-- estados `Preparando…`, `Subiendo…` y `Vinculando…`;
-- conservación del archivo y campos ante errores esperados;
-- creación de `media_assets` y `entity_media` / `cult_media`;
-- redirección correcta después del guardado;
-- ausencia de interfaz móvil paralela;
-- ausencia de excepciones por Hermandad.
-
-### Limpieza posterior al smoke
-
-San Benito quedó restaurado al estado editorial correcto:
-
-```text
-objetos temporales en Storage         0
-media_assets temporales               0
-relaciones temporales                 0
-portadas activas del Paso             1
-fotografía real restaurada             Juan Valladares
-entradas de auditoría conservadas      3
-```
-
-También se retiraron la política de borrado efímera, la extensión HTTP temporal y el secreto temporal de Vault utilizados exclusivamente para la limpieza. No permanece ningún permiso ni recurso auxiliar del smoke.
-
-Las fotografías reales incorporadas en Pastora y El Baratillo se conservan como contenido editorial documentado.
+La PR #339 reutiliza esa arquitectura y añade barreras automáticas específicas para la fotografía contextual y el comportamiento móvil.
 
 ## Estado de fases
 
@@ -113,6 +105,7 @@ Media abierta                         🟢 GOBERNADA
 Importación masiva base               🟢 DISPONIBLE
 Experiencia móvil · corte 1           🟢 CERRADO
 Panel móvil · operación real          🟢 PRODUCCIÓN
+Panel V2 · móvil + foto contextual    🟢 PRODUCCIÓN
 Producción                            🟢 READY
 Divergencia migración 20260824104227  🟠 PENDIENTE DE RECONCILIACIÓN LOCAL
 ```
@@ -121,17 +114,17 @@ Divergencia migración 20260824104227  🟠 PENDIENTE DE RECONCILIACIÓN LOCAL
 
 ### #337 · Portada editorial + Hero V2 de Imágenes
 
-- Es el frente funcional activo.
-- Parte de `main` anterior a la integración de #323.
-- No comparte los nueve archivos del Panel móvil.
-- Debe reconciliarse con `main` `fb27fa75` antes de integrarse.
-- Requiere CI, build, preview exacta y revisión visual en escritorio y móvil.
+- Continúa como frente funcional abierto.
+- Debe reconciliarse de nuevo con el `main` vigente después de #339 y #341 antes de integrarse.
+- No debe perder la separación `hero` frente a retrato principal (`is_cover`).
+- Requiere CI, build, preview exacta y revisión visual en escritorio y móvil tras la reconciliación.
 
 ### #332 · Hero V2 de Hermandad con El Baratillo
 
 - Continúa como piloto visual aislado.
 - No debe convertirse en patrón global mediante excepciones por `slug`.
 - Su integración definitiva deberá usar media gobernada y un componente genérico.
+- También deberá reconciliarse con el `main` vigente antes de cualquier integración.
 
 ### #49 · Importador documental asistido
 
@@ -141,7 +134,7 @@ Divergencia migración 20260824104227  🟠 PENDIENTE DE RECONCILIACIÓN LOCAL
 
 ## Bloqueos y precauciones
 
-No existen bloqueos para el Panel móvil ya integrado.
+No existen bloqueos conocidos para el Panel V2 ya publicado.
 
 Antes de cualquier trabajo nuevo que toque Supabase, esquema o migraciones:
 
@@ -154,7 +147,7 @@ La divergencia `20260824104227` no bloquea cambios puramente visuales o de front
 
 ## Siguiente acción
 
-**Reconciliar la PR #337 con `main` `fb27fa75` y ejecutar su validación completa antes de decidir la integración.**
+**Reconciliar la PR #337 con el `main` vigente después de #339/#341 y ejecutar su validación completa antes de decidir la integración.**
 
 El carril de reconciliación de la migración `20260824104227` debe resolverse antes del próximo cambio de Supabase o esquema.
 
@@ -167,4 +160,4 @@ El carril de reconciliación de la migración `20260824104227` debe resolverse a
 5. Marcar como cerrados los anteriores cuando el estado real lo confirme.
 6. Devolver una sola acción ejecutable.
 
-**ESTADO-PROYECTO → 🟢 ACTUALIZADO CON EL CIERRE DEL PANEL MÓVIL**
+**ESTADO-PROYECTO → 🟢 ACTUALIZADO CON PANEL V2 EN PRODUCCIÓN**
