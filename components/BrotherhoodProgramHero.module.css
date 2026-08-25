@@ -12,11 +12,22 @@
   isolation: isolate;
 }
 
+.photoBackdrop {
+  z-index: -6;
+  object-fit: cover;
+  object-position: var(--hero-desktop-focus, center 44%);
+  transform: scale(1.06);
+  filter: blur(24px) saturate(.82) brightness(.72);
+}
+
 .photo {
   z-index: -5;
-  object-fit: cover;
-  object-position: center 44%;
+  object-position: var(--hero-desktop-focus, center 44%);
   filter: saturate(.9) contrast(1.04);
+}
+
+.contained .photo {
+  padding-inline: clamp(0px, 5vw, 84px);
 }
 
 .photoVeil {
@@ -295,8 +306,13 @@
     border-bottom-width: 3px;
   }
 
-  .photo {
-    object-position: 58% 32%;
+  .photo,
+  .photoBackdrop {
+    object-position: var(--hero-mobile-focus, 58% 32%);
+  }
+
+  .contained .photo {
+    padding-inline: 0;
   }
 
   .photoVeil {
