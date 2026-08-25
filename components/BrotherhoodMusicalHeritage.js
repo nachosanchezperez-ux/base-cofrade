@@ -26,12 +26,17 @@ function composerText(item) {
   return item.authorshipText || 'Autoría por documentar';
 }
 
+function compactYear(value) {
+  const text = String(value ?? '').trim();
+  return /^\d{4}$/.test(text) ? text : '—';
+}
+
 function MusicRow({ item, showStyle = true }) {
   return (
     <article className={`${styles.march} ${showStyle ? '' : styles.marchCompact}`}>
       <div className={styles.year}>
         <small>Año</small>
-        <strong>{item.year || '—'}</strong>
+        <strong>{compactYear(item.year)}</strong>
       </div>
       <div className={styles.copy}>
         <small className={styles.fieldLabel}>Título</small>
