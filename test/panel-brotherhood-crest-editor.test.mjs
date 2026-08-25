@@ -53,7 +53,19 @@ test('los SVG se validan antes de publicarse y el escudo se revalida en Panel y 
   assert.match(action, /javascript\\s\*:/)
   assert.match(action, /revalidatePath\(`\/panel\/hermandades\/\$\{context\.brotherhoodId\}`\)/)
   assert.match(action, /revalidatePath\(`\/hermandades\/\$\{context\.entity\.slug\}`\)/)
-  assert.match(action, /saved=crest#escudo/)
+  assert.match(action, /return \{ saved: true, publicUrl \}/)
+  assert.match(action, /return \{ removed: true \}/)
+})
+
+test('actualizar el escudo no abandona la ficha ni pisa otros cambios pendientes', async () => {
+  const editor = await source('components/panel/BrotherhoodCrestEditor.js')
+  const action = await source('app/panel/(protected)/hermandades/[id]/crest-actions.js')
+
+  assert.match(editor, /syncHiddenCrestPath/)
+  assert.match(editor, /setDisplayPath\(result\.publicUrl\)/)
+  assert.match(editor, /data-panel-edit-state="ignore"/)
+  assert.match(editor, /Puedes seguir editando la ficha sin perder cambios/)
+  assert.doesNotMatch(action, /redirect\(/)
 })
 
 test('la presentación del escudo es responsive para móvil y escritorio', async () => {
