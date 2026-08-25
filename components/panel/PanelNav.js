@@ -4,45 +4,9 @@ import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { signOutAction } from '@/app/panel/login/actions'
+import { getPanelNavigationGroups } from '@/lib/panel/navigation'
 import { PANEL_ROLES } from '@/lib/panel/roles'
 import styles from './PanelNav.module.css'
-
-const NAV_GROUPS = [
-  {
-    label: 'Inicio',
-    items: [
-      { href: '/panel', label: 'Resumen', mobileLabel: 'Inicio', mark: '⌂' },
-      { href: '/panel/hoy', label: 'Hoy', mark: '24' },
-    ],
-  },
-  {
-    label: 'Contenido',
-    items: [
-      { href: '/panel/hermandades', label: 'Hermandades', mark: 'H' },
-      { href: '/panel/imagenes', label: 'Imágenes', mark: 'I' },
-      { href: '/panel/pasos', label: 'Pasos', mark: 'P' },
-      { href: '/panel/bandas', label: 'Bandas', mark: 'B' },
-      { href: '/panel/marchas', label: 'Marchas', mark: '♫' },
-      { href: '/panel/extraordinarias', label: 'Extraordinarias', mark: '✦' },
-      { href: '/panel/acontecimientos', label: 'Acontecimientos', mark: 'A' },
-    ],
-  },
-  {
-    label: 'Documentación',
-    items: [
-      { href: '/panel/agentes', label: 'Personas', mark: 'Pe' },
-      { href: '/panel/fuentes', label: 'Fuentes', mark: 'F' },
-      { href: '/panel/multimedia', label: 'Multimedia', mark: 'Mu' },
-      { href: '/panel/relaciones', label: 'Relaciones', mark: '↔' },
-    ],
-  },
-  {
-    label: 'Sistema',
-    items: [
-      { href: '/panel/datos', label: 'Datos', mark: 'D' },
-    ],
-  },
-]
 
 function normalize(value = '') {
   return value
@@ -87,13 +51,7 @@ export default function PanelNav({ user }) {
   const [moduleQuery, setModuleQuery] = useState('')
   const canEdit = ['admin', 'editor'].includes(user.role)
 
-  const groups = useMemo(() => NAV_GROUPS.map((group) => {
-    if (group.label !== 'Sistema' || user.role !== 'admin') return group
-    return {
-      ...group,
-      items: [...group.items, { href: '/panel/equipo', label: 'Equipo', mark: 'E' }],
-    }
-  }), [user.role])
+  const groups = useMemo(() => getPanelNavigationGroups(user.role), [user.role])
 
   const normalizedQuery = normalize(moduleQuery)
   const visibleGroups = groups
