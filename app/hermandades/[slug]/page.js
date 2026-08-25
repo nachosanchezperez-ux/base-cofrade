@@ -93,19 +93,14 @@ export default async function HermandadDetailPage({ params }) {
     || null;
   const imagenMap = new Map(h.imagenes.map((imagen) => [imagen.id, imagen]));
   const tiposHermandad = h.tipos || [];
-  const isProgramHandPilot = h.slug === 'el-baratillo' && tiposHermandad.includes('Penitencia');
-  const carreraOficial = h.datosJornada?.ordenJornada
-    ? String(h.datosJornada.ordenJornada).includes(' de ')
-      ? h.datosJornada.ordenJornada
-      : `${h.datosJornada.ordenJornada} de la jornada`
-    : '';
+  const isPenitencia = tiposHermandad.includes('Penitencia');
   const programFacts = [
     { label: 'Salida', value: h.diaSalida },
-    { label: 'Carrera Oficial', value: carreraOficial },
     {
       label: h.datosJornada?.ano ? `Nazarenos · ${h.datosJornada.ano}` : 'Nazarenos',
       value: h.datosJornada?.totalNazarenos,
     },
+    { label: 'Tiempo en Carrera Oficial', value: h.datosJornada?.tiempoCarreraOficial },
     { label: 'Pasos', value: h.pasos?.length ? String(h.pasos.length) : '' },
   ].filter((item) => item.value);
   const canonicalPath = `/hermandades/${h.slug}`;
@@ -154,7 +149,7 @@ export default async function HermandadDetailPage({ params }) {
       ])} />
       <JsonLd data={pageJsonLd} />
 
-      {isProgramHandPilot ? (
+      {isPenitencia ? (
         <BrotherhoodProgramHero
           title={h.nombrePopular}
           officialName={h.nombreOficial}
