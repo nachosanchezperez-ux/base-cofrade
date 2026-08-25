@@ -35,18 +35,50 @@ export default function BrotherhoodProgramHero({
   const visibleFacts = facts.filter((fact) => fact?.label && fact?.value).slice(0, 4)
   const hasPhoto = Boolean(media.photoSrc)
   const context = [seat, locality].filter(Boolean).join(' · ')
+  const width = Number(media.width)
+  const height = Number(media.height)
+  const hasDimensions = width > 0 && height > 0
+  const aspect = hasDimensions ? width / height : null
+  const fitMode = media.fitMode || 'auto'
+  const resolvedFit = fitMode === 'auto'
+    ? (aspect !== null && aspect < 1.35 ? 'contain' : 'cover')
+    : fitMode
+  const desktopFocus = media.focusPosition || `${media.focusX ?? 50}% ${media.focusY ?? 50}%`
+  const mobileFocus = `${media.mobileFocusX ?? media.focusX ?? 50}% ${media.mobileFocusY ?? media.focusY ?? 50}%`
+  const heroStyle = {
+    '--hero-desktop-focus': desktopFocus,
+    '--hero-mobile-focus': mobileFocus,
+  }
 
   return (
-    <section className={`${styles.hero} ${hasPhoto ? styles.hasPhoto : styles.noPhoto}`} aria-labelledby="brotherhood-program-title">
+    <section
+      className={`${styles.hero} ${hasPhoto ? styles.hasPhoto : styles.noPhoto} ${resolvedFit === 'contain' ? styles.contained : styles.covered}`}
+      aria-labelledby="brotherhood-program-title"
+      style={heroStyle}
+    >
       {hasPhoto ? (
-        <Image
-          className={styles.photo}
-          src={media.photoSrc}
-          alt={media.photoAlt || `Fotografía de ${title}`}
-          fill
-          priority
-          sizes="100vw"
-        />
+        <>
+          {resolvedFit === 'contain' ? (
+            <Image
+              className={styles.photoBackdrop}
+              src={media.photoSrc}
+              alt=""
+              fill
+              priority
+              sizes="100vw"
+              aria-hidden="true"
+            />
+          ) : null}
+          <Image
+            className={styles.photo}
+            src={media.photoSrc}
+            alt={media.photoAlt || `Fotografía de ${title}`}
+            fill
+            priority
+            sizes="100vw"
+            style={{ objectFit: resolvedFit }}
+          />
+        </>
       ) : null}
       <span className={styles.photoVeil} aria-hidden="true" />
       <span className={styles.texture} aria-hidden="true" />
