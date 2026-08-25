@@ -61,3 +61,13 @@ test('la cabecera usa media gobernada y no recupera la fotografía temporal incr
   assert.equal(hero.includes('baratilloHeroPhoto'), false)
   assert.equal(page.includes('baratilloHeroPhoto'), false)
 })
+
+test('el programa de mano conserva el contrato de atribución Wikimedia', () => {
+  const hero = source('components/BrotherhoodProgramHero.js')
+
+  assert.match(hero, /upload\.wikimedia\.org/)
+  assert.match(hero, /commons\.wikimedia\.org\/wiki\/File:/)
+  assert.match(hero, /unoptimized=\{bypassImageOptimizer\}/)
+  assert.match(hero, /creditHref \?/)
+  assert.match(hero, /target="_blank"/)
+})
