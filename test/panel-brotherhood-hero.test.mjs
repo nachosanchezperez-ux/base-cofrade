@@ -39,6 +39,17 @@ test('retirar la portada elimina solo el uso hero directo de la Hermandad', () =
   assert.equal(actions.includes('demoteHeroLink'), false)
 })
 
+test('reemplazar la portada conserva la anterior hasta validar el nuevo uso', () => {
+  const actions = source('app/panel/(protected)/hermandades/[id]/portada/actions.js')
+  const selection = actions.slice(
+    actions.indexOf('export async function selectBrotherhoodHeroAction'),
+    actions.indexOf('export async function updateBrotherhoodHeroFramingAction'),
+  )
+
+  assert.ok(selection.indexOf('const hero = existingHero') < selection.indexOf('if (otherHeroIds.length)'))
+  assert.match(selection, /if \(!existingHero\)[\s\S]*delete\(\)\.eq\('id', hero\.id\)/)
+})
+
 test('el Front prioriza hero solo para Hermandades y conserva is_cover en el resto', () => {
   const media = source('lib/supabase/entity-media.js')
   const page = source('app/hermandades/[slug]/page.js')

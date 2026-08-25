@@ -1,0 +1,4 @@
+-- Reconciliación del historial remoto.
+-- Este cambio fue aplicado en Supabase con la versión 20260820215012.
+-- Su definición idempotente y reproducible se conserva en
+-- 20260820234500_capataces_la_cena.sql.

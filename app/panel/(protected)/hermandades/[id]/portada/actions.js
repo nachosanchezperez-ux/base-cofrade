@@ -118,13 +118,6 @@ export async function selectBrotherhoodHeroAction(formData) {
     .filter((item) => item.media_asset_id !== mediaAssetId)
     .map((item) => item.id)
 
-  if (otherHeroIds.length) {
-    assertMutation(
-      await supabase.from('entity_media').delete().in('id', otherHeroIds),
-      'No se pudo retirar la portada anterior'
-    )
-  }
-
   const existingHero = currentHeroes.find((item) => item.media_asset_id === mediaAssetId)
   const framing = {
     relation_type: HERO_RELATION,
@@ -160,6 +153,19 @@ export async function selectBrotherhoodHeroAction(formData) {
           .single(),
         'No se pudo seleccionar la portada de la Hermandad'
       )
+
+  if (otherHeroIds.length) {
+    const removal = await supabase.from('entity_media').delete().in('id', otherHeroIds)
+    if (removal.error) {
+      if (!existingHero) {
+        const rollback = await supabase.from('entity_media').delete().eq('id', hero.id)
+        if (rollback.error) {
+          console.error('[Hilo Cofrade] No se pudo revertir la nueva portada tras fallar el reemplazo', rollback.error)
+        }
+      }
+      throw new Error(`No se pudo retirar la portada anterior: ${removal.error.message}`)
+    }
+  }
 
   await audit(supabase, user, {
     action_type: existingHero ? 'update' : 'link',
