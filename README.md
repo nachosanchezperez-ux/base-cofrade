@@ -1,45 +1,44 @@
-# Base Cofrade · Prototipo v0.1
+# Hilo Cofrade
 
-Primera versión funcional de la aplicación web Base Cofrade.
+Enciclopedia relacional de la Semana Santa y las cofradías de Sevilla y su provincia.
 
-## Qué incluye
+## Producto
 
-- Portada del proyecto.
-- Listado de hermandades con buscador en cliente.
-- Ficha piloto de El Baratillo.
-- Secciones de titulares, pasos, hábito, salidas, cultos y curiosidades.
-- Fichas individuales de las cuatro imágenes cargadas en el prototipo.
-- Datos locales en `lib/data.js`, preparados para sustituirse por Supabase.
-- Diseño responsive sin librerías CSS externas.
+- Home editorial con actualidad, descubrimiento y acceso a la enciclopedia.
+- Directorios públicos de Hermandades, Imágenes, Pasos y Bandas.
+- Procesiones extraordinarias y de Gloria construidas sobre el modelo común de salidas.
+- Fichas relacionadas con fuentes, patrimonio, música, autores y acontecimientos.
+- Tira del hilo para consultar únicamente conocimiento documentado en el grafo.
+- Panel editorial autenticado, responsive y conectado a Supabase.
 
-## Ejecutar en local
+## Arquitectura
 
-Necesitas Node.js compatible con Next.js 16.
+- Next.js 16 y React 19.
+- PostgreSQL, Auth y Storage en Supabase.
+- Despliegues de producción y preview en Vercel.
+- Migraciones SQL versionadas en `supabase/migrations`.
+- Lectura pública stateless separada de la sesión editorial.
+
+## Desarrollo local
+
+Necesitas Node.js compatible con Next.js 16 y las variables de entorno del proyecto.
 
 ```bash
 npm install
+npm test
 npm run dev
 ```
 
-Abre `http://localhost:3000`.
+La aplicación queda disponible en `http://localhost:3000`.
 
-## Publicar en Vercel
+Antes de proponer un cambio consulta `docs/HILO-ORQUESTADOR.md` y
+`docs/ESTADO-PROYECTO.md`. Todo corte debe superar tests, build, preview y smoke
+antes de llegar a producción.
 
-1. Sube esta carpeta a un repositorio de GitHub.
-2. En Vercel, crea un nuevo proyecto importando ese repositorio.
-3. Vercel detectará Next.js automáticamente.
-4. Pulsa Deploy.
+## Gobierno editorial
 
-## Próxima fase
-
-- Crear proyecto en Supabase.
-- Convertir `lib/data.js` en consultas reales.
-- Crear tablas para hermandades, imágenes, pasos, hábitos, salidas, cultos, curiosidades y fuentes.
-- Incorporar fotografías y escudos reales con gestión de derechos/autorizaciones.
-- Añadir restauraciones, acontecimientos, cronología, autores, patrimonio y música.
-
-## Nota de contenido
-
-Este prototipo utiliza datos de ejemplo y estructura de trabajo. Antes de la publicación pública definitiva, cada dato histórico debe revisarse y vincularse a sus fuentes documentales.
-
-<!-- deployment refresh: 2026-08-21 -->
+- Las propuestas automáticas nunca son verdad canónica sin revisión humana.
+- Las entidades y relaciones nuevas nacen en borrador.
+- Las fotografías conservan procedencia, crédito y derechos.
+- No se abre un canal público de aportaciones hasta disponer de contacto,
+  privacidad y tratamiento editorial definidos.

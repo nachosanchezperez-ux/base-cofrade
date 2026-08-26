@@ -247,69 +247,6 @@
   line-height: 1.35;
 }
 
-.collab {
-  scroll-margin-top: calc(var(--hc-app-header-height, 70px) + 18px);
-  display: grid;
-  gap: 16px;
-  margin-top: 14px;
-  padding: 19px;
-  border: 1px solid #dbe4ed;
-  border-radius: 20px;
-  background: linear-gradient(135deg, #fbfcfd 0%, #f4f7fa 100%);
-}
-
-.collab h3 {
-  margin: 6px 0 5px;
-  color: #123a67;
-  font-size: 22px;
-  font-weight: 800;
-  line-height: 1.12;
-  letter-spacing: -.025em;
-}
-
-.collab p {
-  margin: 0;
-  color: #647484;
-  font-size: 13px;
-  line-height: 1.55;
-}
-
-.collabActions {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
-}
-
-.flow {
-  display: flex;
-  gap: 7px;
-  flex-wrap: wrap;
-}
-
-.flow span {
-  padding: 7px 9px;
-  border-radius: 999px;
-  color: #123a67;
-  background: #fff;
-  font-size: 10px;
-  font-weight: 700;
-  box-shadow: 0 2px 8px rgba(15, 39, 66, .03);
-}
-
-.collabButton {
-  display: inline-flex;
-  min-height: 40px;
-  align-items: center;
-  padding: 0 15px;
-  border-radius: 999px;
-  color: #fff;
-  background: #b71f37;
-  font-size: 13px;
-  font-weight: 750;
-  box-shadow: 0 8px 18px rgba(183, 31, 55, .15);
-}
-
 @media (max-width: 619px) {
   .grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -412,15 +349,6 @@
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
-  .collab {
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: center;
-    padding: 22px;
-  }
-
-  .collabActions {
-    align-items: flex-end;
-  }
 }
 
 @media (min-width: 1120px) {

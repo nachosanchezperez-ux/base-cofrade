@@ -3,11 +3,15 @@ import { socialMetadata } from '@/lib/seo';
 import styles from './page.module.css';
 
 const title = 'Colabora';
-const description = 'Ayuda a completar Hilo Cofrade proponiendo información, correcciones, nuevas entidades o fuentes documentales para su revisión.';
+const description = 'La vía pública de aportaciones de Hilo Cofrade está en preparación y todavía no recoge propuestas ni datos personales.';
 
 export const metadata = {
   title,
   description,
+  robots: {
+    index: false,
+    follow: true,
+  },
   ...socialMetadata({ title, description, path: '/colabora' }),
 };
 
@@ -15,28 +19,22 @@ export default function ColaboraPage() {
   return (
     <section className={styles.page}>
       <div className="shell">
-        <span className={styles.eyebrow}>Participa</span>
-        <h1>Ayúdanos a completar el hilo</h1>
+        <span className={styles.eyebrow}>Canal en preparación</span>
+        <h1>Las aportaciones públicas aún no están abiertas</h1>
         <p className={styles.lead}>
-          Hilo Cofrade crecerá también con propuestas de hermandades, bandas y usuarios,
-          siempre con revisión y documentación antes de publicar
+          Esta página no recoge propuestas ni datos personales. Antes de abrir el canal
+          publicaremos sus condiciones de uso, privacidad y tratamiento editorial.
         </p>
 
         <div className={styles.card}>
-          <span className={styles.status}>Formulario beta</span>
-          <h2>Estamos preparando el sistema de aportaciones</h2>
+          <span className={styles.status}>Cerrado temporalmente</span>
+          <h2>Primero debe quedar definido el proceso completo</h2>
           <p>
-            El formulario permitirá proponer nueva información, corregir un dato, incorporar
-            una entidad o aportar una fuente documental
+            La futura vía de colaboración deberá ofrecer un único contacto, explicar qué datos
+            se conservan y mantener toda aportación en revisión antes de incorporarla al grafo.
           </p>
-          <div className={styles.steps}>
-            <span>1 · Envías</span>
-            <span>2 · Revisamos</span>
-            <span>3 · Documentamos</span>
-            <span>4 · Publicamos</span>
-          </div>
           <p className={styles.note}>
-            Ninguna aportación se publicará automáticamente. Hilo Cofrade revisará cada propuesta antes de incorporarla
+            No se anunciará ni habilitará un formulario hasta completar esa información.
           </p>
         </div>
 
