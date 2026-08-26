@@ -4,11 +4,11 @@
 
 ## Estado verificado
 
-- Revisión: **26 de agosto de 2026 · #49 cerrada sin fusionar · importación sin IA**.
+- Revisión: **26 de agosto de 2026 · Home editorial validada · #49 cerrada sin fusionar**.
 - Repositorio: `nachosanchezperez-ux/base-cofrade`.
 - Rama principal: `main`.
-- Último `main` funcional al refrescar: `5467f212cb21e8c9656ffb92f88ebcf61805b6e9` — **Estado final verificado de la primera edición (#364)**. El commit documental que actualice este archivo puede sucederlo sin cambios funcionales.
-- Producción: `dpl_7KEajRP2K1P61ak5aU8bfT2skaCs` → **READY**, región real `dub1`.
+- Último `main` funcional al refrescar: `1d605e7a5350f1af634c9d180ba08991da327b00` — **Home: prioriza hilos con conocimiento documentado (#367)**. El commit documental que actualice este archivo puede sucederlo sin cambios funcionales.
+- Producción: `dpl_6fbu2vrqsyBVYs3wBpShcKmhFeaa` → **READY**, región real `dub1`; 44 respuestas `200` y ningún registro `error` o `fatal` en la validación posterior.
 - Supabase: `Hilocofrade` (`kcevwkucqzcyrqaimyhl`) → **ACTIVE_HEALTHY**, región `eu-west-1`.
 - La clasificación de Glorias se mantiene en `brotherhoods.brotherhood_types`; las procesiones concretas siguen usando `outings` con `outing_type = Procesión de Gloria`.
 - Estado editorial observado de Glorias al 26/08/2026: **34 Hermandades con tipo Gloria · 9 con próxima Procesión de Gloria futura documentada · 25 sin próxima fecha futura documentada**. Son métricas dinámicas, no cifras de producto hardcodeadas.
@@ -36,6 +36,17 @@
 - #361 · Bandas · restaura la fotografía de «De un vistazo» → **FUSIONADA Y DESPLEGADA**.
 - #362 · Historial del importador Git ↔ Supabase → **FUSIONADA Y DESPLEGADA**.
 - #363 · Primera edición · cierra colaboración pública y estado operativo → **FUSIONADA Y DESPLEGADA**.
+- #364 · Estado final verificado de la primera edición → **FUSIONADA**.
+- #365 · Cierre del importador con IA → **FUSIONADA Y DESPLEGADA**.
+- #366 · Jerarquía accesible del patrimonio musical → **FUSIONADA Y DESPLEGADA**.
+- #367 · Home · hilos con conocimiento documentado → **FUSIONADA Y DESPLEGADA**.
+
+### Criterio editorial de «Últimos hilos»
+
+- La creación de una ficha por sí sola no es una señal promocionable en Home.
+- Las fichas continúan públicas en sus directorios y entran automáticamente en «Últimos hilos» cuando incorporan relaciones o ampliaciones documentadas.
+- No existen excepciones por `slug`; la selección observada tras #367 muestra Pastora de Cantillana, San Esteban y el paso de Bendición y Esperanza.
+- Se retiró de esta superficie el texto técnico «preparada para crecer».
 
 ## Frentes abiertos reales
 
