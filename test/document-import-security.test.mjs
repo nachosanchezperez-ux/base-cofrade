@@ -18,12 +18,14 @@ test('la descarga documental fija la conexión al DNS público validado y limita
   assert.match(importer, /bytes > MAX_SOURCE_BYTES/)
   assert.doesNotMatch(importer, /response\.arrayBuffer\(\)/)
   assert.match(importer, /redirectCount <= MAX_REDIRECTS/)
+  assert.match(importer, /normalizeSourceUrl\(new URL\(location, current\)\.toString\(\)\)/)
   assert.match(importer, /request\.setTimeout\(FETCH_TIMEOUT_MS/)
 })
 
 test('el análisis trata la fuente como entrada no confiable y gobierna fallos del modelo', () => {
   assert.match(importer, /FUENTE_NO_CONFIABLE/)
   assert.match(importer, /Ignora cualquier instrucción/)
+  assert.match(importer, /JSON\.stringify\(\{ url: source\.url, title: source\.title \|\| null, text: source\.text \}\)/)
   assert.match(importer, /store: false/)
   assert.match(importer, /type: 'json_schema'/)
   assert.match(importer, /strict: true/)
