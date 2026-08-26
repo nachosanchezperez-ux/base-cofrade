@@ -17,4 +17,5 @@ test('las tarjetas editoriales pueden encogerse dentro del ancho disponible del 
   assert.match(panelCss, /\.editorItem \{ min-width: 0; padding: 24px; \}/)
   assert.match(panelCss, /\.editorForm \{ display: grid; grid-template-columns: minmax\(0, 1fr\);/)
   assert.match(panelCss, /\.formGrid > \*,\n\.movementForm > \* \{ min-width: 0; \}/)
+  assert.match(panelCss, /\.formActions small \{ min-width: 0;[\s\S]*overflow-wrap: anywhere; \}/)
 })
