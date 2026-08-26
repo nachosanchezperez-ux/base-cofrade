@@ -5,6 +5,8 @@
   }
 
   [data-panel-main] {
+    width: 100%;
+    max-width: 100%;
     min-width: 0;
     scroll-padding-bottom: calc(180px + env(safe-area-inset-bottom, 0px));
   }
@@ -34,6 +36,8 @@
 
   [data-panel-shell] > aside [role='dialog'] {
     bottom: calc(72px + env(safe-area-inset-bottom, 0px)) !important;
+    max-height: min(82dvh, 720px) !important;
+    padding: 14px 12px 12px !important;
   }
 
   [data-panel-shell] > aside [role='dialog'] button {
@@ -42,10 +46,66 @@
     touch-action: manipulation;
   }
 
+  [data-panel-shell] > aside [role='dialog'] [class*='mobileSearch'] {
+    margin-bottom: 12px !important;
+  }
+
+  [data-panel-shell] > aside [role='dialog'] [class*='mobileGroups'] {
+    gap: 12px !important;
+  }
+
+  [data-panel-shell] > aside [role='dialog'] [class*='mobileGroup'] {
+    gap: 5px !important;
+  }
+
+  [data-panel-shell] > aside [role='dialog'] [class*='mobileGroupLinks'] {
+    gap: 6px !important;
+  }
+
+  [data-panel-shell] > aside [role='dialog'] [class*='mobileGroupLinks'] a {
+    min-height: 44px !important;
+    gap: 7px !important;
+    padding: 6px 8px !important;
+    border-radius: 10px !important;
+    touch-action: manipulation;
+  }
+
+  [data-panel-shell] > aside [role='dialog'] [class*='mobileGroupLinks'] [class*='navMark'] {
+    width: 27px !important;
+    height: 27px !important;
+    flex-basis: 27px !important;
+  }
+
+  [data-panel-shell] > aside [role='dialog'] [class*='mobileGroupLinks'] [class*='navLabel'] {
+    font-size: 10.5px !important;
+    line-height: 1.15 !important;
+  }
+
   [data-panel-main] [class*='pageWrap'] {
     width: min(calc(100% - 24px), 760px) !important;
+    max-width: 100% !important;
     padding-top: 22px !important;
     padding-bottom: 48px !important;
+  }
+
+  [data-panel-main] [class*='filters'] {
+    width: 100% !important;
+    max-width: 100% !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+  }
+
+  [data-panel-main] [class*='filters'] > * {
+    min-width: 0;
+  }
+
+  [data-panel-main] [class*='filters'] > :first-child,
+  [data-panel-main] [class*='filters'] > button:last-child {
+    grid-column: 1 / -1;
+  }
+
+  [data-panel-main] [class*='filters'] > button:last-child {
+    width: 100% !important;
   }
 
   [data-panel-main] [class*='pageHeader'],

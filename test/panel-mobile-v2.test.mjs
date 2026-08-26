@@ -18,6 +18,13 @@ test('el Panel cambia completamente a operación móvil en el mismo breakpoint q
   assert.match(nav, /Nuevo/)
 })
 
+test('los filtros no fuerzan ancho de escritorio en móvil', () => {
+  assert.match(mobile, /\[data-panel-main\] \[class\*='filters'\] \{[\s\S]*width: 100% !important/)
+  assert.match(mobile, /\[data-panel-main\] \[class\*='filters'\] \{[\s\S]*grid-template-columns: repeat\(2, minmax\(0, 1fr\)\) !important/)
+  assert.match(mobile, /\[class\*='filters'\] > :first-child,[\s\S]*grid-column: 1 \/ -1/)
+  assert.match(mobile, /\[class\*='filters'\] > button:last-child[\s\S]*width: 100% !important/)
+})
+
 test('los formularios están preparados para tacto e iPhone sin zoom automático', () => {
   assert.match(mobile, /font-size: 16px !important/)
   assert.match(mobile, /min-height: 48px !important/)
