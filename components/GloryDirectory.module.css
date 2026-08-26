@@ -1,10 +1,11 @@
 .directory {
   display: grid;
   gap: 34px;
+  color: var(--hc-blue-dark, #0f2742);
 }
 
 .kicker {
-  color: #7d5e18;
+  color: var(--hc-red, #b71f37);
   font-size: .75rem;
   font-weight: 800;
   letter-spacing: .12em;
@@ -15,10 +16,10 @@
   display: grid;
   grid-template-columns: minmax(220px, .7fr) minmax(0, 1.3fr);
   overflow: hidden;
-  border: 1px solid rgba(38, 38, 35, .1);
+  border: 1px solid var(--hc-line, #dce5ec);
   border-radius: 24px;
   background: #fff;
-  box-shadow: 0 18px 48px rgba(34, 31, 25, .08);
+  box-shadow: 0 18px 48px rgba(18, 58, 103, .09);
 }
 
 .featuredVisual {
@@ -28,8 +29,8 @@
   place-items: center;
   padding: 38px;
   background:
-    radial-gradient(circle at 80% 12%, rgba(173, 133, 40, .18), transparent 34%),
-    linear-gradient(145deg, #f7f3e8, #ece3cb);
+    radial-gradient(circle at 80% 12%, rgba(183, 31, 55, .11), transparent 34%),
+    linear-gradient(145deg, #f7fafc, #eaf1f7);
 }
 
 .featuredDate {
@@ -41,7 +42,7 @@
 }
 
 .featuredDate strong {
-  color: #26231d;
+  color: var(--hc-blue-dark, #0f2742);
   font-size: clamp(3.1rem, 8vw, 5.1rem);
   font-weight: 800;
   letter-spacing: -.08em;
@@ -49,7 +50,7 @@
 
 .featuredDate span {
   margin-top: 5px;
-  color: #7d5e18;
+  color: var(--hc-red, #b71f37);
   font-size: .8rem;
   font-weight: 800;
   letter-spacing: .12em;
@@ -57,7 +58,7 @@
 
 .featuredDate small {
   margin-top: 5px;
-  color: #766f60;
+  color: #71808f;
   font-size: .75rem;
   font-weight: 700;
 }
@@ -67,7 +68,7 @@
   height: auto;
   max-height: 180px;
   object-fit: contain;
-  filter: drop-shadow(0 14px 22px rgba(39, 31, 15, .12));
+  filter: drop-shadow(0 14px 22px rgba(18, 58, 103, .11));
 }
 
 .featuredBadge {
@@ -76,8 +77,9 @@
   bottom: 24px;
   padding: 8px 11px;
   border-radius: 999px;
-  background: #26231d;
-  color: white;
+  background: var(--hc-red, #b71f37);
+  color: #fff;
+  box-shadow: 0 9px 22px rgba(183, 31, 55, .2);
   font-size: .68rem;
   font-weight: 800;
   letter-spacing: .11em;
@@ -94,6 +96,7 @@
 .featuredCopy h2 {
   max-width: 760px;
   margin: 10px 0 8px;
+  color: var(--hc-blue-dark, #0f2742);
   font-size: clamp(2rem, 4vw, 3.5rem);
   line-height: .98;
   letter-spacing: -.045em;
@@ -116,14 +119,14 @@
 
 .brotherhoodLink,
 .organizer {
-  color: #5c4a23;
+  color: var(--hc-soft-text, #40586f);
   font-weight: 800;
   text-decoration: none;
 }
 
 .location {
   margin: 5px 0 0;
-  color: #6d675c;
+  color: var(--hc-muted, #657586);
 }
 
 .featuredFacts {
@@ -137,16 +140,16 @@
 .featuredFacts > div {
   min-width: 0;
   padding: 15px 16px;
-  border: 1px solid rgba(38, 35, 29, .08);
+  border: 1px solid var(--hc-line, #dce5ec);
   border-radius: 15px;
-  background: #faf9f6;
+  background: var(--hc-surface, #f7fafc);
 }
 
 .featuredFacts span,
 .cardFacts b {
   display: block;
   margin-bottom: 5px;
-  color: #888073;
+  color: #8794a0;
   font-size: .68rem;
   font-weight: 800;
   letter-spacing: .08em;
@@ -155,7 +158,7 @@
 
 .featuredFacts strong {
   display: block;
-  color: #29261f;
+  color: var(--hc-blue, #123a67);
   font-size: .93rem;
   line-height: 1.25;
 }
@@ -163,7 +166,7 @@
 .featuredDescription {
   max-width: 760px;
   margin: 22px 0 0;
-  color: #615c53;
+  color: var(--hc-muted, #657586);
   line-height: 1.65;
 }
 
@@ -174,11 +177,17 @@
   margin-top: 25px;
   padding: 13px 18px;
   border-radius: 999px;
-  background: #26231d;
-  color: white;
+  background: var(--hc-blue, #123a67);
+  color: #fff;
+  box-shadow: 0 10px 24px rgba(18, 58, 103, .14);
   font-size: .88rem;
   font-weight: 800;
   text-decoration: none;
+}
+
+.primaryAction:hover,
+.primaryAction:focus-visible {
+  background: var(--hc-blue-dark, #0f2742);
 }
 
 .primaryAction span,
@@ -208,6 +217,7 @@
 
 .explorerHead h2 {
   margin: 7px 0 0;
+  color: var(--hc-blue-dark, #0f2742);
   font-size: clamp(1.7rem, 3vw, 2.6rem);
   letter-spacing: -.035em;
 }
@@ -215,7 +225,7 @@
 .explorerHead p {
   max-width: 580px;
   margin: 0;
-  color: #6a645a;
+  color: var(--hc-muted, #657586);
   line-height: 1.55;
 }
 
@@ -224,9 +234,10 @@
   flex-wrap: wrap;
   gap: 10px;
   padding: 12px;
-  border: 1px solid rgba(38, 35, 29, .09);
+  border: 1px solid var(--hc-line, #dce5ec);
   border-radius: 18px;
-  background: #fff;
+  background: rgba(247, 250, 252, .94);
+  box-shadow: 0 9px 24px rgba(18, 58, 103, .04);
 }
 
 .segmented {
@@ -239,10 +250,10 @@
 .yearFilter select,
 .resultHead button {
   min-height: 42px;
-  border: 0;
+  border: 1px solid transparent;
   border-radius: 12px;
-  background: #f2f0ea;
-  color: #4e4940;
+  background: #fff;
+  color: #5d6d7d;
   font: inherit;
   font-size: .82rem;
   font-weight: 700;
@@ -256,19 +267,30 @@
   cursor: pointer;
 }
 
+.segmented button:hover {
+  border-color: #c9d7e1;
+}
+
 .segmented button small {
   display: grid;
   min-width: 22px;
   height: 22px;
   place-items: center;
   border-radius: 999px;
-  background: rgba(255, 255, 255, .65);
+  background: var(--hc-surface-strong, #eef4f8);
+  color: #71808f;
   font-size: .67rem;
 }
 
 .segmented button.active {
-  background: #29261f;
+  border-color: var(--hc-blue, #123a67);
+  background: var(--hc-blue, #123a67);
   color: #fff;
+}
+
+.segmented button.active small {
+  background: rgba(255, 255, 255, .14);
+  color: #d8e4ee;
 }
 
 .yearFilter {
@@ -278,6 +300,14 @@
 .yearFilter select {
   height: 42px;
   padding: 0 34px 0 13px;
+  border-color: var(--hc-line, #dce5ec);
+  color: #284057;
+}
+
+.yearFilter select:focus {
+  border-color: var(--hc-blue, #123a67);
+  outline: 0;
+  box-shadow: 0 0 0 3px rgba(18, 58, 103, .08);
 }
 
 .resultHead {
@@ -294,16 +324,19 @@
 }
 
 .resultHead strong {
+  color: var(--hc-blue, #123a67);
   font-size: .94rem;
 }
 
 .resultHead span {
-  color: #7b756b;
+  color: #85919c;
   font-size: .78rem;
 }
 
 .resultHead button {
   padding: 0 12px;
+  background: transparent;
+  color: var(--hc-red, #b71f37);
   cursor: pointer;
 }
 
@@ -321,13 +354,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 9px;
-  border-bottom: 1px solid rgba(38, 35, 29, .1);
+  padding: 9px 0;
+  border-top: 2px solid var(--hc-blue, #123a67);
+  border-bottom: 1px solid var(--hc-line, #dce5ec);
 }
 
 .monthHeading h3 {
   margin: 0;
-  color: #6d5520;
+  color: var(--hc-blue, #123a67);
   font-size: .78rem;
   font-weight: 800;
   letter-spacing: .12em;
@@ -339,8 +373,8 @@
   height: 28px;
   place-items: center;
   border-radius: 999px;
-  background: #eee8d9;
-  color: #6d5520;
+  background: var(--hc-surface-strong, #eef4f8);
+  color: var(--hc-blue, #123a67);
   font-size: .72rem;
   font-weight: 800;
 }
@@ -357,7 +391,7 @@
   gap: 18px;
   align-items: center;
   padding: 18px 20px;
-  border: 1px solid rgba(38, 35, 29, .08);
+  border: 1px solid var(--hc-line, #dce5ec);
   border-radius: 18px;
   background: #fff;
   transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease;
@@ -365,8 +399,8 @@
 
 .card:hover {
   transform: translateY(-1px);
-  border-color: rgba(125, 94, 24, .25);
-  box-shadow: 0 12px 30px rgba(34, 31, 25, .06);
+  border-color: #c7d5df;
+  box-shadow: 0 12px 30px rgba(18, 58, 103, .07);
 }
 
 .dateBlock {
@@ -374,7 +408,8 @@
   align-content: center;
   justify-items: center;
   min-height: 82px;
-  border-right: 1px solid rgba(38, 35, 29, .1);
+  border-right: 1px solid var(--hc-line, #dce5ec);
+  color: var(--hc-blue, #123a67);
   line-height: 1;
 }
 
@@ -385,7 +420,7 @@
 
 .dateBlock span {
   margin-top: 6px;
-  color: #7d5e18;
+  color: var(--hc-red, #b71f37);
   font-size: .68rem;
   font-weight: 800;
   letter-spacing: .1em;
@@ -400,29 +435,40 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  color: #746e64;
+  color: #71808f;
   font-size: .75rem;
   font-weight: 700;
+}
+
+.cardTopline > span {
+  color: var(--hc-red, #b71f37);
+  font-weight: 800;
 }
 
 .cardTopline small {
   padding: 5px 8px;
   border-radius: 999px;
-  background: #f0eee8;
-  color: #5c574f;
+  background: var(--hc-surface-strong, #eef4f8);
+  color: #33536f;
   font-size: .64rem;
   font-weight: 800;
   letter-spacing: .06em;
   text-transform: uppercase;
 }
 
-.cardTopline small[data-status='announced'] {
-  background: #eee7d5;
-  color: #6d5520;
+.cardTopline small[data-status='held'] {
+  background: #eef5ef;
+  color: #3e6b48;
+}
+
+.cardTopline small[data-status='cancelled'] {
+  background: #fbeaec;
+  color: #a33041;
 }
 
 .cardMain h4 {
   margin: 6px 0 4px;
+  color: var(--hc-blue-dark, #0f2742);
   font-size: clamp(1.08rem, 2vw, 1.35rem);
   line-height: 1.15;
 }
@@ -440,7 +486,7 @@
 
 .organizer {
   display: inline-block;
-  color: #5c4a23;
+  color: var(--hc-soft-text, #40586f);
   font-size: .86rem;
 }
 
@@ -459,13 +505,14 @@
 }
 
 .cardFacts span {
-  color: #4f4a43;
+  color: #5c6b79;
   font-size: .8rem;
   font-weight: 700;
 }
 
 .cardFacts b {
   margin-bottom: 2px;
+  color: var(--hc-blue, #123a67);
   font-size: .61rem;
 }
 
@@ -473,11 +520,15 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: #2f2c26;
+  color: var(--hc-blue, #123a67);
   font-size: .78rem;
   font-weight: 800;
   text-decoration: none;
   white-space: nowrap;
+}
+
+.detailLink span {
+  color: var(--hc-red, #b71f37);
 }
 
 .cardCrest {
@@ -496,13 +547,17 @@
   display: grid;
   gap: 5px;
   padding: 26px;
-  border: 1px dashed rgba(38, 35, 29, .18);
+  border: 1px dashed #cfdce6;
   border-radius: 18px;
-  background: #faf9f6;
+  background: var(--hc-surface, #f7fafc);
+}
+
+.empty strong {
+  color: var(--hc-blue, #123a67);
 }
 
 .empty span {
-  color: #746e64;
+  color: #74818d;
   font-size: .86rem;
 }
 
