@@ -41,7 +41,7 @@ No forman parte del lanzamiento:
 - [x] Retirar las llamadas públicas a “Proponer información” mientras no exista un canal completo.
 - [ ] Definir una página mínima de información legal/privacidad antes de recoger datos personales.
 - [ ] Revisar que las fichas destacadas de Home no contengan campos editoriales vacíos o textos provisionales.
-- [ ] Confirmar dominio canónico, sitemap, robots y tarjetas sociales en producción.
+- [x] Confirmar dominio canónico, sitemap, robots y tarjetas sociales en producción.
 - [ ] Preparar mensaje de lanzamiento y una vía única para reportar errores.
 
 ## Regla de congelación
