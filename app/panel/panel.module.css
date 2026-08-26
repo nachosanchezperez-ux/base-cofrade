@@ -744,7 +744,7 @@
   border-top: 1px solid var(--panel-line);
 }
 
-.formActions small { color: var(--panel-muted); font-size: 10px; }
+.formActions small { min-width: 0; color: var(--panel-muted); font-size: 10px; overflow-wrap: anywhere; }
 
 .colorFieldset {
   display: grid;
