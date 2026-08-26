@@ -65,8 +65,7 @@ function entryLabel(item) {
 
 function statusLabel(item) {
   if (item.isCancelled) return 'Cancelada'
-  if (item.isCelebrated) return 'Celebrada'
-  if (item.isPast) return 'Fecha pasada'
+  if (item.isCelebrated || item.isPast) return 'Celebrada'
   return item.urgencyLabel || 'Próxima'
 }
 
@@ -95,7 +94,7 @@ export async function generateMetadata({ params }) {
     item.title,
     formatSeoDate(item.date),
     item.municipality,
-    `Guía con ${seoCoverage(item)} de la procesión de Gloria.`,
+    item.description || 'Procesión de Gloria de Sevilla.',
   ].filter(Boolean).join('. '))
   const canonical = item.detailHref
 
@@ -138,8 +137,7 @@ export default async function GloryDetailPage({ params }) {
   const pageDescription = seoDescription([
     `${item.title}${item.municipality ? ` · ${item.municipality}` : ''}`,
     formatSeoDate(item.date),
-    item.description || 'Procesión de Gloria documentada en Hilo Cofrade.',
-    `Información de ${seoCoverage(item)}.`,
+    item.description || 'Procesión de Gloria de Sevilla.',
   ].filter(Boolean).join('. '))
   const pageJsonLd = {
     '@context': 'https://schema.org',
@@ -197,7 +195,7 @@ export default async function GloryDetailPage({ params }) {
       <section className={styles.hero}>
         <div className={`shell ${styles.heroGrid}`}>
           <div className={styles.heroCopy}>
-            <Link className={styles.backLink} href="/procesiones-de-gloria">← Todas las Glorias</Link>
+            <Link className={styles.backLink} href="/procesiones-de-gloria">← Calendario de Glorias</Link>
             <div className={styles.topline}>
               <span>{item.municipality || 'Sevilla y provincia'}</span>
               <span data-status={item.eventStatus}>{statusLabel(item)}</span>
@@ -238,12 +236,12 @@ export default async function GloryDetailPage({ params }) {
       <div className={`shell ${styles.body}`}>
         <section className={styles.section} aria-labelledby="datos-procesion-gloria">
           <div className={styles.sectionHead}>
-            <span className="eyebrow">De un vistazo</span>
-            <h2 id="datos-procesion-gloria">Datos documentados</h2>
+            <span className="eyebrow">Información</span>
+            <h2 id="datos-procesion-gloria">Datos de la salida</h2>
           </div>
           <div className={styles.infoGrid}>
             <article><span>Hermandad</span>{item.brotherhoodHref ? <Link href={item.brotherhoodHref}>{item.brotherhoodName}</Link> : <strong>{item.brotherhoodName}</strong>}</article>
-            <article><span>Localidad</span><strong>{item.municipality || 'Por documentar'}</strong></article>
+            <article><span>Localidad</span><strong>{item.municipality || 'Por confirmar'}</strong></article>
             <article><span>Fecha</span><strong>{dateLabel}</strong></article>
             <article><span>Estado</span><strong>{statusLabel(item)}</strong></article>
           </div>
@@ -279,14 +277,14 @@ export default async function GloryDetailPage({ params }) {
               ))}
             </div>
           ) : (
-            <p className={styles.pending}>Acompañamiento musical pendiente de documentar en esta salida.</p>
+            <p className={styles.pending}>Acompañamiento musical por confirmar.</p>
           )}
         </section>
 
         <section className={styles.section} aria-labelledby="fuentes-procesion-gloria">
           <div className={styles.sectionHead}>
-            <span className="eyebrow">Trazabilidad</span>
-            <h2 id="fuentes-procesion-gloria">Fuentes</h2>
+            <span className="eyebrow">Referencias</span>
+            <h2 id="fuentes-procesion-gloria">Fuentes consultadas</h2>
           </div>
           {item.sources.length ? (
             <div className={styles.sources}>
@@ -302,7 +300,7 @@ export default async function GloryDetailPage({ params }) {
               ))}
             </div>
           ) : (
-            <p className={styles.pending}>Fuentes específicas pendientes de incorporar a esta salida.</p>
+            <p className={styles.pending}>No constan fuentes publicadas para esta salida.</p>
           )}
         </section>
       </div>
