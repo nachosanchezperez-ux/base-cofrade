@@ -27,7 +27,8 @@ function groupByMonth(items) {
 
 function statusLabel(item) {
   if (item.isCancelled) return 'Cancelada'
-  if (item.isCelebrated || item.isPast) return 'Celebrada'
+  if (item.isCelebrated) return 'Celebrada'
+  if (item.isPast) return 'Fecha pasada'
   return item.urgencyLabel || 'Próxima'
 }
 
@@ -151,7 +152,7 @@ export default function GloryDirectory({ outings }) {
               aria-pressed={status === 'celebrated'}
               onClick={() => setStatus('celebrated')}
             >
-              Celebradas <small>{celebrated.length}</small>
+              Archivo <small>{celebrated.length}</small>
             </button>
           </div>
 
@@ -185,7 +186,7 @@ export default function GloryDirectory({ outings }) {
         <div className={styles.resultHead}>
           <div>
             <strong>{plural(filtered.length, 'procesión', 'procesiones')}</strong>
-            <span>{status === 'upcoming' ? 'por celebrar' : 'ya celebradas'} · Sevilla y provincia</span>
+            <span>{status === 'upcoming' ? 'por celebrar' : 'en archivo'} · Sevilla y provincia</span>
           </div>
           {territory !== 'all' || year !== 'all' ? (
             <button
