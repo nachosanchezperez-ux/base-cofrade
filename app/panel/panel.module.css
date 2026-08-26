@@ -603,14 +603,18 @@
 
 .sectionHeading > p { width: min(430px, 46%); text-align: right; }
 
-.editorForm { display: grid; gap: 24px; }
+.editorForm { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; }
 
 .formGrid,
 .movementForm {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
+  min-width: 0;
 }
+
+.formGrid > *,
+.movementForm > * { min-width: 0; }
 
 .editorForm label,
 .movementForm label,
