@@ -4,10 +4,10 @@
 
 ## Estado verificado
 
-- Revisión: **26 de agosto de 2026 · #362 integrado · primera edición en cierre de lanzamiento**.
+- Revisión: **26 de agosto de 2026 · #363 integrado · primera edición en cierre de lanzamiento**.
 - Repositorio: `nachosanchezperez-ux/base-cofrade`.
 - Rama principal: `main`.
-- `main` actual al refrescar: `6b74b2afe8a86ca51cfa172a2a5daac8cf8b3622` — **Reconciliar el historial del importador con Supabase (#362)**.
+- Último `main` funcional al refrescar: `84a50addc992fcf3208b2635b9ccb2701bdf438c` — **Primera edición · cerrar colaboración pública y estado operativo (#363)**. El commit documental que actualice este archivo puede sucederlo sin cambios funcionales.
 - Supabase: `Hilocofrade` (`kcevwkucqzcyrqaimyhl`) → **ACTIVE_HEALTHY**, región `eu-west-1`.
 - La clasificación de Glorias se mantiene en `brotherhoods.brotherhood_types`; las procesiones concretas siguen usando `outings` con `outing_type = Procesión de Gloria`.
 - Estado editorial observado de Glorias al 26/08/2026: **34 Hermandades con tipo Gloria · 9 con próxima Procesión de Gloria futura documentada · 25 sin próxima fecha futura documentada**. Son métricas dinámicas, no cifras de producto hardcodeadas.
@@ -34,6 +34,7 @@
 - #353 · Panel · acceso directo desde Inicio y vista operativa de Glorias → **FUSIONADA Y DESPLEGADA**.
 - #361 · Bandas · restaura la fotografía de «De un vistazo» → **FUSIONADA Y DESPLEGADA**.
 - #362 · Historial del importador Git ↔ Supabase → **FUSIONADA Y DESPLEGADA**.
+- #363 · Primera edición · cierra colaboración pública y estado operativo → **FUSIONADA Y DESPLEGADA**.
 
 ## Frentes abiertos reales
 
@@ -72,12 +73,18 @@
 4. La protección contra contraseñas filtradas de Supabase Auth continúa como acción manual de seguridad previa al lanzamiento.
 5. No habilitar formularios públicos sin identidad responsable, contacto, privacidad y tratamiento editorial definidos.
 
+## SEO y descubrimiento
+
+- Dominio `hilocofrade.es` verificado en Google Search Console.
+- `https://hilocofrade.es/sitemap.xml` enviado, descargado por Google y sin errores ni advertencias.
+- La Home figura como **Submitted and indexed**, con `robots.txt` permitido, indexación admitida y último rastreo móvil correcto.
+- Producción publica canonical, robots, Open Graph y Twitter Cards; el sitemap conserva Directorio y Glorias y excluye Colabora mientras permanece cerrada.
+
 ## Orden operativo vigente
 
-1. Retirar las llamadas públicas a «Colabora» mientras no exista un canal y privacidad reales.
-2. Completar la matriz QA pública en 390, 768, 1024 y 1440 px.
-3. Activar la protección contra contraseñas filtradas en Supabase Auth.
-4. Reponer cuota OpenAI y repetir los dos smokes de #49.
-5. Publicar la información legal/privacidad solo con identidad y contacto confirmados.
+1. Completar la matriz QA pública en 390, 768, 1024 y 1440 px.
+2. Activar la protección contra contraseñas filtradas en Supabase Auth.
+3. Reponer cuota OpenAI y repetir los dos smokes de #49.
+4. Publicar la información legal/privacidad solo con identidad y contacto confirmados.
 
-**ESTADO-PROYECTO → 🟡 PRIMERA EDICIÓN EN CIERRE · PRODUCCIÓN ESTABLE · PREVIEWS OPERATIVAS · GIT ↔ SUPABASE 176/176 · #49 BLOQUEADA POR CUOTA OPENAI**
+**ESTADO-PROYECTO → 🟡 PRIMERA EDICIÓN EN CIERRE · PRODUCCIÓN ESTABLE · PREVIEWS OPERATIVAS · GIT ↔ SUPABASE 176/176 · COLABORA CERRADA · SEO CANÓNICO VERIFICADO · #49 BLOQUEADA POR CUOTA OPENAI**
