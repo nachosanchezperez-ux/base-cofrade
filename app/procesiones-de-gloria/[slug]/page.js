@@ -65,7 +65,8 @@ function entryLabel(item) {
 
 function statusLabel(item) {
   if (item.isCancelled) return 'Cancelada'
-  if (item.isCelebrated || item.isPast) return 'Celebrada'
+  if (item.isCelebrated) return 'Celebrada'
+  if (item.isPast) return 'Fecha pasada'
   return item.urgencyLabel || 'Próxima'
 }
 
