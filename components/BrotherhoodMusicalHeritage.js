@@ -31,7 +31,9 @@ function compactYear(value) {
   return /^\d{4}$/.test(text) ? text : '—';
 }
 
-function MusicRow({ item, showStyle = true }) {
+function MusicRow({ item, showStyle = true, headingLevel = 4 }) {
+  const Heading = `h${headingLevel}`;
+
   return (
     <article className={`${styles.march} ${showStyle ? '' : styles.marchCompact}`}>
       <div className={styles.year}>
@@ -40,7 +42,7 @@ function MusicRow({ item, showStyle = true }) {
       </div>
       <div className={styles.copy}>
         <small className={styles.fieldLabel}>Título</small>
-        <h4>{item.name}</h4>
+        <Heading>{item.name}</Heading>
         {item.bandRelation?.name ? (
           <div className={styles.bandRelation}>
             <small>{item.bandRelation.label}</small>
@@ -72,13 +74,15 @@ function MusicRow({ item, showStyle = true }) {
   );
 }
 
-function MusicList({ items, showStyle = true }) {
+function MusicList({ items, showStyle = true, headingLevel = 4 }) {
   return (
     <div className={styles.list}>
       <div className={`${styles.tableHead} ${showStyle ? '' : styles.tableHeadCompact}`} aria-hidden="true">
         <span>Año</span><span>Título</span><span>Compositor</span>{showStyle ? <span>Estilo</span> : null}<span />
       </div>
-      {items.map((item) => <MusicRow item={item} key={item.id} showStyle={showStyle} />)}
+      {items.map((item) => (
+        <MusicRow item={item} key={item.id} showStyle={showStyle} headingLevel={headingLevel} />
+      ))}
     </div>
   );
 }
@@ -100,13 +104,13 @@ function MarchStyleGroups({ items }) {
         <details className={styles.styleGroup} key={group.key} open={index === 0}>
           <summary className={styles.styleSummary}>
             <span className={styles.styleMark} aria-hidden="true">{group.short}</span>
-            <span className={styles.styleHeading}>
-              <strong>{group.label}</strong>
+            <div className={styles.styleHeading}>
+              <h4>{group.label}</h4>
               <small>{group.items.length} {group.items.length === 1 ? 'marcha documentada' : 'marchas documentadas'}</small>
-            </span>
+            </div>
             <span className={styles.styleToggle} aria-hidden="true">＋</span>
           </summary>
-          <MusicList items={group.items} showStyle={false} />
+          <MusicList items={group.items} showStyle={false} headingLevel={5} />
         </details>
       ))}
     </div>
@@ -141,15 +145,15 @@ export default function BrotherhoodMusicalHeritage({ items = [] }) {
             <details className={styles.group} key={group.key} open={group.key === 'Marcha procesional'}>
               <summary className={styles.groupSummary}>
                 <span className={styles.groupMark} aria-hidden="true">{group.short}</span>
-                <span className={styles.groupHeading}>
-                  <strong>{group.label}</strong>
+                <div className={styles.groupHeading}>
+                  <h3>{group.label}</h3>
                   <small>{group.items.length} {group.noun} documentadas</small>
-                </span>
+                </div>
                 <span className={styles.groupToggle} aria-hidden="true">＋</span>
               </summary>
               {group.key === 'Marcha procesional'
                 ? <MarchStyleGroups items={group.items} />
-                : <MusicList items={group.items} />}
+                : <MusicList items={group.items} headingLevel={4} />}
             </details>
           ))}
         </div>

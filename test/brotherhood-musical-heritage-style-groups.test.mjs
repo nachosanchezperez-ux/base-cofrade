@@ -27,6 +27,16 @@ test('las marchas con estilos nuevos o sin clasificar no desaparecen del patrimo
 test('la segmentación evita repetir la columna Estilo dentro de cada bloque', async () => {
   const code = await source('components/BrotherhoodMusicalHeritage.js')
 
-  assert.match(code, /MusicList items=\{group\.items\} showStyle=\{false\}/)
+  assert.match(code, /MusicList items=\{group\.items\} showStyle=\{false\} headingLevel=\{5\}/)
   assert.match(code, /showStyle \? <span>Estilo<\/span> : null/)
+})
+
+test('la jerarquía accesible no salta del título de sección a las composiciones', async () => {
+  const code = await source('components/BrotherhoodMusicalHeritage.js')
+
+  assert.match(code, /<h3>\{group\.label\}<\/h3>/)
+  assert.match(code, /<h4>\{group\.label\}<\/h4>/)
+  assert.match(code, /headingLevel=\{5\}/)
+  assert.match(code, /headingLevel=\{4\}/)
+  assert.doesNotMatch(code, /<h4>\{item\.name\}<\/h4>/)
 })
