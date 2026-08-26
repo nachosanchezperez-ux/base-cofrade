@@ -9,7 +9,7 @@ const actions = read('app/panel/(protected)/importar/actions.js')
 const page = read('app/panel/(protected)/importar/page.js')
 const navigation = read('lib/panel/navigation.js')
 const park = read('supabase/migrations/20260825140859_park_document_import_rpc.sql')
-const activation = read('supabase/migrations/20260826090000_activate_document_import_rpc.sql')
+const activation = read('supabase/migrations/20260826123753_activate_document_import_rpc.sql')
 
 test('la descarga documental fija la conexión al DNS público validado y limita el stream', () => {
   assert.match(importer, /lookup: \(_hostname, options, callback\)/)
