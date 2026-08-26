@@ -4,11 +4,11 @@
 
 ## Estado verificado
 
-- Revisión: **26 de agosto de 2026 · Home editorial validada · #49 cerrada sin fusionar**.
+- Revisión: **26 de agosto de 2026 · superficie pública endurecida · #49 cerrada sin fusionar**.
 - Repositorio: `nachosanchezperez-ux/base-cofrade`.
 - Rama principal: `main`.
-- Último `main` funcional al refrescar: `1d605e7a5350f1af634c9d180ba08991da327b00` — **Home: prioriza hilos con conocimiento documentado (#367)**. El commit documental que actualice este archivo puede sucederlo sin cambios funcionales.
-- Producción: `dpl_6fbu2vrqsyBVYs3wBpShcKmhFeaa` → **READY**, región real `dub1`; 44 respuestas `200` y ningún registro `error` o `fatal` en la validación posterior.
+- Último `main` funcional al refrescar: `618804e995452407da0b31244df8ccd1d75f0ad2` — **Primera edición: retira las rutas públicas de diagnóstico (#369)**. El commit documental que actualice este archivo puede sucederlo sin cambios funcionales.
+- Producción: `dpl_FcightjKG4LePf63UnVvbi9qFwTj` → **READY**, región real `dub1`; Home, Directorio, Glorias y Colabora responden `200`, `/prueba-next` y `/prueba-supabase` responden `404`, y no existen registros `error` o `fatal` en la validación posterior.
 - Supabase: `Hilocofrade` (`kcevwkucqzcyrqaimyhl`) → **ACTIVE_HEALTHY**, región `eu-west-1`.
 - La clasificación de Glorias se mantiene en `brotherhoods.brotherhood_types`; las procesiones concretas siguen usando `outings` con `outing_type = Procesión de Gloria`.
 - Estado editorial observado de Glorias al 26/08/2026: **34 Hermandades con tipo Gloria · 9 con próxima Procesión de Gloria futura documentada · 25 sin próxima fecha futura documentada**. Son métricas dinámicas, no cifras de producto hardcodeadas.
@@ -40,6 +40,7 @@
 - #365 · Cierre del importador con IA → **FUSIONADA Y DESPLEGADA**.
 - #366 · Jerarquía accesible del patrimonio musical → **FUSIONADA Y DESPLEGADA**.
 - #367 · Home · hilos con conocimiento documentado → **FUSIONADA Y DESPLEGADA**.
+- #369 · Primera edición · retira rutas públicas de diagnóstico → **FUSIONADA Y DESPLEGADA**.
 
 ### Criterio editorial de «Últimos hilos»
 
