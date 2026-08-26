@@ -282,7 +282,24 @@ export default async function BandDetailPage({ params }) {
 
       <section className={`${styles.contentSection} ${styles.overviewSection}`} id="resumen">
         <div className="shell">
-          <div className={styles.overviewGrid} style={{ gridTemplateColumns: '1fr' }}>
+          <div className={styles.overviewGrid} style={!band.heroImagePath ? { gridTemplateColumns: '1fr' } : undefined}>
+            {band.heroImagePath ? (
+              <figure className={styles.featurePhoto}>
+                <div>
+                  <Image
+                    src={band.heroImagePath}
+                    alt={band.heroImageAlt || `Fotografía representativa de ${band.popularName}`}
+                    fill
+                    sizes="(max-width: 900px) calc(100vw - 32px), 52vw"
+                  />
+                </div>
+                <figcaption>
+                  <span>La formación</span>
+                  <strong>{band.popularName}</strong>
+                  {band.heroImageCredit ? <small>{band.heroImageCredit}</small> : null}
+                </figcaption>
+              </figure>
+            ) : null}
             <div className={styles.overviewCopy}>
               <div className={styles.sectionHeading}>
                 <h2>{band.popularName}, de un vistazo</h2>
