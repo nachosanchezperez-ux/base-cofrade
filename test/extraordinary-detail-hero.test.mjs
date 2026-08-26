@@ -11,3 +11,8 @@ test('la cabecera elimina Anunciada y destaca el motivo y los datos clave', () =
   assert.equal(css.includes('.keyFacts strong{font-size:15px}'), true)
   assert.equal(css.includes('.dateFact strong{text-transform:none}'), true)
 })
+
+test('las secciones a ancho completo no provocan scroll horizontal', () => {
+  assert.equal(css.includes('.page{overflow-x:clip}'), true)
+  assert.equal(css.includes('margin-inline:calc(50% - 50vw)'), true)
+})

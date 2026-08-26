@@ -603,14 +603,18 @@
 
 .sectionHeading > p { width: min(430px, 46%); text-align: right; }
 
-.editorForm { display: grid; gap: 24px; }
+.editorForm { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; }
 
 .formGrid,
 .movementForm {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
+  min-width: 0;
 }
+
+.formGrid > *,
+.movementForm > * { min-width: 0; }
 
 .editorForm label,
 .movementForm label,
@@ -740,7 +744,7 @@
   border-top: 1px solid var(--panel-line);
 }
 
-.formActions small { color: var(--panel-muted); font-size: 10px; }
+.formActions small { min-width: 0; color: var(--panel-muted); font-size: 10px; overflow-wrap: anywhere; }
 
 .colorFieldset {
   display: grid;
@@ -806,7 +810,7 @@
 }
 
 .editorStack { display: grid; gap: 16px; }
-.editorItem { padding: 24px; }
+.editorItem { min-width: 0; padding: 24px; }
 .itemHeading { margin-bottom: 22px; }
 .itemHeading h3 { font-size: 18px; }
 
