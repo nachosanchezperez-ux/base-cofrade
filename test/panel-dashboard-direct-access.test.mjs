@@ -13,6 +13,7 @@ const mobile = read('app/panel/panel-mobile.css')
 const expectedRoutes = [
   '/panel/hoy',
   '/panel/hermandades',
+  '/panel/glorias',
   '/panel/imagenes',
   '/panel/pasos',
   '/panel/bandas',
@@ -44,7 +45,7 @@ test('el inicio prioriza entidades principales sin ocultar el resto', () => {
   assert.match(page, /accessGroups\.map/)
   assert.match(page, /item\.description/)
   assert.match(navigation, /label: 'Principal'[\s\S]*\/panel\/hermandades[\s\S]*\/panel\/imagenes[\s\S]*\/panel\/pasos[\s\S]*\/panel\/bandas/)
-  assert.match(navigation, /label: 'Contenido'[\s\S]*\/panel\/marchas[\s\S]*\/panel\/extraordinarias[\s\S]*\/panel\/acontecimientos[\s\S]*\/panel\/hoy/)
+  assert.match(navigation, /label: 'Contenido'[\s\S]*\/panel\/glorias[\s\S]*\/panel\/marchas[\s\S]*\/panel\/extraordinarias[\s\S]*\/panel\/acontecimientos[\s\S]*\/panel\/hoy/)
 })
 
 test('los accesos directos son compactos en PC y jerárquicos en móvil', () => {
