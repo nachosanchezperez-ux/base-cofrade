@@ -101,7 +101,7 @@ export default function GloryDirectory({ outings }) {
             ) : (
               <strong className={styles.brotherhoodLink}>{featured.brotherhoodName}</strong>
             )}
-            <p className={styles.location}>{featured.municipality || 'Localidad por documentar'}</p>
+            <p className={styles.location}>{featured.municipality || 'Localidad por confirmar'}</p>
 
             <div className={styles.featuredFacts}>
               <div>
@@ -133,7 +133,7 @@ export default function GloryDirectory({ outings }) {
             <span className={styles.kicker}>Calendario</span>
             <h2 id="calendario-glorias">Procesiones por meses</h2>
           </div>
-          <p>Filtra las salidas documentadas por estado, territorio y año. En móvil, el listado queda reducido a la información esencial.</p>
+          <p>Consulta las procesiones por fecha, territorio y año.</p>
         </div>
 
         <div className={styles.filters}>
@@ -220,7 +220,7 @@ export default function GloryDirectory({ outings }) {
 
                       <div className={styles.cardMain}>
                         <div className={styles.cardTopline}>
-                          <span>{outing.municipality || 'Localidad por documentar'}</span>
+                          <span>{outing.municipality || 'Localidad por confirmar'}</span>
                           <small data-status={outing.eventStatus}>{statusLabel(outing)}</small>
                         </div>
                         <h4><Link href={outing.detailHref}>{outing.title}</Link></h4>
@@ -234,7 +234,7 @@ export default function GloryDirectory({ outings }) {
                           <div className={styles.cardFacts}>
                             {outing.departureTime ? <span><b>Salida</b>{outing.departureTime}</span> : null}
                             {outing.returnTime ? <span><b>Entrada</b>{outing.returnTime}</span> : null}
-                            {outing.routeSummary ? <span><b>Recorrido</b>Publicado</span> : null}
+                            {outing.routeSummary ? <span><b>Recorrido</b>Disponible</span> : null}
                           </div>
                           <Link className={styles.detailLink} href={outing.detailHref}>
                             Ver ficha <span>→</span>
@@ -255,8 +255,8 @@ export default function GloryDirectory({ outings }) {
           </div>
         ) : (
           <div className={styles.empty}>
-            <strong>No hay más procesiones con estos criterios</strong>
-            <span>{status === 'upcoming' && featured ? 'La próxima procesión está destacada justo encima.' : 'Prueba con otro año o territorio.'}</span>
+            <strong>No hay procesiones con estos filtros</strong>
+            <span>Prueba con otro año o territorio.</span>
           </div>
         )}
       </section>

@@ -7,7 +7,7 @@ import styles from './glory-page.module.css'
 export const dynamic = 'force-dynamic'
 
 const baseTitle = 'Procesiones de Gloria en Sevilla'
-const baseDescription = 'Calendario de procesiones de Gloria de Sevilla capital y provincia: fechas, horarios, recorridos, hermandades, bandas y fuentes documentadas.'
+const baseDescription = 'Calendario de procesiones de Gloria en Sevilla capital y provincia: fechas, horarios, recorridos y acompañamientos musicales.'
 
 function currentMadridYear() {
   return Number(new Intl.DateTimeFormat('en', {
@@ -19,7 +19,7 @@ function currentMadridYear() {
 export async function generateMetadata() {
   const year = currentMadridYear()
   const title = `${baseTitle} ${year}`
-  const description = `Calendario de procesiones de Gloria de Sevilla capital y provincia en ${year}: fechas, horarios, recorridos, hermandades, bandas y fuentes documentadas.`
+  const description = `Calendario de procesiones de Gloria en Sevilla capital y provincia en ${year}: fechas, horarios, recorridos y acompañamientos musicales.`
   return {
     title,
     description,
@@ -72,7 +72,7 @@ export default async function ProcesionesDeGloriaPage() {
             <h1>Procesiones de Gloria en Sevilla</h1>
           </div>
           <p>
-            Consulta las próximas procesiones de las hermandades de Gloria, con sus fechas y los datos documentados de cada salida. Las celebradas permanecen disponibles como archivo de consulta.
+            Fechas, horarios y recorridos de las próximas procesiones de Gloria de Sevilla capital y provincia. Las salidas anteriores pueden consultarse por año.
           </p>
         </header>
 
@@ -80,13 +80,13 @@ export default async function ProcesionesDeGloriaPage() {
           <div className={styles.summaryCopy}>
             <span className="eyebrow">Glorias · {currentYear}</span>
             <p>
-              Hilo Cofrade reúne en una sola agenda las <strong>procesiones de Gloria de Sevilla capital y provincia</strong>. Cada salida está conectada con su hermandad y se amplía a medida que se documentan horarios, recorrido, música y fuentes.
+              Las <strong>procesiones de Gloria de Sevilla capital y provincia</strong>, ordenadas por fecha y localidad, con la información disponible de cada jornada.
             </p>
           </div>
           <div className={styles.stats}>
-            <span><strong>{yearOutings.length}</strong> documentadas</span>
+            <span><strong>{yearOutings.length}</strong> salidas</span>
             <span><strong>{upcomingCount}</strong> próximas</span>
-            <span><strong>{archiveCount}</strong> en archivo</span>
+            <span><strong>{archiveCount}</strong> anteriores</span>
             <span><strong>{capitalCount}</strong> capital · <strong>{provinceCount}</strong> provincia</span>
           </div>
         </div>
@@ -94,13 +94,13 @@ export default async function ProcesionesDeGloriaPage() {
         <GloryDirectory outings={outings} />
 
         <section className={styles.guide} aria-labelledby="guia-procesiones-gloria-sevilla">
-          <span className="eyebrow">Guía en crecimiento</span>
-          <h2 id="guia-procesiones-gloria-sevilla">Fechas, recorridos y bandas de las Glorias de Sevilla</h2>
+          <span className="eyebrow">Calendario anual</span>
+          <h2 id="guia-procesiones-gloria-sevilla">Las Glorias de Sevilla, mes a mes</h2>
           <p>
-            Esta agenda no sustituye al directorio de hermandades de Gloria: lo complementa. Aquí la unidad de consulta es cada procesión, mientras que la ficha de la hermandad conserva su historia, titulares, patrimonio y demás relaciones.
+            Las hermandades de Gloria de Sevilla capital y provincia celebran sus procesiones a lo largo de todo el año, con especial presencia en primavera y otoño.
           </p>
           <p>
-            Cuando un horario, itinerario o acompañamiento musical todavía no está documentado, Hilo Cofrade lo mantiene pendiente en lugar de completarlo sin una fuente. Así, la página puede crecer con nuevas salidas sin perder trazabilidad.
+            Quedan fuera de este listado las romerías, los traslados y las salidas extraordinarias, aunque estén vinculados a las mismas hermandades.
           </p>
         </section>
       </div>
