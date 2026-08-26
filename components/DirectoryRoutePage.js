@@ -1,5 +1,5 @@
-import Link from 'next/link'
 import BrotherhoodDirectoryCard from '@/components/BrotherhoodDirectoryCard'
+import DirectoryBreadcrumb from '@/components/DirectoryBreadcrumb'
 import JsonLd from '@/components/JsonLd'
 import { sortBrotherhoods } from '@/lib/brotherhood-directory'
 import { breadcrumbJsonLd, collectionPageJsonLd } from '@/lib/seo'
@@ -18,6 +18,10 @@ export default function DirectoryRoutePage({
   const linkedBreadcrumbs = breadcrumbs
     .filter((item) => Boolean(item.href))
     .map((item) => ({ name: item.label, path: item.href }))
+  const visualBreadcrumbs = [
+    { label: 'Hermandades', href: '/hermandades' },
+    ...breadcrumbs,
+  ]
 
   return (
     <section className={`section page-top ${styles.routePage}`}>
@@ -38,15 +42,7 @@ export default function DirectoryRoutePage({
       })} />
 
       <div className="shell">
-        <nav className={styles.breadcrumbs} aria-label="Migas de pan">
-          <Link href="/hermandades">Hermandades</Link>
-          {breadcrumbs.map((item) => (
-            <span key={item.href || item.label}>
-              <span aria-hidden="true">/</span>
-              {item.href ? <Link href={item.href}>{item.label}</Link> : <strong>{item.label}</strong>}
-            </span>
-          ))}
-        </nav>
+        <DirectoryBreadcrumb items={visualBreadcrumbs} />
 
         <span className="eyebrow">{eyebrow}</span>
         <h1 className="page-title">{title}</h1>
