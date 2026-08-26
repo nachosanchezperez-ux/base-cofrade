@@ -806,7 +806,7 @@
 }
 
 .editorStack { display: grid; gap: 16px; }
-.editorItem { padding: 24px; }
+.editorItem { min-width: 0; padding: 24px; }
 .itemHeading { margin-bottom: 22px; }
 .itemHeading h3 { font-size: 18px; }
 
