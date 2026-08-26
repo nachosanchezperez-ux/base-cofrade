@@ -4,101 +4,94 @@
 
 ## Estado verificado
 
-- Revisión: **26 de agosto de 2026 · superficie pública endurecida · #49 cerrada sin fusionar**.
+- Revisión: **26 de agosto de 2026 · cierre QA de primera edición**.
 - Repositorio: `nachosanchezperez-ux/base-cofrade`.
 - Rama principal: `main`.
-- Último `main` funcional al refrescar: `618804e995452407da0b31244df8ccd1d75f0ad2` — **Primera edición: retira las rutas públicas de diagnóstico (#369)**. El commit documental que actualice este archivo puede sucederlo sin cambios funcionales.
-- Producción: `dpl_FcightjKG4LePf63UnVvbi9qFwTj` → **READY**, región real `dub1`; Home, Directorio, Glorias y Colabora responden `200`, `/prueba-next` y `/prueba-supabase` responden `404`, y no existen registros `error` o `fatal` en la validación posterior.
-- Supabase: `Hilocofrade` (`kcevwkucqzcyrqaimyhl`) → **ACTIVE_HEALTHY**, región `eu-west-1`.
-- La clasificación de Glorias se mantiene en `brotherhoods.brotherhood_types`; las procesiones concretas siguen usando `outings` con `outing_type = Procesión de Gloria`.
-- Estado editorial observado de Glorias al 26/08/2026: **34 Hermandades con tipo Gloria · 9 con próxima Procesión de Gloria futura documentada · 25 sin próxima fecha futura documentada**. Son métricas dinámicas, no cifras de producto hardcodeadas.
+- Último `main` funcional validado: `a45c9ef10b3303f6c6a3e6822299ac0d8fdbd4cb` — **Cierre QA: corregir desbordes y previsualizaciones del Panel (#371)**. El commit documental que actualice este archivo puede sucederlo sin cambios funcionales.
+- PR abiertas al cierre de la revisión: **0**.
+- #49: **CERRADA SIN FUSIONAR**; no debe reabrirse.
+- Producción funcional validada: `dpl_6B8ZJCi9sQvZB1itDufXf6BBqZbU` → **READY**, región `dub1`.
+- Runtime posterior al smoke: **0 respuestas 5xx y 0 eventos fatal**. Se observó un único cierre anticipado de stream con HTTP `200`; la misma ruta volvió a responder `200` y se validó sin error técnico, por lo que no constituye un fallo estructural.
+- Supabase: `Hilocofrade` (`kcevwkucqzcyrqaimyhl`) → **ACTIVE_HEALTHY**, región `eu-west-1`, Postgres `17.6.1.155`, plan de organización **Free**.
+- Migraciones: **176/176** entre Git y Supabase, hasta `20260826123753 activate_document_import_rpc`.
 
-## Vercel · configuración regional canónica
+## Primera edición
 
-- Plan observado: **Pro**.
-- Configuración versionada: una única región primaria mediante `regions: ["dub1"]`.
-- No existe `functionFailoverRegions` ni otra región pasiva versionada.
-- No volver a añadir regiones pasivas o failover de Functions sin comprobar primero las prestaciones del plan vigente.
+**HILO COFRADE · PRIMERA EDICIÓN → 🟡 NO CERRADA TÉCNICAMENTE**
 
-**VERCEL · PUERTA DE QA → 🟢 OPERATIVA**
+Producción está estable y no quedan bloqueos funcionales conocidos. Falta una única puerta técnica: ejecutar y conservar evidencia de la matriz responsive exacta en `390`, `768`, `1024` y `1440` px. La revisión completa realizada en la superficie de navegador disponible y las regresiones automatizadas no sustituyen esa matriz exacta.
 
-## Producción cerrada recientemente
+El cierre técnico no equivale al lanzamiento ni a su comunicación pública. Tras superar la matriz, Dirección deberá aceptar expresamente las dependencias externas de Auth y Legal antes de decidir el anuncio.
 
-- #349 · Primera edición · cierre técnico, rendimiento y navegación → **FUSIONADA Y DESPLEGADA**.
-- #351 · Vercel · recuperar previews sin regiones pasivas Enterprise → **FUSIONADA Y DESPLEGADA**.
-- #342 · Hermandades · portada editable + programa de mano y resumen unificado → **FUSIONADA Y DESPLEGADA**.
-- #350 · Glorias · calendario y fichas de procesiones de Sevilla → **FUSIONADA Y DESPLEGADA**.
-- #352 · Pastora · primera ficha cerrada → **FUSIONADA Y DESPLEGADA**.
-- #354 · Pastora · corrige año visible de marcha → **FUSIONADA Y DESPLEGADA**.
-- #358 · Hermandades · información práctica sin repetir cabecera → **FUSIONADA Y DESPLEGADA**.
-- #360 · Glorias · tono editorial público → **FUSIONADA Y DESPLEGADA**.
-- #353 · Panel · acceso directo desde Inicio y vista operativa de Glorias → **FUSIONADA Y DESPLEGADA**.
-- #361 · Bandas · restaura la fotografía de «De un vistazo» → **FUSIONADA Y DESPLEGADA**.
-- #362 · Historial del importador Git ↔ Supabase → **FUSIONADA Y DESPLEGADA**.
-- #363 · Primera edición · cierra colaboración pública y estado operativo → **FUSIONADA Y DESPLEGADA**.
-- #364 · Estado final verificado de la primera edición → **FUSIONADA**.
-- #365 · Cierre del importador con IA → **FUSIONADA Y DESPLEGADA**.
-- #366 · Jerarquía accesible del patrimonio musical → **FUSIONADA Y DESPLEGADA**.
-- #367 · Home · hilos con conocimiento documentado → **FUSIONADA Y DESPLEGADA**.
-- #369 · Primera edición · retira rutas públicas de diagnóstico → **FUSIONADA Y DESPLEGADA**.
+## QA final
 
-### Criterio editorial de «Últimos hilos»
+### Validado
 
-- La creación de una ficha por sí sola no es una señal promocionable en Home.
-- Las fichas continúan públicas en sus directorios y entran automáticamente en «Últimos hilos» cuando incorporan relaciones o ampliaciones documentadas.
-- No existen excepciones por `slug`; la selección observada tras #367 muestra Pastora de Cantillana, San Esteban y el paso de Bendición y Esperanza.
-- Se retiró de esta superficie el texto técnico «preparada para crecer».
+- Revisión pública completa en producción a `1363 × 936`: Home, Directorio y sus filtros, Hermandades, Imágenes, Pasos, Bandas, Extraordinarias, Glorias, Tira del hilo, navegación y footer.
+- Muestras de Hermandades: Pastora de Cantillana, San Benito, El Baratillo, una Gloria y una ficha incompleta.
+- Variantes de contenido: relaciones y títulos largos, recursos horizontales/verticales/cuadrados, ausencia de fotografía y fichas con cobertura parcial.
+- Panel autenticado: login, sesión, logout, Inicio, navegación, Hermandades, Glorias, Imágenes, Pasos, Bandas y Multimedia. Formularios, carga, guardado y feedback tienen contratos automatizados; no se generaron recursos ni mutaciones editoriales de prueba en producción.
+- Suite: **347/347 tests**.
+- Build: **correcto** con Next.js `16.3` y Turbopack.
+- Correcciones de #371: overflow de fichas de Extraordinarias, ancho intrínseco del editor Multimedia y resolución de URLs absolutas de previsualización.
+- Preview de #371: **READY** en `dub1`; regresiones afectadas sin overflow ni imágenes rotas.
+- Smoke final de producción: Home, Directorio, Hermandad, Imagen, Paso, Banda, Extraordinaria, Gloria, Tira del hilo y Panel superados.
 
-## Frentes abiertos reales
+### Pendiente técnico
 
-- **Ninguna PR abierta** al cerrar esta revisión.
+- **🔴 Matriz exacta `390 / 768 / 1024 / 1440`**. La superficie de navegador disponible no expone emulación ni control verificable de viewport; no se marca como superada.
 
-### #49 · Importador documental asistido
+## Seguridad y Supabase Auth
 
-- **CERRADA SIN FUSIONAR por decisión de producto**.
-- Hilo Cofrade no utilizará la API de OpenAI para importar documentación; no requiere cuota, clave ni facturación del proveedor.
-- La rama queda descartada y no debe reutilizarse como base técnica.
-- Las cuatro migraciones ya reconciliadas permanecen como infraestructura inactiva; no exponen la interfaz ni publican datos por sí solas y no se revierten para no romper el historial Git ↔ Supabase.
-- La prueba realizada no dejó residuos: **0 importaciones y 0 fuentes de prueba**.
-- La vía canónica sin IA ya existe en HC-016: JSON, JSONL y CSV con staging, validación, resolución determinista, revisión humana, aplicación por lotes y auditoría.
+- `/panel` redirige al login sin sesión y todas sus superficies declaran `noindex, nofollow`.
+- `/api/` está excluida en `robots.txt`; los endpoints editoriales exigen autenticación.
+- `/prueba-next` y `/prueba-supabase` responden `404`.
+- No se detectaron claves versionadas, mensajes SQL, trazas técnicas, contenido draft ni errores técnicos en las superficies públicas revisadas.
+- Front público stateless/anon; las consultas públicas mantienen los filtros de publicación.
+- RLS: **74/74 tablas públicas con RLS activa**.
+- Las advertencias de funciones `SECURITY DEFINER` están contenidas: no tienen ejecución anónima, fijan `search_path` y comprueban identidad/rol editorial. Los núcleos de aplicación del importador no son ejecutables por usuarios autenticados.
+- Login, sesión y logout del Panel: **validados**. La interfaz de recuperación existe; no se envió un correo real de recuperación durante QA.
+- Protección contra contraseñas filtradas: **🟣 BLOQUEADA POR LIMITACIÓN EXTERNA DOCUMENTADA**. Supabase la reserva a planes Pro o superiores; el proyecto permanece en Free. La opción se intentó activar desde Dashboard, no persistió y el asesor mantiene la advertencia. No se cambió Auth por código.
 
-## Migraciones · estado operativo
+## Legal, privacidad y contacto
 
-- Git y Supabase contienen **176/176 migraciones**.
-- #362 versionó en `main` las cuatro migraciones del importador ya registradas en Supabase; no volvió a ejecutar DDL.
-- Antes de cualquier nuevo DDL o migración, refrescar nuevamente el historial local/remoto completo.
+**LEGAL → 🟣 PENDIENTE DE DATOS DE DIRECCIÓN**
 
-## Panel V2 · principios vigentes
-
-- Front público stateless; Panel autenticado y editorial.
-- `media_assets` es el archivo común y los usos se expresan mediante relaciones.
-- `PORTADA ≠ GALERÍA ≠ ESCUDO ≠ OTROS RECURSOS`.
-- Todo recurso visible en una ficha debe tender a poder editarse desde el mismo contexto.
-- Los bytes se cargan directamente desde navegador a Supabase Storage mediante URL firmada cuando corresponde.
-- Móvil: inputs de 16 px, objetivos táctiles adecuados, safe areas, navegación inferior y guardado contextual.
-- Multimedia se conserva como biblioteca avanzada, no como paso obligatorio para tareas editoriales cotidianas.
-- Un universo público importante puede tener una **vista operativa propia en Panel** sin duplicar el modelo. `Glorias` aplica este patrón sobre Hermandades + Salidas.
-
-## Bloqueos y precauciones reales
-
-1. No crear ni aplicar migraciones sin refrescar antes el historial local/remoto completo.
-2. No reabrir ni reconstruir #49 con OpenAI u otra API generativa; cualquier ampliación de importación debe extender HC-016 sin eludir staging, validación y revisión humana.
-3. No reintroducir `functionFailoverRegions` o regiones pasivas sin revisar el plan de Vercel.
-4. La protección contra contraseñas filtradas de Supabase Auth continúa como acción manual de seguridad previa al lanzamiento.
-5. No habilitar formularios públicos sin identidad responsable, contacto, privacidad y tratamiento editorial definidos.
+No constan identidad responsable, contacto público, email ni texto de privacidad/tratamiento confirmados. No se publica información inventada. `Colabora` continúa cerrada y `noindex`; no hay formularios públicos de aportación, contacto o recogida de datos personales.
 
 ## SEO y descubrimiento
 
-- Dominio `hilocofrade.es` verificado en Google Search Console.
-- `https://hilocofrade.es/sitemap.xml` enviado, descargado por Google y sin errores ni advertencias.
-- La Home figura como **Submitted and indexed**, con `robots.txt` permitido, indexación admitida y último rastreo móvil correcto.
-- Producción publica canonical, robots, Open Graph y Twitter Cards; el sitemap conserva Directorio y Glorias y excluye Colabora mientras permanece cerrada.
+- `robots.txt`, sitemap, canonical, Open Graph y Twitter Cards: **validados en producción**.
+- Panel y Colabora: `noindex`; APIs excluidas por robots.
+- Las rutas de prueba no existen y las páginas principales son indexables.
+- Sitemap: **188 URLs**, todas con respuesta `200` en el barrido realizado.
+- Search Console: última evidencia canónica del 26/08/2026 — dominio verificado, sitemap sin errores/advertencias y Home indexada. No hubo acceso al conector para refrescar la consola durante este corte; no se afirma una comprobación posterior independiente.
 
-## Orden operativo vigente
+## Salud del grafo
 
-1. Completar la matriz QA pública en 390, 768, 1024 y 1440 px.
-2. Activar la protección contra contraseñas filtradas en Supabase Auth.
-3. Publicar la información legal/privacidad solo con identidad y contacto confirmados.
-4. Mantener la importación estructurada sobre HC-016; no abrir un nuevo importador durante el cierre de lanzamiento.
+**SALUD DEL GRAFO DE LANZAMIENTO → 🟢 APROBADA**
 
-**ESTADO-PROYECTO → 🟡 PRIMERA EDICIÓN EN CIERRE · PRODUCCIÓN ESTABLE · PREVIEWS OPERATIVAS · GIT ↔ SUPABASE 176/176 · COLABORA CERRADA · SEO CANÓNICO VERIFICADO · #49 CERRADA SIN FUSIONAR · IMPORTACIÓN SIN IA**
+- `0` relaciones nucleares publicadas con extremos inexistentes en Hermandades–Imágenes, Hermandades–Pasos e Imágenes–Pasos.
+- `0` Hermandades, Imágenes o Pasos publicados sin su fila especializada.
+- El Auditor muestra `22` prioridades de cobertura: `20` imágenes publicadas sin recurso visual directo y `2` marchas publicadas sin autor. Se comprobó degradación visual segura; son carencias editoriales para backlog, no relaciones rotas ni UI bloqueada.
+
+## Importación
+
+- #49 permanece **cerrada sin fusionar**.
+- Vía canónica: **HC-016 → JSON / JSONL / CSV → staging → validación determinista → revisión humana → aplicación por lotes → auditoría**.
+- No abrir una evolución del importador durante este cierre.
+
+## Bloqueos y precauciones reales
+
+1. Completar la matriz responsive exacta antes de declarar el cierre técnico.
+2. No crear ni aplicar migraciones sin refrescar el historial local/remoto completo.
+3. No reabrir #49 ni sustituir HC-016 por una importación generativa.
+4. No publicar datos legales ni habilitar formularios públicos hasta que Dirección confirme identidad, contacto y tratamiento.
+5. No declarar activada la protección de contraseñas filtradas mientras el plan de Supabase no lo permita.
+6. No abrir automáticamente una segunda edición ni nuevas funcionalidades.
+
+## Única acción siguiente
+
+Ejecutar una comprobación verificable de la matriz responsive exacta en `390`, `768`, `1024` y `1440` px sobre las superficies enumeradas en la orden de cierre. Si no aparecen bloqueos, actualizar este estado a **Primera edición técnicamente cerrada** y dejar Auth/Legal como dependencias externas aceptadas o no por Dirección.
+
+**ESTADO-PROYECTO → 🟡 PRIMERA EDICIÓN NO CERRADA · ÚNICO BLOQUEO TÉCNICO: MATRIZ RESPONSIVE EXACTA · PRODUCCIÓN ESTABLE · PR 0 · GIT ↔ SUPABASE 176/176 · AUTH 🟣 · LEGAL 🟣**

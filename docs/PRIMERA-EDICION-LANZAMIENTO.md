@@ -1,58 +1,55 @@
 # Primera edición · checklist de lanzamiento
 
 Fecha de corte: 26 de agosto de 2026
-Objetivo: publicar una primera edición comprensible, rápida y mantenible sin ampliar el producto durante el cierre.
 
-## Qué es la edición 1.0
+Objetivo: cerrar lo existente sin ampliar funcionalidad.
 
-La primera edición permite:
+## Estado
 
-- descubrir Hilo Cofrade desde Home, Directorio o Extraordinarias;
-- recorrer Hermandades, Imágenes, Pasos y Bandas como una enciclopedia relacionada;
-- consultar fichas con información documentada y fuentes visibles;
-- preguntar a Tira del hilo sin mezclar la sesión editorial con el front público;
-- mantener el contenido desde un Panel responsive y autenticado.
+**PRIMERA EDICIÓN → 🟡 NO CERRADA TÉCNICAMENTE**
 
-No forman parte del lanzamiento:
+Producción y las barreras funcionales están estables. La única puerta técnica pendiente es la matriz responsive exacta en `390`, `768`, `1024` y `1440` px. Auth y Legal son dependencias externas y no se falsean como resueltas.
 
-- el importador documental con IA de #49, cerrado sin fusionar;
-- nuevas familias de entidades o secciones públicas;
-- una capa de caché persistente sin mapa completo de invalidación;
-- un formulario público de aportaciones hasta definir canal, privacidad y tratamiento editorial.
+## Checklist simple
 
-## Puertas de lanzamiento
+| Puerta | Estado | Evidencia resumida |
+|---|---:|---|
+| Código | 🟢 | #371 fusionada; cambio mínimo y regresiones añadidas. |
+| Build | 🟢 | Next.js 16.3/Turbopack completado. |
+| Producción | 🟢 | Deployment funcional `dpl_6B8ZJCi9sQvZB1itDufXf6BBqZbU` READY en `dub1`; sin 5xx ni fatal tras el smoke. |
+| QA responsive | 🔴 | Revisión completa a 1363 px superada, pero falta evidencia exacta a 390/768/1024/1440. |
+| Arquitectura pública | 🟢 | Familias públicas, relaciones, fallbacks y navegación verificadas. |
+| Panel | 🟢 | Protección, login/sesión/logout, navegación y superficies editoriales verificadas; contratos de carga/guardado/feedback cubiertos sin crear datos de prueba. |
+| Migraciones | 🟢 | Git ↔ Supabase `176/176`. |
+| RLS | 🟢 | `74/74` tablas públicas con RLS activa. |
+| SEO | 🟢 | Robots, canonical, OG, Twitter Cards, indexabilidad y noindex validados. |
+| Sitemap | 🟢 | 188 URLs y 188 respuestas 200 en el barrido. |
+| Search Console | 🟣 | Última evidencia canónica del 26/08/2026: dominio verificado, sitemap correcto y Home indexada; falta refresco independiente de la consola. |
+| Seguridad pública | 🟢 | Panel protegido, APIs excluidas, diagnósticos 404, sin claves/trazas/drafts expuestos. |
+| Importador sin IA | 🟢 | #49 cerrada sin fusionar; HC-016 sigue como vía canónica determinista. |
+| Rutas de diagnóstico retiradas | 🟢 | `/prueba-next` y `/prueba-supabase` responden 404. |
+| Auth · contraseñas filtradas | 🟣 | Bloqueada por el plan Free de Supabase; requiere Pro o superior. |
+| Legal / privacidad / contacto | 🟣 | Pendiente de datos confirmados por Dirección; Colabora cerrada y sin formularios públicos de datos personales. |
 
-### P0 · obligatorias
+## Validación realizada
 
-- [x] Historial Git ↔ Supabase completamente alineado.
-- [x] Funciones públicas próximas a la región de datos.
-- [x] Timeout de fuentes de Extraordinarias corregido e indexado.
-- [x] Permisos internos revisados; RPC del importador limitada a editores autenticados y núcleos privados.
-- [x] Suite local y build verdes.
-- [x] Preview del corte técnico sin errores de runtime y con mejora medida.
-- [x] Smoke autenticado de #342 en Pastora, San Benito y El Baratillo.
-- [ ] Activar protección contra contraseñas filtradas en Supabase Auth.
-- [ ] Matriz pública final en 390, 768, 1024 y 1440 px: Home, Directorio, una ficha por familia, Extraordinarias, Pregunta y Colabora.
-- [ ] Verificar foco visible, teclado, títulos, landmarks, textos alternativos y ausencia de scroll horizontal.
-- [x] Producción sin errores `fatal`/`error` después del despliegue.
+- `npm test`: **347/347**.
+- `npm run build`: **correcto**.
+- Preview QA: Extraordinarias y Panel Multimedia sin overflow ni imágenes rotas.
+- Smoke público: Home, Directorio, Hermandad, Imagen, Paso, Banda, Extraordinaria, Gloria y Tira del hilo.
+- Smoke autenticado: Panel y Multimedia.
+- Runtime: 0 respuestas 5xx y 0 eventos fatal. Un cierre anticipado de stream con HTTP 200 no se reprodujo; la ruta afectada pasó una nueva carga completa.
+- Salud del grafo: 0 extremos rotos en relaciones nucleares y 0 entidades publicadas sin fila especializada.
 
-### P1 · antes de anunciar públicamente
+## Dependencias externas
 
-- [x] Retirar las llamadas públicas a “Proponer información” mientras no exista un canal completo.
-- [ ] Definir una página mínima de información legal/privacidad antes de recoger datos personales.
-- [ ] Revisar que las fichas destacadas de Home no contengan campos editoriales vacíos o textos provisionales.
-- [x] Confirmar dominio canónico, sitemap, robots y tarjetas sociales en producción.
-- [ ] Preparar mensaje de lanzamiento y una vía única para reportar errores.
+- **Auth 🟣:** elevar el plan de Supabase si Dirección requiere protección canónica contra contraseñas filtradas. La medida afecta a altas y cambios de contraseña, no revalida automáticamente las contraseñas existentes.
+- **Legal 🟣:** Dirección debe aportar identidad responsable, contacto público, email y tratamiento/política aplicable antes de publicar textos o abrir formularios.
 
 ## Regla de congelación
 
-Durante el cierre solo se aceptan correcciones de seguridad, datos incorrectos, navegación bloqueada, errores responsive, accesibilidad esencial y rendimiento crítico. Cualquier nueva función pasa al backlog posterior a 1.0.
+No iniciar otra Home, Tira del hilo 3, nuevas entidades, directorios, automatizaciones, más Glorias ni nuevas funciones del Panel. Tras la matriz exacta, Dirección decide por separado el cierre técnico y el lanzamiento/comunicación pública.
 
-## Secuencia de salida
+## Única acción siguiente
 
-1. Preview técnica y medición.
-2. Smoke autenticado de #342.
-3. Correcciones P0, sin nuevas funciones.
-4. Fusión de los dos cortes en orden y verificación de producción.
-5. Congelación de 24 horas con observación de runtime.
-6. Anuncio público.
+Ejecutar y documentar la matriz pública y del Panel en `390`, `768`, `1024` y `1440` px. Si no hay bloqueos rojos o naranjas, declarar la primera edición técnicamente cerrada sin confundirlo con su anuncio público.
