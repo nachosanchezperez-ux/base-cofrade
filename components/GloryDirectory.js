@@ -27,8 +27,7 @@ function groupByMonth(items) {
 
 function statusLabel(item) {
   if (item.isCancelled) return 'Cancelada'
-  if (item.isCelebrated) return 'Celebrada'
-  if (item.isPast) return 'Fecha pasada'
+  if (item.isCelebrated || item.isPast) return 'Celebrada'
   return item.urgencyLabel || 'Próxima'
 }
 
@@ -101,7 +100,7 @@ export default function GloryDirectory({ outings }) {
             ) : (
               <strong className={styles.brotherhoodLink}>{featured.brotherhoodName}</strong>
             )}
-            <p className={styles.location}>{featured.municipality || 'Localidad por documentar'}</p>
+            <p className={styles.location}>{featured.municipality || 'Localidad por confirmar'}</p>
 
             <div className={styles.featuredFacts}>
               <div>
@@ -133,7 +132,7 @@ export default function GloryDirectory({ outings }) {
             <span className={styles.kicker}>Calendario</span>
             <h2 id="calendario-glorias">Procesiones por meses</h2>
           </div>
-          <p>Filtra las salidas documentadas por estado, territorio y año. En móvil, el listado queda reducido a la información esencial.</p>
+          <p>Consulta las procesiones por fecha, territorio y año.</p>
         </div>
 
         <div className={styles.filters}>
@@ -152,7 +151,7 @@ export default function GloryDirectory({ outings }) {
               aria-pressed={status === 'celebrated'}
               onClick={() => setStatus('celebrated')}
             >
-              Archivo <small>{celebrated.length}</small>
+              Celebradas <small>{celebrated.length}</small>
             </button>
           </div>
 
@@ -186,7 +185,7 @@ export default function GloryDirectory({ outings }) {
         <div className={styles.resultHead}>
           <div>
             <strong>{plural(filtered.length, 'procesión', 'procesiones')}</strong>
-            <span>{status === 'upcoming' ? 'por celebrar' : 'en archivo'} · Sevilla y provincia</span>
+            <span>{status === 'upcoming' ? 'por celebrar' : 'ya celebradas'} · Sevilla y provincia</span>
           </div>
           {territory !== 'all' || year !== 'all' ? (
             <button
@@ -220,7 +219,7 @@ export default function GloryDirectory({ outings }) {
 
                       <div className={styles.cardMain}>
                         <div className={styles.cardTopline}>
-                          <span>{outing.municipality || 'Localidad por documentar'}</span>
+                          <span>{outing.municipality || 'Localidad por confirmar'}</span>
                           <small data-status={outing.eventStatus}>{statusLabel(outing)}</small>
                         </div>
                         <h4><Link href={outing.detailHref}>{outing.title}</Link></h4>
@@ -234,7 +233,7 @@ export default function GloryDirectory({ outings }) {
                           <div className={styles.cardFacts}>
                             {outing.departureTime ? <span><b>Salida</b>{outing.departureTime}</span> : null}
                             {outing.returnTime ? <span><b>Entrada</b>{outing.returnTime}</span> : null}
-                            {outing.routeSummary ? <span><b>Recorrido</b>Publicado</span> : null}
+                            {outing.routeSummary ? <span><b>Recorrido</b>Disponible</span> : null}
                           </div>
                           <Link className={styles.detailLink} href={outing.detailHref}>
                             Ver ficha <span>→</span>
@@ -255,8 +254,8 @@ export default function GloryDirectory({ outings }) {
           </div>
         ) : (
           <div className={styles.empty}>
-            <strong>No hay más procesiones con estos criterios</strong>
-            <span>{status === 'upcoming' && featured ? 'La próxima procesión está destacada justo encima.' : 'Prueba con otro año o territorio.'}</span>
+            <strong>No hay procesiones con estos filtros</strong>
+            <span>Prueba con otro año o territorio.</span>
           </div>
         )}
       </section>
