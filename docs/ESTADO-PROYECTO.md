@@ -4,10 +4,11 @@
 
 ## Estado verificado
 
-- Revisión: **26 de agosto de 2026 · #363 integrado · primera edición en cierre de lanzamiento**.
+- Revisión: **26 de agosto de 2026 · #49 cerrada sin fusionar · importación sin IA**.
 - Repositorio: `nachosanchezperez-ux/base-cofrade`.
 - Rama principal: `main`.
-- Último `main` funcional al refrescar: `84a50addc992fcf3208b2635b9ccb2701bdf438c` — **Primera edición · cerrar colaboración pública y estado operativo (#363)**. El commit documental que actualice este archivo puede sucederlo sin cambios funcionales.
+- Último `main` funcional al refrescar: `5467f212cb21e8c9656ffb92f88ebcf61805b6e9` — **Estado final verificado de la primera edición (#364)**. El commit documental que actualice este archivo puede sucederlo sin cambios funcionales.
+- Producción: `dpl_7KEajRP2K1P61ak5aU8bfT2skaCs` → **READY**, región real `dub1`.
 - Supabase: `Hilocofrade` (`kcevwkucqzcyrqaimyhl`) → **ACTIVE_HEALTHY**, región `eu-west-1`.
 - La clasificación de Glorias se mantiene en `brotherhoods.brotherhood_types`; las procesiones concretas siguen usando `outings` con `outing_type = Procesión de Gloria`.
 - Estado editorial observado de Glorias al 26/08/2026: **34 Hermandades con tipo Gloria · 9 con próxima Procesión de Gloria futura documentada · 25 sin próxima fecha futura documentada**. Son métricas dinámicas, no cifras de producto hardcodeadas.
@@ -38,15 +39,16 @@
 
 ## Frentes abiertos reales
 
+- **Ninguna PR abierta** al cerrar esta revisión.
+
 ### #49 · Importador documental asistido
 
-- **ABIERTA / DRAFT · bloqueo externo explícito**.
-- Reconciliada con el `main` real; CI #991 y preview automática en `dub1` → **VERDES**.
-- Núcleo endurecido contra SSRF, redirecciones inseguras, exceso de tamaño e instrucciones incrustadas en fuentes.
-- Acceso del Panel, RLS, permisos y `apply_document_import(...)` validados mediante smoke transaccional con `ROLLBACK`.
-- La prueba real con la fuente oficial de Presentación y Sangre alcanzó OpenAI, pero fue rechazada por cuota agotada.
-- No dejó residuos: **0 importaciones y 0 fuentes de prueba**.
-- No fusionar hasta reponer cuota y completar los smokes de Presentación y Sangre y San Benito.
+- **CERRADA SIN FUSIONAR por decisión de producto**.
+- Hilo Cofrade no utilizará la API de OpenAI para importar documentación; no requiere cuota, clave ni facturación del proveedor.
+- La rama queda descartada y no debe reutilizarse como base técnica.
+- Las cuatro migraciones ya reconciliadas permanecen como infraestructura inactiva; no exponen la interfaz ni publican datos por sí solas y no se revierten para no romper el historial Git ↔ Supabase.
+- La prueba realizada no dejó residuos: **0 importaciones y 0 fuentes de prueba**.
+- La vía canónica sin IA ya existe en HC-016: JSON, JSONL y CSV con staging, validación, resolución determinista, revisión humana, aplicación por lotes y auditoría.
 
 ## Migraciones · estado operativo
 
@@ -68,7 +70,7 @@
 ## Bloqueos y precauciones reales
 
 1. No crear ni aplicar migraciones sin refrescar antes el historial local/remoto completo.
-2. #49 no puede fusionarse hasta superar sus dos smokes reales con cuota OpenAI disponible.
+2. No reabrir ni reconstruir #49 con OpenAI u otra API generativa; cualquier ampliación de importación debe extender HC-016 sin eludir staging, validación y revisión humana.
 3. No reintroducir `functionFailoverRegions` o regiones pasivas sin revisar el plan de Vercel.
 4. La protección contra contraseñas filtradas de Supabase Auth continúa como acción manual de seguridad previa al lanzamiento.
 5. No habilitar formularios públicos sin identidad responsable, contacto, privacidad y tratamiento editorial definidos.
@@ -84,7 +86,7 @@
 
 1. Completar la matriz QA pública en 390, 768, 1024 y 1440 px.
 2. Activar la protección contra contraseñas filtradas en Supabase Auth.
-3. Reponer cuota OpenAI y repetir los dos smokes de #49.
-4. Publicar la información legal/privacidad solo con identidad y contacto confirmados.
+3. Publicar la información legal/privacidad solo con identidad y contacto confirmados.
+4. Mantener la importación estructurada sobre HC-016; no abrir un nuevo importador durante el cierre de lanzamiento.
 
-**ESTADO-PROYECTO → 🟡 PRIMERA EDICIÓN EN CIERRE · PRODUCCIÓN ESTABLE · PREVIEWS OPERATIVAS · GIT ↔ SUPABASE 176/176 · COLABORA CERRADA · SEO CANÓNICO VERIFICADO · #49 BLOQUEADA POR CUOTA OPENAI**
+**ESTADO-PROYECTO → 🟡 PRIMERA EDICIÓN EN CIERRE · PRODUCCIÓN ESTABLE · PREVIEWS OPERATIVAS · GIT ↔ SUPABASE 176/176 · COLABORA CERRADA · SEO CANÓNICO VERIFICADO · #49 CERRADA SIN FUSIONAR · IMPORTACIÓN SIN IA**

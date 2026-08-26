@@ -15,7 +15,7 @@ La primera edición permite:
 
 No forman parte del lanzamiento:
 
-- el importador documental de #49;
+- el importador documental con IA de #49, cerrado sin fusionar;
 - nuevas familias de entidades o secciones públicas;
 - una capa de caché persistente sin mapa completo de invalidación;
 - un formulario público de aportaciones hasta definir canal, privacidad y tratamiento editorial.

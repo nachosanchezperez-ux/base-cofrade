@@ -62,9 +62,9 @@ Admite fuentes JSON, JSONL y CSV dentro de los límites definidos por el Panel.
 
 ## Relación con la PR #49
 
-La PR #49 corresponde a un importador documental asistido antiguo y permanece **aparcada**.
+La PR #49 correspondía a un importador documental asistido mediante OpenAI y fue **cerrada sin fusionar el 26/08/2026 por decisión de producto**.
 
-No es la implementación de HC-016, no debe utilizarse como base técnica y sus migraciones no se aplican por inercia. Una futura extracción `URL → IA → propuesta` deberá reconstruirse sobre esta arquitectura de lotes, revisión humana e integridad vigente.
+No es la implementación de HC-016 y no debe utilizarse como base técnica. Hilo Cofrade no depende de una API generativa para importar contenido: JSON, JSONL y CSV son las entradas canónicas. Cualquier ampliación futura debe extender esta arquitectura de lotes, revisión humana e integridad vigente, sin crear una vía paralela de extracción automática.
 
 ## Publicación y revisión humana
 
