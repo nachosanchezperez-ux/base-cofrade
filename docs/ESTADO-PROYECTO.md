@@ -4,10 +4,10 @@
 
 ## Estado verificado
 
-- Revisión: **26 de agosto de 2026 · Panel #353 en revisión visual · #360 ya integrado en producción**.
+- Revisión: **26 de agosto de 2026 · #362 integrado · primera edición en cierre de lanzamiento**.
 - Repositorio: `nachosanchezperez-ux/base-cofrade`.
 - Rama principal: `main`.
-- `main` actual al refrescar: `f2ae88887de7b3f4a3ae8d0b07d809514bdf1521` — **Glorias · normaliza el tono editorial de los textos (#360)**.
+- `main` actual al refrescar: `6b74b2afe8a86ca51cfa172a2a5daac8cf8b3622` — **Reconciliar el historial del importador con Supabase (#362)**.
 - Supabase: `Hilocofrade` (`kcevwkucqzcyrqaimyhl`) → **ACTIVE_HEALTHY**, región `eu-west-1`.
 - La clasificación de Glorias se mantiene en `brotherhoods.brotherhood_types`; las procesiones concretas siguen usando `outings` con `outing_type = Procesión de Gloria`.
 - Estado editorial observado de Glorias al 26/08/2026: **34 Hermandades con tipo Gloria · 9 con próxima Procesión de Gloria futura documentada · 25 sin próxima fecha futura documentada**. Son métricas dinámicas, no cifras de producto hardcodeadas.
@@ -31,40 +31,27 @@
 - #354 · Pastora · corrige año visible de marcha → **FUSIONADA Y DESPLEGADA**.
 - #358 · Hermandades · información práctica sin repetir cabecera → **FUSIONADA Y DESPLEGADA**.
 - #360 · Glorias · tono editorial público → **FUSIONADA Y DESPLEGADA**.
+- #353 · Panel · acceso directo desde Inicio y vista operativa de Glorias → **FUSIONADA Y DESPLEGADA**.
+- #361 · Bandas · restaura la fotografía de «De un vistazo» → **FUSIONADA Y DESPLEGADA**.
+- #362 · Historial del importador Git ↔ Supabase → **FUSIONADA Y DESPLEGADA**.
 
 ## Frentes abiertos reales
 
-### #353 · Panel · acceso directo desde Inicio
-
-- **ABIERTA · revisión visual de Dirección**.
-- Rama: `feat/panel-inicio-todos-modulos-20260825`.
-- Reconciliada con `main` tras #360; debe mantenerse en **0 commits por detrás** antes de integrar.
-- Centraliza la navegación del Panel y expone accesos directos coherentes en móvil y PC.
-- Inicio prioriza Hermandades, Imágenes, Pasos y Bandas y conserva el resto de módulos en grupos compactos.
-- Menú móvil exhaustivo, compacto y con objetivos táctiles.
-- Contrato responsive de filtros protegido contra geometrías inline de escritorio.
-- Añade **Panel → Glorias** como vista editorial sobre el modelo existente, sin nueva entidad ni tabla:
-  - Hermandades con `brotherhood_types` que contiene `Gloria`;
-  - próximas salidas `outings` cuyo tipo es `Procesión de Gloria`;
-  - próximas fechas primero y pendientes después;
-  - acceso directo a ficha de Hermandad y gestión de Salidas.
-- Head funcional de Glorias validado: `b23791d46793bc30c0b7c598df2f55218afe69ea`.
-- CI #980 → **SUCCESS**; `npm test` y `npm run build` → **PASS**.
-- Preview funcional: `dpl_26dbXy8T5om1DMrY4J6TEp4ARyY6` → **READY**.
-- Runtime preview `error`/`fatal` → **0** en la ventana comprobada.
-- Sin cambios de esquema, migraciones, RLS ni Storage.
-- Tras la reconciliación con #360 debe repetirse la barrera CI/build/preview sobre el head final antes de producción.
-
 ### #49 · Importador documental asistido
 
-- **APARCADA**.
-- No utilizar como base; no actualizar, rebasar, fusionar ni aplicar sus migraciones.
+- **ABIERTA / DRAFT · bloqueo externo explícito**.
+- Reconciliada con el `main` real; CI #991 y preview automática en `dub1` → **VERDES**.
+- Núcleo endurecido contra SSRF, redirecciones inseguras, exceso de tamaño e instrucciones incrustadas en fuentes.
+- Acceso del Panel, RLS, permisos y `apply_document_import(...)` validados mediante smoke transaccional con `ROLLBACK`.
+- La prueba real con la fuente oficial de Presentación y Sangre alcanzó OpenAI, pero fue rechazada por cuota agotada.
+- No dejó residuos: **0 importaciones y 0 fuentes de prueba**.
+- No fusionar hasta reponer cuota y completar los smokes de Presentación y Sangre y San Benito.
 
 ## Migraciones · estado operativo
 
-- #353 no introduce ninguna migración.
-- #360 no introdujo cambios de Supabase.
-- Antes de cualquier nuevo DDL o migración, refrescar nuevamente historial local/remoto completo.
+- Git y Supabase contienen **176/176 migraciones**.
+- #362 versionó en `main` las cuatro migraciones del importador ya registradas en Supabase; no volvió a ejecutar DDL.
+- Antes de cualquier nuevo DDL o migración, refrescar nuevamente el historial local/remoto completo.
 
 ## Panel V2 · principios vigentes
 
@@ -80,16 +67,17 @@
 ## Bloqueos y precauciones reales
 
 1. No crear ni aplicar migraciones sin refrescar antes el historial local/remoto completo.
-2. #49 continúa fuera de alcance.
+2. #49 no puede fusionarse hasta superar sus dos smokes reales con cuota OpenAI disponible.
 3. No reintroducir `functionFailoverRegions` o regiones pasivas sin revisar el plan de Vercel.
 4. La protección contra contraseñas filtradas de Supabase Auth continúa como acción manual de seguridad previa al lanzamiento.
-5. Antes de fusionar #353, refrescar `main` una última vez y repetir CI/build/preview si ha avanzado.
+5. No habilitar formularios públicos sin identidad responsable, contacto, privacidad y tratamiento editorial definidos.
 
 ## Orden operativo vigente
 
-1. Cerrar revisión visual de #353 en móvil y PC.
-2. Verificar #353 sobre el `main` real tras #360.
-3. Integrar #353 solo con CI/build/preview verdes y 0 commits por detrás.
-4. Mantener #49 aparcada.
+1. Retirar las llamadas públicas a «Colabora» mientras no exista un canal y privacidad reales.
+2. Completar la matriz QA pública en 390, 768, 1024 y 1440 px.
+3. Activar la protección contra contraseñas filtradas en Supabase Auth.
+4. Reponer cuota OpenAI y repetir los dos smokes de #49.
+5. Publicar la información legal/privacidad solo con identidad y contacto confirmados.
 
-**ESTADO-PROYECTO → 🟡 #353 EN REVISIÓN VISUAL · PANEL GLORIAS IMPLEMENTADO · #360 YA EN PRODUCCIÓN · PRODUCCIÓN ESTABLE · #49 APARCADA**
+**ESTADO-PROYECTO → 🟡 PRIMERA EDICIÓN EN CIERRE · PRODUCCIÓN ESTABLE · PREVIEWS OPERATIVAS · GIT ↔ SUPABASE 176/176 · #49 BLOQUEADA POR CUOTA OPENAI**

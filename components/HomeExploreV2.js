@@ -75,23 +75,6 @@ export default function HomeExploreV2({ stats }) {
             ))}
           </div>
         </aside>
-
-        <aside className={`${styles.collab} ${polishStyles.collab}`} id="colabora">
-          <div>
-            <span className={styles.eyebrow}>Participa</span>
-            <h3>Ayúdanos a completar el hilo</h3>
-            <p>Las aportaciones pasan por revisión y documentación antes de incorporarse a Hilo Cofrade.</p>
-          </div>
-          <div className={styles.collabActions}>
-            <div className={`${styles.flow} ${polishStyles.collabFlow}`} aria-label="Proceso de publicación">
-              <span>1 · Envías</span>
-              <span>2 · Revisamos</span>
-              <span>3 · Documentamos</span>
-              <span>4 · Publicamos</span>
-            </div>
-            <Link className={`${styles.collabButton} ${polishStyles.collabButton}`} href="/colabora">Proponer información</Link>
-          </div>
-        </aside>
       </div>
     </section>
   )

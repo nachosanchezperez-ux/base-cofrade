@@ -24,9 +24,6 @@
 .desktopNav a::after{content:"";position:absolute;left:50%;bottom:14px;transform:translateX(-50%) scaleX(0);width:24px;height:3px;border-radius:999px;background:#b71f37;transition:transform .18s ease}
 .desktopNav a.active{color:#123a67}
 .desktopNav a.active::after{transform:translateX(-50%) scaleX(1)}
-.collabButton{display:none;align-items:center;gap:8px;padding:9px 13px;border:1px solid #e1e8ef;border-radius:999px;color:#123a67;background:#fff;font-size:11px;font-weight:800;transition:border-color .18s ease,background .18s ease,color .18s ease,box-shadow .18s ease}
-.collabButton span{width:6px;height:6px;border-radius:50%;background:#b71f37}
-.collabButtonActive{border-color:#c8d8e7;background:#f2f6fa;color:#0f2742;box-shadow:0 4px 14px rgba(15,39,66,.06)}
 .menuButton{position:relative;z-index:101;width:42px;height:42px;display:grid;place-items:center;border:1px solid #d8e1e9;border-radius:13px;background:#fff;color:#123a67;font-size:19px;cursor:pointer;flex:0 0 42px;box-shadow:0 4px 14px rgba(15,39,66,.04)}
 .menuOpen{background:#123a67;color:#fff;border-color:#123a67}
 .accent{height:2px;background:linear-gradient(90deg,#b71f37 0 9%,transparent 9% 100%)}
@@ -53,10 +50,6 @@
 .mobileLinks a{display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;min-height:52px;padding:0 15px;border-radius:13px;color:#0f2742;font-size:14px;font-weight:750}
 .mobileLinks a:hover,.activeMobile{background:#f5f8fb;color:#123a67}
 .mobileLinks a span{color:#b71f37;font-size:15px}
-.mobileCta{margin-top:12px;padding-top:14px;border-top:1px solid #e1e8ef}
-.mobileCta a{display:flex;align-items:center;justify-content:space-between;min-height:50px;padding:0 15px;border-radius:13px;background:#123a67;color:#fff;font-size:13px;font-weight:800;transition:box-shadow .18s ease,transform .18s ease}
-.mobileCta .mobileCtaActive{box-shadow:0 0 0 3px rgba(183,31,55,.16)}
-
 :global(#hc-app .section-nav){top:var(--hc-app-header-height)}
 :global(#hc-app #inicio),
 :global(#hc-app #tiradelhilo),
@@ -64,8 +57,7 @@
 :global(#hc-app #hoy),
 :global(#hc-app #ultimos-hilos),
 :global(#hc-app #siguientes-extraordinarias),
-:global(#hc-app #enciclopedia),
-:global(#hc-app #colabora){scroll-margin-top:calc(var(--hc-app-header-height) + 14px)}
+:global(#hc-app #enciclopedia){scroll-margin-top:calc(var(--hc-app-header-height) + 14px)}
 
 @media(max-width:390px){
   .inner{gap:14px}
@@ -77,7 +69,6 @@
 @media(min-width:860px){
   :global(#hc-app){--hc-app-header-height:78px}
   .desktopNav{display:flex}
-  .collabButton{display:inline-flex}
   .menuButton{display:none}
   .inner{min-height:76px;gap:26px}
   .brand{gap:15px}
