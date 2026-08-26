@@ -35,3 +35,18 @@ test('the homepage offers two clear first-visit paths', async () => {
   assert.match(home, /href="\/directorio"[\s\S]*Explorar la enciclopedia/)
   assert.match(home, /href="\/extraordinarias"[\s\S]*Ver próximas extraordinarias/)
 })
+
+test('public collaboration stays closed until privacy and contact are defined', async () => {
+  const [header, explore, collaboration, sitemap] = await Promise.all([
+    read('components/HiloHeader.js'),
+    read('components/HomeExploreV2.js'),
+    read('app/colabora/page.js'),
+    read('app/sitemap.js'),
+  ])
+
+  assert.doesNotMatch(header, /Colabora con Hilo Cofrade|<span \/>Colabora/)
+  assert.doesNotMatch(explore, /Proponer información|id="colabora"/)
+  assert.doesNotMatch(sitemap, /absoluteUrl\('\/colabora'\)/)
+  assert.match(collaboration, /index:\s*false/)
+  assert.match(collaboration, /no recoge propuestas ni datos personales/i)
+})
