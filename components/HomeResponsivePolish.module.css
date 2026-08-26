@@ -461,38 +461,6 @@
     font-size: 9px;
   }
 
-  .collab {
-    gap: 12px;
-    margin-top: 10px;
-    padding: 16px;
-    border-radius: 17px;
-  }
-
-  .collab h3 {
-    font-size: 20px;
-  }
-
-  .collab p {
-    font-size: 12px;
-  }
-
-  .collabFlow {
-    display: grid;
-    width: 100%;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 6px;
-  }
-
-  .collabFlow span {
-    padding: 6px 7px;
-    font-size: 9px;
-    text-align: center;
-  }
-
-  .collabButton {
-    width: 100%;
-    justify-content: center;
-  }
 }
 
 @media (max-width: 350px) {

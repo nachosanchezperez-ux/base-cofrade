@@ -78,11 +78,6 @@ const staticEntries = [
     changeFrequency: 'monthly',
     priority: 0.7,
   },
-  {
-    url: absoluteUrl('/colabora'),
-    changeFrequency: 'monthly',
-    priority: 0.4,
-  },
 ];
 
 function validLastModified(value) {

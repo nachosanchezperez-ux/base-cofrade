@@ -21,7 +21,6 @@ const homeScrollSections = [
   ['ultimos-hilos', 'ultimos-hilos'],
   ['siguientes-extraordinarias', 'extraordinarias'],
   ['enciclopedia', 'explorar'],
-  ['colabora', 'colabora'],
 ];
 
 const directoryLinks = [
@@ -198,18 +197,6 @@ export default function HiloHeader() {
 
           <GlobalHiloSearch />
 
-          <a
-            className={`${styles.collabButton} ${active === 'colabora' ? styles.collabButtonActive : ''}`}
-            href={pathname === '/' ? '#colabora' : '/#colabora'}
-            aria-current={active === 'colabora' ? 'location' : undefined}
-            onClick={() => {
-              setActive('colabora');
-              closeExplore();
-            }}
-          >
-            <span />Colabora
-          </a>
-
           <button
             className={`${styles.menuButton} ${open ? styles.menuOpen : ''}`}
             type="button"
@@ -261,19 +248,6 @@ export default function HiloHeader() {
                 </Link>
               ))}
             </nav>
-          </div>
-          <div className={styles.mobileCta}>
-            <a
-              href={pathname === '/' ? '#colabora' : '/#colabora'}
-              className={active === 'colabora' ? styles.mobileCtaActive : ''}
-              aria-current={active === 'colabora' ? 'location' : undefined}
-              onClick={() => {
-                setActive('colabora');
-                setOpen(false);
-              }}
-            >
-              Colabora con Hilo Cofrade <span>→</span>
-            </a>
           </div>
         </div>
       </div>

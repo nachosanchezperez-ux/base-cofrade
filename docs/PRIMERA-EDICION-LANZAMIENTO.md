@@ -1,6 +1,6 @@
 # Primera edición · checklist de lanzamiento
 
-Fecha de corte: 25 de agosto de 2026  
+Fecha de corte: 26 de agosto de 2026
 Objetivo: publicar una primera edición comprensible, rápida y mantenible sin ampliar el producto durante el cierre.
 
 ## Qué es la edición 1.0
@@ -27,18 +27,18 @@ No forman parte del lanzamiento:
 - [x] Historial Git ↔ Supabase completamente alineado.
 - [x] Funciones públicas próximas a la región de datos.
 - [x] Timeout de fuentes de Extraordinarias corregido e indexado.
-- [x] Permisos internos y RPC aparcada fuera de `anon`/`authenticated`.
+- [x] Permisos internos revisados; RPC del importador limitada a editores autenticados y núcleos privados.
 - [x] Suite local y build verdes.
-- [ ] Preview del corte técnico sin errores de runtime y con mejora medida.
-- [ ] Smoke autenticado de #342 en Pastora, San Benito y El Baratillo.
+- [x] Preview del corte técnico sin errores de runtime y con mejora medida.
+- [x] Smoke autenticado de #342 en Pastora, San Benito y El Baratillo.
 - [ ] Activar protección contra contraseñas filtradas en Supabase Auth.
 - [ ] Matriz pública final en 390, 768, 1024 y 1440 px: Home, Directorio, una ficha por familia, Extraordinarias, Pregunta y Colabora.
 - [ ] Verificar foco visible, teclado, títulos, landmarks, textos alternativos y ausencia de scroll horizontal.
-- [ ] Producción sin errores `fatal`/`error` después del despliegue.
+- [x] Producción sin errores `fatal`/`error` después del despliegue.
 
 ### P1 · antes de anunciar públicamente
 
-- [ ] Sustituir el estado beta de Colabora por un canal real o retirar las llamadas a “Proponer información”.
+- [x] Retirar las llamadas públicas a “Proponer información” mientras no exista un canal completo.
 - [ ] Definir una página mínima de información legal/privacidad antes de recoger datos personales.
 - [ ] Revisar que las fichas destacadas de Home no contengan campos editoriales vacíos o textos provisionales.
 - [ ] Confirmar dominio canónico, sitemap, robots y tarjetas sociales en producción.
