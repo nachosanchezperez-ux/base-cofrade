@@ -5,7 +5,7 @@ export default function robots() {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/api/', '/panel/', '/prueba-next', '/prueba-supabase'],
+      disallow: ['/api/', '/panel/'],
     },
     sitemap: absoluteUrl('/sitemap.xml'),
     host: SITE_URL,

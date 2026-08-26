@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict'
-import { readFileSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import test from 'node:test'
 
 const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8')
@@ -78,19 +78,22 @@ test('Extraordinarias enlaza cada ItemList con su guía canónica', () => {
   )
 })
 
-test('robots reserva las APIs y mantiene el noindex en superficies internas', () => {
+test('robots reserva las APIs y mantiene el noindex en el Panel', () => {
   assert.match(robots, /disallow:\s*\[[^\]]*'\/api\/'/)
   assert.match(robots, /'\/panel\/'/)
-  assert.match(robots, /'\/prueba-next'/)
-  assert.match(robots, /'\/prueba-supabase'/)
 
+  const panelLayout = read('app/panel/layout.js')
+  assert.match(panelLayout, /index:\s*false/)
+  assert.match(panelLayout, /follow:\s*false/)
+})
+
+test('producción no publica rutas de diagnóstico', () => {
   for (const path of [
-    'app/panel/layout.js',
     'app/prueba-next/page.js',
     'app/prueba-supabase/page.js',
   ]) {
-    const source = read(path)
-    assert.match(source, /index:\s*false/)
-    assert.match(source, /follow:\s*false/)
+    assert.equal(existsSync(new URL(`../${path}`, import.meta.url)), false)
   }
+
+  assert.doesNotMatch(robots, /prueba-next|prueba-supabase/)
 })
