@@ -15,4 +15,6 @@ test('Multimedia conserva URL externas y normaliza rutas del bucket con el resol
 
 test('las tarjetas editoriales pueden encogerse dentro del ancho disponible del Panel', () => {
   assert.match(panelCss, /\.editorItem \{ min-width: 0; padding: 24px; \}/)
+  assert.match(panelCss, /\.editorForm \{ display: grid; grid-template-columns: minmax\(0, 1fr\);/)
+  assert.match(panelCss, /\.formGrid > \*,\n\.movementForm > \* \{ min-width: 0; \}/)
 })
