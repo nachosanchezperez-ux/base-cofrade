@@ -1,0 +1,4 @@
+-- Reconciliación del historial remoto.
+-- Este cambio fue aplicado en Supabase con la versión 20260821232847.
+-- Su definición idempotente y reproducible se conserva en
+-- 20260821173000_unifica_logos_bandas.sql.

@@ -1,0 +1,39 @@
+/* PASOS · RESUMEN EN HERMANDADES Y FOTOGRAFÍAS VERTICALES
+   La ficha de Hermandad debe ofrecer una vista previa compacta. La evolución
+   patrimonial completa vive en la ficha propia del Paso. */
+
+.processional-card .step-phases {
+  display: none;
+}
+
+.processional-card .processional-body > .text-link {
+  display: inline-flex;
+  margin-top: 22px;
+}
+
+/* La fotografía del Paso de la Piedad es vertical. En el resumen mantenemos
+   la proporción compacta de las tarjetas, pero mostramos la imagen completa
+   en lugar de recortarla para forzarla a un formato panorámico. */
+.processional-photo.has-image:has(.processional-photo-image[src*="piedad-d-posada"]) {
+  background:
+    radial-gradient(circle at 50% 42%, rgba(255, 255, 255, .07), transparent 48%),
+    #071a2d;
+}
+
+.processional-photo.has-image .processional-photo-image[src*="piedad-d-posada"] {
+  z-index: 1;
+  display: block;
+  visibility: visible;
+  opacity: 1;
+  object-fit: contain;
+  object-position: center center !important;
+}
+
+.processional-photo.has-image:has(.processional-photo-image[src*="piedad-d-posada"])::after {
+  z-index: 2;
+  background: linear-gradient(180deg, rgba(3, 12, 22, .04), transparent 62%, rgba(3, 12, 22, .68));
+}
+
+.processional-photo.has-image:has(.processional-photo-image[src*="piedad-d-posada"]) .processional-photo-credit {
+  z-index: 3;
+}

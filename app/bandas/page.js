@@ -1,70 +1,103 @@
-import Image from 'next/image'
-import Link from 'next/link'
-import { getBandsDirectory } from '@/lib/supabase/bands'
-import styles from './bandas.module.css'
+import JsonLd from '@/components/JsonLd'
+import RelationalEntityDirectory from '@/components/RelationalEntityDirectory'
+import { getPublicBandsDirectory } from '@/lib/supabase/bands-directory-public'
+import { breadcrumbJsonLd, collectionPageJsonLd, socialMetadata } from '@/lib/seo'
 
 export const dynamic = 'force-dynamic'
 
+const BAND_LOGO_PRESENTATION = {
+  'banda-del-sol': { mode: 'integrated', background: 'secondary' },
+  'sangre-de-san-benito': { mode: 'integrated', background: 'primary' },
+  'banda-de-musica-del-maestro-tejera': { mode: 'integrated', background: 'secondary' },
+  'banda-municipal-de-musica-de-la-puebla-del-rio': { mode: 'contained', color: '#FCEBEC' },
+  'banda-de-musica-nuestra-senora-de-la-soledad-cantillana': { mode: 'integrated', background: 'secondary' },
+}
+
+function logoPresentationFor(band) {
+  const presentation = BAND_LOGO_PRESENTATION[band.slug]
+  if (!presentation) return { mode: 'contained', backgroundColor: '' }
+
+  const backgroundColor = presentation.color
+    || (presentation.background === 'secondary'
+      ? band.secondaryColor
+      : presentation.background === 'primary'
+        ? band.primaryColor
+        : '')
+
+  return {
+    mode: presentation.mode,
+    backgroundColor,
+  }
+}
+
+const title = 'Bandas de Sevilla y provincia'
+const description = 'Directorio de bandas cofrades de Sevilla y su provincia: historia, acompañamientos, dirección, salidas y estrenos.'
+
 export const metadata = {
-  title: 'Bandas de Sevilla y provincia',
-  description: 'Directorio de bandas cofrades de Sevilla y su provincia: historia, acompañamientos, dirección, salidas y estrenos.',
-  alternates: { canonical: '/bandas' },
+  title,
+  description,
+  ...socialMetadata({
+    title: 'Directorio de bandas',
+    description: 'Consulta formaciones musicales y sus relaciones documentadas con hermandades, pasos, salidas, responsables y patrimonio musical.',
+    path: '/bandas',
+  }),
 }
 
 export default async function BandasPage({ searchParams }) {
-  const bands = await getBandsDirectory()
-  const filters = await searchParams
+  const [bands, filters] = await Promise.all([
+    getPublicBandsDirectory(),
+    searchParams,
+  ])
   const type = String(filters?.tipo || '')
   const municipality = String(filters?.localidad || '')
-  const visibleBands = bands.filter((band) => (
-    (!type || band.typeSlug === type)
-    && (!municipality || band.municipalitySlug === municipality)
-  ))
-  const activeFilter = type
-    ? bands.find((band) => band.typeSlug === type)?.type
-    : bands.find((band) => band.municipalitySlug === municipality)?.municipality
+  const items = bands.map((band) => {
+    const logoPresentation = logoPresentationFor(band)
+
+    return {
+      id: band.id,
+      name: band.popularName,
+      officialName: band.officialName,
+      href: `/bandas/${band.slug}`,
+      type: band.type,
+      typeSlug: band.typeSlug,
+      municipality: band.municipality,
+      municipalitySlug: band.municipalitySlug,
+      foundation: band.foundation,
+      linkedBrotherhood: band.linkedBrotherhood,
+      logoPath: band.logoPath,
+      logoPresentationMode: logoPresentation.mode,
+      logoBackgroundColor: logoPresentation.backgroundColor,
+      primaryColor: band.primaryColor,
+      secondaryColor: band.secondaryColor,
+      keywords: [band.officialShortName, band.summary, band.linkedBrotherhood].filter(Boolean),
+    }
+  })
 
   return (
-    <main className={styles.module}>
-      <section className={styles.directoryHero}>
-        <div className="shell">
-          <span className={styles.eyebrow}>Enciclopedia musical</span>
-          <h1>Directorio de bandas</h1>
-          <p>Formaciones identificadas por sus propios colores y conectadas con hermandades, pasos, salidas, responsables y patrimonio musical.</p>
-        </div>
-      </section>
-
-      <section className={styles.directorySection}>
-        <div className="shell">
-          <div className={styles.resultHeading}>
-            <div><strong>{visibleBands.length} {visibleBands.length === 1 ? 'banda publicada' : 'bandas publicadas'}</strong><span>{activeFilter ? `Filtro: ${activeFilter}` : 'Sevilla capital y provincia'}</span></div>
-            {activeFilter ? <Link className={styles.clearFilter} href="/bandas">Ver todas</Link> : null}
-          </div>
-          <div className={styles.bandGrid}>
-            {visibleBands.map((band) => (
-              <Link
-                href={`/bandas/${band.slug}`}
-                className={styles.bandCard}
-                key={band.id}
-                style={{ '--band-primary': band.primaryColor, '--band-secondary': band.secondaryColor }}
-              >
-                <span className={styles.cardStripe} />
-                <span className={styles.cardLogo}>
-                  {band.logoPath ? <Image src={band.logoPath} alt="" width={100} height={126} sizes="100px" /> : band.popularName.slice(0, 2).toUpperCase()}
-                </span>
-                <span className={styles.cardCopy}>
-                  <small>{band.type}</small>
-                  <strong>{band.popularName}</strong>
-                  <span>{band.officialName}</span>
-                  <em>{band.municipality}{band.foundation ? ` · Desde ${band.foundation}` : ''}</em>
-                </span>
-                <span className={styles.cardArrow}>→</span>
-              </Link>
-            ))}
-            {!visibleBands.length ? <div className={styles.emptyBlock}>No hay bandas publicadas con este filtro.</div> : null}
-          </div>
-        </div>
-      </section>
-    </main>
+    <section className="section page-top">
+      <JsonLd data={breadcrumbJsonLd([
+        { name: 'Inicio', path: '/' },
+        { name: 'Bandas', path: '/bandas' },
+      ])} />
+      <JsonLd data={collectionPageJsonLd({
+        path: '/bandas',
+        name: 'Directorio de bandas',
+        description,
+        items: items.map((item) => ({ name: item.name, path: item.href })),
+      })} />
+      <div className="shell">
+        <span className="eyebrow">Enciclopedia musical</span>
+        <h1 className="page-title">Directorio de bandas</h1>
+        <p className="page-lead">
+          Formaciones conectadas con hermandades, pasos, salidas, responsables y patrimonio musical.
+        </p>
+        <RelationalEntityDirectory
+          items={items}
+          kind="band"
+          initialTypeSlug={type}
+          initialMunicipalitySlug={municipality}
+        />
+      </div>
+    </section>
   )
 }

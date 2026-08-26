@@ -1,0 +1,68 @@
+.identity {
+  min-width: 0;
+  margin-top: 14px;
+}
+
+.identityVisual {
+  display: grid;
+  grid-template-columns: 68px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+}
+
+.visual {
+  position: relative;
+  overflow: hidden;
+  width: 68px;
+  height: 68px;
+  border: 1px solid rgba(255, 255, 255, .14);
+  border-radius: 17px;
+  background: rgba(255, 255, 255, .08);
+  box-shadow: 0 8px 20px rgba(2, 14, 28, .16);
+}
+
+.visual[data-kind="crest"],
+.visual[data-kind="logo"],
+.visual[data-kind="context-crest"] {
+  background: rgba(255, 255, 255, .96);
+}
+
+.visual[data-kind="crest"] img,
+.visual[data-kind="logo"] img,
+.visual[data-kind="context-crest"] img {
+  padding: 9px;
+}
+
+.identityCopy {
+  min-width: 0;
+}
+
+.identity h3 {
+  margin: 0 0 6px !important;
+}
+
+.context {
+  display: block;
+  overflow: hidden;
+  margin-bottom: 4px;
+  color: rgba(255, 255, 255, .52);
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: .08em;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+@media (min-width: 860px) {
+  .identityVisual {
+    grid-template-columns: 72px minmax(0, 1fr);
+    gap: 13px;
+  }
+
+  .visual {
+    width: 72px;
+    height: 72px;
+  }
+}

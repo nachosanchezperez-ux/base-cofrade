@@ -1,29 +1,28 @@
-import Link from 'next/link'
-import styles from '@/app/panel/panel.module.css'
+import EntityWorkspaceNav from '@/components/panel/EntityWorkspaceNav'
 
 export default async function BandEditorLayout({ children, params }) {
   const { id } = await params
+  const root = `/panel/bandas/${id}`
+  const items = [
+    { href: root, label: 'General', group: 'Ficha', match: 'exact' },
+    { href: `${root}/direccion`, label: 'Dirección', group: 'Banda' },
+    { href: `${root}/acompanamientos`, label: 'Acompañamientos', group: 'Banda' },
+    { href: `${root}/extraordinarias`, label: 'Extraordinarias', group: 'Banda' },
+    { href: `${root}/estrenos`, label: 'Estrenos', group: 'Banda' },
+    { href: `${root}/patrimonio`, label: 'Patrimonio', group: 'Archivo' },
+    { href: `${root}/discografia`, label: 'Discografía', group: 'Archivo' },
+    { href: `${root}/canales`, label: 'Canales', group: 'Archivo' },
+    { href: `${root}/multimedia`, label: 'Multimedia', group: 'Archivo' },
+    { href: `/panel/fuentes?entity=${id}`, label: 'Fuentes', group: 'Archivo', activePath: '/panel/fuentes', tool: true },
+  ]
 
   return (
     <>
-      <div
-        style={{
-          width: 'min(1180px, calc(100% - 56px))',
-          margin: '18px auto -18px',
-          display: 'flex',
-          justifyContent: 'flex-end',
-          gap: 8,
-          flexWrap: 'wrap',
-        }}
-        aria-label="Edición de la banda"
-      >
-        <Link className={styles.secondaryButton} href={`/panel/bandas/${id}`}>
-          Ficha de banda
-        </Link>
-        <Link className={styles.primaryButton} href={`/panel/bandas/${id}/discografia`}>
-          Editar discografía
-        </Link>
-      </div>
+      <EntityWorkspaceNav
+        eyebrow="Ficha de Banda"
+        description="Identidad, dirección, acompañamientos, repertorio, patrimonio, discografía y archivo visual."
+        items={items}
+      />
       {children}
     </>
   )

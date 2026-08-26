@@ -10,7 +10,7 @@ const STATUS_LABELS = {
   archived: 'Archivado',
 }
 
-export const metadata = { title: 'Agentes · Panel' }
+export const metadata = { title: 'Personas · Panel' }
 
 export default async function PanelAgentsPage({ searchParams }) {
   const query = await searchParams
@@ -29,16 +29,16 @@ export default async function PanelAgentsPage({ searchParams }) {
       <header className={styles.pageHeader}>
         <div>
           <span className={styles.eyebrow}>Enciclopedia</span>
-          <h1>Agentes</h1>
-          <p>Personas, talleres, empresas e instituciones reutilizables en autorías y trabajos.</p>
+          <h1>Personas</h1>
+          <p>Autores, compositores, imagineros, artesanos, restauradores y otros profesionales, además de talleres, empresas e instituciones vinculadas.</p>
         </div>
-        {canEdit ? <Link className={styles.primaryButton} href="/panel/agentes/nuevo">Nuevo Agente</Link> : null}
+        {canEdit ? <Link className={styles.primaryButton} href="/panel/agentes/nuevo">Nueva ficha</Link> : null}
       </header>
 
       <form className={styles.filters}>
         <label>
-          <span className={styles.srOnly}>Buscar Agente</span>
-          <input type="search" name="q" defaultValue={q} placeholder="Buscar Agente…" />
+          <span className={styles.srOnly}>Buscar persona o entidad</span>
+          <input type="search" name="q" defaultValue={q} placeholder="Buscar persona, taller o entidad…" />
         </label>
         <label>
           <span className={styles.srOnly}>Filtrar por estado</span>
@@ -55,7 +55,7 @@ export default async function PanelAgentsPage({ searchParams }) {
 
       <section className={styles.panelCard}>
         <div className={styles.listHeading}>
-          <strong>{agents.length} Agentes</strong>
+          <strong>{agents.length} fichas</strong>
           <small>Los borradores solo son visibles en el Panel</small>
         </div>
         {agents.length ? (
@@ -69,11 +69,15 @@ export default async function PanelAgentsPage({ searchParams }) {
                   <small>{item.slug || 'Slug por documentar'}</small>
                 </div>
                 <span className={`${styles.statusBadge} ${styles[item.status]}`}>{STATUS_LABELS[item.status]}</span>
-                <Link className={styles.rowLink} href={`/panel/agentes/${item.id}`}>Editar <span>→</span></Link>
+                {item.isEditable ? (
+                  <Link className={styles.rowLink} href={`/panel/agentes/${item.id}`}>Editar <span>→</span></Link>
+                ) : (
+                  <span className={styles.rowNote} title={item.referenceReason}>Nodo de referencia</span>
+                )}
               </article>
             ))}
           </div>
-        ) : <p className={styles.emptyText}>No hay Agentes que coincidan con este filtro.</p>}
+        ) : <p className={styles.emptyText}>No hay personas o entidades que coincidan con este filtro.</p>}
       </section>
     </div>
   )

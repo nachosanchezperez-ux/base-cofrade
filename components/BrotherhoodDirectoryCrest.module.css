@@ -1,0 +1,64 @@
+.crestMedia.crestMedia {
+  --hc-directory-media-width: 82px;
+  --hc-directory-media-height: 104px;
+  width: 82px;
+  height: 104px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  place-items: center;
+}
+
+.crestImage.crestImage {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  transform:
+    translate(var(--crest-optical-x, 0px), var(--crest-optical-y, 0px))
+    scale(var(--crest-optical-scale, 1));
+  transform-origin: center;
+  transition: transform .14s ease;
+  will-change: transform;
+}
+
+.fallbackMedia.fallbackMedia {
+  width: 72px;
+  height: 92px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  overflow: visible;
+}
+
+.monogram.monogram {
+  display: grid;
+  width: 64px;
+  height: 64px;
+  place-items: center;
+  border: 1px solid #e7edf3;
+  border-radius: 14px;
+  background: #f7f9fb;
+}
+
+@media (max-width: 620px) {
+  .crestMedia.crestMedia {
+    --hc-directory-media-width: 60px;
+    --hc-directory-media-height: 80px;
+    width: 60px;
+    height: 80px;
+  }
+
+  .fallbackMedia.fallbackMedia {
+    width: 58px;
+    height: 76px;
+  }
+
+  .monogram.monogram {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+  }
+}

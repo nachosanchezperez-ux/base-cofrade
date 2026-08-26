@@ -1,0 +1,142 @@
+/*
+ * Contrato móvil estable de la Home.
+ *
+ * Los módulos de la portada combinan varios CSS Modules. Estos selectores se
+ * apoyan únicamente en identificadores y atributos públicos del DOM para que
+ * el resultado no dependa del orden de inyección de los estilos compilados.
+ */
+
+@media (max-width: 619px) {
+  /* Tira del hilo: una pregunta legible por tarjeta y desplazamiento horizontal. */
+  #hc-app #tiradelhilo [aria-label="Preguntas sugeridas"] {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(210px, 84%);
+    gap: 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin-right: -18px;
+    padding: 0 18px 3px 0;
+    flex-wrap: nowrap;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    overscroll-behavior-inline: contain;
+  }
+
+  #hc-app #tiradelhilo [aria-label="Preguntas sugeridas"]::-webkit-scrollbar {
+    display: none;
+  }
+
+  #hc-app #tiradelhilo [aria-label="Preguntas sugeridas"] button {
+    box-sizing: border-box;
+    min-height: 72px;
+    padding: 11px 13px;
+    border-radius: 16px;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.36;
+    text-align: left;
+    white-space: normal;
+    scroll-snap-align: start;
+  }
+
+  /*
+   * Hoy: en móvil los escudos y logotipos no aportan información suficiente
+   * para justificar una tercera columna. Las fotografías reales sí se conservan.
+   */
+  #hc-app #hoy > .shell > div > article {
+    min-height: 0;
+  }
+
+  #hc-app #hoy > .shell > div > article:has(> [data-home-visual-kind="crest"]),
+  #hc-app #hoy > .shell > div > article:has(> [data-home-visual-kind="logo"]),
+  #hc-app #hoy > .shell > div > article:has(> [data-home-visual-kind="context-crest"]),
+  #hc-app #hoy > .shell > div > article:has(> [data-home-visual-kind="identity"]) {
+    grid-template-columns: 34px minmax(0, 1fr);
+  }
+
+  #hc-app #hoy [data-home-visual-kind="crest"],
+  #hc-app #hoy [data-home-visual-kind="logo"],
+  #hc-app #hoy [data-home-visual-kind="context-crest"],
+  #hc-app #hoy [data-home-visual-kind="identity"] {
+    display: none;
+  }
+
+  #hc-app #hoy > .shell > div > article:has(> [data-home-visual-kind="photo"]) {
+    grid-template-columns: 34px minmax(0, 1fr) 58px;
+  }
+
+  #hc-app #hoy [data-home-visual-kind="photo"] {
+    grid-column: 3;
+    grid-row: 1;
+    align-self: start;
+    width: 58px;
+    height: 64px;
+    min-height: 64px;
+    max-height: 64px;
+    margin-top: 0;
+  }
+
+  #hc-app #hoy > .shell > div > article > div:first-of-type > p {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  /*
+   * Enciclopedia: el dato principal es la cifra. El sustantivo completo queda
+   * disponible para lectores de pantalla, pero no fuerza píldoras de dos líneas.
+   */
+  #hc-app #enciclopedia [data-home-count-label] {
+    display: none;
+  }
+
+  #hc-app #enciclopedia span:has(> [data-home-count-label]) {
+    min-width: 34px;
+    max-width: none;
+    padding: 5px 8px;
+    white-space: nowrap;
+    text-align: center;
+    line-height: 1;
+  }
+
+  #hc-app #enciclopedia span:has(> [data-home-count-label]) > strong {
+    font-size: 10px;
+    font-weight: 800;
+  }
+
+  #hc-app #enciclopedia > .shell > div > a p {
+    display: -webkit-box;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  #hc-app #enciclopedia > .shell > div > a h3,
+  #hc-app #enciclopedia > .shell > div > a span {
+    overflow-wrap: anywhere;
+  }
+
+  /*
+   * Extraordinarias lejanas: la Home actúa como avance, no como guía completa.
+   * Cuando existen cuatro hitos o más se muestran dos; bandas y lugares quedan
+   * para la ficha específica enlazada desde el propio módulo.
+   */
+  #hc-app #extraordinarias[data-home-urgency="later"] figure > div:first-child {
+    aspect-ratio: 2 / 1;
+  }
+
+  #hc-app #extraordinarias[data-home-urgency="later"]
+    [aria-labelledby="briefing-horarios"]:has(> div > div:nth-child(4))
+    > div
+    > div:nth-child(n + 3) {
+    display: none;
+  }
+
+  #hc-app #extraordinarias[data-home-urgency="later"] [aria-labelledby="briefing-bandas"],
+  #hc-app #extraordinarias[data-home-urgency="later"] [aria-labelledby="briefing-lugares"] {
+    display: none;
+  }
+}

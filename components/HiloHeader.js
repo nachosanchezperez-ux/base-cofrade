@@ -1,22 +1,51 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
+import GlobalHiloSearch from './GlobalHiloSearch';
 import styles from './HiloHeader.module.css';
 
 const sections = [
   ['inicio', 'Inicio'],
   ['tiradelhilo', 'Tira del hilo'],
-  ['hoy', 'Hoy'],
   ['extraordinarias', 'Extraordinarias'],
-  ['enciclopedia', 'Enciclopedia'],
+  ['hoy', 'Hoy'],
 ];
+
+const homeScrollSections = [
+  ['inicio', 'inicio'],
+  ['tiradelhilo', 'tiradelhilo'],
+  ['extraordinarias', 'extraordinarias'],
+  ['hoy', 'hoy'],
+  ['ultimos-hilos', 'ultimos-hilos'],
+  ['siguientes-extraordinarias', 'extraordinarias'],
+  ['enciclopedia', 'explorar'],
+  ['colabora', 'colabora'],
+];
+
+const directoryLinks = [
+  ['/directorio', 'Directorio'],
+  ['/hermandades', 'Hermandades'],
+  ['/procesiones-de-gloria', 'Procesiones de Gloria'],
+  ['/imagenes', 'Imágenes'],
+  ['/pasos', 'Pasos'],
+  ['/bandas', 'Bandas'],
+];
+
+function routeActive(pathname) {
+  if (pathname === '/') return 'inicio';
+  if (pathname.startsWith('/pregunta')) return 'tiradelhilo';
+  if (pathname.startsWith('/extraordinarias')) return 'extraordinarias';
+  return '';
+}
 
 export default function HiloHeader() {
   const pathname = usePathname();
+  const headerRef = useRef(null);
+  const exploreRef = useRef(null);
   const [open, setOpen] = useState(false);
-  const [active, setActive] = useState(pathname === '/' ? 'inicio' : '');
+  const [active, setActive] = useState(routeActive(pathname));
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -27,32 +56,101 @@ export default function HiloHeader() {
   }, []);
 
   useEffect(() => {
-    if (pathname !== '/') return undefined;
-    const elements = sections
-      .map(([id]) => document.getElementById(id))
-      .filter(Boolean);
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible) setActive(visible.target.id);
-      },
-      { rootMargin: '-22% 0px -60% 0px', threshold: [0, 0.1, 0.25, 0.5] }
-    );
-
-    elements.forEach((element) => observer.observe(element));
-    return () => observer.disconnect();
+    setOpen(false);
+    exploreRef.current?.removeAttribute('open');
+    if (pathname !== '/') setActive(routeActive(pathname));
   }, [pathname]);
 
-  const hrefFor = (id) => (pathname === '/' ? `#${id}` : `/#${id}`);
+  useEffect(() => {
+    if (!open) return undefined;
+
+    const previousOverflow = document.body.style.overflow;
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') setOpen(false);
+    };
+
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', onKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, [open]);
+
+  useEffect(() => {
+    const onPointerDown = (event) => {
+      const menu = exploreRef.current;
+      if (menu?.hasAttribute('open') && !menu.contains(event.target)) {
+        menu.removeAttribute('open');
+      }
+    };
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') exploreRef.current?.removeAttribute('open');
+    };
+
+    document.addEventListener('pointerdown', onPointerDown);
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('pointerdown', onPointerDown);
+      document.removeEventListener('keydown', onKeyDown);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (pathname !== '/') return undefined;
+
+    let frame = 0;
+
+    const updateActiveSection = () => {
+      frame = 0;
+      const markerY = (headerRef.current?.getBoundingClientRect().height || 0) + 18;
+      const targets = homeScrollSections
+        .map(([id, activeId]) => ({ element: document.getElementById(id), activeId }))
+        .filter(({ element }) => Boolean(element))
+        .map((target) => ({ ...target, top: target.element.getBoundingClientRect().top }))
+        .sort((a, b) => a.top - b.top);
+
+      if (!targets.length) return;
+
+      let nextActive = targets[0].activeId;
+      for (const target of targets) {
+        if (target.top > markerY) break;
+        nextActive = target.activeId;
+      }
+      setActive(nextActive);
+    };
+
+    const scheduleUpdate = () => {
+      if (!frame) frame = window.requestAnimationFrame(updateActiveSection);
+    };
+
+    scheduleUpdate();
+    window.addEventListener('scroll', scheduleUpdate, { passive: true });
+    window.addEventListener('resize', scheduleUpdate);
+    window.addEventListener('hashchange', scheduleUpdate);
+
+    return () => {
+      if (frame) window.cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', scheduleUpdate);
+      window.removeEventListener('resize', scheduleUpdate);
+      window.removeEventListener('hashchange', scheduleUpdate);
+    };
+  }, [pathname]);
+
+  const hrefFor = (id) => {
+    if (id === 'extraordinarias') return '/extraordinarias';
+    return pathname === '/' ? `#${id}` : `/#${id}`;
+  };
+  const isDirectoryActive = directoryLinks.some(([href]) => pathname.startsWith(href));
+  const isExploreActive = active === 'explorar' || isDirectoryActive;
+  const closeExplore = () => exploreRef.current?.removeAttribute('open');
 
   if (pathname.startsWith('/panel')) return null;
 
   return (
     <>
-      <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
+      <header ref={headerRef} className={`${styles.header} ${scrolled ? styles.scrolled : ''}`} data-hilo-header>
         <div className={`shell ${styles.inner}`}>
           <Link href="/" className={styles.brand} aria-label="Hilo Cofrade, inicio">
             <span className={styles.brandRail} aria-hidden="true">
@@ -71,13 +169,44 @@ export default function HiloHeader() {
                 key={id}
                 href={hrefFor(id)}
                 className={active === id ? styles.active : ''}
+                aria-current={active === id ? 'location' : undefined}
+                onClick={() => {
+                  setActive(id);
+                  closeExplore();
+                }}
               >
                 {label}
               </a>
             ))}
+            <details ref={exploreRef} className={styles.exploreMenu}>
+              <summary className={isExploreActive ? styles.active : ''}>Explorar</summary>
+              <div className={styles.directoryPopover}>
+                {directoryLinks.map(([href, label]) => (
+                  <Link
+                    href={href}
+                    key={href}
+                    className={pathname.startsWith(href) ? styles.currentDirectory : ''}
+                    aria-current={pathname.startsWith(href) ? 'page' : undefined}
+                    onClick={closeExplore}
+                  >
+                    {label}<span>→</span>
+                  </Link>
+                ))}
+              </div>
+            </details>
           </nav>
 
-          <a className={styles.collabButton} href={pathname === '/' ? '#colabora' : '/#colabora'}>
+          <GlobalHiloSearch />
+
+          <a
+            className={`${styles.collabButton} ${active === 'colabora' ? styles.collabButtonActive : ''}`}
+            href={pathname === '/' ? '#colabora' : '/#colabora'}
+            aria-current={active === 'colabora' ? 'location' : undefined}
+            onClick={() => {
+              setActive('colabora');
+              closeExplore();
+            }}
+          >
             <span />Colabora
           </a>
 
@@ -86,6 +215,7 @@ export default function HiloHeader() {
             type="button"
             aria-label={open ? 'Cerrar menú' : 'Abrir menú'}
             aria-expanded={open}
+            aria-controls="hilo-mobile-menu"
             onClick={() => setOpen((value) => !value)}
           >
             {open ? '×' : '☰'}
@@ -94,7 +224,11 @@ export default function HiloHeader() {
         <div className={styles.accent} />
       </header>
 
-      <div className={`${styles.mobilePanel} ${open ? styles.panelOpen : ''}`}>
+      <div
+        id="hilo-mobile-menu"
+        className={`${styles.mobilePanel} ${open ? styles.panelOpen : ''}`}
+        aria-hidden={!open}
+      >
         <div className="shell">
           <nav className={styles.mobileLinks} aria-label="Menú móvil">
             {sections.map(([id, label]) => (
@@ -102,14 +236,42 @@ export default function HiloHeader() {
                 key={id}
                 href={hrefFor(id)}
                 className={active === id ? styles.activeMobile : ''}
-                onClick={() => setOpen(false)}
+                aria-current={active === id ? 'location' : undefined}
+                onClick={() => {
+                  setActive(id);
+                  setOpen(false);
+                }}
               >
                 {label}<span>→</span>
               </a>
             ))}
           </nav>
+          <div className={`${styles.mobileDirectories} ${active === 'explorar' ? styles.mobileDirectoriesActive : ''}`}>
+            <span>Enciclopedia</span>
+            <nav aria-label="Directorios de la enciclopedia">
+              {directoryLinks.map(([href, label]) => (
+                <Link
+                  href={href}
+                  key={href}
+                  className={pathname.startsWith(href) ? styles.activeMobile : ''}
+                  aria-current={pathname.startsWith(href) ? 'page' : undefined}
+                  onClick={() => setOpen(false)}
+                >
+                  {label}<span>→</span>
+                </Link>
+              ))}
+            </nav>
+          </div>
           <div className={styles.mobileCta}>
-            <a href={pathname === '/' ? '#colabora' : '/#colabora'} onClick={() => setOpen(false)}>
+            <a
+              href={pathname === '/' ? '#colabora' : '/#colabora'}
+              className={active === 'colabora' ? styles.mobileCtaActive : ''}
+              aria-current={active === 'colabora' ? 'location' : undefined}
+              onClick={() => {
+                setActive('colabora');
+                setOpen(false);
+              }}
+            >
               Colabora con Hilo Cofrade <span>→</span>
             </a>
           </div>

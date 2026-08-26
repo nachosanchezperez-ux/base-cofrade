@@ -1,8 +1,15 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import EntitySectionNav from '@/components/EntitySectionNav';
 import JsonLd from '@/components/JsonLd';
+import RelationalEntityHero from '@/components/RelationalEntityHero';
+import RelationalThread from '@/components/RelationalThread';
 import SectionTitle from '@/components/SectionTitle';
+import { getStepPhotoFraming } from '@/lib/step-photo-framing';
+import { getPublishedEntityCoverMedia } from '@/lib/supabase/entity-media';
 import { getPasoPageBySlug } from '@/lib/supabase/public-entity-pages';
+import { getPublishedStepHeritage } from '@/lib/supabase/step-heritage';
+import styles from './step.module.css';
 import {
   absoluteUrl,
   breadcrumbJsonLd,
@@ -22,6 +29,7 @@ export async function generateMetadata({ params }) {
   }
 
   const { paso, hermandad } = result;
+  const coverMedia = await getPublishedEntityCoverMedia(paso.id);
   const title = paso.nombre;
   const description = seoDescription(
     hermandad
@@ -39,10 +47,22 @@ export async function generateMetadata({ params }) {
       title: pageTitle(title),
       description,
       url: canonical,
+      ...(coverMedia?.path ? {
+        images: [{
+          url: coverMedia.path,
+          alt: coverMedia.alt || `Fotografía de ${paso.nombre}`,
+        }],
+      } : {}),
     },
     twitter: {
       title: pageTitle(title),
       description,
+      ...(coverMedia?.path ? {
+        images: [{
+          url: coverMedia.path,
+          alt: coverMedia.alt || `Fotografía de ${paso.nombre}`,
+        }],
+      } : {}),
     },
   };
 }
@@ -51,26 +71,48 @@ export default async function PasoDetailPage({params}){
   const {slug}=await params;
   const result=await getPasoPageBySlug(slug);
   if(!result) notFound();
-  const {paso,hermandad,imagenes=[]}=result;
+  const {paso,hermandad,imagenes=[],bandas=[]}=result;
+  const [coverMedia, heritage] = await Promise.all([
+    getPublishedEntityCoverMedia(paso.id),
+    getPublishedStepHeritage(paso.id),
+  ]);
+  const relationalItems = [
+    ...(hermandad ? [{
+      kind: 'Hermandad',
+      relation: 'Pertenece a',
+      title: hermandad.nombrePopular,
+      href: `/hermandades/${hermandad.slug}`,
+      context: 'Ficha matriz de la corporación',
+    }] : []),
+    ...imagenes.map((imagen) => ({
+      kind: 'Imagen',
+      relation: 'Procesiona aquí',
+      title: imagen.nombre,
+      href: `/imagenes/${imagen.slug}`,
+      context: [imagen.autor, imagen.fecha].filter(Boolean).join(' · '),
+    })),
+    ...bandas.map((banda) => ({
+      kind: 'Banda',
+      relation: banda.posicion || 'Acompañamiento',
+      title: banda.nombre,
+      href: `/bandas/${banda.slug}`,
+      context: [banda.salida, banda.periodo].filter(Boolean).join(' · '),
+    })),
+  ];
   const canonicalPath = `/pasos/${paso.slug}`;
-  const breadcrumbs = hermandad
-    ? [
-        { name: 'Inicio', path: '/' },
-        { name: 'Hermandades', path: '/hermandades' },
-        { name: hermandad.nombrePopular, path: `/hermandades/${hermandad.slug}` },
-        { name: paso.nombre, path: canonicalPath },
-      ]
-    : [
-        { name: 'Inicio', path: '/' },
-        { name: 'Pasos', path: '/pasos' },
-        { name: paso.nombre, path: canonicalPath },
-      ];
+  const breadcrumbs = [
+    { name: 'Inicio', path: '/' },
+    { name: 'Pasos', path: '/pasos' },
+    { name: paso.nombre, path: canonicalPath },
+  ];
 
   return (
-    <main className="brotherhood-page" style={{
+    <div className="brotherhood-page" style={{
       '--brotherhood-primary': hermandad?.colores?.primario || '#153B69',
       '--brotherhood-secondary': hermandad?.colores?.secundario || '#A71930',
-      '--brotherhood-light': hermandad?.colores?.claro || '#FFFFFF'
+      '--brotherhood-light': hermandad?.colores?.claro || '#FFFFFF',
+      '--brotherhood-dark': hermandad?.colores?.oscuro || '#0D2949',
+      '--brotherhood-on-secondary': hermandad?.colores?.sobreSecundario || '#FFFFFF'
     }}>
       <JsonLd data={breadcrumbJsonLd(breadcrumbs)} />
       <JsonLd data={{
@@ -80,6 +122,7 @@ export default async function PasoDetailPage({params}){
         url: absoluteUrl(canonicalPath),
         name: paso.nombre,
         description: paso.descripcion,
+        ...(coverMedia?.path ? { image: absoluteUrl(coverMedia.path) } : {}),
         ...(hermandad ? {
           isPartOf: {
             '@type': 'Organization',
@@ -87,37 +130,56 @@ export default async function PasoDetailPage({params}){
           },
         } : {}),
       }} />
-      <section className="step-detail-hero">
-        <div className="shell">
-          <div className="brotherhood-breadcrumb">
-            <span className="breadcrumb-accent" />
-            {hermandad ? (
-              <>
-                <Link href="/hermandades">Hermandades</Link>
-                <span className="breadcrumb-arrow">→</span>
-                <Link href={`/hermandades/${hermandad.slug}`}>{hermandad.nombrePopular}</Link>
-              </>
-            ) : (
-              <Link href="/pasos">Pasos</Link>
-            )}
-            <span className="breadcrumb-arrow">→</span>
-            <strong>{paso.tipo}</strong>
-          </div>
-          <div className="step-detail-grid">
-            <div className="step-detail-copy">
-              <span className="step-kicker">Ficha del paso</span>
-              <span className="pill brotherhood-pill">{paso.tipo}</span>
-              <h1>{paso.nombre}</h1>
-              <p>{paso.descripcion}</p>
-            </div>
-            <div className="step-photo-placeholder">Fotografía del paso</div>
-          </div>
-        </div>
-      </section>
+      <RelationalEntityHero
+        variant="step"
+        entityType="Paso procesional"
+        title={paso.nombre}
+        breadcrumbItems={[
+          { label: 'Pasos', href: '/pasos' },
+          { label: 'Ficha' },
+        ]}
+        badges={[
+          paso.tipo,
+          imagenes.length ? `${imagenes.length} ${imagenes.length === 1 ? 'imagen vinculada' : 'imágenes vinculadas'}` : '',
+        ]}
+        relation={hermandad ? {
+          label: 'Pertenece a',
+          name: hermandad.nombrePopular,
+          href: `/hermandades/${hermandad.slug}`,
+          crestSrc: hermandad.escudoPath || '',
+        } : null}
+        facts={[
+          { label: 'Ejecución', value: paso.ejecucion },
+          { label: 'Sistema de portadores', value: paso.sistemaPortadores },
+          { label: 'Imágenes', value: imagenes.length || '' },
+        ]}
+        media={{
+          photoSrc: coverMedia?.path || '',
+          photoAlt: coverMedia?.alt || `Fotografía de ${paso.nombre}`,
+          credit: coverMedia?.credit || '',
+          initials: paso.nombre.slice(0, 2).toUpperCase(),
+          width: coverMedia?.width,
+          height: coverMedia?.height,
+          focusX: coverMedia?.focusX,
+          focusY: coverMedia?.focusY,
+          mobileFocusX: coverMedia?.mobileFocusX,
+          mobileFocusY: coverMedia?.mobileFocusY,
+          fitMode: coverMedia?.fitMode,
+          focusPosition: coverMedia?.focusPosition || getStepPhotoFraming(paso.slug).hero,
+        }}
+      />
 
-      <section className="section"><div className="shell content-grid">
+      <EntitySectionNav items={[
+        { href: '#resumen', label: 'Resumen' },
+        relationalItems.length > 0 && { href: '#tira-del-hilo', label: 'Tira del hilo' },
+        bandas.length > 0 && { href: '#acompanamiento', label: 'Acompañamiento' },
+        { href: '#patrimonio', label: 'Patrimonio y evolución' },
+      ]} />
+
+      <section className="section" id="resumen"><div className="shell content-grid">
         <div>
           <SectionTitle eyebrow="Configuración actual" title="Datos del paso" />
+          {paso.descripcion ? <p className="body-large">{paso.descripcion}</p> : null}
           <div className="step-facts">
             <div>
               <small>Hermandad</small>
@@ -125,6 +187,7 @@ export default async function PasoDetailPage({params}){
             </div>
             <div><small>Tipo</small><strong>{paso.tipo}</strong></div>
             <div><small>Ejecución</small><strong>{paso.ejecucion || 'Pendiente de incorporar'}</strong></div>
+            {paso.materiales ? <div><small>Materiales</small><strong>{paso.materiales}</strong></div> : null}
             <div><small>Sistema de portadores</small><strong>{paso.sistemaPortadores || 'Pendiente de incorporar'}</strong></div>
           </div>
         </div>
@@ -138,9 +201,88 @@ export default async function PasoDetailPage({params}){
         </aside>
       </div></section>
 
-      <section className="section brotherhood-soft"><div className="shell">
-        <SectionTitle eyebrow="Próximamente" title="Patrimonio y evolución" description="Esta ficha irá incorporando diseño, talla, dorado, orfebrería, bordados, restauraciones, reformas, capataces y acompañamientos musicales históricos." />
-      </div></section>
-    </main>
+      <RelationalThread
+        currentName={paso.nombre}
+        currentMeta={[paso.tipo, paso.ejecucion].filter(Boolean).join(' · ')}
+        items={relationalItems}
+        priorityProfile="paso"
+        title="Este paso conecta patrimonio, imágenes y música"
+        description="Desde aquí puedes volver a la Hermandad, abrir las fichas de las imágenes que procesionan o continuar hacia las formaciones musicales vinculadas actualmente."
+      />
+
+      {bandas.length > 0 && (
+        <section className={`section ${styles.accompanimentSection}`} id="acompanamiento">
+          <div className="shell">
+            <SectionTitle
+              eyebrow="Relación actual"
+              title="Acompañamiento musical"
+              description="Formaciones vinculadas actualmente a este paso mediante acompañamientos documentados."
+            />
+            <div className={styles.accompanimentGrid}>
+              {bandas.map((banda) => (
+                <Link className={styles.accompanimentCard} href={`/bandas/${banda.slug}`} key={banda.id}>
+                  <span>{banda.posicion}</span>
+                  <strong>{banda.nombre}</strong>
+                  <small>{[banda.salida, banda.periodo].filter(Boolean).join(' · ')}</small>
+                  <em aria-hidden="true">→</em>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      <section className={`section brotherhood-soft ${styles.heritageSection}`} id="patrimonio">
+        <div className="shell">
+          <div className={styles.heritageIntro}>
+            <SectionTitle
+              eyebrow="Patrimonio documentado"
+              title="Patrimonio y evolución"
+              description={heritage.phases.length
+                ? 'Diseño, talla, dorados, piezas singulares y restauraciones que explican la configuración actual del paso.'
+                : 'La evolución patrimonial de este paso está pendiente de documentar.'}
+            />
+          </div>
+
+          {heritage.phases.length ? (
+            <div className={styles.timeline}>
+              {heritage.phases.map((phase) => (
+                <article className={styles.phase} key={phase.id}>
+                  <div className={styles.date}>{phase.date}</div>
+                  <div className={styles.card}>
+                    <div className={styles.meta}>
+                      <span className={styles.type}>{phase.type}</span>
+                    </div>
+                    <h3>{phase.title}</h3>
+                    {phase.description ? <p className={styles.description}>{phase.description}</p> : null}
+                    {phase.responsibles.length ? (
+                      <div className={styles.people} aria-label={`Responsables de ${phase.title}`}>
+                        {phase.responsibles.map((person) => (
+                          <div className={styles.person} key={person.id}>
+                            <strong>{person.name}</strong>
+                            <small>{[person.role, person.discipline].filter(Boolean).join(' · ')}</small>
+                          </div>
+                        ))}
+                      </div>
+                    ) : null}
+                  </div>
+                </article>
+              ))}
+            </div>
+          ) : null}
+
+          {heritage.sources.length ? (
+            <div className={styles.sources}>
+              <strong>Documentación:</strong>
+              {heritage.sources.map((source) => source.url ? (
+                <a key={source.id} href={source.url} target="_blank" rel="noreferrer">{source.name}</a>
+              ) : (
+                <span key={source.id}>{source.type || source.name}</span>
+              ))}
+            </div>
+          ) : null}
+        </div>
+      </section>
+    </div>
   );
 }

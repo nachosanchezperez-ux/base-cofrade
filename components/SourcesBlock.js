@@ -5,7 +5,7 @@ export default function SourcesBlock({
   if (!sources?.length) return null;
 
   return (
-    <section className="section sources-section" id={id}>
+    <section className="section sources-section" id={id} data-hilo-section="sources">
       <div className="shell">
         <div className="sources-heading">
           <div>
@@ -15,20 +15,36 @@ export default function SourcesBlock({
         </div>
 
         <div className="sources-list">
-          {sources.map((fuente) => (
-            <a
-              className="source-row"
-              href={fuente.url}
-              target="_blank"
-              rel="noreferrer"
-              key={fuente.id}
-            >
-              <span className="source-capirote" aria-hidden="true" />
-              <div className="source-copy">
-                <strong>{fuente.nombre}</strong>
-              </div>
-            </a>
-          ))}
+          {sources.map((fuente) => {
+            const isExternal = Boolean(fuente.url);
+            const Row = isExternal ? 'a' : 'div';
+            const rowProps = isExternal
+              ? {
+                  href: fuente.url,
+                  target: '_blank',
+                  rel: 'noreferrer',
+                  'data-hilo-event': 'source_open',
+                  'data-hilo-scope': 'external',
+                }
+              : {
+                  'data-hilo-scope': 'internal',
+                  'data-source-static': 'true',
+                };
+
+            return (
+              <Row
+                className={`source-row${isExternal ? '' : ' source-row-static'}`}
+                key={fuente.id}
+                data-hilo-section="sources"
+                {...rowProps}
+              >
+                <span className="source-capirote" aria-hidden="true" />
+                <div className="source-copy">
+                  <strong>{fuente.nombre}</strong>
+                </div>
+              </Row>
+            );
+          })}
         </div>
       </div>
     </section>

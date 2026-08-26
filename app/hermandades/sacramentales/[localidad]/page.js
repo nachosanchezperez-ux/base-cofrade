@@ -5,6 +5,7 @@ import {
   labelFromSlug,
   localitySlug,
 } from '@/lib/brotherhood-directory'
+import { socialMetadata } from '@/lib/seo'
 import { getHermandadesDirectory } from '@/lib/supabase/brotherhood-directory'
 
 export const dynamic = 'force-dynamic'
@@ -12,9 +13,14 @@ export const dynamic = 'force-dynamic'
 export async function generateMetadata({ params }) {
   const { localidad } = await params
   const localityName = labelFromSlug(localidad)
+  const title = `Hermandades Sacramentales de ${localityName}`
+  const description = `Directorio de Hermandades Sacramentales de ${localityName}.`
+  const path = `/hermandades/sacramentales/${localidad}`
+
   return {
-    title: `Hermandades Sacramentales de ${localityName}`,
-    description: `Directorio de Hermandades Sacramentales de ${localityName}.`,
+    title,
+    description,
+    ...socialMetadata({ title, description, path }),
   }
 }
 
@@ -28,12 +34,14 @@ export default async function SacramentalLocalityPage({ params }) {
   if (!items.length) notFound()
 
   const localityName = labelFromSlug(localidad)
+  const path = `/hermandades/sacramentales/${localidad}`
   return (
     <DirectoryRoutePage
       eyebrow="Hermandades Sacramentales"
       title={`Sacramentales de ${localityName}`}
       description={`Corporaciones sacramentales documentadas en ${localityName}.`}
       hermandades={items}
+      path={path}
       contextLabel="Sacramental"
       breadcrumbs={[
         { label: 'Sacramentales', href: '/hermandades/sacramentales' },

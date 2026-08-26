@@ -66,7 +66,7 @@ export default async function DocumentImportPage({ searchParams }) {
       {query?.error ? <div className={styles.readOnlyNotice} role="alert">{String(query.error)}</div> : null}
       {migrationPending ? (
         <div className={styles.readOnlyNotice} role="status">
-          El módulo está desplegado pero necesita aplicar la migración 049 antes de guardar análisis.
+          El almacenamiento del importador no está disponible en este entorno. El análisis permanecerá desactivado hasta reconciliar las migraciones.
         </div>
       ) : null}
       {!configured ? (

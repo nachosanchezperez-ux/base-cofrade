@@ -1,0 +1,4 @@
+-- Reconciliación del historial remoto.
+-- Este cambio fue aplicado en Supabase con la versión 20260820234658.
+-- Su definición idempotente y reproducible se conserva en
+-- 20260821080100_fotografias_san_benito.sql.

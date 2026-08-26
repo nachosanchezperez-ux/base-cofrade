@@ -13,6 +13,7 @@ const SAVED_MESSAGES = {
   updated: 'La relación se ha actualizado correctamente.',
   closed: 'El periodo de la relación se ha cerrado sin borrar la Imagen.',
   archived: 'La relación se ha retirado. La Imagen continúa existiendo de forma independiente.',
+  uploaded: 'Fotografía principal del Titular actualizada correctamente.',
 }
 
 export default async function BrotherhoodImagesPage({ params, searchParams }) {

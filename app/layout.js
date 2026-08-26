@@ -1,7 +1,17 @@
+import '@fontsource/open-sans/400.css';
+import '@fontsource/open-sans/600.css';
+import '@fontsource/open-sans/700.css';
+import '@fontsource/open-sans/800.css';
 import './globals.css';
+import './typography.css';
+import './crest.css';
+import './habit-layout.css';
+import './step-preview.css';
+import './home-mobile-contract.css';
 import HiloHeader from '@/components/HiloHeader';
 import HiloFooter from '@/components/HiloFooter';
 import JsonLd from '@/components/JsonLd';
+import HiloAnalytics from '@/components/analytics/HiloAnalytics';
 import {
   DEFAULT_DESCRIPTION,
   HOME_TITLE,
@@ -58,11 +68,12 @@ const websiteJsonLd = {
 export default function RootLayout({ children }) {
   return (
     <html lang="es">
-      <body>
+      <body id="hc-app">
         <JsonLd data={websiteJsonLd} />
         <HiloHeader />
         <main>{children}</main>
         <HiloFooter />
+        <HiloAnalytics />
       </body>
     </html>
   );

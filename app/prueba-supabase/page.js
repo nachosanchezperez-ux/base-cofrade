@@ -17,15 +17,15 @@ export default async function PruebaSupabasePage() {
 
   if (error) {
     return (
-      <main style={{ padding: '40px', fontFamily: 'sans-serif' }}>
+      <div style={{ padding: '40px', fontFamily: 'sans-serif' }}>
         <h1>Error conectando con Supabase</h1>
         <pre>{JSON.stringify(error, null, 2)}</pre>
-      </main>
+      </div>
     )
   }
 
   return (
-    <main style={{ padding: '40px', fontFamily: 'sans-serif' }}>
+    <div style={{ padding: '40px', fontFamily: 'sans-serif' }}>
       <h1>Hilo Cofrade · Supabase conectado</h1>
       <p>{data.length} entidades recibidas desde la base real</p>
 
@@ -38,6 +38,6 @@ export default async function PruebaSupabasePage() {
           </li>
         ))}
       </ul>
-    </main>
+    </div>
   )
 }

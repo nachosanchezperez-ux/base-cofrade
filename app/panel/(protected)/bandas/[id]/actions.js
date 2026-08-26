@@ -230,7 +230,8 @@ export async function saveBandAccompanimentAction(formData) {
   const bandId = uuid(formData, 'band_id')
   const periodId = optionalUuid(formData, 'period_id')
   const yearFrom = integer(formData, 'year_from')
-  if (!yearFrom) throw new Error('El año de inicio es obligatorio.')
+  const dateFromText = nullable(formData, 'date_from_text')
+  if (!yearFrom && !dateFromText) throw new Error('Indica un año de inicio o una datación textual.')
   const brotherhoodId = uuid(formData, 'brotherhood_entity_id')
   const stepId = optionalUuid(formData, 'step_entity_id')
   const publicEntities = assertMutation(
@@ -247,6 +248,7 @@ export async function saveBandAccompanimentAction(formData) {
     public_step_name: publicName(stepId),
     position: required(formData, 'position', 'La ubicación'),
     outing_type: required(formData, 'outing_type', 'La jornada o salida'),
+    date_from_text: dateFromText,
     year_from: yearFrom,
     year_to: integer(formData, 'year_to'),
     is_current: checked(formData, 'is_current'),

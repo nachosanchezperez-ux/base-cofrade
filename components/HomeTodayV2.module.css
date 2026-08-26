@@ -1,0 +1,400 @@
+.section {
+  scroll-margin-top: calc(var(--hc-app-header-height, 70px) + 18px);
+  padding: 36px 0;
+  border-top: 1px solid #e1e8ef;
+  border-bottom: 1px solid #e1e8ef;
+  background:
+    radial-gradient(circle at 84% 8%, rgba(18, 58, 103, .055), transparent 29%),
+    #f5f8fb;
+}
+
+.header {
+  margin-bottom: 20px;
+}
+
+.date {
+  display: block;
+  margin-bottom: 5px;
+  color: #b71f37;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.header h2 {
+  margin: 0;
+  color: #123a67;
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -.035em;
+}
+
+.header p {
+  margin: 8px 0 0;
+  max-width: 760px;
+  color: #647484;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  gap: 13px;
+  min-height: 188px;
+  overflow: hidden;
+  padding: 18px;
+  border: 1px solid #e1e8ef;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 10px 28px rgba(15, 39, 66, .035);
+}
+
+.cardWithVisual {
+  grid-template-columns: 40px minmax(0, 1fr) 78px;
+}
+
+.discoveryCard {
+  border-color: #d5e2ee;
+  background: linear-gradient(145deg, #ffffff 0%, #f2f7fb 100%);
+}
+
+.icon {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border-radius: 12px;
+  color: #123a67;
+  background: #eaf1f8;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.copy {
+  min-width: 0;
+}
+
+.topline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.type {
+  color: #b71f37;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+
+.kicker {
+  padding: 4px 7px;
+  border-radius: 999px;
+  color: #526b84;
+  background: #edf3f8;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.context {
+  display: inline-flex;
+  margin-top: 8px;
+  color: #718090;
+  font-size: 10px;
+  font-weight: 750;
+  line-height: 1.3;
+}
+
+.card h3 {
+  margin: 8px 0 6px;
+  color: #0f2742;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -.025em;
+}
+
+.card p {
+  margin: 0;
+  color: #5f7080;
+  font-size: 14px;
+  line-height: 1.58;
+}
+
+.link {
+  display: inline-flex;
+  margin-top: 11px;
+  color: #123a67;
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.visual {
+  position: relative;
+  align-self: stretch;
+  min-height: 92px;
+  overflow: hidden;
+  border-radius: 15px;
+}
+
+.visualIdentity {
+  border: 1px solid #dce6ef;
+  background:
+    radial-gradient(circle at 50% 36%, rgba(18, 58, 103, .09), transparent 58%),
+    #f7fafc;
+}
+
+.visualIdentityImage {
+  object-fit: contain;
+  padding: 9px;
+}
+
+.visualPhoto {
+  min-height: 118px;
+  border: 1px solid #dce6ef;
+  background: #102944;
+}
+
+.visualPhoto::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 48%, rgba(8, 29, 50, .28));
+  pointer-events: none;
+}
+
+.visualPhotoImage {
+  object-fit: cover;
+}
+
+.musicCard {
+  position: relative;
+  display: grid;
+  gap: 0;
+  margin-top: 12px;
+  overflow: hidden;
+  border: 1px solid #d5e0ea;
+  border-radius: 20px;
+  color: #fff;
+  background: linear-gradient(128deg, #0f2742 0%, #153f69 68%, #1d568d 100%);
+  box-shadow: 0 16px 38px rgba(15, 39, 66, .09);
+}
+
+.musicCard::after {
+  content: "";
+  position: absolute;
+  right: -80px;
+  top: -120px;
+  width: 260px;
+  height: 260px;
+  border: 1px solid rgba(255, 255, 255, .08);
+  border-radius: 50%;
+  box-shadow: 0 0 0 42px rgba(255, 255, 255, .018);
+  pointer-events: none;
+}
+
+.musicAccent {
+  display: none;
+}
+
+.musicCopy {
+  position: relative;
+  z-index: 1;
+  padding: 20px;
+}
+
+.musicCopy .type {
+  color: #f0a5b0;
+}
+
+.musicCopy h3 {
+  margin: 8px 0 5px;
+  color: #fff;
+  font-size: 25px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -.025em;
+}
+
+.musicCopy > p {
+  margin: 0;
+  color: rgba(255, 255, 255, .72);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.musicCopy > p strong {
+  color: #fff;
+}
+
+.whyToday {
+  margin-top: 14px;
+  padding: 11px 12px;
+  border-left: 3px solid #f0a5b0;
+  border-radius: 0 12px 12px 0;
+  background: rgba(255, 255, 255, .075);
+}
+
+.whyToday span {
+  display: block;
+  margin-bottom: 3px;
+  color: #f0a5b0;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.whyToday p {
+  margin: 0;
+  color: rgba(255, 255, 255, .86);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.player {
+  position: relative;
+  z-index: 1;
+  padding: 0 20px 20px;
+}
+
+@media (max-width: 520px) {
+  .cardWithVisual {
+    grid-template-columns: 40px minmax(0, 1fr);
+  }
+
+  .cardWithVisual .visual {
+    grid-column: 2;
+    width: 92px;
+    min-height: 72px;
+    margin-top: 2px;
+  }
+}
+
+@media (min-width: 860px) {
+  .section {
+    padding: 44px 0;
+  }
+
+  .header {
+    display: grid;
+    grid-template-columns: minmax(0, .9fr) minmax(360px, 1.1fr);
+    column-gap: 42px;
+    align-items: end;
+  }
+
+  .date {
+    grid-column: 1 / -1;
+  }
+
+  .header h2 {
+    font-size: 40px;
+  }
+
+  .header p {
+    margin: 0;
+    max-width: 680px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 14px;
+  }
+
+  .card {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    min-height: 0;
+    padding: 22px 24px;
+  }
+
+  .icon {
+    display: none;
+  }
+
+  .cardWithVisual {
+    grid-template-columns: minmax(0, 1fr) 126px;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .cardWithVisual:has(.visualIdentity) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .visualIdentity {
+    display: none;
+  }
+
+  .topline {
+    gap: 10px;
+  }
+
+  .kicker {
+    max-width: 100%;
+    padding: 4px 8px;
+    line-height: 1.3;
+    white-space: normal;
+  }
+
+  .card h3 {
+    margin: 9px 0 8px;
+    font-size: 25px;
+    line-height: 1.12;
+  }
+
+  .card p {
+    line-height: 1.52;
+  }
+
+  .link {
+    margin-top: 12px;
+  }
+
+  .visual {
+    min-height: 0;
+  }
+
+  .visualPhoto {
+    width: 126px;
+    height: 146px;
+    min-height: 146px;
+    align-self: center;
+  }
+
+  .musicCard {
+    grid-template-columns: minmax(0, 1fr) minmax(250px, .38fr);
+    align-items: center;
+    margin-top: 14px;
+  }
+
+  .musicAccent {
+    display: none;
+  }
+
+  .musicCopy {
+    padding: 20px 26px;
+  }
+
+  .musicCopy h3 {
+    font-size: 24px;
+  }
+
+  .player {
+    padding: 20px 26px;
+    border-left: 1px solid rgba(255, 255, 255, .12);
+  }
+}

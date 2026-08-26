@@ -1,0 +1,356 @@
+.section {
+  padding: 78px 0;
+  background: #f4f7fa;
+}
+
+.header,
+.sequence {
+  width: min(100%, 1180px);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.header {
+  margin-bottom: 28px;
+}
+
+.copy {
+  max-width: 820px;
+}
+
+.copy h2 {
+  margin: 7px 0 10px;
+  color: var(--bc-dark);
+  font-family: Georgia, serif;
+  font-size: clamp(36px, 3.15vw, 46px);
+  line-height: 1.02;
+  letter-spacing: -.035em;
+}
+
+.copy p {
+  max-width: 760px;
+  margin: 0;
+  color: #667685;
+  font-size: 15px;
+  line-height: 1.58;
+}
+
+.context {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px 18px;
+  align-items: center;
+  margin-top: 17px;
+  color: #6d7d8c;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.context strong {
+  color: var(--bc-blue);
+  font-size: 12px;
+}
+
+.context span {
+  position: relative;
+}
+
+.context strong + span::before {
+  content: '·';
+  position: absolute;
+  left: -11px;
+  color: #a9b3bc;
+}
+
+.sequence {
+  display: grid;
+  border-top: 1px solid rgba(21, 59, 105, .12);
+}
+
+.item {
+  display: grid;
+  gap: 20px;
+  align-items: center;
+  min-height: 112px;
+  padding: 12px 14px 12px 6px;
+  border-bottom: 1px solid rgba(21, 59, 105, .12);
+  transition: background .18s ease, padding .18s ease;
+}
+
+.withLogo {
+  grid-template-columns: 90px minmax(0, 1fr) 34px;
+}
+
+.withoutLogo {
+  grid-template-columns: minmax(0, 1fr) 34px;
+  padding-left: 0;
+}
+
+.item:hover,
+.item:focus-visible {
+  padding-left: 14px;
+  background: rgba(255, 255, 255, .7);
+  outline: none;
+}
+
+.logoWrap {
+  position: relative;
+  width: 72px;
+  height: 88px;
+  overflow: hidden;
+  border: 1px solid #e3eaf0;
+  border-radius: 15px;
+  background: #f1f5f8;
+}
+
+.logo {
+  object-fit: contain;
+  object-position: center;
+  padding: 7px;
+}
+
+/* Reproduce la presentación del Directorio de Bandas para los logotipos
+   que necesitan un fondo integrado o un soporte cromático específico. */
+.item[href="/bandas/banda-del-sol"] .logoWrap {
+  border-color: color-mix(in srgb, #061D59 58%, #e3eaf0);
+  background: #061D59;
+}
+.item[href="/bandas/banda-del-sol"] .logo { padding: 0; }
+
+.item[href="/bandas/sangre-de-san-benito"] .logoWrap {
+  border-color: color-mix(in srgb, #65121A 58%, #e3eaf0);
+  background: #65121A;
+}
+.item[href="/bandas/sangre-de-san-benito"] .logo { padding: 0; }
+
+.item[href="/bandas/banda-de-musica-nuestra-senora-de-la-soledad-cantillana"] .logoWrap {
+  border-color: color-mix(in srgb, #111216 58%, #e3eaf0);
+  background: #111216;
+}
+.item[href="/bandas/banda-de-musica-nuestra-senora-de-la-soledad-cantillana"] .logo { padding: 0; }
+
+.item[href="/bandas/banda-de-musica-del-maestro-tejera"] .logoWrap { background: #EAF4FF; }
+.item[href="/bandas/banda-municipal-de-musica-de-la-puebla-del-rio"] .logoWrap { background: #FCEBEC; }
+.item[href="/bandas/carmen-de-salteras"] .logoWrap { background: color-mix(in srgb, #8B451F 7%, white); }
+.item[href="/bandas/agrupacion-musical-nuestra-senora-de-la-encarnacion"] .logoWrap { background: color-mix(in srgb, #1B82B4 7%, white); }
+.item[href="/bandas/escolania-salesiana-maria-auxiliadora-sevilla"] .logoWrap { background: color-mix(in srgb, #DC001B 7%, white); }
+.item[href="/bandas/las-cigarreras"] .logoWrap { background: color-mix(in srgb, #63358B 7%, white); }
+
+.main {
+  min-width: 0;
+}
+
+.position {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--bc-red);
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+}
+
+.main h3 {
+  max-width: 780px;
+  margin: 0;
+  color: #162d43;
+  font-size: 19px;
+  line-height: 1.22;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 9px;
+  align-items: center;
+  margin-top: 7px;
+  color: #71808e;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.meta span:nth-child(2) {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 0 8px;
+  border: 1px solid rgba(21, 59, 105, .13);
+  border-radius: 999px;
+  color: var(--bc-blue);
+  background: rgba(21, 59, 105, .065);
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .02em;
+}
+
+.meta span:nth-child(2)::before {
+  content: none;
+  margin: 0;
+}
+
+.arrow {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  justify-self: end;
+  border-radius: 50%;
+  color: var(--bc-blue);
+  font-size: 19px;
+  transition: transform .18s ease, background .18s ease, color .18s ease;
+}
+
+.item:hover .arrow,
+.item:focus-visible .arrow {
+  transform: translateX(3px);
+  color: var(--bc-red);
+  background: #fff;
+}
+
+:global(.brotherhood-current-music-sequence) + :global(#acompanamiento-musical) {
+  display: none;
+}
+
+@media (max-width: 1100px) {
+  .header,
+  .sequence {
+    width: min(100%, 920px);
+  }
+
+  .withLogo {
+    grid-template-columns: 78px minmax(0, 1fr) 32px;
+    gap: 17px;
+  }
+
+  .logoWrap {
+    width: 64px;
+    height: 78px;
+  }
+
+  .main h3 {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 760px) {
+  .section {
+    padding: 62px 0;
+  }
+
+  .header {
+    margin-bottom: 20px;
+  }
+
+  .copy h2 {
+    font-size: clamp(31px, 9vw, 38px);
+  }
+
+  .copy p {
+    max-width: 34rem;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .context {
+    margin-top: 14px;
+    gap: 6px 16px;
+  }
+
+  .item {
+    min-height: 92px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  .withLogo {
+    grid-template-columns: 62px minmax(0, 1fr) 28px;
+    gap: 13px;
+  }
+
+  .withoutLogo {
+    grid-template-columns: minmax(0, 1fr) 28px;
+  }
+
+  .logoWrap {
+    width: 54px;
+    height: 68px;
+    border-radius: 15px;
+  }
+
+  .main h3 {
+    font-size: 16px;
+    line-height: 1.24;
+  }
+
+  .arrow {
+    width: 28px;
+    height: 28px;
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 56px 0;
+  }
+
+  .copy h2 {
+    font-size: 32px;
+  }
+
+  .copy p {
+    font-size: 13.5px;
+  }
+
+  .context {
+    margin-top: 13px;
+    font-size: 10px;
+  }
+
+  .context strong {
+    font-size: 11px;
+  }
+
+  .withLogo {
+    grid-template-columns: 60px minmax(0, 1fr) 24px;
+    gap: 10px;
+  }
+
+  .withoutLogo {
+    grid-template-columns: minmax(0, 1fr) 24px;
+  }
+
+  .logoWrap {
+    width: 52px;
+    height: 66px;
+  }
+
+  .item {
+    min-height: 90px;
+    padding-right: 0;
+  }
+
+  .position {
+    font-size: 8.5px;
+  }
+
+  .main h3 {
+    font-size: 15px;
+  }
+
+  .meta {
+    margin-top: 5px;
+    font-size: 9.5px;
+  }
+
+  .meta span:nth-child(2) {
+    min-height: 22px;
+    padding: 0 7px;
+    font-size: 8.7px;
+  }
+
+  .arrow {
+    width: 24px;
+    height: 24px;
+  }
+}

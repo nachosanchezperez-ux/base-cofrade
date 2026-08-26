@@ -1,0 +1,304 @@
+.summaryGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.summaryCard {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+  padding: 16px 18px;
+  border: 1px solid var(--panel-line);
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 8px 24px rgb(15 39 66 / 4%);
+}
+
+.summaryCard span {
+  color: var(--panel-muted);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.summaryCard strong {
+  color: var(--panel-navy);
+  font-size: 26px;
+  line-height: 1;
+  letter-spacing: -.04em;
+}
+
+.workspaceSection {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 26px;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.sectionHeader h2 {
+  margin: 3px 0 0;
+  color: var(--panel-navy);
+  font-size: 21px;
+  letter-spacing: -.03em;
+}
+
+.sectionHeader p {
+  margin: 0;
+  color: var(--panel-muted);
+  font-size: 12px;
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.gloryCard {
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+  padding: 17px;
+  border: 1px solid var(--panel-line);
+  border-radius: 15px;
+  background: #fff;
+  box-shadow: 0 9px 25px rgb(15 39 66 / 4%);
+}
+
+.gloryCardPending {
+  gap: 11px;
+  background: #fbfcfd;
+  box-shadow: none;
+}
+
+.identityRow {
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 11px;
+  min-width: 0;
+}
+
+.crest {
+  display: grid;
+  width: 46px;
+  height: 46px;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid #dce6ef;
+  border-radius: 12px;
+  color: var(--panel-blue);
+  background: #f3f7fa;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.crest img {
+  width: 100%;
+  height: 100%;
+  padding: 4px;
+  object-fit: contain;
+}
+
+.identityCopy {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.identityCopy strong {
+  overflow: hidden;
+  color: var(--panel-navy);
+  font-size: 14px;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.identityCopy span {
+  overflow: hidden;
+  color: var(--panel-muted);
+  font-size: 10.5px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.outingBlock {
+  display: grid;
+  gap: 4px;
+  padding: 12px 13px;
+  border-radius: 11px;
+  background: #f3f7fa;
+}
+
+.outingBlock span {
+  color: var(--panel-red);
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.outingBlock strong {
+  color: var(--panel-navy);
+  font-size: 15px;
+  line-height: 1.25;
+}
+
+.outingBlock small {
+  color: var(--panel-muted);
+  font-size: 10.5px;
+  line-height: 1.35;
+}
+
+.pendingBlock {
+  padding: 11px 12px;
+  border: 1px dashed #d7e1ea;
+  border-radius: 11px;
+  color: var(--panel-muted);
+  background: #fff;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.cardActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.cardActions a {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 12px;
+  border: 1px solid var(--panel-line);
+  border-radius: 9px;
+  color: var(--panel-blue);
+  background: #fff;
+  font-size: 10.5px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.cardActions a:last-child {
+  border-color: transparent;
+  color: #fff;
+  background: var(--panel-blue);
+}
+
+.emptyState {
+  padding: 22px;
+  border: 1px dashed #d5e0e9;
+  border-radius: 14px;
+  color: var(--panel-muted);
+  background: #fff;
+  font-size: 13px;
+  text-align: center;
+}
+
+@media (max-width: 860px) {
+  .summaryGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 7px;
+    margin-bottom: 18px;
+  }
+
+  .summaryCard {
+    gap: 4px;
+    padding: 12px 10px;
+    border-radius: 11px;
+    text-align: center;
+  }
+
+  .summaryCard span {
+    font-size: 8px;
+    line-height: 1.2;
+  }
+
+  .summaryCard strong {
+    font-size: 22px;
+  }
+
+  .sectionHeader {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .sectionHeader h2 {
+    font-size: 19px;
+  }
+
+  .cardGrid {
+    grid-template-columns: 1fr;
+    gap: 9px;
+  }
+
+  .gloryCard {
+    gap: 11px;
+    padding: 14px;
+    border-radius: 13px;
+  }
+
+  .identityRow {
+    grid-template-columns: 42px minmax(0, 1fr) auto;
+    gap: 9px;
+  }
+
+  .crest {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+  }
+
+  .identityCopy strong {
+    font-size: 13px;
+  }
+
+  .outingBlock {
+    padding: 10px 11px;
+  }
+
+  .outingBlock strong {
+    font-size: 14px;
+  }
+
+  .cardActions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 7px;
+  }
+
+  .cardActions a {
+    min-height: 44px;
+    padding: 0 8px;
+    touch-action: manipulation;
+  }
+}
+
+@media (max-width: 360px) {
+  .summaryGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .summaryCard {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    text-align: left;
+  }
+
+  .cardActions {
+    grid-template-columns: 1fr;
+  }
+}

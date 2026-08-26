@@ -1,0 +1,31 @@
+/* Ajuste específico de las fotografías de La Encarnación.
+ * Preserva el formato real de las imágenes aportadas por la Agrupación
+ * y evita forzarlas al encuadre vertical genérico de las fichas de Bandas.
+ */
+figure[class*="featurePhoto"]:has(img[alt="Agrupación Musical Nuestra Señora de la Encarnación durante una salida procesional en Sevilla"]) {
+  min-height: 0;
+  aspect-ratio: 31 / 18;
+  align-self: center;
+}
+
+figure[class*="featurePhoto"]:has(img[alt="Agrupación Musical Nuestra Señora de la Encarnación durante una salida procesional en Sevilla"]) img {
+  object-fit: cover;
+  object-position: center;
+}
+
+figure[class*="heritagePhoto"]:has(img[alt="Banderín de la Agrupación Musical Nuestra Señora de la Encarnación"]) {
+  min-height: 0;
+  aspect-ratio: 2 / 3;
+}
+
+figure[class*="heritagePhoto"]:has(img[alt="Banderín de la Agrupación Musical Nuestra Señora de la Encarnación"]) img {
+  object-fit: contain;
+  object-position: center;
+}
+
+@media (max-width: 900px) {
+  figure[class*="featurePhoto"]:has(img[alt="Agrupación Musical Nuestra Señora de la Encarnación durante una salida procesional en Sevilla"]),
+  figure[class*="heritagePhoto"]:has(img[alt="Banderín de la Agrupación Musical Nuestra Señora de la Encarnación"]) {
+    min-height: 0;
+  }
+}

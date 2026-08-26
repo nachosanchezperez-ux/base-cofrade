@@ -1,7 +1,9 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import BrotherhoodDirectoryCard from '@/components/BrotherhoodDirectoryCard'
+import JsonLd from '@/components/JsonLd'
 import {
+  directoryContextLabel,
   directoryPath,
   directoryPeriod,
   directoryType,
@@ -9,6 +11,7 @@ import {
   localityLabel,
   sortBrotherhoods,
 } from '@/lib/brotherhood-directory'
+import { breadcrumbJsonLd, collectionPageJsonLd } from '@/lib/seo'
 import styles from './HermandadesDirectory.module.css'
 
 export default function HermandadesCategoryDirectory({ hermandades, typeKey }) {
@@ -19,10 +22,26 @@ export default function HermandadesCategoryDirectory({ hermandades, typeKey }) {
     const label = [localityLabel(item), period].filter(Boolean).join(' · ')
     const href = directoryPath(item, typeKey)
     return [href, { href, label }]
-  })).values()]
+  }).filter(([href]) => Boolean(href))).values()]
+  const pageName = `${config.label} de Sevilla y provincia`
 
   return (
     <section className={`section page-top ${styles.routePage}`}>
+      <JsonLd data={breadcrumbJsonLd([
+        { name: 'Inicio', path: '/' },
+        { name: 'Hermandades', path: '/hermandades' },
+        { name: config.label, path: config.href },
+      ])} />
+      <JsonLd data={collectionPageJsonLd({
+        path: config.href,
+        name: pageName,
+        description: config.description,
+        items: items.map((hermandad) => ({
+          name: hermandad.nombrePopular,
+          path: `/hermandades/${hermandad.slug}`,
+        })),
+      })} />
+
       <div className="shell">
         <nav className={styles.breadcrumbs} aria-label="Migas de pan">
           <Link href="/hermandades">Hermandades</Link>
@@ -61,7 +80,11 @@ export default function HermandadesCategoryDirectory({ hermandades, typeKey }) {
         {items.length ? (
           <div className={styles.list}>
             {items.map((hermandad) => (
-              <BrotherhoodDirectoryCard key={hermandad.id} hermandad={hermandad} />
+              <BrotherhoodDirectoryCard
+                key={hermandad.id}
+                hermandad={hermandad}
+                contextLabel={directoryContextLabel(hermandad, typeKey)}
+              />
             ))}
           </div>
         ) : (

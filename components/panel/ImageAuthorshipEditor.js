@@ -6,6 +6,7 @@ import {
   archiveImageAuthorshipAction,
   updateImageAuthorshipAction,
 } from '@/app/panel/(protected)/imagenes/[id]/autorias/actions'
+import { addAnonymousImageAuthorshipAction } from '@/app/panel/(protected)/imagenes/[id]/autorias/anonymous-action'
 import styles from '@/app/panel/panel.module.css'
 
 const STATUS_LABELS = {
@@ -21,13 +22,14 @@ const AUTHORSHIP_LABELS = {
   workshop_of: 'Taller de',
   circle_of: 'Círculo de',
   school_of: 'Escuela de',
+  anonymous: 'Autor desconocido',
 }
 
 const CERTAINTY_LABELS = {
   documented: 'Documentada',
   attributed: 'Atribuida',
   traditional: 'Tradicional',
-  unknown: 'Pendiente',
+  unknown: 'Desconocida',
 }
 
 function periodLabel(item) {
@@ -37,30 +39,34 @@ function periodLabel(item) {
 }
 
 function AuthorshipFields({ relation }) {
+  const isAnonymous = relation?.authorship_type === 'anonymous'
   return (
     <div className={styles.formGrid}>
       <label>
         <span>Tipo</span>
-        <select name="authorship_type" defaultValue={relation?.authorship_type || 'author'} required>
+        <select name="authorship_type" defaultValue={relation?.authorship_type || 'author'} required disabled={isAnonymous}>
           <option value="author">Autoría documentada</option>
           <option value="attributed_to">Atribuida a</option>
           <option value="workshop_of">Taller de</option>
           <option value="circle_of">Círculo de</option>
           <option value="school_of">Escuela de</option>
+          {isAnonymous ? <option value="anonymous">Autor desconocido</option> : null}
         </select>
+        {isAnonymous ? <input type="hidden" name="authorship_type" value="anonymous" /> : null}
       </label>
       <label>
         <span>Grado de certeza</span>
-        <select name="certainty" defaultValue={relation?.certainty || 'documented'} required>
+        <select name="certainty" defaultValue={relation?.certainty || 'documented'} required disabled={isAnonymous}>
           <option value="documented">Documentada</option>
           <option value="attributed">Atribuida</option>
           <option value="traditional">Tradicional</option>
-          <option value="unknown">Pendiente</option>
+          <option value="unknown">Desconocida</option>
         </select>
+        {isAnonymous ? <input type="hidden" name="certainty" value="unknown" /> : null}
       </label>
       <label className={styles.fieldWide}>
         <span>Rol</span>
-        <input name="role_name" defaultValue={relation?.role_name || 'autor'} required />
+        <input name="role_name" defaultValue={relation?.role_name || 'autor'} required readOnly={isAnonymous} />
       </label>
       <label>
         <span>Fecha inicial exacta</span>
@@ -91,6 +97,8 @@ function AuthorshipFields({ relation }) {
 }
 
 export default function ImageAuthorshipEditor({ data, canEdit }) {
+  const hasActiveAnonymous = data.relations.some((relation) => relation.authorship_type === 'anonymous' && relation.status !== 'archived')
+
   return (
     <>
       <section className={styles.editorSection}>
@@ -106,7 +114,8 @@ export default function ImageAuthorshipEditor({ data, canEdit }) {
           <div className={styles.editorStack}>
             {data.relations.map((relation) => {
               const archived = relation.status === 'archived'
-              const agentName = relation.agent?.name || 'Agente no disponible'
+              const anonymous = relation.authorship_type === 'anonymous'
+              const agentName = anonymous ? 'Autor desconocido' : relation.agent?.name || 'Agente no disponible'
               return (
                 <article className={styles.editorItem} key={relation.id}>
                   <div className={styles.itemHeading}>
@@ -128,7 +137,7 @@ export default function ImageAuthorshipEditor({ data, canEdit }) {
                     <Link className={styles.rowLink} href={`/panel/agentes/${relation.agent.id}`}>
                       Abrir Agente <span>→</span>
                     </Link>
-                  ) : null}
+                  ) : anonymous ? <p className={styles.emptyText}>No se crea un Agente ficticio: la ausencia de autor conocido queda documentada en la relación.</p> : null}
 
                   {!archived ? (
                     <form action={updateImageAuthorshipAction} className={styles.editorForm}>
@@ -137,7 +146,7 @@ export default function ImageAuthorshipEditor({ data, canEdit }) {
                       <AuthorshipFields relation={relation} />
                       <div className={styles.formActions}>
                         <small>Usa fecha exacta solo cuando esté documentada; para años, periodos o dataciones imprecisas usa la cronología en texto.</small>
-                        {canEdit ? <button className={styles.primaryButton} type="submit">Guardar autoría</button> : null}
+                        {canEdit && !anonymous ? <button className={styles.primaryButton} type="submit">Guardar autoría</button> : null}
                       </div>
                     </form>
                   ) : null}
@@ -169,34 +178,55 @@ export default function ImageAuthorshipEditor({ data, canEdit }) {
       </section>
 
       {canEdit ? (
-        <section className={styles.editorSection}>
-          <div className={styles.sectionHeading}>
-            <div>
-              <span className={styles.eyebrow}>Buscar antes de crear</span>
-              <h2>Vincular Agente existente</h2>
+        <>
+          <section className={styles.editorSection}>
+            <div className={styles.sectionHeading}>
+              <div>
+                <span className={styles.eyebrow}>Autor no identificado</span>
+                <h2>Documentar autor desconocido</h2>
+              </div>
+              <p>Úsalo solo cuando una Fuente permita afirmar que la obra es anónima o que su autor no está identificado.</p>
             </div>
-            <p>El Agente debe existir previamente en el Panel.</p>
-          </div>
+            <form action={addAnonymousImageAuthorshipAction} className={`${styles.panelCard} ${styles.editorForm}`}>
+              <input type="hidden" name="image_id" value={data.entity.id} />
+              <div className={styles.formActions}>
+                <small>No crea una Persona llamada «Anónimo». Registra la ausencia de autor conocido como un dato estructurado y luego permite vincular su Fuente.</small>
+                <button className={styles.secondaryButton} type="submit" disabled={hasActiveAnonymous}>
+                  {hasActiveAnonymous ? 'Autor desconocido ya documentado' : 'Registrar autor desconocido'}
+                </button>
+              </div>
+            </form>
+          </section>
 
-          <form action={addImageAuthorshipAction} className={`${styles.panelCard} ${styles.editorForm}`}>
-            <input type="hidden" name="image_id" value={data.entity.id} />
-            <div className={styles.formGrid}>
-              <EntityPicker
-                className={styles.fieldWide}
-                name="agent_entity_id"
-                items={data.candidates}
-                label="Buscar Agente"
-                placeholder="Persona, taller, empresa o institución…"
-                emptyLabel="Selecciona un Agente existente"
-              />
+          <section className={styles.editorSection}>
+            <div className={styles.sectionHeading}>
+              <div>
+                <span className={styles.eyebrow}>Buscar antes de crear</span>
+                <h2>Vincular Agente existente</h2>
+              </div>
+              <p>El Agente debe existir previamente en el Panel.</p>
             </div>
-            <AuthorshipFields />
-            <div className={styles.formActions}>
-              <small>«Autoría documentada» exige certeza documentada. Usa cronología textual para años o periodos sin fabricar una fecha exacta.</small>
-              <button className={styles.primaryButton} type="submit">Añadir autoría</button>
-            </div>
-          </form>
-        </section>
+
+            <form action={addImageAuthorshipAction} className={`${styles.panelCard} ${styles.editorForm}`}>
+              <input type="hidden" name="image_id" value={data.entity.id} />
+              <div className={styles.formGrid}>
+                <EntityPicker
+                  className={styles.fieldWide}
+                  name="agent_entity_id"
+                  items={data.candidates}
+                  label="Buscar Agente"
+                  placeholder="Persona, taller, empresa o institución…"
+                  emptyLabel="Selecciona un Agente existente"
+                />
+              </div>
+              <AuthorshipFields />
+              <div className={styles.formActions}>
+                <small>«Autoría documentada» exige certeza documentada. Usa cronología textual para años o periodos sin fabricar una fecha exacta.</small>
+                <button className={styles.primaryButton} type="submit">Añadir autoría</button>
+              </div>
+            </form>
+          </section>
+        </>
       ) : null}
     </>
   )

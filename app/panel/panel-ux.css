@@ -1,0 +1,430 @@
+[data-panel-shell] {
+  grid-template-columns: 260px minmax(0, 1fr);
+}
+
+[data-panel-main] {
+  --panel-editor-border: #d8e2eb;
+  --panel-editor-line: #e3eaf0;
+  --panel-editor-soft: #f7fafc;
+  font-size: 15px;
+}
+
+[data-panel-main] input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
+[data-panel-main] select,
+[data-panel-main] textarea {
+  min-height: 46px;
+  font-size: 14px !important;
+  line-height: 1.4;
+}
+
+[data-panel-main] textarea {
+  line-height: 1.55;
+}
+
+[data-panel-main] label > span,
+[data-panel-main] fieldset legend {
+  font-size: 12px !important;
+  line-height: 1.4;
+}
+
+[data-panel-main] p {
+  font-size: 15px !important;
+  line-height: 1.6;
+}
+
+[data-panel-main] small {
+  font-size: 12px !important;
+  line-height: 1.45;
+}
+
+[data-panel-main] h2 {
+  font-size: 24px !important;
+  line-height: 1.15;
+}
+
+[data-panel-main] h3 {
+  line-height: 1.25;
+}
+
+[data-panel-main] [data-panel-workspace-nav] + div {
+  padding-top: 36px !important;
+}
+
+[data-panel-main] [data-panel-workspace-nav] + div > header {
+  margin-bottom: 20px !important;
+}
+
+[data-panel-main] [class*="editorHeader"] {
+  margin-bottom: 20px !important;
+}
+
+[data-panel-main] [class*="breadcrumb"] {
+  gap: 10px;
+  font-size: 12.5px !important;
+  line-height: 1.35;
+}
+
+[data-panel-main] [class*="statusBadge"] {
+  min-height: 28px;
+  padding-inline: 10px;
+  font-size: 10px !important;
+}
+
+[data-panel-main] [class*="metricCard"] > span {
+  font-size: 13px !important;
+}
+
+[data-panel-main] [class*="metricCard"] small {
+  font-size: 11.5px !important;
+}
+
+[data-panel-main] section[aria-label="Cobertura de la extraordinaria"] {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+[data-panel-main] section[aria-label^="Cobertura"] {
+  gap: 10px;
+  margin-bottom: 26px;
+}
+
+[data-panel-main] section[aria-label^="Cobertura"] > [class*="metricCard"] {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  align-items: center;
+  min-width: 0;
+  min-height: 78px;
+  padding: 14px 16px;
+  column-gap: 13px;
+  row-gap: 2px;
+  border-color: var(--panel-editor-border);
+  box-shadow: none !important;
+}
+
+[data-panel-main] section[aria-label^="Cobertura"] > [class*="metricCard"] > strong {
+  grid-column: 1;
+  grid-row: 1 / 3;
+  min-width: 34px;
+  font-size: 28px !important;
+  text-align: center;
+}
+
+[data-panel-main] section[aria-label^="Cobertura"] > [class*="metricCard"] > span:first-child {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: end;
+  color: #4e6072;
+  font-weight: 800;
+}
+
+[data-panel-main] section[aria-label^="Cobertura"] > [class*="metricCard"] > small {
+  grid-column: 2;
+  grid-row: 2;
+  align-self: start;
+  min-width: 0;
+}
+
+[data-panel-main] section[aria-label^="Cobertura"] > .panelMetricLink {
+  grid-template-columns: auto minmax(0, 1fr) 28px;
+  padding-right: 16px;
+}
+
+[data-panel-main] section[aria-label^="Cobertura"] > .panelMetricLink .panelMetricArrow {
+  position: static;
+  grid-column: 3;
+  grid-row: 1 / 3;
+  align-self: center;
+  justify-self: end;
+  right: auto;
+  bottom: auto;
+}
+
+[data-panel-main] [class*="editorSection"] {
+  margin-bottom: 42px !important;
+}
+
+[data-panel-main] [class*="editorSection"] > [class*="sectionHeading"] {
+  margin-bottom: 12px !important;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--panel-editor-line);
+}
+
+[data-panel-main] [class*="editorSection"] > [class*="panelCard"],
+[data-panel-main] [class*="editorStack"] > [class*="editorItem"] {
+  border-color: var(--panel-editor-border);
+  box-shadow: none !important;
+}
+
+[data-panel-main] [class*="editorSection"] > form[class*="panelCard"][class*="editorForm"] {
+  gap: 22px !important;
+  padding: 22px 24px 0 !important;
+  overflow: hidden;
+  border-color: var(--panel-editor-border);
+  box-shadow: none !important;
+}
+
+[data-panel-main] [class*="editorSection"] > form[class*="panelCard"][class*="editorForm"] > [class*="formActions"] {
+  margin: 0 -24px;
+  padding: 16px 24px 18px;
+  border-top: 1px solid var(--panel-editor-line);
+  background: var(--panel-editor-soft);
+}
+
+[data-panel-main] [class*="editorStack"] {
+  gap: 12px !important;
+}
+
+[data-panel-main] [class*="editorStack"] > [class*="editorItem"] {
+  padding: 20px !important;
+}
+
+[data-panel-main] [class*="panelSubsection"] + [class*="panelSubsection"] {
+  margin-top: 26px !important;
+  padding-top: 22px !important;
+}
+
+[data-panel-main] [class*="colorFieldset"] {
+  border-color: var(--panel-editor-border);
+  background: var(--panel-editor-soft);
+}
+
+[data-panel-main] [class*="moduleList"] > div {
+  padding-block: 12px;
+}
+
+[data-panel-main] [class*="summaryGrid"] article {
+  border-color: var(--panel-editor-border) !important;
+  box-shadow: none !important;
+}
+
+[data-panel-main] [class*="brotherhoodList"] article {
+  position: relative;
+  margin-inline: -10px;
+  padding-inline: 10px;
+  border-radius: 11px;
+  transition: background .14s ease, box-shadow .14s ease;
+}
+
+[data-panel-main] [class*="brotherhoodList"] article:hover {
+  background: #f8fafc;
+}
+
+[data-panel-main] [class*="brotherhoodList"] article:has([class*="rowLink"]:focus-visible) {
+  background: #f4f8fb;
+  box-shadow: 0 0 0 3px rgb(18 58 103 / 9%);
+}
+
+[data-panel-main] [class*="listIdentity"] strong {
+  font-size: 15px !important;
+}
+
+[data-panel-main] [class*="listIdentity"] span {
+  font-size: 12px !important;
+}
+
+[data-panel-main] [class*="listIdentity"] small {
+  font-size: 11px !important;
+}
+
+[data-panel-main] [class*="brotherhoodList"] [class*="rowLink"]::before {
+  position: absolute;
+  inset: 0;
+  border-radius: 11px;
+  content: '';
+}
+
+[data-panel-main] [class*="brotherhoodList"] [class*="rowLink"]:focus-visible {
+  outline: none;
+}
+
+[data-panel-main] .panelMetricLink {
+  position: relative;
+  min-width: 0;
+  padding-right: 48px;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease, background .16s ease;
+}
+
+[data-panel-main] .panelMetricLink:hover {
+  border-color: #bfd0de;
+  background: #fbfdff;
+  box-shadow: 0 14px 36px rgb(15 39 66 / 9%);
+  transform: translateY(-2px);
+}
+
+[data-panel-main] section[aria-label^="Cobertura"] > .panelMetricLink:hover {
+  box-shadow: 0 8px 22px rgb(15 39 66 / 8%) !important;
+}
+
+[data-panel-main] .panelMetricOverlay {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  border-radius: inherit;
+}
+
+[data-panel-main] .panelMetricOverlay:focus-visible {
+  outline: 3px solid rgb(18 58 103 / 15%);
+  outline-offset: 3px;
+}
+
+[data-panel-main] .panelMetricArrow {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border-radius: 9px;
+  color: #123a67;
+  background: #edf4fa;
+  font-size: 14px !important;
+  font-weight: 900;
+  pointer-events: none;
+  transition: transform .16s ease, background .16s ease;
+}
+
+[data-panel-main] .panelMetricLink:hover .panelMetricArrow,
+[data-panel-main] .panelMetricLink:has(.panelMetricOverlay:focus-visible) .panelMetricArrow {
+  background: #e4eef6;
+  transform: translateX(2px);
+}
+
+[data-panel-main] [data-panel-error-recovery] {
+  width: min(680px, calc(100% - 32px));
+  margin: 9vh auto 0;
+  text-align: left;
+}
+
+[data-panel-main] [data-panel-error-recovery] p {
+  margin-bottom: 10px;
+}
+
+[data-panel-main] [data-panel-error-recovery] .panelErrorRecoveryNote {
+  display: block;
+  margin: 0 0 22px;
+  color: #68788a;
+  font-size: 12.5px !important;
+  line-height: 1.55;
+}
+
+[data-panel-main] [data-panel-error-recovery] .panelErrorRecoveryActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+@media (max-width: 1180px) {
+  [data-panel-shell] {
+    grid-template-columns: 224px minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  [data-panel-main] section[aria-label="Cobertura de la extraordinaria"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 860px) {
+  [data-panel-shell] {
+    display: block;
+    padding-bottom: 82px;
+  }
+
+  [data-panel-main] {
+    font-size: 14px;
+  }
+
+  [data-panel-main] [class*="pageWrap"] {
+    width: min(100% - 28px, 760px) !important;
+    padding: 28px 0 56px !important;
+  }
+
+  [data-panel-main] input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
+  [data-panel-main] select,
+  [data-panel-main] textarea {
+    min-height: 48px;
+    font-size: 16px !important;
+  }
+
+  [data-panel-main] p {
+    font-size: 14px !important;
+  }
+
+  [data-panel-main] [data-panel-workspace-nav] + div {
+    padding-top: 24px !important;
+  }
+
+  [data-panel-main] [class*="breadcrumb"] {
+    overflow-x: auto;
+    padding-bottom: 3px;
+    font-size: 12px !important;
+    white-space: nowrap;
+    scrollbar-width: none;
+  }
+
+  [data-panel-main] [class*="breadcrumb"]::-webkit-scrollbar {
+    display: none;
+  }
+
+  [data-panel-main] [class*="editorSection"] {
+    margin-bottom: 34px !important;
+  }
+
+  [data-panel-main] [class*="editorSection"] > form[class*="panelCard"][class*="editorForm"] {
+    gap: 18px !important;
+    padding: 18px 18px 0 !important;
+  }
+
+  [data-panel-main] [class*="editorSection"] > form[class*="panelCard"][class*="editorForm"] > [class*="formActions"] {
+    margin-inline: -18px;
+    padding: 15px 18px 18px;
+  }
+
+  [data-panel-main] [class*="editorStack"] > [class*="editorItem"] {
+    padding: 16px !important;
+  }
+
+  [data-panel-main] section[aria-label^="Cobertura"] > [class*="metricCard"] {
+    min-height: 70px;
+    padding: 12px 13px;
+    column-gap: 10px;
+  }
+
+  [data-panel-main] section[aria-label^="Cobertura"] > [class*="metricCard"] > strong {
+    min-width: 30px;
+    font-size: 24px !important;
+  }
+
+  [data-panel-main] section[aria-label^="Cobertura"] > .panelMetricLink {
+    padding-right: 13px;
+  }
+
+  [data-panel-main] .panelMetricLink {
+    padding-right: 44px;
+  }
+
+  [data-panel-main] .panelMetricArrow {
+    right: 14px;
+    bottom: 14px;
+  }
+
+  [data-panel-main] [data-panel-error-recovery] {
+    margin-top: 5vh;
+  }
+
+  [data-panel-main] [data-panel-error-recovery] .panelErrorRecoveryActions > * {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  [data-panel-main] section[aria-label="Cobertura de la extraordinaria"],
+  [data-panel-main] section[aria-label^="Cobertura"] {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,4 @@
+-- Reconciliación del historial remoto.
+-- Este cambio fue aplicado en Supabase con la versión 20260820234652.
+-- Su definición idempotente y reproducible se conserva en
+-- 20260821080000_paso_misterio_san_benito.sql.

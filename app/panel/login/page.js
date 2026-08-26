@@ -2,8 +2,12 @@ import { redirect } from 'next/navigation'
 import LoginForm from './LoginForm'
 import { getPanelUser } from '@/lib/panel/auth'
 import styles from '@/app/panel/panel.module.css'
+import authStyles from './auth.module.css'
 
-export const metadata = { title: 'Acceso al panel' }
+export const metadata = {
+  title: 'Acceso al panel',
+  robots: { index: false, follow: false },
+}
 export const dynamic = 'force-dynamic'
 
 export default async function PanelLoginPage({ searchParams }) {
@@ -24,6 +28,16 @@ export default async function PanelLoginPage({ searchParams }) {
           <h1>Todo está relacionado. También al editar.</h1>
           <p>Acceso privado para documentar, revisar y publicar el patrimonio cofrade.</p>
         </div>
+        {query?.reset === '1' ? (
+          <p className={authStyles.statusSuccess} role="status">
+            Contraseña actualizada. Ya puedes acceder con la nueva contraseña.
+          </p>
+        ) : null}
+        {query?.recovery === 'invalid' ? (
+          <p className={authStyles.statusError} role="alert">
+            El enlace de recuperación no es válido o ha caducado. Solicita uno nuevo.
+          </p>
+        ) : null}
         <LoginForm next={query?.next || '/panel'} />
         <small className={styles.loginNote}>Solo pueden entrar las cuentas autorizadas.</small>
       </section>
