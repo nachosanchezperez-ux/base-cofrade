@@ -72,7 +72,7 @@ export default async function ProcesionesDeGloriaPage() {
             <h1>Procesiones de Gloria en Sevilla</h1>
           </div>
           <p>
-            Fechas, horarios y recorridos de las próximas procesiones de Gloria de Sevilla capital y provincia. Las salidas ya celebradas pueden consultarse por año.
+            Fechas, horarios y recorridos de las próximas procesiones de Gloria de Sevilla capital y provincia. Las salidas anteriores pueden consultarse por año.
           </p>
         </header>
 
@@ -86,7 +86,7 @@ export default async function ProcesionesDeGloriaPage() {
           <div className={styles.stats}>
             <span><strong>{yearOutings.length}</strong> salidas</span>
             <span><strong>{upcomingCount}</strong> próximas</span>
-            <span><strong>{archiveCount}</strong> celebradas</span>
+            <span><strong>{archiveCount}</strong> anteriores</span>
             <span><strong>{capitalCount}</strong> capital · <strong>{provinceCount}</strong> provincia</span>
           </div>
         </div>
