@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import EntityPicker from '@/components/panel/EntityPicker'
+import OutingDirectImageUpload from '@/components/panel/brotherhood/OutingDirectImageUpload'
 import RelationSourcesEditor from '@/components/panel/RelationSourcesEditor'
 import { requirePanelUser } from '@/lib/panel/auth'
 import { getBrotherhoodOutingsEditorData } from '@/lib/panel/brotherhood-outings'
@@ -15,7 +16,6 @@ import {
   saveOutingMusicPositionAction,
   saveOutingParticipantAction,
   saveOutingScheduleItemAction,
-  uploadOutingHeroImageAction,
 } from './actions'
 import styles from '@/app/panel/panel.module.css'
 
@@ -38,9 +38,9 @@ function OutingFields({ item = null, data }) {
   const routeJson = item?.route ? JSON.stringify(item.route, null, 2) : ''
   return (
     <div className={styles.formGrid}>
-      <label className={styles.fieldWide}><span>Título público</span><input name="title" defaultValue={item?.title || ''} placeholder="Salida extraordinaria de…" /></label>
-      <label><span>Tipo de salida</span><input name="outing_type" defaultValue={item?.outing_type || 'Procesión extraordinaria'} required /></label>
-      <label><span>Carácter</span><select name="character" defaultValue={item?.character || 'extraordinary'}><option value="ordinary">Ordinaria</option><option value="extraordinary">Extraordinaria</option></select></label>
+      <label className={styles.fieldWide}><span>Título público</span><input name="title" defaultValue={item?.title || ''} placeholder="Vía Crucis, Rosario, Traslado, Procesión…" /></label>
+      <label><span>Tipo de salida</span><input name="outing_type" list="outing-types" defaultValue={item?.outing_type || ''} placeholder="Selecciona o escribe el tipo" required /></label>
+      <label><span>Carácter</span><select name="character" defaultValue={item?.character || 'ordinary'}><option value="ordinary">Ordinaria</option><option value="extraordinary">Extraordinaria</option></select></label>
       <label><span>Estado del evento</span><select name="event_status" defaultValue={item?.event_status || 'announced'}><option value="announced">Anunciada</option><option value="held">Celebrada</option><option value="cancelled">Cancelada</option></select></label>
       <label><span>Estado editorial</span><StatusSelect defaultValue={item?.status || 'draft'} /></label>
       <label><span>Fecha de salida</span><input name="outing_date" type="date" defaultValue={item?.outing_date || ''} /></label>
@@ -51,7 +51,7 @@ function OutingFields({ item = null, data }) {
       <label><span>Localidad</span><select name="municipality_id" defaultValue={item?.municipality_id || data.brotherhood.municipality_id || ''}><option value="">Sin localidad</option>{data.municipalities.map((municipality) => <option key={municipality.id} value={municipality.id}>{municipality.name} · {municipality.province}</option>)}</select></label>
       <label><span>Origen</span><select name="origin_place_id" defaultValue={item?.origin_place_id || ''}><option value="">Sin origen</option>{data.places.map((place) => <option key={place.id} value={place.id}>{place.name}</option>)}</select></label>
       <label><span>Destino</span><select name="destination_place_id" defaultValue={item?.destination_place_id || ''}><option value="">Sin destino</option>{data.places.map((place) => <option key={place.id} value={place.id}>{place.name}</option>)}</select></label>
-      <label><span>Serie anual vinculada</span><select name="outing_series_id" defaultValue={item?.outing_series_id || ''}><option value="">Sin serie vinculada</option>{data.series.map((series) => <option key={series.id} value={series.id}>{series.title}</option>)}</select></label>
+      <label><span>Salida habitual vinculada</span><select name="outing_series_id" defaultValue={item?.outing_series_id || ''}><option value="">Sin salida habitual vinculada</option>{data.series.map((series) => <option key={series.id} value={series.id}>{series.title}</option>)}</select></label>
       <label className={styles.fieldWide}><span>Motivo</span><input name="reason" defaultValue={item?.reason || ''} /></label>
       <label className={styles.fieldWide}><span>Recorrido resumido</span><textarea name="route_summary" defaultValue={item?.route_summary || ''} rows="3" /></label>
       <label className={styles.fieldWide}><span>Descripción pública</span><textarea name="description" defaultValue={item?.description || ''} rows="4" /></label>
@@ -76,10 +76,24 @@ export default async function BrotherhoodOutingsPage({ params, searchParams }) {
 
   return (
     <div className={styles.pageWrap}>
+      <datalist id="outing-types">
+        <option value="Estación de penitencia" />
+        <option value="Procesión de Gloria" />
+        <option value="Vía Crucis" />
+        <option value="Rosario público" />
+        <option value="Traslado" />
+        <option value="Romería" />
+        <option value="Subida" />
+        <option value="Bajada" />
+        <option value="Procesión sacramental" />
+        <option value="Procesión extraordinaria" />
+        <option value="Otra salida pública" />
+      </datalist>
+
       <header className={styles.editorHeader}>
-        <div className={styles.breadcrumb}><Link href="/panel/hermandades">Hermandades</Link><span>→</span><Link href={`/panel/hermandades/${id}`}>{data.brotherhood.popular_name || data.entity.name}</Link><span>→</span><strong>Salidas concretas</strong></div>
+        <div className={styles.breadcrumb}><Link href="/panel/hermandades">Hermandades</Link><span>→</span><Link href={`/panel/hermandades/${id}`}>{data.brotherhood.popular_name || data.entity.name}</Link><span>→</span><strong>Salidas</strong></div>
         <div className={styles.editorTitleRow}>
-          <div><span className={styles.eyebrow}>Agenda y extraordinarias</span><h1>Salidas concretas</h1><p>Fecha, itinerario, titulares, horarios y música de cada salida documentada.</p></div>
+          <div><span className={styles.eyebrow}>Agenda de la Hermandad</span><h1>Salidas</h1><p>Estación de penitencia, procesiones de Gloria, Vía Crucis, rosarios, traslados, romerías, subidas, bajadas y cualquier otra salida pública documentada.</p></div>
           <Link className={styles.secondaryButton} href={`/hermandades/${data.entity.slug}#salidas`} target="_blank" rel="noreferrer">Ver en el Front ↗</Link>
         </div>
       </header>
@@ -87,8 +101,25 @@ export default async function BrotherhoodOutingsPage({ params, searchParams }) {
       {savedMessage ? <div className={styles.savedNotice} role="status">{savedMessage}</div> : null}
       {!canEdit ? <div className={styles.readOnlyNotice}>Tu perfil tiene acceso de consulta.</div> : null}
 
+      <section className={styles.editorSection} id="habituales">
+        <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>Calendario habitual</span><h2>Salidas habituales</h2></div><p>Lo que la Hermandad celebra de forma ordinaria, aunque cada edición tenga después su fecha, recorrido y acompañamientos concretos.</p></div>
+        <div className={styles.panelCard}>
+          <div className={styles.listHeading}><strong>{data.series.length} salida{data.series.length === 1 ? '' : 's'} habitual{data.series.length === 1 ? '' : 'es'}</strong><small>Procesiones, estaciones de penitencia, rosarios, Vía Crucis, traslados, romerías y otros actos del calendario propio.</small></div>
+          {data.series.length ? (
+            <div className={styles.editorStack}>
+              {data.series.map((series) => (
+                <article className={styles.editorItem} key={series.id}>
+                  <div className={styles.itemHeading}><div><span className={styles.eyebrow}>{series.outing_type || 'Salida habitual'}</span><h3>{series.title}</h3></div><span className={`${styles.statusBadge} ${styles[series.status]}`}>{STATUS_LABELS[series.status] || series.status}</span></div>
+                </article>
+              ))}
+            </div>
+          ) : <p className={styles.emptyText}>Todavía no se ha definido el calendario habitual de salidas de esta Hermandad.</p>}
+          <div className={styles.formActions}><small>La recurrencia es un dato interno; en el Panel se gestiona siempre como una Salida de la Hermandad.</small><Link className={styles.secondaryButton} href={`${returnPath}/recurrentes`}>Gestionar salidas habituales</Link></div>
+        </div>
+      </section>
+
       <section className={styles.editorSection}>
-        <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>Histórico</span><h2>Salidas registradas</h2></div><p>{data.outings.length} salida{data.outings.length === 1 ? '' : 's'} activa{data.outings.length === 1 ? '' : 's'}.</p></div>
+        <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>Ediciones concretas</span><h2>Salidas registradas</h2></div><p>{data.outings.length} salida{data.outings.length === 1 ? '' : 's'} activa{data.outings.length === 1 ? '' : 's'} con fecha, histórico o guía propia.</p></div>
         <div className={styles.editorStack}>
           {data.outings.map((outing) => (
             <article className={styles.editorItem} id={`outing-${outing.id}`} key={outing.id}>
@@ -97,18 +128,20 @@ export default async function BrotherhoodOutingsPage({ params, searchParams }) {
                 <span className={`${styles.statusBadge} ${styles[outing.status]}`}>{STATUS_LABELS[outing.status]}</span>
               </div>
 
-              {outing.hero_image_path ? <img src={outing.hero_image_path} alt={outing.hero_image_alt || outing.title || outing.outing_type} style={{ width: '100%', maxHeight: 280, objectFit: 'cover', borderRadius: 12, marginBottom: 18 }} /> : null}
+              {!canEdit && outing.hero_image_path ? <img src={outing.hero_image_path} alt={outing.hero_image_alt || outing.title || outing.outing_type} style={{ width: '100%', maxHeight: 280, objectFit: 'cover', borderRadius: 12, marginBottom: 18 }} /> : null}
 
-              {canEdit ? <form action={saveOutingAction} className={styles.editorForm}><input type="hidden" name="brotherhood_id" value={id} /><input type="hidden" name="outing_id" value={outing.id} /><OutingFields item={outing} data={data} /><div className={styles.formActions}><small>Los datos publicados alimentan la ficha de la Hermandad y, si es extraordinaria futura, la Home.</small><button className={styles.secondaryButton} type="submit">Guardar salida</button></div></form> : null}
+              {canEdit ? <form action={saveOutingAction} className={styles.editorForm}><input type="hidden" name="brotherhood_id" value={id} /><input type="hidden" name="outing_id" value={outing.id} /><OutingFields item={outing} data={data} /><div className={styles.formActions}><small>Los datos publicados alimentan la ficha de la Hermandad y las agendas que correspondan.</small><button className={styles.secondaryButton} type="submit">Guardar salida</button></div></form> : null}
 
               {canEdit ? (
                 <div className={styles.panelSubsection}>
-                  <div className={styles.subsectionHeading}><div><span className={styles.eyebrow}>Portada</span><h4>Imagen principal</h4></div></div>
-                  <form action={uploadOutingHeroImageAction} className={styles.editorForm}>
-                    <input type="hidden" name="brotherhood_id" value={id} /><input type="hidden" name="outing_id" value={outing.id} />
-                    <div className={styles.formGrid}><label className={styles.fieldWide}><span>Archivo</span><input name="file" type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/avif" required /></label><label><span>Texto alternativo</span><input name="hero_image_alt" defaultValue={outing.hero_image_alt || outing.title || outing.outing_type} required /></label><label><span>Crédito</span><input name="hero_image_credit" defaultValue={outing.hero_image_credit || ''} /></label></div>
-                    <div className={styles.formActions}><small>Actualiza la imagen usada también por el bloque de extraordinarias de la Home.</small><button className={styles.secondaryButton} type="submit">Subir imagen</button></div>
-                  </form>
+                  <OutingDirectImageUpload
+                    brotherhoodId={id}
+                    outingId={outing.id}
+                    title={outing.title || outing.outing_type}
+                    currentSrc={outing.hero_image_path || ''}
+                    currentAlt={outing.hero_image_alt || outing.title || outing.outing_type}
+                    currentCredit={outing.hero_image_credit || ''}
+                  />
                 </div>
               ) : null}
 
@@ -175,7 +208,7 @@ export default async function BrotherhoodOutingsPage({ params, searchParams }) {
         </div>
       </section>
 
-      {canEdit ? <section className={styles.editorSection}><div className={styles.sectionHeading}><div><span className={styles.eyebrow}>Nueva salida</span><h2>Registrar salida concreta</h2></div><p>Después podrás añadir titulares, horarios, Bandas, imagen y Fuentes.</p></div><form action={saveOutingAction} className={`${styles.panelCard} ${styles.editorForm}`}><input type="hidden" name="brotherhood_id" value={id} /><OutingFields data={data} /><div className={styles.formActions}><small>Puede quedar en borrador hasta completar la guía.</small><button className={styles.primaryButton} type="submit">Crear salida</button></div></form></section> : null}
+      {canEdit ? <section className={styles.editorSection}><div className={styles.sectionHeading}><div><span className={styles.eyebrow}>Nueva salida</span><h2>Registrar una salida</h2></div><p>Añade cualquier salida concreta de la Hermandad; después podrás completar titulares, horarios, Bandas, imagen y Fuentes.</p></div><form action={saveOutingAction} className={`${styles.panelCard} ${styles.editorForm}`}><input type="hidden" name="brotherhood_id" value={id} /><OutingFields data={data} /><div className={styles.formActions}><small>Puede quedar en borrador hasta completar la documentación.</small><button className={styles.primaryButton} type="submit">Crear salida</button></div></form></section> : null}
     </div>
   )
 }
