@@ -109,6 +109,10 @@ Dirección debe completar responsable, email/contacto público y decisiones jur�
 
 #385 reutiliza relaciones y modelos existentes; no altera constraints ni migraciones del grafo.
 
+El corte editorial del 27 de agosto mantiene `20` Imágenes publicadas sin recurso visual directo. Todas conservan Fuente y autoría estructurada, por lo que siguen siendo carencias de cobertura y no relaciones rotas. La autoría original de `Gloria a ti · adaptación para banda` quedó vinculada a `J. Arriaga`; permanece pendiente identificar con evidencia inequívoca al adaptador de 2016. Solo `El Descendimiento` continúa como Marcha publicada sin ningún autor publicado.
+
+Apple Music conserva `46` lanzamientos enlazados: `34` llegan directamente al lanzamiento y `12` mantienen temporalmente el perfil oficial de la banda por falta de coincidencia exacta. El detalle y la cola editorial están documentados en [`AUDITORIA-EDITORIAL-APPLE-MUSIC-2026-08-27.md`](./AUDITORIA-EDITORIAL-APPLE-MUSIC-2026-08-27.md).
+
 ## Importación
 
 - #49 permanece **cerrada sin fusionar**.
