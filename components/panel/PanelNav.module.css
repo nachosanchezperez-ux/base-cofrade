@@ -186,29 +186,31 @@
   background: rgb(255 255 255 / 10%);
 }
 
-.navMark {
-  display: grid;
-  place-items: center;
-  width: 26px;
-  min-width: 26px;
-  height: 26px;
-  border: 1px solid rgb(255 255 255 / 11%);
-  border-radius: 8px;
-  color: rgb(255 255 255 / 82%);
-  background: rgb(255 255 255 / 5%);
-  font-size: 10px;
-  font-weight: 900;
-  letter-spacing: -.02em;
+.navActive::after {
+  width: 6px;
+  height: 6px;
+  margin-left: auto;
+  flex: 0 0 6px;
+  border-radius: 50%;
+  background: var(--panel-red);
+  content: '';
 }
 
-.navActive .navMark {
-  border-color: rgb(255 255 255 / 20%);
+.navMark {
+  display: grid;
+  width: 27px;
+  height: 27px;
+  flex: 0 0 27px;
+  place-items: center;
+  border: 1px solid rgb(255 255 255 / 14%);
+  border-radius: 8px;
   color: #fff;
-  background: rgb(183 31 55 / 35%);
+  font-size: 9px;
+  font-weight: 850;
+  line-height: 1;
 }
 
 .navLabel {
-  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -216,76 +218,69 @@
 
 .sidebarFoot {
   display: grid;
-  gap: 12px;
+  gap: 14px;
   margin-top: auto;
-  padding-top: 22px;
+  padding-top: 26px;
 }
 
 .userCard {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 11px;
   min-width: 0;
+}
+
+.sidebarFoot .userCard {
+  padding-top: 18px;
+  border-top: 1px solid rgb(255 255 255 / 10%);
 }
 
 .avatar {
   display: grid;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
   place-items: center;
-  width: 34px;
-  min-width: 34px;
-  height: 34px;
   border-radius: 50%;
   color: #fff;
-  background: rgb(183 31 55 / 72%);
-  font-size: 10px;
-  font-weight: 900;
+  background: var(--panel-red);
+  font-size: 11px;
+  font-weight: 800;
 }
 
 .userCopy {
   display: grid;
+  gap: 2px;
   min-width: 0;
 }
 
-.userCopy strong,
-.userCopy small {
+.userCopy strong {
   overflow: hidden;
+  font-size: 13px;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.userCopy strong {
-  font-size: 12px;
-}
-
 .userCopy small {
-  margin-top: 2px;
-  color: rgb(255 255 255 / 48%);
-  font-size: 9.5px;
+  color: rgb(255 255 255 / 55%);
+  font-size: 10px;
 }
 
 .signOut,
 .mobileSignOut {
-  width: 100%;
-  min-height: 38px;
-  border: 1px solid rgb(255 255 255 / 10%);
-  border-radius: 10px;
-  color: rgb(255 255 255 / 64%);
-  background: transparent;
+  padding: 0;
+  border: 0;
+  background: none;
   font: inherit;
-  font-size: 11px;
-  font-weight: 750;
   cursor: pointer;
 }
 
-.signOut:hover,
-.signOut:focus-visible,
-.mobileSignOut:hover,
-.mobileSignOut:focus-visible {
-  border-color: rgb(255 255 255 / 20%);
-  outline: none;
-  color: #fff;
-  background: rgb(255 255 255 / 6%);
+.signOut {
+  color: rgb(255 255 255 / 52%);
+  font-size: 11px;
 }
+
+.signOut:hover { color: #fff; }
 
 .mobileBar,
 .mobileBackdrop,
@@ -298,22 +293,87 @@
   width: 1px;
   height: 1px;
   padding: 0;
-  margin: -1px;
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
 }
 
-@media (max-width: 960px) {
+@media (max-width: 1180px) {
   .sidebar {
-    position: static;
-    width: auto;
+    padding: 22px 14px 18px;
+  }
+
+  .brandCopy {
+    font-size: 18px;
+  }
+
+  .brandCopy small {
+    font-size: 8.5px;
+  }
+
+  .quickSearch {
+    margin-top: 19px;
+  }
+
+  .quickCreate {
+    margin-top: 8px;
+  }
+
+  .quickSearch kbd {
+    display: none;
+  }
+
+  .desktopNav {
+    gap: 16px;
+    margin-top: 20px;
+  }
+
+  .groupLabel {
+    padding-inline: 9px;
+    font-size: 8px;
+  }
+
+  .navLink {
+    gap: 9px;
+    min-height: 39px;
+    padding: 7px 8px;
+    font-size: 12px;
+  }
+
+  .navMark {
+    width: 25px;
+    height: 25px;
+    flex-basis: 25px;
+    font-size: 8px;
+  }
+
+  .avatar {
+    width: 34px;
+    height: 34px;
+    flex-basis: 34px;
+  }
+
+  .userCopy strong {
+    font-size: 11.5px;
+  }
+}
+
+@media (max-width: 860px) {
+  .sidebar {
+    position: fixed;
+    z-index: 60;
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: block;
+    width: 100%;
     min-height: 0;
-    height: auto;
+    height: 72px;
     padding: 0;
     overflow: visible;
-    background: none;
+    box-shadow: 0 -10px 30px rgb(5 20 35 / 18%);
   }
 
   .panelBrand,
@@ -324,37 +384,29 @@
   }
 
   .mobileBar {
-    position: fixed;
-    right: 10px;
-    bottom: calc(8px + env(safe-area-inset-bottom));
-    left: 10px;
-    z-index: 80;
+    position: relative;
+    z-index: 3;
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 2px;
-    min-height: 62px;
-    padding: 5px;
-    border: 1px solid rgb(15 45 77 / 10%);
-    border-radius: 18px;
-    background: rgb(255 255 255 / 96%);
-    box-shadow: 0 14px 45px rgb(10 31 52 / 18%);
-    backdrop-filter: blur(16px);
+    width: 100%;
+    height: 72px;
+    padding: 6px 7px 8px;
+    background: linear-gradient(155deg, #102e4f 0%, #0b2037 100%);
   }
 
   .mobilePrimaryLink,
   .mobileCommandButton,
   .mobileMenuButton {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 3px;
+    display: grid;
     min-width: 0;
-    min-height: 50px;
-    padding: 4px 2px;
+    align-content: center;
+    justify-items: center;
+    gap: 3px;
+    min-height: 56px;
+    padding: 3px 3px;
     border: 0;
-    border-radius: 12px;
-    color: #6c7887;
+    border-radius: 10px;
+    color: rgb(255 255 255 / 68%);
     background: transparent;
     font: inherit;
     text-decoration: none;
@@ -362,59 +414,73 @@
   }
 
   .mobileCommandButton:disabled {
-    opacity: .38;
+    opacity: .35;
     cursor: not-allowed;
   }
 
   .mobilePrimaryLink .navMark,
   .mobileCommandButton .navMark,
   .mobileMenuButton .navMark {
-    width: 26px;
-    min-width: 26px;
-    height: 22px;
-    border: 0;
-    color: currentColor;
-    background: transparent;
-    font-size: 16px;
+    width: 25px;
+    height: 25px;
+    flex-basis: 25px;
+    margin: 0;
+    border-radius: 7px;
+    font-size: 9px;
   }
 
   .mobilePrimaryLink .navLabel,
   .mobileCommandButton .navLabel,
   .mobileMenuButton .navLabel {
-    max-width: 100%;
-    font-size: 9.5px;
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip: auto;
+    color: inherit;
+    font-size: 8.5px;
     font-weight: 800;
+    line-height: 1;
+    white-space: nowrap;
   }
 
   .mobilePrimaryLink.navActive,
   .mobileMenuButtonActive {
-    color: #153b69;
-    background: #f0f5fa;
+    color: #fff;
+    background: rgb(255 255 255 / 9%);
+  }
+
+  .mobilePrimaryLink.navActive::after {
+    display: none;
   }
 
   .mobileBackdrop {
     position: fixed;
-    inset: 0;
-    z-index: 81;
+    z-index: 1;
+    inset: 0 0 72px;
     display: block;
+    width: 100%;
     border: 0;
-    background: rgb(5 20 34 / 45%);
+    background: rgb(5 18 31 / 48%);
+    backdrop-filter: blur(2px);
   }
 
   .mobileMenu {
     position: fixed;
-    right: 10px;
-    bottom: calc(78px + env(safe-area-inset-bottom));
-    left: 10px;
-    z-index: 82;
-    display: grid;
-    grid-template-rows: auto auto minmax(0, 1fr) auto;
-    max-height: min(72vh, 650px);
-    overflow: hidden;
-    border: 1px solid #dde6ef;
-    border-radius: 22px;
+    z-index: 2;
+    right: 0;
+    bottom: 72px;
+    left: 0;
+    display: block;
+    max-height: min(76vh, 680px);
+    padding: 18px 16px 16px;
+    overflow-y: auto;
+    border: 1px solid #dfe7ef;
+    border-bottom: 0;
+    border-radius: 20px 20px 0 0;
+    color: var(--panel-ink);
     background: #fff;
-    box-shadow: 0 22px 70px rgb(10 31 52 / 28%);
+    box-shadow: 0 -18px 46px rgb(5 20 35 / 24%);
   }
 
   .mobileMenuHead {
@@ -422,122 +488,138 @@
     align-items: center;
     justify-content: space-between;
     gap: 16px;
-    padding: 18px 18px 10px;
+    margin-bottom: 13px;
   }
 
   .mobileMenuHead > div {
     display: grid;
-    gap: 2px;
+    gap: 3px;
   }
 
   .mobileMenuHead span {
-    color: #8a96a4;
-    font-size: 9px;
+    color: var(--panel-red);
+    font-size: 8px;
     font-weight: 850;
-    letter-spacing: .13em;
+    letter-spacing: .16em;
     text-transform: uppercase;
   }
 
   .mobileMenuHead strong {
-    color: #153b69;
-    font-size: 18px;
+    color: var(--panel-navy);
+    font-size: 20px;
+    letter-spacing: -.035em;
   }
 
-  .mobileMenuHead > button {
+  .mobileMenuHead button {
     display: grid;
+    width: 36px;
+    height: 36px;
     place-items: center;
-    width: 38px;
-    height: 38px;
-    border: 0;
-    border-radius: 50%;
-    color: #536273;
-    background: #f2f5f8;
+    border: 1px solid var(--panel-line);
+    border-radius: 10px;
+    color: var(--panel-muted);
+    background: #fff;
+    font: inherit;
     font-size: 22px;
     cursor: pointer;
   }
 
   .mobileSearch {
-    position: relative;
     display: block;
-    padding: 0 14px 10px;
+    margin-bottom: 17px;
   }
 
   .mobileSearch input {
     width: 100%;
-    min-height: 44px;
+    min-height: 46px;
     padding: 10px 13px;
-    border: 1px solid #dce5ed;
+    border: 1px solid #cbd8e3;
     border-radius: 12px;
     outline: none;
-    color: #1a334d;
+    color: var(--panel-ink);
     background: #f8fafc;
     font: inherit;
     font-size: 16px;
   }
 
   .mobileSearch input:focus {
-    border-color: #a6bbce;
+    border-color: var(--panel-blue);
     background: #fff;
-    box-shadow: 0 0 0 3px rgb(21 59 105 / 8%);
+    box-shadow: 0 0 0 3px rgb(18 58 103 / 9%);
   }
 
   .mobileGroups {
     display: grid;
-    align-content: start;
-    gap: 10px;
-    padding: 2px 14px 12px;
-    overflow-y: auto;
-    overscroll-behavior: contain;
+    gap: 18px;
   }
 
   .mobileGroup {
     display: grid;
-    gap: 4px;
+    gap: 8px;
   }
 
   .mobileGroupLabel {
-    padding: 0 4px;
-    color: #8290a0;
+    padding: 0;
+    color: #8190a0;
+    font-size: 8px;
   }
 
   .mobileGroupLinks {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 5px;
+    gap: 8px;
   }
 
   .mobileGroupLinks .navLink {
-    min-height: 44px;
-    padding: 6px 8px;
-    border: 1px solid #e5ebf1;
-    border-radius: 11px;
-    color: #31475d;
-    background: #fff;
-    font-size: 11px;
+    justify-content: flex-start;
+    gap: 9px;
+    min-height: 49px;
+    padding: 9px 10px;
+    border: 1px solid #e1e8ef;
+    border-radius: 12px;
+    color: var(--panel-blue);
+    background: #f8fafc;
   }
 
   .mobileGroupLinks .navLink:hover,
-  .mobileGroupLinks .navLink:focus-visible,
   .mobileGroupLinks .navActive {
-    color: #153b69;
-    background: #f4f7fa;
+    border-color: #c8d7e5;
+    color: var(--panel-navy);
+    background: #edf4fa;
   }
 
   .mobileGroupLinks .navMark {
-    width: 24px;
-    min-width: 24px;
-    height: 24px;
-    border-color: #e1e8ef;
-    color: #153b69;
-    background: #f7f9fb;
-    font-size: 9px;
+    border-color: #d3dfeb;
+    color: var(--panel-blue);
+    background: #fff;
+  }
+
+  .mobileGroupLinks .navLabel {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip: auto;
+    color: inherit;
+    font-size: 11px;
+    white-space: normal;
+  }
+
+  .mobileGroupLinks .navActive::after {
+    position: static;
+    display: block;
+    margin-left: auto;
+    background: var(--panel-red);
   }
 
   .mobileEmpty {
     margin: 0;
-    padding: 24px 8px;
-    color: #748292;
-    font-size: 12px;
+    padding: 18px;
+    border: 1px dashed #d4dee7;
+    border-radius: 12px;
+    color: var(--panel-muted);
+    background: #fafcfd;
+    font-size: 13px;
     text-align: center;
   }
 
@@ -545,40 +627,51 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
-    padding: 11px 14px calc(11px + env(safe-area-inset-bottom));
-    border-top: 1px solid #edf1f5;
-    background: #fafbfd;
-  }
-
-  .mobileUserRow .userCard {
-    min-width: 0;
+    gap: 14px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--panel-line);
   }
 
   .mobileUserRow .avatar {
-    width: 32px;
-    min-width: 32px;
-    height: 32px;
+    width: 34px;
+    height: 34px;
+    flex-basis: 34px;
+  }
+
+  .mobileUserRow .userCopy {
+    display: grid;
   }
 
   .mobileUserRow .userCopy strong {
-    color: #263d55;
+    color: var(--panel-navy);
+    font-size: 11px;
   }
 
   .mobileUserRow .userCopy small {
-    color: #8290a0;
-  }
-
-  .mobileUserRow form {
-    flex: 0 0 auto;
+    color: var(--panel-muted);
+    font-size: 9px;
   }
 
   .mobileSignOut {
-    width: auto;
-    min-height: 38px;
-    padding: 0 11px;
-    border-color: #dde5ec;
-    color: #667485;
-    background: #fff;
+    color: #8b5360;
+    font-size: 10px;
+    font-weight: 750;
+  }
+}
+
+@media (max-width: 420px) {
+  .mobileBar {
+    padding-inline: 3px;
+  }
+
+  .mobilePrimaryLink .navLabel,
+  .mobileCommandButton .navLabel,
+  .mobileMenuButton .navLabel {
+    font-size: 7.5px;
+  }
+
+  .mobileGroupLinks {
+    grid-template-columns: 1fr;
   }
 }
