@@ -1,4 +1,4 @@
-:global(#hc-app){--hc-app-header-height:64px}
+:global(#hc-app){--hc-app-header-height:70px}
 
 .header{
   position:sticky;
@@ -10,12 +10,12 @@
   transition:box-shadow .2s ease;
 }
 .scrolled{box-shadow:0 8px 28px rgba(15,39,66,.07)}
-.inner{min-height:62px;display:flex;align-items:center;justify-content:space-between;gap:18px}
-.brand{display:flex;align-items:center;gap:10px;white-space:nowrap;min-width:0}
+.inner{min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:22px}
+.brand{display:flex;align-items:center;gap:14px;white-space:nowrap;min-width:0}
 .brandRail{display:flex;align-items:center;gap:5px;flex:0 0 auto}
-.brandLine{width:24px;height:3px;border-radius:999px;background:#b71f37}
-.brandNode{width:5px;height:5px;border-radius:50%;background:#b71f37}
-.brandWord{display:inline-flex;align-items:baseline;gap:5px;font-size:16px;letter-spacing:-.015em;color:#123a67}
+.brandLine{width:28px;height:3px;border-radius:999px;background:#b71f37}
+.brandNode{width:6px;height:6px;border-radius:50%;background:#b71f37}
+.brandWord{display:inline-flex;align-items:baseline;gap:6px;font-size:18px;letter-spacing:-.015em;color:#123a67}
 .brandWord strong{font-weight:800;color:#151b23}
 .brandWord span{font-weight:500;color:#123a67}
 .desktopNav{display:none;align-items:center;gap:20px}
@@ -60,10 +60,10 @@
 :global(#hc-app #enciclopedia){scroll-margin-top:calc(var(--hc-app-header-height) + 14px)}
 
 @media(max-width:390px){
-  .inner{gap:12px}
-  .brand{gap:9px}
-  .brandLine{width:21px}
-  .brandWord{gap:4px;font-size:15px}
+  .inner{gap:14px}
+  .brand{gap:10px}
+  .brandLine{width:23px}
+  .brandWord{gap:5px;font-size:17px}
 }
 
 @media(min-width:860px){
@@ -73,7 +73,6 @@
   .inner{min-height:76px;gap:26px}
   .brand{gap:15px}
   .brandLine{width:30px}
-  .brandNode{width:6px;height:6px}
   .brandWord{font-size:19px}
 }
 
