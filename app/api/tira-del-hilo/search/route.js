@@ -16,12 +16,8 @@ export async function GET(request) {
   try {
     const items = prioritizeHiloNavigationItems(await searchPublicHiloEntities(term, 8))
     return NextResponse.json({ items }, { headers: { 'Cache-Control': 'no-store' } })
-  } catch (error) {
-    console.error('[Hilo Cofrade] Error en autocompletado de Tira del hilo', {
-      rawTerm,
-      term,
-      error: error instanceof Error ? error.message : String(error),
-    })
+  } catch {
+    console.error('[Hilo Cofrade] Error en autocompletado de Tira del hilo')
     return NextResponse.json({ items: [] }, { status: 200, headers: { 'Cache-Control': 'no-store' } })
   }
 }
