@@ -419,6 +419,38 @@
 .editorForm textarea,
 .movementForm textarea { min-height: 80px; resize: vertical; }
 
+.legalWarning {
+  display: grid;
+  gap: 5px;
+  margin-bottom: 18px;
+  padding: 14px 16px;
+  border: 1px solid #e3c36e;
+  border-radius: 10px;
+  color: #5f4912;
+  background: #fff8df;
+}
+
+.legalWarning strong { font-size: 12px; }
+.legalWarning span { font-size: 11px; line-height: 1.55; }
+.legalDocument { min-width: 0; }
+.editorForm .legalTextarea {
+  min-height: 520px;
+  overflow-wrap: normal;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+.legalPreview {
+  max-width: 100%;
+  margin: 18px 0 0;
+  overflow: auto;
+  color: var(--panel-ink);
+  font: 12px/1.65 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
 .filters input:focus,
 .filters select:focus,
 .field input:focus,
