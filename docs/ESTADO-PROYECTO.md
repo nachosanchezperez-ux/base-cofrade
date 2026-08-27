@@ -4,19 +4,20 @@
 
 ## Estado verificado
 
-- Revisión: **27 de agosto de 2026 · Search Console, sitemap y cierre de rutas públicas**.
+- Revisión: **27 de agosto de 2026 · Apple Music exacta y verificación editorial**.
 - Repositorio: `nachosanchezperez-ux/base-cofrade`.
 - Rama principal: `main`.
-- Último `main` funcional validado: `c6a15a9da7a82c2313ec98a392f30a9fee7244b4` — **Buscador público · exige ficha especializada antes de enlazar (#395)**.
-- Producción: `dpl_9b7yQaUfdLcLvdrLDBP3ZZYUPJMq` → **READY**, región `dub1`, commit exacto `c6a15a9`.
+- Último `main` validado: `394e3b31d3b5f071c54489ba048b41a374f6b48a` — **Docs · registra Search Console y salud pública (#396)**.
+- Producción: `dpl_EQvX8tLwfAZxG8zphFeMR6qA8f4x` → **READY**, región `dub1`, commit exacto `394e3b3`.
 - Alias verificados: `hilocofrade.es`, `www.hilocofrade.es`, alias principal de Vercel y alias de `main`.
-- Runtime del deployment actual: **6 peticiones de comprobación con HTTP 200 y 0 eventos `error/fatal`**.
+- Runtime del deployment actual: **sin errores agrupados ni eventos `error/fatal` en la última hora verificada**.
 - PR #393: **fusionada**; excluye de sitemap, directorios y enlaces de Bandas las entidades sin ficha pública.
 - PR #395: **fusionada**; impide que el buscador público enlace entidades navegables sin ficha especializada.
+- PR #396: **fusionada**; registra la evidencia de Search Console, sitemap y salud pública.
 - PR #394: **abierta y no fusionada**; cabeceras de identidad pendientes de matriz visual exacta.
 - #383 y #49: **cerradas sin fusionar**; no deben reabrirse sin decisión expresa de Dirección.
 - Supabase: `Hilocofrade` (`kcevwkucqzcyrqaimyhl`) → **ACTIVE_HEALTHY**, región `eu-west-1`, Postgres `17.6.1.155`, plan de organización **Free**.
-- Migraciones: **178/178** entre Git y Supabase, hasta `20260827002425 index_legal_drafts_updated_by`. #393 y #395 no añadieron migraciones, cambios de esquema ni cambios RLS.
+- Migraciones: **178/178** entre Git y Supabase, hasta `20260827002425 index_legal_drafts_updated_by`. #393, #395 y #396 no añadieron migraciones, cambios de esquema ni cambios RLS.
 - Suite de `main`: **372/372 tests**. Build Next.js `16.3`/Turbopack: **correcto**.
 
 ## Primera edición
@@ -36,8 +37,8 @@ Auth y Legal permanecen como dependencias externas/documentales. El cierre técn
 
 - `npm test`: **372/372** en `main` tras #395.
 - `npm run build`: **correcto**.
-- Producción: `dpl_9b7yQaUfdLcLvdrLDBP3ZZYUPJMq` READY en `dub1`.
-- Runtime: 0 `error/fatal` en la comprobación posterior al despliegue.
+- Producción: `dpl_EQvX8tLwfAZxG8zphFeMR6qA8f4x` READY en `dub1`.
+- Runtime: 0 errores agrupados y 0 `error/fatal` en la última hora verificada.
 - Panel protegido; APIs excluidas y rutas de diagnóstico retiradas.
 - Front público stateless/anon y filtros de publicación conservados.
 - RLS: **75/75 tablas públicas con RLS activa** según la última auditoría canónica.
@@ -52,7 +53,7 @@ Auth y Legal permanecen como dependencias externas/documentales. El cierre técn
 
 - `/panel` mantiene autenticación y `noindex, nofollow`.
 - La protección contra contraseñas filtradas continúa **🟣 BLOQUEADA POR EL PLAN FREE DE SUPABASE**; requiere Pro o superior y no se declara activada.
-- #393 y #395 no modificaron Auth, funciones `SECURITY DEFINER`, políticas ni esquema.
+- #393, #395 y #396 no modificaron Auth, funciones `SECURITY DEFINER`, políticas ni esquema.
 
 ## Legal, privacidad y contacto
 
@@ -98,7 +99,7 @@ La cifra de `188` páginas descubiertas es la última lectura de Search Console;
 
 ## Apple Music
 
-Apple Music conserva `46` lanzamientos enlazados: `34` llegan directamente al lanzamiento y `12` mantienen temporalmente el perfil oficial de la banda por falta de coincidencia exacta. El detalle y la cola editorial están documentados en [`AUDITORIA-EDITORIAL-APPLE-MUSIC-2026-08-27.md`](./AUDITORIA-EDITORIAL-APPLE-MUSIC-2026-08-27.md).
+Apple Music conserva `46` lanzamientos publicados enlazados: `40` llegan directamente al álbum, EP o sencillo y `6` mantienen temporalmente el perfil oficial de la banda por discrepancias de artista, título o año. Otros `6` singles de Tres Caídas están en estado `review`, ya preenlazados a su lanzamiento exacto y correctamente excluidos de producción. El detalle y la cola editorial están documentados en [`AUDITORIA-EDITORIAL-APPLE-MUSIC-2026-08-27.md`](./AUDITORIA-EDITORIAL-APPLE-MUSIC-2026-08-27.md).
 
 ## Importación
 
@@ -119,4 +120,4 @@ Apple Music conserva `46` lanzamientos enlazados: `34` llegan directamente al la
 
 Ejecutar la matriz `390 / 768 / 1024 / 1440` sobre producción y sobre el preview de #394. Si no aparecen incidencias rojas o naranjas, resolver #394 y actualizar el estado técnico sin declarar por ello el lanzamiento público.
 
-**ESTADO-PROYECTO → 🟡 PRIMERA EDICIÓN NO CERRADA · PRODUCCIÓN `c6a15a9` READY · SEARCH CONSOLE 🟢 · SITEMAP 195/195 🟢 · GIT ↔ SUPABASE 178/178 · PR ABIERTA #394 · AUTH 🟣 · LEGAL 🟣**
+**ESTADO-PROYECTO → 🟡 PRIMERA EDICIÓN NO CERRADA · PRODUCCIÓN `394e3b3` READY · SEARCH CONSOLE 🟢 · SITEMAP 195/195 🟢 · APPLE MUSIC 40/46 DIRECTOS · GIT ↔ SUPABASE 178/178 · PR ABIERTA #394 · AUTH 🟣 · LEGAL 🟣**

@@ -4,36 +4,45 @@
 
 Este corte continúa el trabajo editorial sin abrir funcionalidades ni preparar el lanzamiento. Se ha trabajado sobre datos ya modelados y editables desde el Panel.
 
-- `main` refrescado al comenzar el corte: `f9b7a7c`.
+- `main` refrescado al comenzar el seguimiento: `394e3b3`.
 - Supabase: proyecto `Hilocofrade` activo y saludable.
 - Sin cambios de esquema, migraciones, RLS, componentes o rutas públicas.
 - Apple Music se mantiene como enlace editorial externo en `band_releases.external_url`; no se ha añadido una integración ni se ha usado una API.
 
 ## Apple Music
 
-El catálogo contiene `236` lanzamientos publicados. `46` tienen destino Apple Music.
+El catálogo contiene `237` lanzamientos publicados y `6` en estado `review`. Entre los publicados, `46` tienen destino Apple Music.
 
-Se revisaron los enlaces Apple existentes contra las páginas públicas oficiales y se sustituyeron `26` destinos genéricos de artista por el álbum, EP o sencillo exacto cuando coincidían inequívocamente título y año.
+En el primer corte se sustituyeron `26` destinos genéricos de artista por el álbum, EP o sencillo exacto. Este seguimiento contrasta de nuevo la cola con las páginas públicas oficiales de Apple Music y resuelve otros `6` enlaces publicados. El estado publicado pasa de `34` a `40` destinos directos y de `12` a `6` perfiles pendientes.
 
 | Banda | Enlaces Apple | Destinos directos | Perfil pendiente |
 | --- | ---: | ---: | ---: |
-| Banda de Música María Santísima de la Victoria | 1 | 1 | 0 |
+| La Redención | 1 | 1 | 0 |
 | Las Cigarreras | 6 | 6 | 0 |
 | Los Gitanos | 10 | 9 | 1 |
 | Presentación al Pueblo | 4 | 4 | 0 |
-| Santa María Magdalena de Arahal | 17 | 10 | 7 |
-| Tres Caídas de Triana | 8 | 4 | 4 |
-| **Total** | **46** | **34** | **12** |
+| Santa María Magdalena de Arahal | 17 | 13 | 4 |
+| Tres Caídas de Triana | 8 | 7 | 1 |
+| **Total** | **46** | **40** | **6** |
 
-Las cuatro fichas públicas modificadas devolvieron HTTP `200` y renderizaron sus destinos Apple después del cambio.
+En este seguimiento, las fichas públicas de Santa María Magdalena de Arahal y Tres Caídas de Triana devolvieron HTTP `200` y renderizaron los seis destinos exactos publicados después del cambio.
+
+### Coincidencias exactas resueltas en este seguimiento
+
+- Santa María Magdalena de Arahal: `Nazareno y Gitano` (1992), `Buena Muerte y Esperanza` (1998) y `Antología` (2000).
+- Tres Caídas de Triana: `El hijo de Dios (Directo)` (2021), `Y se hizo el Silencio… (Directo)` (2024) y `El Recuerdo (Directo)` (2025).
 
 ### Pendientes Apple que no deben resolverse por aproximación
 
 Los siguientes lanzamientos conservan el perfil oficial de la banda porque no se encontró una ficha exacta o porque título/año no permitían afirmar identidad:
 
-- Los Gitanos: `Concierto Anual Hermandad de Los Gitanos 2024 (Live)`.
-- Santa María Magdalena de Arahal: `Salud de San Bernardo`, `La Paz`, `Misericordia`, `Nazareno y Gitano`, `Buena Muerte y Esperanza`, `Antología` y `Arahal · 1964-2003`.
-- Tres Caídas de Triana: `La Misericordia del Padre`, `El hijo de Dios (Directo)`, `Y se hizo el Silencio… (Directo)` y `El Recuerdo (Directo)`.
+- Los Gitanos: `Concierto Anual Hermandad de Los Gitanos 2024 (Live)`; Apple publica el álbum bajo `Varios Artistas`, no como lanzamiento propio inequívoco de la banda.
+- Santa María Magdalena de Arahal: `Salud de San Bernardo` (base: 1981; Apple: reedición 2024), `La Paz` (sin ficha exacta localizada), `Misericordia` (base: 1990; Apple: 1991) y `Arahal · 1964-2003` (no debe sustituirse por el título distinto `La Música del Señor`, aunque sea de 2002).
+- Tres Caídas de Triana: `La Misericordia del Padre` (base: 2019); la ficha oficial localizada corresponde a `La Misericordia del Padre (En Directo)` de 2025 y es otro lanzamiento.
+
+### Registros en `review` preenlazados
+
+Los seis registros no publicados de Tres Caídas de Triana ya apuntan a su single exacto: `El Compás del Barro (Directo)` y `Se Arrodilla Triana (Directo)` (2024), además de `La Misericordia del Padre (En Directo)`, `Más allá del río (En Directo)`, `Un solo Dios (En Directo)` y `Yo soy la Verdad (En Directo)` (2025). Permanecen fuera de producción por su estado `review`; este corte no los publica.
 
 Regla de continuidad: no convertir un perfil en álbum por semejanza de título, ni relacionar una edición en directo o reedición cuando el año y la denominación no coincidan.
 
@@ -72,7 +81,7 @@ No se debe cerrar esta cola con hotlinking, capturas, archivos sin procedencia o
 
 1. Resolver las `9` imágenes de Cigarreras, Misión y San Esteban mediante archivos propios, autorizados o con licencia comprobada.
 2. Pedir o localizar una Fuente primaria para el adaptador de `Gloria a ti` y el compositor de `El Descendimiento`.
-3. Revisar manualmente los `12` perfiles Apple pendientes cuando el catálogo oficial publique una coincidencia exacta.
+3. Resolver los `6` perfiles Apple pendientes solo tras aclarar las discrepancias editoriales de artista, título o año.
 4. Ampliar Apple Music al resto del catálogo solo con coincidencia exacta de banda, título, tipo de lanzamiento y año.
 
 Este documento no modifica el estado de lanzamiento ni sustituye la matriz responsive pendiente.
