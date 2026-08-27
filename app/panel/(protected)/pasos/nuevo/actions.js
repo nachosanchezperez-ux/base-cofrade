@@ -6,6 +6,8 @@ import { redirect } from 'next/navigation'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
 
+const UUID_PATTERN = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i
+
 function value(formData, name) {
   return String(formData.get(name) || '').trim()
 }
@@ -17,6 +19,13 @@ function nullable(formData, name) {
 function required(formData, name, label) {
   const candidate = value(formData, name)
   if (!candidate) throw new Error(`${label} es obligatorio.`)
+  return candidate
+}
+
+function optionalUuid(formData, name) {
+  const candidate = value(formData, name)
+  if (!candidate) return null
+  if (!UUID_PATTERN.test(candidate)) throw new Error(`Identificador no válido: ${name}`)
   return candidate
 }
 
@@ -86,6 +95,31 @@ async function ensureUniqueIdentity(supabase, { name, slug, customSlug }) {
   }
 }
 
+async function loadContextBrotherhood(supabase, brotherhoodId) {
+  if (!brotherhoodId) return null
+  const result = await supabase
+    .from('entities')
+    .select('id, name, slug, status')
+    .eq('id', brotherhoodId)
+    .eq('entity_type', 'brotherhood')
+    .neq('status', 'archived')
+    .maybeSingle()
+  if (result.error) throw new Error(`No se pudo validar la Hermandad de contexto: ${result.error.message}`)
+  if (!result.data) throw new Error('La Hermandad desde la que has llegado ya no está disponible.')
+  return result.data
+}
+
+async function refreshCreatedStep(stepId, brotherhood = null) {
+  revalidatePath('/panel')
+  revalidatePath('/panel/pasos')
+  revalidatePath(`/panel/pasos/${stepId}`)
+  if (!brotherhood) return
+  revalidatePath('/panel/hermandades')
+  revalidatePath(`/panel/hermandades/${brotherhood.id}`)
+  revalidatePath(`/panel/hermandades/${brotherhood.id}/pasos`)
+  if (brotherhood.slug) revalidatePath(`/hermandades/${brotherhood.slug}`)
+}
+
 export async function createStepAction(formData) {
   const user = await requirePanelEditor()
   const supabase = await createClient()
@@ -93,15 +127,19 @@ export async function createStepAction(formData) {
   const submittedSlug = value(formData, 'slug')
   const entitySlug = slugify(submittedSlug || stepName)
   const stepType = nullable(formData, 'step_type')
+  const brotherhoodId = optionalUuid(formData, 'brotherhood_id')
 
   if (!entitySlug) throw new Error('No se ha podido generar un slug válido.')
   if (entitySlug.length > 160) throw new Error('El slug es demasiado largo.')
 
-  await ensureUniqueIdentity(supabase, {
-    name: stepName,
-    slug: entitySlug,
-    customSlug: Boolean(submittedSlug),
-  })
+  const [, brotherhood] = await Promise.all([
+    ensureUniqueIdentity(supabase, {
+      name: stepName,
+      slug: entitySlug,
+      customSlug: Boolean(submittedSlug),
+    }),
+    loadContextBrotherhood(supabase, brotherhoodId),
+  ])
 
   const stepId = randomUUID()
   const entityPayload = {
@@ -156,8 +194,41 @@ export async function createStepAction(formData) {
     },
   })
 
-  revalidatePath('/panel')
-  revalidatePath('/panel/pasos')
-  revalidatePath(`/panel/pasos/${stepId}`)
+  if (brotherhood) {
+    const relationPayload = {
+      brotherhood_entity_id: brotherhood.id,
+      step_entity_id: stepId,
+      relation_type: 'processional_step',
+      status: 'draft',
+    }
+    const relationResult = await supabase
+      .from('brotherhood_steps')
+      .insert(relationPayload)
+      .select('id')
+      .single()
+
+    await refreshCreatedStep(stepId, brotherhood)
+
+    if (relationResult.error) {
+      console.error('[Hilo Cofrade] El Paso se creó, pero no pudo vincularse automáticamente a la Hermandad', {
+        stepId,
+        brotherhoodId: brotherhood.id,
+        error: relationResult.error.message,
+      })
+      redirect(`/panel/hermandades/${brotherhood.id}/pasos?saved=created-unlinked&created=${stepId}`)
+    }
+
+    await audit(supabase, user, {
+      action_type: 'link',
+      object_type: 'brotherhood_step',
+      object_id: relationResult.data.id,
+      entity_id: brotherhood.id,
+      summary: `Paso creado y vinculado: ${stepName}`,
+      changed_fields: relationPayload,
+    })
+    redirect(`/panel/hermandades/${brotherhood.id}/pasos?saved=created-linked&created=${stepId}`)
+  }
+
+  await refreshCreatedStep(stepId)
   redirect(`/panel/pasos/${stepId}?saved=created`)
 }
