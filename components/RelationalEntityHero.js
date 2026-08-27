@@ -115,6 +115,7 @@ export default function RelationalEntityHero({
   const visibleFacts = facts.filter((fact) => fact?.label && fact?.value).slice(0, 3);
   const isBrotherhood = variant === 'brotherhood';
   const isBand = variant === 'band';
+  const bandHasPhoto = isBand && Boolean(media.photoSrc);
 
   const heading = (
     <div className={styles.titleBody}>
@@ -135,6 +136,15 @@ export default function RelationalEntityHero({
       <BrotherhoodCrest src={media.crestSrc} alt={media.crestAlt} />
       {heading}
     </div>
+  ) : isBand ? (
+    <div className={bandStyles.identityLockup}>
+      <BandIdentity
+        src={media.crestSrc}
+        alt={media.crestAlt}
+        initials={media.initials}
+      />
+      {heading}
+    </div>
   ) : heading;
 
   return (
@@ -146,8 +156,8 @@ export default function RelationalEntityHero({
       <div className="shell">
         <Breadcrumb items={breadcrumbItems} />
 
-        <div className={`${styles.grid} ${polishStyles.grid} ${isBand ? bandStyles.bandGrid : ''}`}>
-          <div className={`${styles.copy} ${polishStyles.copy} ${isBand ? bandStyles.bandCopy : ''}`}>
+        <div className={`${styles.grid} ${polishStyles.grid} ${isBand ? bandStyles.bandGrid : ''} ${isBand && !bandHasPhoto ? bandStyles.bandGridNoPhoto : ''}`}>
+          <div className={`${styles.copy} ${polishStyles.copy} ${isBand ? bandStyles.bandCopy : ''} ${isBand && !bandHasPhoto ? bandStyles.bandCopyNoPhoto : ''}`}>
             {identityHeading}
 
             <ParentRelation relation={relation} />
@@ -167,11 +177,7 @@ export default function RelationalEntityHero({
           </div>
 
           {isBand ? (
-            <BandIdentity
-              src={media.crestSrc}
-              alt={media.crestAlt}
-              initials={media.initials}
-            />
+            bandHasPhoto ? <RelationalEntityHeroMedia variant="band" {...media} /> : null
           ) : (
             <RelationalEntityHeroMedia variant={variant} {...media} />
           )}

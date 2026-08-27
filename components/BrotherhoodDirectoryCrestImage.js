@@ -120,7 +120,15 @@ function opticalBalance(image) {
   }
 }
 
-export default function BrotherhoodDirectoryCrestImage({ src, alt, className = '' }) {
+export default function BrotherhoodDirectoryCrestImage({
+  src,
+  alt,
+  className = '',
+  width = 82,
+  height = 104,
+  sizes = '(max-width: 620px) 60px, 82px',
+  priority = false,
+}) {
   const imageRef = useRef(null)
   const [balance, setBalance] = useState(defaultBalance)
 
@@ -149,9 +157,10 @@ export default function BrotherhoodDirectoryCrestImage({ src, alt, className = '
       className={className}
       src={src}
       alt={alt}
-      width={82}
-      height={104}
-      sizes="(max-width: 620px) 60px, 82px"
+      width={width}
+      height={height}
+      sizes={sizes}
+      priority={priority}
       crossOrigin="anonymous"
       onLoad={handleLoad}
       style={{
