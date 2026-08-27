@@ -1,6 +1,5 @@
 'use server'
 
-import { randomUUID } from 'node:crypto'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { requirePanelEditor } from '@/lib/panel/auth'
@@ -12,9 +11,6 @@ const EVENT_STATUSES = new Set(['announced', 'held', 'cancelled'])
 const CHARACTERS = new Set(['ordinary', 'extraordinary'])
 const PARTICIPATION_MODES = new Set(['full_route', 'segment', 'alternating', 'unspecified'])
 const PARTICIPANT_ROLES = new Set(['processional_image', 'liturgical_music'])
-const IMAGE_TYPES = new Map([
-  ['image/jpeg', 'jpg'], ['image/png', 'png'], ['image/webp', 'webp'], ['image/gif', 'gif'], ['image/avif', 'avif'],
-])
 
 function value(formData, name) { return String(formData.get(name) || '').trim() }
 function nullable(formData, name) { return value(formData, name) || null }
@@ -57,10 +53,6 @@ function status(formData) {
 function assertRow(result, label) {
   if (result.error) throw new Error(`${label}: ${result.error.message}`)
   if (!result.data) throw new Error(label)
-  return result.data
-}
-function assertMutation(result, label) {
-  if (result.error) throw new Error(`${label}: ${result.error.message}`)
   return result.data
 }
 function routeJson(formData) {
@@ -360,44 +352,4 @@ export async function archiveOutingMusicAssignmentAction(formData) {
   await audit(supabase, user, { action_type: 'archive', object_type: 'outing_music_assignment', object_id: saved.id, entity_id: brotherhoodId, summary: 'Asignación musical archivada' })
   await refresh(supabase, brotherhoodId, [saved.band_entity_id])
   redirectSaved(brotherhoodId, 'music-assignment-archived', outingId)
-}
-
-function storagePathFromPublicUrl(publicUrl = '') {
-  const marker = '/storage/v1/object/public/hilo-media/'
-  const index = publicUrl.indexOf(marker)
-  return index >= 0 ? decodeURIComponent(publicUrl.slice(index + marker.length)) : ''
-}
-
-export async function uploadOutingHeroImageAction(formData) {
-  const user = await requirePanelEditor()
-  const supabase = await createClient()
-  const brotherhoodId = uuid(formData, 'brotherhood_id')
-  const outingId = uuid(formData, 'outing_id')
-  const outing = await requireOuting(supabase, brotherhoodId, outingId)
-  const file = formData.get('file')
-  if (!(file instanceof File) || file.size === 0) throw new Error('Selecciona una imagen para la salida.')
-  if (file.size > 10 * 1024 * 1024) throw new Error('La imagen no puede superar 10 MB.')
-  const extension = IMAGE_TYPES.get(file.type)
-  if (!extension) throw new Error('Formato no admitido. Usa JPG, PNG, WEBP, GIF o AVIF.')
-
-  const path = `salidas/${outingId}/${randomUUID()}.${extension}`
-  const uploaded = await supabase.storage.from('hilo-media').upload(path, file, { contentType: file.type, upsert: false })
-  assertMutation(uploaded, 'No se pudo subir la imagen de la salida')
-  const publicUrl = supabase.storage.from('hilo-media').getPublicUrl(path).data.publicUrl
-  const alt = required(formData, 'hero_image_alt', 'El texto alternativo')
-  const credit = nullable(formData, 'hero_image_credit')
-  const updated = await supabase.from('outings').update({ hero_image_path: publicUrl, hero_image_alt: alt, hero_image_credit: credit }).eq('id', outingId).eq('brotherhood_entity_id', brotherhoodId)
-  if (updated.error) {
-    await supabase.storage.from('hilo-media').remove([path])
-    throw new Error(`No se pudo asociar la imagen a la salida: ${updated.error.message}`)
-  }
-
-  const oldPath = storagePathFromPublicUrl(outing.hero_image_path || '')
-  if (oldPath && oldPath !== path) {
-    const removed = await supabase.storage.from('hilo-media').remove([oldPath])
-    if (removed.error) console.error('[Hilo Cofrade] No se pudo limpiar la imagen anterior de la salida', removed.error)
-  }
-  await audit(supabase, user, { action_type: 'update', object_type: 'outing', object_id: outingId, entity_id: brotherhoodId, summary: `Imagen de salida actualizada: ${outing.title || outing.outing_type}`, changed_fields: { hero_image_path: publicUrl, hero_image_alt: alt, hero_image_credit: credit } })
-  await refresh(supabase, brotherhoodId)
-  redirectSaved(brotherhoodId, 'hero-image', outingId)
 }
