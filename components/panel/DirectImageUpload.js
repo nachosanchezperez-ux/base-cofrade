@@ -187,7 +187,7 @@ export default function DirectImageUpload({
             </>
           ) : null}
         </div>
-        {error ? <div className={styles.errorNotice} role="alert">{error}</div> : null}
+        {error ? <div className={styles.readOnlyNotice} role="alert">{error}</div> : null}
         {message ? <div className={styles.savedNotice} role="status">{message}</div> : null}
         <div className={styles.formActions}>
           <small>Vercel solo autoriza y vincula metadatos; no recibe los bytes del archivo.</small>
