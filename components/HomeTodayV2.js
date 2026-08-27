@@ -8,13 +8,13 @@ function isSvg(path = '') {
   return String(path).toLowerCase().endsWith('.svg')
 }
 
-function CardVisual({ visual }) {
+function CardVisual({ visual, featured = false }) {
   if (!visual?.path) return null
   const photo = visual.kind === 'photo'
 
   return (
     <div
-      className={`${styles.visual} ${photo ? styles.visualPhoto : styles.visualIdentity} ${polishStyles.todayVisual}`}
+      className={`${styles.visual} ${photo ? styles.visualPhoto : styles.visualIdentity} ${featured ? styles.featureVisual : ''} ${polishStyles.todayVisual}`}
       title={photo && visual.credit ? visual.credit : undefined}
       data-home-visual-kind={visual.kind || 'identity'}
     >
@@ -22,7 +22,7 @@ function CardVisual({ visual }) {
         src={visual.path}
         alt={visual.alt || ''}
         fill
-        sizes={photo ? '(max-width: 859px) 96px, 112px' : '78px'}
+        sizes={photo ? featured ? '(max-width: 859px) 100vw, 52vw' : '(max-width: 859px) 96px, 112px' : '78px'}
         className={photo ? styles.visualPhotoImage : styles.visualIdentityImage}
         style={photo && visual.focusPosition ? { objectPosition: visual.focusPosition } : undefined}
         unoptimized={isSvg(visual.path)}
@@ -67,9 +67,37 @@ function MusicVisual({ march }) {
 }
 
 export default function HomeTodayV2({ today, content }) {
-  const cards = [content?.ephemeris, content?.editorial, content?.discovery].filter(Boolean)
-  const hasContent = cards.length > 0 || Boolean(content?.march)
+  const featured = content?.ephemeris || content?.editorial || content?.fact || null
+  const secondaryCards = [
+    content?.fact !== featured ? content?.fact : null,
+    content?.discovery,
+  ].filter(Boolean)
+  const hasContent = Boolean(featured) || secondaryCards.length > 0 || Boolean(content?.march)
   if (!hasContent) return null
+
+  const renderCard = (card, { isFeatured = false } = {}) => (
+    <article
+      className={`${styles.card} ${isFeatured ? styles.featureCard : styles.compactCard} ${polishStyles.todayCard} ${card.kind === 'discovery' ? styles.discoveryCard : ''} ${card.visual?.path ? `${styles.cardWithVisual} ${polishStyles.todayCardWithVisual}` : ''}`}
+      key={`${card.kind}-${card.id}`}
+    >
+      <span className={`${styles.icon} ${polishStyles.todayIcon}`} aria-hidden="true">{card.icon}</span>
+      <div className={styles.copy}>
+        <div className={styles.topline}>
+          <span className={styles.type}>{card.label}</span>
+          <RelationshipTrail value={card.kicker} />
+        </div>
+        {card.visual?.kind === 'context-crest' && card.visual.contextName ? (
+          <span className={styles.context}>En {card.visual.contextName}</span>
+        ) : null}
+        <h3>{card.title}</h3>
+        {card.summary ? <p>{card.summary}</p> : null}
+        {card.href ? (
+          <Link className={`${styles.link} ${polishStyles.todayLink}`} href={card.href}>{card.linkLabel}</Link>
+        ) : null}
+      </div>
+      <CardVisual visual={card.visual} featured={isFeatured} />
+    </article>
+  )
 
   return (
     <section className={`${styles.section} ${polishStyles.todaySection}`} id="hoy">
@@ -80,31 +108,14 @@ export default function HomeTodayV2({ today, content }) {
           <p>Una selección diaria para descubrir historias, relaciones, datos y música de la enciclopedia.</p>
         </header>
 
-        {cards.length ? (
-          <div className={`${styles.grid} ${polishStyles.todayGrid}`}>
-            {cards.map((card) => (
-              <article
-                className={`${styles.card} ${polishStyles.todayCard} ${card.kind === 'discovery' ? styles.discoveryCard : ''} ${card.visual?.path ? `${styles.cardWithVisual} ${polishStyles.todayCardWithVisual}` : ''}`}
-                key={`${card.kind}-${card.id}`}
-              >
-                <span className={`${styles.icon} ${polishStyles.todayIcon}`} aria-hidden="true">{card.icon}</span>
-                <div className={styles.copy}>
-                  <div className={styles.topline}>
-                    <span className={styles.type}>{card.label}</span>
-                    <RelationshipTrail value={card.kicker} />
-                  </div>
-                  {card.visual?.kind === 'context-crest' && card.visual.contextName ? (
-                    <span className={styles.context}>En {card.visual.contextName}</span>
-                  ) : null}
-                  <h3>{card.title}</h3>
-                  {card.summary ? <p>{card.summary}</p> : null}
-                  {card.href ? (
-                    <Link className={`${styles.link} ${polishStyles.todayLink}`} href={card.href}>{card.linkLabel}</Link>
-                  ) : null}
-                </div>
-                <CardVisual visual={card.visual} />
-              </article>
-            ))}
+        {featured || secondaryCards.length ? (
+          <div className={`${styles.editorialGrid} ${polishStyles.todayGrid}`}>
+            {featured ? renderCard(featured, { isFeatured: true }) : null}
+            {secondaryCards.length ? (
+              <div className={styles.sideColumn}>
+                {secondaryCards.map((card) => renderCard(card))}
+              </div>
+            ) : null}
           </div>
         ) : null}
 
