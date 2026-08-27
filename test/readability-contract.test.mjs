@@ -42,6 +42,21 @@ test('navegación, auxiliares y formularios tienen una barrera transversal de le
   assert.match(readability, /\[class\*='meta'\]/)
 })
 
+test('la segunda barrera cubre etiquetas estructurales de tarjetas y agendas', () => {
+  const readability = source('app/readability.css')
+
+  assert.match(readability, /article > span:first-child:not\(\[class\]\)/)
+  assert.match(readability, /\[class\*='Facts'\]/)
+  assert.match(readability, /\[class\*='Essentials'\]/)
+  assert.match(readability, /\[class\*='cardMain'\]/)
+  assert.match(readability, /\[class\*='cardMusic'\]/)
+  assert.match(readability, /\[class\*='featuredMusic'\]/)
+  assert.match(readability, /\[class\*='signals'\]/)
+  assert.match(readability, /\[class\*='label'\]/)
+  assert.match(readability, /\[class\*='routeFacts'\]/)
+  assert.match(readability, /\[class\*='timelineCopy'\]/)
+})
+
 test('el Panel conserva densidad sin sacrificar lectura ni provocar zoom móvil', () => {
   const readability = source('app/readability.css')
 
