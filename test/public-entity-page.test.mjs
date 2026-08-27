@@ -8,11 +8,11 @@ import {
 
 test('el sitemap excluye entidades publicadas sin perfil especializado', () => {
   const entities = [
-    { entity_type: 'brotherhood', slug: 'lista' },
-    { entity_type: 'brotherhood', slug: 'incompleta' },
+    { id: 'brotherhood-ready', entity_type: 'brotherhood', slug: 'lista' },
+    { id: 'brotherhood-missing', entity_type: 'brotherhood', slug: 'incompleta' },
   ]
 
-  const result = filterPublicPageEntities(entities, [{ slug: 'lista' }])
+  const result = filterPublicPageEntities(entities, [{ entity_id: 'brotherhood-ready' }])
 
   assert.deepEqual(result.map((entity) => entity.slug), ['lista'])
 })

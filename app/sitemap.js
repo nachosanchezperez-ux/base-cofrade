@@ -102,7 +102,7 @@ async function publishedEntities() {
     const supabase = createPublicClient();
     const { data, error } = await supabase
       .from('entities')
-      .select('slug, updated_at, entity_type')
+      .select('id, slug, updated_at, entity_type')
       .in('entity_type', ['brotherhood', 'band', 'image', 'step'])
       .eq('status', 'published')
       .not('slug', 'is', null);
