@@ -11,10 +11,11 @@ test('Wikimedia Commons está autorizada como origen remoto de imágenes', async
   assert.match(config, /pathname: '\/wikipedia\/commons\/\*\*'/);
 });
 
-test('los logotipos oficiales de Virgen de los Reyes usan un origen remoto acotado', async () => {
+test('los logotipos oficiales externos de Bandas usan orígenes remotos acotados', async () => {
   const config = await read('next.config.mjs');
 
   assert.match(config, /hostname: 'www\.virgendelosreyes\.es'/);
+  assert.match(config, /hostname: 'www\.bandacruzroja\.es'/);
   assert.match(config, /pathname: '\/wp-content\/uploads\/\*\*'/);
 });
 

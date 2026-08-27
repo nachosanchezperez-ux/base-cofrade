@@ -58,6 +58,11 @@ const nextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'www.bandacruzroja.es',
+        pathname: '/wp-content/uploads/**',
+      },
+      {
+        protocol: 'https',
         hostname: 'm.media-amazon.com',
         pathname: '/images/**',
       },
