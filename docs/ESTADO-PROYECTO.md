@@ -4,14 +4,15 @@
 
 ## Estado verificado
 
-- Revisión: **27 de agosto de 2026 · auditoría de privacidad, Analytics y almacenamiento**.
+- Revisión: **27 de agosto de 2026 · auditoría técnica final y congelación de Primera edición**.
 - Repositorio: `nachosanchezperez-ux/base-cofrade`.
 - Rama principal: `main`.
-- Último `main` funcional validado: `065013b999030fdd9130f9dc071f94a846cda737` — **Prevención de plataformas duplicadas en Canales de Bandas (#379)**. El commit documental que actualice este archivo puede sucederlo sin cambios funcionales.
+- Último `main` funcional validado: `73d45a887fcdd7ecc19510e450119e8298dd7a5a` — **Identidad de cabecera y favicon de Hilo Cofrade (#389)**. El commit documental que actualice este archivo puede sucederlo sin cambios funcionales.
 - PR abiertas al cierre de la revisión: **0**.
 - #49: **CERRADA SIN FUSIONAR**; no debe reabrirse.
-- Producción funcional validada: `dpl_A4ZSWp9avMXm4PisvLsbCQLMfq61` → **READY**, región `dub1`.
-- Runtime posterior al smoke: **0 errores/fatales en el deployment actual**. `/panel` mantiene la barrera anónima y el preview autenticado de Canales de Bandas no mostró errores de aplicación.
+- #383 y #385: **CERRADAS SIN FUSIONAR Y APLAZADAS**; conservan sus ramas para una decisión posterior de Dirección, fuera de la Primera edición.
+- Producción funcional validada: `dpl_Hi4A81sbRh115ATZsNnFRvyce88A` → **READY**, región `dub1`, commit exacto `73d45a8`.
+- Runtime posterior a la auditoría: **0 respuestas 5xx y 0 errores/fatales en el deployment actual**. Las únicas respuestas 4xx provocadas por el barrido fueron los 404 esperados de `/api`, `/prueba-next` y `/prueba-supabase`; `/panel` mantiene la redirección al login.
 - Supabase: `Hilocofrade` (`kcevwkucqzcyrqaimyhl`) → **ACTIVE_HEALTHY**, región `eu-west-1`, Postgres `17.6.1.155`, plan de organización **Free**.
 - Migraciones: **178/178** entre Git y Supabase, hasta `20260827002425 index_legal_drafts_updated_by`.
 
@@ -31,12 +32,14 @@ El cierre técnico no equivale al lanzamiento ni a su comunicación pública. Tr
 - Muestras de Hermandades: Pastora de Cantillana, San Benito, El Baratillo, una Gloria y una ficha incompleta.
 - Variantes de contenido: relaciones y títulos largos, recursos horizontales/verticales/cuadrados, ausencia de fotografía y fichas con cobertura parcial.
 - Panel autenticado: login, sesión, logout, Inicio, navegación, Hermandades, Glorias, Imágenes, Pasos, Bandas y Multimedia. Formularios, carga, guardado y feedback tienen contratos automatizados; no se generaron recursos ni mutaciones editoriales de prueba en producción.
-- Suite: **353/353 tests**.
+- Suite: **360/360 tests**.
 - Build: **correcto** con Next.js `16.3` y Turbopack.
 - Correcciones de #371: overflow de fichas de Extraordinarias, ancho intrínseco del editor Multimedia y resolución de URLs absolutas de previsualización.
 - Preview de #371: **READY** en `dub1`; regresiones afectadas sin overflow ni imágenes rotas.
 - Corrección de #379: Canales de Bandas ya no ofrece plataformas vinculadas ni presupone `website`; el caso real de Virgen de los Reyes dejó disponible únicamente WhatsApp, sin guardar ni sobrescribir datos.
 - Smoke final de producción: Home, Directorio, Hermandad, Imagen, Paso, Banda, Extraordinaria, Gloria, Tira del hilo y Panel superados.
+- Auditoría técnica adicional sobre `73d45a8`: `npm audit` sin vulnerabilidades, build correcto, sin credenciales reales versionadas y muestra viva de doce superficies públicas con respuesta 200.
+- Accesibilidad semántica de la muestra: idioma, título, un único `h1` y `main`, imágenes con alternativa, botones con nombre, campos etiquetados y sin identificadores duplicados. No sustituye la matriz visual exacta.
 
 ### Pendiente técnico
 
@@ -52,6 +55,7 @@ El cierre técnico no equivale al lanzamiento ni a su comunicación pública. Tr
 - RLS: **75/75 tablas públicas con RLS activa**.
 - El autocompletado de Tira del hilo registra únicamente un evento fijo cuando falla: no envía a logs el texto original, el término normalizado ni el mensaje de la excepción. La regresión de privacidad forma parte de la suite desde #377.
 - Las advertencias de funciones `SECURITY DEFINER` están contenidas: no tienen ejecución anónima, fijan `search_path` y comprueban identidad/rol editorial. Los núcleos de aplicación del importador no son ejecutables por usuarios autenticados.
+- Asesores del 27/08/2026: 8 avisos de seguridad — 6 corresponden al patrón `SECURITY DEFINER` ya verificado, 1 a `completeness_rules` cerrada por RLS sin política y 1 a contraseñas filtradas bloqueada por plan. Los 141 avisos de rendimiento se reservan para una fase posterior: 70 claves foráneas sin índice, 56 políticas permisivas múltiples y 15 índices sin uso; no existe degradación de lanzamiento demostrada.
 - Login, sesión y logout del Panel: **validados**. La interfaz de recuperación existe; no se envió un correo real de recuperación durante QA.
 - Protección contra contraseñas filtradas: **🟣 BLOQUEADA POR LIMITACIÓN EXTERNA DOCUMENTADA**. Supabase la reserva a planes Pro o superiores; el proyecto permanece en Free. La opción se intentó activar desde Dashboard, no persistió y el asesor mantiene la advertencia. No se cambió Auth por código.
 
@@ -68,8 +72,8 @@ La auditoría técnica del 27/08/2026 ya está incorporada a los borradores priv
 - `robots.txt`, sitemap, canonical, Open Graph y Twitter Cards: **validados en producción**.
 - Panel y Colabora: `noindex`; APIs excluidas por robots.
 - Las rutas de prueba no existen y las páginas principales son indexables.
-- Sitemap: **188 URLs**, todas con respuesta `200` en el barrido realizado.
-- Search Console: última evidencia canónica del 26/08/2026 — dominio verificado, sitemap sin errores/advertencias y Home indexada. No hubo acceso al conector para refrescar la consola durante este corte; no se afirma una comprobación posterior independiente.
+- Sitemap: **193 URLs**, endpoint con respuesta `200`; la muestra viva de doce superficies públicas respondió `200` y no aparecieron 5xx en el deployment. No se afirma un segundo barrido íntegro de las 193 URLs porque la sesión de auditoría agotó su ventana de red antes de devolver el resumen completo.
+- Search Console: última evidencia autenticada canónica del 26/08/2026 — dominio verificado, sitemap sin errores/advertencias y Home indexada. El 27/08/2026 se refrescó el baseline público: Google muestra la Home, directorios y fichas, y la Home constaba rastreada ese día; la sesión autenticada de la consola no pudo estabilizarse y no se afirma un refresco interno posterior.
 
 ## Salud del grafo
 
@@ -93,9 +97,10 @@ La auditoría técnica del 27/08/2026 ya está incorporada a los borradores priv
 4. No publicar datos legales ni habilitar formularios públicos hasta que Dirección confirme identidad, contacto y tratamiento.
 5. No declarar activada la protección de contraseñas filtradas mientras el plan de Supabase no lo permita.
 6. No abrir automáticamente una segunda edición ni nuevas funcionalidades.
+7. No reabrir #383 o #385 durante el cierre; Dirección decidirá después si recupera sus ramas y con qué alcance.
 
 ## Única acción siguiente
 
 Ejecutar una comprobación verificable de la matriz responsive exacta en `390`, `768`, `1024` y `1440` px sobre las superficies enumeradas en la orden de cierre. Si no aparecen bloqueos, actualizar este estado a **Primera edición técnicamente cerrada** y dejar Auth/Legal como dependencias externas aceptadas o no por Dirección.
 
-**ESTADO-PROYECTO → 🟡 PRIMERA EDICIÓN NO CERRADA · ÚNICO BLOQUEO TÉCNICO: MATRIZ RESPONSIVE EXACTA · PRODUCCIÓN ESTABLE · PR 0 · GIT ↔ SUPABASE 178/178 · AUTH 🟣 · LEGAL 🟣 EN EDICIÓN PRIVADA**
+**ESTADO-PROYECTO → 🟡 PRIMERA EDICIÓN NO CERRADA · ÚNICO BLOQUEO TÉCNICO: MATRIZ RESPONSIVE EXACTA · PRODUCCIÓN `73d45a8` ESTABLE · PR 0 · GIT ↔ SUPABASE 178/178 · AUTH 🟣 · LEGAL 🟣 EN EDICIÓN PRIVADA**
