@@ -14,14 +14,14 @@ Producción y las barreras funcionales están estables. La única puerta técnic
 
 | Puerta | Estado | Evidencia resumida |
 |---|---:|---|
-| Código | 🟢 | #371 fusionada; cambio mínimo y regresiones añadidas. |
+| Código | 🟢 | #371, #372, #373 y #375 fusionadas; cambios acotados y regresiones añadidas. |
 | Build | 🟢 | Next.js 16.3/Turbopack completado. |
-| Producción | 🟢 | Deployment funcional `dpl_6B8ZJCi9sQvZB1itDufXf6BBqZbU` READY en `dub1`; sin 5xx ni fatal tras el smoke. |
+| Producción | 🟢 | Deployment funcional `dpl_BNHgyQn9nr7nr4e7EWn3MbEEUnPS` READY en `dub1`; `/panel/legal` sin errores de runtime tras el smoke. |
 | QA responsive | 🔴 | Revisión completa a 1363 px superada, pero falta evidencia exacta a 390/768/1024/1440. |
 | Arquitectura pública | 🟢 | Familias públicas, relaciones, fallbacks y navegación verificadas. |
-| Panel | 🟢 | Protección, login/sesión/logout, navegación y superficies editoriales verificadas; contratos de carga/guardado/feedback cubiertos sin crear datos de prueba. |
-| Migraciones | 🟢 | Git ↔ Supabase `176/176`. |
-| RLS | 🟢 | `74/74` tablas públicas con RLS activa. |
+| Panel | 🟢 | Protección, login/sesión/logout, navegación y superficies editoriales verificadas; Legal ofrece cuatro borradores privados editables sin publicación automática. |
+| Migraciones | 🟢 | Git ↔ Supabase `178/178`. |
+| RLS | 🟢 | `75/75` tablas públicas con RLS activa; `legal_drafts` no concede acceso a `anon`. |
 | SEO | 🟢 | Robots, canonical, OG, Twitter Cards, indexabilidad y noindex validados. |
 | Sitemap | 🟢 | 188 URLs y 188 respuestas 200 en el barrido. |
 | Search Console | 🟣 | Última evidencia canónica del 26/08/2026: dominio verificado, sitemap correcto y Home indexada; falta refresco independiente de la consola. |
@@ -29,7 +29,7 @@ Producción y las barreras funcionales están estables. La única puerta técnic
 | Importador sin IA | 🟢 | #49 cerrada sin fusionar; HC-016 sigue como vía canónica determinista. |
 | Rutas de diagnóstico retiradas | 🟢 | `/prueba-next` y `/prueba-supabase` responden 404. |
 | Auth · contraseñas filtradas | 🟣 | Bloqueada por el plan Free de Supabase; requiere Pro o superior. |
-| Legal / privacidad / contacto | 🟣 | Pendiente de datos confirmados por Dirección; Colabora cerrada y sin formularios públicos de datos personales. |
+| Legal / privacidad / contacto | 🟣 | Borrador privado editable en Panel; pendiente de completar responsable, emails, contacto, bases, plazos y aprobación. Sin rutas públicas; Colabora sigue cerrada. |
 
 ## Validación realizada
 
