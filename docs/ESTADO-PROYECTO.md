@@ -4,103 +4,128 @@
 
 ## Estado verificado
 
-- Revisión: **27 de agosto de 2026 · auditoría técnica final y congelación de Primera edición**.
+- Revisión: **27 de agosto de 2026 · recuperación autorizada de #385 tras la congelación de Primera edición**.
 - Repositorio: `nachosanchezperez-ux/base-cofrade`.
 - Rama principal: `main`.
-- Último `main` funcional validado: `73d45a887fcdd7ecc19510e450119e8298dd7a5a` — **Identidad de cabecera y favicon de Hilo Cofrade (#389)**. El commit documental que actualice este archivo puede sucederlo sin cambios funcionales.
-- PR abiertas al cierre de la revisión: **0**.
+- Último `main` funcional validado: `913dd614b427c43ceaa0bc48a83a86d619a63bf6` — **Panel · Curiosidades, multimedia directa y Salidas unificadas (#385)**.
+- #385: **🟢 RECUPERADA POR DECISIÓN EXPRESA DE DIRECCIÓN, FUSIONADA Y EN PRODUCCIÓN**.
+- #383: **CERRADA SIN FUSIONAR**; permanece fuera de este alcance.
 - #49: **CERRADA SIN FUSIONAR**; no debe reabrirse.
-- #383 y #385: **CERRADAS SIN FUSIONAR Y APLAZADAS**; conservan sus ramas para una decisión posterior de Dirección, fuera de la Primera edición.
-- Producción funcional validada: `dpl_Hi4A81sbRh115ATZsNnFRvyce88A` → **READY**, región `dub1`, commit exacto `73d45a8`.
-- Runtime posterior a la auditoría: **0 respuestas 5xx y 0 errores/fatales en el deployment actual**. Las únicas respuestas 4xx provocadas por el barrido fueron los 404 esperados de `/api`, `/prueba-next` y `/prueba-supabase`; `/panel` mantiene la redirección al login.
+- Producción funcional validada: `dpl_6ZgEQuhTiRxcVs9KFhmeEzhbENbk` → **READY**, región `dub1`, commit exacto `913dd614`.
+- Alias de producción verificados en el deployment: `hilocofrade.es`, `www.hilocofrade.es`, alias principal de Vercel y alias de `main`.
+- Runtime del deployment de #385: **0 errores/fatales** en la comprobación posterior al despliegue.
 - Supabase: `Hilocofrade` (`kcevwkucqzcyrqaimyhl`) → **ACTIVE_HEALTHY**, región `eu-west-1`, Postgres `17.6.1.155`, plan de organización **Free**.
-- Migraciones: **178/178** entre Git y Supabase, hasta `20260827002425 index_legal_drafts_updated_by`.
+- Migraciones: **178/178** entre Git y Supabase, hasta `20260827002425 index_legal_drafts_updated_by`. #385 no añadió migraciones, cambios de esquema ni cambios RLS.
+
+## Decisión post-congelación · #385
+
+La congelación técnica previa cerró #383 y #385 sin fusionarlas para no ampliar funcionalidad durante el cierre. Posteriormente Dirección autorizó expresamente recuperar **solo #385**.
+
+La recuperación se ejecutó con preflight completo:
+
+- la rama se reconcilió con el `main` de cierre antes de reabrir la PR;
+- quedó **0 commits por detrás**;
+- se conservaron íntegros favicon, identidad, legibilidad y documentación incorporados durante el cierre;
+- CI del head reconciliado: **369/369 tests** y build Next.js correcto;
+- preview exacta del head: **READY** en `dub1`, sin `error/fatal`;
+- PR #385 fusionada con head esperado;
+- producción posterior al merge: **READY**, alias correctos y runtime sin errores/fatales.
+
+Esta decisión **no recupera #383**, no reabre #49 y no supone iniciar una nueva fase funcional.
+
+## Alcance funcional integrado por #385
+
+### Salidas
+
+`Salidas` es el único concepto visible de agenda dentro de una Hermandad. El término técnico `Series` deja de exponerse al editor.
+
+Dentro del módulo conviven:
+
+- **Salidas habituales**: estación de penitencia, Procesión de Gloria, Vía Crucis, Rosario público, Traslado, Romería, Subida, Bajada, Procesión sacramental, extraordinarias y otras salidas recurrentes.
+- **Salidas registradas**: cada edición concreta con fecha, horarios, recorrido, titulares, música, fotografía y fuentes.
+
+La recurrencia continúa internamente en el modelo relacional, pero no condiciona la terminología de la interfaz.
+
+### Multimedia
+
+Los flujos migrados de Bandas y Salidas siguen el contrato:
+
+**navegador → permiso temporal → Supabase Storage → verificación servidor → vinculación de metadatos**.
+
+Los bytes del archivo no atraviesan las Server Actions de Vercel. El patrón cubre logotipo, fotografía principal y banderín de Bandas, además de la imagen principal de una Salida.
+
+### Curiosidades
+
+Las Curiosidades de una Hermandad proceden de `editorial_content` + `editorial_content_links`, respetando publicación y RLS. No se creó un segundo modelo ni se recupera contenido legacy cuando no existe relación editorial válida.
 
 ## Primera edición
 
 **HILO COFRADE · PRIMERA EDICIÓN → 🟡 NO CERRADA TÉCNICAMENTE**
 
-Producción está estable y no quedan bloqueos funcionales conocidos. Falta una única puerta técnica: ejecutar y conservar evidencia de la matriz responsive exacta en `390`, `768`, `1024` y `1440` px. La revisión completa realizada en la superficie de navegador disponible y las regresiones automatizadas no sustituyen esa matriz exacta.
+La integración autorizada de #385 no cambia la puerta pendiente de cierre: falta ejecutar y conservar evidencia de la matriz responsive exacta en `390`, `768`, `1024` y `1440` px.
 
-El cierre técnico no equivale al lanzamiento ni a su comunicación pública. Tras superar la matriz, Dirección deberá aceptar expresamente las dependencias externas de Auth y Legal antes de decidir el anuncio.
+El cierre técnico no equivale al lanzamiento ni a su comunicación pública. Auth y Legal permanecen como dependencias externas/documentales y no se falsean como resueltas.
 
-## QA final
+## QA y seguridad
 
 ### Validado
 
-- Revisión pública completa en producción a `1363 × 936`: Home, Directorio y sus filtros, Hermandades, Imágenes, Pasos, Bandas, Extraordinarias, Glorias, Tira del hilo, navegación y footer.
-- Muestras de Hermandades: Pastora de Cantillana, San Benito, El Baratillo, una Gloria y una ficha incompleta.
-- Variantes de contenido: relaciones y títulos largos, recursos horizontales/verticales/cuadrados, ausencia de fotografía y fichas con cobertura parcial.
-- Panel autenticado: login, sesión, logout, Inicio, navegación, Hermandades, Glorias, Imágenes, Pasos, Bandas y Multimedia. Formularios, carga, guardado y feedback tienen contratos automatizados; no se generaron recursos ni mutaciones editoriales de prueba en producción.
-- Suite: **360/360 tests**.
+- Suite del corte #385: **369/369 tests**.
 - Build: **correcto** con Next.js `16.3` y Turbopack.
-- Correcciones de #371: overflow de fichas de Extraordinarias, ancho intrínseco del editor Multimedia y resolución de URLs absolutas de previsualización.
-- Preview de #371: **READY** en `dub1`; regresiones afectadas sin overflow ni imágenes rotas.
-- Corrección de #379: Canales de Bandas ya no ofrece plataformas vinculadas ni presupone `website`; el caso real de Virgen de los Reyes dejó disponible únicamente WhatsApp, sin guardar ni sobrescribir datos.
-- Smoke final de producción: Home, Directorio, Hermandad, Imagen, Paso, Banda, Extraordinaria, Gloria, Tira del hilo y Panel superados.
-- Auditoría técnica adicional sobre `73d45a8`: `npm audit` sin vulnerabilidades, build correcto, sin credenciales reales versionadas y muestra viva de doce superficies públicas con respuesta 200.
-- Accesibilidad semántica de la muestra: idioma, título, un único `h1` y `main`, imágenes con alternativa, botones con nombre, campos etiquetados y sin identificadores duplicados. No sustituye la matriz visual exacta.
+- Producción #385: `dpl_6ZgEQuhTiRxcVs9KFhmeEzhbENbk` READY en `dub1`.
+- Runtime de producción: 0 `error/fatal` en la ventana posterior al despliegue.
+- Panel protegido, APIs excluidas y rutas de diagnóstico retiradas conforme al cierre previo.
+- Front público stateless/anon; filtros de publicación conservados.
+- RLS: **75/75 tablas públicas con RLS activa** según la última auditoría canónica.
+- `npm audit` del cierre previo: 0 vulnerabilidades.
 
 ### Pendiente técnico
 
-- **🔴 Matriz exacta `390 / 768 / 1024 / 1440`**. La superficie de navegador disponible no expone emulación ni control verificable de viewport; no se marca como superada.
+- **🔴 Matriz exacta `390 / 768 / 1024 / 1440`**. No se marca como superada sin evidencia verificable de esos cuatro viewports.
 
 ## Seguridad y Supabase Auth
 
-- `/panel` redirige al login sin sesión y todas sus superficies declaran `noindex, nofollow`.
-- `/api/` está excluida en `robots.txt`; los endpoints editoriales exigen autenticación.
-- `/prueba-next` y `/prueba-supabase` responden `404`.
-- No se detectaron claves versionadas, mensajes SQL, trazas técnicas, contenido draft ni errores técnicos en las superficies públicas revisadas.
-- Front público stateless/anon; las consultas públicas mantienen los filtros de publicación.
-- RLS: **75/75 tablas públicas con RLS activa**.
-- El autocompletado de Tira del hilo registra únicamente un evento fijo cuando falla: no envía a logs el texto original, el término normalizado ni el mensaje de la excepción. La regresión de privacidad forma parte de la suite desde #377.
-- Las advertencias de funciones `SECURITY DEFINER` están contenidas: no tienen ejecución anónima, fijan `search_path` y comprueban identidad/rol editorial. Los núcleos de aplicación del importador no son ejecutables por usuarios autenticados.
-- Asesores del 27/08/2026: 8 avisos de seguridad — 6 corresponden al patrón `SECURITY DEFINER` ya verificado, 1 a `completeness_rules` cerrada por RLS sin política y 1 a contraseñas filtradas bloqueada por plan. Los 141 avisos de rendimiento se reservan para una fase posterior: 70 claves foráneas sin índice, 56 políticas permisivas múltiples y 15 índices sin uso; no existe degradación de lanzamiento demostrada.
-- Login, sesión y logout del Panel: **validados**. La interfaz de recuperación existe; no se envió un correo real de recuperación durante QA.
-- Protección contra contraseñas filtradas: **🟣 BLOQUEADA POR LIMITACIÓN EXTERNA DOCUMENTADA**. Supabase la reserva a planes Pro o superiores; el proyecto permanece en Free. La opción se intentó activar desde Dashboard, no persistió y el asesor mantiene la advertencia. No se cambió Auth por código.
+- `/panel` mantiene autenticación y `noindex, nofollow`.
+- La protección contra contraseñas filtradas continúa **🟣 BLOQUEADA POR EL PLAN FREE DE SUPABASE**; no se declara activada.
+- Las advertencias de asesores ya documentadas permanecen fuera de este cambio; #385 no modificó Auth, funciones `SECURITY DEFINER`, políticas ni esquema.
 
 ## Legal, privacidad y contacto
 
 **LEGAL → 🟣 BORRADOR PRIVADO EDITABLE · PENDIENTE DE DATOS Y APROBACIÓN DE DIRECCIÓN**
 
-Dirección ha confirmado que aportará responsable, email y contacto público, pero todavía no constan sus valores definitivos. El Panel incorpora `/panel/legal` con ficha de Dirección, Aviso legal, Privacidad y Cookies/almacenamiento como borradores privados; solo miembros del Panel pueden leerlos y admin/editor puede guardarlos. No existen rutas legales públicas ni enlaces de Footer y ningún estado del editor publica contenido automáticamente. `Colabora` continúa cerrada y `noindex`; no hay formularios públicos de aportación, contacto o recogida de datos personales.
+Dirección debe completar responsable, email/contacto público y decisiones jurídicas pendientes antes de publicar textos legales o habilitar formularios públicos. `Colabora` continúa cerrada y `noindex`.
 
-La auditoría técnica del 27/08/2026 ya está incorporada a los borradores privados y registrada en `audit_log`. Confirma: Vercel Web Analytics sin texto de búsquedas ni parámetros de URL y con exclusión del Panel; conversación de Tira y profundidad relacional en `sessionStorage`; sesión, recuperación, borradores no guardados y recientes del Panel; ausencia de etiquetas publicitarias, Google Analytics, Google Tag Manager, Meta Pixel y sistemas de perfilado; y presencia limitada de reproductores de YouTube/Spotify. Los documentos permanecen en estado `draft` porque siguen pendientes los datos del responsable, bases jurídicas, plazos, contratos/transferencias y la decisión sobre consentimiento o bloqueo previo de reproductores de terceros. No se ha añadido un banner ni se ha publicado información legal.
+#385 no modifica este estado legal ni introduce nuevos tratamientos de datos personales.
 
 ## SEO y descubrimiento
 
-- `robots.txt`, sitemap, canonical, Open Graph y Twitter Cards: **validados en producción**.
-- Panel y Colabora: `noindex`; APIs excluidas por robots.
-- Las rutas de prueba no existen y las páginas principales son indexables.
-- Sitemap: **193 URLs**, endpoint con respuesta `200`; la muestra viva de doce superficies públicas respondió `200` y no aparecieron 5xx en el deployment. No se afirma un segundo barrido íntegro de las 193 URLs porque la sesión de auditoría agotó su ventana de red antes de devolver el resumen completo.
-- Search Console: última evidencia autenticada canónica del 26/08/2026 — dominio verificado, sitemap sin errores/advertencias y Home indexada. El 27/08/2026 se refrescó el baseline público: Google muestra la Home, directorios y fichas, y la Home constaba rastreada ese día; la sesión autenticada de la consola no pudo estabilizarse y no se afirma un refresco interno posterior.
+- Robots, sitemap, canonical, Open Graph, Twitter Cards e indexabilidad mantienen el baseline validado antes de #385.
+- Panel y Colabora continúan `noindex`; APIs excluidas por robots.
+- #385 no cambia rutas públicas canónicas ni requiere una migración SEO específica.
 
 ## Salud del grafo
 
-**SALUD DEL GRAFO DE LANZAMIENTO → 🟢 APROBADA**
+**SALUD DEL GRAFO DE LANZAMIENTO → 🟢 APROBADA** conforme a la última auditoría de cierre.
 
-- `0` relaciones nucleares publicadas con extremos inexistentes en Hermandades–Imágenes, Hermandades–Pasos e Imágenes–Pasos.
-- `0` Hermandades, Imágenes o Pasos publicados sin su fila especializada.
-- El Auditor muestra `22` prioridades de cobertura: `20` imágenes publicadas sin recurso visual directo y `2` marchas publicadas sin autor. Se comprobó degradación visual segura; son carencias editoriales para backlog, no relaciones rotas ni UI bloqueada.
+#385 reutiliza relaciones y modelos existentes; no altera constraints ni migraciones del grafo.
 
 ## Importación
 
 - #49 permanece **cerrada sin fusionar**.
 - Vía canónica: **HC-016 → JSON / JSONL / CSV → staging → validación determinista → revisión humana → aplicación por lotes → auditoría**.
-- No abrir una evolución del importador durante este cierre.
 
 ## Bloqueos y precauciones reales
 
 1. Completar la matriz responsive exacta antes de declarar el cierre técnico.
 2. No crear ni aplicar migraciones sin refrescar el historial local/remoto completo.
-3. No reabrir #49 ni sustituir HC-016 por una importación generativa.
-4. No publicar datos legales ni habilitar formularios públicos hasta que Dirección confirme identidad, contacto y tratamiento.
-5. No declarar activada la protección de contraseñas filtradas mientras el plan de Supabase no lo permita.
-6. No abrir automáticamente una segunda edición ni nuevas funcionalidades.
-7. No reabrir #383 o #385 durante el cierre; Dirección decidirá después si recupera sus ramas y con qué alcance.
+3. No reabrir #49.
+4. #383 permanece cerrada hasta una decisión expresa e independiente de Dirección.
+5. No publicar datos legales ni habilitar formularios públicos hasta completar Legal.
+6. No declarar activada la protección de contraseñas filtradas mientras el plan de Supabase no lo permita.
+7. La recuperación de #385 es una excepción autorizada post-congelación y no abre automáticamente nuevos frentes funcionales.
 
-## Única acción siguiente
+## Única acción siguiente de cierre
 
-Ejecutar una comprobación verificable de la matriz responsive exacta en `390`, `768`, `1024` y `1440` px sobre las superficies enumeradas en la orden de cierre. Si no aparecen bloqueos, actualizar este estado a **Primera edición técnicamente cerrada** y dejar Auth/Legal como dependencias externas aceptadas o no por Dirección.
+Ejecutar y documentar la matriz pública y del Panel en `390`, `768`, `1024` y `1440` px. Si no hay bloqueos rojos o naranjas, actualizar el estado a **Primera edición técnicamente cerrada** sin confundirlo con su anuncio público.
 
-**ESTADO-PROYECTO → 🟡 PRIMERA EDICIÓN NO CERRADA · ÚNICO BLOQUEO TÉCNICO: MATRIZ RESPONSIVE EXACTA · PRODUCCIÓN `73d45a8` ESTABLE · PR 0 · GIT ↔ SUPABASE 178/178 · AUTH 🟣 · LEGAL 🟣 EN EDICIÓN PRIVADA**
+**ESTADO-PROYECTO → 🟡 PRIMERA EDICIÓN NO CERRADA · #385 🟢 EN PRODUCCIÓN · #383 CERRADA · ÚNICO BLOQUEO TÉCNICO DE CIERRE: MATRIZ RESPONSIVE EXACTA · PRODUCCIÓN `913dd614` READY · GIT ↔ SUPABASE 178/178 · AUTH 🟣 · LEGAL 🟣**
