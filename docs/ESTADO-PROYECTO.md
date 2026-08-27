@@ -4,112 +4,99 @@
 
 ## Estado verificado
 
-- Revisión: **27 de agosto de 2026 · recuperación autorizada de #385 tras la congelación de Primera edición**.
+- Revisión: **27 de agosto de 2026 · Search Console, sitemap y cierre de rutas públicas**.
 - Repositorio: `nachosanchezperez-ux/base-cofrade`.
 - Rama principal: `main`.
-- Último `main` funcional validado: `913dd614b427c43ceaa0bc48a83a86d619a63bf6` — **Panel · Curiosidades, multimedia directa y Salidas unificadas (#385)**.
-- #385: **🟢 RECUPERADA POR DECISIÓN EXPRESA DE DIRECCIÓN, FUSIONADA Y EN PRODUCCIÓN**.
-- #383: **CERRADA SIN FUSIONAR**; permanece fuera de este alcance.
-- #49: **CERRADA SIN FUSIONAR**; no debe reabrirse.
-- Producción funcional validada: `dpl_6ZgEQuhTiRxcVs9KFhmeEzhbENbk` → **READY**, región `dub1`, commit exacto `913dd614`.
-- Alias de producción verificados en el deployment: `hilocofrade.es`, `www.hilocofrade.es`, alias principal de Vercel y alias de `main`.
-- Runtime del deployment de #385: **0 errores/fatales** en la comprobación posterior al despliegue.
+- Último `main` funcional validado: `c6a15a9da7a82c2313ec98a392f30a9fee7244b4` — **Buscador público · exige ficha especializada antes de enlazar (#395)**.
+- Producción: `dpl_9b7yQaUfdLcLvdrLDBP3ZZYUPJMq` → **READY**, región `dub1`, commit exacto `c6a15a9`.
+- Alias verificados: `hilocofrade.es`, `www.hilocofrade.es`, alias principal de Vercel y alias de `main`.
+- Runtime del deployment actual: **6 peticiones de comprobación con HTTP 200 y 0 eventos `error/fatal`**.
+- PR #393: **fusionada**; excluye de sitemap, directorios y enlaces de Bandas las entidades sin ficha pública.
+- PR #395: **fusionada**; impide que el buscador público enlace entidades navegables sin ficha especializada.
+- PR #394: **abierta y no fusionada**; cabeceras de identidad pendientes de matriz visual exacta.
+- #383 y #49: **cerradas sin fusionar**; no deben reabrirse sin decisión expresa de Dirección.
 - Supabase: `Hilocofrade` (`kcevwkucqzcyrqaimyhl`) → **ACTIVE_HEALTHY**, región `eu-west-1`, Postgres `17.6.1.155`, plan de organización **Free**.
-- Migraciones: **178/178** entre Git y Supabase, hasta `20260827002425 index_legal_drafts_updated_by`. #385 no añadió migraciones, cambios de esquema ni cambios RLS.
-
-## Decisión post-congelación · #385
-
-La congelación técnica previa cerró #383 y #385 sin fusionarlas para no ampliar funcionalidad durante el cierre. Posteriormente Dirección autorizó expresamente recuperar **solo #385**.
-
-La recuperación se ejecutó con preflight completo:
-
-- la rama se reconcilió con el `main` de cierre antes de reabrir la PR;
-- quedó **0 commits por detrás**;
-- se conservaron íntegros favicon, identidad, legibilidad y documentación incorporados durante el cierre;
-- CI del head reconciliado: **369/369 tests** y build Next.js correcto;
-- preview exacta del head: **READY** en `dub1`, sin `error/fatal`;
-- PR #385 fusionada con head esperado;
-- producción posterior al merge: **READY**, alias correctos y runtime sin errores/fatales.
-
-Esta decisión **no recupera #383**, no reabre #49 y no supone iniciar una nueva fase funcional.
-
-## Alcance funcional integrado por #385
-
-### Salidas
-
-`Salidas` es el único concepto visible de agenda dentro de una Hermandad. El término técnico `Series` deja de exponerse al editor.
-
-Dentro del módulo conviven:
-
-- **Salidas habituales**: estación de penitencia, Procesión de Gloria, Vía Crucis, Rosario público, Traslado, Romería, Subida, Bajada, Procesión sacramental, extraordinarias y otras salidas recurrentes.
-- **Salidas registradas**: cada edición concreta con fecha, horarios, recorrido, titulares, música, fotografía y fuentes.
-
-La recurrencia continúa internamente en el modelo relacional, pero no condiciona la terminología de la interfaz.
-
-### Multimedia
-
-Los flujos migrados de Bandas y Salidas siguen el contrato:
-
-**navegador → permiso temporal → Supabase Storage → verificación servidor → vinculación de metadatos**.
-
-Los bytes del archivo no atraviesan las Server Actions de Vercel. El patrón cubre logotipo, fotografía principal y banderín de Bandas, además de la imagen principal de una Salida.
-
-### Curiosidades
-
-Las Curiosidades de una Hermandad proceden de `editorial_content` + `editorial_content_links`, respetando publicación y RLS. No se creó un segundo modelo ni se recupera contenido legacy cuando no existe relación editorial válida.
+- Migraciones: **178/178** entre Git y Supabase, hasta `20260827002425 index_legal_drafts_updated_by`. #393 y #395 no añadieron migraciones, cambios de esquema ni cambios RLS.
+- Suite de `main`: **372/372 tests**. Build Next.js `16.3`/Turbopack: **correcto**.
 
 ## Primera edición
 
 **HILO COFRADE · PRIMERA EDICIÓN → 🟡 NO CERRADA TÉCNICAMENTE**
 
-La integración autorizada de #385 no cambia la puerta pendiente de cierre: falta ejecutar y conservar evidencia de la matriz responsive exacta en `390`, `768`, `1024` y `1440` px.
+No se declara lanzamiento. Permanecen dos condiciones operativas de cierre:
 
-El cierre técnico no equivale al lanzamiento ni a su comunicación pública. Auth y Legal permanecen como dependencias externas/documentales y no se falsean como resueltas.
+1. ejecutar y conservar evidencia de la matriz responsive exacta en `390`, `768`, `1024` y `1440` px;
+2. resolver o cerrar la PR #394, que sigue abierta y necesita esa misma validación visual.
+
+Auth y Legal permanecen como dependencias externas/documentales. El cierre técnico no equivale al lanzamiento ni a su comunicación pública.
 
 ## QA y seguridad
 
 ### Validado
 
-- Suite del corte #385: **369/369 tests**.
-- Build: **correcto** con Next.js `16.3` y Turbopack.
-- Producción #385: `dpl_6ZgEQuhTiRxcVs9KFhmeEzhbENbk` READY en `dub1`.
-- Runtime de producción: 0 `error/fatal` en la ventana posterior al despliegue.
-- Panel protegido, APIs excluidas y rutas de diagnóstico retiradas conforme al cierre previo.
-- Front público stateless/anon; filtros de publicación conservados.
+- `npm test`: **372/372** en `main` tras #395.
+- `npm run build`: **correcto**.
+- Producción: `dpl_9b7yQaUfdLcLvdrLDBP3ZZYUPJMq` READY en `dub1`.
+- Runtime: 0 `error/fatal` en la comprobación posterior al despliegue.
+- Panel protegido; APIs excluidas y rutas de diagnóstico retiradas.
+- Front público stateless/anon y filtros de publicación conservados.
 - RLS: **75/75 tablas públicas con RLS activa** según la última auditoría canónica.
-- `npm audit` del cierre previo: 0 vulnerabilidades.
+- `npm audit` del cierre: 0 vulnerabilidades.
 
 ### Pendiente técnico
 
 - **🔴 Matriz exacta `390 / 768 / 1024 / 1440`**. No se marca como superada sin evidencia verificable de esos cuatro viewports.
+- **🟠 PR #394 abierta**. No forma parte de producción y no debe fusionarse sin completar su matriz.
 
 ## Seguridad y Supabase Auth
 
 - `/panel` mantiene autenticación y `noindex, nofollow`.
-- La protección contra contraseñas filtradas continúa **🟣 BLOQUEADA POR EL PLAN FREE DE SUPABASE**; no se declara activada.
-- Las advertencias de asesores ya documentadas permanecen fuera de este cambio; #385 no modificó Auth, funciones `SECURITY DEFINER`, políticas ni esquema.
+- La protección contra contraseñas filtradas continúa **🟣 BLOQUEADA POR EL PLAN FREE DE SUPABASE**; requiere Pro o superior y no se declara activada.
+- #393 y #395 no modificaron Auth, funciones `SECURITY DEFINER`, políticas ni esquema.
 
 ## Legal, privacidad y contacto
 
-**LEGAL → 🟣 BORRADOR PRIVADO EDITABLE · PENDIENTE DE DATOS Y APROBACIÓN DE DIRECCIÓN**
+**LEGAL → 🟣 BORRADOR PRIVADO EDITABLE · PENDIENTE DE DATOS CONCRETOS Y APROBACIÓN DE DIRECCIÓN**
 
-Dirección debe completar responsable, email/contacto público y decisiones jurídicas pendientes antes de publicar textos legales o habilitar formularios públicos. `Colabora` continúa cerrada y `noindex`.
+El Panel dispone de borradores privados para completar responsable, email, contacto público y decisiones jurídicas. No se publican valores inventados. `Colabora` continúa cerrada y `noindex`; no existen formularios públicos abiertos de recogida de datos personales.
 
-#385 no modifica este estado legal ni introduce nuevos tratamientos de datos personales.
+## SEO, sitemap y Search Console
 
-## SEO y descubrimiento
+### Producción
 
-- Robots, sitemap, canonical, Open Graph, Twitter Cards e indexabilidad mantienen el baseline validado antes de #385.
-- Panel y Colabora continúan `noindex`; APIs excluidas por robots.
-- #385 no cambia rutas públicas canónicas ni requiere una migración SEO específica.
+- `robots.txt`: HTTP 200; permite el sitio, excluye `/api/` y `/panel/`, y declara `https://hilocofrade.es/sitemap.xml`.
+- `sitemap.xml`: HTTP 200, `application/xml`, **195 URL** actuales.
+- Auditoría completa del sitemap: **195/195 URL con HTTP 200**, canonical correcto, sin `noindex` y sin duplicados.
+- Las cinco hermandades relacionales sin ficha especializada no aparecen en sitemap ni directorios y ya no reciben enlaces desde Bandas o buscadores públicos.
+- Canonical, Open Graph, Twitter Cards, `noindex` de Panel/Colabora y retirada de rutas de prueba conservan el baseline aprobado.
+
+### Search Console · evidencia del 27 de agosto de 2026
+
+- Propiedad de dominio: `hilocofrade.es`.
+- Home `https://hilocofrade.es/`: **“La URL está en Google”**, página indexada y HTTPS correcto.
+- Sitemap enviado: **Correcto**; enviado el 13 de agosto, última lectura el 27 de agosto, **188 páginas descubiertas** en la instantánea de Google.
+- Cobertura mostrada: **12 páginas indexadas** y **31 no indexadas**.
+- Motivos no indexados: `1` página con redirección y `30` descubiertas actualmente sin indexar; `0` rastreadas actualmente sin indexar.
+- Rendimiento visible: `5` clics totales. Vídeo: `1` sin indexar y `0` indexados.
+- No se observa ningún problema crítico nuevo.
+
+La cifra de `188` páginas descubiertas es la última lectura de Search Console; el sitemap de producción contiene ahora `195` URL válidas. La diferencia es retraso de procesamiento, no una incoherencia del archivo actual.
 
 ## Salud del grafo
 
-**SALUD DEL GRAFO DE LANZAMIENTO → 🟢 APROBADA** conforme a la última auditoría de cierre.
+**SALUD PÚBLICA DE LANZAMIENTO → 🟢 APROBADA**
 
-#385 reutiliza relaciones y modelos existentes; no altera constraints ni migraciones del grafo.
+- El sitemap y las superficies navegables no contienen extremos públicos inexistentes.
+- Cinco nodos de tipo Hermandad siguen publicados únicamente como referencias de acompañamientos musicales y carecen de fila especializada. Se mantienen fuera de navegación pública hasta que Dirección decida completarlos o reclasificarlos; no se inventan perfiles.
+- El buscador puede devolver esos nombres como conocimiento relacional, pero con `href` vacío. Una ficha válida como El Baratillo conserva su enlace normal.
 
-El corte editorial del 27 de agosto mantiene `20` Imágenes publicadas sin recurso visual directo. Todas conservan Fuente y autoría estructurada, por lo que siguen siendo carencias de cobertura y no relaciones rotas. La autoría original de `Gloria a ti · adaptación para banda` quedó vinculada a `J. Arriaga`; permanece pendiente identificar con evidencia inequívoca al adaptador de 2016. Solo `El Descendimiento` continúa como Marcha publicada sin ningún autor publicado.
+**INTEGRIDAD EDITORIAL → 🟡 BACKLOG NO BLOQUEANTE**
+
+- `20` Imágenes publicadas siguen sin recurso visual directo; conservan fuente y autoría estructurada.
+- `Gloria a ti · adaptación para banda` conserva autoría original vinculada a `J. Arriaga`; falta identificar con evidencia al adaptador de 2016.
+- `El Descendimiento` continúa como Marcha publicada sin autor publicado.
+
+## Apple Music
 
 Apple Music conserva `46` lanzamientos enlazados: `34` llegan directamente al lanzamiento y `12` mantienen temporalmente el perfil oficial de la banda por falta de coincidencia exacta. El detalle y la cola editorial están documentados en [`AUDITORIA-EDITORIAL-APPLE-MUSIC-2026-08-27.md`](./AUDITORIA-EDITORIAL-APPLE-MUSIC-2026-08-27.md).
 
@@ -121,15 +108,15 @@ Apple Music conserva `46` lanzamientos enlazados: `34` llegan directamente al la
 ## Bloqueos y precauciones reales
 
 1. Completar la matriz responsive exacta antes de declarar el cierre técnico.
-2. No crear ni aplicar migraciones sin refrescar el historial local/remoto completo.
-3. No reabrir #49.
-4. #383 permanece cerrada hasta una decisión expresa e independiente de Dirección.
-5. No publicar datos legales ni habilitar formularios públicos hasta completar Legal.
+2. No fusionar #394 sin su matriz visual y un nuevo preflight sobre `main`.
+3. No crear ni aplicar migraciones sin refrescar el historial local/remoto completo.
+4. No reabrir #49 ni #383 sin decisión expresa de Dirección.
+5. No publicar datos legales ni habilitar formularios públicos hasta completar y aprobar Legal.
 6. No declarar activada la protección de contraseñas filtradas mientras el plan de Supabase no lo permita.
-7. La recuperación de #385 es una excepción autorizada post-congelación y no abre automáticamente nuevos frentes funcionales.
+7. No abrir automáticamente una segunda edición ni declarar el lanzamiento.
 
 ## Única acción siguiente de cierre
 
-Ejecutar y documentar la matriz pública y del Panel en `390`, `768`, `1024` y `1440` px. Si no hay bloqueos rojos o naranjas, actualizar el estado a **Primera edición técnicamente cerrada** sin confundirlo con su anuncio público.
+Ejecutar la matriz `390 / 768 / 1024 / 1440` sobre producción y sobre el preview de #394. Si no aparecen incidencias rojas o naranjas, resolver #394 y actualizar el estado técnico sin declarar por ello el lanzamiento público.
 
-**ESTADO-PROYECTO → 🟡 PRIMERA EDICIÓN NO CERRADA · #385 🟢 EN PRODUCCIÓN · #383 CERRADA · ÚNICO BLOQUEO TÉCNICO DE CIERRE: MATRIZ RESPONSIVE EXACTA · PRODUCCIÓN `913dd614` READY · GIT ↔ SUPABASE 178/178 · AUTH 🟣 · LEGAL 🟣**
+**ESTADO-PROYECTO → 🟡 PRIMERA EDICIÓN NO CERRADA · PRODUCCIÓN `c6a15a9` READY · SEARCH CONSOLE 🟢 · SITEMAP 195/195 🟢 · GIT ↔ SUPABASE 178/178 · PR ABIERTA #394 · AUTH 🟣 · LEGAL 🟣**
