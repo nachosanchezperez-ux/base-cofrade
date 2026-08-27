@@ -2,15 +2,22 @@
 -- Cierra la etapa de la A.M. Virgen de los Reyes tras la Semana Santa de 2026
 -- y registra la nueva vinculación de la A.M. Ntra. Sra. de la Encarnación desde 2027.
 
-update public.music_accompaniment_periods
+update public.music_accompaniment_periods as period
 set year_to = 2026,
     date_to_text = 'Semana Santa de 2026',
     is_current = false,
     notes = 'Fuente oficial de la banda: Nuestra Semana Santa. La vinculación con la Hermandad de las Viñas finalizó tras la Semana Santa de 2026.',
     updated_at = now()
-where id = '279dc0a1-4058-43bf-89b3-3b137d527c01'
-  and band_entity_id = 'b829bf98-78fa-4f0f-9aeb-cd965c779853'
-  and brotherhood_entity_id = '9f5c6f70-67b0-4161-bff5-a4af0e4d7b40';
+where period.band_entity_id = (
+    select id from public.entities
+    where entity_type = 'band' and slug = 'agrupacion-musical-virgen-de-los-reyes-sevilla'
+  )
+  and period.brotherhood_entity_id = (
+    select id from public.entities
+    where entity_type = 'brotherhood' and slug = 'hermandad-las-vinas-jerez'
+  )
+  and period.outing_type = 'Viernes Santo'
+  and period.year_from = 2024;
 
 insert into public.music_accompaniment_periods (
   id,
@@ -36,9 +43,9 @@ insert into public.music_accompaniment_periods (
   public_province
 )
 select
-  'b74f9a36-3779-4a44-9e68-166ceb1b17c5'::uuid,
-  '9f5c6f70-67b0-4161-bff5-a4af0e4d7b40'::uuid,
-  'cb04a5d8-e81e-4405-a001-9d5a60840924'::uuid,
+  gen_random_uuid(),
+  brotherhood.id,
+  band.id,
   null,
   'Tras el paso de misterio · tramo de vuelta',
   'Viernes Santo',
@@ -57,11 +64,17 @@ select
   'Jerez de la Frontera',
   'jerez-de-la-frontera',
   'Cádiz'
-where not exists (
-  select 1
-  from public.music_accompaniment_periods
-  where band_entity_id = 'cb04a5d8-e81e-4405-a001-9d5a60840924'
-    and brotherhood_entity_id = '9f5c6f70-67b0-4161-bff5-a4af0e4d7b40'
-    and year_from = 2027
-    and status = 'published'
-);
+from public.entities as brotherhood
+cross join public.entities as band
+where brotherhood.entity_type = 'brotherhood'
+  and brotherhood.slug = 'hermandad-las-vinas-jerez'
+  and band.entity_type = 'band'
+  and band.slug = 'agrupacion-musical-nuestra-senora-de-la-encarnacion'
+  and not exists (
+    select 1
+    from public.music_accompaniment_periods as existing
+    where existing.band_entity_id = band.id
+      and existing.brotherhood_entity_id = brotherhood.id
+      and existing.year_from = 2027
+      and existing.status = 'published'
+  );
