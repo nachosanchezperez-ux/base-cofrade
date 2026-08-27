@@ -2,34 +2,12 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
+import { PANEL_CREATE_ITEMS } from '@/lib/panel/creation'
+import { getPanelNavigationGroups } from '@/lib/panel/navigation'
 import styles from './PanelCommandPalette.module.css'
 
 const RECENTS_KEY = 'hilo-panel-recents-v1'
 const MAX_RECENTS = 8
-
-const MODULES = [
-  { name: 'Resumen', typeLabel: 'Inicio', href: '/panel', mark: '⌂' },
-  { name: 'Hoy', typeLabel: 'Inicio', href: '/panel/hoy', mark: '24' },
-  { name: 'Hermandades', typeLabel: 'Contenido', href: '/panel/hermandades', mark: 'H' },
-  { name: 'Imágenes', typeLabel: 'Contenido', href: '/panel/imagenes', mark: 'I' },
-  { name: 'Pasos', typeLabel: 'Contenido', href: '/panel/pasos', mark: 'P' },
-  { name: 'Bandas', typeLabel: 'Contenido', href: '/panel/bandas', mark: 'B' },
-  { name: 'Marchas', typeLabel: 'Contenido', href: '/panel/marchas', mark: '♫' },
-  { name: 'Extraordinarias', typeLabel: 'Contenido', href: '/panel/extraordinarias', mark: '✦' },
-  { name: 'Acontecimientos', typeLabel: 'Contenido', href: '/panel/acontecimientos', mark: 'A' },
-  { name: 'Personas', typeLabel: 'Documentación', href: '/panel/agentes', mark: 'Pe' },
-  { name: 'Fuentes', typeLabel: 'Documentación', href: '/panel/fuentes', mark: 'F' },
-  { name: 'Multimedia', typeLabel: 'Documentación', href: '/panel/multimedia', mark: 'Mu' },
-  { name: 'Relaciones', typeLabel: 'Documentación', href: '/panel/relaciones', mark: '↔' },
-  { name: 'Datos', typeLabel: 'Sistema', href: '/panel/datos', mark: 'D' },
-]
-
-const CREATE_ITEMS = [
-  { name: 'Nueva hermandad', typeLabel: 'Crear', href: '/panel/hermandades/nueva', mark: 'H' },
-  { name: 'Nueva imagen', typeLabel: 'Crear', href: '/panel/imagenes/nueva', mark: 'I' },
-  { name: 'Nuevo paso', typeLabel: 'Crear', href: '/panel/pasos/nuevo', mark: 'P' },
-  { name: 'Nueva persona', typeLabel: 'Crear', href: '/panel/agentes/nuevo', mark: 'Pe' },
-]
 
 const SEGMENT_LABELS = {
   hermandades: 'Hermandad',
@@ -92,7 +70,7 @@ function currentEntity(pathname) {
   }
 }
 
-export default function PanelCommandPalette({ canEdit = false }) {
+export default function PanelCommandPalette({ canEdit = false, role = 'contributor' }) {
   const pathname = usePathname()
   const router = useRouter()
   const inputRef = useRef(null)
@@ -105,16 +83,26 @@ export default function PanelCommandPalette({ canEdit = false }) {
   const [error, setError] = useState('')
   const [activeIndex, setActiveIndex] = useState(0)
 
+  const modules = useMemo(() => (
+    getPanelNavigationGroups(role)
+      .flatMap((group) => group.items.map((item) => ({
+        name: item.label,
+        typeLabel: group.label,
+        href: item.href,
+        mark: item.mark,
+      })))
+  ), [role])
+
   const moduleMatches = useMemo(() => {
     const needle = normalize(query)
-    if (!needle) return MODULES.slice(0, 7)
-    return MODULES.filter((item) => normalize(`${item.name} ${item.typeLabel}`).includes(needle)).slice(0, 6)
-  }, [query])
+    if (!needle) return modules.slice(0, 8)
+    return modules.filter((item) => normalize(`${item.name} ${item.typeLabel}`).includes(needle)).slice(0, 7)
+  }, [modules, query])
 
   const visibleItems = mode === 'recent'
     ? recents
     : mode === 'new'
-      ? (canEdit ? CREATE_ITEMS : [])
+      ? (canEdit ? PANEL_CREATE_ITEMS : [])
       : [...moduleMatches, ...results]
 
   function openPalette(nextMode = 'search') {
