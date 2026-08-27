@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { requirePanelUser } from '@/lib/panel/auth'
 import { getPanelBands } from '@/lib/panel/data'
 import styles from '@/app/panel/panel.module.css'
 
@@ -11,12 +12,17 @@ export default async function PanelBandsPage({ searchParams }) {
   const query = await searchParams
   const q = String(query?.q || '').trim()
   const status = ['published', 'review', 'draft', 'archived'].includes(query?.status) ? query.status : ''
-  const bands = await getPanelBands({ query: q, status })
+  const [user, bands] = await Promise.all([
+    requirePanelUser(),
+    getPanelBands({ query: q, status }),
+  ])
+  const canEdit = ['admin', 'editor'].includes(user.role)
 
   return (
     <div className={styles.pageWrap}>
       <header className={styles.pageHeader}>
         <div><span className={styles.eyebrow}>Enciclopedia musical</span><h1>Bandas</h1><p>Identidad, acompañamientos, salidas, dirección, estrenos y discografía conectada en una sola ficha editorial.</p></div>
+        {canEdit ? <Link className={styles.primaryButton} href="/panel/bandas/nueva">Nueva banda</Link> : null}
       </header>
 
       <form className={styles.filters}>
