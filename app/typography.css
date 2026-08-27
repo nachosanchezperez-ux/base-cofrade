@@ -13,16 +13,18 @@
   --font-size-body: 16px;
   --font-size-reading: 17px;
   --font-size-data: 16px;
-  --font-size-meta: 12px;
-  --font-size-eyebrow: 10px;
-  --font-size-button: 13px;
+  --font-size-meta: 13px;
+  --font-size-eyebrow: 12px;
+  --font-size-button: 14px;
 
   --font-size-panel-display: clamp(30px, 3.5vw, 44px);
   --font-size-panel-heading: 21px;
   --font-size-panel-card: 18px;
   --font-size-panel-subheading: 15px;
   --font-size-panel-body: 14px;
-  --font-size-panel-control: 13px;
+  --font-size-panel-meta: 12px;
+  --font-size-panel-eyebrow: 12px;
+  --font-size-panel-control: 14px;
 
   --tracking-display: -0.045em;
   --tracking-heading: -0.035em;
@@ -222,7 +224,7 @@ body {
   [class*='eyebrow'],
   [class*='Eyebrow']
 ) {
-  font-size: var(--font-size-eyebrow);
+  font-size: var(--font-size-panel-eyebrow);
   font-weight: var(--font-weight-extrabold);
   line-height: 1.4;
   letter-spacing: var(--tracking-eyebrow);

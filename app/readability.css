@@ -1,0 +1,279 @@
+/*
+ * Hilo Cofrade · suelo transversal de legibilidad
+ *
+ * Esta hoja se importa la última desde app/layout.js. No sustituye el diseño
+ * de cada módulo: actúa como red de seguridad sobre declaraciones históricas
+ * de 8–11 px que todavía existen en vistas antiguas.
+ *
+ * Contrato de lectura:
+ * - texto auxiliar / pies / etiquetas: 12 px como mínimo visual;
+ * - metadatos: 13 px;
+ * - navegación y controles interactivos: 14 px;
+ * - campos de formulario públicos: 16 px (también evita zoom en iOS).
+ */
+:root {
+  --readability-caption: 12px;
+  --readability-meta: 13px;
+  --readability-interactive: 14px;
+  --readability-form: 16px;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Navegación y acciones: ningún enlace de menú vuelve a quedar en 8–11 px. */
+#hc-app :is(nav, [role='navigation']) :is(a, button, [role='button']),
+#hc-app :is(button, [role='button']),
+#hc-app summary {
+  font-size: var(--readability-interactive);
+  line-height: 1.45;
+}
+
+/* Formularios públicos: 16 px es el suelo de lectura y evita auto-zoom móvil. */
+#hc-app :is(input, select, textarea) {
+  font-size: var(--readability-form);
+  line-height: 1.45;
+}
+
+/* Texto auxiliar semántico. */
+#hc-app :is(small, figcaption, dt) {
+  font-size: var(--readability-caption);
+  line-height: 1.45;
+}
+
+#hc-app figcaption > :is(span, small),
+#hc-app time > span {
+  font-size: var(--readability-caption);
+  line-height: 1.45;
+}
+
+#hc-app dd,
+#hc-app table :is(th, td) {
+  font-size: var(--readability-interactive);
+  line-height: 1.5;
+}
+
+#hc-app label {
+  font-size: var(--readability-meta);
+  line-height: 1.45;
+}
+
+/* Kicker, eyebrow y familias de etiquetas visuales recurrentes. */
+#hc-app :is(
+  [class*='eyebrow'],
+  [class*='Eyebrow'],
+  [class*='kicker'],
+  [class*='Kicker'],
+  [class*='overline'],
+  [class*='Overline'],
+  [class*='navLabel'],
+  [class*='NavLabel']
+) {
+  font-size: var(--readability-caption);
+  line-height: 1.45;
+}
+
+#hc-app :is(
+  [class*='badge'],
+  [class*='Badge'],
+  [class*='pill'],
+  [class*='Pill'],
+  [class*='chip'],
+  [class*='Chip']
+) {
+  font-size: var(--readability-caption);
+  line-height: 1.4;
+}
+
+#hc-app :is(
+  [class*='badge'],
+  [class*='Badge'],
+  [class*='pill'],
+  [class*='Pill'],
+  [class*='chip'],
+  [class*='Chip']
+) :is(span, small) {
+  font-size: var(--readability-caption);
+  line-height: 1.4;
+}
+
+#hc-app :is(
+  [class*='label'],
+  [class*='Label']
+):not(label) {
+  font-size: var(--readability-caption);
+  line-height: 1.45;
+}
+
+/* Metadatos y créditos: se actúa solo sobre hijos textuales para no alterar layouts. */
+#hc-app :is(
+  [class*='meta'],
+  [class*='Meta'],
+  [class*='caption'],
+  [class*='Caption'],
+  [class*='credit'],
+  [class*='Credit'],
+  [class*='topline'],
+  [class*='Topline']
+) > :is(span, small, p, a) {
+  font-size: var(--readability-meta);
+  line-height: 1.45;
+}
+
+/*
+ * Estructuras de tarjeta recurrentes. Esta segunda barrera cubre etiquetas
+ * sin clase propia que antes escapaban al sistema tipográfico: encabezados,
+ * hechos rápidos, ubicaciones, vacíos editoriales y llamadas a la acción.
+ */
+:where(#hc-app) article > span:first-child:not([class]) {
+  font-size: var(--readability-caption);
+  line-height: 1.45;
+}
+
+#hc-app :is([class*='Head'], [class*='head']) > span:not([class]),
+#hc-app :is([class*='Head'], [class*='head']) > div > span:not([class]),
+#hc-app :is([class*='Facts'], [class*='facts']) span,
+#hc-app :is([class*='Essentials'], [class*='essentials']) span {
+  font-size: var(--readability-caption);
+  line-height: 1.45;
+}
+
+#hc-app :is(
+  span[class*='context'],
+  span[class*='Context'],
+  span[class*='place'],
+  span[class*='Place'],
+  span[class*='location'],
+  span[class*='Location'],
+  span[class*='organizer'],
+  span[class*='Organizer'],
+  small[class*='context'],
+  small[class*='Context'],
+  small[class*='place'],
+  small[class*='Place'],
+  small[class*='location'],
+  small[class*='Location']
+) {
+  font-size: var(--readability-meta);
+  line-height: 1.45;
+}
+
+#hc-app :is([class*='Location'], [class*='location']) > :is(span, small),
+#hc-app :is([class*='empty'], [class*='Empty']) > :is(span, p, small),
+#hc-app :is([class*='signals'], [class*='Signals']) span {
+  font-size: var(--readability-meta);
+  line-height: 1.45;
+}
+
+#hc-app :is([class*='dateBlock'], [class*='DateBlock'], [class*='featuredDate'], [class*='FeaturedDate']) > span {
+  font-size: var(--readability-caption);
+  line-height: 1.4;
+}
+
+:where(#hc-app) :is([class*='Actions'], [class*='actions'], [class*='Links'], [class*='links']) > a,
+#hc-app :is(a[class*='Jump'], a[class*='jump'], a[class*='Filter'], a[class*='filter']) {
+  font-size: var(--readability-interactive);
+  line-height: 1.45;
+}
+
+#hc-app :is([class*='Copy'], [class*='copy']) > em:not([class]) {
+  font-size: var(--readability-meta);
+  line-height: 1.45;
+}
+
+#hc-app :is([class*='cardMain'], [class*='CardMain']) > p,
+#hc-app :is([class*='explorerHead'], [class*='ExplorerHead'], [class*='sectionHead'], [class*='SectionHead']) > p {
+  font-size: var(--readability-interactive);
+  line-height: 1.55;
+}
+
+/* Casos estructurales de agenda: etiquetas y nombres musicales dentro de tarjetas compactas. */
+#hc-app :is([class*='cardMusic'], [class*='CardMusic'], [class*='featuredMusic'], [class*='FeaturedMusic']) > span,
+#hc-app :is([class*='cardMusic'], [class*='CardMusic'], [class*='featuredMusic'], [class*='FeaturedMusic']) > div > p > small {
+  font-size: var(--readability-caption);
+  line-height: 1.45;
+}
+
+#hc-app :is([class*='cardMusic'], [class*='CardMusic'], [class*='featuredMusic'], [class*='FeaturedMusic']) > div > p > strong,
+#hc-app :is([class*='routeFacts'], [class*='RouteFacts']) strong,
+#hc-app :is([class*='timelineCopy'], [class*='TimelineCopy']) > strong {
+  font-size: var(--readability-interactive);
+  line-height: 1.45;
+}
+
+#hc-app :is([class*='sources'], [class*='Sources']) article > span:first-child,
+#hc-app :is([class*='heroThread'], [class*='HeroThread']) b {
+  font-size: var(--readability-caption);
+  line-height: 1.4;
+}
+
+#hc-app :is([class*='sources'], [class*='Sources']) article > a {
+  font-size: var(--readability-interactive);
+  line-height: 1.45;
+}
+
+/*
+ * Texto explicativo que históricamente se comprimía por debajo de 12 px.
+ * Se limita a descripciones, notas, resúmenes, fuentes y líneas temporales,
+ * sin tocar titulares ni párrafos editoriales de mayor jerarquía.
+ */
+#hc-app :is(p, small)[class*='description'],
+#hc-app :is(p, small)[class*='Description'],
+#hc-app :is(p, small)[class*='summary'],
+#hc-app :is(p, small)[class*='Summary'],
+#hc-app :is(p, small)[class*='note'],
+#hc-app :is(p, small)[class*='Note'],
+#hc-app :is([class*='source'], [class*='Source']) :is(p, small),
+#hc-app :is([class*='timeline'], [class*='Timeline']) :is(p, small) {
+  font-size: var(--readability-interactive);
+  line-height: 1.55;
+}
+
+/*
+ * El Panel conserva una densidad algo mayor en escritorio, pero no baja de
+ * 12 px en texto auxiliar ni de 14 px en controles. En móvil los campos son
+ * siempre de 16 px para evitar zoom involuntario en Safari/iOS.
+ */
+#hc-panel :is(nav, [role='navigation']) :is(a, button, [role='button']),
+#hc-panel :is(button, [role='button']) {
+  font-size: var(--font-size-panel-control, 14px);
+}
+
+#hc-panel :is(input, select, textarea) {
+  font-size: var(--font-size-panel-control, 14px);
+}
+
+#hc-panel :is(small, figcaption, dt),
+#hc-panel :is(
+  [class*='eyebrow'],
+  [class*='Eyebrow'],
+  [class*='kicker'],
+  [class*='Kicker'],
+  [class*='navLabel'],
+  [class*='NavLabel'],
+  [class*='label'],
+  [class*='Label']
+) {
+  font-size: var(--font-size-panel-meta, 12px);
+}
+
+#hc-panel :is(
+  [class*='meta'],
+  [class*='Meta'],
+  [class*='caption'],
+  [class*='Caption'],
+  [class*='credit'],
+  [class*='Credit'],
+  [class*='topline'],
+  [class*='Topline']
+) > :is(span, small, p, a) {
+  font-size: var(--font-size-panel-meta, 12px);
+}
+
+@media (max-width: 760px) {
+  #hc-panel :is(input, select, textarea) {
+    font-size: var(--readability-form);
+  }
+}

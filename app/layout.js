@@ -9,6 +9,7 @@ import './habit-layout.css';
 import './step-preview.css';
 import './home-mobile-contract.css';
 import './titulars-desktop-layout.css';
+import './readability.css';
 import HiloHeader from '@/components/HiloHeader';
 import HiloFooter from '@/components/HiloFooter';
 import JsonLd from '@/components/JsonLd';
