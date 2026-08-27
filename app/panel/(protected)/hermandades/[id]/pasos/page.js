@@ -15,6 +15,8 @@ const SAVED_MESSAGES = {
   closed: 'El periodo se ha cerrado sin borrar el Paso.',
   archived: 'La relación se ha retirado. El Paso continúa existiendo de forma independiente.',
   uploaded: 'Fotografía principal del Paso actualizada correctamente.',
+  'created-linked': 'El nuevo Paso se ha creado y vinculado a la Hermandad. Completa su ficha antes de publicarlo.',
+  'created-unlinked': 'El Paso se ha creado, pero no se pudo vincular automáticamente. Puedes seleccionarlo en el formulario inferior.',
 }
 
 export default async function BrotherhoodStepsPage({ params, searchParams }) {
@@ -45,7 +47,10 @@ export default async function BrotherhoodStepsPage({ params, searchParams }) {
             <h1>Pasos de la Hermandad</h1>
             <p>{data.brotherhood.official_name}</p>
           </div>
-          <Link className={styles.secondaryButton} href={`/panel/hermandades/${id}`}>Volver al editor</Link>
+          <div className={styles.editorHeaderActions}>
+            {canEdit ? <Link className={styles.primaryButton} href={`/panel/pasos/nuevo?brotherhood=${id}`}>Nuevo Paso</Link> : null}
+            <Link className={styles.secondaryButton} href={`/panel/hermandades/${id}`}>Volver al editor</Link>
+          </div>
         </div>
       </header>
 
