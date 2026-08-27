@@ -2,85 +2,62 @@
 
 Fecha de corte: 27 de agosto de 2026
 
-Objetivo: cerrar lo existente sin ampliar frentes de forma automática.
+Objetivo: cerrar lo existente sin ampliar frentes ni declarar automáticamente el lanzamiento.
 
 ## Estado
 
 **PRIMERA EDICIÓN → 🟡 NO CERRADA TÉCNICAMENTE**
 
-Producción y las barreras funcionales están estables. La única puerta técnica pendiente continúa siendo la matriz responsive exacta en `390`, `768`, `1024` y `1440` px. Auth y Legal son dependencias externas y no se falsean como resueltas.
-
-Tras la congelación inicial, Dirección autorizó expresamente recuperar **#385**. Esa PR se reconcilió con el `main` de cierre, pasó QA completo y fue fusionada. **#383 permanece cerrada sin fusionar.**
+Producción, SEO, sitemap y seguridad pública están aprobados. Siguen pendientes la matriz responsive exacta en `390`, `768`, `1024` y `1440` px y la resolución de la PR visual #394. Auth y Legal son dependencias externas y no se falsean como resueltas.
 
 ## Checklist simple
 
 | Puerta | Estado | Evidencia resumida |
 |---|---:|---|
-| Código | 🟢 | `main` funcional `913dd614`; #385 integrada por decisión expresa de Dirección; #383 y #49 permanecen cerradas sin fusionar. |
-| Build | 🟢 | Next.js 16.3/Turbopack completado sobre el head reconciliado de #385. |
-| Tests | 🟢 | **369/369** en la integración de #385. |
-| Producción | 🟢 | Deployment `dpl_6ZgEQuhTiRxcVs9KFhmeEzhbENbk` READY en `dub1`, asociado exactamente a `913dd614`; alias `hilocofrade.es` y `www.hilocofrade.es` verificados. |
-| Runtime | 🟢 | 0 eventos `error/fatal` en la comprobación posterior al despliegue de #385. |
-| QA responsive | 🔴 | Sigue faltando evidencia exacta a 390/768/1024/1440. |
-| Arquitectura pública | 🟢 | Familias públicas, relaciones, fallbacks y navegación conservan el baseline de cierre. |
-| Panel | 🟢 | #385 unifica Salidas, conecta Curiosidades editoriales y normaliza multimedia firmada de Bandas/Salidas. |
-| Migraciones | 🟢 | Git ↔ Supabase `178/178`; #385 añade 0 migraciones. |
-| RLS | 🟢 | `75/75` tablas públicas con RLS activa según la última auditoría; #385 añade 0 cambios RLS. |
-| SEO | 🟢 | Robots, canonical, OG, Twitter Cards e indexabilidad conservan el baseline validado. |
-| Seguridad pública | 🟢 | Panel protegido, APIs excluidas y diagnósticos retirados; #385 no cambia Auth. |
+| Código | 🟢 | `main` funcional `c6a15a9`; #393 y #395 fusionadas; #394 abierta y aún fuera de producción. |
+| Build | 🟢 | Next.js 16.3/Turbopack completado tras #395. |
+| Tests | 🟢 | **372/372** en `main`. |
+| Producción | 🟢 | `dpl_9b7yQaUfdLcLvdrLDBP3ZZYUPJMq` READY en `dub1`, commit exacto `c6a15a9`; alias correctos. |
+| Runtime | 🟢 | 6 peticiones finales con HTTP 200 y 0 eventos `error/fatal`. |
+| QA responsive | 🔴 | Falta evidencia exacta a 390/768/1024/1440, incluida la preview de #394. |
+| Arquitectura pública | 🟢 | Directorios, sitemap, Bandas y buscadores ya no enlazan entidades sin ficha especializada. |
+| Panel | 🟢 | Protegido y operativo; Salidas, Curiosidades, multimedia y borradores legales conservan el baseline validado. |
+| Migraciones | 🟢 | Git ↔ Supabase `178/178`; #393 y #395 añaden 0 migraciones. |
+| RLS | 🟢 | `75/75` tablas públicas con RLS activa según la última auditoría. |
+| SEO | 🟢 | Canonical, OG, Twitter Cards, indexabilidad y exclusiones mantienen el baseline aprobado. |
+| Sitemap | 🟢 | Producción sirve **195 URL**; auditoría **195/195** con HTTP 200, canonical y sin `noindex` ni duplicados. |
+| Search Console | 🟢 | Dominio verificado; Home en Google y HTTPS correcto; sitemap correcto y leído el 27/08. |
+| Seguridad pública | 🟢 | Panel protegido, APIs excluidas, sin claves, SQL, drafts ni trazas técnicas expuestas. |
+| Rutas de diagnóstico | 🟢 | Rutas de prueba retiradas; `robots.txt` excluye `/api/` y `/panel/`. |
 | Importador sin IA | 🟢 | #49 cerrada sin fusionar; HC-016 sigue como vía canónica determinista. |
 | Auth · contraseñas filtradas | 🟣 | Bloqueada por el plan Free de Supabase; requiere Pro o superior. |
-| Legal / privacidad / contacto | 🟣 | Borrador privado editable; pendiente de responsable, emails/contacto, bases, plazos y aprobación. Sin rutas legales públicas ni apertura de Colabora. |
+| Legal / privacidad / contacto | 🟣 | Borradores privados editables; faltan valores concretos y aprobación. Colabora continúa cerrada. |
 
-## Integración autorizada de #385
+## Search Console · corte actual
 
-La recuperación de #385 se ejecutó después del cierre inicial y no supone reabrir el desarrollo general de la Primera edición.
+- Home: **indexada** y servida por HTTPS.
+- Sitemap: **Correcto**, enviado el 13 de agosto y leído el 27 de agosto.
+- Instantánea de Google: `188` páginas descubiertas, `12` indexadas y `31` no indexadas.
+- Exclusiones: `1` página con redirección y `30` descubiertas actualmente sin indexar; `0` rastreadas actualmente sin indexar.
+- Rendimiento visible: `5` clics. Vídeo: `1` sin indexar.
 
-### Salidas
+Search Console procesa una instantánea anterior de `188` URL; el sitemap de producción actual contiene `195` URL válidas. No se trata como error crítico.
 
-El Panel expone un único módulo **Salidas**. Dentro se distinguen:
+## Salud pública y editorial
 
-- **Salidas habituales**: estación de penitencia, Procesión de Gloria, Vía Crucis, Rosario público, Traslado, Romería, Subida, Bajada, Procesión sacramental, extraordinarias y otras salidas recurrentes.
-- **Salidas registradas**: ediciones concretas con fecha, horarios, recorrido, titulares, música, fotografía y fuentes.
-
-El término técnico `Series` permanece únicamente en el modelo interno.
-
-### Curiosidades
-
-Las Curiosidades relacionadas con una Hermandad proceden del Banco editorial canónico (`editorial_content` + `editorial_content_links`) y respetan publicación/RLS.
-
-### Multimedia
-
-Bandas y fotografías principales de Salidas usan subida firmada directa:
-
-**navegador → Supabase Storage → verificación → vinculación**.
-
-Los bytes no pasan por las Server Actions de Vercel.
-
-## Validación realizada para #385
-
-- rama reconciliada con el `main` de cierre: **0 commits por detrás** antes del merge;
-- `npm test`: **369/369**;
-- `npm run build`: **correcto**;
-- preview exacta del head: **READY** en `dub1`;
-- runtime preview: 0 `error/fatal`;
-- merge con head esperado;
-- producción: `dpl_6ZgEQuhTiRxcVs9KFhmeEzhbENbk` **READY**;
-- alias de producción: `hilocofrade.es`, `www.hilocofrade.es` y alias Vercel correctos;
-- runtime de producción: 0 `error/fatal` en la ventana posterior al despliegue;
-- 0 migraciones, 0 cambios de esquema y 0 cambios RLS.
+- **Pública 🟢:** sitemap, directorios, enlaces de Bandas y buscadores no conducen a las cinco hermandades relacionales sin ficha.
+- **Editorial 🟡:** esos cinco nodos permanecen como referencias no navegables hasta completarlos o reclasificarlos con datos reales.
+- Las carencias de cobertura visual y autoría ya registradas siguen en backlog y no rompen la UI.
 
 ## Dependencias externas
 
-- **Auth 🟣:** elevar el plan de Supabase si Dirección requiere protección canónica contra contraseñas filtradas.
-- **Legal 🟣:** completar identidad responsable, contacto público, email y tratamiento/política aplicable antes de publicar textos o abrir formularios.
+- **Auth 🟣:** elevar el plan de Supabase si Dirección requiere la protección canónica contra contraseñas filtradas.
+- **Legal 🟣:** completar responsable, contacto público, email y tratamiento/política aplicable; aprobarlos antes de publicar textos o abrir formularios.
 
-## Regla de congelación actualizada
+## Regla de congelación
 
-La recuperación de #385 fue una decisión expresa y puntual de Dirección. No implica iniciar otra Home, una nueva Tira del hilo, nuevas entidades, directorios, automatizaciones ni más funciones del Panel.
-
-`#383` permanece cerrada sin fusionar y requiere una decisión independiente si alguna vez se quiere recuperar.
+No iniciar otra Home, una nueva Tira del hilo, nuevas entidades, directorios, automatizaciones ni más funciones del Panel. No declarar lanzamiento ni comunicación pública como consecuencia automática del cierre técnico.
 
 ## Única acción siguiente
 
-Ejecutar y documentar la matriz pública y del Panel en `390`, `768`, `1024` y `1440` px. Si no hay bloqueos rojos o naranjas, declarar la Primera edición técnicamente cerrada sin confundirlo con su anuncio público.
+Ejecutar y documentar la matriz `390 / 768 / 1024 / 1440` sobre producción y sobre la preview de #394. Después, resolver esa PR y decidir el cierre técnico por separado del lanzamiento público.
