@@ -21,8 +21,10 @@ test('conserva fotografías reales como contexto útil', () => {
   assert.ok(css.includes('height: 146px;'))
 })
 
-test('Marcha del día sigue a ancho completo pero con composición más compacta', () => {
-  assert.ok(css.includes('grid-template-columns: minmax(0, 1fr) minmax(250px, .38fr);'))
+test('Marcha del día sigue a ancho completo y reserva un espacio real para su portada', () => {
+  assert.ok(css.includes('grid-template-columns: 116px minmax(0, 1fr) minmax(250px, .38fr);'))
+  assert.ok(css.includes('.musicVisual {'))
+  assert.ok(css.includes('width: 92px;'))
   assert.ok(css.includes('margin-top: 14px;'))
   assert.ok(!css.includes('grid-template-columns: 84px minmax(0, 1.35fr) minmax(280px, .65fr);'))
 })
