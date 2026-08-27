@@ -24,7 +24,7 @@ export default async function ProtectedPanelLayout({ children }) {
         {children}
       </div>
       <Suspense fallback={null}>
-        <PanelCommandPalette canEdit={canEdit} />
+        <PanelCommandPalette canEdit={canEdit} role={user.role} />
         <PanelSaveToast />
         <PanelEditState />
         <PanelMetricNavigation />
