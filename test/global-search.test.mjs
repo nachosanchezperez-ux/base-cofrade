@@ -74,6 +74,16 @@ test('el autocompletado coloca las fichas navegables antes que otras coincidenci
   assert.doesNotMatch(route, /if \(intent\?\.explicitNavigation\)/)
 })
 
+test('el autocompletado no registra el texto escrito por el usuario cuando falla', async () => {
+  const route = await readFile(new URL('../app/api/tira-del-hilo/search/route.js', import.meta.url), 'utf8')
+  const errorHandler = route.slice(route.indexOf('} catch'))
+
+  assert.match(errorHandler, /console\.error\('\[Hilo Cofrade\] Error en autocompletado de Tira del hilo'\)/)
+  assert.doesNotMatch(errorHandler, /rawTerm/)
+  assert.doesNotMatch(errorHandler, /\bterm\b/)
+  assert.doesNotMatch(errorHandler, /\berror\b\s*:/)
+})
+
 test('las coincidencias directas se presentan como mini fichas visuales y escalables', async () => {
   const [loader, search, searchStyles] = await Promise.all([
     readFile(new URL('../lib/supabase/search-live.js', import.meta.url), 'utf8'),
