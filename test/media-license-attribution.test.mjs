@@ -19,6 +19,15 @@ test('los logotipos oficiales externos de Bandas usan orígenes remotos acotados
   assert.match(config, /pathname: '\/wp-content\/uploads\/\*\*'/);
 });
 
+test('las portadas publicadas de discografía tienen todos sus orígenes autorizados', async () => {
+  const config = await read('next.config.mjs');
+
+  assert.match(config, /hostname: 'i\.scdn\.co'/);
+  assert.match(config, /hostname: 'i\.ibb\.co'/);
+  assert.match(config, /hostname: 'image-cdn-ak\.spotifycdn\.com'/);
+  assert.match(config, /hostname: 'image-cdn-fa\.spotifycdn\.com'/);
+});
+
 test('la media pública conserva licencia y crédito visible', async () => {
   const source = await read('lib/supabase/entity-media.js');
 
