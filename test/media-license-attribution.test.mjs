@@ -11,6 +11,13 @@ test('Wikimedia Commons está autorizada como origen remoto de imágenes', async
   assert.match(config, /pathname: '\/wikipedia\/commons\/\*\*'/);
 });
 
+test('los logotipos oficiales de Virgen de los Reyes usan un origen remoto acotado', async () => {
+  const config = await read('next.config.mjs');
+
+  assert.match(config, /hostname: 'www\.virgendelosreyes\.es'/);
+  assert.match(config, /pathname: '\/wp-content\/uploads\/\*\*'/);
+});
+
 test('la media pública conserva licencia y crédito visible', async () => {
   const source = await read('lib/supabase/entity-media.js');
 
