@@ -113,3 +113,11 @@ test('las coincidencias directas se presentan como mini fichas visuales y escala
   assert.doesNotMatch(search, /item\.title\s*===\s*['"]El Baratillo['"]/)
   assert.doesNotMatch(loader, /entity\.slug\s*===\s*['"]el-baratillo['"]/)
 })
+
+test('el buscador no enlaza entidades navegables sin su ficha especializada', async () => {
+  const loader = await readFile(new URL('../lib/supabase/search-live.js', import.meta.url), 'utf8')
+
+  assert.match(loader, /isPublicEntityPageReady/)
+  assert.match(loader, /publicProfileByType\[entity\.entity_type\]\?\.get\(entity\.id\)/)
+  assert.match(loader, /entityHref\(entity, publicProfileByType/)
+})

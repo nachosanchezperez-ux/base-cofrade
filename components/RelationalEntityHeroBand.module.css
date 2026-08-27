@@ -30,15 +30,16 @@
 
 .identityLockup {
   display: grid;
-  grid-template-columns: clamp(210px, 22vw, 300px) minmax(0, 1fr);
-  gap: clamp(30px, 4vw, 52px);
+  grid-template-columns: clamp(190px, 17vw, 230px) minmax(0, 1fr);
+  gap: clamp(28px, 3.4vw, 42px);
   align-items: center;
 }
 
 .heroBand .bandCopy h1 {
   max-width: 11ch;
-  font-size: clamp(54px, 5.6vw, 80px);
+  font-size: clamp(52px, 4.8vw, 70px);
   line-height: .95;
+  overflow-wrap: break-word;
 }
 
 .heroBand .bandCopy :global(.subtitle) {
@@ -48,7 +49,7 @@
 .identityStage {
   position: relative;
   display: grid;
-  min-height: 300px;
+  min-height: 250px;
   place-items: center;
   isolation: isolate;
 }
@@ -73,8 +74,8 @@
 .logoStage {
   position: relative;
   display: grid;
-  width: min(100%, 300px);
-  height: 280px;
+  width: min(100%, 230px);
+  height: 236px;
   place-items: center;
 }
 
@@ -82,7 +83,7 @@
   width: auto;
   max-width: 100%;
   height: auto;
-  max-height: 270px;
+  max-height: 228px;
   object-fit: contain;
   filter: drop-shadow(0 20px 32px rgba(0, 0, 0, .28));
 }

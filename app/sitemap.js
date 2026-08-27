@@ -7,6 +7,7 @@ import { absoluteUrl } from '@/lib/seo';
 import { getHermandadesDirectory } from '@/lib/supabase/brotherhood-directory';
 import { getExtraordinaryDirectory } from '@/lib/supabase/extraordinary-directory';
 import { getGloryDirectory } from '@/lib/supabase/glory-directory';
+import { filterPublicPageEntities } from '@/lib/supabase/public-entity-page';
 import { createPublicClient } from '@/lib/supabase/public';
 
 export const revalidate = 3600;
@@ -101,7 +102,7 @@ async function publishedEntities() {
     const supabase = createPublicClient();
     const { data, error } = await supabase
       .from('entities')
-      .select('slug, updated_at, entity_type')
+      .select('id, slug, updated_at, entity_type')
       .in('entity_type', ['brotherhood', 'band', 'image', 'step'])
       .eq('status', 'published')
       .not('slug', 'is', null);
@@ -157,7 +158,10 @@ export default async function sitemap() {
     getExtraordinaryDirectory(),
     getGloryDirectory(),
   ]);
-  const brotherhoods = entities.filter((item) => item.entity_type === 'brotherhood');
+  const brotherhoods = filterPublicPageEntities(
+    entities.filter((item) => item.entity_type === 'brotherhood'),
+    brotherhoodDirectory
+  );
   const bands = entities.filter((item) => item.entity_type === 'band');
   const images = entities.filter((item) => item.entity_type === 'image');
   const steps = entities.filter((item) => item.entity_type === 'step');

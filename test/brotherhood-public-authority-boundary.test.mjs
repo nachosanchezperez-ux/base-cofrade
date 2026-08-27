@@ -70,9 +70,11 @@ test('el cliente público compartido es stateless y no usa SSR ni cookies', asyn
 test('el directorio y la ficha pública entran por loaders públicos de Hermandades', async () => {
   const directoryPage = await source('app/hermandades/page.js')
   const detailPage = await source('app/hermandades/[slug]/page.js')
+  const directoryLoader = await source('lib/supabase/brotherhood-directory.js')
 
   assert.match(directoryPage, /getHermandadesDirectory/)
   assert.match(detailPage, /getHermandadPageBySlug/)
+  assert.match(directoryLoader, /filterPublicPageEntities\(entities, brotherhoodRows\)/)
   assert.doesNotMatch(directoryPage, /@\/lib\/supabase\/(?:server|client)/)
   assert.doesNotMatch(detailPage, /@\/lib\/supabase\/(?:server|client)/)
 })

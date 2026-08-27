@@ -42,7 +42,9 @@ test('Bandas une logotipo y nombre y usa la fotografía solo como apoyo', () => 
   assert.match(hero, /bandHasPhoto \? <RelationalEntityHeroMedia variant="band"/)
   assert.match(hero, /bandStyles\.bandGridNoPhoto/)
   assert.match(css, /\.identityLockup \{/)
-  assert.match(css, /grid-template-columns: clamp\(210px, 22vw, 300px\) minmax\(0, 1fr\)/)
+  assert.match(css, /grid-template-columns: clamp\(190px, 17vw, 230px\) minmax\(0, 1fr\)/)
+  assert.match(css, /font-size: clamp\(52px, 4\.8vw, 70px\)/)
+  assert.match(css, /overflow-wrap: break-word/)
   assert.match(css, /\.heroBand \.bandGridNoPhoto \{[\s\S]*grid-template-columns: 1fr/)
   assert.match(css, /@media \(max-width: 620px\)[\s\S]*\.identityLockup \{[\s\S]*grid-template-columns: 1fr/)
 })
@@ -56,6 +58,6 @@ test('el sistema de identidad no contiene excepciones por ficha', () => {
   ]
 
   for (const text of files) {
-    assert.equal(/el-baratillo|pastora|maestro-tejera|soledad-cantillana/i.test(text), false)
+    assert.equal(/el-baratillo|pastora|maestro-tejera|soledad-cantillana|cigarreras/i.test(text), false)
   }
 })

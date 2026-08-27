@@ -71,6 +71,7 @@ test('discografía, colores y enriquecimiento relacional de Bandas permanecen en
   const presence = await source('lib/supabase/relational-presence.js')
 
   assert.match(bands, /createPublicClient/)
+  assert.match(bands, /isPublicEntityPageReady\(brotherhood, brotherhoodProfile\)/)
   assert.match(discography, /createPublicClient/)
   assert.match(colors, /createPublicClient/)
   assert.doesNotMatch(bands, /@\/lib\/supabase\/server(?:['"]|\/)/)
