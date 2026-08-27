@@ -4,16 +4,16 @@
 
 ## Estado verificado
 
-- Revisión: **26 de agosto de 2026 · cierre QA de primera edición**.
+- Revisión: **27 de agosto de 2026 · borradores legales privados en Panel**.
 - Repositorio: `nachosanchezperez-ux/base-cofrade`.
 - Rama principal: `main`.
-- Último `main` funcional validado: `a45c9ef10b3303f6c6a3e6822299ac0d8fdbd4cb` — **Cierre QA: corregir desbordes y previsualizaciones del Panel (#371)**. El commit documental que actualice este archivo puede sucederlo sin cambios funcionales.
+- Último `main` funcional validado: `65c573e048b777d69b8c06572c9f69cb3df3596d` — **Borradores legales privados y editables en el Panel (#375)**. El commit documental que actualice este archivo puede sucederlo sin cambios funcionales.
 - PR abiertas al cierre de la revisión: **0**.
 - #49: **CERRADA SIN FUSIONAR**; no debe reabrirse.
-- Producción funcional validada: `dpl_6B8ZJCi9sQvZB1itDufXf6BBqZbU` → **READY**, región `dub1`.
-- Runtime posterior al smoke: **0 respuestas 5xx y 0 eventos fatal**. Se observó un único cierre anticipado de stream con HTTP `200`; la misma ruta volvió a responder `200` y se validó sin error técnico, por lo que no constituye un fallo estructural.
+- Producción funcional validada: `dpl_BNHgyQn9nr7nr4e7EWn3MbEEUnPS` → **READY**, región `dub1`.
+- Runtime posterior al smoke: **0 errores agrupados en `/panel/legal`**. La ruta autenticada cargó cuatro documentos y cuatro acciones de guardado, sin overflow ni errores de aplicación.
 - Supabase: `Hilocofrade` (`kcevwkucqzcyrqaimyhl`) → **ACTIVE_HEALTHY**, región `eu-west-1`, Postgres `17.6.1.155`, plan de organización **Free**.
-- Migraciones: **176/176** entre Git y Supabase, hasta `20260826123753 activate_document_import_rpc`.
+- Migraciones: **178/178** entre Git y Supabase, hasta `20260827002425 index_legal_drafts_updated_by`.
 
 ## Primera edición
 
@@ -55,9 +55,9 @@ El cierre técnico no equivale al lanzamiento ni a su comunicación pública. Tr
 
 ## Legal, privacidad y contacto
 
-**LEGAL → 🟣 PENDIENTE DE DATOS DE DIRECCIÓN**
+**LEGAL → 🟣 BORRADOR PRIVADO EDITABLE · PENDIENTE DE DATOS Y APROBACIÓN DE DIRECCIÓN**
 
-No constan identidad responsable, contacto público, email ni texto de privacidad/tratamiento confirmados. No se publica información inventada. `Colabora` continúa cerrada y `noindex`; no hay formularios públicos de aportación, contacto o recogida de datos personales.
+Dirección ha confirmado que aportará responsable, email y contacto público, pero todavía no constan sus valores definitivos. El Panel incorpora `/panel/legal` con ficha de Dirección, Aviso legal, Privacidad y Cookies/almacenamiento como borradores privados; solo miembros del Panel pueden leerlos y admin/editor puede guardarlos. No existen rutas legales públicas ni enlaces de Footer y ningún estado del editor publica contenido automáticamente. `Colabora` continúa cerrada y `noindex`; no hay formularios públicos de aportación, contacto o recogida de datos personales.
 
 ## SEO y descubrimiento
 
@@ -94,4 +94,4 @@ No constan identidad responsable, contacto público, email ni texto de privacida
 
 Ejecutar una comprobación verificable de la matriz responsive exacta en `390`, `768`, `1024` y `1440` px sobre las superficies enumeradas en la orden de cierre. Si no aparecen bloqueos, actualizar este estado a **Primera edición técnicamente cerrada** y dejar Auth/Legal como dependencias externas aceptadas o no por Dirección.
 
-**ESTADO-PROYECTO → 🟡 PRIMERA EDICIÓN NO CERRADA · ÚNICO BLOQUEO TÉCNICO: MATRIZ RESPONSIVE EXACTA · PRODUCCIÓN ESTABLE · PR 0 · GIT ↔ SUPABASE 176/176 · AUTH 🟣 · LEGAL 🟣**
+**ESTADO-PROYECTO → 🟡 PRIMERA EDICIÓN NO CERRADA · ÚNICO BLOQUEO TÉCNICO: MATRIZ RESPONSIVE EXACTA · PRODUCCIÓN ESTABLE · PR 0 · GIT ↔ SUPABASE 178/178 · AUTH 🟣 · LEGAL 🟣 EN EDICIÓN PRIVADA**
