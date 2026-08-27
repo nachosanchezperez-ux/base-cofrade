@@ -36,7 +36,7 @@ test('el sitemap descubre superficies públicas y rutas nacidas de datos', () =>
 
   assert.match(sitemap, /createPublicClient/)
   assert.match(sitemap, /filterPublicPageEntities/)
-  assert.match(sitemap, /PUBLIC_ENTITY_PROFILE_TABLES/)
+  assert.match(sitemap, /brotherhoodDirectory/)
   assert.match(sitemap, /getHermandadesDirectory/)
   assert.match(sitemap, /getExtraordinaryDirectory/)
   assert.match(sitemap, /directoryPath/)

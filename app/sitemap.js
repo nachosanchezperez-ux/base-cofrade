@@ -7,10 +7,7 @@ import { absoluteUrl } from '@/lib/seo';
 import { getHermandadesDirectory } from '@/lib/supabase/brotherhood-directory';
 import { getExtraordinaryDirectory } from '@/lib/supabase/extraordinary-directory';
 import { getGloryDirectory } from '@/lib/supabase/glory-directory';
-import {
-  filterPublicPageEntities,
-  PUBLIC_ENTITY_PROFILE_TABLES,
-} from '@/lib/supabase/public-entity-page';
+import { filterPublicPageEntities } from '@/lib/supabase/public-entity-page';
 import { createPublicClient } from '@/lib/supabase/public';
 
 export const revalidate = 3600;
@@ -105,30 +102,13 @@ async function publishedEntities() {
     const supabase = createPublicClient();
     const { data, error } = await supabase
       .from('entities')
-      .select('id, slug, updated_at, entity_type')
+      .select('slug, updated_at, entity_type')
       .in('entity_type', ['brotherhood', 'band', 'image', 'step'])
       .eq('status', 'published')
       .not('slug', 'is', null);
 
     if (error) throw error;
-    const entities = data || [];
-    const profileResults = await Promise.all(
-      Object.entries(PUBLIC_ENTITY_PROFILE_TABLES).map(async ([entityType, table]) => {
-        const entityIds = entities
-          .filter((entity) => entity.entity_type === entityType)
-          .map((entity) => entity.id);
-        if (!entityIds.length) return [entityType, []];
-
-        const result = await supabase
-          .from(table)
-          .select('entity_id')
-          .in('entity_id', entityIds);
-        if (result.error) throw result.error;
-        return [entityType, result.data || []];
-      })
-    );
-
-    return filterPublicPageEntities(entities, Object.fromEntries(profileResults));
+    return data || [];
   } catch (error) {
     console.error('[Hilo Cofrade] No se pudo generar el sitemap desde Supabase', {
       error: error instanceof Error ? error.message : String(error),
@@ -178,7 +158,10 @@ export default async function sitemap() {
     getExtraordinaryDirectory(),
     getGloryDirectory(),
   ]);
-  const brotherhoods = entities.filter((item) => item.entity_type === 'brotherhood');
+  const brotherhoods = filterPublicPageEntities(
+    entities.filter((item) => item.entity_type === 'brotherhood'),
+    brotherhoodDirectory
+  );
   const bands = entities.filter((item) => item.entity_type === 'band');
   const images = entities.filter((item) => item.entity_type === 'image');
   const steps = entities.filter((item) => item.entity_type === 'step');

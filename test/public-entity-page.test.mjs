@@ -8,17 +8,13 @@ import {
 
 test('el sitemap excluye entidades publicadas sin perfil especializado', () => {
   const entities = [
-    { id: 'brotherhood-ready', entity_type: 'brotherhood', slug: 'lista' },
-    { id: 'brotherhood-missing', entity_type: 'brotherhood', slug: 'incompleta' },
-    { id: 'band-ready', entity_type: 'band', slug: 'banda-lista' },
+    { entity_type: 'brotherhood', slug: 'lista' },
+    { entity_type: 'brotherhood', slug: 'incompleta' },
   ]
 
-  const result = filterPublicPageEntities(entities, {
-    brotherhood: [{ entity_id: 'brotherhood-ready' }],
-    band: [{ entity_id: 'band-ready' }],
-  })
+  const result = filterPublicPageEntities(entities, [{ slug: 'lista' }])
 
-  assert.deepEqual(result.map((entity) => entity.id), ['brotherhood-ready', 'band-ready'])
+  assert.deepEqual(result.map((entity) => entity.slug), ['lista'])
 })
 
 test('una ficha pública exige estado, slug y perfil especializado', () => {
