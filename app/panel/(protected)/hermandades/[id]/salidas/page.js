@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import EntityPicker from '@/components/panel/EntityPicker'
+import OutingDirectImageUpload from '@/components/panel/brotherhood/OutingDirectImageUpload'
 import RelationSourcesEditor from '@/components/panel/RelationSourcesEditor'
 import { requirePanelUser } from '@/lib/panel/auth'
 import { getBrotherhoodOutingsEditorData } from '@/lib/panel/brotherhood-outings'
@@ -15,7 +16,6 @@ import {
   saveOutingMusicPositionAction,
   saveOutingParticipantAction,
   saveOutingScheduleItemAction,
-  uploadOutingHeroImageAction,
 } from './actions'
 import styles from '@/app/panel/panel.module.css'
 
@@ -97,18 +97,20 @@ export default async function BrotherhoodOutingsPage({ params, searchParams }) {
                 <span className={`${styles.statusBadge} ${styles[outing.status]}`}>{STATUS_LABELS[outing.status]}</span>
               </div>
 
-              {outing.hero_image_path ? <img src={outing.hero_image_path} alt={outing.hero_image_alt || outing.title || outing.outing_type} style={{ width: '100%', maxHeight: 280, objectFit: 'cover', borderRadius: 12, marginBottom: 18 }} /> : null}
+              {!canEdit && outing.hero_image_path ? <img src={outing.hero_image_path} alt={outing.hero_image_alt || outing.title || outing.outing_type} style={{ width: '100%', maxHeight: 280, objectFit: 'cover', borderRadius: 12, marginBottom: 18 }} /> : null}
 
               {canEdit ? <form action={saveOutingAction} className={styles.editorForm}><input type="hidden" name="brotherhood_id" value={id} /><input type="hidden" name="outing_id" value={outing.id} /><OutingFields item={outing} data={data} /><div className={styles.formActions}><small>Los datos publicados alimentan la ficha de la Hermandad y, si es extraordinaria futura, la Home.</small><button className={styles.secondaryButton} type="submit">Guardar salida</button></div></form> : null}
 
               {canEdit ? (
                 <div className={styles.panelSubsection}>
-                  <div className={styles.subsectionHeading}><div><span className={styles.eyebrow}>Portada</span><h4>Imagen principal</h4></div></div>
-                  <form action={uploadOutingHeroImageAction} className={styles.editorForm}>
-                    <input type="hidden" name="brotherhood_id" value={id} /><input type="hidden" name="outing_id" value={outing.id} />
-                    <div className={styles.formGrid}><label className={styles.fieldWide}><span>Archivo</span><input name="file" type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/avif" required /></label><label><span>Texto alternativo</span><input name="hero_image_alt" defaultValue={outing.hero_image_alt || outing.title || outing.outing_type} required /></label><label><span>Crédito</span><input name="hero_image_credit" defaultValue={outing.hero_image_credit || ''} /></label></div>
-                    <div className={styles.formActions}><small>Actualiza la imagen usada también por el bloque de extraordinarias de la Home.</small><button className={styles.secondaryButton} type="submit">Subir imagen</button></div>
-                  </form>
+                  <OutingDirectImageUpload
+                    brotherhoodId={id}
+                    outingId={outing.id}
+                    title={outing.title || outing.outing_type}
+                    currentSrc={outing.hero_image_path || ''}
+                    currentAlt={outing.hero_image_alt || outing.title || outing.outing_type}
+                    currentCredit={outing.hero_image_credit || ''}
+                  />
                 </div>
               ) : null}
 
