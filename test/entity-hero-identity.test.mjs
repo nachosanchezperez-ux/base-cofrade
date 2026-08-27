@@ -33,20 +33,31 @@ test('el equilibrado óptico admite tamaños de portada sin romper el directorio
   assert.match(crest, /sizes=\{sizes\}/)
 })
 
-test('Bandas une logotipo y nombre y usa la fotografía solo como apoyo', () => {
+test('Bandas reserva la cabecera para logotipo y nombre', () => {
   const hero = source('components/RelationalEntityHero.js')
   const css = source('components/RelationalEntityHeroBand.module.css')
+  const page = source('app/bandas/[slug]/page.js')
 
-  assert.match(hero, /const bandHasPhoto = isBand && Boolean\(media\.photoSrc\)/)
   assert.match(hero, /bandStyles\.identityLockup/)
-  assert.match(hero, /bandHasPhoto \? <RelationalEntityHeroMedia variant="band"/)
-  assert.match(hero, /bandStyles\.bandGridNoPhoto/)
+  assert.match(hero, /!isBand \? \(/)
+  assert.doesNotMatch(hero, /RelationalEntityHeroMedia variant="band"/)
+  assert.match(hero, /bandStyles\.bandGridIdentityOnly/)
   assert.match(css, /\.identityLockup \{/)
   assert.match(css, /grid-template-columns: clamp\(190px, 17vw, 230px\) minmax\(0, 1fr\)/)
   assert.match(css, /font-size: clamp\(52px, 4\.8vw, 70px\)/)
   assert.match(css, /overflow-wrap: break-word/)
-  assert.match(css, /\.heroBand \.bandGridNoPhoto \{[\s\S]*grid-template-columns: 1fr/)
+  assert.match(css, /\.heroBand \.bandGridIdentityOnly \{[\s\S]*grid-template-columns: 1fr/)
   assert.match(css, /@media \(max-width: 620px\)[\s\S]*\.identityLockup \{[\s\S]*grid-template-columns: 1fr/)
+  assert.doesNotMatch(page, /<RelationalEntityHero[\s\S]*?media=\{\{[\s\S]*?photoSrc:/)
+})
+
+test('la fotografía de una banda se conserva en De un vistazo', () => {
+  const page = source('app/bandas/[slug]/page.js')
+
+  assert.match(page, /id="resumen"/)
+  assert.match(page, /band\.heroImagePath \? \(/)
+  assert.match(page, /src=\{band\.heroImagePath\}/)
+  assert.match(page, /band\.heroImageCredit/)
 })
 
 test('el sistema de identidad no contiene excepciones por ficha', () => {
