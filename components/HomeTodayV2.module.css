@@ -39,9 +39,14 @@
   line-height: 1.6;
 }
 
-.grid {
+.editorialGrid {
   display: grid;
   grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.sideColumn {
+  display: grid;
   gap: 12px;
 }
 
@@ -63,6 +68,19 @@
   grid-template-columns: 40px minmax(0, 1fr) 78px;
 }
 
+.featureCard {
+  border-color: #d7e2ec;
+  box-shadow: 0 18px 42px rgba(15, 39, 66, .065);
+}
+
+.featureCard h3 {
+  font-size: 24px;
+}
+
+.compactCard {
+  min-height: 0;
+}
+
 .discoveryCard {
   border-color: #d5e2ee;
   background: linear-gradient(145deg, #ffffff 0%, #f2f7fb 100%);
@@ -81,6 +99,8 @@
 }
 
 .copy {
+  display: flex;
+  flex-direction: column;
   min-width: 0;
 }
 
@@ -100,6 +120,11 @@
 }
 
 .kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  max-width: 100%;
+  flex-wrap: wrap;
   padding: 4px 7px;
   border-radius: 999px;
   color: #526b84;
@@ -107,6 +132,18 @@
   font-size: 10px;
   font-weight: 700;
   line-height: 1.2;
+}
+
+.kickerStep {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+}
+
+.kickerArrow {
+  color: #8aa0b4;
+  font-weight: 800;
 }
 
 .context {
@@ -136,7 +173,9 @@
 
 .link {
   display: inline-flex;
-  margin-top: 11px;
+  align-self: flex-start;
+  margin-top: auto;
+  padding-top: 11px;
   color: #123a67;
   font-size: 13px;
   font-weight: 750;
@@ -183,7 +222,9 @@
 .musicCard {
   position: relative;
   display: grid;
+  grid-template-columns: 78px minmax(0, 1fr);
   gap: 0;
+  align-items: center;
   margin-top: 12px;
   overflow: hidden;
   border: 1px solid #d5e0ea;
@@ -206,14 +247,31 @@
   pointer-events: none;
 }
 
-.musicAccent {
-  display: none;
+.musicVisual {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 62px;
+  height: 62px;
+  margin-left: 16px;
+  overflow: hidden;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, .15);
+  border-radius: 15px;
+  color: #fff;
+  background: rgba(255, 255, 255, .08);
+  box-shadow: 0 10px 24px rgba(3, 17, 30, .18);
+  font-size: 25px;
+}
+
+.musicCover {
+  object-fit: cover;
 }
 
 .musicCopy {
   position: relative;
   z-index: 1;
-  padding: 20px;
+  padding: 18px 16px;
 }
 
 .musicCopy .type {
@@ -229,15 +287,56 @@
   letter-spacing: -.025em;
 }
 
-.musicCopy > p {
+.musicByline {
   margin: 0;
   color: rgba(255, 255, 255, .72);
   font-size: 13px;
   line-height: 1.55;
 }
 
-.musicCopy > p strong {
+.musicByline strong {
   color: #fff;
+}
+
+.musicContext {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.musicContext > span {
+  display: grid;
+  gap: 2px;
+  min-width: 132px;
+  padding: 8px 10px;
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: 11px;
+  background: rgba(255, 255, 255, .055);
+}
+
+.musicContext small {
+  color: #f0a5b0;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.musicContext strong,
+.musicContext a {
+  overflow-wrap: anywhere;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.musicContext a {
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 255, 255, .28);
+  text-underline-offset: 3px;
 }
 
 .whyToday {
@@ -268,7 +367,48 @@
 .player {
   position: relative;
   z-index: 1;
+  grid-column: 1 / -1;
   padding: 0 20px 20px;
+}
+
+.musicLink {
+  display: flex;
+  width: fit-content;
+  margin: -7px 17px 0 auto;
+  color: rgba(255, 255, 255, .78);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+@media (max-width: 619px) {
+  .featureCard.cardWithVisual {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .featureCard.cardWithVisual .icon {
+    display: none;
+  }
+
+  .featureCard.cardWithVisual .copy {
+    grid-row: 2;
+  }
+
+  .featureCard.cardWithVisual .featureVisual {
+    display: block;
+    grid-row: 1;
+    grid-column: 1;
+    width: 100%;
+    height: 158px;
+    min-height: 158px;
+    max-height: none;
+    margin: 0;
+    border-radius: 14px;
+  }
+
+  .featureCard h3 {
+    font-size: 22px;
+  }
 }
 
 @media (max-width: 520px) {
@@ -309,8 +449,14 @@
     max-width: 680px;
   }
 
-  .grid {
-    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  .editorialGrid {
+    grid-template-columns: minmax(0, 1.32fr) minmax(330px, .68fr);
+    gap: 14px;
+    align-items: stretch;
+  }
+
+  .sideColumn {
+    grid-template-rows: repeat(2, minmax(0, 1fr));
     gap: 14px;
   }
 
@@ -361,7 +507,7 @@
   }
 
   .link {
-    margin-top: 12px;
+    padding-top: 12px;
   }
 
   .visual {
@@ -375,18 +521,71 @@
     align-self: center;
   }
 
+  .featureCard {
+    min-height: 378px;
+    padding: 28px 30px;
+  }
+
+  .featureCard.cardWithVisual {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: 190px minmax(0, 1fr);
+    gap: 22px;
+    align-items: stretch;
+  }
+
+  .featureCard.cardWithVisual .copy {
+    grid-row: 2;
+  }
+
+  .featureCard .featureVisual {
+    display: block;
+    grid-row: 1;
+    width: 100%;
+    height: 190px;
+    min-height: 190px;
+    border-radius: 17px;
+  }
+
+  .featureCard .visualIdentity {
+    display: none;
+  }
+
+  .featureCard h3 {
+    max-width: 720px;
+    margin-top: 11px;
+    font-size: 31px;
+    line-height: 1.08;
+  }
+
+  .featureCard p {
+    max-width: 760px;
+    font-size: 15px;
+    line-height: 1.58;
+  }
+
+  .compactCard {
+    padding: 20px 22px;
+  }
+
+  .compactCard h3 {
+    font-size: 21px;
+  }
+
   .musicCard {
-    grid-template-columns: minmax(0, 1fr) minmax(250px, .38fr);
+    grid-template-columns: 116px minmax(0, 1fr) minmax(250px, .38fr);
     align-items: center;
     margin-top: 14px;
   }
 
-  .musicAccent {
-    display: none;
+  .musicVisual {
+    width: 92px;
+    height: 92px;
+    margin-left: 24px;
+    border-radius: 18px;
   }
 
   .musicCopy {
-    padding: 20px 26px;
+    padding: 20px 24px;
   }
 
   .musicCopy h3 {
@@ -394,7 +593,12 @@
   }
 
   .player {
+    grid-column: auto;
     padding: 20px 26px;
     border-left: 1px solid rgba(255, 255, 255, .12);
+  }
+
+  .musicLink {
+    margin-right: 17px;
   }
 }
