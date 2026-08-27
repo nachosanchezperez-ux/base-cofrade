@@ -14,6 +14,8 @@ const SAVED_MESSAGES = {
   closed: 'El periodo de la relación se ha cerrado sin borrar la Imagen.',
   archived: 'La relación se ha retirado. La Imagen continúa existiendo de forma independiente.',
   uploaded: 'Fotografía principal del Titular actualizada correctamente.',
+  'created-linked': 'La nueva Imagen se ha creado y vinculado como Titular. Completa su ficha antes de publicarla.',
+  'created-unlinked': 'La Imagen se ha creado, pero no se pudo vincular automáticamente. Puedes seleccionarla en el formulario inferior.',
 }
 
 export default async function BrotherhoodImagesPage({ params, searchParams }) {
@@ -44,7 +46,10 @@ export default async function BrotherhoodImagesPage({ params, searchParams }) {
             <h1>Imágenes y titulares</h1>
             <p>{data.brotherhood.official_name}</p>
           </div>
-          <Link className={styles.secondaryButton} href={`/panel/hermandades/${id}`}>Volver al editor</Link>
+          <div className={styles.editorHeaderActions}>
+            {canEdit ? <Link className={styles.primaryButton} href={`/panel/imagenes/nueva?brotherhood=${id}`}>Nueva Imagen</Link> : null}
+            <Link className={styles.secondaryButton} href={`/panel/hermandades/${id}`}>Volver al editor</Link>
+          </div>
         </div>
       </header>
 
