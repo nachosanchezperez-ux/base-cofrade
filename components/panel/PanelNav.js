@@ -93,6 +93,14 @@ export default function PanelNav({ user }) {
         <kbd>⌘K</kbd>
       </button>
 
+      {canEdit ? (
+        <button className={`${styles.quickSearch} ${styles.quickCreate}`} type="button" onClick={() => openCommand('new')}>
+          <span aria-hidden="true">＋</span>
+          <strong>Nuevo contenido</strong>
+          <kbd>+</kbd>
+        </button>
+      ) : null}
+
       <nav className={styles.desktopNav} aria-label="Navegación del panel">
         {groups.map((group) => (
           <section className={styles.navGroup} key={group.label}>
