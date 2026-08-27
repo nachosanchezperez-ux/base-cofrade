@@ -4,7 +4,7 @@
 
 ## Estado verificado
 
-- Revisión: **27 de agosto de 2026 · cierre de duplicados en Canales de Bandas**.
+- Revisión: **27 de agosto de 2026 · auditoría de privacidad, Analytics y almacenamiento**.
 - Repositorio: `nachosanchezperez-ux/base-cofrade`.
 - Rama principal: `main`.
 - Último `main` funcional validado: `065013b999030fdd9130f9dc071f94a846cda737` — **Prevención de plataformas duplicadas en Canales de Bandas (#379)**. El commit documental que actualice este archivo puede sucederlo sin cambios funcionales.
@@ -60,6 +60,8 @@ El cierre técnico no equivale al lanzamiento ni a su comunicación pública. Tr
 **LEGAL → 🟣 BORRADOR PRIVADO EDITABLE · PENDIENTE DE DATOS Y APROBACIÓN DE DIRECCIÓN**
 
 Dirección ha confirmado que aportará responsable, email y contacto público, pero todavía no constan sus valores definitivos. El Panel incorpora `/panel/legal` con ficha de Dirección, Aviso legal, Privacidad y Cookies/almacenamiento como borradores privados; solo miembros del Panel pueden leerlos y admin/editor puede guardarlos. No existen rutas legales públicas ni enlaces de Footer y ningún estado del editor publica contenido automáticamente. `Colabora` continúa cerrada y `noindex`; no hay formularios públicos de aportación, contacto o recogida de datos personales.
+
+La auditoría técnica del 27/08/2026 ya está incorporada a los borradores privados y registrada en `audit_log`. Confirma: Vercel Web Analytics sin texto de búsquedas ni parámetros de URL y con exclusión del Panel; conversación de Tira y profundidad relacional en `sessionStorage`; sesión, recuperación, borradores no guardados y recientes del Panel; ausencia de etiquetas publicitarias, Google Analytics, Google Tag Manager, Meta Pixel y sistemas de perfilado; y presencia limitada de reproductores de YouTube/Spotify. Los documentos permanecen en estado `draft` porque siguen pendientes los datos del responsable, bases jurídicas, plazos, contratos/transferencias y la decisión sobre consentimiento o bloqueo previo de reproductores de terceros. No se ha añadido un banner ni se ha publicado información legal.
 
 ## SEO y descubrimiento
 
