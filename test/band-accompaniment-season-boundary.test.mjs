@@ -32,7 +32,8 @@ test('la migración cierra Virgen de los Reyes en 2026 y abre La Encarnación en
 
   assert.match(migration, /year_to = 2026/)
   assert.match(migration, /is_current = false/)
-  assert.match(migration, /'cb04a5d8-e81e-4405-a001-9d5a60840924'::uuid/)
+  assert.match(migration, /agrupacion-musical-virgen-de-los-reyes-sevilla/)
+  assert.match(migration, /agrupacion-musical-nuestra-senora-de-la-encarnacion/)
   assert.match(migration, /'Desde 2027'/)
   assert.match(migration, /'Tras el paso de misterio · tramo de vuelta'/)
 })
