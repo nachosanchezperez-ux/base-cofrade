@@ -5,14 +5,17 @@ import styles from '@/app/panel/panel.module.css'
 
 export const metadata = { title: 'Nuevo paso · Panel' }
 
-export default async function NewStepPage() {
+export default async function NewStepPage({ searchParams }) {
   await requirePanelEditor()
+  const query = await searchParams
+  const brotherhoodId = String(query?.brotherhood || '').trim()
+  const contextual = Boolean(brotherhoodId)
 
   return (
     <div className={styles.pageWrap}>
       <header className={styles.editorHeader}>
         <div className={styles.breadcrumb}>
-          <Link href="/panel/pasos">Pasos</Link>
+          {contextual ? <Link href={`/panel/hermandades/${brotherhoodId}/pasos`}>Pasos de la Hermandad</Link> : <Link href="/panel/pasos">Pasos</Link>}
           <span>→</span>
           <strong>Nuevo paso</strong>
         </div>
@@ -20,11 +23,13 @@ export default async function NewStepPage() {
           <div>
             <span className={styles.eyebrow}>Alta mínima</span>
             <h1>Nuevo paso</h1>
-            <p>Crea primero la identidad básica. Las relaciones y la documentación se incorporarán después.</p>
+            <p>{contextual ? 'Crea el Paso y quedará vinculado a la Hermandad en el mismo flujo.' : 'Crea primero la identidad básica. Las relaciones y la documentación se incorporarán después.'}</p>
           </div>
           <span className={`${styles.statusBadge} ${styles.draft}`}>Borrador</span>
         </div>
       </header>
+
+      {contextual ? <div className={styles.savedNotice}>Al guardar volverás a la Hermandad con el nuevo Paso ya vinculado.</div> : null}
 
       <section className={styles.editorSection}>
         <div className={styles.sectionHeading}>
@@ -36,6 +41,7 @@ export default async function NewStepPage() {
         </div>
 
         <form action={createStepAction} className={`${styles.panelCard} ${styles.editorForm}`}>
+          {contextual ? <input type="hidden" name="brotherhood_id" value={brotherhoodId} /> : null}
           <div className={styles.formGrid}>
             <label className={styles.fieldWide}>
               <span>Nombre del paso</span>
@@ -51,8 +57,8 @@ export default async function NewStepPage() {
             </label>
           </div>
           <div className={styles.formActions}>
-            <small>Se crearán la entidad y su ficha de paso con estado borrador.</small>
-            <button className={styles.primaryButton} type="submit">Crear paso</button>
+            <small>{contextual ? 'Se crearán el Paso y la relación Hermandad ↔ Paso como borrador.' : 'Se crearán la entidad y su ficha de paso con estado borrador.'}</small>
+            <button className={styles.primaryButton} type="submit">{contextual ? 'Crear y vincular' : 'Crear paso'}</button>
           </div>
         </form>
       </section>
