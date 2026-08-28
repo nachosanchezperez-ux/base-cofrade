@@ -105,7 +105,7 @@
 
 .keyFacts {
   display: grid;
-  grid-template-columns: minmax(210px, 1.5fr) repeat(3, minmax(110px, .65fr));
+  grid-template-columns: minmax(210px, 1.5fr) repeat(2, minmax(110px, .65fr));
   gap: 1px;
   margin-top: 32px;
   overflow: hidden;
