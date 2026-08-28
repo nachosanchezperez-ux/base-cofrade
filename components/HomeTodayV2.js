@@ -14,7 +14,7 @@ function CardVisual({ visual, featured = false }) {
 
   return (
     <div
-      className={`${styles.visual} ${photo ? styles.visualPhoto : styles.visualIdentity} ${featured ? styles.featureVisual : ''} ${polishStyles.todayVisual}`}
+      className={`${styles.visual} ${photo ? styles.visualPhoto : styles.visualIdentity} ${featured ? styles.featureVisual : polishStyles.todayVisual}`}
       title={photo && visual.credit ? visual.credit : undefined}
       data-home-visual-kind={visual.kind || 'identity'}
     >
@@ -22,7 +22,7 @@ function CardVisual({ visual, featured = false }) {
         src={visual.path}
         alt={visual.alt || ''}
         fill
-        sizes={photo ? featured ? '(max-width: 859px) 100vw, 52vw' : '(max-width: 859px) 96px, 112px' : '78px'}
+        sizes={featured ? (photo ? '(max-width: 859px) 100vw, 52vw' : '160px') : photo ? '(max-width: 859px) 96px, 112px' : '78px'}
         className={photo ? styles.visualPhotoImage : styles.visualIdentityImage}
         style={photo && visual.focusPosition ? { objectPosition: visual.focusPosition } : undefined}
         unoptimized={isSvg(visual.path)}
@@ -77,7 +77,7 @@ export default function HomeTodayV2({ today, content }) {
 
   const renderCard = (card, { isFeatured = false } = {}) => (
     <article
-      className={`${styles.card} ${isFeatured ? styles.featureCard : styles.compactCard} ${polishStyles.todayCard} ${card.kind === 'discovery' ? styles.discoveryCard : ''} ${card.visual?.path ? `${styles.cardWithVisual} ${polishStyles.todayCardWithVisual}` : ''}`}
+      className={`${styles.card} ${isFeatured ? styles.featureCard : `${styles.compactCard} ${polishStyles.todayCard}`} ${card.kind === 'discovery' ? styles.discoveryCard : ''} ${card.visual?.path ? `${styles.cardWithVisual} ${isFeatured ? '' : polishStyles.todayCardWithVisual}` : ''}`}
       key={`${card.kind}-${card.id}`}
     >
       <span className={`${styles.icon} ${polishStyles.todayIcon}`} aria-hidden="true">{card.icon}</span>
