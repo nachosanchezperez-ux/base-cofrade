@@ -8,6 +8,8 @@ function source(path) {
 
 test('Bandas no recupera contenido editorial o relacional desde fallbacks locales', () => {
   const bands = source('lib/supabase/bands.js')
+  const bandsCore = source('lib/supabase/bands-core.js')
+  const publicBandLoader = `${bands}\n${bandsCore}`
 
   for (const forbidden of [
     'FALLBACK_BAND',
@@ -15,11 +17,12 @@ test('Bandas no recupera contenido editorial o relacional desde fallbacks locale
     'CIGARRERAS_HISTORICAL_ACCOMPANIMENTS',
     'CIGARRERAS_CURIOSITIES',
   ]) {
-    assert.equal(bands.includes(forbidden), false, `${forbidden} no debe volver al loader público de Bandas`)
+    assert.equal(publicBandLoader.includes(forbidden), false, `${forbidden} no debe volver al loader público de Bandas`)
   }
 
-  assert.match(bands, /\.in\('relation_type', \['about', 'historical_accompaniment'\]\)/)
-  assert.match(bands, /if \(!entity\.data\) return null/)
+  assert.match(publicBandLoader, /\.in\('relation_type', \['about', 'historical_accompaniment'\]\)/)
+  assert.match(publicBandLoader, /if \(!entity\.data\) return null/)
+  assert.match(bands, /getBandBySlug as getCoreBandBySlug/)
 })
 
 test('el directorio de Hermandades usa el crest_path persistente', () => {
