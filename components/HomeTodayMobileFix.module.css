@@ -1,0 +1,56 @@
+@media (max-width: 619px) {
+  .featureCard {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-rows: auto auto !important;
+    gap: 14px !important;
+    min-height: 0 !important;
+    padding: 14px !important;
+  }
+
+  .featureIcon {
+    display: none !important;
+  }
+
+  .featureCopy {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .featureVisual {
+    display: block !important;
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    width: 100% !important;
+    height: 158px !important;
+    min-height: 158px !important;
+    max-height: none !important;
+    margin: 0 !important;
+    align-self: stretch !important;
+    border-radius: 14px !important;
+  }
+
+  .featureCopy h3 {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 7px 0 6px !important;
+    font-size: 22px !important;
+    line-height: 1.16 !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+  }
+
+  .featureCopy p {
+    width: 100% !important;
+    max-width: none !important;
+  }
+}
+
+@media (max-width: 390px) {
+  .featureVisual {
+    height: 142px !important;
+    min-height: 142px !important;
+  }
+}

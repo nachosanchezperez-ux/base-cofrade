@@ -3,6 +3,7 @@ import Link from 'next/link'
 import HomeMarchPlayer from '@/components/HomeMarchPlayer'
 import styles from './HomeTodayV2.module.css'
 import polishStyles from './HomeResponsivePolish.module.css'
+import mobileFixStyles from './HomeTodayMobileFix.module.css'
 
 function isSvg(path = '') {
   return String(path).toLowerCase().endsWith('.svg')
@@ -14,7 +15,7 @@ function CardVisual({ visual, featured = false }) {
 
   return (
     <div
-      className={`${styles.visual} ${photo ? styles.visualPhoto : styles.visualIdentity} ${featured ? styles.featureVisual : polishStyles.todayVisual}`}
+      className={`${styles.visual} ${photo ? styles.visualPhoto : styles.visualIdentity} ${featured ? `${styles.featureVisual} ${mobileFixStyles.featureVisual}` : polishStyles.todayVisual}`}
       title={photo && visual.credit ? visual.credit : undefined}
       data-home-visual-kind={visual.kind || 'identity'}
     >
@@ -77,11 +78,11 @@ export default function HomeTodayV2({ today, content }) {
 
   const renderCard = (card, { isFeatured = false } = {}) => (
     <article
-      className={`${styles.card} ${isFeatured ? styles.featureCard : `${styles.compactCard} ${polishStyles.todayCard}`} ${card.kind === 'discovery' ? styles.discoveryCard : ''} ${card.visual?.path ? `${styles.cardWithVisual} ${isFeatured ? '' : polishStyles.todayCardWithVisual}` : ''}`}
+      className={`${styles.card} ${isFeatured ? `${styles.featureCard} ${mobileFixStyles.featureCard}` : `${styles.compactCard} ${polishStyles.todayCard}`} ${card.kind === 'discovery' ? styles.discoveryCard : ''} ${card.visual?.path ? `${styles.cardWithVisual} ${isFeatured ? '' : polishStyles.todayCardWithVisual}` : ''}`}
       key={`${card.kind}-${card.id}`}
     >
-      <span className={`${styles.icon} ${polishStyles.todayIcon}`} aria-hidden="true">{card.icon}</span>
-      <div className={styles.copy}>
+      <span className={`${styles.icon} ${polishStyles.todayIcon} ${isFeatured ? mobileFixStyles.featureIcon : ''}`} aria-hidden="true">{card.icon}</span>
+      <div className={`${styles.copy} ${isFeatured ? mobileFixStyles.featureCopy : ''}`}>
         <div className={styles.topline}>
           <span className={styles.type}>{card.label}</span>
           <RelationshipTrail value={card.kicker} />
