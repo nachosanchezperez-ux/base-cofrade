@@ -4,11 +4,11 @@
 
 ## Estado verificado
 
-- Revisión: **28 de agosto de 2026 · publicación legal y reconciliación final de migraciones**.
+- Revisión: **28 de agosto de 2026 · cierre de salud editorial y reconciliación de #394**.
 - Repositorio: `nachosanchezperez-ux/base-cofrade`.
 - Rama principal: `main`.
-- Último baseline funcional validado de `main`: `0120be4f5fe7fff9bed0c242ff6c4c79da8499e1` — **#409 · estado canónico posterior a la publicación legal**; el árbol de aplicación procede de #407/#408 sobre el baseline posterior a #406.
-- Deployment de producción validado: `dpl_29u6UQBvZ35i4yGPUJvQZdKnhfyG` → **READY**, región `dub1`, commit exacto `0120be4` y alias `hilocofrade.es` activos.
+- Último baseline funcional validado de `main`: `a12ab812e7aef6ab363b533be4389d7630eade39` — **#411 · cierre de autoría pendiente y revalidación editorial de Apple Music**.
+- Deployment de producción validado: `dpl_2WvqoXwiKVT8JJkPG9Bwc4kEeEDw` → **READY**, región `dub1`, commit exacto `a12ab81` y alias `hilocofrade.es` activos.
 - PR abiertas: **solo #394**, abierta, draft y mergeable.
 - No se ha abierto ningún frente funcional nuevo durante este cierre.
 
@@ -27,13 +27,13 @@ Esta revisión manual no se describe como fallo técnico y no bloquea la validac
 ## #394 · Cabeceras identitarias
 
 - Estado: **🟣 READY FOR VISUAL APPROVAL**.
-- Base actual: `main 0120be4`, incluida la publicación legal.
-- Head: `f1ecb2bf4e9974926f1e7270cb1db9c5890c79d4`.
+- Base actual: `main a12ab81`, incluida la migración editorial 181.
+- Head: `f14672e4049a4904b2b85ed9820a11d588d00418`.
 - Delta: **9 archivos**, limitado a cabeceras de Hermandades/Bandas, media, configuración de imágenes y regresiones.
 - Tests: **399/399**.
 - Build: Next.js `16.3` / Turbopack correcto.
 - CI: **verde**.
-- Preview: `dpl_H2xE73rFJcnzFE6Cu2vhLy7Kc9Rv` → **READY**, región `dub1`.
+- Preview: `dpl_GAz9wvohZA5DsugBQkAq1W1Qnkaw` → **READY**, región `dub1`.
 - Auditoría técnica: **🟢**.
 
 La auditoría confirma:
@@ -70,9 +70,9 @@ Esta validación técnica no sustituye el juicio visual de Dirección.
 
 ## Producción y rendimiento
 
-- Producción actual: **READY** en `dub1`, deployment `dpl_29u6UQBvZ35i4yGPUJvQZdKnhfyG`, commit `0120be4`.
+- Producción actual: **READY** en `dub1`, deployment `dpl_2WvqoXwiKVT8JJkPG9Bwc4kEeEDw`, commit `a12ab81`.
 - Smoke automatizable: todas las superficies principales respondieron y renderizaron correctamente.
-- Runtime posterior a la publicación legal: **sin errores de runtime** en la última hora.
+- Runtime posterior al cierre editorial: **sin errores de runtime** en la última hora.
 
 ### Incidencia de `statement timeout`
 
@@ -186,4 +186,4 @@ Hasta entonces solo se permite bug real, seguridad, legal, contenido, datos, fue
 
 **Dirección debe revisar visualmente #394 y el baseline en `390 / 768 / 1024 / 1440`; si da el visto bueno, resolver #394 y declarar el cierre técnico con su freeze.**
 
-**ESTADO-PROYECTO → 🟡 PRIMERA EDICIÓN TÉCNICAMENTE PREPARADA · BASELINE AUTOMATIZABLE 🟢 · PRODUCCIÓN READY · GIT ↔ SUPABASE 180/180 · #394 READY FOR VISUAL APPROVAL · QA VISUAL 🟣 · AUTH 🟢 · LEGAL 🟢**
+**ESTADO-PROYECTO → 🟡 PRIMERA EDICIÓN TÉCNICAMENTE PREPARADA · BASELINE AUTOMATIZABLE 🟢 · PRODUCCIÓN READY · GIT ↔ SUPABASE 181/181 · #394 READY FOR VISUAL APPROVAL · QA VISUAL 🟣 · AUTH 🟢 · LEGAL 🟢**
