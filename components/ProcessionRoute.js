@@ -32,10 +32,14 @@ function RouteLeg({ leg, route }) {
       </header>
 
       <ol className={styles.routeList}>
-        {visiblePoints.map((point) => {
-          const badge = roleLabel(point.role, leg.id, route.circuit)
+        {visiblePoints.map((point, index) => {
+          const isSingleLegCircuitEntry = route.circuit
+            && route.legs.length === 1
+            && index === visiblePoints.length - 1
+          const visualRole = isSingleLegCircuitEntry ? 'end' : point.role
+          const badge = roleLabel(visualRole, leg.id, route.circuit)
           return (
-            <li className={styles.routePoint} data-role={point.role} key={point.id}>
+            <li className={styles.routePoint} data-role={visualRole} key={point.id}>
               <span className={styles.node} aria-hidden="true" />
               <div className={styles.pointCopy}>
                 <div className={styles.pointTop}>
