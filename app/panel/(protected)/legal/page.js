@@ -32,15 +32,15 @@ export default async function LegalPanelPage({ searchParams }) {
         <div>
           <span className={styles.eyebrow}>Documentación interna</span>
           <h1>Legal</h1>
-          <p>Completa y revisa los textos antes de crear rutas públicas. Ningún estado de esta pantalla publica contenido automáticamente.</p>
+          <p>Completa y revisa los textos. Los tres documentos públicos se actualizan al marcarlos como «Listo internamente».</p>
         </div>
       </header>
 
       {query?.saved === 'document-updated' ? <div className={styles.savedNotice} role="status">El borrador legal se ha guardado.</div> : null}
       {!canEdit ? <div className={styles.readOnlyNotice}>Tu perfil tiene acceso de consulta.</div> : null}
       <div className={styles.legalWarning} role="note">
-        <strong>Borradores privados</strong>
-        <span>No se mostrarán en el Front ni en el Footer. Mantén el estado en Borrador mientras queden marcas [COMPLETAR] o [CONFIRMAR].</span>
+        <strong>Control de publicación</strong>
+        <span>La ficha de Dirección siempre es privada. Mantén los demás documentos en Borrador o En revisión mientras queden marcas [COMPLETAR] o [CONFIRMAR].</span>
       </div>
 
       <section className={styles.editorStack} aria-label="Borradores legales">
@@ -85,7 +85,7 @@ export default async function LegalPanelPage({ searchParams }) {
                   </label>
                 </div>
                 <div className={styles.formActions}>
-                  <small>Guardar no crea ni modifica páginas públicas.</small>
+                  <small>«Listo internamente» publica los tres textos legales; la ficha de Dirección nunca se muestra.</small>
                   <button className={styles.secondaryButton} type="submit">Guardar borrador</button>
                 </div>
               </form>

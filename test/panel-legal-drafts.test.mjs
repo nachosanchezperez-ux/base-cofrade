@@ -17,12 +17,12 @@ test('los borradores legales quedan privados y protegidos por RLS', () => {
   assert.doesNotMatch(migration, /to anon[\s\S]*using/)
 })
 
-test('el Panel ofrece los cuatro documentos sin una acción de publicación pública', () => {
+test('el Panel mantiene privada la ficha de Dirección y controla los documentos públicos', () => {
   for (const key of ['direction_sheet', 'legal_notice', 'privacy_policy', 'storage_policy']) {
     assert.match(migration, new RegExp(`'${key}'`))
   }
-  assert.match(page, /Guardar no crea ni modifica páginas públicas/)
-  assert.doesNotMatch(page, /Publicar/)
+  assert.match(page, /La ficha de Dirección siempre es privada/)
+  assert.match(page, /«Listo internamente» publica los tres textos legales/)
   assert.match(navigation, /href: '\/panel\/legal'/)
 })
 
