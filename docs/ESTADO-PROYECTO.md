@@ -7,9 +7,9 @@
 - Revisión: **28 de agosto de 2026 · publicación legal y reconciliación final de migraciones**.
 - Repositorio: `nachosanchezperez-ux/base-cofrade`.
 - Rama principal: `main`.
-- Último baseline funcional validado de `main`: `6369f71872e969a8001347bf6e5f26b004aef883` — **#408 · reconciliación de la versión real de la migración legal**; incluye la publicación legal de #407 sobre el baseline posterior a #406.
-- Deployment de producción validado: `dpl_GtpegWiF3C9G4fBUsFevMh5DrGNZ` → **READY**, región `dub1`, commit exacto `6369f718` y alias `hilocofrade.es` activos.
-- PR abiertas: **solo #394**, abierta y draft. Tras avanzar `main` con #406/#407/#408, GitHub ya no la presenta mergeable; debe reconciliarse antes de su decisión final, sin ampliar alcance.
+- Último baseline funcional validado de `main`: `0120be4f5fe7fff9bed0c242ff6c4c79da8499e1` — **#409 · estado canónico posterior a la publicación legal**; el árbol de aplicación procede de #407/#408 sobre el baseline posterior a #406.
+- Deployment de producción validado: `dpl_29u6UQBvZ35i4yGPUJvQZdKnhfyG` → **READY**, región `dub1`, commit exacto `0120be4` y alias `hilocofrade.es` activos.
+- PR abiertas: **solo #394**, abierta, draft y mergeable.
 - No se ha abierto ningún frente funcional nuevo durante este cierre.
 
 ## Primera edición
@@ -27,13 +27,13 @@ Esta revisión manual no se describe como fallo técnico y no bloquea la validac
 ## #394 · Cabeceras identitarias
 
 - Estado: **🟣 READY FOR VISUAL APPROVAL**.
-- Base funcional validada originalmente: `main aa7514b`; `main` actual es `6369f718` y requiere una reconciliación final antes de resolver la PR.
-- Head: `7bd47ef9566d70587da4f064fd931e636e668c94` (incluye la sincronización documental final; el árbol funcional validado es `e1f90b4`).
+- Base actual: `main 0120be4`, incluida la publicación legal.
+- Head: `f1ecb2bf4e9974926f1e7270cb1db9c5890c79d4`.
 - Delta: **9 archivos**, limitado a cabeceras de Hermandades/Bandas, media, configuración de imágenes y regresiones.
-- Tests: **394/394**.
+- Tests: **399/399**.
 - Build: Next.js `16.3` / Turbopack correcto.
 - CI: **verde**.
-- Preview: `dpl_B2onFM8fRucPGh1dT7UUJxKjoiQ6` → **READY**, región `dub1`.
+- Preview: `dpl_H2xE73rFJcnzFE6Cu2vhLy7Kc9Rv` → **READY**, región `dub1`.
 - Auditoría técnica: **🟢**.
 
 La auditoría confirma:
@@ -45,7 +45,7 @@ La auditoría confirma:
 - sin migraciones, cambios de datos, rutas públicas ni consultas añadidas;
 - SEO, navegación, Imágenes y Pasos conservan el baseline.
 
-#394 permanece en borrador y no se fusiona hasta el visto bueno visual manual. Después deberá reconciliarse con el `main` real y repetir sus checks técnicos antes de la decisión definitiva.
+#394 permanece en borrador y no se fusiona hasta el visto bueno visual manual.
 
 ## QA responsive
 
@@ -70,7 +70,7 @@ Esta validación técnica no sustituye el juicio visual de Dirección.
 
 ## Producción y rendimiento
 
-- Producción actual: **READY** en `dub1`, deployment `dpl_GtpegWiF3C9G4fBUsFevMh5DrGNZ`, commit `6369f718`.
+- Producción actual: **READY** en `dub1`, deployment `dpl_29u6UQBvZ35i4yGPUJvQZdKnhfyG`, commit `0120be4`.
 - Smoke automatizable: todas las superficies principales respondieron y renderizaron correctamente.
 - Runtime posterior a la publicación legal: **sin errores de runtime** en la última hora.
 
@@ -174,10 +174,9 @@ Hasta entonces solo se permite bug real, seguridad, legal, contenido, datos, fue
 
 1. **QA visual manual exacto `390 / 768 / 1024 / 1440`** sobre producción y preview de #394.
 2. **Decisión visual sobre #394**: fusionar o cerrar sin fusionar.
-3. **Reconciliación final de #394** con el `main` real y repetición de checks después del visto bueno visual.
 
 ## Única acción siguiente
 
 **Dirección debe revisar visualmente #394 y el baseline en `390 / 768 / 1024 / 1440`; si da el visto bueno, resolver #394 y declarar el cierre técnico con su freeze.**
 
-**ESTADO-PROYECTO → 🟡 PRIMERA EDICIÓN TÉCNICAMENTE PREPARADA · BASELINE AUTOMATIZABLE 🟢 · PRODUCCIÓN READY · GIT ↔ SUPABASE 180/180 · #394 PENDIENTE VISUAL Y DE RECONCILIACIÓN FINAL · QA VISUAL 🟣 · AUTH 🟢 · LEGAL 🟢**
+**ESTADO-PROYECTO → 🟡 PRIMERA EDICIÓN TÉCNICAMENTE PREPARADA · BASELINE AUTOMATIZABLE 🟢 · PRODUCCIÓN READY · GIT ↔ SUPABASE 180/180 · #394 READY FOR VISUAL APPROVAL · QA VISUAL 🟣 · AUTH 🟢 · LEGAL 🟢**
