@@ -152,22 +152,14 @@ export default async function BandDetailPage({ params }) {
     currentYear
   )
   const accompanimentGroups = splitCurrentAccompaniments(seasonalAccompaniments.current)
-  const upcomingAccompanimentGroups = splitCurrentAccompaniments(seasonalAccompaniments.upcoming || [])
   const orderedAccompaniments = sortHolyWeekAccompaniments(accompanimentGroups.holyWeek)
   const gloryAccompaniments = sortGloryAccompaniments(accompanimentGroups.glories)
-  const upcomingAccompaniments = [
-    ...sortHolyWeekAccompaniments(upcomingAccompanimentGroups.holyWeek),
-    ...sortGloryAccompaniments(upcomingAccompanimentGroups.glories),
-  ]
-  const upcomingYears = [...new Set(upcomingAccompaniments.map((item) => item.yearFrom).filter(Boolean))].sort((a, b) => a - b)
-  const nextAccompanimentYear = upcomingYears[0] || currentYear + 1
   const gloryGroups = groupGloryAccompaniments(gloryAccompaniments)
   const gloryTypeSummary = summarizeGloryTypes(gloryAccompaniments)
   const historicalAccompaniments = seasonalAccompaniments.historical.sort((a, b) => (b.yearTo || b.yearFrom || 0) - (a.yearTo || a.yearFrom || 0))
   const curiosities = band.curiosities || []
   const hasAccompaniments = orderedAccompaniments.length > 0
   const hasGloryAccompaniments = gloryAccompaniments.length > 0
-  const hasUpcomingAccompaniments = upcomingAccompaniments.length > 0
   const hasHistoricalAccompaniments = historicalAccompaniments.length > 0
   const hasOutings = band.outings.length > 0
   const hasPremieres = band.premieres.length > 0
@@ -175,7 +167,7 @@ export default async function BandDetailPage({ params }) {
   const hasDirection = band.direction.length > 0
   const banderin = band.heritage?.find((item) => item.type === 'Banderín') || null
   const accentColor = colors.find((item) => item.role === 'accent')?.hexValue || band.primaryColor
-  const currentRelations = [...orderedAccompaniments, ...gloryAccompaniments, ...upcomingAccompaniments]
+  const currentRelations = [...orderedAccompaniments, ...gloryAccompaniments]
   const bandThreadItems = [
     ...(band.linkedBrotherhoodSlug ? [{
       kind: 'Hermandad',
@@ -276,7 +268,6 @@ export default async function BandDetailPage({ params }) {
             {bandThreadItems.length ? <a href="#tira-del-hilo">Tira del hilo</a> : null}
             {banderin ? <a href="#banderin">Banderín</a> : null}
             {hasAccompaniments ? <a href="#acompanamientos">Semana Santa</a> : null}
-            {hasUpcomingAccompaniments ? <a href="#proximos-acompanamientos">Próximos</a> : null}
             {hasGloryAccompaniments ? <a href="#glorias">Glorias y eucarísticas</a> : null}
             {hasHistoricalAccompaniments ? <a href="#acompanamientos-historicos">Histórico</a> : null}
             {hasOutings ? <a href="#extraordinarias">Extraordinarias</a> : null}
@@ -409,24 +400,11 @@ export default async function BandDetailPage({ params }) {
       {hasAccompaniments ? <section className={`${styles.contentSection} ${styles.softSection}`} id="acompanamientos">
         <div className="shell">
           <div className={styles.sectionHeading}>
-            <span className={styles.eyebrow}>Semana Santa · {currentYear}</span>
-            <h2>Acompañamientos musicales</h2>
+            <span className={styles.eyebrow}>Temporada {currentYear}</span>
+            <h2>Contratos de Semana Santa</h2>
             <p>Acompañamientos procesionales, ordenados por jornada y con su localidad exacta.</p>
           </div>
           <div className={styles.relationshipGrid}>{orderedAccompaniments.map((item) => (
-            <AccompanimentCard item={item} band={band} key={item.id} showLocation />
-          ))}</div>
-        </div>
-      </section> : null}
-
-      {hasUpcomingAccompaniments ? <section className={styles.contentSection} id="proximos-acompanamientos">
-        <div className="shell">
-          <div className={styles.sectionHeading}>
-            <span className={styles.eyebrow}>Próximas vinculaciones · {nextAccompanimentYear}</span>
-            <h2>Próximos acompañamientos</h2>
-            <p>Acuerdos ya anunciados para próximas salidas procesionales, separados de los acompañamientos vigentes de {currentYear}.</p>
-          </div>
-          <div className={styles.relationshipGrid}>{upcomingAccompaniments.map((item) => (
             <AccompanimentCard item={item} band={band} key={item.id} showLocation />
           ))}</div>
         </div>
@@ -437,7 +415,7 @@ export default async function BandDetailPage({ params }) {
           <div className={styles.sectionHeading}>
             <span className={styles.eyebrow}>Sevilla y provincia</span>
             <h2>Glorias, eucarísticas y cultos externos</h2>
-            <p>Acompañamientos documentados para {currentYear}, organizados por ámbito y naturaleza de la salida.</p>
+            <p>Acompañamientos documentados para la temporada 2026, organizados por ámbito y naturaleza de la salida.</p>
           </div>
           <div className={styles.gloryTypeSummary} aria-label="Tipos de procesiones documentadas">
             {gloryTypeSummary.map((item) => <article key={item.type}>
