@@ -7,8 +7,8 @@
 - Revisión: **28 de agosto de 2026 · cierre del baseline técnico automatizable**.
 - Repositorio: `nachosanchezperez-ux/base-cofrade`.
 - Rama principal: `main`.
-- Último baseline funcional validado: `aa7514b18af5fec01b05c2e98133a24356632e00` — **Merge #404 · Hoy en Hilo Cofrade móvil**.
-- Producción: `dpl_9TLZV8QCMNh5Xgje1WKeyGnXuFsZ` → **READY**, región `dub1`, commit `aa7514b`.
+- Último baseline funcional validado de `main`: `aa7514b18af5fec01b05c2e98133a24356632e00` — **Merge #404 · Hoy en Hilo Cofrade móvil**. Los commits posteriores de esta secuencia son exclusivamente documentales y no alteran el árbol ejecutable.
+- Deployment funcional validado: `dpl_9TLZV8QCMNh5Xgje1WKeyGnXuFsZ` → **READY**, región `dub1`, commit `aa7514b`. Los deployments posteriores de documentación conservan ese mismo código de aplicación.
 - PR abiertas: **solo #394**, abierta, draft y mergeable.
 - No se ha abierto ningún frente funcional nuevo durante este cierre.
 
