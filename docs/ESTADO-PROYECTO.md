@@ -97,7 +97,7 @@ Resultado: **🟢 incidencia transitoria no reproducida**. No se modifica códig
 
 - Proyecto `Hilocofrade` (`kcevwkucqzcyrqaimyhl`) → **ACTIVE_HEALTHY**.
 - Región: `eu-west-1`; Postgres `17.6.1.155`; plan **Pro**.
-- Migraciones Git ↔ Supabase: **180/180**, hasta `20260828212940 publish_ready_legal_documents`.
+- Migraciones Git ↔ Supabase: **181/181**, hasta `20260828225007 documenta_el_descendimiento_jose_sapena`.
 - Leaked Password Protection: **🟢 ACTIVA**. El asesor ya no emite `auth_leaked_password_protection`.
 - Auth del Panel: **🟢 OPERATIVA**. La regresión posterior a la activación validó login, sesión, navegación, logout y nueva autenticación; el último smoke confirmó una sesión autenticada vigente.
 
@@ -154,6 +154,13 @@ La publicación se realizó mediante #407 y la migración se reconcilió con el 
 ## Apple Music
 
 Apple Music conserva `52` lanzamientos publicados enlazados: `46` llegan al álbum, EP o sencillo exacto y `6` mantienen temporalmente el perfil oficial de la banda por discrepancias documentales de artista, título o año. No quedan lanzamientos en `review`. Detalle: [`AUDITORIA-EDITORIAL-APPLE-MUSIC-2026-08-27.md`](./AUDITORIA-EDITORIAL-APPLE-MUSIC-2026-08-27.md).
+
+La revalidación del 28 de agosto mantiene esos `6` perfiles: las fichas localizadas corresponden a reediciones, años diferentes o versiones en directo distintas y no deben sustituirse por aproximación.
+
+## Salud editorial
+
+- Marchas publicadas sin autoría estructurada: **0**. `El Descendimiento` queda documentada como obra de José Sapena Matarredona (1961).
+- Imágenes publicadas sin recurso visual directo: **20**. Todas conservan Fuente y autoría estructurada, pero no existe en `media_assets` un archivo exacto y autorizado reutilizable. Es una cola editorial de cobertura, no un bloqueo técnico ni una UI rota.
 
 ## Importación
 
