@@ -7,8 +7,8 @@ function roleLabel(role, legId, circuit) {
   if (role === 'start') return legId === 'return' && circuit ? 'Punto de giro' : 'Salida'
   if (role === 'turnaround') return 'Punto de giro'
   if (role === 'end') {
-    if (legId === 'return') return 'Entrada'
-    return circuit ? 'Punto de giro' : 'Llegada'
+    if (circuit || legId === 'return') return 'Entrada'
+    return 'Llegada'
   }
   return ''
 }
@@ -58,7 +58,7 @@ function PlaceSummary({ route }) {
       <div className={styles.placeSummary} data-circuit="true">
         <div className={styles.placeCard}>
           <span>Salida y entrada</span>
-          <strong>{route.baseLocation || route.origin || route.destination || 'Lugar por documentar'}</strong>
+          <strong>{route.baseLocation || route.origin || route.destination || 'Lugar por confirmar'}</strong>
         </div>
       </div>
     )
