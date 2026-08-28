@@ -28,7 +28,7 @@ export default async function HomePage() {
   const today = getTodayLabel()
   const {
     todayContent,
-    extraordinaryOutings,
+    upcomingAgenda,
     featuredBriefing,
     discoveryThreads,
     exploreStats,
@@ -38,7 +38,7 @@ export default async function HomePage() {
     <HomePageV2
       today={today}
       todayContent={todayContent}
-      extraordinaryOutings={extraordinaryOutings}
+      upcomingAgenda={upcomingAgenda}
       featuredBriefing={featuredBriefing}
       discoveryThreads={discoveryThreads}
       exploreStats={exploreStats}

@@ -33,7 +33,7 @@ test('the homepage offers two clear first-visit paths', async () => {
 
   assert.match(home, /aria-label="Accesos principales"/)
   assert.match(home, /href="\/directorio"[\s\S]*Explorar la enciclopedia/)
-  assert.match(home, /href="\/extraordinarias"[\s\S]*Ver próximas extraordinarias/)
+  assert.match(home, /#proximos-dias[\s\S]*Ver próximas procesiones/)
 })
 
 test('public collaboration stays closed until privacy and contact are defined', async () => {

@@ -10,6 +10,7 @@ const HOME_PUBLIC_MODULES = [
   'lib/supabase/home-effective-editorial.js',
   'lib/supabase/home-effective-visual.js',
   'lib/supabase/home-extraordinary-links.js',
+  'lib/supabase/home-upcoming-agenda.js',
   'lib/supabase/home-discovery-diverse.js',
   'lib/supabase/home-thread-visual.js',
   'lib/supabase/home-visuals.js',

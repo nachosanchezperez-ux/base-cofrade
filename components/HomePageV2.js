@@ -46,21 +46,21 @@ function mobileScheduleIds(schedule = [], liveState = {}) {
 export default function HomePageV2({
   today,
   todayContent,
-  extraordinaryOutings,
+  upcomingAgenda = [],
   featuredBriefing,
   discoveryThreads,
   exploreStats,
 }) {
-  const featuredExtraordinary = extraordinaryOutings[0] || null
-  const followingExtraordinaryOutings = extraordinaryOutings.slice(1)
-  const featuredGuideHref = featuredExtraordinary?.href || '/extraordinarias'
+  const featuredOuting = upcomingAgenda[0] || null
+  const followingAgenda = upcomingAgenda.slice(1)
+  const featuredGuideHref = featuredOuting?.href || featuredOuting?.calendarHref || '/extraordinarias'
   const todayKey = madridDateKey()
-  const featuredIsToday = featuredExtraordinary?.date === todayKey
-  const liveState = featuredExtraordinary
-    ? getExtraordinaryLiveState(featuredExtraordinary.date, featuredBriefing.schedule)
-    : { state: 'upcoming', eyebrow: 'Próxima extraordinaria', nextId: '', pastIds: [] }
+  const featuredIsToday = featuredOuting?.date === todayKey
+  const liveState = featuredOuting
+    ? getExtraordinaryLiveState(featuredOuting.date, featuredBriefing.schedule)
+    : { state: 'upcoming', eyebrow: 'Próxima cita', nextId: '', pastIds: [] }
   const homePriority = getHomeAdaptivePriority({
-    dateKey: featuredExtraordinary?.date || '',
+    dateKey: featuredOuting?.date || '',
     todayKey,
     liveState: liveState.state,
   })
@@ -68,38 +68,53 @@ export default function HomePageV2({
     ? featuredBriefing.schedule.find((item) => item.id === liveState.nextId) || null
     : null
   const featuredDateLabel = homePriority.relativeDateLabel
-    || featuredExtraordinary?.dateParts?.weekdayLabel
-    || featuredExtraordinary?.dateParts?.label
+    || featuredOuting?.dateParts?.weekdayLabel
+    || featuredOuting?.dateParts?.label
     || ''
   const featuredTimingLabel = nextScheduleItem?.time
     ? `${liveState.state === 'live' ? 'Siguiente' : 'Comienza'} · ${nextScheduleItem.time}`
-    : featuredIsToday && featuredExtraordinary?.departureTime
-      ? `Salida · ${featuredExtraordinary.departureTime}`
+    : featuredIsToday && featuredOuting?.departureTime
+      ? `Salida · ${featuredOuting.departureTime}`
       : ''
   const featuredMeta = [
-    featuredExtraordinary?.municipality,
+    featuredOuting?.municipality,
     featuredDateLabel,
     featuredTimingLabel,
   ].filter(Boolean).join(' · ')
   const pastScheduleIds = new Set(liveState.pastIds || [])
   const mobileVisibleScheduleIds = mobileScheduleIds(featuredBriefing.schedule, liveState)
-  const extraordinaryEyebrow = homePriority.eyebrow || liveState.eyebrow
+  const agendaTypeLabel = featuredOuting?.typeLabel || 'Procesión'
+  const agendaEyebrow = liveState.state === 'live'
+    ? `En curso · ${agendaTypeLabel}`
+    : liveState.state === 'done' && featuredIsToday
+      ? `Celebrada hoy · ${agendaTypeLabel}`
+      : homePriority.relativeDateLabel
+        ? `${homePriority.relativeDateLabel} · ${agendaTypeLabel}`
+        : `Próxima cita · ${agendaTypeLabel}`
 
-  const extraordinarySection = featuredExtraordinary ? (
+  const upcomingSection = featuredOuting ? (
     <section
       className={`${styles.section} ${styles.featuredExtraordinary} ${polishStyles.extraordinarySection}`}
-      id="extraordinarias"
-      aria-labelledby="proxima-extraordinaria-title"
+      id="proximos-dias"
+      aria-labelledby="proximos-dias-title"
       data-home-urgency={homePriority.urgency}
     >
       <div className="shell">
-        <article className={`${styles.featuredExtraordinaryCard} ${polishStyles.extraordinaryCard} ${liveState.state === 'live' ? liveStyles.featuredExtraordinaryLive : ''} ${featuredExtraordinary.heroImagePath ? '' : liveStyles.featuredExtraordinaryNoMedia}`}>
-          {featuredExtraordinary.heroImagePath ? (
+        <header className={styles.upcomingAgendaHead}>
+          <div>
+            <span className={styles.eyebrow}>Agenda cofrade</span>
+            <h2 id="proximos-dias-title">En los próximos días</h2>
+          </div>
+          <p>Las próximas procesiones documentadas en Sevilla y su provincia, reunidas por fecha.</p>
+        </header>
+
+        <article className={`${styles.featuredExtraordinaryCard} ${polishStyles.extraordinaryCard} ${liveState.state === 'live' ? liveStyles.featuredExtraordinaryLive : ''} ${featuredOuting.heroImagePath ? '' : liveStyles.featuredExtraordinaryNoMedia}`}>
+          {featuredOuting.heroImagePath ? (
             <figure className={styles.featuredExtraordinaryMedia}>
               <div className={`${styles.featuredExtraordinaryImageFrame} ${polishStyles.extraordinaryImageFrame}`}>
                 <Image
-                  src={featuredExtraordinary.heroImagePath}
-                  alt={featuredExtraordinary.heroImageAlt}
+                  src={featuredOuting.heroImagePath}
+                  alt={featuredOuting.heroImageAlt}
                   fill
                   sizes="(max-width: 859px) calc(100vw - 32px), 33vw"
                   priority
@@ -108,20 +123,20 @@ export default function HomePageV2({
                   <span className={liveStyles.liveImageBadge}><i aria-hidden="true" /> En curso</span>
                 ) : null}
               </div>
-              {featuredExtraordinary.heroImageCredit ? (
-                <figcaption>{featuredExtraordinary.heroImageCredit}</figcaption>
+              {featuredOuting.heroImageCredit ? (
+                <figcaption>{featuredOuting.heroImageCredit}</figcaption>
               ) : null}
             </figure>
           ) : null}
 
           <div className={`${styles.featuredExtraordinaryCopy} ${polishStyles.extraordinaryCopy}`}>
             <div className={styles.featuredExtraordinaryIntro}>
-              <span className={`${styles.eyebrow} ${liveState.state === 'live' ? liveStyles.liveEyebrow : ''}`}>{extraordinaryEyebrow}</span>
-              <h2 className={polishStyles.extraordinaryTitle} id="proxima-extraordinaria-title">{featuredExtraordinary.title}</h2>
+              <span className={`${styles.eyebrow} ${liveState.state === 'live' ? liveStyles.liveEyebrow : ''}`}>{agendaEyebrow}</span>
+              <h3 className={`${styles.featuredAgendaTitle} ${polishStyles.extraordinaryTitle}`}>{featuredOuting.title}</h3>
               <div className={`${styles.featuredExtraordinaryMeta} ${polishStyles.extraordinaryMeta}`}>
                 <strong>{featuredMeta}</strong>
               </div>
-              {featuredExtraordinary.reason ? <p>{featuredExtraordinary.reason}</p> : null}
+              {featuredOuting.reason ? <p>{featuredOuting.reason}</p> : null}
             </div>
 
             <div className={`${styles.extraordinaryBriefing} ${polishStyles.extraordinaryBriefing}`}>
@@ -190,21 +205,21 @@ export default function HomePageV2({
               <Link className={navStyles.primary} href={featuredGuideHref}>
                 Abrir guía completa <span aria-hidden="true">→</span>
               </Link>
-              <Link className={navStyles.secondary} href="/extraordinarias">
-                Ver todas las extraordinarias
+              <Link className={navStyles.secondary} href={featuredOuting.calendarHref}>
+                Ver {featuredOuting.calendarLabel}
               </Link>
             </div>
           </div>
         </article>
 
-        {followingExtraordinaryOutings.length ? (
-          <div className={`${styles.nextExtraSection} ${polishStyles.nextExtraSection}`} id="siguientes-extraordinarias">
+        {followingAgenda.length ? (
+          <div className={`${styles.nextExtraSection} ${polishStyles.nextExtraSection}`} id="siguientes-procesiones">
             <div className={styles.nextExtraHead} style={stackedNextExtraHeadStyle}>
               <span className={styles.eyebrow}>Después</span>
-              <h2>Las siguientes extraordinarias</h2>
+              <h3>Las siguientes citas</h3>
             </div>
             <div className={`${styles.nextExtraList} ${polishStyles.nextExtraList}`}>
-              {followingExtraordinaryOutings.map((outing) => (
+              {followingAgenda.map((outing) => (
                 <Link
                   className={`${styles.nextExtraRow} ${navStyles.row} ${polishStyles.nextExtraRow}`}
                   href={outing.href || '/extraordinarias'}
@@ -216,15 +231,21 @@ export default function HomePageV2({
                     <span>{outing.dateParts.month}</span>
                   </time>
                   <div>
+                    <span className={styles.agendaType}>{outing.typeLabel}</span>
                     <h3>{outing.title}</h3>
-                    <p>{[outing.municipality, outing.reason].filter(Boolean).join(' · ')}</p>
+                    <p>{[outing.municipality, outing.brotherhoodName].filter(Boolean).join(' · ')}</p>
                   </div>
                 </Link>
               ))}
             </div>
-            <Link className={navStyles.calendar} href="/extraordinarias">
-              Ver calendario completo <span aria-hidden="true">→</span>
-            </Link>
+            <nav className={styles.agendaCalendars} aria-label="Calendarios de próximas procesiones">
+              <Link className={navStyles.calendar} href="/extraordinarias">
+                Extraordinarias <span aria-hidden="true">→</span>
+              </Link>
+              <Link className={navStyles.calendar} href="/procesiones-de-gloria">
+                Procesiones de Gloria <span aria-hidden="true">→</span>
+              </Link>
+            </nav>
           </div>
         ) : null}
       </div>
@@ -245,8 +266,8 @@ export default function HomePageV2({
               <Link className={styles.heroPrimaryAction} href="/directorio">
                 Explorar la enciclopedia <span aria-hidden="true">→</span>
               </Link>
-              <Link className={styles.heroSecondaryAction} href="/extraordinarias">
-                Ver próximas extraordinarias
+              <Link className={styles.heroSecondaryAction} href={featuredOuting ? '#proximos-dias' : '/extraordinarias'}>
+                Ver próximas procesiones
               </Link>
             </nav>
             <div className={`${styles.heroThread} ${polishStyles.heroThread}`} aria-label="Recorrido del conocimiento relacionado de Hilo Cofrade">
@@ -272,13 +293,13 @@ export default function HomePageV2({
 
       {homePriority.extraordinaryFirst ? (
         <>
-          {extraordinarySection}
+          {upcomingSection}
           {todaySection}
         </>
       ) : (
         <>
           {todaySection}
-          {extraordinarySection}
+          {upcomingSection}
         </>
       )}
 
