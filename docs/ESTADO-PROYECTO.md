@@ -151,7 +151,7 @@ Legal no bloquea el baseline técnico mientras se mantengan estas barreras, pero
 
 ## Apple Music
 
-Apple Music conserva `46` lanzamientos publicados enlazados: `40` llegan al álbum, EP o sencillo y `6` mantienen temporalmente el perfil oficial de la banda. Otros `6` singles están en `review`, excluidos de producción. Detalle: [`AUDITORIA-EDITORIAL-APPLE-MUSIC-2026-08-27.md`](./AUDITORIA-EDITORIAL-APPLE-MUSIC-2026-08-27.md).
+Apple Music conserva `52` lanzamientos publicados enlazados: `46` llegan al álbum, EP o sencillo exacto y `6` mantienen temporalmente el perfil oficial de la banda por discrepancias documentales de artista, título o año. No quedan lanzamientos en `review`. Detalle: [`AUDITORIA-EDITORIAL-APPLE-MUSIC-2026-08-27.md`](./AUDITORIA-EDITORIAL-APPLE-MUSIC-2026-08-27.md).
 
 ## Importación
 
