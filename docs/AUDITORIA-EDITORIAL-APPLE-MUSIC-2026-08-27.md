@@ -56,9 +56,9 @@ La misma Fuente indica que hubo adaptación para banda en 2016, pero no identifi
 
 ### El Descendimiento
 
-Continúa sin autor publicado. La pertenencia al álbum `Misericordia` está documentada, pero no existe todavía una Fuente fiable que atribuya la pista concreta. No debe reutilizarse la autoría de obras homónimas.
+La revisión del 28 de agosto localizó una ficha específica y concordante de Patrimonio Musical: `El Descendimiento`, compuesta por `José Sapena Matarredona` en 1961 y dedicada al Cristo del Descendimiento de Jaén. Se incorpora el agente, la autoría con rol `composer`, el año de composición y la Fuente vinculada a la Marcha.
 
-Resultado estructural: las Marchas publicadas sin ningún autor publicado pasan de `2` a `1`.
+Resultado estructural: las Marchas publicadas sin ningún autor publicado pasan de `1` a `0`.
 
 ## Imágenes sin recurso visual directo
 
@@ -80,8 +80,14 @@ No se debe cerrar esta cola con hotlinking, capturas, archivos sin procedencia o
 ## Próximas acciones editoriales
 
 1. Resolver las `9` imágenes de Cigarreras, Misión y San Esteban mediante archivos propios, autorizados o con licencia comprobada.
-2. Pedir o localizar una Fuente primaria para el adaptador de `Gloria a ti` y el compositor de `El Descendimiento`.
+2. Pedir o localizar una Fuente primaria para el adaptador de `Gloria a ti`.
 3. Mantener los `6` perfiles Apple pendientes hasta aclarar las discrepancias editoriales de artista, título o año.
 4. Ampliar Apple Music al resto del catálogo solo con coincidencia exacta de banda, título, tipo de lanzamiento y año.
+
+## Revalidación · 28 de agosto de 2026
+
+- Los `6` destinos provisionales de Apple Music se contrastaron de nuevo con las páginas oficiales disponibles. Continúan sin cumplir simultáneamente artista, título, tipo y año, por lo que se conservan como perfiles y no se sustituyen por reediciones o versiones en directo distintas.
+- Los `20` registros de Imagen continúan sin un activo exacto reutilizable en `media_assets`. Las Fuentes editoriales existentes no conceden por sí solas derechos de reproducción; el cierre requiere archivo propio, autorización o licencia comprobada.
+- `El Descendimiento` deja de ser una advertencia de Salud tras documentar a José Sapena Matarredona y el año 1961.
 
 Este documento no modifica el estado de lanzamiento ni sustituye la matriz responsive pendiente.
