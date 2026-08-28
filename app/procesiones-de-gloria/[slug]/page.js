@@ -4,6 +4,7 @@ import { cache } from 'react'
 import { notFound } from 'next/navigation'
 import JsonLd from '@/components/JsonLd'
 import ProcessionRoute from '@/components/ProcessionRoute'
+import { gloryDisplayTitle } from '@/lib/glory-display'
 import { buildProcessionRoute } from '@/lib/procession-route'
 import { getGloryDetail } from '@/lib/supabase/glory-directory'
 import { absoluteUrl, breadcrumbJsonLd, pageTitle, seoDescription } from '@/lib/seo'
@@ -128,6 +129,7 @@ export default async function GloryDetailPage({ params }) {
   const canonicalUrl = absoluteUrl(canonicalPath)
   const entry = entryLabel(item)
   const dateLabel = formatDate(item.date)
+  const displayTitle = gloryDisplayTitle(item.title, item.year)
   const processionRoute = buildProcessionRoute({
     route: item.route,
     routeSummary: item.routeSummary,
@@ -201,7 +203,7 @@ export default async function GloryDetailPage({ params }) {
               <span>{item.municipality || 'Sevilla y provincia'}</span>
               <span data-status={item.eventStatus}>{statusLabel(item)}</span>
             </div>
-            <h1>{item.title}</h1>
+            <h1>{displayTitle}</h1>
             {item.brotherhoodHref
               ? <Link className={styles.brotherhood} href={item.brotherhoodHref}>{item.brotherhoodName}</Link>
               : <strong className={styles.brotherhood}>{item.brotherhoodName}</strong>}
@@ -211,7 +213,6 @@ export default async function GloryDetailPage({ params }) {
               <div className={styles.dateFact}><span>Fecha</span><strong>{dateLabel}</strong></div>
               <div><span>Salida</span><strong>{item.departureTime || 'Por confirmar'}</strong></div>
               <div><span>Entrada</span><strong>{entry || 'Por confirmar'}</strong></div>
-              <div><span>Tipo</span><strong>{item.outingType}</strong></div>
             </div>
           </div>
 
