@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
+import { gloryDisplayTitle } from '@/lib/glory-display'
 import styles from './GloryDirectory.module.css'
 
 function plural(count, singular, pluralForm) {
@@ -92,8 +93,8 @@ export default function GloryDirectory({ outings }) {
           </div>
 
           <div className={styles.featuredCopy}>
-            <span className={styles.kicker}>Próxima procesión</span>
-            <h2><Link href={featured.detailHref}>{featured.title}</Link></h2>
+            <span className={styles.kicker}>Próxima salida</span>
+            <h2><Link href={featured.detailHref}>{gloryDisplayTitle(featured.title, featured.year)}</Link></h2>
             {featured.brotherhoodHref ? (
               <Link className={styles.brotherhoodLink} href={featured.brotherhoodHref}>
                 {featured.brotherhoodName}
@@ -121,7 +122,7 @@ export default function GloryDirectory({ outings }) {
             {featured.description ? <p className={styles.featuredDescription}>{featured.description}</p> : null}
 
             <Link className={styles.primaryAction} href={featured.detailHref}>
-              Ver procesión <span>→</span>
+              Ver detalles <span>→</span>
             </Link>
           </div>
         </article>
@@ -223,7 +224,7 @@ export default function GloryDirectory({ outings }) {
                           <span>{outing.municipality || 'Localidad por confirmar'}</span>
                           <small data-status={outing.eventStatus}>{statusLabel(outing)}</small>
                         </div>
-                        <h4><Link href={outing.detailHref}>{outing.title}</Link></h4>
+                        <h4><Link href={outing.detailHref}>{gloryDisplayTitle(outing.title, outing.year)}</Link></h4>
                         {outing.brotherhoodHref ? (
                           <Link className={styles.organizer} href={outing.brotherhoodHref}>{outing.brotherhoodName}</Link>
                         ) : (
