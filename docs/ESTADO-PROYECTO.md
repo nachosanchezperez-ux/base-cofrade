@@ -7,8 +7,9 @@
 - Revisión: **28 de agosto de 2026 · cierre del baseline técnico automatizable**.
 - Repositorio: `nachosanchezperez-ux/base-cofrade`.
 - Rama principal: `main`.
+- HEAD real de `main`: `ec355c058fcf0878ee02d9a1d568c14bdf4e7c6d` — cierre documental; no altera el árbol ejecutable.
 - Último baseline funcional validado de `main`: `aa7514b18af5fec01b05c2e98133a24356632e00` — **Merge #404 · Hoy en Hilo Cofrade móvil**. Los commits posteriores de esta secuencia son exclusivamente documentales y no alteran el árbol ejecutable.
-- Deployment funcional validado: `dpl_9TLZV8QCMNh5Xgje1WKeyGnXuFsZ` → **READY**, región `dub1`, commit `aa7514b`. Los deployments posteriores de documentación conservan ese mismo código de aplicación.
+- Producción actual: `dpl_uG4UmNUYKAAGBbCSPPrqPgQYc4zZ` → **READY**, región `dub1`, commit documental `ec355c0`, con el mismo árbol funcional `aa7514b` validado.
 - PR abiertas: **solo #394**, abierta, draft y mergeable.
 - No se ha abierto ningún frente funcional nuevo durante este cierre.
 
@@ -33,7 +34,7 @@ Esta revisión manual no se describe como fallo técnico y no bloquea la validac
 - Tests: **394/394**.
 - Build: Next.js `16.3` / Turbopack correcto.
 - CI: **verde**.
-- Preview: `dpl_5787ADgdpkK1XzBjbDWdQoZ8xdkB` → **READY**, región `dub1`.
+- Preview: `dpl_B2onFM8fRucPGh1dT7UUJxKjoiQ6` → **READY**, región `dub1`.
 - Auditoría técnica: **🟢**.
 
 La auditoría confirma:
