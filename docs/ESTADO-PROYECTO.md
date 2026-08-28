@@ -28,7 +28,7 @@ Esta revisión manual no se describe como fallo técnico y no bloquea la validac
 
 - Estado: **🟣 READY FOR VISUAL APPROVAL**.
 - Base actual: `main a12ab81`, incluida la migración editorial 181.
-- Head: `f14672e4049a4904b2b85ed9820a11d588d00418`.
+- Último head funcional validado: `f14672e4049a4904b2b85ed9820a11d588d00418`; las reconciliaciones documentales posteriores no alteran el delta funcional.
 - Delta: **9 archivos**, limitado a cabeceras de Hermandades/Bandas, media, configuración de imágenes y regresiones.
 - Tests: **399/399**.
 - Build: Next.js `16.3` / Turbopack correcto.
