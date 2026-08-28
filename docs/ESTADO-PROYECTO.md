@@ -4,12 +4,12 @@
 
 ## Estado verificado
 
-- Revisión: **28 de agosto de 2026 · cierre del baseline técnico automatizable**.
+- Revisión: **28 de agosto de 2026 · publicación legal y reconciliación final de migraciones**.
 - Repositorio: `nachosanchezperez-ux/base-cofrade`.
 - Rama principal: `main`.
-- Último baseline funcional validado: `aa7514b18af5fec01b05c2e98133a24356632e00` — **Merge #404 · Hoy en Hilo Cofrade móvil**.
-- Producción: `dpl_9TLZV8QCMNh5Xgje1WKeyGnXuFsZ` → **READY**, región `dub1`, commit `aa7514b`.
-- PR abiertas: **solo #394**, abierta, draft y mergeable.
+- Último baseline funcional validado de `main`: `6369f71872e969a8001347bf6e5f26b004aef883` — **#408 · reconciliación de la versión real de la migración legal**; incluye la publicación legal de #407 sobre el baseline posterior a #406.
+- Deployment de producción validado: `dpl_GtpegWiF3C9G4fBUsFevMh5DrGNZ` → **READY**, región `dub1`, commit exacto `6369f718` y alias `hilocofrade.es` activos.
+- PR abiertas: **solo #394**, abierta y draft. Tras avanzar `main` con #406/#407/#408, GitHub ya no la presenta mergeable; debe reconciliarse antes de su decisión final, sin ampliar alcance.
 - No se ha abierto ningún frente funcional nuevo durante este cierre.
 
 ## Primera edición
@@ -27,13 +27,13 @@ Esta revisión manual no se describe como fallo técnico y no bloquea la validac
 ## #394 · Cabeceras identitarias
 
 - Estado: **🟣 READY FOR VISUAL APPROVAL**.
-- Base funcional validada: `main aa7514b`.
-- Head: `e1f90b41ef1b2f50025170acc59180babc33b007`.
+- Base funcional validada originalmente: `main aa7514b`; `main` actual es `6369f718` y requiere una reconciliación final antes de resolver la PR.
+- Head: `7bd47ef9566d70587da4f064fd931e636e668c94` (incluye la sincronización documental final; el árbol funcional validado es `e1f90b4`).
 - Delta: **9 archivos**, limitado a cabeceras de Hermandades/Bandas, media, configuración de imágenes y regresiones.
 - Tests: **394/394**.
 - Build: Next.js `16.3` / Turbopack correcto.
 - CI: **verde**.
-- Preview: `dpl_5787ADgdpkK1XzBjbDWdQoZ8xdkB` → **READY**, región `dub1`.
+- Preview: `dpl_B2onFM8fRucPGh1dT7UUJxKjoiQ6` → **READY**, región `dub1`.
 - Auditoría técnica: **🟢**.
 
 La auditoría confirma:
@@ -45,7 +45,7 @@ La auditoría confirma:
 - sin migraciones, cambios de datos, rutas públicas ni consultas añadidas;
 - SEO, navegación, Imágenes y Pasos conservan el baseline.
 
-#394 permanece en borrador y no se fusiona hasta el visto bueno visual manual.
+#394 permanece en borrador y no se fusiona hasta el visto bueno visual manual. Después deberá reconciliarse con el `main` real y repetir sus checks técnicos antes de la decisión definitiva.
 
 ## QA responsive
 
@@ -70,9 +70,9 @@ Esta validación técnica no sustituye el juicio visual de Dirección.
 
 ## Producción y rendimiento
 
-- Producción actual: **READY** en `dub1`.
+- Producción actual: **READY** en `dub1`, deployment `dpl_GtpegWiF3C9G4fBUsFevMh5DrGNZ`, commit `6369f718`.
 - Smoke automatizable: todas las superficies principales respondieron y renderizaron correctamente.
-- Runtime posterior: **sin errores `error/fatal`** en producción ni en el preview de #394.
+- Runtime posterior a la publicación legal: **sin errores de runtime** en la última hora.
 
 ### Incidencia de `statement timeout`
 
@@ -97,7 +97,7 @@ Resultado: **🟢 incidencia transitoria no reproducida**. No se modifica códig
 
 - Proyecto `Hilocofrade` (`kcevwkucqzcyrqaimyhl`) → **ACTIVE_HEALTHY**.
 - Región: `eu-west-1`; Postgres `17.6.1.155`; plan **Pro**.
-- Migraciones Git ↔ Supabase: **179/179**, hasta `20260827232524 corrige_las_vinas_virgen_reyes_encarnacion`.
+- Migraciones Git ↔ Supabase: **180/180**, hasta `20260828212940 publish_ready_legal_documents`.
 - Leaked Password Protection: **🟢 ACTIVA**. El asesor ya no emite `auth_leaked_password_protection`.
 - Auth del Panel: **🟢 OPERATIVA**. La regresión posterior a la activación validó login, sesión, navegación, logout y nueva autenticación; el último smoke confirmó una sesión autenticada vigente.
 
@@ -126,7 +126,7 @@ El asesor conserva avisos conocidos sobre funciones `SECURITY DEFINER` accesible
 **SEO BASELINE → 🟢 CORRECTO**
 
 - `robots.txt`: permite Front y excluye `/api/` y `/panel/`.
-- Sitemap: **199 URL**.
+- Sitemap: **202 URL**, incluidas las tres rutas legales públicas.
 - Home: canonical, `index, follow`, Open Graph y Twitter Cards presentes.
 - Panel: `noindex, nofollow`.
 - Colabora: `noindex, follow`, cerrada y sin formulario.
@@ -137,20 +137,23 @@ Search Console conserva la última evidencia aportada por Dirección: propiedad 
 
 ## Legal, privacidad y contacto
 
-**LEGAL → 🟣 BORRADORES PRIVADOS · PENDIENTE DE DIRECCIÓN**
+**LEGAL → 🟢 PUBLICADO CON DECISIONES CONFIRMADAS POR DIRECCIÓN**
 
-- `/panel/legal`: operativo.
-- Cuatro documentos privados: todos continúan en `draft`.
-- Ficha de Dirección, Aviso legal y Política de privacidad conservan marcadores pendientes.
-- Almacenamiento/cookies tiene contenido de trabajo, pero sigue sin aprobación.
+- Rutas públicas operativas con HTTP 200: `/aviso-legal`, `/privacidad` y `/cookies`.
+- Los tres documentos son editables desde `/panel/legal`; el estado `ready` controla su publicación.
+- La ficha de Dirección y las notas internas permanecen privadas y no son seleccionables por `anon`.
+- Contacto público único: `hilocofrade@gmail.com`.
+- Dirección decide expresamente no mostrar domicilio ni dirección postal.
+- En el alcance actual no existen publicidad, patrocinios, afiliación, pagos ni newsletter.
+- Footer y sitemap enlazan los tres documentos.
+- Smoke público: los tres documentos responden, sin marcadores pendientes ni dirección postal expuesta.
 - Colabora continúa cerrada, sin formulario público de recogida de datos personales.
-- No se publica ningún dato inventado.
 
-Legal no bloquea el baseline técnico mientras se mantengan estas barreras, pero continúa como pendiente previo al lanzamiento público.
+La publicación se realizó mediante #407 y la migración se reconcilió con el historial remoto mediante #408. La rama de preview de Supabase conserva una deuda histórica ajena a Legal: una migración antigua de San Benito depende de datos semilla en una base nueva; producción está alineada y no se repitió SQL.
 
 ## Apple Music
 
-Apple Music conserva `46` lanzamientos publicados enlazados: `40` llegan al álbum, EP o sencillo y `6` mantienen temporalmente el perfil oficial de la banda. Otros `6` singles están en `review`, excluidos de producción. Detalle: [`AUDITORIA-EDITORIAL-APPLE-MUSIC-2026-08-27.md`](./AUDITORIA-EDITORIAL-APPLE-MUSIC-2026-08-27.md).
+Apple Music conserva `52` lanzamientos publicados enlazados: `46` llegan al álbum, EP o sencillo exacto y `6` mantienen temporalmente el perfil oficial de la banda por discrepancias documentales de artista, título o año. No quedan lanzamientos en `review`. Detalle: [`AUDITORIA-EDITORIAL-APPLE-MUSIC-2026-08-27.md`](./AUDITORIA-EDITORIAL-APPLE-MUSIC-2026-08-27.md).
 
 ## Importación
 
@@ -171,10 +174,10 @@ Hasta entonces solo se permite bug real, seguridad, legal, contenido, datos, fue
 
 1. **QA visual manual exacto `390 / 768 / 1024 / 1440`** sobre producción y preview de #394.
 2. **Decisión visual sobre #394**: fusionar o cerrar sin fusionar.
-3. **Legal**: completar y aprobar datos/textos antes del lanzamiento público.
+3. **Reconciliación final de #394** con el `main` real y repetición de checks después del visto bueno visual.
 
 ## Única acción siguiente
 
 **Dirección debe revisar visualmente #394 y el baseline en `390 / 768 / 1024 / 1440`; si da el visto bueno, resolver #394 y declarar el cierre técnico con su freeze.**
 
-**ESTADO-PROYECTO → 🟡 PRIMERA EDICIÓN TÉCNICAMENTE PREPARADA · BASELINE AUTOMATIZABLE 🟢 · PRODUCCIÓN READY · GIT ↔ SUPABASE 179/179 · #394 READY FOR VISUAL APPROVAL · QA VISUAL 🟣 · AUTH 🟢 · LEGAL 🟣**
+**ESTADO-PROYECTO → 🟡 PRIMERA EDICIÓN TÉCNICAMENTE PREPARADA · BASELINE AUTOMATIZABLE 🟢 · PRODUCCIÓN READY · GIT ↔ SUPABASE 180/180 · #394 PENDIENTE VISUAL Y DE RECONCILIACIÓN FINAL · QA VISUAL 🟣 · AUTH 🟢 · LEGAL 🟢**

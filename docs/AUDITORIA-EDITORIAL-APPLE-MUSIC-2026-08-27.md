@@ -11,9 +11,9 @@ Este corte continúa el trabajo editorial sin abrir funcionalidades ni preparar 
 
 ## Apple Music
 
-El catálogo contiene `237` lanzamientos publicados y `6` en estado `review`. Entre los publicados, `46` tienen destino Apple Music.
+El catálogo contiene actualmente `252` lanzamientos publicados y ninguno en estado `review`. Entre los publicados, `52` tienen destino Apple Music.
 
-En el primer corte se sustituyeron `26` destinos genéricos de artista por el álbum, EP o sencillo exacto. Este seguimiento contrasta de nuevo la cola con las páginas públicas oficiales de Apple Music y resuelve otros `6` enlaces publicados. El estado publicado pasa de `34` a `40` destinos directos y de `12` a `6` perfiles pendientes.
+En los dos primeros cortes se sustituyeron destinos genéricos por el álbum, EP o sencillo exacto, dejando `40` destinos directos y `6` perfiles pendientes. Este cierre contrasta los seis singles que permanecían en `review` con sus páginas oficiales de Apple Music y los publica. El estado final queda en `46` destinos directos y `6` perfiles conservados por discrepancias documentales.
 
 | Banda | Enlaces Apple | Destinos directos | Perfil pendiente |
 | --- | ---: | ---: | ---: |
@@ -22,8 +22,8 @@ En el primer corte se sustituyeron `26` destinos genéricos de artista por el á
 | Los Gitanos | 10 | 9 | 1 |
 | Presentación al Pueblo | 4 | 4 | 0 |
 | Santa María Magdalena de Arahal | 17 | 13 | 4 |
-| Tres Caídas de Triana | 8 | 7 | 1 |
-| **Total** | **46** | **40** | **6** |
+| Tres Caídas de Triana | 14 | 13 | 1 |
+| **Total** | **52** | **46** | **6** |
 
 En este seguimiento, las fichas públicas de Santa María Magdalena de Arahal y Tres Caídas de Triana devolvieron HTTP `200` y renderizaron los seis destinos exactos publicados después del cambio.
 
@@ -40,9 +40,9 @@ Los siguientes lanzamientos conservan el perfil oficial de la banda porque no se
 - Santa María Magdalena de Arahal: `Salud de San Bernardo` (base: 1981; Apple: reedición 2024), `La Paz` (sin ficha exacta localizada), `Misericordia` (base: 1990; Apple: 1991) y `Arahal · 1964-2003` (no debe sustituirse por el título distinto `La Música del Señor`, aunque sea de 2002).
 - Tres Caídas de Triana: `La Misericordia del Padre` (base: 2019); la ficha oficial localizada corresponde a `La Misericordia del Padre (En Directo)` de 2025 y es otro lanzamiento.
 
-### Registros en `review` preenlazados
+### Registros procedentes de `review`
 
-Los seis registros no publicados de Tres Caídas de Triana ya apuntan a su single exacto: `El Compás del Barro (Directo)` y `Se Arrodilla Triana (Directo)` (2024), además de `La Misericordia del Padre (En Directo)`, `Más allá del río (En Directo)`, `Un solo Dios (En Directo)` y `Yo soy la Verdad (En Directo)` (2025). Permanecen fuera de producción por su estado `review`; este corte no los publica.
+Los seis registros de Tres Caídas de Triana apuntan a su single exacto: `El Compás del Barro (Directo)` y `Se Arrodilla Triana (Directo)` (2024), además de `La Misericordia del Padre (En Directo)`, `Más allá del río (En Directo)`, `Un solo Dios (En Directo)` y `Yo soy la Verdad (En Directo)` (2025). Cada uno conserva dos Fuentes. Tras contrastar artista, título, tipo y año con las páginas oficiales de Apple Music, los seis pasan de `review` a `published`. La ficha pública de Tres Caídas devolvió HTTP `200` y mostró los seis títulos y enlaces.
 
 Regla de continuidad: no convertir un perfil en álbum por semejanza de título, ni relacionar una edición en directo o reedición cuando el año y la denominación no coincidan.
 
@@ -81,7 +81,7 @@ No se debe cerrar esta cola con hotlinking, capturas, archivos sin procedencia o
 
 1. Resolver las `9` imágenes de Cigarreras, Misión y San Esteban mediante archivos propios, autorizados o con licencia comprobada.
 2. Pedir o localizar una Fuente primaria para el adaptador de `Gloria a ti` y el compositor de `El Descendimiento`.
-3. Resolver los `6` perfiles Apple pendientes solo tras aclarar las discrepancias editoriales de artista, título o año.
+3. Mantener los `6` perfiles Apple pendientes hasta aclarar las discrepancias editoriales de artista, título o año.
 4. Ampliar Apple Music al resto del catálogo solo con coincidencia exacta de banda, título, tipo de lanzamiento y año.
 
 Este documento no modifica el estado de lanzamiento ni sustituye la matriz responsive pendiente.
