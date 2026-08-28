@@ -30,6 +30,33 @@ test('detecta salida y entrada en el mismo lugar y separa ida y regreso', () => 
   assert.equal(route.legs[1].points.at(-1).role, 'end')
 })
 
+test('un circuito estructurado de un solo tramo termina visualmente como entrada', () => {
+  const route = buildProcessionRoute({
+    origin: 'Plaza Constitución',
+    destination: 'Plaza Constitución',
+    route: {
+      itineraries: [
+        {
+          id: 'route',
+          label: 'Recorrido',
+          points: [
+            { label: 'Plaza Constitución' },
+            { label: 'José Payán' },
+            { label: 'Plaza Constitución' },
+          ],
+        },
+      ],
+    },
+  })
+  const component = readFileSync(new URL('../components/ProcessionRoute.js', import.meta.url), 'utf8')
+
+  assert.equal(route.kind, 'circuit')
+  assert.equal(route.legs.length, 1)
+  assert.match(component, /isSingleLegCircuitEntry/)
+  assert.match(component, /visualRole = isSingleLegCircuitEntry \? 'end' : point\.role/)
+  assert.match(component, /if \(circuit \|\| legId === 'return'\) return 'Entrada'/)
+})
+
 test('mantiene origen y destino separados cuando la extraordinaria es un traslado', () => {
   const route = buildProcessionRoute({
     origin: 'Parroquia de Nuestra Señora de los Dolores',
