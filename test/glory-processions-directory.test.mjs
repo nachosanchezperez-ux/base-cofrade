@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
 import test from 'node:test'
+import { gloryDisplayTitle } from '../lib/glory-display.js'
 
 const read = (path) => readFile(new URL(`../${path}`, import.meta.url), 'utf8')
 
@@ -77,4 +78,31 @@ test('Glory serializes Madrid event times with the real seasonal UTC offset', as
   assert.match(detail, /startDate: madridDateTime\(item\.date, item\.departureTime\)/)
   assert.match(detail, /endDate: madridDateTime\(item\.returnDate \|\| item\.date, item\.returnTime\)/)
   assert.doesNotMatch(detail, /:00\+02:00/)
+})
+
+test('Glory evita repetir Procesión de Gloria en cada título visible', async () => {
+  assert.equal(
+    gloryDisplayTitle('Procesión de Nuestra Señora de Aguas Santas 2026', 2026),
+    'Nuestra Señora de Aguas Santas'
+  )
+  assert.equal(
+    gloryDisplayTitle('Procesión Triunfal de Gloria de Nuestra Señora de Consolación Coronada 2026', 2026),
+    'Nuestra Señora de Consolación Coronada'
+  )
+  assert.equal(
+    gloryDisplayTitle('Procesión triunfal de la Divina Pastora 2026', 2026),
+    'Divina Pastora'
+  )
+
+  const [component, detail, css] = await Promise.all([
+    read('components/GloryDirectory.js'),
+    read('app/procesiones-de-gloria/[slug]/page.js'),
+    read('app/procesiones-de-gloria/[slug]/glory-detail.module.css'),
+  ])
+
+  assert.match(component, /Próxima salida/)
+  assert.match(component, /gloryDisplayTitle\(outing\.title, outing\.year\)/)
+  assert.match(detail, /<h1>\{displayTitle\}<\/h1>/)
+  assert.doesNotMatch(detail, /<span>Tipo<\/span>/)
+  assert.match(css, /grid-template-columns:\s*minmax\(210px, 1\.5fr\) repeat\(2, minmax\(110px, \.65fr\)\)/)
 })
