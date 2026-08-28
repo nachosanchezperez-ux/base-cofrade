@@ -28,7 +28,7 @@ Esta revisión manual no se describe como fallo técnico y no bloquea la validac
 
 - Estado: **🟣 READY FOR VISUAL APPROVAL**.
 - Base funcional validada: `main aa7514b`.
-- Head: `e1f90b41ef1b2f50025170acc59180babc33b007`.
+- Head: `7bd47ef9566d70587da4f064fd931e636e668c94` (incluye la sincronización documental final; el árbol funcional validado es `e1f90b4`).
 - Delta: **9 archivos**, limitado a cabeceras de Hermandades/Bandas, media, configuración de imágenes y regresiones.
 - Tests: **394/394**.
 - Build: Next.js `16.3` / Turbopack correcto.
