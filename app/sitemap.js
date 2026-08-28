@@ -79,6 +79,21 @@ const staticEntries = [
     changeFrequency: 'monthly',
     priority: 0.7,
   },
+  {
+    url: absoluteUrl('/aviso-legal'),
+    changeFrequency: 'yearly',
+    priority: 0.2,
+  },
+  {
+    url: absoluteUrl('/privacidad'),
+    changeFrequency: 'yearly',
+    priority: 0.2,
+  },
+  {
+    url: absoluteUrl('/cookies'),
+    changeFrequency: 'yearly',
+    priority: 0.2,
+  },
 ];
 
 function validLastModified(value) {
