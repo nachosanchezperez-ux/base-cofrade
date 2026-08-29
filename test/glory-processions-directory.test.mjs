@@ -80,6 +80,13 @@ test('Glory serializes Madrid event times with the real seasonal UTC offset', as
   assert.doesNotMatch(detail, /:00\+02:00/)
 })
 
+test('Glory local hero images bypass the Next optimizer for reliable mobile rendering', async () => {
+  const detail = await read('app/procesiones-de-gloria/[slug]/page.js')
+
+  assert.match(detail, /unoptimized=\{item\.heroImagePath\.startsWith\('\/'\)\}/)
+  assert.match(detail, /src=\{item\.heroImagePath\}/)
+})
+
 test('Glory evita repetir Procesión de Gloria en cada título visible', async () => {
   assert.equal(
     gloryDisplayTitle('Procesión de Nuestra Señora de Aguas Santas 2026', 2026),
