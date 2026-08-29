@@ -93,6 +93,10 @@ test('Glory evita repetir Procesión de Gloria en cada título visible', async (
     gloryDisplayTitle('Procesión triunfal de la Divina Pastora 2026', 2026),
     'Divina Pastora'
   )
+  assert.equal(
+    gloryDisplayTitle('Procesión de Gloria del Santísimo Cristo de la Vera Cruz 2026', 2026),
+    'Santísimo Cristo de la Vera Cruz'
+  )
 
   const [component, detail, css] = await Promise.all([
     read('components/GloryDirectory.js'),
