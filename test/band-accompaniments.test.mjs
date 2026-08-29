@@ -30,6 +30,26 @@ test('separa el tipo y la identidad del paso sin alterar el nombre canónico', (
   })
 })
 
+test('reconoce Cristo y Virgen solo cuando la posición lo documenta de forma inequívoca', () => {
+  assert.deepEqual(presentAccompanimentStep({
+    position: 'Tras el paso del Cristo',
+    stepName: 'Santísimo Cristo de la Salud',
+  }), {
+    type: 'Paso de Cristo',
+    name: 'Santísimo Cristo de la Salud',
+    position: '',
+  })
+
+  assert.deepEqual(presentAccompanimentStep({
+    position: 'Tras el paso de la Virgen',
+    stepName: 'María Santísima Madre de los Desamparados',
+  }), {
+    type: 'Paso de Virgen',
+    name: 'María Santísima Madre de los Desamparados',
+    position: '',
+  })
+})
+
 test('conserva el contexto de la posición después de separar el tipo de paso', () => {
   assert.deepEqual(presentAccompanimentStep({
     position: 'Tras el paso de misterio · tramo de vuelta',
@@ -41,16 +61,26 @@ test('conserva el contexto de la posición después de separar el tipo de paso',
   })
 })
 
-test('no inventa tipo de paso y conserva una posición musical documentada', () => {
+test('si el tipo no puede determinarse no lo inventa ni añade una categoría genérica', () => {
   assert.deepEqual(presentAccompanimentStep({
     position: 'Cruz de guía',
     stepName: 'Santísimo Cristo de la Caridad',
   }), {
     type: '',
     name: 'Santísimo Cristo de la Caridad',
-    position: 'Cruz de guía',
+    position: '',
   })
   assert.deepEqual(presentAccompanimentStep({}), { type: '', name: '', position: '' })
+})
+
+test('si no existe paso documentado conserva la posición musical disponible', () => {
+  assert.deepEqual(presentAccompanimentStep({
+    position: 'Tras el paso del Cristo de la Salud',
+  }), {
+    type: '',
+    name: '',
+    position: 'Tras el paso del Cristo de la Salud',
+  })
 })
 
 test('presenta una sola localidad sin duplicar Sevilla capital', () => {
