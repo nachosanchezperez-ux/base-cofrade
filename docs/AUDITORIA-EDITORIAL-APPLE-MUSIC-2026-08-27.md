@@ -52,7 +52,9 @@ Regla de continuidad: no convertir un perfil en álbum por semejanza de título,
 
 La Fuente ya vinculada a la Marcha identifica a `J. Arriaga` como autor de la copla original del siglo XIX. Se publicó esa relación con rol `composer`.
 
-La misma Fuente indica que hubo adaptación para banda en 2016, pero no identifica inequívocamente a la persona adaptadora. Esa autoría continúa pendiente y no se ha asociado a otra persona por coincidencia de nombre.
+La Fuente inicial indica que hubo adaptación para banda en 2016, pero no identifica a la persona adaptadora. La revisión del 29 de agosto localiza la grabación específica de YoSoyPastoreñoTV, que acredita expresamente la adaptación a `Manuel García` y el año 2016. Una segunda referencia histórica del repertorio de la Banda de la Soledad coincide en `Arriaga / arreglos Manuel García`.
+
+Se incorpora la relación con rol `adapter` y se conserva la identidad con alcance prudente: solo `Manuel García`, sin añadir segundo apellido, biografía ni unificación con posibles homónimos mientras no exista una Fuente inequívoca.
 
 ### El Descendimiento
 
@@ -80,9 +82,8 @@ No se debe cerrar esta cola con hotlinking, capturas, archivos sin procedencia o
 ## Próximas acciones editoriales
 
 1. Resolver las `9` imágenes de Cigarreras, Misión y San Esteban mediante archivos propios, autorizados o con licencia comprobada.
-2. Pedir o localizar una Fuente primaria para el adaptador de `Gloria a ti`.
-3. Mantener los `6` perfiles Apple pendientes hasta aclarar las discrepancias editoriales de artista, título o año.
-4. Ampliar Apple Music al resto del catálogo solo con coincidencia exacta de banda, título, tipo de lanzamiento y año.
+2. Mantener los `6` perfiles Apple pendientes hasta aclarar las discrepancias editoriales de artista, título o año.
+3. Ampliar Apple Music al resto del catálogo solo con coincidencia exacta de banda, título, tipo de lanzamiento y año.
 
 ## Revalidación · 28 de agosto de 2026
 

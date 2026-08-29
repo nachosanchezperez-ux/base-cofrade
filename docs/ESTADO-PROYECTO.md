@@ -97,7 +97,7 @@ Resultado: **🟢 incidencia transitoria no reproducida**. No se modifica códig
 
 - Proyecto `Hilocofrade` (`kcevwkucqzcyrqaimyhl`) → **ACTIVE_HEALTHY**.
 - Región: `eu-west-1`; Postgres `17.6.1.155`; plan **Pro**.
-- Migraciones Git ↔ Supabase: **181/181**, hasta `20260828225007 documenta_el_descendimiento_jose_sapena`.
+- Migraciones Git ↔ Supabase: **182/182**, hasta `20260829075845 documenta_gloria_a_ti_manuel_garcia`.
 - Leaked Password Protection: **🟢 ACTIVA**. El asesor ya no emite `auth_leaked_password_protection`.
 - Auth del Panel: **🟢 OPERATIVA**. La regresión posterior a la activación validó login, sesión, navegación, logout y nueva autenticación; el último smoke confirmó una sesión autenticada vigente.
 
@@ -160,6 +160,7 @@ La revalidación del 28 de agosto mantiene esos `6` perfiles: las fichas localiz
 ## Salud editorial
 
 - Marchas publicadas sin autoría estructurada: **0**. `El Descendimiento` queda documentada como obra de José Sapena Matarredona (1961).
+- `Gloria a ti · adaptación para banda` queda documentada con Manuel García como adaptador (2016), sin ampliar su identidad más allá del nombre acreditado.
 - Imágenes publicadas sin recurso visual directo: **20**. Todas conservan Fuente y autoría estructurada, pero no existe en `media_assets` un archivo exacto y autorizado reutilizable. Es una cola editorial de cobertura, no un bloqueo técnico ni una UI rota.
 
 ## Importación
@@ -186,4 +187,4 @@ Hasta entonces solo se permite bug real, seguridad, legal, contenido, datos, fue
 
 **Dirección debe revisar visualmente #394 y el baseline en `390 / 768 / 1024 / 1440`; si da el visto bueno, resolver #394 y declarar el cierre técnico con su freeze.**
 
-**ESTADO-PROYECTO → 🟡 PRIMERA EDICIÓN TÉCNICAMENTE PREPARADA · BASELINE AUTOMATIZABLE 🟢 · PRODUCCIÓN READY · GIT ↔ SUPABASE 181/181 · #394 READY FOR VISUAL APPROVAL · QA VISUAL 🟣 · AUTH 🟢 · LEGAL 🟢**
+**ESTADO-PROYECTO → 🟡 PRIMERA EDICIÓN TÉCNICAMENTE PREPARADA · BASELINE AUTOMATIZABLE 🟢 · PRODUCCIÓN READY · GIT ↔ SUPABASE 182/182 · #394 READY FOR VISUAL APPROVAL · QA VISUAL 🟣 · AUTH 🟢 · LEGAL 🟢**
