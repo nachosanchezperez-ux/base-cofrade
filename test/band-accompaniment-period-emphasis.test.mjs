@@ -52,6 +52,17 @@ test('el tipo de paso es una categoría tipográfica sin píldora', () => {
   assert.doesNotMatch(page, />Tras el paso/)
 })
 
+test('móvil mantiene el protagonismo de Desde y el nombre del paso sin encoger tipografía', () => {
+  const periodCss = read('app/bandas/[slug]/band-period-emphasis.module.css')
+  const baseCss = read('app/bandas/bandas.module.css')
+  const mobile = periodCss.slice(periodCss.indexOf('@media (max-width: 680px)'))
+  const typeRule = baseCss.match(/\.relationshipStep \.relationshipStepType \{([^}]+)\}/)?.[1] || ''
+
+  assert.match(mobile, /div:first-child > strong[\s\S]*font-size: 15\.5px;/)
+  assert.match(mobile, /div:nth-child\(4\) > strong[\s\S]*font-size: 15px;/)
+  assert.match(typeRule, /font-size: 13px/)
+})
+
 test('Semana Santa, próximos acompañamientos y Glorias reutilizan la misma tarjeta', () => {
   const page = read('app/bandas/[slug]/page.js')
 
