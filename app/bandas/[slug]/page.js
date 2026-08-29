@@ -14,6 +14,8 @@ import { absoluteUrl, breadcrumbJsonLd } from '@/lib/seo'
 import {
   groupGloryAccompaniments,
   partitionAccompanimentsBySeason,
+  presentAccompanimentLocation,
+  presentAccompanimentStep,
   sortGloryAccompaniments,
   sortHolyWeekAccompaniments,
   splitCurrentAccompaniments,
@@ -66,11 +68,8 @@ function creditedName(item) {
 }
 
 function AccompanimentCard({ item, band, showLocation = false }) {
-  const locationScope = item.municipalitySlug === 'sevilla'
-    ? 'Sevilla capital'
-    : item.province === 'Sevilla'
-      ? 'Provincia de Sevilla'
-      : item.province || ''
+  const step = presentAccompanimentStep(item)
+  const hasStepDetail = step.type || step.name || step.position
 
   return (
     <article className={`${styles.relationshipCard} ${showLocation ? styles.locatedRelationshipCard : ''}`}>
@@ -79,21 +78,20 @@ function AccompanimentCard({ item, band, showLocation = false }) {
         <strong>{yearRange(item)}</strong>
       </div>
       {showLocation ? <div className={styles.relationshipLocation}>
-        <span>Localidad</span>
-        <strong>{item.municipality || 'Por documentar'}</strong>
-        {locationScope ? <small>{locationScope}</small> : null}
+        <strong>{presentAccompanimentLocation(item)}</strong>
       </div> : null}
       <div className={styles.relationshipIdentity}>
         <h3>{item.brotherhoodName}</h3>
       </div>
-      <div className={styles.relationshipStep}>
-        <span>{item.position || 'Acompañamiento musical'}</span>
-        {item.stepName ? (
+      {hasStepDetail ? <div className={styles.relationshipStep}>
+        {step.type ? <span className={styles.relationshipStepType}>{step.type}</span> : null}
+        {step.name ? (
           item.stepPageReady && item.stepSlug
-            ? <Link href={`/pasos/${item.stepSlug}`}>{item.stepName} <b aria-hidden="true">→</b></Link>
-            : <strong>{item.stepName}</strong>
+            ? <Link href={`/pasos/${item.stepSlug}`}>{step.name} <b aria-hidden="true">→</b></Link>
+            : <strong>{step.name}</strong>
         ) : null}
-      </div>
+        {step.position ? <small className={styles.relationshipStepPosition}>{step.position}</small> : null}
+      </div> : null}
       {item.notes && item.brotherhoodName !== band.linkedBrotherhood ? <p className={styles.relationshipNote}>{item.notes}</p> : null}
       <div className={styles.relationshipLinks}>
         {item.brotherhoodSlug && item.brotherhoodPageReady
