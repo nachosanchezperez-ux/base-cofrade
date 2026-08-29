@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import {
+  formatOutingType,
   groupGloryAccompaniments,
   partitionAccompanimentsBySeason,
   resolveAccompanimentLocation,
@@ -44,19 +45,31 @@ test('conserva la localidad pública cuando la hermandad vinculada sigue en borr
   })
 })
 
+test('normaliza tipos técnicos de salida antes de mostrarlos', () => {
+  assert.equal(formatOutingType('procesion_gloria'), 'Procesión de gloria')
+  assert.equal(formatOutingType('PROCESION_PENITENCIAL'), 'Procesión penitencial')
+  assert.equal(formatOutingType('romeria'), 'Romería')
+  assert.equal(formatOutingType('Estación de Penitencia'), 'Estación de penitencia')
+  assert.equal(formatOutingType('Madrugada'), 'Madrugá')
+})
+
 test('separa Semana Santa de Glorias y cultos externos', () => {
   const items = [
     { id: 'corpus', outingType: 'Procesión eucarística' },
     { id: 'domingo', outingType: 'Domingo de Ramos' },
     { id: 'gloria', outingType: 'Procesión de gloria' },
     { id: 'viernes', outingType: 'Viernes Santo' },
+    { id: 'madruga', outingType: 'Madrugá' },
+    { id: 'estacion', outingType: 'estacion_penitencia' },
+    { id: 'penitencial-externa', outingType: 'procesion_penitencial' },
     { id: 'extraordinaria', outingType: 'Procesión extraordinaria' },
   ]
 
   const groups = splitCurrentAccompaniments(items)
 
-  assert.deepEqual(groups.holyWeek.map((item) => item.id), ['domingo', 'viernes'])
-  assert.deepEqual(groups.glories.map((item) => item.id), ['corpus', 'gloria', 'extraordinaria'])
+  assert.deepEqual(groups.holyWeek.map((item) => item.id), ['domingo', 'viernes', 'madruga', 'estacion'])
+  assert.deepEqual(groups.glories.map((item) => item.id), ['corpus', 'gloria', 'penitencial-externa', 'extraordinaria'])
+  assert.equal(groups.glories.find((item) => item.id === 'penitencial-externa').outingType, 'Procesión penitencial')
 })
 
 test('ordena Semana Santa por jornada y Glorias alfabéticamente', () => {
@@ -86,17 +99,20 @@ test('agrupa los acompañamientos de Glorias entre Sevilla capital y provincia',
   assert.deepEqual(groups[1].items.map((item) => item.municipality), ['Benacazón', 'Camas'])
 })
 
-test('resume las Glorias por tipo de procesión', () => {
+test('resume las Glorias por tipo de procesión sin duplicar variantes técnicas', () => {
   const summary = summarizeGloryTypes([
     { outingType: 'Procesión de gloria' },
+    { outingType: 'procesion_gloria' },
+    { outingType: 'Gloria' },
     { outingType: 'Procesión eucarística' },
-    { outingType: 'Procesión de gloria' },
     { outingType: 'Procesión extraordinaria' },
+    { outingType: 'romeria' },
   ])
 
   assert.deepEqual(summary, [
-    { type: 'Procesión de gloria', label: 'Procesiones de gloria', count: 2 },
+    { type: 'Procesión de gloria', label: 'Procesiones de gloria', count: 3 },
     { type: 'Procesión eucarística', label: 'Procesiones eucarísticas', count: 1 },
     { type: 'Procesión extraordinaria', label: 'Procesiones extraordinarias', count: 1 },
+    { type: 'Romería', label: 'Romerías', count: 1 },
   ])
 })
