@@ -219,7 +219,14 @@ export default async function GloryDetailPage({ params }) {
           <div className={styles.heroVisual}>
             {item.heroImagePath ? (
               <>
-                <Image src={item.heroImagePath} alt={item.heroImageAlt} fill priority sizes="(max-width: 820px) calc(100vw - 32px), 36vw" />
+                <Image
+                  src={item.heroImagePath}
+                  alt={item.heroImageAlt}
+                  fill
+                  priority
+                  unoptimized={item.heroImagePath.startsWith('/')}
+                  sizes="(max-width: 820px) calc(100vw - 32px), 36vw"
+                />
                 {item.heroImageCredit ? <small>{item.heroImageCredit}</small> : null}
               </>
             ) : item.crestPath ? (
