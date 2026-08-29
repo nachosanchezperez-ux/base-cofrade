@@ -4,12 +4,60 @@ import {
   formatOutingType,
   groupGloryAccompaniments,
   partitionAccompanimentsBySeason,
+  presentAccompanimentLocation,
+  presentAccompanimentStep,
   resolveAccompanimentLocation,
   sortGloryAccompaniments,
   sortHolyWeekAccompaniments,
   splitCurrentAccompaniments,
   summarizeGloryTypes,
 } from '../lib/bands/accompaniments.js'
+
+test('separa el tipo y la identidad del paso sin alterar el nombre canónico', () => {
+  const cases = [
+    ['Tras el paso de misterio', 'Paso de misterio de Nuestro Padre Jesús del Soberano Poder en su Prendimiento', 'Paso de misterio', 'Nuestro Padre Jesús del Soberano Poder en su Prendimiento'],
+    ['Tras el paso de misterio', 'Paso de misterio del Sagrado Decreto de la Santísima Trinidad', 'Paso de misterio', 'Sagrado Decreto de la Santísima Trinidad'],
+    ['Tras el paso de palio', 'Paso de palio de María Santísima de la Victoria', 'Paso de palio', 'María Santísima de la Victoria'],
+    ['Tras el paso de palio', 'Paso de palio del Dulce Nombre de María', 'Paso de palio', 'Dulce Nombre de María'],
+  ]
+
+  cases.forEach(([position, stepName, type, name]) => {
+    const item = { position, stepName }
+    const before = structuredClone(item)
+
+    assert.deepEqual(presentAccompanimentStep(item), { type, name, position: '' })
+    assert.deepEqual(item, before)
+  })
+})
+
+test('conserva el contexto de la posición después de separar el tipo de paso', () => {
+  assert.deepEqual(presentAccompanimentStep({
+    position: 'Tras el paso de misterio · tramo de vuelta',
+    stepName: 'Paso de misterio de Nuestro Padre Jesús Nazareno',
+  }), {
+    type: 'Paso de misterio',
+    name: 'Nuestro Padre Jesús Nazareno',
+    position: 'tramo de vuelta',
+  })
+})
+
+test('no inventa tipo de paso y conserva una posición musical documentada', () => {
+  assert.deepEqual(presentAccompanimentStep({
+    position: 'Cruz de guía',
+    stepName: 'Santísimo Cristo de la Caridad',
+  }), {
+    type: '',
+    name: 'Santísimo Cristo de la Caridad',
+    position: 'Cruz de guía',
+  })
+  assert.deepEqual(presentAccompanimentStep({}), { type: '', name: '', position: '' })
+})
+
+test('presenta una sola localidad sin duplicar Sevilla capital', () => {
+  assert.equal(presentAccompanimentLocation({ municipality: 'Sevilla', municipalitySlug: 'sevilla', province: 'Sevilla' }), 'Sevilla')
+  assert.equal(presentAccompanimentLocation({ municipality: 'Cantillana', province: 'Sevilla' }), 'Cantillana')
+  assert.equal(presentAccompanimentLocation({ municipality: 'Marchena', province: 'Sevilla' }), 'Marchena')
+})
 
 test('retira automáticamente de la temporada los contratos que ya han finalizado', () => {
   const periods = partitionAccompanimentsBySeason([

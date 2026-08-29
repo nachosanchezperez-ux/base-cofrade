@@ -255,6 +255,8 @@
 .relationshipIdentity h3 { margin-top: 0; }
 .relationshipStep { display: grid; gap: 5px; margin: 0 20px; padding: 14px 0 16px; border-top: 1px solid var(--band-line); }
 .relationshipStep span { color: var(--band-muted); font-size: 8px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+.relationshipStep .relationshipStepType { min-height: 0; padding: 0; border: 0; border-radius: 0; color: var(--band-primary); background: none; font-size: 13px; font-weight: 800; letter-spacing: 0; line-height: 1.2; text-transform: none; }
+.relationshipStepPosition { color: var(--band-muted); font-size: 10px; font-weight: 600; line-height: 1.4; }
 .relationshipStep strong { color: var(--band-secondary); font-size: 12px; font-weight: 600; line-height: 1.45; }
 .relationshipStep a { color: var(--band-secondary); font-size: 12px; font-weight: 700; line-height: 1.45; }
 .relationshipStep a:hover { color: var(--band-primary); }

@@ -27,19 +27,37 @@ test('día de salida y antigüedad comparten una cabecera equilibrada', () => {
   assert.match(css, /div:first-child > strong[\s\S]*min-height: 36px;/)
 })
 
-test('la localidad no repite Localidad, Sevilla y Sevilla capital', () => {
-  const css = read('app/bandas/[slug]/band-period-emphasis.module.css')
+test('las tarjetas delegan la localidad en una única regla de presentación', () => {
+  const page = read('app/bandas/[slug]/page.js')
+  const card = page.slice(page.indexOf('function AccompanimentCard'), page.indexOf('function HistoricalIcon'))
 
-  assert.match(css, /div:nth-child\(2\) > span,[\s\S]*div:nth-child\(2\) > small[\s\S]*display: none;/)
-  assert.match(css, /div:nth-child\(2\) > strong[\s\S]*font-size: 13px;/)
+  assert.match(card, /presentAccompanimentLocation\(item\)/)
+  assert.doesNotMatch(card, /Sevilla capital/)
+  assert.doesNotMatch(card, /<span>Localidad<\/span>/)
 })
 
-test('el tipo de paso se convierte en una clave visual dentro de la tarjeta', () => {
-  const css = read('app/bandas/[slug]/band-period-emphasis.module.css')
+test('el tipo de paso es una categoría tipográfica sin píldora', () => {
+  const page = read('app/bandas/[slug]/page.js')
+  const baseCss = read('app/bandas/bandas.module.css')
+  const periodCss = read('app/bandas/[slug]/band-period-emphasis.module.css')
+  const typeRule = baseCss.match(/\.relationshipStep \.relationshipStepType \{([^}]+)\}/)?.[1] || ''
 
-  assert.match(css, /div:nth-child\(4\) > span[\s\S]*background: color-mix/)
-  assert.match(css, /div:nth-child\(4\) > span[\s\S]*font-weight: 800;/)
-  assert.match(css, /div:nth-child\(4\) > span[\s\S]*text-transform: none;/)
+  assert.match(page, /className=\{styles\.relationshipStepType\}/)
+  assert.match(typeRule, /color: var\(--band-primary\)/)
+  assert.match(typeRule, /font-weight: 800/)
+  assert.match(typeRule, /background: none/)
+  assert.match(typeRule, /border: 0/)
+  assert.match(typeRule, /border-radius: 0/)
+  assert.doesNotMatch(periodCss, /div:nth-child\(4\) > span/)
+  assert.doesNotMatch(page, />Tras el paso/)
+})
+
+test('Semana Santa, próximos acompañamientos y Glorias reutilizan la misma tarjeta', () => {
+  const page = read('app/bandas/[slug]/page.js')
+
+  assert.match(page, /id="acompanamientos"[\s\S]*orderedAccompaniments\.map[\s\S]*<AccompanimentCard/)
+  assert.match(page, /id="proximos-acompanamientos"[\s\S]*upcomingAccompaniments\.map[\s\S]*<AccompanimentCard/)
+  assert.match(page, /id="glorias"[\s\S]*group\.items\.map[\s\S]*<AccompanimentCard/)
 })
 
 test('los estados no accionables no consumen un pie completo de tarjeta', () => {
