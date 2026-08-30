@@ -32,6 +32,11 @@
   padding: 26px;
 }
 
+/* Los campos editoriales no documentados no deben dejar filas vacías. */
+.habit-copy dl div:has(> dd:empty) {
+  display: none;
+}
+
 /* Varias variantes: la tarjeta no debe crecer por una tipografía excesivamente
    abierta. Se compacta la ficha y la ilustración queda centrada en su panel. */
 @media (min-width: 621px) {
