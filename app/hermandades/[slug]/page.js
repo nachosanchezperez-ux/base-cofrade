@@ -24,6 +24,11 @@ import { getHermandadPageBySlug } from '@/lib/supabase/brotherhood-page';
 import { getPublishedBrotherhoodCrestPath } from '@/lib/supabase/brotherhood-public-authority';
 import { getPublishedEntityCoverMediaMap } from '@/lib/supabase/entity-media';
 import {
+  meetsPublicEditorialMinimum,
+  publicEditorialRobots,
+  publicText,
+} from '@/lib/supabase/public-entity-page';
+import {
   absoluteUrl,
   breadcrumbJsonLd,
   brotherhoodSeoDescription,
@@ -52,11 +57,28 @@ export async function generateMetadata({ params }) {
   const title = brotherhoodSeoTitle(h);
   const description = brotherhoodSeoDescription(h);
   const canonical = `/hermandades/${h.slug}`;
+  const editoriallyReady = meetsPublicEditorialMinimum({
+    identity: h.nombrePopular || h.nombreOficial,
+    type: (h.tipos || []).join(' · '),
+    context: h.localidad,
+    summary: h.resumen,
+    relations: [
+      h.imagenes,
+      h.pasos,
+      h.cronologia,
+      h.acompanamientoActual,
+      h.patrimonio,
+      h.cultos,
+    ],
+    sources: h.fuentesFicha || [],
+    publicValues: h,
+  });
 
   return {
     title,
     description,
     alternates: { canonical },
+    robots: publicEditorialRobots(editoriallyReady),
     openGraph: {
       type: 'article',
       title: pageTitle(title),
@@ -91,6 +113,15 @@ export default async function HermandadDetailPage({ params }) {
     || h.imagenes.map((imagen) => entityCoverMedia.get(imagen.id)).find(Boolean)
     || null;
   const imagenMap = new Map(h.imagenes.map((imagen) => [imagen.id, imagen]));
+  const fallbackMusicalHeritage = (h.patrimonioMusical || []).filter((item) => (
+    publicText(item.nombre) && publicText(item.autor)
+  ));
+  const documentedCurrentAccompaniments = (h.acompanamientoActual || []).filter((item) => (
+    publicText(item.banda) && publicText(item.posicion || item.tipo)
+  ));
+  const documentedHistoricalAccompaniments = (h.acompanamientos || []).filter((item) => (
+    publicText(item.banda) && publicText(item.paso || item.tipo || item.periodo)
+  ));
   const tiposHermandad = h.tipos || [];
   const isPenitencia = tiposHermandad.includes('Penitencia');
   const brotherhoodTypeLabel = isPenitencia
@@ -101,7 +132,7 @@ export default async function HermandadDetailPage({ params }) {
         ? 'Hermandad Sacramental'
         : 'Hermandad';
   const penitentialFacts = [
-    { label: 'Salida', value: h.diaSalida },
+    { label: 'Salida', value: publicText(h.diaSalida) },
     {
       label: h.datosJornada?.ano ? `Nazarenos · ${h.datosJornada.ano}` : 'Nazarenos',
       value: h.datosJornada?.totalNazarenos,
@@ -110,12 +141,20 @@ export default async function HermandadDetailPage({ params }) {
     { label: 'Pasos', value: h.pasos?.length ? String(h.pasos.length) : '' },
   ].filter((item) => item.value);
   const gloryFacts = [
-    { label: 'Fundación', value: h.fundacion },
-    { label: 'Salida', value: h.diaSalida },
+    { label: 'Fundación', value: publicText(h.fundacion) },
+    { label: 'Salida', value: publicText(h.diaSalida) },
     { label: 'Titulares', value: h.imagenes?.length ? String(h.imagenes.length) : '' },
     { label: 'Pasos', value: h.pasos?.length ? String(h.pasos.length) : '' },
   ].filter((item) => item.value);
   const heroFacts = isPenitencia ? penitentialFacts : gloryFacts;
+  const heroFactLabels = new Set(heroFacts.map((fact) => fact.label));
+  const hasPracticalOverview = Boolean(
+    publicText(h.sedeDetalle?.nombre)
+    || (tiposHermandad.length > 1)
+    || (publicText(h.fundacion) && !heroFactLabels.has('Fundación'))
+    || (publicText(h.datosJornada?.totalHermanos) && !heroFactLabels.has('Hermanos'))
+    || (h.imagenes?.length && !heroFactLabels.has('Titulares'))
+  );
   const canonicalPath = `/hermandades/${h.slug}`;
   const description = brotherhoodSeoDescription(h);
   const pageJsonLd = {
@@ -166,8 +205,8 @@ export default async function HermandadDetailPage({ params }) {
         entityType={brotherhoodTypeLabel}
         title={h.nombrePopular}
         officialName={h.nombreOficial}
-        locality={h.localidad}
-        seat={h.sede}
+        locality={publicText(h.localidad)}
+        seat={publicText(h.sede)}
         breadcrumbItems={[
           { label: 'Hermandades', href: '/hermandades' },
           { label: h.localidad || 'Ficha' },
@@ -191,12 +230,12 @@ export default async function HermandadDetailPage({ params }) {
       />
 
       <EntitySectionNav items={[
-        { href: '#resumen', label: 'Información' },
-        { href: '#titulares', label: 'Titulares' },
-        { href: '#pasos', label: 'Pasos' },
+        hasPracticalOverview && { href: '#resumen', label: 'Información' },
+        h.imagenes?.length > 0 && { href: '#titulares', label: 'Titulares' },
+        h.pasos?.length > 0 && { href: '#pasos', label: 'Pasos' },
         (h.imagenes?.length > 0 || h.pasos?.length > 0) && { href: '#tira-del-hilo', label: 'Tira del hilo' },
-        h.acompanamientoActual?.length > 0 && { href: '#acompanamiento-musical', label: 'Acompañamiento' },
-        (musicalHeritage.length > 0 || h.patrimonioMusical?.length > 0) && { href: '#musica', label: 'Patrimonio musical' },
+        documentedCurrentAccompaniments.length > 0 && { href: '#acompanamiento-musical', label: 'Acompañamiento' },
+        (musicalHeritage.length > 0 || fallbackMusicalHeritage.length > 0) && { href: '#musica', label: 'Patrimonio musical' },
         h.cronologia?.length > 0 && { href: '#historia', label: 'Historia' },
         h.habitos?.length > 0 && { href: '#tunica', label: 'Túnica' },
         h.salidas?.length > 0 && { href: '#salidas', label: 'Salidas' },
@@ -204,7 +243,7 @@ export default async function HermandadDetailPage({ params }) {
         h.simpecados?.length > 0 && { href: '#simpecados', label: 'Simpecados' },
         h.cartelesFiestas?.length > 0 && { href: '#carteles', label: 'Carteles' },
         (h.patrimonio?.length > 0 || h.estrenos?.length > 0) && { href: '#patrimonio', label: 'Patrimonio' },
-        h.acompanamientos?.length > 0 && { href: '#acompanamientos', label: 'Histórico musical' },
+        documentedHistoricalAccompaniments.length > 0 && { href: '#acompanamientos', label: 'Histórico musical' },
         h.noticias?.length > 0 && { href: '#noticias', label: 'Noticias' },
         h.curiosidades?.length > 0 && { href: '#curiosidades', label: 'Curiosidades' },
         h.enlacesOficiales?.length > 0 && { href: '#enlaces-de-interes', label: 'Web y redes' },
@@ -257,6 +296,7 @@ export default async function HermandadDetailPage({ params }) {
         </div></section>
       )}
 
+      {h.imagenes?.length > 0 && (
       <section className="section brotherhood-soft" id="titulares"><div className="shell">
         <SectionTitle eyebrow="Titularidad" title="Sagrados Titulares" description="Imágenes e identidades devocionales que conforman la titularidad documentada de la Hermandad." />
         <div className="image-grid">{h.imagenes.map((imagen) => {
@@ -313,7 +353,9 @@ export default async function HermandadDetailPage({ params }) {
         })}</div>
         <BrotherhoodConceptualTitulars brotherhoodId={h.id} />
       </div></section>
+      )}
 
+      {h.pasos?.length > 0 && (
       <section className="section" id="pasos"><div className="shell">
         <SectionTitle eyebrow={`${h.pasos.length} pasos`} title="Pasos procesionales" description="Imágenes, diseño, talla, orfebrería, bordados, reformas y evolución histórica." />
         <div className="processional-grid">{h.pasos.map((paso, index) => (
@@ -338,10 +380,10 @@ export default async function HermandadDetailPage({ params }) {
               <div className="processional-photo"><span>0{index + 1}</span><small>Fotografía del paso</small></div>
             )}
             <div className="processional-body"><span className="pill">{paso.tipo}</span><h3>{paso.nombre}</h3><p>{paso.descripcion}</p>
-              {(paso.capatazActual || paso.acompanamientoActual) && (
+              {(publicText(paso.capatazActual) || publicText(paso.acompanamientoActual)) && (
                 <div className="step-current-data">
-                  <div><small>Capataz actual</small><strong>{paso.capatazActual || 'Pendiente de incorporar'}</strong></div>
-                  <div><small>Acompañamiento musical</small><strong>{paso.acompanamientoActual || 'Pendiente de incorporar'}</strong></div>
+                  {publicText(paso.capatazActual) ? <div><small>Capataz actual</small><strong>{publicText(paso.capatazActual)}</strong></div> : null}
+                  {publicText(paso.acompanamientoActual) ? <div><small>Acompañamiento musical</small><strong>{publicText(paso.acompanamientoActual)}</strong></div> : null}
                 </div>
               )}
               {(paso.ejecucion || paso.sistemaPortadores || paso.materiales) && (
@@ -352,7 +394,7 @@ export default async function HermandadDetailPage({ params }) {
                 </div>
               )}
               {paso.estadoActual && <p className="step-current-state">{paso.estadoActual}</p>}
-              <div className="related-row"><small>Imágenes que procesionan</small><div>{(
+              {(paso.imagenesDetalle?.length || paso.imagenes?.length) ? <div className="related-row"><small>Imágenes que procesionan</small><div>{(
                 paso.imagenesDetalle?.length
                   ? paso.imagenesDetalle
                   : paso.imagenes.map((id) => imagenMap.get(id)).filter(Boolean)
@@ -360,23 +402,24 @@ export default async function HermandadDetailPage({ params }) {
                 imagen.fichaDisponible
                   ? <Link key={imagen.id} href={`/imagenes/${imagen.slug}`}>{imagen.nombre}</Link>
                   : <span className="related-name" key={imagen.id}>{imagen.nombre}</span>
-              ))}</div></div>
+              ))}</div></div> : null}
               {paso.fichaDisponible && <Link href={`/pasos/${paso.slug}`} className="text-link">Ver ficha del paso →</Link>}
             </div>
           </article>
         ))}</div>
       </div></section>
+      )}
 
       <BrotherhoodOwnBands brotherhoodId={h.id} />
 
       {musicalHeritage.length > 0 ? (
         <BrotherhoodMusicalHeritage items={musicalHeritage} />
-      ) : h.patrimonioMusical?.length > 0 ? (
+      ) : fallbackMusicalHeritage.length > 0 ? (
         <section className="section music-section" id="musica"><div className="shell">
           <SectionTitle eyebrow="Sonidos propios" title="Patrimonio Musical" description="Marchas dedicadas a la Hermandad y a sus titulares, conectadas con sus autores y registros audiovisuales." />
-          <div className="music-list">{h.patrimonioMusical.map((m) => (
+          <div className="music-list">{fallbackMusicalHeritage.map((m) => (
             <article key={m.id}><div className="music-index">♪</div><div><h3>{m.nombre}</h3><p>{m.autor}</p></div><strong>{m.ano}</strong>
-            {m.youtube ? <a href={m.youtube} target="_blank" rel="noreferrer" className="music-play">YouTube ↗</a> : <span className="music-pending">Enlace pendiente</span>}</article>
+            {m.youtube ? <a href={m.youtube} target="_blank" rel="noreferrer" className="music-play">YouTube ↗</a> : null}</article>
           ))}</div>
         </div></section>
       ) : null}
@@ -485,6 +528,8 @@ export default async function HermandadDetailPage({ params }) {
         <SectionTitle eyebrow="Memoria material" title="Patrimonio" description="Obras, enseres y espacios documentados como piezas vivas: su historia, sus autores y las intervenciones que han definido su aspecto." />
 
         {h.patrimonio?.length > 0 && (
+          <details className="heritage-catalog-disclosure" open={h.patrimonio.length <= 3}>
+            <summary><span>Explorar catálogo patrimonial</span><strong>{h.patrimonio.length} {h.patrimonio.length === 1 ? 'pieza' : 'piezas'}</strong><b aria-hidden="true">＋</b></summary>
           <div className="heritage-catalog">
             {h.patrimonio.map((pieza, index) => (
               <article className={`heritage-work ${pieza.destacado ? 'heritage-work-featured' : ''}`} key={pieza.id}>
@@ -545,6 +590,7 @@ export default async function HermandadDetailPage({ params }) {
               </article>
             ))}
           </div>
+          </details>
         )}
 
         {h.estrenos?.length > 0 && (
@@ -557,17 +603,17 @@ export default async function HermandadDetailPage({ params }) {
         )}
       </div></section>}
 
-      {h.acompanamientos?.length > 0 && <section className="section brotherhood-soft" id="acompanamientos"><div className="shell">
+      {documentedHistoricalAccompaniments.length > 0 && <section className="section brotherhood-soft" id="acompanamientos"><div className="shell">
         <SectionTitle eyebrow="Memoria sonora" title="Acompañamientos Musicales Históricos" description="Una cronología por paso para conocer qué formaciones musicales han acompañado a la Hermandad." />
-        <div className="music-history-grid">{h.acompanamientos.map((a) => (
-          <article key={a.id}><span className="music-period">{a.periodo}</span><h3>{a.banda}</h3><p>{a.paso}</p><small>{a.tipo}</small></article>
+        <div className="music-history-grid">{documentedHistoricalAccompaniments.map((a) => (
+          <article key={a.id}>{publicText(a.periodo) ? <span className="music-period">{publicText(a.periodo)}</span> : null}<h3>{publicText(a.banda)}</h3>{publicText(a.paso) ? <p>{publicText(a.paso)}</p> : null}{publicText(a.tipo) ? <small>{publicText(a.tipo)}</small> : null}</article>
         ))}</div>
       </div></section>}
 
       {h.noticias?.length > 0 && <section className="section brotherhood-white" id="noticias"><div className="shell">
         <SectionTitle eyebrow="Última hora" title="Noticias relacionadas" description="Actualidad vinculada directamente con la Hermandad, sus titulares, patrimonio y vida corporativa." />
         <div className="news-grid">{h.noticias.map((n) => (
-          <article className="news-card" key={n.id}><div className="news-image-placeholder">Noticia</div><div><small>{n.fecha} · {n.categoria}</small><h3>{n.titulo}</h3><p>{n.extracto}</p>{n.url ? <a href={n.url} target="_blank" rel="noreferrer" className="text-link">Leer noticia ↗</a> : <span className="text-link muted-link">Enlace pendiente</span>}</div></article>
+          <article className="news-card" key={n.id}><div className="news-image-placeholder">Noticia</div><div><small>{n.fecha} · {n.categoria}</small><h3>{n.titulo}</h3><p>{n.extracto}</p>{n.url ? <a href={n.url} target="_blank" rel="noreferrer" className="text-link">Leer noticia ↗</a> : null}</div></article>
         ))}</div>
       </div></section>}
 

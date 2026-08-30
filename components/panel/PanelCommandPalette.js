@@ -16,6 +16,7 @@ const MODULES = [
   { name: 'Bandas', typeLabel: 'Contenido', href: '/panel/bandas', mark: 'B' },
   { name: 'Marchas', typeLabel: 'Contenido', href: '/panel/marchas', mark: '♫' },
   { name: 'Extraordinarias', typeLabel: 'Contenido', href: '/panel/extraordinarias', mark: '✦' },
+  { name: 'Igualás y ensayos', typeLabel: 'Contenido', href: '/panel/igualas-y-ensayos', mark: 'I/E' },
   { name: 'Acontecimientos', typeLabel: 'Contenido', href: '/panel/acontecimientos', mark: 'A' },
   { name: 'Personas', typeLabel: 'Documentación', href: '/panel/agentes', mark: 'Pe' },
   { name: 'Fuentes', typeLabel: 'Documentación', href: '/panel/fuentes', mark: 'F' },
@@ -39,6 +40,7 @@ const SEGMENT_LABELS = {
   marchas: 'Marcha',
   agentes: 'Persona',
   extraordinarias: 'Extraordinaria',
+  'igualas-y-ensayos': 'Igualá / ensayo',
   acontecimientos: 'Acontecimiento',
 }
 
@@ -72,11 +74,12 @@ function markForType(type = '') {
     march: '♫',
     agent: 'Pe',
     extraordinary: '✦',
+    crew_event: 'I/E',
   }[type] || '→'
 }
 
 function currentEntity(pathname) {
-  const match = pathname.match(/^\/panel\/(hermandades|imagenes|pasos|bandas|marchas|agentes|extraordinarias|acontecimientos)\/([^/?#]+)/)
+  const match = pathname.match(/^\/panel\/(hermandades|imagenes|pasos|bandas|marchas|agentes|extraordinarias|igualas-y-ensayos|acontecimientos)\/([^/?#]+)/)
   if (!match || ['nueva', 'nuevo'].includes(match[2])) return null
   const [, segment, id] = match
   return {
@@ -88,7 +91,8 @@ function currentEntity(pathname) {
           : segment === 'bandas' ? 'B'
             : segment === 'marchas' ? '♫'
               : segment === 'agentes' ? 'Pe'
-                : segment === 'extraordinarias' ? '✦' : 'A',
+                : segment === 'extraordinarias' ? '✦'
+                  : segment === 'igualas-y-ensayos' ? 'I/E' : 'A',
   }
 }
 

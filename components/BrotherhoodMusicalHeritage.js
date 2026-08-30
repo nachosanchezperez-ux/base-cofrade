@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import SectionTitle from './SectionTitle';
+import { publicText } from '@/lib/supabase/public-entity-page';
 import styles from './BrotherhoodMusicalHeritage.module.css';
 
 const GROUPS = [
@@ -23,22 +24,25 @@ function composerText(item) {
     return `Texto: ${item.lyricists.map((author) => author.name).join(' · ')}`;
   }
   if (item.adapters?.length) return item.adapters.map((author) => author.name).join(' · ');
-  return item.authorshipText || 'Autoría por documentar';
+  return publicText(item.authorshipText);
 }
 
 function compactYear(value) {
   const text = String(value ?? '').trim();
-  return /^\d{4}$/.test(text) ? text : '—';
+  return /^\d{4}$/.test(text) ? text : '';
 }
 
 function MusicRow({ item, showStyle = true, headingLevel = 4 }) {
   const Heading = `h${headingLevel}`;
+  const year = compactYear(item.year);
+  const composer = composerText(item);
+  const musicType = publicText(item.musicType);
 
   return (
     <article className={`${styles.march} ${showStyle ? '' : styles.marchCompact}`}>
       <div className={styles.year}>
         <small>Año</small>
-        <strong>{compactYear(item.year)}</strong>
+        {year ? <strong>{year}</strong> : null}
       </div>
       <div className={styles.copy}>
         <small className={styles.fieldLabel}>Título</small>
@@ -54,7 +58,7 @@ function MusicRow({ item, showStyle = true, headingLevel = 4 }) {
       </div>
       <div className={styles.authorColumn}>
         <small className={styles.fieldLabel}>Compositor</small>
-        <strong>{composerText(item)}</strong>
+        {composer ? <strong>{composer}</strong> : null}
         {item.adapters?.length && item.composers?.length ? (
           <span>{item.adapters.map((author) => `${author.label || 'Adaptación'} · ${author.name}`).join(' · ')}</span>
         ) : null}
@@ -62,7 +66,7 @@ function MusicRow({ item, showStyle = true, headingLevel = 4 }) {
       {showStyle ? (
         <div className={styles.styleColumn}>
           <small className={styles.fieldLabel}>Estilo</small>
-          <strong>{item.musicType || 'Por documentar'}</strong>
+          {musicType ? <strong>{musicType}</strong> : null}
         </div>
       ) : null}
       {item.listening?.url ? (
@@ -100,8 +104,8 @@ function MarchStyleGroups({ items }) {
 
   return (
     <div className={styles.styleGroups} aria-label="Marchas procesionales por estilo musical">
-      {styleGroups.map((group, index) => (
-        <details className={styles.styleGroup} key={group.key} open={index === 0}>
+      {styleGroups.map((group) => (
+        <details className={styles.styleGroup} key={group.key}>
           <summary className={styles.styleSummary}>
             <span className={styles.styleMark} aria-hidden="true">{group.short}</span>
             <div className={styles.styleHeading}>
@@ -142,7 +146,7 @@ export default function BrotherhoodMusicalHeritage({ items = [] }) {
 
         <div className={styles.groups}>
           {groups.map((group) => (
-            <details className={styles.group} key={group.key} open={group.key === 'Marcha procesional'}>
+            <details className={styles.group} key={group.key}>
               <summary className={styles.groupSummary}>
                 <span className={styles.groupMark} aria-hidden="true">{group.short}</span>
                 <div className={styles.groupHeading}>

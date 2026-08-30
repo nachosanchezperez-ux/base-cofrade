@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import BrotherhoodDirectoryCrestImage from './BrotherhoodDirectoryCrestImage';
 import RelationalEntityHeroMedia from './RelationalEntityHeroMedia';
 import styles from './RelationalEntityHero.module.css';
 import polishStyles from './RelationalEntityHeroPolish.module.css';
@@ -83,14 +84,12 @@ function BandIdentity({ src, alt, initials = '' }) {
       <span className={bandStyles.identityAura} aria-hidden="true" />
       <div className={bandStyles.logoStage}>
         {src ? (
-          <Image
+          <BrotherhoodDirectoryCrestImage
             className={bandStyles.logo}
             src={src}
             alt={alt || ''}
-            width={360}
-            height={320}
-            sizes="(max-width: 620px) 210px, (max-width: 900px) 270px, 340px"
-            priority
+            fallback={initials || 'HC'}
+            fallbackClassName={bandStyles.initials}
           />
         ) : (
           <span className={bandStyles.initials} aria-hidden="true">{initials || 'HC'}</span>

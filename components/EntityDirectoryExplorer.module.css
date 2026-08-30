@@ -358,7 +358,7 @@
   font-size: 18px;
   line-height: 1.08;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
 }
 
 .context,
@@ -383,7 +383,7 @@
   font-size: 9px;
   font-weight: 600;
   line-height: 1.35;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
 }
 
 .arrow {

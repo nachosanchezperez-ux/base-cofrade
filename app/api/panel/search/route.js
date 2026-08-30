@@ -26,7 +26,7 @@ export async function GET(request) {
   if (query.length < 2) return response({ results: [] })
 
   const supabase = await createClient()
-  const [entitiesResult, outingsResult] = await Promise.all([
+  const [entitiesResult, outingsResult, crewEntitiesResult] = await Promise.all([
     supabase
       .from('entities')
       .select('id, name, entity_type, status')
@@ -41,6 +41,14 @@ export async function GET(request) {
       .ilike('title', `%${query}%`)
       .order('outing_date', { ascending: false })
       .limit(4),
+    supabase
+      .from('entities')
+      .select('id, name, status, events!inner(event_category, event_date, event_type)')
+      .eq('entity_type', 'event')
+      .eq('events.event_category', 'crew_call')
+      .ilike('name', `%${query}%`)
+      .order('name')
+      .limit(6),
   ])
 
   if (entitiesResult.error) {
@@ -50,6 +58,10 @@ export async function GET(request) {
 
   if (outingsResult.error) {
     console.error('[Hilo Cofrade] Error buscando extraordinarias en el Panel', outingsResult.error)
+  }
+
+  if (crewEntitiesResult.error) {
+    console.error('[Hilo Cofrade] Error buscando igualás y ensayos en el Panel', crewEntitiesResult.error)
   }
 
   const entities = (entitiesResult.data || []).map((item) => {
@@ -73,5 +85,14 @@ export async function GET(request) {
     href: `/panel/extraordinarias/${item.id}`,
   }))
 
-  return response({ results: [...entities, ...outings].slice(0, 16) })
+  const crewEvents = (crewEntitiesResult.data || []).map((item) => ({
+    id: item.id,
+    name: item.name,
+    type: 'crew_event',
+    typeLabel: 'Igualá / ensayo',
+    status: item.status || '',
+    href: `/panel/igualas-y-ensayos/${item.id}`,
+  }))
+
+  return response({ results: [...entities, ...outings, ...crewEvents].slice(0, 16) })
 }

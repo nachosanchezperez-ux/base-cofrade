@@ -1,0 +1,134 @@
+.periodScope {
+  display: contents;
+}
+
+/*
+ * Día/tipo de salida + antigüedad
+ *
+ * La cabecera se resuelve únicamente con tipografía. Así el día puede respirar
+ * o partir de forma natural sin que una píldora provoque desbordes en móvil.
+ */
+.periodScope :global(#acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:first-child > span,
+.periodScope :global(#proximos-acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:first-child > span,
+.periodScope :global(#glorias) > :global(.shell) > div:nth-of-type(3) > section > div > article > div:first-child > span {
+  display: block;
+  min-width: 0;
+  max-width: none;
+  flex: 1 1 auto;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  color: #fff;
+  background: none;
+  font-size: 13.5px;
+  font-weight: 800;
+  letter-spacing: .075em;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+  text-transform: uppercase;
+  text-wrap: balance;
+  white-space: normal;
+}
+
+.periodScope :global(#acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:first-child > strong,
+.periodScope :global(#proximos-acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:first-child > strong,
+.periodScope :global(#glorias) > :global(.shell) > div:nth-of-type(3) > section > div > article > div:first-child > strong {
+  display: block;
+  flex: 0 0 auto;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  color: #fff;
+  background: none;
+  box-shadow: none;
+  font-size: 16px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -.015em;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+/*
+ * Localidad
+ *
+ * «Localidad · Sevilla · Sevilla capital» se reduce a una única referencia.
+ * El ámbito ya está explicado por el propio bloque y no necesita repetirse.
+ */
+.periodScope :global(#acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:nth-child(2),
+.periodScope :global(#proximos-acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:nth-child(2),
+.periodScope :global(#glorias) > :global(.shell) > div:nth-of-type(3) > section > div > article > div:nth-child(2) {
+  display: flex;
+  min-height: 0;
+  align-items: center;
+  padding: 9px 16px;
+  border-bottom: 0;
+  background: color-mix(in srgb, var(--band-primary) 3%, white);
+}
+
+.periodScope :global(#acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:nth-child(2) > span,
+.periodScope :global(#acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:nth-child(2) > small,
+.periodScope :global(#proximos-acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:nth-child(2) > span,
+.periodScope :global(#proximos-acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:nth-child(2) > small,
+.periodScope :global(#glorias) > :global(.shell) > div:nth-of-type(3) > section > div > article > div:nth-child(2) > span,
+.periodScope :global(#glorias) > :global(.shell) > div:nth-of-type(3) > section > div > article > div:nth-child(2) > small {
+  display: none;
+}
+
+.periodScope :global(#acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:nth-child(2) > strong,
+.periodScope :global(#proximos-acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:nth-child(2) > strong,
+.periodScope :global(#glorias) > :global(.shell) > div:nth-of-type(3) > section > div > article > div:nth-child(2) > strong {
+  color: var(--band-muted);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.periodScope :global(#acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:nth-child(4) > strong,
+.periodScope :global(#acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:nth-child(4) > a,
+.periodScope :global(#proximos-acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:nth-child(4) > strong,
+.periodScope :global(#proximos-acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:nth-child(4) > a,
+.periodScope :global(#glorias) > :global(.shell) > div:nth-of-type(3) > section > div > article > div:nth-child(4) > strong,
+.periodScope :global(#glorias) > :global(.shell) > div:nth-of-type(3) > section > div > article > div:nth-child(4) > a {
+  font-size: 14.5px;
+  line-height: 1.42;
+}
+
+/* Un estado no accionable no necesita ocupar un pie completo de tarjeta. */
+.periodScope :global(#acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:last-child:has(> span),
+.periodScope :global(#proximos-acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:last-child:has(> span),
+.periodScope :global(#glorias) > :global(.shell) > div:nth-of-type(3) > section > div > article > div:last-child:has(> span) {
+  display: none;
+}
+
+@media (max-width: 680px) {
+  .periodScope :global(#acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:first-child > span,
+  .periodScope :global(#proximos-acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:first-child > span,
+  .periodScope :global(#glorias) > :global(.shell) > div:nth-of-type(3) > section > div > article > div:first-child > span {
+    padding: 0;
+    font-size: 13px;
+    line-height: 1.25;
+  }
+
+  .periodScope :global(#acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:first-child > strong,
+  .periodScope :global(#proximos-acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:first-child > strong,
+  .periodScope :global(#glorias) > :global(.shell) > div:nth-of-type(3) > section > div > article > div:first-child > strong {
+    padding: 0;
+    font-size: 15.5px;
+  }
+
+  .periodScope :global(#acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:nth-child(2),
+  .periodScope :global(#proximos-acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:nth-child(2),
+  .periodScope :global(#glorias) > :global(.shell) > div:nth-of-type(3) > section > div > article > div:nth-child(2) {
+    padding: 8px 14px;
+  }
+
+  .periodScope :global(#acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:nth-child(4) > strong,
+  .periodScope :global(#acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:nth-child(4) > a,
+  .periodScope :global(#proximos-acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:nth-child(4) > strong,
+  .periodScope :global(#proximos-acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:nth-child(4) > a,
+  .periodScope :global(#glorias) > :global(.shell) > div:nth-of-type(3) > section > div > article > div:nth-child(4) > strong,
+  .periodScope :global(#glorias) > :global(.shell) > div:nth-of-type(3) > section > div > article > div:nth-child(4) > a {
+    font-size: 15px;
+  }
+}

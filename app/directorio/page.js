@@ -99,7 +99,7 @@ export default async function DirectorioPage({ searchParams }) {
         <span className="eyebrow">Enciclopedia cofrade</span>
         <h1 className="page-title">Directorio</h1>
         <p className="page-lead">
-          Busca y explora Hilo Cofrade por entidad, ubicación, calendario procesional y estilo musical.
+          Hermandades, Imágenes, Pasos y Bandas tienen directorio público. Marchas y Autores se descubren mediante la búsqueda, Tira del hilo y las relaciones documentadas en cada ficha.
         </p>
         <EntityDirectoryExplorer items={items} initialState={initialState} />
       </div>

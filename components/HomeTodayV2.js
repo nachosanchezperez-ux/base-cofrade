@@ -1,5 +1,8 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
+import { useState } from 'react'
 import HomeMarchPlayer from '@/components/HomeMarchPlayer'
 import styles from './HomeTodayV2.module.css'
 import polishStyles from './HomeResponsivePolish.module.css'
@@ -7,6 +10,16 @@ import mobileFixStyles from './HomeTodayMobileFix.module.css'
 
 function isSvg(path = '') {
   return String(path).toLowerCase().endsWith('.svg')
+}
+
+function HomeImage({ fallback = '•', ...props }) {
+  const [failed, setFailed] = useState(false)
+
+  if (failed) {
+    return <span className={styles.visualFallback} aria-hidden="true">{fallback}</span>
+  }
+
+  return <Image {...props} onError={() => setFailed(true)} />
 }
 
 function CardVisual({ visual, featured = false }) {
@@ -19,7 +32,7 @@ function CardVisual({ visual, featured = false }) {
       title={photo && visual.credit ? visual.credit : undefined}
       data-home-visual-kind={visual.kind || 'identity'}
     >
-      <Image
+      <HomeImage
         src={visual.path}
         alt={visual.alt || ''}
         fill
@@ -27,6 +40,7 @@ function CardVisual({ visual, featured = false }) {
         className={photo ? styles.visualPhotoImage : styles.visualIdentityImage}
         style={photo && visual.focusPosition ? { objectPosition: visual.focusPosition } : undefined}
         unoptimized={isSvg(visual.path)}
+        fallback={visual.alt?.trim()?.charAt(0)?.toUpperCase() || '•'}
       />
     </div>
   )
@@ -49,16 +63,23 @@ function RelationshipTrail({ value }) {
 }
 
 function MusicVisual({ march }) {
+  const bandLogoPath = march.bandLogoPath || ''
+  const visualPath = bandLogoPath || march.coverImagePath || ''
+  const visualAlt = bandLogoPath
+    ? march.bandLogoAlt || `Logotipo de ${march.performedBy || 'la banda intérprete'}`
+    : march.coverImageAlt || ''
+
   return (
     <div className={styles.musicVisual}>
-      {march.coverImagePath ? (
-        <Image
-          src={march.coverImagePath}
-          alt={march.coverImageAlt || ''}
+      {visualPath ? (
+        <HomeImage
+          src={visualPath}
+          alt={visualAlt}
           fill
           sizes="(max-width: 859px) 74px, 112px"
-          className={styles.musicCover}
-          unoptimized={isSvg(march.coverImagePath)}
+          className={bandLogoPath ? styles.visualIdentityImage : styles.musicCover}
+          unoptimized={isSvg(visualPath)}
+          fallback="♪"
         />
       ) : (
         <span aria-hidden="true">♪</span>

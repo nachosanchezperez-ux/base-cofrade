@@ -71,7 +71,7 @@ export default function BrotherhoodProgramHero({
     '--hero-mobile-focus': mobileFocus,
   }
   const creditHref = resolveCreditHref(media.photoSrc)
-  const bypassImageOptimizer = isWikimediaUpload(media.photoSrc)
+  const bypassImageOptimizer = String(media.photoSrc || '').startsWith('/') || isWikimediaUpload(media.photoSrc)
 
   return (
     <section
