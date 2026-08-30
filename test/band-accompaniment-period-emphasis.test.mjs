@@ -13,27 +13,35 @@ test('las fichas de Banda destacan visualmente desde cuándo existe cada acompa�
   assert.match(css, /:global\(#acompanamientos\)/)
   assert.match(css, /:global\(#proximos-acompanamientos\)/)
   assert.match(css, /:global\(#glorias\)/)
-  assert.match(css, /font-size: 15px;/)
+  assert.match(css, /font-size: 16px;/)
   assert.match(css, /font-weight: 800;/)
-  assert.match(css, /background: #fff;/)
   assert.match(css, /font-variant-numeric: tabular-nums;/)
 })
 
-test('día de salida y antigüedad comparten una cabecera equilibrada', () => {
+test('día de salida y antigüedad comparten una cabecera tipográfica sin pastillas', () => {
   const css = read('app/bandas/[slug]/band-period-emphasis.module.css')
+  const dayRule = css.match(/div:first-child > span \{([^}]+)\}/)?.[1] || ''
+  const periodRule = css.match(/div:first-child > strong \{([^}]+)\}/)?.[1] || ''
 
-  assert.match(css, /div:first-child > span[\s\S]*min-height: 36px;/)
-  assert.match(css, /div:first-child > span[\s\S]*padding: 8px 16px;/)
-  assert.match(css, /div:first-child > span[\s\S]*border-radius: 999px;/)
-  assert.match(css, /div:first-child > strong[\s\S]*min-height: 36px;/)
+  assert.match(dayRule, /border: 0;/)
+  assert.match(dayRule, /border-radius: 0;/)
+  assert.match(dayRule, /background: none;/)
+  assert.match(dayRule, /white-space: normal;/)
+  assert.match(dayRule, /overflow-wrap: anywhere;/)
+  assert.match(periodRule, /border: 0;/)
+  assert.match(periodRule, /border-radius: 0;/)
+  assert.match(periodRule, /background: none;/)
+  assert.match(periodRule, /box-shadow: none;/)
+  assert.match(periodRule, /white-space: nowrap;/)
 })
 
-test('el día de salida conserva más respiración horizontal también en móvil', () => {
+test('el día de salida puede respirar o partir sin desbordar en móvil', () => {
   const css = read('app/bandas/[slug]/band-period-emphasis.module.css')
   const mobile = css.slice(css.indexOf('@media (max-width: 680px)'))
 
-  assert.match(mobile, /div:first-child > span[\s\S]*padding: 8px 15px;/)
-  assert.match(mobile, /div:first-child > span[\s\S]*font-size: 12\.5px;/)
+  assert.match(mobile, /div:first-child > span[\s\S]*padding: 0;/)
+  assert.match(mobile, /div:first-child > span[\s\S]*font-size: 13px;/)
+  assert.match(mobile, /div:first-child > strong[\s\S]*font-size: 15\.5px;/)
 })
 
 test('las tarjetas delegan la localidad en una única regla de presentación', () => {
