@@ -21,6 +21,7 @@ import {
   groupGloryAccompaniments,
   partitionAccompanimentsBySeason,
   presentAccompanimentLocation,
+  presentAccompanimentMoment,
   presentAccompanimentStep,
   sortGloryAccompaniments,
   sortHolyWeekAccompaniments,
@@ -75,8 +76,8 @@ function creditedName(item) {
   return [item.name, ...(item.aliases || [])].join(' · ')
 }
 
-function accompanimentHeaderLabel(value) {
-  const label = publicText(value)
+function accompanimentHeaderLabel(item) {
+  const label = publicText(presentAccompanimentMoment(item))
   const normalized = label
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
@@ -98,7 +99,7 @@ function AccompanimentCard({ item, band, showLocation = false }) {
   return (
     <article className={`${styles.relationshipCard} ${showLocation ? styles.locatedRelationshipCard : ''}`}>
       <div className={styles.relationshipTop}>
-        <span>{accompanimentHeaderLabel(item.outingType)}</span>
+        <span>{accompanimentHeaderLabel(item)}</span>
         {period ? <strong>{period}</strong> : null}
       </div>
       {showLocation && location ? <div className={styles.relationshipLocation}>
