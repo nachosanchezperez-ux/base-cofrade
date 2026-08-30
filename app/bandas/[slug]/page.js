@@ -8,6 +8,7 @@ import RelationalThread from '@/components/RelationalThread'
 import RelationalEntityHero from '@/components/RelationalEntityHero'
 import EntitySectionNav from '@/components/EntitySectionNav'
 import BandDiscographySection from '@/components/bands/BandDiscographySection'
+import BandFeaturePhoto from '@/components/BandFeaturePhoto'
 import { getBandBySlug, youtubeEmbedUrl } from '@/lib/supabase/bands'
 import { getBandDiscography } from '@/lib/supabase/bandDiscography'
 import { getPublishedBandColors } from '@/lib/supabase/bandColors'
@@ -322,21 +323,14 @@ export default async function BandDetailPage({ params }) {
         <div className="shell">
           <div className={styles.overviewGrid} style={!band.heroImagePath ? { gridTemplateColumns: '1fr' } : undefined}>
             {band.heroImagePath ? (
-              <figure className={styles.featurePhoto}>
-                <div>
-                  <Image
-                    src={band.heroImagePath}
-                    alt={band.heroImageAlt || `Fotografía representativa de ${band.popularName}`}
-                    fill
-                    sizes="(max-width: 900px) calc(100vw - 32px), 52vw"
-                  />
-                </div>
-                <figcaption>
-                  <span>La formación</span>
-                  <strong>{band.popularName}</strong>
-                  {band.heroImageCredit ? <small>{band.heroImageCredit}</small> : null}
-                </figcaption>
-              </figure>
+              <BandFeaturePhoto
+                key={band.heroImagePath}
+                src={band.heroImagePath}
+                alt={band.heroImageAlt}
+                credit={band.heroImageCredit}
+                name={band.popularName}
+                logoPath={band.logoPath}
+              />
             ) : null}
             <div className={styles.overviewCopy}>
               <div className={styles.sectionHeading}>
