@@ -1,0 +1,68 @@
+.headerScope {
+  display: contents;
+}
+
+/*
+ * La cabecera de cada acompañamiento debe soportar tanto etiquetas cortas
+ * ("Romería") como periodos sin fecha inicial sin comprimir palabras letra a letra.
+ */
+.headerScope :global(#acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:first-child,
+.headerScope :global(#proximos-acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:first-child,
+.headerScope :global(#glorias) > :global(.shell) > div:nth-of-type(3) > section > div > article > div:first-child {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px 16px;
+  align-items: start;
+}
+
+.headerScope :global(#acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:first-child > span,
+.headerScope :global(#proximos-acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:first-child > span,
+.headerScope :global(#glorias) > :global(.shell) > div:nth-of-type(3) > section > div > article > div:first-child > span {
+  min-width: 0;
+  max-width: none;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
+}
+
+.headerScope :global(#acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:first-child > strong,
+.headerScope :global(#proximos-acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:first-child > strong,
+.headerScope :global(#glorias) > :global(.shell) > div:nth-of-type(3) > section > div > article > div:first-child > strong {
+  min-width: 0;
+  max-width: min(48%, 220px);
+  overflow-wrap: break-word;
+  word-break: normal;
+  white-space: normal;
+  text-align: right;
+}
+
+@media (max-width: 680px) {
+  .headerScope :global(#acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:first-child,
+  .headerScope :global(#proximos-acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:first-child,
+  .headerScope :global(#glorias) > :global(.shell) > div:nth-of-type(3) > section > div > article > div:first-child {
+    gap: 7px 12px;
+  }
+
+  .headerScope :global(#acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:first-child > strong,
+  .headerScope :global(#proximos-acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:first-child > strong,
+  .headerScope :global(#glorias) > :global(.shell) > div:nth-of-type(3) > section > div > article > div:first-child > strong {
+    max-width: 46%;
+  }
+}
+
+@media (max-width: 360px) {
+  .headerScope :global(#acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:first-child,
+  .headerScope :global(#proximos-acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:first-child,
+  .headerScope :global(#glorias) > :global(.shell) > div:nth-of-type(3) > section > div > article > div:first-child {
+    grid-template-columns: 1fr;
+  }
+
+  .headerScope :global(#acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:first-child > strong,
+  .headerScope :global(#proximos-acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:first-child > strong,
+  .headerScope :global(#glorias) > :global(.shell) > div:nth-of-type(3) > section > div > article > div:first-child > strong {
+    max-width: 100%;
+    justify-self: start;
+    text-align: left;
+  }
+}
