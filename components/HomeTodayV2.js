@@ -63,16 +63,22 @@ function RelationshipTrail({ value }) {
 }
 
 function MusicVisual({ march }) {
+  const bandLogoPath = march.bandLogoPath || ''
+  const visualPath = bandLogoPath || march.coverImagePath || ''
+  const visualAlt = bandLogoPath
+    ? march.bandLogoAlt || `Logotipo de ${march.performedBy || 'la banda intérprete'}`
+    : march.coverImageAlt || ''
+
   return (
     <div className={styles.musicVisual}>
-      {march.coverImagePath ? (
+      {visualPath ? (
         <HomeImage
-          src={march.coverImagePath}
-          alt={march.coverImageAlt || ''}
+          src={visualPath}
+          alt={visualAlt}
           fill
           sizes="(max-width: 859px) 74px, 112px"
-          className={styles.musicCover}
-          unoptimized={isSvg(march.coverImagePath)}
+          className={bandLogoPath ? styles.visualIdentityImage : styles.musicCover}
+          unoptimized={isSvg(visualPath)}
           fallback="♪"
         />
       ) : (

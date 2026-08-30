@@ -2,6 +2,20 @@
 
 > Fuente canónica para Hilo Orquestador. GitHub, Vercel y Supabase prevalecen siempre sobre este documento.
 
+## Actualización · 30 de agosto de 2026
+
+- Baseline verificado de `main`: `f9e62e3` — #427.
+- Producción: `dpl_4Uwn6tFtnxKawCEMwy9UewVnW6nU` → **READY** sobre ese commit.
+- Frentes abiertos al iniciar esta actualización: **#394, #423 y #425**.
+- Nueva línea autorizada por Dirección: **Calendario de Igualás y Ensayos**, desarrollada en `feat/calendario-igualas-ensayos-20260830`.
+- Alcance: agenda pública e histórico, ficha propia por convocatoria, filtros por mes/tipo/Hermandad/Paso/Capataz/localidad, Panel editorial, búsqueda y sitemap.
+- Modelo: `entities/event` + `events.event_category = crew_call`, con relaciones tipadas `crew_event_steps` y `crew_event_agents`, RLS y guardas de publicación.
+- Entrega: PR **#428**, preview `dpl_2sq3WTaAk4rimQiyXKuvpZQ3YHLx` → **READY**.
+- Supabase: migración `20260830084624 calendario_igualas_ensayos` aplicada; 12 acontecimientos históricos preservados, 2/2 tablas nuevas con RLS y 15 políticas sobre el módulo.
+- Validación: **421/421 tests**, `git diff --check` y build de producción correctos sobre el `main` vigente.
+
+Esta actualización prevalece sobre las referencias inferiores al cierre anterior y deja sin efecto la frase de congelación funcional para este frente expresamente solicitado. El resto del documento conserva el snapshot de primera edición para trazabilidad.
+
 ## Estado verificado
 
 - Revisión: **28 de agosto de 2026 · cierre de salud editorial y reconciliación de #394**.
