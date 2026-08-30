@@ -26,6 +26,13 @@ test('la Marcha del día resuelve interpretación, lanzamiento y portada publica
   assert.match(component, /Ver la discografía/)
 })
 
+test('la Home sustituye cualquier imagen editorial rota por un fallback controlado', () => {
+  assert.match(component, /function HomeImage/)
+  assert.match(component, /onError=\{\(\) => setFailed\(true\)\}/)
+  assert.match(component, /fallback="♪"/)
+  assert.match(css, /\.visualFallback/)
+})
+
 test('el Hilo para descubrir mantiene la concordancia en singular', () => {
   assert.match(loader, /agree\(count, 'queda conectado', 'quedan conectados'\)/)
   assert.doesNotMatch(loader, /\$\{plural\(count, 'paso', 'pasos'\)\} quedan conectados/)
