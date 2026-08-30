@@ -34,7 +34,7 @@ async function ensureUniqueSlug(supabase, slug, eventId = null) {
 
 async function requireEvent(supabase, eventId) {
   const entity = assertRow(await supabase.from('entities').select('id, name, slug, status').eq('id', eventId).eq('entity_type', 'event').maybeSingle(), 'El Acontecimiento no existe.')
-  const event = assertRow(await supabase.from('events').select('*').eq('entity_id', eventId).maybeSingle(), 'La ficha del Acontecimiento no existe.')
+  const event = assertRow(await supabase.from('events').select('*').eq('entity_id', eventId).eq('event_category', 'historical').maybeSingle(), 'La ficha del Acontecimiento no existe.')
   return { entity, event }
 }
 
@@ -78,6 +78,7 @@ export async function createEventAction(formData) {
   const entityPayload = { id: eventId, entity_type: 'event', name, slug, summary: nullable(formData, 'summary'), status: entityStatus }
   const eventPayload = {
     entity_id: eventId,
+    event_category: 'historical',
     event_type: required(formData, 'event_type', 'El tipo de acontecimiento'),
     event_date: optionalDate(formData, 'event_date'),
     event_date_text: nullable(formData, 'event_date_text'),
@@ -124,7 +125,7 @@ export async function updateEventAction(formData) {
     description: nullable(formData, 'description'),
   }
   assertMutation(await supabase.from('entities').update(entityPayload).eq('id', eventId).eq('entity_type', 'event'), 'No se pudo actualizar el Acontecimiento')
-  assertMutation(await supabase.from('events').update(eventPayload).eq('entity_id', eventId), 'No se pudo actualizar la ficha del Acontecimiento')
+  assertMutation(await supabase.from('events').update(eventPayload).eq('entity_id', eventId).eq('event_category', 'historical'), 'No se pudo actualizar la ficha del Acontecimiento')
   await audit(supabase, user, { action_type: nextStatus === 'published' && current.entity.status !== 'published' ? 'publish' : 'update', object_type: 'event', object_id: eventId, entity_id: eventId, summary: `Acontecimiento actualizado: ${name}`, changed_fields: { entity: entityPayload, event: eventPayload } })
   const relations = await supabase.from('entity_relations').select('target_entity_id').eq('source_entity_id', eventId).neq('status', 'archived')
   await refreshEvent(supabase, eventId, (relations.data || []).map((item) => item.target_entity_id))

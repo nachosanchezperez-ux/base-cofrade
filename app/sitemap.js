@@ -7,6 +7,7 @@ import { absoluteUrl } from '@/lib/seo';
 import { getHermandadesDirectory } from '@/lib/supabase/brotherhood-directory';
 import { getExtraordinaryDirectory } from '@/lib/supabase/extraordinary-directory';
 import { getGloryDirectory } from '@/lib/supabase/glory-directory';
+import { getCrewEventDirectory } from '@/lib/supabase/crew-events';
 import { filterPublicPageEntities } from '@/lib/supabase/public-entity-page';
 import { createPublicClient } from '@/lib/supabase/public';
 
@@ -66,6 +67,11 @@ const staticEntries = [
   },
   {
     url: absoluteUrl('/extraordinarias'),
+    changeFrequency: 'daily',
+    priority: 0.9,
+  },
+  {
+    url: absoluteUrl('/igualas-y-ensayos'),
     changeFrequency: 'daily',
     priority: 0.9,
   },
@@ -166,12 +172,24 @@ function gloryEntries(outings) {
     }));
 }
 
+function crewEventEntries(events) {
+  return events
+    .filter((event) => Boolean(event.detailHref))
+    .map((event) => ({
+      url: absoluteUrl(event.detailHref),
+      ...(validLastModified(event.updatedAt) ? { lastModified: validLastModified(event.updatedAt) } : {}),
+      changeFrequency: event.isUpcoming ? 'daily' : 'monthly',
+      priority: event.isUpcoming ? 0.82 : 0.66,
+    }));
+}
+
 export default async function sitemap() {
-  const [entities, brotherhoodDirectory, extraordinaryOutings, gloryOutings] = await Promise.all([
+  const [entities, brotherhoodDirectory, extraordinaryOutings, gloryOutings, crewEvents] = await Promise.all([
     publishedEntities(),
     getHermandadesDirectory(),
     getExtraordinaryDirectory(),
     getGloryDirectory(),
+    getCrewEventDirectory(),
   ]);
   const brotherhoods = filterPublicPageEntities(
     entities.filter((item) => item.entity_type === 'brotherhood'),
@@ -209,6 +227,7 @@ export default async function sitemap() {
     ...directoryEntries(brotherhoodDirectory),
     ...extraordinaryEntries(extraordinaryOutings),
     ...gloryEntries(gloryOutings),
+    ...crewEventEntries(crewEvents),
   ];
 
   return [...new Map(entries.map((entry) => [entry.url, entry])).values()];
