@@ -28,6 +28,8 @@ test('el equilibrado óptico admite tamaños de portada sin romper el directorio
   assert.match(crest, /height = 104/)
   assert.match(crest, /sizes = '\(max-width: 620px\) 60px, 82px'/)
   assert.match(crest, /priority = false/)
+  assert.match(crest, /maxScale = MAX_SCALE/)
+  assert.match(crest, /opticalBalance\(image, maxScale\)/)
   assert.match(crest, /width=\{width\}/)
   assert.match(crest, /height=\{height\}/)
   assert.match(crest, /sizes=\{sizes\}/)
@@ -46,9 +48,20 @@ test('Bandas reserva la cabecera para logotipo y nombre', () => {
   assert.match(css, /grid-template-columns: clamp\(190px, 17vw, 230px\) minmax\(0, 1fr\)/)
   assert.match(css, /font-size: clamp\(52px, 4\.8vw, 70px\)/)
   assert.match(css, /overflow-wrap: break-word/)
+  assert.match(hero, /maxScale=\{2\.4\}/)
+  assert.match(css, /translate\(var\(--crest-optical-x, 0px\), var\(--crest-optical-y, 0px\)\)/)
   assert.match(css, /\.heroBand \.bandGridIdentityOnly \{[\s\S]*grid-template-columns: 1fr/)
   assert.match(css, /@media \(max-width: 620px\)[\s\S]*\.identityLockup \{[\s\S]*grid-template-columns: 1fr/)
   assert.doesNotMatch(page, /<RelationalEntityHero[\s\S]*?media=\{\{[\s\S]*?photoSrc:/)
+})
+
+test('la identidad de Hermandades aparece antes en el primer viewport móvil', () => {
+  const css = source('components/BrotherhoodProgramHero.module.css')
+
+  assert.match(css, /@media \(max-width: 700px\)[\s\S]*?\.hero \{[\s\S]*?min-height: 740px/)
+  assert.match(css, /@media \(max-width: 700px\)[\s\S]*?\.content \{[\s\S]*?padding: 205px 0 8px/)
+  assert.match(css, /@media \(max-width: 420px\)[\s\S]*?min-height: 740px/)
+  assert.doesNotMatch(css, /min-height: 8[24]0px/)
 })
 
 test('la fotografía de una banda se conserva en De un vistazo', () => {

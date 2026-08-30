@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 const SAMPLE_LIMIT = 192
 const ALPHA_THRESHOLD = 4
@@ -79,7 +79,7 @@ function readVisibleBounds(image) {
   }
 }
 
-function opticalBalance(image) {
+function opticalBalance(image, maxScale = MAX_SCALE) {
   const host = image.parentElement
   const hostRect = host?.getBoundingClientRect()
   const naturalWidth = image.naturalWidth
@@ -104,7 +104,7 @@ function opticalBalance(image) {
   const targetWidth = hostRect.width * TARGET_COVERAGE
   const targetHeight = hostRect.height * TARGET_COVERAGE
   const requestedScale = Math.min(targetWidth / visibleWidth, targetHeight / visibleHeight)
-  const scale = clamp(requestedScale, MIN_SCALE, MAX_SCALE)
+  const scale = clamp(requestedScale, MIN_SCALE, maxScale)
 
   if (!Number.isFinite(scale) || scale <= 0) return defaultBalance()
 
@@ -128,6 +128,7 @@ export default function BrotherhoodDirectoryCrestImage({
   height = 104,
   sizes = '(max-width: 620px) 60px, 82px',
   priority = false,
+  maxScale = MAX_SCALE,
   fallback = 'HC',
   fallbackClassName = '',
 }) {
@@ -135,10 +136,10 @@ export default function BrotherhoodDirectoryCrestImage({
   const [balance, setBalance] = useState(defaultBalance)
   const [failed, setFailed] = useState(false)
 
-  function recalculate(image = imageRef.current) {
+  const recalculate = useCallback((image = imageRef.current) => {
     if (!image) return
-    window.requestAnimationFrame(() => setBalance(opticalBalance(image)))
-  }
+    window.requestAnimationFrame(() => setBalance(opticalBalance(image, maxScale)))
+  }, [maxScale])
 
   function handleLoad(event) {
     recalculate(event.currentTarget)
@@ -152,7 +153,7 @@ export default function BrotherhoodDirectoryCrestImage({
     const observer = new ResizeObserver(() => recalculate(image))
     observer.observe(host)
     return () => observer.disconnect()
-  }, [])
+  }, [recalculate])
 
   if (failed) return <span className={fallbackClassName}>{fallback}</span>
 

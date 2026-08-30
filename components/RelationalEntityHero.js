@@ -88,6 +88,11 @@ function BandIdentity({ src, alt, initials = '' }) {
             className={bandStyles.logo}
             src={src}
             alt={alt || ''}
+            width={230}
+            height={236}
+            sizes="(max-width: 390px) 184px, (max-width: 620px) 200px, 230px"
+            priority
+            maxScale={2.4}
             fallback={initials || 'HC'}
             fallbackClassName={bandStyles.initials}
           />
