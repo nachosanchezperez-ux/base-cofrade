@@ -10,7 +10,7 @@ const title = 'Calendario de Igualás y Ensayos'
 const description = 'Próximas igualás, ensayos, mudás y convocatorias de costaleros de las hermandades de Sevilla y su provincia, relacionadas con sus pasos y capataces.'
 
 export const metadata = {
-  title: pageTitle(title),
+  title,
   description,
   alternates: { canonical: '/igualas-y-ensayos' },
   openGraph: { title: pageTitle(title), description, url: '/igualas-y-ensayos' },

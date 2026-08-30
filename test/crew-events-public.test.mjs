@@ -23,6 +23,13 @@ test('el calendario público ofrece filtros relacionales, próximas citas e hist
   assert.doesNotMatch(loader, /@\/lib\/supabase\/server/)
   assert.match(loader, /\.eq\('event_category', 'crew_call'\)/)
   assert.match(loader, /municipality\?\.province !== 'Sevilla'/)
+  assert.match(page, /export const metadata = \{\n  title,\n  description/)
+})
+
+test('las fichas de convocatoria delegan una sola vez la marca en el título', async () => {
+  const detail = await source('app/igualas-y-ensayos/[slug]/page.js')
+
+  assert.match(detail, /return \{\n    title: `\$\{event\.eventTypeLabel\} · \$\{event\.brotherhoodName\}`/)
 })
 
 test('la agenda es descubrible desde cabecera, buscador y sitemap', async () => {

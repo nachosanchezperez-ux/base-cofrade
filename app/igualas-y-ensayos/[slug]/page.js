@@ -11,10 +11,10 @@ export const revalidate = 900
 export async function generateMetadata({ params }) {
   const { slug } = await params
   const event = await getCrewEventDetail(slug)
-  if (!event) return { title: pageTitle('Convocatoria no encontrada'), robots: { index: false, follow: false } }
+  if (!event) return { title: 'Convocatoria no encontrada', robots: { index: false, follow: false } }
   const description = event.summary || `${event.eventTypeLabel} de ${event.brotherhoodName} el ${event.dateParts.label}.`
   return {
-    title: pageTitle(`${event.eventTypeLabel} · ${event.brotherhoodName}`),
+    title: `${event.eventTypeLabel} · ${event.brotherhoodName}`,
     description,
     alternates: { canonical: `/igualas-y-ensayos/${event.slug}` },
     openGraph: { title: pageTitle(event.title), description, url: `/igualas-y-ensayos/${event.slug}` },
