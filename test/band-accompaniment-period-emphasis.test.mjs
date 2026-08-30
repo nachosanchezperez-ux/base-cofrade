@@ -23,8 +23,17 @@ test('día de salida y antigüedad comparten una cabecera equilibrada', () => {
   const css = read('app/bandas/[slug]/band-period-emphasis.module.css')
 
   assert.match(css, /div:first-child > span[\s\S]*min-height: 36px;/)
+  assert.match(css, /div:first-child > span[\s\S]*padding: 8px 16px;/)
   assert.match(css, /div:first-child > span[\s\S]*border-radius: 999px;/)
   assert.match(css, /div:first-child > strong[\s\S]*min-height: 36px;/)
+})
+
+test('el día de salida conserva más respiración horizontal también en móvil', () => {
+  const css = read('app/bandas/[slug]/band-period-emphasis.module.css')
+  const mobile = css.slice(css.indexOf('@media (max-width: 680px)'))
+
+  assert.match(mobile, /div:first-child > span[\s\S]*padding: 8px 15px;/)
+  assert.match(mobile, /div:first-child > span[\s\S]*font-size: 12\.5px;/)
 })
 
 test('las tarjetas delegan la localidad en una única regla de presentación', () => {
