@@ -5,6 +5,8 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 
 const SAMPLE_LIMIT = 192
 const ALPHA_THRESHOLD = 4
+const BACKGROUND_EDGE_VARIANCE = 28
+const BACKGROUND_DISTANCE = 42
 const SAFE_INSET = 0.075
 const TARGET_COVERAGE = 1 - (SAFE_INSET * 2)
 const MIN_SCALE = 0.82
@@ -21,6 +23,71 @@ function fullBounds() {
 
 function defaultBalance() {
   return { scale: 1, x: 0, y: 0 }
+}
+
+function pixelColor(pixels, width, x, y) {
+  const offset = (y * width + x) * 4
+  return [pixels[offset], pixels[offset + 1], pixels[offset + 2]]
+}
+
+function colorDistanceSquared(first, second) {
+  return first.reduce((total, channel, index) => {
+    const difference = channel - second[index]
+    return total + (difference * difference)
+  }, 0)
+}
+
+function readBounds(pixels, width, height, isVisible) {
+  let minX = width
+  let minY = height
+  let maxX = -1
+  let maxY = -1
+
+  for (let y = 0; y < height; y += 1) {
+    for (let x = 0; x < width; x += 1) {
+      if (!isVisible(x, y, (y * width + x) * 4)) continue
+      if (x < minX) minX = x
+      if (x > maxX) maxX = x
+      if (y < minY) minY = y
+      if (y > maxY) maxY = y
+    }
+  }
+
+  return maxX < minX || maxY < minY
+    ? null
+    : { minX, minY, maxX, maxY }
+}
+
+function detectUniformBackgroundBounds(pixels, width, height, alphaBounds) {
+  const fillsCanvas = alphaBounds.minX === 0
+    && alphaBounds.minY === 0
+    && alphaBounds.maxX === width - 1
+    && alphaBounds.maxY === height - 1
+  if (!fillsCanvas) return null
+
+  const edgePoints = [
+    [0, 0], [Math.floor(width / 2), 0], [width - 1, 0],
+    [0, Math.floor(height / 2)], [width - 1, Math.floor(height / 2)],
+    [0, height - 1], [Math.floor(width / 2), height - 1], [width - 1, height - 1],
+  ]
+  const edgeColors = edgePoints.map(([x, y]) => pixelColor(pixels, width, x, y))
+  const background = [0, 1, 2].map((channel) => (
+    edgeColors.reduce((total, color) => total + color[channel], 0) / edgeColors.length
+  ))
+  const edgeTolerance = BACKGROUND_EDGE_VARIANCE * BACKGROUND_EDGE_VARIANCE
+  if (edgeColors.some((color) => colorDistanceSquared(color, background) > edgeTolerance)) return null
+
+  const distanceTolerance = BACKGROUND_DISTANCE * BACKGROUND_DISTANCE
+  const foregroundBounds = readBounds(pixels, width, height, (x, y, offset) => (
+    pixels[offset + 3] > ALPHA_THRESHOLD
+      && colorDistanceSquared(pixelColor(pixels, width, x, y), background) > distanceTolerance
+  ))
+  if (!foregroundBounds) return null
+
+  const foregroundWidth = foregroundBounds.maxX - foregroundBounds.minX + 1
+  const foregroundHeight = foregroundBounds.maxY - foregroundBounds.minY + 1
+  if (foregroundWidth >= width * 0.94 && foregroundHeight >= height * 0.94) return null
+  return foregroundBounds
 }
 
 function readVisibleBounds(image) {
@@ -45,29 +112,23 @@ function readVisibleBounds(image) {
     context.drawImage(image, 0, 0, sampleWidth, sampleHeight)
     const pixels = context.getImageData(0, 0, sampleWidth, sampleHeight).data
 
-    let minX = sampleWidth
-    let minY = sampleHeight
-    let maxX = -1
-    let maxY = -1
+    const alphaBounds = readBounds(
+      pixels,
+      sampleWidth,
+      sampleHeight,
+      (x, y, offset) => pixels[offset + 3] > ALPHA_THRESHOLD,
+    )
+    const visibleBounds = alphaBounds
+      ? detectUniformBackgroundBounds(pixels, sampleWidth, sampleHeight, alphaBounds) || alphaBounds
+      : null
 
-    for (let y = 0; y < sampleHeight; y += 1) {
-      for (let x = 0; x < sampleWidth; x += 1) {
-        const alpha = pixels[(y * sampleWidth + x) * 4 + 3]
-        if (alpha <= ALPHA_THRESHOLD) continue
-        if (x < minX) minX = x
-        if (x > maxX) maxX = x
-        if (y < minY) minY = y
-        if (y > maxY) maxY = y
-      }
-    }
-
-    const bounds = maxX < minX || maxY < minY
+    const bounds = !visibleBounds
       ? fullBounds()
       : {
-          left: minX / sampleWidth,
-          top: minY / sampleHeight,
-          right: (maxX + 1) / sampleWidth,
-          bottom: (maxY + 1) / sampleHeight,
+          left: visibleBounds.minX / sampleWidth,
+          top: visibleBounds.minY / sampleHeight,
+          right: (visibleBounds.maxX + 1) / sampleWidth,
+          bottom: (visibleBounds.maxY + 1) / sampleHeight,
         }
 
     boundsCache.set(sourceKey, bounds)
