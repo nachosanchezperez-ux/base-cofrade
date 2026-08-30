@@ -1,204 +1,167 @@
-# Estado operativo de Hilo Cofrade
+# Hilo Cofrade · Estado canónico
 
-> Fuente canónica para Hilo Orquestador. GitHub, Vercel y Supabase prevalecen siempre sobre este documento.
+**Corte:** 30 de agosto de 2026 · cierre técnico de Primera Edición
+**Régimen:** `FIRST EDITION FREEZE` activo
 
-## Actualización · 30 de agosto de 2026
+## Estado general
 
-- Baseline verificado de `main`: `f9e62e3` — #427.
-- Producción: `dpl_4Uwn6tFtnxKawCEMwy9UewVnW6nU` → **READY** sobre ese commit.
-- Frentes abiertos al iniciar esta actualización: **#394, #423 y #425**.
-- Nueva línea autorizada por Dirección: **Calendario de Igualás y Ensayos**, desarrollada en `feat/calendario-igualas-ensayos-20260830`.
-- Alcance: agenda pública e histórico, ficha propia por convocatoria, filtros por mes/tipo/Hermandad/Paso/Capataz/localidad, Panel editorial, búsqueda y sitemap.
-- Modelo: `entities/event` + `events.event_category = crew_call`, con relaciones tipadas `crew_event_steps` y `crew_event_agents`, RLS y guardas de publicación.
-- Entrega: PR **#428**, preview `dpl_2sq3WTaAk4rimQiyXKuvpZQ3YHLx` → **READY**.
-- Supabase: migración `20260830084624 calendario_igualas_ensayos` aplicada; 12 acontecimientos históricos preservados, 2/2 tablas nuevas con RLS y 15 políticas sobre el módulo.
-- Validación: **421/421 tests**, `git diff --check` y build de producción correctos sobre el `main` vigente.
+- Baseline funcional de `main`: `732e8a4801b69d7a8edca1f75ece048fbf2028f9`.
+- El HEAD posterior a este corte puede añadir únicamente esta actualización documental; no cambia el árbol funcional validado.
+- #425, cierre UX de Primera Edición: **fusionada**.
+- #394, cabeceras nombre + escudo/logotipo: **única puerta de aprobación visual**, abierta en borrador y no fusionada.
+- #423, fotografía de la Pastora 2026: **pendiente editorial**, aislada del baseline.
+- Nueva expansión funcional: **congelada**.
 
-Esta actualización prevalece sobre las referencias inferiores al cierre anterior y deja sin efecto la frase de congelación funcional para este frente expresamente solicitado. El resto del documento conserva el snapshot de primera edición para trazabilidad.
+## Baseline técnico
 
-## Estado verificado
+**BASELINE TÉCNICO → 🟢 VALIDADO**
 
-- Revisión: **28 de agosto de 2026 · cierre de salud editorial y reconciliación de #394**.
-- Repositorio: `nachosanchezperez-ux/base-cofrade`.
-- Rama principal: `main`.
-- Último baseline funcional validado de `main`: `a12ab812e7aef6ab363b533be4389d7630eade39` — **#411 · cierre de autoría pendiente y revalidación editorial de Apple Music**.
-- Deployment de producción validado: `dpl_2WvqoXwiKVT8JJkPG9Bwc4kEeEDw` → **READY**, región `dub1`, commit exacto `a12ab81` y alias `hilocofrade.es` activos.
-- PR abiertas: **solo #394**, abierta, draft y mergeable.
-- No se ha abierto ningún frente funcional nuevo durante este cierre.
+- `npm test`: `439/439` sobre el baseline fusionado.
+- Build de producción y TypeScript: correctos.
+- El repositorio no define scripts independientes de lint o typecheck; `--if-present` finaliza correctamente.
+- `git diff --check`: correcto.
+- CI #1181: correcta.
+- #425 quedó reconciliada con el `main` real antes de fusionarse.
+- El único conflicto, en Marcha del día, conserva la prioridad del escudo introducida por `main` y el fallback controlado de #425.
+- La duplicación de «Hilo Cofrade» en los títulos de Igualás detectada durante el smoke quedó corregida y cubierta por regresión.
 
-## Primera edición
+## Producción y Vercel
 
-**HILO COFRADE · PRIMERA EDICIÓN → 🟡 TÉCNICAMENTE PREPARADA**
+**PRODUCCIÓN → 🟢 ESTABLE**
 
-**BASELINE TÉCNICO AUTOMATIZABLE → 🟢 VALIDADO**
+- Deployment del baseline funcional: `dpl_4dHpAHMEJntLABL346rH8uKs16dE`.
+- Commit desplegado: `732e8a4801b69d7a8edca1f75ece048fbf2028f9`.
+- Estado: `READY`; región: `dub1`.
+- Dominio canónico: `https://hilocofrade.es`.
+- Runtime del deployment: sin errores ni fatales en el control posterior a la fusión.
+- Los `statement timeout` observados pertenecen a deployments anteriores; no se han reproducido en el deployment actual y permanecen cerrados como incidencia histórica.
 
-No se declara todavía el cierre técnico completo ni se activa el `FIRST EDITION FREEZE`. Queda una única puerta técnica humana:
+## Pull requests
 
-**QA RESPONSIVE VISUAL EXACTO `390 / 768 / 1024 / 1440` → 🟣 PENDIENTE DE VALIDACIÓN MANUAL DE DIRECCIÓN**
+### #425 · Cierre UX de Primera Edición
 
-Esta revisión manual no se describe como fallo técnico y no bloquea la validación del resto del baseline. El cierre técnico no equivale al lanzamiento ni a su comunicación pública.
+**Estado → 🟢 FUSIONADA**
 
-## #394 · Cabeceras identitarias
+Responsabilidades cerradas:
 
-- Estado: **🟣 READY FOR VISUAL APPROVAL**.
-- Base actual: `main a12ab81`, incluida la migración editorial 181.
-- Último head funcional validado: `f14672e4049a4904b2b85ed9820a11d588d00418`; las reconciliaciones documentales posteriores no alteran el delta funcional.
-- Delta: **9 archivos**, limitado a cabeceras de Hermandades/Bandas, media, configuración de imágenes y regresiones.
-- Tests: **399/399**.
-- Build: Next.js `16.3` / Turbopack correcto.
-- CI: **verde**.
-- Preview: `dpl_GAz9wvohZA5DsugBQkAq1W1Qnkaw` → **READY**, región `dub1`.
-- Auditoría técnica: **🟢**.
+- coherencia de cifras entre Home y directorios;
+- filtrado de placeholders, vacíos y falsos ceros;
+- `noindex, follow` para fichas bajo mínimo editorial;
+- navegación interna, anclas, teclado y estado activo;
+- fallbacks de imágenes, logos, portadas y fotografía destacada;
+- legibilidad de directorios;
+- jornada real ↔ «Desde [año]» en acompañamientos;
+- catálogos secundarios cerrados por defecto;
+- separación de fuentes directas y generales en presentación;
+- accesibilidad básica del buscador, foco y estados anunciables.
 
-La auditoría confirma:
+No resuelve ni pretende resolver la nueva composición visual de cabeceras de #394.
 
-- sin excepciones por slug ni hardcodes por ficha;
-- componentes compartidos para Hermandades y Bandas;
-- fotografía de Banda conservada en «De un vistazo»;
-- escudos y logotipos mantienen sus rutas y carga;
-- sin migraciones, cambios de datos, rutas públicas ni consultas añadidas;
-- SEO, navegación, Imágenes y Pasos conservan el baseline.
+### #394 · Cabeceras nombre + escudo/logotipo
 
-#394 permanece en borrador y no se fusiona hasta el visto bueno visual manual.
+**Decisión → OPCIÓN C · 🟣 READY FOR VISUAL APPROVAL**
 
-## QA responsive
+- Introduce una decisión visual material distinta: escudo/logotipo y nombre forman una sola identidad principal.
+- El solape de archivos con #425 es parcial, pero no existe duplicidad de objetivo.
+- Reconciliada técnicamente con el baseline fusionado de #425.
+- Validación local reconciliada: `446/446` pruebas y build correcto.
+- Permanece en borrador y no se fusiona hasta la aprobación visual humana.
+- Es la única puerta visual; no constituye un segundo baseline técnico.
 
-### QA responsive técnico
+### #423 · Fotografía Pastora de Cantillana 2026
 
-**QA RESPONSIVE AUTOMATIZABLE → 🟢 VALIDADO**
+**Estado → 🟠 PENDIENTE EDITORIAL**
 
-- Regresiones CSS y de identidad incluidas en la suite completa.
-- Smoke en producción sobre Home, Directorio, Hermandad, Imagen, Paso, Banda, Extraordinaria, Gloria, Tira del hilo y Panel.
-- Smoke del preview de #394 sobre Home, Hermandades, Bandas, Imagen y Paso.
-- En la superficie automatizada disponible: cero overflow horizontal, errores técnicos visibles o imágenes cargadas rotas en las páginas inspeccionadas.
-- Sin errores de hidratación o JavaScript atribuibles a la aplicación.
+- El diff real contiene únicamente `public/procesiones/pastora-cantillana/.gitkeep`.
+- No contiene la fotografía anunciada.
+- Faltan el recurso definitivo, procedencia/derechos y la relación con el `outing`.
+- No se fusiona y no compite con el cierre UX.
 
-Esta validación técnica no sustituye el juicio visual de Dirección.
+## Git ↔ Supabase
 
-### QA responsive visual
+**ALINEACIÓN → 🟢**
 
-- `390 px` → 🟣 pendiente manual.
-- `768 px` → 🟣 pendiente manual.
-- `1024 px` → 🟣 pendiente manual.
-- `1440 px` → 🟣 pendiente manual.
+- Proyecto: `Hilocofrade` (`kcevwkucqzcyrqaimyhl`), `ACTIVE_HEALTHY`, `eu-west-1`, plan Pro.
+- Migraciones en Git: `185`.
+- Migraciones en Supabase: `185`.
+- Última versión: `20260830140331 normalize_cruz_roja_glorias_2026`.
+- No se han creado ni aplicado migraciones durante este cierre.
+- #425 no modificó datos, esquema, RLS ni Storage.
 
-## Producción y rendimiento
+## Auth, RLS y seguridad
 
-- Producción actual: **READY** en `dub1`, deployment `dpl_2WvqoXwiKVT8JJkPG9Bwc4kEeEDw`, commit `a12ab81`.
-- Smoke automatizable: todas las superficies principales respondieron y renderizaron correctamente.
-- Runtime posterior al cierre editorial: **sin errores de runtime** en la última hora.
+**SEGURIDAD → 🟢**
 
-### Incidencia de `statement timeout`
+- RLS activa en `77/77` tablas públicas.
+- `166` claves foráneas públicas validadas; `0` sin validar.
+- Front público anónimo y stateless.
+- Panel autenticado y `noindex, nofollow`.
+- Sesión autenticada comprobada en producción.
+- Acción «Cerrar sesión» presente; no se ejecutó para no alterar la sesión de Dirección.
+- Login y recuperación conservan sus regresiones existentes.
+- Leaked Password Protection no presenta aviso de desactivación en el asesor actual.
+- No hay rutas de diagnóstico públicas ni datos draft visibles en el smoke.
+- El asesor conserva avisos conocidos de funciones `SECURITY DEFINER` para `authenticated` y una tabla interna con RLS sin política; no existe concesión nueva a `anon` ni hallazgo nuevo provocado por este cierre.
 
-El deployment actual registró dos peticiones HTTP 200 de fichas de Paso en las que la carga secundaria de Fuentes agotó `statement timeout`:
+## Legal
 
-- `/pasos/paso-misterio-jesucristo-atado-columna`;
-- `/pasos/paso-palio-dulce-nombre-bellavista`.
+**LEGAL → 🟢 PUBLICADO**
 
-Investigación:
-
-- loader: `lib/supabase/brotherhoods.js`;
-- tabla: `source_links`;
-- consulta: selección de `source_id` filtrada por destinos documentales;
-- volumen analizado: 1.723 filas;
-- consulta directa: 5 filas y ejecución aproximada de **0,35 ms**;
-- reproducción posterior: seis peticiones, todas HTTP 200;
-- runtime posterior: sin nuevos timeouts ni errores/fatales.
-
-Resultado: **🟢 incidencia transitoria no reproducida**. No se modifica código, timeout, caché ni esquema por especulación. Se mantiene vigilancia.
-
-## Supabase, migraciones y Auth
-
-- Proyecto `Hilocofrade` (`kcevwkucqzcyrqaimyhl`) → **ACTIVE_HEALTHY**.
-- Región: `eu-west-1`; Postgres `17.6.1.155`; plan **Pro**.
-- Migraciones Git ↔ Supabase: **182/182**, hasta `20260829075845 documenta_gloria_a_ti_manuel_garcia`.
-- Leaked Password Protection: **🟢 ACTIVA**. El asesor ya no emite `auth_leaked_password_protection`.
-- Auth del Panel: **🟢 OPERATIVA**. La regresión posterior a la activación validó login, sesión, navegación, logout y nueva autenticación; el último smoke confirmó una sesión autenticada vigente.
-
-## RLS y seguridad pública
-
-- RLS: **75/75 tablas públicas con RLS activa**.
-- Front público: anónimo y stateless, protegido por regresiones.
-- Panel: autenticado y `noindex, nofollow`.
-- `/api/`: excluida por `robots.txt`.
-- `/prueba-next` y `/prueba-supabase`: **404**.
-- Sin SQL, stack traces, claves o datos draft visibles en el smoke.
-
-El asesor conserva avisos conocidos sobre funciones `SECURITY DEFINER` accesibles al rol autenticado y una tabla interna con RLS sin política. Pertenecen al control de roles/importación del Panel, verifican membresía o permisos y no están concedidas a `anon`; no se ha detectado una exposición pública nueva. Referencia: <https://supabase.com/docs/guides/database/database-linter>.
+- `/aviso-legal`, `/privacidad` y `/cookies`: operativas y con documento `ready`.
+- Footer y sitemap mantienen los enlaces.
+- Los borradores internos no son públicos.
+- No se modificó contenido legal durante este cierre.
 
 ## Salud del grafo
 
 **SALUD DEL GRAFO → 🟢 SIN BLOQUEOS NUCLEARES**
 
-- Relaciones publicadas con extremos inexistentes o no publicados: **0**.
-- Relaciones Hermandad ↔ Imagen, Hermandad ↔ Paso, Imagen ↔ Paso y Marcha ↔ Autor con extremos públicos inválidos: **0**.
-- Cinco nodos de Hermandad siguen como referencias relacionales sin ficha especializada; están excluidos de sitemap y navegación pública por #393/#395.
-- Las carencias editoriales permanecen en backlog y no bloquean mientras la UI degrade de forma segura.
+- Relaciones nucleares con extremos inexistentes: `0`.
+- Relaciones nucleares publicadas con extremos no publicados: `0`.
+- Claves foráneas públicas sin validar: `0`.
+- Persisten `5` nodos publicados de referencia sin ficha especializada; la navegación pública, sitemap y `noindex` degradan de forma segura y no constituyen rotura nuclear.
+- No se ha completado contenido secundario en esta tarea.
 
-## SEO y navegación
+## QA técnico
 
-**SEO BASELINE → 🟢 CORRECTO**
+**QA TÉCNICO → 🟢**
 
-- `robots.txt`: permite Front y excluye `/api/` y `/panel/`.
-- Sitemap: **202 URL**, incluidas las tres rutas legales públicas.
-- Home: canonical, `index, follow`, Open Graph y Twitter Cards presentes.
-- Panel: `noindex, nofollow`.
-- Colabora: `noindex, follow`, cerrada y sin formulario.
-- Rutas de diagnóstico: 404.
-- Directorios y fichas mantienen títulos, H1, canonical y enlaces a entidades reales.
+Smoke de producción validado para Home, Directorio, Hermandad, Imagen, Paso, Banda, Extraordinaria, Gloria, Igualás y Ensayos, Tira del hilo y Panel autenticado.
 
-Search Console conserva la última evidencia aportada por Dirección: propiedad verificada, Home en Google y sitemap correcto.
+Resultado:
 
-## Legal, privacidad y contacto
+- sin 404/500 en las rutas recorridas;
+- sin imágenes rotas visibles;
+- sin overflow global detectable;
+- un único `main` por página;
+- sin errores propios de consola;
+- canonical y títulos coherentes;
+- Panel privado, con sesión válida y control de cierre de sesión presente.
 
-**LEGAL → 🟢 PUBLICADO CON DECISIONES CONFIRMADAS POR DIRECCIÓN**
+Las regresiones existentes cubren contratos responsive, overflow, navegación, accesibilidad, SEO, fallbacks y publicación. El navegador automático verificó render real sin overflow en el ancho disponible; esta evidencia técnica no equivale a aprobación visual humana.
 
-- Rutas públicas operativas con HTTP 200: `/aviso-legal`, `/privacidad` y `/cookies`.
-- Los tres documentos son editables desde `/panel/legal`; el estado `ready` controla su publicación.
-- La ficha de Dirección y las notas internas permanecen privadas y no son seleccionables por `anon`.
-- Contacto público único: `hilocofrade@gmail.com`.
-- Dirección decide expresamente no mostrar domicilio ni dirección postal.
-- En el alcance actual no existen publicidad, patrocinios, afiliación, pagos ni newsletter.
-- Footer y sitemap enlazan los tres documentos.
-- Smoke público: los tres documentos responden, sin marcadores pendientes ni dirección postal expuesta.
-- Colabora continúa cerrada, sin formulario público de recogida de datos personales.
+## QA visual manual
 
-La publicación se realizó mediante #407 y la migración se reconcilió con el historial remoto mediante #408. La rama de preview de Supabase conserva una deuda histórica ajena a Legal: una migración antigua de San Benito depende de datos semilla en una base nueva; producción está alineada y no se repitió SQL.
+**QA VISUAL MANUAL → 🟣 PENDIENTE DE DIRECCIÓN**
 
-## Apple Music
+- `390 px`: pendiente.
+- `768 px`: pendiente.
+- `1024 px`: pendiente.
+- `1440 px`: pendiente.
 
-Apple Music conserva `52` lanzamientos publicados enlazados: `46` llegan al álbum, EP o sencillo exacto y `6` mantienen temporalmente el perfil oficial de la banda por discrepancias documentales de artista, título o año. No quedan lanzamientos en `review`. Detalle: [`AUDITORIA-EDITORIAL-APPLE-MUSIC-2026-08-27.md`](./AUDITORIA-EDITORIAL-APPLE-MUSIC-2026-08-27.md).
+No se han pedido ni fingido pantallazos. Esta es la única deuda manual y se concentra en la decisión visual de #394.
 
-La revalidación del 28 de agosto mantiene esos `6` perfiles: las fichas localizadas corresponden a reediciones, años diferentes o versiones en directo distintas y no deben sustituirse por aproximación.
+## Primera Edición y freeze
 
-## Salud editorial
+- ⚙️ Baseline técnico: **🟢 validado**.
+- 🚀 Producción: **🟢 estable**.
+- 🔐 Seguridad: **🟢**.
+- ⚖️ Legal: **🟢**.
+- 🕸️ Grafo: **🟢 sin bloqueos nucleares**.
+- 📱 QA técnico: **🟢**.
+- 👁️ QA visual manual: **🟣 pendiente**.
 
-- Marchas publicadas sin autoría estructurada: **0**. `El Descendimiento` queda documentada como obra de José Sapena Matarredona (1961).
-- `Gloria a ti · adaptación para banda` queda documentada con Manuel García como adaptador (2016), sin ampliar su identidad más allá del nombre acreditado.
-- Imágenes publicadas sin recurso visual directo: **20**. Todas conservan Fuente y autoría estructurada, pero no existe en `media_assets` un archivo exacto y autorizado reutilizable. Es una cola editorial de cobertura, no un bloqueo técnico ni una UI rota.
+**PRIMERA EDICIÓN → 🟡 TÉCNICAMENTE PREPARADA**
+Pendiente únicamente de la aprobación visual manual de #394.
 
-## Importación
-
-- #49 permanece **cerrada sin fusionar**.
-- Vía canónica: **HC-016 → JSON / JSONL / CSV → staging → validación determinista → revisión humana → aplicación por lotes → auditoría**.
-
-## Estado de congelación
-
-La expansión funcional queda detenida. El `FIRST EDITION FREEZE` formal no se activa todavía porque falta la aprobación visual manual y la decisión definitiva sobre #394.
-
-Hasta entonces solo se permite bug real, seguridad, legal, contenido, datos, fuentes, fotografías, corrección editorial o incidencia de producción.
-
-## Bloqueos técnicos reales
-
-**No se ha detectado ningún bloqueo técnico automatizable adicional.**
-
-## Pendientes manuales y pre-lanzamiento
-
-1. **QA visual manual exacto `390 / 768 / 1024 / 1440`** sobre producción y preview de #394.
-2. **Decisión visual sobre #394**: fusionar o cerrar sin fusionar.
-
-## Única acción siguiente
-
-**Dirección debe revisar visualmente #394 y el baseline en `390 / 768 / 1024 / 1440`; si da el visto bueno, resolver #394 y declarar el cierre técnico con su freeze.**
-
-**ESTADO-PROYECTO → 🟡 PRIMERA EDICIÓN TÉCNICAMENTE PREPARADA · BASELINE AUTOMATIZABLE 🟢 · PRODUCCIÓN READY · GIT ↔ SUPABASE 182/182 · #394 READY FOR VISUAL APPROVAL · QA VISUAL 🟣 · AUTH 🟢 · LEGAL 🟢**
+`FIRST EDITION FREEZE` queda activo. Hasta esa decisión solo se permiten contenido, datos, Fuentes, fotografías, bugs reales, seguridad, correcciones editoriales e incidencias de producción. No se abren nuevas funcionalidades, módulos, entidades, Homes, rediseños ni evoluciones estructurales.
