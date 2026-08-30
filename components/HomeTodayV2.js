@@ -61,8 +61,8 @@ function rotatingEditorial(content, serial) {
   if (content?.pinnedEditorialType === 'curiosity' && content.editorial) return content.editorial
 
   const candidates = serial % 2
-    ? [content?.fact, content?.editorial]
-    : [content?.editorial, content?.fact]
+    ? [content?.editorial, content?.fact]
+    : [content?.fact, content?.editorial]
   return candidates.find(Boolean) || null
 }
 
@@ -153,7 +153,7 @@ export default function HomeTodayV2({ today, content }) {
   const featured = content?.ephemeris
     || (dailyCards.length ? dailyCards[serial % dailyCards.length] : null)
   const secondaryCards = dailyCards.filter((card) => card !== featured)
-  const featureRight = Boolean(featured && secondaryCards.length && serial % 2)
+  const featureRight = Boolean(featured && secondaryCards.length && !(serial % 2))
   const hasContent = dailyCards.length > 0 || Boolean(content?.march)
   if (!hasContent) return null
 
