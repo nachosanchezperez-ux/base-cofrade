@@ -6,15 +6,23 @@ import SourcesBlock from '@/components/SourcesBlock'
 import OfficialLinks from '@/components/OfficialLinks'
 import RelationalThread from '@/components/RelationalThread'
 import RelationalEntityHero from '@/components/RelationalEntityHero'
+import EntitySectionNav from '@/components/EntitySectionNav'
 import BandDiscographySection from '@/components/bands/BandDiscographySection'
+import BandFeaturePhoto from '@/components/BandFeaturePhoto'
 import { getBandBySlug, youtubeEmbedUrl } from '@/lib/supabase/bands'
 import { getBandDiscography } from '@/lib/supabase/bandDiscography'
 import { getPublishedBandColors } from '@/lib/supabase/bandColors'
+import {
+  meetsPublicEditorialMinimum,
+  publicEditorialRobots,
+  publicText,
+} from '@/lib/supabase/public-entity-page'
 import { absoluteUrl, breadcrumbJsonLd } from '@/lib/seo'
 import {
   groupGloryAccompaniments,
   partitionAccompanimentsBySeason,
   presentAccompanimentLocation,
+  presentAccompanimentMoment,
   presentAccompanimentStep,
   sortGloryAccompaniments,
   sortHolyWeekAccompaniments,
@@ -48,17 +56,19 @@ function yearRange(item) {
   if (item.yearFrom && item.yearTo) {
     return item.yearFrom === item.yearTo ? `Año ${item.yearFrom}` : `${item.yearFrom}–${item.yearTo}`
   }
-  if (item.periodText) return item.periodText
-  if (!item.yearFrom) return 'Periodo por documentar'
+  if (publicText(item.periodText)) return publicText(item.periodText)
+  if (!item.yearFrom) return ''
   return `Desde ${item.yearFrom}`
 }
 
 function groupContributions(items = []) {
   return items.reduce((groups, item) => {
-    const key = `${item.interventionType || 'Intervención'} · ${item.year || 'Fecha por documentar'}`
+    const type = publicText(item.interventionType) || 'Intervención'
+    const year = publicText(item.year)
+    const key = [type, year].filter(Boolean).join(' · ')
     const group = groups.find((entry) => entry.key === key)
     if (group) group.items.push(item)
-    else groups.push({ key, type: item.interventionType || 'Intervención', year: item.year || '', items: [item] })
+    else groups.push({ key, type, year, items: [item] })
     return groups
   }, [])
 }
@@ -67,37 +77,51 @@ function creditedName(item) {
   return [item.name, ...(item.aliases || [])].join(' · ')
 }
 
+function accompanimentHeaderLabel(item) {
+  const label = publicText(presentAccompanimentMoment(item))
+  const normalized = label
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+  if (normalized === 'estacion de penitencia') return 'Semana Santa'
+  if (normalized === 'procesion de gloria') return 'Gloria'
+  if (normalized === 'procesion eucaristica') return 'Eucarística'
+  if (normalized === 'procesion extraordinaria') return 'Extraordinaria'
+  if (normalized === 'procesion penitencial') return 'Penitencial'
+  return label || 'Acompañamiento'
+}
+
 function AccompanimentCard({ item, band, showLocation = false }) {
   const step = presentAccompanimentStep(item)
   const hasStepDetail = step.type || step.name || step.position
+  const period = yearRange(item)
+  const location = publicText(presentAccompanimentLocation(item))
 
   return (
     <article className={`${styles.relationshipCard} ${showLocation ? styles.locatedRelationshipCard : ''}`}>
       <div className={styles.relationshipTop}>
-        <span>{item.outingType || 'Salida procesional'}</span>
-        <strong>{yearRange(item)}</strong>
+        <span>{accompanimentHeaderLabel(item)}</span>
+        {period ? <strong>{period}</strong> : null}
       </div>
-      {showLocation ? <div className={styles.relationshipLocation}>
-        <strong>{presentAccompanimentLocation(item)}</strong>
+      {showLocation && location ? <div className={styles.relationshipLocation}>
+        <strong>{location}</strong>
       </div> : null}
       <div className={styles.relationshipIdentity}>
         <h3>{item.brotherhoodName}</h3>
       </div>
       {hasStepDetail ? <div className={styles.relationshipStep}>
-        {step.type ? <span className={styles.relationshipStepType}>{step.type}</span> : null}
+        {step.position ? <small className={styles.relationshipStepPosition}>{step.position}</small> : null}
         {step.name ? (
           item.stepPageReady && item.stepSlug
             ? <Link href={`/pasos/${item.stepSlug}`}>{step.name} <b aria-hidden="true">→</b></Link>
             : <strong>{step.name}</strong>
         ) : null}
-        {step.position ? <small className={styles.relationshipStepPosition}>{step.position}</small> : null}
+        {step.type ? <span className={styles.relationshipStepType}>{step.type}</span> : null}
       </div> : null}
-      {item.notes && item.brotherhoodName !== band.linkedBrotherhood ? <p className={styles.relationshipNote}>{item.notes}</p> : null}
-      <div className={styles.relationshipLinks}>
-        {item.brotherhoodSlug && item.brotherhoodPageReady
-          ? <Link href={`/hermandades/${item.brotherhoodSlug}`}>Ver ficha de la hermandad <span>→</span></Link>
-          : <span>Ficha de hermandad en preparación</span>}
-      </div>
+      {publicText(item.notes) && item.brotherhoodName !== band.linkedBrotherhood ? <p className={styles.relationshipNote}>{publicText(item.notes)}</p> : null}
+      {item.brotherhoodSlug && item.brotherhoodPageReady ? <div className={styles.relationshipLinks}>
+        <Link href={`/hermandades/${item.brotherhoodSlug}`}>Ver ficha de la hermandad <span>→</span></Link>
+      </div> : null}
     </article>
   )
 }
@@ -119,11 +143,24 @@ function CuriosityIcon() {
 export async function generateMetadata({ params }) {
   const { slug } = await params
   const band = await getBandBySlug(slug)
-  if (!band) return {}
+  if (!band) return {
+    title: 'Banda no encontrada',
+    robots: { index: false, follow: false },
+  }
+  const editoriallyReady = meetsPublicEditorialMinimum({
+    identity: band.popularName || band.officialName,
+    type: band.type,
+    context: band.municipality,
+    summary: band.summary,
+    relations: [band.accompaniments, band.historicalAccompaniments, band.outings, band.premieres, band.heritage, band.direction],
+    sources: band.sources || [],
+    publicValues: band,
+  })
   return {
     title: band.popularName,
     description: band.summary,
     alternates: { canonical: `/bandas/${slug}` },
+    robots: publicEditorialRobots(editoriallyReady),
     openGraph: {
       title: band.popularName,
       description: band.summary,
@@ -206,9 +243,9 @@ export default async function BandDetailPage({ params }) {
     name: band.officialName,
     alternateName: band.popularName,
     url: absoluteUrl(`/bandas/${band.slug}`),
-    description: band.summary,
-    foundingDate: band.foundation || undefined,
-    foundingLocation: band.municipality || undefined,
+    ...(publicText(band.summary) ? { description: publicText(band.summary) } : {}),
+    foundingDate: publicText(band.foundation) || undefined,
+    foundingLocation: publicText(band.municipality) || undefined,
     image: band.heroImagePath ? absoluteUrl(band.heroImagePath) : undefined,
     sameAs: band.interestLinks.map((link) => link.url),
   }
@@ -243,7 +280,7 @@ export default async function BandDetailPage({ params }) {
           { label: 'Bandas', href: '/bandas' },
           { label: band.popularName },
         ]}
-        badges={[band.type, band.municipality]}
+        badges={[publicText(band.type), publicText(band.municipality)].filter(Boolean)}
         relation={band.linkedBrotherhoodSlug ? {
           label: band.linkedBrotherhoodRelationType === 'associated_with_brotherhood'
             ? 'Hermandad asociada'
@@ -252,9 +289,9 @@ export default async function BandDetailPage({ params }) {
           href: `/hermandades/${band.linkedBrotherhoodSlug}`,
         } : null}
         facts={[
-          { label: 'Formación', value: band.type },
-          { label: 'Localidad', value: band.municipality },
-          { label: 'Fundación', value: band.foundation || '' },
+          publicText(band.type) ? { label: 'Formación', value: publicText(band.type) } : null,
+          publicText(band.municipality) ? { label: 'Localidad', value: publicText(band.municipality) } : null,
+          publicText(band.foundation) ? { label: 'Fundación', value: publicText(band.foundation) } : null,
         ]}
         media={{
           photoSrc: band.heroImagePath,
@@ -266,77 +303,65 @@ export default async function BandDetailPage({ params }) {
         }}
       />
 
-      <nav className={`section-nav brotherhood-nav ${styles.sectionNav}`} aria-label="Secciones de la ficha">
-        <div className="shell brotherhood-nav-shell">
-          <span className={`brotherhood-nav-label ${styles.navLabel}`}>Explorar ficha</span>
-          <div className={`brotherhood-nav-list nav-scroll ${styles.navList}`}>
-            <a href="#resumen">De un vistazo</a>
-            {bandThreadItems.length ? <a href="#tira-del-hilo">Tira del hilo</a> : null}
-            {banderin ? <a href="#banderin">Banderín</a> : null}
-            {hasAccompaniments ? <a href="#acompanamientos">Semana Santa</a> : null}
-            {hasUpcomingAccompaniments ? <a href="#proximos-acompanamientos">Próximos</a> : null}
-            {hasGloryAccompaniments ? <a href="#glorias">Glorias y eucarísticas</a> : null}
-            {hasHistoricalAccompaniments ? <a href="#acompanamientos-historicos">Histórico</a> : null}
-            {hasOutings ? <a href="#extraordinarias">Extraordinarias</a> : null}
-            {hasPremieres ? <a href="#repertorio">Repertorio</a> : null}
-            {hasDiscography ? <a href="#discografia">Discografía</a> : null}
-            {hasDirection ? <a href="#direccion">Dirección</a> : null}
-            {band.interestLinks.length ? <a href="#enlaces-de-interes">Enlaces de interés</a> : null}
-            {band.sources?.length ? <a href="#fuentes">Fuentes</a> : null}
-          </div>
-        </div>
-      </nav>
+      <EntitySectionNav items={[
+        { href: '#resumen', label: 'De un vistazo' },
+        bandThreadItems.length > 0 && { href: '#tira-del-hilo', label: 'Tira del hilo' },
+        banderin && { href: '#banderin', label: 'Banderín' },
+        hasAccompaniments && { href: '#acompanamientos', label: 'Semana Santa' },
+        hasUpcomingAccompaniments && { href: '#proximos-acompanamientos', label: 'Próximos' },
+        hasGloryAccompaniments && { href: '#glorias', label: 'Glorias y eucarísticas' },
+        hasHistoricalAccompaniments && { href: '#acompanamientos-historicos', label: 'Histórico' },
+        hasOutings && { href: '#extraordinarias', label: 'Extraordinarias' },
+        hasPremieres && { href: '#repertorio', label: 'Repertorio' },
+        hasDiscography && { href: '#discografia', label: 'Discografía' },
+        hasDirection && { href: '#direccion', label: 'Dirección' },
+        band.interestLinks.length > 0 && { href: '#enlaces-de-interes', label: 'Enlaces de interés' },
+        band.sources?.length > 0 && { href: '#fuentes', label: 'Fuentes' },
+      ]} />
 
       <section className={`${styles.contentSection} ${styles.overviewSection}`} id="resumen">
         <div className="shell">
           <div className={styles.overviewGrid} style={!band.heroImagePath ? { gridTemplateColumns: '1fr' } : undefined}>
             {band.heroImagePath ? (
-              <figure className={styles.featurePhoto}>
-                <div>
-                  <Image
-                    src={band.heroImagePath}
-                    alt={band.heroImageAlt || `Fotografía representativa de ${band.popularName}`}
-                    fill
-                    sizes="(max-width: 900px) calc(100vw - 32px), 52vw"
-                  />
-                </div>
-                <figcaption>
-                  <span>La formación</span>
-                  <strong>{band.popularName}</strong>
-                  {band.heroImageCredit ? <small>{band.heroImageCredit}</small> : null}
-                </figcaption>
-              </figure>
+              <BandFeaturePhoto
+                key={band.heroImagePath}
+                src={band.heroImagePath}
+                alt={band.heroImageAlt}
+                credit={band.heroImageCredit}
+                name={band.popularName}
+                logoPath={band.logoPath}
+              />
             ) : null}
             <div className={styles.overviewCopy}>
               <div className={styles.sectionHeading}>
                 <h2>{band.popularName}, de un vistazo</h2>
               </div>
               <div className={styles.roleGrid}>
-                <article>
+                {publicText(band.type) ? <article>
                   <span>Formación</span>
-                  <strong>{band.type}</strong>
+                  <strong>{publicText(band.type)}</strong>
                   <Link href={`/bandas?tipo=${band.typeSlug}`}>Bandas de esta formación →</Link>
-                </article>
-                <article>
+                </article> : null}
+                {publicText(band.municipality) ? <article>
                   <span>Localidad</span>
-                  <strong>{band.municipality}</strong>
+                  <strong>{publicText(band.municipality)}</strong>
                   {band.municipalitySlug ? <Link href={`/bandas?localidad=${band.municipalitySlug}`}>Bandas de {band.municipality} →</Link> : null}
-                </article>
+                </article> : null}
                 {band.linkedBrotherhood ? <article>
                   <span>{band.linkedBrotherhoodRelationType === 'associated_with_brotherhood' ? 'Hermandad asociada' : 'Hermandad'}</span>
                   <strong>{band.linkedBrotherhood}</strong>
                   {band.linkedBrotherhoodSlug ? <Link href={`/hermandades/${band.linkedBrotherhoodSlug}`}>Ver ficha de la hermandad →</Link> : null}
                 </article> : null}
-                <article className={styles.trajectoryCard}>
+                {(publicText(band.foundation) || publicText(band.headquarters)) ? <article className={styles.trajectoryCard}>
                   <span>Trayectoria</span>
-                  <strong>{band.foundation ? `Fundación: ${band.foundation}` : 'Fundación por documentar'}</strong>
-                  {band.headquarters && band.headquarters !== band.municipality ? (
+                  {publicText(band.foundation) ? <strong>Fundación: {publicText(band.foundation)}</strong> : null}
+                  {publicText(band.headquarters) && band.headquarters !== band.municipality ? (
                     <div className={styles.trajectoryLocation}>
                       <span>Sede / local de ensayo</span>
                       <strong>{band.headquarters}</strong>
                     </div>
                   ) : null}
-                </article>
+                </article> : null}
               </div>
               {(hasAccompaniments || hasGloryAccompaniments || currentPremieres.length || band.outings.length) ? (
                 <div className={styles.impactPanel}>
@@ -479,7 +504,7 @@ export default async function BandDetailPage({ params }) {
                     <strong>{yearRange(item)}</strong>
                   </div>
                   <div className={styles.historicalCopy}>
-                    <span>{item.outingType || 'Salida procesional'}</span>
+                    {publicText(item.outingType) ? <span>{accompanimentHeaderLabel(item.outingType)}</span> : null}
                     <h3>{item.brotherhoodName}</h3>
                     <p>{item.position || item.stepName || 'Acompañamiento musical'}</p>
                     {item.notes ? <small>{item.notes}</small> : null}
@@ -535,8 +560,8 @@ export default async function BandDetailPage({ params }) {
         <div className="shell">
           <div className={styles.sectionHeading}><span className={styles.eyebrow}>Patrimonio musical</span><h2>Repertorio</h2></div>
           {years.map((year) => (
-            <div className={styles.premiereYear} key={year}>
-              <div className={styles.premiereYearHeading}><h3>{year}</h3><span>{band.premieres.filter((item) => item.year === year).length} {band.premieres.filter((item) => item.year === year).length === 1 ? 'obra' : 'obras'}</span></div>
+            <details className={styles.premiereYear} key={year}>
+              <summary className={styles.premiereYearHeading}><h3>{year}</h3><span>{band.premieres.filter((item) => item.year === year).length} {band.premieres.filter((item) => item.year === year).length === 1 ? 'obra' : 'obras'}</span><b aria-hidden="true">＋</b></summary>
               <div className={styles.premiereGrid}>{band.premieres.filter((item) => item.year === year).map((item) => {
                 const embed = youtubeEmbedUrl(item.videoUrl)
                 return (
@@ -556,7 +581,7 @@ export default async function BandDetailPage({ params }) {
                   </article>
                 )
               })}</div>
-            </div>
+            </details>
           ))}
         </div>
       </section> : null}

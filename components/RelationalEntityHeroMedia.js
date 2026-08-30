@@ -117,7 +117,7 @@ export default function RelationalEntityHeroMedia({
         ) : (
           <div className={styles.initialsFallback}>
             <span>{initials || 'HC'}</span>
-            <small>Imagen pendiente de incorporar</small>
+            <small>Identidad visual</small>
           </div>
         )}
 

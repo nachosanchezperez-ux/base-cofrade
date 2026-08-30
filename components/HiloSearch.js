@@ -9,6 +9,7 @@ import HiloGraphPath, { isGraphPathResponse } from './HiloGraphPath';
 import HiloReferences from './HiloReferences';
 import { hiloEntityKey, prioritizeHiloNavigationItems } from '@/lib/tira-search-intent';
 import { decodeTiraSession, encodeTiraSession, TIRA_SESSION_KEY } from '@/lib/tira-session';
+import { publicText } from '@/lib/supabase/public-entity-page';
 import styles from './HiloSearch.module.css';
 
 const starterQuestions = [
@@ -79,11 +80,12 @@ function contextLabel(context) {
 }
 
 function AnswerListItem({ item, index }) {
+  const meta = publicText(item.meta);
   const content = (
     <>
       <span>
         <strong>{item.label}</strong>
-        {item.meta ? <small>{item.meta}</small> : null}
+        {meta ? <small>{meta}</small> : null}
       </span>
       {item.href ? <b aria-hidden="true">→</b> : null}
     </>
@@ -119,6 +121,7 @@ function AnswerListItem({ item, index }) {
 }
 
 function SearchResultVisual({ item }) {
+  const [imageFailed, setImageFailed] = useState(false);
   const visual = item.visual || null;
   const kindClass = visual?.kind === 'identity' ? styles.resultVisualIdentity : styles.resultVisualPhoto;
   const fallbackType = item.entityType || analyticsEntityType(item.type);
@@ -129,7 +132,7 @@ function SearchResultVisual({ item }) {
       className={`${styles.resultVisual} ${visual?.src ? kindClass : styles.resultVisualFallback}`}
       aria-hidden="true"
     >
-      {visual?.src ? (
+      {visual?.src && !imageFailed ? (
         <Image
           src={visual.src}
           alt=""
@@ -140,6 +143,7 @@ function SearchResultVisual({ item }) {
             objectFit: visual.fit === 'contain' ? 'contain' : 'cover',
             objectPosition: visual.focusPosition || '50% 50%',
           }}
+          onError={() => setImageFailed(true)}
         />
       ) : <strong>{fallback}</strong>}
     </span>
@@ -147,7 +151,8 @@ function SearchResultVisual({ item }) {
 }
 
 function SearchResultContent({ item }) {
-  const descriptor = item.descriptor || item.subtitle || '';
+  const descriptor = publicText(item.descriptor || item.subtitle);
+  const location = publicText(item.location);
 
   return (
     <>
@@ -155,10 +160,10 @@ function SearchResultContent({ item }) {
       <span className={styles.resultCopy}>
         <span className={styles.resultMeta}>
           <span className={styles.resultType}>{item.type}</span>
-          {item.location ? (
+          {location ? (
             <span className={styles.resultLocation}>
               <i aria-hidden="true" />
-              {item.location}
+              {location}
             </span>
           ) : null}
         </span>
@@ -175,8 +180,10 @@ function SearchResultContent({ item }) {
 
 function AssistantAnswer({ message, onFollowUp, compact = false }) {
   const response = message.response || {};
-  const visibleItems = compact ? (response.items || []).slice(0, 3) : (response.items || []);
-  const visibleEntities = compact ? (response.entities || []).slice(0, 3) : (response.entities || []);
+  const publicItems = (response.items || []).filter((item) => publicText(item.label));
+  const publicEntities = (response.entities || []).filter((entity) => publicText(entity.name));
+  const visibleItems = compact ? publicItems.slice(0, 3) : publicItems;
+  const visibleEntities = compact ? publicEntities.slice(0, 3) : publicEntities;
   const hasEntities = visibleEntities.length > 0;
   const hasItems = visibleItems.length > 0;
   const isGraphPath = isGraphPathResponse(response);
@@ -439,7 +446,7 @@ export default function HiloSearch({
   return (
     <div className={`${styles.wrap} ${fullPage ? styles.fullMode : ''}`} data-hilo-section={fullPage ? 'conversation_search' : 'home_search'}>
       {hasConversation ? (
-        <div className={styles.conversation} aria-live="polite">
+        <div className={styles.conversation} aria-live="polite" aria-busy={loading}>
           {visibleMessages.map((message) => message.role === 'user' ? (
             <div className={styles.userMessage} key={message.id}>
               <span>Tú</span>
@@ -449,12 +456,13 @@ export default function HiloSearch({
             <AssistantAnswer message={message} key={message.id} onFollowUp={ask} compact={compact} />
           ))}
           {loading ? (
-            <div className={`${styles.assistantMessage} ${styles.loadingMessage}`}>
+            <div className={`${styles.assistantMessage} ${styles.loadingMessage}`} role="status" aria-live="polite">
               <div className={styles.assistantMeta}>
                 <span className={styles.assistantDot} aria-hidden="true" />
                 <strong>Hilo Cofrade</strong>
               </div>
-              <div className={styles.typing} aria-label="Consultando el grafo"><span /><span /><span /></div>
+              <div className={styles.typing} aria-hidden="true"><span /><span /><span /></div>
+              <span className={styles.srOnly}>Consultando los datos publicados</span>
             </div>
           ) : null}
         </div>
@@ -524,6 +532,7 @@ export default function HiloSearch({
                 data-hilo-event="search_result_open"
                 data-hilo-origin={searchOrigin}
                 data-hilo-target-type={analyticsEntityType(item.type)}
+                aria-label={`Abrir ficha de ${item.title}`}
               >
                 <SearchResultContent item={item} />
               </Link>
@@ -536,6 +545,7 @@ export default function HiloSearch({
                 data-hilo-event="search_result_ask"
                 data-hilo-origin={searchOrigin}
                 data-hilo-target-type={analyticsEntityType(item.type)}
+                aria-label={`Preguntar sobre ${item.title}`}
               >
                 <SearchResultContent item={item} />
               </button>

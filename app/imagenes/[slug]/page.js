@@ -9,6 +9,11 @@ import SourcesBlock from '@/components/SourcesBlock';
 import { getPublishedEntityMedia } from '@/lib/supabase/entity-media';
 import { getImagenPageBySlug } from '@/lib/supabase/public-entity-pages';
 import {
+  meetsPublicEditorialMinimum,
+  publicEditorialRobots,
+  publicText,
+} from '@/lib/supabase/public-entity-page';
+import {
   absoluteUrl,
   breadcrumbJsonLd,
   pageTitle,
@@ -43,6 +48,15 @@ export async function generateMetadata({ params }) {
       : `Ficha de ${imagen.nombre}: autoría, datación, descripción material y fuentes documentales.`
   );
   const canonical = `/imagenes/${imagen.slug}`;
+  const editoriallyReady = meetsPublicEditorialMinimum({
+    identity: imagen.nombre,
+    type: imagen.tipologia || imagen.tipo,
+    context: hermandad?.localidad || hermandad?.nombrePopular,
+    summary: imagen.descripcion,
+    relations: [hermandad?.id, result.pasos, imagen.restauraciones, imagen.acontecimientos],
+    sources: imagen.fuentes || [],
+    publicValues: imagen,
+  });
   const socialImage = coverMedia?.path
     ? [{ url: coverMedia.path, alt: coverMedia.alt || `Fotografía de ${imagen.nombre}` }]
     : undefined;
@@ -51,6 +65,7 @@ export async function generateMetadata({ params }) {
     title,
     description,
     alternates: { canonical },
+    robots: publicEditorialRobots(editoriallyReady),
     openGraph: {
       type: 'article',
       title: pageTitle(title),
@@ -116,6 +131,13 @@ export default async function ImagenPage({ params }) {
     })),
   ];
   const hasRelatedEntities = relationalItems.length > 0;
+  const hasImageOverview = Boolean(
+    hermandad
+    || publicText(imagen.autor)
+    || publicText(imagen.fecha)
+    || publicText(imagen.tipologia || imagen.tipo)
+    || imagen.coronacionCanonica
+  );
   const breadcrumbs = [
     { name: 'Inicio', path: '/' },
     { name: 'Imágenes', path: '/imagenes' },
@@ -145,7 +167,7 @@ export default async function ImagenPage({ params }) {
           image: [...new Set(entityMedia.map((item) => absoluteUrl(item.path)))],
         } : {}),
         ...(imagen.material ? { artMedium: imagen.material } : {}),
-        ...(imagen.autor && !/pendiente|desconocido|anónimo/i.test(imagen.autor) ? {
+        ...(publicText(imagen.autor) && !/desconocido|anónimo/i.test(imagen.autor) ? {
           creator: {
             '@type': 'Person',
             name: imagen.autor,
@@ -166,8 +188,8 @@ export default async function ImagenPage({ params }) {
           crestSrc: hermandad.escudoPath || '',
         } : null}
         facts={[
-          { label: 'Autoría', value: imagen.autor },
-          { label: 'Datación', value: imagen.fecha },
+          publicText(imagen.autor) ? { label: 'Autoría', value: publicText(imagen.autor) } : null,
+          publicText(imagen.fecha) ? { label: 'Datación', value: publicText(imagen.fecha) } : null,
           primaryStep ? {
             label: 'Procesiona en',
             value: primaryStep.nombre,
@@ -190,7 +212,7 @@ export default async function ImagenPage({ params }) {
       />
 
       <EntitySectionNav items={[
-        { href: '#resumen', label: 'Resumen' },
+        hasImageOverview && { href: '#resumen', label: 'Resumen' },
         hasRelatedEntities && { href: '#tira-del-hilo', label: 'Tira del hilo' },
         galleryMedia.length > 0 && { href: '#galeria', label: 'Galería' },
         imagen.restauraciones?.length > 0 && { href: '#restauraciones', label: 'Restauraciones' },
@@ -199,7 +221,7 @@ export default async function ImagenPage({ params }) {
         imagen.fuentes?.length > 0 && { href: '#fuentes', label: 'Fuentes' },
       ]} />
 
-      <section className="section image-overview-v2" id="resumen">
+      {hasImageOverview ? <section className="section image-overview-v2" id="resumen">
         <div className="shell image-overview-grid-v2">
           <div className="image-overview-copy-v2">
             <span className="eyebrow">De un vistazo</span>
@@ -211,31 +233,27 @@ export default async function ImagenPage({ params }) {
           </div>
 
           <div className="image-facts-v2">
-            <article>
+            {hermandad ? <article>
               <small>Hermandad</small>
-              {hermandad ? (
-                <Link href={`/hermandades/${hermandad.slug}`}>
-                  {hermandad.nombrePopular}
-                </Link>
-              ) : (
-                <strong>Sin vinculación publicada</strong>
-              )}
-            </article>
+              <Link href={`/hermandades/${hermandad.slug}`}>
+                {hermandad.nombrePopular}
+              </Link>
+            </article> : null}
 
-            <article>
+            {publicText(imagen.autor) ? <article>
               <small>Autor</small>
-              <strong>{imagen.autor || 'Pendiente de incorporar'}</strong>
-            </article>
+              <strong>{publicText(imagen.autor)}</strong>
+            </article> : null}
 
-            <article>
+            {publicText(imagen.fecha) ? <article>
               <small>Fecha</small>
-              <strong>{imagen.fecha || 'Pendiente de incorporar'}</strong>
-            </article>
+              <strong>{publicText(imagen.fecha)}</strong>
+            </article> : null}
 
-            <article>
+            {publicText(imagen.tipologia || imagen.tipo) ? <article>
               <small>Tipología</small>
-              <strong>{imagen.tipologia || imagen.tipo || 'Pendiente de incorporar'}</strong>
-            </article>
+              <strong>{publicText(imagen.tipologia || imagen.tipo)}</strong>
+            </article> : null}
 
             {imagen.coronacionCanonica && (
               <article className="image-coronation-v2">
@@ -258,7 +276,7 @@ export default async function ImagenPage({ params }) {
             )}
           </div>
         </div>
-      </section>
+      </section> : null}
 
       <RelationalThread
         currentName={imagen.nombre}

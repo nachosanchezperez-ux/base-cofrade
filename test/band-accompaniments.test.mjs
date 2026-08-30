@@ -5,6 +5,7 @@ import {
   groupGloryAccompaniments,
   partitionAccompanimentsBySeason,
   presentAccompanimentLocation,
+  presentAccompanimentMoment,
   presentAccompanimentStep,
   resolveAccompanimentLocation,
   sortGloryAccompaniments,
@@ -129,6 +130,25 @@ test('normaliza tipos técnicos de salida antes de mostrarlos', () => {
   assert.equal(formatOutingType('romeria'), 'Romería')
   assert.equal(formatOutingType('Estación de Penitencia'), 'Estación de penitencia')
   assert.equal(formatOutingType('Madrugada'), 'Madrugá')
+})
+
+test('la cabecera recupera la jornada documentada cuando el tipo es genérico', () => {
+  assert.equal(presentAccompanimentMoment({
+    outingType: 'Estación de penitencia',
+    notes: 'Miércoles Santo. Renovado para 2027.',
+  }), 'Miércoles Santo')
+  assert.equal(presentAccompanimentMoment({
+    outingType: 'Estación de penitencia',
+    notes: 'Madrugá y mañana del Viernes Santo.',
+  }), 'Madrugá')
+  assert.equal(presentAccompanimentMoment({
+    outingType: 'Estación de penitencia',
+    notes: '',
+  }), 'Semana Santa')
+  assert.equal(presentAccompanimentMoment({
+    outingType: 'Procesión de gloria',
+    notes: '8 de septiembre',
+  }), 'Procesión de gloria')
 })
 
 test('separa Semana Santa de Glorias y cultos externos', () => {

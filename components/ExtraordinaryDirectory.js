@@ -243,11 +243,11 @@ export default function ExtraordinaryDirectory({ outings }) {
 
                       <div className={styles.cardMain}>
                         <div className={styles.cardTopline}>
-                          <span>{outing.municipality || 'Localidad por documentar'}</span>
+                          {outing.municipality ? <span>{outing.municipality}</span> : null}
                           <small data-status={outing.eventStatus}>{statusLabel(outing)}</small>
                         </div>
                         <h4><Link href={`/extraordinarias/${outing.slug}`}>{outing.title}</Link></h4>
-                        <strong className={styles.organizer}>{outing.brotherhoodName}</strong>
+                        {outing.brotherhoodName ? <strong className={styles.organizer}>{outing.brotherhoodName}</strong> : null}
                         {outing.reason ? <p>{outing.reason}</p> : null}
 
                         {outing.music.length ? (

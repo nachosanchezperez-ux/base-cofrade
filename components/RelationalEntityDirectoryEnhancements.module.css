@@ -92,8 +92,12 @@
 }
 
 .cardCopy strong {
+  display: -webkit-box;
+  overflow: hidden;
   margin-top: 0;
   text-wrap: balance;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
 }
 
 .cardCopy small {

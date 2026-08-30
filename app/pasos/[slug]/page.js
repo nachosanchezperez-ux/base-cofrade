@@ -8,6 +8,11 @@ import SectionTitle from '@/components/SectionTitle';
 import { getStepPhotoFraming } from '@/lib/step-photo-framing';
 import { getPublishedEntityCoverMedia } from '@/lib/supabase/entity-media';
 import { getPasoPageBySlug } from '@/lib/supabase/public-entity-pages';
+import {
+  meetsPublicEditorialMinimum,
+  publicEditorialRobots,
+  publicText,
+} from '@/lib/supabase/public-entity-page';
 import { getPublishedStepHeritage } from '@/lib/supabase/step-heritage';
 import styles from './step.module.css';
 import {
@@ -28,8 +33,11 @@ export async function generateMetadata({ params }) {
     };
   }
 
-  const { paso, hermandad } = result;
-  const coverMedia = await getPublishedEntityCoverMedia(paso.id);
+  const { paso, hermandad, imagenes = [], bandas = [] } = result;
+  const [coverMedia, heritage] = await Promise.all([
+    getPublishedEntityCoverMedia(paso.id),
+    getPublishedStepHeritage(paso.id),
+  ]);
   const title = paso.nombre;
   const description = seoDescription(
     hermandad
@@ -37,11 +45,21 @@ export async function generateMetadata({ params }) {
       : `Ficha de ${paso.nombre}: imágenes que procesionan, configuración y evolución patrimonial documentada.`
   );
   const canonical = `/pasos/${paso.slug}`;
+  const editoriallyReady = meetsPublicEditorialMinimum({
+    identity: paso.nombre,
+    type: paso.tipo,
+    context: hermandad?.localidad || hermandad?.nombrePopular,
+    summary: paso.descripcion,
+    relations: [hermandad?.id, imagenes, bandas, heritage.phases],
+    sources: heritage.sources || [],
+    publicValues: [paso, heritage.phases],
+  });
 
   return {
     title,
     description,
     alternates: { canonical },
+    robots: publicEditorialRobots(editoriallyReady),
     openGraph: {
       type: 'article',
       title: pageTitle(title),
@@ -121,7 +139,7 @@ export default async function PasoDetailPage({params}){
         '@id': `${absoluteUrl(canonicalPath)}#work`,
         url: absoluteUrl(canonicalPath),
         name: paso.nombre,
-        description: paso.descripcion,
+        ...(publicText(paso.descripcion) ? { description: publicText(paso.descripcion) } : {}),
         ...(coverMedia?.path ? { image: absoluteUrl(coverMedia.path) } : {}),
         ...(hermandad ? {
           isPartOf: {
@@ -149,8 +167,8 @@ export default async function PasoDetailPage({params}){
           crestSrc: hermandad.escudoPath || '',
         } : null}
         facts={[
-          { label: 'Ejecución', value: paso.ejecucion },
-          { label: 'Sistema de portadores', value: paso.sistemaPortadores },
+          publicText(paso.ejecucion) ? { label: 'Ejecución', value: publicText(paso.ejecucion) } : null,
+          publicText(paso.sistemaPortadores) ? { label: 'Sistema de portadores', value: publicText(paso.sistemaPortadores) } : null,
           { label: 'Imágenes', value: imagenes.length || '' },
         ]}
         media={{
@@ -173,32 +191,32 @@ export default async function PasoDetailPage({params}){
         { href: '#resumen', label: 'Resumen' },
         relationalItems.length > 0 && { href: '#tira-del-hilo', label: 'Tira del hilo' },
         bandas.length > 0 && { href: '#acompanamiento', label: 'Acompañamiento' },
-        { href: '#patrimonio', label: 'Patrimonio y evolución' },
+        (heritage.phases.length > 0 || heritage.sources.length > 0) && { href: '#patrimonio', label: 'Patrimonio y evolución' },
       ]} />
 
       <section className="section" id="resumen"><div className="shell content-grid">
         <div>
           <SectionTitle eyebrow="Configuración actual" title="Datos del paso" />
-          {paso.descripcion ? <p className="body-large">{paso.descripcion}</p> : null}
+          {publicText(paso.descripcion) ? <p className="body-large">{publicText(paso.descripcion)}</p> : null}
           <div className="step-facts">
-            <div>
+            {hermandad ? <div>
               <small>Hermandad</small>
-              <strong>{hermandad?.nombrePopular || 'Sin vinculación publicada'}</strong>
-            </div>
-            <div><small>Tipo</small><strong>{paso.tipo}</strong></div>
-            <div><small>Ejecución</small><strong>{paso.ejecucion || 'Pendiente de incorporar'}</strong></div>
-            {paso.materiales ? <div><small>Materiales</small><strong>{paso.materiales}</strong></div> : null}
-            <div><small>Sistema de portadores</small><strong>{paso.sistemaPortadores || 'Pendiente de incorporar'}</strong></div>
+              <strong>{hermandad.nombrePopular}</strong>
+            </div> : null}
+            {publicText(paso.tipo) ? <div><small>Tipo</small><strong>{publicText(paso.tipo)}</strong></div> : null}
+            {publicText(paso.ejecucion) ? <div><small>Ejecución</small><strong>{publicText(paso.ejecucion)}</strong></div> : null}
+            {publicText(paso.materiales) ? <div><small>Materiales</small><strong>{publicText(paso.materiales)}</strong></div> : null}
+            {publicText(paso.sistemaPortadores) ? <div><small>Sistema de portadores</small><strong>{publicText(paso.sistemaPortadores)}</strong></div> : null}
           </div>
         </div>
-        <aside className="brotherhood-summary-card">
+        {imagenes.length > 0 ? <aside className="brotherhood-summary-card">
           <span className="eyebrow">Imágenes que procesionan</span>
           <div className="step-images-list">
-            {imagenes.length ? imagenes.map((imagen)=>(
-              <Link key={imagen.slug} href={`/imagenes/${imagen.slug}`}>{imagen.nombre}<span>{[imagen.autor, imagen.fecha].filter(Boolean).join(' · ') || 'Datos por documentar'}</span></Link>
-            )) : <strong>Sin imágenes publicadas vinculadas</strong>}
+            {imagenes.map((imagen)=>(
+              <Link key={imagen.slug} href={`/imagenes/${imagen.slug}`}>{imagen.nombre}{[publicText(imagen.autor), publicText(imagen.fecha)].filter(Boolean).length ? <span>{[publicText(imagen.autor), publicText(imagen.fecha)].filter(Boolean).join(' · ')}</span> : null}</Link>
+            ))}
           </div>
-        </aside>
+        </aside> : null}
       </div></section>
 
       <RelationalThread
@@ -232,7 +250,7 @@ export default async function PasoDetailPage({params}){
         </section>
       )}
 
-      <section className={`section brotherhood-soft ${styles.heritageSection}`} id="patrimonio">
+      {(heritage.phases.length > 0 || heritage.sources.length > 0) ? <section className={`section brotherhood-soft ${styles.heritageSection}`} id="patrimonio">
         <div className="shell">
           <div className={styles.heritageIntro}>
             <SectionTitle
@@ -240,7 +258,7 @@ export default async function PasoDetailPage({params}){
               title="Patrimonio y evolución"
               description={heritage.phases.length
                 ? 'Diseño, talla, dorados, piezas singulares y restauraciones que explican la configuración actual del paso.'
-                : 'La evolución patrimonial de este paso está pendiente de documentar.'}
+                : 'Fuentes documentales vinculadas a la configuración patrimonial del paso.'}
             />
           </div>
 
@@ -282,7 +300,7 @@ export default async function PasoDetailPage({params}){
             </div>
           ) : null}
         </div>
-      </section>
+      </section> : null}
     </div>
   );
 }

@@ -62,6 +62,31 @@ function initials(value) {
     .toUpperCase()
 }
 
+function isSevillaCapital(value) {
+  return ['sevilla', 'sevilla capital'].includes(normalize(value))
+}
+
+function DirectoryCardMedia({ item, compact }) {
+  const [failed, setFailed] = useState(false)
+  const hasMedia = Boolean(item.mediaPath) && !failed
+
+  return (
+    <span className={`${styles.media} ${styles[item.mediaKind] || ''}`}>
+      {hasMedia ? (
+        <Image
+          src={item.mediaPath}
+          alt=""
+          fill
+          sizes={compact ? '56px' : '(max-width: 640px) 68px, (max-width: 1100px) 82px, 92px'}
+          onError={() => setFailed(true)}
+        />
+      ) : (
+        <span className={styles.monogram}>{initials(item.name)}</span>
+      )}
+    </span>
+  )
+}
+
 function searchScore(item, needle) {
   if (!needle) return 0
   const name = normalize(item.name)
@@ -89,19 +114,9 @@ function DirectoryCard({ item, compact = false }) {
       className={`${styles.card} ${compact ? mobileStyles.compactCard : ''}`}
       href={item.href}
       key={`${item.kind}-${item.id}`}
+      aria-label={`Abrir ficha de ${item.name}`}
     >
-      <span className={`${styles.media} ${styles[item.mediaKind] || ''}`}>
-        {item.mediaPath ? (
-          <Image
-            src={item.mediaPath}
-            alt=""
-            fill
-            sizes={compact ? '56px' : '(max-width: 640px) 68px, (max-width: 1100px) 82px, 92px'}
-          />
-        ) : (
-          <span className={styles.monogram}>{initials(item.name)}</span>
-        )}
-      </span>
+      <DirectoryCardMedia item={item} compact={compact} />
 
       <span className={styles.cardCopy}>
         <span className={styles.cardMeta}>
@@ -188,8 +203,8 @@ export default function EntityDirectoryExplorer({ items, initialState = {} }) {
     if (!['brotherhood', 'image'].includes(kind)) return []
 
     const options = [{ value: 'todos', label: 'Todas', count: scopedItems.length }]
-    const capitalCount = scopedItems.filter((item) => normalize(item.municipality) === 'sevilla').length
-    const provinceItems = scopedItems.filter((item) => item.municipality && normalize(item.municipality) !== 'sevilla')
+    const capitalCount = scopedItems.filter((item) => isSevillaCapital(item.municipality)).length
+    const provinceItems = scopedItems.filter((item) => item.municipality && !isSevillaCapital(item.municipality))
 
     if (capitalCount) options.push({ value: 'sevilla-capital', label: 'Sevilla', count: capitalCount })
     if (provinceItems.length) options.push({ value: 'provincia', label: 'Provincia', count: provinceItems.length })
@@ -263,7 +278,7 @@ export default function EntityDirectoryExplorer({ items, initialState = {} }) {
       .filter((item) => {
         if (kind !== 'all' && item.kind !== kind) return false
 
-        const isCapital = normalize(item.municipality) === 'sevilla'
+        const isCapital = isSevillaCapital(item.municipality)
         const matchesTerritory = territory === 'todos'
           || (territory === 'sevilla-capital' && isCapital)
           || (territory === 'provincia' && !isCapital)
@@ -388,7 +403,7 @@ export default function EntityDirectoryExplorer({ items, initialState = {} }) {
 
   return (
     <div className={styles.directory}>
-      <label className={styles.searchBox}>
+      <label className={styles.searchBox} htmlFor="unified-directory-search">
         <span className={styles.searchGlyph} aria-hidden="true">
           <svg viewBox="0 0 24 24" focusable="false">
             <circle cx="11" cy="11" r="6.5" />
@@ -397,6 +412,7 @@ export default function EntityDirectoryExplorer({ items, initialState = {} }) {
         </span>
         <span className="sr-only">Buscar en el directorio</span>
         <input
+          id="unified-directory-search"
           type="search"
           value={query}
           onChange={(event) => {
@@ -405,6 +421,7 @@ export default function EntityDirectoryExplorer({ items, initialState = {} }) {
           }}
           placeholder="Buscar hermandad, imagen, paso, banda…"
           autoComplete="off"
+          aria-label="Buscar en el directorio público"
         />
         {query ? (
           <button
@@ -540,7 +557,7 @@ export default function EntityDirectoryExplorer({ items, initialState = {} }) {
             >
               <option value="todos">Todas las localidades</option>
               {municipalities.map((item) => (
-                <option value={item} key={item}>{item === 'Sevilla' ? 'Sevilla capital' : item}</option>
+                <option value={item} key={item}>{isSevillaCapital(item) ? 'Sevilla capital' : item}</option>
               ))}
             </select>
           </label>

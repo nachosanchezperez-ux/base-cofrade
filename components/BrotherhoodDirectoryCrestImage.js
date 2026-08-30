@@ -120,9 +120,16 @@ function opticalBalance(image) {
   }
 }
 
-export default function BrotherhoodDirectoryCrestImage({ src, alt, className = '' }) {
+export default function BrotherhoodDirectoryCrestImage({
+  src,
+  alt,
+  className = '',
+  fallback = 'HC',
+  fallbackClassName = '',
+}) {
   const imageRef = useRef(null)
   const [balance, setBalance] = useState(defaultBalance)
+  const [failed, setFailed] = useState(false)
 
   function recalculate(image = imageRef.current) {
     if (!image) return
@@ -143,6 +150,8 @@ export default function BrotherhoodDirectoryCrestImage({ src, alt, className = '
     return () => observer.disconnect()
   }, [])
 
+  if (failed) return <span className={fallbackClassName}>{fallback}</span>
+
   return (
     <Image
       ref={imageRef}
@@ -154,6 +163,7 @@ export default function BrotherhoodDirectoryCrestImage({ src, alt, className = '
       sizes="(max-width: 620px) 60px, 82px"
       crossOrigin="anonymous"
       onLoad={handleLoad}
+      onError={() => setFailed(true)}
       style={{
         '--crest-optical-scale': balance.scale,
         '--crest-optical-x': `${balance.x}px`,
