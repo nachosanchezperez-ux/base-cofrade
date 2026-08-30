@@ -34,7 +34,8 @@ test('el Hilo para descubrir mantiene la concordancia en singular', () => {
 test('separa el Dato Cofrade de la historia protagonista diaria', () => {
   assert.match(loader, /fact: null/)
   assert.match(loader, /content_type === 'fact'/)
-  assert.match(loader, /return \{ ephemeris, editorial, fact, discovery, march \}/)
+  assert.match(loader, /ephemeris: featureCardOrNull\(ephemeris\)/)
+  assert.match(loader, /march: publicMarch/)
   assert.match(component, /const featured = content\?\.ephemeris \|\| content\?\.editorial \|\| content\?\.fact/)
   assert.match(component, /const secondaryCards/)
   assert.match(component, /styles\.sideColumn/)

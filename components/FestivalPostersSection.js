@@ -58,11 +58,12 @@ export default function FestivalPostersSection({ posters = [] }) {
 
         <div className="festival-posters-series">
           {posterSeries(posters).map((series) => (
-            <div className="festival-posters-group" key={series.key}>
-              <div className="heritage-subheading festival-posters-group-heading">
-                <span className="eyebrow">{series.eyebrow}</span>
-                <h3>{series.title}</h3>
-              </div>
+            <details className="festival-posters-group" key={series.key}>
+              <summary className="heritage-subheading festival-posters-group-heading">
+                <h3><span className="eyebrow">{series.eyebrow}</span>{series.title}</h3>
+                <strong>{series.posters.length} {series.posters.length === 1 ? 'cartel' : 'carteles'}</strong>
+                <b aria-hidden="true">＋</b>
+              </summary>
               <div className="festival-posters-list">
                 {series.posters.map((poster) => {
                   const author = poster.agentes?.[0]?.nombre || poster.imagen?.autor || '';
@@ -133,7 +134,7 @@ export default function FestivalPostersSection({ posters = [] }) {
                   );
                 })}
               </div>
-            </div>
+            </details>
           ))}
         </div>
       </div>

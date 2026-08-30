@@ -63,6 +63,27 @@ function bandMediaClass(item) {
   return ''
 }
 
+function RelationalCardMedia({ item, isBand, mediaPath, presentationClass }) {
+  const [failed, setFailed] = useState(false)
+  const hasMedia = Boolean(mediaPath) && !failed
+
+  return (
+    <span className={`${enhancementStyles.media} ${contractStyles.media} ${isBand ? enhancementStyles.bandMedia : ''} ${presentationClass}`}>
+      {hasMedia ? (
+        <Image
+          src={mediaPath}
+          alt=""
+          fill
+          sizes="(max-width: 620px) 58px, 72px"
+          onError={() => setFailed(true)}
+        />
+      ) : (
+        <span className={`${styles.monogram} ${enhancementStyles.monogram}`}>{initials(item.name)}</span>
+      )}
+    </span>
+  )
+}
+
 export default function RelationalEntityDirectory({
   items,
   kind,
@@ -92,7 +113,7 @@ export default function RelationalEntityDirectory({
   const filtered = useMemo(() => {
     const needle = normalize(query)
     return items.filter((item) => {
-      const isCapital = normalize(item.municipality) === 'sevilla'
+      const isCapital = ['sevilla', 'sevilla capital'].includes(normalize(item.municipality))
       const matchesTerritory = territory === 'todos'
         || (territory === 'sevilla-capital' && isCapital)
         || (territory === 'provincia' && !isCapital)
@@ -126,12 +147,14 @@ export default function RelationalEntityDirectory({
   return (
     <div className={styles.directory}>
       <div className={styles.searchPanel}>
-        <label className={styles.searchRow}>
-          <span className="sr-only">Buscar</span>
+        <label className={styles.searchRow} htmlFor={`directory-search-${kind}`}>
+          <span className="sr-only">Buscar en el directorio de {copy.plural}</span>
           <input
+            id={`directory-search-${kind}`}
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder={copy.placeholder}
+            aria-label={`Buscar en el directorio de ${copy.plural}`}
           />
           <span className={styles.searchIcon} aria-hidden="true">⌕</span>
         </label>
@@ -167,7 +190,7 @@ export default function RelationalEntityDirectory({
         </div>
       </div>
 
-      <div className={styles.resultHead}>
+      <div className={styles.resultHead} aria-live="polite" aria-atomic="true">
         <div>
           <strong>{filtered.length} {filtered.length === 1 ? copy.singular : copy.plural}</strong>
           <span>Relaciones documentadas en Sevilla capital y provincia</span>
@@ -200,19 +223,19 @@ export default function RelationalEntityDirectory({
                 className={`${styles.card} ${contractStyles.contract} ${enhancementStyles.card} ${isBand ? enhancementStyles.bandCard : ''}`}
                 href={item.href}
                 key={item.id}
+                aria-label={`Abrir ficha de ${item.name}`}
                 style={isBand ? {
                   '--entity-accent': item.primaryColor || '#63358B',
                   '--entity-secondary': item.secondaryColor || '#29272C',
                   '--logo-background': item.logoBackgroundColor || undefined,
                 } : undefined}
               >
-                <span className={`${enhancementStyles.media} ${contractStyles.media} ${isBand ? enhancementStyles.bandMedia : ''} ${presentationClass}`}>
-                  {mediaPath ? (
-                    <Image src={mediaPath} alt="" fill sizes="(max-width: 620px) 58px, 72px" />
-                  ) : (
-                    <span className={`${styles.monogram} ${enhancementStyles.monogram}`}>{initials(item.name)}</span>
-                  )}
-                </span>
+                <RelationalCardMedia
+                  item={item}
+                  isBand={isBand}
+                  mediaPath={mediaPath}
+                  presentationClass={presentationClass}
+                />
                 <span className={`${styles.cardCopy} ${contractStyles.copy} ${enhancementStyles.cardCopy}`}>
                   <strong>{item.name}</strong>
                   <small>{[item.type, item.date].filter(Boolean).join(' · ')}</small>
@@ -225,19 +248,25 @@ export default function RelationalEntityDirectory({
                     </>
                   ) : (
                     <>
-                      <span className={`${styles.context} ${enhancementStyles.clamped}`}>
-                        {[item.brotherhoodName, item.municipality].filter(Boolean).join(' · ') || 'Relación territorial por documentar'}
-                      </span>
+                      {[item.brotherhoodName, item.municipality].filter(Boolean).length ? (
+                        <span className={`${styles.context} ${enhancementStyles.clamped}`}>
+                          {[item.brotherhoodName, item.municipality].filter(Boolean).join(' · ')}
+                        </span>
+                      ) : null}
                       {isImage ? (
-                        <span className={`${styles.details} ${enhancementStyles.clamped}`}>
-                          {authorNames ? `Autoría: ${authorNames}` : 'Autoría por documentar'}
-                          {item.place ? ` · ${item.place}` : ''}
-                        </span>
+                        authorNames || item.place ? (
+                          <span className={`${styles.details} ${enhancementStyles.clamped}`}>
+                            {authorNames ? `Autoría: ${authorNames}` : ''}
+                            {item.place ? `${authorNames ? ' · ' : ''}${item.place}` : ''}
+                          </span>
+                        ) : null
                       ) : (
-                        <span className={`${styles.details} ${enhancementStyles.clamped}`}>
-                          {imageNames ? `Procesionan: ${imageNames}` : 'Imágenes vinculadas por documentar'}
-                          {authorNames ? ` · Autoría/taller: ${authorNames}` : ''}
-                        </span>
+                        imageNames || authorNames ? (
+                          <span className={`${styles.details} ${enhancementStyles.clamped}`}>
+                            {imageNames ? `Procesionan: ${imageNames}` : ''}
+                            {authorNames ? `${imageNames ? ' · ' : ''}Autoría/taller: ${authorNames}` : ''}
+                          </span>
+                        ) : null
                       )}
                     </>
                   )}

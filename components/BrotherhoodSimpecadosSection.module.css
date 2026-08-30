@@ -6,6 +6,26 @@
     #fff;
 }
 
+.catalog > summary {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 26px;
+  padding: 18px 20px;
+  border: 1px solid color-mix(in srgb, var(--brotherhood-primary) 16%, #dfe5ea);
+  border-radius: 17px;
+  background: #fff;
+  color: var(--brotherhood-primary);
+  cursor: pointer;
+  list-style: none;
+}
+
+.catalog > summary::-webkit-details-marker { display: none; }
+.catalog > summary span { font-weight: 850; }
+.catalog > summary strong { margin-left: auto; color: #717b82; font-size: .75rem; }
+.catalog > summary b { transition: transform .18s ease; }
+.catalog[open] > summary b { transform: rotate(45deg); }
+
 .grid {
   display: grid;
   gap: 34px;

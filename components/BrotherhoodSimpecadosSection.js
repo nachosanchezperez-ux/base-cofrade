@@ -19,6 +19,12 @@ export default function BrotherhoodSimpecadosSection({ items = [] }) {
           description="Piezas patrimoniales con identidad propia: denominaciones, cronología, autorías, restauraciones, uso, fotografías y Fuentes permanecen estructurados y reutilizables en el grafo de Hilo Cofrade."
         />
 
+        <details className={styles.catalog} open={items.length <= 2}>
+          <summary>
+            <span>Explorar catálogo</span>
+            <strong>{items.length} {items.length === 1 ? 'pieza documentada' : 'piezas documentadas'}</strong>
+            <b aria-hidden="true">＋</b>
+          </summary>
         <div className={styles.grid}>
           {items.map((item, index) => {
             const image = item.imagen;
@@ -103,6 +109,7 @@ export default function BrotherhoodSimpecadosSection({ items = [] }) {
             );
           })}
         </div>
+        </details>
       </div>
     </section>
   );

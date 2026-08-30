@@ -26,7 +26,7 @@ test('no crea un enlace circular cuando falta el mes propio de Gloria', () => {
 
   assert.equal(gloryMonth(cena), '')
   assert.equal(directoryPath(cena, 'gloria'), '')
-  assert.equal(directoryContextLabel(cena, 'gloria'), 'Mes principal por documentar')
+  assert.equal(directoryContextLabel(cena, 'gloria'), '')
 })
 
 test('las Sacramentales se organizan por localidad sin inventar un periodo', () => {

@@ -325,6 +325,10 @@
 .premiereSection .sectionHeading p { color: rgb(255 255 255 / 62%); }
 .premiereYear { margin-top: 45px; }
 .premiereYearHeading { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; margin-bottom: 13px; }
+.premiereYearHeading { cursor: pointer; list-style: none; }
+.premiereYearHeading::-webkit-details-marker { display: none; }
+.premiereYearHeading b { margin: 0 0 6px 2px; color: #fff; transition: transform .18s ease; }
+.premiereYear[open] .premiereYearHeading b { transform: rotate(45deg); }
 .premiereYearHeading h3 { margin: 0; color: #fff; font-size: 44px; letter-spacing: -.045em; }
 .premiereYearHeading span { margin-bottom: 6px; color: rgb(255 255 255 / 48%); font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
 .premiereGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
