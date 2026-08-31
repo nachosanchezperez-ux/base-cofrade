@@ -37,6 +37,15 @@ test('la composición de escritorio alterna el lado protagonista y conserva móv
   assert.match(css, /@media \(max-width: 859px\)[\s\S]*\.featureRight/)
 })
 
+test('una protagonista sin fotografía se compacta y evita un gran vacío vertical', () => {
+  const css = read('components/HomeTodayDynamic.module.css')
+
+  assert.match(css, /\.featureCardSlot:not\(:has\(\[data-home-visual-kind="photo"\]\)\)/)
+  assert.match(css, /grid-column: 1 \/ -1 !important;/)
+  assert.match(css, /min-height: 0 !important;/)
+  assert.match(css, /\+ \.sideColumnSlot[\s\S]*grid-template-columns: repeat\(2, minmax\(0, 1fr\)\)/)
+})
+
 test('la caché pública se renueva con el nuevo contrato de rotación', () => {
   const snapshot = read('lib/supabase/home-snapshot.js')
   assert.match(snapshot, /hilo-cofrade-home-public-snapshot-v12/)
