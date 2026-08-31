@@ -35,6 +35,7 @@ import {
   brotherhoodSeoTitle,
   pageTitle,
 } from '@/lib/seo';
+import outingVideoStyles from './outing-video.module.css';
 
 export const dynamic = 'force-dynamic';
 const getHermandad = cache(getHermandadPageBySlug);
@@ -464,7 +465,7 @@ export default async function HermandadDetailPage({ params }) {
       {h.salidas?.length > 0 && <section className="section brotherhood-white" id="salidas"><div className="shell">
         <SectionTitle eyebrow="En la calle" title="Salidas" description="Estación de penitencia, procesiones, rosarios, vía crucis y traslados forman parte del histórico de salidas de cada hermandad." />
         <div className="outing-grid">{h.salidas.map((s) => (
-          <article className={`outing-card ${s.ediciones?.length ? 'outing-card-featured' : ''}`} key={s.id}>
+          <article className={`outing-card ${s.ediciones?.length ? 'outing-card-featured' : ''} ${s.video ? outingVideoStyles.cardWithVideo : ''}`} key={s.id}>
             <div className="outing-type">
               <span>{s.tipo}</span>
               {s.caracter && <small>{s.caracter}</small>}
@@ -486,6 +487,29 @@ export default async function HermandadDetailPage({ params }) {
                     </div>
                   ))}
                 </div>
+              )}
+
+              {s.video && (
+                <aside className={outingVideoStyles.video} aria-label={`Vídeo oficial de ${s.nombre}`}>
+                  <div className={outingVideoStyles.heading}>
+                    <div>
+                      <span>Archivo audiovisual</span>
+                      <strong>{s.video.titulo}</strong>
+                    </div>
+                    {s.video.autor && <small>Canal oficial · {s.video.autor}</small>}
+                  </div>
+                  <div className={outingVideoStyles.frame}>
+                    <iframe
+                      src={`https://www.youtube-nocookie.com/embed/${encodeURIComponent(s.video.id)}?rel=0`}
+                      title={s.video.titulo}
+                      loading="lazy"
+                      allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      allowFullScreen
+                    />
+                  </div>
+                  <a href={s.video.url} target="_blank" rel="noreferrer">Ver en el canal de la Hermandad ↗</a>
+                </aside>
               )}
 
               {s.ediciones?.map((edicion) => (
