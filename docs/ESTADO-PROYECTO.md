@@ -1,6 +1,6 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 31 de agosto de 2026 · 15:00 UTC
+**Corte validado:** 31 de agosto de 2026 · 15:05 UTC
 
 **Régimen:** `FIRST EDITION FREEZE` activo
 
@@ -12,11 +12,11 @@
 
 - Baseline funcional y estructural: `a025098528351656503460596d28b5318e39daf5`.
 - Último commit funcional validado en este corte:
-  `34e390adeab7306f92a34e07f65577c1979c56d3`.
+  `13d4b8f577e2cb42f69f38e656793ddd78813956`.
 - La evolución posterior al baseline contiene certificación canónica (#452),
-  mantenimiento SEO P0 (#453 y #454), correcciones reales de Bandas (#455 y
-  #458) y el bugfix de música de Glorias (#459); no abre una nueva edición ni
-  amplía la arquitectura.
+  mantenimiento SEO P0 (#453 y #454), correcciones reales de Bandas (#455,
+  #458 y #460) y el bugfix de música de Glorias (#459); no abre una nueva
+  edición ni amplía la arquitectura.
 - Matriz manual 390/768/1024/1440 aprobada por Dirección.
 - No hay un frente funcional abierto ni PR funcionales abiertas en el corte.
 - Durante el freeze solo se permiten contenido, datos, fotografías, Fuentes,
@@ -26,8 +26,8 @@
 
 - Baseline funcional/estructural: `a025098528351656503460596d28b5318e39daf5`
   (#432).
-- Último `main` funcional comprobado: `34e390adeab7306f92a34e07f65577c1979c56d3`
-  (#459).
+- Último `main` funcional comprobado: `13d4b8f577e2cb42f69f38e656793ddd78813956`
+  (#460).
 - #439: fusionada en `378b20be3301f42635673ae9f41bbe6104a90b40`.
 - #432: fusionada en `a025098528351656503460596d28b5318e39daf5`.
 - #452: certifica el baseline canónico y mantiene `FIRST EDITION FREEZE`.
@@ -41,8 +41,11 @@
 - #459: hace visibles los acompañamientos musicales de Glorias cuando su posición
   documentada es `procession`, `opening` o `behind_step`, además de
   `processional_music`, fusionada en `34e390adeab7306f92a34e07f65577c1979c56d3`.
+- #460: reutiliza la entidad canónica de Centuria antes de cargar su ampliación y
+  evita duplicados por slug o nombre, fusionada en
+  `13d4b8f577e2cb42f69f38e656793ddd78813956`.
 - PR funcionales abiertas: 0 en el corte.
-- `Production SEO Smoke` #32 sobre `34e390adeab7306f92a34e07f65577c1979c56d3`
+- `Production SEO Smoke` #39 sobre `13d4b8f577e2cb42f69f38e656793ddd78813956`
   termina `SUCCESS`.
 - Las sincronizaciones documentales posteriores no alteran el baseline funcional
   ni obligan a reescribir este SHA de forma recursiva.
@@ -51,11 +54,11 @@
 
 **PRODUCCIÓN → 🟢 ESTABLE**
 
-- Último deployment funcional validado: `dpl_8Y9g9XKeYiaTcUrrjc1m2YN7ofXM`.
-- Commit funcional desplegado: `34e390adeab7306f92a34e07f65577c1979c56d3`.
+- Último deployment funcional validado: `dpl_FvUPHZv9QgBEWAG7iiT1LN2vGS1S`.
+- Commit funcional desplegado: `13d4b8f577e2cb42f69f38e656793ddd78813956`.
 - Estado: `READY`; target: producción.
 - Dominios: `https://hilocofrade.es` y `https://www.hilocofrade.es`.
-- Runtime: 0 errores detectados en la comprobación de los últimos 30 minutos.
+- Runtime: 0 errores detectados en la comprobación reciente del frente.
 - El `Production SEO Smoke` automático del deployment funcional validado pasa
   correctamente sobre las superficies SEO protegidas y URLs dinámicas obtenidas
   desde el sitemap.
@@ -212,9 +215,10 @@ completar, en este orden, sin reutilizar esta certificación como autorización:
 **GRAFO → 🟢 SIN BLOQUEOS NUCLEARES**
 
 - No se han introducido nuevas entidades ni relaciones estructurales en este
-  ciclo.
+  ciclo SEO/editorial.
 - La música de Glorias ya documentada vuelve a ser visible sin alterar sus
   códigos de posición.
+- #460 evita duplicar Centuria al reutilizar su entidad canónica existente.
 
 ## Freeze y fase activa
 
