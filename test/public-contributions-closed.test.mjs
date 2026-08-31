@@ -33,6 +33,9 @@ test('la apertura conserva anon sin acceso y escribe solo mediante el servidor',
 
 test('/colabora no publica el formulario hasta completar su configuración', () => {
   assert.match(publicPage, /contributionReadiness/)
+  assert.match(publicPage, /Ayúdanos a seguir tirando del hilo/)
+  assert.match(publicPage, /Tu aportación, paso a paso/)
+  assert.match(publicPage, /Completamos el hilo/)
   assert.match(publicPage, /process\.env\.VERCEL_ENV === 'preview'/)
   assert.match(publicPage, /if \(!readiness\.enabled && !isDeploymentPreview\) return <ClosedContributionsPage \/>/)
   assert.match(publicPage, /No estamos recogiendo información ni datos personales/)

@@ -20,10 +20,10 @@ export const metadata = {
 }
 
 const steps = [
-  ['1', 'Envías', 'Explicas la aportación y añades sus fuentes.'],
-  ['2', 'Revisamos', 'El contenido y los archivos quedan en una cola privada.'],
-  ['3', 'Contrastamos', 'El equipo comprueba datos, derechos y procedencia.'],
-  ['4', 'Documentamos', 'Solo un editor puede incorporarlo manualmente a una ficha.'],
+  ['1', 'Cuéntanos', 'Elige el tipo de aportación y explica con claridad qué dato debemos corregir, ampliar o documentar.'],
+  ['2', 'Documenta', 'Añade enlaces, fotografías o PDF que nos permitan comprobar la información y conocer su procedencia.'],
+  ['3', 'Contrastamos', 'El equipo revisa las fuentes, la autoría y los derechos antes de aceptar cualquier cambio.'],
+  ['4', 'Completamos el hilo', 'Si la aportación queda verificada, un editor la incorpora manualmente a la ficha correspondiente.'],
 ]
 
 function ClosedContributionsPage() {
@@ -62,10 +62,10 @@ export default function ColaboraPage() {
       <header className={styles.hero}>
         <div className="shell">
           <span className={styles.eyebrow}>Archivo abierto · Revisión humana</span>
-          <h1>Ayúdanos a documentar mejor la historia cofrade</h1>
+          <h1>Ayúdanos a seguir tirando del hilo</h1>
           <p>
-            Puedes corregir una ficha, proponer información nueva, adjuntar imágenes o PDF,
-            enlazar otras fuentes y sugerir mejoras. Nada se publica automáticamente.
+            Cada dato, fotografía o documento puede completar una historia cofrade.
+            Cuéntanos qué debemos revisar y aporta las fuentes que nos ayuden a contrastarlo.
           </p>
         </div>
       </header>
@@ -74,7 +74,7 @@ export default function ColaboraPage() {
         <section className={styles.process} aria-labelledby="proceso-aportacion">
           <div className={styles.sectionHeading}>
             <span className={styles.eyebrow}>Cómo funciona</span>
-            <h2 id="proceso-aportacion">Un canal público, una revisión editorial</h2>
+            <h2 id="proceso-aportacion">Tu aportación, paso a paso</h2>
           </div>
           <ol>
             {steps.map(([number, label, copy]) => (
