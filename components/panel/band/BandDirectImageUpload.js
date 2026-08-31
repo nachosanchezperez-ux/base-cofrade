@@ -15,6 +15,7 @@ export default function BandDirectImageUpload({
   currentSrc = '',
   currentAlt = '',
   currentCredit = '',
+  syncFields = null,
 }) {
   return (
     <DirectImageUpload
@@ -27,6 +28,7 @@ export default function BandDirectImageUpload({
       saveAction={saveBandMediaUploadAction}
       metadata={{ band_id: bandId, asset_entity_id: assetId, media_kind: kind }}
       showTextFields={kind !== 'logo'}
+      syncFields={syncFields}
       successMessage={`${title} actualizado correctamente.`}
     />
   )
