@@ -80,11 +80,19 @@ test('Glory serializes Madrid event times with the real seasonal UTC offset', as
   assert.doesNotMatch(detail, /:00\+02:00/)
 })
 
-test('Glory local hero images bypass the Next optimizer for reliable mobile rendering', async () => {
-  const detail = await read('app/procesiones-de-gloria/[slug]/page.js')
+test('Glory hero photographs use Next optimization and recover from broken sources', async () => {
+  const [detail, hero, css] = await Promise.all([
+    read('app/procesiones-de-gloria/[slug]/page.js'),
+    read('app/procesiones-de-gloria/[slug]/GloryHeroMedia.js'),
+    read('app/procesiones-de-gloria/[slug]/glory-detail.module.css'),
+  ])
 
-  assert.match(detail, /unoptimized=\{item\.heroImagePath\.startsWith\('\/'\)\}/)
-  assert.match(detail, /src=\{item\.heroImagePath\}/)
+  assert.match(detail, /<GloryHeroMedia/)
+  assert.match(hero, /quality=\{90\}/)
+  assert.match(hero, /onError=\{\(\) => setImageFailed\(true\)\}/)
+  assert.doesNotMatch(hero, /unoptimized/)
+  assert.match(css, /\.heroImage\s*\{[\s\S]*object-fit:\s*contain/)
+  assert.match(css, /\.heroImageBackdrop\s*\{[\s\S]*filter:\s*blur/)
 })
 
 test('Glory evita repetir Procesión de Gloria en cada título visible', async () => {
