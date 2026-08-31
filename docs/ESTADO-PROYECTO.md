@@ -1,6 +1,6 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 31 de agosto de 2026 · 14:30 UTC
+**Corte validado:** 31 de agosto de 2026 · 15:00 UTC
 
 **Régimen:** `FIRST EDITION FREEZE` activo
 
@@ -12,12 +12,13 @@
 
 - Baseline funcional y estructural: `a025098528351656503460596d28b5318e39daf5`.
 - Último commit funcional validado en este corte:
-  `c8407c9e2566ea1594127290e1bf4ee022f3fc7f`.
-- La evolución posterior al baseline contiene únicamente certificación canónica
-  (#452), mantenimiento SEO P0 (#453 y #454) y una corrección visual real de
-  Bandas (#455); no abre una nueva edición ni amplía la arquitectura.
+  `34e390adeab7306f92a34e07f65577c1979c56d3`.
+- La evolución posterior al baseline contiene certificación canónica (#452),
+  mantenimiento SEO P0 (#453 y #454), correcciones reales de Bandas (#455 y
+  #458) y el bugfix de música de Glorias (#459); no abre una nueva edición ni
+  amplía la arquitectura.
 - Matriz manual 390/768/1024/1440 aprobada por Dirección.
-- No hay un frente funcional abierto ni PR abiertas en el corte.
+- No hay un frente funcional abierto ni PR funcionales abiertas en el corte.
 - Durante el freeze solo se permiten contenido, datos, fotografías, Fuentes,
   seguridad, legal, bugs e incidencias reales.
 
@@ -25,8 +26,8 @@
 
 - Baseline funcional/estructural: `a025098528351656503460596d28b5318e39daf5`
   (#432).
-- Último `main` funcional comprobado: `c8407c9e2566ea1594127290e1bf4ee022f3fc7f`
-  (#455).
+- Último `main` funcional comprobado: `34e390adeab7306f92a34e07f65577c1979c56d3`
+  (#459).
 - #439: fusionada en `378b20be3301f42635673ae9f41bbe6104a90b40`.
 - #432: fusionada en `a025098528351656503460596d28b5318e39daf5`.
 - #452: certifica el baseline canónico y mantiene `FIRST EDITION FREEZE`.
@@ -35,9 +36,14 @@
   `8bfca4d4cf23460a414d3f507f8a1f2774551299`.
 - #455: corrección visual de Mairena fusionada en
   `c8407c9e2566ea1594127290e1bf4ee022f3fc7f`.
-- PR abiertas: 0 en el corte funcional.
-- La última ejecución `Production SEO Smoke` sobre ese commit funcional es la
-  #22 y termina `SUCCESS`.
+- #458: publica Centuria Romana Macarena y corrige la presentación de Tres
+  Caídas, fusionada en `5d2009bdabf2b50bb75da07ce0c0254ce2be0b2c`.
+- #459: hace visibles los acompañamientos musicales de Glorias cuando su posición
+  documentada es `procession`, `opening` o `behind_step`, además de
+  `processional_music`, fusionada en `34e390adeab7306f92a34e07f65577c1979c56d3`.
+- PR funcionales abiertas: 0 en el corte.
+- `Production SEO Smoke` #32 sobre `34e390adeab7306f92a34e07f65577c1979c56d3`
+  termina `SUCCESS`.
 - Las sincronizaciones documentales posteriores no alteran el baseline funcional
   ni obligan a reescribir este SHA de forma recursiva.
 
@@ -45,18 +51,16 @@
 
 **PRODUCCIÓN → 🟢 ESTABLE**
 
-- Último deployment funcional validado: `dpl_7vRuFGN8j2SiKmKN1eohANnjXcpT`.
-- Commit funcional desplegado: `c8407c9e2566ea1594127290e1bf4ee022f3fc7f`.
+- Último deployment funcional validado: `dpl_8Y9g9XKeYiaTcUrrjc1m2YN7ofXM`.
+- Commit funcional desplegado: `34e390adeab7306f92a34e07f65577c1979c56d3`.
 - Estado: `READY`; target: producción.
-- Dominios: `https://hilocofrade.es` y `https://www.hilocofrade.es`, con
-  redirección canónica correcta.
-- Runtime: 0 errores detectados en la última hora y 0 respuestas 5xx en el
-  deployment funcional validado; la muestra observada registra 49 respuestas
-  200.
+- Dominios: `https://hilocofrade.es` y `https://www.hilocofrade.es`.
+- Runtime: 0 errores detectados en la comprobación de los últimos 30 minutos.
 - El `Production SEO Smoke` automático del deployment funcional validado pasa
-  correctamente sobre Home, Directorio, Extraordinarias, Glorias, Igualás,
-  Baratillo, Cigarreras y una URL dinámica de cada agenda obtenida desde el
-  sitemap.
+  correctamente sobre las superficies SEO protegidas y URLs dinámicas obtenidas
+  desde el sitemap.
+- QA en producción confirma la música visible en Osuna, Utrera y Aguas Santas
+  tras #459.
 
 ## SEO P0 · mantenimiento técnico
 
@@ -79,9 +83,29 @@
   superficies protegidas.
 - La canonical de la raíz se normaliza como `https://hilocofrade.es`, evitando
   falsos negativos por una barra final equivalente.
-- No hubo migraciones, cambios de esquema, RLS, datos ni Panel.
 - No se hizo una conversión masiva a ISR durante el freeze: la optimización de
   caché queda reservada a una incidencia o métrica de rendimiento verificable.
+
+## Ciclo editorial SEO · agenda próxima
+
+**Estado → 🟢 PRIMER LOTE CONTRASTADO Y PUBLICADO**
+
+- Cerro del Águila (6/09) y la igualá de Santa María del Buen Aire (10/09) se
+  revisan como suficientemente documentadas y no se añaden textos de relleno.
+- Utrera (8/09): se corrige la salida de Nuestra Señora de Consolación Coronada a
+  las `07:00`, se documentan el Santo Rosario, el entorno del Real y Parque del V
+  Centenario y el Coro de la Virgen de Consolación.
+- Osuna (8/09): se incorpora el itinerario 2026, la salida a las `20:15`, el
+  contexto de la Función Principal y la Banda de Música Villa de Osuna.
+- Gerena (12/09): se refuerza el contexto de la Coronación Canónica con traslado
+  a las `17:00`, Pontifical a las `19:30` y procesión triunfal desde las `22:30`.
+- Se incorporan Fuentes específicas de 2026 para Utrera, Osuna y Gerena sin
+  inventar fechas de publicación cuando la fuente no las expone.
+- #459 corrige un fallo transversal de presentación que ocultaba música ya
+  documentada en Glorias. La corrección conserva los códigos semánticos reales y
+  no crea nuevas Bandas ni cambia el modelo.
+- Este lote modifica únicamente contenido editorial en producción y una capa de
+  lectura/presentación; no añade esquema, migraciones, RLS ni módulos.
 
 ## #439 · Aportaciones públicas seguras
 
@@ -142,8 +166,7 @@ completar, en este orden, sin reutilizar esta certificación como autorización:
 - Panel y Front comparten `bands.logo_background_color`.
 - No contiene estilos por slug, excepciones por Banda ni una segunda lógica de
   tamaño; conserva el normalizador óptico y `object-fit: contain`.
-- Producción registra la migración y conserva las 32 Bandas con `NULL`: no hubo
-  normalización masiva ni cambio visual por defecto.
+- La configuración por defecto no fuerza una normalización masiva de colores.
 
 ## Reproducibilidad de ramas y deuda histórica
 
@@ -163,30 +186,21 @@ completar, en este orden, sin reutilizar esta certificación como autorización:
 
 ## Git ↔ Supabase
 
-**PRODUCCIÓN → 🟢 ALINEADA**
+**PRODUCCIÓN → 🟢 ALINEADA EN ESQUEMA**
 
-- Git y Supabase registran exactamente 4 migraciones activas:
-  `20260831070000_first_edition_baseline`,
-  `20260831071000_secure_public_contributions_reconciled`,
-  `20260831072000_add_band_logo_background_color` y
-  `20260831074355_publica_tres_igualas_septiembre_2026`.
-- Diferencias de historial: ninguna.
-- Proyecto Supabase: `ACTIVE_HEALTHY`.
-- Ramas de desarrollo activas: ninguna; solo permanece `main`.
+- El ciclo editorial de este corte no añade migraciones ni modifica esquema.
+- Las actualizaciones de Utrera, Osuna y Gerena son contenido editorial sobre el
+  modelo ya certificado.
+- Proyecto Supabase: `ACTIVE_HEALTHY` en la última comprobación del frente.
+- No se ha relajado RLS ni alterado permisos por este trabajo.
 
 ## Seguridad, Auth, Storage y Legal
 
 **SEGURIDAD → 🟢 SIN BLOQUEO DE PRODUCCIÓN**
 
-- Todas las tablas públicas tienen RLS activa.
-- Auth registra 1 usuario y el Panel 1 miembro activo; no se extrajeron datos
-  personales durante el control.
-- Los seis avisos sobre funciones `SECURITY DEFINER` corresponden a funciones
-  autenticadas del Panel: no son ejecutables por `anon`, fijan `search_path` y
-  comprueban el rol activo antes de operar.
-- Los dos avisos de tablas RLS sin política quedan cerrados por defecto:
-  `contribution_attempts` no tiene privilegios API y `completeness_rules`, aunque
-  conserva grants heredados, no expone filas al carecer de políticas.
+- Todas las tablas públicas mantienen RLS activa según el cierre certificado.
+- Las funciones autenticadas del Panel y las superficies legales permanecen sin
+  cambios en este ciclo.
 - Storage separa medios públicos de la cuarentena privada; no hay políticas
   anónimas de escritura.
 - `/aviso-legal`, `/privacidad` y `/cookies`: operativas.
@@ -197,9 +211,10 @@ completar, en este orden, sin reutilizar esta certificación como autorización:
 
 **GRAFO → 🟢 SIN BLOQUEOS NUCLEARES**
 
-- 0 relaciones genéricas con extremos inexistentes.
-- 0 relaciones publicadas con extremos no públicos.
-- 0 claves foráneas públicas sin validar.
+- No se han introducido nuevas entidades ni relaciones estructurales en este
+  ciclo.
+- La música de Glorias ya documentada vuelve a ser visible sin alterar sus
+  códigos de posición.
 
 ## Freeze y fase activa
 
@@ -208,6 +223,7 @@ módulos, Homes, rediseños ni una Segunda Edición.
 
 La fase activa es exclusivamente editorial/documental: completar y verificar
 Bandas, Glorias, Igualás, Hermandades, fotografías y Fuentes sobre el modelo ya
-cerrado. El SEO P0 queda cerrado como mantenimiento compatible con el freeze, no
-queda ninguna PR funcional abierta en este corte y las aportaciones públicas
-permanecen desactivadas.
+cerrado. El SEO P0 permanece cerrado; este ciclo avanza contenido y corrige
+incidencias reales de presentación sin ampliar la arquitectura. No queda ninguna
+PR funcional abierta en este corte y las aportaciones públicas permanecen
+desactivadas.
