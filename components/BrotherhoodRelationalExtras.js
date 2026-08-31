@@ -37,6 +37,26 @@ function publicPeriod(period = '') {
   return /^desde\s+\d{4}\b/i.test(value) ? value : ''
 }
 
+function outingLabel(value = '') {
+  const label = String(value || '').trim().replaceAll('_', ' ')
+  return label || 'Salida procesional'
+}
+
+function groupCurrentAccompaniments(items = []) {
+  const groups = new Map()
+
+  for (const item of items) {
+    const label = outingLabel(item.salida)
+    if (!groups.has(label)) groups.set(label, [])
+    groups.get(label).push(item)
+  }
+
+  return [...groups.entries()].map(([label, groupItems]) => ({
+    label,
+    items: groupItems,
+  }))
+}
+
 async function loadConceptualTitulars(supabase, brotherhoodId) {
   const relations = assertRows(
     await supabase
@@ -177,19 +197,6 @@ async function loadCurrentAccompaniments(supabase, brotherhoodId) {
     .sort((a, b) => processionRank(a.posicion) - processionRank(b.posicion) || a.posicion.localeCompare(b.posicion, 'es'))
 }
 
-async function loadBrotherhoodTypes(supabase, brotherhoodId) {
-  const row = assertRow(
-    await supabase
-      .from('brotherhoods')
-      .select('brotherhood_types')
-      .eq('entity_id', brotherhoodId)
-      .maybeSingle(),
-    'No se pudo consultar el tipo de Hermandad'
-  )
-
-  return row?.brotherhood_types || []
-}
-
 async function loadBrotherhoodThreadData(supabase, brotherhoodId) {
   const [brotherhoodResult, imageLinksResult, stepLinksResult] = await Promise.all([
     supabase
@@ -232,7 +239,7 @@ async function loadBrotherhoodThreadData(supabase, brotherhoodId) {
           .select('id, name, slug')
           .eq('entity_type', 'step')
           .eq('status', 'published')
-          .in('id', stepIds)
+          .in('id', stepIds),
       : Promise.resolve({ data: [], error: null }),
   ])
 
@@ -435,62 +442,71 @@ function BrotherhoodDiscoveryPaths({ brotherhoodName, data }) {
   )
 }
 
-function CurrentMusicSequence({ items, penitencia }) {
+function CurrentMusicSequence({ items }) {
   if (!items.length) return null
 
-  const description = penitencia
-    ? 'Las formaciones que ponen música al discurrir de la Hermandad durante la estación de penitencia.'
-    : 'Las formaciones que acompañan musicalmente a la Hermandad en sus salidas procesionales.'
-  const outingNames = [...new Set(items.map((item) => item.salida).filter(Boolean))]
-  const sharedOuting = outingNames.length === 1 ? outingNames[0] : ''
+  const groups = groupCurrentAccompaniments(items)
 
   return (
     <section className={`${styles.section} brotherhood-current-music-sequence`} id="acompanamiento-musical">
       <div className="shell">
         <div className={styles.header}>
           <div className={styles.copy}>
-            <span className="eyebrow">{penitencia ? 'Semana Santa' : 'Música procesional'}</span>
+            <span className="eyebrow">Música procesional</span>
             <h2>Acompañamiento musical</h2>
-            <p>{description}</p>
+            <p>Las formaciones vinculadas actualmente a la Hermandad, organizadas según la salida concreta a la que acompaña cada una.</p>
             <div className={styles.context}>
-              {sharedOuting ? <strong>{sharedOuting}</strong> : null}
-              <span>{items.length} {items.length === 1 ? 'formación' : 'formaciones'}</span>
+              <span>{items.length} {items.length === 1 ? 'formación' : 'formaciones'} · {groups.length} {groups.length === 1 ? 'salida' : 'salidas'}</span>
             </div>
           </div>
         </div>
 
-        <div className={styles.sequence}>
-          {items.map((item) => {
-            const period = publicPeriod(item.periodo)
-            return (
-              <Link
-                className={`${styles.item} ${item.logo ? styles.withLogo : styles.withoutLogo}`}
-                href={`/bandas/${item.slug}`}
-                key={item.id}
-              >
-                {item.logo ? (
-                  <div className={styles.logoWrap}>
-                    <Image
-                      className={styles.logo}
-                      src={item.logo}
-                      alt={`Logotipo de ${item.nombre}`}
-                      fill
-                      sizes="58px"
-                    />
-                  </div>
-                ) : null}
-                <div className={styles.main}>
-                  <span className={styles.position}>{item.posicion}</span>
-                  <h3>{item.nombre}</h3>
-                  <div className={styles.meta}>
-                    <span>{item.tipo}</span>
-                    {period ? <span>{period}</span> : null}
-                  </div>
+        <div className={styles.groups}>
+          {groups.map((group) => (
+            <section className={styles.outingGroup} key={group.label}>
+              <header className={styles.outingHeader}>
+                <div>
+                  <span>Salida</span>
+                  <h3>{group.label}</h3>
                 </div>
-                <span className={styles.arrow} aria-hidden="true">→</span>
-              </Link>
-            )
-          })}
+                <small>{group.items.length} {group.items.length === 1 ? 'formación' : 'formaciones'}</small>
+              </header>
+
+              <div className={styles.sequence}>
+                {group.items.map((item) => {
+                  const period = publicPeriod(item.periodo)
+                  return (
+                    <Link
+                      className={`${styles.item} ${item.logo ? styles.withLogo : styles.withoutLogo}`}
+                      href={`/bandas/${item.slug}`}
+                      key={item.id}
+                    >
+                      {item.logo ? (
+                        <div className={styles.logoWrap}>
+                          <Image
+                            className={styles.logo}
+                            src={item.logo}
+                            alt={`Logotipo de ${item.nombre}`}
+                            fill
+                            sizes="58px"
+                          />
+                        </div>
+                      ) : null}
+                      <div className={styles.main}>
+                        <span className={styles.position}>{item.posicion}</span>
+                        <h3>{item.nombre}</h3>
+                        <div className={styles.meta}>
+                          <span>{item.tipo}</span>
+                          {period ? <span>{period}</span> : null}
+                        </div>
+                      </div>
+                      <span className={styles.arrow} aria-hidden="true">→</span>
+                    </Link>
+                  )
+                })}
+              </div>
+            </section>
+          ))}
         </div>
       </div>
     </section>
@@ -500,11 +516,10 @@ function CurrentMusicSequence({ items, penitencia }) {
 export async function BrotherhoodOwnBands({ brotherhoodId }) {
   try {
     const supabase = createPublicClient()
-    const [bands, threadData, currentAccompaniments, brotherhoodTypes] = await Promise.all([
+    const [bands, threadData, currentAccompaniments] = await Promise.all([
       loadOwnBands(supabase, brotherhoodId),
       loadBrotherhoodThreadData(supabase, brotherhoodId),
       loadCurrentAccompaniments(supabase, brotherhoodId),
-      loadBrotherhoodTypes(supabase, brotherhoodId),
     ])
     const discoveryData = await loadBrotherhoodDiscoveryData(
       supabase,
@@ -558,7 +573,6 @@ export async function BrotherhoodOwnBands({ brotherhoodId }) {
       `${threadData.steps.length} pasos`,
       currentBandCount ? `${currentBandCount} bandas actuales` : '',
     ].filter(Boolean).join(' · ')
-    const penitencia = brotherhoodTypes.includes('Penitencia')
     const brotherhoodName = threadData.brotherhood?.name || 'Hermandad'
 
     return (
@@ -594,7 +608,7 @@ export async function BrotherhoodOwnBands({ brotherhoodId }) {
           </section>
         ) : null}
 
-        <CurrentMusicSequence items={currentAccompaniments} penitencia={penitencia} />
+        <CurrentMusicSequence items={currentAccompaniments} />
       </>
     )
   } catch (error) {
