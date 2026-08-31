@@ -1,6 +1,6 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 31 de agosto de 2026 · 06:33 UTC
+**Corte validado:** 31 de agosto de 2026 · 09:20 UTC
 **Régimen:** `FIRST EDITION FREEZE` activo
 
 ## Estado general
@@ -15,121 +15,108 @@
 
 ## GitHub y baseline técnico
 
-- `main`: `f160b34c3b09b997d9dae214dfa56315c589aff2`.
-- Último merge: #443, igualá del Rosario de Santiago.
-- #442, normalización visual del logotipo de Tres Caídas: fusionada.
-- PR abiertas: #439 y #432.
-- #439 reconciliada con este `main`: 475/475 tests, build de producción,
-  TypeScript, CI #1221 y preview Vercel verdes.
-- #439 no se fusiona porque su rama Supabase continúa roja; el bloqueo está
-  aislado y no afecta a `main` ni a producción.
+- `main`: `2a8e01adb7f9c2b7edc7c19f24caf21d56f8a042`.
+- Último merge: #445, tres igualás oficiales de septiembre de 2026.
+- #439: fusionada en `378b20be3301f42635673ae9f41bbe6104a90b40`.
+- Única PR abierta: #432.
+- #432 head: `4efca69bf5c43f09f3af61bb3beae5481a8fa930`;
+  mergeable, CI #1238 verde y preview Vercel `READY`.
+- Suite del head de #432: 484/484; build y TypeScript correctos.
 
 ## Producción y Vercel
 
 **PRODUCCIÓN → 🟢 ESTABLE**
 
-- Deployment: `dpl_F2yg72LS91EmUNEZArcRJZiVm59G`.
-- Commit desplegado: `f160b34c3b09b997d9dae214dfa56315c589aff2`.
+- Deployment: `dpl_7xcbC8yBwYQuCNxfzLtjHUuxPaTd`.
+- Commit desplegado: `2a8e01adb7f9c2b7edc7c19f24caf21d56f8a042`.
 - Estado: `READY`; región operativa: `dub1`.
 - Dominios: `https://hilocofrade.es` y `https://www.hilocofrade.es`.
-- Runtime del deployment: sin errores ni fatales en el corte.
-- Smoke HTTP 200 en Home, Directorio, Hermandad, Banda, Gloria, Igualás,
+- Runtime: sin errores ni fatales en el corte.
+- Smoke correcto en Home, Directorio, Hermandad, Banda, Gloria, Igualás,
   Extraordinarias, Legal, Privacidad, Cookies, Panel y `/colabora`.
 
 ## #439 · Aportaciones públicas seguras
 
-**Estado → 🟣 BLOQUEADA POR REPRODUCIBILIDAD HISTÓRICA DE RAMAS**
+**Estado → 🟢 FUSIONADA · SERVICIO CERRADO**
 
-- Head: `b84ecfa388d4130fcb6afb91bb040429d0a049bd`.
-- Base real: `main` `f160b34c`.
-- GitHub: mergeable; CI y preview Vercel verdes.
-- Auditoría de código: validación estricta de payload y tipos, límites de
-  archivos, recodificación de imágenes, Turnstile preparado, rate limit,
-  cuarentena privada, escritura solo servidor, errores públicos genéricos y
-  ninguna publicación automática en el grafo.
-- El flag solo abre el canal con valor literal
-  `PUBLIC_CONTRIBUTIONS_ENABLED=true` y configuración completa.
-- La versión auditada devuelve una página cerrada antes de renderizar el
-  formulario y rechaza la acción antes del honeypot cuando el flag está apagado.
-- No se fusiona mientras la rama Supabase no reproduzca todo el historial.
+- La infraestructura segura y el baseline reproducible están versionados en
+  `main`.
+- `PUBLIC_CONTRIBUTIONS_ENABLED` permanece `false`.
+- `/colabora` no renderiza un formulario y declara que no recoge propuestas
+  ni datos personales.
+- El endpoint falla cerrado; Turnstile está preparado, pero no activado.
+- La activación futura requiere un corte separado de Legal → Privacidad →
+  Seguridad → Turnstile → QA → Activación.
 
 ## Aportaciones públicas
 
 **APORTACIONES → ⚪ INFRAESTRUCTURA PREPARADA · 🔒 DESACTIVADAS**
 
-- Producción muestra «Las aportaciones públicas aún no están abiertas».
-- No existe formulario público activo.
-- La página declara que no recoge propuestas ni datos personales.
-- `contributions`: RLS activa, 0 filas y sin `SELECT`/`INSERT` para `anon` ni
-  `authenticated`.
-- No se ha activado Turnstile ni cambiado el flag a `true`.
+- `contributions`: RLS activa y 0 filas.
+- `anon`: sin `SELECT`, `INSERT`, `UPDATE` ni `DELETE`.
+- `authenticated`: sin `INSERT` ni `DELETE`; lectura y actualización solo
+  mediante políticas de miembros/editor del Panel.
+- La cuarentena de archivos permanece privada.
+- No se ha publicado ningún formulario ni activado el flag.
 
 ## #432 · Fondo configurable de logotipos de Bandas
 
-**Estado → 🟣 BLOQUEADA POR CAUSA CONCRETA**
+**Estado → 🟢 LISTA PARA FUSIÓN**
 
-- Head: `e9a8468ea45ab815acf546413fd786fe0c024b49`.
-- GitHub: abierta y no mergeable frente al `main` actual.
-- Preview Vercel histórica: `READY`.
-- No existe actualmente una rama Supabase propia de #432.
-- La auditoría funcional conserva sentido: campo nullable reutilizable,
-  validación HEX `#RRGGBB`, opción «Sin fondo», selector y preview; Panel y Front
-  comparten el mismo valor.
+- Campo nullable reutilizable, validación HEX `#RRGGBB`, selector, preview y
+  opción «Sin fondo».
+- Panel y Front comparten `bands.logo_background_color`.
 - No contiene estilos por slug, excepciones por Banda ni una segunda lógica de
-  tamaño; no duplica el tratamiento visual genérico vigente.
-- No se revalida ni fusiona hasta disponer de una rama Supabase reproducible y
-  reconciliarla con `main`.
+  tamaño; conserva el normalizador óptico y `object-fit: contain`.
+- La rama Supabase temporal reprodujo baseline, seguridad, #432 y seed.
+- Persistencia real comprobada con Maestro Tejera (`#F2F2F2`), rechazo de HEX
+  inválido y reversión a `NULL`; Las Cigarreras conservó el comportamiento sin
+  fondo.
+- La rama temporal fue eliminada tras el QA; producción no se tocó.
+- Preview del head: `dpl_EWUjETd7YhHRs8Ezu2riWVThPrij`, `READY`.
 
-## Migración 048 y ramas Supabase
+## Migración 048 y reproducibilidad de ramas
 
-**048 → 🟢 DIAGNOSTICADA Y REPRODUCIDA · CADENA POSTERIOR → 🟣 BLOQUEADA**
+**048 → 🟢 AISLADA POR BASELINE · BLOQUEO REAL POSTERIOR IDENTIFICADO**
 
-- `20260818133048_consolidar_san_benito` presupone una Hermandad, tres Pasos,
-  titulares, sede y relaciones canónicas creadas antes desde el Panel.
-- En ramas `with_data=false` esos registros no existen; por eso 048 lanzaba
-  «no existe el registro canónico de San Benito».
-- Se eligió estrategia C: baseline idempotente anterior a 048, sin reescribir
-  la migración ni cambiar los datos reales de San Benito.
-- La rama de #439 superó 048 y avanzó hasta 054. Un segundo baseline mínimo
-  permitió superar 054 y llegar a 057.
-- Bloqueo actual exacto: `20260819130530_logotipo_portadas_puebla` espera la
-  Banda Municipal de Música de La Puebla del Río y tres publicaciones creadas
-  históricamente fuera de las migraciones.
-- La sucesión 048 → 054 → 057 demuestra un problema global del historial. No se
-  añaden más parches por entidad: la solución pendiente es un baseline de datos
-  versionado y completo, o una política segura de ramas con copia controlada.
+- `20260818133048_consolidar_san_benito` era una migración histórica de datos
+  no reproducible sin los registros canónicos de producción.
+- No se reescribió la historia ni se alteraron datos reales de San Benito.
+- La estrategia C quedó materializada mediante baseline único y seed mínimo,
+  idempotente y sin aportaciones.
+- Con ese baseline, una rama vacía supera 048. El fallo vigente apareció después:
+  `20260831074355_publica_tres_igualas_septiembre_2026` asumía tres Hermandades
+  presentes en producción.
+- #432 contiene la corrección general: si una Hermandad fuente no existe en una
+  preview vacía, su convocatoria se omite sin crear datos ficticios ni relajar
+  integridad. El resultado de producción permanece idéntico.
 
 ## Git ↔ Supabase
 
 **PRODUCCIÓN → 🟢 ALINEADA**
 
-- Git `main`: 191 migraciones.
-- Supabase producción: 191 migraciones.
-- Última versión común:
-  `20260831061147_publica_iguala_rosario_santiago_2026`.
-- `20260830232314_close_public_contribution_endpoint` está aplicada y
-  versionada; no se ejecutó de nuevo.
-- Los baselines investigados y la migración segura nueva permanecen solo en
-  #439; al no fusionarse, no crean divergencia en producción.
-- Proyecto Supabase: `ACTIVE_HEALTHY`; 77 tablas públicas con RLS activa.
+- Historial activo Git/Supabase:
+  `20260831070000_first_edition_baseline`,
+  `20260831071000_secure_public_contributions_reconciled` y
+  `20260831074355_publica_tres_igualas_septiembre_2026`.
+- Diferencias de historial en producción: ninguna.
+- Proyecto Supabase: `ACTIVE_HEALTHY`.
+- Ramas de desarrollo activas tras el QA: ninguna.
 
 ## Seguridad, Auth y Legal
 
-**SEGURIDAD → 🟢 EN PRODUCCIÓN · #439 SIN ROJOS DE CÓDIGO**
+**SEGURIDAD → 🟢**
 
 - Front público anónimo y stateless; Panel autenticado y no indexable.
-- RLS de `contributions` activa y canal público sin privilegios.
-- Sin secretos en cliente, claves sensibles públicas, datos personales en logs,
-  SQL ni stack traces expuestos por #439.
+- Sin secretos sensibles en cliente, datos personales en logs, SQL ni stack
+  traces públicos.
 - `/aviso-legal`, `/privacidad` y `/cookies`: operativas.
-- La activación futura exige un corte separado de Legal → Privacidad →
-  Seguridad → Turnstile → QA → Activación.
 
 ## Salud del grafo
 
 **GRAFO → 🟢 SIN BLOQUEOS NUCLEARES**
 
-- 0 relaciones de entidad con extremos inexistentes.
+- 0 relaciones genéricas con extremos inexistentes.
 - 0 relaciones publicadas con extremos no públicos.
 - 0 relaciones Hermandad–Paso, Hermandad–Imagen o Imagen–Paso con extremos
   inexistentes.
@@ -138,6 +125,7 @@
 ## Freeze
 
 `FIRST EDITION FREEZE` continúa activo. No se abren funcionalidades, entidades,
-módulos, Homes, rediseños ni una Segunda Edición. El único frente siguiente
-admisible es resolver de forma general la reproducibilidad histórica de ramas
-Supabase; después se revalidarán #439 y #432 por separado.
+módulos, Homes, rediseños ni una Segunda Edición.
+
+La única decisión pendiente de Dirección es fusionar o no #432, ya clasificada
+como lista para fusión. Las aportaciones públicas permanecen desactivadas.
