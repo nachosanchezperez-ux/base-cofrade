@@ -84,17 +84,18 @@ Responsabilidades cerradas:
 - El `outing` publicado conserva fecha, imagen, texto alternativo y crédito.
 - #423 no requiere nueva migración, cambio de esquema, RLS ni Storage.
 
-**HISTORIAL GLOBAL DE MIGRACIONES → 🟠 RECONCILIACIÓN PENDIENTE**
+**HISTORIAL GLOBAL DE MIGRACIONES → 🟢 ALINEADO**
 
-- Git: 189 archivos de migración.
-- Supabase: 188 entradas de historial.
-- Solo en Supabase: `20260830232314_close_public_contribution_endpoint`.
-- Solo en Git:
-  - `20260831014500_pasion_muerte_habito_correccion`;
-  - `20260831015700_pasion_muerte_habito_imagen_publica`.
-- Los datos de Pasión y Muerte ya reflejan ambas migraciones; no se repiten sus actualizaciones.
-- La migración de contribuciones pertenece al frente paralelo `feat/secure-public-contributions-20260831`.
-- La reconciliación se mantiene separada para no mezclar trabajos paralelos ni fingir una alineación inexistente.
+- Git: 190 archivos de migración.
+- Supabase: 190 entradas de historial.
+- Sin versiones exclusivas en Git ni en Supabase.
+- `20260831014500_pasion_muerte_habito_correccion` y
+  `20260831015700_pasion_muerte_habito_imagen_publica` se marcaron como aplicadas
+  tras comprobar que producción ya reflejaba exactamente ambas migraciones; no se
+  repitieron sus actualizaciones ni cambió `updated_at`.
+- `20260830232314_close_public_contribution_endpoint` queda incorporada a Git
+  como reconciliación del cierre preventivo ya aplicado. Esto no activa el frente
+  paralelo #439 ni su formulario público.
 
 ## Auth, RLS y seguridad
 
