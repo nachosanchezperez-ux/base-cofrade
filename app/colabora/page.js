@@ -31,7 +31,7 @@ function ClosedContributionsPage() {
     <div className={styles.page}>
       <header className={styles.hero}>
         <div className="shell">
-          <span className={styles.eyebrow}>Archivo abierto · Próxima fase</span>
+          <span className={styles.eyebrow}>Colabora con Hilo Cofrade</span>
           <h1>Las aportaciones públicas aún no están abiertas</h1>
           <p>
             La infraestructura permanece cerrada mientras se completan el corte
@@ -61,7 +61,7 @@ export default function ColaboraPage() {
     <div className={styles.page}>
       <header className={styles.hero}>
         <div className="shell">
-          <span className={styles.eyebrow}>Archivo abierto · Revisión humana</span>
+          <span className={styles.eyebrow}>Colabora con Hilo Cofrade</span>
           <h1>Ayúdanos a seguir tirando del hilo</h1>
           <p>
             Cada dato, fotografía o documento puede completar una historia cofrade.
