@@ -11,7 +11,7 @@
 **PRIMERA EDICIÓN → 🟢 CERRADA, CERTIFICADA Y CONGELADA**
 
 - Baseline funcional y estructural: `a025098528351656503460596d28b5318e39daf5`.
-- `main` total validado en este corte:
+- Último commit funcional validado en este corte:
   `c8407c9e2566ea1594127290e1bf4ee022f3fc7f`.
 - La evolución posterior al baseline contiene únicamente certificación canónica
   (#452), mantenimiento SEO P0 (#453 y #454) y una corrección visual real de
@@ -25,7 +25,7 @@
 
 - Baseline funcional/estructural: `a025098528351656503460596d28b5318e39daf5`
   (#432).
-- Último `main` total comprobado: `c8407c9e2566ea1594127290e1bf4ee022f3fc7f`
+- Último `main` funcional comprobado: `c8407c9e2566ea1594127290e1bf4ee022f3fc7f`
   (#455).
 - #439: fusionada en `378b20be3301f42635673ae9f41bbe6104a90b40`.
 - #432: fusionada en `a025098528351656503460596d28b5318e39daf5`.
@@ -35,24 +35,28 @@
   `8bfca4d4cf23460a414d3f507f8a1f2774551299`.
 - #455: corrección visual de Mairena fusionada en
   `c8407c9e2566ea1594127290e1bf4ee022f3fc7f`.
-- PR abiertas: 0.
-- La última ejecución `Production SEO Smoke` sobre el `main` actual es la #22 y
-  termina `SUCCESS`.
+- PR abiertas: 0 en el corte funcional.
+- La última ejecución `Production SEO Smoke` sobre ese commit funcional es la
+  #22 y termina `SUCCESS`.
+- Las sincronizaciones documentales posteriores no alteran el baseline funcional
+  ni obligan a reescribir este SHA de forma recursiva.
 
 ## Producción y Vercel
 
 **PRODUCCIÓN → 🟢 ESTABLE**
 
-- Deployment: `dpl_7vRuFGN8j2SiKmKN1eohANnjXcpT`.
-- Commit desplegado: `c8407c9e2566ea1594127290e1bf4ee022f3fc7f`.
+- Último deployment funcional validado: `dpl_7vRuFGN8j2SiKmKN1eohANnjXcpT`.
+- Commit funcional desplegado: `c8407c9e2566ea1594127290e1bf4ee022f3fc7f`.
 - Estado: `READY`; target: producción.
 - Dominios: `https://hilocofrade.es` y `https://www.hilocofrade.es`, con
   redirección canónica correcta.
 - Runtime: 0 errores detectados en la última hora y 0 respuestas 5xx en el
-  deployment actual; la muestra observada registra 49 respuestas 200.
-- El `Production SEO Smoke` automático del deployment actual pasa correctamente
-  sobre Home, Directorio, Extraordinarias, Glorias, Igualás, Baratillo,
-  Cigarreras y una URL dinámica de cada agenda obtenida desde el sitemap.
+  deployment funcional validado; la muestra observada registra 49 respuestas
+  200.
+- El `Production SEO Smoke` automático del deployment funcional validado pasa
+  correctamente sobre Home, Directorio, Extraordinarias, Glorias, Igualás,
+  Baratillo, Cigarreras y una URL dinámica de cada agenda obtenida desde el
+  sitemap.
 
 ## SEO P0 · mantenimiento técnico
 
@@ -205,5 +209,5 @@ módulos, Homes, rediseños ni una Segunda Edición.
 La fase activa es exclusivamente editorial/documental: completar y verificar
 Bandas, Glorias, Igualás, Hermandades, fotografías y Fuentes sobre el modelo ya
 cerrado. El SEO P0 queda cerrado como mantenimiento compatible con el freeze, no
-queda ninguna PR abierta en este corte y las aportaciones públicas permanecen
-desactivadas.
+queda ninguna PR funcional abierta en este corte y las aportaciones públicas
+permanecen desactivadas.
