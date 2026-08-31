@@ -14,7 +14,9 @@ begin
     and entity_type = 'band';
 
   if v_band is null then
-    raise exception 'No se localiza la banda Presentación al Pueblo';
+    -- Las ramas efímeras de Supabase se crean sin datos editoriales.
+    -- En producción la precondición existe; en previews vacías la migración debe ser inocua.
+    return;
   end if;
 
   insert into sources (id,name,url,source_type,author_or_publisher,accessed_at,notes)
