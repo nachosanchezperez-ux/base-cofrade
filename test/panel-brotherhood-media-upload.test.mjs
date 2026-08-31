@@ -12,12 +12,12 @@ const loader = read('lib/panel/brotherhood-media.js')
 const layout = read('app/panel/(protected)/hermandades/[id]/layout.js')
 const metricNavigation = read('components/panel/PanelMetricNavigation.js')
 
-test('la Hermandad ofrece una subida semántica para Pasos, carteles y Titulares', () => {
-  assert.match(page, /¿Qué quieres subir\?/)
-  assert.match(page, /Fotografía de un Paso/)
+test('la Hermandad ofrece gestión semántica para Pasos, carteles y Titulares', () => {
+  assert.match(page, /¿Qué quieres gestionar\?/)
+  assert.match(page, /Fotografías de Pasos/)
   assert.match(page, /title="Carteles"|title="Cartel"/)
   assert.match(page, /Fotografías de los Titulares/)
-  assert.match(page, /El Panel se encarga de vincular la imagen a la ficha correcta/)
+  assert.match(page, /Sube, revisa y gestiona las imágenes desde el mismo contenido al que pertenecen/)
   assert.doesNotMatch(page, /name="relation_type"/)
 })
 
