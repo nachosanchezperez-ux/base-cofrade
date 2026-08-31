@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 270">
+<rect x="40" y="50" width="600" height="200" rx="24" fill="#112339"/>
+<line x1="100" y1="150" x2="168" y2="150" stroke="#B01B32" stroke-width="9" stroke-linecap="round"/>
+<circle cx="100" cy="150" r="13" fill="#B01B32"/>
+<circle cx="168" cy="150" r="13" fill="#B01B32"/>
+<text x="225" y="172" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="54"><tspan font-weight="700" fill="#FFFFFF">Hilo </tspan><tspan font-weight="400" fill="#FFFFFF">Cofrade</tspan></text>
+</svg>
