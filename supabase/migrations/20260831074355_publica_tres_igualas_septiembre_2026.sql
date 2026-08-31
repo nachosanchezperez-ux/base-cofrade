@@ -130,6 +130,21 @@ insert into crew_calls_20260831 values
   'Convocatoria oficial para fecha, hora, lugar y paso; no publica capataz ni requisitos.'
 );
 
+-- Las ramas de preview no copian datos de producción. Conservamos únicamente
+-- las convocatorias cuya Hermandad canónica ya existe en la base de destino;
+-- así la migración es un no-op seguro en una rama mínima y mantiene exactamente
+-- el mismo resultado histórico en producción.
+delete from crew_calls_20260831 call
+where not exists (
+  select 1
+  from public.entities brotherhood_entity
+  join public.brotherhoods brotherhood
+    on brotherhood.entity_id = brotherhood_entity.id
+  where brotherhood_entity.slug = call.brotherhood_slug
+    and brotherhood_entity.entity_type = 'brotherhood'
+    and brotherhood_entity.status = 'published'
+);
+
 -- Lugares institucionales anunciados. El punto de encuentro de Mercedes se
 -- conserva como texto para no convertir una dirección puntual en una sede.
 insert into public.places (
