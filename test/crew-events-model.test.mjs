@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises'
 
 const migrationPath = new URL('../supabase/migrations/20260830084624_calendario_igualas_ensayos.sql', import.meta.url)
 const buenAireMigrationPath = new URL('../supabase/migrations/20260830090233_publica_iguala_buen_aire_2026.sql', import.meta.url)
+const rosarioSantiagoMigrationPath = new URL('../supabase/migrations/20260831061147_publica_iguala_rosario_santiago_2026.sql', import.meta.url)
 
 test('el calendario reutiliza la entidad event y crea relaciones tipadas con Pasos y Personas', async () => {
   const sql = await readFile(migrationPath, 'utf8')
@@ -46,4 +47,19 @@ test('la primera igualá publicada conserva convocatoria, relaciones y fuente of
   assert.match(sql, /'paso-procesional-santa-maria-buen-aire-sevilla'/)
   assert.match(sql, /'manuel-vizcaya-lopez'/)
   assert.match(sql, /https:\/\/hermandadpasionymuerte\.es\/\?p=3840/)
+})
+
+test('la igualá del Rosario de Santiago publica solo los datos anunciados y acredita la Hermandad', async () => {
+  const sql = await readFile(rosarioSantiagoMigrationPath, 'utf8')
+
+  assert.match(sql, /'iguala-rosario-santiago-alcala-2026'/)
+  assert.match(sql, /date '2026-09-19'/)
+  assert.match(sql, /time '18:30'/)
+  assert.match(sql, /'paso-procesional-nuestra-senora-rosario-santiago-alcala'/)
+  assert.match(sql, /event\.place_id is null/)
+  assert.match(sql, /event\.location_text is null/)
+  assert.match(sql, /event\.requirements is null/)
+  assert.match(sql, /from public\.crew_event_agents relation/)
+  assert.match(sql, /https:\/\/www\.facebook\.com\/100069128529775\/posts\/1114255717555369\//)
+  assert.match(sql, /https:\/\/parroquiasantiagoalcala\.es\/rosario-de-santiago\//)
 })
