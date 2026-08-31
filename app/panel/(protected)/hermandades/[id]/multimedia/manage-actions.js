@@ -158,7 +158,7 @@ async function loadContext(formData) {
   const asset = assertRow(
     await supabase
       .from('media_assets')
-      .select('id, storage_path, title, caption, alt_text, author_name, rights_status')
+      .select('id, title, caption, alt_text, author_name, rights_status')
       .eq('id', mediaAssetId)
       .maybeSingle(),
     'El archivo multimedia ya no existe.'
@@ -174,10 +174,6 @@ async function audit(supabase, user, entry) {
     ...entry,
   })
   if (result.error) console.error('[Hilo Cofrade] No se pudo registrar la operación multimedia local', result.error)
-}
-
-function isManagedStoragePath(storagePath = '') {
-  return Boolean(storagePath) && !storagePath.startsWith('/') && !/^https?:\/\//i.test(storagePath) && !storagePath.includes('..')
 }
 
 function redirectManaged(context, saved) {
@@ -228,14 +224,6 @@ async function promoteNextCover(context) {
   const payload = { is_cover: true, sort_order: 0, [context.spec.relationColumn]: 'cover' }
   const promoted = await context.supabase.from(context.spec.table).update(payload).eq('id', next.data.id)
   if (promoted.error) throw new Error(`No se pudo activar la fotografía principal de reemplazo: ${promoted.error.message}`)
-}
-
-async function countAssetReferences(supabase, mediaAssetId) {
-  const results = await Promise.all(['entity_media', 'cult_media', 'outing_media'].map((table) => (
-    supabase.from(table).select('id', { count: 'exact', head: true }).eq('media_asset_id', mediaAssetId)
-  )))
-  if (results.some((result) => result.error)) return null
-  return results.reduce((total, result) => total + Number(result.count || 0), 0)
 }
 
 export async function updateBrotherhoodMediaAssetAction(formData) {
@@ -292,7 +280,7 @@ export async function setBrotherhoodMediaCoverAction(formData) {
   redirectManaged(context, 'cover')
 }
 
-export async function deleteBrotherhoodMediaAssetAction(formData) {
+export async function unlinkBrotherhoodMediaAssetAction(formData) {
   const user = await requirePanelEditor()
   const context = await loadContext(formData)
   const wasCover = Boolean(context.link.is_cover)
@@ -303,33 +291,19 @@ export async function deleteBrotherhoodMediaAssetAction(formData) {
   )
   if (wasCover) await promoteNextCover(context)
 
-  const remainingReferences = await countAssetReferences(context.supabase, context.mediaAssetId)
-  let removedAsset = false
-  if (remainingReferences === 0) {
-    const deletedAsset = await context.supabase.from('media_assets').delete().eq('id', context.mediaAssetId)
-    if (!deletedAsset.error) {
-      removedAsset = true
-      if (isManagedStoragePath(context.asset.storage_path)) {
-        const removedStorage = await context.supabase.storage.from('hilo-media').remove([context.asset.storage_path])
-        if (removedStorage.error) console.error('[Hilo Cofrade] No se pudo limpiar el archivo huérfano de Storage', removedStorage.error)
-      }
-    } else {
-      console.error('[Hilo Cofrade] El vínculo se retiró, pero el archivo multimedia se conserva', deletedAsset.error)
-    }
-  }
-
   await audit(context.supabase, user, {
-    action_type: removedAsset ? 'delete' : 'unlink',
+    action_type: 'unlink',
     object_type: context.spec.table,
     object_id: context.linkId,
     entity_id: context.targetKind === 'cult' ? context.brotherhoodId : context.targetId,
-    summary: `${removedAsset ? 'Archivo eliminado' : 'Archivo desvinculado'}: ${context.target.name}`,
+    summary: `Archivo desvinculado: ${context.target.name}`,
     changed_fields: {
       media_asset_id: context.mediaAssetId,
-      removed_asset: removedAsset,
-      preserved_because_reused: remainingReferences !== 0,
+      removed_asset: false,
+      storage_preserved: true,
+      cleanup_deferred: true,
     },
   })
   revalidateManagedMedia(context)
-  redirectManaged(context, removedAsset ? 'deleted' : 'unlinked')
+  redirectManaged(context, 'unlinked')
 }
