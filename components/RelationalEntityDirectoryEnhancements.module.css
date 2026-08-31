@@ -236,3 +236,44 @@
     font-size: 18px;
   }
 }
+
+.bandMediaWide {
+  border-color: color-mix(in srgb, var(--entity-accent) 14%, #e3eaf0);
+  background: color-mix(in srgb, var(--entity-accent) 4%, white);
+}
+
+.bandMediaWide img {
+  object-fit: contain;
+  padding: 5px;
+}
+
+.card.bandCard[data-logo-presentation='wide'] {
+  --hc-directory-media-column: 158px;
+  --hc-directory-media-width: 150px;
+  --hc-directory-media-height: 72px;
+}
+
+@media (max-width: 1100px) {
+  .card.bandCard[data-logo-presentation='wide'] {
+    --hc-directory-media-column: 142px;
+    --hc-directory-media-width: 134px;
+    --hc-directory-media-height: 68px;
+  }
+}
+
+@media (max-width: 840px) {
+  .card.bandCard[data-logo-presentation='wide'] {
+    --hc-directory-media-column: 128px;
+    --hc-directory-media-width: 120px;
+    --hc-directory-media-height: 62px;
+  }
+}
+
+@media (max-width: 620px) {
+  .card.bandCard[data-logo-presentation='wide'] {
+    --hc-directory-media-column: 104px;
+    --hc-directory-media-width: 100px;
+    --hc-directory-media-height: 54px;
+    --hc-directory-card-gap: 10px;
+  }
+}

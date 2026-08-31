@@ -87,11 +87,12 @@ function isOpaqueRasterLogo(src = '') {
   return path.endsWith('.jpg') || path.endsWith('.jpeg');
 }
 
-function BandIdentity({ src, alt, initials = '', backgroundColor = '' }) {
+function BandIdentity({ src, alt, initials = '', backgroundColor = '', presentation = 'default' }) {
   const opaqueRaster = isOpaqueRasterLogo(src);
   const resolvedBackground = normalizeLogoBackgroundColor(backgroundColor);
   const lightBackground = resolvedBackground && isLightLogoBackgroundColor(resolvedBackground);
   const removeLightRasterBackground = opaqueRaster && !resolvedBackground;
+  const isWide = presentation === 'wide';
 
   return (
     <div className={bandStyles.identityStage} aria-label={alt || 'Identidad visual de la formación'}>
@@ -116,14 +117,14 @@ function BandIdentity({ src, alt, initials = '', backgroundColor = '' }) {
       ) : null}
       <span className={bandStyles.identityAura} aria-hidden="true" />
       <div
-        className={`${bandStyles.logoStage} ${removeLightRasterBackground ? bandStyles.logoStageOpaqueRaster : ''}`}
+        className={`${bandStyles.logoStage} ${isWide ? bandStyles.logoStageWide : ''} ${removeLightRasterBackground ? bandStyles.logoStageOpaqueRaster : ''}`}
         data-custom-background={resolvedBackground ? 'true' : undefined}
         data-light-background={lightBackground ? 'true' : undefined}
         style={resolvedBackground ? { '--band-logo-background': resolvedBackground } : undefined}
       >
         {src ? (
           <BrotherhoodDirectoryCrestImage
-            className={`${bandStyles.logo} ${removeLightRasterBackground ? bandStyles.logoOpaqueRaster : ''}`}
+            className={`${bandStyles.logo} ${isWide ? bandStyles.logoWide : ''} ${removeLightRasterBackground ? bandStyles.logoOpaqueRaster : ''}`}
             src={src}
             alt={alt || ''}
             width={230}
@@ -157,6 +158,7 @@ export default function RelationalEntityHero({
   const visibleFacts = facts.filter((fact) => fact?.label && fact?.value).slice(0, 3);
   const isBrotherhood = variant === 'brotherhood';
   const isBand = variant === 'band';
+  const isWideBandLogo = isBand && media.crestPresentation === 'wide';
 
   const heading = (
     <div className={styles.titleBody}>
@@ -178,12 +180,13 @@ export default function RelationalEntityHero({
       {heading}
     </div>
   ) : isBand ? (
-    <div className={bandStyles.identityLockup}>
+    <div className={`${bandStyles.identityLockup} ${isWideBandLogo ? bandStyles.identityLockupWide : ''}`}>
       <BandIdentity
         src={media.crestSrc}
         alt={media.crestAlt}
         initials={media.initials}
         backgroundColor={media.logoBackgroundColor}
+        presentation={media.crestPresentation}
       />
       {heading}
     </div>

@@ -23,6 +23,7 @@ import {
   partitionAccompanimentsBySeason,
   presentAccompanimentLocation,
   presentAccompanimentMoment,
+  presentAccompanimentNotes,
   presentAccompanimentStep,
   sortGloryAccompaniments,
   sortHolyWeekAccompaniments,
@@ -96,11 +97,13 @@ function AccompanimentCard({ item, band, showLocation = false }) {
   const hasStepDetail = step.type || step.name || step.position
   const period = yearRange(item)
   const location = publicText(presentAccompanimentLocation(item))
+  const headerLabel = accompanimentHeaderLabel(item)
+  const notes = publicText(presentAccompanimentNotes(item, headerLabel))
 
   return (
     <article className={`${styles.relationshipCard} ${showLocation ? styles.locatedRelationshipCard : ''}`}>
       <div className={styles.relationshipTop}>
-        <span>{accompanimentHeaderLabel(item)}</span>
+        <span>{headerLabel}</span>
         {period ? <strong>{period}</strong> : null}
       </div>
       {showLocation && location ? <div className={styles.relationshipLocation}>
@@ -118,7 +121,7 @@ function AccompanimentCard({ item, band, showLocation = false }) {
         ) : null}
         {step.type ? <span className={styles.relationshipStepType}>{step.type}</span> : null}
       </div> : null}
-      {publicText(item.notes) && item.brotherhoodName !== band.linkedBrotherhood ? <p className={styles.relationshipNote}>{publicText(item.notes)}</p> : null}
+      {notes && item.brotherhoodName !== band.linkedBrotherhood ? <p className={styles.relationshipNote}>{notes}</p> : null}
       {item.brotherhoodSlug && item.brotherhoodPageReady ? <div className={styles.relationshipLinks}>
         <Link href={`/hermandades/${item.brotherhoodSlug}`}>Ver ficha de la hermandad <span>→</span></Link>
       </div> : null}
@@ -298,6 +301,7 @@ export default async function BandDetailPage({ params }) {
           crestAlt: `Logotipo de ${band.popularName}`,
           initials: band.popularName.slice(0, 2).toUpperCase(),
           logoBackgroundColor: band.logoBackgroundColor,
+          crestPresentation: band.slug === 'agrupacion-musical-virgen-de-los-reyes-sevilla' ? 'wide' : 'default',
         }}
       />
 

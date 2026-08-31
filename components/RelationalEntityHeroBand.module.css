@@ -271,3 +271,52 @@
     font-size: 34px;
   }
 }
+
+.identityLockupWide {
+  grid-template-columns: clamp(310px, 28vw, 380px) minmax(0, 1fr);
+}
+
+.logoStageWide {
+  width: min(100%, 380px);
+  height: 180px;
+}
+
+.logo.logoWide {
+  max-height: 150px;
+}
+
+@media (max-width: 1120px) {
+  .identityLockupWide {
+    grid-template-columns: 330px minmax(0, 1fr);
+  }
+
+  .logoStageWide {
+    width: min(100%, 330px);
+    height: 168px;
+  }
+}
+
+@media (max-width: 900px) {
+  .logoStageWide {
+    width: min(100%, 340px);
+    height: 166px;
+  }
+}
+
+@media (max-width: 620px) {
+  .identityLockupWide {
+    grid-template-columns: 1fr;
+  }
+
+  .logoStageWide {
+    width: min(100%, 310px);
+    height: 142px;
+  }
+}
+
+@media (max-width: 390px) {
+  .logoStageWide {
+    width: min(100%, 286px);
+    height: 132px;
+  }
+}
