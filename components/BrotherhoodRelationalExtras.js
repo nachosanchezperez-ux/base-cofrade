@@ -239,7 +239,7 @@ async function loadBrotherhoodThreadData(supabase, brotherhoodId) {
           .select('id, name, slug')
           .eq('entity_type', 'step')
           .eq('status', 'published')
-          .in('id', stepIds),
+          .in('id', stepIds)
       : Promise.resolve({ data: [], error: null }),
   ])
 
