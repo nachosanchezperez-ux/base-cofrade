@@ -7,7 +7,7 @@ function source(path) {
 }
 
 test('la autoría desconocida no necesita un Agente ficticio', () => {
-  const migration = source('supabase/migrations/20260822150900_image_authorship_anonymous.sql')
+  const migration = source('supabase/migrations_archive/first-edition/20260822150900_image_authorship_anonymous.sql')
   const action = source('app/panel/(protected)/imagenes/[id]/autorias/anonymous-action.js')
   const editor = source('components/panel/ImageAuthorshipEditor.js')
 

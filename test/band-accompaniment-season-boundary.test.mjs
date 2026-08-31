@@ -28,7 +28,7 @@ test('la ficha de Banda usa lenguaje cofrade y ofrece una sección para contrato
 })
 
 test('la migración cierra Virgen de los Reyes en 2026 y abre La Encarnación en 2027', () => {
-  const migration = read('supabase/migrations/20260827232524_corrige_las_vinas_virgen_reyes_encarnacion.sql')
+  const migration = read('supabase/migrations_archive/first-edition/20260827232524_corrige_las_vinas_virgen_reyes_encarnacion.sql')
 
   assert.match(migration, /year_to = 2026/)
   assert.match(migration, /is_current = false/)

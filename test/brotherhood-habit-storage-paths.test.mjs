@@ -70,7 +70,7 @@ test('el flujo de hábitos guarda rutas internas y las resuelve solo al visualiz
 
 test('versiona la migración remota que normaliza y blinda image_path', async () => {
   const migration = await source(
-    'supabase/migrations/20260823232506_normalize_brotherhood_habit_media_paths.sql'
+    'supabase/migrations_archive/first-edition/20260823232506_normalize_brotherhood_habit_media_paths.sql'
   )
 
   assert.match(migration, /update public\.brotherhood_habits/)

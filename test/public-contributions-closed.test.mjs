@@ -4,8 +4,8 @@ import test from 'node:test'
 
 const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8')
 
-const migration = read('supabase/migrations/20260830232314_close_public_contribution_endpoint.sql')
-const secureMigration = read('supabase/migrations/20260830235652_secure_public_contributions_reconciled.sql')
+const migration = read('supabase/migrations_archive/first-edition/20260830232314_close_public_contribution_endpoint.sql')
+const secureMigration = read('supabase/migrations/20260831071000_secure_public_contributions_reconciled.sql')
 const publicPage = read('app/colabora/page.js')
 const publicForm = read('app/colabora/ContributionForm.js')
 const publicAction = read('app/colabora/actions.js')

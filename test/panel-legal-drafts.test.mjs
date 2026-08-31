@@ -4,7 +4,7 @@ import test from 'node:test'
 
 const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8')
 
-const migration = read('supabase/migrations/20260827001549_panel_legal_drafts.sql')
+const migration = read('supabase/migrations_archive/first-edition/20260827001549_panel_legal_drafts.sql')
 const page = read('app/panel/(protected)/legal/page.js')
 const actions = read('app/panel/(protected)/legal/actions.js')
 const navigation = read('lib/panel/navigation.js')

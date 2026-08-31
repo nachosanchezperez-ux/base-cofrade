@@ -38,7 +38,7 @@ test('las fotografías de cultos tienen lectura pública y subida editorial prop
   const publicLoader = await source('lib/supabase/cult-media.js')
   const panelAction = await source('app/panel/(protected)/hermandades/[id]/multimedia/actions.js')
   const panelPage = await source('app/panel/(protected)/hermandades/[id]/multimedia/page.js')
-  const migration = await source('supabase/migrations/20260824003235_cult_media.sql')
+  const migration = await source('supabase/migrations_archive/first-edition/20260824003235_cult_media.sql')
 
   assert.match(publicLoader, /createPublicClient/)
   assert.match(publicLoader, /PUBLIC_RIGHTS_STATUSES/)
@@ -53,7 +53,7 @@ test('las fotografías de cultos tienen lectura pública y subida editorial prop
 test('la subida rápida respeta el gobierno de media abierta y cult_media aplica mínimo privilegio', async () => {
   const panelAction = await source('app/panel/(protected)/hermandades/[id]/multimedia/actions.js')
   const panelPage = await source('app/panel/(protected)/hermandades/[id]/multimedia/page.js')
-  const migration = await source('supabase/migrations/20260824003235_cult_media.sql')
+  const migration = await source('supabase/migrations_archive/first-edition/20260824003235_cult_media.sql')
 
   assert.match(panelAction, /QUICK_UPLOAD_RIGHTS = new Set\(\['owned', 'authorized'\]\)/)
   assert.match(panelAction, /solo admite material propio o autorizado/)

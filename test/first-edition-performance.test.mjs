@@ -13,7 +13,7 @@ test('public functions use one European region without Enterprise failover', asy
 
 test('extraordinary source links have a targeted covering index', async () => {
   const migration = await read(
-    'supabase/migrations/20260825141316_index_extraordinary_source_links.sql',
+    'supabase/migrations_archive/first-edition/20260825141316_index_extraordinary_source_links.sql',
   )
 
   assert.match(migration, /create index if not exists source_links_outing_idx/i)

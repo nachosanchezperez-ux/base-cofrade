@@ -3,41 +3,41 @@ import { readFileSync, readdirSync } from 'node:fs'
 import test from 'node:test'
 
 const migrationsDirectory = new URL('../supabase/migrations/', import.meta.url)
-const baselineName = '20260818130000_branch_baseline_san_benito.sql'
-const consolidationName = '20260818133048_consolidar_san_benito.sql'
+const archiveDirectory = new URL('../supabase/migrations_archive/first-edition/', import.meta.url)
+const baselineName = '20260831070000_first_edition_baseline.sql'
+const securityName = '20260831071000_secure_public_contributions_reconciled.sql'
 const baseline = readFileSync(new URL(baselineName, migrationsDirectory), 'utf8')
-const discographyBaselineName = '20260819100000_branch_baseline_cigarreras_releases.sql'
-const discographyCoverName = '20260819102713_portadas_discografia_cigarreras.sql'
-const discographyBaseline = readFileSync(new URL(discographyBaselineName, migrationsDirectory), 'utf8')
+const seed = readFileSync(new URL('../supabase/seed.sql', import.meta.url), 'utf8')
 
-test('el baseline reutilizable precede a la consolidación histórica de San Benito', () => {
-  const migrations = readdirSync(migrationsDirectory).sort()
-
-  assert.ok(migrations.indexOf(baselineName) >= 0)
-  assert.ok(migrations.indexOf(baselineName) < migrations.indexOf(consolidationName))
+test('las ramas nuevas ejecutan un baseline único antes de #439', () => {
+  assert.deepEqual(
+    readdirSync(migrationsDirectory).filter((file) => file.endsWith('.sql')).sort(),
+    [baselineName, securityName],
+  )
 })
 
-test('el baseline de discografía precede a la migración histórica de portadas', () => {
-  const migrations = readdirSync(migrationsDirectory).sort()
+test('el baseline reproduce el esquema canónico y conserva las barreras RLS', () => {
+  const schemaDeclarations = baseline.slice(0, baseline.indexOf('CREATE OR REPLACE FUNCTION'))
 
-  assert.ok(migrations.indexOf(discographyBaselineName) >= 0)
-  assert.ok(migrations.indexOf(discographyBaselineName) < migrations.indexOf(discographyCoverName))
-  assert.match(discographyBaseline, /on conflict \(band_entity_id, title, release_year\) do nothing/)
-  assert.match(discographyBaseline, /release_count <> 9/)
+  assert.match(baseline, /create table public\.entities/)
+  assert.match(baseline, /create table public\.contributions/)
+  assert.match(baseline, /create view public\.calendar_items with \(security_invoker=true\)/)
+  assert.match(baseline, /alter table public\.contributions enable row level security/)
+  assert.match(baseline, /revoke all on all tables in schema public from public, anon, authenticated, service_role/)
+  assert.doesNotMatch(schemaDeclarations, /insert into public\.(entities|brotherhoods|bands|contributions)/i)
 })
 
-test('el baseline es idempotente y conserva los identificadores canónicos', () => {
-  for (const canonicalId of [
-    '206cf962-fd63-4fae-ad0d-9454554283d8',
-    '2c49d077-e377-492d-8e30-25fa823bdcd8',
-    'ddda6dd4-a9d6-44f6-b269-02c40903d5ea',
-    '9bd34c93-150e-40b7-9e99-2b66f3bd0f25',
-  ]) {
-    assert.match(baseline, new RegExp(canonicalId))
-  }
+test('el seed de preview es mínimo, idempotente y no contiene aportaciones', () => {
+  assert.match(seed, /on conflict \(id\) do update set/)
+  assert.match(seed, /banda-de-musica-del-maestro-tejera/)
+  assert.match(seed, /las-cigarreras/)
+  assert.doesNotMatch(seed, /insert into public\.contributions/i)
+  assert.doesNotMatch(seed, /contact_email|panel_users|auth\.users/i)
+})
 
-  assert.match(baseline, /on conflict \(id\) do nothing/)
-  assert.match(baseline, /where municipality\.slug = 'sevilla'/)
-  assert.match(baseline, /Baseline San Benito: no se pudieron reconstruir los tres Pasos/)
-  assert.doesNotMatch(baseline, /update public\.entities[\s\S]*status = 'draft'/)
+test('el historial anterior permanece archivado y fuera de la cadena ejecutable', () => {
+  const archived = readdirSync(archiveDirectory)
+  assert.ok(archived.includes('20260818133048_consolidar_san_benito.sql'))
+  assert.ok(archived.includes('20260819130530_logotipo_portadas_puebla.sql'))
+  assert.ok(archived.includes('20260831061147_publica_iguala_rosario_santiago_2026.sql'))
 })

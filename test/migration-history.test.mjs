@@ -26,4 +26,8 @@ test("Supabase migration versions are unique and well formed", async () => {
   }
 
   assert.ok(files.length > 0, "No Supabase migrations found");
+  assert.deepEqual(files, [
+    "20260831070000_first_edition_baseline.sql",
+    "20260831071000_secure_public_contributions_reconciled.sql",
+  ]);
 });
