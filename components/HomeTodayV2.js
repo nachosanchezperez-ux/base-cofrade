@@ -149,6 +149,7 @@ export default function HomeTodayV2({ today, content }) {
     content?.ephemeris,
     editorial,
     content?.discovery,
+    content?.discoverySecondary,
   ])
   const featured = content?.ephemeris
     || (dailyCards.length ? dailyCards[serial % dailyCards.length] : null)
