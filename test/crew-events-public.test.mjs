@@ -31,7 +31,8 @@ test('las fichas de convocatoria usan título SEO específico con fecha y locali
 
   assert.match(detail, /function eventSeoTitle\(event\)/)
   assert.match(detail, /event\.title, event\.dateParts\.label, event\.municipality/)
-  assert.match(detail, /title: eventSeoTitle\(event\)/)
+  assert.match(detail, /const title = eventSeoTitle\(event\)/)
+  assert.match(detail, /return \{\n    title,\n    description,/)
   assert.doesNotMatch(detail, /title: `\$\{event\.eventTypeLabel\} · \$\{event\.brotherhoodName\}`/)
 })
 
