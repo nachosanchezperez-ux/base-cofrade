@@ -71,12 +71,24 @@
   display: none;
 }
 
+.logoFilterDefs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
 .logoStage {
   position: relative;
   display: grid;
   width: min(100%, 230px);
   height: 236px;
   place-items: center;
+}
+
+.logoStageOpaqueRaster {
+  overflow: visible;
 }
 
 .logo {
@@ -90,6 +102,15 @@
     scale(var(--crest-optical-scale, 1));
   transform-origin: center;
   filter: drop-shadow(0 20px 32px rgba(0, 0, 0, .28));
+}
+
+/* Los JPEG no admiten transparencia. Cuando una identidad visual llega en
+   este formato, conservamos el equilibrado óptico común y retiramos solo el
+   fondo casi blanco para que no aparezca como una caja dentro de la cabecera. */
+.logoOpaqueRaster {
+  filter:
+    url("#band-logo-remove-light-raster-background")
+    drop-shadow(0 20px 32px rgba(0, 0, 0, .28));
 }
 
 .initials {
