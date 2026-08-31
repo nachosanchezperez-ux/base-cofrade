@@ -55,6 +55,8 @@ test('public collaboration fails closed until privacy and anti-bot are activated
   assert.match(form, /disabled=\{!enabled \|\| pending\}/)
   assert.match(form, /Vista previa segura/)
   assert.match(security, /PUBLIC_CONTRIBUTIONS_ENABLED === 'true'/)
+  assert.match(collaboration, /process\.env\.VERCEL_ENV === 'preview'/)
+  assert.match(collaboration, /!readiness\.enabled && !isDeploymentPreview/)
   assert.match(security, /NEXT_PUBLIC_TURNSTILE_SITE_KEY/)
   assert.match(security, /TURNSTILE_SECRET_KEY/)
 })

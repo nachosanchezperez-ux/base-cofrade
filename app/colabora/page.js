@@ -52,7 +52,8 @@ function ClosedContributionsPage() {
 
 export default function ColaboraPage() {
   const readiness = contributionReadiness()
-  if (!readiness.enabled) return <ClosedContributionsPage />
+  const isDeploymentPreview = process.env.VERCEL_ENV === 'preview'
+  if (!readiness.enabled && !isDeploymentPreview) return <ClosedContributionsPage />
 
   const formTicket = readiness.enabled ? createContributionFormTicket() : ''
 
