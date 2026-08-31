@@ -6,6 +6,7 @@ const migrationPath = new URL('../supabase/migrations_archive/first-edition/2026
 const buenAireMigrationPath = new URL('../supabase/migrations_archive/first-edition/20260830090233_publica_iguala_buen_aire_2026.sql', import.meta.url)
 const rosarioSantiagoMigrationPath = new URL('../supabase/migrations_archive/first-edition/20260831061147_publica_iguala_rosario_santiago_2026.sql', import.meta.url)
 const septemberCallsMigrationPath = new URL('../supabase/migrations/20260831074355_publica_tres_igualas_septiembre_2026.sql', import.meta.url)
+const pastoraTrianaMigrationPath = new URL('../supabase/migrations/20260831213932_publica_iguala_divina_pastora_triana_2026.sql', import.meta.url)
 
 test('el calendario reutiliza la entidad event y crea relaciones tipadas con Pasos y Personas', async () => {
   const sql = await readFile(migrationPath, 'utf8')
@@ -90,4 +91,23 @@ test('las igualás de Cuatrovitas, Guadalupe y Mercedes conservan datos y ausenc
   assert.match(sql, /https:\/\/www\.facebook\.com\/MercedesPuertaReal\/photos\//)
   assert.match(sql, /delete from crew_calls_20260831 call\s+where not exists/)
   assert.match(sql, /brotherhood_entity\.status = 'published'/)
+})
+
+
+test('la igualá de la Divina Pastora de Triana separa convocatoria, capataz y comienzo de etapa', async () => {
+  const sql = await readFile(pastoraTrianaMigrationPath, 'utf8')
+
+  assert.match(sql, /'iguala-divina-pastora-triana-2026'/)
+  assert.match(sql, /date '2026-09-03'/)
+  assert.match(sql, /time '21:30'/)
+  assert.match(sql, /Local del Bar Bistec, calle Pelay Correa, 37/)
+  assert.match(sql, /Acudir con calzado blanco de salida/)
+  assert.match(sql, /'miguel-angel-perez-pascual'/)
+  assert.match(sql, /year_from = 2022/)
+  assert.match(sql, /independiente de la convocatoria de la igualá/)
+  assert.match(sql, /event\.place_id is null/)
+  assert.match(sql, /1493386516157074/)
+  assert.match(sql, /1429439689218424/)
+  assert.match(sql, /gentedepaz\.es\/la-pastora-de-triana-nombra-nuevo-capataz/)
+  assert.match(sql, /delete from crew_call_pastora_triana_20260831 call/)
 })
