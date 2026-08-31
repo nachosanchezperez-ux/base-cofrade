@@ -14,7 +14,7 @@ test('Fotos y carteles muestra los archivos ya vinculados en el contenido natura
   assert.match(manager, /Archivos vinculados/)
   assert.match(manager, /Editar información/)
   assert.match(manager, /Usar como principal/)
-  assert.match(manager, /Confirmar eliminación/)
+  assert.match(manager, /Confirmar desvinculación/)
 })
 
 test('la gestión local valida que el destino pertenece a la Hermandad', () => {
@@ -25,12 +25,16 @@ test('la gestión local valida que el destino pertenece a la Hermandad', () => {
   assert.match(actions, /El contenido seleccionado no pertenece a esta Hermandad/)
 })
 
-test('eliminar limpia el archivo solo cuando no queda reutilizado', () => {
-  assert.match(actions, /\['entity_media', 'cult_media', 'outing_media'\]/)
-  assert.match(actions, /remainingReferences === 0/)
-  assert.match(actions, /from\('media_assets'\)\.delete/)
-  assert.match(actions, /storage\.from\('hilo-media'\)\.remove/)
-  assert.match(actions, /preserved_because_reused/)
+test('desvincular conserva siempre el asset y Storage durante Primera Edición', () => {
+  assert.match(actions, /unlinkBrotherhoodMediaAssetAction/)
+  assert.match(actions, /action_type: 'unlink'/)
+  assert.match(actions, /removed_asset: false/)
+  assert.match(actions, /storage_preserved: true/)
+  assert.match(actions, /cleanup_deferred: true/)
+  assert.doesNotMatch(actions, /countAssetReferences/)
+  assert.doesNotMatch(actions, /from\('media_assets'\)\.delete/)
+  assert.doesNotMatch(actions, /storage\.from\('hilo-media'\)\.remove/)
+  assert.doesNotMatch(actions, /deleteBrotherhoodMediaAssetAction/)
 })
 
 test('retirar una portada promociona otra imagen vinculada cuando existe', () => {
