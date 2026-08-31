@@ -3,6 +3,7 @@ import '@fontsource/open-sans/600.css';
 import '@fontsource/open-sans/700.css';
 import '@fontsource/open-sans/800.css';
 import './globals.css';
+import './brand.css';
 import './typography.css';
 import './crest.css';
 import './habit-layout.css';
@@ -31,6 +32,34 @@ export const metadata = {
   applicationName: SITE_NAME,
   creator: SITE_NAME,
   publisher: SITE_NAME,
+  manifest: '/manifest.webmanifest',
+  icons: {
+    icon: [
+      {
+        url: '/brand/favicon-16x16.png',
+        sizes: '16x16',
+        type: 'image/png',
+      },
+      {
+        url: '/brand/favicon-32x32.png',
+        sizes: '32x32',
+        type: 'image/png',
+      },
+      {
+        url: '/brand/favicon-48x48.png',
+        sizes: '48x48',
+        type: 'image/png',
+      },
+    ],
+    shortcut: '/brand/favicon.ico',
+    apple: [
+      {
+        url: '/brand/apple-touch-icon.png',
+        sizes: '180x180',
+        type: 'image/png',
+      },
+    ],
+  },
   openGraph: {
     type: 'website',
     locale: 'es_ES',
@@ -38,11 +67,20 @@ export const metadata = {
     siteName: SITE_NAME,
     title: HOME_TITLE,
     description: DEFAULT_DESCRIPTION,
+    images: [
+      {
+        url: '/opengraph-image',
+        width: 1200,
+        height: 630,
+        alt: 'Hilo Cofrade, enciclopedia cofrade de Sevilla y provincia',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: HOME_TITLE,
     description: DEFAULT_DESCRIPTION,
+    images: ['/opengraph-image'],
   },
   robots: {
     index: true,
@@ -55,6 +93,10 @@ export const metadata = {
       'max-video-preview': -1,
     },
   },
+};
+
+export const viewport = {
+  themeColor: '#112339',
 };
 
 const websiteJsonLd = {
