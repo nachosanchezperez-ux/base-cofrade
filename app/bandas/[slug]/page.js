@@ -110,13 +110,13 @@ function AccompanimentCard({ item, band, showLocation = false }) {
         <h3>{item.brotherhoodName}</h3>
       </div>
       {hasStepDetail ? <div className={styles.relationshipStep}>
-        {step.position ? <small className={styles.relationshipStepPosition}>{step.position}</small> : null}
+        {step.type ? <span className={styles.relationshipStepType}>{step.type}</span> : null}
         {step.name ? (
           item.stepPageReady && item.stepSlug
             ? <Link href={`/pasos/${item.stepSlug}`}>{step.name} <b aria-hidden="true">→</b></Link>
             : <strong>{step.name}</strong>
         ) : null}
-        {step.type ? <span className={styles.relationshipStepType}>{step.type}</span> : null}
+        {step.position ? <small className={styles.relationshipStepPosition}>{step.position}</small> : null}
       </div> : null}
       {publicText(item.notes) && item.brotherhoodName !== band.linkedBrotherhood ? <p className={styles.relationshipNote}>{publicText(item.notes)}</p> : null}
       {item.brotherhoodSlug && item.brotherhoodPageReady ? <div className={styles.relationshipLinks}>
@@ -305,12 +305,12 @@ export default async function BandDetailPage({ params }) {
         { href: '#resumen', label: 'De un vistazo' },
         bandThreadItems.length > 0 && { href: '#tira-del-hilo', label: 'Tira del hilo' },
         banderin && { href: '#banderin', label: 'Banderín' },
-        hasAccompaniments && { href: '#acompanamientos', label: 'Semana Santa' },
+        hasAccompaniments && { href: '#acompanamientos', label: 'Dónde suena' },
         hasUpcomingAccompaniments && { href: '#proximos-acompanamientos', label: 'Próximos' },
         hasGloryAccompaniments && { href: '#glorias', label: 'Glorias y eucarísticas' },
         hasHistoricalAccompaniments && { href: '#acompanamientos-historicos', label: 'Histórico' },
         hasOutings && { href: '#extraordinarias', label: 'Extraordinarias' },
-        hasPremieres && { href: '#repertorio', label: 'Repertorio' },
+        hasPremieres && { href: '#repertorio', label: 'Música' },
         hasDiscography && { href: '#discografia', label: 'Discografía' },
         hasDirection && { href: '#direccion', label: 'Dirección' },
         band.interestLinks.length > 0 && { href: '#enlaces-de-interes', label: 'Enlaces de interés' },
@@ -370,7 +370,7 @@ export default async function BandDetailPage({ params }) {
                   <div className={styles.impactMetrics}>
                     {hasAccompaniments ? <a href="#acompanamientos"><strong>{orderedAccompaniments.length}</strong><span>{orderedAccompaniments.length === 1 ? 'contrato de Semana Santa' : 'contratos de Semana Santa'}</span></a> : null}
                     {hasGloryAccompaniments ? <a href="#glorias"><strong>{gloryAccompaniments.length}</strong><span>{gloryAccompaniments.length === 1 ? 'contrato de Gloria o culto externo' : 'contratos de Glorias y cultos externos'}</span></a> : null}
-                    {currentPremieres.length ? <a href="#repertorio"><strong>{currentPremieres.length}</strong><span>{band.premieres.filter((item) => item.year === currentYear).length === 1 ? `estreno en ${currentYear}` : `estrenos en ${currentYear}`}</span></a> : null}
+                    {currentPremieres.length ? <a href="#repertorio"><strong>{currentPremieres.length}</strong><span>{currentPremieres.length === 1 ? `novedad musical en ${currentYear}` : `novedades musicales en ${currentYear}`}</span></a> : null}
                     {band.outings.length ? <a href="#extraordinarias"><strong>{band.outings.length}</strong><span>{band.outings.length === 1 ? 'salida extraordinaria' : 'salidas extraordinarias'}</span></a> : null}
                   </div>
                 </div>
@@ -430,7 +430,7 @@ export default async function BandDetailPage({ params }) {
       {hasAccompaniments ? <section className={`${styles.contentSection} ${styles.softSection}`} id="acompanamientos">
         <div className="shell">
           <div className={styles.sectionHeading}>
-            <span className={styles.eyebrow}>Semana Santa · {currentYear}</span>
+            <span className={styles.eyebrow}>Dónde suena · Semana Santa · {currentYear}</span>
             <h2>Acompañamientos musicales</h2>
             <p>Acompañamientos procesionales, ordenados por jornada y con su localidad exacta.</p>
           </div>
@@ -443,7 +443,7 @@ export default async function BandDetailPage({ params }) {
       {hasUpcomingAccompaniments ? <section className={styles.contentSection} id="proximos-acompanamientos">
         <div className="shell">
           <div className={styles.sectionHeading}>
-            <span className={styles.eyebrow}>Próximas vinculaciones · {nextAccompanimentYear}</span>
+            <span className={styles.eyebrow}>Dónde suena · Próximas vinculaciones · {nextAccompanimentYear}</span>
             <h2>Próximos acompañamientos</h2>
             <p>Acuerdos ya anunciados para próximas salidas procesionales, separados de los acompañamientos vigentes de {currentYear}.</p>
           </div>
@@ -456,7 +456,7 @@ export default async function BandDetailPage({ params }) {
       {hasGloryAccompaniments ? <section className={styles.contentSection} id="glorias">
         <div className="shell">
           <div className={styles.sectionHeading}>
-            <span className={styles.eyebrow}>Sevilla y provincia</span>
+            <span className={styles.eyebrow}>Dónde suena · Sevilla y provincia</span>
             <h2>Glorias, eucarísticas y cultos externos</h2>
             <p>Acompañamientos documentados para {currentYear}, organizados por ámbito y naturaleza de la salida.</p>
           </div>
@@ -494,24 +494,29 @@ export default async function BandDetailPage({ params }) {
           </div>
           <div className={styles.historicalLayout}>
             <div className={styles.historicalList}>
-              {historicalAccompaniments.map((item) => (
-                <article className={styles.historicalCard} key={item.id}>
+              {historicalAccompaniments.map((item) => {
+                const step = presentAccompanimentStep(item)
+                return <article className={styles.historicalCard} key={item.id}>
                   <div className={styles.historicalPeriod}>
                     <span className={styles.historicalIcon}><HistoricalIcon /></span>
                     <span>Periodo histórico</span>
                     <strong>{yearRange(item)}</strong>
                   </div>
                   <div className={styles.historicalCopy}>
-                    {publicText(item.outingType) ? <span>{accompanimentHeaderLabel(item.outingType)}</span> : null}
+                    {publicText(item.outingType) ? <span>{accompanimentHeaderLabel(item)}</span> : null}
                     <h3>{item.brotherhoodName}</h3>
-                    <p>{item.position || item.stepName || 'Acompañamiento musical'}</p>
+                    <div className={styles.historicalStep}>
+                      {step.type ? <strong>{step.type}</strong> : null}
+                      <span>{step.name || item.position || 'Acompañamiento musical'}</span>
+                      {step.position ? <small>{step.position}</small> : null}
+                    </div>
                     {item.notes ? <small>{item.notes}</small> : null}
                     {item.brotherhoodSlug && item.brotherhoodPageReady
                       ? <Link href={`/hermandades/${item.brotherhoodSlug}`}>Ver ficha de la hermandad <span>→</span></Link>
                       : null}
                   </div>
                 </article>
-              ))}
+              })}
             </div>
             {curiosities.length ? <div className={styles.curiosityStack}>
               {curiosities.map((item) => (
@@ -556,17 +561,17 @@ export default async function BandDetailPage({ params }) {
 
       {hasPremieres ? <section className={`${styles.contentSection} ${styles.premiereSection}`} id="repertorio">
         <div className="shell">
-          <div className={styles.sectionHeading}><span className={styles.eyebrow}>Patrimonio musical</span><h2>Repertorio</h2></div>
+          <div className={styles.sectionHeading}><span className={styles.eyebrow}>Conoce su música</span><h2>Estrenos y novedades</h2><p>Obras nuevas, adaptaciones e incorporaciones al repertorio, identificadas según su naturaleza documental.</p></div>
           {years.map((year) => (
-            <details className={styles.premiereYear} key={year}>
-              <summary className={styles.premiereYearHeading}><h3>{year}</h3><span>{band.premieres.filter((item) => item.year === year).length} {band.premieres.filter((item) => item.year === year).length === 1 ? 'obra' : 'obras'}</span><b aria-hidden="true">＋</b></summary>
+            <details className={styles.premiereYear} key={year} open={year === currentYear}>
+              <summary className={styles.premiereYearHeading}><h3>{year}</h3><span>{band.premieres.filter((item) => item.year === year).length} {band.premieres.filter((item) => item.year === year).length === 1 ? 'novedad' : 'novedades'}</span><b aria-hidden="true">＋</b></summary>
               <div className={styles.premiereGrid}>{band.premieres.filter((item) => item.year === year).map((item) => {
                 const embed = youtubeEmbedUrl(item.videoUrl)
                 return (
                   <article className={styles.premiereCard} key={item.id}>
                     {embed ? <div className={styles.videoWrap}><iframe src={embed} title={`${item.title}, de ${item.composerName}`} loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen /></div> : null}
                     <div className={styles.premiereCopy}>
-                      <span>Estreno</span>
+                      <span>{item.type || 'Novedad musical'}</span>
                       <h4>{item.title}</h4>
                       {item.credits?.length ? (
                         <div className={styles.premiereCredits}>
