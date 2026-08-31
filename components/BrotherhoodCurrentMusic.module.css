@@ -4,6 +4,7 @@
 }
 
 .header,
+.groups,
 .sequence {
   width: min(100%, 1180px);
   margin-left: auto;
@@ -60,6 +61,51 @@
   position: absolute;
   left: -11px;
   color: #a9b3bc;
+}
+
+.groups {
+  display: grid;
+  gap: 30px;
+}
+
+.outingGroup {
+  min-width: 0;
+}
+
+.outingHeader {
+  display: flex;
+  gap: 18px;
+  align-items: end;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.outingHeader > div {
+  min-width: 0;
+}
+
+.outingHeader span {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--bc-red);
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.outingHeader h3 {
+  margin: 0;
+  color: var(--bc-dark);
+  font-size: 20px;
+  line-height: 1.15;
+}
+
+.outingHeader small {
+  flex: 0 0 auto;
+  color: #71808e;
+  font-size: 10px;
+  font-weight: 800;
 }
 
 .sequence {
@@ -213,6 +259,7 @@
 
 @media (max-width: 1100px) {
   .header,
+  .groups,
   .sequence {
     width: min(100%, 920px);
   }
@@ -254,6 +301,18 @@
   .context {
     margin-top: 14px;
     gap: 6px 16px;
+  }
+
+  .groups {
+    gap: 24px;
+  }
+
+  .outingHeader {
+    align-items: start;
+  }
+
+  .outingHeader h3 {
+    font-size: 18px;
   }
 
   .item {
@@ -309,6 +368,14 @@
 
   .context strong {
     font-size: 11px;
+  }
+
+  .outingHeader {
+    gap: 10px;
+  }
+
+  .outingHeader h3 {
+    font-size: 17px;
   }
 
   .withLogo {
