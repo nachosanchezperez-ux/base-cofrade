@@ -1,10 +1,12 @@
 import { ImageResponse } from 'next/og';
 
 export const alt = 'Hilo Cofrade · Enciclopedia cofrade de Sevilla y provincia';
+
 export const size = {
   width: 1200,
   height: 630,
 };
+
 export const contentType = 'image/png';
 
 export default function OpenGraphImage() {
@@ -17,39 +19,121 @@ export default function OpenGraphImage() {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          padding: '78px 86px',
+          padding: '74px 82px',
           color: '#FFFFFF',
-          background: 'linear-gradient(135deg, #0D2949 0%, #153B69 62%, #174F67 100%)',
+          background: '#112339',
           fontFamily: 'sans-serif',
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '30px',
+          }}
+        >
           <div
             style={{
-              width: '18px',
-              height: '18px',
-              borderRadius: '999px',
-              background: '#C33B4B',
-              boxShadow: '26px 0 0 #FFFFFF, 52px 0 0 #66B8D4',
+              display: 'flex',
+              alignItems: 'center',
             }}
-          />
-          <span style={{ marginLeft: '54px', fontSize: '25px', letterSpacing: '5px', textTransform: 'uppercase' }}>
-            Sevilla y su provincia
+          >
+            <div
+              style={{
+                width: '30px',
+                height: '30px',
+                borderRadius: '999px',
+                background: '#B01B32',
+              }}
+            />
+
+            <div
+              style={{
+                width: '72px',
+                height: '10px',
+                background: '#B01B32',
+              }}
+            />
+
+            <div
+              style={{
+                width: '30px',
+                height: '30px',
+                borderRadius: '999px',
+                background: '#B01B32',
+              }}
+            />
+          </div>
+
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'baseline',
+              gap: '20px',
+              color: '#FFFFFF',
+              fontSize: '60px',
+              letterSpacing: '-2px',
+            }}
+          >
+            <span style={{ fontWeight: 800 }}>Hilo</span>
+            <span style={{ fontWeight: 400 }}>Cofrade</span>
+          </div>
+        </div>
+
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            maxWidth: '900px',
+          }}
+        >
+          <div
+            style={{
+              color: '#B01B32',
+              fontSize: '22px',
+              fontWeight: 800,
+              letterSpacing: '5px',
+              textTransform: 'uppercase',
+            }}
+          >
+            Enciclopedia cofrade
+          </div>
+
+          <div
+            style={{
+              marginTop: '22px',
+              fontSize: '58px',
+              fontWeight: 700,
+              lineHeight: 1.08,
+              letterSpacing: '-2px',
+            }}
+          >
+            Sevilla y su provincia,
+            todo conectado por un mismo hilo
+          </div>
+        </div>
+
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            color: 'rgba(255,255,255,.78)',
+            fontSize: '22px',
+          }}
+        >
+          <span>
+            Hermandades · Imágenes · Pasos · Bandas · Patrimonio
           </span>
-        </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <div style={{ fontSize: '92px', fontWeight: 800, letterSpacing: '-4px', lineHeight: 1 }}>
-            Hilo Cofrade
-          </div>
-          <div style={{ width: '760px', marginTop: '30px', fontSize: '38px', lineHeight: 1.25, color: '#E8F2F5' }}>
-            Todo en las cofradías está relacionado
-          </div>
-        </div>
-
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '24px', color: '#D6E6EC' }}>
-          <span>Hermandades · Imágenes · Pasos · Bandas · Patrimonio</span>
-          <span style={{ fontWeight: 700 }}>hilocofrade.es</span>
+          <span
+            style={{
+              color: '#FFFFFF',
+              fontWeight: 700,
+            }}
+          >
+            hilocofrade.es
+          </span>
         </div>
       </div>
     ),
