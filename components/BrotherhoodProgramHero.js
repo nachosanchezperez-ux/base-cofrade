@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import BrotherhoodDirectoryCrestImage from './BrotherhoodDirectoryCrestImage'
 import styles from './BrotherhoodProgramHero.module.css'
 
 function Breadcrumb({ items = [] }) {
@@ -111,26 +112,28 @@ export default function BrotherhoodProgramHero({
         <Breadcrumb items={breadcrumbItems} />
 
         <div className={styles.content}>
-          <div className={styles.identityRow}>
+          <div className={styles.identityLockup}>
             {media.crestSrc ? (
               <span className={styles.crest}>
-                <Image
+                <BrotherhoodDirectoryCrestImage
                   src={media.crestSrc}
                   alt={media.crestAlt || `Escudo de ${title}`}
-                  width={94}
-                  height={112}
-                  sizes="(max-width: 620px) 64px, 94px"
+                  width={178}
+                  height={202}
+                  sizes="(max-width: 700px) 102px, (max-width: 980px) 144px, 178px"
                   priority
                 />
               </span>
             ) : null}
-            <div className={styles.identityCopy}>
-              <span>{entityType}</span>
-              {locality ? <small>{locality}</small> : null}
+            <div className={styles.identityBody}>
+              <div className={styles.identityCopy}>
+                <span>{entityType}</span>
+                {locality ? <small>{locality}</small> : null}
+              </div>
+              <h1 id="brotherhood-program-title">{title}</h1>
             </div>
           </div>
 
-          <h1 id="brotherhood-program-title">{title}</h1>
           {context ? <p className={styles.context}>{context}</p> : null}
           {officialName ? <p className={styles.officialName}>{officialName}</p> : null}
 

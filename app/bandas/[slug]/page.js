@@ -294,9 +294,6 @@ export default async function BandDetailPage({ params }) {
           publicText(band.foundation) ? { label: 'Fundación', value: publicText(band.foundation) } : null,
         ]}
         media={{
-          photoSrc: band.heroImagePath,
-          photoAlt: band.heroImageAlt || `Fotografía de ${band.popularName}`,
-          credit: band.heroImageCredit,
           crestSrc: band.logoPath,
           crestAlt: `Logotipo de ${band.popularName}`,
           initials: band.popularName.slice(0, 2).toUpperCase(),
