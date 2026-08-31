@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import sharp from 'sharp'
+import { validateContributionAttachment } from '../lib/contributions/attachment-validation.js'
 import { validateContributionPhoto } from '../lib/contributions/image-validation.js'
 import {
   ContributionValidationError,
@@ -47,17 +48,47 @@ test('una corrección exige ficha y el texto no admite HTML', () => {
   )
 })
 
-test('rechaza documentos como archivo y los permite únicamente como enlace', () => {
+test('admite PDF como adjunto y conserva los documentos enlazados', async () => {
   const form = validForm({ contribution_type: 'media' })
-  form.set('photos', new File(['%PDF-1.7'], 'documento.pdf', { type: 'application/pdf' }))
-  assert.throws(() => parseContributionForm(form), /JPG, PNG o WebP/i)
+  const pdf = new File(['%PDF-1.7\n1 0 obj\n<< /Type /Catalog >>\nendobj\nstartxref\n0\n%%EOF'], 'documento.pdf', { type: 'application/pdf' })
+  form.set('attachments', pdf)
+  const parsed = parseContributionForm(form)
+  assert.equal(parsed.attachments.length, 1)
+  const verified = await validateContributionAttachment(pdf)
+  assert.equal(verified.verifiedMimeType, 'application/pdf')
+  assert.equal(verified.kind, 'document')
+  assert.equal(verified.width, null)
 
   const linked = parseContributionForm(validForm({
     contribution_type: 'media',
     sources: 'https://example.com/documento.pdf',
   }))
-  assert.equal(linked.photos.length, 0)
+  assert.equal(linked.attachments.length, 0)
   assert.deepEqual(linked.sources, ['https://example.com/documento.pdf'])
+})
+
+test('rechaza PDF falsos, cifrados o con contenido activo', async () => {
+  const fake = new File(['contenido arbitrario'], 'falso.pdf', { type: 'application/pdf' })
+  await assert.rejects(() => validateContributionAttachment(fake), /estructura reconocible/i)
+
+  const active = new File(['%PDF-1.7\n/JavaScript /OpenAction\n%%EOF'], 'activo.pdf', { type: 'application/pdf' })
+  await assert.rejects(() => validateContributionAttachment(active), /contenido activo/i)
+
+  const disguised = new File(['%PDF-1.7\n%%EOF'], 'documento.jpg', { type: 'application/pdf' })
+  await assert.rejects(() => validateContributionAttachment(disguised), /terminar en \.pdf/i)
+})
+
+test('limita el número y el peso acumulado de los adjuntos', () => {
+  const tooMany = validForm()
+  for (let index = 0; index < 4; index += 1) {
+    tooMany.append('attachments', new File(['x'], `foto-${index}.jpg`, { type: 'image/jpeg' }))
+  }
+  assert.throws(() => parseContributionForm(tooMany), /hasta 3 archivos/i)
+
+  const tooHeavy = validForm()
+  tooHeavy.append('attachments', new File([Buffer.alloc(6 * 1024 * 1024)], 'uno.pdf', { type: 'application/pdf' }))
+  tooHeavy.append('attachments', new File([Buffer.alloc(5 * 1024 * 1024)], 'dos.pdf', { type: 'application/pdf' }))
+  assert.throws(() => parseContributionForm(tooHeavy), /10 MB en total/i)
 })
 
 test('decodifica y recodifica una imagen antes de mandarla a cuarentena', async () => {
@@ -75,8 +106,19 @@ test('decodifica y recodifica una imagen antes de mandarla a cuarentena', async 
   assert.match(result.sha256, /^[0-9a-f]{64}$/)
 })
 
+test('solo exige crédito y derechos cuando hay una imagen adjunta', async () => {
+  const source = await sharp({
+    create: { width: 10, height: 10, channels: 3, background: '#0f2742' },
+  }).jpeg().toBuffer()
+  const form = validForm()
+  form.set('attachments', new File([source], 'foto.jpg', { type: 'image/jpeg' }))
+  assert.throws(() => parseContributionForm(form), /autoría|crédito/i)
+  form.set('photo_credit', 'Autor de prueba')
+  form.set('rights_confirmed', 'on')
+  assert.equal(parseContributionForm(form).attachments.length, 1)
+})
+
 test('rechaza una firma falsa aunque el navegador declare un MIME permitido', async () => {
   const fake = new File([Buffer.from('contenido arbitrario')], 'falsa.png', { type: 'image/png' })
   await assert.rejects(() => validateContributionPhoto(fake), /no contiene una imagen/i)
 })
-

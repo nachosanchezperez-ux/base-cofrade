@@ -11,6 +11,8 @@ test('el Panel incorpora una cola privada de aportaciones', () => {
   assert.match(page, /getPanelContributions/)
   assert.match(page, /Nada|nunca modifica una ficha automáticamente/i)
   assert.match(page, /rel="noopener noreferrer"/)
+  assert.match(page, /Archivos en cuarentena/)
+  assert.match(page, /Documento sin previsualización/)
   assert.doesNotMatch(page, /dangerouslySetInnerHTML/)
 })
 
@@ -21,4 +23,3 @@ test('solo editor o administrador puede resolver y cada cambio se audita', () =>
   assert.match(actions, /resolution_summary/)
   assert.doesNotMatch(actions, /from\(['"]entities['"]\)\.(?:insert|update)/)
 })
-

@@ -66,11 +66,11 @@ create table if not exists public.contribution_attachments (
   original_name text not null,
   declared_mime_type text not null,
   verified_mime_type text not null check (
-    verified_mime_type in ('image/jpeg', 'image/png', 'image/webp')
+    verified_mime_type in ('image/jpeg', 'image/png', 'image/webp', 'application/pdf')
   ),
-  byte_size integer not null check (byte_size > 0 and byte_size <= 5242880),
-  width integer not null check (width > 0 and width <= 12000),
-  height integer not null check (height > 0 and height <= 12000),
+  byte_size integer not null check (byte_size > 0 and byte_size <= 8388608),
+  width integer check (width is null or (width > 0 and width <= 12000)),
+  height integer check (height is null or (height > 0 and height <= 12000)),
   sha256 text not null check (sha256 ~ '^[0-9a-f]{64}$'),
   status text not null default 'quarantined' check (
     status in ('quarantined', 'accepted', 'rejected', 'deleted')
@@ -79,7 +79,12 @@ create table if not exists public.contribution_attachments (
   alt_text text,
   created_at timestamptz not null default now(),
   reviewed_at timestamptz,
-  deleted_at timestamptz
+  deleted_at timestamptz,
+  constraint contribution_attachments_dimensions_check check (
+    (verified_mime_type = 'application/pdf' and width is null and height is null)
+    or
+    (verified_mime_type <> 'application/pdf' and width is not null and height is not null)
+  )
 );
 
 create index if not exists contribution_attachments_contribution_idx
@@ -203,8 +208,8 @@ values (
   'hilo-contributions-quarantine',
   'hilo-contributions-quarantine',
   false,
-  5242880,
-  array['image/jpeg', 'image/png', 'image/webp']
+  8388608,
+  array['image/jpeg', 'image/png', 'image/webp', 'application/pdf']
 )
 on conflict (id) do update set
   public = false,
@@ -232,7 +237,7 @@ using (
 comment on table public.contributions is
   'Cola editorial privada de aportaciones públicas. Nunca modifica el grafo automáticamente.';
 comment on table public.contribution_attachments is
-  'Fotografías públicas aisladas en cuarentena privada hasta revisión humana.';
+  'Imágenes y PDF aislados en cuarentena privada hasta revisión humana.';
 comment on table public.contribution_attempts is
   'Huellas HMAC efímeras para limitar abuso; nunca almacena la IP en claro.';
 

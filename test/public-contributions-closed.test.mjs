@@ -54,7 +54,7 @@ test('la acción valida seguridad antes de insertar y nunca publica automáticam
     'verifyContributionFormTicket',
     'consume_contribution_rate_limit',
     'verifyTurnstile',
-    'validateContributionPhoto',
+    'validateContributionAttachment',
   ]) {
     assert.match(publicAction, new RegExp(guard))
   }

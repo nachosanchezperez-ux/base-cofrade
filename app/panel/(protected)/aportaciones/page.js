@@ -95,7 +95,7 @@ export default async function PanelContributionsPage({ searchParams }) {
             {focused.page_url && safeExternalUrl(focused.page_url) ? <section className={localStyles.detailBlock}><h3>Página relacionada</h3><p><a href={safeExternalUrl(focused.page_url)} target="_blank" rel="noopener noreferrer">Abrir URL sin previsualización</a></p></section> : null}
             <section className={localStyles.detailBlock}><h3>Contacto</h3><p>{focused.contact_name || 'Sin nombre'}{focused.contact_email ? ` · ${focused.contact_email}` : ' · Sin correo'}</p></section>
             {focused.source_urls?.length ? <section className={`${localStyles.detailBlock} ${localStyles.wide}`}><h3>Fuentes y documentos</h3><ul className={localStyles.sourceList}>{focused.source_urls.map((source) => safeExternalUrl(source) ? <li key={source}><a href={safeExternalUrl(source)} target="_blank" rel="noopener noreferrer">{source}</a></li> : null)}</ul></section> : null}
-            {focused.contribution_attachments?.length ? <section className={`${localStyles.detailBlock} ${localStyles.wide}`}><h3>Fotografías en cuarentena</h3><ul className={localStyles.attachmentList}>{focused.contribution_attachments.map((attachment) => <li key={attachment.id}>{attachment.signedUrl ? <a href={attachment.signedUrl} target="_blank" rel="noopener noreferrer">Descargar {attachment.original_name}</a> : <strong>Archivo temporalmente no disponible</strong>}<span>{attachment.verified_mime_type} · {(attachment.byte_size / 1024 / 1024).toFixed(2)} MB · {attachment.width} × {attachment.height} px · {attachment.status}</span><span>Crédito: {attachment.credit || 'No indicado'} · Texto alternativo: {attachment.alt_text || 'No indicado'}</span></li>)}</ul></section> : null}
+            {focused.contribution_attachments?.length ? <section className={`${localStyles.detailBlock} ${localStyles.wide}`}><h3>Archivos en cuarentena</h3><ul className={localStyles.attachmentList}>{focused.contribution_attachments.map((attachment) => <li key={attachment.id}>{attachment.signedUrl ? <a href={attachment.signedUrl} target="_blank" rel="noopener noreferrer">Descargar {attachment.original_name}</a> : <strong>Archivo temporalmente no disponible</strong>}<span>{attachment.verified_mime_type} · {(attachment.byte_size / 1024 / 1024).toFixed(2)} MB{attachment.width && attachment.height ? ` · ${attachment.width} × ${attachment.height} px` : ''} · {attachment.status}</span>{attachment.verified_mime_type.startsWith('image/') ? <span>Crédito: {attachment.credit || 'No indicado'} · Texto alternativo: {attachment.alt_text || 'No indicado'}</span> : <span>Documento sin previsualización · descargar solo para la revisión necesaria.</span>}</li>)}</ul></section> : null}
           </div>
 
           <p className={localStyles.privacyNote}>Datos restringidos al equipo editorial. No copies el correo ni los archivos fuera del flujo necesario para revisar la aportación.</p>
@@ -125,7 +125,7 @@ export default async function PanelContributionsPage({ searchParams }) {
               <span className={styles.eyebrow}>{CONTRIBUTION_TYPE_LABELS[item.contribution_type]}</span>
               <h2>{item.title}</h2>
               <p>{item.contact_name || 'Remitente anónimo'} · {formatDate(item.created_at)}</p>
-              <div className={localStyles.queueMeta}><span className={`${localStyles.badge} ${localStyles[item.status] || ''}`}>{CONTRIBUTION_STATUS_LABELS[item.status]}</span>{item.assigned_to ? <span className={localStyles.badge}>Asignada</span> : null}{item.contribution_attachments?.length ? <span className={localStyles.badge}>{item.contribution_attachments.length} foto{item.contribution_attachments.length === 1 ? '' : 's'}</span> : null}</div>
+              <div className={localStyles.queueMeta}><span className={`${localStyles.badge} ${localStyles[item.status] || ''}`}>{CONTRIBUTION_STATUS_LABELS[item.status]}</span>{item.assigned_to ? <span className={localStyles.badge}>Asignada</span> : null}{item.contribution_attachments?.length ? <span className={localStyles.badge}>{item.contribution_attachments.length} archivo{item.contribution_attachments.length === 1 ? '' : 's'}</span> : null}</div>
             </div>
             <small>HC-{item.id.slice(0, 8).toUpperCase()} →</small>
           </Link>
@@ -134,4 +134,3 @@ export default async function PanelContributionsPage({ searchParams }) {
     </div>
   )
 }
-

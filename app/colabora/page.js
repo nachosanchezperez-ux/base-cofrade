@@ -5,7 +5,7 @@ import ContributionForm from './ContributionForm'
 import styles from './page.module.css';
 
 const title = 'Colabora con Hilo Cofrade'
-const description = 'Envía correcciones, información documentada, fotografías o sugerencias para revisión editorial.'
+const description = 'Envía correcciones, información documentada, imágenes, PDF o sugerencias para revisión editorial.'
 
 export const dynamic = 'force-dynamic'
 
@@ -63,8 +63,8 @@ export default function ColaboraPage() {
           <span className={styles.eyebrow}>Archivo abierto · Revisión humana</span>
           <h1>Ayúdanos a documentar mejor la historia cofrade</h1>
           <p>
-            Puedes corregir una ficha, proponer información nueva, aportar fotografías o
-            documentos enlazados y sugerir mejoras. Nada se publica automáticamente.
+            Puedes corregir una ficha, proponer información nueva, adjuntar imágenes o PDF,
+            enlazar otras fuentes y sugerir mejoras. Nada se publica automáticamente.
           </p>
         </div>
       </header>
@@ -107,7 +107,7 @@ export default function ColaboraPage() {
               <strong>Protección del envío</strong>
               <p>
                 Aplicamos CAPTCHA, límites antiabuso, validación estricta y una cuarentena
-                privada para las imágenes. No guardamos la dirección IP en claro.
+                privada para los archivos. No guardamos la dirección IP en claro.
               </p>
             </div>
             <p className={styles.help}>

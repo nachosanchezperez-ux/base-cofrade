@@ -12,7 +12,7 @@ Hilo Cofrade abrirá un único canal público para que cualquier visitante pueda
 - corregir una ficha existente;
 - proponer información para una ficha nueva;
 - aportar fotografías;
-- aportar documentos mediante una URL verificable;
+- aportar PDF adjuntos u otros documentos mediante una URL verificable;
 - enviar una sugerencia general sobre la web.
 
 Ninguna aportación modificará directamente el grafo, creará entidades, publicará media ni
@@ -52,7 +52,7 @@ Antes de comenzar la implementación funcional deben estar resueltos:
 |---|---|---|
 | `correction` | Corregir una ficha | Señalar un dato incorrecto y aportar la corrección y su Fuente. |
 | `new_record` | Proponer nueva información | Preparar una futura ficha o bloque documental. |
-| `media` | Aportar una fotografía o documento | Entregar fotografía propia/autorizada o enlazar un documento verificable. |
+| `media` | Aportar una fotografía o documento | Adjuntar fotografía propia/autorizada o PDF, o enlazar otro documento verificable. |
 | `suggestion` | Sugerencia general | Comunicar una mejora o incidencia no ligada a una ficha concreta. |
 
 ### 3.2 Campos comunes
@@ -197,7 +197,7 @@ Límites iniciales de salida:
 
 - máximo 5 intentos por 15 minutos por huella;
 - máximo 20 intentos por 24 horas por huella;
-- máximo 2 archivos por aportación;
+- máximo 3 archivos por aportación;
 - máximo 10 MB acumulados por aportación;
 - título: 140 caracteres;
 - descripción: 6.000 caracteres;
@@ -225,23 +225,28 @@ La primera salida admite únicamente:
 - JPEG;
 - PNG;
 - WebP.
+- PDF estático, sin cifrado, formularios, JavaScript, acciones ni archivos incrustados.
 
-Cada archivo tendrá un máximo de 5 MB. SVG, GIF, AVIF, HTML, ZIP, ejecutables, Office y PDF no
-se aceptan como archivo en esta primera fase.
+Cada archivo tendrá un máximo de 8 MB y el conjunto no podrá superar 10 MB. SVG, GIF, AVIF,
+HTML, ZIP, ejecutables y Office no se aceptan como archivo en esta primera fase.
 
-Los documentos se aportan mediante una URL pública verificable. El PDF directo queda bloqueado
-hasta disponer de análisis antimalware real y probado, sin introducir un coste no autorizado.
+Los demás documentos se aportan mediante una URL pública verificable. Los PDF directos quedan
+en cuarentena privada, nunca se previsualizan y se entregan al Panel como descarga. La validación
+estructural y el bloqueo de funciones activas reducen riesgo, pero no sustituyen un análisis
+antimalware; por ello el equipo solo debe descargarlos cuando la revisión lo requiera.
 
-### 6.2 Flujo de fotografía
+### 6.2 Flujo de archivos
 
 1. La Server Action valida formulario, anti-bot y límites.
-2. La petición admite como máximo 10 MB de fotografías dentro del límite propio de Server Actions.
+2. La petición admite como máximo 10 MB de adjuntos dentro del límite propio de Server Actions.
 3. El servidor comprueba tamaño, MIME y firma real antes de tocar Storage.
-4. Sharp decodifica y recodifica la imagen, limita píxeles y elimina EXIF y metadatos no necesarios.
-5. Se calcula el hash y se bloquean duplicados o archivos incompatibles.
-6. Se crea una aportación `pending` y rutas UUID en un bucket privado de cuarentena.
-7. El servidor sube los bytes saneados con una clave secreta que nunca llega al navegador.
-8. Si cualquier operación falla, se eliminan tanto la fila incompleta como los objetos subidos.
+4. Sharp decodifica y recodifica las imágenes, limita píxeles y elimina EXIF y metadatos no necesarios.
+5. Los PDF deben tener cabecera y cierre válidos y no pueden declarar cifrado, JavaScript, acciones,
+   formularios, contenido enriquecido ni archivos incrustados.
+6. Se calcula el hash y se bloquean duplicados o archivos incompatibles.
+7. Se crea una aportación `pending` y rutas UUID en un bucket privado de cuarentena.
+8. El servidor sube los bytes validados con una clave secreta que nunca llega al navegador.
+9. Si cualquier operación falla, se eliminan tanto la fila incompleta como los objetos subidos.
 
 El bucket de cuarentena:
 
@@ -346,6 +351,7 @@ Los plazos definitivos requieren revisión legal antes del lanzamiento.
 - archivo sobredimensionado: denegado en aplicación y bucket;
 - acceso público a cuarentena: denegado;
 - archivo que no puede decodificarse y recodificarse: denegado.
+- PDF sin estructura reconocible, cifrado o con funciones activas: denegado.
 
 ### Funcional
 
@@ -372,7 +378,7 @@ Los plazos definitivos requieren revisión legal antes del lanzamiento.
 1. Parche aislado de permisos heredados y prueba negativa anónima.
 2. Migración del modelo, índices, constraints, RLS, grants y bucket privado.
 3. Server Action, validación, anti-bot, rate limiting y pruebas de dominio.
-4. Flujo de fotografías en cuarentena.
+4. Flujo de imágenes y PDF en cuarentena.
 5. Página pública responsive y accesible.
 6. Bandeja del Panel y auditoría.
 7. Política de privacidad revisada y publicada.

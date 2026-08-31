@@ -7,11 +7,13 @@ import { submitContributionAction } from './actions'
 import styles from './page.module.css'
 
 const INITIAL_STATE = { status: 'idle', message: '' }
-const MAX_FILE_BYTES = 5 * 1024 * 1024
+const MAX_FILE_BYTES = 8 * 1024 * 1024
+const MAX_TOTAL_FILE_BYTES = 10 * 1024 * 1024
+const ALLOWED_FILE_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp', 'application/pdf'])
 const TYPES = [
   ['correction', 'Corregir una ficha', 'Un dato que ya aparece en la web no es correcto o está incompleto.'],
   ['new_record', 'Proponer información', 'Quieres documentar una ficha, un hecho o un contenido nuevo.'],
-  ['media', 'Fotografías o documentos', 'Aportas imágenes propias/autorizadas o enlaces a documentos.'],
+  ['media', 'Fotografías o documentos', 'Adjuntas imágenes propias/autorizadas, PDF o enlaces a otras fuentes.'],
   ['suggestion', 'Sugerencia general', 'Has encontrado una incidencia o propones mejorar la web.'],
 ]
 
@@ -19,6 +21,7 @@ export default function ContributionForm({ enabled, formTicket, turnstileSiteKey
   const [state, formAction, pending] = useActionState(submitContributionAction, INITIAL_STATE)
   const [type, setType] = useState('correction')
   const [fileMessage, setFileMessage] = useState('')
+  const [hasPhotos, setHasPhotos] = useState(false)
 
   useEffect(() => {
     if (state.status === 'error') window.turnstile?.reset?.()
@@ -26,22 +29,29 @@ export default function ContributionForm({ enabled, formTicket, turnstileSiteKey
 
   function validateFiles(event) {
     const files = [...(event.target.files || [])]
-    if (files.length > 2) {
+    setHasPhotos(false)
+    if (files.length > 3) {
       event.target.value = ''
-      setFileMessage('Selecciona como máximo dos fotografías.')
+      setFileMessage('Selecciona como máximo tres archivos.')
       return
     }
-    if (files.some((file) => !['image/jpeg', 'image/png', 'image/webp'].includes(file.type))) {
+    if (files.some((file) => !ALLOWED_FILE_TYPES.has(file.type))) {
       event.target.value = ''
-      setFileMessage('Solo se admiten fotografías JPG, PNG o WebP.')
+      setFileMessage('Solo se admiten archivos JPG, PNG, WebP o PDF.')
       return
     }
     if (files.some((file) => file.size > MAX_FILE_BYTES)) {
       event.target.value = ''
-      setFileMessage('Cada fotografía puede ocupar como máximo 5 MB.')
+      setFileMessage('Cada archivo puede ocupar como máximo 8 MB.')
       return
     }
-    setFileMessage(files.length ? `${files.length} fotografía${files.length === 1 ? '' : 's'} preparada${files.length === 1 ? '' : 's'} para la cuarentena.` : '')
+    if (files.reduce((total, file) => total + file.size, 0) > MAX_TOTAL_FILE_BYTES) {
+      event.target.value = ''
+      setFileMessage('Los archivos pueden ocupar como máximo 10 MB en total.')
+      return
+    }
+    setHasPhotos(files.some((file) => file.type.startsWith('image/')))
+    setFileMessage(files.length ? `${files.length} archivo${files.length === 1 ? '' : 's'} preparado${files.length === 1 ? '' : 's'} para la cuarentena privada.` : '')
   }
 
   if (state.status === 'success') {
@@ -122,31 +132,36 @@ export default function ContributionForm({ enabled, formTicket, turnstileSiteKey
           </label>
         </div>
 
-        {type === 'media' ? (
-          <fieldset className={styles.photoFieldset}>
-            <legend>Fotografías (opcional si enlazas un documento)</legend>
+        <fieldset className={styles.photoFieldset}>
+            <legend>Archivos adjuntos (opcional)</legend>
             <div className={styles.fieldGrid}>
               <label className={styles.fieldWide}>
-                <span>Archivos</span>
-                <input name="photos" type="file" accept="image/jpeg,image/png,image/webp" multiple onChange={validateFiles} disabled={pending} />
-                <small>Hasta 2 archivos · JPG, PNG o WebP · 5 MB por archivo. PDF, Office, SVG, GIF y ZIP no se admiten.</small>
+                <span>Seleccionar archivos</span>
+                <input name="attachments" type="file" accept="image/jpeg,image/png,image/webp,application/pdf,.pdf" multiple onChange={validateFiles} disabled={pending} />
+                <small>Hasta 3 archivos · JPG, PNG, WebP o PDF · 8 MB por archivo y 10 MB en total. Office, SVG, GIF y ZIP no se admiten.</small>
                 {fileMessage ? <em className={styles.fileMessage}>{fileMessage}</em> : null}
               </label>
-              <label>
-                <span>Autoría o crédito</span>
-                <input name="photo_credit" maxLength={180} disabled={pending} placeholder="Nombre de la persona autora" />
-              </label>
-              <label>
-                <span>Texto alternativo</span>
-                <input name="photo_alt_text" maxLength={300} disabled={pending} placeholder="Qué aparece en la imagen" />
-              </label>
+              {hasPhotos ? (
+                <>
+                  <label>
+                    <span>Autoría o crédito de las fotografías *</span>
+                    <input name="photo_credit" required maxLength={180} disabled={pending} placeholder="Nombre de la persona autora" />
+                  </label>
+                  <label>
+                    <span>Texto alternativo</span>
+                    <input name="photo_alt_text" maxLength={300} disabled={pending} placeholder="Qué aparece en la imagen" />
+                  </label>
+                </>
+              ) : null}
             </div>
-            <label className={styles.checkRow}>
-              <input name="rights_confirmed" type="checkbox" disabled={pending} />
-              <span>Confirmo que soy titular de las fotografías o tengo permiso suficiente para aportarlas para revisión y posible publicación.</span>
-            </label>
+            {hasPhotos ? (
+              <label className={styles.checkRow}>
+                <input name="rights_confirmed" type="checkbox" required disabled={pending} />
+                <span>Confirmo que soy titular de las fotografías o tengo permiso suficiente para aportarlas para revisión y posible publicación.</span>
+              </label>
+            ) : null}
+            <p className={styles.quarantineNote}>Los PDF se guardan sin previsualización y solo pueden descargarse desde el panel privado durante la revisión editorial.</p>
           </fieldset>
-        ) : null}
 
         <fieldset className={styles.contactFieldset}>
           <legend>Contacto (opcional)</legend>

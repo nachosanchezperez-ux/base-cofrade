@@ -3,7 +3,7 @@
 import { createHash, randomUUID } from 'node:crypto'
 import { headers } from 'next/headers'
 import { CONTRIBUTION_BUCKET, CONTRIBUTION_PRIVACY_VERSION } from '@/lib/contributions/config'
-import { validateContributionPhoto } from '@/lib/contributions/image-validation'
+import { validateContributionAttachment } from '@/lib/contributions/attachment-validation'
 import {
   contributionFingerprint,
   contributionReadiness,
@@ -21,19 +21,19 @@ import { createAdminClient } from '@/lib/supabase/admin'
 
 const GENERIC_ERROR = 'No hemos podido recibir la aportación de forma segura. Espera unos minutos y vuelve a intentarlo.'
 
-function submissionHash(payload, photos) {
+function submissionHash(payload, attachments) {
   const normalized = JSON.stringify({
     type: payload.contributionType,
     title: payload.title.toLocaleLowerCase('es-ES'),
     description: payload.description,
     pageUrl: payload.pageUrl,
     sources: payload.sources,
-    photos: photos.map((photo) => photo.sha256),
+    attachments: attachments.map((attachment) => attachment.sha256),
   })
   return createHash('sha256').update(normalized).digest('hex')
 }
 
-async function removeUploadedPhotos(supabase, paths) {
+async function removeUploadedAttachments(supabase, paths) {
   if (!paths.length) return
   const result = await supabase.storage.from(CONTRIBUTION_BUCKET).remove(paths)
   if (result.error) {
@@ -83,10 +83,10 @@ export async function submitContributionAction(_previousState, formData) {
     })
     if (!turnstileValid) throw new Error('Turnstile rejected contribution')
 
-    const photos = []
-    for (const file of payload.photos) photos.push(await validateContributionPhoto(file))
+    const attachments = []
+    for (const file of payload.attachments) attachments.push(await validateContributionAttachment(file))
 
-    const contentHash = submissionHash(payload, photos)
+    const contentHash = submissionHash(payload, attachments)
     const duplicateThreshold = new Date(Date.now() - 24 * 60 * 60_000).toISOString()
     const duplicate = await supabase
       .from('contributions')
@@ -126,11 +126,11 @@ export async function submitContributionAction(_previousState, formData) {
     contributionId = created.data.id
 
     const attachmentRows = []
-    for (const photo of photos) {
+    for (const attachment of attachments) {
       const attachmentId = randomUUID()
-      const storagePath = `${contributionId}/${attachmentId}.${photo.extension}`
-      const uploaded = await supabase.storage.from(CONTRIBUTION_BUCKET).upload(storagePath, photo.buffer, {
-        contentType: photo.verifiedMimeType,
+      const storagePath = `${contributionId}/${attachmentId}.${attachment.extension}`
+      const uploaded = await supabase.storage.from(CONTRIBUTION_BUCKET).upload(storagePath, attachment.buffer, {
+        contentType: attachment.verifiedMimeType,
         cacheControl: '0',
         upsert: false,
       })
@@ -140,16 +140,16 @@ export async function submitContributionAction(_previousState, formData) {
         id: attachmentId,
         contribution_id: contributionId,
         storage_path: storagePath,
-        original_name: photo.originalName,
-        declared_mime_type: photo.declaredMimeType,
-        verified_mime_type: photo.verifiedMimeType,
-        byte_size: photo.byteSize,
-        width: photo.width,
-        height: photo.height,
-        sha256: photo.sha256,
+        original_name: attachment.originalName,
+        declared_mime_type: attachment.declaredMimeType,
+        verified_mime_type: attachment.verifiedMimeType,
+        byte_size: attachment.byteSize,
+        width: attachment.width,
+        height: attachment.height,
+        sha256: attachment.sha256,
         status: 'quarantined',
-        credit: payload.photoCredit,
-        alt_text: payload.photoAltText,
+        credit: attachment.kind === 'image' ? payload.photoCredit : null,
+        alt_text: attachment.kind === 'image' ? payload.photoAltText : null,
       })
     }
 
@@ -167,14 +167,14 @@ export async function submitContributionAction(_previousState, formData) {
       changed_fields: {
         contribution_type: payload.contributionType,
         source_count: payload.sources.length,
-        attachment_count: photos.length,
+        attachment_count: attachments.length,
       },
     })
     if (audit.error) console.error('[Hilo Cofrade] No se pudo auditar una aportación pública', audit.error.message)
 
     return { status: 'success', reference: `HC-${contributionId.slice(0, 8).toUpperCase()}` }
   } catch (error) {
-    if (supabase && uploadedPaths.length) await removeUploadedPhotos(supabase, uploadedPaths)
+    if (supabase && uploadedPaths.length) await removeUploadedAttachments(supabase, uploadedPaths)
     if (supabase && contributionId) {
       const removed = await supabase.from('contributions').delete().eq('id', contributionId)
       if (removed.error) console.error('[Hilo Cofrade] No se pudo retirar una aportación incompleta', removed.error.message)
