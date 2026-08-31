@@ -1,6 +1,6 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 31 de agosto de 2026 · 09:20 UTC
+**Corte validado:** 31 de agosto de 2026 · 10:01 UTC
 **Régimen:** `FIRST EDITION FREEZE` activo
 
 ## Estado general
@@ -15,20 +15,20 @@
 
 ## GitHub y baseline técnico
 
-- `main`: `2a8e01adb7f9c2b7edc7c19f24caf21d56f8a042`.
-- Último merge: #445, tres igualás oficiales de septiembre de 2026.
+- `main`: `a025098528351656503460596d28b5318e39daf5`.
+- Último merge funcional: #432, fondo configurable de logotipos de Bandas.
 - #439: fusionada en `378b20be3301f42635673ae9f41bbe6104a90b40`.
-- Única PR abierta: #432.
-- #432 head: `4efca69bf5c43f09f3af61bb3beae5481a8fa930`;
-  mergeable, CI #1238 verde y preview Vercel `READY`.
-- Suite del head de #432: 484/484; build y TypeScript correctos.
+- #432: fusionada en `a025098528351656503460596d28b5318e39daf5`.
+- PR abiertas en el corte: ninguna.
+- Suite validada de #432: 484/484; CI #1241, build, TypeScript y preview
+  correctos.
 
 ## Producción y Vercel
 
 **PRODUCCIÓN → 🟢 ESTABLE**
 
-- Deployment: `dpl_7xcbC8yBwYQuCNxfzLtjHUuxPaTd`.
-- Commit desplegado: `2a8e01adb7f9c2b7edc7c19f24caf21d56f8a042`.
+- Deployment: `dpl_5s3aaZxuNZ8wpLGCrCNurkeGLoER`.
+- Commit desplegado: `a025098528351656503460596d28b5318e39daf5`.
 - Estado: `READY`; región operativa: `dub1`.
 - Dominios: `https://hilocofrade.es` y `https://www.hilocofrade.es`.
 - Runtime: sin errores ni fatales en el corte.
@@ -61,19 +61,21 @@
 
 ## #432 · Fondo configurable de logotipos de Bandas
 
-**Estado → 🟢 LISTA PARA FUSIÓN**
+**Estado → 🟢 FUSIONADA**
 
 - Campo nullable reutilizable, validación HEX `#RRGGBB`, selector, preview y
   opción «Sin fondo».
 - Panel y Front comparten `bands.logo_background_color`.
 - No contiene estilos por slug, excepciones por Banda ni una segunda lógica de
   tamaño; conserva el normalizador óptico y `object-fit: contain`.
-- La rama Supabase temporal reprodujo baseline, seguridad, #432 y seed.
+- La rama Supabase temporal reprodujo baseline, seguridad, #432 y seed antes
+  de la fusión.
 - Persistencia real comprobada con Maestro Tejera (`#F2F2F2`), rechazo de HEX
   inválido y reversión a `NULL`; Las Cigarreras conservó el comportamiento sin
   fondo.
-- La rama temporal fue eliminada tras el QA; producción no se tocó.
-- Preview del head: `dpl_EWUjETd7YhHRs8Ezu2riWVThPrij`, `READY`.
+- La rama temporal fue eliminada tras el QA.
+- Producción registra la migración, conserva las 32 Bandas con `NULL` y no
+  introduce cambios visuales hasta que el Panel configure un valor.
 
 ## Migración 048 y reproducibilidad de ramas
 
@@ -87,7 +89,7 @@
 - Con ese baseline, una rama vacía supera 048. El fallo vigente apareció después:
   `20260831074355_publica_tres_igualas_septiembre_2026` asumía tres Hermandades
   presentes en producción.
-- #432 contiene la corrección general: si una Hermandad fuente no existe en una
+- `main` contiene la corrección general: si una Hermandad fuente no existe en una
   preview vacía, su convocatoria se omite sin crear datos ficticios ni relajar
   integridad. El resultado de producción permanece idéntico.
 
@@ -97,7 +99,8 @@
 
 - Historial activo Git/Supabase:
   `20260831070000_first_edition_baseline`,
-  `20260831071000_secure_public_contributions_reconciled` y
+  `20260831071000_secure_public_contributions_reconciled`,
+  `20260831072000_add_band_logo_background_color` y
   `20260831074355_publica_tres_igualas_septiembre_2026`.
 - Diferencias de historial en producción: ninguna.
 - Proyecto Supabase: `ACTIVE_HEALTHY`.
@@ -127,5 +130,5 @@
 `FIRST EDITION FREEZE` continúa activo. No se abren funcionalidades, entidades,
 módulos, Homes, rediseños ni una Segunda Edición.
 
-La única decisión pendiente de Dirección es fusionar o no #432, ya clasificada
-como lista para fusión. Las aportaciones públicas permanecen desactivadas.
+No queda ninguna PR abierta en este corte. Las aportaciones públicas permanecen
+desactivadas.
