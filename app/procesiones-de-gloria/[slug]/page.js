@@ -152,6 +152,7 @@ export default async function GloryDetailPage({ params }) {
     inLanguage: 'es',
     isPartOf: { '@id': `${absoluteUrl('/')}#website` },
     mainEntity: { '@id': `${canonicalUrl}#event` },
+    ...(item.heroImagePath ? { primaryImageOfPage: { '@type': 'ImageObject', url: absoluteUrl(item.heroImagePath) } } : {}),
   }
   const eventJsonLd = {
     '@context': 'https://schema.org',
@@ -167,6 +168,7 @@ export default async function GloryDetailPage({ params }) {
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
     ...(item.isUpcoming ? { eventStatus: 'https://schema.org/EventScheduled' } : {}),
     ...(item.isCancelled ? { eventStatus: 'https://schema.org/EventCancelled' } : {}),
+    ...(item.heroImagePath ? { image: [absoluteUrl(item.heroImagePath)] } : {}),
     organizer: {
       '@type': 'Organization',
       name: item.brotherhoodName,
