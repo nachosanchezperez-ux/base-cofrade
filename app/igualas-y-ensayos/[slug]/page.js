@@ -2,23 +2,63 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import JsonLd from '@/components/JsonLd'
 import { crewEventStatusLabel } from '@/lib/crew-events'
-import { absoluteUrl, breadcrumbJsonLd, pageTitle } from '@/lib/seo'
+import { absoluteUrl, breadcrumbJsonLd, pageTitle, seoDescription } from '@/lib/seo'
 import { getCrewEventDetail } from '@/lib/supabase/crew-events'
 import styles from './crew-event-detail.module.css'
 
 export const revalidate = 900
 
+function madridUtcOffset(value) {
+  if (!value) return '+00:00'
+  const zone = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'Europe/Madrid',
+    timeZoneName: 'longOffset',
+  }).formatToParts(new Date(`${value}T12:00:00Z`))
+    .find((part) => part.type === 'timeZoneName')?.value || 'GMT+00:00'
+  return zone.replace('GMT', '') || '+00:00'
+}
+
+function madridDateTime(date, time) {
+  if (!date) return ''
+  return time ? `${date}T${time}:00${madridUtcOffset(date)}` : date
+}
+
+function eventSeoTitle(event) {
+  return [event.title, event.dateParts.label, event.municipality].filter(Boolean).join(' · ')
+}
+
+function eventSeoDescription(event) {
+  const timing = event.dateParts.label
+    ? `${event.dateParts.label}${event.startTime ? ` a las ${event.startTime}` : ''}`
+    : ''
+  const steps = event.steps.length ? `Paso: ${event.steps.map((step) => step.name).join(', ')}` : ''
+  const agents = event.agents.length
+    ? `${event.agents.length === 1 ? 'Responsable' : 'Responsables'}: ${event.agents.map((agent) => agent.name).join(', ')}`
+    : ''
+
+  return seoDescription([
+    event.summary || event.description || `${event.eventTypeLabel} de ${event.brotherhoodName}`,
+    timing,
+    event.location ? `Lugar: ${event.location}` : '',
+    steps,
+    agents,
+  ].filter(Boolean).join('. '))
+}
+
 export async function generateMetadata({ params }) {
   const { slug } = await params
   const event = await getCrewEventDetail(slug)
   if (!event) return { title: 'Convocatoria no encontrada', robots: { index: false, follow: false } }
-  const description = event.summary || `${event.eventTypeLabel} de ${event.brotherhoodName} el ${event.dateParts.label}.`
+  const title = eventSeoTitle(event)
+  const description = eventSeoDescription(event)
+  const canonical = `/igualas-y-ensayos/${event.slug}`
+
   return {
-    title: `${event.eventTypeLabel} · ${event.brotherhoodName}`,
+    title,
     description,
-    alternates: { canonical: `/igualas-y-ensayos/${event.slug}` },
-    openGraph: { title: pageTitle(event.title), description, url: `/igualas-y-ensayos/${event.slug}` },
-    twitter: { title: pageTitle(event.title), description },
+    alternates: { canonical },
+    openGraph: { title: pageTitle(title), description, url: canonical },
+    twitter: { title: pageTitle(title), description },
   }
 }
 
@@ -26,19 +66,51 @@ export default async function CrewEventDetailPage({ params }) {
   const { slug } = await params
   const event = await getCrewEventDetail(slug)
   if (!event) notFound()
+
+  const canonicalUrl = absoluteUrl(event.detailHref)
+  const description = eventSeoDescription(event)
+  const pageJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': `${canonicalUrl}#webpage`,
+    url: canonicalUrl,
+    name: pageTitle(eventSeoTitle(event)),
+    description,
+    inLanguage: 'es',
+    isPartOf: { '@id': `${absoluteUrl('/')}#website` },
+    mainEntity: { '@id': `${canonicalUrl}#event` },
+  }
   const eventJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Event',
+    '@id': `${canonicalUrl}#event`,
     name: event.title,
-    startDate: event.date,
+    startDate: madridDateTime(event.date, event.startTime),
+    ...(event.endTime ? { endDate: madridDateTime(event.date, event.endTime) } : {}),
+    description,
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
     eventStatus: event.isCancelled
       ? 'https://schema.org/EventCancelled'
       : event.isPostponed
         ? 'https://schema.org/EventPostponed'
         : 'https://schema.org/EventScheduled',
-    url: absoluteUrl(event.detailHref),
-    organizer: { '@type': 'Organization', name: event.brotherhoodName },
-    ...(event.location ? { location: { '@type': 'Place', name: event.location, address: event.municipality } } : {}),
+    url: canonicalUrl,
+    organizer: {
+      '@type': 'Organization',
+      name: event.brotherhoodName,
+      ...(event.brotherhoodHref ? { url: absoluteUrl(event.brotherhoodHref) } : {}),
+    },
+    location: {
+      '@type': 'Place',
+      name: event.location || event.municipality || 'Sevilla',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: event.municipality,
+        addressRegion: event.province || 'Sevilla',
+        addressCountry: 'ES',
+      },
+    },
+    mainEntityOfPage: { '@id': `${canonicalUrl}#webpage` },
   }
 
   return (
@@ -48,6 +120,7 @@ export default async function CrewEventDetailPage({ params }) {
         { name: 'Igualás y Ensayos', path: '/igualas-y-ensayos' },
         { name: event.title, path: event.detailHref },
       ])} />
+      <JsonLd data={pageJsonLd} />
       <JsonLd data={eventJsonLd} />
       <div className="shell">
         <nav className={styles.breadcrumb} aria-label="Migas de pan"><Link href="/igualas-y-ensayos">Igualás y Ensayos</Link><span>→</span><strong>{event.eventTypeLabel}</strong></nav>
