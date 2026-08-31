@@ -25,3 +25,17 @@ test('el tratamiento conserva el equilibrado óptico común sin excepciones nomi
   assert.doesNotMatch(component, /tres\s+ca[íi]das|cigarreras/i)
   assert.doesNotMatch(css, /tres\s+ca[íi]das|cigarreras/i)
 })
+
+test('un fondo configurado conserva los píxeles del JPEG y evita el filtro destructivo', () => {
+  const component = read('components/RelationalEntityHero.js')
+
+  assert.match(component, /const removeLightRasterBackground = opaqueRaster && !resolvedBackground/)
+  assert.match(component, /removeLightRasterBackground \? bandStyles\.logoOpaqueRaster/)
+})
+
+test('Tres Caídas usa el emblema oficial transparente sobre gris neutro', () => {
+  const migration = read('supabase/migrations/20260831135520_publica_centuria_y_corrige_logo_tres_caidas.sql')
+
+  assert.match(migration, /\/bandas\/tres-caidas-triana\/logotipo\.png/)
+  assert.match(migration, /logo_background_color = '#ECEFF1'/)
+})
