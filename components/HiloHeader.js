@@ -142,8 +142,8 @@ export default function HiloHeader() {
             <Image
               src="/brand/logo-header.svg"
               alt=""
-              width={680}
-              height={270}
+              width={510}
+              height={72}
               priority
               className={styles.brandLogo}
             />
