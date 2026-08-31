@@ -25,6 +25,14 @@ test('Igualás publica fecha y hora con zona de Madrid y conecta WebPage con Eve
   }
 })
 
+test('Igualás limpia puntuación y no repite fecha/hora si ya están en el resumen', () => {
+  assert.ok(crewEvent.includes('function cleanSeoSentence'))
+  assert.ok(crewEvent.includes('function includesSeoDetail'))
+  assert.ok(crewEvent.includes("!includesSeoDetail(lead, event.dateParts.label)"))
+  assert.ok(crewEvent.includes("!includesSeoDetail(lead, event.startTime)"))
+  assert.ok(crewEvent.includes('parts.map(cleanSeoSentence).filter(Boolean).join'))
+})
+
 test('Glorias declara la fotografía principal también en datos estructurados', () => {
   assert.ok(gloryEvent.includes('primaryImageOfPage'))
   assert.ok(gloryEvent.includes('image: [absoluteUrl(item.heroImagePath)]'))
