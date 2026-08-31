@@ -1,6 +1,6 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 31 de agosto de 2026 · 12:30 UTC
+**Corte validado:** 31 de agosto de 2026 · 14:30 UTC
 
 **Régimen:** `FIRST EDITION FREEZE` activo
 
@@ -11,12 +11,11 @@
 **PRIMERA EDICIÓN → 🟢 CERRADA, CERTIFICADA Y CONGELADA**
 
 - Baseline funcional y estructural: `a025098528351656503460596d28b5318e39daf5`.
-- `main` total validado antes de esta actualización documental:
-  `95dab43cd11ba07bfeb3d1780a29c0cf73b6dc87`.
-- La evolución posterior al baseline contiene una corrección real de presentación
-  (#448), cierres editoriales/de contenido (#449 y #450) y un endurecimiento de
-  validación cerrado por defecto (#451); no abre una nueva edición ni amplía la
-  arquitectura.
+- `main` total validado en este corte:
+  `c8407c9e2566ea1594127290e1bf4ee022f3fc7f`.
+- La evolución posterior al baseline contiene únicamente certificación canónica
+  (#452), mantenimiento SEO P0 (#453 y #454) y una corrección visual real de
+  Bandas (#455); no abre una nueva edición ni amplía la arquitectura.
 - Matriz manual 390/768/1024/1440 aprobada por Dirección.
 - No hay un frente funcional abierto ni PR abiertas en el corte.
 - Durante el freeze solo se permiten contenido, datos, fotografías, Fuentes,
@@ -26,28 +25,59 @@
 
 - Baseline funcional/estructural: `a025098528351656503460596d28b5318e39daf5`
   (#432).
-- Último `main` total comprobado: `95dab43cd11ba07bfeb3d1780a29c0cf73b6dc87`
-  (#451).
+- Último `main` total comprobado: `c8407c9e2566ea1594127290e1bf4ee022f3fc7f`
+  (#455).
 - #439: fusionada en `378b20be3301f42635673ae9f41bbe6104a90b40`.
 - #432: fusionada en `a025098528351656503460596d28b5318e39daf5`.
+- #452: certifica el baseline canónico y mantiene `FIRST EDITION FREEZE`.
+- #453: SEO P0 fusionado en `d26fde8dd0dac51bd9a6c4b86345bba1784cc8a9`.
+- #454: limpieza SEO de Igualás fusionada en
+  `8bfca4d4cf23460a414d3f507f8a1f2774551299`.
+- #455: corrección visual de Mairena fusionada en
+  `c8407c9e2566ea1594127290e1bf4ee022f3fc7f`.
 - PR abiertas: 0.
-- El commit total tiene CI #1252 y Vercel en verde. La suite de #451 quedó en
-  485/485 con build y `git diff --check` correctos.
+- La última ejecución `Production SEO Smoke` sobre el `main` actual es la #22 y
+  termina `SUCCESS`.
 
 ## Producción y Vercel
 
 **PRODUCCIÓN → 🟢 ESTABLE**
 
-- Deployment: `dpl_F1Hb9zVis6XgfrJWsTadCusNnfwn`.
-- Commit desplegado: `95dab43cd11ba07bfeb3d1780a29c0cf73b6dc87`.
+- Deployment: `dpl_7vRuFGN8j2SiKmKN1eohANnjXcpT`.
+- Commit desplegado: `c8407c9e2566ea1594127290e1bf4ee022f3fc7f`.
 - Estado: `READY`; target: producción.
 - Dominios: `https://hilocofrade.es` y `https://www.hilocofrade.es`, con
   redirección canónica correcta.
-- Runtime del deployment exacto: 0 errores, 0 fatales y 0 respuestas 5xx en el
-  corte; no hay hilos de revisión Vercel sin resolver.
-- Smoke HTTP 200 correcto en Home, Directorio, Hermandad, Imagen, Paso, Banda,
-  Extraordinarias, Gloria, Igualás, Tira del hilo, Legal, Privacidad, Cookies,
-  Panel y `/colabora`.
+- Runtime: 0 errores detectados en la última hora y 0 respuestas 5xx en el
+  deployment actual; la muestra observada registra 49 respuestas 200.
+- El `Production SEO Smoke` automático del deployment actual pasa correctamente
+  sobre Home, Directorio, Extraordinarias, Glorias, Igualás, Baratillo,
+  Cigarreras y una URL dinámica de cada agenda obtenida desde el sitemap.
+
+## SEO P0 · mantenimiento técnico
+
+**Estado → 🟢 CERRADO Y EN PRODUCCIÓN**
+
+- Igualás y Ensayos publica títulos y descriptions específicos por convocatoria,
+  canonical individual y relación `WebPage ↔ Event`.
+- `Event.startDate` incorpora la hora real y el offset de `Europe/Madrid` cuando
+  el horario está documentado.
+- El organizador se enlaza a la Hermandad pública cuando existe y la ubicación se
+  estructura como `Place` + `PostalAddress` sin inventar direcciones.
+- Las descriptions evitan repetir fecha, hora, Hermandad, lugar, Paso o
+  responsables cuando ya aparecen en el texto base.
+- Extraordinarias calcula el offset de `Europe/Madrid` por fecha y ya no fija
+  artificialmente `+02:00`; el horario de invierno queda cubierto.
+- Procesiones de Gloria expone la fotografía principal mediante
+  `primaryImageOfPage` y `Event.image` cuando existe.
+- El smoke SEO de producción se dispara tras deployments de producción y también
+  puede ejecutarse manualmente; exige HTTP 200, canonical y JSON-LD en las
+  superficies protegidas.
+- La canonical de la raíz se normaliza como `https://hilocofrade.es`, evitando
+  falsos negativos por una barra final equivalente.
+- No hubo migraciones, cambios de esquema, RLS, datos ni Panel.
+- No se hizo una conversión masiva a ISR durante el freeze: la optimización de
+  caché queda reservada a una incidencia o métrica de rendimiento verificable.
 
 ## #439 · Aportaciones públicas seguras
 
@@ -174,5 +204,6 @@ módulos, Homes, rediseños ni una Segunda Edición.
 
 La fase activa es exclusivamente editorial/documental: completar y verificar
 Bandas, Glorias, Igualás, Hermandades, fotografías y Fuentes sobre el modelo ya
-cerrado. No queda ninguna PR abierta en este corte y las aportaciones públicas
-permanecen desactivadas.
+cerrado. El SEO P0 queda cerrado como mantenimiento compatible con el freeze, no
+queda ninguna PR abierta en este corte y las aportaciones públicas permanecen
+desactivadas.
