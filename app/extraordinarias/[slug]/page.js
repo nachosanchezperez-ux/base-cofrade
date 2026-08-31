@@ -49,6 +49,21 @@ function formatShortDate(value) {
   }).format(date).replace('.', '')
 }
 
+function madridUtcOffset(value) {
+  if (!value) return '+00:00'
+  const zone = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'Europe/Madrid',
+    timeZoneName: 'longOffset',
+  }).formatToParts(new Date(`${value}T12:00:00Z`))
+    .find((part) => part.type === 'timeZoneName')?.value || 'GMT+00:00'
+  return zone.replace('GMT', '') || '+00:00'
+}
+
+function madridDateTime(date, time) {
+  if (!date) return ''
+  return time ? `${date}T${time}:00${madridUtcOffset(date)}` : date
+}
+
 function normalizeText(value) {
   return String(value || '')
     .normalize('NFD')
@@ -206,9 +221,9 @@ export default async function ExtraordinaryDetailPage({ params }) {
     '@id': `${canonicalUrl}#event`,
     url: canonicalUrl,
     name: `${item.outingType}: ${item.title}`,
-    startDate: item.departureTime ? `${item.date}T${item.departureTime}:00+02:00` : item.date,
+    startDate: madridDateTime(item.date, item.departureTime),
     ...(item.returnDate || item.returnTime ? {
-      endDate: `${item.returnDate || item.date}${item.returnTime ? `T${item.returnTime}:00+02:00` : ''}`,
+      endDate: madridDateTime(item.returnDate || item.date, item.returnTime),
     } : {}),
     description: item.reason || item.description || pageDescription,
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
