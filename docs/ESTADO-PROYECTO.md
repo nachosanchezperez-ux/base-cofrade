@@ -1,6 +1,6 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 31 de agosto de 2026 · 19:52 UTC
+**Corte validado:** 31 de agosto de 2026 · 23:06 UTC
 
 **Régimen:** `FIRST EDITION FREEZE` activo
 
@@ -11,14 +11,15 @@
 **PRIMERA EDICIÓN → 🟢 CERRADA, CERTIFICADA Y CONGELADA**
 
 - Baseline funcional y estructural: `a025098528351656503460596d28b5318e39daf5` (#432).
-- Último `main` funcional validado antes de esta sincronización documental: `b975b613c2d15a84c6adb3fdc3fb72268e8d3d8a` (#467).
-- Producción funcional está `READY` sobre ese SHA en `dpl_G6ZEcc3rf1NHA9LSeP4C7TLQYL2T`.
-- CI #1321 termina `SUCCESS` con `npm ci`, `npm test` y `npm run build` en verde.
+- `main` real validado: `051beae66348a67e3a28c1a475476f29a5898952` (#487).
+- Producción está `READY` sobre ese SHA en `dpl_4LRFMepTp5oiUHSyaHvLP2RwXxWn`.
+- CI #1350 termina `SUCCESS`; validación local actual: `520/520` pruebas y build de producción en verde.
 - Runtime reciente de producción: sin errores detectados.
 - La matriz manual 390/768/1024/1440 de Primera Edición permanece aprobada.
 - El freeze no permite abrir arquitectura, módulos ni una Segunda Edición; sí permite contenido, datos, fotografías, Fuentes, seguridad, legal, bugs e incidencias reales.
 - Cola UX/estructural objeto de este corte: **0 frentes abiertos**.
-- PR abiertas al cerrar el corte funcional: **0**.
+- PR UX/estructurales abiertas al cerrar este corte: **0**.
+- La última actuación editorial (#486) y su reconciliación técnica (#487) están cerradas.
 
 ## GitHub · estado de trabajo
 
@@ -40,11 +41,21 @@
 - #471 · gestión local de multimedia en Hermandades: fusionada y desplegada con política conservadora de desvinculación.
 - #472 y #473 · ajustes posteriores de presencia de marca en cabecera/footer móvil: integrados y vigentes; no reabren #470.
 - #474 · reparación de portadas de Presentación al Pueblo: fusionada concurrentemente durante el cierre y preservada al reconciliar #467.
+- #475 · fotografía del Rosario vespertino 2026 de Las Aguas: fusionada como contenido.
+- #476 · igualá 2026 de la Pastora de Triana: fusionada como contenido.
+- #477 · fotografías en el calendario de Procesiones de Gloria: fusionada como corrección real.
+- #478 y #479 · auditoría de Presentación al Pueblo, reconciliación de su migración y limpieza de nota pública: fusionadas.
+- #480 y #481 · traslado al Risco de la Pastora de Cantillana y ubicación contextual de su vídeo: fusionadas.
+- #482 · segunda fase documental de Presentación al Pueblo: fusionada; utiliza el modelo vigente y no abre arquitectura nueva.
+- #483 · versión remota de la migración de #482 reconciliada en Git sin reejecutar SQL.
+- #485 · tratamiento transversal y responsive de fotografías de Glorias: fusionada como bug real, con fallback seguro y sin excepciones nominales.
+- #486 · conflictos documentales de Presentación al Pueblo: cerrados como contenido.
+- #487 · timestamp remoto de #486 reconciliado en Git sin reejecutar SQL.
 - #467 · cierre UX de Bandas: fusionada con delta final exclusivamente transversal de notas redundantes; la excepción nominal del logo de Virgen de los Reyes fue descartada.
 
 ### PR abiertas en este corte
 
-**Ninguna.**
+**Ninguna salvo esta sincronización canónica (#484).**
 
 No debe abrirse un nuevo frente UX/estructural para continuar el cierre. La fase vuelve a ser editorial/documental salvo bug real, seguridad o incidencia verificable compatible con el freeze.
 
@@ -145,12 +156,12 @@ Nota administrativa: el conector de GitHub falló al quitar el estado draft de #
 
 **PRODUCCIÓN → 🟢 ESTABLE**
 
-- Último deployment funcional validado antes de esta sincronización documental: `dpl_G6ZEcc3rf1NHA9LSeP4C7TLQYL2T`.
-- Commit funcional desplegado: `b975b613c2d15a84c6adb3fdc3fb72268e8d3d8a`.
+- Último deployment validado: `dpl_4LRFMepTp5oiUHSyaHvLP2RwXxWn`.
+- Commit desplegado: `051beae66348a67e3a28c1a475476f29a5898952`.
 - Estado: `READY`; target: producción.
 - Dominios canónicos: `https://hilocofrade.es` y `https://www.hilocofrade.es`.
-- CI funcional de cierre #1321: `SUCCESS`.
-- Comprobación runtime reciente: sin errores detectados.
+- CI #1350 termina `SUCCESS`; Vercel informa `SUCCESS` para el commit desplegado.
+- Comprobación runtime del deployment y del proyecto: sin `error/fatal` detectado en la última hora.
 - Las fichas de Procesiones de Gloria son dinámicas (`force-dynamic`), por lo que las correcciones editoriales de Supabase se reflejan sin un redeploy de aplicación.
 - El commit que actualiza este documento es exclusivamente documental y no altera el baseline funcional anterior.
 
@@ -294,7 +305,13 @@ Una decisión posterior de Dirección deberá abrir un corte independiente y com
 
 **PROYECTO DE PRODUCCIÓN → 🟢 `ACTIVE_HEALTHY`**
 
-El cierre #471 no añade DDL, RLS ni nuevas tablas. #467 tampoco modifica Supabase. El avance concurrente #474 sí añadió y aplicó una migración editorial de datos para reparar portadas de Presentación al Pueblo.
+El cierre #471 no añade DDL, RLS ni nuevas tablas. #467 tampoco modifica Supabase. Los cambios posteriores son editoriales o correcciones reales sobre el modelo vigente.
+
+**GIT ↔ SUPABASE → 🟢 17/17 VERSIONES RECONCILIADAS**
+
+- No se reejecutó SQL ni se modificaron datos de producción durante esta reconciliación.
+- Las versiones `20260831154654` y `20260831225216` se nombran en Git como fueron registradas realmente en remoto.
+- `20260831150414` queda representada por un marcador no-op: producción registró una segunda aplicación histórica de Centuria, pero una base nueva ya obtiene el resultado final con la migración idempotente `20260831135520`; no se repite DML.
 
 Migraciones registradas en producción en el momento de este corte:
 
@@ -307,10 +324,18 @@ Migraciones registradas en producción en el momento de este corte:
 7. `20260831150414_publica_centuria_y_corrige_logo_tres_caidas`
 8. `20260831154654_completa_discografia_presentacion_pueblo`
 9. `20260831193853_repara_portadas_presentacion_pueblo`
+10. `20260831213932_publica_iguala_divina_pastora_triana_2026`
+11. `20260831220820_incorpora_video_traslado_risco_cantillana`
+12. `20260831220940_audita_presentacion_pueblo`
+13. `20260831221003_normaliza_tipo_traslado_risco_cantillana`
+14. `20260831221120_corrige_nota_publica_presentacion_rinconada`
+15. `20260831223715_corrige_video_traslado_risco_en_salida`
+16. `20260831225216_completa_presentacion_pueblo_fase2`
+17. `20260831230357_cierra_conflictos_presentacion_pueblo`
 
 ### Observación de ramas Supabase
 
-- El proyecto productivo responde `ACTIVE_HEALTHY`.
+- El proyecto productivo responde `ACTIVE_HEALTHY` en PostgreSQL 17.6.1 (`eu-west-1`).
 - `list_branches` informa únicamente `main`, pero su estado de integración continúa como `MIGRATIONS_FAILED` mientras `preview_project_status` figura `ACTIVE_HEALTHY`.
 - Este corte no intenta reparar ni reinterpretar ese estado porque #471/#467 no requieren una rama de desarrollo ni una nueva reconciliación de esquema.
 - Antes de volver a usar Supabase Preview Branches debe abrirse una reconciliación específica y comprobar la causa real del estado `MIGRATIONS_FAILED`; no asumir que el baseline reproducible anterior sigue vigente sin esa comprobación.
