@@ -6,7 +6,7 @@ const migrationPath = new URL('../supabase/migrations_archive/first-edition/2026
 const buenAireMigrationPath = new URL('../supabase/migrations_archive/first-edition/20260830090233_publica_iguala_buen_aire_2026.sql', import.meta.url)
 const rosarioSantiagoMigrationPath = new URL('../supabase/migrations_archive/first-edition/20260831061147_publica_iguala_rosario_santiago_2026.sql', import.meta.url)
 const septemberCallsMigrationPath = new URL('../supabase/migrations/20260831074355_publica_tres_igualas_septiembre_2026.sql', import.meta.url)
-const pastoraTrianaMigrationPath = new URL('../supabase/migrations/20260831212910_publica_iguala_divina_pastora_triana_2026.sql', import.meta.url)
+const pastoraTrianaMigrationPath = new URL('../supabase/migrations/20260831213932_publica_iguala_divina_pastora_triana_2026.sql', import.meta.url)
 
 test('el calendario reutiliza la entidad event y crea relaciones tipadas con Pasos y Personas', async () => {
   const sql = await readFile(migrationPath, 'utf8')
