@@ -6,6 +6,7 @@ const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf
 
 const page = read('app/panel/(protected)/hermandades/[id]/multimedia/page.js')
 const manager = read('app/panel/(protected)/hermandades/[id]/multimedia/MediaAssetManager.js')
+const managerStyles = read('app/panel/(protected)/hermandades/[id]/multimedia/MediaAssetManager.module.css')
 const actions = read('app/panel/(protected)/hermandades/[id]/multimedia/manage-actions.js')
 
 test('Fotos y carteles muestra los archivos ya vinculados en el contenido natural', () => {
@@ -41,4 +42,15 @@ test('retirar una portada promociona otra imagen vinculada cuando existe', () =>
   assert.match(actions, /promoteNextCover/)
   assert.match(actions, /is_cover: true/)
   assert.match(actions, /\[context\.spec\.relationColumn\]: 'cover'/)
+})
+
+test('la gestión de archivos conserva un contrato responsive sin overflow', () => {
+  assert.match(managerStyles, /grid-template-columns: 92px minmax\(0, 1fr\)/)
+  assert.match(managerStyles, /\.body\s*\{[\s\S]*min-width: 0/)
+  assert.match(managerStyles, /text-overflow: ellipsis/)
+  assert.match(managerStyles, /@media \(max-width: 720px\)/)
+  assert.match(managerStyles, /grid-template-columns: 72px minmax\(0, 1fr\)/)
+  assert.match(managerStyles, /\.grid\s*\{[\s\S]*grid-template-columns: 1fr/)
+  assert.match(managerStyles, /\.actions\s*\{[\s\S]*flex-direction: column/)
+  assert.match(managerStyles, /\.actions button\s*\{[\s\S]*width: 100%/)
 })
