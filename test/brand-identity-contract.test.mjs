@@ -6,22 +6,30 @@ function source(path) {
   return readFileSync(new URL(`../${path}`, import.meta.url), 'utf8')
 }
 
-test('el logo de cabecera usa el activo oficial con las proporciones canónicas de Hilo Cofrade', () => {
+test('el logo de cabecera usa el activo oficial con una firma visible y compacta', () => {
   const header = source('components/HiloHeader.module.css')
   const component = source('components/HiloHeader.js')
+  const logo = source('public/brand/logo-header.svg')
 
   assert.match(header, /--hc-app-header-height:70px/)
   assert.match(header, /\.inner\{min-height:68px;[^}]*gap:22px\}/)
   assert.match(header, /\.brand\{display:flex;align-items:center;flex:0 0 auto;white-space:nowrap;min-width:0\}/)
-  assert.match(header, /\.brandLogo\{display:block;width:148px;height:auto\}/)
-  assert.match(header, /@media\(max-width:859px\)[\s\S]*\.brandLogo\{width:168px\}/)
-  assert.match(header, /@media\(max-width:390px\)[\s\S]*\.inner\{gap:10px\}[\s\S]*\.brandLogo\{width:164px\}/)
+  assert.match(header, /\.brandLogo\{display:block;width:170px;height:auto\}/)
+  assert.match(header, /@media\(max-width:859px\)[\s\S]*\.brandLogo\{width:200px\}/)
+  assert.match(header, /@media\(max-width:390px\)[\s\S]*\.inner\{gap:8px\}[\s\S]*\.brandLogo\{width:194px\}/)
+  assert.match(header, /@media\(max-width:340px\)[\s\S]*\.brandLogo\{width:174px\}/)
   assert.match(header, /@media\(min-width:860px\)[\s\S]*--hc-app-header-height:78px/)
-  assert.match(header, /@media\(min-width:860px\)[\s\S]*\.brandLogo\{width:158px\}/)
+  assert.match(header, /@media\(min-width:860px\)[\s\S]*\.brandLogo\{width:170px\}/)
 
   assert.match(component, /import Image from 'next\/image'/)
   assert.match(component, /src="\/brand\/logo-header\.svg"/)
+  assert.match(component, /width=\{510\}/)
+  assert.match(component, /height=\{72\}/)
   assert.doesNotMatch(component, /brandRail|brandLine|brandNode|brandWord/)
+
+  assert.match(logo, /viewBox="80 116 510 72"/)
+  assert.match(logo, /fill="#112339">Hilo /)
+  assert.match(logo, /fill="#112339">Cofrade/)
 })
 
 test('el footer móvil centra la marca y cierra la página con aire inferior intencional', () => {
