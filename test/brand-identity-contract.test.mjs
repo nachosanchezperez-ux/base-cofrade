@@ -14,13 +14,25 @@ test('el logo de cabecera usa el activo oficial con las proporciones canónicas 
   assert.match(header, /\.inner\{min-height:68px;[^}]*gap:22px\}/)
   assert.match(header, /\.brand\{display:flex;align-items:center;flex:0 0 auto;white-space:nowrap;min-width:0\}/)
   assert.match(header, /\.brandLogo\{display:block;width:148px;height:auto\}/)
-  assert.match(header, /@media\(max-width:390px\)[\s\S]*\.brandLogo\{width:132px\}/)
+  assert.match(header, /@media\(max-width:859px\)[\s\S]*\.brandLogo\{width:168px\}/)
+  assert.match(header, /@media\(max-width:390px\)[\s\S]*\.inner\{gap:10px\}[\s\S]*\.brandLogo\{width:164px\}/)
   assert.match(header, /@media\(min-width:860px\)[\s\S]*--hc-app-header-height:78px/)
   assert.match(header, /@media\(min-width:860px\)[\s\S]*\.brandLogo\{width:158px\}/)
 
   assert.match(component, /import Image from 'next\/image'/)
   assert.match(component, /src="\/brand\/logo-header\.svg"/)
   assert.doesNotMatch(component, /brandRail|brandLine|brandNode|brandWord/)
+})
+
+test('el footer móvil centra la marca y cierra la página con aire inferior intencional', () => {
+  const footer = source('components/HiloFooter.module.css')
+
+  assert.match(footer, /@media\(max-width:859px\)[\s\S]*\.inner\{[^}]*align-items:center;[^}]*padding:28px 0 calc\(30px \+ env\(safe-area-inset-bottom,0px\)\);[^}]*text-align:center\}/)
+  assert.match(footer, /@media\(max-width:859px\)[\s\S]*\.brand\{width:100%;justify-content:center\}/)
+  assert.match(footer, /@media\(max-width:859px\)[\s\S]*\.brandLogo\{width:216px\}/)
+  assert.match(footer, /@media\(max-width:859px\)[\s\S]*\.meta\{width:100%;justify-items:center;gap:12px\}/)
+  assert.match(footer, /@media\(max-width:859px\)[\s\S]*\.meta nav\{max-width:330px;justify-content:center;/)
+  assert.match(footer, /@media\(max-width:390px\)[\s\S]*\.brandLogo\{width:208px\}/)
 })
 
 test('el navegador usa el icono gráfico oficial de Hilo Cofrade', () => {
