@@ -78,15 +78,20 @@ function BrotherhoodCrest({ src, alt }) {
   );
 }
 
+function isOpaqueRasterLogo(src = '') {
+  const path = String(src).split('?')[0].toLowerCase();
+  return path.endsWith('.jpg') || path.endsWith('.jpeg');
+}
+
 function BandIdentity({ src, alt, initials = '' }) {
-  const cleanLightBackground = /tres\s+ca[íi]das\s+de\s+triana/i.test(alt || '');
+  const opaqueRaster = isOpaqueRasterLogo(src);
 
   return (
     <div className={bandStyles.identityStage} aria-label={alt || 'Identidad visual de la formación'}>
-      {cleanLightBackground ? (
+      {opaqueRaster ? (
         <svg className={bandStyles.logoFilterDefs} aria-hidden="true" focusable="false">
           <defs>
-            <filter id="band-logo-remove-light-background" colorInterpolationFilters="sRGB">
+            <filter id="band-logo-remove-light-raster-background" colorInterpolationFilters="sRGB">
               <feColorMatrix
                 in="SourceGraphic"
                 type="matrix"
@@ -103,10 +108,10 @@ function BandIdentity({ src, alt, initials = '' }) {
         </svg>
       ) : null}
       <span className={bandStyles.identityAura} aria-hidden="true" />
-      <div className={`${bandStyles.logoStage} ${cleanLightBackground ? bandStyles.logoStageClean : ''}`}>
+      <div className={`${bandStyles.logoStage} ${opaqueRaster ? bandStyles.logoStageOpaqueRaster : ''}`}>
         {src ? (
           <BrotherhoodDirectoryCrestImage
-            className={`${bandStyles.logo} ${cleanLightBackground ? bandStyles.logoCleanLight : ''}`}
+            className={`${bandStyles.logo} ${opaqueRaster ? bandStyles.logoOpaqueRaster : ''}`}
             src={src}
             alt={alt || ''}
             width={230}
