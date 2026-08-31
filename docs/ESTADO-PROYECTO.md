@@ -1,40 +1,39 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte:** 30 de agosto de 2026 · cierre técnico de Primera Edición
+**Corte:** 31 de agosto de 2026 · cierre UX de Primera Edición
 **Régimen:** `FIRST EDITION FREEZE` activo
 
 ## Estado general
 
-- Baseline funcional de `main`: `732e8a4801b69d7a8edca1f75ece048fbf2028f9`.
-- El HEAD posterior a este corte puede añadir únicamente esta actualización documental; no cambia el árbol funcional validado.
+- Baseline funcional de `main`: `42ebfc3cfbcc5fefbc1ff11340705bfb3cfa1fa3`.
 - #425, cierre UX de Primera Edición: **fusionada**.
-- #394, cabeceras nombre + escudo/logotipo: **única puerta de aprobación visual**, abierta en borrador y no fusionada.
-- #423, fotografía de la Pastora 2026: **pendiente editorial**, aislada del baseline.
+- #394, cabeceras nombre + escudo/logotipo: **fusionada**.
+- #423, fotografía de la Pastora de Cantillana 2026: **resuelta editorialmente**.
+- QA visual manual 390/768/1024/1440: **completada por Dirección**.
 - Nueva expansión funcional: **congelada**.
 
 ## Baseline técnico
 
 **BASELINE TÉCNICO → 🟢 VALIDADO**
 
-- `npm test`: `439/439` sobre el baseline fusionado.
-- Build de producción y TypeScript: correctos.
-- El repositorio no define scripts independientes de lint o typecheck; `--if-present` finaliza correctamente.
+- `npm test`: **454/454** sobre el árbol reconciliado con `main`.
+- Build de producción y TypeScript: correctos sobre el árbol reconciliado.
 - `git diff --check`: correcto.
-- CI #1181: correcta.
-- #425 quedó reconciliada con el `main` real antes de fusionarse.
-- El único conflicto, en Marcha del día, conserva la prioridad del escudo introducida por `main` y el fallback controlado de #425.
-- La duplicación de «Hilo Cofrade» en los títulos de Igualás detectada durante el smoke quedó corregida y cubierta por regresión.
+- #425 y #394 quedaron reconciliadas con el `main` real antes de fusionarse.
+- #394 cerró la única decisión visual material: escudo/logotipo y nombre como una sola identidad principal.
+- No queda una segunda puerta estructural abierta.
 
 ## Producción y Vercel
 
 **PRODUCCIÓN → 🟢 ESTABLE**
 
-- Deployment del baseline funcional: `dpl_4dHpAHMEJntLABL346rH8uKs16dE`.
-- Commit desplegado: `732e8a4801b69d7a8edca1f75ece048fbf2028f9`.
+- Deployment: `dpl_E4yM8LRaEv7KGy88tMrUg9cWPFrw`.
+- Commit desplegado: `42ebfc3cfbcc5fefbc1ff11340705bfb3cfa1fa3`.
 - Estado: `READY`; región: `dub1`.
-- Dominio canónico: `https://hilocofrade.es`.
-- Runtime del deployment: sin errores ni fatales en el control posterior a la fusión.
-- Los `statement timeout` observados pertenecen a deployments anteriores; no se han reproducido en el deployment actual y permanecen cerrados como incidencia histórica.
+- Dominios: `https://hilocofrade.es` y `https://www.hilocofrade.es`.
+- Runtime posterior a la fusión: sin errores ni fatales.
+- Smoke público correcto en Home, El Baratillo, La Pastora de Cantillana, San Benito, Maestro Tejera y Las Cigarreras.
+- Rutas comprobadas con títulos presentes, cero imágenes rotas y cero overflow horizontal.
 
 ## Pull requests
 
@@ -50,118 +49,110 @@ Responsabilidades cerradas:
 - navegación interna, anclas, teclado y estado activo;
 - fallbacks de imágenes, logos, portadas y fotografía destacada;
 - legibilidad de directorios;
-- jornada real ↔ «Desde [año]» en acompañamientos;
-- catálogos secundarios cerrados por defecto;
-- separación de fuentes directas y generales en presentación;
+- jornada real y antigüedad en acompañamientos;
 - accesibilidad básica del buscador, foco y estados anunciables.
-
-No resuelve ni pretende resolver la nueva composición visual de cabeceras de #394.
 
 ### #394 · Cabeceras nombre + escudo/logotipo
 
-**Decisión → OPCIÓN C · 🟣 READY FOR VISUAL APPROVAL**
+**Estado → 🟢 FUSIONADA**
 
-- Introduce una decisión visual material distinta: escudo/logotipo y nombre forman una sola identidad principal.
-- El solape de archivos con #425 es parcial, pero no existe duplicidad de objetivo.
-- Reconciliada técnicamente con el baseline fusionado de #425.
-- Validación local reconciliada: `446/446` pruebas y build correcto.
-- Permanece en borrador y no se fusiona hasta la aprobación visual humana.
-- Es la única puerta visual; no constituye un segundo baseline técnico.
+- Commit de integración: `42ebfc3cfbcc5fefbc1ff11340705bfb3cfa1fa3`.
+- Matriz manual 390/768/1024/1440 aprobada.
+- El Baratillo, San Benito y Maestro Tejera quedaron revalidados a 390 px tras las correcciones finales.
+- Preview, CI, build, runtime y smoke: correctos.
+- No modificó Supabase, IDs, slugs, enlaces ni archivos de logotipo.
 
 ### #423 · Fotografía Pastora de Cantillana 2026
 
-**Estado → 🟠 PENDIENTE EDITORIAL**
+**Estado → 🟢 RESUELTA EDITORIALMENTE**
 
-- El diff real contiene únicamente `public/procesiones/pastora-cantillana/.gitkeep`.
-- No contiene la fotografía anunciada.
-- Faltan el recurso definitivo, procedencia/derechos y la relación con el `outing`.
-- No se fusiona y no compite con el cierre UX.
+- Recurso canónico en Git:
+  `/public/procesiones/pastora-cantillana/pastora-cantillana-8-septiembre-2026.webp`.
+- Dimensiones: 720 × 1079 px; formato WEBP.
+- La carpeta ya contiene el recurso real; se retira el antiguo `.gitkeep`.
+- Supabase ya vincula el recurso al `outing` `4eddf059-35aa-4fab-80ad-313398a0332a`.
+- Salida: «Procesión triunfal de la Divina Pastora 2026», 8 de septiembre de 2026.
+- Estado: `published`; crédito: `Fotografía • Hermandad`.
+- Texto alternativo: «Divina Pastora de las Almas de Cantillana durante su procesión.»
+- No se duplica el archivo ni se repite una escritura ya cerrada en Supabase.
 
 ## Git ↔ Supabase
 
-**ALINEACIÓN → 🟢**
+**ALINEACIÓN DE CONTENIDO #423 → 🟢**
 
-- Proyecto: `Hilocofrade` (`kcevwkucqzcyrqaimyhl`), `ACTIVE_HEALTHY`, `eu-west-1`, plan Pro.
-- Migraciones en Git: `185`.
-- Migraciones en Supabase: `185`.
-- Última versión: `20260830140331 normalize_cruz_roja_glorias_2026`.
-- No se han creado ni aplicado migraciones durante este cierre.
-- #425 no modificó datos, esquema, RLS ni Storage.
+- La ruta guardada en Supabase existe en `main`.
+- El `outing` publicado conserva fecha, imagen, texto alternativo y crédito.
+- #423 no requiere nueva migración, cambio de esquema, RLS ni Storage.
+
+**HISTORIAL GLOBAL DE MIGRACIONES → 🟠 RECONCILIACIÓN PENDIENTE**
+
+- Git: 189 archivos de migración.
+- Supabase: 188 entradas de historial.
+- Solo en Supabase: `20260830232314_close_public_contribution_endpoint`.
+- Solo en Git:
+  - `20260831014500_pasion_muerte_habito_correccion`;
+  - `20260831015700_pasion_muerte_habito_imagen_publica`.
+- Los datos de Pasión y Muerte ya reflejan ambas migraciones; no se repiten sus actualizaciones.
+- La migración de contribuciones pertenece al frente paralelo `feat/secure-public-contributions-20260831`.
+- La reconciliación se mantiene separada para no mezclar trabajos paralelos ni fingir una alineación inexistente.
 
 ## Auth, RLS y seguridad
 
-**SEGURIDAD → 🟢**
+**SEGURIDAD → 🟢 SIN REGRESIONES DEL CIERRE UX**
 
-- RLS activa en `77/77` tablas públicas.
-- `166` claves foráneas públicas validadas; `0` sin validar.
-- Front público anónimo y stateless.
-- Panel autenticado y `noindex, nofollow`.
-- Sesión autenticada comprobada en producción.
-- Acción «Cerrar sesión» presente; no se ejecutó para no alterar la sesión de Dirección.
-- Login y recuperación conservan sus regresiones existentes.
-- Leaked Password Protection no presenta aviso de desactivación en el asesor actual.
-- No hay rutas de diagnóstico públicas ni datos draft visibles en el smoke.
-- El asesor conserva avisos conocidos de funciones `SECURITY DEFINER` para `authenticated` y una tabla interna con RLS sin política; no existe concesión nueva a `anon` ni hallazgo nuevo provocado por este cierre.
+- #394 y #423 no cambian Auth, RLS, Storage ni permisos.
+- El front público sigue siendo anónimo y stateless.
+- El Panel permanece autenticado y `noindex, nofollow`.
+- No se han creado claves, recursos ni integraciones nuevas durante este cierre.
 
 ## Legal
 
 **LEGAL → 🟢 PUBLICADO**
 
-- `/aviso-legal`, `/privacidad` y `/cookies`: operativas y con documento `ready`.
+- `/aviso-legal`, `/privacidad` y `/cookies`: operativas.
 - Footer y sitemap mantienen los enlaces.
-- Los borradores internos no son públicos.
 - No se modificó contenido legal durante este cierre.
 
 ## Salud del grafo
 
 **SALUD DEL GRAFO → 🟢 SIN BLOQUEOS NUCLEARES**
 
-- Relaciones nucleares con extremos inexistentes: `0`.
-- Relaciones nucleares publicadas con extremos no publicados: `0`.
-- Claves foráneas públicas sin validar: `0`.
-- Persisten `5` nodos publicados de referencia sin ficha especializada; la navegación pública, sitemap y `noindex` degradan de forma segura y no constituyen rotura nuclear.
-- No se ha completado contenido secundario en esta tarea.
+- El cierre de #394 es exclusivamente de presentación.
+- #423 conserva una relación válida entre recurso y salida publicada.
+- No se han creado entidades, relaciones ni excepciones por slug.
 
 ## QA técnico
 
 **QA TÉCNICO → 🟢**
 
-Smoke de producción validado para Home, Directorio, Hermandad, Imagen, Paso, Banda, Extraordinaria, Gloria, Igualás y Ensayos, Tira del hilo y Panel autenticado.
-
-Resultado:
-
-- sin 404/500 en las rutas recorridas;
-- sin imágenes rotas visibles;
-- sin overflow global detectable;
-- un único `main` por página;
-- sin errores propios de consola;
-- canonical y títulos coherentes;
-- Panel privado, con sesión válida y control de cierre de sesión presente.
-
-Las regresiones existentes cubren contratos responsive, overflow, navegación, accesibilidad, SEO, fallbacks y publicación. El navegador automático verificó render real sin overflow en el ancho disponible; esta evidencia técnica no equivale a aprobación visual humana.
+- Suite reconciliada: 454/454.
+- Producción: `READY`.
+- Runtime: sin errores ni fatales.
+- Smoke del delta visual: correcto.
+- Cero imágenes rotas y cero overflow horizontal en las rutas de control.
 
 ## QA visual manual
 
-**QA VISUAL MANUAL → 🟣 PENDIENTE DE DIRECCIÓN**
+**QA VISUAL MANUAL → 🟢 COMPLETADA POR DIRECCIÓN**
 
-- `390 px`: pendiente.
-- `768 px`: pendiente.
-- `1024 px`: pendiente.
-- `1440 px`: pendiente.
+- 390 px: aprobada.
+- 768 px: aprobada.
+- 1024 px: aprobada.
+- 1440 px: aprobada.
 
-No se han pedido ni fingido pantallazos. Esta es la única deuda manual y se concentra en la decisión visual de #394.
+La deuda manual de #394 queda cerrada.
 
 ## Primera Edición y freeze
 
 - ⚙️ Baseline técnico: **🟢 validado**.
 - 🚀 Producción: **🟢 estable**.
-- 🔐 Seguridad: **🟢**.
+- 🔐 Seguridad del cierre: **🟢**.
 - ⚖️ Legal: **🟢**.
 - 🕸️ Grafo: **🟢 sin bloqueos nucleares**.
 - 📱 QA técnico: **🟢**.
-- 👁️ QA visual manual: **🟣 pendiente**.
+- 👁️ QA visual manual: **🟢**.
+- 📰 #423: **🟢 resuelta editorialmente**.
 
-**PRIMERA EDICIÓN → 🟡 TÉCNICAMENTE PREPARADA**
-Pendiente únicamente de la aprobación visual manual de #394.
+**PRIMERA EDICIÓN → 🟢 TÉCNICA Y VISUALMENTE PREPARADA**
 
-`FIRST EDITION FREEZE` queda activo. Hasta esa decisión solo se permiten contenido, datos, Fuentes, fotografías, bugs reales, seguridad, correcciones editoriales e incidencias de producción. No se abren nuevas funcionalidades, módulos, entidades, Homes, rediseños ni evoluciones estructurales.
+`FIRST EDITION FREEZE` queda activo. Hasta nueva decisión de Dirección solo se permiten contenido, datos, Fuentes, fotografías, bugs reales, seguridad, correcciones editoriales e incidencias de producción. No se abren nuevas funcionalidades, módulos, entidades, Homes, rediseños ni evoluciones estructurales.
