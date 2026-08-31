@@ -28,7 +28,7 @@ test('el baseline reproduce el esquema canónico y conserva las barreras RLS', (
 })
 
 test('el seed de preview es mínimo, idempotente y no contiene aportaciones', () => {
-  assert.match(seed, /on conflict \(id\) do update set/)
+  assert.match(seed, /on conflict \(id\) do nothing/)
   assert.match(seed, /banda-de-musica-del-maestro-tejera/)
   assert.match(seed, /las-cigarreras/)
   assert.doesNotMatch(seed, /insert into public\.contributions/i)

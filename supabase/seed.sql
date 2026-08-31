@@ -15,12 +15,7 @@ values (
   'Andalucía',
   'España'
 )
-on conflict (id) do update set
-  name = excluded.name,
-  slug = excluded.slug,
-  province = excluded.province,
-  autonomous_community = excluded.autonomous_community,
-  country = excluded.country;
+on conflict (id) do nothing;
 
 insert into public.entities (
   id, entity_type, name, slug, summary, status
@@ -42,12 +37,7 @@ values
     'Banda sevillana de cornetas y tambores.',
     'published'
   )
-on conflict (id) do update set
-  entity_type = excluded.entity_type,
-  name = excluded.name,
-  slug = excluded.slug,
-  summary = excluded.summary,
-  status = excluded.status;
+on conflict (id) do nothing;
 
 insert into public.bands (
   entity_id,
@@ -92,15 +82,4 @@ values
     'Foto · Las Cigarreras',
     'Sevilla'
   )
-on conflict (entity_id) do update set
-  band_type = excluded.band_type,
-  municipality_id = excluded.municipality_id,
-  foundation_text = excluded.foundation_text,
-  description = excluded.description,
-  primary_color = excluded.primary_color,
-  secondary_color = excluded.secondary_color,
-  logo_path = excluded.logo_path,
-  hero_image_path = excluded.hero_image_path,
-  hero_image_alt = excluded.hero_image_alt,
-  hero_image_credit = excluded.hero_image_credit,
-  headquarters_text = excluded.headquarters_text;
+on conflict (entity_id) do nothing;
