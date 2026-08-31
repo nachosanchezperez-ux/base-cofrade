@@ -37,12 +37,16 @@ test('la composición de escritorio alterna el lado protagonista y conserva móv
   assert.match(css, /@media \(max-width: 859px\)[\s\S]*\.featureRight/)
 })
 
-test('una protagonista sin fotografía se compacta y evita un gran vacío vertical', () => {
+test('una protagonista sin fotografía se compacta y elimina también la fila visual vacía', () => {
   const css = read('components/HomeTodayDynamic.module.css')
 
   assert.match(css, /\.featureCardSlot:not\(:has\(\[data-home-visual-kind="photo"\]\)\)/)
   assert.match(css, /grid-column: 1 \/ -1 !important;/)
+  assert.match(css, /grid-template-columns: minmax\(0, 1fr\) !important;/)
+  assert.match(css, /grid-template-rows: auto !important;/)
   assert.match(css, /min-height: 0 !important;/)
+  assert.match(css, /> div:not\(\[data-home-visual-kind\]\)[\s\S]*grid-row: 1 !important;/)
+  assert.match(css, /> \[data-home-visual-kind\]:not\(\[data-home-visual-kind="photo"\]\)[\s\S]*display: none !important;/)
   assert.match(css, /\+ \.sideColumnSlot[\s\S]*grid-template-columns: repeat\(2, minmax\(0, 1fr\)\)/)
 })
 

@@ -35,16 +35,29 @@
   }
 
   /*
-   * Una protagonista sin fotografía real no debe fingir una portada visual.
-   * Se convierte en una pieza editorial horizontal y deja que las secundarias
-   * formen una segunda fila equilibrada. Así desaparece el gran vacío vertical.
+   * Una protagonista sin fotografía real no debe conservar la geometría
+   * reservada a una portada. Además de retirar la altura mínima, anulamos
+   * la fila visual de 190 px que define la tarjeta destacada con imagen.
    */
   .featureCardSlot:not(:has([data-home-visual-kind="photo"])) {
     grid-column: 1 / -1 !important;
     grid-row: 1 !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-rows: auto !important;
+    gap: 0 !important;
     min-height: 0 !important;
     padding: 22px 26px !important;
     align-self: start;
+    align-items: start !important;
+  }
+
+  .featureCardSlot:not(:has([data-home-visual-kind="photo"])) > div:not([data-home-visual-kind]) {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+  }
+
+  .featureCardSlot:not(:has([data-home-visual-kind="photo"])) > [data-home-visual-kind]:not([data-home-visual-kind="photo"]) {
+    display: none !important;
   }
 
   .featureCardSlot:not(:has([data-home-visual-kind="photo"])) h3 {
