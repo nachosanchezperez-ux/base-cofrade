@@ -26,10 +26,13 @@ test('el calendario público ofrece filtros relacionales, próximas citas e hist
   assert.match(page, /export const metadata = \{\n  title,\n  description/)
 })
 
-test('las fichas de convocatoria delegan una sola vez la marca en el título', async () => {
+test('las fichas de convocatoria usan título SEO específico con fecha y localidad sin duplicar la marca', async () => {
   const detail = await source('app/igualas-y-ensayos/[slug]/page.js')
 
-  assert.match(detail, /return \{\n    title: `\$\{event\.eventTypeLabel\} · \$\{event\.brotherhoodName\}`/)
+  assert.match(detail, /function eventSeoTitle\(event\)/)
+  assert.match(detail, /event\.title, event\.dateParts\.label, event\.municipality/)
+  assert.match(detail, /title: eventSeoTitle\(event\)/)
+  assert.doesNotMatch(detail, /title: `\$\{event\.eventTypeLabel\} · \$\{event\.brotherhoodName\}`/)
 })
 
 test('la agenda es descubrible desde cabecera, buscador y sitemap', async () => {
