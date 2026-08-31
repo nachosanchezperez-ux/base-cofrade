@@ -1,6 +1,6 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 31 de agosto de 2026 · 16:15 UTC
+**Corte validado:** 31 de agosto de 2026 · 19:52 UTC
 
 **Régimen:** `FIRST EDITION FREEZE` activo
 
@@ -11,10 +11,14 @@
 **PRIMERA EDICIÓN → 🟢 CERRADA, CERTIFICADA Y CONGELADA**
 
 - Baseline funcional y estructural: `a025098528351656503460596d28b5318e39daf5` (#432).
-- Último `main` funcional validado en este corte: `38792223b3780938b344d5c37e24f321d600a734` (#466).
-- Producción está `READY` y el `Production SEO Smoke` #56 termina `SUCCESS` sobre ese SHA.
+- Último `main` funcional validado antes de esta sincronización documental: `b975b613c2d15a84c6adb3fdc3fb72268e8d3d8a` (#467).
+- Producción funcional está `READY` sobre ese SHA en `dpl_G6ZEcc3rf1NHA9LSeP4C7TLQYL2T`.
+- CI #1321 termina `SUCCESS` con `npm ci`, `npm test` y `npm run build` en verde.
+- Runtime reciente de producción: sin errores detectados.
 - La matriz manual 390/768/1024/1440 de Primera Edición permanece aprobada.
 - El freeze no permite abrir arquitectura, módulos ni una Segunda Edición; sí permite contenido, datos, fotografías, Fuentes, seguridad, legal, bugs e incidencias reales.
+- Cola UX/estructural objeto de este corte: **0 frentes abiertos**.
+- PR abiertas al cerrar el corte funcional: **0**.
 
 ## GitHub · estado de trabajo
 
@@ -29,32 +33,126 @@
 - #460 · reutilización de la entidad canónica de Centuria para evitar duplicados: fusionada.
 - #463 · menú de Bandas adaptado a la paleta de cada formación: fusionada.
 - #464 · ampliación de la discografía de Presentación al Pueblo: fusionada.
-- #466 · Las Cigarreras elevada como ficha patrón de Bandas: fusionada en `38792223b3780938b344d5c37e24f321d600a734`.
+- #465 · entrada directa y edición visual contextual de Bandas en Panel: fusionada.
+- #466 · Las Cigarreras elevada como ficha patrón de Bandas: fusionada.
+- #469 · corrección de cabeceras de `Dónde suena`: fusionada.
+- #470 · identidad corporativa oficial de Hilo Cofrade: fusionada, desplegada y fijada como identidad canónica.
+- #471 · gestión local de multimedia en Hermandades: fusionada y desplegada con política conservadora de desvinculación.
+- #472 y #473 · ajustes posteriores de presencia de marca en cabecera/footer móvil: integrados y vigentes; no reabren #470.
+- #474 · reparación de portadas de Presentación al Pueblo: fusionada concurrentemente durante el cierre y preservada al reconciliar #467.
+- #467 · cierre UX de Bandas: fusionada con delta final exclusivamente transversal de notas redundantes; la excepción nominal del logo de Virgen de los Reyes fue descartada.
 
 ### PR abiertas en este corte
 
-- #465 · `Panel Bandas · entrada directa y edición visual contextual`.
-  - Alcance exclusivo de Panel/Bandas.
-  - Sin migraciones, esquema, RLS ni datos editoriales.
-  - No solapa el trabajo de agenda/Glorias de este corte.
-- #467 · `UX · cierre responsive de bandas y validación final`.
-  - Alcance de presentación de Bandas.
-  - Pendiente de matriz visual antes de una eventual fusión.
-  - No solapa `outings`, Glorias, Romerías ni Fuentes de este corte.
+**Ninguna.**
 
-No debe fusionarse ninguna PR únicamente para “limpiar” el estado. Cada frente conserva su propia puerta de QA.
+No debe abrirse un nuevo frente UX/estructural para continuar el cierre. La fase vuelve a ser editorial/documental salvo bug real, seguridad o incidencia verificable compatible con el freeze.
+
+## #470 · Identidad corporativa oficial
+
+**Estado → 🟢 CERRADA · FUSIONADA · DESPLEGADA**
+
+- La identidad oficial permanece fijada.
+- Los cambios posteriores de #472/#473 se consideran ajustes integrados de la misma identidad, no una fase 2.
+- #470 no debe reabrirse, rehacerse ni ampliarse durante este freeze salvo regresión demostrable.
+
+## #471 · Gestión local de multimedia
+
+**Estado → 🟢 CERRADA · FUSIONADA · DESPLEGADA**
+
+- Merge funcional: `87a62cc837b0578a38ac4c40dafe815b804d9e67`.
+- La gestión desde `Hermandad → Fotos y carteles` permite ver, editar, marcar como principal y desvincular recursos ya vinculados.
+- Se validan UUID, `target_kind`, pertenencia del recurso a la Hermandad, vínculo `link + target + media_asset`, estados de derechos y `alt_text` obligatorio.
+- Las operaciones de edición/desvinculación pasan por `requirePanelEditor` y generan audit log.
+- Al retirar una portada puede promocionarse otra imagen vinculada.
+
+### Auditoría de borrado
+
+La auditoría confirmó que `media_assets` recibe FK directas desde:
+
+- `entity_media.media_asset_id`;
+- `cult_media.media_asset_id`;
+- `outing_media.media_asset_id`.
+
+También existen referencias por ruta sin FK directa en otros campos del modelo, entre ellos `heritage_assets.public_image_path` y `outings.hero_image_path`. Por tanto, contar solo las tres tablas de enlace no demuestra de forma exhaustiva que un asset esté huérfano.
+
+Política vigente de Primera Edición:
+
+**DESVINCULAR → CONSERVAR `media_assets` → CONSERVAR STORAGE.**
+
+- #471 no ejecuta garbage collection automático.
+- No borra objetos del bucket al desvincular.
+- No expone una superficie de borrado arbitrario por `storage_path`.
+- La limpieza física de assets huérfanos queda diferida a mantenimiento futuro con auditoría global de referencias; no es un frente UX abierto.
+
+QA final de #471:
+
+- CI #1314: `SUCCESS`.
+- `npm ci`, `npm test` y `npm run build`: verde.
+- Preview final: `READY`.
+- Runtime preview: sin `error/fatal` detectados.
+- Producción posterior al merge: `READY`, sin error runtime detectado.
+- La protección SSO del preview impidió automatizar una inspección visual autenticada del Panel; no se declara una captura manual inexistente. El contrato responsive quedó revisado estáticamente y blindado por tests.
+
+## #467 · cierre UX de Bandas
+
+**Estado → 🟢 CERRADA · FUSIONADA · DESPLEGADA**
+
+- SHA funcional final: `b975b613c2d15a84c6adb3fdc3fb72268e8d3d8a`.
+- Delta final frente al `main` reconciliado: únicamente `lib/bands/accompaniments.js` y `test/band-accompaniments.test.mjs`.
+- No modifica CSS, breakpoints, Hero, Directorio, esquema, RLS ni datos.
+
+### Regla transversal de jornada redundante
+
+La capa de presentación elimina únicamente segmentos que repiten literalmente la jornada/tipo ya visible en la cabecera y conserva el dato fuente.
+
+Casos de contrato:
+
+- `Sábado de Pasión.` con la misma cabecera → se oculta.
+- `Miércoles Santo. Recorrido de vuelta por…` → conserva solo el contenido útil posterior.
+- `Madrugá y mañana del Viernes Santo.` → se conserva íntegra.
+- Observaciones documentales no equivalentes → se conservan.
+
+### Excepción nominal descartada
+
+No se integró la propuesta de tratar específicamente el slug de Virgen de los Reyes como `wide`.
+
+No queda en `main` por #467:
+
+- `if slug === ...` para ese logo;
+- mapa `slug → wide`;
+- `data-logo-presentation` específico;
+- estilos `wide` dedicados;
+- test nominal de Virgen de los Reyes.
+
+Durante el freeze, un problema cosmético de proporción no justifica crear esquema ni una excepción creciente por nombres.
+
+QA final de #467:
+
+- CI #1321: `SUCCESS`.
+- `npm ci`: verde.
+- `npm test`: verde.
+- `npm run build`: verde.
+- Preview `dpl_3QVcHUTP5QRNX2VDgEWZqAVZK8Ne`: `READY`.
+- Runtime preview: sin `error/fatal` detectados.
+- Producción `dpl_G6ZEcc3rf1NHA9LSeP4C7TLQYL2T`: `READY`.
+- Runtime producción reciente: sin errores detectados.
+- Dominios `hilocofrade.es` y `www.hilocofrade.es` asociados al deployment final.
+
+Nota administrativa: el conector de GitHub falló al quitar el estado draft de #467 por un error GraphQL interno. Tras reconciliar el avance concurrente de #474 y validar nuevamente el SHA final, `main` avanzó de forma no forzada a ese commit; GitHub reconoció automáticamente #467 como `closed` + `merged` con `merge_commit_sha = b975b613c2d15a84c6adb3fdc3fb72268e8d3d8a`.
 
 ## Producción y Vercel
 
 **PRODUCCIÓN → 🟢 ESTABLE**
 
-- Deployment funcional vigente en el momento del corte: `dpl_CbA1P7o3exP9A4KPjVPyxNoqiVKr`.
-- Commit desplegado: `38792223b3780938b344d5c37e24f321d600a734`.
+- Último deployment funcional validado antes de esta sincronización documental: `dpl_G6ZEcc3rf1NHA9LSeP4C7TLQYL2T`.
+- Commit funcional desplegado: `b975b613c2d15a84c6adb3fdc3fb72268e8d3d8a`.
 - Estado: `READY`; target: producción.
 - Dominios canónicos: `https://hilocofrade.es` y `https://www.hilocofrade.es`.
-- `Production SEO Smoke` #56: `SUCCESS`.
-- Comprobación runtime de los últimos 30 minutos: sin logs `error` ni `fatal`.
+- CI funcional de cierre #1321: `SUCCESS`.
+- Comprobación runtime reciente: sin errores detectados.
 - Las fichas de Procesiones de Gloria son dinámicas (`force-dynamic`), por lo que las correcciones editoriales de Supabase se reflejan sin un redeploy de aplicación.
+- El commit que actualiza este documento es exclusivamente documental y no altera el baseline funcional anterior.
 
 ## SEO P0 · mantenimiento técnico
 
@@ -190,14 +288,15 @@ Una decisión posterior de Dirección deberá abrir un corte independiente y com
 - `bands.logo_background_color` sigue siendo nullable y reutilizable.
 - Panel y Front comparten la configuración HEX y la opción sin fondo.
 - El mecanismo no introduce excepciones estructurales por slug.
+- #467 refuerza esta regla: no se añade una excepción nominal para Virgen de los Reyes.
 
 ## Supabase · esquema, migraciones y ramas
 
 **PROYECTO DE PRODUCCIÓN → 🟢 `ACTIVE_HEALTHY`**
 
-El ciclo editorial del 8 de septiembre modifica únicamente datos ya soportados por el modelo (`outings`, `sources`, `source_links`, `outing_schedule_items`); no añade DDL, RLS ni nuevas tablas.
+El cierre #471 no añade DDL, RLS ni nuevas tablas. #467 tampoco modifica Supabase. El avance concurrente #474 sí añadió y aplicó una migración editorial de datos para reparar portadas de Presentación al Pueblo.
 
-Migraciones registradas en producción en el momento del corte:
+Migraciones registradas en producción en el momento de este corte:
 
 1. `20260831070000_first_edition_baseline`
 2. `20260831071000_secure_public_contributions_reconciled`
@@ -207,22 +306,25 @@ Migraciones registradas en producción en el momento del corte:
 6. `20260831141610_normalize_mairena_logo_and_readability`
 7. `20260831150414_publica_centuria_y_corrige_logo_tres_caidas`
 8. `20260831154654_completa_discografia_presentacion_pueblo`
+9. `20260831193853_repara_portadas_presentacion_pueblo`
 
 ### Observación de ramas Supabase
 
 - El proyecto productivo responde `ACTIVE_HEALTHY`.
-- `list_branches` informa únicamente `main`, pero su estado de integración aparece como `MIGRATIONS_FAILED` mientras el preview project status figura `ACTIVE_HEALTHY`.
-- Este corte no intenta reparar ni reinterpretar ese estado porque no requiere una rama de desarrollo ni modifica esquema.
+- `list_branches` informa únicamente `main`, pero su estado de integración continúa como `MIGRATIONS_FAILED` mientras `preview_project_status` figura `ACTIVE_HEALTHY`.
+- Este corte no intenta reparar ni reinterpretar ese estado porque #471/#467 no requieren una rama de desarrollo ni una nueva reconciliación de esquema.
 - Antes de volver a usar Supabase Preview Branches debe abrirse una reconciliación específica y comprobar la causa real del estado `MIGRATIONS_FAILED`; no asumir que el baseline reproducible anterior sigue vigente sin esa comprobación.
 
 ## Seguridad, Auth, Storage y Legal
 
 **SEGURIDAD → 🟢 SIN BLOQUEO DETECTADO EN ESTE CICLO**
 
-- No se alteran políticas RLS, Auth, permisos ni secretos.
-- No se realizan cambios de Storage.
+- No se alteran políticas RLS, Auth, permisos ni secretos por #471/#467.
+- #471 permite desvincular media, pero conserva tanto `media_assets` como el objeto de Storage.
+- No se ejecuta borrado físico de Storage desde la nueva gestión local de Hermandades.
+- La limpieza de huérfanos queda separada de la UX y requiere una auditoría global futura.
 - Las superficies `/aviso-legal`, `/privacidad` y `/cookies` permanecen fuera de este frente.
-- La edición editorial se ha realizado sobre campos ya existentes y fuentes trazables.
+- La edición editorial continúa sobre campos existentes y fuentes trazables.
 
 ## Salud del grafo
 
@@ -233,11 +335,18 @@ Migraciones registradas en producción en el momento del corte:
 - Setefilla mantiene su taxonomía real de Romería.
 - Coria gana recorrido estructurado sin alterar IDs ni relaciones.
 - Las cronologías de Osuna, Utrera y Setefilla quedan normalizadas en `outing_schedule_items`.
+- La gestión de #471 retira únicamente vínculos seleccionados y no borra el asset reutilizable del grafo.
 
 ## Freeze y siguiente frente
 
 `FIRST EDITION FREEZE` continúa activo.
 
-La fase activa sigue siendo editorial/documental: completar y verificar Bandas, Glorias, Romerías, Igualás, Hermandades, fotografías y Fuentes sobre el modelo cerrado. Las PR #465 y #467 mantienen sus propias puertas de QA y no deben mezclarse con el trabajo de agenda.
+**FRONTES UX/ESTRUCTURALES ABIERTOS → 0.**
 
-Siguiente prioridad editorial después de este lote: revisar las citas del 10–15 de septiembre por proximidad, empezando por Santa María del Buen Aire, Gerena, Castillo de Lebrija, Dolores de Camas, Vera Cruz de Tocina y Dolores de La Rinconada, sin inventar horarios ni acompañamientos no confirmados.
+**MODO ACTIVO → EDITORIAL / DOCUMENTAL.**
+
+La fase activa vuelve a ser completar y verificar Bandas, Glorias, Romerías, Igualás, Hermandades, fotografías y Fuentes sobre el modelo cerrado. No abrir nuevas funcionalidades por inercia; cualquier excepción debe justificarse como bug real, seguridad o incidencia verificable compatible con el freeze.
+
+La limpieza física de assets huérfanos no forma parte de #471 ni de la cola UX: queda como mantenimiento futuro independiente y conservador.
+
+Siguiente prioridad editorial ya documentada: revisar las citas del 10–15 de septiembre por proximidad, empezando por Santa María del Buen Aire, Gerena, Castillo de Lebrija, Dolores de Camas, Vera Cruz de Tocina y Dolores de La Rinconada, sin inventar horarios ni acompañamientos no confirmados.
