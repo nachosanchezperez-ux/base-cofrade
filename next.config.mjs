@@ -93,6 +93,11 @@ const nextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'is1-ssl.mzstatic.com',
+        pathname: '/image/thumb/**',
+      },
+      {
+        protocol: 'https',
         hostname: 'i.ibb.co',
         pathname: '/**',
       },

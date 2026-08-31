@@ -115,9 +115,10 @@
   filter: drop-shadow(0 20px 32px rgba(0, 0, 0, .28));
 }
 
-/* Los JPEG no admiten transparencia. Cuando una identidad visual llega en
-   este formato, conservamos el equilibrado óptico común y retiramos solo el
-   fondo casi blanco para que no aparezca como una caja dentro de la cabecera. */
+/* Los JPEG no admiten transparencia. El filtro solo se usa como último
+   recurso cuando la ficha no define una pastilla propia. Con un fondo
+   configurado preservamos los píxeles originales para evitar halos o cajas
+   negras en logotipos blancos. */
 .logoOpaqueRaster {
   filter:
     url("#band-logo-remove-light-raster-background")
