@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import QuickMediaUploadForm from './QuickMediaUploadForm'
+import MediaAssetManager from './MediaAssetManager'
 import { requirePanelUser } from '@/lib/panel/auth'
 import { getBrotherhoodMediaWorkspaceData } from '@/lib/panel/brotherhood-media'
 import styles from '@/app/panel/panel.module.css'
@@ -8,6 +9,9 @@ import mediaStyles from './media.module.css'
 
 const SAVED_MESSAGES = {
   uploaded: 'La imagen se ha subido y ya queda vinculada a su ficha.',
+  updated: 'La información del archivo se ha actualizado correctamente.',
+  cover: 'La fotografía principal se ha actualizado correctamente.',
+  unlinked: 'El archivo se ha retirado de este contenido. El recurso multimedia y su almacenamiento se conservan.',
 }
 
 function targetAlt(target, kind) {
@@ -42,7 +46,7 @@ function MediaTargetCard({ target, kind, brotherhoodId }) {
   const rightsHelp = 'Para Wikimedia, licencias abiertas o dominio público utiliza la Biblioteca multimedia, que exige Fuente, licencia y atribución completas.'
   const uploadNote = kind === 'cult'
     ? 'Se mostrará como portada de este culto en la ficha pública.'
-    : 'Se guardará como imagen principal de esta ficha. La fotografía anterior seguirá disponible en el archivo.'
+    : 'Se guardará como imagen principal de esta ficha. La fotografía anterior seguirá disponible justo aquí para editarla, recuperarla o desvincularla.'
 
   return (
     <article className={mediaStyles.targetCard} id={anchor}>
@@ -67,6 +71,13 @@ function MediaTargetCard({ target, kind, brotherhoodId }) {
           </p>
         </div>
       </div>
+
+      <MediaAssetManager
+        media={target.media}
+        brotherhoodId={brotherhoodId}
+        targetId={target.id}
+        targetKind={targetKind}
+      />
 
       <details className={mediaStyles.uploadDetails} open={!hasCanonicalImage}>
         <summary>{targetLabel(kind, { hasCanonicalImage, hasLegacyImage })}<span aria-hidden="true">⌄</span></summary>
@@ -124,9 +135,9 @@ export default async function BrotherhoodMultimediaPage({ params, searchParams }
         </div>
         <div className={styles.editorTitleRow}>
           <div>
-            <span className={styles.eyebrow}>Subida rápida</span>
+            <span className={styles.eyebrow}>Archivo visual de la Hermandad</span>
             <h1>Fotos y carteles</h1>
-            <p>Elige primero qué elemento quieres ilustrar. El Panel se encarga de vincular la imagen a la ficha correcta.</p>
+            <p>Sube, revisa y gestiona las imágenes desde el mismo contenido al que pertenecen.</p>
           </div>
           <Link className={styles.secondaryButton} href={`/panel/multimedia?entity=${id}`}>Abrir biblioteca completa</Link>
         </div>
@@ -139,15 +150,15 @@ export default async function BrotherhoodMultimediaPage({ params, searchParams }
         <>
           <section className={mediaStyles.quickStart} aria-label="Elegir tipo de contenido">
             <div>
-              <span className={styles.eyebrow}>¿Qué quieres subir?</span>
+              <span className={styles.eyebrow}>¿Qué quieres gestionar?</span>
               <h2>Ve directamente al contenido</h2>
-              <p>No necesitas buscar la entidad ni escribir el tipo de relación.</p>
+              <p>Cada elemento muestra ahora las fotografías que ya tiene vinculadas y sus opciones de edición.</p>
             </div>
             <nav>
-              {data.cults.length ? <a href="#cultos-visuales"><strong>Foto de portada de un Culto</strong><span>{data.cults.length} documentado{data.cults.length === 1 ? '' : 's'} →</span></a> : null}
-              <a href="#pasos"><strong>Fotografía de un Paso</strong><span>{data.steps.length} relacionado{data.steps.length === 1 ? '' : 's'} →</span></a>
-              <a href="#carteles"><strong>Cartel</strong><span>{posters.length} documentado{posters.length === 1 ? '' : 's'} →</span></a>
-              {data.images.length ? <a href="#titulares"><strong>Fotografía de un Titular</strong><span>{data.images.length} relacionado{data.images.length === 1 ? '' : 's'} →</span></a> : null}
+              {data.cults.length ? <a href="#cultos-visuales"><strong>Fotos de Cultos</strong><span>{data.cults.length} documentado{data.cults.length === 1 ? '' : 's'} →</span></a> : null}
+              <a href="#pasos"><strong>Fotografías de Pasos</strong><span>{data.steps.length} relacionado{data.steps.length === 1 ? '' : 's'} →</span></a>
+              <a href="#carteles"><strong>Carteles</strong><span>{posters.length} documentado{posters.length === 1 ? '' : 's'} →</span></a>
+              {data.images.length ? <a href="#titulares"><strong>Fotografías de Titulares</strong><span>{data.images.length} relacionado{data.images.length === 1 ? '' : 's'} →</span></a> : null}
               {otherHeritage.length ? <a href="#patrimonio-visual"><strong>Otra pieza patrimonial</strong><span>{otherHeritage.length} documentada{otherHeritage.length === 1 ? '' : 's'} →</span></a> : null}
             </nav>
           </section>
@@ -156,7 +167,7 @@ export default async function BrotherhoodMultimediaPage({ params, searchParams }
             id="cultos-visuales"
             eyebrow="Cultos principales"
             title="Fotos de portada para los Cultos"
-            description="Sube una fotografía real de cada celebración. Se mostrará como portada de su tarjeta en la ficha pública y mantendrá crédito, derechos y texto alternativo."
+            description="Cada Culto muestra sus fotografías vinculadas para poder editar sus datos, cambiar la principal o retirar un archivo."
             items={data.cults}
             kind="cult"
             brotherhoodId={id}
@@ -167,7 +178,7 @@ export default async function BrotherhoodMultimediaPage({ params, searchParams }
             id="pasos"
             eyebrow="Cortejo"
             title="Fotografías de los Pasos"
-            description="Cada fotografía queda vinculada directamente al Paso, no a la Hermandad de forma genérica."
+            description="Cada fotografía queda vinculada directamente al Paso y puede gestionarse desde esta misma pantalla."
             items={data.steps}
             kind="step"
             brotherhoodId={id}
@@ -190,7 +201,7 @@ export default async function BrotherhoodMultimediaPage({ params, searchParams }
               id="titulares"
               eyebrow="Imágenes"
               title="Fotografías de los Titulares"
-              description="La fotografía se incorpora a la ficha propia de cada Imagen."
+              description="La fotografía se incorpora a la ficha propia de cada Imagen y permanece gestionable desde la Hermandad."
               items={data.images}
               kind="image"
               brotherhoodId={id}
