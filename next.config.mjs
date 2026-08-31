@@ -63,6 +63,11 @@ const nextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'municipaldemairena.com',
+        pathname: '/wp-content/uploads/**',
+      },
+      {
+        protocol: 'https',
         hostname: 'm.media-amazon.com',
         pathname: '/images/**',
       },
