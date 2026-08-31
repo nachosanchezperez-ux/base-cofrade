@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import { gloryDisplayTitle } from '@/lib/glory-display'
 import styles from './GloryDirectory.module.css'
+import photoStyles from './GloryDirectoryPhotos.module.css'
 
 function plural(count, singular, pluralForm) {
   return `${count} ${count === 1 ? singular : pluralForm}`
@@ -73,13 +74,24 @@ export default function GloryDirectory({ outings }) {
     <div className={styles.directory}>
       {featured ? (
         <article className={styles.featured}>
-          <div className={styles.featuredVisual}>
-            <div className={styles.featuredDate} aria-label={featured.dateParts.label}>
+          <div className={`${styles.featuredVisual} ${featured.heroImagePath ? photoStyles.featuredVisualWithPhoto : ''}`}>
+            {featured.heroImagePath ? (
+              <Image
+                src={featured.heroImagePath}
+                alt={featured.heroImageAlt}
+                fill
+                priority
+                unoptimized={featured.heroImagePath.startsWith('/')}
+                className={photoStyles.featuredPhoto}
+                sizes="(max-width: 820px) 100vw, 38vw"
+              />
+            ) : null}
+            <div className={`${styles.featuredDate} ${featured.heroImagePath ? photoStyles.featuredDateOnPhoto : ''}`} aria-label={featured.dateParts.label}>
               <strong>{featured.dateParts.day}</strong>
               <span>{featured.dateParts.month}</span>
               <small>{featured.dateParts.year}</small>
             </div>
-            {featured.crestPath ? (
+            {!featured.heroImagePath && featured.crestPath ? (
               <Image
                 src={featured.crestPath}
                 alt={`Escudo de ${featured.brotherhoodName}`}
@@ -89,7 +101,9 @@ export default function GloryDirectory({ outings }) {
                 sizes="150px"
               />
             ) : null}
-            <span className={styles.featuredBadge}>{featured.urgencyLabel || 'PRÓXIMA'}</span>
+            <span className={`${styles.featuredBadge} ${featured.heroImagePath ? photoStyles.photoForeground : ''}`}>
+              {featured.urgencyLabel || 'PRÓXIMA'}
+            </span>
           </div>
 
           <div className={styles.featuredCopy}>
@@ -219,7 +233,7 @@ export default function GloryDirectory({ outings }) {
                         <span>{outing.dateParts.month || 'FECHA'}</span>
                       </time>
 
-                      <div className={styles.cardMain}>
+                      <div className={`${styles.cardMain} ${outing.heroImagePath ? photoStyles.cardMainWithPhoto : ''}`}>
                         <div className={styles.cardTopline}>
                           <span>{outing.municipality || 'Localidad por confirmar'}</span>
                           <small data-status={outing.eventStatus}>{statusLabel(outing)}</small>
@@ -243,7 +257,17 @@ export default function GloryDirectory({ outings }) {
                         </div>
                       </div>
 
-                      {outing.crestPath ? (
+                      {outing.heroImagePath ? (
+                        <div className={photoStyles.cardPhoto}>
+                          <Image
+                            src={outing.heroImagePath}
+                            alt={outing.heroImageAlt}
+                            fill
+                            unoptimized={outing.heroImagePath.startsWith('/')}
+                            sizes="(max-width: 560px) 62px, (max-width: 820px) 70px, 92px"
+                          />
+                        </div>
+                      ) : outing.crestPath ? (
                         <div className={styles.cardCrest} aria-hidden="true">
                           <Image src={outing.crestPath} alt="" width={78} height={78} sizes="78px" />
                         </div>
