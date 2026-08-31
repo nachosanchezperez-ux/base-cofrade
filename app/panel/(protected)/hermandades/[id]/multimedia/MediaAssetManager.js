@@ -1,7 +1,7 @@
 import styles from '@/app/panel/panel.module.css'
 import {
-  deleteBrotherhoodMediaAssetAction,
   setBrotherhoodMediaCoverAction,
+  unlinkBrotherhoodMediaAssetAction,
   updateBrotherhoodMediaAssetAction,
 } from './manage-actions'
 import mediaStyles from './MediaAssetManager.module.css'
@@ -85,11 +85,11 @@ export default function MediaAssetManager({ media = [], brotherhoodId, targetId,
               </details>
 
               <details className={mediaStyles.deleteDetails}>
-                <summary>Eliminar</summary>
-                <p>Se retirará de este contenido. Si el archivo no se utiliza en ningún otro lugar, también se limpiará de la biblioteca y del almacenamiento.</p>
-                <form action={deleteBrotherhoodMediaAssetAction}>
+                <summary>Desvincular</summary>
+                <p>Se retirará únicamente de este contenido. El archivo multimedia y el objeto de almacenamiento se conservarán para evitar borrar recursos que puedan seguir utilizándose en otros contextos.</p>
+                <form action={unlinkBrotherhoodMediaAssetAction}>
                   <HiddenFields brotherhoodId={brotherhoodId} targetId={targetId} targetKind={targetKind} item={item} />
-                  <button className={styles.smallButton} type="submit">Confirmar eliminación</button>
+                  <button className={styles.smallButton} type="submit">Confirmar desvinculación</button>
                 </form>
               </details>
             </div>
