@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { getPanelBands } from '@/lib/panel/data'
 import styles from '@/app/panel/panel.module.css'
+import bandUx from '@/app/panel/(protected)/bandas/BandPanelUx.module.css'
 
 const STATUS_LABELS = { published: 'Publicado', review: 'En revisión', draft: 'Borrador', archived: 'Archivado' }
 
@@ -16,7 +17,7 @@ export default async function PanelBandsPage({ searchParams }) {
   return (
     <div className={styles.pageWrap}>
       <header className={styles.pageHeader}>
-        <div><span className={styles.eyebrow}>Enciclopedia musical</span><h1>Bandas</h1><p>Identidad, acompañamientos, salidas, dirección, estrenos y discografía conectada en una sola ficha editorial.</p></div>
+        <div><span className={styles.eyebrow}>Enciclopedia musical</span><h1>Bandas</h1><p>Abre una Banda para editar su identidad y todos los contenidos conectados desde una única ficha.</p></div>
       </header>
 
       <form className={styles.filters}>
@@ -26,15 +27,17 @@ export default async function PanelBandsPage({ searchParams }) {
       </form>
 
       <section className={styles.panelCard}>
-        <div className={styles.listHeading}><strong>{bands.length} {bands.length === 1 ? 'banda' : 'bandas'}</strong><small>Datos conectados con la ficha pública</small></div>
+        <div className={styles.listHeading}><strong>{bands.length} {bands.length === 1 ? 'banda' : 'bandas'}</strong><small>Toca una Banda para abrir su ficha editorial completa</small></div>
         {bands.length ? (
           <div className={styles.brotherhoodList}>
             {bands.map((item) => (
-              <article key={item.id}>
-                <span className={styles.listMonogram}>{item.logoPath ? <Image src={item.logoPath} alt="" width={34} height={40} /> : item.popularName.slice(0, 2).toUpperCase()}</span>
-                <div className={styles.listIdentity}><strong>{item.popularName}</strong><span>{item.officialName}</span><small>{item.municipality} · {item.type}</small></div>
-                <span className={`${styles.statusBadge} ${styles[item.status]}`}>{STATUS_LABELS[item.status]}</span>
-                <div style={{ display: 'grid', gap: '4px', justifyItems: 'end' }}><Link className={styles.rowLink} href={`/panel/bandas/${item.id}`}>Editar <span>→</span></Link><Link className={styles.rowLink} href={`/panel/bandas/${item.id}/discografia`}>Discografía <span>→</span></Link></div>
+              <article key={item.id} className={bandUx.bandListItem}>
+                <Link className={bandUx.bandListLink} href={`/panel/bandas/${item.id}`} aria-label={`Editar ficha de ${item.popularName}`}>
+                  <span className={styles.listMonogram}>{item.logoPath ? <Image src={item.logoPath} alt="" width={34} height={40} /> : item.popularName.slice(0, 2).toUpperCase()}</span>
+                  <div className={styles.listIdentity}><strong>{item.popularName}</strong><span>{item.officialName}</span><small>{item.municipality} · {item.type}</small></div>
+                  <span className={`${styles.statusBadge} ${styles[item.status]}`}>{STATUS_LABELS[item.status]}</span>
+                  <span className={`${styles.rowLink} ${bandUx.bandPrimaryAction}`}>Editar banda <span>→</span></span>
+                </Link>
               </article>
             ))}
           </div>
