@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import { cache } from 'react'
 import { notFound } from 'next/navigation'
@@ -8,6 +7,7 @@ import { gloryDisplayTitle } from '@/lib/glory-display'
 import { buildProcessionRoute } from '@/lib/procession-route'
 import { getGloryDetail } from '@/lib/supabase/glory-directory'
 import { absoluteUrl, breadcrumbJsonLd, pageTitle, seoDescription } from '@/lib/seo'
+import GloryHeroMedia from './GloryHeroMedia'
 import styles from './glory-detail.module.css'
 
 export const dynamic = 'force-dynamic'
@@ -219,27 +219,14 @@ export default async function GloryDetailPage({ params }) {
           </div>
 
           <div className={styles.heroVisual}>
-            {item.heroImagePath ? (
-              <>
-                <Image
-                  src={item.heroImagePath}
-                  alt={item.heroImageAlt}
-                  fill
-                  priority
-                  unoptimized={item.heroImagePath.startsWith('/')}
-                  sizes="(max-width: 820px) calc(100vw - 32px), 36vw"
-                />
-                {item.heroImageCredit ? <small>{item.heroImageCredit}</small> : null}
-              </>
-            ) : item.crestPath ? (
-              <Image className={styles.crest} src={item.crestPath} alt={`Escudo de ${item.brotherhoodName}`} width={380} height={380} priority />
-            ) : (
-              <div className={styles.datePoster} aria-hidden="true">
-                <strong>{item.dateParts.day}</strong>
-                <span>{item.dateParts.month}</span>
-                <small>{item.dateParts.year}</small>
-              </div>
-            )}
+            <GloryHeroMedia
+              src={item.heroImagePath}
+              alt={item.heroImageAlt}
+              credit={item.heroImageCredit}
+              crestPath={item.crestPath}
+              brotherhoodName={item.brotherhoodName}
+              dateParts={item.dateParts}
+            />
           </div>
         </div>
       </section>
