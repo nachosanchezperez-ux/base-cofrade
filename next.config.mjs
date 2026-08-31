@@ -43,6 +43,11 @@ const nextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'pasionporlamusicacofrade.wordpress.com',
+        pathname: '/wp-content/uploads/**',
+      },
+      {
+        protocol: 'https',
         hostname: 'cdn.palbincdn.com',
         pathname: '/users/**',
       },
