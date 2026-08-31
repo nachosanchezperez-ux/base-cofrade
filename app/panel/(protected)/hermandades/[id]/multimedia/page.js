@@ -11,8 +11,7 @@ const SAVED_MESSAGES = {
   uploaded: 'La imagen se ha subido y ya queda vinculada a su ficha.',
   updated: 'La información del archivo se ha actualizado correctamente.',
   cover: 'La fotografía principal se ha actualizado correctamente.',
-  deleted: 'El archivo se ha eliminado de este contenido y ya no tenía otros usos.',
-  unlinked: 'El archivo se ha retirado de este contenido y se conserva porque está utilizado en otro lugar.',
+  unlinked: 'El archivo se ha retirado de este contenido. El recurso multimedia y su almacenamiento se conservan.',
 }
 
 function targetAlt(target, kind) {
@@ -47,7 +46,7 @@ function MediaTargetCard({ target, kind, brotherhoodId }) {
   const rightsHelp = 'Para Wikimedia, licencias abiertas o dominio público utiliza la Biblioteca multimedia, que exige Fuente, licencia y atribución completas.'
   const uploadNote = kind === 'cult'
     ? 'Se mostrará como portada de este culto en la ficha pública.'
-    : 'Se guardará como imagen principal de esta ficha. La fotografía anterior seguirá disponible justo aquí para editarla, recuperarla o eliminarla.'
+    : 'Se guardará como imagen principal de esta ficha. La fotografía anterior seguirá disponible justo aquí para editarla, recuperarla o desvincularla.'
 
   return (
     <article className={mediaStyles.targetCard} id={anchor}>
