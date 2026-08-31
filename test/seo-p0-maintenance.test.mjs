@@ -45,7 +45,7 @@ test('el smoke de producción protege las superficies SEO principales y dinámic
     assert.match(smokeScript, new RegExp(path.replaceAll('/', '\\/')))
   }
   assert.match(smokeScript, /\/sitemap\.xml/)
-  assert.match(smokeScript, /rel=\\"canonical\\"/)
+  assert.match(smokeScript, /rel="canonical"/)
   assert.match(smokeScript, /application\/ld\+json/)
   assert.match(smokeWorkflow, /deployment_status:/)
   assert.match(smokeWorkflow, /workflow_dispatch:/)
