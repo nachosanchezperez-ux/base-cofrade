@@ -4,21 +4,24 @@ import test from 'node:test'
 
 const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8')
 
-test('Tres Caídas elimina visualmente el fondo claro sin afectar a otras bandas', () => {
+test('los logos JPEG reciben un tratamiento genérico de fondo opaco', () => {
   const component = read('components/RelationalEntityHero.js')
   const css = read('components/RelationalEntityHeroBand.module.css')
 
-  assert.match(component, /tres\\s\+ca\[íi\]das\\s\+de\\s\+triana/)
-  assert.match(component, /band-logo-remove-light-background/)
-  assert.match(component, /bandStyles\.logoCleanLight/)
-  assert.match(css, /\.logoCleanLight/)
-  assert.match(css, /url\("#band-logo-remove-light-background"\)/)
+  assert.match(component, /function isOpaqueRasterLogo/)
+  assert.match(component, /endsWith\('\.jpg'\)/)
+  assert.match(component, /endsWith\('\.jpeg'\)/)
+  assert.match(component, /band-logo-remove-light-raster-background/)
+  assert.match(component, /bandStyles\.logoOpaqueRaster/)
+  assert.match(css, /\.logoOpaqueRaster/)
+  assert.match(css, /url\("#band-logo-remove-light-raster-background"\)/)
 })
 
-test('el logo limpio gana presencia óptica y se adapta en móvil', () => {
+test('el tratamiento conserva el equilibrado óptico común sin excepciones nominales', () => {
+  const component = read('components/RelationalEntityHero.js')
   const css = read('components/RelationalEntityHeroBand.module.css')
 
-  assert.match(css, /\.logoCleanLight[\s\S]*scale\(1\.34\)/)
-  assert.match(css, /@media \(max-width: 620px\)[\s\S]*\.logoCleanLight[\s\S]*scale\(1\.27\)/)
-  assert.match(css, /@media \(max-width: 390px\)[\s\S]*\.logoCleanLight[\s\S]*scale\(1\.23\)/)
+  assert.match(css, /scale\(var\(--crest-optical-scale, 1\)\)/)
+  assert.doesNotMatch(component, /tres\s+ca[íi]das|cigarreras/i)
+  assert.doesNotMatch(css, /tres\s+ca[íi]das|cigarreras/i)
 })
