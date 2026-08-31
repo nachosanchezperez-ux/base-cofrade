@@ -6,7 +6,6 @@ import { breadcrumbJsonLd, collectionPageJsonLd, socialMetadata } from '@/lib/se
 export const dynamic = 'force-dynamic'
 
 const BAND_LOGO_PRESENTATION = {
-  'agrupacion-musical-virgen-de-los-reyes-sevilla': { mode: 'wide' },
   'banda-del-sol': { mode: 'integrated', background: 'secondary' },
   'sangre-de-san-benito': { mode: 'integrated', background: 'primary' },
   'banda-de-musica-del-maestro-tejera': { mode: 'integrated', background: 'secondary' },

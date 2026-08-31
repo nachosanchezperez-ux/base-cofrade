@@ -14,8 +14,9 @@ function errorMessage(error) {
 }
 
 function syncField(scope, name, value) {
-  if (!name || !scope) return
-  const input = scope.querySelector(`[name="${name}"]`)
+  if (!name) return
+  const selector = `[name="${name}"]`
+  const input = scope?.querySelector(selector) || document.querySelector(selector)
   if (input instanceof HTMLInputElement || input instanceof HTMLTextAreaElement) input.value = value || ''
 }
 
@@ -162,7 +163,7 @@ export default function DirectImageUpload({
   return (
     <div ref={rootRef} className={styles.editorForm} data-direct-image-upload data-panel-edit-state="ignore">
       <div className={styles.subsectionHeading}>
-        <div><span className={styles.eyebrow}>Storage directo</span><h4>{title}</h4></div>
+        <div><span className={styles.eyebrow}>Imagen</span><h4>{title}</h4></div>
         {description ? <p>{description}</p> : null}
       </div>
 
@@ -178,7 +179,7 @@ export default function DirectImageUpload({
           <label className={styles.fieldWide}>
             <span>Archivo</span>
             <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/avif" onChange={handleFileChange} required disabled={pending} />
-            <small>JPG, PNG, WEBP, GIF o AVIF · máximo 10 MB. El archivo va directamente a Supabase Storage.</small>
+            <small>JPG, PNG, WEBP, GIF o AVIF · máximo 10 MB.</small>
           </label>
           {showTextFields ? (
             <>
@@ -190,7 +191,7 @@ export default function DirectImageUpload({
         {error ? <div className={styles.readOnlyNotice} role="alert">{error}</div> : null}
         {message ? <div className={styles.savedNotice} role="status">{message}</div> : null}
         <div className={styles.formActions}>
-          <small>Vercel solo autoriza y vincula metadatos; no recibe los bytes del archivo.</small>
+          <small>La imagen quedará vinculada automáticamente a este contenido.</small>
           <button className={styles.secondaryButton} type="submit" disabled={pending || !selectedFile}>{buttonLabel}</button>
         </div>
       </form>

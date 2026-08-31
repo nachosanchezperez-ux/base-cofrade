@@ -284,6 +284,10 @@
 .historicalCopy > span { color: var(--band-primary); font-size: 9px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
 .historicalCopy h3 { margin: 6px 0 9px; color: var(--band-secondary); font-size: clamp(23px, 2.6vw, 30px); line-height: 1.08; letter-spacing: -.035em; }
 .historicalCopy p { margin: 0; color: var(--band-muted); font-size: 12px; line-height: 1.55; }
+.historicalStep { display: grid; gap: 3px; color: var(--band-muted); font-size: 12px; line-height: 1.55; }
+.historicalStep strong { color: var(--band-primary); font-size: 12px; }
+.historicalStep span { color: var(--band-secondary); font-weight: 600; }
+.historicalStep small { color: var(--band-muted); font-size: 10px; }
 .historicalCopy > small { margin-top: 10px; color: var(--band-muted); font-size: 10px; line-height: 1.5; }
 .historicalCopy > a { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 15px; padding-top: 12px; border-top: 1px solid var(--band-line); color: var(--band-primary); font-size: 9px; font-weight: 700; }
 .historicalCopy > a:hover { text-decoration: underline; text-underline-offset: 3px; }

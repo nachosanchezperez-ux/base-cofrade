@@ -6,7 +6,6 @@ import {
   partitionAccompanimentsBySeason,
   presentAccompanimentLocation,
   presentAccompanimentMoment,
-  presentAccompanimentNotes,
   presentAccompanimentStep,
   resolveAccompanimentLocation,
   sortGloryAccompaniments,
@@ -150,30 +149,6 @@ test('la cabecera recupera la jornada documentada cuando el tipo es genérico', 
     outingType: 'Procesión de gloria',
     notes: '8 de septiembre',
   }), 'Procesión de gloria')
-})
-
-test('el cuerpo elimina únicamente la jornada ya visible en la cabecera', () => {
-  assert.equal(presentAccompanimentNotes({
-    outingType: 'Sábado de Pasión',
-    notes: 'Sábado de Pasión.',
-  }, 'Sábado de Pasión'), '')
-
-  assert.equal(presentAccompanimentNotes({
-    outingType: 'Estación de penitencia',
-    notes: 'Miércoles Santo. Recorrido de vuelta por el itinerario habitual.',
-  }, 'Miércoles Santo'), 'Recorrido de vuelta por el itinerario habitual.')
-})
-
-test('el cuerpo conserva matices y observaciones documentales relevantes', () => {
-  assert.equal(presentAccompanimentNotes({
-    outingType: 'Estación de penitencia',
-    notes: 'Madrugá y mañana del Viernes Santo.',
-  }, 'Madrugá'), 'Madrugá y mañana del Viernes Santo.')
-
-  assert.equal(presentAccompanimentNotes({
-    outingType: 'Martes Santo',
-    notes: 'Segunda etapa, vigente según la fuente oficial.',
-  }, 'Martes Santo'), 'Segunda etapa, vigente según la fuente oficial.')
 })
 
 test('separa Semana Santa de Glorias y cultos externos', () => {

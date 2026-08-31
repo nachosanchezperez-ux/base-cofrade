@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { externalReleaseLinkLabel, presentReleaseType } from '@/lib/bands/discography'
 import styles from './BandDiscographySection.module.css'
 
 function ordinalLabel(value) {
@@ -165,6 +166,7 @@ export default function BandDiscographySection({ releases = [], artistSpotifyUrl
                   <h3>{release.title}</h3>
                   <div className={styles.meta}>
                     {release.year ? <strong>{release.year}</strong> : null}
+                    {presentReleaseType(release.type) ? <span>{presentReleaseType(release.type)}</span> : null}
                     {ordinalLabel(release.ordinalNumber) ? <span>{ordinalLabel(release.ordinalNumber)}</span> : null}
                     {release.tracks.length ? (
                       <span>{release.tracks.length} {release.tracks.length === 1 ? 'pista' : 'pistas'}</span>
@@ -196,7 +198,7 @@ export default function BandDiscographySection({ releases = [], artistSpotifyUrl
                           data-hilo-scope="release"
                         >Álbum completo en Spotify ↗</a>
                       ) : null}
-                      {release.externalUrl ? <a href={release.externalUrl} target="_blank" rel="noopener noreferrer" className={styles.secondaryLink}>Más información ↗</a> : null}
+                      {release.externalUrl ? <a href={release.externalUrl} target="_blank" rel="noopener noreferrer" className={styles.secondaryLink}>{externalReleaseLinkLabel(release.externalUrl)}</a> : null}
                     </div>
                   ) : null}
                 </div>

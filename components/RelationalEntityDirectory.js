@@ -60,7 +60,6 @@ const KIND_COPY = {
 
 function bandMediaClass(item) {
   if (item.logoPresentationMode === 'integrated') return enhancementStyles.bandMediaIntegrated
-  if (item.logoPresentationMode === 'wide') return enhancementStyles.bandMediaWide
   return ''
 }
 
@@ -222,7 +221,6 @@ export default function RelationalEntityDirectory({
             return (
               <Link
                 className={`${styles.card} ${contractStyles.contract} ${enhancementStyles.card} ${isBand ? enhancementStyles.bandCard : ''}`}
-                data-logo-presentation={isBand ? item.logoPresentationMode : undefined}
                 href={item.href}
                 key={item.id}
                 aria-label={`Abrir ficha de ${item.name}`}
