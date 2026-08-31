@@ -5,6 +5,7 @@ import { readFile } from 'node:fs/promises'
 const migrationPath = new URL('../supabase/migrations_archive/first-edition/20260830084624_calendario_igualas_ensayos.sql', import.meta.url)
 const buenAireMigrationPath = new URL('../supabase/migrations_archive/first-edition/20260830090233_publica_iguala_buen_aire_2026.sql', import.meta.url)
 const rosarioSantiagoMigrationPath = new URL('../supabase/migrations_archive/first-edition/20260831061147_publica_iguala_rosario_santiago_2026.sql', import.meta.url)
+const septemberCallsMigrationPath = new URL('../supabase/migrations/20260831074355_publica_tres_igualas_septiembre_2026.sql', import.meta.url)
 
 test('el calendario reutiliza la entidad event y crea relaciones tipadas con Pasos y Personas', async () => {
   const sql = await readFile(migrationPath, 'utf8')
@@ -62,4 +63,29 @@ test('la igualá del Rosario de Santiago publica solo los datos anunciados y acr
   assert.match(sql, /from public\.crew_event_agents relation/)
   assert.match(sql, /https:\/\/www\.facebook\.com\/100069128529775\/posts\/1114255717555369\//)
   assert.match(sql, /https:\/\/parroquiasantiagoalcala\.es\/rosario-de-santiago\//)
+})
+
+
+test('las igualás de Cuatrovitas, Guadalupe y Mercedes conservan datos y ausencias anunciadas', async () => {
+  const sql = await readFile(septemberCallsMigrationPath, 'utf8')
+
+  assert.match(sql, /'iguala-virgen-cuatrovitas-2026'/)
+  assert.match(sql, /date '2026-09-01'/)
+  assert.match(sql, /time '21:00'/)
+  assert.match(sql, /'manuel-pinto-montero'/)
+  assert.match(sql, /al menos un año de antigüedad/)
+  assert.match(sql, /https:\/\/www\.instagram\.com\/p\/DcIxzvFM1M-\//)
+
+  assert.match(sql, /'iguala-nuestra-senora-guadalupe-sevilla-2026'/)
+  assert.match(sql, /date '2026-09-03'/)
+  assert.match(sql, /time '20:30'/)
+  assert.match(sql, /'jose-manuel-rechi'/)
+  assert.match(sql, /https:\/\/hermandaddeguadalupe\.wordpress\.com\/2026\/08\/24\/iguala-de-costaleros-2026\//)
+
+  assert.match(sql, /'iguala-mercedes-puerta-real-2026'/)
+  assert.match(sql, /date '2026-09-12'/)
+  assert.match(sql, /time '10:30'/)
+  assert.match(sql, /no publica capataz ni requisitos/)
+  assert.match(sql, /if call\.capataz_slug is null then/)
+  assert.match(sql, /https:\/\/www\.facebook\.com\/MercedesPuertaReal\/photos\//)
 })
