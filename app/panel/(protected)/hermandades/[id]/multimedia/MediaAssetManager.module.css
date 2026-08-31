@@ -72,16 +72,15 @@
 }
 
 .identity strong {
-  overflow: hidden;
   color: #0f2742;
   font-size: 13px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
 }
 
 .identity small {
   color: #68788a;
   font-size: 10px;
+  overflow-wrap: anywhere;
 }
 
 .badge {

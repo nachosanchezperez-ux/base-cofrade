@@ -19,6 +19,11 @@ test('Fotos y carteles muestra los archivos ya vinculados en el contenido natura
 })
 
 test('la gestión local valida que el destino pertenece a la Hermandad', () => {
+  assert.match(actions, /requirePanelEditor/)
+  assert.match(actions, /UUID_PATTERN/)
+  assert.match(actions, /TARGET_KINDS/)
+  assert.match(actions, /RIGHTS_STATUSES/)
+  assert.match(actions, /La descripción accesible es obligatoria/)
   assert.match(actions, /brotherhood_steps/)
   assert.match(actions, /brotherhood_images/)
   assert.match(actions, /heritage_assets/)
@@ -36,6 +41,7 @@ test('desvincular conserva siempre el asset y Storage durante Primera Edición',
   assert.doesNotMatch(actions, /from\('media_assets'\)\.delete/)
   assert.doesNotMatch(actions, /storage\.from\('hilo-media'\)\.remove/)
   assert.doesNotMatch(actions, /deleteBrotherhoodMediaAssetAction/)
+  assert.doesNotMatch(actions, /select\('id, storage_path/)
 })
 
 test('retirar una portada promociona otra imagen vinculada cuando existe', () => {
@@ -47,7 +53,8 @@ test('retirar una portada promociona otra imagen vinculada cuando existe', () =>
 test('la gestión de archivos conserva un contrato responsive sin overflow', () => {
   assert.match(managerStyles, /grid-template-columns: 92px minmax\(0, 1fr\)/)
   assert.match(managerStyles, /\.body\s*\{[\s\S]*min-width: 0/)
-  assert.match(managerStyles, /text-overflow: ellipsis/)
+  assert.match(managerStyles, /overflow-wrap: anywhere/)
+  assert.doesNotMatch(managerStyles, /text-overflow: ellipsis/)
   assert.match(managerStyles, /@media \(max-width: 720px\)/)
   assert.match(managerStyles, /grid-template-columns: 72px minmax\(0, 1fr\)/)
   assert.match(managerStyles, /\.grid\s*\{[\s\S]*grid-template-columns: 1fr/)
