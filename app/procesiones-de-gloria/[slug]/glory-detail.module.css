@@ -142,7 +142,9 @@
 .heroVisual {
   position: relative;
   display: grid;
-  min-height: 390px;
+  width: min(100%, 430px);
+  height: clamp(290px, 32vw, 390px);
+  justify-self: center;
   place-items: center;
   overflow: hidden;
   border: 1px solid var(--hc-line);
@@ -151,10 +153,21 @@
     radial-gradient(circle at 80% 12%, rgba(183, 31, 55, .09), transparent 34%),
     linear-gradient(145deg, #f7fafc, #eaf1f7);
   box-shadow: 0 18px 44px rgba(18, 58, 103, .08);
+  isolation: isolate;
 }
 
-.heroVisual > img:not(.crest) {
+.heroImageBackdrop {
+  z-index: 0;
   object-fit: cover;
+  transform: scale(1.08);
+  filter: blur(18px) saturate(.8);
+  opacity: .32;
+}
+
+.heroImage {
+  z-index: 1;
+  object-fit: contain;
+  padding: clamp(8px, 1vw, 14px);
 }
 
 .heroVisual > small {
@@ -164,7 +177,7 @@
   z-index: 2;
   padding: 5px 8px;
   border-radius: 8px;
-  background: rgba(7, 22, 37, .7);
+  background: rgba(7, 22, 37, .74);
   color: #fff;
   font-size: .67rem;
 }
@@ -342,7 +355,8 @@
   }
 
   .heroVisual {
-    min-height: 330px;
+    width: min(100%, 520px);
+    height: clamp(300px, 70vw, 390px);
   }
 
   .keyFacts {
@@ -364,8 +378,13 @@
   }
 
   .heroVisual {
-    min-height: 270px;
+    width: 100%;
+    height: clamp(260px, 82vw, 330px);
     border-radius: 24px;
+  }
+
+  .heroImage {
+    padding: 8px;
   }
 
   .keyFacts {
