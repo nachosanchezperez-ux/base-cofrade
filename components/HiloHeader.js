@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
@@ -155,14 +156,14 @@ export default function HiloHeader() {
       <header ref={headerRef} className={`${styles.header} ${scrolled ? styles.scrolled : ''}`} data-hilo-header>
         <div className={`shell ${styles.inner}`}>
           <Link href="/" className={styles.brand} aria-label="Hilo Cofrade, inicio">
-            <span className={styles.brandRail} aria-hidden="true">
-              <span className={styles.brandLine} />
-              <span className={styles.brandNode} />
-            </span>
-            <span className={styles.brandWord}>
-              <strong>Hilo</strong>
-              <span>Cofrade</span>
-            </span>
+            <Image
+              src="/brand/logo-header.svg"
+              alt=""
+              width={680}
+              height={270}
+              priority
+              className={styles.brandLogo}
+            />
           </Link>
 
           <nav className={styles.desktopNav} aria-label="Navegación principal">
