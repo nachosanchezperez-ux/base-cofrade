@@ -6,13 +6,14 @@ const migrationsDirectory = new URL('../supabase/migrations/', import.meta.url)
 const archiveDirectory = new URL('../supabase/migrations_archive/first-edition/', import.meta.url)
 const baselineName = '20260831070000_first_edition_baseline.sql'
 const securityName = '20260831071000_secure_public_contributions_reconciled.sql'
+const septemberCrewCallsName = '20260831074355_publica_tres_igualas_septiembre_2026.sql'
 const baseline = readFileSync(new URL(baselineName, migrationsDirectory), 'utf8')
 const seed = readFileSync(new URL('../supabase/seed.sql', import.meta.url), 'utf8')
 
 test('las ramas nuevas ejecutan un baseline único antes de #439', () => {
   assert.deepEqual(
     readdirSync(migrationsDirectory).filter((file) => file.endsWith('.sql')).sort(),
-    [baselineName, securityName],
+    [baselineName, securityName, septemberCrewCallsName],
   )
 })
 

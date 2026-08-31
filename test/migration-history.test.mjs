@@ -29,5 +29,6 @@ test("Supabase migration versions are unique and well formed", async () => {
   assert.deepEqual(files, [
     "20260831070000_first_edition_baseline.sql",
     "20260831071000_secure_public_contributions_reconciled.sql",
+    "20260831074355_publica_tres_igualas_septiembre_2026.sql",
   ]);
 });
