@@ -18,21 +18,35 @@ begin
   from public.entities
   where slug = 'hermandad-de-la-macarena';
 
-  insert into public.entities (entity_type, name, slug, summary, status)
-  values (
-    'band',
-    'Centuria Romana Macarena',
-    'banda-centuria-romana-macarena',
-    'Banda de cornetas y tambores integrada en la Centuria Romana de la Hermandad de la Macarena, con trayectoria documentada desde su reorganización de 1897.',
-    'published'
-  )
-  on conflict (slug) do update set
-    entity_type = excluded.entity_type,
-    name = excluded.name,
-    summary = excluded.summary,
-    status = excluded.status,
-    updated_at = now()
-  returning id into v_band_id;
+  select entity.id into v_band_id
+  from public.entities entity
+  where entity.entity_type = 'band'
+    and (
+      entity.slug in ('centuria-romana-macarena', 'banda-centuria-romana-macarena')
+      or regexp_replace(lower(trim(entity.name)), '[[:space:]]+', ' ', 'g') = 'centuria romana macarena'
+    )
+  order by (entity.slug = 'centuria-romana-macarena') desc, entity.created_at
+  limit 1;
+
+  if v_band_id is null then
+    insert into public.entities (entity_type, name, slug, summary, status)
+    values (
+      'band',
+      'Centuria Romana Macarena',
+      'centuria-romana-macarena',
+      'Banda de cornetas y tambores integrada en la Centuria Romana de la Hermandad de la Macarena, con trayectoria documentada desde su reorganización de 1897.',
+      'published'
+    )
+    returning id into v_band_id;
+  else
+    update public.entities
+    set
+      name = 'Centuria Romana Macarena',
+      summary = 'Banda de cornetas y tambores integrada en la Centuria Romana de la Hermandad de la Macarena, con trayectoria documentada desde su reorganización de 1897.',
+      status = 'published',
+      updated_at = now()
+    where id = v_band_id;
+  end if;
 
   insert into public.bands (
     entity_id,
