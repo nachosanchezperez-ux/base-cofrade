@@ -87,7 +87,7 @@
   place-items: center;
 }
 
-.logoStageClean {
+.logoStageOpaqueRaster {
   overflow: visible;
 }
 
@@ -104,15 +104,12 @@
   filter: drop-shadow(0 20px 32px rgba(0, 0, 0, .28));
 }
 
-/* Tres Caídas parte de un JPG cuadrado con fondo claro. El filtro convierte
-   únicamente ese fondo casi blanco en transparencia visual y la escala manual
-   compensa el cuadrado original para igualar su presencia con Las Cigarreras. */
-.logoCleanLight {
-  transform:
-    translate(var(--crest-optical-x, 0px), var(--crest-optical-y, 0px))
-    scale(1.34);
+/* Los JPEG no admiten transparencia. Cuando una identidad visual llega en
+   este formato, conservamos el equilibrado óptico común y retiramos solo el
+   fondo casi blanco para que no aparezca como una caja dentro de la cabecera. */
+.logoOpaqueRaster {
   filter:
-    url("#band-logo-remove-light-background")
+    url("#band-logo-remove-light-raster-background")
     drop-shadow(0 20px 32px rgba(0, 0, 0, .28));
 }
 
@@ -223,12 +220,6 @@
     max-height: 162px;
   }
 
-  .logoCleanLight {
-    transform:
-      translate(var(--crest-optical-x, 0px), var(--crest-optical-y, 0px))
-      scale(1.27);
-  }
-
   .identityAura {
     width: 205px;
   }
@@ -262,12 +253,6 @@
 
   .logo {
     max-height: 150px;
-  }
-
-  .logoCleanLight {
-    transform:
-      translate(var(--crest-optical-x, 0px), var(--crest-optical-y, 0px))
-      scale(1.23);
   }
 
   .heroBand .bandCopy h1 {
