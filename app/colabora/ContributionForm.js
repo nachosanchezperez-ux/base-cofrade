@@ -118,7 +118,7 @@ export default function ContributionForm({ enabled, formTicket, turnstileSiteKey
           </label>
           <label className={styles.fieldWide}>
             <span>URL de la ficha o página relacionada {type === 'correction' ? '*' : '(opcional)'}</span>
-            <input name="page_url" type="url" required={type === 'correction'} maxLength={2048} disabled={pending} placeholder="https://hilocofrade.com/…" />
+            <input name="page_url" type="url" required={type === 'correction'} maxLength={2048} disabled={pending} placeholder="https://hilocofrade.es/…" />
           </label>
           <label className={styles.fieldWide}>
             <span>Explicación detallada *</span>
@@ -126,9 +126,15 @@ export default function ContributionForm({ enabled, formTicket, turnstileSiteKey
             <small>Texto plano · entre 30 y 6.000 caracteres · no incluyas datos sensibles.</small>
           </label>
           <label className={styles.fieldWide}>
-            <span>Fuentes y documentos enlazados</span>
+            <span>
+              Fuentes y documentos enlazados
+              {type === 'new_record' ? ' (obligatorio si no adjuntas un archivo)' : ''}
+            </span>
             <textarea name="sources" rows={4} disabled={pending} placeholder={'https://web-oficial.es/…\nhttps://archivo-publico.es/documento.pdf'} />
-            <small>Una URL pública HTTP/HTTPS por línea · máximo 8. No abrimos previsualizaciones automáticas.</small>
+            <small>
+              Una URL pública HTTP/HTTPS por línea · máximo 8. No abrimos previsualizaciones automáticas.
+              {type === 'new_record' ? ' Para proponer información nueva, añade al menos una fuente o un archivo.' : ''}
+            </small>
           </label>
         </div>
 
