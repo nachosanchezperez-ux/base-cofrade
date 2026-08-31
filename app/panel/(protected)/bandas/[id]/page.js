@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { notFound, redirect } from 'next/navigation'
 import PanelFormGroup from '@/components/panel/PanelFormGroup'
+import BandDirectImageUpload from '@/components/panel/band/BandDirectImageUpload'
 import BandLogoBackgroundField from '@/components/panel/band/BandLogoBackgroundField'
 import { requirePanelUser } from '@/lib/panel/auth'
 import { getBandEditorData } from '@/lib/panel/data'
@@ -13,6 +14,7 @@ import {
 } from '@/components/panel/band/BandEditorPrimitives'
 import { updateBandAction } from './actions'
 import styles from '@/app/panel/panel.module.css'
+import bandUx from '@/app/panel/(protected)/bandas/BandPanelUx.module.css'
 
 export const metadata = { title: 'Editar banda · Panel' }
 
@@ -53,7 +55,7 @@ export default async function BandEditorPage({ params, searchParams }) {
       <header className={styles.editorHeader}>
         <div className={styles.breadcrumb}><Link href="/panel/bandas">Bandas</Link><span>→</span><strong>{displayName}</strong></div>
         <div className={styles.editorTitleRow}>
-          <div><span className={styles.eyebrow}>Resumen de ficha</span><h1>{displayName}</h1><p>{data.officialName?.name}</p></div>
+          <div><span className={styles.eyebrow}>Editar Banda</span><h1>{displayName}</h1><p>{data.officialName?.name}</p></div>
           <div className={styles.editorHeaderActions}>
             <span className={`${styles.statusBadge} ${styles[data.entity.status]}`}>{STATUS_LABELS[data.entity.status]}</span>
             {data.entity.slug ? <Link className={styles.secondaryButton} href={`/bandas/${data.entity.slug}`} target="_blank" rel="noreferrer">Ver ficha pública ↗</Link> : null}
@@ -72,11 +74,15 @@ export default async function BandEditorPage({ params, searchParams }) {
       </section>
 
       <section className={styles.editorSection} id="general">
-        <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>Identidad</span><h2>Información general</h2></div><p>Datos estructurales, identidad visual, sede y trayectoria básica de la formación.</p></div>
+        <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>Identidad</span><h2>Información general</h2></div><p>Datos estructurales, sede, colores y trayectoria básica de la formación.</p></div>
         <form action={updateBandAction} className={`${styles.panelCard} ${styles.editorForm}`}>
           <input type="hidden" name="band_id" value={data.entity.id} />
           <input type="hidden" name="official_name_id" value={data.officialName?.id || ''} />
           <input type="hidden" name="popular_name_id" value={data.popularName?.id || ''} />
+          <input type="hidden" name="logo_path" defaultValue={data.band?.logo_path || ''} />
+          <input type="hidden" name="hero_image_path" defaultValue={data.band?.hero_image_path || ''} />
+          <input type="hidden" name="hero_image_alt" defaultValue={data.band?.hero_image_alt || ''} />
+          <input type="hidden" name="hero_image_credit" defaultValue={data.band?.hero_image_credit || ''} />
 
           <PanelFormGroup
             eyebrow="Identidad pública"
@@ -105,8 +111,8 @@ export default async function BandEditorPage({ params, searchParams }) {
 
           <PanelFormGroup
             eyebrow="Identidad visual"
-            title="Colores, logotipo y fotografía"
-            description="Recursos maestros que alimentan la cabecera, tarjetas y archivo visual de la Banda."
+            title="Colores y presentación"
+            description="Paleta de la Banda y fondo de apoyo del logotipo. El logotipo y la fotografía se cambian justo debajo, sin rutas técnicas."
           >
             <label><span>Color principal</span><input name="primary_color" defaultValue={data.band?.primary_color || ''} placeholder="#63358B" /></label>
             <label><span>Color secundario</span><input name="secondary_color" defaultValue={data.band?.secondary_color || ''} placeholder="#29272C" /></label>
@@ -116,10 +122,6 @@ export default async function BandEditorPage({ params, searchParams }) {
               logoAlt={`Logotipo de ${displayName}`}
               initials={displayName.slice(0, 2).toUpperCase()}
             />
-            <label className={styles.fieldWide}><span>Ruta pública del logotipo</span><input name="logo_path" defaultValue={data.band?.logo_path || ''} /></label>
-            <label className={styles.fieldWide}><span>Ruta pública de la fotografía principal</span><input name="hero_image_path" defaultValue={data.band?.hero_image_path || ''} /></label>
-            <label className={styles.fieldWide}><span>Descripción accesible de la fotografía</span><input name="hero_image_alt" defaultValue={data.band?.hero_image_alt || ''} /></label>
-            <label className={styles.fieldWide}><span>Crédito de la fotografía</span><input name="hero_image_credit" defaultValue={data.band?.hero_image_credit || ''} /></label>
           </PanelFormGroup>
 
           <PanelFormGroup
@@ -135,7 +137,41 @@ export default async function BandEditorPage({ params, searchParams }) {
       </section>
 
       <section className={styles.editorSection}>
-        <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>Cobertura editorial</span><h2>Completar la ficha</h2></div><p>Los contenidos especializados viven ya en módulos propios del workspace.</p></div>
+        <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>Imágenes principales</span><h2>Logotipo y fotografía</h2></div><p>Cambia aquí los recursos que identifican a la Banda en su ficha y en los directorios.</p></div>
+        <div className={bandUx.primaryMediaGrid}>
+          <div className={styles.panelCard}>
+            {canEdit ? (
+              <BandDirectImageUpload
+                bandId={id}
+                kind="logo"
+                title="Logotipo"
+                description="Identidad gráfica principal de la Banda."
+                currentSrc={data.band?.logo_path || ''}
+                currentAlt={`Logotipo de ${displayName}`}
+                syncFields={{ path: 'logo_path' }}
+              />
+            ) : <p className={styles.emptyText}>Logotipo: {data.band?.logo_path ? 'documentado' : 'pendiente'}.</p>}
+          </div>
+
+          <div className={styles.panelCard}>
+            {canEdit ? (
+              <BandDirectImageUpload
+                bandId={id}
+                kind="hero"
+                title="Fotografía principal"
+                description="Imagen principal de la formación para la cabecera y las vistas públicas."
+                currentSrc={data.band?.hero_image_path || ''}
+                currentAlt={data.band?.hero_image_alt || ''}
+                currentCredit={data.band?.hero_image_credit || ''}
+                syncFields={{ path: 'hero_image_path', alt: 'hero_image_alt', credit: 'hero_image_credit' }}
+              />
+            ) : <p className={styles.emptyText}>Fotografía principal: {data.band?.hero_image_path ? 'documentada' : 'pendiente'}.</p>}
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.editorSection}>
+        <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>Cobertura editorial</span><h2>Completar la ficha</h2></div><p>Los contenidos especializados viven en módulos propios de esta misma Banda.</p></div>
         <div className={styles.panelCard}>
           <div className={styles.moduleList}>
             <ModuleRow href={`/panel/bandas/${id}/direccion`} label="Dirección" count={data.direction.length} note="Responsables actuales e históricos" />
@@ -145,7 +181,7 @@ export default async function BandEditorPage({ params, searchParams }) {
             <ModuleRow href={`/panel/bandas/${id}/patrimonio`} label="Patrimonio" count={data.assets.length} note="Banderín, realización y restauraciones" />
             <ModuleRow href={`/panel/bandas/${id}/discografia`} label="Discografía" note="Discos, pistas y plataformas" />
             <ModuleRow href={`/panel/bandas/${id}/canales`} label="Canales" count={data.socialLinks.length} note="Web, redes y Spotify" />
-            <ModuleRow href={`/panel/bandas/${id}/multimedia`} label="Multimedia" note="Logos, portadas y archivo visual" />
+            <ModuleRow href={`/panel/bandas/${id}/multimedia`} label="Multimedia" note="Banderín y archivo visual avanzado" />
           </div>
         </div>
       </section>
