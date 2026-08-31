@@ -36,17 +36,25 @@ test('the homepage offers two clear first-visit paths', async () => {
   assert.match(home, /#proximos-dias[\s\S]*Ver próximas procesiones/)
 })
 
-test('public collaboration stays closed until privacy and contact are defined', async () => {
-  const [header, explore, collaboration, sitemap] = await Promise.all([
+test('public collaboration fails closed until privacy and anti-bot are activated', async () => {
+  const [header, explore, footer, collaboration, form, security, sitemap] = await Promise.all([
     read('components/HiloHeader.js'),
     read('components/HomeExploreV2.js'),
+    read('components/HiloFooter.js'),
     read('app/colabora/page.js'),
+    read('app/colabora/ContributionForm.js'),
+    read('lib/contributions/security.js'),
     read('app/sitemap.js'),
   ])
 
   assert.doesNotMatch(header, /Colabora con Hilo Cofrade|<span \/>Colabora/)
   assert.doesNotMatch(explore, /Proponer información|id="colabora"/)
+  assert.match(footer, /href="\/colabora"/)
   assert.doesNotMatch(sitemap, /absoluteUrl\('\/colabora'\)/)
-  assert.match(collaboration, /index:\s*false/)
-  assert.match(collaboration, /no recoge propuestas ni datos personales/i)
+  assert.match(collaboration, /index:\s*contributionReadiness\(\)\.enabled/)
+  assert.match(form, /disabled=\{!enabled \|\| pending\}/)
+  assert.match(form, /Vista previa segura/)
+  assert.match(security, /PUBLIC_CONTRIBUTIONS_ENABLED === 'true'/)
+  assert.match(security, /NEXT_PUBLIC_TURNSTILE_SITE_KEY/)
+  assert.match(security, /TURNSTILE_SECRET_KEY/)
 })

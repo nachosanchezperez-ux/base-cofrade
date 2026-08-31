@@ -10,6 +10,7 @@ Enciclopedia relacional de la Semana Santa y las cofradías de Sevilla y su prov
 - Fichas relacionadas con fuentes, patrimonio, música, autores y acontecimientos.
 - Tira del hilo para consultar únicamente conocimiento documentado en el grafo.
 - Panel editorial autenticado, responsive y conectado a Supabase.
+- Canal de aportaciones públicas con revisión humana y cuarentena privada.
 
 ## Arquitectura
 
@@ -31,6 +32,11 @@ npm run dev
 
 La aplicación queda disponible en `http://localhost:3000`.
 
+El formulario de `/colabora` se muestra en vista previa y falla de forma cerrada. Para aceptar
+envíos deben aplicarse las migraciones, configurar Supabase y Turnstile en el entorno, publicar
+la actualización de privacidad y establecer `PUBLIC_CONTRIBUTIONS_ENABLED=true`. Ninguna clave
+privada debe usar el prefijo `NEXT_PUBLIC_`; consulta `.env.example` para los nombres esperados.
+
 Antes de proponer un cambio consulta `docs/HILO-ORQUESTADOR.md` y
 `docs/ESTADO-PROYECTO.md`. Todo corte debe superar tests, build, preview y smoke
 antes de llegar a producción.
@@ -40,5 +46,5 @@ antes de llegar a producción.
 - Las propuestas automáticas nunca son verdad canónica sin revisión humana.
 - Las entidades y relaciones nuevas nacen en borrador.
 - Las fotografías conservan procedencia, crédito y derechos.
-- No se abre un canal público de aportaciones hasta disponer de contacto,
-  privacidad y tratamiento editorial definidos.
+- Las aportaciones públicas nunca escriben directamente en el grafo: pasan por controles
+  antiabuso, una cola privada y revisión editorial trazable.

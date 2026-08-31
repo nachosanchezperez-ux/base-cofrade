@@ -23,6 +23,7 @@ export default function HiloFooter() {
         </div>
         <div className={styles.meta}>
           <nav aria-label="Información legal">
+            <Link href="/colabora">Colabora</Link>
             <Link href="/aviso-legal">Aviso legal</Link>
             <Link href="/privacidad">Privacidad</Link>
             <Link href="/cookies">Cookies</Link>
