@@ -16,8 +16,14 @@ const DYNAMIC_PREFIXES = [
   '/igualas-y-ensayos/',
 ]
 
+function normalizeCanonical(value) {
+  const url = new URL(value)
+  const pathname = url.pathname === '/' ? '' : url.pathname.replace(/\/+$/, '')
+  return `${url.origin}${pathname}`
+}
+
 function canonicalFor(path) {
-  return `${BASE_URL}${path === '/' ? '/' : path}`
+  return normalizeCanonical(`${BASE_URL}${path}`)
 }
 
 async function fetchHtml(path) {
@@ -38,8 +44,9 @@ async function fetchHtml(path) {
   }
 
   const expectedCanonical = canonicalFor(path)
-  if (!html.includes(`rel="canonical" href="${expectedCanonical}"`)) {
-    throw new Error(`${path}: canonical ausente o incorrecta (${expectedCanonical})`)
+  const canonical = html.match(/<link rel="canonical" href="([^"]+)"/)?.[1] || ''
+  if (!canonical || normalizeCanonical(canonical) !== expectedCanonical) {
+    throw new Error(`${path}: canonical ausente o incorrecta (${canonical || 'sin canonical'}; esperada ${expectedCanonical})`)
   }
   if (!html.includes('application/ld+json')) {
     throw new Error(`${path}: JSON-LD ausente`)

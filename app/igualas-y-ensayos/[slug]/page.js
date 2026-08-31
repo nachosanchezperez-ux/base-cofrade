@@ -27,22 +27,46 @@ function eventSeoTitle(event) {
   return [event.title, event.dateParts.label, event.municipality].filter(Boolean).join(' · ')
 }
 
-function eventSeoDescription(event) {
-  const timing = event.dateParts.label
-    ? `${event.dateParts.label}${event.startTime ? ` a las ${event.startTime}` : ''}`
-    : ''
-  const steps = event.steps.length ? `Paso: ${event.steps.map((step) => step.name).join(', ')}` : ''
-  const agents = event.agents.length
-    ? `${event.agents.length === 1 ? 'Responsable' : 'Responsables'}: ${event.agents.map((agent) => agent.name).join(', ')}`
-    : ''
+function cleanSeoSentence(value) {
+  return String(value || '').trim().replace(/[.!?…]+$/u, '')
+}
 
-  return seoDescription([
-    event.summary || event.description || `${event.eventTypeLabel} de ${event.brotherhoodName}`,
-    timing,
-    event.location ? `Lugar: ${event.location}` : '',
-    steps,
-    agents,
-  ].filter(Boolean).join('. '))
+function includesSeoDetail(value, detail) {
+  if (!value || !detail) return false
+  return cleanSeoSentence(value).toLocaleLowerCase('es')
+    .includes(cleanSeoSentence(detail).toLocaleLowerCase('es'))
+}
+
+function eventSeoDescription(event) {
+  const lead = cleanSeoSentence(
+    event.summary || event.description || `${event.eventTypeLabel} de ${event.brotherhoodName}`
+  )
+  const parts = [lead]
+
+  if (event.dateParts.label && !includesSeoDetail(lead, event.dateParts.label)) {
+    parts.push(`${event.dateParts.label}${event.startTime ? ` a las ${event.startTime}` : ''}`)
+  } else if (event.startTime && !includesSeoDetail(lead, event.startTime)) {
+    parts.push(`Hora: ${event.startTime}`)
+  }
+
+  if (event.brotherhoodName && !includesSeoDetail(lead, event.brotherhoodName)) {
+    parts.push(`Hermandad: ${event.brotherhoodName}`)
+  }
+  if (event.location && !includesSeoDetail(lead, event.location)) {
+    parts.push(`Lugar: ${event.location}`)
+  }
+
+  const stepNames = event.steps.map((step) => step.name).filter(Boolean)
+  if (stepNames.length && !stepNames.every((name) => includesSeoDetail(lead, name))) {
+    parts.push(`Paso: ${stepNames.join(', ')}`)
+  }
+
+  const agentNames = event.agents.map((agent) => agent.name).filter(Boolean)
+  if (agentNames.length && !agentNames.every((name) => includesSeoDetail(lead, name))) {
+    parts.push(`${agentNames.length === 1 ? 'Responsable' : 'Responsables'}: ${agentNames.join(', ')}`)
+  }
+
+  return seoDescription(parts.map(cleanSeoSentence).filter(Boolean).join('. '))
 }
 
 export async function generateMetadata({ params }) {
