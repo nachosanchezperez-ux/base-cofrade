@@ -48,6 +48,25 @@ test('una corrección exige ficha y el texto no admite HTML', () => {
   )
 })
 
+test('una propuesta de información nueva exige al menos una fuente o un archivo', () => {
+  assert.throws(
+    () => parseContributionForm(validForm({ contribution_type: 'new_record', sources: '' })),
+    /fuente pública|archivo/i,
+  )
+
+  const documented = parseContributionForm(validForm({
+    contribution_type: 'new_record',
+    sources: 'https://example.com/fuente-oficial',
+  }))
+  assert.deepEqual(documented.sources, ['https://example.com/fuente-oficial'])
+
+  const withFile = validForm({ contribution_type: 'new_record', sources: '' })
+  withFile.set('attachments', new File([
+    '%PDF-1.7\n1 0 obj\n<< /Type /Catalog >>\nendobj\nstartxref\n0\n%%EOF',
+  ], 'documento.pdf', { type: 'application/pdf' }))
+  assert.equal(parseContributionForm(withFile).attachments.length, 1)
+})
+
 test('admite PDF como adjunto y conserva los documentos enlazados', async () => {
   const form = validForm({ contribution_type: 'media' })
   const pdf = new File(['%PDF-1.7\n1 0 obj\n<< /Type /Catalog >>\nendobj\nstartxref\n0\n%%EOF'], 'documento.pdf', { type: 'application/pdf' })
