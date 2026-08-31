@@ -79,13 +79,34 @@ function BrotherhoodCrest({ src, alt }) {
 }
 
 function BandIdentity({ src, alt, initials = '' }) {
+  const cleanLightBackground = /tres\s+ca[íi]das\s+de\s+triana/i.test(alt || '');
+
   return (
     <div className={bandStyles.identityStage} aria-label={alt || 'Identidad visual de la formación'}>
+      {cleanLightBackground ? (
+        <svg className={bandStyles.logoFilterDefs} aria-hidden="true" focusable="false">
+          <defs>
+            <filter id="band-logo-remove-light-background" colorInterpolationFilters="sRGB">
+              <feColorMatrix
+                in="SourceGraphic"
+                type="matrix"
+                values="1 0 0 0 0
+                        0 1 0 0 0
+                        0 0 1 0 0
+                        -0.333 -0.333 -0.333 0 1"
+              />
+              <feComponentTransfer>
+                <feFuncA type="linear" slope="5" intercept="-0.45" />
+              </feComponentTransfer>
+            </filter>
+          </defs>
+        </svg>
+      ) : null}
       <span className={bandStyles.identityAura} aria-hidden="true" />
-      <div className={bandStyles.logoStage}>
+      <div className={`${bandStyles.logoStage} ${cleanLightBackground ? bandStyles.logoStageClean : ''}`}>
         {src ? (
           <BrotherhoodDirectoryCrestImage
-            className={bandStyles.logo}
+            className={`${bandStyles.logo} ${cleanLightBackground ? bandStyles.logoCleanLight : ''}`}
             src={src}
             alt={alt || ''}
             width={230}
