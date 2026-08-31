@@ -1,0 +1,43 @@
+.featureCardSlot,
+.sideColumnSlot {
+  min-width: 0;
+}
+
+@media (min-width: 860px) {
+  .featureRight {
+    grid-template-columns: minmax(330px, .68fr) minmax(0, 1.32fr);
+  }
+
+  .featureRight > .featureCardSlot {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .featureRight > .sideColumnSlot {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .sideColumnSingle {
+    grid-template-rows: minmax(0, 1fr) !important;
+  }
+
+  .sideColumnSingle > * {
+    height: 100%;
+  }
+
+  .sideColumnSingle h3 {
+    font-size: 25px;
+  }
+
+  .sideColumnSingle p {
+    font-size: 14.5px;
+  }
+}
+
+@media (max-width: 859px) {
+  .featureRight,
+  .sideColumnSingle {
+    grid-template-columns: 1fr;
+  }
+}
