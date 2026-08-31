@@ -88,4 +88,6 @@ test('las igualás de Cuatrovitas, Guadalupe y Mercedes conservan datos y ausenc
   assert.match(sql, /no publica capataz ni requisitos/)
   assert.match(sql, /if call\.capataz_slug is null then/)
   assert.match(sql, /https:\/\/www\.facebook\.com\/MercedesPuertaReal\/photos\//)
+  assert.match(sql, /delete from crew_calls_20260831 call\s+where not exists/)
+  assert.match(sql, /brotherhood_entity\.status = 'published'/)
 })

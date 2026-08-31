@@ -6,6 +6,10 @@ import styles from './RelationalEntityHero.module.css';
 import polishStyles from './RelationalEntityHeroPolish.module.css';
 import brotherhoodStyles from './RelationalEntityHeroBrotherhood.module.css';
 import bandStyles from './RelationalEntityHeroBand.module.css';
+import {
+  isLightLogoBackgroundColor,
+  normalizeLogoBackgroundColor,
+} from '@/lib/bands/logo-background';
 
 function Breadcrumb({ items = [] }) {
   if (!items.length) return null;
@@ -83,8 +87,10 @@ function isOpaqueRasterLogo(src = '') {
   return path.endsWith('.jpg') || path.endsWith('.jpeg');
 }
 
-function BandIdentity({ src, alt, initials = '' }) {
+function BandIdentity({ src, alt, initials = '', backgroundColor = '' }) {
   const opaqueRaster = isOpaqueRasterLogo(src);
+  const resolvedBackground = normalizeLogoBackgroundColor(backgroundColor);
+  const lightBackground = resolvedBackground && isLightLogoBackgroundColor(resolvedBackground);
 
   return (
     <div className={bandStyles.identityStage} aria-label={alt || 'Identidad visual de la formación'}>
@@ -108,7 +114,12 @@ function BandIdentity({ src, alt, initials = '' }) {
         </svg>
       ) : null}
       <span className={bandStyles.identityAura} aria-hidden="true" />
-      <div className={`${bandStyles.logoStage} ${opaqueRaster ? bandStyles.logoStageOpaqueRaster : ''}`}>
+      <div
+        className={`${bandStyles.logoStage} ${opaqueRaster ? bandStyles.logoStageOpaqueRaster : ''}`}
+        data-custom-background={resolvedBackground ? 'true' : undefined}
+        data-light-background={lightBackground ? 'true' : undefined}
+        style={resolvedBackground ? { '--band-logo-background': resolvedBackground } : undefined}
+      >
         {src ? (
           <BrotherhoodDirectoryCrestImage
             className={`${bandStyles.logo} ${opaqueRaster ? bandStyles.logoOpaqueRaster : ''}`}
@@ -171,6 +182,7 @@ export default function RelationalEntityHero({
         src={media.crestSrc}
         alt={media.crestAlt}
         initials={media.initials}
+        backgroundColor={media.logoBackgroundColor}
       />
       {heading}
     </div>

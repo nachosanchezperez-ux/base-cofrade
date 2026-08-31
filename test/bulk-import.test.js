@@ -70,6 +70,30 @@ test('bloquea columnas de referencia no previstas', () => {
   assert.match(result.errors.join(' '), /solo puede ser id o entity_id/)
 })
 
+test('normaliza y valida el fondo del logotipo en cargas masivas de Bandas', () => {
+  const valid = validateBulkImportRecord({
+    table: 'bands',
+    operation: 'upsert',
+    data: { entity_id: '11111111-1111-1111-1111-111111111111', logo_background_color: '#a1b2c3' },
+  })
+  assert.deepEqual(valid.errors, [])
+  assert.equal(valid.record.data.logo_background_color, '#A1B2C3')
+
+  const withoutBackground = validateBulkImportRecord({
+    table: 'bands',
+    operation: 'upsert',
+    data: { entity_id: '11111111-1111-1111-1111-111111111111', logo_background_color: '' },
+  })
+  assert.equal(withoutBackground.record.data.logo_background_color, null)
+
+  const invalid = validateBulkImportRecord({
+    table: 'bands',
+    operation: 'upsert',
+    data: { entity_id: '11111111-1111-1111-1111-111111111111', logo_background_color: '#12345G' },
+  })
+  assert.match(invalid.errors.join(' '), /#RRGGBB/)
+})
+
 test('exige una clave estable para los upsert', () => {
   const result = validateBulkImportRecord({
     table: 'entities',

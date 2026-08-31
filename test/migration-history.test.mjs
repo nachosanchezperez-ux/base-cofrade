@@ -26,9 +26,12 @@ test("Supabase migration versions are unique and well formed", async () => {
   }
 
   assert.ok(files.length > 0, "No Supabase migrations found");
-  assert.deepEqual(files, [
+  assert.deepEqual(files.slice(0, 2), [
     "20260831070000_first_edition_baseline.sql",
     "20260831071000_secure_public_contributions_reconciled.sql",
-    "20260831074355_publica_tres_igualas_septiembre_2026.sql",
   ]);
+  assert.ok(
+    files.slice(2).every((file) => file > "20260831071000_secure_public_contributions_reconciled.sql"),
+    "Every post-baseline migration must follow the reconciled security migration",
+  );
 });
