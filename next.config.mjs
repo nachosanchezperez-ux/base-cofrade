@@ -53,6 +53,16 @@ const nextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'www.virgendelosreyes.es',
+        pathname: '/wp-content/uploads/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.bandacruzroja.es',
+        pathname: '/wp-content/uploads/**',
+      },
+      {
+        protocol: 'https',
         hostname: 'm.media-amazon.com',
         pathname: '/images/**',
       },
@@ -70,6 +80,16 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'image-cdn-fa.spotifycdn.com',
         pathname: '/image/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'i.scdn.co',
+        pathname: '/image/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'i.ibb.co',
+        pathname: '/**',
       },
     ],
   },

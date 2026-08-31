@@ -26,16 +26,27 @@ test('la Marcha del día resuelve interpretación, lanzamiento y portada publica
   assert.match(component, /Ver la discografía/)
 })
 
+test('la Home sustituye cualquier imagen editorial rota por un fallback controlado', () => {
+  assert.match(component, /function HomeImage/)
+  assert.match(component, /onError=\{\(\) => setFailed\(true\)\}/)
+  assert.match(component, /fallback="♪"/)
+  assert.match(css, /\.visualFallback/)
+})
+
 test('el Hilo para descubrir mantiene la concordancia en singular', () => {
   assert.match(loader, /agree\(count, 'queda conectado', 'quedan conectados'\)/)
   assert.doesNotMatch(loader, /\$\{plural\(count, 'paso', 'pasos'\)\} quedan conectados/)
 })
 
-test('separa el Dato Cofrade de la historia protagonista diaria', () => {
+test('separa el contenido editorial estático y lo combina con hilos que rotan por fecha', () => {
   assert.match(loader, /fact: null/)
   assert.match(loader, /content_type === 'fact'/)
-  assert.match(loader, /return \{ ephemeris, editorial, fact, discovery, march \}/)
-  assert.match(component, /const featured = content\?\.ephemeris \|\| content\?\.editorial \|\| content\?\.fact/)
+  assert.match(loader, /ephemeris: featureCardOrNull\(ephemeris\)/)
+  assert.match(loader, /march: publicMarch/)
+  assert.match(component, /function rotatingEditorial/)
+  assert.match(component, /const serial = dailySerial\(today\)/)
+  assert.match(component, /content\?\.discoverySecondary/)
+  assert.match(component, /const featured = content\?\.ephemeris/)
   assert.match(component, /const secondaryCards/)
   assert.match(component, /styles\.sideColumn/)
 })

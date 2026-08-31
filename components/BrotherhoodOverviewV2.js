@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import CofradeTypeBadges from '@/components/CofradeTypeBadges'
+import { publicText } from '@/lib/supabase/public-entity-page'
 import styles from './BrotherhoodOverviewV2.module.css'
 
 function verifiedLabel(value = '') {
@@ -33,28 +34,31 @@ function periodLabel(item) {
 export default function BrotherhoodOverviewV2({ brotherhood, heroFactLabels = [] }) {
   const seat = brotherhood.sedeDetalle
   const types = brotherhood.tipos || []
-  const members = brotherhood.datosJornada?.totalHermanos || ''
+  const members = publicText(brotherhood.datosJornada?.totalHermanos)
   const titularCount = brotherhood.imagenes?.length || 0
   const mapUrl = directionsUrl(seat)
   const verified = verifiedLabel(seat?.horarioVerificadoEn)
   const heroFacts = new Set(heroFactLabels)
 
   const identityFacts = [
-    brotherhood.fundacion ? { label: 'Fundación', value: brotherhood.fundacion } : null,
+    publicText(brotherhood.fundacion) ? { label: 'Fundación', value: publicText(brotherhood.fundacion) } : null,
     members ? { label: 'Hermanos', value: members } : null,
     titularCount ? { label: 'Titulares', value: String(titularCount) } : null,
   ].filter((fact) => fact && !heroFacts.has(fact.label))
   const showIdentity = identityFacts.length > 0 || types.length > 1
+  const showSeat = Boolean(publicText(seat?.nombre))
+
+  if (!showIdentity && !showSeat) return null
 
   return (
     <section className={styles.section} id="resumen">
       <div className={`shell ${styles.shell}`}>
         <header className={styles.header}>
           <span className={styles.eyebrow}>Información práctica</span>
-          <h2>Sede y visita</h2>
+          <h2>{showSeat ? 'Sede y visita' : 'Datos principales'}</h2>
         </header>
 
-        <div className={`${styles.grid} ${showIdentity && seat?.nombre ? '' : styles.gridSingle}`}>
+        <div className={`${styles.grid} ${showIdentity && showSeat ? '' : styles.gridSingle}`}>
           {showIdentity ? (
             <article className={styles.identityCard}>
               <div className={styles.cardTopline}>
@@ -75,7 +79,7 @@ export default function BrotherhoodOverviewV2({ brotherhood, heroFactLabels = []
             </article>
           ) : null}
 
-          {seat?.nombre ? (
+          {showSeat ? (
             <article className={styles.seatCard}>
               <div className={styles.cardTopline}>
                 <span>Ubicación</span>
@@ -85,8 +89,8 @@ export default function BrotherhoodOverviewV2({ brotherhood, heroFactLabels = []
               <div className={styles.seatIdentity}>
                 <span className={styles.pin} aria-hidden="true"><i /></span>
                 <div>
-                  <h3>{seat.nombre}</h3>
-                  {seat.direccion ? <p>{seat.direccion}</p> : null}
+                  <h3>{publicText(seat.nombre)}</h3>
+                  {publicText(seat.direccion) ? <p>{publicText(seat.direccion)}</p> : null}
                 </div>
               </div>
 

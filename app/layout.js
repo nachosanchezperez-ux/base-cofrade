@@ -72,8 +72,9 @@ export default function RootLayout({ children }) {
     <html lang="es">
       <body id="hc-app">
         <JsonLd data={websiteJsonLd} />
+        <a className="skip-link" href="#main-content">Saltar al contenido</a>
         <HiloHeader />
-        <main>{children}</main>
+        <main id="main-content" tabIndex={-1}>{children}</main>
         <HiloFooter />
         <HiloAnalytics />
       </body>

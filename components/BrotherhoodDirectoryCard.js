@@ -20,7 +20,11 @@ export default function BrotherhoodDirectoryCard({ hermandad, contextLabel }) {
   const placeLabel = [localityLabel(hermandad), hermandad.barrio].filter(Boolean).join(' · ')
 
   return (
-    <Link href={`/hermandades/${hermandad.slug}`} className={`${styles.item} ${contractStyles.contract}`}>
+    <Link
+      href={`/hermandades/${hermandad.slug}`}
+      className={`${styles.item} ${contractStyles.contract}`}
+      aria-label={`Abrir ficha de ${name}`}
+    >
       <span
         className={`${styles.crestWrap} ${contractStyles.media} ${crest ? crestStyles.crestMedia : crestStyles.fallbackMedia}`}
         data-media-overflow={crest ? 'visible' : undefined}
@@ -30,6 +34,8 @@ export default function BrotherhoodDirectoryCard({ hermandad, contextLabel }) {
             className={`${styles.crestImage} ${crestStyles.crestImage}`}
             src={crest}
             alt={`Escudo de ${name}`}
+            fallback={name.slice(0, 2).toUpperCase()}
+            fallbackClassName={`${styles.monogram} ${crestStyles.monogram}`}
           />
         ) : (
           <span className={`${styles.monogram} ${crestStyles.monogram}`}>{name.slice(0, 2).toUpperCase()}</span>
@@ -41,8 +47,8 @@ export default function BrotherhoodDirectoryCard({ hermandad, contextLabel }) {
         {contextLabel || hermandad.diaSalida ? (
           <span className={`${styles.context} ${enhancementStyles.contextAfterName}`}>{contextLabel || hermandad.diaSalida}</span>
         ) : null}
-        <span className={styles.see}>{hermandad.sede || 'Sede canónica por documentar'}</span>
-        <span className={styles.place}>{placeLabel}</span>
+        {hermandad.sede ? <span className={styles.see}>{hermandad.sede}</span> : null}
+        {placeLabel ? <span className={styles.place}>{placeLabel}</span> : null}
         <span className={styles.types}>
           <CofradeTypeBadges tipos={hermandad.tipos || []} compact />
         </span>

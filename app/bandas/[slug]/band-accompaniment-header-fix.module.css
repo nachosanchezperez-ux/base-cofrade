@@ -1,0 +1,64 @@
+.headerScope {
+  display: contents;
+}
+
+/*
+ * Jornada/tipo + periodo deben leerse como dos datos breves y estables.
+ * El periodo reserva únicamente su anchura real y nunca parte «Desde» o el año.
+ */
+.headerScope :global(#acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:first-child,
+.headerScope :global(#proximos-acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:first-child,
+.headerScope :global(#glorias) > :global(.shell) > div:nth-of-type(3) > section > div > article > div:first-child {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: minmax(0, 1fr) max-content;
+  gap: 8px 14px;
+  align-items: start;
+}
+
+.headerScope :global(#acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:first-child > span,
+.headerScope :global(#proximos-acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:first-child > span,
+.headerScope :global(#glorias) > :global(.shell) > div:nth-of-type(3) > section > div > article > div:first-child > span {
+  min-width: 0;
+  max-width: none;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+  hyphens: none !important;
+  text-wrap: balance;
+}
+
+.headerScope :global(#acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:first-child > strong,
+.headerScope :global(#proximos-acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:first-child > strong,
+.headerScope :global(#glorias) > :global(.shell) > div:nth-of-type(3) > section > div > article > div:first-child > strong {
+  min-width: max-content;
+  max-width: none;
+  overflow-wrap: normal !important;
+  word-break: keep-all !important;
+  hyphens: none !important;
+  white-space: nowrap !important;
+  text-align: right;
+}
+
+@media (max-width: 680px) {
+  .headerScope :global(#acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:first-child,
+  .headerScope :global(#proximos-acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:first-child,
+  .headerScope :global(#glorias) > :global(.shell) > div:nth-of-type(3) > section > div > article > div:first-child {
+    gap: 7px 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .headerScope :global(#acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:first-child,
+  .headerScope :global(#proximos-acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:first-child,
+  .headerScope :global(#glorias) > :global(.shell) > div:nth-of-type(3) > section > div > article > div:first-child {
+    grid-template-columns: 1fr;
+  }
+
+  .headerScope :global(#acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:first-child > strong,
+  .headerScope :global(#proximos-acompanamientos) > :global(.shell) > div:nth-of-type(2) > article > div:first-child > strong,
+  .headerScope :global(#glorias) > :global(.shell) > div:nth-of-type(3) > section > div > article > div:first-child > strong {
+    min-width: 0;
+    justify-self: start;
+    text-align: left;
+  }
+}

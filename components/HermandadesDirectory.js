@@ -78,12 +78,14 @@ export default function HermandadesDirectory({ hermandades }) {
         </div>
 
         <div className={styles.searchPanel}>
-          <label className={styles.searchRow}>
+          <label className={styles.searchRow} htmlFor="brotherhood-directory-search">
             <span className="sr-only">Buscar hermandad</span>
             <input
+              id="brotherhood-directory-search"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Ej. El Baratillo, Cantillana, Capilla de la Piedad…"
+              aria-label="Buscar en el directorio de hermandades"
             />
             <span className={styles.searchIcon} aria-hidden="true">⌕</span>
           </label>
@@ -121,7 +123,7 @@ export default function HermandadesDirectory({ hermandades }) {
           </div>
         </div>
 
-        <div className={styles.resultHead}>
+        <div className={styles.resultHead} aria-live="polite" aria-atomic="true">
           <div>
             <strong>{filtered.length} {filtered.length === 1 ? 'hermandad' : 'hermandades'}</strong>
             <span>Sevilla capital y provincia</span>

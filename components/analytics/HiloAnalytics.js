@@ -31,6 +31,7 @@ const ENTITY_ROUTES = {
   marchas: 'march',
   autores: 'agent',
   acontecimientos: 'event',
+  'igualas-y-ensayos': 'crew_event',
   lugares: 'place',
 }
 

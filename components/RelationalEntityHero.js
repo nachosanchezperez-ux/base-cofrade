@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import BrotherhoodDirectoryCrestImage from './BrotherhoodDirectoryCrestImage';
 import RelationalEntityHeroMedia from './RelationalEntityHeroMedia';
 import styles from './RelationalEntityHero.module.css';
 import polishStyles from './RelationalEntityHeroPolish.module.css';
@@ -83,14 +84,17 @@ function BandIdentity({ src, alt, initials = '' }) {
       <span className={bandStyles.identityAura} aria-hidden="true" />
       <div className={bandStyles.logoStage}>
         {src ? (
-          <Image
+          <BrotherhoodDirectoryCrestImage
             className={bandStyles.logo}
             src={src}
             alt={alt || ''}
-            width={360}
-            height={320}
-            sizes="(max-width: 620px) 210px, (max-width: 900px) 270px, 340px"
+            width={230}
+            height={236}
+            sizes="(max-width: 390px) 184px, (max-width: 620px) 200px, 230px"
             priority
+            maxScale={2.4}
+            fallback={initials || 'HC'}
+            fallbackClassName={bandStyles.initials}
           />
         ) : (
           <span className={bandStyles.initials} aria-hidden="true">{initials || 'HC'}</span>
@@ -135,6 +139,15 @@ export default function RelationalEntityHero({
       <BrotherhoodCrest src={media.crestSrc} alt={media.crestAlt} />
       {heading}
     </div>
+  ) : isBand ? (
+    <div className={bandStyles.identityLockup}>
+      <BandIdentity
+        src={media.crestSrc}
+        alt={media.crestAlt}
+        initials={media.initials}
+      />
+      {heading}
+    </div>
   ) : heading;
 
   return (
@@ -146,8 +159,8 @@ export default function RelationalEntityHero({
       <div className="shell">
         <Breadcrumb items={breadcrumbItems} />
 
-        <div className={`${styles.grid} ${polishStyles.grid} ${isBand ? bandStyles.bandGrid : ''}`}>
-          <div className={`${styles.copy} ${polishStyles.copy} ${isBand ? bandStyles.bandCopy : ''}`}>
+        <div className={`${styles.grid} ${polishStyles.grid} ${isBand ? `${bandStyles.bandGrid} ${bandStyles.bandGridIdentityOnly}` : ''}`}>
+          <div className={`${styles.copy} ${polishStyles.copy} ${isBand ? `${bandStyles.bandCopy} ${bandStyles.bandCopyIdentityOnly}` : ''}`}>
             {identityHeading}
 
             <ParentRelation relation={relation} />
@@ -166,15 +179,9 @@ export default function RelationalEntityHero({
             ) : null}
           </div>
 
-          {isBand ? (
-            <BandIdentity
-              src={media.crestSrc}
-              alt={media.crestAlt}
-              initials={media.initials}
-            />
-          ) : (
+          {!isBand ? (
             <RelationalEntityHeroMedia variant={variant} {...media} />
-          )}
+          ) : null}
         </div>
       </div>
     </section>

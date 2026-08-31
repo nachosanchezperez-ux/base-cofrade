@@ -176,6 +176,10 @@
 .featurePhoto figcaption span { color: rgb(255 255 255 / 64%); font-size: 9px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
 .featurePhoto figcaption strong { margin-top: 5px; color: #fff; font-size: clamp(24px, 3vw, 36px); line-height: 1.05; }
 .featurePhoto figcaption small { margin-top: 9px; color: rgb(255 255 255 / 55%); font-size: 9px; }
+.featurePhotoFallback { display: grid; width: 100%; height: 100%; align-content: center; justify-items: center; gap: 16px; color: #fff; background: radial-gradient(circle at 50% 42%, rgb(255 255 255 / 15%), transparent 36%), linear-gradient(145deg, var(--band-primary), var(--band-secondary)); }
+.featurePhotoFallback small { color: rgb(255 255 255 / 72%); font-size: 11px; font-weight: 750; letter-spacing: .12em; text-transform: uppercase; }
+.featurePhotoLogo { width: min(42%, 220px); height: auto; max-height: 240px; object-fit: contain; }
+.featurePhotoInitials { display: grid; width: 136px; height: 136px; place-items: center; border: 1px solid rgb(255 255 255 / 26%); border-radius: 50%; color: #fff; background: rgb(255 255 255 / 9%); font-size: 42px; font-weight: 850; }
 .overviewCopy { display: flex; min-width: 0; flex-direction: column; justify-content: center; }
 .overviewCopy .sectionHeading { margin-bottom: 24px; }
 .overviewCopy .sectionHeading h2 { max-width: 610px; font-size: clamp(38px, 4.5vw, 58px); }
@@ -255,6 +259,8 @@
 .relationshipIdentity h3 { margin-top: 0; }
 .relationshipStep { display: grid; gap: 5px; margin: 0 20px; padding: 14px 0 16px; border-top: 1px solid var(--band-line); }
 .relationshipStep span { color: var(--band-muted); font-size: 8px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+.relationshipStep .relationshipStepType { min-height: 0; padding: 0; border: 0; border-radius: 0; color: var(--band-primary); background: none; font-size: 13px; font-weight: 800; letter-spacing: 0; line-height: 1.2; text-transform: none; }
+.relationshipStepPosition { color: var(--band-muted); font-size: 10px; font-weight: 600; line-height: 1.4; }
 .relationshipStep strong { color: var(--band-secondary); font-size: 12px; font-weight: 600; line-height: 1.45; }
 .relationshipStep a { color: var(--band-secondary); font-size: 12px; font-weight: 700; line-height: 1.45; }
 .relationshipStep a:hover { color: var(--band-primary); }
@@ -323,6 +329,10 @@
 .premiereSection .sectionHeading p { color: rgb(255 255 255 / 62%); }
 .premiereYear { margin-top: 45px; }
 .premiereYearHeading { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; margin-bottom: 13px; }
+.premiereYearHeading { cursor: pointer; list-style: none; }
+.premiereYearHeading::-webkit-details-marker { display: none; }
+.premiereYearHeading b { margin: 0 0 6px 2px; color: #fff; transition: transform .18s ease; }
+.premiereYear[open] .premiereYearHeading b { transform: rotate(45deg); }
 .premiereYearHeading h3 { margin: 0; color: #fff; font-size: 44px; letter-spacing: -.045em; }
 .premiereYearHeading span { margin-bottom: 6px; color: rgb(255 255 255 / 48%); font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
 .premiereGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }

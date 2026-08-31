@@ -1,12 +1,79 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
+import { useState } from 'react'
 import HomeMarchPlayer from '@/components/HomeMarchPlayer'
 import styles from './HomeTodayV2.module.css'
 import polishStyles from './HomeResponsivePolish.module.css'
 import mobileFixStyles from './HomeTodayMobileFix.module.css'
+import dynamicStyles from './HomeTodayDynamic.module.css'
+
+const MONTH_INDEX = {
+  enero: 0,
+  febrero: 1,
+  marzo: 2,
+  abril: 3,
+  mayo: 4,
+  junio: 5,
+  julio: 6,
+  agosto: 7,
+  septiembre: 8,
+  octubre: 9,
+  noviembre: 10,
+  diciembre: 11,
+}
 
 function isSvg(path = '') {
   return String(path).toLowerCase().endsWith('.svg')
+}
+
+function normalized(value = '') {
+  return String(value)
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+}
+
+function dailySerial(value = '') {
+  const normalizedLabel = normalized(value)
+  const match = normalizedLabel.match(/(\d{1,2}) de ([a-z]+) de (\d{4})/)
+  if (match && MONTH_INDEX[match[2]] !== undefined) {
+    return Math.floor(Date.UTC(Number(match[3]), MONTH_INDEX[match[2]], Number(match[1])) / 86400000)
+  }
+
+  return [...normalizedLabel].reduce((total, char) => ((total * 31) + char.charCodeAt(0)) >>> 0, 7)
+}
+
+function uniqueCards(cards = []) {
+  const seen = new Set()
+  return cards.filter((card) => {
+    if (!card) return false
+    const key = `${card.kind || 'card'}:${card.id || card.href || card.title}`
+    if (seen.has(key)) return false
+    seen.add(key)
+    return true
+  })
+}
+
+function rotatingEditorial(content, serial) {
+  if (content?.pinnedEditorialType === 'fact' && content.fact) return content.fact
+  if (content?.pinnedEditorialType === 'curiosity' && content.editorial) return content.editorial
+
+  const candidates = serial % 2
+    ? [content?.editorial, content?.fact]
+    : [content?.fact, content?.editorial]
+  return candidates.find(Boolean) || null
+}
+
+function HomeImage({ fallback = '•', ...props }) {
+  const [failed, setFailed] = useState(false)
+
+  if (failed) {
+    return <span className={styles.visualFallback} aria-hidden="true">{fallback}</span>
+  }
+
+  return <Image {...props} onError={() => setFailed(true)} />
 }
 
 function CardVisual({ visual, featured = false }) {
@@ -19,7 +86,7 @@ function CardVisual({ visual, featured = false }) {
       title={photo && visual.credit ? visual.credit : undefined}
       data-home-visual-kind={visual.kind || 'identity'}
     >
-      <Image
+      <HomeImage
         src={visual.path}
         alt={visual.alt || ''}
         fill
@@ -27,6 +94,7 @@ function CardVisual({ visual, featured = false }) {
         className={photo ? styles.visualPhotoImage : styles.visualIdentityImage}
         style={photo && visual.focusPosition ? { objectPosition: visual.focusPosition } : undefined}
         unoptimized={isSvg(visual.path)}
+        fallback={visual.alt?.trim()?.charAt(0)?.toUpperCase() || '•'}
       />
     </div>
   )
@@ -49,16 +117,23 @@ function RelationshipTrail({ value }) {
 }
 
 function MusicVisual({ march }) {
+  const bandLogoPath = march.bandLogoPath || ''
+  const visualPath = bandLogoPath || march.coverImagePath || ''
+  const visualAlt = bandLogoPath
+    ? march.bandLogoAlt || `Logotipo de ${march.performedBy || 'la banda intérprete'}`
+    : march.coverImageAlt || ''
+
   return (
     <div className={styles.musicVisual}>
-      {march.coverImagePath ? (
-        <Image
-          src={march.coverImagePath}
-          alt={march.coverImageAlt || ''}
+      {visualPath ? (
+        <HomeImage
+          src={visualPath}
+          alt={visualAlt}
           fill
           sizes="(max-width: 859px) 74px, 112px"
-          className={styles.musicCover}
-          unoptimized={isSvg(march.coverImagePath)}
+          className={bandLogoPath ? styles.visualIdentityImage : styles.musicCover}
+          unoptimized={isSvg(visualPath)}
+          fallback="♪"
         />
       ) : (
         <span aria-hidden="true">♪</span>
@@ -68,17 +143,24 @@ function MusicVisual({ march }) {
 }
 
 export default function HomeTodayV2({ today, content }) {
-  const featured = content?.ephemeris || content?.editorial || content?.fact || null
-  const secondaryCards = [
-    content?.fact !== featured ? content?.fact : null,
+  const serial = dailySerial(today)
+  const editorial = rotatingEditorial(content, serial)
+  const dailyCards = uniqueCards([
+    content?.ephemeris,
+    editorial,
     content?.discovery,
-  ].filter(Boolean)
-  const hasContent = Boolean(featured) || secondaryCards.length > 0 || Boolean(content?.march)
+    content?.discoverySecondary,
+  ])
+  const featured = content?.ephemeris
+    || (dailyCards.length ? dailyCards[serial % dailyCards.length] : null)
+  const secondaryCards = dailyCards.filter((card) => card !== featured)
+  const featureRight = Boolean(featured && secondaryCards.length && !(serial % 2))
+  const hasContent = dailyCards.length > 0 || Boolean(content?.march)
   if (!hasContent) return null
 
   const renderCard = (card, { isFeatured = false } = {}) => (
     <article
-      className={`${styles.card} ${isFeatured ? `${styles.featureCard} ${mobileFixStyles.featureCard}` : `${styles.compactCard} ${polishStyles.todayCard}`} ${card.kind === 'discovery' ? styles.discoveryCard : ''} ${card.visual?.path ? `${styles.cardWithVisual} ${isFeatured ? '' : polishStyles.todayCardWithVisual}` : ''}`}
+      className={`${styles.card} ${isFeatured ? `${styles.featureCard} ${mobileFixStyles.featureCard} ${dynamicStyles.featureCardSlot}` : `${styles.compactCard} ${polishStyles.todayCard}`} ${card.kind === 'discovery' ? styles.discoveryCard : ''} ${card.visual?.path ? `${styles.cardWithVisual} ${isFeatured ? '' : polishStyles.todayCardWithVisual}` : ''}`}
       key={`${card.kind}-${card.id}`}
     >
       <span className={`${styles.icon} ${polishStyles.todayIcon} ${isFeatured ? mobileFixStyles.featureIcon : ''}`} aria-hidden="true">{card.icon}</span>
@@ -101,19 +183,23 @@ export default function HomeTodayV2({ today, content }) {
   )
 
   return (
-    <section className={`${styles.section} ${polishStyles.todaySection}`} id="hoy">
+    <section
+      className={`${styles.section} ${polishStyles.todaySection}`}
+      id="hoy"
+      data-daily-layout={featureRight ? 'lead-right' : 'lead-left'}
+    >
       <div className="shell">
         <header className={`${styles.header} ${polishStyles.todayHeader}`}>
           <span className={styles.date}>{today}</span>
           <h2>Hoy en Hilo Cofrade</h2>
-          <p>Una selección diaria para descubrir historias, relaciones, datos y música de la enciclopedia.</p>
+          <p>Una selección que cambia cada día para descubrir historias, relaciones, datos y música de la enciclopedia.</p>
         </header>
 
         {featured || secondaryCards.length ? (
-          <div className={`${styles.editorialGrid} ${polishStyles.todayGrid}`}>
+          <div className={`${styles.editorialGrid} ${polishStyles.todayGrid} ${featureRight ? dynamicStyles.featureRight : ''}`}>
             {featured ? renderCard(featured, { isFeatured: true }) : null}
             {secondaryCards.length ? (
-              <div className={styles.sideColumn}>
+              <div className={`${styles.sideColumn} ${dynamicStyles.sideColumnSlot} ${secondaryCards.length === 1 ? dynamicStyles.sideColumnSingle : ''}`}>
                 {secondaryCards.map((card) => renderCard(card))}
               </div>
             ) : null}

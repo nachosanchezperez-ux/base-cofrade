@@ -10,6 +10,7 @@ const sections = [
   ['inicio', 'Inicio'],
   ['tiradelhilo', 'Tira del hilo'],
   ['extraordinarias', 'Extraordinarias'],
+  ['igualas-ensayos', 'Igualás y ensayos'],
   ['hoy', 'Hoy'],
 ];
 
@@ -36,6 +37,7 @@ function routeActive(pathname) {
   if (pathname === '/') return 'inicio';
   if (pathname.startsWith('/pregunta')) return 'tiradelhilo';
   if (pathname.startsWith('/extraordinarias')) return 'extraordinarias';
+  if (pathname.startsWith('/igualas-y-ensayos')) return 'igualas-ensayos';
   return '';
 }
 
@@ -139,6 +141,7 @@ export default function HiloHeader() {
 
   const hrefFor = (id) => {
     if (id === 'extraordinarias') return '/extraordinarias';
+    if (id === 'igualas-ensayos') return '/igualas-y-ensayos';
     return pathname === '/' ? `#${id}` : `/#${id}`;
   };
   const isDirectoryActive = directoryLinks.some(([href]) => pathname.startsWith(href));
