@@ -1,5 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Hilo Cofrade">
-  <rect width="64" height="64" rx="14" fill="#ffffff"/>
-  <path d="M10 32H40" fill="none" stroke="#b71f37" stroke-width="6" stroke-linecap="round"/>
-  <circle cx="51" cy="32" r="5" fill="#b71f37"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<rect x="48" y="48" width="416" height="416" rx="96" fill="#112339"/>
+<line x1="166" y1="256" x2="346" y2="256" stroke="#B01B32" stroke-width="26" stroke-linecap="round"/>
+<circle cx="166" cy="256" r="34" fill="#B01B32"/>
+<circle cx="346" cy="256" r="34" fill="#B01B32"/>
 </svg>
