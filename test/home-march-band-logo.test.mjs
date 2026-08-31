@@ -22,8 +22,8 @@ test('la marcha del día prioriza el escudo de la banda frente a la portada', ()
   assert.match(component, /bandLogoPath \? styles\.visualIdentityImage : styles\.musicCover/)
 })
 
-test('el cambio de identidad visual invalida la caché pública de Home', () => {
+test('la identidad musical conserva una caché pública versionada junto al contrato diario', () => {
   const snapshot = read('lib/supabase/home-snapshot.js')
 
-  assert.match(snapshot, /hilo-cofrade-home-public-snapshot-v10/)
+  assert.match(snapshot, /hilo-cofrade-home-public-snapshot-v12/)
 })
