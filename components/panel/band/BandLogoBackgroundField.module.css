@@ -1,0 +1,156 @@
+.field {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: minmax(0, 1fr) minmax(210px, 280px);
+  gap: 24px;
+  align-items: stretch;
+  padding: 20px;
+  border: 1px solid var(--panel-line);
+  border-radius: 14px;
+  background: var(--panel-soft);
+}
+
+.controls {
+  display: grid;
+  align-content: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.hexField {
+  display: grid;
+  gap: 8px;
+}
+
+.hexField > span:first-child,
+.previewWrap > span {
+  color: var(--panel-navy);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.inputRow {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 210px);
+  gap: 10px;
+}
+
+.inputRow input {
+  min-width: 0;
+}
+
+.colorPicker {
+  width: 48px;
+  height: 43px;
+  padding: 4px;
+  cursor: pointer;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.actions button {
+  min-height: 38px;
+  padding: 0 14px;
+  border: 1px solid var(--panel-line);
+  border-radius: 9px;
+  color: var(--panel-navy);
+  background: #fff;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.actions button:disabled {
+  opacity: .45;
+  cursor: default;
+}
+
+.actions button:focus-visible,
+.inputRow input:focus-visible {
+  outline: 3px solid rgb(18 58 103 / 28%);
+  outline-offset: 2px;
+}
+
+.help,
+.error,
+.previewWrap small {
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.help,
+.previewWrap small {
+  color: var(--panel-muted);
+}
+
+.error {
+  color: #a3132b;
+  font-weight: 700;
+}
+
+.previewWrap {
+  display: grid;
+  gap: 9px;
+}
+
+.preview {
+  position: relative;
+  display: grid;
+  min-height: 190px;
+  overflow: hidden;
+  place-items: center;
+  border: 1px solid rgb(15 39 66 / 10%);
+  border-radius: 18px;
+  background: linear-gradient(145deg, #173552, #0c2137);
+}
+
+.preview[data-custom-background='true'] {
+  border-color: rgb(255 255 255 / 22%);
+  background: var(--preview-logo-background);
+}
+
+.preview[data-light-background='true'] {
+  border-color: #aeb8c3;
+}
+
+.logo {
+  width: auto;
+  max-width: 86%;
+  height: auto;
+  max-height: 168px;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 20px rgb(0 0 0 / 22%));
+}
+
+.initials {
+  display: grid;
+  width: 112px;
+  height: 112px;
+  place-items: center;
+  border: 1px solid rgb(255 255 255 / 24%);
+  border-radius: 50%;
+  color: #fff;
+  background: rgb(0 0 0 / 12%);
+  font-size: 30px;
+  font-weight: 800;
+}
+
+@media (max-width: 720px) {
+  .field {
+    grid-template-columns: 1fr;
+    padding: 16px;
+  }
+
+  .inputRow {
+    grid-template-columns: 48px minmax(0, 1fr);
+  }
+
+  .preview {
+    min-height: 180px;
+  }
+}

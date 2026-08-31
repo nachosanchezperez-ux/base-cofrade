@@ -91,6 +91,17 @@
   overflow: visible;
 }
 
+.logoStage[data-custom-background='true'] {
+  border: 1px solid rgba(255, 255, 255, .2);
+  border-radius: 28px;
+  background: var(--band-logo-background);
+  box-shadow: 0 24px 54px rgba(0, 0, 0, .2);
+}
+
+.logoStage[data-light-background='true'] {
+  border-color: rgba(15, 39, 66, .28);
+}
+
 .logo {
   width: 100%;
   height: 100%;

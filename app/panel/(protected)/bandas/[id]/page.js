@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { notFound, redirect } from 'next/navigation'
 import PanelFormGroup from '@/components/panel/PanelFormGroup'
+import BandLogoBackgroundField from '@/components/panel/band/BandLogoBackgroundField'
 import { requirePanelUser } from '@/lib/panel/auth'
 import { getBandEditorData } from '@/lib/panel/data'
 import {
@@ -109,6 +110,12 @@ export default async function BandEditorPage({ params, searchParams }) {
           >
             <label><span>Color principal</span><input name="primary_color" defaultValue={data.band?.primary_color || ''} placeholder="#63358B" /></label>
             <label><span>Color secundario</span><input name="secondary_color" defaultValue={data.band?.secondary_color || ''} placeholder="#29272C" /></label>
+            <BandLogoBackgroundField
+              initialColor={data.band?.logo_background_color || ''}
+              logoSrc={data.band?.logo_path || ''}
+              logoAlt={`Logotipo de ${displayName}`}
+              initials={displayName.slice(0, 2).toUpperCase()}
+            />
             <label className={styles.fieldWide}><span>Ruta pública del logotipo</span><input name="logo_path" defaultValue={data.band?.logo_path || ''} /></label>
             <label className={styles.fieldWide}><span>Ruta pública de la fotografía principal</span><input name="hero_image_path" defaultValue={data.band?.hero_image_path || ''} /></label>
             <label className={styles.fieldWide}><span>Descripción accesible de la fotografía</span><input name="hero_image_alt" defaultValue={data.band?.hero_image_alt || ''} /></label>

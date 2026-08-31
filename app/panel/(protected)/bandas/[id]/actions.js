@@ -5,6 +5,7 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
+import { isValidLogoBackgroundColor, normalizeLogoBackgroundColor } from '@/lib/bands/logo-background'
 
 const UUID_PATTERN = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i
 const STATUSES = new Set(['draft', 'review', 'published', 'archived'])
@@ -56,6 +57,12 @@ function color(formData, name) {
   const candidate = nullable(formData, name)
   if (candidate && !/^#[0-9a-f]{6}$/i.test(candidate)) throw new Error('El color debe escribirse como #63358B.')
   return candidate
+}
+function logoBackgroundColor(formData) {
+  const candidate = nullable(formData, 'logo_background_color')
+  if (!candidate) return null
+  if (!isValidLogoBackgroundColor(candidate)) throw new Error('El fondo del logotipo debe escribirse como #RRGGBB.')
+  return normalizeLogoBackgroundColor(candidate)
 }
 function assertMutation(result, label) {
   if (result.error) throw new Error(`${label}: ${result.error.message}`)
@@ -155,6 +162,7 @@ export async function updateBandAction(formData) {
     description: nullable(formData, 'description'),
     primary_color: color(formData, 'primary_color'),
     secondary_color: color(formData, 'secondary_color'),
+    logo_background_color: logoBackgroundColor(formData),
     logo_path: nullable(formData, 'logo_path'),
     hero_image_path: nullable(formData, 'hero_image_path'),
     hero_image_alt: nullable(formData, 'hero_image_alt'),

@@ -297,6 +297,7 @@ export default async function BandDetailPage({ params }) {
           crestSrc: band.logoPath,
           crestAlt: `Logotipo de ${band.popularName}`,
           initials: band.popularName.slice(0, 2).toUpperCase(),
+          logoBackgroundColor: band.logoBackgroundColor,
         }}
       />
 
