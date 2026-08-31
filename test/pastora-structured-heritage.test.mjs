@@ -7,7 +7,7 @@ async function source(path) {
 }
 
 test('los Simpecados usan patrimonio y nombres genéricos reutilizables', async () => {
-  const migration = await source('supabase/migrations/20260824002000_structured_simpecados_and_musical_work_types.sql')
+  const migration = await source('supabase/migrations_archive/first-edition/20260824002000_structured_simpecados_and_musical_work_types.sql')
 
   assert.match(migration, /create table if not exists public\.entity_names/)
   assert.match(migration, /alter table public\.heritage_assets\s+add column if not exists usage_text text/)
@@ -29,7 +29,7 @@ test('los Simpecados usan patrimonio y nombres genéricos reutilizables', async 
 })
 
 test('la tipología musical separa naturaleza de estilo y mantiene relaciones del grafo', async () => {
-  const migration = await source('supabase/migrations/20260824002000_structured_simpecados_and_musical_work_types.sql')
+  const migration = await source('supabase/migrations_archive/first-edition/20260824002000_structured_simpecados_and_musical_work_types.sql')
 
   assert.match(migration, /add column if not exists work_type text/)
   for (const type of ['Marcha procesional', 'Himno', 'Copla', 'Adaptación']) {
@@ -61,7 +61,7 @@ test('el patrimonio musical ordena por año ascendente y muestra Año Título Co
 })
 
 test('las fechas discutidas quedan abiertas en vez de inventarse', async () => {
-  const migration = await source('supabase/migrations/20260824002000_structured_simpecados_and_musical_work_types.sql')
+  const migration = await source('supabase/migrations_archive/first-edition/20260824002000_structured_simpecados_and_musical_work_types.sql')
 
   assert.match(migration, /Documentada en grabación de 1996 · fecha de composición por confirmar/)
   assert.match(migration, /La grabación oficial de 1996 acredita existencia, no año de composición/)
@@ -70,7 +70,7 @@ test('las fechas discutidas quedan abiertas en vez de inventarse', async () => {
 })
 
 test('la fuente del estreno de Salve Pastora queda versionada sin alterar la fecha de composición', async () => {
-  const migration = await source('supabase/migrations/20260824002500_source_salve_pastora_premiere.sql')
+  const migration = await source('supabase/migrations_archive/first-edition/20260824002500_source_salve_pastora_premiere.sql')
 
   assert.match(migration, /Cantillana y su Pastora/)
   assert.match(migration, /2013-09-08|8 de septiembre de 2013|8 de septiembre de 2013|8 de septiembre/i)

@@ -5,8 +5,8 @@ import test from 'node:test'
 const read = (path) => readFile(new URL(`../${path}`, import.meta.url), 'utf8')
 
 test('Git representa las migraciones remotas previas sin una versión duplicada de la Pastora', async () => {
-  const pastora = await read('supabase/migrations/20260823232704_pastora_cantillana_identidad_cromatica.sql')
-  const sourceLinks = await read('supabase/migrations/20260823234637_harden_public_source_link_targets.sql')
+  const pastora = await read('supabase/migrations_archive/first-edition/20260823232704_pastora_cantillana_identidad_cromatica.sql')
+  const sourceLinks = await read('supabase/migrations_archive/first-edition/20260823234637_harden_public_source_link_targets.sql')
 
   assert.match(pastora, /pastora-de-cantillana/)
   assert.match(pastora, /#257FA1/)
@@ -15,13 +15,13 @@ test('Git representa las migraciones remotas previas sin una versión duplicada 
   assert.match(sourceLinks, /brotherhood_habit_id/)
 
   await assert.rejects(
-    read('supabase/migrations/20260824012800_pastora_cantillana_identidad_cromatica.sql'),
+    read('supabase/migrations_archive/first-edition/20260824012800_pastora_cantillana_identidad_cromatica.sql'),
     /ENOENT/,
   )
 })
 
 test('Supabase exige licencia abierta admitida y procedencia completa', async () => {
-  const migration = await read('supabase/migrations/20260824000215_guard_open_media_provenance.sql')
+  const migration = await read('supabase/migrations_archive/first-edition/20260824000215_guard_open_media_provenance.sql')
 
   assert.match(migration, /open_media_provenance_is_valid/)
   assert.match(migration, /media_assets_open_provenance_check/)
@@ -33,7 +33,7 @@ test('Supabase exige licencia abierta admitida y procedencia completa', async ()
   assert.match(migration, /create policy "Publishable media assets"/)
 
   await assert.rejects(
-    read('supabase/migrations/20260824015300_guard_open_media_provenance.sql'),
+    read('supabase/migrations_archive/first-edition/20260824015300_guard_open_media_provenance.sql'),
     /ENOENT/,
   )
 })

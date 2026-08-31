@@ -8,7 +8,7 @@ async function source(path) {
 
 test('la fuente de Salve Pastora se conserva como anuncio previo y no como prueba del estreno', async () => {
   const migration = await source(
-    'supabase/migrations/20260824003035_reconcile_salve_pastora_premiere_evidence.sql',
+    'supabase/migrations_archive/first-edition/20260824003035_reconcile_salve_pastora_premiere_evidence.sql',
   )
 
   assert.match(
@@ -26,7 +26,7 @@ test('la fuente de Salve Pastora se conserva como anuncio previo y no como prueb
 
 test('los campos canónicos de estreno efectivo vuelven a quedar abiertos hasta disponer de confirmación posterior', async () => {
   const migration = await source(
-    'supabase/migrations/20260824003035_reconcile_salve_pastora_premiere_evidence.sql',
+    'supabase/migrations_archive/first-edition/20260824003035_reconcile_salve_pastora_premiere_evidence.sql',
   )
 
   assert.match(migration, /premiere_date = null/)
@@ -40,13 +40,13 @@ test('los campos canónicos de estreno efectivo vuelven a quedar abiertos hasta 
 
 test('la corrección se ejecuta después de las migraciones reproducibles que introdujeron la inferencia', async () => {
   const structured = await source(
-    'supabase/migrations/20260824002000_structured_simpecados_and_musical_work_types.sql',
+    'supabase/migrations_archive/first-edition/20260824002000_structured_simpecados_and_musical_work_types.sql',
   )
   const sourceMigration = await source(
-    'supabase/migrations/20260824002500_source_salve_pastora_premiere.sql',
+    'supabase/migrations_archive/first-edition/20260824002500_source_salve_pastora_premiere.sql',
   )
   const correction = await source(
-    'supabase/migrations/20260824003035_reconcile_salve_pastora_premiere_evidence.sql',
+    'supabase/migrations_archive/first-edition/20260824003035_reconcile_salve_pastora_premiere_evidence.sql',
   )
 
   assert.match(structured, /premiere_date='2013-09-08'/)

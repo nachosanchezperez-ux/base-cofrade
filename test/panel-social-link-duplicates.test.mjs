@@ -14,7 +14,7 @@ test('Bandas no vuelve a ofrecer plataformas que ya tienen un enlace', async () 
 })
 
 test('PostgreSQL conserva una sola plataforma por entidad como última barrera', async () => {
-  const migration = await readFile(new URL('../supabase/migrations/20260813090020_enlaces_oficiales_entidades.sql', import.meta.url), 'utf8')
+  const migration = await readFile(new URL('../supabase/migrations_archive/first-edition/20260813090020_enlaces_oficiales_entidades.sql', import.meta.url), 'utf8')
 
   assert.match(migration, /unique\s*\(entity_id,\s*platform\)/i)
 })

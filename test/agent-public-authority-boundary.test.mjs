@@ -61,7 +61,7 @@ test('el autocompletado de Tira del hilo conserva el wrapper público y no inven
 })
 
 test('la primera migración pública exige endpoints publicados en las relaciones de agentes', async () => {
-  const migration = await source('supabase/migrations/20260823211405_public_agent_relation_integrity.sql')
+  const migration = await source('supabase/migrations_archive/first-edition/20260823211405_public_agent_relation_integrity.sql')
 
   for (const relation of [
     'image_authorships',
@@ -82,7 +82,7 @@ test('la primera migración pública exige endpoints publicados en las relacione
 })
 
 test('el endurecimiento final de Personas cubre roles, bandas y extremos publicables', async () => {
-  const migration = await source('supabase/migrations/20260823211610_harden_public_agent_relations.sql')
+  const migration = await source('supabase/migrations_archive/first-edition/20260823211610_harden_public_agent_relations.sql')
 
   for (const policy of [
     'Public agent roles',

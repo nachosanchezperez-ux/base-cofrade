@@ -15,7 +15,7 @@ test('las rutas legales públicas existen y leen solo documentos listos', () => 
 })
 
 test('RLS limita el acceso público a los tres documentos aprobados', () => {
-  const migration = read('supabase/migrations/20260828212940_publish_ready_legal_documents.sql')
+  const migration = read('supabase/migrations_archive/first-edition/20260828212940_publish_ready_legal_documents.sql')
   assert.match(migration, /status = 'ready'/)
   assert.match(migration, /'legal_notice', 'privacy_policy', 'storage_policy'/)
   assert.doesNotMatch(migration, /direction_sheet/)
