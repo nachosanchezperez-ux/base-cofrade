@@ -108,9 +108,9 @@ export default function BrotherhoodOverviewV2({ brotherhood, heroFactLabels = []
           ) : null}
 
           {showSeat ? (
-            <article className={styles.seatCard}>
+            <article className={styles.seatCard} aria-label="Sede canónica, horarios y visita">
               <div className={styles.cardTopline}>
-                <span>Ubicación</span>
+                <span>Sede canónica</span>
                 {seat.tipo ? <small>{String(seat.tipo).replaceAll('_', ' ')}</small> : null}
               </div>
 
@@ -127,7 +127,7 @@ export default function BrotherhoodOverviewV2({ brotherhood, heroFactLabels = []
                   <div className={styles.hoursHero}>
                     <span className={styles.clock} aria-hidden="true"><i /></span>
                     <div>
-                      <small>Horarios del templo</small>
+                      <small>Sede · Horarios del templo</small>
                       <strong>Planifica tu visita</strong>
                     </div>
                     {verified ? <span className={styles.verified}>Revisado · {verified}</span> : null}
