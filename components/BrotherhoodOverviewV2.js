@@ -40,6 +40,24 @@ function scheduleKind(value = '') {
   return 'note'
 }
 
+function scheduleEntries(value = '') {
+  return String(value)
+    .split(/\.\s+(?=[A-ZÁÉÍÓÚÑ])/)
+    .map((entry) => entry.trim().replace(/\.$/, ''))
+    .filter(Boolean)
+    .map((entry, index) => {
+      const separator = entry.indexOf(':')
+      const hasDays = separator > 0 && separator < 52
+      const detail = hasDays ? entry.slice(separator + 1).trim() : entry
+
+      return {
+        id: `${index}-${entry}`,
+        days: hasDays ? entry.slice(0, separator).trim() : '',
+        detail,
+      }
+    })
+}
+
 function scheduleLines(value = '') {
   return String(value)
     .split(/\r?\n/)
@@ -54,8 +72,70 @@ function scheduleLines(value = '') {
         kind: scheduleKind(line),
         label: hasLabel ? line.slice(0, separator).trim() : '',
         value: hasLabel ? line.slice(separator + 1).trim() : line,
+        entries: scheduleEntries(hasLabel ? line.slice(separator + 1).trim() : line),
       }
     })
+}
+
+function highlightedSchedule(value = '') {
+  return String(value)
+    .split(/(\b\d{1,2}:\d{2}(?:[–-]\d{1,2}:\d{2})?\b|\bcerrad[oa]s?\b)/gi)
+    .filter(Boolean)
+    .map((part, index) => {
+      if (/^\d{1,2}:\d{2}(?:[–-]\d{1,2}:\d{2})?$/.test(part)) {
+        return <span className={styles.timeChip} key={`${index}-${part}`}>{part}</span>
+      }
+
+      if (/^cerrad[oa]s?$/i.test(part)) {
+        return <strong className={styles.closedChip} key={`${index}-${part}`}>{part}</strong>
+      }
+
+      return part
+    })
+}
+
+function MapPinIcon({ className = '' }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+      <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z" />
+      <circle cx="12" cy="10" r="2.5" />
+    </svg>
+  )
+}
+
+function ClockIcon({ className = '' }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="M12 7.5V12l3 2" />
+    </svg>
+  )
+}
+
+function ScheduleIcon({ kind }) {
+  if (kind === 'mass') {
+    return <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4v16M7.5 9h9" /></svg>
+  }
+
+  if (kind === 'office') {
+    return <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="7" width="16" height="12" rx="2" /><path d="M9 7V5h6v2M4 12h16" /></svg>
+  }
+
+  if (kind === 'devotion') {
+    return <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="3.5" /><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6 7 7M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4" /></svg>
+  }
+
+  if (kind === 'opening') return <ClockIcon />
+
+  return <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="8.5" /><path d="M12 11v5M12 8h.01" /></svg>
+}
+
+function ArrowUpRightIcon({ className = '' }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+      <path d="M7 17 17 7M9 7h8v8" />
+    </svg>
+  )
 }
 
 export default function BrotherhoodOverviewV2({ brotherhood, heroFactLabels = [] }) {
@@ -115,7 +195,7 @@ export default function BrotherhoodOverviewV2({ brotherhood, heroFactLabels = []
               </div>
 
               <div className={styles.seatIdentity}>
-                <span className={styles.pin} aria-hidden="true"><i /></span>
+                <span className={styles.pin} aria-hidden="true"><MapPinIcon /></span>
                 <div>
                   <h3>{publicText(seat.nombre)}</h3>
                   {publicText(seat.direccion) ? <p>{publicText(seat.direccion)}</p> : null}
@@ -125,7 +205,7 @@ export default function BrotherhoodOverviewV2({ brotherhood, heroFactLabels = []
               {seat.horarioApertura ? (
                 <div className={styles.hours}>
                   <div className={styles.hoursHero}>
-                    <span className={styles.clock} aria-hidden="true"><i /></span>
+                    <span className={styles.clock} aria-hidden="true"><ClockIcon /></span>
                     <div>
                       <small>Sede · Horarios del templo</small>
                       <strong>Planifica tu visita</strong>
@@ -136,25 +216,32 @@ export default function BrotherhoodOverviewV2({ brotherhood, heroFactLabels = []
                   <div className={styles.hoursList}>
                     {templeSchedule.map((item) => (
                       <div className={`${styles.hoursRow} ${styles[`hours_${item.kind}`]}`} key={item.id}>
-                        <span className={styles.hoursMarker} aria-hidden="true" />
-                        <p>
+                        <span className={styles.hoursMarker} aria-hidden="true"><ScheduleIcon kind={item.kind} /></span>
+                        <div className={styles.hoursContent}>
                           {item.label ? <b>{item.label}</b> : null}
-                          <span>{item.value}</span>
-                        </p>
+                          <div className={styles.hoursEntries}>
+                            {item.entries.map((entry) => (
+                              <div className={`${styles.hoursEntry} ${entry.days ? '' : styles.hoursEntryNoDays}`} key={entry.id}>
+                                {entry.days ? <span className={styles.hoursDays}>{entry.days}</span> : null}
+                                <span className={styles.hoursDetail}>{highlightedSchedule(entry.detail)}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
                       </div>
                     ))}
                   </div>
 
                   <div className={styles.hoursFooter}>
-                    <span aria-hidden="true">✦</span>
+                    <span className={styles.footerIcon} aria-hidden="true"><ScheduleIcon kind="note" /></span>
                     <p>Comprueba los cultos extraordinarios antes de desplazarte.</p>
                   </div>
                 </div>
               ) : null}
 
               <div className={styles.seatActions}>
-                {mapUrl ? <a href={mapUrl} target="_blank" rel="noreferrer">Cómo llegar <span aria-hidden="true">↗</span></a> : null}
-                {seat.localidad ? <span>{seat.localidad}{seat.provincia && seat.provincia !== seat.localidad ? ` · ${seat.provincia}` : ''}</span> : null}
+                {mapUrl ? <a href={mapUrl} target="_blank" rel="noreferrer">Cómo llegar <ArrowUpRightIcon className={styles.actionIcon} /></a> : null}
+                {!publicText(seat.direccion) && seat.localidad ? <span>{seat.localidad}{seat.provincia && seat.provincia !== seat.localidad ? ` · ${seat.provincia}` : ''}</span> : null}
               </div>
 
               {seat.hermandadesCompartidas?.length > 0 ? (
