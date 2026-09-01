@@ -1,6 +1,6 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 1 de septiembre de 2026 · 09:05 UTC
+**Corte validado:** 1 de septiembre de 2026 · 14:06 UTC
 
 **Régimen:** `FIRST EDITION FREEZE` activo
 
@@ -11,18 +11,18 @@
 **PRIMERA EDICIÓN → 🟢 CERRADA, CERTIFICADA Y CONGELADA**
 
 - Baseline funcional y estructural: `a025098528351656503460596d28b5318e39daf5` (#432).
-- Último commit funcional/editorial validado: `7d187d4e1cfbc95b29d5d7a3e67840723ead775f` (#497).
-- HEAD real de `main` observado inmediatamente antes de esta sincronización: `7d187d4e1cfbc95b29d5d7a3e67840723ead775f` (#497).
-- #493–#496 fueron sincronizaciones exclusivamente documentales; #497 vuelve a avanzar el baseline editorial sin modificar arquitectura, UX, esquema ni RLS. El commit que contiene este propio corte puede avanzar de nuevo el HEAD sin convertirse en un cambio funcional adicional; para el SHA vivo prevalece siempre `main` real.
-- Deployment de producción observado inmediatamente antes de esta sincronización: `dpl_2evJEusfKvziFt8L6g9qHd7USGEU`, `READY`, sobre `7d187d4e1cfbc95b29d5d7a3e67840723ead775f`.
-- Supabase productivo registra la migración DML `20260901083249_incorpora_oliva_salteras_rosario_cadiz`; Git y remoto quedan reconciliados en 21/21 versiones.
-- Vercel informa `SUCCESS` para el HEAD desplegado; el deployment actual y la última hora del proyecto no registran errores ni fatales.
+- Último commit funcional/editorial validado: `c4e422a7a9448fc8a8f12a25fdd0d2244a7cdb1b` (#499).
+- HEAD real de `main` observado inmediatamente antes de esta sincronización: `c4e422a7a9448fc8a8f12a25fdd0d2244a7cdb1b` (#499).
+- #499 avanza el baseline editorial y aplica una corrección mínima de presentación sobre el módulo existente de Hermandades; no modifica arquitectura, esquema ni RLS. El commit que contiene este propio corte puede avanzar de nuevo el HEAD sin convertirse en un cambio funcional adicional; para el SHA vivo prevalece siempre `main` real.
+- Deployment de producción observado inmediatamente antes de esta sincronización: `dpl_J9PdCHAaiHcMuZpyZKrGsPRBJo3Y`, `READY`, sobre `c4e422a7a9448fc8a8f12a25fdd0d2244a7cdb1b`.
+- Supabase productivo registra la migración DML `20260901135411_documenta_horarios_templos_septiembre_2026`; Git y remoto quedan reconciliados en 22/22 versiones.
+- Vercel informa `SUCCESS` para el HEAD desplegado; el deployment actual y los últimos 15 minutos del proyecto no registran errores ni fatales.
 - La matriz manual 390/768/1024/1440 de Primera Edición permanece aprobada.
 - El freeze no permite abrir arquitectura, módulos ni una Segunda Edición; sí permite contenido, datos, fotografías, Fuentes, seguridad, legal, bugs e incidencias reales.
 - Cola UX/estructural objeto de este corte: **0 frentes abiertos**.
 - PR UX/estructurales abiertas al cerrar este corte: **0**.
 - #467, #470 y #471 siguen cerradas; no se reabre ninguna.
-- La última actuación editorial es #497, lote certificado de La Oliva de Salteras y Rosario de Cádiz, ya fusionado, aplicado y desplegado. Cruz Roja no se reabre.
+- La última actuación editorial es #499, horarios de La Milagrosa, Baratillo, Estrella y Cachorro, ya fusionada, aplicada y desplegada sin publicar fichas que permanecían en borrador.
 
 ## GitHub · estado de trabajo
 
@@ -58,6 +58,7 @@
 - #488–#490 · banderín de Presentación al Pueblo y reconciliación del recurso: fusionadas y desplegadas.
 - #491 · primera auditoría documental de Cruz Roja: fusionada y desplegada; completa acompañamientos actuales e históricos, Fuentes y novedades de repertorio sobre el modelo vigente.
 - #497 · La Oliva de Salteras y Rosario de Cádiz: fusionada, aplicada y desplegada; incorpora identidad, 14 acompañamientos vigentes, 50 ediciones, 274 pistas y Fuentes trazables sin DDL ni RLS.
+- #499 · horarios de templos y sedes: fusionada, aplicada y desplegada; documenta La Milagrosa, Baratillo, Estrella y Cachorro con Fuentes oficiales, reutiliza el modelo vigente y preserva los borradores editoriales.
 
 ### PR abiertas en este corte
 
@@ -162,16 +163,16 @@ Nota administrativa: el conector de GitHub falló al quitar el estado draft de #
 
 **PRODUCCIÓN → 🟢 ESTABLE**
 
-- Deployment de producción observado antes de este commit documental: `dpl_2evJEusfKvziFt8L6g9qHd7USGEU`.
-- Commit desplegado en ese corte: `7d187d4e1cfbc95b29d5d7a3e67840723ead775f` (#497), último cambio funcional/editorial validado.
+- Deployment de producción observado antes de este commit documental: `dpl_J9PdCHAaiHcMuZpyZKrGsPRBJo3Y`.
+- Commit desplegado en ese corte: `c4e422a7a9448fc8a8f12a25fdd0d2244a7cdb1b` (#499), último cambio funcional/editorial validado.
 - Estado: `READY`; target: producción.
 - Dominios canónicos: `https://hilocofrade.es` y `https://www.hilocofrade.es`.
 - Vercel informa `SUCCESS` para el commit desplegado.
-- Comprobación runtime: el deployment actual no registra `error/fatal` y el proyecto no presenta errores agrupados en la última hora.
-- Smoke específico de #497: las fichas públicas de La Oliva de Salteras y Rosario de Cádiz responden HTTP 200 sobre `dpl_2evJEusfKvziFt8L6g9qHd7USGEU` y cargan identidad, acompañamientos y discografía.
-- El smoke general anterior de Home, Hermandades, Bandas, Procesiones de Gloria, Igualás y Ensayos, Extraordinarias, Tira del hilo (`/pregunta`) y Panel permanece válido; #497 no modifica rutas ni código público.
+- Comprobación runtime: el deployment actual no registra `error/fatal` en los últimos 15 minutos.
+- Smoke específico de #499: la ficha pública de El Baratillo responde HTTP 200 sobre `dpl_J9PdCHAaiHcMuZpyZKrGsPRBJo3Y` y muestra «Horarios del templo», el texto multilínea completo y «Verificado · sept 2026».
+- El smoke general anterior de Home, Hermandades, Bandas, Procesiones de Gloria, Igualás y Ensayos, Extraordinarias, Tira del hilo (`/pregunta`) y Panel permanece válido; #499 no modifica rutas.
 - Las fichas de Procesiones de Gloria son dinámicas (`force-dynamic`), por lo que las correcciones editoriales de Supabase se reflejan sin un redeploy de aplicación.
-- El commit que actualiza este documento es exclusivamente documental y no altera el baseline editorial de #497.
+- El commit que actualiza este documento es exclusivamente documental y no altera el baseline editorial de #499.
 
 ## SEO P0 · mantenimiento técnico
 
@@ -315,11 +316,12 @@ Una decisión posterior de Dirección deberá abrir un corte independiente y com
 
 El cierre técnico permanece intacto. Los cambios posteriores son editoriales o correcciones reales sobre el modelo vigente.
 
-**GIT ↔ SUPABASE → 🟢 21/21 VERSIONES RECONCILIADAS EN PRODUCCIÓN**
+**GIT ↔ SUPABASE → 🟢 22/22 VERSIONES RECONCILIADAS EN PRODUCCIÓN**
 
-- Última versión: `20260901083249_incorpora_oliva_salteras_rosario_cadiz`.
+- Última versión: `20260901135411_documenta_horarios_templos_septiembre_2026`.
 - El proyecto productivo responde en PostgreSQL 17.6.1, región `eu-west-1`.
 - La auditoría de este corte no ejecutó DDL, no modificó RLS y no reescribió migraciones históricas.
+- La integración automática ya había registrado `20260901135411`; una aplicación manual idempotente añadió temporalmente una segunda entrada de historial. Tras comprobar que la versión temporal contenía una sola sentencia frente a las ocho de la versión canónica, se retiró exclusivamente esa entrada extra. Los datos no se duplicaron y el historial volvió a 22/22.
 - La continuidad editorial puede seguir utilizando las tablas y relaciones existentes.
 
 Migraciones registradas en producción en el momento de este corte:
@@ -345,6 +347,7 @@ Migraciones registradas en producción en el momento de este corte:
 19. `20260901002206_ajusta_banderin_presentacion_fondo_negro`
 20. `20260901004026_cruz_roja_fase1_documental`
 21. `20260901083249_incorpora_oliva_salteras_rosario_cadiz`
+22. `20260901135411_documenta_horarios_templos_septiembre_2026`
 
 ### Observación de ramas Supabase
 
@@ -423,6 +426,19 @@ La limpieza física de assets huérfanos no forma parte de #471 ni de la cola UX
 - CI #1375: `SUCCESS`; `npm test`: 520/520; `npm run build`: verde.
 - La migración completa se validó primero contra producción dentro de `BEGIN … ROLLBACK` y después quedó aplicada como versión `20260901083249`.
 - Cruz Roja no se reabre y no se abre un lote adicional en este corte.
+
+### Lote editorial · Horarios de templos y sedes
+
+**ESTADO → 🟢 CERTIFICADO · FUSIONADO · APLICADO · DESPLEGADO**
+
+- #499 documenta los horarios comunicados para septiembre de La Milagrosa, Baratillo, Estrella y Cachorro.
+- Se reutilizan `places.opening_hours_text`, `opening_hours_verified_at`, `entity_locations` y Fuentes del modelo cerrado; no se añade DDL ni se modifica RLS.
+- La presentación pública pasa a titular «Horarios del templo» y respeta los saltos de línea del contenido.
+- El Baratillo queda visible en su ficha publicada. Cachorro, Estrella y La Milagrosa conservan su estado editorial `draft`; se incorporan sus datos y ubicaciones sin publicarlas prematuramente.
+- Las cuatro Fuentes quedan enlazadas una sola vez a su entidad correspondiente y los cuatro horarios constan como verificados el 1 de septiembre de 2026.
+- CI #1379: `SUCCESS`; `npm test`: 522/522; `npm run build`: verde; `git diff --check`: verde.
+- La migración se validó primero contra producción dentro de `BEGIN … ROLLBACK` y quedó aplicada como `20260901135411_documenta_horarios_templos_septiembre_2026`.
+- Producción `dpl_J9PdCHAaiHcMuZpyZKrGsPRBJo3Y`: `READY`; smoke de El Baratillo HTTP 200 y runtime sin `error/fatal` en los últimos 15 minutos.
 
 **SIGUIENTE ACCIÓN → DETENERSE Y DEVOLVER A DIRECCIÓN.**
 
