@@ -13,7 +13,7 @@
 - Baseline funcional y estructural: `a025098528351656503460596d28b5318e39daf5` (#432).
 - Último commit funcional/editorial validado: `b64380487eb42d644460ffcc2abb34d126fbb4a1` (#491).
 - El HEAD posterior a ese corte puede añadir únicamente la sincronización documental #493; no cambia el baseline funcional ni la fase activa.
-- Producción está `READY` sobre ese SHA en `dpl_3D3vVQ4ayzCixvFurrbcbFyAXi7M`.
+- El deployment funcional auditado está `READY` sobre ese SHA en `dpl_3D3vVQ4ayzCixvFurrbcbFyAXi7M`; las sincronizaciones documentales posteriores no alteran la aplicación.
 - Vercel informa `SUCCESS` para el commit desplegado; runtime reciente sin errores ni fatales.
 - La matriz manual 390/768/1024/1440 de Primera Edición permanece aprobada.
 - El freeze no permite abrir arquitectura, módulos ni una Segunda Edición; sí permite contenido, datos, fotografías, Fuentes, seguridad, legal, bugs e incidencias reales.
@@ -159,8 +159,8 @@ Nota administrativa: el conector de GitHub falló al quitar el estado draft de #
 
 **PRODUCCIÓN → 🟢 ESTABLE**
 
-- Último deployment validado: `dpl_3D3vVQ4ayzCixvFurrbcbFyAXi7M`.
-- Commit desplegado: `b64380487eb42d644460ffcc2abb34d126fbb4a1`.
+- Último deployment funcional validado: `dpl_3D3vVQ4ayzCixvFurrbcbFyAXi7M`.
+- Commit funcional desplegado: `b64380487eb42d644460ffcc2abb34d126fbb4a1`.
 - Estado: `READY`; target: producción.
 - Dominios canónicos: `https://hilocofrade.es` y `https://www.hilocofrade.es`.
 - Vercel informa `SUCCESS` para el commit desplegado.
