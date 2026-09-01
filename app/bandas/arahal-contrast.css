@@ -1,21 +1,21 @@
 /* Contraste de lectura para fichas cuya identidad usa el dorado claro #C5A253 como secundario. */
-[style*="--band-secondary: #C5A253"] #repertorio {
+[style*="#C5A253"] #repertorio {
   color: #332f35;
 }
 
-[style*="--band-secondary: #C5A253"] #repertorio h2,
-[style*="--band-secondary: #C5A253"] #repertorio h3,
-[style*="--band-secondary: #C5A253"] #repertorio h4,
-[style*="--band-secondary: #C5A253"] #repertorio summary b {
+[style*="#C5A253"] #repertorio h2,
+[style*="#C5A253"] #repertorio h3,
+[style*="#C5A253"] #repertorio h4,
+[style*="#C5A253"] #repertorio summary b {
   color: #332f35 !important;
 }
 
-[style*="--band-secondary: #C5A253"] #repertorio p,
-[style*="--band-secondary: #C5A253"] #repertorio summary span,
-[style*="--band-secondary: #C5A253"] #repertorio article > div > strong {
+[style*="#C5A253"] #repertorio p,
+[style*="#C5A253"] #repertorio summary span,
+[style*="#C5A253"] #repertorio article > div > strong {
   color: #5d565f !important;
 }
 
-[style*="--band-secondary: #C5A253"] #repertorio article span {
+[style*="#C5A253"] #repertorio article span {
   color: #4b454d !important;
 }
