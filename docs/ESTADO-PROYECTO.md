@@ -1,6 +1,6 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 1 de septiembre de 2026 · 21:16 UTC
+**Corte validado:** 1 de septiembre de 2026 · 21:49 UTC
 
 **Régimen:** `FIRST EDITION FREEZE` activo
 
@@ -11,18 +11,17 @@
 **PRIMERA EDICIÓN → 🟢 CERRADA, CERTIFICADA Y CONGELADA**
 
 - Baseline funcional y estructural: `a025098528351656503460596d28b5318e39daf5` (#432).
-- Último commit funcional validado: `f9e6fdd4035f997f3bc3dd0c2f05db5a1e18e9de`, corrección acotada del parser de rangos horarios tras #514.
-- HEAD real de `main` observado inmediatamente antes de esta sincronización: `f9e6fdd4035f997f3bc3dd0c2f05db5a1e18e9de`.
-- #514 refina la agenda visual de la Sede canónica sin modificar datos, arquitectura, esquema ni RLS. El commit que contiene este propio corte puede avanzar de nuevo el HEAD sin convertirse en un cambio funcional adicional; para el SHA vivo prevalece siempre `main` real.
-- Deployment de producción observado inmediatamente antes de esta sincronización: `dpl_FdXbGSfR29teENyXXzoH4xWQ1oVJ`, `READY`, sobre `f9e6fdd4035f997f3bc3dd0c2f05db5a1e18e9de`.
-- Supabase productivo registra hasta `20260901204320_completa_direccion_sede_baratillo`; Git y remoto quedan reconciliados en 30/30 versiones.
+- Último commit funcional validado: `1111bd7b3a863638603112d47e2413cc1dda3e76` (#517), cierre editorial de La Bofetá.
+- HEAD real de `main` observado inmediatamente antes de esta sincronización: `1111bd7b3a863638603112d47e2413cc1dda3e76`.
+- Deployment de producción observado inmediatamente antes de esta sincronización: `dpl_8uppNq8jYyBbJKgbo3wnq1hGAcRL`, `READY`, sobre `1111bd7b3a863638603112d47e2413cc1dda3e76`.
+- Supabase productivo registra hasta `20260901214842_completa_la_bofeta`; Git y remoto quedan reconciliados en 31/31 versiones.
 - Vercel informa `SUCCESS` para el HEAD desplegado; el deployment actual y los últimos 15 minutos del proyecto no registran errores ni fatales.
 - La matriz manual 390/768/1024/1440 de Primera Edición permanece aprobada.
 - El freeze no permite abrir arquitectura, módulos ni una Segunda Edición; sí permite contenido, datos, fotografías, Fuentes, seguridad, legal, bugs e incidencias reales.
 - Cola UX/estructural creada por este lote: **0 frentes abiertos**.
 - PR abiertas al cerrar este corte: **0**.
 - #467, #470 y #471 siguen cerradas; no se reabre ninguna.
-- La última actuación editorial es #516, DML trazable que completa la dirección de la Sede del Baratillo. La última corrección funcional autorizada es el hotfix acotado `f9e6fdd` posterior a #514.
+- La última actuación editorial es #517: cierre completo de La Bofetá con cuatro titulares, dos pasos, siete imágenes en el misterio, música, hábito, colores, capataces y Fuentes.
 
 ## GitHub · estado de trabajo
 
@@ -69,6 +68,7 @@
 - #513 · Las Aguas: incorpora el tercer paso, Nuestra Señora del Rosario, sus acompañamientos de Gloria y las imágenes secundarias del misterio.
 - #514 · refinamiento visual de la Sede: fusionada, desplegada y cerrada; mejora jerarquía, horarios, iconografía, accesibilidad y respuesta móvil sin ampliar el modelo.
 - #516 · dirección de la Sede del Baratillo: fusionada como DML editorial trazable, sin DDL ni RLS.
+- #517 · La Bofetá: ficha editorial completada, aplicada y desplegada; publica cuatro titulares, dos pasos, las seis imágenes secundarias del misterio junto a Jesús, acompañamientos, hábito, colores, capataces y Fuentes, sin DDL ni RLS.
 - `f9e6fdd` · rangos horarios compactos: bug real corregido transversalmente y cubierto por prueba; no abre una nueva cola UX.
 
 ### PR abiertas en este corte
@@ -174,8 +174,8 @@ Nota administrativa: el conector de GitHub falló al quitar el estado draft de #
 
 **PRODUCCIÓN → 🟢 ESTABLE**
 
-- Deployment de producción observado antes de este commit documental: `dpl_BDLQdCJ4xhZ5J92bRJ8UeRDFXU2b`.
-- Commit desplegado en ese corte: `dd6f52a139b74db0c0e5b6f81823badcae72d662` (#506). #508 ya está fusionada y certificada en preview.
+- Deployment de producción observado antes de este commit documental: `dpl_8uppNq8jYyBbJKgbo3wnq1hGAcRL`.
+- Commit desplegado en ese corte: `1111bd7b3a863638603112d47e2413cc1dda3e76` (#517).
 - Estado: `READY`; target: producción.
 - Dominios canónicos: `https://hilocofrade.es` y `https://www.hilocofrade.es`.
 - Vercel informa `SUCCESS` para el commit desplegado.
@@ -183,7 +183,7 @@ Nota administrativa: el conector de GitHub falló al quitar el estado draft de #
 - Smoke específico de #506: la ficha pública del Baratillo responde HTTP 200 y muestra `Planifica tu visita`; la preview de #508 muestra además `Sede canónica`, sin overlay.
 - Smoke general: Home, Hermandades, Bandas, Procesiones de Gloria, Igualás y Ensayos, Extraordinarias, Tira del hilo (`/pregunta`) y Panel responden HTTP 200.
 - Las fichas de Procesiones de Gloria son dinámicas (`force-dynamic`), por lo que las correcciones editoriales de Supabase se reflejan sin un redeploy de aplicación.
-- El commit que actualiza este documento es exclusivamente documental y no altera el DML canónico de #505 ni la corrección visual de #508.
+- El commit que actualiza este documento es exclusivamente documental y no altera el DML canónico de #517.
 
 ## SEO P0 · mantenimiento técnico
 
