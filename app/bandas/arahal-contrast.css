@@ -19,3 +19,8 @@
 [style*="#C5A253"] #repertorio article span {
   color: #4b454d !important;
 }
+
+/* Si no existe un Paso canónico, la posición es el único texto de paso: no se repite como detalle. */
+#acompanamientos-historicos article > div:last-child > div:not(:has(> strong)) > small {
+  display: none;
+}
