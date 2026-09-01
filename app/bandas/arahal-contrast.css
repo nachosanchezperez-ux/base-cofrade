@@ -1,21 +1,21 @@
-/* Contraste específico para identidades de banda con secundario dorado claro. */
-.bandPageArahal #repertorio {
+/* Contraste de lectura para fichas cuya identidad usa el dorado claro #C5A253 como secundario. */
+[style*="--band-secondary: #C5A253"] #repertorio {
   color: #332f35;
 }
 
-.bandPageArahal #repertorio h2,
-.bandPageArahal #repertorio h3,
-.bandPageArahal #repertorio h4,
-.bandPageArahal #repertorio summary b {
+[style*="--band-secondary: #C5A253"] #repertorio h2,
+[style*="--band-secondary: #C5A253"] #repertorio h3,
+[style*="--band-secondary: #C5A253"] #repertorio h4,
+[style*="--band-secondary: #C5A253"] #repertorio summary b {
   color: #332f35 !important;
 }
 
-.bandPageArahal #repertorio p,
-.bandPageArahal #repertorio summary span,
-.bandPageArahal #repertorio article > div > strong {
+[style*="--band-secondary: #C5A253"] #repertorio p,
+[style*="--band-secondary: #C5A253"] #repertorio summary span,
+[style*="--band-secondary: #C5A253"] #repertorio article > div > strong {
   color: #5d565f !important;
 }
 
-.bandPageArahal #repertorio article span {
+[style*="--band-secondary: #C5A253"] #repertorio article span {
   color: #4b454d !important;
 }
