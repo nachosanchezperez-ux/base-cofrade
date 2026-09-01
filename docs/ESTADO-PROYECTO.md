@@ -1,6 +1,6 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 1 de septiembre de 2026 · 07:52 UTC
+**Corte validado:** 1 de septiembre de 2026 · 09:05 UTC
 
 **Régimen:** `FIRST EDITION FREEZE` activo
 
@@ -11,18 +11,18 @@
 **PRIMERA EDICIÓN → 🟢 CERRADA, CERTIFICADA Y CONGELADA**
 
 - Baseline funcional y estructural: `a025098528351656503460596d28b5318e39daf5` (#432).
-- Último commit funcional/editorial validado: `b64380487eb42d644460ffcc2abb34d126fbb4a1` (#491).
-- HEAD real de `main` observado inmediatamente antes de esta sincronización: `1489ba74af6afb31f66a82d98b8c01d29ef1e163` (#495).
-- #493, #494 y #495 son sincronizaciones exclusivamente documentales; no cambian el baseline funcional ni la fase activa. El commit que contiene este propio corte puede avanzar de nuevo el HEAD sin convertirse en baseline funcional; para el SHA vivo prevalece siempre `main` real.
-- Deployment de producción observado inmediatamente antes de esta sincronización: `dpl_EYiv3VZGPbzzpEApbEtwPAY7xMSE`, `READY`, sobre el HEAD documental `1489ba74af6afb31f66a82d98b8c01d29ef1e163`. Un deployment posterior provocado solo por este documento conserva el mismo baseline funcional.
-- El último deployment funcional auditado antes de esas sincronizaciones permanece `READY` sobre `b64380487eb42d644460ffcc2abb34d126fbb4a1` en `dpl_3D3vVQ4ayzCixvFurrbcbFyAXi7M`.
+- Último commit funcional/editorial validado: `7d187d4e1cfbc95b29d5d7a3e67840723ead775f` (#497).
+- HEAD real de `main` observado inmediatamente antes de esta sincronización: `7d187d4e1cfbc95b29d5d7a3e67840723ead775f` (#497).
+- #493–#496 fueron sincronizaciones exclusivamente documentales; #497 vuelve a avanzar el baseline editorial sin modificar arquitectura, UX, esquema ni RLS. El commit que contiene este propio corte puede avanzar de nuevo el HEAD sin convertirse en un cambio funcional adicional; para el SHA vivo prevalece siempre `main` real.
+- Deployment de producción observado inmediatamente antes de esta sincronización: `dpl_2evJEusfKvziFt8L6g9qHd7USGEU`, `READY`, sobre `7d187d4e1cfbc95b29d5d7a3e67840723ead775f`.
+- Supabase productivo registra la migración DML `20260901083249_incorpora_oliva_salteras_rosario_cadiz`; Git y remoto quedan reconciliados en 21/21 versiones.
 - Vercel informa `SUCCESS` para el HEAD desplegado; el deployment actual y la última hora del proyecto no registran errores ni fatales.
 - La matriz manual 390/768/1024/1440 de Primera Edición permanece aprobada.
 - El freeze no permite abrir arquitectura, módulos ni una Segunda Edición; sí permite contenido, datos, fotografías, Fuentes, seguridad, legal, bugs e incidencias reales.
 - Cola UX/estructural objeto de este corte: **0 frentes abiertos**.
 - PR UX/estructurales abiertas al cerrar este corte: **0**.
 - #467, #470 y #471 siguen cerradas; no se reabre ninguna.
-- La última actuación editorial es #491, primera auditoría documental de Cruz Roja, ya fusionada y desplegada.
+- La última actuación editorial es #497, lote certificado de La Oliva de Salteras y Rosario de Cádiz, ya fusionado, aplicado y desplegado. Cruz Roja no se reabre.
 
 ## GitHub · estado de trabajo
 
@@ -57,6 +57,7 @@
 - #467 · cierre UX de Bandas: fusionada con delta final exclusivamente transversal de notas redundantes; la excepción nominal del logo de Virgen de los Reyes fue descartada.
 - #488–#490 · banderín de Presentación al Pueblo y reconciliación del recurso: fusionadas y desplegadas.
 - #491 · primera auditoría documental de Cruz Roja: fusionada y desplegada; completa acompañamientos actuales e históricos, Fuentes y novedades de repertorio sobre el modelo vigente.
+- #497 · La Oliva de Salteras y Rosario de Cádiz: fusionada, aplicada y desplegada; incorpora identidad, 14 acompañamientos vigentes, 50 ediciones, 274 pistas y Fuentes trazables sin DDL ni RLS.
 
 ### PR abiertas en este corte
 
@@ -161,16 +162,16 @@ Nota administrativa: el conector de GitHub falló al quitar el estado draft de #
 
 **PRODUCCIÓN → 🟢 ESTABLE**
 
-- Deployment de producción observado antes de este commit documental: `dpl_EYiv3VZGPbzzpEApbEtwPAY7xMSE`.
-- Commit desplegado en ese corte: `1489ba74af6afb31f66a82d98b8c01d29ef1e163`; es un HEAD documental y conserva como último cambio funcional/editorial `b64380487eb42d644460ffcc2abb34d126fbb4a1` (#491).
-- Deployment funcional de referencia: `dpl_3D3vVQ4ayzCixvFurrbcbFyAXi7M`, sobre `b64380487eb42d644460ffcc2abb34d126fbb4a1`.
+- Deployment de producción observado antes de este commit documental: `dpl_2evJEusfKvziFt8L6g9qHd7USGEU`.
+- Commit desplegado en ese corte: `7d187d4e1cfbc95b29d5d7a3e67840723ead775f` (#497), último cambio funcional/editorial validado.
 - Estado: `READY`; target: producción.
 - Dominios canónicos: `https://hilocofrade.es` y `https://www.hilocofrade.es`.
 - Vercel informa `SUCCESS` para el commit desplegado.
-- Comprobación runtime: el deployment actual no registra `error/fatal` y el proyecto no presenta ninguno en la última hora. La vista agregada de 24 horas conserva dos cierres tempranos de stream en `/extraordinarias/[slug].rsc`, ambos ligados a un deployment anterior y sin recurrencia en el actual; no constituyen un bloqueo de producción.
-- Smoke de producción sobre `dpl_EYiv3VZGPbzzpEApbEtwPAY7xMSE`: Home, Hermandades, Bandas, Procesiones de Gloria, Igualás y Ensayos, Extraordinarias, Tira del hilo (`/pregunta`) y Panel responden HTTP 200. Panel resuelve correctamente a `/panel/login` sin sesión; `www` devuelve redirección permanente al dominio canónico.
+- Comprobación runtime: el deployment actual no registra `error/fatal` y el proyecto no presenta errores agrupados en la última hora.
+- Smoke específico de #497: las fichas públicas de La Oliva de Salteras y Rosario de Cádiz responden HTTP 200 sobre `dpl_2evJEusfKvziFt8L6g9qHd7USGEU` y cargan identidad, acompañamientos y discografía.
+- El smoke general anterior de Home, Hermandades, Bandas, Procesiones de Gloria, Igualás y Ensayos, Extraordinarias, Tira del hilo (`/pregunta`) y Panel permanece válido; #497 no modifica rutas ni código público.
 - Las fichas de Procesiones de Gloria son dinámicas (`force-dynamic`), por lo que las correcciones editoriales de Supabase se reflejan sin un redeploy de aplicación.
-- El commit que actualiza este documento es exclusivamente documental y no altera el baseline funcional anterior.
+- El commit que actualiza este documento es exclusivamente documental y no altera el baseline editorial de #497.
 
 ## SEO P0 · mantenimiento técnico
 
@@ -314,9 +315,9 @@ Una decisión posterior de Dirección deberá abrir un corte independiente y com
 
 El cierre técnico permanece intacto. Los cambios posteriores son editoriales o correcciones reales sobre el modelo vigente.
 
-**GIT ↔ SUPABASE → 🟢 20/20 VERSIONES RECONCILIADAS EN PRODUCCIÓN**
+**GIT ↔ SUPABASE → 🟢 21/21 VERSIONES RECONCILIADAS EN PRODUCCIÓN**
 
-- Última versión: `20260901004026_cruz_roja_fase1_documental`.
+- Última versión: `20260901083249_incorpora_oliva_salteras_rosario_cadiz`.
 - El proyecto productivo responde en PostgreSQL 17.6.1, región `eu-west-1`.
 - La auditoría de este corte no ejecutó DDL, no modificó RLS y no reescribió migraciones históricas.
 - La continuidad editorial puede seguir utilizando las tablas y relaciones existentes.
@@ -343,13 +344,14 @@ Migraciones registradas en producción en el momento de este corte:
 18. `20260901001916_presenta_banderin_presentacion_al_pueblo`
 19. `20260901002206_ajusta_banderin_presentacion_fondo_negro`
 20. `20260901004026_cruz_roja_fase1_documental`
+21. `20260901083249_incorpora_oliva_salteras_rosario_cadiz`
 
 ### Observación de ramas Supabase
 
 **PREVIEW BRANCHES → 🟣 DEUDA TÉCNICA AISLADA**
 
 - No existe ninguna preview activa; `list_branches` devuelve únicamente `main`.
-- El último error reproducido en una preview es `MIGRATIONS_FAILED` por SQLSTATE `23514`: `source_links_one_target`.
+- #497 volvió a reproducir el error en una rama limpia y la rama efímera fue retirada automáticamente tras el merge. El resultado sigue siendo `MIGRATIONS_FAILED` por SQLSTATE `23514`: `source_links_one_target`.
 - Primera migración que falla: `20260831135520_publica_centuria_y_corrige_logo_tres_caidas.sql`.
 - Statement: bloque `do $$`, inserción final en `public.source_links (source_id, entity_id, scope, notes)` para la Fuente «Tres Caídas de Triana · emblema oficial».
 - Fila observada: `b225b14b-79fb-46e1-8a3b-040b5d3509b1`; `source_id=a1c237f1-665f-4e36-89ad-de4ff1d25c78`; `entity_id=NULL`; alcance «Identidad visual».
@@ -389,12 +391,12 @@ No quedan bloqueados:
 
 **GRAFO → 🟢 SIN NUEVOS BLOQUEOS**
 
-- No se crean nuevas entidades para completar la agenda del 8 de septiembre.
-- Las relaciones musicales existentes se conservan.
-- Setefilla mantiene su taxonomía real de Romería.
-- Coria gana recorrido estructurado sin alterar IDs ni relaciones.
-- Las cronologías de Osuna, Utrera y Setefilla quedan normalizadas en `outing_schedule_items`.
-- La gestión de #471 retira únicamente vínculos seleccionados y no borra el asset reutilizable del grafo.
+- La Oliva queda publicada con 8 acompañamientos actuales, 27 ediciones y 198 pistas; Rosario queda publicada con 6 acompañamientos actuales, 23 ediciones y 76 pistas.
+- Los 14 acompañamientos del lote tienen Paso y Fuente; no queda ninguno sin extremo relacional o soporte documental.
+- Las 50 ediciones publicadas tienen al menos una pista y una Fuente; las 22 ediciones históricas inventariadas conservan carátula, `alt` y crédito.
+- No hay grupos duplicados de acompañamientos actuales ni `source_links` huérfanos detectados.
+- Santa Marta queda expresamente fuera de los acompañamientos vigentes de Rosario; cualquier relación previa se conserva solo como histórica hasta 2025.
+- El paso de Columna de Cádiz usa un nodo propio y no reutiliza el paso homónimo ya perteneciente a Las Cigarreras en Sevilla.
 
 ## Freeze y siguiente frente
 
@@ -410,14 +412,18 @@ La fase activa vuelve a ser completar y verificar Bandas, Glorias, Romerías, Ig
 
 La limpieza física de assets huérfanos no forma parte de #471 ni de la cola UX: queda como mantenimiento futuro independiente y conservador.
 
-### Siguiente lote editorial · Bandas
+### Lote editorial · Bandas · La Oliva + Rosario
 
-Lote único propuesto, a certificar antes de abrir otro:
+**ESTADO → 🟢 CERTIFICADO · FUSIONADO · APLICADO · DESPLEGADO**
 
-1. **Maestro Tejera**: 23 acompañamientos actuales ya relacionados, pero 0 históricos y 0 ediciones discográficas estructuradas. Máximo retorno documental y relacional inmediato.
-2. **Agrupación Musical Virgen de los Reyes**: 6 acompañamientos actuales, 6 históricos y 21 ediciones con portada; faltan fotografía principal y paleta estructurada, y requiere una auditoría de identidad, vigencias y Fuentes oficiales.
-3. **La Redención**: 6 acompañamientos actuales, 4 históricos, 12 ediciones y 9 novedades musicales; faltan fotografía principal y paleta estructurada, y el catálogo ofrece alto potencial para conectar Marchas, Autores y estrenos.
+- La Oliva de Salteras y Rosario de Cádiz forman el lote cerrado por #497.
+- Identidad, nombres, colores, logotipos y canales oficiales quedan estructurados sobre el modelo existente.
+- Se incorporan relaciones actuales, cronologías prudentes, Fuentes, discografía física y catálogo digital sin inventar inicios no acreditados.
+- No se añade fotografía principal: ausencia de foto prevalece sobre material sin derechos trazables.
+- CI #1375: `SUCCESS`; `npm test`: 520/520; `npm run build`: verde.
+- La migración completa se validó primero contra producción dentro de `BEGIN … ROLLBACK` y después quedó aplicada como versión `20260901083249`.
+- Cruz Roja no se reabre y no se abre un lote adicional en este corte.
 
-Cruz Roja no se reabre salvo hueco demostrado. El lote anterior queda representado por #491 y mantiene 25 acompañamientos actuales, 8 históricos, 41 ediciones con portada y 97 vínculos de Fuente contabilizados en la auditoría de selección.
+**SIGUIENTE ACCIÓN → DETENERSE Y DEVOLVER A DIRECCIÓN.**
 
 La vigilancia de Glorias, Igualás y Extraordinarias continúa únicamente por cambios oficiales de horario, itinerario, acompañamiento, suspensión, aplazamiento o convocatoria nueva.
