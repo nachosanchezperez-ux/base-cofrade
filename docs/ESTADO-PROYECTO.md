@@ -1,6 +1,6 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 31 de agosto de 2026 · 23:06 UTC
+**Corte validado:** 1 de septiembre de 2026 · 06:15 UTC
 
 **Régimen:** `FIRST EDITION FREEZE` activo
 
@@ -11,15 +11,16 @@
 **PRIMERA EDICIÓN → 🟢 CERRADA, CERTIFICADA Y CONGELADA**
 
 - Baseline funcional y estructural: `a025098528351656503460596d28b5318e39daf5` (#432).
-- `main` real validado: `051beae66348a67e3a28c1a475476f29a5898952` (#487).
-- Producción está `READY` sobre ese SHA en `dpl_4LRFMepTp5oiUHSyaHvLP2RwXxWn`.
-- CI #1350 termina `SUCCESS`; validación local actual: `520/520` pruebas y build de producción en verde.
-- Runtime reciente de producción: sin errores detectados.
+- `main` real validado: `b64380487eb42d644460ffcc2abb34d126fbb4a1` (#491).
+- Último commit funcional/editorial: auditoría documental de Cruz Roja, sin cambios de arquitectura ni de modelo.
+- Producción está `READY` sobre ese SHA en `dpl_3D3vVQ4ayzCixvFurrbcbFyAXi7M`.
+- Vercel informa `SUCCESS` para el commit desplegado; runtime reciente sin errores ni fatales.
 - La matriz manual 390/768/1024/1440 de Primera Edición permanece aprobada.
 - El freeze no permite abrir arquitectura, módulos ni una Segunda Edición; sí permite contenido, datos, fotografías, Fuentes, seguridad, legal, bugs e incidencias reales.
 - Cola UX/estructural objeto de este corte: **0 frentes abiertos**.
 - PR UX/estructurales abiertas al cerrar este corte: **0**.
-- La última actuación editorial (#486) y su reconciliación técnica (#487) están cerradas.
+- #467, #470 y #471 siguen cerradas; no se reabre ninguna.
+- La última actuación editorial es #491, primera auditoría documental de Cruz Roja, ya fusionada y desplegada.
 
 ## GitHub · estado de trabajo
 
@@ -52,10 +53,12 @@
 - #486 · conflictos documentales de Presentación al Pueblo: cerrados como contenido.
 - #487 · timestamp remoto de #486 reconciliado en Git sin reejecutar SQL.
 - #467 · cierre UX de Bandas: fusionada con delta final exclusivamente transversal de notas redundantes; la excepción nominal del logo de Virgen de los Reyes fue descartada.
+- #488–#490 · banderín de Presentación al Pueblo y reconciliación del recurso: fusionadas y desplegadas.
+- #491 · primera auditoría documental de Cruz Roja: fusionada y desplegada; completa acompañamientos actuales e históricos, Fuentes y novedades de repertorio sobre el modelo vigente.
 
 ### PR abiertas en este corte
 
-**Ninguna salvo esta sincronización canónica (#484).**
+**Ninguna.**
 
 No debe abrirse un nuevo frente UX/estructural para continuar el cierre. La fase vuelve a ser editorial/documental salvo bug real, seguridad o incidencia verificable compatible con el freeze.
 
@@ -156,12 +159,13 @@ Nota administrativa: el conector de GitHub falló al quitar el estado draft de #
 
 **PRODUCCIÓN → 🟢 ESTABLE**
 
-- Último deployment validado: `dpl_4LRFMepTp5oiUHSyaHvLP2RwXxWn`.
-- Commit desplegado: `051beae66348a67e3a28c1a475476f29a5898952`.
+- Último deployment validado: `dpl_3D3vVQ4ayzCixvFurrbcbFyAXi7M`.
+- Commit desplegado: `b64380487eb42d644460ffcc2abb34d126fbb4a1`.
 - Estado: `READY`; target: producción.
 - Dominios canónicos: `https://hilocofrade.es` y `https://www.hilocofrade.es`.
-- CI #1350 termina `SUCCESS`; Vercel informa `SUCCESS` para el commit desplegado.
+- Vercel informa `SUCCESS` para el commit desplegado.
 - Comprobación runtime del deployment y del proyecto: sin `error/fatal` detectado en la última hora.
+- Smoke de producción: Home, Hermandades, Bandas, Procesiones de Gloria, Igualás y Ensayos, Extraordinarias, Tira del hilo (`/pregunta`) y Panel responden HTTP 200. Panel redirige correctamente a `/panel/login` sin sesión.
 - Las fichas de Procesiones de Gloria son dinámicas (`force-dynamic`), por lo que las correcciones editoriales de Supabase se reflejan sin un redeploy de aplicación.
 - El commit que actualiza este documento es exclusivamente documental y no altera el baseline funcional anterior.
 
@@ -305,13 +309,14 @@ Una decisión posterior de Dirección deberá abrir un corte independiente y com
 
 **PROYECTO DE PRODUCCIÓN → 🟢 `ACTIVE_HEALTHY`**
 
-El cierre #471 no añade DDL, RLS ni nuevas tablas. #467 tampoco modifica Supabase. Los cambios posteriores son editoriales o correcciones reales sobre el modelo vigente.
+El cierre técnico permanece intacto. Los cambios posteriores son editoriales o correcciones reales sobre el modelo vigente.
 
-**GIT ↔ SUPABASE → 🟢 17/17 VERSIONES RECONCILIADAS**
+**GIT ↔ SUPABASE → 🟢 20/20 VERSIONES RECONCILIADAS EN PRODUCCIÓN**
 
-- No se reejecutó SQL ni se modificaron datos de producción durante esta reconciliación.
-- Las versiones `20260831154654` y `20260831225216` se nombran en Git como fueron registradas realmente en remoto.
-- `20260831150414` queda representada por un marcador no-op: producción registró una segunda aplicación histórica de Centuria, pero una base nueva ya obtiene el resultado final con la migración idempotente `20260831135520`; no se repite DML.
+- Última versión: `20260901004026_cruz_roja_fase1_documental`.
+- El proyecto productivo responde en PostgreSQL 17.6.1, región `eu-west-1`.
+- La auditoría de este corte no ejecutó DDL, no modificó RLS y no reescribió migraciones históricas.
+- La continuidad editorial puede seguir utilizando las tablas y relaciones existentes.
 
 Migraciones registradas en producción en el momento de este corte:
 
@@ -332,13 +337,39 @@ Migraciones registradas en producción en el momento de este corte:
 15. `20260831223715_corrige_video_traslado_risco_en_salida`
 16. `20260831225216_completa_presentacion_pueblo_fase2`
 17. `20260831230357_cierra_conflictos_presentacion_pueblo`
+18. `20260901001916_presenta_banderin_presentacion_al_pueblo`
+19. `20260901002206_ajusta_banderin_presentacion_fondo_negro`
+20. `20260901004026_cruz_roja_fase1_documental`
 
 ### Observación de ramas Supabase
 
-- El proyecto productivo responde `ACTIVE_HEALTHY` en PostgreSQL 17.6.1 (`eu-west-1`).
-- `list_branches` informa únicamente `main`, pero su estado de integración continúa como `MIGRATIONS_FAILED` mientras `preview_project_status` figura `ACTIVE_HEALTHY`.
-- Este corte no intenta reparar ni reinterpretar ese estado porque #471/#467 no requieren una rama de desarrollo ni una nueva reconciliación de esquema.
-- Antes de volver a usar Supabase Preview Branches debe abrirse una reconciliación específica y comprobar la causa real del estado `MIGRATIONS_FAILED`; no asumir que el baseline reproducible anterior sigue vigente sin esa comprobación.
+**PREVIEW BRANCHES → 🟣 DEUDA TÉCNICA AISLADA**
+
+- No existe ninguna preview activa; `list_branches` devuelve únicamente `main`.
+- El último error reproducido en una preview es `MIGRATIONS_FAILED` por SQLSTATE `23514`: `source_links_one_target`.
+- Primera migración que falla: `20260831135520_publica_centuria_y_corrige_logo_tres_caidas.sql`.
+- Statement: bloque `do $$`, inserción final en `public.source_links (source_id, entity_id, scope, notes)` para la Fuente «Tres Caídas de Triana · emblema oficial».
+- Fila observada: `b225b14b-79fb-46e1-8a3b-040b5d3509b1`; `source_id=a1c237f1-665f-4e36-89ad-de4ff1d25c78`; `entity_id=NULL`; alcance «Identidad visual».
+- Precondición asumida: existencia previa del slug `banda-cornetas-tambores-santisimo-cristo-tres-caidas-sevilla`.
+- En producción el nodo, la Fuente y su vínculo existen válidamente. En una rama nueva, las migraciones se ejecutan antes del seed; el seed mínimo solo crea Maestro Tejera y Las Cigarreras. La subconsulta devuelve `NULL` y la fila queda con cero destinos, cuando la restricción exige exactamente uno.
+- Clasificación principal: **D · DML histórico no reproducible**. Factores contribuyentes: baseline de esquema sin datos productivos y seed mínimo posterior a las migraciones.
+- La migración ya aplicada en producción no se edita por conveniencia de branching.
+- Deuda formal: #492 · `Reconciliar Supabase Preview Branches`.
+- Prioridad: resolver antes del próximo cambio de esquema.
+
+Hasta cerrar #492 quedan bloqueados:
+
+- nuevo DDL;
+- nuevas tablas;
+- nuevas migraciones estructurales;
+- cambios de RLS.
+
+No quedan bloqueados:
+
+- contenido y Fuentes;
+- fotografías trazables;
+- discografía, estrenos y acompañamientos;
+- históricos y relaciones soportadas por el modelo actual.
 
 ## Seguridad, Auth, Storage y Legal
 
@@ -370,8 +401,20 @@ Migraciones registradas en producción en el momento de este corte:
 
 **MODO ACTIVO → EDITORIAL / DOCUMENTAL.**
 
+**NUEVO DDL / NUEVA TABLA / MIGRACIÓN ESTRUCTURAL / RLS → ⛔ BLOQUEADO HASTA CERRAR #492.**
+
 La fase activa vuelve a ser completar y verificar Bandas, Glorias, Romerías, Igualás, Hermandades, fotografías y Fuentes sobre el modelo cerrado. No abrir nuevas funcionalidades por inercia; cualquier excepción debe justificarse como bug real, seguridad o incidencia verificable compatible con el freeze.
 
 La limpieza física de assets huérfanos no forma parte de #471 ni de la cola UX: queda como mantenimiento futuro independiente y conservador.
 
-Siguiente prioridad editorial ya documentada: revisar las citas del 10–15 de septiembre por proximidad, empezando por Santa María del Buen Aire, Gerena, Castillo de Lebrija, Dolores de Camas, Vera Cruz de Tocina y Dolores de La Rinconada, sin inventar horarios ni acompañamientos no confirmados.
+### Siguiente lote editorial · Bandas
+
+Lote único propuesto, a certificar antes de abrir otro:
+
+1. **Maestro Tejera**: 23 acompañamientos actuales ya relacionados, pero 0 históricos y 0 ediciones discográficas estructuradas. Máximo retorno documental y relacional inmediato.
+2. **Agrupación Musical Virgen de los Reyes**: 6 acompañamientos actuales, 6 históricos y 21 ediciones con portada; faltan fotografía principal y paleta estructurada, y requiere una auditoría de identidad, vigencias y Fuentes oficiales.
+3. **La Redención**: 6 acompañamientos actuales, 4 históricos, 12 ediciones y 9 novedades musicales; faltan fotografía principal y paleta estructurada, y el catálogo ofrece alto potencial para conectar Marchas, Autores y estrenos.
+
+Cruz Roja no se reabre salvo hueco demostrado. El lote anterior queda representado por #491 y mantiene 25 acompañamientos actuales, 8 históricos, 41 ediciones con portada y 97 vínculos de Fuente contabilizados en la auditoría de selección.
+
+La vigilancia de Glorias, Igualás y Extraordinarias continúa únicamente por cambios oficiales de horario, itinerario, acompañamiento, suspensión, aplazamiento o convocatoria nueva.
