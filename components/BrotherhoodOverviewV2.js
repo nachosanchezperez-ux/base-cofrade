@@ -47,7 +47,8 @@ function scheduleEntries(value = '') {
     .filter(Boolean)
     .map((entry, index) => {
       const separator = entry.indexOf(':')
-      const hasDays = separator > 0 && separator < 52
+      const startsWithTime = /^\d{1,2}:\d{2}/.test(entry)
+      const hasDays = !startsWithTime && separator > 0 && separator < 52
       const detail = hasDays ? entry.slice(separator + 1).trim() : entry
 
       return {

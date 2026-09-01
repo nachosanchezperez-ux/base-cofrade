@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
 import test from 'node:test'
+import { runInNewContext } from 'node:vm'
 
 const migrationUrl = new URL(
   '../supabase/migrations/20260901135411_documenta_horarios_templos_septiembre_2026.sql',
@@ -61,4 +62,16 @@ test('la ficha presenta el campo libre como horarios del templo y respeta sus sa
   assert.match(styles, /\.timeChip \{[\s\S]*?font-size: 12px/)
   assert.match(styles, /\.seatActions a \{[\s\S]*?min-height: 44px/)
   assert.match(styles, /\.seatActions a:focus-visible/)
+})
+
+test('un rango compacto no se confunde con una etiqueta de días', async () => {
+  const overview = await source('components/BrotherhoodOverviewV2.js')
+  const start = overview.indexOf('function scheduleEntries')
+  const end = overview.indexOf('\n\nfunction scheduleLines', start)
+  const scheduleEntries = runInNewContext(`(${overview.slice(start, end)})`)
+
+  assert.equal(
+    JSON.stringify(scheduleEntries('18:30–20:30').map(({ days, detail }) => ({ days, detail }))),
+    JSON.stringify([{ days: '', detail: '18:30–20:30' }]),
+  )
 })
