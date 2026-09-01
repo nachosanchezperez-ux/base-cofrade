@@ -1,21 +1,26 @@
-/* Contraste específico para identidades de banda con secundario dorado claro. */
-.bandPageArahal #repertorio {
+/* Contraste de lectura para fichas cuya identidad usa el dorado claro #C5A253 como secundario. */
+[style*="#C5A253"] #repertorio {
   color: #332f35;
 }
 
-.bandPageArahal #repertorio h2,
-.bandPageArahal #repertorio h3,
-.bandPageArahal #repertorio h4,
-.bandPageArahal #repertorio summary b {
+[style*="#C5A253"] #repertorio h2,
+[style*="#C5A253"] #repertorio h3,
+[style*="#C5A253"] #repertorio h4,
+[style*="#C5A253"] #repertorio summary b {
   color: #332f35 !important;
 }
 
-.bandPageArahal #repertorio p,
-.bandPageArahal #repertorio summary span,
-.bandPageArahal #repertorio article > div > strong {
+[style*="#C5A253"] #repertorio p,
+[style*="#C5A253"] #repertorio summary span,
+[style*="#C5A253"] #repertorio article > div > strong {
   color: #5d565f !important;
 }
 
-.bandPageArahal #repertorio article span {
+[style*="#C5A253"] #repertorio article span {
   color: #4b454d !important;
+}
+
+/* Si no existe un Paso canónico, la posición es el único texto de paso: no se repite como detalle. */
+#acompanamientos-historicos article > div:last-child > div:not(:has(> strong)) > small {
+  display: none;
 }
