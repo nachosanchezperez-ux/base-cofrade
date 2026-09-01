@@ -96,7 +96,7 @@ export default function BrotherhoodOverviewV2({ brotherhood, heroFactLabels = []
 
               {seat.horarioApertura ? (
                 <div className={styles.hours}>
-                  <small>Horario de apertura</small>
+                  <small>Horarios del templo</small>
                   <strong>{seat.horarioApertura}</strong>
                   {verified ? <span>Verificado · {verified}</span> : null}
                 </div>
