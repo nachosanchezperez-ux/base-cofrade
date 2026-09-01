@@ -1,6 +1,6 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 1 de septiembre de 2026 · 16:42 UTC
+**Corte validado:** 1 de septiembre de 2026 · 18:50 UTC
 
 **Régimen:** `FIRST EDITION FREEZE` activo
 
@@ -11,18 +11,18 @@
 **PRIMERA EDICIÓN → 🟢 CERRADA, CERTIFICADA Y CONGELADA**
 
 - Baseline funcional y estructural: `a025098528351656503460596d28b5318e39daf5` (#432).
-- Último commit funcional validado: `803b064979e4943eed37ce4680c9ed8013c4c3a6` (#511).
-- HEAD real de `main` observado inmediatamente antes de esta sincronización: `803b064979e4943eed37ce4680c9ed8013c4c3a6` (#511).
+- Último commit funcional validado: `c9f77dd6bc3c7f759d9cffe616acb814a382ed1f` (#513).
+- HEAD real de `main` observado inmediatamente antes de esta sincronización: `c9f77dd6bc3c7f759d9cffe616acb814a382ed1f` (#513).
 - #506 aplica la presentación visual de los horarios y #508 la integra expresamente dentro de la Sede canónica por indicación de Dirección; no modifican datos, arquitectura, esquema ni RLS. El commit que contiene este propio corte puede avanzar de nuevo el HEAD sin convertirse en un cambio funcional adicional; para el SHA vivo prevalece siempre `main` real.
 - Deployment de producción observado inmediatamente antes de esta sincronización: `dpl_BDLQdCJ4xhZ5J92bRJ8UeRDFXU2b`, `READY`, sobre `dd6f52a139b74db0c0e5b6f81823badcae72d662` (#506). #508 está fusionada y su preview `dpl_DC31YzjuhBECQnTb7ScJTq6pgutN` permanece `READY`; el webhook de producción no había generado aún un deployment nuevo en el momento del corte.
-- Supabase productivo registra hasta `20260901170000_certifica_las_aguas`; Git y remoto quedan reconciliados en 28/28 versiones.
+- Supabase productivo registra hasta `20260901180000_completa_paso_rosario_las_aguas`; Git y remoto quedan reconciliados en 29/29 versiones.
 - Vercel informa `SUCCESS` para el HEAD desplegado; el deployment actual y los últimos 15 minutos del proyecto no registran errores ni fatales.
 - La matriz manual 390/768/1024/1440 de Primera Edición permanece aprobada.
 - El freeze no permite abrir arquitectura, módulos ni una Segunda Edición; sí permite contenido, datos, fotografías, Fuentes, seguridad, legal, bugs e incidencias reales.
 - Cola UX/estructural creada por este lote: **0 frentes abiertos**.
 - PR abiertas al cerrar este corte: **0**.
 - #467, #470 y #471 siguen cerradas; no se reabre ninguna.
-- La última actuación editorial es #511, certificación documental de Las Aguas. La última corrección funcional autorizada sigue siendo #508.
+- La última actuación editorial es #513, corrección documental del paso del Rosario de Las Aguas. La última corrección funcional autorizada sigue siendo #508.
 
 ## GitHub · estado de trabajo
 
@@ -66,6 +66,7 @@
 - #508 · integración de horarios en Sede: fusionada; presenta templo, dirección, horario y acceso como una única Sede canónica y mantiene `places.opening_hours_text` como origen.
 - #509 · Dulce Nombre de Bellavista, Las Aguas, La Bofetá, Jesús Despojado y La Macarena: fichas base publicadas; tres salidas de septiembre confirmadas y trazables.
 - #511 · Las Aguas: ficha documental certificada con titulares, autorías, pasos, hábito, colores, capataz, música, horarios y Fuentes.
+- #513 · Las Aguas: incorpora el tercer paso, Nuestra Señora del Rosario, sus acompañamientos de Gloria y las imágenes secundarias del misterio.
 
 ### PR abiertas en este corte
 
@@ -323,9 +324,9 @@ Una decisión posterior de Dirección deberá abrir un corte independiente y com
 
 El cierre técnico permanece intacto. Los cambios posteriores son editoriales o correcciones reales sobre el modelo vigente.
 
-**GIT ↔ SUPABASE → 🟢 28/28 VERSIONES RECONCILIADAS EN PRODUCCIÓN**
+**GIT ↔ SUPABASE → 🟢 29/29 VERSIONES RECONCILIADAS EN PRODUCCIÓN**
 
-- Última versión: `20260901170000_certifica_las_aguas`.
+- Última versión: `20260901180000_completa_paso_rosario_las_aguas`.
 - El proyecto productivo responde en PostgreSQL 17.6.1, región `eu-west-1`.
 - La auditoría de este corte no ejecutó DDL, no modificó RLS y no reescribió migraciones históricas; #505 es DML idempotente.
 - Git Integration aplicó `20260901144529` al fusionar #505. Una segunda ejecución manual idempotente quedó registrada como `20260901145701`; no duplicó datos. La segunda versión se refleja en Git mediante un archivo vacío de reconciliación, sin repetir el SQL canónico ni alterar el historial remoto.
@@ -362,6 +363,7 @@ Migraciones registradas en producción en el momento de este corte:
 26. `20260901145701_certifica_arahal_y_los_gitanos`
 27. `20260901160000_completa_hermandades_septiembre_octubre`
 28. `20260901170000_certifica_las_aguas`
+29. `20260901180000_completa_paso_rosario_las_aguas`
 
 ### Observación de ramas Supabase
 
@@ -423,7 +425,7 @@ No quedan bloqueados:
 - Santa Marta queda expresamente fuera de los acompañamientos vigentes de Rosario; cualquier relación previa se conserva solo como histórica hasta 2025.
 - El paso de Columna de Cádiz usa un nodo propio y no reutiliza el paso homónimo ya perteneciente a Las Cigarreras en Sevilla.
 - El Juncal queda relacionado con el paso de Nuestra Señora del Juncal y con Luis Miguel Sánchez Fajardo y Jesús Sánchez Fajardo como capataces de su única cita mixta de igualá y ensayo.
-- Las Aguas queda con 4 titulares publicados, 2 pasos completos, 3 posiciones musicales actuales, Gonzalo Carrión como capataz de ambos pasos, 1 hábito, 2 colores y trazabilidad de Fuente; no presenta slugs duplicados ni vínculos de Fuente inválidos.
+- Las Aguas queda con 4 titulares publicados y 3 pasos completos. El misterio relaciona sus 5 imágenes; el paso de gloria vincula a Nuestra Señora del Rosario, Rosario de Cádiz en Cruz de Guía y Mairena tras el paso. Conserva morado y blanco, sin slugs duplicados ni vínculos de Fuente inválidos.
 - La Divina Pastora de Padre Pío queda relacionada con su paso y con Ricardo Manuel López Ruiz «Almansa» como capataz de su única cita mixta de igualá y mudá.
 
 ## Freeze y siguiente frente
@@ -530,12 +532,12 @@ La limpieza física de assets huérfanos no forma parte de #471 ni de la cola UX
 
 **ESTADO → 🟢 CERTIFICADO · FUSIONADO · APLICADO · DESPLEGADO**
 
-- #511 completa cuatro titulares, dos pasos, hábito, colores, capataz, música, horarios y Fuentes.
+- #511 completa cuatro titulares, los dos pasos del Lunes Santo, hábito, colores, capataz, música, horarios y Fuentes. #513 corrige el inventario con el tercer paso, correspondiente a Nuestra Señora del Rosario.
 - Conserva los conflictos documentales sin falsa precisión: Guadalupe queda fechada en 1965–1966 y el Rosario permanece como obra anónima del siglo XVIII.
 - Los colores no reciben códigos HEX inventados y no se añade fotografía sin derechos trazables.
 - La migración se ejecutó dos veces consecutivas dentro de una transacción con rollback y quedó aplicada como `20260901170000_certifica_las_aguas`.
-- Auditoría productiva: 4 titulares, 2 pasos, 3 acompañamientos, 2 relaciones actuales de capataz, 1 hábito, 2 colores, 0 slugs duplicados y 0 vínculos de Fuente inválidos.
-- CI #1403 y Vercel: `SUCCESS`; producción sobre `803b064979e4943eed37ce4680c9ed8013c4c3a6`.
+- Auditoría productiva tras #513: 4 titulares, 3 pasos, 5 imágenes en el misterio, 2 acompañamientos propios de la procesión de Gloria, morado y blanco, 0 slugs duplicados y 0 vínculos de Fuente inválidos.
+- CI #1403 y #1407, y Vercel: `SUCCESS`; producción funcional sobre `c9f77dd6bc3c7f759d9cffe616acb814a382ed1f`.
 
 **SIGUIENTE ACCIÓN → CERTIFICAR LA BOFETÁ CON EL MISMO ESTÁNDAR DOCUMENTAL.**
 
