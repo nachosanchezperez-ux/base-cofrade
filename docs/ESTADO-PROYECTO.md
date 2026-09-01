@@ -1,6 +1,6 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 1 de septiembre de 2026 · 07:50 UTC
+**Corte validado:** 1 de septiembre de 2026 · 07:52 UTC
 
 **Régimen:** `FIRST EDITION FREEZE` activo
 
@@ -12,9 +12,9 @@
 
 - Baseline funcional y estructural: `a025098528351656503460596d28b5318e39daf5` (#432).
 - Último commit funcional/editorial validado: `b64380487eb42d644460ffcc2abb34d126fbb4a1` (#491).
-- HEAD real de `main`: `57fe8c2336c37e5cde626f636b4c6931128b51fb` (#494).
-- #493 y #494 son sincronizaciones exclusivamente documentales; no cambian el baseline funcional ni la fase activa.
-- Deployment actual de producción: `dpl_pZvvKeFKUvyDfgFzWj2S3vtommPR`, `READY`, sobre el HEAD documental `57fe8c2336c37e5cde626f636b4c6931128b51fb`.
+- HEAD real de `main` observado inmediatamente antes de esta sincronización: `1489ba74af6afb31f66a82d98b8c01d29ef1e163` (#495).
+- #493, #494 y #495 son sincronizaciones exclusivamente documentales; no cambian el baseline funcional ni la fase activa. El commit que contiene este propio corte puede avanzar de nuevo el HEAD sin convertirse en baseline funcional; para el SHA vivo prevalece siempre `main` real.
+- Deployment de producción observado inmediatamente antes de esta sincronización: `dpl_EYiv3VZGPbzzpEApbEtwPAY7xMSE`, `READY`, sobre el HEAD documental `1489ba74af6afb31f66a82d98b8c01d29ef1e163`. Un deployment posterior provocado solo por este documento conserva el mismo baseline funcional.
 - El último deployment funcional auditado antes de esas sincronizaciones permanece `READY` sobre `b64380487eb42d644460ffcc2abb34d126fbb4a1` en `dpl_3D3vVQ4ayzCixvFurrbcbFyAXi7M`.
 - Vercel informa `SUCCESS` para el HEAD desplegado; el deployment actual y la última hora del proyecto no registran errores ni fatales.
 - La matriz manual 390/768/1024/1440 de Primera Edición permanece aprobada.
@@ -161,14 +161,14 @@ Nota administrativa: el conector de GitHub falló al quitar el estado draft de #
 
 **PRODUCCIÓN → 🟢 ESTABLE**
 
-- Deployment actual de producción: `dpl_pZvvKeFKUvyDfgFzWj2S3vtommPR`.
-- Commit desplegado: `57fe8c2336c37e5cde626f636b4c6931128b51fb`; es un HEAD documental y conserva como último cambio funcional/editorial `b64380487eb42d644460ffcc2abb34d126fbb4a1` (#491).
+- Deployment de producción observado antes de este commit documental: `dpl_EYiv3VZGPbzzpEApbEtwPAY7xMSE`.
+- Commit desplegado en ese corte: `1489ba74af6afb31f66a82d98b8c01d29ef1e163`; es un HEAD documental y conserva como último cambio funcional/editorial `b64380487eb42d644460ffcc2abb34d126fbb4a1` (#491).
 - Deployment funcional de referencia: `dpl_3D3vVQ4ayzCixvFurrbcbFyAXi7M`, sobre `b64380487eb42d644460ffcc2abb34d126fbb4a1`.
 - Estado: `READY`; target: producción.
 - Dominios canónicos: `https://hilocofrade.es` y `https://www.hilocofrade.es`.
 - Vercel informa `SUCCESS` para el commit desplegado.
 - Comprobación runtime: el deployment actual no registra `error/fatal` y el proyecto no presenta ninguno en la última hora. La vista agregada de 24 horas conserva dos cierres tempranos de stream en `/extraordinarias/[slug].rsc`, ambos ligados a un deployment anterior y sin recurrencia en el actual; no constituyen un bloqueo de producción.
-- Smoke de producción sobre `dpl_pZvvKeFKUvyDfgFzWj2S3vtommPR`: Home, Hermandades, Bandas, Procesiones de Gloria, Igualás y Ensayos, Extraordinarias, Tira del hilo (`/pregunta`) y Panel responden HTTP 200. Panel resuelve correctamente a `/panel/login` sin sesión; `www` devuelve redirección permanente al dominio canónico.
+- Smoke de producción sobre `dpl_EYiv3VZGPbzzpEApbEtwPAY7xMSE`: Home, Hermandades, Bandas, Procesiones de Gloria, Igualás y Ensayos, Extraordinarias, Tira del hilo (`/pregunta`) y Panel responden HTTP 200. Panel resuelve correctamente a `/panel/login` sin sesión; `www` devuelve redirección permanente al dominio canónico.
 - Las fichas de Procesiones de Gloria son dinámicas (`force-dynamic`), por lo que las correcciones editoriales de Supabase se reflejan sin un redeploy de aplicación.
 - El commit que actualiza este documento es exclusivamente documental y no altera el baseline funcional anterior.
 
