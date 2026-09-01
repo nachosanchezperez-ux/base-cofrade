@@ -1,6 +1,6 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 1 de septiembre de 2026 · 14:06 UTC
+**Corte validado:** 1 de septiembre de 2026 · 14:20 UTC
 
 **Régimen:** `FIRST EDITION FREEZE` activo
 
@@ -11,18 +11,18 @@
 **PRIMERA EDICIÓN → 🟢 CERRADA, CERTIFICADA Y CONGELADA**
 
 - Baseline funcional y estructural: `a025098528351656503460596d28b5318e39daf5` (#432).
-- Último commit funcional/editorial validado: `c4e422a7a9448fc8a8f12a25fdd0d2244a7cdb1b` (#499).
-- HEAD real de `main` observado inmediatamente antes de esta sincronización: `c4e422a7a9448fc8a8f12a25fdd0d2244a7cdb1b` (#499).
-- #499 avanza el baseline editorial y aplica una corrección mínima de presentación sobre el módulo existente de Hermandades; no modifica arquitectura, esquema ni RLS. El commit que contiene este propio corte puede avanzar de nuevo el HEAD sin convertirse en un cambio funcional adicional; para el SHA vivo prevalece siempre `main` real.
-- Deployment de producción observado inmediatamente antes de esta sincronización: `dpl_J9PdCHAaiHcMuZpyZKrGsPRBJo3Y`, `READY`, sobre `c4e422a7a9448fc8a8f12a25fdd0d2244a7cdb1b`.
-- Supabase productivo registra la migración DML `20260901135411_documenta_horarios_templos_septiembre_2026`; Git y remoto quedan reconciliados en 22/22 versiones.
+- Último commit funcional/editorial validado: `2339121abf39c45916f00e208167265448ba0ccb` (#501).
+- HEAD real de `main` observado inmediatamente antes de esta sincronización: `2339121abf39c45916f00e208167265448ba0ccb` (#501).
+- #501 completa Maestro Tejera y Centuria Romana Macarena con datos y relaciones sobre el modelo vigente; no modifica arquitectura, esquema ni RLS. El commit que contiene este propio corte puede avanzar de nuevo el HEAD sin convertirse en un cambio funcional adicional; para el SHA vivo prevalece siempre `main` real.
+- Deployment de producción observado inmediatamente antes de esta sincronización: `dpl_FaSFT8zoET8YrMSZUJtLQH6t1cXf`, `READY`, sobre `2339121abf39c45916f00e208167265448ba0ccb`.
+- Supabase productivo registra la migración DML `20260901141718_completa_maestro_tejera_y_centuria`; Git y remoto quedan reconciliados en 23/23 versiones.
 - Vercel informa `SUCCESS` para el HEAD desplegado; el deployment actual y los últimos 15 minutos del proyecto no registran errores ni fatales.
 - La matriz manual 390/768/1024/1440 de Primera Edición permanece aprobada.
 - El freeze no permite abrir arquitectura, módulos ni una Segunda Edición; sí permite contenido, datos, fotografías, Fuentes, seguridad, legal, bugs e incidencias reales.
 - Cola UX/estructural objeto de este corte: **0 frentes abiertos**.
 - PR UX/estructurales abiertas al cerrar este corte: **0**.
 - #467, #470 y #471 siguen cerradas; no se reabre ninguna.
-- La última actuación editorial es #499, horarios de La Milagrosa, Baratillo, Estrella y Cachorro, ya fusionada, aplicada y desplegada sin publicar fichas que permanecían en borrador.
+- La última actuación editorial es #501, lote Maestro Tejera + Centuria Romana Macarena, ya fusionado, aplicado, desplegado y auditado.
 
 ## GitHub · estado de trabajo
 
@@ -59,6 +59,7 @@
 - #491 · primera auditoría documental de Cruz Roja: fusionada y desplegada; completa acompañamientos actuales e históricos, Fuentes y novedades de repertorio sobre el modelo vigente.
 - #497 · La Oliva de Salteras y Rosario de Cádiz: fusionada, aplicada y desplegada; incorpora identidad, 14 acompañamientos vigentes, 50 ediciones, 274 pistas y Fuentes trazables sin DDL ni RLS.
 - #499 · horarios de templos y sedes: fusionada, aplicada y desplegada; documenta La Milagrosa, Baratillo, Estrella y Cachorro con Fuentes oficiales, reutiliza el modelo vigente y preserva los borradores editoriales.
+- #501 · Maestro Tejera y Centuria Romana Macarena: fusionada, aplicada y desplegada; completa 28 ediciones y 351 pistas de Maestro Tejera, 76 pistas históricas pendientes de Centuria y dos elementos patrimoniales con Fuentes oficiales, sin DDL ni RLS.
 
 ### PR abiertas en este corte
 
@@ -163,16 +164,16 @@ Nota administrativa: el conector de GitHub falló al quitar el estado draft de #
 
 **PRODUCCIÓN → 🟢 ESTABLE**
 
-- Deployment de producción observado antes de este commit documental: `dpl_J9PdCHAaiHcMuZpyZKrGsPRBJo3Y`.
-- Commit desplegado en ese corte: `c4e422a7a9448fc8a8f12a25fdd0d2244a7cdb1b` (#499), último cambio funcional/editorial validado.
+- Deployment de producción observado antes de este commit documental: `dpl_FaSFT8zoET8YrMSZUJtLQH6t1cXf`.
+- Commit desplegado en ese corte: `2339121abf39c45916f00e208167265448ba0ccb` (#501), último cambio funcional/editorial validado.
 - Estado: `READY`; target: producción.
 - Dominios canónicos: `https://hilocofrade.es` y `https://www.hilocofrade.es`.
 - Vercel informa `SUCCESS` para el commit desplegado.
-- Comprobación runtime: el deployment actual no registra `error/fatal` en los últimos 15 minutos.
-- Smoke específico de #499: la ficha pública de El Baratillo responde HTTP 200 sobre `dpl_J9PdCHAaiHcMuZpyZKrGsPRBJo3Y` y muestra «Horarios del templo», el texto multilínea completo y «Verificado · sept 2026».
-- El smoke general anterior de Home, Hermandades, Bandas, Procesiones de Gloria, Igualás y Ensayos, Extraordinarias, Tira del hilo (`/pregunta`) y Panel permanece válido; #499 no modifica rutas.
+- Comprobación runtime: el deployment actual no registra `error/fatal` en la última hora.
+- Smoke específico de #501: `/bandas`, Maestro Tejera y Centuria Romana Macarena responden HTTP 200 sobre `dpl_FaSFT8zoET8YrMSZUJtLQH6t1cXf`; `www` redirige de forma permanente al dominio canónico.
+- El smoke general anterior de Home, Hermandades, Bandas, Procesiones de Gloria, Igualás y Ensayos, Extraordinarias, Tira del hilo (`/pregunta`) y Panel permanece válido; #501 no modifica rutas ni presentación.
 - Las fichas de Procesiones de Gloria son dinámicas (`force-dynamic`), por lo que las correcciones editoriales de Supabase se reflejan sin un redeploy de aplicación.
-- El commit que actualiza este documento es exclusivamente documental y no altera el baseline editorial de #499.
+- El commit que actualiza este documento es exclusivamente documental y no altera el baseline editorial de #501.
 
 ## SEO P0 · mantenimiento técnico
 
@@ -316,12 +317,12 @@ Una decisión posterior de Dirección deberá abrir un corte independiente y com
 
 El cierre técnico permanece intacto. Los cambios posteriores son editoriales o correcciones reales sobre el modelo vigente.
 
-**GIT ↔ SUPABASE → 🟢 22/22 VERSIONES RECONCILIADAS EN PRODUCCIÓN**
+**GIT ↔ SUPABASE → 🟢 23/23 VERSIONES RECONCILIADAS EN PRODUCCIÓN**
 
-- Última versión: `20260901135411_documenta_horarios_templos_septiembre_2026`.
+- Última versión: `20260901141718_completa_maestro_tejera_y_centuria`.
 - El proyecto productivo responde en PostgreSQL 17.6.1, región `eu-west-1`.
-- La auditoría de este corte no ejecutó DDL, no modificó RLS y no reescribió migraciones históricas.
-- La integración automática ya había registrado `20260901135411`; una aplicación manual idempotente añadió temporalmente una segunda entrada de historial. Tras comprobar que la versión temporal contenía una sola sentencia frente a las ocho de la versión canónica, se retiró exclusivamente esa entrada extra. Los datos no se duplicaron y el historial volvió a 22/22.
+- La auditoría de este corte no ejecutó DDL, no modificó RLS y no reescribió migraciones históricas; #501 es DML idempotente.
+- En el corte de #499, la integración automática ya había registrado `20260901135411`; una aplicación manual idempotente añadió temporalmente una segunda entrada de historial. Tras comprobarla, se retiró exclusivamente esa entrada extra. Los datos no se duplicaron y el historial quedó reconciliado antes de incorporar #501.
 - La continuidad editorial puede seguir utilizando las tablas y relaciones existentes.
 
 Migraciones registradas en producción en el momento de este corte:
@@ -348,13 +349,14 @@ Migraciones registradas en producción en el momento de este corte:
 20. `20260901004026_cruz_roja_fase1_documental`
 21. `20260901083249_incorpora_oliva_salteras_rosario_cadiz`
 22. `20260901135411_documenta_horarios_templos_septiembre_2026`
+23. `20260901141718_completa_maestro_tejera_y_centuria`
 
 ### Observación de ramas Supabase
 
 **PREVIEW BRANCHES → 🟣 DEUDA TÉCNICA AISLADA**
 
-- No existe ninguna preview activa; `list_branches` devuelve únicamente `main`.
-- #497 volvió a reproducir el error en una rama limpia y la rama efímera fue retirada automáticamente tras el merge. El resultado sigue siendo `MIGRATIONS_FAILED` por SQLSTATE `23514`: `source_links_one_target`.
+- No existe ninguna preview activa tras el merge; `list_branches` devuelve únicamente `main`. El estado de branching conserva `MIGRATIONS_FAILED`, aunque el proyecto productivo permanece `ACTIVE_HEALTHY`.
+- #501 volvió a reproducir el error en una rama limpia y la rama efímera fue retirada automáticamente tras el merge. El resultado sigue siendo `MIGRATIONS_FAILED` por SQLSTATE `23514`: `source_links_one_target`.
 - Primera migración que falla: `20260831135520_publica_centuria_y_corrige_logo_tres_caidas.sql`.
 - Statement: bloque `do $$`, inserción final en `public.source_links (source_id, entity_id, scope, notes)` para la Fuente «Tres Caídas de Triana · emblema oficial».
 - Fila observada: `b225b14b-79fb-46e1-8a3b-040b5d3509b1`; `source_id=a1c237f1-665f-4e36-89ad-de4ff1d25c78`; `entity_id=NULL`; alcance «Identidad visual».
@@ -394,6 +396,10 @@ No quedan bloqueados:
 
 **GRAFO → 🟢 SIN NUEVOS BLOQUEOS**
 
+- Maestro Tejera queda con 23 acompañamientos actuales, 28 ediciones y 351 pistas; Centuria Romana Macarena queda con 1 relación musical actual, 38 ediciones y 119 pistas totales.
+- Las 28 ediciones de Maestro Tejera y las 38 de Centuria tienen al menos una pista y una Fuente; los acompañamientos del lote no quedan sin Fuente.
+- Centuria incorpora dos nodos patrimoniales documentados: uniforme de 2018 y escudo del uniforme presentado en 2026.
+- La auditoría posterior a #501 no detecta grupos duplicados de acompañamientos actuales.
 - La Oliva queda publicada con 8 acompañamientos actuales, 27 ediciones y 198 pistas; Rosario queda publicada con 6 acompañamientos actuales, 23 ediciones y 76 pistas.
 - Los 14 acompañamientos del lote tienen Paso y Fuente; no queda ninguno sin extremo relacional o soporte documental.
 - Las 50 ediciones publicadas tienen al menos una pista y una Fuente; las 22 ediciones históricas inventariadas conservan carátula, `alt` y crédito.
@@ -439,6 +445,20 @@ La limpieza física de assets huérfanos no forma parte de #471 ni de la cola UX
 - CI #1379: `SUCCESS`; `npm test`: 522/522; `npm run build`: verde; `git diff --check`: verde.
 - La migración se validó primero contra producción dentro de `BEGIN … ROLLBACK` y quedó aplicada como `20260901135411_documenta_horarios_templos_septiembre_2026`.
 - Producción `dpl_J9PdCHAaiHcMuZpyZKrGsPRBJo3Y`: `READY`; smoke de El Baratillo HTTP 200 y runtime sin `error/fatal` en los últimos 15 minutos.
+
+### Lote editorial · Bandas · Maestro Tejera + Centuria Romana Macarena
+
+**ESTADO → 🟢 CERTIFICADO · FUSIONADO · APLICADO · DESPLEGADO**
+
+- #501 completa ambas fichas sobre el modelo First Edition existente, sin cambios de UX, DDL, RLS ni arquitectura.
+- Maestro Tejera incorpora 28 ediciones y 351 pistas con fechas, duraciones, carátulas y Fuente editorial trazable; conserva sus 23 acompañamientos actuales ya documentados sin inventar inicios.
+- Centuria completa 76 pistas de seis álbumes históricos; su inventario total queda en 38 ediciones y 119 pistas.
+- El uniforme de 2018 y el escudo del uniforme presentado en 2026 quedan como patrimonio relacionado y respaldado por publicaciones oficiales de la Hermandad de la Macarena.
+- No se incorporan fotografías nuevas ni material sin derechos trazables.
+- CI #1383: `SUCCESS`; `npm test`: 522/522; `npm run build`: verde; `git diff --check`: verde.
+- La migración se validó contra producción dentro de `BEGIN … ROLLBACK` y quedó aplicada en remoto como `20260901141718_completa_maestro_tejera_y_centuria`.
+- Producción `dpl_FaSFT8zoET8YrMSZUJtLQH6t1cXf`: `READY`; smoke HTTP 200 de ambas fichas y runtime sin `error/fatal` en la última hora.
+- Supabase Preview volvió a aislar la deuda histórica de #492 antes de alcanzar la migración nueva; no se reescribe esa historia ni se bloquea este lote DML.
 
 **SIGUIENTE ACCIÓN → DETENERSE Y DEVOLVER A DIRECCIÓN.**
 
