@@ -72,6 +72,14 @@ where not exists (
   where url = 'https://www.instagram.com/p/DQwMtcjDfnU/'
 );
 
+insert into sources (name, url, source_type, author_or_publisher, publication_date, accessed_at, notes)
+select v.name, v.url, v.source_type, v.publisher, v.publication_date, date '2026-09-01', v.notes
+from (values
+  ('Candelaria Madre de Dios · fin de la vinculación con Cruz Roja', 'https://www.diariodesevilla.es/semana_santa/candelaria-madre-dios-no-renueva_0_2004554810.html', 'Prensa especializada', 'Diario de Sevilla', date '2025-08-12', 'Documenta el periodo 2010–2025 y la no renovación.'),
+  ('Candelaria Madre de Dios · renovación con AMUECI', 'https://www.instagram.com/p/DbaSONFgLDZ/', 'Red social oficial', 'Hermandad de la Candelaria Madre de Dios', date '2026-07-30', 'Confirma la continuidad de AMUECI y que Cruz Roja ya no es la formación vigente.')
+) as v(name, url, source_type, publisher, publication_date, notes)
+where not exists (select 1 from sources s where s.url = v.url);
+
 update sources
 set accessed_at = date '2026-09-01'
 where url in (
@@ -89,7 +97,9 @@ where url in (
   'https://www.bandacruzroja.es/hermandades/semana-santa/sabado-santo',
   'https://www.bandacruzroja.es/hermandades/semana-santa/domingo-de-resurreccion',
   'https://www.bandacruzroja.es/wp-content/uploads/2025/02/INDICE-2025-1.pdf',
-  'https://www.instagram.com/p/DQwMtcjDfnU/'
+  'https://www.instagram.com/p/DQwMtcjDfnU/',
+  'https://www.diariodesevilla.es/semana_santa/candelaria-madre-dios-no-renueva_0_2004554810.html',
+  'https://www.instagram.com/p/DbaSONFgLDZ/'
 );
 
 update bands
@@ -272,6 +282,36 @@ join music_accompaniment_periods p
  and p.outing_type = 'Lunes Santo'
  and p.is_current
 where s.url = 'https://www.instagram.com/p/DQwMtcjDfnU/'
+  and not exists (
+    select 1 from source_links sl
+    where sl.source_id = s.id and sl.music_accompaniment_period_id = p.id
+  );
+
+update music_accompaniment_periods
+set year_from = 2010,
+    year_to = 2025,
+    is_current = false,
+    notes = 'Vinculación documentada entre 2010 y 2025. La Hermandad no renovó el acuerdo; AMUECI asumió el acompañamiento desde la salida de 2026 y renovó posteriormente por tres años.',
+    updated_at = now()
+where band_entity_id = (select id from entities where slug = 'banda-musica-cruz-roja-sevilla')
+  and brotherhood_entity_id = (select id from entities where slug = 'hermandad-candelaria-madre-de-dios-sevilla')
+  and outing_type = 'Gloria'
+  and year_to = 2025;
+
+insert into source_links (source_id, music_accompaniment_period_id, scope, notes)
+select s.id, p.id, 'Finalización del acompañamiento en 2025', 'Contraste frente al listado de Glorias de la web de la banda, que permanece desactualizado.'
+from sources s
+join music_accompaniment_periods p
+  on p.band_entity_id = (select id from entities where slug = 'banda-musica-cruz-roja-sevilla')
+ and p.brotherhood_entity_id = (select id from entities where slug = 'hermandad-candelaria-madre-de-dios-sevilla')
+ and p.outing_type = 'Gloria'
+ and p.year_from = 2010
+ and p.year_to = 2025
+ and not p.is_current
+where s.url in (
+  'https://www.diariodesevilla.es/semana_santa/candelaria-madre-dios-no-renueva_0_2004554810.html',
+  'https://www.instagram.com/p/DbaSONFgLDZ/'
+)
   and not exists (
     select 1 from source_links sl
     where sl.source_id = s.id and sl.music_accompaniment_period_id = p.id
