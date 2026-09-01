@@ -1,6 +1,6 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 1 de septiembre de 2026 · 14:40 UTC
+**Corte validado:** 1 de septiembre de 2026 · 15:02 UTC
 
 **Régimen:** `FIRST EDITION FREEZE` activo
 
@@ -11,18 +11,18 @@
 **PRIMERA EDICIÓN → 🟢 CERRADA, CERTIFICADA Y CONGELADA**
 
 - Baseline funcional y estructural: `a025098528351656503460596d28b5318e39daf5` (#432).
-- Último commit funcional/editorial validado: `34bb25c20d35676a7755a56cd4f3fb232dc6301a` (#503).
-- HEAD real de `main` observado inmediatamente antes de esta sincronización: `34bb25c20d35676a7755a56cd4f3fb232dc6301a` (#503).
-- #503 publica las convocatorias mixtas del Juncal y de la Divina Pastora de Padre Pío como una única entidad por cita, con pasos, capataces y Fuentes sobre el modelo vigente; no modifica arquitectura, esquema ni RLS. El commit que contiene este propio corte puede avanzar de nuevo el HEAD sin convertirse en un cambio funcional adicional; para el SHA vivo prevalece siempre `main` real.
-- Deployment de producción observado inmediatamente antes de esta sincronización: `dpl_4MFCZNfmiq5kRCz7YZ3yyXooJ5rv`, `READY`, sobre `34bb25c20d35676a7755a56cd4f3fb232dc6301a`.
-- Supabase productivo registra la migración DML `20260901142902_publica_igualas_juncal_y_pastora_padre_pio_2026`; Git y remoto quedan reconciliados en 24/24 versiones.
+- Último commit funcional/editorial validado: `7c912b7c384e731390ac2361b02e01f7410e0b62` (#505).
+- HEAD real de `main` observado inmediatamente antes de esta sincronización: `7c912b7c384e731390ac2361b02e01f7410e0b62` (#505).
+- #505 certifica Santa María Magdalena de Arahal y Los Gitanos (formación adulta): completa cuatro ediciones sin pistas, corrige tres acompañamientos finalizados en 2026 y enlaza todas las relaciones del lote con Fuentes; no modifica arquitectura, esquema ni RLS. El commit que contiene este propio corte puede avanzar de nuevo el HEAD sin convertirse en un cambio funcional adicional; para el SHA vivo prevalece siempre `main` real.
+- Deployment de producción observado inmediatamente antes de esta sincronización: `dpl_HqHDBpMqUSWGonXZjuiwExVPFCbX`, `READY`, sobre `7c912b7c384e731390ac2361b02e01f7410e0b62`.
+- Supabase productivo registra `20260901144529_certifica_arahal_y_los_gitanos` y la entrada registral idempotente `20260901145701_certifica_arahal_y_los_gitanos`; Git y remoto quedan reconciliados en 26/26 versiones.
 - Vercel informa `SUCCESS` para el HEAD desplegado; el deployment actual y los últimos 15 minutos del proyecto no registran errores ni fatales.
 - La matriz manual 390/768/1024/1440 de Primera Edición permanece aprobada.
 - El freeze no permite abrir arquitectura, módulos ni una Segunda Edición; sí permite contenido, datos, fotografías, Fuentes, seguridad, legal, bugs e incidencias reales.
-- Cola UX/estructural objeto de este corte: **0 frentes abiertos**.
-- PR UX/estructurales abiertas al cerrar este corte: **0**.
+- Cola UX/estructural creada por este lote: **0 frentes abiertos**.
+- PR abiertas al cerrar este corte: **1**, la #506 concurrente, de presentación visual de horarios y ajena al lote editorial.
 - #467, #470 y #471 siguen cerradas; no se reabre ninguna.
-- La última actuación editorial es #503, igualás mixtas del Juncal y de la Divina Pastora de Padre Pío, ya fusionada, aplicada, desplegada y auditada.
+- La última actuación editorial es #505, Santa María Magdalena de Arahal y Los Gitanos, ya fusionada, aplicada, desplegada y auditada.
 
 ## GitHub · estado de trabajo
 
@@ -61,10 +61,15 @@
 - #499 · horarios de templos y sedes: fusionada, aplicada y desplegada; documenta La Milagrosa, Baratillo, Estrella y Cachorro con Fuentes oficiales, reutiliza el modelo vigente y preserva los borradores editoriales.
 - #501 · Maestro Tejera y Centuria Romana Macarena: fusionada, aplicada y desplegada; completa 28 ediciones y 351 pistas de Maestro Tejera, 76 pistas históricas pendientes de Centuria y dos elementos patrimoniales con Fuentes oficiales, sin DDL ni RLS.
 - #503 · igualás del Juncal y de la Divina Pastora de Padre Pío: fusionada, aplicada y desplegada; conserva cada convocatoria mixta como una entidad única, enlaza sus pasos, capataces y Fuentes, y mantiene nulas la hora y la ubicación no publicadas del Juncal.
+- #505 · Santa María Magdalena de Arahal y Los Gitanos: fusionada, aplicada y desplegada; completa 54 pistas, corrige a histórico tres relaciones cerradas en 2026 y deja todas las ediciones y acompañamientos del lote con Fuente.
 
 ### PR abiertas en este corte
 
-**Ninguna.**
+**#506 · `Destaca visualmente los horarios de los templos` · ABIERTA.**
+
+- Rama: `feat/horarios-visual`.
+- Es una propuesta UX concurrente y no forma parte de #505 ni de la fase editorial autorizada.
+- El auditor la eleva a Dirección: no debe integrarse durante el freeze salvo que se justifique y reclasifique como incidencia real.
 
 No debe abrirse un nuevo frente UX/estructural para continuar el cierre. La fase vuelve a ser editorial/documental salvo bug real, seguridad o incidencia verificable compatible con el freeze.
 
@@ -165,16 +170,16 @@ Nota administrativa: el conector de GitHub falló al quitar el estado draft de #
 
 **PRODUCCIÓN → 🟢 ESTABLE**
 
-- Deployment de producción observado antes de este commit documental: `dpl_4MFCZNfmiq5kRCz7YZ3yyXooJ5rv`.
-- Commit desplegado en ese corte: `34bb25c20d35676a7755a56cd4f3fb232dc6301a` (#503), último cambio funcional/editorial validado.
+- Deployment de producción observado antes de este commit documental: `dpl_HqHDBpMqUSWGonXZjuiwExVPFCbX`.
+- Commit desplegado en ese corte: `7c912b7c384e731390ac2361b02e01f7410e0b62` (#505), último cambio funcional/editorial validado.
 - Estado: `READY`; target: producción.
 - Dominios canónicos: `https://hilocofrade.es` y `https://www.hilocofrade.es`.
 - Vercel informa `SUCCESS` para el commit desplegado.
 - Comprobación runtime: el deployment actual no registra errores en los últimos 15 minutos.
-- Smoke específico de #503: las fichas del Juncal y de la Divina Pastora de Padre Pío responden HTTP 200 con sus datos esperados; el directorio `/igualas-y-ensayos` contiene ambas convocatorias.
-- El smoke general anterior de Home, Hermandades, Bandas, Procesiones de Gloria, Igualás y Ensayos, Extraordinarias, Tira del hilo (`/pregunta`) y Panel permanece válido; #503 no modifica rutas ni presentación.
+- Smoke específico de #505: las fichas públicas de Arahal y Los Gitanos responden HTTP 200.
+- Smoke general: Home, Hermandades, Bandas, Procesiones de Gloria, Igualás y Ensayos, Extraordinarias, Tira del hilo (`/pregunta`) y Panel responden HTTP 200.
 - Las fichas de Procesiones de Gloria son dinámicas (`force-dynamic`), por lo que las correcciones editoriales de Supabase se reflejan sin un redeploy de aplicación.
-- El commit que actualiza este documento es exclusivamente documental y no altera el baseline editorial de #503.
+- El commit que actualiza este documento y refleja la segunda versión remota es exclusivamente documental/registral y no altera el DML canónico de #505.
 
 ## SEO P0 · mantenimiento técnico
 
@@ -318,11 +323,12 @@ Una decisión posterior de Dirección deberá abrir un corte independiente y com
 
 El cierre técnico permanece intacto. Los cambios posteriores son editoriales o correcciones reales sobre el modelo vigente.
 
-**GIT ↔ SUPABASE → 🟢 24/24 VERSIONES RECONCILIADAS EN PRODUCCIÓN**
+**GIT ↔ SUPABASE → 🟢 26/26 VERSIONES RECONCILIADAS EN PRODUCCIÓN**
 
-- Última versión: `20260901142902_publica_igualas_juncal_y_pastora_padre_pio_2026`.
+- Última versión: `20260901145701_certifica_arahal_y_los_gitanos`.
 - El proyecto productivo responde en PostgreSQL 17.6.1, región `eu-west-1`.
-- La auditoría de este corte no ejecutó DDL, no modificó RLS y no reescribió migraciones históricas; #503 es DML idempotente.
+- La auditoría de este corte no ejecutó DDL, no modificó RLS y no reescribió migraciones históricas; #505 es DML idempotente.
+- Git Integration aplicó `20260901144529` al fusionar #505. Una segunda ejecución manual idempotente quedó registrada como `20260901145701`; no duplicó datos. La segunda versión se refleja en Git mediante un archivo vacío de reconciliación, sin repetir el SQL canónico ni alterar el historial remoto.
 - En el corte de #499, la integración automática ya había registrado `20260901135411`; una aplicación manual idempotente añadió temporalmente una segunda entrada de historial. Tras comprobarla, se retiró exclusivamente esa entrada extra. Los datos no se duplicaron y el historial quedó reconciliado antes de incorporar #501.
 - La continuidad editorial puede seguir utilizando las tablas y relaciones existentes.
 
@@ -352,13 +358,15 @@ Migraciones registradas en producción en el momento de este corte:
 22. `20260901135411_documenta_horarios_templos_septiembre_2026`
 23. `20260901141718_completa_maestro_tejera_y_centuria`
 24. `20260901142902_publica_igualas_juncal_y_pastora_padre_pio_2026`
+25. `20260901144529_certifica_arahal_y_los_gitanos`
+26. `20260901145701_certifica_arahal_y_los_gitanos`
 
 ### Observación de ramas Supabase
 
 **PREVIEW BRANCHES → 🟣 DEUDA TÉCNICA AISLADA**
 
 - No existe ninguna preview activa tras el merge; `list_branches` devuelve únicamente `main`. El estado de branching conserva `MIGRATIONS_FAILED`, aunque el proyecto productivo permanece `ACTIVE_HEALTHY`.
-- #501 volvió a reproducir el error en una rama limpia y la rama efímera fue retirada automáticamente tras el merge. El resultado sigue siendo `MIGRATIONS_FAILED` por SQLSTATE `23514`: `source_links_one_target`.
+- #505 volvió a reproducir el error en una rama limpia y la rama efímera fue retirada automáticamente tras el merge. El resultado sigue siendo `MIGRATIONS_FAILED` por SQLSTATE `23514`: `source_links_one_target`.
 - Primera migración que falla: `20260831135520_publica_centuria_y_corrige_logo_tres_caidas.sql`.
 - Statement: bloque `do $$`, inserción final en `public.source_links (source_id, entity_id, scope, notes)` para la Fuente «Tres Caídas de Triana · emblema oficial».
 - Fila observada: `b225b14b-79fb-46e1-8a3b-040b5d3509b1`; `source_id=a1c237f1-665f-4e36-89ad-de4ff1d25c78`; `entity_id=NULL`; alcance «Identidad visual».
@@ -398,6 +406,10 @@ No quedan bloqueados:
 
 **GRAFO → 🟢 SIN NUEVOS BLOQUEOS**
 
+- Los Gitanos queda con 10 ediciones, 97 pistas, 2 acompañamientos actuales y 4 históricos; Santa María Magdalena de Arahal queda con 20 ediciones, 172 pistas, 6 acompañamientos actuales y 3 históricos.
+- El lote no conserva ediciones sin pistas, acompañamientos sin Fuente, pistas sin disco ni posiciones duplicadas.
+- Pasión de Huelva, Nazareno del Amor de Cádiz y Prendimiento de Jerez pasan a histórico al concluir 2026; no se sobrescribe el presente con relaciones ya finalizadas.
+- Penas de Santiago queda documentada desde 2025; Hiniesta desde 1976, Humillación de Camas desde 2024, Monte-Sión desde 2026 y San Pablo dentro de su acuerdo 2025–2027.
 - Maestro Tejera queda con 23 acompañamientos actuales, 28 ediciones y 351 pistas; Centuria Romana Macarena queda con 1 relación musical actual, 38 ediciones y 119 pistas totales.
 - Las 28 ediciones de Maestro Tejera y las 38 de Centuria tienen al menos una pista y una Fuente; los acompañamientos del lote no quedan sin Fuente.
 - Centuria incorpora dos nodos patrimoniales documentados: uniforme de 2018 y escudo del uniforme presentado en 2026.
@@ -415,7 +427,7 @@ No quedan bloqueados:
 
 `FIRST EDITION FREEZE` continúa activo.
 
-**FRONTES UX/ESTRUCTURALES ABIERTOS → 0.**
+**FRENTE UX CONCURRENTE DETECTADO → #506 · ELEVADO A DIRECCIÓN.**
 
 **MODO ACTIVO → EDITORIAL / DOCUMENTAL.**
 
@@ -477,6 +489,23 @@ La limpieza física de assets huérfanos no forma parte de #471 ni de la cola UX
 - Producción `dpl_4MFCZNfmiq5kRCz7YZ3yyXooJ5rv`: `READY`; las dos fichas y el directorio responden HTTP 200 con el contenido esperado, sin errores runtime en los últimos 15 minutos.
 - Supabase Preview volvió a aislar la deuda histórica de #492 y la rama efímera fue retirada tras el merge; la migración nueva convierte la ausencia de las Hermandades canónicas en un no-op seguro y producción permanece `ACTIVE_HEALTHY`.
 
+### Lote editorial · Bandas · Santa María Magdalena de Arahal + Los Gitanos
+
+**ESTADO → 🟢 CERTIFICADO · FUSIONADO · APLICADO · DESPLEGADO**
+
+- #505 completa ambas fichas sobre el modelo First Edition existente, sin cambios de UX, DDL, RLS ni arquitectura; la formación juvenil de Los Gitanos permanece separada y fuera del lote.
+- Los Gitanos completa 44 pistas de `Hágase Tu Voluntad`, `Andando y con Sentimiento` y `Concierto Anual Hermandad de Los Gitanos 2024 (Live)`; su inventario queda en 10 ediciones y 97 pistas.
+- Santa María Magdalena de Arahal completa las 10 pistas de `La Paz`; su inventario queda en 20 ediciones y 172 pistas.
+- Pasión de Huelva, Nazareno del Amor de Cádiz y Prendimiento de Jerez se conservan como históricos cerrados en 2026. Los Gitanos mantiene como vigentes su Hermandad de origen y Penas de Santiago.
+- Todas las ediciones del lote tienen pistas y todos sus acompañamientos tienen Fuente; la auditoría no detecta pistas sin disco ni posiciones duplicadas.
+- No se incorporan fotografías nuevas ni material sin derechos. El banderín y el uniforme ya existentes no se duplican.
+- CI de #505: `verify` y Vercel verdes; `npm test`: 522/522; `npm run build`: verde; `git diff --check`: verde.
+- La migración se validó primero contra producción dentro de `BEGIN … ROLLBACK`. Git Integration registró el DML como `20260901144529`; la ejecución manual idempotente quedó además en `20260901145701` y se refleja mediante una reconciliación vacía, sin repetir datos.
+- Producción `dpl_HqHDBpMqUSWGonXZjuiwExVPFCbX`: `READY`; smoke HTTP 200 de ambas fichas y de las ocho superficies públicas principales; sin errores runtime en la última hora.
+- Supabase Preview volvió a aislar #492 antes de alcanzar la migración editorial y la rama efímera fue retirada tras el merge.
+
 **SIGUIENTE ACCIÓN → DETENERSE Y DEVOLVER A DIRECCIÓN.**
+
+No se abre un tercer lote de Bandas hasta recibir Dirección. La #506 queda señalada como frente UX concurrente ajeno al lote y no debe integrarse por inercia durante el freeze.
 
 La vigilancia de Glorias, Igualás y Extraordinarias continúa únicamente por cambios oficiales de horario, itinerario, acompañamiento, suspensión, aplazamiento o convocatoria nueva.

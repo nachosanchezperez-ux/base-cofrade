@@ -1,0 +1,8 @@
+-- Reconciliación registral Git ↔ Supabase producción.
+--
+-- La migración editorial 20260901144529 fue aplicada automáticamente por la
+-- integración de Git al fusionar #505. Una segunda ejecución manual, totalmente
+-- idempotente, quedó registrada en producción con esta versión.
+--
+-- El DML canónico permanece únicamente en 20260901144529. Este archivo vacío
+-- conserva la historia remota sin repetir datos ni reescribir migraciones.
