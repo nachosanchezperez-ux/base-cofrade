@@ -58,6 +58,20 @@ where not exists (
   where url = 'https://www.bandacruzroja.es/wp-content/uploads/2025/02/INDICE-2025-1.pdf'
 );
 
+insert into sources (name, url, source_type, author_or_publisher, publication_date, accessed_at, notes)
+select
+  'Redención · renovación de Cruz Roja',
+  'https://www.instagram.com/p/DQwMtcjDfnU/',
+  'Red social oficial',
+  'Hermandad de la Redención',
+  date '2025-11-07',
+  date '2026-09-01',
+  'Renovación oficial por tres Lunes Santos: 2026, 2027 y 2028.'
+where not exists (
+  select 1 from sources
+  where url = 'https://www.instagram.com/p/DQwMtcjDfnU/'
+);
+
 update sources
 set accessed_at = date '2026-09-01'
 where url in (
@@ -74,7 +88,8 @@ where url in (
   'https://www.bandacruzroja.es/hermandades/semana-santa/viernes-santo',
   'https://www.bandacruzroja.es/hermandades/semana-santa/sabado-santo',
   'https://www.bandacruzroja.es/hermandades/semana-santa/domingo-de-resurreccion',
-  'https://www.bandacruzroja.es/wp-content/uploads/2025/02/INDICE-2025-1.pdf'
+  'https://www.bandacruzroja.es/wp-content/uploads/2025/02/INDICE-2025-1.pdf',
+  'https://www.instagram.com/p/DQwMtcjDfnU/'
 );
 
 update bands
@@ -85,13 +100,13 @@ with period_data as (
   select * from (values
     ('Viernes de Dolores', 'hermandad-angeles-san-juan-aznalfarache', 'Nuestra Señora de los Ángeles', 2022, 'San Juan de Aznalfarache', 'san-juan-de-aznalfarache', 'Acuerdo documentado desde 2019 y vinculación oficial computada por la banda desde 2020. Las salidas previstas en 2020 y 2021 no se celebraron por la pandemia; primer acompañamiento efectivo en 2022.', 'https://www.bandacruzroja.es/hermandades/semana-santa/viernes-de-dolores'),
     ('Domingo de Ramos', 'hermandad-san-roque-sevilla', 'Nuestra Señora de Gracia y Esperanza', 2016, 'Sevilla', 'sevilla', 'Actual vinculación musical iniciada en 2016.', 'https://www.bandacruzroja.es/hermandades/semana-santa/domingo-de-ramos'),
-    ('Lunes Santo', 'hermandad-de-la-redencion', 'María Santísima del Rocío', 2022, 'Sevilla', 'sevilla', 'Acompañamiento vigente desde la Semana Santa de 2022.', 'https://www.bandacruzroja.es/hermandades/semana-santa/lunes-santo'),
+    ('Lunes Santo', 'hermandad-de-la-redencion', 'María Santísima del Rocío Coronada', 2022, 'Sevilla', 'sevilla', 'Acompañamiento vigente desde la Semana Santa de 2022. Renovación oficial confirmada para los Lunes Santos de 2026, 2027 y 2028.', 'https://www.bandacruzroja.es/hermandades/semana-santa/lunes-santo'),
     ('Martes Santo', 'hermandad-candelaria-sevilla', 'María Santísima de la Candelaria', 1984, 'Sevilla', 'sevilla', 'Acompañamiento vigente desde 1984.', 'https://www.bandacruzroja.es/hermandades/semana-santa/martes-santo'),
     ('Miércoles Santo', 'hermandad-de-san-bernardo', 'María Santísima del Refugio', 1998, 'Sevilla', 'sevilla', 'Actual vinculación musical iniciada en 1998.', 'https://www.bandacruzroja.es/hermandades/semana-santa/miercoles-santo'),
     ('Jueves Santo', 'hermandad-monte-sion-sevilla', 'María Santísima del Rosario en sus Misterios Dolorosos Coronada', 2016, 'Sevilla', 'sevilla', 'Regreso de la formación en 2016.', 'https://www.bandacruzroja.es/hermandades/semana-santa/jueves-santo'),
-    ('Madrugá', 'hermandad-jesus-la-algaba', 'Nuestra Señora de los Dolores', 2019, 'La Algaba', 'la-algaba', 'Acompañamiento vigente desde 2019.', 'https://www.bandacruzroja.es/hermandades/semana-santa/la-madruga'),
+    ('Madrugá', 'hermandad-jesus-la-algaba', 'Nuestra Señora de los Dolores', 2019, 'La Algaba', 'la-algaba', 'Acompañamiento vigente desde 2019. La última renovación localizada cubre 2025 y 2026; continuidad desde 2027 pendiente de confirmación.', 'https://www.bandacruzroja.es/hermandades/semana-santa/la-madruga'),
     ('Viernes Santo', 'hermandad-soledad-alcala-del-rio', 'Nuestra Señora de los Dolores en su Soledad Coronada', 1991, 'Alcalá del Río', 'alcala-del-rio', 'Vinculación musical vigente desde 1991.', 'https://www.bandacruzroja.es/hermandades/semana-santa/viernes-santo'),
-    ('Sábado Santo', 'hermandad-soledad-marchena', 'Nuestra Señora y Madre de la Soledad', 2023, 'Marchena', 'marchena', 'Regreso de la banda al Sábado Santo desde 2023.', 'https://www.bandacruzroja.es/hermandades/semana-santa/sabado-santo'),
+    ('Sábado Santo', 'hermandad-soledad-marchena', 'Nuestra Señora y Madre de la Soledad Coronada', 2023, 'Marchena', 'marchena', 'Contrato documentado para 2023–2026; continuidad desde 2027 pendiente de confirmación.', 'https://www.bandacruzroja.es/hermandades/semana-santa/sabado-santo'),
     ('Domingo de Resurrección', 'hermandad-calle-real-castilleja-cuesta', 'Inmaculada Concepción Coronada', 2020, 'Castilleja de la Cuesta', 'castilleja-de-la-cuesta', 'Vinculación vigente desde 2020. En 2026 constan dos participaciones en la jornada: mañana y tarde.', 'https://www.bandacruzroja.es/hermandades/semana-santa/domingo-de-resurreccion')
   ) as d(outing_type, brotherhood_slug, step_name, year_from, municipality_name, municipality_slug, notes, source_url)
 )
@@ -246,6 +261,20 @@ where s.url = 'https://www.bandacruzroja.es/conocenos/director'
     where sl.source_id = s.id
       and sl.entity_id = ba.band_entity_id
       and sl.scope = 'relation:band_agent:' || ba.id::text
+  );
+
+insert into source_links (source_id, music_accompaniment_period_id, scope, notes)
+select s.id, p.id, 'Renovación 2026–2028', 'La Hermandad confirma tres Lunes Santos desde 2026.'
+from sources s
+join music_accompaniment_periods p
+  on p.band_entity_id = (select id from entities where slug = 'banda-musica-cruz-roja-sevilla')
+ and p.brotherhood_entity_id = (select id from entities where slug = 'hermandad-de-la-redencion')
+ and p.outing_type = 'Lunes Santo'
+ and p.is_current
+where s.url = 'https://www.instagram.com/p/DQwMtcjDfnU/'
+  and not exists (
+    select 1 from source_links sl
+    where sl.source_id = s.id and sl.music_accompaniment_period_id = p.id
   );
 
 with additions(title, composer_name, display_order) as (
