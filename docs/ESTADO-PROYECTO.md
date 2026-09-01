@@ -11,8 +11,8 @@
 **PRIMERA EDICIÓN → 🟢 CERRADA, CERTIFICADA Y CONGELADA**
 
 - Baseline funcional y estructural: `a025098528351656503460596d28b5318e39daf5` (#432).
-- `main` real validado: `b64380487eb42d644460ffcc2abb34d126fbb4a1` (#491).
-- Último commit funcional/editorial: auditoría documental de Cruz Roja, sin cambios de arquitectura ni de modelo.
+- Último commit funcional/editorial validado: `b64380487eb42d644460ffcc2abb34d126fbb4a1` (#491).
+- El HEAD posterior a ese corte puede añadir únicamente la sincronización documental #493; no cambia el baseline funcional ni la fase activa.
 - Producción está `READY` sobre ese SHA en `dpl_3D3vVQ4ayzCixvFurrbcbFyAXi7M`.
 - Vercel informa `SUCCESS` para el commit desplegado; runtime reciente sin errores ni fatales.
 - La matriz manual 390/768/1024/1440 de Primera Edición permanece aprobada.
