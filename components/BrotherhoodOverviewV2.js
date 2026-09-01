@@ -31,6 +31,33 @@ function periodLabel(item) {
   return 'Periodo documentado'
 }
 
+function scheduleKind(value = '') {
+  const line = String(value).toLocaleLowerCase('es')
+  if (/misa|eucarist/.test(line)) return 'mass'
+  if (/despacho|secretar|mayordom|oficina/.test(line)) return 'office'
+  if (/exposici|adoraci|rosario|culto/.test(line)) return 'devotion'
+  if (/apertura|visita/.test(line)) return 'opening'
+  return 'note'
+}
+
+function scheduleLines(value = '') {
+  return String(value)
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .map((line, index) => {
+      const separator = line.indexOf('·')
+      const hasLabel = separator > 0 && separator < 42
+
+      return {
+        id: `${index}-${line}`,
+        kind: scheduleKind(line),
+        label: hasLabel ? line.slice(0, separator).trim() : '',
+        value: hasLabel ? line.slice(separator + 1).trim() : line,
+      }
+    })
+}
+
 export default function BrotherhoodOverviewV2({ brotherhood, heroFactLabels = [] }) {
   const seat = brotherhood.sedeDetalle
   const types = brotherhood.tipos || []
@@ -38,6 +65,7 @@ export default function BrotherhoodOverviewV2({ brotherhood, heroFactLabels = []
   const titularCount = brotherhood.imagenes?.length || 0
   const mapUrl = directionsUrl(seat)
   const verified = verifiedLabel(seat?.horarioVerificadoEn)
+  const templeSchedule = scheduleLines(seat?.horarioApertura)
   const heroFacts = new Set(heroFactLabels)
 
   const identityFacts = [
@@ -96,9 +124,31 @@ export default function BrotherhoodOverviewV2({ brotherhood, heroFactLabels = []
 
               {seat.horarioApertura ? (
                 <div className={styles.hours}>
-                  <small>Horarios del templo</small>
-                  <strong>{seat.horarioApertura}</strong>
-                  {verified ? <span>Verificado · {verified}</span> : null}
+                  <div className={styles.hoursHero}>
+                    <span className={styles.clock} aria-hidden="true"><i /></span>
+                    <div>
+                      <small>Horarios del templo</small>
+                      <strong>Planifica tu visita</strong>
+                    </div>
+                    {verified ? <span className={styles.verified}>Revisado · {verified}</span> : null}
+                  </div>
+
+                  <div className={styles.hoursList}>
+                    {templeSchedule.map((item) => (
+                      <div className={`${styles.hoursRow} ${styles[`hours_${item.kind}`]}`} key={item.id}>
+                        <span className={styles.hoursMarker} aria-hidden="true" />
+                        <p>
+                          {item.label ? <b>{item.label}</b> : null}
+                          <span>{item.value}</span>
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className={styles.hoursFooter}>
+                    <span aria-hidden="true">✦</span>
+                    <p>Comprueba los cultos extraordinarios antes de desplazarte.</p>
+                  </div>
                 </div>
               ) : null}
 
