@@ -39,6 +39,11 @@ test('la ficha presenta el campo libre como horarios del templo y respeta sus sa
   ])
 
   assert.match(overview, /Horarios del templo/)
+  assert.match(overview, /Planifica tu visita/)
   assert.match(overview, /seat\.horarioApertura/)
-  assert.match(styles, /\.hours strong[\s\S]*white-space:\s*pre-line/)
+  assert.match(overview, /scheduleLines\(seat\?\.horarioApertura\)/)
+  assert.match(styles, /\.hoursHero[\s\S]*linear-gradient/)
+  assert.match(styles, /\.hoursList/)
+  assert.match(styles, /\.hoursRow/)
+  assert.match(styles, /\.hours_mass/)
 })
