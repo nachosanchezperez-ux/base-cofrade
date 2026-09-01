@@ -1,6 +1,6 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 1 de septiembre de 2026 · 18:50 UTC
+**Corte validado:** 1 de septiembre de 2026 · 21:16 UTC
 
 **Régimen:** `FIRST EDITION FREEZE` activo
 
@@ -11,18 +11,18 @@
 **PRIMERA EDICIÓN → 🟢 CERRADA, CERTIFICADA Y CONGELADA**
 
 - Baseline funcional y estructural: `a025098528351656503460596d28b5318e39daf5` (#432).
-- Último commit funcional validado: `c9f77dd6bc3c7f759d9cffe616acb814a382ed1f` (#513).
-- HEAD real de `main` observado inmediatamente antes de esta sincronización: `c9f77dd6bc3c7f759d9cffe616acb814a382ed1f` (#513).
-- #506 aplica la presentación visual de los horarios y #508 la integra expresamente dentro de la Sede canónica por indicación de Dirección; no modifican datos, arquitectura, esquema ni RLS. El commit que contiene este propio corte puede avanzar de nuevo el HEAD sin convertirse en un cambio funcional adicional; para el SHA vivo prevalece siempre `main` real.
-- Deployment de producción observado inmediatamente antes de esta sincronización: `dpl_BDLQdCJ4xhZ5J92bRJ8UeRDFXU2b`, `READY`, sobre `dd6f52a139b74db0c0e5b6f81823badcae72d662` (#506). #508 está fusionada y su preview `dpl_DC31YzjuhBECQnTb7ScJTq6pgutN` permanece `READY`; el webhook de producción no había generado aún un deployment nuevo en el momento del corte.
-- Supabase productivo registra hasta `20260901180000_completa_paso_rosario_las_aguas`; Git y remoto quedan reconciliados en 29/29 versiones.
+- Último commit funcional validado: `f9e6fdd4035f997f3bc3dd0c2f05db5a1e18e9de`, corrección acotada del parser de rangos horarios tras #514.
+- HEAD real de `main` observado inmediatamente antes de esta sincronización: `f9e6fdd4035f997f3bc3dd0c2f05db5a1e18e9de`.
+- #514 refina la agenda visual de la Sede canónica sin modificar datos, arquitectura, esquema ni RLS. El commit que contiene este propio corte puede avanzar de nuevo el HEAD sin convertirse en un cambio funcional adicional; para el SHA vivo prevalece siempre `main` real.
+- Deployment de producción observado inmediatamente antes de esta sincronización: `dpl_FdXbGSfR29teENyXXzoH4xWQ1oVJ`, `READY`, sobre `f9e6fdd4035f997f3bc3dd0c2f05db5a1e18e9de`.
+- Supabase productivo registra hasta `20260901204320_completa_direccion_sede_baratillo`; Git y remoto quedan reconciliados en 30/30 versiones.
 - Vercel informa `SUCCESS` para el HEAD desplegado; el deployment actual y los últimos 15 minutos del proyecto no registran errores ni fatales.
 - La matriz manual 390/768/1024/1440 de Primera Edición permanece aprobada.
 - El freeze no permite abrir arquitectura, módulos ni una Segunda Edición; sí permite contenido, datos, fotografías, Fuentes, seguridad, legal, bugs e incidencias reales.
 - Cola UX/estructural creada por este lote: **0 frentes abiertos**.
 - PR abiertas al cerrar este corte: **0**.
 - #467, #470 y #471 siguen cerradas; no se reabre ninguna.
-- La última actuación editorial es #513, corrección documental del paso del Rosario de Las Aguas. La última corrección funcional autorizada sigue siendo #508.
+- La última actuación editorial es #516, DML trazable que completa la dirección de la Sede del Baratillo. La última corrección funcional autorizada es el hotfix acotado `f9e6fdd` posterior a #514.
 
 ## GitHub · estado de trabajo
 
@@ -67,12 +67,15 @@
 - #509 · Dulce Nombre de Bellavista, Las Aguas, La Bofetá, Jesús Despojado y La Macarena: fichas base publicadas; tres salidas de septiembre confirmadas y trazables.
 - #511 · Las Aguas: ficha documental certificada con titulares, autorías, pasos, hábito, colores, capataz, música, horarios y Fuentes.
 - #513 · Las Aguas: incorpora el tercer paso, Nuestra Señora del Rosario, sus acompañamientos de Gloria y las imágenes secundarias del misterio.
+- #514 · refinamiento visual de la Sede: fusionada, desplegada y cerrada; mejora jerarquía, horarios, iconografía, accesibilidad y respuesta móvil sin ampliar el modelo.
+- #516 · dirección de la Sede del Baratillo: fusionada como DML editorial trazable, sin DDL ni RLS.
+- `f9e6fdd` · rangos horarios compactos: bug real corregido transversalmente y cubierto por prueba; no abre una nueva cola UX.
 
 ### PR abiertas en este corte
 
 **Ninguna.**
 
-No debe abrirse un nuevo frente UX/estructural para continuar el cierre. #506 y #508 responden a una indicación expresa de Dirección sobre un contenido ya incorporado y no abren módulo, arquitectura ni modelo nuevo.
+No debe abrirse un nuevo frente UX/estructural para continuar el cierre. #514 queda como cierre definitivo de la cola visual de Sede y no abre módulo, arquitectura ni modelo nuevo.
 
 ## #470 · Identidad corporativa oficial
 
@@ -432,7 +435,9 @@ No quedan bloqueados:
 
 `FIRST EDITION FREEZE` continúa activo.
 
-**FRENTE UX CONCURRENTE DETECTADO → #506 · ELEVADO A DIRECCIÓN.**
+**COLA UX ABIERTA → 0.**
+
+**COLA ESTRUCTURAL ABIERTA → 0.**
 
 **MODO ACTIVO → EDITORIAL / DOCUMENTAL.**
 
@@ -539,8 +544,28 @@ La limpieza física de assets huérfanos no forma parte de #471 ni de la cola UX
 - Auditoría productiva tras #513: 4 titulares, 3 pasos, 5 imágenes en el misterio, 2 acompañamientos propios de la procesión de Gloria, morado y blanco, 0 slugs duplicados y 0 vínculos de Fuente inválidos.
 - CI #1403 y #1407, y Vercel: `SUCCESS`; producción funcional sobre `c9f77dd6bc3c7f759d9cffe616acb814a382ed1f`.
 
-**SIGUIENTE ACCIÓN → CERTIFICAR LA BOFETÁ CON EL MISMO ESTÁNDAR DOCUMENTAL.**
+### Cierre definitivo · #514 · Sede canónica
 
-No se abre un tercer lote de Bandas hasta recibir Dirección. #506 y #508 quedan cerradas como corrección funcional expresamente autorizada y no abren una cola UX nueva.
+**ESTADO → 🟢 FUSIONADA · DESPLEGADA · CERTIFICADA**
+
+- #514 queda limitada a presentación: legibilidad y jerarquía de horarios, dirección, iconografía funcional, foco, contraste, tacto móvil y responsive.
+- La revisión no detecta condiciones por Hermandad, hacks por slug, segunda lógica de horarios, componentes duplicados, DDL, migraciones de esquema ni cambios RLS.
+- #515 y todo el contenido posterior de Las Aguas permanecen preservados.
+- #516 completa únicamente la dirección trazable del Baratillo mediante DML editorial y no se interpreta como ampliación UX.
+- El hotfix `f9e6fdd` evita que un rango compacto como `18:30–20:30` se divida por su primer `:`; la suite queda en 523/523 y el build es correcto.
+- Producción `dpl_FdXbGSfR29teENyXXzoH4xWQ1oVJ`: `READY`; Baratillo muestra `Calle Adriano, 13`, Las Aguas conserva `18:30–20:30` como rango unido y el runtime no registra errores ni fatales.
+- Supabase permanece `ACTIVE_HEALTHY`, con 30/30 migraciones, sin DDL ni RLS introducidos por #514. #492 continúa aislada como deuda de Preview Branches.
+
+### Siguiente lote editorial · Bandas
+
+**SELECCIÓN → VIRGEN DE LOS REYES + LA REDENCIÓN.**
+
+- Ambas fichas están publicadas y conservan identidad, acompañamientos, históricos, discografía, pistas, estrenos, redes y canales musicales.
+- La auditoría actual confirma que siguen incompletas para el estándar del lote: no tienen colores estructurados ni fotografía principal con derechos; Virgen de los Reyes carece además de estrenos 2025 estructurados y La Redención no tiene Fuente enlazada directamente a la entidad.
+- El lote deberá completar solo contenido y Fuentes sobre el modelo vigente, sin DDL, RLS ni nueva UX y sin incorporar imágenes carentes de derechos trazables.
+
+**SIGUIENTE ACCIÓN → AUDITAR Y COMPLETAR EL LOTE EDITORIAL VIRGEN DE LOS REYES + LA REDENCIÓN.**
+
+#514 queda cerrada de forma definitiva y no abre una cola UX nueva.
 
 La vigilancia de Glorias, Igualás y Extraordinarias continúa únicamente por cambios oficiales de horario, itinerario, acompañamiento, suspensión, aplazamiento o convocatoria nueva.
