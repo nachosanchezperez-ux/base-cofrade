@@ -1,0 +1,21 @@
+/* Contraste específico para identidades de banda con secundario dorado claro. */
+.bandPageArahal #repertorio {
+  color: #332f35;
+}
+
+.bandPageArahal #repertorio h2,
+.bandPageArahal #repertorio h3,
+.bandPageArahal #repertorio h4,
+.bandPageArahal #repertorio summary b {
+  color: #332f35 !important;
+}
+
+.bandPageArahal #repertorio p,
+.bandPageArahal #repertorio summary span,
+.bandPageArahal #repertorio article > div > strong {
+  color: #5d565f !important;
+}
+
+.bandPageArahal #repertorio article span {
+  color: #4b454d !important;
+}
