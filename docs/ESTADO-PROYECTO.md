@@ -1,6 +1,6 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 1 de septiembre de 2026 · 15:02 UTC
+**Corte validado:** 1 de septiembre de 2026 · 15:28 UTC
 
 **Régimen:** `FIRST EDITION FREEZE` activo
 
@@ -11,18 +11,18 @@
 **PRIMERA EDICIÓN → 🟢 CERRADA, CERTIFICADA Y CONGELADA**
 
 - Baseline funcional y estructural: `a025098528351656503460596d28b5318e39daf5` (#432).
-- Último commit funcional/editorial validado: `7c912b7c384e731390ac2361b02e01f7410e0b62` (#505).
-- HEAD real de `main` observado inmediatamente antes de esta sincronización: `7c912b7c384e731390ac2361b02e01f7410e0b62` (#505).
-- #505 certifica Santa María Magdalena de Arahal y Los Gitanos (formación adulta): completa cuatro ediciones sin pistas, corrige tres acompañamientos finalizados en 2026 y enlaza todas las relaciones del lote con Fuentes; no modifica arquitectura, esquema ni RLS. El commit que contiene este propio corte puede avanzar de nuevo el HEAD sin convertirse en un cambio funcional adicional; para el SHA vivo prevalece siempre `main` real.
-- Deployment de producción observado inmediatamente antes de esta sincronización: `dpl_HqHDBpMqUSWGonXZjuiwExVPFCbX`, `READY`, sobre `7c912b7c384e731390ac2361b02e01f7410e0b62`.
+- Último commit funcional validado: `6cc4b71588696878e6df2b9e50fe29380b0835df` (#508).
+- HEAD real de `main` observado inmediatamente antes de esta sincronización: `6cc4b71588696878e6df2b9e50fe29380b0835df` (#508).
+- #506 aplica la presentación visual de los horarios y #508 la integra expresamente dentro de la Sede canónica por indicación de Dirección; no modifican datos, arquitectura, esquema ni RLS. El commit que contiene este propio corte puede avanzar de nuevo el HEAD sin convertirse en un cambio funcional adicional; para el SHA vivo prevalece siempre `main` real.
+- Deployment de producción observado inmediatamente antes de esta sincronización: `dpl_BDLQdCJ4xhZ5J92bRJ8UeRDFXU2b`, `READY`, sobre `dd6f52a139b74db0c0e5b6f81823badcae72d662` (#506). #508 está fusionada y su preview `dpl_DC31YzjuhBECQnTb7ScJTq6pgutN` permanece `READY`; el webhook de producción no había generado aún un deployment nuevo en el momento del corte.
 - Supabase productivo registra `20260901144529_certifica_arahal_y_los_gitanos` y la entrada registral idempotente `20260901145701_certifica_arahal_y_los_gitanos`; Git y remoto quedan reconciliados en 26/26 versiones.
 - Vercel informa `SUCCESS` para el HEAD desplegado; el deployment actual y los últimos 15 minutos del proyecto no registran errores ni fatales.
 - La matriz manual 390/768/1024/1440 de Primera Edición permanece aprobada.
 - El freeze no permite abrir arquitectura, módulos ni una Segunda Edición; sí permite contenido, datos, fotografías, Fuentes, seguridad, legal, bugs e incidencias reales.
 - Cola UX/estructural creada por este lote: **0 frentes abiertos**.
-- PR abiertas al cerrar este corte: **1**, la #506 concurrente, de presentación visual de horarios y ajena al lote editorial.
+- PR abiertas al cerrar este corte: **0**.
 - #467, #470 y #471 siguen cerradas; no se reabre ninguna.
-- La última actuación editorial es #505, Santa María Magdalena de Arahal y Los Gitanos, ya fusionada, aplicada, desplegada y auditada.
+- La última actuación editorial sigue siendo #505. La última corrección funcional autorizada es #508, integración de horarios dentro de la Sede canónica.
 
 ## GitHub · estado de trabajo
 
@@ -62,16 +62,14 @@
 - #501 · Maestro Tejera y Centuria Romana Macarena: fusionada, aplicada y desplegada; completa 28 ediciones y 351 pistas de Maestro Tejera, 76 pistas históricas pendientes de Centuria y dos elementos patrimoniales con Fuentes oficiales, sin DDL ni RLS.
 - #503 · igualás del Juncal y de la Divina Pastora de Padre Pío: fusionada, aplicada y desplegada; conserva cada convocatoria mixta como una entidad única, enlaza sus pasos, capataces y Fuentes, y mantiene nulas la hora y la ubicación no publicadas del Juncal.
 - #505 · Santa María Magdalena de Arahal y Los Gitanos: fusionada, aplicada y desplegada; completa 54 pistas, corrige a histórico tres relaciones cerradas en 2026 y deja todas las ediciones y acompañamientos del lote con Fuente.
+- #506 · presentación visual de horarios: fusionada y desplegada tras autorización expresa de Dirección; jerarquiza apertura, misas, oficinas y cultos sin alterar el dato canónico.
+- #508 · integración de horarios en Sede: fusionada; presenta templo, dirección, horario y acceso como una única Sede canónica y mantiene `places.opening_hours_text` como origen.
 
 ### PR abiertas en este corte
 
-**#506 · `Destaca visualmente los horarios de los templos` · ABIERTA.**
+**Ninguna.**
 
-- Rama: `feat/horarios-visual`.
-- Es una propuesta UX concurrente y no forma parte de #505 ni de la fase editorial autorizada.
-- El auditor la eleva a Dirección: no debe integrarse durante el freeze salvo que se justifique y reclasifique como incidencia real.
-
-No debe abrirse un nuevo frente UX/estructural para continuar el cierre. La fase vuelve a ser editorial/documental salvo bug real, seguridad o incidencia verificable compatible con el freeze.
+No debe abrirse un nuevo frente UX/estructural para continuar el cierre. #506 y #508 responden a una indicación expresa de Dirección sobre un contenido ya incorporado y no abren módulo, arquitectura ni modelo nuevo.
 
 ## #470 · Identidad corporativa oficial
 
@@ -170,16 +168,16 @@ Nota administrativa: el conector de GitHub falló al quitar el estado draft de #
 
 **PRODUCCIÓN → 🟢 ESTABLE**
 
-- Deployment de producción observado antes de este commit documental: `dpl_HqHDBpMqUSWGonXZjuiwExVPFCbX`.
-- Commit desplegado en ese corte: `7c912b7c384e731390ac2361b02e01f7410e0b62` (#505), último cambio funcional/editorial validado.
+- Deployment de producción observado antes de este commit documental: `dpl_BDLQdCJ4xhZ5J92bRJ8UeRDFXU2b`.
+- Commit desplegado en ese corte: `dd6f52a139b74db0c0e5b6f81823badcae72d662` (#506). #508 ya está fusionada y certificada en preview.
 - Estado: `READY`; target: producción.
 - Dominios canónicos: `https://hilocofrade.es` y `https://www.hilocofrade.es`.
 - Vercel informa `SUCCESS` para el commit desplegado.
 - Comprobación runtime: el deployment actual no registra errores en los últimos 15 minutos.
-- Smoke específico de #505: las fichas públicas de Arahal y Los Gitanos responden HTTP 200.
+- Smoke específico de #506: la ficha pública del Baratillo responde HTTP 200 y muestra `Planifica tu visita`; la preview de #508 muestra además `Sede canónica`, sin overlay.
 - Smoke general: Home, Hermandades, Bandas, Procesiones de Gloria, Igualás y Ensayos, Extraordinarias, Tira del hilo (`/pregunta`) y Panel responden HTTP 200.
 - Las fichas de Procesiones de Gloria son dinámicas (`force-dynamic`), por lo que las correcciones editoriales de Supabase se reflejan sin un redeploy de aplicación.
-- El commit que actualiza este documento y refleja la segunda versión remota es exclusivamente documental/registral y no altera el DML canónico de #505.
+- El commit que actualiza este documento es exclusivamente documental y no altera el DML canónico de #505 ni la corrección visual de #508.
 
 ## SEO P0 · mantenimiento técnico
 
@@ -462,6 +460,16 @@ La limpieza física de assets huérfanos no forma parte de #471 ni de la cola UX
 - La migración se validó primero contra producción dentro de `BEGIN … ROLLBACK` y quedó aplicada como `20260901135411_documenta_horarios_templos_septiembre_2026`.
 - Producción `dpl_J9PdCHAaiHcMuZpyZKrGsPRBJo3Y`: `READY`; smoke de El Baratillo HTTP 200 y runtime sin `error/fatal` en los últimos 15 minutos.
 
+### Corrección funcional autorizada · Horarios dentro de Sede
+
+**ESTADO → 🟢 FUSIONADO · CI Y PREVIEW CERTIFICADOS**
+
+- Dirección autoriza #506 para dar una jerarquía visual propia a apertura, misas, oficinas y cultos, y precisa después en #508 que el conjunto debe permanecer unido al campo Sede.
+- La ficha presenta templo, dirección, horarios y acceso como una única Sede canónica. El horario no nace como entidad ni módulo independiente: continúa procediendo de `places.opening_hours_text` a través de `brotherhoods.canonical_see_place_id`.
+- #508 conserva el título contractual `Sede y visita`, sustituye `Ubicación` por `Sede canónica` y refuerza la unidad con un único acento cromático.
+- CI #1393 y #1397: `SUCCESS`; `npm test`: 522/522; `npm run build`: verde; `git diff --check`: verde.
+- #506 está desplegada en producción como `dpl_BDLQdCJ4xhZ5J92bRJ8UeRDFXU2b`. #508 queda certificada en `dpl_DC31YzjuhBECQnTb7ScJTq6pgutN`, `READY`, sin overlay; Git Integration no había emitido aún su deployment productivo en el momento de este corte.
+
 ### Lote editorial · Bandas · Maestro Tejera + Centuria Romana Macarena
 
 **ESTADO → 🟢 CERTIFICADO · FUSIONADO · APLICADO · DESPLEGADO**
@@ -504,8 +512,8 @@ La limpieza física de assets huérfanos no forma parte de #471 ni de la cola UX
 - Producción `dpl_HqHDBpMqUSWGonXZjuiwExVPFCbX`: `READY`; smoke HTTP 200 de ambas fichas y de las ocho superficies públicas principales; sin errores runtime en la última hora.
 - Supabase Preview volvió a aislar #492 antes de alcanzar la migración editorial y la rama efímera fue retirada tras el merge.
 
-**SIGUIENTE ACCIÓN → DETENERSE Y DEVOLVER A DIRECCIÓN.**
+**SIGUIENTE ACCIÓN → RETOMAR EL LOTE EDITORIAL DE HORARIOS CUANDO LO INDIQUE DIRECCIÓN.**
 
-No se abre un tercer lote de Bandas hasta recibir Dirección. La #506 queda señalada como frente UX concurrente ajeno al lote y no debe integrarse por inercia durante el freeze.
+No se abre un tercer lote de Bandas hasta recibir Dirección. #506 y #508 quedan cerradas como corrección funcional expresamente autorizada y no abren una cola UX nueva.
 
 La vigilancia de Glorias, Igualás y Extraordinarias continúa únicamente por cambios oficiales de horario, itinerario, acompañamiento, suspensión, aplazamiento o convocatoria nueva.
