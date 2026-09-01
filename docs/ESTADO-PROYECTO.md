@@ -1,6 +1,6 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 1 de septiembre de 2026 · 15:28 UTC
+**Corte validado:** 1 de septiembre de 2026 · 16:42 UTC
 
 **Régimen:** `FIRST EDITION FREEZE` activo
 
@@ -11,18 +11,18 @@
 **PRIMERA EDICIÓN → 🟢 CERRADA, CERTIFICADA Y CONGELADA**
 
 - Baseline funcional y estructural: `a025098528351656503460596d28b5318e39daf5` (#432).
-- Último commit funcional validado: `6cc4b71588696878e6df2b9e50fe29380b0835df` (#508).
-- HEAD real de `main` observado inmediatamente antes de esta sincronización: `6cc4b71588696878e6df2b9e50fe29380b0835df` (#508).
+- Último commit funcional validado: `803b064979e4943eed37ce4680c9ed8013c4c3a6` (#511).
+- HEAD real de `main` observado inmediatamente antes de esta sincronización: `803b064979e4943eed37ce4680c9ed8013c4c3a6` (#511).
 - #506 aplica la presentación visual de los horarios y #508 la integra expresamente dentro de la Sede canónica por indicación de Dirección; no modifican datos, arquitectura, esquema ni RLS. El commit que contiene este propio corte puede avanzar de nuevo el HEAD sin convertirse en un cambio funcional adicional; para el SHA vivo prevalece siempre `main` real.
 - Deployment de producción observado inmediatamente antes de esta sincronización: `dpl_BDLQdCJ4xhZ5J92bRJ8UeRDFXU2b`, `READY`, sobre `dd6f52a139b74db0c0e5b6f81823badcae72d662` (#506). #508 está fusionada y su preview `dpl_DC31YzjuhBECQnTb7ScJTq6pgutN` permanece `READY`; el webhook de producción no había generado aún un deployment nuevo en el momento del corte.
-- Supabase productivo registra `20260901144529_certifica_arahal_y_los_gitanos` y la entrada registral idempotente `20260901145701_certifica_arahal_y_los_gitanos`; Git y remoto quedan reconciliados en 26/26 versiones.
+- Supabase productivo registra hasta `20260901170000_certifica_las_aguas`; Git y remoto quedan reconciliados en 28/28 versiones.
 - Vercel informa `SUCCESS` para el HEAD desplegado; el deployment actual y los últimos 15 minutos del proyecto no registran errores ni fatales.
 - La matriz manual 390/768/1024/1440 de Primera Edición permanece aprobada.
 - El freeze no permite abrir arquitectura, módulos ni una Segunda Edición; sí permite contenido, datos, fotografías, Fuentes, seguridad, legal, bugs e incidencias reales.
 - Cola UX/estructural creada por este lote: **0 frentes abiertos**.
 - PR abiertas al cerrar este corte: **0**.
 - #467, #470 y #471 siguen cerradas; no se reabre ninguna.
-- La última actuación editorial sigue siendo #505. La última corrección funcional autorizada es #508, integración de horarios dentro de la Sede canónica.
+- La última actuación editorial es #511, certificación documental de Las Aguas. La última corrección funcional autorizada sigue siendo #508.
 
 ## GitHub · estado de trabajo
 
@@ -64,6 +64,8 @@
 - #505 · Santa María Magdalena de Arahal y Los Gitanos: fusionada, aplicada y desplegada; completa 54 pistas, corrige a histórico tres relaciones cerradas en 2026 y deja todas las ediciones y acompañamientos del lote con Fuente.
 - #506 · presentación visual de horarios: fusionada y desplegada tras autorización expresa de Dirección; jerarquiza apertura, misas, oficinas y cultos sin alterar el dato canónico.
 - #508 · integración de horarios en Sede: fusionada; presenta templo, dirección, horario y acceso como una única Sede canónica y mantiene `places.opening_hours_text` como origen.
+- #509 · Dulce Nombre de Bellavista, Las Aguas, La Bofetá, Jesús Despojado y La Macarena: fichas base publicadas; tres salidas de septiembre confirmadas y trazables.
+- #511 · Las Aguas: ficha documental certificada con titulares, autorías, pasos, hábito, colores, capataz, música, horarios y Fuentes.
 
 ### PR abiertas en este corte
 
@@ -321,9 +323,9 @@ Una decisión posterior de Dirección deberá abrir un corte independiente y com
 
 El cierre técnico permanece intacto. Los cambios posteriores son editoriales o correcciones reales sobre el modelo vigente.
 
-**GIT ↔ SUPABASE → 🟢 26/26 VERSIONES RECONCILIADAS EN PRODUCCIÓN**
+**GIT ↔ SUPABASE → 🟢 28/28 VERSIONES RECONCILIADAS EN PRODUCCIÓN**
 
-- Última versión: `20260901145701_certifica_arahal_y_los_gitanos`.
+- Última versión: `20260901170000_certifica_las_aguas`.
 - El proyecto productivo responde en PostgreSQL 17.6.1, región `eu-west-1`.
 - La auditoría de este corte no ejecutó DDL, no modificó RLS y no reescribió migraciones históricas; #505 es DML idempotente.
 - Git Integration aplicó `20260901144529` al fusionar #505. Una segunda ejecución manual idempotente quedó registrada como `20260901145701`; no duplicó datos. La segunda versión se refleja en Git mediante un archivo vacío de reconciliación, sin repetir el SQL canónico ni alterar el historial remoto.
@@ -358,6 +360,8 @@ Migraciones registradas en producción en el momento de este corte:
 24. `20260901142902_publica_igualas_juncal_y_pastora_padre_pio_2026`
 25. `20260901144529_certifica_arahal_y_los_gitanos`
 26. `20260901145701_certifica_arahal_y_los_gitanos`
+27. `20260901160000_completa_hermandades_septiembre_octubre`
+28. `20260901170000_certifica_las_aguas`
 
 ### Observación de ramas Supabase
 
@@ -419,6 +423,7 @@ No quedan bloqueados:
 - Santa Marta queda expresamente fuera de los acompañamientos vigentes de Rosario; cualquier relación previa se conserva solo como histórica hasta 2025.
 - El paso de Columna de Cádiz usa un nodo propio y no reutiliza el paso homónimo ya perteneciente a Las Cigarreras en Sevilla.
 - El Juncal queda relacionado con el paso de Nuestra Señora del Juncal y con Luis Miguel Sánchez Fajardo y Jesús Sánchez Fajardo como capataces de su única cita mixta de igualá y ensayo.
+- Las Aguas queda con 4 titulares publicados, 2 pasos completos, 3 posiciones musicales actuales, Gonzalo Carrión como capataz de ambos pasos, 1 hábito, 2 colores y trazabilidad de Fuente; no presenta slugs duplicados ni vínculos de Fuente inválidos.
 - La Divina Pastora de Padre Pío queda relacionada con su paso y con Ricardo Manuel López Ruiz «Almansa» como capataz de su única cita mixta de igualá y mudá.
 
 ## Freeze y siguiente frente
@@ -512,7 +517,27 @@ La limpieza física de assets huérfanos no forma parte de #471 ni de la cola UX
 - Producción `dpl_HqHDBpMqUSWGonXZjuiwExVPFCbX`: `READY`; smoke HTTP 200 de ambas fichas y de las ocho superficies públicas principales; sin errores runtime en la última hora.
 - Supabase Preview volvió a aislar #492 antes de alcanzar la migración editorial y la rama efímera fue retirada tras el merge.
 
-**SIGUIENTE ACCIÓN → RETOMAR EL LOTE EDITORIAL DE HORARIOS CUANDO LO INDIQUE DIRECCIÓN.**
+### Lote editorial · Hermandades · base de septiembre y octubre
+
+**ESTADO → 🟢 CERTIFICADO · FUSIONADO · APLICADO · DESPLEGADO**
+
+- #509 completa y publica Dulce Nombre de Bellavista, Las Aguas, La Bofetá, Jesús Despojado y La Macarena.
+- Publica las salidas confirmadas de Bellavista (12/09) y La Bofetá (27/09), y refuerza la Fuente de Las Aguas (19/09).
+- Jesús Despojado conserva sin inventar una salida de 2026 no confirmada.
+- La migración `20260901160000_completa_hermandades_septiembre_octubre` está aplicada en producción.
+
+### Lote editorial · Hermandades · Las Aguas
+
+**ESTADO → 🟢 CERTIFICADO · FUSIONADO · APLICADO · DESPLEGADO**
+
+- #511 completa cuatro titulares, dos pasos, hábito, colores, capataz, música, horarios y Fuentes.
+- Conserva los conflictos documentales sin falsa precisión: Guadalupe queda fechada en 1965–1966 y el Rosario permanece como obra anónima del siglo XVIII.
+- Los colores no reciben códigos HEX inventados y no se añade fotografía sin derechos trazables.
+- La migración se ejecutó dos veces consecutivas dentro de una transacción con rollback y quedó aplicada como `20260901170000_certifica_las_aguas`.
+- Auditoría productiva: 4 titulares, 2 pasos, 3 acompañamientos, 2 relaciones actuales de capataz, 1 hábito, 2 colores, 0 slugs duplicados y 0 vínculos de Fuente inválidos.
+- CI #1403 y Vercel: `SUCCESS`; producción sobre `803b064979e4943eed37ce4680c9ed8013c4c3a6`.
+
+**SIGUIENTE ACCIÓN → CERTIFICAR LA BOFETÁ CON EL MISMO ESTÁNDAR DOCUMENTAL.**
 
 No se abre un tercer lote de Bandas hasta recibir Dirección. #506 y #508 quedan cerradas como corrección funcional expresamente autorizada y no abren una cola UX nueva.
 
