@@ -629,7 +629,9 @@ export default async function HermandadDetailPage({ params }) {
                       src={e.imagen.src}
                       alt={e.imagen.alt}
                       fill
-                      sizes="(max-width: 767px) calc(100vw - 40px), (max-width: 1199px) calc(50vw - 32px), 370px"
+                      sizes={h.estrenos.length === 1
+                        ? '(max-width: 767px) calc(100vw - 40px), (max-width: 1199px) calc(100vw - 48px), 1158px'
+                        : '(max-width: 767px) calc(100vw - 40px), (max-width: 1199px) calc(50vw - 32px), 370px'}
                     />
                   ) : <div className="release-card-placeholder" aria-hidden="true">{e.ano}</div>}
                   <div className="release-card-badges"><span>{e.tipo}</span><strong>{e.ano}</strong></div>

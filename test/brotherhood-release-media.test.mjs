@@ -13,6 +13,7 @@ test('las novedades patrimoniales pueden mostrar la imagen documentada de su pie
   assert.match(loader, /heritageUpdateTargetById\.get\(update\.target_entity_id\)/)
   assert.match(page, /className="release-card-visual"/)
   assert.match(page, /e\.imagen\.credito/)
+  assert.match(page, /h\.estrenos\.length === 1[\s\S]*1158px[\s\S]*370px/)
   assert.match(css, /\.release-card-visual\s*\{[^}]*aspect-ratio:3\/2/s)
   assert.match(css, /\.release-card:only-child \.release-card-visual\{[^}]*aspect-ratio:2\/1/s)
   assert.match(css, /@media\(max-width:620px\)[\s\S]*\.release-card:only-child \.release-card-visual\{aspect-ratio:1\/1\}/)
