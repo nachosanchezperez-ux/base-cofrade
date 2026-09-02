@@ -1,6 +1,6 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 2 de septiembre de 2026 · 00:37 UTC
+**Corte validado:** 2 de septiembre de 2026 · 06:57 UTC
 
 **Régimen:** `FIRST EDITION FREEZE` activo
 
@@ -11,17 +11,17 @@
 **PRIMERA EDICIÓN → 🟢 CERRADA, CERTIFICADA Y CONGELADA**
 
 - Baseline funcional y estructural: `a025098528351656503460596d28b5318e39daf5` (#432).
-- Último commit funcional validado: `2d024e24830a079dc1d27204ea121a21b82921f1` (#522), cierre editorial de Padre Pío.
-- HEAD real de `main` observado inmediatamente antes de esta sincronización: `2d024e24830a079dc1d27204ea121a21b82921f1`.
-- Deployment de producción observado inmediatamente antes de esta sincronización: `dpl_95WKWZMq8cot9SxxEnhHWAxmoQ4Z`, `READY`, sobre `2d024e24830a079dc1d27204ea121a21b82921f1`.
-- Supabase productivo registra hasta `20260902003548_completa_padre_pio`; Git y remoto conservan 33/33 migraciones canónicas.
+- Último commit funcional validado: `26bbcf3613502b60d21ba4e9929fd1379abbc96a` (#524), lote editorial de Virgen de los Reyes y La Redención.
+- HEAD real de `main` observado inmediatamente antes de esta sincronización: `26bbcf3613502b60d21ba4e9929fd1379abbc96a`.
+- Deployment de producción observado inmediatamente antes de esta sincronización: `dpl_FcPgifZpLmnF4nwfED92BKETSud4`, `READY`, sobre `26bbcf3613502b60d21ba4e9929fd1379abbc96a`.
+- Supabase productivo registra hasta `20260902065247_completa_virgen_reyes_y_redencion`; Git y remoto conservan 34/34 migraciones canónicas.
 - Vercel informa `SUCCESS` para el HEAD desplegado; el deployment actual y los últimos 15 minutos del proyecto no registran errores ni fatales.
 - La matriz manual 390/768/1024/1440 de Primera Edición permanece aprobada.
 - El freeze no permite abrir arquitectura, módulos ni una Segunda Edición; sí permite contenido, datos, fotografías, Fuentes, seguridad, legal, bugs e incidencias reales.
 - Cola UX/estructural creada por este lote: **0 frentes abiertos**.
-- PR abiertas al cerrar este corte: **0**.
+- PR abiertas al cerrar este corte: **1**, #525, lote editorial concurrente de Padre Pío.
 - #467, #470 y #471 siguen cerradas; no se reabre ninguna.
-- La última actuación editorial es #522: apertura y cierre completo de la Hermandad Sacramental de Padre Pío con identidad, sede, titulares procesionales, pasos, responsables, música, hábito, patrimonio, extraordinaria, estreno y Fuentes.
+- La última actuación editorial cerrada es #524: Virgen de los Reyes y La Redención completadas con paletas, Fuentes, estrenos 2025, discografía, patrimonio y respaldo histórico sobre el modelo vigente.
 
 ## GitHub · estado de trabajo
 
@@ -74,11 +74,16 @@
 - #520 · Arahal: coherencia visual y documental de acompañamientos fusionada y desplegada.
 - #521 · ruta relacional móvil de Hilo: ajuste responsive fusionado y desplegado.
 - #522 · Padre Pío: ficha canónica abierta, completada, aplicada y desplegada; mantiene separada la Hermandad Sacramental de la Pastora de Padre Pío y publica el estreno del palio y la extraordinaria de octubre de 2026.
+- #524 · Virgen de los Reyes y La Redención: lote editorial fusionado, aplicado y desplegado; estructura las paletas de ambas Bandas, incorpora dos estrenos 2025 con marchas, autores, dedicatorias, singles y pistas, añade Fuentes directas y documenta el banderín y el uniforme de La Redención sin DDL ni RLS.
 - `f9e6fdd` · rangos horarios compactos: bug real corregido transversalmente y cubierto por prueba; no abre una nueva cola UX.
 
 ### PR abiertas en este corte
 
-**Ninguna.**
+**#525 · Unifica el estreno de las bambalinas de Padre Pío.**
+
+- Frente editorial concurrente detectado después del merge de #524.
+- No forma parte del lote de Bandas ni reabre UX o arquitectura.
+- Debe resolverse por su propio ciclo de revisión y certificación.
 
 No debe abrirse un nuevo frente UX/estructural para continuar el cierre. #514 queda como cierre definitivo de la cola visual de Sede y no abre módulo, arquitectura ni modelo nuevo.
 
@@ -179,12 +184,13 @@ Nota administrativa: el conector de GitHub falló al quitar el estado draft de #
 
 **PRODUCCIÓN → 🟢 ESTABLE**
 
-- Deployment de producción observado antes de este commit documental: `dpl_95WKWZMq8cot9SxxEnhHWAxmoQ4Z`.
-- Commit desplegado en ese corte: `2d024e24830a079dc1d27204ea121a21b82921f1` (#522).
+- Deployment de producción observado antes de este commit documental: `dpl_FcPgifZpLmnF4nwfED92BKETSud4`.
+- Commit desplegado en ese corte: `26bbcf3613502b60d21ba4e9929fd1379abbc96a` (#524).
 - Estado: `READY`; target: producción.
 - Dominios canónicos: `https://hilocofrade.es` y `https://www.hilocofrade.es`.
 - Vercel informa `SUCCESS` para el commit desplegado.
-- Comprobación runtime: el deployment actual no registra errores en los últimos 15 minutos.
+- Comprobación runtime: el deployment actual no registra errores ni fatales en los últimos 30 minutos.
+- Smoke específico de #524: las fichas públicas de Virgen de los Reyes y La Redención responden HTTP 200; la primera muestra 23 trabajos, «El Galileo» y «Luz de luz», y la segunda muestra sus Fuentes directas, Apple Music y el banderín de 2011.
 - Smoke específico de #522: `https://hilocofrade.es/hermandades/padre-pio-sevilla` responde HTTP 200 y muestra el escudo oficial, ambos capataces y los dos hitos diferenciados del palio.
 - Smoke general: Home, Hermandades, Bandas, Procesiones de Gloria, Igualás y Ensayos, Extraordinarias, Tira del hilo (`/pregunta`) y Panel responden HTTP 200.
 - Las fichas de Procesiones de Gloria son dinámicas (`force-dynamic`), por lo que las correcciones editoriales de Supabase se reflejan sin un redeploy de aplicación.
@@ -332,11 +338,11 @@ Una decisión posterior de Dirección deberá abrir un corte independiente y com
 
 El cierre técnico permanece intacto. Los cambios posteriores son editoriales o correcciones reales sobre el modelo vigente.
 
-**GIT ↔ SUPABASE → 🟢 33/33 VERSIONES CANÓNICAS EN PRODUCCIÓN**
+**GIT ↔ SUPABASE → 🟢 34/34 VERSIONES CANÓNICAS EN PRODUCCIÓN**
 
-- Última versión remota: `20260902003548_completa_padre_pio`; el SQL canónico está versionado en Git como `20260902002439_completa_padre_pio.sql`.
+- Última versión remota: `20260902065247_completa_virgen_reyes_y_redencion`; el SQL canónico está versionado en Git con esa misma versión.
 - El proyecto productivo responde en PostgreSQL 17.6.1, región `eu-west-1`.
-- La auditoría de este corte no ejecutó DDL, no modificó RLS y no reescribió migraciones históricas; #522 es DML idempotente.
+- La auditoría de este corte no ejecutó DDL, no modificó RLS y no reescribió migraciones históricas; #524 es DML idempotente.
 - Git Integration aplicó `20260901144529` al fusionar #505. Una segunda ejecución manual idempotente quedó registrada como `20260901145701`; no duplicó datos. La segunda versión se refleja en Git mediante un archivo vacío de reconciliación, sin repetir el SQL canónico ni alterar el historial remoto.
 - En el corte de #499, la integración automática ya había registrado `20260901135411`; una aplicación manual idempotente añadió temporalmente una segunda entrada de historial. Tras comprobarla, se retiró exclusivamente esa entrada extra. Los datos no se duplicaron y el historial quedó reconciliado antes de incorporar #501.
 - La continuidad editorial puede seguir utilizando las tablas y relaciones existentes.
@@ -376,6 +382,7 @@ Migraciones registradas en producción en el momento de este corte:
 31. `20260901214842_completa_la_bofeta`
 32. `20260901224439_incorpora_escudo_cabecera_san_esteban`
 33. `20260902003548_completa_padre_pio`
+34. `20260902065247_completa_virgen_reyes_y_redencion`
 
 ### Observación de ramas Supabase
 
@@ -578,15 +585,18 @@ La limpieza física de assets huérfanos no forma parte de #471 ni de la cola UX
 - La migración completa se ejecutó dos veces dentro de `BEGIN … ROLLBACK` antes de aplicarse como `20260902003548_completa_padre_pio`.
 - QA: `npm test` 523/523, `npm run build` correcto, CI #1436 verde, preview Vercel `READY`, producción `dpl_95WKWZMq8cot9SxxEnhHWAxmoQ4Z` `READY`, smoke HTTP 200 y sin errores runtime en los 15 minutos posteriores al despliegue.
 
-### Siguiente lote editorial · Bandas
+### Lote editorial · Bandas · Virgen de los Reyes + La Redención
 
-**SELECCIÓN → VIRGEN DE LOS REYES + LA REDENCIÓN.**
+**ESTADO → 🟢 CERTIFICADO · FUSIONADO · APLICADO · DESPLEGADO.**
 
-- Ambas fichas están publicadas y conservan identidad, acompañamientos, históricos, discografía, pistas, estrenos, redes y canales musicales.
-- La auditoría actual confirma que siguen incompletas para el estándar del lote: no tienen colores estructurados ni fotografía principal con derechos; Virgen de los Reyes carece además de estrenos 2025 estructurados y La Redención no tiene Fuente enlazada directamente a la entidad.
-- El lote deberá completar solo contenido y Fuentes sobre el modelo vigente, sin DDL, RLS ni nueva UX y sin incorporar imágenes carentes de derechos trazables.
+- Virgen de los Reyes queda con 3 colores, 6 acompañamientos vigentes, 6 históricos, 23 ediciones, 216 pistas y 5 estrenos; «El Galileo» y «Luz de luz» incorporan marcha, autores, dedicatoria, estreno, edición digital, pista y Fuentes.
+- La Redención queda con 3 colores, 6 acompañamientos vigentes, 4 históricos, 12 ediciones, 149 pistas, 9 estrenos, 5 Fuentes directas y 2 elementos patrimoniales actuales.
+- Monte-Sión y La Milagrosa conservan sus periodos históricos cerrados en 2025 y disponen de Fuente específica.
+- La salud del grafo devuelve 0 ediciones sin pistas, 0 ediciones sin Fuente, 0 estrenos incompletos, 0 marchas nuevas sin autor y 0 acompañamientos sin Fuente.
+- Las fotografías principales permanecen pendientes de recurso autorizado; no se publica media sin derechos trazables.
+- QA: `npm test` 523/523, `npm run build` correcto, Vercel preview y producción `READY`, checks en éxito, smoke HTTP 200 y runtime sin errores ni fatales.
 
-**SIGUIENTE ACCIÓN → AUDITAR Y COMPLETAR EL LOTE EDITORIAL VIRGEN DE LOS REYES + LA REDENCIÓN.**
+**SIGUIENTE ACCIÓN → RESOLVER Y CERTIFICAR EL LOTE EDITORIAL CONCURRENTE #525.**
 
 #514 queda cerrada de forma definitiva y no abre una cola UX nueva.
 
