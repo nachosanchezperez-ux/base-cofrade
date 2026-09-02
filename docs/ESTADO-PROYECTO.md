@@ -1,6 +1,6 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 1 de septiembre de 2026 · 21:49 UTC
+**Corte validado:** 2 de septiembre de 2026 · 00:37 UTC
 
 **Régimen:** `FIRST EDITION FREEZE` activo
 
@@ -11,17 +11,17 @@
 **PRIMERA EDICIÓN → 🟢 CERRADA, CERTIFICADA Y CONGELADA**
 
 - Baseline funcional y estructural: `a025098528351656503460596d28b5318e39daf5` (#432).
-- Último commit funcional validado: `1111bd7b3a863638603112d47e2413cc1dda3e76` (#517), cierre editorial de La Bofetá.
-- HEAD real de `main` observado inmediatamente antes de esta sincronización: `1111bd7b3a863638603112d47e2413cc1dda3e76`.
-- Deployment de producción observado inmediatamente antes de esta sincronización: `dpl_8uppNq8jYyBbJKgbo3wnq1hGAcRL`, `READY`, sobre `1111bd7b3a863638603112d47e2413cc1dda3e76`.
-- Supabase productivo registra hasta `20260901214842_completa_la_bofeta`; Git y remoto quedan reconciliados en 31/31 versiones.
+- Último commit funcional validado: `2d024e24830a079dc1d27204ea121a21b82921f1` (#522), cierre editorial de Padre Pío.
+- HEAD real de `main` observado inmediatamente antes de esta sincronización: `2d024e24830a079dc1d27204ea121a21b82921f1`.
+- Deployment de producción observado inmediatamente antes de esta sincronización: `dpl_95WKWZMq8cot9SxxEnhHWAxmoQ4Z`, `READY`, sobre `2d024e24830a079dc1d27204ea121a21b82921f1`.
+- Supabase productivo registra hasta `20260902003548_completa_padre_pio`; Git y remoto conservan 33/33 migraciones canónicas.
 - Vercel informa `SUCCESS` para el HEAD desplegado; el deployment actual y los últimos 15 minutos del proyecto no registran errores ni fatales.
 - La matriz manual 390/768/1024/1440 de Primera Edición permanece aprobada.
 - El freeze no permite abrir arquitectura, módulos ni una Segunda Edición; sí permite contenido, datos, fotografías, Fuentes, seguridad, legal, bugs e incidencias reales.
 - Cola UX/estructural creada por este lote: **0 frentes abiertos**.
 - PR abiertas al cerrar este corte: **0**.
 - #467, #470 y #471 siguen cerradas; no se reabre ninguna.
-- La última actuación editorial es #517: cierre completo de La Bofetá con cuatro titulares, dos pasos, siete imágenes en el misterio, música, hábito, colores, capataces y Fuentes.
+- La última actuación editorial es #522: apertura y cierre completo de la Hermandad Sacramental de Padre Pío con identidad, sede, titulares procesionales, pasos, responsables, música, hábito, patrimonio, extraordinaria, estreno y Fuentes.
 
 ## GitHub · estado de trabajo
 
@@ -69,6 +69,11 @@
 - #514 · refinamiento visual de la Sede: fusionada, desplegada y cerrada; mejora jerarquía, horarios, iconografía, accesibilidad y respuesta móvil sin ampliar el modelo.
 - #516 · dirección de la Sede del Baratillo: fusionada como DML editorial trazable, sin DDL ni RLS.
 - #517 · La Bofetá: ficha editorial completada, aplicada y desplegada; publica cuatro titulares, dos pasos, las seis imágenes secundarias del misterio junto a Jesús, acompañamientos, hábito, colores, capataces y Fuentes, sin DDL ni RLS.
+- #518 · sincronización documental del cierre de La Bofetá: fusionada y desplegada.
+- #519 · San Esteban: escudo y cabecera oficial incorporados con gobierno editorial de media.
+- #520 · Arahal: coherencia visual y documental de acompañamientos fusionada y desplegada.
+- #521 · ruta relacional móvil de Hilo: ajuste responsive fusionado y desplegado.
+- #522 · Padre Pío: ficha canónica abierta, completada, aplicada y desplegada; mantiene separada la Hermandad Sacramental de la Pastora de Padre Pío y publica el estreno del palio y la extraordinaria de octubre de 2026.
 - `f9e6fdd` · rangos horarios compactos: bug real corregido transversalmente y cubierto por prueba; no abre una nueva cola UX.
 
 ### PR abiertas en este corte
@@ -174,16 +179,16 @@ Nota administrativa: el conector de GitHub falló al quitar el estado draft de #
 
 **PRODUCCIÓN → 🟢 ESTABLE**
 
-- Deployment de producción observado antes de este commit documental: `dpl_8uppNq8jYyBbJKgbo3wnq1hGAcRL`.
-- Commit desplegado en ese corte: `1111bd7b3a863638603112d47e2413cc1dda3e76` (#517).
+- Deployment de producción observado antes de este commit documental: `dpl_95WKWZMq8cot9SxxEnhHWAxmoQ4Z`.
+- Commit desplegado en ese corte: `2d024e24830a079dc1d27204ea121a21b82921f1` (#522).
 - Estado: `READY`; target: producción.
 - Dominios canónicos: `https://hilocofrade.es` y `https://www.hilocofrade.es`.
 - Vercel informa `SUCCESS` para el commit desplegado.
 - Comprobación runtime: el deployment actual no registra errores en los últimos 15 minutos.
-- Smoke específico de #506: la ficha pública del Baratillo responde HTTP 200 y muestra `Planifica tu visita`; la preview de #508 muestra además `Sede canónica`, sin overlay.
+- Smoke específico de #522: `https://hilocofrade.es/hermandades/padre-pio-sevilla` responde HTTP 200 y muestra el escudo oficial, ambos capataces y los dos hitos diferenciados del palio.
 - Smoke general: Home, Hermandades, Bandas, Procesiones de Gloria, Igualás y Ensayos, Extraordinarias, Tira del hilo (`/pregunta`) y Panel responden HTTP 200.
 - Las fichas de Procesiones de Gloria son dinámicas (`force-dynamic`), por lo que las correcciones editoriales de Supabase se reflejan sin un redeploy de aplicación.
-- El commit que actualiza este documento es exclusivamente documental y no altera el DML canónico de #517.
+- El commit que actualiza este documento es exclusivamente documental y no altera el DML canónico de #522.
 
 ## SEO P0 · mantenimiento técnico
 
@@ -327,11 +332,11 @@ Una decisión posterior de Dirección deberá abrir un corte independiente y com
 
 El cierre técnico permanece intacto. Los cambios posteriores son editoriales o correcciones reales sobre el modelo vigente.
 
-**GIT ↔ SUPABASE → 🟢 29/29 VERSIONES RECONCILIADAS EN PRODUCCIÓN**
+**GIT ↔ SUPABASE → 🟢 33/33 VERSIONES CANÓNICAS EN PRODUCCIÓN**
 
-- Última versión: `20260901180000_completa_paso_rosario_las_aguas`.
+- Última versión remota: `20260902003548_completa_padre_pio`; el SQL canónico está versionado en Git como `20260902002439_completa_padre_pio.sql`.
 - El proyecto productivo responde en PostgreSQL 17.6.1, región `eu-west-1`.
-- La auditoría de este corte no ejecutó DDL, no modificó RLS y no reescribió migraciones históricas; #505 es DML idempotente.
+- La auditoría de este corte no ejecutó DDL, no modificó RLS y no reescribió migraciones históricas; #522 es DML idempotente.
 - Git Integration aplicó `20260901144529` al fusionar #505. Una segunda ejecución manual idempotente quedó registrada como `20260901145701`; no duplicó datos. La segunda versión se refleja en Git mediante un archivo vacío de reconciliación, sin repetir el SQL canónico ni alterar el historial remoto.
 - En el corte de #499, la integración automática ya había registrado `20260901135411`; una aplicación manual idempotente añadió temporalmente una segunda entrada de historial. Tras comprobarla, se retiró exclusivamente esa entrada extra. Los datos no se duplicaron y el historial quedó reconciliado antes de incorporar #501.
 - La continuidad editorial puede seguir utilizando las tablas y relaciones existentes.
@@ -367,6 +372,10 @@ Migraciones registradas en producción en el momento de este corte:
 27. `20260901160000_completa_hermandades_septiembre_octubre`
 28. `20260901170000_certifica_las_aguas`
 29. `20260901180000_completa_paso_rosario_las_aguas`
+30. `20260901204320_completa_direccion_sede_baratillo`
+31. `20260901214842_completa_la_bofeta`
+32. `20260901224439_incorpora_escudo_cabecera_san_esteban`
+33. `20260902003548_completa_padre_pio`
 
 ### Observación de ramas Supabase
 
@@ -555,6 +564,19 @@ La limpieza física de assets huérfanos no forma parte de #471 ni de la cola UX
 - El hotfix `f9e6fdd` evita que un rango compacto como `18:30–20:30` se divida por su primer `:`; la suite queda en 523/523 y el build es correcto.
 - Producción `dpl_FdXbGSfR29teENyXXzoH4xWQ1oVJ`: `READY`; Baratillo muestra `Calle Adriano, 13`, Las Aguas conserva `18:30–20:30` como rango unido y el runtime no registra errores ni fatales.
 - Supabase permanece `ACTIVE_HEALTHY`, con 30/30 migraciones, sin DDL ni RLS introducidos por #514. #492 continúa aislada como deuda de Preview Branches.
+
+### Lote editorial · Hermandades · Padre Pío
+
+**ESTADO → 🟢 CERTIFICADO · FUSIONADO · APLICADO · DESPLEGADO**
+
+- #522 abre `padre-pio-sevilla` como Hermandad Sacramental y de Penitencia independiente de `pastora-padre-pio`.
+- La ficha publica sede, historia, cinco canales oficiales, hábito marfil y burdeos, dos imágenes procesionales con autoría, dos pasos, capataces y dos acompañamientos vigentes en 2026.
+- San Juan de la Cruz queda documentado sin fabricar una imagen titular: su relicario se incorpora como pieza patrimonial. El carácter sacramental y la Santa Cruz permanecen en la identidad, historia y Fuentes de la corporación.
+- La limpieza y mejora de las bambalinas del 24 de agosto queda separada del estreno anunciado de cordones y flecos de bellota del 11 de octubre. Ambos trabajos reconocen a las siete hermanas nombradas por la Fuente oficial.
+- La salida extraordinaria de la Divina Gracia del 11 de octubre de 2026 publica horario, itinerario, motivo parroquial, imagen participante y acompañamiento musical.
+- El escudo procede del sitio oficial; no se incorporan fotografías sin derechos trazables.
+- La migración completa se ejecutó dos veces dentro de `BEGIN … ROLLBACK` antes de aplicarse como `20260902003548_completa_padre_pio`.
+- QA: `npm test` 523/523, `npm run build` correcto, CI #1436 verde, preview Vercel `READY`, producción `dpl_95WKWZMq8cot9SxxEnhHWAxmoQ4Z` `READY`, smoke HTTP 200 y sin errores runtime en los 15 minutos posteriores al despliegue.
 
 ### Siguiente lote editorial · Bandas
 
