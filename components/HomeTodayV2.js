@@ -105,7 +105,7 @@ function RelationshipTrail({ value }) {
   if (!parts.length) return null
 
   return (
-    <span className={styles.kicker} aria-label={`Recorrido: ${parts.join(', ')}`}>
+    <span className={`${styles.kicker} ${mobileFixStyles.relationshipTrail}`} aria-label={`Recorrido: ${parts.join(', ')}`}>
       {parts.map((part, index) => (
         <span className={styles.kickerStep} key={`${part}-${index}`}>
           {index ? <span className={styles.kickerArrow} aria-hidden="true">→</span> : null}
