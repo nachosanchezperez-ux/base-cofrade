@@ -41,7 +41,7 @@ export default function BrotherhoodInlineMedia({
             </small>
           </span>
         </span>
-        <span className={styles.action}>{cover ? 'Ver / editar' : 'Añadir'}</span>
+        <span className={styles.action}>{cover ? 'Ver / editar' : 'Añadir / cambiar'}</span>
       </summary>
 
       <div className={styles.content}>
