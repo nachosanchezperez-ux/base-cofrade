@@ -15,7 +15,7 @@ const RIGHTS_OPTIONS = [
   ['restricted', 'Restringida'],
 ]
 
-function HiddenFields({ brotherhoodId, targetId, targetKind, item }) {
+function HiddenFields({ brotherhoodId, targetId, targetKind, item, returnPath }) {
   return (
     <>
       <input type="hidden" name="brotherhood_id" value={brotherhoodId} />
@@ -23,11 +23,12 @@ function HiddenFields({ brotherhoodId, targetId, targetKind, item }) {
       <input type="hidden" name="target_kind" value={targetKind} />
       <input type="hidden" name="media_link_id" value={item.id} />
       <input type="hidden" name="media_asset_id" value={item.asset.id} />
+      {returnPath ? <input type="hidden" name="return_path" value={returnPath} /> : null}
     </>
   )
 }
 
-export default function MediaAssetManager({ media = [], brotherhoodId, targetId, targetKind }) {
+export default function MediaAssetManager({ media = [], brotherhoodId, targetId, targetKind, returnPath = '' }) {
   if (!media.length) return null
 
   return (
@@ -56,7 +57,7 @@ export default function MediaAssetManager({ media = [], brotherhoodId, targetId,
               <div className={mediaStyles.actions}>
                 {!item.is_cover ? (
                   <form action={setBrotherhoodMediaCoverAction}>
-                    <HiddenFields brotherhoodId={brotherhoodId} targetId={targetId} targetKind={targetKind} item={item} />
+                    <HiddenFields brotherhoodId={brotherhoodId} targetId={targetId} targetKind={targetKind} item={item} returnPath={returnPath} />
                     <button className={styles.smallButton} type="submit">Usar como principal</button>
                   </form>
                 ) : null}
@@ -65,7 +66,7 @@ export default function MediaAssetManager({ media = [], brotherhoodId, targetId,
               <details className={mediaStyles.editDetails}>
                 <summary>Editar información</summary>
                 <form action={updateBrotherhoodMediaAssetAction} className={mediaStyles.editForm}>
-                  <HiddenFields brotherhoodId={brotherhoodId} targetId={targetId} targetKind={targetKind} item={item} />
+                  <HiddenFields brotherhoodId={brotherhoodId} targetId={targetId} targetKind={targetKind} item={item} returnPath={returnPath} />
                   <div className={mediaStyles.grid}>
                     <label><span>Título</span><input name="title" defaultValue={item.asset.title || ''} /></label>
                     <label><span>Autor / fotógrafo</span><input name="author_name" defaultValue={item.asset.author_name || ''} /></label>
@@ -88,7 +89,7 @@ export default function MediaAssetManager({ media = [], brotherhoodId, targetId,
                 <summary>Desvincular</summary>
                 <p>Se retirará únicamente de este contenido. El archivo multimedia y el objeto de almacenamiento se conservarán para evitar borrar recursos que puedan seguir utilizándose en otros contextos.</p>
                 <form action={unlinkBrotherhoodMediaAssetAction}>
-                  <HiddenFields brotherhoodId={brotherhoodId} targetId={targetId} targetKind={targetKind} item={item} />
+                  <HiddenFields brotherhoodId={brotherhoodId} targetId={targetId} targetKind={targetKind} item={item} returnPath={returnPath} />
                   <button className={styles.smallButton} type="submit">Confirmar desvinculación</button>
                 </form>
               </details>
