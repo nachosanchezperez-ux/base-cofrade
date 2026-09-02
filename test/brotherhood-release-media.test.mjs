@@ -14,6 +14,8 @@ test('las novedades patrimoniales pueden mostrar la imagen documentada de su pie
   assert.match(page, /className="release-card-visual"/)
   assert.match(page, /e\.imagen\.credito/)
   assert.match(css, /\.release-card-visual\s*\{[^}]*aspect-ratio:3\/2/s)
+  assert.match(css, /\.release-card:only-child \.release-card-visual\{[^}]*aspect-ratio:2\/1/s)
+  assert.match(css, /@media\(max-width:620px\)[\s\S]*\.release-card:only-child \.release-card-visual\{aspect-ratio:1\/1\}/)
 })
 
 test('los estrenos priorizan la lectura rápida y pliegan los equipos extensos', () => {
