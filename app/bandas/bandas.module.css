@@ -269,27 +269,41 @@
 }
 .historicalSection .sectionHeading { margin-bottom: 22px; }
 .historicalSection .sectionHeading h2 { font-size: clamp(32px, 4.2vw, 48px); }
-.historicalLayout { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(310px, .7fr); gap: 14px; align-items: stretch; }
-.historicalList,
-.curiosityStack { display: grid; gap: 12px; }
-.historicalCard { display: grid; grid-template-columns: 138px minmax(0, 1fr); min-height: 190px; overflow: hidden; border: 1px solid var(--band-line); border-radius: 20px; background: #fff; box-shadow: 0 14px 36px rgb(41 39 44 / 7%); }
-.historicalPeriod { display: grid; align-content: center; justify-items: center; gap: 7px; padding: 20px 14px; color: #fff; background: linear-gradient(155deg, var(--band-primary), color-mix(in srgb, var(--band-primary) 28%, var(--band-secondary))); text-align: center; }
+.historicalLayout { display: grid; gap: 28px; }
+.historicalRail { min-width: 0; }
+.historicalRailToolbar { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; margin-bottom: 14px; }
+.historicalRailStatus { display: grid; gap: 3px; }
+.historicalRailStatus strong { color: var(--band-secondary); font-size: 13px; }
+.historicalRailStatus span { color: var(--band-muted); font-size: 10px; line-height: 1.4; }
+.historicalRailControls { display: flex; gap: 8px; }
+.historicalRailControls button { display: grid; width: 42px; height: 42px; place-items: center; border: 1px solid color-mix(in srgb, var(--band-primary) 28%, white); border-radius: 50%; color: #fff; background: var(--band-primary); box-shadow: 0 8px 20px color-mix(in srgb, var(--band-primary) 18%, transparent); cursor: pointer; transition: transform .18s ease, opacity .18s ease, background .18s ease; }
+.historicalRailControls button:hover:not(:disabled) { transform: translateY(-2px); background: color-mix(in srgb, var(--band-primary) 78%, var(--band-secondary)); }
+.historicalRailControls button:focus-visible { outline: 3px solid color-mix(in srgb, var(--band-primary) 35%, white); outline-offset: 3px; }
+.historicalRailControls button:disabled { opacity: .28; cursor: default; }
+.historicalRailControls span { font-size: 18px; line-height: 1; }
+.historicalList { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(330px, calc((100% - 28px) / 3)); gap: 14px; align-items: stretch; padding: 4px 4px 24px; margin: 0 -4px; overflow-x: auto; overscroll-behavior-inline: contain; scroll-behavior: smooth; scroll-snap-type: x mandatory; scrollbar-color: color-mix(in srgb, var(--band-primary) 38%, white) transparent; scrollbar-width: thin; }
+.historicalList:focus-visible { outline: 3px solid color-mix(in srgb, var(--band-primary) 28%, white); outline-offset: 4px; border-radius: 22px; }
+.curiosityStack { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+.historicalCard { display: grid; grid-template-rows: 112px minmax(0, 1fr); min-height: 344px; overflow: hidden; border: 1px solid var(--band-line); border-radius: 20px; background: #fff; box-shadow: 0 14px 36px rgb(41 39 44 / 7%); scroll-snap-align: start; scroll-snap-stop: always; }
+.historicalPeriod { display: grid; grid-template-columns: 38px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 20px; color: #fff; background: linear-gradient(145deg, var(--band-primary), color-mix(in srgb, var(--band-primary) 28%, var(--band-secondary))); text-align: left; }
 .historicalPeriod > span:not(.historicalIcon) { color: rgb(255 255 255 / 62%); font-size: 8px; font-weight: 600; letter-spacing: .13em; text-transform: uppercase; }
 .historicalIcon,
 .curiosityIcon { display: grid; place-items: center; border-radius: 50%; }
 .historicalIcon { width: 34px; height: 34px; margin-bottom: 2px; color: #fff; background: rgb(255 255 255 / 12%); }
 .historicalIcon svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.65; }
-.historicalPeriod strong { max-width: 110px; color: #fff; font-size: 28px; line-height: 1; letter-spacing: -.04em; }
-.historicalCopy { display: flex; min-width: 0; flex-direction: column; justify-content: center; padding: 22px 26px; }
-.historicalCopy > span { color: var(--band-primary); font-size: 9px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
-.historicalCopy h3 { margin: 6px 0 9px; color: var(--band-secondary); font-size: clamp(23px, 2.6vw, 30px); line-height: 1.08; letter-spacing: -.035em; }
+.historicalPeriod strong { max-width: 150px; color: #fff; font-size: 25px; line-height: 1; letter-spacing: -.04em; text-align: right; }
+.historicalCopy { display: flex; min-width: 0; flex-direction: column; padding: 21px 22px 20px; }
+.historicalMeta { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.historicalMeta span { color: var(--band-primary); font-size: 9px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+.historicalMeta small { overflow: hidden; color: var(--band-muted); font-size: 9px; font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
+.historicalCopy h3 { margin: 7px 0 10px; color: var(--band-secondary); font-size: clamp(22px, 2.1vw, 27px); line-height: 1.08; letter-spacing: -.035em; }
 .historicalCopy p { margin: 0; color: var(--band-muted); font-size: 12px; line-height: 1.55; }
 .historicalStep { display: grid; gap: 3px; color: var(--band-muted); font-size: 12px; line-height: 1.55; }
 .historicalStep strong { color: var(--band-primary); font-size: 12px; }
 .historicalStep span { color: var(--band-secondary); font-weight: 600; }
 .historicalStep small { color: var(--band-muted); font-size: 10px; }
 .historicalCopy > small { margin-top: 10px; color: var(--band-muted); font-size: 10px; line-height: 1.5; }
-.historicalCopy > a { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 15px; padding-top: 12px; border-top: 1px solid var(--band-line); color: var(--band-primary); font-size: 9px; font-weight: 700; }
+.historicalCopy > a { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: auto; padding-top: 12px; border-top: 1px solid var(--band-line); color: var(--band-primary); font-size: 9px; font-weight: 700; }
 .historicalCopy > a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .curiosityCard { position: relative; display: flex; min-height: 190px; flex-direction: column; justify-content: center; padding: 26px 28px; overflow: hidden; border-radius: 20px; color: #fff; background: linear-gradient(145deg, var(--band-secondary), color-mix(in srgb, var(--band-secondary) 62%, var(--band-primary))); box-shadow: 0 16px 38px rgb(41 39 44 / 14%); }
 .curiosityCard::after { position: absolute; top: -62px; right: -42px; width: 180px; height: 180px; border: 1px solid rgb(255 255 255 / 10%); border-radius: 50%; content: ''; }
@@ -354,7 +368,10 @@
   .relationshipGrid,
   .directionGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .gloryRelationshipGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .historicalLayout { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 1100px) {
+  .historicalList { grid-auto-columns: minmax(310px, calc((100% - 14px) / 2)); }
 }
 
 @media (max-width: 680px) {
@@ -409,11 +426,15 @@
   .locatedRelationshipCard { min-height: 0; }
   .historicalSection { padding: 52px 0; }
   .historicalSection .sectionHeading { margin-bottom: 18px; }
-  .historicalCard { grid-template-columns: 96px minmax(0, 1fr); min-height: 184px; }
-  .historicalPeriod { padding: 18px 8px; }
+  .historicalRailToolbar { align-items: center; }
+  .historicalRailStatus span { max-width: 230px; }
+  .historicalRailControls button { width: 40px; height: 40px; }
+  .historicalList { grid-auto-columns: calc(100% - 34px); gap: 12px; padding-bottom: 20px; scroll-padding-inline: 4px; }
+  .historicalCard { grid-template-rows: 104px minmax(0, 1fr); min-height: 330px; }
+  .historicalPeriod { grid-template-columns: 34px minmax(0, 1fr) auto; gap: 9px; padding: 17px; }
   .historicalIcon { width: 30px; height: 30px; }
-  .historicalPeriod > span:not(.historicalIcon) { max-width: 70px; font-size: 7px; }
-  .historicalPeriod strong { font-size: 23px; }
+  .historicalPeriod > span:not(.historicalIcon) { max-width: 86px; font-size: 7px; }
+  .historicalPeriod strong { font-size: 22px; }
   .historicalCopy { padding: 20px 17px; }
   .historicalCopy h3 { font-size: 22px; }
   .curiosityCard { min-height: 0; padding: 23px 21px; }
