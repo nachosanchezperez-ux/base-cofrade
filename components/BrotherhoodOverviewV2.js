@@ -148,11 +148,13 @@ export default function BrotherhoodOverviewV2({ brotherhood, heroFactLabels = []
   const verified = verifiedLabel(seat?.horarioVerificadoEn)
   const templeSchedule = scheduleLines(seat?.horarioApertura)
   const heroFacts = new Set(heroFactLabels)
+  const colorNames = (brotherhood.colores?.nombres || []).map(publicText).filter(Boolean)
 
   const identityFacts = [
     publicText(brotherhood.fundacion) ? { label: 'Fundación', value: publicText(brotherhood.fundacion) } : null,
     members ? { label: 'Hermanos', value: members } : null,
     titularCount ? { label: 'Titulares', value: String(titularCount) } : null,
+    colorNames.length ? { label: 'Colores', value: colorNames.join(' · ') } : null,
   ].filter((fact) => fact && !heroFacts.has(fact.label))
   const showIdentity = identityFacts.length > 0 || types.length > 1
   const showSeat = Boolean(publicText(seat?.nombre))
