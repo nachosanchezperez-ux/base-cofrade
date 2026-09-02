@@ -13,6 +13,7 @@ import HistoricalAccompanimentsRail from './HistoricalAccompanimentsRail'
 import { getBandBySlug, youtubeEmbedUrl } from '@/lib/supabase/bands'
 import { getBandDiscography } from '@/lib/supabase/bandDiscography'
 import { getPublishedBandColors } from '@/lib/supabase/bandColors'
+import { getBandOutingPublicLinks } from '@/lib/supabase/band-outing-links'
 import {
   meetsPublicEditorialMinimum,
   publicEditorialRobots,
@@ -175,9 +176,10 @@ export default async function BandDetailPage({ params }) {
   const { slug } = await params
   const band = await getBandBySlug(slug)
   if (!band) notFound()
-  const [discography, colors] = await Promise.all([
+  const [discography, colors, outingLinks] = await Promise.all([
     getBandDiscography(band.id),
     getPublishedBandColors(band.id),
+    getBandOutingPublicLinks(band.outings.map((item) => item.id)),
   ])
   const years = [...new Set(band.premieres.map((item) => item.year))].sort((a, b) => b - a)
   const currentYear = new Date().getFullYear()
@@ -546,6 +548,7 @@ export default async function BandDetailPage({ params }) {
           <div className={styles.sectionHeading}><span className={styles.eyebrow}>Agenda</span><h2>Próximas salidas extraordinarias</h2></div>
           <div className={styles.outingList}>{band.outings.map((item) => {
             const event = eventDate(item.date)
+            const links = outingLinks[item.id] || {}
             return (
               <article key={item.id}>
                 <time dateTime={item.date} aria-label={dateLabel(item.date)}>
@@ -560,6 +563,10 @@ export default async function BandDetailPage({ params }) {
                   {item.organizerName ? <p className={styles.outingOrganizer}>{item.organizerName}</p> : null}
                   {item.reason ? <p className={styles.outingReason}>{item.reason}</p> : null}
                   {item.position ? <small>{item.position}</small> : null}
+                  {(links.outingSlug || links.brotherhoodSlug) ? <div className={styles.relationshipLinks}>
+                    {links.outingSlug ? <Link href={`/extraordinarias/${links.outingSlug}`}>Ver ficha de la salida <span>→</span></Link> : null}
+                    {links.brotherhoodSlug ? <Link href={`/hermandades/${links.brotherhoodSlug}`}>Ver ficha de la hermandad <span>→</span></Link> : null}
+                  </div> : null}
                 </div>
               </article>
             )
