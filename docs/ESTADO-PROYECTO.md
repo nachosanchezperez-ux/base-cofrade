@@ -1,6 +1,6 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 2 de septiembre de 2026 · 07:01 UTC
+**Corte validado:** 2 de septiembre de 2026 · 07:48 UTC
 
 **Régimen:** `FIRST EDITION FREEZE` activo
 
@@ -11,9 +11,9 @@
 **PRIMERA EDICIÓN → 🟢 CERRADA, CERTIFICADA Y CONGELADA**
 
 - Baseline funcional y estructural: `a025098528351656503460596d28b5318e39daf5` (#432).
-- Último commit funcional validado: `78c13094d8d39d9061ea3fd6dfa2e2898bd7fa3b` (#525), lote editorial concurrente de Padre Pío integrado después de #524.
-- HEAD real de `main` observado inmediatamente antes de esta sincronización: `78c13094d8d39d9061ea3fd6dfa2e2898bd7fa3b`.
-- Deployment de producción observado inmediatamente antes de esta sincronización: `dpl_4zSevk8ipKiVYAWcVdj83w8ke4ob`, `READY`, sobre `78c13094d8d39d9061ea3fd6dfa2e2898bd7fa3b`.
+- Último commit funcional validado: `e31aa2bc994985f7918eba9db9bf7cd032179959` (#527), corrección transversal del orden procesional y acceso visible a Estrenos.
+- HEAD real de `main` observado inmediatamente antes de esta sincronización: `e31aa2bc994985f7918eba9db9bf7cd032179959`.
+- Deployment de producción observado inmediatamente antes de esta sincronización: `dpl_9s92FPmZ1P4iFXbyguHpPXmT5GSm`, `READY`, sobre `e31aa2bc994985f7918eba9db9bf7cd032179959`.
 - Supabase productivo registra hasta `20260902065710_unifica_bambalinas_padre_pio`; Git y remoto conservan 35/35 migraciones canónicas.
 - Vercel informa `SUCCESS` para el HEAD desplegado; el deployment actual y los últimos 15 minutos del proyecto no registran errores ni fatales.
 - La matriz manual 390/768/1024/1440 de Primera Edición permanece aprobada.
@@ -21,7 +21,7 @@
 - Cola UX/estructural creada por este lote: **0 frentes abiertos**.
 - PR funcionales abiertas al cerrar este corte: **0**.
 - #467, #470 y #471 siguen cerradas; no se reabre ninguna.
-- La última actuación editorial cerrada es #525; se integró concurrentemente después de #524 y preserva completo el lote certificado de Virgen de los Reyes y La Redención.
+- La última actuación funcional cerrada es #527; resuelve una incidencia real sin reabrir la cola UX y preserva completos #524 y #525.
 
 ## GitHub · estado de trabajo
 
@@ -76,13 +76,14 @@
 - #522 · Padre Pío: ficha canónica abierta, completada, aplicada y desplegada; mantiene separada la Hermandad Sacramental de la Pastora de Padre Pío y publica el estreno del palio y la extraordinaria de octubre de 2026.
 - #524 · Virgen de los Reyes y La Redención: lote editorial fusionado, aplicado y desplegado; estructura las paletas de ambas Bandas, incorpora dos estrenos 2025 con marchas, autores, dedicatorias, singles y pistas, añade Fuentes directas y documenta el banderín y el uniforme de La Redención sin DDL ni RLS.
 - #525 · Padre Pío: lote editorial concurrente fusionado, aplicado y desplegado después de #524; unifica la actuación en las bambalinas y publica colores y media trazable sin reabrir UX ni arquitectura.
+- #527 · orden procesional y acceso a Estrenos: fusionada, desplegada y certificada; aplica una ordenación semántica estable y transversal, sin excepciones por Hermandad, y hace navegable la sección ya existente sin DDL, RLS ni datos nuevos.
 - `f9e6fdd` · rangos horarios compactos: bug real corregido transversalmente y cubierto por prueba; no abre una nueva cola UX.
 
 ### PR abiertas en este corte
 
 **Ninguna funcional.**
 
-#526 es exclusivamente la sincronización documental de este cierre y se autocierra al integrarse.
+#528 es exclusivamente la sincronización documental de este cierre y se autocierra al integrarse.
 
 No debe abrirse un nuevo frente UX/estructural para continuar el cierre. #514 queda como cierre definitivo de la cola visual de Sede y no abre módulo, arquitectura ni modelo nuevo.
 
@@ -183,12 +184,13 @@ Nota administrativa: el conector de GitHub falló al quitar el estado draft de #
 
 **PRODUCCIÓN → 🟢 ESTABLE**
 
-- Deployment de producción observado antes de este commit documental: `dpl_4zSevk8ipKiVYAWcVdj83w8ke4ob`.
-- Commit desplegado en ese corte: `78c13094d8d39d9061ea3fd6dfa2e2898bd7fa3b` (#525), que preserva íntegramente #524.
+- Deployment de producción observado antes de este commit documental: `dpl_9s92FPmZ1P4iFXbyguHpPXmT5GSm`.
+- Commit desplegado en ese corte: `e31aa2bc994985f7918eba9db9bf7cd032179959` (#527), que preserva íntegramente #524 y #525.
 - Estado: `READY`; target: producción.
 - Dominios canónicos: `https://hilocofrade.es` y `https://www.hilocofrade.es`.
 - Vercel informa `SUCCESS` para el commit desplegado.
-- Comprobación runtime: el deployment actual no registra errores ni fatales en los últimos 30 minutos.
+- Comprobación runtime: el deployment actual no registra errores ni fatales en los últimos 30 minutos; Vercel informa `SUCCESS` para el commit.
+- QA específico de #527: 529/529 tests, build y `git diff --check` en verde; Padre Pío responde HTTP 200, muestra el acceso y la sección `Estrenos`, y presenta el paso del Señor antes del palio.
 - Smoke específico de #524: las fichas públicas de Virgen de los Reyes y La Redención responden HTTP 200; la primera muestra 23 trabajos, «El Galileo» y «Luz de luz», y la segunda muestra sus Fuentes directas, Apple Music y el banderín de 2011.
 - Smoke específico de #522: `https://hilocofrade.es/hermandades/padre-pio-sevilla` responde HTTP 200 y muestra el escudo oficial, ambos capataces y los dos hitos diferenciados del palio.
 - Smoke general: Home, Hermandades, Bandas, Procesiones de Gloria, Igualás y Ensayos, Extraordinarias, Tira del hilo (`/pregunta`) y Panel responden HTTP 200.
