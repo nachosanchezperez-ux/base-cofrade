@@ -21,4 +21,7 @@ test('Hermandades conservan enlaces contextuales y Bandas evitan duplicarlos al 
   assert.doesNotMatch(bandLayout, /RelatedExtraordinaryOutings/)
   assert.match(component, /`\/extraordinarias\/\$\{item\.slug\}`/)
   assert.match(component, /Ver calendario completo/)
+  assert.match(component, /className=\{styles\.cardLink\}/)
+  assert.match(component, /<span className=\{styles\.guide\}>Ver guía/)
+  assert.doesNotMatch(component, /<h3><Link/)
 })

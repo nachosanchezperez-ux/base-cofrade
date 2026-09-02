@@ -30,10 +30,12 @@ export default function RelatedExtraordinaryOutings({ items = [], context = 'ent
         <div className={styles.grid}>
           {items.map((item) => (
             <article key={item.id}>
-              <time dateTime={item.date}>{dateLabel(item.date)}</time>
-              <h3><Link href={`/extraordinarias/${item.slug}`}>{item.title}</Link></h3>
-              <p>{[item.municipality, item.reason].filter(Boolean).join(' · ')}</p>
-              <Link className={styles.guide} href={`/extraordinarias/${item.slug}`}>Ver guía de la extraordinaria <span aria-hidden="true">→</span></Link>
+              <Link className={styles.cardLink} href={`/extraordinarias/${item.slug}`}>
+                <time dateTime={item.date}>{dateLabel(item.date)}</time>
+                <h3>{item.title}</h3>
+                <p>{[item.municipality, item.reason].filter(Boolean).join(' · ')}</p>
+                <span className={styles.guide}>Ver guía <span aria-hidden="true">→</span></span>
+              </Link>
             </article>
           ))}
         </div>
