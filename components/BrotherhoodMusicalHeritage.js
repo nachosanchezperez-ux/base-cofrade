@@ -5,6 +5,7 @@ import styles from './BrotherhoodMusicalHeritage.module.css';
 
 const GROUPS = [
   { key: 'Marcha procesional', label: 'Marchas procesionales', short: 'M', noun: 'marchas' },
+  { key: 'Música para cultos', label: 'Música para cultos', short: 'CU', noun: 'obras' },
   { key: 'Himno', label: 'Himnos', short: 'H', noun: 'himnos' },
   { key: 'Copla', label: 'Coplas', short: 'C', noun: 'coplas' },
   { key: 'Adaptación', label: 'Adaptaciones', short: 'A', noun: 'adaptaciones' },
@@ -136,7 +137,7 @@ export default function BrotherhoodMusicalHeritage({ items = [] }) {
           <SectionTitle
             eyebrow="Sonidos propios"
             title="Patrimonio musical"
-            description="Obras relacionadas de forma independiente con la Hermandad, sus Titulares, autores, formaciones, estrenos y fuentes. Las marchas procesionales se ordenan por estilo musical; himnos, coplas y adaptaciones se conservan como tipos distintos."
+            description="Obras relacionadas de forma independiente con la Hermandad, sus Titulares, autores, formaciones, estrenos y fuentes. Las marchas procesionales se ordenan por estilo musical; la música para cultos, himnos, coplas y adaptaciones se conserva como repertorio diferenciado."
           />
           <div className={styles.summary} aria-label={`${items.length} composiciones documentadas`}>
             <strong>{items.length}</strong>
