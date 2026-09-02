@@ -12,6 +12,12 @@ test('la microcopia del histórico habla de trayectoria y etapas', () => {
   assert.match(rail, /De la etapa más reciente a la más antigua/)
 })
 
+test('la tarjeta no repite la posición cuando actúa como identidad visible', () => {
+  assert.match(page, /const stepIdentity = step\.name \|\| item\.position \|\| 'Acompañamiento musical'/)
+  assert.match(page, /step\.position && step\.position !== stepIdentity/)
+  assert.doesNotMatch(page, /\{step\.position \? <small>\{step\.position\}<\/small> : null\}/)
+})
+
 test('las observaciones públicas eliminan fórmulas internas y notas puramente redundantes', () => {
   assert.match(migration, /v_expected integer := 34/)
   assert.match(migration, /null::text/)
