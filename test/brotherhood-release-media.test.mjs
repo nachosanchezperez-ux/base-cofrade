@@ -15,8 +15,9 @@ test('las novedades patrimoniales pueden mostrar la imagen documentada de su pie
   assert.match(page, /e\.imagen\.credito/)
   assert.match(page, /h\.estrenos\.length === 1[\s\S]*1158px[\s\S]*370px/)
   assert.match(css, /\.release-card-visual\s*\{[^}]*aspect-ratio:3\/2/s)
-  assert.match(css, /\.release-card:only-child \.release-card-visual\{[^}]*aspect-ratio:2\/1/s)
-  assert.match(css, /@media\(max-width:620px\)[\s\S]*\.release-card:only-child \.release-card-visual\{aspect-ratio:1\/1\}/)
+  assert.match(css, /\.release-card:only-child \.release-card-visual\{[^}]*aspect-ratio:3\/2/s)
+  assert.match(css, /\.release-card:only-child \.release-card-visual img\{object-fit:contain\}/)
+  assert.doesNotMatch(css, /\.release-card:only-child \.release-card-visual\{aspect-ratio:(?:4\/3|1\/1)\}/)
 })
 
 test('los estrenos priorizan la lectura rápida y pliegan los equipos extensos', () => {
