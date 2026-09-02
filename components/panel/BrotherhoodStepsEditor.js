@@ -78,6 +78,7 @@ export default function BrotherhoodStepsEditor({ data, canEdit }) {
                       title={stepName}
                       defaultAlt={stepName}
                       returnSection="pasos"
+                      media={relation.step.media || []}
                     />
                   ) : null}
 
