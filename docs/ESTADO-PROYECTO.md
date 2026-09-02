@@ -1,6 +1,6 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 2 de septiembre de 2026 · 07:48 UTC
+**Corte validado:** 2 de septiembre de 2026 · 12:06 UTC
 
 **Régimen:** `FIRST EDITION FREEZE` activo
 
@@ -11,17 +11,29 @@
 **PRIMERA EDICIÓN → 🟢 CERRADA, CERTIFICADA Y CONGELADA**
 
 - Baseline funcional y estructural: `a025098528351656503460596d28b5318e39daf5` (#432).
-- Último commit funcional validado: `e31aa2bc994985f7918eba9db9bf7cd032179959` (#527), corrección transversal del orden procesional y acceso visible a Estrenos.
-- HEAD real de `main` observado inmediatamente antes de esta sincronización: `e31aa2bc994985f7918eba9db9bf7cd032179959`.
-- Deployment de producción observado inmediatamente antes de esta sincronización: `dpl_9s92FPmZ1P4iFXbyguHpPXmT5GSm`, `READY`, sobre `e31aa2bc994985f7918eba9db9bf7cd032179959`.
-- Supabase productivo registra hasta `20260902065710_unifica_bambalinas_padre_pio`; Git y remoto conservan 35/35 migraciones canónicas.
-- Vercel informa `SUCCESS` para el HEAD desplegado; el deployment actual y los últimos 15 minutos del proyecto no registran errores ni fatales.
+- Último commit funcional validado: `c3e9f19a2429d1b4526af4f3cbb165c2aaff9cb4` (#549), cierre documental de La Macarena y Jesús Despojado.
+- HEAD real de `main` observado inmediatamente antes de esta sincronización: `c3e9f19a2429d1b4526af4f3cbb165c2aaff9cb4`.
+- Deployment de producción observado inmediatamente antes de esta sincronización: `dpl_3PBYz2TYN5bFn96WzRGzuJmZtXM6`, `READY`, sobre `c3e9f19a2429d1b4526af4f3cbb165c2aaff9cb4`.
+- Supabase productivo registra 46 migraciones hasta `20260902115831_restituye_madruga_centuria_macarena`; esta sincronización alinea los ocho timestamps históricos divergentes para dejar Git y remoto en 46/46.
+- Vercel informa `SUCCESS` para el HEAD desplegado; el deployment actual no registra errores ni fatales en los últimos 30 minutos.
 - La matriz manual 390/768/1024/1440 de Primera Edición permanece aprobada.
 - El freeze no permite abrir arquitectura, módulos ni una Segunda Edición; sí permite contenido, datos, fotografías, Fuentes, seguridad, legal, bugs e incidencias reales.
 - Cola UX/estructural creada por este lote: **0 frentes abiertos**.
 - PR funcionales abiertas al cerrar este corte: **0**.
 - #467, #470 y #471 siguen cerradas; no se reabre ninguna.
-- La última actuación funcional cerrada es #527; resuelve una incidencia real sin reabrir la cola UX y preserva completos #524 y #525.
+- La última actuación funcional cerrada es #549; completa dos Hermandades sin reabrir UX, DDL ni arquitectura.
+
+## Cierre operativo · #529 y frente de Hermandades
+
+- #529 quedó fusionada, desplegada y certificada: la relación San Esteban ↔ extraordinarias es navegable sin crear un patrón UX nuevo.
+- Se auditaron las **51 Hermandades publicadas**; el inventario y la matriz comparativa quedan en `docs/AUDITORIA-HERMANDADES-2026-09-02.md`.
+- Top 5 de prioridad: **La Macarena, Jesús Despojado, La Sed, Pino Montano y San Benito**.
+- La Macarena y Jesús Despojado fueron las dos seleccionadas por diferencia material de prioridad y potencial relacional.
+- Ambas quedan con tres titulares, dos pasos, autorías, hábito, capataces, patrimonio, Fuentes y música conectada a su posición o paso exacto.
+- Completitud comparativa de cierre: **La Macarena 78 %** y **Jesús Despojado 76 %**; la señal técnica simplificada queda en 71 % para ambas.
+- Salud del grafo del lote: cero titulares sin ficha, pasos sin ficha, relaciones imagen-paso huérfanas o Fuentes sin destino.
+- Media: sin fotografía de portada; se mantiene pendiente de recurso autorizado.
+- `PUBLIC_CONTRIBUTIONS_ENABLED=false`; Primera Edición y `FIRST EDITION FREEZE` permanecen activos.
 
 ## GitHub · estado de trabajo
 
@@ -77,13 +89,19 @@
 - #524 · Virgen de los Reyes y La Redención: lote editorial fusionado, aplicado y desplegado; estructura las paletas de ambas Bandas, incorpora dos estrenos 2025 con marchas, autores, dedicatorias, singles y pistas, añade Fuentes directas y documenta el banderín y el uniforme de La Redención sin DDL ni RLS.
 - #525 · Padre Pío: lote editorial concurrente fusionado, aplicado y desplegado después de #524; unifica la actuación en las bambalinas y publica colores y media trazable sin reabrir UX ni arquitectura.
 - #527 · orden procesional y acceso a Estrenos: fusionada, desplegada y certificada; aplica una ordenación semántica estable y transversal, sin excepciones por Hermandad, y hace navegable la sección ya existente sin DDL, RLS ni datos nuevos.
+- #529 · extraordinarias relacionadas de San Esteban: fusionada, desplegada y certificada; convierte la tarjeta existente en un acceso navegable sin módulo ni arquitectura nueva.
+- #543–#545 · extraordinaria de Padre Pío y Centuria Romana Macarena: fusionadas; deduplican la salida, completan la certificación editorial y reconcilian sus versiones remotas.
+- #547 · posiciones de la Centuria en la Madrugá: fusionada como corrección concurrente real y preservada por #549.
+- #549 · La Macarena y Jesús Despojado: lote editorial fusionado, aplicado y desplegado; completa titulares, pasos, autorías, hábitos, capataces, patrimonio, Fuentes y relaciones musicales sin DDL, RLS, UX ni nuevas Bandas.
 - `f9e6fdd` · rangos horarios compactos: bug real corregido transversalmente y cubierto por prueba; no abre una nueva cola UX.
 
 ### PR abiertas en este corte
 
 **Ninguna funcional.**
 
-#528 es exclusivamente la sincronización documental de este cierre y se autocierra al integrarse.
+La única PR transitoria de este corte es la sincronización documental y de
+timestamps de migración; se autocierra al integrarse. Después quedan **0 PR
+abiertas**.
 
 No debe abrirse un nuevo frente UX/estructural para continuar el cierre. #514 queda como cierre definitivo de la cola visual de Sede y no abre módulo, arquitectura ni modelo nuevo.
 
@@ -184,12 +202,13 @@ Nota administrativa: el conector de GitHub falló al quitar el estado draft de #
 
 **PRODUCCIÓN → 🟢 ESTABLE**
 
-- Deployment de producción observado antes de este commit documental: `dpl_9s92FPmZ1P4iFXbyguHpPXmT5GSm`.
-- Commit desplegado en ese corte: `e31aa2bc994985f7918eba9db9bf7cd032179959` (#527), que preserva íntegramente #524 y #525.
+- Deployment de producción observado antes de este commit documental: `dpl_3PBYz2TYN5bFn96WzRGzuJmZtXM6`.
+- Commit desplegado en ese corte: `c3e9f19a2429d1b4526af4f3cbb165c2aaff9cb4` (#549).
 - Estado: `READY`; target: producción.
 - Dominios canónicos: `https://hilocofrade.es` y `https://www.hilocofrade.es`.
 - Vercel informa `SUCCESS` para el commit desplegado.
 - Comprobación runtime: el deployment actual no registra errores ni fatales en los últimos 30 minutos; Vercel informa `SUCCESS` para el commit.
+- Smoke de #549: las fichas de La Macarena y Jesús Despojado responden HTTP 200 desde el deployment actual y muestran titulares, pasos y acompañamientos. Jesús Despojado queda `index, follow`; La Macarena permanece `noindex, follow` mientras no cumpla todo el mínimo público, sin forzar SEO ni incorporar media sin derechos.
 - QA específico de #527: 529/529 tests, build y `git diff --check` en verde; Padre Pío responde HTTP 200, muestra el acceso y la sección `Estrenos`, y presenta el paso del Señor antes del palio.
 - Smoke específico de #524: las fichas públicas de Virgen de los Reyes y La Redención responden HTTP 200; la primera muestra 23 trabajos, «El Galileo» y «Luz de luz», y la segunda muestra sus Fuentes directas, Apple Music y el banderín de 2011.
 - Smoke específico de #522: `https://hilocofrade.es/hermandades/padre-pio-sevilla` responde HTTP 200 y muestra el escudo oficial, ambos capataces y los dos hitos diferenciados del palio.
@@ -339,9 +358,9 @@ Una decisión posterior de Dirección deberá abrir un corte independiente y com
 
 El cierre técnico permanece intacto. Los cambios posteriores son editoriales o correcciones reales sobre el modelo vigente.
 
-**GIT ↔ SUPABASE → 🟢 35/35 VERSIONES CANÓNICAS EN PRODUCCIÓN**
+**GIT ↔ SUPABASE → 🟢 46/46 VERSIONES CANÓNICAS EN PRODUCCIÓN**
 
-- Última versión remota: `20260902065710_unifica_bambalinas_padre_pio`; la versión inmediatamente anterior `20260902065247_completa_virgen_reyes_y_redencion` contiene el lote de Bandas y ambas están versionadas en Git.
+- Última versión remota: `20260902115831_restituye_madruga_centuria_macarena`; el cierre de Hermandades está registrado como `20260902115332_completa_macarena_y_jesus_despojado` y `20260902115551_restaura_cruz_guia_juvenil_macarena`.
 - El proyecto productivo responde en PostgreSQL 17.6.1, región `eu-west-1`.
 - La auditoría de este corte no ejecutó DDL, no modificó RLS y no reescribió migraciones históricas; #524 es DML idempotente y #525 mantiene las mismas barreras estructurales.
 - Git Integration aplicó `20260901144529` al fusionar #505. Una segunda ejecución manual idempotente quedó registrada como `20260901145701`; no duplicó datos. La segunda versión se refleja en Git mediante un archivo vacío de reconciliación, sin repetir el SQL canónico ni alterar el historial remoto.
@@ -385,6 +404,17 @@ Migraciones registradas en producción en el momento de este corte:
 33. `20260902003548_completa_padre_pio`
 34. `20260902065247_completa_virgen_reyes_y_redencion`
 35. `20260902065710_unifica_bambalinas_padre_pio`
+36. `20260902090401_normaliza_textos_historicos_bandas`
+37. `20260902090742_mejora_foto_bambalinas_padre_pio`
+38. `20260902102751_completa_las_cigarreras_2025_y_fuentes`
+39. `20260902104622_completa_tres_caidas_triana`
+40. `20260902111558_completa_dedicatoria_hijo_esperanza_y_certifica_redencion`
+41. `20260902111735_abrevia_credito_foto_bambalinas_padre_pio`
+42. `20260902114908_deduplica_extraordinaria_padre_pio`
+43. `20260902115047_certifica_centuria_romana_macarena`
+44. `20260902115332_completa_macarena_y_jesus_despojado`
+45. `20260902115551_restaura_cruz_guia_juvenil_macarena`
+46. `20260902115831_restituye_madruga_centuria_macarena`
 
 ### Observación de ramas Supabase
 
@@ -392,6 +422,7 @@ Migraciones registradas en producción en el momento de este corte:
 
 - No existe ninguna preview activa tras el merge; `list_branches` devuelve únicamente `main`. El estado de branching conserva `MIGRATIONS_FAILED`, aunque el proyecto productivo permanece `ACTIVE_HEALTHY`.
 - #505 volvió a reproducir el error en una rama limpia y la rama efímera fue retirada automáticamente tras el merge. El resultado sigue siendo `MIGRATIONS_FAILED` por SQLSTATE `23514`: `source_links_one_target`.
+- #549 volvió a aislar exactamente la misma deuda antes de alcanzar su DML: falló en la migración histórica de Centuria al intentar enlazar una Fuente con un destino nulo. Producción aplicó y certificó el lote sin error; #492 no se reinterpretó como fallo de las Hermandades.
 - Primera migración que falla: `20260831135520_publica_centuria_y_corrige_logo_tres_caidas.sql`.
 - Statement: bloque `do $$`, inserción final en `public.source_links (source_id, entity_id, scope, notes)` para la Fuente «Tres Caídas de Triana · emblema oficial».
 - Fila observada: `b225b14b-79fb-46e1-8a3b-040b5d3509b1`; `source_id=a1c237f1-665f-4e36-89ad-de4ff1d25c78`; `entity_id=NULL`; alcance «Identidad visual».
@@ -461,7 +492,10 @@ No quedan bloqueados:
 
 **NUEVO DDL / NUEVA TABLA / MIGRACIÓN ESTRUCTURAL / RLS → ⛔ BLOQUEADO HASTA CERRAR #492.**
 
-La fase activa vuelve a ser completar y verificar Bandas, Glorias, Romerías, Igualás, Hermandades, fotografías y Fuentes sobre el modelo cerrado. No abrir nuevas funcionalidades por inercia; cualquier excepción debe justificarse como bug real, seguridad o incidencia verificable compatible con el freeze.
+El frente de Hermandades queda detenido tras cerrar La Macarena y Jesús
+Despojado. No se abre un tercer lote ni una mejora técnica automática: el
+siguiente movimiento requiere una nueva orden de Dirección. La agenda temporal
+urgente conserva prioridad y puede interrumpir solo ante un cambio oficial.
 
 La limpieza física de assets huérfanos no forma parte de #471 ni de la cola UX: queda como mantenimiento futuro independiente y conservador.
 
