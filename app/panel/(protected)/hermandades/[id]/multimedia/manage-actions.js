@@ -198,8 +198,10 @@ function addSavedState(path, saved) {
   return `${pathname}${separator}saved=${encodeURIComponent(saved)}${hash}`
 }
 
-function redirectManaged(context, saved, formData) {
-  redirect(addSavedState(managedReturnPath(formData, context), saved))
+function redirectManaged(context, saved, formData, contextualSaved = saved) {
+  const destination = managedReturnPath(formData, context)
+  const isContextual = destination !== fallbackManagedPath(context)
+  redirect(addSavedState(destination, isContextual ? contextualSaved : saved))
 }
 
 function revalidateManagedMedia(context) {
@@ -277,7 +279,7 @@ export async function updateBrotherhoodMediaAssetAction(formData) {
     changed_fields: payload,
   })
   revalidateManagedMedia(context)
-  redirectManaged(context, 'media-updated', formData)
+  redirectManaged(context, 'updated', formData, 'media-updated')
 }
 
 export async function setBrotherhoodMediaCoverAction(formData) {
@@ -299,7 +301,7 @@ export async function setBrotherhoodMediaCoverAction(formData) {
     changed_fields: { media_asset_id: context.mediaAssetId, is_cover: true },
   })
   revalidateManagedMedia(context)
-  redirectManaged(context, 'media-cover', formData)
+  redirectManaged(context, 'cover', formData, 'media-cover')
 }
 
 export async function unlinkBrotherhoodMediaAssetAction(formData) {
@@ -327,5 +329,5 @@ export async function unlinkBrotherhoodMediaAssetAction(formData) {
     },
   })
   revalidateManagedMedia(context)
-  redirectManaged(context, 'media-unlinked', formData)
+  redirectManaged(context, 'unlinked', formData, 'media-unlinked')
 }
