@@ -243,7 +243,8 @@ export default async function HermandadDetailPage({ params }) {
         h.cultos?.length > 0 && { href: '#cultos', label: 'Cultos' },
         h.simpecados?.length > 0 && { href: '#simpecados', label: 'Simpecados' },
         h.cartelesFiestas?.length > 0 && { href: '#carteles', label: 'Carteles' },
-        (h.patrimonio?.length > 0 || h.estrenos?.length > 0) && { href: '#patrimonio', label: 'Patrimonio' },
+        h.patrimonio?.length > 0 && { href: '#patrimonio', label: 'Patrimonio' },
+        h.estrenos?.length > 0 && { href: '#estrenos', label: 'Estrenos' },
         documentedHistoricalAccompaniments.length > 0 && { href: '#acompanamientos', label: 'Histórico musical' },
         h.noticias?.length > 0 && { href: '#noticias', label: 'Noticias' },
         h.curiosidades?.length > 0 && { href: '#curiosidades', label: 'Curiosidades' },
@@ -618,7 +619,7 @@ export default async function HermandadDetailPage({ params }) {
         )}
 
         {h.estrenos?.length > 0 && (
-          <div className="heritage-timeline-block">
+          <div className="heritage-timeline-block" id="estrenos">
             <div className="heritage-subheading"><span className="eyebrow">Evolución documentada</span><h3>Estrenos y restauraciones</h3></div>
             <div className="release-grid">{h.estrenos.map((e) => (
               <article className="release-card" key={e.id}>
