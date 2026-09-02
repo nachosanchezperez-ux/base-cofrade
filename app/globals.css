@@ -384,6 +384,20 @@ button, input { font: inherit; }
   background:#fff;
   box-shadow:0 12px 34px rgba(21,59,105,.045);
 }
+.outing-card-related{
+  color:inherit;
+  text-decoration:none;
+  transition:border-color .16s ease,box-shadow .16s ease,transform .16s ease;
+}
+.outing-card-related:hover{
+  border-color:color-mix(in srgb,var(--brotherhood-primary) 32%,#e0e6ec);
+  box-shadow:0 16px 38px rgba(21,59,105,.1);
+  transform:translateY(-2px);
+}
+.outing-card-related:focus-visible{
+  outline:3px solid var(--brotherhood-secondary);
+  outline-offset:3px;
+}
 .outing-type{
   border-right:1px solid #e0e6ec;
   padding-right:18px;
@@ -421,6 +435,20 @@ button, input { font: inherit; }
   color:var(--bc-red);
   font-weight:800;
 }
+.outing-guide-link{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  margin-top:18px;
+  color:var(--brotherhood-primary);
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.04em;
+  text-decoration:none;
+  text-transform:uppercase;
+}
+.outing-card-related:hover .outing-guide-link,
+.outing-guide-link:hover{text-decoration:underline}
 
 /* CULTOS */
 

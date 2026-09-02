@@ -40,6 +40,23 @@ import outingVideoStyles from './outing-video.module.css';
 export const dynamic = 'force-dynamic';
 const getHermandad = cache(getHermandadPageBySlug);
 
+function normalizeOutingLabel(value = '') {
+  return String(value)
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLocaleLowerCase('es')
+    .trim();
+}
+
+function outingCharacterLabel(outing) {
+  const character = String(outing?.caracter || '').trim();
+  if (!character) return '';
+
+  const type = normalizeOutingLabel(outing?.tipo);
+  const normalizedCharacter = normalizeOutingLabel(character);
+  return type.includes(normalizedCharacter) ? '' : character;
+}
+
 export function generateStaticParams() {
   return hermandades.map((item) => ({ slug: item.slug }));
 }
@@ -465,11 +482,25 @@ export default async function HermandadDetailPage({ params }) {
 
       {h.salidas?.length > 0 && <section className="section brotherhood-white" id="salidas"><div className="shell">
         <SectionTitle eyebrow="En la calle" title="Salidas" description="Estación de penitencia, procesiones, rosarios, vía crucis y traslados forman parte del histórico de salidas de cada hermandad." />
-        <div className="outing-grid">{h.salidas.map((s) => (
-          <article className={`outing-card ${s.ediciones?.length ? 'outing-card-featured' : ''} ${s.video ? outingVideoStyles.cardWithVideo : ''}`} key={s.id}>
+        <div className="outing-grid">{h.salidas.map((s) => {
+          const guideHref = s.slug ? `/extraordinarias/${s.slug}` : '';
+          const hasEmbeddedInteraction = Boolean(s.video || s.ediciones?.length || s.movimientos?.length);
+          const isWholeCardLink = Boolean(guideHref) && !hasEmbeddedInteraction;
+          const OutingCard = isWholeCardLink ? Link : 'article';
+          const characterLabel = outingCharacterLabel(s);
+
+          return (
+          <OutingCard
+            className={`outing-card ${s.ediciones?.length ? 'outing-card-featured' : ''} ${s.video ? outingVideoStyles.cardWithVideo : ''} ${guideHref ? 'outing-card-related' : ''}`}
+            key={s.id}
+            {...(isWholeCardLink ? {
+              href: guideHref,
+              'aria-label': `Ver guía de ${s.nombre}`,
+            } : {})}
+          >
             <div className="outing-type">
               <span>{s.tipo}</span>
-              {s.caracter && <small>{s.caracter}</small>}
+              {characterLabel && <small>{characterLabel}</small>}
             </div>
 
             <div className="outing-content">
@@ -538,9 +569,16 @@ export default async function HermandadDetailPage({ params }) {
                   </details>
                 </div>
               ))}
+
+              {guideHref && (
+                isWholeCardLink
+                  ? <span className="outing-guide-link">Ver guía <span aria-hidden="true">→</span></span>
+                  : <Link className="outing-guide-link" href={guideHref}>Ver guía <span aria-hidden="true">→</span></Link>
+              )}
             </div>
-          </article>
-        ))}</div>
+          </OutingCard>
+          );
+        })}</div>
       </div></section>}
 
       <BrotherhoodCultsSection cults={h.cultos} />

@@ -12,6 +12,11 @@ const nextConfig = {
         destination: '/bandas/escolania-salesiana-maria-auxiliadora-sevilla',
         permanent: true,
       },
+      {
+        source: '/extraordinarias/padre-pio-divina-gracia-salida-extraordinaria-2026-10-11',
+        destination: '/extraordinarias/sevilla-divina-gracia-2026',
+        permanent: true,
+      },
     ]
   },
   images: {
