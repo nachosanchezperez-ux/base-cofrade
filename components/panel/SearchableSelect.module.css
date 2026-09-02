@@ -1,0 +1,109 @@
+.root {
+  display: grid;
+  gap: 12px;
+}
+
+.current,
+.emptyCurrent {
+  border: 1px solid #cfdbe6;
+  border-radius: 14px;
+  background: #f5f8fb;
+}
+
+.current {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 14px 16px;
+}
+
+.emptyCurrent {
+  display: grid;
+  gap: 4px;
+  padding: 13px 15px;
+}
+
+.currentCopy {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.currentLabel {
+  color: #b71f37;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.currentCopy strong,
+.emptyCurrent strong {
+  color: #0f2742;
+  font-size: 15px;
+  line-height: 1.35;
+}
+
+.currentCopy small {
+  color: #68788a;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.currentActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+
+.removeButton {
+  min-height: 43px;
+  padding: 0 14px;
+  border: 1px solid #e1b7bf;
+  border-radius: 10px;
+  color: #9f1c32;
+  background: #fff;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.removeButton:hover {
+  border-color: #b71f37;
+  background: #fff7f8;
+}
+
+.searchArea {
+  display: grid;
+  gap: 8px;
+  padding-top: 2px;
+}
+
+.results {
+  display: grid;
+  gap: 6px;
+}
+
+.help {
+  color: #68788a;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+@media (max-width: 680px) {
+  .current {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .currentActions {
+    width: 100%;
+  }
+
+  .currentActions > button {
+    flex: 1 1 0;
+  }
+}
