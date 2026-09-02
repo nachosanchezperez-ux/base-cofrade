@@ -176,8 +176,30 @@ async function audit(supabase, user, entry) {
   if (result.error) console.error('[Hilo Cofrade] No se pudo registrar la operación multimedia local', result.error)
 }
 
-function redirectManaged(context, saved) {
-  redirect(`/panel/hermandades/${context.brotherhoodId}/multimedia?saved=${saved}#contenido-${context.targetId}`)
+function fallbackManagedPath(context) {
+  return `/panel/hermandades/${context.brotherhoodId}/multimedia#contenido-${context.targetId}`
+}
+
+function managedReturnPath(formData, context) {
+  const candidate = value(formData, 'return_path')
+  const allowedPrefix = `/panel/hermandades/${context.brotherhoodId}/`
+  if (!candidate) return fallbackManagedPath(context)
+  if (!candidate.startsWith(allowedPrefix) || candidate.startsWith('//') || candidate.includes('://')) {
+    return fallbackManagedPath(context)
+  }
+  return candidate
+}
+
+function addSavedState(path, saved) {
+  const hashIndex = path.indexOf('#')
+  const pathname = hashIndex >= 0 ? path.slice(0, hashIndex) : path
+  const hash = hashIndex >= 0 ? path.slice(hashIndex) : ''
+  const separator = pathname.includes('?') ? '&' : '?'
+  return `${pathname}${separator}saved=${encodeURIComponent(saved)}${hash}`
+}
+
+function redirectManaged(context, saved, formData) {
+  redirect(addSavedState(managedReturnPath(formData, context), saved))
 }
 
 function revalidateManagedMedia(context) {
@@ -255,7 +277,7 @@ export async function updateBrotherhoodMediaAssetAction(formData) {
     changed_fields: payload,
   })
   revalidateManagedMedia(context)
-  redirectManaged(context, 'updated')
+  redirectManaged(context, 'media-updated', formData)
 }
 
 export async function setBrotherhoodMediaCoverAction(formData) {
@@ -277,7 +299,7 @@ export async function setBrotherhoodMediaCoverAction(formData) {
     changed_fields: { media_asset_id: context.mediaAssetId, is_cover: true },
   })
   revalidateManagedMedia(context)
-  redirectManaged(context, 'cover')
+  redirectManaged(context, 'media-cover', formData)
 }
 
 export async function unlinkBrotherhoodMediaAssetAction(formData) {
@@ -305,5 +327,5 @@ export async function unlinkBrotherhoodMediaAssetAction(formData) {
     },
   })
   revalidateManagedMedia(context)
-  redirectManaged(context, 'unlinked')
+  redirectManaged(context, 'media-unlinked', formData)
 }
