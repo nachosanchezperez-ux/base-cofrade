@@ -73,7 +73,7 @@ export default function HistoricalAccompanimentsRail({ children, count }) {
     <div className={styles.historicalRailToolbar}>
       <div className={styles.historicalRailStatus} id="historical-accompaniments-status" aria-live="polite">
         <strong>{state.first + 1}–{state.last} de {count}</strong>
-        <span>Ordenados del periodo más reciente al más antiguo</span>
+        <span>De la etapa más reciente a la más antigua</span>
       </div>
       {count > 1 ? <div className={styles.historicalRailControls}>
         <button
