@@ -12,8 +12,7 @@ begin
   where slug = 'bambalinas-palio-madre-divina-gracia-padre-pio';
 
   update public.heritage_assets
-  set public_image_path = '/hermandades/padre-pio/bambalinas-palio-2026-original.jpeg',
-      updated_at = now()
+  set public_image_path = '/hermandades/padre-pio/bambalinas-palio-2026-original.jpeg'
   where entity_id = v_asset_id
     and public_image_path in (
       '/hermandades/padre-pio/bambalinas-palio-2026.jpeg',
