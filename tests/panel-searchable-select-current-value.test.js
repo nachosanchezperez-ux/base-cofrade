@@ -14,7 +14,7 @@ test('el selector del Panel diferencia la selección actual del buscador de reem
 
   assert.match(component, /Selección actual/)
   assert.match(component, /Este es el valor que se guardará si no lo cambias\./)
-  assert.match(component, /Cambiar \{label\}/)
+  assert.match(component, /Cambiar \$\{label\}/)
   assert.match(component, /Mantener actual/)
   assert.match(component, />Quitar</)
   assert.match(component, /showSearch = !selectedOption \|\| isChanging/)
