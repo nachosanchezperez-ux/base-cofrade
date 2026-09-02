@@ -1,639 +1,237 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 2 de septiembre de 2026 · 12:06 UTC
+**Corte validado:** 2 de septiembre de 2026 · cierre nocturno
 
 **Régimen:** `FIRST EDITION FREEZE` activo
 
-**Fase activa:** editorial, documental y corrección de incidencias reales
+**Fase activa:** editorial / documental sobre el modelo vigente
 
 ## Estado general
 
 **PRIMERA EDICIÓN → 🟢 CERRADA, CERTIFICADA Y CONGELADA**
 
-- Baseline funcional y estructural: `a025098528351656503460596d28b5318e39daf5` (#432).
-- Último commit funcional validado: `c3e9f19a2429d1b4526af4f3cbb165c2aaff9cb4` (#549), cierre documental de La Macarena y Jesús Despojado.
-- HEAD real de `main` observado inmediatamente antes de esta sincronización: `c3e9f19a2429d1b4526af4f3cbb165c2aaff9cb4`.
-- Deployment de producción observado inmediatamente antes de esta sincronización: `dpl_3PBYz2TYN5bFn96WzRGzuJmZtXM6`, `READY`, sobre `c3e9f19a2429d1b4526af4f3cbb165c2aaff9cb4`.
-- Supabase productivo registra 46 migraciones hasta `20260902115831_restituye_madruga_centuria_macarena`; esta sincronización alinea los ocho timestamps históricos divergentes para dejar Git y remoto en 46/46.
-- Vercel informa `SUCCESS` para el HEAD desplegado; el deployment actual no registra errores ni fatales en los últimos 30 minutos.
-- La matriz manual 390/768/1024/1440 de Primera Edición permanece aprobada.
-- El freeze no permite abrir arquitectura, módulos ni una Segunda Edición; sí permite contenido, datos, fotografías, Fuentes, seguridad, legal, bugs e incidencias reales.
-- Cola UX/estructural creada por este lote: **0 frentes abiertos**.
-- PR funcionales abiertas al cerrar este corte: **0**.
-- #467, #470 y #471 siguen cerradas; no se reabre ninguna.
-- La última actuación funcional cerrada es #549; completa dos Hermandades sin reabrir UX, DDL ni arquitectura.
-
-## Cierre operativo · #529 y frente de Hermandades
-
-- #529 quedó fusionada, desplegada y certificada: la relación San Esteban ↔ extraordinarias es navegable sin crear un patrón UX nuevo.
-- Se auditaron las **51 Hermandades publicadas**; el inventario y la matriz comparativa quedan en `docs/AUDITORIA-HERMANDADES-2026-09-02.md`.
-- Top 5 de prioridad: **La Macarena, Jesús Despojado, La Sed, Pino Montano y San Benito**.
-- La Macarena y Jesús Despojado fueron las dos seleccionadas por diferencia material de prioridad y potencial relacional.
-- Ambas quedan con tres titulares, dos pasos, autorías, hábito, capataces, patrimonio, Fuentes y música conectada a su posición o paso exacto.
-- Completitud comparativa de cierre: **La Macarena 78 %** y **Jesús Despojado 76 %**; la señal técnica simplificada queda en 71 % para ambas.
-- Salud del grafo del lote: cero titulares sin ficha, pasos sin ficha, relaciones imagen-paso huérfanas o Fuentes sin destino.
-- Media: sin fotografía de portada; se mantiene pendiente de recurso autorizado.
-- `PUBLIC_CONTRIBUTIONS_ENABLED=false`; Primera Edición y `FIRST EDITION FREEZE` permanecen activos.
-
-## GitHub · estado de trabajo
-
-### Fusionado y vigente
-
-- #439 · infraestructura de aportaciones públicas seguras: fusionada, servicio público desactivado.
-- #432 · baseline reproducible y fondo configurable de logotipos de Bandas: fusionada.
-- #453 y #454 · mantenimiento SEO P0: fusionado y en producción.
-- #455 · corrección visual de Mairena: fusionada.
-- #458 · Centuria Romana Macarena y presentación de Tres Caídas: fusionada.
-- #459 · música de Glorias visible para posiciones `processional_music`, `procession`, `opening` y `behind_step`: fusionada.
-- #460 · reutilización de la entidad canónica de Centuria para evitar duplicados: fusionada.
-- #463 · menú de Bandas adaptado a la paleta de cada formación: fusionada.
-- #464 · ampliación de la discografía de Presentación al Pueblo: fusionada.
-- #465 · entrada directa y edición visual contextual de Bandas en Panel: fusionada.
-- #466 · Las Cigarreras elevada como ficha patrón de Bandas: fusionada.
-- #469 · corrección de cabeceras de `Dónde suena`: fusionada.
-- #470 · identidad corporativa oficial de Hilo Cofrade: fusionada, desplegada y fijada como identidad canónica.
-- #471 · gestión local de multimedia en Hermandades: fusionada y desplegada con política conservadora de desvinculación.
-- #472 y #473 · ajustes posteriores de presencia de marca en cabecera/footer móvil: integrados y vigentes; no reabren #470.
-- #474 · reparación de portadas de Presentación al Pueblo: fusionada concurrentemente durante el cierre y preservada al reconciliar #467.
-- #475 · fotografía del Rosario vespertino 2026 de Las Aguas: fusionada como contenido.
-- #476 · igualá 2026 de la Pastora de Triana: fusionada como contenido.
-- #477 · fotografías en el calendario de Procesiones de Gloria: fusionada como corrección real.
-- #478 y #479 · auditoría de Presentación al Pueblo, reconciliación de su migración y limpieza de nota pública: fusionadas.
-- #480 y #481 · traslado al Risco de la Pastora de Cantillana y ubicación contextual de su vídeo: fusionadas.
-- #482 · segunda fase documental de Presentación al Pueblo: fusionada; utiliza el modelo vigente y no abre arquitectura nueva.
-- #483 · versión remota de la migración de #482 reconciliada en Git sin reejecutar SQL.
-- #485 · tratamiento transversal y responsive de fotografías de Glorias: fusionada como bug real, con fallback seguro y sin excepciones nominales.
-- #486 · conflictos documentales de Presentación al Pueblo: cerrados como contenido.
-- #487 · timestamp remoto de #486 reconciliado en Git sin reejecutar SQL.
-- #467 · cierre UX de Bandas: fusionada con delta final exclusivamente transversal de notas redundantes; la excepción nominal del logo de Virgen de los Reyes fue descartada.
-- #488–#490 · banderín de Presentación al Pueblo y reconciliación del recurso: fusionadas y desplegadas.
-- #491 · primera auditoría documental de Cruz Roja: fusionada y desplegada; completa acompañamientos actuales e históricos, Fuentes y novedades de repertorio sobre el modelo vigente.
-- #497 · La Oliva de Salteras y Rosario de Cádiz: fusionada, aplicada y desplegada; incorpora identidad, 14 acompañamientos vigentes, 50 ediciones, 274 pistas y Fuentes trazables sin DDL ni RLS.
-- #499 · horarios de templos y sedes: fusionada, aplicada y desplegada; documenta La Milagrosa, Baratillo, Estrella y Cachorro con Fuentes oficiales, reutiliza el modelo vigente y preserva los borradores editoriales.
-- #501 · Maestro Tejera y Centuria Romana Macarena: fusionada, aplicada y desplegada; completa 28 ediciones y 351 pistas de Maestro Tejera, 76 pistas históricas pendientes de Centuria y dos elementos patrimoniales con Fuentes oficiales, sin DDL ni RLS.
-- #503 · igualás del Juncal y de la Divina Pastora de Padre Pío: fusionada, aplicada y desplegada; conserva cada convocatoria mixta como una entidad única, enlaza sus pasos, capataces y Fuentes, y mantiene nulas la hora y la ubicación no publicadas del Juncal.
-- #505 · Santa María Magdalena de Arahal y Los Gitanos: fusionada, aplicada y desplegada; completa 54 pistas, corrige a histórico tres relaciones cerradas en 2026 y deja todas las ediciones y acompañamientos del lote con Fuente.
-- #506 · presentación visual de horarios: fusionada y desplegada tras autorización expresa de Dirección; jerarquiza apertura, misas, oficinas y cultos sin alterar el dato canónico.
-- #508 · integración de horarios en Sede: fusionada; presenta templo, dirección, horario y acceso como una única Sede canónica y mantiene `places.opening_hours_text` como origen.
-- #509 · Dulce Nombre de Bellavista, Las Aguas, La Bofetá, Jesús Despojado y La Macarena: fichas base publicadas; tres salidas de septiembre confirmadas y trazables.
-- #511 · Las Aguas: ficha documental certificada con titulares, autorías, pasos, hábito, colores, capataz, música, horarios y Fuentes.
-- #513 · Las Aguas: incorpora el tercer paso, Nuestra Señora del Rosario, sus acompañamientos de Gloria y las imágenes secundarias del misterio.
-- #514 · refinamiento visual de la Sede: fusionada, desplegada y cerrada; mejora jerarquía, horarios, iconografía, accesibilidad y respuesta móvil sin ampliar el modelo.
-- #516 · dirección de la Sede del Baratillo: fusionada como DML editorial trazable, sin DDL ni RLS.
-- #517 · La Bofetá: ficha editorial completada, aplicada y desplegada; publica cuatro titulares, dos pasos, las seis imágenes secundarias del misterio junto a Jesús, acompañamientos, hábito, colores, capataces y Fuentes, sin DDL ni RLS.
-- #518 · sincronización documental del cierre de La Bofetá: fusionada y desplegada.
-- #519 · San Esteban: escudo y cabecera oficial incorporados con gobierno editorial de media.
-- #520 · Arahal: coherencia visual y documental de acompañamientos fusionada y desplegada.
-- #521 · ruta relacional móvil de Hilo: ajuste responsive fusionado y desplegado.
-- #522 · Padre Pío: ficha canónica abierta, completada, aplicada y desplegada; mantiene separada la Hermandad Sacramental de la Pastora de Padre Pío y publica el estreno del palio y la extraordinaria de octubre de 2026.
-- #524 · Virgen de los Reyes y La Redención: lote editorial fusionado, aplicado y desplegado; estructura las paletas de ambas Bandas, incorpora dos estrenos 2025 con marchas, autores, dedicatorias, singles y pistas, añade Fuentes directas y documenta el banderín y el uniforme de La Redención sin DDL ni RLS.
-- #525 · Padre Pío: lote editorial concurrente fusionado, aplicado y desplegado después de #524; unifica la actuación en las bambalinas y publica colores y media trazable sin reabrir UX ni arquitectura.
-- #527 · orden procesional y acceso a Estrenos: fusionada, desplegada y certificada; aplica una ordenación semántica estable y transversal, sin excepciones por Hermandad, y hace navegable la sección ya existente sin DDL, RLS ni datos nuevos.
-- #529 · extraordinarias relacionadas de San Esteban: fusionada, desplegada y certificada; convierte la tarjeta existente en un acceso navegable sin módulo ni arquitectura nueva.
-- #543–#545 · extraordinaria de Padre Pío y Centuria Romana Macarena: fusionadas; deduplican la salida, completan la certificación editorial y reconcilian sus versiones remotas.
-- #547 · posiciones de la Centuria en la Madrugá: fusionada como corrección concurrente real y preservada por #549.
-- #549 · La Macarena y Jesús Despojado: lote editorial fusionado, aplicado y desplegado; completa titulares, pasos, autorías, hábitos, capataces, patrimonio, Fuentes y relaciones musicales sin DDL, RLS, UX ni nuevas Bandas.
-- `f9e6fdd` · rangos horarios compactos: bug real corregido transversalmente y cubierto por prueba; no abre una nueva cola UX.
-
-### PR abiertas en este corte
-
-**Ninguna funcional.**
-
-La única PR transitoria de este corte es la sincronización documental y de
-timestamps de migración; se autocierra al integrarse. Después quedan **0 PR
-abiertas**.
-
-No debe abrirse un nuevo frente UX/estructural para continuar el cierre. #514 queda como cierre definitivo de la cola visual de Sede y no abre módulo, arquitectura ni modelo nuevo.
-
-## #470 · Identidad corporativa oficial
-
-**Estado → 🟢 CERRADA · FUSIONADA · DESPLEGADA**
-
-- La identidad oficial permanece fijada.
-- Los cambios posteriores de #472/#473 se consideran ajustes integrados de la misma identidad, no una fase 2.
-- #470 no debe reabrirse, rehacerse ni ampliarse durante este freeze salvo regresión demostrable.
+- Baseline funcional y estructural de Primera Edición: cerrado.
+- HEAD funcional observado antes de este corte documental: `6f20318dcd90120dfdf87db06c454c0d12c066dc`.
+- Producción observada antes de este corte: `READY` sobre el mismo SHA.
+- Check Vercel del HEAD: `success`.
+- Runtime de producción: sin errores registrados en las 6 horas auditadas antes del cierre.
+- PR abiertas al iniciar el corte: **0**.
+- #529: **cerrada**.
+- #492: **abierta y aislada** a Supabase Preview Branches; no bloquea DML editorial sobre el modelo vigente.
+- Aportaciones públicas: **desactivadas**.
+- Cola UX abierta: **0**.
+- Cola estructural abierta: **0**.
+- Nuevo DDL / nuevas tablas / cambios RLS / nueva arquitectura: **⛔ bloqueados durante el freeze y mientras #492 siga abierta**.
+
+## Supabase
+
+**PRODUCCIÓN → 🟢 `ACTIVE_HEALTHY`**
+
+- Proyecto productivo: PostgreSQL 17.6.1, región `eu-west-1`.
+- Historial de migraciones Git ↔ remoto auditado antes de este cierre: **48/48**.
+- Últimas versiones ya canónicas:
+  - `20260902121927_completa_amparo_sevilla`;
+  - `20260902125718_aplica_paleta_amparo_sevilla`.
+- El cierre posterior de Amparo se ha ejecutado exclusivamente como DML editorial sobre tablas y relaciones existentes.
+- No se ha ejecutado DDL, no se ha alterado RLS y no se ha creado una nueva migración estructural.
+- #492 conserva la deuda histórica de reproducibilidad de Preview Branches y no se reinterpreta como un fallo de producción.
+
+## GitHub y Vercel
+
+**ESTADO PREVIO A ESTA SINCRONIZACIÓN DOCUMENTAL → 🟢 ESTABLE**
+
+- `main`: `6f20318dcd90120dfdf87db06c454c0d12c066dc`.
+- PR abiertas: **0**.
+- #529: cerrada y certificada.
+- Vercel producción: `READY`.
+- Check del commit: `success`.
+- Errores/fatales runtime recientes: **0 detectados** en la ventana auditada.
+
+Este documento y `docs/CERTIFICACION-AMPARO-2026-09-02.md` son una sincronización canónica del cierre editorial. No cambian aplicación, esquema, UX ni arquitectura.
+
+## Frente de Hermandades · Amparo
+
+**AMPARO → 🟢 CERTIFICADA**
+
+La auditoría completa queda registrada en `docs/CERTIFICACION-AMPARO-2026-09-02.md`.
+
+### Identidad y Sede
+
+- Nombre canónico: **Real, Venerable e Ilustre Hermandad de Nuestra Señora del Amparo**.
+- Nombre popular: **El Amparo**.
+- Tipo: **Gloria**.
+- Localidad: **Sevilla**.
+- Sede canónica: **Real Parroquia de Santa María Magdalena**.
+- Dirección: **Calle Bailén, 5, 41001 Sevilla**.
+- Horarios de la Sede: documentados y verificados el **2 de septiembre de 2026**.
+- La información de templo, dirección y horarios permanece en el nodo canónico de Sede; no se duplica en Hermandad.
+
+### Titular
+
+- Nuestra Señora del Amparo: publicada y relacionada como titular.
+- Autoría conservada con prudencia documental:
+  - Roque de Balduque → atribución;
+  - Antonio de Alfián → atribución de policromía/estofado.
+- Intervenciones documentadas:
+  - José Rodríguez Rivero-Carrera · restauración · 1986;
+  - Almudena Fernández García · limpieza de conservación · 2015;
+  - José Joaquín Fijo León · limpieza de conservación · 2015.
+- Autoría, atribución e intervención permanecen separadas.
+
+### Paso
+
+- Paso procesional de Nuestra Señora del Amparo: publicado y relacionado con la titular.
+- Dos fases estructuradas:
+  - **Peana procesional · 1831** → Melchor Cano (diseño) + Lucas de Prada (ejecución/talla).
+  - **Paso procesional actual · 1927** → Taller de Antonio Corrales, Rafael Domínguez, Luis Domínguez, Montenegro y Jorge Ferrer.
+- La fuente oficial identifica al proyectista del paso únicamente como **Montenegro**; no se inventa nombre de pila ni una identificación más precisa.
+- Capataz: **Ismael Vargas**, vigente en 2026; fecha inicial no documentada.
+
+### Patrimonio material
+
+Se mantienen separados patrimonio material y patrimonio musical.
+
+Patrimonio material certificado:
+
+1. **Simpecado de Gala** · 1804–1807, estrenado en 1807.
+   - Bordado original: taller de Francisca de Paula Zuloaga.
+   - Lienzo central: Salvador Gutiérrez.
+   - Restauraciones estructuradas y fechadas: Joaquín Ossorio, Almudena Fernández García, José Joaquín Fijo León y José Ramón Paleteiro.
+   - Media autorizada y trazable.
+2. **Manto procesional de Nuestra Señora del Amparo** · 1851.
+   - Autoría original: Manuel María Ariza.
+   - Restauración 2009–2010: Emilio José Gómez Moreno.
+   - Sin fotografía publicada al no existir media certificada en el cierre.
+3. **Coronas históricas de Nuestra Señora del Amparo y el Niño Jesús** · principios del siglo XVIII.
+   - Proyecto de restauración y enriquecimiento reversible documentado para la Coronación Canónica de 2026.
+   - Participan Joaquín Ossorio, Ana Amparo Cerrejón Lozano y Javier Sánchez de los Reyes.
+   - Sin fotografía publicada al no existir media certificada en el cierre.
+
+Regla aplicada: **sin foto > foto sin derechos**.
+
+### Patrimonio musical
+
+**Procesión → 6 marchas dedicadas y relacionadas**
 
-## #471 · Gestión local de multimedia
+- `Amparo` · José del Castillo Díaz · 1929.
+- `Virgen del Amparo` · José Martínez Peralto · 1956.
+- `Amparo` · Pedro Morales Muñoz · 2005.
+- `Bajo tu Amparo` · Rubén Jordán Flores · 2014.
+- `Al Amparo de María` · Juan Catón Guillén / instrumentación de Alberto Barea · 2015.
+- `Virgen del Amparo` · Julián Martín Fernández · 2015.
 
-**Estado → 🟢 CERRADA · FUSIONADA · DESPLEGADA**
+**Cultos → 7 composiciones separadas de las marchas procesionales**
 
-- Merge funcional: `87a62cc837b0578a38ac4c40dafe815b804d9e67`.
-- La gestión desde `Hermandad → Fotos y carteles` permite ver, editar, marcar como principal y desvincular recursos ya vinculados.
-- Se validan UUID, `target_kind`, pertenencia del recurso a la Hermandad, vínculo `link + target + media_asset`, estados de derechos y `alt_text` obligatorio.
-- Las operaciones de edición/desvinculación pasan por `requirePanelEditor` y generan audit log.
-- Al retirar una portada puede promocionarse otra imagen vinculada.
+- Plegaria a la Santísima Virgen del Amparo · 1920.
+- Plegaria a la Santísima Virgen del Amparo · 1923.
+- Alabado · 1924.
+- Sub Tuum Praesidium · 2014.
+- Missa Refugium Peccatorum · 2015.
+- Bajo tu Amparo · 2016.
+- Sonata da Chiesa Sancta Dei Genitrix · 2019.
 
-### Auditoría de borrado
+No se registra como marcha procesional ninguna obra cuyo destino documentado sea el culto interno.
 
-La auditoría confirmó que `media_assets` recibe FK directas desde:
+### Cultos 2026 y Coronación Canónica
 
-- `entity_media.media_asset_id`;
-- `cult_media.media_asset_id`;
-- `outing_media.media_asset_id`.
+Los cultos ordinarios permanecen separados de las ocurrencias excepcionales de 2026.
 
-También existen referencias por ruta sin FK directa en otros campos del modelo, entre ellos `heritage_assets.public_image_path` y `outings.hero_image_path`. Por tanto, contar solo las tres tablas de enlace no demuestra de forma exhaustiva que un asset esté huérfano.
+Programa extraordinario estructurado sin convertirlo en recurrencia anual:
 
-Política vigente de Primera Edición:
+- Besamanos extraordinario · **17–18 de octubre**.
+- Novena de la Coronación · **24 de octubre–1 de noviembre**; el 29 de octubre se documenta la procesión claustral con el Santísimo Sacramento.
+- Vísperas Solemnes · **7 de noviembre**.
+- Función Principal de Instituto y **Coronación Canónica** · **8 de noviembre · 10:00**.
+- Segundo Besamanos extraordinario · **14–15 de noviembre**.
+- Misa por los hermanos difuntos · **16 de noviembre · 20:00**.
 
-**DESVINCULAR → CONSERVAR `media_assets` → CONSERVAR STORAGE.**
+La **Coronación Canónica de Nuestra Señora del Amparo** queda como `event` propio, fechado el 8 de noviembre de 2026, relacionado con la Hermandad y la Real Parroquia de Santa María Magdalena.
 
-- #471 no ejecuta garbage collection automático.
-- No borra objetos del bucket al desvincular.
-- No expone una superficie de borrado arbitrario por `storage_path`.
-- La limpieza física de assets huérfanos queda diferida a mantenimiento futuro con auditoría global de referencias; no es un frente UX abierto.
+### Salida y acompañamiento
 
-QA final de #471:
+Corrección editorial de actualidad estricta:
 
-- CI #1314: `SUCCESS`.
-- `npm ci`, `npm test` y `npm run build`: verde.
-- Preview final: `READY`.
-- Runtime preview: sin `error/fatal` detectados.
-- Producción posterior al merge: `READY`, sin error runtime detectado.
-- La protección SSO del preview impidió automatizar una inspección visual autenticada del Panel; no se declara una captura manual inexistente. El contrato responsive quedó revisado estáticamente y blindado por tests.
+- La salida de la tarde del **8 de noviembre de 2026** queda clasificada como **Procesión de Gloria ordinaria**, celebrada en la jornada de la Coronación Canónica.
+- El hecho extraordinario es la **Coronación Canónica** de la mañana; no se fuerza la procesión anual a `extraordinary`.
+- Salida documentada: **17:00**.
+- Visita prevista al Ayuntamiento y continuación por la feligresía.
+- Itinerario detallado y hora de entrada permanecen pendientes de anuncio oficial.
+- **Carmen de Salteras** → tras el paso → vigente en 2026; fecha inicial no documentada.
+- La posición musical queda relacionada con la salida y con el paso exacto.
 
-## #467 · cierre UX de Bandas
+### Multimedia
 
-**Estado → 🟢 CERRADA · FUSIONADA · DESPLEGADA**
+- Titular: media autorizada, con `alt`, autor/crédito y estado de derechos.
+- Paso: se conserva la fotografía autorizada y acreditada.
+- Simpecado: media autorizada y acreditada.
+- Se retiró de la ficha una fotografía duplicada del paso que figuraba sin autor/crédito; el asset quedó eliminado al no conservar otras relaciones.
+- Manto y coronas: sin media publicada por ausencia de recurso certificado.
 
-- SHA funcional final: `b975b613c2d15a84c6adb3fdc3fb72268e8d3d8a`.
-- Delta final frente al `main` reconciliado: únicamente `lib/bands/accompaniments.js` y `test/band-accompaniments.test.mjs`.
-- No modifica CSS, breakpoints, Hero, Directorio, esquema, RLS ni datos.
+### Fuentes
 
-### Regla transversal de jornada redundante
+- **14 Fuentes relevantes** sostienen los bloques certificados.
+- Prioridad aplicada: web oficial de la Hermandad → fuentes institucionales/diocesanas → fuente especializada actual para datos no disponibles en la web oficial.
+- URLs duplicadas dentro del ámbito Amparo: **0**.
+- No quedan cultos, ocurrencias, intervenciones, capataz ni acompañamiento vigente sin Fuente.
 
-La capa de presentación elimina únicamente segmentos que repiten literalmente la jornada/tipo ya visible en la cabecera y conserva el dato fuente.
+### Salud del grafo
 
-Casos de contrato:
+**RESULTADO → 🟢 LIMPIO**
 
-- `Sábado de Pasión.` con la misma cabecera → se oculta.
-- `Miércoles Santo. Recorrido de vuelta por…` → conserva solo el contenido útil posterior.
-- `Madrugá y mañana del Viernes Santo.` → se conserva íntegra.
-- Observaciones documentales no equivalentes → se conservan.
+- Fases del paso: **2**.
+- Autorías/agentes estructurados en fases: **7**.
+- Patrimonio material: **3 piezas**.
+- Música de cultos: **7 obras**.
+- Marchas procesionales dedicadas: **6**.
+- Media crítica incompleta: **0**.
+- Intervenciones sin Fuente: **0**.
+- Cultos sin Fuente: **0**.
+- Ocurrencias 2026 sin Fuente: **0**.
+- Capataz vigente sin Fuente: **0**.
+- Acompañamiento vigente sin Fuente: **0**.
+- Entidades del ámbito Amparo huérfanas detectadas: **0**.
+- URLs de Fuente duplicadas en el ámbito auditado: **0**.
 
-### Excepción nominal descartada
+## Primera Edición y #492
 
-No se integró la propuesta de tratar específicamente el slug de Virgen de los Reyes como `wide`.
+**#492 → 🟣 AISLADA · NO BLOQUEA ESTE FRENTE EDITORIAL**
 
-No queda en `main` por #467:
+La deuda de Supabase Preview Branches sigue sin resolverse y continúa bloqueando:
 
-- `if slug === ...` para ese logo;
-- mapa `slug → wide`;
-- `data-logo-presentation` específico;
-- estilos `wide` dedicados;
-- test nominal de Virgen de los Reyes.
+- nuevo DDL;
+- nuevas tablas;
+- nuevas migraciones estructurales;
+- cambios RLS;
+- ampliaciones de arquitectura.
 
-Durante el freeze, un problema cosmético de proporción no justifica crear esquema ni una excepción creciente por nombres.
+No bloquea:
 
-QA final de #467:
-
-- CI #1321: `SUCCESS`.
-- `npm ci`: verde.
-- `npm test`: verde.
-- `npm run build`: verde.
-- Preview `dpl_3QVcHUTP5QRNX2VDgEWZqAVZK8Ne`: `READY`.
-- Runtime preview: sin `error/fatal` detectados.
-- Producción `dpl_G6ZEcc3rf1NHA9LSeP4C7TLQYL2T`: `READY`.
-- Runtime producción reciente: sin errores detectados.
-- Dominios `hilocofrade.es` y `www.hilocofrade.es` asociados al deployment final.
-
-Nota administrativa: el conector de GitHub falló al quitar el estado draft de #467 por un error GraphQL interno. Tras reconciliar el avance concurrente de #474 y validar nuevamente el SHA final, `main` avanzó de forma no forzada a ese commit; GitHub reconoció automáticamente #467 como `closed` + `merged` con `merge_commit_sha = b975b613c2d15a84c6adb3fdc3fb72268e8d3d8a`.
-
-## Producción y Vercel
-
-**PRODUCCIÓN → 🟢 ESTABLE**
-
-- Deployment de producción observado antes de este commit documental: `dpl_3PBYz2TYN5bFn96WzRGzuJmZtXM6`.
-- Commit desplegado en ese corte: `c3e9f19a2429d1b4526af4f3cbb165c2aaff9cb4` (#549).
-- Estado: `READY`; target: producción.
-- Dominios canónicos: `https://hilocofrade.es` y `https://www.hilocofrade.es`.
-- Vercel informa `SUCCESS` para el commit desplegado.
-- Comprobación runtime: el deployment actual no registra errores ni fatales en los últimos 30 minutos; Vercel informa `SUCCESS` para el commit.
-- Smoke de #549: las fichas de La Macarena y Jesús Despojado responden HTTP 200 desde el deployment actual y muestran titulares, pasos y acompañamientos. Jesús Despojado queda `index, follow`; La Macarena permanece `noindex, follow` mientras no cumpla todo el mínimo público, sin forzar SEO ni incorporar media sin derechos.
-- QA específico de #527: 529/529 tests, build y `git diff --check` en verde; Padre Pío responde HTTP 200, muestra el acceso y la sección `Estrenos`, y presenta el paso del Señor antes del palio.
-- Smoke específico de #524: las fichas públicas de Virgen de los Reyes y La Redención responden HTTP 200; la primera muestra 23 trabajos, «El Galileo» y «Luz de luz», y la segunda muestra sus Fuentes directas, Apple Music y el banderín de 2011.
-- Smoke específico de #522: `https://hilocofrade.es/hermandades/padre-pio-sevilla` responde HTTP 200 y muestra el escudo oficial, ambos capataces y los dos hitos diferenciados del palio.
-- Smoke general: Home, Hermandades, Bandas, Procesiones de Gloria, Igualás y Ensayos, Extraordinarias, Tira del hilo (`/pregunta`) y Panel responden HTTP 200.
-- Las fichas de Procesiones de Gloria son dinámicas (`force-dynamic`), por lo que las correcciones editoriales de Supabase se reflejan sin un redeploy de aplicación.
-- El commit que actualiza este documento es exclusivamente documental y no altera el DML canónico de #522.
-
-## SEO P0 · mantenimiento técnico
-
-**Estado → 🟢 CERRADO Y EN PRODUCCIÓN**
-
-- Igualás y Ensayos publica metadata específica por convocatoria, canonical individual y relación `WebPage ↔ Event`.
-- `Event.startDate` usa hora documentada y offset de `Europe/Madrid` cuando corresponde.
-- Extraordinarias calcula el offset de Madrid por fecha y no fija artificialmente `+02:00`.
-- Procesiones de Gloria expone `primaryImageOfPage` y `Event.image` cuando existe fotografía documentada.
-- El smoke SEO de producción protege Home, Directorios, Extraordinarias, Glorias, Igualás y URLs dinámicas del sitemap.
-- No se abre una conversión masiva a ISR durante el freeze sin una incidencia o métrica verificable.
-
-## Ciclo editorial SEO · primer lote
-
-**Estado → 🟢 PUBLICADO Y VALIDADO**
-
-- Cerro del Águila (6/09) y Santa María del Buen Aire (10/09) se revisaron sin añadir texto de relleno.
-- Utrera (8/09): salida corregida a `07:00`, Santo Rosario, recorrido por el Real/Parque del V Centenario y Coro de la Virgen.
-- Osuna (8/09): itinerario 2026, salida `20:15`, Función Principal y Banda de Música Villa de Osuna.
-- Gerena (12/09): contexto de la Coronación Canónica con traslado `17:00`, Pontifical `19:30` y procesión triunfal desde `22:30`.
-- Se incorporaron Fuentes específicas de 2026 sin inventar fechas de publicación ausentes.
-- #459 corrigió el fallo transversal que ocultaba acompañamientos musicales ya documentados en varias Glorias.
-
-## Ciclo editorial SEO · segundo lote · 8 de septiembre
-
-**Estado → 🟢 DATOS CONTRASTADOS Y PUBLICADOS**
-
-### Nuestra Señora de Aguas Santas · Villaverde del Río
-
-- Se mantiene la salida documentada a las `22:00`.
-- Se refuerza la descripción como procesión patronal en paso custodia y su tradición de detenerse de puerta en puerta por la localidad.
-- Las Cigarreras permanece documentada y relacionada como acompañamiento tras el paso.
-- No se incorpora una hora de regreso histórica como si fuera específica de 2026.
-- No se fabrica un recorrido cerrado donde la propia tradición es puerta a puerta.
-
-### Nuestra Señora de la Estrella Coronada · Coria del Río
-
-- El itinerario 2026 oficial permanece completo y se identifica editorialmente como el cuarto de los seis recorridos, conocido como el del `Laberinto`.
-- Se documenta que la Virgen regresa a estas calles ocho años después.
-- El recorrido se normaliza también en `outings.route` como itinerario estructurado para conservar correctamente nombres como `Ramón y Cajal`, que el parser heredado podía dividir.
-- La hora de salida y el acompañamiento musical permanecen sin completar mientras no exista una confirmación específica y suficientemente sólida para el 8 de septiembre de 2026.
-- La ficha pública conserva expresamente `Por confirmar` en esos campos en lugar de inferir datos por tradición.
-
-### Nuestra Señora de Consolación · Osuna
-
-- Se conserva la salida a las `20:15`, el itinerario 2026 y la Banda de Música Villa de Osuna.
-- Se añade cronología estructurada del 8 de septiembre:
-  - `10:00` · apertura del templo;
-  - `11:30` · misa de autoridades civiles y militares;
-  - `18:00` · apertura vespertina;
-  - `19:00` · Función Principal de Instituto;
-  - `20:15` · salida procesional.
-- La cronología queda en el modelo canónico aunque la ficha pública actual no tenga un módulo independiente de horarios.
-
-### Nuestra Señora de Consolación Coronada · Utrera
-
-- Se conserva la salida oficial a las `07:00` durante el Santo Rosario y el Coro de la Virgen.
-- Se añade cronología estructurada del 8 de septiembre:
-  - `00:00` · encendido de la Lámpara, Salve y repique de campanas;
-  - `01:00` · inicio de peregrinaciones;
-  - `06:00` · peregrinación de Los Molares y Misa de Peregrinos;
-  - `07:00` · salida de la Virgen y Santo Rosario;
-  - `12:30` · Solemne Función Principal;
-  - `14:00–19:00` · paso de fieles ante la Virgen;
-  - `23:00` · cierre del Santuario.
-- La cronología queda estructurada sin forzar su presentación como un nuevo módulo durante el freeze.
-
-### Nuestra Señora de Setefilla · Lora del Río
-
-- Se mantiene correctamente clasificada como `Romería`; no se reetiqueta como `Procesión de Gloria` para encajarla artificialmente en un directorio.
-- Se documenta el Santuario como origen/destino canónico y el carácter de la peregrinación desde Lora del Río.
-- Se incorporan horarios y secuencia documentada:
-  - llegada de romeros desde primeras horas de la madrugada;
-  - `11:00` · Letanías y procesión de la Virgen alrededor de la Ermita;
-  - a continuación · Función Principal de Instituto;
-  - tras la Función · besamanos.
-- Se elimina de la salida 2026 la referencia de 2020 sobre la suspensión por pandemia.
-- Se sustituyen/añaden como soporte del evento 2026:
-  - Hermandad Mayor de Nuestra Señora de Setefilla;
-  - Agenda Cultural de Andalucía · Junta de Andalucía;
-  - Turismo de la Provincia de Sevilla.
-- El frontend actual no ofrece una ruta pública específica de Romerías; los datos quedan canónicos y disponibles para el grafo sin inventar una URL ni introducir Setefilla en `/procesiones-de-gloria`.
-
-### Fotografías
-
-- Las cinco citas revisadas no tienen `hero_image_path` documentado actualmente.
-- No se han reutilizado imágenes web sin una evidencia clara de derechos/licencia o una aportación autorizada.
-- Se prioriza ausencia de foto frente a incorporar material sin trazabilidad de uso.
-
-## Vigilancia de agenda próxima
-
-Se mantiene una vigilancia periódica de cambios sustanciales en fuentes oficiales o medios locales fiables para:
-
-- Cerro del Águila · 6/09/2026;
-- Aguas Santas · Villaverde del Río · 8/09/2026;
-- Estrella · Coria del Río · 8/09/2026;
-- Consolación · Osuna · 8/09/2026;
-- Setefilla · Lora del Río · 8/09/2026;
-- Consolación · Utrera · 8/09/2026;
-- Santa María del Buen Aire · 10/09/2026;
-- Virgen de la Sangre · Gerena · 12/09/2026.
-
-Solo deben elevarse cambios de horario, itinerario, acompañamiento, suspensión/aplazamiento o avisos organizativos relevantes; no se generan avisos si no hay novedades.
-
-## #439 · Aportaciones públicas seguras
-
-**Estado → 🟢 FUSIONADA · SERVICIO CERRADO**
-
-- La infraestructura segura está versionada en `main`.
-- `PUBLIC_CONTRIBUTIONS_ENABLED` permanece `false`.
-- `/colabora` no publica el formulario mientras el servicio esté desactivado.
-- RLS, rate limit, ticket de formulario, origen, honeypot, deduplicación, validación de tipos/archivos y cuarentena privada permanecen preparados.
-- Turnstile está preparado, pero su mera existencia no autoriza una activación pública.
-
-### Puerta obligatoria para una activación futura
-
-Una decisión posterior de Dirección deberá abrir un corte independiente y completar revisión legal/privacidad, conservación y borrado, Turnstile, secretos server-only, límites de payload, recodificación/cuarentena, rate limit, RLS, QA, preview y activación controlada antes de cambiar el flag.
+- contenido;
+- Fuentes;
+- media trazable;
+- relaciones sobre tablas existentes;
+- patrimonio;
+- cultos;
+- acompañamientos;
+- acontecimientos y salidas soportados por el modelo actual.
 
 ## Aportaciones públicas
 
 **APORTACIONES → ⚪ INFRAESTRUCTURA PREPARADA · 🔒 DESACTIVADAS**
 
-- `contributions`: RLS activa.
-- `contribution_attempts`: cerrada para API pública según el baseline certificado.
-- `anon`: sin escritura directa sobre aportaciones.
-- La cuarentena `hilo-contributions-quarantine` permanece privada.
-- No se ha activado el formulario público en este ciclo.
+- `PUBLIC_CONTRIBUTIONS_ENABLED=false` permanece como estado canónico.
+- No se activa `/colabora` ni escritura pública durante este corte.
+- No se modifica RLS, Auth, Storage ni secretos.
 
-## #432 · Fondo configurable de logotipos de Bandas
+## Siguiente frente
 
-**Estado → 🟢 FUSIONADA E INTEGRADA**
+Amparo queda cerrada y certificada.
 
-- `bands.logo_background_color` sigue siendo nullable y reutilizable.
-- Panel y Front comparten la configuración HEX y la opción sin fondo.
-- El mecanismo no introduce excepciones estructurales por slug.
-- #467 refuerza esta regla: no se añade una excepción nominal para Virgen de los Reyes.
+A partir de la integración de este documento debe seleccionarse **una sola Hermandad** siguiente, con este orden de prioridad:
 
-## Supabase · esquema, migraciones y ramas
+1. actualidad documental;
+2. salida o acontecimiento extraordinario próximo cuando exista;
+3. deuda documental real;
+4. potencial relacional con Imágenes, Pasos, Bandas, Patrimonio, Cultos, Salidas y Fuentes.
 
-**PROYECTO DE PRODUCCIÓN → 🟢 `ACTIVE_HEALTHY`**
-
-El cierre técnico permanece intacto. Los cambios posteriores son editoriales o correcciones reales sobre el modelo vigente.
-
-**GIT ↔ SUPABASE → 🟢 46/46 VERSIONES CANÓNICAS EN PRODUCCIÓN**
-
-- Última versión remota: `20260902115831_restituye_madruga_centuria_macarena`; el cierre de Hermandades está registrado como `20260902115332_completa_macarena_y_jesus_despojado` y `20260902115551_restaura_cruz_guia_juvenil_macarena`.
-- El proyecto productivo responde en PostgreSQL 17.6.1, región `eu-west-1`.
-- La auditoría de este corte no ejecutó DDL, no modificó RLS y no reescribió migraciones históricas; #524 es DML idempotente y #525 mantiene las mismas barreras estructurales.
-- Git Integration aplicó `20260901144529` al fusionar #505. Una segunda ejecución manual idempotente quedó registrada como `20260901145701`; no duplicó datos. La segunda versión se refleja en Git mediante un archivo vacío de reconciliación, sin repetir el SQL canónico ni alterar el historial remoto.
-- En el corte de #499, la integración automática ya había registrado `20260901135411`; una aplicación manual idempotente añadió temporalmente una segunda entrada de historial. Tras comprobarla, se retiró exclusivamente esa entrada extra. Los datos no se duplicaron y el historial quedó reconciliado antes de incorporar #501.
-- La continuidad editorial puede seguir utilizando las tablas y relaciones existentes.
-
-Migraciones registradas en producción en el momento de este corte:
-
-1. `20260831070000_first_edition_baseline`
-2. `20260831071000_secure_public_contributions_reconciled`
-3. `20260831072000_add_band_logo_background_color`
-4. `20260831074355_publica_tres_igualas_septiembre_2026`
-5. `20260831135520_publica_centuria_y_corrige_logo_tres_caidas`
-6. `20260831141610_normalize_mairena_logo_and_readability`
-7. `20260831150414_publica_centuria_y_corrige_logo_tres_caidas`
-8. `20260831154654_completa_discografia_presentacion_pueblo`
-9. `20260831193853_repara_portadas_presentacion_pueblo`
-10. `20260831213932_publica_iguala_divina_pastora_triana_2026`
-11. `20260831220820_incorpora_video_traslado_risco_cantillana`
-12. `20260831220940_audita_presentacion_pueblo`
-13. `20260831221003_normaliza_tipo_traslado_risco_cantillana`
-14. `20260831221120_corrige_nota_publica_presentacion_rinconada`
-15. `20260831223715_corrige_video_traslado_risco_en_salida`
-16. `20260831225216_completa_presentacion_pueblo_fase2`
-17. `20260831230357_cierra_conflictos_presentacion_pueblo`
-18. `20260901001916_presenta_banderin_presentacion_al_pueblo`
-19. `20260901002206_ajusta_banderin_presentacion_fondo_negro`
-20. `20260901004026_cruz_roja_fase1_documental`
-21. `20260901083249_incorpora_oliva_salteras_rosario_cadiz`
-22. `20260901135411_documenta_horarios_templos_septiembre_2026`
-23. `20260901141718_completa_maestro_tejera_y_centuria`
-24. `20260901142902_publica_igualas_juncal_y_pastora_padre_pio_2026`
-25. `20260901144529_certifica_arahal_y_los_gitanos`
-26. `20260901145701_certifica_arahal_y_los_gitanos`
-27. `20260901160000_completa_hermandades_septiembre_octubre`
-28. `20260901170000_certifica_las_aguas`
-29. `20260901180000_completa_paso_rosario_las_aguas`
-30. `20260901204320_completa_direccion_sede_baratillo`
-31. `20260901214842_completa_la_bofeta`
-32. `20260901224439_incorpora_escudo_cabecera_san_esteban`
-33. `20260902003548_completa_padre_pio`
-34. `20260902065247_completa_virgen_reyes_y_redencion`
-35. `20260902065710_unifica_bambalinas_padre_pio`
-36. `20260902090401_normaliza_textos_historicos_bandas`
-37. `20260902090742_mejora_foto_bambalinas_padre_pio`
-38. `20260902102751_completa_las_cigarreras_2025_y_fuentes`
-39. `20260902104622_completa_tres_caidas_triana`
-40. `20260902111558_completa_dedicatoria_hijo_esperanza_y_certifica_redencion`
-41. `20260902111735_abrevia_credito_foto_bambalinas_padre_pio`
-42. `20260902114908_deduplica_extraordinaria_padre_pio`
-43. `20260902115047_certifica_centuria_romana_macarena`
-44. `20260902115332_completa_macarena_y_jesus_despojado`
-45. `20260902115551_restaura_cruz_guia_juvenil_macarena`
-46. `20260902115831_restituye_madruga_centuria_macarena`
-
-### Observación de ramas Supabase
-
-**PREVIEW BRANCHES → 🟣 DEUDA TÉCNICA AISLADA**
-
-- No existe ninguna preview activa tras el merge; `list_branches` devuelve únicamente `main`. El estado de branching conserva `MIGRATIONS_FAILED`, aunque el proyecto productivo permanece `ACTIVE_HEALTHY`.
-- #505 volvió a reproducir el error en una rama limpia y la rama efímera fue retirada automáticamente tras el merge. El resultado sigue siendo `MIGRATIONS_FAILED` por SQLSTATE `23514`: `source_links_one_target`.
-- #549 volvió a aislar exactamente la misma deuda antes de alcanzar su DML: falló en la migración histórica de Centuria al intentar enlazar una Fuente con un destino nulo. Producción aplicó y certificó el lote sin error; #492 no se reinterpretó como fallo de las Hermandades.
-- Primera migración que falla: `20260831135520_publica_centuria_y_corrige_logo_tres_caidas.sql`.
-- Statement: bloque `do $$`, inserción final en `public.source_links (source_id, entity_id, scope, notes)` para la Fuente «Tres Caídas de Triana · emblema oficial».
-- Fila observada: `b225b14b-79fb-46e1-8a3b-040b5d3509b1`; `source_id=a1c237f1-665f-4e36-89ad-de4ff1d25c78`; `entity_id=NULL`; alcance «Identidad visual».
-- Precondición asumida: existencia previa del slug `banda-cornetas-tambores-santisimo-cristo-tres-caidas-sevilla`.
-- En producción el nodo, la Fuente y su vínculo existen válidamente. En una rama nueva, las migraciones se ejecutan antes del seed; el seed mínimo solo crea Maestro Tejera y Las Cigarreras. La subconsulta devuelve `NULL` y la fila queda con cero destinos, cuando la restricción exige exactamente uno.
-- Clasificación principal: **D · DML histórico no reproducible**. Factores contribuyentes: baseline de esquema sin datos productivos y seed mínimo posterior a las migraciones.
-- La migración ya aplicada en producción no se edita por conveniencia de branching.
-- Deuda formal: #492 · `Reconciliar Supabase Preview Branches`.
-- Prioridad: resolver antes del próximo cambio de esquema.
-
-Hasta cerrar #492 quedan bloqueados:
-
-- nuevo DDL;
-- nuevas tablas;
-- nuevas migraciones estructurales;
-- cambios de RLS.
-
-No quedan bloqueados:
-
-- contenido y Fuentes;
-- fotografías trazables;
-- discografía, estrenos y acompañamientos;
-- históricos y relaciones soportadas por el modelo actual.
-
-## Seguridad, Auth, Storage y Legal
-
-**SEGURIDAD → 🟢 SIN BLOQUEO DETECTADO EN ESTE CICLO**
-
-- No se alteran políticas RLS, Auth, permisos ni secretos por #471/#467.
-- #471 permite desvincular media, pero conserva tanto `media_assets` como el objeto de Storage.
-- No se ejecuta borrado físico de Storage desde la nueva gestión local de Hermandades.
-- La limpieza de huérfanos queda separada de la UX y requiere una auditoría global futura.
-- Las superficies `/aviso-legal`, `/privacidad` y `/cookies` permanecen fuera de este frente.
-- La edición editorial continúa sobre campos existentes y fuentes trazables.
-
-## Salud del grafo
-
-**GRAFO → 🟢 SIN NUEVOS BLOQUEOS**
-
-- Los Gitanos queda con 10 ediciones, 97 pistas, 2 acompañamientos actuales y 4 históricos; Santa María Magdalena de Arahal queda con 20 ediciones, 172 pistas, 6 acompañamientos actuales y 3 históricos.
-- El lote no conserva ediciones sin pistas, acompañamientos sin Fuente, pistas sin disco ni posiciones duplicadas.
-- Pasión de Huelva, Nazareno del Amor de Cádiz y Prendimiento de Jerez pasan a histórico al concluir 2026; no se sobrescribe el presente con relaciones ya finalizadas.
-- Penas de Santiago queda documentada desde 2025; Hiniesta desde 1976, Humillación de Camas desde 2024, Monte-Sión desde 2026 y San Pablo dentro de su acuerdo 2025–2027.
-- Maestro Tejera queda con 23 acompañamientos actuales, 28 ediciones y 351 pistas; Centuria Romana Macarena queda con 1 relación musical actual, 38 ediciones y 119 pistas totales.
-- Las 28 ediciones de Maestro Tejera y las 38 de Centuria tienen al menos una pista y una Fuente; los acompañamientos del lote no quedan sin Fuente.
-- Centuria incorpora dos nodos patrimoniales documentados: uniforme de 2018 y escudo del uniforme presentado en 2026.
-- La auditoría posterior a #501 no detecta grupos duplicados de acompañamientos actuales.
-- La Oliva queda publicada con 8 acompañamientos actuales, 27 ediciones y 198 pistas; Rosario queda publicada con 6 acompañamientos actuales, 23 ediciones y 76 pistas.
-- Los 14 acompañamientos del lote tienen Paso y Fuente; no queda ninguno sin extremo relacional o soporte documental.
-- Las 50 ediciones publicadas tienen al menos una pista y una Fuente; las 22 ediciones históricas inventariadas conservan carátula, `alt` y crédito.
-- No hay grupos duplicados de acompañamientos actuales ni `source_links` huérfanos detectados.
-- Santa Marta queda expresamente fuera de los acompañamientos vigentes de Rosario; cualquier relación previa se conserva solo como histórica hasta 2025.
-- El paso de Columna de Cádiz usa un nodo propio y no reutiliza el paso homónimo ya perteneciente a Las Cigarreras en Sevilla.
-- El Juncal queda relacionado con el paso de Nuestra Señora del Juncal y con Luis Miguel Sánchez Fajardo y Jesús Sánchez Fajardo como capataces de su única cita mixta de igualá y ensayo.
-- Las Aguas queda con 4 titulares publicados y 3 pasos completos. El misterio relaciona sus 5 imágenes; el paso de gloria vincula a Nuestra Señora del Rosario, Rosario de Cádiz en Cruz de Guía y Mairena tras el paso. Conserva morado y blanco, sin slugs duplicados ni vínculos de Fuente inválidos.
-- La Divina Pastora de Padre Pío queda relacionada con su paso y con Ricardo Manuel López Ruiz «Almansa» como capataz de su única cita mixta de igualá y mudá.
-
-## Freeze y siguiente frente
-
-`FIRST EDITION FREEZE` continúa activo.
-
-**COLA UX ABIERTA → 0.**
-
-**COLA ESTRUCTURAL ABIERTA → 0.**
-
-**MODO ACTIVO → EDITORIAL / DOCUMENTAL.**
-
-**NUEVO DDL / NUEVA TABLA / MIGRACIÓN ESTRUCTURAL / RLS → ⛔ BLOQUEADO HASTA CERRAR #492.**
-
-El frente de Hermandades queda detenido tras cerrar La Macarena y Jesús
-Despojado. No se abre un tercer lote ni una mejora técnica automática: el
-siguiente movimiento requiere una nueva orden de Dirección. La agenda temporal
-urgente conserva prioridad y puede interrumpir solo ante un cambio oficial.
-
-La limpieza física de assets huérfanos no forma parte de #471 ni de la cola UX: queda como mantenimiento futuro independiente y conservador.
-
-### Lote editorial · Bandas · La Oliva + Rosario
-
-**ESTADO → 🟢 CERTIFICADO · FUSIONADO · APLICADO · DESPLEGADO**
-
-- La Oliva de Salteras y Rosario de Cádiz forman el lote cerrado por #497.
-- Identidad, nombres, colores, logotipos y canales oficiales quedan estructurados sobre el modelo existente.
-- Se incorporan relaciones actuales, cronologías prudentes, Fuentes, discografía física y catálogo digital sin inventar inicios no acreditados.
-- No se añade fotografía principal: ausencia de foto prevalece sobre material sin derechos trazables.
-- CI #1375: `SUCCESS`; `npm test`: 520/520; `npm run build`: verde.
-- La migración completa se validó primero contra producción dentro de `BEGIN … ROLLBACK` y después quedó aplicada como versión `20260901083249`.
-- Cruz Roja no se reabre y no se abre un lote adicional en este corte.
-
-### Lote editorial · Horarios de templos y sedes
-
-**ESTADO → 🟢 CERTIFICADO · FUSIONADO · APLICADO · DESPLEGADO**
-
-- #499 documenta los horarios comunicados para septiembre de La Milagrosa, Baratillo, Estrella y Cachorro.
-- Se reutilizan `places.opening_hours_text`, `opening_hours_verified_at`, `entity_locations` y Fuentes del modelo cerrado; no se añade DDL ni se modifica RLS.
-- La presentación pública pasa a titular «Horarios del templo» y respeta los saltos de línea del contenido.
-- El Baratillo queda visible en su ficha publicada. Cachorro, Estrella y La Milagrosa conservan su estado editorial `draft`; se incorporan sus datos y ubicaciones sin publicarlas prematuramente.
-- Las cuatro Fuentes quedan enlazadas una sola vez a su entidad correspondiente y los cuatro horarios constan como verificados el 1 de septiembre de 2026.
-- CI #1379: `SUCCESS`; `npm test`: 522/522; `npm run build`: verde; `git diff --check`: verde.
-- La migración se validó primero contra producción dentro de `BEGIN … ROLLBACK` y quedó aplicada como `20260901135411_documenta_horarios_templos_septiembre_2026`.
-- Producción `dpl_J9PdCHAaiHcMuZpyZKrGsPRBJo3Y`: `READY`; smoke de El Baratillo HTTP 200 y runtime sin `error/fatal` en los últimos 15 minutos.
-
-### Corrección funcional autorizada · Horarios dentro de Sede
-
-**ESTADO → 🟢 FUSIONADO · CI Y PREVIEW CERTIFICADOS**
-
-- Dirección autoriza #506 para dar una jerarquía visual propia a apertura, misas, oficinas y cultos, y precisa después en #508 que el conjunto debe permanecer unido al campo Sede.
-- La ficha presenta templo, dirección, horarios y acceso como una única Sede canónica. El horario no nace como entidad ni módulo independiente: continúa procediendo de `places.opening_hours_text` a través de `brotherhoods.canonical_see_place_id`.
-- #508 conserva el título contractual `Sede y visita`, sustituye `Ubicación` por `Sede canónica` y refuerza la unidad con un único acento cromático.
-- CI #1393 y #1397: `SUCCESS`; `npm test`: 522/522; `npm run build`: verde; `git diff --check`: verde.
-- #506 está desplegada en producción como `dpl_BDLQdCJ4xhZ5J92bRJ8UeRDFXU2b`. #508 queda certificada en `dpl_DC31YzjuhBECQnTb7ScJTq6pgutN`, `READY`, sin overlay; Git Integration no había emitido aún su deployment productivo en el momento de este corte.
-
-### Lote editorial · Bandas · Maestro Tejera + Centuria Romana Macarena
-
-**ESTADO → 🟢 CERTIFICADO · FUSIONADO · APLICADO · DESPLEGADO**
-
-- #501 completa ambas fichas sobre el modelo First Edition existente, sin cambios de UX, DDL, RLS ni arquitectura.
-- Maestro Tejera incorpora 28 ediciones y 351 pistas con fechas, duraciones, carátulas y Fuente editorial trazable; conserva sus 23 acompañamientos actuales ya documentados sin inventar inicios.
-- Centuria completa 76 pistas de seis álbumes históricos; su inventario total queda en 38 ediciones y 119 pistas.
-- El uniforme de 2018 y el escudo del uniforme presentado en 2026 quedan como patrimonio relacionado y respaldado por publicaciones oficiales de la Hermandad de la Macarena.
-- No se incorporan fotografías nuevas ni material sin derechos trazables.
-- CI #1383: `SUCCESS`; `npm test`: 522/522; `npm run build`: verde; `git diff --check`: verde.
-- La migración se validó contra producción dentro de `BEGIN … ROLLBACK` y quedó aplicada en remoto como `20260901141718_completa_maestro_tejera_y_centuria`.
-- Producción `dpl_FaSFT8zoET8YrMSZUJtLQH6t1cXf`: `READY`; smoke HTTP 200 de ambas fichas y runtime sin `error/fatal` en la última hora.
-- Supabase Preview volvió a aislar la deuda histórica de #492 antes de alcanzar la migración nueva; no se reescribe esa historia ni se bloquea este lote DML.
-
-### Lote editorial · Igualás · Juncal + Divina Pastora de Padre Pío
-
-**ESTADO → 🟢 CERTIFICADO · FUSIONADO · APLICADO · DESPLEGADO**
-
-- #503 publica las dos citas del 5 de septiembre de 2026 sobre el modelo First Edition existente, sin cambios de UX, DDL, RLS ni arquitectura.
-- El Juncal se modela como una única convocatoria mixta de igualá y ensayo. La hora y el lugar permanecen nulos porque la fuente no los publica; Luis Miguel Sánchez Fajardo y Jesús Sánchez Fajardo quedan enlazados como capataces.
-- La Divina Pastora de Padre Pío se modela como una única convocatoria mixta de igualá y mudá, a las `22:00` en la Plazoleta Antonio Ruiz, con Ricardo Manuel López Ruiz «Almansa» como capataz.
-- Ambas citas enlazan la Hermandad, su paso, los capataces y Fuentes verificables; la convocatoria de Padre Pío conserva como principal el canal oficial de la corporación.
-- CI #1387: `SUCCESS`; `npm test`: 522/522; `npm run build`: verde; `git diff --check`: verde.
-- La migración completa se validó contra producción dentro de `BEGIN … ROLLBACK` antes y después de aplicarla y quedó registrada como `20260901142902_publica_igualas_juncal_y_pastora_padre_pio_2026`.
-- Producción `dpl_4MFCZNfmiq5kRCz7YZ3yyXooJ5rv`: `READY`; las dos fichas y el directorio responden HTTP 200 con el contenido esperado, sin errores runtime en los últimos 15 minutos.
-- Supabase Preview volvió a aislar la deuda histórica de #492 y la rama efímera fue retirada tras el merge; la migración nueva convierte la ausencia de las Hermandades canónicas en un no-op seguro y producción permanece `ACTIVE_HEALTHY`.
-
-### Lote editorial · Bandas · Santa María Magdalena de Arahal + Los Gitanos
-
-**ESTADO → 🟢 CERTIFICADO · FUSIONADO · APLICADO · DESPLEGADO**
-
-- #505 completa ambas fichas sobre el modelo First Edition existente, sin cambios de UX, DDL, RLS ni arquitectura; la formación juvenil de Los Gitanos permanece separada y fuera del lote.
-- Los Gitanos completa 44 pistas de `Hágase Tu Voluntad`, `Andando y con Sentimiento` y `Concierto Anual Hermandad de Los Gitanos 2024 (Live)`; su inventario queda en 10 ediciones y 97 pistas.
-- Santa María Magdalena de Arahal completa las 10 pistas de `La Paz`; su inventario queda en 20 ediciones y 172 pistas.
-- Pasión de Huelva, Nazareno del Amor de Cádiz y Prendimiento de Jerez se conservan como históricos cerrados en 2026. Los Gitanos mantiene como vigentes su Hermandad de origen y Penas de Santiago.
-- Todas las ediciones del lote tienen pistas y todos sus acompañamientos tienen Fuente; la auditoría no detecta pistas sin disco ni posiciones duplicadas.
-- No se incorporan fotografías nuevas ni material sin derechos. El banderín y el uniforme ya existentes no se duplican.
-- CI de #505: `verify` y Vercel verdes; `npm test`: 522/522; `npm run build`: verde; `git diff --check`: verde.
-- La migración se validó primero contra producción dentro de `BEGIN … ROLLBACK`. Git Integration registró el DML como `20260901144529`; la ejecución manual idempotente quedó además en `20260901145701` y se refleja mediante una reconciliación vacía, sin repetir datos.
-- Producción `dpl_HqHDBpMqUSWGonXZjuiwExVPFCbX`: `READY`; smoke HTTP 200 de ambas fichas y de las ocho superficies públicas principales; sin errores runtime en la última hora.
-- Supabase Preview volvió a aislar #492 antes de alcanzar la migración editorial y la rama efímera fue retirada tras el merge.
-
-### Lote editorial · Hermandades · base de septiembre y octubre
-
-**ESTADO → 🟢 CERTIFICADO · FUSIONADO · APLICADO · DESPLEGADO**
-
-- #509 completa y publica Dulce Nombre de Bellavista, Las Aguas, La Bofetá, Jesús Despojado y La Macarena.
-- Publica las salidas confirmadas de Bellavista (12/09) y La Bofetá (27/09), y refuerza la Fuente de Las Aguas (19/09).
-- Jesús Despojado conserva sin inventar una salida de 2026 no confirmada.
-- La migración `20260901160000_completa_hermandades_septiembre_octubre` está aplicada en producción.
-
-### Lote editorial · Hermandades · Las Aguas
-
-**ESTADO → 🟢 CERTIFICADO · FUSIONADO · APLICADO · DESPLEGADO**
-
-- #511 completa cuatro titulares, los dos pasos del Lunes Santo, hábito, colores, capataz, música, horarios y Fuentes. #513 corrige el inventario con el tercer paso, correspondiente a Nuestra Señora del Rosario.
-- Conserva los conflictos documentales sin falsa precisión: Guadalupe queda fechada en 1965–1966 y el Rosario permanece como obra anónima del siglo XVIII.
-- Los colores no reciben códigos HEX inventados y no se añade fotografía sin derechos trazables.
-- La migración se ejecutó dos veces consecutivas dentro de una transacción con rollback y quedó aplicada como `20260901170000_certifica_las_aguas`.
-- Auditoría productiva tras #513: 4 titulares, 3 pasos, 5 imágenes en el misterio, 2 acompañamientos propios de la procesión de Gloria, morado y blanco, 0 slugs duplicados y 0 vínculos de Fuente inválidos.
-- CI #1403 y #1407, y Vercel: `SUCCESS`; producción funcional sobre `c9f77dd6bc3c7f759d9cffe616acb814a382ed1f`.
-
-### Cierre definitivo · #514 · Sede canónica
-
-**ESTADO → 🟢 FUSIONADA · DESPLEGADA · CERTIFICADA**
-
-- #514 queda limitada a presentación: legibilidad y jerarquía de horarios, dirección, iconografía funcional, foco, contraste, tacto móvil y responsive.
-- La revisión no detecta condiciones por Hermandad, hacks por slug, segunda lógica de horarios, componentes duplicados, DDL, migraciones de esquema ni cambios RLS.
-- #515 y todo el contenido posterior de Las Aguas permanecen preservados.
-- #516 completa únicamente la dirección trazable del Baratillo mediante DML editorial y no se interpreta como ampliación UX.
-- El hotfix `f9e6fdd` evita que un rango compacto como `18:30–20:30` se divida por su primer `:`; la suite queda en 523/523 y el build es correcto.
-- Producción `dpl_FdXbGSfR29teENyXXzoH4xWQ1oVJ`: `READY`; Baratillo muestra `Calle Adriano, 13`, Las Aguas conserva `18:30–20:30` como rango unido y el runtime no registra errores ni fatales.
-- Supabase permanece `ACTIVE_HEALTHY`, con 30/30 migraciones, sin DDL ni RLS introducidos por #514. #492 continúa aislada como deuda de Preview Branches.
-
-### Lote editorial · Hermandades · Padre Pío
-
-**ESTADO → 🟢 CERTIFICADO · FUSIONADO · APLICADO · DESPLEGADO**
-
-- #522 abre `padre-pio-sevilla` como Hermandad Sacramental y de Penitencia independiente de `pastora-padre-pio`.
-- La ficha publica sede, historia, cinco canales oficiales, hábito marfil y burdeos, dos imágenes procesionales con autoría, dos pasos, capataces y dos acompañamientos vigentes en 2026.
-- San Juan de la Cruz queda documentado sin fabricar una imagen titular: su relicario se incorpora como pieza patrimonial. El carácter sacramental y la Santa Cruz permanecen en la identidad, historia y Fuentes de la corporación.
-- La limpieza y mejora de las bambalinas del 24 de agosto queda separada del estreno anunciado de cordones y flecos de bellota del 11 de octubre. Ambos trabajos reconocen a las siete hermanas nombradas por la Fuente oficial.
-- La salida extraordinaria de la Divina Gracia del 11 de octubre de 2026 publica horario, itinerario, motivo parroquial, imagen participante y acompañamiento musical.
-- El escudo procede del sitio oficial; no se incorporan fotografías sin derechos trazables.
-- La migración completa se ejecutó dos veces dentro de `BEGIN … ROLLBACK` antes de aplicarse como `20260902003548_completa_padre_pio`.
-- QA: `npm test` 523/523, `npm run build` correcto, CI #1436 verde, preview Vercel `READY`, producción `dpl_95WKWZMq8cot9SxxEnhHWAxmoQ4Z` `READY`, smoke HTTP 200 y sin errores runtime en los 15 minutos posteriores al despliegue.
-
-### Lote editorial · Bandas · Virgen de los Reyes + La Redención
-
-**ESTADO → 🟢 CERTIFICADO · FUSIONADO · APLICADO · DESPLEGADO.**
-
-- Virgen de los Reyes queda con 3 colores, 6 acompañamientos vigentes, 6 históricos, 23 ediciones, 216 pistas y 5 estrenos; «El Galileo» y «Luz de luz» incorporan marcha, autores, dedicatoria, estreno, edición digital, pista y Fuentes.
-- La Redención queda con 3 colores, 6 acompañamientos vigentes, 4 históricos, 12 ediciones, 149 pistas, 9 estrenos, 5 Fuentes directas y 2 elementos patrimoniales actuales.
-- Monte-Sión y La Milagrosa conservan sus periodos históricos cerrados en 2025 y disponen de Fuente específica.
-- La salud del grafo devuelve 0 ediciones sin pistas, 0 ediciones sin Fuente, 0 estrenos incompletos, 0 marchas nuevas sin autor y 0 acompañamientos sin Fuente.
-- Las fotografías principales permanecen pendientes de recurso autorizado; no se publica media sin derechos trazables.
-- QA: `npm test` 523/523, `npm run build` correcto, Vercel preview y producción `READY`, checks en éxito, smoke HTTP 200 y runtime sin errores ni fatales.
-
-**SIGUIENTE ACCIÓN → REANUDAR LA VIGILANCIA PRIORITARIA DE LA AGENDA DE SEPTIEMBRE.**
-
-#514 queda cerrada de forma definitiva y no abre una cola UX nueva.
-
-La vigilancia de Glorias, Igualás y Extraordinarias continúa únicamente por cambios oficiales de horario, itinerario, acompañamiento, suspensión, aplazamiento o convocatoria nueva.
+No se abrirá en paralelo otra Hermandad, Banda, UX, módulo, tabla ni arquitectura.
