@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import RelationalThread from '@/components/RelationalThread'
+import { orderProcessionalItems } from '@/lib/brotherhood-processional-order'
 import styles from '@/components/BrotherhoodCurrentMusic.module.css'
 import discoveryStyles from '@/components/BrotherhoodRelationalDiscovery.module.css'
 import { getPublishedEntityCoverMediaMap } from '@/lib/supabase/entity-media'
@@ -245,8 +246,8 @@ async function loadBrotherhoodThreadData(supabase, brotherhoodId) {
 
   return {
     brotherhood,
-    images: assertRows(imagesResult, 'No se pudieron consultar las Imágenes publicadas de la Hermandad'),
-    steps: assertRows(stepsResult, 'No se pudieron consultar los Pasos publicados de la Hermandad'),
+    images: orderProcessionalItems(assertRows(imagesResult, 'No se pudieron consultar las Imágenes publicadas de la Hermandad')),
+    steps: orderProcessionalItems(assertRows(stepsResult, 'No se pudieron consultar los Pasos publicados de la Hermandad')),
   }
 }
 
