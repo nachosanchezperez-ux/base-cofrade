@@ -9,6 +9,7 @@ import RelationalEntityHero from '@/components/RelationalEntityHero'
 import EntitySectionNav from '@/components/EntitySectionNav'
 import BandDiscographySection from '@/components/bands/BandDiscographySection'
 import BandFeaturePhoto from '@/components/BandFeaturePhoto'
+import HistoricalAccompanimentsRail from './HistoricalAccompanimentsRail'
 import { getBandBySlug, youtubeEmbedUrl } from '@/lib/supabase/bands'
 import { getBandDiscography } from '@/lib/supabase/bandDiscography'
 import { getPublishedBandColors } from '@/lib/supabase/bandColors'
@@ -491,11 +492,13 @@ export default async function BandDetailPage({ params }) {
           <div className={styles.sectionHeading}>
             <span className={styles.eyebrow}>Memoria musical</span>
             <h2>Acompañamientos históricos</h2>
+            <p>{historicalAccompaniments.length} relaciones documentadas para explorar la trayectoria de la formación.</p>
           </div>
           <div className={styles.historicalLayout}>
-            <div className={styles.historicalList}>
+            <HistoricalAccompanimentsRail count={historicalAccompaniments.length}>
               {historicalAccompaniments.map((item) => {
                 const step = presentAccompanimentStep(item)
+                const location = publicText(presentAccompanimentLocation(item))
                 return <article className={styles.historicalCard} key={item.id}>
                   <div className={styles.historicalPeriod}>
                     <span className={styles.historicalIcon}><HistoricalIcon /></span>
@@ -503,7 +506,10 @@ export default async function BandDetailPage({ params }) {
                     <strong>{yearRange(item)}</strong>
                   </div>
                   <div className={styles.historicalCopy}>
-                    {publicText(item.outingType) ? <span>{accompanimentHeaderLabel(item)}</span> : null}
+                    <div className={styles.historicalMeta}>
+                      {publicText(item.outingType) ? <span>{accompanimentHeaderLabel(item)}</span> : null}
+                      {location ? <small>{location}</small> : null}
+                    </div>
                     <h3>{item.brotherhoodName}</h3>
                     <div className={styles.historicalStep}>
                       {step.type ? <strong>{step.type}</strong> : null}
@@ -517,7 +523,7 @@ export default async function BandDetailPage({ params }) {
                   </div>
                 </article>
               })}
-            </div>
+            </HistoricalAccompanimentsRail>
             {curiosities.length ? <div className={styles.curiosityStack}>
               {curiosities.map((item) => (
                 <aside className={styles.curiosityCard} key={item.id}>
