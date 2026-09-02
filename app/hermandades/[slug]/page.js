@@ -622,24 +622,33 @@ export default async function HermandadDetailPage({ params }) {
           <div className="heritage-timeline-block" id="estrenos">
             <div className="heritage-subheading"><span className="eyebrow">Evolución documentada</span><h3>Estrenos y restauraciones</h3></div>
             <div className="release-grid">{h.estrenos.map((e) => (
-              <article className="release-card" key={e.id}>
-                {e.imagen && (
-                  <div className="release-card-image">
+              <article className={`release-card ${e.imagen ? 'has-image' : ''}`} key={e.id}>
+                <figure className="release-card-visual">
+                  {e.imagen ? (
                     <Image
                       src={e.imagen.src}
                       alt={e.imagen.alt}
                       fill
                       sizes="(max-width: 767px) calc(100vw - 40px), (max-width: 1199px) calc(50vw - 32px), 370px"
                     />
-                  </div>
-                )}
+                  ) : <div className="release-card-placeholder" aria-hidden="true">{e.ano}</div>}
+                  <div className="release-card-badges"><span>{e.tipo}</span><strong>{e.ano}</strong></div>
+                  {e.imagen?.credito && <figcaption>{e.imagen.credito}</figcaption>}
+                </figure>
                 <div className="release-card-copy">
-                  <span className="release-year">{e.ano}</span>
-                  <span className="pill">{e.tipo}</span>
+                  {(e.disciplina || e.elemento) && <span className="release-card-eyebrow">{e.disciplina || e.elemento}</span>}
                   <h3>{e.titulo}</h3>
-                  <p>{e.descripcion}</p>
-                  <small>{e.autoria}</small>
-                  {e.imagen?.credito && <small className="release-card-credit">{e.imagen.credito}</small>}
+                  {(e.fecha || e.elemento) && <dl className="release-card-facts">
+                    {e.fecha && <div><dt>Fecha</dt><dd><time dateTime={e.fechaIso}>{e.fecha}</time></dd></div>}
+                    {e.elemento && <div><dt>Intervención</dt><dd>{e.elemento}</dd></div>}
+                  </dl>}
+                  <p className="release-card-description">{e.descripcion}</p>
+                  {e.agentes?.length > 0 ? (
+                    <details className="release-card-team">
+                      <summary><span>Equipo responsable</span><strong>{e.agentes.length} {e.agentes.length === 1 ? 'persona' : 'personas'}</strong><b aria-hidden="true">＋</b></summary>
+                      <ul>{e.agentes.map((agente) => <li key={`${e.id}-${agente.id}`}><strong>{agente.nombre}</strong>{agente.rol && <span>{agente.rol}</span>}</li>)}</ul>
+                    </details>
+                  ) : <small className="release-card-authorship">{e.autoria}</small>}
                 </div>
               </article>
             ))}</div>
