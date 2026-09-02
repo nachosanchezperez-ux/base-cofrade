@@ -33,7 +33,7 @@ test('mantiene en revisión el estreno de 1980 hasta completar su autoría', () 
 })
 
 test('añade canales oficiales y metadatos discográficos contrastados sin DDL', () => {
-  assert.match(migration, /Apple Music oficial/)
+  assert.match(migration, /Tres Caídas de Triana · Apple Music/)
   assert.match(migration, /YouTube oficial/)
   assert.match(migration, /Álbum de doce pistas publicado por Pasarela/)
   assert.match(migration, /Álbum de dieciséis pistas publicado por Pasarela/)
