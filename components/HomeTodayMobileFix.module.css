@@ -47,7 +47,7 @@
     max-width: none !important;
   }
 
-  [aria-label^="Recorrido:"] {
+  .relationshipTrail {
     width: 100%;
     padding: 0 !important;
     border-radius: 0 !important;
@@ -57,7 +57,7 @@
     line-height: 1.35 !important;
   }
 
-  [aria-label^="Recorrido:"] > span {
+  .relationshipTrail > span {
     white-space: nowrap;
   }
 }
