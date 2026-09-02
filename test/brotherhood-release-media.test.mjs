@@ -31,10 +31,14 @@ test('los estrenos priorizan la lectura rápida y pliegan los equipos extensos',
   assert.match(page, /Equipo responsable/)
 })
 
-test('la ficha muestra los nombres documentados de los colores corporativos', () => {
+test('la ficha aplica los colores corporativos como tema sin mostrarlos como dato', () => {
   const loader = read('lib/supabase/brotherhoods.js')
+  const page = read('app/hermandades/[slug]/page.js')
   const overview = read('components/BrotherhoodOverviewV2.js')
 
-  assert.match(loader, /nombres: colors\.map\(\(color\) => color\.color_name\)/)
-  assert.match(overview, /label: 'Colores', value: colorNames\.join\(' · '\)/)
+  assert.match(loader, /colores: colorTheme\(remote\.colors, base\.colores\)/)
+  assert.match(page, /'--brotherhood-primary': h\.colores\?\.primario/)
+  assert.match(page, /'--brotherhood-secondary': h\.colores\?\.secundario/)
+  assert.doesNotMatch(overview, /label: 'Colores'/)
+  assert.doesNotMatch(overview, /colorNames\.join/)
 })
