@@ -19,11 +19,12 @@ test('las fichas abren con la identidad de la Hermandad y no con una guía de re
   await assert.rejects(access(join(ROOT, 'lib/supabase/brotherhood-broadcast-guide.js')))
 })
 
-test('la retirada de la guía conserva las salidas extraordinarias relacionadas', async () => {
+test('la ficha no duplica las salidas extraordinarias en un módulo final', async () => {
   const layout = await source('app/hermandades/[slug]/layout.js')
+  const page = await source('app/hermandades/[slug]/page.js')
 
-  assert.match(layout, /getBrotherhoodUpcomingExtraordinaryLinksBySlug\(slug\)/)
-  assert.match(layout, /<RelatedExtraordinaryOutings items=\{extraordinaryOutings\}/)
+  assert.doesNotMatch(layout, /RelatedExtraordinaryOutings/)
+  assert.match(page, /s\.slug \? `\/extraordinarias\/\$\{s\.slug\}` : ''/)
 })
 
 test('los datos de salida, paso, música e historia permanecen en sus secciones naturales', async () => {

@@ -14,9 +14,11 @@ test('las fichas públicas enlazan solo extraordinarias futuras publicables', ()
   assert.match(helper, /not\('slug', 'is', null\)/)
 })
 
-test('Hermandades conservan enlaces contextuales y Bandas evitan duplicarlos al final', () => {
-  assert.match(brotherhoodLayout, /getBrotherhoodUpcomingExtraordinaryLinksBySlug/)
-  assert.match(brotherhoodLayout, /RelatedExtraordinaryOutings/)
+test('Hermandades enlazan la guía en Salidas sin repetir un módulo al final', () => {
+  const brotherhoodPage = read('app/hermandades/[slug]/page.js')
+  assert.doesNotMatch(brotherhoodLayout, /getBrotherhoodUpcomingExtraordinaryLinksBySlug/)
+  assert.doesNotMatch(brotherhoodLayout, /RelatedExtraordinaryOutings/)
+  assert.match(brotherhoodPage, /`\/extraordinarias\/\$\{s\.slug\}`/)
   assert.doesNotMatch(bandLayout, /getBandUpcomingExtraordinaryLinksBySlug/)
   assert.doesNotMatch(bandLayout, /RelatedExtraordinaryOutings/)
   assert.match(component, /`\/extraordinarias\/\$\{item\.slug\}`/)
