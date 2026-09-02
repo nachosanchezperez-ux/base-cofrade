@@ -499,6 +499,8 @@ export default async function BandDetailPage({ params }) {
               {historicalAccompaniments.map((item) => {
                 const step = presentAccompanimentStep(item)
                 const location = publicText(presentAccompanimentLocation(item))
+                const stepIdentity = step.name || item.position || 'Acompañamiento musical'
+                const stepContext = step.position && step.position !== stepIdentity ? step.position : ''
                 return <article className={styles.historicalCard} key={item.id}>
                   <div className={styles.historicalPeriod}>
                     <span className={styles.historicalIcon}><HistoricalIcon /></span>
@@ -513,8 +515,8 @@ export default async function BandDetailPage({ params }) {
                     <h3>{item.brotherhoodName}</h3>
                     <div className={styles.historicalStep}>
                       {step.type ? <strong>{step.type}</strong> : null}
-                      <span>{step.name || item.position || 'Acompañamiento musical'}</span>
-                      {step.position ? <small>{step.position}</small> : null}
+                      <span>{stepIdentity}</span>
+                      {stepContext ? <small>{stepContext}</small> : null}
                     </div>
                     {item.notes ? <small>{item.notes}</small> : null}
                     {item.brotherhoodSlug && item.brotherhoodPageReady
