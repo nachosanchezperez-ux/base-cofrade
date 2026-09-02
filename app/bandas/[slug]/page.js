@@ -492,7 +492,7 @@ export default async function BandDetailPage({ params }) {
           <div className={styles.sectionHeading}>
             <span className={styles.eyebrow}>Memoria musical</span>
             <h2>Acompañamientos históricos</h2>
-            <p>{historicalAccompaniments.length} relaciones documentadas para explorar la trayectoria de la formación.</p>
+            <p>Un recorrido por las hermandades y los pasos que forman parte de su trayectoria.</p>
           </div>
           <div className={styles.historicalLayout}>
             <HistoricalAccompanimentsRail count={historicalAccompaniments.length}>
