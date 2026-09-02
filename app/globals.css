@@ -439,11 +439,26 @@ button, input { font: inherit; }
   margin-top:34px;
 }
 .release-card{
-  padding:28px;
   border-radius:20px;
   border:1px solid #e0e6ec;
   background:#fff;
   box-shadow:0 12px 32px rgba(21,59,105,.04);
+  overflow:hidden;
+}
+.release-card:only-child{
+  grid-column:1 / -1;
+  max-width:860px;
+}
+.release-card-image{
+  position:relative;
+  aspect-ratio:3/2;
+  background:#080808;
+}
+.release-card-image img{
+  object-fit:cover;
+}
+.release-card-copy{
+  padding:28px;
 }
 .release-year{
   display:block;
@@ -459,8 +474,14 @@ button, input { font: inherit; }
 }
 .release-card p{color:var(--ink-soft)}
 .release-card small{
+  display:block;
   color:var(--bc-red);
   font-weight:800;
+}
+.release-card-credit{
+  margin-top:14px;
+  color:var(--ink-soft)!important;
+  font-weight:600!important;
 }
 
 /* CATÁLOGO PATRIMONIAL */

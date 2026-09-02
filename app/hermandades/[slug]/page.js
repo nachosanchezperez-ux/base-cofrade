@@ -621,7 +621,26 @@ export default async function HermandadDetailPage({ params }) {
           <div className="heritage-timeline-block">
             <div className="heritage-subheading"><span className="eyebrow">Evolución documentada</span><h3>Estrenos y restauraciones</h3></div>
             <div className="release-grid">{h.estrenos.map((e) => (
-              <article className="release-card" key={e.id}><span className="release-year">{e.ano}</span><span className="pill">{e.tipo}</span><h3>{e.titulo}</h3><p>{e.descripcion}</p><small>{e.autoria}</small></article>
+              <article className="release-card" key={e.id}>
+                {e.imagen && (
+                  <div className="release-card-image">
+                    <Image
+                      src={e.imagen.src}
+                      alt={e.imagen.alt}
+                      fill
+                      sizes="(max-width: 767px) calc(100vw - 40px), (max-width: 1199px) calc(50vw - 32px), 370px"
+                    />
+                  </div>
+                )}
+                <div className="release-card-copy">
+                  <span className="release-year">{e.ano}</span>
+                  <span className="pill">{e.tipo}</span>
+                  <h3>{e.titulo}</h3>
+                  <p>{e.descripcion}</p>
+                  <small>{e.autoria}</small>
+                  {e.imagen?.credito && <small className="release-card-credit">{e.imagen.credito}</small>}
+                </div>
+              </article>
             ))}</div>
           </div>
         )}
