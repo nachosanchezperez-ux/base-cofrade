@@ -1,23 +1,18 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 2 de septiembre de 2026 · cierre nocturno
-
-**Régimen:** `FIRST EDITION FREEZE` activo
-
+**Corte validado:** 2 de septiembre de 2026 · cierre nocturno  
+**Régimen:** `FIRST EDITION FREEZE` activo  
 **Fase activa:** editorial / documental sobre el modelo vigente
 
 ## Estado general
 
 **PRIMERA EDICIÓN → 🟢 CERRADA, CERTIFICADA Y CONGELADA**
 
-- Baseline funcional y estructural de Primera Edición: cerrado.
-- HEAD funcional observado antes de este corte documental: `6f20318dcd90120dfdf87db06c454c0d12c066dc`.
-- Producción observada antes de este corte: `READY` sobre el mismo SHA.
-- Check Vercel del HEAD: `success`.
-- Runtime de producción: sin errores registrados en las 6 horas auditadas antes del cierre.
-- PR abiertas al iniciar el corte: **0**.
+- Baseline funcional y estructural: cerrado.
+- `main` de partida para esta sincronización documental: `ba95e39af32f0ed94b15957dd84f6e405a769637`.
+- PR abiertas al iniciar esta sincronización: **0**.
 - #529: **cerrada**.
-- #492: **abierta y aislada** a Supabase Preview Branches; no bloquea DML editorial sobre el modelo vigente.
+- #492: **abierta y aislada** a Supabase Preview Branches.
 - Aportaciones públicas: **desactivadas**.
 - Cola UX abierta: **0**.
 - Cola estructural abierta: **0**.
@@ -27,176 +22,140 @@
 
 **PRODUCCIÓN → 🟢 `ACTIVE_HEALTHY`**
 
-- Proyecto productivo: PostgreSQL 17.6.1, región `eu-west-1`.
-- Historial de migraciones Git ↔ remoto auditado antes de este cierre: **48/48**.
-- Últimas versiones ya canónicas:
+- Proyecto: `Hilocofrade`.
+- PostgreSQL: **17.6.1**.
+- Región: **eu-west-1**.
+- Historial de migraciones remoto: **48** versiones.
+- Últimas migraciones canónicas:
   - `20260902121927_completa_amparo_sevilla`;
   - `20260902125718_aplica_paleta_amparo_sevilla`.
-- El cierre posterior de Amparo se ha ejecutado exclusivamente como DML editorial sobre tablas y relaciones existentes.
-- No se ha ejecutado DDL, no se ha alterado RLS y no se ha creado una nueva migración estructural.
-- #492 conserva la deuda histórica de reproducibilidad de Preview Branches y no se reinterpreta como un fallo de producción.
+- Amparo y San Esteban se han cerrado posteriormente mediante **DML editorial sobre tablas y relaciones existentes**.
+- No se ha ejecutado DDL, no se ha creado una nueva tabla, no se ha alterado RLS y no se ha abierto nueva arquitectura.
+- #492 conserva la deuda histórica de reproducibilidad de Preview Branches y no se reinterpreta como fallo de producción.
 
 ## GitHub y Vercel
 
-**ESTADO PREVIO A ESTA SINCRONIZACIÓN DOCUMENTAL → 🟢 ESTABLE**
+**ESTADO PREVIO A ESTA SINCRONIZACIÓN → 🟢 ESTABLE**
 
-- `main`: `6f20318dcd90120dfdf87db06c454c0d12c066dc`.
+- `main`: `ba95e39af32f0ed94b15957dd84f6e405a769637`.
 - PR abiertas: **0**.
-- #529: cerrada y certificada.
-- Vercel producción: `READY`.
-- Check del commit: `success`.
-- Errores/fatales runtime recientes: **0 detectados** en la ventana auditada.
+- Producción Vercel: **READY** sobre el mismo SHA.
+- Runtime de producción: **0 errores detectados** en la ventana de 6 horas auditada.
+- Runtime Node.js: 3 funciones observadas en el deployment actual.
+- Bundler: Turbopack.
 
-Este documento y `docs/CERTIFICACION-AMPARO-2026-09-02.md` son una sincronización canónica del cierre editorial. No cambian aplicación, esquema, UX ni arquitectura.
+Esta actualización y las certificaciones asociadas son exclusivamente documentales; no cambian aplicación, UX, esquema ni arquitectura.
 
-## Frente de Hermandades · Amparo
+## Lotes de Hermandades cerrados en este corte
+
+### 1 · Amparo
 
 **AMPARO → 🟢 CERTIFICADA**
 
-La auditoría completa queda registrada en `docs/CERTIFICACION-AMPARO-2026-09-02.md`.
+Documento completo: `docs/CERTIFICACION-AMPARO-2026-09-02.md`.
 
-### Identidad y Sede
+Cierre certificado:
 
-- Nombre canónico: **Real, Venerable e Ilustre Hermandad de Nuestra Señora del Amparo**.
-- Nombre popular: **El Amparo**.
-- Tipo: **Gloria**.
-- Localidad: **Sevilla**.
-- Sede canónica: **Real Parroquia de Santa María Magdalena**.
-- Dirección: **Calle Bailén, 5, 41001 Sevilla**.
-- Horarios de la Sede: documentados y verificados el **2 de septiembre de 2026**.
-- La información de templo, dirección y horarios permanece en el nodo canónico de Sede; no se duplica en Hermandad.
+- identidad y Sede;
+- titular y atribuciones;
+- restauraciones;
+- paso y fases;
+- capataz 2026;
+- Simpecado, manto y coronas históricas;
+- seis marchas procesionales;
+- siete composiciones para cultos separadas del catálogo procesional;
+- cultos extraordinarios de 2026;
+- Coronación Canónica como acontecimiento propio;
+- procesión anual del 8/11 correctamente separada del acontecimiento extraordinario;
+- Carmen de Salteras vinculada al paso y salida exactos;
+- media y Fuentes certificadas;
+- salud del grafo sin deuda crítica.
 
-### Titular
+### 2 · San Esteban
 
-- Nuestra Señora del Amparo: publicada y relacionada como titular.
-- Autoría conservada con prudencia documental:
-  - Roque de Balduque → atribución;
-  - Antonio de Alfián → atribución de policromía/estofado.
-- Intervenciones documentadas:
-  - José Rodríguez Rivero-Carrera · restauración · 1986;
-  - Almudena Fernández García · limpieza de conservación · 2015;
-  - José Joaquín Fijo León · limpieza de conservación · 2015.
-- Autoría, atribución e intervención permanecen separadas.
+**SAN ESTEBAN → 🟢 CERTIFICADA**
 
-### Paso
+Documento completo: `docs/CERTIFICACION-SAN-ESTEBAN-2026-09-02.md`.
 
-- Paso procesional de Nuestra Señora del Amparo: publicado y relacionado con la titular.
-- Dos fases estructuradas:
-  - **Peana procesional · 1831** → Melchor Cano (diseño) + Lucas de Prada (ejecución/talla).
-  - **Paso procesional actual · 1927** → Taller de Antonio Corrales, Rafael Domínguez, Luis Domínguez, Montenegro y Jorge Ferrer.
-- La fuente oficial identifica al proyectista del paso únicamente como **Montenegro**; no se inventa nombre de pila ni una identificación más precisa.
-- Capataz: **Ismael Vargas**, vigente en 2026; fecha inicial no documentada.
+San Esteban fue la **única Hermandad** abierta después de Amparo, al combinar actualidad, extraordinaria próxima y deuda documental real.
 
-### Patrimonio material
+Cierre certificado:
 
-Se mantienen separados patrimonio material y patrimonio musical.
+- Sede canónica normalizada y horarios verificados el 2/09/2026;
+- dos titulares, manteniendo autor desconocido en el Señor sin atribuciones inventadas;
+- cinco intervenciones conservativas/restauraciones incorporadas sobre los titulares;
+- dos pasos ya previamente estructurados, con 14 fases y 19 agentes/autores conservados;
+- dos capataces vigentes con Fuente;
+- diez bienes de patrimonio material y 16 autorías/componentes;
+- 38 marchas procesionales dedicadas: 19 al Señor y 19 a la Virgen;
+- `Refugio de Desamparados` separada como salutación musical, no como marcha;
+- entrada musical ambigua `Virgen de los Desamparados-1961 (Fortunati. Megías Rosado)` excluida hasta disponer de identificación inequívoca;
+- 15 cultos canónicos y 13 ocurrencias fechadas de 2026;
+- I Centenario Fundacional creado como acontecimiento propio;
+- exposición `Salud y Buen Viaje: la devoción que construye una historia. San Esteban 1926–2026` registrada como acontecimiento en curso del 1 al 15 de septiembre;
+- traslado extraordinario del 21/11 y procesión extraordinaria del 22/11 mantenidos como hechos procesionales concretos;
+- Agrupación Musical Virgen de los Reyes normalizada contra el paso exacto y posición `tras el paso` para el 22/11;
+- una cabecera autorizada y trazable, con autor real no identificado declarado expresamente sin inventar firma;
+- 25 Fuentes relevantes;
+- salud del grafo sin deuda crítica automática.
 
-Patrimonio material certificado:
-
-1. **Simpecado de Gala** · 1804–1807, estrenado en 1807.
-   - Bordado original: taller de Francisca de Paula Zuloaga.
-   - Lienzo central: Salvador Gutiérrez.
-   - Restauraciones estructuradas y fechadas: Joaquín Ossorio, Almudena Fernández García, José Joaquín Fijo León y José Ramón Paleteiro.
-   - Media autorizada y trazable.
-2. **Manto procesional de Nuestra Señora del Amparo** · 1851.
-   - Autoría original: Manuel María Ariza.
-   - Restauración 2009–2010: Emilio José Gómez Moreno.
-   - Sin fotografía publicada al no existir media certificada en el cierre.
-3. **Coronas históricas de Nuestra Señora del Amparo y el Niño Jesús** · principios del siglo XVIII.
-   - Proyecto de restauración y enriquecimiento reversible documentado para la Coronación Canónica de 2026.
-   - Participan Joaquín Ossorio, Ana Amparo Cerrejón Lozano y Javier Sánchez de los Reyes.
-   - Sin fotografía publicada al no existir media certificada en el cierre.
-
-Regla aplicada: **sin foto > foto sin derechos**.
-
-### Patrimonio musical
-
-**Procesión → 6 marchas dedicadas y relacionadas**
-
-- `Amparo` · José del Castillo Díaz · 1929.
-- `Virgen del Amparo` · José Martínez Peralto · 1956.
-- `Amparo` · Pedro Morales Muñoz · 2005.
-- `Bajo tu Amparo` · Rubén Jordán Flores · 2014.
-- `Al Amparo de María` · Juan Catón Guillén / instrumentación de Alberto Barea · 2015.
-- `Virgen del Amparo` · Julián Martín Fernández · 2015.
-
-**Cultos → 7 composiciones separadas de las marchas procesionales**
-
-- Plegaria a la Santísima Virgen del Amparo · 1920.
-- Plegaria a la Santísima Virgen del Amparo · 1923.
-- Alabado · 1924.
-- Sub Tuum Praesidium · 2014.
-- Missa Refugium Peccatorum · 2015.
-- Bajo tu Amparo · 2016.
-- Sonata da Chiesa Sancta Dei Genitrix · 2019.
-
-No se registra como marcha procesional ninguna obra cuyo destino documentado sea el culto interno.
-
-### Cultos 2026 y Coronación Canónica
-
-Los cultos ordinarios permanecen separados de las ocurrencias excepcionales de 2026.
-
-Programa extraordinario estructurado sin convertirlo en recurrencia anual:
-
-- Besamanos extraordinario · **17–18 de octubre**.
-- Novena de la Coronación · **24 de octubre–1 de noviembre**; el 29 de octubre se documenta la procesión claustral con el Santísimo Sacramento.
-- Vísperas Solemnes · **7 de noviembre**.
-- Función Principal de Instituto y **Coronación Canónica** · **8 de noviembre · 10:00**.
-- Segundo Besamanos extraordinario · **14–15 de noviembre**.
-- Misa por los hermanos difuntos · **16 de noviembre · 20:00**.
-
-La **Coronación Canónica de Nuestra Señora del Amparo** queda como `event` propio, fechado el 8 de noviembre de 2026, relacionado con la Hermandad y la Real Parroquia de Santa María Magdalena.
-
-### Salida y acompañamiento
-
-Corrección editorial de actualidad estricta:
-
-- La salida de la tarde del **8 de noviembre de 2026** queda clasificada como **Procesión de Gloria ordinaria**, celebrada en la jornada de la Coronación Canónica.
-- El hecho extraordinario es la **Coronación Canónica** de la mañana; no se fuerza la procesión anual a `extraordinary`.
-- Salida documentada: **17:00**.
-- Visita prevista al Ayuntamiento y continuación por la feligresía.
-- Itinerario detallado y hora de entrada permanecen pendientes de anuncio oficial.
-- **Carmen de Salteras** → tras el paso → vigente en 2026; fecha inicial no documentada.
-- La posición musical queda relacionada con la salida y con el paso exacto.
-
-### Multimedia
-
-- Titular: media autorizada, con `alt`, autor/crédito y estado de derechos.
-- Paso: se conserva la fotografía autorizada y acreditada.
-- Simpecado: media autorizada y acreditada.
-- Se retiró de la ficha una fotografía duplicada del paso que figuraba sin autor/crédito; el asset quedó eliminado al no conservar otras relaciones.
-- Manto y coronas: sin media publicada por ausencia de recurso certificado.
-
-### Fuentes
-
-- **14 Fuentes relevantes** sostienen los bloques certificados.
-- Prioridad aplicada: web oficial de la Hermandad → fuentes institucionales/diocesanas → fuente especializada actual para datos no disponibles en la web oficial.
-- URLs duplicadas dentro del ámbito Amparo: **0**.
-- No quedan cultos, ocurrencias, intervenciones, capataz ni acompañamiento vigente sin Fuente.
-
-### Salud del grafo
+## Salud documental · San Esteban
 
 **RESULTADO → 🟢 LIMPIO**
 
-- Fases del paso: **2**.
-- Autorías/agentes estructurados en fases: **7**.
-- Patrimonio material: **3 piezas**.
-- Música de cultos: **7 obras**.
-- Marchas procesionales dedicadas: **6**.
-- Media crítica incompleta: **0**.
-- Intervenciones sin Fuente: **0**.
-- Cultos sin Fuente: **0**.
-- Ocurrencias 2026 sin Fuente: **0**.
-- Capataz vigente sin Fuente: **0**.
-- Acompañamiento vigente sin Fuente: **0**.
-- Entidades del ámbito Amparo huérfanas detectadas: **0**.
+- Titulares: **2**.
+- Autorías de titulares: **2**.
+- Intervenciones de titulares: **5**.
+- Pasos: **2**.
+- Fases de paso: **14**.
+- Agentes/autores de fases: **19**.
+- Capataces vigentes: **2**.
+- Patrimonio material: **10 bienes**.
+- Patrimonio musical no-marcha: **1 salutación**.
+- Marchas al Señor: **19**.
+- Marchas a la Virgen: **19**.
+- Cultos: **15**.
+- Ocurrencias 2026: **13**.
+- Salidas extraordinarias del lote: **2**.
+- Acontecimientos: **2**.
+- Acompañamientos ordinarios vigentes: **2**.
+- Media de cabecera: **1**, autorizada y trazable.
+- Fuentes relevantes: **25**.
+
+Deuda crítica auditada:
+
+- media sin `alt` / Fuente / estado de derechos / campo de autoría: **0**;
+- autorías de titulares sin Fuente: **0**;
+- intervenciones sin Fuente: **0**;
+- fases de paso sin Fuente: **0**;
+- capataces vigentes sin Fuente: **0**;
+- patrimonio sin Fuente: **0**;
+- cultos sin Fuente: **0**;
+- ocurrencias sin Fuente: **0**;
+- salidas sin Fuente: **0**;
+- acontecimientos sin Fuente: **0**;
+- acompañamientos vigentes sin Fuente: **0**;
+- marchas dedicadas sin Fuente: **0**;
+- marchas dedicadas sin autor: **0**;
 - URLs de Fuente duplicadas en el ámbito auditado: **0**.
+
+## Actualidad estricta
+
+A fecha de corte, **2 de septiembre de 2026**:
+
+- la exposición del Centenario de San Esteban está en curso hasta el **15 de septiembre**;
+- el traslado extraordinario del Señor está anunciado para el **21 de noviembre**;
+- la procesión extraordinaria de regreso está anunciada para el **22 de noviembre**;
+- la Misa Solemne de Cristo Rey del 22/11 está documentada a las **11:00** en la Catedral;
+- no se completa itinerario u horario no publicado oficialmente;
+- no se canoniza una autoría musical ambigua;
+- las fechas pasadas de cultos 2026 se registran como celebradas y las futuras como anunciadas.
 
 ## Primera Edición y #492
 
-**#492 → 🟣 AISLADA · NO BLOQUEA ESTE FRENTE EDITORIAL**
+**#492 → 🟣 AISLADA · NO BLOQUEA EL FRENTE EDITORIAL**
 
-La deuda de Supabase Preview Branches sigue sin resolverse y continúa bloqueando:
+Continúa bloqueando:
 
 - nuevo DDL;
 - nuevas tablas;
@@ -212,6 +171,7 @@ No bloquea:
 - relaciones sobre tablas existentes;
 - patrimonio;
 - cultos;
+- música;
 - acompañamientos;
 - acontecimientos y salidas soportados por el modelo actual.
 
@@ -220,18 +180,14 @@ No bloquea:
 **APORTACIONES → ⚪ INFRAESTRUCTURA PREPARADA · 🔒 DESACTIVADAS**
 
 - `PUBLIC_CONTRIBUTIONS_ENABLED=false` permanece como estado canónico.
-- No se activa `/colabora` ni escritura pública durante este corte.
+- No se activa `/colabora` ni escritura pública.
 - No se modifica RLS, Auth, Storage ni secretos.
 
-## Siguiente frente
+## Estado del frente
 
-Amparo queda cerrada y certificada.
+**AMPARO → 🟢 CERRADA Y CERTIFICADA**  
+**SAN ESTEBAN → 🟢 CERRADA Y CERTIFICADA**
 
-A partir de la integración de este documento debe seleccionarse **una sola Hermandad** siguiente, con este orden de prioridad:
+No queda otro lote abierto por esta orden.
 
-1. actualidad documental;
-2. salida o acontecimiento extraordinario próximo cuando exista;
-3. deuda documental real;
-4. potencial relacional con Imágenes, Pasos, Bandas, Patrimonio, Cultos, Salidas y Fuentes.
-
-No se abrirá en paralelo otra Hermandad, Banda, UX, módulo, tabla ni arquitectura.
+Cualquier siguiente Hermandad requerirá una nueva selección explícita y deberá respetar el mismo orden de prioridad: actualidad → extraordinaria próxima → deuda documental → potencial relacional.
