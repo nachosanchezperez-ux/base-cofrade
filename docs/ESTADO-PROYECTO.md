@@ -8,12 +8,13 @@
 
 **PRIMERA EDICIÓN → 🟢 CERRADA, CERTIFICADA Y CONGELADA**
 
-- Baseline de aplicación validado antes de esta sincronización documental: `1f44cb8c020856e4327595319a51c73cad6a3214`.
-- Producción correspondiente: `READY` en `dpl_7uM2q5foLhL9792YiwiScTFcaY8P`.
+- Baseline de aplicación validado antes de esta sincronización documental: `b7201bc2b2557435c2bbff6183608903bf95e09c`.
+- Producción correspondiente: `READY` en `dpl_4bvW3QjfxWf41nD6K8WzTgbUiiKb`.
 - Runtime productivo: 0 `error/fatal` en la comprobación final de una hora.
 - #568: fusionada; corrige de forma sistémica los enlaces de guías de salidas.
 - #569: fusionada; mejora contraste y normalización cromática compartida.
-- #570: trabajo concurrente sobre horarios de sedes; fuera del lote Castillo y no usado como bloqueo editorial.
+- #570: fusionada; ajuste compartido de lectura editorial de horarios de sedes, sin interferir en el cierre de Castillo.
+- #571: fusionada; paletas editoriales de Santa Genoveva y La Bofetá, fuera del lote Castillo.
 - Amparo: 🟢 cerrada y certificada.
 - San Esteban: 🟢 cerrada y certificada.
 - La Sed: 🟢 cerrada y certificada.
@@ -31,9 +32,9 @@ Esta sincronización es documental. No introduce UX, DDL, tablas, enums, RLS ni 
 - Proyecto: `Hilocofrade`.
 - PostgreSQL: 17.6.1.
 - Región: `eu-west-1`.
-- Migraciones remotas verificadas en este corte: **52**.
-- Última migración remota: `20260903143200_normaliza_hex_colores_hermandades`.
-- Las cuatro migraciones posteriores al corte anterior corresponden a paletas/normalización editorial; no abren nuevo modelo estructural.
+- Migraciones remotas verificadas en este corte: **53**.
+- Última migración remota: `20260903144500_aplica_paletas_santa_genoveva_y_bofeta`.
+- Las migraciones posteriores al corte anterior corresponden a paletas/normalización editorial; no abren nuevo modelo estructural.
 - El lote Castillo se ha ejecutado mediante DML editorial sobre el modelo vigente y con prevalidación `BEGIN … ROLLBACK` en los bloques de escritura.
 - #492 continúa bloqueando DDL, nuevas tablas, migraciones estructurales y cambios RLS; no bloquea investigación ni DML editorial.
 
