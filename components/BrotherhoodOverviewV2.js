@@ -3,6 +3,7 @@ import CofradeTypeBadges from '@/components/CofradeTypeBadges'
 import { publicText } from '@/lib/supabase/public-entity-page'
 import styles from './BrotherhoodOverviewV2.module.css'
 import scheduleStyles from './BrotherhoodOverviewSchedule.module.css'
+import balanceStyles from './BrotherhoodOverviewBalance.module.css'
 
 function verifiedLabel(value = '') {
   if (!value) return ''
@@ -71,11 +72,22 @@ function scheduleLineParts(line = '') {
   const hasSeasonAfterMass = /^(misa|misas|eucarist)/i.test(parts[0])
     && /^(invierno|verano|estival|curso)/i.test(parts[1])
   const labelLength = hasSeasonAfterMass ? 2 : 1
+  const label = parts.slice(0, labelLength).join(' · ')
+  let value = parts.slice(labelLength).join(' · ')
+  const repeatedSeparator = value.indexOf(':')
 
-  return {
-    label: parts.slice(0, labelLength).join(' · '),
-    value: parts.slice(labelLength).join(' · '),
+  if (repeatedSeparator > 0) {
+    const repeatedLabel = value.slice(0, repeatedSeparator).trim()
+    const labelRoot = label.split(/\s+·\s+/)[0]
+    const matchesFullLabel = repeatedLabel.localeCompare(label, 'es', { sensitivity: 'base' }) === 0
+    const matchesLabelRoot = repeatedLabel.localeCompare(labelRoot, 'es', { sensitivity: 'base' }) === 0
+
+    if (matchesFullLabel || matchesLabelRoot) {
+      value = value.slice(repeatedSeparator + 1).trim()
+    }
   }
+
+  return { label, value }
 }
 
 function scheduleLines(value = '') {
@@ -195,16 +207,16 @@ export default function BrotherhoodOverviewV2({ brotherhood, heroFactLabels = []
           <h2>{showSeat ? 'Sede y visita' : 'Datos principales'}</h2>
         </header>
 
-        <div className={`${styles.grid} ${showIdentity && showSeat ? '' : styles.gridSingle}`}>
+        <div className={`${styles.grid} ${showIdentity && showSeat ? balanceStyles.balancedGrid : styles.gridSingle}`}>
           {showIdentity ? (
-            <article className={styles.identityCard}>
+            <article className={`${styles.identityCard} ${balanceStyles.equalCard}`}>
               <div className={styles.cardTopline}>
                 <span>{hasHistoricalSeats ? 'Historia y datos' : 'Datos complementarios'}</span>
                 {types.length > 1 ? <CofradeTypeBadges tipos={types} compact /> : null}
               </div>
 
               {identityFacts.length ? (
-                <dl className={styles.identityFacts} data-count={identityFacts.length}>
+                <dl className={`${styles.identityFacts} ${balanceStyles.identityFactsBalanced}`} data-count={identityFacts.length}>
                   {identityFacts.map((fact) => (
                     <div key={fact.label}>
                       <dt>{fact.label}</dt>
@@ -215,7 +227,7 @@ export default function BrotherhoodOverviewV2({ brotherhood, heroFactLabels = []
               ) : null}
 
               {hasHistoricalSeats ? (
-                <details className={styles.seatHistory} open>
+                <details className={`${styles.seatHistory} ${balanceStyles.seatHistoryBalanced}`} open>
                   <summary>
                     Historia de sus sedes
                     <span>{historicalSeats.length} {historicalSeats.length === 1 ? 'sede' : 'sedes'}</span>
@@ -235,7 +247,7 @@ export default function BrotherhoodOverviewV2({ brotherhood, heroFactLabels = []
           ) : null}
 
           {showSeat ? (
-            <article className={styles.seatCard} aria-label="Sede canónica, horarios y visita">
+            <article className={`${styles.seatCard} ${balanceStyles.equalCard} ${balanceStyles.seatBalanced}`} aria-label="Sede canónica, horarios y visita">
               <div className={styles.cardTopline}>
                 <span>Sede canónica</span>
                 {seat.tipo ? <small>{String(seat.tipo).replaceAll('_', ' ')}</small> : null}
@@ -285,7 +297,7 @@ export default function BrotherhoodOverviewV2({ brotherhood, heroFactLabels = []
                 </div>
               ) : null}
 
-              <div className={styles.seatActions}>
+              <div className={`${styles.seatActions} ${balanceStyles.seatActionsBalanced}`}>
                 {mapUrl ? <a href={mapUrl} target="_blank" rel="noreferrer">Cómo llegar <ArrowUpRightIcon className={styles.actionIcon} /></a> : null}
                 {!publicText(seat.direccion) && seat.localidad ? <span>{seat.localidad}{seat.provincia && seat.provincia !== seat.localidad ? ` · ${seat.provincia}` : ''}</span> : null}
               </div>
