@@ -78,8 +78,13 @@ test('la ficha presenta los horarios con lectura editorial y sin pastillas', asy
   assert.match(balanceStyles, /\.seatBalanced \{[\s\S]*?display: flex[\s\S]*?flex-direction: column/)
   assert.match(balanceStyles, /\.seatActionsBalanced \{[\s\S]*?margin-top: auto/)
   assert.match(balanceStyles, /\.identityFactsBalanced\[data-count='2'\][\s\S]*?1\.7fr/)
+  assert.match(balanceStyles, /\.identityFactsBalanced > div:not\(:first-child\)[\s\S]*?align-content: center/)
+  assert.match(balanceStyles, /\.seatBalanced > \.seatIdentity:nth-child\(2\):nth-last-child\(2\)[\s\S]*?margin-top: auto/)
+  assert.match(balanceStyles, /\.seatHistoryBalanced article:only-child[\s\S]*?grid-column: 1 \/ -1/)
+  assert.match(balanceStyles, /\.seatHistoryBalanced article:only-child[\s\S]*?grid-template-areas:/)
   assert.match(balanceStyles, /@media \(min-width: 1120px\)[\s\S]*?\.seatHistoryBalanced > div[\s\S]*?repeat\(2/)
   assert.match(balanceStyles, /@media \(max-width: 900px\)[\s\S]*?\.seatBalanced \{[\s\S]*?display: block/)
+  assert.match(balanceStyles, /@media \(max-width: 620px\)[\s\S]*?\.seatHistoryBalanced article:only-child[\s\S]*?grid-template-columns: 1fr/)
 })
 
 test('un rango compacto no se confunde con una etiqueta de días', async () => {
