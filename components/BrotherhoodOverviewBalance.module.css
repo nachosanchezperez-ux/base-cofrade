@@ -4,7 +4,7 @@
 }
 
 .equalCard {
-  height: 100%;
+  align-self: stretch;
 }
 
 .seatBalanced {
@@ -45,7 +45,7 @@
   }
 
   .equalCard {
-    height: auto;
+    align-self: auto;
   }
 
   .seatBalanced {
