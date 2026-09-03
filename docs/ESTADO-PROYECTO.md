@@ -1,193 +1,238 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 2 de septiembre de 2026 · cierre nocturno  
-**Régimen:** `FIRST EDITION FREEZE` activo  
+**Corte validado:** 3 de septiembre de 2026 · ciclo editorial de mañana
+**Régimen:** `FIRST EDITION FREEZE` activo
 **Fase activa:** editorial / documental sobre el modelo vigente
 
 ## Estado general
 
 **PRIMERA EDICIÓN → 🟢 CERRADA, CERTIFICADA Y CONGELADA**
 
-- Baseline funcional y estructural: cerrado.
-- `main` de partida para esta sincronización documental: `ba95e39af32f0ed94b15957dd84f6e405a769637`.
-- PR abiertas al iniciar esta sincronización: **0**.
-- #529: **cerrada**.
-- #492: **abierta y aislada** a Supabase Preview Branches.
-- Aportaciones públicas: **desactivadas**.
-- Cola UX abierta: **0**.
-- Cola estructural abierta: **0**.
-- Nuevo DDL / nuevas tablas / cambios RLS / nueva arquitectura: **⛔ bloqueados durante el freeze y mientras #492 siga abierta**.
+- `main` verificado al iniciar este ciclo: `56eff7a865b4d1498bfed434e3d4c30eeae7ed44`.
+- Producción Vercel al iniciar el ciclo: `READY` sobre el mismo SHA.
+- Check del HEAD: `success`.
+- Runtime auditado: 0 `error/fatal` en 12 horas.
+- PR abiertas al iniciar el ciclo: 0.
+- Amparo: cerrada y certificada.
+- San Esteban: cerrada y certificada.
+- #529: cerrada.
+- #492: abierta y aislada a Supabase Preview Branches.
+- Aportaciones públicas: desactivadas; `/colabora` mantiene formulario y endpoint cerrados.
+- Cola UX: 0.
+- Cola estructural: 0.
+- Nuevo DDL, tablas, RLS y arquitectura: bloqueados durante el freeze y mientras #492 siga abierta.
 
 ## Supabase
 
 **PRODUCCIÓN → 🟢 `ACTIVE_HEALTHY`**
 
 - Proyecto: `Hilocofrade`.
-- PostgreSQL: **17.6.1**.
-- Región: **eu-west-1**.
-- Historial de migraciones remoto: **48** versiones.
-- Últimas migraciones canónicas:
-  - `20260902121927_completa_amparo_sevilla`;
-  - `20260902125718_aplica_paleta_amparo_sevilla`.
-- Amparo y San Esteban se han cerrado posteriormente mediante **DML editorial sobre tablas y relaciones existentes**.
-- No se ha ejecutado DDL, no se ha creado una nueva tabla, no se ha alterado RLS y no se ha abierto nueva arquitectura.
-- #492 conserva la deuda histórica de reproducibilidad de Preview Branches y no se reinterpreta como fallo de producción.
+- PostgreSQL: 17.6.1.
+- Región: `eu-west-1`.
+- Migraciones remotas: 48.
+- Últimas: `20260902121927_completa_amparo_sevilla` y `20260902125718_aplica_paleta_amparo_sevilla`.
+- El cierre de La Sed se ejecutó solo mediante DML editorial sobre el modelo vigente.
+- Cada bloque fue prevalidado con `BEGIN … ROLLBACK`.
+- No hubo DDL, nueva tabla, RLS ni arquitectura.
+- Supabase conserva únicamente la rama `main`.
 
-## GitHub y Vercel
+## Lotes cerrados
 
-**ESTADO PREVIO A ESTA SINCRONIZACIÓN → 🟢 ESTABLE**
-
-- `main`: `ba95e39af32f0ed94b15957dd84f6e405a769637`.
-- PR abiertas: **0**.
-- Producción Vercel: **READY** sobre el mismo SHA.
-- Runtime de producción: **0 errores detectados** en la ventana de 6 horas auditada.
-- Runtime Node.js: 3 funciones observadas en el deployment actual.
-- Bundler: Turbopack.
-
-Esta actualización y las certificaciones asociadas son exclusivamente documentales; no cambian aplicación, UX, esquema ni arquitectura.
-
-## Lotes de Hermandades cerrados en este corte
-
-### 1 · Amparo
+### Amparo
 
 **AMPARO → 🟢 CERTIFICADA**
 
-Documento completo: `docs/CERTIFICACION-AMPARO-2026-09-02.md`.
+Documento: `docs/CERTIFICACION-AMPARO-2026-09-02.md`.
 
-Cierre certificado:
+No se ha reabierto ni modificado en este ciclo.
 
-- identidad y Sede;
-- titular y atribuciones;
-- restauraciones;
-- paso y fases;
-- capataz 2026;
-- Simpecado, manto y coronas históricas;
-- seis marchas procesionales;
-- siete composiciones para cultos separadas del catálogo procesional;
-- cultos extraordinarios de 2026;
-- Coronación Canónica como acontecimiento propio;
-- procesión anual del 8/11 correctamente separada del acontecimiento extraordinario;
-- Carmen de Salteras vinculada al paso y salida exactos;
-- media y Fuentes certificadas;
-- salud del grafo sin deuda crítica.
-
-### 2 · San Esteban
+### San Esteban
 
 **SAN ESTEBAN → 🟢 CERTIFICADA**
 
-Documento completo: `docs/CERTIFICACION-SAN-ESTEBAN-2026-09-02.md`.
+Documento: `docs/CERTIFICACION-SAN-ESTEBAN-2026-09-02.md`.
 
-San Esteban fue la **única Hermandad** abierta después de Amparo, al combinar actualidad, extraordinaria próxima y deuda documental real.
+No se ha reabierto ni modificado en este ciclo.
 
-Cierre certificado:
+### Hermandad de la Sed
 
-- Sede canónica normalizada y horarios verificados el 2/09/2026;
-- dos titulares, manteniendo autor desconocido en el Señor sin atribuciones inventadas;
-- cinco intervenciones conservativas/restauraciones incorporadas sobre los titulares;
-- dos pasos ya previamente estructurados, con 14 fases y 19 agentes/autores conservados;
-- dos capataces vigentes con Fuente;
-- diez bienes de patrimonio material y 16 autorías/componentes;
-- 38 marchas procesionales dedicadas: 19 al Señor y 19 a la Virgen;
-- `Refugio de Desamparados` separada como salutación musical, no como marcha;
-- entrada musical ambigua `Virgen de los Desamparados-1961 (Fortunati. Megías Rosado)` excluida hasta disponer de identificación inequívoca;
-- 15 cultos canónicos y 13 ocurrencias fechadas de 2026;
-- I Centenario Fundacional creado como acontecimiento propio;
-- exposición `Salud y Buen Viaje: la devoción que construye una historia. San Esteban 1926–2026` registrada como acontecimiento en curso del 1 al 15 de septiembre;
-- traslado extraordinario del 21/11 y procesión extraordinaria del 22/11 mantenidos como hechos procesionales concretos;
-- Agrupación Musical Virgen de los Reyes normalizada contra el paso exacto y posición `tras el paso` para el 22/11;
-- una cabecera autorizada y trazable, con autor real no identificado declarado expresamente sin inventar firma;
-- 25 Fuentes relevantes;
-- salud del grafo sin deuda crítica automática.
+**LA SED → 🟢 CERTIFICADA · SIN BLOQUEOS DE GRAFO**
 
-## Salud documental · San Esteban
+Documento: `docs/CERTIFICACION-LA-SED-2026-09-03.md`.
 
-**RESULTADO → 🟢 LIMPIO**
+Top 3 inicial:
 
-- Titulares: **2**.
-- Autorías de titulares: **2**.
-- Intervenciones de titulares: **5**.
-- Pasos: **2**.
-- Fases de paso: **14**.
-- Agentes/autores de fases: **19**.
-- Capataces vigentes: **2**.
-- Patrimonio material: **10 bienes**.
-- Patrimonio musical no-marcha: **1 salutación**.
-- Marchas al Señor: **19**.
-- Marchas a la Virgen: **19**.
-- Cultos: **15**.
-- Ocurrencias 2026: **13**.
-- Salidas extraordinarias del lote: **2**.
-- Acontecimientos: **2**.
-- Acompañamientos ordinarios vigentes: **2**.
-- Media de cabecera: **1**, autorizada y trazable.
-- Fuentes relevantes: **25**.
+1. La Sed · prioridad aproximada 27/31 · completitud técnica 29 %.
+2. Aguas Santas de Villaverde del Río · prioridad aproximada 23/31 · completitud 29 %.
+3. Virgen del Castillo de Lebrija · prioridad aproximada 22/31 · completitud 21 %.
 
-Deuda crítica auditada:
+La Sed fue la única Hermandad abierta.
 
-- media sin `alt` / Fuente / estado de derechos / campo de autoría: **0**;
-- autorías de titulares sin Fuente: **0**;
-- intervenciones sin Fuente: **0**;
-- fases de paso sin Fuente: **0**;
-- capataces vigentes sin Fuente: **0**;
-- patrimonio sin Fuente: **0**;
-- cultos sin Fuente: **0**;
-- ocurrencias sin Fuente: **0**;
-- salidas sin Fuente: **0**;
-- acontecimientos sin Fuente: **0**;
-- acompañamientos vigentes sin Fuente: **0**;
-- marchas dedicadas sin Fuente: **0**;
-- marchas dedicadas sin autor: **0**;
-- URLs de Fuente duplicadas en el ámbito auditado: **0**.
+## Cierre documental · La Sed
 
-## Actualidad estricta
+### Identidad y Sede
 
-A fecha de corte, **2 de septiembre de 2026**:
+- Nombre canónico completo normalizado.
+- Nombre popular: La Sed.
+- Penitencia + Sacramental.
+- Fundación: 8 de septiembre de 1969.
+- Fusión sacramental: 28 de octubre de 1972.
+- Sede: Parroquia de la Concepción Inmaculada.
+- Dirección: Calle Cristo de la Sed, 41, 41005 Sevilla.
+- Horarios de apertura y misas verificados el 3/09/2026.
+- Hábito reglamentario estructurado.
+- Colores negro y blanco, sin HEX inventado.
 
-- la exposición del Centenario de San Esteban está en curso hasta el **15 de septiembre**;
-- el traslado extraordinario del Señor está anunciado para el **21 de noviembre**;
-- la procesión extraordinaria de regreso está anunciada para el **22 de noviembre**;
-- la Misa Solemne de Cristo Rey del 22/11 está documentada a las **11:00** en la Catedral;
-- no se completa itinerario u horario no publicado oficialmente;
-- no se canoniza una autoría musical ambigua;
-- las fechas pasadas de cultos 2026 se registran como celebradas y las futuras como anunciadas.
+### Titulares
 
-## Primera Edición y #492
+Tres titulares publicados y relacionados:
 
-**#492 → 🟣 AISLADA · NO BLOQUEA EL FRENTE EDITORIAL**
+- Santísimo Cristo de la Sed · Luis Álvarez Duarte · 1969–1970.
+- Santa María de Consolación Madre de la Iglesia · Antonio Joaquín Dubé de Luque · 1969.
+- San Juan Evangelista · Antonio Joaquín Dubé de Luque · 1986.
 
-Continúa bloqueando:
+Intervenciones estructuradas: 8.
 
-- nuevo DDL;
-- nuevas tablas;
-- nuevas migraciones estructurales;
-- cambios RLS;
-- ampliaciones de arquitectura.
+Se conserva la evaluación de Pedro Manzano de marzo de 2026 como diagnóstico publicado; no se inventa una intervención posterior.
 
-No bloquea:
+### Pasos y capataces
 
-- contenido;
-- Fuentes;
-- media trazable;
-- relaciones sobre tablas existentes;
-- patrimonio;
-- cultos;
-- música;
-- acompañamientos;
-- acontecimientos y salidas soportados por el modelo actual.
+- Pasos publicados: 2.
+- Fases: 7.
+- Agentes/autores en fases: 15.
+- Cristo: Fernando Adriaensens Lázaro, vigente en 2026.
+- Palio: Manuel Vizcaya López, vigente en 2026.
+
+### Música
+
+Acompañamientos vigentes:
+
+- Rosario de Cádiz → Cristo → desde 2017.
+- Banda Municipal de Música de Mairena del Alcor → palio → desde 2001.
+- Banda de Música La Oliva de Salteras → palio → desde 2002.
+
+La procesión de Consolación del 3 de octubre de 2026 permanece sin banda asignada porque su fuente específica no la documenta.
+
+### Patrimonio
+
+Cuatro bienes representativos:
+
+- Custodia Sacramental · 1997–1998 · Hermanos Caballero González.
+- Cruz de Guía · 1981–1983 · Manuel de los Ríos.
+- Potencias del Cristo · Fernando Marmolejo Camargo / Fernando Marmolejo.
+- Manto de salida de Consolación · Fernando Prini / taller de Charo Bernardino · 2017–2025.
+
+El nuevo techo de palio aprobado en mayo de 2026 queda como proyecto/acontecimiento, no como patrimonio ejecutado.
+
+### Patrimonio musical
+
+Seis marchas certificadas:
+
+- `Cristo de la Sed` · Pedro Gámez Laserna / Juan Antonio Cuevas Muñoz · 1973.
+- `Consolación de Nervión` · Abel Moreno · 1987.
+- `Consolación` · Pedro Morales · enero de 2002.
+- `Madre de Consolación` · José Juan Gámez Varo · 2007.
+- `Camino vas del Calvario` · Manuel Alejandro González Cruz «Quini» · 2013.
+- `A mi Cristo de la Sed` · Francisco Javier Alonso Jiménez · 2026.
+
+No se amplía por homonimia.
+
+### Cultos
+
+- Cultos ordinarios: 14.
+- Ocurrencias concretas de 2026: 7.
+- Fechas futuras no confirmadas del Mes de la Virgen no se infieren.
+- Besamanos: último domingo de septiembre y sábado anterior, según modificación del artículo 50.K aprobada en 2007; se documenta que la página de Reglas conserva una redacción anterior de octubre.
+
+### Salidas y acontecimientos
+
+- Procesión ordinaria de Consolación: 3 de octubre de 2026, 18:00; Virgen y paso relacionados.
+- Extraordinaria histórica: 17 de septiembre de 1994 por el XXV aniversario fundacional.
+- Acontecimientos: XXV aniversario de 1994 y aprobación del nuevo techo de palio el 13 de mayo de 2026.
+
+### Multimedia
+
+**HUECO LEGÍTIMO → 🟣 0 RECURSOS AUTORIZADOS**
+
+No se incorporan imágenes web o de prensa sin trazabilidad de derechos.
+
+**SIN FOTO > FOTO SIN DERECHOS.**
+
+### Fuentes
+
+- Fuentes relevantes: 31.
+- URLs duplicadas dentro de La Sed: 0.
+- No quedan relaciones críticas certificadas sin Fuente.
+
+## Salud del grafo · La Sed
+
+**RESULTADO → 🟢 CLEAN**
+
+- Titulares: 3.
+- Pasos: 2.
+- Fases: 7.
+- Agentes de fase: 15.
+- Capataces vigentes: 2.
+- Acompañamientos vigentes: 3.
+- Patrimonio material: 4.
+- Marchas dedicadas: 6.
+- Cultos: 14.
+- Ocurrencias 2026: 7.
+- Acontecimientos: 2.
+- Salidas: 2.
+- Enlaces Imagen/Paso del 3/10: 2.
+- Imágenes sin autoría: 0.
+- Relaciones críticas sin Fuente: 0.
+- Patrimonio sin padre: 0.
+- Marchas sin autor: 0.
+- Media incompleta: 0.
+- Slugs duplicados: 0.
+- URLs duplicadas en el lote: 0.
+
+## Completitud · La Sed
+
+- Inicial: 29 %.
+- Final: 86 %.
+
+Aproximación editorial:
+
+- Identidad → 95 %.
+- Sede → 100 %.
+- Titulares → 95 %.
+- Pasos → 95 %.
+- Música → 90 %.
+- Patrimonio → 90 %.
+- Cultos → 92 %.
+- Extraordinarias / acontecimientos → 85 %.
+- Multimedia → 15 %.
+- Fuentes → 100 %.
+
+La baja puntuación de Multimedia refleja ausencia de recursos autorizados, no relaciones rotas.
+
+## Actualidad urgente fuera del lote
+
+Durante la selección se detectó una discrepancia actual en Virgen del Castillo de Lebrija: la información reciente por obras de Santa María de la Oliva modifica la sede/traslado y el programa municipal sitúa la procesión del 12 de septiembre a las 19:00 mientras Hilo conserva un dato anterior. No se ha abierto ni modificado esa Hermandad para respetar la regla de un único lote.
+
+## #492
+
+**#492 → 🟣 AISLADA**
+
+Sigue bloqueando DDL, nuevas tablas, migraciones estructurales, RLS y arquitectura. No bloquea DML editorial.
 
 ## Aportaciones públicas
 
-**APORTACIONES → ⚪ INFRAESTRUCTURA PREPARADA · 🔒 DESACTIVADAS**
+**APORTACIONES → 🔒 DESACTIVADAS**
 
-- `PUBLIC_CONTRIBUTIONS_ENABLED=false` permanece como estado canónico.
-- No se activa `/colabora` ni escritura pública.
-- No se modifica RLS, Auth, Storage ni secretos.
+- `/colabora` mantiene el servicio cerrado.
+- No se activó formulario ni endpoint.
+- No se modificaron RLS, Auth, Storage ni secretos.
 
 ## Estado del frente
 
-**AMPARO → 🟢 CERRADA Y CERTIFICADA**  
+**AMPARO → 🟢 CERRADA Y CERTIFICADA**
 **SAN ESTEBAN → 🟢 CERRADA Y CERTIFICADA**
+**LA SED → 🟢 CERRADA Y CERTIFICADA**
 
-No queda otro lote abierto por esta orden.
+No queda otra Hermandad abierta por esta orden.
 
-Cualquier siguiente Hermandad requerirá una nueva selección explícita y deberá respetar el mismo orden de prioridad: actualidad → extraordinaria próxima → deuda documental → potencial relacional.
+**SIGUIENTE MOVIMIENTO → ESPERAR DIRECCIÓN.**
