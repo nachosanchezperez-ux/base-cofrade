@@ -504,6 +504,45 @@ export default async function HermandadDetailPage({ params }) {
             </div>
 
             <div className="outing-content">
+              {s.imagen?.src ? (
+                <figure
+                  className="outing-photo"
+                  style={{
+                    position: 'relative',
+                    width: '100%',
+                    aspectRatio: '16 / 9',
+                    margin: '0 0 18px',
+                    overflow: 'hidden',
+                    borderRadius: '14px',
+                    background: '#edf1f4',
+                  }}
+                >
+                  <Image
+                    src={s.imagen.src}
+                    alt={s.imagen.alt || `Fotografía de ${s.nombre}`}
+                    fill
+                    sizes="(max-width: 760px) calc(100vw - 48px), (max-width: 1100px) 48vw, 540px"
+                    style={{ objectFit: 'cover' }}
+                  />
+                  {s.imagen.credito ? (
+                    <figcaption
+                      style={{
+                        position: 'absolute',
+                        right: 10,
+                        bottom: 8,
+                        padding: '4px 7px',
+                        borderRadius: 7,
+                        background: 'rgba(8, 25, 43, .72)',
+                        color: '#fff',
+                        fontSize: 11,
+                        lineHeight: 1.2,
+                      }}
+                    >
+                      Fotografía · {s.imagen.credito}
+                    </figcaption>
+                  ) : null}
+                </figure>
+              ) : null}
               <h3>{s.nombre}</h3>
               {s.titulares && <p className="outing-subject">{s.titulares}</p>}
               {s.momento && <p>{s.momento}</p>}
