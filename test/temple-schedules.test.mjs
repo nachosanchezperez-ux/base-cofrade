@@ -33,9 +33,10 @@ test('los cuatro horarios quedan documentados sin abrir esquema nuevo', async ()
   assert.doesNotMatch(migration, /update\s+public\.entities[\s\S]*?set[\s\S]*?status\s*=/i)
 })
 
-test('la ficha presenta el campo libre como horarios del templo y respeta sus saltos', async () => {
-  const [overview, styles] = await Promise.all([
+test('la ficha presenta los horarios con lectura editorial y sin pastillas', async () => {
+  const [overview, scheduleStyles, overviewStyles] = await Promise.all([
     source('components/BrotherhoodOverviewV2.js'),
+    source('components/BrotherhoodOverviewSchedule.module.css'),
     source('components/BrotherhoodOverviewV2.module.css'),
   ])
 
@@ -44,34 +45,54 @@ test('la ficha presenta el campo libre como horarios del templo y respeta sus sa
   assert.match(overview, /Sede canónica, horarios y visita/)
   assert.match(overview, /Sede · Horarios del templo/)
   assert.match(overview, /Planifica tu visita/)
+  assert.match(overview, /Revisado · \{verified\}/)
+  assert.match(overview, /Cómo llegar/)
   assert.match(overview, /seat\.horarioApertura/)
   assert.match(overview, /scheduleLines\(seat\?\.horarioApertura\)/)
   assert.match(overview, /scheduleEntries/)
+  assert.match(overview, /scheduleLineParts/)
   assert.match(overview, /highlightedSchedule/)
-  assert.match(overview, /styles\.hoursDays/)
-  assert.match(overview, /styles\.timeChip/)
+  assert.match(overview, /scheduleStyles\.days/)
+  assert.match(overview, /scheduleStyles\.time/)
+  assert.doesNotMatch(overview, /styles\.timeChip|scheduleStyles\.timeChip/)
+  assert.doesNotMatch(overview, /styles\.closedChip|scheduleStyles\.closedChip/)
   assert.match(overview, /!publicText\(seat\.direccion\) && seat\.localidad/)
-  assert.match(styles, /\.hoursHero[\s\S]*linear-gradient/)
-  assert.match(styles, /\.hoursList/)
-  assert.match(styles, /\.hoursRow/)
-  assert.match(styles, /\.hoursMarker svg/)
-  assert.match(styles, /\.hoursEntry/)
-  assert.match(styles, /\.hoursContent > b \{[\s\S]*?font-size: 12px/)
-  assert.match(styles, /\.hoursDays \{[\s\S]*?font-size: 12px/)
-  assert.match(styles, /\.hoursDetail \{[\s\S]*?font-size: 13px/)
-  assert.match(styles, /\.timeChip \{[\s\S]*?font-size: 12px/)
-  assert.match(styles, /\.seatActions a \{[\s\S]*?min-height: 44px/)
-  assert.match(styles, /\.seatActions a:focus-visible/)
+
+  assert.match(scheduleStyles, /\.hero \{[\s\S]*?background: #17324d/)
+  assert.match(scheduleStyles, /\.hero \{[\s\S]*?inset 3px 0 var\(--brotherhood-secondary/)
+  assert.match(scheduleStyles, /\.row \{[\s\S]*?grid-template-columns: minmax\(128px, \.58fr\) minmax\(0, 1\.82fr\)/)
+  assert.match(scheduleStyles, /\.entry \{[\s\S]*?grid-template-columns: minmax\(108px, \.7fr\) minmax\(0, 1\.5fr\)/)
+  assert.match(scheduleStyles, /\.time \{[^}]*font-weight: 850/)
+  assert.doesNotMatch(scheduleStyles, /\.time \{[^}]*(?:background|border-radius|display:\s*inline-flex)/)
+  assert.match(scheduleStyles, /@media \(max-width: 620px\)[\s\S]*?\.row \{[\s\S]*?grid-template-columns: 1fr/)
+  assert.match(scheduleStyles, /@media \(max-width: 620px\)[\s\S]*?\.entry \{[\s\S]*?grid-template-columns: 1fr/)
+  assert.match(overviewStyles, /\.seatActions a \{[\s\S]*?min-height: 44px/)
+  assert.match(overviewStyles, /\.seatActions a:focus-visible/)
 })
 
 test('un rango compacto no se confunde con una etiqueta de días', async () => {
   const overview = await source('components/BrotherhoodOverviewV2.js')
   const start = overview.indexOf('function scheduleEntries')
-  const end = overview.indexOf('\n\nfunction scheduleLines', start)
+  const end = overview.indexOf('\n\nfunction scheduleLineParts', start)
   const scheduleEntries = runInNewContext(`(${overview.slice(start, end)})`)
 
   assert.equal(
     JSON.stringify(scheduleEntries('18:30–20:30').map(({ days, detail }) => ({ days, detail }))),
     JSON.stringify([{ days: '', detail: '18:30–20:30' }]),
+  )
+})
+
+test('misas conserva la temporada dentro del nombre del bloque', async () => {
+  const overview = await source('components/BrotherhoodOverviewV2.js')
+  const start = overview.indexOf('function scheduleLineParts')
+  const end = overview.indexOf('\n\nfunction scheduleLines', start)
+  const scheduleLineParts = runInNewContext(`(${overview.slice(start, end)})`)
+
+  assert.deepEqual(
+    JSON.parse(JSON.stringify(scheduleLineParts('Misas · invierno · L–S: 09:00 · 12:00 · 18:30 · 20:00'))),
+    {
+      label: 'Misas · invierno',
+      value: 'L–S: 09:00 · 12:00 · 18:30 · 20:00',
+    },
   )
 })
