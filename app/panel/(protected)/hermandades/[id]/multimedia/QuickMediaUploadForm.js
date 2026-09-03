@@ -48,6 +48,7 @@ export default function QuickMediaUploadForm({
   rightsHelp,
   uploadNote,
   returnSection = 'multimedia',
+  selectAsHero = false,
 }) {
   const fileInputId = useId()
   const alertRef = useRef(null)
@@ -182,6 +183,7 @@ export default function QuickMediaUploadForm({
       <input type="hidden" name="target_kind" value={targetKind} />
       <input type="hidden" name="title" value={title} />
       <input type="hidden" name="return_section" value={returnSection} />
+      <input type="hidden" name="select_as_hero" value={selectAsHero ? '1' : '0'} />
 
       <label className={mediaStyles.fileField} htmlFor={fileInputId}>
         <span>Fotografía</span>
@@ -247,7 +249,7 @@ export default function QuickMediaUploadForm({
       <div className={mediaStyles.uploadActions}>
         <small>{uploadNote}</small>
         <button className={panelStyles.primaryButton} type="submit" disabled={pending || !selectedFile}>
-          {pending ? <><span className={mediaStyles.pendingSpinner} aria-hidden="true" />{pendingCopy(phase)}</> : 'Subir y vincular'}
+          {pending ? <><span className={mediaStyles.pendingSpinner} aria-hidden="true" />{pendingCopy(phase)}</> : selectAsHero ? 'Subir y usar como portada' : 'Subir y vincular'}
         </button>
       </div>
     </form>
