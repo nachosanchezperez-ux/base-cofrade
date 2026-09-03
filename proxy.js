@@ -15,6 +15,16 @@ export async function proxy(request) {
     return NextResponse.redirect(canonicalUrl, 308)
   }
 
+  const gloryBridgePrefix = '/extraordinarias/gloria/'
+  if (request.nextUrl.pathname.startsWith(gloryBridgePrefix)) {
+    const glorySlug = request.nextUrl.pathname.slice(gloryBridgePrefix.length)
+    if (glorySlug) {
+      const gloryUrl = request.nextUrl.clone()
+      gloryUrl.pathname = `/procesiones-de-gloria/${glorySlug}`
+      return NextResponse.redirect(gloryUrl, 308)
+    }
+  }
+
   if (request.nextUrl.pathname.startsWith('/panel')) {
     return updateSession(request)
   }
