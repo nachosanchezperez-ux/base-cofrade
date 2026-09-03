@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import BrotherhoodDirectoryCrestImage from './BrotherhoodDirectoryCrestImage'
 import styles from './BrotherhoodProgramHero.module.css'
+import corporateStyles from './BrotherhoodProgramHeroCorporate.module.css'
 
 function Breadcrumb({ items = [] }) {
   if (!items.length) return null
@@ -75,7 +76,7 @@ export default function BrotherhoodProgramHero({
 
   return (
     <section
-      className={`${styles.hero} ${hasPhoto ? styles.hasPhoto : styles.noPhoto} ${resolvedFit === 'contain' ? styles.contained : styles.covered}`}
+      className={`${styles.hero} ${corporateStyles.corporateHero} ${hasPhoto ? styles.hasPhoto : styles.noPhoto} ${resolvedFit === 'contain' ? styles.contained : styles.covered}`}
       aria-labelledby="brotherhood-program-title"
       style={heroStyle}
     >
@@ -105,7 +106,7 @@ export default function BrotherhoodProgramHero({
           />
         </>
       ) : null}
-      <span className={styles.photoVeil} aria-hidden="true" />
+      <span className={`${styles.photoVeil} ${!hasPhoto ? corporateStyles.noPhotoVeil : ''}`} aria-hidden="true" />
       <span className={styles.texture} aria-hidden="true" />
 
       <div className={`shell ${styles.shell}`}>
@@ -138,7 +139,7 @@ export default function BrotherhoodProgramHero({
           {officialName ? <p className={styles.officialName}>{officialName}</p> : null}
 
           {visibleFacts.length ? (
-            <dl className={styles.facts} data-count={visibleFacts.length}>
+            <dl className={`${styles.facts} ${corporateStyles.corporateFacts}`} data-count={visibleFacts.length}>
               {visibleFacts.map((fact) => (
                 <div key={fact.label}>
                   <dt>{fact.label}</dt>
