@@ -34,10 +34,11 @@ test('los cuatro horarios quedan documentados sin abrir esquema nuevo', async ()
 })
 
 test('la ficha presenta los horarios con lectura editorial y sin pastillas', async () => {
-  const [overview, scheduleStyles, overviewStyles] = await Promise.all([
+  const [overview, scheduleStyles, overviewStyles, balanceStyles] = await Promise.all([
     source('components/BrotherhoodOverviewV2.js'),
     source('components/BrotherhoodOverviewSchedule.module.css'),
     source('components/BrotherhoodOverviewV2.module.css'),
+    source('components/BrotherhoodOverviewBalance.module.css'),
   ])
 
   assert.match(overview, /Horarios del templo/)
@@ -54,6 +55,10 @@ test('la ficha presenta los horarios con lectura editorial y sin pastillas', asy
   assert.match(overview, /highlightedSchedule/)
   assert.match(overview, /scheduleStyles\.days/)
   assert.match(overview, /scheduleStyles\.time/)
+  assert.match(overview, /BrotherhoodOverviewBalance\.module\.css/)
+  assert.match(overview, /balanceStyles\.balancedGrid/)
+  assert.match(overview, /balanceStyles\.identityFactsBalanced/)
+  assert.match(overview, /balanceStyles\.seatActionsBalanced/)
   assert.doesNotMatch(overview, /styles\.timeChip|scheduleStyles\.timeChip/)
   assert.doesNotMatch(overview, /styles\.closedChip|scheduleStyles\.closedChip/)
   assert.match(overview, /!publicText\(seat\.direccion\) && seat\.localidad/)
@@ -68,6 +73,13 @@ test('la ficha presenta los horarios con lectura editorial y sin pastillas', asy
   assert.match(scheduleStyles, /@media \(max-width: 620px\)[\s\S]*?\.entry \{[\s\S]*?grid-template-columns: 1fr/)
   assert.match(overviewStyles, /\.seatActions a \{[\s\S]*?min-height: 44px/)
   assert.match(overviewStyles, /\.seatActions a:focus-visible/)
+
+  assert.match(balanceStyles, /\.balancedGrid \{[\s\S]*?grid-template-columns: repeat\(2, minmax\(0, 1fr\)\)/)
+  assert.match(balanceStyles, /\.seatBalanced \{[\s\S]*?display: flex[\s\S]*?flex-direction: column/)
+  assert.match(balanceStyles, /\.seatActionsBalanced \{[\s\S]*?margin-top: auto/)
+  assert.match(balanceStyles, /\.identityFactsBalanced\[data-count='2'\][\s\S]*?1\.7fr/)
+  assert.match(balanceStyles, /@media \(min-width: 1120px\)[\s\S]*?\.seatHistoryBalanced > div[\s\S]*?repeat\(2/)
+  assert.match(balanceStyles, /@media \(max-width: 900px\)[\s\S]*?\.seatBalanced \{[\s\S]*?display: block/)
 })
 
 test('un rango compacto no se confunde con una etiqueta de días', async () => {
@@ -93,6 +105,29 @@ test('misas conserva la temporada dentro del nombre del bloque', async () => {
     {
       label: 'Misas · invierno',
       value: 'L–S: 09:00 · 12:00 · 18:30 · 20:00',
+    },
+  )
+})
+
+test('el horario elimina etiquetas repetidas sin perder días ni horas', async () => {
+  const overview = await source('components/BrotherhoodOverviewV2.js')
+  const start = overview.indexOf('function scheduleLineParts')
+  const end = overview.indexOf('\n\nfunction scheduleLines', start)
+  const scheduleLineParts = runInNewContext(`(${overview.slice(start, end)})`)
+
+  assert.deepEqual(
+    JSON.parse(JSON.stringify(scheduleLineParts('Apertura · Apertura: L–S: 08:00–13:00'))),
+    {
+      label: 'Apertura',
+      value: 'L–S: 08:00–13:00',
+    },
+  )
+
+  assert.deepEqual(
+    JSON.parse(JSON.stringify(scheduleLineParts('Misas · Misas: D: 10:00 · 12:00'))),
+    {
+      label: 'Misas',
+      value: 'D: 10:00 · 12:00',
     },
   )
 })
