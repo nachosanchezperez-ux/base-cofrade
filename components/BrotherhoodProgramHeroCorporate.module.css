@@ -1,0 +1,23 @@
+.corporateHero {
+  background:
+    radial-gradient(circle at 78% 25%, color-mix(in srgb, var(--brotherhood-secondary, #a71930) 24%, transparent), transparent 34%),
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--brotherhood-primary, #112339) 64%, #000),
+      color-mix(in srgb, var(--brotherhood-primary, #112339) 42%, #000) 72%
+    ) !important;
+}
+
+.noPhotoVeil {
+  background:
+    radial-gradient(circle at 78% 30%, color-mix(in srgb, var(--brotherhood-secondary, #a71930) 28%, transparent), transparent 35%),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--brotherhood-primary, #112339) 78%, #000) 0%,
+      color-mix(in srgb, var(--brotherhood-primary, #112339) 58%, #000) 100%
+    ) !important;
+}
+
+.corporateFacts {
+  background: color-mix(in srgb, var(--brotherhood-primary, #112339) 56%, transparent) !important;
+}
