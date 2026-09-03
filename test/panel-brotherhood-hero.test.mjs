@@ -14,7 +14,28 @@ test('Hermandades incorpora Portada como módulo propio del Panel', () => {
   assert.match(layout, /label: 'Portada'/)
   assert.match(page, /Portada de la Hermandad/)
   assert.match(page, /Ajusta su encuadre para ordenador y móvil|ajusta su encuadre para ordenador y móvil/i)
+  assert.match(page, /Subir fotografía para la cabecera/)
   assert.match(page, /Añadir o gestionar fotografías/)
+})
+
+test('Portada permite subir una fotografía nueva y seleccionarla como hero sin salir del módulo', () => {
+  const page = source('app/panel/(protected)/hermandades/[id]/portada/page.js')
+  const uploadForm = source('app/panel/(protected)/hermandades/[id]/multimedia/QuickMediaUploadForm.js')
+  const uploadActions = source('app/panel/(protected)/hermandades/[id]/multimedia/actions.js')
+
+  assert.match(page, /QuickMediaUploadForm/)
+  assert.match(page, /targetId=\{id\}/)
+  assert.match(page, /returnSection="portada"/)
+  assert.match(page, /selectAsHero/)
+  assert.match(page, /queda seleccionada como portada en la misma operación/)
+  assert.match(uploadForm, /name="select_as_hero"/)
+  assert.match(uploadForm, /Subir y usar como portada/)
+  assert.match(uploadActions, /'portada'/)
+  assert.match(uploadActions, /target\.entity_type === 'brotherhood' && target\.id === brotherhoodId/)
+  assert.match(uploadActions, /relation_type: 'hero'/)
+  assert.match(uploadActions, /notes: 'Portada de la Hermandad'/)
+  assert.match(uploadActions, /revalidatePath\(`\/panel\/hermandades\/\$\{context\.brotherhoodId\}\/portada`\)/)
+  assert.match(uploadActions, /\/portada\?saved=uploaded/)
 })
 
 test('la portada de Hermandad reutiliza media existente sin alterar su relación original', () => {
