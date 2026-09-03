@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { requirePanelUser } from '@/lib/panel/auth'
 import { getBrotherhoodHeroWorkspace } from '@/lib/panel/brotherhood-hero'
+import QuickMediaUploadForm from '../multimedia/QuickMediaUploadForm'
 import BrotherhoodHeroFramingForm from './BrotherhoodHeroFramingForm'
 import {
   removeBrotherhoodHeroAction,
@@ -15,6 +16,7 @@ export const metadata = { title: 'Portada · Hermandad · Panel' }
 
 const SAVED_MESSAGES = {
   selected: 'La fotografía queda seleccionada como portada de la Hermandad.',
+  uploaded: 'La fotografía se ha subido, queda guardada en el archivo de la Hermandad y ya gobierna su cabecera.',
   framing: 'El encuadre de la portada se ha guardado correctamente.',
   removed: 'La portada específica se ha retirado. La fotografía original permanece intacta en su ficha.',
 }
@@ -104,7 +106,7 @@ export default async function BrotherhoodCoverPage({ params, searchParams }) {
               <h3>{suggested ? 'Puedes reutilizar una fotografía ya documentada' : 'Todavía no hay fotografías disponibles'}</h3>
               <p>{suggested
                 ? 'La portada crea un uso independiente del mismo archivo. El Titular, Paso, Culto o pieza patrimonial conserva su relación, crédito y derechos originales.'
-                : 'Añade fotografías desde Fotos y carteles y vuelve aquí para elegir cuál debe gobernar la cabecera.'}</p>
+                : 'Puedes subir aquí una fotografía nueva para la cabecera o añadir más recursos desde Fotos y carteles.'}</p>
             </div>
           </div>
         )}
@@ -118,6 +120,28 @@ export default async function BrotherhoodCoverPage({ params, searchParams }) {
           </form>
         ) : null}
       </section>
+
+      {canEdit ? (
+        <section className={panelStyles.editorSection}>
+          <div className={panelStyles.sectionHeading}>
+            <div><span className={panelStyles.eyebrow}>Nueva fotografía</span><h2>Subir fotografía para la cabecera</h2></div>
+            <p>La subida se incorpora al archivo de la Hermandad y queda seleccionada como portada en la misma operación.</p>
+          </div>
+          <div className={panelStyles.panelCard}>
+            <QuickMediaUploadForm
+              brotherhoodId={id}
+              targetId={id}
+              targetKind="entity"
+              title={`Cabecera de ${brotherhoodName}`}
+              defaultAlt={`Fotografía de cabecera de ${brotherhoodName}`}
+              rightsHelp="Indica que la Hermandad o el autor han autorizado su publicación, o que el archivo pertenece a Hilo Cofrade."
+              uploadNote="Se guardará en el archivo de la Hermandad, se seleccionará como portada y después podrás ajustar el encuadre para ordenador y móvil."
+              returnSection="portada"
+              selectAsHero
+            />
+          </div>
+        </section>
+      ) : null}
 
       <section className={panelStyles.editorSection}>
         <div className={panelStyles.sectionHeading}>
@@ -158,7 +182,7 @@ export default async function BrotherhoodCoverPage({ params, searchParams }) {
           </div>
         ) : (
           <div className={panelStyles.emptyPanel}>
-            No hay fotografías publicables en esta Hermandad. Añade una desde Fotos y carteles y vuelve a este apartado.
+            No hay fotografías publicables en esta Hermandad. Puedes subir una nueva directamente desde el bloque anterior.
           </div>
         )}
       </section>
