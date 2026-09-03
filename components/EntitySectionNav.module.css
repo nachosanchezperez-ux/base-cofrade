@@ -1,0 +1,17 @@
+.nav {
+  background: linear-gradient(
+    90deg,
+    var(--brotherhood-dark, var(--band-secondary, #112339)),
+    var(--brotherhood-primary, var(--band-primary, #112339))
+  ) !important;
+  border-bottom-color: var(--brotherhood-secondary, var(--bc-red, rgba(255,255,255,.18))) !important;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, .16) !important;
+}
+
+.nav :global(.brotherhood-nav-label) {
+  color: rgba(255, 255, 255, .68);
+}
+
+.nav :global(.brotherhood-nav-list) a[aria-current]::after {
+  background: var(--brotherhood-secondary, var(--bc-red, #fff)) !important;
+}
