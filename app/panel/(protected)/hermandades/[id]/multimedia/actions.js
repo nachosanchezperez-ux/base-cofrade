@@ -11,7 +11,7 @@ const QUICK_UPLOAD_PATH_PATTERN = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}\
 const IMAGE_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/avif'])
 const QUICK_UPLOAD_RIGHTS = new Set(['owned', 'authorized'])
 const TARGET_KINDS = new Set(['entity', 'cult'])
-const RETURN_SECTIONS = new Set(['multimedia', 'cultos', 'pasos', 'titulares', 'patrimonio'])
+const RETURN_SECTIONS = new Set(['multimedia', 'cultos', 'pasos', 'titulares', 'patrimonio', 'portada'])
 const MAX_FILE_SIZE = 10 * 1024 * 1024
 
 function value(formData, name) {
@@ -85,6 +85,8 @@ async function loadCult(supabase, cultId, brotherhoodId) {
 }
 
 async function assertBrotherhoodTarget(supabase, brotherhoodId, target) {
+  if (target.entity_type === 'brotherhood' && target.id === brotherhoodId) return
+
   if (target.entity_type === 'step') {
     const result = await supabase
       .from('brotherhood_steps')
@@ -132,6 +134,7 @@ async function loadUploadContext(formData) {
   const targetId = uuid(formData, 'target_id')
   const targetKind = value(formData, 'target_kind') || 'entity'
   const returnSection = value(formData, 'return_section') || 'multimedia'
+  const selectAsHero = value(formData, 'select_as_hero') === '1'
   if (!TARGET_KINDS.has(targetKind)) throw new Error('El tipo de destino de la imagen no es válido.')
   if (!RETURN_SECTIONS.has(returnSection)) throw new Error('La sección de retorno de la imagen no es válida.')
 
@@ -143,6 +146,15 @@ async function loadUploadContext(formData) {
     : await loadEntity(supabase, targetId, 'La ficha de destino no existe o está archivada.')
 
   if (targetKind === 'entity') await assertBrotherhoodTarget(supabase, brotherhoodId, target)
+
+  if (selectAsHero && (
+    targetKind !== 'entity'
+    || targetId !== brotherhoodId
+    || target.entity_type !== 'brotherhood'
+    || returnSection !== 'portada'
+  )) {
+    throw new Error('La selección automática como portada solo puede hacerse desde la Portada de esta Hermandad.')
+  }
 
   const fileType = value(formData, 'file_type')
   const originalFileName = value(formData, 'file_name').slice(0, 255)
@@ -167,6 +179,7 @@ async function loadUploadContext(formData) {
     targetId,
     targetKind,
     returnSection,
+    selectAsHero,
     brotherhood,
     target,
     storageRoot,
@@ -228,6 +241,66 @@ async function audit(supabase, user, entry) {
 async function rollbackNewAsset(supabase, mediaAssetId, storagePath) {
   if (mediaAssetId) await supabase.from('media_assets').delete().eq('id', mediaAssetId)
   if (storagePath) await supabase.storage.from('hilo-media').remove([storagePath])
+}
+
+async function rollbackNewLink(context, relationTable, linkId, previousCoverIds, mediaAssetId, storagePath) {
+  if (linkId) await context.supabase.from(relationTable).delete().eq('id', linkId)
+  if (previousCoverIds.length) {
+    await context.supabase.from(relationTable).update({ is_cover: true }).in('id', previousCoverIds)
+  }
+  await rollbackNewAsset(context.supabase, mediaAssetId, storagePath)
+}
+
+async function attachUploadedHero(context, mediaAssetId, coverLinkId, previousCoverIds, storagePath) {
+  const existingHeroResult = await context.supabase
+    .from('entity_media')
+    .select('id')
+    .eq('entity_id', context.brotherhoodId)
+    .eq('relation_type', 'hero')
+
+  if (existingHeroResult.error) {
+    await rollbackNewLink(context, 'entity_media', coverLinkId, previousCoverIds, mediaAssetId, storagePath)
+    throw new Error(`No se pudo comprobar la portada anterior: ${existingHeroResult.error.message}`)
+  }
+
+  const heroResult = await context.supabase
+    .from('entity_media')
+    .insert({
+      entity_id: context.brotherhoodId,
+      media_asset_id: mediaAssetId,
+      relation_type: 'hero',
+      sort_order: 0,
+      is_cover: false,
+      notes: 'Portada de la Hermandad',
+      focus_x: 50,
+      focus_y: 50,
+      mobile_focus_x: null,
+      mobile_focus_y: null,
+      fit_mode: 'auto',
+    })
+    .select('id')
+    .single()
+
+  if (heroResult.error) {
+    await rollbackNewLink(context, 'entity_media', coverLinkId, previousCoverIds, mediaAssetId, storagePath)
+    throw new Error(`No se pudo seleccionar la imagen como portada: ${heroResult.error.message}`)
+  }
+
+  const previousHeroIds = (existingHeroResult.data || []).map((item) => item.id)
+  if (previousHeroIds.length) {
+    const removePrevious = await context.supabase
+      .from('entity_media')
+      .delete()
+      .in('id', previousHeroIds)
+
+    if (removePrevious.error) {
+      await context.supabase.from('entity_media').delete().eq('id', heroResult.data.id)
+      await rollbackNewLink(context, 'entity_media', coverLinkId, previousCoverIds, mediaAssetId, storagePath)
+      throw new Error(`La nueva fotografía se subió, pero no se pudo reemplazar la portada anterior: ${removePrevious.error.message}`)
+    }
+  }
+
+  return heroResult.data.id
 }
 
 async function persistBrotherhoodRelatedMedia(formData, context, user, storagePath) {
@@ -312,22 +385,41 @@ async function persistBrotherhoodRelatedMedia(formData, context, user, storagePa
     throw new Error(`No se pudo vincular la imagen: ${linkResult.error.message}`)
   }
 
+  let heroLinkId = null
+  if (context.selectAsHero) {
+    heroLinkId = await attachUploadedHero(
+      context,
+      assetResult.data.id,
+      linkResult.data.id,
+      previousCoverIds,
+      storagePath,
+    )
+  }
+
   await audit(context.supabase, user, {
     action_type: 'link',
     object_type: relationTable,
-    object_id: linkResult.data.id,
+    object_id: heroLinkId || linkResult.data.id,
     entity_id: context.targetKind === 'cult' ? context.brotherhoodId : context.targetId,
-    summary: `Imagen principal incorporada a ${context.target.name} desde ${context.brotherhood.name}`,
+    summary: context.selectAsHero
+      ? `Fotografía incorporada al archivo y seleccionada como portada de ${context.brotherhood.name}`
+      : `Imagen principal incorporada a ${context.target.name} desde ${context.brotherhood.name}`,
     changed_fields: {
       brotherhood_id: context.brotherhoodId,
       target_kind: context.targetKind,
       target_id: context.targetId,
       media_asset_id: assetResult.data.id,
-      relation_type: 'cover',
+      relation_type: context.selectAsHero ? 'hero' : 'cover',
+      archive_relation_type: 'cover',
+      select_as_hero: context.selectAsHero,
       upload_mode: 'signed_direct',
       return_section: context.returnSection,
     },
   })
+
+  if (context.returnSection === 'portada') {
+    return `/panel/hermandades/${context.brotherhoodId}/portada?saved=uploaded`
+  }
 
   const anchor = context.returnSection === 'multimedia'
     ? `contenido-${context.targetId}`
@@ -340,6 +432,7 @@ function revalidateUploadedMedia(context) {
   revalidatePath('/panel/multimedia')
   revalidatePath(`/panel/hermandades/${context.brotherhoodId}`)
   revalidatePath(`/panel/hermandades/${context.brotherhoodId}/multimedia`)
+  revalidatePath(`/panel/hermandades/${context.brotherhoodId}/portada`)
   revalidatePath(`/panel/hermandades/${context.brotherhoodId}/patrimonio`)
   revalidatePath(`/panel/hermandades/${context.brotherhoodId}/cultos`)
   revalidatePath(`/panel/hermandades/${context.brotherhoodId}/pasos`)
