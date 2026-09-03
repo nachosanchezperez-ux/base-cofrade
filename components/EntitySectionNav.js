@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import styles from './EntitySectionNav.module.css';
 
 const DISCOVERABLE_SECTIONS = [
   { href: '#musica', label: 'Patrimonio musical' },
@@ -123,7 +124,7 @@ export default function EntitySectionNav({ items = [] }) {
 
   return (
     <nav
-      className="section-nav brotherhood-nav entity-section-nav"
+      className={`${styles.nav} section-nav brotherhood-nav entity-section-nav`}
       aria-label="Secciones de la ficha"
       data-can-scroll-start={scrollState.start || undefined}
       data-can-scroll-end={scrollState.end || undefined}
