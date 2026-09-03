@@ -28,9 +28,53 @@
   padding-block: 14px;
 }
 
+.identityFactsBalanced > div:not(:first-child) {
+  align-content: center;
+}
+
 .seatActionsBalanced {
   margin-top: auto;
   padding-top: 17px;
+}
+
+/* Cuando la sede no tiene horarios ni otros bloques, el contenido se agrupa
+   en el centro útil de la tarjeta para evitar el gran vacío visual. */
+.seatBalanced > .seatIdentity:nth-child(2):nth-last-child(2) {
+  margin-top: auto;
+}
+
+.seatBalanced > .seatIdentity:nth-child(2):nth-last-child(2) + .seatActionsBalanced {
+  margin-top: 20px;
+  margin-bottom: auto;
+  padding-top: 0;
+}
+
+/* Una única sede histórica debe leerse como una fila editorial completa,
+   no como una tarjeta pequeña perdida en media columna. */
+.seatHistoryBalanced article:only-child {
+  grid-column: 1 / -1;
+  grid-template-columns: minmax(88px, .38fr) minmax(0, 1.62fr);
+  grid-template-areas:
+    'period title'
+    'period address';
+  column-gap: 18px;
+  row-gap: 2px;
+  align-items: center;
+  min-height: 62px;
+  padding: 12px 14px;
+}
+
+.seatHistoryBalanced article:only-child small {
+  grid-area: period;
+  align-self: center;
+}
+
+.seatHistoryBalanced article:only-child strong {
+  grid-area: title;
+}
+
+.seatHistoryBalanced article:only-child p {
+  grid-area: address;
 }
 
 @media (min-width: 1120px) {
@@ -56,6 +100,15 @@
     margin-top: 17px;
     padding-top: 0;
   }
+
+  .seatBalanced > .seatIdentity:nth-child(2):nth-last-child(2) {
+    margin-top: 14px;
+  }
+
+  .seatBalanced > .seatIdentity:nth-child(2):nth-last-child(2) + .seatActionsBalanced {
+    margin-top: 17px;
+    margin-bottom: 0;
+  }
 }
 
 @media (max-width: 620px) {
@@ -69,6 +122,16 @@
 
   .identityFactsBalanced > div {
     padding-block: 14px;
+  }
+
+  .seatHistoryBalanced article:only-child {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'period'
+      'title'
+      'address';
+    min-height: 0;
+    row-gap: 3px;
   }
 }
 
