@@ -2,6 +2,7 @@ import Link from 'next/link'
 import CofradeTypeBadges from '@/components/CofradeTypeBadges'
 import { publicText } from '@/lib/supabase/public-entity-page'
 import styles from './BrotherhoodOverviewV2.module.css'
+import scheduleStyles from './BrotherhoodOverviewSchedule.module.css'
 
 function verifiedLabel(value = '') {
   if (!value) return ''
@@ -59,21 +60,38 @@ function scheduleEntries(value = '') {
     })
 }
 
+function scheduleLineParts(line = '') {
+  const parts = String(line)
+    .split(/\s+·\s+/)
+    .map((part) => part.trim())
+    .filter(Boolean)
+
+  if (parts.length < 2) return { label: '', value: line }
+
+  const hasSeasonAfterMass = /^(misa|misas|eucarist)/i.test(parts[0])
+    && /^(invierno|verano|estival|curso)/i.test(parts[1])
+  const labelLength = hasSeasonAfterMass ? 2 : 1
+
+  return {
+    label: parts.slice(0, labelLength).join(' · '),
+    value: parts.slice(labelLength).join(' · '),
+  }
+}
+
 function scheduleLines(value = '') {
   return String(value)
     .split(/\r?\n/)
     .map((line) => line.trim())
     .filter(Boolean)
     .map((line, index) => {
-      const separator = line.indexOf('·')
-      const hasLabel = separator > 0 && separator < 42
+      const parsed = scheduleLineParts(line)
 
       return {
         id: `${index}-${line}`,
         kind: scheduleKind(line),
-        label: hasLabel ? line.slice(0, separator).trim() : '',
-        value: hasLabel ? line.slice(separator + 1).trim() : line,
-        entries: scheduleEntries(hasLabel ? line.slice(separator + 1).trim() : line),
+        label: parsed.label,
+        value: parsed.value,
+        entries: scheduleEntries(parsed.value),
       }
     })
 }
@@ -84,15 +102,23 @@ function highlightedSchedule(value = '') {
     .filter(Boolean)
     .map((part, index) => {
       if (/^\d{1,2}:\d{2}(?:[–-]\d{1,2}:\d{2})?$/.test(part)) {
-        return <span className={styles.timeChip} key={`${index}-${part}`}>{part}</span>
+        return <strong className={scheduleStyles.time} key={`${index}-${part}`}>{part}</strong>
       }
 
       if (/^cerrad[oa]s?$/i.test(part)) {
-        return <strong className={styles.closedChip} key={`${index}-${part}`}>{part}</strong>
+        return <strong className={scheduleStyles.closed} key={`${index}-${part}`}>{part}</strong>
       }
 
       return part
     })
+}
+
+function fallbackScheduleLabel(kind) {
+  if (kind === 'mass') return 'Misas'
+  if (kind === 'office') return 'Despacho'
+  if (kind === 'devotion') return 'Cultos'
+  if (kind === 'opening') return 'Apertura'
+  return 'Horario'
 }
 
 function MapPinIcon({ className = '' }) {
@@ -204,37 +230,36 @@ export default function BrotherhoodOverviewV2({ brotherhood, heroFactLabels = []
               </div>
 
               {seat.horarioApertura ? (
-                <div className={styles.hours}>
-                  <div className={styles.hoursHero}>
-                    <span className={styles.clock} aria-hidden="true"><ClockIcon /></span>
-                    <div>
+                <div className={scheduleStyles.hours}>
+                  <div className={scheduleStyles.hero}>
+                    <span className={scheduleStyles.clock} aria-hidden="true"><ClockIcon /></span>
+                    <div className={scheduleStyles.heroCopy}>
                       <small>Sede · Horarios del templo</small>
                       <strong>Planifica tu visita</strong>
                     </div>
-                    {verified ? <span className={styles.verified}>Revisado · {verified}</span> : null}
+                    {verified ? <span className={scheduleStyles.verified}>Revisado · {verified}</span> : null}
                   </div>
 
-                  <div className={styles.hoursList}>
+                  <div className={scheduleStyles.list}>
                     {templeSchedule.map((item) => (
-                      <div className={`${styles.hoursRow} ${styles[`hours_${item.kind}`]}`} key={item.id}>
-                        <span className={styles.hoursMarker} aria-hidden="true"><ScheduleIcon kind={item.kind} /></span>
-                        <div className={styles.hoursContent}>
-                          {item.label ? <b>{item.label}</b> : null}
-                          <div className={styles.hoursEntries}>
-                            {item.entries.map((entry) => (
-                              <div className={`${styles.hoursEntry} ${entry.days ? '' : styles.hoursEntryNoDays}`} key={entry.id}>
-                                {entry.days ? <span className={styles.hoursDays}>{entry.days}</span> : null}
-                                <span className={styles.hoursDetail}>{highlightedSchedule(entry.detail)}</span>
-                              </div>
-                            ))}
-                          </div>
+                      <div className={`${scheduleStyles.row} ${item.kind === 'note' ? scheduleStyles.noteRow : ''}`} key={item.id}>
+                        <b className={`${scheduleStyles.label} ${item.label ? '' : scheduleStyles.labelMuted}`}>
+                          {item.label || fallbackScheduleLabel(item.kind)}
+                        </b>
+                        <div className={scheduleStyles.entries}>
+                          {item.entries.map((entry) => (
+                            <div className={`${scheduleStyles.entry} ${entry.days ? '' : scheduleStyles.entryNoDays}`} key={entry.id}>
+                              {entry.days ? <span className={scheduleStyles.days}>{entry.days}</span> : null}
+                              <span className={scheduleStyles.detail}>{highlightedSchedule(entry.detail)}</span>
+                            </div>
+                          ))}
                         </div>
                       </div>
                     ))}
                   </div>
 
-                  <div className={styles.hoursFooter}>
-                    <span className={styles.footerIcon} aria-hidden="true"><ScheduleIcon kind="note" /></span>
+                  <div className={scheduleStyles.footer}>
+                    <span className={scheduleStyles.footerIcon} aria-hidden="true"><ScheduleIcon kind="note" /></span>
                     <p>Comprueba los cultos extraordinarios antes de desplazarte.</p>
                   </div>
                 </div>
