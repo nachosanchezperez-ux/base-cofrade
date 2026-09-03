@@ -173,6 +173,8 @@ export default function BrotherhoodOverviewV2({ brotherhood, heroFactLabels = []
   const mapUrl = directionsUrl(seat)
   const verified = verifiedLabel(seat?.horarioVerificadoEn)
   const templeSchedule = scheduleLines(seat?.horarioApertura)
+  const historicalSeats = seat?.sedesHistoricas || []
+  const hasHistoricalSeats = historicalSeats.length > 0
   const heroFacts = new Set(heroFactLabels)
 
   const identityFacts = [
@@ -180,7 +182,7 @@ export default function BrotherhoodOverviewV2({ brotherhood, heroFactLabels = []
     members ? { label: 'Hermanos', value: members } : null,
     titularCount ? { label: 'Titulares', value: String(titularCount) } : null,
   ].filter((fact) => fact && !heroFacts.has(fact.label))
-  const showIdentity = identityFacts.length > 0 || types.length > 1
+  const showIdentity = identityFacts.length > 0 || types.length > 1 || hasHistoricalSeats
   const showSeat = Boolean(publicText(seat?.nombre))
 
   if (!showIdentity && !showSeat) return null
@@ -197,7 +199,7 @@ export default function BrotherhoodOverviewV2({ brotherhood, heroFactLabels = []
           {showIdentity ? (
             <article className={styles.identityCard}>
               <div className={styles.cardTopline}>
-                <span>Datos complementarios</span>
+                <span>{hasHistoricalSeats ? 'Historia y datos' : 'Datos complementarios'}</span>
                 {types.length > 1 ? <CofradeTypeBadges tipos={types} compact /> : null}
               </div>
 
@@ -210,6 +212,24 @@ export default function BrotherhoodOverviewV2({ brotherhood, heroFactLabels = []
                     </div>
                   ))}
                 </dl>
+              ) : null}
+
+              {hasHistoricalSeats ? (
+                <details className={styles.seatHistory} open>
+                  <summary>
+                    Historia de sus sedes
+                    <span>{historicalSeats.length} {historicalSeats.length === 1 ? 'sede' : 'sedes'}</span>
+                  </summary>
+                  <div>
+                    {historicalSeats.map((item) => (
+                      <article key={item.id}>
+                        <small>{periodLabel(item)}</small>
+                        <strong>{item.nombre}</strong>
+                        {item.direccion ? <p>{item.direccion}</p> : null}
+                      </article>
+                    ))}
+                  </div>
+                </details>
               ) : null}
             </article>
           ) : null}
@@ -279,21 +299,6 @@ export default function BrotherhoodOverviewV2({ brotherhood, heroFactLabels = []
                     ))}
                   </div>
                 </div>
-              ) : null}
-
-              {seat.sedesHistoricas?.length > 0 ? (
-                <details className={styles.seatHistory}>
-                  <summary>Historia de sus sedes <span aria-hidden="true">＋</span></summary>
-                  <div>
-                    {seat.sedesHistoricas.map((item) => (
-                      <article key={item.id}>
-                        <small>{periodLabel(item)}</small>
-                        <strong>{item.nombre}</strong>
-                        {item.direccion ? <p>{item.direccion}</p> : null}
-                      </article>
-                    ))}
-                  </div>
-                </details>
               ) : null}
             </article>
           ) : null}
