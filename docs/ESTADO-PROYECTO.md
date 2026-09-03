@@ -1,6 +1,6 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 3 de septiembre de 2026 · ciclo editorial de mañana
+**Corte validado:** 3 de septiembre de 2026 · cierre del ciclo editorial
 **Régimen:** `FIRST EDITION FREEZE` activo
 **Fase activa:** editorial / documental sobre el modelo vigente
 
@@ -8,19 +8,22 @@
 
 **PRIMERA EDICIÓN → 🟢 CERRADA, CERTIFICADA Y CONGELADA**
 
-- `main` verificado al iniciar este ciclo: `56eff7a865b4d1498bfed434e3d4c30eeae7ed44`.
-- Producción Vercel al iniciar el ciclo: `READY` sobre el mismo SHA.
-- Check del HEAD: `success`.
-- Runtime auditado: 0 `error/fatal` en 12 horas.
-- PR abiertas al iniciar el ciclo: 0.
+- Baseline de aplicación certificado tras el QA de este ciclo: `e5ae26a271f8696d0bc0ba2b2e1eb47f37577f09`.
+- Ese SHA corresponde al merge de #562, corrección de alcance público de música y Fuentes.
+- Producción de aplicación verificada: `READY` en `dpl_Au2g9t3vMu1jDMP8PjuJBrW7QtLj`.
+- Runtime productivo: 0 `error/fatal` propios en la comprobación post-merge.
+- PR operativas abiertas antes de esta sincronización documental: 0.
 - Amparo: cerrada y certificada.
 - San Esteban: cerrada y certificada.
+- La Sed: cerrada y certificada.
 - #529: cerrada.
 - #492: abierta y aislada a Supabase Preview Branches.
 - Aportaciones públicas: desactivadas; `/colabora` mantiene formulario y endpoint cerrados.
 - Cola UX: 0.
 - Cola estructural: 0.
 - Nuevo DDL, tablas, RLS y arquitectura: bloqueados durante el freeze y mientras #492 siga abierta.
+
+Esta sincronización de `ESTADO-PROYECTO.md` es exclusivamente documental y no modifica aplicación, UX, esquema ni arquitectura.
 
 ## Supabase
 
@@ -30,10 +33,10 @@
 - PostgreSQL: 17.6.1.
 - Región: `eu-west-1`.
 - Migraciones remotas: 48.
-- Últimas: `20260902121927_completa_amparo_sevilla` y `20260902125718_aplica_paleta_amparo_sevilla`.
-- El cierre de La Sed se ejecutó solo mediante DML editorial sobre el modelo vigente.
-- Cada bloque fue prevalidado con `BEGIN … ROLLBACK`.
-- No hubo DDL, nueva tabla, RLS ni arquitectura.
+- Últimas migraciones estructurales: `20260902121927_completa_amparo_sevilla` y `20260902125718_aplica_paleta_amparo_sevilla`.
+- El cierre de La Sed se ejecutó mediante DML editorial sobre el modelo vigente.
+- Cada bloque de escritura de La Sed fue prevalidado con `BEGIN … ROLLBACK`.
+- No hubo DDL, nueva tabla, nuevo enum, RLS ni arquitectura.
 - Supabase conserva únicamente la rama `main`.
 
 ## Lotes cerrados
@@ -44,7 +47,14 @@
 
 Documento: `docs/CERTIFICACION-AMPARO-2026-09-02.md`.
 
-No se ha reabierto ni modificado en este ciclo.
+No se reabrió el lote. Durante el smoke final se detectó una Fuente de Cantillana que llegaba a la ficha por dos enlaces globales redundantes a profesionales compartidos. Se corrigió exclusivamente esa contaminación documental:
+
+- Fuente afectada: `Simpecado de los Devotos · Hermandad Sacramental de la Asunción`.
+- Se eliminaron 2 `source_links` globales redundantes a agentes.
+- Se conservaron 4 enlaces exactos de esa Fuente al Simpecado y sus intervenciones en Cantillana.
+- Prevalidación: `BEGIN … ROLLBACK` correcta.
+- DDL: 0.
+- Smoke posterior de Amparo: HTTP 200, patrimonio musical completo y Fuente ajena ausente.
 
 ### San Esteban
 
@@ -52,7 +62,7 @@ No se ha reabierto ni modificado en este ciclo.
 
 Documento: `docs/CERTIFICACION-SAN-ESTEBAN-2026-09-02.md`.
 
-No se ha reabierto ni modificado en este ciclo.
+No se reabrió ni se modificó contenido del lote. El smoke de no regresión posterior a #562 mantuvo la ficha operativa y sus bloques certificados.
 
 ### Hermandad de la Sed
 
@@ -66,7 +76,7 @@ Top 3 inicial:
 2. Aguas Santas de Villaverde del Río · prioridad aproximada 23/31 · completitud 29 %.
 3. Virgen del Castillo de Lebrija · prioridad aproximada 22/31 · completitud 21 %.
 
-La Sed fue la única Hermandad abierta.
+La Sed fue la única Hermandad abierta como nuevo lote.
 
 ## Cierre documental · La Sed
 
@@ -93,7 +103,7 @@ Tres titulares publicados y relacionados:
 
 Intervenciones estructuradas: 8.
 
-Se conserva la evaluación de Pedro Manzano de marzo de 2026 como diagnóstico publicado; no se inventa una intervención posterior.
+La evaluación de Pedro Manzano de marzo de 2026 se conserva como diagnóstico publicado; no se inventa una intervención posterior.
 
 ### Pasos y capataces
 
@@ -111,7 +121,7 @@ Acompañamientos vigentes:
 - Banda Municipal de Música de Mairena del Alcor → palio → desde 2001.
 - Banda de Música La Oliva de Salteras → palio → desde 2002.
 
-La procesión de Consolación del 3 de octubre de 2026 permanece sin banda asignada porque su fuente específica no la documenta.
+La procesión de Consolación del 3 de octubre de 2026 permanece sin banda asignada porque su Fuente específica no documenta acompañamiento musical.
 
 ### Patrimonio
 
@@ -142,7 +152,7 @@ No se amplía por homonimia.
 - Cultos ordinarios: 14.
 - Ocurrencias concretas de 2026: 7.
 - Fechas futuras no confirmadas del Mes de la Virgen no se infieren.
-- Besamanos: último domingo de septiembre y sábado anterior, según modificación del artículo 50.K aprobada en 2007; se documenta que la página de Reglas conserva una redacción anterior de octubre.
+- Besamanos: último domingo de septiembre y sábado anterior, según modificación del artículo 50.K aprobada en 2007; la discrepancia con la redacción anterior de la página de Reglas queda documentada.
 
 ### Salidas y acontecimientos
 
@@ -160,9 +170,11 @@ No se incorporan imágenes web o de prensa sin trazabilidad de derechos.
 
 ### Fuentes
 
-- Fuentes relevantes: 31.
-- URLs duplicadas dentro de La Sed: 0.
 - No quedan relaciones críticas certificadas sin Fuente.
+- URLs duplicadas dentro del lote: 0.
+- El smoke post-certificación detectó que la vista pública heredaba Fuentes de agentes compartidos y que Patrimonio musical solo leía dedicatorias al nodo Hermandad.
+- #562 corrigió ambas lecturas de forma genérica: dedicatorias a Hermandad + titulares y filtrado de Fuentes que llegan exclusivamente por agentes compartidos.
+- Smoke de producción posterior a #562: las 6 marchas aparecen en Patrimonio musical y desaparecen las Fuentes ajenas de San Esteban, Baratillo y San Benito.
 
 ## Salud del grafo · La Sed
 
@@ -209,9 +221,25 @@ Aproximación editorial:
 
 La baja puntuación de Multimedia refleja ausencia de recursos autorizados, no relaciones rotas.
 
+## QA de aplicación posterior a la certificación
+
+**#562 → 🟢 MERGED**
+
+Corrección demostrada durante el smoke de La Sed:
+
+- Patrimonio musical público ahora incluye dedicatorias a la Hermandad y a sus titulares.
+- Las Fuentes globales de autores/capataces compartidos ya no contaminan otras fichas salvo que tengan además una relación propia con la Hermandad mostrada.
+- Sin excepciones nominales.
+- `npm ci`: verde.
+- `npm test`: verde.
+- `npm run build`: verde.
+- Vercel: verde.
+- Producción: `READY`.
+- Runtime: 0 `error/fatal` propios.
+
 ## Actualidad urgente fuera del lote
 
-Durante la selección se detectó una discrepancia actual en Virgen del Castillo de Lebrija: la información reciente por obras de Santa María de la Oliva modifica la sede/traslado y el programa municipal sitúa la procesión del 12 de septiembre a las 19:00 mientras Hilo conserva un dato anterior. No se ha abierto ni modificado esa Hermandad para respetar la regla de un único lote.
+Durante la selección se detectó una discrepancia actual en Virgen del Castillo de Lebrija: la información reciente por obras de Santa María de la Oliva modifica la sede/traslado y el programa municipal sitúa la procesión del 12 de septiembre a las 19:00 mientras Hilo conserva un dato anterior. No se abrió ni modificó esa Hermandad para respetar la regla de un único lote.
 
 ## #492
 
