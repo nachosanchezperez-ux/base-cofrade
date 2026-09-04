@@ -1,6 +1,6 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 4 de septiembre de 2026 · cierre documental de Mercedes de Mairena del Aljarafe  
+**Corte validado:** 4 de septiembre de 2026 · cierre documental de Dulce Nombre de Bellavista  
 **Régimen:** `FIRST EDITION FREEZE` activo  
 **Fase activa:** editorial / documental sobre el modelo vigente
 
@@ -8,13 +8,15 @@
 
 **PRIMERA EDICIÓN → 🟢 CERRADA, CERTIFICADA Y CONGELADA**
 
-El frente documental seleccionado en la auditoría global del 4 de septiembre queda completado:
+Los últimos frentes documentales cerrados permanecen certificados:
 
 - Estrella de Coria → **certificada**.
 - La Trinidad → **certificada**.
-- Consolación de Carrión de los Céspedes → **certificada al 93 %**, indexable y con grafo limpio.
-- Mercedes de Mairena del Aljarafe → **certificada al 93 %**, indexable y con grafo limpio.
-- No queda una segunda Hermandad autorizada dentro de este lote.
+- Consolación de Carrión de los Céspedes → **certificada al 93 %**.
+- Mercedes de Mairena del Aljarafe → **certificada al 93 %**.
+- Dulce Nombre de Bellavista → **certificada al 93 %**, indexable y con grafo limpio.
+
+No queda una segunda Hermandad abierta dentro de este lote.
 
 ## Cierres documentales vigentes
 
@@ -60,73 +62,90 @@ El 7 % restante corresponde a la señal de escudo y otros huecos legítimos que 
 
 Documento: `docs/CERTIFICACION-MERCEDES-MAIRENA-2026-09-04.md`.
 
-La ficha partía de un 14 % técnico. El cierre incorpora y relaciona:
+La ficha partía de un 14 % técnico. El cierre incorpora identidad, sede, carácter Gloria/Sacramental, titular, tres configuraciones procesionales, seis cultos, calendario 2026, dos salidas de 2026, música vigente e histórica correctamente separada, tres piezas patrimoniales, el acontecimiento de la fusión sacramental y Fuentes enlazadas por contexto.
 
-- identidad completa y sede en la Iglesia Parroquial de San Ildefonso;
-- doble carácter Gloria y Sacramental;
-- fundación documentada de la corporación mercedaria en el siglo XVII;
-- antigua Sacramental fundada en 1864, fusión acordada en 1975 y aprobación canónica de 03/01/1977;
-- Nuestra Señora de las Mercedes como titular, con núcleo gótico documentado en el siglo XIV y conservación de 2013;
-- tres configuraciones procesionales: paso glorioso de septiembre, templete argénteo del Corpus y paso de la Custodia;
-- seis cultos recurrentes;
-- tres ocurrencias exactas de septiembre de 2026 procedentes del calendario parroquial vigente;
-- dos salidas de 2026: Corpus del 07/06 y procesión gloriosa anunciada para el 27/09;
-- Banda de Música María Santísima de la Victoria como acompañamiento vigente documentado únicamente para el Corpus 2026;
-- acompañamiento de septiembre de 2025 conservado como histórico, sin extrapolarlo a septiembre de 2026;
-- tres piezas patrimoniales: manto de Esperanza Elena Caro, custodia sacramental y saya de Manuel Solano de 2018;
-- acontecimiento histórico de la aprobación canónica de la fusión sacramental;
-- Fuentes institucionales, parroquiales, corporativas, locales y cofrades enlazadas por contexto.
+Durante el QA se detectó que el acontecimiento de 1977 existía en `events` pero no aparecía en Historia porque faltaba su relación explícita `involves`. Se clasificó como deuda editorial de relación y se corrigió el grafo sin modificar el lector común.
 
-Durante el QA se detectó que el acontecimiento de 1977 existía en `events` pero no aparecía en Historia porque faltaba su relación explícita `involves` con la Hermandad. Se clasificó como deuda editorial de relación y se corrigió el grafo. El lector común no necesitó cambios.
+### Dulce Nombre de Bellavista
 
-El 7 % restante corresponde a la señal de escudo. También permanecen como deuda legítima fotografías no autorizadas, datos técnicos de pasos no publicados y el acompañamiento de la procesión gloriosa del 27/09/2026 mientras no exista una confirmación específica fiable.
+**DULCE NOMBRE DE BELLAVISTA → 🟢 CERTIFICADA · 93 % · INDEXABLE · GRAFO CLEAN**
+
+Documento: `docs/CERTIFICACION-DULCE-NOMBRE-BELLAVISTA-2026-09-04.md`.
+
+La ficha partía de un 79 % técnico. El cierre incorpora y revalida:
+
+- identidad e historia de la corporación actual sin confundirla con el antecedente sacramental de 1968–1975;
+- sede histórica en la Parroquia del Dulce Nombre de María y sede vigente desde 15/06/2019 en el Sagrado Corazón de Jesús;
+- dos titulares con autoría, cronología e iconografía documentadas;
+- restauración del Señor por Darío Ojeda, finalizada en marzo de 2025;
+- dos pasos y sus capataces vigentes;
+- corrección del nodo compartido del capataz del misterio a **Jesús Varela Peral**;
+- tallado de la trasera del misterio estrenado en 2026 y relacionado con José Manuel Rodríguez Melo;
+- proyecto del nuevo palio con actualidad estricta: primeros estrenos aplazados a **2027**, sin presentarlos como realidad de 2026;
+- siete cultos recurrentes y siete ocurrencias exactas de 2026;
+- primer Vía Crucis del Señor en 1993;
+- estación de penitencia del Viernes de Dolores de 2026, primera desde el interior del Sagrado Corazón tras la nueva puerta;
+- Rosario público del 12/09/2026;
+- La Redención y Santa Ana de Dos Hermanas como acompañamientos vigentes de la estación de penitencia 2026;
+- Presentación al Pueblo 1997–1999 conservada como histórico;
+- toca de sobremanto de 2026 con diseño de Álvaro Abril Vela, bordado de Oro Bordado de Dolores Fernández y joyería de El Oribe;
+- tres acontecimientos históricos relacionados mediante `involves`;
+- recuperación documental del escudo corporativo original con las Reglas de 2026;
+- Fuentes directas y contextuales reforzadas, retirando del Rosario la antigua agenda genérica al disponer de convocatoria específica de septiembre de 2026.
+
+El 7 % restante corresponde exclusivamente a la señal técnica de escudo. El diseño recuperado está documentado, pero `crest_path` permanece vacío hasta disponer de un archivo reutilizable con derechos trazables.
+
+También se conserva como deuda legítima la normalización de la Agrupación Musical María Santísima del Rocío como Banda independiente, las fotografías no autorizadas y la comprobación posterior de la hora real de entrada de la estación de penitencia de 2026 frente al horario anunciado.
 
 ## Efecto de #589 sobre Fuentes
 
 #589 continúa siendo la regla vigente para Fuentes heredadas de entidades relacionadas.
 
-Mercedes mantiene Fuentes acotadas por contexto: Hermandad, titular, culto, ocurrencia anual, salida, acompañamiento, patrimonio, acontecimiento o relación de autoría. La Fuente parroquial de septiembre de 2026 se enlaza tanto a las ocurrencias anuales como a los cultos correspondientes para asegurar trazabilidad en el lector actual sin modificar UX.
+Las certificaciones de Mercedes y Bellavista mantienen las Fuentes acotadas por contexto: Hermandad, titular, culto, ocurrencia anual, salida, acompañamiento, patrimonio, acontecimiento, intervención o relación de autoría.
 
-No se detectó contaminación de segundo grado.
+En Bellavista, la convocatoria específica de septiembre de 2026 sustituye a la antigua agenda genérica como fuente del Rosario. No se detectó contaminación de segundo grado en el QA público.
 
-## Actualidad de main durante el cierre de Mercedes
+## Actualidad de main durante el cierre de Bellavista
 
-El frente comenzó sobre `main = 5b1bacf`. Durante su ejecución, `main` avanzó hasta `292daa7` mediante dos commits dedicados exclusivamente al tratamiento CSS responsive de las fotografías de Salidas.
+Bellavista se abrió después del cierre de Mercedes. Antes del trabajo editorial se refrescó el repositorio y se encontró `main = f0cda70`, con 0 PR abiertas.
 
-Se auditó el delta completo y se confirmó que no modifica:
+El delta posterior a Mercedes incluye cambios de lector y presentación —entre ellos Vía Crucis institucional, Fuentes, sede, música y directorios—. Por ello Bellavista se revalidó expresamente contra el lector vigente de `f0cda70` antes de certificar.
 
-- Supabase;
-- datos o consultas de Hermandades;
-- relaciones;
-- Fuentes;
-- criterios de completitud;
-- temporalidad;
-- SEO.
-
-La ficha pública de Mercedes fue revalidada sobre el deployment asociado a `292daa7`, incluyendo el tratamiento responsive de la fotografía de su salida del 27 de septiembre de 2026. La rama de certificación se creó desde ese `main`.
+El nuevo módulo institucional de Vía Crucis no se activa para el Vía Crucis propio de Bellavista de 1993, que permanece correctamente en Salidas.
 
 ## Estado técnico
 
-- Supabase producción: **ACTIVE_HEALTHY** en el último control del cierre.
-- Completitud de Mercedes de Mairena: **93 %**.
-- Señales positivas: identidad, sede, salida, titular, pasos, cultos, salidas, música y Fuentes.
-- Señal negativa: escudo, clasificado como deuda legítima.
+- Supabase producción: **operativa durante el cierre**.
+- Completitud de Dulce Nombre de Bellavista: **93 %**.
+- Señales positivas: identidad, sede, día, titulares, pasos, cultos, salidas, música y Fuentes.
+- Señal negativa: escudo, clasificada como deuda legítima.
 - Slugs duplicados: **0**.
 - Hermandad→Imagen huérfanas: **0**.
 - Hermandad→Paso huérfanas: **0**.
 - Imagen→Paso huérfanas: **0**.
 - Periodos musicales huérfanos: **0**.
-- Futuros musicales marcados como actuales en Mercedes: **0**.
-- Ruta pública de Mercedes: **HTTP 200 · index, follow · canonical correcta**.
-- Historia de 1977: **visible tras completar la relación `involves`**.
-- Crédito de la fotografía de salida: **normalizado a `Fotografía · Hermandad`**.
+- Futuros musicales marcados como actuales: **0**.
+- Titulares: **2**.
+- Pasos: **2**.
+- Cultos: **7**.
+- Ocurrencias de cultos 2026: **7**.
+- Salidas: **3**.
+- Acompañamientos normalizados de la estación de penitencia 2026: **2**.
+- Periodos musicales: **3**.
+- Patrimonio: **1 pieza + 1 intervención de restauración**.
+- Acontecimientos históricos: **3**.
+- Fases de pasos publicadas: **4**.
+- Sedes documentadas: **2**.
+- Ruta pública: **HTTP 200 · index, follow · canonical correcta**.
+- Runtime errors detectados en la ruta durante el control: **0**.
 - Cambios estructurales en este cierre: **0**.
 - DDL nuevo: **0**.
 - Tablas nuevas: **0**.
 - Migraciones estructurales: **0**.
 - Cambios RLS: **0**.
 - Nueva arquitectura: **0**.
-- UX general nueva dentro del frente editorial de Mercedes: **0**.
+- Cambios del lector dentro del frente Bellavista: **0**.
+- Nueva UX dentro del frente Bellavista: **0**.
 
 ## #492
 
@@ -151,9 +170,10 @@ No bloquea contenido, Fuentes, fotografías, patrimonio, música, históricos, c
 - La Trinidad → 🟢 certificada.
 - Consolación de Carrión → 🟢 certificada.
 - Mercedes de Mairena → 🟢 certificada.
+- Dulce Nombre de Bellavista → 🟢 certificada.
 
 ## Siguiente movimiento autorizado
 
-Tras fusionar la documentación de este cierre y confirmar de nuevo **0 PR abiertas**, el siguiente movimiento permitido es refrescar la auditoría global y recalcular la deuda real sobre el `main` vigente.
+Tras fusionar la documentación de Bellavista y volver a confirmar **0 PR abiertas**, el siguiente frente editorial acordado es **Pino Montaño**.
 
-No queda autorizada la ejecución de una segunda Hermandad dentro de este cierre. Antes de abrir otro frente debe volver a prevalecer el `main` vigente y confirmarse que no haya deuda operativa previa.
+Antes de modificar Pino Montaño debe refrescarse de nuevo `main`, comprobar merges concurrentes y diagnosticar su deuda real sobre el estado vigente. No se abre Pino Montaño dentro del mismo cierre de Bellavista.
