@@ -1,3 +1,5 @@
+@import './outing-image-presence.module.css';
+
 .cardWithVideo {
   grid-column: 1 / -1;
   grid-template-columns: 150px minmax(0, 1fr);
