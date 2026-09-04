@@ -16,7 +16,10 @@ import styles from './HermandadesDirectory.module.css'
 
 export default function HermandadesCategoryDirectory({ hermandades, typeKey }) {
   const config = directoryType(typeKey)
-  const items = sortBrotherhoods(hermandades.filter((item) => hasDirectoryType(item, typeKey)))
+  const items = sortBrotherhoods(
+    hermandades.filter((item) => hasDirectoryType(item, typeKey)),
+    typeKey
+  )
   const routes = [...new Map(items.map((item) => {
     const period = directoryPeriod(item, typeKey)
     const label = [localityLabel(item), period].filter(Boolean).join(' · ')
