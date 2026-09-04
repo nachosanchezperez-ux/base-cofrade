@@ -15,6 +15,7 @@ import {
 } from '@/lib/brotherhood-directory'
 import styles from './HermandadesDirectory.module.css'
 import enhancementStyles from './HermandadesDirectoryEnhancements.module.css'
+import groupStyles from './HermandadesDirectoryMainGroups.module.css'
 
 function groupSorted(items, getLabel) {
   return items.reduce((groups, item) => {
@@ -62,11 +63,12 @@ function buildExplorerGroups(items) {
 
     const otherItems = locality.items.filter((item) => !primaryDirectoryType(item))
     if (otherItems.length) {
+      const sortedOtherItems = sortBrotherhoods(otherItems)
       typeGroups.push({
         key: 'otras',
         label: 'Otras hermandades',
-        items: sortBrotherhoods(otherItems),
-        periods: [{ label: '', items: sortBrotherhoods(otherItems) }],
+        items: sortedOtherItems,
+        periods: [{ label: '', items: sortedOtherItems }],
       })
     }
 
@@ -249,10 +251,10 @@ export default function HermandadesDirectory({ hermandades }) {
                         </header>
                       ) : null}
 
-                      <div className={styles.mainTypeStack}>
+                      <div className={groupStyles.mainTypeStack}>
                         {locality.typeGroups.map((typeGroup) => (
-                          <section className={styles.mainTypeBlock} key={`${territoryGroup.key}-${locality.label}-${typeGroup.key}`}>
-                            <header className={styles.mainTypeHeading}>
+                          <section className={groupStyles.mainTypeBlock} key={`${territoryGroup.key}-${locality.label}-${typeGroup.key}`}>
+                            <header className={groupStyles.mainTypeHeading}>
                               <strong>{typeGroup.label}</strong>
                               <span>{typeGroup.items.length}</span>
                             </header>
