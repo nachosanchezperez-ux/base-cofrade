@@ -1,6 +1,6 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 3 de septiembre de 2026 · cierre de actualidad de Virgen del Castillo de Lebrija  
+**Corte validado:** 4 de septiembre de 2026 · cierre de #581 Estrella de Coria y #582 La Trinidad  
 **Régimen:** `FIRST EDITION FREEZE` activo  
 **Fase activa:** editorial / documental sobre el modelo vigente
 
@@ -8,196 +8,85 @@
 
 **PRIMERA EDICIÓN → 🟢 CERRADA, CERTIFICADA Y CONGELADA**
 
-- Baseline de aplicación validado antes de esta sincronización documental: `b7201bc2b2557435c2bbff6183608903bf95e09c`.
-- Producción correspondiente: `READY` en `dpl_4bvW3QjfxWf41nD6K8WzTgbUiiKb`.
-- Runtime productivo: 0 `error/fatal` en la comprobación final de una hora.
-- #568: fusionada; corrige de forma sistémica los enlaces de guías de salidas.
-- #569: fusionada; mejora contraste y normalización cromática compartida.
-- #570: fusionada; ajuste compartido de lectura editorial de horarios de sedes, sin interferir en el cierre de Castillo.
-- #571: fusionada; paletas editoriales de Santa Genoveva y La Bofetá, fuera del lote Castillo.
-- Amparo: 🟢 cerrada y certificada.
-- San Esteban: 🟢 cerrada y certificada.
-- La Sed: 🟢 cerrada y certificada.
-- Virgen del Castillo de Lebrija: 🟢 deuda de actualidad de septiembre de 2026 cerrada y verificada.
-- #529: cerrada.
-- #492: 🟣 abierta y aislada a Supabase Preview Branches.
-- Aportaciones públicas: desactivadas.
+El frente operativo de cierre de Hermandades abierto el 4 de septiembre queda completado:
 
-Esta sincronización es documental. No introduce UX, DDL, tablas, enums, RLS ni arquitectura.
+- #581 · Estrella de Coria → **MERGED y certificada**.
+- #582 · La Trinidad → **MERGED y certificada**.
+- PR abiertas tras ambos cierres → **0**.
+- No queda ninguna de estas dos Hermandades como frente activo.
+- No se ha abierto una Hermandad nueva dentro de esta tarea.
 
-## Supabase
+## Cierres documentales vigentes
 
-**PRODUCCIÓN → 🟢 `ACTIVE_HEALTHY`**
+### Estrella de Coria del Río
 
-- Proyecto: `Hilocofrade`.
-- PostgreSQL: 17.6.1.
-- Región: `eu-west-1`.
-- Migraciones remotas verificadas en este corte: **53**.
-- Última migración remota: `20260903144500_aplica_paletas_santa_genoveva_y_bofeta`.
-- Las migraciones posteriores al corte anterior corresponden a paletas/normalización editorial; no abren nuevo modelo estructural.
-- El lote Castillo se ha ejecutado mediante DML editorial sobre el modelo vigente y con prevalidación `BEGIN … ROLLBACK` en los bloques de escritura.
-- #492 continúa bloqueando DDL, nuevas tablas, migraciones estructurales y cambios RLS; no bloquea investigación ni DML editorial.
+**ESTRELLA DE CORIA → 🟢 CERTIFICADA · 86 % · INDEXABLE · GRAFO CLEAN**
 
-## Lotes cerrados
+Documento: `docs/CERTIFICACION-ESTRELLA-CORIA-2026-09-04.md`.
 
-### Amparo
+Reconciliada expresamente contra el `main` posterior a #589. Se mantienen como deuda legítima únicamente huecos que no deben resolverse por inferencia: cabecera/escudo con derechos trazables, multimedia autorizada, colores institucionales verificados, autoría superior del paso, capataz actual y datos de hora/acompañamiento patronal 2026 todavía no publicados.
 
-**AMPARO → 🟢 CERTIFICADA**
+### La Trinidad
 
-Documento: `docs/CERTIFICACION-AMPARO-2026-09-02.md`.
+**LA TRINIDAD → 🟢 CERTIFICADA · 100 % · INDEXABLE · GRAFO CLEAN**
 
-Se mantiene cerrada. Las correcciones posteriores han sido únicamente de QA transversal o de enlaces documentales demostrados; no se ha abierto una segunda auditoría.
+Documento: `docs/CERTIFICACION-LA-TRINIDAD-REVALIDADA-2026-09-04.md`.
 
-### San Esteban
+La revalidación posterior a #589 confirma:
 
-**SAN ESTEBAN → 🟢 CERTIFICADA**
+- Archicofradía de María Auxiliadora Coronada independiente;
+- María Auxiliadora y San Juan Bosco vinculados procesionalmente a dicha corporación, no absorbidos por La Trinidad;
+- tres pasos penitenciales correctamente relacionados;
+- capataces de 2026 separados del relevo confirmado para 2027;
+- música 2026 separada de histórico y cambios futuros confirmados;
+- Rosario Vespertino del 13/12/2025 y extraordinaria del V Centenario de 2008 conservados;
+- patrimonio, marchas, cultos, salidas, Fuentes e indexabilidad revalidados.
 
-Documento: `docs/CERTIFICACION-SAN-ESTEBAN-2026-09-02.md`.
+La única regresión material detectada durante el cierre fue temporal: un acompañamiento publicado como futuro podía entrar en el bloque vigente antes de su año/fecha de inicio. #582 añade un filtro común y test de regresión para impedir que los cambios musicales de 2027 se presenten como actuales en 2026.
 
-Se mantiene cerrada y sin reapertura editorial.
+## Efecto de #589 sobre Fuentes
 
-### Hermandad de la Sed
+#589 continúa siendo la regla vigente para Fuentes heredadas de agentes relacionados.
 
-**LA SED → 🟢 CERTIFICADA · SIN BLOQUEOS DE GRAFO**
+La auditoría reforzada de La Trinidad confirmó que Fuentes de segundo grado pertenecientes a otros contextos —por ejemplo Buen Fin/Sagrada Lanzada, Dulce Nombre de Bellavista o capataces de El Baratillo— no deben aparecer como Fuentes de La Trinidad solo por compartir autor/capataz.
 
-Documento: `docs/CERTIFICACION-LA-SED-2026-09-03.md`.
+El filtro de #589 evita esa contaminación sin eliminar Fuentes necesarias para las relaciones internas certificadas.
 
-- Completitud técnica inicial aproximada: 29 %.
-- Completitud final aproximada: 86 %.
-- Titulares: 3.
-- Pasos: 2.
-- Fases: 7.
-- Capataces vigentes: 2.
-- Acompañamientos vigentes: 3.
-- Patrimonio material representativo: 4 bienes.
-- Marchas dedicadas certificadas: 6.
-- Cultos: 14.
-- Ocurrencias 2026: 7.
-- Acontecimientos: 2.
-- Multimedia: hueco legítimo por ausencia de recursos autorizados.
+## Estado técnico
 
-### Virgen del Castillo de Lebrija
-
-**DEUDA DE ACTUALIDAD SEPTIEMBRE 2026 → 🟢 RESUELTA**
-
-Documento: `docs/CERTIFICACION-ACTUALIDAD-CASTILLO-LEBRIJA-2026-09-03.md`.
-
-Este cierre no declara completitud enciclopédica integral; certifica el frente temporal ordenado para septiembre de 2026.
-
-#### Sede y ubicación
-
-- Sede canónica / histórica: **Ermita de Nuestra Señora del Castillo**.
-- Ubicación temporal en septiembre de 2026: **Convento de la Purísima Concepción**.
-- Las obras de Santa María de la Oliva obligan a suspender el traslado previsto para el 6 de septiembre.
-- La excepción se modela mediante localización temporal + acontecimiento, sin sustituir la sede canónica.
-
-#### Titular
-
-- Nuestra Señora del Castillo Coronada queda publicada y relacionada con la Hermandad.
-- No se inventa autoría.
-- La ubicación actual queda resuelta en el grafo.
-
-#### Cultos 2026
-
-- Ofrenda floral · 11/09/2026.
-- Solemne Función · 12/09/2026 · 11:00.
-- Novena · 13–21/09/2026.
-
-Cultos y ocurrencias cuentan con Fuentes relacionadas.
-
-#### Procesión
-
-- Procesión de Gloria: **12 de septiembre de 2026 · 19:00**.
-- Se corrige el dato anterior de las 20:00.
-- Origen/destino 2026: Convento de la Purísima Concepción.
-- Banda: **Banda de Música Virgen del Castillo de Lebrija**, tras el paso.
-- Recorrido: pendiente; no se incorpora un itinerario antiguo o no confirmado.
-- Entrada: pendiente de publicación.
-
-#### Identidad cromática
-
-Paleta indicada por Dirección y aplicada sobre el modelo vigente:
-
-- Morado `#5B2C83` · principal.
-- Blanco `#FFFFFF`.
-- Dorado `#C6A15B` · acento.
-
-#### Acontecimiento
-
-Se relaciona el acontecimiento de reorganización temporal de 2026 con:
-
-- Hermandad del Castillo de Lebrija;
-- Nuestra Señora del Castillo Coronada.
-
-#### Salud del grafo
-
-**RESULTADO → 🟢 CLEAN para el alcance de actualidad**
-
-- Colores: 3.
-- Titulares publicados: 1.
-- Ubicaciones actuales: 1.
-- Acontecimientos: 1.
-- Relaciones del acontecimiento: 2.
-- Cultos: 3.
-- Ocurrencias 2026: 3.
-- Enlaces de Fuente a ocurrencias: 4.
-- Salidas: 1.
-- Fuentes directas de salida: 2.
-- Posiciones musicales: 1.
-- Asignaciones musicales: 1.
-- Fuente de asignación musical: 1.
-- Duplicados de slug Hermandad/Imagen/Salida: 0.
-
-#### QA público
-
-- `/hermandades/castillo-lebrija` → HTTP 200.
-- `/procesiones-de-gloria` → HTTP 200; Lebrija muestra salida 19:00.
-- `/procesiones-de-gloria/lebrija-castillo-2026-09-12` → HTTP 200.
-- La ficha específica muestra Convento de la Purísima, 19:00, Banda Virgen del Castillo y recorrido pendiente.
-- Runtime: 0 `error/fatal` en la comprobación final.
-
-## Reparación transversal de guías de salidas
-
-**#568 → 🟢 MERGED**
-
-El QA de Castillo reveló que la ficha común de Hermandad construía `Ver guía` para cualquier salida con slug, aunque no existiera una guía extraordinaria. Esto producía 404 en salidas ordinarias como Castillo y Amparo.
-
-La solución es común, no nominal:
-
-- el lector valida los slugs contra `extraordinary_outings_directory`;
-- solo las guías extraordinarias reales exponen enlace;
-- las salidas ordinarias conservan su slug en base de datos;
-- no se reclasifica ninguna salida;
-- no hay excepciones por slug;
-- `npm ci`, `npm test`, `npm run build` y Vercel: verdes antes del merge.
-
-## Fuentes de actualidad · Castillo
-
-Prioridad utilizada:
-
-1. Hermandad del Castillo de Lebrija: sede, cultos y traslados.
-2. Ayuntamiento de Lebrija: Ermita del Castillo y programa de Feria y Fiestas Patronales 2026.
-3. El Pespunte Cofrade: cambio temporal por obras y acompañamiento musical, 28/08/2026.
-
-No se incorpora recorrido 2026 porque no consta publicado en las fuentes actuales verificadas.
+- Supabase producción: **ACTIVE_HEALTHY** en el último control de este cierre.
+- Cambios estructurales en #581/#582: **0**.
+- DDL nuevo: **0**.
+- Tablas nuevas: **0**.
+- Migraciones estructurales: **0**.
+- Cambios RLS: **0**.
+- Nueva arquitectura: **0**.
+- UX general nueva: **0**.
 
 ## #492
 
-**#492 → 🟣 AISLADA**
+**#492 · Reconciliar Supabase Preview Branches → 🟣 ABIERTA Y AISLADA.**
 
-Mantiene su alcance de Supabase Preview Branches. No se ha intentado resolver dentro del lote editorial.
+#492 sigue bloqueando únicamente:
 
-## Aportaciones públicas
+- nuevo DDL;
+- nuevas tablas;
+- migraciones estructurales;
+- cambios RLS.
 
-**APORTACIONES → 🔒 DESACTIVADAS**
+No bloquea contenido, Fuentes, fotografías, patrimonio, música, históricos, cultos, salidas ni relaciones soportadas por el modelo actual.
 
-No se activó formulario ni endpoint y no se modificaron Auth, Storage, RLS o secretos.
+## Frentes certificados anteriores que permanecen cerrados
 
-## Estado del frente
+- Amparo → 🟢 certificada.
+- San Esteban → 🟢 certificada.
+- La Sed → 🟢 certificada.
+- Virgen del Castillo de Lebrija → 🟢 deuda de actualidad de septiembre de 2026 cerrada y verificada.
+- Estrella de Coria → 🟢 certificada.
+- La Trinidad → 🟢 certificada.
 
-**AMPARO → 🟢 CERRADA Y CERTIFICADA**  
-**SAN ESTEBAN → 🟢 CERRADA Y CERTIFICADA**  
-**LA SED → 🟢 CERRADA Y CERTIFICADA**  
-**CASTILLO DE LEBRIJA · ACTUALIDAD 2026 → 🟢 CERRADA Y VERIFICADA**
+## Siguiente movimiento autorizado
 
-**SIGUIENTE MOVIMIENTO → refrescar ranking real de deuda documental y seleccionar una sola Hermandad para la siguiente auditoría, sin introducir datos hasta devolver el diagnóstico a Dirección.**
+Con el frente #581/#582 cerrado, el siguiente movimiento es **refrescar la auditoría global de Hermandades, recalcular la deuda documental real, devolver un TOP 3 y seleccionar una única Hermandad como próximo frente**.
+
+La ejecución de esa nueva Hermandad no forma parte de este cierre y no debe iniciarse hasta una orden posterior.
