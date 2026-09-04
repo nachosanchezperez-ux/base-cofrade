@@ -1,6 +1,6 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 4 de septiembre de 2026 · cierre documental de Consolación de Carrión de los Céspedes  
+**Corte validado:** 4 de septiembre de 2026 · cierre documental de Mercedes de Mairena del Aljarafe  
 **Régimen:** `FIRST EDITION FREEZE` activo  
 **Fase activa:** editorial / documental sobre el modelo vigente
 
@@ -10,11 +10,11 @@
 
 El frente documental seleccionado en la auditoría global del 4 de septiembre queda completado:
 
-- #581 · Estrella de Coria → **MERGED y certificada**.
-- #582 · La Trinidad → **MERGED y certificada**.
+- Estrella de Coria → **certificada**.
+- La Trinidad → **certificada**.
 - Consolación de Carrión de los Céspedes → **certificada al 93 %**, indexable y con grafo limpio.
-- #590 · paleta de Las Cigarreras → **MERGED** durante el cierre de Carrión; revalidado sin incidencia sobre este frente documental.
-- No queda ninguna de estas Hermandades como frente activo.
+- Mercedes de Mairena del Aljarafe → **certificada al 93 %**, indexable y con grafo limpio.
+- No queda una segunda Hermandad autorizada dentro de este lote.
 
 ## Cierres documentales vigentes
 
@@ -42,7 +42,7 @@ La revalidación posterior a #589 confirma:
 - Rosario Vespertino del 13/12/2025 y extraordinaria del V Centenario de 2008 conservados;
 - patrimonio, marchas, cultos, salidas, Fuentes e indexabilidad revalidados.
 
-La única regresión material detectada durante aquel cierre fue temporal: un acompañamiento publicado como futuro podía entrar en el bloque vigente antes de su año/fecha de inicio. #582 añadió un filtro común y test de regresión para impedir que los cambios musicales de 2027 se presenten como actuales en 2026.
+La regresión temporal detectada durante aquel cierre quedó corregida con lógica común para impedir que los cambios musicales de 2027 se presenten como actuales en 2026.
 
 ### Consolación de Carrión de los Céspedes
 
@@ -50,55 +50,83 @@ La única regresión material detectada durante aquel cierre fue temporal: un ac
 
 Documento: `docs/CERTIFICACION-CONSOLACION-CARRION-2026-09-04.md`.
 
-La ficha partía de un 0 % técnico. El cierre incorpora y relaciona:
+La ficha pasó de un 0 % técnico a un cierre documental profundo con identidad, sede, tres titulares, tres pasos, cinco cultos, tres salidas de 2026, música vigente e histórica, patrimonio, marcha dedicada, Fuentes y relaciones. El procedimiento canónico de 2024 sobre el patronazgo queda documentado con las posiciones públicas de ambas corporaciones y sin presentarlo como cierre jurídico definitivo.
 
-- identidad completa, sede canónica e historia fundacional;
-- tres titulares: Nuestra Señora de Consolación, Santísimo Cristo de la Vera Cruz y María Santísima de la Soledad;
-- tres pasos: Virgen, Corpus Christi y Stabat Mater;
-- cinco cultos recurrentes documentados sin extrapolar fechas anuales no publicadas;
-- tres salidas de 2026: Stabat Mater, Día del Romero y Corpus Christi;
-- Maestro Tejera como acompañamiento vigente documentado en 2026;
-- Presentación al Pueblo y La Redención como acompañamientos históricos/eventuales de salidas concretas de 2026;
-- marcha `A Ti, Consolación` vinculada directamente a la imagen titular;
-- dos piezas patrimoniales;
-- procedimiento canónico de 2024 sobre el patronazgo documentado con las posiciones públicas de ambas corporaciones, sin presentarlo como cierre jurídico definitivo;
-- Fuentes corporativas, institucionales, patrimoniales y periodísticas directamente pertinentes.
+El 7 % restante corresponde a la señal de escudo y otros huecos legítimos que no deben completarse mediante inferencia.
 
-El 7 % restante corresponde a la señal de escudo. Se conserva como deuda legítima mientras no exista un recurso con derechos suficientemente trazables. Tampoco se fuerzan autorías, capataces, cronologías técnicas o fechas de septiembre de 2026 que las Fuentes actuales no permiten afirmar con suficiente seguridad.
+### Mercedes de Mairena del Aljarafe
+
+**MERCEDES DE MAIRENA → 🟢 CERTIFICADA · 93 % · INDEXABLE · GRAFO CLEAN**
+
+Documento: `docs/CERTIFICACION-MERCEDES-MAIRENA-2026-09-04.md`.
+
+La ficha partía de un 14 % técnico. El cierre incorpora y relaciona:
+
+- identidad completa y sede en la Iglesia Parroquial de San Ildefonso;
+- doble carácter Gloria y Sacramental;
+- fundación documentada de la corporación mercedaria en el siglo XVII;
+- antigua Sacramental fundada en 1864, fusión acordada en 1975 y aprobación canónica de 03/01/1977;
+- Nuestra Señora de las Mercedes como titular, con núcleo gótico documentado en el siglo XIV y conservación de 2013;
+- tres configuraciones procesionales: paso glorioso de septiembre, templete argénteo del Corpus y paso de la Custodia;
+- seis cultos recurrentes;
+- tres ocurrencias exactas de septiembre de 2026 procedentes del calendario parroquial vigente;
+- dos salidas de 2026: Corpus del 07/06 y procesión gloriosa anunciada para el 27/09;
+- Banda de Música María Santísima de la Victoria como acompañamiento vigente documentado únicamente para el Corpus 2026;
+- acompañamiento de septiembre de 2025 conservado como histórico, sin extrapolarlo a septiembre de 2026;
+- tres piezas patrimoniales: manto de Esperanza Elena Caro, custodia sacramental y saya de Manuel Solano de 2018;
+- acontecimiento histórico de la aprobación canónica de la fusión sacramental;
+- Fuentes institucionales, parroquiales, corporativas, locales y cofrades enlazadas por contexto.
+
+Durante el QA se detectó que el acontecimiento de 1977 existía en `events` pero no aparecía en Historia porque faltaba su relación explícita `involves` con la Hermandad. Se clasificó como deuda editorial de relación y se corrigió el grafo. El lector común no necesitó cambios.
+
+El 7 % restante corresponde a la señal de escudo. También permanecen como deuda legítima fotografías no autorizadas, datos técnicos de pasos no publicados y el acompañamiento de la procesión gloriosa del 27/09/2026 mientras no exista una confirmación específica fiable.
 
 ## Efecto de #589 sobre Fuentes
 
-#589 continúa siendo la regla vigente para Fuentes heredadas de agentes relacionados.
+#589 continúa siendo la regla vigente para Fuentes heredadas de entidades relacionadas.
 
-La auditoría reforzada de La Trinidad confirmó que Fuentes de segundo grado pertenecientes a otros contextos no deben aparecer solo por compartir autor/capataz.
+Mercedes mantiene Fuentes acotadas por contexto: Hermandad, titular, culto, ocurrencia anual, salida, acompañamiento, patrimonio, acontecimiento o relación de autoría. La Fuente parroquial de septiembre de 2026 se enlaza tanto a las ocurrencias anuales como a los cultos correspondientes para asegurar trazabilidad en el lector actual sin modificar UX.
 
-La certificación de Consolación de Carrión mantiene el mismo criterio: las Fuentes visibles son corporativas o de primer grado respecto de identidad, titulares, pasos, cultos, salidas, música, patrimonio y procedimiento de patronazgo. No se detectó contaminación de segundo grado.
+No se detectó contaminación de segundo grado.
 
-## Actualidad de main durante el cierre
+## Actualidad de main durante el cierre de Mercedes
 
-El frente de Carrión comenzó con `main = 6358762`. Durante su ejecución se fusionó `#590 · Aplica la paleta de Las Cigarreras`, por lo que el cierre se revalidó contra el nuevo `main = f7a762b` antes de abrir su PR documental.
+El frente comenzó sobre `main = 5b1bacf`. Durante su ejecución, `main` avanzó hasta `292daa7` mediante dos commits dedicados exclusivamente al tratamiento CSS responsive de las fotografías de Salidas.
 
-#590 solo incorpora DML de colores de Las Cigarreras y no modifica lector público, Hermandades de Carrión, relaciones, Fuentes, criterios de completitud ni indexabilidad.
+Se auditó el delta completo y se confirmó que no modifica:
+
+- Supabase;
+- datos o consultas de Hermandades;
+- relaciones;
+- Fuentes;
+- criterios de completitud;
+- temporalidad;
+- SEO.
+
+La ficha pública de Mercedes fue revalidada sobre el deployment asociado a `292daa7`, incluyendo el tratamiento responsive de la fotografía de su salida del 27 de septiembre de 2026. La rama de certificación se creó desde ese `main`.
 
 ## Estado técnico
 
 - Supabase producción: **ACTIVE_HEALTHY** en el último control del cierre.
-- Completitud de Consolación de Carrión: **93 %**.
+- Completitud de Mercedes de Mairena: **93 %**.
+- Señales positivas: identidad, sede, salida, titular, pasos, cultos, salidas, música y Fuentes.
+- Señal negativa: escudo, clasificado como deuda legítima.
 - Slugs duplicados: **0**.
 - Hermandad→Imagen huérfanas: **0**.
 - Hermandad→Paso huérfanas: **0**.
 - Imagen→Paso huérfanas: **0**.
 - Periodos musicales huérfanos: **0**.
-- Futuros musicales marcados como actuales en Carrión: **0**.
-- Ruta pública de Carrión: **HTTP 200 · index, follow · canonical correcta**.
-- Runtime errors detectados en la ruta durante el control: **0**.
+- Futuros musicales marcados como actuales en Mercedes: **0**.
+- Ruta pública de Mercedes: **HTTP 200 · index, follow · canonical correcta**.
+- Historia de 1977: **visible tras completar la relación `involves`**.
+- Crédito de la fotografía de salida: **normalizado a `Fotografía · Hermandad`**.
 - Cambios estructurales en este cierre: **0**.
 - DDL nuevo: **0**.
 - Tablas nuevas: **0**.
 - Migraciones estructurales: **0**.
 - Cambios RLS: **0**.
 - Nueva arquitectura: **0**.
-- UX general nueva: **0**.
+- UX general nueva dentro del frente editorial de Mercedes: **0**.
 
 ## #492
 
@@ -122,9 +150,10 @@ No bloquea contenido, Fuentes, fotografías, patrimonio, música, históricos, c
 - Estrella de Coria → 🟢 certificada.
 - La Trinidad → 🟢 certificada.
 - Consolación de Carrión → 🟢 certificada.
+- Mercedes de Mairena → 🟢 certificada.
 
 ## Siguiente movimiento autorizado
 
-Tras fusionar la documentación de este cierre y confirmar de nuevo **0 PR abiertas**, el siguiente movimiento permitido es refrescar la auditoría global y recalcular la deuda real sobre el nuevo estado.
+Tras fusionar la documentación de este cierre y confirmar de nuevo **0 PR abiertas**, el siguiente movimiento permitido es refrescar la auditoría global y recalcular la deuda real sobre el `main` vigente.
 
 No queda autorizada la ejecución de una segunda Hermandad dentro de este cierre. Antes de abrir otro frente debe volver a prevalecer el `main` vigente y confirmarse que no haya deuda operativa previa.
