@@ -1,6 +1,6 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 4 de septiembre de 2026 · cierre de #581 Estrella de Coria y #582 La Trinidad  
+**Corte validado:** 4 de septiembre de 2026 · cierre documental de Consolación de Carrión de los Céspedes  
 **Régimen:** `FIRST EDITION FREEZE` activo  
 **Fase activa:** editorial / documental sobre el modelo vigente
 
@@ -8,13 +8,13 @@
 
 **PRIMERA EDICIÓN → 🟢 CERRADA, CERTIFICADA Y CONGELADA**
 
-El frente operativo de cierre de Hermandades abierto el 4 de septiembre queda completado:
+El frente documental seleccionado en la auditoría global del 4 de septiembre queda completado:
 
 - #581 · Estrella de Coria → **MERGED y certificada**.
 - #582 · La Trinidad → **MERGED y certificada**.
-- PR abiertas tras ambos cierres → **0**.
-- No queda ninguna de estas dos Hermandades como frente activo.
-- No se ha abierto una Hermandad nueva dentro de esta tarea.
+- Consolación de Carrión de los Céspedes → **certificada al 93 %**, indexable y con grafo limpio.
+- #590 · paleta de Las Cigarreras → **MERGED** durante el cierre de Carrión; revalidado sin incidencia sobre este frente documental.
+- No queda ninguna de estas Hermandades como frente activo.
 
 ## Cierres documentales vigentes
 
@@ -42,20 +42,57 @@ La revalidación posterior a #589 confirma:
 - Rosario Vespertino del 13/12/2025 y extraordinaria del V Centenario de 2008 conservados;
 - patrimonio, marchas, cultos, salidas, Fuentes e indexabilidad revalidados.
 
-La única regresión material detectada durante el cierre fue temporal: un acompañamiento publicado como futuro podía entrar en el bloque vigente antes de su año/fecha de inicio. #582 añade un filtro común y test de regresión para impedir que los cambios musicales de 2027 se presenten como actuales en 2026.
+La única regresión material detectada durante aquel cierre fue temporal: un acompañamiento publicado como futuro podía entrar en el bloque vigente antes de su año/fecha de inicio. #582 añadió un filtro común y test de regresión para impedir que los cambios musicales de 2027 se presenten como actuales en 2026.
+
+### Consolación de Carrión de los Céspedes
+
+**CONSOLACIÓN DE CARRIÓN → 🟢 CERTIFICADA · 93 % · INDEXABLE · GRAFO CLEAN**
+
+Documento: `docs/CERTIFICACION-CONSOLACION-CARRION-2026-09-04.md`.
+
+La ficha partía de un 0 % técnico. El cierre incorpora y relaciona:
+
+- identidad completa, sede canónica e historia fundacional;
+- tres titulares: Nuestra Señora de Consolación, Santísimo Cristo de la Vera Cruz y María Santísima de la Soledad;
+- tres pasos: Virgen, Corpus Christi y Stabat Mater;
+- cinco cultos recurrentes documentados sin extrapolar fechas anuales no publicadas;
+- tres salidas de 2026: Stabat Mater, Día del Romero y Corpus Christi;
+- Maestro Tejera como acompañamiento vigente documentado en 2026;
+- Presentación al Pueblo y La Redención como acompañamientos históricos/eventuales de salidas concretas de 2026;
+- marcha `A Ti, Consolación` vinculada directamente a la imagen titular;
+- dos piezas patrimoniales;
+- confirmación del patronazgo de 2024 como acontecimiento histórico;
+- Fuentes corporativas, institucionales, patrimoniales y periodísticas directamente pertinentes.
+
+El 7 % restante corresponde a la señal de escudo. Se conserva como deuda legítima mientras no exista un recurso con derechos suficientemente trazables. Tampoco se fuerzan autorías, capataces, cronologías técnicas o fechas de septiembre de 2026 que las Fuentes actuales no permiten afirmar con suficiente seguridad.
 
 ## Efecto de #589 sobre Fuentes
 
 #589 continúa siendo la regla vigente para Fuentes heredadas de agentes relacionados.
 
-La auditoría reforzada de La Trinidad confirmó que Fuentes de segundo grado pertenecientes a otros contextos —por ejemplo Buen Fin/Sagrada Lanzada, Dulce Nombre de Bellavista o capataces de El Baratillo— no deben aparecer como Fuentes de La Trinidad solo por compartir autor/capataz.
+La auditoría reforzada de La Trinidad confirmó que Fuentes de segundo grado pertenecientes a otros contextos no deben aparecer solo por compartir autor/capataz.
 
-El filtro de #589 evita esa contaminación sin eliminar Fuentes necesarias para las relaciones internas certificadas.
+La certificación de Consolación de Carrión mantiene el mismo criterio: las Fuentes visibles son corporativas o de primer grado respecto de identidad, titulares, pasos, cultos, salidas, música, patrimonio y patronazgo. No se detectó contaminación de segundo grado.
+
+## Actualidad de main durante el cierre
+
+El frente de Carrión comenzó con `main = 6358762`. Durante su ejecución se fusionó `#590 · Aplica la paleta de Las Cigarreras`, por lo que el cierre se revalidó contra el nuevo `main = f7a762b` antes de abrir su PR documental.
+
+#590 solo incorpora DML de colores de Las Cigarreras y no modifica lector público, Hermandades de Carrión, relaciones, Fuentes, criterios de completitud ni indexabilidad.
 
 ## Estado técnico
 
-- Supabase producción: **ACTIVE_HEALTHY** en el último control de este cierre.
-- Cambios estructurales en #581/#582: **0**.
+- Supabase producción: **ACTIVE_HEALTHY** en el último control del cierre.
+- Completitud de Consolación de Carrión: **93 %**.
+- Slugs duplicados: **0**.
+- Hermandad→Imagen huérfanas: **0**.
+- Hermandad→Paso huérfanas: **0**.
+- Imagen→Paso huérfanas: **0**.
+- Periodos musicales huérfanos: **0**.
+- Futuros musicales marcados como actuales en Carrión: **0**.
+- Ruta pública de Carrión: **HTTP 200 · index, follow · canonical correcta**.
+- Runtime errors detectados en la ruta durante el control: **0**.
+- Cambios estructurales en este cierre: **0**.
 - DDL nuevo: **0**.
 - Tablas nuevas: **0**.
 - Migraciones estructurales: **0**.
@@ -84,9 +121,10 @@ No bloquea contenido, Fuentes, fotografías, patrimonio, música, históricos, c
 - Virgen del Castillo de Lebrija → 🟢 deuda de actualidad de septiembre de 2026 cerrada y verificada.
 - Estrella de Coria → 🟢 certificada.
 - La Trinidad → 🟢 certificada.
+- Consolación de Carrión → 🟢 certificada.
 
 ## Siguiente movimiento autorizado
 
-Con el frente #581/#582 cerrado, el siguiente movimiento es **refrescar la auditoría global de Hermandades, recalcular la deuda documental real, devolver un TOP 3 y seleccionar una única Hermandad como próximo frente**.
+Tras fusionar la documentación de este cierre y confirmar de nuevo **0 PR abiertas**, el siguiente movimiento permitido es refrescar la auditoría global y recalcular la deuda real sobre el nuevo estado.
 
-La ejecución de esa nueva Hermandad no forma parte de este cierre y no debe iniciarse hasta una orden posterior.
+No queda autorizada la ejecución de una segunda Hermandad dentro de este cierre. Antes de abrir otro frente debe volver a prevalecer el `main` vigente y confirmarse que no haya deuda operativa previa.
