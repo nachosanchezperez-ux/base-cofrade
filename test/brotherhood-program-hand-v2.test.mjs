@@ -56,7 +56,7 @@ test('Información práctica excluye los datos ya mostrados en la portada', () =
   assert.match(overview, /!heroFacts\.has\(fact\.label\)/)
   assert.match(overview, /const showIdentity = identityFacts\.length > 0 \|\| types\.length > 1/)
   assert.match(overview, /showIdentity && showSeat/)
-  assert.match(overview, /if \(!showIdentity && !showSeat\) return null/)
+  assert.match(overview, /if \(!showIdentity && !showSeat\) \{[\s\S]*BrotherhoodViaCrucisSection/)
   assert.match(overview, /Fundación/)
   assert.match(overview, /Hermanos/)
   assert.match(overview, /Titulares/)
