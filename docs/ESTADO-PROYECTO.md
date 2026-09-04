@@ -1,6 +1,6 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 4 de septiembre de 2026 · cierre documental de Dulce Nombre de Bellavista  
+**Corte validado:** 4 de septiembre de 2026 · cierre documental de Pino Montano  
 **Régimen:** `FIRST EDITION FREEZE` activo  
 **Fase activa:** editorial / documental sobre el modelo vigente
 
@@ -8,15 +8,16 @@
 
 **PRIMERA EDICIÓN → 🟢 CERRADA, CERTIFICADA Y CONGELADA**
 
-Los últimos frentes documentales cerrados permanecen certificados:
+Últimos frentes documentales certificados:
 
-- Estrella de Coria → **certificada**.
-- La Trinidad → **certificada**.
-- Consolación de Carrión de los Céspedes → **certificada al 93 %**.
-- Mercedes de Mairena del Aljarafe → **certificada al 93 %**.
-- Dulce Nombre de Bellavista → **certificada al 93 %**, indexable y con grafo limpio.
+- Estrella de Coria → **86 %**.
+- La Trinidad → **100 %**.
+- Consolación de Carrión de los Céspedes → **93 %**.
+- Mercedes de Mairena del Aljarafe → **93 %**.
+- Dulce Nombre de Bellavista → **93 %**.
+- Pino Montano → **93 %**, indexable y con grafo limpio.
 
-No queda una segunda Hermandad abierta dentro de este lote.
+No queda otra Hermandad autorizada dentro de este lote. Tras fusionar este cierre debe realizarse un nuevo recálculo global antes de seleccionar el siguiente frente.
 
 ## Cierres documentales vigentes
 
@@ -26,7 +27,7 @@ No queda una segunda Hermandad abierta dentro de este lote.
 
 Documento: `docs/CERTIFICACION-ESTRELLA-CORIA-2026-09-04.md`.
 
-Reconciliada expresamente contra el `main` posterior a #589. Se mantienen como deuda legítima únicamente huecos que no deben resolverse por inferencia: cabecera/escudo con derechos trazables, multimedia autorizada, colores institucionales verificados, autoría superior del paso, capataz actual y datos de hora/acompañamiento patronal 2026 todavía no publicados.
+Mantiene como deuda legítima únicamente huecos que no deben resolverse por inferencia: cabecera/escudo con derechos trazables, multimedia autorizada, colores institucionales verificados y datos concretos aún no publicados.
 
 ### La Trinidad
 
@@ -34,17 +35,7 @@ Reconciliada expresamente contra el `main` posterior a #589. Se mantienen como d
 
 Documento: `docs/CERTIFICACION-LA-TRINIDAD-REVALIDADA-2026-09-04.md`.
 
-La revalidación posterior a #589 confirma:
-
-- Archicofradía de María Auxiliadora Coronada independiente;
-- María Auxiliadora y San Juan Bosco vinculados procesionalmente a dicha corporación, no absorbidos por La Trinidad;
-- tres pasos penitenciales correctamente relacionados;
-- capataces de 2026 separados del relevo confirmado para 2027;
-- música 2026 separada de histórico y cambios futuros confirmados;
-- Rosario Vespertino del 13/12/2025 y extraordinaria del V Centenario de 2008 conservados;
-- patrimonio, marchas, cultos, salidas, Fuentes e indexabilidad revalidados.
-
-La regresión temporal detectada durante aquel cierre quedó corregida con lógica común para impedir que los cambios musicales de 2027 se presenten como actuales en 2026.
+Se mantiene separada la Archicofradía de María Auxiliadora Coronada; tres pasos penitenciales, capataces de 2026 y cambios confirmados para 2027 permanecen temporalmente diferenciados. Patrimonio, marchas, cultos, salidas y Fuentes fueron revalidados.
 
 ### Consolación de Carrión de los Céspedes
 
@@ -52,9 +43,7 @@ La regresión temporal detectada durante aquel cierre quedó corregida con lógi
 
 Documento: `docs/CERTIFICACION-CONSOLACION-CARRION-2026-09-04.md`.
 
-La ficha pasó de un 0 % técnico a un cierre documental profundo con identidad, sede, tres titulares, tres pasos, cinco cultos, tres salidas de 2026, música vigente e histórica, patrimonio, marcha dedicada, Fuentes y relaciones. El procedimiento canónico de 2024 sobre el patronazgo queda documentado con las posiciones públicas de ambas corporaciones y sin presentarlo como cierre jurídico definitivo.
-
-El 7 % restante corresponde a la señal de escudo y otros huecos legítimos que no deben completarse mediante inferencia.
+La ficha pasó de 0 % a un cierre documental profundo con identidad, sede, tres titulares, tres pasos, cinco cultos, tres salidas de 2026, música, patrimonio, marcha dedicada, Fuentes y relaciones. La deuda restante no se fuerza.
 
 ### Mercedes de Mairena del Aljarafe
 
@@ -62,9 +51,7 @@ El 7 % restante corresponde a la señal de escudo y otros huecos legítimos que 
 
 Documento: `docs/CERTIFICACION-MERCEDES-MAIRENA-2026-09-04.md`.
 
-La ficha partía de un 14 % técnico. El cierre incorpora identidad, sede, carácter Gloria/Sacramental, titular, tres configuraciones procesionales, seis cultos, calendario 2026, dos salidas de 2026, música vigente e histórica correctamente separada, tres piezas patrimoniales, el acontecimiento de la fusión sacramental y Fuentes enlazadas por contexto.
-
-Durante el QA se detectó que el acontecimiento de 1977 existía en `events` pero no aparecía en Historia porque faltaba su relación explícita `involves`. Se clasificó como deuda editorial de relación y se corrigió el grafo sin modificar el lector común.
+La ficha pasó de 14 % a 93 % con identidad, sede, doble carácter Gloria/Sacramental, titular, tres configuraciones procesionales, seis cultos, calendario 2026, dos salidas, música vigente e histórica, patrimonio, fusión sacramental y Fuentes contextuales. El acontecimiento de 1977 quedó relacionado mediante `involves` sin cambios de lector.
 
 ### Dulce Nombre de Bellavista
 
@@ -72,80 +59,95 @@ Durante el QA se detectó que el acontecimiento de 1977 existía en `events` per
 
 Documento: `docs/CERTIFICACION-DULCE-NOMBRE-BELLAVISTA-2026-09-04.md`.
 
-La ficha partía de un 79 % técnico. El cierre incorpora y revalida:
+La ficha partía de 79 %. Quedaron cerrados identidad, sede histórica y vigente, dos titulares, dos pasos, cultos 2026, salidas, música vigente, memoria histórica, patrimonio y acontecimientos.
 
-- identidad e historia de la corporación actual sin confundirla con el antecedente sacramental de 1968–1975;
-- sede histórica en la Parroquia del Dulce Nombre de María y sede vigente desde 15/06/2019 en el Sagrado Corazón de Jesús;
-- dos titulares con autoría, cronología e iconografía documentadas;
-- restauración del Señor por Darío Ojeda, finalizada en marzo de 2025;
-- dos pasos y sus capataces vigentes;
-- corrección del nodo compartido del capataz del misterio a **Jesús Varela Peral**;
-- tallado de la trasera del misterio estrenado en 2026 y relacionado con José Manuel Rodríguez Melo;
-- proyecto del nuevo palio con actualidad estricta: primeros estrenos aplazados a **2027**, sin presentarlos como realidad de 2026;
-- siete cultos recurrentes y siete ocurrencias exactas de 2026;
-- primer Vía Crucis del Señor en 1993;
-- estación de penitencia del Viernes de Dolores de 2026, primera desde el interior del Sagrado Corazón tras la nueva puerta;
-- Rosario público del 12/09/2026;
-- La Redención y Santa Ana de Dos Hermanas como acompañamientos vigentes de la estación de penitencia 2026;
-- Presentación al Pueblo 1997–1999 conservada como histórico;
-- toca de sobremanto de 2026 con diseño de Álvaro Abril Vela, bordado de Oro Bordado de Dolores Fernández y joyería de El Oribe;
-- tres acontecimientos históricos relacionados mediante `involves`;
-- recuperación documental del escudo corporativo original con las Reglas de 2026;
-- Fuentes directas y contextuales reforzadas, retirando del Rosario la antigua agenda genérica al disponer de convocatoria específica de septiembre de 2026.
+Después de la certificación se reforzó una atribución que ya existía en el grafo: el **proyecto del futuro paso de palio está diseñado por Álvaro Abril Vela**, con ejecución de bordados contratada a **Oro Bordado de Dolores Fernández**. El proyecto permanece temporalmente separado del palio vigente en 2026 y sus primeros estrenos están reprogramados para **2027**. Se añadió una fuente específica de autoría/ejecución a la fase del paso, sin cambios estructurales.
 
-El 7 % restante corresponde exclusivamente a la señal técnica de escudo. El diseño recuperado está documentado, pero `crest_path` permanece vacío hasta disponer de un archivo reutilizable con derechos trazables.
+El 7 % residual continúa siendo el escudo sin archivo reutilizable con derechos trazables.
 
-También se conserva como deuda legítima la normalización de la Agrupación Musical María Santísima del Rocío como Banda independiente, las fotografías no autorizadas y la comprobación posterior de la hora real de entrada de la estación de penitencia de 2026 frente al horario anunciado.
+### Pino Montano
+
+**PINO MONTANO → 🟢 CERTIFICADA · 93 % · INDEXABLE · GRAFO CLEAN**
+
+Documento: `docs/CERTIFICACION-PINO-MONTANO-2026-09-04.md`.
+
+La ficha partía de un 71 % técnico. El cierre incorpora y revalida:
+
+- origen escolar y vecinal en el curso 1981–1982 y primera salida del Viernes de Dolores de 1982;
+- Agrupación Parroquial desde 08/03/2000 y Hermandad de Penitencia desde 20/02/2007;
+- sede histórica en la iglesia del antiguo Hospital Psiquiátrico y sede vigente en San Isidro Labrador desde 13/03/2004;
+- relación de madrinazgo con la Macarena desde 26/11/2007 y hermanamiento aprobado en 2014;
+- dos titulares: Nuestro Padre Jesús de Nazaret y María Santísima del Amor;
+- dos pasos procesionales vigentes;
+- dos proyectos futuros aprobados el 05/04/2025, diferenciados del estado actual: misterio de **Manuel Caballero Acevedo / Taller Hermanos Caballero** y palio de **José Antonio Grande de León**;
+- doce cultos recurrentes y doce ocurrencias exactas de 2026;
+- cuatro salidas: Vía Crucis 2026, estación de penitencia 2026, Rosario anunciado para 24/10/2026 y procesión extraordinaria final de la Misión Evangelizadora de 2024;
+- tres posiciones musicales vigentes de 2026: Centuria Macarena juvenil en Cruz de Guía, Encarnación tras el misterio y La Puebla del Río tras el palio;
+- cuatro piezas patrimoniales: saya del XXV aniversario, manto de cultos en ejecución desde 2026, juego de jarras de 2017 y corona de 2019;
+- seis acontecimientos históricos renderizados en Historia mediante relaciones `involves`;
+- quince Fuentes visibles en el lector público, enlazadas por contexto.
+
+El manto de cultos se mantiene expresamente como **obra en ejecución**, sin fecha de conclusión inventada. Los proyectos de los pasos se conservan como fases futuras/en desarrollo y no como pasos ya concluidos.
+
+El 7 % restante corresponde únicamente a la señal técnica de escudo.
 
 ## Efecto de #589 sobre Fuentes
 
 #589 continúa siendo la regla vigente para Fuentes heredadas de entidades relacionadas.
 
-Las certificaciones de Mercedes y Bellavista mantienen las Fuentes acotadas por contexto: Hermandad, titular, culto, ocurrencia anual, salida, acompañamiento, patrimonio, acontecimiento, intervención o relación de autoría.
+Los cierres recientes mantienen las Fuentes acotadas por contexto: Hermandad, titular, sede, culto, ocurrencia anual, salida, acompañamiento, fase de paso, patrimonio, acontecimiento, intervención o relación de autoría.
 
-En Bellavista, la convocatoria específica de septiembre de 2026 sustituye a la antigua agenda genérica como fuente del Rosario. No se detectó contaminación de segundo grado en el QA público.
+En Pino Montano, el QA público muestra 15 Fuentes relevantes y no se detectó contaminación de segundo grado.
 
-## Actualidad de main durante el cierre de Bellavista
+## Actualidad de main durante el cierre de Pino Montano
 
-Bellavista se abrió después del cierre de Mercedes. Antes del trabajo editorial se refrescó el repositorio y se encontró `main = f0cda70`, con 0 PR abiertas.
+Pino Montano se abrió sobre `main = 91bf533a8b4dd74f8268d0c15f92a45060b71d22`, correspondiente al merge de la certificación de Bellavista (#600).
 
-El delta posterior a Mercedes incluye cambios de lector y presentación —entre ellos Vía Crucis institucional, Fuentes, sede, música y directorios—. Por ello Bellavista se revalidó expresamente contra el lector vigente de `f0cda70` antes de certificar.
+Antes de certificar se volvió a comprobar:
 
-El nuevo módulo institucional de Vía Crucis no se activa para el Vía Crucis propio de Bellavista de 1993, que permanece correctamente en Salidas.
+- `main` sin avance concurrente;
+- **0 PR abiertas**;
+- #492 abierta y aislada;
+- lector público vigente sin regresiones sistémicas para la ficha.
+
+No fue necesario modificar código ni lector.
 
 ## Estado técnico
 
 - Supabase producción: **operativa durante el cierre**.
-- Completitud de Dulce Nombre de Bellavista: **93 %**.
+- Completitud de Pino Montano: **93 %**.
 - Señales positivas: identidad, sede, día, titulares, pasos, cultos, salidas, música y Fuentes.
 - Señal negativa: escudo, clasificada como deuda legítima.
+- Titulares: **2**.
+- Pasos: **2**.
+- Proyectos de pasos: **2**.
+- Cultos: **12**.
+- Ocurrencias de cultos 2026: **12**.
+- Salidas: **4**.
+- Acompañamientos concretos: **4**.
+- Periodos musicales: **3**.
+- Patrimonio: **4 piezas**.
+- Acontecimientos históricos: **6**.
+- Sedes documentadas: **2**.
 - Slugs duplicados: **0**.
 - Hermandad→Imagen huérfanas: **0**.
 - Hermandad→Paso huérfanas: **0**.
 - Imagen→Paso huérfanas: **0**.
 - Periodos musicales huérfanos: **0**.
-- Futuros musicales marcados como actuales: **0**.
-- Titulares: **2**.
-- Pasos: **2**.
-- Cultos: **7**.
-- Ocurrencias de cultos 2026: **7**.
-- Salidas: **3**.
-- Acompañamientos normalizados de la estación de penitencia 2026: **2**.
-- Periodos musicales: **3**.
-- Patrimonio: **1 pieza + 1 intervención de restauración**.
-- Acontecimientos históricos: **3**.
-- Fases de pasos publicadas: **4**.
-- Sedes documentadas: **2**.
+- Fases de pasos huérfanas: **0**.
+- Relaciones huérfanas: **0**.
+- Música futura marcada como actual: **0**.
+- Proyectos futuros con fecha incoherente: **0**.
 - Ruta pública: **HTTP 200 · index, follow · canonical correcta**.
-- Runtime errors detectados en la ruta durante el control: **0**.
-- Cambios estructurales en este cierre: **0**.
+- Runtime errors/fatales asociados a la ruta en el control previo a certificación: **0**.
+- Cambios estructurales: **0**.
 - DDL nuevo: **0**.
 - Tablas nuevas: **0**.
 - Migraciones estructurales: **0**.
 - Cambios RLS: **0**.
 - Nueva arquitectura: **0**.
-- Cambios del lector dentro del frente Bellavista: **0**.
-- Nueva UX dentro del frente Bellavista: **0**.
+- Cambios del lector: **0**.
+- Nueva UX: **0**.
 
 ## #492
 
@@ -165,15 +167,16 @@ No bloquea contenido, Fuentes, fotografías, patrimonio, música, históricos, c
 - Amparo → 🟢 certificada.
 - San Esteban → 🟢 certificada.
 - La Sed → 🟢 certificada.
-- Virgen del Castillo de Lebrija → 🟢 deuda de actualidad de septiembre de 2026 cerrada y verificada.
+- Virgen del Castillo de Lebrija → 🟢 deuda de actualidad de septiembre de 2026 cerrada.
 - Estrella de Coria → 🟢 certificada.
 - La Trinidad → 🟢 certificada.
 - Consolación de Carrión → 🟢 certificada.
 - Mercedes de Mairena → 🟢 certificada.
 - Dulce Nombre de Bellavista → 🟢 certificada.
+- Pino Montano → 🟢 certificada.
 
 ## Siguiente movimiento autorizado
 
-Tras fusionar la documentación de Bellavista y volver a confirmar **0 PR abiertas**, el siguiente frente editorial acordado es **Pino Montaño**.
+Tras fusionar esta documentación y confirmar de nuevo **0 PR abiertas**, corresponde ejecutar un **nuevo recálculo global de deuda documental** sobre el `main` vigente.
 
-Antes de modificar Pino Montaño debe refrescarse de nuevo `main`, comprobar merges concurrentes y diagnosticar su deuda real sobre el estado vigente. No se abre Pino Montaño dentro del mismo cierre de Bellavista.
+No se abre automáticamente otra Hermandad dentro del cierre de Pino Montano. El siguiente frente debe seleccionarse con el estado actualizado de producción.
