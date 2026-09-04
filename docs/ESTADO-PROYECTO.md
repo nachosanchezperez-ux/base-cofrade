@@ -1,6 +1,6 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 4 de septiembre de 2026 · cierre documental de Pino Montano  
+**Corte validado:** 4 de septiembre de 2026 · cierre documental de Vera Cruz y Encarnación de Aznalcázar  
 **Régimen:** `FIRST EDITION FREEZE` activo  
 **Fase activa:** editorial / documental sobre el modelo vigente
 
@@ -15,7 +15,8 @@
 - Consolación de Carrión de los Céspedes → **93 %**.
 - Mercedes de Mairena del Aljarafe → **93 %**.
 - Dulce Nombre de Bellavista → **93 %**.
-- Pino Montano → **93 %**, indexable y con grafo limpio.
+- Pino Montano → **93 %**.
+- Vera Cruz y Encarnación de Aznalcázar → **93 %**, indexable y con grafo limpio.
 
 No queda otra Hermandad autorizada dentro de este lote. Tras fusionar este cierre debe realizarse un nuevo recálculo global antes de seleccionar el siguiente frente.
 
@@ -91,55 +92,92 @@ El manto de cultos se mantiene expresamente como **obra en ejecución**, sin fec
 
 El 7 % restante corresponde únicamente a la señal técnica de escudo.
 
+### Vera Cruz y Encarnación de Aznalcázar
+
+**VERA CRUZ Y ENCARNACIÓN DE AZNALCÁZAR → 🟢 CERTIFICADA · 93 % · INDEXABLE · GRAFO CLEAN**
+
+Documento: `docs/CERTIFICACION-VERA-CRUZ-ENCARNACION-AZNALCAZAR-2026-09-04.md`.
+
+La ficha partía de un **14 % técnico** y estaba representada casi únicamente como Gloria. El cierre reconstruye la corporación completa sobre el modelo vigente:
+
+- nombre oficial completo y nombre público normalizado;
+- fundación documentada el **18/05/1538** en el convento de franciscanos mínimos de Nuestra Señora de la Victoria;
+- doble carácter **Penitencia + Gloria**;
+- sede canónica actual en la **Capilla de Nuestra Señora de la Encarnación**, C/ Diezmo 12;
+- estación de penitencia el **Jueves Santo** y procesión de Gloria el **último domingo de septiembre**;
+- tres titulares: Santísimo Cristo de la Vera Cruz, Nuestra Señora de la Encarnación y Santa María Magdalena;
+- cronología prudente: Cristo del siglo XVII; Virgen y Magdalena del siglo XVIII; sin convertir atribuciones propuestas en autorías concluyentes;
+- dos pasos procesionales: paso penitencial de Cristo y Magdalena y paso de Gloria de la Encarnación;
+- hábito penitencial documentado con túnica y antifaz verdes, cordón franciscano blanco y escudo bordado en oro;
+- cuatro cultos recurrentes de septiembre: Triduo, Ofrenda floral, Misa solemne y Función Principal;
+- **0 ocurrencias de cultos 2026 de forma deliberada**, porque no se extrapolan fechas ni horas desde convocatorias históricas;
+- estación de penitencia del **02/04/2026, 19:30–22:00**, con ruta, música de capilla y Lignum Crucis;
+- procesión de Gloria del **27/09/2026**, sin inventar hora no publicada;
+- extraordinaria del **28/03/2013** por el 475.º aniversario fundacional, con los tres titulares;
+- Las Nieves de Olivares tras el paso de Gloria, vínculo documentado desde 2013 y continuidad confirmada en 2026;
+- tres piezas patrimoniales: Lignum Crucis, retablo neoclásico de la capilla y manto rojo bordado en oro de la Virgen;
+- tres acontecimientos históricos: fundación de 1538, restauración de la Encarnación por Luis Álvarez Duarte en 1995 y 475.º aniversario de 2013;
+- seis Fuentes directas y doce Fuentes visibles en el lector público, relacionadas por contexto.
+
+El slug `encarnacion-aznalcazar` se conserva para mantener continuidad SEO.
+
+La antigua fuente PDF municipal permanece como archivo ya existente, pero no se han incorporado datos nuevos dependientes exclusivamente de ella al no haberse completado una revisión visual fiable de sus páginas.
+
+La señal técnica residual del 7 % corresponde únicamente al **escudo**, que permanece vacío hasta disponer de archivo reutilizable con derechos/procedencia trazables.
+
 ## Efecto de #589 sobre Fuentes
 
 #589 continúa siendo la regla vigente para Fuentes heredadas de entidades relacionadas.
 
 Los cierres recientes mantienen las Fuentes acotadas por contexto: Hermandad, titular, sede, culto, ocurrencia anual, salida, acompañamiento, fase de paso, patrimonio, acontecimiento, intervención o relación de autoría.
 
-En Pino Montano, el QA público muestra 15 Fuentes relevantes y no se detectó contaminación de segundo grado.
+En Pino Montano, el QA público mostró 15 Fuentes relevantes sin contaminación de segundo grado.
 
-## Actualidad de main durante el cierre de Pino Montano
+En Aznalcázar, el lector público muestra 12 Fuentes relevantes. La convocatoria de cultos de 2023 queda explícitamente tratada como patrón histórico/recurrente, no como calendario 2026. No se detectó contaminación de segundo grado.
 
-Pino Montano se abrió sobre `main = 91bf533a8b4dd74f8268d0c15f92a45060b71d22`, correspondiente al merge de la certificación de Bellavista (#600).
+## Actualidad de main durante el cierre de Aznalcázar
 
-Antes de certificar se volvió a comprobar:
+Vera Cruz y Encarnación de Aznalcázar se abrió después del merge de Pino Montano.
 
-- `main` sin avance concurrente;
+Preflight y revalidación previa a certificación:
+
+- `main = 7fcf87327bcd08a5bcd27a2e7d8a15818461cde9`;
 - **0 PR abiertas**;
 - #492 abierta y aislada;
-- lector público vigente sin regresiones sistémicas para la ficha.
+- Supabase producción operativa;
+- ningún merge concurrente posterior que obligue a reconciliar lector, Fuentes, completitud o indexabilidad.
 
 No fue necesario modificar código ni lector.
 
 ## Estado técnico
 
+### Vera Cruz y Encarnación de Aznalcázar
+
 - Supabase producción: **operativa durante el cierre**.
-- Completitud de Pino Montano: **93 %**.
+- Completitud: **93 %**.
 - Señales positivas: identidad, sede, día, titulares, pasos, cultos, salidas, música y Fuentes.
 - Señal negativa: escudo, clasificada como deuda legítima.
-- Titulares: **2**.
+- Titulares: **3**.
 - Pasos: **2**.
-- Proyectos de pasos: **2**.
-- Cultos: **12**.
-- Ocurrencias de cultos 2026: **12**.
-- Salidas: **4**.
-- Acompañamientos concretos: **4**.
-- Periodos musicales: **3**.
-- Patrimonio: **4 piezas**.
-- Acontecimientos históricos: **6**.
-- Sedes documentadas: **2**.
+- Cultos recurrentes: **4**.
+- Ocurrencias de cultos 2026: **0 deliberadamente**.
+- Salidas: **3**.
+- Acompañamientos concretos: **1**.
+- Periodos musicales: **1**.
+- Patrimonio: **3 piezas**.
+- Acontecimientos históricos: **3**.
+- Fuentes directas: **6**.
+- Fuentes visibles: **12**.
 - Slugs duplicados: **0**.
+- Hermandad→Imagen duplicadas: **0**.
+- Hermandad→Paso duplicadas: **0**.
+- Imagen→Paso duplicadas: **0**.
 - Hermandad→Imagen huérfanas: **0**.
 - Hermandad→Paso huérfanas: **0**.
-- Imagen→Paso huérfanas: **0**.
-- Periodos musicales huérfanos: **0**.
-- Fases de pasos huérfanas: **0**.
-- Relaciones huérfanas: **0**.
 - Música futura marcada como actual: **0**.
-- Proyectos futuros con fecha incoherente: **0**.
+- Acontecimientos históricos sin `involves`: **0**.
 - Ruta pública: **HTTP 200 · index, follow · canonical correcta**.
-- Runtime errors/fatales asociados a la ruta en el control previo a certificación: **0**.
+- Runtime errors asociados a la ruta durante el control previo a certificación: **0**.
 - Cambios estructurales: **0**.
 - DDL nuevo: **0**.
 - Tablas nuevas: **0**.
@@ -174,9 +212,10 @@ No bloquea contenido, Fuentes, fotografías, patrimonio, música, históricos, c
 - Mercedes de Mairena → 🟢 certificada.
 - Dulce Nombre de Bellavista → 🟢 certificada.
 - Pino Montano → 🟢 certificada.
+- Vera Cruz y Encarnación de Aznalcázar → 🟢 certificada.
 
 ## Siguiente movimiento autorizado
 
 Tras fusionar esta documentación y confirmar de nuevo **0 PR abiertas**, corresponde ejecutar un **nuevo recálculo global de deuda documental** sobre el `main` vigente.
 
-No se abre automáticamente otra Hermandad dentro del cierre de Pino Montano. El siguiente frente debe seleccionarse con el estado actualizado de producción.
+No se abre automáticamente otra Hermandad dentro del cierre de Aznalcázar. El siguiente frente debe seleccionarse con el estado actualizado de producción.
