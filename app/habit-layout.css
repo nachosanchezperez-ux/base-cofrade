@@ -3,6 +3,47 @@
    entre ilustración y ficha. Las reglas específicas de varias variantes son comunes
    a todas las hermandades: no hay excepciones por slug ni por imagen. */
 
+/* La indumentaria usa una superficie oscura estable. La identidad corporativa queda
+   en los acentos y en la propia representación del hábito, pero la legibilidad no
+   depende de que el color oscuro de cada Hermandad tenga suficiente contraste. */
+#tunica.brotherhood-dark {
+  color: #f7fafc;
+  background:
+    radial-gradient(circle at 88% 10%, rgba(255,255,255,.07), transparent 27%),
+    linear-gradient(145deg, #10263d 0%, #18304b 54%, #10263d 100%);
+}
+
+#tunica .section-heading h2,
+#tunica .habit-copy h3 {
+  color: #fff;
+}
+
+#tunica .section-heading p {
+  color: #d5e0ea;
+}
+
+#tunica .eyebrow {
+  color: #e2bdc7;
+}
+
+#tunica .brotherhood-habit {
+  border-color: rgba(255,255,255,.17);
+  background: rgba(255,255,255,.075);
+  box-shadow: 0 18px 44px rgba(4,17,30,.18);
+}
+
+#tunica .habit-copy dl div {
+  border-top-color: rgba(255,255,255,.13);
+}
+
+#tunica .habit-copy dt {
+  color: #c8d3de;
+}
+
+#tunica .habit-copy dd {
+  color: #f7fafc;
+}
+
 .habit-visual {
   position: relative;
   overflow: hidden;
@@ -215,7 +256,7 @@
     min-height: 360px;
     padding: 0;
     border-right: 0;
-    border-bottom: 1px solid rgba(255,255,255,.1);
+    border-bottom: 1px solid rgba(255,255,255,.13);
   }
 
   .habit-image {
