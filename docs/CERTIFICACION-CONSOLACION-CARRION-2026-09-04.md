@@ -85,7 +85,9 @@ Se incorporan dos piezas documentadas:
 
 ## Historia y acontecimientos
 
-Se incorpora como hito de 2024 la confirmación en tercera instancia, por el Tribunal de la Rota, del patronazgo de Nuestra Señora de Consolación sobre Carrión de los Céspedes.
+Se incorpora como hito de 2024 la resolución producida en el procedimiento canónico sobre el patronazgo de Nuestra Señora de Consolación. La Hermandad de Consolación comunicó públicamente el resultado como confirmación en tercera instancia; la Hermandad del Rosario sostuvo que no existió una nueva sentencia sobre el fondo, sino la inadmisión de su `restitutio in integrum`, y anunció recurso ante la Signatura Apostólica.
+
+La ficha conserva ambas posiciones y no presenta el episodio de 2024 como cierre jurídico definitivo. En la auditoría de actualidad del 4 de septiembre de 2026 no se localizó una resolución posterior de 2025–2026 que permita eliminar esa cautela.
 
 ## Fuentes
 
@@ -99,7 +101,8 @@ La ficha combina Fuentes corporativas, patrimoniales, institucionales y periodí
 - crónicas y convocatorias específicas del Stabat Mater de 2026;
 - Fuentes de Maestro Tejera y La Redención para sus participaciones de 2026;
 - documentación específica de la restauración del Cristo;
-- Cadena SER para el hito del patronazgo de 2024.
+- Cadena SER para la posición comunicada por Consolación sobre el procedimiento de patronazgo de 2024;
+- Arte Sacro para la posición pública de la Hermandad del Rosario sobre el alcance de esa resolución y el recurso anunciado.
 
 No se detectan Fuentes de segundo grado impropias en la ficha pública.
 
@@ -135,6 +138,7 @@ Permanece sin impedir la certificación:
 - capataces no verificados por Fuente fiable actual;
 - calendario exacto de los cultos y salidas de septiembre de 2026 mientras no exista convocatoria anual verificable;
 - fecha compositiva de `A Ti, Consolación`;
-- resolución definitiva de las discrepancias cronológicas de la Virgen y el Cristo mediante Fuente patrimonial superior.
+- resolución definitiva de las discrepancias cronológicas de la Virgen y el Cristo mediante Fuente patrimonial superior;
+- eventual resolución posterior del procedimiento de patronazgo si fuera publicada oficialmente.
 
 Estos huecos no justifican inferencias ni nuevo modelo.
