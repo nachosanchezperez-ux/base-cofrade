@@ -61,7 +61,7 @@ La ficha partía de un 0 % técnico. El cierre incorpora y relaciona:
 - Presentación al Pueblo y La Redención como acompañamientos históricos/eventuales de salidas concretas de 2026;
 - marcha `A Ti, Consolación` vinculada directamente a la imagen titular;
 - dos piezas patrimoniales;
-- confirmación del patronazgo de 2024 como acontecimiento histórico;
+- procedimiento canónico de 2024 sobre el patronazgo documentado con las posiciones públicas de ambas corporaciones, sin presentarlo como cierre jurídico definitivo;
 - Fuentes corporativas, institucionales, patrimoniales y periodísticas directamente pertinentes.
 
 El 7 % restante corresponde a la señal de escudo. Se conserva como deuda legítima mientras no exista un recurso con derechos suficientemente trazables. Tampoco se fuerzan autorías, capataces, cronologías técnicas o fechas de septiembre de 2026 que las Fuentes actuales no permiten afirmar con suficiente seguridad.
@@ -72,7 +72,7 @@ El 7 % restante corresponde a la señal de escudo. Se conserva como deuda legít
 
 La auditoría reforzada de La Trinidad confirmó que Fuentes de segundo grado pertenecientes a otros contextos no deben aparecer solo por compartir autor/capataz.
 
-La certificación de Consolación de Carrión mantiene el mismo criterio: las Fuentes visibles son corporativas o de primer grado respecto de identidad, titulares, pasos, cultos, salidas, música, patrimonio y patronazgo. No se detectó contaminación de segundo grado.
+La certificación de Consolación de Carrión mantiene el mismo criterio: las Fuentes visibles son corporativas o de primer grado respecto de identidad, titulares, pasos, cultos, salidas, música, patrimonio y procedimiento de patronazgo. No se detectó contaminación de segundo grado.
 
 ## Actualidad de main durante el cierre
 
