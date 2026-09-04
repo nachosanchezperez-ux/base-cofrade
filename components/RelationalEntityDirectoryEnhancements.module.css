@@ -119,6 +119,139 @@
   -webkit-line-clamp: 2;
 }
 
+.bandGroups {
+  display: grid;
+  gap: 38px;
+  margin-top: 2px;
+}
+
+.bandTerritory {
+  display: grid;
+  gap: 20px;
+}
+
+.bandTerritory + .bandTerritory {
+  margin-top: 4px;
+  padding-top: 32px;
+  border-top: 1px solid #dce5ed;
+}
+
+.bandTerritoryHeading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 0 2px 12px;
+  border-bottom: 2px solid #123a67;
+}
+
+.bandTerritoryHeading small {
+  display: block;
+  color: #b71f37;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.bandTerritoryHeading h2 {
+  margin: 4px 0 0;
+  color: #0f2742;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 28px;
+  line-height: 1;
+}
+
+.bandTerritoryHeading > span {
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background: #f1f5f8;
+  color: #526577;
+  padding: 7px 10px;
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.bandLocalities {
+  display: grid;
+  gap: 28px;
+}
+
+.bandLocality {
+  display: grid;
+  gap: 14px;
+}
+
+.bandLocalityHeading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 0 2px 9px;
+  border-bottom: 1px solid #dce5ed;
+}
+
+.bandLocalityHeading h3 {
+  margin: 0;
+  color: #123a67;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 21px;
+  line-height: 1.05;
+}
+
+.bandLocalityHeading > span {
+  flex: 0 0 auto;
+  color: #75818d;
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.bandTypes {
+  display: grid;
+  gap: 22px;
+}
+
+.bandTypeGroup {
+  display: grid;
+  gap: 10px;
+}
+
+.bandTypeHeading {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 24px;
+  padding: 0 2px;
+}
+
+.bandTypeHeading::before {
+  width: 4px;
+  height: 18px;
+  border-radius: 999px;
+  background: #b71f37;
+  content: '';
+}
+
+.bandTypeHeading strong {
+  color: #123a67;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.bandTypeHeading span {
+  display: grid;
+  min-width: 22px;
+  height: 22px;
+  place-items: center;
+  border-radius: 999px;
+  background: #f1f5f8;
+  color: #6b7887;
+  font-size: 8px;
+  font-weight: 900;
+}
+
 @media (max-width: 1100px) {
   .card.bandCard {
     grid-template-columns: 80px minmax(0, 1fr) 26px;
@@ -162,6 +295,14 @@
   .card.bandCard > .media.bandMedia {
     width: 70px;
     height: 86px;
+  }
+
+  .bandGroups {
+    gap: 32px;
+  }
+
+  .bandLocalities {
+    gap: 24px;
   }
 }
 
@@ -217,6 +358,48 @@
 
   .cardCopy :global(.context) {
     margin-top: 7px;
+  }
+
+  .bandGroups {
+    gap: 28px;
+  }
+
+  .bandTerritory {
+    gap: 16px;
+  }
+
+  .bandTerritory + .bandTerritory {
+    padding-top: 24px;
+  }
+
+  .bandTerritoryHeading {
+    align-items: flex-start;
+    padding-bottom: 10px;
+  }
+
+  .bandTerritoryHeading h2 {
+    font-size: 24px;
+  }
+
+  .bandTerritoryHeading > span {
+    padding: 6px 8px;
+    font-size: 8px;
+  }
+
+  .bandLocalities {
+    gap: 22px;
+  }
+
+  .bandLocalityHeading h3 {
+    font-size: 19px;
+  }
+
+  .bandTypes {
+    gap: 18px;
+  }
+
+  .bandTypeHeading strong {
+    font-size: 10px;
   }
 }
 
