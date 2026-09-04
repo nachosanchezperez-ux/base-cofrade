@@ -11,7 +11,7 @@
 
 .card {
   overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--brotherhood-primary) 16%, #dfe5ea);
+  border: 1px solid #dde3e8;
   border-radius: 28px;
   background: #fff;
   box-shadow: 0 18px 50px rgba(20, 42, 58, 0.07);
@@ -22,7 +22,7 @@
   aspect-ratio: 16 / 10;
   margin: 0;
   overflow: hidden;
-  background: color-mix(in srgb, var(--brotherhood-primary) 10%, #f4f6f7);
+  background: #f3f5f6;
 }
 
 .photo {
@@ -74,10 +74,11 @@
   align-items: center;
   justify-content: center;
   padding: 24px 13px 16px;
-  border: 1px solid color-mix(in srgb, var(--brotherhood-primary) 22%, #dce4e9);
+  border: 1px solid #dfe4e8;
   border-radius: 19px;
-  background: color-mix(in srgb, var(--brotherhood-light) 82%, #f3f6f8);
-  color: var(--brotherhood-dark);
+  background: linear-gradient(180deg, #ffffff 0%, #f6f7f8 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.92), 0 8px 22px rgba(25, 42, 55, 0.055);
+  color: #1b2c3d;
   text-align: center;
 }
 
@@ -94,12 +95,13 @@
   display: block;
   width: 9px;
   height: 21px;
-  border: 2px solid color-mix(in srgb, var(--brotherhood-primary) 74%, #122b3c);
+  border: 2px solid color-mix(in srgb, var(--brotherhood-primary) 70%, #24394b);
   border-radius: 999px;
   background: #fff;
 }
 
 .day {
+  color: #172a3d;
   font-size: clamp(2.4rem, 5vw, 3.8rem);
   line-height: 0.9;
   letter-spacing: -0.07em;
@@ -108,7 +110,7 @@
 .month,
 .subDate {
   margin-top: 12px;
-  color: var(--brotherhood-secondary);
+  color: #6b747c;
   font-size: 0.71rem;
   font-weight: 800;
   letter-spacing: 0.11em;
@@ -118,6 +120,7 @@
 
 .mainDate {
   max-width: 100%;
+  color: #22313f;
   font-size: 1.02rem;
   font-weight: 800;
   line-height: 1.18;
@@ -144,18 +147,29 @@
 }
 
 .type {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 9px;
   margin-bottom: 10px;
-  color: var(--brotherhood-secondary);
+  color: #59646d;
   font-size: 0.76rem;
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
+.type::before {
+  width: 18px;
+  height: 2px;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background: var(--brotherhood-secondary);
+  content: '';
+}
+
 .copy h3 {
   margin: 0;
-  color: #131416;
+  color: #172432;
   font-size: clamp(1.45rem, 2.5vw, 2.05rem);
   line-height: 1.08;
   letter-spacing: -0.035em;
