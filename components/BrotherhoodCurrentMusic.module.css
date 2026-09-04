@@ -21,7 +21,7 @@
 
 .copy h2 {
   margin: 7px 0 10px;
-  color: var(--bc-dark);
+  color: #162d43;
   font-family: Georgia, serif;
   font-size: clamp(36px, 3.15vw, 46px);
   line-height: 1.02;
@@ -48,7 +48,7 @@
 }
 
 .context strong {
-  color: var(--bc-blue);
+  color: #17324a;
   font-size: 12px;
 }
 
@@ -96,7 +96,7 @@
 
 .outingHeader h3 {
   margin: 0;
-  color: var(--bc-dark);
+  color: #162d43;
   font-size: 20px;
   line-height: 1.15;
 }
@@ -220,10 +220,10 @@
   align-items: center;
   min-height: 24px;
   padding: 0 8px;
-  border: 1px solid rgba(21, 59, 105, .13);
+  border: 1px solid rgba(21, 59, 105, .16);
   border-radius: 999px;
-  color: var(--bc-blue);
-  background: rgba(21, 59, 105, .065);
+  color: #17324a;
+  background: #edf2f6;
   font-size: 9px;
   font-weight: 900;
   letter-spacing: .02em;
@@ -241,7 +241,7 @@
   place-items: center;
   justify-self: end;
   border-radius: 50%;
-  color: var(--bc-blue);
+  color: #17324a;
   font-size: 19px;
   transition: transform .18s ease, background .18s ease, color .18s ease;
 }
@@ -251,6 +251,17 @@
   transform: translateX(3px);
   color: var(--bc-red);
   background: #fff;
+}
+
+/* Los datos sobre fondos claros nunca heredan un color corporativo que pueda ser blanco o demasiado claro. */
+:global(.step-current-data strong),
+:global(.step-facts strong) {
+  color: #162d43;
+}
+
+:global(.step-current-data small),
+:global(.step-facts small) {
+  color: #6f7e8b;
 }
 
 :global(.brotherhood-current-music-sequence) + :global(#acompanamiento-musical) {
