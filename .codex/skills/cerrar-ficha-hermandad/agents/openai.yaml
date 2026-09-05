@@ -1,0 +1,5 @@
+interface:
+  display_name: "Cerrar ficha de Hermandad"
+  short_description: "Audita y certifica una Hermandad de Hilo"
+  default_prompt: "Usa $cerrar-ficha-hermandad para auditar y cerrar una Hermandad concreta de Hilo Cofrade."
+
