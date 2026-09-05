@@ -1,33 +1,35 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 5 de septiembre de 2026 · `main = 2b1dd2ddd6c9e0cc0ee5c60a332241bbd741c325`  
+**Corte validado:** 5 de septiembre de 2026  
+**Base de sincronización:** `main = fc63f4f10c126755d07af53ce4bdfcdd2caed038` · #619 ya integrada junto al merge concurrente #620  
 **Régimen:** `FIRST EDITION FREEZE` activo  
-**Fase activa:** editorial / documental sobre el modelo vigente  
-**Frente editorial activo:** ninguno  
-**PR abiertas:** 0
+**Fase:** editorial / documental sobre el modelo vigente  
+**Frente editorial activo:** ninguno
 
-## Estado general
+## Dónde estamos ahora
 
-**PRIMERA EDICIÓN → 🟢 CERRADA, CERTIFICADA Y CONGELADA**
+La Primera Edición permanece cerrada, certificada y congelada. No existe bloqueo editorial general ni una Hermandad abierta en trabajo.
 
-Repositorio, producción y modelo vigente permiten continuar con cierres editoriales profundos sin abrir arquitectura nueva.
+En la revalidación de este corte:
 
-El último cierre documental certificado es **El Cerro del Águila (#615)**. Después se han fusionado tres ajustes transversales sobre ese frente:
+- GitHub: `main = fc63f4f10c126755d07af53ce4bdfcdd2caed038`;
+- #619 sincronizó el estado canónico anterior;
+- #620 entró de forma concurrente y aplica a Cuatrovitas una paleta verde, blanco y dorado mediante DML sobre el modelo existente;
+- Vercel producción: `READY` sobre `fc63f4f`;
+- Supabase producción: operativa;
+- #492: abierta y aislada;
+- FIRST EDITION FREEZE: activo.
 
-- #616 · fotografía principal del Rosario de la Aurora 2026;
-- #617 · campo relacional **Vestidor actual** para Imágenes;
-- #618 · corrección JPEG de la fotografía del Rosario del Cerro.
-
-Producción está **READY** sobre el HEAD actual `2b1dd2d`.
+El SHA que resulte de fusionar este ajuste documental pasa a ser el nuevo HEAD de referencia sin cambiar el estado funcional descrito aquí.
 
 ## Cierres documentales vigentes
 
-Estas fichas permanecen cerradas y no deben reabrirse por deuda legítima, mejoras cosméticas o por perseguir un 100 % técnico:
+No deben reabrirse por deuda legítima, mejoras cosméticas o por perseguir un 100 % técnico:
 
 - Amparo;
 - San Esteban;
 - La Sed;
-- Virgen del Castillo de Lebrija · actualidad de septiembre de 2026 cerrada;
+- Virgen del Castillo de Lebrija · actualidad de septiembre de 2026;
 - Estrella de Coria;
 - La Trinidad;
 - Consolación de Carrión de los Céspedes;
@@ -42,153 +44,87 @@ Estas fichas permanecen cerradas y no deben reabrirse por deuda legítima, mejor
 - Nuestra Señora de la Luz de San Esteban;
 - El Cerro del Águila.
 
-Solo procede reabrir una ficha certificada ante regresión real o información nueva verificable que cambie materialmente su estado.
+Solo procede reabrir una ficha certificada ante una regresión real o información nueva verificable que cambie materialmente su estado.
 
-## Cierres posteriores al corte documental anterior
+## Estado posterior a Tomares
 
 ### Sastres · #607 + #608
 
-- ficha cerrada al 86 % técnico;
-- sede, titular, paso, cultos, salidas, patrimonio, acontecimientos y Fuentes estructurados;
-- Las Cigarreras confirmada vigente en 2026, con continuidad desde 2024;
-- deuda residual legítima: escudo/media con derechos y detalles patrimoniales no suficientemente publicados.
+86 % técnico. Sede, titular, paso, cultos, salidas, patrimonio, acontecimientos y Fuentes estructurados. Las Cigarreras queda vigente en 2026 con continuidad desde 2024. Escudo/media y detalles no publicados permanecen como deuda legítima.
 
 ### Hermandad Sacramental de Camas · #609–#613
 
-El cierre inicial de Dolores de Camas (#609) quedó superado por la revisión de la Fuente oficial `sacramentaldecamas.es`.
+#613 prevalece sobre el cierre inicial #609. La ficha canónica representa **Penitencia + Sacramental + Gloria**, con Jueves Santo, Corpus y Gloria separados; Gran Poder, Dolores Coronada y San Sebastián; 3 pasos; 12 cultos; salidas y música 2026; hitos históricos y paleta burdeos/dorado/negro/blanco. Completitud técnica: 100 %.
 
-Estado canónico vigente:
-
-- #610 corrige la búsqueda del Panel por nombre popular/oficial/localidad;
-- #611 retira el placeholder duplicado que provocaba 404 y conserva Cruz Roja como histórica;
-- #613 reconstruye la ficha completa como **Penitencia + Sacramental + Gloria**;
-- Jueves Santo, Corpus y Procesión de Gloria quedan separados;
-- Gran Poder, Dolores Coronada y San Sebastián quedan estructurados como titulares;
-- 3 pasos, 12 cultos, salidas 2026, música e hitos históricos;
-- colores burdeos, dorado, negro y blanco;
-- completitud técnica: **100 %**.
-
-La denominación operativa vigente es **Hermandad Sacramental de Camas**. #613 prevalece sobre #609.
+#610 corrigió la búsqueda del Panel y #611 retiró el placeholder duplicado que provocaba 404, conservando Cruz Roja como histórica.
 
 ### Setefilla · #612
 
-- 93 % técnico, considerado cierre completo para su idiosincrasia;
-- Santuario = sede canónica y residencia actual de la Imagen;
-- Asunción = referencia parroquial, Capilla de la Virgen y lugar de la Novena;
-- Casa de la Virgen = sede social y museo;
-- Romería anual separada de Idas y Venidas;
-- Venida 2022 e Ida 2024 estructuradas;
-- `music=false` no se considera deuda automática.
+93 % técnico considerado cierre completo para su idiosincrasia. Santuario, Asunción y Casa de la Virgen están diferenciados; Romería anual e Idas/Venidas son series distintas; Venida 2022 e Ida 2024 están estructuradas. La ausencia de música no constituye deuda automática.
 
 ### Nuestra Señora de la Luz de San Esteban · #614
 
-- 21 % → 86 %;
-- identidad histórica, sede, titular, paso, cultos y procesión de 2026 estructurados;
-- Las Cigarreras documentada en 2025 sin extrapolar vigencia a 2026;
-- deuda legítima: escudo y música 2026 no confirmada específicamente.
+21 % → 86 %. Identidad, sede, titular, paso, cultos y procesión 2026 estructurados. Las Cigarreras solo se acredita en 2025; no se extrapola a 2026. Escudo y música 2026 específica permanecen como deuda legítima.
 
-### El Cerro del Águila · #615
+### El Cerro del Águila · #615–#618
 
-- 93 % técnico;
-- Penitencia + Sacramental + Gloria;
-- 3 titulares, 3 pasos, 8 cultos, 6 salidas, 4 periodos musicales y 5 hitos históricos;
-- misión del 06/09/2026 relacionada sin duplicar la guía ya existente;
-- Ángeles, Centuria Macarena y Nieves de Olivares vigentes en 2026;
-- Nazareno de Huelva queda histórico 2019–2026 y no vigente para 2027;
-- deuda técnica residual: escudo.
+93 % técnico. Penitencia + Sacramental + Gloria; 3 titulares; 3 pasos; 8 cultos; 6 salidas; música actual 2026; 5 hitos. La misión/Rosario del 06/09/2026 reutiliza la guía existente. Nazareno de Huelva queda histórico 2019–2026 y no vigente para 2027. #616 y #618 cierran la fotografía principal del Rosario 2026.
 
-## Mejoras transversales vigentes
+## Reglas transversales ya vigentes
 
-Además de los cierres editoriales, `main` incorpora ya como reglas comunes:
+- #580 · huecos secundarios transparentes no fuerzan `noindex`;
+- #584 · histórico musical estructurado visible;
+- #587 · fotografías de Salidas Panel → ficha pública;
+- #589 · Fuentes heredadas acotadas al contexto real;
+- #594 · Vía Crucis de las Cofradías como relación reutilizable;
+- #595–#596 · contraste común estable;
+- #597–#599 + #603 · directorios ordenados por territorio, naturaleza, jornada/mes y estilo;
+- #604 · nombre oficial completo en móvil;
+- #606 · contratos futuros excluidos de la actualidad hasta su fecha efectiva;
+- #610 · búsqueda de Hermandades por nombre corto, popular, oficial y localidad;
+- #617 · `Vestidor actual` como relación `agent → dresser_of → image`, editable desde Panel, con conservación de histórico y visualización pública;
+- #620 · paleta de Cuatrovitas: verde, blanco y dorado.
 
-- #580 · una ficha completa no queda `noindex` por huecos secundarios transparentes;
-- #584 · histórico musical estructurado visible en Hermandades;
-- #587 · fotografías de Salidas guardadas en Panel se muestran en ficha pública;
-- #589 · las Fuentes heredadas quedan acotadas al contexto real de la Hermandad;
-- #594 · participación en el Vía Crucis de las Cofradías como relación reutilizable;
-- #595–#596 · contraste estable en acompañamientos, Fuentes y Túnica;
-- #597–#599 + #603 · directorios de Hermandades y Bandas ordenados por territorio, naturaleza, jornada/mes y estilo;
-- #604 · nombre oficial completo visible en móvil;
-- #606 · los contratos musicales futuros no contaminan la actualidad del bloque relacional;
-- #610 · búsqueda del Panel por nombre corto, popular, oficial y localidad;
-- #617 · `Vestidor actual` como relación `agent → dresser_of → image`, editable desde Panel, con histórico al cambiarlo y visualización pública.
+No se admiten excepciones por slug para ocultar problemas comunes.
 
-No existen excepciones por slug para resolver problemas comunes de estas áreas.
+## Vestidores
 
-## Vestidores · estado vigente
-
-#617 está fusionada y el modelo reutiliza `entity_relations`, sin tabla nueva ni DDL.
-
-Aplicaciones editoriales ya cargadas en producción:
+Relaciones actuales cargadas sobre el modelo vigente:
 
 - Francisco Carrera Iglesias «Paquili» → Nuestra Señora de los Dolores del Cerro;
 - José Antonio Grande de León → Piedad y Caridad del Baratillo, Dolores y Misericordia de Jesús Despojado y Amor de Pino Montano;
 - Leandro González Ruiz → Encarnación de San Benito;
 - Antonio Sanabria Vázquez → Guadalupe y Mayor Dolor de Las Aguas.
 
-La relación Leandro González Ruiz → María Santísima de la Estrella de Sevilla está preparada en `draft`, igual que la imagen y la Hermandad, y no constituye un frente editorial abierto ni se presenta como publicada.
-
-## Producción y repositorio
-
-Estado revalidado en el corte actual:
-
-- `main = 2b1dd2ddd6c9e0cc0ee5c60a332241bbd741c325`;
-- último merge: #618 · Corrige la fotografía del Rosario del Cerro;
-- PR abiertas: **0**;
-- Vercel producción: **READY** sobre `2b1dd2d`;
-- Supabase producción: operativa;
-- FIRST EDITION FREEZE: activo;
-- frente editorial abierto: **ninguno**.
+La relación Leandro González Ruiz → María Santísima de la Estrella de Sevilla permanece `draft`, igual que la Imagen y su Hermandad, y no constituye frente abierto ni contenido publicado.
 
 ## #492
 
-**#492 · Reconciliar Supabase Preview Branches → 🟣 ABIERTA Y AISLADA.**
+**#492 · Reconciliar Supabase Preview Branches → ABIERTA Y AISLADA.**
 
-Diagnóstico vigente: preview branches no reproducen todavía de forma segura todo el DML histórico porque algunas migraciones dependen de datos productivos que no existen antes del seed.
-
-#492 **sí bloquea**:
+Bloquea únicamente:
 
 - nuevo DDL;
 - nuevas tablas;
-- nuevas migraciones estructurales;
+- migraciones estructurales;
 - cambios RLS relacionados.
 
-#492 **no bloquea**:
+No bloquea contenido/DML editorial, Hermandades, titulares, pasos, música, patrimonio, agentes, cultos, salidas, acontecimientos, Fuentes, media soportada, relaciones existentes ni SEO editorial.
 
-- contenido y DML editorial sobre tablas existentes;
-- Hermandades, titulares y pasos;
-- música y periodos temporales;
-- patrimonio y agentes;
-- cultos y salidas;
-- acontecimientos;
-- Fuentes;
-- fotografías/media ya soportada;
-- relaciones existentes;
-- SEO editorial.
+No debe resolverse reescribiendo migraciones históricas ya aplicadas ni alterando producción por un problema exclusivo de preview.
 
-No debe resolverse modificando migraciones históricas ya aplicadas en producción ni introduciendo cambios productivos para una limitación exclusiva de preview.
+## Bloqueos y criterio editorial
 
-## Bloqueos reales
+Los límites reales son FIRST EDITION FREEZE, #492 para estructura/RLS, actualidad estricta 2026/2027, trazabilidad de Fuentes/media y la obligación de no inventar datos para elevar completitud.
 
-En este momento no existe ningún bloqueo editorial general.
-
-Los límites son:
-
-1. FIRST EDITION FREEZE;
-2. #492 para estructura/RLS;
-3. actualidad estricta 2026/2027;
-4. no inventar datos para elevar completitud;
-5. media solo con procedencia/derechos suficientemente trazables;
-6. una Hermandad por frente y certificación antes de continuar.
+Una ausencia debe clasificarse como deuda real, no aplicable, dato todavía no publicado, pendiente de verificar o hueco legítimo.
 
 ## Siguiente movimiento autorizado
 
-Antes de abrir una nueva Hermandad:
-
-1. recalcular la deuda documental de todas las Hermandades publicadas sobre el estado actual;
-2. clasificar ausencias como deuda real, no aplicable, dato no publicado, pendiente de verificar o hueco legítimo;
-3. devolver un TOP 3 actual por oportunidad real, no solo por porcentaje;
-4. seleccionar UNA sola Hermandad;
-5. diagnosticarla antes de introducir contenido;
-6. cerrarla con evidencia verificable, QA, PR, merge y producción;
-7. volver a dejar `main`, documentación canónica y producción alineados con 0 PR abiertas.
+1. Recalcular la deuda documental de todas las Hermandades publicadas.
+2. Generar un TOP 3 por oportunidad real, no solo porcentaje.
+3. Elegir UNA sola Hermandad.
+4. Diagnosticarla antes de modificar datos.
+5. Cerrar exclusivamente con evidencia verificable y sin nuevo modelo.
+6. Ejecutar QA, PR, merge y producción.
+7. Actualizar de nuevo este estado con el cierre final y confirmar 0 PR abiertas.
