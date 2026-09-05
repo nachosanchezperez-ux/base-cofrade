@@ -8,6 +8,7 @@ import { getHermandadesDirectory } from '@/lib/supabase/brotherhood-directory';
 import { getExtraordinaryDirectory } from '@/lib/supabase/extraordinary-directory';
 import { getGloryDirectory } from '@/lib/supabase/glory-directory';
 import { getCrewEventDirectory } from '@/lib/supabase/crew-events';
+import { getPublicIndexableEntityEntries } from '@/lib/supabase/public-indexability';
 
 export const revalidate = 3600;
 
@@ -94,10 +95,31 @@ const staticEntries = [
   },
 ];
 
+const entitySitemapConfig = {
+  brotherhood: { segment: 'hermandades', changeFrequency: 'weekly', priority: 0.8 },
+  band: { segment: 'bandas', changeFrequency: 'weekly', priority: 0.8 },
+  image: { segment: 'imagenes', changeFrequency: 'monthly', priority: 0.7 },
+  step: { segment: 'pasos', changeFrequency: 'monthly', priority: 0.7 },
+};
+
 function validLastModified(value) {
   if (!value) return null;
   const date = new Date(value);
   return Number.isNaN(date.getTime()) ? null : date;
+}
+
+function entityEntries(items) {
+  return items.flatMap((item) => {
+    const config = entitySitemapConfig[item.entityType];
+    if (!config || !item.slug) return [];
+    const lastModified = validLastModified(item.updatedAt);
+    return [{
+      url: absoluteUrl(`/${config.segment}/${item.slug}`),
+      ...(lastModified ? { lastModified } : {}),
+      changeFrequency: config.changeFrequency,
+      priority: config.priority,
+    }];
+  });
 }
 
 function directoryEntries(brotherhoods) {
@@ -152,12 +174,13 @@ export default async function sitemap() {
     getGloryDirectory(),
     getCrewEventDirectory(),
   ]);
+  const indexableEntities = await getPublicIndexableEntityEntries({
+    brotherhoods: brotherhoodDirectory,
+  });
 
-  // Entity detail pages decide indexability with a stricter editorial minimum.
-  // Until the sitemap can derive that same signal cheaply, Google discovers
-  // those pages through the indexable directories and the relational graph.
   const entries = [
     ...staticEntries,
+    ...entityEntries(indexableEntities),
     ...directoryEntries(brotherhoodDirectory),
     ...extraordinaryEntries(extraordinaryOutings),
     ...gloryEntries(gloryOutings),
