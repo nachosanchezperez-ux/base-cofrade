@@ -1,4 +1,5 @@
 import EntityWorkspaceNav from '@/components/panel/EntityWorkspaceNav'
+import BrotherhoodPublicationControl from '@/components/panel/brotherhood/BrotherhoodPublicationControl'
 
 export default async function BrotherhoodEditorLayout({ children, params }) {
   const { id } = await params
@@ -23,6 +24,7 @@ export default async function BrotherhoodEditorLayout({ children, params }) {
   return (
     <>
       <EntityWorkspaceNav eyebrow="Ficha de Hermandad" description="Identidad, memoria, cortejo, patrimonio, agenda y documentación conectados." items={items} />
+      <BrotherhoodPublicationControl brotherhoodId={id} />
       {children}
     </>
   )
