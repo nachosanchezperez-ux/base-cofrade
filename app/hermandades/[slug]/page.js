@@ -104,6 +104,7 @@ export async function generateMetadata({ params }) {
       url: canonical,
     },
     twitter: {
+      card: 'summary_large_image',
       title: pageTitle(title),
       description,
     },
