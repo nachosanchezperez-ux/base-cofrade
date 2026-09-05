@@ -118,6 +118,7 @@ export default function HomePageV2({
                   fill
                   sizes="(max-width: 859px) calc(100vw - 32px), 33vw"
                   priority
+                  unoptimized
                 />
                 {liveState.state === 'live' ? (
                   <span className={liveStyles.liveImageBadge}><i aria-hidden="true" /> En curso</span>
