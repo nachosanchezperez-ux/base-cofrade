@@ -2,6 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import RelationalThread from '@/components/RelationalThread'
 import { orderProcessionalItems } from '@/lib/brotherhood-processional-order'
+import { futureMusicAccompanimentPeriodIds } from '@/lib/music-accompaniment-effective'
 import styles from '@/components/BrotherhoodCurrentMusic.module.css'
 import discoveryStyles from '@/components/BrotherhoodRelationalDiscovery.module.css'
 import { getPublishedEntityCoverMediaMap } from '@/lib/supabase/entity-media'
@@ -147,14 +148,16 @@ async function loadCurrentAccompaniments(supabase, brotherhoodId) {
   const periods = assertRows(
     await supabase
       .from('music_accompaniment_periods')
-      .select('id, band_entity_id, step_entity_id, position, outing_type, date_from_text, year_from, notes')
+      .select('id, band_entity_id, step_entity_id, position, outing_type, date_from, date_from_text, year_from, notes')
       .eq('brotherhood_entity_id', brotherhoodId)
       .eq('is_current', true)
       .eq('status', 'published'),
     'No se pudieron consultar los acompañamientos actuales'
   )
 
-  const bandIds = unique(periods.map((item) => item.band_entity_id))
+  const futureIds = futureMusicAccompanimentPeriodIds(periods)
+  const effectivePeriods = periods.filter((period) => !futureIds.has(period.id))
+  const bandIds = unique(effectivePeriods.map((item) => item.band_entity_id))
   if (!bandIds.length) return []
 
   const [entitiesResult, bandsResult] = await Promise.all([
@@ -175,7 +178,7 @@ async function loadCurrentAccompaniments(supabase, brotherhoodId) {
   const entityById = new Map(entities.map((item) => [item.id, item]))
   const bandById = new Map(bands.map((item) => [item.entity_id, item]))
 
-  return periods
+  return effectivePeriods
     .map((period) => {
       const entity = entityById.get(period.band_entity_id)
       const band = bandById.get(period.band_entity_id) || {}
