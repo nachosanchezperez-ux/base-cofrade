@@ -1,8 +1,7 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 5 de septiembre de 2026  
-**HEAD funcional previo a esta sincronización:** `main = c6ae1c72feb41e997f794fc68f713854b64dc8ee`  
-**Último cierre editorial:** Virgen del Valle de Écija · #630 · `eb8494ef28a8c47cb8a42a866252ead7206c7cea`  
+**Corte validado:** 5 de septiembre de 2026 · cierre documental de San Bernardo  
+**HEAD funcional previo a esta sincronización:** `main = 5206696574fc54cfde74547b8d6a87fc9d00d302`  
 **Régimen:** `FIRST EDITION FREEZE` activo  
 **Fase:** editorial / documental sobre el modelo vigente  
 **Frente editorial activo:** ninguno
@@ -11,25 +10,24 @@
 
 ## Dónde estamos ahora
 
-La Primera Edición permanece cerrada, certificada y congelada. No existe bloqueo editorial general ni una Hermandad abierta en trabajo.
+La Primera Edición permanece cerrada, certificada y congelada. San Bernardo ha concluido su ciclo `diagnóstico → completar → relacionar → validar → certificar → cerrar` y no queda otra Hermandad autorizada dentro de este frente.
 
 Estado validado antes de esta sincronización final:
 
-- GitHub: `main = c6ae1c72feb41e997f794fc68f713854b64dc8ee`;
-- PR abiertas: 0;
-- último cierre editorial certificado: **Virgen del Valle de Écija · #630**;
-- #628 simplifica la jerarquía visual del directorio de bandas agrupándolo por tipología musical;
-- #629 aplica al Cerro del Águila la paleta burdeos, blanco y dorado;
-- #630 cierra la Virgen del Valle de Écija;
-- Vercel producción: `READY` exactamente sobre `c6ae1c72feb41e997f794fc68f713854b64dc8ee`;
+- GitHub: `main = 5206696574fc54cfde74547b8d6a87fc9d00d302`;
+- PR abiertas al congelar la rama: **0**;
+- #635, paleta de San Bernardo, integrada previamente en `2aac73b4760c2b54304d87ca106c61cc6d961c6e`;
+- #637, unificación de indexabilidad del sitemap, integrada en `5206696574fc54cfde74547b8d6a87fc9d00d302`;
 - Supabase producción: operativa;
+- San Bernardo: **100 % técnico · indexable · grafo limpio**;
+- producción previa a la certificación Git: HTTP 200, canonical correcta, `index, follow`, sitemap correcto y 0 runtime errors en la ruta;
 - #492: abierta y aislada;
 - FIRST EDITION FREEZE: activo;
 - frente editorial activo: ninguno.
 
 ## Cierres documentales vigentes
 
-Estas fichas no deben reabrirse por deuda legítima, mejoras cosméticas o por perseguir un 100 % técnico. Solo procede reabrirlas ante una regresión real o nueva información verificable que cambie materialmente su estado.
+Estas fichas no deben reabrirse por deuda legítima, mejoras cosméticas o por perseguir porcentajes. Solo procede reabrirlas ante una regresión real o nueva información verificable que cambie materialmente su estado.
 
 - Amparo;
 - San Esteban;
@@ -49,42 +47,88 @@ Estas fichas no deben reabrirse por deuda legítima, mejoras cosméticas o por p
 - Nuestra Señora de la Luz de San Esteban;
 - El Cerro del Águila;
 - Pontificia, Real e Ilustre Hermandad de Nuestra Señora de Consolación Coronada de Utrera;
-- **Hermandad de Nuestra Señora del Valle Coronada de Écija**.
+- Hermandad de Nuestra Señora del Valle Coronada de Écija;
+- **Hermandad de San Bernardo**.
 
-## Último cierre certificado · Virgen del Valle de Écija · #630
+## Último cierre certificado · San Bernardo
 
-Completitud técnica de cierre: **30 % → 100 %** (10/10 señales). El porcentaje técnico no elimina los huecos histórico-artísticos legítimos.
+Documento: `docs/CERTIFICACION-SAN-BERNARDO-2026-09-05.md`.
 
-Quedan estructurados y validados:
+**SAN BERNARDO → CERRADA Y CERTIFICADA · 100 % TÉCNICO · INDEXABLE · GRAFO CLEAN.**
 
-- identidad y documentación histórica desde 1401, con primeras reglas conocidas de 1664;
-- sede canónica en la Iglesia Parroquial Mayor de Santa Cruz;
-- Nuestra Señora del Valle Coronada como titular publicada y residente en Santa Cruz;
-- paso procesional de Gloria vigente;
-- 3 cultos principales y 3 ocurrencias concretas de 2026;
-- serie anual del 8 de septiembre;
-- procesión del 08/09/2026 a las 19:30 con recorrido especial por el barrio del Carmen;
-- AMUECI como acompañamiento vigente en el periodo contractual 2024–2026;
-- duplicidad previa de AMUECI 2026 reconciliada y eliminada;
-- 4 acontecimientos históricos: voto municipal de 1584, reglas de 1664, capilla de 1929 y Coronación Canónica de 1999;
-- marcha *María del Valle* · Cristóbal López Gándara · 2026;
-- colores celeste y blanco;
-- Fuentes, relaciones, SEO y runtime.
+La ficha partía de un 93 % técnico pero mantenía deuda real de profundidad y coherencia. El cierre incorpora o revalida:
 
-Actualidad estricta aplicada:
+- identidad completa, sede canónica y paleta morado oscuro / negro / blanco;
+- escudo canónico en Storage con fuente oficial de heráldica;
+- 6 titulares/imágenes devocionales;
+- 3 pasos/configuraciones y 9 fases históricas documentadas;
+- capataces vigentes de Cristo, palio y custodia;
+- 10 restauraciones de imágenes estructuradas;
+- 16 cultos recurrentes y 10 ocurrencias concretas de 2026;
+- 3 salidas, incluida la estación de penitencia de 2026 y el Vía Crucis de las Cofradías de 1989 como salida histórica estructurada;
+- 3 acompañamientos vigentes y 3 asignaciones exactas para el Miércoles Santo de 2026;
+- 27 obras del patrimonio musical relacionadas y con fuente;
+- 7 piezas patrimoniales principales;
+- 12 acontecimientos históricos jerarquizados;
+- 12 fuentes directas de Hermandad más Fuentes contextuales en cultos, restauraciones, fases, música, patrimonio, salidas y acontecimientos.
 
-- la procesión del 08/09/2026 permanece `announced`;
-- la Novena 30/08–07/09 permanece `announced` porque el modelo no dispone de `ongoing`;
-- AMUECI queda vigente únicamente hasta 2026 según el acuerdo documentado; no se proyecta automáticamente a 2027;
-- no se convierte la tradición sobre el origen de la Imagen en autoría o datación canónica.
+### Correcciones relevantes
 
-Deuda legítima restante:
+- **Nuestro Padre Jesús de la Humildad no pertenece a la titularidad de San Bernardo** y no se ha creado ni relacionado.
+- El primer paso actual es el **Paso del Santísimo Cristo de la Salud**, no un misterio. Se corrigió una etiqueta histórica que aún lo denominaba «paso de misterio».
+- `Refúgiame` queda como marcha de **Banda de Música**, de 1994, no como cornetas y tambores.
+- El **Guión Sacramental** queda como pieza anónima del siglo XIX, restaurada en 1991 por José Ramón Paleteiro y Talleres de Villarreal; se elimina la anterior atribución/fecha no coincidente con el catálogo oficial vigente.
+- El paño mortuorio de Ánimas queda correctamente atribuido a Lucas Ortega (1744), con cenefa de Bernardo Barbosa (1764), y marcado **en restauración** en el IAPH desde febrero de 2026.
+- El manto de vistas de María Santísima del Refugio se conserva como **proyecto en ejecución en 2026** por Jesús Rosado Borja, sin fecha de finalización inventada.
 
-- autoría y datación histórico-artística exactas de la Imagen;
-- vestidor actual, mientras no exista Fuente verificable;
-- autoría, cronología y descripción física profunda del paso;
-- fotografías de titular, paso y cabecera con procedencia/derechos trazables;
-- patrimonio material adicional cuando exista documentación suficientemente específica.
+### Actualidad estricta
+
+- el estado del Santísimo Cristo de la Salud no convierte el anuncio de traslado al IAPH en una restauración concluida;
+- los cinco cultos recurrentes añadidos de marzo/octubre/noviembre/diciembre no reciben una ocurrencia concreta de 2026 sin convocatoria específica;
+- las bandas actuales se separan de los periodos históricos;
+- no se proyectan contratos o situaciones musicales futuras como actuales;
+- no se fuerza una autoría definitiva del Cristo mientras permanezca discutida;
+- `Salud y Refugio` permanece sin autor/año canónicos ante fuentes no unívocas.
+
+### QA
+
+Conteos finales:
+
+- titulares/imágenes: 6;
+- pasos: 3;
+- fases de paso: 9;
+- cultos: 16;
+- ocurrencias 2026: 10;
+- salidas: 3;
+- periodos musicales actuales: 3;
+- asignaciones exactas 2026: 3;
+- patrimonio: 7;
+- restauraciones estructuradas: 10;
+- acontecimientos: 12;
+- obras musicales: 27.
+
+Controles a cero:
+
+- duplicados Hermandad→Imagen / Hermandad→Paso / Imagen→Paso;
+- cultos, salidas, patrimonio y acontecimientos duplicados;
+- posiciones o asignaciones musicales duplicadas;
+- dedicatorias musicales duplicadas;
+- relaciones musicales sin fuente;
+- fases de paso sin fuente;
+- acontecimientos sin `involves`;
+- música futura marcada como actual;
+- endpoints no publicados en relaciones nucleares;
+- relación con una Humildad inexistente en esta corporación;
+- etiqueta vigente de «misterio» para el paso del Cristo.
+
+### Deuda legítima
+
+No bloquea la certificación:
+
+- fotografías de cabecera, titulares y pasos con procedencia/derechos trazables;
+- autoría histórica definitiva del Santísimo Cristo de la Salud mientras siga discutida;
+- autor/año de `Salud y Refugio` hasta disponer de fuente unívoca;
+- piezas menores no suficientemente documentadas.
 
 ## Reglas y mejoras transversales vigentes
 
@@ -95,15 +139,12 @@ Deuda legítima restante:
 - Vía Crucis de las Cofradías como relación reutilizable;
 - contraste común estable;
 - directorios de Hermandades ordenados por territorio/naturaleza/jornada o mes;
-- directorio de bandas agrupado por tipología musical, con territorio/localidad como filtros (#628);
+- directorio de bandas agrupado por tipología musical, con territorio/localidad como filtros;
 - nombre oficial completo visible también en móvil;
 - contratos futuros excluidos de la actualidad hasta su fecha efectiva;
 - búsqueda de Hermandades por nombre corto, popular, oficial y localidad;
 - `Vestidor actual` como relación `agent → dresser_of → image`, editable desde Panel, con histórico y lectura pública;
-- Cuatrovitas: paleta verde, blanco y dorado;
-- Purísima de La Algaba: paleta celeste, blanco y dorado;
-- Cristo de la Corona: morado oscuro, morado claro y negro (#627);
-- Cerro del Águila: burdeos, blanco y dorado (#629).
+- sitemap alineado con el mínimo editorial público (#637).
 
 No se admiten excepciones por slug para ocultar problemas comunes.
 
@@ -149,15 +190,6 @@ Cada ausencia debe clasificarse como:
 
 ## Siguiente movimiento autorizado
 
-No existe frente abierto.
+No existe frente editorial abierto.
 
-**San Bernardo** queda identificado como siguiente candidato prioritario, pero todavía no está abierto. Su nodo existente es `draft` y debe diagnosticarse desde el HEAD canónico que resulte de esta sincronización.
-
-Antes de abrirlo:
-
-1. refrescar `main`, PR y producción;
-2. comprobar que este estado sigue vigente;
-3. auditar el nodo `hermandad-de-san-bernardo` y sus relaciones existentes;
-4. fijar alcance y Fuentes antes de escribir;
-5. cerrar únicamente con evidencia verificable y sin nuevo modelo;
-6. QA → PR → merge → producción → actualización canónica → 0 PR abiertas.
+Tras fusionar esta certificación, comprobar producción exacta sobre el SHA de merge y confirmar **0 PR abiertas**. Después, cualquier nuevo frente requiere un nuevo recálculo o una orden editorial expresa; no se abre automáticamente otra Hermandad desde el cierre de San Bernardo.
