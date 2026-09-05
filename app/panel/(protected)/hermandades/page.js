@@ -7,14 +7,26 @@ const STATUS_LABELS = { published: 'Publicado', review: 'En revisión', draft: '
 
 export const metadata = { title: 'Hermandades · Panel' }
 
+function normalizeSearch(value) {
+  return String(value || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLocaleLowerCase('es')
+}
+
 export default async function PanelBrotherhoodsPage({ searchParams }) {
   const query = await searchParams
   const q = String(query?.q || '').trim()
   const status = ['published', 'review', 'draft', 'archived'].includes(query?.status) ? query.status : ''
-  const [user, brotherhoods] = await Promise.all([
+  const [user, allBrotherhoods] = await Promise.all([
     requirePanelUser(),
-    getPanelBrotherhoods({ query: q, status }),
+    getPanelBrotherhoods({ status }),
   ])
+  const searchTerm = normalizeSearch(q)
+  const brotherhoods = searchTerm
+    ? allBrotherhoods.filter((item) => [item.name, item.popularName, item.officialName, item.municipality]
+        .some((value) => normalizeSearch(value).includes(searchTerm)))
+    : allBrotherhoods
   const canEdit = ['admin', 'editor'].includes(user.role)
 
   return (
