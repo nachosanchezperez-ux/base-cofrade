@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
+import BrotherhoodDirectoryCrestImage from './BrotherhoodDirectoryCrestImage'
 import contractStyles from './DirectoryCardContract.module.css'
 import enhancementStyles from './RelationalEntityDirectoryEnhancements.module.css'
 import styles from './RelationalEntityDirectory.module.css'
@@ -119,17 +120,32 @@ function bandMediaClass(item) {
 function RelationalCardMedia({ item, isBand, mediaPath, presentationClass }) {
   const [failed, setFailed] = useState(false)
   const hasMedia = Boolean(mediaPath) && !failed
+  const shouldNormalizeBandLogo = isBand && item.logoPresentationMode !== 'integrated'
 
   return (
     <span className={`${enhancementStyles.media} ${contractStyles.media} ${isBand ? enhancementStyles.bandMedia : ''} ${presentationClass}`}>
       {hasMedia ? (
-        <Image
-          src={mediaPath}
-          alt=""
-          fill
-          sizes="(max-width: 620px) 58px, 72px"
-          onError={() => setFailed(true)}
-        />
+        shouldNormalizeBandLogo ? (
+          <BrotherhoodDirectoryCrestImage
+            className={enhancementStyles.bandLogoOptical}
+            src={mediaPath}
+            alt=""
+            width={82}
+            height={82}
+            sizes="(max-width: 620px) 58px, 72px"
+            maxScale={2.1}
+            fallback={initials(item.name)}
+            fallbackClassName={`${styles.monogram} ${enhancementStyles.monogram}`}
+          />
+        ) : (
+          <Image
+            src={mediaPath}
+            alt=""
+            fill
+            sizes="(max-width: 620px) 58px, 72px"
+            onError={() => setFailed(true)}
+          />
+        )
       ) : (
         <span className={`${styles.monogram} ${enhancementStyles.monogram}`}>{initials(item.name)}</span>
       )}
