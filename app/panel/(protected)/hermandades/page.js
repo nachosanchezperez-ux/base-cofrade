@@ -43,7 +43,7 @@ export default async function PanelBrotherhoodsPage({ searchParams }) {
       </form>
 
       <section className={styles.panelCard}>
-        <div className={styles.listHeading}><strong>{brotherhoods.length} hermandades</strong><small>Datos conectados con la web pública</small></div>
+        <div className={styles.listHeading}><strong>{brotherhoods.length} hermandades</strong><small>Los borradores se pueden editar y solo aparecen en la web cuando decides publicarlos.</small></div>
         {brotherhoods.length ? (
           <div className={styles.brotherhoodList}>
             {brotherhoods.map((item) => (
@@ -51,7 +51,7 @@ export default async function PanelBrotherhoodsPage({ searchParams }) {
                 <span className={styles.listMonogram}>{item.popularName.slice(0, 2).toUpperCase()}</span>
                 <div className={styles.listIdentity}><strong>{item.popularName}</strong><span>{item.officialName}</span><small>{item.municipality} · {item.processionDay}</small></div>
                 <span className={`${styles.statusBadge} ${styles[item.status]}`}>{STATUS_LABELS[item.status]}</span>
-                <Link className={styles.rowLink} href={`/panel/hermandades/${item.id}`}>Editar <span>→</span></Link>
+                <Link className={styles.rowLink} href={`/panel/hermandades/${item.id}`}>{item.status === 'draft' ? 'Editar borrador' : 'Editar'} <span>→</span></Link>
               </article>
             ))}
           </div>
