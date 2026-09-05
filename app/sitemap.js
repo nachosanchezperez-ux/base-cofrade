@@ -8,16 +8,8 @@ import { getHermandadesDirectory } from '@/lib/supabase/brotherhood-directory';
 import { getExtraordinaryDirectory } from '@/lib/supabase/extraordinary-directory';
 import { getGloryDirectory } from '@/lib/supabase/glory-directory';
 import { getCrewEventDirectory } from '@/lib/supabase/crew-events';
-import { filterPublicPageEntities } from '@/lib/supabase/public-entity-page';
-import { createPublicClient } from '@/lib/supabase/public';
 
 export const revalidate = 3600;
-
-const fallbackEntities = [
-  { slug: 'el-baratillo', updated_at: null, entity_type: 'brotherhood' },
-  { slug: 'asuncion-de-cantillana', updated_at: null, entity_type: 'brotherhood' },
-  { slug: 'las-cigarreras', updated_at: null, entity_type: 'band' },
-];
 
 const staticEntries = [
   {
@@ -108,36 +100,6 @@ function validLastModified(value) {
   return Number.isNaN(date.getTime()) ? null : date;
 }
 
-function entityEntry(item, path, changeFrequency, priority) {
-  const lastModified = validLastModified(item.updated_at);
-  return {
-    url: absoluteUrl(path),
-    ...(lastModified ? { lastModified } : {}),
-    changeFrequency,
-    priority,
-  };
-}
-
-async function publishedEntities() {
-  try {
-    const supabase = createPublicClient();
-    const { data, error } = await supabase
-      .from('entities')
-      .select('id, slug, updated_at, entity_type')
-      .in('entity_type', ['brotherhood', 'band', 'image', 'step'])
-      .eq('status', 'published')
-      .not('slug', 'is', null);
-
-    if (error) throw error;
-    return data || [];
-  } catch (error) {
-    console.error('[Hilo Cofrade] No se pudo generar el sitemap desde Supabase', {
-      error: error instanceof Error ? error.message : String(error),
-    });
-    return fallbackEntities;
-  }
-}
-
 function directoryEntries(brotherhoods) {
   const paths = DIRECTORY_TYPES.flatMap(({ key }) => (
     brotherhoods
@@ -184,46 +146,18 @@ function crewEventEntries(events) {
 }
 
 export default async function sitemap() {
-  const [entities, brotherhoodDirectory, extraordinaryOutings, gloryOutings, crewEvents] = await Promise.all([
-    publishedEntities(),
+  const [brotherhoodDirectory, extraordinaryOutings, gloryOutings, crewEvents] = await Promise.all([
     getHermandadesDirectory(),
     getExtraordinaryDirectory(),
     getGloryDirectory(),
     getCrewEventDirectory(),
   ]);
-  const brotherhoods = filterPublicPageEntities(
-    entities.filter((item) => item.entity_type === 'brotherhood'),
-    brotherhoodDirectory
-  );
-  const bands = entities.filter((item) => item.entity_type === 'band');
-  const images = entities.filter((item) => item.entity_type === 'image');
-  const steps = entities.filter((item) => item.entity_type === 'step');
+
+  // Entity detail pages decide indexability with a stricter editorial minimum.
+  // Until the sitemap can derive that same signal cheaply, Google discovers
+  // those pages through the indexable directories and the relational graph.
   const entries = [
     ...staticEntries,
-    ...brotherhoods.map((brotherhood) => entityEntry(
-      brotherhood,
-      `/hermandades/${brotherhood.slug}`,
-      'weekly',
-      0.8
-    )),
-    ...bands.map((band) => entityEntry(
-      band,
-      `/bandas/${band.slug}`,
-      'weekly',
-      0.8
-    )),
-    ...images.map((image) => entityEntry(
-      image,
-      `/imagenes/${image.slug}`,
-      'monthly',
-      0.7
-    )),
-    ...steps.map((step) => entityEntry(
-      step,
-      `/pasos/${step.slug}`,
-      'monthly',
-      0.7
-    )),
     ...directoryEntries(brotherhoodDirectory),
     ...extraordinaryEntries(extraordinaryOutings),
     ...gloryEntries(gloryOutings),
