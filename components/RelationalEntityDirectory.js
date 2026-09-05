@@ -57,82 +57,40 @@ function bandTypeRank(value = '') {
 }
 
 function compareBandItems(first, second) {
-  const territoryDifference = (isCapitalItem(first) ? 0 : 1) - (isCapitalItem(second) ? 0 : 1)
-  if (territoryDifference) return territoryDifference
-
-  const municipalityDifference = compareText(first.municipality, second.municipality)
-  if (municipalityDifference) return municipalityDifference
-
   const typeDifference = bandTypeRank(first.type) - bandTypeRank(second.type)
   if (typeDifference) return typeDifference
 
   const typeLabelDifference = compareText(first.type, second.type)
   if (typeLabelDifference) return typeLabelDifference
 
+  const territoryDifference = (isCapitalItem(first) ? 0 : 1) - (isCapitalItem(second) ? 0 : 1)
+  if (territoryDifference) return territoryDifference
+
+  const municipalityDifference = compareText(first.municipality, second.municipality)
+  if (municipalityDifference) return municipalityDifference
+
   return compareText(first.name, second.name)
 }
 
 function groupBandItems(items = []) {
-  const territories = new Map()
+  const types = new Map()
 
   ;[...items].sort(compareBandItems).forEach((item) => {
-    const isCapital = isCapitalItem(item)
-    const territoryKey = isCapital ? 'sevilla-capital' : 'provincia'
-    const territoryLabel = isCapital ? 'Sevilla capital' : 'Provincia de Sevilla'
-
-    if (!territories.has(territoryKey)) {
-      territories.set(territoryKey, {
-        key: territoryKey,
-        label: territoryLabel,
-        count: 0,
-        localities: new Map(),
-      })
-    }
-
-    const territory = territories.get(territoryKey)
-    territory.count += 1
-
-    const localityLabel = isCapital
-      ? 'Sevilla capital'
-      : item.municipality || 'Localidad sin documentar'
-    const localityKey = isCapital
-      ? 'sevilla-capital'
-      : item.municipalitySlug || slugify(localityLabel) || 'sin-localidad'
-
-    if (!territory.localities.has(localityKey)) {
-      territory.localities.set(localityKey, {
-        key: localityKey,
-        label: localityLabel,
-        isCapital,
-        count: 0,
-        types: new Map(),
-      })
-    }
-
-    const locality = territory.localities.get(localityKey)
-    locality.count += 1
-
     const typeLabel = item.type || 'Formación musical'
     const typeKey = itemTypeSlug(item) || 'formacion-musical'
 
-    if (!locality.types.has(typeKey)) {
-      locality.types.set(typeKey, {
+    if (!types.has(typeKey)) {
+      types.set(typeKey, {
         key: typeKey,
         label: typeLabel,
         items: [],
       })
     }
 
-    locality.types.get(typeKey).items.push(item)
+    types.get(typeKey).items.push(item)
   })
 
-  return [...territories.values()].map((territory) => ({
-    ...territory,
-    localities: [...territory.localities.values()].map((locality) => ({
-      ...locality,
-      types: [...locality.types.values()],
-    })),
-  }))
+  return [...types.values()]
 }
 
 const KIND_COPY = {
@@ -291,8 +249,10 @@ export default function RelationalEntityDirectory({
           {isBand ? (
             <>
               <span className={`${styles.context} ${enhancementStyles.clamped}`}>{item.officialName}</span>
-              {item.foundation ? (
-                <span className={`${styles.details} ${enhancementStyles.clamped}`}>Desde {item.foundation}</span>
+              {item.municipality || item.foundation ? (
+                <span className={`${styles.details} ${enhancementStyles.clamped}`}>
+                  {[item.municipality, item.foundation ? `Desde ${item.foundation}` : ''].filter(Boolean).join(' · ')}
+                </span>
               ) : null}
             </>
           ) : (
@@ -374,7 +334,11 @@ export default function RelationalEntityDirectory({
       <div className={styles.resultHead} aria-live="polite" aria-atomic="true">
         <div>
           <strong>{filtered.length} {filtered.length === 1 ? copy.singular : copy.plural}</strong>
-          <span>Relaciones documentadas en Sevilla capital y provincia</span>
+          <span>
+            {isBand
+              ? 'Agrupadas por tipología musical; territorio y localidad disponibles como filtros'
+              : 'Relaciones documentadas en Sevilla capital y provincia'}
+          </span>
         </div>
         {hasFilters ? (
           <button
@@ -394,41 +358,14 @@ export default function RelationalEntityDirectory({
       {filtered.length ? (
         isBand ? (
           <div className={enhancementStyles.bandGroups}>
-            {bandGroups.map((territoryGroup) => (
-              <section className={enhancementStyles.bandTerritory} key={territoryGroup.key}>
-                <div className={enhancementStyles.bandTerritoryHeading}>
-                  <div>
-                    <small>Territorio</small>
-                    <h2>{territoryGroup.label}</h2>
-                  </div>
-                  <span>{territoryGroup.count} {territoryGroup.count === 1 ? 'banda' : 'bandas'}</span>
+            {bandGroups.map((typeGroup) => (
+              <section className={enhancementStyles.bandTypeGroup} key={typeGroup.key}>
+                <div className={enhancementStyles.bandTypeHeading}>
+                  <strong>{typeGroup.label}</strong>
+                  <span>{typeGroup.items.length}</span>
                 </div>
-
-                <div className={enhancementStyles.bandLocalities}>
-                  {territoryGroup.localities.map((localityGroup) => (
-                    <section className={enhancementStyles.bandLocality} key={`${territoryGroup.key}-${localityGroup.key}`}>
-                      {!localityGroup.isCapital ? (
-                        <div className={enhancementStyles.bandLocalityHeading}>
-                          <h3>{localityGroup.label}</h3>
-                          <span>{localityGroup.count} {localityGroup.count === 1 ? 'banda' : 'bandas'}</span>
-                        </div>
-                      ) : null}
-
-                      <div className={enhancementStyles.bandTypes}>
-                        {localityGroup.types.map((typeGroup) => (
-                          <section className={enhancementStyles.bandTypeGroup} key={`${localityGroup.key}-${typeGroup.key}`}>
-                            <div className={enhancementStyles.bandTypeHeading}>
-                              <strong>{typeGroup.label}</strong>
-                              <span>{typeGroup.items.length}</span>
-                            </div>
-                            <div className={styles.grid}>
-                              {typeGroup.items.map(renderCard)}
-                            </div>
-                          </section>
-                        ))}
-                      </div>
-                    </section>
-                  ))}
+                <div className={styles.grid}>
+                  {typeGroup.items.map(renderCard)}
                 </div>
               </section>
             ))}
