@@ -44,6 +44,58 @@ function auditAction(currentStatus, nextStatus) {
   return 'update'
 }
 
+async function updateCurrentDresser(supabase, { imageId, dresserId }) {
+  if (dresserId) {
+    const dresser = assertQuery(
+      await supabase
+        .from('entities')
+        .select('id, name')
+        .eq('id', dresserId)
+        .eq('entity_type', 'agent')
+        .eq('status', 'published')
+        .maybeSingle(),
+      'No se pudo comprobar el vestidor seleccionado'
+    )
+    if (!dresser) throw new Error('El vestidor seleccionado no es un Agente publicado válido.')
+  }
+
+  const currentRelations = assertQuery(
+    await supabase
+      .from('entity_relations')
+      .select('id, source_entity_id')
+      .eq('target_entity_id', imageId)
+      .eq('relation_type', 'dresser_of')
+      .eq('status', 'published'),
+    'No se pudo comprobar el vestidor actual'
+  ) || []
+
+  if (currentRelations.length === 1 && currentRelations[0].source_entity_id === dresserId) return
+  if (!dresserId && !currentRelations.length) return
+
+  if (currentRelations.length) {
+    assertMutation(
+      await supabase
+        .from('entity_relations')
+        .update({ status: 'archived' })
+        .in('id', currentRelations.map((relation) => relation.id)),
+      'No se pudo conservar el histórico de vestidores'
+    )
+  }
+
+  if (dresserId) {
+    assertMutation(
+      await supabase.from('entity_relations').insert({
+        source_entity_id: dresserId,
+        relation_type: 'dresser_of',
+        target_entity_id: imageId,
+        notes: 'Vestidor actual gestionado desde el panel de Hilo Cofrade.',
+        status: 'published',
+      }),
+      'No se pudo guardar el vestidor actual'
+    )
+  }
+}
+
 export async function updateImageAction(formData) {
   const user = await requirePanelEditor()
   const supabase = await createClient()
@@ -52,6 +104,7 @@ export async function updateImageAction(formData) {
   const entitySlug = slugify(required(formData, 'slug', 'El slug'))
   const nextStatus = entityStatus(formData)
   const advocationId = optionalUuid(formData, 'advocation_entity_id')
+  const dresserId = optionalUuid(formData, 'dresser_agent_id')
 
   if (!entitySlug) throw new Error('No se ha podido generar un slug válido.')
   if (entitySlug.length > 160) throw new Error('El slug es demasiado largo.')
@@ -87,8 +140,9 @@ export async function updateImageAction(formData) {
 
   assertMutation(await supabase.from('entities').update(entityPayload).eq('id', imageId).eq('entity_type', 'image'), 'No se pudo actualizar la entidad de imagen')
   assertMutation(await supabase.from('images').update(imagePayload).eq('entity_id', imageId), 'No se pudo actualizar la ficha de imagen')
+  await updateCurrentDresser(supabase, { imageId, dresserId })
 
-  await audit(supabase, user, { action_type: auditAction(current.status, nextStatus), object_type: 'image', object_id: imageId, entity_id: imageId, summary: `Imagen actualizada: ${imageName}`, changed_fields: { entity: entityPayload, image: imagePayload } })
+  await audit(supabase, user, { action_type: auditAction(current.status, nextStatus), object_type: 'image', object_id: imageId, entity_id: imageId, summary: `Imagen actualizada: ${imageName}`, changed_fields: { entity: entityPayload, image: imagePayload, dresser_agent_id: dresserId } })
 
   revalidatePath('/panel')
   revalidatePath('/panel/imagenes')

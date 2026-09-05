@@ -7,6 +7,7 @@ import JsonLd from '@/components/JsonLd';
 import RelationalThread from '@/components/RelationalThread';
 import SourcesBlock from '@/components/SourcesBlock';
 import { getPublishedEntityMedia } from '@/lib/supabase/entity-media';
+import { getPublishedImageDresser } from '@/lib/supabase/image-dresser';
 import { getImagenPageBySlug } from '@/lib/supabase/public-entity-pages';
 import {
   meetsPublicEditorialMinimum,
@@ -88,7 +89,10 @@ export default async function ImagenPage({ params }) {
   if (!result) notFound();
 
   const { imagen, hermandad, pasos = [] } = result;
-  const entityMedia = await getPublishedEntityMedia(imagen.id);
+  const [entityMedia, dresser] = await Promise.all([
+    getPublishedEntityMedia(imagen.id),
+    getPublishedImageDresser(imagen.id),
+  ]);
   const explicitHeroMedia = entityMedia.find((item) => item.relationType === 'hero') || null;
   const portraitMedia = entityMedia.find((item) => item.isCover) || null;
   const coverMedia = explicitHeroMedia || portraitMedia;
@@ -136,6 +140,7 @@ export default async function ImagenPage({ params }) {
     || publicText(imagen.autor)
     || publicText(imagen.fecha)
     || publicText(imagen.tipologia || imagen.tipo)
+    || dresser?.name
     || imagen.coronacionCanonica
   );
   const breadcrumbs = [
@@ -228,7 +233,7 @@ export default async function ImagenPage({ params }) {
             <h2>La imagen</h2>
             <p>
               Cada imagen mantiene una ficha propia y puede conectarse con Hermandades,
-              autorías, pasos y acontecimientos sin depender de esas relaciones para existir.
+              autorías, vestidores, pasos y acontecimientos sin depender de esas relaciones para existir.
             </p>
           </div>
 
@@ -243,6 +248,11 @@ export default async function ImagenPage({ params }) {
             {publicText(imagen.autor) ? <article>
               <small>Autor</small>
               <strong>{publicText(imagen.autor)}</strong>
+            </article> : null}
+
+            {dresser?.name ? <article>
+              <small>Vestidor actual</small>
+              <strong>{dresser.name}</strong>
             </article> : null}
 
             {publicText(imagen.fecha) ? <article>

@@ -81,6 +81,14 @@ export default async function ImageEditorPage({ params, searchParams }) {
               </select>
             </label>
             <label className={styles.checkField}><input name="is_dress_image" type="checkbox" defaultChecked={image.is_dress_image || false} /><span>Imagen de vestir</span></label>
+            <label className={styles.fieldWide}>
+              <span>Vestidor actual</span>
+              <select name="dresser_agent_id" defaultValue={data.dresser?.agentId || ''}>
+                <option value="">Sin vestidor documentado</option>
+                {data.agentOptions.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}
+              </select>
+              <small>Selecciona una persona ya registrada como Agente. Al cambiarla, la relación anterior se conserva archivada como histórico.</small>
+            </label>
             <label className={styles.fieldWide}><span>Resumen SEO / directorio</span><textarea name="summary" defaultValue={entity.summary || ''} rows="3" /></label>
             <label className={styles.fieldWide}><span>Descripción pública</span><textarea name="description" defaultValue={image.description || ''} rows="5" /></label>
           </PanelFormGroup>
@@ -113,7 +121,7 @@ export default async function ImageEditorPage({ params, searchParams }) {
           </PanelFormGroup>
 
           <div className={styles.formActions}>
-            <small>{canEdit ? 'Autorías, restauraciones, fotografías, Fuentes y relaciones se gestionan desde las herramientas conectadas de esta misma ficha.' : 'Tu perfil tiene acceso de consulta.'}</small>
+            <small>{canEdit ? 'Autorías, vestidor, restauraciones, fotografías, Fuentes y relaciones se gestionan desde las herramientas conectadas de esta misma ficha.' : 'Tu perfil tiene acceso de consulta.'}</small>
             {canEdit ? <button className={styles.primaryButton} type="submit">Guardar ficha completa</button> : null}
           </div>
         </form>
