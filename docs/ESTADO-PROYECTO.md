@@ -1,7 +1,7 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 5 de septiembre de 2026 · cierre documental de San Bernardo  
-**HEAD funcional previo a esta sincronización:** `main = 5206696574fc54cfde74547b8d6a87fc9d00d302`  
+**Corte validado:** 5 de septiembre de 2026 · prueba de cierre de Las Aguas
+**HEAD funcional previo a esta sincronización:** `main = 8cb5bf54609a328d23745ed592f006ccc89b62fd`
 **Régimen:** `FIRST EDITION FREEZE` activo  
 **Fase:** editorial / documental sobre el modelo vigente  
 **Frente editorial activo:** ninguno
@@ -10,16 +10,18 @@
 
 ## Dónde estamos ahora
 
-La Primera Edición permanece cerrada, certificada y congelada. San Bernardo ha concluido su ciclo `diagnóstico → completar → relacionar → validar → certificar → cerrar` y no queda otra Hermandad autorizada dentro de este frente.
+La Primera Edición permanece cerrada, certificada y congelada. San Bernardo ha concluido su ciclo `diagnóstico → completar → relacionar → validar → certificar → cerrar`; Las Aguas ha superado una revalidación completa sin nuevo DML y no queda un frente editorial activo.
 
 Estado validado antes de esta sincronización final:
 
-- GitHub: `main = 5206696574fc54cfde74547b8d6a87fc9d00d302`;
+- GitHub: `main = 8cb5bf54609a328d23745ed592f006ccc89b62fd`;
 - PR abiertas al congelar la rama: **0**;
 - #635, paleta de San Bernardo, integrada previamente en `2aac73b4760c2b54304d87ca106c61cc6d961c6e`;
 - #637, unificación de indexabilidad del sitemap, integrada en `5206696574fc54cfde74547b8d6a87fc9d00d302`;
 - Supabase producción: operativa;
 - San Bernardo: **100 % técnico · indexable · grafo limpio**;
+- Las Aguas: **cerrada · indexable · grafo nuclear limpio**;
+- producción: `dpl_CRWGXSoX5mPcFQL6fAhxwvtGYzPr`, `READY`, sobre el mismo SHA de `main`;
 - producción previa a la certificación Git: HTTP 200, canonical correcta, `index, follow`, sitemap correcto y 0 runtime errors en la ruta;
 - #492: abierta y aislada;
 - FIRST EDITION FREEZE: activo;
@@ -30,6 +32,7 @@ Estado validado antes de esta sincronización final:
 Estas fichas no deben reabrirse por deuda legítima, mejoras cosméticas o por perseguir porcentajes. Solo procede reabrirlas ante una regresión real o nueva información verificable que cambie materialmente su estado.
 
 - Amparo;
+- Las Aguas;
 - San Esteban;
 - La Sed;
 - Virgen del Castillo de Lebrija · actualidad de septiembre de 2026;
@@ -120,6 +123,26 @@ Controles a cero:
 - endpoints no publicados en relaciones nucleares;
 - relación con una Humildad inexistente en esta corporación;
 - etiqueta vigente de «misterio» para el paso del Cristo.
+
+## Primera prueba de habilidad · Las Aguas
+
+Documento: `docs/CERTIFICACION-LAS-AGUAS-2026-09-05.md`.
+
+**LAS AGUAS → CERRADA Y REVALIDADA · INDEXABLE · GRAFO NUCLEAR LIMPIO.**
+
+La habilidad de proyecto `.codex/skills/cerrar-ficha-hermandad` ha completado su primera prueba sobre una ficha ya certificada. Detectó correctamente que no procedía crear DML: revalidó el estado productivo, las fuentes, las relaciones y la representación pública sin reabrir la Hermandad por deuda legítima.
+
+Resultado observado sobre `main = 8cb5bf54609a328d23745ed592f006ccc89b62fd`:
+
+- 4 titulares y 3 pasos publicados;
+- 5 imágenes en el misterio y Nuestra Señora del Rosario en su paso de gloria;
+- 5 acompañamientos actuales: 3 del Lunes Santo y 2 de la Procesión de Gloria;
+- morado y blanco publicados;
+- duplicados nucleares a cero;
+- canonical correcta, `index, follow`, OG válida y 0 errores runtime en la ruta durante las 24 horas auditadas;
+- Vercel producción `READY` en `dpl_CRWGXSoX5mPcFQL6fAhxwvtGYzPr`, sincronizado con el mismo SHA de `main`.
+
+No se ha tocado Supabase, arquitectura, UX, DDL ni RLS.
 
 ### Deuda legítima
 
