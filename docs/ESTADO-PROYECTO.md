@@ -1,7 +1,7 @@
 # Hilo Cofrade · Estado canónico
 
 **Corte validado:** 5 de septiembre de 2026  
-**Base de sincronización:** `main = fc63f4f10c126755d07af53ce4bdfcdd2caed038` · #619 ya integrada junto al merge concurrente #620  
+**Base de sincronización:** `main = e7a659ee18a7833fb807faa6b7d2614a8ec5f856` · #621 integrada  
 **Régimen:** `FIRST EDITION FREEZE` activo  
 **Fase:** editorial / documental sobre el modelo vigente  
 **Frente editorial activo:** ninguno
@@ -10,17 +10,20 @@
 
 La Primera Edición permanece cerrada, certificada y congelada. No existe bloqueo editorial general ni una Hermandad abierta en trabajo.
 
-En la revalidación de este corte:
+Estado validado:
 
-- GitHub: `main = fc63f4f10c126755d07af53ce4bdfcdd2caed038`;
-- #619 sincronizó el estado canónico anterior;
-- #620 entró de forma concurrente y aplica a Cuatrovitas una paleta verde, blanco y dorado mediante DML sobre el modelo existente;
-- Vercel producción: `READY` sobre `fc63f4f`;
+- GitHub: `main = e7a659ee18a7833fb807faa6b7d2614a8ec5f856`;
+- PR abiertas: 0;
+- #618 corrige definitivamente la fotografía del Rosario 2026 del Cerro;
+- #619 sincroniza el estado canónico posterior a #617/#618;
+- #620 aplica a Cuatrovitas la paleta verde, blanco y dorado mediante DML sobre el modelo existente;
+- #621 revalida el estado canónico tras la entrada concurrente de #620;
+- Vercel producción: `READY` sobre `e7a659ee18a7833fb807faa6b7d2614a8ec5f856`;
 - Supabase producción: operativa;
 - #492: abierta y aislada;
 - FIRST EDITION FREEZE: activo.
 
-El SHA que resulte de fusionar este ajuste documental pasa a ser el nuevo HEAD de referencia sin cambiar el estado funcional descrito aquí.
+GitHub, Supabase y Vercel prevalecen siempre sobre cualquier corte documental anterior.
 
 ## Cierres documentales vigentes
 
@@ -46,29 +49,29 @@ No deben reabrirse por deuda legítima, mejoras cosméticas o por perseguir un 1
 
 Solo procede reabrir una ficha certificada ante una regresión real o información nueva verificable que cambie materialmente su estado.
 
-## Estado posterior a Tomares
+## Cierres y ajustes recientes relevantes
 
 ### Sastres · #607 + #608
 
-86 % técnico. Sede, titular, paso, cultos, salidas, patrimonio, acontecimientos y Fuentes estructurados. Las Cigarreras queda vigente en 2026 con continuidad desde 2024. Escudo/media y detalles no publicados permanecen como deuda legítima.
+86 % técnico en el corte de certificación. Sede, titular, paso, cultos, salidas, patrimonio, acontecimientos y Fuentes estructurados. Las Cigarreras queda vigente en 2026 con continuidad desde 2024. Escudo/media y detalles no publicados permanecen como deuda legítima.
 
 ### Hermandad Sacramental de Camas · #609–#613
 
-#613 prevalece sobre el cierre inicial #609. La ficha canónica representa **Penitencia + Sacramental + Gloria**, con Jueves Santo, Corpus y Gloria separados; Gran Poder, Dolores Coronada y San Sebastián; 3 pasos; 12 cultos; salidas y música 2026; hitos históricos y paleta burdeos/dorado/negro/blanco. Completitud técnica: 100 %.
+#613 prevalece sobre el cierre inicial #609. La ficha canónica representa **Penitencia + Sacramental + Gloria**, con Jueves Santo, Corpus y Gloria separados; Gran Poder, Dolores Coronada y San Sebastián; 3 pasos; 12 cultos; salidas y música 2026; hitos históricos y paleta burdeos/dorado/negro/blanco.
 
 #610 corrigió la búsqueda del Panel y #611 retiró el placeholder duplicado que provocaba 404, conservando Cruz Roja como histórica.
 
 ### Setefilla · #612
 
-93 % técnico considerado cierre completo para su idiosincrasia. Santuario, Asunción y Casa de la Virgen están diferenciados; Romería anual e Idas/Venidas son series distintas; Venida 2022 e Ida 2024 están estructuradas. La ausencia de música no constituye deuda automática.
+Cierre documental propio para su idiosincrasia. Santuario, Asunción y Casa de la Virgen están diferenciados; Romería anual e Idas/Venidas son series distintas; Venida 2022 e Ida 2024 están estructuradas. La ausencia de música no constituye deuda automática.
 
 ### Nuestra Señora de la Luz de San Esteban · #614
 
-21 % → 86 %. Identidad, sede, titular, paso, cultos y procesión 2026 estructurados. Las Cigarreras solo se acredita en 2025; no se extrapola a 2026. Escudo y música 2026 específica permanecen como deuda legítima.
+Identidad, sede, titular, paso, cultos y procesión 2026 estructurados. Las Cigarreras solo se acredita en 2025; no se extrapola a 2026. Escudo y música 2026 específica permanecen como deuda legítima.
 
 ### El Cerro del Águila · #615–#618
 
-93 % técnico. Penitencia + Sacramental + Gloria; 3 titulares; 3 pasos; 8 cultos; 6 salidas; música actual 2026; 5 hitos. La misión/Rosario del 06/09/2026 reutiliza la guía existente. Nazareno de Huelva queda histórico 2019–2026 y no vigente para 2027. #616 y #618 cierran la fotografía principal del Rosario 2026.
+Penitencia + Sacramental + Gloria; 3 titulares; 3 pasos; cultos, salidas, música actual 2026 e hitos históricos. La misión/Rosario del 06/09/2026 reutiliza la guía existente. Nazareno de Huelva queda histórico 2019–2026 y no vigente para 2027. #616 y #618 cierran la fotografía principal del Rosario 2026.
 
 ## Reglas transversales ya vigentes
 
