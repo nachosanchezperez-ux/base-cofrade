@@ -22,6 +22,16 @@ const nextConfig = {
         destination: '/hermandades/san-esteban',
         permanent: true,
       },
+      {
+        source: '/hermandades/hermandad-de-san-benito',
+        destination: '/hermandades/san-benito',
+        permanent: true,
+      },
+      {
+        source: '/imagenes/nuestra-senora-santa-maria-aguas-santas-coronada-villaverde',
+        destination: '/imagenes/nuestra-senora-aguas-santas-villaverde-del-rio',
+        permanent: true,
+      },
     ]
   },
   images: {
