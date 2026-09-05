@@ -1,7 +1,7 @@
 # Hilo Cofrade · Estado canónico
 
 **Corte validado:** 5 de septiembre de 2026  
-**Base de sincronización:** `main = e7a659ee18a7833fb807faa6b7d2614a8ec5f856` · #621 integrada  
+**Base de sincronización:** `main = 41ef02d6a74e3a1b2a52b45df17908115fa34cd4` · #623 integrada  
 **Régimen:** `FIRST EDITION FREEZE` activo  
 **Fase:** editorial / documental sobre el modelo vigente  
 **Frente editorial activo:** ninguno
@@ -12,13 +12,15 @@ La Primera Edición permanece cerrada, certificada y congelada. No existe bloque
 
 Estado validado:
 
-- GitHub: `main = e7a659ee18a7833fb807faa6b7d2614a8ec5f856`;
+- GitHub: `main = 41ef02d6a74e3a1b2a52b45df17908115fa34cd4`;
 - PR abiertas: 0;
 - #618 corrige definitivamente la fotografía del Rosario 2026 del Cerro;
 - #619 sincroniza el estado canónico posterior a #617/#618;
 - #620 aplica a Cuatrovitas la paleta verde, blanco y dorado mediante DML sobre el modelo existente;
 - #621 revalida el estado canónico tras la entrada concurrente de #620;
-- Vercel producción: `READY` sobre `e7a659ee18a7833fb807faa6b7d2614a8ec5f856`;
+- #622 sincroniza de nuevo el estado antes del recálculo documental;
+- #623 aplica a Purísima de La Algaba la paleta celeste, blanco y dorado mediante DML sobre el modelo existente;
+- Vercel producción: último despliegue de `main` en curso/READY según el corte; validar de nuevo antes de abrir el siguiente frente;
 - Supabase producción: operativa;
 - #492: abierta y aislada;
 - FIRST EDITION FREEZE: activo.
@@ -86,7 +88,8 @@ Penitencia + Sacramental + Gloria; 3 titulares; 3 pasos; cultos, salidas, músic
 - #606 · contratos futuros excluidos de la actualidad hasta su fecha efectiva;
 - #610 · búsqueda de Hermandades por nombre corto, popular, oficial y localidad;
 - #617 · `Vestidor actual` como relación `agent → dresser_of → image`, editable desde Panel, con conservación de histórico y visualización pública;
-- #620 · paleta de Cuatrovitas: verde, blanco y dorado.
+- #620 · paleta de Cuatrovitas: verde, blanco y dorado;
+- #623 · paleta de Purísima de La Algaba: celeste, blanco y dorado.
 
 No se admiten excepciones por slug para ocultar problemas comunes.
 
