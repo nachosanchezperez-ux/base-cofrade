@@ -34,14 +34,24 @@ test('el sitemap descubre superficies públicas y rutas nacidas de datos', () =>
     assert.match(sitemap, new RegExp(route.replaceAll('/', '\\/')))
   }
 
-  assert.match(sitemap, /createPublicClient/)
-  assert.match(sitemap, /filterPublicPageEntities/)
   assert.match(sitemap, /brotherhoodDirectory/)
   assert.match(sitemap, /getHermandadesDirectory/)
   assert.match(sitemap, /getExtraordinaryDirectory/)
+  assert.match(sitemap, /getGloryDirectory/)
+  assert.match(sitemap, /getCrewEventDirectory/)
   assert.match(sitemap, /directoryPath/)
   assert.match(sitemap, /\/extraordinarias\/\$\{outing\.slug\}/)
   assert.match(sitemap, /new Map\(entries\.map/)
+})
+
+test('el sitemap no adelanta fichas cuya indexabilidad decide el mínimo editorial', () => {
+  assert.doesNotMatch(sitemap, /createPublicClient/)
+  assert.doesNotMatch(sitemap, /filterPublicPageEntities/)
+  assert.doesNotMatch(sitemap, /publishedEntities/)
+  assert.doesNotMatch(sitemap, /\/hermandades\/\$\{brotherhood\.slug\}/)
+  assert.doesNotMatch(sitemap, /\/bandas\/\$\{band\.slug\}/)
+  assert.doesNotMatch(sitemap, /\/imagenes\/\$\{image\.slug\}/)
+  assert.doesNotMatch(sitemap, /\/pasos\/\$\{step\.slug\}/)
 })
 
 test('el sitemap solo publica rutas segmentadas de la clasificación real', () => {
