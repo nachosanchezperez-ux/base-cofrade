@@ -6,6 +6,7 @@ const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf
 
 const sitemap = read('app/sitemap.js')
 const robots = read('app/robots.js')
+const publicIndexability = read('lib/supabase/public-indexability.js')
 const categoryDirectory = read('components/HermandadesCategoryDirectory.js')
 const routeDirectory = read('components/DirectoryRoutePage.js')
 const extraordinaryDirectory = read('app/extraordinarias/page.js')
@@ -44,14 +45,35 @@ test('el sitemap descubre superficies públicas y rutas nacidas de datos', () =>
   assert.match(sitemap, /new Map\(entries\.map/)
 })
 
-test('el sitemap no adelanta fichas cuya indexabilidad decide el mínimo editorial', () => {
-  assert.doesNotMatch(sitemap, /createPublicClient/)
-  assert.doesNotMatch(sitemap, /filterPublicPageEntities/)
+test('el sitemap solo devuelve fichas aprobadas por el snapshot editorial compartido', () => {
+  assert.match(sitemap, /getPublicIndexableEntityEntries/)
+  assert.match(sitemap, /entityEntries\(indexableEntities\)/)
+  assert.match(sitemap, /brotherhood:\s*\{ segment: 'hermandades'/)
+  assert.match(sitemap, /band:\s*\{ segment: 'bandas'/)
+  assert.match(sitemap, /image:\s*\{ segment: 'imagenes'/)
+  assert.match(sitemap, /step:\s*\{ segment: 'pasos'/)
   assert.doesNotMatch(sitemap, /publishedEntities/)
-  assert.doesNotMatch(sitemap, /\/hermandades\/\$\{brotherhood\.slug\}/)
-  assert.doesNotMatch(sitemap, /\/bandas\/\$\{band\.slug\}/)
-  assert.doesNotMatch(sitemap, /\/imagenes\/\$\{image\.slug\}/)
-  assert.doesNotMatch(sitemap, /\/pasos\/\$\{step\.slug\}/)
+  assert.doesNotMatch(sitemap, /filterPublicPageEntities/)
+})
+
+test('las cuatro familias comparten el mismo mínimo editorial', () => {
+  for (const evaluator of [
+    'isBrotherhoodEditoriallyIndexable',
+    'isBandEditoriallyIndexable',
+    'isImageEditoriallyIndexable',
+    'isStepEditoriallyIndexable',
+  ]) {
+    assert.match(publicIndexability, new RegExp(`export function ${evaluator}`))
+  }
+
+  assert.match(publicIndexability, /meetsPublicEditorialMinimum/)
+  assert.match(publicIndexability, /getPublicIndexableEntityEntries/)
+  assert.match(publicIndexability, /getBandsDirectory/)
+  assert.match(publicIndexability, /getImagesDirectory/)
+  assert.match(publicIndexability, /getStepsDirectory/)
+  assert.match(publicIndexability, /source_links/)
+  assert.match(publicIndexability, /step_phases/)
+  assert.match(publicIndexability, /music_accompaniment_periods/)
 })
 
 test('el sitemap solo publica rutas segmentadas de la clasificación real', () => {
