@@ -20,3 +20,12 @@ test('elimina tarjetas duplicadas sin confundir salidas distintas', () => {
 
   assert.deepEqual(uniquePublicOutings(items).map((item) => item.id), ['1', '2'])
 })
+
+test('reserva el Vía Crucis del Consejo para su módulo institucional', () => {
+  const items = [
+    { id: 'via-crucis', slug: 'via-crucis-consejo-1989-san-bernardo', tipo: 'Vía Crucis del Consejo', nombre: 'Vía Crucis de las Cofradías 1989', caracter: 'extraordinary' },
+    { id: 'extraordinaria', slug: 'salida-extraordinaria-2026', tipo: 'Salida extraordinaria', nombre: 'Salida extraordinaria 2026', caracter: 'extraordinary' },
+  ]
+
+  assert.deepEqual(uniquePublicOutings(items).map((item) => item.id), ['extraordinaria'])
+})
