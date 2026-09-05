@@ -12,16 +12,21 @@ const EVENT_STATUS_LABELS = {
   cancelled: 'Cancelada',
 }
 
+const MONTH_LABELS = ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC']
+
 function visualCoverage(item) {
   return Number(item.hasPhoto) + Number(item.hasPoster) + Number(item.galleryCount > 0)
 }
 
-function visualSummary(item) {
-  return [
-    `Foto ${item.hasPhoto ? '✓' : '—'}`,
-    `Cartel ${item.hasPoster ? '✓' : '—'}`,
-    `Galería ${item.galleryCount || '—'}`,
-  ].join(' · ')
+function outingDateMeta(value) {
+  if (!value) return { day: '—', month: 'SIN FECHA', year: '' }
+  const [year, month, day] = String(value).split('-')
+  const monthIndex = Number(month) - 1
+  return {
+    day: day || '—',
+    month: MONTH_LABELS[monthIndex] || '',
+    year: year || '',
+  }
 }
 
 export const metadata = { title: 'Extraordinarias · Panel' }
@@ -36,6 +41,10 @@ export default async function PanelExtraordinaryOutingsPage({ searchParams }) {
     getExtraordinaryCreateOptions(),
   ])
   const canEdit = ['admin', 'editor'].includes(user.role)
+  const completeCount = outings.filter((item) => visualCoverage(item) === 3).length
+  const photoCount = outings.filter((item) => item.hasPhoto).length
+  const posterCount = outings.filter((item) => item.hasPoster).length
+  const galleryCount = outings.filter((item) => item.galleryCount > 0).length
 
   return (
     <div className={styles.pageWrap}>
@@ -90,31 +99,58 @@ export default async function PanelExtraordinaryOutingsPage({ searchParams }) {
       </form>
 
       <section className={styles.panelCard}>
-        <div className={styles.listHeading}>
-          <strong>{outings.length} extraordinarias</strong>
-          <small>Cobertura 3/3 = fotografía principal + cartel + al menos una imagen de galería.</small>
+        <div className={`${styles.listHeading} ${extraStyles.directoryHeading}`}>
+          <div>
+            <strong>{outings.length} extraordinarias</strong>
+            <small>La cobertura visual se completa con fotografía principal, cartel y al menos una imagen de galería.</small>
+          </div>
+          <div className={extraStyles.directoryStats} aria-label="Resumen de cobertura visual">
+            <span><b>{completeCount}</b><small>completas</small></span>
+            <span><b>{photoCount}</b><small>con foto</small></span>
+            <span><b>{posterCount}</b><small>con cartel</small></span>
+            <span><b>{galleryCount}</b><small>con galería</small></span>
+          </div>
         </div>
 
         {outings.length ? (
           <div className={extraStyles.outingList}>
             {outings.map((item) => {
               const coverage = visualCoverage(item)
+              const date = outingDateMeta(item.outing_date)
+              const organizer = item.organizer_name || ''
               return (
-                <article key={item.id}>
-                  <div
-                    className={`${extraStyles.photoState} ${coverage === 3 ? extraStyles.photoReady : extraStyles.photoMissing}`}
-                    aria-label={`Cobertura visual ${coverage} de 3`}
-                  >
-                    {coverage}/3
+                <article className={extraStyles.outingRow} key={item.id}>
+                  <div className={extraStyles.dateBlock} aria-label={item.outing_date ? `Fecha ${item.outing_date}` : 'Fecha por documentar'}>
+                    <strong>{date.day}</strong>
+                    <span>{date.month}</span>
+                    <small>{date.year || 'Pendiente'}</small>
                   </div>
+
                   <div className={extraStyles.outingIdentity}>
-                    <span>{[item.municipality, item.outing_date].filter(Boolean).join(' · ')}</span>
+                    <span>{item.municipality || 'Localidad por documentar'}</span>
                     <strong>{item.title || item.outing_type || 'Extraordinaria'}</strong>
-                    <small>{item.organizer_name || item.reference_code || 'Entidad por documentar'}</small>
+                    <div className={extraStyles.identityMeta}>
+                      <small className={!organizer ? extraStyles.missingMeta : ''}>{organizer || 'Entidad por documentar'}</small>
+                      {item.reference_code ? <em>REF · {item.reference_code}</em> : null}
+                    </div>
                   </div>
-                  <span className={`${extraStyles.eventStatus} ${extraStyles[item.event_status] || ''}`}>{EVENT_STATUS_LABELS[item.event_status] || item.event_status}</span>
-                  <span className={`${extraStyles.photoBadge} ${coverage === 3 ? extraStyles.photoBadgeReady : ''}`}>{visualSummary(item)}</span>
-                  <Link className={styles.rowLink} href={`/panel/extraordinarias/${item.id}/general`}>Editar <span>→</span></Link>
+
+                  <div className={extraStyles.editorialState}>
+                    <span className={`${extraStyles.eventStatus} ${extraStyles[item.event_status] || ''}`}>{EVENT_STATUS_LABELS[item.event_status] || item.event_status}</span>
+                    <div className={extraStyles.coverageBlock} aria-label={`Cobertura visual ${coverage} de 3`}>
+                      <div className={extraStyles.coverageTop}>
+                        <span>Cobertura visual</span>
+                        <strong>{coverage}/3</strong>
+                      </div>
+                      <div className={extraStyles.coverageItems}>
+                        <span className={`${extraStyles.coverageItem} ${item.hasPhoto ? extraStyles.coverageReady : extraStyles.coveragePending}`}><i>{item.hasPhoto ? '✓' : '○'}</i>Foto</span>
+                        <span className={`${extraStyles.coverageItem} ${item.hasPoster ? extraStyles.coverageReady : extraStyles.coveragePending}`}><i>{item.hasPoster ? '✓' : '○'}</i>Cartel</span>
+                        <span className={`${extraStyles.coverageItem} ${item.galleryCount > 0 ? extraStyles.coverageReady : extraStyles.coveragePending}`}><i>{item.galleryCount > 0 ? '✓' : '○'}</i>Galería{item.galleryCount > 0 ? ` · ${item.galleryCount}` : ''}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <Link className={`${styles.rowLink} ${extraStyles.editLink}`} href={`/panel/extraordinarias/${item.id}/general`}>Editar <span>→</span></Link>
                 </article>
               )
             })}
