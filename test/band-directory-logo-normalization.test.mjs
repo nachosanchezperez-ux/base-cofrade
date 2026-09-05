@@ -21,6 +21,8 @@ test('el directorio de Bandas normaliza el peso visual de escudos contenidos', (
 test('la normalización no introduce excepciones nominales de Bandas', () => {
   const directory = read('components/RelationalEntityDirectory.js')
   const css = read('components/RelationalEntityDirectoryEnhancements.module.css')
+  const implementation = `${directory}\n${css}`
 
-  assert.equal(/centuria|cigarreras|banda-del-sol/i.test(`${directory}\n${css}`), false)
+  assert.equal(/centuria-romana-macarena|banda-del-sol|las-cigarreras/i.test(implementation), false)
+  assert.equal(/item\.(?:slug|name)[\s\S]{0,80}(?:centuria|cigarreras|sol)/i.test(implementation), false)
 })
