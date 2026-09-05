@@ -17,6 +17,11 @@ const nextConfig = {
         destination: '/extraordinarias/sevilla-divina-gracia-2026',
         permanent: true,
       },
+      {
+        source: '/hermandades/hermandad-san-esteban-sevilla',
+        destination: '/hermandades/san-esteban',
+        permanent: true,
+      },
     ]
   },
   images: {
