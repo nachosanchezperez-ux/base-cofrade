@@ -1,0 +1,58 @@
+/* Respiración visual de la indumentaria nazarena.
+   La ilustración debe conservar presencia sin tocar los bordes de su panel.
+   Estas reglas complementan el layout base y son comunes a todas las Hermandades. */
+
+@media (min-width: 901px) {
+  .habit-grid > .brotherhood-habit:only-child {
+    grid-template-columns: minmax(340px, .88fr) minmax(0, 1.12fr);
+  }
+
+  .habit-grid > .brotherhood-habit:only-child .habit-visual:has(.habit-image) {
+    min-height: 590px;
+    padding: 28px 34px 18px;
+  }
+
+  .habit-grid > .brotherhood-habit:only-child .habit-image {
+    width: auto;
+    height: min(550px, 46vw);
+    max-height: 550px;
+    max-width: calc(100% - 28px);
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1180px) {
+  .habit-grid > .brotherhood-habit:not(:only-child) .habit-visual:has(.habit-image) {
+    min-height: 490px;
+    padding: 18px 20px 12px;
+  }
+
+  .habit-grid > .brotherhood-habit:not(:only-child) .habit-image {
+    height: min(430px, 42vw);
+    max-height: 430px;
+    max-width: calc(100% - 20px);
+  }
+}
+
+@media (min-width: 621px) and (max-width: 900px) {
+  .habit-visual:has(.habit-image) {
+    min-height: 450px;
+    padding: 20px 22px 12px;
+  }
+
+  .habit-image {
+    height: 420px;
+    max-width: calc(100% - 20px);
+  }
+}
+
+@media (max-width: 620px) {
+  .habit-visual:has(.habit-image) {
+    min-height: 400px;
+    padding: 16px 16px 8px;
+  }
+
+  .habit-image {
+    height: 410px;
+    max-width: calc(100% - 12px);
+  }
+}
