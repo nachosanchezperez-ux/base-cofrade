@@ -1,0 +1,29 @@
+/* La sección de Túnica conserva una base oscura de alto contraste, pero su
+   atmósfera visual nace de la identidad cromática de cada Hermandad. El tono
+   corporativo se mezcla con una base muy oscura para evitar texto blanco sobre
+   fondos claros incluso cuando el color principal de la entidad es blanco,
+   celeste, amarillo u otro tono luminoso. */
+#tunica.brotherhood-dark {
+  background:
+    radial-gradient(
+      circle at 88% 10%,
+      color-mix(in srgb, var(--brotherhood-secondary, #a71930) 24%, transparent),
+      transparent 29%
+    ),
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--brotherhood-primary, #153b69) 34%, #07111c) 0%,
+      color-mix(in srgb, var(--brotherhood-dark, var(--brotherhood-primary, #153b69)) 38%, #07111c) 54%,
+      color-mix(in srgb, var(--brotherhood-primary, #153b69) 28%, #07111c) 100%
+    );
+}
+
+#tunica .eyebrow {
+  color: color-mix(in srgb, var(--brotherhood-secondary, #a71930) 34%, #ffffff);
+}
+
+#tunica .brotherhood-habit {
+  box-shadow:
+    0 18px 44px rgba(4,17,30,.18),
+    inset 0 1px 0 color-mix(in srgb, var(--brotherhood-primary, #153b69) 16%, transparent);
+}
