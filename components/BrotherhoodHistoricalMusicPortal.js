@@ -81,7 +81,11 @@ export default function BrotherhoodHistoricalMusicPortal({ items = [] }) {
     const host = document.createElement('div')
     host.setAttribute('data-historical-music-experience', 'true')
     host.className = styles.portalHost
+
+    const previousDisplay = legacyGrid.style.getPropertyValue('display')
+    const previousDisplayPriority = legacyGrid.style.getPropertyPriority('display')
     legacyGrid.hidden = true
+    legacyGrid.style.setProperty('display', 'none', 'important')
 
     if (heading) heading.insertAdjacentElement('afterend', host)
     else shell.prepend(host)
@@ -90,6 +94,11 @@ export default function BrotherhoodHistoricalMusicPortal({ items = [] }) {
 
     return () => {
       legacyGrid.hidden = false
+      if (previousDisplay) {
+        legacyGrid.style.setProperty('display', previousDisplay, previousDisplayPriority)
+      } else {
+        legacyGrid.style.removeProperty('display')
+      }
       host.remove()
     }
   }, [groups.length, items])
