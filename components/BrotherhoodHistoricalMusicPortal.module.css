@@ -1,0 +1,334 @@
+.portalHost {
+  width: 100%;
+}
+
+.experience {
+  margin-top: 28px;
+}
+
+.summary {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 18px 0 22px;
+  border-top: 1px solid color-mix(in srgb, var(--brotherhood-primary) 16%, transparent);
+}
+
+.summary > div {
+  display: grid;
+  gap: 4px;
+}
+
+.summary span,
+.groupHeader small {
+  color: var(--brotherhood-primary);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.summary strong {
+  color: #162334;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(24px, 2.2vw, 34px);
+  font-weight: 500;
+  line-height: 1.05;
+}
+
+.summary p {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  color: #162334;
+  font-size: 16px;
+  font-weight: 800;
+  text-align: right;
+}
+
+.summary p small {
+  color: #6f7a86;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  align-items: start;
+}
+
+.group {
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--brotherhood-primary) 16%, #dbe2e8);
+  border-radius: 22px;
+  background: color-mix(in srgb, var(--brotherhood-light, #fff) 94%, #f4f6f7);
+  box-shadow: 0 18px 42px rgba(17, 30, 45, .06);
+}
+
+.groupHeader {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: center;
+  padding: 22px 22px 18px;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--brotherhood-primary) 9%, #fff), #fff 68%);
+}
+
+.groupIndex {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--brotherhood-primary) 24%, transparent);
+  border-radius: 50%;
+  color: var(--brotherhood-primary);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .08em;
+}
+
+.groupHeader > div {
+  min-width: 0;
+}
+
+.groupHeader h3 {
+  margin: 4px 0 0;
+  color: #172536;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(19px, 1.55vw, 25px);
+  font-weight: 500;
+  line-height: 1.12;
+}
+
+.groupMark {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 12px;
+  background: var(--brotherhood-primary);
+  color: var(--brotherhood-light, #fff);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .04em;
+}
+
+.groupMeta {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 11px 22px;
+  border-top: 1px solid rgba(22, 35, 52, .07);
+  border-bottom: 1px solid rgba(22, 35, 52, .08);
+  background: rgba(255, 255, 255, .7);
+  color: #6a7480;
+  font-size: 12px;
+}
+
+.groupMeta strong {
+  color: #26374a;
+  font-weight: 800;
+}
+
+.timeline {
+  margin: 0;
+  padding: 8px 20px 16px;
+  list-style: none;
+}
+
+.timelineItem {
+  display: grid;
+  grid-template-columns: 88px 18px minmax(0, 1fr);
+  align-items: stretch;
+  min-height: 68px;
+}
+
+.timelineItem time {
+  align-self: start;
+  padding-top: 17px;
+  color: var(--brotherhood-primary);
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: -.01em;
+}
+
+.rail {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.rail::before {
+  position: absolute;
+  inset-block: 0;
+  width: 1px;
+  content: '';
+  background: color-mix(in srgb, var(--brotherhood-primary) 18%, #dfe5ea);
+}
+
+.timelineItem:first-child .rail::before {
+  top: 22px;
+}
+
+.timelineItem:last-child .rail::before {
+  bottom: calc(100% - 23px);
+}
+
+.rail i {
+  position: relative;
+  z-index: 1;
+  width: 9px;
+  height: 9px;
+  margin-top: 19px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: var(--brotherhood-primary);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--brotherhood-primary) 34%, transparent);
+}
+
+.timelineCopy {
+  min-width: 0;
+  padding: 13px 0 13px 12px;
+  border-bottom: 1px solid rgba(22, 35, 52, .07);
+}
+
+.timelineItem:last-child .timelineCopy {
+  border-bottom: 0;
+}
+
+.timelineCopy > strong,
+.timelineCopy > a {
+  display: inline-flex;
+  gap: 8px;
+  align-items: baseline;
+  color: #172536;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.25;
+  text-decoration: none;
+}
+
+.timelineCopy > a span {
+  color: var(--brotherhood-primary);
+  transition: transform .18s ease;
+}
+
+.timelineCopy > a:hover span {
+  transform: translateX(3px);
+}
+
+.timelineMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  align-items: center;
+  margin-top: 5px;
+  color: #76808b;
+  font-size: 11px;
+}
+
+.timelineMeta em {
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--brotherhood-primary) 8%, #f5f6f7);
+  color: var(--brotherhood-primary);
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 850;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.timelineCopy p {
+  margin: 6px 0 0;
+  color: #697580;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+@media (max-width: 900px) {
+  .columns {
+    grid-template-columns: 1fr;
+  }
+
+  .groupHeader h3 {
+    font-size: 23px;
+  }
+}
+
+@media (max-width: 560px) {
+  .experience {
+    margin-top: 20px;
+  }
+
+  .summary {
+    align-items: flex-start;
+    padding: 15px 0 18px;
+  }
+
+  .summary p {
+    display: none;
+  }
+
+  .summary strong {
+    font-size: 25px;
+  }
+
+  .group {
+    border-radius: 18px;
+  }
+
+  .groupHeader {
+    grid-template-columns: auto minmax(0, 1fr);
+    padding: 18px 16px 15px;
+  }
+
+  .groupMark {
+    display: none;
+  }
+
+  .groupIndex {
+    width: 34px;
+    height: 34px;
+  }
+
+  .groupHeader h3 {
+    font-size: 20px;
+  }
+
+  .groupMeta {
+    padding: 10px 16px;
+  }
+
+  .timeline {
+    padding: 6px 14px 12px;
+  }
+
+  .timelineItem {
+    grid-template-columns: 74px 15px minmax(0, 1fr);
+    min-height: 64px;
+  }
+
+  .timelineItem time {
+    padding-top: 15px;
+    font-size: 12px;
+  }
+
+  .rail i {
+    margin-top: 17px;
+  }
+
+  .timelineCopy {
+    padding: 11px 0 11px 10px;
+  }
+
+  .timelineCopy > strong,
+  .timelineCopy > a {
+    font-size: 13px;
+  }
+}
