@@ -7,6 +7,7 @@ import './brand.css';
 import './typography.css';
 import './crest.css';
 import './habit-layout.css';
+import './habit-identity.css';
 import './step-preview.css';
 import './home-mobile-contract.css';
 import './titulars-desktop-layout.css';
