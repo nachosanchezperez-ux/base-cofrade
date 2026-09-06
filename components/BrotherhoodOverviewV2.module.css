@@ -58,16 +58,19 @@
   position: relative;
   padding: 24px;
   overflow: hidden;
+  border-color: color-mix(in srgb, var(--brotherhood-secondary, #a71930) 44%, var(--brotherhood-dark, #17324d));
+  color: var(--brotherhood-on-secondary, #fff);
   background:
-    radial-gradient(circle at 88% 8%, color-mix(in srgb, var(--brotherhood-secondary, #a71930) 9%, transparent), transparent 32%),
-    #fbfcfd;
+    radial-gradient(circle at 92% 4%, color-mix(in srgb, var(--brotherhood-light, #fff) 22%, transparent), transparent 34%),
+    linear-gradient(145deg, var(--brotherhood-dark, #17324d), color-mix(in srgb, var(--brotherhood-secondary, #a71930) 78%, var(--brotherhood-dark, #17324d)));
+  box-shadow: 0 22px 54px color-mix(in srgb, var(--brotherhood-dark, #17324d) 22%, transparent);
 }
 
 .seatCard::before {
   position: absolute;
   inset: 0 auto 0 0;
   width: 4px;
-  background: linear-gradient(180deg, var(--brotherhood-secondary, #a71930), color-mix(in srgb, var(--brotherhood-secondary, #a71930) 16%, transparent));
+  background: linear-gradient(180deg, var(--brotherhood-light, #fff), color-mix(in srgb, var(--brotherhood-light, #fff) 18%, transparent));
   content: '';
 }
 
@@ -88,6 +91,58 @@
   color: #8290a0;
   font-size: 9px;
   font-weight: 750;
+}
+
+.seatCard .cardTopline,
+.seatCard .cardTopline small {
+  color: color-mix(in srgb, var(--brotherhood-on-secondary, #fff) 72%, transparent);
+}
+
+.seatCard .pin {
+  color: var(--brotherhood-secondary, #a71930);
+  background: var(--brotherhood-light, #fff);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--brotherhood-dark, #17324d) 24%, transparent);
+}
+
+.seatCard:hover .pin {
+  color: var(--brotherhood-dark, #17324d);
+  background: color-mix(in srgb, var(--brotherhood-light, #fff) 90%, var(--brotherhood-secondary, #a71930));
+}
+
+.seatCard .seatIdentity h3 {
+  color: var(--brotherhood-on-secondary, #fff);
+}
+
+.seatCard .seatIdentity p,
+.seatCard .seatActions > span {
+  color: color-mix(in srgb, var(--brotherhood-on-secondary, #fff) 70%, transparent);
+}
+
+.seatCard .seatActions a {
+  color: var(--brotherhood-dark, #17324d);
+  background: var(--brotherhood-light, #fff);
+  box-shadow: 0 9px 24px color-mix(in srgb, var(--brotherhood-dark, #17324d) 28%, transparent);
+}
+
+.seatCard .seatActions a:hover {
+  color: var(--brotherhood-on-secondary, #fff);
+  background: color-mix(in srgb, var(--brotherhood-secondary, #a71930) 74%, var(--brotherhood-dark, #17324d));
+}
+
+.seatCard .shared,
+.seatCard .seatHistory {
+  border-top-color: color-mix(in srgb, var(--brotherhood-on-secondary, #fff) 22%, transparent);
+}
+
+.seatCard .shared > small,
+.seatCard .seatHistory summary {
+  color: color-mix(in srgb, var(--brotherhood-on-secondary, #fff) 76%, transparent);
+}
+
+.seatCard .shared a {
+  border-color: color-mix(in srgb, var(--brotherhood-on-secondary, #fff) 24%, transparent);
+  color: var(--brotherhood-on-secondary, #fff);
+  background: color-mix(in srgb, var(--brotherhood-on-secondary, #fff) 10%, transparent);
 }
 
 .identityFacts {
