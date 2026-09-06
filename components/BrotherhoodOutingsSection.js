@@ -1,5 +1,5 @@
-import Image from 'next/image'
 import Link from 'next/link'
+import BrotherhoodOutingImage from './BrotherhoodOutingImage'
 import styles from './BrotherhoodOutingsSection.module.css'
 
 function normalized(value = '') {
@@ -68,32 +68,6 @@ function sectionCopy(outings) {
     title: 'Salidas',
     description: 'Procesiones, rosarios, vía crucis y traslados documentados en la historia de la Hermandad.',
   }
-}
-
-function OutingImage({ outing, primary = false }) {
-  if (!outing.imagen?.src) {
-    return (
-      <div className={`${styles.imageFallback} ${primary ? styles.primaryFallback : ''}`} aria-hidden="true">
-        <span>{String(outing.tipo || 'Salida').slice(0, 1)}</span>
-        <i />
-        <b>{outing.caracter || 'Memoria procesional'}</b>
-      </div>
-    )
-  }
-
-  return (
-    <figure className={styles.image}>
-      <Image
-        src={outing.imagen.src}
-        alt={outing.imagen.alt || `Fotografía de ${outing.nombre}`}
-        fill
-        sizes={primary
-          ? '(max-width: 820px) calc(100vw - 32px), (max-width: 1280px) 52vw, 690px'
-          : '(max-width: 720px) calc(100vw - 32px), 420px'}
-      />
-      {outing.imagen.credito ? <figcaption>Fotografía · {outing.imagen.credito}</figcaption> : null}
-    </figure>
-  )
 }
 
 function Movements({ outing }) {
@@ -219,7 +193,7 @@ export default function BrotherhoodOutingsSection({ outings = [] }) {
 
         <article className={styles.primary}>
           <div className={styles.primaryNumber} aria-hidden="true">01</div>
-          <OutingImage outing={primary} primary />
+          <BrotherhoodOutingImage outing={primary} primary />
           <OutingText outing={primary} primary />
         </article>
 
@@ -233,7 +207,7 @@ export default function BrotherhoodOutingsSection({ outings = [] }) {
               {secondary.map((outing, index) => (
                 <article className={styles.card} key={outing.id}>
                   <span className={styles.cardNumber} aria-hidden="true">{String(index + 2).padStart(2, '0')}</span>
-                  <OutingImage outing={outing} />
+                  <BrotherhoodOutingImage outing={outing} />
                   <OutingText outing={outing} />
                 </article>
               ))}
