@@ -1,12 +1,32 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 6 de septiembre de 2026 · La Misión de Heliópolis · cierre documental avanzado
-**HEAD funcional previo a esta sincronización:** `main = fb54dad60e4f5b1356934fb972f5726383e8fea5`
+**Corte validado:** 6 de septiembre de 2026 · El Juncal · cierre documental avanzado
+**HEAD funcional previo a esta sincronización:** `main = c3c6deb20078b775cb9cbc5a63f84e845c5780f4`
 **Régimen:** `FIRST EDITION FREEZE` activo  
 **Fase:** editorial / documental sobre el modelo vigente  
 **Frente editorial de Hermandad activo:** ninguno
 
 > GitHub, Supabase y Vercel prevalecen siempre sobre cualquier SHA transitorio escrito en documentación. Las PR abiertas no se consideran estado canónico hasta su integración y validación.
+
+## Último cierre de Hermandad · El Juncal · 2026-09-06
+
+**EL JUNCAL → CERRADA Y CERTIFICADA · 100 % TÉCNICO · INDEXABLE · PATRIMONIO DEL PASO JERARQUIZADO.**
+
+Documento: `docs/CERTIFICACION-EL-JUNCAL-2026-09-06.md`.  
+PR funcional: [#673](https://github.com/nachosanchezperez-ux/base-cofrade/pull/673).
+
+Resultado:
+
+- identidad, fundación de 1968, título completo y sede canónica estructuradas;
+- 3 imágenes titulares y titularidad sacramental no visual;
+- 1 paso de Gloria con 4 piezas patrimoniales en su propia ficha;
+- 9 cultos recurrentes y 7 ocurrencias exactas de 2026;
+- salida de Gloria y cultos externos separados de 2 salidas extraordinarias históricas;
+- Banda de Música de la Cruz Roja enlazada al paso y a la salida de 2026;
+- 0 salidas sin Fuente y completitud técnica final del 100 %;
+- producción `READY`, páginas de Hermandad y Paso con HTTP 200 y 0 errores runtime.
+
+Migración: `20260907013000_cierra_el_juncal.sql`.
 
 ## Último cierre de Hermandad · La Misión de Heliópolis · 2026-09-06
 
@@ -162,12 +182,12 @@ Durante el cierre de Osuna aparecieron trabajos independientes. Se aplicó actua
 
 Estado validado antes de esta sincronización documental:
 
-- GitHub: `main = fb54dad60e4f5b1356934fb972f5726383e8fea5`;
+- GitHub: `main = c3c6deb20078b775cb9cbc5a63f84e845c5780f4`;
 - PR abiertas: **0**;
-- producción Vercel: `dpl_4U3KuWTSvsGpM4bnSdVjCukjn94p` · `READY` · mismo SHA de `main`;
-- producción: ficha de La Misión comprobada con sede, titularidades, pasos, música, salidas, cultos y fuentes visibles;
+- producción Vercel: `dpl_AwNpbqE6MFHPPfpwn23cEohzG6o7` · `READY` · mismo SHA de `main`;
+- producción: fichas de El Juncal y su Paso comprobadas con sede, titulares, música, salidas, cultos, patrimonio y fuentes visibles;
 - runtime `error/fatal`: 0 en el deployment final durante la ventana auditada;
-- Supabase: operativa · **78 migraciones registradas** · La Misión aplicada y verificada;
+- Supabase: operativa · **79 migraciones registradas** · El Juncal aplicado y verificado;
 - Consolación de Osuna: 100 % técnico · cerrada · indexable · grafo nuclear limpio;
 - Purísima de La Algaba: 93 % técnico · cerrada · música 2026 sin confirmar;
 - San Bernardo: 100 % técnico · cerrado;
@@ -175,6 +195,7 @@ Estado validado antes de esta sincronización documental:
 - Las Aguas: cerrada y revalidada · estación de penitencia y procesión de Gloria anuales publicadas · patrimonio procesional jerarquizado por Paso;
 - La Carretería: 100 % técnico · cerrada · indexable · grafo nuclear limpio;
 - La Misión de Heliópolis: 100 % técnico · cerrada · indexable · grafo nuclear limpio;
+- El Juncal: 100 % técnico · cerrado · indexable · patrimonio del Paso jerarquizado;
 - #492: abierta y aislada;
 - FIRST EDITION FREEZE: activo;
 - frente editorial de Hermandad activo: ninguno.
@@ -208,7 +229,8 @@ Estas fichas no deben reabrirse por deuda legítima, mejoras cosméticas o por p
 - Purísima de La Algaba · 93 % técnico · música 2026 pendiente de confirmación;
 - **Consolación de Osuna · 100 % técnico**;
 - **La Carretería · 100 % técnico**.
-- **La Misión de Heliópolis · 100 % técnico**.
+- **La Misión de Heliópolis · 100 % técnico**;
+- **El Juncal · 100 % técnico**.
 
 ## Reglas operativas vigentes
 
@@ -236,6 +258,11 @@ No debe resolverse reescribiendo migraciones históricas ya aplicadas ni modific
 ## Auditor
 
 El ciclo queda limpio:
+
+- El Juncal queda cerrado al 100 %, con sede unívoca, tres titulares visuales, una titularidad sacramental y el patrimonio ligado a su Paso;
+- la salida de Gloria, el Vía Crucis y las extraordinarias históricas se muestran en sus categorías temporales correctas;
+- las convocatorias de 2026 sin memoria posterior permanecen `announced`;
+- la ausencia de fotografías de titulares con derechos trazables queda como deuda visual legítima;
 
 - La Misión de Heliópolis queda cerrada al 100 %, con identidad homónima aislada, salidas temporalmente correctas y grafo nuclear sin duplicados;
 - el hábito y los dos capataces existentes fueron revalidados, no recreados;
