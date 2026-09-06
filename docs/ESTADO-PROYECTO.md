@@ -1,38 +1,40 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 5 de septiembre de 2026 · prueba de cierre de Las Aguas
-**HEAD funcional previo a esta sincronización:** `main = 8cb5bf54609a328d23745ed592f006ccc89b62fd`
+**Corte validado:** 6 de septiembre de 2026 · cierre avanzado de Jesús Despojado
+**HEAD funcional previo a esta sincronización:** `main = 33fda16b2161b492c6d27c17f987a81582029445`
 **Régimen:** `FIRST EDITION FREEZE` activo  
 **Fase:** editorial / documental sobre el modelo vigente  
-**Frente editorial activo:** Jesús Despojado · ficha avanzada
+**Frente editorial activo:** ninguno
 
 > La PR que sincronice este documento pasa a ser el nuevo HEAD canónico sin alterar el estado funcional descrito aquí. GitHub, Supabase y Vercel prevalecen siempre sobre cualquier SHA transitorio escrito en documentación.
 
-## Frente editorial autorizado · Jesús Despojado · 2026-09-05
+## Último frente cerrado · Jesús Despojado · 2026-09-06
 
 - Alcance: devoción, cultos, salidas y música vinculada a salidas.
 - Límites: solo DML editorial y documentación; sin DDL, RLS, arquitectura ni cambios de UX.
-- Certificación de trabajo: `docs/CERTIFICACION-JESUS-DESPOJADO-AVANZADA-2026-09-05.md`.
+- Resultado: **100 % técnico · indexable · fuentes y grafo del frente limpios**.
+- Certificación final: `docs/CERTIFICACION-JESUS-DESPOJADO-AVANZADA-2026-09-05.md`.
 - La `FIRST EDITION FREEZE` continúa vigente para cualquier frente distinto de esta orden editorial.
 
 ## Dónde estamos ahora
 
-La Primera Edición permanece cerrada, certificada y congelada. San Bernardo ha concluido su ciclo `diagnóstico → completar → relacionar → validar → certificar → cerrar`; Las Aguas ha superado una revalidación completa sin nuevo DML. Por orden editorial del 5 de septiembre se abre únicamente la ampliación avanzada de Jesús Despojado.
+La Primera Edición permanece cerrada, certificada y congelada. Jesús Despojado ha concluido su ampliación avanzada de devoción, cultos, salidas y música; no queda un frente editorial activo.
 
 Estado validado antes de esta sincronización final:
 
-- GitHub: `main = 8cb5bf54609a328d23745ed592f006ccc89b62fd`;
+- GitHub: `main = 33fda16b2161b492c6d27c17f987a81582029445` · PR #653 integrada;
 - PR abiertas al congelar la rama: **0**;
 - #635, paleta de San Bernardo, integrada previamente en `2aac73b4760c2b54304d87ca106c61cc6d961c6e`;
 - #637, unificación de indexabilidad del sitemap, integrada en `5206696574fc54cfde74547b8d6a87fc9d00d302`;
 - Supabase producción: operativa;
 - San Bernardo: **100 % técnico · indexable · grafo limpio**;
 - Las Aguas: **cerrada · indexable · grafo nuclear limpio**;
-- producción: `dpl_CRWGXSoX5mPcFQL6fAhxwvtGYzPr`, `READY`, sobre el mismo SHA de `main`;
-- producción previa a la certificación Git: HTTP 200, canonical correcta, `index, follow`, sitemap correcto y 0 runtime errors en la ruta;
+- Jesús Despojado: **100 % técnico · 4 titulares · 9 cultos · 2 salidas · 3 asignaciones musicales · 14 fuentes relevantes · 0 duplicados**;
+- producción: `dpl_GoHc3fvGUYtgAbbn7M2rdwiLLYij`, `READY`, sobre el mismo SHA de `main`;
+- producción: HTTP 200, canonical correcta, `index, follow` y 0 runtime errors en la ruta de Jesús Despojado;
 - #492: abierta y aislada;
 - FIRST EDITION FREEZE: activo;
-- frente editorial activo: Jesús Despojado · ficha avanzada.
+- frente editorial activo: ninguno.
 
 ## Cierres documentales vigentes
 
@@ -58,7 +60,8 @@ Estas fichas no deben reabrirse por deuda legítima, mejoras cosméticas o por p
 - El Cerro del Águila;
 - Pontificia, Real e Ilustre Hermandad de Nuestra Señora de Consolación Coronada de Utrera;
 - Hermandad de Nuestra Señora del Valle Coronada de Écija;
-- **Hermandad de San Bernardo**.
+- **Hermandad de San Bernardo**;
+- **Jesús Despojado · ficha avanzada**.
 
 ## Último cierre certificado · San Bernardo
 

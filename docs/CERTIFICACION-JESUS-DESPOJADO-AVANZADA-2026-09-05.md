@@ -1,13 +1,34 @@
 # Certificación editorial · Jesús Despojado · ficha avanzada
 
-Fecha de corte: **5 de septiembre de 2026**  
+Fecha de corte documental: **5 de septiembre de 2026**
+
+Validación final: **6 de septiembre de 2026**
 Slug: `hermandad-jesus-despojado-sevilla`
 
 ## Resultado
 
 La ficha base ya estaba correctamente resuelta. Esta segunda pasada amplía el frente de **devoción, cultos, salidas y música** sin modificar arquitectura, RLS ni experiencia de usuario.
 
-Tras aplicar `20260905235900_amplia_jesus_despojado_devocion_salidas.sql`, la señal reproducible `brotherhood_completeness` debe pasar de **79 % a 100 %**: cultos, salidas y música vinculada a una salida dejan de estar vacíos.
+Tras aplicar `20260905235900_amplia_jesus_despojado_devocion_salidas.sql`, la señal reproducible `brotherhood_completeness` pasa de **79 % a 100 %**: cultos, salidas y música vinculada a una salida dejan de estar vacíos.
+
+## Validación final en producción
+
+| Control | Resultado |
+| --- | ---: |
+| Titulares publicados | 4 |
+| Cultos recurrentes | 9 |
+| Ocurrencias celebradas | 3 |
+| Salidas publicadas | 2 |
+| Posiciones musicales | 2 |
+| Asignaciones musicales | 3 |
+| Fuentes relevantes del frente | 14 |
+| Huecos de fuente | 0 |
+| Duplicados detectados | 0 |
+| `brotherhood_completeness` | 100 % |
+
+La [PR #653](https://github.com/nachosanchezperez-ux/base-cofrade/pull/653) quedó integrada en `main = 33fda16b2161b492c6d27c17f987a81582029445`. El despliegue de producción `dpl_GoHc3fvGUYtgAbbn7M2rdwiLLYij` está `READY`, la ficha responde HTTP 200, conserva canonical propia y `index, follow`, y no registra errores de runtime en la ruta.
+
+El check principal `verify` y Vercel finalizaron correctamente. Supabase Preview reprodujo un fallo histórico de baseline en una migración anterior de Centuria Macarena, antes de alcanzar este fichero; la nueva migración se validó dos veces con rollback contra producción y se aplicó después correctamente al proyecto canónico.
 
 ## Aportaciones verificables
 
@@ -40,4 +61,4 @@ Tras aplicar `20260905235900_amplia_jesus_despojado_devocion_salidas.sql`, la se
 
 ## Criterio de cierre
 
-La migración es DML e idempotente: resuelve claves por `slug`, evita duplicados y conserva las fuentes en el mismo modelo relacional. El cierre final requiere CI verde, aplicación en producción y recálculo posterior de inventario, duplicados, fuentes y señales de completitud.
+La migración es DML e idempotente: resuelve claves por `slug`, evita duplicados y conserva las fuentes en el mismo modelo relacional. La aplicación en producción, el inventario, las fuentes, los duplicados, la indexabilidad y las señales de completitud han quedado revalidados. **Jesús Despojado queda cerrada y certificada en su ficha avanzada.**
