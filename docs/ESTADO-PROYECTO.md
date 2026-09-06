@@ -1,12 +1,33 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 6 de septiembre de 2026 · La Carretería · cierre documental avanzado  
-**HEAD funcional previo a esta sincronización:** `main = 67cf37ffb30cb0343a4560160f5bc83f512db14c`  
+**Corte validado:** 6 de septiembre de 2026 · La Misión de Heliópolis · cierre documental avanzado
+**HEAD funcional previo a esta sincronización:** `main = fb54dad60e4f5b1356934fb972f5726383e8fea5`
 **Régimen:** `FIRST EDITION FREEZE` activo  
 **Fase:** editorial / documental sobre el modelo vigente  
 **Frente editorial de Hermandad activo:** ninguno
 
 > GitHub, Supabase y Vercel prevalecen siempre sobre cualquier SHA transitorio escrito en documentación. Las PR abiertas no se consideran estado canónico hasta su integración y validación.
+
+## Último cierre de Hermandad · La Misión de Heliópolis · 2026-09-06
+
+**LA MISIÓN → CERRADA Y CERTIFICADA · 100 % TÉCNICO · INDEXABLE · GRAFO NUCLEAR LIMPIO.**
+
+Documento: `docs/CERTIFICACION-LA-MISION-2026-09-06.md`.
+PR funcional: [#671](https://github.com/nachosanchezperez-ux/base-cofrade/pull/671).
+
+Resultado:
+
+- sede canónica relacional y titularidades no visuales estructuradas;
+- 4 imágenes titulares y 2 pasos procesionales;
+- 12 cultos y 11 ocurrencias de 2026;
+- 3 series habituales y 3 salidas concretas;
+- 3 posiciones y 3 asignaciones musicales;
+- 2 estrenos patrimoniales ligados al Santo Cristo;
+- procesiones eucarística y de Gloria mantenidas `announced` hasta disponer de evidencia posterior;
+- 0 duplicados, 0 salidas sin Fuente y completitud técnica final del 100 %;
+- producción `READY`, HTTP 200, canonical exacta, `index, follow`, 0 imágenes rotas y 0 errores runtime.
+
+Migración: `20260907002000_cierra_la_mision.sql`.
 
 ## Último cierre de Hermandad · La Carretería · 2026-09-06
 
@@ -141,18 +162,19 @@ Durante el cierre de Osuna aparecieron trabajos independientes. Se aplicó actua
 
 Estado validado antes de esta sincronización documental:
 
-- GitHub: `main = 67cf37ffb30cb0343a4560160f5bc83f512db14c`;
+- GitHub: `main = fb54dad60e4f5b1356934fb972f5726383e8fea5`;
 - PR abiertas: **0**;
-- producción Vercel: `dpl_2DrWFAFTja9hW23XNouFYTNbtJCa` · `READY` · mismo SHA de `main`;
-- producción: ficha de Las Aguas comprobada con las dos series anuales visibles;
+- producción Vercel: `dpl_4U3KuWTSvsGpM4bnSdVjCukjn94p` · `READY` · mismo SHA de `main`;
+- producción: ficha de La Misión comprobada con sede, titularidades, pasos, música, salidas, cultos y fuentes visibles;
 - runtime `error/fatal`: 0 en el deployment final durante la ventana auditada;
-- Supabase: operativa · **77 migraciones registradas** · La Carretería aplicada y verificada;
+- Supabase: operativa · **78 migraciones registradas** · La Misión aplicada y verificada;
 - Consolación de Osuna: 100 % técnico · cerrada · indexable · grafo nuclear limpio;
 - Purísima de La Algaba: 93 % técnico · cerrada · música 2026 sin confirmar;
 - San Bernardo: 100 % técnico · cerrado;
 - Jesús Despojado: 100 % técnico · cerrado;
 - Las Aguas: cerrada y revalidada · estación de penitencia y procesión de Gloria anuales publicadas · patrimonio procesional jerarquizado por Paso;
 - La Carretería: 100 % técnico · cerrada · indexable · grafo nuclear limpio;
+- La Misión de Heliópolis: 100 % técnico · cerrada · indexable · grafo nuclear limpio;
 - #492: abierta y aislada;
 - FIRST EDITION FREEZE: activo;
 - frente editorial de Hermandad activo: ninguno.
@@ -186,6 +208,7 @@ Estas fichas no deben reabrirse por deuda legítima, mejoras cosméticas o por p
 - Purísima de La Algaba · 93 % técnico · música 2026 pendiente de confirmación;
 - **Consolación de Osuna · 100 % técnico**;
 - **La Carretería · 100 % técnico**.
+- **La Misión de Heliópolis · 100 % técnico**.
 
 ## Reglas operativas vigentes
 
@@ -214,6 +237,10 @@ No debe resolverse reescribiendo migraciones históricas ya aplicadas ni modific
 
 El ciclo queda limpio:
 
+- La Misión de Heliópolis queda cerrada al 100 %, con identidad homónima aislada, salidas temporalmente correctas y grafo nuclear sin duplicados;
+- el hábito y los dos capataces existentes fueron revalidados, no recreados;
+- las dos convocatorias pasadas sin memoria posterior permanecen `announced` y no se convierten en hechos por inferencia;
+- la ausencia de fotografía con derechos queda como deuda visual legítima y no como deuda documental;
 - #668 fue integrada antes de abrir La Carretería y no quedó como frente técnico pendiente;
 - La Carretería queda cerrada al 100 %, sin salidas huérfanas de Fuente ni titulares duplicados;
 - el doble registro operativo de la migración idempotente de #668 no duplicó datos y no se trata como bloqueo;
