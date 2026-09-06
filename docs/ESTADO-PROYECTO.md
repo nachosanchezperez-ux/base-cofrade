@@ -1,14 +1,34 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 6 de septiembre de 2026 · Los Negritos · cierre documental avanzado
-**HEAD funcional previo a esta sincronización:** `main = 5c0d6e6daaa9bffc910de93e8087f9c82b075475`
+**Corte validado:** 6 de septiembre de 2026 · Pasión y Muerte · cierre documental avanzado
+**HEAD funcional previo a esta sincronización:** `main = 344a34838ce1cad5a1b97436703ab470ee54398f`
 **Régimen:** `FIRST EDITION FREEZE` activo  
 **Fase:** editorial / documental sobre el modelo vigente  
 **Frente editorial de Hermandad activo:** ninguno
 
 > GitHub, Supabase y Vercel prevalecen siempre sobre cualquier SHA transitorio escrito en documentación. Las PR abiertas no se consideran estado canónico hasta su integración y validación.
 
-## Último cierre de Hermandad · Los Negritos · 2026-09-06
+## Último cierre de Hermandad · Pasión y Muerte · 2026-09-06
+
+**PASIÓN Y MUERTE → CERRADA Y CERTIFICADA · 100 % TÉCNICO · INDEXABLE · GRAFO NUCLEAR LIMPIO.**
+
+Documento: `docs/CERTIFICACION-PASION-Y-MUERTE-2026-09-06.md`.
+
+PR funcional: [#677](https://github.com/nachosanchezperez-ux/base-cofrade/pull/677).
+
+Resultado:
+
+- 4 sedes históricas o vigentes estructuradas;
+- 3 titulares visuales y la Resurrección como titular no visual;
+- 8 cultos recurrentes y 8 ocurrencias de 2026 con actualidad estricta;
+- 3 series diferenciadas y 3 salidas publicadas;
+- 2 acompañamientos de 2026 vinculados a salida y Paso;
+- 0 huecos de fuente, 0 duplicados nucleares y 0 salidas futuras marcadas como celebradas;
+- producción `READY`, ficha pública con HTTP 200, canonical exacta, `index, follow`, 0 imágenes rotas y 0 errores runtime.
+
+Migración: `20260907032000_cierra_pasion_y_muerte.sql`.
+
+## Cierre concurrente reconciliado · Los Negritos · 2026-09-06
 
 **LOS NEGRITOS → CERRADA Y CERTIFICADA · 100 % TÉCNICO · INDEXABLE · PATRIMONIO DE LOS PASOS JERARQUIZADO.**
 
@@ -203,12 +223,12 @@ Durante el cierre de Osuna aparecieron trabajos independientes. Se aplicó actua
 
 Estado validado antes de esta sincronización documental:
 
-- GitHub: `main = 5c0d6e6daaa9bffc910de93e8087f9c82b075475`;
+- GitHub: `main = 344a34838ce1cad5a1b97436703ab470ee54398f`;
 - PR abiertas: **0**;
-- producción Vercel: `READY` · mismo SHA de `main`;
-- producción: Los Negritos y sus fichas de titulares y Pasos comprobadas con sede, música, salidas, cultos, patrimonio y fuentes visibles;
+- producción Vercel: `dpl_2gKcQm9ZeGq42ZXNczcdHwB5dsNd` · `READY` · mismo SHA de `main`;
+- producción: Los Negritos y Pasión y Muerte comprobadas con sedes, titulares, Pasos, música, salidas, cultos, patrimonio y fuentes visibles;
 - runtime `error/fatal`: 0 en el deployment final durante la ventana auditada;
-- Supabase: operativa · **83 migraciones registradas** · Los Negritos y el frente concurrente aplicados y verificados;
+- Supabase: operativa · **83 migraciones registradas** · Los Negritos y Pasión y Muerte aplicadas y verificadas;
 - Consolación de Osuna: 100 % técnico · cerrada · indexable · grafo nuclear limpio;
 - Purísima de La Algaba: 93 % técnico · cerrada · música 2026 sin confirmar;
 - San Bernardo: 100 % técnico · cerrado;
@@ -218,7 +238,7 @@ Estado validado antes de esta sincronización documental:
 - La Misión de Heliópolis: 100 % técnico · cerrada · indexable · grafo nuclear limpio;
 - El Juncal: 100 % técnico · cerrado · indexable · patrimonio del Paso jerarquizado;
 - Los Negritos: 100 % técnico · cerrada · indexable · patrimonio de ambos Pasos jerarquizado;
-- Pasión y Muerte: 100 % técnico · cerrada tras reconciliación concurrente;
+- Pasión y Muerte: 100 % técnico · cerrada · indexable · cultos, salidas y música vinculados;
 - #492: abierta y aislada;
 - FIRST EDITION FREEZE: activo;
 - frente editorial de Hermandad activo: ninguno.
@@ -283,6 +303,11 @@ No debe resolverse reescribiendo migraciones históricas ya aplicadas ni modific
 ## Auditor
 
 El ciclo queda limpio:
+
+- Pasión y Muerte queda cerrada al 100 %, con cuatro sedes, cuatro titularidades, ocho cultos y tres salidas documentadas;
+- la Gloria futura permanece `announced`, la Resurrección no genera una imagen inventada y la relación madrina respeta el `draft` de la Estrella;
+- se evitó una colisión de versión con #678 y el inventario final conserva cero duplicados y cero huecos de fuente;
+- las PR concurrentes #676 y #678 quedaron integradas antes de certificar el cierre;
 
 - Los Negritos queda cerrada al 100 %, con sede unívoca, dos titulares, dos pasos y patrimonio dependiente del nivel correcto del grafo;
 - la estación de penitencia se separa del Vía Crucis institucional y de los traslados, rosario y regreso extraordinario de 2019;
