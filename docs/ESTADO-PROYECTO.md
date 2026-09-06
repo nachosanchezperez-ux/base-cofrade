@@ -1,12 +1,44 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 6 de septiembre de 2026 · Las Aguas · salidas habituales de Penitencia y Gloria  
-**HEAD funcional previo a esta sincronización:** `main = 4248465d52b16c5a44a3029a78d1ca4bd4b0f793`  
+**Corte validado:** 6 de septiembre de 2026 · La Carretería · cierre documental avanzado  
+**HEAD funcional previo a esta sincronización:** `main = 67cf37ffb30cb0343a4560160f5bc83f512db14c`  
 **Régimen:** `FIRST EDITION FREEZE` activo  
 **Fase:** editorial / documental sobre el modelo vigente  
 **Frente editorial de Hermandad activo:** ninguno
 
 > GitHub, Supabase y Vercel prevalecen siempre sobre cualquier SHA transitorio escrito en documentación. Las PR abiertas no se consideran estado canónico hasta su integración y validación.
+
+## Último cierre de Hermandad · La Carretería · 2026-09-06
+
+**LA CARRETERÍA → CERRADA Y CERTIFICADA · 100 % TÉCNICO · INDEXABLE · GRAFO NUCLEAR LIMPIO.**
+
+Documento: `docs/CERTIFICACION-LA-CARRETERIA-2026-09-06.md`.  
+PR funcional: [#669](https://github.com/nachosanchezperez-ux/base-cofrade/pull/669).
+
+Resultado:
+
+- 4 sedes históricas/canónicas publicadas;
+- 3 titulares canónicos;
+- 8 cultos y 1 ocurrencia de 2026;
+- 2 series habituales y 3 salidas documentadas;
+- música de 2026 vinculada a salida y Paso;
+- 2 capataces actuales;
+- 8 bienes patrimoniales en su nivel correcto del grafo;
+- 0 salidas sin Fuente y 0 grupos duplicados de titulares;
+- completitud técnica final: 100 %;
+- producción `READY`, HTTP 200, canonical exacta, `index, follow` y 0 errores runtime.
+
+Migración: `20260906230000_cierra_la_carreteria.sql`.
+
+## Frente técnico reconciliado · #668 · 2026-09-06
+
+Antes de publicar La Carretería apareció la PR #668. Se detuvo el frente editorial, se auditó e integró primero:
+
+- CI y Vercel correctos;
+- 16 piezas procesionales de Las Aguas redistribuidas entre sus tres Pasos (2 / 11 / 3);
+- sin DDL, RLS ni arquitectura;
+- producción `READY` en `3471ea18a78b39851c81586588b1cabf9cc5beee`;
+- #492 reprodujo únicamente el fallo histórico ya aislado.
 
 ## Actualización material · Las Aguas · 2026-09-06
 
@@ -109,17 +141,18 @@ Durante el cierre de Osuna aparecieron trabajos independientes. Se aplicó actua
 
 Estado validado antes de esta sincronización documental:
 
-- GitHub: `main = 4248465d52b16c5a44a3029a78d1ca4bd4b0f793`;
+- GitHub: `main = 67cf37ffb30cb0343a4560160f5bc83f512db14c`;
 - PR abiertas: **0**;
-- producción Vercel: `dpl_5VuYin1x1uYmmeR1ixxrWHZmivUF` · `READY` · mismo SHA de `main`;
+- producción Vercel: `dpl_2DrWFAFTja9hW23XNouFYTNbtJCa` · `READY` · mismo SHA de `main`;
 - producción: ficha de Las Aguas comprobada con las dos series anuales visibles;
 - runtime `error/fatal`: 0 en el deployment final durante la ventana auditada;
-- Supabase: operativa · **74 migraciones alineadas** · última `20260906215000`;
+- Supabase: operativa · **77 migraciones registradas** · La Carretería aplicada y verificada;
 - Consolación de Osuna: 100 % técnico · cerrada · indexable · grafo nuclear limpio;
 - Purísima de La Algaba: 93 % técnico · cerrada · música 2026 sin confirmar;
 - San Bernardo: 100 % técnico · cerrado;
 - Jesús Despojado: 100 % técnico · cerrado;
-- Las Aguas: cerrada y revalidada · estación de penitencia y procesión de Gloria anuales publicadas;
+- Las Aguas: cerrada y revalidada · estación de penitencia y procesión de Gloria anuales publicadas · patrimonio procesional jerarquizado por Paso;
+- La Carretería: 100 % técnico · cerrada · indexable · grafo nuclear limpio;
 - #492: abierta y aislada;
 - FIRST EDITION FREEZE: activo;
 - frente editorial de Hermandad activo: ninguno.
@@ -151,7 +184,8 @@ Estas fichas no deben reabrirse por deuda legítima, mejoras cosméticas o por p
 - Hermandad de San Bernardo;
 - Jesús Despojado · ficha avanzada;
 - Purísima de La Algaba · 93 % técnico · música 2026 pendiente de confirmación;
-- **Consolación de Osuna · 100 % técnico**.
+- **Consolación de Osuna · 100 % técnico**;
+- **La Carretería · 100 % técnico**.
 
 ## Reglas operativas vigentes
 
@@ -180,6 +214,10 @@ No debe resolverse reescribiendo migraciones históricas ya aplicadas ni modific
 
 El ciclo queda limpio:
 
+- #668 fue integrada antes de abrir La Carretería y no quedó como frente técnico pendiente;
+- La Carretería queda cerrada al 100 %, sin salidas huérfanas de Fuente ni titulares duplicados;
+- el doble registro operativo de la migración idempotente de #668 no duplicó datos y no se trata como bloqueo;
+
 - cierre de Consolación de Osuna certificado;
 - ampliación material de Las Aguas certificada en base de datos y ficha pública;
 - cambios concurrentes reconciliados contra `main` antes de integrarse;
@@ -190,4 +228,4 @@ El ciclo queda limpio:
 
 ## Siguiente movimiento autorizado
 
-Ejecutar un **nuevo recálculo corto de deuda documental** sobre el estado productivo actual y seleccionar una única Hermandad. No se arrastra automáticamente el ranking anterior: la prioridad debe recalcularse con actualidad de septiembre y deuda real después de este cierre.
+No hay frente editorial activo. El siguiente movimiento deberá comenzar con un preflight de GitHub y producción y, solo con 0 PR abiertas, recalcular la deuda documental sin reutilizar rankings antiguos.
