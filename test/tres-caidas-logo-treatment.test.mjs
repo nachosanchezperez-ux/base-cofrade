@@ -26,11 +26,12 @@ test('el tratamiento conserva el equilibrado óptico común sin excepciones nomi
   assert.doesNotMatch(css, /tres\s+ca[íi]das|cigarreras/i)
 })
 
-test('un fondo configurado conserva los píxeles del JPEG y evita el filtro destructivo', () => {
+test('la cabecera no recupera una caja configurada para los logos JPEG', () => {
   const component = read('components/RelationalEntityHero.js')
 
-  assert.match(component, /const removeLightRasterBackground = opaqueRaster && !resolvedBackground/)
+  assert.match(component, /const removeLightRasterBackground = opaqueRaster/)
   assert.match(component, /removeLightRasterBackground \? bandStyles\.logoOpaqueRaster/)
+  assert.doesNotMatch(component, /resolvedBackground|data-custom-background/)
 })
 
 test('Tres Caídas usa el emblema oficial transparente sobre gris neutro', () => {

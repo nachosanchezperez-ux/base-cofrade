@@ -30,10 +30,11 @@ test('la migración añade un campo nullable independiente de los colores corpor
   assert.doesNotMatch(migration, /update public\.bands/)
 })
 
-test('Panel y ficha pública comparten el campo sin reutilizar primary_color', () => {
+test('Panel y directorio comparten el campo sin convertir la cabecera en una caja', () => {
   const panel = source('components/panel/band/BandLogoBackgroundField.js')
   const action = source('app/panel/(protected)/bandas/[id]/actions.js')
   const loader = source('lib/supabase/bands-core.js')
+  const directory = source('components/RelationalEntityDirectory.js')
   const hero = source('components/RelationalEntityHero.js')
   const heroCss = source('components/RelationalEntityHeroBand.module.css')
 
@@ -42,7 +43,9 @@ test('Panel y ficha pública comparten el campo sin reutilizar primary_color', (
   assert.match(panel, />Restablecer</)
   assert.match(action, /logo_background_color:/)
   assert.match(loader, /logoBackgroundColor: band\.logo_background_color \|\| ''/)
-  assert.match(hero, /backgroundColor=\{media\.logoBackgroundColor\}/)
-  assert.match(heroCss, /\.logoStage\[data-custom-background='true'\]/)
+  assert.match(directory, /item\.logoBackgroundColor/)
+  assert.doesNotMatch(hero, /backgroundColor=\{media\.logoBackgroundColor\}/)
+  assert.doesNotMatch(hero, /data-custom-background/)
+  assert.doesNotMatch(heroCss, /\.logoStage\[data-custom-background='true'\]/)
   assert.match(heroCss, /object-fit: contain/)
 })
