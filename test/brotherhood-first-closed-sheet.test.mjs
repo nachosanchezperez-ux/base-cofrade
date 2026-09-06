@@ -22,19 +22,22 @@ test('las fichas abren con la identidad de la Hermandad y no con una guía de re
 test('la ficha no duplica las salidas extraordinarias en un módulo final', async () => {
   const layout = await source('app/hermandades/[slug]/layout.js')
   const page = await source('app/hermandades/[slug]/page.js')
+  const outings = await source('components/BrotherhoodOutingsSection.js')
 
   assert.doesNotMatch(layout, /RelatedExtraordinaryOutings/)
-  assert.match(page, /s\.slug \? `\/extraordinarias\/\$\{s\.slug\}` : ''/)
+  assert.match(page, /<BrotherhoodOutingsSection outings=\{h\.salidas\} \/>/)
+  assert.match(outings, /return `\/extraordinarias\/\$\{slug\}`/)
 })
 
 test('los datos de salida, paso, música e historia permanecen en sus secciones naturales', async () => {
   const page = await source('app/hermandades/[slug]/page.js')
+  const outings = await source('components/BrotherhoodOutingsSection.js')
 
   assert.match(page, /id="pasos"/)
   assert.match(page, /BrotherhoodOwnBands/)
   assert.match(page, /BrotherhoodMusicalHeritage/)
   assert.match(page, /id="historia"/)
-  assert.match(page, /id="salidas"/)
+  assert.match(outings, /id="salidas"/)
 })
 
 test('la ficha pública omite marcadores internos de datos todavía no documentados', async () => {

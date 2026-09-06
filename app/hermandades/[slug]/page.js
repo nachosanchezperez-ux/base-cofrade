@@ -4,6 +4,7 @@ import { cache } from 'react';
 import BrotherhoodCultsSection from '@/components/BrotherhoodCultsSection';
 import BrotherhoodMusicalHeritage from '@/components/BrotherhoodMusicalHeritage';
 import BrotherhoodOverviewV2 from '@/components/BrotherhoodOverviewV2';
+import BrotherhoodOutingsSection from '@/components/BrotherhoodOutingsSection';
 import BrotherhoodProgramHero from '@/components/BrotherhoodProgramHero';
 import BrotherhoodSimpecadosSection from '@/components/BrotherhoodSimpecadosSection';
 import {
@@ -35,27 +36,9 @@ import {
   brotherhoodSeoTitle,
   pageTitle,
 } from '@/lib/seo';
-import outingVideoStyles from './outing-video.module.css';
 
 export const dynamic = 'force-dynamic';
 const getHermandad = cache(getHermandadPageBySlug);
-
-function normalizeOutingLabel(value = '') {
-  return String(value)
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLocaleLowerCase('es')
-    .trim();
-}
-
-function outingCharacterLabel(outing) {
-  const character = String(outing?.caracter || '').trim();
-  if (!character) return '';
-
-  const type = normalizeOutingLabel(outing?.tipo);
-  const normalizedCharacter = normalizeOutingLabel(character);
-  return type.includes(normalizedCharacter) ? '' : character;
-}
 
 export function generateStaticParams() {
   return hermandades.map((item) => ({ slug: item.slug }));
@@ -481,145 +464,7 @@ export default async function HermandadDetailPage({ params }) {
         ))}</div>
       </div></section>}
 
-      {h.salidas?.length > 0 && <section className="section brotherhood-white" id="salidas"><div className="shell">
-        <SectionTitle eyebrow="En la calle" title="Salidas" description="Estación de penitencia, procesiones, rosarios, vía crucis y traslados forman parte del histórico de salidas de cada hermandad." />
-        <div className="outing-grid">{h.salidas.map((s) => {
-          const guideHref = s.slug ? `/extraordinarias/${s.slug}` : '';
-          const hasEmbeddedInteraction = Boolean(s.video || s.ediciones?.length || s.movimientos?.length);
-          const isWholeCardLink = Boolean(guideHref) && !hasEmbeddedInteraction;
-          const OutingCard = isWholeCardLink ? Link : 'article';
-          const characterLabel = outingCharacterLabel(s);
-
-          return (
-          <OutingCard
-            className={`outing-card ${s.ediciones?.length ? 'outing-card-featured' : ''} ${s.video ? outingVideoStyles.cardWithVideo : ''} ${guideHref ? 'outing-card-related' : ''}`}
-            key={s.id}
-            {...(isWholeCardLink ? {
-              href: guideHref,
-              'aria-label': `Ver guía de ${s.nombre}`,
-            } : {})}
-          >
-            <div className="outing-type">
-              <span>{s.tipo}</span>
-              {characterLabel && <small>{characterLabel}</small>}
-            </div>
-
-            <div className="outing-content">
-              {s.imagen?.src ? (
-                <figure
-                  className="outing-photo"
-                  style={{
-                    position: 'relative',
-                    width: '100%',
-                    aspectRatio: '16 / 9',
-                    margin: '0 0 18px',
-                    overflow: 'hidden',
-                    borderRadius: '14px',
-                    background: '#edf1f4',
-                  }}
-                >
-                  <Image
-                    src={s.imagen.src}
-                    alt={s.imagen.alt || `Fotografía de ${s.nombre}`}
-                    fill
-                    sizes="(max-width: 760px) calc(100vw - 48px), (max-width: 1100px) 48vw, 540px"
-                    style={{ objectFit: 'cover' }}
-                  />
-                  {s.imagen.credito ? (
-                    <figcaption
-                      style={{
-                        position: 'absolute',
-                        right: 10,
-                        bottom: 8,
-                        padding: '4px 7px',
-                        borderRadius: 7,
-                        background: 'rgba(8, 25, 43, .72)',
-                        color: '#fff',
-                        fontSize: 11,
-                        lineHeight: 1.2,
-                      }}
-                    >
-                      Fotografía · {s.imagen.credito}
-                    </figcaption>
-                  ) : null}
-                </figure>
-              ) : null}
-              <h3>{s.nombre}</h3>
-              {s.titulares && <p className="outing-subject">{s.titulares}</p>}
-              {s.momento && <p>{s.momento}</p>}
-              {s.destino && <small className="outing-destination">{s.destino}</small>}
-
-              {s.movimientos?.length > 0 && (
-                <div className="outing-movements">
-                  {s.movimientos.map((movimiento) => (
-                    <div className="outing-movement" key={`${s.id}-${movimiento.sentido}`}>
-                      <strong>{movimiento.sentido}</strong>
-                      <p>{movimiento.momento}</p>
-                      {movimiento.destino && <small>{movimiento.destino}</small>}
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              {s.video && (
-                <aside className={outingVideoStyles.video} aria-label={`Vídeo oficial de ${s.nombre}`}>
-                  <div className={outingVideoStyles.heading}>
-                    <div>
-                      <span>Archivo audiovisual</span>
-                      <strong>{s.video.titulo}</strong>
-                    </div>
-                    {s.video.autor && <small>Canal oficial · {s.video.autor}</small>}
-                  </div>
-                  <div className={outingVideoStyles.frame}>
-                    <iframe
-                      src={`https://www.youtube-nocookie.com/embed/${encodeURIComponent(s.video.id)}?rel=0`}
-                      title={s.video.titulo}
-                      loading="lazy"
-                      allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      referrerPolicy="strict-origin-when-cross-origin"
-                      allowFullScreen
-                    />
-                  </div>
-                  <a href={s.video.url} target="_blank" rel="noreferrer">Ver en el canal de la Hermandad ↗</a>
-                </aside>
-              )}
-
-              {s.ediciones?.map((edicion) => (
-                <div className="route-edition" key={`${s.id}-${edicion.ano}`}>
-                  <div className="route-edition-head">
-                    <span>Recorrido · {edicion.ano}</span>
-                    <div className="route-times">
-                      <div><small>Salida</small><strong>{edicion.salida}</strong></div>
-                      <span className="route-line" />
-                      <div><small>Entrada</small><strong>{edicion.entrada}</strong></div>
-                    </div>
-                  </div>
-                  <details className="route-details">
-                    <summary>Ver recorrido completo <span>＋</span></summary>
-                    <div className="route-path">
-                      {edicion.recorrido.map((calle, index) => (
-                        <span
-                          className={calle.toLowerCase() === 'carrera oficial' ? 'route-official' : ''}
-                          key={`${edicion.ano}-${calle}-${index}`}
-                        >
-                          {calle}
-                        </span>
-                      ))}
-                    </div>
-                  </details>
-                </div>
-              ))}
-
-              {guideHref && (
-                isWholeCardLink
-                  ? <span className="outing-guide-link">Ver guía <span aria-hidden="true">→</span></span>
-                  : <Link className="outing-guide-link" href={guideHref}>Ver guía <span aria-hidden="true">→</span></Link>
-              )}
-            </div>
-          </OutingCard>
-          );
-        })}</div>
-      </div></section>}
+      <BrotherhoodOutingsSection outings={h.salidas} />
 
       <BrotherhoodCultsSection cults={h.cultos} />
 
