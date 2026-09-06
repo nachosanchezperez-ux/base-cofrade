@@ -9,7 +9,7 @@ Slug: `hermandad-jesus-despojado-sevilla`
 
 La ficha base ya estaba correctamente resuelta. Esta segunda pasada amplía el frente de **devoción, cultos, salidas y música** sin modificar arquitectura, RLS ni experiencia de usuario.
 
-Tras aplicar `20260905235900_amplia_jesus_despojado_devocion_salidas.sql`, la señal reproducible `brotherhood_completeness` pasa de **79 % a 100 %**: cultos, salidas y música vinculada a una salida dejan de estar vacíos.
+Tras aplicar `20260906055451_amplia_jesus_despojado_devocion_salidas.sql`, la señal reproducible `brotherhood_completeness` pasa de **79 % a 100 %**: cultos, salidas y música vinculada a una salida dejan de estar vacíos.
 
 ## Validación final en producción
 
