@@ -1,12 +1,30 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 6 de septiembre de 2026 · Consolación de Osuna y reconciliación de frentes concurrentes  
-**HEAD funcional previo a esta sincronización:** `main = c9938ce440c6baa5583cb99f8a3db372461089a7`  
+**Corte validado:** 6 de septiembre de 2026 · Las Aguas · salidas habituales de Penitencia y Gloria  
+**HEAD funcional previo a esta sincronización:** `main = 4248465d52b16c5a44a3029a78d1ca4bd4b0f793`  
 **Régimen:** `FIRST EDITION FREEZE` activo  
 **Fase:** editorial / documental sobre el modelo vigente  
 **Frente editorial de Hermandad activo:** ninguno
 
 > GitHub, Supabase y Vercel prevalecen siempre sobre cualquier SHA transitorio escrito en documentación. Las PR abiertas no se consideran estado canónico hasta su integración y validación.
+
+## Actualización material · Las Aguas · 2026-09-06
+
+La ficha cerrada de Las Aguas se reabrió únicamente por nueva información material verificable: faltaban sus dos salidas habituales en el modelo de series.
+
+PR funcional: [#666](https://github.com/nachosanchezperez-ux/base-cofrade/pull/666).
+
+Resultado:
+
+- estación de penitencia anual del Lunes Santo publicada;
+- procesión de gloria anual de Nuestra Señora del Rosario publicada;
+- fecha, horario e itinerario concretos reservados para cada edición, sin inventar datos fijos;
+- ambas series enlazadas a fuentes institucionales;
+- migración DML idempotente, sin DDL, nuevas tablas ni cambios RLS;
+- producción y ficha pública certificadas en el deployment `dpl_5VuYin1x1uYmmeR1ixxrWHZmivUF`;
+- HTTP 200, canonical exacta, `index, follow` y 0 errores `error/fatal`.
+
+Migración: `20260906215000_completa_salidas_habituales_las_aguas.sql`.
 
 ## Último cierre de Hermandad · Consolación de Osuna · 2026-09-06
 
@@ -91,17 +109,17 @@ Durante el cierre de Osuna aparecieron trabajos independientes. Se aplicó actua
 
 Estado validado antes de esta sincronización documental:
 
-- GitHub: `main = c9938ce440c6baa5583cb99f8a3db372461089a7`;
+- GitHub: `main = 4248465d52b16c5a44a3029a78d1ca4bd4b0f793`;
 - PR abiertas: **0**;
-- producción Vercel: `dpl_4TGDUUemABCEfzpXpiqKaBEdQPMs` · `READY` · mismo SHA de `main`;
-- producción: ficha de Consolación de Osuna y ficha de Bandas comprobadas tras los merges de UX;
+- producción Vercel: `dpl_5VuYin1x1uYmmeR1ixxrWHZmivUF` · `READY` · mismo SHA de `main`;
+- producción: ficha de Las Aguas comprobada con las dos series anuales visibles;
 - runtime `error/fatal`: 0 en el deployment final durante la ventana auditada;
-- Supabase: operativa · **73 migraciones alineadas** · última `20260906095500`;
+- Supabase: operativa · **74 migraciones alineadas** · última `20260906215000`;
 - Consolación de Osuna: 100 % técnico · cerrada · indexable · grafo nuclear limpio;
 - Purísima de La Algaba: 93 % técnico · cerrada · música 2026 sin confirmar;
 - San Bernardo: 100 % técnico · cerrado;
 - Jesús Despojado: 100 % técnico · cerrado;
-- Las Aguas: cerrada y revalidada;
+- Las Aguas: cerrada y revalidada · estación de penitencia y procesión de Gloria anuales publicadas;
 - #492: abierta y aislada;
 - FIRST EDITION FREEZE: activo;
 - frente editorial de Hermandad activo: ninguno.
@@ -163,8 +181,10 @@ No debe resolverse reescribiendo migraciones históricas ya aplicadas ni modific
 El ciclo queda limpio:
 
 - cierre de Consolación de Osuna certificado;
+- ampliación material de Las Aguas certificada en base de datos y ficha pública;
 - cambios concurrentes reconciliados contra `main` antes de integrarse;
 - ningún dato de Osuna fue sobreescrito por los frentes UX o la corrección musical;
+- las dos series de Las Aguas están publicadas una sola vez y cada una conserva una fuente enlazada;
 - ninguna PR permanece abierta en el corte validado;
 - no existe frente editorial de Hermandad activo.
 
