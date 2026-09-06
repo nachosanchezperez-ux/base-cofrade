@@ -4,13 +4,20 @@
 **HEAD funcional previo a esta sincronización:** `main = 8cb5bf54609a328d23745ed592f006ccc89b62fd`
 **Régimen:** `FIRST EDITION FREEZE` activo  
 **Fase:** editorial / documental sobre el modelo vigente  
-**Frente editorial activo:** ninguno
+**Frente editorial activo:** Jesús Despojado · ficha avanzada
 
 > La PR que sincronice este documento pasa a ser el nuevo HEAD canónico sin alterar el estado funcional descrito aquí. GitHub, Supabase y Vercel prevalecen siempre sobre cualquier SHA transitorio escrito en documentación.
 
+## Frente editorial autorizado · Jesús Despojado · 2026-09-05
+
+- Alcance: devoción, cultos, salidas y música vinculada a salidas.
+- Límites: solo DML editorial y documentación; sin DDL, RLS, arquitectura ni cambios de UX.
+- Certificación de trabajo: `docs/CERTIFICACION-JESUS-DESPOJADO-AVANZADA-2026-09-05.md`.
+- La `FIRST EDITION FREEZE` continúa vigente para cualquier frente distinto de esta orden editorial.
+
 ## Dónde estamos ahora
 
-La Primera Edición permanece cerrada, certificada y congelada. San Bernardo ha concluido su ciclo `diagnóstico → completar → relacionar → validar → certificar → cerrar`; Las Aguas ha superado una revalidación completa sin nuevo DML y no queda un frente editorial activo.
+La Primera Edición permanece cerrada, certificada y congelada. San Bernardo ha concluido su ciclo `diagnóstico → completar → relacionar → validar → certificar → cerrar`; Las Aguas ha superado una revalidación completa sin nuevo DML. Por orden editorial del 5 de septiembre se abre únicamente la ampliación avanzada de Jesús Despojado.
 
 Estado validado antes de esta sincronización final:
 
@@ -25,7 +32,7 @@ Estado validado antes de esta sincronización final:
 - producción previa a la certificación Git: HTTP 200, canonical correcta, `index, follow`, sitemap correcto y 0 runtime errors en la ruta;
 - #492: abierta y aislada;
 - FIRST EDITION FREEZE: activo;
-- frente editorial activo: ninguno.
+- frente editorial activo: Jesús Despojado · ficha avanzada.
 
 ## Cierres documentales vigentes
 
