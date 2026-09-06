@@ -1,29 +1,27 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 6 de septiembre de 2026 · cierre de Consolación de Osuna revalidado tras #660  
-**HEAD funcional previo a esta sincronización:** `main = 54ec8465bf120f27d62abab5a6ab7e8efea839e5`  
+**Corte validado:** 6 de septiembre de 2026 · Consolación de Osuna y reconciliación de frentes concurrentes  
+**HEAD funcional previo a esta sincronización:** `main = c9938ce440c6baa5583cb99f8a3db372461089a7`  
 **Régimen:** `FIRST EDITION FREEZE` activo  
 **Fase:** editorial / documental sobre el modelo vigente  
 **Frente editorial de Hermandad activo:** ninguno
 
 > GitHub, Supabase y Vercel prevalecen siempre sobre cualquier SHA transitorio escrito en documentación. Las PR abiertas no se consideran estado canónico hasta su integración y validación.
 
-## Última actualización cerrada · Consolación de Osuna · 2026-09-06
+## Último cierre de Hermandad · Consolación de Osuna · 2026-09-06
 
 **CONSOLACIÓN DE OSUNA → CERRADA Y CERTIFICADA · 100 % TÉCNICO · INDEXABLE · GRAFO NUCLEAR LIMPIO.**
 
-Documento: `docs/CERTIFICACION-CONSOLACION-OSUNA-2026-09-06.md`.
-
+Documento: `docs/CERTIFICACION-CONSOLACION-OSUNA-2026-09-06.md`.  
 PR funcional: [#661](https://github.com/nachosanchezperez-ux/base-cofrade/pull/661).
 
 Resultado:
 
 - punto de partida: 36 % técnico;
 - identidad oficial, fundación en 1624 y sede canónica estructuradas;
-- 1 titular publicado;
-- 1 paso de Gloria relacionado;
+- 1 titular y 1 paso de Gloria;
 - 2 cultos recurrentes y 2 ocurrencias de 2026;
-- 1 salida patronal de 2026 enlazada con titular, paso, sede y música;
+- salida patronal del 8 de septiembre de 2026 enlazada con titular, paso, sede y música;
 - Banda de Música Villa de Osuna como acompañamiento actual documentado;
 - 3 integrantes del equipo de capataces y auxiliares de 2026;
 - 2 acontecimientos históricos estructurados;
@@ -31,36 +29,27 @@ Resultado:
 - duplicados nucleares a cero;
 - completitud técnica final: 100 %.
 
-### Actualidad estricta
+### Actualidad estricta aplicada
 
-- la salida del 8 de septiembre de 2026 permanece `announced` hasta que exista evidencia posterior de celebración;
-- la Novena y la Función Principal conservan su estado temporal de 2026 sin adelantar hechos futuros;
+- la salida del 8 de septiembre permanece `announced` hasta disponer de evidencia posterior de celebración;
+- la Novena y la Función Principal conservan su estado temporal real de 2026;
 - el convenio de la Banda Villa de Osuna se documenta desde el 23 de diciembre de 2025 con una vigencia publicada de cuatro años;
 - no se inventa una fecha exacta de finalización del convenio;
 - el convenio municipal no se presenta como contrato directo de la Hermandad;
-- los 24 costaleros y el equipo de capataces/auxiliares se acotan a la salida de 2026;
-- no se asigna a cada integrante una función concreta que la fuente no desglose.
+- los 24 costaleros y el equipo de capataces/auxiliares se acotan a 2026;
+- no se atribuye a cada integrante un rol individual que la fuente no desglose;
+- la cronología de la titular se conserva como discrepancia documentada: catálogo BIC anterior a 1400 con reforma en el siglo XVII frente a tradición local vinculada al siglo XVI.
 
-### Cronología de la titular
+### QA público final
 
-No se fuerza una fecha única para Nuestra Señora de Consolación:
-
-- el catálogo BIC del BOE la data como obra anónima anterior a 1400, reformada en el siglo XVII;
-- la tradición difundida por el Ayuntamiento de Osuna la vincula a una llegada desde Inglaterra en el siglo XVI.
-
-La ficha conserva ambas capas separadas y no convierte la tradición local en datación artística.
-
-### QA público
-
-Validado sobre producción:
+Revalidado después de integrar los cambios concurrentes de frontend:
 
 - `/hermandades/consolacion-osuna` → HTTP 200;
 - canonical exacta;
 - `index, follow`;
 - OG/Twitter válidos;
-- sede, titular, paso, acompañamiento, historia, salida, cultos y fuentes visibles;
-- 10 fuentes visibles;
-- 0 errores `error/fatal` localizados para la ruta durante la ventana auditada.
+- sede, titular, paso, acompañamiento, historia, nuevo módulo de Salidas, cultos y 10 Fuentes visibles;
+- 0 errores `error/fatal` en el deployment final durante la ventana auditada.
 
 ### Migraciones propias del cierre
 
@@ -70,49 +59,56 @@ Validado sobre producción:
 
 Las escrituras se probaron dos veces con `ROLLBACK` antes de aplicarse.
 
-## Actualización concurrente posterior · #660
+## Frentes concurrentes reconciliados
 
-Mientras se sincronizaba el cierre de Osuna se integró [#660](https://github.com/nachosanchezperez-ux/base-cofrade/pull/660), que corrige dos acompañamientos de Gloria asociados a la Banda de Música María Santísima de la Victoria de Las Cigarreras.
+Durante el cierre de Osuna aparecieron trabajos independientes. Se aplicó actualidad estricta y se reconciliaron de forma separada, sin mezclarlos con el DML de la Hermandad.
 
-Actualidad estricta aplicada:
+### #660 · Corrección musical Sastres / Luz
 
-- `main` posterior a #660 prevalece sobre el SHA de merge de #661;
-- Supabase queda con **73 migraciones alineadas**, última `20260906095500 · corrige_acompanamientos_banda_musica_cigarreras`;
-- Consolación de Osuna se revalidó después de #660 y conserva **100 % técnico con todos los indicadores nucleares verdaderos**;
-- #660 no modifica la ficha de Osuna ni invalida su certificación.
+- integrada antes de la primera sincronización de Osuna;
+- corrige dos acompañamientos de Gloria asociados a la Banda de Música María Santísima de la Victoria de Las Cigarreras;
+- añadió `20260906095500 · corrige_acompanamientos_banda_musica_cigarreras`;
+- Osuna fue revalidada después y mantuvo el 100 % técnico.
+
+### #659 · Rediseño del bloque Salidas de Hermandades
+
+- PR originalmente creada desde un `main` anterior;
+- se comprobó que sus siete archivos no habían sufrido cambios en los merges posteriores;
+- se rebasó sobre el `main` actualizado conservando exactamente su contenido funcional;
+- preview Vercel `READY` y build correcto;
+- integrada en `f85f7511f530bf7c2f12866f6bb349e6349e9dcd`;
+- el nuevo módulo de Salidas está visible también en la ficha de Consolación de Osuna.
+
+### #663 · Cabeceras de Bandas
+
+- ajuste exclusivamente visual de cabeceras/logotipos de fichas de Bandas;
+- seis archivos aislados de datos, Hermandades y Salidas;
+- rebasado sobre el `main` posterior a #659;
+- preview Vercel `READY` y build correcto;
+- integrado en `c9938ce440c6baa5583cb99f8a3db372461089a7`.
 
 ## Estado técnico actual
 
 Estado validado antes de esta sincronización documental:
 
-- GitHub: `main = 54ec8465bf120f27d62abab5a6ab7e8efea839e5`;
-- último cambio funcional: #660, posterior a #661;
-- producción Vercel: `dpl_5fHyRS5UM3rsEwW672sqW1k2BWuZ` · `READY` · mismo SHA de `main`;
+- GitHub: `main = c9938ce440c6baa5583cb99f8a3db372461089a7`;
+- PR abiertas: **0**;
+- producción Vercel: `dpl_4TGDUUemABCEfzpXpiqKaBEdQPMs` · `READY` · mismo SHA de `main`;
+- producción: ficha de Consolación de Osuna y ficha de Bandas comprobadas tras los merges de UX;
+- runtime `error/fatal`: 0 en el deployment final durante la ventana auditada;
 - Supabase: operativa · **73 migraciones alineadas** · última `20260906095500`;
-- Consolación de Osuna: 100 % técnico · indexable · grafo nuclear limpio · revalidada tras #660;
+- Consolación de Osuna: 100 % técnico · cerrada · indexable · grafo nuclear limpio;
 - Purísima de La Algaba: 93 % técnico · cerrada · música 2026 sin confirmar;
 - San Bernardo: 100 % técnico · cerrado;
 - Jesús Despojado: 100 % técnico · cerrado;
 - Las Aguas: cerrada y revalidada;
 - #492: abierta y aislada;
-- FIRST EDITION FREEZE: activo.
-
-## PR concurrente abierta
-
-### #659 · Rediseña las salidas de las Hermandades
-
-A la hora de este corte permanece abierta [#659](https://github.com/nachosanchezperez-ux/base-cofrade/pull/659).
-
-- tipo: UX / presentación;
-- base original: `94aea60f5f37e9195c5189e8a3cb2c94e326d598`;
-- fue creada antes de los merges #661 y #660;
-- no se considera canónica mientras no se reconcilie contra `main = 54ec8465bf120f27d62abab5a6ab7e8efea839e5` y se valide de nuevo.
-
-Por ello, el repositorio **no está todavía en estado de 0 PR abiertas**, aunque Consolación de Osuna sí haya quedado cerrada y certificada.
+- FIRST EDITION FREEZE: activo;
+- frente editorial de Hermandad activo: ninguno.
 
 ## Cierres documentales vigentes
 
-Estas fichas no deben reabrirse por deuda legítima, mejoras cosméticas o por perseguir porcentajes. Solo procede reabrirlas ante una regresión real o nueva información verificable que cambie materialmente su estado.
+Estas fichas no deben reabrirse por deuda legítima, mejoras cosméticas o por perseguir porcentajes. Solo procede reabrirlas ante regresión real o nueva información verificable que cambie materialmente su estado.
 
 - Amparo;
 - Las Aguas;
@@ -139,8 +135,6 @@ Estas fichas no deben reabrirse por deuda legítima, mejoras cosméticas o por p
 - Purísima de La Algaba · 93 % técnico · música 2026 pendiente de confirmación;
 - **Consolación de Osuna · 100 % técnico**.
 
-Los detalles de cada cierre permanecen en sus documentos de certificación específicos y no se duplican aquí salvo cuando afectan al estado operativo actual.
-
 ## Reglas operativas vigentes
 
 - actualidad estricta: el último estado explícitamente validado prevalece;
@@ -158,37 +152,22 @@ Los detalles de cada cierre permanecen en sus documentos de certificación espec
 
 **#492 · Reconciliar Supabase Preview Branches → ABIERTA Y AISLADA.**
 
-No bloquea:
+No bloquea contenido/DML editorial, Hermandades, titulares, pasos, música, patrimonio, cultos, acontecimientos, salidas, Fuentes, agentes, relaciones existentes ni SEO editorial.
 
-- contenido/DML editorial;
-- Hermandades, titulares y pasos;
-- música, patrimonio y cultos;
-- acontecimientos y salidas;
-- Fuentes, agentes y relaciones existentes;
-- SEO editorial.
-
-Sí bloquea:
-
-- nuevo DDL;
-- nuevas tablas;
-- migraciones estructurales;
-- cambios RLS relacionados.
+Sí bloquea nuevo DDL, nuevas tablas, migraciones estructurales y cambios RLS relacionados.
 
 No debe resolverse reescribiendo migraciones históricas ya aplicadas ni modificando producción por un problema exclusivo de preview.
 
 ## Auditor
 
-El cierre de Consolación de Osuna es válido y no queda deuda A pendiente en su contrato actual.
+El ciclo queda limpio:
 
-La desviación operativa real está fuera de la ficha: #660 se integró correctamente durante el cierre y #659 permanece abierta desde un frente UX concurrente. No se ha mezclado ese rediseño con el trabajo de Osuna.
-
-Por disciplina de frente único, **no debe abrirse otra Hermandad mientras #659 siga abierta sin reconciliar contra el `main` real**.
+- cierre de Consolación de Osuna certificado;
+- cambios concurrentes reconciliados contra `main` antes de integrarse;
+- ningún dato de Osuna fue sobreescrito por los frentes UX o la corrección musical;
+- ninguna PR permanece abierta en el corte validado;
+- no existe frente editorial de Hermandad activo.
 
 ## Siguiente movimiento autorizado
 
-1. terminar esta sincronización documental;
-2. reconciliar #659 contra `main = 54ec8465bf120f27d62abab5a6ab7e8efea839e5`;
-3. validar de nuevo su build, responsive y ausencia de regresiones;
-4. fusionarla o cerrarla según el resultado;
-5. volver a 0 PR abiertas;
-6. solo después ejecutar un nuevo recálculo de deuda antes de elegir otra Hermandad.
+Ejecutar un **nuevo recálculo corto de deuda documental** sobre el estado productivo actual y seleccionar una única Hermandad. No se arrastra automáticamente el ranking anterior: la prioridad debe recalcularse con actualidad de septiembre y deuda real después de este cierre.
