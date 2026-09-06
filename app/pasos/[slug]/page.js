@@ -50,9 +50,9 @@ export async function generateMetadata({ params }) {
     type: paso.tipo,
     context: hermandad?.localidad || hermandad?.nombrePopular,
     summary: paso.descripcion,
-    relations: [hermandad?.id, imagenes, bandas, heritage.phases],
+    relations: [hermandad?.id, imagenes, bandas, heritage.phases, heritage.pieces],
     sources: heritage.sources || [],
-    publicValues: [paso, heritage.phases],
+    publicValues: [paso, heritage.phases, heritage.pieces],
   });
 
   return {
@@ -191,7 +191,7 @@ export default async function PasoDetailPage({params}){
         { href: '#resumen', label: 'Resumen' },
         relationalItems.length > 0 && { href: '#tira-del-hilo', label: 'Tira del hilo' },
         bandas.length > 0 && { href: '#acompanamiento', label: 'Acompañamiento' },
-        (heritage.phases.length > 0 || heritage.sources.length > 0) && { href: '#patrimonio', label: 'Patrimonio y evolución' },
+        (heritage.phases.length > 0 || heritage.pieces.length > 0 || heritage.sources.length > 0) && { href: '#patrimonio', label: 'Patrimonio y evolución' },
       ]} />
 
       <section className="section" id="resumen"><div className="shell content-grid">
@@ -250,17 +250,35 @@ export default async function PasoDetailPage({params}){
         </section>
       )}
 
-      {(heritage.phases.length > 0 || heritage.sources.length > 0) ? <section className={`section brotherhood-soft ${styles.heritageSection}`} id="patrimonio">
+      {(heritage.phases.length > 0 || heritage.pieces.length > 0 || heritage.sources.length > 0) ? <section className={`section brotherhood-soft ${styles.heritageSection}`} id="patrimonio">
         <div className="shell">
           <div className={styles.heritageIntro}>
             <SectionTitle
               eyebrow="Patrimonio documentado"
               title="Patrimonio y evolución"
-              description={heritage.phases.length
-                ? 'Diseño, talla, dorados, piezas singulares y restauraciones que explican la configuración actual del paso.'
+              description={(heritage.phases.length || heritage.pieces.length)
+                ? 'Las piezas del paso y su evolución material: diseño, talla, bordado, orfebrería, dorados y restauraciones.'
                 : 'Fuentes documentales vinculadas a la configuración patrimonial del paso.'}
             />
           </div>
+
+          {heritage.pieces.length ? (
+            <div className={styles.pieces} aria-label="Piezas patrimoniales del paso">
+              {heritage.pieces.map((piece) => (
+                <article className={styles.piece} key={piece.id}>
+                  <div className={styles.pieceMeta}>
+                    <span>{piece.type}</span>
+                    {piece.date ? <small>{piece.date}</small> : null}
+                  </div>
+                  <h3>{piece.title}</h3>
+                  {piece.description ? <p>{piece.description}</p> : null}
+                  {piece.detail ? <strong>{piece.detail}</strong> : null}
+                  {piece.context ? <details><summary>Contexto histórico</summary><p>{piece.context}</p></details> : null}
+                  {!piece.current ? <em>Elemento histórico</em> : null}
+                </article>
+              ))}
+            </div>
+          ) : null}
 
           {heritage.phases.length ? (
             <div className={styles.timeline}>
