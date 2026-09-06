@@ -53,6 +53,11 @@ const nextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'www.hermandadlosnegritos.org',
+        pathname: '/prueba/wp-content/uploads/**',
+      },
+      {
+        protocol: 'https',
         hostname: 'hermandaddesanbenito.net',
         pathname: '/wp-content/uploads/**',
       },
