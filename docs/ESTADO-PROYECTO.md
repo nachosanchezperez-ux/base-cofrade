@@ -1,12 +1,33 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 6 de septiembre de 2026 · El Juncal · cierre documental avanzado
-**HEAD funcional previo a esta sincronización:** `main = c3c6deb20078b775cb9cbc5a63f84e845c5780f4`
+**Corte validado:** 6 de septiembre de 2026 · Los Negritos · cierre documental avanzado
+**HEAD funcional previo a esta sincronización:** `main = 5c0d6e6daaa9bffc910de93e8087f9c82b075475`
 **Régimen:** `FIRST EDITION FREEZE` activo  
 **Fase:** editorial / documental sobre el modelo vigente  
 **Frente editorial de Hermandad activo:** ninguno
 
 > GitHub, Supabase y Vercel prevalecen siempre sobre cualquier SHA transitorio escrito en documentación. Las PR abiertas no se consideran estado canónico hasta su integración y validación.
+
+## Último cierre de Hermandad · Los Negritos · 2026-09-06
+
+**LOS NEGRITOS → CERRADA Y CERTIFICADA · 100 % TÉCNICO · INDEXABLE · PATRIMONIO DE LOS PASOS JERARQUIZADO.**
+
+Documento: `docs/CERTIFICACION-LOS-NEGRITOS-2026-09-06.md`.
+PR funcional: [#676](https://github.com/nachosanchezperez-ux/base-cofrade/pull/676).
+PR de ajuste relacional: [#678](https://github.com/nachosanchezperez-ux/base-cofrade/pull/678).
+
+Resultado:
+
+- identidad histórica, sede canónica y hábito estructurados;
+- escudo oficial y paleta azul, blanco y celeste aplicados;
+- 2 titulares, 2 pasos y 4 bienes patrimoniales ligados a sus páginas de Paso;
+- 8 cultos recurrentes y 8 ocurrencias de 2026;
+- estación de penitencia separada del Vía Crucis de 1977 y de 3 salidas históricas de la coronación de 2019;
+- 3 acompañamientos vigentes y 3 asignaciones musicales en la edición de 2026;
+- producción verificada en Hermandad, titulares y Pasos, incluida Las Nieves en la página del palio;
+- 0 salidas sin Fuente y completitud técnica final del 100 %.
+
+Migraciones: `20260907030000_cierra_los_negritos.sql` y `20260907031000_ajusta_paso_palio_negritos.sql`.
 
 ## Último cierre de Hermandad · El Juncal · 2026-09-06
 
@@ -182,12 +203,12 @@ Durante el cierre de Osuna aparecieron trabajos independientes. Se aplicó actua
 
 Estado validado antes de esta sincronización documental:
 
-- GitHub: `main = c3c6deb20078b775cb9cbc5a63f84e845c5780f4`;
+- GitHub: `main = 5c0d6e6daaa9bffc910de93e8087f9c82b075475`;
 - PR abiertas: **0**;
-- producción Vercel: `dpl_AwNpbqE6MFHPPfpwn23cEohzG6o7` · `READY` · mismo SHA de `main`;
-- producción: fichas de El Juncal y su Paso comprobadas con sede, titulares, música, salidas, cultos, patrimonio y fuentes visibles;
+- producción Vercel: `READY` · mismo SHA de `main`;
+- producción: Los Negritos y sus fichas de titulares y Pasos comprobadas con sede, música, salidas, cultos, patrimonio y fuentes visibles;
 - runtime `error/fatal`: 0 en el deployment final durante la ventana auditada;
-- Supabase: operativa · **79 migraciones registradas** · El Juncal aplicado y verificado;
+- Supabase: operativa · **83 migraciones registradas** · Los Negritos y el frente concurrente aplicados y verificados;
 - Consolación de Osuna: 100 % técnico · cerrada · indexable · grafo nuclear limpio;
 - Purísima de La Algaba: 93 % técnico · cerrada · música 2026 sin confirmar;
 - San Bernardo: 100 % técnico · cerrado;
@@ -196,6 +217,8 @@ Estado validado antes de esta sincronización documental:
 - La Carretería: 100 % técnico · cerrada · indexable · grafo nuclear limpio;
 - La Misión de Heliópolis: 100 % técnico · cerrada · indexable · grafo nuclear limpio;
 - El Juncal: 100 % técnico · cerrado · indexable · patrimonio del Paso jerarquizado;
+- Los Negritos: 100 % técnico · cerrada · indexable · patrimonio de ambos Pasos jerarquizado;
+- Pasión y Muerte: 100 % técnico · cerrada tras reconciliación concurrente;
 - #492: abierta y aislada;
 - FIRST EDITION FREEZE: activo;
 - frente editorial de Hermandad activo: ninguno.
@@ -231,6 +254,8 @@ Estas fichas no deben reabrirse por deuda legítima, mejoras cosméticas o por p
 - **La Carretería · 100 % técnico**.
 - **La Misión de Heliópolis · 100 % técnico**;
 - **El Juncal · 100 % técnico**.
+- **Los Negritos · 100 % técnico**;
+- **Pasión y Muerte · 100 % técnico**.
 
 ## Reglas operativas vigentes
 
@@ -258,6 +283,11 @@ No debe resolverse reescribiendo migraciones históricas ya aplicadas ni modific
 ## Auditor
 
 El ciclo queda limpio:
+
+- Los Negritos queda cerrada al 100 %, con sede unívoca, dos titulares, dos pasos y patrimonio dependiente del nivel correcto del grafo;
+- la estación de penitencia se separa del Vía Crucis institucional y de los traslados, rosario y regreso extraordinario de 2019;
+- Las Nieves de Olivares aparece en la Hermandad y en la ficha del paso de palio, sin perder la antigüedad documentada desde 2006;
+- la PR concurrente #677 fue renumerada para evitar una colisión de migraciones, revalidada, integrada y aplicada sin tocar Los Negritos;
 
 - El Juncal queda cerrado al 100 %, con sede unívoca, tres titulares visuales, una titularidad sacramental y el patrimonio ligado a su Paso;
 - la salida de Gloria, el Vía Crucis y las extraordinarias históricas se muestran en sus categorías temporales correctas;
