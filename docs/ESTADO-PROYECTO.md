@@ -1,37 +1,38 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 6 de septiembre de 2026 · cierre avanzado de Jesús Despojado
-**HEAD funcional previo a esta sincronización:** `main = 33fda16b2161b492c6d27c17f987a81582029445`
+**Corte validado:** 6 de septiembre de 2026 · calendario del Niño Jesús de San Bernardo
+**HEAD funcional previo a esta sincronización:** `main = 20a73206e25114935a130b02e1b83c3880d32de2`
 **Régimen:** `FIRST EDITION FREEZE` activo  
 **Fase:** editorial / documental sobre el modelo vigente  
 **Frente editorial activo:** ninguno
 
 > La PR que sincronice este documento pasa a ser el nuevo HEAD canónico sin alterar el estado funcional descrito aquí. GitHub, Supabase y Vercel prevalecen siempre sobre cualquier SHA transitorio escrito en documentación.
 
-## Último frente cerrado · Jesús Despojado · 2026-09-06
+## Última actualización cerrada · Niño Jesús de San Bernardo · 2026-09-06
 
-- Alcance: devoción, cultos, salidas y música vinculada a salidas.
+- Alcance: igualá y primer ensayo del 3 de septiembre, más ensayos del 8 y 10 de septiembre de 2026.
 - Límites: solo DML editorial y documentación; sin DDL, RLS, arquitectura ni cambios de UX.
-- Resultado: **100 % técnico · indexable · fuentes y grafo del frente limpios**.
-- Certificación final: `docs/CERTIFICACION-JESUS-DESPOJADO-AVANZADA-2026-09-05.md`.
+- Resultado: **3 convocatorias · 1 paso nuevo · 2 fuentes por ficha · indexables · grafo limpio**.
+- La posible mudá del 12 de septiembre permanece como nota no confirmada, no como acontecimiento.
+- PR funcional: [#655](https://github.com/nachosanchezperez-ux/base-cofrade/pull/655).
 - La `FIRST EDITION FREEZE` continúa vigente para cualquier frente distinto de esta orden editorial.
 
 ## Dónde estamos ahora
 
-La Primera Edición permanece cerrada, certificada y congelada. Jesús Despojado ha concluido su ampliación avanzada de devoción, cultos, salidas y música; no queda un frente editorial activo.
+La Primera Edición permanece cerrada, certificada y congelada. San Bernardo se reabrió únicamente ante nueva información verificable para incorporar el calendario del paso del Niño Jesús y volvió a quedar cerrado; no existe un frente editorial activo.
 
 Estado validado antes de esta sincronización final:
 
-- GitHub: `main = 33fda16b2161b492c6d27c17f987a81582029445` · PR #653 integrada;
+- GitHub: `main = 20a73206e25114935a130b02e1b83c3880d32de2` · PR #655 integrada;
 - PR abiertas al congelar la rama: **0**;
 - #635, paleta de San Bernardo, integrada previamente en `2aac73b4760c2b54304d87ca106c61cc6d961c6e`;
 - #637, unificación de indexabilidad del sitemap, integrada en `5206696574fc54cfde74547b8d6a87fc9d00d302`;
-- Supabase producción: operativa;
-- San Bernardo: **100 % técnico · indexable · grafo limpio**;
+- Supabase producción: operativa · 67 migraciones alineadas · última versión `20260906060559`;
+- San Bernardo: **100 % técnico · 4 pasos · 3 convocatorias nuevas · indexable · grafo limpio**;
 - Las Aguas: **cerrada · indexable · grafo nuclear limpio**;
 - Jesús Despojado: **100 % técnico · 4 titulares · 9 cultos · 2 salidas · 3 asignaciones musicales · 14 fuentes relevantes · 0 duplicados**;
-- producción: `dpl_GoHc3fvGUYtgAbbn7M2rdwiLLYij`, `READY`, sobre el mismo SHA de `main`;
-- producción: HTTP 200, canonical correcta, `index, follow` y 0 runtime errors en la ruta de Jesús Despojado;
+- producción: `dpl_FpD3D2LNFb3Q9cKTmEjhBEqJL1FE`, `READY`, sobre el mismo SHA de `main`;
+- producción: agenda, tres convocatorias y paso del Niño Jesús en HTTP 200, canonical correcta, `index, follow` y 0 runtime errors en las rutas auditadas;
 - #492: abierta y aislada;
 - FIRST EDITION FREEZE: activo;
 - frente editorial activo: ninguno.
@@ -74,7 +75,7 @@ La ficha partía de un 93 % técnico pero mantenía deuda real de profundidad y 
 - identidad completa, sede canónica y paleta morado oscuro / negro / blanco;
 - escudo canónico en Storage con fuente oficial de heráldica;
 - 6 titulares/imágenes devocionales;
-- 3 pasos/configuraciones y 9 fases históricas documentadas;
+- 4 pasos/configuraciones y 9 fases históricas documentadas;
 - capataces vigentes de Cristo, palio y custodia;
 - 10 restauraciones de imágenes estructuradas;
 - 16 cultos recurrentes y 10 ocurrencias concretas de 2026;
@@ -84,6 +85,16 @@ La ficha partía de un 93 % técnico pero mantenía deuda real de profundidad y 
 - 7 piezas patrimoniales principales;
 - 12 acontecimientos históricos jerarquizados;
 - 12 fuentes directas de Hermandad más Fuentes contextuales en cultos, restauraciones, fases, música, patrimonio, salidas y acontecimientos.
+
+### Actualización verificable posterior · 6 de septiembre de 2026
+
+- Se incorpora el paso del Niño Jesús de la procesión eucarística como cuarto paso relacionado.
+- Se publica una única cita mixta de igualá y primer ensayo para el 3 de septiembre, a las 19:00, en la Casa de Hermandad.
+- Se publican los ensayos del 8 y 10 de septiembre sin inventar hora ni lugar.
+- No se atribuye capataz porque las fuentes no lo identifican.
+- La posible mudá del 12 de septiembre por la tarde se conserva solo como aviso provisional.
+- La salida eucarística ya existente del 14 de septiembre permanece intacta.
+- Las tres fichas quedan vinculadas al canal oficial de la Hermandad y a un contraste contemporáneo de Arte Sacro.
 
 ### Correcciones relevantes
 
@@ -108,7 +119,7 @@ La ficha partía de un 93 % técnico pero mantenía deuda real de profundidad y 
 Conteos finales:
 
 - titulares/imágenes: 6;
-- pasos: 3;
+- pasos: 4;
 - fases de paso: 9;
 - cultos: 16;
 - ocurrencias 2026: 10;
@@ -225,4 +236,4 @@ Cada ausencia debe clasificarse como:
 
 No existe frente editorial abierto.
 
-Tras fusionar esta certificación, comprobar producción exacta sobre el SHA de merge y confirmar **0 PR abiertas**. Después, cualquier nuevo frente requiere un nuevo recálculo o una orden editorial expresa; no se abre automáticamente otra Hermandad desde el cierre de San Bernardo.
+Tras fusionar esta sincronización documental, comprobar producción exacta sobre el SHA de merge y confirmar **0 PR abiertas**. Después, cualquier nuevo frente requiere un nuevo recálculo, nueva información verificable o una orden editorial expresa; no se abre automáticamente otra Hermandad desde el cierre de San Bernardo.
