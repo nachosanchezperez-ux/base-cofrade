@@ -1,7 +1,7 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 6 de septiembre de 2026 · cierre avanzado de Consolación de Osuna  
-**HEAD funcional previo a esta sincronización:** `main = f0af0d048dc0f81c6ff4c4cb56f6fa0d6ad3746b`  
+**Corte validado:** 6 de septiembre de 2026 · cierre de Consolación de Osuna revalidado tras #660  
+**HEAD funcional previo a esta sincronización:** `main = 54ec8465bf120f27d62abab5a6ab7e8efea839e5`  
 **Régimen:** `FIRST EDITION FREEZE` activo  
 **Fase:** editorial / documental sobre el modelo vigente  
 **Frente editorial de Hermandad activo:** ninguno
@@ -62,49 +62,53 @@ Validado sobre producción:
 - 10 fuentes visibles;
 - 0 errores `error/fatal` localizados para la ruta durante la ventana auditada.
 
-### Migraciones
+### Migraciones propias del cierre
 
 - `20260906095000_cierra_consolacion_osuna.sql`;
 - `20260906095100_vincula_acompanamiento_consolacion_osuna.sql`;
 - `20260906095200_ajusta_vigencia_banda_villa_osuna.sql`.
 
-Supabase producción: **72 migraciones alineadas**, última versión `20260906095200`.
+Las escrituras se probaron dos veces con `ROLLBACK` antes de aplicarse.
+
+## Actualización concurrente posterior · #660
+
+Mientras se sincronizaba el cierre de Osuna se integró [#660](https://github.com/nachosanchezperez-ux/base-cofrade/pull/660), que corrige dos acompañamientos de Gloria asociados a la Banda de Música María Santísima de la Victoria de Las Cigarreras.
+
+Actualidad estricta aplicada:
+
+- `main` posterior a #660 prevalece sobre el SHA de merge de #661;
+- Supabase queda con **73 migraciones alineadas**, última `20260906095500 · corrige_acompanamientos_banda_musica_cigarreras`;
+- Consolación de Osuna se revalidó después de #660 y conserva **100 % técnico con todos los indicadores nucleares verdaderos**;
+- #660 no modifica la ficha de Osuna ni invalida su certificación.
 
 ## Estado técnico actual
 
-Estado validado tras el cierre funcional #661 y antes de esta sincronización documental:
+Estado validado antes de esta sincronización documental:
 
-- GitHub: `main = f0af0d048dc0f81c6ff4c4cb56f6fa0d6ad3746b`;
-- producción Vercel: `dpl_HWbce3Wc6VSo9GW8GKkjeAcP6G9X` · `READY` · mismo SHA de `main`;
-- Supabase: operativa · 72 migraciones alineadas;
-- Consolación de Osuna: 100 % técnico · indexable · grafo nuclear limpio;
+- GitHub: `main = 54ec8465bf120f27d62abab5a6ab7e8efea839e5`;
+- último cambio funcional: #660, posterior a #661;
+- producción Vercel: `dpl_5fHyRS5UM3rsEwW672sqW1k2BWuZ` · `READY` · mismo SHA de `main`;
+- Supabase: operativa · **73 migraciones alineadas** · última `20260906095500`;
+- Consolación de Osuna: 100 % técnico · indexable · grafo nuclear limpio · revalidada tras #660;
 - Purísima de La Algaba: 93 % técnico · cerrada · música 2026 sin confirmar;
-- San Bernardo: 100 % técnico · cerrada;
+- San Bernardo: 100 % técnico · cerrado;
 - Jesús Despojado: 100 % técnico · cerrado;
 - Las Aguas: cerrada y revalidada;
 - #492: abierta y aislada;
 - FIRST EDITION FREEZE: activo.
 
-## PR concurrentes abiertas
-
-A la hora de este corte existen dos PR abiertas que **no forman parte del cierre de Consolación de Osuna** y no deben mezclarse con él:
+## PR concurrente abierta
 
 ### #659 · Rediseña las salidas de las Hermandades
 
+A la hora de este corte permanece abierta [#659](https://github.com/nachosanchezperez-ux/base-cofrade/pull/659).
+
 - tipo: UX / presentación;
 - base original: `94aea60f5f37e9195c5189e8a3cb2c94e326d598`;
-- estado observado: abierta;
-- no se considera canónica mientras no se reconcilie contra el `main` posterior a #661 y se valide de nuevo.
+- fue creada antes de los merges #661 y #660;
+- no se considera canónica mientras no se reconcilie contra `main = 54ec8465bf120f27d62abab5a6ab7e8efea839e5` y se valide de nuevo.
 
-### #660 · Corrige Sastres y la Luz en la Banda de Música de Las Cigarreras
-
-- tipo: corrección de datos/regresión;
-- base original: `94aea60f5f37e9195c5189e8a3cb2c94e326d598`;
-- estado observado: abierta y mergeable antes de reconciliar con #661;
-- corrige la asignación de Nuestra Señora de los Reyes · Sastres y Nuestra Señora de la Luz hacia la Banda de Música María Santísima de la Victoria;
-- no se considera canónica hasta su integración y validación sobre el `main` actual.
-
-Estas PR explican que el repositorio no esté en estado de **0 PR abiertas** aunque Consolación de Osuna sí haya quedado cerrada.
+Por ello, el repositorio **no está todavía en estado de 0 PR abiertas**, aunque Consolación de Osuna sí haya quedado cerrada y certificada.
 
 ## Cierres documentales vigentes
 
@@ -176,14 +180,15 @@ No debe resolverse reescribiendo migraciones históricas ya aplicadas ni modific
 
 El cierre de Consolación de Osuna es válido y no queda deuda A pendiente en su contrato actual.
 
-La desviación operativa real está fuera de la ficha: mientras este cierre se ejecutaba aparecieron #659 y #660 desde frentes concurrentes. No se han mezclado, fusionado ni modificado desde este ciclo.
+La desviación operativa real está fuera de la ficha: #660 se integró correctamente durante el cierre y #659 permanece abierta desde un frente UX concurrente. No se ha mezclado ese rediseño con el trabajo de Osuna.
 
-Por disciplina de frente único, **no debe abrirse otra Hermandad mientras #659 y #660 sigan abiertas sin reconciliar contra el `main` real**.
+Por disciplina de frente único, **no debe abrirse otra Hermandad mientras #659 siga abierta sin reconciliar contra el `main` real**.
 
 ## Siguiente movimiento autorizado
 
 1. terminar esta sincronización documental;
-2. reconciliar #659 y #660 contra el `main` posterior a #661;
-3. decidir por separado si cada una sigue siendo válida y mergeable;
-4. volver a 0 PR abiertas o documentar expresamente el bloqueo que lo impida;
-5. solo después ejecutar un nuevo recálculo de deuda antes de elegir otra Hermandad.
+2. reconciliar #659 contra `main = 54ec8465bf120f27d62abab5a6ab7e8efea839e5`;
+3. validar de nuevo su build, responsive y ausencia de regresiones;
+4. fusionarla o cerrarla según el resultado;
+5. volver a 0 PR abiertas;
+6. solo después ejecutar un nuevo recálculo de deuda antes de elegir otra Hermandad.
