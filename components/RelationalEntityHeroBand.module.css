@@ -57,18 +57,18 @@
 .identityAura {
   position: absolute;
   z-index: -2;
-  width: min(102%, 356px);
+  width: min(106%, 360px);
   aspect-ratio: 1;
   border-radius: 50%;
   background:
     radial-gradient(
       circle,
-      color-mix(in srgb, var(--hero-tone) 42%, rgba(255, 255, 255, .16)) 0%,
-      color-mix(in srgb, var(--hero-tone) 18%, transparent) 45%,
+      color-mix(in srgb, var(--hero-tone) 30%, rgba(255, 255, 255, .1)) 0%,
+      color-mix(in srgb, var(--hero-tone) 12%, transparent) 45%,
       transparent 74%
     );
-  filter: blur(8px);
-  opacity: .9;
+  filter: blur(20px);
+  opacity: .32;
 }
 
 .identityStage::before,
@@ -89,54 +89,8 @@
   display: grid;
   width: min(100%, 278px);
   height: 286px;
-  padding: 18px;
   place-items: center;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, .28);
-  border-radius: 34px;
-  background:
-    linear-gradient(145deg, rgba(255, 255, 255, .15), rgba(255, 255, 255, .065));
-  box-shadow:
-    0 30px 72px rgba(0, 0, 0, .27),
-    0 0 0 1px color-mix(in srgb, var(--hero-tone) 14%, transparent),
-    inset 0 1px 0 rgba(255, 255, 255, .2);
-}
-
-.logoStage::before {
-  content: '';
-  position: absolute;
-  inset: 8px;
-  z-index: 0;
-  border: 1px solid rgba(255, 255, 255, .11);
-  border-radius: 27px;
-  pointer-events: none;
-}
-
-.logoStageOpaqueRaster {
   overflow: visible;
-}
-
-.logoStage[data-custom-background='true'] {
-  border-color: rgba(255, 255, 255, .32);
-  background:
-    linear-gradient(145deg, rgba(255, 255, 255, .11), rgba(255, 255, 255, 0)),
-    var(--band-logo-background);
-  box-shadow:
-    0 30px 72px rgba(0, 0, 0, .27),
-    0 0 0 1px color-mix(in srgb, var(--hero-tone) 20%, transparent),
-    inset 0 1px 0 rgba(255, 255, 255, .3);
-}
-
-.logoStage[data-light-background='true'] {
-  border-color: rgba(15, 39, 66, .34);
-  box-shadow:
-    0 30px 72px rgba(0, 0, 0, .24),
-    0 0 0 1px rgba(15, 39, 66, .12),
-    inset 0 1px 0 rgba(255, 255, 255, .55);
-}
-
-.logoStage[data-light-background='true']::before {
-  border-color: rgba(15, 39, 66, .12);
 }
 
 .logo {
@@ -144,14 +98,14 @@
   z-index: 1;
   width: 100%;
   height: 100%;
-  max-height: 250px;
+  max-height: 272px;
   object-fit: contain;
   object-position: center;
   transform:
     translate(var(--crest-optical-x, 0px), var(--crest-optical-y, 0px))
     scale(var(--crest-optical-scale, 1));
   transform-origin: center;
-  filter: drop-shadow(0 22px 34px rgba(0, 0, 0, .3));
+  filter: drop-shadow(0 14px 26px rgba(0, 0, 0, .22));
 }
 
 /* Los JPEG no admiten transparencia. El filtro solo se usa como último
@@ -161,7 +115,7 @@
 .logoOpaqueRaster {
   filter:
     url("#band-logo-remove-light-raster-background")
-    drop-shadow(0 22px 34px rgba(0, 0, 0, .3));
+    drop-shadow(0 14px 26px rgba(0, 0, 0, .22));
 }
 
 .initials {
@@ -208,16 +162,10 @@
   .logoStage {
     width: min(100%, 244px);
     height: 252px;
-    padding: 16px;
-    border-radius: 30px;
-  }
-
-  .logoStage::before {
-    border-radius: 23px;
   }
 
   .logo {
-    max-height: 220px;
+    max-height: 238px;
   }
 
   .heroBand .bandCopy h1 {
@@ -274,17 +222,10 @@
   .logoStage {
     width: min(100%, 204px);
     height: 184px;
-    padding: 12px;
-    border-radius: 25px;
-  }
-
-  .logoStage::before {
-    inset: 6px;
-    border-radius: 19px;
   }
 
   .logo {
-    max-height: 168px;
+    max-height: 178px;
   }
 
   .identityAura {
@@ -319,7 +260,7 @@
   }
 
   .logo {
-    max-height: 154px;
+    max-height: 164px;
   }
 
   .heroBand .bandCopy h1 {
