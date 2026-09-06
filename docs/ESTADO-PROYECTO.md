@@ -1,38 +1,39 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte validado:** 6 de septiembre de 2026 · calendario del Niño Jesús de San Bernardo
-**HEAD funcional previo a esta sincronización:** `main = 20a73206e25114935a130b02e1b83c3880d32de2`
+**Corte validado:** 6 de septiembre de 2026 · cierre avanzado de la Purísima de La Algaba
+**HEAD funcional previo a esta sincronización:** `main = e3afcd9c0d1206c5dfd91c0627407dd214f5ff49`
 **Régimen:** `FIRST EDITION FREEZE` activo  
 **Fase:** editorial / documental sobre el modelo vigente  
 **Frente editorial activo:** ninguno
 
 > La PR que sincronice este documento pasa a ser el nuevo HEAD canónico sin alterar el estado funcional descrito aquí. GitHub, Supabase y Vercel prevalecen siempre sobre cualquier SHA transitorio escrito en documentación.
 
-## Última actualización cerrada · Niño Jesús de San Bernardo · 2026-09-06
+## Última actualización cerrada · Purísima de La Algaba · 2026-09-06
 
-- Alcance: igualá y primer ensayo del 3 de septiembre, más ensayos del 8 y 10 de septiembre de 2026.
+- Alcance: cierre avanzado de identidad, sede, titular, paso, cultos, Romería, acontecimientos, intervención histórica, memoria musical y Fuentes.
+- Punto de partida: **36 % técnico**.
+- Resultado: **93 % técnico · 1 titular · 1 paso · 3 cultos · 4 salidas · 3 acontecimientos · 1 intervención · 2 evidencias musicales históricas · indexable · grafo nuclear limpio**.
+- La sede canónica queda correctamente separada de la residencia devocional habitual de la imagen en El Aral.
+- La música de 2026 permanece **sin confirmar**: los acompañamientos documentados de 2011 y 2017 son históricos y no se proyectan como vigentes.
+- PR funcional: [#657](https://github.com/nachosanchezperez-ux/base-cofrade/pull/657).
+- Certificación: `docs/CERTIFICACION-PURISIMA-LA-ALGABA-2026-09-06.md`.
 - Límites: solo DML editorial y documentación; sin DDL, RLS, arquitectura ni cambios de UX.
-- Resultado: **3 convocatorias · 1 paso nuevo · 2 fuentes por ficha · indexables · grafo limpio**.
-- La posible mudá del 12 de septiembre permanece como nota no confirmada, no como acontecimiento.
-- PR funcional: [#655](https://github.com/nachosanchezperez-ux/base-cofrade/pull/655).
-- La `FIRST EDITION FREEZE` continúa vigente para cualquier frente distinto de esta orden editorial.
 
 ## Dónde estamos ahora
 
-La Primera Edición permanece cerrada, certificada y congelada. San Bernardo se reabrió únicamente ante nueva información verificable para incorporar el calendario del paso del Niño Jesús y volvió a quedar cerrado; no existe un frente editorial activo.
+La Primera Edición permanece cerrada, certificada y congelada. La Purísima de La Algaba se abrió como único frente tras el recálculo global de deuda, se completó únicamente con información verificable y vuelve a quedar cerrada; no existe un frente editorial activo.
 
 Estado validado antes de esta sincronización final:
 
-- GitHub: `main = 20a73206e25114935a130b02e1b83c3880d32de2` · PR #655 integrada;
-- PR abiertas al congelar la rama: **0**;
-- #635, paleta de San Bernardo, integrada previamente en `2aac73b4760c2b54304d87ca106c61cc6d961c6e`;
-- #637, unificación de indexabilidad del sitemap, integrada en `5206696574fc54cfde74547b8d6a87fc9d00d302`;
-- Supabase producción: operativa · 67 migraciones alineadas · última versión `20260906060559`;
+- GitHub: `main = e3afcd9c0d1206c5dfd91c0627407dd214f5ff49` · PR #657 integrada;
+- PR funcionales abiertas al congelar la rama: **0**;
+- Supabase producción: operativa · **69 migraciones alineadas** · última versión `20260906072100`;
+- Purísima de La Algaba: **93 % técnico · 1 titular · 1 paso · 3 cultos · 4 salidas · 3 acontecimientos · 0 acompañamientos actuales · indexable · grafo nuclear limpio**;
 - San Bernardo: **100 % técnico · 4 pasos · 3 convocatorias nuevas · indexable · grafo limpio**;
 - Las Aguas: **cerrada · indexable · grafo nuclear limpio**;
 - Jesús Despojado: **100 % técnico · 4 titulares · 9 cultos · 2 salidas · 3 asignaciones musicales · 14 fuentes relevantes · 0 duplicados**;
-- producción: `dpl_FpD3D2LNFb3Q9cKTmEjhBEqJL1FE`, `READY`, sobre el mismo SHA de `main`;
-- producción: agenda, tres convocatorias y paso del Niño Jesús en HTTP 200, canonical correcta, `index, follow` y 0 runtime errors en las rutas auditadas;
+- producción: `dpl_Ei6R9Qd7xKctE24sKcTAfho7DNMd`, `READY`, sobre el mismo SHA de `main`;
+- producción: ficha de la Purísima en HTTP 200, canonical correcta, `index, follow`, OG/Twitter válidas y 0 errores `error/fatal` localizados en la ruta durante la ventana auditada;
 - #492: abierta y aislada;
 - FIRST EDITION FREEZE: activo;
 - frente editorial activo: ninguno.
@@ -62,9 +63,68 @@ Estas fichas no deben reabrirse por deuda legítima, mejoras cosméticas o por p
 - Pontificia, Real e Ilustre Hermandad de Nuestra Señora de Consolación Coronada de Utrera;
 - Hermandad de Nuestra Señora del Valle Coronada de Écija;
 - **Hermandad de San Bernardo**;
-- **Jesús Despojado · ficha avanzada**.
+- **Jesús Despojado · ficha avanzada**;
+- **Purísima de La Algaba · 93 % técnico · música 2026 pendiente de confirmación**.
 
-## Último cierre certificado · San Bernardo
+## Último cierre certificado · Purísima de La Algaba
+
+Documento: `docs/CERTIFICACION-PURISIMA-LA-ALGABA-2026-09-06.md`.
+
+**PURÍSIMA DE LA ALGABA → CERRADA Y CERTIFICADA · 93 % TÉCNICO · INDEXABLE · GRAFO NUCLEAR LIMPIO.**
+
+El 7 % mecánico restante corresponde exclusivamente a la ausencia de acompañamiento musical vigente confirmado. No constituye deuda A ni justifica inventar continuidad desde evidencias históricas.
+
+El cierre incorpora o revalida:
+
+- identidad oficial y nombre popular;
+- reglas documentadas de 1870 y contexto devocional anterior;
+- sede canónica en la Iglesia Parroquial de Nuestra Señora de las Nieves;
+- residencia devocional habitual de la titular en la Ermita de San Salvador e Inmaculada Concepción, en El Aral;
+- Purísima Concepción de María Coronada como titular publicada, talla anónima del siglo XVIII;
+- paso de Gloria relacionado con la titular y documentado como paso de plata;
+- 3 cultos recurrentes;
+- 4 salidas publicadas, incluida la Romería de 2026;
+- 3 acontecimientos históricos relacionados mediante `involves`;
+- intervención de Antonio Castillo Lastrucci en 1929;
+- Asociación Musical de La Algaba documentada puntualmente en 2011 y 2017, con `is_current = false`;
+- Fuentes institucionales, de Hermandad y de prensa especializada enlazadas en los niveles específicos disponibles.
+
+### Actualidad estricta
+
+- sede canónica y residencia devocional no se confunden;
+- un traslado temporal de la imagen no modifica la sede canónica;
+- la autoría original de la titular permanece anónima;
+- la intervención de Castillo Lastrucci en 1929 no se convierte en una sustitución de imagen;
+- no se inventan autoría, fecha completa ni número actual de costaleros del paso;
+- la Romería 2026 conserva `event_status = announced` al no haberse usado una crónica posterior para elevarla a celebrada;
+- 2011 y 2017 se modelan como evidencias musicales puntuales, no como un intervalo continuo;
+- no existe acompañamiento musical de 2026 publicado sin una fuente contemporánea suficiente.
+
+### QA
+
+Conteos finales:
+
+- completitud técnica: 93 %;
+- titulares: 1;
+- pasos: 1;
+- cultos: 3;
+- salidas: 4;
+- acontecimientos: 3;
+- intervenciones: 1;
+- evidencias musicales históricas: 2;
+- acompañamientos actuales: 0;
+- enlaces de fuente relevantes comprobados: 14.
+
+Controles a cero:
+
+- duplicados Hermandad→Imagen;
+- duplicados Hermandad→Paso;
+- cultos duplicados;
+- slugs de salidas duplicados;
+- música histórica marcada falsamente como actual;
+- acontecimientos sin `involves` hacia la Hermandad.
+
+## Cierre certificado anterior · San Bernardo
 
 Documento: `docs/CERTIFICACION-SAN-BERNARDO-2026-09-05.md`.
 
@@ -236,4 +296,4 @@ Cada ausencia debe clasificarse como:
 
 No existe frente editorial abierto.
 
-Tras fusionar esta sincronización documental, comprobar producción exacta sobre el SHA de merge y confirmar **0 PR abiertas**. Después, cualquier nuevo frente requiere un nuevo recálculo, nueva información verificable o una orden editorial expresa; no se abre automáticamente otra Hermandad desde el cierre de San Bernardo.
+Tras fusionar esta sincronización documental, comprobar producción exacta sobre el SHA de merge y confirmar **0 PR abiertas**. Después, cualquier nuevo frente requiere un nuevo recálculo, nueva información verificable o una orden editorial expresa; no se abre automáticamente otra Hermandad desde el cierre de la Purísima de La Algaba.
