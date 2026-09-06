@@ -23,51 +23,73 @@ function guideHref(outing) {
   return `/extraordinarias/${slug}`
 }
 
-function outingScore(outing) {
+function outingCategory(outing) {
   const type = normalized(outing?.tipo)
+  const title = normalized(outing?.nombre)
   const character = normalized(outing?.caracter)
-  if (type.includes('estacion de penitencia')) return 100
-  if (type.includes('procesion de gloria')) return 90
-  if (character === 'ordinaria' || character === 'anual') return 60
-  if (outing?.imagen?.src) return 20
-  return 0
+
+  if (type.includes('estacion de penitencia')) return 'penitence'
+  if (type.includes('procesion de gloria')) return 'glory'
+  if (character === 'extraordinaria' || type.includes('traslado') || type.includes('extraordinaria')) return 'historical'
+  if (type.includes('via crucis') || type.includes('rosario') || title.includes('via crucis') || title.includes('rosario')) return 'external'
+  return 'other'
 }
 
-function orderedOutings(outings) {
-  return outings
-    .map((outing, index) => ({ outing, index }))
-    .sort((left, right) => outingScore(right.outing) - outingScore(left.outing) || left.index - right.index)
-    .map(({ outing }) => outing)
-}
+function categoryCopy(key, outings) {
+  const first = outings[0]
 
-function sectionCopy(outings) {
-  const types = outings.map((outing) => normalized(outing.tipo))
-  const hasPenitence = types.some((type) => type.includes('estacion de penitencia'))
-  const hasGlory = types.some((type) => type.includes('procesion de gloria'))
-
-  if (hasPenitence) {
+  if (key === 'penitence') {
+    const day = String(first?.momento || '').split('·')[0].trim()
     return {
-      eyebrow: 'La cofradía en la calle',
-      title: 'Estación de penitencia',
-      description: hasGlory
-        ? 'La jornada principal y las demás salidas documentadas, leídas como acontecimientos vivos de la Hermandad.'
-        : 'La jornada principal de la Hermandad: sus tiempos, sus titulares y el recorrido documentado de cada edición.',
+      eyebrow: 'Salida ordinaria',
+      title: [day, first?.tipo].filter(Boolean).join(' · '),
+      description: 'La estación de penitencia anual de la Hermandad, con sus tiempos y recorrido documentados por edición.',
     }
   }
 
-  if (hasGlory) {
+  if (key === 'glory') {
+    const subject = String(first?.nombre || '')
+      .replace(/^procesión de gloria de\s+/i, '')
+      .replace(/^nuestra señora del\s+/i, 'Virgen del ')
     return {
-      eyebrow: 'La devoción en la calle',
-      title: outings.length === 1 ? 'Procesión de gloria' : 'Procesiones de gloria',
-      description: 'Cada salida como una jornada completa: fecha, recorrido, lugares y memoria visual.',
+      eyebrow: 'Salida ordinaria',
+      title: ['Salida de Gloria', subject].filter(Boolean).join(' · '),
+      description: 'La salida anual de la titular gloriosa, diferenciada de la estación de penitencia.',
+    }
+  }
+
+  if (key === 'external') {
+    return {
+      eyebrow: 'Devoción en la calle',
+      title: 'Cultos externos',
+      description: 'Vía Crucis, rosarios vespertinos y otros cultos celebrados fuera de la sede.',
+    }
+  }
+
+  if (key === 'historical') {
+    return {
+      eyebrow: 'Archivo de la Hermandad',
+      title: 'Histórico',
+      description: 'Traslados y salidas extraordinarias conservados como acontecimientos de años anteriores.',
     }
   }
 
   return {
-    eyebrow: 'En la calle',
-    title: 'Salidas',
-    description: 'Procesiones, rosarios, vía crucis y traslados documentados en la historia de la Hermandad.',
+    eyebrow: 'Otros registros',
+    title: 'Otras salidas',
+    description: 'Salidas documentadas pendientes de una clasificación editorial más específica.',
   }
+}
+
+function groupedOutings(outings) {
+  const order = ['penitence', 'glory', 'external', 'historical', 'other']
+  const groups = new Map(order.map((key) => [key, []]))
+
+  outings.forEach((outing) => groups.get(outingCategory(outing)).push(outing))
+
+  return order
+    .map((key) => ({ key, outings: groups.get(key) }))
+    .filter((group) => group.outings.length)
 }
 
 function Movements({ outing }) {
@@ -176,44 +198,52 @@ export default function BrotherhoodOutingsSection({ outings = [] }) {
   const availableOutings = Array.isArray(outings) ? outings : []
   if (!availableOutings.length) return null
 
-  const ordered = orderedOutings(availableOutings)
-  const [primary, ...secondary] = ordered
-  const copy = sectionCopy(ordered)
+  const groups = groupedOutings(availableOutings)
+  let runningIndex = 0
 
   return (
     <section className={styles.section} id="salidas">
       <div className={`shell ${styles.shell}`}>
         <header className={styles.heading}>
-          <span>{copy.eyebrow}</span>
+          <span>La Hermandad en la calle</span>
           <div>
-            <h2>{copy.title}</h2>
-            <p>{copy.description}</p>
+            <h2>Salidas</h2>
+            <p>Las salidas ordinarias, los cultos externos y la memoria extraordinaria se presentan como ámbitos distintos.</p>
           </div>
         </header>
 
-        <article className={styles.primary}>
-          <div className={styles.primaryNumber} aria-hidden="true">01</div>
-          <BrotherhoodOutingImage outing={primary} primary />
-          <OutingText outing={primary} primary />
-        </article>
+        <div className={styles.groups}>
+          {groups.map((group) => {
+            const copy = categoryCopy(group.key, group.outings)
+            const featured = group.key === 'penitence' || group.key === 'glory'
 
-        {secondary.length ? (
-          <div className={styles.archive}>
-            <div className={styles.archiveHeading}>
-              <span>Otras salidas documentadas</span>
-              <strong>{String(secondary.length).padStart(2, '0')}</strong>
-            </div>
-            <div className={styles.grid}>
-              {secondary.map((outing, index) => (
-                <article className={styles.card} key={outing.id}>
-                  <span className={styles.cardNumber} aria-hidden="true">{String(index + 2).padStart(2, '0')}</span>
-                  <BrotherhoodOutingImage outing={outing} />
-                  <OutingText outing={outing} />
-                </article>
-              ))}
-            </div>
-          </div>
-        ) : null}
+            return (
+              <section className={styles.group} key={group.key} aria-labelledby={`salidas-${group.key}`}>
+                <div className={styles.groupHeading}>
+                  <div>
+                    <span>{copy.eyebrow}</span>
+                    <h3 id={`salidas-${group.key}`}>{copy.title}</h3>
+                    <p>{copy.description}</p>
+                  </div>
+                  <strong>{String(group.outings.length).padStart(2, '0')}</strong>
+                </div>
+
+                <div className={styles.grid}>
+                  {group.outings.map((outing) => {
+                    runningIndex += 1
+                    return (
+                      <article className={`${styles.card} ${featured ? styles.featured : ''}`} key={outing.id}>
+                        <span className={styles.cardNumber} aria-hidden="true">{String(runningIndex).padStart(2, '0')}</span>
+                        <BrotherhoodOutingImage outing={outing} primary={featured} />
+                        <OutingText outing={outing} primary={featured} />
+                      </article>
+                    )
+                  })}
+                </div>
+              </section>
+            )
+          })}
+        </div>
       </div>
     </section>
   )
