@@ -29,10 +29,6 @@
   grid-template-columns: 60px minmax(0, 1fr) auto 84px !important;
 }
 
-.bandRow {
-  grid-template-columns: 60px minmax(0, 1fr) auto 116px !important;
-}
-
 @media (max-width: 720px) {
   .mark {
     width: 48px;
@@ -40,8 +36,7 @@
     border-radius: 12px;
   }
 
-  .brotherhoodRow,
-  .bandRow {
+  .brotherhoodRow {
     grid-template-columns: 52px minmax(0, 1fr) auto !important;
   }
 }
