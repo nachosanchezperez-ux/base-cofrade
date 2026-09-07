@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import PanelEntityMark from '@/components/panel/PanelEntityMark'
-import markStyles from '@/components/panel/PanelEntityMark.module.css'
 import { getPanelBands } from '@/lib/panel/data'
 import styles from '@/app/panel/panel.module.css'
 import bandUx from '@/app/panel/(protected)/bandas/BandPanelUx.module.css'
@@ -33,7 +32,7 @@ export default async function PanelBandsPage({ searchParams }) {
           <div className={styles.brotherhoodList}>
             {bands.map((item) => (
               <article key={item.id} className={bandUx.bandListItem}>
-                <Link className={`${bandUx.bandListLink} ${markStyles.bandRow}`} href={`/panel/bandas/${item.id}`} aria-label={`Editar ficha de ${item.popularName}`}>
+                <Link className={bandUx.bandListLink} href={`/panel/bandas/${item.id}`} aria-label={`Editar ficha de ${item.popularName}`}>
                   <PanelEntityMark src={item.logoPath} name={item.popularName} />
                   <div className={styles.listIdentity}><strong>{item.popularName}</strong><span>{item.officialName}</span><small>{item.municipality} · {item.type}</small></div>
                   <span className={`${styles.statusBadge} ${styles[item.status]}`}>{STATUS_LABELS[item.status]}</span>
