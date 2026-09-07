@@ -15,7 +15,7 @@ export default async function BulkImportPage() {
       <div>
         <span className={styles.eyebrow}>Carga y normalización</span>
         <h1>Importación masiva</h1>
-        <p>Prepara CSV, JSON o JSONL en lotes, valida cada registro y aplica únicamente los datos correctos al grafo.</p>
+        <p>Prepara CSV, JSON o JSONL, resuelve el plan completo y habilita Apply solo cuando el lote entero supera el preflight.</p>
       </div>
     </header>
 

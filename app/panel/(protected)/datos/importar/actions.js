@@ -3,12 +3,15 @@
 import { revalidatePath } from 'next/cache'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
-import { bulkImportPriority, findBulkImportTargetCollisions } from '@/lib/panel/bulk-import-config'
-import { applyBulkImportRecord, preflightBulkImportRecord, refreshBulkImportCounts } from '@/lib/panel/bulk-import'
+import { bulkImportPriority, findBulkImportTargetCollisions, validateBulkImportRecord } from '@/lib/panel/bulk-import-config'
+import { applyBulkImportRecord, refreshBulkImportCounts } from '@/lib/panel/bulk-import'
+import { assertBulkImportBatchCanApply, preflightBulkImportBatch } from '@/lib/panel/bulk-import-preflight'
 
 const UUID_PATTERN = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i
 const SOURCE_FORMATS = new Set(['json', 'jsonl', 'csv'])
 const ITEM_CHUNK_SIZE = 20
+const PREFLIGHT_PAGE_SIZE = 1000
+const PREFLIGHT_WRITE_SIZE = 75
 
 function assertImportId(importId) {
   const value = String(importId || '')
@@ -41,6 +44,79 @@ async function loadBatch(supabase, importId) {
     await supabase.from('bulk_imports').select('*').eq('id', importId).single(),
     'No se pudo cargar el lote',
   )
+}
+
+async function loadAllBatchItems(supabase, importId) {
+  const items = []
+  for (let start = 0; ; start += PREFLIGHT_PAGE_SIZE) {
+    const page = assertResult(
+      await supabase
+        .from('bulk_import_items')
+        .select('id, import_id, position, table_name, operation, priority, record, status, validation_errors, error_text, result, applied_at')
+        .eq('import_id', importId)
+        .order('position', { ascending: true })
+        .range(start, start + PREFLIGHT_PAGE_SIZE - 1),
+      'No se pudieron leer todos los registros del preflight',
+    ) || []
+    items.push(...page)
+    if (page.length < PREFLIGHT_PAGE_SIZE) break
+  }
+  return items
+}
+
+async function persistBatchPreflight(supabase, items, preflight) {
+  const now = new Date().toISOString()
+  const rows = items.map((item, index) => {
+    const plan = preflight.plans[index]
+    if (item.status === 'applied') return item
+    return {
+      ...item,
+      table_name: plan.record?.table || '__invalid__',
+      operation: plan.record?.operation === 'upsert' ? 'upsert' : 'insert',
+      priority: bulkImportPriority(plan.record?.table),
+      record: plan.record || item.record,
+      status: plan.errors.length ? 'invalid' : 'valid',
+      validation_errors: plan.errors,
+      error_text: null,
+      result: {
+        table: plan.record?.table || null,
+        requested_operation: plan.record?.operation || null,
+        effective_operation: plan.effectiveOperation,
+        resolved_references: plan.resolvedReferences,
+        state: plan.errors.length ? 'invalid' : 'valid',
+      },
+      applied_at: null,
+      updated_at: now,
+    }
+  })
+
+  for (let start = 0; start < rows.length; start += PREFLIGHT_WRITE_SIZE) {
+    assertResult(
+      await supabase.from('bulk_import_items').upsert(rows.slice(start, start + PREFLIGHT_WRITE_SIZE), { onConflict: 'import_id,position' }),
+      'No se pudo guardar el resultado completo del preflight',
+    )
+  }
+}
+
+async function runStoredBatchPreflight(supabase, batch) {
+  const items = await loadAllBatchItems(supabase, batch.id)
+  const preflight = await preflightBulkImportBatch(supabase, items.map((item) => item.record))
+  await persistBatchPreflight(supabase, items, preflight)
+  const metadata = batch.metadata && typeof batch.metadata === 'object' && !Array.isArray(batch.metadata)
+    ? { ...batch.metadata }
+    : {}
+  metadata.preflight = {
+    checked_items: items.length,
+    valid_items: preflight.validCount,
+    invalid_items: preflight.invalidCount,
+    can_apply: preflight.canApply,
+    effective_operation_counts: preflight.effectiveOperationCounts,
+  }
+  assertResult(
+    await supabase.from('bulk_imports').update({ metadata, updated_at: new Date().toISOString() }).eq('id', batch.id),
+    'No se pudo guardar el resumen del preflight',
+  )
+  return { items, preflight, metadata }
 }
 
 export async function createBulkImportAction(input) {
@@ -91,7 +167,7 @@ export async function appendBulkImportItemsAction(importIdInput, startPositionIn
   if (startPosition + inputRecords.length > batch.expected_items) throw new Error('El bloque supera el tamaño declarado del lote.')
 
   const now = new Date().toISOString()
-  const validations = await Promise.all(inputRecords.map((inputRecord) => preflightBulkImportRecord(supabase, inputRecord)))
+  const validations = inputRecords.map(validateBulkImportRecord)
   const rows = validations.map((validation, index) => {
     const record = validation.record && typeof validation.record === 'object' && !Array.isArray(validation.record)
       ? validation.record
@@ -109,7 +185,13 @@ export async function appendBulkImportItemsAction(importIdInput, startPositionIn
       status: validation.errors.length ? 'invalid' : 'valid',
       validation_errors: validation.errors,
       error_text: null,
-      result: validation.errors.length ? null : { effective_operation: validation.effectiveOperation },
+      result: {
+        table: tableName === '__invalid__' ? null : tableName,
+        requested_operation: operation,
+        effective_operation: null,
+        resolved_references: [],
+        state: validation.errors.length ? 'invalid' : 'staged',
+      },
       applied_at: null,
       updated_at: now,
     }
@@ -135,12 +217,20 @@ export async function finalizeBulkImportAction(importIdInput) {
     throw new Error(`El lote declara ${batch.expected_items} registros, pero se han preparado ${counts.staged_items}.`)
   }
 
+  const { preflight, metadata } = await runStoredBatchPreflight(supabase, batch)
+  const finalCounts = await refreshBulkImportCounts(supabase, importId)
+  if (!preflight.canApply) {
+    revalidatePath('/panel/datos/importar')
+    revalidatePath(`/panel/datos/importar/${importId}`)
+    return { id: importId, status: 'staging', blocked: true, counts: finalCounts, preflight }
+  }
+
   assertResult(
-    await supabase.from('bulk_imports').update({ status: 'ready', updated_at: new Date().toISOString() }).eq('id', importId),
+    await supabase.from('bulk_imports').update({ status: 'ready', metadata, updated_at: new Date().toISOString() }).eq('id', importId),
     'No se pudo cerrar la preparación del lote',
   )
   revalidatePath('/panel/datos/importar')
-  return { id: importId, status: 'ready', counts }
+  return { id: importId, status: 'ready', blocked: false, counts: finalCounts, preflight }
 }
 
 export async function cancelBulkImportAction(importIdInput, reasonInput = '') {
@@ -204,6 +294,12 @@ export async function applyBulkImportChunkAction(importIdInput) {
   if (!['ready', 'processing'].includes(batch.status)) throw new Error('El lote debe estar preparado antes de aplicarlo.')
 
   if (batch.status === 'ready') {
+    const { preflight } = await runStoredBatchPreflight(supabase, batch)
+    assertBulkImportBatchCanApply(preflight)
+    const checkedCounts = await refreshBulkImportCounts(supabase, importId)
+    if (checkedCounts.staged_items !== batch.expected_items || checkedCounts.invalid_items || checkedCounts.failed_items) {
+      throw new Error('PREFLIGHT_BLOCKED: el lote no está completo y limpio; no se aplicará ningún registro.')
+    }
     assertResult(
       await supabase.from('bulk_imports').update({ status: 'processing', updated_at: new Date().toISOString() }).eq('id', importId),
       'No se pudo iniciar el lote',
