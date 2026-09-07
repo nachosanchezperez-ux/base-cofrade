@@ -25,16 +25,26 @@ function operationCounts(batch) {
   }
 }
 
+function effectiveOperationCounts(batch) {
+  const counts = batch?.metadata?.preflight?.effective_operation_counts || {}
+  return {
+    insert: Number(counts.insert) || 0,
+    update: Number(counts.update) || 0,
+    reuse: Number(counts.reuse) || 0,
+  }
+}
+
 export default async function BulkImportDetailPage({ params }) {
   const { id } = await params
   const user = await requirePanelUser()
   const detail = await getBulkImportDetail(id)
   if (!detail) notFound()
 
-  const { batch, issues } = detail
+  const { batch, items, issues } = detail
   const canEdit = ['admin', 'editor'].includes(user.role)
   const retryAction = retryBulkImportFailuresAction.bind(null, batch.id)
   const operations = operationCounts(batch)
+  const effective = effectiveOperationCounts(batch)
 
   return <div className={panelStyles.pageWrap}>
     <header className={panelStyles.pageHeader}>
@@ -55,10 +65,26 @@ export default async function BulkImportDetailPage({ params }) {
           <div><span>Aplicados</span><strong>{batch.applied_items}</strong></div>
           <div><span>Incidencias</span><strong>{batch.invalid_items + batch.failed_items}</strong></div>
         </div>
-        {batch.metadata?.operation_counts || batch.metadata?.transport_chunks ? <p className={styles.muted}>Perfil del lote: {operations.insert} insert · {operations.upsert} upsert{batch.metadata?.transport_chunks ? ` · ${batch.metadata.transport_chunks} envíos de preparación` : ''}.</p> : null}
+        {batch.metadata?.preflight ? <p className={styles.muted}>Plan efectivo: {effective.insert} insert · {effective.update} update · {effective.reuse} reuse{batch.metadata?.transport_chunks ? ` · ${batch.metadata.transport_chunks} envíos de staging` : ''}.</p> : batch.metadata?.operation_counts || batch.metadata?.transport_chunks ? <p className={styles.muted}>Perfil solicitado: {operations.insert} insert · {operations.upsert} upsert{batch.metadata?.transport_chunks ? ` · ${batch.metadata.transport_chunks} envíos de preparación` : ''}.</p> : null}
+        {batch.metadata?.preflight && !batch.metadata.preflight.can_apply ? <div className={styles.errorBox}><strong>Apply bloqueado por el preflight global</strong><br />El lote contiene incidencias deterministas. No se aplicará ningún registro hasta preparar un lote completamente válido.</div> : null}
         {batch.status === 'cancelled' && batch.metadata?.cancellation_reason ? <div className={styles.warningBox}><strong>Lote cancelado antes de aplicar registros</strong><br />{batch.metadata.cancellation_reason}</div> : null}
         {operations.upsert > 0 && ['ready', 'processing'].includes(batch.status) ? <div className={styles.warningBox}>{operations.upsert} registro{operations.upsert === 1 ? '' : 's'} usa{operations.upsert === 1 ? '' : 'n'} <code>upsert</code> y puede{operations.upsert === 1 ? '' : 'n'} actualizar filas existentes cuando coincida la clave de conflicto.</div> : null}
         {canEdit && batch.failed_items > 0 ? <form action={retryAction}><button type="submit" className={styles.secondaryButton}>Reintentar {batch.failed_items} fallido{batch.failed_items === 1 ? '' : 's'}</button></form> : null}
+      </section>
+
+      <section className={styles.card}>
+        <div className={styles.cardHeading}><div><span className={styles.kicker}>Preflight</span><h2>Plan efectivo por registro</h2></div><span className={styles.formatPill}>{items.length}</span></div>
+        {items.length ? <div className={styles.previewList}>{items.map((item) => {
+          const requested = item.result?.requested_operation || item.operation || '—'
+          const effectiveOperation = item.result?.effective_operation || '—'
+          const references = item.result?.resolved_references || []
+          return <article key={item.id} className={['invalid', 'failed'].includes(item.status) ? styles.previewError : ''}>
+            <div><b>#{item.position + 1}</b><strong>{item.table_name}</strong><span>{requested} → {effectiveOperation}</span><span>{item.result?.state || item.status}</span></div>
+            {references.length ? <code>{references.map((ref) => `${ref.target_column}: ${ref.state}${ref.provider_position ? ` (#${ref.provider_position})` : ''}`).join(' · ')}</code> : <code>Sin referencias relacionales</code>}
+            {item.validation_errors?.length ? <small>{item.validation_errors.join(' ')}</small> : null}
+          </article>
+        })}</div> : <div className={styles.warningBox}>El lote todavía no contiene registros de staging.</div>}
+        {batch.staged_items > 500 ? <p className={styles.muted}>Se muestran los primeros 500 registros del plan. Los contadores corresponden al lote completo.</p> : null}
       </section>
 
       <section className={styles.card}>
