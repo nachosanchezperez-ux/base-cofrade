@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import CofradeTypeBadges from '@/components/CofradeTypeBadges'
-import BrotherhoodViaCrucisSection from '@/components/BrotherhoodViaCrucisSection'
 import { publicText } from '@/lib/supabase/public-entity-page'
 import styles from './BrotherhoodOverviewV2.module.css'
 import scheduleStyles from './BrotherhoodOverviewSchedule.module.css'
@@ -186,7 +185,6 @@ export default function BrotherhoodOverviewV2({ brotherhood, heroFactLabels = []
   const historicalSeats = seat?.sedesHistoricas || []
   const hasHistoricalSeats = historicalSeats.length > 0
   const heroFacts = new Set(heroFactLabels)
-  const viaCrucisItems = brotherhood.viaCrucisCofradias || []
 
   const identityFacts = [
     publicText(brotherhood.fundacion) ? { label: 'Fundación', value: publicText(brotherhood.fundacion) } : null,
@@ -196,9 +194,7 @@ export default function BrotherhoodOverviewV2({ brotherhood, heroFactLabels = []
   const showIdentity = identityFacts.length > 0 || types.length > 1 || hasHistoricalSeats
   const showSeat = Boolean(publicText(seat?.nombre))
 
-  if (!showIdentity && !showSeat) {
-    return <BrotherhoodViaCrucisSection items={viaCrucisItems} />
-  }
+  if (!showIdentity && !showSeat) return null
 
   return (
     <>
@@ -319,8 +315,6 @@ export default function BrotherhoodOverviewV2({ brotherhood, heroFactLabels = []
           </div>
         </div>
       </section>
-
-      <BrotherhoodViaCrucisSection items={viaCrucisItems} />
     </>
   )
 }

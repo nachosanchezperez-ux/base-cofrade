@@ -4,6 +4,7 @@ import { cache } from 'react';
 import BrotherhoodCultsSection from '@/components/BrotherhoodCultsSection';
 import BrotherhoodMusicalHeritage from '@/components/BrotherhoodMusicalHeritage';
 import BrotherhoodOverviewV2 from '@/components/BrotherhoodOverviewV2';
+import BrotherhoodViaCrucisSection from '@/components/BrotherhoodViaCrucisSection';
 import BrotherhoodOutingsSection from '@/components/BrotherhoodOutingsSection';
 import BrotherhoodProgramHero from '@/components/BrotherhoodProgramHero';
 import BrotherhoodSimpecadosSection from '@/components/BrotherhoodSimpecadosSection';
@@ -239,6 +240,7 @@ export default async function HermandadDetailPage({ params }) {
         documentedCurrentAccompaniments.length > 0 && { href: '#acompanamiento-musical', label: 'Acompañamiento' },
         (musicalHeritage.length > 0 || fallbackMusicalHeritage.length > 0) && { href: '#musica', label: 'Patrimonio musical' },
         h.cronologia?.length > 0 && { href: '#historia', label: 'Historia' },
+        h.viaCrucisCofradias?.length > 0 && { href: '#via-crucis-cofradias', label: 'Vía Crucis' },
         h.habitos?.length > 0 && { href: '#tunica', label: 'Túnica' },
         h.salidas?.length > 0 && { href: '#salidas', label: 'Salidas' },
         h.cultos?.length > 0 && { href: '#cultos', label: 'Cultos' },
@@ -435,6 +437,8 @@ export default async function HermandadDetailPage({ params }) {
           </article>
         ))}</div>
       </div></section>}
+
+      <BrotherhoodViaCrucisSection items={h.viaCrucisCofradias} />
 
       {h.habitos?.length > 0 && <section className="section brotherhood-dark" id="tunica"><div className="shell">
         <SectionTitle eyebrow="Estación de penitencia" title="Túnica" description="Descripción documentada de la indumentaria nazarena de la Hermandad." />
