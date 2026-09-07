@@ -95,7 +95,7 @@
 
 .seatCard .cardTopline,
 .seatCard .cardTopline small {
-  color: color-mix(in srgb, var(--brotherhood-on-secondary, #fff) 72%, transparent);
+  color: rgba(255, 255, 255, .78);
 }
 
 .seatCard .pin {
@@ -110,12 +110,12 @@
 }
 
 .seatCard .seatIdentity h3 {
-  color: var(--brotherhood-on-secondary, #fff);
+  color: #fff;
 }
 
 .seatCard .seatIdentity p,
 .seatCard .seatActions > span {
-  color: color-mix(in srgb, var(--brotherhood-on-secondary, #fff) 70%, transparent);
+  color: rgba(255, 255, 255, .74);
 }
 
 .seatCard .seatActions a {
@@ -698,7 +698,8 @@
   }
 
   .seatIdentity h3 {
-    font-size: 22px;
+    font-size: 21px;
+    line-height: 1.12;
   }
 
   .hoursHero {
