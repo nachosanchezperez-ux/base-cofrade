@@ -1,0 +1,92 @@
+{
+  "source_existing_variants": [
+    { "table": "sources", "operation": "insert", "data": { "url": "https://example.com/recurso?a=1&b=2" } },
+    { "table": "sources", "operation": "insert", "data": { "url": "https://example.com/recurso/?utm_source=panel&a=1&b=2#archivo" } },
+    { "table": "sources", "operation": "insert", "data": { "url": "https://example.com/recurso/?b=2&a=1" } },
+    { "table": "sources", "operation": "insert", "data": { "url": "example.com/recurso?b=2&utm_medium=social&a=1" } },
+    { "table": "sources", "operation": "insert", "data": { "url": "HTTPS://EXAMPLE.COM/recurso/?a=1&b=2&utm_campaign=prueba" } }
+  ],
+  "source_new": {
+    "table": "sources",
+    "operation": "insert",
+    "data": { "name": "Fuente canónica nueva", "source_type": "web", "url": "https://example.com/nueva" }
+  },
+  "existing_upsert": {
+    "table": "entities",
+    "operation": "upsert",
+    "on_conflict": "slug",
+    "data": { "entity_type": "brotherhood", "name": "Entidad existente actualizada", "slug": "entidad-existente" }
+  },
+  "new_record": {
+    "table": "entities",
+    "operation": "upsert",
+    "on_conflict": "slug",
+    "data": { "entity_type": "brotherhood", "name": "Entidad nueva", "slug": "entidad-nueva" }
+  },
+  "invalid_column": {
+    "table": "entities",
+    "operation": "insert",
+    "data": { "entity_type": "brotherhood", "name": "Columna inválida", "columna_historica": true }
+  },
+  "missing_required": {
+    "table": "entities",
+    "operation": "upsert",
+    "on_conflict": "slug",
+    "data": { "slug": "insert-sin-obligatorio" }
+  },
+  "unresolved_reference": {
+    "table": "brotherhoods",
+    "operation": "insert",
+    "refs": { "entity_id": { "table": "entities", "match": { "slug": "no-existe" } } },
+    "data": { "official_name": "Referencia ausente", "popular_name": "Referencia ausente" }
+  },
+  "ambiguous_reference": {
+    "table": "brotherhoods",
+    "operation": "insert",
+    "refs": { "entity_id": { "table": "entities", "match": { "name": "Entidad ambigua" } } },
+    "data": { "official_name": "Referencia ambigua", "popular_name": "Referencia ambigua" }
+  },
+  "collision": [
+    {
+      "table": "entities",
+      "operation": "upsert",
+      "on_conflict": "slug",
+      "data": { "entity_type": "brotherhood", "name": "Destino uno", "slug": "destino-repetido" }
+    },
+    {
+      "table": "entities",
+      "operation": "upsert",
+      "on_conflict": "slug",
+      "data": { "entity_type": "brotherhood", "name": "Destino incompatible", "slug": "destino-repetido" }
+    }
+  ],
+  "dependency_chain": [
+    {
+      "table": "sources",
+      "operation": "insert",
+      "data": { "name": "Fuente de la cadena", "source_type": "web", "url": "https://example.com/cadena" }
+    },
+    {
+      "table": "entities",
+      "operation": "upsert",
+      "on_conflict": "slug",
+      "data": { "entity_type": "brotherhood", "name": "Hermandad de la cadena", "slug": "hermandad-cadena" }
+    },
+    {
+      "table": "brotherhoods",
+      "operation": "upsert",
+      "on_conflict": "entity_id",
+      "refs": { "entity_id": { "table": "entities", "match": { "slug": "hermandad-cadena" } } },
+      "data": { "official_name": "Hermandad de la cadena", "popular_name": "La Cadena" }
+    },
+    {
+      "table": "source_links",
+      "operation": "insert",
+      "refs": {
+        "source_id": { "table": "sources", "match": { "url": "https://example.com/cadena/?utm_source=lote#detalle" } },
+        "entity_id": { "table": "entities", "match": { "slug": "hermandad-cadena" } }
+      },
+      "data": { "scope": "Ficha canónica" }
+    }
+  ]
+}
