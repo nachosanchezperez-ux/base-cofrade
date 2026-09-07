@@ -67,12 +67,13 @@ test('la identidad de Hermandades aparece antes en el primer viewport móvil', (
   assert.doesNotMatch(css, /min-height: 8[24]0px/)
 })
 
-test('la fotografía de una banda se conserva en De un vistazo', () => {
+test('la portada de una banda se conserva en De un vistazo con fotografía o identidad visual', () => {
   const page = source('app/bandas/[slug]/page.js')
 
   assert.match(page, /id="resumen"/)
-  assert.match(page, /band\.heroImagePath \? \(/)
+  assert.match(page, /<BandFeaturePhoto/)
   assert.match(page, /src=\{band\.heroImagePath\}/)
+  assert.match(page, /logoPath=\{band\.logoPath\}/)
   assert.match(page, /band\.heroImageCredit/)
 })
 
