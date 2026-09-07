@@ -61,6 +61,15 @@ function savedOperationCounts(batch) {
   }
 }
 
+function savedEffectiveOperationCounts(batch) {
+  const counts = batch?.metadata?.preflight?.effective_operation_counts || {}
+  return {
+    insert: Number(counts.insert) || 0,
+    update: Number(counts.update) || 0,
+    reuse: Number(counts.reuse) || 0,
+  }
+}
+
 function pendingValidItems(batch) {
   return Math.max(0, (batch.valid_items || 0) - (batch.applied_items || 0) - (batch.failed_items || 0))
 }
@@ -211,8 +220,10 @@ export default function ImportWorkspace({ initialImports, canEdit }) {
       }
       const final = await finalizeBulkImportAction(batch.id)
       createdBatchId = null
-      setProgress({ phase: 'ready', current: offset, total: analysis.records.length })
-      setMessage(`Lote preparado en ${batches.length} envíos: ${final.counts.valid_items} válidos · ${final.counts.invalid_items} con incidencias. Revisa el resumen antes de confirmar la escritura en el grafo.`)
+      setProgress({ phase: final.blocked ? 'blocked' : 'ready', current: offset, total: analysis.records.length })
+      setMessage(final.blocked
+        ? `Preflight cerrado: ${final.counts.invalid_items} registro${final.counts.invalid_items === 1 ? '' : 's'} con incidencias. El lote completo queda bloqueado y no escribirá ningún registro.`
+        : `Lote preparado en ${batches.length} envíos: ${final.counts.valid_items} válidos · 0 incidencias. Revisa el plan efectivo antes de confirmar la escritura en el grafo.`)
       router.refresh()
     } catch (caught) {
       if (createdBatchId) {
@@ -321,12 +332,12 @@ export default function ImportWorkspace({ initialImports, canEdit }) {
         </article>)}</div>
         {analysis.collisions.length > 5 ? <small>Hay {analysis.collisions.length - 5} colisiones adicionales.</small> : null}
       </div> : null}
-      {analysis.invalidCount ? <div className={styles.warningBox}>Los registros inválidos se conservarán en el lote para revisión, pero no se aplicarán. El resto sí podrá importarse.</div> : !hasCollisions ? <div className={styles.successBox}>La estructura del lote es válida y no contiene destinos de upsert repetidos. Las restricciones y referencias se volverán a comprobar al aplicar cada registro.</div> : null}
+      {analysis.invalidCount ? <div className={styles.warningBox}>El lote podrá guardarse para diagnóstico, pero el preflight global bloqueará Apply: mientras exista un solo registro inválido no se escribirá ninguno.</div> : !hasCollisions ? <div className={styles.successBox}>La estructura inicial es válida y no contiene destinos de upsert repetidos. El servidor resolverá el plan completo y todas sus referencias antes de habilitar Apply.</div> : null}
       <div className={styles.previewList}>{analysis.validations.slice(0, 6).map((item, index) => <article key={index} className={item.errors.length ? styles.previewError : ''}><div><b>#{index + 1}</b><strong>{item.record?.table || 'sin tabla'}</strong><span>{item.record?.operation || '—'}</span></div><code>{JSON.stringify(item.record?.data || {}).slice(0, 320)}</code>{item.errors.length ? <small>{item.errors.join(' ')}</small> : null}</article>)}</div>
       {analysis.records.length > 6 ? <p className={styles.muted}>Se muestran 6 registros de {analysis.records.length}. El lote completo se valida al prepararlo.</p> : null}
     </section> : null}
 
-    {progress ? <section className={styles.progressCard} aria-live="polite"><div><strong>{progress.phase === 'staging' ? 'Preparando lote' : progress.phase === 'ready' ? 'Lote preparado' : 'Aplicando al grafo'}</strong><span>{progress.current} / {progress.total}</span></div><progress value={progressPercent} max="100">{progressPercent}%</progress></section> : null}
+    {progress ? <section className={styles.progressCard} aria-live="polite"><div><strong>{progress.phase === 'staging' ? 'Preparando lote' : progress.phase === 'ready' ? 'Lote preparado' : progress.phase === 'blocked' ? 'Preflight bloqueado' : 'Aplicando al grafo'}</strong><span>{progress.current} / {progress.total}</span></div><progress value={progressPercent} max="100">{progressPercent}%</progress></section> : null}
     {message ? <div className={styles.successBox}>{message}</div> : null}
     {error ? <div className={styles.errorBox}>{error}</div> : null}
 
@@ -335,11 +346,12 @@ export default function ImportWorkspace({ initialImports, canEdit }) {
       {initialImports.length ? <div className={styles.historyList}>{initialImports.map((batch) => {
         const pending = pendingValidItems(batch)
         const operations = savedOperationCounts(batch)
-        const canApply = canEdit && ['ready', 'processing'].includes(batch.status) && pending > 0
+        const effective = savedEffectiveOperationCounts(batch)
+        const canApply = canEdit && ['ready', 'processing'].includes(batch.status) && pending > 0 && batch.invalid_items === 0 && batch.failed_items === 0 && batch.metadata?.preflight?.can_apply === true
         const canCancel = canEdit && ['staging', 'ready'].includes(batch.status) && batch.applied_items === 0 && batch.failed_items === 0
         return <article key={batch.id}>
           <div className={styles.historyMain}><div><strong>{batch.label}</strong><span>{batch.source_name || batch.source_format.toUpperCase()} · {formatDate(batch.created_at)}</span></div><span className={styles.status}>{statusLabel(batch.status)}</span></div>
-          <div className={styles.historyMetrics}><span><b>{batch.staged_items}</b> preparados</span><span><b>{batch.applied_items}</b> aplicados</span><span><b>{batch.invalid_items}</b> inválidos</span><span><b>{batch.failed_items}</b> fallidos</span>{operations.upsert ? <span><b>{operations.upsert}</b> upsert</span> : null}{batch.metadata?.transport_chunks ? <span><b>{batch.metadata.transport_chunks}</b> envíos</span> : null}</div>
+          <div className={styles.historyMetrics}><span><b>{batch.staged_items}</b> preparados</span><span><b>{batch.applied_items}</b> aplicados</span><span><b>{batch.invalid_items}</b> inválidos</span><span><b>{batch.failed_items}</b> fallidos</span>{effective.insert ? <span><b>{effective.insert}</b> insert</span> : null}{effective.update ? <span><b>{effective.update}</b> update</span> : null}{effective.reuse ? <span><b>{effective.reuse}</b> reuse</span> : null}{operations.upsert && !batch.metadata?.preflight ? <span><b>{operations.upsert}</b> upsert</span> : null}{batch.metadata?.transport_chunks ? <span><b>{batch.metadata.transport_chunks}</b> envíos</span> : null}</div>
           <div className={styles.actions}>
             <a className={styles.secondaryButton} style={{ textDecoration: 'none' }} href={`/panel/datos/importar/${batch.id}`}>Ver detalle</a>
             {canCancel && cancellingImportId !== batch.id ? <button type="button" className={styles.secondaryButton} onClick={() => { setConfirmingImportId(null); setCancellingImportId(batch.id) }} disabled={working}>Cancelar lote</button> : null}
@@ -350,7 +362,7 @@ export default function ImportWorkspace({ initialImports, canEdit }) {
             <div className={styles.actions}><button type="button" className={styles.secondaryButton} onClick={() => setCancellingImportId(null)} disabled={working}>Volver</button><button type="button" className={styles.primaryButton} onClick={() => cancelBatch(batch.id)} disabled={working}>Confirmar cancelación</button></div>
           </div> : null}
           {canApply && confirmingImportId === batch.id ? <div className={styles.warningBox}>
-            <strong>Confirmación antes de escribir</strong><br />Se aplicarán {pending} registros válidos. {operations.upsert > 0 ? `${operations.upsert} usan upsert y pueden actualizar filas existentes si coincide su clave.` : 'Este lote no registra upserts aplicables en sus metadatos.'}
+            <strong>Confirmación antes de escribir</strong><br />El preflight global está limpio. Se aplicarán {pending} registros: {effective.insert} insert · {effective.update} update · {effective.reuse} reuse. La barrera completa se comprobará otra vez antes de la primera escritura.
             <div className={styles.actions}><button type="button" className={styles.secondaryButton} onClick={() => setConfirmingImportId(null)} disabled={working}>Cancelar</button><button type="button" className={styles.primaryButton} onClick={() => applyBatch(batch.id)} disabled={working}>Confirmar aplicación</button></div>
           </div> : null}
         </article>
