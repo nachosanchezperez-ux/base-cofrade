@@ -60,6 +60,21 @@ La arquitectura canónica está implementada mediante:
 
 Admite fuentes JSON, JSONL y CSV dentro de los límites definidos por el Panel.
 
+## Circuito seguro · HC-016.3
+
+El staging conserva el archivo completo y el preflight se ejecuta sobre el lote entero antes de habilitar Apply. El plan:
+
+- ordena por las prioridades comunes de tablas, sin depender del orden del JSON/CSV;
+- resuelve referencias existentes y referencias provistas por otra fila anterior en dependencias;
+- detecta colisiones aunque estén en envíos de staging distintos;
+- expone tabla, operación solicitada, operación efectiva, referencias, errores y estado;
+- bloquea el lote completo si una sola fila contiene un error determinista;
+- vuelve a ejecutar la barrera global inmediatamente antes de la primera escritura.
+
+Las operaciones efectivas son `insert`, `update` y `reuse`. El Panel no presenta un `upsert` genérico cuando el preflight ya conoce el resultado.
+
+La garantía es un bloqueo global previo a Apply. No es atomicidad SQL de todo el lote: Apply continúa usando bloques gobernados y auditables sobre el modelo vigente.
+
 ## Relación con la PR #49
 
 La PR #49 correspondía a un importador documental asistido mediante OpenAI y fue **cerrada sin fusionar el 26/08/2026 por decisión de producto**.
