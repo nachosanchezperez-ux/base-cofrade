@@ -1,4 +1,6 @@
 import Link from 'next/link'
+import PanelEntityMark from '@/components/panel/PanelEntityMark'
+import markStyles from '@/components/panel/PanelEntityMark.module.css'
 import { requirePanelUser } from '@/lib/panel/auth'
 import { getPanelBrotherhoods } from '@/lib/panel/data'
 import styles from '@/app/panel/panel.module.css'
@@ -47,8 +49,8 @@ export default async function PanelBrotherhoodsPage({ searchParams }) {
         {brotherhoods.length ? (
           <div className={styles.brotherhoodList}>
             {brotherhoods.map((item) => (
-              <article key={item.id}>
-                <span className={styles.listMonogram}>{item.popularName.slice(0, 2).toUpperCase()}</span>
+              <article key={item.id} className={markStyles.brotherhoodRow}>
+                <PanelEntityMark src={item.crestPath} name={item.popularName} />
                 <div className={styles.listIdentity}><strong>{item.popularName}</strong><span>{item.officialName}</span><small>{item.municipality} · {item.processionDay}</small></div>
                 <span className={`${styles.statusBadge} ${styles[item.status]}`}>{STATUS_LABELS[item.status]}</span>
                 <Link className={styles.rowLink} href={`/panel/hermandades/${item.id}`}>{item.status === 'draft' ? 'Editar borrador' : 'Editar'} <span>→</span></Link>
