@@ -43,7 +43,7 @@ export default async function PanelMasterDataPage({ searchParams }) {
     <section className={styles.editorSection}>
       <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>Operaciones de datos</span><h2>Carga de contenido</h2></div><p>Prepara grandes volúmenes sin saltarte la validación editorial ni la trazabilidad.</p></div>
       <div className={styles.panelCard}><div className={styles.moduleList}>
-        <ModuleRow href="/panel/datos/importar" label="Importación masiva" count="CSV · JSON" note="Carga por lotes, preflight, referencias relacionales y aplicación parcial de registros válidos" />
+        <ModuleRow href="/panel/datos/importar" label="Importación masiva" count="CSV · JSON" note="Carga por lotes, preflight global, referencias relacionales y Apply bloqueado ante cualquier incidencia" />
       </div></div>
     </section>
 
