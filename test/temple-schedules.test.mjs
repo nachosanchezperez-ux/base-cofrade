@@ -97,6 +97,11 @@ test('un rango compacto no se confunde con una etiqueta de días', async () => {
     JSON.stringify(scheduleEntries('18:30–20:30').map(({ days, detail }) => ({ days, detail }))),
     JSON.stringify([{ days: '', detail: '18:30–20:30' }]),
   )
+
+  assert.equal(
+    JSON.stringify(scheduleEntries('Lunes a sábado, 18:00–20:00; domingos, 10:00–12:00').map(({ days, detail }) => ({ days, detail }))),
+    JSON.stringify([{ days: '', detail: 'Lunes a sábado, 18:00–20:00; domingos, 10:00–12:00' }]),
+  )
 })
 
 test('misas conserva la temporada dentro del nombre del bloque', async () => {
