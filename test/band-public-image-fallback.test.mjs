@@ -15,3 +15,11 @@ test('la fotografía de presentación de una banda nunca deja el icono roto nati
   assert.match(component, /Identidad visual de la formación/)
   assert.match(css, /\.featurePhotoFallback/)
 })
+
+test('todas las bandas conservan una portada aunque aún no tengan fotografía', () => {
+  assert.match(page, /<div className=\{styles\.overviewGrid\}>\s*<BandFeaturePhoto/)
+  assert.match(page, /src=\{band\.heroImagePath\}/)
+  assert.match(page, /logoPath=\{band\.logoPath\}/)
+  assert.doesNotMatch(page, /style=\{!band\.heroImagePath/)
+  assert.doesNotMatch(page, /\{band\.heroImagePath \? \(\s*<BandFeaturePhoto/)
+})

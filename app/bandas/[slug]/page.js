@@ -321,17 +321,15 @@ export default async function BandDetailPage({ params }) {
 
       <section className={`${styles.contentSection} ${styles.overviewSection}`} id="resumen">
         <div className="shell">
-          <div className={styles.overviewGrid} style={!band.heroImagePath ? { gridTemplateColumns: '1fr' } : undefined}>
-            {band.heroImagePath ? (
-              <BandFeaturePhoto
-                key={band.heroImagePath}
-                src={band.heroImagePath}
-                alt={band.heroImageAlt}
-                credit={band.heroImageCredit}
-                name={band.popularName}
-                logoPath={band.logoPath}
-              />
-            ) : null}
+          <div className={styles.overviewGrid}>
+            <BandFeaturePhoto
+              key={band.heroImagePath || band.logoPath || band.id}
+              src={band.heroImagePath}
+              alt={band.heroImageAlt}
+              credit={band.heroImageCredit}
+              name={band.popularName}
+              logoPath={band.logoPath}
+            />
             <div className={styles.overviewCopy}>
               <div className={styles.sectionHeading}>
                 <h2>{band.popularName}, de un vistazo</h2>
