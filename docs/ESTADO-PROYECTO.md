@@ -4,7 +4,11 @@
 
 **HEAD real al abrir el frente:** `main = aa736bd0cf9eb00a923c13bbf3ddeae29e56369e`
 
-**Producción correspondiente:** `dpl_HxpTaTt94qMnU7k6eGf2qNiNZEFB` · `READY`
+**HEAD funcional de HC-016.3:** `0691e335246fdd6604dcfe02ccaacfd557210a9e` · [#689](https://github.com/nachosanchezperez-ux/base-cofrade/pull/689) fusionada
+
+**HEAD real tras el avance posterior:** `246a9551456fa963879fc377d7f47ba261c91fc8` · [#690](https://github.com/nachosanchezperez-ux/base-cofrade/pull/690)
+
+**Producción correspondiente:** `dpl_7sDQLHPFZEr3jsLe8eXV2Dx4RioA` · `READY` · mismo SHA
 
 **PR abiertas al corte:** **0**
 
@@ -16,7 +20,7 @@
 
 ## Dónde estamos ahora
 
-Hilo Cofrade mantiene cerrados los frentes editoriales de Hermandades abiertos hasta Pasión y Muerte. El trabajo activo es técnico: cerrar el circuito seguro del importador HC-016 sobre la arquitectura existente, sin abrir otra Hermandad y sin cambios de esquema.
+Hilo Cofrade mantiene cerrados los frentes editoriales de Hermandades abiertos hasta Pasión y Muerte. HC-016.3 está certificado e integrado sobre la arquitectura existente: el importador dispone de preflight global cerrado, dependencias deterministas y segunda barrera antes de la primera escritura. No hay frente editorial de Hermandad activo.
 
 La secuencia vigente del importador es:
 
@@ -50,15 +54,18 @@ Los cierres documentales anteriores continúan vigentes. No se reabre una ficha 
 
 - [#686](https://github.com/nachosanchezperez-ux/base-cofrade/pull/686) · HC-016.1: contratos de tablas, columnas inválidas, obligatorios de INSERT, referencias inexistentes o ambiguas y cálculo `INSERT`/`UPDATE` efectivo.
 - [#687](https://github.com/nachosanchezperez-ux/base-cofrade/pull/687) · HC-016.2: URL canónica de Fuentes, retirada de tracking y fragmentos, query útil ordenada, equivalencia de barra final, `reuse` y resolución determinista de referencias a Fuentes.
-- HC-016.3: barrera global antes de Apply, planificación de referencias internas, colisiones del lote completo, independencia del orden por prioridades y resultado explícito `insert`/`update`/`reuse` por fila.
+- [#689](https://github.com/nachosanchezperez-ux/base-cofrade/pull/689) · HC-016.3: barrera global antes de Apply, planificación de referencias internas, colisiones del lote completo, independencia del orden por prioridades y resultado explícito `insert`/`update`/`reuse` por fila.
+- [#690](https://github.com/nachosanchezperez-ux/base-cofrade/pull/690): avance posterior sobre `main` que prepara propuestas deterministas desde Salud del grafo; no abre una Hermandad ni aplica contenido.
 
 Documentación técnica: `docs/HC-016-importacion-masiva-gobernada.md`, `docs/HC-016-2-FUENTES-CANONICAS.md` y `docs/HC-016-3-CIRCUITO-SEGURO.md`.
 
 ## Estado técnico
 
 - `main` inicial del frente: `aa736bd0cf9eb00a923c13bbf3ddeae29e56369e`;
+- HEAD funcional de HC-016.3: `0691e335246fdd6604dcfe02ccaacfd557210a9e`;
+- HEAD real posterior: `246a9551456fa963879fc377d7f47ba261c91fc8`;
 - GitHub: 0 PR abiertas al preflight;
-- producción Vercel: `READY` y alineada con ese SHA;
+- producción Vercel: `dpl_7sDQLHPFZEr3jsLe8eXV2Dx4RioA` · `READY` · alineada con el HEAD real;
 - Panel: proporciones 1:1 de marcas protegidas en Hermandades y Bandas;
 - Supabase: operativa sobre el modelo vigente;
 - FIRST EDITION FREEZE: activo;
@@ -88,10 +95,11 @@ HC-016.3 no reescribe migraciones históricas, no altera producción para repara
 
 - el estado anterior estaba atrasado respecto a `main` y se ha reducido a una fotografía operativa, no a un changelog;
 - #686, #687 y #688 ya forman parte del corte canónico;
-- producción correspondiente a `aa736bd` está `READY`;
+- [#689](https://github.com/nachosanchezperez-ux/base-cofrade/pull/689) certifica HC-016.3 en `0691e335246fdd6604dcfe02ccaacfd557210a9e`;
+- `main` avanzó después mediante #690 a `246a9551456fa963879fc377d7f47ba261c91fc8`; prevalece este corte más reciente y su producción está `READY`;
 - no existe frente editorial de Hermandad activo;
-- el siguiente frente editorial solo podrá recalcularse después de certificar HC-016.3 y volver a 0 PR abiertas.
+- HC-016.3 queda certificado sin DDL, tablas, migraciones, RLS ni datos editoriales.
 
 ## Siguiente movimiento autorizado
 
-Cerrar HC-016.3 con suite, build, preview, merge y producción verdes. Después, y solo después, recalcular la siguiente Hermandad y preparar el primer lote editorial real para HC-016 sin aplicarlo en producción como prueba.
+Recalcular la siguiente Hermandad desde el estado real del grafo y preparar el primer lote editorial real para HC-016. El lote deberá revisarse en staging y no se aplicará en producción únicamente como demostración técnica.
