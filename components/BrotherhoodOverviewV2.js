@@ -49,15 +49,12 @@ function scheduleEntries(value = '') {
     .map((entry) => entry.trim().replace(/\.$/, ''))
     .filter(Boolean)
     .map((entry, index) => {
-      const separator = entry.indexOf(':')
-      const startsWithTime = /^\d{1,2}:\d{2}/.test(entry)
-      const hasDays = !startsWithTime && separator > 0 && separator < 52
-      const detail = hasDays ? entry.slice(separator + 1).trim() : entry
+      const labelledEntry = entry.match(/^([^:]{1,52}):\s+(.+)$/)
 
       return {
         id: `${index}-${entry}`,
-        days: hasDays ? entry.slice(0, separator).trim() : '',
-        detail,
+        days: labelledEntry ? labelledEntry[1].trim() : '',
+        detail: labelledEntry ? labelledEntry[2].trim() : entry,
       }
     })
 }
