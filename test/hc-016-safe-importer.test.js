@@ -148,3 +148,25 @@ test('el resultado de cada fila expone tabla, operación solicitada, efectiva, r
     assert.equal(plan.status, 'valid')
   }
 })
+
+
+test('rechaza antes de Apply un on_conflict sin restricción única real', async () => {
+  const invalid = await preflightBulkImportBatch(fakeSupabase(), [{
+    table: 'outings',
+    operation: 'upsert',
+    on_conflict: 'slug',
+    data: { slug: 'salida-sin-clave-unica', outing_type: 'Rosario público' },
+  }])
+  assert.equal(invalid.canApply, false)
+  assert.equal(invalid.invalidCount, 1)
+  assert.match(invalid.plans[0].errors.join(' '), /INVALID_CONFLICT_TARGET: outings\(slug\)/)
+
+  const valid = await preflightBulkImportBatch(fakeSupabase(), [{
+    table: 'entities',
+    operation: 'upsert',
+    on_conflict: 'slug',
+    data: { entity_type: 'band', name: 'Formación nueva', slug: 'formacion-nueva' },
+  }])
+  assert.equal(valid.canApply, true)
+  assert.equal(valid.plans[0].effectiveOperation, 'insert')
+})
