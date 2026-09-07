@@ -6,6 +6,7 @@ import { createClient } from '@/lib/supabase/server'
 import { buildHealthImportProposal } from '@/lib/panel/data-health-import'
 import {
   appendBulkImportItemsAction,
+  cancelBulkImportAction,
   createBulkImportAction,
   finalizeBulkImportAction,
 } from '../importar/actions'
@@ -58,6 +59,11 @@ export async function prepareHealthImportProposalAction(formData) {
     await appendBulkImportItemsAction(batch.id, 0, proposal.records)
     await finalizeBulkImportAction(batch.id)
   } catch (error) {
+    try {
+      await cancelBulkImportAction(batch.id, 'Propuesta de Salud interrumpida antes de completar el staging.')
+    } catch (cancelError) {
+      console.error('[Hilo Cofrade] No se pudo autocancelar la propuesta de Salud', cancelError)
+    }
     throw error
   }
 
