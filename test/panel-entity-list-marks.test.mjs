@@ -16,7 +16,7 @@ test('los listados de hermandades y bandas usan sus imágenes de identidad', asy
   assert.match(bands, /PanelEntityMark src=\{item\.logoPath\}/)
   assert.match(mark, /<img/)
   assert.match(mark, /loading="lazy"/)
-  assert.match(css, /\.mark\s+\.image\s*\{[^}]*width:\s*100%;[^}]*height:\s*100%\s*!important;[^}]*max-width:\s*100%;[^}]*max-height:\s*100%;[^}]*object-fit:\s*contain;/s)
+  assert.match(css, /\.mark\s+\.image\s*\{[^}]*width:\s*100%;[^}]*height:\s*auto;[^}]*max-width:\s*100%;[^}]*max-height:\s*100%;[^}]*aspect-ratio:\s*1\s*\/\s*1;[^}]*object-fit:\s*contain;/s)
   assert.match(css, /object-fit:\s*contain/)
   assert.match(css, /grid-template-columns:\s*60px/)
 })
