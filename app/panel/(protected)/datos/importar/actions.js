@@ -3,8 +3,8 @@
 import { revalidatePath } from 'next/cache'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
-import { bulkImportPriority, findBulkImportTargetCollisions, validateBulkImportRecord } from '@/lib/panel/bulk-import-config'
-import { applyBulkImportRecord, refreshBulkImportCounts } from '@/lib/panel/bulk-import'
+import { bulkImportPriority, findBulkImportTargetCollisions } from '@/lib/panel/bulk-import-config'
+import { applyBulkImportRecord, preflightBulkImportRecord, refreshBulkImportCounts } from '@/lib/panel/bulk-import'
 
 const UUID_PATTERN = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i
 const SOURCE_FORMATS = new Set(['json', 'jsonl', 'csv'])
@@ -91,11 +91,11 @@ export async function appendBulkImportItemsAction(importIdInput, startPositionIn
   if (startPosition + inputRecords.length > batch.expected_items) throw new Error('El bloque supera el tamaño declarado del lote.')
 
   const now = new Date().toISOString()
-  const rows = inputRecords.map((inputRecord, index) => {
-    const validation = validateBulkImportRecord(inputRecord)
+  const validations = await Promise.all(inputRecords.map((inputRecord) => preflightBulkImportRecord(supabase, inputRecord)))
+  const rows = validations.map((validation, index) => {
     const record = validation.record && typeof validation.record === 'object' && !Array.isArray(validation.record)
       ? validation.record
-      : (inputRecord ?? {})
+      : (inputRecords[index] ?? {})
     const tableName = typeof record?.table === 'string' && record.table ? record.table : '__invalid__'
     const operation = record?.operation === 'upsert' ? 'upsert' : 'insert'
 
@@ -109,7 +109,7 @@ export async function appendBulkImportItemsAction(importIdInput, startPositionIn
       status: validation.errors.length ? 'invalid' : 'valid',
       validation_errors: validation.errors,
       error_text: null,
-      result: null,
+      result: validation.errors.length ? null : { effective_operation: validation.effectiveOperation },
       applied_at: null,
       updated_at: now,
     }
