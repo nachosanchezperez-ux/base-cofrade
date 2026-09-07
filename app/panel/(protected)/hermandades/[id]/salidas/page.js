@@ -21,6 +21,7 @@ import styles from '@/app/panel/panel.module.css'
 
 const STATUS_LABELS = { published: 'Publicado', review: 'En revisión', draft: 'Borrador', archived: 'Archivado' }
 const EVENT_STATUS_LABELS = { announced: 'Anunciada', held: 'Celebrada', cancelled: 'Cancelada' }
+const PARTICIPANT_ROLE_LABELS = { processional_image: 'Imagen procesional', processional_step: 'Paso procesional', liturgical_music: 'Música litúrgica' }
 const SAVED_MESSAGES = {
   created: 'La salida se ha creado correctamente.', updated: 'La salida se ha actualizado.', archived: 'La salida se ha archivado.',
   participant: 'El participante se ha guardado.', 'participant-removed': 'El participante se ha retirado.',
@@ -146,11 +147,11 @@ export default async function BrotherhoodOutingsPage({ params, searchParams }) {
               ) : null}
 
               <div className={styles.panelSubsection}>
-                <div className={styles.subsectionHeading}><div><span className={styles.eyebrow}>Protagonistas</span><h4>Titulares y música litúrgica</h4></div><p>{outing.participants.length} relación{outing.participants.length === 1 ? '' : 'es'}.</p></div>
+                <div className={styles.subsectionHeading}><div><span className={styles.eyebrow}>Protagonistas</span><h4>Imágenes, Pasos y música litúrgica</h4></div><p>{outing.participants.length} relación{outing.participants.length === 1 ? '' : 'es'}.</p></div>
                 <div className={styles.editorStack}>
                   {outing.participants.map((participant) => (
                     <div className={styles.editorItem} key={participant.id}>
-                      <strong>{participant.entity?.name || 'Entidad no disponible'}</strong><small>{participant.role === 'processional_image' ? 'Imagen procesional' : 'Música litúrgica'}{participant.notes ? ` · ${participant.notes}` : ''}</small>
+                      <strong>{participant.entity?.name || 'Entidad no disponible'}</strong><small>{PARTICIPANT_ROLE_LABELS[participant.role] || participant.role}{participant.notes ? ` · ${participant.notes}` : ''}</small>
                       {canEdit ? <form action={removeOutingParticipantAction} className={styles.archiveForm}><input type="hidden" name="brotherhood_id" value={id} /><input type="hidden" name="outing_id" value={outing.id} /><input type="hidden" name="participant_id" value={participant.id} /><button type="submit">Retirar relación</button></form> : null}
                     </div>
                   ))}

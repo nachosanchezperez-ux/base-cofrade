@@ -6,6 +6,7 @@ const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf
 
 const layout = read('app/panel/(protected)/hermandades/[id]/layout.js')
 const outings = read('app/panel/(protected)/hermandades/[id]/salidas/page.js')
+const outingsData = read('lib/panel/brotherhood-outings.js')
 const habitual = read('app/panel/(protected)/hermandades/[id]/salidas/recurrentes/page.js')
 
 test('Salidas es el único módulo visible de agenda en la ficha de Hermandad', () => {
@@ -51,4 +52,12 @@ test('el editor anual oculta la terminología técnica de Series al usuario', ()
   assert.doesNotMatch(habitual, />Salidas recurrentes</)
   assert.doesNotMatch(habitual, />Nueva serie anual</)
   assert.doesNotMatch(habitual, />Recurrencias registradas</)
+})
+
+
+test('el Panel resuelve y etiqueta los Pasos participantes de una salida', () => {
+  assert.match(outingsData, /participantById\.get\(participant\.entity_id\) \|\| stepById\.get\(participant\.entity_id\)/)
+  assert.match(outings, /processional_step: 'Paso procesional'/)
+  assert.match(outings, /PARTICIPANT_ROLE_LABELS\[participant\.role\] \|\| participant\.role/)
+  assert.doesNotMatch(outings, /participant\.role === 'processional_image' \? 'Imagen procesional' : 'Música litúrgica'/)
 })
