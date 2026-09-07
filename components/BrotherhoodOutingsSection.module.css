@@ -449,14 +449,19 @@
   .primary { min-height: 0; border-radius: 20px; }
   .primary .image, .primaryFallback { min-height: 360px; }
   .copy { padding: 28px 22px 30px; }
-  .copy h3 { font-size: 36px; }
-  .facts > div { grid-template-columns: 64px minmax(0, 1fr); }
+  .copy h3 { font-size: 32px; line-height: 1.04; }
+  .facts { margin-top: 24px; }
+  .facts > div { grid-template-columns: 1fr; gap: 6px; padding: 14px 0; }
+  .facts dt { font-size: 10px; }
+  .facts dd { font-size: 14px; line-height: 1.5; }
   .editionHead { display: block; }
   .times { margin-top: 16px; }
   .route ol { max-height: 420px; }
   .card,
   .featured { grid-template-rows: 260px 1fr; }
   .card .copy { padding: 24px 20px 26px; }
+  .card .copy h3,
+  .featured .copy h3 { font-size: 32px; }
   .videoHeading { display: block; }
   .videoHeading small { display: block; margin-top: 6px; text-align: left; }
 }

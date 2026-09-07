@@ -39,7 +39,7 @@ function categoryCopy(key, outings) {
   const first = outings[0]
 
   if (key === 'penitence') {
-    const day = String(first?.momento || '').split('·')[0].trim()
+    const day = String(first?.diaLiturgico || first?.momento || '').split('·')[0].trim()
     return {
       eyebrow: 'Salida ordinaria',
       title: [day, first?.tipo].filter(Boolean).join(' · '),
@@ -168,9 +168,17 @@ function Video({ outing }) {
   )
 }
 
-function OutingText({ outing, primary = false }) {
+function outingCardTitle(outing, categoryKey) {
+  if (categoryKey !== 'penitence') return outing.nombre
+
+  const year = String(`${outing.momento || ''} ${outing.nombre || ''}`).match(/\b(?:19|20)\d{2}\b/)?.[0]
+  return year ? `Edición ${year}` : outing.nombre
+}
+
+function OutingText({ outing, categoryKey }) {
   const href = guideHref(outing)
   const label = characterLabel(outing)
+  const title = outingCardTitle(outing, categoryKey)
 
   return (
     <div className={styles.copy}>
@@ -178,12 +186,12 @@ function OutingText({ outing, primary = false }) {
         <span>{outing.tipo}</span>
         {label ? <small>{label}</small> : null}
       </div>
-      <h3>{outing.nombre}</h3>
+      <h3>{title}</h3>
       {outing.titulares ? <p className={styles.subject}>{outing.titulares}</p> : null}
       {(outing.momento || outing.destino) ? (
         <dl className={styles.facts}>
           {outing.momento ? <div><dt>Cuándo</dt><dd>{outing.momento}</dd></div> : null}
-          {outing.destino ? <div><dt>{primary ? 'Horizonte' : 'Recorrido'}</dt><dd>{outing.destino}</dd></div> : null}
+          {outing.destino ? <div><dt>Recorrido</dt><dd>{outing.destino}</dd></div> : null}
         </dl>
       ) : null}
       <Movements outing={outing} />
@@ -235,7 +243,7 @@ export default function BrotherhoodOutingsSection({ outings = [] }) {
                       <article className={`${styles.card} ${featured ? styles.featured : ''}`} key={outing.id}>
                         <span className={styles.cardNumber} aria-hidden="true">{String(runningIndex).padStart(2, '0')}</span>
                         <BrotherhoodOutingImage outing={outing} primary={featured} />
-                        <OutingText outing={outing} primary={featured} />
+                        <OutingText outing={outing} categoryKey={group.key} />
                       </article>
                     )
                   })}

@@ -4,11 +4,21 @@ import test from 'node:test'
 import { uniquePublicOutings } from '../lib/outings/public-outing-link.js'
 
 const loader = await readFile(new URL('../lib/supabase/brotherhoods.js', import.meta.url), 'utf8')
+const outingsView = await readFile(new URL('../components/BrotherhoodOutingsSection.js', import.meta.url), 'utf8')
+const outingsStyles = await readFile(new URL('../components/BrotherhoodOutingsSection.module.css', import.meta.url), 'utf8')
 
 test('el lector conserva la relación entre cada edición y su serie', () => {
   assert.match(loader, /event_status, outing_series_id/)
   assert.match(loader, /serieId: outing\.outing_series_id/)
   assert.match(loader, /serieId: outing\.id/)
+  assert.match(loader, /diaLiturgico: outingSeriesById\.get\(outing\.outing_series_id\)\?\.date_rule/)
+})
+
+test('la estación usa el día litúrgico y compacta la edición en móvil', () => {
+  assert.match(outingsView, /first\?\.diaLiturgico \|\| first\?\.momento/)
+  assert.match(outingsView, /return year \? `Edición \$\{year\}`/)
+  assert.match(outingsView, /<dt>Recorrido<\/dt>/)
+  assert.match(outingsStyles, /@media \(max-width: 620px\)[\s\S]*?\.facts > div \{ grid-template-columns: 1fr/)
 })
 
 test('una edición concreta sustituye a la tarjeta genérica de su serie anual', () => {
