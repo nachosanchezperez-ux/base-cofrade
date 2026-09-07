@@ -1,16 +1,18 @@
 import Link from 'next/link'
 import { requirePanelUser } from '@/lib/panel/auth'
 import { getPanelDataHealth } from '@/lib/panel/data-health'
+import { prepareHealthImportProposalAction } from './actions'
 import styles from '@/app/panel/panel.module.css'
 
 const SEVERITY_LABELS = { critical: 'Prioritario', warning: 'Revisar', info: 'Mejora' }
 const CATEGORIES = ['Estructura', 'Documentación', 'Relaciones', 'Visual']
+const AUTO_PROPOSAL_TYPES = new Set(['brotherhood', 'step'])
 
 export const metadata = { title: 'Salud del grafo · Datos · Panel' }
 
 export default async function DataHealthPage({ searchParams }) {
   const [query, user, data] = await Promise.all([searchParams, requirePanelUser(), getPanelDataHealth()])
-  void user
+  const canEdit = ['admin', 'editor'].includes(user.role)
   const severity = ['critical', 'warning', 'info'].includes(String(query?.nivel || '')) ? String(query.nivel) : ''
   const category = CATEGORIES.includes(String(query?.categoria || '')) ? String(query.categoria) : ''
   const issues = data.issues.filter((item) => (!severity || item.severity === severity) && (!category || item.category === category))
@@ -39,8 +41,9 @@ export default async function DataHealthPage({ searchParams }) {
         <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>Diagnóstico</span><h2>Incidencias abiertas</h2></div><p>{issues.length} incidencia{issues.length === 1 ? '' : 's'} en la vista actual.</p></div>
         {issues.length ? (
           <div className={styles.editorStack}>
-            {issues.map((item) => (
-              <article className={styles.editorItem} key={item.id}>
+            {issues.map((item) => {
+              const canPrepare = canEdit && item.key === 'reference-node' && AUTO_PROPOSAL_TYPES.has(item.entityType)
+              return <article className={styles.editorItem} key={item.id}>
                 <div className={styles.itemHeading}>
                   <div>
                     <span className={styles.eyebrow}>{item.category} · {item.entityLabel}</span>
@@ -50,9 +53,17 @@ export default async function DataHealthPage({ searchParams }) {
                   <span className={`${styles.statusBadge} ${item.severity === 'critical' ? styles.archived : item.severity === 'warning' ? styles.review : styles.draft}`}>{SEVERITY_LABELS[item.severity]}</span>
                 </div>
                 <p className={styles.emptyText}>{item.detail}</p>
-                <div className={styles.formActions}><small>La incidencia desaparece automáticamente cuando el dato subyacente queda resuelto.</small><Link className={styles.secondaryButton} href={item.href}>{item.action} →</Link></div>
+                <div className={styles.formActions}>
+                  <small>{canPrepare ? 'Hilo puede preparar una corrección determinista en staging. Nada se aplica sin revisión posterior.' : 'La incidencia desaparece automáticamente cuando el dato subyacente queda resuelto.'}</small>
+                  {canPrepare ? <form action={prepareHealthImportProposalAction}>
+                    <input type="hidden" name="entity_id" value={item.entityId} />
+                    <input type="hidden" name="entity_type" value={item.entityType} />
+                    <button className={styles.primaryButton} type="submit">Preparar lote →</button>
+                  </form> : null}
+                  <Link className={styles.secondaryButton} href={item.href}>{item.action} →</Link>
+                </div>
               </article>
-            ))}
+            })}
           </div>
         ) : <div className={styles.savedNotice}>No hay incidencias que coincidan con estos filtros.</div>}
       </section>
