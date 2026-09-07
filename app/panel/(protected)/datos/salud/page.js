@@ -1,7 +1,8 @@
 import Link from 'next/link'
 import { requirePanelUser } from '@/lib/panel/auth'
 import { getPanelDataHealth } from '@/lib/panel/data-health'
-import { prepareHealthImportProposalAction } from './actions'
+import { getHealthSourceReuseCandidates } from '@/lib/panel/data-health-reuse'
+import { prepareHealthImportProposalAction, prepareSourceReuseProposalAction } from './actions'
 import styles from '@/app/panel/panel.module.css'
 
 const SEVERITY_LABELS = { critical: 'Prioritario', warning: 'Revisar', info: 'Mejora' }
@@ -16,6 +17,8 @@ export default async function DataHealthPage({ searchParams }) {
   const severity = ['critical', 'warning', 'info'].includes(String(query?.nivel || '')) ? String(query.nivel) : ''
   const category = CATEGORIES.includes(String(query?.categoria || '')) ? String(query.categoria) : ''
   const issues = data.issues.filter((item) => (!severity || item.severity === severity) && (!category || item.category === category))
+  const missingSourceEntityIds = issues.filter((item) => item.key === 'missing-source').map((item) => item.entityId)
+  const sourceCandidates = await getHealthSourceReuseCandidates(missingSourceEntityIds)
 
   return (
     <div className={styles.pageWrap}>
@@ -43,6 +46,8 @@ export default async function DataHealthPage({ searchParams }) {
           <div className={styles.editorStack}>
             {issues.map((item) => {
               const canPrepare = canEdit && item.key === 'reference-node' && AUTO_PROPOSAL_TYPES.has(item.entityType)
+              const reusableSources = item.key === 'missing-source' ? (sourceCandidates.get(item.entityId) || []) : []
+              const canReuseSource = canEdit && reusableSources.length > 0
               return <article className={styles.editorItem} key={item.id}>
                 <div className={styles.itemHeading}>
                   <div>
@@ -53,8 +58,26 @@ export default async function DataHealthPage({ searchParams }) {
                   <span className={`${styles.statusBadge} ${item.severity === 'critical' ? styles.archived : item.severity === 'warning' ? styles.review : styles.draft}`}>{SEVERITY_LABELS[item.severity]}</span>
                 </div>
                 <p className={styles.emptyText}>{item.detail}</p>
+
+                {canReuseSource ? <div className={styles.panelCard} style={{ marginTop: 12 }}>
+                  <p style={{ marginTop: 0 }}><strong>Fuentes ya presentes en relaciones de esta entidad</strong></p>
+                  <p className={styles.emptyText}>Puedes reutilizar una de ellas como Fuente directa. Hilo solo prepara el vínculo; tú decides cuál y revisas el lote antes de Apply.</p>
+                  <form action={prepareSourceReuseProposalAction} className={styles.filters} style={{ gridTemplateColumns: 'minmax(240px, 1fr) auto' }}>
+                    <input type="hidden" name="entity_id" value={item.entityId} />
+                    <input type="hidden" name="entity_type" value={item.entityType} />
+                    <label>
+                      <span className={styles.srOnly}>Fuente existente</span>
+                      <select name="source_id" required defaultValue="">
+                        <option value="" disabled>Selecciona una Fuente existente…</option>
+                        {reusableSources.map((source) => <option key={source.id} value={source.id}>{source.name}{source.sourceType ? ` · ${source.sourceType}` : ''}</option>)}
+                      </select>
+                    </label>
+                    <button className={styles.primaryButton} type="submit">Preparar reutilización →</button>
+                  </form>
+                </div> : null}
+
                 <div className={styles.formActions}>
-                  <small>{canPrepare ? 'Hilo puede preparar una corrección determinista en staging. Nada se aplica sin revisión posterior.' : 'La incidencia desaparece automáticamente cuando el dato subyacente queda resuelto.'}</small>
+                  <small>{canPrepare ? 'Hilo puede preparar una corrección determinista en staging. Nada se aplica sin revisión posterior.' : canReuseSource ? 'Hay evidencia existente reutilizable; no hace falta crear una Fuente nueva.' : 'La incidencia desaparece automáticamente cuando el dato subyacente queda resuelto.'}</small>
                   {canPrepare ? <form action={prepareHealthImportProposalAction}>
                     <input type="hidden" name="entity_id" value={item.entityId} />
                     <input type="hidden" name="entity_type" value={item.entityType} />
