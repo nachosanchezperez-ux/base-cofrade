@@ -35,3 +35,14 @@ test('Fuentes pagina los catálogos y filtra los vínculos por entidad antes de 
   assert.match(data, /if \(entityId\) query = query\.eq\('entity_id', entityId\)/)
   assert.match(data, /\.order\('created_at', \{ ascending: false \}\)[\s\S]*\.order\('id', \{ ascending: false \}\)/)
 })
+
+
+test('los editores relacionales recorren todas las páginas de Fuentes y vínculos', () => {
+  const data = source('lib/panel/relation-sources.js')
+
+  assert.match(data, /const PAGE_SIZE = 1000/)
+  assert.match(data, /async function fetchAllPages\(buildQuery, label\)/)
+  assert.match(data, /await buildQuery\(\)\.range\(from, from \+ PAGE_SIZE - 1\)/)
+  assert.match(data, /fetchAllPages\([\s\S]*\.from\('sources'\)[\s\S]*\.order\('name'\)[\s\S]*\.order\('id'\)/)
+  assert.match(data, /fetchAllPages\([\s\S]*\.from\('source_links'\)[\s\S]*\.order\('created_at'\)[\s\S]*\.order\('id'\)/)
+})
