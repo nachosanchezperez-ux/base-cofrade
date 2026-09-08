@@ -14,21 +14,40 @@ function normalize(value = '') {
 
 function groupLabel(name = '') {
   const value = normalize(name)
+  if (value.includes('misterio')) return 'Paso de misterio'
   if (value.includes('palio') || value.includes('refugio')) return 'Paso de palio'
   if (value.includes('cristo')) return 'Paso de Cristo'
   return 'Paso procesional'
 }
 
+function lastDevotionalInitial(name = '') {
+  const ignoredWords = new Set([
+    'paso', 'de', 'del', 'la', 'las', 'el', 'los', 'al', 'y',
+    'santisimo', 'santisima', 'nuestro', 'nuestra', 'senor', 'senora',
+    'maria', 'virgen', 'cristo', 'misterio', 'palio',
+  ])
+
+  return String(name)
+    .split(/\s+/)
+    .reverse()
+    .map((word) => word.replace(/[^A-Za-zÁÉÍÓÚÜÑáéíóúüñ]/g, ''))
+    .find((word) => word && !ignoredWords.has(normalize(word)))
+    ?.charAt(0)
+    ?.toUpperCase() || ''
+}
+
 function groupMark(name = '') {
   const value = normalize(name)
-  if (value.includes('palio') || value.includes('refugio')) return 'VR'
-  if (value.includes('cristo')) return 'CS'
+  const initial = lastDevotionalInitial(name)
+
+  if ((value.includes('palio') || value.includes('refugio')) && initial) return `V${initial}`
+  if (value.includes('cristo') && initial) return `C${initial}`
   return '♪'
 }
 
 function groupPriority(name = '') {
   const value = normalize(name)
-  if (value.includes('cristo')) return 1
+  if (value.includes('misterio') || value.includes('cristo')) return 1
   if (value.includes('palio') || value.includes('refugio')) return 2
   return 3
 }
@@ -70,7 +89,7 @@ export default function BrotherhoodHistoricalMusicPortal({ items = [] }) {
   }, [items])
 
   useEffect(() => {
-    if (items.length <= 6 || groups.length < 2) return undefined
+    if (groups.length < 2) return undefined
 
     const section = document.getElementById('acompanamientos')
     const shell = section?.querySelector('.shell')
