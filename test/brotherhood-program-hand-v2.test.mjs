@@ -38,9 +38,10 @@ test('la portada muestra datos útiles con semántica documentada', () => {
   assert.equal(page.includes('de la jornada'), false)
 })
 
-test('Información práctica excluye los datos ya mostrados en la portada', () => {
+test('De un vistazo amplía la portada con actividad anual y datos relacionales', () => {
   const page = source('app/hermandades/[slug]/page.js')
   const overview = source('components/BrotherhoodOverviewV2.js')
+  const quickFacts = source('components/BrotherhoodQuickFacts.js')
 
   assert.match(page, /import BrotherhoodOverviewV2 from '@\/components\/BrotherhoodOverviewV2'/)
   assert.match(page, /heroFactLabels=\{heroFacts\.map\(\(fact\) => fact\.label\)\}/)
@@ -48,23 +49,27 @@ test('Información práctica excluye los datos ya mostrados en la portada', () =
   assert.equal(page.includes('key-data-card'), false)
   assert.equal(page.includes('Datos clave'), false)
   assert.equal(page.includes('BrotherhoodSeatSection'), false)
-  assert.equal(page.includes("label: 'Sede y visita'"), false)
 
-  assert.match(overview, /Información práctica/)
-  assert.match(overview, /Sede y visita/)
-  assert.match(overview, /const heroFacts = new Set\(heroFactLabels\)/)
-  assert.match(overview, /!heroFacts\.has\(fact\.label\)/)
-  assert.match(overview, /const showIdentity = identityFacts\.length > 0 \|\| types\.length > 1/)
-  assert.match(overview, /showIdentity && showSeat/)
-  assert.match(overview, /if \(!showIdentity && !showSeat\) return null/)
-  assert.equal(overview.includes('BrotherhoodViaCrucisSection'), false)
-  assert.match(overview, /Fundación/)
-  assert.match(overview, /Hermanos/)
-  assert.match(overview, /Titulares/)
+  assert.match(overview, /De un vistazo/)
+  assert.match(overview, /La Hermandad durante el año/)
+  assert.match(overview, /BrotherhoodQuickFacts/)
+  assert.match(overview, /Sede canónica/)
   assert.match(overview, /Cómo llegar/)
+  assert.equal(overview.includes('BrotherhoodViaCrucisSection'), false)
   assert.equal(overview.includes('brotherhood.resumen'), false)
-  assert.equal(overview.includes('De un vistazo'), false)
   assert.equal(overview.includes('brotherhood.historia'), false)
+
+  assert.match(quickFacts, /hermano_mayor_of/)
+  assert.match(quickFacts, /hermana_mayor_of/)
+  assert.match(quickFacts, /dresser_of/)
+  assert.match(quickFacts, /members_count/)
+  assert.match(quickFacts, /members_count_kind/)
+  assert.match(quickFacts, /outing_series/)
+  assert.match(quickFacts, /Actividad anual habitual/)
+  assert.match(quickFacts, /Estación de penitencia/)
+  assert.match(quickFacts, /Vía Crucis/)
+  assert.match(quickFacts, /Vestidores actuales/)
+  assert.match(quickFacts, /Dato de \$\{relational\.membership\.year\}/)
 })
 
 test('la cabecera usa media gobernada y no recupera la fotografía temporal incrustada del piloto antiguo', () => {
