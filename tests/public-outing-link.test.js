@@ -1,5 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
+import { readFileSync } from 'node:fs'
 
 import { publicOutingRouteSlug, uniquePublicOutings } from '../lib/outings/public-outing-link.js'
 
@@ -28,4 +29,11 @@ test('reserva el Vía Crucis del Consejo para su módulo institucional', () => {
   ]
 
   assert.deepEqual(uniquePublicOutings(items).map((item) => item.id), ['extraordinaria'])
+})
+
+test('una salida sin itinerario no presenta su motivo como Recorrido', () => {
+  const source = readFileSync(new URL('../lib/supabase/brotherhoods.js', import.meta.url), 'utf8')
+
+  assert.match(source, /destino: outing\.route_summary \|\| '',/)
+  assert.doesNotMatch(source, /destino: outing\.route_summary \|\| outing\.reason/)
 })
