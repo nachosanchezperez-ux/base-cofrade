@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import CofradeTypeBadges from '@/components/CofradeTypeBadges'
+import BrotherhoodQuickFacts from '@/components/BrotherhoodQuickFacts'
 import { publicText } from '@/lib/supabase/public-entity-page'
 import styles from './BrotherhoodOverviewV2.module.css'
 import scheduleStyles from './BrotherhoodOverviewSchedule.module.css'
@@ -177,142 +178,124 @@ function ArrowUpRightIcon({ className = '' }) {
 export default function BrotherhoodOverviewV2({ brotherhood, heroFactLabels = [] }) {
   const seat = brotherhood.sedeDetalle
   const types = brotherhood.tipos || []
-  const members = publicText(brotherhood.datosJornada?.totalHermanos)
-  const titularCount = brotherhood.imagenes?.length || 0
   const mapUrl = directionsUrl(seat)
   const verified = verifiedLabel(seat?.horarioVerificadoEn)
   const templeSchedule = scheduleLines(seat?.horarioApertura)
   const historicalSeats = seat?.sedesHistoricas || []
   const hasHistoricalSeats = historicalSeats.length > 0
-  const heroFacts = new Set(heroFactLabels)
-
-  const identityFacts = [
-    publicText(brotherhood.fundacion) ? { label: 'Fundación', value: publicText(brotherhood.fundacion) } : null,
-    members ? { label: 'Hermanos', value: members } : null,
-    titularCount ? { label: 'Titulares', value: String(titularCount) } : null,
-  ].filter((fact) => fact && !heroFacts.has(fact.label))
-  const showIdentity = identityFacts.length > 0 || types.length > 1 || hasHistoricalSeats
+  const showIdentity = types.length > 1 || hasHistoricalSeats
   const showSeat = Boolean(publicText(seat?.nombre))
-
-  if (!showIdentity && !showSeat) return null
 
   return (
     <>
       <section className={styles.section} id="resumen">
         <div className={`shell ${styles.shell}`}>
           <header className={styles.header}>
-            <span className={styles.eyebrow}>Información práctica</span>
-            <h2>{showSeat ? 'Sede y visita' : 'Datos principales'}</h2>
+            <span className={styles.eyebrow}>De un vistazo</span>
+            <h2>La Hermandad durante el año</h2>
           </header>
 
-          <div className={`${styles.grid} ${showIdentity && showSeat ? balanceStyles.balancedGrid : styles.gridSingle}`}>
-            {showIdentity ? (
-              <article className={`${styles.identityCard} ${balanceStyles.equalCard}`}>
-                <div className={styles.cardTopline}>
-                  <span>{hasHistoricalSeats ? 'Historia y datos' : 'Datos complementarios'}</span>
-                  {types.length > 1 ? <CofradeTypeBadges tipos={types} compact /> : null}
-                </div>
+          <BrotherhoodQuickFacts brotherhood={brotherhood} heroFactLabels={heroFactLabels} />
 
-                {identityFacts.length ? (
-                  <dl className={`${styles.identityFacts} ${balanceStyles.identityFactsBalanced}`} data-count={identityFacts.length}>
-                    {identityFacts.map((fact) => (
-                      <div key={fact.label}>
-                        <dt>{fact.label}</dt>
-                        <dd>{fact.value}</dd>
-                      </div>
-                    ))}
-                  </dl>
-                ) : null}
-
-                {hasHistoricalSeats ? (
-                  <details className={`${styles.seatHistory} ${balanceStyles.seatHistoryBalanced}`} open>
-                    <summary>
-                      Historia de sus sedes
-                      <span>{historicalSeats.length} {historicalSeats.length === 1 ? 'sede' : 'sedes'}</span>
-                    </summary>
-                    <div>
-                      {historicalSeats.map((item) => (
-                        <article key={item.id}>
-                          <small>{periodLabel(item)}</small>
-                          <strong>{item.nombre}</strong>
-                          {item.direccion ? <p>{item.direccion}</p> : null}
-                        </article>
-                      ))}
-                    </div>
-                  </details>
-                ) : null}
-              </article>
-            ) : null}
-
-            {showSeat ? (
-              <article className={`${styles.seatCard} ${balanceStyles.equalCard} ${balanceStyles.seatBalanced}`} aria-label="Sede canónica, horarios y visita">
-                <div className={styles.cardTopline}>
-                  <span>Sede canónica</span>
-                  {seat.tipo ? <small>{String(seat.tipo).replaceAll('_', ' ')}</small> : null}
-                </div>
-
-                <div className={styles.seatIdentity}>
-                  <span className={styles.pin} aria-hidden="true"><MapPinIcon /></span>
-                  <div>
-                    <h3>{publicText(seat.nombre)}</h3>
-                    {publicText(seat.direccion) ? <p>{publicText(seat.direccion)}</p> : null}
+          {(showIdentity || showSeat) ? (
+            <div className={`${styles.grid} ${showIdentity && showSeat ? balanceStyles.balancedGrid : styles.gridSingle}`}>
+              {showIdentity ? (
+                <article className={`${styles.identityCard} ${balanceStyles.equalCard}`}>
+                  <div className={styles.cardTopline}>
+                    <span>{hasHistoricalSeats ? 'Historia de sus sedes' : 'Identidad'}</span>
+                    {types.length > 1 ? <CofradeTypeBadges tipos={types} compact /> : null}
                   </div>
-                </div>
 
-                {seat.horarioApertura ? (
-                  <div className={scheduleStyles.hours}>
-                    <div className={scheduleStyles.hero}>
-                      <span className={scheduleStyles.clock} aria-hidden="true"><ClockIcon /></span>
-                      <div className={scheduleStyles.heroCopy}>
-                        <small>Sede · Horarios del templo</small>
-                        <strong>Planifica tu visita</strong>
+                  {hasHistoricalSeats ? (
+                    <details className={`${styles.seatHistory} ${balanceStyles.seatHistoryBalanced}`} open>
+                      <summary>
+                        Recorrido por sus sedes
+                        <span>{historicalSeats.length} {historicalSeats.length === 1 ? 'sede' : 'sedes'}</span>
+                      </summary>
+                      <div>
+                        {historicalSeats.map((item) => (
+                          <article key={item.id}>
+                            <small>{periodLabel(item)}</small>
+                            <strong>{item.nombre}</strong>
+                            {item.direccion ? <p>{item.direccion}</p> : null}
+                          </article>
+                        ))}
                       </div>
-                      {verified ? <span className={scheduleStyles.verified}>Revisado · {verified}</span> : null}
-                    </div>
+                    </details>
+                  ) : null}
+                </article>
+              ) : null}
 
-                    <div className={scheduleStyles.list}>
-                      {templeSchedule.map((item) => (
-                        <div className={`${scheduleStyles.row} ${item.kind === 'note' ? scheduleStyles.noteRow : ''}`} key={item.id}>
-                          <b className={`${scheduleStyles.label} ${item.label ? '' : scheduleStyles.labelMuted}`}>
-                            {item.label || fallbackScheduleLabel(item.kind)}
-                          </b>
-                          <div className={scheduleStyles.entries}>
-                            {item.entries.map((entry) => (
-                              <div className={`${scheduleStyles.entry} ${entry.days ? '' : scheduleStyles.entryNoDays}`} key={entry.id}>
-                                {entry.days ? <span className={scheduleStyles.days}>{entry.days}</span> : null}
-                                <span className={scheduleStyles.detail}>{highlightedSchedule(entry.detail)}</span>
-                              </div>
-                            ))}
-                          </div>
+              {showSeat ? (
+                <article className={`${styles.seatCard} ${balanceStyles.equalCard} ${balanceStyles.seatBalanced}`} aria-label="Sede canónica, horarios y visita">
+                  <div className={styles.cardTopline}>
+                    <span>Sede canónica</span>
+                    {seat.tipo ? <small>{String(seat.tipo).replaceAll('_', ' ')}</small> : null}
+                  </div>
+
+                  <div className={styles.seatIdentity}>
+                    <span className={styles.pin} aria-hidden="true"><MapPinIcon /></span>
+                    <div>
+                      <h3>{publicText(seat.nombre)}</h3>
+                      {publicText(seat.direccion) ? <p>{publicText(seat.direccion)}</p> : null}
+                    </div>
+                  </div>
+
+                  {seat.horarioApertura ? (
+                    <div className={scheduleStyles.hours}>
+                      <div className={scheduleStyles.hero}>
+                        <span className={scheduleStyles.clock} aria-hidden="true"><ClockIcon /></span>
+                        <div className={scheduleStyles.heroCopy}>
+                          <small>Sede · Horarios del templo</small>
+                          <strong>Planifica tu visita</strong>
                         </div>
-                      ))}
-                    </div>
+                        {verified ? <span className={scheduleStyles.verified}>Revisado · {verified}</span> : null}
+                      </div>
 
-                    <div className={scheduleStyles.footer}>
-                      <span className={scheduleStyles.footerIcon} aria-hidden="true"><ScheduleIcon kind="note" /></span>
-                      <p>Comprueba los cultos extraordinarios antes de desplazarte.</p>
+                      <div className={scheduleStyles.list}>
+                        {templeSchedule.map((item) => (
+                          <div className={`${scheduleStyles.row} ${item.kind === 'note' ? scheduleStyles.noteRow : ''}`} key={item.id}>
+                            <b className={`${scheduleStyles.label} ${item.label ? '' : scheduleStyles.labelMuted}`}>
+                              {item.label || fallbackScheduleLabel(item.kind)}
+                            </b>
+                            <div className={scheduleStyles.entries}>
+                              {item.entries.map((entry) => (
+                                <div className={`${scheduleStyles.entry} ${entry.days ? '' : scheduleStyles.entryNoDays}`} key={entry.id}>
+                                  {entry.days ? <span className={scheduleStyles.days}>{entry.days}</span> : null}
+                                  <span className={scheduleStyles.detail}>{highlightedSchedule(entry.detail)}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className={scheduleStyles.footer}>
+                        <span className={scheduleStyles.footerIcon} aria-hidden="true"><ScheduleIcon kind="note" /></span>
+                        <p>Comprueba los cultos extraordinarios antes de desplazarte.</p>
+                      </div>
                     </div>
+                  ) : null}
+
+                  <div className={`${styles.seatActions} ${balanceStyles.seatActionsBalanced}`}>
+                    {mapUrl ? <a href={mapUrl} target="_blank" rel="noreferrer">Cómo llegar <ArrowUpRightIcon className={styles.actionIcon} /></a> : null}
+                    {!publicText(seat.direccion) && seat.localidad ? <span>{seat.localidad}{seat.provincia && seat.provincia !== seat.localidad ? ` · ${seat.provincia}` : ''}</span> : null}
                   </div>
-                ) : null}
 
-                <div className={`${styles.seatActions} ${balanceStyles.seatActionsBalanced}`}>
-                  {mapUrl ? <a href={mapUrl} target="_blank" rel="noreferrer">Cómo llegar <ArrowUpRightIcon className={styles.actionIcon} /></a> : null}
-                  {!publicText(seat.direccion) && seat.localidad ? <span>{seat.localidad}{seat.provincia && seat.provincia !== seat.localidad ? ` · ${seat.provincia}` : ''}</span> : null}
-                </div>
-
-                {seat.hermandadesCompartidas?.length > 0 ? (
-                  <div className={styles.shared}>
-                    <small>También en esta sede</small>
-                    <div>
-                      {seat.hermandadesCompartidas.map((item) => (
-                        <Link href={`/hermandades/${item.slug}`} key={item.id}>{item.nombre} <span aria-hidden="true">→</span></Link>
-                      ))}
+                  {seat.hermandadesCompartidas?.length > 0 ? (
+                    <div className={styles.shared}>
+                      <small>También en esta sede</small>
+                      <div>
+                        {seat.hermandadesCompartidas.map((item) => (
+                          <Link href={`/hermandades/${item.slug}`} key={item.id}>{item.nombre} <span aria-hidden="true">→</span></Link>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                ) : null}
-              </article>
-            ) : null}
-          </div>
+                  ) : null}
+                </article>
+              ) : null}
+            </div>
+          ) : null}
         </div>
       </section>
     </>

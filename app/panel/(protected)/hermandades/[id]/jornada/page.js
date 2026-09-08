@@ -27,6 +27,17 @@ function StatusSelect({ defaultValue = 'draft' }) {
   )
 }
 
+function MembersKindSelect({ defaultValue = 'exact' }) {
+  return (
+    <select name="members_count_kind" defaultValue={defaultValue || 'exact'}>
+      <option value="exact">Cifra exacta</option>
+      <option value="approximate">Aproximada</option>
+      <option value="minimum">Más de…</option>
+      <option value="maximum">Menos de…</option>
+    </select>
+  )
+}
+
 function StatsFields({ item = null, sourceOptions, defaultDay = '' }) {
   return (
     <div className={styles.formGrid}>
@@ -42,6 +53,8 @@ function StatsFields({ item = null, sourceOptions, defaultDay = '' }) {
       <label><span>Monaguillos</span><input name="monaguillos_count" type="number" min="0" defaultValue={item?.monaguillos_count ?? ''} /></label>
       <label><span>Integrantes de acompañamientos musicales</span><input name="musical_accompaniment_count" type="number" min="0" defaultValue={item?.musical_accompaniment_count ?? ''} /></label>
       <label><span>Total cortejo</span><input name="total_procession_count" type="number" min="0" defaultValue={item?.total_procession_count ?? ''} /></label>
+      <label><span>Número de hermanos</span><input name="members_count" type="number" min="0" defaultValue={item?.members_count ?? ''} placeholder="2480" /></label>
+      <label><span>Tipo de cifra de hermanos</span><MembersKindSelect defaultValue={item?.members_count_kind || 'exact'} /></label>
       <label><span>Orden por nazarenos</span><input name="position_by_nazarenos" type="number" min="1" defaultValue={item?.position_by_nazarenos ?? ''} /></label>
       <label><span>Orden por cortejo</span><input name="position_by_procession" type="number" min="1" defaultValue={item?.position_by_procession ?? ''} /></label>
       <label><span>Hermandades en la jornada</span><input name="brotherhoods_in_day" type="number" min="1" defaultValue={item?.brotherhoods_in_day ?? ''} /></label>
@@ -50,9 +63,19 @@ function StatsFields({ item = null, sourceOptions, defaultDay = '' }) {
       <label><span>Estado editorial</span><StatusSelect defaultValue={item?.status || 'draft'} /></label>
       <EntityPicker
         className={styles.fieldWide}
+        name="members_source_id"
+        items={sourceOptions}
+        label="Fuente del número de hermanos (opcional)"
+        placeholder="Buscar Fuente…"
+        emptyLabel="Sin Fuente específica"
+        required={false}
+        defaultValue={item?.members_source_id || ''}
+      />
+      <EntityPicker
+        className={styles.fieldWide}
         name="source_id"
         items={sourceOptions}
-        label="Fuente principal (opcional)"
+        label="Fuente principal de la jornada (opcional)"
         placeholder="Buscar Fuente…"
         emptyLabel="Sin Fuente principal"
         required={false}
@@ -79,7 +102,7 @@ export default async function BrotherhoodProcessionStatsPage({ params, searchPar
           <strong>Datos de jornada</strong>
         </div>
         <div className={styles.editorTitleRow}>
-          <div><span className={styles.eyebrow}>Cortejo y Carrera Oficial</span><h1>Datos de jornada</h1><p>Serie histórica anual de {data.brotherhood.popular_name || data.entity.name}.</p></div>
+          <div><span className={styles.eyebrow}>Cortejo, hermanos y Carrera Oficial</span><h1>Datos de jornada</h1><p>Serie histórica anual de {data.brotherhood.popular_name || data.entity.name}.</p></div>
           <Link className={styles.secondaryButton} href={`/hermandades/${data.entity.slug}#resumen`} target="_blank" rel="noreferrer">Ver en el Front ↗</Link>
         </div>
       </header>
@@ -90,7 +113,7 @@ export default async function BrotherhoodProcessionStatsPage({ params, searchPar
       <section className={styles.editorSection}>
         <div className={styles.sectionHeading}>
           <div><span className={styles.eyebrow}>Histórico</span><h2>Registros por año</h2></div>
-          <p>El Front usa el registro publicado más reciente para el bloque de Datos clave.</p>
+          <p>El Front usa el registro publicado más reciente para cada dato anual disponible.</p>
         </div>
 
         <div className={styles.editorStack}>
@@ -102,6 +125,7 @@ export default async function BrotherhoodProcessionStatsPage({ params, searchPar
               </div>
 
               <div className={styles.moduleList} style={{ marginBottom: 18 }}>
+                <div><span>Hermanos</span><strong>{item.members_count != null ? Number(item.members_count).toLocaleString('es-ES') : '—'}</strong></div>
                 <div><span>Total nazarenos</span><strong>{item.total_nazarenos_count ?? '—'}</strong></div>
                 <div><span>Total cortejo</span><strong>{item.total_procession_count ?? '—'}</strong></div>
                 <div><span>Orden en la jornada</span><strong>{item.position_by_nazarenos ? `${item.position_by_nazarenos}.ª${item.brotherhoods_in_day ? ` de ${item.brotherhoods_in_day}` : ''}` : '—'}</strong></div>
@@ -113,7 +137,7 @@ export default async function BrotherhoodProcessionStatsPage({ params, searchPar
                   <input type="hidden" name="brotherhood_id" value={id} />
                   <input type="hidden" name="stats_id" value={item.id} />
                   <StatsFields item={item} sourceOptions={data.sourceOptions} defaultDay={data.brotherhood.current_procession_day} />
-                  <div className={styles.formActions}><small>{item.source ? `Fuente: ${item.source.name}` : 'Añade una Fuente principal cuando el dato esté documentado.'}</small><button className={styles.secondaryButton} type="submit">Guardar {item.year}</button></div>
+                  <div className={styles.formActions}><small>{item.source ? `Fuente de jornada: ${item.source.name}` : 'Añade una Fuente principal cuando el dato esté documentado.'}</small><button className={styles.secondaryButton} type="submit">Guardar {item.year}</button></div>
                 </form>
               ) : null}
 
