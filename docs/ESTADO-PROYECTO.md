@@ -1,157 +1,152 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 8 de septiembre de 2026 · segundo lote editorial real de HC-016
+**Corte operativo:** 8 de septiembre de 2026 · El Museo certificado mediante HC-016
 
-**HEAD funcional auditado:** `2ab67af601f6ec3314e0ca07f610535446088e41` · [#706](https://github.com/nachosanchezperez-ux/base-cofrade/pull/706) fusionada
+**HEAD funcional auditado:** `9022aaa1cf90d4c9d6aa4aade8a9e3454926362f`
 
-**Producción auditada:** `dpl_2NPrhdVh5167Fw8CLfWYyiVrPD6n` · `READY` · mismo SHA que el HEAD funcional auditado
+**Producción auditada:** `dpl_GG5TAiW4Cb3iGJXypUdtm9jmrSQk` · `READY` · mismo SHA que el HEAD funcional auditado
 
-**PR abiertas al cierre:** **0**
+**PR abiertas antes de sincronizar esta fotografía:** **0**
 
 **Régimen:** `FIRST EDITION FREEZE` activo
 
-**Frente editorial de Hermandad:** San Pablo y Mercedes de la Puerta Real cerradas; no existe otra ficha abierta
+**Frente editorial de Hermandad:** San Pablo, Mercedes de la Puerta Real y El Museo cerradas; no existe otra ficha abierta
 
-> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El HEAD canónico posterior es el commit de `main` que contiene esta fotografía; `2ab67af…` identifica el producto y el flujo que se auditaron antes de su sincronización documental.
+> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El HEAD canónico posterior será el commit de `main` que contenga este documento; `9022aaa1…` identifica el producto y los datos auditados antes de la sincronización documental.
 
 ## Dónde estamos ahora
 
-HC-016 ha completado dos lotes editoriales reales. San Pablo continúa certificado y Mercedes de la Puerta Real queda certificada como segundo contexto: una Hermandad de Gloria, con fuentes, titulares, Paso, intervenciones, Cultos, Salida, acompañamiento y patrimonio distintos de los del primer lote.
+HC-016 ya funciona como método editorial operativo. San Pablo fue el primer lote real; Mercedes de la Puerta Real acreditó el segundo contexto y dejó corregida la validación sistémica de autorías; El Museo vuelve a ejecutar el circuito completo en una Hermandad penitencial con mayor densidad histórica, artística, litúrgica y relacional.
 
-El segundo cierre se realizó mediante el circuito canónico, sin incorporación manual masiva, nuevo DDL, tablas, migraciones estructurales, cambios RLS ni excepciones específicas:
+El cierre de El Museo no incorporó código, DDL, tablas, migraciones, cambios RLS ni excepciones por `slug`. Todo el DML pasó por:
 
 ```text
 CARGA → STAGING → PREFLIGHT GLOBAL → REVISIÓN → APPLY → RESULTADOS
 ```
 
-La primera ejecución de Mercedes descubrió un valor limitado por `CHECK` que HC-016 todavía no validaba. Dos filas alcanzaron Apply y fallaron; las 35 anteriores ya se habían escrito. Por tanto, no se presenta esa primera pasada como atómica ni como perfecta. Se detuvo el frente, se corrigió la causa común en [#705](https://github.com/nachosanchezperez-ux/base-cofrade/pull/705), se desplegó el arreglo y solo entonces se preparó el remate. La segunda ejecución terminó 68/68 y un fixture posterior demuestra que el mismo fallo queda bloqueado antes de Apply.
+## Lotes anteriores que siguen certificados
 
-## Primer lote real · San Pablo
+- **San Pablo:** 183 filas originales aplicadas, remediadas o descartadas con causa; su remate de 41/41 continúa cerrado. Las correcciones de #694, #695, #696, #698 y #699 siguen integradas.
+- **Mercedes de la Puerta Real:** segundo contexto real cerrado. La validación genérica de `image_authorships.authorship_type` de #705 impide que el fallo determinista descubierto alcance Apply; #706 mantiene separados motivo e itinerario de Salidas.
 
-San Pablo sigue cerrado. Las 183 filas originales permanecen aplicadas, remediadas o descartadas con causa; el cierre `bc2def40-4dbe-464e-a6c5-43ccfbad8027` aplicó 41/41 actualizaciones. No han reaparecido duplicados, huérfanos ni regresiones públicas en su ficha.
+## Recálculo de deuda y selección de El Museo
 
-Las correcciones de [#694](https://github.com/nachosanchezperez-ux/base-cofrade/pull/694), [#695](https://github.com/nachosanchezperez-ux/base-cofrade/pull/695), [#696](https://github.com/nachosanchezperez-ux/base-cofrade/pull/696), [#698](https://github.com/nachosanchezperez-ux/base-cofrade/pull/698) y [#699](https://github.com/nachosanchezperez-ux/base-cofrade/pull/699) continúan integradas: Fuentes paginadas con orden estable, UPDATE efectivo, bloqueo de tablas no escribibles, Pasos de Salidas correctamente tipados y `on_conflict` limitado a claves reales.
+La deuda se recalculó desde el grafo real entre Hermandades publicadas no certificadas, antes de escribir. No se confundieron ausencia documental, dato no aplicable, contenido no publicado, pendiente de verificar y deuda real.
 
-## Recálculo de deuda y selección
+| Candidata | Completitud inicial aprox. | Deuda real y potencial | Fuentes | Dificultad | Valor editorial | Cierre con HC-016 |
+|---|---:|---|---|---|---|---:|
+| El Museo | 43 % | Titulares, Pasos, autorías, hábitos, patrimonio, Cultos, Salidas y relaciones | Buena y mayoritariamente oficial | Media-alta | Muy alto | 93 % |
+| El Cachorro | 43 % | Grafo artístico y procesional muy amplio, con más volumen y ambigüedad | Muy buena | Alta | Muy alto | 88 % |
+| Cristo de Burgos | 43 % | Núcleo penitencial, titulares, Pasos, Cultos y patrimonio | Buena, con web oficial | Media | Alto | 90 % |
 
-El ranking se recalculó desde el grafo real, exclusivamente entre Hermandades publicadas no certificadas y antes de escribir datos. Se clasificaron las ausencias como deuda real, no aplicable, no publicada, pendiente de verificar o hueco legítimo.
+Se eligió **El Museo** porque combinaba fuentes oficiales suficientes, reutilización de nodos existentes y familias relacionales distintas de Mercedes. Era el mejor equilibrio para volver a demostrar el método sin optar simplemente por la ficha más vacía.
 
-| Candidata | Completitud inicial aprox. | Deuda y potencial | Fuentes | Dificultad | Cierre posible con HC-016 |
-|---|---:|---|---|---|---:|
-| Mercedes de la Puerta Real | 43 % | Alto potencial en titulares, Paso, intervenciones, Cultos, Gloria, música y patrimonio | Muy buena, mayoritariamente oficial | Media | 95 % |
-| El Museo | 43 % | Alto potencial histórico, artístico y relacional | Buena | Media-alta | 93 % |
-| El Cachorro | 43 % | Potencial muy alto, pero con mayor volumen y ambigüedad | Muy buena | Alta | 88 % |
+## El Museo · diagnóstico inicial
 
-Se eligió **Mercedes de la Puerta Real** porque permitía probar más familias de HC-016 en un contexto de Gloria con fuentes oficiales suficientes, reutilización de nodos ya existentes y un lote abordable. El Museo no llegó a Staging ni se escribió.
+La identidad y la sede ya existían. No había titulares, Pasos, hábitos, Cultos, patrimonio ni media publicados. Sí existía el acompañamiento vigente de la Banda de Música de la Oliva de Salteras, asociado a un Paso de palio aún en borrador; también existían en borrador la Salida histórica del Vía Crucis del Consejo de 2014 y su relación institucional.
 
-## Segundo lote real · inventario y ejecución
+La deuda abordable era editorial y relacional. La ausencia de fotografías con licencia reutilizable no justificaba inventar media ni bloquear el cierre.
 
-### Núcleo, titulares y Paso
+## Diseño y ejecución del lote
 
-Lote `c525cad2-04ff-4e68-a778-5cf2c354f2c4`:
+El inventario respetó el orden Fuentes → entidades → Hermandad → titulares/Pasos → agentes → música → patrimonio → Cultos → Salidas → relaciones → `source_links`. Se canonicalizaron las Fuentes y se reutilizaron los nodos que representaban la misma realidad.
 
-- 37 filas preparadas y revisadas;
-- plan efectivo: 34 insert · 3 update;
-- resultado: 35 aplicadas · 2 fallidas;
-- familias: 8 Fuentes, sede canónica, Hermandad, 4 titulares, 4 relaciones Hermandad–Imagen, autorías, Paso, relación Imagen–Paso y 8 `source_links`.
+### Lote principal
 
-Las posiciones 24 y 25 intentaban representar la remodelación de 1969 y la conservación de 2000 como `image_authorships.authorship_type = remodeling/restoration`. El `CHECK` real solo admite `author`, `attributed_to`, `workshop_of`, `circle_of`, `school_of` y `anonymous`. Las dos filas fallaron y no existen en la base.
-
-La modelización correcta no era ampliar el `CHECK` ni falsear autorías: ambas actuaciones se trasladaron a `heritage_interventions`, reutilizando a Luis Álvarez Duarte. Las autorías desconocidas de la Virgen y San Pedro Nolasco se expresaron como `anonymous` con certeza `unknown`.
-
-### Cierre editorial
-
-Lote `0eebc10c-137f-4485-974f-04df7dfed11e`:
+`efbb56a9-640b-4207-9b67-287a39992479` · 114 filas en 17 tablas:
 
 | Familia | Filas |
 |---|---:|
-| Fuentes | 5 |
+| Fuentes | 15 |
+| Entidades | 15 |
 | Hermandad | 1 |
-| Entidades | 6 |
-| Relaciones Hermandad–Imagen | 4 |
-| Autorías de imágenes | 4 |
-| Relación Imagen–Paso | 1 |
-| Intervenciones patrimoniales | 2 |
-| Cultos recurrentes | 6 |
-| Ocurrencias de Cultos 2026 | 6 |
-| Salida 2026 | 1 |
-| Participantes de la Salida | 2 |
-| Posición, asignación y periodo musical | 3 |
-| Piezas patrimoniales | 2 |
-| `source_links` | 25 |
-| **Total** | **68** |
+| Imágenes titulares | 2 |
+| Agentes | 4 |
+| Pasos | 2 |
+| Relaciones Hermandad–Imagen y Hermandad–Paso | 4 |
+| Autorías y relaciones Imagen–Paso | 4 |
+| Hábitos | 2 |
+| Patrimonio e intervenciones | 12 |
+| Cultos | 9 |
+| Salidas y participantes | 7 |
+| `source_links` | 37 |
+| **Total** | **114** |
 
-Se reutilizaron la Hermandad, la capilla canónica, el Paso procesional, la Banda Municipal de Música de La Puebla del Río, Luis Álvarez Duarte y las cuatro imágenes creadas en el primer envío. No se duplicaron esos nodos.
+- Carga, Staging y Preflight global: 114/114 válidas, 0 incidencias.
+- Plan efectivo: 106 insert · 5 update · 3 reuse.
+- Apply: 114/114 procesadas, 0 inválidas, 0 fallos.
 
-Resultado del circuito completo:
+Las tres reutilizaciones fueron las Fuentes oficiales de historia y música y la Fuente del Consejo. Los cinco UPDATE afectaron al perfil de El Museo, al Paso de palio y su relación, y a la Salida histórica de 2014; no duplicaron filas existentes.
 
-- Carga: 68/68 válidas y 0 colisiones;
-- Staging y Preflight global: 68/68, 0 errores;
-- revisión manual: referencias y dependencias resueltas;
-- plan efectivo: 56 insert · 12 update · 0 errores;
-- Apply: 68/68 aplicadas, 0 fallos.
+### Remates editoriales
 
-## Incidencias y correcciones genéricas
+- `20010f90-60d5-474f-aa1d-80aa8daaa546` · 8/8 UPDATE, 0 fallos: ajustó los vínculos de Fuentes relacionales al contrato genérico `entity_id + scope` que consume el Panel.
+- `ec97160a-e0e5-44ec-b6bf-67501dd64fb3` · 2/2, 0 fallos: 1 insert y 1 update para publicar la relación del Vía Crucis del Consejo de 2014 y enlazar su Fuente oficial.
 
-- [#705](https://github.com/nachosanchezperez-ux/base-cofrade/pull/705) valida `image_authorships.authorship_type` contra el `CHECK` real. No contiene excepciones para Mercedes. Un fixture con `restoration` queda en `0/1`, informa `INVALID_VALUE`, termina en `Preflight bloqueado` y registra 0 aplicados. El lote diagnóstico `9a332188-b5c3-4307-80b2-9b2582ed93e0` quedó cancelado después de la prueba.
-- [#706](https://github.com/nachosanchezperez-ux/base-cofrade/pull/706) evita mostrar `outings.reason` bajo el rótulo «Recorrido» cuando no existe `route_summary`. La corrección es común a todas las Salidas y conserva la ausencia documental legítima.
+Resultado acumulado: **124/124 operaciones procesadas**, con **107 insert, 14 update y 3 reuse**; ningún error determinista alcanzó Apply.
 
-No apareció una nueva columna inválida, referencia no resuelta, ambigüedad, conflicto, permiso, `on_conflict` incorrecto o dependencia rota en el lote de cierre. Ningún error determinista de esa segunda ejecución alcanzó Apply.
+La incidencia de visibilidad de ocho Fuentes fue una discordancia editorial del lote con el contrato de presentación ya vigente. Se corrigió en el propio lote. No reveló una carencia de validación, resolución, planificación, dependencias, permisos o Apply y no justificó un parche sistémico.
 
-## Certificación de Mercedes de la Puerta Real
+## Certificación de El Museo
 
 La ficha pasa aproximadamente de **43 % a 92 %** de completitud editorial útil:
 
-- identidad, denominación oficial, sede canónica y canales publicados;
-- 4 titulares publicados, con autorías o anonimía explícita y 2 intervenciones de la Virgen;
-- Paso procesional publicado y relacionado con la Virgen;
-- Banda Municipal de Música de La Puebla del Río vigente tras el Paso;
-- 6 Cultos recurrentes y 6 ocurrencias de 2026 publicadas;
-- Salida ordinaria del 26 de septiembre de 2026 a las 19:00, publicada y visible en Procesiones de Gloria;
-- participantes resueltos como Imagen procesional y Paso procesional, sin confusión con música litúrgica;
-- manto blanco de salida de 2012 y corona de oro de 1972 publicados;
-- 15 Fuentes visibles en la ficha pública;
-- 0 duplicados activos de titulares o autorías, 0 autorías con valores inválidos, 0 `source_links` huérfanos y 0 participantes huérfanos;
-- título SEO, canonical y `robots=index, follow` correctos; la Salida está presente en el directorio y en el sitemap.
+- identidad, denominación, historia, sede y web oficial;
+- 2 titulares publicados con autoría, cronología y material documentados;
+- 2 Pasos publicados y relacionados con sus imágenes;
+- acompañamiento vigente de la Oliva de Salteras correctamente mostrado como música procesional del palio;
+- 2 hábitos penitenciales;
+- 9 Cultos recurrentes;
+- Estación de Penitencia de 2026 publicada como celebrada, con horario e itinerario documentados;
+- Vía Crucis del Consejo de 2014 publicado como salida histórica e integrado en el módulo institucional;
+- 6 piezas patrimoniales y 6 intervenciones asociadas;
+- 15 Fuentes visibles en la ficha pública y 38 vínculos de Fuente del lote;
+- 0 relaciones de El Museo en borrador, 0 duplicados activos de titulares, Pasos o Salidas y 0 enlaces huérfanos.
 
-Huecos legítimos o pendientes de verificación, no datos inventados:
+Huecos legítimos o pendientes de verificar:
 
-- itinerario exacto de 2026: no se publicó por falta de una fuente oficial inequívoca;
-- fotografías de titulares y patrimonio: no se incorporaron sin licencia reutilizable comprobada;
-- vestidor actual: pendiente de una fuente oficial concluyente;
-- catálogo musical y patrimonial exhaustivo: existe documentación de referencia, pero no se fuerza una exhaustividad artificial; las dedicatorias musicales estructuradas no son escribibles por el rol actual de HC-016 y no se cambió RLS;
-- hábito penitencial: no aplicable a esta Hermandad de Gloria.
+- escudo y fotografías con derechos de reutilización comprobados;
+- canales sociales distintos de la web oficial;
+- capataces, vestidores u otros oficios actuales sin Fuente oficial inequívoca;
+- catálogo musical y patrimonial exhaustivo.
 
-## QA y producción
+No se transformaron anuncios en hechos celebrados ni se inventaron continuidades, fechas, autorías o responsables.
 
-- pruebas específicas del importador, autorías y Salidas: verdes;
-- suite completa: 650/650;
+## QA
+
+- auditoría final de Supabase: 2 titulares, 2 Pasos, 2 hábitos, 6 piezas, 9 Cultos y 2 Salidas publicados; relación institucional de 2014 publicada y con Fuente;
+- 38 `source_links` del lote, 0 huérfanos, 0 duplicados activos y 0 relaciones relacionadas en borrador;
+- Panel: titulares, Pasos, hábitos, Cultos, patrimonio, Salidas y distintivos de Fuentes comprobados;
+- ficha pública: canonical correcto, `index, follow`, Open Graph correcto, tres bloques JSON-LD, sin imágenes rotas, desbordamiento horizontal ni errores de aplicación;
+- desktop comprobado directamente; los contratos responsive de tablet y móvil quedaron cubiertos por la suite, ya que el navegador remoto no expuso redimensionado de viewport;
+- suite completa actual: **659/659**;
 - `next build`: correcto con Next.js 16.3.0, TypeScript válido y 13 páginas estáticas;
-- `git diff --check`: limpio;
-- PR #705: CI verde, preview `READY`, squash merge `ba318b6aefcd0d3a1b691697139a9415b5453faa`;
-- PR #706: CI verde, preview `READY`, squash merge `2ab67af601f6ec3314e0ca07f610535446088e41`;
-- producción #706: `READY` y SHA idéntico a `main`;
-- ficha pública, Panel, directorio de Gloria y detalle de la Salida comprobados después del despliegue.
+- `git diff --check`: limpio.
 
-Durante el build de #706, la generación del sitemap registró un `fetch failed` transitorio al consultar Supabase y omitió las fichas individuales de entidades en esa versión estática; no fue un error de datos de Mercedes. La indexabilidad directa de su ficha es correcta y el siguiente despliegue debe volver a generar el sitemap. Si la omisión global persistiera, será una regresión técnica separada y no se ocultará como completitud editorial.
+## Actualidad de `main` y producción
+
+Después del corte inicial `08135180…` se integraron cambios ajenos al frente de El Museo hasta `9022aaa1…`. El cierre los conserva. Producción está `READY` en `dpl_GG5TAiW4Cb3iGJXypUdtm9jmrSQk` y coincide con ese SHA antes de esta actualización documental.
+
+La siguiente sincronización documental debe fusionarse mediante una única PR acotada, desplegarse y terminar con producción en el mismo SHA final de `main` y 0 PR abiertas.
 
 ## #492 · aislada
 
-[#492](https://github.com/nachosanchezperez-ux/base-cofrade/issues/492) sigue **abierta y aislada**. No bloquea contenido ni relaciones soportadas por el modelo actual. Sí bloquea nuevo DDL, tablas, migraciones estructurales y cambios RLS hasta reconciliar Supabase Preview Branches.
+[#492](https://github.com/nachosanchezperez-ux/base-cofrade/issues/492) sigue abierta y aislada. No bloquea DML editorial ni relaciones soportadas por el modelo vigente. Sí mantiene fuera de alcance nuevo DDL, tablas, migraciones estructurales y cambios RLS.
 
 No existe otro bloqueo operativo.
 
 ## Auditor
 
 1. **¿San Pablo continúa cerrado?** Sí.
-2. **¿Mercedes de la Puerta Real está cerrada?** Sí, con los huecos legítimos expresos anteriores.
-3. **¿Queda alguna fila de los dos lotes en estado indeterminado?** No: 35 se aplicaron en el núcleo, 2 se descartaron y reformularon con causa, y 68 se aplicaron en el cierre.
-4. **¿Puede repetirse el fallo determinista de autorías por el mismo camino?** No: Carga y Preflight lo bloquean antes de Apply.
-5. **¿HC-016 ha demostrado reutilización en un segundo contexto real?** Sí: el cierre 68/68 se ejecutó íntegramente con HC-016, reutilizando nodos y sin carga manual masiva.
-6. **¿Existe algún bloqueo aparte de #492?** No.
-7. **¿`main`, producción y estado canónico coinciden?** Sí al cierre; esta fotografía documenta el HEAD funcional verificado.
-8. **¿Hay 0 PR abiertas?** Sí.
+2. **¿Mercedes de la Puerta Real continúa cerrada?** Sí.
+3. **¿El Museo está cerrado?** Sí, con los huecos legítimos expresos.
+4. **¿Queda alguna fila del lote en estado indeterminado?** No: 124/124 están aplicadas o reutilizadas con resultado conocido.
+5. **¿Algún error determinista nuevo alcanzó Apply?** No.
+6. **¿HC-016 es reutilizable como método editorial?** Sí; El Museo repite el circuito sin incorporación manual masiva ni cambios de arquitectura.
+7. **¿Existe algún bloqueo aparte de #492?** No.
+8. **¿`main`, producción y estado canónico coinciden?** Sí para el HEAD funcional auditado; el commit que contenga esta fotografía será el nuevo HEAD canónico.
+9. **¿Había 0 PR abiertas antes de la sincronización?** Sí.
 
 ## Siguiente movimiento autorizado
 
-HC-016 pasa de importador certificado a método editorial operativo. El siguiente movimiento permitido es recalcular otra vez la deuda documental desde el grafo real y seleccionar **una** única Hermandad. No se autoriza ampliar arquitectura ni abrir varias fichas en paralelo.
+Cerrar la PR documental, verificar producción y volver a 0 PR abiertas. Después podrá recalcularse la deuda y elegirse una única Hermandad; no se abre una tercera ficha durante este frente.
