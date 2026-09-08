@@ -61,14 +61,7 @@ function activityLabel(type = '') {
   return publicText(type) || 'Salida habitual'
 }
 
-function activityMoment(item = {}) {
-  return publicText(item.diaLiturgico)
-    || publicText(item.momento)
-    || publicText(item.fechaDetalle)
-    || ''
-}
-
-function annualActivities(brotherhood) {
+function annualActivities(brotherhood, recurringSeries = []) {
   const mainDay = publicText(brotherhood.diaSalida)
   const types = brotherhood.tipos || []
   const main = mainDay
@@ -79,12 +72,11 @@ function annualActivities(brotherhood) {
       }]
     : []
 
-  const recurring = (brotherhood.salidas || [])
-    .filter((item) => item.estado === 'recurring')
+  const recurring = recurringSeries
     .map((item) => ({
       id: item.id,
-      label: activityLabel(item.tipo),
-      moment: activityMoment(item),
+      label: activityLabel(item.outing_type),
+      moment: [publicText(item.date_rule), publicText(item.time_text)].filter(Boolean).join(' · '),
     }))
     .filter((item) => item.moment)
 
@@ -98,13 +90,13 @@ function annualActivities(brotherhood) {
 }
 
 async function loadRelationalFacts(brotherhood) {
-  if (!brotherhood?.id) return { head: null, dressers: [], membership: null }
+  if (!brotherhood?.id) return { head: null, dressers: [], membership: null, recurringSeries: [] }
 
   const supabase = createClient()
   const imageIds = (brotherhood.imagenes || []).map((item) => item.id).filter(Boolean)
   const currentYear = new Date().getUTCFullYear()
 
-  const [headResult, dresserResult, membershipResult] = await Promise.all([
+  const [headResult, dresserResult, membershipResult, recurringSeriesResult] = await Promise.all([
     supabase
       .from('entity_relations')
       .select('id, source_entity_id, relation_type, date_from, date_from_text, date_to, date_to_text')
@@ -128,11 +120,18 @@ async function loadRelationalFacts(brotherhood) {
       .order('year', { ascending: false })
       .limit(1)
       .maybeSingle(),
+    supabase
+      .from('outing_series')
+      .select('id, outing_type, date_rule, time_text, display_order')
+      .eq('brotherhood_entity_id', brotherhood.id)
+      .eq('status', 'published')
+      .order('display_order'),
   ])
 
   if (headResult.error) throw new Error(`No se pudo consultar el gobierno actual: ${headResult.error.message}`)
   if (dresserResult.error) throw new Error(`No se pudieron consultar los vestidores: ${dresserResult.error.message}`)
   if (membershipResult.error) throw new Error(`No se pudo consultar el número de hermanos: ${membershipResult.error.message}`)
+  if (recurringSeriesResult.error) throw new Error(`No se pudo consultar la actividad anual habitual: ${recurringSeriesResult.error.message}`)
 
   const headRelations = (headResult.data || []).filter((item) => isCurrentRelation(item, currentYear))
   const dresserRelations = (dresserResult.data || []).filter((item) => isCurrentRelation(item, currentYear))
@@ -155,7 +154,7 @@ async function loadRelationalFacts(brotherhood) {
   const agentById = new Map((agentsResult.data || []).map((agent) => [agent.id, agent]))
   const imageById = new Map((brotherhood.imagenes || []).map((image) => [image.id, image]))
   const headRelation = [...headRelations]
-    .sort((first, second) => latestYear(second.date_from_text || second.date_from) - latestYear(first.date_from_text || first.date_from))
+    .sort((first, second) => (latestYear(second.date_from_text || second.date_from) || 0) - (latestYear(first.date_from_text || first.date_from) || 0))
     .find((item) => agentById.has(item.source_entity_id))
   const headAgent = headRelation ? agentById.get(headRelation.source_entity_id) : null
 
@@ -189,11 +188,12 @@ async function loadRelationalFacts(brotherhood) {
           year: membershipResult.data.year,
         }
       : null,
+    recurringSeries: recurringSeriesResult.data || [],
   }
 }
 
 export default async function BrotherhoodQuickFacts({ brotherhood }) {
-  let relational = { head: null, dressers: [], membership: null }
+  let relational = { head: null, dressers: [], membership: null, recurringSeries: [] }
 
   try {
     relational = await loadRelationalFacts(brotherhood)
@@ -204,7 +204,7 @@ export default async function BrotherhoodQuickFacts({ brotherhood }) {
     })
   }
 
-  const activities = annualActivities(brotherhood)
+  const activities = annualActivities(brotherhood, relational.recurringSeries)
   const facts = [
     publicText(brotherhood.fundacion) ? { label: 'Fundación', value: publicText(brotherhood.fundacion) } : null,
     brotherhood.imagenes?.length ? { label: 'Titulares', value: String(brotherhood.imagenes.length) } : null,
