@@ -57,3 +57,29 @@ test('acepta los campos reales usados por entities, brotherhoods y bands', () =>
 
   for (const input of inputs) assert.deepEqual(validateBulkImportRecord(input).errors, [])
 })
+
+test('bloquea valores ajenos al CHECK de image_authorships antes de Apply', () => {
+  const invalid = validateBulkImportRecord({
+    table: 'image_authorships',
+    operation: 'insert',
+    data: {
+      image_entity_id: '00000000-0000-0000-0000-000000000001',
+      agent_entity_id: '00000000-0000-0000-0000-000000000002',
+      authorship_type: 'restoration',
+    },
+  })
+
+  assert.ok(invalid.errors.some((error) => error.startsWith('INVALID_VALUE: image_authorships.authorship_type')))
+
+  const valid = validateBulkImportRecord({
+    table: 'image_authorships',
+    operation: 'insert',
+    data: {
+      image_entity_id: '00000000-0000-0000-0000-000000000001',
+      agent_entity_id: '00000000-0000-0000-0000-000000000002',
+      authorship_type: 'author',
+    },
+  })
+
+  assert.deepEqual(valid.errors, [])
+})
