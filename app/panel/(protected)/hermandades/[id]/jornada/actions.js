@@ -7,6 +7,7 @@ import { createClient } from '@/lib/supabase/server'
 
 const UUID_PATTERN = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i
 const STATUSES = new Set(['draft', 'review', 'published', 'archived'])
+const MEMBERS_COUNT_KINDS = new Set(['exact', 'approximate', 'minimum', 'maximum'])
 
 function value(formData, name) { return String(formData.get(name) || '').trim() }
 function nullable(formData, name) { return value(formData, name) || null }
@@ -43,6 +44,12 @@ function optionalTime(formData, name) {
 function status(formData) {
   const candidate = value(formData, 'status') || 'draft'
   if (!STATUSES.has(candidate)) throw new Error('Estado editorial no válido.')
+  return candidate
+}
+function membersCountKind(formData, membersCount) {
+  if (membersCount === null) return null
+  const candidate = value(formData, 'members_count_kind') || 'exact'
+  if (!MEMBERS_COUNT_KINDS.has(candidate)) throw new Error('Tipo de cifra de hermanos no válido.')
   return candidate
 }
 function assertRow(result, label) {
@@ -90,13 +97,20 @@ export async function saveBrotherhoodProcessionStatsAction(formData) {
   const brotherhood = await requireBrotherhood(supabase, brotherhoodId)
   const year = integer(formData, 'year', { min: 1900, max: 2100, required: true })
   const sourceId = uuid(formData, 'source_id', true)
-  const source = await requireSource(supabase, sourceId)
+  const membersSourceId = uuid(formData, 'members_source_id', true)
+  const [source, membersSource] = await Promise.all([
+    requireSource(supabase, sourceId),
+    requireSource(supabase, membersSourceId),
+  ])
   const brotherhoodsInDay = integer(formData, 'brotherhoods_in_day', { min: 1 })
   const positionByNazarenos = integer(formData, 'position_by_nazarenos', { min: 1 })
   const positionByProcession = integer(formData, 'position_by_procession', { min: 1 })
+  const membersCount = integer(formData, 'members_count', { min: 0 })
+  const membershipKind = membersCountKind(formData, membersCount)
 
   if (brotherhoodsInDay && positionByNazarenos && positionByNazarenos > brotherhoodsInDay) throw new Error('La posición por nazarenos no puede superar el número de hermandades de la jornada.')
   if (brotherhoodsInDay && positionByProcession && positionByProcession > brotherhoodsInDay) throw new Error('La posición por cortejo no puede superar el número de hermandades de la jornada.')
+  if (membersCount === null && membersSourceId) throw new Error('No puede asignarse una Fuente de hermanos sin indicar la cifra.')
 
   const duplicate = await supabase
     .from('brotherhood_procession_stats')
@@ -121,6 +135,9 @@ export async function saveBrotherhoodProcessionStatsAction(formData) {
     monaguillos_count: integer(formData, 'monaguillos_count', { min: 0 }),
     musical_accompaniment_count: integer(formData, 'musical_accompaniment_count', { min: 0 }),
     total_procession_count: integer(formData, 'total_procession_count', { min: 0 }),
+    members_count: membersCount,
+    members_count_kind: membershipKind,
+    members_source_id: membersCount === null ? null : membersSourceId,
     position_by_nazarenos: positionByNazarenos,
     position_by_procession: positionByProcession,
     brotherhoods_in_day: brotherhoodsInDay,
@@ -144,7 +161,11 @@ export async function saveBrotherhoodProcessionStatsAction(formData) {
     object_id: saved.id,
     entity_id: brotherhoodId,
     summary: `${statsId ? 'Datos de jornada actualizados' : 'Datos de jornada creados'}: ${brotherhood.name} · ${year}`,
-    changed_fields: { ...payload, source_name: source?.name || null },
+    changed_fields: {
+      ...payload,
+      source_name: source?.name || null,
+      members_source_name: membersSource?.name || null,
+    },
   })
   await refresh(supabase, brotherhoodId)
   redirectSaved(brotherhoodId, statsId ? 'updated' : 'created')
