@@ -2,9 +2,9 @@
 
 **Corte operativo:** 8 de septiembre de 2026 · cierre del primer lote editorial real de HC-016
 
-**HEAD real de producto auditado:** `2a0fccb3de22da80c7310566153a016f62f5a9f6` · [#701](https://github.com/nachosanchezperez-ux/base-cofrade/pull/701) fusionada
+**HEAD real de producto auditado:** `d4e2184bebc72481e9097ea621bde600859b0e99` · [#703](https://github.com/nachosanchezperez-ux/base-cofrade/pull/703) fusionada
 
-**Producción auditada:** `dpl_Gh8KuMr8tWLrtvDqx7uZHsWtkKrC` · `READY` · mismo SHA que el HEAD de producto auditado
+**Producción auditada:** `dpl_J7KR9xCVahNfwyx3YYZ3EUwLtLHD` · `READY` · mismo SHA que el HEAD de producto auditado
 
 **PR abiertas al cierre:** **0**
 
@@ -12,11 +12,13 @@
 
 **Frente editorial de Hermandad:** San Pablo cerrado; no se ha abierto otra Hermandad
 
-> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El HEAD canónico posterior es el commit de `main` que contiene esta fotografía; `2a0fccb3…` identifica el producto que se auditó antes de su sincronización documental.
+> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El HEAD canónico posterior es el commit de `main` que contiene esta fotografía; `d4e2184b…` identifica el producto que se auditó antes de su sincronización documental.
 
 ## Dónde estamos ahora
 
 San Pablo está certificado como primer lote editorial real de HC-016. La ficha pública y el Panel reflejan identidad, sede, titulares, Pasos, hábito, música, Salidas, Cultos, relaciones y Fuentes documentadas. No hay filas del lote en estado indeterminado, duplicados activos ni relaciones huérfanas detectadas.
+
+Después de la certificación de San Pablo, [#703](https://github.com/nachosanchezperez-ux/base-cofrade/pull/703) se fusionó de forma concurrente. Ese frente convierte «De un vistazo» en un bloque relacional anual y amplía `brotherhood_procession_stats` con la cifra de hermanos y su Fuente. No pertenece a HC-016 ni reabre su lote. Su CI terminó correctamente, producción está `READY` en `d4e2184b…` y el esquema real contiene las tres columnas, los dos `CHECK` y la clave foránea versionados en `20260908083000_add_brotherhood_membership_stats.sql`. El historial remoto de migraciones no conserva ese mismo identificador de archivo; esta divergencia permanece contenida en la reconciliación pendiente de #492 y no justifica repetir DDL sobre producción.
 
 HC-016 mantiene el circuito:
 
@@ -57,7 +59,7 @@ No queda operación pendiente del lote original. Las ausencias de escudo, ilustr
 - [#698](https://github.com/nachosanchezperez-ux/base-cofrade/pull/698): admite únicamente PK o restricciones UNIQUE reales en `on_conflict`; `outings.slug` queda bloqueado antes de Apply;
 - [#699](https://github.com/nachosanchezperez-ux/base-cofrade/pull/699): extiende la paginación estable a los editores relacionales de Fuentes.
 
-No hay excepciones específicas para San Pablo ni cambios de DDL, tablas, migraciones estructurales o RLS.
+No hay excepciones específicas para San Pablo ni cambios de DDL, tablas, migraciones estructurales o RLS dentro de HC-016. El DDL posterior de #703 pertenece a un frente concurrente ya fusionado y queda reconciliado arriba sin atribuirlo a este lote.
 
 ## Certificación de San Pablo
 
@@ -86,7 +88,7 @@ Regresión del HEAD auditado:
 
 ## #492 · aislada
 
-[#492](https://github.com/nachosanchezperez-ux/base-cofrade/issues/492) sigue **abierta y aislada**. No bloquea contenido, código, validación ni Panel sobre el modelo actual. Sí bloquea nuevo DDL, tablas, migraciones estructurales y cambios RLS hasta reconciliar Supabase Preview Branches.
+[#492](https://github.com/nachosanchezperez-ux/base-cofrade/issues/492) sigue **abierta y aislada**. No bloquea contenido, código, validación ni Panel sobre el modelo actual. Sí bloquea nuevo DDL, tablas, migraciones estructurales y cambios RLS hasta reconciliar Supabase Preview Branches. La aplicación directa y posterior versionado del DDL de #703 no resuelven esa deuda ni autorizan nuevas ampliaciones de esquema.
 
 No existe otro bloqueo operativo.
 
