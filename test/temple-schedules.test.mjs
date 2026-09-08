@@ -33,7 +33,7 @@ test('los cuatro horarios quedan documentados sin abrir esquema nuevo', async ()
   assert.doesNotMatch(migration, /update\s+public\.entities[\s\S]*?set[\s\S]*?status\s*=/i)
 })
 
-test('la ficha presenta los horarios con lectura editorial y sin pastillas', async () => {
+test('la ficha presenta sede y horarios dentro del nuevo De un vistazo', async () => {
   const [overview, scheduleStyles, overviewStyles, balanceStyles] = await Promise.all([
     source('components/BrotherhoodOverviewV2.js'),
     source('components/BrotherhoodOverviewSchedule.module.css'),
@@ -41,8 +41,10 @@ test('la ficha presenta los horarios con lectura editorial y sin pastillas', asy
     source('components/BrotherhoodOverviewBalance.module.css'),
   ])
 
+  assert.match(overview, /De un vistazo/)
+  assert.match(overview, /La Hermandad durante el año/)
   assert.match(overview, /Horarios del templo/)
-  assert.match(overview, /Sede y visita/)
+  assert.match(overview, /Sede canónica/)
   assert.match(overview, /Sede canónica, horarios y visita/)
   assert.match(overview, /Sede · Horarios del templo/)
   assert.match(overview, /Planifica tu visita/)
@@ -57,7 +59,6 @@ test('la ficha presenta los horarios con lectura editorial y sin pastillas', asy
   assert.match(overview, /scheduleStyles\.time/)
   assert.match(overview, /BrotherhoodOverviewBalance\.module\.css/)
   assert.match(overview, /balanceStyles\.balancedGrid/)
-  assert.match(overview, /balanceStyles\.identityFactsBalanced/)
   assert.match(overview, /balanceStyles\.seatActionsBalanced/)
   assert.doesNotMatch(overview, /styles\.timeChip|scheduleStyles\.timeChip/)
   assert.doesNotMatch(overview, /styles\.closedChip|scheduleStyles\.closedChip/)
@@ -111,11 +112,8 @@ test('misas conserva la temporada dentro del nombre del bloque', async () => {
   const scheduleLineParts = runInNewContext(`(${overview.slice(start, end)})`)
 
   assert.deepEqual(
-    JSON.parse(JSON.stringify(scheduleLineParts('Misas · invierno · L–S: 09:00 · 12:00 · 18:30 · 20:00'))),
-    {
-      label: 'Misas · invierno',
-      value: 'L–S: 09:00 · 12:00 · 18:30 · 20:00',
-    },
+    JSON.parse(JSON.stringify(scheduleLineParts('Misas · Invierno · Lunes a sábado: 19:30'))),
+    { label: 'Misas · Invierno', value: 'Lunes a sábado: 19:30' },
   )
 })
 
@@ -126,18 +124,7 @@ test('el horario elimina etiquetas repetidas sin perder días ni horas', async (
   const scheduleLineParts = runInNewContext(`(${overview.slice(start, end)})`)
 
   assert.deepEqual(
-    JSON.parse(JSON.stringify(scheduleLineParts('Apertura · Apertura: L–S: 08:00–13:00'))),
-    {
-      label: 'Apertura',
-      value: 'L–S: 08:00–13:00',
-    },
-  )
-
-  assert.deepEqual(
-    JSON.parse(JSON.stringify(scheduleLineParts('Misas · Misas: D: 10:00 · 12:00'))),
-    {
-      label: 'Misas',
-      value: 'D: 10:00 · 12:00',
-    },
+    JSON.parse(JSON.stringify(scheduleLineParts('Apertura · Apertura: Lunes a viernes, 10:00–13:00'))),
+    { label: 'Apertura', value: 'Lunes a viernes, 10:00–13:00' },
   )
 })
