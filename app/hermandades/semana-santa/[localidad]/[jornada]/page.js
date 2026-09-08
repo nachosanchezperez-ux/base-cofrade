@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import DirectoryRoutePage from '@/components/DirectoryRoutePage'
 import {
+  directoryPeriod,
   directorySlug,
   hasDirectoryType,
   labelFromSlug,
@@ -32,7 +33,7 @@ export default async function HolyWeekLocalityDayPage({ params }) {
   const items = hermandades.filter((item) => (
     hasDirectoryType(item, 'semana-santa')
     && localitySlug(item) === localidad
-    && directorySlug(item.diaSalida) === jornada
+    && directorySlug(directoryPeriod(item, 'semana-santa')) === jornada
   ))
 
   if (!items.length) notFound()
