@@ -2,8 +2,8 @@
 
 ## Alcance
 
-La reconciliación parte de `main = 4816a985bc5cc5316a5562a690` y no modifica
-datos de producción. Su objetivo es que una Preview Branch sin copia de datos
+La reconciliación parte de `main = 4816a985bc5cc5316a5562a690f7e5e173b3ec0b` y no modifica
+contenido editorial de producción. Su objetivo es que una Preview Branch sin copia de datos
 pueda ejecutar la cadena completa, cargar el seed mínimo y quedar operativa
 antes de cualquier nuevo cambio de esquema.
 
@@ -85,3 +85,54 @@ remotos ni a reejecutar DML.
 - producción sin mutación editorial y con la evolución estructural registrada;
 - `main`, producción y tablero reconciliados;
 - #492 cerrada y 0 PR abiertas.
+
+## Certificación funcional
+
+La PR [#730](https://github.com/nachosanchezperez-ux/base-cofrade/pull/730)
+quedó fusionada en `c48096ebfdbe907cb8efde30d285d9b77f6c0ac1`, después de
+incorporar los HEAD concurrentes de #729 y #731. Antes del merge se verificó:
+
+- 90/90 SQL editoriales archivados idénticos byte a byte a sus archivos de
+  origen;
+- regresión específica: 66/66;
+- suite completa vigente: 667/667;
+- `next build` correcto;
+- `git diff --check` limpio;
+- CI y preview de Vercel verdes.
+
+La Supabase Preview Branch de #730 (`tsindhyuxinpysbpvdhb`) nació sin copia de
+producción y terminó en `FUNCTIONS_DEPLOYED`. Aplicó exactamente las cuatro
+migraciones activas y después cargó el seed: 1 municipio, 2 entidades y 2
+Bandas de QA. Conservó 0 aportaciones y 0 `source_links`, expuso las tres
+columnas y los dos constraints de estadísticas de hermanos y no añadió avisos
+de seguridad distintos de los ya presentes en producción.
+
+## Reconciliación productiva
+
+Antes de reparar el registro, producción contenía 87 marcas: las tres primeras
+migraciones estructurales y 84 aplicaciones editoriales posteriores. El corte
+se validó con el digest `fbb4767625778d7160740f1999c84cab` antes de modificar
+la tabla de seguimiento.
+
+Siguiendo el contrato de `migration repair`, la operación se limitó a
+`supabase_migrations.schema_migrations`: retiró las 84 marcas que ya no forman
+parte de la cadena ejecutable y marcó como aplicada
+`20260908083000_add_brotherhood_membership_stats`, cuyo esquema ya estaba
+materializado. No aplicó ni revirtió SQL editorial o estructural.
+
+El postflight remoto confirma:
+
+- historial exacto de 4/4 versiones activas;
+- 3 columnas y 2 constraints de estadísticas de hermanos;
+- 2.258 entidades, 1.694 Fuentes, 4.810 `source_links`, 75 Bandas, 132
+  Hermandades y 21 filas de estadísticas procesionales;
+- 0 `source_links` huérfanos;
+- eliminación de la preview fallida obsoleta de #661; la rama no contenía
+  datos únicos y puede recrearse desde Git si fuese necesario.
+
+La producción web de `c48096eb…` quedó `READY` en
+`dpl_DZNDHudTpvmCoqc1DCAmkpxEmC4L`: `hilocofrade.es` respondió HTTP 200 con
+canonical, `index, follow`, Open Graph, Twitter y JSON-LD, sin errores de
+runtime en el corte. Con esta certificación, el tablero vuelve a reflejar a
+GitHub y #492 deja de bloquear los cambios estructurales futuros, que seguirán
+obligados a pasar por una preview limpia.
