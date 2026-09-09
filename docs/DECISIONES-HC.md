@@ -2,9 +2,9 @@
 
 > Índice vivo de decisiones de producto, arquitectura, datos y diseño de Hilo Cofrade. Antes de asignar un identificador nuevo deben consultarse este registro, `docs/HILO-ORQUESTADOR.md`, `docs/ESTADO-PROYECTO.md` y el estado real de GitHub, Vercel y Supabase.
 
-- Revisión canónica: **24 de agosto de 2026**.
-- Última decisión registrada: **HC-017**.
-- Próximo identificador disponible: **HC-018**, todavía **no asignado ni reservado**.
+- Revisión canónica: **9 de septiembre de 2026**.
+- Última decisión registrada: **HC-018**.
+- Próximo identificador disponible: **HC-019**, todavía **no asignado ni reservado**.
 - Si el registro contradice al producto real, primero se investiga y después se corrige el documento.
 
 ## Estados
@@ -36,6 +36,7 @@
 | **HC-015** | Frontera Front público ↔ Panel editorial | **CERRADA** | [`HC-015-frontera-publico-panel.md`](./HC-015-frontera-publico-panel.md). |
 | **HC-016** | Importación masiva gobernada | **CERRADA** | [`HC-016-importacion-masiva-gobernada.md`](./HC-016-importacion-masiva-gobernada.md). |
 | **HC-017** | Salud del grafo como cola editorial continua | **CERRADA** | [`HC-017-salud-grafo-cola-editorial.md`](./HC-017-salud-grafo-cola-editorial.md). |
+| **HC-018** | Aportaciones públicas seguras | **IMPLEMENTADA EN CÓDIGO · ACTIVACIÓN BLOQUEADA** | [`HC-018-aportaciones-publicas-seguras.md`](./HC-018-aportaciones-publicas-seguras.md). |
 
 ## Decisiones que no se duplican
 
@@ -47,6 +48,7 @@
 - El patrimonio musical relacional permanece en **HC-013**.
 - La prioridad de logotipos se gobierna mediante **HC-012**.
 - Fotografías, escudos y roles visuales se rigen por HC-014 y los contratos de media existentes, no por excepciones por entidad.
+- **HC-018** no autoriza la apertura pública de `/colabora`: su activación sigue sujeta a las puertas de seguridad, privacidad, antiabuso y reconciliación estructural de su documento canónico.
 
 ## Normas sin ID propio
 
