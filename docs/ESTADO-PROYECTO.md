@@ -47,7 +47,8 @@ No debe mantenerse en la cola lo que ya está integrado y desplegado:
 - SEO P3 de Hermandades;
 - acompañamientos históricos y cronología musical por Paso de Las Aguas;
 - incorporación de Pasión de Linares, Esencia y cinco Bandas de la Semana Santa de Sevilla (#708 y #709).
-- paleta negra, blanca y dorada de El Museo (#711);\n- paletas de cinco Hermandades a partir de hábitos documentados (#713).
+- paleta negra, blanca y dorada de El Museo (#711);
+- paletas de cinco Hermandades a partir de hábitos documentados (#713).
 
 ## Dónde estamos ahora
 
