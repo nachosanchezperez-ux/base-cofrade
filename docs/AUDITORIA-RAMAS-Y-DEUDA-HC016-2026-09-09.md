@@ -2,14 +2,22 @@
 
 ## Resultado
 
-El corte queda ordenado sin borrar ramas y sin confundir una referencia remota con trabajo activo:
+El corte queda ordenado, recuperable y sin confundir una referencia remota con trabajo activo:
 
-- `main` auditado: `58488e8632cbbb1d42557624c6d20f621d0d6d5b`;
-- producción: `READY` sobre el mismo SHA;
-- PR abiertas en el corte: **0**;
-- ramas remotas distintas de `main`: **813**;
-- manifiesto completo: [`BRANCH-HYGIENE-MANIFEST-2026-09-09.csv`](./BRANCH-HYGIENE-MANIFEST-2026-09-09.csv);
-- ramas eliminadas: **0**.
+- base estricta previa a la limpieza: `main = 46a9ab51dcf82b3b226b12b951debe2a7717de15`;
+- postflight operativo: `main = 6fac40ac4bbac718e40656e7bbcaf78de71f4233`;
+- producción: `READY` sobre el mismo SHA y sin errores de runtime en la última hora;
+- PR abiertas tras el postflight: **0**;
+- ramas remotas distintas de `main`: **817 antes → 63 después**;
+- ramas eliminadas: **754** en dos pasadas verificadas;
+- salvaguarda remota: `archive/pre-cleanup-20260909 @ 1261c3d1d7da023faa0449ed2cd2b69fef7fabe1`.
+
+Evidencia del corte:
+
+- estado anterior completo: [`BRANCH-HYGIENE-MANIFEST-PRE-CLEANUP-2026-09-09.csv`](./BRANCH-HYGIENE-MANIFEST-PRE-CLEANUP-2026-09-09.csv);
+- 753 referencias de la primera pasada: [`BRANCH-CLEANUP-CANDIDATES-2026-09-09.csv`](./BRANCH-CLEANUP-CANDIDATES-2026-09-09.csv);
+- revisión individual de las 303 ramas inicialmente no equivalentes: [`BRANCH-REVIEW-MANIFEST-2026-09-09.csv`](./BRANCH-REVIEW-MANIFEST-2026-09-09.csv);
+- manifiesto posterior vigente: [`BRANCH-HYGIENE-MANIFEST-2026-09-09.csv`](./BRANCH-HYGIENE-MANIFEST-2026-09-09.csv).
 
 El script reproducible es [`scripts/audit-remote-branches.mjs`](../scripts/audit-remote-branches.mjs). El manifiesto debe regenerarse contra `origin/main` y con el número real de PR abiertas antes de cualquier corte de limpieza:
 
@@ -18,18 +26,34 @@ HILO_BRANCH_AUDIT_OPEN_PRS=0 node scripts/audit-remote-branches.mjs \
   --output docs/BRANCH-HYGIENE-MANIFEST-2026-09-09.csv
 ```
 
-## Clasificación conservadora
+## Clasificación y decisión ejecutada
 
-| Clase | Ramas | Significado | Acción propuesta |
-|---|---:|---|---|
-| `merged_ancestor` | 293 | La punta es antecesora literal de `main` | Candidata a limpieza autorizada |
-| `patch_equivalent` | 219 | No es antecesora literal, pero sus commits no aportan parches únicos frente a `main` | Candidata a limpieza autorizada |
-| `review_required` | 301 | Conserva al menos un parche único según el análisis conservador | Revisión manual; no borrar |
-| **Total** | **813** | 775 puntas únicas | — |
+El refresco posterior a #719 encontró 817 ramas y evitó usar el corte anterior de 813 como orden de borrado.
 
-Existen 13 grupos de puntas duplicadas que agrupan 51 ramas. La columna `duplicate_tip_branches` los hace visibles sin asumir que puedan eliminarse.
+| Base verificable | Ramas | Decisión |
+|---|---:|---|
+| Antecesoras literales de `main` | 295 | 294 eliminadas; `release/activate-public-contributions-20260831` preservada por política |
+| Equivalentes por parche | 219 | 219 eliminadas |
+| Punta exacta de un PR fusionado | 240 | 240 eliminadas |
+| Trabajo único sin cierre inequívoco | 61 | Preservadas |
+| Salvaguarda `archive/*` | 1 | Preservada |
+| Rama del propio PR #720 | 1 | Eliminada en la segunda pasada, ya fusionada |
+| **Total anterior** | **817** | **754 eliminadas · 63 preservadas** |
 
-Las **512 candidatas** no son una orden de borrado. Antes de actuar hay que refrescar `main`, PR y protecciones, revisar las 301 ramas no equivalentes y ejecutar la limpieza únicamente en un corte expresamente autorizado y recuperable.
+La revisión cruzó 303 ramas con parches únicos contra los 718 PR reales del repositorio. De ellas, 240 coincidían exactamente con la punta de un PR fusionado; 29 coincidían con PR cerrados sin fusionar, 27 no tenían PR, cinco habían movido su punta después de un PR y una era el propio PR abierto. Solo el primer grupo entró en la limpieza masiva.
+
+La primera pasada fue 753/753 y la segunda 1/1. Ambas exigieron coincidencia exacta de SHA mediante `force-with-lease`, bloques atómicos, ausencia de PR ajenos abiertos y la existencia previa de la salvaguarda. La tarea efímera usada para ejecutarlas se retira en el cierre documental.
+
+## Recuperación
+
+La rama `archive/pre-cleanup-20260909` apunta a un commit de archivo con 457 padres: el `main` previo y 456 puntas únicas que no eran antecesoras. Las restantes puntas eliminadas siguen alcanzables desde `main`. Para restaurar una referencia concreta basta recuperar su SHA del manifiesto anterior y recrear la rama:
+
+```bash
+git fetch origin archive/pre-cleanup-20260909
+git branch <nombre-restaurado> <sha-del-manifiesto>
+```
+
+No se recupera nada de forma automática ni se reutiliza la rama de archivo como rama de trabajo.
 
 ## Recálculo de deuda editorial
 
@@ -64,7 +88,9 @@ La certificación del lote y del subgrafo queda en [`CERTIFICACION-EL-CACHORRO-H
 
 ## Límites del corte
 
-- no se ha eliminado ninguna rama;
+- se eliminaron únicamente las 754 referencias registradas y verificadas; las 61 ramas con trabajo único siguen intactas;
+- `release/activate-public-contributions-20260831` continúa preservada y no activa HC-018;
+- la salvaguarda `archive/pre-cleanup-20260909` no se considera trabajo activo;
 - no se ha abierto una quinta Hermandad;
 - no se ha creado DDL, tabla, migración estructural, política RLS, arquitectura o UX;
 - [#492](https://github.com/nachosanchezperez-ux/base-cofrade/issues/492) continúa como único bloqueo estructural y no bloquea este DML editorial.

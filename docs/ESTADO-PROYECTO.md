@@ -1,10 +1,10 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 9 de septiembre de 2026 · manifiesto de ramas y cuarto lote HC-016
+**Corte operativo:** 9 de septiembre de 2026 · limpieza recuperable de ramas y cuarto lote HC-016
 
-**HEAD base auditado:** `58488e8632cbbb1d42557624c6d20f621d0d6d5b`
+**HEAD operativo auditado:** `6fac40ac4bbac718e40656e7bbcaf78de71f4233`
 
-**Producción auditada:** `READY` · mismo SHA que el HEAD base auditado
+**Producción auditada:** `READY` · mismo SHA que el HEAD operativo auditado · 0 errores de runtime en la última hora
 
 **PR abiertas al iniciar esta reconciliación:** **0**
 
@@ -12,7 +12,7 @@
 
 **Frente ACTIVO:** ninguno; El Cachorro está cerrado y no existe otra ficha editorial abierta
 
-> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El HEAD canónico posterior será el commit de `main` que contenga este documento; `58488e86…` identifica la base verificada antes de este remate documental.
+> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El HEAD canónico posterior será el commit de `main` que contenga este documento; `6fac40ac…` identifica el postflight verificado antes de este remate documental.
 
 ## Tablero operativo único
 
@@ -22,7 +22,7 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 |---|---|---|---|
 | **CERRADO** | Orden operativo | Autoridad documental y cola única integradas en #712 | No reabrir salvo contradicción verificable |
 | **BLOQUEADO** | [#492 · Supabase Preview Branches](https://github.com/nachosanchezperez-ux/base-cofrade/issues/492) | Reconciliación estructural pendiente | Bloquea DDL, tablas, migraciones estructurales y RLS; no bloquea DML editorial |
-| **COLA 1** | Higiene de ramas | Manifiesto preparado: 813 ramas; 293 antecesoras, 219 equivalentes por parche y 301 a revisar; 0 borradas | Revisar las 301 no equivalentes y borrar solo en un corte posterior, autorizado y recuperable |
+| **CERRADO** | Higiene de ramas | 817 ramas revisadas; 754 eliminadas por SHA; 63 preservadas; salvaguarda remota verificada | No borrar las 61 ramas con trabajo único sin una revisión futura específica |
 | **CERRADO** | Cuarto lote HC-016 | El Cachorro: 90/90 aplicadas, 0 inválidas, 0 fallos; intento previo inválido cancelado con 0 escrituras | No reabrir para perseguir un 100 % artificial |
 | **COLA 2** | Siguiente frente editorial | No existe una quinta ficha abierta | Refrescar grafo y TOP 3 antes de elegir una sola Hermandad |
 | **COLA 3** | Cristo del Perdón · San José de la Rinconada | Ficha publicada; quedan por rematar la música vigente y el escudo solicitado | Tratar como remate acotado, no como ficha nueva ni como cambio estructural |
@@ -31,7 +31,7 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 
 ## Verdad de plataforma
 
-- GitHub: `main = 58488e86…`, 0 PR abiertas y una única issue abierta: #492.
+- GitHub: `main = 6fac40ac…`, 0 PR abiertas y una única issue abierta: #492.
 - Vercel: producción `READY` en el mismo SHA.
 - Supabase: la base productiva responde; el cuarto lote HC-016 está `completed` con 90/90 y su intento inválido previo está `cancelled` con 0 escrituras.
 - Git ↔ Supabase: el historial no se considerará reconciliado hasta cerrar #492. No se reescriben migraciones ya aplicadas ni se usa producción para resolver una limitación de previews.
@@ -51,7 +51,7 @@ No debe mantenerse en la cola lo que ya está integrado y desplegado:
 - paleta negra, blanca y dorada de El Museo (#711);
 - paletas de cinco Hermandades a partir de hábitos documentados (#713).
 - paletas de siete Hermandades de Sevilla (#715), de Milagrosa, Quinta Angustia y Montserrat (#716) y de otras seis Hermandades de Sevilla y provincia (#717);
-- manifiesto conservador de 813 ramas, sin borrados;
+- limpieza recuperable de ramas: 817 revisadas, 754 eliminadas y 63 preservadas;
 - cuarto lote real de HC-016: El Cachorro.
 
 ## Dónde estamos ahora
@@ -71,7 +71,9 @@ CARGA → STAGING → PREFLIGHT GLOBAL → REVISIÓN → APPLY → RESULTADOS
 
 ## Manifiesto de ramas y cuarto lote
 
-El manifiesto reproducible clasifica 813 ramas remotas contra `main = 58488e86…`: 293 son antecesoras literales, 219 son equivalentes por parche y 301 requieren revisión manual. Hay 775 puntas únicas y 13 grupos de puntas duplicadas. **No se ha borrado ninguna rama.** La evidencia completa está en [`AUDITORIA-RAMAS-Y-DEUDA-HC016-2026-09-09.md`](./AUDITORIA-RAMAS-Y-DEUDA-HC016-2026-09-09.md).
+El corte estricto posterior a #719 clasificó 817 ramas contra `main = 46a9ab51…`: 295 antecesoras, 219 equivalentes por parche y 303 con parches únicos. El cruce individual con 718 PR permitió reconocer 240 puntas exactas de PR fusionados sin convertir los PR cerrados sin fusionar en permiso de borrado.
+
+La limpieza eliminó 753 referencias en la primera pasada y la rama ya fusionada de #720 en la segunda. Quedan 63 ramas: 61 con trabajo único conservado, la rama de release de HC-018 y `archive/pre-cleanup-20260909`. La salvaguarda apunta a `1261c3d1…` y conserva todas las puntas que no siguen alcanzables desde `main`. La evidencia completa está en [`AUDITORIA-RAMAS-Y-DEUDA-HC016-2026-09-09.md`](./AUDITORIA-RAMAS-Y-DEUDA-HC016-2026-09-09.md).
 
 El TOP 3 actualizado fue El Cachorro, El Carmen y Cristo de Burgos. El Cachorro quedó primero por densidad relacional y profundidad de fuentes oficiales. La actualidad estricta detectó un lote ya preparado, evitó duplicarlo y permitió auditarlo antes de Apply.
 
@@ -173,7 +175,7 @@ No se transformaron anuncios en hechos celebrados ni se inventaron continuidades
 
 ## Actualidad de `main` y producción
 
-El cierre documental de El Museo quedó integrado en `af81be33…`, su paleta cromática en `63463d7e…`, el orden operativo en `04e75a44…` y las cinco paletas derivadas de hábitos en `a910fd9b…`. Después se integraron las paletas #715, #716 y #717. El corte vigente anterior a esta documentación es `main = 58488e86…`, con producción `READY` en el mismo SHA.
+El cierre documental de El Museo quedó integrado en `af81be33…`, su paleta cromática en `63463d7e…`, el orden operativo en `04e75a44…` y las cinco paletas derivadas de hábitos en `a910fd9b…`. Después se integraron las paletas #715, #716, #717 y #719, el cierre de El Cachorro en #718 y la limpieza recuperable en #720. El postflight vigente anterior a esta documentación es `main = 6fac40ac…`, con producción `READY` en el mismo SHA.
 
 Este remate no cambia producto, datos ni alcance. Tras integrarlo, el SHA final de `main` y producción debe prevalecer sobre esta base auditada y GitHub debe volver a 0 PR abiertas.
 
@@ -196,12 +198,12 @@ No existe otro bloqueo operativo.
 9. **¿Había 0 PR abiertas antes de la sincronización?** Sí.
 10. **¿El cuarto lote real está cerrado?** Sí; El Cachorro terminó 90/90 y sin fallos.
 11. **¿Existe una quinta Hermandad abierta?** No.
-12. **¿Las ramas remotas equivalen a trabajo activo?** No; 813 están clasificadas y ninguna ha sido borrada.
-13. **¿`main` y producción coinciden en el corte previo a este remate?** Sí, en `58488e86…`.
+12. **¿Las ramas remotas equivalen a trabajo activo?** No; 817 se revisaron, 754 se eliminaron de forma recuperable y 63 quedaron preservadas.
+13. **¿`main` y producción coinciden en el postflight previo a este remate?** Sí, en `6fac40ac…`.
 
 ## Siguiente movimiento autorizado
 
-1. Revisar manualmente las 301 ramas `review_required`; no ejecutar borrados sin un corte expresamente autorizado y recuperable.
+1. Mantener preservadas las 61 ramas con trabajo único; cualquier limpieza futura exige una revisión específica nueva, no la reutilización de este manifiesto.
 2. Mantener cerrada El Cachorro y no abrir una quinta ficha por continuidad automática.
 3. Antes de un nuevo lote editorial, refrescar `main`, PR, producción y grafo, recalcular el TOP 3 y elegir una sola Hermandad.
 4. Mantener el remate de Cristo del Perdón como trabajo acotado en cola y #492 como único bloqueo estructural.
