@@ -183,6 +183,14 @@
   line-height: 1.62;
 }
 
+.copy .place {
+  color: var(--brotherhood-primary);
+  font-size: .78rem;
+  font-weight: 750;
+  letter-spacing: .025em;
+  margin-top: 10px;
+}
+
 @media (max-width: 900px) {
   .grid {
     grid-template-columns: 1fr;
