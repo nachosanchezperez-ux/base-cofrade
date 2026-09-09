@@ -64,7 +64,8 @@ test('la ficha presenta sede y horarios dentro del nuevo De un vistazo', async (
   assert.doesNotMatch(overview, /styles\.closedChip|scheduleStyles\.closedChip/)
   assert.match(overview, /!publicText\(seat\.direccion\) && seat\.localidad/)
 
-  assert.match(scheduleStyles, /\.hero \{[\s\S]*?background: #17324d/)
+  assert.match(scheduleStyles, /\.hero \{[\s\S]*?background: var\(--brotherhood-dark, var\(--brotherhood-primary/)
+  assert.doesNotMatch(scheduleStyles, /\.hero \{[\s\S]*?background: #17324d/)
   assert.match(scheduleStyles, /\.hero \{[\s\S]*?inset 3px 0 var\(--brotherhood-secondary/)
   assert.match(scheduleStyles, /\.row \{[\s\S]*?grid-template-columns: minmax\(128px, \.58fr\) minmax\(0, 1\.82fr\)/)
   assert.match(scheduleStyles, /\.entry \{[\s\S]*?grid-template-columns: minmax\(108px, \.7fr\) minmax\(0, 1\.5fr\)/)
