@@ -4,6 +4,12 @@ import test from "node:test";
 
 const MIGRATIONS_DIRECTORY = new URL("../supabase/migrations/", import.meta.url);
 const VERSION_PATTERN = /^(\d{14})_[a-z0-9_]+\.sql$/;
+const EXECUTABLE_SCHEMA_MIGRATIONS = [
+  "20260831070000_first_edition_baseline.sql",
+  "20260831071000_secure_public_contributions_reconciled.sql",
+  "20260831072000_add_band_logo_background_color.sql",
+  "20260908083000_add_brotherhood_membership_stats.sql",
+];
 
 test("Supabase migration versions are unique and well formed", async () => {
   const files = (await readdir(MIGRATIONS_DIRECTORY))
@@ -25,13 +31,9 @@ test("Supabase migration versions are unique and well formed", async () => {
     versions.set(version, file);
   }
 
-  assert.ok(files.length > 0, "No Supabase migrations found");
-  assert.deepEqual(files.slice(0, 2), [
-    "20260831070000_first_edition_baseline.sql",
-    "20260831071000_secure_public_contributions_reconciled.sql",
-  ]);
-  assert.ok(
-    files.slice(2).every((file) => file > "20260831071000_secure_public_contributions_reconciled.sql"),
-    "Every post-baseline migration must follow the reconciled security migration",
+  assert.deepEqual(
+    files,
+    EXECUTABLE_SCHEMA_MIGRATIONS,
+    "The executable chain is schema-only; intentional DDL must update this reviewed list",
   );
 });

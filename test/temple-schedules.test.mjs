@@ -4,7 +4,7 @@ import test from 'node:test'
 import { runInNewContext } from 'node:vm'
 
 const migrationUrl = new URL(
-  '../supabase/migrations/20260901135411_documenta_horarios_templos_septiembre_2026.sql',
+  '../supabase/migrations_archive/post-first-edition-editorial/20260901135411_documenta_horarios_templos_septiembre_2026.sql',
   import.meta.url,
 )
 
