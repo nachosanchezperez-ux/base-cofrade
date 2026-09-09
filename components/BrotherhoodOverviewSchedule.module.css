@@ -2,10 +2,10 @@
   display: grid;
   margin-top: 18px;
   overflow: hidden;
-  border: 1px solid #dce5ed;
+  border: 1px solid color-mix(in srgb, var(--brotherhood-primary, #112339) 12%, #e6e6e6);
   border-radius: 14px;
   background: #fff;
-  box-shadow: 0 10px 26px rgba(22, 49, 76, .055);
+  box-shadow: 0 10px 26px color-mix(in srgb, var(--brotherhood-primary, #112339) 6%, transparent);
 }
 
 .hero {
@@ -15,8 +15,8 @@
   gap: 11px;
   padding: 13px 16px;
   color: #fff;
-  background: #17324d;
-  box-shadow: inset 3px 0 var(--brotherhood-secondary, #a71930);
+  background: var(--brotherhood-dark, var(--brotherhood-primary, #112339));
+  box-shadow: inset 3px 0 var(--brotherhood-secondary, var(--brotherhood-primary, #112339));
 }
 
 .heroCopy {
@@ -79,14 +79,14 @@
 }
 
 .row + .row {
-  border-top: 1px solid #e8edf2;
+  border-top: 1px solid color-mix(in srgb, var(--brotherhood-primary, #112339) 8%, #ececec);
 }
 
 .label {
   margin: 1px 0 0;
   padding-left: 9px;
-  border-left: 2px solid var(--brotherhood-secondary, #a71930);
-  color: #17324d;
+  border-left: 2px solid var(--brotherhood-secondary, var(--brotherhood-primary, #112339));
+  color: var(--brotherhood-dark, var(--brotherhood-primary, #112339));
   font-size: 10px;
   font-weight: 850;
   letter-spacing: .1em;
@@ -95,8 +95,8 @@
 }
 
 .labelMuted {
-  border-left-color: #c8d1da;
-  color: #66788a;
+  border-left-color: #c9cdd1;
+  color: #686e74;
 }
 
 .entries {
@@ -118,7 +118,7 @@
 }
 
 .days {
-  color: #52677b;
+  color: #53595f;
   font-size: 12px;
   font-weight: 780;
   line-height: 1.5;
@@ -126,7 +126,7 @@
 
 .detail {
   min-width: 0;
-  color: #304a64;
+  color: #3f454b;
   font-size: 13px;
   font-weight: 560;
   line-height: 1.5;
@@ -134,7 +134,7 @@
 }
 
 .time {
-  color: #17324d;
+  color: var(--brotherhood-dark, var(--brotherhood-primary, #112339));
   font-size: inherit;
   font-weight: 850;
   letter-spacing: .005em;
@@ -148,7 +148,7 @@
 }
 
 .noteRow .detail {
-  color: #6f7e8d;
+  color: #71767b;
 }
 
 .footer {
@@ -157,9 +157,9 @@
   gap: 7px;
   align-items: start;
   padding: 9px 16px 10px;
-  border-top: 1px solid #e8edf2;
-  color: #81909e;
-  background: #f7f9fb;
+  border-top: 1px solid color-mix(in srgb, var(--brotherhood-primary, #112339) 8%, #ececec);
+  color: #858a8f;
+  background: #f7f7f7;
 }
 
 .footerIcon {
@@ -167,7 +167,7 @@
   width: 16px;
   height: 16px;
   place-items: center;
-  color: var(--brotherhood-secondary, #a71930);
+  color: var(--brotherhood-secondary, var(--brotherhood-primary, #112339));
 }
 
 .footerIcon svg {

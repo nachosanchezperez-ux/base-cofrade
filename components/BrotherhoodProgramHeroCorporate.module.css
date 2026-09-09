@@ -21,3 +21,129 @@
 .corporateFacts {
   background: color-mix(in srgb, var(--brotherhood-primary, #112339) 56%, transparent) !important;
 }
+
+/*
+ * La identidad corporativa no termina en la cabecera. Varias piezas antiguas
+ * de la ficha conservaban azules editoriales fijos. Este scope los convierte
+ * en superficies y líneas derivadas de la paleta real de cada Hermandad.
+ */
+:global(.brotherhood-page) {
+  --brotherhood-ink-strong: var(--brotherhood-dark, var(--brotherhood-primary, #112339));
+  --brotherhood-surface-soft: color-mix(in srgb, var(--brotherhood-primary, #112339) 4%, #fff);
+  --brotherhood-surface-medium: color-mix(in srgb, var(--brotherhood-primary, #112339) 10%, #fff);
+  --brotherhood-line-soft: color-mix(in srgb, var(--brotherhood-primary, #112339) 13%, transparent);
+  --brotherhood-shadow-soft: color-mix(in srgb, var(--brotherhood-primary, #112339) 8%, transparent);
+}
+
+:global(.brotherhood-page .brotherhood-soft),
+:global(.brotherhood-page .step-current-data),
+:global(.brotherhood-page .step-facts > div) {
+  background: var(--brotherhood-surface-soft) !important;
+}
+
+:global(.brotherhood-page > .section) {
+  border-top-color: color-mix(in srgb, var(--brotherhood-primary, #112339) 5%, transparent) !important;
+}
+
+:global(.brotherhood-page .brotherhood-summary-card),
+:global(.brotherhood-page .processional-card),
+:global(.brotherhood-page .current-music-card),
+:global(.brotherhood-page .music-history-grid article),
+:global(.brotherhood-page .heritage-work) {
+  box-shadow: 0 16px 42px var(--brotherhood-shadow-soft) !important;
+}
+
+:global(.brotherhood-page .brotherhood-summary-card) {
+  background: var(--brotherhood-surface-soft) !important;
+}
+
+:global(.brotherhood-page .brotherhood-portrait) {
+  background: linear-gradient(
+    155deg,
+    color-mix(in srgb, var(--brotherhood-primary, #112339) 4%, #fff),
+    color-mix(in srgb, var(--brotherhood-primary, #112339) 16%, #fff)
+  ) !important;
+}
+
+:global(.brotherhood-page .brotherhood-portrait span) {
+  color: var(--brotherhood-ink-strong) !important;
+  border-color: var(--brotherhood-line-soft) !important;
+}
+
+:global(.brotherhood-page .cofrade-type-badge),
+:global(.brotherhood-page .cofrade-type-badges.is-compact .cofrade-type-badge) {
+  border-color: var(--brotherhood-line-soft) !important;
+}
+
+:global(.brotherhood-page .cofrade-type-badges.is-compact .cofrade-type-badge) {
+  background: var(--brotherhood-surface-soft) !important;
+}
+
+:global(.brotherhood-page .official-links-grid a) {
+  border-color: var(--brotherhood-line-soft) !important;
+}
+
+:global(.brotherhood-page .official-links-grid a:hover) {
+  border-color: color-mix(in srgb, var(--brotherhood-primary, #112339) 28%, transparent) !important;
+  box-shadow: 0 12px 30px var(--brotherhood-shadow-soft) !important;
+}
+
+:global(.brotherhood-page .heritage-work) {
+  border-color: var(--brotherhood-line-soft) !important;
+}
+
+:global(.brotherhood-page .heritage-work-lead),
+:global(.brotherhood-page .heritage-work-story p) {
+  color: #60666c !important;
+}
+
+:global(.brotherhood-page .heritage-work-agents > div > span) {
+  border-color: var(--brotherhood-line-soft) !important;
+  background: var(--brotherhood-surface-soft) !important;
+}
+
+:global(.brotherhood-page .heritage-work-visual.has-image::after) {
+  background: linear-gradient(180deg, transparent 68%, rgba(0, 0, 0, .72)) !important;
+}
+
+:global(.brotherhood-page .brotherhood-current-music-sequence) {
+  background: var(--brotherhood-surface-soft) !important;
+}
+
+:global(.brotherhood-page .brotherhood-current-music-sequence h2),
+:global(.brotherhood-page .brotherhood-current-music-sequence h3),
+:global(.brotherhood-page .brotherhood-current-music-sequence strong) {
+  color: var(--brotherhood-ink-strong) !important;
+}
+
+:global(.brotherhood-page .brotherhood-current-music-sequence [class*="__sequence"]),
+:global(.brotherhood-page .brotherhood-current-music-sequence [class*="__item"]) {
+  border-color: var(--brotherhood-line-soft) !important;
+}
+
+:global(.brotherhood-page .brotherhood-current-music-sequence [class*="__meta"] span:nth-child(2)) {
+  color: var(--brotherhood-ink-strong) !important;
+  border-color: var(--brotherhood-line-soft) !important;
+  background: var(--brotherhood-surface-medium) !important;
+}
+
+:global(.brotherhood-page .brotherhood-current-music-sequence [class*="__arrow"]) {
+  color: var(--brotherhood-ink-strong) !important;
+}
+
+:global(.brotherhood-page #cultos article),
+:global(.brotherhood-page #via-crucis-cofradias article) {
+  border-color: var(--brotherhood-line-soft) !important;
+  box-shadow: 0 16px 42px var(--brotherhood-shadow-soft) !important;
+}
+
+:global(.brotherhood-page #cultos h3),
+:global(.brotherhood-page #cultos strong),
+:global(.brotherhood-page #via-crucis-cofradias h3),
+:global(.brotherhood-page #via-crucis-cofradias strong) {
+  color: var(--brotherhood-ink-strong) !important;
+}
+
+:global(.brotherhood-page #via-crucis-cofradias article p) {
+  color: #62686e !important;
+}
