@@ -29,7 +29,7 @@ jobs:
         run: >-
           node scripts/cleanup-remote-branches.mjs
           --execute
-          --expected-count=753
-          --manifest=docs/BRANCH-CLEANUP-CANDIDATES-2026-09-09.csv
+          --expected-count=1
+          --manifest=docs/BRANCH-CLEANUP-SECOND-PASS-2026-09-09.csv
           --recovery-ref=archive/pre-cleanup-20260909
           --recovery-sha=1261c3d1d7da023faa0449ed2cd2b69fef7fabe1
