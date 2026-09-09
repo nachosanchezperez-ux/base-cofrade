@@ -4,7 +4,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import { gloryDisplayTitle } from '@/lib/glory-display'
+import BrotherhoodDirectoryCrestImage from './BrotherhoodDirectoryCrestImage'
 import styles from './GloryDirectory.module.css'
+import crestStyles from './GloryDirectoryCrests.module.css'
 import photoStyles from './GloryDirectoryPhotos.module.css'
 
 function plural(count, singular, pluralForm) {
@@ -92,14 +94,20 @@ export default function GloryDirectory({ outings }) {
               <small>{featured.dateParts.year}</small>
             </div>
             {!featured.heroImagePath && featured.crestPath ? (
-              <Image
-                src={featured.crestPath}
-                alt={`Escudo de ${featured.brotherhoodName}`}
-                width={150}
-                height={150}
-                className={styles.featuredCrest}
-                sizes="150px"
-              />
+              <div className={crestStyles.featuredCrestFrame}>
+                <BrotherhoodDirectoryCrestImage
+                  src={featured.crestPath}
+                  alt={`Escudo de ${featured.brotherhoodName}`}
+                  width={160}
+                  height={180}
+                  className={crestStyles.featuredCrest}
+                  sizes="160px"
+                  priority
+                  maxScale={1.8}
+                  fallback=""
+                  fallbackClassName={crestStyles.hiddenFallback}
+                />
+              </div>
             ) : null}
             <span className={`${styles.featuredBadge} ${featured.heroImagePath ? photoStyles.photoForeground : ''}`}>
               {featured.urgencyLabel || 'PRÓXIMA'}
@@ -268,8 +276,18 @@ export default function GloryDirectory({ outings }) {
                           />
                         </div>
                       ) : outing.crestPath ? (
-                        <div className={styles.cardCrest} aria-hidden="true">
-                          <Image src={outing.crestPath} alt="" width={78} height={78} sizes="78px" />
+                        <div className={`${styles.cardCrest} ${crestStyles.cardCrestFrame}`} aria-hidden="true">
+                          <BrotherhoodDirectoryCrestImage
+                            src={outing.crestPath}
+                            alt=""
+                            width={82}
+                            height={82}
+                            sizes="82px"
+                            maxScale={1.8}
+                            className={crestStyles.cardCrestImage}
+                            fallback=""
+                            fallbackClassName={crestStyles.hiddenFallback}
+                          />
                         </div>
                       ) : null}
                     </article>
