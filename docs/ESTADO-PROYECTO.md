@@ -1,18 +1,18 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 9 de septiembre de 2026 · sexto lote HC-016, cierre de Cristo de Burgos y reversión del séptimo lote concurrente
+**Corte operativo:** 9 de septiembre de 2026 · cierre gobernado del séptimo lote HC-016 de Las Siete Palabras
 
-**HEAD operativo auditado:** `305b1e9f19543e51b908548a059855c6e2fdf221`
+**HEAD operativo auditado:** `cd4b5e4ba1d71363e4943d405a0c7202731cbd30`
 
-**Producción auditada:** `READY` · deployment `dpl_2QqNtkyYGJLb8JUVkm4STuE2b7pp` · mismo SHA que el HEAD operativo auditado
+**Producción auditada:** `READY` · deployment `dpl_GHjp2NQBFNN4M5W8veJLQ67Susef` · mismo SHA que el HEAD operativo auditado
 
 **PR abiertas al iniciar esta reconciliación:** **0**
 
 **Régimen:** `FIRST EDITION FREEZE` activo
 
-**Frente ACTIVO:** ninguno; Cristo del Perdón, El Carmen y Cristo de Burgos están cerrados en datos, a falta únicamente del escudo de Cristo del Perdón que se incorporará desde el Panel
+**Frente editorial ACTIVO:** ninguno
 
-> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El HEAD canónico posterior será el commit de `main` que contenga este documento; `305b1e9f…` identifica el postflight verificado antes de esta reconciliación documental.
+> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El HEAD canónico posterior será el commit de `main` que contenga este documento; el preflight comenzó en `de55d81b…` y adoptó `cd4b5e4b…` cuando #727 se fusionó durante la ejecución.
 
 ## Tablero operativo único
 
@@ -28,15 +28,15 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | **CERRADO** | Sexto lote HC-016 | Cristo de Burgos: 110/110 en el lote principal y 2/2 en el remate institucional; 0 inválidas y 0 fallos | No reabrir para perseguir un 100 % artificial; faltan únicamente recursos visuales autorizados y deuda legítima |
 | **CANCELADO** | Séptimo lote concurrente | Las Siete Palabras: las 252 altas se retiraron y las 18 actualizaciones se reconciliaron; el lote consta como `cancelled` y la señal volvió al 43 % | No cuenta como contexto certificado; no reabrir sin un nuevo TOP 3 y una orden específica |
 | **CERRADO** | Cristo del Perdón · San José de la Rinconada | Las dos bandas vigentes quedan verificadas y documentadas mediante un remate HC-016 de 5/5 | El escudo queda reservado a la carga anunciada desde el Panel; no bloquea el cierre de datos |
-| **COLA 2** | Siguiente frente editorial | No existe una séptima ficha abierta | Refrescar grafo y TOP 3 antes de elegir una sola Hermandad; El Valle, Las Siete Palabras y Montserrat son solo señales preliminares del último recálculo |
+| **CERRADO** | Séptimo lote HC-016 | Las Siete Palabras: 270/270 aplicadas, 0 inválidas, 0 fallos; completitud 43 % → 86 % | No reabrir para perseguir un 100 % artificial; no abrir una octava Hermandad |
 | **LABORATORIO** | Mejoras de producto y diseño | Ideas de cabeceras, nuevos campos, nuevas secciones y ampliaciones transversales | No activar mientras siga `FIRST EDITION FREEZE` |
 | **BLOQUEADO** | HC-018 · Aportaciones públicas | Implementación en código, activación expresamente bloqueada | No abrir `/colabora` hasta superar sus puertas de seguridad, privacidad y antiabuso |
 
 ## Verdad de plataforma
 
-- GitHub: `main = 305b1e9f…`, 0 PR abiertas y una única issue abierta: #492 al iniciar esta reconciliación.
-- Vercel: producción `READY` en el mismo SHA mediante `dpl_2QqNtkyYGJLb8JUVkm4STuE2b7pp`.
-- Supabase: la base productiva responde; Cristo de Burgos conserva sus dos lotes `completed` (`110/110` y `2/2`). El lote concurrente de Las Siete Palabras consta como `cancelled`, con 252 altas retiradas, 18 actualizaciones reconciliadas y completitud restaurada al 43 %.
+- GitHub: `main = cd4b5e4b…`, 0 PR abiertas en el corte previo a esta certificación y #492 abierta y aislada.
+- Vercel: producción `READY` en el mismo SHA mediante `dpl_GHjp2NQBFNN4M5W8veJLQ67Susef`.
+- Supabase: la base productiva responde; el nuevo lote de Las Siete Palabras está `completed` con 270/270, 0 inválidas y 0 fallos. El lote concurrente anterior permanece `cancelled` y trazado.
 - Git ↔ Supabase: el historial no se considerará reconciliado hasta cerrar #492. No se reescriben migraciones ya aplicadas ni se usa producción para resolver una limitación de previews.
 
 ## Trabajo reciente ya cerrado
@@ -60,10 +60,13 @@ No debe mantenerse en la cola lo que ya está integrado y desplegado:
 - remate musical de Cristo del Perdón y quinto lote real de HC-016: El Carmen.
 - sexto lote real de HC-016: Cristo de Burgos, incluido el Vía Crucis institucional de 1999.
 - reversión trazada del séptimo lote concurrente de Las Siete Palabras, sin DDL y sin alterar el sexto cierre.
+- presentación de la cuadrilla actual en las fichas de Pasos (`00e241f` y `de55d81`), integrada y desplegada antes de este lote editorial.
+- paleta propia de Las Siete Palabras (#727), incorporada durante la ejecución y adoptada como nuevo HEAD prevalente.
+- séptimo lote real de HC-016: Las Siete Palabras, 270/270.
 
 ## Dónde estamos ahora
 
-HC-016 ya funciona como método editorial operativo en seis contextos reales. San Pablo fue el primero; Mercedes de la Puerta Real acreditó el segundo y dejó corregida la validación sistémica de autorías; El Museo ejecutó el tercero en una Hermandad penitencial densa; El Cachorro completó el cuarto con 90 operaciones; El Carmen sumó el quinto con 83 operaciones; Cristo de Burgos completa el sexto con 110 operaciones principales y un remate institucional de 2 operaciones. El remate independiente de Cristo del Perdón añadió trazabilidad a dos periodos ya existentes sin duplicarlos.
+HC-016 funciona como método editorial operativo en siete contextos reales: San Pablo, Mercedes de la Puerta Real, El Museo, El Cachorro, El Carmen, Cristo de Burgos y Las Siete Palabras. El séptimo cierre añade 270 operaciones verificadas sobre una ficha de alta densidad relacional, sin esquema nuevo y sin excepciones por `slug`.
 
 Los cierres editoriales no incorporaron DDL, tablas, migraciones estructurales, cambios RLS ni excepciones por `slug`. El circuito gobernado sigue siendo:
 
@@ -107,6 +110,16 @@ Después del cierre de Cristo de Burgos apareció y se fusionó de forma concurr
 La reversión se ejecutó de forma compensatoria y transaccional: preflight sin deriva ni dependencias externas, simulación completa seguida de `ROLLBACK` y Apply real. Se retiraron las 252 altas exclusivas, se reconciliaron las 18 actualizaciones sobre filas preexistentes y se preservó el historial del lote. `bulk_imports` lo registra como `cancelled`, `audit_log` conserva la restauración y la completitud de Las Siete Palabras vuelve al 43 %.
 
 No hubo DDL, nuevas tablas, migraciones ni cambios RLS. Las Siete Palabras vuelve a ser únicamente candidata y no cuenta como séptimo contexto certificado.
+
+## Séptimo lote gobernado · Las Siete Palabras
+
+Después de aquella reversión se recibió una orden específica, se refrescó de nuevo el grafo y se compararon seis Hermandades publicadas no certificadas. El TOP 3 nuevo fue Las Siete Palabras (43 %), El Valle (43 %) y La Amargura (71 %). Las Siete Palabras se eligió por su deuda nuclear, 13 fuentes oficiales disponibles y el mayor potencial relacional; no por el ranking anterior.
+
+El lote nuevo `f97aef97-12f9-4ed5-b1dd-201dd7c6f877` recorrió el circuito completo y quedó `completed`: **270/270**, **252 insert**, **18 update**, **0 reuse**, **0 inválidas** y **0 fallos**. Publicó 12 titulares/imágenes, 4 Pasos, 1 hábito, 16 Cultos, 2 Salidas, 27 piezas patrimoniales, 5 periodos musicales y 74 vínculos de Fuente. La completitud reproducible pasa del 43 % al 86 %.
+
+La actualidad se conservó de forma estricta: el Rosario de noviembre de 2026 sigue anunciado; el Réquiem conserva el 19 de noviembre sin hora inventada; Presentación al Pueblo queda histórica en 1992–2006; ningún anuncio de 2027 se convirtió en vigencia de 2026. El único incidente fue de presentación: el Panel perdió la etiqueta descriptiva y guardó el rótulo genérico «Importación masiva»; el UUID, contenido, preflight y Apply son íntegros.
+
+La evidencia completa está en [`CERTIFICACION-SIETE-PALABRAS-HC016-2026-09-09.md`](./CERTIFICACION-SIETE-PALABRAS-HC016-2026-09-09.md). El frente editorial queda cerrado y no se abre una octava Hermandad.
 
 ## Recálculo de deuda y selección de El Museo
 
@@ -221,24 +234,24 @@ No existe otro bloqueo operativo.
 3. **¿El Museo está cerrado?** Sí, con los huecos legítimos expresos.
 4. **¿El Cachorro continúa cerrado?** Sí: el cuarto lote terminó 90/90 y sin fallos.
 5. **¿Algún error determinista nuevo alcanzó Apply?** No.
-6. **¿HC-016 es reutilizable como método editorial?** Sí; Cristo de Burgos completa el sexto contexto real con 110/110 operaciones principales y un remate institucional de 2/2, sin cambios de arquitectura.
+6. **¿HC-016 es reutilizable como método editorial?** Sí; Las Siete Palabras completa el séptimo contexto real con 270/270 operaciones, sin cambios de arquitectura.
 7. **¿Existe algún bloqueo estructural aparte de #492?** No; la divergencia del historial de migraciones queda adscrita a su reconciliación.
 8. **¿`main` y producción coincidían en el corte histórico de El Museo?** Sí, en `a910fd9b…`.
 9. **¿Había 0 PR abiertas antes de la sincronización?** Sí.
 10. **¿El quinto lote real está cerrado?** Sí; El Carmen terminó 83/83 y sin fallos.
 11. **¿Cristo del Perdón requiere rehacer su música?** No; los dos periodos vigentes ya eran correctos y ahora tienen trazabilidad documental adicional.
-12. **¿Existe una séptima Hermandad abierta?** No; el lote concurrente de Las Siete Palabras fue revertido y cancelado.
+12. **¿Existe una séptima Hermandad abierta?** No; Las Siete Palabras ya está cerrada y certificada después de un TOP 3 nuevo y autorización expresa.
 13. **¿Las ramas remotas equivalen a trabajo activo?** No; 817 se revisaron, 754 se eliminaron de forma recuperable y 63 quedaron preservadas.
-14. **¿`main` y producción coinciden en el postflight previo a esta reconciliación?** Sí, en `305b1e9f…`.
+14. **¿`main` y producción coinciden en el último corte previo a esta certificación?** Sí, en `cd4b5e4b…`; ese SHA posterior prevaleció sobre el inicial `de55d81b…`.
 15. **¿Cristo de Burgos está cerrada y visible?** Sí; la ficha alcanza el 86 %, muestra música vigente e histórica y presenta el Vía Crucis institucional de 1999.
-16. **¿Las Siete Palabras cuenta como contexto certificado?** No; volvió al 43 % y permanece en la cola de candidatas.
+16. **¿Las Siete Palabras cuenta ya como contexto certificado?** Sí; el lote nuevo terminó 270/270 y la ficha alcanza el 86 % con huecos legítimos expresos.
 
 ## Siguiente movimiento autorizado
 
 1. Mantener preservadas las 61 ramas con trabajo único; cualquier limpieza futura exige una revisión específica nueva, no la reutilización de este manifiesto.
-2. Mantener cerradas El Cachorro, El Carmen y Cristo de Burgos, y no abrir una séptima ficha por continuidad automática.
-3. Antes de un nuevo lote editorial, refrescar `main`, PR, producción y grafo, recalcular el TOP 3 y elegir una sola Hermandad. El Valle, Las Siete Palabras y Montserrat son candidatas preliminares, no decisiones ya tomadas.
+2. Mantener cerradas El Cachorro, El Carmen, Cristo de Burgos y Las Siete Palabras; no hay frente editorial activo.
+3. No abrir una octava Hermandad. El Valle y La Amargura permanecen como referencias del corte, no como frentes abiertos.
 4. Permitir la carga manual del escudo de Cristo del Perdón desde el Panel, sin reabrir su cierre de datos.
 5. Mantener #492 como único bloqueo estructural.
 
-No se abre una Hermandad por continuidad de una conversación antigua ni se activa un frente de Laboratorio durante este corte.
+No se abre una segunda Hermandad ni se activa un frente de Laboratorio durante este corte.
