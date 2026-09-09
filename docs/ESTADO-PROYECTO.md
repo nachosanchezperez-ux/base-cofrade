@@ -1,18 +1,18 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 9 de septiembre de 2026 · remate de Cristo del Perdón y quinto lote HC-016
+**Corte operativo:** 9 de septiembre de 2026 · sexto lote HC-016 y cierre de Cristo de Burgos
 
-**HEAD operativo auditado:** `7b895f5d8779c12e4e9b187da7b22580ed66676d`
+**HEAD operativo auditado:** `2fdc52fb0e096c36c2d1d57a3028edebc1c39195`
 
-**Producción auditada:** `READY` · deployment `dpl_52BkVNbnSKRvBN9w5XXoj4AAR4NH` · mismo SHA que el HEAD operativo auditado
+**Producción auditada:** `READY` · deployment `dpl_4ddnFzWzcBfQyeUiBa3gCzhF2hni` · mismo SHA que el HEAD operativo auditado
 
 **PR abiertas al iniciar esta reconciliación:** **0**
 
 **Régimen:** `FIRST EDITION FREEZE` activo
 
-**Frente ACTIVO:** ninguno; Cristo del Perdón y El Carmen están cerrados en datos, a falta únicamente del escudo de Cristo del Perdón que se incorporará desde el Panel
+**Frente ACTIVO:** ninguno; Cristo del Perdón, El Carmen y Cristo de Burgos están cerrados en datos, a falta únicamente del escudo de Cristo del Perdón que se incorporará desde el Panel
 
-> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El HEAD canónico posterior será el commit de `main` que contenga este documento; `7b895f5d…` identifica el postflight verificado antes de este remate documental.
+> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El HEAD canónico posterior será el commit de `main` que contenga este documento; `2fdc52fb…` identifica el postflight verificado antes de este cierre documental.
 
 ## Tablero operativo único
 
@@ -25,16 +25,17 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | **CERRADO** | Higiene de ramas | 817 ramas revisadas; 754 eliminadas por SHA; 63 preservadas; salvaguarda remota verificada | No borrar las 61 ramas con trabajo único sin una revisión futura específica |
 | **CERRADO** | Cuarto lote HC-016 | El Cachorro: 90/90 aplicadas, 0 inválidas, 0 fallos; intento previo inválido cancelado con 0 escrituras | No reabrir para perseguir un 100 % artificial |
 | **CERRADO** | Quinto lote HC-016 | El Carmen: 83/83 aplicadas, 0 inválidas, 0 fallos; 3 titulares, 2 Pasos, 9 Cultos, Salida de 2026 y 4 periodos musicales | No reabrir para completar catálogos exhaustivos o perseguir un 100 % artificial |
+| **CERRADO** | Sexto lote HC-016 | Cristo de Burgos: 110/110 en el lote principal y 2/2 en el remate institucional; 0 inválidas y 0 fallos | No reabrir para perseguir un 100 % artificial; faltan únicamente recursos visuales autorizados y deuda legítima |
 | **CERRADO** | Cristo del Perdón · San José de la Rinconada | Las dos bandas vigentes quedan verificadas y documentadas mediante un remate HC-016 de 5/5 | El escudo queda reservado a la carga anunciada desde el Panel; no bloquea el cierre de datos |
-| **COLA 2** | Siguiente frente editorial | No existe una sexta ficha abierta | Refrescar grafo y TOP 3 antes de elegir una sola Hermandad; Cristo de Burgos era la siguiente candidata del último corte, no una apertura automática |
+| **COLA 2** | Siguiente frente editorial | No existe una séptima ficha abierta | Refrescar grafo y TOP 3 antes de elegir una sola Hermandad; El Valle, Las Siete Palabras y Montserrat son solo señales preliminares del último recálculo |
 | **LABORATORIO** | Mejoras de producto y diseño | Ideas de cabeceras, nuevos campos, nuevas secciones y ampliaciones transversales | No activar mientras siga `FIRST EDITION FREEZE` |
 | **BLOQUEADO** | HC-018 · Aportaciones públicas | Implementación en código, activación expresamente bloqueada | No abrir `/colabora` hasta superar sus puertas de seguridad, privacidad y antiabuso |
 
 ## Verdad de plataforma
 
-- GitHub: `main = 7b895f5d…`, 0 PR abiertas y una única issue abierta: #492.
-- Vercel: producción `READY` en el mismo SHA mediante `dpl_52BkVNbnSKRvBN9w5XXoj4AAR4NH`.
-- Supabase: la base productiva responde; el remate de Cristo del Perdón está `completed` con 5/5 y el quinto lote HC-016 de El Carmen está `completed` con 83/83.
+- GitHub: `main = 2fdc52fb…`, 0 PR abiertas y una única issue abierta: #492 al iniciar este cierre.
+- Vercel: producción `READY` en el mismo SHA mediante `dpl_4ddnFzWzcBfQyeUiBa3gCzhF2hni`.
+- Supabase: la base productiva responde; el lote principal de Cristo de Burgos está `completed` con 110/110 y su remate institucional está `completed` con 2/2.
 - Git ↔ Supabase: el historial no se considerará reconciliado hasta cerrar #492. No se reescriben migraciones ya aplicadas ni se usa producción para resolver una limitación de previews.
 
 ## Trabajo reciente ya cerrado
@@ -56,10 +57,11 @@ No debe mantenerse en la cola lo que ya está integrado y desplegado:
 - cuarto lote real de HC-016: El Cachorro;
 - eliminación del azul residual en las fichas de Hermandad (#721);
 - remate musical de Cristo del Perdón y quinto lote real de HC-016: El Carmen.
+- sexto lote real de HC-016: Cristo de Burgos, incluido el Vía Crucis institucional de 1999.
 
 ## Dónde estamos ahora
 
-HC-016 ya funciona como método editorial operativo en cinco contextos reales. San Pablo fue el primero; Mercedes de la Puerta Real acreditó el segundo y dejó corregida la validación sistémica de autorías; El Museo ejecutó el tercero en una Hermandad penitencial densa; El Cachorro completó el cuarto con 90 operaciones; El Carmen suma el quinto con 83 operaciones, reutilización de nodos, titulares, Pasos, Cultos, Salida de 2026, música vigente e histórica y Fuentes. El remate independiente de Cristo del Perdón añadió trazabilidad a dos periodos ya existentes sin duplicarlos.
+HC-016 ya funciona como método editorial operativo en seis contextos reales. San Pablo fue el primero; Mercedes de la Puerta Real acreditó el segundo y dejó corregida la validación sistémica de autorías; El Museo ejecutó el tercero en una Hermandad penitencial densa; El Cachorro completó el cuarto con 90 operaciones; El Carmen sumó el quinto con 83 operaciones; Cristo de Burgos completa el sexto con 110 operaciones principales y un remate institucional de 2 operaciones. El remate independiente de Cristo del Perdón añadió trazabilidad a dos periodos ya existentes sin duplicarlos.
 
 Los cierres editoriales no incorporaron DDL, tablas, migraciones estructurales, cambios RLS ni excepciones por `slug`. El circuito gobernado sigue siendo:
 
@@ -88,6 +90,14 @@ El lote `c0160005-1000-4000-8000-000000000001` dejó El Carmen `completed`: 83/8
 
 El lote independiente `c0160005-0000-4000-8000-000000000001` cerró 5/5 operaciones sobre Cristo del Perdón. Las bandas del Cristo del Humilladero y Municipal Cristo del Perdón ya existían como vigentes; se conservaron y se añadieron dos Fuentes y tres vínculos sin duplicar acompañamientos. La carga del escudo anunciada por el editor queda fuera de este lote y se realizará desde el Panel.
 
+## Sexto lote · Cristo de Burgos
+
+El grafo se refrescó después de cerrar El Cachorro y El Carmen. Cristo de Burgos conservaba una deuda nuclear del 43 %, fuentes oficiales profundas y un alcance compatible con una sola ficha. Se seleccionó por delante de las señales preliminares de El Valle, Las Siete Palabras y Montserrat; ese orden no abre automáticamente el siguiente frente.
+
+El lote `c0160006-1000-4000-8000-000000000001` quedó `completed`: 110/110, 103 insert, 6 update, 1 reuse y 0 fallos. Publicó 2 titulares, 2 Pasos, 1 hábito, 10 Cultos, 2 Salidas, 4 piezas patrimoniales y 2 periodos musicales; conservó además el periodo vigente ya existente de Maestro Tejera.
+
+La verificación pública detectó que el acontecimiento ya existente del Vía Crucis de 1999 tenía su relación `involves` en borrador. El remate `c0160006-2000-4000-8000-000000000001` publicó esa relación y añadió su vínculo documental: 2/2, 0 fallos. La ficha muestra ya el módulo institucional sin cambios de código o presentación. La certificación está en [`CERTIFICACION-CRISTO-DE-BURGOS-HC016-2026-09-09.md`](./CERTIFICACION-CRISTO-DE-BURGOS-HC016-2026-09-09.md).
+
 ## Recálculo de deuda y selección de El Museo
 
 La deuda se recalculó desde el grafo real entre Hermandades publicadas no certificadas, antes de escribir. No se confundieron ausencia documental, dato no aplicable, contenido no publicado, pendiente de verificar y deuda real.
@@ -96,7 +106,7 @@ La deuda se recalculó desde el grafo real entre Hermandades publicadas no certi
 |---|---:|---|---|---|---|---:|
 | El Museo | 43 % | Titulares, Pasos, autorías, hábitos, patrimonio, Cultos, Salidas y relaciones | Buena y mayoritariamente oficial | Media-alta | Muy alto | 93 % |
 | El Cachorro | 43 % | Grafo artístico y procesional muy amplio, con más volumen y ambigüedad | Muy buena | Alta | Muy alto | 88 % |
-| Cristo de Burgos | 43 % | Núcleo penitencial, titulares, Pasos, Cultos y patrimonio | Buena, con web oficial | Media | Alto | 90 % |
+| Cristo de Burgos | 43 % | Núcleo penitencial, titulares, Pasos, Cultos y patrimonio | Buena, con web oficial | Media | Alto | 86 % |
 
 Se eligió **El Museo** porque combinaba fuentes oficiales suficientes, reutilización de nodos existentes y familias relacionales distintas de Mercedes. Era el mejor equilibrio para volver a demostrar el método sin optar simplemente por la ficha más vacía.
 
@@ -184,7 +194,7 @@ No se transformaron anuncios en hechos celebrados ni se inventaron continuidades
 
 ## Actualidad de `main` y producción
 
-El cierre documental de El Museo quedó integrado en `af81be33…`, su paleta cromática en `63463d7e…`, el orden operativo en `04e75a44…` y las cinco paletas derivadas de hábitos en `a910fd9b…`. Después se integraron las paletas #715, #716, #717 y #719, el cierre de El Cachorro en #718, la limpieza recuperable en #720 y la eliminación del azul residual en #721. El postflight vigente anterior a esta documentación es `main = 7b895f5d…`, con producción `READY` en el mismo SHA.
+El cierre documental de El Museo quedó integrado en `af81be33…`, su paleta cromática en `63463d7e…`, el orden operativo en `04e75a44…` y las cinco paletas derivadas de hábitos en `a910fd9b…`. Después se integraron las paletas #715, #716, #717 y #719, el cierre de El Cachorro en #718, la limpieza recuperable en #720, la eliminación del azul residual en #721, El Carmen y la limpieza cromática transversal. El postflight vigente anterior a esta documentación es `main = 2fdc52fb…`, con producción `READY` en el mismo SHA.
 
 Este remate documental no cambia producto ni arquitectura; refleja el DML editorial ya aplicado y verificado. Tras integrarlo, el SHA final de `main` y producción debe prevalecer sobre esta base auditada y GitHub debe volver a 0 PR abiertas.
 
@@ -201,21 +211,22 @@ No existe otro bloqueo operativo.
 3. **¿El Museo está cerrado?** Sí, con los huecos legítimos expresos.
 4. **¿El Cachorro continúa cerrado?** Sí: el cuarto lote terminó 90/90 y sin fallos.
 5. **¿Algún error determinista nuevo alcanzó Apply?** No.
-6. **¿HC-016 es reutilizable como método editorial?** Sí; El Carmen completa el quinto contexto real con 83/83 operaciones sin cambios de arquitectura.
+6. **¿HC-016 es reutilizable como método editorial?** Sí; Cristo de Burgos completa el sexto contexto real con 110/110 operaciones principales y un remate institucional de 2/2, sin cambios de arquitectura.
 7. **¿Existe algún bloqueo estructural aparte de #492?** No; la divergencia del historial de migraciones queda adscrita a su reconciliación.
 8. **¿`main` y producción coincidían en el corte histórico de El Museo?** Sí, en `a910fd9b…`.
 9. **¿Había 0 PR abiertas antes de la sincronización?** Sí.
 10. **¿El quinto lote real está cerrado?** Sí; El Carmen terminó 83/83 y sin fallos.
 11. **¿Cristo del Perdón requiere rehacer su música?** No; los dos periodos vigentes ya eran correctos y ahora tienen trazabilidad documental adicional.
-12. **¿Existe una sexta Hermandad abierta?** No.
+12. **¿Existe una séptima Hermandad abierta?** No.
 13. **¿Las ramas remotas equivalen a trabajo activo?** No; 817 se revisaron, 754 se eliminaron de forma recuperable y 63 quedaron preservadas.
-14. **¿`main` y producción coinciden en el postflight previo a este remate?** Sí, en `7b895f5d…`.
+14. **¿`main` y producción coinciden en el postflight previo a este cierre?** Sí, en `2fdc52fb…`.
+15. **¿Cristo de Burgos está cerrada y visible?** Sí; la ficha alcanza el 86 %, muestra música vigente e histórica y presenta el Vía Crucis institucional de 1999.
 
 ## Siguiente movimiento autorizado
 
 1. Mantener preservadas las 61 ramas con trabajo único; cualquier limpieza futura exige una revisión específica nueva, no la reutilización de este manifiesto.
-2. Mantener cerradas El Cachorro y El Carmen, y no abrir una sexta ficha por continuidad automática.
-3. Antes de un nuevo lote editorial, refrescar `main`, PR, producción y grafo, recalcular el TOP 3 y elegir una sola Hermandad. Cristo de Burgos es una candidata, no una decisión ya tomada.
+2. Mantener cerradas El Cachorro, El Carmen y Cristo de Burgos, y no abrir una séptima ficha por continuidad automática.
+3. Antes de un nuevo lote editorial, refrescar `main`, PR, producción y grafo, recalcular el TOP 3 y elegir una sola Hermandad. El Valle, Las Siete Palabras y Montserrat son candidatas preliminares, no decisiones ya tomadas.
 4. Permitir la carga manual del escudo de Cristo del Perdón desde el Panel, sin reabrir su cierre de datos.
 5. Mantener #492 como único bloqueo estructural.
 
