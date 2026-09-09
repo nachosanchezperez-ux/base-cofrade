@@ -5,7 +5,7 @@ import test from 'node:test'
 const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8')
 
 test('Mairena usa el PNG transparente oficial sobre gris claro', () => {
-  const migration = read('supabase/migrations/20260831141610_normalize_mairena_logo_and_readability.sql')
+  const migration = read('supabase/migrations_archive/post-first-edition-editorial/20260831141610_normalize_mairena_logo_and_readability.sql')
   const config = read('next.config.mjs')
 
   assert.match(migration, /ColorSinFondo-e1602318863442\.png/)
@@ -15,7 +15,7 @@ test('Mairena usa el PNG transparente oficial sobre gris claro', () => {
 })
 
 test('Mairena no usa el blanco corporativo como tinta pública sobre blanco', () => {
-  const migration = read('supabase/migrations/20260831141610_normalize_mairena_logo_and_readability.sql')
+  const migration = read('supabase/migrations_archive/post-first-edition-editorial/20260831141610_normalize_mairena_logo_and_readability.sql')
 
   assert.match(migration, /secondary_color = '#183B5B'/)
   assert.doesNotMatch(migration, /update public\.band_colors/)

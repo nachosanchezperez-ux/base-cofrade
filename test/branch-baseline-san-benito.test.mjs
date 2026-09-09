@@ -4,16 +4,19 @@ import test from 'node:test'
 
 const migrationsDirectory = new URL('../supabase/migrations/', import.meta.url)
 const archiveDirectory = new URL('../supabase/migrations_archive/first-edition/', import.meta.url)
+const postBaselineArchiveDirectory = new URL('../supabase/migrations_archive/post-first-edition-editorial/', import.meta.url)
 const baselineName = '20260831070000_first_edition_baseline.sql'
 const securityName = '20260831071000_secure_public_contributions_reconciled.sql'
+const logoBackgroundName = '20260831072000_add_band_logo_background_color.sql'
+const membershipStatsName = '20260908083000_add_brotherhood_membership_stats.sql'
 const baseline = readFileSync(new URL(baselineName, migrationsDirectory), 'utf8')
+const membershipStats = readFileSync(new URL(membershipStatsName, migrationsDirectory), 'utf8')
 const seed = readFileSync(new URL('../supabase/seed.sql', import.meta.url), 'utf8')
 
-test('las ramas nuevas ejecutan el baseline único antes de #439 y de evoluciones posteriores', () => {
+test('las ramas nuevas ejecutan únicamente el baseline y las evoluciones de esquema', () => {
   const migrations = readdirSync(migrationsDirectory).filter((file) => file.endsWith('.sql')).sort()
 
-  assert.deepEqual(migrations.slice(0, 2), [baselineName, securityName])
-  assert.ok(migrations.slice(2).every((file) => file > securityName))
+  assert.deepEqual(migrations, [baselineName, securityName, logoBackgroundName, membershipStatsName])
 })
 
 test('el baseline reproduce el esquema canónico y conserva las barreras RLS', () => {
@@ -40,4 +43,22 @@ test('el historial anterior permanece archivado y fuera de la cadena ejecutable'
   assert.ok(archived.includes('20260818133048_consolidar_san_benito.sql'))
   assert.ok(archived.includes('20260819130530_logotipo_portadas_puebla.sql'))
   assert.ok(archived.includes('20260831061147_publica_iguala_rosario_santiago_2026.sql'))
+})
+
+test('el DML posterior al baseline permanece íntegro y fuera de la cadena ejecutable', () => {
+  const archived = readdirSync(postBaselineArchiveDirectory)
+    .filter((file) => file.endsWith('.sql'))
+    .sort()
+
+  assert.equal(archived.length, 90)
+  assert.equal(archived[0], '20260831074355_publica_tres_igualas_septiembre_2026.sql')
+  assert.equal(archived.at(-1), '20260909162000_aplica_paleta_siete_palabras.sql')
+  assert.ok(archived.includes('20260831135520_publica_centuria_y_corrige_logo_tres_caidas.sql'))
+})
+
+test('la evolución de estadísticas es idempotente en preview y en producción reconciliada', () => {
+  assert.match(membershipStats, /add column if not exists members_count integer/i)
+  assert.match(membershipStats, /add column if not exists members_count_kind text/i)
+  assert.match(membershipStats, /add column if not exists members_source_id uuid/i)
+  assert.match(membershipStats, /if not exists \([\s\S]*?pg_constraint/i)
 })

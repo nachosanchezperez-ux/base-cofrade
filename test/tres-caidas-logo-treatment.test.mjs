@@ -35,7 +35,7 @@ test('la cabecera no recupera una caja configurada para los logos JPEG', () => {
 })
 
 test('Tres Caídas usa el emblema oficial transparente sobre gris neutro', () => {
-  const migration = read('supabase/migrations/20260831135520_publica_centuria_y_corrige_logo_tres_caidas.sql')
+  const migration = read('supabase/migrations_archive/post-first-edition-editorial/20260831135520_publica_centuria_y_corrige_logo_tres_caidas.sql')
 
   assert.match(migration, /\/bandas\/tres-caidas-triana\/logotipo\.png/)
   assert.match(migration, /logo_background_color = '#ECEFF1'/)

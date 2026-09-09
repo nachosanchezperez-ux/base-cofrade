@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 const migrationUrl = new URL(
-  "../supabase/migrations/20260908163610_incorpora_cinco_bandas_semana_santa_sevilla.sql",
+  "../supabase/migrations_archive/post-first-edition-editorial/20260908163610_incorpora_cinco_bandas_semana_santa_sevilla.sql",
   import.meta.url,
 );
 
