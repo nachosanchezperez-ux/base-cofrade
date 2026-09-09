@@ -2,7 +2,7 @@
 
 **Corte operativo:** 9 de septiembre de 2026 · reconciliación y orden operativo
 
-**HEAD base auditado:** `04e75a44a85ca97667d2cc696e86e51ddd974eb3`
+**HEAD base auditado:** `a910fd9b53e40c9cd5e25440e06861a7f31c147d`
 
 **Producción auditada:** `READY` · mismo SHA que el HEAD base auditado
 
@@ -12,7 +12,7 @@
 
 **Frente ACTIVO:** ninguno; el orden operativo está cerrado y no existe un lote editorial abierto
 
-> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El HEAD canónico posterior será el commit de `main` que contenga este documento; `04e75a44…` identifica la base verificada antes de este remate documental.
+> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El HEAD canónico posterior será el commit de `main` que contenga este documento; `a910fd9b…` identifica la base verificada antes de este remate documental.
 
 ## Tablero operativo único
 
@@ -30,7 +30,7 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 
 ## Verdad de plataforma
 
-- GitHub: `main = 04e75a44…`, 0 PR abiertas y una única issue abierta: #492.
+- GitHub: `main = a910fd9b…`, 0 PR abiertas y una única issue abierta: #492.
 - Vercel: producción `READY` en el mismo SHA.
 - Supabase: la base productiva responde y los lotes HC-016 permanecen aplicados.
 - Git ↔ Supabase: el historial no se considerará reconciliado hasta cerrar #492. No se reescriben migraciones ya aplicadas ni se usa producción para resolver una limitación de previews.
@@ -47,7 +47,7 @@ No debe mantenerse en la cola lo que ya está integrado y desplegado:
 - SEO P3 de Hermandades;
 - acompañamientos históricos y cronología musical por Paso de Las Aguas;
 - incorporación de Pasión de Linares, Esencia y cinco Bandas de la Semana Santa de Sevilla (#708 y #709).
-- paleta negra, blanca y dorada de El Museo (#711).
+- paleta negra, blanca y dorada de El Museo (#711);\n- paletas de cinco Hermandades a partir de hábitos documentados (#713).
 
 ## Dónde estamos ahora
 
@@ -160,7 +160,7 @@ No se transformaron anuncios en hechos celebrados ni se inventaron continuidades
 
 ## Actualidad de `main` y producción
 
-El cierre documental de El Museo quedó integrado en `af81be33…`, su paleta cromática en `63463d7e…` y el orden operativo en `04e75a44…`. Producción estaba `READY` y coincidía con este último SHA antes del remate documental.
+El cierre documental de El Museo quedó integrado en `af81be33…`, su paleta cromática en `63463d7e…`, el orden operativo en `04e75a44…` y las cinco paletas derivadas de hábitos en `a910fd9b…`. Producción estaba `READY` y coincidía con este último SHA antes del remate documental.
 
 Este remate no cambia producto, datos ni alcance. Tras integrarlo, el SHA final de `main` y producción debe prevalecer sobre esta base auditada y GitHub debe volver a 0 PR abiertas.
 
@@ -179,7 +179,7 @@ No existe otro bloqueo operativo.
 5. **¿Algún error determinista nuevo alcanzó Apply?** No.
 6. **¿HC-016 es reutilizable como método editorial?** Sí; El Museo repite el circuito sin incorporación manual masiva ni cambios de arquitectura.
 7. **¿Existe algún bloqueo estructural aparte de #492?** No; la divergencia del historial de migraciones queda adscrita a su reconciliación.
-8. **¿`main` y producción coinciden?** Sí, en `04e75a44…` antes de este remate documental.
+8. **¿`main` y producción coinciden?** Sí, en `a910fd9b…` antes de este remate documental.
 9. **¿Había 0 PR abiertas antes de la sincronización?** Sí.
 10. **¿Existe una cuarta Hermandad abierta?** No.
 11. **¿Las ramas remotas equivalen a trabajo activo?** No; deben clasificarse por PR y equivalencia antes de cualquier borrado.
