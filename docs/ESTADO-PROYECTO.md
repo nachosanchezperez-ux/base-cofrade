@@ -1,18 +1,18 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 9 de septiembre de 2026 · limpieza recuperable de ramas y cuarto lote HC-016
+**Corte operativo:** 9 de septiembre de 2026 · remate de Cristo del Perdón y quinto lote HC-016
 
-**HEAD operativo auditado:** `6fac40ac4bbac718e40656e7bbcaf78de71f4233`
+**HEAD operativo auditado:** `7b895f5d8779c12e4e9b187da7b22580ed66676d`
 
-**Producción auditada:** `READY` · mismo SHA que el HEAD operativo auditado · 0 errores de runtime en la última hora
+**Producción auditada:** `READY` · deployment `dpl_52BkVNbnSKRvBN9w5XXoj4AAR4NH` · mismo SHA que el HEAD operativo auditado
 
 **PR abiertas al iniciar esta reconciliación:** **0**
 
 **Régimen:** `FIRST EDITION FREEZE` activo
 
-**Frente ACTIVO:** ninguno; El Cachorro está cerrado y no existe otra ficha editorial abierta
+**Frente ACTIVO:** ninguno; Cristo del Perdón y El Carmen están cerrados en datos, a falta únicamente del escudo de Cristo del Perdón que se incorporará desde el Panel
 
-> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El HEAD canónico posterior será el commit de `main` que contenga este documento; `6fac40ac…` identifica el postflight verificado antes de este remate documental.
+> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El HEAD canónico posterior será el commit de `main` que contenga este documento; `7b895f5d…` identifica el postflight verificado antes de este remate documental.
 
 ## Tablero operativo único
 
@@ -24,16 +24,17 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | **BLOQUEADO** | [#492 · Supabase Preview Branches](https://github.com/nachosanchezperez-ux/base-cofrade/issues/492) | Reconciliación estructural pendiente | Bloquea DDL, tablas, migraciones estructurales y RLS; no bloquea DML editorial |
 | **CERRADO** | Higiene de ramas | 817 ramas revisadas; 754 eliminadas por SHA; 63 preservadas; salvaguarda remota verificada | No borrar las 61 ramas con trabajo único sin una revisión futura específica |
 | **CERRADO** | Cuarto lote HC-016 | El Cachorro: 90/90 aplicadas, 0 inválidas, 0 fallos; intento previo inválido cancelado con 0 escrituras | No reabrir para perseguir un 100 % artificial |
-| **COLA 2** | Siguiente frente editorial | No existe una quinta ficha abierta | Refrescar grafo y TOP 3 antes de elegir una sola Hermandad |
-| **COLA 3** | Cristo del Perdón · San José de la Rinconada | Ficha publicada; quedan por rematar la música vigente y el escudo solicitado | Tratar como remate acotado, no como ficha nueva ni como cambio estructural |
+| **CERRADO** | Quinto lote HC-016 | El Carmen: 83/83 aplicadas, 0 inválidas, 0 fallos; 3 titulares, 2 Pasos, 9 Cultos, Salida de 2026 y 4 periodos musicales | No reabrir para completar catálogos exhaustivos o perseguir un 100 % artificial |
+| **CERRADO** | Cristo del Perdón · San José de la Rinconada | Las dos bandas vigentes quedan verificadas y documentadas mediante un remate HC-016 de 5/5 | El escudo queda reservado a la carga anunciada desde el Panel; no bloquea el cierre de datos |
+| **COLA 2** | Siguiente frente editorial | No existe una sexta ficha abierta | Refrescar grafo y TOP 3 antes de elegir una sola Hermandad; Cristo de Burgos era la siguiente candidata del último corte, no una apertura automática |
 | **LABORATORIO** | Mejoras de producto y diseño | Ideas de cabeceras, nuevos campos, nuevas secciones y ampliaciones transversales | No activar mientras siga `FIRST EDITION FREEZE` |
 | **BLOQUEADO** | HC-018 · Aportaciones públicas | Implementación en código, activación expresamente bloqueada | No abrir `/colabora` hasta superar sus puertas de seguridad, privacidad y antiabuso |
 
 ## Verdad de plataforma
 
-- GitHub: `main = 6fac40ac…`, 0 PR abiertas y una única issue abierta: #492.
-- Vercel: producción `READY` en el mismo SHA.
-- Supabase: la base productiva responde; el cuarto lote HC-016 está `completed` con 90/90 y su intento inválido previo está `cancelled` con 0 escrituras.
+- GitHub: `main = 7b895f5d…`, 0 PR abiertas y una única issue abierta: #492.
+- Vercel: producción `READY` en el mismo SHA mediante `dpl_52BkVNbnSKRvBN9w5XXoj4AAR4NH`.
+- Supabase: la base productiva responde; el remate de Cristo del Perdón está `completed` con 5/5 y el quinto lote HC-016 de El Carmen está `completed` con 83/83.
 - Git ↔ Supabase: el historial no se considerará reconciliado hasta cerrar #492. No se reescriben migraciones ya aplicadas ni se usa producción para resolver una limitación de previews.
 
 ## Trabajo reciente ya cerrado
@@ -47,16 +48,18 @@ No debe mantenerse en la cola lo que ya está integrado y desplegado:
 - ordenación de Hermandades y Bandas por jornada/tipología;
 - SEO P3 de Hermandades;
 - acompañamientos históricos y cronología musical por Paso de Las Aguas;
-- incorporación de Pasión de Linares, Esencia y cinco Bandas de la Semana Santa de Sevilla (#708 y #709).
+- incorporación de Pasión de Linares, Esencia y cinco Bandas de la Semana Santa de Sevilla (#708 y #709);
 - paleta negra, blanca y dorada de El Museo (#711);
-- paletas de cinco Hermandades a partir de hábitos documentados (#713).
+- paletas de cinco Hermandades a partir de hábitos documentados (#713);
 - paletas de siete Hermandades de Sevilla (#715), de Milagrosa, Quinta Angustia y Montserrat (#716) y de otras seis Hermandades de Sevilla y provincia (#717);
 - limpieza recuperable de ramas: 817 revisadas, 754 eliminadas y 63 preservadas;
-- cuarto lote real de HC-016: El Cachorro.
+- cuarto lote real de HC-016: El Cachorro;
+- eliminación del azul residual en las fichas de Hermandad (#721);
+- remate musical de Cristo del Perdón y quinto lote real de HC-016: El Carmen.
 
 ## Dónde estamos ahora
 
-HC-016 ya funciona como método editorial operativo en cuatro contextos reales. San Pablo fue el primero; Mercedes de la Puerta Real acreditó el segundo y dejó corregida la validación sistémica de autorías; El Museo ejecutó el tercero en una Hermandad penitencial densa; El Cachorro completa el cuarto con 90 operaciones, reutilización de nodos, titulares, Pasos, patrimonio, Cultos, Salida histórica, música y Fuentes.
+HC-016 ya funciona como método editorial operativo en cinco contextos reales. San Pablo fue el primero; Mercedes de la Puerta Real acreditó el segundo y dejó corregida la validación sistémica de autorías; El Museo ejecutó el tercero en una Hermandad penitencial densa; El Cachorro completó el cuarto con 90 operaciones; El Carmen suma el quinto con 83 operaciones, reutilización de nodos, titulares, Pasos, Cultos, Salida de 2026, música vigente e histórica y Fuentes. El remate independiente de Cristo del Perdón añadió trazabilidad a dos periodos ya existentes sin duplicarlos.
 
 Los cierres editoriales no incorporaron DDL, tablas, migraciones estructurales, cambios RLS ni excepciones por `slug`. El circuito gobernado sigue siendo:
 
@@ -78,6 +81,12 @@ La limpieza eliminó 753 referencias en la primera pasada y la rama ya fusionada
 El TOP 3 actualizado fue El Cachorro, El Carmen y Cristo de Burgos. El Cachorro quedó primero por densidad relacional y profundidad de fuentes oficiales. La actualidad estricta detectó un lote ya preparado, evitó duplicarlo y permitió auditarlo antes de Apply.
 
 El lote `19d2d74c-ff8d-42cd-9a4e-42c8e3a56a7d` quedó `completed`: 90/90, 77 insert, 12 update, 1 reuse y 0 fallos. El lote previo `1e325c2a-c27d-4572-a69e-cc279ed9075f` quedó `cancelled` con 0 escrituras. La certificación está en [`CERTIFICACION-EL-CACHORRO-HC016-2026-09-09.md`](./CERTIFICACION-EL-CACHORRO-HC016-2026-09-09.md).
+
+## Quinto lote y remate de Cristo del Perdón
+
+El lote `c0160005-1000-4000-8000-000000000001` dejó El Carmen `completed`: 83/83, 74 insert, 6 update, 3 reuse y 0 fallos. Publicó 3 titulares, 2 Pasos, 9 Cultos, la Estación de Penitencia de 2026 y cuatro periodos musicales. La cronología diferencia la Soledad de Cantillana como vigente de Pasión de Linares, Virgen de los Reyes y Guadalrosal como periodos finalizados. La certificación está en [`CERTIFICACION-EL-CARMEN-HC016-2026-09-09.md`](./CERTIFICACION-EL-CARMEN-HC016-2026-09-09.md).
+
+El lote independiente `c0160005-0000-4000-8000-000000000001` cerró 5/5 operaciones sobre Cristo del Perdón. Las bandas del Cristo del Humilladero y Municipal Cristo del Perdón ya existían como vigentes; se conservaron y se añadieron dos Fuentes y tres vínculos sin duplicar acompañamientos. La carga del escudo anunciada por el editor queda fuera de este lote y se realizará desde el Panel.
 
 ## Recálculo de deuda y selección de El Museo
 
@@ -175,9 +184,9 @@ No se transformaron anuncios en hechos celebrados ni se inventaron continuidades
 
 ## Actualidad de `main` y producción
 
-El cierre documental de El Museo quedó integrado en `af81be33…`, su paleta cromática en `63463d7e…`, el orden operativo en `04e75a44…` y las cinco paletas derivadas de hábitos en `a910fd9b…`. Después se integraron las paletas #715, #716, #717 y #719, el cierre de El Cachorro en #718 y la limpieza recuperable en #720. El postflight vigente anterior a esta documentación es `main = 6fac40ac…`, con producción `READY` en el mismo SHA.
+El cierre documental de El Museo quedó integrado en `af81be33…`, su paleta cromática en `63463d7e…`, el orden operativo en `04e75a44…` y las cinco paletas derivadas de hábitos en `a910fd9b…`. Después se integraron las paletas #715, #716, #717 y #719, el cierre de El Cachorro en #718, la limpieza recuperable en #720 y la eliminación del azul residual en #721. El postflight vigente anterior a esta documentación es `main = 7b895f5d…`, con producción `READY` en el mismo SHA.
 
-Este remate no cambia producto, datos ni alcance. Tras integrarlo, el SHA final de `main` y producción debe prevalecer sobre esta base auditada y GitHub debe volver a 0 PR abiertas.
+Este remate documental no cambia producto ni arquitectura; refleja el DML editorial ya aplicado y verificado. Tras integrarlo, el SHA final de `main` y producción debe prevalecer sobre esta base auditada y GitHub debe volver a 0 PR abiertas.
 
 ## #492 · aislada
 
@@ -190,22 +199,24 @@ No existe otro bloqueo operativo.
 1. **¿San Pablo continúa cerrado?** Sí.
 2. **¿Mercedes de la Puerta Real continúa cerrada?** Sí.
 3. **¿El Museo está cerrado?** Sí, con los huecos legítimos expresos.
-4. **¿Queda alguna fila del lote en estado indeterminado?** No: 124/124 están aplicadas o reutilizadas con resultado conocido.
+4. **¿El Cachorro continúa cerrado?** Sí: el cuarto lote terminó 90/90 y sin fallos.
 5. **¿Algún error determinista nuevo alcanzó Apply?** No.
-6. **¿HC-016 es reutilizable como método editorial?** Sí; El Museo repite el circuito sin incorporación manual masiva ni cambios de arquitectura.
+6. **¿HC-016 es reutilizable como método editorial?** Sí; El Carmen completa el quinto contexto real con 83/83 operaciones sin cambios de arquitectura.
 7. **¿Existe algún bloqueo estructural aparte de #492?** No; la divergencia del historial de migraciones queda adscrita a su reconciliación.
 8. **¿`main` y producción coincidían en el corte histórico de El Museo?** Sí, en `a910fd9b…`.
 9. **¿Había 0 PR abiertas antes de la sincronización?** Sí.
-10. **¿El cuarto lote real está cerrado?** Sí; El Cachorro terminó 90/90 y sin fallos.
-11. **¿Existe una quinta Hermandad abierta?** No.
-12. **¿Las ramas remotas equivalen a trabajo activo?** No; 817 se revisaron, 754 se eliminaron de forma recuperable y 63 quedaron preservadas.
-13. **¿`main` y producción coinciden en el postflight previo a este remate?** Sí, en `6fac40ac…`.
+10. **¿El quinto lote real está cerrado?** Sí; El Carmen terminó 83/83 y sin fallos.
+11. **¿Cristo del Perdón requiere rehacer su música?** No; los dos periodos vigentes ya eran correctos y ahora tienen trazabilidad documental adicional.
+12. **¿Existe una sexta Hermandad abierta?** No.
+13. **¿Las ramas remotas equivalen a trabajo activo?** No; 817 se revisaron, 754 se eliminaron de forma recuperable y 63 quedaron preservadas.
+14. **¿`main` y producción coinciden en el postflight previo a este remate?** Sí, en `7b895f5d…`.
 
 ## Siguiente movimiento autorizado
 
 1. Mantener preservadas las 61 ramas con trabajo único; cualquier limpieza futura exige una revisión específica nueva, no la reutilización de este manifiesto.
-2. Mantener cerrada El Cachorro y no abrir una quinta ficha por continuidad automática.
-3. Antes de un nuevo lote editorial, refrescar `main`, PR, producción y grafo, recalcular el TOP 3 y elegir una sola Hermandad.
-4. Mantener el remate de Cristo del Perdón como trabajo acotado en cola y #492 como único bloqueo estructural.
+2. Mantener cerradas El Cachorro y El Carmen, y no abrir una sexta ficha por continuidad automática.
+3. Antes de un nuevo lote editorial, refrescar `main`, PR, producción y grafo, recalcular el TOP 3 y elegir una sola Hermandad. Cristo de Burgos es una candidata, no una decisión ya tomada.
+4. Permitir la carga manual del escudo de Cristo del Perdón desde el Panel, sin reabrir su cierre de datos.
+5. Mantener #492 como único bloqueo estructural.
 
 No se abre una Hermandad por continuidad de una conversación antigua ni se activa un frente de Laboratorio durante este corte.
