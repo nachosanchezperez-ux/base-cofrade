@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { externalReleaseLinkLabel, presentReleaseType } from '@/lib/bands/discography'
+import BandReleaseCover from './BandReleaseCover'
 import styles from './BandDiscographySection.module.css'
 
 function ordinalLabel(value) {
@@ -151,16 +152,11 @@ export default function BandDiscographySection({ releases = [], artistSpotifyUrl
                 data-hilo-scope="release"
               >
                 <div className={styles.cover}>
-                  {release.coverImagePath ? (
-                    <Image
-                      src={release.coverImagePath}
-                      alt={release.coverImageAlt || `Portada de ${release.title}`}
-                      fill
-                      sizes="(max-width: 760px) 64px, 84px"
-                    />
-                  ) : (
-                    <div className={styles.coverPlaceholder} aria-hidden="true"><span>{release.year || 'HC'}</span></div>
-                  )}
+                  <BandReleaseCover
+                    src={release.coverImagePath}
+                    alt={release.coverImageAlt || `Portada de ${release.title}`}
+                    year={release.year}
+                  />
                 </div>
                 <div className={styles.summaryCopy}>
                   <h3>{release.title}</h3>
