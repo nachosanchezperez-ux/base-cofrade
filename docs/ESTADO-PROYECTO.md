@@ -2,7 +2,7 @@
 
 **Corte operativo:** 9 de septiembre de 2026 · reconciliación y orden operativo
 
-**HEAD base auditado:** `63463d7eedcd3b06473d34340906783cfb904718`
+**HEAD base auditado:** `a910fd9b53e40c9cd5e25440e06861a7f31c147d`
 
 **Producción auditada:** `READY` · mismo SHA que el HEAD base auditado
 
@@ -10,9 +10,9 @@
 
 **Régimen:** `FIRST EDITION FREEZE` activo
 
-**Frente ACTIVO:** orden operativo y sincronización documental; ningún lote editorial abierto
+**Frente ACTIVO:** ninguno; el orden operativo está cerrado y no existe un lote editorial abierto
 
-> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El HEAD canónico posterior será el commit de `main` que contenga este documento; `63463d7e…` identifica la base verificada antes de esta sincronización.
+> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El HEAD canónico posterior será el commit de `main` que contenga este documento; `a910fd9b…` identifica la base verificada antes de este remate documental.
 
 ## Tablero operativo único
 
@@ -20,9 +20,9 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 
 | Posición | Frente | Estado real | Regla |
 |---|---|---|---|
-| **ACTIVO** | Orden operativo | Reconciliar documentación viva y dejar una única cola verificable | No abrir una Hermandad durante este corte |
+| **CERRADO** | Orden operativo | Autoridad documental y cola única integradas en #712 | No reabrir salvo contradicción verificable |
 | **BLOQUEADO** | [#492 · Supabase Preview Branches](https://github.com/nachosanchezperez-ux/base-cofrade/issues/492) | Reconciliación estructural pendiente | Bloquea DDL, tablas, migraciones estructurales y RLS; no bloquea DML editorial |
-| **COLA 1** | Higiene de ramas | 807 ramas remotas distintas de `main`: 289 son ancestros de `main` y 518 no lo son de forma literal | Preparar manifiesto por PR/estado y borrar solo en un corte autorizado y recuperable |
+| **COLA 1** | Higiene de ramas | Más de 800 ramas remotas distintas de `main`; una rama no equivale por sí sola a trabajo pendiente | Preparar manifiesto por PR/estado y borrar solo en un corte autorizado y recuperable |
 | **COLA 2** | Siguiente lote HC-016 | San Pablo, Mercedes de la Puerta Real y El Museo están cerradas; no existe una cuarta ficha abierta | Recalcular deuda, presentar TOP 3 y elegir una sola Hermandad antes de escribir |
 | **COLA 3** | Cristo del Perdón · San José de la Rinconada | Ficha publicada; quedan por rematar la música vigente y el escudo solicitado | Tratar como remate acotado, no como ficha nueva ni como cambio estructural |
 | **LABORATORIO** | Mejoras de producto y diseño | Ideas de cabeceras, nuevos campos, nuevas secciones y ampliaciones transversales | No activar mientras siga `FIRST EDITION FREEZE` |
@@ -30,7 +30,7 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 
 ## Verdad de plataforma
 
-- GitHub: `main = 63463d7e…`, 0 PR abiertas y una única issue abierta: #492.
+- GitHub: `main = a910fd9b…`, 0 PR abiertas y una única issue abierta: #492.
 - Vercel: producción `READY` en el mismo SHA.
 - Supabase: la base productiva responde y los lotes HC-016 permanecen aplicados.
 - Git ↔ Supabase: el historial no se considerará reconciliado hasta cerrar #492. No se reescriben migraciones ya aplicadas ni se usa producción para resolver una limitación de previews.
@@ -47,7 +47,8 @@ No debe mantenerse en la cola lo que ya está integrado y desplegado:
 - SEO P3 de Hermandades;
 - acompañamientos históricos y cronología musical por Paso de Las Aguas;
 - incorporación de Pasión de Linares, Esencia y cinco Bandas de la Semana Santa de Sevilla (#708 y #709).
-- paleta negra, blanca y dorada de El Museo (#711).
+- paleta negra, blanca y dorada de El Museo (#711);
+- paletas de cinco Hermandades a partir de hábitos documentados (#713).
 
 ## Dónde estamos ahora
 
@@ -160,9 +161,9 @@ No se transformaron anuncios en hechos celebrados ni se inventaron continuidades
 
 ## Actualidad de `main` y producción
 
-El cierre documental de El Museo quedó integrado en `af81be33…` y su paleta cromática en `63463d7e…`. Producción está `READY` y coincide con este último SHA antes de esta actualización documental.
+El cierre documental de El Museo quedó integrado en `af81be33…`, su paleta cromática en `63463d7e…`, el orden operativo en `04e75a44…` y las cinco paletas derivadas de hábitos en `a910fd9b…`. Producción estaba `READY` y coincidía con este último SHA antes del remate documental.
 
-La presente sincronización debe fusionarse mediante una única PR acotada, desplegarse y terminar con producción en el mismo SHA final de `main` y 0 PR abiertas.
+Este remate no cambia producto, datos ni alcance. Tras integrarlo, el SHA final de `main` y producción debe prevalecer sobre esta base auditada y GitHub debe volver a 0 PR abiertas.
 
 ## #492 · aislada
 
@@ -179,16 +180,15 @@ No existe otro bloqueo operativo.
 5. **¿Algún error determinista nuevo alcanzó Apply?** No.
 6. **¿HC-016 es reutilizable como método editorial?** Sí; El Museo repite el circuito sin incorporación manual masiva ni cambios de arquitectura.
 7. **¿Existe algún bloqueo estructural aparte de #492?** No; la divergencia del historial de migraciones queda adscrita a su reconciliación.
-8. **¿`main` y producción coinciden?** Sí, en `63463d7e…` antes de esta sincronización.
+8. **¿`main` y producción coinciden?** Sí, en `a910fd9b…` antes de este remate documental.
 9. **¿Había 0 PR abiertas antes de la sincronización?** Sí.
 10. **¿Existe una cuarta Hermandad abierta?** No.
 11. **¿Las ramas remotas equivalen a trabajo activo?** No; deben clasificarse por PR y equivalencia antes de cualquier borrado.
 
 ## Siguiente movimiento autorizado
 
-1. Cerrar esta única PR documental, verificar producción y volver a 0 PR abiertas.
-2. Preparar el manifiesto de higiene de ramas sin borrar todavía.
-3. Recalcular la deuda editorial desde el grafo real, presentar el TOP 3 y elegir una sola Hermandad.
-4. Abrir el cuarto lote real de HC-016 únicamente después de esa elección.
+1. Preparar el manifiesto de higiene de ramas sin borrar todavía.
+2. Recalcular la deuda editorial desde el grafo real, presentar el TOP 3 y elegir una sola Hermandad.
+3. Abrir el cuarto lote real de HC-016 únicamente después de esa elección.
 
 No se abre una Hermandad por continuidad de una conversación antigua ni se activa un frente de Laboratorio durante este corte.
