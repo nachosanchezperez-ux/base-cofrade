@@ -25,6 +25,26 @@ Debe comprobar como mínimo:
 
 Si el estado registrado está desactualizado, prevalece el estado real de las herramientas y debe actualizarse `docs/ESTADO-PROYECTO.md` cuando esa diferencia cambie decisiones futuras.
 
+## Autoridad documental
+
+Para evitar que una fotografía antigua vuelva a convertirse en una orden operativa:
+
+1. `docs/ESTADO-PROYECTO.md` es el **único tablero operativo vivo**: indica qué está abierto, bloqueado, en cola o detenido.
+2. `docs/DECISIONES-HC.md` es el **índice vivo de decisiones**: registra contratos de producto y arquitectura, no tareas.
+3. Las auditorías, certificaciones y cierres fechados son **evidencia histórica**. Conservan su validez para el corte que documentan, pero sus apartados «Siguiente movimiento» no prevalecen sobre el tablero vivo.
+4. Una conversación, una rama remota o una propuesta no constituyen trabajo activo por sí solas.
+5. GitHub, Vercel y Supabase prevalecen siempre sobre los documentos cuando exista una diferencia verificable.
+
+El Orquestador debe clasificar cada petición en una sola de estas posiciones:
+
+- **ACTIVO:** único frente que puede ejecutarse ahora;
+- **BLOQUEADO:** requiere una precondición explícita;
+- **COLA:** autorizado para evaluación posterior, pero todavía no abierto;
+- **LABORATORIO:** idea o ampliación no autorizada durante el régimen vigente;
+- **CERRADO:** integrado y verificado; no se reabre sin regresión o información material nueva.
+
+No puede haber más de un frente editorial de Hermandad en estado **ACTIVO**.
+
 ---
 
 # HILO ORQUESTADOR · MATRIZ AUTOMÁTICA DE DECISIÓN

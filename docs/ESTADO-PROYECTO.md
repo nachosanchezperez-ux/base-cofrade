@@ -1,18 +1,53 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 8 de septiembre de 2026 · El Museo certificado mediante HC-016
+**Corte operativo:** 9 de septiembre de 2026 · reconciliación y orden operativo
 
-**HEAD funcional auditado:** `9022aaa1cf90d4c9d6aa4aade8a9e3454926362f`
+**HEAD base auditado:** `63463d7eedcd3b06473d34340906783cfb904718`
 
-**Producción auditada:** `dpl_GG5TAiW4Cb3iGJXypUdtm9jmrSQk` · `READY` · mismo SHA que el HEAD funcional auditado
+**Producción auditada:** `READY` · mismo SHA que el HEAD base auditado
 
-**PR abiertas antes de sincronizar esta fotografía:** **0**
+**PR abiertas al iniciar esta reconciliación:** **0**
 
 **Régimen:** `FIRST EDITION FREEZE` activo
 
-**Frente editorial de Hermandad:** San Pablo, Mercedes de la Puerta Real y El Museo cerradas; no existe otra ficha abierta
+**Frente ACTIVO:** orden operativo y sincronización documental; ningún lote editorial abierto
 
-> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El HEAD canónico posterior será el commit de `main` que contenga este documento; `9022aaa1…` identifica el producto y los datos auditados antes de la sincronización documental.
+> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El HEAD canónico posterior será el commit de `main` que contenga este documento; `63463d7e…` identifica la base verificada antes de esta sincronización.
+
+## Tablero operativo único
+
+Este apartado sustituye cualquier instrucción de continuidad escrita en auditorías o certificaciones fechadas.
+
+| Posición | Frente | Estado real | Regla |
+|---|---|---|---|
+| **ACTIVO** | Orden operativo | Reconciliar documentación viva y dejar una única cola verificable | No abrir una Hermandad durante este corte |
+| **BLOQUEADO** | [#492 · Supabase Preview Branches](https://github.com/nachosanchezperez-ux/base-cofrade/issues/492) | Reconciliación estructural pendiente | Bloquea DDL, tablas, migraciones estructurales y RLS; no bloquea DML editorial |
+| **COLA 1** | Higiene de ramas | 807 ramas remotas distintas de `main`: 289 son ancestros de `main` y 518 no lo son de forma literal | Preparar manifiesto por PR/estado y borrar solo en un corte autorizado y recuperable |
+| **COLA 2** | Siguiente lote HC-016 | San Pablo, Mercedes de la Puerta Real y El Museo están cerradas; no existe una cuarta ficha abierta | Recalcular deuda, presentar TOP 3 y elegir una sola Hermandad antes de escribir |
+| **COLA 3** | Cristo del Perdón · San José de la Rinconada | Ficha publicada; quedan por rematar la música vigente y el escudo solicitado | Tratar como remate acotado, no como ficha nueva ni como cambio estructural |
+| **LABORATORIO** | Mejoras de producto y diseño | Ideas de cabeceras, nuevos campos, nuevas secciones y ampliaciones transversales | No activar mientras siga `FIRST EDITION FREEZE` |
+| **BLOQUEADO** | HC-018 · Aportaciones públicas | Implementación en código, activación expresamente bloqueada | No abrir `/colabora` hasta superar sus puertas de seguridad, privacidad y antiabuso |
+
+## Verdad de plataforma
+
+- GitHub: `main = 63463d7e…`, 0 PR abiertas y una única issue abierta: #492.
+- Vercel: producción `READY` en el mismo SHA.
+- Supabase: la base productiva responde y los lotes HC-016 permanecen aplicados.
+- Git ↔ Supabase: el historial no se considerará reconciliado hasta cerrar #492. No se reescriben migraciones ya aplicadas ni se usa producción para resolver una limitación de previews.
+
+## Trabajo reciente ya cerrado
+
+No debe mantenerse en la cola lo que ya está integrado y desplegado:
+
+- portadas visuales y carátulas de la discografía de Bandas (#700 y #701);
+- circuito seguro de HC-016 y sus tres lotes reales: San Pablo, Mercedes de la Puerta Real y El Museo;
+- separación del Vía Crucis institucional y su posición editorial;
+- cabeceras de Bandas con el logotipo protagonista (#663);
+- ordenación de Hermandades y Bandas por jornada/tipología;
+- SEO P3 de Hermandades;
+- acompañamientos históricos y cronología musical por Paso de Las Aguas;
+- incorporación de Pasión de Linares, Esencia y cinco Bandas de la Semana Santa de Sevilla (#708 y #709).
+- paleta negra, blanca y dorada de El Museo (#711).
 
 ## Dónde estamos ahora
 
@@ -125,9 +160,9 @@ No se transformaron anuncios en hechos celebrados ni se inventaron continuidades
 
 ## Actualidad de `main` y producción
 
-Después del corte inicial `08135180…` se integraron cambios ajenos al frente de El Museo hasta `9022aaa1…`. El cierre los conserva. Producción está `READY` en `dpl_GG5TAiW4Cb3iGJXypUdtm9jmrSQk` y coincide con ese SHA antes de esta actualización documental.
+El cierre documental de El Museo quedó integrado en `af81be33…` y su paleta cromática en `63463d7e…`. Producción está `READY` y coincide con este último SHA antes de esta actualización documental.
 
-La siguiente sincronización documental debe fusionarse mediante una única PR acotada, desplegarse y terminar con producción en el mismo SHA final de `main` y 0 PR abiertas.
+La presente sincronización debe fusionarse mediante una única PR acotada, desplegarse y terminar con producción en el mismo SHA final de `main` y 0 PR abiertas.
 
 ## #492 · aislada
 
@@ -143,10 +178,17 @@ No existe otro bloqueo operativo.
 4. **¿Queda alguna fila del lote en estado indeterminado?** No: 124/124 están aplicadas o reutilizadas con resultado conocido.
 5. **¿Algún error determinista nuevo alcanzó Apply?** No.
 6. **¿HC-016 es reutilizable como método editorial?** Sí; El Museo repite el circuito sin incorporación manual masiva ni cambios de arquitectura.
-7. **¿Existe algún bloqueo aparte de #492?** No.
-8. **¿`main`, producción y estado canónico coinciden?** Sí para el HEAD funcional auditado; el commit que contenga esta fotografía será el nuevo HEAD canónico.
+7. **¿Existe algún bloqueo estructural aparte de #492?** No; la divergencia del historial de migraciones queda adscrita a su reconciliación.
+8. **¿`main` y producción coinciden?** Sí, en `63463d7e…` antes de esta sincronización.
 9. **¿Había 0 PR abiertas antes de la sincronización?** Sí.
+10. **¿Existe una cuarta Hermandad abierta?** No.
+11. **¿Las ramas remotas equivalen a trabajo activo?** No; deben clasificarse por PR y equivalencia antes de cualquier borrado.
 
 ## Siguiente movimiento autorizado
 
-Cerrar la PR documental, verificar producción y volver a 0 PR abiertas. Después podrá recalcularse la deuda y elegirse una única Hermandad; no se abre una tercera ficha durante este frente.
+1. Cerrar esta única PR documental, verificar producción y volver a 0 PR abiertas.
+2. Preparar el manifiesto de higiene de ramas sin borrar todavía.
+3. Recalcular la deuda editorial desde el grafo real, presentar el TOP 3 y elegir una sola Hermandad.
+4. Abrir el cuarto lote real de HC-016 únicamente después de esa elección.
+
+No se abre una Hermandad por continuidad de una conversación antigua ni se activa un frente de Laboratorio durante este corte.
