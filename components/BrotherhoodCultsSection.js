@@ -91,8 +91,9 @@ export default function BrotherhoodCultsSection({ cults = [] }) {
                 <div className={styles.body}>
                   <CultDate cult={cult} />
                   <div className={styles.copy}>
-                    <span className={styles.type}>{cult.tipo}</span>
+                    <span className={styles.type}>{cult.anunciada ? 'Próximo culto · ' : ''}{cult.tipo}</span>
                     <h3>{cult.nombre}</h3>
+                    {cult.lugar ? <p className={styles.place}>{cult.lugar}</p> : null}
                     {cult.descripcion ? <p>{cult.descripcion}</p> : null}
                   </div>
                 </div>

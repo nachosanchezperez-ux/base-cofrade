@@ -1,8 +1,8 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 9 de septiembre de 2026 · Supabase Preview Branches reconciliadas en #730
+**Corte operativo:** 9 de septiembre de 2026 · Cultos septiembre–diciembre de 2026 preparados y certificados
 
-**HEAD operativo auditado:** `c48096ebfdbe907cb8efde30d285d9b77f6c0ac1`
+**HEAD operativo de partida:** `b9095b581f8156c4089ee11250758cd9c7c7ae9b`
 
 **Producción auditada:** `READY` · deployment `dpl_DZNDHudTpvmCoqc1DCAmkpxEmC4L` · mismo SHA que el HEAD operativo auditado
 
@@ -12,7 +12,7 @@
 
 **Frente editorial ACTIVO:** ninguno
 
-> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El HEAD canónico posterior será el commit de `main` que contenga este documento; #730 quedó integrada, desplegada y verificada sobre `c48096eb…`.
+> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El HEAD canónico posterior será el commit de `main` que contenga este documento; durante la ejecución, `b9095b5…` sustituyó al SHA inicial y fue adoptado antes de integrar el lote.
 
 ## Tablero operativo único
 
@@ -29,13 +29,14 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | **CANCELADO** | Séptimo lote concurrente | Las Siete Palabras: las 252 altas se retiraron y las 18 actualizaciones se reconciliaron; el lote consta como `cancelled` y la señal volvió al 43 % | No cuenta como contexto certificado; no reabrir sin un nuevo TOP 3 y una orden específica |
 | **CERRADO** | Cristo del Perdón · San José de la Rinconada | Las dos bandas vigentes quedan verificadas y documentadas mediante un remate HC-016 de 5/5 | El escudo queda reservado a la carga anunciada desde el Panel; no bloquea el cierre de datos |
 | **CERRADO** | Séptimo lote HC-016 | Las Siete Palabras: 270/270 aplicadas, 0 inválidas, 0 fallos; completitud 43 % → 86 % | No reabrir para perseguir un 100 % artificial; no abrir una octava Hermandad |
+| **CERRADO** | Cultos septiembre–diciembre de 2026 | Lote transversal HC-016 `c0162026-0909-4000-8000-000000000001`: 53/53, cuatro Hermandades y 0 DDL | Mantener ediciones futuras desde Fuentes oficiales; recurrencia no equivale a anuncio |
 | **CERRADO** | Navegación e indexación pública | #729 filtra entidades sin ficha y estabiliza el sitemap mediante lecturas por lotes con reintento; producción publica 553 URL | Mantener la frontera pública; no convertir nodos relacionales incompletos en enlaces navegables |
 | **LABORATORIO** | Mejoras de producto y diseño | Ideas de cabeceras, nuevos campos, nuevas secciones y ampliaciones transversales | No activar mientras siga `FIRST EDITION FREEZE` |
 | **BLOQUEADO** | HC-018 · Aportaciones públicas | Implementación en código, activación expresamente bloqueada | No abrir `/colabora` hasta superar sus puertas de seguridad, privacidad y antiabuso |
 
 ## Verdad de plataforma
 
-- GitHub: `main = c48096eb…`, #730 fusionada y 0 PR abiertas al iniciar esta certificación.
+- GitHub: `main = b9095b58…` antes de integrar este cierre; 0 PR abiertas al iniciar el frente.
 - Vercel: producción `READY` en el mismo SHA mediante `dpl_DZNDHudTpvmCoqc1DCAmkpxEmC4L`; `hilocofrade.es` responde 200 y no registra errores de runtime en el corte.
 - Supabase Preview: la rama limpia de #730, sin datos productivos, completó las cuatro migraciones activas y el seed mínimo; la rama fallida obsoleta de #661 fue eliminada sin pérdida de datos únicos.
 - Git ↔ Supabase: producción registra exactamente las cuatro migraciones estructurales activas. Las 84 marcas editoriales posteriores al baseline se retiraron únicamente del historial remoto y los 90 SQL correspondientes se conservan intactos en archivo; no se reejecutó ni revirtió su contenido.
@@ -66,10 +67,13 @@ No debe mantenerse en la cola lo que ya está integrado y desplegado:
 - séptimo lote real de HC-016: Las Siete Palabras, 270/270.
 - saneamiento de directorios y sitemap (#729): 553 URL servidas, fichas válidas 200 y exclusión de dos Pasos relacionales de La Estrella sin perfil público.
 - reconciliación de Supabase Preview Branches (#730): cadena activa de cuatro migraciones estructurales, 90 SQL editoriales archivados intactos y preview limpia certificada sin datos de producción.
+- Cultos de septiembre a diciembre de 2026: 53/53 operaciones gobernadas sobre San Pablo, Pino Montano, La Misión y Los Negritos, con ediciones, horarios, titulares y Fuentes oficiales.
 
 ## Dónde estamos ahora
 
 HC-016 funciona como método editorial operativo en siete contextos reales: San Pablo, Mercedes de la Puerta Real, El Museo, El Cachorro, El Carmen, Cristo de Burgos y Las Siete Palabras. El séptimo cierre añade 270 operaciones verificadas sobre una ficha de alta densidad relacional, sin esquema nuevo y sin excepciones por `slug`.
+
+El lote transversal de Cultos 2026 demuestra además el uso rutinario del método sin abrir otra ficha: cuatro Hermandades existentes, 53/53 operaciones y separación estricta entre calendario recurrente y edición anunciada. La certificación está en [`CERTIFICACION-CULTOS-OTONO-2026-2026-09-09.md`](./CERTIFICACION-CULTOS-OTONO-2026-2026-09-09.md).
 
 Los cierres editoriales no incorporaron DDL, tablas, migraciones estructurales, cambios RLS ni excepciones por `slug`. El circuito gobernado sigue siendo:
 
