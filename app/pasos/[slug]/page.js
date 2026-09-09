@@ -5,6 +5,7 @@ import JsonLd from '@/components/JsonLd';
 import RelationalEntityHero from '@/components/RelationalEntityHero';
 import RelationalThread from '@/components/RelationalThread';
 import SectionTitle from '@/components/SectionTitle';
+import StepCrewFacts from '@/components/StepCrewFacts';
 import { getStepPhotoFraming } from '@/lib/step-photo-framing';
 import { getPublishedEntityCoverMedia } from '@/lib/supabase/entity-media';
 import { getPasoPageBySlug } from '@/lib/supabase/public-entity-pages';
@@ -207,6 +208,7 @@ export default async function PasoDetailPage({params}){
             {publicText(paso.ejecucion) ? <div><small>Ejecución</small><strong>{publicText(paso.ejecucion)}</strong></div> : null}
             {publicText(paso.materiales) ? <div><small>Materiales</small><strong>{publicText(paso.materiales)}</strong></div> : null}
             {publicText(paso.sistemaPortadores) ? <div><small>Sistema de portadores</small><strong>{publicText(paso.sistemaPortadores)}</strong></div> : null}
+            <StepCrewFacts stepId={paso.id} />
           </div>
         </div>
         {imagenes.length > 0 ? <aside className="brotherhood-summary-card">
