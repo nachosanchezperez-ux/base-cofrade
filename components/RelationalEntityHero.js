@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { getPublishedBrotherhoodCrestPathBySlug } from '@/lib/supabase/brotherhood-public-authority';
 import BrotherhoodDirectoryCrestImage from './BrotherhoodDirectoryCrestImage';
 import RelationalEntityHeroMedia from './RelationalEntityHeroMedia';
 import styles from './RelationalEntityHero.module.css';
@@ -31,6 +32,21 @@ function Breadcrumb({ items = [] }) {
       </ol>
     </nav>
   );
+}
+
+function brotherhoodSlugFromRelation(relation) {
+  const match = String(relation?.href || '').match(/^\/hermandades\/([^/?#]+)/);
+  return match?.[1] || '';
+}
+
+async function withBrotherhoodCrest(relation) {
+  if (!relation?.name || !relation?.href || relation.crestSrc) return relation;
+
+  const slug = brotherhoodSlugFromRelation(relation);
+  if (!slug) return relation;
+
+  const crestSrc = await getPublishedBrotherhoodCrestPathBySlug(slug);
+  return crestSrc ? { ...relation, crestSrc } : relation;
 }
 
 function ParentRelation({ relation }) {
@@ -131,7 +147,7 @@ function BandIdentity({ src, alt, initials = '' }) {
   );
 }
 
-export default function RelationalEntityHero({
+export default async function RelationalEntityHero({
   variant = 'image',
   entityType,
   title,
@@ -146,6 +162,7 @@ export default function RelationalEntityHero({
   const visibleFacts = facts.filter((fact) => fact?.label && fact?.value).slice(0, 3);
   const isBrotherhood = variant === 'brotherhood';
   const isBand = variant === 'band';
+  const visibleRelation = isBand ? await withBrotherhoodCrest(relation) : relation;
 
   const heading = (
     <div className={styles.titleBody}>
@@ -190,7 +207,7 @@ export default function RelationalEntityHero({
           <div className={`${styles.copy} ${polishStyles.copy} ${isBand ? `${bandStyles.bandCopy} ${bandStyles.bandCopyIdentityOnly}` : ''}`}>
             {identityHeading}
 
-            <ParentRelation relation={relation} />
+            <ParentRelation relation={visibleRelation} />
 
             {visibleFacts.length ? (
               <dl className={`${styles.facts} ${polishStyles.facts} ${isBand ? bandStyles.bandFacts : ''}`} data-count={visibleFacts.length}>
