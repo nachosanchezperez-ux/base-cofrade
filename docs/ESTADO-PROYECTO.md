@@ -12,7 +12,7 @@
 
 **Frente ACTIVO:** ninguno; Cristo del Perdón, El Carmen, Cristo de Burgos y Las Siete Palabras están cerrados en datos, a falta únicamente del escudo de Cristo del Perdón que se incorporará desde el Panel
 
-> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El HEAD canónico posterior será el commit de `main` que contenga este documento; `2fdc52fb…` identifica el postflight verificado antes de este cierre documental.
+> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El HEAD canónico posterior será el commit de `main` que contenga este documento; `0ad71091…` identifica el postflight verificado antes de este cierre documental.
 
 ## Tablero operativo único
 
