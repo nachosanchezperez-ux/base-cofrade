@@ -4,7 +4,7 @@
 
 **HEAD operativo de partida:** `b9095b581f8156c4089ee11250758cd9c7c7ae9b`
 
-**Producción auditada:** `READY` · deployment `dpl_DZNDHudTpvmCoqc1DCAmkpxEmC4L` · mismo SHA que el HEAD operativo auditado
+**Producción auditada:** `READY` · deployment `dpl_8GECiKCmzXTrkNwqrMV96GWuBHnv` · SHA funcional `03b12d869e00b5c9c3f77408a857c4301e6c148a`
 
 **PR abiertas al iniciar esta reconciliación:** **0**
 
@@ -36,8 +36,8 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 
 ## Verdad de plataforma
 
-- GitHub: `main = b9095b58…` antes de integrar este cierre; 0 PR abiertas al iniciar el frente.
-- Vercel: producción `READY` en el mismo SHA mediante `dpl_DZNDHudTpvmCoqc1DCAmkpxEmC4L`; `hilocofrade.es` responde 200 y no registra errores de runtime en el corte.
+- GitHub: `main = 03b12d86…` después de integrar #735; 0 PR abiertas al iniciar el frente.
+- Vercel: producción `READY` en `03b12d86…` mediante `dpl_8GECiKCmzXTrkNwqrMV96GWuBHnv`; las cuatro fichas auditadas responden 200 con canonical, `index, follow`, OG/Twitter y Cultos visibles.
 - Supabase Preview: la rama limpia de #730, sin datos productivos, completó las cuatro migraciones activas y el seed mínimo; la rama fallida obsoleta de #661 fue eliminada sin pérdida de datos únicos.
 - Git ↔ Supabase: producción registra exactamente las cuatro migraciones estructurales activas. Las 84 marcas editoriales posteriores al baseline se retiraron únicamente del historial remoto y los 90 SQL correspondientes se conservan intactos en archivo; no se reejecutó ni revirtió su contenido.
 
