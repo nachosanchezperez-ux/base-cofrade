@@ -1,10 +1,10 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 9 de septiembre de 2026 · cierre gobernado del séptimo lote HC-016 de Las Siete Palabras
+**Corte operativo:** 9 de septiembre de 2026 · saneamiento de navegación e indexación pública integrado en #729
 
-**HEAD operativo auditado:** `cd4b5e4ba1d71363e4943d405a0c7202731cbd30`
+**HEAD operativo auditado:** `9f3ac79849ab054b1b56c2be67058129bda0402c`
 
-**Producción auditada:** `READY` · deployment `dpl_GHjp2NQBFNN4M5W8veJLQ67Susef` · mismo SHA que el HEAD operativo auditado
+**Producción auditada:** `READY` · deployment `dpl_FS9fqCU2snPS8fekpD4UB2xpN94t` · mismo SHA que el HEAD operativo auditado
 
 **PR abiertas al iniciar esta reconciliación:** **0**
 
@@ -12,7 +12,7 @@
 
 **Frente editorial ACTIVO:** ninguno
 
-> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El HEAD canónico posterior será el commit de `main` que contenga este documento; el preflight comenzó en `de55d81b…` y adoptó `cd4b5e4b…` cuando #727 se fusionó durante la ejecución.
+> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El HEAD canónico posterior será el commit de `main` que contenga este documento; #729 quedó integrada, desplegada y verificada sobre `9f3ac798…`.
 
 ## Tablero operativo único
 
@@ -29,13 +29,14 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | **CANCELADO** | Séptimo lote concurrente | Las Siete Palabras: las 252 altas se retiraron y las 18 actualizaciones se reconciliaron; el lote consta como `cancelled` y la señal volvió al 43 % | No cuenta como contexto certificado; no reabrir sin un nuevo TOP 3 y una orden específica |
 | **CERRADO** | Cristo del Perdón · San José de la Rinconada | Las dos bandas vigentes quedan verificadas y documentadas mediante un remate HC-016 de 5/5 | El escudo queda reservado a la carga anunciada desde el Panel; no bloquea el cierre de datos |
 | **CERRADO** | Séptimo lote HC-016 | Las Siete Palabras: 270/270 aplicadas, 0 inválidas, 0 fallos; completitud 43 % → 86 % | No reabrir para perseguir un 100 % artificial; no abrir una octava Hermandad |
+| **CERRADO** | Navegación e indexación pública | #729 filtra entidades sin ficha y estabiliza el sitemap mediante lecturas por lotes con reintento; producción publica 553 URL | Mantener la frontera pública; no convertir nodos relacionales incompletos en enlaces navegables |
 | **LABORATORIO** | Mejoras de producto y diseño | Ideas de cabeceras, nuevos campos, nuevas secciones y ampliaciones transversales | No activar mientras siga `FIRST EDITION FREEZE` |
 | **BLOQUEADO** | HC-018 · Aportaciones públicas | Implementación en código, activación expresamente bloqueada | No abrir `/colabora` hasta superar sus puertas de seguridad, privacidad y antiabuso |
 
 ## Verdad de plataforma
 
-- GitHub: `main = cd4b5e4b…`, 0 PR abiertas en el corte previo a esta certificación y #492 abierta y aislada.
-- Vercel: producción `READY` en el mismo SHA mediante `dpl_GHjp2NQBFNN4M5W8veJLQ67Susef`.
+- GitHub: `main = 9f3ac798…`, 0 PR abiertas tras el postflight de #729 y #492 abierta y aislada.
+- Vercel: producción `READY` en el mismo SHA mediante `dpl_FS9fqCU2snPS8fekpD4UB2xpN94t`.
 - Supabase: la base productiva responde; el nuevo lote de Las Siete Palabras está `completed` con 270/270, 0 inválidas y 0 fallos. El lote concurrente anterior permanece `cancelled` y trazado.
 - Git ↔ Supabase: el historial no se considerará reconciliado hasta cerrar #492. No se reescriben migraciones ya aplicadas ni se usa producción para resolver una limitación de previews.
 
@@ -63,6 +64,7 @@ No debe mantenerse en la cola lo que ya está integrado y desplegado:
 - presentación de la cuadrilla actual en las fichas de Pasos (`00e241f` y `de55d81`), integrada y desplegada antes de este lote editorial.
 - paleta propia de Las Siete Palabras (#727), incorporada durante la ejecución y adoptada como nuevo HEAD prevalente.
 - séptimo lote real de HC-016: Las Siete Palabras, 270/270.
+- saneamiento de directorios y sitemap (#729): 553 URL servidas, fichas válidas 200 y exclusión de dos Pasos relacionales de La Estrella sin perfil público.
 
 ## Dónde estamos ahora
 
@@ -245,6 +247,8 @@ No existe otro bloqueo operativo.
 14. **¿`main` y producción coinciden en el último corte previo a esta certificación?** Sí, en `cd4b5e4b…`; ese SHA posterior prevaleció sobre el inicial `de55d81b…`.
 15. **¿Cristo de Burgos está cerrada y visible?** Sí; la ficha alcanza el 86 %, muestra música vigente e histórica y presenta el Vía Crucis institucional de 1999.
 16. **¿Las Siete Palabras cuenta ya como contexto certificado?** Sí; el lote nuevo terminó 270/270 y la ficha alcanza el 86 % con huecos legítimos expresos.
+17. **¿La navegación pública conduce a fichas inexistentes conocidas?** No; los dos Pasos relacionales de La Estrella sin perfil especializado quedan fuera de `/pasos` y del sitemap.
+18. **¿El sitemap vuelve a publicar las fichas individuales?** Sí; producción sirve 553 URL y las muestras de Hermandades, Bandas, Imágenes y Pasos responden 200.
 
 ## Siguiente movimiento autorizado
 
@@ -253,5 +257,6 @@ No existe otro bloqueo operativo.
 3. No abrir una octava Hermandad. El Valle y La Amargura permanecen como referencias del corte, no como frentes abiertos.
 4. Permitir la carga manual del escudo de Cristo del Perdón desde el Panel, sin reabrir su cierre de datos.
 5. Mantener #492 como único bloqueo estructural.
+6. Mantener el rediseño amplio del directorio en Laboratorio; #729 solo sanea la frontera de publicación y la fiabilidad de las consultas.
 
 No se abre una segunda Hermandad ni se activa un frente de Laboratorio durante este corte.
