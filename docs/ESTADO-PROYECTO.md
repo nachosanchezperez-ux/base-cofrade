@@ -1,8 +1,8 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 9 de septiembre de 2026 · reconciliación y orden operativo
+**Corte operativo:** 9 de septiembre de 2026 · manifiesto de ramas y cuarto lote HC-016
 
-**HEAD base auditado:** `a910fd9b53e40c9cd5e25440e06861a7f31c147d`
+**HEAD base auditado:** `58488e8632cbbb1d42557624c6d20f621d0d6d5b`
 
 **Producción auditada:** `READY` · mismo SHA que el HEAD base auditado
 
@@ -10,9 +10,9 @@
 
 **Régimen:** `FIRST EDITION FREEZE` activo
 
-**Frente ACTIVO:** ninguno; el orden operativo está cerrado y no existe un lote editorial abierto
+**Frente ACTIVO:** ninguno; El Cachorro está cerrado y no existe otra ficha editorial abierta
 
-> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El HEAD canónico posterior será el commit de `main` que contenga este documento; `a910fd9b…` identifica la base verificada antes de este remate documental.
+> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El HEAD canónico posterior será el commit de `main` que contenga este documento; `58488e86…` identifica la base verificada antes de este remate documental.
 
 ## Tablero operativo único
 
@@ -22,17 +22,18 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 |---|---|---|---|
 | **CERRADO** | Orden operativo | Autoridad documental y cola única integradas en #712 | No reabrir salvo contradicción verificable |
 | **BLOQUEADO** | [#492 · Supabase Preview Branches](https://github.com/nachosanchezperez-ux/base-cofrade/issues/492) | Reconciliación estructural pendiente | Bloquea DDL, tablas, migraciones estructurales y RLS; no bloquea DML editorial |
-| **COLA 1** | Higiene de ramas | Más de 800 ramas remotas distintas de `main`; una rama no equivale por sí sola a trabajo pendiente | Preparar manifiesto por PR/estado y borrar solo en un corte autorizado y recuperable |
-| **COLA 2** | Siguiente lote HC-016 | San Pablo, Mercedes de la Puerta Real y El Museo están cerradas; no existe una cuarta ficha abierta | Recalcular deuda, presentar TOP 3 y elegir una sola Hermandad antes de escribir |
+| **COLA 1** | Higiene de ramas | Manifiesto preparado: 813 ramas; 293 antecesoras, 219 equivalentes por parche y 301 a revisar; 0 borradas | Revisar las 301 no equivalentes y borrar solo en un corte posterior, autorizado y recuperable |
+| **CERRADO** | Cuarto lote HC-016 | El Cachorro: 90/90 aplicadas, 0 inválidas, 0 fallos; intento previo inválido cancelado con 0 escrituras | No reabrir para perseguir un 100 % artificial |
+| **COLA 2** | Siguiente frente editorial | No existe una quinta ficha abierta | Refrescar grafo y TOP 3 antes de elegir una sola Hermandad |
 | **COLA 3** | Cristo del Perdón · San José de la Rinconada | Ficha publicada; quedan por rematar la música vigente y el escudo solicitado | Tratar como remate acotado, no como ficha nueva ni como cambio estructural |
 | **LABORATORIO** | Mejoras de producto y diseño | Ideas de cabeceras, nuevos campos, nuevas secciones y ampliaciones transversales | No activar mientras siga `FIRST EDITION FREEZE` |
 | **BLOQUEADO** | HC-018 · Aportaciones públicas | Implementación en código, activación expresamente bloqueada | No abrir `/colabora` hasta superar sus puertas de seguridad, privacidad y antiabuso |
 
 ## Verdad de plataforma
 
-- GitHub: `main = a910fd9b…`, 0 PR abiertas y una única issue abierta: #492.
+- GitHub: `main = 58488e86…`, 0 PR abiertas y una única issue abierta: #492.
 - Vercel: producción `READY` en el mismo SHA.
-- Supabase: la base productiva responde y los lotes HC-016 permanecen aplicados.
+- Supabase: la base productiva responde; el cuarto lote HC-016 está `completed` con 90/90 y su intento inválido previo está `cancelled` con 0 escrituras.
 - Git ↔ Supabase: el historial no se considerará reconciliado hasta cerrar #492. No se reescriben migraciones ya aplicadas ni se usa producción para resolver una limitación de previews.
 
 ## Trabajo reciente ya cerrado
@@ -49,12 +50,15 @@ No debe mantenerse en la cola lo que ya está integrado y desplegado:
 - incorporación de Pasión de Linares, Esencia y cinco Bandas de la Semana Santa de Sevilla (#708 y #709).
 - paleta negra, blanca y dorada de El Museo (#711);
 - paletas de cinco Hermandades a partir de hábitos documentados (#713).
+- paletas de siete Hermandades de Sevilla (#715), de Milagrosa, Quinta Angustia y Montserrat (#716) y de otras seis Hermandades de Sevilla y provincia (#717);
+- manifiesto conservador de 813 ramas, sin borrados;
+- cuarto lote real de HC-016: El Cachorro.
 
 ## Dónde estamos ahora
 
-HC-016 ya funciona como método editorial operativo. San Pablo fue el primer lote real; Mercedes de la Puerta Real acreditó el segundo contexto y dejó corregida la validación sistémica de autorías; El Museo vuelve a ejecutar el circuito completo en una Hermandad penitencial con mayor densidad histórica, artística, litúrgica y relacional.
+HC-016 ya funciona como método editorial operativo en cuatro contextos reales. San Pablo fue el primero; Mercedes de la Puerta Real acreditó el segundo y dejó corregida la validación sistémica de autorías; El Museo ejecutó el tercero en una Hermandad penitencial densa; El Cachorro completa el cuarto con 90 operaciones, reutilización de nodos, titulares, Pasos, patrimonio, Cultos, Salida histórica, música y Fuentes.
 
-El cierre de El Museo no incorporó código, DDL, tablas, migraciones, cambios RLS ni excepciones por `slug`. Todo el DML pasó por:
+Los cierres editoriales no incorporaron DDL, tablas, migraciones estructurales, cambios RLS ni excepciones por `slug`. El circuito gobernado sigue siendo:
 
 ```text
 CARGA → STAGING → PREFLIGHT GLOBAL → REVISIÓN → APPLY → RESULTADOS
@@ -64,6 +68,14 @@ CARGA → STAGING → PREFLIGHT GLOBAL → REVISIÓN → APPLY → RESULTADOS
 
 - **San Pablo:** 183 filas originales aplicadas, remediadas o descartadas con causa; su remate de 41/41 continúa cerrado. Las correcciones de #694, #695, #696, #698 y #699 siguen integradas.
 - **Mercedes de la Puerta Real:** segundo contexto real cerrado. La validación genérica de `image_authorships.authorship_type` de #705 impide que el fallo determinista descubierto alcance Apply; #706 mantiene separados motivo e itinerario de Salidas.
+
+## Manifiesto de ramas y cuarto lote
+
+El manifiesto reproducible clasifica 813 ramas remotas contra `main = 58488e86…`: 293 son antecesoras literales, 219 son equivalentes por parche y 301 requieren revisión manual. Hay 775 puntas únicas y 13 grupos de puntas duplicadas. **No se ha borrado ninguna rama.** La evidencia completa está en [`AUDITORIA-RAMAS-Y-DEUDA-HC016-2026-09-09.md`](./AUDITORIA-RAMAS-Y-DEUDA-HC016-2026-09-09.md).
+
+El TOP 3 actualizado fue El Cachorro, El Carmen y Cristo de Burgos. El Cachorro quedó primero por densidad relacional y profundidad de fuentes oficiales. La actualidad estricta detectó un lote ya preparado, evitó duplicarlo y permitió auditarlo antes de Apply.
+
+El lote `19d2d74c-ff8d-42cd-9a4e-42c8e3a56a7d` quedó `completed`: 90/90, 77 insert, 12 update, 1 reuse y 0 fallos. El lote previo `1e325c2a-c27d-4572-a69e-cc279ed9075f` quedó `cancelled` con 0 escrituras. La certificación está en [`CERTIFICACION-EL-CACHORRO-HC016-2026-09-09.md`](./CERTIFICACION-EL-CACHORRO-HC016-2026-09-09.md).
 
 ## Recálculo de deuda y selección de El Museo
 
@@ -161,7 +173,7 @@ No se transformaron anuncios en hechos celebrados ni se inventaron continuidades
 
 ## Actualidad de `main` y producción
 
-El cierre documental de El Museo quedó integrado en `af81be33…`, su paleta cromática en `63463d7e…`, el orden operativo en `04e75a44…` y las cinco paletas derivadas de hábitos en `a910fd9b…`. Producción estaba `READY` y coincidía con este último SHA antes del remate documental.
+El cierre documental de El Museo quedó integrado en `af81be33…`, su paleta cromática en `63463d7e…`, el orden operativo en `04e75a44…` y las cinco paletas derivadas de hábitos en `a910fd9b…`. Después se integraron las paletas #715, #716 y #717. El corte vigente anterior a esta documentación es `main = 58488e86…`, con producción `READY` en el mismo SHA.
 
 Este remate no cambia producto, datos ni alcance. Tras integrarlo, el SHA final de `main` y producción debe prevalecer sobre esta base auditada y GitHub debe volver a 0 PR abiertas.
 
@@ -180,15 +192,18 @@ No existe otro bloqueo operativo.
 5. **¿Algún error determinista nuevo alcanzó Apply?** No.
 6. **¿HC-016 es reutilizable como método editorial?** Sí; El Museo repite el circuito sin incorporación manual masiva ni cambios de arquitectura.
 7. **¿Existe algún bloqueo estructural aparte de #492?** No; la divergencia del historial de migraciones queda adscrita a su reconciliación.
-8. **¿`main` y producción coinciden?** Sí, en `a910fd9b…` antes de este remate documental.
+8. **¿`main` y producción coincidían en el corte histórico de El Museo?** Sí, en `a910fd9b…`.
 9. **¿Había 0 PR abiertas antes de la sincronización?** Sí.
-10. **¿Existe una cuarta Hermandad abierta?** No.
-11. **¿Las ramas remotas equivalen a trabajo activo?** No; deben clasificarse por PR y equivalencia antes de cualquier borrado.
+10. **¿El cuarto lote real está cerrado?** Sí; El Cachorro terminó 90/90 y sin fallos.
+11. **¿Existe una quinta Hermandad abierta?** No.
+12. **¿Las ramas remotas equivalen a trabajo activo?** No; 813 están clasificadas y ninguna ha sido borrada.
+13. **¿`main` y producción coinciden en el corte previo a este remate?** Sí, en `58488e86…`.
 
 ## Siguiente movimiento autorizado
 
-1. Preparar el manifiesto de higiene de ramas sin borrar todavía.
-2. Recalcular la deuda editorial desde el grafo real, presentar el TOP 3 y elegir una sola Hermandad.
-3. Abrir el cuarto lote real de HC-016 únicamente después de esa elección.
+1. Revisar manualmente las 301 ramas `review_required`; no ejecutar borrados sin un corte expresamente autorizado y recuperable.
+2. Mantener cerrada El Cachorro y no abrir una quinta ficha por continuidad automática.
+3. Antes de un nuevo lote editorial, refrescar `main`, PR, producción y grafo, recalcular el TOP 3 y elegir una sola Hermandad.
+4. Mantener el remate de Cristo del Perdón como trabajo acotado en cola y #492 como único bloqueo estructural.
 
 No se abre una Hermandad por continuidad de una conversación antigua ni se activa un frente de Laboratorio durante este corte.
