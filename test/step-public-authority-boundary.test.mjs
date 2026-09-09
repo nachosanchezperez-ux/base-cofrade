@@ -56,11 +56,13 @@ test('el cliente público compartido de Pasos es stateless y no usa SSR ni cooki
 test('el directorio y la ficha pública de Pasos entran por loaders públicos explícitos', async () => {
   const directoryPage = await source('app/pasos/page.js')
   const detailPage = await source('app/pasos/[slug]/page.js')
+  const directoryLoader = await source('lib/supabase/directories.js')
 
   assert.match(directoryPage, /getStepsDirectory/)
   assert.match(detailPage, /getPasoPageBySlug/)
   assert.match(detailPage, /getPublishedEntityCoverMedia/)
   assert.match(detailPage, /getPublishedStepHeritage/)
+  assert.match(directoryLoader, /filterPublicPageEntities\(entities, steps\)/)
   assert.doesNotMatch(directoryPage, /@\/lib\/supabase\/(?:server|client)/)
   assert.doesNotMatch(detailPage, /@\/lib\/supabase\/(?:server|client)/)
 })
