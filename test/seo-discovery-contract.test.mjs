@@ -71,6 +71,7 @@ test('las cuatro familias comparten el mismo mínimo editorial', () => {
   assert.match(publicIndexability, /getBandsDirectory/)
   assert.match(publicIndexability, /getImagesDirectory/)
   assert.match(publicIndexability, /getStepsDirectory/)
+  assert.match(publicIndexability, /loadPublicRowsInBatches/)
   assert.match(publicIndexability, /source_links/)
   assert.match(publicIndexability, /step_phases/)
   assert.match(publicIndexability, /music_accompaniment_periods/)
