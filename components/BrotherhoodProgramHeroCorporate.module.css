@@ -33,6 +33,13 @@
   --brotherhood-surface-medium: color-mix(in srgb, var(--brotherhood-primary, #112339) 10%, #fff);
   --brotherhood-line-soft: color-mix(in srgb, var(--brotherhood-primary, #112339) 13%, transparent);
   --brotherhood-shadow-soft: color-mix(in srgb, var(--brotherhood-primary, #112339) 8%, transparent);
+  --brotherhood-neutral-ink: #25282c;
+  --brotherhood-neutral-text: #5f6469;
+  --brotherhood-neutral-muted: #7a7f84;
+  --brotherhood-neutral-surface: #f7f7f7;
+  --brotherhood-neutral-surface-soft: #fafafa;
+  --brotherhood-neutral-line: #e2e3e5;
+  --brotherhood-neutral-shadow: rgba(17, 17, 17, .065);
 }
 
 :global(.brotherhood-page .brotherhood-soft),
@@ -79,6 +86,10 @@
   background: var(--brotherhood-surface-soft) !important;
 }
 
+:global(.brotherhood-page .official-links-section) {
+  background: var(--brotherhood-surface-soft) !important;
+}
+
 :global(.brotherhood-page .official-links-grid a) {
   border-color: var(--brotherhood-line-soft) !important;
 }
@@ -86,6 +97,17 @@
 :global(.brotherhood-page .official-links-grid a:hover) {
   border-color: color-mix(in srgb, var(--brotherhood-primary, #112339) 28%, transparent) !important;
   box-shadow: 0 12px 30px var(--brotherhood-shadow-soft) !important;
+}
+
+:global(.brotherhood-page .official-links-heading p),
+:global(.brotherhood-page .official-links-grid small) {
+  color: var(--brotherhood-neutral-muted) !important;
+}
+
+:global(.brotherhood-page .heritage-section) {
+  background:
+    radial-gradient(circle at 92% 8%, color-mix(in srgb, var(--brotherhood-primary, #112339) 5%, transparent), transparent 25%),
+    #fff !important;
 }
 
 :global(.brotherhood-page .heritage-work) {
@@ -104,6 +126,18 @@
 
 :global(.brotherhood-page .heritage-work-visual.has-image::after) {
   background: linear-gradient(180deg, transparent 68%, rgba(0, 0, 0, .72)) !important;
+}
+
+:global(.brotherhood-page .release-card) {
+  box-shadow: 0 24px 64px var(--brotherhood-neutral-shadow) !important;
+}
+
+:global(.brotherhood-page .release-card-visual::after) {
+  background: linear-gradient(180deg, rgba(0, 0, 0, .08) 45%, rgba(0, 0, 0, .76) 100%) !important;
+}
+
+:global(.brotherhood-page .release-card-description) {
+  color: var(--brotherhood-neutral-text) !important;
 }
 
 :global(.brotherhood-page .brotherhood-current-music-sequence) {
@@ -131,6 +165,13 @@
   color: var(--brotherhood-ink-strong) !important;
 }
 
+:global(.brotherhood-page #acompanamiento-musical [class*="__copy"] > p),
+:global(.brotherhood-page #acompanamiento-musical [class*="__context"]),
+:global(.brotherhood-page #acompanamiento-musical [class*="__meta"]),
+:global(.brotherhood-page #acompanamiento-musical [class*="__outingHeader"] > small) {
+  color: var(--brotherhood-neutral-text) !important;
+}
+
 :global(.brotherhood-page #cultos article),
 :global(.brotherhood-page #via-crucis-cofradias article) {
   border-color: var(--brotherhood-line-soft) !important;
@@ -144,6 +185,195 @@
   color: var(--brotherhood-ink-strong) !important;
 }
 
+:global(.brotherhood-page #cultos [class*="__visual"]::after),
+:global(.brotherhood-page #via-crucis-cofradias [class*="__visual"]::after) {
+  background: linear-gradient(180deg, transparent, rgba(0, 0, 0, .58)) !important;
+}
+
+:global(.brotherhood-page #cultos [class*="__date"]),
+:global(.brotherhood-page #cultos [class*="__day"]),
+:global(.brotherhood-page #cultos [class*="__mainDate"]) {
+  color: var(--brotherhood-neutral-ink) !important;
+}
+
+:global(.brotherhood-page #cultos [class*="__month"]),
+:global(.brotherhood-page #cultos [class*="__subDate"]),
+:global(.brotherhood-page #cultos [class*="__type"]),
+:global(.brotherhood-page #cultos [class*="__copy"] p) {
+  color: var(--brotherhood-neutral-text) !important;
+}
+
+:global(.brotherhood-page #cultos [class*="__bindings"] i) {
+  border-color: color-mix(in srgb, var(--brotherhood-primary, #112339) 70%, #303236) !important;
+}
+
+:global(.brotherhood-page #via-crucis-cofradias [class*="__year"]) {
+  color: var(--brotherhood-neutral-ink) !important;
+  border-color: var(--brotherhood-neutral-line) !important;
+  background: var(--brotherhood-neutral-surface) !important;
+}
+
+:global(.brotherhood-page #via-crucis-cofradias [class*="__protagonists"]),
 :global(.brotherhood-page #via-crucis-cofradias article p) {
-  color: #62686e !important;
+  color: var(--brotherhood-neutral-text) !important;
+}
+
+:global(.brotherhood-page #musica) {
+  background:
+    radial-gradient(circle at 88% 5%, color-mix(in srgb, var(--brotherhood-secondary, #a71930) 7%, transparent), transparent 28%),
+    var(--brotherhood-neutral-surface) !important;
+}
+
+:global(.brotherhood-page #musica [class*="__summary"]),
+:global(.brotherhood-page #musica [class*="__group"]),
+:global(.brotherhood-page #musica [class*="__styleGroup"]) {
+  border-color: var(--brotherhood-line-soft) !important;
+  box-shadow: 0 14px 36px var(--brotherhood-neutral-shadow) !important;
+}
+
+:global(.brotherhood-page #musica [class*="__groupSummary"]) {
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--brotherhood-primary, #112339) 4%, #fff),
+    color-mix(in srgb, var(--brotherhood-secondary, #a71930) 2%, #fff)
+  ) !important;
+}
+
+:global(.brotherhood-page #musica [class*="__styleGroups"]),
+:global(.brotherhood-page #musica [class*="__tableHead"]) {
+  background: var(--brotherhood-neutral-surface-soft) !important;
+}
+
+:global(.brotherhood-page #musica [class*="__styleMark"]) {
+  color: var(--brotherhood-ink-strong) !important;
+  background: var(--brotherhood-surface-medium) !important;
+}
+
+:global(.brotherhood-page #musica [class*="__styleHeading"] h4),
+:global(.brotherhood-page #musica [class*="__copy"] h4),
+:global(.brotherhood-page #musica [class*="__copy"] h5) {
+  color: var(--brotherhood-neutral-ink) !important;
+}
+
+:global(.brotherhood-page #musica [class*="__summary"] span),
+:global(.brotherhood-page #musica [class*="__styleHeading"] p),
+:global(.brotherhood-page #musica [class*="__copy"] p) {
+  color: var(--brotherhood-neutral-text) !important;
+}
+
+:global(.brotherhood-page #musica [class*="__listen"]) {
+  border-color: var(--brotherhood-line-soft) !important;
+  background: var(--brotherhood-neutral-surface-soft) !important;
+}
+
+:global(.brotherhood-page #salidas) {
+  background:
+    radial-gradient(circle at 90% 10%, color-mix(in srgb, var(--brotherhood-secondary, #a71930) 28%, transparent), transparent 34%),
+    linear-gradient(
+      145deg,
+      var(--brotherhood-dark, var(--brotherhood-primary, #112339)),
+      color-mix(in srgb, var(--brotherhood-dark, #111) 72%, #000) 76%
+    ) !important;
+}
+
+:global(.brotherhood-page #salidas figure[class*="__image"]) {
+  background: #151515 !important;
+}
+
+:global(.brotherhood-page #salidas figure[class*="__image"]::after) {
+  background: linear-gradient(90deg, transparent 65%, rgba(0, 0, 0, .3)) !important;
+}
+
+:global(.brotherhood-page #salidas figure[class*="__image"] figcaption) {
+  background: rgba(0, 0, 0, .72) !important;
+}
+
+:global(.brotherhood-page #salidas [class*="__imageFallback"]) {
+  background:
+    radial-gradient(circle at center, color-mix(in srgb, var(--brotherhood-secondary, #a71930) 24%, transparent), transparent 44%),
+    color-mix(in srgb, var(--brotherhood-primary, #112339) 58%, #080808) !important;
+}
+
+:global(.brotherhood-page #simpecados [class*="__card"]) {
+  box-shadow: 0 22px 60px var(--brotherhood-neutral-shadow) !important;
+}
+
+:global(.brotherhood-page #simpecados [class*="__visual"]) {
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--brotherhood-primary, #112339) 86%, #171717),
+    color-mix(in srgb, var(--brotherhood-primary, #112339) 62%, #090909)
+  ) !important;
+}
+
+:global(.brotherhood-page #simpecados [class*="__facts"] dd),
+:global(.brotherhood-page #simpecados [class*="__lead"]),
+:global(.brotherhood-page #simpecados [class*="__technical"]) {
+  color: var(--brotherhood-neutral-text) !important;
+}
+
+:global(.brotherhood-page #resumen [class*="BrotherhoodOverviewV2-module"][class*="__header"] h2) {
+  color: var(--brotherhood-neutral-ink) !important;
+}
+
+:global(.brotherhood-page #resumen [class*="__identityCard"]) {
+  border-color: var(--brotherhood-line-soft) !important;
+  background: var(--brotherhood-neutral-surface-soft) !important;
+  box-shadow: 0 16px 42px var(--brotherhood-neutral-shadow) !important;
+}
+
+:global(.brotherhood-page #resumen [class*="__identityFacts"] dd),
+:global(.brotherhood-page #resumen [class*="__historySummary"]),
+:global(.brotherhood-page #resumen [class*="__history"] p) {
+  color: var(--brotherhood-neutral-text) !important;
+}
+
+:global(.brotherhood-page #fuentes [class*="__disclosure"]) {
+  border-color: var(--brotherhood-line-soft) !important;
+  box-shadow: 0 12px 34px var(--brotherhood-neutral-shadow) !important;
+}
+
+:global(.brotherhood-page #fuentes [class*="__heading"] h2) {
+  color: var(--brotherhood-neutral-ink) !important;
+}
+
+:global(.brotherhood-page #fuentes [class*="__meta"]) {
+  color: var(--brotherhood-neutral-text) !important;
+}
+
+:global(.brotherhood-page #fuentes [class*="__toggle"]) {
+  color: var(--brotherhood-ink-strong) !important;
+  border-color: var(--brotherhood-line-soft) !important;
+  background: var(--brotherhood-neutral-surface) !important;
+}
+
+:global(.brotherhood-page #fuentes [class*="__disclosure"][open] [class*="__toggle"]) {
+  background: var(--brotherhood-surface-medium) !important;
+}
+
+:global(.brotherhood-page #fuentes [class*="__list"]) {
+  border-color: var(--brotherhood-line-soft) !important;
+}
+
+/* Las fotografías conservan la identidad de la Hermandad, pero su velo nunca añade azul por defecto. */
+:global(.brotherhood-page [class*="BrotherhoodProgramHero-module"][class*="__hero"]:not([class*="__noPhoto"]) [class*="BrotherhoodProgramHero-module"][class*="__photoVeil"]) {
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, .995) 0%, rgba(0, 0, 0, .96) 24%, rgba(0, 0, 0, .82) 39%, rgba(0, 0, 0, .46) 55%, rgba(0, 0, 0, .1) 75%, rgba(0, 0, 0, .02) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, .2) 0%, rgba(0, 0, 0, .08) 52%, rgba(0, 0, 0, .72) 100%) !important;
+}
+
+@media (max-width: 920px) {
+  :global(.brotherhood-page [class*="BrotherhoodProgramHero-module"][class*="__hero"]:not([class*="__noPhoto"]) [class*="BrotherhoodProgramHero-module"][class*="__photoVeil"]) {
+    background:
+      linear-gradient(90deg, rgba(0, 0, 0, .98) 0%, rgba(0, 0, 0, .86) 40%, rgba(0, 0, 0, .34) 72%, rgba(0, 0, 0, .08) 100%),
+      linear-gradient(180deg, rgba(0, 0, 0, .14), rgba(0, 0, 0, .72)) !important;
+  }
+}
+
+@media (max-width: 620px) {
+  :global(.brotherhood-page [class*="BrotherhoodProgramHero-module"][class*="__hero"]:not([class*="__noPhoto"]) [class*="BrotherhoodProgramHero-module"][class*="__photoVeil"]) {
+    background:
+      linear-gradient(180deg, rgba(0, 0, 0, .12) 0%, rgba(0, 0, 0, .16) 34%, rgba(0, 0, 0, .82) 76%, rgba(0, 0, 0, .94) 100%),
+      linear-gradient(90deg, rgba(0, 0, 0, .6), rgba(0, 0, 0, .08)) !important;
+  }
 }
