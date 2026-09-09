@@ -1,10 +1,10 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 9 de septiembre de 2026 · saneamiento de navegación e indexación pública integrado en #729
+**Corte operativo:** 9 de septiembre de 2026 · Supabase Preview Branches reconciliadas en #730
 
-**HEAD operativo auditado:** `9f3ac79849ab054b1b56c2be67058129bda0402c`
+**HEAD operativo auditado:** `c48096ebfdbe907cb8efde30d285d9b77f6c0ac1`
 
-**Producción auditada:** `READY` · deployment `dpl_FS9fqCU2snPS8fekpD4UB2xpN94t` · mismo SHA que el HEAD operativo auditado
+**Producción auditada:** `READY` · deployment `dpl_DZNDHudTpvmCoqc1DCAmkpxEmC4L` · mismo SHA que el HEAD operativo auditado
 
 **PR abiertas al iniciar esta reconciliación:** **0**
 
@@ -12,7 +12,7 @@
 
 **Frente editorial ACTIVO:** ninguno
 
-> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El HEAD canónico posterior será el commit de `main` que contenga este documento; #729 quedó integrada, desplegada y verificada sobre `9f3ac798…`.
+> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El HEAD canónico posterior será el commit de `main` que contenga este documento; #730 quedó integrada, desplegada y verificada sobre `c48096eb…`.
 
 ## Tablero operativo único
 
@@ -21,7 +21,7 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | Posición | Frente | Estado real | Regla |
 |---|---|---|---|
 | **CERRADO** | Orden operativo | Autoridad documental y cola única integradas en #712 | No reabrir salvo contradicción verificable |
-| **BLOQUEADO** | [#492 · Supabase Preview Branches](https://github.com/nachosanchezperez-ux/base-cofrade/issues/492) | Reconciliación estructural pendiente | Bloquea DDL, tablas, migraciones estructurales y RLS; no bloquea DML editorial |
+| **CERRADO** | [#492 · Supabase Preview Branches](https://github.com/nachosanchezperez-ux/base-cofrade/issues/492) | Cadena reproducible certificada en #730; producción reconciliada con las cuatro migraciones estructurales activas | Todo cambio futuro de esquema debe nacer como migración reproducible y superar una preview sin datos |
 | **CERRADO** | Higiene de ramas | 817 ramas revisadas; 754 eliminadas por SHA; 63 preservadas; salvaguarda remota verificada | No borrar las 61 ramas con trabajo único sin una revisión futura específica |
 | **CERRADO** | Cuarto lote HC-016 | El Cachorro: 90/90 aplicadas, 0 inválidas, 0 fallos; intento previo inválido cancelado con 0 escrituras | No reabrir para perseguir un 100 % artificial |
 | **CERRADO** | Quinto lote HC-016 | El Carmen: 83/83 aplicadas, 0 inválidas, 0 fallos; 3 titulares, 2 Pasos, 9 Cultos, Salida de 2026 y 4 periodos musicales | No reabrir para completar catálogos exhaustivos o perseguir un 100 % artificial |
@@ -35,10 +35,10 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 
 ## Verdad de plataforma
 
-- GitHub: `main = 9f3ac798…`, 0 PR abiertas tras el postflight de #729 y #492 abierta y aislada.
-- Vercel: producción `READY` en el mismo SHA mediante `dpl_FS9fqCU2snPS8fekpD4UB2xpN94t`.
-- Supabase: la base productiva responde; el nuevo lote de Las Siete Palabras está `completed` con 270/270, 0 inválidas y 0 fallos. El lote concurrente anterior permanece `cancelled` y trazado.
-- Git ↔ Supabase: el historial no se considerará reconciliado hasta cerrar #492. No se reescriben migraciones ya aplicadas ni se usa producción para resolver una limitación de previews.
+- GitHub: `main = c48096eb…`, #730 fusionada y 0 PR abiertas al iniciar esta certificación.
+- Vercel: producción `READY` en el mismo SHA mediante `dpl_DZNDHudTpvmCoqc1DCAmkpxEmC4L`; `hilocofrade.es` responde 200 y no registra errores de runtime en el corte.
+- Supabase Preview: la rama limpia de #730, sin datos productivos, completó las cuatro migraciones activas y el seed mínimo; la rama fallida obsoleta de #661 fue eliminada sin pérdida de datos únicos.
+- Git ↔ Supabase: producción registra exactamente las cuatro migraciones estructurales activas. Las 84 marcas editoriales posteriores al baseline se retiraron únicamente del historial remoto y los 90 SQL correspondientes se conservan intactos en archivo; no se reejecutó ni revirtió su contenido.
 
 ## Trabajo reciente ya cerrado
 
@@ -65,6 +65,7 @@ No debe mantenerse en la cola lo que ya está integrado y desplegado:
 - paleta propia de Las Siete Palabras (#727), incorporada durante la ejecución y adoptada como nuevo HEAD prevalente.
 - séptimo lote real de HC-016: Las Siete Palabras, 270/270.
 - saneamiento de directorios y sitemap (#729): 553 URL servidas, fichas válidas 200 y exclusión de dos Pasos relacionales de La Estrella sin perfil público.
+- reconciliación de Supabase Preview Branches (#730): cadena activa de cuatro migraciones estructurales, 90 SQL editoriales archivados intactos y preview limpia certificada sin datos de producción.
 
 ## Dónde estamos ahora
 
@@ -223,11 +224,11 @@ El cierre documental de El Museo quedó integrado en `af81be33…`, su paleta cr
 
 Este remate documental no cambia producto ni arquitectura; refleja el DML editorial ya aplicado y verificado. Tras integrarlo, el SHA final de `main` y producción debe prevalecer sobre esta base auditada y GitHub debe volver a 0 PR abiertas.
 
-## #492 · aislada
+## #492 · cerrada
 
-[#492](https://github.com/nachosanchezperez-ux/base-cofrade/issues/492) sigue abierta y aislada. No bloquea DML editorial ni relaciones soportadas por el modelo vigente. Sí mantiene fuera de alcance nuevo DDL, tablas, migraciones estructurales y cambios RLS.
+[#492](https://github.com/nachosanchezperez-ux/base-cofrade/issues/492) queda resuelta por #730. La preview limpia ejecutó 4/4 migraciones activas y el seed mínimo; producción conserva su esquema y contenido, y su historial remoto coincide ya con la cadena estructural de Git.
 
-No existe otro bloqueo operativo.
+El cierre levanta el bloqueo excepcional sobre DDL. No autoriza cambios directos: todo nuevo DDL, tabla, migración estructural o ajuste RLS deberá incorporarse mediante una migración reproducible, verificarse en preview sin datos y superar sus puertas de seguridad.
 
 ## Auditor
 
@@ -237,7 +238,7 @@ No existe otro bloqueo operativo.
 4. **¿El Cachorro continúa cerrado?** Sí: el cuarto lote terminó 90/90 y sin fallos.
 5. **¿Algún error determinista nuevo alcanzó Apply?** No.
 6. **¿HC-016 es reutilizable como método editorial?** Sí; Las Siete Palabras completa el séptimo contexto real con 270/270 operaciones, sin cambios de arquitectura.
-7. **¿Existe algún bloqueo estructural aparte de #492?** No; la divergencia del historial de migraciones queda adscrita a su reconciliación.
+7. **¿Existe algún bloqueo estructural activo?** No; #492 quedó reconciliada mediante #730 y su certificación productiva.
 8. **¿`main` y producción coincidían en el corte histórico de El Museo?** Sí, en `a910fd9b…`.
 9. **¿Había 0 PR abiertas antes de la sincronización?** Sí.
 10. **¿El quinto lote real está cerrado?** Sí; El Carmen terminó 83/83 y sin fallos.
@@ -256,7 +257,7 @@ No existe otro bloqueo operativo.
 2. Mantener cerradas El Cachorro, El Carmen, Cristo de Burgos y Las Siete Palabras; no hay frente editorial activo.
 3. No abrir una octava Hermandad. El Valle y La Amargura permanecen como referencias del corte, no como frentes abiertos.
 4. Permitir la carga manual del escudo de Cristo del Perdón desde el Panel, sin reabrir su cierre de datos.
-5. Mantener #492 como único bloqueo estructural.
+5. Mantener la disciplina restaurada por #492: migraciones para esquema; HC-016 o Panel para contenido; preview limpia obligatoria antes de integrar DDL.
 6. Mantener el rediseño amplio del directorio en Laboratorio; #729 solo sanea la frontera de publicación y la fiabilidad de las consultas.
 
 No se abre una segunda Hermandad ni se activa un frente de Laboratorio durante este corte.
