@@ -1,18 +1,18 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 9 de septiembre de 2026 · Cultos septiembre–diciembre de 2026 preparados y certificados
+**Corte operativo:** 10 de septiembre de 2026 · cierre técnico #734 certificado
 
-**HEAD operativo de partida:** `b9095b581f8156c4089ee11250758cd9c7c7ae9b`
+**HEAD funcional auditado:** `3039f81c8ae787e9dd0496c81566d99596168276`
 
-**Producción auditada:** `READY` · deployment `dpl_8GECiKCmzXTrkNwqrMV96GWuBHnv` · SHA funcional `03b12d869e00b5c9c3f77408a857c4301e6c148a`
+**Producción auditada:** `READY` · deployment `dpl_28Cky18RRenhgCnwL5bvPBwHE4Pj` · SHA funcional `3039f81c8ae787e9dd0496c81566d99596168276`
 
-**PR abiertas al iniciar esta reconciliación:** **0**
+**PR abiertas al cerrar el frente funcional:** **0**
 
 **Régimen:** `FIRST EDITION FREEZE` activo
 
 **Frente editorial ACTIVO:** ninguno
 
-> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El HEAD canónico posterior será el commit de `main` que contenga este documento; durante la ejecución, `b9095b5…` sustituyó al SHA inicial y fue adoptado antes de integrar el lote.
+> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El HEAD canónico posterior será el commit de `main` que contenga este documento; #734 ya aparecía fusionada al iniciar la revalidación y se adoptó su SHA real antes del postflight.
 
 ## Tablero operativo único
 
@@ -30,14 +30,15 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | **CERRADO** | Cristo del Perdón · San José de la Rinconada | Las dos bandas vigentes quedan verificadas y documentadas mediante un remate HC-016 de 5/5 | El escudo queda reservado a la carga anunciada desde el Panel; no bloquea el cierre de datos |
 | **CERRADO** | Séptimo lote HC-016 | Las Siete Palabras: 270/270 aplicadas, 0 inválidas, 0 fallos; completitud 43 % → 86 % | No reabrir para perseguir un 100 % artificial; no abrir una octava Hermandad |
 | **CERRADO** | Cultos septiembre–diciembre de 2026 | Lote transversal HC-016 `c0162026-0909-4000-8000-000000000001`: 53/53, cuatro Hermandades y 0 DDL | Mantener ediciones futuras desde Fuentes oficiales; recurrencia no equivale a anuncio |
+| **CERRADO** | Carátulas de Discografía · #734 | Reintento del optimizador a la URL original y fallback accesible; 21 fichas auditadas, sin imágenes rotas visibles ni desbordamiento | Corregir en origen las cinco URLs históricas inaccesibles de La Oliva; el fallback no cancela esa deuda de datos |
 | **CERRADO** | Navegación e indexación pública | #729 filtra entidades sin ficha y estabiliza el sitemap mediante lecturas por lotes con reintento; producción publica 553 URL | Mantener la frontera pública; no convertir nodos relacionales incompletos en enlaces navegables |
 | **LABORATORIO** | Mejoras de producto y diseño | Ideas de cabeceras, nuevos campos, nuevas secciones y ampliaciones transversales | No activar mientras siga `FIRST EDITION FREEZE` |
 | **BLOQUEADO** | HC-018 · Aportaciones públicas | Implementación en código, activación expresamente bloqueada | No abrir `/colabora` hasta superar sus puertas de seguridad, privacidad y antiabuso |
 
 ## Verdad de plataforma
 
-- GitHub: `main = 03b12d86…` después de integrar #735; 0 PR abiertas al iniciar el frente.
-- Vercel: producción `READY` en `03b12d86…` mediante `dpl_8GECiKCmzXTrkNwqrMV96GWuBHnv`; las cuatro fichas auditadas responden 200 con canonical, `index, follow`, OG/Twitter y Cultos visibles.
+- GitHub: `main = 3039f81c…` después de integrar #734; 0 PR abiertas al cerrar el frente funcional.
+- Vercel: producción `READY` en `3039f81c…` mediante `dpl_28Cky18RRenhgCnwL5bvPBwHE4Pj`; el QA representativo y transversal de Discografía no muestra carátulas rotas ni desbordamiento.
 - Supabase Preview: la rama limpia de #730, sin datos productivos, completó las cuatro migraciones activas y el seed mínimo; la rama fallida obsoleta de #661 fue eliminada sin pérdida de datos únicos.
 - Git ↔ Supabase: producción registra exactamente las cuatro migraciones estructurales activas. Las 84 marcas editoriales posteriores al baseline se retiraron únicamente del historial remoto y los 90 SQL correspondientes se conservan intactos en archivo; no se reejecutó ni revirtió su contenido.
 
@@ -68,6 +69,7 @@ No debe mantenerse en la cola lo que ya está integrado y desplegado:
 - saneamiento de directorios y sitemap (#729): 553 URL servidas, fichas válidas 200 y exclusión de dos Pasos relacionales de La Estrella sin perfil público.
 - reconciliación de Supabase Preview Branches (#730): cadena activa de cuatro migraciones estructurales, 90 SQL editoriales archivados intactos y preview limpia certificada sin datos de producción.
 - Cultos de septiembre a diciembre de 2026: 53/53 operaciones gobernadas sobre San Pablo, Pino Montano, La Misión y Los Negritos, con ediciones, horarios, titulares y Fuentes oficiales.
+- carátulas de Discografía (#734): intento optimizado, reintento original y fallback accesible compartido para las fichas de Banda.
 
 ## Dónde estamos ahora
 
@@ -234,6 +236,26 @@ Este remate documental no cambia producto ni arquitectura; refleja el DML editor
 
 El cierre levanta el bloqueo excepcional sobre DDL. No autoriza cambios directos: todo nuevo DDL, tabla, migración estructural o ajuste RLS deberá incorporarse mediante una migración reproducible, verificarse en preview sin datos y superar sus puertas de seguridad.
 
+## Cierre técnico #734 · carátulas de Discografía
+
+#734 ya constaba fusionada cuando comenzó la revalidación contra `main = 3039f81c…`. El diff seguía siendo necesario y estaba limitado al componente compartido de Discografía de Bandas: una carátula válida usa el optimizador de Next; si falla, se reintenta la URL original; si también falla, se muestra un fallback accesible sin imagen rota ni texto alternativo usado como sustitución visual.
+
+La suite vigente terminó **671/671**, el build completo pasó con TypeScript válido y `git diff --check` quedó limpio. En producción se revisaron Cruz Roja, La Oliva de Salteras y las 21 fichas de Banda con discografía publicada: 0 imágenes rotas visibles y 0 desbordamientos. Las carátulas válidas permanecen intactas; cinco recursos históricos de La Oliva caen correctamente al fallback, pero siguen clasificados como deuda corregible de datos. No existe hoy una publicación sin `cover_image_path`; esa rama queda cubierta por el contrato y la regresión automatizada. Las fichas de Marcha no comparten el componente modificado y no presentan cambio funcional por #734.
+
+El deployment `dpl_28Cky18RRenhgCnwL5bvPBwHE4Pj` está `READY` y corresponde al SHA funcional `3039f81c…`. Los logs no registran errores de Discografía. Sí muestran tres respuestas 500 ajenas a #734 al generar imágenes Open Graph de Hermandades desde recursos WEBP; constituyen una deuda técnica separada y no se convierten en un frente paralelo durante este cierre.
+
+## Recálculo editorial corto posterior al cierre
+
+Se excluyeron las siete Hermandades ya certificadas. El corte nuevo no reutiliza el orden anterior y separa ausencia real, deuda relacional y huecos legítimos.
+
+| Candidata | Completitud útil | Deuda documental | Deuda relacional | Deuda legítima | Fuentes y cierre HC-016 |
+|---|---:|---|---|---|---|
+| **San Gonzalo** | 43 % | Alta: titulares, Pasos, autorías, Cultos, Salidas y patrimonio | Muy alta: tres titulares, dos Pasos, agentes y música reutilizable | Media y licencias de media | Web oficial activa y actualizada; cierre alto sin esquema nuevo |
+| **El Valle** | 43 % | Alta: núcleo artístico, Cultos, Salidas y patrimonio | Muy alta: cuatro titulares, tres Pasos y dos periodos musicales ya señalados | Media y media autorizada | Fuente oficial profunda; cierre alto, con mayor complejidad artística |
+| **La Amargura** | 71 % | Media: Cultos, Salidas, patrimonio y trazabilidad adicional | Media-alta: tres imágenes y dos Pasos ya publicados | Media | Fuentes oficiales disponibles; cierre muy alto y alcance más corto |
+
+El siguiente frente recomendado es **San Gonzalo**: combina deuda nuclear, fuente oficial viva, alta reutilización de nodos, actualidad 2026 verificable y un alcance editorial ordinario compatible con HC-016. La selección queda registrada, pero no se abre ni se ejecuta el lote.
+
 ## Auditor
 
 1. **¿San Pablo continúa cerrado?** Sí.
@@ -259,9 +281,9 @@ El cierre levanta el bloqueo excepcional sobre DDL. No autoriza cambios directos
 
 1. Mantener preservadas las 61 ramas con trabajo único; cualquier limpieza futura exige una revisión específica nueva, no la reutilización de este manifiesto.
 2. Mantener cerradas El Cachorro, El Carmen, Cristo de Burgos y Las Siete Palabras; no hay frente editorial activo.
-3. No abrir una octava Hermandad. El Valle y La Amargura permanecen como referencias del corte, no como frentes abiertos.
+3. No abrir una octava Hermandad. San Gonzalo queda seleccionada como siguiente frente recomendado tras el recálculo corto, pero su lote no está abierto ni autorizado para ejecución.
 4. Permitir la carga manual del escudo de Cristo del Perdón desde el Panel, sin reabrir su cierre de datos.
 5. Mantener la disciplina restaurada por #492: migraciones para esquema; HC-016 o Panel para contenido; preview limpia obligatoria antes de integrar DDL.
 6. Mantener el rediseño amplio del directorio en Laboratorio; #729 solo sanea la frontera de publicación y la fiabilidad de las consultas.
 
-No se abre una segunda Hermandad ni se activa un frente de Laboratorio durante este corte.
+No se abre una Hermandad ni se activa un frente de Laboratorio durante este corte.
