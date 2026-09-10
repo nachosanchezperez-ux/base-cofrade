@@ -1,10 +1,10 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 10 de septiembre de 2026 · cierre técnico #734 certificado
+**Corte operativo:** 10 de septiembre de 2026 · octavo lote real HC-016 certificado
 
-**HEAD funcional auditado:** `3039f81c8ae787e9dd0496c81566d99596168276`
+**HEAD funcional auditado:** `d4fa89cd91dce0bdccb3fa9632498b7976820187`
 
-**Producción auditada:** `READY` · deployment `dpl_28Cky18RRenhgCnwL5bvPBwHE4Pj` · SHA funcional `3039f81c8ae787e9dd0496c81566d99596168276`
+**Producción auditada:** `READY` · deployment `dpl_ANgo7Efw9UNwyad3kGjrpAkFHJ3A` · SHA funcional `d4fa89cd91dce0bdccb3fa9632498b7976820187`
 
 **PR abiertas al cerrar el frente funcional:** **0**
 
@@ -12,7 +12,7 @@
 
 **Frente editorial ACTIVO:** ninguno
 
-> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El HEAD canónico posterior será el commit de `main` que contenga este documento; #734 ya aparecía fusionada al iniciar la revalidación y se adoptó su SHA real antes del postflight.
+> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El HEAD canónico posterior será el commit de `main` que contenga este documento; el lote de San Gonzalo partió del SHA real `2ec0c5f…` y su cierre funcional quedó integrado en `d4fa89c…`.
 
 ## Tablero operativo único
 
@@ -29,6 +29,7 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | **CANCELADO** | Séptimo lote concurrente | Las Siete Palabras: las 252 altas se retiraron y las 18 actualizaciones se reconciliaron; el lote consta como `cancelled` y la señal volvió al 43 % | No cuenta como contexto certificado; no reabrir sin un nuevo TOP 3 y una orden específica |
 | **CERRADO** | Cristo del Perdón · San José de la Rinconada | Las dos bandas vigentes quedan verificadas y documentadas mediante un remate HC-016 de 5/5 | El escudo queda reservado a la carga anunciada desde el Panel; no bloquea el cierre de datos |
 | **CERRADO** | Séptimo lote HC-016 | Las Siete Palabras: 270/270 aplicadas, 0 inválidas, 0 fallos; completitud 43 % → 86 % | No reabrir para perseguir un 100 % artificial; no abrir una octava Hermandad |
+| **CERRADO** | Octavo lote HC-016 | San Gonzalo: 233 operaciones efectivas reconciliadas; 0 pendientes, 0 duplicados nucleares y 0 huérfanos; completitud útil aproximada 43 % → 92 % | No reabrir para fabricar multimedia ni forzar datos sin evidencia; El Valle y La Amargura siguen en cola |
 | **CERRADO** | Cultos septiembre–diciembre de 2026 | Lote transversal HC-016 `c0162026-0909-4000-8000-000000000001`: 53/53, cuatro Hermandades y 0 DDL | Mantener ediciones futuras desde Fuentes oficiales; recurrencia no equivale a anuncio |
 | **CERRADO** | Carátulas de Discografía · #734 | Reintento del optimizador a la URL original y fallback accesible; 21 fichas auditadas, sin imágenes rotas visibles ni desbordamiento | Corregir en origen las cinco URLs históricas inaccesibles de La Oliva; el fallback no cancela esa deuda de datos |
 | **CERRADO** | Navegación e indexación pública | #729 filtra entidades sin ficha y estabiliza el sitemap mediante lecturas por lotes con reintento; producción publica 553 URL | Mantener la frontera pública; no convertir nodos relacionales incompletos en enlaces navegables |
@@ -37,8 +38,8 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 
 ## Verdad de plataforma
 
-- GitHub: `main = 3039f81c…` después de integrar #734; 0 PR abiertas al cerrar el frente funcional.
-- Vercel: producción `READY` en `3039f81c…` mediante `dpl_28Cky18RRenhgCnwL5bvPBwHE4Pj`; el QA representativo y transversal de Discografía no muestra carátulas rotas ni desbordamiento.
+- GitHub: `main = d4fa89cd…` después de integrar #738; 0 PR funcionales abiertas antes de esta certificación documental.
+- Vercel: producción `READY` en `d4fa89cd…` mediante `dpl_ANgo7Efw9UNwyad3kGjrpAkFHJ3A`; San Gonzalo y sus dos Pasos responden 200 y el deployment no registra errores de runtime.
 - Supabase Preview: la rama limpia de #730, sin datos productivos, completó las cuatro migraciones activas y el seed mínimo; la rama fallida obsoleta de #661 fue eliminada sin pérdida de datos únicos.
 - Git ↔ Supabase: producción registra exactamente las cuatro migraciones estructurales activas. Las 84 marcas editoriales posteriores al baseline se retiraron únicamente del historial remoto y los 90 SQL correspondientes se conservan intactos en archivo; no se reejecutó ni revirtió su contenido.
 
@@ -70,10 +71,11 @@ No debe mantenerse en la cola lo que ya está integrado y desplegado:
 - reconciliación de Supabase Preview Branches (#730): cadena activa de cuatro migraciones estructurales, 90 SQL editoriales archivados intactos y preview limpia certificada sin datos de producción.
 - Cultos de septiembre a diciembre de 2026: 53/53 operaciones gobernadas sobre San Pablo, Pino Montano, La Misión y Los Negritos, con ediciones, horarios, titulares y Fuentes oficiales.
 - carátulas de Discografía (#734): intento optimizado, reintento original y fallback accesible compartido para las fichas de Banda.
+- octavo lote real de HC-016: San Gonzalo, con titularidad sacramental, 3 imágenes titulares, 2 Pasos, 3 bandas vigentes, 13 Cultos, 5 Salidas, 11 piezas patrimoniales, 5 acontecimientos y 17 Fuentes visibles.
 
 ## Dónde estamos ahora
 
-HC-016 funciona como método editorial operativo en siete contextos reales: San Pablo, Mercedes de la Puerta Real, El Museo, El Cachorro, El Carmen, Cristo de Burgos y Las Siete Palabras. El séptimo cierre añade 270 operaciones verificadas sobre una ficha de alta densidad relacional, sin esquema nuevo y sin excepciones por `slug`.
+HC-016 funciona como método editorial operativo en ocho contextos reales: San Pablo, Mercedes de la Puerta Real, El Museo, El Cachorro, El Carmen, Cristo de Burgos, Las Siete Palabras y San Gonzalo. El octavo cierre reconcilia 233 operaciones efectivas sobre una ficha de alta densidad relacional, sin esquema nuevo ni excepciones por `slug`.
 
 El lote transversal de Cultos 2026 demuestra además el uso rutinario del método sin abrir otra ficha: cuatro Hermandades existentes, 53/53 operaciones y separación estricta entre calendario recurrente y edición anunciada. La certificación está en [`CERTIFICACION-CULTOS-OTONO-2026-2026-09-09.md`](./CERTIFICACION-CULTOS-OTONO-2026-2026-09-09.md).
 
@@ -236,6 +238,20 @@ Este remate documental no cambia producto ni arquitectura; refleja el DML editor
 
 El cierre levanta el bloqueo excepcional sobre DDL. No autoriza cambios directos: todo nuevo DDL, tabla, migración estructural o ajuste RLS deberá incorporarse mediante una migración reproducible, verificarse en preview sin datos y superar sus puertas de seguridad.
 
+## Octavo lote HC-016 · San Gonzalo
+
+San Gonzalo partía de una completitud útil aproximada del 43 %, con identidad, sede, jornada y un acompañamiento musical ya publicados, pero con deuda nuclear en titulares, Pasos, autorías, Cultos, Salidas, patrimonio y trazabilidad. La investigación priorizó el sitio y las hojas informativas oficiales de la Hermandad, el Consejo de Cofradías y fuentes fiables para recorrido y renovaciones musicales.
+
+El lote principal `e6ffcd86-2704-445f-a2b3-5397ebb50ccb` superó staging con 226/226 filas válidas, 0 referencias sin resolver, 0 ambigüedades y 0 colisiones. Su planificación efectiva fue 218 insert, 7 update y 1 reuse. Apply ejecutó 212 filas y rechazó 14 porque el validador no conocía tres `CHECK` ya presentes en la base: conservación de Imágenes, conservación de Pasos y categoría de Acontecimientos. Se detuvo el cierre, se clasificó la incidencia como validación sistémica y se añadieron los enums reales al preflight con regresión.
+
+La reconciliación `22d1fea4-b7a3-4028-8f98-a7d7ecd04579` aplicó 14/14 sin fallos. Dos remates editoriales posteriores aplicaron 4/4 y 3/3 para enlazar el Santísimo Sacramento canónico, completar sus Fuentes y registrar la banda vigente en Cruz de Guía. El resultado lógico final es **233 operaciones efectivas: 225 insert, 7 update y 1 reuse**, con 0 pendientes y 0 fallos sin reconciliar.
+
+El grafo publica 3 imágenes titulares y una identidad sacramental conceptual, 2 Pasos, 10 autorías de Imágenes, 3 responsables actuales, 3 acompañamientos vigentes, 13 Cultos y 12 ediciones de 2026, 5 Salidas, 11 piezas patrimoniales, 5 Acontecimientos y 17 Fuentes visibles. No hay duplicados nucleares, relaciones huérfanas, relaciones troncales en borrador ni cronologías incompatibles. La presentación común se corrigió para que una titularidad devocional compartida no herede una fotografía física contextual de otra Hermandad.
+
+La completitud útil final queda aproximadamente en **92 %**. Son huecos legítimos o pendientes de evidencia: escudo y fotografías sin derechos verificables; vestidor actual no publicado de forma inequívoca; año exacto de Caifás, conservado como década de 1970 ante fuentes conflictivas; fecha inicial de Santa Ana, mantenida como vigente en 2026; y un catálogo musical no exhaustivo. No se ha usado ninguno para fabricar un 100 %.
+
+La suite vigente terminó **673/673**, el build de Next.js pasó con TypeScript válido y `git diff --check` quedó limpio. En producción la ficha es indexable, presenta canonical exacta, OG/Twitter, tres bloques JSON-LD, identidad, titulares, Pasos, música, patrimonio, Cultos, Salidas, historia, enlaces y Fuentes. Su OG devuelve PNG 1200 × 630. El deployment funcional `dpl_ANgo7Efw9UNwyad3kGjrpAkFHJ3A` está `READY` en `d4fa89c…`, con respuestas 200 y sin errores de runtime. La evidencia completa está en [`CERTIFICACION-SAN-GONZALO-HC016-2026-09-10.md`](./CERTIFICACION-SAN-GONZALO-HC016-2026-09-10.md).
+
 ## Cierre técnico #734 · carátulas de Discografía
 
 #734 ya constaba fusionada cuando comenzó la revalidación contra `main = 3039f81c…`. El diff seguía siendo necesario y estaba limitado al componente compartido de Discografía de Bandas: una carátula válida usa el optimizador de Next; si falla, se reintenta la URL original; si también falla, se muestra un fallback accesible sin imagen rota ni texto alternativo usado como sustitución visual.
@@ -276,14 +292,16 @@ El siguiente frente recomendado es **San Gonzalo**: combina deuda nuclear, fuent
 16. **¿Las Siete Palabras cuenta ya como contexto certificado?** Sí; el lote nuevo terminó 270/270 y la ficha alcanza el 86 % con huecos legítimos expresos.
 17. **¿La navegación pública conduce a fichas inexistentes conocidas?** No; los dos Pasos relacionales de La Estrella sin perfil especializado quedan fuera de `/pasos` y del sitemap.
 18. **¿El sitemap vuelve a publicar las fichas individuales?** Sí; producción sirve 553 URL y las muestras de Hermandades, Bandas, Imágenes y Pasos responden 200.
+19. **¿San Gonzalo cuenta ya como octavo contexto certificado?** Sí; el contenido está reconciliado, #738 está fusionada y producción sirve el cierre funcional en `d4fa89c…`.
+20. **¿El fallo de Apply quedó oculto?** No; las 14 filas rechazadas se clasificaron, el validador común se corrigió con regresión y todas se reaplicaron sin pendientes.
 
 ## Siguiente movimiento autorizado
 
 1. Mantener preservadas las 61 ramas con trabajo único; cualquier limpieza futura exige una revisión específica nueva, no la reutilización de este manifiesto.
-2. Mantener cerradas El Cachorro, El Carmen, Cristo de Burgos y Las Siete Palabras; no hay frente editorial activo.
-3. No abrir una octava Hermandad. San Gonzalo queda seleccionada como siguiente frente recomendado tras el recálculo corto, pero su lote no está abierto ni autorizado para ejecución.
+2. Mantener cerradas El Cachorro, El Carmen, Cristo de Burgos, Las Siete Palabras y San Gonzalo; no hay frente editorial activo.
+3. Auditar como siguiente prioridad las Hermandades de Sevilla con salida entre el 12 y el 20 de septiembre de 2026 antes de abrir sus lotes. El Valle y La Amargura permanecen en cola y no se abren por inercia.
 4. Permitir la carga manual del escudo de Cristo del Perdón desde el Panel, sin reabrir su cierre de datos.
 5. Mantener la disciplina restaurada por #492: migraciones para esquema; HC-016 o Panel para contenido; preview limpia obligatoria antes de integrar DDL.
 6. Mantener el rediseño amplio del directorio en Laboratorio; #729 solo sanea la frontera de publicación y la fiabilidad de las consultas.
 
-No se abre una Hermandad ni se activa un frente de Laboratorio durante este corte.
+No se abre otra Hermandad ni se activa un frente de Laboratorio dentro del cierre de San Gonzalo.
