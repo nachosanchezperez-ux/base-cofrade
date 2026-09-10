@@ -161,6 +161,14 @@
 .open:hover { color: color-mix(in srgb, var(--repertoire-accent) 68%, #fff); }
 .open:focus-visible { border-radius: 3px; outline: 2px solid var(--repertoire-accent); outline-offset: 6px; }
 
+:global(#hc-app) .section :is(.heading h2, .year, .identity > span, .copy h3, .metrics strong) {
+  font-family: Georgia, serif;
+}
+
+:global(#hc-app) .section :is(.heading h2, .copy h3, .metrics strong) {
+  font-weight: 400;
+}
+
 @media (max-width: 820px) {
   .heading { grid-template-columns: 1fr; gap: 12px; }
   .heading > span { padding: 0; }

@@ -94,6 +94,16 @@
 .sourceCard p { margin: 0; color: rgba(255,255,255,.62); font-size: 13px; line-height: 1.65; }
 .sourceCard a { grid-column: 2; justify-self: start; padding-bottom: 4px; border-bottom: 1px solid var(--repertoire-accent); font-size: 9px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
 
+:global(#hc-app) .directory :is(.directoryHero h1, .directoryHeading strong, .directoryYear, .directoryCard h2, .directoryCard dd),
+:global(#hc-app) .detail :is(.heroCopy h1, .heroYear, .heroMetrics strong, .repertoireHeading h2, .note, .workCard h3, .count, .sourceCard h2) {
+  font-family: Georgia, serif;
+}
+
+:global(#hc-app) .directory :is(.directoryHero h1, .directoryCard h2),
+:global(#hc-app) .detail :is(.heroCopy h1, .heroMetrics strong, .repertoireHeading h2, .workCard h3, .count, .sourceCard h2) {
+  font-weight: 400;
+}
+
 @media (max-width: 820px) {
   .directoryGrid,
   .worksGrid { grid-template-columns: 1fr; }
