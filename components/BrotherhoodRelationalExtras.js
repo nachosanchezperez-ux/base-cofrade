@@ -340,31 +340,13 @@ export async function BrotherhoodConceptualTitulars({ brotherhoodId }) {
     const supabase = createPublicClient()
     const titulars = await loadConceptualTitulars(supabase, brotherhoodId)
     if (!titulars.length) return null
-    const coverMedia = await getPublishedEntityCoverMediaMap(titulars.map((titular) => titular.id))
 
     return (
       <div className="image-grid" style={{ marginTop: '1.25rem' }}>
         {titulars.map((titular) => {
-          const media = coverMedia.get(titular.id)
-
           return (
             <article className="image-card brotherhood-image-card" key={titular.id}>
-              {media?.path ? (
-                <div className="portrait-placeholder brotherhood-portrait has-image">
-                  <Image
-                    className="brotherhood-portrait-image"
-                    src={media.path}
-                    alt={media.alt || `Fotografía de ${titular.nombre}`}
-                    fill
-                    sizes="(max-width: 620px) calc(100vw - 40px), (max-width: 980px) 50vw, 25vw"
-                  />
-                  {media.credit ? (
-                    <small className="brotherhood-portrait-credit">{media.credit}</small>
-                  ) : null}
-                </div>
-              ) : (
-                <div className="portrait-placeholder brotherhood-portrait"><span>✦</span></div>
-              )}
+              <div className="portrait-placeholder brotherhood-portrait"><span>✦</span></div>
               <div className="image-card-body">
                 <span className="eyebrow">{titular.tipo}</span>
                 <h3>{titular.nombre}</h3>

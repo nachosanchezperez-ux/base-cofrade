@@ -83,3 +83,42 @@ test('bloquea valores ajenos al CHECK de image_authorships antes de Apply', () =
 
   assert.deepEqual(valid.errors, [])
 })
+
+test('bloquea antes de Apply los enums de conservación y categoría que impone la base', () => {
+  const cases = [
+    {
+      table: 'images',
+      column: 'current_condition',
+      invalid: 'Conservada',
+      valid: 'extant',
+    },
+    {
+      table: 'steps',
+      column: 'current_condition',
+      invalid: 'Conservado',
+      valid: 'preserved',
+    },
+    {
+      table: 'events',
+      column: 'event_category',
+      invalid: 'Historia de la Hermandad',
+      valid: 'historical',
+    },
+  ]
+
+  for (const item of cases) {
+    const invalid = validateBulkImportRecord({
+      table: item.table,
+      operation: 'insert',
+      data: { [item.column]: item.invalid },
+    })
+    assert.ok(invalid.errors.some((error) => error.startsWith(`INVALID_VALUE: ${item.table}.${item.column}`)))
+
+    const valid = validateBulkImportRecord({
+      table: item.table,
+      operation: 'insert',
+      data: { [item.column]: item.valid },
+    })
+    assert.deepEqual(valid.errors, [])
+  }
+})
