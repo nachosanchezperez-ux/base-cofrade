@@ -10,6 +10,7 @@ const EXECUTABLE_SCHEMA_MIGRATIONS = [
   "20260831072000_add_band_logo_background_color.sql",
   "20260908083000_add_brotherhood_membership_stats.sql",
   "20260910181542_crucetas_musicales.sql",
+  "20260910202000_reconcilia_seguridad_crucetas.sql",
 ];
 
 test("Supabase migration versions are unique and well formed", async () => {
