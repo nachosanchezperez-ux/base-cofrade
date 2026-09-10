@@ -20,6 +20,7 @@ import OfficialLinks from '@/components/OfficialLinks';
 import SectionTitle from '@/components/SectionTitle';
 import SourcesBlock from '@/components/SourcesBlock';
 import { hermandades } from '@/lib/data';
+import { holyWeekDay } from '@/lib/brotherhood-directory';
 import { getStepPhotoFraming } from '@/lib/step-photo-framing';
 import { getBrotherhoodMusicalHeritage } from '@/lib/supabase/brotherhood-musical-heritage';
 import { getHermandadPageBySlug } from '@/lib/supabase/brotherhood-page';
@@ -40,6 +41,47 @@ import {
 
 export const dynamic = 'force-dynamic';
 const getHermandad = cache(getHermandadPageBySlug);
+
+function normalizeProcessionalText(value = '') {
+  return String(value || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim();
+}
+
+function stepCountText(count) {
+  return count > 0 ? `${count} ${count === 1 ? 'paso' : 'pasos'}` : '';
+}
+
+function isGloryStep(step) {
+  return normalizeProcessionalText(step?.tipo).includes('gloria');
+}
+
+function isSacramentalStep(step) {
+  const type = normalizeProcessionalText(step?.tipo);
+  return type.includes('custodia') || type.includes('sacramental') || type.includes('eucarist');
+}
+
+function gloryOutingForHeader(outings = []) {
+  const candidates = outings.filter((outing) => (
+    normalizeProcessionalText([outing?.tipo, outing?.nombre].filter(Boolean).join(' ')).includes('gloria')
+  ));
+
+  return candidates.find((outing) => (
+    outing?.estado === 'recurring' || normalizeProcessionalText(outing?.caracter) === 'anual'
+  )) || candidates[0] || null;
+}
+
+function outingDateForHeader(outing) {
+  if (!outing) return '';
+
+  const liturgicalDay = publicText(outing.diaLiturgico);
+  if (liturgicalDay) return liturgicalDay;
+
+  const moment = publicText(outing.momento);
+  return moment ? moment.split(' · ')[0].trim() : '';
+}
 
 export function generateStaticParams() {
   return hermandades.map((item) => ({ slug: item.slug }));
@@ -127,28 +169,52 @@ export default async function HermandadDetailPage({ params }) {
   ));
   const tiposHermandad = h.tipos || [];
   const isPenitencia = tiposHermandad.includes('Penitencia');
+  const isGloria = tiposHermandad.includes('Gloria');
   const brotherhoodTypeLabel = isPenitencia
     ? 'Hermandad de Penitencia'
-    : tiposHermandad.includes('Gloria')
+    : isGloria
       ? 'Hermandad de Gloria'
       : tiposHermandad.includes('Sacramental')
         ? 'Hermandad Sacramental'
         : 'Hermandad';
+  const steps = h.pasos || [];
+  const explicitGlorySteps = steps.filter(isGloryStep);
+  const holyWeekSteps = isPenitencia
+    ? steps.filter((step) => !isGloryStep(step) && !isSacramentalStep(step))
+    : [];
+  const glorySteps = isPenitencia
+    ? explicitGlorySteps
+    : explicitGlorySteps.length > 0
+      ? explicitGlorySteps
+      : steps.filter((step) => !isSacramentalStep(step));
+  const gloryOuting = isGloria ? gloryOutingForHeader(h.salidas) : null;
+  const gloryDate = isGloria
+    ? outingDateForHeader(gloryOuting) || (!isPenitencia ? publicText(h.diaSalida) : '')
+    : '';
+  const holyWeekFact = isPenitencia ? {
+    label: 'Semana Santa',
+    value: [holyWeekDay(h) || publicText(h.diaSalida), stepCountText(holyWeekSteps.length)]
+      .filter(Boolean)
+      .join(' · '),
+  } : null;
+  const gloryFact = isGloria && gloryDate ? {
+    label: 'Gloria',
+    value: [gloryDate, stepCountText(glorySteps.length)].filter(Boolean).join(' · '),
+  } : null;
   const penitentialFacts = [
-    { label: 'Salida', value: publicText(h.diaSalida) },
+    holyWeekFact,
+    gloryFact,
     {
       label: h.datosJornada?.ano ? `Nazarenos · ${h.datosJornada.ano}` : 'Nazarenos',
       value: h.datosJornada?.totalNazarenos,
     },
     { label: 'Tiempo en Carrera Oficial', value: h.datosJornada?.tiempoCarreraOficial },
-    { label: 'Pasos', value: h.pasos?.length ? String(h.pasos.length) : '' },
-  ].filter((item) => item.value);
+  ].filter((item) => item?.value);
   const gloryFacts = [
+    gloryFact,
     { label: 'Fundación', value: publicText(h.fundacion) },
-    { label: 'Salida', value: publicText(h.diaSalida) },
     { label: 'Titulares', value: h.imagenes?.length ? String(h.imagenes.length) : '' },
-    { label: 'Pasos', value: h.pasos?.length ? String(h.pasos.length) : '' },
-  ].filter((item) => item.value);
+  ].filter((item) => item?.value);
   const heroFacts = isPenitencia ? penitentialFacts : gloryFacts;
   const heroFactLabels = new Set(heroFacts.map((fact) => fact.label));
   const hasPracticalOverview = Boolean(
