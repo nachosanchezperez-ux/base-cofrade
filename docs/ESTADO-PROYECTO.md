@@ -1,10 +1,10 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 10 de septiembre de 2026 · octavo lote real HC-016 certificado
+**Corte operativo:** 10 de septiembre de 2026 · HC-019 Crucetas Musicales certificada
 
-**HEAD funcional auditado:** `d4fa89cd91dce0bdccb3fa9632498b7976820187`
+**HEAD funcional auditado:** `2b22a29d996afd2affb7af901321e117beee8b30`
 
-**Producción auditada:** `READY` · deployment `dpl_ANgo7Efw9UNwyad3kGjrpAkFHJ3A` · SHA funcional `d4fa89cd91dce0bdccb3fa9632498b7976820187`
+**Producción auditada:** `READY` · deployment `dpl_G3Ndveqo4RyTYkP2azF2jHqMLfZz` · SHA funcional `2b22a29d996afd2affb7af901321e117beee8b30`
 
 **PR abiertas al cerrar el frente funcional:** **0**
 
@@ -12,7 +12,7 @@
 
 **Frente editorial ACTIVO:** ninguno
 
-> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El HEAD canónico posterior será el commit de `main` que contenga este documento; el lote de San Gonzalo partió del SHA real `2ec0c5f…` y su cierre funcional quedó integrado en `d4fa89c…`.
+> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El HEAD canónico posterior será el commit de `main` que contenga este documento; HC-019 partió del SHA real `8893522…` y su cierre funcional y de seguridad quedó integrado en `2b22a29…`.
 
 ## Tablero operativo único
 
@@ -32,16 +32,18 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | **CERRADO** | Octavo lote HC-016 | San Gonzalo: 233 operaciones efectivas reconciliadas; 0 pendientes, 0 duplicados nucleares y 0 huérfanos; completitud útil aproximada 43 % → 92 % | No reabrir para fabricar multimedia ni forzar datos sin evidencia; El Valle y La Amargura siguen en cola |
 | **CERRADO** | Cultos septiembre–diciembre de 2026 | Lote transversal HC-016 `c0162026-0909-4000-8000-000000000001`: 53/53, cuatro Hermandades y 0 DDL | Mantener ediciones futuras desde Fuentes oficiales; recurrencia no equivale a anuncio |
 | **CERRADO** | Carátulas de Discografía · #734 | Reintento del optimizador a la URL original y fallback accesible; 21 fichas auditadas, sin imágenes rotas visibles ni desbordamiento | Corregir en origen las cinco URLs históricas inaccesibles de La Oliva; el fallback no cancela esa deuda de datos |
+| **CERRADO** | HC-019 · Crucetas Musicales | Piloto Pastora de Cantillana 2026: 48 obras, 60 interpretaciones, 0 duplicados deterministas y 0 huérfanos; #740 y remate #741 integrados | Incorporar nuevas crucetas como música efectivamente interpretada; multiplicidad no equivale a consecutividad |
 | **CERRADO** | Navegación e indexación pública | #729 filtra entidades sin ficha y estabiliza el sitemap mediante lecturas por lotes con reintento; producción publica 553 URL | Mantener la frontera pública; no convertir nodos relacionales incompletos en enlaces navegables |
 | **LABORATORIO** | Mejoras de producto y diseño | Ideas de cabeceras, nuevos campos, nuevas secciones y ampliaciones transversales | No activar mientras siga `FIRST EDITION FREEZE` |
 | **BLOQUEADO** | HC-018 · Aportaciones públicas | Implementación en código, activación expresamente bloqueada | No abrir `/colabora` hasta superar sus puertas de seguridad, privacidad y antiabuso |
 
 ## Verdad de plataforma
 
-- GitHub: `main = d4fa89cd…` después de integrar #738; 0 PR funcionales abiertas antes de esta certificación documental.
-- Vercel: producción `READY` en `d4fa89cd…` mediante `dpl_ANgo7Efw9UNwyad3kGjrpAkFHJ3A`; San Gonzalo y sus dos Pasos responden 200 y el deployment no registra errores de runtime.
+- GitHub: `main = 2b22a29d…` después de integrar #740 y #741; 0 PR funcionales abiertas antes de esta certificación documental.
+- Vercel: producción `READY` en `2b22a29d…` mediante `dpl_G3Ndveqo4RyTYkP2azF2jHqMLfZz`; las rutas de Crucetas responden 200 y el deployment no registra errores de runtime.
+- Supabase: producción registra las dos migraciones de HC-019; el piloto suma 48 obras y 60 interpretaciones, sin huérfanos ni duplicidades deterministas. RLS está activa, `anon` solo dispone de lectura y el modelo rechaza repertorios distintos de `performed`.
 - Supabase Preview: la rama limpia de #730, sin datos productivos, completó las cuatro migraciones activas y el seed mínimo; la rama fallida obsoleta de #661 fue eliminada sin pérdida de datos únicos.
-- Git ↔ Supabase: producción registra exactamente las cuatro migraciones estructurales activas. Las 84 marcas editoriales posteriores al baseline se retiraron únicamente del historial remoto y los 90 SQL correspondientes se conservan intactos en archivo; no se reejecutó ni revirtió su contenido.
+- Git ↔ Supabase: producción registra las cuatro migraciones estructurales reconciliadas en #730 y las dos migraciones posteriores de HC-019. Las 84 marcas editoriales posteriores al baseline se retiraron únicamente del historial remoto y los 90 SQL correspondientes se conservan intactos en archivo; no se reejecutó ni revirtió su contenido.
 
 ## Trabajo reciente ya cerrado
 
@@ -72,10 +74,13 @@ No debe mantenerse en la cola lo que ya está integrado y desplegado:
 - Cultos de septiembre a diciembre de 2026: 53/53 operaciones gobernadas sobre San Pablo, Pino Montano, La Misión y Los Negritos, con ediciones, horarios, titulares y Fuentes oficiales.
 - carátulas de Discografía (#734): intento optimizado, reintento original y fallback accesible compartido para las fichas de Banda.
 - octavo lote real de HC-016: San Gonzalo, con titularidad sacramental, 3 imágenes titulares, 2 Pasos, 3 bandas vigentes, 13 Cultos, 5 Salidas, 11 piezas patrimoniales, 5 acontecimientos y 17 Fuentes visibles.
+- HC-019 · Crucetas Musicales (#740 y #741): directorio y ficha pública del piloto, relaciones reutilizables con Hermandad, Salida, Paso, Banda, Marchas y Fuente, y contrato estricto de música efectivamente interpretada.
 
 ## Dónde estamos ahora
 
 HC-016 funciona como método editorial operativo en ocho contextos reales: San Pablo, Mercedes de la Puerta Real, El Museo, El Cachorro, El Carmen, Cristo de Burgos, Las Siete Palabras y San Gonzalo. El octavo cierre reconcilia 233 operaciones efectivas sobre una ficha de alta densidad relacional, sin esquema nuevo ni excepciones por `slug`.
+
+HC-019 queda certificada con su piloto real: Pastora de Cantillana · Procesión de Gloria 2026 · Banda de Música de Nuestra Señora de la Soledad de Cantillana. El modelo conserva 48 obras y 60 interpretaciones mediante multiplicidades, sin inferir orden, ubicación ni consecutividad. La evidencia está en [`CERTIFICACION-HC019-CRUCETAS-MUSICALES-2026-09-10.md`](./CERTIFICACION-HC019-CRUCETAS-MUSICALES-2026-09-10.md).
 
 El lote transversal de Cultos 2026 demuestra además el uso rutinario del método sin abrir otra ficha: cuatro Hermandades existentes, 53/53 operaciones y separación estricta entre calendario recurrente y edición anunciada. La certificación está en [`CERTIFICACION-CULTOS-OTONO-2026-2026-09-09.md`](./CERTIFICACION-CULTOS-OTONO-2026-2026-09-09.md).
 
