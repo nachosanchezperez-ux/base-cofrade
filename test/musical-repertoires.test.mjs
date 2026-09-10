@@ -29,6 +29,7 @@ test('la carga de Pastora 2026 queda cerrada en 48 obras y 60 interpretaciones',
   assert.match(migration, /<> 60/)
   assert.match(migration, /'macarena-emilio-cebrian'/)
   assert.match(migration, /'macarena-abel-moreno'/)
+  assert.match(migration, /insert into public\.agents \(entity_id, agent_kind, description\)/)
 })
 
 test('la lectura pública está protegida y usa el cliente sin sesión', () => {

@@ -267,6 +267,27 @@ begin
           lower(translate(seed.name, 'ÁÉÍÓÚÜÑáéíóúüñ', 'AEIOUUNaeiouun'))
   );
 
+  with author_seed(name) as (values
+    ('Daniel Albarrán Acosta'),('José Félix García Domínguez'),('Pedro Morales Muñoz'),
+    ('Cristóbal López Gándara'),('Manuel Marvizón Carvallo'),('Juan José Puntas Fernández'),
+    ('Pablo Ojeda Jiménez'),('Pedro Braña Martínez'),('José Albero Francés'),('Emilio Cebrián Ruiz'),
+    ('Manuel Ruiz Vidriet'),('Santiago Ramos Castro'),('Manuel Retobollo Orden'),('Abel Moreno Gómez'),
+    ('J. Arriaga'),('Manuel García Martín'),('Jesús Joaquín Espinosa de los Monteros Pérez'),
+    ('Manuel López Farfán'),('José Velázquez Sánchez'),('Juan de Dios Espinosa Ordóñez'),
+    ('Pablo Sánchez Sánchez'),('Juan Velázquez Sánchez'),('Fray Sebastián de Villaviciosa'),
+    ('José Luis Gómez Jaldón'),('Pascual Marquina Narro'),('Alfonso López Cortés'),
+    ('Óscar Navarro González'),('José de la Vega Sánchez'),('Germán Álvarez Beigbeder'),
+    ('Jesús Sanz Lagares'),('Román San José Redondo'),('David Hurtado Torres'),
+    ('Pedro Gámez Laserna'),('Víctor Arturo López López')
+  )
+  insert into public.agents (entity_id, agent_kind, description)
+  select entity.id, 'person', entity.summary
+  from author_seed seed
+  join public.entities entity on entity.entity_type = 'agent'
+    and lower(translate(entity.name, 'ÁÉÍÓÚÜÑáéíóúüñ', 'AEIOUUNaeiouun')) =
+        lower(translate(seed.name, 'ÁÉÍÓÚÜÑáéíóúüñ', 'AEIOUUNaeiouun'))
+  on conflict (entity_id) do nothing;
+
   with march_seed(slug, title, work_type) as (values
     ('marcha-bendita-la-hora-que-el-mundo-te-vio','Bendita la hora que el mundo te vio','Marcha procesional'),
     ('pastora-reina-de-cantillana-jose-felix-garcia','Pastora, Reina de Cantillana','Marcha procesional'),
