@@ -24,11 +24,11 @@ test('la portada inmersiva se aplica a todas las Hermandades sin excepciones por
 test('la portada muestra datos útiles con semántica documentada', () => {
   const page = source('app/hermandades/[slug]/page.js')
 
-  assert.match(page, /label: 'Salida'/)
+  assert.match(page, /label: 'Semana Santa'/)
   assert.match(page, /Nazarenos · \$\{h\.datosJornada\.ano\}/)
   assert.match(page, /label: 'Tiempo en Carrera Oficial'/)
   assert.match(page, /h\.datosJornada\?\.tiempoCarreraOficial/)
-  assert.match(page, /label: 'Pasos'/)
+  assert.match(page, /stepCountText\(holyWeekSteps\.length\)/)
   assert.match(page, /h\.datosJornada\?\.totalNazarenos/)
   assert.match(page, /h\.pasos\?\.length/)
   assert.match(page, /label: 'Fundación'/)

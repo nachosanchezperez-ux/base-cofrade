@@ -9,11 +9,13 @@ import RelationalEntityHero from '@/components/RelationalEntityHero'
 import EntitySectionNav from '@/components/EntitySectionNav'
 import BandDiscographySection from '@/components/bands/BandDiscographySection'
 import BandFeaturePhoto from '@/components/BandFeaturePhoto'
+import MusicalRepertoiresSection from '@/components/MusicalRepertoiresSection'
 import HistoricalAccompanimentsRail from './HistoricalAccompanimentsRail'
 import { getBandBySlug, youtubeEmbedUrl } from '@/lib/supabase/bands'
 import { getBandDiscography } from '@/lib/supabase/bandDiscography'
 import { getPublishedBandColors } from '@/lib/supabase/bandColors'
 import { getBandOutingPublicLinks } from '@/lib/supabase/band-outing-links'
+import { getMusicalRepertoires } from '@/lib/supabase/musical-repertoires'
 import {
   meetsPublicEditorialMinimum,
   publicEditorialRobots,
@@ -176,10 +178,11 @@ export default async function BandDetailPage({ params }) {
   const { slug } = await params
   const band = await getBandBySlug(slug)
   if (!band) notFound()
-  const [discography, colors, outingLinks] = await Promise.all([
+  const [discography, colors, outingLinks, musicalRepertoires] = await Promise.all([
     getBandDiscography(band.id),
     getPublishedBandColors(band.id),
     getBandOutingPublicLinks(band.outings.map((item) => item.id)),
+    getMusicalRepertoires({ bandEntityId: band.id }),
   ])
   const years = [...new Set(band.premieres.map((item) => item.year))].sort((a, b) => b - a)
   const currentYear = new Date().getFullYear()
@@ -209,6 +212,7 @@ export default async function BandDetailPage({ params }) {
   const hasHistoricalAccompaniments = historicalAccompaniments.length > 0
   const hasOutings = band.outings.length > 0
   const hasPremieres = band.premieres.length > 0
+  const hasMusicalRepertoires = musicalRepertoires.length > 0
   const hasDiscography = discography.length > 0
   const hasDirection = band.direction.length > 0
   const banderin = band.heritage?.find((item) => item.type === 'Banderín') || null
@@ -313,6 +317,7 @@ export default async function BandDetailPage({ params }) {
         hasHistoricalAccompaniments && { href: '#acompanamientos-historicos', label: 'Histórico' },
         hasOutings && { href: '#extraordinarias', label: 'Extraordinarias' },
         hasPremieres && { href: '#repertorio', label: 'Música' },
+        hasMusicalRepertoires && { href: '#crucetas-musicales', label: 'Crucetas' },
         hasDiscography && { href: '#discografia', label: 'Discografía' },
         hasDirection && { href: '#direccion', label: 'Dirección' },
         band.interestLinks.length > 0 && { href: '#enlaces-de-interes', label: 'Enlaces de interés' },
@@ -600,6 +605,8 @@ export default async function BandDetailPage({ params }) {
           ))}
         </div>
       </section> : null}
+
+      <MusicalRepertoiresSection items={musicalRepertoires} context="band" />
 
       <BandDiscographySection releases={discography} />
 

@@ -32,6 +32,7 @@ const directoryLinks = [
   ['/imagenes', 'Imágenes'],
   ['/pasos', 'Pasos'],
   ['/bandas', 'Bandas'],
+  ['/crucetas-musicales', 'Crucetas musicales'],
 ];
 
 function routeActive(pathname) {

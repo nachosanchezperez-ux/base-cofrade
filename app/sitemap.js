@@ -9,6 +9,7 @@ import { getExtraordinaryDirectory } from '@/lib/supabase/extraordinary-director
 import { getGloryDirectory } from '@/lib/supabase/glory-directory';
 import { getCrewEventDirectory } from '@/lib/supabase/crew-events';
 import { getPublicIndexableEntityEntries } from '@/lib/supabase/public-indexability';
+import { getMusicalRepertoires } from '@/lib/supabase/musical-repertoires';
 
 export const revalidate = 3600;
 
@@ -57,6 +58,11 @@ const staticEntries = [
     url: absoluteUrl('/bandas'),
     changeFrequency: 'weekly',
     priority: 0.9,
+  },
+  {
+    url: absoluteUrl('/crucetas-musicales'),
+    changeFrequency: 'weekly',
+    priority: 0.86,
   },
   {
     url: absoluteUrl('/extraordinarias'),
@@ -167,12 +173,21 @@ function crewEventEntries(events) {
     }));
 }
 
+function musicalRepertoireEntries(repertoires) {
+  return repertoires.map((repertoire) => ({
+    url: absoluteUrl(repertoire.href),
+    changeFrequency: 'monthly',
+    priority: 0.72,
+  }));
+}
+
 export default async function sitemap() {
-  const [brotherhoodDirectory, extraordinaryOutings, gloryOutings, crewEvents] = await Promise.all([
+  const [brotherhoodDirectory, extraordinaryOutings, gloryOutings, crewEvents, musicalRepertoires] = await Promise.all([
     getHermandadesDirectory(),
     getExtraordinaryDirectory(),
     getGloryDirectory(),
     getCrewEventDirectory(),
+    getMusicalRepertoires(),
   ]);
   const indexableEntities = await getPublicIndexableEntityEntries({
     brotherhoods: brotherhoodDirectory,
@@ -185,6 +200,7 @@ export default async function sitemap() {
     ...extraordinaryEntries(extraordinaryOutings),
     ...gloryEntries(gloryOutings),
     ...crewEventEntries(crewEvents),
+    ...musicalRepertoireEntries(musicalRepertoires),
   ];
 
   return [...new Map(entries.map((entry) => [entry.url, entry])).values()];
