@@ -9,6 +9,7 @@ const baselineName = '20260831070000_first_edition_baseline.sql'
 const securityName = '20260831071000_secure_public_contributions_reconciled.sql'
 const logoBackgroundName = '20260831072000_add_band_logo_background_color.sql'
 const membershipStatsName = '20260908083000_add_brotherhood_membership_stats.sql'
+const musicalRepertoiresName = '20260910181542_crucetas_musicales.sql'
 const baseline = readFileSync(new URL(baselineName, migrationsDirectory), 'utf8')
 const membershipStats = readFileSync(new URL(membershipStatsName, migrationsDirectory), 'utf8')
 const seed = readFileSync(new URL('../supabase/seed.sql', import.meta.url), 'utf8')
@@ -16,7 +17,7 @@ const seed = readFileSync(new URL('../supabase/seed.sql', import.meta.url), 'utf
 test('las ramas nuevas ejecutan únicamente el baseline y las evoluciones de esquema', () => {
   const migrations = readdirSync(migrationsDirectory).filter((file) => file.endsWith('.sql')).sort()
 
-  assert.deepEqual(migrations, [baselineName, securityName, logoBackgroundName, membershipStatsName])
+  assert.deepEqual(migrations, [baselineName, securityName, logoBackgroundName, membershipStatsName, musicalRepertoiresName])
 })
 
 test('el baseline reproduce el esquema canónico y conserva las barreras RLS', () => {

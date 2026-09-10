@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { cache } from 'react';
 import BrotherhoodCultsSection from '@/components/BrotherhoodCultsSection';
 import BrotherhoodMusicalHeritage from '@/components/BrotherhoodMusicalHeritage';
+import MusicalRepertoiresSection from '@/components/MusicalRepertoiresSection';
 import BrotherhoodOverviewV2 from '@/components/BrotherhoodOverviewV2';
 import BrotherhoodViaCrucisSection from '@/components/BrotherhoodViaCrucisSection';
 import BrotherhoodOutingsSection from '@/components/BrotherhoodOutingsSection';
@@ -23,6 +24,7 @@ import { hermandades } from '@/lib/data';
 import { holyWeekDay } from '@/lib/brotherhood-directory';
 import { getStepPhotoFraming } from '@/lib/step-photo-framing';
 import { getBrotherhoodMusicalHeritage } from '@/lib/supabase/brotherhood-musical-heritage';
+import { getMusicalRepertoires } from '@/lib/supabase/musical-repertoires';
 import { getHermandadPageBySlug } from '@/lib/supabase/brotherhood-page';
 import { getPublishedBrotherhoodCrestPath } from '@/lib/supabase/brotherhood-public-authority';
 import { getPublishedEntityCoverMediaMap } from '@/lib/supabase/entity-media';
@@ -142,7 +144,7 @@ export default async function HermandadDetailPage({ params }) {
   const h = await getHermandad(slug);
   if (!h) notFound();
 
-  const [entityCoverMedia, musicalHeritage, authoritativeCrestPath] = await Promise.all([
+  const [entityCoverMedia, musicalHeritage, authoritativeCrestPath, musicalRepertoires] = await Promise.all([
     getPublishedEntityCoverMediaMap(
       [
         h.id,
@@ -153,6 +155,7 @@ export default async function HermandadDetailPage({ params }) {
     ),
     getBrotherhoodMusicalHeritage(h.id),
     getPublishedBrotherhoodCrestPath(h.id),
+    getMusicalRepertoires({ brotherhoodEntityId: h.id }),
   ]);
   const heroMedia = entityCoverMedia.get(h.id)
     || h.imagenes.map((imagen) => entityCoverMedia.get(imagen.id)).find(Boolean)
@@ -305,6 +308,7 @@ export default async function HermandadDetailPage({ params }) {
         (h.imagenes?.length > 0 || h.pasos?.length > 0) && { href: '#tira-del-hilo', label: 'Tira del hilo' },
         documentedCurrentAccompaniments.length > 0 && { href: '#acompanamiento-musical', label: 'Acompañamiento' },
         (musicalHeritage.length > 0 || fallbackMusicalHeritage.length > 0) && { href: '#musica', label: 'Patrimonio musical' },
+        musicalRepertoires.length > 0 && { href: '#crucetas-musicales', label: 'Crucetas' },
         h.cronologia?.length > 0 && { href: '#historia', label: 'Historia' },
         h.viaCrucisCofradias?.length > 0 && { href: '#via-crucis-cofradias', label: 'Vía Crucis' },
         h.habitos?.length > 0 && { href: '#tunica', label: 'Túnica' },
@@ -494,6 +498,8 @@ export default async function HermandadDetailPage({ params }) {
           ))}</div>
         </div></section>
       ) : null}
+
+      <MusicalRepertoiresSection items={musicalRepertoires} context="brotherhood" />
 
       {h.cronologia?.length > 0 && <section className="section history-section" id="historia"><div className="shell">
         <SectionTitle eyebrow="Cronología" title="Historia" description="Una línea temporal para recorrer los grandes hitos y conectarlos con titulares, pasos y acontecimientos." />
