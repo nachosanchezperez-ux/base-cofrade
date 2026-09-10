@@ -14,6 +14,7 @@ test('la cruceta modela una banda en una salida y conserva el paso relacionado',
   assert.match(migration, /band_entity_id uuid not null references public\.entities/)
   assert.match(migration, /step_entity_id uuid references public\.entities/)
   assert.match(migration, /unique \(outing_id, band_entity_id\)/)
+  assert.match(migration, /musical_repertoires_source_idx/)
 })
 
 test('las cantidades expresan interpretaciones sin inventar consecutividad', () => {

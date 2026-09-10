@@ -57,6 +57,9 @@ create index musical_repertoires_band_idx
 create index musical_repertoires_step_idx
   on public.musical_repertoires (step_entity_id)
   where step_entity_id is not null;
+create index musical_repertoires_source_idx
+  on public.musical_repertoires (source_id)
+  where source_id is not null;
 create index musical_repertoire_entries_repertoire_idx
   on public.musical_repertoire_entries (repertoire_id, display_order);
 create index musical_repertoire_entries_march_idx
