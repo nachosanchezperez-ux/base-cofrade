@@ -7,6 +7,7 @@ function source(path) {
 }
 
 const migration = source('supabase/migrations/20260910181542_crucetas_musicales.sql')
+const hardening = source('supabase/migrations/20260910202000_reconcilia_seguridad_crucetas.sql')
 
 test('la cruceta modela una banda en una salida y conserva el paso relacionado', () => {
   assert.match(migration, /create table public\.musical_repertoires/)
@@ -39,8 +40,14 @@ test('la lectura pública está protegida y usa el cliente sin sesión', () => {
   assert.match(migration, /enable row level security/g)
   assert.match(migration, /status = 'published'/)
   assert.match(migration, /band\.entity_type = 'band'/)
+  assert.match(migration, /check \(repertoire_kind = 'performed'\)/)
+  assert.match(migration, /revoke all on public\.musical_repertoires from public, anon, authenticated/)
+  assert.match(hardening, /create index if not exists musical_repertoires_source_idx/)
+  assert.match(hardening, /HC-019 solo admite repertorios realmente interpretados/)
+  assert.match(hardening, /revoke all on public\.musical_repertoire_entries from public, anon, authenticated/)
   assert.match(loader, /import 'server-only'/)
   assert.match(loader, /createPublicClient/)
+  assert.match(loader, /eq\('repertoire_kind', 'performed'\)/)
   assert.doesNotMatch(loader, /createClient|next\/headers|cookies\(/)
 })
 

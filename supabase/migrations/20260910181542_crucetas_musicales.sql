@@ -18,7 +18,7 @@ create table public.musical_repertoires (
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
   constraint musical_repertoires_kind_check
-    check (repertoire_kind in ('performed', 'planned', 'partial')),
+    check (repertoire_kind = 'performed'),
   constraint musical_repertoires_status_check
     check (status in ('draft', 'review', 'published', 'archived')),
   constraint musical_repertoires_outing_band_key
@@ -44,7 +44,7 @@ create table public.musical_repertoire_entries (
 comment on table public.musical_repertoires is
   'Repertorios documentados para una banda en una salida concreta.';
 comment on column public.musical_repertoires.repertoire_kind is
-  'performed: publicado tras la salida; planned: previsión; partial: reconstrucción incompleta.';
+  'performed: repertorio realmente interpretado y documentado tras la salida.';
 comment on column public.musical_repertoire_entries.performance_count is
   'Número de interpretaciones declarado por la fuente. No expresa si fueron consecutivas.';
 comment on column public.musical_repertoire_entries.display_order is
@@ -156,6 +156,8 @@ create policy "Editors can delete musical repertoire entries"
   to authenticated
   using ((select public.can_edit_panel()));
 
+revoke all on public.musical_repertoires from public, anon, authenticated;
+revoke all on public.musical_repertoire_entries from public, anon, authenticated;
 grant select on public.musical_repertoires to anon;
 grant select on public.musical_repertoire_entries to anon;
 grant select, insert, update, delete on public.musical_repertoires to authenticated;
