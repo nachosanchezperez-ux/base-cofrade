@@ -38,6 +38,8 @@ export default async function MusicalRepertoireDetailPage({ params }) {
   const repertoire = await getMusicalRepertoireBySlug(slug)
   if (!repertoire) notFound()
 
+  const stepHref = repertoire.step?.slug ? `/pasos/${repertoire.step.slug}` : ''
+
   return (
     <div
       className={styles.detail}
@@ -63,19 +65,29 @@ export default async function MusicalRepertoireDetailPage({ params }) {
           <nav className={styles.breadcrumb} aria-label="Migas de pan">
             <Link href="/">Inicio</Link><span>/</span><Link href="/crucetas-musicales">Crucetas musicales</Link>
           </nav>
+
           <div className={styles.heroGrid}>
             <div className={styles.heroCopy}>
-              <div className={styles.verified}><i aria-hidden="true" /> Repertorio interpretado</div>
-              <span>{dateLabel(repertoire.date)}</span>
+              <div className={styles.heroMeta}>
+                <div className={styles.verified}><i aria-hidden="true" /> Repertorio interpretado</div>
+                <span className={styles.heroDate}>{dateLabel(repertoire.date)}</span>
+                <span className={styles.heroEdition}>Edición {repertoire.year}</span>
+              </div>
               <h1>{repertoire.brotherhood.name}</h1>
               <p>{repertoire.outing.title}</p>
+              {repertoire.band.href ? (
+                <Link className={styles.heroBand} href={repertoire.band.href}>
+                  <span>Banda</span>
+                  <strong>{repertoire.band.name}</strong>
+                  <b aria-hidden="true">→</b>
+                </Link>
+              ) : null}
             </div>
-            <div className={styles.heroYear} aria-label={`Edición ${repertoire.year}`}>{repertoire.year}</div>
           </div>
+
           <div className={styles.heroMetrics}>
             <div><strong>{repertoire.worksCount}</strong><span>obras distintas</span></div>
             <div><strong>{repertoire.performancesCount}</strong><span>interpretaciones</span></div>
-            <div><strong>1</strong><span>banda</span></div>
           </div>
         </div>
       </header>
@@ -93,11 +105,19 @@ export default async function MusicalRepertoireDetailPage({ params }) {
             <small>Consultar ficha <b aria-hidden="true">→</b></small>
           </Link>
           {repertoire.step ? (
-            <div>
-              <span>Paso</span>
-              <strong>{repertoire.step.name}</strong>
-              <small>Procesión de {repertoire.year}</small>
-            </div>
+            stepHref ? (
+              <Link href={stepHref}>
+                <span>Paso</span>
+                <strong>{repertoire.step.name}</strong>
+                <small>Consultar ficha <b aria-hidden="true">→</b></small>
+              </Link>
+            ) : (
+              <div>
+                <span>Paso</span>
+                <strong>{repertoire.step.name}</strong>
+                <small>Procesión de {repertoire.year}</small>
+              </div>
+            )
           ) : null}
         </div>
       </section>
