@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import JsonLd from '@/components/JsonLd'
@@ -15,6 +16,21 @@ function dateLabel(value) {
     year: 'numeric',
     timeZone: 'Europe/Madrid',
   }).format(new Date(`${value}T12:00:00`))
+}
+
+function BandLogo({ band, size = 36 }) {
+  if (!band?.logoPath) return <span aria-hidden="true">♪</span>
+
+  return (
+    <Image
+      src={band.logoPath}
+      alt=""
+      width={size}
+      height={size}
+      sizes={`${size}px`}
+      style={{ width: size, height: size, objectFit: 'contain', display: 'block' }}
+    />
+  )
 }
 
 export async function generateMetadata({ params }) {
@@ -77,7 +93,7 @@ export default async function MusicalRepertoireDetailPage({ params }) {
               <p>{repertoire.outing.title}</p>
               {repertoire.band.href ? (
                 <Link className={styles.heroBand} href={repertoire.band.href}>
-                  <span>Banda</span>
+                  <BandLogo band={repertoire.band} size={38} />
                   <strong>{repertoire.band.name}</strong>
                   <b aria-hidden="true">→</b>
                 </Link>
@@ -100,7 +116,7 @@ export default async function MusicalRepertoireDetailPage({ params }) {
             <small>Consultar ficha <b aria-hidden="true">→</b></small>
           </Link>
           <Link href={repertoire.band.href}>
-            <span>Banda</span>
+            <span aria-label="Banda"><BandLogo band={repertoire.band} size={30} /></span>
             <strong>{repertoire.band.name}</strong>
             <small>Consultar ficha <b aria-hidden="true">→</b></small>
           </Link>
