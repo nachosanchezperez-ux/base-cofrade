@@ -1,10 +1,10 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 10 de septiembre de 2026 · HC-019 Crucetas Musicales certificada
+**Corte operativo:** 11 de septiembre de 2026 · Divina Pastora de Santa Marina certificada
 
-**HEAD funcional auditado:** `2b22a29d996afd2affb7af901321e117beee8b30`
+**HEAD funcional auditado:** `1f41c09553fb420f25d8cc6a2b3f305f4219d4b1`
 
-**Producción auditada:** `READY` · deployment `dpl_G3Ndveqo4RyTYkP2azF2jHqMLfZz` · SHA funcional `2b22a29d996afd2affb7af901321e117beee8b30`
+**Producción auditada:** `READY` · deployment `dpl_kQPLn7RkT1QZX2B5DamDL5DYr97X` · SHA funcional `1f41c09553fb420f25d8cc6a2b3f305f4219d4b1`
 
 **PR abiertas al cerrar el frente funcional:** **0**
 
@@ -12,7 +12,7 @@
 
 **Frente editorial ACTIVO:** ninguno
 
-> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El HEAD canónico posterior será el commit de `main` que contenga este documento; HC-019 partió del SHA real `8893522…` y su cierre funcional y de seguridad quedó integrado en `2b22a29…`.
+> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El HEAD canónico posterior será el commit de `main` que contenga este documento; la Divina Pastora de Santa Marina quedó cerrada sobre `1f41c095…`.
 
 ## Tablero operativo único
 
@@ -30,6 +30,7 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | **CERRADO** | Cristo del Perdón · San José de la Rinconada | Las dos bandas vigentes quedan verificadas y documentadas mediante un remate HC-016 de 5/5 | El escudo queda reservado a la carga anunciada desde el Panel; no bloquea el cierre de datos |
 | **CERRADO** | Séptimo lote HC-016 | Las Siete Palabras: 270/270 aplicadas, 0 inválidas, 0 fallos; completitud 43 % → 86 % | No reabrir para perseguir un 100 % artificial; no abrir una octava Hermandad |
 | **CERRADO** | Octavo lote HC-016 | San Gonzalo: 233 operaciones efectivas reconciliadas; 0 pendientes, 0 duplicados nucleares y 0 huérfanos; completitud útil aproximada 43 % → 92 % | No reabrir para fabricar multimedia ni forzar datos sin evidencia; El Valle y La Amargura siguen en cola |
+| **CERRADO** | Noveno lote HC-016 | Divina Pastora de Santa Marina: 50/50 en tres lotes, 0 inválidas, 0 fallos; titular, Paso, Cultos, Salidas, música, patrimonio y media licenciada; H3 y señal técnica 100 % | No reabrir para perseguir exhaustividad; queda como hueco legítimo una fotografía específica del Paso completo |
 | **CERRADO** | Cultos septiembre–diciembre de 2026 | Lote transversal HC-016 `c0162026-0909-4000-8000-000000000001`: 53/53, cuatro Hermandades y 0 DDL | Mantener ediciones futuras desde Fuentes oficiales; recurrencia no equivale a anuncio |
 | **CERRADO** | Carátulas de Discografía · #734 | Reintento del optimizador a la URL original y fallback accesible; 21 fichas auditadas, sin imágenes rotas visibles ni desbordamiento | Corregir en origen las cinco URLs históricas inaccesibles de La Oliva; el fallback no cancela esa deuda de datos |
 | **CERRADO** | HC-019 · Crucetas Musicales | Piloto Pastora de Cantillana 2026: 48 obras, 60 interpretaciones, 0 duplicados deterministas y 0 huérfanos; #740 y remate #741 integrados | Incorporar nuevas crucetas como música efectivamente interpretada; multiplicidad no equivale a consecutividad |
@@ -39,9 +40,9 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 
 ## Verdad de plataforma
 
-- GitHub: `main = 2b22a29d…` después de integrar #740 y #741; 0 PR funcionales abiertas antes de esta certificación documental.
-- Vercel: producción `READY` en `2b22a29d…` mediante `dpl_G3Ndveqo4RyTYkP2azF2jHqMLfZz`; las rutas de Crucetas responden 200 y el deployment no registra errores de runtime.
-- Supabase: producción registra las dos migraciones de HC-019; el piloto suma 48 obras y 60 interpretaciones, sin huérfanos ni duplicidades deterministas. RLS está activa, `anon` solo dispone de lectura y el modelo rechaza repertorios distintos de `performed`.
+- GitHub: `main = 1f41c095…` después de integrar #745; 0 PR funcionales abiertas antes de esta certificación documental.
+- Vercel: producción `READY` en `1f41c095…` mediante `dpl_kQPLn7RkT1QZX2B5DamDL5DYr97X`; las fichas públicas de la Divina Pastora de Santa Marina responden 200.
+- Supabase: la Divina Pastora de Santa Marina queda cerrada mediante tres lotes HC-016 que suman 50/50 operaciones, sin DDL, pendientes, duplicados nucleares ni huérfanos. La señal reproducible de completitud alcanza el 100 %.
 - Supabase Preview: la rama limpia de #730, sin datos productivos, completó las cuatro migraciones activas y el seed mínimo; la rama fallida obsoleta de #661 fue eliminada sin pérdida de datos únicos.
 - Git ↔ Supabase: producción registra las cuatro migraciones estructurales reconciliadas en #730 y las dos migraciones posteriores de HC-019. Las 84 marcas editoriales posteriores al baseline se retiraron únicamente del historial remoto y los 90 SQL correspondientes se conservan intactos en archivo; no se reejecutó ni revirtió su contenido.
 
@@ -75,10 +76,11 @@ No debe mantenerse en la cola lo que ya está integrado y desplegado:
 - carátulas de Discografía (#734): intento optimizado, reintento original y fallback accesible compartido para las fichas de Banda.
 - octavo lote real de HC-016: San Gonzalo, con titularidad sacramental, 3 imágenes titulares, 2 Pasos, 3 bandas vigentes, 13 Cultos, 5 Salidas, 11 piezas patrimoniales, 5 acontecimientos y 17 Fuentes visibles.
 - HC-019 · Crucetas Musicales (#740 y #741): directorio y ficha pública del piloto, relaciones reutilizables con Hermandad, Salida, Paso, Banda, Marchas y Fuente, y contrato estricto de música efectivamente interpretada.
+- noveno lote real de HC-016: Divina Pastora de Santa Marina, con titular canónica, andas, tres Cultos y tres Salidas de 2026, dos formaciones musicales, patrimonio del Paso, 11 Fuentes visibles y fotografía CC BY-SA 4.0 (#745).
 
 ## Dónde estamos ahora
 
-HC-016 funciona como método editorial operativo en ocho contextos reales: San Pablo, Mercedes de la Puerta Real, El Museo, El Cachorro, El Carmen, Cristo de Burgos, Las Siete Palabras y San Gonzalo. El octavo cierre reconcilia 233 operaciones efectivas sobre una ficha de alta densidad relacional, sin esquema nuevo ni excepciones por `slug`.
+HC-016 funciona como método editorial operativo en nueve contextos reales: San Pablo, Mercedes de la Puerta Real, El Museo, El Cachorro, El Carmen, Cristo de Burgos, Las Siete Palabras, San Gonzalo y Divina Pastora de Santa Marina. El noveno cierre suma 50/50 operaciones en tres lotes gobernados y alcanza H3 con la señal reproducible al 100 %, sin esquema nuevo ni excepciones por `slug`.
 
 HC-019 queda certificada con su piloto real: Pastora de Cantillana · Procesión de Gloria 2026 · Banda de Música de Nuestra Señora de la Soledad de Cantillana. El modelo conserva 48 obras y 60 interpretaciones mediante multiplicidades, sin inferir orden, ubicación ni consecutividad. La evidencia está en [`CERTIFICACION-HC019-CRUCETAS-MUSICALES-2026-09-10.md`](./CERTIFICACION-HC019-CRUCETAS-MUSICALES-2026-09-10.md).
 
@@ -257,6 +259,16 @@ La completitud útil final queda aproximadamente en **92 %**. Son huecos legíti
 
 La suite vigente terminó **673/673**, el build de Next.js pasó con TypeScript válido y `git diff --check` quedó limpio. En producción la ficha es indexable, presenta canonical exacta, OG/Twitter, tres bloques JSON-LD, identidad, titulares, Pasos, música, patrimonio, Cultos, Salidas, historia, enlaces y Fuentes. Su OG devuelve PNG 1200 × 630. El deployment funcional `dpl_ANgo7Efw9UNwyad3kGjrpAkFHJ3A` está `READY` en `d4fa89c…`, con respuestas 200 y sin errores de runtime. La evidencia completa está en [`CERTIFICACION-SAN-GONZALO-HC016-2026-09-10.md`](./CERTIFICACION-SAN-GONZALO-HC016-2026-09-10.md).
 
+## Noveno lote HC-016 · Divina Pastora de Santa Marina
+
+La ficha partía de H2, con sede, Paso, tres Cultos, tres Salidas y música parcialmente documentados, pero sin titular canónica publicada ni grafo completo entre Imagen, Paso, Cultos, Salida y acompañamientos. El lote principal `89efa9ed-4ad7-4893-8686-30fb1dc831b1` terminó 43/43, con 34 insert y 9 update. Los remates `f5c7e46f-55eb-4ba1-a539-ab113e1a4581` y `e40b665a-68ef-495e-bbe6-fc51ddfd56ff` sumaron 2/2 y 5/5. El balance final es **50/50**, 41 insert, 9 update, 0 inválidas, 0 fallos y 0 operaciones pendientes.
+
+Se publicó la titular como Divina Pastora de las Almas de Santa Marina, atribuida prudentemente a Francisco Antonio Ruiz Gijón hacia 1704–1705, y su restauración por Juan Manuel Miñarro López en 1991–1992. La Imagen quedó relacionada con la Hermandad, las andas de 1959–1960, los tres Cultos y la Salida principal. La procesión del 20 de septiembre de 2026 muestra a Santa Cecilia abriendo el cortejo y a la Banda Municipal de Coria del Río tras las andas. El Paso publica además sus candelabros y las coronillas realizadas por Orfebrería Andaluza en 2002.
+
+La fotografía de Jl FilpoC, bajo CC BY-SA 4.0, se integró mediante #745 como cabecera de Hermandad y portada de la Imagen, con crédito y procedencia completos. Las tres fichas públicas responden 200 y son indexables; el OG devuelve PNG 1200 × 630. El grafo no contiene duplicados nucleares ni relaciones huérfanas y la señal reproducible de completitud alcanza **100 %**, por lo que la ficha queda en **H3**. Permanece como hueco legítimo una fotografía específica del Paso completo. La cronología temporal de sedes no se fuerza porque `entity_locations` está bloqueada para escritura por HC-016; la sede canónica ya consta en el campo vigente.
+
+La evidencia completa está en [`CERTIFICACION-PASTORA-SANTA-MARINA-HC016-2026-09-11.md`](./CERTIFICACION-PASTORA-SANTA-MARINA-HC016-2026-09-11.md). El frente queda cerrado y no activa cambios de UX, arquitectura o funcionalidades.
+
 ## Cierre técnico #734 · carátulas de Discografía
 
 #734 ya constaba fusionada cuando comenzó la revalidación contra `main = 3039f81c…`. El diff seguía siendo necesario y estaba limitado al componente compartido de Discografía de Bandas: una carátula válida usa el optimizador de Next; si falla, se reintenta la URL original; si también falla, se muestra un fallback accesible sin imagen rota ni texto alternativo usado como sustitución visual.
@@ -267,15 +279,15 @@ El deployment `dpl_28Cky18RRenhgCnwL5bvPBwHE4Pj` está `READY` y corresponde al 
 
 ## Recálculo editorial corto posterior al cierre
 
-Se excluyeron las siete Hermandades ya certificadas. El corte nuevo no reutiliza el orden anterior y separa ausencia real, deuda relacional y huecos legítimos.
+Se excluyeron las nueve Hermandades ya certificadas. El corte nuevo no reutiliza el orden anterior y separa ausencia real, deuda relacional y huecos legítimos.
 
 | Candidata | Completitud útil | Deuda documental | Deuda relacional | Deuda legítima | Fuentes y cierre HC-016 |
 |---|---:|---|---|---|---|
-| **San Gonzalo** | 43 % | Alta: titulares, Pasos, autorías, Cultos, Salidas y patrimonio | Muy alta: tres titulares, dos Pasos, agentes y música reutilizable | Media y licencias de media | Web oficial activa y actualizada; cierre alto sin esquema nuevo |
+| **Guadalupe de San Buenaventura** | 79 % | Media: remate de entidades, relaciones y trazabilidad | Media | Media y recursos gráficos autorizados | Mejor equilibrio para el siguiente lote corto |
+| **Divina Pastora de Triana** | 64 % | Media-alta: núcleo artístico, calendario y patrimonio | Alta | Media y licencias de media | Actualidad de Gloria y cierre viable con fuentes oficiales |
 | **El Valle** | 43 % | Alta: núcleo artístico, Cultos, Salidas y patrimonio | Muy alta: cuatro titulares, tres Pasos y dos periodos musicales ya señalados | Media y media autorizada | Fuente oficial profunda; cierre alto, con mayor complejidad artística |
-| **La Amargura** | 71 % | Media: Cultos, Salidas, patrimonio y trazabilidad adicional | Media-alta: tres imágenes y dos Pasos ya publicados | Media | Fuentes oficiales disponibles; cierre muy alto y alcance más corto |
 
-El siguiente frente recomendado es **San Gonzalo**: combina deuda nuclear, fuente oficial viva, alta reutilización de nodos, actualidad 2026 verificable y un alcance editorial ordinario compatible con HC-016. La selección queda registrada, pero no se abre ni se ejecuta el lote.
+El siguiente frente recomendado es **Guadalupe de San Buenaventura**. La selección queda registrada, pero no se abre ni se ejecuta el lote dentro del cierre de Santa Marina.
 
 ## Auditor
 
@@ -284,7 +296,7 @@ El siguiente frente recomendado es **San Gonzalo**: combina deuda nuclear, fuent
 3. **¿El Museo está cerrado?** Sí, con los huecos legítimos expresos.
 4. **¿El Cachorro continúa cerrado?** Sí: el cuarto lote terminó 90/90 y sin fallos.
 5. **¿Algún error determinista nuevo alcanzó Apply?** No.
-6. **¿HC-016 es reutilizable como método editorial?** Sí; Las Siete Palabras completa el séptimo contexto real con 270/270 operaciones, sin cambios de arquitectura.
+6. **¿HC-016 es reutilizable como método editorial?** Sí; la Divina Pastora de Santa Marina completa el noveno contexto real con 50/50 operaciones, sin cambios de arquitectura.
 7. **¿Existe algún bloqueo estructural activo?** No; #492 quedó reconciliada mediante #730 y su certificación productiva.
 8. **¿`main` y producción coincidían en el corte histórico de El Museo?** Sí, en `a910fd9b…`.
 9. **¿Había 0 PR abiertas antes de la sincronización?** Sí.
@@ -299,14 +311,17 @@ El siguiente frente recomendado es **San Gonzalo**: combina deuda nuclear, fuent
 18. **¿El sitemap vuelve a publicar las fichas individuales?** Sí; producción sirve 553 URL y las muestras de Hermandades, Bandas, Imágenes y Pasos responden 200.
 19. **¿San Gonzalo cuenta ya como octavo contexto certificado?** Sí; el contenido está reconciliado, #738 está fusionada y producción sirve el cierre funcional en `d4fa89c…`.
 20. **¿El fallo de Apply quedó oculto?** No; las 14 filas rechazadas se clasificaron, el validador común se corrigió con regresión y todas se reaplicaron sin pendientes.
+21. **¿La Divina Pastora de Santa Marina cuenta ya como noveno contexto certificado?** Sí; los tres lotes suman 50/50, la ficha queda en H3 con señal técnica del 100 % y el recurso gráfico licenciado está en producción mediante #745.
 
 ## Siguiente movimiento autorizado
 
 1. Mantener preservadas las 61 ramas con trabajo único; cualquier limpieza futura exige una revisión específica nueva, no la reutilización de este manifiesto.
-2. Mantener cerradas El Cachorro, El Carmen, Cristo de Burgos, Las Siete Palabras y San Gonzalo; no hay frente editorial activo.
-3. Auditar como siguiente prioridad las Hermandades de Sevilla con salida entre el 12 y el 20 de septiembre de 2026 antes de abrir sus lotes. El Valle y La Amargura permanecen en cola y no se abren por inercia.
+2. Mantener cerradas El Cachorro, El Carmen, Cristo de Burgos, Las Siete Palabras, San Gonzalo y Divina Pastora de Santa Marina; no hay frente editorial activo.
+3. Priorizar Guadalupe de San Buenaventura; después Divina Pastora de Triana y El Valle. Ninguna se abre por inercia dentro de este cierre.
 4. Permitir la carga manual del escudo de Cristo del Perdón desde el Panel, sin reabrir su cierre de datos.
 5. Mantener la disciplina restaurada por #492: migraciones para esquema; HC-016 o Panel para contenido; preview limpia obligatoria antes de integrar DDL.
 6. Mantener el rediseño amplio del directorio en Laboratorio; #729 solo sanea la frontera de publicación y la fiabilidad de las consultas.
 
-No se abre otra Hermandad ni se activa un frente de Laboratorio dentro del cierre de San Gonzalo.
+7. Contrastar individualmente los 56 registros pasados que todavía figuran como anunciados; no convertirlos en celebrados solo por haber vencido su fecha.
+
+No se abre otra Hermandad ni se activa un frente de Laboratorio dentro del cierre de la Divina Pastora de Santa Marina.
