@@ -68,7 +68,6 @@ test('el DML posterior al baseline permanece íntegro y fuera de la cadena ejecu
 test('la evolución de estadísticas es idempotente en preview y en producción reconciliada', () => {
   assert.match(membershipStats, /add column if not exists members_count integer/i)
   assert.match(membershipStats, /add column if not exists members_count_kind text/i)
-  assert.match(membershipStats, /add column if not exists members_count_kind text/i)
   assert.match(membershipStats, /add column if not exists members_source_id uuid/i)
   assert.match(membershipStats, /if not exists \([\s\S]*?pg_constraint/i)
 })
