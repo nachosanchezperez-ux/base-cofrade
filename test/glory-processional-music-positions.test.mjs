@@ -8,7 +8,7 @@ test('las Glorias muestran los acompañamientos documentados aunque conserven su
   const directory = read('lib/supabase/glory-directory.js')
   const page = read('app/procesiones-de-gloria/[slug]/page.js')
 
-  assert.match(directory, /\['processional_music', 'procession', 'opening', 'behind_step'\]\.includes\(row\.type\)/)
+  assert.match(directory, /\['processional_music', 'procession', 'opening', 'behind_step', 'behind_glory'\]\.includes\(row\.type\)/)
   assert.match(page, /item\.processionalMusic\.length/)
   assert.match(page, /item\.processionalMusic\.map/)
 })
