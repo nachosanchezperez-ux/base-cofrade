@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import { useState } from 'react'
+import EntityVisualFallback from '@/components/EntityVisualFallback'
 import styles from '@/app/bandas/bandas.module.css'
 
 export default function BandFeaturePhoto({
@@ -13,7 +14,6 @@ export default function BandFeaturePhoto({
 }) {
   const [photoFailed, setPhotoFailed] = useState(false)
   const [logoFailed, setLogoFailed] = useState(false)
-  const initials = String(name || 'HC').slice(0, 2).toUpperCase()
   const showPhoto = Boolean(src) && !photoFailed
   const showLogo = Boolean(logoPath) && !logoFailed
 
@@ -41,7 +41,7 @@ export default function BandFeaturePhoto({
                 onError={() => setLogoFailed(true)}
               />
             ) : (
-              <span className={styles.featurePhotoInitials} aria-hidden="true">{initials}</span>
+              <EntityVisualFallback className={styles.featurePhotoInitials} />
             )}
             <small>Identidad visual de la formación</small>
           </div>
