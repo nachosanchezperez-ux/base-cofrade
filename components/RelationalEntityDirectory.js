@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import BrotherhoodDirectoryCrestImage from './BrotherhoodDirectoryCrestImage'
+import EntityVisualFallback from './EntityVisualFallback'
 import contractStyles from './DirectoryCardContract.module.css'
 import enhancementStyles from './RelationalEntityDirectoryEnhancements.module.css'
 import styles from './RelationalEntityDirectory.module.css'
@@ -19,16 +20,6 @@ function slugify(value) {
   return normalize(value)
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '')
-}
-
-function initials(value) {
-  return String(value || '')
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((item) => item[0])
-    .join('')
-    .toUpperCase()
 }
 
 function compactNames(items = [], limit = 2) {
@@ -134,7 +125,6 @@ function RelationalCardMedia({ item, isBand, mediaPath, presentationClass }) {
             height={82}
             sizes="(max-width: 620px) 58px, 72px"
             maxScale={2.1}
-            fallback={initials(item.name)}
             fallbackClassName={`${styles.monogram} ${enhancementStyles.monogram}`}
           />
         ) : (
@@ -147,7 +137,7 @@ function RelationalCardMedia({ item, isBand, mediaPath, presentationClass }) {
           />
         )
       ) : (
-        <span className={`${styles.monogram} ${enhancementStyles.monogram}`}>{initials(item.name)}</span>
+        <EntityVisualFallback className={`${styles.monogram} ${enhancementStyles.monogram}`} />
       )}
     </span>
   )
