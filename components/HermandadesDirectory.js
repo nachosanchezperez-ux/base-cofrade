@@ -98,6 +98,7 @@ export default function HermandadesDirectory({ hermandades }) {
   const [query, setQuery] = useState('')
   const [territory, setTerritory] = useState('todos')
   const [municipality, setMunicipality] = useState('todos')
+  const [openLocalities, setOpenLocalities] = useState([])
 
   const counts = useMemo(() => Object.fromEntries(
     DIRECTORY_TYPES.map((type) => [
@@ -114,6 +115,16 @@ export default function HermandadesDirectory({ hermandades }) {
     if (firstCapital !== secondCapital) return firstCapital - secondCapital
     return first.localeCompare(second, 'es', { sensitivity: 'base' })
   }), [hermandades])
+
+  const municipalityStats = useMemo(() => municipalities.map((item) => {
+    const normalized = normalizeDirectoryValue(item)
+    return {
+      key: normalized,
+      label: normalized === 'sevilla' ? 'Sevilla capital' : item,
+      count: hermandades.filter((hermandad) => normalizeDirectoryValue(hermandad.localidad) === normalized).length,
+      isCapital: normalized === 'sevilla',
+    }
+  }), [municipalities, hermandades])
 
   const filtered = useMemo(() => {
     const value = normalizeDirectoryValue(query)
@@ -139,6 +150,31 @@ export default function HermandadesDirectory({ hermandades }) {
   }, [query, territory, municipality, hermandades])
 
   const groups = useMemo(() => buildExplorerGroups(filtered), [filtered])
+  const localityKeys = useMemo(() => groups.flatMap((territoryGroup) => (
+    territoryGroup.localities.map((locality) => `${territoryGroup.key}:${locality.label}`)
+  )), [groups])
+  const forceOpenLocalities = Boolean(query.trim()) || municipality !== 'todos'
+  const allLocalitiesOpen = localityKeys.length > 0 && localityKeys.every((key) => openLocalities.includes(key))
+
+  function toggleLocality(key) {
+    setOpenLocalities((current) => (
+      current.includes(key)
+        ? current.filter((item) => item !== key)
+        : [...current, key]
+    ))
+  }
+
+  function selectMunicipality(item) {
+    setMunicipality(item.key)
+    setTerritory(item.isCapital ? 'sevilla-capital' : 'provincia')
+  }
+
+  function clearFilters() {
+    setQuery('')
+    setTerritory('todos')
+    setMunicipality('todos')
+    setOpenLocalities([])
+  }
 
   return (
     <div className={styles.directory}>
@@ -171,7 +207,7 @@ export default function HermandadesDirectory({ hermandades }) {
               id="brotherhood-directory-search"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
-              placeholder="Ej. El Baratillo, Cantillana, Capilla de la Piedad…"
+              placeholder="Ej. El Baratillo, La Rinconada, Capilla de la Piedad…"
               aria-label="Buscar en el directorio de hermandades"
             />
             <span className={styles.searchIcon} aria-hidden="true">⌕</span>
@@ -188,7 +224,11 @@ export default function HermandadesDirectory({ hermandades }) {
                   type="button"
                   key={value}
                   className={territory === value ? styles.activeTerritory : ''}
-                  onClick={() => setTerritory(value)}
+                  onClick={() => {
+                    setTerritory(value)
+                    if (value === 'sevilla-capital' && municipality !== 'sevilla') setMunicipality('todos')
+                    if (value === 'provincia' && municipality === 'sevilla') setMunicipality('todos')
+                  }}
                   aria-pressed={territory === value}
                 >
                   {label}
@@ -210,81 +250,150 @@ export default function HermandadesDirectory({ hermandades }) {
           </div>
         </div>
 
+        <div className={styles.municipalityRail} aria-label="Accesos rápidos por municipio">
+          <span className={styles.municipalityRailLabel}>Municipios</span>
+          <div className={styles.municipalityChips}>
+            <button
+              type="button"
+              className={municipality === 'todos' ? styles.activeMunicipalityChip : styles.municipalityChip}
+              onClick={() => {
+                setMunicipality('todos')
+                setTerritory('todos')
+              }}
+            >
+              Todos
+            </button>
+            {municipalityStats.map((item) => (
+              <button
+                type="button"
+                key={item.key}
+                className={municipality === item.key ? styles.activeMunicipalityChip : styles.municipalityChip}
+                onClick={() => selectMunicipality(item)}
+                aria-pressed={municipality === item.key}
+              >
+                <span>{item.label}</span>
+                <strong>{item.count}</strong>
+              </button>
+            ))}
+          </div>
+        </div>
+
         <div className={styles.resultHead} aria-live="polite" aria-atomic="true">
           <div>
             <strong>{filtered.length} {filtered.length === 1 ? 'hermandad' : 'hermandades'}</strong>
-            <span>Ordenadas por territorio, naturaleza y calendario</span>
+            <span>Agrupadas por municipio, naturaleza y calendario</span>
           </div>
           {query || territory !== 'todos' || municipality !== 'todos' ? (
-            <button
-              type="button"
-              onClick={() => {
-                setQuery('')
-                setTerritory('todos')
-                setMunicipality('todos')
-              }}
-            >
+            <button type="button" onClick={clearFilters}>
               Limpiar filtros
             </button>
           ) : null}
         </div>
 
         {filtered.length ? (
-          <div className={styles.groupedDirectory}>
-            {groups.map((territoryGroup) => (
-              <section className={styles.territoryBlock} key={territoryGroup.key}>
-                <header className={styles.territoryHeading}>
-                  <div>
-                    <span>Territorio</span>
-                    <h2>{territoryGroup.label}</h2>
-                  </div>
-                  <strong>{territoryGroup.items.length} {territoryGroup.items.length === 1 ? 'hermandad' : 'hermandades'}</strong>
-                </header>
+          <>
+            {!forceOpenLocalities ? (
+              <div className={styles.directoryControls}>
+                <div>
+                  <strong>Explora por municipio</strong>
+                  <span>Abre solo la localidad que quieras consultar.</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setOpenLocalities(allLocalitiesOpen ? [] : localityKeys)}
+                >
+                  {allLocalitiesOpen ? 'Plegar todos' : 'Abrir todos'}
+                </button>
+              </div>
+            ) : null}
 
-                <div className={styles.localityStack}>
-                  {territoryGroup.localities.map((locality) => (
-                    <section className={styles.localityBlock} key={`${territoryGroup.key}-${locality.label}`}>
-                      {territoryGroup.key === 'provincia' ? (
-                        <header className={styles.localityHeading}>
-                          <h3>{locality.label}</h3>
-                          <span>{locality.items.length} {locality.items.length === 1 ? 'hermandad' : 'hermandades'}</span>
-                        </header>
-                      ) : null}
+            <div className={styles.groupedDirectory}>
+              {groups.map((territoryGroup) => (
+                <section className={styles.territoryBlock} key={territoryGroup.key}>
+                  <header className={styles.territoryHeading}>
+                    <div>
+                      <span>Territorio</span>
+                      <h2>{territoryGroup.label}</h2>
+                    </div>
+                    <strong>{territoryGroup.items.length} {territoryGroup.items.length === 1 ? 'hermandad' : 'hermandades'}</strong>
+                  </header>
 
-                      <div className={groupStyles.mainTypeStack}>
-                        {locality.typeGroups.map((typeGroup) => (
-                          <section className={groupStyles.mainTypeBlock} key={`${territoryGroup.key}-${locality.label}-${typeGroup.key}`}>
-                            <header className={groupStyles.mainTypeHeading}>
-                              <strong>{typeGroup.label}</strong>
-                              <span>{typeGroup.items.length}</span>
-                            </header>
+                  <div className={styles.localityStack}>
+                    {territoryGroup.localities.map((locality) => {
+                      const localityKey = `${territoryGroup.key}:${locality.label}`
+                      const isOpen = forceOpenLocalities || openLocalities.includes(localityKey)
+                      const panelId = `municipio-${territoryGroup.key}-${normalizeDirectoryValue(locality.label).replace(/\s+/g, '-')}`
 
-                            <div className={styles.periodStack}>
-                              {typeGroup.periods.map((period) => (
-                                <section className={styles.periodBlock} key={`${territoryGroup.key}-${locality.label}-${typeGroup.key}-${period.label || 'general'}`}>
-                                  {period.label ? (
-                                    <header className={styles.periodHeading}>
-                                      <h4>{period.label}</h4>
-                                      <span>{period.items.length}</span>
-                                    </header>
-                                  ) : null}
-                                  <div className={styles.list}>
-                                    {period.items.map((hermandad) => (
-                                      <BrotherhoodDirectoryCard key={hermandad.id} hermandad={hermandad} />
+                      return (
+                        <section
+                          className={`${styles.localityAccordion} ${isOpen ? styles.localityOpen : ''}`}
+                          key={localityKey}
+                        >
+                          <button
+                            type="button"
+                            className={styles.localityToggle}
+                            aria-expanded={isOpen}
+                            aria-controls={panelId}
+                            onClick={() => toggleLocality(localityKey)}
+                          >
+                            <span className={styles.localityIdentity}>
+                              <small>{territoryGroup.key === 'capital' ? 'Capital' : 'Municipio'}</small>
+                              <strong>{locality.label}</strong>
+                              <span className={styles.localityTypeSummary} aria-label="Tipos de hermandades presentes">
+                                {locality.typeGroups.map((typeGroup) => (
+                                  <span key={`${localityKey}-${typeGroup.key}`}>
+                                    {typeGroup.label}
+                                    <b>{typeGroup.items.length}</b>
+                                  </span>
+                                ))}
+                              </span>
+                            </span>
+                            <span className={styles.localityMeta}>
+                              <span className={styles.localityCount}>
+                                {locality.items.length} {locality.items.length === 1 ? 'hermandad' : 'hermandades'}
+                              </span>
+                              <span className={styles.localityChevron} aria-hidden="true">⌄</span>
+                            </span>
+                          </button>
+
+                          <div className={styles.localityContent} id={panelId} hidden={!isOpen}>
+                            <div className={groupStyles.mainTypeStack}>
+                              {locality.typeGroups.map((typeGroup) => (
+                                <section className={groupStyles.mainTypeBlock} key={`${territoryGroup.key}-${locality.label}-${typeGroup.key}`}>
+                                  <header className={groupStyles.mainTypeHeading}>
+                                    <strong>{typeGroup.label}</strong>
+                                    <span>{typeGroup.items.length}</span>
+                                  </header>
+
+                                  <div className={styles.periodStack}>
+                                    {typeGroup.periods.map((period) => (
+                                      <section className={styles.periodBlock} key={`${territoryGroup.key}-${locality.label}-${typeGroup.key}-${period.label || 'general'}`}>
+                                        {period.label ? (
+                                          <header className={styles.periodHeading}>
+                                            <h4>{period.label}</h4>
+                                            <span>{period.items.length}</span>
+                                          </header>
+                                        ) : null}
+                                        <div className={styles.list}>
+                                          {period.items.map((hermandad) => (
+                                            <BrotherhoodDirectoryCard key={hermandad.id} hermandad={hermandad} />
+                                          ))}
+                                        </div>
+                                      </section>
                                     ))}
                                   </div>
                                 </section>
                               ))}
                             </div>
-                          </section>
-                        ))}
-                      </div>
-                    </section>
-                  ))}
-                </div>
-              </section>
-            ))}
-          </div>
+                          </div>
+                        </section>
+                      )
+                    })}
+                  </div>
+                </section>
+              ))}
+            </div>
+          </>
         ) : (
           <div className={styles.empty}>
             <strong>No hay hermandades disponibles con estos criterios</strong>
