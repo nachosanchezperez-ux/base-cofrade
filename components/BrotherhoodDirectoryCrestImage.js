@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import { useCallback, useEffect, useRef, useState } from 'react'
+import EntityVisualFallback from './EntityVisualFallback'
 
 const SAMPLE_LIMIT = 192
 const ALPHA_THRESHOLD = 4
@@ -190,7 +191,6 @@ export default function BrotherhoodDirectoryCrestImage({
   sizes = '(max-width: 620px) 60px, 82px',
   priority = false,
   maxScale = MAX_SCALE,
-  fallback = 'HC',
   fallbackClassName = '',
 }) {
   const imageRef = useRef(null)
@@ -216,7 +216,7 @@ export default function BrotherhoodDirectoryCrestImage({
     return () => observer.disconnect()
   }, [recalculate])
 
-  if (failed) return <span className={fallbackClassName}>{fallback}</span>
+  if (failed) return <EntityVisualFallback className={fallbackClassName} />
 
   return (
     <Image
