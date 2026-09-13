@@ -23,7 +23,7 @@ test('el directorio ofrece acceso visual rápido por municipio', () => {
   assert.match(styles, /\.localityTypeSummary\{/)
 })
 
-test('una búsqueda o un municipio filtrado abre automáticamente su bloque', () => {
-  assert.match(component, /const forceOpenLocalities = Boolean\(query\.trim\(\)\) \|\| municipality !== 'todos'/)
+test('una búsqueda, un municipio filtrado o Sevilla capital abren automáticamente su bloque', () => {
+  assert.match(component, /const forceOpenLocalities = Boolean\(query\.trim\(\)\) \|\| municipality !== 'todos' \|\| territory === 'sevilla-capital'/)
   assert.match(component, /const isOpen = forceOpenLocalities \|\| openLocalities\.includes\(localityKey\)/)
 })
