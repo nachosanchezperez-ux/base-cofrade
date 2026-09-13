@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useState } from 'react';
+import EntityVisualFallback from './EntityVisualFallback';
 import styles from './RelationalEntityHero.module.css';
 import focusStyles from './RelationalEntityHeroMedia.module.css';
 import polishStyles from './RelationalEntityHeroPolish.module.css';
@@ -30,7 +31,6 @@ export default function RelationalEntityHeroMedia({
   photoSrc = '',
   photoAlt = '',
   credit = '',
-  initials = '',
   crestSrc = '',
   crestAlt = '',
   focusPosition = '',
@@ -116,8 +116,8 @@ export default function RelationalEntityHeroMedia({
           </div>
         ) : (
           <div className={styles.initialsFallback}>
-            <span>{initials || 'HC'}</span>
-            <small>Identidad visual</small>
+            <EntityVisualFallback />
+            <small>Identidad visual pendiente</small>
           </div>
         )}
 
