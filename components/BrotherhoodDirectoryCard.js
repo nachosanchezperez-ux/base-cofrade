@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import CofradeTypeBadges from '@/components/CofradeTypeBadges'
 import BrotherhoodDirectoryCrestImage from '@/components/BrotherhoodDirectoryCrestImage'
+import EntityVisualFallback from '@/components/EntityVisualFallback'
 import { displayName, localityLabel } from '@/lib/brotherhood-directory'
 import contractStyles from './DirectoryCardContract.module.css'
 import styles from './HermandadesDirectory.module.css'
@@ -34,11 +35,10 @@ export default function BrotherhoodDirectoryCard({ hermandad, contextLabel }) {
             className={`${styles.crestImage} ${crestStyles.crestImage}`}
             src={crest}
             alt={`Escudo de ${name}`}
-            fallback={name.slice(0, 2).toUpperCase()}
             fallbackClassName={`${styles.monogram} ${crestStyles.monogram}`}
           />
         ) : (
-          <span className={`${styles.monogram} ${crestStyles.monogram}`}>{name.slice(0, 2).toUpperCase()}</span>
+          <EntityVisualFallback className={`${styles.monogram} ${crestStyles.monogram}`} />
         )}
       </span>
 
