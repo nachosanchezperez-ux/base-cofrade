@@ -28,13 +28,17 @@ function countLabel(count) {
   return count === 1 ? '1 interpretación' : `${count} interpretaciones`
 }
 
+function metricLabel(count, singular, plural) {
+  return count === 1 ? singular : plural
+}
+
 export async function generateMetadata({ params }) {
   const { slug } = await params
   const march = await getPublicMarchBySlug(slug)
   if (!march) return { title: 'Marcha no encontrada', robots: { index: false, follow: false } }
 
   const composers = march.authors.filter((author) => author.role === 'composer').map((author) => author.name).join(', ')
-  const description = [composers ? `Obra de ${composers}.` : '', march.documentedPerformances ? `${countLabel(march.documentedPerformances)} documentadas en crucetas musicales.` : '', march.listenings.length ? 'Grabaciones disponibles.' : ''].filter(Boolean).join(' ')
+  const description = [composers ? `Obra de ${composers}.` : '', march.documentedPerformances ? `${countLabel(march.documentedPerformances)} ${metricLabel(march.documentedPerformances, 'documentada', 'documentadas')} en crucetas musicales.` : '', march.listenings.length ? 'Grabaciones disponibles.' : ''].filter(Boolean).join(' ')
 
   return {
     title: `${march.name} · Marcha procesional`,
@@ -76,9 +80,9 @@ export default async function MarchDetailPage({ params }) {
             {march.summary ? <p>{march.summary}</p> : null}
           </div>
           <div className={styles.metrics}>
-            <div><strong>{march.documentedPerformances}</strong><span>interpretaciones documentadas</span></div>
-            <div><strong>{march.repertoireHistory.length}</strong><span>procesiones relacionadas</span></div>
-            <div><strong>{march.listenings.length}</strong><span>escuchas disponibles</span></div>
+            <div><strong>{march.documentedPerformances}</strong><span>{metricLabel(march.documentedPerformances, 'interpretación documentada', 'interpretaciones documentadas')}</span></div>
+            <div><strong>{march.repertoireHistory.length}</strong><span>{metricLabel(march.repertoireHistory.length, 'procesión relacionada', 'procesiones relacionadas')}</span></div>
+            <div><strong>{march.listenings.length}</strong><span>{metricLabel(march.listenings.length, 'escucha disponible', 'escuchas disponibles')}</span></div>
           </div>
         </div>
       </header>
