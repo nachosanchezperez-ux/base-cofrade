@@ -33,6 +33,25 @@ function BandLogo({ band, size = 36 }) {
   )
 }
 
+function authorship(entry) {
+  const composers = entry.authors.filter((author) => author.role === 'composer')
+  const primary = composers.length ? composers : entry.authors
+  return primary.map((author) => author.name).join(' · ') || entry.credit || ''
+}
+
+function secondaryAuthorship(entry) {
+  const composers = entry.authors.filter((author) => author.role === 'composer')
+  if (!composers.length) return ''
+  return entry.authors
+    .filter((author) => author.role !== 'composer')
+    .map((author) => `${author.role === 'adapter' ? 'Adaptación' : author.role === 'lyricist' ? 'Letra' : 'Autoría'}: ${author.name}`)
+    .join(' · ')
+}
+
+function performanceLabel(count) {
+  return count === 1 ? '1 vez' : `${count} veces`
+}
+
 export async function generateMetadata({ params }) {
   const { slug } = await params
   const repertoire = await getMusicalRepertoireBySlug(slug)
@@ -55,6 +74,7 @@ export default async function MusicalRepertoireDetailPage({ params }) {
   if (!repertoire) notFound()
 
   const stepHref = repertoire.step?.slug ? `/pasos/${repertoire.step.slug}` : ''
+  const listenableCount = repertoire.entries.filter((entry) => entry.listening).length
 
   return (
     <div
@@ -74,6 +94,11 @@ export default async function MusicalRepertoireDetailPage({ params }) {
         numTracks: repertoire.worksCount,
         dateCreated: repertoire.date,
         byArtist: { '@type': 'MusicGroup', name: repertoire.band.name, url: absoluteUrl(repertoire.band.href) },
+        track: repertoire.entries.map((entry) => ({
+          '@type': 'MusicRecording',
+          name: entry.title,
+          url: entry.marchHref ? absoluteUrl(entry.marchHref) : undefined,
+        })),
       }} />
 
       <header className={styles.detailHero}>
@@ -144,6 +169,7 @@ export default async function MusicalRepertoireDetailPage({ params }) {
             <div>
               <span>La música de la procesión</span>
               <h2>Repertorio interpretado</h2>
+              <small>{repertoire.worksCount} Marchas vinculadas{listenableCount ? ` · ${listenableCount} con escucha disponible` : ''}</small>
             </div>
             <p>La cifra indica cuántas veces fue interpretada cada obra según la información facilitada. No se deduce el orden, el lugar ni si las interpretaciones fueron consecutivas.</p>
           </header>
@@ -152,13 +178,47 @@ export default async function MusicalRepertoireDetailPage({ params }) {
             {repertoire.entries.map((entry) => (
               <article className={styles.workCard} key={entry.id}>
                 <div className={styles.note} aria-hidden="true">♪</div>
-                <div>
-                  <h3>{entry.title}</h3>
-                  {entry.credit ? <p>{entry.credit}</p> : <p>Autoría no indicada en la fuente</p>}
+                <div className={styles.workCopy}>
+                  <div className={styles.workTitle}>
+                    <span>{entry.workType || 'Marcha vinculada'}{entry.compositionYear ? ` · ${entry.compositionYear}` : ''}</span>
+                    <h3>{entry.marchHref ? <Link href={entry.marchHref}>{entry.title} <b aria-hidden="true">→</b></Link> : entry.title}</h3>
+                  </div>
+                  <dl className={styles.workRelations}>
+                    <div>
+                      <dt>Autoría</dt>
+                      <dd>{authorship(entry) || 'No documentada'}</dd>
+                      {secondaryAuthorship(entry) ? <small>{secondaryAuthorship(entry)}</small> : null}
+                    </div>
+                    {entry.dedications.length ? (
+                      <div>
+                        <dt>Dedicatoria</dt>
+                        <dd>{entry.dedications.map((dedication, index) => (
+                          <span key={`${dedication.id}-${index}`}>
+                            {index ? ' · ' : ''}
+                            {dedication.href ? <Link href={dedication.href}>{dedication.name}</Link> : dedication.name}
+                          </span>
+                        ))}</dd>
+                      </div>
+                    ) : null}
+                  </dl>
                 </div>
-                {entry.count > 1 ? (
-                  <strong className={styles.count} aria-label={`${entry.count} interpretaciones`}>×{entry.count}</strong>
-                ) : null}
+                <div className={styles.workActions}>
+                  <strong className={styles.count} aria-label={`${entry.count} ${entry.count === 1 ? 'interpretación' : 'interpretaciones'}`}>{performanceLabel(entry.count)}</strong>
+                  {entry.listening ? (
+                    <a
+                      className={styles.listen}
+                      href={entry.listening.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Escuchar ${entry.title} en ${entry.listening.provider}`}
+                      data-hilo-event="repertoire_listen_click"
+                      data-hilo-provider={entry.listening.provider.toLowerCase()}
+                    >
+                      <span aria-hidden="true">▶</span>
+                      <span>Escuchar <small>{entry.listening.provider}</small></span>
+                    </a>
+                  ) : null}
+                </div>
               </article>
             ))}
           </div>
