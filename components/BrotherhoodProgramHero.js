@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import BrotherhoodDirectoryCrestImage from './BrotherhoodDirectoryCrestImage'
+import EntityVisualFallback from './EntityVisualFallback'
 import styles from './BrotherhoodProgramHero.module.css'
 import corporateStyles from './BrotherhoodProgramHeroCorporate.module.css'
 
@@ -123,9 +124,12 @@ export default function BrotherhoodProgramHero({
                   height={202}
                   sizes="(max-width: 700px) 102px, (max-width: 980px) 144px, 178px"
                   priority
+                  fallbackClassName={styles.crest}
                 />
               </span>
-            ) : null}
+            ) : (
+              <EntityVisualFallback className={styles.crest} />
+            )}
             <div className={styles.identityBody}>
               <div className={styles.identityCopy}>
                 <span>{entityType}</span>
