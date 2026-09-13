@@ -27,10 +27,13 @@ function outingCategory(outing) {
   const type = normalized(outing?.tipo)
   const title = normalized(outing?.nombre)
   const character = normalized(outing?.caracter)
+  const state = normalized(outing?.estado)
+  const extraordinary = character === 'extraordinaria' || type.includes('traslado') || type.includes('extraordinaria')
 
   if (type.includes('estacion de penitencia')) return 'penitence'
   if (type.includes('procesion de gloria')) return 'glory'
-  if (character === 'extraordinaria' || type.includes('traslado') || type.includes('extraordinaria')) return 'historical'
+  if (state === 'announced' && extraordinary) return 'upcoming'
+  if (extraordinary) return 'historical'
   if (type.includes('via crucis') || type.includes('rosario') || title.includes('via crucis') || title.includes('rosario')) return 'external'
   return 'other'
 }
@@ -58,6 +61,14 @@ function categoryCopy(key, outings) {
     }
   }
 
+  if (key === 'upcoming') {
+    return {
+      eyebrow: 'Próximas citas',
+      title: 'Próximas extraordinarias',
+      description: 'Traslados y salidas extraordinarias ya anunciados para fechas futuras.',
+    }
+  }
+
   if (key === 'external') {
     return {
       eyebrow: 'Devoción en la calle',
@@ -82,7 +93,7 @@ function categoryCopy(key, outings) {
 }
 
 function groupedOutings(outings) {
-  const order = ['penitence', 'glory', 'external', 'historical', 'other']
+  const order = ['penitence', 'glory', 'upcoming', 'external', 'historical', 'other']
   const groups = new Map(order.map((key) => [key, []]))
 
   outings.forEach((outing) => groups.get(outingCategory(outing)).push(outing))
