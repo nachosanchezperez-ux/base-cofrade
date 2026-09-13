@@ -6,6 +6,7 @@ import {
   validateBulkImportRecord,
   validateBulkImportTableContract,
 } from '../lib/panel/bulk-import-config.js'
+import { validateBulkImportDatabaseChecks } from '../lib/panel/bulk-import-preflight.js'
 
 test('rechaza columnas inexistentes conocidas antes de Apply', () => {
   const cases = [
@@ -121,4 +122,24 @@ test('bloquea antes de Apply los enums de conservación y categoría que impone 
     })
     assert.deepEqual(valid.errors, [])
   }
+})
+
+test('bloquea un periodo musical sin inicio antes de Apply', () => {
+  assert.deepEqual(
+    validateBulkImportDatabaseChecks('music_accompaniment_periods', {
+      date_from: null,
+      date_from_text: null,
+      year_from: null,
+    }),
+    ['CHECK_CONSTRAINT: music_accompaniment_periods.music_period_start_present requiere date_from, date_from_text o year_from.'],
+  )
+
+  assert.deepEqual(
+    validateBulkImportDatabaseChecks('music_accompaniment_periods', {
+      date_from: null,
+      date_from_text: null,
+      year_from: 2026,
+    }),
+    [],
+  )
 })
