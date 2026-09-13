@@ -6,6 +6,8 @@
 
 **Resultado:** se selecciona la **Hermandad de la Divina Misericordia · Rosario de Santiago**, de Alcalá de Guadaíra. La selección no abre el frente ni autoriza lote, staging, Apply, DML o PR editorial.
 
+> **Estado posterior:** esta auditoría conserva la decisión tomada en su corte. La orden posterior de ejecución ya cerró la seleccionada como undécimo contexto real; la verdad operativa vigente está en [`ESTADO-PROYECTO.md`](./ESTADO-PROYECTO.md) y la evidencia en [`CERTIFICACION-DIVINA-MISERICORDIA-ROSARIO-SANTIAGO-HC016-2026-09-13.md`](./CERTIFICACION-DIVINA-MISERICORDIA-ROSARIO-SANTIAGO-HC016-2026-09-13.md).
+
 ## Preflight reconciliado
 
 - `main` funcional: `1072dc18035edadb2b93b1c06ed10a848ae217a2`.
