@@ -1,10 +1,10 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 13 de septiembre de 2026 · cierre del undécimo contexto HC-016
+**Corte operativo:** 13 de septiembre de 2026 · recálculo posterior al undécimo contexto HC-016
 
-**HEAD funcional auditado:** `ba4035789c4bfc46bb4af62f70d7ce1ea999f309`
+**HEAD auditado:** `41d30add4c3b6d7a54535a470d695c2086f9a8c5`
 
-**Producción auditada:** `READY` · deployment `dpl_7B1ZokgHcatiopT5QX1t3EitMMES` · SHA funcional `ba4035789c4bfc46bb4af62f70d7ce1ea999f309`
+**Producción auditada:** `READY` · deployment `dpl_BeENEaAwLRhbXUQv5j31GPsgBYEv` · SHA `41d30add4c3b6d7a54535a470d695c2086f9a8c5`
 
 **PR abiertas:** **0**
 
@@ -12,7 +12,7 @@
 
 **Frente editorial ACTIVO:** ninguno
 
-> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El SHA funcional de partida de esta fotografía es `ba403578…`; el commit de archivo y certificación que contenga este tablero pasa a ser el HEAD canónico cuando `main` y producción vuelvan a coincidir. Guadalupe permanece cerrada como décimo contexto y Divina Misericordia · Rosario de Santiago queda cerrada como undécimo.
+> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El SHA de partida de esta fotografía es `41d30add…`; el commit exclusivamente documental que contenga este tablero pasa a ser el HEAD canónico cuando `main` y producción vuelvan a coincidir. Guadalupe permanece cerrada como décimo contexto y Divina Misericordia · Rosario de Santiago como undécimo.
 
 ## Tablero operativo único
 
@@ -33,6 +33,7 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | **CERRADO** | Noveno lote HC-016 | Divina Pastora de Santa Marina: 50/50 en tres lotes, 0 inválidas, 0 fallos; titular, Paso, Cultos, Salidas, música, patrimonio y media licenciada; H3 y señal técnica 100 % | No reabrir para perseguir exhaustividad; queda como hueco legítimo una fotografía específica del Paso completo |
 | **CERRADO** | Décimo lote HC-016 | Guadalupe de San Buenaventura: 1 titular, 1 Paso, 9 Cultos, 5 hitos históricos, 2 canales oficiales y 12 Fuentes visibles; DML aplicado sin DDL | No reabrir para inventar fecha del Paso, dimensiones, restauraciones o media sin derechos |
 | **CERRADO** | Undécimo contexto HC-016 | Divina Misericordia · Rosario de Santiago: 4 titulares, 2 Pasos, 9 Cultos, 2 Salidas, 3 periodos musicales, 12 hitos visibles, 5 canales y 8 Fuentes principales; 167 operaciones efectivas y reutilización de la Banda de Alcalá | No reabrir para inventar media, patrimonio exhaustivo o vigencias musicales posteriores |
+| **SELECCIONADO · NO ABIERTO** | Duodécimo contexto HC-016 | Santo Entierro de Dos Hermanas gana el recálculo territorial por deuda verificable, densidad relacional y valor municipal | No crear lote, staging, Apply, DML o PR editorial sin una orden posterior específica |
 | **CERRADO** | Cultos septiembre–diciembre de 2026 | Lote transversal HC-016 `c0162026-0909-4000-8000-000000000001`: 53/53, cuatro Hermandades y 0 DDL | Mantener ediciones futuras desde Fuentes oficiales; recurrencia no equivale a anuncio |
 | **CERRADO** | Carátulas de Discografía · #734 | Reintento del optimizador a la URL original y fallback accesible; 21 fichas auditadas, sin imágenes rotas visibles ni desbordamiento | Corregir en origen las cinco URLs históricas inaccesibles de La Oliva; el fallback no cancela esa deuda de datos |
 | **CERRADO** | HC-019 · Crucetas Musicales | Piloto Pastora de Cantillana 2026: 48 obras, 60 interpretaciones, 0 duplicados deterministas y 0 huérfanos; #740 y remate #741 integrados | Incorporar nuevas crucetas como música efectivamente interpretada; multiplicidad no equivale a consecutividad |
@@ -42,8 +43,8 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 
 ## Verdad de plataforma
 
-- GitHub: `main = ba4035789c4bfc46bb4af62f70d7ce1ea999f309` en el corte funcional; #749–#757 están fusionadas, #492 está cerrada y hay 0 PR abiertas. El commit documental final prevalece al integrarse.
-- Vercel: producción `READY` mediante `dpl_7B1ZokgHcatiopT5QX1t3EitMMES`, exactamente sobre `ba4035789c4bfc46bb4af62f70d7ce1ea999f309`; no hay errores `error`/`fatal` ni clústeres de runtime en las últimas 24 horas.
+- GitHub: `main = 41d30add4c3b6d7a54535a470d695c2086f9a8c5`; #749–#757 están fusionadas, #492 está cerrada y hay 0 PR abiertas. El commit documental final prevalece al integrarse.
+- Vercel: producción `READY` mediante `dpl_BeENEaAwLRhbXUQv5j31GPsgBYEv`, exactamente sobre `41d30add4c3b6d7a54535a470d695c2086f9a8c5`; no hay errores `error`/`fatal` ni clústeres de runtime en las últimas 24 horas.
 - Supabase: proyecto `Hilocofrade` `ACTIVE_HEALTHY`, una sola rama principal y seis migraciones activas. Guadalupe conserva su décimo cierre. Divina Misericordia publica 4 Imágenes, 2 Pasos, 9 Cultos, 2 Salidas, 3 periodos musicales, 12 acontecimientos y 5 canales, sin duplicados nucleares ni relaciones troncales huérfanas.
 - Supabase Preview: #492 continúa cerrada por #730; no existe un bloqueo estructural pendiente ni se ha ejecutado DDL en este recálculo.
 - Git ↔ Supabase: siguen vigentes las cuatro migraciones estructurales reconciliadas en #730 y las dos posteriores de HC-019. El undécimo cierre se realizó exclusivamente mediante DML gobernado y su receta queda archivada fuera de la cadena estructural activa.
@@ -86,7 +87,7 @@ No debe mantenerse en la cola lo que ya está integrado y desplegado:
 
 ## Dónde estamos ahora
 
-HC-016 funciona como método editorial operativo en once contextos reales: San Pablo, Mercedes de la Puerta Real, El Museo, El Cachorro, El Carmen, Cristo de Burgos, Las Siete Palabras, San Gonzalo, Divina Pastora de Santa Marina, Guadalupe de San Buenaventura y Divina Misericordia · Rosario de Santiago. El undécimo cierre amplía Alcalá de Guadaíra con un grafo mixto de Penitencia y Gloria sin esquema nuevo ni excepciones por `slug`.
+HC-016 funciona como método editorial operativo en once contextos reales: San Pablo, Mercedes de la Puerta Real, El Museo, El Cachorro, El Carmen, Cristo de Burgos, Las Siete Palabras, San Gonzalo, Divina Pastora de Santa Marina, Guadalupe de San Buenaventura y Divina Misericordia · Rosario de Santiago. El recálculo vivo selecciona al Santo Entierro de Dos Hermanas como duodécimo contexto, pero **no abre el frente ni autoriza ejecución**. La evidencia está en [`AUDITORIA-TERRITORIAL-DUODECIMO-HC016-2026-09-13.md`](./AUDITORIA-TERRITORIAL-DUODECIMO-HC016-2026-09-13.md).
 
 HC-019 queda certificada con su piloto real: Pastora de Cantillana · Procesión de Gloria 2026 · Banda de Música de Nuestra Señora de la Soledad de Cantillana. El modelo conserva 48 obras y 60 interpretaciones mediante multiplicidades, sin inferir orden, ubicación ni consecutividad. La evidencia está en [`CERTIFICACION-HC019-CRUCETAS-MUSICALES-2026-09-10.md`](./CERTIFICACION-HC019-CRUCETAS-MUSICALES-2026-09-10.md).
 
@@ -295,29 +296,41 @@ Se excluyeron los diez contextos ya certificados. La deuda se midió solo cuando
 
 La selección de **Hermandad de la Divina Misericordia · Rosario de Santiago** fue ejecutada por orden posterior y ya no permanece en cola. La ficha queda certificada en [`CERTIFICACION-DIVINA-MISERICORDIA-ROSARIO-SANTIAGO-HC016-2026-09-13.md`](./CERTIFICACION-DIVINA-MISERICORDIA-ROSARIO-SANTIAGO-HC016-2026-09-13.md); este TOP 3 se conserva como fundamento histórico de la decisión, no como cola operativa actual.
 
+## Recálculo territorial vigente
+
+El corte posterior al undécimo cierre vuelve a medir el grafo y selecciona una sola candidata, sin abrirla. La evidencia completa está en [`AUDITORIA-TERRITORIAL-DUODECIMO-HC016-2026-09-13.md`](./AUDITORIA-TERRITORIAL-DUODECIMO-HC016-2026-09-13.md).
+
+| Puesto | Hermandad | Municipio | Deuda | Relaciones | Valor territorial | Fuentes | Riesgo |
+|---:|---|---|---|---|---|---|---|
+| **1** | **Santo Entierro** | Dos Hermanas | Muy alta | Muy altas | Máximo | Medias-altas | Medio-alto |
+| **2** | Santa Ana | Dos Hermanas | Alta | Altas | Máximo | Altas | Bajo-medio |
+| **3** | Sagrada Resurrección | Sevilla | Muy alta | Muy altas | Bajo | Muy altas | Medio-alto |
+
+El Santo Entierro gana por aportar dos titulares, dos Pasos y mayor densidad relacional que Santa Ana dentro del mismo salto municipal. Supera a la Sagrada Resurrección porque Dos Hermanas todavía carece de una ficha profunda, mientras Sevilla ya dispone de cobertura y navegación maduras. La selección cabe íntegramente en DML y no autoriza ejecución.
+
 ## Auditor
 
-1. **¿Cuál es el HEAD real?** `ba4035789c4bfc46bb4af62f70d7ce1ea999f309` en el corte funcional; el commit de archivo y certificación que integre esta fotografía prevalecerá después.
-2. **¿Producción coincide exactamente?** Sí: `dpl_7B1ZokgHcatiopT5QX1t3EitMMES` está `READY` sobre ese SHA.
+1. **¿Cuál es el HEAD real?** `41d30add4c3b6d7a54535a470d695c2086f9a8c5`; el commit exclusivamente documental que integre esta fotografía prevalecerá después.
+2. **¿Producción coincide exactamente?** Sí: `dpl_BeENEaAwLRhbXUQv5j31GPsgBYEv` está `READY` sobre ese SHA.
 3. **¿Existen errores runtime?** No en las últimas 24 horas.
 4. **¿Hay PR abiertas?** No: 0.
-5. **¿#749–#756 están completamente absorbidas?** Sí, todas fusionadas en `main`.
-6. **¿Guadalupe continúa certificada?** Sí: décimo contexto, sin regresión.
+5. **¿#749–#757 están completamente absorbidas?** Sí, todas fusionadas en `main`.
+6. **¿Los cierres décimo y undécimo continúan certificados?** Sí: Guadalupe y Divina Misericordia, sin regresión.
 7. **¿El tablero está totalmente actualizado?** Sí; esta sección es la única fotografía operativa actual y los cortes antiguos quedan identificados como históricos.
-8. **¿Queda algún frente activo?** No; el undécimo contexto está cerrado.
-9. **¿Cuál es el TOP 3 territorial?** Divina Misericordia · Rosario de Santiago; Santo Entierro; Santa Ana.
-10. **¿Cuál es el undécimo contexto HC-016?** Hermandad de la Divina Misericordia · Rosario de Santiago, Alcalá de Guadaíra, ya certificada.
-11. **¿Por qué ganó a las otras dos?** Aporta el mayor equilibrio territorial, cuatro titulares oficialmente documentados y un grafo penitencial y glorioso reutilizable, con mejor base primaria que Santo Entierro y más densidad relacional que Santa Ana.
+8. **¿Queda algún frente activo?** No; la selección no constituye apertura.
+9. **¿Cuál es el TOP 3 territorial?** Santo Entierro; Santa Ana; Sagrada Resurrección de Sevilla.
+10. **¿Cuál debe ser el duodécimo contexto HC-016?** Hermandad del Santo Entierro de Dos Hermanas.
+11. **¿Por qué gana a las otras dos?** Tiene más deuda y densidad que Santa Ana en el mismo municipio y aporta más equilibrio territorial que la Sagrada Resurrección, con alcance íntegramente DML.
 
 ## Siguiente movimiento autorizado
 
 1. Mantener preservadas las 61 ramas con trabajo único; cualquier limpieza futura exige una revisión específica nueva, no la reutilización de este manifiesto.
 2. Mantener cerradas El Cachorro, El Carmen, Cristo de Burgos, Las Siete Palabras, San Gonzalo, Divina Pastora de Santa Marina, Guadalupe de San Buenaventura y Divina Misericordia · Rosario de Santiago; no hay frente editorial activo.
-3. No abrir una duodécima Hermandad sin un nuevo recálculo territorial y una orden específica.
+3. Mantener el Santo Entierro de Dos Hermanas como duodécimo contexto seleccionado pero no abierto; lote, staging, Apply, DML y PR requieren una orden específica posterior.
 4. Permitir la carga manual del escudo de Cristo del Perdón desde el Panel, sin reabrir su cierre de datos.
 5. Mantener la disciplina restaurada por #492: migraciones para esquema; HC-016 o Panel para contenido; preview limpia obligatoria antes de integrar DDL.
 6. Conservar el directorio ya integrado por #751 y #752: municipios en bloques plegables, accesos rápidos, Sevilla capital por jornadas y Glorias por meses, y acceso específico a Sacramentales.
 
 7. Contrastar individualmente los 56 registros pasados que todavía figuran como anunciados; no convertirlos en celebrados solo por haber vencido su fecha.
 
-No se abre otra Hermandad ni se activa un frente de Laboratorio. El undécimo contexto queda cerrado y no genera por sí mismo una cola nueva.
+No se abre otra Hermandad ni se activa un frente de Laboratorio. Los once contextos permanecen cerrados y la selección del duodécimo no genera por sí misma un frente nuevo.
