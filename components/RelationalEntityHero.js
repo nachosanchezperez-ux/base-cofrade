@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { getPublishedBrotherhoodCrestPathBySlug } from '@/lib/supabase/brotherhood-public-authority';
 import BrotherhoodDirectoryCrestImage from './BrotherhoodDirectoryCrestImage';
+import EntityVisualFallback from './EntityVisualFallback';
 import RelationalEntityHeroMedia from './RelationalEntityHeroMedia';
 import styles from './RelationalEntityHero.module.css';
 import polishStyles from './RelationalEntityHeroPolish.module.css';
@@ -65,7 +66,7 @@ function ParentRelation({ relation }) {
           />
         </span>
       ) : (
-        <span className={styles.relationNode} aria-hidden="true">HC</span>
+        <EntityVisualFallback className={styles.relationNode} />
       )}
       <span className={styles.relationCopy}>
         <small>{relation.label || 'Pertenece a'}</small>
@@ -77,7 +78,9 @@ function ParentRelation({ relation }) {
 }
 
 function BrotherhoodCrest({ src, alt }) {
-  if (!src) return null;
+  if (!src) {
+    return <EntityVisualFallback className={`${styles.identityCrest} ${polishStyles.identityCrest} ${brotherhoodStyles.crest}`} />;
+  }
 
   return (
     <span className={`${styles.identityCrest} ${polishStyles.identityCrest} ${brotherhoodStyles.crest}`}>
@@ -99,7 +102,7 @@ function isOpaqueRasterLogo(src = '') {
   return path.endsWith('.jpg') || path.endsWith('.jpeg');
 }
 
-function BandIdentity({ src, alt, initials = '' }) {
+function BandIdentity({ src, alt }) {
   const opaqueRaster = isOpaqueRasterLogo(src);
   const removeLightRasterBackground = opaqueRaster;
 
@@ -136,11 +139,10 @@ function BandIdentity({ src, alt, initials = '' }) {
             sizes="(max-width: 390px) 184px, (max-width: 620px) 200px, 230px"
             priority
             maxScale={2.4}
-            fallback={initials || 'HC'}
             fallbackClassName={bandStyles.initials}
           />
         ) : (
-          <span className={bandStyles.initials} aria-hidden="true">{initials || 'HC'}</span>
+          <EntityVisualFallback className={bandStyles.initials} />
         )}
       </div>
     </div>
@@ -188,7 +190,6 @@ export default async function RelationalEntityHero({
       <BandIdentity
         src={media.crestSrc}
         alt={media.crestAlt}
-        initials={media.initials}
       />
       {heading}
     </div>
