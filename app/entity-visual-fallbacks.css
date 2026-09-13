@@ -1,0 +1,31 @@
+/*
+ * Fallback visual canónico de Hilo Cofrade.
+ * Las imágenes reales, escudos y logotipos siempre tienen prioridad; estas
+ * reglas solo sustituyen los antiguos monogramas cuando no existe media.
+ */
+
+.portrait-placeholder.brotherhood-portrait:not(.has-image) {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 112 56'%3E%3Cline x1='30' y1='28' x2='82' y2='28' stroke='%23B01B32' stroke-width='7' stroke-linecap='round'/%3E%3Ccircle cx='30' cy='28' r='10' fill='%23B01B32'/%3E%3Ccircle cx='82' cy='28' r='10' fill='%23B01B32'/%3E%3C/svg%3E");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: min(42%, 76px) auto;
+}
+
+.portrait-placeholder.brotherhood-portrait:not(.has-image) > span {
+  font-size: 0 !important;
+  color: transparent !important;
+}
+
+/*
+ * Los directorios históricos todavía envuelven el fallback en un span de
+ * monograma. La estructura es inequívoca: el primer span de la tarjeta es el
+ * soporte de media y solo contiene otro span cuando no hay imagen real.
+ */
+a[aria-label^='Abrir ficha de '] > span:first-child > span:only-child {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 112 56'%3E%3Cline x1='30' y1='28' x2='82' y2='28' stroke='%23B01B32' stroke-width='7' stroke-linecap='round'/%3E%3Ccircle cx='30' cy='28' r='10' fill='%23B01B32'/%3E%3Ccircle cx='82' cy='28' r='10' fill='%23B01B32'/%3E%3C/svg%3E");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: min(62%, 58px) auto;
+  font-size: 0 !important;
+  color: transparent !important;
+}
