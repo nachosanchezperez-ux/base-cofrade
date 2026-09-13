@@ -174,11 +174,20 @@ function crewEventEntries(events) {
 }
 
 function musicalRepertoireEntries(repertoires) {
-  return repertoires.map((repertoire) => ({
-    url: absoluteUrl(repertoire.href),
-    changeFrequency: 'monthly',
-    priority: 0.72,
-  }));
+  return repertoires.flatMap((repertoire) => [
+    {
+      url: absoluteUrl(repertoire.href),
+      changeFrequency: 'monthly',
+      priority: 0.72,
+    },
+    ...repertoire.entries
+      .filter((entry) => entry.marchHref)
+      .map((entry) => ({
+        url: absoluteUrl(entry.marchHref),
+        changeFrequency: 'monthly',
+        priority: 0.66,
+      })),
+  ]);
 }
 
 export default async function sitemap() {
