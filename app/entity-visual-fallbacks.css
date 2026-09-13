@@ -20,8 +20,9 @@
  * Los directorios históricos todavía envuelven el fallback en un span de
  * monograma. La estructura es inequívoca: el primer span de la tarjeta es el
  * soporte de media y solo contiene otro span cuando no hay imagen real.
+ * Los fallbacks nuevos ya dibujan la marca mediante EntityVisualFallback.
  */
-a[aria-label^='Abrir ficha de '] > span:first-child > span:only-child {
+a[aria-label^='Abrir ficha de '] > span:first-child > span:only-child:not([data-hilo-entity-visual-fallback]) {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 112 56'%3E%3Cline x1='30' y1='28' x2='82' y2='28' stroke='%23B01B32' stroke-width='7' stroke-linecap='round'/%3E%3Ccircle cx='30' cy='28' r='10' fill='%23B01B32'/%3E%3Ccircle cx='82' cy='28' r='10' fill='%23B01B32'/%3E%3C/svg%3E");
   background-position: center;
   background-repeat: no-repeat;
