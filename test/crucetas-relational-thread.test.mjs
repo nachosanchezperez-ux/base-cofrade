@@ -31,6 +31,7 @@ test('la ficha pública de Marcha devuelve el hilo hacia las crucetas', () => {
   assert.match(marchDetail, /Marcha → procesión → banda/)
   assert.match(marchDetail, /Interpretada en/)
   assert.match(marchDetail, /Escuchar la marcha/)
+  assert.match(marchDetail, /metricLabel\(march\.documentedPerformances, 'interpretación documentada', 'interpretaciones documentadas'\)/)
 })
 
 test('las Marchas descubiertas desde crucetas entran en el sitemap', () => {
