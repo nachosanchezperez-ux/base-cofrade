@@ -7,6 +7,7 @@ import BrotherhoodDirectoryCard from '@/components/BrotherhoodDirectoryCard'
 import {
   DIRECTORY_TYPES,
   directoryPeriod,
+  directorySlug,
   displayName,
   hasDirectoryType,
   localityLabel,
@@ -14,6 +15,7 @@ import {
   sortBrotherhoods,
 } from '@/lib/brotherhood-directory'
 import styles from './HermandadesDirectory.module.css'
+import capitalStyles from './HermandadesDirectoryCapital.module.css'
 import enhancementStyles from './HermandadesDirectoryEnhancements.module.css'
 import groupStyles from './HermandadesDirectoryMainGroups.module.css'
 
@@ -94,6 +96,115 @@ function buildExplorerGroups(items) {
   ].filter(Boolean)
 }
 
+function capitalPeriodHref(typeKey, periodLabel) {
+  return `/hermandades/${typeKey}/sevilla-capital/${directorySlug(periodLabel)}`
+}
+
+function CapitalDirectoryHub({ locality }) {
+  const semanaSanta = locality.typeGroups.find((group) => group.key === 'semana-santa')
+  const glorias = locality.typeGroups.find((group) => group.key === 'gloria')
+  const sacramentales = locality.typeGroups.find((group) => group.key === 'sacramentales')
+  const otherGroups = locality.typeGroups.filter((group) => !['semana-santa', 'gloria', 'sacramentales'].includes(group.key))
+
+  const families = [
+    semanaSanta ? {
+      ...semanaSanta,
+      kicker: 'Calendario de penitencia',
+      description: 'Entra directamente por la jornada de la Semana Santa de Sevilla que quieras consultar.',
+    } : null,
+    glorias ? {
+      ...glorias,
+      kicker: 'Calendario de glorias',
+      description: 'Mostramos únicamente los meses que ya tienen hermandades publicadas en el directorio.',
+    } : null,
+  ].filter(Boolean)
+
+  return (
+    <div className={capitalStyles.capitalHub}>
+      <div className={capitalStyles.capitalIntro}>
+        <div>
+          <strong>Sevilla capital, por calendario</strong>
+          <span>Elige primero la gran familia y después su jornada o mes para evitar un listado interminable.</span>
+        </div>
+      </div>
+
+      {families.length ? (
+        <div className={capitalStyles.capitalFamilies}>
+          {families.map((family) => (
+            <section className={capitalStyles.familyCard} key={family.key}>
+              <header className={capitalStyles.familyHeading}>
+                <div>
+                  <small>{family.kicker}</small>
+                  <strong>{family.label}</strong>
+                </div>
+                <span>{family.items.length}</span>
+              </header>
+
+              <p className={capitalStyles.familyCopy}>{family.description}</p>
+
+              <div className={capitalStyles.periodGrid}>
+                {family.periods.map((period) => {
+                  const unavailable = !period.label || period.label === 'Sin fecha documentada'
+                  if (unavailable) {
+                    return (
+                      <span className={capitalStyles.periodUnavailable} key={`${family.key}-sin-fecha`}>
+                        <span>Sin fecha documentada</span>
+                        <strong>{period.items.length}</strong>
+                      </span>
+                    )
+                  }
+
+                  return (
+                    <Link
+                      className={capitalStyles.periodLink}
+                      href={capitalPeriodHref(family.key, period.label)}
+                      key={`${family.key}-${period.label}`}
+                    >
+                      <span>{period.label}</span>
+                      <strong>{period.items.length}</strong>
+                    </Link>
+                  )
+                })}
+              </div>
+            </section>
+          ))}
+        </div>
+      ) : null}
+
+      {sacramentales ? (
+        <Link className={capitalStyles.sacramentalCard} href="/hermandades/sacramentales/sevilla-capital">
+          <div>
+            <small>Directorio específico</small>
+            <strong>Sacramentales de Sevilla</strong>
+          </div>
+          <span className={capitalStyles.sacramentalMeta}>
+            <span>{sacramentales.items.length} {sacramentales.items.length === 1 ? 'hermandad' : 'hermandades'}</span>
+            <b aria-hidden="true">→</b>
+          </span>
+        </Link>
+      ) : null}
+
+      {otherGroups.length ? (
+        <div className={capitalStyles.capitalFallback}>
+          {otherGroups.map((typeGroup) => (
+            <section className={groupStyles.mainTypeBlock} key={`capital-${typeGroup.key}`}>
+              <header className={groupStyles.mainTypeHeading}>
+                <strong>{typeGroup.label}</strong>
+                <span>{typeGroup.items.length}</span>
+              </header>
+              <div className={styles.list}>
+                {typeGroup.items.map((hermandad) => (
+                  <BrotherhoodDirectoryCard key={hermandad.id} hermandad={hermandad} />
+                ))}
+              </div>
+            </section>
+          ))}
+        </div>
+      ) : null}
+    </div>
+  )
+}
+
 export default function HermandadesDirectory({ hermandades }) {
   const [query, setQuery] = useState('')
   const [territory, setTerritory] = useState('todos')
@@ -153,7 +264,7 @@ export default function HermandadesDirectory({ hermandades }) {
   const localityKeys = useMemo(() => groups.flatMap((territoryGroup) => (
     territoryGroup.localities.map((locality) => `${territoryGroup.key}:${locality.label}`)
   )), [groups])
-  const forceOpenLocalities = Boolean(query.trim()) || municipality !== 'todos'
+  const forceOpenLocalities = Boolean(query.trim()) || municipality !== 'todos' || territory === 'sevilla-capital'
   const allLocalitiesOpen = localityKeys.length > 0 && localityKeys.every((key) => openLocalities.includes(key))
 
   function toggleLocality(key) {
@@ -323,6 +434,7 @@ export default function HermandadesDirectory({ hermandades }) {
                       const localityKey = `${territoryGroup.key}:${locality.label}`
                       const isOpen = forceOpenLocalities || openLocalities.includes(localityKey)
                       const panelId = `municipio-${territoryGroup.key}-${normalizeDirectoryValue(locality.label).replace(/\s+/g, '-')}`
+                      const useCapitalHub = territoryGroup.key === 'capital' && !query.trim()
 
                       return (
                         <section
@@ -357,34 +469,38 @@ export default function HermandadesDirectory({ hermandades }) {
                           </button>
 
                           <div className={styles.localityContent} id={panelId} hidden={!isOpen}>
-                            <div className={groupStyles.mainTypeStack}>
-                              {locality.typeGroups.map((typeGroup) => (
-                                <section className={groupStyles.mainTypeBlock} key={`${territoryGroup.key}-${locality.label}-${typeGroup.key}`}>
-                                  <header className={groupStyles.mainTypeHeading}>
-                                    <strong>{typeGroup.label}</strong>
-                                    <span>{typeGroup.items.length}</span>
-                                  </header>
+                            {useCapitalHub ? (
+                              <CapitalDirectoryHub locality={locality} />
+                            ) : (
+                              <div className={groupStyles.mainTypeStack}>
+                                {locality.typeGroups.map((typeGroup) => (
+                                  <section className={groupStyles.mainTypeBlock} key={`${territoryGroup.key}-${locality.label}-${typeGroup.key}`}>
+                                    <header className={groupStyles.mainTypeHeading}>
+                                      <strong>{typeGroup.label}</strong>
+                                      <span>{typeGroup.items.length}</span>
+                                    </header>
 
-                                  <div className={styles.periodStack}>
-                                    {typeGroup.periods.map((period) => (
-                                      <section className={styles.periodBlock} key={`${territoryGroup.key}-${locality.label}-${typeGroup.key}-${period.label || 'general'}`}>
-                                        {period.label ? (
-                                          <header className={styles.periodHeading}>
-                                            <h4>{period.label}</h4>
-                                            <span>{period.items.length}</span>
-                                          </header>
-                                        ) : null}
-                                        <div className={styles.list}>
-                                          {period.items.map((hermandad) => (
-                                            <BrotherhoodDirectoryCard key={hermandad.id} hermandad={hermandad} />
-                                          ))}
-                                        </div>
-                                      </section>
-                                    ))}
-                                  </div>
-                                </section>
-                              ))}
-                            </div>
+                                    <div className={styles.periodStack}>
+                                      {typeGroup.periods.map((period) => (
+                                        <section className={styles.periodBlock} key={`${territoryGroup.key}-${locality.label}-${typeGroup.key}-${period.label || 'general'}`}>
+                                          {period.label ? (
+                                            <header className={styles.periodHeading}>
+                                              <h4>{period.label}</h4>
+                                              <span>{period.items.length}</span>
+                                            </header>
+                                          ) : null}
+                                          <div className={styles.list}>
+                                            {period.items.map((hermandad) => (
+                                              <BrotherhoodDirectoryCard key={hermandad.id} hermandad={hermandad} />
+                                            ))}
+                                          </div>
+                                        </section>
+                                      ))}
+                                    </div>
+                                  </section>
+                                ))}
+                              </div>
+                            )}
                           </div>
                         </section>
                       )
