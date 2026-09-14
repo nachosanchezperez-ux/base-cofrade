@@ -1,16 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { musicalRepertoireDateLabel } from '@/lib/musical-repertoires/presentation'
 import styles from './MusicalRepertoiresSection.module.css'
-
-function dateLabel(value) {
-  if (!value) return ''
-  return new Intl.DateTimeFormat('es-ES', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-    timeZone: 'Europe/Madrid',
-  }).format(new Date(`${value}T12:00:00`))
-}
 
 function metricLabel(count, singular, plural) {
   return count === 1 ? singular : plural
@@ -66,9 +57,9 @@ export default function MusicalRepertoiresSection({ items = [], context = 'broth
               </div>
 
               <div className={styles.copy}>
-                <span>{dateLabel(item.date)}</span>
-                <h3>{item.outing.title}</h3>
-                <p>{item.band.name}</p>
+                <span>{musicalRepertoireDateLabel(item.date)}</span>
+                <h3>{item.displayTitle}</h3>
+                <p>Cruceta de {item.band.name}</p>
               </div>
 
               <div className={styles.metrics}>

@@ -37,7 +37,7 @@ export default async function MusicalRepertoiresDirectoryPage() {
         <div className="shell">
           <span>Archivo sonoro procesional</span>
           <h1>Crucetas musicales</h1>
-          <p>Los repertorios que las bandas confirman después de cada procesión, relacionados con la Hermandad, el paso y la edición concreta.</p>
+          <p>Los repertorios que las bandas confirman después de cada procesión, identificados por Hermandad, jornada o fecha, año y formación musical.</p>
         </div>
       </header>
 
@@ -57,13 +57,13 @@ export default async function MusicalRepertoiresDirectoryPage() {
                 >
                   <div className={styles.directoryYear}>{item.year}</div>
                   <span>Repertorio interpretado</span>
-                  <h2>{item.outing.title}</h2>
-                  <p>{item.brotherhood.name}</p>
+                  <h2>{item.displayTitle}</h2>
+                  <p>Cruceta de <strong>{item.band.name}</strong></p>
                   <dl>
                     <div><dt>Obras</dt><dd>{item.worksCount}</dd></div>
                     <div><dt>Interpretaciones</dt><dd>{item.performancesCount}</dd></div>
                   </dl>
-                  <small>{item.band.name}</small>
+                  <small>{item.step?.name || 'Procesión documentada'}</small>
                   <Link href={item.href}>Abrir cruceta <b aria-hidden="true">→</b></Link>
                 </article>
               ))}

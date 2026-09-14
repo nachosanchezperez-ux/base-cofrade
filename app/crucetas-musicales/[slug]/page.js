@@ -2,21 +2,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import JsonLd from '@/components/JsonLd'
+import { musicalRepertoireDateLabel } from '@/lib/musical-repertoires/presentation'
 import { getMusicalRepertoireBySlug } from '@/lib/supabase/musical-repertoires'
 import { absoluteUrl, breadcrumbJsonLd, pageTitle } from '@/lib/seo'
 import styles from '../crucetas.module.css'
 
 export const dynamic = 'force-dynamic'
-
-function dateLabel(value) {
-  if (!value) return ''
-  return new Intl.DateTimeFormat('es-ES', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-    timeZone: 'Europe/Madrid',
-  }).format(new Date(`${value}T12:00:00`))
-}
 
 function BandLogo({ band, size = 36 }) {
   if (!band?.logoPath) return <span aria-hidden="true">♪</span>
@@ -57,8 +48,8 @@ export async function generateMetadata({ params }) {
   const repertoire = await getMusicalRepertoireBySlug(slug)
   if (!repertoire) return { title: 'Cruceta musical no encontrada', robots: { index: false, follow: false } }
 
-  const title = `${repertoire.brotherhood.name}: cruceta musical de ${repertoire.year}`
-  const description = `${repertoire.worksCount} obras y ${repertoire.performancesCount} interpretaciones de ${repertoire.band.name} en ${repertoire.outing.title}.`
+  const title = `${repertoire.displayTitle}: cruceta de ${repertoire.band.name}`
+  const description = `${repertoire.worksCount} obras y ${repertoire.performancesCount} interpretaciones de ${repertoire.band.name} en ${repertoire.displayTitle}.`
 
   return {
     title,
@@ -84,12 +75,12 @@ export default async function MusicalRepertoireDetailPage({ params }) {
       <JsonLd data={breadcrumbJsonLd([
         { name: 'Inicio', path: '/' },
         { name: 'Crucetas musicales', path: '/crucetas-musicales' },
-        { name: repertoire.brotherhood.name, path: repertoire.href },
+        { name: repertoire.displayTitle, path: repertoire.href },
       ])} />
       <JsonLd data={{
         '@context': 'https://schema.org',
         '@type': 'MusicPlaylist',
-        name: repertoire.title,
+        name: repertoire.displayTitle,
         url: absoluteUrl(repertoire.href),
         numTracks: repertoire.worksCount,
         dateCreated: repertoire.date,
@@ -111,11 +102,10 @@ export default async function MusicalRepertoireDetailPage({ params }) {
             <div className={styles.heroCopy}>
               <div className={styles.heroMeta}>
                 <div className={styles.verified}><i aria-hidden="true" /> Repertorio interpretado</div>
-                <span className={styles.heroDate}>{dateLabel(repertoire.date)}</span>
-                <span className={styles.heroEdition}>Edición {repertoire.year}</span>
+                <span className={styles.heroDate}>{musicalRepertoireDateLabel(repertoire.date)}</span>
               </div>
-              <h1>{repertoire.brotherhood.name}</h1>
-              <p>{repertoire.outing.title}</p>
+              <h1>{repertoire.displayTitle}</h1>
+              <p>Cruceta de {repertoire.band.name}</p>
               {repertoire.band.href ? (
                 <Link className={styles.heroBand} href={repertoire.band.href}>
                   <BandLogo band={repertoire.band} size={38} />
