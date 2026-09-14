@@ -1,0 +1,94 @@
+.paletteScope {
+  display: contents;
+}
+
+/*
+ * Las fichas de bandas ya publican su propia paleta. Esta capa neutraliza
+ * restos cromáticos históricos de componentes globales que todavía usaban
+ * el azul/rojo de Hilo como color visual de interfaz. La marca de Hilo usada
+ * como fallback cuando falta un logotipo se mantiene deliberadamente intacta.
+ */
+.paletteScope :global(.official-links-section) {
+  background:
+    radial-gradient(circle at 92% 10%, color-mix(in srgb, var(--band-primary) 7%, transparent), transparent 28%),
+    color-mix(in srgb, var(--band-primary) 3%, #fff);
+}
+
+.paletteScope :global(.official-links-section .eyebrow),
+.paletteScope :global(.sources-section .eyebrow),
+.paletteScope :global(.text-link),
+.paletteScope :global(.arrow-link) {
+  color: var(--band-primary);
+}
+
+.paletteScope :global(.official-links-heading h2),
+.paletteScope :global(.sources-section h2) {
+  color: var(--band-secondary);
+}
+
+.paletteScope :global(.official-links-heading p),
+.paletteScope :global(.official-links-grid small) {
+  color: color-mix(in srgb, var(--band-secondary) 52%, #7b7b7b);
+}
+
+.paletteScope :global(.official-links-grid a) {
+  border-color: color-mix(in srgb, var(--band-primary) 16%, #e4e4e4);
+  color: var(--band-secondary);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--band-secondary) 4%, transparent);
+}
+
+.paletteScope :global(.official-links-grid a:hover),
+.paletteScope :global(.official-links-grid a:focus-visible) {
+  border-color: color-mix(in srgb, var(--band-primary) 38%, #dedede);
+  box-shadow: 0 12px 30px color-mix(in srgb, var(--band-primary) 10%, transparent);
+}
+
+.paletteScope :global(.official-links-grid a > span) {
+  background: var(--band-primary);
+}
+
+.paletteScope :global(.sources-section) {
+  border-top-color: color-mix(in srgb, var(--band-primary) 12%, #e5e1e8);
+  background: #fff;
+}
+
+.paletteScope :global(.sources-section details) {
+  border-color: color-mix(in srgb, var(--band-primary) 13%, #dfe5ea);
+  box-shadow: 0 12px 34px color-mix(in srgb, var(--band-secondary) 4%, transparent);
+}
+
+.paletteScope :global(.sources-section summary) {
+  color: var(--band-secondary);
+}
+
+.paletteScope :global(.sources-section summary b) {
+  border-color: color-mix(in srgb, var(--band-primary) 18%, #d8e0e7);
+  color: var(--band-primary);
+  background: color-mix(in srgb, var(--band-primary) 5%, #fff);
+}
+
+.paletteScope :global(.sources-section details[open] summary b) {
+  background: color-mix(in srgb, var(--band-primary) 9%, #fff);
+}
+
+.paletteScope :global(.sources-section .sources-list) {
+  border-top-color: color-mix(in srgb, var(--band-primary) 10%, #e7ecef);
+}
+
+.paletteScope :global(.source-capirote) {
+  background: var(--band-primary);
+}
+
+.paletteScope :global(.source-copy strong) {
+  color: var(--band-secondary);
+}
+
+.paletteScope :global(.source-row) {
+  border-color: color-mix(in srgb, var(--band-primary) 11%, #e1e5e8);
+}
+
+.paletteScope :global(.source-row:hover),
+.paletteScope :global(.source-row:focus-visible) {
+  border-color: color-mix(in srgb, var(--band-primary) 30%, #dde1e4);
+  background: color-mix(in srgb, var(--band-primary) 4%, #fff);
+}
