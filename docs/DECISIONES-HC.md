@@ -64,6 +64,10 @@ Su arquitectura actual es una aplicación de HC-001 y HC-004: acontecimientos, s
 
 `PROTOCOLO-TARJETAS-DIRECTORIO.md` continúa como norma transversal de diseño y responsive. No todo patrón de interfaz necesita un identificador HC.
 
+### Clasificación de corporaciones
+
+`Agrupación Parroquial` expresa el carácter institucional de la corporación. Puede convivir con `Penitencia`, `Gloria` o `Sacramental`, que describen sus realidades cultuales y procesionales; nunca se deduce una categoría de otra ni se sustituye el tipo de una salida concreta.
+
 ### Prioridad visual
 
 La elección entre escudo, logotipo, fotografía, cartel, portada o galería pertenece a los contratos de entidad, media y relación editorial. No se resuelve con hardcodes por `slug`.

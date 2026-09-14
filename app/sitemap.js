@@ -46,6 +46,11 @@ const staticEntries = [
     priority: 0.85,
   },
   {
+    url: absoluteUrl('/hermandades/agrupaciones-parroquiales'),
+    changeFrequency: 'weekly',
+    priority: 0.85,
+  },
+  {
     url: absoluteUrl('/imagenes'),
     changeFrequency: 'weekly',
     priority: 0.9,

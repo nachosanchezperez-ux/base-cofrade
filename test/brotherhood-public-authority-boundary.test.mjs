@@ -9,6 +9,8 @@ const BROTHERHOOD_PUBLIC_MODULES = [
   'app/hermandades/semana-santa/[localidad]/[jornada]/page.js',
   'app/hermandades/gloria/page.js',
   'app/hermandades/sacramentales/page.js',
+  'app/hermandades/agrupaciones-parroquiales/page.js',
+  'app/hermandades/agrupaciones-parroquiales/[localidad]/page.js',
   'lib/supabase/brotherhood-directory.js',
   'lib/supabase/brotherhoods.js',
   'lib/supabase/brotherhood-display.js',

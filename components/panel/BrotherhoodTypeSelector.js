@@ -5,6 +5,7 @@ import Image from 'next/image'
 import styles from '@/app/panel/panel.module.css'
 
 const TYPES = [
+  { name: 'Agrupación Parroquial', icon: '/iconos/hermandades/agrupacion-parroquial.svg' },
   { name: 'Penitencia', icon: '/iconos/hermandades/penitencia.png' },
   { name: 'Gloria', icon: '/iconos/hermandades/gloria.png' },
   { name: 'Sacramental', icon: '/iconos/hermandades/sacramental.png' },
@@ -26,8 +27,8 @@ export default function BrotherhoodTypeSelector({ selected = [] }) {
 
   return (
     <fieldset className={`${styles.typeFieldset} ${styles.fieldWide}`}>
-      <legend>Tipos de hermandad</legend>
-      <p>Selecciona una, dos o las tres opciones.</p>
+      <legend>Clasificación de la corporación</legend>
+      <p>Marca Agrupación Parroquial y añade Penitencia, Gloria o Sacramental cuando corresponda.</p>
       <div className={styles.typeOptions}>
         {TYPES.map(({ name, icon }, index) => {
           const checked = types.includes(name)

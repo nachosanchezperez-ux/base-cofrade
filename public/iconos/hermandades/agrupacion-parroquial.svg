@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-labelledby="title">
+  <title id="title">Agrupación Parroquial</title>
+  <path fill="#B13B50" stroke="#123A67" stroke-linejoin="round" stroke-width="34" d="M182 884V458l330-224 330 224v426H182Z"/>
+  <path fill="#F4B52B" stroke="#123A67" stroke-linejoin="round" stroke-width="30" d="M512 116v90m-53-45h106"/>
+  <path fill="#FFFFFF" stroke="#123A67" stroke-width="30" d="M410 884V650c0-56 46-102 102-102s102 46 102 102v234H410Z"/>
+  <circle cx="512" cy="430" r="54" fill="#F4B52B" stroke="#123A67" stroke-width="28"/>
+  <path fill="none" stroke="#123A67" stroke-linecap="round" stroke-width="30" d="M124 884h776"/>
+</svg>

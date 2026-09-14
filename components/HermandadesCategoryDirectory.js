@@ -34,7 +34,7 @@ function groupedDirectory(items, typeKey) {
 
   const localitiesFor = (source) => groupSorted(source, localityLabel).map((locality) => ({
     ...locality,
-    periods: typeKey === 'sacramentales'
+    periods: ['sacramentales', 'agrupaciones-parroquiales'].includes(typeKey)
       ? [{ label: '', items: locality.items }]
       : groupSorted(locality.items, (item) => directoryPeriod(item, typeKey) || 'Sin fecha documentada'),
   }))
@@ -69,6 +69,8 @@ export default function HermandadesCategoryDirectory({ hermandades, typeKey }) {
     return [href, { href, label }]
   }).filter(([href]) => Boolean(href))).values()]
   const pageName = `${config.label} de Sevilla y provincia`
+  const itemSingular = config.itemSingular || 'hermandad'
+  const itemPlural = config.itemPlural || 'hermandades'
 
   return (
     <section className={`section page-top ${styles.routePage}`}>
@@ -117,7 +119,7 @@ export default function HermandadesCategoryDirectory({ hermandades, typeKey }) {
 
         <div className={styles.resultHead}>
           <div>
-            <strong>{items.length} {items.length === 1 ? 'hermandad' : 'hermandades'}</strong>
+            <strong>{items.length} {items.length === 1 ? itemSingular : itemPlural}</strong>
             <span>Sevilla capital y provincia</span>
           </div>
         </div>
@@ -131,7 +133,7 @@ export default function HermandadesCategoryDirectory({ hermandades, typeKey }) {
                     <span>Territorio</span>
                     <h2>{territory.label}</h2>
                   </div>
-                  <strong>{territory.items.length} {territory.items.length === 1 ? 'hermandad' : 'hermandades'}</strong>
+                  <strong>{territory.items.length} {territory.items.length === 1 ? itemSingular : itemPlural}</strong>
                 </header>
 
                 <div className={styles.localityStack}>
@@ -140,7 +142,7 @@ export default function HermandadesCategoryDirectory({ hermandades, typeKey }) {
                       {territory.key === 'provincia' ? (
                         <header className={styles.localityHeading}>
                           <h3>{locality.label}</h3>
-                          <span>{locality.items.length} {locality.items.length === 1 ? 'hermandad' : 'hermandades'}</span>
+                          <span>{locality.items.length} {locality.items.length === 1 ? itemSingular : itemPlural}</span>
                         </header>
                       ) : null}
 
@@ -174,7 +176,7 @@ export default function HermandadesCategoryDirectory({ hermandades, typeKey }) {
         ) : (
           <div className={styles.empty}>
             <strong>Todavía no hay fichas publicadas en esta categoría</strong>
-            <span>Solo se mostrarán hermandades cuya clasificación esté expresamente documentada.</span>
+            <span>Solo se mostrarán corporaciones cuya clasificación esté expresamente documentada.</span>
           </div>
         )}
       </div>

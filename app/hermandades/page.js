@@ -6,14 +6,14 @@ import { absoluteUrl, breadcrumbJsonLd, pageTitle } from '@/lib/seo';
 export const dynamic = 'force-dynamic';
 
 export const metadata = {
-  title: 'Hermandades de Sevilla y provincia',
-  description: 'Directorio de hermandades de Semana Santa, Gloria y Sacramentales de Sevilla capital y provincia, organizado por localidad, jornada y mes.',
+  title: 'Hermandades y Agrupaciones Parroquiales de Sevilla',
+  description: 'Directorio de hermandades de Semana Santa, Gloria, Sacramentales y Agrupaciones Parroquiales de Sevilla capital y provincia.',
   alternates: {
     canonical: '/hermandades',
   },
   openGraph: {
-    title: pageTitle('Directorio de hermandades'),
-    description: 'Consulta las hermandades de Semana Santa, Gloria y Sacramentales de Sevilla capital y provincia.',
+    title: pageTitle('Directorio de hermandades y Agrupaciones Parroquiales'),
+    description: 'Consulta hermandades y Agrupaciones Parroquiales de Sevilla capital y provincia.',
     url: '/hermandades',
   },
 };
@@ -25,7 +25,7 @@ export default async function HermandadesPage() {
     '@type': 'CollectionPage',
     '@id': `${absoluteUrl('/hermandades')}#collection`,
     url: absoluteUrl('/hermandades'),
-    name: 'Directorio de hermandades',
+    name: 'Directorio de hermandades y Agrupaciones Parroquiales',
     inLanguage: 'es',
     isPartOf: {
       '@id': `${absoluteUrl('/')}#website`,
@@ -51,9 +51,9 @@ export default async function HermandadesPage() {
       <JsonLd data={directoryJsonLd} />
       <div className="shell">
         <span className="eyebrow">Enciclopedia cofrade</span>
-        <h1 className="page-title">Directorio de hermandades</h1>
+        <h1 className="page-title">Hermandades y Agrupaciones Parroquiales</h1>
         <p className="page-lead">
-          Recorre las hermandades de Sevilla capital y su provincia por su naturaleza, localidad y momento principal del calendario.
+          Recorre las corporaciones de Sevilla capital y su provincia por su carácter, localidad y momento principal del calendario.
         </p>
         <HermandadesDirectory hermandades={hermandades} />
       </div>

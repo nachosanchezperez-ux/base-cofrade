@@ -6,6 +6,14 @@ import { redirect } from 'next/navigation'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
 
+const BROTHERHOOD_TYPES = new Map([
+  ['agrupación parroquial', 'Agrupación Parroquial'],
+  ['agrupacion parroquial', 'Agrupación Parroquial'],
+  ['penitencia', 'Penitencia'],
+  ['gloria', 'Gloria'],
+  ['sacramental', 'Sacramental'],
+])
+
 function value(formData, name) {
   return String(formData.get(name) || '').trim()
 }
@@ -14,6 +22,16 @@ function required(formData, name, label) {
   const candidate = value(formData, name)
   if (!candidate) throw new Error(`${label} es obligatorio.`)
   return candidate
+}
+
+function brotherhoodTypes(formData) {
+  const submitted = formData.getAll('brotherhood_types').map((item) => String(item).trim())
+  if (submitted.some((item) => !BROTHERHOOD_TYPES.has(item.toLowerCase()))) {
+    throw new Error('Se ha recibido una clasificación de corporación no válida.')
+  }
+  const selected = [...new Set(submitted.map((item) => BROTHERHOOD_TYPES.get(item.toLowerCase())))]
+  if (!selected.length) throw new Error('Selecciona al menos una clasificación para la corporación.')
+  return selected
 }
 
 function slugify(valueToSlug) {
@@ -90,6 +108,7 @@ export async function createBrotherhoodAction(formData) {
   const supabase = await createClient()
   const popularName = required(formData, 'popular_name', 'El nombre popular')
   const officialName = required(formData, 'official_name', 'El nombre oficial')
+  const selectedTypes = brotherhoodTypes(formData)
   const entitySlug = slugify(value(formData, 'slug') || popularName)
 
   if (!entitySlug) throw new Error('No se ha podido generar un slug válido.')
@@ -113,6 +132,7 @@ export async function createBrotherhoodAction(formData) {
     entity_id: brotherhoodId,
     official_name: officialName,
     popular_name: popularName,
+    brotherhood_types: selectedTypes,
   }
 
   assertMutation(

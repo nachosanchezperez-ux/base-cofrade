@@ -15,12 +15,14 @@ const categoryPages = [
   read('app/hermandades/semana-santa/page.js'),
   read('app/hermandades/gloria/page.js'),
   read('app/hermandades/sacramentales/page.js'),
+  read('app/hermandades/agrupaciones-parroquiales/page.js'),
 ]
 
 const nestedDirectoryPages = [
   read('app/hermandades/semana-santa/[localidad]/[jornada]/page.js'),
   read('app/hermandades/gloria/[localidad]/[mes]/page.js'),
   read('app/hermandades/sacramentales/[localidad]/page.js'),
+  read('app/hermandades/agrupaciones-parroquiales/[localidad]/page.js'),
 ]
 
 test('el sitemap descubre superficies públicas y rutas nacidas de datos', () => {
@@ -31,6 +33,7 @@ test('el sitemap descubre superficies públicas y rutas nacidas de datos', () =>
     '/hermandades/semana-santa',
     '/hermandades/gloria',
     '/hermandades/sacramentales',
+    '/hermandades/agrupaciones-parroquiales',
   ]) {
     assert.match(sitemap, new RegExp(route.replaceAll('/', '\\/')))
   }
