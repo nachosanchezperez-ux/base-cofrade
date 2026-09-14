@@ -38,6 +38,7 @@ import {
   breadcrumbJsonLd,
   brotherhoodSeoDescription,
   brotherhoodSeoTitle,
+  brotherhoodPublicTypeLabel,
   pageTitle,
 } from '@/lib/seo';
 
@@ -173,13 +174,7 @@ export default async function HermandadDetailPage({ params }) {
   const tiposHermandad = h.tipos || [];
   const isPenitencia = tiposHermandad.includes('Penitencia');
   const isGloria = tiposHermandad.includes('Gloria');
-  const brotherhoodTypeLabel = isPenitencia
-    ? 'Hermandad de Penitencia'
-    : isGloria
-      ? 'Hermandad de Gloria'
-      : tiposHermandad.includes('Sacramental')
-        ? 'Hermandad Sacramental'
-        : 'Hermandad';
+  const brotherhoodTypeLabel = brotherhoodPublicTypeLabel(h);
   const steps = h.pasos || [];
   const explicitGlorySteps = steps.filter(isGloryStep);
   const holyWeekSteps = isPenitencia

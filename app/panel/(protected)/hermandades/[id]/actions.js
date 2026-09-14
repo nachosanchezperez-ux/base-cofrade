@@ -12,6 +12,8 @@ import { createClient } from '@/lib/supabase/server'
 const UUID_PATTERN = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i
 const STATUSES = new Set(['draft', 'review', 'published', 'archived'])
 const BROTHERHOOD_TYPES = new Map([
+  ['agrupación parroquial', 'Agrupación Parroquial'],
+  ['agrupacion parroquial', 'Agrupación Parroquial'],
   ['penitencia', 'Penitencia'],
   ['gloria', 'Gloria'],
   ['sacramental', 'Sacramental'],
@@ -79,10 +81,10 @@ function status(formData) {
 function brotherhoodTypes(formData) {
   const submitted = formData.getAll('brotherhood_types').map((item) => String(item).trim())
   if (submitted.some((item) => !BROTHERHOOD_TYPES.has(item.toLowerCase()))) {
-    throw new Error('Se ha recibido un tipo de hermandad no válido.')
+    throw new Error('Se ha recibido una clasificación de corporación no válida.')
   }
   const selected = [...new Set(submitted.map((item) => BROTHERHOOD_TYPES.get(item.toLowerCase())))]
-  if (!selected.length) throw new Error('Selecciona al menos un tipo de hermandad.')
+  if (!selected.length) throw new Error('Selecciona al menos una clasificación para la corporación.')
   return selected
 }
 
@@ -111,6 +113,7 @@ async function refreshBrotherhood(supabase, brotherhoodId) {
   revalidatePath(`/panel/hermandades/${brotherhoodId}/salidas`)
   revalidatePath(`/panel/hermandades/${brotherhoodId}/salidas/recurrentes`)
   revalidatePath('/hermandades')
+  revalidatePath('/hermandades/agrupaciones-parroquiales')
   if (data?.slug) revalidatePath(`/hermandades/${data.slug}`)
 }
 

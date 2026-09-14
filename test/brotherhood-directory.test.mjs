@@ -37,3 +37,17 @@ test('las Sacramentales se organizan por localidad sin inventar un periodo', () 
   assert.equal(directoryPath(sacramental, 'sacramentales'), '/hermandades/sacramentales/sevilla-capital')
   assert.equal(directoryContextLabel(sacramental, 'sacramentales'), 'Sacramental')
 })
+
+test('las Agrupaciones Parroquiales se organizan por localidad sin mezclar su carácter con la salida', () => {
+  const grouping = {
+    localidad: 'La Rinconada',
+    tipos: ['Agrupación Parroquial', 'Penitencia'],
+    diaSalida: 'Sábado de Pasión',
+  }
+
+  assert.equal(
+    directoryPath(grouping, 'agrupaciones-parroquiales'),
+    '/hermandades/agrupaciones-parroquiales/la-rinconada'
+  )
+  assert.equal(directoryContextLabel(grouping, 'agrupaciones-parroquiales'), 'Agrupación Parroquial')
+})

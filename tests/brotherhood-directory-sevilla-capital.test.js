@@ -22,6 +22,7 @@ test('Semana Santa enlaza por jornadas y Glorias por meses usando las rutas SEO 
 
 test('Sacramentales mantiene un acceso propio y el diseño es responsive', () => {
   assert.match(component, /\/hermandades\/sacramentales\/sevilla-capital/)
+  assert.match(component, /\/hermandades\/agrupaciones-parroquiales\/sevilla-capital/)
   assert.match(styles, /\.capitalFamilies\{/)
   assert.match(styles, /\.periodGrid\{/)
   assert.match(styles, /@media\(max-width:620px\)/)

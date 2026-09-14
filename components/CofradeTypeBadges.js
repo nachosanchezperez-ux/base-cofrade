@@ -2,6 +2,11 @@ import Image from 'next/image';
 
 const TYPE_CONFIG = [
   {
+    key: 'agrupación parroquial',
+    label: 'Agrupación Parroquial',
+    icon: '/iconos/hermandades/agrupacion-parroquial.svg',
+  },
+  {
     key: 'penitencia',
     label: 'Penitencia',
     icon: '/iconos/hermandades/penitencia.png',
@@ -50,7 +55,7 @@ export default function CofradeTypeBadges({ tipos = [], compact = false }) {
       .filter(Boolean)
       .map(typeConfig)
       .map((item) => [item.key, item])
-  ).values()].slice(0, 3);
+  ).values()].slice(0, 4);
 
   return (
     <div

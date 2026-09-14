@@ -18,6 +18,7 @@ import styles from './HermandadesDirectory.module.css'
 import capitalStyles from './HermandadesDirectoryCapital.module.css'
 import enhancementStyles from './HermandadesDirectoryEnhancements.module.css'
 import groupStyles from './HermandadesDirectoryMainGroups.module.css'
+import institutionalStyles from './HermandadesDirectoryInstitutional.module.css'
 
 function groupSorted(items, getLabel) {
   return items.reduce((groups, item) => {
@@ -35,7 +36,13 @@ function groupSorted(items, getLabel) {
 }
 
 function primaryDirectoryType(item) {
+  const parishGrouping = DIRECTORY_TYPES.find((type) => type.key === 'agrupaciones-parroquiales')
+  if (parishGrouping && hasDirectoryType(item, parishGrouping.key)) return parishGrouping
   return DIRECTORY_TYPES.find((type) => hasDirectoryType(item, type.key)) || null
+}
+
+function categoryCountLabel(type, count) {
+  return count === 1 ? (type.itemSingular || 'hermandad') : (type.itemPlural || 'hermandades')
 }
 
 function buildExplorerGroups(items) {
@@ -51,7 +58,7 @@ function buildExplorerGroups(items) {
       if (!typeItems.length) return null
 
       const sorted = sortBrotherhoods(typeItems, type.key)
-      const periods = type.key === 'sacramentales'
+      const periods = ['sacramentales', 'agrupaciones-parroquiales'].includes(type.key)
         ? [{ label: '', items: sorted }]
         : groupSorted(sorted, (item) => directoryPeriod(item, type.key) || 'Sin fecha documentada')
 
@@ -104,7 +111,8 @@ function CapitalDirectoryHub({ locality }) {
   const semanaSanta = locality.typeGroups.find((group) => group.key === 'semana-santa')
   const glorias = locality.typeGroups.find((group) => group.key === 'gloria')
   const sacramentales = locality.typeGroups.find((group) => group.key === 'sacramentales')
-  const otherGroups = locality.typeGroups.filter((group) => !['semana-santa', 'gloria', 'sacramentales'].includes(group.key))
+  const parishGroups = locality.typeGroups.find((group) => group.key === 'agrupaciones-parroquiales')
+  const otherGroups = locality.typeGroups.filter((group) => !['semana-santa', 'gloria', 'sacramentales', 'agrupaciones-parroquiales'].includes(group.key))
 
   const families = [
     semanaSanta ? {
@@ -171,17 +179,33 @@ function CapitalDirectoryHub({ locality }) {
         </div>
       ) : null}
 
-      {sacramentales ? (
-        <Link className={capitalStyles.sacramentalCard} href="/hermandades/sacramentales/sevilla-capital">
-          <div>
-            <small>Directorio específico</small>
-            <strong>Sacramentales de Sevilla</strong>
-          </div>
-          <span className={capitalStyles.sacramentalMeta}>
-            <span>{sacramentales.items.length} {sacramentales.items.length === 1 ? 'hermandad' : 'hermandades'}</span>
-            <b aria-hidden="true">→</b>
-          </span>
-        </Link>
+      {sacramentales || parishGroups ? (
+        <div className={institutionalStyles.institutionalCards}>
+          {sacramentales ? (
+            <Link className={capitalStyles.sacramentalCard} href="/hermandades/sacramentales/sevilla-capital">
+              <div>
+                <small>Directorio específico</small>
+                <strong>Sacramentales de Sevilla</strong>
+              </div>
+              <span className={capitalStyles.sacramentalMeta}>
+                <span>{sacramentales.items.length} {sacramentales.items.length === 1 ? 'hermandad' : 'hermandades'}</span>
+                <b aria-hidden="true">→</b>
+              </span>
+            </Link>
+          ) : null}
+          {parishGroups ? (
+            <Link className={capitalStyles.sacramentalCard} href="/hermandades/agrupaciones-parroquiales/sevilla-capital">
+              <div>
+                <small>Carácter de la corporación</small>
+                <strong>Agrupaciones Parroquiales</strong>
+              </div>
+              <span className={capitalStyles.sacramentalMeta}>
+                <span>{parishGroups.items.length} {parishGroups.items.length === 1 ? 'agrupación' : 'agrupaciones'}</span>
+                <b aria-hidden="true">→</b>
+              </span>
+            </Link>
+          ) : null}
+        </div>
       ) : null}
 
       {otherGroups.length ? (
@@ -289,14 +313,14 @@ export default function HermandadesDirectory({ hermandades }) {
 
   return (
     <div className={styles.directory}>
-      <div className={styles.categoryGrid}>
+      <div className={`${styles.categoryGrid} ${institutionalStyles.balancedCategoryGrid}`}>
         {DIRECTORY_TYPES.map((type) => (
           <Link className={styles.categoryCard} href={type.href} key={type.key}>
             <span className={styles.categoryIcon} aria-hidden="true">
               <Image src={type.icon} alt="" width={78} height={78} sizes="78px" />
             </span>
             <span className={styles.categoryCopy}>
-              <small>{counts[type.key]} {counts[type.key] === 1 ? 'hermandad' : 'hermandades'}</small>
+              <small>{counts[type.key]} {categoryCountLabel(type, counts[type.key])}</small>
               <strong>{type.label}</strong>
               <span>{type.description}</span>
             </span>
@@ -307,19 +331,19 @@ export default function HermandadesDirectory({ hermandades }) {
 
       <div className={styles.explorer}>
         <div className={styles.explorerHeading}>
-          <span>Encuentra una hermandad</span>
+          <span>Encuentra una corporación</span>
           <strong>Busca por nombre, templo o localidad</strong>
         </div>
 
         <div className={styles.searchPanel}>
           <label className={styles.searchRow} htmlFor="brotherhood-directory-search">
-            <span className="sr-only">Buscar hermandad</span>
+            <span className="sr-only">Buscar corporación</span>
             <input
               id="brotherhood-directory-search"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Ej. El Baratillo, La Rinconada, Capilla de la Piedad…"
-              aria-label="Buscar en el directorio de hermandades"
+              aria-label="Buscar en el directorio de corporaciones"
             />
             <span className={styles.searchIcon} aria-hidden="true">⌕</span>
           </label>
@@ -391,7 +415,7 @@ export default function HermandadesDirectory({ hermandades }) {
 
         <div className={styles.resultHead} aria-live="polite" aria-atomic="true">
           <div>
-            <strong>{filtered.length} {filtered.length === 1 ? 'hermandad' : 'hermandades'}</strong>
+            <strong>{filtered.length} {filtered.length === 1 ? 'corporación' : 'corporaciones'}</strong>
             <span>Agrupadas por municipio, naturaleza y calendario</span>
           </div>
           {query || territory !== 'todos' || municipality !== 'todos' ? (
@@ -426,7 +450,7 @@ export default function HermandadesDirectory({ hermandades }) {
                       <span>Territorio</span>
                       <h2>{territoryGroup.label}</h2>
                     </div>
-                    <strong>{territoryGroup.items.length} {territoryGroup.items.length === 1 ? 'hermandad' : 'hermandades'}</strong>
+                    <strong>{territoryGroup.items.length} {territoryGroup.items.length === 1 ? 'corporación' : 'corporaciones'}</strong>
                   </header>
 
                   <div className={styles.localityStack}>
@@ -451,7 +475,7 @@ export default function HermandadesDirectory({ hermandades }) {
                             <span className={styles.localityIdentity}>
                               <small>{territoryGroup.key === 'capital' ? 'Capital' : 'Municipio'}</small>
                               <strong>{locality.label}</strong>
-                              <span className={styles.localityTypeSummary} aria-label="Tipos de hermandades presentes">
+                              <span className={styles.localityTypeSummary} aria-label="Tipos de corporaciones presentes">
                                 {locality.typeGroups.map((typeGroup) => (
                                   <span key={`${localityKey}-${typeGroup.key}`}>
                                     {typeGroup.label}
@@ -462,7 +486,7 @@ export default function HermandadesDirectory({ hermandades }) {
                             </span>
                             <span className={styles.localityMeta}>
                               <span className={styles.localityCount}>
-                                {locality.items.length} {locality.items.length === 1 ? 'hermandad' : 'hermandades'}
+                                {locality.items.length} {locality.items.length === 1 ? 'corporación' : 'corporaciones'}
                               </span>
                               <span className={styles.localityChevron} aria-hidden="true">⌄</span>
                             </span>
@@ -512,7 +536,7 @@ export default function HermandadesDirectory({ hermandades }) {
           </>
         ) : (
           <div className={styles.empty}>
-            <strong>No hay hermandades disponibles con estos criterios</strong>
+            <strong>No hay corporaciones disponibles con estos criterios</strong>
             <span>Prueba otra búsqueda o cambia el territorio.</span>
           </div>
         )}

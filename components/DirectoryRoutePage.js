@@ -13,6 +13,8 @@ export default function DirectoryRoutePage({
   path,
   breadcrumbs = [],
   contextLabel,
+  itemSingular = 'hermandad',
+  itemPlural = 'hermandades',
 }) {
   const items = sortBrotherhoods(hermandades)
   const linkedBreadcrumbs = breadcrumbs
@@ -50,7 +52,7 @@ export default function DirectoryRoutePage({
 
         <div className={styles.resultHead} style={{ marginTop: 34 }}>
           <div>
-            <strong>{items.length} {items.length === 1 ? 'hermandad' : 'hermandades'}</strong>
+            <strong>{items.length} {items.length === 1 ? itemSingular : itemPlural}</strong>
             <span>Fichas publicadas en Hilo Cofrade</span>
           </div>
         </div>
@@ -67,7 +69,7 @@ export default function DirectoryRoutePage({
           </div>
         ) : (
           <div className={styles.empty}>
-            <strong>Todavía no hay hermandades publicadas en este apartado</strong>
+            <strong>Todavía no hay corporaciones publicadas en este apartado</strong>
             <span>El directorio irá creciendo a medida que se documenten nuevas fichas.</span>
           </div>
         )}
