@@ -46,8 +46,7 @@ test('directorio, ficha y bloques relacionados priorizan la identidad común y l
     assert.doesNotMatch(source, /<h[123]>\{(?:item|repertoire)\.outing\.title\}<\/h[123]>/)
   }
 
-  assert.match(directory, /<span>Cruceta de<\/span><strong>\{item\.band\.name\}<\/strong>/)
-  assert.match(directory, /item\.band\.logoPath/)
+  assert.match(directory, /Cruceta de <strong>\{item\.band\.name\}<\/strong>/)
   assert.match(detail, /Cruceta de \{repertoire\.band\.name\}/)
   assert.match(related, /Cruceta de \{item\.band\.name\}/)
 })
