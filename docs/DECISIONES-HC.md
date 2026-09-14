@@ -2,9 +2,9 @@
 
 > Índice vivo de decisiones de producto, arquitectura, datos y diseño de Hilo Cofrade. Antes de asignar un identificador nuevo deben consultarse este registro, `docs/HILO-ORQUESTADOR.md`, `docs/ESTADO-PROYECTO.md` y el estado real de GitHub, Vercel y Supabase.
 
-- Revisión canónica: **9 de septiembre de 2026**.
-- Última decisión registrada: **HC-019**.
-- Próximo identificador disponible: **HC-020**, todavía **no asignado ni reservado**.
+- Revisión canónica: **14 de septiembre de 2026**.
+- Última decisión registrada: **HC-020**.
+- Próximo identificador disponible: **HC-021**, todavía **no asignado ni reservado**.
 - Si el registro contradice al producto real, primero se investiga y después se corrige el documento.
 
 ## Estados
@@ -38,6 +38,7 @@
 | **HC-017** | Salud del grafo como cola editorial continua | **CERRADA** | [`HC-017-salud-grafo-cola-editorial.md`](./HC-017-salud-grafo-cola-editorial.md). |
 | **HC-018** | Aportaciones públicas seguras | **IMPLEMENTADA EN CÓDIGO · ACTIVACIÓN BLOQUEADA** | [`HC-018-aportaciones-publicas-seguras.md`](./HC-018-aportaciones-publicas-seguras.md). |
 | **HC-019** | Crucetas musicales interpretadas | **IMPLEMENTADA** | [`HC-019-crucetas-musicales.md`](./HC-019-crucetas-musicales.md). |
+| **HC-020** | Agenda Cofrade y rosarios públicos | **IMPLEMENTADA** | [`HC-020-agenda-cofrade.md`](./HC-020-agenda-cofrade.md). |
 
 ## Decisiones que no se duplican
 
@@ -51,6 +52,7 @@
 - Fotografías, escudos y roles visuales se rigen por HC-014 y los contratos de media existentes, no por excepciones por entidad.
 - **HC-018** no autoriza la apertura pública de `/colabora`: su activación sigue sujeta a las puertas de seguridad, privacidad, antiabuso y reconciliación estructural de su documento canónico.
 - **HC-019** amplía HC-006 y HC-013: documenta lo interpretado en una salida concreta, sin convertir cantidades en orden ni consecutividad.
+- **HC-020** agrega actos ya gobernados: no crea una segunda fuente de verdad ni convierte coincidencias textuales en rosarios públicos.
 
 ## Normas sin ID propio
 
