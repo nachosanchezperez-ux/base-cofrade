@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import JsonLd from '@/components/JsonLd'
 import { getMusicalRepertoires } from '@/lib/supabase/musical-repertoires'
@@ -59,12 +58,7 @@ export default async function MusicalRepertoiresDirectoryPage() {
                   <div className={styles.directoryYear}>{item.year}</div>
                   <span>Repertorio interpretado</span>
                   <h2>{item.displayTitle}</h2>
-                  <div className={styles.directoryBand}>
-                    {item.band.logoPath ? (
-                      <Image src={item.band.logoPath} alt="" width={44} height={44} sizes="44px" />
-                    ) : <i aria-hidden="true">♪</i>}
-                    <p><span>Cruceta de</span><strong>{item.band.name}</strong></p>
-                  </div>
+                  <p>Cruceta de <strong>{item.band.name}</strong></p>
                   <dl>
                     <div><dt>Obras</dt><dd>{item.worksCount}</dd></div>
                     <div><dt>Interpretaciones</dt><dd>{item.performancesCount}</dd></div>
