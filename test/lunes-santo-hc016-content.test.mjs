@@ -18,7 +18,7 @@ test('publica las cuatro fichas ausentes y conserva las cinco certificadas', () 
 test('preserva el silencio de Santa Marta y la música sacra de Vera+Cruz', () => {
   assert.match(sql, /La estación de penitencia se realiza en silencio/)
   assert.match(sql, /Capilla Musical Gólgota/)
-  assert.match(sql, /capillamusicalgolgota\.blogspot\.com\/2011\/04\/semana-santa-2011\.html/)
+  assert.match(sql, /cruz%20de%20guia%202026\.pdf/)
   assert.doesNotMatch(sql, /santa-genoveva-ya-tiene-todas-bandas-confirmadas/)
   assert.match(sql, /b73f2543-4840-43af-ae52-06b116bebf67/)
   assert.doesNotMatch(sql, /music:santa-marta/)
