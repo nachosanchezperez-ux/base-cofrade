@@ -10,6 +10,7 @@ import { getGloryDirectory } from '@/lib/supabase/glory-directory';
 import { getCrewEventDirectory } from '@/lib/supabase/crew-events';
 import { getPublicIndexableEntityEntries } from '@/lib/supabase/public-indexability';
 import { getMusicalRepertoires } from '@/lib/supabase/musical-repertoires';
+import { getRosaryOutings } from '@/lib/supabase/rosary-outings';
 
 export const revalidate = 3600;
 
@@ -63,6 +64,11 @@ const staticEntries = [
     url: absoluteUrl('/crucetas-musicales'),
     changeFrequency: 'weekly',
     priority: 0.86,
+  },
+  {
+    url: absoluteUrl('/agenda-cofrade'),
+    changeFrequency: 'daily',
+    priority: 0.92,
   },
   {
     url: absoluteUrl('/extraordinarias'),
@@ -190,13 +196,25 @@ function musicalRepertoireEntries(repertoires) {
   ]);
 }
 
+function rosaryEntries(outings) {
+  return outings
+    .filter((outing) => Boolean(outing.detailHref))
+    .map((outing) => ({
+      url: absoluteUrl(outing.detailHref),
+      ...(validLastModified(outing.updatedAt) ? { lastModified: validLastModified(outing.updatedAt) } : {}),
+      changeFrequency: outing.isUpcoming ? 'daily' : 'monthly',
+      priority: outing.isUpcoming ? 0.82 : 0.64,
+    }));
+}
+
 export default async function sitemap() {
-  const [brotherhoodDirectory, extraordinaryOutings, gloryOutings, crewEvents, musicalRepertoires] = await Promise.all([
+  const [brotherhoodDirectory, extraordinaryOutings, gloryOutings, crewEvents, musicalRepertoires, rosaryOutings] = await Promise.all([
     getHermandadesDirectory(),
     getExtraordinaryDirectory(),
     getGloryDirectory(),
     getCrewEventDirectory(),
     getMusicalRepertoires(),
+    getRosaryOutings(),
   ]);
   const indexableEntities = await getPublicIndexableEntityEntries({
     brotherhoods: brotherhoodDirectory,
@@ -210,6 +228,7 @@ export default async function sitemap() {
     ...gloryEntries(gloryOutings),
     ...crewEventEntries(crewEvents),
     ...musicalRepertoireEntries(musicalRepertoires),
+    ...rosaryEntries(rosaryOutings),
   ];
 
   return [...new Map(entries.map((entry) => [entry.url, entry])).values()];
