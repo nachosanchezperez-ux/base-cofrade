@@ -1,10 +1,10 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 14 de septiembre de 2026 · cierre del macrolote transversal HC-016 del Martes Santo de Sevilla
+**Corte operativo:** 14 de septiembre de 2026 · cierre del macrolote transversal HC-016 del Miércoles Santo de Sevilla
 
-**HEAD de partida auditado:** `0ec9e6630676a0aff3e4e7ead0e83f395da4132f`
+**HEAD de partida auditado:** `848d0c058208d1f4421b4d964cb0a156f4c13761`
 
-**Producción de partida auditada:** `READY` · deployment `dpl_2gruQQxU73hzEWACdysUmkrvpEXS` · SHA `0ec9e6630676a0aff3e4e7ead0e83f395da4132f`
+**Producción de partida auditada:** `READY` · deployment `dpl_EQh2PMzwipa3AszZ72BSrHabQGPm` · SHA `848d0c058208d1f4421b4d964cb0a156f4c13761`
 
 **PR abiertas:** **0** tras integrar el presente ajuste documental
 
@@ -12,7 +12,7 @@
 
 **Frente editorial ACTIVO:** ninguno
 
-> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El SHA de partida de esta fotografía es `0ec9e663…`; el commit que contenga este tablero pasa a ser el HEAD canónico cuando `main` y producción vuelvan a coincidir. Los trece contextos HC-016 permanecen cerrados; Madrugá, Sábado Santo, Lunes Santo y Martes Santo quedan cubiertos mediante macrolotes transversales.
+> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El SHA de partida de esta fotografía es `848d0c05…`; el commit que contenga este tablero pasa a ser el HEAD canónico cuando `main` y producción vuelvan a coincidir. Los trece contextos HC-016 permanecen cerrados; Madrugá, Sábado Santo, Lunes Santo, Martes Santo y Miércoles Santo quedan cubiertos mediante macrolotes transversales.
 
 ## Tablero operativo único
 
@@ -39,6 +39,7 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | **CERRADO** | Macrolote transversal HC-016 · Sábado Santo de Sevilla | 206/206, 0 inválidas, 0 fallos; El Sol publicado, Santo Entierro creado y Soledad de San Lorenzo completada; Trinidad y Servitas preservadas; directorio `Sábado Santo · 5` | No reabrir las cinco corporaciones como frentes separados; completar solo deuda nueva verificable o multimedia autorizada |
 | **CERRADO** | Macrolote transversal HC-016 · Lunes Santo de Sevilla | 309/309 operaciones gobernadas, 0 inválidas, 0 fallos; Redención, Santa Genoveva, Santa Marta y Vera+Cruz completadas; cinco cierres previos preservados; directorio `Lunes Santo · 9` | No reabrir las nueve corporaciones como frentes separados; cualquier nueva jornada exige recálculo y orden expresa |
 | **CERRADO** | Macrolote transversal HC-016 · Martes Santo de Sevilla | 224/224 operaciones gobernadas, 0 inválidas, 0 fallos; Candelaria, Los Javieres y Los Estudiantes completadas; cinco cierres previos preservados; directorio `Martes Santo · 8` | No reabrir las ocho corporaciones como frentes separados; cualquier nueva jornada exige recálculo y orden expresa |
+| **CERRADO** | Macrolote transversal HC-016 · Miércoles Santo de Sevilla | 153/153 operaciones gobernadas, 0 inválidas, 0 fallos; El Buen Fin publicado con separación estricta de la Dolorosa homónima de la Lanzada; ocho cierres previos preservados; directorio `Miércoles Santo · 9` | No reabrir las nueve corporaciones como frentes separados; cualquier nueva jornada exige recálculo y orden expresa |
 | **CERRADO** | Cultos septiembre–diciembre de 2026 | Lote transversal HC-016 `c0162026-0909-4000-8000-000000000001`: 53/53, cuatro Hermandades y 0 DDL | Mantener ediciones futuras desde Fuentes oficiales; recurrencia no equivale a anuncio |
 | **CERRADO** | Carátulas de Discografía · #734 | Reintento del optimizador a la URL original y fallback accesible; 21 fichas auditadas, sin imágenes rotas visibles ni desbordamiento | Corregir en origen las cinco URLs históricas inaccesibles de La Oliva; el fallback no cancela esa deuda de datos |
 | **CERRADO** | HC-019 · Crucetas Musicales | Piloto Pastora de Cantillana 2026: 48 obras, 60 interpretaciones, 0 duplicados deterministas y 0 huérfanos; #740 y remate #741 integrados | Incorporar nuevas crucetas como música efectivamente interpretada; multiplicidad no equivale a consecutividad |
@@ -48,9 +49,9 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 
 ## Verdad de plataforma
 
-- GitHub: `main` partía de `0ec9e6630676a0aff3e4e7ead0e83f395da4132f`; #749–#768 están fusionadas, #492 está cerrada y la cola vuelve a 0 PR abiertas al integrar este cierre. El commit final prevalece.
-- Vercel: la producción de partida estaba `READY` mediante `dpl_2gruQQxU73hzEWACdysUmkrvpEXS`, exactamente sobre `0ec9e6630676a0aff3e4e7ead0e83f395da4132f`, sin errores runtime en la última hora. La certificación final exige que el nuevo deployment alcance el SHA fusionado.
-- Supabase: proyecto `Hilocofrade` `ACTIVE_HEALTHY`. El Martes Santo figura `completed` mediante 224/224 operaciones gobernadas, 0 inválidas y 0 fallos. Las ocho Hermandades están publicadas; en las tres intervenidas hay 0 slugs duplicados y 0 relaciones troncales huérfanas. Los trece contextos y los macrolotes anteriores permanecen preservados.
+- GitHub: `main` partía de `848d0c058208d1f4421b4d964cb0a156f4c13761`; #749–#769 están fusionadas, #492 está cerrada y la cola vuelve a 0 PR abiertas al integrar este cierre. El commit final prevalece.
+- Vercel: la producción de partida estaba `READY` mediante `dpl_EQh2PMzwipa3AszZ72BSrHabQGPm`, exactamente sobre `848d0c058208d1f4421b4d964cb0a156f4c13761`, sin errores runtime en la última hora. La certificación final exige que el nuevo deployment alcance el SHA fusionado.
+- Supabase: proyecto `Hilocofrade` `ACTIVE_HEALTHY`. El Miércoles Santo figura `completed` mediante 153/153 operaciones gobernadas, 0 inválidas y 0 fallos. Las nueve Hermandades están publicadas; El Buen Fin queda al 93 % reproducible, con 0 slugs duplicados, 0 huérfanos y 0 cruces con María Santísima del Buen Fin de la Lanzada. Los trece contextos y los macrolotes anteriores permanecen preservados.
 - Supabase Preview: #492 continúa cerrada por #730; no existe un bloqueo estructural pendiente ni se ha ejecutado DDL en este recálculo.
 - Git ↔ Supabase: siguen vigentes las cuatro migraciones estructurales reconciliadas en #730 y las dos posteriores de HC-019. El decimotercer cierre se realizó exclusivamente mediante DML gobernado y su receta queda archivada fuera de la cadena estructural activa.
 
@@ -93,6 +94,7 @@ No debe mantenerse en la cola lo que ya está integrado y desplegado:
 - macrolote transversal HC-016 del Sábado Santo de Sevilla: El Sol publicado, Santo Entierro creado y Soledad de San Lorenzo completada; Trinidad y Servitas preservadas; cinco fichas reunidas en su jornada del directorio.
 - macrolote transversal HC-016 del Lunes Santo de Sevilla: Redención, Santa Genoveva, Santa Marta y Vera+Cruz completadas; cinco fichas previas preservadas; nueve cofradías reunidas en su jornada del directorio.
 - macrolote transversal HC-016 del Martes Santo de Sevilla: Candelaria, Los Javieres y Los Estudiantes completadas; cinco fichas previas preservadas; ocho cofradías reunidas en su jornada del directorio.
+- macrolote transversal HC-016 del Miércoles Santo de Sevilla: El Buen Fin publicado con seis imágenes, dos Pasos, diez Cultos, salida de 2026, patrimonio, hitos, música y Fuentes; ocho fichas previas preservadas y nueve cofradías reunidas en la jornada.
 - #749–#756: paleta de Humildad y Caridad, Rosario 2026 de la Corona con AMUECI, directorio visual por municipios, desglose de Sevilla capital, paletas de cinco Bandas, memoria extraordinaria de la Corona en 2025, separación de extraordinarias futuras y cierre de Guadalupe. Todo está absorbido por `main`.
 - #757: cruceta interpretada de la Virgen del Castillo de Lebrija en 2026, absorbida durante este cierre concurrente sin invadir el contexto HC-016.
 - #758 y #759: cruceta de la Pastora de Padre Pío y paletas de seis Bandas integradas antes del Apply, sin invadir el contexto HC-016.
@@ -102,7 +104,7 @@ No debe mantenerse en la cola lo que ya está integrado y desplegado:
 
 ## Dónde estamos ahora
 
-HC-016 funciona como método editorial operativo en trece contextos reales: San Pablo, Mercedes de la Puerta Real, El Museo, El Cachorro, El Carmen, Cristo de Burgos, Las Siete Palabras, San Gonzalo, Divina Pastora de Santa Marina, Guadalupe de San Buenaventura, Divina Misericordia · Rosario de Santiago, Santo Entierro de Dos Hermanas y Sagrada Resurrección de Sevilla. Sobre esta base, la Madrugá quedó `completed` con 262/262 operaciones, el Sábado Santo con 206/206, el Lunes Santo con 309/309 y el Martes Santo con 224/224 operaciones gobernadas; todos sin inválidas ni fallos. La evidencia del último cierre está en [`CERTIFICACION-MARTES-SANTO-HC016-2026-09-14.md`](./CERTIFICACION-MARTES-SANTO-HC016-2026-09-14.md). No hay otro frente editorial abierto.
+HC-016 funciona como método editorial operativo en trece contextos reales: San Pablo, Mercedes de la Puerta Real, El Museo, El Cachorro, El Carmen, Cristo de Burgos, Las Siete Palabras, San Gonzalo, Divina Pastora de Santa Marina, Guadalupe de San Buenaventura, Divina Misericordia · Rosario de Santiago, Santo Entierro de Dos Hermanas y Sagrada Resurrección de Sevilla. Sobre esta base, la Madrugá quedó `completed` con 262/262 operaciones, el Sábado Santo con 206/206, el Lunes Santo con 309/309, el Martes Santo con 224/224 y el Miércoles Santo con 153/153 operaciones gobernadas; todos sin inválidas ni fallos. La evidencia del último cierre está en [`CERTIFICACION-MIERCOLES-SANTO-HC016-2026-09-14.md`](./CERTIFICACION-MIERCOLES-SANTO-HC016-2026-09-14.md). No hay otro frente editorial abierto.
 
 HC-019 queda certificada con su piloto real: Pastora de Cantillana · Procesión de Gloria 2026 · Banda de Música de Nuestra Señora de la Soledad de Cantillana. El modelo conserva 48 obras y 60 interpretaciones mediante multiplicidades, sin inferir orden, ubicación ni consecutividad. La evidencia está en [`CERTIFICACION-HC019-CRUCETAS-MUSICALES-2026-09-10.md`](./CERTIFICACION-HC019-CRUCETAS-MUSICALES-2026-09-10.md).
 
