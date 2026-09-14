@@ -77,6 +77,20 @@ test('las cuatro familias comparten el mismo mínimo editorial', () => {
   assert.match(publicIndexability, /music_accompaniment_periods/)
 })
 
+test('las Fuentes relacionales del sitemap heredan lotes y reintentos', () => {
+  assert.match(publicIndexability, /const loadSourceLinksByIds = .*loadPublicRowsInBatches/s)
+
+  for (const column of [
+    'step_phase_id',
+    'cult_id',
+    'outing_id',
+    'music_accompaniment_period_id',
+    'entity_id',
+  ]) {
+    assert.match(publicIndexability, new RegExp(`loadSourceLinksByIds\\([\\s\\S]*?'${column}'`))
+  }
+})
+
 test('el sitemap solo publica rutas segmentadas de la clasificación real', () => {
   assert.match(sitemap, /hasDirectoryType/)
   assert.match(
