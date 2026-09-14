@@ -10,7 +10,7 @@ import styles from './HiloHeader.module.css';
 const sections = [
   ['inicio', 'Inicio'],
   ['tiradelhilo', 'Tira del hilo'],
-  ['extraordinarias', 'Extraordinarias'],
+  ['agenda', 'Agenda'],
   ['igualas-ensayos', 'Igualás y ensayos'],
   ['hoy', 'Hoy'],
 ];
@@ -38,7 +38,7 @@ const directoryLinks = [
 function routeActive(pathname) {
   if (pathname === '/') return 'inicio';
   if (pathname.startsWith('/pregunta')) return 'tiradelhilo';
-  if (pathname.startsWith('/extraordinarias')) return 'extraordinarias';
+  if (pathname.startsWith('/agenda-cofrade') || pathname.startsWith('/extraordinarias')) return 'agenda';
   if (pathname.startsWith('/igualas-y-ensayos')) return 'igualas-ensayos';
   return '';
 }
@@ -125,7 +125,7 @@ export default function HiloHeader() {
   }, [pathname]);
 
   const hrefFor = (id) => {
-    if (id === 'extraordinarias') return '/extraordinarias';
+    if (id === 'agenda') return '/agenda-cofrade';
     if (id === 'igualas-ensayos') return '/igualas-y-ensayos';
     return pathname === '/' ? `#${id}` : `/#${id}`;
   };
