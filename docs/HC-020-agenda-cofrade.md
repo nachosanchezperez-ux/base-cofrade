@@ -4,7 +4,7 @@
 
 Agenda Cofrade se convierte en la entrada pública común para responder a preguntas temporales como «qué ver hoy», «qué ver este fin de semana» y «qué sale», sin duplicar los datos canónicos de cada acto.
 
-La primera entrega pública agrega los rosarios ya documentados en `outings` y conserva fichas propias para fecha, horario, recorrido, acompañamiento y Fuentes.
+El centro agrega extraordinarias, procesiones de Gloria, rosarios públicos, igualás y ensayos ya documentados, y conserva sus fichas propias para fecha, horario, recorrido, acompañamiento y Fuentes.
 
 ## Alcance de rosarios
 
@@ -26,6 +26,8 @@ No existe la modalidad «Rosario nocturno»: la hora del acto se expresa en su h
 - La lectura pública usa el cliente anónimo sin sesión y respeta RLS.
 - Las Hermandades o Bandas no publicadas pueden nombrarse, pero no generan enlaces a fichas privadas o incompletas.
 - La portada permite separar próximos y archivo, además de Sevilla capital y provincia.
+- La cronología común permite consultar hoy, el fin de semana, próximos actos y archivo, y filtrar por familia y territorio.
+- Una misma salida no se duplica: cuando un rosario tiene carácter extraordinario prevalece su clasificación como rosario y lo extraordinario queda como atributo.
 - Cada salida con `slug` obtiene una URL canónica bajo `/agenda-cofrade/rosarios/`, metadatos sociales y datos estructurados `Event`.
 - El sitemap incluye la portada y las fichas públicas de rosarios.
 - No se introduce DDL, migración, cambio RLS ni copia paralela de datos.
