@@ -1,18 +1,19 @@
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 # Hilo Cofrade · Estado canónico
 
 **Corte operativo:** 14 de septiembre de 2026 · cierre del macrolote transversal HC-016 del Sábado Santo de Sevilla
 
-**HEAD auditado:** `1790c916f0dcd328d1c468787489a8edb879f286`
+**HEAD auditado:** `30ee3688c9026714d82e26c3f606c6ef378acb5c`
 
-**Producción auditada:** `READY` · deployment `dpl_42V1wDnTPxCJpp7DHyZCPLen1rm6` · SHA `1790c916f0dcd328d1c468787489a8edb879f286`
+**Producción auditada:** `READY` · deployment `dpl_9T9xFcLu2dtRipAkrB4bsnE3fKUG` · SHA `30ee3688c9026714d82e26c3f606c6ef378acb5c`
 
-**PR abiertas:** **1** · #765, frente concurrente de producto «Ingestión asistida v1»; no pertenece al cierre editorial
+**PR abiertas:** **0** tras integrar el presente ajuste documental
 
 **Régimen:** `FIRST EDITION FREEZE` activo
 
 **Frente editorial ACTIVO:** ninguno
 
-> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El SHA de partida de esta fotografía es `1790c916…`; el commit documental que contenga este tablero pasa a ser el HEAD canónico cuando `main` y producción vuelvan a coincidir. Los trece contextos HC-016 permanecen cerrados; la Madrugá y el Sábado Santo quedan cubiertos mediante macrolotes transversales. La PR #765 apareció de forma concurrente y no se integra ni se cierra desde este frente.
+> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El SHA de partida de esta fotografía es `30ee3688…`; el commit documental que contenga este tablero pasa a ser el HEAD canónico cuando `main` y producción vuelvan a coincidir. Los trece contextos HC-016 permanecen cerrados; la Madrugá y el Sábado Santo quedan cubiertos mediante macrolotes transversales. La PR de producto #765 apareció y fue integrada de forma concurrente después de #764, sin alterar el lote editorial.
 
 ## Tablero operativo único
 
@@ -46,8 +47,8 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 
 ## Verdad de plataforma
 
-- GitHub: `main = 1790c916f0dcd328d1c468787489a8edb879f286`; #749–#764 están fusionadas, #492 está cerrada y existe 1 PR abierta ajena al cierre editorial: #765. El commit documental final prevalece al integrarse.
-- Vercel: producción `READY` mediante `dpl_42V1wDnTPxCJpp7DHyZCPLen1rm6`, exactamente sobre `1790c916f0dcd328d1c468787489a8edb879f286`; no hay clústeres de runtime en la última hora y el postflight público no detectó errores propios de la aplicación.
+- GitHub: `main = 30ee3688c9026714d82e26c3f606c6ef378acb5c`; #749–#765 están fusionadas, #492 está cerrada y el presente ajuste devuelve la cola a 0 PR abiertas. El commit documental final prevalece al integrarse.
+- Vercel: producción `READY` mediante `dpl_9T9xFcLu2dtRipAkrB4bsnE3fKUG`, exactamente sobre `30ee3688c9026714d82e26c3f606c6ef378acb5c`; no hay clústeres de runtime en la última hora y el postflight público no detectó errores propios de la aplicación.
 - Supabase: proyecto `Hilocofrade` `ACTIVE_HEALTHY`, una sola rama principal y seis migraciones activas. El macrolote del Sábado Santo figura `completed` con 206/206 operaciones, 199 insert, 7 update, 0 inválidas y 0 fallos. Las cinco Hermandades están publicadas, sin nombres duplicados en las nuevas entidades ni relaciones troncales huérfanas. Los trece contextos anteriores y la Madrugá permanecen preservados.
 - Supabase Preview: #492 continúa cerrada por #730; no existe un bloqueo estructural pendiente ni se ha ejecutado DDL en este recálculo.
 - Git ↔ Supabase: siguen vigentes las cuatro migraciones estructurales reconciliadas en #730 y las dos posteriores de HC-019. El decimotercer cierre se realizó exclusivamente mediante DML gobernado y su receta queda archivada fuera de la cadena estructural activa.
@@ -333,11 +334,11 @@ Sagrada Resurrección ganó por el mayor lote útil y verificable: cinco titular
 
 ## Auditor
 
-1. **¿Cuál es el HEAD real?** `1790c916f0dcd328d1c468787489a8edb879f286`; el commit documental que integre esta fotografía prevalecerá después.
-2. **¿Producción coincide exactamente?** Sí: `dpl_42V1wDnTPxCJpp7DHyZCPLen1rm6` está `READY` sobre ese SHA.
+1. **¿Cuál es el HEAD real?** `30ee3688c9026714d82e26c3f606c6ef378acb5c`; el commit documental que integre esta fotografía prevalecerá después.
+2. **¿Producción coincide exactamente?** Sí: `dpl_9T9xFcLu2dtRipAkrB4bsnE3fKUG` está `READY` sobre ese SHA.
 3. **¿Existen errores runtime?** No: tampoco aparecieron errores propios de la aplicación durante el postflight de las fichas públicas.
-4. **¿Hay PR abiertas?** Sí: 1, la #765 de producto, concurrente y ajena a este cierre editorial.
-5. **¿#749–#764 están completamente absorbidas?** Sí, todas fusionadas en `main`.
+4. **¿Hay PR abiertas?** No tras integrar este ajuste: 0.
+5. **¿#749–#765 están completamente absorbidas?** Sí, todas fusionadas en `main`.
 6. **¿Los trece contextos están certificados?** Sí; los macrolotes transversales de la Madrugá y del Sábado Santo se añaden sin regresión observada en esos trece cierres.
 7. **¿El tablero está totalmente actualizado?** Sí; esta sección es la única fotografía operativa actual y los cortes antiguos quedan identificados como históricos.
 8. **¿Queda algún frente activo?** No; el macrolote del Sábado Santo está cerrado.
