@@ -1,4 +1,3 @@
- 1 file changed, 10 insertions(+), 10 deletions(-)
 # Hilo Cofrade · Estado canónico
 
 **Corte operativo:** 14 de septiembre de 2026 · cierre del macrolote transversal HC-016 del Sábado Santo de Sevilla
