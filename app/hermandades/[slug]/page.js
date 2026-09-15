@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { cache } from 'react';
 import BrotherhoodCultsSection from '@/components/BrotherhoodCultsSection';
+import BrotherhoodCrewEventsSection from '@/components/BrotherhoodCrewEventsSection';
 import BrotherhoodHabitGloves from '@/components/BrotherhoodHabitGloves';
 import BrotherhoodMusicalHeritage from '@/components/BrotherhoodMusicalHeritage';
 import MusicalRepertoiresSection from '@/components/MusicalRepertoiresSection';
@@ -25,6 +26,7 @@ import { hermandades } from '@/lib/data';
 import { holyWeekDay } from '@/lib/brotherhood-directory';
 import { getStepPhotoFraming } from '@/lib/step-photo-framing';
 import { getBrotherhoodMusicalHeritage } from '@/lib/supabase/brotherhood-musical-heritage';
+import { getCrewEventsByBrotherhoodId } from '@/lib/supabase/crew-events';
 import { getMusicalRepertoires } from '@/lib/supabase/musical-repertoires';
 import { getHermandadPageBySlug } from '@/lib/supabase/brotherhood-page';
 import { getPublishedBrotherhoodCrestPath } from '@/lib/supabase/brotherhood-public-authority';
@@ -146,7 +148,7 @@ export default async function HermandadDetailPage({ params }) {
   const h = await getHermandad(slug);
   if (!h) notFound();
 
-  const [entityCoverMedia, musicalHeritage, authoritativeCrestPath, musicalRepertoires] = await Promise.all([
+  const [entityCoverMedia, musicalHeritage, authoritativeCrestPath, musicalRepertoires, crewEvents] = await Promise.all([
     getPublishedEntityCoverMediaMap(
       [
         h.id,
@@ -158,6 +160,7 @@ export default async function HermandadDetailPage({ params }) {
     getBrotherhoodMusicalHeritage(h.id),
     getPublishedBrotherhoodCrestPath(h.id),
     getMusicalRepertoires({ brotherhoodEntityId: h.id }),
+    getCrewEventsByBrotherhoodId(h.id),
   ]);
   const heroMedia = entityCoverMedia.get(h.id)
     || h.imagenes.map((imagen) => entityCoverMedia.get(imagen.id)).find(Boolean)
@@ -309,6 +312,7 @@ export default async function HermandadDetailPage({ params }) {
         h.viaCrucisCofradias?.length > 0 && { href: '#via-crucis-cofradias', label: 'Vía Crucis' },
         h.habitos?.length > 0 && { href: '#tunica', label: 'Túnica' },
         h.salidas?.length > 0 && { href: '#salidas', label: 'Salidas' },
+        crewEvents.length > 0 && { href: '#igualas-y-ensayos', label: 'Igualás y ensayos' },
         h.cultos?.length > 0 && { href: '#cultos', label: 'Cultos' },
         h.simpecados?.length > 0 && { href: '#simpecados', label: 'Simpecados' },
         h.cartelesFiestas?.length > 0 && { href: '#carteles', label: 'Carteles' },
@@ -538,6 +542,8 @@ export default async function HermandadDetailPage({ params }) {
       </div></section>}
 
       <BrotherhoodOutingsSection outings={h.salidas} />
+
+      <BrotherhoodCrewEventsSection events={crewEvents} />
 
       <BrotherhoodCultsSection cults={h.cultos} />
 
