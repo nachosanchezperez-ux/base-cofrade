@@ -8,12 +8,35 @@ import {
 } from '@/app/panel/(protected)/hermandades/[id]/geography-actions'
 import styles from '@/app/panel/panel.module.css'
 
-function municipalityOptions(items) {
-  return items.map((item) => ({
-    value: item.id,
-    label: `${item.name} · ${item.province}`,
-    searchText: `${item.autonomous_community} ${item.country}`,
-  }))
+function municipalityLabel(item) {
+  return [item.name, item.province].filter(Boolean).join(' · ')
+}
+
+function MunicipalitySelect({
+  name,
+  label = 'Localidad',
+  municipalities,
+  value,
+  onChange,
+  emptyLabel = 'Sin localidad seleccionada',
+  required = false,
+}) {
+  return (
+    <label>
+      <span>{label}</span>
+      <select
+        name={name}
+        value={value || ''}
+        onChange={(event) => onChange(event.target.value)}
+        required={required}
+      >
+        <option value="">{emptyLabel}</option>
+        {municipalities.map((item) => (
+          <option key={item.id} value={item.id}>{municipalityLabel(item)}</option>
+        ))}
+      </select>
+    </label>
+  )
 }
 
 function placeOptions(items) {
@@ -35,11 +58,10 @@ export function BrotherhoodGeographyFields({
 }) {
   const [municipalityId, setMunicipalityId] = useState(selectedMunicipalityId || '')
   const [placeId, setPlaceId] = useState(selectedPlaceId || '')
-  const [newMunicipalityName, setNewMunicipalityName] = useState('')
+  const [creatingMunicipality, setCreatingMunicipality] = useState(false)
   const [newPlaceName, setNewPlaceName] = useState('')
   const [newPlaceMunicipalityId, setNewPlaceMunicipalityId] = useState(selectedMunicipalityId || '')
 
-  const municipalityChoices = municipalityOptions(municipalities)
   const visiblePlaces = municipalityId
     ? places.filter((place) => place.municipality_id === municipalityId)
     : places
@@ -64,29 +86,36 @@ export function BrotherhoodGeographyFields({
   return (
     <>
       <div className={styles.fieldWide}>
-        <SearchableSelect
+        <MunicipalitySelect
           name="municipality_id"
-          label="Localidad"
-          options={municipalityChoices}
+          municipalities={municipalities}
           value={municipalityId}
           onChange={chooseMunicipality}
-          emptyLabel="Sin localidad seleccionada"
-          searchPlaceholder="Buscar localidad existente…"
-          onCreate={canEdit ? setNewMunicipalityName : undefined}
-          createLabel="Crear Localidad"
         />
-        {newMunicipalityName && canEdit ? (
+        {canEdit ? (
+          <div className={styles.formActions} style={{ marginTop: 8 }}>
+            <button
+              type="button"
+              className={styles.secondaryButton}
+              onClick={() => setCreatingMunicipality((current) => !current)}
+              aria-expanded={creatingMunicipality}
+            >
+              {creatingMunicipality ? 'Cancelar nueva localidad' : 'Crear nueva localidad'}
+            </button>
+          </div>
+        ) : null}
+        {creatingMunicipality && canEdit ? (
           <div className={styles.editorItem} style={{ marginTop: 12 }}>
             <strong>Crear Localidad</strong>
-            <p className={styles.emptyText}>No hay coincidencias. Completa el alta y se usará directamente en esta Hermandad.</p>
+            <p className={styles.emptyText}>Completa el alta y se usará directamente en esta Hermandad.</p>
             <div className={styles.formGrid}>
-              <label><span>Nombre</span><input name="new_municipality_name" defaultValue={newMunicipalityName} required /></label>
+              <label><span>Nombre</span><input name="new_municipality_name" required /></label>
               <label><span>Provincia</span><input name="new_municipality_province" defaultValue="Sevilla" required /></label>
               <label><span>Comunidad autónoma</span><input name="new_municipality_autonomous_community" defaultValue="Andalucía" required /></label>
               <label><span>País</span><input name="new_municipality_country" defaultValue="España" required /></label>
             </div>
             <div className={styles.formActions}>
-              <button type="button" className={styles.secondaryButton} onClick={() => setNewMunicipalityName('')}>Cancelar</button>
+              <button type="button" className={styles.secondaryButton} onClick={() => setCreatingMunicipality(false)}>Cancelar</button>
               <button type="submit" formAction={createMunicipalityAction} formNoValidate className={styles.primaryButton}>Crear y usar Localidad</button>
             </div>
           </div>
@@ -115,14 +144,13 @@ export function BrotherhoodGeographyFields({
             <div className={styles.formGrid}>
               <label className={styles.fieldWide}><span>Nombre</span><input name="new_place_name" defaultValue={newPlaceName} required /></label>
               <div className={styles.fieldWide}>
-                <SearchableSelect
+                <MunicipalitySelect
                   name="new_place_municipality_id"
-                  label="Localidad"
-                  options={municipalityChoices}
+                  municipalities={municipalities}
                   value={newPlaceMunicipalityId}
                   onChange={setNewPlaceMunicipalityId}
                   emptyLabel="Selecciona una localidad"
-                  searchPlaceholder="Buscar localidad existente…"
+                  required
                 />
               </div>
               <label><span>Tipo de lugar</span><input name="new_place_type" placeholder="Parroquia" /></label>
