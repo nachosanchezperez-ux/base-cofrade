@@ -12,6 +12,7 @@ import { createClient } from '@/lib/supabase/server'
 
 const UUID_PATTERN = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i
 const STATUSES = new Set(['draft', 'review', 'published', 'archived'])
+const GLOVE_COLORS = new Set(['Blanco', 'Negro'])
 const ALLOWED_IMAGES = new Map([
   ['image/jpeg', 'jpg'],
   ['image/png', 'png'],
@@ -44,6 +45,12 @@ function integer(formData, name, fallback = 0) {
 function status(formData) {
   const candidate = value(formData, 'status') || 'draft'
   if (!STATUSES.has(candidate)) throw new Error('Estado editorial no válido.')
+  return candidate
+}
+function gloveColor(formData) {
+  const candidate = value(formData, 'gloves_color')
+  if (!candidate) return null
+  if (!GLOVE_COLORS.has(candidate)) throw new Error('El color de los guantes debe ser blanco o negro.')
   return candidate
 }
 function assertRow(result, label) {
@@ -106,6 +113,7 @@ export async function saveBrotherhoodHabitAction(formData) {
     buttons_description: nullable(formData, 'buttons_description'),
     shield_description: nullable(formData, 'shield_description'),
     footwear_description: nullable(formData, 'footwear_description'),
+    gloves_color: gloveColor(formData),
     image_path: imagePath,
     image_alt: nullable(formData, 'image_alt'),
     sort_order: integer(formData, 'sort_order', 0),
