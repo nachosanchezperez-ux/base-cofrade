@@ -58,7 +58,7 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 
 - GitHub: el trabajo partió de `8ebd4d25bba3f064e1b0cdf8ec32087119f4a492` y quedó reconciliado sobre `6b771181ec96f34de412856b9b3834aa8b769baf`; #749–#785 están fusionadas, #492 está cerrada y había 0 PR abiertas. El commit final prevalece.
 - Vercel: la producción de partida estaba `READY` mediante `dpl_CAe2iqMCQgeKp7wwWvPN494KN12x`, exactamente sobre `8ebd4d25bba3f064e1b0cdf8ec32087119f4a492`, sin errores runtime vigentes.
-- Supabase: proyecto `Hilocofrade` `ACTIVE_HEALTHY`. Santa Ana (`c0160023-0000-4000-8000-000000000001`) figura `completed` con 49/49 y Vera-Cruz (`c0160024-0000-4000-8000-000000000001`) con 43/43; ambos conservan 0 operaciones inválidas y 0 fallos.
+- Supabase: proyecto `Hilocofrade` `ACTIVE_HEALTHY`. Santa Ana (`c0160023-0000-4000-8000-000000000001`) figura `completed` con 49/49 y Vera-Cruz (`c0160024-0000-4000-8000-000000000001`) con 45/45; ambos conservan 0 operaciones inválidas y 0 fallos.
 - Supabase Preview: #492 continúa cerrada por #730; no existe un bloqueo estructural pendiente ni se ha ejecutado DDL en este recálculo.
 - Git ↔ Supabase: siguen vigentes las cuatro migraciones estructurales reconciliadas en #730 y las dos posteriores de HC-019. Los cierres de Santa Ana y Vera-Cruz se ejecutaron exclusivamente mediante DML gobernado; sus recetas elevan a 120 los SQL editoriales archivados fuera de la cadena estructural activa.
 
@@ -119,7 +119,7 @@ No debe mantenerse en la cola lo que ya está integrado y desplegado:
 
 ## Dónde estamos ahora
 
-HC-016 funciona como método editorial operativo en dieciséis contextos individuales y en los macrolotes transversales ya certificados. Santa Ana de Dos Hermanas terminó 49/49 y Vera-Cruz de Alcalá del Río 43/43; ambos lotes conservan 0 duplicados, 0 huérfanos y 0 Salidas pasadas en `announced`. La evidencia está en [`CERTIFICACION-SANTA-ANA-DOS-HERMANAS-HC016-2026-09-15.md`](./CERTIFICACION-SANTA-ANA-DOS-HERMANAS-HC016-2026-09-15.md) y [`CERTIFICACION-VERA-CRUZ-ALCALA-DEL-RIO-HC016-2026-09-15.md`](./CERTIFICACION-VERA-CRUZ-ALCALA-DEL-RIO-HC016-2026-09-15.md). Todas las jornadas ordinarias de la Semana Santa de Sevilla y las Glorias de septiembre y octubre permanecen cerradas. No hay otro frente editorial abierto.
+HC-016 funciona como método editorial operativo en dieciséis contextos individuales y en los macrolotes transversales ya certificados. Santa Ana de Dos Hermanas terminó 49/49 y Vera-Cruz de Alcalá del Río 45/45; ambos lotes conservan 0 duplicados, 0 huérfanos y 0 Salidas pasadas en `announced`. La evidencia está en [`CERTIFICACION-SANTA-ANA-DOS-HERMANAS-HC016-2026-09-15.md`](./CERTIFICACION-SANTA-ANA-DOS-HERMANAS-HC016-2026-09-15.md) y [`CERTIFICACION-VERA-CRUZ-ALCALA-DEL-RIO-HC016-2026-09-15.md`](./CERTIFICACION-VERA-CRUZ-ALCALA-DEL-RIO-HC016-2026-09-15.md). Todas las jornadas ordinarias de la Semana Santa de Sevilla y las Glorias de septiembre y octubre permanecen cerradas. No hay otro frente editorial abierto.
 
 HC-019 queda certificada con su piloto real: Pastora de Cantillana · Procesión de Gloria 2026 · Banda de Música de Nuestra Señora de la Soledad de Cantillana. El modelo conserva 48 obras y 60 interpretaciones mediante multiplicidades, sin inferir orden, ubicación ni consecutividad. La evidencia está en [`CERTIFICACION-HC019-CRUCETAS-MUSICALES-2026-09-10.md`](./CERTIFICACION-HC019-CRUCETAS-MUSICALES-2026-09-10.md).
 
@@ -363,7 +363,7 @@ Sagrada Resurrección ganó por el mayor lote útil y verificable: cinco titular
 7. **¿El tablero está totalmente actualizado?** Sí; esta sección es la única fotografía operativa actual y los cortes antiguos quedan como evidencia histórica.
 8. **¿Queda algún frente activo?** No tras cerrar Santa Ana y Vera-Cruz.
 9. **¿Qué cubren los dos últimos lotes?** Dos contextos provinciales independientes: Santa Ana de Dos Hermanas y Vera-Cruz de Alcalá del Río.
-10. **¿Cuál es su resultado?** Dos lotes `completed`, 49/49 y 43/43 operaciones gobernadas, 0 inválidas y 0 fallos.
+10. **¿Cuál es su resultado?** Dos lotes `completed`, 49/49 y 45/45 operaciones gobernadas, 0 inválidas y 0 fallos.
 11. **¿Por qué permanecen separados?** Porque sus titulares, cultos, salidas, música, patrimonio y fuentes pertenecen a corporaciones y municipios distintos.
 
 ## Siguiente movimiento autorizado

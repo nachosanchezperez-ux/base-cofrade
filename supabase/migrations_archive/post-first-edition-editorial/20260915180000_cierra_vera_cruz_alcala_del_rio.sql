@@ -406,6 +406,20 @@ set
   public_step_name = 'Paso del Santísimo Cristo · Paso de palio de María Santísima de las Angustias Coronada'
 where id = '00b07fdf-4795-4986-9135-59c3e04622b0';
 
+update public.entities
+set
+  name = 'Banda de Música Virgen de las Mercedes de Bollullos del Condado',
+  slug = 'banda-musica-virgen-mercedes-bollullos-del-condado',
+  summary = 'Formación de Bollullos del Condado documentada tras el palio de María Santísima de las Angustias Coronada en el cortejo de ida del Jueves Santo de 2026.',
+  status = 'published'
+where id = 'b5ab8fa7-e3e1-4667-a2db-23bea160aa52';
+
+update public.bands
+set
+  municipality_id = 'a2208260-0000-0000-0000-000000000030',
+  description = 'Banda de Música de Bollullos del Condado documentada tras el palio de María Santísima de las Angustias Coronada en 2026 y, en su trayectoria histórica, tras María Santísima del Refugio de San Bernardo entre 1991 y 1997.'
+where entity_id = 'b5ab8fa7-e3e1-4667-a2db-23bea160aa52';
+
 insert into public.music_accompaniment_periods (
   id, brotherhood_entity_id, band_entity_id, step_entity_id, position, outing_type, date_from_text,
   is_current, notes, status, public_brotherhood_name, public_step_name, public_brotherhood_slug,
@@ -508,6 +522,7 @@ values
   ('1c2d8b78-ecb8-44e5-9090-9934762ff7dd', '4fc8c2bd-b98e-4634-8c0e-70bfb63365f7', '449f7825-9ff7-4722-856d-8319c3fdd697', 'Coronación de 1971', 'Hito histórico.'),
   ('ca2bbe9a-4196-4870-8730-72dd259e5ae0', '4fc8c2bd-b98e-4634-8c0e-70bfb63365f7', 'b1c686e5-9c91-4009-87d4-7d33c35924d8', 'Reconocimiento de 1996', 'Hito histórico.'),
   ('65f2052c-d91e-4d4c-a5a9-699bb9ece938', '4fc8c2bd-b98e-4634-8c0e-70bfb63365f7', 'e625575d-b048-49ab-a67b-58d67d9a225e', 'Estreno de 2012', 'Hito patrimonial.'),
+  ('483011cc-80c3-4605-8810-80a07c243887', '347cccd0-1ff0-4594-9896-9860816f703f', 'b5ab8fa7-e3e1-4667-a2db-23bea160aa52', 'Banda de las Mercedes de Bollullos', 'Formación documentada tras el palio en el cortejo de ida de 2026.'),
   ('e7c22732-714d-4d0a-8327-5f2970e0bba1', '347cccd0-1ff0-4594-9896-9860816f703f', 'ca5812c5-30fe-45e4-91e0-43ff8c513889', 'Pelícano de plata', 'Descripción oficial del paso.'),
   ('35fac081-e517-47a6-afc2-c08db349cd5b', '347cccd0-1ff0-4594-9896-9860816f703f', '3cb7468c-636d-4dc5-b0fd-e019065c057a', 'Manto', 'Descripción oficial del palio.'),
   ('280fbf62-9aa1-4ee7-a3b1-74154a5d7772', '347cccd0-1ff0-4594-9896-9860816f703f', '10503762-5cad-4b9c-94ec-362b63f5ec27', 'Palio y faldón', 'Descripción oficial del palio.'),
@@ -606,6 +621,7 @@ with operations(table_name, scope) as (
     ('cult_occurrences','4 ediciones 2026'), ('outings','2 salidas'), ('outing_entities','5 participantes'),
     ('outing_schedule_items','5 hitos horarios'), ('outing_music_positions','6 posiciones'),
     ('outing_music_assignments','6 asignaciones'), ('music_accompaniment_periods','2 periodos reutilizados'),
+    ('entities','Banda de las Mercedes reutilizada'), ('bands','perfil musical completado'),
     ('music_accompaniment_periods','2 periodos nuevos'), ('brotherhood_procession_stats','estadística 2026'),
     ('entities','6 acontecimientos'), ('events','6 fichas históricas'), ('source_links','historia e identidad'),
     ('source_links','atribuciones de titulares'), ('source_links','patrimonio de los pasos'),
@@ -661,6 +677,17 @@ begin
 
   if exists (select 1 from public.entities group by slug having count(*) > 1) then
     raise exception 'La receta deja slugs duplicados';
+  end if;
+
+  if (
+    select count(distinct map.band_entity_id)
+    from public.music_accompaniment_periods map
+    join public.entities band on band.id = map.band_entity_id and band.status = 'published'
+    where map.brotherhood_entity_id = '00dc20d4-b0f2-4ceb-a16f-b8d0d37d2fb6'
+      and map.is_current
+      and map.status = 'published'
+  ) <> 4 then
+    raise exception 'Vera-Cruz no publica sus cuatro formaciones musicales vigentes';
   end if;
 
   if (select applied_items from public.bulk_imports where id='c0160024-0000-4000-8000-000000000001')
