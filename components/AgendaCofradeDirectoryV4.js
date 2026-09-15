@@ -8,7 +8,7 @@ import styles from './AgendaCofradeDirectoryV4.module.css'
 const categoryOptions = [
   ['processions', 'Procesiones'],
   ['transfers', 'Traslados'],
-  ['rosaries', 'Rosarios'],
+  ['rosaries', 'Rosarios públicos'],
   ['devotions', 'Besamanos y besapiés'],
 ]
 
