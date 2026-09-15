@@ -27,9 +27,9 @@ La ficha publica y relaciona:
 
 | Estado | Preparadas | Aplicadas | Inválidas | Fallidas |
 |---|---:|---:|---:|---:|
-| `completed` | 43 | 43 | 0 | 0 |
+| `completed` | 45 | 45 | 0 | 0 |
 
-La receta DML canónica queda archivada en `20260915180000_cierra_vera_cruz_alcala_del_rio.sql`. La reaplicación idempotente conserva tres imágenes, dos pasos, cuatro cultos, dos Salidas y cuatro periodos musicales vigentes.
+La receta DML canónica queda archivada en `20260915180000_cierra_vera_cruz_alcala_del_rio.sql`. La reaplicación idempotente conserva tres imágenes, dos pasos, cuatro cultos, dos Salidas y cuatro periodos musicales vigentes. La Banda de Música Virgen de las Mercedes de Bollullos del Condado se reutiliza desde su nodo histórico y vuelve a publicarse por su participación acreditada en 2026.
 
 ## Postflight relacional
 
@@ -52,6 +52,7 @@ La receta DML canónica queda archivada en `20260915180000_cierra_vera_cruz_alca
 - 0 Salidas pasadas conservadas en `announced`.
 - El Jueves Santo cruza correctamente la medianoche: 2–3 de abril de 2026.
 - Las asignaciones de ida y regreso no se funden en un único acompañamiento genérico.
+- Las cuatro formaciones vigentes de la estación quedan enlazables desde la ficha pública.
 
 ## Fuentes principales
 

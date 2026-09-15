@@ -38,6 +38,9 @@ test('el Jueves Santo conserva sus dos tramos, horarios y música', () => {
   assert.match(recipe, /da951f85-de4c-48a4-bd97-b8c9f835d9b4/)
   assert.match(recipe, /b5ab8fa7-e3e1-4667-a2db-23bea160aa52/)
   assert.match(recipe, /31f46874-049b-4c33-aa68-b65ded5dfda9/)
+  assert.match(recipe, /Banda de Música Virgen de las Mercedes de Bollullos del Condado/)
+  assert.match(recipe, /banda-musica-virgen-mercedes-bollullos-del-condado/)
+  assert.match(recipe, /Vera-Cruz no publica sus cuatro formaciones musicales vigentes/)
 })
 
 test('San Gregorio mantiene cultos y regreso separados de la estación penitencial', () => {
