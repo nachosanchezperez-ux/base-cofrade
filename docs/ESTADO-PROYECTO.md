@@ -56,11 +56,11 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 
 ## Verdad de plataforma
 
-- GitHub: `main` partía de `6aa1738fa703f61c41a41a341387582c0e18a323`; #749–#784 están fusionadas, #492 está cerrada y había 0 PR abiertas. El commit final prevalece.
-- Vercel: la producción de partida estaba `READY` mediante `dpl_Fm3hi1C2v1qLs69uwvkNVDniGvfj`, exactamente sobre `6aa1738fa703f61c41a41a341387582c0e18a323`. Solo constaba un timeout aislado de `Hoy 2.0` con respuesta 200 y reintento correcto; no afecta al macrolote.
-- Supabase: proyecto `Hilocofrade` `ACTIVE_HEALTHY`. La auditoría `c0160021-0000-4000-8000-000000000001` conserva 30/30 y el macrolote de octubre `c0160022-0000-4000-8000-000000000001` figura `completed`: 186/186 operaciones, 0 inválidas y 0 fallos.
+- GitHub: el trabajo partió de `8ebd4d25bba3f064e1b0cdf8ec32087119f4a492` y quedó reconciliado sobre `6b771181ec96f34de412856b9b3834aa8b769baf`; #749–#785 están fusionadas, #492 está cerrada y había 0 PR abiertas. El commit final prevalece.
+- Vercel: la producción de partida estaba `READY` mediante `dpl_CAe2iqMCQgeKp7wwWvPN494KN12x`, exactamente sobre `8ebd4d25bba3f064e1b0cdf8ec32087119f4a492`, sin errores runtime vigentes.
+- Supabase: proyecto `Hilocofrade` `ACTIVE_HEALTHY`. Santa Ana (`c0160023-0000-4000-8000-000000000001`) figura `completed` con 49/49 y Vera-Cruz (`c0160024-0000-4000-8000-000000000001`) con 43/43; ambos conservan 0 operaciones inválidas y 0 fallos.
 - Supabase Preview: #492 continúa cerrada por #730; no existe un bloqueo estructural pendiente ni se ha ejecutado DDL en este recálculo.
-- Git ↔ Supabase: siguen vigentes las cuatro migraciones estructurales reconciliadas en #730 y las dos posteriores de HC-019. Glorias de septiembre y octubre se cerraron exclusivamente mediante DML gobernado; sus recetas quedan archivadas fuera de la cadena estructural activa.
+- Git ↔ Supabase: siguen vigentes las cuatro migraciones estructurales reconciliadas en #730 y las dos posteriores de HC-019. Los cierres de Santa Ana y Vera-Cruz se ejecutaron exclusivamente mediante DML gobernado; sus recetas elevan a 120 los SQL editoriales archivados fuera de la cadena estructural activa.
 
 ## Trabajo reciente ya cerrado
 
@@ -98,6 +98,8 @@ No debe mantenerse en la cola lo que ya está integrado y desplegado:
 - undécimo lote real de HC-016: Divina Misericordia · Rosario de Santiago, con cuatro titulares, dos Pasos, nueve Cultos, doble calendario de Penitencia y Gloria y reutilización de la Banda de Alcalá.
 - duodécimo lote real de HC-016: Santo Entierro de Dos Hermanas, con tres titulares, dos Pasos, cinco Cultos y separación estricta entre Sábado Santo y Domingo de Resurrección.
 - decimotercer lote real de HC-016: Sagrada Resurrección de Sevilla, con cinco titulares, dos Pasos, cuatro Cultos, estación de penitencia de 2026, tres bandas vigentes y seis periodos musicales.
+- decimoquinto lote real de HC-016: Santa Ana de Dos Hermanas, con titular gótica, paso de tumbilla, tres Cultos, dos Salidas de julio, dos formaciones musicales y fotografía CC0 trazable.
+- decimosexto lote real de HC-016: Vera-Cruz de Alcalá del Río, con tres imágenes relacionadas, dos Pasos, cuatro Cultos, dos Salidas, cuatro periodos musicales vigentes, patrimonio y seis hitos históricos.
 - macrolote transversal HC-016 de la Madrugá: El Silencio y El Calvario creadas; Esperanza de Triana y Los Gitanos completadas; Macarena y Gran Poder preservadas; seis fichas reunidas en su jornada del directorio.
 - macrolote transversal HC-016 del Sábado Santo de Sevilla: El Sol publicado, Santo Entierro creado y Soledad de San Lorenzo completada; Trinidad y Servitas preservadas; cinco fichas reunidas en su jornada del directorio.
 - macrolote transversal HC-016 del Lunes Santo de Sevilla: Redención, Santa Genoveva, Santa Marta y Vera+Cruz completadas; cinco fichas previas preservadas; nueve cofradías reunidas en su jornada del directorio.
@@ -117,7 +119,7 @@ No debe mantenerse en la cola lo que ya está integrado y desplegado:
 
 ## Dónde estamos ahora
 
-HC-016 funciona como método editorial operativo en trece contextos individuales y en los macrolotes transversales ya certificados. Todas las jornadas ordinarias de la Semana Santa de Sevilla y las Glorias de septiembre y octubre permanecen cerradas. El macrolote de octubre terminó 186/186, con quince corporaciones publicadas, 0 duplicados, 0 huérfanos y siete Salidas futuras en `announced`; la evidencia está en [`CERTIFICACION-GLORIAS-OCTUBRE-HC016-2026-09-15.md`](./CERTIFICACION-GLORIAS-OCTUBRE-HC016-2026-09-15.md). La auditoría de acontecimientos pasados conserva por separado sus 30/30 operaciones y 112 registros legítimamente anunciados. No hay otro frente editorial abierto.
+HC-016 funciona como método editorial operativo en dieciséis contextos individuales y en los macrolotes transversales ya certificados. Santa Ana de Dos Hermanas terminó 49/49 y Vera-Cruz de Alcalá del Río 43/43; ambos lotes conservan 0 duplicados, 0 huérfanos y 0 Salidas pasadas en `announced`. La evidencia está en [`CERTIFICACION-SANTA-ANA-DOS-HERMANAS-HC016-2026-09-15.md`](./CERTIFICACION-SANTA-ANA-DOS-HERMANAS-HC016-2026-09-15.md) y [`CERTIFICACION-VERA-CRUZ-ALCALA-DEL-RIO-HC016-2026-09-15.md`](./CERTIFICACION-VERA-CRUZ-ALCALA-DEL-RIO-HC016-2026-09-15.md). Todas las jornadas ordinarias de la Semana Santa de Sevilla y las Glorias de septiembre y octubre permanecen cerradas. No hay otro frente editorial abierto.
 
 HC-019 queda certificada con su piloto real: Pastora de Cantillana · Procesión de Gloria 2026 · Banda de Música de Nuestra Señora de la Soledad de Cantillana. El modelo conserva 48 obras y 60 interpretaciones mediante multiplicidades, sin inferir orden, ubicación ni consecutividad. La evidencia está en [`CERTIFICACION-HC019-CRUCETAS-MUSICALES-2026-09-10.md`](./CERTIFICACION-HC019-CRUCETAS-MUSICALES-2026-09-10.md).
 
@@ -357,23 +359,23 @@ Sagrada Resurrección ganó por el mayor lote útil y verificable: cinco titular
 3. **¿Existen errores runtime?** No en el preflight; se volverán a comprobar sobre el deployment final.
 4. **¿Hay PR abiertas?** No en el preflight; el cierre exige volver a 0.
 5. **¿#749–#782 están completamente absorbidas?** Sí, todas fusionadas en `main`.
-6. **¿Los trece contextos están certificados?** Sí; los macrolotes transversales se añaden sin regresión observada en esos trece contextos.
+6. **¿Los dieciséis contextos están certificados?** Sí; Santa Ana y Vera-Cruz se añaden sin regresión observada en los cierres anteriores.
 7. **¿El tablero está totalmente actualizado?** Sí; esta sección es la única fotografía operativa actual y los cortes antiguos quedan como evidencia histórica.
-8. **¿Queda algún frente activo?** No tras cerrar Glorias de septiembre.
-9. **¿Qué cubre el último lote?** Las once corporaciones del censo institucional de septiembre: seis fichas completadas y cinco cierres preservados.
-10. **¿Cuál es su resultado?** Un lote `completed`, 114/114 operaciones gobernadas, 0 inválidas y 0 fallos.
-11. **¿Por qué es transversal?** Porque completa el bloque mensual como una unidad, reutiliza el grafo y mantiene la Romería de Torreblanca fuera de `Procesión de Gloria`.
+8. **¿Queda algún frente activo?** No tras cerrar Santa Ana y Vera-Cruz.
+9. **¿Qué cubren los dos últimos lotes?** Dos contextos provinciales independientes: Santa Ana de Dos Hermanas y Vera-Cruz de Alcalá del Río.
+10. **¿Cuál es su resultado?** Dos lotes `completed`, 49/49 y 43/43 operaciones gobernadas, 0 inválidas y 0 fallos.
+11. **¿Por qué permanecen separados?** Porque sus titulares, cultos, salidas, música, patrimonio y fuentes pertenecen a corporaciones y municipios distintos.
 
 ## Siguiente movimiento autorizado
 
 1. Mantener preservadas las 61 ramas con trabajo único; cualquier limpieza futura exige una revisión específica nueva, no la reutilización de este manifiesto.
-2. Mantener cerrados los trece contextos HC-016 y todos los macrolotes transversales de las jornadas ordinarias de Sevilla; no hay frente editorial activo.
-3. Mantener octubre, noviembre y diciembre en cola; no abrir otro mes sin una orden específica posterior.
+2. Mantener cerrados los dieciséis contextos HC-016 y todos los macrolotes transversales de las jornadas ordinarias de Sevilla; no hay frente editorial activo.
+3. No abrir otro contexto o mes sin una orden específica posterior.
 4. Permitir la carga manual del escudo de Cristo del Perdón desde el Panel, sin reabrir su cierre de datos.
 5. Mantener la disciplina restaurada por #492: migraciones para esquema; HC-016 o Panel para contenido; preview limpia obligatoria antes de integrar DDL.
 6. Conservar el directorio ya integrado por #751 y #752: municipios en bloques plegables, accesos rápidos, Sevilla capital por jornadas y Glorias por meses, y acceso específico a Sacramentales.
 
 7. Mantener los 112 registros pasados que continúan legítimamente en `announced`; solo una nueva evidencia posterior verificable autoriza cambiar cada caso.
-8. Tras certificar producción y 0 PR abiertas, procede abrir Glorias de octubre como siguiente y único macrolote, mediante orden posterior.
+8. Tras certificar producción y 0 PR abiertas, esperar una orden posterior para seleccionar el siguiente frente.
 
-No se activa un frente de Laboratorio. Los trece contextos, los macrolotes de Semana Santa y Glorias de septiembre permanecen cerrados; la Sagrada Resurrección conserva además su cierre individual.
+No se activa un frente de Laboratorio. Los dieciséis contextos, los macrolotes de Semana Santa y las Glorias de septiembre y octubre permanecen cerrados.
