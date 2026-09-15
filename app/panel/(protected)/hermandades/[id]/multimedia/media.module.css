@@ -345,6 +345,51 @@
   font-size: 11px !important;
 }
 
+.batchList {
+  display: grid;
+  gap: 12px;
+}
+
+.batchItem {
+  display: grid;
+  grid-template-columns: 94px minmax(0, 1fr);
+  align-items: start;
+  gap: 14px;
+  padding: 13px;
+  border: 1px solid #dbe5ed;
+  border-radius: 13px;
+  background: #f9fbfd;
+}
+
+.batchItem > img {
+  width: 94px;
+  height: 94px;
+  object-fit: cover;
+  border: 1px solid #d5e0e8;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.batchItem > div {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.batchItem > div > strong {
+  overflow: hidden;
+  color: var(--panel-navy);
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.batchItem > div > small {
+  margin-top: -6px;
+  color: var(--panel-muted);
+  font-size: 10px;
+}
+
 .formGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -544,6 +589,17 @@
 
   .formGrid {
     grid-template-columns: 1fr;
+  }
+
+  .batchItem {
+    grid-template-columns: 68px minmax(0, 1fr);
+    gap: 11px;
+    padding: 11px;
+  }
+
+  .batchItem > img {
+    width: 68px;
+    height: 78px;
   }
 
   .uploadForm input,
