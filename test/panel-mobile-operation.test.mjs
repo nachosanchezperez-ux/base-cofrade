@@ -21,7 +21,7 @@ test('la subida rápida móvil conserva el formulario y devuelve los errores en 
   assert.match(form, /URL\.createObjectURL\(file\)/)
   assert.match(form, /panel-action-error/)
   assert.match(form, /aria-busy=\{pending\}/)
-  assert.match(form, /Subiendo…/)
+  assert.match(form, /Subiendo\$\{counter\}…/)
   assert.match(form, /se envía directamente al archivo multimedia/)
   assert.match(action, /return \{ error: message \}/)
   assert.match(action, /redirect\(destination\)/)
