@@ -1,3 +1,5 @@
+import './outing-photo.css'
+
 export const metadata = {
   robots: {
     index: false,
