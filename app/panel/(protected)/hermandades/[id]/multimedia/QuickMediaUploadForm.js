@@ -11,6 +11,7 @@ import { createClient as createBrowserSupabaseClient } from '@/lib/supabase/clie
 
 const ACCEPTED_IMAGE_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/avif'])
 const MAX_FILE_SIZE = 10 * 1024 * 1024
+const MAX_BATCH_FILES = 10
 
 function formatFileSize(bytes) {
   if (!Number.isFinite(bytes) || bytes <= 0) return ''
@@ -27,9 +28,10 @@ function RightsSelect() {
   )
 }
 
-function pendingCopy(phase) {
-  if (phase === 'uploading') return 'Subiendo…'
-  if (phase === 'saving') return 'Vinculando…'
+function pendingCopy(phase, progress, total) {
+  const counter = total > 1 ? ` ${progress + 1} de ${total}` : ''
+  if (phase === 'uploading') return `Subiendo${counter}…`
+  if (phase === 'saving') return `Vinculando${counter}…`
   return 'Preparando…'
 }
 
@@ -52,15 +54,14 @@ export default function QuickMediaUploadForm({
 }) {
   const fileInputId = useId()
   const alertRef = useRef(null)
-  const [selectedFile, setSelectedFile] = useState(null)
-  const [previewUrl, setPreviewUrl] = useState('')
+  const previewUrlsRef = useRef([])
+  const [selectedItems, setSelectedItems] = useState([])
   const [error, setError] = useState('')
   const [phase, setPhase] = useState('idle')
+  const [progress, setProgress] = useState(0)
   const [pending, startTransition] = useTransition()
 
-  useEffect(() => () => {
-    if (previewUrl) URL.revokeObjectURL(previewUrl)
-  }, [previewUrl])
+  useEffect(() => () => previewUrlsRef.current.forEach((url) => URL.revokeObjectURL(url)), [])
 
   function announceError(message) {
     setError(message)
@@ -69,33 +70,52 @@ export default function QuickMediaUploadForm({
   }
 
   function handleFileChange(event) {
-    const file = event.target.files?.[0] || null
+    const files = Array.from(event.target.files || [])
     setError('')
 
-    if (!file) {
-      setSelectedFile(null)
-      setPreviewUrl('')
+    if (!files.length) {
+      previewUrlsRef.current.forEach((url) => URL.revokeObjectURL(url))
+      previewUrlsRef.current = []
+      setSelectedItems([])
       return
     }
 
-    if (!ACCEPTED_IMAGE_TYPES.has(file.type)) {
+    if (files.length > MAX_BATCH_FILES) {
       event.target.value = ''
-      setSelectedFile(null)
-      setPreviewUrl('')
-      announceError('La imagen debe ser JPG, PNG, WEBP, GIF o AVIF.')
+      announceError(`Puedes subir un máximo de ${MAX_BATCH_FILES} imágenes cada vez.`)
       return
     }
 
-    if (file.size > MAX_FILE_SIZE) {
+    const invalidType = files.find((file) => !ACCEPTED_IMAGE_TYPES.has(file.type))
+    if (invalidType) {
       event.target.value = ''
-      setSelectedFile(null)
-      setPreviewUrl('')
-      announceError('La imagen no puede superar 10 MB.')
+      announceError(`«${invalidType.name}» no es JPG, PNG, WEBP, GIF ni AVIF.`)
       return
     }
 
-    setSelectedFile(file)
-    setPreviewUrl(URL.createObjectURL(file))
+    const oversized = files.find((file) => file.size > MAX_FILE_SIZE)
+    if (oversized) {
+      event.target.value = ''
+      announceError(`«${oversized.name}» supera el máximo de 10 MB.`)
+      return
+    }
+
+    previewUrlsRef.current.forEach((url) => URL.revokeObjectURL(url))
+    const items = files.map((file) => ({
+      file,
+      previewUrl: URL.createObjectURL(file),
+      altText: defaultAlt,
+      caption: '',
+    }))
+    previewUrlsRef.current = items.map((item) => item.previewUrl)
+    setSelectedItems(items)
+    setProgress(0)
+  }
+
+  function updateItem(index, field, value) {
+    setSelectedItems((items) => items.map((item, itemIndex) => (
+      itemIndex === index ? { ...item, [field]: value } : item
+    )))
   }
 
   function handleSubmit(event) {
@@ -104,66 +124,72 @@ export default function QuickMediaUploadForm({
 
     const form = event.currentTarget
     if (!form.reportValidity()) return
-    if (!selectedFile) {
-      announceError('Selecciona una imagen para subir.')
+    if (!selectedItems.length) {
+      announceError('Selecciona al menos una imagen para subir.')
+      return
+    }
+    if (selectedItems.some((item) => !item.altText.trim())) {
+      announceError('Cada imagen necesita su propia descripción accesible.')
       return
     }
 
-    const metadata = new FormData(form)
-    metadata.delete('file')
-    metadata.set('file_name', selectedFile.name)
-    metadata.set('file_type', selectedFile.type)
-    metadata.set('file_size', String(selectedFile.size))
     setError('')
+    setProgress(0)
 
     startTransition(async () => {
-      try {
-        setPhase('preparing')
-        const prepared = await prepareBrotherhoodRelatedMediaUploadAction(metadata)
-        if (prepared?.error) {
-          announceError(prepared.error)
-          setPhase('idle')
-          return
-        }
-        if (!prepared?.upload?.path || !prepared?.upload?.token) {
-          announceError('No se pudo preparar la subida directa de la imagen.')
-          setPhase('idle')
-          return
-        }
+      const supabase = createBrowserSupabaseClient()
+      let destination = ''
 
-        setPhase('uploading')
-        const supabase = createBrowserSupabaseClient()
-        const uploaded = await supabase.storage
-          .from('hilo-media')
-          .uploadToSignedUrl(
-            prepared.upload.path,
-            prepared.upload.token,
-            selectedFile,
-            {
+      for (let index = 0; index < selectedItems.length; index += 1) {
+        const item = selectedItems[index]
+        const metadata = new FormData(form)
+        metadata.delete('file')
+        metadata.set('file_name', item.file.name)
+        metadata.set('file_type', item.file.type)
+        metadata.set('file_size', String(item.file.size))
+        metadata.set('alt_text', item.altText.trim())
+        metadata.set('caption', item.caption.trim())
+        metadata.set('batch_mode', '1')
+        setProgress(index)
+
+        try {
+          setPhase('preparing')
+          const prepared = await prepareBrotherhoodRelatedMediaUploadAction(metadata)
+          if (prepared?.error) throw new Error(prepared.error)
+          if (!prepared?.upload?.path || !prepared?.upload?.token) {
+            throw new Error('No se pudo preparar la subida directa de la imagen.')
+          }
+
+          setPhase('uploading')
+          const uploaded = await supabase.storage
+            .from('hilo-media')
+            .uploadToSignedUrl(prepared.upload.path, prepared.upload.token, item.file, {
               cacheControl: '3600',
-              contentType: selectedFile.type,
-            }
-          )
+              contentType: item.file.type,
+            })
+          if (uploaded.error) throw new Error(`No se pudo subir «${item.file.name}»: ${uploaded.error.message}`)
 
-        if (uploaded.error) {
-          announceError(`No se pudo subir la imagen: ${uploaded.error.message}`)
+          metadata.set('storage_path', prepared.upload.path)
+          setPhase('saving')
+          const result = await uploadBrotherhoodRelatedMediaAction(metadata)
+          if (result?.error) throw new Error(result.error)
+          destination = result?.destination || destination
+        } catch (uploadError) {
+          const completed = index
+          const prefix = completed ? `${completed} de ${selectedItems.length} imágenes quedaron subidas. ` : ''
+          previewUrlsRef.current.slice(0, completed).forEach((url) => URL.revokeObjectURL(url))
+          previewUrlsRef.current = previewUrlsRef.current.slice(completed)
+          setSelectedItems((items) => items.slice(completed))
+          announceError(`${prefix}${errorMessage(uploadError)}`)
+          setProgress(0)
           setPhase('idle')
           return
         }
-
-        metadata.set('storage_path', prepared.upload.path)
-      } catch (uploadError) {
-        announceError(errorMessage(uploadError))
-        setPhase('idle')
-        return
       }
 
-      setPhase('saving')
-      const result = await uploadBrotherhoodRelatedMediaAction(metadata)
-      if (result?.error) {
-        announceError(result.error)
-        setPhase('idle')
-      }
+      previewUrlsRef.current.forEach((url) => URL.revokeObjectURL(url))
+      previewUrlsRef.current = []
+      window.location.assign(destination || window.location.href)
     })
   }
 
@@ -194,21 +220,22 @@ export default function QuickMediaUploadForm({
             name="file"
             type="file"
             accept="image/*"
+            multiple={!selectAsHero}
             aria-describedby={`${fileHelpId} ${fileSelectionId}`}
             onChange={handleFileChange}
             disabled={pending}
             required
           />
-          <span className={`${mediaStyles.filePreview} ${previewUrl ? mediaStyles.filePreviewReady : ''}`} aria-hidden="true">
-            {previewUrl ? <img src={previewUrl} alt="" /> : '＋'}
+          <span className={`${mediaStyles.filePreview} ${selectedItems.length ? mediaStyles.filePreviewReady : ''}`} aria-hidden="true">
+            {selectedItems[0]?.previewUrl ? <img src={selectedItems[0].previewUrl} alt="" /> : '＋'}
           </span>
           <span className={mediaStyles.fileCopy} id={fileSelectionId} aria-live="polite">
-            <strong>{selectedFile ? selectedFile.name : 'Elige una fotografía'}</strong>
-            <small>{selectedFile ? `${formatFileSize(selectedFile.size)} · preparada para subir` : 'Fototeca, Cámara o Archivos'}</small>
+            <strong>{selectedItems.length ? `${selectedItems.length} ${selectedItems.length === 1 ? 'fotografía seleccionada' : 'fotografías seleccionadas'}` : selectAsHero ? 'Elige una fotografía' : 'Elige una o varias fotografías'}</strong>
+            <small>{selectedItems.length === 1 ? `${formatFileSize(selectedItems[0].file.size)} · preparada para subir` : selectedItems.length > 1 ? 'Se subirán una a una con progreso visible' : 'Fototeca, Cámara o Archivos'}</small>
           </span>
-          <span className={mediaStyles.fileButton} aria-hidden="true">{selectedFile ? 'Cambiar' : 'Elegir'}</span>
+          <span className={mediaStyles.fileButton} aria-hidden="true">{selectedItems.length ? 'Cambiar' : 'Elegir'}</span>
         </span>
-        <small id={fileHelpId}>JPG, PNG, WEBP, GIF o AVIF · máximo 10 MB. La imagen se envía directamente al archivo multimedia y se conserva si hay que corregir algún dato.</small>
+        <small id={fileHelpId}>{selectAsHero ? 'JPG, PNG, WEBP, GIF o AVIF · máximo 10 MB.' : 'JPG, PNG, WEBP, GIF o AVIF · máximo 10 MB por imagen y 10 imágenes por lote.'} Cada imagen se envía directamente al archivo multimedia.</small>
       </label>
 
       <div className={mediaStyles.formGrid}>
@@ -228,15 +255,27 @@ export default function QuickMediaUploadForm({
         </label>
       </div>
 
-      <label>
-        <span>Descripción accesible</span>
-        <input name="alt_text" defaultValue={defaultAlt} required />
-      </label>
-
-      <label>
-        <span>Pie opcional</span>
-        <textarea name="caption" rows="2" placeholder="Información que ayude a contextualizar la imagen." />
-      </label>
+      {selectedItems.length ? (
+        <div className={mediaStyles.batchList} aria-label="Datos de las imágenes seleccionadas">
+          {selectedItems.map((item, index) => (
+            <article className={mediaStyles.batchItem} key={`${item.file.name}-${item.file.size}-${item.file.lastModified}-${index}`}>
+              <img src={item.previewUrl} alt="" />
+              <div>
+                <strong>{index + 1}. {item.file.name}</strong>
+                <small>{formatFileSize(item.file.size)}</small>
+                <label>
+                  <span>Descripción accesible</span>
+                  <input name="alt_text" value={item.altText} onChange={(event) => updateItem(index, 'altText', event.target.value)} required />
+                </label>
+                <label>
+                  <span>Pie opcional</span>
+                  <textarea name="caption" rows="2" value={item.caption} onChange={(event) => updateItem(index, 'caption', event.target.value)} placeholder="Información que ayude a contextualizar la imagen." />
+                </label>
+              </div>
+            </article>
+          ))}
+        </div>
+      ) : null}
 
       {error ? (
         <div className={mediaStyles.uploadError} role="alert" ref={alertRef} tabIndex={-1}>
@@ -248,8 +287,8 @@ export default function QuickMediaUploadForm({
 
       <div className={mediaStyles.uploadActions}>
         <small>{uploadNote}</small>
-        <button className={panelStyles.primaryButton} type="submit" disabled={pending || !selectedFile}>
-          {pending ? <><span className={mediaStyles.pendingSpinner} aria-hidden="true" />{pendingCopy(phase)}</> : selectAsHero ? 'Subir y usar como portada' : 'Subir y vincular'}
+        <button className={panelStyles.primaryButton} type="submit" disabled={pending || !selectedItems.length}>
+          {pending ? <><span className={mediaStyles.pendingSpinner} aria-hidden="true" />{pendingCopy(phase, progress, selectedItems.length)}</> : selectAsHero ? 'Subir y usar como portada' : selectedItems.length > 1 ? `Subir ${selectedItems.length} imágenes` : 'Subir y vincular'}
         </button>
       </div>
     </form>
