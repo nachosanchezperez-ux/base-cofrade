@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { cache } from 'react';
 import BrotherhoodCultsSection from '@/components/BrotherhoodCultsSection';
+import BrotherhoodHabitGloves from '@/components/BrotherhoodHabitGloves';
 import BrotherhoodMusicalHeritage from '@/components/BrotherhoodMusicalHeritage';
 import MusicalRepertoiresSection from '@/components/MusicalRepertoiresSection';
 import BrotherhoodOverviewV2 from '@/components/BrotherhoodOverviewV2';
@@ -530,6 +531,7 @@ export default async function HermandadDetailPage({ params }) {
               <div><dt>Cíngulo</dt><dd>{item.cordon}</dd></div><div><dt>Botonadura</dt><dd>{item.botonadura}</dd></div>
               {item.escudo && <div><dt>Escudo</dt><dd>{item.escudo}</dd></div>}
               <div><dt>Calzado</dt><dd>{item.calzado}</dd></div>
+              <BrotherhoodHabitGloves habitId={item.id} />
             </dl></div>
           </article>
         ))}</div>
