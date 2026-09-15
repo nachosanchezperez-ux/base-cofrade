@@ -54,7 +54,8 @@ function HabitFields({ item = null }) {
         <label><span>Cíngulo, cinturón o esparto</span><textarea name="cord_description" defaultValue={item?.cord_description || ''} rows="3" /></label>
         <label><span>Botonadura</span><textarea name="buttons_description" defaultValue={item?.buttons_description || ''} rows="3" /></label>
         <label><span>Escudo</span><textarea name="shield_description" defaultValue={item?.shield_description || ''} rows="3" /></label>
-        <label><span>Calzado y complementos</span><textarea name="footwear_description" defaultValue={item?.footwear_description || ''} rows="3" /></label>
+        <label><span>Calzado</span><textarea name="footwear_description" defaultValue={item?.footwear_description || ''} rows="3" placeholder="Zapatos, sandalias, calcetines…" /></label>
+        <label><span>Guantes</span><select name="gloves_color" defaultValue={item?.gloves_color || ''}><option value="">No mostrar</option><option value="Blanco">Blanco</option><option value="Negro">Negro</option></select></label>
       </PanelFormGroup>
 
       <PanelFormGroup
