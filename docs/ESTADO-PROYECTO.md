@@ -1,10 +1,10 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 15 de septiembre de 2026 · cierre de la auditoría HC-016 de acontecimientos pasados en `announced`
+**Corte operativo:** 15 de septiembre de 2026 · cierre del macrolote HC-016 de Glorias de octubre de Sevilla
 
-**HEAD de partida auditado:** `9a8de434bba436d92eed005d7d3b78d3c0643258`
+**HEAD de partida auditado:** `6aa1738fa703f61c41a41a341387582c0e18a323`
 
-**Producción de partida auditada:** `READY` · deployment `dpl_D6ZzZi3Y3Y4Hd38YiA5Qr8oD3wHZ` · SHA `9a8de434bba436d92eed005d7d3b78d3c0643258`
+**Producción de partida auditada:** `READY` · deployment `dpl_Fm3hi1C2v1qLs69uwvkNVDniGvfj` · SHA `6aa1738fa703f61c41a41a341387582c0e18a323`
 
 **PR abiertas:** **0** tras integrar el presente ajuste documental
 
@@ -12,7 +12,7 @@
 
 **Frente editorial ACTIVO:** ninguno
 
-> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El SHA de partida de esta fotografía es `9a8de434…`; el commit que contenga este tablero pasa a ser el HEAD canónico cuando `main` y producción vuelvan a coincidir. Los trece contextos HC-016 y todos los macrolotes de Semana Santa permanecen cerrados; Glorias de octubre no se ha abierto.
+> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El SHA de partida de esta fotografía es `6aa1738…`; el commit que contenga este tablero pasa a ser el HEAD canónico cuando `main` y producción vuelvan a coincidir. Los trece contextos HC-016, todos los macrolotes de Semana Santa y Glorias de septiembre y octubre permanecen cerrados.
 
 ## Tablero operativo único
 
@@ -44,6 +44,7 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | **CERRADO** | Macrolote transversal HC-016 · Viernes Santo de Sevilla | 270/270 operaciones gobernadas, 0 inválidas, 0 fallos; La Carretería preservada, seis fichas completadas y siete corporaciones publicadas | San Isidoro penitencial permanece separado de la Salud letífica; no inventar música para su cortejo en silencio |
 | **CERRADO** | Macrolote transversal HC-016 · Jueves Santo de Sevilla | 223/223 operaciones gobernadas, 0 inválidas, 0 fallos; Los Negritos y El Valle preservados, cinco fichas completadas y siete corporaciones publicadas | Pasión permanece separada de Pasión y Muerte; no inventar música para el paso del Señor |
 | **CERRADO** | Macrolote transversal HC-016 · Glorias de septiembre de Sevilla | 114/114 operaciones gobernadas, 0 inválidas, 0 fallos; once corporaciones cubiertas, cinco cierres preservados y seis fichas completadas | Torreblanca letífica permanece separada de la penitencial y de la imagen homónima de la Misión; su cita del 27 es Romería |
+| **CERRADO** | Macrolote transversal HC-016 · Glorias de octubre de Sevilla | 186/186 operaciones gobernadas, 0 inválidas, 0 fallos; quince corporaciones cubiertas, seis fichas creadas, cuatro completadas y cinco cierres preservados | Las advocaciones mixtas permanecen en su Hermandad canónica; las siete Salidas futuras siguen `announced` y no se anticipan las convocatorias posteriores al 12 de octubre |
 | **CERRADO** | Auditoría HC-016 · pasados en `announced` | Inventario inicial real 125; 13 estados elevados a `held` con evidencia posterior; 112 preservados; 30/30 operaciones, 0 inválidas y 0 fallos | No convertir convocatorias en hechos por el mero paso del tiempo; revisar de nuevo solo ante nueva evidencia posterior |
 | **CERRADO** | Cultos septiembre–diciembre de 2026 | Lote transversal HC-016 `c0162026-0909-4000-8000-000000000001`: 53/53, cuatro Hermandades y 0 DDL | Mantener ediciones futuras desde Fuentes oficiales; recurrencia no equivale a anuncio |
 | **CERRADO** | Carátulas de Discografía · #734 | Reintento del optimizador a la URL original y fallback accesible; 21 fichas auditadas, sin imágenes rotas visibles ni desbordamiento | Corregir en origen las cinco URLs históricas inaccesibles de La Oliva; el fallback no cancela esa deuda de datos |
@@ -55,11 +56,11 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 
 ## Verdad de plataforma
 
-- GitHub: `main` partía de `9a8de434bba436d92eed005d7d3b78d3c0643258`; #749–#783 están fusionadas, #492 está cerrada y había 0 PR abiertas. El commit final prevalece.
-- Vercel: la producción de partida estaba `READY` mediante `dpl_D6ZzZi3Y3Y4Hd38YiA5Qr8oD3wHZ`, exactamente sobre `9a8de434bba436d92eed005d7d3b78d3c0643258`, sin errores runtime en la última hora. La certificación final exige que el nuevo deployment alcance el SHA fusionado.
-- Supabase: proyecto `Hilocofrade` `ACTIVE_HEALTHY`. La auditoría `c0160021-0000-4000-8000-000000000001` figura `completed`: 30/30 operaciones, 0 inválidas y 0 fallos. El inventario inicial fue 125; 13 registros tienen confirmación posterior y 112 continúan legítimamente en `announced`.
+- GitHub: `main` partía de `6aa1738fa703f61c41a41a341387582c0e18a323`; #749–#784 están fusionadas, #492 está cerrada y había 0 PR abiertas. El commit final prevalece.
+- Vercel: la producción de partida estaba `READY` mediante `dpl_Fm3hi1C2v1qLs69uwvkNVDniGvfj`, exactamente sobre `6aa1738fa703f61c41a41a341387582c0e18a323`. Solo constaba un timeout aislado de `Hoy 2.0` con respuesta 200 y reintento correcto; no afecta al macrolote.
+- Supabase: proyecto `Hilocofrade` `ACTIVE_HEALTHY`. La auditoría `c0160021-0000-4000-8000-000000000001` conserva 30/30 y el macrolote de octubre `c0160022-0000-4000-8000-000000000001` figura `completed`: 186/186 operaciones, 0 inválidas y 0 fallos.
 - Supabase Preview: #492 continúa cerrada por #730; no existe un bloqueo estructural pendiente ni se ha ejecutado DDL en este recálculo.
-- Git ↔ Supabase: siguen vigentes las cuatro migraciones estructurales reconciliadas en #730 y las dos posteriores de HC-019. El cierre de Glorias de septiembre se realizó exclusivamente mediante DML gobernado y su receta queda archivada fuera de la cadena estructural activa.
+- Git ↔ Supabase: siguen vigentes las cuatro migraciones estructurales reconciliadas en #730 y las dos posteriores de HC-019. Glorias de septiembre y octubre se cerraron exclusivamente mediante DML gobernado; sus recetas quedan archivadas fuera de la cadena estructural activa.
 
 ## Trabajo reciente ya cerrado
 
@@ -106,6 +107,7 @@ No debe mantenerse en la cola lo que ya está integrado y desplegado:
 - macrolote transversal HC-016 del Viernes Santo de Sevilla: La Carretería preservada; Cachorro, La O, San Isidoro, Montserrat, Sagrada Mortaja y Soledad de San Buenaventura completadas; siete corporaciones y siete cortejos sin mezclar San Isidoro con la Salud letífica.
 - macrolote transversal HC-016 del Jueves Santo de Sevilla: Los Negritos y El Valle preservados; Exaltación, Cigarreras, Monte-Sión, Quinta Angustia y Pasión completadas; siete corporaciones publicadas sin contaminación entre homónimos.
 - macrolote transversal HC-016 de Glorias de septiembre de Sevilla: once corporaciones cubiertas; cinco cierres preservados; Pastora de Triana, Valvanera, Santa Lucía, Sastres, Inmaculado Corazón de Torreblanca y Padre Pío completadas mediante 114/114 operaciones.
+- macrolote transversal HC-016 de Glorias de octubre de Sevilla: quince corporaciones cubiertas sin duplicar las dimensiones letíficas de Hermandades mixtas; seis fichas creadas, cuatro completadas y siete Salidas futuras publicadas mediante 186/186 operaciones.
 - #749–#756: paleta de Humildad y Caridad, Rosario 2026 de la Corona con AMUECI, directorio visual por municipios, desglose de Sevilla capital, paletas de cinco Bandas, memoria extraordinaria de la Corona en 2025, separación de extraordinarias futuras y cierre de Guadalupe. Todo está absorbido por `main`.
 - #757: cruceta interpretada de la Virgen del Castillo de Lebrija en 2026, absorbida durante este cierre concurrente sin invadir el contexto HC-016.
 - #758 y #759: cruceta de la Pastora de Padre Pío y paletas de seis Bandas integradas antes del Apply, sin invadir el contexto HC-016.
@@ -115,7 +117,7 @@ No debe mantenerse en la cola lo que ya está integrado y desplegado:
 
 ## Dónde estamos ahora
 
-HC-016 funciona como método editorial operativo en trece contextos individuales y en los macrolotes transversales ya certificados. Todas las jornadas ordinarias de la Semana Santa de Sevilla y Glorias de septiembre permanecen cerradas. La auditoría de acontecimientos pasados terminó 30/30 y preservó 112 registros cuya celebración no consta mediante evidencia posterior suficiente. La evidencia del cierre está en [`CERTIFICACION-AUDITORIA-PAST-ANNOUNCED-HC016-2026-09-15.md`](./CERTIFICACION-AUDITORIA-PAST-ANNOUNCED-HC016-2026-09-15.md). No hay otro frente editorial abierto.
+HC-016 funciona como método editorial operativo en trece contextos individuales y en los macrolotes transversales ya certificados. Todas las jornadas ordinarias de la Semana Santa de Sevilla y las Glorias de septiembre y octubre permanecen cerradas. El macrolote de octubre terminó 186/186, con quince corporaciones publicadas, 0 duplicados, 0 huérfanos y siete Salidas futuras en `announced`; la evidencia está en [`CERTIFICACION-GLORIAS-OCTUBRE-HC016-2026-09-15.md`](./CERTIFICACION-GLORIAS-OCTUBRE-HC016-2026-09-15.md). La auditoría de acontecimientos pasados conserva por separado sus 30/30 operaciones y 112 registros legítimamente anunciados. No hay otro frente editorial abierto.
 
 HC-019 queda certificada con su piloto real: Pastora de Cantillana · Procesión de Gloria 2026 · Banda de Música de Nuestra Señora de la Soledad de Cantillana. El modelo conserva 48 obras y 60 interpretaciones mediante multiplicidades, sin inferir orden, ubicación ni consecutividad. La evidencia está en [`CERTIFICACION-HC019-CRUCETAS-MUSICALES-2026-09-10.md`](./CERTIFICACION-HC019-CRUCETAS-MUSICALES-2026-09-10.md).
 
