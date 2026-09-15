@@ -67,24 +67,28 @@ test('los bytes van directos a Storage y el Server Action solo recibe metadatos'
   assert.doesNotMatch(actions, /instanceof File/)
 })
 
-test('la redirección final de Next queda fuera de la captura local de errores', () => {
+test('la subida individual conserva redirect y el lote devuelve destino sin interrumpir la cola', () => {
   const transitionIndex = uploadForm.indexOf('startTransition(async () => {')
-  const tryIndex = uploadForm.indexOf('try {', transitionIndex)
-  const catchIndex = uploadForm.indexOf('} catch (uploadError) {', tryIndex)
-  const savingIndex = uploadForm.indexOf("setPhase('saving')", catchIndex)
-  const finalActionIndex = uploadForm.indexOf(
-    'const result = await uploadBrotherhoodRelatedMediaAction(metadata)',
-    savingIndex
-  )
-
   assert.ok(transitionIndex >= 0)
-  assert.ok(tryIndex > transitionIndex)
-  assert.ok(catchIndex > tryIndex)
-  assert.ok(savingIndex > catchIndex)
-  assert.ok(finalActionIndex > savingIndex)
-  assert.doesNotMatch(uploadForm.slice(tryIndex, catchIndex), /uploadBrotherhoodRelatedMediaAction/)
+  assert.match(uploadForm, /for \(let index = 0; index < selectedItems\.length; index \+= 1\)/)
+  assert.match(uploadForm, /metadata\.set\('batch_mode', '1'\)/)
+  assert.match(uploadForm, /const result = await uploadBrotherhoodRelatedMediaAction\(metadata\)/)
+  assert.match(uploadForm, /window\.location\.assign\(destination \|\| window\.location\.href\)/)
   assert.doesNotMatch(uploadForm, /NEXT_REDIRECT/)
+  assert.match(actions, /value\(formData, 'batch_mode'\) === '1'/)
+  assert.match(actions, /return \{ saved: true, destination \}/)
   assert.match(actions, /redirect\(destination\)/)
+})
+
+test('permite seleccionar hasta diez imágenes y pide descripción accesible individual', () => {
+  assert.match(uploadForm, /MAX_BATCH_FILES = 10/)
+  assert.match(uploadForm, /multiple=\{!selectAsHero\}/)
+  assert.match(uploadForm, /Array\.from\(event\.target\.files \|\| \[\]\)/)
+  assert.match(uploadForm, /Cada imagen necesita su propia descripción accesible/)
+  assert.match(uploadForm, /name="alt_text" value=\{item\.altText\}/)
+  assert.match(uploadForm, /Subir \$\{selectedItems\.length\} imágenes/)
+  assert.match(styles, /\.batchList/)
+  assert.match(styles, /\.batchItem/)
 })
 
 test('el workspace carga los destinos relacionados y prioriza carteles por año', () => {
