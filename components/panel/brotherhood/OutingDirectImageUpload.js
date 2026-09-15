@@ -16,8 +16,8 @@ export default function OutingDirectImageUpload({
 }) {
   return (
     <DirectImageUpload
-      title="Imagen principal"
-      description="Actualiza la portada utilizada por la ficha, Extraordinarias o Glorias cuando corresponda."
+      title="Fotografía de esta salida"
+      description="Sube una fotografía propia para esta salida concreta. Se utilizará en la ficha de la Hermandad y, cuando corresponda, en Agenda, Glorias o Extraordinarias."
       currentSrc={currentSrc}
       currentAlt={currentAlt || title}
       currentCredit={currentCredit}
@@ -26,7 +26,7 @@ export default function OutingDirectImageUpload({
       metadata={{ brotherhood_id: brotherhoodId, outing_id: outingId }}
       requireAlt
       syncFields={{ path: 'hero_image_path', alt: 'hero_image_alt', credit: 'hero_image_credit' }}
-      successMessage="Imagen principal de la salida actualizada correctamente."
+      successMessage="Fotografía de la salida actualizada correctamente."
     />
   )
 }

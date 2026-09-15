@@ -1,0 +1,41 @@
+#hc-panel article[id^="outing-"] {
+  display: grid;
+}
+
+#hc-panel article[id^="outing-"] > div:first-child {
+  order: -3;
+}
+
+#hc-panel article[id^="outing-"] > div:has(> [data-direct-image-upload]) {
+  order: -2;
+  margin: 0 0 24px;
+  padding: 18px;
+  border: 1px solid #d8e3ec;
+  border-radius: 14px;
+  background: #f7fafc;
+}
+
+#hc-panel article[id^="outing-"] > form {
+  order: -1;
+}
+
+#hc-panel article[id^="outing-"] form label:has(input[name="hero_image_path"]),
+#hc-panel article[id^="outing-"] form label:has(input[name="hero_image_alt"]),
+#hc-panel article[id^="outing-"] form label:has(input[name="hero_image_credit"]) {
+  display: none;
+}
+
+#hc-panel article[id^="outing-"] [data-direct-image-upload] {
+  gap: 16px;
+}
+
+#hc-panel article[id^="outing-"] [data-direct-image-upload] > form {
+  padding-top: 2px;
+}
+
+@media (max-width: 760px) {
+  #hc-panel article[id^="outing-"] > div:has(> [data-direct-image-upload]) {
+    margin-bottom: 18px;
+    padding: 14px;
+  }
+}
