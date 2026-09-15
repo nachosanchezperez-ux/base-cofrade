@@ -61,7 +61,7 @@ export default async function AgendaCofradePage({ searchParams }) {
           <Link className={styles.current} href="/agenda-cofrade#agenda" aria-current="page">Agenda principal</Link>
           <Link href="/extraordinarias">Extraordinarias</Link>
           <Link href="/procesiones-de-gloria">Glorias</Link>
-          <Link href="/agenda-cofrade?categoria=rosaries#agenda">Rosarios</Link>
+          <Link href="/agenda-cofrade?categoria=rosaries#agenda">Rosarios públicos</Link>
           <Link href="/agenda-cofrade?categoria=devotions#agenda">Besamanos</Link>
           <Link href="/igualas-y-ensayos">Igualás y ensayos</Link>
         </div>
