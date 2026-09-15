@@ -11,6 +11,7 @@ const EXECUTABLE_SCHEMA_MIGRATIONS = [
   "20260908083000_add_brotherhood_membership_stats.sql",
   "20260910181542_crucetas_musicales.sql",
   "20260910202000_reconcilia_seguridad_crucetas.sql",
+  "20260915215500_add_brotherhood_habit_gloves.sql",
 ];
 
 test("Supabase migration versions are unique and well formed", async () => {
