@@ -514,5 +514,9 @@ export async function uploadBrotherhoodRelatedMediaAction(formData) {
     console.error('[Hilo Cofrade] La imagen se guardó, pero no se pudo revalidar toda la navegación', error)
   }
 
+  if (value(formData, 'batch_mode') === '1') {
+    return { saved: true, destination }
+  }
+
   redirect(destination)
 }
