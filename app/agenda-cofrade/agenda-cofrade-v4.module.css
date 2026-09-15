@@ -1,5 +1,5 @@
-.agendaNavV4>div{display:grid;grid-template-columns:repeat(6,max-content);justify-content:start;gap:6px;overflow-x:auto}.agendaNavV4 a{display:flex;align-items:center;justify-content:center;min-height:36px}.contentV4{padding-top:30px}
+.agendaNavV4>div{display:grid;grid-template-columns:repeat(6,max-content);justify-content:start;gap:7px;overflow-x:auto}.agendaNavV4 a{display:flex;align-items:center;justify-content:center;min-height:42px;padding:8px 14px;font-size:12px}.contentV4{padding-top:30px}
 
-@media(max-width:720px){.agendaNavV4{position:sticky}.agendaNavV4>div{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;overflow:visible;padding-top:8px;padding-bottom:8px}.agendaNavV4 a{min-height:38px;padding:6px 5px;text-align:center;white-space:normal;font-size:9px;line-height:1.15}.contentV4{padding-top:22px}}
+@media(max-width:720px){.agendaNavV4{position:sticky}.agendaNavV4>div{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;overflow:visible;padding-top:8px;padding-bottom:8px}.agendaNavV4 a{min-height:46px;padding:7px 6px;text-align:center;white-space:normal;font-size:11px;line-height:1.2}.contentV4{padding-top:22px}}
 
-@media(max-width:390px){.agendaNavV4 a{font-size:8px}}
+@media(max-width:390px){.agendaNavV4 a{font-size:10px}}
