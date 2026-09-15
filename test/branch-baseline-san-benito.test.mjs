@@ -11,6 +11,7 @@ const logoBackgroundName = '20260831072000_add_band_logo_background_color.sql'
 const membershipStatsName = '20260908083000_add_brotherhood_membership_stats.sql'
 const musicalRepertoiresName = '20260910181542_crucetas_musicales.sql'
 const musicalRepertoiresHardeningName = '20260910202000_reconcilia_seguridad_crucetas.sql'
+const brotherhoodHabitGlovesName = '20260915215500_add_brotherhood_habit_gloves.sql'
 const baseline = readFileSync(new URL(baselineName, migrationsDirectory), 'utf8')
 const membershipStats = readFileSync(new URL(membershipStatsName, migrationsDirectory), 'utf8')
 const seed = readFileSync(new URL('../supabase/seed.sql', import.meta.url), 'utf8')
@@ -25,6 +26,7 @@ test('las ramas nuevas ejecutan únicamente el baseline y las evoluciones de esq
     membershipStatsName,
     musicalRepertoiresName,
     musicalRepertoiresHardeningName,
+    brotherhoodHabitGlovesName,
   ])
 })
 
@@ -59,9 +61,10 @@ test('el DML posterior al baseline permanece íntegro y fuera de la cadena ejecu
     .filter((file) => file.endsWith('.sql'))
     .sort()
 
-  assert.equal(archived.length, 120)
+  assert.equal(archived.length, 121)
   assert.equal(archived[0], '20260831074355_publica_tres_igualas_septiembre_2026.sql')
-  assert.equal(archived.at(-1), '20260915180000_cierra_vera_cruz_alcala_del_rio.sql')
+  assert.equal(archived.at(-1), '20260915213000_cierra_trazabilidad_bandas_publicas.sql')
+  assert.ok(archived.includes('20260915213000_cierra_trazabilidad_bandas_publicas.sql'))
   assert.ok(archived.includes('20260915113000_cierra_santa_ana_dos_hermanas.sql'))
   assert.ok(archived.includes('20260915180000_cierra_vera_cruz_alcala_del_rio.sql'))
   assert.ok(archived.includes('20260915130000_audita_acontecimientos_pasados_announced.sql'))
