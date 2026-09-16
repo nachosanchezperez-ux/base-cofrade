@@ -39,6 +39,34 @@ test('encode y decode mantienen el contrato saneado', () => {
   assert.equal(decodeTiraSession(encoded).messages[0].text, 'Hola')
 })
 
+test('conserva jornadas y directorios territoriales seguros al restaurar la conversación', () => {
+  const restored = decodeTiraSession(encodeTiraSession({
+    messages: [{
+      id: 'assistant-directory',
+      role: 'assistant',
+      response: {
+        kind: 'answer',
+        answer: 'Nueve hermandades publicadas.',
+        items: [{
+          label: 'San Gonzalo',
+          group: 'Lunes Santo',
+          href: '/hermandades/san-gonzalo',
+        }],
+        links: [{
+          label: 'Ver el Lunes Santo de Sevilla',
+          href: '/hermandades/semana-santa/sevilla-capital/lunes-santo',
+        }],
+        compactItemLimit: 9,
+      },
+    }],
+  }))
+
+  const response = restored.messages[0].response
+  assert.equal(response.items[0].group, 'Lunes Santo')
+  assert.equal(response.links[0].href, '/hermandades/semana-santa/sevilla-capital/lunes-santo')
+  assert.equal(response.compactItemLimit, 9)
+})
+
 test('elimina enlaces peligrosos de una sesión manipulada', () => {
   const session = sanitizeTiraSession({
     messages: [{
@@ -48,6 +76,7 @@ test('elimina enlaces peligrosos de una sesión manipulada', () => {
         answer: 'Resultado',
         entities: [{ id: 'e1', entityType: 'band', type: 'Banda', name: 'Banda', href: 'javascript:alert(1)' }],
         items: [{ label: 'Ficha', href: 'javascript:alert(1)' }],
+        links: [{ label: 'Directorio', href: 'javascript:alert(1)' }],
         references: [{ id: 's1', name: 'Fuente', url: 'javascript:alert(1)' }],
       },
     }],
@@ -56,5 +85,6 @@ test('elimina enlaces peligrosos de una sesión manipulada', () => {
   const response = session.messages[0].response
   assert.equal(response.entities[0].href, '')
   assert.equal(response.items[0].href, '')
+  assert.deepEqual(response.links, [])
   assert.equal(response.references[0].url, '')
 })

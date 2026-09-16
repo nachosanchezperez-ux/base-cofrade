@@ -11,6 +11,7 @@ import { hiloEntityKey, prioritizeHiloNavigationItems } from '@/lib/tira-search-
 import { decodeTiraSession, encodeTiraSession, TIRA_SESSION_KEY } from '@/lib/tira-session';
 import { publicText } from '@/lib/supabase/public-entity-page';
 import styles from './HiloSearch.module.css';
+import responseStyles from './HiloSearchResponse.module.css';
 
 const starterQuestions = [
   '¿Qué imágenes de La Cena son anteriores al siglo XX?',
@@ -95,7 +96,7 @@ function AnswerListItem({ item, index }) {
     return (
       <a
         href={item.href}
-        className={styles.answerListItem}
+        className={`${styles.answerListItem} ${responseStyles.safeAnswerItem}`}
         key={`${item.label}-${index}`}
         target="_blank"
         rel="noopener noreferrer"
@@ -107,14 +108,14 @@ function AnswerListItem({ item, index }) {
 
   if (item.href) {
     return (
-      <Link href={item.href} className={styles.answerListItem} key={`${item.label}-${index}`}>
+      <Link href={item.href} className={`${styles.answerListItem} ${responseStyles.safeAnswerItem}`} key={`${item.label}-${index}`}>
         {content}
       </Link>
     );
   }
 
   return (
-    <div className={styles.answerListItem} key={`${item.label}-${index}`}>
+    <div className={`${styles.answerListItem} ${responseStyles.safeAnswerItem}`} key={`${item.label}-${index}`}>
       {content}
     </div>
   );
@@ -182,14 +183,23 @@ function AssistantAnswer({ message, onFollowUp, compact = false }) {
   const response = message.response || {};
   const publicItems = (response.items || []).filter((item) => publicText(item.label));
   const publicEntities = (response.entities || []).filter((entity) => publicText(entity.name));
-  const visibleItems = compact ? publicItems.slice(0, 3) : publicItems;
+  const compactItemLimit = Math.max(1, Math.min(Number(response.compactItemLimit) || 3, 12));
+  const visibleItems = compact ? publicItems.slice(0, compactItemLimit) : publicItems;
   const visibleEntities = compact ? publicEntities.slice(0, 3) : publicEntities;
+  const itemGroups = visibleItems.reduce((groups, item) => {
+    const label = publicText(item.group);
+    const key = label || '__ungrouped__';
+    if (!groups.has(key)) groups.set(key, { label, items: [] });
+    groups.get(key).items.push(item);
+    return groups;
+  }, new Map());
+  const showGroupLabels = itemGroups.size > 1;
   const hasEntities = visibleEntities.length > 0;
   const hasItems = visibleItems.length > 0;
   const isGraphPath = isGraphPathResponse(response);
 
   return (
-    <div className={styles.assistantMessage}>
+    <div className={`${styles.assistantMessage} ${responseStyles.safeAssistant}`}>
       <div className={styles.assistantMeta}>
         <span className={styles.assistantDot} aria-hidden="true" />
         <strong>Hilo Cofrade</strong>
@@ -209,9 +219,22 @@ function AssistantAnswer({ message, onFollowUp, compact = false }) {
       {isGraphPath && !compact ? (
         <HiloGraphPath response={response} />
       ) : hasItems ? (
-        <div className={styles.answerList}>
-          {visibleItems.map((item, index) => (
-            <AnswerListItem item={item} index={index} key={`${item.label}-${index}`} />
+        <div className={`${styles.answerList} ${responseStyles.groupedList}`}>
+          {[...itemGroups.values()].map((group, groupIndex) => (
+            <div className={responseStyles.answerListGroup} key={group.label || `group-${groupIndex}`}>
+              {showGroupLabels && group.label ? <span className={responseStyles.answerListHeading}>{group.label}</span> : null}
+              {group.items.map((item, itemIndex) => (
+                <AnswerListItem item={item} index={itemIndex} key={`${item.label}-${itemIndex}`} />
+              ))}
+            </div>
+          ))}
+        </div>
+      ) : null}
+
+      {(response.links || []).length > 0 ? (
+        <div className={responseStyles.answerLinks} aria-label="Directorios relacionados">
+          {response.links.map((link) => (
+            <Link href={link.href} key={`${link.href}-${link.label}`}>{link.label}<span aria-hidden="true">→</span></Link>
           ))}
         </div>
       ) : null}
@@ -444,11 +467,11 @@ export default function HiloSearch({
       : 'Pregunta sobre hermandades, imágenes, pasos, bandas, marchas, autores…';
 
   return (
-    <div className={`${styles.wrap} ${fullPage ? styles.fullMode : ''}`} data-hilo-section={fullPage ? 'conversation_search' : 'home_search'}>
+    <div className={`${styles.wrap} ${responseStyles.safeWrap} ${fullPage ? styles.fullMode : ''}`} data-hilo-section={fullPage ? 'conversation_search' : 'home_search'}>
       {hasConversation ? (
-        <div className={styles.conversation} aria-live="polite" aria-busy={loading}>
+        <div className={`${styles.conversation} ${responseStyles.safeConversation}`} aria-live="polite" aria-busy={loading}>
           {visibleMessages.map((message) => message.role === 'user' ? (
-            <div className={styles.userMessage} key={message.id}>
+            <div className={`${styles.userMessage} ${responseStyles.safeUserMessage}`} key={message.id}>
               <span>Tú</span>
               <p>{message.text}</p>
             </div>
@@ -469,7 +492,7 @@ export default function HiloSearch({
       ) : null}
 
       {hasConversation ? (
-        <div className={styles.contextToolbar}>
+        <div className={`${styles.contextToolbar} ${responseStyles.safeToolbar}`}>
           {activeContextLabel ? (
             <span className={styles.contextPill}><i aria-hidden="true" />Siguiendo · {activeContextLabel}</span>
           ) : <span />}
