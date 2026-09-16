@@ -62,4 +62,5 @@ test('el buscador vivo incorpora aliases y superficies de contenido publicado', 
   assert.match(content, /getGloryDirectory/)
   assert.match(content, /getExtraordinaryDirectory/)
   assert.match(content, /getMusicalRepertoires/)
+  assert.match(content, /score >= Math\.max\(200, Math\.round\(bestScore \* 0\.6\)\)/)
 })
