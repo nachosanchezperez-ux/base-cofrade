@@ -1,6 +1,14 @@
 import Link from 'next/link'
 import styles from './HomeProjectOverview.module.css'
 
+const agendaCategories = [
+  { key: 'processions', label: 'Procesiones' },
+  { key: 'transfers', label: 'Traslados' },
+  { key: 'rosaries', label: 'Rosarios' },
+  { key: 'devotions', label: 'Besamanos y besapiés' },
+  { key: 'concerts', label: 'Conciertos' },
+]
+
 const secondaryAreas = [
   {
     key: 'musica',
@@ -33,21 +41,30 @@ export default function HomeProjectOverview() {
         </header>
 
         <nav className={styles.map} aria-label="Áreas principales de Hilo Cofrade">
-          <Link className={styles.agendaCard} href="/agenda-cofrade">
+          <article className={styles.agendaCard}>
             <span className={styles.cardEyebrow}>Qué ocurre y cuándo</span>
             <span className={styles.agendaBody}>
               <strong>Agenda cofrade</strong>
               <span>Los actos documentados, ordenados por fecha y lugar y enlazados con sus protagonistas.</span>
             </span>
-            <span className={styles.agendaTypes} aria-label="Procesiones, traslados, rosarios, besamanos y conciertos">
-              <i>Procesiones</i>
-              <i>Traslados</i>
-              <i>Rosarios</i>
-              <i>Besamanos</i>
-              <i>Conciertos</i>
-            </span>
-            <span className={styles.agendaCta}>Abrir la agenda <b aria-hidden="true">→</b></span>
-          </Link>
+            <span className={styles.agendaTypesLabel}>Elige qué quieres ver</span>
+            <ul className={styles.agendaTypes} aria-label="Categorías de la Agenda Cofrade">
+              {agendaCategories.map((category) => (
+                <li key={category.key}>
+                  <Link
+                    href={`/agenda-cofrade?categoria=${category.key}#agenda`}
+                    data-category={category.key}
+                  >
+                    <span>{category.label}</span>
+                    <b aria-hidden="true">→</b>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <Link className={styles.agendaCta} href="/agenda-cofrade">
+              Ver la agenda completa <b aria-hidden="true">→</b>
+            </Link>
+          </article>
 
           <div className={styles.supportingAreas}>
             <Link className={styles.encyclopediaCard} href="/directorio">
