@@ -56,6 +56,39 @@ test('reconoce filtros y operaciones sobre el conjunto anterior', () => {
   )
 })
 
+test('encadena municipio y acompañamientos actuales en una sola pregunta', () => {
+  assert.deepEqual(
+    planFreeCompoundQuestion('¿Qué bandas acompañan a las hermandades de La Rinconada?'),
+    {
+      mode: 'sequential',
+      queries: [
+        '¿Cuáles son las hermandades de La Rinconada?',
+        '¿Qué bandas acompañan a estas hermandades?',
+      ],
+      summary: 'Directorio municipal y acompañamientos actuales de La Rinconada',
+    }
+  )
+
+  assert.deepEqual(
+    planFreeCompoundQuestion('¿Qué acompañamientos musicales tienen las cofradías en Dos Hermanas?')?.queries,
+    [
+      '¿Cuáles son las hermandades de Dos Hermanas?',
+      '¿Qué bandas acompañan a estas hermandades?',
+    ]
+  )
+})
+
+test('no confunde una tipología o una hermandad concreta con un municipio', () => {
+  assert.equal(
+    planFreeCompoundQuestion('¿Qué bandas acompañan a las hermandades de gloria en Cantillana?'),
+    null
+  )
+  assert.equal(
+    planFreeCompoundQuestion('¿Qué bandas acompañan a la hermandad de La Cena?'),
+    null
+  )
+})
+
 test('encadena autoría y dedicatoria de una marcha sin IA', () => {
   assert.deepEqual(
     planFreeCompoundQuestion(
