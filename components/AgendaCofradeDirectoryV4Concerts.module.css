@@ -1,0 +1,7 @@
+.quickTypesFive{grid-template-columns:repeat(5,minmax(0,1fr))}
+.quickTypesFive button[data-category="concerts"]{border-top-color:#356b91}
+.quickTypesFive button.quickTypeConcertActive{border-color:#356b91;background:#356b91;color:#fff}
+.concertCard time{color:#356b91}
+.concertCard [data-category="concerts"]{color:#356b91}
+
+@media(max-width:860px){.quickTypesFive{grid-template-columns:repeat(2,minmax(0,1fr))}}
