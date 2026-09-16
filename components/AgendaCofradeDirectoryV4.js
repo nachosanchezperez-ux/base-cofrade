@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import styles from './AgendaCofradeDirectoryV4.module.css'
+import concertStyles from './AgendaCofradeDirectoryV4Concerts.module.css'
 
 const categoryOptions = [
   ['processions', 'Procesiones'],
@@ -135,12 +136,12 @@ export default function AgendaCofradeDirectoryV4({
         <p>Elige cuándo, qué tipo de acto y dónde. Todo queda visible sin abrir menús intermedios.</p>
       </div>
 
-      <div className={styles.quickTypes} aria-label="Elegir tipo de acto">
+      <div className={`${styles.quickTypes} ${concertStyles.quickTypesFive}`} aria-label="Elegir tipo de acto">
         {categoryOptions.map(([value, label]) => (
           <button
             type="button"
             data-category={value}
-            className={category === value ? styles.quickTypeActive : ''}
+            className={category === value ? `${styles.quickTypeActive} ${value === 'concerts' ? concertStyles.quickTypeConcertActive : ''}` : ''}
             aria-pressed={category === value}
             onClick={() => setCategory(category === value ? 'all' : value)}
             key={value}
@@ -221,7 +222,7 @@ export default function AgendaCofradeDirectoryV4({
               </div>
               <div className={styles.cards}>
                 {group.items.map((item) => (
-                  <article className={styles.card} key={item.key} data-category={item.category}>
+                  <article className={`${styles.card} ${item.category === 'concerts' ? concertStyles.concertCard : ''}`} key={item.key} data-category={item.category}>
                     <time className={styles.dateBlock} dateTime={item.date || undefined}>
                       <strong>{item.dateInfo.day}</strong>
                       <span>{item.dateInfo.month}</span>
@@ -233,7 +234,7 @@ export default function AgendaCofradeDirectoryV4({
                         {item.isExtraordinary && item.category === 'rosaries' ? <b>Extraordinario</b> : null}
                         {item.isCancelled ? <small>Cancelado</small> : null}
                       </div>
-                      <h4>{item.href ? <Link href={item.href}>{item.title}</Link> : item.title}</h4>
+                      <h4>{item.category === 'concerts' ? item.title : item.href ? <Link href={item.href}>{item.title}</Link> : item.title}</h4>
                       <p className={styles.organizer}>{item.organizer}</p>
                       <div className={styles.cardFacts}>
                         <span><b>Localidad</b>{item.municipality || 'Por confirmar'}</span>
