@@ -4,6 +4,7 @@ import HiloSearch from '@/components/HiloSearch'
 import HomeTodayV2 from '@/components/HomeTodayV2'
 import HomeExploreV2 from '@/components/HomeExploreV2'
 import HomeKnowledgeThreads from '@/components/HomeKnowledgeThreads'
+import HomeProjectOverview from '@/components/HomeProjectOverview'
 import { getExtraordinaryLiveState } from '@/lib/home-live-status'
 import { getHomeAdaptivePriority } from '@/lib/home-adaptive-priority'
 import styles from '@/app/home.module.css'
@@ -262,13 +263,13 @@ export default function HomePageV2({
           <div className={`${styles.heroCopy} ${polishStyles.heroCopy}`}>
             <span className={styles.kicker}>Sevilla y su provincia</span>
             <h1 className={polishStyles.heroTitle}>Hilo Cofrade, <span>todo en las cofradías está relacionado</span></h1>
-            <p className={polishStyles.heroDescription}>Consulta, descubre y sigue las conexiones entre hermandades, imágenes, bandas, marchas, autores y patrimonio.</p>
+            <p className={polishStyles.heroDescription}>Consulta la agenda cofrade y descubre las conexiones entre hermandades, imágenes, pasos, bandas, marchas, autores y patrimonio.</p>
             <nav className={styles.heroActions} aria-label="Accesos principales">
               <Link className={styles.heroPrimaryAction} href="/directorio">
                 Explorar la enciclopedia <span aria-hidden="true">→</span>
               </Link>
-              <Link className={styles.heroSecondaryAction} href={featuredOuting ? '#proximos-dias' : '/extraordinarias'}>
-                Ver próximas procesiones
+              <Link className={styles.heroSecondaryAction} href="/agenda-cofrade">
+                Ver la agenda cofrade
               </Link>
             </nav>
             <div className={`${styles.heroThread} ${polishStyles.heroThread}`} aria-label="Recorrido del conocimiento relacionado de Hilo Cofrade">
@@ -291,6 +292,8 @@ export default function HomePageV2({
           </aside>
         </div>
       </section>
+
+      <HomeProjectOverview />
 
       {homePriority.extraordinaryFirst ? (
         <>

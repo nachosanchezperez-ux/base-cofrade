@@ -30,9 +30,9 @@ export default function HomeExploreV2({ stats }) {
     <section className={`${styles.section} ${polishStyles.exploreSection}`} id="enciclopedia">
       <div className="shell">
         <header className={`${styles.header} ${polishStyles.exploreHeader}`}>
-          <span className={styles.eyebrow}>Enciclopedia</span>
-          <h2>Entra por donde quieras</h2>
-          <p>Cuatro puertas para empezar a recorrer Hilo Cofrade. Cada directorio abre después sus relaciones con imágenes, pasos, música, autores y patrimonio.</p>
+          <span className={styles.eyebrow}>El núcleo documental</span>
+          <h2>Explora la enciclopedia</h2>
+          <p>Hermandades, imágenes, pasos y bandas son las cuatro puertas principales. Desde cada ficha puedes seguir el hilo hacia su historia, su patrimonio y su música.</p>
         </header>
 
         <div className={`${styles.grid} ${polishStyles.exploreGrid}`}>
@@ -63,8 +63,8 @@ export default function HomeExploreV2({ stats }) {
         <aside className={`${styles.graphStrip} ${polishStyles.graphStrip}`} aria-label="Dimensión del grafo público de Hilo Cofrade">
           <div className={styles.graphIntro}>
             <span className={styles.eyebrow}>El hilo sigue</span>
-            <h3>Los directorios son solo la entrada</h3>
-            <p>Marchas, autores, patrimonio y acontecimientos se descubren relacionados con las entidades principales, sin convertir la Home en un catálogo de tablas.</p>
+            <h3>Cada ficha abre nuevas relaciones</h3>
+            <p>Marchas, autores, patrimonio y acontecimientos completan el relato y conectan entre sí las entidades principales.</p>
           </div>
           <div className={`${styles.metrics} ${polishStyles.graphMetrics}`}>
             {graph.map((item) => (

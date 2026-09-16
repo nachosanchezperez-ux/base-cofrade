@@ -28,12 +28,21 @@ test('extraordinary sources are loaded in the source-link query', async () => {
   assert.doesNotMatch(loader, /\.from\('sources'\)/)
 })
 
-test('the homepage offers two clear first-visit paths', async () => {
-  const home = await read('components/HomePageV2.js')
+test('the homepage offers clear first-visit paths and a complete project overview', async () => {
+  const [home, overview] = await Promise.all([
+    read('components/HomePageV2.js'),
+    read('components/HomeProjectOverview.js'),
+  ])
 
   assert.match(home, /aria-label="Accesos principales"/)
   assert.match(home, /href="\/directorio"[\s\S]*Explorar la enciclopedia/)
-  assert.match(home, /#proximos-dias[\s\S]*Ver próximas procesiones/)
+  assert.match(home, /href="\/agenda-cofrade"[\s\S]*Ver la agenda cofrade/)
+  assert.match(home, /<HomeProjectOverview \/>/)
+  assert.match(overview, /aria-label="Áreas principales de Hilo Cofrade"/)
+  assert.match(overview, /href: '\/agenda-cofrade'/)
+  assert.match(overview, /href: '\/directorio'/)
+  assert.match(overview, /href: '\/crucetas-musicales'/)
+  assert.match(overview, /href: '\/igualas-y-ensayos'/)
 })
 
 test('public collaboration fails closed until privacy and anti-bot are activated', async () => {
