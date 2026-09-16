@@ -52,6 +52,20 @@ function groupByMonth(items) {
   return groups
 }
 
+function categoryBreakdown(items) {
+  return categoryOptions
+    .map(([value, label]) => ({
+      value,
+      label,
+      count: items.filter((item) => item.category === value).length,
+    }))
+    .filter((item) => item.count > 0)
+}
+
+function monthAnchor(key) {
+  return `agenda-v4-${String(key || 'sin-fecha').replace(/[^a-z0-9-]/gi, '-')}`
+}
+
 function EventVisual({ item }) {
   if (!item.imagePath) return null
   return (
@@ -133,7 +147,7 @@ export default function AgendaCofradeDirectoryV4({
           <span>Sevilla y provincia</span>
           <h2 id="agenda-v4-title">Agenda de actos</h2>
         </div>
-        <p>Elige cuándo, qué tipo de acto y dónde. Todo queda visible sin abrir menús intermedios.</p>
+        <p>Elige cuándo, qué tipo de acto y dónde. Los meses y cada familia de actos se distinguen visualmente para localizar una cita de un vistazo.</p>
       </div>
 
       <div className={`${styles.quickTypes} ${concertStyles.quickTypesFive}`} aria-label="Elegir tipo de acto">
@@ -213,43 +227,71 @@ export default function AgendaCofradeDirectoryV4({
         </div>
       </div>
 
+      {groups.length > 1 ? (
+        <nav className={styles.monthNavigation} aria-label="Ir directamente a un mes">
+          {groups.map((group) => (
+            <a href={`#${monthAnchor(group.key)}`} key={group.key}>
+              <span>{group.label}</span>
+              <strong>{group.items.length}</strong>
+            </a>
+          ))}
+        </nav>
+      ) : null}
+
       {groups.length ? (
         <div className={styles.months}>
-          {groups.map((group) => (
-            <section className={styles.monthGroup} key={group.key} aria-labelledby={`agenda-v4-${group.key}`}>
-              <div className={styles.monthHeading}>
-                <h3 id={`agenda-v4-${group.key}`}>{group.label}</h3><span>{group.items.length}</span>
-              </div>
-              <div className={styles.cards}>
-                {group.items.map((item) => (
-                  <article className={`${styles.card} ${item.category === 'concerts' ? concertStyles.concertCard : ''}`} key={item.key} data-category={item.category}>
-                    <time className={styles.dateBlock} dateTime={item.date || undefined}>
-                      <strong>{item.dateInfo.day}</strong>
-                      <span>{item.dateInfo.month}</span>
-                      {item.dateInfo.year ? <small>{item.dateInfo.year}</small> : null}
-                    </time>
-                    <div className={styles.cardBody}>
-                      <div className={styles.cardTopline}>
-                        <span data-category={item.category}>{item.categoryLabel}</span>
-                        {item.isExtraordinary && item.category === 'rosaries' ? <b>Extraordinario</b> : null}
-                        {item.isCancelled ? <small>Cancelado</small> : null}
+          {groups.map((group) => {
+            const breakdown = categoryBreakdown(group.items)
+            const anchor = monthAnchor(group.key)
+            return (
+              <section className={styles.monthGroup} id={anchor} key={group.key} aria-labelledby={`${anchor}-title`}>
+                <div className={styles.monthHeading}>
+                  <div className={styles.monthIdentity}>
+                    <span>Mes</span>
+                    <h3 id={`${anchor}-title`}>{group.label}</h3>
+                    <strong>{group.items.length} {group.items.length === 1 ? 'acto' : 'actos'}</strong>
+                  </div>
+                  <div className={styles.monthTypeSummary} aria-label={`Tipos de actos en ${group.label}`}>
+                    {breakdown.map((type) => (
+                      <span data-category={type.value} key={type.value}>
+                        <i aria-hidden="true" />
+                        {type.label}
+                        <b>{type.count}</b>
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div className={styles.cards}>
+                  {group.items.map((item) => (
+                    <article className={`${styles.card} ${item.category === 'concerts' ? concertStyles.concertCard : ''}`} key={item.key} data-category={item.category}>
+                      <time className={styles.dateBlock} dateTime={item.date || undefined}>
+                        <strong>{item.dateInfo.day}</strong>
+                        <span>{item.dateInfo.month}</span>
+                        {item.dateInfo.year ? <small>{item.dateInfo.year}</small> : null}
+                      </time>
+                      <div className={styles.cardBody}>
+                        <div className={styles.cardTopline}>
+                          <span data-category={item.category}>{item.categoryLabel}</span>
+                          {item.isExtraordinary && item.category === 'rosaries' ? <b>Extraordinario</b> : null}
+                          {item.isCancelled ? <small>Cancelado</small> : null}
+                        </div>
+                        <h4>{item.category === 'concerts' ? item.title : item.href ? <Link href={item.href}>{item.title}</Link> : item.title}</h4>
+                        <p className={styles.organizer}>{item.organizer}</p>
+                        <div className={styles.cardFacts}>
+                          <span><b>Localidad</b>{item.municipality || 'Por confirmar'}</span>
+                          <span><b>Horario</b>{item.timeText || (item.startTime ? `${item.startTime}${item.endTime ? `–${item.endTime}` : ''} h` : 'Por confirmar')}</span>
+                          {item.place ? <span><b>Lugar</b>{item.place}</span> : null}
+                        </div>
+                        {item.summary ? <p className={styles.routePreview}>{item.summary}</p> : null}
+                        <EventActions item={item} />
                       </div>
-                      <h4>{item.category === 'concerts' ? item.title : item.href ? <Link href={item.href}>{item.title}</Link> : item.title}</h4>
-                      <p className={styles.organizer}>{item.organizer}</p>
-                      <div className={styles.cardFacts}>
-                        <span><b>Localidad</b>{item.municipality || 'Por confirmar'}</span>
-                        <span><b>Horario</b>{item.timeText || (item.startTime ? `${item.startTime}${item.endTime ? `–${item.endTime}` : ''} h` : 'Por confirmar')}</span>
-                        {item.place ? <span><b>Lugar</b>{item.place}</span> : null}
-                      </div>
-                      {item.summary ? <p className={styles.routePreview}>{item.summary}</p> : null}
-                      <EventActions item={item} />
-                    </div>
-                    <EventVisual item={item} />
-                  </article>
-                ))}
-              </div>
-            </section>
-          ))}
+                      <EventVisual item={item} />
+                    </article>
+                  ))}
+                </div>
+              </section>
+            )
+          })}
         </div>
       ) : (
         <div className={styles.empty}>
