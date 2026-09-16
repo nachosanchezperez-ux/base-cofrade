@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import styles from './AgendaCofradeDirectoryV4.module.css'
 import concertStyles from './AgendaCofradeDirectoryV4Concerts.module.css'
+import visualStyles from './AgendaCofradeDirectoryV4Visuals.module.css'
 
 const categoryOptions = [
   ['processions', 'Procesiones'],
@@ -13,6 +14,14 @@ const categoryOptions = [
   ['devotions', 'Besamanos y besapiés'],
   ['concerts', 'Conciertos'],
 ]
+
+const visualFallbacks = {
+  processions: { mark: 'PRO', label: 'Procesión' },
+  transfers: { mark: 'TRA', label: 'Traslado' },
+  rosaries: { mark: 'ROS', label: 'Rosario' },
+  devotions: { mark: 'DEV', label: 'Culto' },
+  concerts: { mark: 'MÚS', label: 'Concierto' },
+}
 
 function addDays(value, amount) {
   const date = new Date(`${value}T12:00:00Z`)
@@ -67,15 +76,40 @@ function monthAnchor(key) {
 }
 
 function EventVisual({ item }) {
-  if (!item.imagePath) return null
+  const fallback = item.imageFallbackPath || ''
+  const [src, setSrc] = useState(item.imagePath || fallback)
+  const [kind, setKind] = useState(item.imageKind || (src ? 'crest' : 'fallback'))
+  const emptyVisual = visualFallbacks[item.category] || { mark: 'HC', label: 'Acto' }
+
+  if (!src) {
+    return (
+      <div className={`${styles.cardVisual} ${visualStyles.visualContainer} ${visualStyles.fallbackFrame}`} aria-hidden="true">
+        <span className={visualStyles.fallbackMark}>{emptyVisual.mark}</span>
+        <small>{emptyVisual.label}</small>
+      </div>
+    )
+  }
+
+  function handleError() {
+    if (fallback && src !== fallback) {
+      setSrc(fallback)
+      setKind('crest')
+      return
+    }
+    setSrc('')
+    setKind('fallback')
+  }
+
   return (
-    <div className={styles.cardVisual} aria-hidden={!item.imageAlt}>
+    <div className={`${styles.cardVisual} ${visualStyles.visualContainer} ${kind === 'photo' ? visualStyles.photoFrame : visualStyles.crestFrame}`}>
       <Image
-        src={item.imagePath}
-        alt={item.imageAlt}
+        key={src}
+        src={src}
+        alt={item.imageAlt || ''}
         fill
-        sizes="(max-width: 720px) 84px, 126px"
-        className={item.imageAlt ? styles.cardPhoto : styles.cardCrest}
+        sizes="(max-width: 560px) 72px, (max-width: 720px) 92px, 126px"
+        className={kind === 'photo' ? styles.cardPhoto : styles.cardCrest}
+        onError={handleError}
       />
     </div>
   )
@@ -263,7 +297,7 @@ export default function AgendaCofradeDirectoryV4({
                 </div>
                 <div className={styles.cards}>
                   {group.items.map((item) => (
-                    <article className={`${styles.card} ${item.category === 'concerts' ? concertStyles.concertCard : ''}`} key={item.key} data-category={item.category}>
+                    <article className={`${styles.card} ${visualStyles.visualCard} ${item.category === 'concerts' ? concertStyles.concertCard : ''}`} key={item.key} data-category={item.category}>
                       <time className={styles.dateBlock} dateTime={item.date || undefined}>
                         <strong>{item.dateInfo.day}</strong>
                         <span>{item.dateInfo.month}</span>
