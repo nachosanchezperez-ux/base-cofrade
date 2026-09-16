@@ -10,6 +10,7 @@ const categoryOptions = [
   ['transfers', 'Traslados'],
   ['rosaries', 'Rosarios públicos'],
   ['devotions', 'Besamanos y besapiés'],
+  ['concerts', 'Conciertos'],
 ]
 
 function addDays(value, amount) {
@@ -61,6 +62,28 @@ function EventVisual({ item }) {
         sizes="(max-width: 720px) 84px, 126px"
         className={item.imageAlt ? styles.cardPhoto : styles.cardCrest}
       />
+    </div>
+  )
+}
+
+function EventActions({ item }) {
+  if (item.category === 'concerts') {
+    const visibleBands = (item.bands || []).filter((band) => band.href).slice(0, 3)
+    return (
+      <div className={styles.cardActions}>
+        {visibleBands.map((band, index) => (
+          <Link href={band.href} key={band.id}>{index === 0 ? 'Ver banda' : band.name} {index === 0 ? <span>→</span> : null}</Link>
+        ))}
+        {item.relatedBrotherhoodHref ? <Link href={item.relatedBrotherhoodHref}>Ver Hermandad</Link> : null}
+      </div>
+    )
+  }
+
+  return (
+    <div className={styles.cardActions}>
+      {item.href ? <Link href={item.href}>{item.actionLabel || 'Ver acto'} <span>→</span></Link> : null}
+      {item.organizerHref ? <Link href={item.organizerHref}>Ver Hermandad</Link> : null}
+      {item.categoryHref && item.categoryHref !== item.href && item.categoryHref !== item.organizerHref ? <Link href={item.categoryHref}>Ver calendario</Link> : null}
     </div>
   )
 }
@@ -210,18 +233,15 @@ export default function AgendaCofradeDirectoryV4({
                         {item.isExtraordinary && item.category === 'rosaries' ? <b>Extraordinario</b> : null}
                         {item.isCancelled ? <small>Cancelado</small> : null}
                       </div>
-                      <h4><Link href={item.href}>{item.title}</Link></h4>
+                      <h4>{item.href ? <Link href={item.href}>{item.title}</Link> : item.title}</h4>
                       <p className={styles.organizer}>{item.organizer}</p>
                       <div className={styles.cardFacts}>
                         <span><b>Localidad</b>{item.municipality || 'Por confirmar'}</span>
                         <span><b>Horario</b>{item.timeText || (item.startTime ? `${item.startTime}${item.endTime ? `–${item.endTime}` : ''} h` : 'Por confirmar')}</span>
+                        {item.place ? <span><b>Lugar</b>{item.place}</span> : null}
                       </div>
                       {item.summary ? <p className={styles.routePreview}>{item.summary}</p> : null}
-                      <div className={styles.cardActions}>
-                        <Link href={item.href}>{item.actionLabel || 'Ver acto'} <span>→</span></Link>
-                        {item.organizerHref ? <Link href={item.organizerHref}>Ver Hermandad</Link> : null}
-                        {item.categoryHref && item.categoryHref !== item.href && item.categoryHref !== item.organizerHref ? <Link href={item.categoryHref}>Ver calendario</Link> : null}
-                      </div>
+                      <EventActions item={item} />
                     </div>
                     <EventVisual item={item} />
                   </article>
