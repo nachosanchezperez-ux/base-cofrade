@@ -1,6 +1,10 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 16 de septiembre de 2026 · segundo macrolote provincial por municipios
+**Corte operativo:** 16 de septiembre de 2026 · selección del tercer macrolote provincial
+
+**HEAD de preflight del tercer macrolote:** `9d8e09b5a4a9acedebafaf574c8b938ebbb14cca`
+
+**Producción de preflight:** `READY` · deployment `dpl_DEe9z4X9CK6jWTed3HfVopGxCqNP` · SHA `9d8e09b5a4a9acedebafaf574c8b938ebbb14cca`
 
 **HEAD de partida del segundo macrolote:** `b2ba99b5fee86eff6226c523f1db2953bf8337a6`
 
@@ -16,11 +20,11 @@
 
 **Producción de partida auditada:** `READY` · deployment `dpl_2P3Q9Rtdobb7rVd63jwi7U3f1VmP` · SHA `074acd5dde226c5c5305904205362b06c5ed54e6`
 
-**PR abiertas:** **0** al abrir la auditoría municipal
+**PR abiertas:** **0** al abrir el recálculo municipal
 
 **Régimen:** `FIRST EDITION FREEZE` activo
 
-**Frente editorial ACTIVO:** ninguno
+**Frente editorial ACTIVO:** **Cantillana · inventario y fuentes del tercer macrolote municipal**. El Apply editorial no ha comenzado.
 
 > GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El SHA de partida de este segundo macrolote es `b2ba99b5…`; el commit que contenga este tablero pasa a ser el HEAD canónico cuando `main` y producción vuelvan a coincidir. Los dieciséis contextos HC-016, todos los macrolotes de Semana Santa y Glorias de septiembre y octubre permanecen cerrados.
 
@@ -69,6 +73,7 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | **CERRADO** | Macrolote municipal HC-016 · Dos Hermanas | Lote `c0160027-0000-4000-8000-000000000001`: 467/467, 0 inválidas y 0 fallos; veinte Hermandades, siete Bandas locales, 34 relaciones con titulares, 29 Pasos, 26 acompañamientos vigentes y 17 Salidas; #807 y producción `dpl_D1hbF9U3RBee1K6xngMiCTwGDPT4` sobre `8a0fd32d…` | Preservar Santa Ana y Santo Entierro; no reabrir sin deuda material nueva |
 | **CERRADO** | Macrolote municipal HC-016 · Alcalá de Guadaíra | Lote `c0160028-0000-4000-8000-000000000001`: 309/309, 0 inválidas y 0 fallos; catorce Hermandades únicas, cuatro Bandas locales, 29 relaciones con titulares, 21 Pasos, 4 acompañamientos vigentes y 10 estaciones celebradas en 2026; #808 y producción `dpl_2veeyCeBAz1CAcFQLKbb23LtHvBJ` sobre `eca7be9c…` | Preservar Divina Misericordia; no reabrir sin deuda material nueva |
 | **CERRADO** | Segundo macrolote municipal HC-016 · Pilas | Lote `c0160029-0000-4000-8000-000000000001`: 118/118, 0 inválidas y 0 fallos; cuatro corporaciones, dos Bandas locales, ocho titulares, ocho Pasos y ocho Salidas; sin DDL | Preservar el universo municipal; cinco convocatorias pasadas siguen `announced` hasta disponer de evidencia posterior |
+| **CERRADO** | Navegación, búsqueda, SEO y repertorios · #811–#818 | Jornadas y municipios navegables; buscador ampliado y afinado; caché de directorios y fichas; repertorios de conciertos visibles | No reabrir sin regresión reproducible; los contadores de Home se corrigen de forma transversal sin alterar el modelo |
 | **CERRADO** | Cultos septiembre–diciembre de 2026 | Lote transversal HC-016 `c0162026-0909-4000-8000-000000000001`: 53/53, cuatro Hermandades y 0 DDL | Mantener ediciones futuras desde Fuentes oficiales; recurrencia no equivale a anuncio |
 | **CERRADO** | Carátulas de Discografía · #734 y #791 | Reintento del optimizador a la URL original y fallback accesible; #791 estabilizó las 17 carátulas de La Oliva que aún dependían del servidor antiguo | Mantener URLs estables y el fallback accesible como protección, no como deuda activa |
 | **CERRADO** | HC-019 · Crucetas Musicales | Piloto Pastora de Cantillana 2026: 48 obras, 60 interpretaciones, 0 duplicados deterministas y 0 huérfanos; #740 y remate #741 integrados | Incorporar nuevas crucetas como música efectivamente interpretada; multiplicidad no equivale a consecutividad |
@@ -129,6 +134,14 @@ El TOP 3 recalculado fue **Pilas**, Cantillana y Utrera. Pilas ganó con un univ
 Pilas y Utrera compitieron desde cero; no se reutilizó su posición histórica. El lote de Pilas `c0160029-0000-4000-8000-000000000001` terminó `completed` con 118/118 operaciones, 104 insert/upsert, 14 update, 13 reutilizaciones, 0 inválidas y 0 fallos. El resultado reúne cuatro corporaciones, dos Bandas locales, ocho titulares, ocho Pasos y ocho Salidas. La formación externa San Miguel Arcángel conserva identidad de Puertollano y solo se contextualiza como acompañamiento de la Borriquita.
 
 Las cinco Salidas de 2026 creadas a partir de convocatorias oficiales permanecen `announced`: la fecha pasada no acredita celebración. Tampoco se fabricaron Cultos fechados, Agenda futura, conciertos, igualás, Crucetas, acompañamientos no identificados ni multimedia sin derechos. El postflight de datos conserva 0 slugs publicados duplicados, 0 titulares o Pasos publicados huérfanos y 0 contaminación territorial. La certificación está en [`CERTIFICACION-PILAS-SEGUNDO-MACROLOTE-MUNICIPAL-HC016-2026-09-16.md`](./CERTIFICACION-PILAS-SEGUNDO-MACROLOTE-MUNICIPAL-HC016-2026-09-16.md).
+
+## Tercer macrolote provincial · selección
+
+El recálculo sobre el grafo posterior a Pilas abarca **56 municipios** de la provincia con Hermandad o Banda local, **85 Hermandades publicadas** y **51 Bandas publicadas**. Gerena, Dos Hermanas, Alcalá de Guadaíra y Pilas quedan excluidos como municipios ya certificados. El TOP 3 actual es **Cantillana**, **Coria del Río** y **Utrera**.
+
+Cantillana gana por combinar tres Hermandades publicadas, una Banda local, seis Cultos, cuatro Salidas, una Cruceta y trece enlaces directos de Fuente. La Asunción y la Pastora se preservan; la deuda nuclear está concentrada en la Soledad, cuya ficha carece de titulares, Pasos, Cultos y Salidas estructurados. Coria del Río queda en cola con dos Hermandades y dos nodos de Banda que requieren reconciliación de identidad. Utrera queda en cola por su gran valor territorial, pero el grafo actual solo representa tres de las trece corporaciones del universo documentado y conserva dos nodos Álvarez Quintero que deben desambiguarse antes de un cierre integral.
+
+La auditoría completa, la metodología y el universo preliminar de Cantillana están en [`AUDITORIA-TERCER-MACROLOTE-MUNICIPAL-2026-09-16.md`](./AUDITORIA-TERCER-MACROLOTE-MUNICIPAL-2026-09-16.md). La selección no ejecuta DML, DDL ni cambios de RLS: activa únicamente el inventario y la reunión de fuentes del municipio ganador.
 
 ## Supabase · conciertos
 
@@ -449,10 +462,10 @@ Sagrada Resurrección ganó por el mayor lote útil y verificable: cinco titular
 7. **¿Dónde está el riesgo enciclopédico?** En convertir cada catálogo patrimonial, biografía, discografía, dedicatoria o fotografía ausente en deuda obligatoria.
 8. **¿Qué funcionalidad queda operativa?** La Agenda integra conciertos; Hermandades y Bandas permiten búsqueda municipal; la Home representa el proyecto completo y el Panel conserva la subida múltiple.
 9. **¿HC-016/019/020 permiten seguir creciendo?** Sí. Este cierre es exclusivamente documental y no altera sus contratos ni ejecuta DDL.
-10. **¿Queda algún frente activo?** No; tampoco queda ningún frente editorial abierto.
+10. **¿Queda algún frente activo?** Sí: Cantillana queda seleccionada únicamente para cerrar inventario y fuentes; el Apply editorial todavía no ha comenzado y Coria del Río y Utrera permanecen en cola.
 
 ## Siguiente movimiento autorizado
 
-Tras certificar producción y 0 PR abiertas, la única recomendación es **recalcular Cantillana como posible tercer macrolote municipal**, sin activarla automáticamente. Debe comenzar con un universo cerrado que separe Penitencia, Glorias, Banda y Cruceta; Utrera no permanece artificialmente en cola.
+El único movimiento autorizado es **cerrar el universo y las fuentes de Cantillana antes de preparar el Apply HC-016**. Deben permanecer separadas Penitencia, Glorias, Banda y Cruceta, aunque formen un único macrolote municipal. Coria del Río y Utrera quedan en cola y no se abren en paralelo.
 
 No se activa un frente de Laboratorio, HC-018, Sevilla capital ni otro municipio. Los dieciséis contextos, los macrolotes de Semana Santa, las Glorias de septiembre y octubre, el macrofrente Bandas, Gerena, Dos Hermanas, Alcalá de Guadaíra y Pilas permanecen cerrados. Los 112 registros pasados que continúan legítimamente en `announced` solo pueden cambiar ante nueva evidencia posterior verificable.
