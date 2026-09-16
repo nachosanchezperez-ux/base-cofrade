@@ -43,6 +43,13 @@ test('Home cuenta el mismo conjunto navegable que el directorio público', async
   assert.doesNotMatch(loader, /const types = \['brotherhood', 'image', 'step', 'band'/)
 })
 
+test('Home cuenta el grafo sin quedar limitada a las primeras 1.000 entidades', async () => {
+  const loader = await readFile(new URL('../lib/supabase/home-v2.js', import.meta.url), 'utf8')
+  assert.match(loader, /const GRAPH_TYPES = \['march', 'agent', 'heritage_asset', 'event'\]/)
+  assert.match(loader, /select\('id', \{ count: 'exact', head: true \}\)/)
+  assert.doesNotMatch(loader, /\.select\('entity_type'\)\s*\.in\('entity_type'/)
+})
+
 test('las fichas mínimas reciben noindex sin perder navegación interna', async () => {
   const pages = await Promise.all([
     'app/hermandades/[slug]/page.js',
