@@ -7,7 +7,7 @@ import { getCrewEventDirectory } from '@/lib/supabase/crew-events'
 import styles from './agenda-cofrade.module.css'
 import v4Styles from './agenda-cofrade-v4.module.css'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 300
 
 const currentYear = new Intl.DateTimeFormat('es-ES', { year: 'numeric', timeZone: 'Europe/Madrid' }).format(new Date())
 const title = `Agenda cofrade de Sevilla y provincia ${currentYear}`

@@ -3,7 +3,7 @@ import JsonLd from '@/components/JsonLd';
 import { getHermandadesDirectory } from '@/lib/supabase/brotherhood-directory';
 import { absoluteUrl, breadcrumbJsonLd, pageTitle } from '@/lib/seo';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 900;
 
 export const metadata = {
   title: 'Hermandades y Agrupaciones Parroquiales de Sevilla',

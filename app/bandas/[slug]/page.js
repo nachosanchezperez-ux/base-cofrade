@@ -35,7 +35,7 @@ import {
 } from '@/lib/bands/accompaniments'
 import styles from '../bandas.module.css'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 900
 
 function dateLabel(value) {
   if (!value) return ''

@@ -3,7 +3,7 @@ import RelationalEntityDirectory from '@/components/RelationalEntityDirectory'
 import { getImagesDirectory } from '@/lib/supabase/directories'
 import { breadcrumbJsonLd, collectionPageJsonLd, socialMetadata } from '@/lib/seo'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 900
 
 const title = 'Imágenes cofrades de Sevilla y provincia'
 const description = 'Directorio de imágenes cofrades de Sevilla y su provincia: autoría, datación, hermandad, ubicación y relaciones históricas.'
