@@ -1,5 +1,7 @@
+import { Suspense } from 'react'
 import JsonLd from '@/components/JsonLd'
 import RelationalEntityDirectory from '@/components/RelationalEntityDirectory'
+import RelationalEntityDirectoryFromUrl from '@/components/RelationalEntityDirectoryFromUrl'
 import { getPublicBandsDirectory } from '@/lib/supabase/bands-directory-public'
 import { breadcrumbJsonLd, collectionPageJsonLd, socialMetadata } from '@/lib/seo'
 
@@ -43,13 +45,8 @@ export const metadata = {
   }),
 }
 
-export default async function BandasPage({ searchParams }) {
-  const [bands, filters] = await Promise.all([
-    getPublicBandsDirectory(),
-    searchParams,
-  ])
-  const type = String(filters?.tipo || '')
-  const municipality = String(filters?.localidad || '')
+export default async function BandasPage() {
+  const bands = await getPublicBandsDirectory()
   const items = bands.map((band) => {
     const logoPresentation = logoPresentationFor(band)
 
@@ -91,12 +88,9 @@ export default async function BandasPage({ searchParams }) {
         <p className="page-lead">
           Formaciones conectadas con hermandades, pasos, salidas, responsables y patrimonio musical.
         </p>
-        <RelationalEntityDirectory
-          items={items}
-          kind="band"
-          initialTypeSlug={type}
-          initialMunicipalitySlug={municipality}
-        />
+        <Suspense fallback={<RelationalEntityDirectory items={items} kind="band" />}>
+          <RelationalEntityDirectoryFromUrl items={items} kind="band" />
+        </Suspense>
       </div>
     </section>
   )

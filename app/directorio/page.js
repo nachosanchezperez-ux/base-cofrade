@@ -1,4 +1,6 @@
+import { Suspense } from 'react'
 import EntityDirectoryExplorer from '@/components/EntityDirectoryExplorer'
+import EntityDirectoryExplorerFromUrl from '@/components/EntityDirectoryExplorerFromUrl'
 import JsonLd from '@/components/JsonLd'
 import { getPublicEntityDirectory } from '@/lib/supabase/public-entity-directory'
 import { absoluteUrl, breadcrumbJsonLd, socialMetadata } from '@/lib/seo'
@@ -19,48 +21,8 @@ export const metadata = {
   }),
 }
 
-function slugify(value) {
-  return String(value || '')
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
-}
-
-function resolveOption(values, requested) {
-  if (!requested) return 'todos'
-  return values.find((value) => slugify(value) === slugify(requested)) || 'todos'
-}
-
-export default async function DirectorioPage({ searchParams }) {
-  const [items, params] = await Promise.all([
-    getPublicEntityDirectory(),
-    searchParams,
-  ])
-
-  const requestedKind = String(params?.tipo || 'all')
-  const kind = ['all', 'brotherhood', 'image', 'step', 'band'].includes(requestedKind)
-    ? requestedKind
-    : 'all'
-  const scopedItems = kind === 'all' ? items : items.filter((item) => item.kind === kind)
-  const municipalities = [...new Set(scopedItems.map((item) => item.municipality).filter(Boolean))]
-  const subtypeValues = [...new Set(scopedItems.flatMap((item) => item.subtypeValues || []).filter(Boolean))]
-  const holyWeekDays = [...new Set(scopedItems.map((item) => item.holyWeekDay).filter(Boolean))]
-  const gloryMonths = [...new Set(scopedItems.map((item) => item.gloryMonth).filter(Boolean))]
-
-  const initialState = {
-    query: String(params?.q || ''),
-    kind,
-    territory: ['todos', 'sevilla-capital', 'provincia'].includes(String(params?.territorio || ''))
-      ? String(params.territorio)
-      : 'todos',
-    municipality: resolveOption(municipalities, params?.localidad),
-    subtype: kind === 'all' ? 'todos' : resolveOption(subtypeValues, params?.subtipo),
-    holyWeekDay: kind === 'all' ? 'todos' : resolveOption(holyWeekDays, params?.dia),
-    gloryMonth: kind === 'all' ? 'todos' : resolveOption(gloryMonths, params?.mes),
-    limit: String(params?.limite || ''),
-  }
+export default async function DirectorioPage() {
+  const items = await getPublicEntityDirectory()
 
   const counts = items.reduce((result, item) => {
     result[item.kind] = (result[item.kind] || 0) + 1
@@ -101,7 +63,9 @@ export default async function DirectorioPage({ searchParams }) {
         <p className="page-lead">
           Hermandades, Imágenes, Pasos y Bandas tienen directorio público. Marchas y Autores se descubren mediante la búsqueda, Tira del hilo y las relaciones documentadas en cada ficha.
         </p>
-        <EntityDirectoryExplorer items={items} initialState={initialState} />
+        <Suspense fallback={<EntityDirectoryExplorer items={items} />}>
+          <EntityDirectoryExplorerFromUrl items={items} />
+        </Suspense>
       </div>
     </section>
   )

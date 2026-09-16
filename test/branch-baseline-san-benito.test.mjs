@@ -15,6 +15,7 @@ const brotherhoodHabitGlovesName = '20260915215500_add_brotherhood_habit_gloves.
 const concertEventCategoryName = '20260916062208_allow_concert_event_category.sql'
 const concertEventBandsName = '20260916062216_create_concert_event_bands.sql'
 const concertEventBandsSecurityName = '20260916062223_secure_concert_event_bands.sql'
+const sourceLinksSourceIndexName = '20260916215528_add_source_links_source_id_index.sql'
 const baseline = readFileSync(new URL(baselineName, migrationsDirectory), 'utf8')
 const membershipStats = readFileSync(new URL(membershipStatsName, migrationsDirectory), 'utf8')
 const seed = readFileSync(new URL('../supabase/seed.sql', import.meta.url), 'utf8')
@@ -33,7 +34,15 @@ test('las ramas nuevas ejecutan únicamente el baseline y las evoluciones de esq
     concertEventCategoryName,
     concertEventBandsName,
     concertEventBandsSecurityName,
+    sourceLinksSourceIndexName,
   ])
+})
+
+test('las consultas inversas de Fuentes disponen de un índice reproducible', () => {
+  const migration = readFileSync(new URL(sourceLinksSourceIndexName, migrationsDirectory), 'utf8')
+
+  assert.match(migration, /create index if not exists source_links_source_id_idx/i)
+  assert.match(migration, /on public\.source_links using btree \(source_id\)/i)
 })
 
 test('el baseline reproduce el esquema canónico y conserva las barreras RLS', () => {
