@@ -88,3 +88,33 @@ test('elimina enlaces peligrosos de una sesión manipulada', () => {
   assert.deepEqual(response.links, [])
   assert.equal(response.references[0].url, '')
 })
+
+test('conserva las superficies públicas de contenido documentado', () => {
+  const restored = sanitizeTiraSession({
+    messages: [{
+      role: 'assistant',
+      response: {
+        items: [
+          { label: 'Marcha', href: '/marchas/refugiame' },
+          { label: 'Cruceta', href: '/crucetas-musicales/san-gonzalo-lunes-santo-2026' },
+          { label: 'Gloria', href: '/procesiones-de-gloria/pastora-de-cantillana-2026' },
+          { label: 'Extraordinaria', href: '/extraordinarias/santa-ana-2026' },
+          { label: 'Cultos', href: '/hermandades/el-baratillo#cultos' },
+          { label: 'Agenda', href: '/agenda-cofrade?municipio=sevilla' },
+        ],
+      },
+    }],
+  })
+
+  assert.deepEqual(
+    restored.messages[0].response.items.map((item) => item.href),
+    [
+      '/marchas/refugiame',
+      '/crucetas-musicales/san-gonzalo-lunes-santo-2026',
+      '/procesiones-de-gloria/pastora-de-cantillana-2026',
+      '/extraordinarias/santa-ana-2026',
+      '/hermandades/el-baratillo#cultos',
+      '/agenda-cofrade?municipio=sevilla',
+    ],
+  )
+})
