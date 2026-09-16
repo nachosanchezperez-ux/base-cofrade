@@ -1,9 +1,10 @@
 .section {
-  padding: 28px 0 32px;
+  padding: 28px 0 34px;
   border-top: 1px solid #e7edf3;
   border-bottom: 1px solid #e1e8ef;
   background:
-    linear-gradient(110deg, rgba(18, 58, 103, .045), transparent 42%),
+    radial-gradient(circle at 8% 12%, rgba(183, 31, 55, .045), transparent 23%),
+    linear-gradient(115deg, rgba(18, 58, 103, .045), transparent 44%),
     #f7f9fb;
 }
 
@@ -14,7 +15,7 @@
 }
 
 .eyebrow,
-.areaEyebrow {
+.cardEyebrow {
   color: #b71f37;
   font-size: 10px;
   font-weight: 800;
@@ -33,136 +34,290 @@
 
 .header p {
   margin: 0;
-  max-width: 690px;
+  max-width: 670px;
   color: #617182;
   font-size: 14px;
   line-height: 1.58;
 }
 
-.grid {
+.map,
+.supportingAreas,
+.secondaryGrid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
 }
 
-.card {
+.agendaCard,
+.encyclopediaCard,
+.secondaryCard {
+  position: relative;
   display: flex;
   min-width: 0;
-  min-height: 188px;
+  overflow: hidden;
   flex-direction: column;
-  padding: 14px;
-  border: 1px solid #dce5ed;
-  border-radius: 17px;
-  color: inherit;
-  background: rgba(255, 255, 255, .92);
-  box-shadow: 0 8px 22px rgba(15, 39, 66, .035);
+  border-radius: 19px;
   transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
 }
 
-.card:hover {
+.agendaCard:hover,
+.encyclopediaCard:hover,
+.secondaryCard:hover {
   transform: translateY(-2px);
-  border-color: #bfcedb;
-  box-shadow: 0 14px 30px rgba(15, 39, 66, .075);
 }
 
-.cardTopline {
-  display: flex;
-  min-width: 0;
-  align-items: center;
-  gap: 7px;
-}
-
-.sequence {
-  display: grid;
-  width: 26px;
-  height: 26px;
-  flex: 0 0 auto;
-  place-items: center;
-  border-radius: 999px;
+.agendaCard {
+  min-height: 216px;
+  padding: 20px;
   color: #fff;
-  background: #123a67;
-  font-size: 9px;
+  background:
+    radial-gradient(circle at 86% 18%, rgba(97, 163, 221, .26), transparent 27%),
+    linear-gradient(145deg, #0d223a 0%, #123f6d 100%);
+  box-shadow: 0 18px 42px rgba(15, 39, 66, .14);
+}
+
+.agendaCard::after {
+  position: absolute;
+  right: -82px;
+  bottom: -142px;
+  width: 310px;
+  height: 310px;
+  border: 1px solid rgba(255, 255, 255, .08);
+  border-radius: 50%;
+  box-shadow: 0 0 0 45px rgba(255, 255, 255, .018);
+  content: "";
+}
+
+.agendaCard > * {
+  position: relative;
+  z-index: 1;
+}
+
+.agendaCard .cardEyebrow {
+  color: #f3a4b1;
+}
+
+.agendaBody {
+  display: flex;
+  max-width: 570px;
+  flex-direction: column;
+  margin-top: 24px;
+}
+
+.agendaBody strong {
+  font-size: 30px;
   font-weight: 800;
   line-height: 1;
+  letter-spacing: -.04em;
 }
 
-.areaEyebrow {
-  overflow: hidden;
-  color: #7a8794;
+.agendaBody > span {
+  margin-top: 8px;
+  color: rgba(255, 255, 255, .72);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.48;
+}
+
+.agendaTypes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 17px;
+}
+
+.agendaTypes i,
+.entityTrail i {
+  font-style: normal;
+}
+
+.agendaTypes i {
+  padding: 5px 8px;
+  border: 1px solid rgba(255, 255, 255, .13);
+  border-radius: 999px;
+  color: rgba(255, 255, 255, .78);
+  background: rgba(255, 255, 255, .055);
   font-size: 9px;
-  line-height: 1.25;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  font-weight: 750;
 }
 
-.cardBody {
+.agendaCta,
+.secondaryCta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 18px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.agendaCta b,
+.encyclopediaBody > b,
+.secondaryCta b {
+  transition: transform .18s ease;
+}
+
+.agendaCard:hover .agendaCta b,
+.encyclopediaCard:hover .encyclopediaBody > b,
+.secondaryCard:hover .secondaryCta b {
+  transform: translateX(3px);
+}
+
+.encyclopediaCard,
+.secondaryCard {
+  border: 1px solid #dce5ed;
+  color: inherit;
+  background: rgba(255, 255, 255, .94);
+  box-shadow: 0 8px 24px rgba(15, 39, 66, .035);
+}
+
+.encyclopediaCard:hover,
+.secondaryCard:hover {
+  border-color: #c5d3df;
+  box-shadow: 0 13px 30px rgba(15, 39, 66, .075);
+}
+
+.encyclopediaCard {
+  min-height: 154px;
+  padding: 17px;
+}
+
+.encyclopediaBody {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 15px;
+  margin-top: 12px;
+}
+
+.encyclopediaBody > span {
   display: flex;
   min-width: 0;
   flex-direction: column;
-  padding-top: 15px;
 }
 
-.cardBody strong {
+.encyclopediaBody strong {
   color: #0f2742;
-  font-size: 19px;
+  font-size: 23px;
+  font-weight: 800;
+  line-height: 1.06;
+  letter-spacing: -.035em;
+}
+
+.encyclopediaBody small {
+  margin-top: 5px;
+  color: #667687;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.encyclopediaBody > b {
+  display: grid;
+  width: 31px;
+  height: 31px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  background: #123a67;
+  font-size: 15px;
+}
+
+.entityTrail {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+  margin-top: auto;
+  padding-top: 13px;
+  color: #647789;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .025em;
+}
+
+.entityTrail b {
+  color: #b71f37;
+}
+
+.secondaryGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.secondaryCard {
+  min-height: 158px;
+  padding: 14px;
+}
+
+.secondaryCard[data-area="musica"] {
+  background:
+    linear-gradient(145deg, rgba(183, 31, 55, .045), transparent 64%),
+    #fff;
+}
+
+.secondaryCard[data-area="costaleros"] {
+  background:
+    linear-gradient(145deg, rgba(18, 58, 103, .055), transparent 64%),
+    #fff;
+}
+
+.secondaryBody {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  margin-top: 12px;
+}
+
+.secondaryBody strong {
+  color: #0f2742;
+  font-size: 18px;
   font-weight: 800;
   line-height: 1.08;
   letter-spacing: -.025em;
   overflow-wrap: anywhere;
 }
 
-.cardBody > span {
+.secondaryBody > span {
   display: -webkit-box;
-  margin-top: 7px;
+  margin-top: 6px;
   overflow: hidden;
-  color: #667687;
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 1.42;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4;
-}
-
-.cta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 7px;
-  margin-top: auto;
-  padding-top: 15px;
-  color: #123a67;
+  color: #6a7988;
   font-size: 11px;
-  font-weight: 800;
-  line-height: 1.25;
+  font-weight: 600;
+  line-height: 1.38;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
 }
 
-.cta b {
+.secondaryCta {
+  color: #123a67;
+  font-size: 10px;
+}
+
+.secondaryCta b {
   color: #b71f37;
-  font-size: 15px;
-  transition: transform .18s ease;
-}
-
-.card:hover .cta b {
-  transform: translateX(2px);
+  font-size: 14px;
 }
 
 @media (max-width: 350px) {
-  .grid {
+  .secondaryGrid {
     grid-template-columns: 1fr;
   }
 
-  .card {
-    min-height: 158px;
+  .secondaryCard {
+    min-height: 142px;
   }
 }
 
 @media (min-width: 620px) {
   .section {
-    padding: 34px 0 38px;
+    padding: 34px 0 40px;
   }
 
   .header {
-    grid-template-columns: minmax(0, .9fr) minmax(360px, 1.1fr);
+    grid-template-columns: minmax(0, 1fr) minmax(340px, .9fr);
     align-items: end;
     gap: 34px;
     margin-bottom: 22px;
@@ -172,45 +327,99 @@
     font-size: 40px;
   }
 
-  .card {
-    min-height: 176px;
-    padding: 17px;
+  .map {
+    grid-template-columns: minmax(0, 1.03fr) minmax(0, .97fr);
+    gap: 10px;
   }
 
-  .cardBody strong {
-    font-size: 22px;
+  .supportingAreas,
+  .secondaryGrid {
+    gap: 10px;
   }
 
-  .cardBody > span {
-    font-size: 13px;
+  .agendaCard {
+    min-height: 330px;
+    padding: 24px;
   }
 
-  .cta {
-    font-size: 12px;
+  .agendaBody {
+    margin-top: 34px;
+  }
+
+  .agendaBody strong {
+    font-size: 36px;
+  }
+
+  .agendaBody > span {
+    font-size: 14px;
+  }
+
+  .encyclopediaCard {
+    min-height: 161px;
+    padding: 18px;
+  }
+
+  .secondaryCard {
+    min-height: 159px;
+    padding: 15px;
   }
 }
 
 @media (min-width: 1040px) {
-  .grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 11px;
+  .map {
+    grid-template-columns: minmax(0, 1.12fr) minmax(0, .88fr);
+    gap: 12px;
   }
 
-  .card {
-    min-height: 198px;
-    padding: 19px;
+  .supportingAreas,
+  .secondaryGrid {
+    gap: 12px;
   }
 
-  .cardBody {
-    padding-top: 19px;
+  .agendaCard {
+    min-height: 354px;
+    padding: 28px;
   }
 
-  .cardBody strong {
-    font-size: 24px;
+  .agendaBody {
+    margin-top: 40px;
   }
 
-  .cardBody > span {
-    font-size: 13px;
-    line-height: 1.5;
+  .agendaBody strong {
+    font-size: 42px;
+  }
+
+  .agendaTypes i {
+    padding: 6px 9px;
+    font-size: 10px;
+  }
+
+  .encyclopediaCard {
+    min-height: 170px;
+    padding: 20px;
+  }
+
+  .encyclopediaBody strong {
+    font-size: 26px;
+  }
+
+  .secondaryCard {
+    min-height: 172px;
+    padding: 17px;
+  }
+
+  .secondaryBody strong {
+    font-size: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .agendaCard,
+  .encyclopediaCard,
+  .secondaryCard,
+  .agendaCta b,
+  .encyclopediaBody > b,
+  .secondaryCta b {
+    transition: none;
   }
 }
