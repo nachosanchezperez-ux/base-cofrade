@@ -6,6 +6,8 @@
 
 **HEAD reconciliado antes de integrar Dos Hermanas:** `4588879d38e02bf00ba4f98ab22595438012fe02`
 
+**HEAD reconciliado antes de integrar Alcalá de Guadaíra:** `8a0fd32d397e8a1fb3fd9f8cc4a84abc50328762`
+
 **Producción de partida auditada:** `READY` · deployment `dpl_2P3Q9Rtdobb7rVd63jwi7U3f1VmP` · SHA `074acd5dde226c5c5305904205362b06c5ed54e6`
 
 **PR abiertas:** **0** al abrir la auditoría municipal
@@ -58,7 +60,8 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | **CERRADO** | Jerarquía editorial de Home · #802 | Agenda como entrada prioritaria, Enciclopedia como núcleo documental y Música e Igualás como accesos especializados | No cambió arquitectura ni rutas; no reabrir sin una regresión reproducible |
 | **CERRADO** | Visibilidad y navegación de Agenda · #803–#805 | Categorías accesibles desde Home, selección de sección coherente y visuales con prioridad foto → escudo/logo → fallback, también en móvil | Entraron durante la auditoría municipal y quedaron absorbidas antes de la PR del macrolote |
 | **CERRADO** | Primer macrolote municipal HC-016 · Gerena | Lote `c0160026-0000-4000-8000-000000000001`: 83/83, 0 inválidas y 0 fallos; tres Hermandades, una Banda local, siete titulares, seis Pasos y relaciones municipales canónicas | No abrir el segundo municipio; Agenda, Cultos fechados, igualás, conciertos y Crucetas permanecen como huecos legítimos sin convocatoria verificable |
-| **PENDIENTE DE INTEGRACIÓN** | Macrolote municipal HC-016 · Dos Hermanas | Lote `c0160027-0000-4000-8000-000000000001`: 467/467, 0 inválidas y 0 fallos; veinte Hermandades, siete Bandas locales, 34 relaciones con titulares, 29 Pasos, 26 acompañamientos vigentes y 17 Salidas | Preservar Santa Ana y Santo Entierro; no activar Alcalá de Guadaíra hasta que la PR, producción y 0 PR certifiquen este cierre |
+| **CERRADO** | Macrolote municipal HC-016 · Dos Hermanas | Lote `c0160027-0000-4000-8000-000000000001`: 467/467, 0 inválidas y 0 fallos; veinte Hermandades, siete Bandas locales, 34 relaciones con titulares, 29 Pasos, 26 acompañamientos vigentes y 17 Salidas; #807 y producción `dpl_D1hbF9U3RBee1K6xngMiCTwGDPT4` sobre `8a0fd32d…` | Preservar Santa Ana y Santo Entierro; no reabrir sin deuda material nueva |
+| **PENDIENTE DE INTEGRACIÓN** | Macrolote municipal HC-016 · Alcalá de Guadaíra | Lote `c0160028-0000-4000-8000-000000000001`: 309/309, 0 inválidas y 0 fallos; catorce Hermandades únicas, cuatro Bandas locales, 29 relaciones con titulares, 21 Pasos, 4 acompañamientos vigentes y 10 estaciones celebradas en 2026 | Preservar Divina Misericordia; cerrar PR, producción y 0 PR antes de declarar terminado el programa municipal |
 | **CERRADO** | Cultos septiembre–diciembre de 2026 | Lote transversal HC-016 `c0162026-0909-4000-8000-000000000001`: 53/53, cuatro Hermandades y 0 DDL | Mantener ediciones futuras desde Fuentes oficiales; recurrencia no equivale a anuncio |
 | **CERRADO** | Carátulas de Discografía · #734 y #791 | Reintento del optimizador a la URL original y fallback accesible; #791 estabilizó las 17 carátulas de La Oliva que aún dependían del servidor antiguo | Mantener URLs estables y el fallback accesible como protección, no como deuda activa |
 | **CERRADO** | HC-019 · Crucetas Musicales | Piloto Pastora de Cantillana 2026: 48 obras, 60 interpretaciones, 0 duplicados deterministas y 0 huérfanos; #740 y remate #741 integrados | Incorporar nuevas crucetas como música efectivamente interpretada; multiplicidad no equivale a consecutividad |
