@@ -43,6 +43,11 @@ export default async function AgendaCofradePage({ searchParams }) {
   const initialTerritory = ['all', 'capital', 'province'].includes(requestedTerritory)
     ? requestedTerritory
     : 'all'
+  const agendaNavSection = ['rosaries', 'devotions', 'concerts'].includes(initialCategory)
+    ? initialCategory
+    : 'agenda'
+  const navClass = (section) => agendaNavSection === section ? v4Styles.navSelected : undefined
+  const navCurrent = (section) => agendaNavSection === section ? 'page' : undefined
 
   return (
     <div className={styles.page}>
@@ -58,13 +63,13 @@ export default async function AgendaCofradePage({ searchParams }) {
 
       <nav className={`${styles.agendaNav} ${v4Styles.agendaNavV4}`} aria-label="Secciones de la Agenda Cofrade">
         <div className="shell">
-          <Link className={styles.current} href="/agenda-cofrade#agenda" aria-current="page">Agenda principal</Link>
-          <Link href="/extraordinarias">Extraordinarias</Link>
-          <Link href="/procesiones-de-gloria">Glorias</Link>
-          <Link href="/agenda-cofrade?categoria=rosaries#agenda">Rosarios públicos</Link>
-          <Link href="/agenda-cofrade?categoria=devotions#agenda">Besamanos</Link>
-          <Link href="/agenda-cofrade?categoria=concerts#agenda">Conciertos</Link>
-          <Link href="/igualas-y-ensayos">Igualás y ensayos</Link>
+          <Link data-section="agenda" className={navClass('agenda')} href="/agenda-cofrade#agenda" aria-current={navCurrent('agenda')}>Agenda principal</Link>
+          <Link data-section="extraordinary" href="/extraordinarias">Extraordinarias</Link>
+          <Link data-section="glories" href="/procesiones-de-gloria">Glorias</Link>
+          <Link data-section="rosaries" className={navClass('rosaries')} href="/agenda-cofrade?categoria=rosaries#agenda" aria-current={navCurrent('rosaries')}>Rosarios públicos</Link>
+          <Link data-section="devotions" className={navClass('devotions')} href="/agenda-cofrade?categoria=devotions#agenda" aria-current={navCurrent('devotions')}>Besamanos</Link>
+          <Link data-section="concerts" className={navClass('concerts')} href="/agenda-cofrade?categoria=concerts#agenda" aria-current={navCurrent('concerts')}>Conciertos</Link>
+          <Link data-section="crew" href="/igualas-y-ensayos">Igualás y ensayos</Link>
         </div>
       </nav>
 
