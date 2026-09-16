@@ -3,7 +3,7 @@ import periodStyles from './band-period-emphasis.module.css'
 import headerStyles from './band-accompaniment-header-fix.module.css'
 import paletteStyles from './band-palette-cleanup.module.css'
 
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-static'
 
 export default function BandDetailLayout({ children }) {
   return (
