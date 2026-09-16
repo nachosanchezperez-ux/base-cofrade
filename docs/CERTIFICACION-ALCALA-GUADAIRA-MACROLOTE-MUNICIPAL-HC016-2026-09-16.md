@@ -70,5 +70,10 @@ El cierre demuestra que una localidad con corporaciones de naturaleza mixta debe
 
 ## Cierre técnico
 
-La PR, el SHA final, el deployment exacto y los errores posteriores se completan durante el postflight. El programa Dos Hermanas + Alcalá de Guadaíra termina únicamente cuando `main` y producción coincidan y GitHub vuelva a 0 PR abiertas.
+- PR funcional: [#808](https://github.com/nachosanchezperez-ux/base-cofrade/pull/808), fusionada con todos los controles correctos.
+- HEAD canónico: `eca7be9cc5356e5636aed9b9814b9c997ca4b9a8`.
+- Producción: `READY`, deployment `dpl_2veeyCeBAz1CAcFQLKbb23LtHvBJ`, sobre el mismo SHA.
+- Errores runtime posteriores: 0.
+- PR abiertas tras el cierre funcional: 0.
 
+El programa Dos Hermanas + Alcalá de Guadaíra queda cerrado como dos ecosistemas municipales consecutivos.
