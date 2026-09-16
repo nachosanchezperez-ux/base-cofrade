@@ -11,7 +11,7 @@ export const dynamic = 'force-dynamic'
 
 const currentYear = new Intl.DateTimeFormat('es-ES', { year: 'numeric', timeZone: 'Europe/Madrid' }).format(new Date())
 const title = `Agenda cofrade de Sevilla y provincia ${currentYear}`
-const description = 'Consulta procesiones, traslados, rosarios públicos, besamanos y besapiés de hoy y este fin de semana en Sevilla y su provincia.'
+const description = 'Consulta procesiones, traslados, rosarios públicos, besamanos, besapiés y conciertos de bandas de hoy y este fin de semana en Sevilla y su provincia.'
 
 export const metadata = {
   title,
@@ -32,7 +32,7 @@ export default async function AgendaCofradePage({ searchParams }) {
   const upcomingCrewCount = crewEvents.filter((item) => item.isUpcoming && !item.isCancelled).length
 
   const requestedCategory = String(params?.categoria || 'all')
-  const initialCategory = ['all', 'processions', 'transfers', 'rosaries', 'devotions'].includes(requestedCategory)
+  const initialCategory = ['all', 'processions', 'transfers', 'rosaries', 'devotions', 'concerts'].includes(requestedCategory)
     ? requestedCategory
     : 'all'
   const requestedPeriod = String(params?.periodo || 'upcoming')
@@ -63,6 +63,7 @@ export default async function AgendaCofradePage({ searchParams }) {
           <Link href="/procesiones-de-gloria">Glorias</Link>
           <Link href="/agenda-cofrade?categoria=rosaries#agenda">Rosarios públicos</Link>
           <Link href="/agenda-cofrade?categoria=devotions#agenda">Besamanos</Link>
+          <Link href="/agenda-cofrade?categoria=concerts#agenda">Conciertos</Link>
           <Link href="/igualas-y-ensayos">Igualás y ensayos</Link>
         </div>
       </nav>
@@ -76,8 +77,8 @@ export default async function AgendaCofradePage({ searchParams }) {
           initialTerritory={initialTerritory}
         />
         <section className={styles.relatedCalendar} aria-labelledby="calendar-cuadrillas"><div><span>Calendario especializado</span><h2 id="calendar-cuadrillas">Igualás y ensayos</h2><p>Las convocatorias de cuadrillas quedan en un espacio propio, conectado con sus Hermandades y separado de la agenda de interés general.</p></div><Link href="/igualas-y-ensayos">Ver {upcomingCrewCount} próximas convocatorias <span>→</span></Link></section>
-        <nav className={styles.relatedLinks} aria-label="Explorar contenidos relacionados"><span>Seguir explorando</span><Link href="/hermandades">Hermandades</Link><Link href="/procesiones-de-gloria">Calendario de Glorias</Link><Link href="/extraordinarias">Calendario de extraordinarias</Link></nav>
-        <section className={styles.seoCopy} aria-labelledby="agenda-sevilla"><span>Agenda actualizada</span><h2 id="agenda-sevilla">Qué ver hoy y este fin de semana en la Sevilla cofrade</h2><p>{seoDescription('Hilo Cofrade reúne los actos públicos de Sevilla capital y sus municipios en una cronología común. Procesiones, traslados, rosarios, besamanos y besapiés permanecen conectados con sus calendarios y con la ficha de cada Hermandad.')}</p></section>
+        <nav className={styles.relatedLinks} aria-label="Explorar contenidos relacionados"><span>Seguir explorando</span><Link href="/hermandades">Hermandades</Link><Link href="/bandas">Bandas</Link><Link href="/procesiones-de-gloria">Calendario de Glorias</Link><Link href="/extraordinarias">Calendario de extraordinarias</Link></nav>
+        <section className={styles.seoCopy} aria-labelledby="agenda-sevilla"><span>Agenda actualizada</span><h2 id="agenda-sevilla">Qué ver hoy y este fin de semana en la Sevilla cofrade</h2><p>{seoDescription('Hilo Cofrade reúne los actos públicos de Sevilla capital y sus municipios en una cronología común. Procesiones, traslados, rosarios, besamanos, besapiés y conciertos permanecen conectados con sus calendarios, Bandas y Hermandades.')}</p></section>
       </div>
     </div>
   )

@@ -4,12 +4,14 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import styles from './AgendaCofradeDirectoryV4.module.css'
+import concertStyles from './AgendaCofradeDirectoryV4Concerts.module.css'
 
 const categoryOptions = [
   ['processions', 'Procesiones'],
   ['transfers', 'Traslados'],
   ['rosaries', 'Rosarios públicos'],
   ['devotions', 'Besamanos y besapiés'],
+  ['concerts', 'Conciertos'],
 ]
 
 function addDays(value, amount) {
@@ -65,6 +67,28 @@ function EventVisual({ item }) {
   )
 }
 
+function EventActions({ item }) {
+  if (item.category === 'concerts') {
+    const visibleBands = (item.bands || []).filter((band) => band.href).slice(0, 3)
+    return (
+      <div className={styles.cardActions}>
+        {visibleBands.map((band, index) => (
+          <Link href={band.href} key={band.id}>{index === 0 ? 'Ver banda' : band.name} {index === 0 ? <span>→</span> : null}</Link>
+        ))}
+        {item.relatedBrotherhoodHref ? <Link href={item.relatedBrotherhoodHref}>Ver Hermandad</Link> : null}
+      </div>
+    )
+  }
+
+  return (
+    <div className={styles.cardActions}>
+      {item.href ? <Link href={item.href}>{item.actionLabel || 'Ver acto'} <span>→</span></Link> : null}
+      {item.organizerHref ? <Link href={item.organizerHref}>Ver Hermandad</Link> : null}
+      {item.categoryHref && item.categoryHref !== item.href && item.categoryHref !== item.organizerHref ? <Link href={item.categoryHref}>Ver calendario</Link> : null}
+    </div>
+  )
+}
+
 export default function AgendaCofradeDirectoryV4({
   items,
   today,
@@ -112,12 +136,12 @@ export default function AgendaCofradeDirectoryV4({
         <p>Elige cuándo, qué tipo de acto y dónde. Todo queda visible sin abrir menús intermedios.</p>
       </div>
 
-      <div className={styles.quickTypes} aria-label="Elegir tipo de acto">
+      <div className={`${styles.quickTypes} ${concertStyles.quickTypesFive}`} aria-label="Elegir tipo de acto">
         {categoryOptions.map(([value, label]) => (
           <button
             type="button"
             data-category={value}
-            className={category === value ? styles.quickTypeActive : ''}
+            className={category === value ? `${styles.quickTypeActive} ${value === 'concerts' ? concertStyles.quickTypeConcertActive : ''}` : ''}
             aria-pressed={category === value}
             onClick={() => setCategory(category === value ? 'all' : value)}
             key={value}
@@ -198,7 +222,7 @@ export default function AgendaCofradeDirectoryV4({
               </div>
               <div className={styles.cards}>
                 {group.items.map((item) => (
-                  <article className={styles.card} key={item.key} data-category={item.category}>
+                  <article className={`${styles.card} ${item.category === 'concerts' ? concertStyles.concertCard : ''}`} key={item.key} data-category={item.category}>
                     <time className={styles.dateBlock} dateTime={item.date || undefined}>
                       <strong>{item.dateInfo.day}</strong>
                       <span>{item.dateInfo.month}</span>
@@ -210,18 +234,15 @@ export default function AgendaCofradeDirectoryV4({
                         {item.isExtraordinary && item.category === 'rosaries' ? <b>Extraordinario</b> : null}
                         {item.isCancelled ? <small>Cancelado</small> : null}
                       </div>
-                      <h4><Link href={item.href}>{item.title}</Link></h4>
+                      <h4>{item.category === 'concerts' ? item.title : item.href ? <Link href={item.href}>{item.title}</Link> : item.title}</h4>
                       <p className={styles.organizer}>{item.organizer}</p>
                       <div className={styles.cardFacts}>
                         <span><b>Localidad</b>{item.municipality || 'Por confirmar'}</span>
                         <span><b>Horario</b>{item.timeText || (item.startTime ? `${item.startTime}${item.endTime ? `–${item.endTime}` : ''} h` : 'Por confirmar')}</span>
+                        {item.place ? <span><b>Lugar</b>{item.place}</span> : null}
                       </div>
                       {item.summary ? <p className={styles.routePreview}>{item.summary}</p> : null}
-                      <div className={styles.cardActions}>
-                        <Link href={item.href}>{item.actionLabel || 'Ver acto'} <span>→</span></Link>
-                        {item.organizerHref ? <Link href={item.organizerHref}>Ver Hermandad</Link> : null}
-                        {item.categoryHref && item.categoryHref !== item.href && item.categoryHref !== item.organizerHref ? <Link href={item.categoryHref}>Ver calendario</Link> : null}
-                      </div>
+                      <EventActions item={item} />
                     </div>
                     <EventVisual item={item} />
                   </article>
