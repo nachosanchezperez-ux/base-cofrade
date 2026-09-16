@@ -4,6 +4,7 @@ import assert from 'node:assert/strict'
 import {
   freeFactIntent,
   freeSetIntent,
+  matchMunicipalityName,
 } from '../lib/tira-free-facts.js'
 
 test('reconoce opciones de escucha de una marcha', () => {
@@ -30,6 +31,23 @@ test('reconoce hechos básicos de hermandades y bandas', () => {
     freeFactIntent('¿De qué localidad es la Banda del Sol?'),
     { kind: 'location', entityTypes: ['band', 'brotherhood'] }
   )
+})
+
+test('reconoce listados de Hermandades por municipio sin secuestrar relaciones', () => {
+  const expected = { kind: 'brotherhoods_by_municipality', entityTypes: ['brotherhood'] }
+  assert.deepEqual(freeFactIntent('¿Cuáles son las hermandades de La Rinconada?'), expected)
+  assert.deepEqual(freeFactIntent('¿Qué cofradías hay en Dos Hermanas?'), expected)
+  assert.deepEqual(freeFactIntent('Listado de hermandades de Alcalá de Guadaíra'), expected)
+  assert.deepEqual(freeFactIntent('Hermandades de Sevilla'), expected)
+  assert.equal(freeFactIntent('¿Qué bandas acompañan a las hermandades de La Rinconada?'), null)
+  assert.equal(freeFactIntent('¿Qué pasos tienen las hermandades de La Rinconada?'), null)
+})
+
+test('resuelve el municipio completo más específico dentro de la pregunta', () => {
+  const municipalities = ['Sevilla', 'La Rinconada', 'Alcalá de Guadaíra', 'Alcalá del Río']
+  assert.equal(matchMunicipalityName('Hermandades de La Rinconada', municipalities), 'La Rinconada')
+  assert.equal(matchMunicipalityName('¿Qué cofradías hay en Alcalá de Guadaíra?', municipalities), 'Alcalá de Guadaíra')
+  assert.equal(matchMunicipalityName('Hermandades de Alcalá', municipalities), '')
 })
 
 test('reconoce datos materiales y técnicos de imágenes y pasos', () => {
