@@ -1,10 +1,10 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 15 de septiembre de 2026 · cierre del macrofrente Bandas tras el recálculo post-Semana Santa
+**Corte operativo:** 16 de septiembre de 2026 · reconciliación canónica posterior a #789–#799
 
-**HEAD de partida auditado:** `d6a399c6025db0c43240b967ba81c6a4903e0377`
+**HEAD de partida auditado:** `445531f985c0e6527ab45d6a69e98b977d3111ce`
 
-**Producción de partida auditada:** `READY` · deployment `dpl_HKp55kMKtgu8JrjsviZShZHhFU9B` · SHA `d6a399c6025db0c43240b967ba81c6a4903e0377`
+**Producción de partida auditada:** `READY` · deployment `dpl_4aswaVTuu46Hn5ViGwY24GiyafLU` · SHA `445531f985c0e6527ab45d6a69e98b977d3111ce`
 
 **PR abiertas:** **0** tras integrar el presente ajuste documental
 
@@ -12,7 +12,7 @@
 
 **Frente editorial ACTIVO:** ninguno
 
-> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El SHA de partida de esta fotografía es `d6a399c6…`; el commit que contenga este tablero pasa a ser el HEAD canónico cuando `main` y producción vuelvan a coincidir. Los dieciséis contextos HC-016, todos los macrolotes de Semana Santa y Glorias de septiembre y octubre permanecen cerrados.
+> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El SHA de partida de esta fotografía es `445531f9…`; el commit que contenga este tablero pasa a ser el HEAD canónico cuando `main` y producción vuelvan a coincidir. Los dieciséis contextos HC-016, todos los macrolotes de Semana Santa y Glorias de septiembre y octubre permanecen cerrados.
 
 ## Tablero operativo único
 
@@ -21,7 +21,7 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | Posición | Frente | Estado real | Regla |
 |---|---|---|---|
 | **CERRADO** | Orden operativo | Autoridad documental y cola única integradas en #712 | No reabrir salvo contradicción verificable |
-| **CERRADO** | [#492 · Supabase Preview Branches](https://github.com/nachosanchezperez-ux/base-cofrade/issues/492) | Cadena reproducible certificada en #730; producción reconciliada con las cuatro migraciones estructurales activas | Todo cambio futuro de esquema debe nacer como migración reproducible y superar una preview sin datos |
+| **CERRADO** | [#492 · Supabase Preview Branches](https://github.com/nachosanchezperez-ux/base-cofrade/issues/492) | Incidencia cerrada; la cadena reproducible incorpora diez migraciones estructurales y las tres de conciertos superan la preview sin datos | Todo cambio futuro de esquema debe nacer como migración reproducible y superar una preview sin datos |
 | **CERRADO** | Higiene de ramas | 817 ramas revisadas; 754 eliminadas por SHA; 63 preservadas; salvaguarda remota verificada | No borrar las 61 ramas con trabajo único sin una revisión futura específica |
 | **CERRADO** | Cuarto lote HC-016 | El Cachorro: 90/90 aplicadas, 0 inválidas, 0 fallos; intento previo inválido cancelado con 0 escrituras | No reabrir para perseguir un 100 % artificial |
 | **CERRADO** | Quinto lote HC-016 | El Carmen: 83/83 aplicadas, 0 inválidas, 0 fallos; 3 titulares, 2 Pasos, 9 Cultos, Salida de 2026 y 4 periodos musicales | No reabrir para completar catálogos exhaustivos o perseguir un 100 % artificial |
@@ -48,8 +48,12 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | **CERRADO** | Auditoría HC-016 · pasados en `announced` | Inventario inicial real 125; 13 estados elevados a `held` con evidencia posterior; 112 preservados; 30/30 operaciones, 0 inválidas y 0 fallos | No convertir convocatorias en hechos por el mero paso del tiempo; revisar de nuevo solo ante nueva evidencia posterior |
 | **CERRADO** | Macrofrente Bandas · trazabilidad pública | Lote `c0160025-0000-4000-8000-000000000001`: 23/23, 0 inválidas y 0 fallos; 18 fichas reciben Fuente directa y el duplicado de Los Gitanos Juvenil queda reconciliado sin borrar IDs | Mantener como deuda legítima municipio, multimedia, discografía o estrenos cuando no exista evidencia o derechos; no perseguir exhaustividad artificial |
 | **CERRADO** | Subida múltiple de imágenes · Panel | La multimedia relacionada de Hermandades admite hasta 10 imágenes por lote, metadatos accesibles por archivo, progreso y recuperación parcial; la portada sigue siendo una selección única | Mantener la subida directa firmada a Storage, 10 MB por imagen y validación editorial de derechos y descripción |
+| **CERRADO** | Producto V4 y multimedia · #790, #793 y #794 | Navegación directa de Hermandades y Agenda, legibilidad V4.1 y fotografía independiente por Salida integradas | No reabrir sin una regresión reproducible |
+| **CERRADO** | Agenda de conciertos · #795 | Conciertos integrados en Agenda y relacionados con Bandas mediante esquema reproducible y RLS | Mantener la relación canónica; no duplicar actos ni Bandas |
+| **CERRADO** | Búsqueda municipal · #796 y #799 | Hermandades y Bandas vinculadas a Hermandades pueden buscarse por municipio | Preservar municipio como filtro transversal y relación canónica |
+| **CERRADO** | Home general · #797 | Portada adaptada a la fotografía completa del proyecto; absorbió la reconciliación que motivó #798 | #798 permanece cerrada sin integrar y sustituida por #797 |
 | **CERRADO** | Cultos septiembre–diciembre de 2026 | Lote transversal HC-016 `c0162026-0909-4000-8000-000000000001`: 53/53, cuatro Hermandades y 0 DDL | Mantener ediciones futuras desde Fuentes oficiales; recurrencia no equivale a anuncio |
-| **CERRADO** | Carátulas de Discografía · #734 | Reintento del optimizador a la URL original y fallback accesible; 21 fichas auditadas, sin imágenes rotas visibles ni desbordamiento | Corregir en origen las cinco URLs históricas inaccesibles de La Oliva; el fallback no cancela esa deuda de datos |
+| **CERRADO** | Carátulas de Discografía · #734 y #791 | Reintento del optimizador a la URL original y fallback accesible; #791 estabilizó las 17 carátulas de La Oliva que aún dependían del servidor antiguo | Mantener URLs estables y el fallback accesible como protección, no como deuda activa |
 | **CERRADO** | HC-019 · Crucetas Musicales | Piloto Pastora de Cantillana 2026: 48 obras, 60 interpretaciones, 0 duplicados deterministas y 0 huérfanos; #740 y remate #741 integrados | Incorporar nuevas crucetas como música efectivamente interpretada; multiplicidad no equivale a consecutividad |
 | **CERRADO** | HC-020 · Agenda Cofrade | Centro único refinado: agenda general para procesiones, traslados, rosarios, besamanos y besapiés; igualás y ensayos como calendario especializado relacionado | Preservar fechas canónicas, relaciones con Hermandades y calendarios de origen; no duplicar actos ni destacar una única cita |
 | **CERRADO** | Navegación e indexación pública | #729 filtra entidades sin ficha y estabiliza el sitemap mediante lecturas por lotes con reintento; producción publica 553 URL | Mantener la frontera pública; no convertir nodos relacionales incompletos en enlaces navegables |
@@ -58,11 +62,41 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 
 ## Verdad de plataforma
 
-- GitHub: el trabajo partió de `d6a399c6025db0c43240b967ba81c6a4903e0377`; las cinco revisiones posteriores a `042ff60…` pertenecen al cierre ya integrado de guantes del hábito, #492 está cerrada y había 0 PR abiertas. El commit final prevalece.
-- Vercel: la producción de partida estaba `READY` mediante `dpl_HKp55kMKtgu8JrjsviZShZHhFU9B`, exactamente sobre `d6a399c6025db0c43240b967ba81c6a4903e0377`.
+- GitHub: el trabajo partió de `445531f985c0e6527ab45d6a69e98b977d3111ce`; no existía ningún merge posterior y había 0 PR abiertas. El commit documental final prevalece.
+- Vercel: la producción de partida estaba `READY` mediante `dpl_4aswaVTuu46Hn5ViGwY24GiyafLU`, exactamente sobre `445531f985c0e6527ab45d6a69e98b977d3111ce`.
 - Supabase: proyecto `Hilocofrade` `ACTIVE_HEALTHY`. El macrofrente Bandas (`c0160025-0000-4000-8000-000000000001`) figura `completed` con 23/23, 0 inválidas y 0 fallos; las 75 Bandas públicas conservan `slug`, resumen, descripción y al menos una Fuente directa.
-- Supabase Preview: #492 continúa cerrada por #730; no existe un bloqueo estructural pendiente ni se ha ejecutado DDL en este recálculo.
-- Git ↔ Supabase: siguen vigentes las cuatro migraciones estructurales reconciliadas en #730 y las dos posteriores de HC-019. Este cierre usa exclusivamente DML gobernado y archiva su receta fuera de la cadena estructural activa; no añade DDL, tablas ni políticas.
+- Supabase Preview: #492 continúa cerrada y la cadena reproducible incluye las tres migraciones de conciertos; no existe un bloqueo estructural pendiente y esta reconciliación documental no ejecuta DDL ni modifica RLS.
+- Git ↔ Supabase: el esquema remoto coincide con la cadena de Git. El historial remoto conserva `20260915215828_add_brotherhood_habit_gloves`, mientras el archivo reproducible equivalente usa `20260915215500`; es una diferencia histórica de versión, no de definición. Las tres migraciones posteriores coinciden exactamente por versión y nombre.
+
+## Reconciliación #789–#799
+
+| PR | Estado canónico | Resultado |
+|---|---|---|
+| [#789](https://github.com/nachosanchezperez-ux/base-cofrade/pull/789) | Fusionada | Subida múltiple de hasta 10 imágenes desde el Panel, con metadatos individuales, progreso y recuperación parcial |
+| [#790](https://github.com/nachosanchezperez-ux/base-cofrade/pull/790) | Fusionada | Navegación directa V4 en Hermandades y Agenda |
+| [#791](https://github.com/nachosanchezperez-ux/base-cofrade/pull/791) | Fusionada | Carátulas históricas de La Oliva estabilizadas; 27/27 recursos publicados quedaron en URLs estables |
+| [#792](https://github.com/nachosanchezperez-ux/base-cofrade/pull/792) | Fusionada | Igualás y ensayos relacionados con sus Hermandades |
+| [#793](https://github.com/nachosanchezperez-ux/base-cofrade/pull/793) | Fusionada | Mejora V4.1 de legibilidad |
+| [#794](https://github.com/nachosanchezperez-ux/base-cofrade/pull/794) | Fusionada | Fotografía independiente para cada Salida |
+| [#795](https://github.com/nachosanchezperez-ux/base-cofrade/pull/795) | Fusionada | Agenda de conciertos de Bandas y relación canónica concierto–Banda |
+| [#796](https://github.com/nachosanchezperez-ux/base-cofrade/pull/796) | Fusionada | Buscador de Hermandades por municipio |
+| [#797](https://github.com/nachosanchezperez-ux/base-cofrade/pull/797) | Fusionada | Home adaptada a la fotografía general del proyecto; incorpora la reconciliación de la cadena de migraciones |
+| [#798](https://github.com/nachosanchezperez-ux/base-cofrade/pull/798) | **Cerrada sin integrar; sustituida por #797** | No forma parte de `main` y no se contabiliza como trabajo fusionado |
+| [#799](https://github.com/nachosanchezperez-ux/base-cofrade/pull/799) | Fusionada | Buscador de Bandas vinculadas a Hermandades por municipio |
+
+## Supabase · conciertos
+
+El historial remoto y la cadena reproducible contienen estas versiones exactas:
+
+- `20260916062208_allow_concert_event_category`;
+- `20260916062216_create_concert_event_bands`;
+- `20260916062223_secure_concert_event_bands`.
+
+`public.concert_event_bands` está disponible, con RLS activa y cinco políticas vigentes: lectura de relaciones publicadas, lectura del Panel, alta y actualización editorial y borrado administrativo. Las restricciones de `public.events` aceptan la categoría `concert` y exigen fecha y tipo musical. El esquema remoto y el repositorio son equivalentes, la preview puede reproducir las diez migraciones activas sobre una base vacía y [#492](https://github.com/nachosanchezperez-ux/base-cofrade/issues/492) continúa cerrada.
+
+## Observación histórica de runtime
+
+Vercel registró un único `statement timeout` de «Hoy 2.0» en el deployment anterior `dpl_Fm3hi1C2v1qLs69uwvkNVDniGvfj`. La respuesta pública fue 200, el error no se ha repetido en `dpl_4aswaVTuu46Hn5ViGwY24GiyafLU` y no constituye un bloqueo. No se abre una corrección técnica sin reproducción en el deployment vigente.
 
 ## Trabajo reciente ya cerrado
 
@@ -113,6 +147,7 @@ No debe mantenerse en la cola lo que ya está integrado y desplegado:
 - macrolote transversal HC-016 de Glorias de septiembre de Sevilla: once corporaciones cubiertas; cinco cierres preservados; Pastora de Triana, Valvanera, Santa Lucía, Sastres, Inmaculado Corazón de Torreblanca y Padre Pío completadas mediante 114/114 operaciones.
 - macrolote transversal HC-016 de Glorias de octubre de Sevilla: quince corporaciones cubiertas sin duplicar las dimensiones letíficas de Hermandades mixtas; seis fichas creadas, cuatro completadas y siete Salidas futuras publicadas mediante 186/186 operaciones.
 - subida múltiple de imágenes en el Panel de Hermandades: hasta 10 archivos por lote, descripción accesible y pie individual, crédito y derechos compartidos, subida directa secuencial con progreso y reanudación desde el primer fallo.
+- #789–#799: subida múltiple, navegación V4, estabilización de carátulas de La Oliva, relaciones de igualás y ensayos, legibilidad V4.1, fotografía por Salida, Agenda de conciertos, búsquedas municipales y nueva Home. #798 quedó cerrada sin integrar porque #797 absorbió su reconciliación.
 - #749–#756: paleta de Humildad y Caridad, Rosario 2026 de la Corona con AMUECI, directorio visual por municipios, desglose de Sevilla capital, paletas de cinco Bandas, memoria extraordinaria de la Corona en 2025, separación de extraordinarias futuras y cierre de Guadalupe. Todo está absorbido por `main`.
 - #757: cruceta interpretada de la Virgen del Castillo de Lebrija en 2026, absorbida durante este cierre concurrente sin invadir el contexto HC-016.
 - #758 y #759: cruceta de la Pastora de Padre Pío y paletas de seis Bandas integradas antes del Apply, sin invadir el contexto HC-016.
@@ -268,13 +303,11 @@ No se transformaron anuncios en hechos celebrados ni se inventaron continuidades
 
 ## QA
 
-- auditoría final de Supabase: 2 titulares, 2 Pasos, 2 hábitos, 6 piezas, 9 Cultos y 2 Salidas publicados; relación institucional de 2014 publicada y con Fuente;
-- 38 `source_links` del lote, 0 huérfanos, 0 duplicados activos y 0 relaciones relacionadas en borrador;
-- Panel: titulares, Pasos, hábitos, Cultos, patrimonio, Salidas y distintivos de Fuentes comprobados;
-- ficha pública: canonical correcto, `index, follow`, Open Graph correcto, tres bloques JSON-LD, sin imágenes rotas, desbordamiento horizontal ni errores de aplicación;
-- desktop comprobado directamente; los contratos responsive de tablet y móvil quedaron cubiertos por la suite, ya que el navegador remoto no expuso redimensionado de viewport;
-- suite completa actual: **659/659**;
-- `next build`: correcto con Next.js 16.3.0, TypeScript válido y 13 páginas estáticas;
+- enlaces y clasificación de #789–#799 contrastados con GitHub; #798 figura cerrada, no fusionada y sustituida por #797;
+- historial remoto, tabla `concert_event_bands`, restricciones y cinco políticas RLS contrastados en Supabase sin escrituras;
+- las rutas públicas de Inicio, Agenda Cofrade, Hermandades y Bandas responden correctamente en el deployment vigente;
+- suite completa actual: **809/809**;
+- `next build`: correcto con Next.js 16.3.0 y TypeScript válido;
 - `git diff --check`: limpio.
 
 ## Corte histórico de `main` y producción · El Museo
@@ -286,6 +319,8 @@ Este remate documental no cambia producto ni arquitectura; refleja el DML editor
 ## #492 · cerrada
 
 [#492](https://github.com/nachosanchezperez-ux/base-cofrade/issues/492) queda resuelta por #730. La preview limpia ejecutó 4/4 migraciones activas y el seed mínimo; producción conserva su esquema y contenido, y su historial remoto coincide ya con la cadena estructural de Git.
+
+La cadena ha crecido de forma gobernada hasta diez migraciones activas. Las tres incorporadas por la Agenda de conciertos reproducen categoría, tabla relacional y seguridad RLS en Supabase Preview. La incidencia continúa cerrada con motivo `completed`.
 
 El cierre levanta el bloqueo excepcional sobre DDL. No autoriza cambios directos: todo nuevo DDL, tabla, migración estructural o ajuste RLS deberá incorporarse mediante una migración reproducible, verificarse en preview sin datos y superar sus puertas de seguridad.
 
@@ -319,7 +354,7 @@ La evidencia completa está en [`CERTIFICACION-PASTORA-SANTA-MARINA-HC016-2026-0
 
 La suite vigente terminó **671/671**, el build completo pasó con TypeScript válido y `git diff --check` quedó limpio. En producción se revisaron Cruz Roja, La Oliva de Salteras y las 21 fichas de Banda con discografía publicada: 0 imágenes rotas visibles y 0 desbordamientos. Las carátulas válidas permanecen intactas; cinco recursos históricos de La Oliva caen correctamente al fallback, pero siguen clasificados como deuda corregible de datos. No existe hoy una publicación sin `cover_image_path`; esa rama queda cubierta por el contrato y la regresión automatizada. Las fichas de Marcha no comparten el componente modificado y no presentan cambio funcional por #734.
 
-En aquel corte, el deployment `dpl_28Cky18RRenhgCnwL5bvPBwHE4Pj` estaba `READY` sobre `3039f81c…`. Los tres 500 de Open Graph observados entonces no reaparecen en la auditoría viva actual: Vercel no registra errores de runtime en las últimas 24 horas.
+En aquel corte, el deployment `dpl_28Cky18RRenhgCnwL5bvPBwHE4Pj` estaba `READY` sobre `3039f81c…`. Los tres 500 de Open Graph observados entonces no reaparecen en la auditoría viva actual. La única observación posterior es el timeout aislado de «Hoy 2.0» ya registrado arriba: ocurrió en otro deployment, sirvió respuesta pública 200 y no se ha repetido en el vigente.
 
 ## Recálculo territorial que seleccionó el undécimo contexto
 
@@ -359,16 +394,16 @@ Sagrada Resurrección ganó por el mayor lote útil y verificable: cinco titular
 
 ## Auditor
 
-1. **¿Cuál es el HEAD real de partida?** `d6a399c6025db0c43240b967ba81c6a4903e0377`; el SHA fusionado de este cierre prevalece al terminar el pipeline.
+1. **¿Cuál es el HEAD real de partida?** `445531f985c0e6527ab45d6a69e98b977d3111ce`; el SHA fusionado de este cierre prevalece al terminar el pipeline.
 2. **¿Producción coincide exactamente?** Sí en el corte de partida; el postflight final exige coincidencia exacta con el SHA fusionado.
 3. **¿Hay PR abiertas?** No en el preflight; el cierre exige volver a 0.
 4. **¿Qué deuda grande era falsa?** La ausencia de discografía, estrenos, imágenes o intervenciones no es universalmente aplicable y no autoriza rellenar fichas ni perseguir un 100 % artificial.
-5. **¿Qué estaba infrarepresentado de verdad?** La trazabilidad directa de Bandas ya visibles: 19 de 76 fichas públicas no mostraban ninguna Fuente y una misma formación juvenil estaba dividida en dos nodos.
-6. **¿Qué relación rindió más?** Reutilizar las Fuentes ya enlazadas a acompañamientos activó la trazabilidad pública de 18 fichas sin inventar historia, vigencias ni multimedia.
+5. **¿Qué se ha reconciliado en este corte?** Las once PR #789–#799, distinguiendo diez integradas y #798 cerrada sin integrar, además de las tres migraciones de conciertos y el timeout histórico no reproducido.
+6. **¿Qué relaciones nuevas quedan certificadas?** Conciertos con Bandas, igualás y ensayos con Hermandades, fotografías con Salidas y búsquedas municipales de Hermandades y Bandas relacionadas.
 7. **¿Dónde está el riesgo enciclopédico?** En convertir cada catálogo patrimonial, biografía, discografía, dedicatoria o fotografía ausente en deuda obligatoria.
-8. **¿Qué funcionalidad estaba infrautilizada?** `source_links` a nivel de entidad: la evidencia existía en periodos y asignaciones, pero no llegaba a la ficha de Banda.
-9. **¿HC-016/019/020 permiten seguir creciendo?** Sí. Este cierre usa HC-016 sin DDL; HC-019 conserva cuatro repertorios y 169 entradas completamente relacionadas; HC-020 mantiene 141 citas futuras entre Salidas, Cultos y Acontecimientos sin duplicados deterministas.
-10. **¿Queda algún frente activo?** No después del cierre y la certificación del macrofrente Bandas.
+8. **¿Qué funcionalidad queda operativa?** La Agenda integra conciertos; Hermandades y Bandas permiten búsqueda municipal; la Home representa el proyecto completo y el Panel conserva la subida múltiple.
+9. **¿HC-016/019/020 permiten seguir creciendo?** Sí. Este cierre es exclusivamente documental y no altera sus contratos ni ejecuta DDL.
+10. **¿Queda algún frente activo?** No; tampoco queda ningún frente editorial abierto.
 
 ## Siguiente movimiento autorizado
 
