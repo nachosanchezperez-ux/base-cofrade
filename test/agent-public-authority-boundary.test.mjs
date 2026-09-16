@@ -57,7 +57,8 @@ test('el autocompletado de Tira del hilo conserva el wrapper público y no inven
   assert.match(tiraPublic, /runWithPublicSupabaseRead/)
   assert.match(tiraPublic, /searchHiloEntities/)
   assert.match(liveSearch, /agent:\s*'Autor \/ profesional'/)
-  assert.match(liveSearch, /NAVIGABLE_TYPES = new Set\(\['brotherhood', 'image', 'step', 'band'\]\)/)
+  assert.match(liveSearch, /NAVIGABLE_TYPES = new Set\(\['brotherhood', 'image', 'step', 'band', 'march'\]\)/)
+  assert.doesNotMatch(liveSearch, /if \(entity\.entity_type === 'agent'\) return/)
 })
 
 test('la primera migración pública exige endpoints publicados en las relaciones de agentes', async () => {

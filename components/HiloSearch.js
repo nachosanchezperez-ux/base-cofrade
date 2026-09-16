@@ -39,6 +39,11 @@ const searchResultMarks = {
   event: 'AC',
   heritage_asset: 'PT',
   advocation: 'AV',
+  cult: 'CU',
+  outing: 'SA',
+  musical_repertoire: 'CR',
+  heritage_update: 'ES',
+  band_premiere: '♪',
 };
 
 function normalize(value = '') {
