@@ -43,6 +43,18 @@ test('reconoce listados de Hermandades por municipio sin secuestrar relaciones',
   assert.equal(freeFactIntent('¿Qué pasos tienen las hermandades de La Rinconada?'), null)
 })
 
+test('reconoce Bandas y panoramas por municipio sin secuestrar acompañamientos', () => {
+  const bands = { kind: 'bands_by_municipality', entityTypes: ['band'] }
+  assert.deepEqual(freeFactIntent('Bandas de Gerena'), bands)
+  assert.deepEqual(freeFactIntent('¿Qué bandas hay en Cantillana?'), bands)
+  assert.deepEqual(freeFactIntent('Listado de formaciones musicales de Dos Hermanas'), bands)
+  assert.equal(freeFactIntent('¿Qué bandas acompañan a las hermandades de Gerena?'), null)
+  assert.deepEqual(
+    freeFactIntent('¿Qué hay en Gerena?'),
+    { kind: 'municipality_overview', entityTypes: ['brotherhood', 'band'] }
+  )
+})
+
 test('resuelve el municipio completo más específico dentro de la pregunta', () => {
   const municipalities = ['Sevilla', 'La Rinconada', 'Alcalá de Guadaíra', 'Alcalá del Río']
   assert.equal(matchMunicipalityName('Hermandades de La Rinconada', municipalities), 'La Rinconada')

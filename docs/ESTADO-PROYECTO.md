@@ -1,18 +1,20 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 16 de septiembre de 2026 · reconciliación canónica posterior a #789–#799
+**Corte operativo:** 16 de septiembre de 2026 · primer macrolote provincial por municipios
 
-**HEAD de partida auditado:** `445531f985c0e6527ab45d6a69e98b977d3111ce`
+**HEAD de partida auditado:** `074acd5dde226c5c5305904205362b06c5ed54e6`
 
-**Producción de partida auditada:** `READY` · deployment `dpl_4aswaVTuu46Hn5ViGwY24GiyafLU` · SHA `445531f985c0e6527ab45d6a69e98b977d3111ce`
+**HEAD reconciliado antes de integrar el macrolote:** `f2bcfa0503394946357396da543bb4c182c5748b`
 
-**PR abiertas:** **0** tras integrar el presente ajuste documental
+**Producción de partida auditada:** `READY` · deployment `dpl_2P3Q9Rtdobb7rVd63jwi7U3f1VmP` · SHA `074acd5dde226c5c5305904205362b06c5ed54e6`
+
+**PR abiertas:** **0** al abrir la auditoría municipal
 
 **Régimen:** `FIRST EDITION FREEZE` activo
 
 **Frente editorial ACTIVO:** ninguno
 
-> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El SHA de partida de esta fotografía es `445531f9…`; el commit que contenga este tablero pasa a ser el HEAD canónico cuando `main` y producción vuelvan a coincidir. Los dieciséis contextos HC-016, todos los macrolotes de Semana Santa y Glorias de septiembre y octubre permanecen cerrados.
+> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El SHA de partida de esta fotografía es `074acd5d…`; el commit que contenga este tablero pasa a ser el HEAD canónico cuando `main` y producción vuelvan a coincidir. Los dieciséis contextos HC-016, todos los macrolotes de Semana Santa y Glorias de septiembre y octubre permanecen cerrados.
 
 ## Tablero operativo único
 
@@ -50,8 +52,12 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | **CERRADO** | Subida múltiple de imágenes · Panel | La multimedia relacionada de Hermandades admite hasta 10 imágenes por lote, metadatos accesibles por archivo, progreso y recuperación parcial; la portada sigue siendo una selección única | Mantener la subida directa firmada a Storage, 10 MB por imagen y validación editorial de derechos y descripción |
 | **CERRADO** | Producto V4 y multimedia · #790, #793 y #794 | Navegación directa de Hermandades y Agenda, legibilidad V4.1 y fotografía independiente por Salida integradas | No reabrir sin una regresión reproducible |
 | **CERRADO** | Agenda de conciertos · #795 | Conciertos integrados en Agenda y relacionados con Bandas mediante esquema reproducible y RLS | Mantener la relación canónica; no duplicar actos ni Bandas |
-| **CERRADO** | Búsqueda municipal · #796 y #799 | Hermandades y Bandas vinculadas a Hermandades pueden buscarse por municipio | Preservar municipio como filtro transversal y relación canónica |
+| **CERRADO** | Búsqueda municipal · #796, #799 y macrolote de Gerena | Hermandades, Bandas locales y el resumen de entidades publicadas pueden consultarse por municipio | Preservar municipio como filtro transversal y relación canónica; no añadir excepciones nominales |
 | **CERRADO** | Home general · #797 | Portada adaptada a la fotografía completa del proyecto; absorbió la reconciliación que motivó #798 | #798 permanece cerrada sin integrar y sustituida por #797 |
+| **CERRADO** | Agenda V4.2 · #801 | Agenda organizada visualmente por meses, con navegación directa, contadores y diferenciación de tipos; cronología y filtros preservados | No reabrir sin una regresión reproducible |
+| **CERRADO** | Jerarquía editorial de Home · #802 | Agenda como entrada prioritaria, Enciclopedia como núcleo documental y Música e Igualás como accesos especializados | No cambió arquitectura ni rutas; no reabrir sin una regresión reproducible |
+| **CERRADO** | Visibilidad y navegación de Agenda · #803–#805 | Categorías accesibles desde Home, selección de sección coherente y visuales con prioridad foto → escudo/logo → fallback, también en móvil | Entraron durante la auditoría municipal y quedaron absorbidas antes de la PR del macrolote |
+| **CERRADO** | Primer macrolote municipal HC-016 · Gerena | Lote `c0160026-0000-4000-8000-000000000001`: 83/83, 0 inválidas y 0 fallos; tres Hermandades, una Banda local, siete titulares, seis Pasos y relaciones municipales canónicas | No abrir el segundo municipio; Agenda, Cultos fechados, igualás, conciertos y Crucetas permanecen como huecos legítimos sin convocatoria verificable |
 | **CERRADO** | Cultos septiembre–diciembre de 2026 | Lote transversal HC-016 `c0162026-0909-4000-8000-000000000001`: 53/53, cuatro Hermandades y 0 DDL | Mantener ediciones futuras desde Fuentes oficiales; recurrencia no equivale a anuncio |
 | **CERRADO** | Carátulas de Discografía · #734 y #791 | Reintento del optimizador a la URL original y fallback accesible; #791 estabilizó las 17 carátulas de La Oliva que aún dependían del servidor antiguo | Mantener URLs estables y el fallback accesible como protección, no como deuda activa |
 | **CERRADO** | HC-019 · Crucetas Musicales | Piloto Pastora de Cantillana 2026: 48 obras, 60 interpretaciones, 0 duplicados deterministas y 0 huérfanos; #740 y remate #741 integrados | Incorporar nuevas crucetas como música efectivamente interpretada; multiplicidad no equivale a consecutividad |
@@ -62,8 +68,8 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 
 ## Verdad de plataforma
 
-- GitHub: el trabajo partió de `445531f985c0e6527ab45d6a69e98b977d3111ce`; no existía ningún merge posterior y había 0 PR abiertas. El commit documental final prevalece.
-- Vercel: la producción de partida estaba `READY` mediante `dpl_4aswaVTuu46Hn5ViGwY24GiyafLU`, exactamente sobre `445531f985c0e6527ab45d6a69e98b977d3111ce`.
+- GitHub: el trabajo partió de `074acd5dde226c5c5305904205362b06c5ed54e6`; #801 y #802 estaban fusionadas y había 0 PR abiertas. Antes de integrar el macrolote se absorbieron #803–#805 y el corte pasó a `f2bcfa0503394946357396da543bb4c182c5748b`. El commit final del macrolote prevalece.
+- Vercel: la producción de partida estaba `READY` mediante `dpl_2P3Q9Rtdobb7rVd63jwi7U3f1VmP`, exactamente sobre `074acd5dde226c5c5305904205362b06c5ed54e6`.
 - Supabase: proyecto `Hilocofrade` `ACTIVE_HEALTHY`. El macrofrente Bandas (`c0160025-0000-4000-8000-000000000001`) figura `completed` con 23/23, 0 inválidas y 0 fallos; las 75 Bandas públicas conservan `slug`, resumen, descripción y al menos una Fuente directa.
 - Supabase Preview: #492 continúa cerrada y la cadena reproducible incluye las tres migraciones de conciertos; no existe un bloqueo estructural pendiente y esta reconciliación documental no ejecuta DDL ni modifica RLS.
 - Git ↔ Supabase: el esquema remoto coincide con la cadena de Git. El historial remoto conserva `20260915215828_add_brotherhood_habit_gloves`, mientras el archivo reproducible equivalente usa `20260915215500`; es una diferencia histórica de versión, no de definición. Las tres migraciones posteriores coinciden exactamente por versión y nombre.
@@ -83,6 +89,25 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | [#797](https://github.com/nachosanchezperez-ux/base-cofrade/pull/797) | Fusionada | Home adaptada a la fotografía general del proyecto; incorpora la reconciliación de la cadena de migraciones |
 | [#798](https://github.com/nachosanchezperez-ux/base-cofrade/pull/798) | **Cerrada sin integrar; sustituida por #797** | No forma parte de `main` y no se contabiliza como trabajo fusionado |
 | [#799](https://github.com/nachosanchezperez-ux/base-cofrade/pull/799) | Fusionada | Buscador de Bandas vinculadas a Hermandades por municipio |
+
+## Reconciliación #801–#802
+
+| PR | Estado canónico | Resultado |
+|---|---|---|
+| [#801](https://github.com/nachosanchezperez-ux/base-cofrade/pull/801) | Fusionada | Agenda V4.2: meses como bloques navegables, navegación directa, contadores y diferenciación visual de tipos de actos, sin perder cronología ni filtros |
+| [#802](https://github.com/nachosanchezperez-ux/base-cofrade/pull/802) | Fusionada | Nueva jerarquía editorial de Home: Agenda prioritaria, Enciclopedia como núcleo documental y Música e Igualás como accesos especializados, sin alterar arquitectura ni rutas |
+
+## Primer macrolote provincial por municipios
+
+El mapa del grafo identifica 47 municipios provinciales con presencia real. En el corte inicial había 50 Hermandades publicadas y 24 fichas con deuda nuclear; tras el lote de Gerena hay 51 Hermandades publicadas y 22 fichas con ese tipo de deuda. El inventario completo está en [`MAPA-MUNICIPAL-PROVINCIA-2026-09-16.csv`](./MAPA-MUNICIPAL-PROVINCIA-2026-09-16.csv).
+
+El TOP 3 fue **Gerena**, Pilas y Utrera. Gerena ganó por tener un universo cerrable de tres corporaciones históricas, dos fichas incompletas, una tercera corporación verificable ausente, una Banda municipal sin nodo y fuentes suficientes para resolver el grafo sin DDL. Pilas y Utrera vuelven a **COLA**; no quedan abiertos.
+
+El lote de Gerena `c0160026-0000-4000-8000-000000000001` terminó `completed` con 83/83 operaciones, 77 insert/upsert, 6 update, 10 reutilizaciones, 0 inválidas y 0 fallos. Gran Poder y Vera-Cruz quedaron completadas; la Soledad Coronada y la Banda Municipal de Música quedaron incorporadas; se preservó la extraordinaria de la Coronación de la Sangre ya certificada. El postflight conserva 0 slugs duplicados, 0 huérfanos, 0 contaminación territorial y 0 Salidas pasadas de Gerena en `announced`.
+
+La QA transversal detectó que «Bandas de Gerena» se resolvía como una consulta de acompañamientos de una Hermandad. El lector común quedó corregido para que «Hermandades de [municipio]», «Bandas de [municipio]» y «Qué hay en [municipio]» consulten los directorios públicos y el grafo territorial, sin `slug`, localidad ni respuesta hardcodeados.
+
+No se fabricaron Agenda, Cultos fechados, conciertos, igualás, Crucetas ni multimedia. La recurrencia histórica no se convirtió en convocatoria 2026 y ninguna mención de 2027 se publicó como vigencia actual. La certificación está en [`CERTIFICACION-GERENA-MACROLOTE-MUNICIPAL-HC016-2026-09-16.md`](./CERTIFICACION-GERENA-MACROLOTE-MUNICIPAL-HC016-2026-09-16.md).
 
 ## Supabase · conciertos
 
