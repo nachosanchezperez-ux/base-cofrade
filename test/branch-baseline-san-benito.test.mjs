@@ -12,6 +12,9 @@ const membershipStatsName = '20260908083000_add_brotherhood_membership_stats.sql
 const musicalRepertoiresName = '20260910181542_crucetas_musicales.sql'
 const musicalRepertoiresHardeningName = '20260910202000_reconcilia_seguridad_crucetas.sql'
 const brotherhoodHabitGlovesName = '20260915215500_add_brotherhood_habit_gloves.sql'
+const concertCategoryName = '20260916062208_allow_concert_event_category.sql'
+const concertBandsName = '20260916062216_create_concert_event_bands.sql'
+const concertBandsSecurityName = '20260916062223_secure_concert_event_bands.sql'
 const baseline = readFileSync(new URL(baselineName, migrationsDirectory), 'utf8')
 const membershipStats = readFileSync(new URL(membershipStatsName, migrationsDirectory), 'utf8')
 const seed = readFileSync(new URL('../supabase/seed.sql', import.meta.url), 'utf8')
@@ -27,6 +30,9 @@ test('las ramas nuevas ejecutan únicamente el baseline y las evoluciones de esq
     musicalRepertoiresName,
     musicalRepertoiresHardeningName,
     brotherhoodHabitGlovesName,
+    concertCategoryName,
+    concertBandsName,
+    concertBandsSecurityName,
   ])
 })
 

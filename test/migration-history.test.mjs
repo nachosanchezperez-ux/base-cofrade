@@ -12,6 +12,9 @@ const EXECUTABLE_SCHEMA_MIGRATIONS = [
   "20260910181542_crucetas_musicales.sql",
   "20260910202000_reconcilia_seguridad_crucetas.sql",
   "20260915215500_add_brotherhood_habit_gloves.sql",
+  "20260916062208_allow_concert_event_category.sql",
+  "20260916062216_create_concert_event_bands.sql",
+  "20260916062223_secure_concert_event_bands.sql",
 ];
 
 test("Supabase migration versions are unique and well formed", async () => {
