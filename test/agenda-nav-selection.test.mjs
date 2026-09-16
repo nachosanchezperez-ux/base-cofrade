@@ -7,7 +7,8 @@ function read(path) {
 }
 
 test('la navegación de Agenda marca de forma natural la sección filtrada', () => {
-  const page = read('app/agenda-cofrade/page.js')
+  const page = read('components/AgendaCofradeNav.js')
+  const urlState = read('components/AgendaCofradeNavFromUrl.js')
   const css = read('app/agenda-cofrade/agenda-cofrade-v4.module.css')
 
   assert.match(page, /const agendaNavSection = \['rosaries', 'devotions', 'concerts'\]\.includes\(initialCategory\)/)
@@ -17,6 +18,8 @@ test('la navegación de Agenda marca de forma natural la sección filtrada', () 
   assert.match(page, /navClass\('concerts'\)/)
   assert.match(page, /aria-current=\{navCurrent\('agenda'\)\}/)
   assert.doesNotMatch(page, /className=\{styles\.current\}/)
+  assert.match(urlState, /useSearchParams\(\)/)
+  assert.match(urlState, /searchParams\.get\('categoria'\)/)
 
   assert.match(css, /\.navSelected\{/)
   assert.match(css, /navSelected\[data-section="rosaries"\]/)

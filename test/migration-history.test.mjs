@@ -15,6 +15,7 @@ const EXECUTABLE_SCHEMA_MIGRATIONS = [
   "20260916062208_allow_concert_event_category.sql",
   "20260916062216_create_concert_event_bands.sql",
   "20260916062223_secure_concert_event_bands.sql",
+  "20260916215528_add_source_links_source_id_index.sql",
 ];
 
 test("Supabase migration versions are unique and well formed", async () => {
