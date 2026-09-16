@@ -3,5 +3,22 @@
 .quickTypesFive button.quickTypeConcertActive{border-color:#356b91;background:#356b91;color:#fff}
 .concertCard time{color:#356b91}
 .concertCard [data-category="concerts"]{color:#356b91}
+.repertoire{margin-top:12px;padding-top:10px;border-top:1px solid #e4e7ea}
+.repertoire summary{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:38px;padding:0 11px;border:1px solid #d9e3ea;border-radius:10px;background:#f7fafc;color:#234e6d;font-size:10px;font-weight:850;cursor:pointer;list-style:none}
+.repertoire summary::-webkit-details-marker{display:none}
+.repertoire summary span{display:flex;align-items:center;gap:7px}
+.repertoire summary span::before{content:'♫';font-size:12px}
+.repertoire summary small{display:flex;align-items:center;gap:8px;color:#6d7d88;font-size:9px;font-weight:750}
+.repertoire summary small::after{content:'+';display:grid;width:21px;height:21px;place-items:center;border-radius:50%;background:#fff;color:#356b91;font-size:15px;line-height:1;box-shadow:0 1px 4px rgba(28,53,74,.08)}
+.repertoire[open] summary small::after{content:'−'}
+.repertoireList{display:grid;gap:0;margin:8px 0 0;padding:0;border:1px solid #e3e8ec;border-radius:11px;background:#fff;list-style:none;overflow:hidden;counter-reset:repertoire}
+.repertoireItem{counter-increment:repertoire;display:grid;grid-template-columns:28px minmax(0,1fr) auto;align-items:center;gap:10px;padding:9px 11px;border-bottom:1px solid #edf0f2}
+.repertoireItem:last-child{border-bottom:0}
+.repertoireNumber::before{content:counter(repertoire);display:grid;width:24px;height:24px;place-items:center;border-radius:50%;background:#edf4f8;color:#356b91;font-size:8px;font-weight:900}
+.repertoireItem div{display:grid;gap:2px;min-width:0}
+.repertoireItem strong{color:#1e3141;font-family:Georgia,'Times New Roman',serif;font-size:12px;font-weight:600;line-height:1.25}
+.repertoireItem div>span{color:#6d7780;font-size:9px;line-height:1.3}
+.repertoireItem>b{padding:4px 7px;border-radius:999px;background:#f3e7d8;color:#8c5826;font-size:7px;font-weight:900;letter-spacing:.06em;text-transform:uppercase}
 
 @media(max-width:860px){.quickTypesFive{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.repertoire{margin-top:10px;padding-top:9px}.repertoire summary{min-height:40px;padding:0 10px;font-size:10px}.repertoire summary small{font-size:8px}.repertoireItem{grid-template-columns:25px minmax(0,1fr) auto;gap:8px;padding:9px}.repertoireNumber::before{width:22px;height:22px}.repertoireItem strong{font-size:11px}.repertoireItem div>span{font-size:8px}.repertoireItem>b{padding:4px 6px;font-size:6px}}

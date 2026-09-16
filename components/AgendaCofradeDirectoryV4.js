@@ -137,6 +137,51 @@ function EventActions({ item }) {
   )
 }
 
+function repertoireEntries(value = '') {
+  return String(value)
+    .split('\n')
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .filter((line) => !/^repertorio\s*:?$/i.test(line))
+    .map((line, index) => {
+      const isPremiere = /\(estreno\)/i.test(line)
+      const clean = line.replace(/\s*\(estreno\)\s*/i, '').trim()
+      const [title, ...authorParts] = clean.split(/\s+—\s+/)
+      return {
+        key: `${index}-${clean}`,
+        title: title || clean,
+        author: authorParts.join(' — '),
+        isPremiere,
+      }
+    })
+}
+
+function ConcertRepertoire({ item }) {
+  const entries = repertoireEntries(item.repertoireText)
+  if (!entries.length) return null
+
+  return (
+    <details className={concertStyles.repertoire}>
+      <summary>
+        <span>Ver repertorio</span>
+        <small>{entries.length} {entries.length === 1 ? 'marcha' : 'marchas'}</small>
+      </summary>
+      <ol className={concertStyles.repertoireList}>
+        {entries.map((entry) => (
+          <li className={concertStyles.repertoireItem} key={entry.key}>
+            <span className={concertStyles.repertoireNumber} aria-hidden="true" />
+            <div>
+              <strong>{entry.title}</strong>
+              {entry.author ? <span>{entry.author}</span> : null}
+            </div>
+            {entry.isPremiere ? <b>Estreno</b> : null}
+          </li>
+        ))}
+      </ol>
+    </details>
+  )
+}
+
 export default function AgendaCofradeDirectoryV4({
   items,
   today,
@@ -317,6 +362,7 @@ export default function AgendaCofradeDirectoryV4({
                           {item.place ? <span><b>Lugar</b>{item.place}</span> : null}
                         </div>
                         {item.summary ? <p className={styles.routePreview}>{item.summary}</p> : null}
+                        {item.category === 'concerts' ? <ConcertRepertoire item={item} /> : null}
                         <EventActions item={item} />
                       </div>
                       <EventVisual item={item} />
