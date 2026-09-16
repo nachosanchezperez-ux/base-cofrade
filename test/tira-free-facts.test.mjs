@@ -4,6 +4,7 @@ import assert from 'node:assert/strict'
 import {
   freeFactIntent,
   freeSetIntent,
+  matchHolyWeekDay,
   matchMunicipalityName,
 } from '../lib/tira-free-facts.js'
 
@@ -39,8 +40,37 @@ test('reconoce listados de Hermandades por municipio sin secuestrar relaciones',
   assert.deepEqual(freeFactIntent('¿Qué cofradías hay en Dos Hermanas?'), expected)
   assert.deepEqual(freeFactIntent('Listado de hermandades de Alcalá de Guadaíra'), expected)
   assert.deepEqual(freeFactIntent('Hermandades de Sevilla'), expected)
+  assert.deepEqual(
+    freeFactIntent('Agrupaciones parroquiales de La Rinconada'),
+    { ...expected, brotherhoodType: 'Agrupación Parroquial' }
+  )
+  assert.deepEqual(
+    freeFactIntent('Hermandades de penitencia de La Rinconada'),
+    { ...expected, brotherhoodType: 'Penitencia' }
+  )
+  assert.deepEqual(
+    freeFactIntent('Glorias de La Rinconada'),
+    { ...expected, brotherhoodType: 'Gloria' }
+  )
+  assert.deepEqual(
+    freeFactIntent('Sacramentales de La Rinconada'),
+    { ...expected, brotherhoodType: 'Sacramental' }
+  )
   assert.equal(freeFactIntent('¿Qué bandas acompañan a las hermandades de La Rinconada?'), null)
   assert.equal(freeFactIntent('¿Qué pasos tienen las hermandades de La Rinconada?'), null)
+})
+
+test('reconoce una jornada de Semana Santa como listado territorial de Hermandades', () => {
+  const expected = {
+    kind: 'brotherhoods_by_municipality',
+    entityTypes: ['brotherhood'],
+    processionDay: 'Lunes Santo',
+  }
+  assert.deepEqual(freeFactIntent('Lunes Santo en Sevilla'), expected)
+  assert.deepEqual(freeFactIntent('Hermandades del Lunes Santo en Sevilla'), expected)
+  assert.equal(matchHolyWeekDay('Qué ver en la Madrugada de Sevilla'), 'Madrugada')
+  assert.equal(matchHolyWeekDay('Sábado de Pasión en Sevilla'), 'Sábado de Pasión')
+  assert.equal(freeFactIntent('¿Qué bandas tocan el Lunes Santo en Sevilla?'), null)
 })
 
 test('reconoce Bandas y panoramas por municipio sin secuestrar acompañamientos', () => {

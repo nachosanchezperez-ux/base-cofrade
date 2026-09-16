@@ -1,0 +1,96 @@
+.safeWrap,
+.safeConversation,
+.safeAssistant,
+.groupedList,
+.answerListGroup,
+.safeToolbar {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.safeUserMessage {
+  min-width: 0;
+}
+
+.safeUserMessage p,
+.safeAssistant p,
+.safeAnswerItem strong,
+.safeAnswerItem small {
+  overflow-wrap: anywhere;
+}
+
+.safeAnswerItem {
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.answerListGroup {
+  display: grid;
+  gap: 6px;
+}
+
+.answerListHeading {
+  padding: 2px 3px 0;
+  color: #f3c8d0;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.answerLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.answerLinks a {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 9px;
+  border: 1px solid rgba(255,255,255,.13);
+  border-radius: 999px;
+  background: rgba(255,255,255,.07);
+  color: #eef3f7;
+  font-size: 10px;
+  font-weight: 750;
+  line-height: 1.35;
+  text-decoration: none;
+}
+
+.answerLinks a:hover {
+  background: rgba(255,255,255,.12);
+  color: #fff;
+}
+
+.answerLinks span {
+  flex: 0 0 auto;
+  color: #f09aa8;
+}
+
+.safeToolbar > button {
+  flex: 0 0 auto;
+}
+
+@media (max-width: 620px) {
+  .safeUserMessage p {
+    box-sizing: border-box;
+    max-width: 100%;
+    white-space: normal;
+  }
+
+  .safeAssistant {
+    overflow: hidden;
+  }
+
+  .answerLinks {
+    display: grid;
+  }
+
+  .answerLinks a {
+    justify-content: space-between;
+    border-radius: 12px;
+  }
+}
