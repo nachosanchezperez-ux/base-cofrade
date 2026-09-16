@@ -1,7 +1,7 @@
 import BrotherhoodHistoricalMusicPortal from '@/components/BrotherhoodHistoricalMusicPortal'
 import { getHistoricalMusicByBrotherhoodSlug } from '@/lib/supabase/historical-music'
 
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-static'
 
 export default async function BrotherhoodDetailLayout({ children, params }) {
   const { slug } = await params
