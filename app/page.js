@@ -2,7 +2,7 @@ import HomePageV2 from '@/components/HomePageV2'
 import { DEFAULT_DESCRIPTION, HOME_TITLE } from '@/lib/seo'
 import { getHomeSnapshot } from '@/lib/supabase/home-snapshot'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 60
 
 export const metadata = {
   alternates: { canonical: '/' },

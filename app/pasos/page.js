@@ -3,7 +3,7 @@ import RelationalEntityDirectory from '@/components/RelationalEntityDirectory'
 import { getStepsDirectory } from '@/lib/supabase/directories'
 import { breadcrumbJsonLd, collectionPageJsonLd, socialMetadata } from '@/lib/seo'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 900
 
 const title = 'Pasos cofrades de Sevilla y provincia'
 const description = 'Directorio de pasos cofrades de Sevilla y su provincia: hermandad, imágenes, tipología, autores, talleres y evolución patrimonial.'

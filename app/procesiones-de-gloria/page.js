@@ -4,7 +4,7 @@ import { getGloryDirectory } from '@/lib/supabase/glory-directory'
 import { breadcrumbJsonLd, collectionPageJsonLd, pageTitle } from '@/lib/seo'
 import styles from './glory-page.module.css'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 300
 
 const baseTitle = 'Procesiones de Gloria en Sevilla'
 const baseDescription = 'Calendario de procesiones de Gloria en Sevilla capital y provincia: fechas, horarios, recorridos y acompañamientos musicales.'

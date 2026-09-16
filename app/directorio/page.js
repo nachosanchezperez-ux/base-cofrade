@@ -4,7 +4,7 @@ import { getPublicEntityDirectory } from '@/lib/supabase/public-entity-directory
 import { absoluteUrl, breadcrumbJsonLd, socialMetadata } from '@/lib/seo'
 import styles from './directorio.module.css'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 900
 
 const title = 'Directorio cofrade de Sevilla y provincia'
 const description = 'Busca y explora hermandades, imágenes, pasos y bandas documentadas en Hilo Cofrade, con navegación por ubicación, calendario y estilo.'

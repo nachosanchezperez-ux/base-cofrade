@@ -6,7 +6,7 @@ import JsonLd from '@/components/JsonLd'
 import { getExtraordinaryDirectory } from '@/lib/supabase/extraordinary-directory'
 import { breadcrumbJsonLd, collectionPageJsonLd, pageTitle } from '@/lib/seo'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 300
 
 const title = 'Procesiones y salidas extraordinarias de Sevilla 2026'
 const description = 'Calendario actualizado de procesiones y salidas extraordinarias de Sevilla capital y provincia en 2026: fechas, horarios, recorridos, bandas, motivos y guías.'

@@ -45,7 +45,7 @@ import {
   pageTitle,
 } from '@/lib/seo';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 900;
 const getHermandad = cache(getHermandadPageBySlug);
 
 function normalizeProcessionalText(value = '') {

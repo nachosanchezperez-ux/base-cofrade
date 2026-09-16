@@ -3,7 +3,7 @@ import RelationalEntityDirectory from '@/components/RelationalEntityDirectory'
 import { getPublicBandsDirectory } from '@/lib/supabase/bands-directory-public'
 import { breadcrumbJsonLd, collectionPageJsonLd, socialMetadata } from '@/lib/seo'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 900
 
 const BAND_LOGO_PRESENTATION = {
   'banda-del-sol': { mode: 'integrated', background: 'secondary' },
