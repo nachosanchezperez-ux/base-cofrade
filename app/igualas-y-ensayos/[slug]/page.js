@@ -1,12 +1,16 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { cache } from 'react'
 import JsonLd from '@/components/JsonLd'
 import { crewEventStatusLabel } from '@/lib/crew-events'
 import { absoluteUrl, breadcrumbJsonLd, pageTitle, seoDescription } from '@/lib/seo'
 import { getCrewEventDetail } from '@/lib/supabase/crew-events'
 import styles from './crew-event-detail.module.css'
 
-export const revalidate = 900
+export const dynamic = 'force-static'
+export const revalidate = 300
+
+const getCrewEvent = cache(getCrewEventDetail)
 
 function madridUtcOffset(value) {
   if (!value) return '+00:00'
@@ -71,7 +75,7 @@ function eventSeoDescription(event) {
 
 export async function generateMetadata({ params }) {
   const { slug } = await params
-  const event = await getCrewEventDetail(slug)
+  const event = await getCrewEvent(slug)
   if (!event) return { title: 'Convocatoria no encontrada', robots: { index: false, follow: false } }
   const title = eventSeoTitle(event)
   const description = eventSeoDescription(event)
@@ -88,7 +92,7 @@ export async function generateMetadata({ params }) {
 
 export default async function CrewEventDetailPage({ params }) {
   const { slug } = await params
-  const event = await getCrewEventDetail(slug)
+  const event = await getCrewEvent(slug)
   if (!event) notFound()
 
   const canonicalUrl = absoluteUrl(event.detailHref)
