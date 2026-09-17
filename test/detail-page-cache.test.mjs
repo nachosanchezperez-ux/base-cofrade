@@ -34,6 +34,16 @@ for (const section of ['pasos', 'imagenes']) {
   })
 }
 
+for (const section of ['marchas', 'crucetas-musicales']) {
+  test(`las fichas de ${section} usan ISR y se generan bajo demanda`, () => {
+    const page = read(`app/${section}/[slug]/page.js`)
+
+    assert.match(page, /export const dynamic = ['"]force-static['"]/)
+    assert.doesNotMatch(page, /force-dynamic/)
+    assert.match(page, /export const revalidate = 900[;]?/)
+  })
+}
+
 test('Pasos e Imágenes deduplican las consultas compartidas por metadata y página', () => {
   const stepPage = read('app/pasos/[slug]/page.js')
   const imagePage = read('app/imagenes/[slug]/page.js')
