@@ -168,6 +168,19 @@ async function refreshSourceViews(supabase, entityId = null) {
 
   const publicRoute = PUBLIC_ROUTES[result.data.entity_type]
   if (publicRoute && result.data.slug) revalidatePath(`/${publicRoute}/${result.data.slug}`)
+
+  if (result.data.entity_type === 'event' && result.data.slug) {
+    const event = await supabase
+      .from('events')
+      .select('event_category')
+      .eq('entity_id', entityId)
+      .maybeSingle()
+    if (event.data?.event_category === 'crew_call') {
+      revalidatePath(`/igualas-y-ensayos/${result.data.slug}`)
+      revalidatePath('/igualas-y-ensayos')
+      revalidatePath('/agenda-cofrade')
+    }
+  }
 }
 
 function redirectSaved(result, entityId = null) {

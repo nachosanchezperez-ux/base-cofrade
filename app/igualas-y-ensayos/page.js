@@ -4,7 +4,8 @@ import { breadcrumbJsonLd, collectionPageJsonLd, pageTitle } from '@/lib/seo'
 import { getCrewEventDirectory } from '@/lib/supabase/crew-events'
 import styles from './crew-events-page.module.css'
 
-export const revalidate = 900
+export const dynamic = 'force-static'
+export const revalidate = 300
 
 const title = 'Calendario de Igualás y Ensayos'
 const description = 'Próximas igualás, ensayos, mudás y convocatorias de costaleros de las hermandades de Sevilla y su provincia, relacionadas con sus pasos y capataces.'
