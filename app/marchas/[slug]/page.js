@@ -5,7 +5,8 @@ import { getPublicMarchBySlug } from '@/lib/supabase/public-marches'
 import { absoluteUrl, breadcrumbJsonLd, pageTitle } from '@/lib/seo'
 import styles from './marcha.module.css'
 
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-static'
+export const revalidate = 900
 
 const AUTHOR_LABELS = {
   composer: 'Composición',

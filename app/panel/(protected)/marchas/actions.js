@@ -4,6 +4,7 @@ import { randomUUID } from 'node:crypto'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { requirePanelEditor } from '@/lib/panel/auth'
+import { revalidateMarchPages } from '@/lib/panel/revalidate-music'
 import { createClient } from '@/lib/supabase/server'
 
 const UUID_PATTERN = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i
@@ -68,6 +69,7 @@ async function requireEntity(supabase, entityId, types, label) {
 }
 
 async function refreshMarch(supabase, marchId, relatedEntityIds = []) {
+  await revalidateMarchPages(supabase, [marchId])
   revalidatePath('/panel')
   revalidatePath('/panel/marchas')
   revalidatePath(`/panel/marchas/${marchId}`)
