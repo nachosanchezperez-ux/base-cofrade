@@ -23,19 +23,18 @@ test('la clasificación pública distingue aurora, matutino y vespertino', () =>
   assert.doesNotMatch(source, /Rosario nocturno/)
 })
 
-test('Agenda expone rosarios en navegación, sitemap y fichas SEO propias', () => {
+test('Agenda expone rosarios como categoría, en sitemap y en fichas SEO propias', () => {
   const header = read('components/HiloHeader.js')
   const sitemap = read('app/sitemap.js')
-  const agendaNav = read('components/AgendaCofradeNav.js')
-  const directory = read('components/AgendaCofradeDirectory.js')
+  const directory = read('components/AgendaCofradeDirectoryV4.js')
   const detail = read('app/agenda-cofrade/rosarios/[slug]/page.js')
 
   assert.match(header, /\['agenda', 'Agenda'\]/)
   assert.match(header, /\/agenda-cofrade/)
   assert.match(sitemap, /getRosaryOutings/)
   assert.match(sitemap, /\/agenda-cofrade/)
-  assert.match(agendaNav, /Rosarios públicos/)
-  assert.match(directory, /Rosarios/)
+  assert.match(directory, /\['rosaries', 'Rosarios públicos'\]/)
+  assert.match(directory, /data-category=\{value\}/)
   assert.match(detail, /'@type': 'Event'/)
   assert.match(detail, /const \{ slug \} = await params/)
 })
