@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { requirePanelEditor } from '@/lib/panel/auth'
+import { revalidateMarchPages } from '@/lib/panel/revalidate-music'
 import { createClient } from '@/lib/supabase/server'
 
 const UUID_PATTERN = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i
@@ -109,8 +110,23 @@ async function requireRelease(supabase, bandId, releaseId) {
   return release
 }
 
-async function refreshDiscography(supabase, bandId) {
+async function refreshDiscography(supabase, bandId, extraMarchIds = []) {
   const band = await requireBand(supabase, bandId)
+  const releases = assertMutation(
+    await supabase.from('band_releases').select('id').eq('band_entity_id', bandId),
+    'No se pudieron consultar los lanzamientos de la banda'
+  ) || []
+  const releaseIds = releases.map((release) => release.id)
+  const tracks = releaseIds.length
+    ? assertMutation(
+        await supabase.from('band_release_tracks').select('march_entity_id').in('release_id', releaseIds),
+        'No se pudieron consultar las pistas de la banda'
+      ) || []
+    : []
+  await revalidateMarchPages(supabase, [
+    ...extraMarchIds,
+    ...tracks.map((track) => track.march_entity_id),
+  ])
   revalidatePath('/panel/bandas')
   revalidatePath(`/panel/bandas/${bandId}`)
   revalidatePath(`/panel/bandas/${bandId}/discografia`)
@@ -208,6 +224,12 @@ export async function saveBandReleaseTrackAction(formData) {
   const releaseId = uuid(formData, 'release_id')
   const trackId = optionalUuid(formData, 'track_id')
   const release = await requireRelease(supabase, bandId, releaseId)
+  const previousTrack = trackId
+    ? assertMutation(
+        await supabase.from('band_release_tracks').select('march_entity_id').eq('id', trackId).eq('release_id', releaseId).maybeSingle(),
+        'No se pudo consultar la pista anterior'
+      )
+    : null
   const sequenceNo = integer(formData, 'sequence_no')
   if (!sequenceNo || sequenceNo < 1) throw new Error('El orden de la pista debe ser mayor que cero.')
 
@@ -255,7 +277,7 @@ export async function saveBandReleaseTrackAction(formData) {
     summary: `${trackId ? 'Pista actualizada' : 'Pista creada'} en ${release.title}: ${payload.title}`,
     changed_fields: payload,
   })
-  await refreshDiscography(supabase, bandId)
+  await refreshDiscography(supabase, bandId, [previousTrack?.march_entity_id, marchEntityId])
   redirectSaved(bandId, 'pista', `release-${releaseId}`)
 }
 
@@ -270,7 +292,7 @@ export async function deleteBandReleaseTrackAction(formData) {
   const track = assertMutation(
     await supabase
       .from('band_release_tracks')
-      .select('id, title')
+      .select('id, title, march_entity_id')
       .eq('id', trackId)
       .eq('release_id', releaseId)
       .maybeSingle(),
@@ -289,7 +311,7 @@ export async function deleteBandReleaseTrackAction(formData) {
     entity_id: bandId,
     summary: `Pista retirada de ${release.title}: ${track.title}`,
   })
-  await refreshDiscography(supabase, bandId)
+  await refreshDiscography(supabase, bandId, [track.march_entity_id])
   redirectSaved(bandId, 'pista', `release-${releaseId}`)
 }
 
