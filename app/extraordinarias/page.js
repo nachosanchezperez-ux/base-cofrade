@@ -42,18 +42,9 @@ function isCoronation(item) {
 export const metadata = {
   title,
   description,
-  alternates: {
-    canonical: '/extraordinarias',
-  },
-  openGraph: {
-    title: pageTitle(title),
-    description,
-    url: '/extraordinarias',
-  },
-  twitter: {
-    title: pageTitle(title),
-    description,
-  },
+  alternates: { canonical: '/extraordinarias' },
+  openGraph: { title: pageTitle(title), description, url: '/extraordinarias' },
+  twitter: { title: pageTitle(title), description },
 }
 
 export default async function ExtraordinariasPage() {
@@ -63,8 +54,6 @@ export default async function ExtraordinariasPage() {
   const yearOutings = visibleOutings.filter((item) => item.year === currentYear)
   const upcomingOutings = yearOutings.filter((item) => item.isUpcoming)
   const upcomingCount = upcomingOutings.length
-  const capitalCount = yearOutings.filter((item) => item.scope === 'capital').length
-  const provinceCount = yearOutings.filter((item) => item.scope === 'province').length
   const monthGroups = groupUpcomingByMonth(upcomingOutings)
   const coronations = upcomingOutings.filter(isCoronation)
   const directoryJsonLd = collectionPageJsonLd({
@@ -88,40 +77,31 @@ export default async function ExtraordinariasPage() {
       <div className="shell">
         <header className={styles.pageIntro}>
           <div>
-            <span className="eyebrow">Calendario cofrade · Sevilla y provincia</span>
-            <h1>Procesiones y salidas extraordinarias de Sevilla 2026</h1>
+            <span className="eyebrow">Sevilla capital y provincia</span>
+            <h1>Salidas extraordinarias</h1>
           </div>
-          <p>
-            Consulta las próximas procesiones extraordinarias de Sevilla capital y provincia: fechas, horarios, recorridos, acompañamientos musicales, motivos y fuentes documentales.
-          </p>
+          <div className={styles.introCopy}>
+            <p>Encuentra de forma rápida las próximas extraordinarias y distingue con un toque las de Sevilla capital y las de la provincia.</p>
+            <span className={styles.introMeta}><strong>{upcomingCount}</strong> próximas documentadas en 2026</span>
+          </div>
         </header>
 
-        <div className={seoStyles.summary} aria-label="Resumen del calendario de extraordinarias de 2026">
-          <p>
-            Hilo Cofrade reúne en una sola agenda las <strong>salidas extraordinarias de Sevilla en 2026</strong>, tanto en la capital como en los municipios de la provincia. Cada cita dispone de una guía propia y se amplía a medida que se confirman el horario, el itinerario, las bandas y otros datos de interés.
-          </p>
-          <div className={seoStyles.stats}>
-            <span><strong>{yearOutings.length}</strong> documentadas en 2026</span>
-            <span><strong>{upcomingCount}</strong> próximas</span>
-            <span><strong>{capitalCount}</strong> en Sevilla capital</span>
-            <span><strong>{provinceCount}</strong> en la provincia</span>
-          </div>
-        </div>
+        <ExtraordinaryDirectory outings={outings} />
 
         {monthGroups.length ? (
           <section className={seoStyles.temporal} aria-labelledby="proximas-extraordinarias-meses">
             <header>
-              <span className="eyebrow">Próximas citas</span>
-              <h2 id="proximas-extraordinarias-meses">Extraordinarias de Sevilla 2026 por meses</h2>
-              <p>Acceso directo a las próximas salidas extraordinarias de Sevilla capital y provincia, ordenadas por mes y enlazadas a su guía individual.</p>
+              <span className="eyebrow">Accesos rápidos</span>
+              <h2 id="proximas-extraordinarias-meses">Explorar las extraordinarias por mes</h2>
+              <p>Abre solo el mes que te interese para consultar sus guías.</p>
             </header>
             <div className={seoStyles.monthGrid}>
               {monthGroups.map((group) => (
-                <article key={group.key} className={seoStyles.monthCard}>
-                  <div className={seoStyles.monthHead}>
+                <details key={group.key} className={seoStyles.monthCard}>
+                  <summary className={seoStyles.monthHead}>
                     <h3>{group.label}</h3>
                     <span>{group.items.length}</span>
-                  </div>
+                  </summary>
                   <div className={seoStyles.monthLinks}>
                     {group.items.map((outing) => (
                       <Link href={`/extraordinarias/${outing.slug}`} key={outing.id}>
@@ -130,7 +110,7 @@ export default async function ExtraordinariasPage() {
                       </Link>
                     ))}
                   </div>
-                </article>
+                </details>
               ))}
             </div>
           </section>
@@ -140,8 +120,7 @@ export default async function ExtraordinariasPage() {
           <section className={seoStyles.coronations} aria-labelledby="coronaciones-canonicas-sevilla-2026">
             <header>
               <span className="eyebrow">Citas destacadas</span>
-              <h2 id="coronaciones-canonicas-sevilla-2026">Coronaciones y salidas extraordinarias de 2026</h2>
-              <p>Guías de las próximas extraordinarias cuyo motivo o tipo documentado está relacionado con una coronación.</p>
+              <h2 id="coronaciones-canonicas-sevilla-2026">Coronaciones y extraordinarias de 2026</h2>
             </header>
             <div className={seoStyles.coronationLinks}>
               {coronations.map((outing) => (
@@ -154,17 +133,11 @@ export default async function ExtraordinariasPage() {
           </section>
         ) : null}
 
-        <ExtraordinaryDirectory outings={outings} />
-
         <section className={seoStyles.guide} aria-labelledby="guia-extraordinarias-sevilla">
-          <span className="eyebrow">Guía actualizada</span>
-          <h2 id="guia-extraordinarias-sevilla">Extraordinarias en Sevilla: fechas, recorridos y bandas</h2>
-          <p>
-            El calendario incluye procesiones extraordinarias, traslados y otros cultos externos de carácter excepcional que están documentados para Sevilla y su provincia. Las próximas citas aparecen primero y las ya celebradas permanecen disponibles como archivo de consulta.
-          </p>
-          <p>
-            En cada guía de Hilo Cofrade puedes consultar los datos confirmados de la jornada: motivo de la extraordinaria, lugar y hora de salida, entrada, recorrido, acompañamiento musical y fuentes utilizadas. Cuando un dato todavía no está publicado, se mantiene pendiente en lugar de completarlo sin documentación.
-          </p>
+          <span className="eyebrow">Cómo leer la agenda</span>
+          <h2 id="guia-extraordinarias-sevilla">Qué encontrarás en cada extraordinaria</h2>
+          <p>Las próximas citas aparecen primero y las ya celebradas permanecen disponibles como archivo. Cada guía reúne únicamente los datos confirmados: motivo, horarios, itinerario, acompañamiento musical y fuentes.</p>
+          <p>Cuando un dato todavía no está publicado, se mantiene pendiente en lugar de completarlo sin documentación.</p>
         </section>
       </div>
     </section>
