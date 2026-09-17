@@ -125,7 +125,24 @@ function CapitalHub({ items }) {
 }
 
 function ProvinceHub({ stats, onSelect }) {
+  const [municipalityQuery, setMunicipalityQuery] = useState('')
+  const [showAll, setShowAll] = useState(false)
   const total = stats.reduce((sum, item) => sum + item.count, 0)
+  const normalizedQuery = normalizeDirectoryValue(municipalityQuery)
+
+  const quickStats = useMemo(() => [...stats]
+    .sort((first, second) => second.count - first.count
+      || first.label.localeCompare(second.label, 'es', { sensitivity: 'base' }))
+    .slice(0, 6), [stats])
+
+  const searchMatches = useMemo(() => {
+    if (!normalizedQuery) return []
+    return stats.filter((item) => normalizeDirectoryValue(item.label).includes(normalizedQuery))
+  }, [normalizedQuery, stats])
+
+  const visibleStats = normalizedQuery ? searchMatches : (showAll ? stats : quickStats)
+  const sectionLabel = normalizedQuery ? 'Resultados' : (showAll ? 'Todos los municipios' : 'Accesos rápidos')
+
   return (
     <section className={styles.provinceHub} aria-labelledby="province-v4-title">
       <div className={styles.hubHeading}>
@@ -135,14 +152,52 @@ function ProvinceHub({ stats, onSelect }) {
         </div>
         <strong>{total} corporaciones</strong>
       </div>
-      <p>Entra directamente en la localidad que quieras consultar.</p>
-      <div className={styles.municipalityGrid}>
-        {stats.map((item) => (
-          <button type="button" onClick={() => onSelect(item.key)} key={item.key}>
-            <span>{item.label}</span><strong>{item.count}</strong>
-          </button>
-        ))}
+      <p className={styles.provinceIntro}>Busca una localidad o entra desde los accesos rápidos.</p>
+
+      <label className={styles.municipalitySearch} htmlFor="hermandades-v4-municipality-search">
+        <span className="sr-only">Buscar municipio</span>
+        <input
+          id="hermandades-v4-municipality-search"
+          type="search"
+          value={municipalityQuery}
+          onChange={(event) => setMunicipalityQuery(event.target.value)}
+          placeholder="Buscar municipio…"
+          autoComplete="off"
+        />
+        <span aria-hidden="true">⌕</span>
+      </label>
+
+      <div className={styles.municipalitySectionHead}>
+        <span>{sectionLabel}</span>
+        <small>{normalizedQuery ? `${searchMatches.length} ${searchMatches.length === 1 ? 'municipio' : 'municipios'}` : `${stats.length} municipios`}</small>
       </div>
+
+      {visibleStats.length ? (
+        <div className={styles.municipalityGrid}>
+          {visibleStats.map((item) => (
+            <button type="button" onClick={() => onSelect(item.key)} key={item.key}>
+              <span>{item.label}</span><strong>{item.count}</strong>
+            </button>
+          ))}
+        </div>
+      ) : (
+        <div className={styles.municipalityEmpty}>
+          <strong>No encontramos ese municipio</strong>
+          <span>Prueba con otro nombre.</span>
+        </div>
+      )}
+
+      {!normalizedQuery && stats.length > quickStats.length ? (
+        <button
+          type="button"
+          className={styles.municipalityToggle}
+          aria-expanded={showAll}
+          onClick={() => setShowAll((current) => !current)}
+        >
+          <span>{showAll ? 'Ver menos municipios' : `Ver todos los municipios (${stats.length})`}</span>
+          <b aria-hidden="true">{showAll ? '↑' : '↓'}</b>
+        </button>
+      ) : null}
     </section>
   )
 }
