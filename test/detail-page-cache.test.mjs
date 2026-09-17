@@ -44,6 +44,16 @@ for (const section of ['marchas', 'crucetas-musicales']) {
   })
 }
 
+for (const section of ['procesiones-de-gloria', 'extraordinarias']) {
+  test(`las fichas temporales de ${section} usan ISR de cinco minutos`, () => {
+    const page = read(`app/${section}/[slug]/page.js`)
+
+    assert.match(page, /export const dynamic = ['"]force-static['"]/)
+    assert.doesNotMatch(page, /force-dynamic/)
+    assert.match(page, /export const revalidate = 300[;]?/)
+  })
+}
+
 test('Pasos e Imágenes deduplican las consultas compartidas por metadata y página', () => {
   const stepPage = read('app/pasos/[slug]/page.js')
   const imagePage = read('app/imagenes/[slug]/page.js')
