@@ -1,6 +1,5 @@
 'use client'
 
-import Image from 'next/image'
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import styles from './ExtraordinaryDirectory.module.css'
@@ -15,20 +14,31 @@ function statusLabel(item) {
   return item.urgencyLabel || 'Próxima'
 }
 
+function territoryLabel(item) {
+  if (item.scope === 'capital') return 'Sevilla capital'
+  return item.municipality ? `${item.municipality} · Provincia` : 'Provincia de Sevilla'
+}
+
 function groupByMonth(items) {
   const groups = []
   const byKey = new Map()
 
   for (const item of items) {
-    if (!byKey.has(item.monthKey)) {
-      const group = { key: item.monthKey, label: item.monthLabel, items: [] }
-      byKey.set(item.monthKey, group)
+    const key = item.monthKey || `sin-fecha-${item.year || 'actual'}`
+    const label = item.monthLabel || (item.year ? String(item.year) : 'Sin fecha')
+    if (!byKey.has(key)) {
+      const group = { key, label, items: [] }
+      byKey.set(key, group)
       groups.push(group)
     }
-    byKey.get(item.monthKey).items.push(item)
+    byKey.get(key).items.push(item)
   }
 
   return groups
+}
+
+function monthAnchor(key) {
+  return `extraordinarias-${String(key || 'sin-fecha').replace(/[^a-z0-9-]/gi, '-')}`
 }
 
 export default function ExtraordinaryDirectory({ outings }) {
@@ -38,136 +48,59 @@ export default function ExtraordinaryDirectory({ outings }) {
 
   const upcoming = useMemo(() => outings.filter((item) => item.isUpcoming && !item.isCancelled), [outings])
   const celebrated = useMemo(() => outings.filter((item) => item.isCelebrated && !item.isCancelled), [outings])
-  const featured = upcoming[0] || null
   const years = useMemo(() => [...new Set(
-    outings.map((item) => item.year).filter(Boolean)
-  )].sort((a, b) => b - a), [outings])
+    celebrated.map((item) => item.year).filter(Boolean)
+  )].sort((a, b) => b - a), [celebrated])
 
-  const filtered = useMemo(() => {
-    const source = status === 'upcoming' ? upcoming : [...celebrated].reverse()
+  const statusSource = status === 'upcoming' ? upcoming : [...celebrated].reverse()
+  const yearSource = useMemo(() => (
+    status === 'celebrated' && year !== 'all'
+      ? statusSource.filter((item) => String(item.year) === year)
+      : statusSource
+  ), [status, statusSource, year])
 
-    return source.filter((item) => {
-      const matchesTerritory = territory === 'all'
-        || (territory === 'capital' && item.scope === 'capital')
-        || (territory === 'province' && item.scope === 'province')
-      const matchesYear = year === 'all' || String(item.year) === year
-      return matchesTerritory && matchesYear
-    })
-  }, [status, territory, year, upcoming, celebrated])
+  const territoryCounts = useMemo(() => ({
+    all: yearSource.length,
+    capital: yearSource.filter((item) => item.scope === 'capital').length,
+    province: yearSource.filter((item) => item.scope === 'province').length,
+  }), [yearSource])
 
-  const visibleItems = status === 'upcoming' && featured
-    ? filtered.filter((item) => item.id !== featured.id)
-    : filtered
-  const monthGroups = useMemo(() => groupByMonth(visibleItems), [visibleItems])
-  const filteredTotal = filtered.length
+  const filtered = useMemo(() => yearSource.filter((item) => (
+    territory === 'all' || item.scope === territory
+  )), [territory, yearSource])
+
+  const monthGroups = useMemo(() => groupByMonth(filtered), [filtered])
+  const nextId = status === 'upcoming' ? filtered[0]?.id : null
+  const territorySummary = territory === 'capital'
+    ? 'Sevilla capital'
+    : territory === 'province'
+      ? 'Provincia de Sevilla'
+      : 'Sevilla capital y provincia'
 
   return (
-    <div className={styles.directory}>
-      {featured ? (
-        <article className={styles.featured} id={featured.anchor}>
-          <div className={styles.featuredMedia}>
-            {featured.heroImagePath ? (
-              <>
-                <Image
-                  src={featured.heroImagePath}
-                  alt={featured.heroImageAlt}
-                  fill
-                  priority
-                  sizes="(max-width: 780px) calc(100vw - 32px), 52vw"
-                />
-                <span className={styles.mediaShade} aria-hidden="true" />
-                {featured.heroImageCredit ? (
-                  <span className={styles.imageCredit}>{featured.heroImageCredit}</span>
-                ) : null}
-              </>
-            ) : (
-              <div className={styles.datePoster} aria-hidden="true">
-                <strong>{featured.dateParts.day}</strong>
-                <span>{featured.dateParts.month}</span>
-                <small>{featured.dateParts.year}</small>
-              </div>
-            )}
-
-            <div className={styles.liveBadge}>{featured.urgencyLabel || 'PRÓXIMA'}</div>
-            <div className={styles.featuredDate}>
-              <strong>{featured.dateParts.day}</strong>
-              <span>{featured.dateParts.month}</span>
-            </div>
-          </div>
-
-          <div className={styles.featuredCopy}>
-            <span className={styles.featuredLocation}>{featured.municipality || 'Sevilla y provincia'}</span>
-            <h2><Link href={`/extraordinarias/${featured.slug}`}>{featured.title}</Link></h2>
-            <strong className={styles.featuredContext}>{featured.brotherhoodName}</strong>
-            {featured.reason ? <p>{featured.reason}</p> : null}
-
-            <div
-              className={styles.featuredEssentials}
-              style={featured.returnTime ? { gridTemplateColumns: '1.35fr .65fr .65fr' } : undefined}
-            >
-              <div>
-                <span>Cuándo</span>
-                <strong>{featured.dateParts.weekdayLabel || featured.dateParts.label}</strong>
-              </div>
-              <div>
-                <span>Salida</span>
-                <strong>{featured.departureTime || 'Por confirmar'}</strong>
-              </div>
-              {featured.returnTime ? (
-                <div>
-                  <span>Entrada</span>
-                  <strong>{featured.returnTime}</strong>
-                </div>
-              ) : null}
-            </div>
-
-            {featured.music.length ? (
-              <div className={`${styles.featuredMusic} ${styles.featuredMusicSpotlight}`}>
-                <span>Acompañamiento musical</span>
-                <div>
-                  {featured.music.map((band, index) => (
-                    <p key={band.id || `${featured.id}-${band.name}`}>
-                      <i aria-hidden="true">{String(index + 1).padStart(2, '0')}</i>
-                      <span>
-                        <strong>{band.name}</strong>
-                        {band.context ? <small>{band.context}</small> : null}
-                      </span>
-                    </p>
-                  ))}
-                </div>
-              </div>
-            ) : null}
-
-            <div className={styles.featuredActions}>
-              <Link className={styles.featuredGuide} href={`/extraordinarias/${featured.slug}`}>
-                Ver guía completa <span>→</span>
-              </Link>
-              <a className={styles.featuredJump} href="#calendario-extraordinarias">
-                Próximas fechas <span>↓</span>
-              </a>
-            </div>
-          </div>
-        </article>
-      ) : null}
-
-      <section className={styles.explorer} id="calendario-extraordinarias" aria-labelledby="extraordinarias-list-title">
-        <div className={styles.explorerHead}>
-          <div>
-            <span>Calendario</span>
-            <h2 id="extraordinarias-list-title">Qué viene después</h2>
-          </div>
-          <p>Consulta las salidas extraordinarias por fecha, territorio y año. La información crece a medida que se documentan horarios, recorrido y música.</p>
+    <section className={styles.directory} id="calendario-extraordinarias" aria-labelledby="extraordinarias-list-title">
+      <div className={styles.explorerHead}>
+        <div>
+          <span>Calendario</span>
+          <h2 id="extraordinarias-list-title">{status === 'upcoming' ? 'Próximas extraordinarias' : 'Extraordinarias celebradas'}</h2>
         </div>
+        <p>Elige el ámbito que quieras consultar. Las tarjetas indican de forma visible si la cita es en Sevilla capital o en un municipio de la provincia.</p>
+      </div>
 
-        <div className={styles.filters}>
-          <div className={styles.segmented} aria-label="Filtrar por estado">
+      <div className={styles.filters} aria-label="Filtros del calendario de extraordinarias">
+        <div className={styles.filterGroup}>
+          <span className={styles.filterLabel}>Estado</span>
+          <div className={`${styles.segmented} ${styles.statusTabs}`} aria-label="Filtrar por estado">
             <button
               type="button"
               className={status === 'upcoming' ? styles.active : ''}
-              onClick={() => setStatus('upcoming')}
+              onClick={() => {
+                setStatus('upcoming')
+                setYear('all')
+              }}
               aria-pressed={status === 'upcoming'}
             >
-              Próximas <small>{upcoming.length}</small>
+              <span>Próximas</span><strong>{upcoming.length}</strong>
             </button>
             <button
               type="button"
@@ -175,11 +108,14 @@ export default function ExtraordinaryDirectory({ outings }) {
               onClick={() => setStatus('celebrated')}
               aria-pressed={status === 'celebrated'}
             >
-              Celebradas <small>{celebrated.length}</small>
+              <span>Celebradas</span><strong>{celebrated.length}</strong>
             </button>
           </div>
+        </div>
 
-          <div className={styles.segmented} aria-label="Filtrar por territorio">
+        <div className={styles.filterGroup}>
+          <span className={styles.filterLabel}>Dónde</span>
+          <div className={`${styles.segmented} ${styles.territoryTabs}`} aria-label="Filtrar por territorio">
             {[
               ['all', 'Todas'],
               ['capital', 'Sevilla capital'],
@@ -192,50 +128,65 @@ export default function ExtraordinaryDirectory({ outings }) {
                 onClick={() => setTerritory(value)}
                 aria-pressed={territory === value}
               >
-                {label}
+                <span>{label}</span><strong>{territoryCounts[value]}</strong>
               </button>
             ))}
           </div>
+        </div>
 
+        {status === 'celebrated' && years.length > 1 ? (
           <label className={styles.yearFilter}>
-            <span className="sr-only">Filtrar por año</span>
+            <span className={styles.filterLabel}>Año</span>
             <select value={year} onChange={(event) => setYear(event.target.value)}>
-              <option value="all">Todos los años</option>
+              <option value="all">Todos</option>
               {years.map((item) => <option value={String(item)} key={item}>{item}</option>)}
             </select>
           </label>
+        ) : null}
+      </div>
+
+      <div className={styles.resultHead} aria-live="polite">
+        <div>
+          <strong>{plural(filtered.length, 'extraordinaria', 'extraordinarias')}</strong>
+          <span>{territorySummary}</span>
         </div>
+        {territory !== 'all' || year !== 'all' ? (
+          <button
+            type="button"
+            onClick={() => {
+              setTerritory('all')
+              setYear('all')
+            }}
+          >
+            Ver todo
+          </button>
+        ) : null}
+      </div>
 
-        <div className={styles.resultHead}>
-          <div>
-            <strong>{plural(filteredTotal, 'extraordinaria', 'extraordinarias')}</strong>
-            <span>{status === 'upcoming' ? 'por celebrar' : 'ya celebradas'} · Sevilla y provincia</span>
-          </div>
-          {territory !== 'all' || year !== 'all' ? (
-            <button
-              type="button"
-              onClick={() => {
-                setTerritory('all')
-                setYear('all')
-              }}
-            >
-              Limpiar filtros
-            </button>
-          ) : null}
-        </div>
+      {monthGroups.length > 1 ? (
+        <nav className={styles.monthNav} aria-label="Ir directamente a un mes">
+          {monthGroups.map((group) => (
+            <a href={`#${monthAnchor(group.key)}`} key={group.key}>
+              <span>{group.label}</span><strong>{group.items.length}</strong>
+            </a>
+          ))}
+        </nav>
+      ) : null}
 
-        {monthGroups.length ? (
-          <div className={styles.months}>
-            {monthGroups.map((group) => (
-              <section className={styles.monthGroup} key={group.key} aria-labelledby={`month-${group.key}`}>
-                <div className={styles.monthHeading}>
-                  <h3 id={`month-${group.key}`}>{group.label}</h3>
-                  <span>{group.items.length}</span>
-                </div>
+      {monthGroups.length ? (
+        <div className={styles.months}>
+          {monthGroups.map((group) => (
+            <section className={styles.monthGroup} id={monthAnchor(group.key)} key={group.key} aria-labelledby={`month-${group.key}`}>
+              <div className={styles.monthHeading}>
+                <h3 id={`month-${group.key}`}>{group.label}</h3>
+                <span>{plural(group.items.length, 'cita', 'citas')}</span>
+              </div>
 
-                <div className={styles.list}>
-                  {group.items.map((outing) => (
-                    <article className={styles.card} id={outing.anchor} key={outing.id}>
+              <div className={styles.list}>
+                {group.items.map((outing) => {
+                  const music = outing.music || []
+                  return (
+                    <article className={styles.card} id={outing.anchor} key={outing.id} data-scope={outing.scope}>
                       <time className={styles.dateBlock} dateTime={outing.date}>
                         <strong>{outing.dateParts.day}</strong>
                         <span>{outing.dateParts.month}</span>
@@ -243,54 +194,44 @@ export default function ExtraordinaryDirectory({ outings }) {
 
                       <div className={styles.cardMain}>
                         <div className={styles.cardTopline}>
-                          {outing.municipality ? <span>{outing.municipality}</span> : null}
-                          <small data-status={outing.eventStatus}>{statusLabel(outing)}</small>
+                          <span className={styles.territoryBadge} data-scope={outing.scope}>{territoryLabel(outing)}</span>
+                          <small data-status={outing.eventStatus} data-next={outing.id === nextId ? 'true' : undefined}>{outing.id === nextId ? 'PRÓXIMA' : statusLabel(outing)}</small>
                         </div>
+
                         <h4><Link href={`/extraordinarias/${outing.slug}`}>{outing.title}</Link></h4>
                         {outing.brotherhoodName ? <strong className={styles.organizer}>{outing.brotherhoodName}</strong> : null}
-                        {outing.reason ? <p>{outing.reason}</p> : null}
+                        {outing.reason ? <p className={styles.reason}>{outing.reason}</p> : null}
 
-                        {outing.music.length ? (
-                          <div className={styles.cardMusic}>
-                            <span>Música</span>
-                            <div>
-                              {outing.music.map((band) => (
-                                <p key={band.id || `${outing.id}-${band.name}`}>
-                                  <strong>{band.name}</strong>
-                                  {band.context ? <small>{band.context}</small> : null}
-                                </p>
-                              ))}
-                            </div>
+                        <div className={styles.cardFacts}>
+                          {outing.departureTime ? <span><b>Salida</b>{outing.departureTime}</span> : null}
+                          {outing.returnTime ? <span><b>Entrada</b>{outing.returnTime}</span> : null}
+                          {outing.origin ? <span><b>Lugar</b>{outing.origin}</span> : null}
+                        </div>
+
+                        {music.length ? (
+                          <div className={styles.musicLine}>
+                            <b>Música</b>
+                            <span>{music.map((band) => band.name).join(' · ')}</span>
                           </div>
                         ) : null}
 
-                        <div className={styles.cardFooter}>
-                          <div className={styles.cardFacts}>
-                            {outing.departureTime ? <span><b>Salida</b>{outing.departureTime}</span> : null}
-                            {outing.returnTime ? <span><b>Entrada</b>{outing.returnTime}</span> : null}
-                          </div>
-                          <div className={styles.signals} aria-label="Información disponible">
-                            {outing.routeSummary ? <span>Recorrido publicado</span> : null}
-                            {outing.music.length ? <span>Música confirmada</span> : null}
-                          </div>
-                        </div>
                         <Link className={styles.cardDetailLink} href={`/extraordinarias/${outing.slug}`}>
-                          Ver guía <span>→</span>
+                          Ver detalles <span>→</span>
                         </Link>
                       </div>
                     </article>
-                  ))}
-                </div>
-              </section>
-            ))}
-          </div>
-        ) : (
-          <div className={styles.empty}>
-            <strong>No hay extraordinarias con estos criterios</strong>
-            <span>{status === 'upcoming' ? 'La próxima salida destacada puede estar ya arriba.' : 'Prueba otro año o territorio.'}</span>
-          </div>
-        )}
-      </section>
-    </div>
+                  )
+                })}
+              </div>
+            </section>
+          ))}
+        </div>
+      ) : (
+        <div className={styles.empty}>
+          <strong>No hay extraordinarias con estos criterios</strong>
+          <span>Prueba con otro ámbito o vuelve a mostrar todas las citas.</span>
+        </div>
+      )}
+    </section>
   )
 }
