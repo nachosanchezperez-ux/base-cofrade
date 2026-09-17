@@ -8,7 +8,7 @@ import { breadcrumbJsonLd, collectionPageJsonLd, pageTitle } from '@/lib/seo'
 
 export const revalidate = 300
 
-const title = 'Procesiones y salidas extraordinarias de Sevilla 2026'
+const title = 'Procesiones y salidas extraordinarias de Sevilla en 2026'
 const description = 'Calendario actualizado de procesiones y salidas extraordinarias de Sevilla capital y provincia en 2026: fechas, horarios, recorridos, bandas, motivos y guías.'
 
 function normalizeText(value) {
@@ -82,7 +82,7 @@ export default async function ExtraordinariasPage() {
           </div>
           <div className={styles.introCopy}>
             <p>Encuentra de forma rápida las próximas extraordinarias y distingue con un toque las de Sevilla capital y las de la provincia.</p>
-            <span className={styles.introMeta}><strong>{upcomingCount}</strong> próximas documentadas en 2026</span>
+            <span className={styles.introMeta}><strong>{upcomingCount}</strong> próximas · {yearOutings.length} documentadas en 2026</span>
           </div>
         </header>
 
@@ -92,7 +92,7 @@ export default async function ExtraordinariasPage() {
           <section className={seoStyles.temporal} aria-labelledby="proximas-extraordinarias-meses">
             <header>
               <span className="eyebrow">Accesos rápidos</span>
-              <h2 id="proximas-extraordinarias-meses">Explorar las extraordinarias por mes</h2>
+              <h2 id="proximas-extraordinarias-meses">Extraordinarias de Sevilla 2026 por meses</h2>
               <p>Abre solo el mes que te interese para consultar sus guías.</p>
             </header>
             <div className={seoStyles.monthGrid}>
@@ -120,7 +120,7 @@ export default async function ExtraordinariasPage() {
           <section className={seoStyles.coronations} aria-labelledby="coronaciones-canonicas-sevilla-2026">
             <header>
               <span className="eyebrow">Citas destacadas</span>
-              <h2 id="coronaciones-canonicas-sevilla-2026">Coronaciones y extraordinarias de 2026</h2>
+              <h2 id="coronaciones-canonicas-sevilla-2026">Coronaciones y salidas extraordinarias de 2026</h2>
             </header>
             <div className={seoStyles.coronationLinks}>
               {coronations.map((outing) => (
