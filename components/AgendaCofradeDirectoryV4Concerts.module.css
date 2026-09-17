@@ -1,5 +1,14 @@
-.quickTypesFive{grid-template-columns:repeat(5,minmax(0,1fr))}
-.quickTypesFive button[data-category="concerts"]{border-top-color:#356b91}
+.quickTypesFive{grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.quickTypesFive.quickTypesFive button{min-height:66px;padding:11px 13px;border-left:4px solid #b01b32;box-shadow:none}
+.quickTypesFive.quickTypesFive button[data-category="processions"]{border-left-color:#ba8b1f}
+.quickTypesFive.quickTypesFive button[data-category="transfers"]{border-left-color:#b01b32}
+.quickTypesFive.quickTypesFive button[data-category="rosaries"]{border-left-color:#72528c}
+.quickTypesFive.quickTypesFive button[data-category="devotions"]{border-left-color:#397269}
+.quickTypesFive.quickTypesFive button[data-category="concerts"]{border-top-color:#356b91;border-left-color:#356b91}
+.quickTypesFive.quickTypesFive button:hover{transform:none;border-color:#cfc8be;box-shadow:0 7px 18px rgba(25,36,48,.055)}
+.quickTypesFive.quickTypesFive button span{font-size:12px;line-height:1.15}
+.quickTypesFive.quickTypesFive button strong{font-size:25px}
+.quickTypesFive.quickTypesFive button small{font-size:8px}
 .quickTypesFive button.quickTypeConcertActive{border-color:#356b91;background:#356b91;color:#fff}
 .concertCard time{color:#356b91}
 .concertCard [data-category="concerts"]{color:#356b91}
@@ -20,5 +29,6 @@
 .repertoireItem div>span{color:#6d7780;font-size:9px;line-height:1.3}
 .repertoireItem>b{padding:4px 7px;border-radius:999px;background:#f3e7d8;color:#8c5826;font-size:7px;font-weight:900;letter-spacing:.06em;text-transform:uppercase}
 
-@media(max-width:860px){.quickTypesFive{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:560px){.repertoire{margin-top:10px;padding-top:9px}.repertoire summary{min-height:40px;padding:0 10px;font-size:10px}.repertoire summary small{font-size:8px}.repertoireItem{grid-template-columns:25px minmax(0,1fr) auto;gap:8px;padding:9px}.repertoireNumber::before{width:22px;height:22px}.repertoireItem strong{font-size:11px}.repertoireItem div>span{font-size:8px}.repertoireItem>b{padding:4px 6px;font-size:6px}}
+@media(max-width:860px){.quickTypesFive{grid-template-columns:repeat(6,minmax(0,1fr))}.quickTypesFive button{grid-column:span 2}.quickTypesFive button:nth-child(n+4){grid-column:span 3}}
+@media(max-width:560px){.quickTypesFive.quickTypesFive button{min-height:62px;padding:10px 11px}.quickTypesFive.quickTypesFive button span{font-size:11px}.quickTypesFive.quickTypesFive button strong{font-size:23px}.repertoire{margin-top:10px;padding-top:9px}.repertoire summary{min-height:40px;padding:0 10px;font-size:10px}.repertoire summary small{font-size:8px}.repertoireItem{grid-template-columns:25px minmax(0,1fr) auto;gap:8px;padding:9px}.repertoireNumber::before{width:22px;height:22px}.repertoireItem strong{font-size:11px}.repertoireItem div>span{font-size:8px}.repertoireItem>b{padding:4px 6px;font-size:6px}}
+@media(max-width:390px){.quickTypesFive{grid-template-columns:repeat(2,minmax(0,1fr))}.quickTypesFive button,.quickTypesFive button:nth-child(n+4){grid-column:auto}.quickTypesFive button:last-child{grid-column:1/-1}}
