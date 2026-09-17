@@ -78,13 +78,14 @@ async function audit(supabase, user, outing, changedFields) {
   if (error) console.error('[Hilo Cofrade] No se pudo auditar la Extraordinaria', error)
 }
 
-function refresh(id, slug) {
+function refresh(id, slug, previousSlug = '') {
   revalidatePath('/')
   revalidatePath('/extraordinarias')
   revalidatePath('/panel/extraordinarias')
   revalidatePath(`/panel/extraordinarias/${id}`)
   revalidatePath(`/panel/extraordinarias/${id}/general`)
   if (slug) revalidatePath(`/extraordinarias/${slug}`)
+  if (previousSlug && previousSlug !== slug) revalidatePath(`/extraordinarias/${previousSlug}`)
 }
 
 export async function saveExtraordinaryGeneralAction(formData) {
@@ -158,6 +159,6 @@ export async function saveExtraordinaryGeneralAction(formData) {
   if (updated.error) throw new Error(`No se pudo guardar la extraordinaria: ${updated.error.message}`)
 
   await audit(supabase, user, outing, payload)
-  refresh(outingId, slug)
+  refresh(outingId, slug, outing.slug)
   redirect(`/panel/extraordinarias/${outingId}/general?saved=general`)
 }
