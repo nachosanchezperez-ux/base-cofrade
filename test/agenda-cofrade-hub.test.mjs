@@ -23,21 +23,28 @@ test('un rosario extraordinario aparece una sola vez y conserva su carácter', (
   assert.match(source, /isExtraordinary: item\.isExtraordinary/)
 })
 
-test('el centro prioriza los actos de interés general y deja el archivo en segundo plano', () => {
-  const directory = read('components/AgendaCofradeDirectory.js')
+test('la Agenda pública muestra solo actos próximos y elimina el acceso histórico', () => {
+  const directory = read('components/AgendaCofradeDirectoryV4.js')
+  const fromUrl = read('components/AgendaCofradeDirectoryFromUrl.js')
   const page = read('app/agenda-cofrade/page.js')
-  assert.match(directory, /Qué ver hoy/)
+
+  assert.match(directory, /Hoy/)
   assert.match(directory, /Este fin de semana/)
   assert.match(directory, /Próximos actos/)
-  assert.match(directory, /Consultar archivo/)
+  assert.match(directory, /upcomingItems/)
+  assert.doesNotMatch(directory, /Archivo \(/)
+  assert.doesNotMatch(directory, /period === 'archive'/)
   assert.match(directory, /Procesiones/)
   assert.match(directory, /Traslados/)
   assert.match(directory, /Besamanos y besapiés/)
-  assert.doesNotMatch(directory, /Anunciado/)
   assert.match(directory, /Sevilla capital/)
   assert.match(directory, /Municipios/)
   assert.match(directory, /Ver Hermandad/)
   assert.match(directory, /Ver calendario/)
+
+  assert.doesNotMatch(fromUrl, /'archive'/)
+  assert.match(page, /items=\{upcoming\}/)
+  assert.match(page, /Solo los próximos actos/)
   assert.match(page, /Agenda cofrade de Sevilla y provincia/)
   assert.match(page, /collectionPageJsonLd/)
   assert.doesNotMatch(page, /Próxima cita/)

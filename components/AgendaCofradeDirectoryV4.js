@@ -38,7 +38,6 @@ function weekendRange(today) {
 }
 
 function belongsToPeriod(item, period, today) {
-  if (period === 'archive') return item.isPast || item.isCancelled
   if (!item.isUpcoming || item.isCancelled) return false
   if (period === 'today') return item.date <= today && (item.endDate || item.date) >= today
   if (period === 'weekend') {
@@ -196,28 +195,30 @@ export default function AgendaCofradeDirectoryV4({
   const [territory, setTerritory] = useState(initialTerritory)
   const [municipality, setMunicipality] = useState(initialMunicipality)
 
+  const upcomingItems = useMemo(
+    () => items.filter((item) => item.isUpcoming && !item.isCancelled),
+    [items]
+  )
+
   const periodCounts = useMemo(() => Object.fromEntries(
-    ['today', 'weekend', 'upcoming', 'archive'].map((value) => [
+    ['today', 'weekend', 'upcoming'].map((value) => [
       value,
-      items.filter((item) => belongsToPeriod(item, value, today)).length,
+      upcomingItems.filter((item) => belongsToPeriod(item, value, today)).length,
     ])
-  ), [items, today])
+  ), [upcomingItems, today])
 
   const categoryCounts = useMemo(() => Object.fromEntries(categoryOptions.map(([value]) => [
     value,
-    items.filter((item) => belongsToPeriod(item, 'upcoming', today) && item.category === value).length,
-  ])), [items, today])
+    upcomingItems.filter((item) => item.category === value).length,
+  ])), [upcomingItems])
 
-  const municipalityOptions = useMemo(() => agendaMunicipalityOptions(items), [items])
+  const municipalityOptions = useMemo(() => agendaMunicipalityOptions(upcomingItems), [upcomingItems])
 
-  const filtered = useMemo(() => {
-    const selected = items.filter((item) => (
-      belongsToPeriod(item, period, today)
-      && (category === 'all' || item.category === category)
-      && agendaLocationMatches(item, territory, municipality)
-    ))
-    return period === 'archive' ? [...selected].reverse() : selected
-  }, [category, items, municipality, period, territory, today])
+  const filtered = useMemo(() => upcomingItems.filter((item) => (
+    belongsToPeriod(item, period, today)
+    && (category === 'all' || item.category === category)
+    && agendaLocationMatches(item, territory, municipality)
+  )), [category, upcomingItems, municipality, period, territory, today])
 
   const groups = useMemo(() => groupByMonth(filtered), [filtered])
   const selectedCategoryLabel = category === 'all'
@@ -237,7 +238,7 @@ export default function AgendaCofradeDirectoryV4({
           <span>Sevilla y provincia</span>
           <h2 id="agenda-v4-title">Agenda de actos</h2>
         </div>
-        <p>Elige cuándo, qué tipo de acto y dónde. Los meses y cada familia de actos se distinguen visualmente para localizar una cita de un vistazo.</p>
+        <p>Solo mostramos lo que está por venir. Elige cuándo, qué tipo de acto y dónde para localizar una cita de un vistazo.</p>
       </div>
 
       <div className={`${styles.quickTypes} ${concertStyles.quickTypesFive}`} aria-label="Elegir tipo de acto">
@@ -334,17 +335,11 @@ export default function AgendaCofradeDirectoryV4({
           <strong>{filtered.length} {filtered.length === 1 ? 'acto' : 'actos'}</strong>
           <span>{selectedCategoryLabel} · {territoryLabel}</span>
         </div>
-        <div className={styles.summaryActions}>
-          {category !== 'all' ? <button type="button" onClick={() => setCategory('all')}>Ver todos los tipos</button> : null}
-          <button
-            type="button"
-            className={period === 'archive' ? styles.archiveActive : ''}
-            aria-pressed={period === 'archive'}
-            onClick={() => setPeriod(period === 'archive' ? 'upcoming' : 'archive')}
-          >
-            {period === 'archive' ? 'Volver a próximos' : `Archivo (${periodCounts.archive})`}
-          </button>
-        </div>
+        {category !== 'all' ? (
+          <div className={styles.summaryActions}>
+            <button type="button" onClick={() => setCategory('all')}>Ver todos los tipos</button>
+          </div>
+        ) : null}
       </div>
 
       {groups.length > 1 ? (
@@ -393,7 +388,6 @@ export default function AgendaCofradeDirectoryV4({
                         <div className={styles.cardTopline}>
                           <span data-category={item.category}>{item.categoryLabel}</span>
                           {item.isExtraordinary && item.category === 'rosaries' ? <b>Extraordinario</b> : null}
-                          {item.isCancelled ? <small>Cancelado</small> : null}
                         </div>
                         <h4>{item.category === 'concerts' ? item.title : item.href ? <Link href={item.href}>{item.title}</Link> : item.title}</h4>
                         <p className={styles.organizer}>{item.organizer}</p>
@@ -416,7 +410,7 @@ export default function AgendaCofradeDirectoryV4({
         </div>
       ) : (
         <div className={styles.empty}>
-          <strong>No hay actos en esta selección</strong>
+          <strong>No hay próximos actos en esta selección</strong>
           <p>Prueba con otro tipo de acto, territorio, municipio o periodo.</p>
         </div>
       )}
