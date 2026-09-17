@@ -7,7 +7,8 @@ import { getMusicalRepertoireBySlug } from '@/lib/supabase/musical-repertoires'
 import { absoluteUrl, breadcrumbJsonLd, pageTitle } from '@/lib/seo'
 import styles from '../crucetas.module.css'
 
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-static'
+export const revalidate = 900
 
 function BandLogo({ band, size = 36 }) {
   if (!band?.logoPath) return <span aria-hidden="true">♪</span>
