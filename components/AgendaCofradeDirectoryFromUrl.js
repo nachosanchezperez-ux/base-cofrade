@@ -2,6 +2,7 @@
 
 import { useSearchParams } from 'next/navigation'
 import AgendaCofradeDirectoryV4 from '@/components/AgendaCofradeDirectoryV4'
+import { agendaMunicipalitySlug } from '@/lib/agenda-cofrade-location'
 
 const CATEGORIES = new Set(['all', 'processions', 'transfers', 'rosaries', 'devotions', 'concerts'])
 const PERIODS = new Set(['today', 'weekend', 'upcoming', 'archive'])
@@ -16,8 +17,12 @@ export default function AgendaCofradeDirectoryFromUrl({ items, today }) {
   const searchParams = useSearchParams()
   const initialCategory = allowedValue(searchParams, 'categoria', CATEGORIES, 'all')
   const initialPeriod = allowedValue(searchParams, 'periodo', PERIODS, 'upcoming')
-  const initialTerritory = allowedValue(searchParams, 'territorio', TERRITORIES, 'all')
-  const stateKey = `${initialCategory}:${initialPeriod}:${initialTerritory}`
+  const requestedMunicipality = agendaMunicipalitySlug(searchParams.get('municipio') || '')
+  const initialTerritory = requestedMunicipality
+    ? 'province'
+    : allowedValue(searchParams, 'territorio', TERRITORIES, 'all')
+  const initialMunicipality = initialTerritory === 'province' ? requestedMunicipality : ''
+  const stateKey = `${initialCategory}:${initialPeriod}:${initialTerritory}:${initialMunicipality}`
 
   return (
     <AgendaCofradeDirectoryV4
@@ -27,6 +32,7 @@ export default function AgendaCofradeDirectoryFromUrl({ items, today }) {
       initialCategory={initialCategory}
       initialPeriod={initialPeriod}
       initialTerritory={initialTerritory}
+      initialMunicipality={initialMunicipality}
     />
   )
 }
