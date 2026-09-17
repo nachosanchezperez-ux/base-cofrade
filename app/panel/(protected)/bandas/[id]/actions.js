@@ -5,6 +5,7 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import { revalidateMarchPages } from '@/lib/panel/revalidate-music'
+import { revalidateOutingPages } from '@/lib/panel/revalidate-outings'
 import { createClient } from '@/lib/supabase/server'
 import { isValidLogoBackgroundColor, normalizeLogoBackgroundColor } from '@/lib/bands/logo-background'
 
@@ -322,6 +323,7 @@ export async function saveBandOutingAction(formData) {
   else assertMutation(await supabase.from('outing_music_assignments').insert(assignmentPayload), 'No se pudo crear la participación')
   await audit(supabase, user, { action_type: outingId ? 'update' : 'create', object_type: 'outing', object_id: outing.id, entity_id: bandId, summary: `${outingId ? 'Salida actualizada' : 'Salida creada'}: ${outingPayload.title}`, changed_fields: outingPayload })
   await refreshBand(supabase, bandId)
+  await revalidateOutingPages(supabase, [outing.id])
   redirectSaved(bandId, 'extraordinarias')
 }
 
@@ -333,6 +335,7 @@ export async function archiveBandOutingAction(formData) {
   assertMutation(await supabase.from('outings').update({ status: 'archived' }).eq('id', outingId), 'No se pudo archivar la salida')
   await audit(supabase, user, { action_type: 'archive', object_type: 'outing', object_id: outingId, entity_id: bandId, summary: 'Salida extraordinaria archivada' })
   await refreshBand(supabase, bandId)
+  await revalidateOutingPages(supabase, [outingId])
   redirectSaved(bandId, 'extraordinarias')
 }
 
