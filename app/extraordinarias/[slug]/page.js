@@ -11,7 +11,8 @@ import styles from './extraordinary-detail.module.css'
 import mediaStyles from './extraordinary-media.module.css'
 import journeyStyles from './extraordinary-journey.module.css'
 
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-static'
+export const revalidate = 300
 
 const getExtraordinary = cache(getExtraordinaryDetail)
 
