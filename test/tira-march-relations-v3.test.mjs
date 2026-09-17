@@ -34,15 +34,9 @@ test('detecta el sentido Marcha -> Bandas con continuidad contextual', () => {
   )
 })
 
-test('las dedicatorias se resuelven sin inferir por el título', () => {
-  assert.equal(
-    marchRelationsV3Intent('¿A quién está dedicada Salud Siempre?')?.kind,
-    'march_dedications'
-  )
-  assert.equal(
-    marchRelationsV3Intent('¿Cuál es su dedicatoria?', { entityType: 'march' })?.kind,
-    'march_dedications'
-  )
+test('las dedicatorias quedan en la capa directa que conserva fuentes exactas', () => {
+  assert.equal(marchRelationsV3Intent('¿A quién está dedicada Salud Siempre?'), null)
+  assert.equal(marchRelationsV3Intent('¿Cuál es su dedicatoria?', { entityType: 'march' }), null)
 })
 
 test('detecta Autor -> Marchas -> Crucetas en ambos formatos', () => {
@@ -84,7 +78,7 @@ test('la clave de uso diferencia una misma Marcha en distintas crucetas', () => 
   )
 })
 
-test('una consulta básica de autoría no se apropia de V3', () => {
+test('consultas básicas siguen fuera de V3', () => {
   assert.equal(marchRelationsV3Intent('¿Quién compuso Salud Siempre?'), null)
   assert.equal(marchRelationsV3Intent('¿De qué año es Salud Siempre?'), null)
   assert.equal(marchRelationsV3Intent('Escuchar Salud Siempre'), null)
