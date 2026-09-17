@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
+import { agendaLocationMatches, agendaMunicipalityOptions } from '@/lib/agenda-cofrade-location'
 import styles from './AgendaCofradeDirectoryV4.module.css'
 import concertStyles from './AgendaCofradeDirectoryV4Concerts.module.css'
 import visualStyles from './AgendaCofradeDirectoryV4Visuals.module.css'
@@ -188,10 +189,12 @@ export default function AgendaCofradeDirectoryV4({
   initialCategory = 'all',
   initialPeriod = 'upcoming',
   initialTerritory = 'all',
+  initialMunicipality = '',
 }) {
   const [period, setPeriod] = useState(initialPeriod)
   const [category, setCategory] = useState(initialCategory)
   const [territory, setTerritory] = useState(initialTerritory)
+  const [municipality, setMunicipality] = useState(initialMunicipality)
 
   const periodCounts = useMemo(() => Object.fromEntries(
     ['today', 'weekend', 'upcoming', 'archive'].map((value) => [
@@ -205,19 +208,27 @@ export default function AgendaCofradeDirectoryV4({
     items.filter((item) => belongsToPeriod(item, 'upcoming', today) && item.category === value).length,
   ])), [items, today])
 
+  const municipalityOptions = useMemo(() => agendaMunicipalityOptions(items), [items])
+
   const filtered = useMemo(() => {
     const selected = items.filter((item) => (
       belongsToPeriod(item, period, today)
       && (category === 'all' || item.category === category)
-      && (territory === 'all' || item.scope === territory)
+      && agendaLocationMatches(item, territory, municipality)
     ))
     return period === 'archive' ? [...selected].reverse() : selected
-  }, [category, items, period, territory, today])
+  }, [category, items, municipality, period, territory, today])
 
   const groups = useMemo(() => groupByMonth(filtered), [filtered])
   const selectedCategoryLabel = category === 'all'
     ? 'Todos los tipos'
     : categoryOptions.find(([value]) => value === category)?.[1]
+  const selectedMunicipalityLabel = municipalityOptions.find((option) => option.slug === municipality)?.label || ''
+  const territoryLabel = territory === 'all'
+    ? 'Sevilla y provincia'
+    : territory === 'capital'
+      ? 'Sevilla capital'
+      : selectedMunicipalityLabel || 'municipios'
 
   return (
     <section id="agenda" className={styles.directory} aria-labelledby="agenda-v4-title">
@@ -280,18 +291,48 @@ export default function AgendaCofradeDirectoryV4({
                 type="button"
                 className={territory === value ? styles.controlActive : ''}
                 aria-pressed={territory === value}
-                onClick={() => setTerritory(value)}
+                onClick={() => {
+                  setTerritory(value)
+                  if (value !== 'province') setMunicipality('')
+                }}
                 key={value}
               >{label}</button>
             ))}
           </div>
+          {territory === 'province' && municipalityOptions.length ? (
+            <label style={{ display: 'grid', gap: '6px', marginTop: '6px' }}>
+              <span className={styles.controlLabel}>Municipio concreto</span>
+              <select
+                value={municipality}
+                onChange={(event) => setMunicipality(event.target.value)}
+                aria-label="Elegir municipio"
+                style={{
+                  width: '100%',
+                  minHeight: '44px',
+                  padding: '0 12px',
+                  border: '1px solid #dedbd4',
+                  borderRadius: '10px',
+                  background: '#fff',
+                  color: '#26394c',
+                  font: 'inherit',
+                  fontSize: '12px',
+                  fontWeight: 750,
+                }}
+              >
+                <option value="">Todos los municipios</option>
+                {municipalityOptions.map((option) => (
+                  <option value={option.slug} key={option.slug}>{option.label}</option>
+                ))}
+              </select>
+            </label>
+          ) : null}
         </div>
       </div>
 
       <div className={styles.resultSummary} aria-live="polite">
         <div>
           <strong>{filtered.length} {filtered.length === 1 ? 'acto' : 'actos'}</strong>
-          <span>{selectedCategoryLabel} · {territory === 'all' ? 'Sevilla y provincia' : territory === 'capital' ? 'Sevilla capital' : 'municipios'}</span>
+          <span>{selectedCategoryLabel} · {territoryLabel}</span>
         </div>
         <div className={styles.summaryActions}>
           {category !== 'all' ? <button type="button" onClick={() => setCategory('all')}>Ver todos los tipos</button> : null}
@@ -376,7 +417,7 @@ export default function AgendaCofradeDirectoryV4({
       ) : (
         <div className={styles.empty}>
           <strong>No hay actos en esta selección</strong>
-          <p>Prueba con otro tipo de acto, territorio o periodo.</p>
+          <p>Prueba con otro tipo de acto, territorio, municipio o periodo.</p>
         </div>
       )}
     </section>
