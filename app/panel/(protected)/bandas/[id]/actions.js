@@ -4,6 +4,7 @@ import { randomUUID } from 'node:crypto'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { requirePanelEditor } from '@/lib/panel/auth'
+import { revalidateMarchPages } from '@/lib/panel/revalidate-music'
 import { createClient } from '@/lib/supabase/server'
 import { isValidLogoBackgroundColor, normalizeLogoBackgroundColor } from '@/lib/bands/logo-background'
 
@@ -421,6 +422,12 @@ export async function saveBandPremiereAction(formData) {
   const supabase = await createClient()
   const bandId = uuid(formData, 'band_id')
   const premiereId = optionalUuid(formData, 'premiere_id')
+  const previousPremiere = premiereId
+    ? assertMutation(
+        await supabase.from('band_premieres').select('march_entity_id').eq('id', premiereId).eq('band_entity_id', bandId).maybeSingle(),
+        'No se pudo consultar el estreno anterior'
+      )
+    : null
   const premiereYear = integer(formData, 'premiere_year')
   if (!premiereYear) throw new Error('El año del estreno es obligatorio.')
   const title = required(formData, 'title', 'El título de la marcha')
@@ -462,6 +469,7 @@ export async function saveBandPremiereAction(formData) {
   else assertMutation(await supabase.from('source_links').insert(linkPayload), 'No se pudo vincular la fuente')
   await audit(supabase, user, { action_type: premiereId ? 'update' : 'create', object_type: 'band_premiere', object_id: saved.id, entity_id: bandId, summary: `${premiereId ? 'Estreno actualizado' : 'Estreno creado'}: ${payload.title}`, changed_fields: payload })
   await refreshBand(supabase, bandId)
+  await revalidateMarchPages(supabase, [previousPremiere?.march_entity_id, marchEntityId])
   redirectSaved(bandId, 'estrenos')
 }
 
@@ -478,6 +486,7 @@ export async function archiveBandPremiereAction(formData) {
   }
   await audit(supabase, user, { action_type: 'archive', object_type: 'band_premiere', object_id: premiereId, entity_id: bandId, summary: 'Estreno archivado' })
   await refreshBand(supabase, bandId)
+  await revalidateMarchPages(supabase, [premiere?.march_entity_id])
   redirectSaved(bandId, 'estrenos')
 }
 
