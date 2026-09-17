@@ -10,7 +10,8 @@ import { absoluteUrl, breadcrumbJsonLd, pageTitle, seoDescription } from '@/lib/
 import GloryHeroMedia from './GloryHeroMedia'
 import styles from './glory-detail.module.css'
 
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-static'
+export const revalidate = 300
 
 const getGlory = cache(getGloryDetail)
 

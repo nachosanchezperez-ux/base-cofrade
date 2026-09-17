@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { requirePanelEditor } from '@/lib/panel/auth'
+import { revalidateOutingPages } from '@/lib/panel/revalidate-outings'
 import { createClient } from '@/lib/supabase/server'
 
 const UUID_PATTERN = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i
@@ -90,8 +91,9 @@ async function requireEntity(supabase, entityId, allowedTypes = []) {
   return assertRow(await query.maybeSingle(), 'La entidad seleccionada no existe o no está disponible.')
 }
 
-async function refresh(supabase, brotherhoodId, extraEntityIds = []) {
+async function refresh(supabase, brotherhoodId, extraEntityIds = [], outingIds = [], previousOutings = []) {
   const brotherhood = await requireBrotherhood(supabase, brotherhoodId)
+  await revalidateOutingPages(supabase, outingIds, previousOutings)
   revalidatePath('/panel')
   revalidatePath(`/panel/hermandades/${brotherhoodId}`)
   revalidatePath(`/panel/hermandades/${brotherhoodId}/salidas`)
@@ -124,6 +126,7 @@ export async function saveOutingAction(formData) {
   const brotherhoodId = uuid(formData, 'brotherhood_id')
   const outingId = uuid(formData, 'outing_id', true)
   const brotherhood = await requireBrotherhood(supabase, brotherhoodId)
+  const previousOuting = outingId ? await requireOuting(supabase, brotherhoodId, outingId) : null
   const character = value(formData, 'character') || 'ordinary'
   const eventStatus = value(formData, 'event_status') || 'announced'
   if (!CHARACTERS.has(character)) throw new Error('Carácter de salida no válido.')
@@ -176,7 +179,7 @@ export async function saveOutingAction(formData) {
     summary: `${outingId ? 'Salida actualizada' : 'Salida creada'}: ${payload.title || payload.outing_type}`,
     changed_fields: payload,
   })
-  await refresh(supabase, brotherhoodId)
+  await refresh(supabase, brotherhoodId, [], [saved.id], previousOuting ? [previousOuting] : [])
   redirectSaved(brotherhoodId, outingId ? 'updated' : 'created', saved.id)
 }
 
@@ -190,7 +193,7 @@ export async function archiveOutingAction(formData) {
     'No se pudo archivar la salida'
   )
   await audit(supabase, user, { action_type: 'archive', object_type: 'outing', object_id: saved.id, entity_id: brotherhoodId, summary: `Salida archivada: ${saved.title || saved.outing_type}` })
-  await refresh(supabase, brotherhoodId)
+  await refresh(supabase, brotherhoodId, [], [outingId])
   redirectSaved(brotherhoodId, 'archived')
 }
 
@@ -212,7 +215,7 @@ export async function saveOutingParticipantAction(formData) {
     : await supabase.from('outing_entities').insert(payload).select('id').single()
   const saved = assertRow(result, 'No se pudo guardar el participante. Comprueba que no esté ya relacionado con el mismo papel.')
   await audit(supabase, user, { action_type: participantId ? 'update' : 'link', object_type: 'outing_entity', object_id: saved.id, entity_id: brotherhoodId, summary: `Participante de salida: ${entity.name} · ${role}`, changed_fields: payload })
-  await refresh(supabase, brotherhoodId, [entityId])
+  await refresh(supabase, brotherhoodId, [entityId], [outingId])
   redirectSaved(brotherhoodId, 'participant', outingId)
 }
 
@@ -225,7 +228,7 @@ export async function removeOutingParticipantAction(formData) {
   await requireOuting(supabase, brotherhoodId, outingId)
   const saved = assertRow(await supabase.from('outing_entities').delete().eq('id', participantId).eq('outing_id', outingId).select('id, entity_id, role').single(), 'No se pudo retirar el participante')
   await audit(supabase, user, { action_type: 'unlink', object_type: 'outing_entity', object_id: saved.id, entity_id: brotherhoodId, summary: `Participante retirado de la salida: ${saved.role}` })
-  await refresh(supabase, brotherhoodId, [saved.entity_id])
+  await refresh(supabase, brotherhoodId, [saved.entity_id], [outingId])
   redirectSaved(brotherhoodId, 'participant-removed', outingId)
 }
 
@@ -251,7 +254,7 @@ export async function saveOutingScheduleItemAction(formData) {
     : await supabase.from('outing_schedule_items').insert(payload).select('id').single()
   const saved = assertRow(result, 'No se pudo guardar el hito. Cada posición del horario debe tener un orden distinto.')
   await audit(supabase, user, { action_type: itemId ? 'update' : 'create', object_type: 'outing_schedule_item', object_id: saved.id, entity_id: brotherhoodId, summary: `Hito de salida: ${payload.label}`, changed_fields: payload })
-  await refresh(supabase, brotherhoodId)
+  await refresh(supabase, brotherhoodId, [], [outingId])
   redirectSaved(brotherhoodId, 'schedule', outingId)
 }
 
@@ -264,7 +267,7 @@ export async function deleteOutingScheduleItemAction(formData) {
   await requireOuting(supabase, brotherhoodId, outingId)
   const saved = assertRow(await supabase.from('outing_schedule_items').delete().eq('id', itemId).eq('outing_id', outingId).select('id, label').single(), 'No se pudo eliminar el hito')
   await audit(supabase, user, { action_type: 'delete', object_type: 'outing_schedule_item', object_id: saved.id, entity_id: brotherhoodId, summary: `Hito eliminado: ${saved.label}` })
-  await refresh(supabase, brotherhoodId)
+  await refresh(supabase, brotherhoodId, [], [outingId])
   redirectSaved(brotherhoodId, 'schedule-removed', outingId)
 }
 
@@ -291,7 +294,7 @@ export async function saveOutingMusicPositionAction(formData) {
     : await supabase.from('outing_music_positions').insert(payload).select('id').single()
   const saved = assertRow(result, 'No se pudo guardar la posición musical. Cada orden debe ser único en la salida.')
   await audit(supabase, user, { action_type: positionId ? 'update' : 'create', object_type: 'outing_music_position', object_id: saved.id, entity_id: brotherhoodId, summary: `Posición musical: ${payload.position_label || payload.position_code}`, changed_fields: payload })
-  await refresh(supabase, brotherhoodId, [stepId])
+  await refresh(supabase, brotherhoodId, [stepId], [outingId])
   redirectSaved(brotherhoodId, 'music-position', outingId)
 }
 
@@ -304,7 +307,7 @@ export async function archiveOutingMusicPositionAction(formData) {
   await requireOuting(supabase, brotherhoodId, outingId)
   const saved = assertRow(await supabase.from('outing_music_positions').update({ status: 'archived' }).eq('id', positionId).eq('outing_id', outingId).select('id, position_label, position_code').single(), 'No se pudo archivar la posición musical')
   await audit(supabase, user, { action_type: 'archive', object_type: 'outing_music_position', object_id: saved.id, entity_id: brotherhoodId, summary: `Posición musical archivada: ${saved.position_label || saved.position_code}` })
-  await refresh(supabase, brotherhoodId)
+  await refresh(supabase, brotherhoodId, [], [outingId])
   redirectSaved(brotherhoodId, 'music-position-archived', outingId)
 }
 
@@ -336,7 +339,7 @@ export async function saveOutingMusicAssignmentAction(formData) {
     : await supabase.from('outing_music_assignments').insert(payload).select('id').single()
   const saved = assertRow(result, 'No se pudo guardar la Banda en esta posición.')
   await audit(supabase, user, { action_type: assignmentId ? 'update' : 'link', object_type: 'outing_music_assignment', object_id: saved.id, entity_id: brotherhoodId, summary: `Banda en salida: ${band.name}`, changed_fields: payload })
-  await refresh(supabase, brotherhoodId, [bandId])
+  await refresh(supabase, brotherhoodId, [bandId], [outingId])
   redirectSaved(brotherhoodId, 'music-assignment', outingId)
 }
 
@@ -350,6 +353,6 @@ export async function archiveOutingMusicAssignmentAction(formData) {
   await requireOuting(supabase, brotherhoodId, outingId)
   const saved = assertRow(await supabase.from('outing_music_assignments').update({ status: 'archived' }).eq('id', assignmentId).eq('music_position_id', positionId).select('id, band_entity_id').single(), 'No se pudo archivar la Banda de la salida')
   await audit(supabase, user, { action_type: 'archive', object_type: 'outing_music_assignment', object_id: saved.id, entity_id: brotherhoodId, summary: 'Asignación musical archivada' })
-  await refresh(supabase, brotherhoodId, [saved.band_entity_id])
+  await refresh(supabase, brotherhoodId, [saved.band_entity_id], [outingId])
   redirectSaved(brotherhoodId, 'music-assignment-archived', outingId)
 }
