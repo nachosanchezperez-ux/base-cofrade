@@ -8,8 +8,8 @@ import { breadcrumbJsonLd, collectionPageJsonLd, pageTitle } from '@/lib/seo'
 
 export const revalidate = 300
 
-const title = 'Procesiones y salidas extraordinarias de Sevilla en 2026'
-const description = 'Calendario actualizado de procesiones y salidas extraordinarias de Sevilla capital y provincia en 2026: fechas, horarios, recorridos, bandas, motivos y guías.'
+const title = 'Procesiones y salidas extraordinarias de Sevilla 2026'
+const description = 'Calendario actualizado de procesiones y salidas extraordinarias de Sevilla en 2026, en capital y provincia: fechas, horarios, recorridos, acompañamientos musicales, motivos y guías.'
 
 function normalizeText(value) {
   return String(value || '')
@@ -54,6 +54,8 @@ export default async function ExtraordinariasPage() {
   const yearOutings = visibleOutings.filter((item) => item.year === currentYear)
   const upcomingOutings = yearOutings.filter((item) => item.isUpcoming)
   const upcomingCount = upcomingOutings.length
+  const capitalCount = upcomingOutings.filter((item) => item.scope === 'capital').length
+  const provinceCount = upcomingOutings.filter((item) => item.scope === 'province').length
   const monthGroups = groupUpcomingByMonth(upcomingOutings)
   const coronations = upcomingOutings.filter(isCoronation)
   const directoryJsonLd = collectionPageJsonLd({
@@ -82,7 +84,12 @@ export default async function ExtraordinariasPage() {
           </div>
           <div className={styles.introCopy}>
             <p>Encuentra de forma rápida las próximas extraordinarias y distingue con un toque las de Sevilla capital y las de la provincia.</p>
-            <span className={styles.introMeta}><strong>{upcomingCount}</strong> próximas · {yearOutings.length} documentadas en 2026</span>
+            <span
+              className={styles.introMeta}
+              aria-label={`${upcomingCount} próximas: ${capitalCount} en Sevilla capital y ${provinceCount} en la provincia. ${yearOutings.length} documentadas en 2026.`}
+            >
+              <strong>{upcomingCount}</strong> próximas · {yearOutings.length} documentadas en 2026
+            </span>
           </div>
         </header>
 
