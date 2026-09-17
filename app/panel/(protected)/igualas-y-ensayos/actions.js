@@ -78,6 +78,7 @@ function eventPayload(formData) {
 
 async function refreshCrewEvent(supabase, id, relatedIds = []) {
   revalidatePath('/igualas-y-ensayos')
+  revalidatePath('/agenda-cofrade')
   revalidatePath('/panel')
   revalidatePath('/panel/igualas-y-ensayos')
   revalidatePath(`/panel/igualas-y-ensayos/${id}`)
