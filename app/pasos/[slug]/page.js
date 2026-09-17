@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { cache } from 'react';
 import { notFound } from 'next/navigation';
 import EntitySectionNav from '@/components/EntitySectionNav';
 import JsonLd from '@/components/JsonLd';
@@ -23,9 +24,16 @@ import {
   seoDescription,
 } from '@/lib/seo';
 
+export const dynamic = 'force-static';
+export const revalidate = 900;
+
+const getPaso = cache(getPasoPageBySlug);
+const getCoverMedia = cache(getPublishedEntityCoverMedia);
+const getStepHeritage = cache(getPublishedStepHeritage);
+
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const result = await getPasoPageBySlug(slug);
+  const result = await getPaso(slug);
 
   if (!result) {
     return {
@@ -36,8 +44,8 @@ export async function generateMetadata({ params }) {
 
   const { paso, hermandad, imagenes = [], bandas = [] } = result;
   const [coverMedia, heritage] = await Promise.all([
-    getPublishedEntityCoverMedia(paso.id),
-    getPublishedStepHeritage(paso.id),
+    getCoverMedia(paso.id),
+    getStepHeritage(paso.id),
   ]);
   const title = paso.nombre;
   const description = seoDescription(
@@ -88,12 +96,12 @@ export async function generateMetadata({ params }) {
 
 export default async function PasoDetailPage({params}){
   const {slug}=await params;
-  const result=await getPasoPageBySlug(slug);
+  const result=await getPaso(slug);
   if(!result) notFound();
   const {paso,hermandad,imagenes=[],bandas=[]}=result;
   const [coverMedia, heritage] = await Promise.all([
-    getPublishedEntityCoverMedia(paso.id),
-    getPublishedStepHeritage(paso.id),
+    getCoverMedia(paso.id),
+    getStepHeritage(paso.id),
   ]);
   const relationalItems = [
     ...(hermandad ? [{

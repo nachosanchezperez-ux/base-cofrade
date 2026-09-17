@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { cache } from 'react';
 import { notFound } from 'next/navigation';
 import EntitySectionNav from '@/components/EntitySectionNav';
 import EntityMediaGallery from '@/components/EntityMediaGallery';
@@ -21,6 +22,12 @@ import {
   seoDescription,
 } from '@/lib/seo';
 
+export const dynamic = 'force-static';
+export const revalidate = 900;
+
+const getImagen = cache(getImagenPageBySlug);
+const getEntityMedia = cache(getPublishedEntityMedia);
+
 function selectEditorialHero(items = []) {
   return items.find((item) => item.relationType === 'hero')
     || items.find((item) => item.isCover)
@@ -29,7 +36,7 @@ function selectEditorialHero(items = []) {
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const result = await getImagenPageBySlug(slug);
+  const result = await getImagen(slug);
 
   if (!result) {
     return {
@@ -39,7 +46,7 @@ export async function generateMetadata({ params }) {
   }
 
   const { imagen, hermandad } = result;
-  const media = await getPublishedEntityMedia(imagen.id);
+  const media = await getEntityMedia(imagen.id);
   const coverMedia = selectEditorialHero(media);
   const title = imagen.nombre;
   const description = seoDescription(
@@ -84,13 +91,13 @@ export async function generateMetadata({ params }) {
 
 export default async function ImagenPage({ params }) {
   const { slug } = await params;
-  const result = await getImagenPageBySlug(slug);
+  const result = await getImagen(slug);
 
   if (!result) notFound();
 
   const { imagen, hermandad, pasos = [] } = result;
   const [entityMedia, dresser] = await Promise.all([
-    getPublishedEntityMedia(imagen.id),
+    getEntityMedia(imagen.id),
     getPublishedImageDresser(imagen.id),
   ]);
   const explicitHeroMedia = entityMedia.find((item) => item.relationType === 'hero') || null;
