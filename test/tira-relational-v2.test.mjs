@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict'
+import { readFile } from 'node:fs/promises'
 import test from 'node:test'
 
 import {
@@ -92,4 +93,18 @@ test('formatea los periodos históricos sin inventar fechas finales', () => {
   assert.equal(relationalPeriodLabel({ date_from_text: 'Desde 1981', is_current: true }), 'Desde 1981 · vigente')
   assert.equal(relationalPeriodLabel({ year_from: 1998, year_to: 2004, is_current: false }), '1998 → 2004')
   assert.equal(relationalPeriodLabel({ is_current: false }), 'Periodo documentado')
+})
+
+test('el total de una cruceta se calcula antes de compactar los resultados visibles', async () => {
+  const source = await readFile(new URL('../lib/supabase/tira-del-hilo-repertoire-entries.js', import.meta.url), 'utf8')
+  assert.match(source, /const totalWorks = allEntries\.length/)
+  assert.match(source, /const visibleEntries = allEntries\.slice\(0, 30\)/)
+})
+
+test('V12 resuelve las marchas de cruceta antes del relacional genérico', async () => {
+  const source = await readFile(new URL('../lib/supabase/tira-del-hilo-v12.js', import.meta.url), 'utf8')
+  const repertoireIndex = source.indexOf('askHiloCofradeRepertoireEntries(clean)')
+  const relationalIndex = source.indexOf('askHiloCofradeRelationalV2(clean, context)')
+  assert.ok(repertoireIndex >= 0)
+  assert.ok(relationalIndex > repertoireIndex)
 })
