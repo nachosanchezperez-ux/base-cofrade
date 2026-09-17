@@ -54,6 +54,19 @@ for (const section of ['procesiones-de-gloria', 'extraordinarias']) {
   })
 }
 
+test('la agenda y las fichas de Igualás y Ensayos usan ISR de cinco minutos', () => {
+  const directory = read('app/igualas-y-ensayos/page.js')
+  const detail = read('app/igualas-y-ensayos/[slug]/page.js')
+
+  for (const page of [directory, detail]) {
+    assert.match(page, /export const dynamic = ['"]force-static['"]/)
+    assert.doesNotMatch(page, /force-dynamic/)
+    assert.match(page, /export const revalidate = 300[;]?/)
+  }
+  assert.match(detail, /const getCrewEvent = cache\(getCrewEventDetail\)/)
+  assert.equal((detail.match(/getCrewEvent\(slug\)/g) || []).length, 2)
+})
+
 test('Pasos e Imágenes deduplican las consultas compartidas por metadata y página', () => {
   const stepPage = read('app/pasos/[slug]/page.js')
   const imagePage = read('app/imagenes/[slug]/page.js')
