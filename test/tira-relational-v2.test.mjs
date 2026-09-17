@@ -21,9 +21,16 @@ test('detecta una banda pedida para una imagen o paso concreto', () => {
   )
 })
 
-test('las consultas actuales genéricas siguen en el motor existente', () => {
+test('mantiene las consultas actuales amplias y reconoce la relación inversa natural', () => {
   assert.equal(relationalV2Intent('¿Qué bandas acompañan a San Gonzalo?'), null)
-  assert.equal(relationalV2Intent('¿A qué hermandades acompaña Santa Ana?'), null)
+  assert.equal(
+    relationalV2Intent('¿A qué hermandades acompaña Santa Ana?')?.kind,
+    'current_band_brotherhoods'
+  )
+  assert.equal(
+    relationalV2Intent('¿Dónde toca Santa Ana?')?.kind,
+    'current_band_brotherhoods'
+  )
 })
 
 test('detecta acompañamientos históricos en ambos sentidos', () => {
@@ -35,6 +42,15 @@ test('detecta acompañamientos históricos en ambos sentidos', () => {
     relationalV2Intent('¿A qué hermandades ha acompañado Santa Ana?')?.kind,
     'music_history'
   )
+})
+
+test('permite seguir una banda con una repregunta histórica breve', () => {
+  const context = {
+    entityId: '49b5a3e0-c7d6-4dac-980e-3eddc355a7d1',
+    entityType: 'band',
+    name: 'Banda de Música Santa Ana de Dos Hermanas',
+  }
+  assert.equal(relationalV2Intent('¿Y antes?', context)?.kind, 'music_history')
 })
 
 test('baja de la cruceta a las marchas solo cuando se piden obras', () => {
@@ -89,9 +105,11 @@ test('prioriza la cruceta de San Gonzalo del año solicitado', () => {
   assert.equal(relationalRequestedYear(question), 2026)
 })
 
-test('formatea los periodos históricos sin inventar fechas finales', () => {
+test('formatea los periodos históricos sin inventar fechas finales ni duplicar vigente', () => {
   assert.equal(relationalPeriodLabel({ date_from_text: 'Desde 1981', is_current: true }), 'Desde 1981 · vigente')
+  assert.equal(relationalPeriodLabel({ date_from_text: 'Vigente · 2026', is_current: true }), 'Vigente · 2026')
   assert.equal(relationalPeriodLabel({ year_from: 1998, year_to: 2004, is_current: false }), '1998 → 2004')
+  assert.equal(relationalPeriodLabel({ year_from: 1930, year_to: 1930, is_current: false }), '1930')
   assert.equal(relationalPeriodLabel({ is_current: false }), 'Periodo documentado')
 })
 
@@ -101,10 +119,12 @@ test('el total de una cruceta se calcula antes de compactar los resultados visib
   assert.match(source, /const visibleEntries = allEntries\.slice\(0, 30\)/)
 })
 
-test('V12 resuelve las marchas de cruceta antes del relacional genérico', async () => {
+test('V12 prioriza detalle de crucetas y relaciones inversas antes del relacional genérico', async () => {
   const source = await readFile(new URL('../lib/supabase/tira-del-hilo-v12.js', import.meta.url), 'utf8')
   const repertoireIndex = source.indexOf('askHiloCofradeRepertoireEntries(clean)')
+  const bandLinksIndex = source.indexOf('askHiloCofradeBandLinksV2(clean, context)')
   const relationalIndex = source.indexOf('askHiloCofradeRelationalV2(clean, context)')
   assert.ok(repertoireIndex >= 0)
-  assert.ok(relationalIndex > repertoireIndex)
+  assert.ok(bandLinksIndex > repertoireIndex)
+  assert.ok(relationalIndex > bandLinksIndex)
 })
