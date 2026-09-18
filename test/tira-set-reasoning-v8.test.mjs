@@ -85,7 +85,9 @@ test('la implementación V8 usa solo relaciones estructuradas y preserva el conj
   assert.match(source, /from\('image_authorships'\)/)
   assert.match(source, /from\('brotherhood_steps'\)/)
   assert.match(source, /from\('step_phase_details'\)/)
-  assert.match(source, /sourceIntent: 'brotherhood_set_/)
+  assert.match(source, /'brotherhood_set_foundation_order'/)
+  assert.match(source, /'brotherhood_set_upcoming_cults'/)
+  assert.match(source, /'brotherhood_set_repeated_agents'/)
   assert.match(orchestrator, /askHiloCofradeSetReasoningV8/)
   assert.ok(
     orchestrator.indexOf('askHiloCofradeSetReasoningV8(clean, context)')
