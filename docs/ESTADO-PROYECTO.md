@@ -1,6 +1,27 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 18 de septiembre de 2026 · reconciliación Supabase + cierre certificado de Cantillana\n\n**HEAD de cierre de contenido Cantillana:** f38fde844553e5794e252a734ae38284d75a50fa\n\n**HEAD canónico del tablero:** el commit que contiene esta actualización documental; el postflight exacto se consigna en el entregable de cierre.\n\n**Producción certificada tras #822:** READY · deployment dpl_9goKSpfU7ZdsPrGDSk7BY7FZpZe4 · SHA f38fde844553e5794e252a734ae38284d75a50fa\n\n**Supabase Preview de main:** SUCCESS · 12/12 migraciones estructurales activas · preview sin datos productivos + seed mínimo\n\n**Reconciliación de migraciones:** **RESUELTA** en #846 · sin migration repair, sin reaplicar DDL, sin cambios de RLS\n\n**Cantillana / #822:** **FUSIONADA Y CERTIFICADA** · lote c0160030-0000-4000-8000-000000000001 · 93/93 · 0 inválidas · 0 fallos\n\n**PR abiertas al postflight de Cantillana:** **0**\n\n**Régimen:** FIRST EDITION FREEZE activo\n\n**Frente editorial ACTIVO:** **ninguno**.\n\n> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. Cantillana cierra el tercer macrolote municipal. Coria del Río y Utrera no quedan activadas: antes de cualquier cuarto municipio debe recalcularse desde cero la cobertura provincial.\n## Tablero operativo único
+**Corte operativo:** 18 de septiembre de 2026 · reconciliación Supabase + cierre certificado de Cantillana
+
+**HEAD de cierre de contenido Cantillana:** f38fde844553e5794e252a734ae38284d75a50fa
+
+**HEAD canónico del tablero:** el commit que contiene esta actualización documental; el postflight exacto se consigna en el entregable de cierre.
+
+**Producción certificada tras #822:** READY · deployment dpl_9goKSpfU7ZdsPrGDSk7BY7FZpZe4 · SHA f38fde844553e5794e252a734ae38284d75a50fa
+
+**Supabase Preview de main:** SUCCESS · 12/12 migraciones estructurales activas · preview sin datos productivos + seed mínimo
+
+**Reconciliación de migraciones:** **RESUELTA** en #846 · sin migration repair, sin reaplicar DDL, sin cambios de RLS
+
+**Cantillana / #822:** **FUSIONADA Y CERTIFICADA** · lote c0160030-0000-4000-8000-000000000001 · 93/93 · 0 inválidas · 0 fallos
+
+**PR abiertas al postflight de Cantillana:** **0**
+
+**Régimen:** FIRST EDITION FREEZE activo
+
+**Frente editorial ACTIVO:** **ninguno**.
+
+> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. Cantillana cierra el tercer macrolote municipal. Coria del Río y Utrera no quedan activadas: antes de cualquier cuarto municipio debe recalcularse desde cero la cobertura provincial.
+## Tablero operativo único
 
 Este apartado sustituye cualquier instrucción de continuidad escrita en auditorías o certificaciones fechadas.
 
@@ -45,7 +66,8 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | **CERRADO** | Macrolote municipal HC-016 · Dos Hermanas | Lote `c0160027-0000-4000-8000-000000000001`: 467/467, 0 inválidas y 0 fallos; veinte Hermandades, siete Bandas locales, 34 relaciones con titulares, 29 Pasos, 26 acompañamientos vigentes y 17 Salidas; #807 y producción `dpl_D1hbF9U3RBee1K6xngMiCTwGDPT4` sobre `8a0fd32d…` | Preservar Santa Ana y Santo Entierro; no reabrir sin deuda material nueva |
 | **CERRADO** | Macrolote municipal HC-016 · Alcalá de Guadaíra | Lote `c0160028-0000-4000-8000-000000000001`: 309/309, 0 inválidas y 0 fallos; catorce Hermandades únicas, cuatro Bandas locales, 29 relaciones con titulares, 21 Pasos, 4 acompañamientos vigentes y 10 estaciones celebradas en 2026; #808 y producción `dpl_2veeyCeBAz1CAcFQLKbb23LtHvBJ` sobre `eca7be9c…` | Preservar Divina Misericordia; no reabrir sin deuda material nueva |
 | **CERRADO** | Segundo macrolote municipal HC-016 · Pilas | Lote `c0160029-0000-4000-8000-000000000001`: 118/118, 0 inválidas y 0 fallos; cuatro corporaciones, dos Bandas locales, ocho titulares, ocho Pasos y ocho Salidas; sin DDL | Preservar el universo municipal; cinco convocatorias pasadas siguen `announced` hasta disponer de evidencia posterior |
-| **CERRADO** | Tercer macrolote municipal HC-016 · Cantillana | Lote c0160030-0000-4000-8000-000000000001: 93/93, 0 inválidas y 0 fallos; Asunción y Pastora preservadas; Soledad cerrada con 4 titulares, 3 Pasos, 7 Cultos/7 ediciones 2026, 1 estación held; Banda local y Cruceta HC-019 preservadas | No reabrir sin deuda material nueva; Montefrío sigue como crédito textual; no elevar announced sin evidencia posterior |\n| **CERRADO** | Navegación, búsqueda, SEO y repertorios · #811–#818 | Jornadas y municipios navegables; buscador ampliado y afinado; caché de directorios y fichas; repertorios de conciertos visibles | No reabrir sin regresión reproducible; los contadores de Home se corrigen de forma transversal sin alterar el modelo |
+| **CERRADO** | Tercer macrolote municipal HC-016 · Cantillana | Lote c0160030-0000-4000-8000-000000000001: 93/93, 0 inválidas y 0 fallos; Asunción y Pastora preservadas; Soledad cerrada con 4 titulares, 3 Pasos, 7 Cultos/7 ediciones 2026, 1 estación held; Banda local y Cruceta HC-019 preservadas | No reabrir sin deuda material nueva; Montefrío sigue como crédito textual; no elevar announced sin evidencia posterior |
+| **CERRADO** | Navegación, búsqueda, SEO y repertorios · #811–#818 | Jornadas y municipios navegables; buscador ampliado y afinado; caché de directorios y fichas; repertorios de conciertos visibles | No reabrir sin regresión reproducible; los contadores de Home se corrigen de forma transversal sin alterar el modelo |
 | **CERRADO** | Cultos septiembre–diciembre de 2026 | Lote transversal HC-016 `c0162026-0909-4000-8000-000000000001`: 53/53, cuatro Hermandades y 0 DDL | Mantener ediciones futuras desde Fuentes oficiales; recurrencia no equivale a anuncio |
 | **CERRADO** | Carátulas de Discografía · #734 y #791 | Reintento del optimizador a la URL original y fallback accesible; #791 estabilizó las 17 carátulas de La Oliva que aún dependían del servidor antiguo | Mantener URLs estables y el fallback accesible como protección, no como deuda activa |
 | **CERRADO** | HC-019 · Crucetas Musicales | Piloto Pastora de Cantillana 2026: 48 obras, 60 interpretaciones, 0 duplicados deterministas y 0 huérfanos; #740 y remate #741 integrados | Incorporar nuevas crucetas como música efectivamente interpretada; multiplicidad no equivale a consecutividad |
@@ -54,7 +76,15 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | **LABORATORIO** | Mejoras de producto y diseño | Ideas de cabeceras, nuevos campos, nuevas secciones y ampliaciones transversales | No activar mientras siga `FIRST EDITION FREEZE` |
 | **BLOQUEADO** | HC-018 · Aportaciones públicas | Implementación en código, activación expresamente bloqueada | No abrir `/colabora` hasta superar sus puertas de seguridad, privacidad y antiabuso |
 
-## Verdad de plataforma\n\n- GitHub: #846 y #822 están fusionadas. El cierre de contenido de Cantillana es f38fde844553e5794e252a734ae38284d75a50fa; tras su postflight había 0 PR abiertas.\n- Vercel: producción quedó READY en dpl_9goKSpfU7ZdsPrGDSk7BY7FZpZe4, exactamente sobre f38fde844553e5794e252a734ae38284d75a50fa; las rutas públicas de Hermandades, Soledad, Banda, Cruceta y Agenda devolvieron 200.\n- Supabase: rama canónica main en FUNCTIONS_DEPLOYED. El lote Cantillana c0160030-0000-4000-8000-000000000001 permanece completed: 93/93 staged, 93/93 válidas, 93/93 aplicadas, 0 inválidas y 0 fallos. No se repitió Apply.\n- Supabase Preview: #846 y la #822 reconstruida superaron previews nuevas con with_data=false. La cadena ejecuta 12 migraciones estructurales activas en orden y el seed mínimo conserva Sevilla, Maestro Tejera y Las Cigarreras.\n- Git ↔ Supabase: correspondencia 12/12 por versión y nombre. Se restauraron en Git las versiones remotas canónicas 20260915215828 y 20260916220756, y se recuperó exactamente 20260916205306_source_links_public_lookup_indexes. La deriva histórica queda **RESUELTA**.\n- Runtime: el postflight de Cantillana no registró errores recientes en Vercel.\n## Reconciliación #789–#799
+## Verdad de plataforma
+
+- GitHub: #846 y #822 están fusionadas. El cierre de contenido de Cantillana es f38fde844553e5794e252a734ae38284d75a50fa; tras su postflight había 0 PR abiertas.
+- Vercel: producción quedó READY en dpl_9goKSpfU7ZdsPrGDSk7BY7FZpZe4, exactamente sobre f38fde844553e5794e252a734ae38284d75a50fa; las rutas públicas de Hermandades, Soledad, Banda, Cruceta y Agenda devolvieron 200.
+- Supabase: rama canónica main en FUNCTIONS_DEPLOYED. El lote Cantillana c0160030-0000-4000-8000-000000000001 permanece completed: 93/93 staged, 93/93 válidas, 93/93 aplicadas, 0 inválidas y 0 fallos. No se repitió Apply.
+- Supabase Preview: #846 y la #822 reconstruida superaron previews nuevas con with_data=false. La cadena ejecuta 12 migraciones estructurales activas en orden y el seed mínimo conserva Sevilla, Maestro Tejera y Las Cigarreras.
+- Git ↔ Supabase: correspondencia 12/12 por versión y nombre. Se restauraron en Git las versiones remotas canónicas 20260915215828 y 20260916220756, y se recuperó exactamente 20260916205306_source_links_public_lookup_indexes. La deriva histórica queda **RESUELTA**.
+- Runtime: el postflight de Cantillana no registró errores recientes en Vercel.
+## Reconciliación #789–#799
 
 | PR | Estado canónico | Resultado |
 |---|---|---|
@@ -99,7 +129,22 @@ Pilas y Utrera compitieron desde cero; no se reutilizó su posición histórica.
 
 Las cinco Salidas de 2026 creadas a partir de convocatorias oficiales permanecen `announced`: la fecha pasada no acredita celebración. Tampoco se fabricaron Cultos fechados, Agenda futura, conciertos, igualás, Crucetas, acompañamientos no identificados ni multimedia sin derechos. El postflight de datos conserva 0 slugs publicados duplicados, 0 titulares o Pasos publicados huérfanos y 0 contaminación territorial. La certificación está en [`CERTIFICACION-PILAS-SEGUNDO-MACROLOTE-MUNICIPAL-HC016-2026-09-16.md`](./CERTIFICACION-PILAS-SEGUNDO-MACROLOTE-MUNICIPAL-HC016-2026-09-16.md).
 
-## Tercer macrolote provincial · Cantillana · CERTIFICADO\n\nCantillana queda **CERRADA** como tercer macrolote municipal. El lote c0160030-0000-4000-8000-000000000001 permanece completed con **93/93 operaciones**, 0 inválidas y 0 fallos. No se repitió Apply durante la reconciliación de #822.\n\nSe preservan como identidades separadas **La Asunción de Cantillana**, **La Pastora de Cantillana** y **La Soledad de Cantillana**. También se preservan la Banda de Música de Nuestra Señora de la Soledad y la Cruceta HC-019 de la Pastora (48 obras / 60 interpretaciones).\n\nLa Soledad queda certificada con **4 titulares, 3 Pasos, 7 Cultos y 7 ediciones 2026, una estación de penitencia celebrada el 3 de abril de 2026 y acompañamiento musical local publicado**. Septenario y Besamanos constan held; las otras cinco convocatorias cultuales continúan announced porque no existe evidencia posterior suficiente. «Montefrío» permanece como crédito textual sin crear una Banda ni una posición no acreditadas.\n\nQA final de grafo: 0 slugs publicados duplicados, 0 enlaces huérfanos de titulares/Pasos en Cantillana, 0 imágenes o Pasos compartidos indebidamente entre las tres Hermandades, 0 salidas duplicadas y 0 duplicados de Agenda.\n\nEl buscador se valida mediante las rutas genéricas del grafo —«Hermandades de Cantillana», «Bandas de Cantillana» y «Qué hay en Cantillana»— y mediante una regresión V10 encadenada; no existe ninguna excepción nominal de Cantillana en la lógica del buscador.\n\nLa certificación está en [CERTIFICACION-CANTILLANA-TERCER-MACROLOTE-MUNICIPAL-HC016-2026-09-17.md](./CERTIFICACION-CANTILLANA-TERCER-MACROLOTE-MUNICIPAL-HC016-2026-09-17.md).\n\n**No se abre un cuarto municipio.** Coria del Río y Utrera dejan de ser una cola reutilizable: el siguiente análisis municipal, cuando se ordene, debe recalcular desde cero la cobertura provincial posterior a Cantillana.\n## Supabase · conciertos
+## Tercer macrolote provincial · Cantillana · CERTIFICADO
+
+Cantillana queda **CERRADA** como tercer macrolote municipal. El lote c0160030-0000-4000-8000-000000000001 permanece completed con **93/93 operaciones**, 0 inválidas y 0 fallos. No se repitió Apply durante la reconciliación de #822.
+
+Se preservan como identidades separadas **La Asunción de Cantillana**, **La Pastora de Cantillana** y **La Soledad de Cantillana**. También se preservan la Banda de Música de Nuestra Señora de la Soledad y la Cruceta HC-019 de la Pastora (48 obras / 60 interpretaciones).
+
+La Soledad queda certificada con **4 titulares, 3 Pasos, 7 Cultos y 7 ediciones 2026, una estación de penitencia celebrada el 3 de abril de 2026 y acompañamiento musical local publicado**. Septenario y Besamanos constan held; las otras cinco convocatorias cultuales continúan announced porque no existe evidencia posterior suficiente. «Montefrío» permanece como crédito textual sin crear una Banda ni una posición no acreditadas.
+
+QA final de grafo: 0 slugs publicados duplicados, 0 enlaces huérfanos de titulares/Pasos en Cantillana, 0 imágenes o Pasos compartidos indebidamente entre las tres Hermandades, 0 salidas duplicadas y 0 duplicados de Agenda.
+
+El buscador se valida mediante las rutas genéricas del grafo —«Hermandades de Cantillana», «Bandas de Cantillana» y «Qué hay en Cantillana»— y mediante una regresión V10 encadenada; no existe ninguna excepción nominal de Cantillana en la lógica del buscador.
+
+La certificación está en [CERTIFICACION-CANTILLANA-TERCER-MACROLOTE-MUNICIPAL-HC016-2026-09-17.md](./CERTIFICACION-CANTILLANA-TERCER-MACROLOTE-MUNICIPAL-HC016-2026-09-17.md).
+
+**No se abre un cuarto municipio.** Coria del Río y Utrera dejan de ser una cola reutilizable: el siguiente análisis municipal, cuando se ordene, debe recalcular desde cero la cobertura provincial posterior a Cantillana.
+## Supabase · conciertos
 
 El historial remoto y la cadena reproducible contienen estas versiones exactas:
 
@@ -407,4 +452,22 @@ El nuevo corte volvió a medir Sevilla capital, La Rinconada, Dos Hermanas y Alc
 
 Sagrada Resurrección ganó por el mayor lote útil y verificable: cinco titulares, dos Pasos, tres posiciones musicales vigentes y seis periodos, además de Cultos, Salida, patrimonio y acontecimientos con Fuentes oficiales segmentadas. Santa Ana conserva más valor municipal, pero ofrecía un grafo menor; Soledad de San Lorenzo no igualaba la combinación de tamaño, fuentes y cierre íntegro mediante DML.
 
-## Auditor\n\n1. **¿Cuál era el HEAD inicial real?** 4608dfc53fe739c3285d15bf431dcc42659e52f8, con GitHub y Vercel verdes pero Supabase Preview bloqueada por versiones remotas ausentes en Git.\n2. **¿Cuál fue la causa de la deriva?** Dos migraciones estructurales estaban aplicadas remotamente bajo timestamps distintos a los archivos que terminaron en Git y una tercera migración estructural de índices de source_links estaba registrada en producción pero ausente de la cadena activa.\n3. **¿Se alteró producción para resolverla?** No. #846 reconcilió el historial en Git con SQL exacto ya registrado remotamente. No hubo migration repair, reaplicación de DDL ni cambios de RLS.\n4. **¿La cadena vuelve a ser reproducible?** Sí: 12/12 migraciones, en orden, sobre preview sin datos productivos, más seed mínimo; Git ↔ Supabase coincide por versión y nombre.\n5. **¿Cantillana se reaplicó?** No. El lote 93/93 ya ejecutado se auditó en producción y se preservó.\n6. **¿Qué quedó certificado en Cantillana?** Tres Hermandades, una Banda local, la Cruceta de Pastora y la Soledad con 4 titulares, 3 Pasos, 7 Cultos/ediciones, salida 2026, música y Fuentes.\n7. **¿Qué huecos siguen siendo legítimos?** Identidad/posición exacta de Montefrío, multimedia con derechos y cinco convocatorias cultuales sin evidencia posterior de celebración.\n8. **¿El buscador necesita excepciones territoriales?** No. Cantillana entra por los intents municipales y por los filtros/cruces V10 del grafo.\n9. **¿Hay deuda técnica bloqueante?** No en este cierre: GitHub, Vercel, Supabase Preview, producción, rutas y runtime quedaron certificados.\n10. **¿Queda algún frente activo?** No. Cantillana está cerrada y no se activa automáticamente Coria del Río, Utrera ni otro municipio.\n## Siguiente movimiento autorizado\n\n**Ningún frente editorial está activo.**\n\nNo abrir Coria del Río, Utrera ni un cuarto municipio a partir de rankings históricos. Cuando exista una nueva orden municipal, el único movimiento válido será **recalcular desde cero la cobertura provincial posterior a Cantillana** y seleccionar de nuevo sobre el grafo vigente.\n\nNo se activa Laboratorio, HC-018, Sevilla capital ni otro municipio. Los contextos y macrolotes certificados permanecen cerrados. Los acontecimientos pasados que continúen legítimamente en announced solo pueden elevarse ante evidencia posterior verificable.\n
+## Auditor
+
+1. **¿Cuál era el HEAD inicial real?** 4608dfc53fe739c3285d15bf431dcc42659e52f8, con GitHub y Vercel verdes pero Supabase Preview bloqueada por versiones remotas ausentes en Git.
+2. **¿Cuál fue la causa de la deriva?** Dos migraciones estructurales estaban aplicadas remotamente bajo timestamps distintos a los archivos que terminaron en Git y una tercera migración estructural de índices de source_links estaba registrada en producción pero ausente de la cadena activa.
+3. **¿Se alteró producción para resolverla?** No. #846 reconcilió el historial en Git con SQL exacto ya registrado remotamente. No hubo migration repair, reaplicación de DDL ni cambios de RLS.
+4. **¿La cadena vuelve a ser reproducible?** Sí: 12/12 migraciones, en orden, sobre preview sin datos productivos, más seed mínimo; Git ↔ Supabase coincide por versión y nombre.
+5. **¿Cantillana se reaplicó?** No. El lote 93/93 ya ejecutado se auditó en producción y se preservó.
+6. **¿Qué quedó certificado en Cantillana?** Tres Hermandades, una Banda local, la Cruceta de Pastora y la Soledad con 4 titulares, 3 Pasos, 7 Cultos/ediciones, salida 2026, música y Fuentes.
+7. **¿Qué huecos siguen siendo legítimos?** Identidad/posición exacta de Montefrío, multimedia con derechos y cinco convocatorias cultuales sin evidencia posterior de celebración.
+8. **¿El buscador necesita excepciones territoriales?** No. Cantillana entra por los intents municipales y por los filtros/cruces V10 del grafo.
+9. **¿Hay deuda técnica bloqueante?** No en este cierre: GitHub, Vercel, Supabase Preview, producción, rutas y runtime quedaron certificados.
+10. **¿Queda algún frente activo?** No. Cantillana está cerrada y no se activa automáticamente Coria del Río, Utrera ni otro municipio.
+## Siguiente movimiento autorizado
+
+**Ningún frente editorial está activo.**
+
+No abrir Coria del Río, Utrera ni un cuarto municipio a partir de rankings históricos. Cuando exista una nueva orden municipal, el único movimiento válido será **recalcular desde cero la cobertura provincial posterior a Cantillana** y seleccionar de nuevo sobre el grafo vigente.
+
+No se activa Laboratorio, HC-018, Sevilla capital ni otro municipio. Los contextos y macrolotes certificados permanecen cerrados. Los acontecimientos pasados que continúen legítimamente en announced solo pueden elevarse ante evidencia posterior verificable.
