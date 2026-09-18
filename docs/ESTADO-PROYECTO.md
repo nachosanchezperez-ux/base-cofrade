@@ -69,7 +69,7 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | **CERRADO** | Macrolote municipal HC-016 · Alcalá de Guadaíra | Lote `c0160028-0000-4000-8000-000000000001`: 309/309, 0 inválidas y 0 fallos; catorce Hermandades únicas, cuatro Bandas locales, 29 relaciones con titulares, 21 Pasos, 4 acompañamientos vigentes y 10 estaciones celebradas en 2026; #808 y producción `dpl_2veeyCeBAz1CAcFQLKbb23LtHvBJ` sobre `eca7be9c…` | Preservar Divina Misericordia; no reabrir sin deuda material nueva |
 | **CERRADO** | Segundo macrolote municipal HC-016 · Pilas | Lote `c0160029-0000-4000-8000-000000000001`: 118/118, 0 inválidas y 0 fallos; cuatro corporaciones, dos Bandas locales, ocho titulares, ocho Pasos y ocho Salidas; sin DDL | Preservar el universo municipal; cinco convocatorias pasadas siguen `announced` hasta disponer de evidencia posterior |
 | **CERRADO** | Tercer macrolote municipal HC-016 · Cantillana | Lote c0160030-0000-4000-8000-000000000001: 93/93, 0 inválidas y 0 fallos; Asunción y Pastora preservadas; Soledad cerrada con 4 titulares, 3 Pasos, 7 Cultos/7 ediciones 2026, 1 estación held; Banda local y Cruceta HC-019 preservadas | No reabrir sin deuda material nueva; Montefrío sigue como crédito textual; no elevar announced sin evidencia posterior |
-| **ACTIVO** | Cuarto macrolote municipal HC-016 · Coria del Río | Recálculo nuevo sobre `673a356…`: 2 Hermandades y 2 Bandas publicadas; Fuente institucional 2026 acredita seis penitenciales; dos nodos casi equivalentes de Banda Municipal requieren desambiguación | Solo inventario y Fuentes; no Apply hasta cerrar universo corporativo, resolver la Banda Municipal y superar preflight 0/0/0/0 |
+| **ACTIVO** | Cuarto macrolote municipal HC-016 · Coria del Río | Inventario canónico cerrado: 8 corporaciones; 6 faltantes. Mapa nuclear de titulares/Pasos fijado y acompañamientos 2026 documentados salvo Piedad y el rol exacto de AM San Lucas en Resurrección. Banda Municipal resuelta como una sola identidad | Resolver dos residuos musicales, estado held/announced de Salidas, Fuentes propias y plan cuantificado; no Apply hasta preflight 0/0/0/0 |
 | **CERRADO** | Navegación, búsqueda, SEO y repertorios · #811–#818 | Jornadas y municipios navegables; buscador ampliado y afinado; caché de directorios y fichas; repertorios de conciertos visibles | No reabrir sin regresión reproducible; los contadores de Home se corrigen de forma transversal sin alterar el modelo |
 | **CERRADO** | Cultos septiembre–diciembre de 2026 | Lote transversal HC-016 `c0162026-0909-4000-8000-000000000001`: 53/53, cuatro Hermandades y 0 DDL | Mantener ediciones futuras desde Fuentes oficiales; recurrencia no equivale a anuncio |
 | **CERRADO** | Carátulas de Discografía · #734 y #791 | Reintento del optimizador a la URL original y fallback accesible; #791 estabilizó las 17 carátulas de La Oliva que aún dependían del servidor antiguo | Mantener URLs estables y el fallback accesible como protección, no como deuda activa |
@@ -484,16 +484,18 @@ Sanlúcar la Mayor entra en el TOP con siete hermandades de penitencia acreditad
 
 La evidencia completa está en [`AUDITORIA-CUARTO-MACROLOTE-MUNICIPAL-2026-09-18.md`](./AUDITORIA-CUARTO-MACROLOTE-MUNICIPAL-2026-09-18.md).
 
+El inventario canónico y la matriz de Fuentes están en [`INVENTARIO-CORIA-DEL-RIO-CUARTO-MACROLOTE-MUNICIPAL-HC016-2026-09-18.md`](./INVENTARIO-CORIA-DEL-RIO-CUARTO-MACROLOTE-MUNICIPAL-HC016-2026-09-18.md).
+
 ## Siguiente movimiento autorizado
 
-**Único frente editorial activo: Coria del Río · inventario y matriz de Fuentes.**
+**Único frente editorial activo: Coria del Río · cerrar residuos documentales y planificar el lote.**
 
 Antes del Apply se exige:
 
-- universo corporativo cerrado;
-- identidad de la Banda Municipal resuelta o explícitamente separada;
-- Fuentes suficientes para cada alta o actualización;
-- mapa de reutilización;
+- universo corporativo cerrado (**cumplido: 8 corporaciones canónicas**);
+- identidad de la Banda Municipal resuelta o explícitamente separada (**cumplido conceptualmente: una sola formación; falta ejecutar la reconciliación DML dentro del futuro lote**);
+- Fuentes suficientes para cada alta o actualización (**música 2026 casi cerrada; quedan Piedad, rol de AM San Lucas y, cuando existan, canales propios de las corporaciones ausentes**);
+- mapa de reutilización (**cerrado en núcleo: Borriquita, Estrella, Banda Municipal y Santa Cecilia; titulares/Pasos ya inventariados, con una ambigüedad física en el paso de la Soledad del Domingo de Resurrección**);
 - recuento TOTAL / INSERT / UPDATE / REUSE;
 - preflight con 0 INVALID / 0 UNRESOLVED / 0 AMBIGUOUS / 0 COLLISION.
 
