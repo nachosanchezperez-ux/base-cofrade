@@ -21,6 +21,7 @@
 **Frente editorial ACTIVO:** **ninguno**.
 
 > GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. Cantillana cierra el tercer macrolote municipal. Coria del Río y Utrera no quedan activadas: antes de cualquier cuarto municipio debe recalcularse desde cero la cobertura provincial.
+
 ## Tablero operativo único
 
 Este apartado sustituye cualquier instrucción de continuidad escrita en auditorías o certificaciones fechadas.
@@ -58,7 +59,7 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | **CERRADO** | Producto V4 y multimedia · #790, #793 y #794 | Navegación directa de Hermandades y Agenda, legibilidad V4.1 y fotografía independiente por Salida integradas | No reabrir sin una regresión reproducible |
 | **CERRADO** | Agenda de conciertos · #795 | Conciertos integrados en Agenda y relacionados con Bandas mediante esquema reproducible y RLS | Mantener la relación canónica; no duplicar actos ni Bandas |
 | **CERRADO** | Búsqueda municipal · #796, #799 y macrolote de Gerena | Hermandades, Bandas locales y el resumen de entidades publicadas pueden consultarse por municipio | Preservar municipio como filtro transversal y relación canónica; no añadir excepciones nominales |
-| **CERRADO** | Home general · #797 | Portada adaptada a la fotografía completa del proyecto; absorbió la reconciliación que motivó #798 | #798 permanece cerrada sin integrar y sustituida por #797 |
+| **CERRADO** | Tira del Hilo V7–V10 · #842–#845 | Directorios territoriales naturales, razonamiento sobre conjuntos, cruces avanzados y filtros encadenados integrados sobre el grafo público | Mantener las consultas genéricas; no introducir excepciones nominales por municipio |\n| **CERRADO** | Home general · #797 | Portada adaptada a la fotografía completa del proyecto; absorbió la reconciliación que motivó #798 | #798 permanece cerrada sin integrar y sustituida por #797 |
 | **CERRADO** | Agenda V4.2 · #801 | Agenda organizada visualmente por meses, con navegación directa, contadores y diferenciación de tipos; cronología y filtros preservados | No reabrir sin una regresión reproducible |
 | **CERRADO** | Jerarquía editorial de Home · #802 | Agenda como entrada prioritaria, Enciclopedia como núcleo documental y Música e Igualás como accesos especializados | No cambió arquitectura ni rutas; no reabrir sin una regresión reproducible |
 | **CERRADO** | Visibilidad y navegación de Agenda · #803–#805 | Categorías accesibles desde Home, selección de sección coherente y visuales con prioridad foto → escudo/logo → fallback, también en móvil | Entraron durante la auditoría municipal y quedaron absorbidas antes de la PR del macrolote |
@@ -464,6 +465,7 @@ Sagrada Resurrección ganó por el mayor lote útil y verificable: cinco titular
 8. **¿El buscador necesita excepciones territoriales?** No. Cantillana entra por los intents municipales y por los filtros/cruces V10 del grafo.
 9. **¿Hay deuda técnica bloqueante?** No en este cierre: GitHub, Vercel, Supabase Preview, producción, rutas y runtime quedaron certificados.
 10. **¿Queda algún frente activo?** No. Cantillana está cerrada y no se activa automáticamente Coria del Río, Utrera ni otro municipio.
+
 ## Siguiente movimiento autorizado
 
 **Ningún frente editorial está activo.**
