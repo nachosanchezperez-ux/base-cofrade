@@ -20,9 +20,9 @@
     "reuse_count": 18,
     "operations_total": 304,
     "operations_by_category": {
-      "archive": 1,
+      "archive": 2,
       "create": 99,
-      "reconcile": 6,
+      "reconcile": 5,
       "relation": 182,
       "source": 15,
       "update": 1
@@ -31,8 +31,8 @@
       "agent_disciplines": 1,
       "agent_names": 1,
       "agents": 1,
-      "band_names": 2,
-      "bands": 3,
+      "band_names": 1,
+      "bands": 4,
       "brotherhood_images": 14,
       "brotherhood_steps": 15,
       "brotherhoods": 7,
@@ -56,7 +56,7 @@
       "Cultos y acontecimientos nuevos: 0; no se fabrica vigencia.",
       "Banda Artística Coriana se conserva como nombre histórico/asociativo de la Banda Municipal, no como entidad independiente.",
       "Solo Cautivo y Soledad/Resurrección 2026 se elevan a held por evidencia posterior.",
-      "La entidad duplicada de Banda Municipal se archiva antes de registrar el nombre canónico para respetar guard_band_name_alias_collision."
+      "El duplicado archivado de Banda Municipal conserva su ID pero queda sin municipality_id activo; el nombre público vigente reside en el nodo canónico y Banda Artística Coriana queda como nombre histórico no vigente."
     ]
   },
   "reuse": [
@@ -791,6 +791,19 @@
     },
     {
       "operation": "update",
+      "table": "bands",
+      "where_keys": [
+        "entity_id"
+      ],
+      "data": {
+        "entity_id": "870f7ec0-8a57-4652-96ff-05725104a47b",
+        "municipality_id": null,
+        "description": "Duplicado histórico reconciliado con la Banda Municipal de Música de Coria del Río; se conserva el ID archivado sin pertenencia municipal activa."
+      },
+      "category": "archive"
+    },
+    {
+      "operation": "update",
       "table": "entities",
       "where_keys": [
         "id"
@@ -815,25 +828,6 @@
         "website_url": "https://linktr.ee/bandadecoria",
         "description": "Banda Municipal de Música de Coria del Río. La denominación Banda Artística Coriana forma parte de su historia y de su estructura asociativa; no se modela como una formación distinta.",
         "headquarters_text": "Coria del Río"
-      },
-      "category": "reconcile"
-    },
-    {
-      "operation": "upsert",
-      "table": "band_names",
-      "on_conflict": "id",
-      "data": {
-        "id": "c0160031-0410-4000-8000-000000000010",
-        "band_entity_id": "63f719d8-61ab-4357-a43f-cc7977bdda43",
-        "name": "Banda Municipal de Música de Coria del Río",
-        "short_name": "BM Coria",
-        "name_type": "official",
-        "date_from": null,
-        "date_from_text": "Denominación pública vigente",
-        "date_to": null,
-        "date_to_text": null,
-        "is_current": true,
-        "notes": "Nombre público normalizado en el cierre municipal de Coria."
       },
       "category": "reconcile"
     },
