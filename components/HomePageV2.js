@@ -103,10 +103,10 @@ export default function HomePageV2({
       <div className="shell">
         <header className={styles.upcomingAgendaHead}>
           <div>
-            <span className={styles.eyebrow}>Agenda cofrade</span>
-            <h2 id="proximos-dias-title">En los próximos días</h2>
+            <span className={styles.eyebrow}>Procesiones próximas</span>
+            <h2 id="proximos-dias-title">En los próximos días, procesiones</h2>
           </div>
-          <p>Las próximas procesiones documentadas en Sevilla y su provincia, reunidas por fecha.</p>
+          <p>Las próximas salidas procesionales documentadas en Sevilla y su provincia. Para rosarios, besamanos, traslados y conciertos, consulta la Agenda Cofrade.</p>
         </header>
 
         <article className={`${styles.featuredExtraordinaryCard} ${polishStyles.extraordinaryCard} ${liveState.state === 'live' ? liveStyles.featuredExtraordinaryLive : ''} ${featuredOuting.heroImagePath ? '' : liveStyles.featuredExtraordinaryNoMedia}`}>
@@ -239,7 +239,10 @@ export default function HomePageV2({
                 </Link>
               ))}
             </div>
-            <nav className={styles.agendaCalendars} aria-label="Calendarios de próximas procesiones">
+            <nav className={styles.agendaCalendars} aria-label="Calendarios y Agenda Cofrade">
+              <Link className={navStyles.calendar} href="/agenda-cofrade">
+                Agenda Cofrade <span aria-hidden="true">→</span>
+              </Link>
               <Link className={navStyles.calendar} href="/extraordinarias">
                 Extraordinarias <span aria-hidden="true">→</span>
               </Link>
