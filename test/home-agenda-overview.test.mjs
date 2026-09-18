@@ -12,10 +12,11 @@ test('la Home ofrece accesos directos a los periodos y categorías reales de Age
   assert.match(overview, /periodo=weekend#agenda/)
 
   for (const category of ['processions', 'transfers', 'rosaries', 'devotions', 'concerts']) {
-    assert.match(overview, new RegExp(`categoria=\\\\${category}#agenda`))
+    assert.match(overview, new RegExp(`key: ['"]${category}['"]`))
     assert.match(agenda, new RegExp(`['"]${category}['"]`))
   }
 
+  assert.match(overview, /categoria=\\$\\{category\\.key\\}#agenda/)
   assert.match(overview, /Por tipo de acto/)
   assert.match(overview, /Igualás y ensayos/)
 })
