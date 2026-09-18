@@ -17,3 +17,11 @@ Reglas para un cambio futuro:
 3. probar la cadena completa sobre una base vacía y después el seed;
 4. actualizar la lista cerrada de `test/migration-history.test.mjs`;
 5. exigir `Supabase Preview` verde antes de fusionar.
+
+## Reconciliación de historial · 18/09/2026
+
+La versión de cada migración estructural activa debe coincidir con la registrada en
+`supabase_migrations.schema_migrations`. Si producción conserva una migración
+estructural válida cuya definición puede recuperarse exactamente desde ese historial,
+Git debe restaurar esa misma versión y SQL; no se crea DDL nuevo ni se usa
+`migration repair` para ocultar la deriva.
