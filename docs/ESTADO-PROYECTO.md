@@ -1,32 +1,26 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 16 de septiembre de 2026 · selección del tercer macrolote provincial
+**Corte operativo:** 18 de septiembre de 2026 · reconciliación Supabase + cierre certificado de Cantillana
 
-**HEAD de preflight del tercer macrolote:** `9d8e09b5a4a9acedebafaf574c8b938ebbb14cca`
+**HEAD de cierre de contenido Cantillana:** f38fde844553e5794e252a734ae38284d75a50fa
 
-**Producción de preflight:** `READY` · deployment `dpl_DEe9z4X9CK6jWTed3HfVopGxCqNP` · SHA `9d8e09b5a4a9acedebafaf574c8b938ebbb14cca`
+**HEAD canónico del tablero:** el commit que contiene esta actualización documental; el postflight exacto se consigna en el entregable de cierre.
 
-**HEAD de partida del segundo macrolote:** `b2ba99b5fee86eff6226c523f1db2953bf8337a6`
+**Producción certificada tras #822:** READY · deployment dpl_9goKSpfU7ZdsPrGDSk7BY7FZpZe4 · SHA f38fde844553e5794e252a734ae38284d75a50fa
 
-**HEAD reconciliado antes de integrar Dos Hermanas:** `4588879d38e02bf00ba4f98ab22595438012fe02`
+**Supabase Preview de main:** SUCCESS · 12/12 migraciones estructurales activas · preview sin datos productivos + seed mínimo
 
-**HEAD reconciliado antes de integrar Alcalá de Guadaíra:** `8a0fd32d397e8a1fb3fd9f8cc4a84abc50328762`
+**Reconciliación de migraciones:** **RESUELTA** en #846 · sin migration repair, sin reaplicar DDL, sin cambios de RLS
 
-**HEAD canónico tras cerrar Alcalá de Guadaíra:** `eca7be9cc5356e5636aed9b9814b9c997ca4b9a8`
+**Cantillana / #822:** **FUSIONADA Y CERTIFICADA** · lote c0160030-0000-4000-8000-000000000001 · 93/93 · 0 inválidas · 0 fallos
 
-**HEAD canónico antes de integrar Pilas:** `b2ba99b5fee86eff6226c523f1db2953bf8337a6`
+**PR abiertas al postflight de Cantillana:** **0**
 
-**Producción canónica al abrir Pilas:** `READY` · deployment `dpl_Fd3qjT7jP9J3A2addtUZNYgKhWLh` · SHA `b2ba99b5fee86eff6226c523f1db2953bf8337a6`
+**Régimen:** FIRST EDITION FREEZE activo
 
-**Producción de partida auditada:** `READY` · deployment `dpl_2P3Q9Rtdobb7rVd63jwi7U3f1VmP` · SHA `074acd5dde226c5c5305904205362b06c5ed54e6`
+**Frente editorial ACTIVO:** **ninguno**.
 
-**PR abiertas:** **0** al abrir el recálculo municipal
-
-**Régimen:** `FIRST EDITION FREEZE` activo
-
-**Frente editorial ACTIVO:** **Cantillana · inventario y fuentes del tercer macrolote municipal**. El Apply editorial no ha comenzado.
-
-> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. El SHA de partida de este segundo macrolote es `b2ba99b5…`; el commit que contenga este tablero pasa a ser el HEAD canónico cuando `main` y producción vuelvan a coincidir. Los dieciséis contextos HC-016, todos los macrolotes de Semana Santa y Glorias de septiembre y octubre permanecen cerrados.
+> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. Cantillana cierra el tercer macrolote municipal. Coria del Río y Utrera no quedan activadas: antes de cualquier cuarto municipio debe recalcularse desde cero la cobertura provincial.
 
 ## Tablero operativo único
 
@@ -35,7 +29,7 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | Posición | Frente | Estado real | Regla |
 |---|---|---|---|
 | **CERRADO** | Orden operativo | Autoridad documental y cola única integradas en #712 | No reabrir salvo contradicción verificable |
-| **CERRADO** | [#492 · Supabase Preview Branches](https://github.com/nachosanchezperez-ux/base-cofrade/issues/492) | Incidencia cerrada; la cadena reproducible incorpora diez migraciones estructurales y las tres de conciertos superan la preview sin datos | Todo cambio futuro de esquema debe nacer como migración reproducible y superar una preview sin datos |
+| **CERRADO** | [#492 · Supabase Preview Branches](https://github.com/nachosanchezperez-ux/base-cofrade/issues/492) | Incidencia cerrada; #846 reconcilió el historial y la cadena activa contiene 12 migraciones estructurales, reproducibles desde cero en preview sin datos | Todo cambio futuro de esquema debe nacer como migración reproducible y superar una preview sin datos |
 | **CERRADO** | Higiene de ramas | 817 ramas revisadas; 754 eliminadas por SHA; 63 preservadas; salvaguarda remota verificada | No borrar las 61 ramas con trabajo único sin una revisión futura específica |
 | **CERRADO** | Cuarto lote HC-016 | El Cachorro: 90/90 aplicadas, 0 inválidas, 0 fallos; intento previo inválido cancelado con 0 escrituras | No reabrir para perseguir un 100 % artificial |
 | **CERRADO** | Quinto lote HC-016 | El Carmen: 83/83 aplicadas, 0 inválidas, 0 fallos; 3 titulares, 2 Pasos, 9 Cultos, Salida de 2026 y 4 periodos musicales | No reabrir para completar catálogos exhaustivos o perseguir un 100 % artificial |
@@ -65,6 +59,7 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | **CERRADO** | Producto V4 y multimedia · #790, #793 y #794 | Navegación directa de Hermandades y Agenda, legibilidad V4.1 y fotografía independiente por Salida integradas | No reabrir sin una regresión reproducible |
 | **CERRADO** | Agenda de conciertos · #795 | Conciertos integrados en Agenda y relacionados con Bandas mediante esquema reproducible y RLS | Mantener la relación canónica; no duplicar actos ni Bandas |
 | **CERRADO** | Búsqueda municipal · #796, #799 y macrolote de Gerena | Hermandades, Bandas locales y el resumen de entidades publicadas pueden consultarse por municipio | Preservar municipio como filtro transversal y relación canónica; no añadir excepciones nominales |
+| **CERRADO** | Tira del Hilo V7–V10 · #842–#845 | Directorios territoriales naturales, razonamiento sobre conjuntos, cruces avanzados y filtros encadenados integrados sobre el grafo público | Mantener las consultas genéricas; no introducir excepciones nominales por municipio |
 | **CERRADO** | Home general · #797 | Portada adaptada a la fotografía completa del proyecto; absorbió la reconciliación que motivó #798 | #798 permanece cerrada sin integrar y sustituida por #797 |
 | **CERRADO** | Agenda V4.2 · #801 | Agenda organizada visualmente por meses, con navegación directa, contadores y diferenciación de tipos; cronología y filtros preservados | No reabrir sin una regresión reproducible |
 | **CERRADO** | Jerarquía editorial de Home · #802 | Agenda como entrada prioritaria, Enciclopedia como núcleo documental y Música e Igualás como accesos especializados | No cambió arquitectura ni rutas; no reabrir sin una regresión reproducible |
@@ -73,6 +68,7 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | **CERRADO** | Macrolote municipal HC-016 · Dos Hermanas | Lote `c0160027-0000-4000-8000-000000000001`: 467/467, 0 inválidas y 0 fallos; veinte Hermandades, siete Bandas locales, 34 relaciones con titulares, 29 Pasos, 26 acompañamientos vigentes y 17 Salidas; #807 y producción `dpl_D1hbF9U3RBee1K6xngMiCTwGDPT4` sobre `8a0fd32d…` | Preservar Santa Ana y Santo Entierro; no reabrir sin deuda material nueva |
 | **CERRADO** | Macrolote municipal HC-016 · Alcalá de Guadaíra | Lote `c0160028-0000-4000-8000-000000000001`: 309/309, 0 inválidas y 0 fallos; catorce Hermandades únicas, cuatro Bandas locales, 29 relaciones con titulares, 21 Pasos, 4 acompañamientos vigentes y 10 estaciones celebradas en 2026; #808 y producción `dpl_2veeyCeBAz1CAcFQLKbb23LtHvBJ` sobre `eca7be9c…` | Preservar Divina Misericordia; no reabrir sin deuda material nueva |
 | **CERRADO** | Segundo macrolote municipal HC-016 · Pilas | Lote `c0160029-0000-4000-8000-000000000001`: 118/118, 0 inválidas y 0 fallos; cuatro corporaciones, dos Bandas locales, ocho titulares, ocho Pasos y ocho Salidas; sin DDL | Preservar el universo municipal; cinco convocatorias pasadas siguen `announced` hasta disponer de evidencia posterior |
+| **CERRADO** | Tercer macrolote municipal HC-016 · Cantillana | Lote c0160030-0000-4000-8000-000000000001: 93/93, 0 inválidas y 0 fallos; Asunción y Pastora preservadas; Soledad cerrada con 4 titulares, 3 Pasos, 7 Cultos/7 ediciones 2026, 1 estación held; Banda local y Cruceta HC-019 preservadas | No reabrir sin deuda material nueva; Montefrío sigue como crédito textual; no elevar announced sin evidencia posterior |
 | **CERRADO** | Navegación, búsqueda, SEO y repertorios · #811–#818 | Jornadas y municipios navegables; buscador ampliado y afinado; caché de directorios y fichas; repertorios de conciertos visibles | No reabrir sin regresión reproducible; los contadores de Home se corrigen de forma transversal sin alterar el modelo |
 | **CERRADO** | Cultos septiembre–diciembre de 2026 | Lote transversal HC-016 `c0162026-0909-4000-8000-000000000001`: 53/53, cuatro Hermandades y 0 DDL | Mantener ediciones futuras desde Fuentes oficiales; recurrencia no equivale a anuncio |
 | **CERRADO** | Carátulas de Discografía · #734 y #791 | Reintento del optimizador a la URL original y fallback accesible; #791 estabilizó las 17 carátulas de La Oliva que aún dependían del servidor antiguo | Mantener URLs estables y el fallback accesible como protección, no como deuda activa |
@@ -84,12 +80,12 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 
 ## Verdad de plataforma
 
-- GitHub: el segundo macrolote partió de `b2ba99b5fee86eff6226c523f1db2953bf8337a6`, con Gerena, Dos Hermanas y Alcalá de Guadaíra cerrados y 0 PR abiertas. El commit final del macrolote prevalece.
-- Vercel: la producción de partida del segundo macrolote estaba `READY` mediante `dpl_Fd3qjT7jP9J3A2addtUZNYgKhWLh`, exactamente sobre `b2ba99b5fee86eff6226c523f1db2953bf8337a6`.
-- Supabase: proyecto `Hilocofrade` `ACTIVE_HEALTHY`. El lote de Pilas (`c0160029-0000-4000-8000-000000000001`) figura `completed` con 118/118, 0 inválidas y 0 fallos; no ejecutó DDL ni modificó RLS.
-- Supabase Preview: #492 continúa cerrada y la cadena reproducible incluye las tres migraciones de conciertos; no existe un bloqueo estructural pendiente y esta reconciliación documental no ejecuta DDL ni modifica RLS.
-- Git ↔ Supabase: el esquema remoto coincide con la cadena de Git. El historial remoto conserva `20260915215828_add_brotherhood_habit_gloves`, mientras el archivo reproducible equivalente usa `20260915215500`; es una diferencia histórica de versión, no de definición. Las tres migraciones posteriores coinciden exactamente por versión y nombre.
-
+- GitHub: #846 y #822 están fusionadas. El cierre de contenido de Cantillana es f38fde844553e5794e252a734ae38284d75a50fa; tras su postflight había 0 PR abiertas.
+- Vercel: producción quedó READY en dpl_9goKSpfU7ZdsPrGDSk7BY7FZpZe4, exactamente sobre f38fde844553e5794e252a734ae38284d75a50fa; las rutas públicas de Hermandades, Soledad, Banda, Cruceta y Agenda devolvieron 200.
+- Supabase: rama canónica main en FUNCTIONS_DEPLOYED. El lote Cantillana c0160030-0000-4000-8000-000000000001 permanece completed: 93/93 staged, 93/93 válidas, 93/93 aplicadas, 0 inválidas y 0 fallos. No se repitió Apply.
+- Supabase Preview: #846 y la #822 reconstruida superaron previews nuevas con with_data=false. La cadena ejecuta 12 migraciones estructurales activas en orden y el seed mínimo conserva Sevilla, Maestro Tejera y Las Cigarreras.
+- Git ↔ Supabase: correspondencia 12/12 por versión y nombre. Se restauraron en Git las versiones remotas canónicas 20260915215828 y 20260916220756, y se recuperó exactamente 20260916205306_source_links_public_lookup_indexes. La deriva histórica queda **RESUELTA**.
+- Runtime: el postflight de Cantillana no registró errores recientes en Vercel.
 ## Reconciliación #789–#799
 
 | PR | Estado canónico | Resultado |
@@ -135,14 +131,21 @@ Pilas y Utrera compitieron desde cero; no se reutilizó su posición histórica.
 
 Las cinco Salidas de 2026 creadas a partir de convocatorias oficiales permanecen `announced`: la fecha pasada no acredita celebración. Tampoco se fabricaron Cultos fechados, Agenda futura, conciertos, igualás, Crucetas, acompañamientos no identificados ni multimedia sin derechos. El postflight de datos conserva 0 slugs publicados duplicados, 0 titulares o Pasos publicados huérfanos y 0 contaminación territorial. La certificación está en [`CERTIFICACION-PILAS-SEGUNDO-MACROLOTE-MUNICIPAL-HC016-2026-09-16.md`](./CERTIFICACION-PILAS-SEGUNDO-MACROLOTE-MUNICIPAL-HC016-2026-09-16.md).
 
-## Tercer macrolote provincial · selección
+## Tercer macrolote provincial · Cantillana · CERTIFICADO
 
-El recálculo sobre el grafo posterior a Pilas abarca **56 municipios** de la provincia con Hermandad o Banda local, **85 Hermandades publicadas** y **51 Bandas publicadas**. Gerena, Dos Hermanas, Alcalá de Guadaíra y Pilas quedan excluidos como municipios ya certificados. El TOP 3 actual es **Cantillana**, **Coria del Río** y **Utrera**.
+Cantillana queda **CERRADA** como tercer macrolote municipal. El lote c0160030-0000-4000-8000-000000000001 permanece completed con **93/93 operaciones**, 0 inválidas y 0 fallos. No se repitió Apply durante la reconciliación de #822.
 
-Cantillana gana por combinar tres Hermandades publicadas, una Banda local, seis Cultos, cuatro Salidas, una Cruceta y trece enlaces directos de Fuente. La Asunción y la Pastora se preservan; la deuda nuclear está concentrada en la Soledad, cuya ficha carece de titulares, Pasos, Cultos y Salidas estructurados. Coria del Río queda en cola con dos Hermandades y dos nodos de Banda que requieren reconciliación de identidad. Utrera queda en cola por su gran valor territorial, pero el grafo actual solo representa tres de las trece corporaciones del universo documentado y conserva dos nodos Álvarez Quintero que deben desambiguarse antes de un cierre integral.
+Se preservan como identidades separadas **La Asunción de Cantillana**, **La Pastora de Cantillana** y **La Soledad de Cantillana**. También se preservan la Banda de Música de Nuestra Señora de la Soledad y la Cruceta HC-019 de la Pastora (48 obras / 60 interpretaciones).
 
-La auditoría completa, la metodología y el universo preliminar de Cantillana están en [`AUDITORIA-TERCER-MACROLOTE-MUNICIPAL-2026-09-16.md`](./AUDITORIA-TERCER-MACROLOTE-MUNICIPAL-2026-09-16.md). La selección no ejecuta DML, DDL ni cambios de RLS: activa únicamente el inventario y la reunión de fuentes del municipio ganador.
+La Soledad queda certificada con **4 titulares, 3 Pasos, 7 Cultos y 7 ediciones 2026, una estación de penitencia celebrada el 3 de abril de 2026 y acompañamiento musical local publicado**. Septenario y Besamanos constan held; las otras cinco convocatorias cultuales continúan announced porque no existe evidencia posterior suficiente. «Montefrío» permanece como crédito textual sin crear una Banda ni una posición no acreditadas.
 
+QA final de grafo: 0 slugs publicados duplicados, 0 enlaces huérfanos de titulares/Pasos en Cantillana, 0 imágenes o Pasos compartidos indebidamente entre las tres Hermandades, 0 salidas duplicadas y 0 duplicados de Agenda.
+
+El buscador se valida mediante las rutas genéricas del grafo —«Hermandades de Cantillana», «Bandas de Cantillana» y «Qué hay en Cantillana»— y mediante una regresión V10 encadenada; no existe ninguna excepción nominal de Cantillana en la lógica del buscador.
+
+La certificación está en [CERTIFICACION-CANTILLANA-TERCER-MACROLOTE-MUNICIPAL-HC016-2026-09-17.md](./CERTIFICACION-CANTILLANA-TERCER-MACROLOTE-MUNICIPAL-HC016-2026-09-17.md).
+
+**No se abre un cuarto municipio.** Coria del Río y Utrera dejan de ser una cola reutilizable: el siguiente análisis municipal, cuando se ordene, debe recalcular desde cero la cobertura provincial posterior a Cantillana.
 ## Supabase · conciertos
 
 El historial remoto y la cadena reproducible contienen estas versiones exactas:
@@ -151,7 +154,7 @@ El historial remoto y la cadena reproducible contienen estas versiones exactas:
 - `20260916062216_create_concert_event_bands`;
 - `20260916062223_secure_concert_event_bands`.
 
-`public.concert_event_bands` está disponible, con RLS activa y cinco políticas vigentes: lectura de relaciones publicadas, lectura del Panel, alta y actualización editorial y borrado administrativo. Las restricciones de `public.events` aceptan la categoría `concert` y exigen fecha y tipo musical. El esquema remoto y el repositorio son equivalentes, la preview puede reproducir las diez migraciones activas sobre una base vacía y [#492](https://github.com/nachosanchezperez-ux/base-cofrade/issues/492) continúa cerrada.
+`public.concert_event_bands` está disponible, con RLS activa y cinco políticas vigentes: lectura de relaciones publicadas, lectura del Panel, alta y actualización editorial y borrado administrativo. Las restricciones de `public.events` aceptan la categoría `concert` y exigen fecha y tipo musical. El esquema remoto y el repositorio vuelven a ser equivalentes tras #846: la preview reproduce las doce migraciones activas sobre una base vacía y [#492](https://github.com/nachosanchezperez-ux/base-cofrade/issues/492) continúa cerrada.
 
 ## Observación histórica de runtime
 
@@ -453,19 +456,21 @@ Sagrada Resurrección ganó por el mayor lote útil y verificable: cinco titular
 
 ## Auditor
 
-1. **¿Cuál es el HEAD real de partida?** `445531f985c0e6527ab45d6a69e98b977d3111ce`; el SHA fusionado de este cierre prevalece al terminar el pipeline.
-2. **¿Producción coincide exactamente?** Sí en el corte de partida; el postflight final exige coincidencia exacta con el SHA fusionado.
-3. **¿Hay PR abiertas?** No en el preflight; el cierre exige volver a 0.
-4. **¿Qué deuda grande era falsa?** La ausencia de discografía, estrenos, imágenes o intervenciones no es universalmente aplicable y no autoriza rellenar fichas ni perseguir un 100 % artificial.
-5. **¿Qué se ha reconciliado en este corte?** Las once PR #789–#799, distinguiendo diez integradas y #798 cerrada sin integrar, además de las tres migraciones de conciertos y el timeout histórico no reproducido.
-6. **¿Qué relaciones nuevas quedan certificadas?** Conciertos con Bandas, igualás y ensayos con Hermandades, fotografías con Salidas y búsquedas municipales de Hermandades y Bandas relacionadas.
-7. **¿Dónde está el riesgo enciclopédico?** En convertir cada catálogo patrimonial, biografía, discografía, dedicatoria o fotografía ausente en deuda obligatoria.
-8. **¿Qué funcionalidad queda operativa?** La Agenda integra conciertos; Hermandades y Bandas permiten búsqueda municipal; la Home representa el proyecto completo y el Panel conserva la subida múltiple.
-9. **¿HC-016/019/020 permiten seguir creciendo?** Sí. Este cierre es exclusivamente documental y no altera sus contratos ni ejecuta DDL.
-10. **¿Queda algún frente activo?** Sí: Cantillana queda seleccionada únicamente para cerrar inventario y fuentes; el Apply editorial todavía no ha comenzado y Coria del Río y Utrera permanecen en cola.
+1. **¿Cuál era el HEAD inicial real?** 4608dfc53fe739c3285d15bf431dcc42659e52f8, con GitHub y Vercel verdes pero Supabase Preview bloqueada por versiones remotas ausentes en Git.
+2. **¿Cuál fue la causa de la deriva?** Dos migraciones estructurales estaban aplicadas remotamente bajo timestamps distintos a los archivos que terminaron en Git y una tercera migración estructural de índices de source_links estaba registrada en producción pero ausente de la cadena activa.
+3. **¿Se alteró producción para resolverla?** No. #846 reconcilió el historial en Git con SQL exacto ya registrado remotamente. No hubo migration repair, reaplicación de DDL ni cambios de RLS.
+4. **¿La cadena vuelve a ser reproducible?** Sí: 12/12 migraciones, en orden, sobre preview sin datos productivos, más seed mínimo; Git ↔ Supabase coincide por versión y nombre.
+5. **¿Cantillana se reaplicó?** No. El lote 93/93 ya ejecutado se auditó en producción y se preservó.
+6. **¿Qué quedó certificado en Cantillana?** Tres Hermandades, una Banda local, la Cruceta de Pastora y la Soledad con 4 titulares, 3 Pasos, 7 Cultos/ediciones, salida 2026, música y Fuentes.
+7. **¿Qué huecos siguen siendo legítimos?** Identidad/posición exacta de Montefrío, multimedia con derechos y cinco convocatorias cultuales sin evidencia posterior de celebración.
+8. **¿El buscador necesita excepciones territoriales?** No. Cantillana entra por los intents municipales y por los filtros/cruces V10 del grafo.
+9. **¿Hay deuda técnica bloqueante?** No en este cierre: GitHub, Vercel, Supabase Preview, producción, rutas y runtime quedaron certificados.
+10. **¿Queda algún frente activo?** No. Cantillana está cerrada y no se activa automáticamente Coria del Río, Utrera ni otro municipio.
 
 ## Siguiente movimiento autorizado
 
-El único movimiento autorizado es **cerrar el universo y las fuentes de Cantillana antes de preparar el Apply HC-016**. Deben permanecer separadas Penitencia, Glorias, Banda y Cruceta, aunque formen un único macrolote municipal. Coria del Río y Utrera quedan en cola y no se abren en paralelo.
+**Ningún frente editorial está activo.**
 
-No se activa un frente de Laboratorio, HC-018, Sevilla capital ni otro municipio. Los dieciséis contextos, los macrolotes de Semana Santa, las Glorias de septiembre y octubre, el macrofrente Bandas, Gerena, Dos Hermanas, Alcalá de Guadaíra y Pilas permanecen cerrados. Los 112 registros pasados que continúan legítimamente en `announced` solo pueden cambiar ante nueva evidencia posterior verificable.
+No abrir Coria del Río, Utrera ni un cuarto municipio a partir de rankings históricos. Cuando exista una nueva orden municipal, el único movimiento válido será **recalcular desde cero la cobertura provincial posterior a Cantillana** y seleccionar de nuevo sobre el grafo vigente.
+
+No se activa Laboratorio, HC-018, Sevilla capital ni otro municipio. Los contextos y macrolotes certificados permanecen cerrados. Los acontecimientos pasados que continúen legítimamente en announced solo pueden elevarse ante evidencia posterior verificable.
