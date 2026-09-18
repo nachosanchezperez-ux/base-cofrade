@@ -1,6 +1,6 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 18 de septiembre de 2026 · reconciliación Supabase + cierre certificado de Cantillana
+**Corte operativo:** 18 de septiembre de 2026 · recálculo del cuarto macrolote municipal
 
 **HEAD de cierre de contenido Cantillana:** f38fde844553e5794e252a734ae38284d75a50fa
 
@@ -18,9 +18,9 @@
 
 **Régimen:** FIRST EDITION FREEZE activo
 
-**Frente editorial ACTIVO:** **ninguno**.
+**Frente editorial ACTIVO:** **Coria del Río · inventario y matriz de fuentes del cuarto macrolote municipal**. El Apply no ha comenzado.
 
-> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. Cantillana cierra el tercer macrolote municipal. Coria del Río y Utrera no quedan activadas: antes de cualquier cuarto municipio debe recalcularse desde cero la cobertura provincial.
+> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. Tras cerrar Cantillana, la cobertura provincial se recalculó desde cero sobre `673a356…`. El TOP 3 nuevo es Coria del Río, Sanlúcar la Mayor y Utrera. Solo Coria queda activa y únicamente en fase de inventario y fuentes; no hay Apply.
 
 ## Tablero operativo único
 
@@ -69,6 +69,7 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | **CERRADO** | Macrolote municipal HC-016 · Alcalá de Guadaíra | Lote `c0160028-0000-4000-8000-000000000001`: 309/309, 0 inválidas y 0 fallos; catorce Hermandades únicas, cuatro Bandas locales, 29 relaciones con titulares, 21 Pasos, 4 acompañamientos vigentes y 10 estaciones celebradas en 2026; #808 y producción `dpl_2veeyCeBAz1CAcFQLKbb23LtHvBJ` sobre `eca7be9c…` | Preservar Divina Misericordia; no reabrir sin deuda material nueva |
 | **CERRADO** | Segundo macrolote municipal HC-016 · Pilas | Lote `c0160029-0000-4000-8000-000000000001`: 118/118, 0 inválidas y 0 fallos; cuatro corporaciones, dos Bandas locales, ocho titulares, ocho Pasos y ocho Salidas; sin DDL | Preservar el universo municipal; cinco convocatorias pasadas siguen `announced` hasta disponer de evidencia posterior |
 | **CERRADO** | Tercer macrolote municipal HC-016 · Cantillana | Lote c0160030-0000-4000-8000-000000000001: 93/93, 0 inválidas y 0 fallos; Asunción y Pastora preservadas; Soledad cerrada con 4 titulares, 3 Pasos, 7 Cultos/7 ediciones 2026, 1 estación held; Banda local y Cruceta HC-019 preservadas | No reabrir sin deuda material nueva; Montefrío sigue como crédito textual; no elevar announced sin evidencia posterior |
+| **ACTIVO** | Cuarto macrolote municipal HC-016 · Coria del Río | Recálculo nuevo sobre `673a356…`: 2 Hermandades y 2 Bandas publicadas; Fuente institucional 2026 acredita seis penitenciales; dos nodos casi equivalentes de Banda Municipal requieren desambiguación | Solo inventario y Fuentes; no Apply hasta cerrar universo corporativo, resolver la Banda Municipal y superar preflight 0/0/0/0 |
 | **CERRADO** | Navegación, búsqueda, SEO y repertorios · #811–#818 | Jornadas y municipios navegables; buscador ampliado y afinado; caché de directorios y fichas; repertorios de conciertos visibles | No reabrir sin regresión reproducible; los contadores de Home se corrigen de forma transversal sin alterar el modelo |
 | **CERRADO** | Cultos septiembre–diciembre de 2026 | Lote transversal HC-016 `c0162026-0909-4000-8000-000000000001`: 53/53, cuatro Hermandades y 0 DDL | Mantener ediciones futuras desde Fuentes oficiales; recurrencia no equivale a anuncio |
 | **CERRADO** | Carátulas de Discografía · #734 y #791 | Reintento del optimizador a la URL original y fallback accesible; #791 estabilizó las 17 carátulas de La Oliva que aún dependían del servidor antiguo | Mantener URLs estables y el fallback accesible como protección, no como deuda activa |
@@ -465,12 +466,35 @@ Sagrada Resurrección ganó por el mayor lote útil y verificable: cinco titular
 7. **¿Qué huecos siguen siendo legítimos?** Identidad/posición exacta de Montefrío, multimedia con derechos y cinco convocatorias cultuales sin evidencia posterior de celebración.
 8. **¿El buscador necesita excepciones territoriales?** No. Cantillana entra por los intents municipales y por los filtros/cruces V10 del grafo.
 9. **¿Hay deuda técnica bloqueante?** No en este cierre: GitHub, Vercel, Supabase Preview, producción, rutas y runtime quedaron certificados.
-10. **¿Queda algún frente activo?** No. Cantillana está cerrada y no se activa automáticamente Coria del Río, Utrera ni otro municipio.
+10. **¿Queda algún frente activo?** Sí: Coria del Río, únicamente en fase de inventario y fuentes del cuarto macrolote. No existe lote aplicado ni autorización para Apply.
+
+## Cuarto macrolote provincial · selección
+
+El recálculo posterior a Cantillana se rehízo desde cero sobre el grafo vivo de `673a356…`, excluyendo Gerena, Dos Hermanas, Alcalá de Guadaíra, Pilas, Cantillana y Sevilla capital.
+
+El TOP 3 nuevo es:
+
+1. **Coria del Río**;
+2. **Sanlúcar la Mayor**;
+3. **Utrera**.
+
+Coria gana por el mejor equilibrio entre deuda real, universo cerrable, densidad relacional y Fuentes actuales. La Fuente institucional provincial de 2026 acredita seis hermandades de penitencia y Hilo Cofrade solo publica una de ellas como penitencial, además de la Estrella como Gloria/Sacramental. También existen dos nodos musicales casi equivalentes que deben investigarse antes de cualquier reconciliación.
+
+Sanlúcar la Mayor entra en el TOP con siete hermandades de penitencia acreditadas por Turismo municipal y solo una publicada en Hilo Cofrade. Utrera mantiene la mayor deuda absoluta, pero requiere un universo mucho más amplio y conserva dos nodos Álvarez Quintero que deben desambiguarse.
+
+La evidencia completa está en [`AUDITORIA-CUARTO-MACROLOTE-MUNICIPAL-2026-09-18.md`](./AUDITORIA-CUARTO-MACROLOTE-MUNICIPAL-2026-09-18.md).
 
 ## Siguiente movimiento autorizado
 
-**Ningún frente editorial está activo.**
+**Único frente editorial activo: Coria del Río · inventario y matriz de Fuentes.**
 
-No abrir Coria del Río, Utrera ni un cuarto municipio a partir de rankings históricos. Cuando exista una nueva orden municipal, el único movimiento válido será **recalcular desde cero la cobertura provincial posterior a Cantillana** y seleccionar de nuevo sobre el grafo vigente.
+Antes del Apply se exige:
 
-No se activa Laboratorio, HC-018, Sevilla capital ni otro municipio. Los contextos y macrolotes certificados permanecen cerrados. Los acontecimientos pasados que continúen legítimamente en announced solo pueden elevarse ante evidencia posterior verificable.
+- universo corporativo cerrado;
+- identidad de la Banda Municipal resuelta o explícitamente separada;
+- Fuentes suficientes para cada alta o actualización;
+- mapa de reutilización;
+- recuento TOTAL / INSERT / UPDATE / REUSE;
+- preflight con 0 INVALID / 0 UNRESOLVED / 0 AMBIGUOUS / 0 COLLISION.
+
+No abrir Sanlúcar la Mayor ni Utrera en paralelo. No se activa Laboratorio, HC-018, Sevilla capital ni otro municipio. Los acontecimientos pasados que continúen legítimamente en announced solo pueden elevarse ante evidencia posterior verificable.
