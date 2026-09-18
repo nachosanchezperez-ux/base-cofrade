@@ -40,6 +40,8 @@ test('reconoce listados de Hermandades por municipio sin secuestrar relaciones',
   assert.deepEqual(freeFactIntent('¿Qué cofradías hay en Dos Hermanas?'), expected)
   assert.deepEqual(freeFactIntent('Listado de hermandades de Alcalá de Guadaíra'), expected)
   assert.deepEqual(freeFactIntent('Hermandades de Sevilla'), expected)
+  assert.deepEqual(freeFactIntent('Las hermandades de La Rinconada'), expected)
+  assert.deepEqual(freeFactIntent('Todas las hermandades de La Rinconada'), expected)
   assert.deepEqual(
     freeFactIntent('Agrupaciones parroquiales de La Rinconada'),
     { ...expected, brotherhoodType: 'Agrupación Parroquial' }
@@ -68,6 +70,10 @@ test('reconoce una jornada de Semana Santa como listado territorial de Hermandad
   }
   assert.deepEqual(freeFactIntent('Lunes Santo en Sevilla'), expected)
   assert.deepEqual(freeFactIntent('Hermandades del Lunes Santo en Sevilla'), expected)
+  assert.deepEqual(freeFactIntent('Las hermandades del Lunes Santo en Sevilla'), expected)
+  assert.deepEqual(freeFactIntent('Hermandades del Lunes Santo'), expected)
+  assert.deepEqual(freeFactIntent('El Lunes Santo en Sevilla'), expected)
+  assert.deepEqual(freeFactIntent('Lunes Santo'), expected)
   assert.equal(matchHolyWeekDay('Qué ver en la Madrugada de Sevilla'), 'Madrugada')
   assert.equal(matchHolyWeekDay('Sábado de Pasión en Sevilla'), 'Sábado de Pasión')
   assert.equal(freeFactIntent('¿Qué bandas tocan el Lunes Santo en Sevilla?'), null)
@@ -78,6 +84,8 @@ test('reconoce Bandas y panoramas por municipio sin secuestrar acompañamientos'
   assert.deepEqual(freeFactIntent('Bandas de Gerena'), bands)
   assert.deepEqual(freeFactIntent('¿Qué bandas hay en Cantillana?'), bands)
   assert.deepEqual(freeFactIntent('Listado de formaciones musicales de Dos Hermanas'), bands)
+  assert.deepEqual(freeFactIntent('Las bandas de Gerena'), bands)
+  assert.deepEqual(freeFactIntent('Todas las bandas de Gerena'), bands)
   assert.equal(freeFactIntent('¿Qué bandas acompañan a las hermandades de Gerena?'), null)
   assert.deepEqual(
     freeFactIntent('¿Qué hay en Gerena?'),
@@ -90,6 +98,8 @@ test('resuelve el municipio completo más específico dentro de la pregunta', ()
   assert.equal(matchMunicipalityName('Hermandades de La Rinconada', municipalities), 'La Rinconada')
   assert.equal(matchMunicipalityName('¿Qué cofradías hay en Alcalá de Guadaíra?', municipalities), 'Alcalá de Guadaíra')
   assert.equal(matchMunicipalityName('Hermandades de Alcalá', municipalities), '')
+  assert.equal(matchMunicipalityName('Hermandades de San José de la Rinconada', municipalities), 'La Rinconada')
+  assert.equal(matchMunicipalityName('Cofradías de San José Rinconada', municipalities), 'La Rinconada')
 })
 
 test('reconoce datos materiales y técnicos de imágenes y pasos', () => {
