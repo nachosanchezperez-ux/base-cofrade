@@ -4,6 +4,7 @@ import test from 'node:test'
 
 const plan = JSON.parse(await readFile(new URL('../scripts/coria-municipal-hc016-plan.json', import.meta.url), 'utf8'))
 const archive = await readFile(new URL('../supabase/migrations_archive/post-first-edition-editorial/20260918220000_cierra_coria_del_rio_macrolote_municipal.sql', import.meta.url), 'utf8')
+const stepRemate = JSON.parse(await readFile(new URL('../scripts/coria-municipal-hc016-outing-step-remate.json', import.meta.url), 'utf8'))
 
 test('Coria congela ocho corporaciones y 304 operaciones', () => {
   assert.equal(plan.summary.scope.corporations, 8)
@@ -73,4 +74,12 @@ test('Rocío entra como corporación sin fabricar Imagen ni Paso', () => {
   assert.ok(plan.rows.some((row) => row.table === 'outing_series'
     && row.data.brotherhood_entity_id === rocio.data.id
     && row.data.outing_type === 'Romería'))
+})
+
+
+test('el QA enlaza explícitamente los quince Pasos con sus ocho Salidas', () => {
+  assert.equal(stepRemate.operations, 15)
+  assert.equal(stepRemate.rows.length, 15)
+  assert.equal(new Set(stepRemate.rows.map((row) => row.outing_id)).size, 8)
+  assert.ok(stepRemate.rows.every((row) => row.role === 'processional_step'))
 })
