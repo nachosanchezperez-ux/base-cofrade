@@ -35,6 +35,7 @@ test('las ramas nuevas ejecutan únicamente el baseline y las evoluciones de esq
     concertEventCategoryName,
     concertEventBandsName,
     concertEventBandsSecurityName,
+    sourceLinksLookupIndexesName,
     sourceLinksSourceIndexName,
   ])
 })
