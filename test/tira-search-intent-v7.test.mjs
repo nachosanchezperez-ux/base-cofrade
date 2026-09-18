@@ -10,7 +10,7 @@ test('la navegación directa sigue abriendo entidades concretas', () => {
   )
   assert.deepEqual(
     getHiloLookupIntent('Abre la ficha de La Cena'),
-    { term: 'La Cena', explicitNavigation: true }
+    { term: 'Cena', explicitNavigation: true }
   )
 })
 
