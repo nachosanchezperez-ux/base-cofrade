@@ -117,6 +117,52 @@
   line-height: 1.48;
 }
 
+.agendaQuick {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 18px;
+}
+
+.agendaQuick a {
+  display: inline-flex;
+  min-height: 36px;
+  align-items: center;
+  gap: 8px;
+  padding: 0 11px;
+  border: 1px solid rgba(255, 255, 255, .2);
+  border-radius: 999px;
+  color: #fff;
+  background: rgba(255, 255, 255, .1);
+  font-size: 11px;
+  font-weight: 800;
+  transition: border-color .18s ease, background .18s ease, transform .18s ease;
+}
+
+.agendaQuick a:first-child {
+  background: #fff;
+  color: #123a67;
+}
+
+.agendaQuick a:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, .42);
+  background: rgba(255, 255, 255, .16);
+}
+
+.agendaQuick a:first-child:hover {
+  background: #f5f8fb;
+}
+
+.agendaQuick a:focus-visible {
+  outline: 3px solid rgba(255, 255, 255, .42);
+  outline-offset: 2px;
+}
+
+.agendaQuick b {
+  font-size: 12px;
+}
+
 .agendaTypes {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -224,6 +270,7 @@
 }
 
 .agendaTypes a:focus-visible,
+.agendaQuick a:focus-visible,
 .agendaCta:focus-visible {
   outline: 3px solid rgba(255, 255, 255, .42);
   outline-offset: 2px;
@@ -504,6 +551,7 @@
   .encyclopediaCard,
   .secondaryCard,
   .agendaTypes a,
+  .agendaQuick a,
   .agendaCta b,
   .encyclopediaBody > b,
   .secondaryCta b {

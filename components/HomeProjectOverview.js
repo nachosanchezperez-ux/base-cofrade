@@ -9,6 +9,11 @@ const agendaCategories = [
   { key: 'concerts', label: 'Conciertos' },
 ]
 
+const agendaPeriods = [
+  { key: 'today', label: 'Hoy', href: '/agenda-cofrade?periodo=today#agenda' },
+  { key: 'weekend', label: 'Este fin de semana', href: '/agenda-cofrade?periodo=weekend#agenda' },
+]
+
 const secondaryAreas = [
   {
     key: 'musica',
@@ -47,7 +52,14 @@ export default function HomeProjectOverview() {
               <strong>Agenda cofrade</strong>
               <span>Los actos documentados, ordenados por fecha y lugar y enlazados con sus protagonistas.</span>
             </span>
-            <span className={styles.agendaTypesLabel}>Elige qué quieres ver</span>
+            <div className={styles.agendaQuick}>
+              {agendaPeriods.map((period) => (
+                <Link href={period.href} key={period.key} data-period={period.key}>
+                  {period.label} <b aria-hidden="true">→</b>
+                </Link>
+              ))}
+            </div>
+            <span className={styles.agendaTypesLabel}>Por tipo de acto</span>
             <ul className={styles.agendaTypes} aria-label="Categorías de la Agenda Cofrade">
               {agendaCategories.map((category) => (
                 <li key={category.key}>

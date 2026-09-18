@@ -2,12 +2,22 @@ import Link from 'next/link'
 import styles from './HomeExploreV2.module.css'
 import polishStyles from './HomeResponsivePolish.module.css'
 
+function hasCount(item) {
+  return Number.isFinite(item?.count)
+}
+
+function displayCount(item) {
+  return hasCount(item) ? item.count : '—'
+}
+
 function countLabel(item) {
+  if (!hasCount(item)) return 'dato no disponible'
   if (item.key === 'step') return item.count === 1 ? 'publicado' : 'publicados'
   return item.count === 1 ? 'publicada' : 'publicadas'
 }
 
 function countAriaLabel(item) {
+  if (!hasCount(item)) return `${item.label}: dato temporalmente no disponible`
   if (item.key === 'brotherhood') return `${item.count} ${item.count === 1 ? 'hermandad publicada' : 'hermandades publicadas'}`
   if (item.key === 'image') return `${item.count} ${item.count === 1 ? 'imagen publicada' : 'imágenes publicadas'}`
   if (item.key === 'step') return `${item.count} ${item.count === 1 ? 'paso publicado' : 'pasos publicados'}`
@@ -44,7 +54,7 @@ export default function HomeExploreV2({ stats }) {
                   className={`${styles.count} ${polishStyles.exploreCount}`}
                   aria-label={countAriaLabel(item)}
                 >
-                  <strong>{item.count}</strong>
+                  <strong>{displayCount(item)}</strong>
                   <span data-home-count-label>{countLabel(item)}</span>
                 </span>
               </div>
@@ -68,8 +78,12 @@ export default function HomeExploreV2({ stats }) {
           </div>
           <div className={`${styles.metrics} ${polishStyles.graphMetrics}`}>
             {graph.map((item) => (
-              <div className={`${styles.metric} ${polishStyles.graphMetric}`} key={item.key}>
-                <strong>{item.count}</strong>
+              <div
+                className={`${styles.metric} ${polishStyles.graphMetric}`}
+                key={item.key}
+                aria-label={hasCount(item) ? `${item.count} ${item.label}` : `${item.label}: dato temporalmente no disponible`}
+              >
+                <strong>{displayCount(item)}</strong>
                 <span>{item.label}</span>
               </div>
             ))}
