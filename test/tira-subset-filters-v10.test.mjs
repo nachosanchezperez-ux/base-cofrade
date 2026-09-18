@@ -77,7 +77,7 @@ test('V10 reduce el contexto y usa únicamente datos estructurados', async () =>
   assert.match(source, /from\('municipalities'\)/)
   assert.match(source, /from\('current_music_accompaniments'\)/)
   assert.match(source, /from\('calendar_cult_days'\)/)
-  assert.match(source, /entityIds: filtered\.map/)
+  assert.match(source, /setContext\(context, filtered\.map/)
   assert.match(source, /'brotherhood_set_filter_type'/)
   assert.match(source, /'brotherhood_set_filter_municipality'/)
   assert.match(source, /'brotherhood_set_filter_without_music'/)
