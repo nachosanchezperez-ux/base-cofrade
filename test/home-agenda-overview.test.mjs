@@ -16,7 +16,7 @@ test('la Home ofrece accesos directos a los periodos y categorías reales de Age
     assert.match(agenda, new RegExp(`['"]${category}['"]`))
   }
 
-  assert.match(overview, /categoria=\\$\\{category\\.key\\}#agenda/)
+  assert.ok(overview.includes('categoria=${category.key}#agenda'))
   assert.match(overview, /Por tipo de acto/)
   assert.match(overview, /Igualás y ensayos/)
 })
