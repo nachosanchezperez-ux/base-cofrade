@@ -11,11 +11,12 @@ const logoBackgroundName = '20260831072000_add_band_logo_background_color.sql'
 const membershipStatsName = '20260908083000_add_brotherhood_membership_stats.sql'
 const musicalRepertoiresName = '20260910181542_crucetas_musicales.sql'
 const musicalRepertoiresHardeningName = '20260910202000_reconcilia_seguridad_crucetas.sql'
-const brotherhoodHabitGlovesName = '20260915215500_add_brotherhood_habit_gloves.sql'
+const brotherhoodHabitGlovesName = '20260915215828_add_brotherhood_habit_gloves.sql'
 const concertEventCategoryName = '20260916062208_allow_concert_event_category.sql'
 const concertEventBandsName = '20260916062216_create_concert_event_bands.sql'
 const concertEventBandsSecurityName = '20260916062223_secure_concert_event_bands.sql'
-const sourceLinksSourceIndexName = '20260916215528_add_source_links_source_id_index.sql'
+const sourceLinksLookupIndexesName = '20260916205306_source_links_public_lookup_indexes.sql'
+const sourceLinksSourceIndexName = '20260916220756_add_source_links_source_id_index.sql'
 const baseline = readFileSync(new URL(baselineName, migrationsDirectory), 'utf8')
 const membershipStats = readFileSync(new URL(membershipStatsName, migrationsDirectory), 'utf8')
 const seed = readFileSync(new URL('../supabase/seed.sql', import.meta.url), 'utf8')
@@ -34,15 +35,24 @@ test('las ramas nuevas ejecutan únicamente el baseline y las evoluciones de esq
     concertEventCategoryName,
     concertEventBandsName,
     concertEventBandsSecurityName,
+    sourceLinksLookupIndexesName,
     sourceLinksSourceIndexName,
   ])
 })
 
-test('las consultas inversas de Fuentes disponen de un índice reproducible', () => {
-  const migration = readFileSync(new URL(sourceLinksSourceIndexName, migrationsDirectory), 'utf8')
+test('las consultas públicas de Fuentes disponen de índices reproducibles', () => {
+  const lookupMigration = readFileSync(new URL(sourceLinksLookupIndexesName, migrationsDirectory), 'utf8')
+  const sourceIndexMigration = readFileSync(new URL(sourceLinksSourceIndexName, migrationsDirectory), 'utf8')
 
-  assert.match(migration, /create index if not exists source_links_source_id_idx/i)
-  assert.match(migration, /on public\.source_links using btree \(source_id\)/i)
+  assert.match(lookupMigration, /source_links_entity_idx/i)
+  assert.match(lookupMigration, /source_links_cult_idx/i)
+  assert.match(lookupMigration, /source_links_heritage_update_idx/i)
+  assert.match(lookupMigration, /source_links_intervention_idx/i)
+  assert.match(lookupMigration, /source_links_step_phase_idx/i)
+  assert.match(lookupMigration, /source_links_outing_series_idx/i)
+  assert.match(lookupMigration, /source_links_music_period_idx/i)
+  assert.match(sourceIndexMigration, /create index if not exists source_links_source_id_idx/i)
+  assert.match(sourceIndexMigration, /on public\.source_links using btree \(source_id\)/i)
 })
 
 test('el baseline reproduce el esquema canónico y conserva las barreras RLS', () => {

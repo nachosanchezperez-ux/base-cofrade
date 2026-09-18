@@ -11,11 +11,12 @@ const EXECUTABLE_SCHEMA_MIGRATIONS = [
   "20260908083000_add_brotherhood_membership_stats.sql",
   "20260910181542_crucetas_musicales.sql",
   "20260910202000_reconcilia_seguridad_crucetas.sql",
-  "20260915215500_add_brotherhood_habit_gloves.sql",
+  "20260915215828_add_brotherhood_habit_gloves.sql",
   "20260916062208_allow_concert_event_category.sql",
   "20260916062216_create_concert_event_bands.sql",
   "20260916062223_secure_concert_event_bands.sql",
-  "20260916215528_add_source_links_source_id_index.sql",
+  "20260916205306_source_links_public_lookup_indexes.sql",
+  "20260916220756_add_source_links_source_id_index.sql",
 ];
 
 test("Supabase migration versions are unique and well formed", async () => {
