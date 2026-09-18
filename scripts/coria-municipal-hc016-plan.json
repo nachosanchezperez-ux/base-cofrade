@@ -55,7 +55,8 @@
       "AM San Lucas se crea como Banda local pero sin asignación procesional 2026 por rol no resuelto.",
       "Cultos y acontecimientos nuevos: 0; no se fabrica vigencia.",
       "Banda Artística Coriana se conserva como nombre histórico/asociativo de la Banda Municipal, no como entidad independiente.",
-      "Solo Cautivo y Soledad/Resurrección 2026 se elevan a held por evidencia posterior."
+      "Solo Cautivo y Soledad/Resurrección 2026 se elevan a held por evidencia posterior.",
+      "La entidad duplicada de Banda Municipal se archiva antes de registrar el nombre canónico para respetar guard_band_name_alias_collision."
     ]
   },
   "reuse": [
@@ -782,6 +783,19 @@
         "id"
       ],
       "data": {
+        "id": "870f7ec0-8a57-4652-96ff-05725104a47b",
+        "status": "archived",
+        "summary": "Duplicado histórico reconciliado con la Banda Municipal de Música de Coria del Río; ID preservado sin relaciones musicales activas."
+      },
+      "category": "archive"
+    },
+    {
+      "operation": "update",
+      "table": "entities",
+      "where_keys": [
+        "id"
+      ],
+      "data": {
         "id": "63f719d8-61ab-4357-a43f-cc7977bdda43",
         "name": "Banda Municipal de Música de Coria del Río",
         "summary": "Banda municipal de Coria del Río, nacida en 1986 desde el Aula Municipal de Música y heredera de la tradición de la Banda Artística Coriana.",
@@ -865,19 +879,6 @@
         "entity_id": "63f719d8-61ab-4357-a43f-cc7977bdda43"
       },
       "category": "reconcile"
-    },
-    {
-      "operation": "update",
-      "table": "entities",
-      "where_keys": [
-        "id"
-      ],
-      "data": {
-        "id": "870f7ec0-8a57-4652-96ff-05725104a47b",
-        "status": "archived",
-        "summary": "Duplicado histórico reconciliado con la Banda Municipal de Música de Coria del Río; ID preservado sin relaciones musicales activas."
-      },
-      "category": "archive"
     },
     {
       "operation": "upsert",
