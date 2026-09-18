@@ -52,13 +52,13 @@ export default function HomeProjectOverview() {
               <strong>Agenda cofrade</strong>
               <span>Los actos documentados, ordenados por fecha y lugar y enlazados con sus protagonistas.</span>
             </span>
-            <nav className={styles.agendaQuick} aria-label="Accesos rápidos por fecha de la Agenda Cofrade">
+            <div className={styles.agendaQuick}>
               {agendaPeriods.map((period) => (
                 <Link href={period.href} key={period.key} data-period={period.key}>
                   {period.label} <b aria-hidden="true">→</b>
                 </Link>
               ))}
-            </nav>
+            </div>
             <span className={styles.agendaTypesLabel}>Por tipo de acto</span>
             <ul className={styles.agendaTypes} aria-label="Categorías de la Agenda Cofrade">
               {agendaCategories.map((category) => (
