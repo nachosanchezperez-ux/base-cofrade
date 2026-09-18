@@ -89,6 +89,26 @@ function outingDateForHeader(outing) {
   return moment ? moment.split(' · ')[0].trim() : '';
 }
 
+function compactReleaseSummary(value = '') {
+  const text = String(value || '').replace(/\s+/g, ' ').trim();
+  if (!text) return '';
+
+  const sentences = text.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [text];
+  let summary = '';
+
+  for (const sentence of sentences) {
+    const candidate = [summary, sentence.trim()].filter(Boolean).join(' ');
+    if (candidate.length > 250 && summary) break;
+    summary = candidate;
+    if (summary.length >= 120) break;
+  }
+
+  if (summary.length <= 250) return summary;
+
+  const clipped = summary.slice(0, 247).replace(/\s+\S*$/, '').trim();
+  return `${clipped || summary.slice(0, 247).trim()}…`;
+}
+
 export function generateStaticParams() {
   return hermandades.map((item) => ({ slug: item.slug }));
 }
@@ -623,39 +643,60 @@ export default async function HermandadDetailPage({ params }) {
         {h.estrenos?.length > 0 && (
           <div className="heritage-timeline-block" id="estrenos">
             <div className="heritage-subheading"><span className="eyebrow">Evolución documentada</span><h3>Estrenos y restauraciones</h3></div>
-            <div className="release-grid">{h.estrenos.map((e) => (
-              <article className={`release-card ${e.imagen ? 'has-image' : ''}`} key={e.id}>
-                <figure className="release-card-visual">
-                  {e.imagen ? (
-                    <Image
-                      src={e.imagen.src}
-                      alt={e.imagen.alt}
-                      fill
-                      sizes={h.estrenos.length === 1
-                        ? '(max-width: 767px) calc(100vw - 40px), (max-width: 1199px) calc(100vw - 48px), 1158px'
-                        : '(max-width: 767px) calc(100vw - 40px), (max-width: 1199px) calc(50vw - 32px), 370px'}
-                    />
-                  ) : <div className="release-card-placeholder" aria-hidden="true">{e.ano}</div>}
-                  <div className="release-card-badges"><span>{e.tipo}</span><strong>{e.ano}</strong></div>
-                  {e.imagen?.credito && <figcaption>{e.imagen.credito}</figcaption>}
-                </figure>
-                <div className="release-card-copy">
-                  {(e.disciplina || e.elemento) && <span className="release-card-eyebrow">{e.disciplina || e.elemento}</span>}
-                  <h3>{e.titulo}</h3>
-                  {(e.fecha || e.elemento) && <dl className="release-card-facts">
-                    {e.fecha && <div><dt>Fecha</dt><dd><time dateTime={e.fechaIso}>{e.fecha}</time></dd></div>}
-                    {e.elemento && <div><dt>Intervención</dt><dd>{e.elemento}</dd></div>}
-                  </dl>}
-                  <p className="release-card-description">{e.descripcion}</p>
-                  {e.agentes?.length > 0 ? (
-                    <details className="release-card-team">
-                      <summary><span>Equipo responsable</span><strong>{e.agentes.length} {e.agentes.length === 1 ? 'persona' : 'personas'}</strong><b aria-hidden="true">＋</b></summary>
-                      <ul>{e.agentes.map((agente) => <li key={`${e.id}-${agente.id}`}><strong>{agente.nombre}</strong>{agente.rol && <span>{agente.rol}</span>}</li>)}</ul>
-                    </details>
-                  ) : <small className="release-card-authorship">{e.autoria}</small>}
-                </div>
-              </article>
-            ))}</div>
+            <div className="release-grid">{h.estrenos.map((e) => {
+              const releaseSummary = compactReleaseSummary(e.descripcion);
+              const hasExtendedDescription = Boolean(e.descripcion && releaseSummary && e.descripcion.trim() !== releaseSummary.trim());
+
+              return (
+                <article className={`release-card ${e.imagen ? 'has-image' : ''}`} key={e.id}>
+                  <figure className="release-card-visual">
+                    {e.imagen ? (
+                      <Image
+                        src={e.imagen.src}
+                        alt={e.imagen.alt}
+                        fill
+                        sizes={h.estrenos.length === 1
+                          ? '(max-width: 767px) calc(100vw - 40px), (max-width: 1199px) calc(100vw - 48px), 1158px'
+                          : '(max-width: 767px) calc(100vw - 40px), (max-width: 1199px) calc(50vw - 32px), 370px'}
+                      />
+                    ) : <div className="release-card-placeholder" aria-hidden="true">{e.ano}</div>}
+                    <div className="release-card-badges"><span>{e.tipo}</span><strong>{e.ano}</strong></div>
+                    {e.imagen?.credito && <figcaption>{e.imagen.credito}</figcaption>}
+                  </figure>
+                  <div className="release-card-copy">
+                    {(e.disciplina || e.elemento) && <span className="release-card-eyebrow">{e.disciplina || e.elemento}</span>}
+                    <h3>{e.titulo}</h3>
+
+                    {(e.elemento || e.disciplina || e.fecha) && <dl className="release-card-facts">
+                      {e.elemento && <div><dt>Intervención</dt><dd>{e.elemento}</dd></div>}
+                      {e.disciplina && e.disciplina !== e.elemento && <div><dt>Disciplina</dt><dd>{e.disciplina}</dd></div>}
+                      {e.fecha && <div><dt>Fecha</dt><dd><time dateTime={e.fechaIso}>{e.fecha}</time></dd></div>}
+                    </dl>}
+
+                    {releaseSummary && (
+                      <div className="release-card-summary">
+                        <small>De un vistazo</small>
+                        <p>{releaseSummary}</p>
+                      </div>
+                    )}
+
+                    {hasExtendedDescription && (
+                      <details className="release-card-detail">
+                        <summary><span>Ver explicación completa</span><b aria-hidden="true">＋</b></summary>
+                        <p>{e.descripcion}</p>
+                      </details>
+                    )}
+
+                    {e.agentes?.length > 0 ? (
+                      <details className="release-card-team">
+                        <summary><span>Equipo responsable</span><strong>{e.agentes.length} {e.agentes.length === 1 ? 'persona' : 'personas'}</strong><b aria-hidden="true">＋</b></summary>
+                        <ul>{e.agentes.map((agente) => <li key={`${e.id}-${agente.id}`}><strong>{agente.nombre}</strong>{agente.rol && <span>{agente.rol}</span>}</li>)}</ul>
+                      </details>
+                    ) : <small className="release-card-authorship">{e.autoria}</small>}
+                  </div>
+                </article>
+              );
+            })}</div>
           </div>
         )}
       </div></section>}
