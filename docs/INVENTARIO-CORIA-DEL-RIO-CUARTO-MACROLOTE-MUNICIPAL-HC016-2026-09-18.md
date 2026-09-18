@@ -298,6 +298,61 @@ La Fuente provincial acredita que las salidas cubren todas las jornadas salvo Ma
 
 **Actualidad:** ninguna Salida se elevará automáticamente a `held` por haber pasado la fecha. Cada una necesita evidencia posterior o una Fuente inequívocamente retrospectiva.
 
+### 4.1 · Mapa de titulares y Pasos
+
+Este mapa fija únicamente identidades y relaciones que ya pueden sostenerse con las Fuentes reunidas. La autoría se conserva con el grado de certeza publicado por cada Fuente.
+
+| Corporación / Salida | Titulares procesionales | Autoría / cronología documentada | Pasos a modelar | Estado previo al lote |
+|---|---|---|---:|---|
+| Borriquita | Stmo. Cristo de la Salud en su Sagrada Entrada en Jerusalén · María Stma. de la Victoria | Ambas imágenes vinculadas a Darío Fernández Parra en la documentación actual de la corporación | 2 | Cristo ya existe; Virgen y ambos Pasos pendientes |
+| Jesús Cautivo | N. P. Jesús Cautivo · Ntra. Sra. del Dulce Nombre de María | Cautivo: talla del s. XVII vinculada al círculo de Pedro Roldán; Dolorosa: Fernando Castejón López, encargo documentado en 1986 | 2 | Todo pendiente de alta/reutilización exacta |
+| San José · Martes Santo | N. P. Jesús de la Paz · María Stma. de Gracia y Esperanza | Fernando Castejón López; cronología documentada en los primeros años de la década de 1990 | 2 | Pendiente |
+| San José · Sábado Santo | Piedad del Stmo. Cristo de la Misericordia y Ntra. Sra. de los Dolores | Grupo de José Antonio Navarro Arteaga documentado en 2017 | 1 | Pendiente; no crear Hermandad independiente |
+| Gran Poder / Carmen | N. P. Jesús del Gran Poder · Ntra. Sra. del Carmen | Francisco Buiza: Señor 1973 · Virgen 1972 | 2 | Pendiente; una sola Hermandad |
+| Vera+Cruz | Stmo. Cristo de la Vera+Cruz · Purísima Concepción de María Stma. | Cristo anónimo, en torno a 1500 · Purísima: Rafael Barbero Medina, 1953 | 2 | Pendiente |
+| Soledad · Viernes Santo | Cristo Yacente · Ntra. Sra. de la Soledad Coronada | Yacente: Francisco Buiza, 1972 · Soledad: imagen histórica de autoría no cerrada en este corte | 2 | Pendiente |
+| Soledad · Domingo de Resurrección | Cristo Resucitado · Ntra. Sra. de la Soledad Coronada | Resucitado: Luis Peyré Azcárraga; encargo 1944 y recepción documentada en 1948 | 2 posiciones procesionales | **Pendiente identidad física del Paso de la Virgen**: no asumir que es un cuarto Paso distinto del Viernes Santo |
+| Rocío | Simpecado / representación corporativa según modelo y Fuente final | No forzar Imagen devocional física si la corporación se representa mediante Simpecado | 0 por defecto | Seguir el patrón relacional de otras Hermandades del Rocío; no fabricar Paso |
+| Estrella | Ntra. Sra. de la Estrella Coronada | Ya documentada en Hilo | 1 | PRESERVAR |
+
+**Bloqueo residual de Pasos:** la única ambigüedad física relevante antes de planificar el lote está en la estructura usada por la Virgen de la Soledad el Domingo de Resurrección. Hasta resolver si es el mismo Paso transformado, unas andas distintas o una estructura específica, no se asignará un cuarto nodo por comodidad.
+
+### 4.2 · Acompañamientos musicales 2026
+
+Fuente transversal principal:
+
+- El Muñidor del Aljarafe 2026 · edición digital  
+  https://aljarafeymas.com/system/images/20386/original/EL_MU%C3%91IDOR_DEL_ALJARAFE_2026_-_EDICION_DIGITAL.pdf
+
+La guía se usa para fijar **vigencia 2026**, no continuidad posterior.
+
+| Jornada | Corporación | Posición | Formación 2026 | Decisión |
+|---|---|---|---|---|
+| Domingo de Ramos | Borriquita | Cristo | AM Nuestro Padre Jesús Nazareno · La Palma del Condado | Documentar 2026; resolver identidad global antes de CREATE |
+| Domingo de Ramos | Borriquita | Virgen | AC Amigos de la Música · Herrera | Documentar 2026; resolver identidad global antes de CREATE |
+| Lunes Santo | Cautivo | Cristo | AM Nuestro Padre Jesús Nazareno · La Algaba | Documentar 2026; resolver identidad global antes de CREATE |
+| Lunes Santo | Cautivo | Virgen | Banda Municipal de Lora del Río | Documentar 2026; resolver identidad global antes de CREATE |
+| Martes Santo | San José / Paz | Misterio | CCTT Nuestra Señora del Rosario · Arriate | Documentar 2026; no sustituir por contratos posteriores |
+| Martes Santo | San José / Paz | Palio | Banda de Música Las Golondrinas · Vélez-Málaga | Documentar 2026 |
+| Miércoles Santo | Gran Poder / Carmen | Cristo | BCT Nuestro Padre Jesús del Gran Poder · Coria del Río | Crear Banda local si supera preflight de identidad |
+| Miércoles Santo | Gran Poder / Carmen | Virgen | Banda Municipal de Música de Coria del Río | REUSE del nodo canónico tras reconciliar duplicado |
+| Jueves Santo | Vera+Cruz | Cristo | Capilla Musical | Conservar como crédito/posición; no crear entidad ambigua sin identidad |
+| Jueves Santo | Vera+Cruz | Virgen | Banda Municipal de Música de Coria del Río | REUSE |
+| Viernes Santo | Soledad | Cristo Yacente | Capilla Musical | Conservar como crédito/posición si no se resuelve identidad |
+| Viernes Santo | Soledad | Virgen | Banda Municipal de Música de Coria del Río | REUSE |
+| Sábado Santo | San José / Piedad | — | **La guía 2026 no consigna acompañamiento** | NO INFERIR desde años anteriores |
+| Domingo de Resurrección | Soledad | Cristo Resucitado | AM Santa Cecilia de Sevilla | REUSE de `6d6ceee7-53d0-4705-a58c-fadc364cb322` |
+| Domingo de Resurrección | Soledad | Virgen | Banda Municipal de Música de Coria del Río | REUSE |
+| Domingo de Resurrección | Soledad | posición adicional | AM San Lucas Evangelista de Coria del Río aparece en otra guía 2026 | **ROL / TRAMO PENDIENTE**; no crear asignación hasta resolverlo |
+
+### 4.3 · Reglas de actualidad musical
+
+- El contrato de **Paterna del Campo** con la Hermandad de San José corresponde a 2027–2028: no se presenta como vigencia 2026.
+- Los acompañamientos históricos de la Piedad —incluidos De Profundis o Capilla Calvarium en fuentes antiguas— no se elevan a 2026 sin prueba actual.
+- Una Banda citada en la guía 2026 no obliga a crear un nodo: antes se busca identidad canónica global y Fuentes suficientes.
+- Para Capillas sin identidad inequívoca se admite crédito textual antes que un nodo dudoso.
+- La Banda Municipal de Coria solo puede quedar publicada una vez después de la reconciliación de IDs.
+
 ---
 
 ## 5 · Universo musical local
@@ -476,13 +531,15 @@ No se borrará el ID.
 
 ### Pendientes
 
-1. acompañamientos musicales vigentes de cada estación de 2026;
-2. Fuentes propias / canales oficiales de las cinco penitenciales ausentes y Rocío, cuando existan;
-3. autoría y cronología exacta de cada titular a partir de Fuentes suficientes;
-4. Pasos y relaciones Imagen ↔ Paso;
-5. comprobar Salidas 2026 una a una como `held` o `announced`;
-6. Cultos recurrentes solo donde haya evidencia directa;
-7. inventario exhaustivo de relaciones del nodo musical duplicado antes de archivarlo.
+1. **Piedad del Sábado Santo:** acompañamiento 2026 no documentado en la guía actual; no inferirlo;
+2. **Domingo de Resurrección:** resolver la posición o tramo exacto de AM San Lucas Evangelista antes de crear asignación;
+3. Fuentes propias / canales oficiales de las cinco penitenciales ausentes y Rocío, cuando existan;
+4. completar autoría y cronología de titulares solo donde una Fuente suficiente permita precisión mayor;
+5. cerrar identidad física de los Pasos, especialmente el utilizado por la Virgen de la Soledad el Domingo de Resurrección;
+6. comprobar Salidas 2026 una a una como `held` o `announced`;
+7. Cultos recurrentes solo donde haya evidencia directa;
+8. inventario exhaustivo de relaciones del nodo musical duplicado antes de archivarlo;
+9. resolver identidad canónica global de las Bandas externas citadas en 2026 antes de cualquier CREATE.
 
 ---
 
@@ -546,6 +603,6 @@ Y guardas específicas:
 4. El cierre debe incorporar también Rocío, no solo Semana Santa, para que el municipio sea realmente integral.
 5. AM San Lucas y BCT Gran Poder son deuda musical real; Banda Artística Coriana no se eleva a formación actual sin evidencia adicional.
 6. Borriquita debe completarse; Estrella debe preservarse.
-7. El próximo movimiento autorizado es **cerrar acompañamientos 2026 + Fuentes propias + mapa de titulares/Pasos**, todavía sin Apply.
+7. El mapa musical 2026 y el núcleo de titulares/Pasos ya están cerrados. El próximo movimiento autorizado es **resolver los dos residuos musicales, Salidas held/announced, Fuentes propias y el plan cuantificado del lote**, todavía sin Apply.
 
-**Estado:** `INVENTARIO CANÓNICO CERRADO · FUENTES BASE REUNIDAS · APPLY NO INICIADO`.
+**Estado:** `INVENTARIO CANÓNICO CERRADO · MÚSICA 2026 CASI CERRADA · MAPA TITULARES/PASOS FIJADO · APPLY NO INICIADO`.
