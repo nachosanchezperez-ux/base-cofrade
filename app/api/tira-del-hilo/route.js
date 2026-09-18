@@ -4,6 +4,8 @@ import { getHiloLookupIntent, selectHiloNavigationItems } from '@/lib/tira-searc
 
 export const dynamic = 'force-dynamic'
 
+// Los municipios se resuelven siempre mediante la lógica territorial genérica; no añadir excepciones nominales aquí.
+
 const VALID_ENTITY_TYPES = new Set([
   'brotherhood',
   'image',
