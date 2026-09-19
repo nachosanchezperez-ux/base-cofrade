@@ -4,7 +4,7 @@
 **Fase:** PRE-LOTE RESUELTO / ROW-BY-ROW CERRADO  
 **Municipio:** Lebrija · `07281b21-d892-4e5d-aa63-24ec0e9bf4d2`  
 **Namespace candidato:** `c0160033-*` · libre y no materializado  
-**DML exactas:** **465** · **32 REUSE**  
+**DML exactas:** **473** · **32 REUSE**  
 **Staging:** 0 · **Apply:** 0
 
 La estimación preliminar queda sustituida por el preflight específico y el plan row-by-row.
@@ -134,7 +134,7 @@ Relaciones 2026 estructuradas: **11**. No se publica música por tradición sin 
 REUSE:
 - Castillo patronal 12/09 · held.
 
-Series nuevas: **16**, incluyendo serie patronal Castillo, San Pedro anual y Corpus Sacramental sin fabricar occurrences 2026.
+Series nuevas: **16**, incluyendo serie patronal Castillo, San Pedro anual y Corpus Sacramental. San Pedro incorpora occurrence 2026 `announced`; el Corpus Sacramental no fabrica occurrence 2026.
 
 ## 7. Cultos
 
@@ -171,14 +171,14 @@ Planificadas: 31 URL.
 
 Además se reutilizan 8 Fuentes existentes del universo Castillo.
 
-Trazabilidad nueva: **121 source_links**.
+Trazabilidad nueva: **123 source_links**.
 
 ## 10. Recuento DML
 
 | Familia | Filas |
 |---|---:|
 | municipalities | 2 |
-| sources | 30 |
+| sources | 31 |
 | places | 6 |
 | entities | 64 |
 | brotherhoods INSERT | 11 |
@@ -192,20 +192,20 @@ Trazabilidad nueva: **121 source_links**.
 | image_steps | 23 |
 | entity_relations | 2 |
 | outing_series | 16 |
-| outings INSERT | 13 |
-| outing_entities | 23 |
-| music positions | 11 |
-| music assignments | 11 |
-| music periods | 11 |
+| outings INSERT | 14 |
+| outing_entities | 24 |
+| music positions | 12 |
+| music assignments | 12 |
+| music periods | 12 |
 | cults | 5 |
 | cult_occurrences | 3 |
-| source_links | 121 |
+| source_links | 123 |
 | UPDATE Castillo | 1 |
 | UPDATE salida patronal Castillo | 1 |
-| **TOTAL** | **465** |
+| **TOTAL** | **473** |
 
 Contrato final del preflight:
-- **463 INSERT/UPSERT**;
+- **471 INSERT/UPSERT**;
 - **2 UPDATE**;
 - **0 DELETE**;
 - **32 REUSE**.
@@ -217,6 +217,6 @@ La autoridad detallada pasa a:
 - [Plan row-by-row](./PLAN-ROW-BY-ROW-LEBRIJA-HC016-2026-09-19.md)
 
 Siguiente puerta:
-**IDs deterministas → manifiesto 465/465 → SQL completo → ROLLBACK**.
+**IDs deterministas → manifiesto 473/473 → SQL completo → ROLLBACK**.
 
 No crear staging ni ejecutar Apply.
