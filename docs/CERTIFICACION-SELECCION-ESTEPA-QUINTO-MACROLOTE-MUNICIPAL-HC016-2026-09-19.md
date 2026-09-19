@@ -122,24 +122,36 @@ La Inmaculada no se separa de Paz y Caridad.
 
 ### 11. ¿Cuánto mediría aproximadamente el lote?
 
-Estimación pre-staging:
+La estimación de selección quedó superada por el preflight específico y el plan row-by-row. La cifra vigente es:
 
-- TOTAL conceptual: **≈395**;
-- INSERT: **≈375**;
-- UPDATE: **≈6**;
-- REUSE: **≈14**;
-- margen: ±25 por trazabilidad/autorías/identidad de Bandas externas.
+- TOTAL DML: **495**;
+- INSERT / UPSERT: **490**;
+- UPDATE: **4**;
+- DELETE controlado: **1**;
+- REUSE canónico fuera del total DML: **21**.
+
+Desglose nuclear post-preflight:
+- 13 corporaciones;
+- 28 Imágenes físicas, 27 nuevas;
+- 18 Pasos, 17 nuevos + 1 existente a publicar;
+- 13 Salidas 2026 nuevas;
+- 16 posiciones/asignaciones musicales;
+- 14 periodos musicales;
+- 8 Cultos + 8 ediciones 2026;
+- 1 acontecimiento;
+- 23 Fuentes nuevas;
+- 143 enlaces de Fuente.
 
 ### 12. ¿Qué huecos son legítimos?
 
 - multimedia sin derechos;
-- Cultos 2026 sin convocatoria directa;
-- Pasos de Glorias sin Fuente física;
-- Salidas 2026 de Asunción, Remedios o Carmen sin evidencia suficiente;
-- continuidad musical futura no acreditada;
-- bandas externas sin identidad canónica global resuelta;
-- autorías antiguas ambiguas;
-- patrimonio exhaustivo.
+- Cultos adicionales no fechados o sin convocatoria 2026;
+- patrimonio exhaustivo de Pasos e Imágenes;
+- música de Santa Ana mientras no exista Fuente directa suficiente;
+- continuidad musical para 2027 no acreditada;
+- autorías no inequívocas fuera de las ocho estructuradas;
+- cualquier elevación de `announced` a `held` sin evidencia posterior;
+- cualquier dato físico o histórico de los Pasos de Gloria que no esté documentado.
 
 ### 13. ¿Puede ejecutarse únicamente con DML?
 
@@ -196,3 +208,14 @@ No queda autorizado por esta certificación:
 - staging: **0**;
 - frente paralelo: **0**.
 
+
+
+## Revisión post-preflight específico
+
+El preflight específico posterior a esta selección resolvió las siete incertidumbres iniciales sin crear staging ni ejecutar DML editorial.
+
+La autoridad operativa pasa a:
+- [Preflight específico de Estepa](./PREFLIGHT-ESTEPA-QUINTO-MACROLOTE-MUNICIPAL-HC016-2026-09-19.md)
+- [Plan row-by-row de Estepa](./PLAN-ROW-BY-ROW-ESTEPA-HC016-2026-09-19.md)
+
+La selección de Estepa no cambia; cambia únicamente la precisión del futuro lote.
