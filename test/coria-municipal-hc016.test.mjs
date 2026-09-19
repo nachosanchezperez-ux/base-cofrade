@@ -4,6 +4,7 @@ import test from 'node:test'
 
 const plan = JSON.parse(await readFile(new URL('../scripts/coria-municipal-hc016-plan.json', import.meta.url), 'utf8'))
 const archive = await readFile(new URL('../supabase/migrations_archive/post-first-edition-editorial/20260918220000_cierra_coria_del_rio_macrolote_municipal.sql', import.meta.url), 'utf8')
+const finalDeltaArchive = await readFile(new URL('../supabase/migrations_archive/post-first-edition-editorial/20260919160000_reconcilia_coria_del_rio_postapply.sql', import.meta.url), 'utf8')
 const stepRemate = JSON.parse(await readFile(new URL('../scripts/coria-municipal-hc016-outing-step-remate.json', import.meta.url), 'utf8'))
 
 test('Coria congela ocho corporaciones y 304 operaciones', () => {
@@ -39,7 +40,7 @@ test('la Banda Municipal se reconcilia sin borrar IDs', () => {
   assert.doesNotMatch(archive, new RegExp(`delete\\s+from\\s+public\\."?entities"?[^;]*${duplicate}`, 'i'))
 })
 
-test('la actualidad 2026 solo eleva a held Cautivo y Resurrección', () => {
+test('el lote base 304 eleva inicialmente a held Cautivo y Resurrección', () => {
   const outings = plan.rows.filter((row) => row.table === 'outings' && row.operation === 'upsert')
   assert.equal(outings.length, 8)
   const held = outings.filter((row) => row.data.event_status === 'held')
@@ -82,4 +83,16 @@ test('el QA enlaza explícitamente los quince Pasos con sus ocho Salidas', () =>
   assert.equal(stepRemate.rows.length, 15)
   assert.equal(new Set(stepRemate.rows.map((row) => row.outing_id)).size, 8)
   assert.ok(stepRemate.rows.every((row) => row.role === 'processional_step'))
+})
+
+
+test('el delta final certifica San José, periodos musicales y sede canónica sin inferencias', () => {
+  assert.match(finalDeltaArchive, /HC016-CORIA-SJ-TUE-2026/)
+  assert.match(finalDeltaArchive, /event_status='held'/)
+  assert.match(finalDeltaArchive, /music_accompaniment_periods/)
+  assert.match(finalDeltaArchive, /c0160031-0715-4000-8000-000000000015/)
+  assert.match(finalDeltaArchive, /5317981f-4be1-4bbd-a4c8-943d178d247e/)
+  assert.match(finalDeltaArchive, /delete from public\.places/i)
+  assert.doesNotMatch(finalDeltaArchive, /c0160031-0401-4000-8000-000000000001/)
+  assert.doesNotMatch(finalDeltaArchive, /\b(create|alter|drop|truncate)\s+(table|policy|schema|function|extension)\b/i)
 })
