@@ -3,8 +3,8 @@
 **Fecha:** 19 de septiembre de 2026  
 **Fase:** ROW-BY-ROW CERRADO  
 **Base:** `9bd786f9cb52f6eafb875dc8157c89da47fabfa5`  
-**TOTAL DML:** **464**  
-**INSERT / UPSERT:** **462**  
+**TOTAL DML:** **465**  
+**INSERT / UPSERT:** **463**  
 **UPDATE:** **2**  
 **DELETE:** **0**  
 **REUSE:** **32**
@@ -33,15 +33,15 @@ Este documento congela el número y orden lógico de las operaciones. Los IDs `c
 | 248–249 | entity_relations | upsert | 2 |
 | 250–265 | outing_series | upsert | 16 |
 | 266–278 | outings | upsert | 13 |
-| 279–300 | outing_entities | upsert | 22 |
-| 301–311 | outing_music_positions | upsert | 11 |
-| 312–322 | outing_music_assignments | upsert | 11 |
-| 323–333 | music_accompaniment_periods | upsert | 11 |
-| 334–338 | cults | upsert | 5 |
-| 339–341 | cult_occurrences | upsert | 3 |
-| 342–462 | source_links | upsert | 121 |
-| 463 | brotherhoods | update | 1 |
-| 464 | outings | update | 1 |
+| 279–301 | outing_entities | upsert | 23 |
+| 302–312 | outing_music_positions | upsert | 11 |
+| 313–323 | outing_music_assignments | upsert | 11 |
+| 324–334 | music_accompaniment_periods | upsert | 11 |
+| 335–339 | cults | upsert | 5 |
+| 340–342 | cult_occurrences | upsert | 3 |
+| 343–463 | source_links | upsert | 121 |
+| 464 | brotherhoods | update | 1 |
+| 465 | outings | update | 1 |
 
 ## 2. Entidades · posiciones 39–102
 
@@ -162,9 +162,10 @@ Santísimo Sacramento reutilizado: `d335bf75-18ce-42db-a10b-cb8942a7b05a`.
 ### outings · 13
 Se crean únicamente las occurrences 2026 verificadas o anunciadas.
 
-### outing_entities · 22
+### outing_entities · 23
 Distribución:
-- Penitencia: 19;
+- Penitencia: 20;
+  - Entrada Triunfal aporta 3: Jesús, Estrella y San Juan Evangelista; los dos varones comparten el mismo misterio.
 - Aurora: 1;
 - San Benito: 1;
 - Corpus San Francisco: 1;
@@ -226,9 +227,9 @@ Subrangos conceptuales:
 - 3 · cult_occurrences;
 - 2 · entity_relations sacramentales.
 
-## 8. UPDATE · posiciones 463–464
+## 8. UPDATE · posiciones 464–465
 
-### 463 · brotherhoods · Castillo
+### 464 · brotherhoods · Castillo
 Actualizar exclusivamente:
 - `official_name` con la denominación moderna de su web/parroquia;
 - `current_procession_day` para reflejar el carácter penitencial y patronal sin crear una segunda Hermandad;
@@ -236,7 +237,7 @@ Actualizar exclusivamente:
 
 No cambia su UUID ni su slug.
 
-### 464 · outings · patronal Castillo 12/09/2026
+### 465 · outings · patronal Castillo 12/09/2026
 Actualizar exclusivamente:
 - `outing_series_id` a la nueva serie patronal.
 
@@ -264,11 +265,11 @@ No se modifica:
 
 El siguiente paso autorizado es únicamente:
 
-**colisiones finales → IDs deterministas `c0160033-*` → manifiesto 464/464 → generar payload SQL → ejecutar payload completo con ROLLBACK**.
+**colisiones finales → IDs deterministas `c0160033-*` → manifiesto 465/465 → generar payload SQL → ejecutar payload completo con ROLLBACK**.
 
 El manifiesto posterior deberá preservar exactamente:
-- 464 DML;
-- 462 upsert;
+- 465 DML;
+- 463 upsert;
 - 2 update;
 - 0 delete;
 - 32 REUSE.
