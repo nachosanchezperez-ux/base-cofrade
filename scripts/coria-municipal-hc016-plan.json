@@ -1,0 +1,4772 @@
+{
+  "version": 1,
+  "generated_for_head": "c1a2f520371f839bd6a629a3a508fd60a170aaab",
+  "summary": {
+    "import_id": "c0160031-0000-4000-8000-000000000001",
+    "scope": {
+      "corporations": 8,
+      "existing_preserved": 2,
+      "brotherhoods_created": 6,
+      "local_bands_created": 2,
+      "municipal_band_duplicates_reconciled": 1,
+      "images_created": 14,
+      "steps_created": 15,
+      "outings_2026_created": 8,
+      "outing_series_created": 9,
+      "cults_created": 0,
+      "events_created": 0,
+      "music_assignments_created": 14
+    },
+    "reuse_count": 18,
+    "operations_total": 304,
+    "operations_by_category": {
+      "archive": 2,
+      "create": 99,
+      "reconcile": 5,
+      "relation": 182,
+      "source": 15,
+      "update": 1
+    },
+    "operations_by_table": {
+      "agent_disciplines": 1,
+      "agent_names": 1,
+      "agents": 1,
+      "band_names": 1,
+      "bands": 4,
+      "brotherhood_images": 14,
+      "brotherhood_steps": 15,
+      "brotherhoods": 7,
+      "entities": 40,
+      "image_authorships": 11,
+      "image_steps": 16,
+      "images": 14,
+      "music_accompaniment_periods": 1,
+      "outing_music_assignments": 14,
+      "outing_music_positions": 14,
+      "outing_series": 9,
+      "outings": 8,
+      "places": 4,
+      "source_links": 99,
+      "sources": 15,
+      "steps": 15
+    },
+    "caveats": [
+      "Piedad de San José 2026 sin música: no documentada.",
+      "AM San Lucas se crea como Banda local pero sin asignación procesional 2026 por rol no resuelto.",
+      "Cultos y acontecimientos nuevos: 0; no se fabrica vigencia.",
+      "Banda Artística Coriana se conserva como nombre histórico/asociativo de la Banda Municipal, no como entidad independiente.",
+      "Solo Cautivo y Soledad/Resurrección 2026 se elevan a held por evidencia posterior.",
+      "El duplicado archivado de Banda Municipal conserva su ID pero queda sin municipality_id activo; el nombre público vigente reside en el nodo canónico y Banda Artística Coriana queda como nombre histórico no vigente."
+    ]
+  },
+  "reuse": [
+    {
+      "kind": "municipality",
+      "id": "fe884314-1f8b-4566-8bb9-7b11ecf42446",
+      "name": "Coria del Río"
+    },
+    {
+      "kind": "brotherhood",
+      "id": "20f519f8-54ee-46e0-a4ab-aa524c13227b",
+      "name": "Borriquita de Coria del Río"
+    },
+    {
+      "kind": "brotherhood",
+      "id": "f5b142a7-5f4e-44e5-b862-444244d30d56",
+      "name": "Estrella de Coria del Río"
+    },
+    {
+      "kind": "image",
+      "id": "734a4dd8-be01-438d-9f99-fdc0d4eb07e8",
+      "name": "Santísimo Cristo de la Salud"
+    },
+    {
+      "kind": "band",
+      "id": "63f719d8-61ab-4357-a43f-cc7977bdda43",
+      "name": "Banda Municipal de Música de Coria del Río"
+    },
+    {
+      "kind": "band",
+      "id": "6d6ceee7-53d0-4705-a58c-fadc364cb322",
+      "name": "Agrupación Musical Santa Cecilia de Sevilla"
+    },
+    {
+      "kind": "band",
+      "id": "de6bb885-b80e-4c26-a176-7f72af419d63",
+      "name": "Nazareno de La Algaba"
+    },
+    {
+      "kind": "agent",
+      "id": "56644891-fdcb-4318-8f5a-4f83d44639d3",
+      "name": "Darío Fernández Parra"
+    },
+    {
+      "kind": "agent",
+      "id": "9f5746d3-e12d-48bd-8e0c-24b8999b27a7",
+      "name": "Fernando Castejón López"
+    },
+    {
+      "kind": "agent",
+      "id": "02810542-45cb-4792-bb49-66bc22309768",
+      "name": "José Antonio Navarro Arteaga"
+    },
+    {
+      "kind": "agent",
+      "id": "160be307-5396-41a2-8903-7467a8c330f3",
+      "name": "Francisco Buiza Fernández"
+    },
+    {
+      "kind": "agent",
+      "id": "77edb355-34a4-47e4-93cb-771914fdf2f7",
+      "name": "Rafael Barbero Medina"
+    },
+    {
+      "kind": "place",
+      "id": "5317981f-4be1-4bbd-a4c8-943d178d247e",
+      "name": "Parroquia de Santa María de la Estrella"
+    },
+    {
+      "kind": "place",
+      "id": "c54894e3-7090-4c69-952c-3fb6a9148a68",
+      "name": "Sede actual de Borriquita"
+    },
+    {
+      "kind": "place",
+      "id": "098585df-089a-4120-9def-170ce89cb26b",
+      "name": "Ermita de San Juan Bautista"
+    },
+    {
+      "kind": "source",
+      "id": "6dc8600a-bd25-4985-87b5-8443a0cb3645",
+      "name": "Borriquita · web oficial"
+    },
+    {
+      "kind": "source",
+      "id": "ddcd51d4-0d03-4b8b-8e60-f3677e649550",
+      "name": "Consejo · Borriquita"
+    },
+    {
+      "kind": "source",
+      "id": "4d7ba709-9674-4822-983c-6a8581290706",
+      "name": "Estrella · web oficial"
+    }
+  ],
+  "rows": [
+    {
+      "operation": "upsert",
+      "table": "sources",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0101-4000-8000-000000000001",
+        "name": "Semana Santa de Coria del Río 2026",
+        "url": "https://www.turismosevilla.org/es/eventos-y-fiestas/semana-santa-2026-coria-del-rio",
+        "source_type": "Fuente institucional",
+        "author_or_publisher": "Turismo de la Provincia de Sevilla",
+        "publication_date": null,
+        "accessed_at": "2026-09-18",
+        "notes": "Universo penitencial 2026, sedes, titulares y número de pasos."
+      },
+      "category": "source"
+    },
+    {
+      "operation": "upsert",
+      "table": "sources",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0102-4000-8000-000000000002",
+        "name": "Horarios y recorridos de la Semana Santa de Coria del Río 2026",
+        "url": "https://www.aljarafedigital.com/aljarafe/coria-del-rio/horarios-y-recorridos-de-la-semana-santa-de-coria-del-rio-2026/",
+        "source_type": "Prensa local",
+        "author_or_publisher": "Aljarafe Digital",
+        "publication_date": "2026-03-28",
+        "accessed_at": "2026-09-18",
+        "notes": "Horarios e itinerarios publicados para las ocho salidas de 2026."
+      },
+      "category": "source"
+    },
+    {
+      "operation": "upsert",
+      "table": "sources",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0103-4000-8000-000000000003",
+        "name": "Hermandades de Penitencia de Coria del Río",
+        "url": "https://www.consejohermandadescoria.com/galeria",
+        "source_type": "Fuente institucional",
+        "author_or_publisher": "Consejo General de Hermandades y Cofradías de Coria del Río",
+        "publication_date": null,
+        "accessed_at": "2026-09-18",
+        "notes": "Identidad, titulares, autorías y configuración procesional."
+      },
+      "category": "source"
+    },
+    {
+      "operation": "upsert",
+      "table": "sources",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0104-4000-8000-000000000004",
+        "name": "Hermandad de Jesús Cautivo",
+        "url": "https://www.consejohermandadescoria.com/quienes-somos",
+        "source_type": "Fuente institucional",
+        "author_or_publisher": "Consejo General de Hermandades y Cofradías de Coria del Río",
+        "publication_date": null,
+        "accessed_at": "2026-09-18",
+        "notes": "Título, sede, historia y titulares del Cautivo."
+      },
+      "category": "source"
+    },
+    {
+      "operation": "upsert",
+      "table": "sources",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0105-4000-8000-000000000005",
+        "name": "Hermandad de San José",
+        "url": "https://www.consejohermandadescoria.com/newpage",
+        "source_type": "Fuente institucional",
+        "author_or_publisher": "Consejo General de Hermandades y Cofradías de Coria del Río",
+        "publication_date": null,
+        "accessed_at": "2026-09-18",
+        "notes": "Historia, titulares de Martes Santo y Piedad de Sábado Santo."
+      },
+      "category": "source"
+    },
+    {
+      "operation": "upsert",
+      "table": "sources",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0106-4000-8000-000000000006",
+        "name": "Hermandad del Gran Poder",
+        "url": "https://www.consejohermandadescoria.com/hermandad-del-gran-poder",
+        "source_type": "Fuente institucional",
+        "author_or_publisher": "Consejo General de Hermandades y Cofradías de Coria del Río",
+        "publication_date": null,
+        "accessed_at": "2026-09-18",
+        "notes": "Identidad, sede, historia y titulares Gran Poder/Carmen."
+      },
+      "category": "source"
+    },
+    {
+      "operation": "upsert",
+      "table": "sources",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0107-4000-8000-000000000007",
+        "name": "Hermandad de Vera+Cruz",
+        "url": "https://www.consejohermandadescoria.com/hermandad-de-vera-cruz",
+        "source_type": "Fuente institucional",
+        "author_or_publisher": "Consejo General de Hermandades y Cofradías de Coria del Río",
+        "publication_date": null,
+        "accessed_at": "2026-09-18",
+        "notes": "Historia, titulares y pasos de la Vera+Cruz."
+      },
+      "category": "source"
+    },
+    {
+      "operation": "upsert",
+      "table": "sources",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0108-4000-8000-000000000008",
+        "name": "Hermandad de la Soledad",
+        "url": "https://www.consejohermandadescoria.com/hermandad-de-la-soledad",
+        "source_type": "Fuente institucional",
+        "author_or_publisher": "Consejo General de Hermandades y Cofradías de Coria del Río",
+        "publication_date": null,
+        "accessed_at": "2026-09-18",
+        "notes": "Historia, Yacente, Resucitado y Soledad."
+      },
+      "category": "source"
+    },
+    {
+      "operation": "upsert",
+      "table": "sources",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0109-4000-8000-000000000009",
+        "name": "Hermandad de Nuestra Señora del Rocío de Coria del Río",
+        "url": "https://www.consejohermandadescoria.com/newpagea377262a",
+        "source_type": "Fuente institucional",
+        "author_or_publisher": "Consejo General de Hermandades y Cofradías de Coria del Río",
+        "publication_date": null,
+        "accessed_at": "2026-09-18",
+        "notes": "Fundación, sede e identidad rociera."
+      },
+      "category": "source"
+    },
+    {
+      "operation": "upsert",
+      "table": "sources",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0110-4000-8000-000000000010",
+        "name": "Banda Municipal de Música de Coria del Río",
+        "url": "https://www.ayto-coriadelrio.es/es/cultura/banda-municipal-de-musica/",
+        "source_type": "Fuente institucional",
+        "author_or_publisher": "Ayuntamiento de Coria del Río",
+        "publication_date": null,
+        "accessed_at": "2026-09-18",
+        "notes": "Identidad única de la Banda Municipal y origen en el Aula Municipal de Música."
+      },
+      "category": "source"
+    },
+    {
+      "operation": "upsert",
+      "table": "sources",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0111-4000-8000-000000000011",
+        "name": "Registro municipal de asociaciones de Coria del Río",
+        "url": "https://www.ayto-coriadelrio.es/es/municipio/asociaciones/",
+        "source_type": "Fuente institucional",
+        "author_or_publisher": "Ayuntamiento de Coria del Río",
+        "publication_date": null,
+        "accessed_at": "2026-09-18",
+        "notes": "Existencia de AM San Lucas Evangelista y BCT Gran Poder, además de la denominación asociativa Banda Artística Coriana."
+      },
+      "category": "source"
+    },
+    {
+      "operation": "upsert",
+      "table": "sources",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0112-4000-8000-000000000012",
+        "name": "El Muñidor del Aljarafe · Semana Santa 2026",
+        "url": "https://aljarafeymas.com/system/images/20386/original/EL_MU%C3%91IDOR_DEL_ALJARAFE_2026_-_EDICION_DIGITAL.pdf",
+        "source_type": "Guía cofrade",
+        "author_or_publisher": "El Muñidor del Aljarafe",
+        "publication_date": "2026-03-01",
+        "accessed_at": "2026-09-18",
+        "notes": "Acompañamientos y programación 2026; no se usa para inferir vigencia posterior."
+      },
+      "category": "source"
+    },
+    {
+      "operation": "upsert",
+      "table": "sources",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0113-4000-8000-000000000013",
+        "name": "Momentos del Lunes Santo 2026 en Coria del Río",
+        "url": "https://www.youtube.com/watch?v=zr143v7GR94",
+        "source_type": "Vídeo posterior",
+        "author_or_publisher": "Miguel Vídeos Cofrades",
+        "publication_date": "2026-07-10",
+        "accessed_at": "2026-09-18",
+        "notes": "Evidencia posterior de la salida del Cautivo y sus dos acompañamientos."
+      },
+      "category": "source"
+    },
+    {
+      "operation": "upsert",
+      "table": "sources",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0114-4000-8000-000000000014",
+        "name": "Procesión de Gloria · Domingo de Resurrección 2026 · Coria del Río",
+        "url": "https://www.youtube.com/watch?v=eHQwGSg_lFg",
+        "source_type": "Vídeo posterior",
+        "author_or_publisher": "Miguel Vídeos Cofrades",
+        "publication_date": "2026-04-20",
+        "accessed_at": "2026-09-18",
+        "notes": "Evidencia posterior de Los Abrazos/Resurrección y música tras Resucitado y Soledad."
+      },
+      "category": "source"
+    },
+    {
+      "operation": "upsert",
+      "table": "sources",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0115-4000-8000-000000000015",
+        "name": "Hermandad de la Borriquita · Turismo del Aljarafe",
+        "url": "https://turismo.aljarafe.com/articulos/Hermandad-de-La-Borriquita-00003/",
+        "source_type": "Fuente institucional turística",
+        "author_or_publisher": "Turismo del Aljarafe",
+        "publication_date": null,
+        "accessed_at": "2026-09-18",
+        "notes": "Autoría y cronología de María Santísima de la Victoria."
+      },
+      "category": "source"
+    },
+    {
+      "operation": "upsert",
+      "table": "places",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0201-4000-8000-000000000001",
+        "municipality_id": "fe884314-1f8b-4566-8bb9-7b11ecf42446",
+        "name": "Capilla de Jesús Cautivo",
+        "slug": "capilla-jesus-cautivo-coria-del-rio",
+        "place_type": "capilla",
+        "address": "Coria del Río, Sevilla",
+        "notes": "Sede canónica de la Hermandad de Jesús Cautivo."
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "places",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0202-4000-8000-000000000002",
+        "municipality_id": "fe884314-1f8b-4566-8bb9-7b11ecf42446",
+        "name": "Parroquia de San José",
+        "slug": "parroquia-san-jose-coria-del-rio",
+        "place_type": "parroquia",
+        "address": "Coria del Río, Sevilla",
+        "notes": "Sede canónica de la Hermandad de San José."
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "places",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0203-4000-8000-000000000003",
+        "municipality_id": "fe884314-1f8b-4566-8bb9-7b11ecf42446",
+        "name": "Capilla de Nuestra Señora de la Soledad",
+        "slug": "capilla-nuestra-senora-soledad-coria-del-rio",
+        "place_type": "capilla",
+        "address": "Plaza de la Soledad, Coria del Río, Sevilla",
+        "notes": "Sede de la Hermandad de la Soledad."
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "places",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0204-4000-8000-000000000004",
+        "municipality_id": "fe884314-1f8b-4566-8bb9-7b11ecf42446",
+        "name": "Capilla de Nuestra Señora del Rocío",
+        "slug": "capilla-nuestra-senora-rocio-coria-del-rio",
+        "place_type": "capilla",
+        "address": "Coria del Río, Sevilla",
+        "notes": "Sede canónica de la Hermandad del Rocío."
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "entities",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0301-4000-8000-000000000001",
+        "entity_type": "brotherhood",
+        "name": "Hermandad de Jesús Cautivo de Coria del Río",
+        "slug": "jesus-cautivo-coria-del-rio",
+        "summary": "Hermandad de Penitencia del Lunes Santo de Coria del Río.",
+        "status": "published"
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "brotherhoods",
+      "on_conflict": "entity_id",
+      "data": {
+        "entity_id": "c0160031-0301-4000-8000-000000000001",
+        "official_name": "Humilde y Fervorosa Hermandad de Nuestro Padre Jesús Cautivo, Nuestra Señora del Dulce Nombre de María, San Lucas Evangelista y Santa Ángela de la Cruz",
+        "popular_name": "Jesús Cautivo",
+        "foundation_text": "Origen vecinal desde 1973; agrupación de fieles en los años 80; Hermandad de Penitencia desde el 28 de febrero de 1990.",
+        "municipality_id": "fe884314-1f8b-4566-8bb9-7b11ecf42446",
+        "canonical_see_place_id": "c0160031-0201-4000-8000-000000000001",
+        "neighborhood": null,
+        "website_url": null,
+        "instagram_url": null,
+        "crest_path": null,
+        "brotherhood_types": [
+          "Penitencia"
+        ],
+        "current_procession_day": "Lunes Santo",
+        "notes": "Cierre municipal HC-016 de Coria del Río; solo se publican datos con Fuente suficiente.",
+        "history_text": "La devoción al antiguo Nazareno se arraigó en el barrio de la Blanca Paloma desde 1973. La corporación fue aprobada como Hermandad de Penitencia en 1990 y realiza su estación el Lunes Santo."
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "entities",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0302-4000-8000-000000000002",
+        "entity_type": "brotherhood",
+        "name": "Hermandad de San José de Coria del Río",
+        "slug": "san-jose-coria-del-rio",
+        "summary": "Hermandad Sacramental y de Penitencia de Coria del Río con salidas el Martes y Sábado Santo.",
+        "status": "published"
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "brotherhoods",
+      "on_conflict": "entity_id",
+      "data": {
+        "entity_id": "c0160031-0302-4000-8000-000000000002",
+        "official_name": "Hermandad Sacramental y Cofradía de Nazarenos de Nuestro Padre Jesús de la Paz en su Presentación al Pueblo, María Santísima de Gracia y Esperanza, Piedad del Santísimo Cristo de la Misericordia, Nuestra Señora de los Dolores, San Juan Evangelista y Patriarca Bendito Señor San José",
+        "popular_name": "Hermandad de San José",
+        "foundation_text": "Fraternidad Cristiana desde 1990; Hermandad de Penitencia desde 2007; Piedad incorporada como titular en 2015 y primera estación de Sábado Santo en 2018.",
+        "municipality_id": "fe884314-1f8b-4566-8bb9-7b11ecf42446",
+        "canonical_see_place_id": "c0160031-0202-4000-8000-000000000002",
+        "neighborhood": null,
+        "website_url": null,
+        "instagram_url": null,
+        "crest_path": null,
+        "brotherhood_types": [
+          "Sacramental",
+          "Penitencia"
+        ],
+        "current_procession_day": "Martes Santo · Sábado Santo",
+        "notes": "Cierre municipal HC-016 de Coria del Río; solo se publican datos con Fuente suficiente.",
+        "history_text": "Nacida en torno a la Parroquia de San José, articula la estación del Martes Santo y, dentro de la misma corporación, la Piedad del Sábado Santo. No se crea una hermandad independiente para la Piedad."
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "entities",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0303-4000-8000-000000000003",
+        "entity_type": "brotherhood",
+        "name": "Hermandad del Gran Poder y Nuestra Señora del Carmen de Coria del Río",
+        "slug": "gran-poder-carmen-coria-del-rio",
+        "summary": "Antigua corporación marinera de Coria del Río que realiza estación el Miércoles Santo.",
+        "status": "published"
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "brotherhoods",
+      "on_conflict": "entity_id",
+      "data": {
+        "entity_id": "c0160031-0303-4000-8000-000000000003",
+        "official_name": "Antigua Hermandad de Jesús Nazareno y Cofradía de Marineros, Fervorosa Hermandad de Nuestro Padre Jesús del Gran Poder y Nuestra Señora del Carmen",
+        "popular_name": "Gran Poder y Carmen",
+        "foundation_text": "Cofradía carmelitana documentada desde 1603 y antigua Hermandad de Jesús Nazareno; configuración actual fruto de su evolución histórica.",
+        "municipality_id": "fe884314-1f8b-4566-8bb9-7b11ecf42446",
+        "canonical_see_place_id": "5317981f-4be1-4bbd-a4c8-943d178d247e",
+        "neighborhood": null,
+        "website_url": null,
+        "instagram_url": null,
+        "crest_path": null,
+        "brotherhood_types": [
+          "Penitencia",
+          "Gloria"
+        ],
+        "current_procession_day": "Miércoles Santo",
+        "notes": "Cierre municipal HC-016 de Coria del Río; solo se publican datos con Fuente suficiente.",
+        "history_text": "La corporación reúne en una misma identidad al Gran Poder y a Nuestra Señora del Carmen. Realiza estación penitencial el Miércoles Santo y conserva su dimensión marinera y carmelitana."
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "entities",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0304-4000-8000-000000000004",
+        "entity_type": "brotherhood",
+        "name": "Hermandad de la Vera+Cruz de Coria del Río",
+        "slug": "vera-cruz-coria-del-rio",
+        "summary": "Hermandad histórica de Penitencia del Jueves Santo de Coria del Río.",
+        "status": "published"
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "brotherhoods",
+      "on_conflict": "entity_id",
+      "data": {
+        "entity_id": "c0160031-0304-4000-8000-000000000004",
+        "official_name": "Humilde y Antigua Hermandad y Cofradía de Nazarenos del Santísimo Cristo de la Vera+Cruz, Purísima Concepción de María Santísima y San Juan Bautista",
+        "popular_name": "Vera+Cruz de Coria del Río",
+        "foundation_text": "Origen en torno a 1500 / principios del siglo XVI; abundante documentación durante el siglo XVI.",
+        "municipality_id": "fe884314-1f8b-4566-8bb9-7b11ecf42446",
+        "canonical_see_place_id": "098585df-089a-4120-9def-170ce89cb26b",
+        "neighborhood": null,
+        "website_url": "https://www.elcerro.com/",
+        "instagram_url": null,
+        "crest_path": null,
+        "brotherhood_types": [
+          "Penitencia"
+        ],
+        "current_procession_day": "Jueves Santo",
+        "notes": "Cierre municipal HC-016 de Coria del Río; solo se publican datos con Fuente suficiente.",
+        "history_text": "Una de las corporaciones históricas de la villa, establecida en la Ermita de San Juan Bautista y vinculada a la devoción de la Vera+Cruz y la Purísima Concepción."
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "entities",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0305-4000-8000-000000000005",
+        "entity_type": "brotherhood",
+        "name": "Hermandad de la Soledad de Coria del Río",
+        "slug": "soledad-coria-del-rio",
+        "summary": "Hermandad Servita de Coria del Río con salidas el Viernes Santo y Domingo de Resurrección.",
+        "status": "published"
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "brotherhoods",
+      "on_conflict": "entity_id",
+      "data": {
+        "entity_id": "c0160031-0305-4000-8000-000000000005",
+        "official_name": "Muy Antigua, Fervorosa y Venerable Hermandad Servita y Cofradía de Nazarenos del Santo Entierro, Cristo Resucitado y Nuestra Señora de la Soledad Coronada",
+        "popular_name": "Soledad de Coria del Río",
+        "foundation_text": "Finales del siglo XVI; referencias documentales de 1567/1569 y poder de 1578 conservados por la tradición documental de la corporación.",
+        "municipality_id": "fe884314-1f8b-4566-8bb9-7b11ecf42446",
+        "canonical_see_place_id": "c0160031-0203-4000-8000-000000000003",
+        "neighborhood": null,
+        "website_url": null,
+        "instagram_url": null,
+        "crest_path": null,
+        "brotherhood_types": [
+          "Servita",
+          "Penitencia",
+          "Gloria"
+        ],
+        "current_procession_day": "Viernes Santo · Domingo de Resurrección",
+        "notes": "Cierre municipal HC-016 de Coria del Río; solo se publican datos con Fuente suficiente.",
+        "history_text": "La misma Hermandad organiza el Santo Entierro y la salida de la Soledad el Viernes Santo, y la celebración de Resurrección y Los Abrazos el Domingo de Resurrección."
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "entities",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0306-4000-8000-000000000006",
+        "entity_type": "brotherhood",
+        "name": "Hermandad de Nuestra Señora del Rocío de Coria del Río",
+        "slug": "rocio-coria-del-rio",
+        "summary": "Hermandad filial rociera fundada en Coria del Río en 1849.",
+        "status": "published"
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "brotherhoods",
+      "on_conflict": "entity_id",
+      "data": {
+        "entity_id": "c0160031-0306-4000-8000-000000000006",
+        "official_name": "Real, Imperial, Ilustre y Antigua Hermandad de Nuestra Señora del Rocío de Coria del Río",
+        "popular_name": "Rocío de Coria del Río",
+        "foundation_text": "21 de abril de 1849; acogida como filial por la Hermandad Matriz en mayo de 1849.",
+        "municipality_id": "fe884314-1f8b-4566-8bb9-7b11ecf42446",
+        "canonical_see_place_id": "c0160031-0204-4000-8000-000000000004",
+        "neighborhood": null,
+        "website_url": null,
+        "instagram_url": null,
+        "crest_path": null,
+        "brotherhood_types": [
+          "Gloria"
+        ],
+        "current_procession_day": "Romería del Rocío",
+        "notes": "Cierre municipal HC-016 de Coria del Río; solo se publican datos con Fuente suficiente.",
+        "history_text": "Fundada en 1849, realiza su camino anual a la aldea del Rocío. El cierre municipal no fuerza una imagen devocional física ni un paso cuando la representación corporativa se articula mediante Simpecado."
+      },
+      "category": "create"
+    },
+    {
+      "operation": "update",
+      "table": "brotherhoods",
+      "where_keys": [
+        "entity_id"
+      ],
+      "data": {
+        "entity_id": "20f519f8-54ee-46e0-a4ab-aa524c13227b",
+        "notes": "Ficha completada en el cuarto macrolote municipal HC-016. Se preserva la identidad previa y se incorpora el segundo titular, los dos pasos y la estación ordinaria de 2026 sin alterar la extraordinaria ya publicada."
+      },
+      "category": "update"
+    },
+    {
+      "operation": "upsert",
+      "table": "entities",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0401-4000-8000-000000000001",
+        "entity_type": "band",
+        "name": "Agrupación Musical San Lucas Evangelista de Coria del Río",
+        "slug": "agrupacion-musical-san-lucas-evangelista-coria-del-rio",
+        "summary": "Formación musical local de Coria del Río.",
+        "status": "published"
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "bands",
+      "on_conflict": "entity_id",
+      "data": {
+        "entity_id": "c0160031-0401-4000-8000-000000000001",
+        "band_type": "Agrupación Musical",
+        "municipality_id": "fe884314-1f8b-4566-8bb9-7b11ecf42446",
+        "foundation_text": null,
+        "website_url": null,
+        "instagram_url": null,
+        "description": "Agrupación Musical San Lucas Evangelista de Coria del Río, documentada por el registro municipal de asociaciones.",
+        "primary_color": null,
+        "secondary_color": null,
+        "logo_path": null,
+        "hero_image_path": null,
+        "hero_image_alt": null,
+        "hero_image_credit": null,
+        "linked_brotherhood_name": null,
+        "headquarters_text": "Coria del Río",
+        "youtube_url": null,
+        "banderin_entity_id": null,
+        "logo_background_color": null
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "entities",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0402-4000-8000-000000000002",
+        "entity_type": "band",
+        "name": "Banda de Cornetas y Tambores Nuestro Padre Jesús del Gran Poder de Coria del Río",
+        "slug": "banda-cornetas-tambores-gran-poder-coria-del-rio",
+        "summary": "Formación de cornetas y tambores vinculada a Coria del Río.",
+        "status": "published"
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "bands",
+      "on_conflict": "entity_id",
+      "data": {
+        "entity_id": "c0160031-0402-4000-8000-000000000002",
+        "band_type": "Cornetas y Tambores",
+        "municipality_id": "fe884314-1f8b-4566-8bb9-7b11ecf42446",
+        "foundation_text": null,
+        "website_url": null,
+        "instagram_url": null,
+        "description": "Banda de Cornetas y Tambores de Nuestro Padre Jesús del Gran Poder de Coria del Río, documentada por el registro municipal de asociaciones.",
+        "primary_color": null,
+        "secondary_color": null,
+        "logo_path": null,
+        "hero_image_path": null,
+        "hero_image_alt": null,
+        "hero_image_credit": null,
+        "linked_brotherhood_name": "Hermandad del Gran Poder y Nuestra Señora del Carmen",
+        "headquarters_text": "Coria del Río",
+        "youtube_url": null,
+        "banderin_entity_id": null,
+        "logo_background_color": null
+      },
+      "category": "create"
+    },
+    {
+      "operation": "update",
+      "table": "entities",
+      "where_keys": [
+        "id"
+      ],
+      "data": {
+        "id": "870f7ec0-8a57-4652-96ff-05725104a47b",
+        "status": "archived",
+        "summary": "Duplicado histórico reconciliado con la Banda Municipal de Música de Coria del Río; ID preservado sin relaciones musicales activas."
+      },
+      "category": "archive"
+    },
+    {
+      "operation": "update",
+      "table": "bands",
+      "where_keys": [
+        "entity_id"
+      ],
+      "data": {
+        "entity_id": "870f7ec0-8a57-4652-96ff-05725104a47b",
+        "municipality_id": null,
+        "description": "Duplicado histórico reconciliado con la Banda Municipal de Música de Coria del Río; se conserva el ID archivado sin pertenencia municipal activa."
+      },
+      "category": "archive"
+    },
+    {
+      "operation": "update",
+      "table": "entities",
+      "where_keys": [
+        "id"
+      ],
+      "data": {
+        "id": "63f719d8-61ab-4357-a43f-cc7977bdda43",
+        "name": "Banda Municipal de Música de Coria del Río",
+        "summary": "Banda municipal de Coria del Río, nacida en 1986 desde el Aula Municipal de Música y heredera de la tradición de la Banda Artística Coriana.",
+        "status": "published"
+      },
+      "category": "reconcile"
+    },
+    {
+      "operation": "update",
+      "table": "bands",
+      "where_keys": [
+        "entity_id"
+      ],
+      "data": {
+        "entity_id": "63f719d8-61ab-4357-a43f-cc7977bdda43",
+        "foundation_text": "1986; antecedentes históricos vinculados a la Banda Artística Coriana desde 1931",
+        "website_url": "https://linktr.ee/bandadecoria",
+        "description": "Banda Municipal de Música de Coria del Río. La denominación Banda Artística Coriana forma parte de su historia y de su estructura asociativa; no se modela como una formación distinta.",
+        "headquarters_text": "Coria del Río"
+      },
+      "category": "reconcile"
+    },
+    {
+      "operation": "upsert",
+      "table": "band_names",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0411-4000-8000-000000000011",
+        "band_entity_id": "63f719d8-61ab-4357-a43f-cc7977bdda43",
+        "name": "Banda Artística Coriana",
+        "short_name": null,
+        "name_type": "former",
+        "date_from": null,
+        "date_from_text": "Antecedente histórico y denominación asociativa",
+        "date_to": null,
+        "date_to_text": null,
+        "is_current": false,
+        "notes": "No constituye una segunda formación musical en Hilo Cofrade."
+      },
+      "category": "reconcile"
+    },
+    {
+      "operation": "update",
+      "table": "music_accompaniment_periods",
+      "where_keys": [
+        "id"
+      ],
+      "data": {
+        "id": "daeec4db-ba7b-4aed-b67c-7cfb8a33389c",
+        "band_entity_id": "63f719d8-61ab-4357-a43f-cc7977bdda43"
+      },
+      "category": "reconcile"
+    },
+    {
+      "operation": "update",
+      "table": "source_links",
+      "where_keys": [
+        "id"
+      ],
+      "data": {
+        "id": "3a2bfa46-28dc-4aa5-be8f-ee4ac3c7a329",
+        "entity_id": "63f719d8-61ab-4357-a43f-cc7977bdda43"
+      },
+      "category": "reconcile"
+    },
+    {
+      "operation": "upsert",
+      "table": "entities",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0501-4000-8000-000000000001",
+        "entity_type": "agent",
+        "name": "Luis Peyré Azcárraga",
+        "slug": "luis-peyre-azcarraga",
+        "summary": "Escultor portugués afincado en Sevilla, autor del Cristo Resucitado de la Soledad de Coria.",
+        "status": "published"
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "agents",
+      "on_conflict": "entity_id",
+      "data": {
+        "entity_id": "c0160031-0501-4000-8000-000000000001",
+        "agent_kind": "person",
+        "municipality_id": null,
+        "foundation_or_birth_text": "Activo en el siglo XX",
+        "death_or_end_text": null,
+        "website_url": null,
+        "instagram_url": null,
+        "description": "Escultor documentado como autor del Cristo Resucitado recibido por la Hermandad de la Soledad de Coria en 1948."
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "agent_names",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0502-4000-8000-000000000002",
+        "agent_entity_id": "c0160031-0501-4000-8000-000000000001",
+        "name": "Luis Peyré Azcárraga",
+        "name_type": "official",
+        "is_current": true,
+        "notes": "Nombre documentado por el Consejo de Hermandades de Coria."
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "agent_disciplines",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0503-4000-8000-000000000003",
+        "agent_entity_id": "c0160031-0501-4000-8000-000000000001",
+        "discipline": "Escultura",
+        "is_primary": true,
+        "notes": "Disciplina documentada."
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "entities",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0601-4000-8000-000000000001",
+        "entity_type": "image",
+        "name": "María Santísima de la Victoria",
+        "slug": "maria-santisima-victoria-coria-del-rio",
+        "summary": "Dolorosa de Darío Fernández Parra realizada en madera de cedro policromada.",
+        "status": "published"
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "images",
+      "on_conflict": "entity_id",
+      "data": {
+        "entity_id": "c0160031-0601-4000-8000-000000000001",
+        "image_type": "Dolorosa",
+        "execution_date_text": "2011",
+        "current_condition": "extant",
+        "description": "Dolorosa de Darío Fernández Parra realizada en madera de cedro policromada.",
+        "is_dress_image": true
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "brotherhood_images",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0801-4000-8000-000000000001",
+        "brotherhood_entity_id": "20f519f8-54ee-46e0-a4ab-aa524c13227b",
+        "image_entity_id": "c0160031-0601-4000-8000-000000000001",
+        "relation_type": "titular",
+        "notes": "Titular vigente documentado en el cierre municipal.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1002-4000-8000-000000000102",
+        "source_id": "c0160031-0115-4000-8000-000000000015",
+        "entity_id": "c0160031-0601-4000-8000-000000000001",
+        "scope": "Identidad, autoría y cronología de la imagen",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "image_authorships",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0851-4000-8000-000000000051",
+        "image_entity_id": "c0160031-0601-4000-8000-000000000001",
+        "agent_entity_id": "56644891-fdcb-4318-8f5a-4f83d44639d3",
+        "authorship_type": "author",
+        "role_name": "escultor",
+        "date_from_text": "2011",
+        "certainty": "documented",
+        "notes": "Autoría estructurada desde Fuente directa o institucional.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1052-4000-8000-000000000152",
+        "source_id": "c0160031-0115-4000-8000-000000000015",
+        "image_authorship_id": "c0160031-0851-4000-8000-000000000051",
+        "scope": "Autoría y cronología",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "entities",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0602-4000-8000-000000000002",
+        "entity_type": "image",
+        "name": "Nuestro Padre Jesús Cautivo de Coria del Río",
+        "slug": "nuestro-padre-jesus-cautivo-coria-del-rio",
+        "summary": "Talla histórica procedente del antiguo Nazareno; la atribución se conserva como círculo de Pedro Roldán.",
+        "status": "published"
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "images",
+      "on_conflict": "entity_id",
+      "data": {
+        "entity_id": "c0160031-0602-4000-8000-000000000002",
+        "image_type": "Cristo cautivo",
+        "execution_date_text": "Siglo XVII; atribuida al círculo de Pedro Roldán",
+        "current_condition": "extant",
+        "description": "Talla histórica procedente del antiguo Nazareno; la atribución se conserva como círculo de Pedro Roldán.",
+        "is_dress_image": false
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "brotherhood_images",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0802-4000-8000-000000000002",
+        "brotherhood_entity_id": "c0160031-0301-4000-8000-000000000001",
+        "image_entity_id": "c0160031-0602-4000-8000-000000000002",
+        "relation_type": "titular",
+        "notes": "Titular vigente documentado en el cierre municipal.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1003-4000-8000-000000000103",
+        "source_id": "c0160031-0103-4000-8000-000000000003",
+        "entity_id": "c0160031-0602-4000-8000-000000000002",
+        "scope": "Identidad, autoría y cronología de la imagen",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "entities",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0603-4000-8000-000000000003",
+        "entity_type": "image",
+        "name": "Nuestra Señora del Dulce Nombre de María de Coria del Río",
+        "slug": "nuestra-senora-dulce-nombre-maria-coria-del-rio",
+        "summary": "Titular mariana realizada por Fernando Castejón López.",
+        "status": "published"
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "images",
+      "on_conflict": "entity_id",
+      "data": {
+        "entity_id": "c0160031-0603-4000-8000-000000000003",
+        "image_type": "Dolorosa",
+        "execution_date_text": "1986",
+        "current_condition": "extant",
+        "description": "Titular mariana realizada por Fernando Castejón López.",
+        "is_dress_image": true
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "brotherhood_images",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0803-4000-8000-000000000003",
+        "brotherhood_entity_id": "c0160031-0301-4000-8000-000000000001",
+        "image_entity_id": "c0160031-0603-4000-8000-000000000003",
+        "relation_type": "titular",
+        "notes": "Titular vigente documentado en el cierre municipal.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1004-4000-8000-000000000104",
+        "source_id": "c0160031-0104-4000-8000-000000000004",
+        "entity_id": "c0160031-0603-4000-8000-000000000003",
+        "scope": "Identidad, autoría y cronología de la imagen",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "image_authorships",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0852-4000-8000-000000000052",
+        "image_entity_id": "c0160031-0603-4000-8000-000000000003",
+        "agent_entity_id": "9f5746d3-e12d-48bd-8e0c-24b8999b27a7",
+        "authorship_type": "author",
+        "role_name": "escultor",
+        "date_from_text": "1986",
+        "certainty": "documented",
+        "notes": "Autoría estructurada desde Fuente directa o institucional.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1053-4000-8000-000000000153",
+        "source_id": "c0160031-0104-4000-8000-000000000004",
+        "image_authorship_id": "c0160031-0852-4000-8000-000000000052",
+        "scope": "Autoría y cronología",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "entities",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0604-4000-8000-000000000004",
+        "entity_type": "image",
+        "name": "Nuestro Padre Jesús de la Paz en su Presentación al Pueblo",
+        "slug": "nuestro-padre-jesus-paz-coria-del-rio",
+        "summary": "Titular cristífero de San José, obra de Fernando Castejón López.",
+        "status": "published"
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "images",
+      "on_conflict": "entity_id",
+      "data": {
+        "entity_id": "c0160031-0604-4000-8000-000000000004",
+        "image_type": "Cristo",
+        "execution_date_text": "1993",
+        "current_condition": "extant",
+        "description": "Titular cristífero de San José, obra de Fernando Castejón López.",
+        "is_dress_image": false
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "brotherhood_images",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0804-4000-8000-000000000004",
+        "brotherhood_entity_id": "c0160031-0302-4000-8000-000000000002",
+        "image_entity_id": "c0160031-0604-4000-8000-000000000004",
+        "relation_type": "titular",
+        "notes": "Titular vigente documentado en el cierre municipal.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1005-4000-8000-000000000105",
+        "source_id": "c0160031-0105-4000-8000-000000000005",
+        "entity_id": "c0160031-0604-4000-8000-000000000004",
+        "scope": "Identidad, autoría y cronología de la imagen",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "image_authorships",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0853-4000-8000-000000000053",
+        "image_entity_id": "c0160031-0604-4000-8000-000000000004",
+        "agent_entity_id": "9f5746d3-e12d-48bd-8e0c-24b8999b27a7",
+        "authorship_type": "author",
+        "role_name": "escultor",
+        "date_from_text": "1993",
+        "certainty": "documented",
+        "notes": "Autoría estructurada desde Fuente directa o institucional.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1054-4000-8000-000000000154",
+        "source_id": "c0160031-0105-4000-8000-000000000005",
+        "image_authorship_id": "c0160031-0853-4000-8000-000000000053",
+        "scope": "Autoría y cronología",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "entities",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0605-4000-8000-000000000005",
+        "entity_type": "image",
+        "name": "María Santísima de Gracia y Esperanza de Coria del Río",
+        "slug": "maria-santisima-gracia-esperanza-coria-del-rio",
+        "summary": "Titular mariana de San José, obra de Fernando Castejón López.",
+        "status": "published"
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "images",
+      "on_conflict": "entity_id",
+      "data": {
+        "entity_id": "c0160031-0605-4000-8000-000000000005",
+        "image_type": "Dolorosa",
+        "execution_date_text": "1992",
+        "current_condition": "extant",
+        "description": "Titular mariana de San José, obra de Fernando Castejón López.",
+        "is_dress_image": true
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "brotherhood_images",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0805-4000-8000-000000000005",
+        "brotherhood_entity_id": "c0160031-0302-4000-8000-000000000002",
+        "image_entity_id": "c0160031-0605-4000-8000-000000000005",
+        "relation_type": "titular",
+        "notes": "Titular vigente documentado en el cierre municipal.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1006-4000-8000-000000000106",
+        "source_id": "c0160031-0105-4000-8000-000000000005",
+        "entity_id": "c0160031-0605-4000-8000-000000000005",
+        "scope": "Identidad, autoría y cronología de la imagen",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "image_authorships",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0854-4000-8000-000000000054",
+        "image_entity_id": "c0160031-0605-4000-8000-000000000005",
+        "agent_entity_id": "9f5746d3-e12d-48bd-8e0c-24b8999b27a7",
+        "authorship_type": "author",
+        "role_name": "escultor",
+        "date_from_text": "1992",
+        "certainty": "documented",
+        "notes": "Autoría estructurada desde Fuente directa o institucional.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1055-4000-8000-000000000155",
+        "source_id": "c0160031-0105-4000-8000-000000000005",
+        "image_authorship_id": "c0160031-0854-4000-8000-000000000054",
+        "scope": "Autoría y cronología",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "entities",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0606-4000-8000-000000000006",
+        "entity_type": "image",
+        "name": "Santísimo Cristo de la Misericordia de Coria del Río",
+        "slug": "santisimo-cristo-misericordia-coria-del-rio",
+        "summary": "Imagen del grupo de la Piedad realizada por José Antonio Navarro Arteaga.",
+        "status": "published"
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "images",
+      "on_conflict": "entity_id",
+      "data": {
+        "entity_id": "c0160031-0606-4000-8000-000000000006",
+        "image_type": "Cristo de Piedad",
+        "execution_date_text": "2017",
+        "current_condition": "extant",
+        "description": "Imagen del grupo de la Piedad realizada por José Antonio Navarro Arteaga.",
+        "is_dress_image": false
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "brotherhood_images",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0806-4000-8000-000000000006",
+        "brotherhood_entity_id": "c0160031-0302-4000-8000-000000000002",
+        "image_entity_id": "c0160031-0606-4000-8000-000000000006",
+        "relation_type": "titular",
+        "notes": "Titular vigente documentado en el cierre municipal.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1007-4000-8000-000000000107",
+        "source_id": "c0160031-0105-4000-8000-000000000005",
+        "entity_id": "c0160031-0606-4000-8000-000000000006",
+        "scope": "Identidad, autoría y cronología de la imagen",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "image_authorships",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0855-4000-8000-000000000055",
+        "image_entity_id": "c0160031-0606-4000-8000-000000000006",
+        "agent_entity_id": "02810542-45cb-4792-bb49-66bc22309768",
+        "authorship_type": "author",
+        "role_name": "escultor",
+        "date_from_text": "2017",
+        "certainty": "documented",
+        "notes": "Autoría estructurada desde Fuente directa o institucional.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1056-4000-8000-000000000156",
+        "source_id": "c0160031-0105-4000-8000-000000000005",
+        "image_authorship_id": "c0160031-0855-4000-8000-000000000055",
+        "scope": "Autoría y cronología",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "entities",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0607-4000-8000-000000000007",
+        "entity_type": "image",
+        "name": "Nuestra Señora de los Dolores de Coria del Río",
+        "slug": "nuestra-senora-dolores-san-jose-coria-del-rio",
+        "summary": "Imagen mariana del grupo de la Piedad realizada por José Antonio Navarro Arteaga.",
+        "status": "published"
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "images",
+      "on_conflict": "entity_id",
+      "data": {
+        "entity_id": "c0160031-0607-4000-8000-000000000007",
+        "image_type": "Dolorosa de Piedad",
+        "execution_date_text": "2017",
+        "current_condition": "extant",
+        "description": "Imagen mariana del grupo de la Piedad realizada por José Antonio Navarro Arteaga.",
+        "is_dress_image": true
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "brotherhood_images",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0807-4000-8000-000000000007",
+        "brotherhood_entity_id": "c0160031-0302-4000-8000-000000000002",
+        "image_entity_id": "c0160031-0607-4000-8000-000000000007",
+        "relation_type": "titular",
+        "notes": "Titular vigente documentado en el cierre municipal.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1008-4000-8000-000000000108",
+        "source_id": "c0160031-0105-4000-8000-000000000005",
+        "entity_id": "c0160031-0607-4000-8000-000000000007",
+        "scope": "Identidad, autoría y cronología de la imagen",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "image_authorships",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0856-4000-8000-000000000056",
+        "image_entity_id": "c0160031-0607-4000-8000-000000000007",
+        "agent_entity_id": "02810542-45cb-4792-bb49-66bc22309768",
+        "authorship_type": "author",
+        "role_name": "escultor",
+        "date_from_text": "2017",
+        "certainty": "documented",
+        "notes": "Autoría estructurada desde Fuente directa o institucional.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1057-4000-8000-000000000157",
+        "source_id": "c0160031-0105-4000-8000-000000000005",
+        "image_authorship_id": "c0160031-0856-4000-8000-000000000056",
+        "scope": "Autoría y cronología",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "entities",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0608-4000-8000-000000000008",
+        "entity_type": "image",
+        "name": "Nuestro Padre Jesús del Gran Poder de Coria del Río",
+        "slug": "nuestro-padre-jesus-gran-poder-coria-del-rio",
+        "summary": "Titular cristífero realizado por Francisco Buiza Fernández.",
+        "status": "published"
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "images",
+      "on_conflict": "entity_id",
+      "data": {
+        "entity_id": "c0160031-0608-4000-8000-000000000008",
+        "image_type": "Nazareno",
+        "execution_date_text": "1973",
+        "current_condition": "extant",
+        "description": "Titular cristífero realizado por Francisco Buiza Fernández.",
+        "is_dress_image": false
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "brotherhood_images",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0808-4000-8000-000000000008",
+        "brotherhood_entity_id": "c0160031-0303-4000-8000-000000000003",
+        "image_entity_id": "c0160031-0608-4000-8000-000000000008",
+        "relation_type": "titular",
+        "notes": "Titular vigente documentado en el cierre municipal.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1009-4000-8000-000000000109",
+        "source_id": "c0160031-0106-4000-8000-000000000006",
+        "entity_id": "c0160031-0608-4000-8000-000000000008",
+        "scope": "Identidad, autoría y cronología de la imagen",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "image_authorships",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0857-4000-8000-000000000057",
+        "image_entity_id": "c0160031-0608-4000-8000-000000000008",
+        "agent_entity_id": "160be307-5396-41a2-8903-7467a8c330f3",
+        "authorship_type": "author",
+        "role_name": "escultor",
+        "date_from_text": "1973",
+        "certainty": "documented",
+        "notes": "Autoría estructurada desde Fuente directa o institucional.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1058-4000-8000-000000000158",
+        "source_id": "c0160031-0106-4000-8000-000000000006",
+        "image_authorship_id": "c0160031-0857-4000-8000-000000000057",
+        "scope": "Autoría y cronología",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "entities",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0609-4000-8000-000000000009",
+        "entity_type": "image",
+        "name": "Nuestra Señora del Carmen de Coria del Río",
+        "slug": "nuestra-senora-carmen-coria-del-rio",
+        "summary": "Titular mariana realizada por Francisco Buiza Fernández.",
+        "status": "published"
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "images",
+      "on_conflict": "entity_id",
+      "data": {
+        "entity_id": "c0160031-0609-4000-8000-000000000009",
+        "image_type": "Dolorosa",
+        "execution_date_text": "1972",
+        "current_condition": "extant",
+        "description": "Titular mariana realizada por Francisco Buiza Fernández.",
+        "is_dress_image": true
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "brotherhood_images",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0809-4000-8000-000000000009",
+        "brotherhood_entity_id": "c0160031-0303-4000-8000-000000000003",
+        "image_entity_id": "c0160031-0609-4000-8000-000000000009",
+        "relation_type": "titular",
+        "notes": "Titular vigente documentado en el cierre municipal.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1010-4000-8000-000000000110",
+        "source_id": "c0160031-0106-4000-8000-000000000006",
+        "entity_id": "c0160031-0609-4000-8000-000000000009",
+        "scope": "Identidad, autoría y cronología de la imagen",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "image_authorships",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0858-4000-8000-000000000058",
+        "image_entity_id": "c0160031-0609-4000-8000-000000000009",
+        "agent_entity_id": "160be307-5396-41a2-8903-7467a8c330f3",
+        "authorship_type": "author",
+        "role_name": "escultor",
+        "date_from_text": "1972",
+        "certainty": "documented",
+        "notes": "Autoría estructurada desde Fuente directa o institucional.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1059-4000-8000-000000000159",
+        "source_id": "c0160031-0106-4000-8000-000000000006",
+        "image_authorship_id": "c0160031-0858-4000-8000-000000000058",
+        "scope": "Autoría y cronología",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "entities",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0610-4000-8000-000000000010",
+        "entity_type": "image",
+        "name": "Santísimo Cristo de la Vera+Cruz de Coria del Río",
+        "slug": "santisimo-cristo-vera-cruz-coria-del-rio",
+        "summary": "Crucificado histórico de la Vera+Cruz. No se eleva la atribución de escuela a autoría personal.",
+        "status": "published"
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "images",
+      "on_conflict": "entity_id",
+      "data": {
+        "entity_id": "c0160031-0610-4000-8000-000000000010",
+        "image_type": "Crucificado",
+        "execution_date_text": "c. 1500; autoría no cerrada, vinculada a la escuela de Gil de Siloé",
+        "current_condition": "extant",
+        "description": "Crucificado histórico de la Vera+Cruz. No se eleva la atribución de escuela a autoría personal.",
+        "is_dress_image": false
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "brotherhood_images",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0810-4000-8000-000000000010",
+        "brotherhood_entity_id": "c0160031-0304-4000-8000-000000000004",
+        "image_entity_id": "c0160031-0610-4000-8000-000000000010",
+        "relation_type": "titular",
+        "notes": "Titular vigente documentado en el cierre municipal.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1011-4000-8000-000000000111",
+        "source_id": "c0160031-0107-4000-8000-000000000007",
+        "entity_id": "c0160031-0610-4000-8000-000000000010",
+        "scope": "Identidad, autoría y cronología de la imagen",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "entities",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0611-4000-8000-000000000011",
+        "entity_type": "image",
+        "name": "Purísima Concepción de María Santísima de Coria del Río",
+        "slug": "purisima-concepcion-coria-del-rio",
+        "summary": "Titular mariana realizada por Rafael Barbero Medina.",
+        "status": "published"
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "images",
+      "on_conflict": "entity_id",
+      "data": {
+        "entity_id": "c0160031-0611-4000-8000-000000000011",
+        "image_type": "Inmaculada / Dolorosa procesional",
+        "execution_date_text": "1953",
+        "current_condition": "extant",
+        "description": "Titular mariana realizada por Rafael Barbero Medina.",
+        "is_dress_image": true
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "brotherhood_images",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0811-4000-8000-000000000011",
+        "brotherhood_entity_id": "c0160031-0304-4000-8000-000000000004",
+        "image_entity_id": "c0160031-0611-4000-8000-000000000011",
+        "relation_type": "titular",
+        "notes": "Titular vigente documentado en el cierre municipal.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1012-4000-8000-000000000112",
+        "source_id": "c0160031-0107-4000-8000-000000000007",
+        "entity_id": "c0160031-0611-4000-8000-000000000011",
+        "scope": "Identidad, autoría y cronología de la imagen",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "image_authorships",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0859-4000-8000-000000000059",
+        "image_entity_id": "c0160031-0611-4000-8000-000000000011",
+        "agent_entity_id": "77edb355-34a4-47e4-93cb-771914fdf2f7",
+        "authorship_type": "author",
+        "role_name": "escultor",
+        "date_from_text": "1953",
+        "certainty": "documented",
+        "notes": "Autoría estructurada desde Fuente directa o institucional.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1060-4000-8000-000000000160",
+        "source_id": "c0160031-0107-4000-8000-000000000007",
+        "image_authorship_id": "c0160031-0859-4000-8000-000000000059",
+        "scope": "Autoría y cronología",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "entities",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0612-4000-8000-000000000012",
+        "entity_type": "image",
+        "name": "Santísimo Cristo Yacente de Coria del Río",
+        "slug": "santisimo-cristo-yacente-coria-del-rio",
+        "summary": "Cristo Yacente adquirido por la Hermandad en 1972, obra de Francisco Buiza Fernández.",
+        "status": "published"
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "images",
+      "on_conflict": "entity_id",
+      "data": {
+        "entity_id": "c0160031-0612-4000-8000-000000000012",
+        "image_type": "Yacente",
+        "execution_date_text": "1972",
+        "current_condition": "extant",
+        "description": "Cristo Yacente adquirido por la Hermandad en 1972, obra de Francisco Buiza Fernández.",
+        "is_dress_image": false
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "brotherhood_images",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0812-4000-8000-000000000012",
+        "brotherhood_entity_id": "c0160031-0305-4000-8000-000000000005",
+        "image_entity_id": "c0160031-0612-4000-8000-000000000012",
+        "relation_type": "titular",
+        "notes": "Titular vigente documentado en el cierre municipal.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1013-4000-8000-000000000113",
+        "source_id": "c0160031-0108-4000-8000-000000000008",
+        "entity_id": "c0160031-0612-4000-8000-000000000012",
+        "scope": "Identidad, autoría y cronología de la imagen",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "image_authorships",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0860-4000-8000-000000000060",
+        "image_entity_id": "c0160031-0612-4000-8000-000000000012",
+        "agent_entity_id": "160be307-5396-41a2-8903-7467a8c330f3",
+        "authorship_type": "author",
+        "role_name": "escultor",
+        "date_from_text": "1972",
+        "certainty": "documented",
+        "notes": "Autoría estructurada desde Fuente directa o institucional.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1061-4000-8000-000000000161",
+        "source_id": "c0160031-0108-4000-8000-000000000008",
+        "image_authorship_id": "c0160031-0860-4000-8000-000000000060",
+        "scope": "Autoría y cronología",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "entities",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0613-4000-8000-000000000013",
+        "entity_type": "image",
+        "name": "Nuestra Señora de la Soledad Coronada de Coria del Río",
+        "slug": "nuestra-senora-soledad-coronada-coria-del-rio",
+        "summary": "Titular mariana histórica de la Hermandad Servita. No se fuerza una autoría no documentada.",
+        "status": "published"
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "images",
+      "on_conflict": "entity_id",
+      "data": {
+        "entity_id": "c0160031-0613-4000-8000-000000000013",
+        "image_type": "Dolorosa",
+        "execution_date_text": "Siglos XVI-XVII; autor anónimo",
+        "current_condition": "extant",
+        "description": "Titular mariana histórica de la Hermandad Servita. No se fuerza una autoría no documentada.",
+        "is_dress_image": true
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "brotherhood_images",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0813-4000-8000-000000000013",
+        "brotherhood_entity_id": "c0160031-0305-4000-8000-000000000005",
+        "image_entity_id": "c0160031-0613-4000-8000-000000000013",
+        "relation_type": "titular",
+        "notes": "Titular vigente documentado en el cierre municipal.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1014-4000-8000-000000000114",
+        "source_id": "c0160031-0108-4000-8000-000000000008",
+        "entity_id": "c0160031-0613-4000-8000-000000000013",
+        "scope": "Identidad, autoría y cronología de la imagen",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "entities",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0614-4000-8000-000000000014",
+        "entity_type": "image",
+        "name": "Cristo Resucitado de Coria del Río",
+        "slug": "cristo-resucitado-coria-del-rio",
+        "summary": "Cristo Resucitado encargado a Luis Peyré Azcárraga y recibido por la Hermandad en 1948.",
+        "status": "published"
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "images",
+      "on_conflict": "entity_id",
+      "data": {
+        "entity_id": "c0160031-0614-4000-8000-000000000014",
+        "image_type": "Resucitado",
+        "execution_date_text": "Encargado en 1944; recibido en 1948",
+        "current_condition": "extant",
+        "description": "Cristo Resucitado encargado a Luis Peyré Azcárraga y recibido por la Hermandad en 1948.",
+        "is_dress_image": false
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "brotherhood_images",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0814-4000-8000-000000000014",
+        "brotherhood_entity_id": "c0160031-0305-4000-8000-000000000005",
+        "image_entity_id": "c0160031-0614-4000-8000-000000000014",
+        "relation_type": "titular",
+        "notes": "Titular vigente documentado en el cierre municipal.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1015-4000-8000-000000000115",
+        "source_id": "c0160031-0108-4000-8000-000000000008",
+        "entity_id": "c0160031-0614-4000-8000-000000000014",
+        "scope": "Identidad, autoría y cronología de la imagen",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "image_authorships",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0861-4000-8000-000000000061",
+        "image_entity_id": "c0160031-0614-4000-8000-000000000014",
+        "agent_entity_id": "c0160031-0501-4000-8000-000000000001",
+        "authorship_type": "author",
+        "role_name": "escultor",
+        "date_from_text": "Encargado en 1944; recibido en 1948",
+        "certainty": "documented",
+        "notes": "Autoría estructurada desde Fuente directa o institucional.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1062-4000-8000-000000000162",
+        "source_id": "c0160031-0108-4000-8000-000000000008",
+        "image_authorship_id": "c0160031-0861-4000-8000-000000000061",
+        "scope": "Autoría y cronología",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "entities",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0701-4000-8000-000000000001",
+        "entity_type": "step",
+        "name": "Paso de misterio del Santísimo Cristo de la Salud de Coria del Río",
+        "slug": "paso-misterio-cristo-salud-coria-del-rio",
+        "summary": "Paso de la Entrada en Jerusalén con el Cristo de la Salud y el conjunto secundario documentado.",
+        "status": "published"
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "steps",
+      "on_conflict": "entity_id",
+      "data": {
+        "entity_id": "c0160031-0701-4000-8000-000000000001",
+        "step_type": "Misterio",
+        "current_condition": "preserved",
+        "description": "Paso de la Entrada en Jerusalén con el Cristo de la Salud y el conjunto secundario documentado."
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "brotherhood_steps",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0830-4000-8000-000000000030",
+        "brotherhood_entity_id": "20f519f8-54ee-46e0-a4ab-aa524c13227b",
+        "step_entity_id": "c0160031-0701-4000-8000-000000000001",
+        "relation_type": "processional_step",
+        "notes": "Paso vigente documentado en el cierre municipal.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "image_steps",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0870-4000-8000-000000000070",
+        "image_entity_id": "734a4dd8-be01-438d-9f99-fdc0d4eb07e8",
+        "step_entity_id": "c0160031-0701-4000-8000-000000000001",
+        "relation_type": "processional",
+        "notes": "Imagen principal del paso.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1122-4000-8000-000000000222",
+        "source_id": "c0160031-0103-4000-8000-000000000003",
+        "entity_id": "c0160031-0701-4000-8000-000000000001",
+        "scope": "Identidad y configuración del paso",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "entities",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0702-4000-8000-000000000002",
+        "entity_type": "step",
+        "name": "Paso de palio de María Santísima de la Victoria de Coria del Río",
+        "slug": "paso-palio-virgen-victoria-coria-del-rio",
+        "summary": "Paso de palio de María Santísima de la Victoria.",
+        "status": "published"
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "steps",
+      "on_conflict": "entity_id",
+      "data": {
+        "entity_id": "c0160031-0702-4000-8000-000000000002",
+        "step_type": "Palio",
+        "current_condition": "preserved",
+        "description": "Paso de palio de María Santísima de la Victoria."
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "brotherhood_steps",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0831-4000-8000-000000000031",
+        "brotherhood_entity_id": "20f519f8-54ee-46e0-a4ab-aa524c13227b",
+        "step_entity_id": "c0160031-0702-4000-8000-000000000002",
+        "relation_type": "processional_step",
+        "notes": "Paso vigente documentado en el cierre municipal.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "image_steps",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0871-4000-8000-000000000071",
+        "image_entity_id": "c0160031-0601-4000-8000-000000000001",
+        "step_entity_id": "c0160031-0702-4000-8000-000000000002",
+        "relation_type": "processional",
+        "notes": "Imagen principal del paso.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1123-4000-8000-000000000223",
+        "source_id": "c0160031-0101-4000-8000-000000000001",
+        "entity_id": "c0160031-0702-4000-8000-000000000002",
+        "scope": "Identidad y configuración del paso",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "entities",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0703-4000-8000-000000000003",
+        "entity_type": "step",
+        "name": "Paso de Nuestro Padre Jesús Cautivo de Coria del Río",
+        "slug": "paso-jesus-cautivo-coria-del-rio",
+        "summary": "Paso procesional del Cautivo.",
+        "status": "published"
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "steps",
+      "on_conflict": "entity_id",
+      "data": {
+        "entity_id": "c0160031-0703-4000-8000-000000000003",
+        "step_type": "Cristo",
+        "current_condition": "preserved",
+        "description": "Paso procesional del Cautivo."
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "brotherhood_steps",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0832-4000-8000-000000000032",
+        "brotherhood_entity_id": "c0160031-0301-4000-8000-000000000001",
+        "step_entity_id": "c0160031-0703-4000-8000-000000000003",
+        "relation_type": "processional_step",
+        "notes": "Paso vigente documentado en el cierre municipal.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "image_steps",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0872-4000-8000-000000000072",
+        "image_entity_id": "c0160031-0602-4000-8000-000000000002",
+        "step_entity_id": "c0160031-0703-4000-8000-000000000003",
+        "relation_type": "processional",
+        "notes": "Imagen principal del paso.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1124-4000-8000-000000000224",
+        "source_id": "c0160031-0101-4000-8000-000000000001",
+        "entity_id": "c0160031-0703-4000-8000-000000000003",
+        "scope": "Identidad y configuración del paso",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "entities",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0704-4000-8000-000000000004",
+        "entity_type": "step",
+        "name": "Paso de palio de Nuestra Señora del Dulce Nombre de María",
+        "slug": "paso-palio-dulce-nombre-coria-del-rio",
+        "summary": "Paso de palio de Nuestra Señora del Dulce Nombre de María.",
+        "status": "published"
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "steps",
+      "on_conflict": "entity_id",
+      "data": {
+        "entity_id": "c0160031-0704-4000-8000-000000000004",
+        "step_type": "Palio",
+        "current_condition": "preserved",
+        "description": "Paso de palio de Nuestra Señora del Dulce Nombre de María."
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "brotherhood_steps",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0833-4000-8000-000000000033",
+        "brotherhood_entity_id": "c0160031-0301-4000-8000-000000000001",
+        "step_entity_id": "c0160031-0704-4000-8000-000000000004",
+        "relation_type": "processional_step",
+        "notes": "Paso vigente documentado en el cierre municipal.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "image_steps",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0873-4000-8000-000000000073",
+        "image_entity_id": "c0160031-0603-4000-8000-000000000003",
+        "step_entity_id": "c0160031-0704-4000-8000-000000000004",
+        "relation_type": "processional",
+        "notes": "Imagen principal del paso.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1125-4000-8000-000000000225",
+        "source_id": "c0160031-0101-4000-8000-000000000001",
+        "entity_id": "c0160031-0704-4000-8000-000000000004",
+        "scope": "Identidad y configuración del paso",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "entities",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0705-4000-8000-000000000005",
+        "entity_type": "step",
+        "name": "Paso de misterio de Nuestro Padre Jesús de la Paz de Coria del Río",
+        "slug": "paso-misterio-jesus-paz-coria-del-rio",
+        "summary": "Paso de misterio de la Presentación al Pueblo.",
+        "status": "published"
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "steps",
+      "on_conflict": "entity_id",
+      "data": {
+        "entity_id": "c0160031-0705-4000-8000-000000000005",
+        "step_type": "Misterio",
+        "current_condition": "preserved",
+        "description": "Paso de misterio de la Presentación al Pueblo."
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "brotherhood_steps",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0834-4000-8000-000000000034",
+        "brotherhood_entity_id": "c0160031-0302-4000-8000-000000000002",
+        "step_entity_id": "c0160031-0705-4000-8000-000000000005",
+        "relation_type": "processional_step",
+        "notes": "Paso vigente documentado en el cierre municipal.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "image_steps",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0874-4000-8000-000000000074",
+        "image_entity_id": "c0160031-0604-4000-8000-000000000004",
+        "step_entity_id": "c0160031-0705-4000-8000-000000000005",
+        "relation_type": "processional",
+        "notes": "Imagen principal del paso.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1126-4000-8000-000000000226",
+        "source_id": "c0160031-0101-4000-8000-000000000001",
+        "entity_id": "c0160031-0705-4000-8000-000000000005",
+        "scope": "Identidad y configuración del paso",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "entities",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0706-4000-8000-000000000006",
+        "entity_type": "step",
+        "name": "Paso de palio de María Santísima de Gracia y Esperanza",
+        "slug": "paso-palio-gracia-esperanza-coria-del-rio",
+        "summary": "Paso de palio de María Santísima de Gracia y Esperanza.",
+        "status": "published"
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "steps",
+      "on_conflict": "entity_id",
+      "data": {
+        "entity_id": "c0160031-0706-4000-8000-000000000006",
+        "step_type": "Palio",
+        "current_condition": "preserved",
+        "description": "Paso de palio de María Santísima de Gracia y Esperanza."
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "brotherhood_steps",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0835-4000-8000-000000000035",
+        "brotherhood_entity_id": "c0160031-0302-4000-8000-000000000002",
+        "step_entity_id": "c0160031-0706-4000-8000-000000000006",
+        "relation_type": "processional_step",
+        "notes": "Paso vigente documentado en el cierre municipal.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "image_steps",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0875-4000-8000-000000000075",
+        "image_entity_id": "c0160031-0605-4000-8000-000000000005",
+        "step_entity_id": "c0160031-0706-4000-8000-000000000006",
+        "relation_type": "processional",
+        "notes": "Imagen principal del paso.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1127-4000-8000-000000000227",
+        "source_id": "c0160031-0101-4000-8000-000000000001",
+        "entity_id": "c0160031-0706-4000-8000-000000000006",
+        "scope": "Identidad y configuración del paso",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "entities",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0707-4000-8000-000000000007",
+        "entity_type": "step",
+        "name": "Paso de la Piedad de San José de Coria del Río",
+        "slug": "paso-piedad-san-jose-coria-del-rio",
+        "summary": "Paso del Santísimo Cristo de la Misericordia y Nuestra Señora de los Dolores.",
+        "status": "published"
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "steps",
+      "on_conflict": "entity_id",
+      "data": {
+        "entity_id": "c0160031-0707-4000-8000-000000000007",
+        "step_type": "Piedad",
+        "current_condition": "preserved",
+        "description": "Paso del Santísimo Cristo de la Misericordia y Nuestra Señora de los Dolores."
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "brotherhood_steps",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0836-4000-8000-000000000036",
+        "brotherhood_entity_id": "c0160031-0302-4000-8000-000000000002",
+        "step_entity_id": "c0160031-0707-4000-8000-000000000007",
+        "relation_type": "processional_step",
+        "notes": "Paso vigente documentado en el cierre municipal.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "image_steps",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0876-4000-8000-000000000076",
+        "image_entity_id": "c0160031-0606-4000-8000-000000000006",
+        "step_entity_id": "c0160031-0707-4000-8000-000000000007",
+        "relation_type": "processional",
+        "notes": "Imagen principal del paso.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1128-4000-8000-000000000228",
+        "source_id": "c0160031-0105-4000-8000-000000000005",
+        "entity_id": "c0160031-0707-4000-8000-000000000007",
+        "scope": "Identidad y configuración del paso",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "entities",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0708-4000-8000-000000000008",
+        "entity_type": "step",
+        "name": "Paso de Nuestro Padre Jesús del Gran Poder de Coria del Río",
+        "slug": "paso-gran-poder-coria-del-rio",
+        "summary": "Paso del Señor del Gran Poder; la fuente histórica lo vincula a Antonio Martín.",
+        "status": "published"
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "steps",
+      "on_conflict": "entity_id",
+      "data": {
+        "entity_id": "c0160031-0708-4000-8000-000000000008",
+        "step_type": "Nazareno",
+        "current_condition": "preserved",
+        "description": "Paso del Señor del Gran Poder; la fuente histórica lo vincula a Antonio Martín."
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "brotherhood_steps",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0837-4000-8000-000000000037",
+        "brotherhood_entity_id": "c0160031-0303-4000-8000-000000000003",
+        "step_entity_id": "c0160031-0708-4000-8000-000000000008",
+        "relation_type": "processional_step",
+        "notes": "Paso vigente documentado en el cierre municipal.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "image_steps",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0877-4000-8000-000000000077",
+        "image_entity_id": "c0160031-0608-4000-8000-000000000008",
+        "step_entity_id": "c0160031-0708-4000-8000-000000000008",
+        "relation_type": "processional",
+        "notes": "Imagen principal del paso.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1129-4000-8000-000000000229",
+        "source_id": "c0160031-0103-4000-8000-000000000003",
+        "entity_id": "c0160031-0708-4000-8000-000000000008",
+        "scope": "Identidad y configuración del paso",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "entities",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0709-4000-8000-000000000009",
+        "entity_type": "step",
+        "name": "Paso de palio de Nuestra Señora del Carmen de Coria del Río",
+        "slug": "paso-palio-carmen-coria-del-rio",
+        "summary": "Paso de palio de Nuestra Señora del Carmen.",
+        "status": "published"
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "steps",
+      "on_conflict": "entity_id",
+      "data": {
+        "entity_id": "c0160031-0709-4000-8000-000000000009",
+        "step_type": "Palio",
+        "current_condition": "preserved",
+        "description": "Paso de palio de Nuestra Señora del Carmen."
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "brotherhood_steps",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0838-4000-8000-000000000038",
+        "brotherhood_entity_id": "c0160031-0303-4000-8000-000000000003",
+        "step_entity_id": "c0160031-0709-4000-8000-000000000009",
+        "relation_type": "processional_step",
+        "notes": "Paso vigente documentado en el cierre municipal.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "image_steps",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0878-4000-8000-000000000078",
+        "image_entity_id": "c0160031-0609-4000-8000-000000000009",
+        "step_entity_id": "c0160031-0709-4000-8000-000000000009",
+        "relation_type": "processional",
+        "notes": "Imagen principal del paso.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1130-4000-8000-000000000230",
+        "source_id": "c0160031-0103-4000-8000-000000000003",
+        "entity_id": "c0160031-0709-4000-8000-000000000009",
+        "scope": "Identidad y configuración del paso",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "entities",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0710-4000-8000-000000000010",
+        "entity_type": "step",
+        "name": "Paso del Santísimo Cristo de la Vera+Cruz de Coria del Río",
+        "slug": "paso-cristo-vera-cruz-coria-del-rio",
+        "summary": "Paso histórico de la Vera+Cruz; el cierre no fuerza un catálogo patrimonial exhaustivo.",
+        "status": "published"
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "steps",
+      "on_conflict": "entity_id",
+      "data": {
+        "entity_id": "c0160031-0710-4000-8000-000000000010",
+        "step_type": "Crucificado",
+        "current_condition": "preserved",
+        "description": "Paso histórico de la Vera+Cruz; el cierre no fuerza un catálogo patrimonial exhaustivo."
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "brotherhood_steps",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0839-4000-8000-000000000039",
+        "brotherhood_entity_id": "c0160031-0304-4000-8000-000000000004",
+        "step_entity_id": "c0160031-0710-4000-8000-000000000010",
+        "relation_type": "processional_step",
+        "notes": "Paso vigente documentado en el cierre municipal.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "image_steps",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0879-4000-8000-000000000079",
+        "image_entity_id": "c0160031-0610-4000-8000-000000000010",
+        "step_entity_id": "c0160031-0710-4000-8000-000000000010",
+        "relation_type": "processional",
+        "notes": "Imagen principal del paso.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1131-4000-8000-000000000231",
+        "source_id": "c0160031-0103-4000-8000-000000000003",
+        "entity_id": "c0160031-0710-4000-8000-000000000010",
+        "scope": "Identidad y configuración del paso",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "entities",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0711-4000-8000-000000000011",
+        "entity_type": "step",
+        "name": "Paso de palio de la Purísima Concepción de Coria del Río",
+        "slug": "paso-palio-purisima-coria-del-rio",
+        "summary": "Paso de palio de la Purísima Concepción.",
+        "status": "published"
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "steps",
+      "on_conflict": "entity_id",
+      "data": {
+        "entity_id": "c0160031-0711-4000-8000-000000000011",
+        "step_type": "Palio",
+        "current_condition": "preserved",
+        "description": "Paso de palio de la Purísima Concepción."
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "brotherhood_steps",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0840-4000-8000-000000000040",
+        "brotherhood_entity_id": "c0160031-0304-4000-8000-000000000004",
+        "step_entity_id": "c0160031-0711-4000-8000-000000000011",
+        "relation_type": "processional_step",
+        "notes": "Paso vigente documentado en el cierre municipal.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "image_steps",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0880-4000-8000-000000000080",
+        "image_entity_id": "c0160031-0611-4000-8000-000000000011",
+        "step_entity_id": "c0160031-0711-4000-8000-000000000011",
+        "relation_type": "processional",
+        "notes": "Imagen principal del paso.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1132-4000-8000-000000000232",
+        "source_id": "c0160031-0103-4000-8000-000000000003",
+        "entity_id": "c0160031-0711-4000-8000-000000000011",
+        "scope": "Identidad y configuración del paso",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "entities",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0712-4000-8000-000000000012",
+        "entity_type": "step",
+        "name": "Paso del Santo Entierro de Coria del Río",
+        "slug": "paso-santo-entierro-coria-del-rio",
+        "summary": "Paso del Santísimo Cristo Yacente en el Viernes Santo.",
+        "status": "published"
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "steps",
+      "on_conflict": "entity_id",
+      "data": {
+        "entity_id": "c0160031-0712-4000-8000-000000000012",
+        "step_type": "Santo Sepulcro",
+        "current_condition": "preserved",
+        "description": "Paso del Santísimo Cristo Yacente en el Viernes Santo."
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "brotherhood_steps",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0841-4000-8000-000000000041",
+        "brotherhood_entity_id": "c0160031-0305-4000-8000-000000000005",
+        "step_entity_id": "c0160031-0712-4000-8000-000000000012",
+        "relation_type": "processional_step",
+        "notes": "Paso vigente documentado en el cierre municipal.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "image_steps",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0881-4000-8000-000000000081",
+        "image_entity_id": "c0160031-0612-4000-8000-000000000012",
+        "step_entity_id": "c0160031-0712-4000-8000-000000000012",
+        "relation_type": "processional",
+        "notes": "Imagen principal del paso.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1133-4000-8000-000000000233",
+        "source_id": "c0160031-0103-4000-8000-000000000003",
+        "entity_id": "c0160031-0712-4000-8000-000000000012",
+        "scope": "Identidad y configuración del paso",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "entities",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0713-4000-8000-000000000013",
+        "entity_type": "step",
+        "name": "Paso de Nuestra Señora de la Soledad Coronada · Viernes Santo",
+        "slug": "paso-soledad-coronada-viernes-santo-coria-del-rio",
+        "summary": "Paso procesional de la Soledad Coronada en el Viernes Santo.",
+        "status": "published"
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "steps",
+      "on_conflict": "entity_id",
+      "data": {
+        "entity_id": "c0160031-0713-4000-8000-000000000013",
+        "step_type": "Palio",
+        "current_condition": "preserved",
+        "description": "Paso procesional de la Soledad Coronada en el Viernes Santo."
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "brotherhood_steps",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0842-4000-8000-000000000042",
+        "brotherhood_entity_id": "c0160031-0305-4000-8000-000000000005",
+        "step_entity_id": "c0160031-0713-4000-8000-000000000013",
+        "relation_type": "processional_step",
+        "notes": "Paso vigente documentado en el cierre municipal.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "image_steps",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0882-4000-8000-000000000082",
+        "image_entity_id": "c0160031-0613-4000-8000-000000000013",
+        "step_entity_id": "c0160031-0713-4000-8000-000000000013",
+        "relation_type": "processional",
+        "notes": "Imagen principal del paso.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1134-4000-8000-000000000234",
+        "source_id": "c0160031-0103-4000-8000-000000000003",
+        "entity_id": "c0160031-0713-4000-8000-000000000013",
+        "scope": "Identidad y configuración del paso",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "entities",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0714-4000-8000-000000000014",
+        "entity_type": "step",
+        "name": "Paso del Cristo Resucitado de Coria del Río",
+        "slug": "paso-cristo-resucitado-coria-del-rio",
+        "summary": "Paso del Cristo Resucitado en la mañana del Domingo de Resurrección.",
+        "status": "published"
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "steps",
+      "on_conflict": "entity_id",
+      "data": {
+        "entity_id": "c0160031-0714-4000-8000-000000000014",
+        "step_type": "Resucitado",
+        "current_condition": "preserved",
+        "description": "Paso del Cristo Resucitado en la mañana del Domingo de Resurrección."
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "brotherhood_steps",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0843-4000-8000-000000000043",
+        "brotherhood_entity_id": "c0160031-0305-4000-8000-000000000005",
+        "step_entity_id": "c0160031-0714-4000-8000-000000000014",
+        "relation_type": "processional_step",
+        "notes": "Paso vigente documentado en el cierre municipal.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "image_steps",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0883-4000-8000-000000000083",
+        "image_entity_id": "c0160031-0614-4000-8000-000000000014",
+        "step_entity_id": "c0160031-0714-4000-8000-000000000014",
+        "relation_type": "processional",
+        "notes": "Imagen principal del paso.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1135-4000-8000-000000000235",
+        "source_id": "c0160031-0108-4000-8000-000000000008",
+        "entity_id": "c0160031-0714-4000-8000-000000000014",
+        "scope": "Identidad y configuración del paso",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "entities",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0715-4000-8000-000000000015",
+        "entity_type": "step",
+        "name": "Paso de gloria de Nuestra Señora de la Soledad Coronada",
+        "slug": "paso-gloria-soledad-coronada-coria-del-rio",
+        "summary": "Paso sin palio utilizado por la Virgen de la Soledad en el Domingo de Resurrección.",
+        "status": "published"
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "steps",
+      "on_conflict": "entity_id",
+      "data": {
+        "entity_id": "c0160031-0715-4000-8000-000000000015",
+        "step_type": "Gloria",
+        "current_condition": "preserved",
+        "description": "Paso sin palio utilizado por la Virgen de la Soledad en el Domingo de Resurrección."
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "brotherhood_steps",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0844-4000-8000-000000000044",
+        "brotherhood_entity_id": "c0160031-0305-4000-8000-000000000005",
+        "step_entity_id": "c0160031-0715-4000-8000-000000000015",
+        "relation_type": "processional_step",
+        "notes": "Paso vigente documentado en el cierre municipal.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "image_steps",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0884-4000-8000-000000000084",
+        "image_entity_id": "c0160031-0613-4000-8000-000000000013",
+        "step_entity_id": "c0160031-0715-4000-8000-000000000015",
+        "relation_type": "processional",
+        "notes": "Imagen principal del paso.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1136-4000-8000-000000000236",
+        "source_id": "c0160031-0103-4000-8000-000000000003",
+        "entity_id": "c0160031-0715-4000-8000-000000000015",
+        "scope": "Identidad y configuración del paso",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "image_steps",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0885-4000-8000-000000000085",
+        "image_entity_id": "c0160031-0607-4000-8000-000000000007",
+        "step_entity_id": "c0160031-0707-4000-8000-000000000007",
+        "relation_type": "secondary",
+        "notes": "Nuestra Señora de los Dolores integra el grupo de la Piedad.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1200-4000-8000-000000000300",
+        "source_id": "c0160031-0104-4000-8000-000000000004",
+        "entity_id": "c0160031-0301-4000-8000-000000000001",
+        "scope": "Identidad, sede, historia y actividad procesional",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1201-4000-8000-000000000301",
+        "source_id": "c0160031-0101-4000-8000-000000000001",
+        "entity_id": "c0160031-0301-4000-8000-000000000001",
+        "scope": "Identidad, sede, historia y actividad procesional",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1202-4000-8000-000000000302",
+        "source_id": "c0160031-0105-4000-8000-000000000005",
+        "entity_id": "c0160031-0302-4000-8000-000000000002",
+        "scope": "Identidad, sede, historia y actividad procesional",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1203-4000-8000-000000000303",
+        "source_id": "c0160031-0101-4000-8000-000000000001",
+        "entity_id": "c0160031-0302-4000-8000-000000000002",
+        "scope": "Identidad, sede, historia y actividad procesional",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1204-4000-8000-000000000304",
+        "source_id": "c0160031-0106-4000-8000-000000000006",
+        "entity_id": "c0160031-0303-4000-8000-000000000003",
+        "scope": "Identidad, sede, historia y actividad procesional",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1205-4000-8000-000000000305",
+        "source_id": "c0160031-0101-4000-8000-000000000001",
+        "entity_id": "c0160031-0303-4000-8000-000000000003",
+        "scope": "Identidad, sede, historia y actividad procesional",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1206-4000-8000-000000000306",
+        "source_id": "c0160031-0107-4000-8000-000000000007",
+        "entity_id": "c0160031-0304-4000-8000-000000000004",
+        "scope": "Identidad, sede, historia y actividad procesional",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1207-4000-8000-000000000307",
+        "source_id": "c0160031-0101-4000-8000-000000000001",
+        "entity_id": "c0160031-0304-4000-8000-000000000004",
+        "scope": "Identidad, sede, historia y actividad procesional",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1208-4000-8000-000000000308",
+        "source_id": "c0160031-0108-4000-8000-000000000008",
+        "entity_id": "c0160031-0305-4000-8000-000000000005",
+        "scope": "Identidad, sede, historia y actividad procesional",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1209-4000-8000-000000000309",
+        "source_id": "c0160031-0101-4000-8000-000000000001",
+        "entity_id": "c0160031-0305-4000-8000-000000000005",
+        "scope": "Identidad, sede, historia y actividad procesional",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1210-4000-8000-000000000310",
+        "source_id": "c0160031-0109-4000-8000-000000000009",
+        "entity_id": "c0160031-0306-4000-8000-000000000006",
+        "scope": "Identidad, sede, historia y actividad procesional",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1211-4000-8000-000000000311",
+        "source_id": "ddcd51d4-0d03-4b8b-8e60-f3677e649550",
+        "entity_id": "20f519f8-54ee-46e0-a4ab-aa524c13227b",
+        "scope": "Identidad, sede, historia y actividad procesional",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1212-4000-8000-000000000312",
+        "source_id": "6dc8600a-bd25-4985-87b5-8443a0cb3645",
+        "entity_id": "20f519f8-54ee-46e0-a4ab-aa524c13227b",
+        "scope": "Identidad, sede, historia y actividad procesional",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1220-4000-8000-000000000320",
+        "source_id": "c0160031-0110-4000-8000-000000000010",
+        "entity_id": "63f719d8-61ab-4357-a43f-cc7977bdda43",
+        "scope": "Identidad única, denominación y trayectoria de la Banda Municipal",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1221-4000-8000-000000000321",
+        "source_id": "c0160031-0111-4000-8000-000000000011",
+        "entity_id": "c0160031-0401-4000-8000-000000000001",
+        "scope": "Existencia y denominación de la formación local",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1222-4000-8000-000000000322",
+        "source_id": "c0160031-0111-4000-8000-000000000011",
+        "entity_id": "c0160031-0402-4000-8000-000000000002",
+        "scope": "Existencia y denominación de la formación local",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1223-4000-8000-000000000323",
+        "source_id": "c0160031-0108-4000-8000-000000000008",
+        "entity_id": "c0160031-0501-4000-8000-000000000001",
+        "scope": "Autor del Cristo Resucitado de la Soledad",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "outing_series",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0901-4000-8000-000000000001",
+        "brotherhood_entity_id": "20f519f8-54ee-46e0-a4ab-aa524c13227b",
+        "outing_type": "Estación de penitencia",
+        "character": "ordinary",
+        "title": "Estación de penitencia de la Borriquita de Coria del Río",
+        "month": 3,
+        "date_rule": "Domingo de Ramos",
+        "time_text": "18:00–23:30",
+        "municipality_id": "fe884314-1f8b-4566-8bb9-7b11ecf42446",
+        "origin_place_id": "c54894e3-7090-4c69-952c-3fb6a9148a68",
+        "destination_place_id": "c54894e3-7090-4c69-952c-3fb6a9148a68",
+        "route_summary": "San Juan, Palco de autoridades, Carretero, Convento, Santa María, Colón, Plaza de la Soledad, Plaza del Rocío y regreso.",
+        "description": "Salida ordinaria de Domingo de Ramos.",
+        "display_order": 1,
+        "status": "published",
+        "notes": "Serie ordinaria documentada; la edición 2026 se modela por separado."
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "outings",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0921-4000-8000-000000000021",
+        "brotherhood_entity_id": "20f519f8-54ee-46e0-a4ab-aa524c13227b",
+        "outing_type": "Estación de penitencia",
+        "character": "ordinary",
+        "title": "Estación de penitencia de la Borriquita de Coria del Río 2026",
+        "outing_date": "2026-03-29",
+        "year": 2026,
+        "departure_time": "18:00",
+        "return_time": "23:30",
+        "municipality_id": "fe884314-1f8b-4566-8bb9-7b11ecf42446",
+        "origin_place_id": "c54894e3-7090-4c69-952c-3fb6a9148a68",
+        "destination_place_id": "c54894e3-7090-4c69-952c-3fb6a9148a68",
+        "reason": null,
+        "description": "Salida de Domingo de Ramos documentada para 2026.",
+        "event_status": "announced",
+        "status": "published",
+        "return_date": "2026-03-29",
+        "route_summary": "San Juan, Palco de autoridades, Carretero, Convento, Santa María, Colón, Plaza de la Soledad, Plaza del Rocío y regreso.",
+        "public_notes": "Convocatoria documentada; no se eleva a held sin evidencia posterior suficiente.",
+        "organizer_name": null,
+        "organizer_notes": null,
+        "outing_series_id": "c0160031-0901-4000-8000-000000000001",
+        "slug": "coria-del-rio-bor-2026",
+        "reference_code": "HC016-CORIA-BOR-2026",
+        "origin_text": null,
+        "destination_text": null
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1241-4000-8000-000000000341",
+        "source_id": "c0160031-0102-4000-8000-000000000002",
+        "outing_series_id": "c0160031-0901-4000-8000-000000000001",
+        "scope": "Horario e itinerario publicados para 2026",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1261-4000-8000-000000000361",
+        "source_id": "c0160031-0101-4000-8000-000000000001",
+        "outing_id": "c0160031-0921-4000-8000-000000000021",
+        "scope": "Jornada, titulares y número de pasos",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1281-4000-8000-000000000381",
+        "source_id": "c0160031-0102-4000-8000-000000000002",
+        "outing_id": "c0160031-0921-4000-8000-000000000021",
+        "scope": "Horario e itinerario 2026",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "outing_series",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0902-4000-8000-000000000002",
+        "brotherhood_entity_id": "c0160031-0301-4000-8000-000000000001",
+        "outing_type": "Estación de penitencia",
+        "character": "ordinary",
+        "title": "Estación de penitencia de Jesús Cautivo de Coria del Río",
+        "month": 3,
+        "date_rule": "Lunes Santo",
+        "time_text": "18:00–01:30",
+        "municipality_id": "fe884314-1f8b-4566-8bb9-7b11ecf42446",
+        "origin_place_id": "c0160031-0201-4000-8000-000000000001",
+        "destination_place_id": "c0160031-0201-4000-8000-000000000001",
+        "route_summary": "Avenida Blas Infante, Avenida Andalucía, Plaza del Rocío, Parroquia, San Juan, Vera-Cruz, Palco de autoridades, Convento, Carretero, Isla, Nueva, Plaza de la Soledad, Avenida Blas Infante y regreso.",
+        "description": "Salida ordinaria de Lunes Santo.",
+        "display_order": 2,
+        "status": "published",
+        "notes": "Serie ordinaria documentada; la edición 2026 se modela por separado."
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "outings",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0922-4000-8000-000000000022",
+        "brotherhood_entity_id": "c0160031-0301-4000-8000-000000000001",
+        "outing_type": "Estación de penitencia",
+        "character": "ordinary",
+        "title": "Estación de penitencia de Jesús Cautivo de Coria del Río 2026",
+        "outing_date": "2026-03-30",
+        "year": 2026,
+        "departure_time": "18:00",
+        "return_time": "01:30",
+        "municipality_id": "fe884314-1f8b-4566-8bb9-7b11ecf42446",
+        "origin_place_id": "c0160031-0201-4000-8000-000000000001",
+        "destination_place_id": "c0160031-0201-4000-8000-000000000001",
+        "reason": null,
+        "description": "Salida de Lunes Santo documentada para 2026.",
+        "event_status": "held",
+        "status": "published",
+        "return_date": "2026-03-31",
+        "route_summary": "Avenida Blas Infante, Avenida Andalucía, Plaza del Rocío, Parroquia, San Juan, Vera-Cruz, Palco de autoridades, Convento, Carretero, Isla, Nueva, Plaza de la Soledad, Avenida Blas Infante y regreso.",
+        "public_notes": "Celebración acreditada por evidencia posterior.",
+        "organizer_name": null,
+        "organizer_notes": null,
+        "outing_series_id": "c0160031-0902-4000-8000-000000000002",
+        "slug": "coria-del-rio-caut-2026",
+        "reference_code": "HC016-CORIA-CAUT-2026",
+        "origin_text": null,
+        "destination_text": null
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1242-4000-8000-000000000342",
+        "source_id": "c0160031-0102-4000-8000-000000000002",
+        "outing_series_id": "c0160031-0902-4000-8000-000000000002",
+        "scope": "Horario e itinerario publicados para 2026",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1262-4000-8000-000000000362",
+        "source_id": "c0160031-0101-4000-8000-000000000001",
+        "outing_id": "c0160031-0922-4000-8000-000000000022",
+        "scope": "Jornada, titulares y número de pasos",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1282-4000-8000-000000000382",
+        "source_id": "c0160031-0102-4000-8000-000000000002",
+        "outing_id": "c0160031-0922-4000-8000-000000000022",
+        "scope": "Horario e itinerario 2026",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1302-4000-8000-000000000402",
+        "source_id": "c0160031-0113-4000-8000-000000000013",
+        "outing_id": "c0160031-0922-4000-8000-000000000022",
+        "scope": "Evidencia posterior de celebración y acompañamientos",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "outing_series",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0903-4000-8000-000000000003",
+        "brotherhood_entity_id": "c0160031-0302-4000-8000-000000000002",
+        "outing_type": "Estación de penitencia",
+        "character": "ordinary",
+        "title": "Estación de penitencia de San José · Martes Santo",
+        "month": 3,
+        "date_rule": "Martes Santo",
+        "time_text": "19:00–02:30",
+        "municipality_id": "fe884314-1f8b-4566-8bb9-7b11ecf42446",
+        "origin_place_id": "c0160031-0202-4000-8000-000000000002",
+        "destination_place_id": "c0160031-0202-4000-8000-000000000002",
+        "route_summary": "Santa Ángela de la Cruz, Convento, Santa María, Palco de autoridades, Antonio Pérez Tinao, San José, San Pedro, Joselito el Gallo, Avenida 1º de Mayo, Duero, Manuel de Falla, Montes Paquiro y regreso.",
+        "description": "Salida ordinaria de Martes Santo.",
+        "display_order": 3,
+        "status": "published",
+        "notes": "Serie ordinaria documentada; la edición 2026 se modela por separado."
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "outings",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0923-4000-8000-000000000023",
+        "brotherhood_entity_id": "c0160031-0302-4000-8000-000000000002",
+        "outing_type": "Estación de penitencia",
+        "character": "ordinary",
+        "title": "Estación de penitencia de San José · Martes Santo 2026",
+        "outing_date": "2026-03-31",
+        "year": 2026,
+        "departure_time": "19:00",
+        "return_time": "02:30",
+        "municipality_id": "fe884314-1f8b-4566-8bb9-7b11ecf42446",
+        "origin_place_id": "c0160031-0202-4000-8000-000000000002",
+        "destination_place_id": "c0160031-0202-4000-8000-000000000002",
+        "reason": null,
+        "description": "Salida de Martes Santo documentada para 2026.",
+        "event_status": "announced",
+        "status": "published",
+        "return_date": "2026-04-01",
+        "route_summary": "Santa Ángela de la Cruz, Convento, Santa María, Palco de autoridades, Antonio Pérez Tinao, San José, San Pedro, Joselito el Gallo, Avenida 1º de Mayo, Duero, Manuel de Falla, Montes Paquiro y regreso.",
+        "public_notes": "Convocatoria documentada; no se eleva a held sin evidencia posterior suficiente.",
+        "organizer_name": null,
+        "organizer_notes": null,
+        "outing_series_id": "c0160031-0903-4000-8000-000000000003",
+        "slug": "coria-del-rio-sj-tue-2026",
+        "reference_code": "HC016-CORIA-SJ-TUE-2026",
+        "origin_text": null,
+        "destination_text": null
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1243-4000-8000-000000000343",
+        "source_id": "c0160031-0102-4000-8000-000000000002",
+        "outing_series_id": "c0160031-0903-4000-8000-000000000003",
+        "scope": "Horario e itinerario publicados para 2026",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1263-4000-8000-000000000363",
+        "source_id": "c0160031-0101-4000-8000-000000000001",
+        "outing_id": "c0160031-0923-4000-8000-000000000023",
+        "scope": "Jornada, titulares y número de pasos",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1283-4000-8000-000000000383",
+        "source_id": "c0160031-0102-4000-8000-000000000002",
+        "outing_id": "c0160031-0923-4000-8000-000000000023",
+        "scope": "Horario e itinerario 2026",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "outing_series",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0904-4000-8000-000000000004",
+        "brotherhood_entity_id": "c0160031-0303-4000-8000-000000000003",
+        "outing_type": "Estación de penitencia",
+        "character": "ordinary",
+        "title": "Estación de penitencia del Gran Poder y Carmen de Coria del Río",
+        "month": 4,
+        "date_rule": "Miércoles Santo",
+        "time_text": "21:00–03:00",
+        "municipality_id": "fe884314-1f8b-4566-8bb9-7b11ecf42446",
+        "origin_place_id": "5317981f-4be1-4bbd-a4c8-943d178d247e",
+        "destination_place_id": "5317981f-4be1-4bbd-a4c8-943d178d247e",
+        "route_summary": "San Juan, Vera-Cruz, Santa María, Convento, Quevedo, Palco de Autoridades, Cervantes, Plaza Donantes de Órganos, Plaza de la Soledad, Plaza del Rocío, Porche y regreso.",
+        "description": "Salida ordinaria de Miércoles Santo.",
+        "display_order": 4,
+        "status": "published",
+        "notes": "Serie ordinaria documentada; la edición 2026 se modela por separado."
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "outings",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0924-4000-8000-000000000024",
+        "brotherhood_entity_id": "c0160031-0303-4000-8000-000000000003",
+        "outing_type": "Estación de penitencia",
+        "character": "ordinary",
+        "title": "Estación de penitencia del Gran Poder y Carmen de Coria del Río 2026",
+        "outing_date": "2026-04-01",
+        "year": 2026,
+        "departure_time": "21:00",
+        "return_time": "03:00",
+        "municipality_id": "fe884314-1f8b-4566-8bb9-7b11ecf42446",
+        "origin_place_id": "5317981f-4be1-4bbd-a4c8-943d178d247e",
+        "destination_place_id": "5317981f-4be1-4bbd-a4c8-943d178d247e",
+        "reason": null,
+        "description": "Salida de Miércoles Santo documentada para 2026.",
+        "event_status": "announced",
+        "status": "published",
+        "return_date": "2026-04-02",
+        "route_summary": "San Juan, Vera-Cruz, Santa María, Convento, Quevedo, Palco de Autoridades, Cervantes, Plaza Donantes de Órganos, Plaza de la Soledad, Plaza del Rocío, Porche y regreso.",
+        "public_notes": "Convocatoria documentada; no se eleva a held sin evidencia posterior suficiente.",
+        "organizer_name": null,
+        "organizer_notes": null,
+        "outing_series_id": "c0160031-0904-4000-8000-000000000004",
+        "slug": "coria-del-rio-gp-2026",
+        "reference_code": "HC016-CORIA-GP-2026",
+        "origin_text": null,
+        "destination_text": null
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1244-4000-8000-000000000344",
+        "source_id": "c0160031-0102-4000-8000-000000000002",
+        "outing_series_id": "c0160031-0904-4000-8000-000000000004",
+        "scope": "Horario e itinerario publicados para 2026",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1264-4000-8000-000000000364",
+        "source_id": "c0160031-0101-4000-8000-000000000001",
+        "outing_id": "c0160031-0924-4000-8000-000000000024",
+        "scope": "Jornada, titulares y número de pasos",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1284-4000-8000-000000000384",
+        "source_id": "c0160031-0102-4000-8000-000000000002",
+        "outing_id": "c0160031-0924-4000-8000-000000000024",
+        "scope": "Horario e itinerario 2026",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "outing_series",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0905-4000-8000-000000000005",
+        "brotherhood_entity_id": "c0160031-0304-4000-8000-000000000004",
+        "outing_type": "Estación de penitencia",
+        "character": "ordinary",
+        "title": "Estación de penitencia de la Vera+Cruz de Coria del Río",
+        "month": 4,
+        "date_rule": "Jueves Santo",
+        "time_text": "21:00–02:30",
+        "municipality_id": "fe884314-1f8b-4566-8bb9-7b11ecf42446",
+        "origin_place_id": "098585df-089a-4120-9def-170ce89cb26b",
+        "destination_place_id": "098585df-089a-4120-9def-170ce89cb26b",
+        "route_summary": "Palco de autoridades, Quevedo, Convento, Santa María, Plaza del Rocío, Parroquia, Méndez Núñez, Esquina Reloj, San Juan, Escalera y entrada.",
+        "description": "Salida ordinaria de Jueves Santo.",
+        "display_order": 5,
+        "status": "published",
+        "notes": "Serie ordinaria documentada; la edición 2026 se modela por separado."
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "outings",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0925-4000-8000-000000000025",
+        "brotherhood_entity_id": "c0160031-0304-4000-8000-000000000004",
+        "outing_type": "Estación de penitencia",
+        "character": "ordinary",
+        "title": "Estación de penitencia de la Vera+Cruz de Coria del Río 2026",
+        "outing_date": "2026-04-02",
+        "year": 2026,
+        "departure_time": "21:00",
+        "return_time": "02:30",
+        "municipality_id": "fe884314-1f8b-4566-8bb9-7b11ecf42446",
+        "origin_place_id": "098585df-089a-4120-9def-170ce89cb26b",
+        "destination_place_id": "098585df-089a-4120-9def-170ce89cb26b",
+        "reason": null,
+        "description": "Salida de Jueves Santo documentada para 2026.",
+        "event_status": "announced",
+        "status": "published",
+        "return_date": "2026-04-03",
+        "route_summary": "Palco de autoridades, Quevedo, Convento, Santa María, Plaza del Rocío, Parroquia, Méndez Núñez, Esquina Reloj, San Juan, Escalera y entrada.",
+        "public_notes": "Convocatoria documentada; no se eleva a held sin evidencia posterior suficiente.",
+        "organizer_name": null,
+        "organizer_notes": null,
+        "outing_series_id": "c0160031-0905-4000-8000-000000000005",
+        "slug": "coria-del-rio-vera-2026",
+        "reference_code": "HC016-CORIA-VERA-2026",
+        "origin_text": null,
+        "destination_text": null
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1245-4000-8000-000000000345",
+        "source_id": "c0160031-0102-4000-8000-000000000002",
+        "outing_series_id": "c0160031-0905-4000-8000-000000000005",
+        "scope": "Horario e itinerario publicados para 2026",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1265-4000-8000-000000000365",
+        "source_id": "c0160031-0101-4000-8000-000000000001",
+        "outing_id": "c0160031-0925-4000-8000-000000000025",
+        "scope": "Jornada, titulares y número de pasos",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1285-4000-8000-000000000385",
+        "source_id": "c0160031-0102-4000-8000-000000000002",
+        "outing_id": "c0160031-0925-4000-8000-000000000025",
+        "scope": "Horario e itinerario 2026",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "outing_series",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0906-4000-8000-000000000006",
+        "brotherhood_entity_id": "c0160031-0305-4000-8000-000000000005",
+        "outing_type": "Estación de penitencia",
+        "character": "ordinary",
+        "title": "Santo Entierro y Soledad de Coria del Río · Viernes Santo",
+        "month": 4,
+        "date_rule": "Viernes Santo",
+        "time_text": "20:30–02:00",
+        "municipality_id": "fe884314-1f8b-4566-8bb9-7b11ecf42446",
+        "origin_place_id": "c0160031-0203-4000-8000-000000000003",
+        "destination_place_id": "c0160031-0203-4000-8000-000000000003",
+        "route_summary": "Palco de autoridades, Quevedo, Convento, Carretero, Santa María, Esquinitas, Cervantes y entrada.",
+        "description": "Salida ordinaria de Viernes Santo.",
+        "display_order": 6,
+        "status": "published",
+        "notes": "Serie ordinaria documentada; la edición 2026 se modela por separado."
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "outings",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0926-4000-8000-000000000026",
+        "brotherhood_entity_id": "c0160031-0305-4000-8000-000000000005",
+        "outing_type": "Estación de penitencia",
+        "character": "ordinary",
+        "title": "Santo Entierro y Soledad de Coria del Río · Viernes Santo 2026",
+        "outing_date": "2026-04-03",
+        "year": 2026,
+        "departure_time": "20:30",
+        "return_time": "02:00",
+        "municipality_id": "fe884314-1f8b-4566-8bb9-7b11ecf42446",
+        "origin_place_id": "c0160031-0203-4000-8000-000000000003",
+        "destination_place_id": "c0160031-0203-4000-8000-000000000003",
+        "reason": null,
+        "description": "Salida de Viernes Santo documentada para 2026.",
+        "event_status": "announced",
+        "status": "published",
+        "return_date": "2026-04-04",
+        "route_summary": "Palco de autoridades, Quevedo, Convento, Carretero, Santa María, Esquinitas, Cervantes y entrada.",
+        "public_notes": "Convocatoria documentada; no se eleva a held sin evidencia posterior suficiente.",
+        "organizer_name": null,
+        "organizer_notes": null,
+        "outing_series_id": "c0160031-0906-4000-8000-000000000006",
+        "slug": "coria-del-rio-sol-fri-2026",
+        "reference_code": "HC016-CORIA-SOL-FRI-2026",
+        "origin_text": null,
+        "destination_text": null
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1246-4000-8000-000000000346",
+        "source_id": "c0160031-0102-4000-8000-000000000002",
+        "outing_series_id": "c0160031-0906-4000-8000-000000000006",
+        "scope": "Horario e itinerario publicados para 2026",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1266-4000-8000-000000000366",
+        "source_id": "c0160031-0101-4000-8000-000000000001",
+        "outing_id": "c0160031-0926-4000-8000-000000000026",
+        "scope": "Jornada, titulares y número de pasos",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1286-4000-8000-000000000386",
+        "source_id": "c0160031-0102-4000-8000-000000000002",
+        "outing_id": "c0160031-0926-4000-8000-000000000026",
+        "scope": "Horario e itinerario 2026",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "outing_series",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0907-4000-8000-000000000007",
+        "brotherhood_entity_id": "c0160031-0302-4000-8000-000000000002",
+        "outing_type": "Estación de penitencia",
+        "character": "ordinary",
+        "title": "Piedad de San José · Sábado Santo",
+        "month": 4,
+        "date_rule": "Sábado Santo",
+        "time_text": "19:30–23:00",
+        "municipality_id": "fe884314-1f8b-4566-8bb9-7b11ecf42446",
+        "origin_place_id": "c0160031-0202-4000-8000-000000000002",
+        "destination_place_id": "c0160031-0202-4000-8000-000000000002",
+        "route_summary": "Pascual Márquez, Nuestra Señora de la Estrella, Quevedo, Palco de autoridades, Convento, Avenida Palomares y regreso.",
+        "description": "Salida ordinaria de Sábado Santo.",
+        "display_order": 7,
+        "status": "published",
+        "notes": "Serie ordinaria documentada; la edición 2026 se modela por separado."
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "outings",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0927-4000-8000-000000000027",
+        "brotherhood_entity_id": "c0160031-0302-4000-8000-000000000002",
+        "outing_type": "Estación de penitencia",
+        "character": "ordinary",
+        "title": "Piedad de San José · Sábado Santo 2026",
+        "outing_date": "2026-04-04",
+        "year": 2026,
+        "departure_time": "19:30",
+        "return_time": "23:00",
+        "municipality_id": "fe884314-1f8b-4566-8bb9-7b11ecf42446",
+        "origin_place_id": "c0160031-0202-4000-8000-000000000002",
+        "destination_place_id": "c0160031-0202-4000-8000-000000000002",
+        "reason": null,
+        "description": "Salida de Sábado Santo documentada para 2026.",
+        "event_status": "announced",
+        "status": "published",
+        "return_date": "2026-04-04",
+        "route_summary": "Pascual Márquez, Nuestra Señora de la Estrella, Quevedo, Palco de autoridades, Convento, Avenida Palomares y regreso.",
+        "public_notes": "Convocatoria documentada; no se eleva a held sin evidencia posterior suficiente.",
+        "organizer_name": null,
+        "organizer_notes": null,
+        "outing_series_id": "c0160031-0907-4000-8000-000000000007",
+        "slug": "coria-del-rio-sj-sat-2026",
+        "reference_code": "HC016-CORIA-SJ-SAT-2026",
+        "origin_text": null,
+        "destination_text": null
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1247-4000-8000-000000000347",
+        "source_id": "c0160031-0102-4000-8000-000000000002",
+        "outing_series_id": "c0160031-0907-4000-8000-000000000007",
+        "scope": "Horario e itinerario publicados para 2026",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1267-4000-8000-000000000367",
+        "source_id": "c0160031-0101-4000-8000-000000000001",
+        "outing_id": "c0160031-0927-4000-8000-000000000027",
+        "scope": "Jornada, titulares y número de pasos",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1287-4000-8000-000000000387",
+        "source_id": "c0160031-0102-4000-8000-000000000002",
+        "outing_id": "c0160031-0927-4000-8000-000000000027",
+        "scope": "Horario e itinerario 2026",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "outing_series",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0908-4000-8000-000000000008",
+        "brotherhood_entity_id": "c0160031-0305-4000-8000-000000000005",
+        "outing_type": "Procesión de Gloria",
+        "character": "ordinary",
+        "title": "Los Abrazos y procesión de Resurrección de Coria del Río",
+        "month": 4,
+        "date_rule": "Domingo de Resurrección",
+        "time_text": "07:00–14:00",
+        "municipality_id": "fe884314-1f8b-4566-8bb9-7b11ecf42446",
+        "origin_place_id": "c0160031-0203-4000-8000-000000000003",
+        "destination_place_id": "c0160031-0203-4000-8000-000000000003",
+        "route_summary": "Cervantes, Pinta, Los Abrazos, Plaza de la Estrella, Porche, Tres de Abril, Plaza del Rocío, Nebrija, Isaac Peral, Guadalquivir, Hueros, Avenida de Andalucía, Pintor Manuel de la Rosa, Plaza de la Soledad y entrada.",
+        "description": "Salida ordinaria de Domingo de Resurrección.",
+        "display_order": 8,
+        "status": "published",
+        "notes": "Serie ordinaria documentada; la edición 2026 se modela por separado."
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "outings",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0928-4000-8000-000000000028",
+        "brotherhood_entity_id": "c0160031-0305-4000-8000-000000000005",
+        "outing_type": "Procesión de Gloria",
+        "character": "ordinary",
+        "title": "Los Abrazos y procesión de Resurrección de Coria del Río 2026",
+        "outing_date": "2026-04-05",
+        "year": 2026,
+        "departure_time": "07:00",
+        "return_time": "14:00",
+        "municipality_id": "fe884314-1f8b-4566-8bb9-7b11ecf42446",
+        "origin_place_id": "c0160031-0203-4000-8000-000000000003",
+        "destination_place_id": "c0160031-0203-4000-8000-000000000003",
+        "reason": null,
+        "description": "Salida de Domingo de Resurrección documentada para 2026.",
+        "event_status": "held",
+        "status": "published",
+        "return_date": "2026-04-05",
+        "route_summary": "Cervantes, Pinta, Los Abrazos, Plaza de la Estrella, Porche, Tres de Abril, Plaza del Rocío, Nebrija, Isaac Peral, Guadalquivir, Hueros, Avenida de Andalucía, Pintor Manuel de la Rosa, Plaza de la Soledad y entrada.",
+        "public_notes": "Celebración acreditada por evidencia posterior.",
+        "organizer_name": null,
+        "organizer_notes": null,
+        "outing_series_id": "c0160031-0908-4000-8000-000000000008",
+        "slug": "coria-del-rio-sol-sun-2026",
+        "reference_code": "HC016-CORIA-SOL-SUN-2026",
+        "origin_text": null,
+        "destination_text": null
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1248-4000-8000-000000000348",
+        "source_id": "c0160031-0102-4000-8000-000000000002",
+        "outing_series_id": "c0160031-0908-4000-8000-000000000008",
+        "scope": "Horario e itinerario publicados para 2026",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1268-4000-8000-000000000368",
+        "source_id": "c0160031-0101-4000-8000-000000000001",
+        "outing_id": "c0160031-0928-4000-8000-000000000028",
+        "scope": "Jornada, titulares y número de pasos",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1288-4000-8000-000000000388",
+        "source_id": "c0160031-0102-4000-8000-000000000002",
+        "outing_id": "c0160031-0928-4000-8000-000000000028",
+        "scope": "Horario e itinerario 2026",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1308-4000-8000-000000000408",
+        "source_id": "c0160031-0114-4000-8000-000000000014",
+        "outing_id": "c0160031-0928-4000-8000-000000000028",
+        "scope": "Evidencia posterior de celebración y acompañamientos",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "outing_series",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0915-4000-8000-000000000015",
+        "brotherhood_entity_id": "c0160031-0306-4000-8000-000000000006",
+        "outing_type": "Romería",
+        "character": "ordinary",
+        "title": "Romería del Rocío · Hermandad de Coria del Río",
+        "month": null,
+        "date_rule": "Romería del Rocío / Pentecostés",
+        "time_text": null,
+        "municipality_id": "fe884314-1f8b-4566-8bb9-7b11ecf42446",
+        "origin_place_id": "c0160031-0204-4000-8000-000000000004",
+        "destination_place_id": null,
+        "route_summary": null,
+        "description": "Camino anual de la Hermandad del Rocío de Coria del Río. No se fabrica una edición concreta sin convocatoria.",
+        "display_order": 9,
+        "status": "published",
+        "notes": "Serie anual; las ediciones se publican únicamente con Fuente vigente."
+      },
+      "category": "create"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1320-4000-8000-000000000420",
+        "source_id": "c0160031-0109-4000-8000-000000000009",
+        "outing_series_id": "c0160031-0915-4000-8000-000000000015",
+        "scope": "Actividad rociera anual e historia corporativa",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "outing_music_positions",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0941-4000-8000-000000000041",
+        "outing_id": "c0160031-0921-4000-8000-000000000021",
+        "step_entity_id": "c0160031-0701-4000-8000-000000000001",
+        "position_code": "after_step",
+        "position_label": "Tras el paso de misterio",
+        "sequence_no": 1,
+        "notes": "Posición documentada para la edición 2026.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "outing_music_assignments",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0961-4000-8000-000000000061",
+        "music_position_id": "c0160031-0941-4000-8000-000000000041",
+        "band_entity_id": null,
+        "participation_mode": "full_route",
+        "sequence_no": 1,
+        "segment_start_label": null,
+        "segment_end_label": null,
+        "notes": "Crédito textual: no se crea un nodo externo sin identidad canónica global resuelta.",
+        "status": "published",
+        "band_name_text": "Agrupación Musical Nuestro Padre Jesús Nazareno · La Palma del Condado"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1351-4000-8000-000000000451",
+        "source_id": "c0160031-0112-4000-8000-000000000012",
+        "outing_music_assignment_id": "c0160031-0961-4000-8000-000000000061",
+        "scope": "Acompañamiento documentado para 2026",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "outing_music_positions",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0942-4000-8000-000000000042",
+        "outing_id": "c0160031-0921-4000-8000-000000000021",
+        "step_entity_id": "c0160031-0702-4000-8000-000000000002",
+        "position_code": "after_step",
+        "position_label": "Tras el paso de palio",
+        "sequence_no": 2,
+        "notes": "Posición documentada para la edición 2026.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "outing_music_assignments",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0962-4000-8000-000000000062",
+        "music_position_id": "c0160031-0942-4000-8000-000000000042",
+        "band_entity_id": null,
+        "participation_mode": "full_route",
+        "sequence_no": 1,
+        "segment_start_label": null,
+        "segment_end_label": null,
+        "notes": "Crédito textual: no se crea un nodo externo sin identidad canónica global resuelta.",
+        "status": "published",
+        "band_name_text": "Asociación Cultural Amigos de la Música · Herrera"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1352-4000-8000-000000000452",
+        "source_id": "c0160031-0112-4000-8000-000000000012",
+        "outing_music_assignment_id": "c0160031-0962-4000-8000-000000000062",
+        "scope": "Acompañamiento documentado para 2026",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "outing_music_positions",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0943-4000-8000-000000000043",
+        "outing_id": "c0160031-0922-4000-8000-000000000022",
+        "step_entity_id": "c0160031-0703-4000-8000-000000000003",
+        "position_code": "after_step",
+        "position_label": "Tras el paso del Cautivo",
+        "sequence_no": 3,
+        "notes": "Posición documentada para la edición 2026.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "outing_music_assignments",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0963-4000-8000-000000000063",
+        "music_position_id": "c0160031-0943-4000-8000-000000000043",
+        "band_entity_id": "de6bb885-b80e-4c26-a176-7f72af419d63",
+        "participation_mode": "full_route",
+        "sequence_no": 1,
+        "segment_start_label": null,
+        "segment_end_label": null,
+        "notes": "Entidad canónica reutilizada cuando existe.",
+        "status": "published",
+        "band_name_text": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1353-4000-8000-000000000453",
+        "source_id": "c0160031-0112-4000-8000-000000000012",
+        "outing_music_assignment_id": "c0160031-0963-4000-8000-000000000063",
+        "scope": "Acompañamiento documentado para 2026",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "outing_music_positions",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0944-4000-8000-000000000044",
+        "outing_id": "c0160031-0922-4000-8000-000000000022",
+        "step_entity_id": "c0160031-0704-4000-8000-000000000004",
+        "position_code": "after_step",
+        "position_label": "Tras el paso de palio",
+        "sequence_no": 4,
+        "notes": "Posición documentada para la edición 2026.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "outing_music_assignments",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0964-4000-8000-000000000064",
+        "music_position_id": "c0160031-0944-4000-8000-000000000044",
+        "band_entity_id": null,
+        "participation_mode": "full_route",
+        "sequence_no": 1,
+        "segment_start_label": null,
+        "segment_end_label": null,
+        "notes": "Crédito textual: no se crea un nodo externo sin identidad canónica global resuelta.",
+        "status": "published",
+        "band_name_text": "Banda Municipal de Música de Lora del Río"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1354-4000-8000-000000000454",
+        "source_id": "c0160031-0112-4000-8000-000000000012",
+        "outing_music_assignment_id": "c0160031-0964-4000-8000-000000000064",
+        "scope": "Acompañamiento documentado para 2026",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "outing_music_positions",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0945-4000-8000-000000000045",
+        "outing_id": "c0160031-0923-4000-8000-000000000023",
+        "step_entity_id": "c0160031-0705-4000-8000-000000000005",
+        "position_code": "after_step",
+        "position_label": "Tras el paso de misterio",
+        "sequence_no": 5,
+        "notes": "Posición documentada para la edición 2026.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "outing_music_assignments",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0965-4000-8000-000000000065",
+        "music_position_id": "c0160031-0945-4000-8000-000000000045",
+        "band_entity_id": null,
+        "participation_mode": "full_route",
+        "sequence_no": 1,
+        "segment_start_label": null,
+        "segment_end_label": null,
+        "notes": "Crédito textual: no se crea un nodo externo sin identidad canónica global resuelta.",
+        "status": "published",
+        "band_name_text": "Banda de Cornetas y Tambores Nuestra Señora del Rosario · Arriate"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1355-4000-8000-000000000455",
+        "source_id": "c0160031-0112-4000-8000-000000000012",
+        "outing_music_assignment_id": "c0160031-0965-4000-8000-000000000065",
+        "scope": "Acompañamiento documentado para 2026",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "outing_music_positions",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0946-4000-8000-000000000046",
+        "outing_id": "c0160031-0923-4000-8000-000000000023",
+        "step_entity_id": "c0160031-0706-4000-8000-000000000006",
+        "position_code": "after_step",
+        "position_label": "Tras el paso de palio",
+        "sequence_no": 6,
+        "notes": "Posición documentada para la edición 2026.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "outing_music_assignments",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0966-4000-8000-000000000066",
+        "music_position_id": "c0160031-0946-4000-8000-000000000046",
+        "band_entity_id": null,
+        "participation_mode": "full_route",
+        "sequence_no": 1,
+        "segment_start_label": null,
+        "segment_end_label": null,
+        "notes": "Crédito textual: no se crea un nodo externo sin identidad canónica global resuelta.",
+        "status": "published",
+        "band_name_text": "Banda de Música Las Golondrinas · Vélez-Málaga"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1356-4000-8000-000000000456",
+        "source_id": "c0160031-0112-4000-8000-000000000012",
+        "outing_music_assignment_id": "c0160031-0966-4000-8000-000000000066",
+        "scope": "Acompañamiento documentado para 2026",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "outing_music_positions",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0947-4000-8000-000000000047",
+        "outing_id": "c0160031-0924-4000-8000-000000000024",
+        "step_entity_id": "c0160031-0708-4000-8000-000000000008",
+        "position_code": "after_step",
+        "position_label": "Tras el paso del Señor",
+        "sequence_no": 7,
+        "notes": "Posición documentada para la edición 2026.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "outing_music_assignments",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0967-4000-8000-000000000067",
+        "music_position_id": "c0160031-0947-4000-8000-000000000047",
+        "band_entity_id": "c0160031-0402-4000-8000-000000000002",
+        "participation_mode": "full_route",
+        "sequence_no": 1,
+        "segment_start_label": null,
+        "segment_end_label": null,
+        "notes": "Entidad canónica reutilizada cuando existe.",
+        "status": "published",
+        "band_name_text": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1357-4000-8000-000000000457",
+        "source_id": "c0160031-0112-4000-8000-000000000012",
+        "outing_music_assignment_id": "c0160031-0967-4000-8000-000000000067",
+        "scope": "Acompañamiento documentado para 2026",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "outing_music_positions",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0948-4000-8000-000000000048",
+        "outing_id": "c0160031-0924-4000-8000-000000000024",
+        "step_entity_id": "c0160031-0709-4000-8000-000000000009",
+        "position_code": "after_step",
+        "position_label": "Tras el paso de palio",
+        "sequence_no": 8,
+        "notes": "Posición documentada para la edición 2026.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "outing_music_assignments",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0968-4000-8000-000000000068",
+        "music_position_id": "c0160031-0948-4000-8000-000000000048",
+        "band_entity_id": "63f719d8-61ab-4357-a43f-cc7977bdda43",
+        "participation_mode": "full_route",
+        "sequence_no": 1,
+        "segment_start_label": null,
+        "segment_end_label": null,
+        "notes": "Entidad canónica reutilizada cuando existe.",
+        "status": "published",
+        "band_name_text": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1358-4000-8000-000000000458",
+        "source_id": "c0160031-0112-4000-8000-000000000012",
+        "outing_music_assignment_id": "c0160031-0968-4000-8000-000000000068",
+        "scope": "Acompañamiento documentado para 2026",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "outing_music_positions",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0949-4000-8000-000000000049",
+        "outing_id": "c0160031-0925-4000-8000-000000000025",
+        "step_entity_id": "c0160031-0710-4000-8000-000000000010",
+        "position_code": "after_step",
+        "position_label": "Tras el paso del Cristo",
+        "sequence_no": 9,
+        "notes": "Posición documentada para la edición 2026.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "outing_music_assignments",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0969-4000-8000-000000000069",
+        "music_position_id": "c0160031-0949-4000-8000-000000000049",
+        "band_entity_id": null,
+        "participation_mode": "full_route",
+        "sequence_no": 1,
+        "segment_start_label": null,
+        "segment_end_label": null,
+        "notes": "Crédito textual: no se crea un nodo externo sin identidad canónica global resuelta.",
+        "status": "published",
+        "band_name_text": "Capilla Musical"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1359-4000-8000-000000000459",
+        "source_id": "c0160031-0112-4000-8000-000000000012",
+        "outing_music_assignment_id": "c0160031-0969-4000-8000-000000000069",
+        "scope": "Acompañamiento documentado para 2026",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "outing_music_positions",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0950-4000-8000-000000000050",
+        "outing_id": "c0160031-0925-4000-8000-000000000025",
+        "step_entity_id": "c0160031-0711-4000-8000-000000000011",
+        "position_code": "after_step",
+        "position_label": "Tras el paso de palio",
+        "sequence_no": 10,
+        "notes": "Posición documentada para la edición 2026.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "outing_music_assignments",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0970-4000-8000-000000000070",
+        "music_position_id": "c0160031-0950-4000-8000-000000000050",
+        "band_entity_id": "63f719d8-61ab-4357-a43f-cc7977bdda43",
+        "participation_mode": "full_route",
+        "sequence_no": 1,
+        "segment_start_label": null,
+        "segment_end_label": null,
+        "notes": "Entidad canónica reutilizada cuando existe.",
+        "status": "published",
+        "band_name_text": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1360-4000-8000-000000000460",
+        "source_id": "c0160031-0112-4000-8000-000000000012",
+        "outing_music_assignment_id": "c0160031-0970-4000-8000-000000000070",
+        "scope": "Acompañamiento documentado para 2026",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "outing_music_positions",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0951-4000-8000-000000000051",
+        "outing_id": "c0160031-0926-4000-8000-000000000026",
+        "step_entity_id": "c0160031-0712-4000-8000-000000000012",
+        "position_code": "after_step",
+        "position_label": "Tras el Santo Entierro",
+        "sequence_no": 11,
+        "notes": "Posición documentada para la edición 2026.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "outing_music_assignments",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0971-4000-8000-000000000071",
+        "music_position_id": "c0160031-0951-4000-8000-000000000051",
+        "band_entity_id": null,
+        "participation_mode": "full_route",
+        "sequence_no": 1,
+        "segment_start_label": null,
+        "segment_end_label": null,
+        "notes": "Crédito textual: no se crea un nodo externo sin identidad canónica global resuelta.",
+        "status": "published",
+        "band_name_text": "Capilla Musical"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1361-4000-8000-000000000461",
+        "source_id": "c0160031-0112-4000-8000-000000000012",
+        "outing_music_assignment_id": "c0160031-0971-4000-8000-000000000071",
+        "scope": "Acompañamiento documentado para 2026",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "outing_music_positions",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0952-4000-8000-000000000052",
+        "outing_id": "c0160031-0926-4000-8000-000000000026",
+        "step_entity_id": "c0160031-0713-4000-8000-000000000013",
+        "position_code": "after_step",
+        "position_label": "Tras la Virgen de la Soledad",
+        "sequence_no": 12,
+        "notes": "Posición documentada para la edición 2026.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "outing_music_assignments",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0972-4000-8000-000000000072",
+        "music_position_id": "c0160031-0952-4000-8000-000000000052",
+        "band_entity_id": "63f719d8-61ab-4357-a43f-cc7977bdda43",
+        "participation_mode": "full_route",
+        "sequence_no": 1,
+        "segment_start_label": null,
+        "segment_end_label": null,
+        "notes": "Entidad canónica reutilizada cuando existe.",
+        "status": "published",
+        "band_name_text": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1362-4000-8000-000000000462",
+        "source_id": "c0160031-0112-4000-8000-000000000012",
+        "outing_music_assignment_id": "c0160031-0972-4000-8000-000000000072",
+        "scope": "Acompañamiento documentado para 2026",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "outing_music_positions",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0953-4000-8000-000000000053",
+        "outing_id": "c0160031-0928-4000-8000-000000000028",
+        "step_entity_id": "c0160031-0714-4000-8000-000000000014",
+        "position_code": "after_step",
+        "position_label": "Tras el Cristo Resucitado",
+        "sequence_no": 13,
+        "notes": "Posición documentada para la edición 2026.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "outing_music_assignments",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0973-4000-8000-000000000073",
+        "music_position_id": "c0160031-0953-4000-8000-000000000053",
+        "band_entity_id": "6d6ceee7-53d0-4705-a58c-fadc364cb322",
+        "participation_mode": "full_route",
+        "sequence_no": 1,
+        "segment_start_label": null,
+        "segment_end_label": null,
+        "notes": "Entidad canónica reutilizada cuando existe.",
+        "status": "published",
+        "band_name_text": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1363-4000-8000-000000000463",
+        "source_id": "c0160031-0112-4000-8000-000000000012",
+        "outing_music_assignment_id": "c0160031-0973-4000-8000-000000000073",
+        "scope": "Acompañamiento documentado para 2026",
+        "notes": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "outing_music_positions",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0954-4000-8000-000000000054",
+        "outing_id": "c0160031-0928-4000-8000-000000000028",
+        "step_entity_id": "c0160031-0715-4000-8000-000000000015",
+        "position_code": "after_step",
+        "position_label": "Tras la Virgen de la Soledad",
+        "sequence_no": 14,
+        "notes": "Posición documentada para la edición 2026.",
+        "status": "published"
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "outing_music_assignments",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-0974-4000-8000-000000000074",
+        "music_position_id": "c0160031-0954-4000-8000-000000000054",
+        "band_entity_id": "63f719d8-61ab-4357-a43f-cc7977bdda43",
+        "participation_mode": "full_route",
+        "sequence_no": 1,
+        "segment_start_label": null,
+        "segment_end_label": null,
+        "notes": "Entidad canónica reutilizada cuando existe.",
+        "status": "published",
+        "band_name_text": null
+      },
+      "category": "relation"
+    },
+    {
+      "operation": "upsert",
+      "table": "source_links",
+      "on_conflict": "id",
+      "data": {
+        "id": "c0160031-1364-4000-8000-000000000464",
+        "source_id": "c0160031-0112-4000-8000-000000000012",
+        "outing_music_assignment_id": "c0160031-0974-4000-8000-000000000074",
+        "scope": "Acompañamiento documentado para 2026",
+        "notes": null
+      },
+      "category": "relation"
+    }
+  ]
+}
