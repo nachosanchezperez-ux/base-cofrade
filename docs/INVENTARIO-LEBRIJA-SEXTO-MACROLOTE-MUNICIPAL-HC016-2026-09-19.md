@@ -1,7 +1,7 @@
 # Inventario canónico y matriz de Fuentes · Lebrija · sexto macrolote municipal HC-016
 
 **Fecha:** 19 de septiembre de 2026  
-**Fase:** PRE-LOTE  
+**Fase:** PREFLIGHT CERRADO · inventario físico reconciliado  
 **Municipio:** Lebrija  
 **Municipality ID existente:** `07281b21-d892-4e5d-aa63-24ec0e9bf4d2`  
 **Namespace candidato:** `c0160033-*` · **LIBRE, NO RESERVADO**  
@@ -164,16 +164,25 @@ No congelar esa cifra. Las mayores variables son:
 - acompañamientos musicales 2026;
 - número de Fuentes y source_links.
 
-## 10. Incertidumbres que bloquean el manifiesto, no la selección
+## 10. Incertidumbres resueltas por el preflight
 
-1. Determinar el inventario físico exacto de Pasos de Humildad/Aurora.
-2. Confirmar si los cuatro titulares de Dolores ocupan cuatro Pasos en el modelo 2026 o si alguna relación no es processional_step.
-3. Resolver el objeto procesional del Rocío sin forzar el tipo `step`.
-4. Cerrar el patrimonio procesional de San Benito.
-5. Fijar la salida eucarística 2026 de la Sacramental solo con Fuente actual.
-6. Auditar acompañamientos 2026 de cada estación.
-7. Reconciliar Bandas externas antes de crear nodos.
-8. Revisar Fuentes ya existentes para evitar duplicarlas.
+1. Humildad: 3 Pasos penitenciales; Aurora añade 1 Paso de Gloria propio.
+2. Dolores: 4 titulares procesionales y 4 Pasos.
+3. Rocío: Simpecado + carreta como patrimonio; 0 `step`.
+4. San Benito: Hermandad + Imagen + salida 2026; 0 `step` hasta Fuente física suficiente.
+5. Sacramental: alta institucional; 0 salida 2026 sin evidencia actual inequívoca.
+6. Música: solo cuatro relaciones 2026 verificadas entran al plan seguro.
+7. Bandas: Afligidos, Agripino Lozano y Banda Municipal Ntra. Sra. del Rosario de El Cuervo son altas nuevas; Banda Virgen del Castillo es REUSE.
+8. Fuentes: las 8 ya existentes de Lebrija se preservan y reutilizan.
+
+Inventario físico resultante para el row-by-row:
+
+- 12 Hermandades · 11 nuevas + Castillo REUSE;
+- 25 Imágenes relacionadas · 24 nuevas + Virgen del Castillo REUSE;
+- 21 Pasos nuevos;
+- 12 Salidas nuevas `held` + salida patronal de Castillo REUSE;
+- 4 acompañamientos musicales 2026 seguros;
+- Aurora y San Benito con Cultos 2026 mínimos documentados.
 
 ## 11. Puerta
 
@@ -181,4 +190,4 @@ Este inventario **no crea staging ni autoriza Apply**.
 
 Siguiente orden interna:
 
-**preflight específico → resolver 8 incertidumbres → IDs/slugs definitivos → recuento exacto INSERT/UPDATE/DELETE/REUSE → plan row-by-row → SQL con ROLLBACK.**
+**plan row-by-row determinista → IDs/slugs definitivos → colisiones → Fuentes y source_links exactos → recuento INSERT/UPDATE/DELETE/REUSE → manifiesto determinista.**
