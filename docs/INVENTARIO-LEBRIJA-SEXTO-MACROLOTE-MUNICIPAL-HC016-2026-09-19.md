@@ -1,184 +1,222 @@
 # Inventario canónico y matriz de Fuentes · Lebrija · sexto macrolote municipal HC-016
 
 **Fecha:** 19 de septiembre de 2026  
-**Fase:** PRE-LOTE  
-**Municipio:** Lebrija  
-**Municipality ID existente:** `07281b21-d892-4e5d-aa63-24ec0e9bf4d2`  
-**Namespace candidato:** `c0160033-*` · **LIBRE, NO RESERVADO**  
-**Apply:** 0 · **Staging:** 0
+**Fase:** PRE-LOTE RESUELTO / ROW-BY-ROW CERRADO  
+**Municipio:** Lebrija · `07281b21-d892-4e5d-aa63-24ec0e9bf4d2`  
+**Namespace candidato:** `c0160033-*` · libre y no materializado  
+**DML exactas:** **465** · **32 REUSE**  
+**Staging:** 0 · **Apply:** 0
 
-## 1. Universo corporativo canónico
+La estimación preliminar queda sustituida por el preflight específico y el plan row-by-row.
 
-| # | Corporación | Tipo | Estado Hilo | Acción preliminar |
-|---|---|---|---|---|
-| 1 | Entrada Triunfal | Penitencia | Ausente | INSERT |
-| 2 | Oración en el Huerto | Penitencia | Ausente | INSERT |
-| 3 | Humildad | Penitencia + Gloria | Ausente | INSERT |
-| 4 | Ecce-Homo · Los Gitanos | Penitencia | Ausente | INSERT |
-| 5 | Castillo | Penitencia + Gloria | **Publicada** | REUSE + completar |
-| 6 | Dolores | Penitencia + Sacramental | Ausente | INSERT |
-| 7 | Vera-Cruz | Penitencia | Ausente | INSERT |
-| 8 | Santo Sepulcro | Penitencia | Ausente | INSERT |
-| 9 | Soledad | Penitencia | Ausente | INSERT |
-| 10 | Rocío | Gloria / Romería | Ausente | INSERT |
-| 11 | San Benito | Gloria / Patronal | Ausente | INSERT |
-| 12 | Hermandad Sacramental | Sacramental | Ausente | INSERT |
+## 1. Corporaciones
 
-### Reconciliaciones obligatorias
+12 canónicas:
+- Entrada Triunfal.
+- Oración.
+- Humildad.
+- Ecce-Homo.
+- Castillo · REUSE.
+- Dolores.
+- Vera-Cruz.
+- Santo Sepulcro.
+- Soledad.
+- Rocío.
+- San Benito.
+- Sacramental.
 
-- **Aurora** se integra en Humildad: no crear Hermandad separada.
-- **Castillo Gloria** se integra en Castillo: no crear segunda corporación.
-- **Dolores** posee título sacramental, pero no absorbe a la **Hermandad Sacramental histórica**: fuentes municipales recientes las tratan separadamente.
-- El Santo Sepulcro y la Soledad permanecen como dos corporaciones distintas pese a su relación histórica con el Santo Entierro.
+Aurora pertenece a Humildad. Castillo Gloria pertenece a la misma Hermandad del Castillo. Dolores y Sacramental son corporaciones distintas.
 
-## 2. Titulares y Pasos · inventario preliminar
+## 2. Imágenes
 
-La autoridad del preflight deberá cerrar IDs físicos; esta tabla no los congela.
+**24 físicas · 23 nuevas + Virgen del Castillo REUSE.**
 
-| Corporación | Titulares/elementos documentados | Pasos documentados |
-|---|---|---:|
-| Entrada Triunfal | Jesús en la Entrada Triunfal · Ntra. Sra. de la Estrella · San Juan Evangelista | 2 |
-| Oración | Jesús Orando en el Huerto · Cristo de la Buena Muerte · Santa María de Jesús | 3 |
-| Humildad | Jesús de la Humildad · Ntra. Sra. de la Victoria · Ntra. Sra. de la Aurora · San Juan Evangelista | 3 penitenciales + Paso de Gloria de Aurora a reconciliar |
-| Ecce-Homo | Jesús del Ecce-Homo · Ntra. Sra. del Mayor Dolor · Beato Ceferino Mártir | 2 |
-| Castillo | Jesús Atado a la Columna · Ntra. Sra. del Castillo Coronada · San Pedro Apóstol | 2; Virgen ya existente, Pasos por crear/reconciliar |
-| Dolores | Ntro. Padre Jesús Nazareno · María Stma. de los Dolores · San Juan Evangelista · Santa Mujer Verónica | 4 |
-| Vera-Cruz | Stmo. Cristo de la Vera-Cruz · Ntra. Sra. de Consolación | 2 |
-| Santo Sepulcro | Cristo de las Cinco Llagas / Yacente | Urna · 1 |
-| Soledad | Ntra. Sra. de la Soledad | 1 |
-| Rocío | Simpecado / patrimonio rociero | No forzar Paso convencional hasta preflight |
-| San Benito | San Benito Abad | 1 |
-| Sacramental | Santísimo Sacramento y patrimonio eucarístico | No forzar Paso si no corresponde al modelo |
+Entrada Triunfal:
+- Jesús en su Entrada Triunfal;
+- Nuestra Señora de la Estrella;
+- San Juan Evangelista.
 
-## 3. Salidas 2026 a preservar
+Oración:
+- Jesús Orando en el Huerto;
+- Cristo de la Buena Muerte;
+- Santa María de Jesús.
 
-### Semana Santa
+Humildad:
+- Jesús de la Humildad;
+- Virgen de la Victoria;
+- Virgen de la Aurora;
+- San Juan Evangelista.
 
-El Ayuntamiento certifica retrospectivamente que las nueve Hermandades de Penitencia realizaron sus estaciones de penitencia en 2026. El lote deberá crear nueve Salidas `held` si la documentación individual permite fijar cada fecha y relación.
+Ecce-Homo:
+- Jesús del Ecce-Homo;
+- Virgen del Mayor Dolor.
 
-### Glorias / otras salidas
+Castillo:
+- Jesús Atado a la Columna;
+- Virgen del Castillo Coronada · REUSE;
+- San Pedro Apóstol.
 
-- Rocío · salida de Lebrija hacia la aldea · 19/05/2026 · evidencia posterior municipal.
-- San Benito · salida procesional patronal · julio de 2026 · evidencia municipal.
-- Aurora · Rosario procesional · 15/08/2026 · fuente oficial de la Hermandad.
-- Castillo · procesión patronal · 12/09/2026 · **ya existente en Hilo**.
+Dolores:
+- Jesús Nazareno;
+- María Santísima de los Dolores;
+- Santa Mujer Verónica;
+- San Juan Evangelista.
 
-La procesión eucarística de la Hermandad Sacramental solo se elevará a Salida 2026 si se obtiene Fuente actual y fecha concreta; no se deduce por recurrencia.
+Vera-Cruz:
+- Cristo de la Vera-Cruz;
+- Virgen de Consolación.
+
+Santo Sepulcro:
+- Cristo de las Cinco Llagas / Yacente.
+
+Soledad:
+- Virgen de la Soledad.
+
+San Benito:
+- San Benito Abad.
+
+Rocío no fuerza el Simpecado a `image`. Sacramental reutiliza la advocación global del Santísimo Sacramento mediante `entity_relations`.
+
+## 3. Pasos
+
+**23 nuevos.**
+
+- Entrada: 2.
+- Oración: 3.
+- Humildad: 3.
+- Ecce-Homo: 2.
+- Castillo: 3.
+- Dolores: 5.
+- Vera-Cruz: 2.
+- Santo Sepulcro: 1.
+- Soledad: 1.
+- San Benito: 1.
+
+San Juan de Humildad no posee Paso actual. El Corpus de San Francisco usa un Paso de S.D.M. sin crear una imagen artificial.
 
 ## 4. Lugares
 
-### REUSE
+REUSE:
+- Parroquia de la Oliva.
+- Ermita del Castillo.
+- Convento de la Purísima Concepción.
 
-- Parroquia de Nuestra Señora de la Oliva · `067dda49-ad58-4a45-9da8-da87491fa7b2`.
-- Ermita de Nuestra Señora del Castillo · `4f08d608-a848-479a-9cae-c6dc1366a5dc`.
-- Convento de la Purísima Concepción · `f4a9cd86-4ee2-4f9a-9d26-7bbaba286176`.
-
-### Por crear/reconciliar
-
-- Parroquia / Iglesia de Santa María de Jesús.
-- Capilla de la Aurora.
-- Iglesia / Ermita de Belén.
-- Iglesia de San Francisco.
-- Ermita de San Benito.
-- cualquier sede adicional solo tras verificar denominación y municipio.
+Nuevos:
+1. Parroquia de Santa María de Jesús.
+2. Capilla de la Aurora.
+3. Iglesia de Belén.
+4. Iglesia de San Francisco.
+5. Capilla de la Vera-Cruz.
+6. Ermita de San Benito.
 
 ## 5. Música
 
-Hilo ya posee la **Banda de Música Virgen del Castillo de Lebrija**.
+REUSE:
+- Banda de Música Virgen del Castillo.
 
-El futuro lote no debe inferir acompañamientos por costumbre. Cada relación 2026 requiere:
+Nuevas:
+- AM Afligidos de Puente Genil.
+- BM Maestro Agripino Lozano de San Fernando.
+- BM Nuestra Señora del Rosario de El Cuervo.
+- Banda Amor y Sacrificio de Lebrija.
 
-1. Salida concreta;
-2. posición;
-3. Banda canónica o texto temporal inequívoco;
-4. Fuente 2026;
-5. periodo histórico solo cuando la continuidad esté documentada.
+Relaciones 2026 estructuradas: **11**. No se publica música por tradición sin evidencia.
 
-Las Bandas externas deberán primero reconciliarse con el directorio existente.
+## 6. Salidas
 
-## 6. Matriz de Fuentes
+**13 nuevas**:
+- 9 estaciones de penitencia · held;
+- Rocío 19/05 · held;
+- Corpus de San Francisco 14/06 · held;
+- San Benito 10/07 · announced;
+- Rosario de la Aurora 15/08 · announced.
 
-| Bloque | Fuente primaria | Uso |
-|---|---|---|
-| Universo penitencial | Consejo · categoría Penitencia | 9 corporaciones |
-| Entrada Triunfal | Consejo · itinerarios | nombre, sede, 2 Pasos |
-| Oración | Consejo · itinerarios / Parroquia Santa María de Jesús | nombre, sede, 3 Pasos |
-| Humildad + Aurora | Consejo + web oficial Humildad | una sola corporación; doble carácter; Paso de Gloria |
-| Ecce-Homo | Consejo | identidad, sede, 2 Pasos |
-| Castillo | Consejo + web oficial + Hilo | REUSE; doble carácter |
-| Dolores | Consejo + web oficial Dolores | identidad actual sacramental/servita, 4 titulares |
-| Vera-Cruz | Consejo | identidad, 2 titulares |
-| Santo Sepulcro | Consejo | identidad, urna, historia |
-| Soledad | Consejo | identidad propia, 1 Paso |
-| Rocío | Ayuntamiento 2026 + Consejo | salida held 2026 |
-| San Benito | Ayuntamiento 2026 + Consejo | salida held 2026 |
-| Sacramental | Consejo + Ayuntamiento Corpus | identidad separada |
-| Semana Santa 2026 | Ayuntamiento | 9/9 estaciones realizadas |
-| Aurora 2026 | web oficial Humildad | Rosario 15/08/2026 |
-| Castillo 2026 | Ayuntamiento + Fuentes ya en Hilo | salida 12/09/2026 |
+REUSE:
+- Castillo patronal 12/09 · held.
 
-## 7. Fuentes URL
+Series nuevas: **16**, incluyendo serie patronal Castillo, San Pedro anual y Corpus Sacramental sin fabricar occurrences 2026.
 
-- https://www.hermandadesdelebrija.org/
-- https://hermandadesdelebrija.org/index.php/87-penitencia
-- https://www.hermandadesdelebrija.org/index.php/86-consejo?start=25
-- https://www.hermandadesdelebrija.org/index.php/noticiasve/86-consejo?start=20
-- https://www.hermandadesdelebrija.org/index.php/noticiasau/103-penitencia/dolores?start=10
-- https://www.hermandadesdelebrija.org/index.php/noticiassc/104-penitencia/veracruz?start=10
-- https://www.hermandadesdelebrija.org/index.php/105-penitencia/santosepulcro?start=10
-- https://www.hermandadesdelebrija.org/index.php/106-penitencia/soledad?start=5
-- https://www.hermandadesdelebrija.org/index.php/107-gloria/rocio
-- https://www.hermandadesdelebrija.org/index.php/fotossb/110-gloria/sanbenito
-- https://www.hermandadesdelebrija.org/index.php/111-sacramentales/sacramental?start=5
-- https://lebrija.es/es/actualidad/noticias/Concluye-una-Semana-Santa-marcada-por-las-buenas-temperaturas-y-con-una-destacada-participacion-ciudadana/
-- https://lebrija.es/es/actualidad/noticias/La-Hermandad-del-Rocio-de-Lebrija-inicia-su-camino-hacia-El-Rocio/
-- https://humildaddelebrija.es/convocatoria-de-actos-y-cultos-aurora-2026/
-- https://hermandaddelosdolores.com/
-- https://hermandaddelcastillo.org/
+## 7. Cultos
 
-## 8. Fotografía actual de Hilo
+Nuevos:
+- Aurora · Besamano.
+- Aurora · Triduo.
+- Aurora · Función.
+- San Benito · Quinario.
+- Sacramental · culto mensual.
 
-Antes del pre-lote:
+Occurrences nuevas: **3**, únicamente Aurora 2026.
 
-- Hermandades Lebrija: **1**;
-- Bandas locales: **1**;
-- Imágenes ligadas a Hermandad municipal: **1**;
-- Pasos ligados a Hermandad municipal: **0**;
-- Salidas: **1**;
-- Cultos: **3**;
-- ediciones 2026: **3**;
-- lugares: **3**;
-- Fuentes con señal nominal/URL de Lebrija: al menos **8**.
+Los 3 Cultos + 3 occurrences 2026 del Castillo permanecen REUSE sin alterar sus estados.
 
-## 9. Estimación de filas
+## 8. Autores
 
-La estimación útil actual es **430–500 DML**.
+REUSE:
+- Juan Manuel Miñarro.
+- Juan Abascal.
+- Pedro Roldán.
 
-No congelar esa cifra. Las mayores variables son:
+Nuevos:
+- Juan Herrera Cala.
+- Juan Antonio González García «Ventura».
+- Diego Roldán y Serrallonga.
 
-- número físico final de Imágenes;
-- Paso de Gloria de Aurora;
-- relaciones exactas de Dolores;
-- modelado del Rocío;
-- Corpus/Sacramental;
-- acompañamientos musicales 2026;
-- número de Fuentes y source_links.
+Autorías estructuradas: **6**.
 
-## 10. Incertidumbres que bloquean el manifiesto, no la selección
+## 9. Fuentes
 
-1. Determinar el inventario físico exacto de Pasos de Humildad/Aurora.
-2. Confirmar si los cuatro titulares de Dolores ocupan cuatro Pasos en el modelo 2026 o si alguna relación no es processional_step.
-3. Resolver el objeto procesional del Rocío sin forzar el tipo `step`.
-4. Cerrar el patrimonio procesional de San Benito.
-5. Fijar la salida eucarística 2026 de la Sacramental solo con Fuente actual.
-6. Auditar acompañamientos 2026 de cada estación.
-7. Reconciliar Bandas externas antes de crear nodos.
-8. Revisar Fuentes ya existentes para evitar duplicarlas.
+Planificadas: 31 URL.
+- 30 nuevas;
+- 1 REUSE por URL exacta: Congregación Nazarena · Hermandades.
 
-## 11. Puerta
+Además se reutilizan 8 Fuentes existentes del universo Castillo.
 
-Este inventario **no crea staging ni autoriza Apply**.
+Trazabilidad nueva: **121 source_links**.
 
-Siguiente orden interna:
+## 10. Recuento DML
 
-**preflight específico → resolver 8 incertidumbres → IDs/slugs definitivos → recuento exacto INSERT/UPDATE/DELETE/REUSE → plan row-by-row → SQL con ROLLBACK.**
+| Familia | Filas |
+|---|---:|
+| municipalities | 2 |
+| sources | 30 |
+| places | 6 |
+| entities | 64 |
+| brotherhoods INSERT | 11 |
+| bands | 4 |
+| agents + names + disciplines | 9 |
+| images | 23 |
+| brotherhood_images | 23 |
+| image_authorships | 6 |
+| steps | 23 |
+| brotherhood_steps | 23 |
+| image_steps | 23 |
+| entity_relations | 2 |
+| outing_series | 16 |
+| outings INSERT | 13 |
+| outing_entities | 23 |
+| music positions | 11 |
+| music assignments | 11 |
+| music periods | 11 |
+| cults | 5 |
+| cult_occurrences | 3 |
+| source_links | 121 |
+| UPDATE Castillo | 1 |
+| UPDATE salida patronal Castillo | 1 |
+| **TOTAL** | **465** |
+
+Contrato final del preflight:
+- **463 INSERT/UPSERT**;
+- **2 UPDATE**;
+- **0 DELETE**;
+- **32 REUSE**.
+
+## 11. Autoridad
+
+La autoridad detallada pasa a:
+- [Preflight específico](./PREFLIGHT-LEBRIJA-SEXTO-MACROLOTE-MUNICIPAL-HC016-2026-09-19.md)
+- [Plan row-by-row](./PLAN-ROW-BY-ROW-LEBRIJA-HC016-2026-09-19.md)
+
+Siguiente puerta:
+**IDs deterministas → manifiesto 465/465 → SQL completo → ROLLBACK**.
+
+No crear staging ni ejecutar Apply.
