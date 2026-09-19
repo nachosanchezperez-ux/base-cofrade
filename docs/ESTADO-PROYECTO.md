@@ -28,7 +28,7 @@
 
 **Régimen:** FIRST EDITION FREEZE activo
 
-**Frente editorial ACTIVO:** **Lebrija · sexto macrolote municipal HC-016 · ROW-BY-ROW CERRADO**. Preflight específico resuelto: **464 DML = 462 upsert + 2 update + 0 delete**, **32 REUSE**, 24 Imágenes canónicas, 23 Pasos, 13 Salidas nuevas, 16 series y 121 source_links. **0 staging · 0 Apply**.
+**Frente editorial ACTIVO:** **Lebrija · sexto macrolote municipal HC-016 · ROW-BY-ROW CERRADO**. Preflight específico resuelto: **465 DML = 463 upsert + 2 update + 0 delete**, **32 REUSE**, 24 Imágenes canónicas, 23 Pasos, 13 Salidas nuevas, 16 series y 121 source_links. **0 staging · 0 Apply**.
 
 > GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. Tras cerrar Estepa se ha recalculado la provincia otra vez desde cero. Lebrija queda seleccionada como único sexto macrolote municipal. Osuna, Carmona, Écija, Utrera y cualquier ranking previo permanecen como evidencia del corte, no como cola automática.
 
@@ -81,7 +81,7 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | **CERRADO** | Tercer macrolote municipal HC-016 · Cantillana | Lote c0160030-0000-4000-8000-000000000001: 93/93, 0 inválidas y 0 fallos; Asunción y Pastora preservadas; Soledad cerrada con 4 titulares, 3 Pasos, 7 Cultos/7 ediciones 2026, 1 estación held; Banda local y Cruceta HC-019 preservadas | No reabrir sin deuda material nueva; Montefrío sigue como crédito textual; no elevar announced sin evidencia posterior |
 | **CERRADO** | Cuarto macrolote municipal HC-016 · Coria del Río | Universo canónico de 8 corporaciones publicado; lote base `c0160031` preservado; reconciliación final `c0160041-0000-4000-8000-000000000001` 22/22, 0 inválidas y 0 fallos; 8 Salidas núcleo 2026; 7 periodos musicales; Banda Municipal unificada; sede duplicada eliminada; Piedad y AM San Lucas conservan huecos legítimos sin inferencia | No reabrir sin deuda material nueva. El siguiente municipio requiere recálculo desde cero y una orden explícita |
 | **CERRADO** | Quinto macrolote municipal HC-016 · Estepa | Import `c0160032-0000-4000-8000-000000000001`: **495/495 aplicadas**, 490 upsert + 4 update + 1 delete, 21 REUSE, 0 inválidas y 0 fallos; 13 Hermandades publicadas, 28 Imágenes, 18 Pasos, 13 Salidas, 16 asignaciones musicales, 14 periodos, 8 Cultos/8 ediciones y 143 enlaces de Fuente; QA público y runtime en verde | No reabrir sin deuda material nueva. El siguiente municipio exige recálculo provincial desde cero y una orden explícita |
-| **ACTIVO · ROW-BY-ROW CERRADO** | Sexto macrolote municipal HC-016 · Lebrija | Preflight específico en verde: **464 DML**, 462 upsert + 2 update, 0 delete, 32 REUSE; inventario físico y Fuentes reconciliados; namespace `c0160033-*` todavía sin materializar | Siguiente puerta: **IDs deterministas → manifiesto 464/464 → SQL completo con ROLLBACK**. **0 staging / 0 Apply** |
+| **ACTIVO · ROW-BY-ROW CERRADO** | Sexto macrolote municipal HC-016 · Lebrija | Preflight específico en verde: **465 DML**, 463 upsert + 2 update, 0 delete, 32 REUSE; inventario físico y Fuentes reconciliados; namespace `c0160033-*` todavía sin materializar | Siguiente puerta: **IDs deterministas → manifiesto 465/465 → SQL completo con ROLLBACK**. **0 staging / 0 Apply** |
 | **CERRADO** | Navegación, búsqueda, SEO y repertorios · #811–#818 | Jornadas y municipios navegables; buscador ampliado y afinado; caché de directorios y fichas; repertorios de conciertos visibles | No reabrir sin regresión reproducible; los contadores de Home se corrigen de forma transversal sin alterar el modelo |
 | **CERRADO** | Cultos septiembre–diciembre de 2026 | Lote transversal HC-016 `c0162026-0909-4000-8000-000000000001`: 53/53, cuatro Hermandades y 0 DDL | Mantener ediciones futuras desde Fuentes oficiales; recurrencia no equivale a anuncio |
 | **CERRADO** | Carátulas de Discografía · #734 y #791 | Reintento del optimizador a la URL original y fallback accesible; #791 estabilizó las 17 carátulas de La Oliva que aún dependían del servidor antiguo | Mantener URLs estables y el fallback accesible como protección, no como deuda activa |
@@ -504,9 +504,9 @@ El inventario canónico y la matriz de Fuentes están en [`INVENTARIO-CORIA-DEL-
 
 **Único frente editorial municipal activo: Lebrija · sexto macrolote HC-016 · ROW-BY-ROW CERRADO.**
 
-El recálculo provincial sigue cerrado. El preflight específico de Lebrija ha resuelto el inventario: **12 corporaciones**, **24 Imágenes canónicas**, **23 Pasos**, **13 Salidas nuevas**, **16 series**, **11 relaciones musicales**, **5 Cultos** y un contrato exacto de **464 DML + 32 REUSE**.
+El recálculo provincial sigue cerrado. El preflight específico de Lebrija ha resuelto el inventario: **12 corporaciones**, **24 Imágenes canónicas**, **23 Pasos**, **13 Salidas nuevas**, **16 series**, **11 relaciones musicales**, **5 Cultos** y un contrato exacto de **465 DML + 32 REUSE**.
 
-Siguiente movimiento, sin necesidad de una nueva selección: **revalidar colisiones → congelar IDs/slugs `c0160033-*` → manifiesto determinista 464/464 → generar payload SQL exacto → ejecutar el payload completo dentro de transacción + ROLLBACK**.
+Siguiente movimiento, sin necesidad de una nueva selección: **revalidar colisiones → congelar IDs/slugs `c0160033-*` → manifiesto determinista 465/465 → generar payload SQL exacto → ejecutar el payload completo dentro de transacción + ROLLBACK**.
 
 **Staging y Apply siguen prohibidos.** No abrir Osuna, Carmona, Écija, Utrera ni otro municipio en paralelo. No se activa Laboratorio, HC-018 ni Sevilla capital. Los acontecimientos pasados que continúen legítimamente en `announced` solo pueden elevarse ante evidencia posterior verificable.
 
