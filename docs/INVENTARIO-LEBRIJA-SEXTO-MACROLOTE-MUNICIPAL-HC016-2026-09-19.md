@@ -4,7 +4,7 @@
 **Fase:** PRE-LOTE RESUELTO / ROW-BY-ROW CERRADO  
 **Municipio:** Lebrija · `07281b21-d892-4e5d-aa63-24ec0e9bf4d2`  
 **Namespace candidato:** `c0160033-*` · libre y no materializado  
-**DML exactas:** **464** · **32 REUSE**  
+**DML exactas:** **465** · **32 REUSE**  
 **Staging:** 0 · **Apply:** 0
 
 La estimación preliminar queda sustituida por el preflight específico y el plan row-by-row.
@@ -193,7 +193,7 @@ Trazabilidad nueva: **121 source_links**.
 | entity_relations | 2 |
 | outing_series | 16 |
 | outings INSERT | 13 |
-| outing_entities | 22 |
+| outing_entities | 23 |
 | music positions | 11 |
 | music assignments | 11 |
 | music periods | 11 |
@@ -202,10 +202,10 @@ Trazabilidad nueva: **121 source_links**.
 | source_links | 121 |
 | UPDATE Castillo | 1 |
 | UPDATE salida patronal Castillo | 1 |
-| **TOTAL** | **464** |
+| **TOTAL** | **465** |
 
 Contrato final del preflight:
-- **462 INSERT/UPSERT**;
+- **463 INSERT/UPSERT**;
 - **2 UPDATE**;
 - **0 DELETE**;
 - **32 REUSE**.
@@ -217,6 +217,6 @@ La autoridad detallada pasa a:
 - [Plan row-by-row](./PLAN-ROW-BY-ROW-LEBRIJA-HC016-2026-09-19.md)
 
 Siguiente puerta:
-**IDs deterministas → manifiesto 464/464 → SQL completo → ROLLBACK**.
+**IDs deterministas → manifiesto 465/465 → SQL completo → ROLLBACK**.
 
 No crear staging ni ejecutar Apply.
