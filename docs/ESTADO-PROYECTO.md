@@ -511,4 +511,5 @@ Evidencia:
 - [Preflight específico de Estepa](./PREFLIGHT-ESTEPA-QUINTO-MACROLOTE-MUNICIPAL-HC016-2026-09-19.md)
 - [Plan row-by-row de Estepa](./PLAN-ROW-BY-ROW-ESTEPA-HC016-2026-09-19.md)
 - [Manifiesto determinista de Estepa](./MANIFIESTO-DETERMINISTA-ESTEPA-HC016-2026-09-19.md)
+- [Certificación del manifiesto determinista](./CERTIFICACION-MANIFIESTO-DETERMINISTA-ESTEPA-HC016-2026-09-19.md)
 - [Certificación de selección de Estepa](./CERTIFICACION-SELECCION-ESTEPA-QUINTO-MACROLOTE-MUNICIPAL-HC016-2026-09-19.md)
