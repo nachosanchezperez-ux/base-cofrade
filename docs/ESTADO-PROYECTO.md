@@ -492,15 +492,8 @@ El inventario canónico y la matriz de Fuentes están en [`INVENTARIO-CORIA-DEL-
 
 ## Siguiente movimiento autorizado
 
-**Único frente editorial activo: Coria del Río · cerrar residuos documentales y planificar el lote.**
+**No existe un frente editorial municipal activo.**
 
-Antes del Apply se exige:
+Coria del Río queda cerrada por #851 y por la reconciliación final `c0160041-0000-4000-8000-000000000001` 22/22. El siguiente movimiento permitido es únicamente un **nuevo recálculo provincial desde cero** cuando se ordene.
 
-- universo corporativo cerrado (**cumplido: 8 corporaciones canónicas**);
-- identidad de la Banda Municipal resuelta o explícitamente separada (**cumplido conceptualmente: una sola formación; falta ejecutar la reconciliación DML dentro del futuro lote**);
-- Fuentes suficientes para cada alta o actualización (**música 2026 casi cerrada; quedan Piedad, rol de AM San Lucas y, cuando existan, canales propios de las corporaciones ausentes**);
-- mapa de reutilización (**cerrado en núcleo: Borriquita, Estrella, Banda Municipal y Santa Cecilia; titulares/Pasos ya inventariados, con una ambigüedad física en el paso de la Soledad del Domingo de Resurrección**);
-- recuento TOTAL / INSERT / UPDATE / REUSE;
-- preflight con 0 INVALID / 0 UNRESOLVED / 0 AMBIGUOUS / 0 COLLISION.
-
-No abrir Sanlúcar la Mayor ni Utrera en paralelo. No se activa Laboratorio, HC-018, Sevilla capital ni otro municipio. Los acontecimientos pasados que continúen legítimamente en announced solo pueden elevarse ante evidencia posterior verificable.
+No abrir automáticamente Sanlúcar la Mayor, Utrera ni ningún otro municipio a partir del ranking anterior. No se activa Laboratorio, HC-018, Sevilla capital ni otro frente por esta certificación. Los acontecimientos pasados que continúen legítimamente en `announced` solo pueden elevarse ante evidencia posterior verificable.
