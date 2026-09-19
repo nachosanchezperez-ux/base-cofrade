@@ -17,7 +17,7 @@ La regla de identidad es especialmente importante en Paz y Caridad: la corporaci
 | # | Corporación canónica | Tipología | Jornada | Sede | Titulares nucleares | Pasos 2026 |
 |---|---|---|---|---|---:|---:|
 | 1 | Fervorosa Hermandad y Cofradía de Nazarenos de Nuestro Padre Jesús en su Entrada Triunfal en Jerusalén y María Santísima de la Victoria | Penitencia | Domingo de Ramos | Iglesia de San Sebastián | 2 | 1 |
-| 2 | Hermandad Obrera de Nuestra Señora de las Angustias, San José Obrero y San Pío X | Penitencia | Lunes Santo | Ermita de Santa Ana | 3 | 1 |
+| 2 | Hermandad Obrera de Nuestra Señora de las Angustias, San José Obrero y San Pío X | Penitencia | Lunes Santo | Ermita de Santa Ana | 2 Imágenes físicas + San Pío X en titularidad institucional | 1 |
 | 3 | Pontificia y Real Hermandad de San Pedro Apóstol, Santo Cristo de las Penas y María Santísima de los Dolores | Penitencia | Martes Santo | Iglesia de Ntra. Sra. de la Asunción | 3 | 2 |
 | 4 | Hermandad y Cofradía del Santísimo Cristo del Amor, Nuestro Padre Jesús Cautivo y Rescatado y María Santísima del Valle | Penitencia | Madrugada del Miércoles Santo | Iglesia de San Sebastián | 3 | 1 |
 | 5 | Pontificia Archicofradía Sacramental y Antigua Hermandad de Penitencia del Dulce Nombre de Jesús, Santísimo Cristo de la Humildad y Paciencia y Esclavitud de María Santísima de la Paz | Sacramental + Penitencia | Miércoles Santo | Iglesia de Ntra. Sra. de los Remedios | 3 | 2 |
@@ -26,7 +26,7 @@ La regla de identidad es especialmente importante en Paz y Caridad: la corporaci
 | 8 | Pontificia y Real Hermandad Sacramental y de Ánimas y Cofradía de Nuestro Padre Jesús Nazareno y María Santísima de los Dolores | Sacramental + Penitencia | Viernes Santo | Iglesia de San Sebastián | 2 | 2 |
 | 9 | Ilustre Cofradía del Santo Entierro de Cristo, Santísimo Cristo de la Buena Muerte y Nuestra Señora de la Soledad | Penitencia | Sábado Santo | Iglesia de San Sebastián | 3 | 2 |
 
-**Total penitencial:** 9 corporaciones · 25 titulares conceptuales · **14 Pasos procesionales verificados para 2026**.
+**Total penitencial:** 9 corporaciones · **24 Imágenes físicas canónicas** · **14 Pasos procesionales verificados para 2026**.
 
 La Fuente turística permanente presenta tres titulares en el Santo Entierro, pero el programa municipal 2026 configura dos Pasos procesionales. No se crea un tercer Paso para el Cristo de la Buena Muerte sin evidencia física específica de 2026.
 
@@ -34,10 +34,10 @@ La Fuente turística permanente presenta tres titulares en el Santo Entierro, pe
 
 | # | Corporación canónica | Tipología | Jornada / fiesta | Sede | Titular nuclear | Paso |
 |---|---|---|---|---|---|---|
-| 10 | Hermandad de Nuestra Señora de la Asunción, Patrona de Estepa | Gloria | Agosto | Iglesia de Ntra. Sra. de la Asunción | Nuestra Señora de la Asunción | PARCIAL |
-| 11 | Hermandad de Nuestra Señora de los Remedios | Gloria | Tercer domingo de mayo / Octava | Iglesia de Ntra. Sra. de los Remedios | Nuestra Señora de los Remedios | PARCIAL |
-| 12 | Hermandad de Nuestra Señora del Carmen | Gloria | Septiembre | Iglesia de Ntra. Sra. del Carmen | Nuestra Señora del Carmen | PARCIAL |
-| 13 | Hermandad de Santa Ana | Gloria | 26 de julio | Ermita de Santa Ana | Santa Ana | PARCIAL |
+| 10 | Hermandad de Nuestra Señora de la Asunción, Patrona de Estepa | Gloria | Agosto | Iglesia de Ntra. Sra. de la Asunción | Nuestra Señora de la Asunción | VERIFICADO |
+| 11 | Hermandad de Nuestra Señora de los Remedios Coronada | Gloria | Tercer domingo de mayo / Octava | Iglesia de Ntra. Sra. de los Remedios | Nuestra Señora de los Remedios Coronada | VERIFICADO |
+| 12 | Hermandad de Nuestra Señora del Carmen | Gloria | Septiembre | Iglesia de Ntra. Sra. del Carmen | Nuestra Señora del Carmen | VERIFICADO |
+| 13 | Hermandad de Santa Ana | Gloria | 26 de julio | Ermita de Santa Ana | Santa Ana | VERIFICADO |
 
 **Total Glorias:** 4 corporaciones · 4 titulares.
 
@@ -76,14 +76,15 @@ Faltan como lugares canónicos municipales:
 
 No se crearán sedes adicionales si una corporación puede relacionarse con uno de estos cinco lugares.
 
-## Titulares
+## Imágenes titulares físicas
 
-Universo nuclear: **29 titulares**.
+Universo canónico para `images`: **28 Imágenes físicas**.
 
 - Existente: Nuestro Padre Jesús Nazareno.
-- Futuros INSERT potenciales: **28 Imágenes**.
+- Futuros INSERT: **27 Imágenes**.
+- San Pío X permanece en la titularidad institucional de Las Angustias, pero no genera una fila `images` sin evidencia inequívoca de una talla titular independiente.
 
-No se crean Imágenes para elevar densidad: solo titulares expresamente documentados por las Fuentes municipales o corporativas.
+No se crean Imágenes para elevar densidad: solo entidades físicas expresamente documentadas.
 
 ## Pasos
 
@@ -99,14 +100,21 @@ No se crean Imágenes para elevar densidad: solo titulares expresamente document
 8. Jesús Nazareno · 2.
 9. Santo Entierro · 2.
 
-Total: **14 Pasos**.
+Total penitencial: **14 Pasos**.
+
+El preflight específico acredita además cuatro Pasos de Gloria:
+- Asunción;
+- Remedios Coronada;
+- Carmen;
+- Santa Ana.
+
+Total municipal comprometido: **18 Pasos**.
 
 Hilo ya contiene un Paso del Nazareno en `review`.
 
 Previsión:
-- 13 Pasos nuevos;
-- 1 Paso existente a completar/publicar;
-- Pasos de Glorias: **no comprometidos** hasta disponer de Fuente física específica.
+- **17 Pasos nuevos**;
+- 1 Paso existente a completar/publicar.
 
 ## Bandas y música
 
@@ -121,12 +129,17 @@ No existen actualmente como Bandas municipales de Estepa:
 
 Su identidad actual está respaldada por actividad municipal reciente. Debe completarse el preflight de nombre oficial antes de INSERT definitivo.
 
-### Entidades externas reutilizables
+### Entidades externas
 
-- Banda de Música Villa de Osuna · existente en Hilo:
-  `75fc797d-f287-4813-9e52-8f5c5ddf56ad`.
+**REUSE**
+- Banda de Música Villa de Osuna · `75fc797d-f287-4813-9e52-8f5c5ddf56ad`.
 
-Las formaciones externas de La Línea, Utrera y Campillos no se convertirán automáticamente en nuevos nodos globales. Si no se resuelve su identidad canónica en el preflight definitivo, se conservarán como créditos textuales.
+**INSERT global previsto**
+- Banda de Cornetas y Tambores Santa Bárbara de La Línea de la Concepción.
+- Banda de Cornetas y Tambores Santa Vera+Cruz de Utrera.
+- Agrupación Musical Vera Cruz de Campillos.
+
+Sus identidades canónicas han quedado resueltas. Campillos y La Línea de la Concepción requerirán únicamente municipios soporte, sin abrir frentes editoriales adicionales.
 
 ### Música 2026
 
@@ -142,11 +155,12 @@ Las formaciones externas de La Línea, Utrera y Campillos no se convertirán aut
 | Viernes Santo | Jesús Nazareno | AM Vera Cruz de Campillos + Banda Villa de Osuna | textual + REUSE |
 | Sábado Santo | Santo Entierro | tambores fúnebres + BAME | textual + Banda local |
 
-Previsión segura:
-- **12 posiciones/asignaciones musicales**;
-- **8 periodos musicales** con nodo de Banda ya existente o local verificable;
-- hasta 11 periodos si las tres formaciones externas se resuelven como entidades canónicas antes del staging;
-- 0 música inventada para Los Estudiantes.
+Previsión congelada:
+- **16 posiciones/asignaciones musicales**;
+- 14 con Banda canónica + 2 créditos textuales;
+- **14 periodos musicales**;
+- 0 música inventada para Los Estudiantes;
+- 0 música inventada para Santa Ana.
 
 ## Personas reutilizables
 
@@ -173,10 +187,10 @@ El futuro lote puede preparar **9 Salidas de Semana Santa 2026**, con estado ind
 
 ### Glorias
 
-- Santa Ana · 26/07/2026: **VERIFICADA como celebrada** por crónica municipal posterior.
-- Asunción · actividad 2026: **PARCIAL** para Salida hasta localizar evidencia posterior específica.
-- Remedios · actividad recurrente y actos documentados: **PARCIAL** para Salida 2026.
-- Carmen · actividad recurrente: **PARCIAL** para Salida 2026.
+- Remedios · 17/05/2026: **held** por evidencia posterior.
+- Santa Ana · 26/07/2026: **held** por crónica municipal posterior.
+- Asunción · 15/08/2026: **announced**; existe convocatoria/seguimiento específico de 2026, pero no se fuerza `held`.
+- Carmen · 12/09/2026: **announced**; existe convocatoria específica de 2026, pero no se fuerza `held`.
 - Inmaculada · no crear edición 2026 por recurrencia.
 
 ### Nazareno · actualidad futura
@@ -204,10 +218,10 @@ Estados: VERIFICADO / PARCIAL / AUSENTE / NO APLICA.
 | Paz y Caridad | Ayuntamiento · ficha | Programa 2026 | VERIFICADO | VERIFICADO | VERIFICADO | VERIFICADO | AUSENTE | VERIFICADO | VERIFICADO |
 | Jesús Nazareno | Ayuntamiento · ficha | 400 aniversario 2026 | VERIFICADO | VERIFICADO | VERIFICADO | VERIFICADO | PARCIAL | VERIFICADO | VERIFICADO |
 | Santo Entierro | Ayuntamiento · ficha | Programa 2026 | VERIFICADO | VERIFICADO | VERIFICADO · 2 en 2026 | VERIFICADO | AUSENTE | VERIFICADO | VERIFICADO |
-| Asunción | Ayuntamiento · cartel 2026 | Glorias municipal | VERIFICADO | VERIFICADO | PARCIAL | AUSENTE | PARCIAL | PARCIAL | PARCIAL |
-| Remedios | Festejos municipal | Glorias municipal | VERIFICADO | VERIFICADO | PARCIAL | PARCIAL | PARCIAL | PARCIAL | VERIFICADO |
-| Carmen | Patrimonio/Festejos municipal | Glorias municipal | VERIFICADO | VERIFICADO | PARCIAL | AUSENTE | PARCIAL | PARCIAL | VERIFICADO |
-| Santa Ana | Crónica municipal 26/07/2026 | Glorias municipal | VERIFICADO | VERIFICADO | PARCIAL | AUSENTE | PARCIAL | VERIFICADO | PARCIAL |
+| Asunción | Ayuntamiento · cartel 2026 | Glorias municipal | VERIFICADO | VERIFICADO | VERIFICADO | VERIFICADO · BAME | VERIFICADO | VERIFICADO · announced | PARCIAL |
+| Remedios | Festejos municipal | Glorias municipal | VERIFICADO | VERIFICADO | VERIFICADO | VERIFICADO · BAME | VERIFICADO | VERIFICADO · held | VERIFICADO |
+| Carmen | Patrimonio/Festejos municipal | Glorias municipal | VERIFICADO | VERIFICADO | VERIFICADO | VERIFICADO · BAME | PARCIAL | VERIFICADO · announced | VERIFICADO |
+| Santa Ana | Crónica municipal 26/07/2026 | Glorias municipal | VERIFICADO | VERIFICADO | VERIFICADO | AUSENTE · no se infiere | PARCIAL | VERIFICADO · held | PARCIAL |
 
 ### Consecuencia
 
@@ -239,17 +253,18 @@ Previsión mínima:
 
 ### INSERT
 
-Núcleo estimado:
+Núcleo congelado:
 - 12 corporaciones nuevas;
 - 4 lugares;
-- 28 Imágenes;
-- 13 Pasos;
-- 4 formaciones locales;
-- hasta 4 agentes nuevos;
-- 10 Salidas 2026 mínimas: 9 penitenciales + Santa Ana;
-- 12 posiciones/asignaciones musicales;
-- 8 periodos musicales comprometidos;
-- 1 acontecimiento actual candidato;
+- **27 Imágenes**;
+- **17 Pasos**;
+- **7 Bandas**: 4 locales + 3 externas;
+- 3 agentes nuevos;
+- **13 Salidas 2026**;
+- **16 posiciones/asignaciones musicales**;
+- **14 periodos musicales**;
+- **8 Cultos + 8 ediciones 2026**;
+- 1 acontecimiento actual;
 - Fuentes y relaciones de trazabilidad.
 
 ### DESCARTADA / NO ENTRA
@@ -258,10 +273,10 @@ Núcleo estimado:
 - Paso separado del Cristo de la Buena Muerte sin evidencia física;
 - música para Los Estudiantes;
 - Cultos 2026 deducidos de guías históricas;
-- Salidas de Gloria 2026 no acreditadas;
+- cualquier Salida de Gloria adicional a las cuatro ediciones 2026 ya resueltas;
 - multimedia sin derechos;
 - patrimonio exhaustivo;
-- bandas externas sin identidad canónica resuelta;
+- cualquier Banda adicional fuera de las siete identidades ya resueltas;
 - cualquier `held` basado solo en que la fecha ya pasó.
 
 ## Cuantificación del futuro lote
@@ -270,33 +285,35 @@ Estimación de trabajo **antes de staging**:
 
 | Concepto | Estimación |
 |---|---:|
-| TOTAL conceptual | **≈395** |
-| INSERT | **≈375** |
-| UPDATE | **≈6** |
-| REUSE | **≈14** |
+| TOTAL DML previsto | **495** |
+| INSERT / UPSERT | **490** |
+| UPDATE | **4** |
+| DELETE controlado | **1** |
+| REUSE | **21** |
 | Corporaciones | 13 total · 12 nuevas |
-| Titulares | 29 total · 28 nuevos |
-| Pasos | 14 verificados · 13 nuevos + 1 UPDATE |
-| Salidas nuevas mínimas | 10 |
-| Posiciones/asignaciones musicales | 12 |
-| Periodos musicales comprometidos | 8 |
-| Cultos comprometidos | **0** |
-| Acontecimientos comprometidos | 1 candidato |
+| Imágenes físicas | **28 total · 27 nuevas** |
+| Pasos | **18 total · 17 nuevos + 1 UPDATE** |
+| Salidas nuevas | **13** |
+| Posiciones/asignaciones musicales | **16** |
+| Periodos musicales | **14** |
+| Cultos / ediciones 2026 | **8 / 8** |
+| Acontecimientos | **1** |
 | Patrimonio comprometido | **0** |
-| Fuentes nuevas estimadas | ≈15 |
-| Enlaces de Fuente | ≈90 |
+| Fuentes nuevas | **23** |
+| Enlaces de Fuente | **143** |
 
-**Margen de la estimación:** ±25 operaciones, concentrado casi exclusivamente en `source_links`, autorías y el resultado del preflight de Bandas externas. El universo de 13 corporaciones no está dentro de ese margen.
+La cuantificación queda congelada en el plan row-by-row. Los REUSE no incrementan las 495 operaciones DML.
 
-## Incertidumbres que deben resolverse antes de staging
+## Incertidumbres tras el preflight específico
 
-1. nombre canónico exacto y canales oficiales de las cuatro formaciones locales;
-2. identidad global de Santa Bárbara de La Línea, Vera+Cruz de Utrera y Vera Cruz de Campillos;
-3. reconciliación de las dos filas de Fuente con idéntica URL de “Devociones de Estepa”;
-4. evidencia física de los Pasos de las cuatro Glorias;
-5. evidencia 2026 posterior de Asunción, Remedios y Carmen antes de crear sus Salidas;
-6. autorías no inequívocas, especialmente atribuciones antiguas;
-7. Cultos vigentes 2026: se mantienen fuera hasta convocatoria directa suficiente.
+Las siete incertidumbres de selección quedan resueltas para el manifiesto nuclear.
+
+Pendientes únicamente como guardas antes de staging:
+1. revalidar que ninguno de los slugs previstos haya sido creado concurrentemente;
+2. revalidar URLs/canales de las siete Bandas nuevas;
+3. mantener Asunción y Carmen en `announced` si no aparece evidencia posterior;
+4. no incorporar autorías, Cultos o patrimonio adicionales fuera del plan sin nueva Fuente;
+5. ejecutar la limpieza de la Fuente duplicada solo si continúa con 0 referencias.
 
 ## Puerta
 
