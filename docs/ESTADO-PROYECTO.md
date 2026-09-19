@@ -528,3 +528,4 @@ Evidencia:
 - [Preflight específico de Lebrija](./PREFLIGHT-LEBRIJA-SEXTO-MACROLOTE-MUNICIPAL-HC016-2026-09-19.md)
 - [Plan row-by-row de Lebrija](./PLAN-ROW-BY-ROW-LEBRIJA-HC016-2026-09-19.md)
 - [Manifiesto determinista de Lebrija](./MANIFIESTO-DETERMINISTA-LEBRIJA-HC016-2026-09-19.md)
+- [Certificación del manifiesto determinista de Lebrija](./CERTIFICACION-MANIFIESTO-DETERMINISTA-LEBRIJA-HC016-2026-09-19.md)
