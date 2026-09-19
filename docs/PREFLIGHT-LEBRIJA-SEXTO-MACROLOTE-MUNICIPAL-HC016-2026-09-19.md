@@ -5,7 +5,7 @@
 **Base de trabajo:** `9bd786f9cb52f6eafb875dc8157c89da47fabfa5`  
 **Municipio:** Lebrija · `07281b21-d892-4e5d-aa63-24ec0e9bf4d2`  
 **Namespace candidato:** `c0160033-*` · libre, todavía no materializado  
-**Resultado:** **PREFLIGHT LÓGICO VERDE · 465 DML PREVISTAS · 32 REUSE**  
+**Resultado:** **PREFLIGHT LÓGICO VERDE · 473 DML PREVISTAS · 32 REUSE**  
 **Staging:** 0 · **Apply:** 0 · **DDL:** 0 · **RLS:** 0
 
 ## 1. Estado de plataforma
@@ -167,7 +167,7 @@ No se crea una relación de autoría cuando la evidencia es genérica, anónima 
 
 ## 7. Salidas 2026
 
-### Nuevas · 13
+### Nuevas · 14
 
 | # | Salida | Fecha | Estado |
 |---|---|---|---|
@@ -184,6 +184,7 @@ No se crea una relación de autoría cuando la evidencia es genérica, anónima 
 | 11 | Corpus de San Francisco · Dolores | 14/06/2026 | held |
 | 12 | San Benito | 10/07/2026 | announced |
 | 13 | Rosario de la Aurora | 15/08/2026 | announced |
+| 14 | San Pedro Apóstol · Castillo | 29/06/2026 | announced |
 
 Las nueve estaciones de penitencia se elevan a `held` porque el Ayuntamiento certificó retrospectivamente que todas se realizaron con normalidad.
 
@@ -191,7 +192,7 @@ Rocío se eleva a `held` por noticia municipal posterior del 20/05 sobre la sali
 
 Corpus de San Francisco se eleva a `held` por convocatoria municipal más evidencia posterior musical.
 
-San Benito y Aurora permanecen `announced`: existe convocatoria fiable, pero no se ha encontrado evidencia posterior suficiente para elevarlas.
+San Benito, Aurora y San Pedro permanecen `announced`: existe convocatoria fiable y concreta, pero no se ha encontrado evidencia posterior suficiente para elevarlas.
 
 ### REUSE / actualización controlada
 
@@ -203,16 +204,16 @@ Salida patronal del Castillo · 12/09/2026 · `8f15dc9a-697a-4639-8243-17a8d683c
 
 ### Series · 16
 
-- 13 series para las nuevas Salidas;
+- 13 series para las Salidas nuevas distintas de San Pedro;
 - 1 serie patronal del Castillo, enlazada a la Salida ya existente;
-- 1 serie anual de San Pedro Apóstol, sin occurrence 2026;
+- 1 serie anual de San Pedro Apóstol, con occurrence 2026 `announced`;
 - 1 serie del Corpus Christi de la Sacramental, sin occurrence 2026 ligada a la Hermandad por falta de asociación directa contemporánea.
 
 ## 8. Música 2026
 
 Solo se modelan relaciones con evidencia directa o retrospectiva suficiente.
 
-Nuevas posiciones/asignaciones: **11 + 11**.
+Nuevas posiciones/asignaciones: **12 + 12**.
 
 1. Humildad · misterio → Afligidos.
 2. Victoria · palio → Agripino Lozano.
@@ -225,6 +226,7 @@ Nuevas posiciones/asignaciones: **11 + 11**.
 9. Dolores · palio → Agripino Lozano.
 10. Corpus de San Francisco → Rosario de El Cuervo.
 11. Vera-Cruz · Consolación → Rosario de El Cuervo.
+12. San Pedro Apóstol → Amor y Sacrificio.
 
 Huecos legítimos:
 - Entrada Triunfal;
@@ -237,7 +239,7 @@ Huecos legítimos:
 
 No se rellenan por tradición.
 
-Periodos musicales: **11**. Cuando solo existe prueba de 2026, se cierra el periodo en 2026. Las renovaciones expresas para 2027 podrán quedar abiertas/current únicamente en los casos acreditados.
+Periodos musicales: **12**. Cuando solo existe prueba de 2026, se cierra el periodo en 2026. Las renovaciones expresas para 2027 podrán quedar abiertas/current únicamente en los casos acreditados.
 
 ## 9. Cultos
 
@@ -263,23 +265,25 @@ Los 3 Cultos y 3 occurrences ya existentes del Castillo se preservan sin reescri
 
 ## 10. Trazabilidad y Fuentes
 
-Lista nueva cerrada: **30 URLs nuevas**.
+Lista nueva cerrada: **31 URLs nuevas**.
 
 La revisión exacta contra `sources.url` dio:
 - 31 URLs planificadas;
 - 1 coincidencia existente: Congregación Nazarena · Hermandades · `a6b01a96-2c4c-4125-bf2a-13c22ca0a7a2`;
-- **30 INSERT de Fuente**;
+- **31 INSERT de Fuente**;
 - **0 colisiones no reconciliadas**.
 
 Además se preservan 8 Fuentes ya existentes del universo Castillo.
 
-Contrato de `source_links`: **121**:
+La Fuente adicional que cierra San Pedro 2026 es El Pespunte, «Procesión de San Pedro de Lebrija 2026: horario, recorrido y banda» (29/06/2026). Documenta fecha, salida a las 21:00, itinerario y acompañamiento de Amor y Sacrificio. Al ser previa a la procesión, la occurrence queda `announced`, no `held`.
+
+Contrato de `source_links`: **123**:
 - 64 entidades nuevas;
 - 1 enlace nuevo al Castillo existente para respaldar su actualización;
 - 6 autorías;
 - 16 series;
-- 13 Salidas;
-- 11 asignaciones musicales;
+- 14 Salidas;
+- 12 asignaciones musicales;
 - 5 Cultos;
 - 3 occurrences;
 - 2 relaciones sacramentales.
@@ -320,7 +324,7 @@ Contrato de `source_links`: **121**:
 | Tabla / operación | Filas |
 |---|---:|
 | municipalities | 2 |
-| sources | 30 |
+| sources | 31 |
 | places | 6 |
 | entities | 64 |
 | brotherhoods · INSERT | 11 |
@@ -336,20 +340,20 @@ Contrato de `source_links`: **121**:
 | image_steps | 23 |
 | entity_relations | 2 |
 | outing_series | 16 |
-| outings · INSERT | 13 |
-| outing_entities | 23 |
-| outing_music_positions | 11 |
-| outing_music_assignments | 11 |
-| music_accompaniment_periods | 11 |
+| outings · INSERT | 14 |
+| outing_entities | 24 |
+| outing_music_positions | 12 |
+| outing_music_assignments | 12 |
+| music_accompaniment_periods | 12 |
 | cults | 5 |
 | cult_occurrences | 3 |
-| source_links | 121 |
+| source_links | 123 |
 | brotherhoods · UPDATE Castillo | 1 |
 | outings · UPDATE patronal Castillo | 1 |
-| **TOTAL DML** | **465** |
+| **TOTAL DML** | **473** |
 
 Operaciones:
-- **463 INSERT/UPSERT**;
+- **471 INSERT/UPSERT**;
 - **2 UPDATE**;
 - **0 DELETE**;
 - **32 REUSE** fuera del total DML.
