@@ -5,7 +5,7 @@
 **Base de trabajo:** `9bd786f9cb52f6eafb875dc8157c89da47fabfa5`  
 **Municipio:** Lebrija · `07281b21-d892-4e5d-aa63-24ec0e9bf4d2`  
 **Namespace candidato:** `c0160033-*` · libre, todavía no materializado  
-**Resultado:** **PREFLIGHT LÓGICO VERDE · 464 DML PREVISTAS · 32 REUSE**  
+**Resultado:** **PREFLIGHT LÓGICO VERDE · 465 DML PREVISTAS · 32 REUSE**  
 **Staging:** 0 · **Apply:** 0 · **DDL:** 0 · **RLS:** 0
 
 ## 1. Estado de plataforma
@@ -337,7 +337,7 @@ Contrato de `source_links`: **121**:
 | entity_relations | 2 |
 | outing_series | 16 |
 | outings · INSERT | 13 |
-| outing_entities | 22 |
+| outing_entities | 23 |
 | outing_music_positions | 11 |
 | outing_music_assignments | 11 |
 | music_accompaniment_periods | 11 |
@@ -346,10 +346,10 @@ Contrato de `source_links`: **121**:
 | source_links | 121 |
 | brotherhoods · UPDATE Castillo | 1 |
 | outings · UPDATE patronal Castillo | 1 |
-| **TOTAL DML** | **464** |
+| **TOTAL DML** | **465** |
 
 Operaciones:
-- **462 INSERT/UPSERT**;
+- **463 INSERT/UPSERT**;
 - **2 UPDATE**;
 - **0 DELETE**;
 - **32 REUSE** fuera del total DML.
