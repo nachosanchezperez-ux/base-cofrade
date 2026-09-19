@@ -1,6 +1,6 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 19 de septiembre de 2026 · manifiesto determinista del quinto macrolote municipal
+**Corte operativo:** 19 de septiembre de 2026 · preflight SQL completo del quinto macrolote municipal
 
 **HEAD de cierre de contenido Cantillana:** f38fde844553e5794e252a734ae38284d75a50fa
 
@@ -10,9 +10,11 @@
 
 **HEAD de preflight/plan Estepa:** `0bf938e69f6bd15fcccdd6e30ce177702bbcec45` · #854 fusionada
 
+**HEAD de manifiesto determinista Estepa:** `e80be2f4b99e0ea195fab5c9f80504aadd563edd` · #855 fusionada
+
 **HEAD canónico del tablero:** el commit que contiene esta actualización documental; el postflight exacto se consigna en el entregable de cierre.
 
-**Producción vigente tras #854:** READY · deployment `dpl_yxSL3BJnGUmWEU1abUdyDpSd2ywn` · SHA `0bf938e69f6bd15fcccdd6e30ce177702bbcec45` · `hilocofrade.es` sin error de alias
+**Producción vigente tras #855:** READY · deployment `dpl_A289sKdkL3rwuoVskCZR29bTqx4Y` · SHA `e80be2f4b99e0ea195fab5c9f80504aadd563edd` · `hilocofrade.es` sin error de alias
 
 **Supabase:** `ACTIVE_HEALTHY` · 12/12 migraciones estructurales activas · lote final Coria `c0160041-0000-4000-8000-000000000001` completado 22/22 · 0 inválidas · 0 fallos
 
@@ -24,7 +26,7 @@
 
 **Régimen:** FIRST EDITION FREEZE activo
 
-**Frente editorial ACTIVO:** **Estepa · quinto macrolote municipal HC-016 · PRE-LOTE**. Preflight específico, plan row-by-row e IDs deterministas `c0160032-*` congelados; bulk import reservado `c0160032-0000-4000-8000-000000000001`, pero **sin fila creada**. **495 DML + 21 REUSE · 0 staging · 0 Apply**.
+**Frente editorial ACTIVO:** **Estepa · quinto macrolote municipal HC-016 · PRE-LOTE**. Payload SQL exacto de **495 DML + 21 REUSE** ejecutado y reejecutado desde el archivo GitHub con `ROLLBACK` y resultado `PREFLIGHT_ESTEPA_SQL_OK_ROLLED_BACK`; **0 staging · 0 Apply · 0 residuos**.
 
 > GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. Tras cerrar Coria del Río se recalculó la provincia desde cero: Estepa queda seleccionada como único quinto macrolote municipal. Sanlúcar la Mayor, Utrera y cualquier ranking previo permanecen como evidencia histórica, no como cola operativa.
 
@@ -76,7 +78,7 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | **CERRADO** | Segundo macrolote municipal HC-016 · Pilas | Lote `c0160029-0000-4000-8000-000000000001`: 118/118, 0 inválidas y 0 fallos; cuatro corporaciones, dos Bandas locales, ocho titulares, ocho Pasos y ocho Salidas; sin DDL | Preservar el universo municipal; cinco convocatorias pasadas siguen `announced` hasta disponer de evidencia posterior |
 | **CERRADO** | Tercer macrolote municipal HC-016 · Cantillana | Lote c0160030-0000-4000-8000-000000000001: 93/93, 0 inválidas y 0 fallos; Asunción y Pastora preservadas; Soledad cerrada con 4 titulares, 3 Pasos, 7 Cultos/7 ediciones 2026, 1 estación held; Banda local y Cruceta HC-019 preservadas | No reabrir sin deuda material nueva; Montefrío sigue como crédito textual; no elevar announced sin evidencia posterior |
 | **CERRADO** | Cuarto macrolote municipal HC-016 · Coria del Río | Universo canónico de 8 corporaciones publicado; lote base `c0160031` preservado; reconciliación final `c0160041-0000-4000-8000-000000000001` 22/22, 0 inválidas y 0 fallos; 8 Salidas núcleo 2026; 7 periodos musicales; Banda Municipal unificada; sede duplicada eliminada; Piedad y AM San Lucas conservan huecos legítimos sin inferencia | No reabrir sin deuda material nueva. El siguiente municipio requiere recálculo desde cero y una orden explícita |
-| **ACTIVO · PRE-LOTE** | Quinto macrolote municipal HC-016 · Estepa | 13 corporaciones, 28 Imágenes, 18 Pasos, 7 Bandas nuevas, 13 Salidas, 16 asignaciones, 14 periodos, 8 Cultos/8 ediciones y 1 acontecimiento. **495 DML = 490 INSERT/UPSERT + 4 UPDATE + 1 DELETE**, 21 REUSE. Namespace `c0160032-*` reservado y manifiesto determinista congelado con 0 colisiones | **0 staging / 0 Apply**. Siguiente salto: construir payload SQL exacto y ejecutarlo completo en transacción + ROLLBACK antes de cualquier staging |
+| **ACTIVO · PRE-LOTE** | Quinto macrolote municipal HC-016 · Estepa | Payload reproducible archivado y validado: **495 DML = 490 INSERT/UPSERT + 4 UPDATE + 1 DELETE**, 21 REUSE; 13 corporaciones, 28 Imágenes, 18 Pasos, 7 Bandas, 13 Salidas, 16 asignaciones, 14 periodos, 8 Cultos/8 ediciones y 1 acontecimiento. Preflight completo en transacción: **VERDE + ROLLBACK** | **0 staging / 0 Apply**. Staging gobernado queda bloqueado hasta una nueva orden explícita y nuevo refresh de colisiones/REUSE |
 | **CERRADO** | Navegación, búsqueda, SEO y repertorios · #811–#818 | Jornadas y municipios navegables; buscador ampliado y afinado; caché de directorios y fichas; repertorios de conciertos visibles | No reabrir sin regresión reproducible; los contadores de Home se corrigen de forma transversal sin alterar el modelo |
 | **CERRADO** | Cultos septiembre–diciembre de 2026 | Lote transversal HC-016 `c0162026-0909-4000-8000-000000000001`: 53/53, cuatro Hermandades y 0 DDL | Mantener ediciones futuras desde Fuentes oficiales; recurrencia no equivale a anuncio |
 | **CERRADO** | Carátulas de Discografía · #734 y #791 | Reintento del optimizador a la URL original y fallback accesible; #791 estabilizó las 17 carátulas de La Oliva que aún dependían del servidor antiguo | Mantener URLs estables y el fallback accesible como protección, no como deuda activa |
@@ -499,9 +501,9 @@ El inventario canónico y la matriz de Fuentes están en [`INVENTARIO-CORIA-DEL-
 
 **Único frente editorial municipal activo: Estepa · quinto macrolote HC-016 · PRE-LOTE.**
 
-El preflight específico ha resuelto las incertidumbres nucleares y el plan row-by-row queda congelado en **495 DML + 21 REUSE**. **No existe staging ni Apply**.
+El payload SQL exacto de **495 DML + 21 REUSE** está archivado y ha superado dos ejecuciones completas con `ROLLBACK`, incluida una reejecución leyendo directamente el archivo desde GitHub. **No existe staging ni Apply**.
 
-Siguiente movimiento: **construir el payload SQL exacto de las 495 operaciones sobre los IDs congelados y ejecutarlo completo en transacción + ROLLBACK**. Solo si termina con 0 INVALID / 0 UNRESOLVED / 0 AMBIGUOUS / 0 COLLISION podrá plantearse staging en una orden posterior.
+Siguiente movimiento, únicamente con nueva orden: **refrescar main/PR/Vercel/Supabase → revalidar `c0160032-*`, 21/21 REUSE, slugs y URLs → crear staging gobernado con el mismo payload archivado**. El Apply seguirá prohibido hasta un nuevo preflight global del staging.
 
 No abrir Osuna, Utrera, Sanlúcar la Mayor ni ningún otro municipio en paralelo. No se activa Laboratorio, HC-018, Sevilla capital ni otro frente. Los acontecimientos pasados que continúen legítimamente en `announced` solo pueden elevarse ante evidencia posterior verificable.
 
@@ -512,4 +514,6 @@ Evidencia:
 - [Plan row-by-row de Estepa](./PLAN-ROW-BY-ROW-ESTEPA-HC016-2026-09-19.md)
 - [Manifiesto determinista de Estepa](./MANIFIESTO-DETERMINISTA-ESTEPA-HC016-2026-09-19.md)
 - [Certificación del manifiesto determinista](./CERTIFICACION-MANIFIESTO-DETERMINISTA-ESTEPA-HC016-2026-09-19.md)
+- [Certificación del preflight SQL](./CERTIFICACION-PREFLIGHT-SQL-ESTEPA-HC016-2026-09-19.md)
+- [SQL archivado de preflight](../supabase/migrations_archive/post-first-edition-editorial/20260919120000_preflight_estepa_quinto_macrolote_hc016.sql)
 - [Certificación de selección de Estepa](./CERTIFICACION-SELECCION-ESTEPA-QUINTO-MACROLOTE-MUNICIPAL-HC016-2026-09-19.md)
