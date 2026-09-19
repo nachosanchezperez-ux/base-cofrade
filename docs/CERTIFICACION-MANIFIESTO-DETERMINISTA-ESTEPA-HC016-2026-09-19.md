@@ -69,12 +69,6 @@ Incluyen:
 
 Fuente duplicada candidata:
 
-`dc375c1f-9318-4de2-baef-9a0d9b2c07d4`
-
-> La fila anterior se mantiene solo como ejemplo de formato y **NO es el ID operativo**.
-
-ID operativo correcto:
-
 `dc375c1f-9318-4de9-ae1f-d1f10a7d050f`
 
 Estado verificado:
