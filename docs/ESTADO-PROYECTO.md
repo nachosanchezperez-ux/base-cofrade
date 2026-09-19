@@ -28,7 +28,7 @@
 
 **Régimen:** FIRST EDITION FREEZE activo
 
-**Frente editorial ACTIVO:** **Lebrija · sexto macrolote municipal HC-016 · PRE-LOTE**. Recálculo nuevo sobre 43 municipios con señal real: TOP 5 **Lebrija → Osuna → Carmona → Écija → Utrera**; TOP 3 **Lebrija → Osuna → Carmona**. Universo preliminar de Lebrija: **12 corporaciones canónicas · 11 ausentes**. **0 staging · 0 Apply**.
+**Frente editorial ACTIVO:** **Lebrija · sexto macrolote municipal HC-016 · PREFLIGHT CERRADO**. Universo: **12 corporaciones canónicas · 11 ausentes**; inventario físico seguro: **25 Imágenes relacionadas, 21 Pasos nuevos, 12 Salidas nuevas `held` y 4 acompañamientos musicales 2026 verificados**. Las 8 incertidumbres del pre-lote están resueltas. **0 staging · 0 Apply**.
 
 > GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. Tras cerrar Estepa se ha recalculado la provincia otra vez desde cero. Lebrija queda seleccionada como único sexto macrolote municipal. Osuna, Carmona, Écija, Utrera y cualquier ranking previo permanecen como evidencia del corte, no como cola automática.
 
@@ -81,7 +81,7 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | **CERRADO** | Tercer macrolote municipal HC-016 · Cantillana | Lote c0160030-0000-4000-8000-000000000001: 93/93, 0 inválidas y 0 fallos; Asunción y Pastora preservadas; Soledad cerrada con 4 titulares, 3 Pasos, 7 Cultos/7 ediciones 2026, 1 estación held; Banda local y Cruceta HC-019 preservadas | No reabrir sin deuda material nueva; Montefrío sigue como crédito textual; no elevar announced sin evidencia posterior |
 | **CERRADO** | Cuarto macrolote municipal HC-016 · Coria del Río | Universo canónico de 8 corporaciones publicado; lote base `c0160031` preservado; reconciliación final `c0160041-0000-4000-8000-000000000001` 22/22, 0 inválidas y 0 fallos; 8 Salidas núcleo 2026; 7 periodos musicales; Banda Municipal unificada; sede duplicada eliminada; Piedad y AM San Lucas conservan huecos legítimos sin inferencia | No reabrir sin deuda material nueva. El siguiente municipio requiere recálculo desde cero y una orden explícita |
 | **CERRADO** | Quinto macrolote municipal HC-016 · Estepa | Import `c0160032-0000-4000-8000-000000000001`: **495/495 aplicadas**, 490 upsert + 4 update + 1 delete, 21 REUSE, 0 inválidas y 0 fallos; 13 Hermandades publicadas, 28 Imágenes, 18 Pasos, 13 Salidas, 16 asignaciones musicales, 14 periodos, 8 Cultos/8 ediciones y 143 enlaces de Fuente; QA público y runtime en verde | No reabrir sin deuda material nueva. El siguiente municipio exige recálculo provincial desde cero y una orden explícita |
-| **ACTIVO · PRE-LOTE** | Sexto macrolote municipal HC-016 · Lebrija | Recálculo provincial nuevo: **TOP 1**. Universo preliminar reconciliado de **12 corporaciones canónicas**, 11 ausentes; 9 penitenciales acreditadas en 2026, Rocío, San Benito y Sacramental; Castillo preservada como corporación mixta ya existente. Slugs preliminares 0 colisiones; namespace candidato `c0160033-*` libre | **Solo preflight**: cerrar inventario físico, Fuentes 2026, música y REUSE; después plan row-by-row y manifiesto. **0 staging / 0 Apply** |
+| **ACTIVO · PREFLIGHT CERRADO** | Sexto macrolote municipal HC-016 · Lebrija | 12 corporaciones; 11 nuevas + Castillo REUSE; 25 Imágenes relacionadas; 21 Pasos nuevos; 12 Salidas nuevas `held`; Rocío modelado con Simpecado/carreta como patrimonio; Sacramental sin salida inventada; 4 acompañamientos 2026 seguros | **Siguiente: plan row-by-row determinista** con IDs, slugs, Fuentes y source_links exactos. **0 staging / 0 Apply** |
 | **CERRADO** | Navegación, búsqueda, SEO y repertorios · #811–#818 | Jornadas y municipios navegables; buscador ampliado y afinado; caché de directorios y fichas; repertorios de conciertos visibles | No reabrir sin regresión reproducible; los contadores de Home se corrigen de forma transversal sin alterar el modelo |
 | **CERRADO** | Cultos septiembre–diciembre de 2026 | Lote transversal HC-016 `c0162026-0909-4000-8000-000000000001`: 53/53, cuatro Hermandades y 0 DDL | Mantener ediciones futuras desde Fuentes oficiales; recurrencia no equivale a anuncio |
 | **CERRADO** | Carátulas de Discografía · #734 y #791 | Reintento del optimizador a la URL original y fallback accesible; #791 estabilizó las 17 carátulas de La Oliva que aún dependían del servidor antiguo | Mantener URLs estables y el fallback accesible como protección, no como deuda activa |
@@ -502,11 +502,11 @@ El inventario canónico y la matriz de Fuentes están en [`INVENTARIO-CORIA-DEL-
 
 ## Siguiente movimiento autorizado
 
-**Único frente editorial municipal activo: Lebrija · sexto macrolote HC-016 · PRE-LOTE.**
+**Único frente editorial municipal activo: Lebrija · sexto macrolote HC-016 · PREFLIGHT CERRADO.**
 
 El recálculo provincial ya está cerrado: TOP 5 **Lebrija → Osuna → Carmona → Écija → Utrera** y TOP 3 **Lebrija → Osuna → Carmona**. Lebrija presenta un universo preliminar de **12 corporaciones canónicas**, de las que Hilo solo publica Castillo; Aurora queda integrada en Humildad y Castillo Gloria en la misma Hermandad del Castillo.
 
-Siguiente movimiento, sin necesidad de una nueva selección: **preflight específico de Lebrija → reconciliar inventario físico y Fuentes → cerrar música y salidas 2026 → IDs/slugs definitivos → recuento exacto INSERT/UPDATE/DELETE/REUSE → plan row-by-row → manifiesto determinista**.
+Siguiente movimiento: **plan row-by-row determinista → congelar IDs/slugs/Fuentes/source_links → ejecutar colisiones → recuento exacto INSERT/UPDATE/DELETE/REUSE → manifiesto determinista**.
 
 **Staging y Apply siguen prohibidos.** No abrir Osuna, Carmona, Écija, Utrera ni otro municipio en paralelo. No se activa Laboratorio, HC-018 ni Sevilla capital. Los acontecimientos pasados que continúen legítimamente en `announced` solo pueden elevarse ante evidencia posterior verificable.
 
@@ -525,3 +525,4 @@ Evidencia:
 - [Auditoría del sexto macrolote municipal](./AUDITORIA-SEXTO-MACROLOTE-MUNICIPAL-HC016-2026-09-19.md)
 - [Inventario canónico y matriz de Fuentes de Lebrija](./INVENTARIO-LEBRIJA-SEXTO-MACROLOTE-MUNICIPAL-HC016-2026-09-19.md)
 - [Certificación de selección de Lebrija](./CERTIFICACION-SELECCION-LEBRIJA-SEXTO-MACROLOTE-MUNICIPAL-HC016-2026-09-19.md)
+- [Preflight específico de Lebrija](./PREFLIGHT-LEBRIJA-SEXTO-MACROLOTE-MUNICIPAL-HC016-2026-09-19.md)
