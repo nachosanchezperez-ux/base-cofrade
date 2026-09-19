@@ -218,10 +218,10 @@ Estados: VERIFICADO / PARCIAL / AUSENTE / NO APLICA.
 | Paz y Caridad | Ayuntamiento · ficha | Programa 2026 | VERIFICADO | VERIFICADO | VERIFICADO | VERIFICADO | AUSENTE | VERIFICADO | VERIFICADO |
 | Jesús Nazareno | Ayuntamiento · ficha | 400 aniversario 2026 | VERIFICADO | VERIFICADO | VERIFICADO | VERIFICADO | PARCIAL | VERIFICADO | VERIFICADO |
 | Santo Entierro | Ayuntamiento · ficha | Programa 2026 | VERIFICADO | VERIFICADO | VERIFICADO · 2 en 2026 | VERIFICADO | AUSENTE | VERIFICADO | VERIFICADO |
-| Asunción | Ayuntamiento · cartel 2026 | Glorias municipal | VERIFICADO | VERIFICADO | PARCIAL | AUSENTE | PARCIAL | PARCIAL | PARCIAL |
-| Remedios | Festejos municipal | Glorias municipal | VERIFICADO | VERIFICADO | PARCIAL | PARCIAL | PARCIAL | PARCIAL | VERIFICADO |
-| Carmen | Patrimonio/Festejos municipal | Glorias municipal | VERIFICADO | VERIFICADO | PARCIAL | AUSENTE | PARCIAL | PARCIAL | VERIFICADO |
-| Santa Ana | Crónica municipal 26/07/2026 | Glorias municipal | VERIFICADO | VERIFICADO | PARCIAL | AUSENTE | PARCIAL | VERIFICADO | PARCIAL |
+| Asunción | Ayuntamiento · cartel 2026 | Glorias municipal | VERIFICADO | VERIFICADO | VERIFICADO | VERIFICADO · BAME | VERIFICADO | VERIFICADO · announced | PARCIAL |
+| Remedios | Festejos municipal | Glorias municipal | VERIFICADO | VERIFICADO | VERIFICADO | VERIFICADO · BAME | VERIFICADO | VERIFICADO · held | VERIFICADO |
+| Carmen | Patrimonio/Festejos municipal | Glorias municipal | VERIFICADO | VERIFICADO | VERIFICADO | VERIFICADO · BAME | PARCIAL | VERIFICADO · announced | VERIFICADO |
+| Santa Ana | Crónica municipal 26/07/2026 | Glorias municipal | VERIFICADO | VERIFICADO | VERIFICADO | AUSENTE · no se infiere | PARCIAL | VERIFICADO · held | PARCIAL |
 
 ### Consecuencia
 
@@ -273,10 +273,10 @@ Núcleo congelado:
 - Paso separado del Cristo de la Buena Muerte sin evidencia física;
 - música para Los Estudiantes;
 - Cultos 2026 deducidos de guías históricas;
-- Salidas de Gloria 2026 no acreditadas;
+- cualquier Salida de Gloria adicional a las cuatro ediciones 2026 ya resueltas;
 - multimedia sin derechos;
 - patrimonio exhaustivo;
-- bandas externas sin identidad canónica resuelta;
+- cualquier Banda adicional fuera de las siete identidades ya resueltas;
 - cualquier `held` basado solo en que la fecha ya pasó.
 
 ## Cuantificación del futuro lote
