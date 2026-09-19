@@ -1,6 +1,6 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 19 de septiembre de 2026 · staging READY del quinto macrolote municipal
+**Corte operativo:** 19 de septiembre de 2026 · cierre certificado del quinto macrolote municipal
 
 **HEAD de cierre de contenido Cantillana:** f38fde844553e5794e252a734ae38284d75a50fa
 
@@ -24,11 +24,11 @@
 
 **Cantillana / #822:** **FUSIONADA Y CERTIFICADA** · lote c0160030-0000-4000-8000-000000000001 · 93/93 · 0 inválidas · 0 fallos
 
-**PR abiertas antes del preflight específico de Estepa:** **0**
+**PR abiertas al postflight funcional de Estepa:** **0**
 
 **Régimen:** FIRST EDITION FREEZE activo
 
-**Frente editorial ACTIVO:** **Estepa · quinto macrolote municipal HC-016 · STAGING READY**. Import `c0160032-0000-4000-8000-000000000001`: **495/495 válidas · 0 inválidas · 0 aplicadas · 0 fallos**. Preflight global post-staging: `PREFLIGHT_ESTEPA_SQL_OK_ROLLED_BACK`. **apply_authorized=false**.
+**Frente editorial ACTIVO:** **NINGUNO**. Estepa queda **CERRADA Y CERTIFICADA**. Import `c0160032-0000-4000-8000-000000000001`: **495/495 aplicadas · 0 inválidas · 0 fallos**. Apply transaccional: `APPLY_ESTEPA_OK_COMMITTED`. QA de producción: **PASS**.
 
 > GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. Tras cerrar Coria del Río se recalculó la provincia desde cero: Estepa queda seleccionada como único quinto macrolote municipal. Sanlúcar la Mayor, Utrera y cualquier ranking previo permanecen como evidencia histórica, no como cola operativa.
 
@@ -80,7 +80,7 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | **CERRADO** | Segundo macrolote municipal HC-016 · Pilas | Lote `c0160029-0000-4000-8000-000000000001`: 118/118, 0 inválidas y 0 fallos; cuatro corporaciones, dos Bandas locales, ocho titulares, ocho Pasos y ocho Salidas; sin DDL | Preservar el universo municipal; cinco convocatorias pasadas siguen `announced` hasta disponer de evidencia posterior |
 | **CERRADO** | Tercer macrolote municipal HC-016 · Cantillana | Lote c0160030-0000-4000-8000-000000000001: 93/93, 0 inválidas y 0 fallos; Asunción y Pastora preservadas; Soledad cerrada con 4 titulares, 3 Pasos, 7 Cultos/7 ediciones 2026, 1 estación held; Banda local y Cruceta HC-019 preservadas | No reabrir sin deuda material nueva; Montefrío sigue como crédito textual; no elevar announced sin evidencia posterior |
 | **CERRADO** | Cuarto macrolote municipal HC-016 · Coria del Río | Universo canónico de 8 corporaciones publicado; lote base `c0160031` preservado; reconciliación final `c0160041-0000-4000-8000-000000000001` 22/22, 0 inválidas y 0 fallos; 8 Salidas núcleo 2026; 7 periodos musicales; Banda Municipal unificada; sede duplicada eliminada; Piedad y AM San Lucas conservan huecos legítimos sin inferencia | No reabrir sin deuda material nueva. El siguiente municipio requiere recálculo desde cero y una orden explícita |
-| **ACTIVO · STAGING READY** | Quinto macrolote municipal HC-016 · Estepa | Import `c0160032-0000-4000-8000-000000000001`: **495/495 válidas**, 490 upsert + 4 update + 1 delete, 21 REUSE, manifest MD5 `36e4ef5449b77311616a35173d2f5190`; preflight global post-staging en verde y sin residuos productivos | **Apply prohibido**: `apply_authorized=false`. Nueva orden + refresh final antes de ejecutar las 495 DML |
+| **CERRADO** | Quinto macrolote municipal HC-016 · Estepa | Import `c0160032-0000-4000-8000-000000000001`: **495/495 aplicadas**, 490 upsert + 4 update + 1 delete, 21 REUSE, 0 inválidas y 0 fallos; 13 Hermandades publicadas, 28 Imágenes, 18 Pasos, 13 Salidas, 16 asignaciones musicales, 14 periodos, 8 Cultos/8 ediciones y 143 enlaces de Fuente; QA público y runtime en verde | No reabrir sin deuda material nueva. El siguiente municipio exige recálculo provincial desde cero y una orden explícita |
 | **CERRADO** | Navegación, búsqueda, SEO y repertorios · #811–#818 | Jornadas y municipios navegables; buscador ampliado y afinado; caché de directorios y fichas; repertorios de conciertos visibles | No reabrir sin regresión reproducible; los contadores de Home se corrigen de forma transversal sin alterar el modelo |
 | **CERRADO** | Cultos septiembre–diciembre de 2026 | Lote transversal HC-016 `c0162026-0909-4000-8000-000000000001`: 53/53, cuatro Hermandades y 0 DDL | Mantener ediciones futuras desde Fuentes oficiales; recurrencia no equivale a anuncio |
 | **CERRADO** | Carátulas de Discografía · #734 y #791 | Reintento del optimizador a la URL original y fallback accesible; #791 estabilizó las 17 carátulas de La Oliva que aún dependían del servidor antiguo | Mantener URLs estables y el fallback accesible como protección, no como deuda activa |
@@ -501,13 +501,11 @@ El inventario canónico y la matriz de Fuentes están en [`INVENTARIO-CORIA-DEL-
 
 ## Siguiente movimiento autorizado
 
-**Único frente editorial municipal activo: Estepa · quinto macrolote HC-016 · STAGING READY.**
+**No existe un frente editorial municipal activo.**
 
-El staging gobernado está creado con el mismo payload archivado: **495/495 válidas, 0 inválidas, 0 aplicadas y 0 fallos**. El preflight global posterior al staging vuelve a dar `PREFLIGHT_ESTEPA_SQL_OK_ROLLED_BACK`. **No existe Apply**.
+Estepa queda cerrada y certificada: refresh final en verde; **21/21 REUSE** presentes; namespace, slugs y URLs sin colisiones; manifiesto **495/495** íntegro; preflight global `PREFLIGHT_ESTEPA_SQL_OK_ROLLED_BACK`; Apply transaccional `APPLY_ESTEPA_OK_COMMITTED`; import `completed` con **495 aplicadas, 0 inválidas y 0 fallos**; QA de producción **PASS**.
 
-Siguiente movimiento, únicamente con nueva orden: **refresh final de main/PR/Vercel/Supabase → revalidar 21/21 REUSE, namespace, slugs, URLs y manifiesto 495/495 → Apply transaccional → QA productivo**. Hasta esa orden, `apply_authorized=false`.
-
-No abrir Osuna, Utrera, Sanlúcar la Mayor ni ningún otro municipio en paralelo. No se activa Laboratorio, HC-018, Sevilla capital ni otro frente. Los acontecimientos pasados que continúen legítimamente en `announced` solo pueden elevarse ante evidencia posterior verificable.
+El siguiente movimiento municipal permitido es únicamente un **nuevo recálculo provincial desde cero** cuando se ordene. No abrir automáticamente Osuna, Utrera, Sanlúcar la Mayor ni ningún otro municipio a partir de rankings anteriores. No se activa Laboratorio, HC-018, Sevilla capital ni otro frente. Los acontecimientos pasados que continúen legítimamente en `announced` solo pueden elevarse ante evidencia posterior verificable.
 
 Evidencia:
 - [Auditoría del quinto macrolote](./AUDITORIA-QUINTO-MACROLOTE-MUNICIPAL-HC016-2026-09-19.md)
@@ -518,5 +516,6 @@ Evidencia:
 - [Certificación del manifiesto determinista](./CERTIFICACION-MANIFIESTO-DETERMINISTA-ESTEPA-HC016-2026-09-19.md)
 - [Certificación del preflight SQL](./CERTIFICACION-PREFLIGHT-SQL-ESTEPA-HC016-2026-09-19.md)
 - [Certificación del staging READY](./CERTIFICACION-STAGING-ESTEPA-HC016-2026-09-19.md)
+- [Certificación de cierre y QA productivo](./CERTIFICACION-CIERRE-ESTEPA-QUINTO-MACROLOTE-MUNICIPAL-HC016-2026-09-19.md)
 - [SQL archivado de preflight](../supabase/migrations_archive/post-first-edition-editorial/20260919120000_preflight_estepa_quinto_macrolote_hc016.sql)
 - [Certificación de selección de Estepa](./CERTIFICACION-SELECCION-ESTEPA-QUINTO-MACROLOTE-MUNICIPAL-HC016-2026-09-19.md)
