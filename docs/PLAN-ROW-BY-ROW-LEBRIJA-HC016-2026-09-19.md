@@ -3,8 +3,8 @@
 **Fecha:** 19 de septiembre de 2026  
 **Fase:** ROW-BY-ROW CERRADO  
 **Base:** `9bd786f9cb52f6eafb875dc8157c89da47fabfa5`  
-**TOTAL DML:** **465**  
-**INSERT / UPSERT:** **463**  
+**TOTAL DML:** **473**  
+**INSERT / UPSERT:** **471**  
 **UPDATE:** **2**  
 **DELETE:** **0**  
 **REUSE:** **32**
@@ -16,34 +16,34 @@ Este documento congela el número y orden lógico de las operaciones. Los IDs `c
 | Posiciones | Tabla | Operación | Filas |
 |---:|---|---|---:|
 | 1–2 | municipalities | upsert | 2 |
-| 3–32 | sources | upsert | 30 |
-| 33–38 | places | upsert | 6 |
-| 39–102 | entities | upsert | 64 |
-| 103–113 | brotherhoods | upsert | 11 |
-| 114–117 | bands | upsert | 4 |
-| 118–120 | agents | upsert | 3 |
-| 121–123 | agent_names | upsert | 3 |
-| 124–126 | agent_disciplines | upsert | 3 |
-| 127–149 | images | upsert | 23 |
-| 150–172 | brotherhood_images | upsert | 23 |
-| 173–178 | image_authorships | upsert | 6 |
-| 179–201 | steps | upsert | 23 |
-| 202–224 | brotherhood_steps | upsert | 23 |
-| 225–247 | image_steps | upsert | 23 |
-| 248–249 | entity_relations | upsert | 2 |
-| 250–265 | outing_series | upsert | 16 |
-| 266–278 | outings | upsert | 13 |
-| 279–301 | outing_entities | upsert | 23 |
-| 302–312 | outing_music_positions | upsert | 11 |
-| 313–323 | outing_music_assignments | upsert | 11 |
-| 324–334 | music_accompaniment_periods | upsert | 11 |
-| 335–339 | cults | upsert | 5 |
-| 340–342 | cult_occurrences | upsert | 3 |
-| 343–463 | source_links | upsert | 121 |
-| 464 | brotherhoods | update | 1 |
-| 465 | outings | update | 1 |
+| 3–33 | sources | upsert | 31 |
+| 34–39 | places | upsert | 6 |
+| 40–103 | entities | upsert | 64 |
+| 104–114 | brotherhoods | upsert | 11 |
+| 115–118 | bands | upsert | 4 |
+| 119–121 | agents | upsert | 3 |
+| 122–124 | agent_names | upsert | 3 |
+| 125–127 | agent_disciplines | upsert | 3 |
+| 128–150 | images | upsert | 23 |
+| 151–173 | brotherhood_images | upsert | 23 |
+| 174–179 | image_authorships | upsert | 6 |
+| 180–202 | steps | upsert | 23 |
+| 203–225 | brotherhood_steps | upsert | 23 |
+| 226–248 | image_steps | upsert | 23 |
+| 249–250 | entity_relations | upsert | 2 |
+| 251–266 | outing_series | upsert | 16 |
+| 267–280 | outings | upsert | 14 |
+| 281–304 | outing_entities | upsert | 24 |
+| 305–316 | outing_music_positions | upsert | 12 |
+| 317–328 | outing_music_assignments | upsert | 12 |
+| 329–340 | music_accompaniment_periods | upsert | 12 |
+| 341–345 | cults | upsert | 5 |
+| 346–348 | cult_occurrences | upsert | 3 |
+| 349–471 | source_links | upsert | 123 |
+| 472 | brotherhoods | update | 1 |
+| 473 | outings | update | 1 |
 
-## 2. Entidades · posiciones 39–102
+## 2. Entidades · posiciones 40–103
 
 ### Hermandades · 11
 1. Entrada Triunfal.
@@ -159,10 +159,10 @@ Santísimo Sacramento reutilizado: `d335bf75-18ce-42db-a10b-cb8942a7b05a`.
 15. Procesión anual de San Pedro Apóstol.
 16. Corpus Christi de la Sacramental.
 
-### outings · 13
+### outings · 14
 Se crean únicamente las occurrences 2026 verificadas o anunciadas.
 
-### outing_entities · 23
+### outing_entities · 24
 Distribución:
 - Penitencia: 20;
   - Entrada Triunfal aporta 3: Jesús, Estrella y San Juan Evangelista; los dos varones comparten el mismo misterio.
@@ -188,9 +188,10 @@ Orden:
 9. Dolores · palio · Agripino.
 10. Corpus San Francisco · Rosario El Cuervo.
 11. Vera-Cruz · Consolación · Rosario El Cuervo.
+12. San Pedro Apóstol · Amor y Sacrificio.
 
-### Periodos · 11
-Los periodos reproducen exactamente las 11 relaciones anteriores.
+### Periodos · 12
+Los periodos reproducen exactamente las 12 relaciones anteriores.
 
 No se publica continuidad futura salvo cuando exista renovación expresa. La evidencia de 2027 de Agripino para Victoria y Dolores puede dejar estos dos vínculos como vigentes; las demás relaciones quedan documentadas para 2026.
 
@@ -211,25 +212,25 @@ Solo Aurora 2026:
 
 ## 7. Fuentes
 
-### sources · 30 nuevas
+### sources · 31 nuevas
 Una URL planificada ya existía y se reutiliza:
 - Congregación Nazarena · Hermandades · `a6b01a96-2c4c-4125-bf2a-13c22ca0a7a2`.
 
-### source_links · 121
+### source_links · 123
 Subrangos conceptuales:
 - 64 · fuente primaria de cada entidad nueva;
 - 1 · actualización institucional de Castillo;
 - 6 · autorías;
 - 16 · outing_series;
-- 13 · outings;
-- 11 · asignaciones musicales;
+- 14 · outings;
+- 12 · asignaciones musicales;
 - 5 · cults;
 - 3 · cult_occurrences;
 - 2 · entity_relations sacramentales.
 
-## 8. UPDATE · posiciones 464–465
+## 8. UPDATE · posiciones 472–473
 
-### 464 · brotherhoods · Castillo
+### 472 · brotherhoods · Castillo
 Actualizar exclusivamente:
 - `official_name` con la denominación moderna de su web/parroquia;
 - `current_procession_day` para reflejar el carácter penitencial y patronal sin crear una segunda Hermandad;
@@ -237,7 +238,7 @@ Actualizar exclusivamente:
 
 No cambia su UUID ni su slug.
 
-### 465 · outings · patronal Castillo 12/09/2026
+### 473 · outings · patronal Castillo 12/09/2026
 Actualizar exclusivamente:
 - `outing_series_id` a la nueva serie patronal.
 
@@ -258,18 +259,18 @@ No se modifica:
 - 0 Apply.
 - 0 imagen/step artificial para el Rocío.
 - 0 imagen artificial del Santísimo.
-- 0 ocurrencia 2026 de San Pedro sin evidencia.
+- San Pedro 2026 se conserva `announced`: existe convocatoria exacta, pero no evidencia posterior suficiente para elevarla a `held`.
 - 0 ocurrencia 2026 de Corpus Sacramental vinculada por inferencia.
 
 ## 10. Próxima puerta
 
 El siguiente paso autorizado es únicamente:
 
-**colisiones finales → IDs deterministas `c0160033-*` → manifiesto 465/465 → generar payload SQL → ejecutar payload completo con ROLLBACK**.
+**colisiones finales → IDs deterministas `c0160033-*` → manifiesto 473/473 → generar payload SQL → ejecutar payload completo con ROLLBACK**.
 
 El manifiesto posterior deberá preservar exactamente:
-- 465 DML;
-- 463 upsert;
+- 473 DML;
+- 471 upsert;
 - 2 update;
 - 0 delete;
 - 32 REUSE.
