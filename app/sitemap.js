@@ -6,6 +6,7 @@ import {
 import { unstable_cache } from 'next/cache';
 import { absoluteUrl } from '@/lib/seo';
 import { bandDirectoryFacets } from '@/lib/band-directory';
+import { heritageDirectoryLocalities } from '@/lib/heritage-directory';
 import { getPublicBandsDirectory } from '@/lib/supabase/bands-directory-public';
 import { getHermandadesDirectory } from '@/lib/supabase/brotherhood-directory';
 import { getExtraordinaryDirectory } from '@/lib/supabase/extraordinary-directory';
@@ -15,6 +16,7 @@ import { getPublicIndexableEntityEntries } from '@/lib/supabase/public-indexabil
 import { getMusicalRepertoires } from '@/lib/supabase/musical-repertoires';
 import { getPublicMarchSitemapEntries } from '@/lib/supabase/public-marches';
 import { getRosaryOutings } from '@/lib/supabase/rosary-outings';
+import { getImagesDirectory, getStepsDirectory } from '@/lib/supabase/directories';
 
 export const revalidate = 3600;
 
@@ -166,6 +168,17 @@ function bandDirectoryEntries(bands) {
   }));
 }
 
+function heritageDirectoryEntries(images, steps) {
+  return [
+    ...heritageDirectoryLocalities(images, 'imagenes'),
+    ...heritageDirectoryLocalities(steps, 'pasos'),
+  ].map((facet) => ({
+    url: absoluteUrl(facet.href),
+    changeFrequency: 'monthly',
+    priority: 0.7,
+  }));
+}
+
 function extraordinaryEntries(outings) {
   return outings
     .filter((outing) => Boolean(outing.slug))
@@ -238,9 +251,11 @@ function rosaryEntries(outings) {
 }
 
 async function buildPublicSitemapEntries() {
-  const [brotherhoodDirectory, bandDirectory, extraordinaryOutings, gloryOutings, crewEvents, musicalRepertoires, marches, rosaryOutings] = await Promise.all([
+  const [brotherhoodDirectory, bandDirectory, imageDirectory, stepDirectory, extraordinaryOutings, gloryOutings, crewEvents, musicalRepertoires, marches, rosaryOutings] = await Promise.all([
     getHermandadesDirectory(),
     getPublicBandsDirectory(),
+    getImagesDirectory(),
+    getStepsDirectory(),
     getExtraordinaryDirectory(),
     getGloryDirectory(),
     getCrewEventDirectory(),
@@ -250,6 +265,8 @@ async function buildPublicSitemapEntries() {
   ]);
   const indexableEntities = await getPublicIndexableEntityEntries({
     brotherhoods: brotherhoodDirectory,
+    images: imageDirectory,
+    steps: stepDirectory,
   });
 
   const entries = [
@@ -257,6 +274,7 @@ async function buildPublicSitemapEntries() {
     ...entityEntries(indexableEntities),
     ...directoryEntries(brotherhoodDirectory),
     ...bandDirectoryEntries(bandDirectory),
+    ...heritageDirectoryEntries(imageDirectory, stepDirectory),
     ...extraordinaryEntries(extraordinaryOutings),
     ...gloryEntries(gloryOutings),
     ...crewEventEntries(crewEvents),
