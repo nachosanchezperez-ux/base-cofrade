@@ -5,6 +5,8 @@ import {
 } from '@/lib/brotherhood-directory';
 import { unstable_cache } from 'next/cache';
 import { absoluteUrl } from '@/lib/seo';
+import { bandDirectoryFacets } from '@/lib/band-directory';
+import { getPublicBandsDirectory } from '@/lib/supabase/bands-directory-public';
 import { getHermandadesDirectory } from '@/lib/supabase/brotherhood-directory';
 import { getExtraordinaryDirectory } from '@/lib/supabase/extraordinary-directory';
 import { getGloryDirectory } from '@/lib/supabase/glory-directory';
@@ -155,6 +157,15 @@ function directoryEntries(brotherhoods) {
   }));
 }
 
+function bandDirectoryEntries(bands) {
+  const facets = bandDirectoryFacets(bands);
+  return [...facets.types, ...facets.municipalities].map((facet) => ({
+    url: absoluteUrl(facet.href),
+    changeFrequency: 'weekly',
+    priority: 0.72,
+  }));
+}
+
 function extraordinaryEntries(outings) {
   return outings
     .filter((outing) => Boolean(outing.slug))
@@ -227,8 +238,9 @@ function rosaryEntries(outings) {
 }
 
 async function buildPublicSitemapEntries() {
-  const [brotherhoodDirectory, extraordinaryOutings, gloryOutings, crewEvents, musicalRepertoires, marches, rosaryOutings] = await Promise.all([
+  const [brotherhoodDirectory, bandDirectory, extraordinaryOutings, gloryOutings, crewEvents, musicalRepertoires, marches, rosaryOutings] = await Promise.all([
     getHermandadesDirectory(),
+    getPublicBandsDirectory(),
     getExtraordinaryDirectory(),
     getGloryDirectory(),
     getCrewEventDirectory(),
@@ -244,6 +256,7 @@ async function buildPublicSitemapEntries() {
     ...staticEntries,
     ...entityEntries(indexableEntities),
     ...directoryEntries(brotherhoodDirectory),
+    ...bandDirectoryEntries(bandDirectory),
     ...extraordinaryEntries(extraordinaryOutings),
     ...gloryEntries(gloryOutings),
     ...crewEventEntries(crewEvents),

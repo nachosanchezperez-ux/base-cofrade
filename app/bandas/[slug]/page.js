@@ -352,12 +352,12 @@ export default async function BandDetailPage({ params }) {
                 {publicText(band.type) ? <article>
                   <span>Formación</span>
                   <strong>{publicText(band.type)}</strong>
-                  <Link href={`/bandas?tipo=${band.typeSlug}`}>Bandas de esta formación →</Link>
+                  <Link href={`/bandas/tipo/${band.typeSlug}`}>Bandas de esta formación →</Link>
                 </article> : null}
                 {publicText(band.municipality) ? <article>
                   <span>Localidad</span>
                   <strong>{publicText(band.municipality)}</strong>
-                  {band.municipalitySlug ? <Link href={`/bandas?localidad=${band.municipalitySlug}`}>Bandas de {band.municipality} →</Link> : null}
+                  {band.municipalitySlug ? <Link href={`/bandas/localidad/${band.municipalitySlug}`}>Bandas de {band.municipality} →</Link> : null}
                 </article> : null}
                 {band.linkedBrotherhood ? <article>
                   <span>{band.linkedBrotherhoodRelationType === 'associated_with_brotherhood' ? 'Hermandad asociada' : 'Hermandad'}</span>
