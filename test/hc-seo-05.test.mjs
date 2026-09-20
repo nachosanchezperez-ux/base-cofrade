@@ -7,8 +7,12 @@ import { agendaSeoCopy, extraordinarySeoCopy, madridYear } from '../lib/seo-cale
 const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8')
 
 test('el año SEO cambia según Europe/Madrid y no según UTC', () => {
+  assert.equal(madridYear(new Date('2026-09-20T12:00:00Z')), 2026)
   assert.equal(madridYear(new Date('2026-12-31T22:30:00Z')), 2026)
+  assert.equal(madridYear(new Date('2026-12-31T22:59:59Z')), 2026)
+  assert.equal(madridYear(new Date('2026-12-31T23:00:00Z')), 2027)
   assert.equal(madridYear(new Date('2026-12-31T23:30:00Z')), 2027)
+  assert.equal(madridYear(new Date('2027-01-01T12:00:00Z')), 2027)
 })
 
 test('Agenda y Extraordinarias comparten el año temporal en su copy SEO', () => {

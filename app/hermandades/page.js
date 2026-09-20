@@ -1,6 +1,9 @@
 import HermandadesDirectoryV4 from '@/components/HermandadesDirectoryV4';
+import BrotherhoodPublicIndex from '@/components/BrotherhoodPublicIndex';
 import JsonLd from '@/components/JsonLd';
+import { filterIndexableBrotherhoods } from '@/lib/brotherhood-public-index';
 import { getHermandadesDirectory } from '@/lib/supabase/brotherhood-directory';
+import { getPublicIndexableEntityEntries } from '@/lib/supabase/public-indexability';
 import { absoluteUrl, breadcrumbJsonLd, pageTitle } from '@/lib/seo';
 
 export const revalidate = 900;
@@ -20,6 +23,13 @@ export const metadata = {
 
 export default async function HermandadesPage() {
   const hermandades = await getHermandadesDirectory();
+  const indexableEntries = await getPublicIndexableEntityEntries({
+    brotherhoods: hermandades,
+    bandDirectory: [],
+    images: [],
+    steps: [],
+  });
+  const indexableHermandades = filterIndexableBrotherhoods(hermandades, indexableEntries);
   const directoryJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
@@ -32,8 +42,8 @@ export default async function HermandadesPage() {
     },
     mainEntity: {
       '@type': 'ItemList',
-      numberOfItems: hermandades.length,
-      itemListElement: hermandades.map((hermandad, index) => ({
+      numberOfItems: indexableHermandades.length,
+      itemListElement: indexableHermandades.map((hermandad, index) => ({
         '@type': 'ListItem',
         position: index + 1,
         name: hermandad.nombrePopular,
@@ -56,6 +66,7 @@ export default async function HermandadesPage() {
           Recorre las corporaciones de Sevilla capital y su provincia por su carácter, localidad y momento principal del calendario.
         </p>
         <HermandadesDirectoryV4 hermandades={hermandades} />
+        <BrotherhoodPublicIndex brotherhoods={indexableHermandades} />
       </div>
     </section>
   );
