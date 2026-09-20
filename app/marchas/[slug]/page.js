@@ -58,7 +58,7 @@ export default async function MarchDetailPage({ params }) {
     <div className={styles.page}>
       <JsonLd data={breadcrumbJsonLd([
         { name: 'Inicio', path: '/' },
-        { name: 'Crucetas musicales', path: '/crucetas-musicales' },
+        { name: 'Marchas', path: '/marchas' },
         { name: march.name, path: march.href },
       ])} />
       <JsonLd data={{
@@ -73,7 +73,7 @@ export default async function MarchDetailPage({ params }) {
       <header className={styles.hero}>
         <div className={`shell ${styles.heroShell}`}>
           <nav className={styles.breadcrumb} aria-label="Migas de pan">
-            <Link href="/">Inicio</Link><span>/</span><Link href="/crucetas-musicales">Crucetas musicales</Link><span>/</span><strong>Marcha</strong>
+            <Link href="/">Inicio</Link><span>/</span><Link href="/marchas">Marchas</Link><span>/</span><strong>{march.name}</strong>
           </nav>
           <div className={styles.heroBody}>
             <span>{march.workType}</span>
