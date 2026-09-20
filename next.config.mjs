@@ -13,6 +13,11 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/bandas/banda-musica-maria-santisima-victoria-cigarreras',
+        destination: '/bandas/banda-musica-maria-santisima-victoria-las-cigarreras',
+        permanent: true,
+      },
+      {
         source: '/extraordinarias/padre-pio-divina-gracia-salida-extraordinaria-2026-10-11',
         destination: '/extraordinarias/sevilla-divina-gracia-2026',
         permanent: true,
