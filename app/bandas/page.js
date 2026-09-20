@@ -1,36 +1,13 @@
 import { Suspense } from 'react'
+import BandDirectoryFacets from '@/components/BandDirectoryFacets'
 import JsonLd from '@/components/JsonLd'
 import RelationalEntityDirectory from '@/components/RelationalEntityDirectory'
 import RelationalEntityDirectoryFromUrl from '@/components/RelationalEntityDirectoryFromUrl'
+import { bandDirectoryItems } from '@/lib/band-directory'
 import { getPublicBandsDirectory } from '@/lib/supabase/bands-directory-public'
 import { breadcrumbJsonLd, collectionPageJsonLd, socialMetadata } from '@/lib/seo'
 
 export const revalidate = 900
-
-const BAND_LOGO_PRESENTATION = {
-  'banda-del-sol': { mode: 'integrated', background: 'secondary' },
-  'sangre-de-san-benito': { mode: 'integrated', background: 'primary' },
-  'banda-de-musica-del-maestro-tejera': { mode: 'integrated', background: 'secondary' },
-  'banda-municipal-de-musica-de-la-puebla-del-rio': { mode: 'contained', color: '#FCEBEC' },
-  'banda-de-musica-nuestra-senora-de-la-soledad-cantillana': { mode: 'integrated', background: 'secondary' },
-}
-
-function logoPresentationFor(band) {
-  const presentation = BAND_LOGO_PRESENTATION[band.slug]
-  if (!presentation) return { mode: 'contained', backgroundColor: '' }
-
-  const backgroundColor = presentation.color
-    || (presentation.background === 'secondary'
-      ? band.secondaryColor
-      : presentation.background === 'primary'
-        ? band.primaryColor
-        : '')
-
-  return {
-    mode: presentation.mode,
-    backgroundColor,
-  }
-}
 
 const title = 'Bandas de Sevilla y provincia'
 const description = 'Directorio de bandas cofrades de Sevilla y su provincia: historia, acompañamientos, dirección, salidas y estrenos.'
@@ -47,28 +24,7 @@ export const metadata = {
 
 export default async function BandasPage() {
   const bands = await getPublicBandsDirectory()
-  const items = bands.map((band) => {
-    const logoPresentation = logoPresentationFor(band)
-
-    return {
-      id: band.id,
-      name: band.popularName,
-      officialName: band.officialName,
-      href: `/bandas/${band.slug}`,
-      type: band.type,
-      typeSlug: band.typeSlug,
-      municipality: band.municipality,
-      municipalitySlug: band.municipalitySlug,
-      foundation: band.foundation,
-      linkedBrotherhood: band.linkedBrotherhood,
-      logoPath: band.logoPath,
-      logoPresentationMode: logoPresentation.mode,
-      logoBackgroundColor: logoPresentation.backgroundColor,
-      primaryColor: band.primaryColor,
-      secondaryColor: band.secondaryColor,
-      keywords: [band.officialShortName, band.summary, band.linkedBrotherhood].filter(Boolean),
-    }
-  })
+  const items = bandDirectoryItems(bands)
 
   return (
     <section className="section page-top">
@@ -88,6 +44,7 @@ export default async function BandasPage() {
         <p className="page-lead">
           Formaciones conectadas con hermandades, pasos, salidas, responsables y patrimonio musical.
         </p>
+        <BandDirectoryFacets bands={bands} />
         <Suspense fallback={<RelationalEntityDirectory items={items} kind="band" />}>
           <RelationalEntityDirectoryFromUrl items={items} kind="band" />
         </Suspense>

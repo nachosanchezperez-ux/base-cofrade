@@ -1,4 +1,5 @@
 import JsonLd from '@/components/JsonLd'
+import DirectoryLocalityFacets from '@/components/DirectoryLocalityFacets'
 import RelationalEntityDirectory from '@/components/RelationalEntityDirectory'
 import { getStepsDirectory } from '@/lib/supabase/directories'
 import { breadcrumbJsonLd, collectionPageJsonLd, socialMetadata } from '@/lib/seo'
@@ -39,6 +40,7 @@ export default async function PasosPage() {
         <p className="page-lead">
           Recorre los pasos procesionales por hermandad, localidad y tipología, y sigue sus imágenes, fases de ejecución, autores y talleres.
         </p>
+        <DirectoryLocalityFacets items={steps} section="pasos" title="Pasos" />
         <RelationalEntityDirectory items={steps} kind="step" />
       </div>
     </section>
