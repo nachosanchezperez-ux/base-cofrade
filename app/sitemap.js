@@ -3,6 +3,7 @@ import {
   directoryPath,
   hasDirectoryType,
 } from '@/lib/brotherhood-directory';
+import { unstable_cache } from 'next/cache';
 import { absoluteUrl } from '@/lib/seo';
 import { getHermandadesDirectory } from '@/lib/supabase/brotherhood-directory';
 import { getExtraordinaryDirectory } from '@/lib/supabase/extraordinary-directory';
@@ -225,7 +226,7 @@ function rosaryEntries(outings) {
     }));
 }
 
-export default async function sitemap() {
+async function buildPublicSitemapEntries() {
   const [brotherhoodDirectory, extraordinaryOutings, gloryOutings, crewEvents, musicalRepertoires, marches, rosaryOutings] = await Promise.all([
     getHermandadesDirectory(),
     getExtraordinaryDirectory(),
@@ -253,3 +254,18 @@ export default async function sitemap() {
 
   return [...new Map(entries.map((entry) => [entry.url, entry])).values()];
 }
+
+const getCachedPublicSitemapEntries = unstable_cache(
+  buildPublicSitemapEntries,
+  ['hilo-cofrade-public-sitemap-v2'],
+  {
+    revalidate: 3600,
+    tags: ['seo-sitemap'],
+  }
+);
+
+export async function getPublicSitemapEntries() {
+  return getCachedPublicSitemapEntries();
+}
+
+export default getPublicSitemapEntries;
