@@ -6,7 +6,7 @@ const page = readFileSync(new URL('../app/extraordinarias/page.js', import.meta.
 
 test('Extraordinarias mantiene navegación SEO por meses con enlaces a guías', () => {
   assert.match(page, /groupUpcomingByMonth/)
-  assert.match(page, /Extraordinarias de Sevilla 2026 por meses/)
+  assert.match(page, /Próximas extraordinarias de Sevilla por meses/)
   assert.match(page, /href=\{`\/extraordinarias\/\$\{outing\.slug\}`\}/)
   assert.match(page, /upcomingOutings/)
 })
@@ -14,6 +14,6 @@ test('Extraordinarias mantiene navegación SEO por meses con enlaces a guías', 
 test('el bloque de coronaciones nace de los datos y no de una lista manual', () => {
   assert.match(page, /function isCoronation/)
   assert.match(page, /coronations = upcomingOutings\.filter\(isCoronation\)/)
-  assert.match(page, /Coronaciones y salidas extraordinarias de 2026/)
+  assert.match(page, /Próximas coronaciones y salidas extraordinarias/)
   assert.doesNotMatch(page, /gerena-sangre-2026|regla-coronada|amparo-sevilla/)
 })

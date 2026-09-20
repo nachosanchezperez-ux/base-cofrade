@@ -6,6 +6,7 @@ import AgendaCofradeNav from '@/components/AgendaCofradeNav'
 import AgendaCofradeNavFromUrl from '@/components/AgendaCofradeNavFromUrl'
 import JsonLd from '@/components/JsonLd'
 import { breadcrumbJsonLd, collectionPageJsonLd, pageTitle, seoDescription } from '@/lib/seo'
+import { agendaSeoCopy, madridYear } from '@/lib/seo-calendar'
 import { getAgendaCofrade } from '@/lib/supabase/agenda-cofrade'
 import { getCrewEventDirectory } from '@/lib/supabase/crew-events'
 import styles from './agenda-cofrade.module.css'
@@ -13,19 +14,19 @@ import v4Styles from './agenda-cofrade-v4.module.css'
 
 export const revalidate = 300
 
-const currentYear = new Intl.DateTimeFormat('es-ES', { year: 'numeric', timeZone: 'Europe/Madrid' }).format(new Date())
-const title = `Agenda cofrade de Sevilla y provincia ${currentYear}`
-const description = 'Consulta los próximos actos cofrades de Sevilla y su provincia: procesiones, traslados, rosarios públicos, besamanos, besapiés y conciertos de bandas.'
-
-export const metadata = {
-  title,
-  description,
-  alternates: { canonical: '/agenda-cofrade' },
-  openGraph: { title: pageTitle(title), description, url: '/agenda-cofrade' },
-  twitter: { title: pageTitle(title), description },
+export function generateMetadata() {
+  const { title, description } = agendaSeoCopy(madridYear())
+  return {
+    title,
+    description,
+    alternates: { canonical: '/agenda-cofrade' },
+    openGraph: { title: pageTitle(title), description, url: '/agenda-cofrade' },
+    twitter: { title: pageTitle(title), description },
+  }
 }
 
 export default async function AgendaCofradePage() {
+  const { title, description } = agendaSeoCopy(madridYear())
   const [agendaData, crewEvents] = await Promise.all([
     getAgendaCofrade(),
     getCrewEventDirectory(),
