@@ -21,7 +21,14 @@ import {
   publicEditorialRobots,
   publicText,
 } from '@/lib/supabase/public-entity-page'
-import { absoluteUrl, breadcrumbJsonLd } from '@/lib/seo'
+import {
+  absoluteUrl,
+  breadcrumbJsonLd,
+  compactSeoTitle,
+  schemaDate,
+  seoDescription,
+  socialMetadata,
+} from '@/lib/seo'
 import {
   groupGloryAccompaniments,
   partitionAccompanimentsBySeason,
@@ -160,17 +167,19 @@ export async function generateMetadata({ params }) {
     sources: band.sources || [],
     publicValues: band,
   })
+  const title = compactSeoTitle(band.popularName)
+  const description = seoDescription(band.summary)
+  const path = `/bandas/${slug}`
   return {
-    title: band.popularName,
-    description: band.summary,
-    alternates: { canonical: `/bandas/${slug}` },
+    title,
+    description,
     robots: publicEditorialRobots(editoriallyReady),
-    openGraph: {
-      title: band.popularName,
-      description: band.summary,
-      url: `/bandas/${slug}`,
+    ...socialMetadata({
+      title,
+      description,
+      path,
       images: band.heroImagePath ? [{ url: band.heroImagePath, alt: band.heroImageAlt }] : undefined,
-    },
+    }),
   }
 }
 
@@ -251,7 +260,7 @@ export default async function BandDetailPage({ params }) {
     alternateName: band.popularName,
     url: absoluteUrl(`/bandas/${band.slug}`),
     ...(publicText(band.summary) ? { description: publicText(band.summary) } : {}),
-    foundingDate: publicText(band.foundation) || undefined,
+    foundingDate: schemaDate(publicText(band.foundation)),
     foundingLocation: publicText(band.municipality) || undefined,
     image: band.heroImagePath ? absoluteUrl(band.heroImagePath) : undefined,
     sameAs: band.interestLinks.map((link) => link.url),

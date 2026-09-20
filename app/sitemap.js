@@ -10,6 +10,7 @@ import { getGloryDirectory } from '@/lib/supabase/glory-directory';
 import { getCrewEventDirectory } from '@/lib/supabase/crew-events';
 import { getPublicIndexableEntityEntries } from '@/lib/supabase/public-indexability';
 import { getMusicalRepertoires } from '@/lib/supabase/musical-repertoires';
+import { getPublicMarchSitemapEntries } from '@/lib/supabase/public-marches';
 import { getRosaryOutings } from '@/lib/supabase/rosary-outings';
 
 export const revalidate = 3600;
@@ -201,6 +202,18 @@ function musicalRepertoireEntries(repertoires) {
   ]);
 }
 
+function marchEntries(marches) {
+  return marches.map((march) => {
+    const lastModified = validLastModified(march.updatedAt);
+    return {
+      url: absoluteUrl(`/marchas/${march.slug}`),
+      ...(lastModified ? { lastModified } : {}),
+      changeFrequency: 'monthly',
+      priority: 0.66,
+    };
+  });
+}
+
 function rosaryEntries(outings) {
   return outings
     .filter((outing) => Boolean(outing.detailHref))
@@ -213,12 +226,13 @@ function rosaryEntries(outings) {
 }
 
 export default async function sitemap() {
-  const [brotherhoodDirectory, extraordinaryOutings, gloryOutings, crewEvents, musicalRepertoires, rosaryOutings] = await Promise.all([
+  const [brotherhoodDirectory, extraordinaryOutings, gloryOutings, crewEvents, musicalRepertoires, marches, rosaryOutings] = await Promise.all([
     getHermandadesDirectory(),
     getExtraordinaryDirectory(),
     getGloryDirectory(),
     getCrewEventDirectory(),
     getMusicalRepertoires(),
+    getPublicMarchSitemapEntries(),
     getRosaryOutings(),
   ]);
   const indexableEntities = await getPublicIndexableEntityEntries({
@@ -233,6 +247,7 @@ export default async function sitemap() {
     ...gloryEntries(gloryOutings),
     ...crewEventEntries(crewEvents),
     ...musicalRepertoireEntries(musicalRepertoires),
+    ...marchEntries(marches),
     ...rosaryEntries(rosaryOutings),
   ];
 

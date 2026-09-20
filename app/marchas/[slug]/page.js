@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import JsonLd from '@/components/JsonLd'
 import { getPublicMarchBySlug } from '@/lib/supabase/public-marches'
-import { absoluteUrl, breadcrumbJsonLd, pageTitle } from '@/lib/seo'
+import { absoluteUrl, breadcrumbJsonLd, compactSeoTitle, socialMetadata } from '@/lib/seo'
 import styles from './marcha.module.css'
 
 export const dynamic = 'force-static'
@@ -41,11 +41,11 @@ export async function generateMetadata({ params }) {
   const composers = march.authors.filter((author) => author.role === 'composer').map((author) => author.name).join(', ')
   const description = [composers ? `Obra de ${composers}.` : '', march.documentedPerformances ? `${countLabel(march.documentedPerformances)} ${metricLabel(march.documentedPerformances, 'documentada', 'documentadas')} en crucetas musicales.` : '', march.listenings.length ? 'Grabaciones disponibles.' : ''].filter(Boolean).join(' ')
 
+  const title = compactSeoTitle(`${march.name} · Marcha procesional`)
   return {
-    title: `${march.name} · Marcha procesional`,
+    title,
     description,
-    alternates: { canonical: march.href },
-    openGraph: { title: pageTitle(march.name), description, url: march.href },
+    ...socialMetadata({ title, description, path: march.href }),
   }
 }
 

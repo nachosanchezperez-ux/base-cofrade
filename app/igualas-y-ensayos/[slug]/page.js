@@ -3,7 +3,15 @@ import { notFound } from 'next/navigation'
 import { cache } from 'react'
 import JsonLd from '@/components/JsonLd'
 import { crewEventStatusLabel } from '@/lib/crew-events'
-import { absoluteUrl, breadcrumbJsonLd, pageTitle, seoDescription } from '@/lib/seo'
+import {
+  absoluteUrl,
+  breadcrumbJsonLd,
+  compactSeoTitle,
+  pageTitle,
+  schemaEventStatus,
+  seoDescription,
+  socialMetadata,
+} from '@/lib/seo'
 import { getCrewEventDetail } from '@/lib/supabase/crew-events'
 import styles from './crew-event-detail.module.css'
 
@@ -77,16 +85,14 @@ export async function generateMetadata({ params }) {
   const { slug } = await params
   const event = await getCrewEvent(slug)
   if (!event) return { title: 'Convocatoria no encontrada', robots: { index: false, follow: false } }
-  const title = eventSeoTitle(event)
+  const title = compactSeoTitle(eventSeoTitle(event))
   const description = eventSeoDescription(event)
   const canonical = `/igualas-y-ensayos/${event.slug}`
 
   return {
     title,
     description,
-    alternates: { canonical },
-    openGraph: { title: pageTitle(title), description, url: canonical },
-    twitter: { title: pageTitle(title), description },
+    ...socialMetadata({ title, description, path: canonical, type: 'article' }),
   }
 }
 
@@ -117,11 +123,7 @@ export default async function CrewEventDetailPage({ params }) {
     ...(event.endTime ? { endDate: madridDateTime(event.date, event.endTime) } : {}),
     description,
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
-    eventStatus: event.isCancelled
-      ? 'https://schema.org/EventCancelled'
-      : event.isPostponed
-        ? 'https://schema.org/EventPostponed'
-        : 'https://schema.org/EventScheduled',
+    ...(schemaEventStatus(event) ? { eventStatus: schemaEventStatus(event) } : {}),
     url: canonicalUrl,
     organizer: {
       '@type': 'Organization',

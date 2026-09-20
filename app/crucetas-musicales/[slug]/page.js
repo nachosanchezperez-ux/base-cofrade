@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation'
 import JsonLd from '@/components/JsonLd'
 import { musicalRepertoireDateLabel } from '@/lib/musical-repertoires/presentation'
 import { getMusicalRepertoireBySlug } from '@/lib/supabase/musical-repertoires'
-import { absoluteUrl, breadcrumbJsonLd, pageTitle } from '@/lib/seo'
+import { absoluteUrl, breadcrumbJsonLd, compactSeoTitle, socialMetadata } from '@/lib/seo'
 import styles from '../crucetas.module.css'
 
 export const dynamic = 'force-static'
@@ -49,14 +49,13 @@ export async function generateMetadata({ params }) {
   const repertoire = await getMusicalRepertoireBySlug(slug)
   if (!repertoire) return { title: 'Cruceta musical no encontrada', robots: { index: false, follow: false } }
 
-  const title = `${repertoire.displayTitle}: cruceta de ${repertoire.band.name}`
+  const title = compactSeoTitle(`${repertoire.displayTitle}: cruceta de ${repertoire.band.name}`)
   const description = `${repertoire.worksCount} obras y ${repertoire.performancesCount} interpretaciones de ${repertoire.band.name} en ${repertoire.displayTitle}.`
 
   return {
     title,
     description,
-    alternates: { canonical: repertoire.href },
-    openGraph: { title: pageTitle(title), description, url: repertoire.href },
+    ...socialMetadata({ title, description, path: repertoire.href }),
   }
 }
 

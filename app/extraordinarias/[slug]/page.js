@@ -6,7 +6,15 @@ import JsonLd from '@/components/JsonLd'
 import ProcessionRoute from '@/components/ProcessionRoute'
 import { buildProcessionRoute } from '@/lib/procession-route'
 import { getExtraordinaryDetail } from '@/lib/supabase/extraordinary-detail'
-import { absoluteUrl, breadcrumbJsonLd, pageTitle, seoDescription } from '@/lib/seo'
+import {
+  absoluteUrl,
+  breadcrumbJsonLd,
+  compactSeoTitle,
+  pageTitle,
+  schemaEventStatus,
+  seoDescription,
+  socialMetadata,
+} from '@/lib/seo'
 import styles from './extraordinary-detail.module.css'
 import mediaStyles from './extraordinary-media.module.css'
 import journeyStyles from './extraordinary-journey.module.css'
@@ -142,7 +150,7 @@ export async function generateMetadata({ params }) {
     }
   }
 
-  const title = seoTitle(item)
+  const title = compactSeoTitle(seoTitle(item))
   const description = seoDescription(
     [
       `${item.title}${item.municipality ? ` en ${item.municipality}` : ''}`,
@@ -156,20 +164,13 @@ export async function generateMetadata({ params }) {
   return {
     title,
     description,
-    alternates: { canonical },
-    openGraph: {
+    ...socialMetadata({
+      title,
+      description,
+      path: canonical,
       type: 'article',
-      title: pageTitle(title),
-      description,
-      url: canonical,
-      ...(item.heroImagePath ? { images: [{ url: item.heroImagePath, alt: item.heroImageAlt }] } : {}),
-    },
-    twitter: {
-      card: item.heroImagePath ? 'summary_large_image' : 'summary',
-      title: pageTitle(title),
-      description,
-      ...(item.heroImagePath ? { images: [item.heroImagePath] } : {}),
-    },
+      images: item.heroImagePath ? [{ url: item.heroImagePath, alt: item.heroImageAlt }] : undefined,
+    }),
   }
 }
 
@@ -228,8 +229,7 @@ export default async function ExtraordinaryDetailPage({ params }) {
     } : {}),
     description: item.reason || item.description || pageDescription,
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
-    ...(item.eventStatus === 'announced' ? { eventStatus: 'https://schema.org/EventScheduled' } : {}),
-    ...(item.eventStatus === 'cancelled' ? { eventStatus: 'https://schema.org/EventCancelled' } : {}),
+    ...(schemaEventStatus(item) ? { eventStatus: schemaEventStatus(item) } : {}),
     ...(item.heroImagePath ? { image: [absoluteUrl(item.heroImagePath)] } : {}),
     ...(item.brotherhoodName ? {
       organizer: {
