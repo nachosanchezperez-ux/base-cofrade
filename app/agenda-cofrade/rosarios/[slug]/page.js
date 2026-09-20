@@ -3,7 +3,14 @@ import Link from 'next/link'
 import { cache } from 'react'
 import { notFound } from 'next/navigation'
 import JsonLd from '@/components/JsonLd'
-import { absoluteUrl, breadcrumbJsonLd, pageTitle, seoDescription } from '@/lib/seo'
+import {
+  absoluteUrl,
+  breadcrumbJsonLd,
+  compactSeoTitle,
+  schemaEventStatus,
+  seoDescription,
+  socialMetadata,
+} from '@/lib/seo'
 import { getRosaryOutingDetail } from '@/lib/supabase/rosary-outings'
 import styles from './rosary-detail.module.css'
 
@@ -42,7 +49,7 @@ export async function generateMetadata({ params }) {
   const item = await getRosary(slug)
   if (!item) return { title: 'Rosario no encontrado', robots: { index: false, follow: false } }
 
-  const title = `${item.title}${item.municipality ? ` en ${item.municipality}` : ''}`
+  const title = compactSeoTitle(`${item.title}${item.municipality ? ` en ${item.municipality}` : ''}`)
   const description = seoDescription([
     item.mode,
     formatDate(item.date),
@@ -54,20 +61,13 @@ export async function generateMetadata({ params }) {
   return {
     title,
     description,
-    alternates: { canonical },
-    openGraph: {
+    ...socialMetadata({
+      title,
+      description,
+      path: canonical,
       type: 'article',
-      title: pageTitle(title),
-      description,
-      url: canonical,
-      ...(item.heroImagePath ? { images: [{ url: item.heroImagePath, alt: item.heroImageAlt }] } : {}),
-    },
-    twitter: {
-      card: item.heroImagePath ? 'summary_large_image' : 'summary',
-      title: pageTitle(title),
-      description,
-      ...(item.heroImagePath ? { images: [item.heroImagePath] } : {}),
-    },
+      images: item.heroImagePath ? [{ url: item.heroImagePath, alt: item.heroImageAlt }] : undefined,
+    }),
   }
 }
 
@@ -89,9 +89,7 @@ export default async function RosaryDetailPage({ params }) {
     ...(item.returnTime || item.returnDate ? { endDate: dateTime(item.returnDate || item.date, item.returnTime) } : {}),
     description,
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
-    eventStatus: item.isCancelled
-      ? 'https://schema.org/EventCancelled'
-      : 'https://schema.org/EventScheduled',
+    ...(schemaEventStatus(item) ? { eventStatus: schemaEventStatus(item) } : {}),
     ...(item.heroImagePath ? { image: [absoluteUrl(item.heroImagePath)] } : {}),
     organizer: {
       '@type': 'Organization',
