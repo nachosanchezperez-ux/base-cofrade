@@ -1,5 +1,5 @@
 import DirectoryBreadcrumb from '@/components/DirectoryBreadcrumb'
-import DirectoryLocalityFacets from '@/components/DirectoryLocalityFacets'
+import HeritageDirectoryFacets from '@/components/HeritageDirectoryFacets'
 import JsonLd from '@/components/JsonLd'
 import RelationalEntityDirectory from '@/components/RelationalEntityDirectory'
 import { breadcrumbJsonLd, collectionPageJsonLd } from '@/lib/seo'
@@ -15,6 +15,7 @@ export default function HeritageDirectoryRoutePage({
   description,
   path,
   contextLabel,
+  initialMunicipalitySlug = '',
 }) {
   return (
     <section className="section page-top">
@@ -37,11 +38,11 @@ export default function HeritageDirectoryRoutePage({
         <span className="eyebrow">{eyebrow}</span>
         <h1 className="page-title">{title}</h1>
         <p className="page-lead">{description}</p>
-        <DirectoryLocalityFacets items={allItems} section={section} title={directoryLabel} />
+        <HeritageDirectoryFacets items={allItems} section={section} title={directoryLabel} />
         <RelationalEntityDirectory
           items={items}
           kind={kind}
-          initialMunicipalitySlug={items[0]?.municipalitySlug || ''}
+          initialMunicipalitySlug={initialMunicipalitySlug}
         />
       </div>
     </section>

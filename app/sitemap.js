@@ -6,7 +6,7 @@ import {
 import { unstable_cache } from 'next/cache';
 import { absoluteUrl } from '@/lib/seo';
 import { bandDirectoryFacets } from '@/lib/band-directory';
-import { heritageDirectoryLocalities } from '@/lib/heritage-directory';
+import { heritageDirectoryLocalities, heritageDirectoryTypes } from '@/lib/heritage-directory';
 import { getPublicBandsDirectory } from '@/lib/supabase/bands-directory-public';
 import { getHermandadesDirectory } from '@/lib/supabase/brotherhood-directory';
 import { getExtraordinaryDirectory } from '@/lib/supabase/extraordinary-directory';
@@ -170,6 +170,8 @@ function bandDirectoryEntries(bands) {
 
 function heritageDirectoryEntries(images, steps) {
   return [
+    ...heritageDirectoryTypes(images, 'imagenes'),
+    ...heritageDirectoryTypes(steps, 'pasos'),
     ...heritageDirectoryLocalities(images, 'imagenes'),
     ...heritageDirectoryLocalities(steps, 'pasos'),
   ].map((facet) => ({

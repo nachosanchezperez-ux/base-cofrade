@@ -8,6 +8,7 @@ import RelationalThread from '@/components/RelationalThread';
 import SectionTitle from '@/components/SectionTitle';
 import StepCrewFacts from '@/components/StepCrewFacts';
 import { getStepPhotoFraming } from '@/lib/step-photo-framing';
+import { heritageDirectoryTypePath, heritageTypeForValue } from '@/lib/heritage-directory';
 import { getPublishedEntityCoverMedia } from '@/lib/supabase/entity-media';
 import { getPasoPageBySlug } from '@/lib/supabase/public-entity-pages';
 import {
@@ -99,6 +100,7 @@ export default async function PasoDetailPage({params}){
   const result=await getPaso(slug);
   if(!result) notFound();
   const {paso,hermandad,imagenes=[],bandas=[]}=result;
+  const directoryType = heritageTypeForValue(paso.tipo, 'pasos');
   const [coverMedia, heritage] = await Promise.all([
     getCoverMedia(paso.id),
     getStepHeritage(paso.id),
@@ -212,7 +214,7 @@ export default async function PasoDetailPage({params}){
               <small>Hermandad</small>
               <strong>{hermandad.nombrePopular}</strong>
             </div> : null}
-            {publicText(paso.tipo) ? <div><small>Tipo</small><strong>{publicText(paso.tipo)}</strong></div> : null}
+            {publicText(paso.tipo) ? <div><small>Tipo</small><strong>{publicText(paso.tipo)}</strong>{directoryType ? <Link href={heritageDirectoryTypePath('pasos', directoryType.slug)}>Ver {directoryType.label.toLowerCase()} →</Link> : null}</div> : null}
             {publicText(paso.ejecucion) ? <div><small>Ejecución</small><strong>{publicText(paso.ejecucion)}</strong></div> : null}
             {publicText(paso.materiales) ? <div><small>Materiales</small><strong>{publicText(paso.materiales)}</strong></div> : null}
             {publicText(paso.sistemaPortadores) ? <div><small>Sistema de portadores</small><strong>{publicText(paso.sistemaPortadores)}</strong></div> : null}

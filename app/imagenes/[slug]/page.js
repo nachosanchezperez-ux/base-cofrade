@@ -6,6 +6,7 @@ import EntityMediaGallery from '@/components/EntityMediaGallery';
 import ImageHeroV2 from '@/components/ImageHeroV2';
 import ImageRestorationsSection from '@/components/ImageRestorationsSection';
 import { imageRestorationCards, buildImageChronology } from '@/lib/image-restoration-display';
+import { heritageDirectoryTypePath, heritageTypeForValue } from '@/lib/heritage-directory';
 import JsonLd from '@/components/JsonLd';
 import RelationalThread from '@/components/RelationalThread';
 import SourcesBlock from '@/components/SourcesBlock';
@@ -108,6 +109,7 @@ export default async function ImagenPage({ params }) {
   const galleryMedia = entityMedia.filter((item) => !item.isCover && item.relationType !== 'hero');
   const primaryStep = pasos.find((paso) => paso.slug) || pasos[0] || null;
   const canonicalPath = `/imagenes/${imagen.slug}`;
+  const directoryType = heritageTypeForValue(imagen.tipo, 'imagenes');
   const restorationCards = imageRestorationCards(imagen.restauraciones);
   const cronologia = buildImageChronology(imagen, restorationCards);
   const otrasImagenes = hermandad?.imagenes?.filter(
@@ -265,6 +267,7 @@ export default async function ImagenPage({ params }) {
             {publicText(imagen.tipologia || imagen.tipo) ? <article>
               <small>Tipología</small>
               <strong>{publicText(imagen.tipologia || imagen.tipo)}</strong>
+              {directoryType ? <Link href={heritageDirectoryTypePath('imagenes', directoryType.slug)}>Ver {directoryType.label.toLowerCase()} →</Link> : null}
             </article> : null}
 
             {imagen.coronacionCanonica && (

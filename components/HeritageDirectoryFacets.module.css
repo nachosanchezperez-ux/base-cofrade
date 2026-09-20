@@ -1,9 +1,20 @@
 .facets {
+  display: grid;
   margin: 30px 0 24px;
+  gap: 18px;
+}
+
+.group {
   padding: 20px;
   border: 1px solid #dfe5e9;
   border-radius: 18px;
   background: #fff;
+}
+
+@media (min-width: 900px) {
+  .facets {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  }
 }
 
 .heading {
@@ -57,7 +68,7 @@
 }
 
 @media (max-width: 560px) {
-  .facets {
+  .group {
     padding: 16px;
     border-radius: 15px;
   }
