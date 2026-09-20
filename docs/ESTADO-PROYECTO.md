@@ -504,22 +504,24 @@ El cierre consecutivo de #870, #871 y #867 deja repositorio, producción y base 
 
 El recálculo provincial se rehízo desde cero sobre Supabase productivo, excluyendo Sevilla capital y los **nueve municipios cerrados en siete macrolotes**. El TOP 5 nuevo es Carmona, Écija, Utrera, Sanlúcar la Mayor y Marchena; el TOP 3 queda formado por Carmona, Écija y Utrera.
 
-**Carmona queda seleccionada** por el mejor equilibrio entre deuda acreditada, actualidad de Fuentes, cerrabilidad y riesgo: Turismo provincial acredita nueve hermandades procesionando en 2026 y Hilo Cofrade no publica ninguna Hermandad carmonense. La única Salida municipal existente es letífica y no cubre la Semana Santa.
+**Carmona queda seleccionada** por el mejor equilibrio entre deuda acreditada, actualidad de Fuentes, cerrabilidad y riesgo. El inventario ya normaliza la formulación de Turismo provincial: son ocho hermandades penitenciales del Consejo más la Orden Seglar Servita, es decir, nueve sujetos corporativos y diez Salidas históricas de 2026 porque la Esperanza aporta dos cortejos. Hilo Cofrade no publica ninguna corporación carmonense.
 
 La evidencia y el método completos están en [`AUDITORIA-OCTAVO-MACROLOTE-MUNICIPAL-HC016-2026-09-20.md`](./AUDITORIA-OCTAVO-MACROLOTE-MUNICIPAL-HC016-2026-09-20.md).
 
 ## Siguiente movimiento autorizado
 
-**No existe todavía un frente editorial municipal activo.**
+**No existe todavía un frente editorial de datos municipal activo.**
 
-Carmona queda seleccionada como candidata única del octavo macrolote municipal HC-016. La siguiente puerta, previa orden expresa, es únicamente el **inventario canónico de sus nueve Hermandades y la matriz de Fuentes**, incluyendo conciliación de la Salida letífica existente, homónimos, sedes, Imágenes, Pasos, Bandas y duplicados.
+Carmona queda seleccionada como candidata única del octavo macrolote municipal HC-016. El **inventario canónico y la matriz de Fuentes** quedan cerrados: nueve sujetos corporativos, 27 imágenes candidatas y diez Salidas históricas de 2026. La Orden Seglar Servita comparte identidad organizadora con la Salida de septiembre ya existente; la Esperanza es una sola corporación con dos cortejos y no debe duplicarse.
 
-La Semana Santa de 2026 ya es histórica: sus recorridos no se tratarán como agenda futura y ninguna Salida se elevará a `held` sin evidencia de celebración. Esta selección no autoriza todavía staging, SQL, Apply ni apertura de PR editorial. Agenda Cofrade continúa como mantenimiento paralelo y no constituye un segundo macrofrente.
+La Semana Santa de 2026 ya es histórica: sus recorridos no se tratarán como agenda futura y ninguna Salida se elevará a `held` sin evidencia de celebración. La siguiente puerta, previa orden expresa, es completar evidencia posterior, Pasos, Bandas y sedes y convertir el inventario en plan row-by-row. No se autorizan todavía staging, SQL, Apply ni PR editorial de datos. Agenda Cofrade continúa como mantenimiento paralelo y no constituye un segundo macrofrente.
 
 Evidencia reciente:
 - [PR #870 · Restauración visual y cronología](https://github.com/nachosanchezperez-ux/base-cofrade/pull/870)
 - [PR #871 · Osuna · séptimo macrolote municipal](https://github.com/nachosanchezperez-ux/base-cofrade/pull/871)
 - [Inventario canónico de Osuna](./INVENTARIO-OSUNA-SEPTIMO-MACROLOTE-MUNICIPAL-HC016-2026-09-20.md)
+- [Inventario canónico de Carmona](./INVENTARIO-CARMONA-OCTAVO-MACROLOTE-MUNICIPAL-HC016-2026-09-20.md)
+- [Matriz de Fuentes de Carmona](./MATRIZ-FUENTES-CARMONA-OCTAVO-MACROLOTE-MUNICIPAL-HC016-2026-09-20.md)
 - [Plan row-by-row de Osuna](./PLAN-ROW-BY-ROW-OSUNA-HC016-2026-09-20.md)
 - [Manifiesto determinista de Osuna](./MANIFIESTO-DETERMINISTA-OSUNA-HC016-2026-09-20.md)
 - [Certificación de preflight SQL de Osuna](./CERTIFICACION-PREFLIGHT-SQL-OSUNA-HC016-2026-09-20.md)

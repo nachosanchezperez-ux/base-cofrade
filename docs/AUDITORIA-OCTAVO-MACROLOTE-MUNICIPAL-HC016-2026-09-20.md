@@ -59,7 +59,7 @@ Lectura directa, sin escrituras, sobre el proyecto productivo `kcevwkucqzcyrqaim
 
 ## 5. Evidencia externa actual
 
-- La ficha institucional de Turismo de la Provincia de Sevilla para [Carmona 2026](https://www.turismosevilla.org/es/eventos-y-fiestas/semana-santa-2026-carmona) acredita que procesionan **nueve hermandades**. En Supabase no hay ninguna Hermandad de Carmona.
+- La ficha institucional de Turismo de la Provincia de Sevilla para [Carmona 2026](https://www.turismosevilla.org/es/eventos-y-fiestas/semana-santa-2026-carmona) usa la expresión **«hasta nueve hermandades»**. El inventario posterior la normaliza como ocho hermandades penitenciales del Consejo más la Orden Seglar Servita: nueve sujetos corporativos y diez Salidas de 2026, porque la Esperanza aporta dos cortejos. En Supabase no hay ninguna Hermandad de Carmona.
 - Turismo provincial mantiene también programas específicos de [Écija 2026](https://www.turismosevilla.org/es/eventos-y-fiestas/semana-santa-2026-ecija), [Utrera 2026](https://www.turismosevilla.org/es/eventos-y-fiestas/semana-santa-2026-utrera) y [Marchena 2026](https://www.turismosevilla.org/es/eventos-y-fiestas/semana-santa-2026-marchena).
 - El Ayuntamiento de Sanlúcar la Mayor publicó en 2026 sus recorridos, horarios y cultos; como apoyo de contraste, la [Agenda Cultural de Andalucía](https://www.juntadeandalucia.es/cultura/agendaculturaldeandalucia/evento/semana-santa-de-sanlucar-la-mayor) enumera el núcleo procesional tradicional.
 
@@ -69,7 +69,7 @@ Las páginas institucionales de 2026 prueban actualidad y permiten abrir un inve
 
 | Posición | Municipio | Puntuación | Lectura operativa |
 |---:|---|---:|---|
-| 1 | **Carmona** | **92/100** | Nueve hermandades acreditadas, cero cargadas, programa 2026 y alcance medio cerrable |
+| 1 | **Carmona** | **92/100** | Nueve sujetos corporativos acreditados, cero cargados, diez Salidas de 2026 y alcance medio cerrable |
 | 2 | **Écija** | **88/100** | Deuda absoluta muy alta y gran rendimiento, con mayor complejidad patrimonial y nominal |
 | 3 | **Utrera** | **83/100** | Deuda alta y fuentes activas, pero conciliación más delicada con tres Hermandades y cuatro Bandas existentes |
 | 4 | **Sanlúcar la Mayor** | **79/100** | Universo manejable y muy incompleto; menor impacto que el TOP 3 |
@@ -85,7 +85,7 @@ Las páginas institucionales de 2026 prueban actualidad y permiten abrir un inve
 
 Carmona ofrece el mejor equilibrio entre impacto y riesgo:
 
-- deuda completa y visible: **0 de 9** Hermandades de Semana Santa;
+- deuda completa y visible: **0 de 9** sujetos corporativos del programa de Semana Santa, formados por ocho hermandades penitenciales y la Orden Seglar Servita;
 - fuente institucional específica de 2026;
 - tamaño suficiente para un macrolote de alto rendimiento, pero más controlable que Écija o Utrera;
 - superficie de duplicados baja: no hay Hermandades ni Bandas municipales que conciliar;
@@ -97,10 +97,12 @@ Carmona ofrece el mejor equilibrio entre impacto y riesgo:
 
 **Carmona queda seleccionada como octavo macrolote municipal HC-016.**
 
-Esta auditoría no autoriza todavía inventario, staging, SQL, Apply ni una PR editorial. La siguiente puerta, cuando exista orden expresa, será únicamente:
+En el momento de su cierre, esta auditoría no autorizaba inventario, staging, SQL, Apply ni una PR editorial. La orden posterior abrió únicamente:
 
-1. inventario canónico de las nueve Hermandades;
+1. inventario canónico de los nueve sujetos corporativos;
 2. matriz de Fuentes por entidad y relación;
 3. conciliación de la Salida letífica ya existente;
 4. clasificación histórica de las Salidas de Semana Santa 2026;
 5. detección de homónimos, sedes, Imágenes, Pasos, Bandas y duplicados antes de preparar operaciones.
+
+La puerta de inventario y matriz quedó cerrada en [`INVENTARIO-CARMONA-OCTAVO-MACROLOTE-MUNICIPAL-HC016-2026-09-20.md`](./INVENTARIO-CARMONA-OCTAVO-MACROLOTE-MUNICIPAL-HC016-2026-09-20.md) y [`MATRIZ-FUENTES-CARMONA-OCTAVO-MACROLOTE-MUNICIPAL-HC016-2026-09-20.md`](./MATRIZ-FUENTES-CARMONA-OCTAVO-MACROLOTE-MUNICIPAL-HC016-2026-09-20.md). La corrección no altera la selección de Carmona ni su puntuación: precisa la ontología y eleva el universo procesional de 2026 a diez Salidas históricas.
