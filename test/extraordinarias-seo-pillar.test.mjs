@@ -5,10 +5,10 @@ import test from 'node:test'
 const page = readFileSync(new URL('../app/extraordinarias/page.js', import.meta.url), 'utf8')
 
 test('Extraordinarias mantiene su intención SEO principal y canonical', () => {
-  assert.match(page, /Procesiones y salidas extraordinarias de Sevilla 2026/)
+  assert.match(page, /extraordinarySeoCopy\(currentYear\)/)
   assert.match(page, /canonical: '\/extraordinarias'/)
-  assert.match(page, /salidas extraordinarias de Sevilla en 2026/)
-  assert.match(page, /fechas, horarios, recorridos, acompañamientos musicales/)
+  assert.match(page, /generateMetadata/)
+  assert.match(page, /madridYear\(\)/)
 })
 
 test('Extraordinarias conserva datos estructurados y enlazado a guías', () => {
@@ -22,4 +22,10 @@ test('la página pilar muestra datos calculados, no cifras editoriales hardcodea
   assert.match(page, /upcomingCount/)
   assert.match(page, /capitalCount/)
   assert.match(page, /provinceCount/)
+})
+
+test('los accesos SEO incluyen próximas citas aunque crucen de año', () => {
+  assert.match(page, /upcomingOutings = visibleOutings\.filter\(\(item\) => item\.isUpcoming\)/)
+  assert.doesNotMatch(page, /const currentYear = 2026/)
+  assert.doesNotMatch(page, /en 2026|Sevilla 2026/)
 })

@@ -27,6 +27,7 @@ test('la Agenda pública muestra solo actos próximos y elimina el acceso histó
   const directory = read('components/AgendaCofradeDirectoryV4.js')
   const fromUrl = read('components/AgendaCofradeDirectoryFromUrl.js')
   const page = read('app/agenda-cofrade/page.js')
+  const seoCalendar = read('lib/seo-calendar.js')
 
   assert.match(directory, /Hoy/)
   assert.match(directory, /Este fin de semana/)
@@ -45,7 +46,8 @@ test('la Agenda pública muestra solo actos próximos y elimina el acceso histó
   assert.doesNotMatch(fromUrl, /'archive'/)
   assert.match(page, /items=\{upcoming\}/)
   assert.match(page, /Solo los próximos actos/)
-  assert.match(page, /Agenda cofrade de Sevilla y provincia/)
+  assert.match(page, /agendaSeoCopy/)
+  assert.match(seoCalendar, /Agenda cofrade de Sevilla y provincia/)
   assert.match(page, /collectionPageJsonLd/)
   assert.doesNotMatch(page, /Próxima cita/)
 })
