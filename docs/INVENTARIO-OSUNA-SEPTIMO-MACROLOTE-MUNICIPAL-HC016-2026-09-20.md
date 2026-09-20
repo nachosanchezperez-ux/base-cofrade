@@ -120,18 +120,18 @@ REUSE: Iglesia Parroquial de Nuestra Señora de Consolación · `637f8d5a-8b60-4
 
 | ID | Fecha | Título | Estado |
 |---|---|---|---|
-| `c0160034-0921-4000-8000-000000000001` | 2026-03-29 | Dulce Nombre de Osuna · Domingo de Ramos 2026 | announced |
-| `c0160034-0922-4000-8000-000000000002` | 2026-03-30 | Vía Crucis de la Humildad y Paciencia 2026 | announced |
-| `c0160034-0923-4000-8000-000000000003` | 2026-03-31 | Vera-Cruz de Osuna · Martes Santo 2026 | announced |
-| `c0160034-0924-4000-8000-000000000004` | 2026-04-01 | Salud y Encarnación de Osuna · Miércoles Santo 2026 | announced |
-| `c0160034-0925-4000-8000-000000000005` | 2026-04-02 | Misericordia de Osuna · Madrugá 2026 | announced |
-| `c0160034-0926-4000-8000-000000000006` | 2026-04-02 | Jesús Caído de Osuna · Jueves Santo 2026 | announced |
-| `c0160034-0927-4000-8000-000000000007` | 2026-04-02 | Humildad y Paciencia de Osuna · Jueves Santo 2026 | announced |
-| `c0160034-0928-4000-8000-000000000008` | 2026-04-03 | Jesús Nazareno de Osuna · Viernes Santo 2026 | announced |
-| `c0160034-0929-4000-8000-000000000009` | 2026-04-03 | Servitas de Osuna · Viernes Santo 2026 | announced |
-| `c0160034-0930-4000-8000-000000000010` | 2026-04-03 | Quinta Angustia de Osuna · Viernes Santo 2026 | announced |
-| `c0160034-0931-4000-8000-000000000011` | 2026-04-03 | Pax de Osuna · Viernes Santo 2026 | announced |
-| `c0160034-0932-4000-8000-000000000012` | 2026-04-04 | Santo Entierro de Osuna · Sábado Santo 2026 | announced |
+| `c0160034-0921-4000-8000-000000000001` | 2026-03-29 | Dulce Nombre de Osuna · Domingo de Ramos 2026 | held |
+| `c0160034-0922-4000-8000-000000000002` | 2026-03-30 | Vía Crucis de la Humildad y Paciencia 2026 | held |
+| `c0160034-0923-4000-8000-000000000003` | 2026-03-31 | Vera-Cruz de Osuna · Martes Santo 2026 | held |
+| `c0160034-0924-4000-8000-000000000004` | 2026-04-01 | Salud y Encarnación de Osuna · Miércoles Santo 2026 | held |
+| `c0160034-0925-4000-8000-000000000005` | 2026-04-02 | Misericordia de Osuna · Madrugá 2026 | held |
+| `c0160034-0926-4000-8000-000000000006` | 2026-04-02 | Jesús Caído de Osuna · Jueves Santo 2026 | held |
+| `c0160034-0927-4000-8000-000000000007` | 2026-04-02 | Humildad y Paciencia de Osuna · Jueves Santo 2026 | held |
+| `c0160034-0928-4000-8000-000000000008` | 2026-04-03 | Jesús Nazareno de Osuna · Viernes Santo 2026 | held |
+| `c0160034-0929-4000-8000-000000000009` | 2026-04-03 | Servitas de Osuna · Viernes Santo 2026 | held |
+| `c0160034-0930-4000-8000-000000000010` | 2026-04-03 | Quinta Angustia de Osuna · Viernes Santo 2026 | held |
+| `c0160034-0931-4000-8000-000000000011` | 2026-04-03 | Pax de Osuna · Viernes Santo 2026 | held |
+| `c0160034-0932-4000-8000-000000000012` | 2026-04-04 | Santo Entierro de Osuna · Sábado Santo 2026 | held |
 
 Las fechas ya han pasado, pero las fuentes de horarios son previas a cada cortejo. Por integridad editorial, el lote no eleva ninguna ocurrencia a `held` sin evidencia posterior individual.
 
