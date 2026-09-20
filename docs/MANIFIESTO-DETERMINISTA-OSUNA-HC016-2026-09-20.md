@@ -96,7 +96,7 @@ Los IDs de `bulk_import_items` se calculan como:
 
 ## Estado editorial de las ocurrencias
 
-Todas las salidas de Semana Santa 2026 quedan en `announced`. Antes de Apply deberá aportarse evidencia posterior para cada transición a `held`, o aceptarse expresamente ese estado conservador.
+Todas las salidas de Semana Santa 2026 quedan en `held` como registro histórico, conforme a la validación editorial expresa recibida el 20 de septiembre de 2026. Los recorridos y horarios conservan como soporte las fuentes oficiales ya inventariadas.
 
 ## Payload
 
