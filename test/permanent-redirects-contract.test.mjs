@@ -23,6 +23,10 @@ test('las URLs históricas verificadas conservan un destino permanente', () => {
       '/bandas/escolania-salesiana-maria-auxiliadora-sevilla',
     ],
     [
+      '/bandas/banda-musica-maria-santisima-victoria-cigarreras',
+      '/bandas/banda-musica-maria-santisima-victoria-las-cigarreras',
+    ],
+    [
       '/extraordinarias/padre-pio-divina-gracia-salida-extraordinaria-2026-10-11',
       '/extraordinarias/sevilla-divina-gracia-2026',
     ],
