@@ -4,6 +4,8 @@ import { notFound } from 'next/navigation';
 import EntitySectionNav from '@/components/EntitySectionNav';
 import EntityMediaGallery from '@/components/EntityMediaGallery';
 import ImageHeroV2 from '@/components/ImageHeroV2';
+import ImageRestorationsSection from '@/components/ImageRestorationsSection';
+import { imageRestorationCards, buildImageChronology } from '@/lib/image-restoration-display';
 import JsonLd from '@/components/JsonLd';
 import RelationalThread from '@/components/RelationalThread';
 import SourcesBlock from '@/components/SourcesBlock';
@@ -106,15 +108,8 @@ export default async function ImagenPage({ params }) {
   const galleryMedia = entityMedia.filter((item) => !item.isCover && item.relationType !== 'hero');
   const primaryStep = pasos.find((paso) => paso.slug) || pasos[0] || null;
   const canonicalPath = `/imagenes/${imagen.slug}`;
-  const cronologia = imagen.cronologia?.length
-    ? imagen.cronologia
-    : imagen.fecha
-      ? [{
-          fecha: imagen.fecha,
-          titulo: 'Datación',
-          texto: 'Fecha asociada actualmente a la ficha de esta imagen.'
-        }]
-      : [];
+  const restorationCards = imageRestorationCards(imagen.restauraciones);
+  const cronologia = buildImageChronology(imagen, restorationCards);
   const otrasImagenes = hermandad?.imagenes?.filter(
     (otraImagen) => otraImagen.slug !== imagen.slug
   ) || [];
@@ -306,23 +301,7 @@ export default async function ImagenPage({ params }) {
 
       <EntityMediaGallery items={galleryMedia} id="galeria" />
 
-      {imagen.restauraciones?.length > 0 && (
-        <section className="section brotherhood-soft" id="restauraciones">
-          <div className="shell">
-            <span className="eyebrow">Patrimonio</span>
-            <h2 className="image-section-title-v2">Restauraciones</h2>
-            <div className="image-record-list-v2">
-              {imagen.restauraciones.map((restauracion, index) => (
-                <article key={`${restauracion.fecha || index}-${index}`}>
-                  <strong>{restauracion.fecha}</strong>
-                  <h3>{restauracion.titulo}</h3>
-                  <p>{restauracion.texto}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
+      <ImageRestorationsSection items={restorationCards} />
 
       {imagen.acontecimientos?.length > 0 && (
         <section className="section" id="hitos">
@@ -350,10 +329,11 @@ export default async function ImagenPage({ params }) {
 
             <div className="image-timeline-v2">
               {cronologia.map((item, index) => (
-                <article key={`${item.fecha}-${item.titulo}-${index}`}>
+                <article key={`${item.fecha}-${item.titulo}-${index}`} id={item.anchor} style={item.anchor ? { scrollMarginTop: 150 } : undefined}>
                   <strong>{item.fecha}</strong>
                   <h3>{item.titulo}</h3>
                   <p>{item.texto}</p>
+                  {item.href ? <a className="text-link" href={item.href}>{item.enlace} <span aria-hidden="true">→</span></a> : null}
                 </article>
               ))}
             </div>
