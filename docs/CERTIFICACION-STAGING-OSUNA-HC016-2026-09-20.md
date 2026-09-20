@@ -24,8 +24,14 @@
 - residuos editoriales en outings: 0;
 - único import activo: Osuna, estado `ready`.
 
+## Deriva de base observada
+
+Durante el cierre se fusionó la PR #870. `main` y producción avanzaron de `eda4dd28066457809d69e26732a6f3b48475bcfe` a `bd2221cb5b748462a36e66d4b396da6630e3d7ed`.
+
+La PR #870 declara 0 escrituras Supabase y la producción quedó `READY` sin errores runtime en las 12 horas comprobadas. El staging no se invalida, pero esta deriva impide reutilizar el preflight para Apply.
+
 ## Puerta
 
 El staging conserva únicamente el manifiesto de las 368 operaciones. El payload SQL archivado termina en `ROLLBACK` y no toca las tablas de staging.
 
-**STOP obligatorio:** no ejecutar Apply sin una autorización explícita nueva y un preflight global inmediatamente anterior.
+**STOP obligatorio:** no ejecutar Apply sin una autorización explícita nueva y un preflight global inmediatamente anterior sobre el SHA vigente.
