@@ -1,6 +1,6 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 19 de septiembre de 2026 · selección del sexto macrolote municipal tras recálculo provincial desde cero
+**Corte operativo:** 20 de septiembre de 2026 · staging READY del sexto macrolote municipal HC-016
 
 **HEAD de cierre de contenido Cantillana:** f38fde844553e5794e252a734ae38284d75a50fa
 
@@ -28,7 +28,7 @@
 
 **Régimen:** FIRST EDITION FREEZE activo
 
-**Frente editorial ACTIVO:** **Lebrija · sexto macrolote municipal HC-016 · MANIFIESTO DETERMINISTA CERRADO**. Contrato congelado: **473/473 DML = 471 upsert + 2 update + 0 delete**, **32 REUSE**, namespace `c0160033-*` todavía sin materializar. **0 staging · 0 Apply**.
+**Frente editorial ACTIVO:** **Lebrija · sexto macrolote municipal HC-016 · STAGING READY**. Import `c0160033-0000-4000-8000-000000000001`: **473/473 válidas**, 471 upsert + 2 update, 0 delete, 32 REUSE, 0 aplicadas y `apply_authorized=false`. El namespace editorial `c0160033-*` continúa sin materializar.
 
 > GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. Tras cerrar Estepa se ha recalculado la provincia otra vez desde cero. Lebrija queda seleccionada como único sexto macrolote municipal. Osuna, Carmona, Écija, Utrera y cualquier ranking previo permanecen como evidencia del corte, no como cola automática.
 
@@ -81,7 +81,7 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | **CERRADO** | Tercer macrolote municipal HC-016 · Cantillana | Lote c0160030-0000-4000-8000-000000000001: 93/93, 0 inválidas y 0 fallos; Asunción y Pastora preservadas; Soledad cerrada con 4 titulares, 3 Pasos, 7 Cultos/7 ediciones 2026, 1 estación held; Banda local y Cruceta HC-019 preservadas | No reabrir sin deuda material nueva; Montefrío sigue como crédito textual; no elevar announced sin evidencia posterior |
 | **CERRADO** | Cuarto macrolote municipal HC-016 · Coria del Río | Universo canónico de 8 corporaciones publicado; lote base `c0160031` preservado; reconciliación final `c0160041-0000-4000-8000-000000000001` 22/22, 0 inválidas y 0 fallos; 8 Salidas núcleo 2026; 7 periodos musicales; Banda Municipal unificada; sede duplicada eliminada; Piedad y AM San Lucas conservan huecos legítimos sin inferencia | No reabrir sin deuda material nueva. El siguiente municipio requiere recálculo desde cero y una orden explícita |
 | **CERRADO** | Quinto macrolote municipal HC-016 · Estepa | Import `c0160032-0000-4000-8000-000000000001`: **495/495 aplicadas**, 490 upsert + 4 update + 1 delete, 21 REUSE, 0 inválidas y 0 fallos; 13 Hermandades publicadas, 28 Imágenes, 18 Pasos, 13 Salidas, 16 asignaciones musicales, 14 periodos, 8 Cultos/8 ediciones y 143 enlaces de Fuente; QA público y runtime en verde | No reabrir sin deuda material nueva. El siguiente municipio exige recálculo provincial desde cero y una orden explícita |
-| **ACTIVO · MANIFIESTO CERRADO** | Sexto macrolote municipal HC-016 · Lebrija | **473/473 DML** congeladas; 471 upsert + 2 update, 0 delete, 32 REUSE; IDs/slugs/rangos deterministas; namespace `c0160033-*` todavía sin materializar | Siguiente puerta: **SQL exacto → ejecución completa con ROLLBACK → 0 residuos**. **0 staging / 0 Apply** |
+| **ACTIVO · STAGING READY** | Sexto macrolote municipal HC-016 · Lebrija | Import `c0160033-0000-4000-8000-000000000001`: **473/473 válidas**, 471 upsert + 2 update, 32 REUSE, 0 inválidas, 0 aplicadas y 0 fallos; preflight SQL repetido con `ROLLBACK` y 0 residuos | Siguiente puerta: **refresh final → 32/32 REUSE → namespace/slugs/URLs → preflight global → autorización explícita de Apply** |
 | **CERRADO** | Navegación, búsqueda, SEO y repertorios · #811–#818 | Jornadas y municipios navegables; buscador ampliado y afinado; caché de directorios y fichas; repertorios de conciertos visibles | No reabrir sin regresión reproducible; los contadores de Home se corrigen de forma transversal sin alterar el modelo |
 | **CERRADO** | Cultos septiembre–diciembre de 2026 | Lote transversal HC-016 `c0162026-0909-4000-8000-000000000001`: 53/53, cuatro Hermandades y 0 DDL | Mantener ediciones futuras desde Fuentes oficiales; recurrencia no equivale a anuncio |
 | **CERRADO** | Carátulas de Discografía · #734 y #791 | Reintento del optimizador a la URL original y fallback accesible; #791 estabilizó las 17 carátulas de La Oliva que aún dependían del servidor antiguo | Mantener URLs estables y el fallback accesible como protección, no como deuda activa |
@@ -95,7 +95,7 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 
 - GitHub: #858 está fusionada; `main = 2c9d30b36ad4f4f2a9c4bb828de5be069fc3bce4`. Estepa está cerrada y antes de la rama documental de Lebrija había 0 PR abiertas.
 - Vercel: producción está READY en `dpl_CqbFFDxWiwadWZiyyyv7Z4JTGjnt`, exactamente sobre `2c9d30b36ad4f4f2a9c4bb828de5be069fc3bce4`, con `hilocofrade.es` asignado y sin error de alias.
-- Supabase: proyecto `Hilocofrade` ACTIVE_HEALTHY; Estepa `c0160032-0000-4000-8000-000000000001` permanece `completed`, 495/495 aplicadas, 0 inválidas, 0 fallos y fase de cierre certificada. Lebrija no tiene staging ni Apply.
+- Supabase: proyecto `Hilocofrade` ACTIVE_HEALTHY; Estepa permanece cerrada. Lebrija `c0160033-0000-4000-8000-000000000001` está `ready`, 473/473 válidas, 0 aplicadas, 0 fallos y `apply_authorized=false`.
 - Supabase Preview: #846 y la #822 reconstruida superaron previews nuevas con with_data=false. La cadena ejecuta 12 migraciones estructurales activas en orden y el seed mínimo conserva Sevilla, Maestro Tejera y Las Cigarreras.
 - Git ↔ Supabase: correspondencia 12/12 por versión y nombre. Se restauraron en Git las versiones remotas canónicas 20260915215828 y 20260916220756, y se recuperó exactamente 20260916205306_source_links_public_lookup_indexes. La deriva histórica queda **RESUELTA**.
 - Runtime: el postflight de Estepa y del deployment de cierre no registró errores runtime ni respuestas 4xx/5xx en la ventana certificada.
@@ -502,13 +502,13 @@ El inventario canónico y la matriz de Fuentes están en [`INVENTARIO-CORIA-DEL-
 
 ## Siguiente movimiento autorizado
 
-**Único frente editorial municipal activo: Lebrija · sexto macrolote HC-016 · ROW-BY-ROW CERRADO.**
+**Único frente editorial municipal activo: Lebrija · sexto macrolote HC-016 · STAGING READY.**
 
 El recálculo provincial sigue cerrado. El preflight específico de Lebrija ha resuelto el inventario: **12 corporaciones**, **24 Imágenes canónicas**, **23 Pasos**, **14 Salidas nuevas**, **16 series**, **12 relaciones musicales**, **5 Cultos** y un contrato exacto de **473 DML + 32 REUSE**.
 
-Siguiente movimiento, sin necesidad de una nueva selección: **generar payload SQL exacto de las 473 DML → comprobar contrato BEGIN/ROLLBACK → ejecutar el payload completo dentro de transacción + ROLLBACK → certificar 0 residuos**.
+El payload 473/473 está validado y el staging gobernado permanece `ready` con 0 operaciones aplicadas. Siguiente movimiento: **refresh final → 32/32 REUSE → namespace/slugs/URLs → preflight global final → autorización explícita de Apply**.
 
-**Staging y Apply siguen prohibidos.** No abrir Osuna, Carmona, Écija, Utrera ni otro municipio en paralelo. No se activa Laboratorio, HC-018 ni Sevilla capital. Los acontecimientos pasados que continúen legítimamente en `announced` solo pueden elevarse ante evidencia posterior verificable.
+**Apply sigue prohibido hasta una orden explícita.** No abrir Osuna, Carmona, Écija, Utrera ni otro municipio en paralelo. No se activa Laboratorio, HC-018 ni Sevilla capital. Los acontecimientos pasados que continúen legítimamente en `announced` solo pueden elevarse ante evidencia posterior verificable.
 
 Evidencia:
 - [Auditoría del quinto macrolote](./AUDITORIA-QUINTO-MACROLOTE-MUNICIPAL-HC016-2026-09-19.md)
@@ -530,3 +530,6 @@ Evidencia:
 - [Certificación de corrección del preflight](./CERTIFICACION-CORRECCION-PREFLIGHT-LEBRIJA-HC016-2026-09-19.md)
 - [Manifiesto determinista de Lebrija](./MANIFIESTO-DETERMINISTA-LEBRIJA-HC016-2026-09-19.md)
 - [Certificación del manifiesto determinista de Lebrija](./CERTIFICACION-MANIFIESTO-DETERMINISTA-LEBRIJA-HC016-2026-09-19.md)
+- [Certificación del preflight SQL de Lebrija](./CERTIFICACION-PREFLIGHT-SQL-LEBRIJA-HC016-2026-09-20.md)
+- [Certificación del staging READY de Lebrija](./CERTIFICACION-STAGING-LEBRIJA-HC016-2026-09-20.md)
+- [SQL archivado de preflight de Lebrija](../supabase/migrations_archive/post-first-edition-editorial/20260920090000_preflight_lebrija_sexto_macrolote_hc016.sql)
