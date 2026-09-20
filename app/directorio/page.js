@@ -1,4 +1,5 @@
 import { Suspense } from 'react'
+import Link from 'next/link'
 import EntityDirectoryExplorer from '@/components/EntityDirectoryExplorer'
 import EntityDirectoryExplorerFromUrl from '@/components/EntityDirectoryExplorerFromUrl'
 import JsonLd from '@/components/JsonLd'
@@ -47,6 +48,7 @@ export default async function DirectorioPage() {
       { '@type': 'CollectionPage', name: `Imágenes (${counts.image || 0})`, url: absoluteUrl('/imagenes') },
       { '@type': 'CollectionPage', name: `Pasos (${counts.step || 0})`, url: absoluteUrl('/pasos') },
       { '@type': 'CollectionPage', name: `Bandas (${counts.band || 0})`, url: absoluteUrl('/bandas') },
+      { '@type': 'CollectionPage', name: 'Marchas procesionales', url: absoluteUrl('/marchas') },
     ],
   }
 
@@ -61,8 +63,11 @@ export default async function DirectorioPage() {
         <span className="eyebrow">Enciclopedia cofrade</span>
         <h1 className="page-title">Directorio</h1>
         <p className="page-lead">
-          Hermandades, Imágenes, Pasos y Bandas tienen directorio público. Marchas y Autores se descubren mediante la búsqueda, Tira del hilo y las relaciones documentadas en cada ficha.
+          Hermandades, Imágenes, Pasos y Bandas comparten este buscador relacional. El archivo musical dispone además de un directorio propio para recorrer sus obras, compositores y conexiones procesionales.
         </p>
+        <Link className={styles.marchesLink} href="/marchas">
+          Explorar el directorio de Marchas <span aria-hidden="true">→</span>
+        </Link>
         <Suspense fallback={<EntityDirectoryExplorer items={items} />}>
           <EntityDirectoryExplorerFromUrl items={items} />
         </Suspense>

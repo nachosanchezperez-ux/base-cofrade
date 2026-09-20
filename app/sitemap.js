@@ -77,6 +77,11 @@ const staticEntries = [
     priority: 0.86,
   },
   {
+    url: absoluteUrl('/marchas'),
+    changeFrequency: 'weekly',
+    priority: 0.88,
+  },
+  {
     url: absoluteUrl('/agenda-cofrade'),
     changeFrequency: 'daily',
     priority: 0.92,
