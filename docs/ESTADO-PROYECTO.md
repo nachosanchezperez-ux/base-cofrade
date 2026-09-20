@@ -1,14 +1,14 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 20 de septiembre de 2026 · Osuna cerrada como séptimo macrolote municipal HC-016 · HC-SEO-03/04/05 integradas secuencialmente
+**Corte operativo:** 20 de septiembre de 2026 · Osuna cerrada como séptimo macrolote municipal HC-016 · frente SEO reconciliado · puerta de Carmona libre
 
-**HEAD funcional de `main` y producción antes de esta actualización documental:** `c9d5c491a81da0cf40ff1c5b719e5e92983d3695` · #876, #877, #882 y #878 fusionadas
+**HEAD funcional de `main` y producción antes de esta actualización documental:** `0e01dd021a109661e1c6f150dfa358cc47d2746a` · #876, #877, #882, #878 y #881 fusionadas
 
-**Producción funcional verificada:** READY · deployment `dpl_3oezqceUohSGCwUh73AyDLwkjLyU` · SHA coincidente · `hilocofrade.es` y `www.hilocofrade.es` sin error de alias
+**Producción funcional verificada:** READY · deployment `dpl_7hG6yPu3WiTj69Jwd5tjxSbPJKNL` · SHA coincidente · `hilocofrade.es` y `www.hilocofrade.es` sin error de alias
 
 **Supabase:** `ACTIVE_HEALTHY` · 12/12 migraciones estructurales activas · Osuna `c0160034-0000-4000-8000-000000000001` cerrada con **368/368 aplicadas · 0 inválidas · 0 fallos**
 
-**PR abiertas:** **1** · #881, HC-SEO-08 concurrente y fuera de esta orden; no autorizada para integración
+**PR abiertas:** **0**
 
 **Staging editoriales activos:** **0**
 
@@ -16,7 +16,7 @@
 
 **Régimen:** FIRST EDITION FREEZE activo
 
-**Frente editorial municipal ACTIVO:** **ninguno**. Carmona permanece intacta como siguiente puerta reservada, sin staging, SQL ni Apply; su activación queda bloqueada hasta recuperar 0 PR abiertas.
+**Frente editorial municipal ACTIVO:** **ninguno**. Carmona permanece intacta y queda liberada como siguiente puerta para la fase exclusiva de evidencia posterior, sin staging, SQL ni Apply.
 
 > GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. Los rankings municipales previos son evidencia histórica, no una cola automática. El próximo municipio solo puede nacer de un recálculo provincial nuevo y una orden expresa.
 
@@ -74,7 +74,7 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | **CERRADO** | Restauraciones de Imágenes · #870 | Módulo visual y alta recíproca en la cronología de Nuestro Padre Jesús de la Paz; reutiliza la intervención canónica de 2026, conserva la datación de 1990 y no duplica datos ni escribe en Supabase | No abrir excepciones nominales: el patrón debe reutilizarse solo con intervenciones canónicas publicadas y evidencia verificable |
 | **CERRADO** | HC-SEO-01 · #867 | Sitemap y descubrimiento por familias estabilizados; Marchas paginadas; Open Graph, Twitter Cards, títulos y JSON-LD normalizados; producción `6da63631…` READY, sin cambiar rutas, slugs, canonical, esquema ni datos | No reabrir sin regresión reproducible. La siguiente iteración SEO exige auditoría nueva y una cola acotada |
 | **CERRADO** | HC-SEO-02/03/04/05/06 · #874, #876, #877, #878, #879 y remate #882 | Sitemaps segmentados; directorio de Marchas; índice SSR de Hermandades alineado con la indexabilidad; frescura anual de Agenda y Extraordinarias; facetas de Bandas preservadas. QA conjunto: 1.720 URL, 0 duplicadas, 0 ausencias entre sitemap general y segmentados | No reabrir ni ampliar el alcance sin auditoría nueva; conservar el corte temporal `Europe/Madrid` y la frontera editorial compartida |
-| **FUERA DE ALCANCE** | HC-SEO-08 · #881 | PR concurrente abierta sobre tipologías de Imágenes y Pasos; no pertenece a la orden #876 → #877 → #878 y no tiene autorización de integración | Resolver mediante una orden separada; mientras siga abierta no certificar 0 PR ni liberar operativamente Carmona |
+| **CERRADO** | HC-SEO-08 · #881 | Tipologías normalizadas de Imágenes y Pasos integradas tras reconciliación contra `main`; 14 facetas públicas, canonical, datos estructurados, navegación y sitemap verificados | No reabrir ni ampliar la taxonomía sin auditoría nueva; mantener el umbral editorial mínimo de tres fichas |
 | **CERRADO** | Navegación, búsqueda, SEO y repertorios · #811–#818 | Jornadas y municipios navegables; buscador ampliado y afinado; caché de directorios y fichas; repertorios de conciertos visibles | No reabrir sin regresión reproducible; los contadores de Home se corrigen de forma transversal sin alterar el modelo |
 | **CERRADO** | Cultos septiembre–diciembre de 2026 | Lote transversal HC-016 `c0162026-0909-4000-8000-000000000001`: 53/53, cuatro Hermandades y 0 DDL | Mantener ediciones futuras desde Fuentes oficiales; recurrencia no equivale a anuncio |
 | **CERRADO** | Carátulas de Discografía · #734 y #791 | Reintento del optimizador a la URL original y fallback accesible; #791 estabilizó las 17 carátulas de La Oliva que aún dependían del servidor antiguo | Mantener URLs estables y el fallback accesible como protección, no como deuda activa |
@@ -86,12 +86,12 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 
 ## Verdad de plataforma
 
-- GitHub: `main = c9d5c491a81da0cf40ff1c5b719e5e92983d3695` en el corte funcional; #876, #877, #882 y #878 están fusionadas. Permanece abierta únicamente #881, concurrente y fuera de esta orden.
-- Vercel: producción está READY en `dpl_3oezqceUohSGCwUh73AyDLwkjLyU`, exactamente sobre `c9d5c491a81da0cf40ff1c5b719e5e92983d3695`, con los alias públicos asignados y sin error.
+- GitHub: `main = 0e01dd021a109661e1c6f150dfa358cc47d2746a` en el corte funcional; #876, #877, #882, #878 y #881 están fusionadas y hay 0 PR abiertas.
+- Vercel: producción está READY en `dpl_7hG6yPu3WiTj69Jwd5tjxSbPJKNL`, exactamente sobre `0e01dd021a109661e1c6f150dfa358cc47d2746a`, con los alias públicos asignados y sin error.
 - Supabase: proyecto `Hilocofrade` ACTIVE_HEALTHY; 12/12 migraciones estructurales activas. Carmona conserva 1 municipio REUSE, 0 Hermandades, 0 Bandas, 0 Lugares, 0 localizaciones, 1 Salida, 0 staging activos y 0 operaciones aplicadas.
 - Supabase Preview: #846 y la #822 reconstruida superaron previews nuevas con with_data=false. La cadena ejecuta 12 migraciones estructurales activas en orden y el seed mínimo conserva Sevilla, Maestro Tejera y Las Cigarreras.
 - Git ↔ Supabase: correspondencia 12/12 por versión y nombre. Se restauraron en Git las versiones remotas canónicas 20260915215828 y 20260916220756, y se recuperó exactamente 20260916205306_source_links_public_lookup_indexes. La deriva histórica queda **RESUELTA**.
-- Runtime: el postflight de `dpl_3oezqceUohSGCwUh73AyDLwkjLyU` no registró errores en las 24 horas comprobadas.
+- Runtime: el postflight de `dpl_7hG6yPu3WiTj69Jwd5tjxSbPJKNL` no registró errores en el intervalo posterior al despliegue comprobado.
 ## Reconciliación #789–#799
 
 | PR | Estado canónico | Resultado |
@@ -501,8 +501,9 @@ El cierre consecutivo de #870, #871 y #867 deja repositorio, producción y base 
 - #871 cerró Osuna como séptimo macrolote municipal con 368/368 operaciones, 8 REUSE y las 12 Salidas de Semana Santa 2026 en `held`;
 - #867 integró HC-SEO-01 sobre el cierre de Osuna y llevó `main` y producción a `6da63631f61bd6caa031a7861d83ba19cda89143`;
 - #876, #877 y #878 se reconciliaron contra el `main` sucesivo y se integraron con postflight individual; #882 corrigió el índice SSR de Hermandades para excluir 30 fichas públicas que no superaban el mínimo editorial del sitemap;
-- el sitemap general y los ocho segmentados contienen exactamente 1.720 URL, sin duplicados, cruces, ausencias ni extras; Marchas, Bandas, Hermandades, Agenda y Extraordinarias conservan canonical e indexabilidad coherentes;
-- no quedan staging editoriales activos ni errores runtime recientes; queda abierta únicamente #881, creada de forma concurrente y no autorizada dentro de esta orden.
+- #881 se reconcilió después contra el `main` resultante y cerró HC-SEO-08 con siete tipologías públicas de Imágenes y siete de Pasos, sin perder las facetas territoriales ni ninguna superficie SEO previa;
+- el sitemap general y los ocho segmentados contienen exactamente 1.734 URL, sin duplicados, cruces, ausencias ni extras; Marchas, Bandas, Hermandades, Imágenes, Pasos, Agenda y Extraordinarias conservan canonical e indexabilidad coherentes;
+- no quedan PR abiertas, staging editoriales activos ni errores runtime recientes.
 
 ## Octavo macrolote provincial · selección
 
@@ -512,13 +513,13 @@ El recálculo provincial se rehízo desde cero sobre Supabase productivo, excluy
 
 La evidencia y el método completos están en [`AUDITORIA-OCTAVO-MACROLOTE-MUNICIPAL-HC016-2026-09-20.md`](./AUDITORIA-OCTAVO-MACROLOTE-MUNICIPAL-HC016-2026-09-20.md).
 
-## Siguiente movimiento autorizado
+## Siguiente puerta
 
-**No existe todavía un frente editorial de datos municipal activo.** Carmona sigue siendo la siguiente puerta, pero no queda operativamente liberada mientras #881 impida certificar 0 PR abiertas.
+**No existe todavía un frente editorial de datos municipal activo.** Carmona queda operativamente liberada como siguiente puerta tras recuperar 0 PR abiertas. La fase siguiente se limita a evidencia posterior y no autoriza todavía staging, SQL, dry-run, Apply ni publicación.
 
 Carmona queda seleccionada como candidata única del octavo macrolote municipal HC-016. El **inventario canónico y la matriz de Fuentes** quedan cerrados: nueve sujetos corporativos, 27 imágenes candidatas y diez Salidas históricas de 2026. La Orden Seglar Servita comparte identidad organizadora con la Salida de septiembre ya existente; la Esperanza es una sola corporación con dos cortejos y no debe duplicarse.
 
-La Semana Santa de 2026 ya es histórica: sus recorridos no se tratarán como agenda futura y ninguna Salida se elevará a `held` sin evidencia de celebración. Una vez recuperadas 0 PR, la puerta exacta será: evidencia posterior de las diez Salidas → participación por Salida → acompañamientos musicales y reconciliación provincial → sedes, con atención a Quinta Angustia y Santo Entierro → denominación y enlace no duplicado de Servitas → plan row-by-row. No se autorizan todavía staging, payload SQL, dry-run, Apply ni publicación del lote de Carmona. Agenda Cofrade continúa como mantenimiento paralelo y no constituye un segundo macrofrente.
+La Semana Santa de 2026 ya es histórica: sus recorridos no se tratarán como agenda futura y ninguna Salida se elevará a `held` sin evidencia de celebración. La puerta exacta es: evidencia posterior de las diez Salidas → participación por Salida → acompañamientos musicales y reconciliación provincial → sedes, con atención a Quinta Angustia y Santo Entierro → denominación y enlace no duplicado de Servitas → plan row-by-row. No se autorizan todavía staging, payload SQL, dry-run, Apply ni publicación del lote de Carmona. Agenda Cofrade continúa como mantenimiento paralelo y no constituye un segundo macrofrente.
 
 Evidencia reciente:
 - [PR #870 · Restauración visual y cronología](https://github.com/nachosanchezperez-ux/base-cofrade/pull/870)
@@ -533,5 +534,6 @@ Evidencia reciente:
 - [SQL archivado de preflight de Osuna](../supabase/migrations_archive/post-first-edition-editorial/20260920180000_preflight_osuna_septimo_macrolote_hc016.sql)
 - [PR #867 · HC-SEO-01](https://github.com/nachosanchezperez-ux/base-cofrade/pull/867)
 - [PR #876 · HC-SEO-03](https://github.com/nachosanchezperez-ux/base-cofrade/pull/876)
+- [PR #881 · HC-SEO-08](https://github.com/nachosanchezperez-ux/base-cofrade/pull/881)
 - [PR #877 · HC-SEO-04](https://github.com/nachosanchezperez-ux/base-cofrade/pull/877)
 - [PR #878 · HC-SEO-05](https://github.com/nachosanchezperez-ux/base-cofrade/pull/878)
