@@ -1,5 +1,5 @@
 import JsonLd from '@/components/JsonLd'
-import DirectoryLocalityFacets from '@/components/DirectoryLocalityFacets'
+import HeritageDirectoryFacets from '@/components/HeritageDirectoryFacets'
 import RelationalEntityDirectory from '@/components/RelationalEntityDirectory'
 import { getImagesDirectory } from '@/lib/supabase/directories'
 import { breadcrumbJsonLd, collectionPageJsonLd, socialMetadata } from '@/lib/seo'
@@ -40,7 +40,7 @@ export default async function ImagenesPage() {
         <p className="page-lead">
           Descubre titulares y otras imágenes físicas a través de su hermandad, localidad, autoría, datación y relaciones documentadas.
         </p>
-        <DirectoryLocalityFacets items={images} section="imagenes" title="Imágenes" />
+        <HeritageDirectoryFacets items={images} section="imagenes" title="Imágenes" />
         <RelationalEntityDirectory items={images} kind="image" />
       </div>
     </section>

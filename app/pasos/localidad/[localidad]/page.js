@@ -47,6 +47,7 @@ export default async function StepMunicipalityDirectoryPage({ params }) {
       description={data.description}
       path={data.path}
       contextLabel={data.label}
+      initialMunicipalitySlug={localidad}
     />
   )
 }

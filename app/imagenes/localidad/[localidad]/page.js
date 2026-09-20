@@ -47,6 +47,7 @@ export default async function ImageMunicipalityDirectoryPage({ params }) {
       description={data.description}
       path={data.path}
       contextLabel={data.label}
+      initialMunicipalitySlug={localidad}
     />
   )
 }
