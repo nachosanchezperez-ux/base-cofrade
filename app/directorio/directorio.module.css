@@ -2,3 +2,22 @@
   min-height: 100vh;
   background: #fff;
 }
+
+.marchesLink {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  margin: 0 0 28px;
+  padding: 10px 14px;
+  border: 1px solid rgba(21,59,105,.18);
+  border-radius: 999px;
+  color: #153b69;
+  background: #f7f9fb;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.marchesLink:hover,
+.marchesLink:focus-visible {
+  border-color: #c99f49;
+}
