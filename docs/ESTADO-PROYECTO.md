@@ -1,36 +1,24 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 20 de septiembre de 2026 · Lebrija cerrada y certificada · sexto macrolote municipal HC-016
+**Corte operativo:** 20 de septiembre de 2026 · Osuna cerrada como séptimo macrolote municipal HC-016 · HC-SEO-01 integrada
 
-**HEAD de cierre de contenido Cantillana:** f38fde844553e5794e252a734ae38284d75a50fa
+**HEAD canónico de `main` y producción:** `6da63631f61bd6caa031a7861d83ba19cda89143` · #867 fusionada
 
-**HEAD de cierre funcional Coria del Río:** `50c762f3323d7a3a9725021cdf5d7e3ba780964b` · #851 fusionada
+**Producción vigente:** READY · deployment `dpl_CUQdvkKCoBwnr7babUtZUsE3MffR` · SHA coincidente · `hilocofrade.es` sin error de alias
 
-**HEAD de selección de Estepa:** `74d8e1dc39655d2f19c58a79eee6d48574ec4031` · #853 fusionada
+**Supabase:** `ACTIVE_HEALTHY` · 12/12 migraciones estructurales activas · Osuna `c0160034-0000-4000-8000-000000000001` cerrada con **368/368 aplicadas · 0 inválidas · 0 fallos**
 
-**HEAD de preflight/plan Estepa:** `0bf938e69f6bd15fcccdd6e30ce177702bbcec45` · #854 fusionada
+**PR abiertas:** **0**
 
-**HEAD de manifiesto determinista Estepa:** `e80be2f4b99e0ea195fab5c9f80504aadd563edd` · #855 fusionada
+**Staging editoriales activos:** **0**
 
-**HEAD de preflight SQL Estepa:** `4aa0807b983ca376a62992bc393e27ae02b04df4` · #856 fusionada
-
-**HEAD canónico del tablero:** el commit que contiene esta actualización documental; el postflight exacto se consigna en el entregable de cierre.
-
-**Producción vigente al cierre de Lebrija:** READY · deployment `dpl_8Mn6ca5Se5h4HFPTGPmXRxVCS1vW` · SHA `7183f9dcd7cdaa65c683d1e3288349c29f3cf738` · `hilocofrade.es` sin error de alias
-
-**Supabase:** `ACTIVE_HEALTHY` · 12/12 migraciones estructurales activas · Lebrija `c0160033-0000-4000-8000-000000000001` cerrada con **473/473 aplicadas · 0 inválidas · 0 fallos**
-
-**Reconciliación de migraciones:** **RESUELTA** en #846 · sin migration repair, sin reaplicar DDL, sin cambios de RLS
-
-**Cantillana / #822:** **FUSIONADA Y CERTIFICADA** · lote c0160030-0000-4000-8000-000000000001 · 93/93 · 0 inválidas · 0 fallos
-
-**PR abiertas antes de abrir la documentación de selección de Lebrija:** **0**
+**Errores runtime recientes:** **0** en la última hora comprobada
 
 **Régimen:** FIRST EDITION FREEZE activo
 
-**Frente editorial municipal ACTIVO:** **ninguno**. Lebrija · sexto macrolote municipal HC-016 queda cerrada con **473/473 aplicadas**, 471 upsert + 2 update, 32 REUSE, 0 inválidas, 0 fallos y `apply_authorized=true`.
+**Frente editorial municipal ACTIVO:** **ninguno**. Estepa, Lebrija y Osuna están cerradas y certificadas como quinto, sexto y séptimo macrolote municipal HC-016.
 
-> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. Tras cerrar Estepa se ha recalculado la provincia otra vez desde cero. Lebrija queda seleccionada como único sexto macrolote municipal. Osuna, Carmona, Écija, Utrera y cualquier ranking previo permanecen como evidencia del corte, no como cola automática.
+> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. Los rankings municipales previos son evidencia histórica, no una cola automática. El próximo municipio solo puede nacer de un recálculo provincial nuevo y una orden expresa.
 
 ## Tablero operativo único
 
@@ -82,6 +70,9 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | **CERRADO** | Cuarto macrolote municipal HC-016 · Coria del Río | Universo canónico de 8 corporaciones publicado; lote base `c0160031` preservado; reconciliación final `c0160041-0000-4000-8000-000000000001` 22/22, 0 inválidas y 0 fallos; 8 Salidas núcleo 2026; 7 periodos musicales; Banda Municipal unificada; sede duplicada eliminada; Piedad y AM San Lucas conservan huecos legítimos sin inferencia | No reabrir sin deuda material nueva. El siguiente municipio requiere recálculo desde cero y una orden explícita |
 | **CERRADO** | Quinto macrolote municipal HC-016 · Estepa | Import `c0160032-0000-4000-8000-000000000001`: **495/495 aplicadas**, 490 upsert + 4 update + 1 delete, 21 REUSE, 0 inválidas y 0 fallos; 13 Hermandades publicadas, 28 Imágenes, 18 Pasos, 13 Salidas, 16 asignaciones musicales, 14 periodos, 8 Cultos/8 ediciones y 143 enlaces de Fuente; QA público y runtime en verde | No reabrir sin deuda material nueva. El siguiente municipio exige recálculo provincial desde cero y una orden explícita |
 | **CERRADO** | Sexto macrolote municipal HC-016 · Lebrija | Import `c0160033-0000-4000-8000-000000000001`: **473/473 aplicadas**, 471 upsert + 2 update, 32 REUSE, 0 inválidas y 0 fallos; 12 corporaciones, 24 Imágenes canónicas, 23 Pasos, 14 Salidas nuevas, 16 series, 12 periodos musicales y 5 Cultos; QA de integridad con 0 colisiones y 0 huérfanos | No reabrir sin deuda material nueva. Rocío permanece `noindex, follow` por mínimo editorial insuficiente; no inventar relaciones para forzar indexación. El siguiente municipio exige recálculo desde cero y orden expresa |
+| **CERRADO** | Séptimo macrolote municipal HC-016 · Osuna · #871 | Import `c0160034-0000-4000-8000-000000000001`: **368/368 aplicadas**, 368 UPSERT, 8 REUSE, 0 inválidas y 0 fallos; 11 Hermandades, 27 Imágenes, 21 Pasos, 12 series, 12 Salidas históricas de Semana Santa 2026 en `held`, 45 relaciones de cortejo y 87 enlaces de Fuente | No reabrir sin deuda material nueva. Los recorridos de 2026 permanecen como histórico; el octavo municipio exige recálculo provincial desde cero y orden expresa |
+| **CERRADO** | Restauraciones de Imágenes · #870 | Módulo visual y alta recíproca en la cronología de Nuestro Padre Jesús de la Paz; reutiliza la intervención canónica de 2026, conserva la datación de 1990 y no duplica datos ni escribe en Supabase | No abrir excepciones nominales: el patrón debe reutilizarse solo con intervenciones canónicas publicadas y evidencia verificable |
+| **CERRADO** | HC-SEO-01 · #867 | Sitemap y descubrimiento por familias estabilizados; Marchas paginadas; Open Graph, Twitter Cards, títulos y JSON-LD normalizados; producción `6da63631…` READY, sin cambiar rutas, slugs, canonical, esquema ni datos | No reabrir sin regresión reproducible. La siguiente iteración SEO exige auditoría nueva y una cola acotada |
 | **CERRADO** | Navegación, búsqueda, SEO y repertorios · #811–#818 | Jornadas y municipios navegables; buscador ampliado y afinado; caché de directorios y fichas; repertorios de conciertos visibles | No reabrir sin regresión reproducible; los contadores de Home se corrigen de forma transversal sin alterar el modelo |
 | **CERRADO** | Cultos septiembre–diciembre de 2026 | Lote transversal HC-016 `c0162026-0909-4000-8000-000000000001`: 53/53, cuatro Hermandades y 0 DDL | Mantener ediciones futuras desde Fuentes oficiales; recurrencia no equivale a anuncio |
 | **CERRADO** | Carátulas de Discografía · #734 y #791 | Reintento del optimizador a la URL original y fallback accesible; #791 estabilizó las 17 carátulas de La Oliva que aún dependían del servidor antiguo | Mantener URLs estables y el fallback accesible como protección, no como deuda activa |
@@ -500,35 +491,30 @@ La evidencia completa está en [`AUDITORIA-CUARTO-MACROLOTE-MUNICIPAL-2026-09-18
 
 El inventario canónico y la matriz de Fuentes están en [`INVENTARIO-CORIA-DEL-RIO-CUARTO-MACROLOTE-MUNICIPAL-HC016-2026-09-18.md`](./INVENTARIO-CORIA-DEL-RIO-CUARTO-MACROLOTE-MUNICIPAL-HC016-2026-09-18.md).
 
+## Reconciliación post-Osuna y HC-SEO-01
+
+El cierre consecutivo de #870, #871 y #867 deja repositorio, producción y base de datos alineados:
+
+- #870 publicó el patrón visual de Restauraciones y su enlace con la cronología existente, sin escrituras en Supabase;
+- #871 cerró Osuna como séptimo macrolote municipal con 368/368 operaciones, 8 REUSE y las 12 Salidas de Semana Santa 2026 en `held`;
+- #867 integró HC-SEO-01 sobre el cierre de Osuna y llevó `main` y producción a `6da63631f61bd6caa031a7861d83ba19cda89143`;
+- no quedan PR abiertas, staging editoriales activos ni errores runtime recientes.
+
 ## Siguiente movimiento autorizado
 
 **No existe un frente editorial municipal activo.**
 
-Lebrija queda cerrada y certificada con **473/473 aplicadas**, **32/32 REUSE**, 0 colisiones y 0 huérfanos nucleares. Su fotografía productiva es: **12 corporaciones**, **24 Imágenes canónicas**, **23 Pasos**, **14 Salidas nuevas**, **16 series**, **12 relaciones musicales** y **5 Cultos**.
+El siguiente frente permitido es exclusivamente el **recálculo desde cero del octavo macrolote municipal HC-016**. Debe excluir los siete municipios ya cerrados, medir de nuevo cobertura, deuda acreditada, densidad relacional, actualidad, Fuentes, duplicidades y riesgo, producir un TOP 5 y un TOP 3, y seleccionar un único municipio.
 
-El siguiente movimiento municipal exige **recalcular la cobertura provincial desde cero** y elegir un único municipio mediante una orden expresa. Osuna, Carmona, Écija, Utrera, Sanlúcar la Mayor y cualquier ranking anterior son evidencia histórica, no una cola automática. No se activa Laboratorio, HC-018 ni Sevilla capital.
+Carmona, Écija, Utrera, Sanlúcar la Mayor y cualquier resultado anterior siguen siendo evidencia histórica, no una cola automática. El recálculo no autoriza todavía inventario, staging, SQL, Apply ni apertura de PR editorial. Agenda Cofrade continúa como mantenimiento paralelo y no constituye un segundo macrofrente.
 
-Evidencia:
-- [Auditoría del quinto macrolote](./AUDITORIA-QUINTO-MACROLOTE-MUNICIPAL-HC016-2026-09-19.md)
-- [Inventario canónico de Estepa](./INVENTARIO-ESTEPA-QUINTO-MACROLOTE-MUNICIPAL-HC016-2026-09-19.md)
-- [Preflight específico de Estepa](./PREFLIGHT-ESTEPA-QUINTO-MACROLOTE-MUNICIPAL-HC016-2026-09-19.md)
-- [Plan row-by-row de Estepa](./PLAN-ROW-BY-ROW-ESTEPA-HC016-2026-09-19.md)
-- [Manifiesto determinista de Estepa](./MANIFIESTO-DETERMINISTA-ESTEPA-HC016-2026-09-19.md)
-- [Certificación del manifiesto determinista](./CERTIFICACION-MANIFIESTO-DETERMINISTA-ESTEPA-HC016-2026-09-19.md)
-- [Certificación del preflight SQL](./CERTIFICACION-PREFLIGHT-SQL-ESTEPA-HC016-2026-09-19.md)
-- [Certificación del staging READY](./CERTIFICACION-STAGING-ESTEPA-HC016-2026-09-19.md)
-- [Certificación de cierre y QA productivo](./CERTIFICACION-CIERRE-ESTEPA-QUINTO-MACROLOTE-MUNICIPAL-HC016-2026-09-19.md)
-- [SQL archivado de preflight](../supabase/migrations_archive/post-first-edition-editorial/20260919120000_preflight_estepa_quinto_macrolote_hc016.sql)
-- [Certificación de selección de Estepa](./CERTIFICACION-SELECCION-ESTEPA-QUINTO-MACROLOTE-MUNICIPAL-HC016-2026-09-19.md)
-- [Auditoría del sexto macrolote municipal](./AUDITORIA-SEXTO-MACROLOTE-MUNICIPAL-HC016-2026-09-19.md)
-- [Inventario canónico y matriz de Fuentes de Lebrija](./INVENTARIO-LEBRIJA-SEXTO-MACROLOTE-MUNICIPAL-HC016-2026-09-19.md)
-- [Certificación de selección de Lebrija](./CERTIFICACION-SELECCION-LEBRIJA-SEXTO-MACROLOTE-MUNICIPAL-HC016-2026-09-19.md)
-- [Preflight específico de Lebrija](./PREFLIGHT-LEBRIJA-SEXTO-MACROLOTE-MUNICIPAL-HC016-2026-09-19.md)
-- [Plan row-by-row de Lebrija](./PLAN-ROW-BY-ROW-LEBRIJA-HC016-2026-09-19.md)
-- [Certificación de corrección del preflight](./CERTIFICACION-CORRECCION-PREFLIGHT-LEBRIJA-HC016-2026-09-19.md)
-- [Manifiesto determinista de Lebrija](./MANIFIESTO-DETERMINISTA-LEBRIJA-HC016-2026-09-19.md)
-- [Certificación del manifiesto determinista de Lebrija](./CERTIFICACION-MANIFIESTO-DETERMINISTA-LEBRIJA-HC016-2026-09-19.md)
-- [Certificación del preflight SQL de Lebrija](./CERTIFICACION-PREFLIGHT-SQL-LEBRIJA-HC016-2026-09-20.md)
-- [Certificación del staging READY de Lebrija](./CERTIFICACION-STAGING-LEBRIJA-HC016-2026-09-20.md)
-- [Certificación de cierre y QA productivo de Lebrija](./CERTIFICACION-CIERRE-LEBRIJA-SEXTO-MACROLOTE-MUNICIPAL-HC016-2026-09-20.md)
-- [SQL archivado de preflight de Lebrija](../supabase/migrations_archive/post-first-edition-editorial/20260920090000_preflight_lebrija_sexto_macrolote_hc016.sql)
+Evidencia reciente:
+- [PR #870 · Restauración visual y cronología](https://github.com/nachosanchezperez-ux/base-cofrade/pull/870)
+- [PR #871 · Osuna · séptimo macrolote municipal](https://github.com/nachosanchezperez-ux/base-cofrade/pull/871)
+- [Inventario canónico de Osuna](./INVENTARIO-OSUNA-SEPTIMO-MACROLOTE-MUNICIPAL-HC016-2026-09-20.md)
+- [Plan row-by-row de Osuna](./PLAN-ROW-BY-ROW-OSUNA-HC016-2026-09-20.md)
+- [Manifiesto determinista de Osuna](./MANIFIESTO-DETERMINISTA-OSUNA-HC016-2026-09-20.md)
+- [Certificación de preflight SQL de Osuna](./CERTIFICACION-PREFLIGHT-SQL-OSUNA-HC016-2026-09-20.md)
+- [Certificación de staging y Apply de Osuna](./CERTIFICACION-STAGING-OSUNA-HC016-2026-09-20.md)
+- [SQL archivado de preflight de Osuna](../supabase/migrations_archive/post-first-edition-editorial/20260920180000_preflight_osuna_septimo_macrolote_hc016.sql)
+- [PR #867 · HC-SEO-01](https://github.com/nachosanchezperez-ux/base-cofrade/pull/867)

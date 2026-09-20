@@ -34,6 +34,7 @@ Para evitar que una fotografía antigua vuelva a convertirse en una orden operat
 3. Las auditorías, certificaciones y cierres fechados son **evidencia histórica**. Conservan su validez para el corte que documentan, pero sus apartados «Siguiente movimiento» no prevalecen sobre el tablero vivo.
 4. Una conversación, una rama remota o una propuesta no constituyen trabajo activo por sí solas.
 5. GitHub, Vercel y Supabase prevalecen siempre sobre los documentos cuando exista una diferencia verificable.
+6. Tras fusionar y verificar un macrofrente, `docs/ESTADO-PROYECTO.md` debe reconciliarse antes de abrir el siguiente. La certificación fechada conserva la evidencia, pero no sustituye la actualización del tablero vivo.
 
 El Orquestador debe clasificar cada petición en una sola de estas posiciones:
 
