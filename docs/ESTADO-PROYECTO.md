@@ -2,9 +2,9 @@
 
 **Corte operativo:** 20 de septiembre de 2026 · Osuna cerrada como séptimo macrolote municipal HC-016 · HC-SEO-01 integrada
 
-**HEAD canónico de `main` y producción:** `6da63631f61bd6caa031a7861d83ba19cda89143` · #867 fusionada
+**HEAD canónico de `main` y producción al inicio de esta auditoría:** `f3e3c15528016ce18cacc87c3668203228fc51c2` · #872 fusionada
 
-**Producción vigente:** READY · deployment `dpl_CUQdvkKCoBwnr7babUtZUsE3MffR` · SHA coincidente · `hilocofrade.es` sin error de alias
+**Producción vigente al inicio de esta auditoría:** READY · deployment `dpl_6dHB3YbdU9c32t8QzjfEF1xhCmq8` · SHA coincidente · `hilocofrade.es` sin error de alias
 
 **Supabase:** `ACTIVE_HEALTHY` · 12/12 migraciones estructurales activas · Osuna `c0160034-0000-4000-8000-000000000001` cerrada con **368/368 aplicadas · 0 inválidas · 0 fallos**
 
@@ -500,13 +500,21 @@ El cierre consecutivo de #870, #871 y #867 deja repositorio, producción y base 
 - #867 integró HC-SEO-01 sobre el cierre de Osuna y llevó `main` y producción a `6da63631f61bd6caa031a7861d83ba19cda89143`;
 - no quedan PR abiertas, staging editoriales activos ni errores runtime recientes.
 
+## Octavo macrolote provincial · selección
+
+El recálculo provincial se rehízo desde cero sobre Supabase productivo, excluyendo Sevilla capital y los **nueve municipios cerrados en siete macrolotes**. El TOP 5 nuevo es Carmona, Écija, Utrera, Sanlúcar la Mayor y Marchena; el TOP 3 queda formado por Carmona, Écija y Utrera.
+
+**Carmona queda seleccionada** por el mejor equilibrio entre deuda acreditada, actualidad de Fuentes, cerrabilidad y riesgo: Turismo provincial acredita nueve hermandades procesionando en 2026 y Hilo Cofrade no publica ninguna Hermandad carmonense. La única Salida municipal existente es letífica y no cubre la Semana Santa.
+
+La evidencia y el método completos están en [`AUDITORIA-OCTAVO-MACROLOTE-MUNICIPAL-HC016-2026-09-20.md`](./AUDITORIA-OCTAVO-MACROLOTE-MUNICIPAL-HC016-2026-09-20.md).
+
 ## Siguiente movimiento autorizado
 
-**No existe un frente editorial municipal activo.**
+**No existe todavía un frente editorial municipal activo.**
 
-El siguiente frente permitido es exclusivamente el **recálculo desde cero del octavo macrolote municipal HC-016**. Debe excluir los siete municipios ya cerrados, medir de nuevo cobertura, deuda acreditada, densidad relacional, actualidad, Fuentes, duplicidades y riesgo, producir un TOP 5 y un TOP 3, y seleccionar un único municipio.
+Carmona queda seleccionada como candidata única del octavo macrolote municipal HC-016. La siguiente puerta, previa orden expresa, es únicamente el **inventario canónico de sus nueve Hermandades y la matriz de Fuentes**, incluyendo conciliación de la Salida letífica existente, homónimos, sedes, Imágenes, Pasos, Bandas y duplicados.
 
-Carmona, Écija, Utrera, Sanlúcar la Mayor y cualquier resultado anterior siguen siendo evidencia histórica, no una cola automática. El recálculo no autoriza todavía inventario, staging, SQL, Apply ni apertura de PR editorial. Agenda Cofrade continúa como mantenimiento paralelo y no constituye un segundo macrofrente.
+La Semana Santa de 2026 ya es histórica: sus recorridos no se tratarán como agenda futura y ninguna Salida se elevará a `held` sin evidencia de celebración. Esta selección no autoriza todavía staging, SQL, Apply ni apertura de PR editorial. Agenda Cofrade continúa como mantenimiento paralelo y no constituye un segundo macrofrente.
 
 Evidencia reciente:
 - [PR #870 · Restauración visual y cronología](https://github.com/nachosanchezperez-ux/base-cofrade/pull/870)
