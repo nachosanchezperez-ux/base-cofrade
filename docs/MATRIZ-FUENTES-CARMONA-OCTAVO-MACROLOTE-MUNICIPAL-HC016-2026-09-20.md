@@ -24,7 +24,7 @@ Una fuente previa acredita un anuncio, no la celebración. Una captura, vídeo o
 | `CAR-F04` | [Consejo · Quinta Angustia](https://consejohermandadescarmona.es/quinta-angustia-2/) | A | título, 1607, titulares e historia de sede | sede vigente requiere contraste 2026 |
 | `CAR-F05` | [Consejo · Santiago](https://consejohermandadescarmona.es/hermandad-de-santiago/) | A | título, reglas de 1656, titulares y pasos | sin evidencia posterior individual de 2026 |
 | `CAR-F06` | [Consejo · Humildad](https://consejohermandadescarmona.es/hermandad-de-la-humildad/) | A | título, origen de 1604, titulares e historia | San Juan y su encaje procesional actual requieren contraste |
-| `CAR-F07` | [Consejo · Amargura](https://consejohermandadescarmona.es/san-felipe/) | A | título, reglas de 1897, titulares e historia | resolver como alias «Cristo de San Felipe»/«Señor de la Amargura» |
+| `CAR-F07` | [Consejo · Amargura](https://consejohermandadescarmona.es/san-felipe/) | A | título, reglas de 1897, titulares e historia | prueba que «Cristo de San Felipe» y «Señor de la Amargura» son dos tallas distintas; solo el Señor participa en 2026 |
 | `CAR-F08` | [Consejo · Santo Entierro](https://consejohermandadescarmona.es/hermandad-del-santo-entierro/) | A | título, 1971, titulares, traslados y paso | sede vigente y composición 2026 requieren contraste |
 | `CAR-F09` | [Turismo provincial · Semana Santa de Carmona 2026](https://www.turismosevilla.org/es/eventos-y-fiestas/semana-santa-2026-carmona) | B | nueve sujetos, programa, sedes, días, pasos; Desamparados como cortejo de un paso | redacción «nueve hermandades» mezcla ocho hermandades y una orden seglar; fuente previa, no prueba `held` |
 | `CAR-F10` | [Turismo Carmona · difusión de Carmona Penitente 2026](https://www.facebook.com/carmonainformacionturistica/posts/1385197720313997/) | B/D | existencia y difusión municipal de la guía 2026 | extraer PDF/edición estable antes de usar itinerarios fila a fila |
@@ -40,14 +40,15 @@ Una fuente previa acredita un anuncio, no la celebración. Una captura, vídeo o
 | `CAR-F20` | [Televisión Carmona · Cristo de los Desamparados](https://play.televisioncarmona.com/v/LwOZnudoEYetI0gXnn/CRISTO-DE-LOS-DESAMPARADOS-REALIZACION//) | C | realización posterior de la primera Salida de Desamparados | pertenece a la única Hermandad de la Esperanza |
 | `CAR-F21` | [Televisión Carmona · San Pedro](https://play.televisioncarmona.com/v/Imqv1GlpxvEHKd1B9I/HERMANDAD-DE-SAN-PEDRO-REPORTAJE-TVC//) | C | reportaje posterior del cortejo de Humildad | alias parroquial; conciliar con `CAR-F06` |
 | `CAR-F22` | [Televisión Carmona · Santo Entierro](https://play.televisioncarmona.com/v/d4cj4lCGq1gPR3ixCX/HERMANDAD-DEL-SANTO-ENTIERRO-REPORTAJE-TVC//) | C | reportaje posterior del Sábado Santo | no resuelve por sí solo sede o composición |
+| `CAR-F23` | [Orden Seglar Siervos de María · web oficial](https://servitascarmona.com/) | A | denominación pública, identidad propia y sede en la Real Iglesia del Salvador | no prueba por sí sola música ni celebración de una Salida concreta |
 
 ## 3. Matriz por sujeto y relación
 
 | Sujeto | Identidad/título | Sede y día 2026 | Titulares | Pasos | Itinerario 2026 | Evidencia `held` | Música | Resultado |
 |---|---|---|---|---|---|---|---|---|
-| Servitas | `F09`; falta regla/fuente propia | `F09` | `F09`; elevar a propia | `F09` | `F10` pendiente de extracción | `F13` cerrada | pendiente | celebración cerrada; estructura aún no aplicable |
+| Servitas | `F23` + `F09` | `F23` + `F09` | `F23` + `F09` | `F09`; concretado en documento de participación | `F10` pendiente de extracción | `F13` cerrada | parcial | identidad y sede cerradas; una corporación para marzo y septiembre |
 | Esperanza | `F01` | `F01` + `F09` | `F01` | `F01` + `F09` | `F10` pendiente | `F14` + `F20` cerradas | pendiente | una corporación, dos Salidas acreditadas |
-| Amargura | `F07` | `F07` + `F09` | `F07` | `F07` + `F09` | `F10` pendiente | `F15` cerrada | pendiente | resolver alias cristífero |
+| Amargura | `F07` | `F07` + `F09` | `F07` | `F07` + `F09` | `F10` pendiente | `F15` cerrada | parcial | dos crucificados distintos; Cristo de San Felipe queda fuera de la Salida 2026 |
 | Expiración | `F03` | `F03` + `F09` | `F03` | `F03` + `F09` | `F10` pendiente | `F16` cerrada | pendiente | separar titulares de cortejo |
 | Quinta Angustia | `F04` | `F04` + `F09` | `F04` | `F04` + `F09` | `F10` pendiente | `F17` cerrada | pendiente | confirmar sede vigente |
 | Santiago | `F05` | `F05` + `F09` | `F05` | `F05` + `F09` | `F10` pendiente | `F18` cerrada | pendiente | base estructural suficiente |
@@ -61,7 +62,7 @@ Una fuente previa acredita un anuncio, no la celebración. Una captura, vídeo o
 |---|---:|---|
 | Confirmación posterior de celebración | **0 pendientes; 10/10 cerradas** | `CAR-F13`–`CAR-F22`; correspondencia auditada en la evidencia posterior del 21 de septiembre |
 | Itinerario y horarios históricos | 10 Salidas | guía 2026 estable y contraste con incidencias; nunca agenda futura |
-| Denominación canónica de Servitas | 1 corporación | reglas, web o perfil oficial inequívoco |
+| Denominación canónica de Servitas | **0 pendientes** | `CAR-F23` fija Orden Seglar de los Siervos de María de Carmona y su sede |
 | Pasos canónicos y relaciones de cortejo | 9 sujetos | fuente A/B por paso y por salida; no inferir por titularidad |
 | Acompañamientos musicales | 10 Salidas | anuncio oficial específico y, para `held`, evidencia posterior cuando se modele ejecución real |
 | Sedes vigentes | 2 focos principales | confirmar Quinta Angustia y Santo Entierro con programa/fuente propia de 2026 |
@@ -72,12 +73,12 @@ Una fuente previa acredita un anuncio, no la celebración. Una captura, vídeo o
 
 1. **Esperanza:** un solo nodo corporativo con dos Salidas; no crear «Desamparados» como Hermandad separada.
 2. **Servitas:** un solo nodo corporativo para Viernes de Dolores y septiembre; la Salida ya existente debe enlazarse, no recrearse.
-3. **Amargura:** «Santísimo Cristo de San Felipe» y «Señor de la Amargura» pueden ser denominaciones del mismo titular; no crear dos Imágenes sin fuente explícita.
+3. **Amargura:** «Santísimo Cristo de San Felipe» y «Señor de la Amargura» son tallas distintas según `CAR-F07`; crear dos Imágenes titulares, pero enlazar solo al Señor con la Salida de 2026.
 4. **Dolores, San Juan, Nazareno, Santo Entierro y Quinta Angustia:** existen numerosos homónimos en Supabase de otros municipios; ningún match nominal aislado es REUSE.
 5. **Sedes:** hoy no existe ningún Lugar de Carmona en la base. Deben crearse con municipio y slug municipal, evitando reutilizar templos homónimos.
 
 ## 6. Puerta siguiente
 
-La evidencia posterior de las diez Salidas está cerrada. La fase siguiente es documentar participación efectiva por Salida —Imágenes, Pasos y relaciones de cortejo—, seguida de música, sedes y normalización de Servitas. Hasta completar esas puertas no se abrirán staging, SQL, Apply ni PR editorial de datos.
+La evidencia posterior de las diez Salidas está cerrada. La participación efectiva, los Pasos, las sedes y la normalización de Servitas se desarrollan en el documento de modelado del 21 de septiembre. La música queda parcial y mantiene bloqueada la puerta row-by-row cerrada. Hasta completar esas puertas no se abrirán staging, SQL, Apply ni PR editorial de datos.
 
 La trazabilidad detallada queda en [`EVIDENCIA-POSTERIOR-CARMONA-OCTAVO-MACROLOTE-MUNICIPAL-HC016-2026-09-21.md`](./EVIDENCIA-POSTERIOR-CARMONA-OCTAVO-MACROLOTE-MUNICIPAL-HC016-2026-09-21.md).
