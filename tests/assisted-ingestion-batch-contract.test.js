@@ -55,3 +55,17 @@ test('la resolución automática aprovecha nombres alternativos existentes', () 
   assert.match(engine, /image_names/)
   assert.match(engine, /matched_by/)
 })
+
+test('una Fuente ya aplicada o ya vinculada no se reabre dentro de otra tanda', () => {
+  assert.match(actions, /alreadyConsumed/)
+  assert.match(actions, /skipReason: 'already_processed'/)
+  assert.match(start, /result\.skipped/)
+  assert.match(start, /ya fue aplicada o está vinculada a otro lote/)
+})
+
+test('las propuestas repetidas fusionan atributos complementarios antes de crear el nodo', () => {
+  assert.match(actions, /mergeEntityProposal/)
+  assert.match(actions, /mergedNewEntitiesById/)
+  assert.match(actions, /options\.mergedNewEntitiesById/)
+  assert.match(actions, /value\.length > current\.length/)
+})
