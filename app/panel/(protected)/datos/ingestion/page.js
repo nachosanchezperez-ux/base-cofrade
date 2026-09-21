@@ -1,6 +1,7 @@
 import { requirePanelUser } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
 import IngestionStart from './IngestionStart'
+import AssistedBatchStart from './AssistedBatchStart'
 import panelStyles from '@/app/panel/panel.module.css'
 
 export const metadata = { title: 'Ingestión asistida · Panel' }
@@ -45,11 +46,18 @@ export default async function AssistedIngestionPage() {
     </header>
 
     {!canEdit ? <div className={panelStyles.readOnlyNotice}>Tu perfil puede revisar propuestas, pero solo administradores y editores pueden analizar Fuentes o generar lotes.</div> : null}
-    <IngestionStart
-      targets={targets}
-      recentImports={recentImports}
-      canEdit={canEdit}
-      aiConfigured={Boolean(process.env.OPENAI_API_KEY)}
-    />
+    <div style={{ display: 'grid', gap: 22 }}>
+      <AssistedBatchStart
+        targets={targets}
+        canEdit={canEdit}
+        aiConfigured={Boolean(process.env.OPENAI_API_KEY)}
+      />
+      <IngestionStart
+        targets={targets}
+        recentImports={recentImports}
+        canEdit={canEdit}
+        aiConfigured={Boolean(process.env.OPENAI_API_KEY)}
+      />
+    </div>
   </div>
 }
