@@ -79,3 +79,31 @@ test('la consulta de relaciones solo pide relation_type cuando la tabla admite e
   assert.match(actions, /select\(equivalentTypes\?\.length \? 'id, relation_type' : 'id'\)/)
   assert.match(actions, /table = 'march_authors'/)
 })
+
+test('las entidades nuevas sin relación segura no se preseleccionan para alta', () => {
+  assert.match(engine, /shouldDefaultCreateNew/)
+  assert.match(engine, /entity\.entity_type === 'heritage_asset'/)
+  assert.match(engine, /proposalHasStageableRelation/)
+  assert.match(engine, /state === 'new' && shouldDefaultCreateNew\(analysis, entity\)/)
+  assert.match(review, /no tiene una relación escribible que justifique crearla automáticamente/)
+})
+
+test('los nombres cortos de agentes se muestran como potenciales pero no se autoseleccionan', () => {
+  assert.match(engine, /shortNamePotentialScore/)
+  assert.match(engine, /match_kind: 'potential'/)
+  assert.match(engine, /\? 'potential'/)
+  assert.match(review, /coincidencia débil por nombre corto/)
+})
+
+test('la tanda bloquea posibles duplicados semánticos entre propuestas nuevas', () => {
+  assert.match(actions, /potentialSameNewEntity/)
+  assert.match(actions, /semanticNameScore/)
+  assert.match(actions, /shortNamePotentialScore/)
+  assert.match(actions, /POSIBLE_DUPLICADO_DE_LOTE/)
+})
+
+test('el patrimonio conserva datación textual sin DDL', () => {
+  assert.match(engine, /heritage_asset:[\s\S]*date_from_text/)
+  assert.match(engine, /heritage_asset:[\s\S]*date_to_text/)
+  assert.match(engine, /asset_type, date_from_text, date_to_text, technique/)
+})

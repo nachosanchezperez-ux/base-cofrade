@@ -2,9 +2,9 @@
 
 **Corte operativo:** 21 de septiembre de 2026 · HC-SEO-09/10 cerrados en producción · discografías D-02C aplicadas y verificadas · puerta municipal de Carmona preservada
 
-**HEAD funcional de `main` y producción antes de esta actualización documental:** `9595038923ee15fb47c132209d189b11605850c3` · #884 y #885 fusionadas sobre el frente SEO anterior
+**HEAD funcional de `main` y producción antes de esta actualización documental:** `0f5ce11b8c9dd8d46eb87536f67f5f1d20345477` · #892–#896 fusionadas tras el frente SEO anterior
 
-**Producción funcional verificada:** READY · deployment `dpl_6VugJwqPzxVqhxpxzQkXzJqtDXBW` · SHA coincidente · `hilocofrade.es` y `www.hilocofrade.es` sin error de alias
+**Producción funcional verificada:** READY · deployment `dpl_AMMeZuVj1M42juXHScZ1uSzUmMHj` · SHA coincidente · `hilocofrade.es` y `www.hilocofrade.es` sin error de alias
 
 **Supabase:** `ACTIVE_HEALTHY` · 12/12 migraciones estructurales activas · D-02C verificado con **18 ediciones y 116 pistas**, dentro de un total público de **551 ediciones y 3.429 pistas**
 
@@ -89,12 +89,12 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 
 ## Verdad de plataforma
 
-- GitHub: `main = 9595038923ee15fb47c132209d189b11605850c3` en el corte funcional; #884 y #885 están fusionadas y el preflight del cierre D-02C encontró 0 PR abiertas.
-- Vercel: producción está READY en `dpl_6VugJwqPzxVqhxpxzQkXzJqtDXBW`, exactamente sobre `9595038923ee15fb47c132209d189b11605850c3`, con los alias públicos asignados y sin error.
+- GitHub: `main = 0f5ce11b8c9dd8d46eb87536f67f5f1d20345477` en el corte funcional; #892–#896 están fusionadas y #886 permanece como única PR abierta de cierre documental.
+- Vercel: producción está READY en `dpl_AMMeZuVj1M42juXHScZ1uSzUmMHj`, exactamente sobre `0f5ce11b8c9dd8d46eb87536f67f5f1d20345477`, con los alias públicos asignados y sin error.
 - Supabase: proyecto `Hilocofrade` ACTIVE_HEALTHY; 12/12 migraciones estructurales activas. D-02C está aplicado y verificado con 18 ediciones, 116 pistas, 18 carátulas y cinco Fuentes canónicas; Carmona conserva intacta su puerta municipal.
 - Supabase Preview: #846 y la #822 reconstruida superaron previews nuevas con with_data=false. La cadena ejecuta 12 migraciones estructurales activas en orden y el seed mínimo conserva Sevilla, Maestro Tejera y Las Cigarreras.
 - Git ↔ Supabase: correspondencia 12/12 por versión y nombre. Se restauraron en Git las versiones remotas canónicas 20260915215828 y 20260916220756, y se recuperó exactamente 20260916205306_source_links_public_lookup_indexes. La deriva histórica queda **RESUELTA**.
-- Runtime: el postflight de `dpl_6VugJwqPzxVqhxpxzQkXzJqtDXBW` no registró errores en el intervalo posterior al despliegue comprobado.
+- Runtime: el control de `dpl_AMMeZuVj1M42juXHScZ1uSzUmMHj` no registró errores en la hora comprobada posterior al despliegue.
 ## Reconciliación #789–#799
 
 | PR | Estado canónico | Resultado |
