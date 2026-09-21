@@ -74,3 +74,8 @@ test('las coincidencias nominales fuera del contexto no se autoseleccionan', () 
   assert.match(engine, /default_choice: state === 'exact'/)
   assert.match(review, /fuera del grafo actual de esta Hermandad/)
 })
+
+test('la consulta de relaciones solo pide relation_type cuando la tabla admite equivalencias', () => {
+  assert.match(actions, /select\(equivalentTypes\?\.length \? 'id, relation_type' : 'id'\)/)
+  assert.match(actions, /table = 'march_authors'/)
+})
