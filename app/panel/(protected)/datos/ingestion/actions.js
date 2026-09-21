@@ -447,6 +447,35 @@ function selectedExistingCandidate(entity, entityId) {
   return (entity.resolution?.candidates || []).find((candidate) => candidate.id === entityId) || null
 }
 
+function enrichmentRecordKey(record) {
+  const identity = record.data?.id || record.data?.entity_id
+  return identity ? `${record.table}:${identity}` : null
+}
+
+function mergeEnrichmentRecord(batchContext, record) {
+  if (!batchContext?.enrichmentRecords) return false
+  const key = enrichmentRecordKey(record)
+  if (!key) return false
+  const existing = batchContext.enrichmentRecords.get(key)
+  if (!existing) {
+    batchContext.enrichmentRecords.set(key, record)
+    return true
+  }
+  const merged = { ...existing.data }
+  for (const [column, value] of Object.entries(record.data || {})) {
+    if (column === 'id' || column === 'entity_id') continue
+    if (merged[column] == null || merged[column] === '') {
+      merged[column] = value
+      continue
+    }
+    if (normalizeComparableName(merged[column]) !== normalizeComparableName(value)) {
+      throw new Error(`CONFLICTO_DE_ENRIQUECIMIENTO: varias Fuentes proponen valores distintos para ${record.table}.${column}.`)
+    }
+  }
+  existing.data = merged
+  return true
+}
+
 async function buildAssistedRecords(supabase, documentImport, reviewInput, options = {}) {
   const analysis = documentImport.analysis || {}
   const normalized = await normalizeReviewInput(supabase, analysis, reviewInput)
@@ -511,7 +540,9 @@ async function buildAssistedRecords(supabase, documentImport, reviewInput, optio
       }
     } else {
       const candidate = selectedExistingCandidate(item.entity, item.id)
-      records.push(...buildExistingEntityEnrichmentRecords(item.entity, candidate))
+      for (const enrichmentRecord of buildExistingEntityEnrichmentRecords(item.entity, candidate)) {
+        if (!mergeEnrichmentRecord(options.batchContext, enrichmentRecord)) records.push(enrichmentRecord)
+      }
     }
     if (!(await hasSourceLink(supabase, sourceRow?.id, { entity_id: item.id }))) {
       records.push(makeSourceLink(source.url, {
@@ -740,7 +771,7 @@ export async function stageAssistedBatchAction(batchIdInput, importIdsInput) {
 
   const sharing = planSharedNewEntities(documentImports)
   const createdNewEntityIds = new Set()
-  const batchContext = { relationIds: new Map(), relationSeen: new Set() }
+  const batchContext = { relationIds: new Map(), relationSeen: new Set(), enrichmentRecords: new Map() }
   const records = []
   let acceptedEntities = 0
   let selectedRelations = 0
@@ -762,6 +793,8 @@ export async function stageAssistedBatchAction(batchIdInput, importIdsInput) {
     acceptedEntities += built.accepted.length
     selectedRelations += built.selectedRelations.length
   }
+
+  records.push(...batchContext.enrichmentRecords.values())
 
   const bulkBatch = await createBulkImportAction({
     label: `HC-AUTO-01 · ${target.name} · ${documentImports.length} Fuentes`,
