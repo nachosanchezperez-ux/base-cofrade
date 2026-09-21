@@ -1,7 +1,7 @@
 # Matriz de Fuentes · Carmona · octavo macrolote municipal HC-016
 
-**Fecha:** 20 de septiembre de 2026  
-**Fase:** MATRIZ CERRADA · sin staging, SQL ni Apply
+**Fecha:** 21 de septiembre de 2026
+**Fase:** MATRIZ ACTUALIZADA · evidencia posterior 10/10 cerrada · sin staging, SQL ni Apply
 
 ## 1. Jerarquía probatoria
 
@@ -30,26 +30,36 @@ Una fuente previa acredita un anuncio, no la celebración. Una captura, vídeo o
 | `CAR-F10` | [Turismo Carmona · difusión de Carmona Penitente 2026](https://www.facebook.com/carmonainformacionturistica/posts/1385197720313997/) | B/D | existencia y difusión municipal de la guía 2026 | extraer PDF/edición estable antes de usar itinerarios fila a fila |
 | `CAR-F11` | [La Revista Carmona · Carmona Penitente 2026](https://www.larevistacarmona.es/texto-diario/mostrar/5825655/carmona-penitente-guia-imprescindible-semana-santa) | D | descripción de contenido: fechas, itinerarios, estrenos e historia | fuente secundaria; no sustituye el documento ni confirma celebración |
 | `CAR-F12` | Fuente existente «Servitas Carmona · publicación oficial en Instagram» | A potencial | Salida de septiembre ya cargada | URL nula y fecha de publicación nula: no utilizable hasta completar procedencia |
+| `CAR-F13` | [Televisión Carmona · Servitas](https://play.televisioncarmona.com/v/Wb1GQFWIeHX0e5LC2q/SERVITAS-REPORTAJE-TVC//) | C | reportaje posterior de la Salida del Viernes de Dolores | no acredita por sí solo itinerario, música ni participación completa |
+| `CAR-F14` | [Televisión Carmona · Esperanza](https://play.televisioncarmona.com/v/zXMfLnWu4r4Dr4azMF/HERMANDAD-DE-LA-ESPERANZA-REPORTAJE-TVC//) | C | reportaje posterior del cortejo de Coronación y Esperanza | no debe confundirse con Desamparados |
+| `CAR-F15` | [Televisión Carmona · San Felipe](https://play.televisioncarmona.com/v/qr2hy93oqRTOHdUYOn/HERMANDAD-DE-SAN-FELIPE-REPORTAJE-TVC//) | C | reportaje posterior del cortejo de la Amargura | alias parroquial; conciliar con `CAR-F07` |
+| `CAR-F16` | [Televisión Carmona · San Blas](https://play.televisioncarmona.com/v/U8chRcbT3j3uDRFP9H/HERMANDAD-DE-SAN-BLAS-REPORTAJE-TVC//) | C | reportaje posterior del cortejo de la Expiración | alias parroquial; conciliar con `CAR-F03` |
+| `CAR-F17` | [Televisión Carmona · Quinta Angustia](https://play.televisioncarmona.com/v/bto3LTLIsgaqKsFfCY/HERMANDAD-DE-LA-QUINTA-ANGUSTIA-REPORTAJE-TVC//) | C | reportaje posterior del Miércoles Santo | no resuelve por sí solo la sede vigente |
+| `CAR-F18` | [Televisión Carmona · Santiago](https://play.televisioncarmona.com/v/8R5I6BUGMu2FqEz73k/HERMANDAD-DE-SANTIAGO-REPORTAJE-TVC//) | C | reportaje posterior del cortejo de Columna y Paciencia | completar participación fila a fila |
+| `CAR-F19` | [Televisión Carmona · El Silencio](https://play.televisioncarmona.com/v/84jhfcoMZ8YXNuunmL/HERMANDAD-DE-EL-SILENCIO-REPORTAJE-TVC//) | C | reportaje posterior del cortejo de Nuestro Padre | alias local; conciliar con `CAR-F02` |
+| `CAR-F20` | [Televisión Carmona · Cristo de los Desamparados](https://play.televisioncarmona.com/v/LwOZnudoEYetI0gXnn/CRISTO-DE-LOS-DESAMPARADOS-REALIZACION//) | C | realización posterior de la primera Salida de Desamparados | pertenece a la única Hermandad de la Esperanza |
+| `CAR-F21` | [Televisión Carmona · San Pedro](https://play.televisioncarmona.com/v/Imqv1GlpxvEHKd1B9I/HERMANDAD-DE-SAN-PEDRO-REPORTAJE-TVC//) | C | reportaje posterior del cortejo de Humildad | alias parroquial; conciliar con `CAR-F06` |
+| `CAR-F22` | [Televisión Carmona · Santo Entierro](https://play.televisioncarmona.com/v/d4cj4lCGq1gPR3ixCX/HERMANDAD-DEL-SANTO-ENTIERRO-REPORTAJE-TVC//) | C | reportaje posterior del Sábado Santo | no resuelve por sí solo sede o composición |
 
 ## 3. Matriz por sujeto y relación
 
 | Sujeto | Identidad/título | Sede y día 2026 | Titulares | Pasos | Itinerario 2026 | Evidencia `held` | Música | Resultado |
 |---|---|---|---|---|---|---|---|---|
-| Servitas | `F09`; falta regla/fuente propia | `F09` | `F09`; elevar a propia | `F09` | `F10` pendiente de extracción | pendiente | pendiente | inventariable, no aplicable aún |
-| Esperanza | `F01` | `F01` + `F09` | `F01` | `F01` + `F09` | `F10` pendiente | pendiente para ambos cortejos | pendiente | una corporación, dos Salidas |
-| Amargura | `F07` | `F07` + `F09` | `F07` | `F07` + `F09` | `F10` pendiente | pendiente | pendiente | resolver alias cristífero |
-| Expiración | `F03` | `F03` + `F09` | `F03` | `F03` + `F09` | `F10` pendiente | pendiente | pendiente | separar titulares de cortejo |
-| Quinta Angustia | `F04` | `F04` + `F09` | `F04` | `F04` + `F09` | `F10` pendiente | pendiente | pendiente | confirmar sede vigente |
-| Santiago | `F05` | `F05` + `F09` | `F05` | `F05` + `F09` | `F10` pendiente | pendiente | pendiente | base estructural suficiente |
-| Nuestro Padre | `F02` | `F02` + `F09` | `F02` | `F02` + `F09` | `F10` pendiente | pendiente | pendiente | Pastora fuera del cortejo penitencial salvo prueba |
-| Humildad | `F06` | `F06` + `F09` | `F06` | `F06` + `F09` | `F10` pendiente | pendiente | pendiente | confirmar relación actual de San Juan |
-| Santo Entierro | `F08` | `F08` + `F09` | `F08` | `F08` + `F09` | `F10` pendiente | pendiente | pendiente | Santa Ana fuera del cortejo salvo prueba |
+| Servitas | `F09`; falta regla/fuente propia | `F09` | `F09`; elevar a propia | `F09` | `F10` pendiente de extracción | `F13` cerrada | pendiente | celebración cerrada; estructura aún no aplicable |
+| Esperanza | `F01` | `F01` + `F09` | `F01` | `F01` + `F09` | `F10` pendiente | `F14` + `F20` cerradas | pendiente | una corporación, dos Salidas acreditadas |
+| Amargura | `F07` | `F07` + `F09` | `F07` | `F07` + `F09` | `F10` pendiente | `F15` cerrada | pendiente | resolver alias cristífero |
+| Expiración | `F03` | `F03` + `F09` | `F03` | `F03` + `F09` | `F10` pendiente | `F16` cerrada | pendiente | separar titulares de cortejo |
+| Quinta Angustia | `F04` | `F04` + `F09` | `F04` | `F04` + `F09` | `F10` pendiente | `F17` cerrada | pendiente | confirmar sede vigente |
+| Santiago | `F05` | `F05` + `F09` | `F05` | `F05` + `F09` | `F10` pendiente | `F18` cerrada | pendiente | base estructural suficiente |
+| Nuestro Padre | `F02` | `F02` + `F09` | `F02` | `F02` + `F09` | `F10` pendiente | `F19` cerrada | pendiente | Pastora fuera del cortejo penitencial salvo prueba |
+| Humildad | `F06` | `F06` + `F09` | `F06` | `F06` + `F09` | `F10` pendiente | `F21` cerrada | pendiente | confirmar relación actual de San Juan |
+| Santo Entierro | `F08` | `F08` + `F09` | `F08` | `F08` + `F09` | `F10` pendiente | `F22` cerrada | pendiente | Santa Ana fuera del cortejo salvo prueba |
 
 ## 4. Deuda probatoria cuantificada
 
 | Deuda | Filas afectadas | Regla de desbloqueo |
 |---|---:|---|
-| Confirmación posterior de celebración | 10 Salidas | una fuente C individual o cobertura conjunta inequívoca que enumere los cortejos celebrados |
+| Confirmación posterior de celebración | **0 pendientes; 10/10 cerradas** | `CAR-F13`–`CAR-F22`; correspondencia auditada en la evidencia posterior del 21 de septiembre |
 | Itinerario y horarios históricos | 10 Salidas | guía 2026 estable y contraste con incidencias; nunca agenda futura |
 | Denominación canónica de Servitas | 1 corporación | reglas, web o perfil oficial inequívoco |
 | Pasos canónicos y relaciones de cortejo | 9 sujetos | fuente A/B por paso y por salida; no inferir por titularidad |
@@ -66,6 +76,8 @@ Una fuente previa acredita un anuncio, no la celebración. Una captura, vídeo o
 4. **Dolores, San Juan, Nazareno, Santo Entierro y Quinta Angustia:** existen numerosos homónimos en Supabase de otros municipios; ningún match nominal aislado es REUSE.
 5. **Sedes:** hoy no existe ningún Lugar de Carmona en la base. Deben crearse con municipio y slug municipal, evitando reutilizar templos homónimos.
 
-## 6. Puerta siguiente propuesta
+## 6. Puerta siguiente
 
-Solo tras nueva orden expresa: obtener la guía 2026 estable, localizar evidencia posterior para las diez Salidas, cerrar Pasos/Bandas/sedes y preparar un plan row-by-row. Hasta entonces no se abrirán staging, SQL, Apply ni PR editorial de datos.
+La evidencia posterior de las diez Salidas está cerrada. La fase siguiente es documentar participación efectiva por Salida —Imágenes, Pasos y relaciones de cortejo—, seguida de música, sedes y normalización de Servitas. Hasta completar esas puertas no se abrirán staging, SQL, Apply ni PR editorial de datos.
+
+La trazabilidad detallada queda en [`EVIDENCIA-POSTERIOR-CARMONA-OCTAVO-MACROLOTE-MUNICIPAL-HC016-2026-09-21.md`](./EVIDENCIA-POSTERIOR-CARMONA-OCTAVO-MACROLOTE-MUNICIPAL-HC016-2026-09-21.md).

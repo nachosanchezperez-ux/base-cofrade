@@ -1,14 +1,14 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 21 de septiembre de 2026 · HC-SEO-09/10 cerrados en producción · discografías D-02C aplicadas y verificadas · puerta municipal de Carmona preservada
+**Corte operativo:** 21 de septiembre de 2026 · #886 y #897 cerradas en producción · evidencia posterior de Carmona 10/10 cerrada
 
-**HEAD funcional de `main` y producción antes de esta actualización documental:** `0f5ce11b8c9dd8d46eb87536f67f5f1d20345477` · #892–#896 fusionadas tras el frente SEO anterior
+**HEAD funcional de `main` y producción antes de esta actualización documental:** `802ad2d3cd81c046f419ec8b00f044e849b459ef` · #897 fusionada tras D-02C
 
-**Producción funcional verificada:** READY · deployment `dpl_AMMeZuVj1M42juXHScZ1uSzUmMHj` · SHA coincidente · `hilocofrade.es` y `www.hilocofrade.es` sin error de alias
+**Producción funcional verificada:** READY · deployment `dpl_Ej7M5RufNFM9iSJYKssyAbdaE54V` · SHA coincidente · 101 respuestas `200`, una `304`, 0 errores/warnings y 0 respuestas 5xx en el corte posterior
 
 **Supabase:** `ACTIVE_HEALTHY` · 12/12 migraciones estructurales activas · D-02C verificado con **18 ediciones y 116 pistas**, dentro de un total público de **551 ediciones y 3.429 pistas**
 
-**PR abiertas antes de esta rama:** **0** · #886 es la única PR de cierre documental y permanece sin fusionar
+**PR abiertas antes de esta rama:** **0** · #886 y #897 están fusionadas
 
 **Staging editoriales activos:** **0**
 
@@ -16,7 +16,7 @@
 
 **Régimen:** FIRST EDITION FREEZE activo
 
-**Frente editorial municipal ACTIVO:** **ninguno**. El único cierre en curso es la trazabilidad Git de D-02C, ya aplicada y verificada en producción; no autoriza una segunda ejecución del DML ni abre D-03. Carmona permanece intacta como siguiente puerta municipal para la fase exclusiva de evidencia posterior, sin staging, SQL ni Apply.
+**Frente editorial municipal ACTIVO:** **Carmona · evidencia y modelado previo**. La confirmación posterior de las diez Salidas está cerrada; la puerta siguiente es participación efectiva por Salida. No están autorizados staging, SQL, dry-run, Apply ni publicación.
 
 > GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. Los rankings municipales previos son evidencia histórica, no una cola automática. El próximo municipio solo puede nacer de un recálculo provincial nuevo y una orden expresa.
 
@@ -26,6 +26,7 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 
 | Posición | Frente | Estado real | Regla |
 |---|---|---|---|
+| **ACTIVO** | Octavo macrolote municipal HC-016 · Carmona | Inventario y matriz cerrados; evidencia posterior de celebración cerrada 10/10 mediante piezas individualizadas de Televisión Carmona | Continuar solo con participación por Salida; sin staging, SQL, dry-run, Apply ni publicación |
 | **CERRADO** | Orden operativo | Autoridad documental y cola única integradas en #712 | No reabrir salvo contradicción verificable |
 | **CERRADO** | [#492 · Supabase Preview Branches](https://github.com/nachosanchezperez-ux/base-cofrade/issues/492) | Incidencia cerrada; #846 reconcilió el historial y la cadena activa contiene 12 migraciones estructurales, reproducibles desde cero en preview sin datos | Todo cambio futuro de esquema debe nacer como migración reproducible y superar una preview sin datos |
 | **CERRADO** | Higiene de ramas | 817 ramas revisadas; 754 eliminadas por SHA; 63 preservadas; salvaguarda remota verificada | No borrar las 61 ramas con trabajo único sin una revisión futura específica |
@@ -89,12 +90,12 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 
 ## Verdad de plataforma
 
-- GitHub: `main = 0f5ce11b8c9dd8d46eb87536f67f5f1d20345477` en el corte funcional; #892–#896 están fusionadas y #886 permanece como única PR abierta de cierre documental.
-- Vercel: producción está READY en `dpl_AMMeZuVj1M42juXHScZ1uSzUmMHj`, exactamente sobre `0f5ce11b8c9dd8d46eb87536f67f5f1d20345477`, con los alias públicos asignados y sin error.
+- GitHub: `main = 802ad2d3cd81c046f419ec8b00f044e849b459ef`; #886 y #897 están fusionadas y no quedan PR abiertas antes de esta rama.
+- Vercel: producción está READY en `dpl_Ej7M5RufNFM9iSJYKssyAbdaE54V`, exactamente sobre `802ad2d3cd81c046f419ec8b00f044e849b459ef`, con los alias públicos asignados y sin error.
 - Supabase: proyecto `Hilocofrade` ACTIVE_HEALTHY; 12/12 migraciones estructurales activas. D-02C está aplicado y verificado con 18 ediciones, 116 pistas, 18 carátulas y cinco Fuentes canónicas; Carmona conserva intacta su puerta municipal.
 - Supabase Preview: #846 y la #822 reconstruida superaron previews nuevas con with_data=false. La cadena ejecuta 12 migraciones estructurales activas en orden y el seed mínimo conserva Sevilla, Maestro Tejera y Las Cigarreras.
 - Git ↔ Supabase: correspondencia 12/12 por versión y nombre. Se restauraron en Git las versiones remotas canónicas 20260915215828 y 20260916220756, y se recuperó exactamente 20260916205306_source_links_public_lookup_indexes. La deriva histórica queda **RESUELTA**.
-- Runtime: el control de `dpl_AMMeZuVj1M42juXHScZ1uSzUmMHj` no registró errores en la hora comprobada posterior al despliegue.
+- Runtime: el control posterior de `dpl_Ej7M5RufNFM9iSJYKssyAbdaE54V` registró 101 respuestas `200`, una `304`, 0 errores/warnings y 0 respuestas 5xx; Supabase no tenía consultas activas de más de 30 segundos.
 ## Reconciliación #789–#799
 
 | PR | Estado canónico | Resultado |
@@ -528,11 +529,11 @@ La evidencia y el método completos están en [`AUDITORIA-OCTAVO-MACROLOTE-MUNIC
 
 ## Siguiente puerta
 
-**No existe todavía un frente editorial de datos municipal activo.** Carmona queda operativamente liberada como siguiente puerta tras recuperar 0 PR abiertas. La fase siguiente se limita a evidencia posterior y no autoriza todavía staging, SQL, dry-run, Apply ni publicación.
+**Carmona es el único frente editorial municipal activo en fase previa.** El inventario, la matriz y la confirmación posterior de celebración están cerrados. No se autorizan todavía staging, SQL, dry-run, Apply ni publicación.
 
 Carmona queda seleccionada como candidata única del octavo macrolote municipal HC-016. El **inventario canónico y la matriz de Fuentes** quedan cerrados: nueve sujetos corporativos, 27 imágenes candidatas y diez Salidas históricas de 2026. La Orden Seglar Servita comparte identidad organizadora con la Salida de septiembre ya existente; la Esperanza es una sola corporación con dos cortejos y no debe duplicarse.
 
-La Semana Santa de 2026 ya es histórica: sus recorridos no se tratarán como agenda futura y ninguna Salida se elevará a `held` sin evidencia de celebración. La puerta exacta es: evidencia posterior de las diez Salidas → participación por Salida → acompañamientos musicales y reconciliación provincial → sedes, con atención a Quinta Angustia y Santo Entierro → denominación y enlace no duplicado de Servitas → plan row-by-row. No se autorizan todavía staging, payload SQL, dry-run, Apply ni publicación del lote de Carmona. Agenda Cofrade continúa como mantenimiento paralelo y no constituye un segundo macrofrente.
+La Semana Santa de 2026 ya es histórica: sus recorridos no se tratarán como agenda futura. Televisión Carmona aporta piezas posteriores e individualizadas para las diez Salidas, incluida la primera del Cristo de los Desamparados; la puerta `held` queda cerrada 10/10. La secuencia restante es: participación por Salida → acompañamientos musicales y reconciliación provincial → sedes, con atención a Quinta Angustia y Santo Entierro → denominación y enlace no duplicado de Servitas → plan row-by-row. No se autorizan todavía staging, payload SQL, dry-run, Apply ni publicación del lote de Carmona. Agenda Cofrade continúa como mantenimiento paralelo y no constituye un segundo macrofrente.
 
 Evidencia reciente:
 - [PR #870 · Restauración visual y cronología](https://github.com/nachosanchezperez-ux/base-cofrade/pull/870)
@@ -540,6 +541,7 @@ Evidencia reciente:
 - [Inventario canónico de Osuna](./INVENTARIO-OSUNA-SEPTIMO-MACROLOTE-MUNICIPAL-HC016-2026-09-20.md)
 - [Inventario canónico de Carmona](./INVENTARIO-CARMONA-OCTAVO-MACROLOTE-MUNICIPAL-HC016-2026-09-20.md)
 - [Matriz de Fuentes de Carmona](./MATRIZ-FUENTES-CARMONA-OCTAVO-MACROLOTE-MUNICIPAL-HC016-2026-09-20.md)
+- [Evidencia posterior 10/10 de Carmona](./EVIDENCIA-POSTERIOR-CARMONA-OCTAVO-MACROLOTE-MUNICIPAL-HC016-2026-09-21.md)
 - [Plan row-by-row de Osuna](./PLAN-ROW-BY-ROW-OSUNA-HC016-2026-09-20.md)
 - [Manifiesto determinista de Osuna](./MANIFIESTO-DETERMINISTA-OSUNA-HC016-2026-09-20.md)
 - [Certificación de preflight SQL de Osuna](./CERTIFICACION-PREFLIGHT-SQL-OSUNA-HC016-2026-09-20.md)
