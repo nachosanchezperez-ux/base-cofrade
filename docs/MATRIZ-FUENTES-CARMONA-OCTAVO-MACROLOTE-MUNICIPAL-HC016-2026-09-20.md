@@ -40,13 +40,13 @@ Una fuente previa acredita un anuncio, no la celebración. Una captura, vídeo o
 | `CAR-F20` | [Televisión Carmona · Cristo de los Desamparados](https://play.televisioncarmona.com/v/LwOZnudoEYetI0gXnn/CRISTO-DE-LOS-DESAMPARADOS-REALIZACION//) | C | realización posterior de la primera Salida de Desamparados | pertenece a la única Hermandad de la Esperanza |
 | `CAR-F21` | [Televisión Carmona · San Pedro](https://play.televisioncarmona.com/v/Imqv1GlpxvEHKd1B9I/HERMANDAD-DE-SAN-PEDRO-REPORTAJE-TVC//) | C | reportaje posterior del cortejo de Humildad | alias parroquial; conciliar con `CAR-F06` |
 | `CAR-F22` | [Televisión Carmona · Santo Entierro](https://play.televisioncarmona.com/v/d4cj4lCGq1gPR3ixCX/HERMANDAD-DEL-SANTO-ENTIERRO-REPORTAJE-TVC//) | C | reportaje posterior del Sábado Santo | no resuelve por sí solo sede o composición |
-| `CAR-F23` | [Orden Seglar Siervos de María · web oficial](https://servitascarmona.com/) | A | denominación pública, identidad propia y sede en la Real Iglesia del Salvador | no prueba por sí sola música ni celebración de una Salida concreta |
+| `CAR-F23` | [Orden Seglar Siervos de María · web oficial](https://servitascarmona.com/) | A | firma «Orden Seglar Siervos de María», nombre público «Orden Seglar Servita Carmona» y sede en la Real Iglesia del Salvador | no prueba por sí sola música, celebración concreta ni que marzo y septiembre compartan Paso |
 
 ## 3. Matriz por sujeto y relación
 
 | Sujeto | Identidad/título | Sede y día 2026 | Titulares | Pasos | Itinerario 2026 | Evidencia `held` | Música | Resultado |
 |---|---|---|---|---|---|---|---|---|
-| Servitas | `F23` + `F09` | `F23` + `F09` | `F23` + `F09` | `F09`; concretado en documento de participación | `F10` pendiente de extracción | `F13` cerrada | parcial | identidad y sede cerradas; una corporación para marzo y septiembre |
+| Servitas | `F23` + `F09` | `F23` + `F09` | `F23` + `F09` | marzo concretado; posible REUSE en septiembre bloqueado | `F10` pendiente de extracción | `F13` cerrada | parcial | identidad y sede cerradas; una corporación para marzo y septiembre, sin inferir Paso compartido |
 | Esperanza | `F01` | `F01` + `F09` | `F01` | `F01` + `F09` | `F10` pendiente | `F14` + `F20` cerradas | pendiente | una corporación, dos Salidas acreditadas |
 | Amargura | `F07` | `F07` + `F09` | `F07` | `F07` + `F09` | `F10` pendiente | `F15` cerrada | parcial | dos crucificados distintos; Cristo de San Felipe queda fuera de la Salida 2026 |
 | Expiración | `F03` | `F03` + `F09` | `F03` | `F03` + `F09` | `F10` pendiente | `F16` cerrada | pendiente | separar titulares de cortejo |
@@ -62,23 +62,24 @@ Una fuente previa acredita un anuncio, no la celebración. Una captura, vídeo o
 |---|---:|---|
 | Confirmación posterior de celebración | **0 pendientes; 10/10 cerradas** | `CAR-F13`–`CAR-F22`; correspondencia auditada en la evidencia posterior del 21 de septiembre |
 | Itinerario y horarios históricos | 10 Salidas | guía 2026 estable y contraste con incidencias; nunca agenda futura |
-| Denominación canónica de Servitas | **0 pendientes** | `CAR-F23` fija Orden Seglar de los Siervos de María de Carmona y su sede |
-| Pasos canónicos y relaciones de cortejo | 9 sujetos | fuente A/B por paso y por salida; no inferir por titularidad |
+| Denominación canónica de Servitas | **0 pendientes** | `CAR-F23` fija «Orden Seglar Siervos de María», «Orden Seglar Servita Carmona» y su sede |
+| Paso de la Salida servita de septiembre | 1 relación | fuente propia o evidencia posterior que pruebe si reutiliza el Paso de palio de marzo |
+| Participaciones de Imagen en Paso | 3 relaciones | prueba específica de 2026 para San Juan de la Esperanza, San Juan de Humildad y María Magdalena del Santo Entierro |
 | Acompañamientos musicales | 10 Salidas | anuncio oficial específico y, para `held`, evidencia posterior cuando se modele ejecución real |
-| Sedes vigentes | 2 focos principales | confirmar Quinta Angustia y Santo Entierro con programa/fuente propia de 2026 |
+| Sedes vigentes | **0 pendientes estructurales** | Consejo + `CAR-F09`; 7 Lugares y 9 relaciones actuales documentadas, sin materializar filas |
 | Fuente ya cargada sin URL | 1 Fuente | recuperar URL y fecha o sustituirla por una fuente trazable |
 | Salida de septiembre aún `announced` | 1 Salida existente | verificación posterior independiente; fuera de este inventario penitencial |
 
 ## 5. Riesgos de duplicación
 
 1. **Esperanza:** un solo nodo corporativo con dos Salidas; no crear «Desamparados» como Hermandad separada.
-2. **Servitas:** un solo nodo corporativo para Viernes de Dolores y septiembre; la Salida ya existente debe enlazarse, no recrearse.
+2. **Servitas:** un solo nodo corporativo para Viernes de Dolores y septiembre; la Salida ya existente debe enlazarse, no recrearse. La unicidad corporativa no demuestra que ambas Salidas compartan Paso.
 3. **Amargura:** «Santísimo Cristo de San Felipe» y «Señor de la Amargura» son tallas distintas según `CAR-F07`; crear dos Imágenes titulares, pero enlazar solo al Señor con la Salida de 2026.
 4. **Dolores, San Juan, Nazareno, Santo Entierro y Quinta Angustia:** existen numerosos homónimos en Supabase de otros municipios; ningún match nominal aislado es REUSE.
 5. **Sedes:** hoy no existe ningún Lugar de Carmona en la base. Deben crearse con municipio y slug municipal, evitando reutilizar templos homónimos.
 
 ## 6. Puerta siguiente
 
-La evidencia posterior de las diez Salidas está cerrada. La participación efectiva, los Pasos, las sedes y la normalización de Servitas se desarrollan en el documento de modelado del 21 de septiembre. La música queda parcial y mantiene bloqueada la puerta row-by-row cerrada. Hasta completar esas puertas no se abrirán staging, SQL, Apply ni PR editorial de datos.
+La evidencia posterior de las diez Salidas está cerrada. La participación efectiva de esos diez cortejos, los Pasos, las sedes y la identidad pública de Servitas se desarrollan en el documento de modelado del 21 de septiembre. La música queda parcial y el posible REUSE del Paso servita de septiembre permanece bloqueado; ambos mantienen cerrada la puerta row-by-row. Hasta completarlos no se abrirán staging, SQL, Apply ni PR editorial de datos.
 
 La trazabilidad detallada queda en [`EVIDENCIA-POSTERIOR-CARMONA-OCTAVO-MACROLOTE-MUNICIPAL-HC016-2026-09-21.md`](./EVIDENCIA-POSTERIOR-CARMONA-OCTAVO-MACROLOTE-MUNICIPAL-HC016-2026-09-21.md).
