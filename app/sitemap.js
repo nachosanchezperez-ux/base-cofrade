@@ -3,6 +3,10 @@ import {
   directoryPath,
   hasDirectoryType,
 } from '@/lib/brotherhood-directory';
+import {
+  brotherhoodDirectoryLocalities,
+  filterIndexableBrotherhoods,
+} from '@/lib/brotherhood-public-index';
 import { unstable_cache } from 'next/cache';
 import { absoluteUrl } from '@/lib/seo';
 import { bandDirectoryFacets } from '@/lib/band-directory';
@@ -164,6 +168,14 @@ function directoryEntries(brotherhoods) {
   }));
 }
 
+function brotherhoodLocalityEntries(brotherhoods) {
+  return brotherhoodDirectoryLocalities(brotherhoods).map((locality) => ({
+    url: absoluteUrl(locality.href),
+    changeFrequency: 'weekly',
+    priority: 0.76,
+  }));
+}
+
 function bandDirectoryEntries(bands) {
   const facets = bandDirectoryFacets(bands);
   return [...facets.types, ...facets.municipalities].map((facet) => ({
@@ -275,11 +287,16 @@ async function buildPublicSitemapEntries() {
     images: imageDirectory,
     steps: stepDirectory,
   });
+  const indexableBrotherhoods = filterIndexableBrotherhoods(
+    brotherhoodDirectory,
+    indexableEntities
+  );
 
   const entries = [
     ...staticEntries,
     ...entityEntries(indexableEntities),
     ...directoryEntries(brotherhoodDirectory),
+    ...brotherhoodLocalityEntries(indexableBrotherhoods),
     ...bandDirectoryEntries(bandDirectory),
     ...heritageDirectoryEntries(imageDirectory, stepDirectory),
     ...extraordinaryEntries(extraordinaryOutings),
