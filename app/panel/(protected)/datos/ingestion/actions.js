@@ -4,7 +4,7 @@ import { randomUUID } from 'node:crypto'
 import { revalidatePath } from 'next/cache'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
-import { normalizeSourceUrl, sourceUrlVariants } from '@/lib/sources/source-url'
+import { sourceUrlVariants } from '@/lib/sources/source-url'
 import {
   attachResolutionSuggestions,
   buildNewEntityRecords,
@@ -118,6 +118,16 @@ export async function analyseSourceAction(input) {
     .maybeSingle()
   const duplicate = assertResult(duplicateResult, 'No se pudo comprobar si la Fuente ya estaba analizada')
   if (duplicate) {
+    const alreadyConsumed = duplicate.status === 'applied' || Boolean(duplicate.application_summary?.bulk_import_id)
+    if (batchId && alreadyConsumed) {
+      return {
+        id: duplicate.id,
+        reused: true,
+        skipped: true,
+        skipReason: 'already_processed',
+        batchId,
+      }
+    }
     if (batchId) {
       const analysis = analysisWithBatchMembership(duplicate.analysis, batchId)
       assertResult(
@@ -127,7 +137,7 @@ export async function analyseSourceAction(input) {
     }
     revalidatePath('/panel/datos/ingestion')
     if (batchId) revalidatePath(`/panel/datos/ingestion/lotes/${batchId}`)
-    return { id: duplicate.id, reused: true, batchId }
+    return { id: duplicate.id, reused: true, skipped: false, batchId }
   }
 
   const extracted = await extractSourceAnalysis({ source, targetName: target.name })
@@ -490,7 +500,8 @@ async function buildAssistedRecords(supabase, documentImport, reviewInput, optio
     if (item.choice === 'new') {
       const alreadyPlanned = createdNewEntityIds?.has(item.id)
       if (!alreadyPlanned) {
-        records.push(...buildNewEntityRecords(item.entity, item.id, target.id))
+        const mergedEntity = options.mergedNewEntitiesById?.[item.id] || item.entity
+        records.push(...buildNewEntityRecords(mergedEntity, item.id, target.id))
         createdNewEntityIds?.add(item.id)
       }
     }
@@ -549,6 +560,30 @@ function criticalEntityConflict(left, right) {
   return null
 }
 
+function mergeEntityProposal(base, incoming) {
+  const attributes = new Map()
+  for (const item of [...(base.attributes || []), ...(incoming.attributes || [])]) {
+    const key = cleanText(item?.key, 80)
+    const value = cleanText(item?.value, 1600)
+    if (!key || !value) continue
+    const current = attributes.get(key)
+    if (!current || value.length > current.length) attributes.set(key, value)
+  }
+
+  const baseSummary = cleanText(base.summary, 1400)
+  const incomingSummary = cleanText(incoming.summary, 1400)
+  const baseEvidence = cleanText(base.evidence, 700)
+  const incomingEvidence = cleanText(incoming.evidence, 700)
+
+  return {
+    ...base,
+    summary: incomingSummary.length > baseSummary.length ? incomingSummary : (baseSummary || null),
+    attributes: [...attributes.entries()].map(([key, value]) => ({ key, value })),
+    evidence: incomingEvidence.length > baseEvidence.length ? incomingEvidence : baseEvidence,
+    confidence: Math.max(Number(base.confidence) || 0, Number(incoming.confidence) || 0),
+  }
+}
+
 function planSharedNewEntities(documentImports) {
   const groups = new Map()
   const forcedNewEntityIds = {}
@@ -567,17 +602,27 @@ function planSharedNewEntities(documentImports) {
         if (conflictKey) {
           throw new Error(`CONFLICTO_DE_LOTE: «${entity.name}» aparece como entidad nueva en varias Fuentes con valores incompatibles para ${conflictKey}. Revisa las propuestas antes de generar el lote.`)
         }
+        existing.entity = mergeEntityProposal(existing.entity, entity)
         forcedNewEntityIds[`${documentImport.id}:${entity.local_id}`] = existing.id
         reusedAcrossSources += 1
       } else {
         const id = randomUUID()
-        groups.set(identity, { id, entity })
+        groups.set(identity, { id, entity: mergeEntityProposal(entity, entity) })
         forcedNewEntityIds[`${documentImport.id}:${entity.local_id}`] = id
       }
     }
   }
 
-  return { forcedNewEntityIds, uniqueNewEntities: groups.size, reusedAcrossSources }
+  const mergedNewEntitiesById = Object.fromEntries(
+    [...groups.values()].map((group) => [group.id, group.entity]),
+  )
+
+  return {
+    forcedNewEntityIds,
+    mergedNewEntitiesById,
+    uniqueNewEntities: groups.size,
+    reusedAcrossSources,
+  }
 }
 
 export async function stageAssistedImportAction(importIdInput, reviewInput) {
@@ -701,6 +746,7 @@ export async function stageAssistedBatchAction(batchIdInput, importIdsInput) {
       target,
       batchId,
       forcedNewEntityIds: sharing.forcedNewEntityIds,
+      mergedNewEntitiesById: sharing.mergedNewEntitiesById,
       createdNewEntityIds,
       batchContext,
     })
