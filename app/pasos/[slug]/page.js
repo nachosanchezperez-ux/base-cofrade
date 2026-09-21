@@ -149,6 +149,24 @@ export default async function PasoDetailPage({params}){
       <JsonLd data={breadcrumbJsonLd(breadcrumbs)} />
       <JsonLd data={{
         '@context': 'https://schema.org',
+        '@type': 'WebPage',
+        '@id': `${absoluteUrl(canonicalPath)}#webpage`,
+        url: absoluteUrl(canonicalPath),
+        name: paso.nombre,
+        isPartOf: { '@id': `${absoluteUrl('/')}#website` },
+        mainEntity: { '@id': `${absoluteUrl(canonicalPath)}#work` },
+        about: [
+          { '@id': `${absoluteUrl(canonicalPath)}#work` },
+          ...(hermandad ? [{
+            '@type': 'Organization',
+            '@id': `${absoluteUrl(`/hermandades/${hermandad.slug}`)}#organization`,
+            url: absoluteUrl(`/hermandades/${hermandad.slug}`),
+            name: hermandad.nombreOficial || hermandad.nombrePopular,
+          }] : []),
+        ],
+      }} />
+      <JsonLd data={{
+        '@context': 'https://schema.org',
         '@type': 'CreativeWork',
         '@id': `${absoluteUrl(canonicalPath)}#work`,
         url: absoluteUrl(canonicalPath),
@@ -156,14 +174,7 @@ export default async function PasoDetailPage({params}){
         name: paso.nombre,
         ...(publicText(paso.descripcion) ? { description: publicText(paso.descripcion) } : {}),
         ...(coverMedia?.path ? { image: absoluteUrl(coverMedia.path) } : {}),
-        ...(hermandad ? {
-          isPartOf: {
-            '@type': 'Organization',
-            '@id': `${absoluteUrl(`/hermandades/${hermandad.slug}`)}#organization`,
-            url: absoluteUrl(`/hermandades/${hermandad.slug}`),
-            name: hermandad.nombreOficial || hermandad.nombrePopular,
-          },
-        } : {}),
+
       }} />
       <RelationalEntityHero
         variant="step"
