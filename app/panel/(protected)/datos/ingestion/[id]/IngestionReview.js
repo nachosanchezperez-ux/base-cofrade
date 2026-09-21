@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { stageAssistedImportAction } from '../actions'
+import { saveAssistedReviewAction, stageAssistedImportAction } from '../actions'
 import styles from '../ingestion.module.css'
 
 const TYPE_LABELS = {
@@ -36,13 +36,26 @@ function initialEntityChoice(entity) {
   return Number(entity.confidence) >= 0.82 && entity.resolution?.state === 'new' ? 'new' : 'ignore'
 }
 
-export default function IngestionReview({ documentImport, target, canEdit }) {
+export default function IngestionReview({ documentImport, target, canEdit, batchId = null }) {
   const router = useRouter()
   const analysis = documentImport.analysis || { entities: [], relations: [], warnings: [] }
-  const [decisions, setDecisions] = useState(() => Object.fromEntries((analysis.entities || []).map((entity) => [entity.local_id, initialEntityChoice(entity)])))
-  const [selectedRelations, setSelectedRelations] = useState(() => new Set((analysis.relations || [])
-    .map((relation, index) => relation.stageable && Number(relation.confidence) >= 0.78 ? index : null)
-    .filter((index) => index !== null)))
+  const savedReview = documentImport.application_summary?.review || null
+  const [decisions, setDecisions] = useState(() => {
+    if (savedReview?.decisions) {
+      return Object.fromEntries((analysis.entities || []).map((entity) => [
+        entity.local_id,
+        savedReview.decisions[entity.local_id] || 'ignore',
+      ]))
+    }
+    return Object.fromEntries((analysis.entities || []).map((entity) => [entity.local_id, initialEntityChoice(entity)]))
+  })
+  const [selectedRelations, setSelectedRelations] = useState(() => new Set(
+    Array.isArray(savedReview?.selected_relation_indexes)
+      ? savedReview.selected_relation_indexes
+      : (analysis.relations || [])
+        .map((relation, index) => relation.stageable && Number(relation.confidence) >= 0.78 ? index : null)
+        .filter((index) => index !== null),
+  ))
   const [working, setWorking] = useState(false)
   const [error, setError] = useState('')
   const [message, setMessage] = useState('')
@@ -80,6 +93,26 @@ export default function IngestionReview({ documentImport, target, canEdit }) {
       else next.add(index)
       return next
     })
+  }
+
+  async function saveReviewForBatch() {
+    if (!canEdit || !batchId || stagedBatchId || working) return
+    setWorking(true)
+    setError('')
+    setMessage('')
+    try {
+      await saveAssistedReviewAction(documentImport.id, {
+        decisions,
+        selectedRelations: [...selectedRelations],
+      })
+      setMessage('Revisión guardada. Volviendo a la tanda…')
+      router.push(`/panel/datos/ingestion/lotes/${batchId}`)
+      router.refresh()
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : 'No se pudo guardar la revisión editorial.')
+    } finally {
+      setWorking(false)
+    }
   }
 
   async function prepareBatch() {
@@ -146,7 +179,7 @@ export default function IngestionReview({ documentImport, target, canEdit }) {
             {(entity.resolution?.candidates || []).map((candidate) => <option key={candidate.id} value={`existing:${candidate.id}`}>Reutilizar: {candidate.name}{candidate.status ? ` · ${candidate.status}` : ''}</option>)}
           </select>
         </label>
-        <small className={styles.resolutionNote}>{entity.resolution?.state === 'exact' ? 'Coincidencia exacta encontrada en Hilo Cofrade.' : entity.resolution?.state === 'ambiguous' ? 'Hay varias coincidencias exactas: requiere elección manual.' : 'No se encontró una coincidencia exacta por nombre y tipo.'}</small>
+        <small className={styles.resolutionNote}>{entity.resolution?.state === 'exact' ? 'Coincidencia exacta encontrada en Hilo Cofrade, incluido su catálogo de nombres alternativos.' : entity.resolution?.state === 'ambiguous' ? 'Hay varias coincidencias exactas: requiere elección manual.' : 'No se encontró una coincidencia exacta por nombre y tipo.'}</small>
       </article>)}</div> : <div className={styles.emptyBox}>La Fuente no ha generado nuevas entidades candidatas.</div>}
     </section>
 
@@ -190,10 +223,17 @@ export default function IngestionReview({ documentImport, target, canEdit }) {
           <div><strong>1</strong><span>Fuente normalizada</span></div>
           <div><strong>0</strong><span>publicaciones automáticas</span></div>
         </div>
+        {batchId ? <div className={styles.warningBox}>
+          <strong>Esta Fuente pertenece a una tanda HC-AUTO-01.</strong><br />Guarda aquí la revisión; el preflight se ejecutará una sola vez cuando todas las Fuentes de la tanda estén revisadas.
+        </div> : null}
         <div className={styles.actions}>
-          <button className={styles.primaryButton} type="button" onClick={prepareBatch} disabled={!canEdit || working}>
-            {working ? 'Ejecutando preflight…' : 'Generar lote y ejecutar preflight'}
-          </button>
+          {batchId
+            ? <button className={styles.primaryButton} type="button" onClick={saveReviewForBatch} disabled={!canEdit || working}>
+                {working ? 'Guardando revisión…' : 'Guardar revisión y volver a la tanda'}
+              </button>
+            : <button className={styles.primaryButton} type="button" onClick={prepareBatch} disabled={!canEdit || working}>
+                {working ? 'Ejecutando preflight…' : 'Generar lote y ejecutar preflight'}
+              </button>}
         </div>
       </>}
       {message ? <div className={styles.successBox}>{message}</div> : null}
