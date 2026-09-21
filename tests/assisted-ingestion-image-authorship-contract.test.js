@@ -42,3 +42,9 @@ test('una autoría nueva nace draft, con certeza coherente y Fuente directa', ()
   assert.match(actions, /status: 'draft'/)
   assert.match(actions, /image_authorship_id: id/)
 })
+
+test('las atribuciones históricas expresamente superadas no se convierten en relación vigente', () => {
+  assert.match(engine, /atribución histórica después descartada, corregida o superada/)
+  assert.match(engine, /NO generes la relación/)
+  assert.match(engine, /warnings\/evidence/)
+})
