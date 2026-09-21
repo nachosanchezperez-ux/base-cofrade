@@ -23,6 +23,8 @@ const RELATION_LABELS = {
   processes_on: 'Imagen → paso',
   belongs_to_brotherhood: 'Banda → Hermandad',
   authored_by: 'Marcha → autor',
+  image_authored_by: 'Imagen → autor documentado',
+  image_attributed_to: 'Imagen → autor atribuido',
   dedicated_to: 'Marcha → dedicatoria',
 }
 
