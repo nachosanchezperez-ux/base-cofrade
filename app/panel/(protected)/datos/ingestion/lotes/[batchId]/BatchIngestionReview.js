@@ -63,7 +63,7 @@ export default function BatchIngestionReview({ batchId, target, imports, canEdit
         <div><strong>{imports.reduce((sum, item) => sum + (item.analysis?.entities?.length || 0), 0)}</strong><span>entidades propuestas</span></div>
         <div><strong>{imports.reduce((sum, item) => sum + (item.analysis?.relations?.length || 0), 0)}</strong><span>relaciones propuestas</span></div>
       </div>
-      <p className={styles.lead}>Cada Fuente se revisa por separado para conservar su evidencia. Al final, HC-AUTO-01 unifica entidades nuevas repetidas entre Fuentes y genera un solo preflight.</p>
+      <p className={styles.lead}>Cada Fuente se revisa por separado para conservar su evidencia. Al final, HC-AUTO-02 unifica entidades nuevas repetidas, fusiona enriquecimientos compatibles y genera un solo preflight.</p>
     </section>
 
     <section className={styles.card}>
