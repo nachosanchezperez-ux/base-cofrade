@@ -122,22 +122,24 @@ export default async function BandDirectionPage({ params, searchParams }) {
   if (!data) notFound()
 
   const supabase = await createClient()
-  const agentIds = data.agents.map((agent) => agent.id).filter(Boolean)
   const [sourceSupport, personRowsResult] = await Promise.all([
     loadRelationSourceSupport(supabase, data.direction, 'band_agent'),
-    agentIds.length
-      ? supabase.from('agents').select('entity_id').in('entity_id', agentIds).eq('agent_kind', 'person')
-      : Promise.resolve({ data: [], error: null }),
+    supabase
+      .from('agents')
+      .select('entity_id, entity:entities!agents_entity_id_fkey!inner(id, name, slug, status)')
+      .eq('agent_kind', 'person')
+      .neq('entity.status', 'archived'),
   ])
-  if (personRowsResult.error) throw new Error(`No se pudieron filtrar las Personas: ${personRowsResult.error.message}`)
+  if (personRowsResult.error) throw new Error(`No se pudieron cargar las Personas: ${personRowsResult.error.message}`)
 
-  const personIds = new Set((personRowsResult.data || []).map((item) => item.entity_id))
   const canEdit = ['admin', 'editor'].includes(user.role)
   const displayName = data.popularName?.name || data.entity.name
   const current = sourceSupport.relations.filter((item) => item.is_current)
   const historical = sourceSupport.relations.filter((item) => !item.is_current)
-  const agentOptions = data.agents
-    .filter((agent) => personIds.has(agent.id))
+  const agentOptions = (personRowsResult.data || [])
+    .map((item) => item.entity)
+    .filter(Boolean)
+    .sort((left, right) => left.name.localeCompare(right.name, 'es'))
     .map((agent) => ({ id: agent.id, name: agent.name, slug: agent.slug, meta: agent.status === 'published' ? 'Persona' : agent.status }))
 
   return (
