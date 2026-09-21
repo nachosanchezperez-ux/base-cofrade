@@ -16,6 +16,7 @@ import {
   BrotherhoodOwnBands,
 } from '@/components/BrotherhoodRelationalExtras';
 import EntitySectionNav from '@/components/EntitySectionNav';
+import RelationalThread from '@/components/RelationalThread';
 import FestivalPostersSection from '@/components/FestivalPostersSection';
 import { notFound } from 'next/navigation';
 import JsonLd from '@/components/JsonLd';
@@ -200,6 +201,54 @@ export default async function HermandadDetailPage({ params }) {
   const isGloria = tiposHermandad.includes('Gloria');
   const brotherhoodTypeLabel = brotherhoodPublicTypeLabel(h);
   const steps = h.pasos || [];
+  const stepById = new Map(steps.map((step) => [step.id, step]));
+  const relationalCurrentAccompaniments = (h.acompanamientoActual || []).filter((item) => (
+    publicText(item.banda) && publicText(item.bandaSlug)
+  ));
+  const brotherhoodThreadItems = [
+    ...(h.imagenes || [])
+      .filter((imagen) => imagen.fichaDisponible && imagen.slug)
+      .map((imagen) => ({
+        kind: 'Imagen',
+        relation: 'Titular',
+        title: imagen.nombre,
+        href: `/imagenes/${imagen.slug}`,
+        context: [imagen.tipo, imagen.autor, imagen.fecha].map(publicText).filter(Boolean).join(' · '),
+      })),
+    ...steps
+      .filter((step) => step.fichaDisponible && step.slug)
+      .map((step) => ({
+        kind: 'Paso',
+        relation: 'Paso procesional',
+        title: step.nombre,
+        href: `/pasos/${step.slug}`,
+        context: [step.tipo, step.ejecucion].map(publicText).filter(Boolean).join(' · '),
+      })),
+    ...relationalCurrentAccompaniments.map((item) => ({
+      kind: 'Banda',
+      relation: publicText(item.posicion) || 'Acompañamiento actual',
+      title: publicText(item.banda),
+      href: `/bandas/${item.bandaSlug}`,
+      context: [
+        stepById.get(item.pasoId)?.nombre,
+        publicText(item.salida),
+        publicText(item.periodo),
+      ].filter(Boolean).join(' · '),
+    })),
+    ...musicalHeritage
+      .filter((item) => item.workType === 'Marcha procesional' && item.slug)
+      .map((item) => ({
+        kind: 'Marcha',
+        relation: 'Patrimonio musical',
+        title: item.name,
+        href: `/marchas/${item.slug}`,
+        context: [
+          String(item.year || ''),
+          publicText(item.musicType),
+          item.composers?.map((author) => author.name).filter(Boolean).join(' · '),
+        ].filter(Boolean).join(' · '),
+      })),
+  ];
   const explicitGlorySteps = steps.filter(isGloryStep);
   const holyWeekSteps = isPenitencia
     ? steps.filter((step) => !isGloryStep(step) && !isSacramentalStep(step))
@@ -324,7 +373,7 @@ export default async function HermandadDetailPage({ params }) {
         hasPracticalOverview && { href: '#resumen', label: 'Información' },
         h.imagenes?.length > 0 && { href: '#titulares', label: 'Titulares' },
         h.pasos?.length > 0 && { href: '#pasos', label: 'Pasos' },
-        (h.imagenes?.length > 0 || h.pasos?.length > 0) && { href: '#tira-del-hilo', label: 'Tira del hilo' },
+        brotherhoodThreadItems.length > 0 && { href: '#tira-del-hilo', label: 'Conexiones' },
         documentedCurrentAccompaniments.length > 0 && { href: '#acompanamiento-musical', label: 'Acompañamiento' },
         (musicalHeritage.length > 0 || fallbackMusicalHeritage.length > 0) && { href: '#musica', label: 'Patrimonio musical' },
         musicalRepertoires.length > 0 && { href: '#crucetas-musicales', label: 'Crucetas' },
@@ -348,6 +397,17 @@ export default async function HermandadDetailPage({ params }) {
       <BrotherhoodOverviewV2
         brotherhood={h}
         heroFactLabels={heroFacts.map((fact) => fact.label)}
+      />
+
+      <RelationalThread
+        currentLabel="Hermandad"
+        currentName={h.nombrePopular}
+        currentMeta={[brotherhoodTypeLabel, publicText(h.localidad)].filter(Boolean).join(' · ')}
+        items={brotherhoodThreadItems}
+        priorityProfile="hermandad"
+        eyebrow="Descubre el hilo"
+        title="Conexiones de esta Hermandad"
+        description="Continúa por sus Titulares, pasos, bandas y marchas documentadas. Cada relación abre una nueva ficha sin perder el contexto de la Hermandad de origen."
       />
 
       {h.participacionesConsejo?.length > 0 && (
