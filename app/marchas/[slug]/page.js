@@ -65,8 +65,10 @@ export default async function MarchDetailPage({ params }) {
       <JsonLd data={{
         '@context': 'https://schema.org',
         '@type': 'MusicComposition',
+        '@id': `${absoluteUrl(march.href)}#composition`,
         name: march.name,
         url: absoluteUrl(march.href),
+        mainEntityOfPage: absoluteUrl(march.href),
         dateCreated: march.compositionYear || undefined,
         composer: march.authors.filter((author) => author.role === 'composer').map((author) => ({ '@type': 'Person', name: author.name })),
       }} />
