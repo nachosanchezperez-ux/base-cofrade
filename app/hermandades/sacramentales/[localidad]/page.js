@@ -1,51 +1,61 @@
 import { notFound } from 'next/navigation'
 import DirectoryRoutePage from '@/components/DirectoryRoutePage'
-import {
-  hasDirectoryType,
-  labelFromSlug,
-  localitySlug,
-} from '@/lib/brotherhood-directory'
+import { labelFromSlug } from '@/lib/brotherhood-directory'
+import { brotherhoodsForDirectoryRoute } from '@/lib/brotherhood-public-index'
 import { socialMetadata } from '@/lib/seo'
-import { getHermandadesDirectory } from '@/lib/supabase/brotherhood-directory'
+import { getIndexableBrotherhoodDirectory } from '@/lib/supabase/indexable-brotherhood-directory'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 900
 
-export async function generateMetadata({ params }) {
-  const { localidad } = await params
+async function pageData(localidad) {
+  const path = `/hermandades/sacramentales/${localidad}`
+  const items = brotherhoodsForDirectoryRoute(
+    await getIndexableBrotherhoodDirectory(),
+    'sacramentales',
+    path
+  )
   const localityName = labelFromSlug(localidad)
   const title = `Hermandades Sacramentales de ${localityName}`
   const description = `Directorio de Hermandades Sacramentales de ${localityName}.`
-  const path = `/hermandades/sacramentales/${localidad}`
+
+  return { items, localityName, path, title, description }
+}
+
+export async function generateMetadata({ params }) {
+  const { localidad } = await params
+  const data = await pageData(localidad)
+
+  if (!data.items.length) {
+    return {
+      title: 'Directorio sacramental no encontrado',
+      robots: { index: false, follow: false },
+    }
+  }
 
   return {
-    title,
-    description,
-    ...socialMetadata({ title, description, path }),
+    title: data.title,
+    description: data.description,
+    ...socialMetadata({ title: data.title, description: data.description, path: data.path }),
   }
 }
 
 export default async function SacramentalLocalityPage({ params }) {
   const { localidad } = await params
-  const hermandades = await getHermandadesDirectory()
-  const items = hermandades.filter((item) => (
-    hasDirectoryType(item, 'sacramentales') && localitySlug(item) === localidad
-  ))
+  const data = await pageData(localidad)
 
-  if (!items.length) notFound()
+  if (!data.items.length) notFound()
 
-  const localityName = labelFromSlug(localidad)
-  const path = `/hermandades/sacramentales/${localidad}`
   return (
     <DirectoryRoutePage
       eyebrow="Hermandades Sacramentales"
-      title={`Sacramentales de ${localityName}`}
-      description={`Corporaciones sacramentales documentadas en ${localityName}.`}
-      hermandades={items}
-      path={path}
+      title={`Sacramentales de ${data.localityName}`}
+      description={`Corporaciones sacramentales documentadas en ${data.localityName}.`}
+      hermandades={data.items}
+      path={data.path}
       contextLabel="Sacramental"
       breadcrumbs={[
         { label: 'Sacramentales', href: '/hermandades/sacramentales' },
-        { label: localityName },
+        { label: data.localityName },
       ]}
     />
   )

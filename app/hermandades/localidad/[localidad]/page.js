@@ -1,28 +1,11 @@
-import { cache } from 'react'
 import { notFound } from 'next/navigation'
 import DirectoryRoutePage from '@/components/DirectoryRoutePage'
-import {
-  brotherhoodsForLocality,
-  filterIndexableBrotherhoods,
-} from '@/lib/brotherhood-public-index'
+import { brotherhoodsForLocality } from '@/lib/brotherhood-public-index'
 import { localityLabel } from '@/lib/brotherhood-directory'
 import { socialMetadata } from '@/lib/seo'
-import { getHermandadesDirectory } from '@/lib/supabase/brotherhood-directory'
-import { getPublicIndexableEntityEntries } from '@/lib/supabase/public-indexability'
+import { getIndexableBrotherhoodDirectory } from '@/lib/supabase/indexable-brotherhood-directory'
 
 export const revalidate = 900
-
-const getIndexableBrotherhoods = cache(async () => {
-  const brotherhoods = await getHermandadesDirectory()
-  const entries = await getPublicIndexableEntityEntries({
-    brotherhoods,
-    bandDirectory: [],
-    images: [],
-    steps: [],
-  })
-
-  return filterIndexableBrotherhoods(brotherhoods, entries)
-})
 
 function pageData(brotherhoods, localidad) {
   const items = brotherhoodsForLocality(brotherhoods, localidad)
@@ -36,7 +19,7 @@ function pageData(brotherhoods, localidad) {
 
 export async function generateMetadata({ params }) {
   const { localidad } = await params
-  const data = pageData(await getIndexableBrotherhoods(), localidad)
+  const data = pageData(await getIndexableBrotherhoodDirectory(), localidad)
 
   if (!data.items.length) {
     return {
@@ -54,7 +37,7 @@ export async function generateMetadata({ params }) {
 
 export default async function BrotherhoodMunicipalityDirectoryPage({ params }) {
   const { localidad } = await params
-  const data = pageData(await getIndexableBrotherhoods(), localidad)
+  const data = pageData(await getIndexableBrotherhoodDirectory(), localidad)
 
   if (!data.items.length) notFound()
 

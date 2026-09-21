@@ -1,8 +1,8 @@
 import HermandadesCategoryDirectory from '@/components/HermandadesCategoryDirectory'
 import { socialMetadata } from '@/lib/seo'
-import { getHermandadesDirectory } from '@/lib/supabase/brotherhood-directory'
+import { getIndexableBrotherhoodDirectory } from '@/lib/supabase/indexable-brotherhood-directory'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 900
 
 const title = 'Hermandades de Gloria'
 const description = 'Hermandades de Gloria de Sevilla capital y provincia organizadas por localidad y mes principal.'
@@ -15,6 +15,6 @@ export const metadata = {
 }
 
 export default async function GloriaDirectoryPage() {
-  const hermandades = await getHermandadesDirectory()
+  const hermandades = await getIndexableBrotherhoodDirectory()
   return <HermandadesCategoryDirectory hermandades={hermandades} typeKey="gloria" />
 }

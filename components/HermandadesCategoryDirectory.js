@@ -3,13 +3,13 @@ import Link from 'next/link'
 import BrotherhoodDirectoryCard from '@/components/BrotherhoodDirectoryCard'
 import JsonLd from '@/components/JsonLd'
 import {
-  directoryPath,
   directoryPeriod,
   directoryType,
   hasDirectoryType,
   localityLabel,
   sortBrotherhoods,
 } from '@/lib/brotherhood-directory'
+import { brotherhoodDirectoryRoutes } from '@/lib/brotherhood-public-index'
 import { breadcrumbJsonLd, collectionPageJsonLd } from '@/lib/seo'
 import styles from './HermandadesDirectory.module.css'
 
@@ -62,12 +62,7 @@ export default function HermandadesCategoryDirectory({ hermandades, typeKey }) {
     typeKey
   )
   const groups = groupedDirectory(items, typeKey)
-  const routes = [...new Map(items.map((item) => {
-    const period = directoryPeriod(item, typeKey)
-    const label = [localityLabel(item), period].filter(Boolean).join(' · ')
-    const href = directoryPath(item, typeKey)
-    return [href, { href, label }]
-  }).filter(([href]) => Boolean(href))).values()]
+  const routes = brotherhoodDirectoryRoutes(items, typeKey)
   const pageName = `${config.label} de Sevilla y provincia`
   const itemSingular = config.itemSingular || 'hermandad'
   const itemPlural = config.itemPlural || 'hermandades'

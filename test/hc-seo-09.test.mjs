@@ -30,10 +30,14 @@ test('HC-SEO-09 solo publica localidades con masa editorial suficiente', () => {
 })
 
 test('la landing municipal comparte la frontera pública de indexabilidad', async () => {
-  const page = await read('app/hermandades/localidad/[localidad]/page.js')
+  const [page, sharedDirectory] = await Promise.all([
+    read('app/hermandades/localidad/[localidad]/page.js'),
+    read('lib/supabase/indexable-brotherhood-directory.js'),
+  ])
 
-  assert.match(page, /getPublicIndexableEntityEntries/)
-  assert.match(page, /filterIndexableBrotherhoods/)
+  assert.match(page, /getIndexableBrotherhoodDirectory/)
+  assert.match(sharedDirectory, /getPublicIndexableEntityEntries/)
+  assert.match(sharedDirectory, /filterIndexableBrotherhoods/)
   assert.match(page, /brotherhoodsForLocality/)
   assert.match(page, /robots: \{ index: false, follow: false \}/)
   assert.match(page, /notFound\(\)/)

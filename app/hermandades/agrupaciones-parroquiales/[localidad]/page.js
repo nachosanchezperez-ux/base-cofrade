@@ -1,53 +1,63 @@
 import { notFound } from 'next/navigation'
 import DirectoryRoutePage from '@/components/DirectoryRoutePage'
-import {
-  hasDirectoryType,
-  labelFromSlug,
-  localitySlug,
-} from '@/lib/brotherhood-directory'
+import { labelFromSlug } from '@/lib/brotherhood-directory'
+import { brotherhoodsForDirectoryRoute } from '@/lib/brotherhood-public-index'
 import { socialMetadata } from '@/lib/seo'
-import { getHermandadesDirectory } from '@/lib/supabase/brotherhood-directory'
+import { getIndexableBrotherhoodDirectory } from '@/lib/supabase/indexable-brotherhood-directory'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 900
 
-export async function generateMetadata({ params }) {
-  const { localidad } = await params
+async function pageData(localidad) {
+  const path = `/hermandades/agrupaciones-parroquiales/${localidad}`
+  const items = brotherhoodsForDirectoryRoute(
+    await getIndexableBrotherhoodDirectory(),
+    'agrupaciones-parroquiales',
+    path
+  )
   const localityName = labelFromSlug(localidad)
   const title = `Agrupaciones Parroquiales de ${localityName}`
   const description = `Directorio de Agrupaciones Parroquiales de ${localityName}.`
-  const path = `/hermandades/agrupaciones-parroquiales/${localidad}`
+
+  return { items, localityName, path, title, description }
+}
+
+export async function generateMetadata({ params }) {
+  const { localidad } = await params
+  const data = await pageData(localidad)
+
+  if (!data.items.length) {
+    return {
+      title: 'Directorio de Agrupaciones Parroquiales no encontrado',
+      robots: { index: false, follow: false },
+    }
+  }
 
   return {
-    title,
-    description,
-    ...socialMetadata({ title, description, path }),
+    title: data.title,
+    description: data.description,
+    ...socialMetadata({ title: data.title, description: data.description, path: data.path }),
   }
 }
 
 export default async function ParishGroupingsLocalityPage({ params }) {
   const { localidad } = await params
-  const hermandades = await getHermandadesDirectory()
-  const items = hermandades.filter((item) => (
-    hasDirectoryType(item, 'agrupaciones-parroquiales') && localitySlug(item) === localidad
-  ))
+  const data = await pageData(localidad)
 
-  if (!items.length) notFound()
+  if (!data.items.length) notFound()
 
-  const localityName = labelFromSlug(localidad)
-  const path = `/hermandades/agrupaciones-parroquiales/${localidad}`
   return (
     <DirectoryRoutePage
       eyebrow="Agrupaciones Parroquiales"
-      title={`Agrupaciones Parroquiales de ${localityName}`}
-      description={`Corporaciones con carácter de Agrupación Parroquial documentadas en ${localityName}.`}
-      hermandades={items}
-      path={path}
+      title={data.title}
+      description={`Corporaciones con carácter de Agrupación Parroquial documentadas en ${data.localityName}.`}
+      hermandades={data.items}
+      path={data.path}
       contextLabel="Agrupación Parroquial"
       itemSingular="agrupación"
       itemPlural="agrupaciones"
       breadcrumbs={[
         { label: 'Agrupaciones Parroquiales', href: '/hermandades/agrupaciones-parroquiales' },
-        { label: localityName },
+        { label: data.localityName },
       ]}
     />
   )
