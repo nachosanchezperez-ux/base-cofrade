@@ -1,8 +1,11 @@
 # Modelado de participación, Pasos, sedes, música y Servitas · Carmona · HC-016
 
-**Fecha:** 21 de septiembre de 2026  
-**Base:** `9055a35b30b1e6a4c05f654c3566a0d0e6ccf578`  
-**Fase:** MODELADO PARCIAL CERRADO · MÚSICA AÚN BLOQUEANTE  
+**Fecha:** 21 de septiembre de 2026
+
+**Base:** `9055a35b30b1e6a4c05f654c3566a0d0e6ccf578`
+
+**Fase:** MODELADO PARCIAL CERRADO · MÚSICA AÚN BLOQUEANTE
+
 **Límites:** sin staging, payload SQL, dry-run, Apply, DDL, RLS ni publicación de datos
 
 ## 1. Resultado ejecutivo
