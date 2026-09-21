@@ -152,12 +152,15 @@ export default async function PasoDetailPage({params}){
         '@type': 'CreativeWork',
         '@id': `${absoluteUrl(canonicalPath)}#work`,
         url: absoluteUrl(canonicalPath),
+        mainEntityOfPage: absoluteUrl(canonicalPath),
         name: paso.nombre,
         ...(publicText(paso.descripcion) ? { description: publicText(paso.descripcion) } : {}),
         ...(coverMedia?.path ? { image: absoluteUrl(coverMedia.path) } : {}),
         ...(hermandad ? {
           isPartOf: {
             '@type': 'Organization',
+            '@id': `${absoluteUrl(`/hermandades/${hermandad.slug}`)}#organization`,
+            url: absoluteUrl(`/hermandades/${hermandad.slug}`),
             name: hermandad.nombreOficial || hermandad.nombrePopular,
           },
         } : {}),
