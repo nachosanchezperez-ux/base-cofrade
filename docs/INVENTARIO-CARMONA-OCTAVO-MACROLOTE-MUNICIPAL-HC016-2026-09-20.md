@@ -103,6 +103,6 @@ Esta fila no es la Salida de Viernes de Dolores y no se duplica. La futura corpo
 
 ## 8. Decisión de cierre
 
-El inventario queda cerrado con **9 sujetos corporativos**, **28 imágenes titulares candidatas**, **10 salidas penitenciales históricas de 2026** y una Salida servita de septiembre ya existente. Permanecen abiertas, para una puerta posterior y expresa, la normalización exacta de Servitas, el inventario canónico de Pasos, la música, la evidencia posterior de celebración y los detalles de recorridos.
+El inventario queda cerrado con **9 sujetos corporativos**, **28 imágenes titulares candidatas**, **10 salidas penitenciales históricas de 2026** y una Salida servita de septiembre ya existente. La evidencia posterior 10/10, la normalización exacta de Servitas y el inventario canónico de 17 Pasos ya se cerraron en las puertas siguientes. Permanecen abiertas la música no acreditada, la procedencia incompleta de la Fuente servita de septiembre, el posible REUSE de su Paso y los detalles de recorridos.
 
 Este documento no autoriza staging, SQL, Apply ni una PR de datos.

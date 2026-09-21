@@ -15,8 +15,8 @@
 - 17 Pasos únicos y 17 participaciones de Paso documentables en los diez cortejos penitenciales. El posible REUSE del Paso servita en septiembre queda bloqueado hasta disponer de prueba específica.
 - 30 relaciones `image_steps` confirmadas por fuente; 3 relaciones permanecen bloqueadas por no acreditar participación efectiva en 2026.
 - 7 Lugares y 9 relaciones de sede actual; no existe ningún Lugar carmonense previo en Supabase.
-- 5 posiciones musicales de 2026 identificadas con evidencia posterior o combinación previa/posterior suficiente; el resto sigue pendiente.
-- 3 Bandas son REUSE seguro; 2 serían INSERT si superan la puerta probatoria.
+- 8 posiciones musicales de 2026 identificadas: 3 cerradas con fuente primaria y contraste posterior, y 5 todavía pendientes de elevar o completar.
+- 3 Bandas son REUSE seguro; 4 serían INSERT si superan la puerta probatoria.
 
 Este documento no es un manifiesto ni autoriza escrituras. El plan row-by-row definitivo continúa bloqueado hasta cerrar toda la música efectiva y elevar las fuentes secundarias indicadas.
 
@@ -91,15 +91,26 @@ La publicación oficial del 19 de septiembre acredita fecha, hora y recorrido; l
 
 | Salida/posición | Banda | Evidencia disponible | Supabase | Estado |
 |---|---|---|---|---|
+| Servitas · Viernes de Dolores | Grupo de viento MAFERMAN | [vídeo posterior individual del 27/03/2026](https://www.facebook.com/antonio.maqueda.792/videos/viernes-de-doloresya-se-percibe-en-el-ambiente-el-aroma-a-incienso-y-olor-a-azah/956422130108446/) que identifica a la formación y el cortejo | no existe | identificado; elevar a fuente propia o institucional |
 | Esperanza · misterio de Coronación | Agrupación Musical Nuestra Señora de Valme de Dos Hermanas | vídeo posterior de 2026 con identificación musical | REUSE `4e4d493c-5273-44aa-8066-72dd1faa1ed8` | identificado; elevar a fuente propia |
-| Amargura · Señor | Banda de Cornetas y Tambores Santísimo Cristo de la Victoria de León | vídeo posterior de 30/03/2026; continuidad oficial publicada para 2025 | REUSE `97f62582-42f5-4d5f-80e0-376398af98e8` | efectivo; falta fuente primaria 2026 |
+| Esperanza · palio | Banda de Música Nuestra Señora de Guaditoca | publicación posterior de 2026 que identifica conjuntamente cortejo y banda, localizada en la página de menciones de la formación | no existe | identificado; falta URL individual estable |
+| Amargura · Señor | Banda de Cornetas y Tambores Santísimo Cristo de la Victoria de León | [vídeo posterior de 30/03/2026](https://www.youtube.com/watch?v=0AApOXmRBE0); continuidad oficial publicada para 2025 | REUSE `97f62582-42f5-4d5f-80e0-376398af98e8` | efectivo; falta fuente primaria 2026 |
 | Expiración · palio de los Dolores | Banda Municipal de Música de Mairena del Alcor | [renovación oficial publicada el 24/10/2025](https://municipaldemairena.com/renovamos-nuestro-martes-santo-con-la-hermandad-de-san-blas/) para el Martes Santo 2026 + evidencia posterior del cortejo | REUSE `d6852052-92bb-4b54-b551-e52b656dea6d` | cerrado |
-| Quinta Angustia · palio de las Angustias | Banda de Música El Arrabal de Carmona | vídeo posterior identificado | no existe | candidato INSERT; elevar a fuente estable |
+| Quinta Angustia · palio de las Angustias | Banda de Música El Arrabal de Carmona | [publicación oficial posterior](https://x.com/QuintaAngustia/status/2057512726579081512) de la Hermandad: Miércoles Santo 2026 y marcha interpretada por El Arrabal | no existe | cerrado; candidato INSERT |
+| Santiago · misterio de la Columna | Banda de Cornetas y Tambores Nuestra Señora de Gracia de Carmona | comunicado oficial de la Banda para el Jueves Santo 2026 + [grabación posterior individual](https://www.youtube.com/watch?v=iETVcXC5gu0) del cortejo | no existe | cerrado; candidato INSERT |
 | Santo Entierro · misterio | Banda de Música El Arrabal de Carmona | [Carmona Penitente 2026](https://www.larevistacarmona.es/texto-diario/mostrar/5825655/carmona-penitente-guia-imprescindible-semana-santa) + publicación posterior del 04/04/2026 | no existe | identificado; elevar la prueba posterior |
 | Esperanza · Desamparados | Banda Municipal de Música de Mairena del Alcor | vídeo posterior localizado con la marcha «La Virgen de los Desamparados» | REUSE | probable; no materializar aún |
-| Servitas · Santo Escapulario 19/09 | Banda de Música del Maestro Manuel Fernández Manzanar (MAFERMAN) | información oficial cargada y perfil oficial; Fuente actual sin URL/fecha | no existe | anunciado; no convertir a efectivo sin cierre posterior |
+| Servitas · Santo Escapulario 19/09 | Banda de Música del Maestro Manuel Fernández Manzanar (MAFERMAN) | [agenda oficial de septiembre](https://www.facebook.com/ServitasCarmona/posts/-%F0%9D%90%80%F0%9D%90%86%F0%9D%90%84%F0%9D%90%8D%F0%9D%90%83%F0%9D%90%80-%F0%9D%90%92%F0%9D%90%84%F0%9D%90%91%F0%9D%90%95%F0%9D%90%88%F0%9D%90%93%F0%9D%90%80-%F0%9D%90%92%F0%9D%90%9E%F0%9D%90%A9%F0%9D%90%AD%F0%9D%90%A2%F0%9D%90%9E%F0%9D%90%A6%F0%9D%90%9B%F0%9D%90%AB%F0%9D%90%9E-%F0%9D%9F%90%F0%9D%9F%8E%F0%9D%9F%90%F0%9D%9F%94compartimos-la-agenda-con-todos-los-cultos-y-acto/1375647494763823/) acredita la Salida, pero no el acompañamiento; la Fuente cargada sigue sin URL/fecha | no existe | anunciado; música no acreditada como efectiva |
 
 Las demás posiciones musicales permanecen `BLOCKED`. No se heredan contratos de 2024/2025 ni se usa el sonido de un vídeo sin identificación inequívoca.
+
+### 6.1 Conflicto resuelto en Quinta Angustia
+
+Una publicación previa anunció a la Banda Castillo de la Mota para el Miércoles Santo de 2026. La publicación oficial posterior de la propia Hermandad identifica a El Arrabal durante el cortejo celebrado. Para modelar ejecución efectiva prevalece la evidencia posterior: no se crea una relación 2026 con Castillo de la Mota.
+
+### 6.2 Conciliación nominal en Supabase
+
+La consulta de producción del 21 de septiembre confirma los tres REUSE por UUID indicados. No devuelve coincidencia para El Arrabal, MAFERMAN, Nuestra Señora de Guaditoca ni Nuestra Señora de Gracia. Son candidatos INSERT, no autorización de alta; deben volver a comprobarse inmediatamente antes de cualquier plan row-by-row.
 
 ## 7. Auditoría de duplicados
 
@@ -108,7 +119,7 @@ Las demás posiciones musicales permanecen `BLOCKED`. No se heredan contratos de
 - Esperanza: una corporación, dos Salidas penitenciales.
 - Servitas: una corporación, dos Salidas de 2026; septiembre es REUSE.
 - Amargura: dos crucificados distintos; no alias.
-- Bandas: tres REUSE confirmados por UUID; El Arrabal y MAFERMAN son candidatos INSERT.
+- Bandas: tres REUSE confirmados por UUID; El Arrabal, MAFERMAN, Nuestra Señora de Guaditoca y Nuestra Señora de Gracia son candidatos INSERT.
 - Ninguna relación bloqueada se convertirá en fila por inferencia.
 
 ## 8. Puerta row-by-row

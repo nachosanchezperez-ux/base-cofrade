@@ -41,17 +41,24 @@ Una fuente previa acredita un anuncio, no la celebración. Una captura, vídeo o
 | `CAR-F21` | [Televisión Carmona · San Pedro](https://play.televisioncarmona.com/v/Imqv1GlpxvEHKd1B9I/HERMANDAD-DE-SAN-PEDRO-REPORTAJE-TVC//) | C | reportaje posterior del cortejo de Humildad | alias parroquial; conciliar con `CAR-F06` |
 | `CAR-F22` | [Televisión Carmona · Santo Entierro](https://play.televisioncarmona.com/v/d4cj4lCGq1gPR3ixCX/HERMANDAD-DEL-SANTO-ENTIERRO-REPORTAJE-TVC//) | C | reportaje posterior del Sábado Santo | no resuelve por sí solo sede o composición |
 | `CAR-F23` | [Orden Seglar Siervos de María · web oficial](https://servitascarmona.com/) | A | firma «Orden Seglar Siervos de María», nombre público «Orden Seglar Servita Carmona» y sede en la Real Iglesia del Salvador | no prueba por sí sola música, celebración concreta ni que marzo y septiembre compartan Paso |
+| `CAR-F24` | [Banda Municipal de Mairena · renovación con San Blas](https://municipaldemairena.com/renovamos-nuestro-martes-santo-con-la-hermandad-de-san-blas/) | A | acompañamiento del palio de la Expiración el Martes Santo de 2026 | anuncio previo; se contrasta con `CAR-F16` para la ejecución del cortejo |
+| `CAR-F25` | [Quinta Angustia · publicación posterior](https://x.com/QuintaAngustia/status/2057512726579081512) | C | identifica a El Arrabal durante el Miércoles Santo de 2026 | prevalece para ejecución efectiva sobre el anuncio previo de Castillo de la Mota |
+| `CAR-F26` | [Banda de Nuestra Señora de Gracia · comunicado Jueves Santo 2026](https://www.facebook.com/100092293824905/posts/677461865340268/) | A | acompañamiento anunciado para el misterio de la Columna | se contrasta con `CAR-F27` para la ejecución efectiva |
+| `CAR-F27` | [Columna 2026 · grabación posterior](https://www.youtube.com/watch?v=iETVcXC5gu0) | D | identifica cortejo y formación musical en una pieza posterior individual | vídeo secundario; suficiente solo combinado con `CAR-F26` |
+| `CAR-F28` | [Servitas · agenda oficial de septiembre de 2026](https://www.facebook.com/ServitasCarmona/posts/1375647494763823/) | A/B | fecha, hora y sede de la Salida del Santo Escapulario | no acredita por sí sola el acompañamiento musical ni el Paso utilizado |
+| `CAR-F29` | [Servitas · vídeo posterior del Viernes de Dolores](https://www.facebook.com/antonio.maqueda.792/videos/956422130108446/) | D | identifica al grupo de viento MAFERMAN en el cortejo del 27/03/2026 | fuente secundaria; debe elevarse antes de materializar música |
+| `CAR-F30` | [Amargura · grabación posterior con Victoria de León](https://www.youtube.com/watch?v=0AApOXmRBE0) | D | identifica el cortejo de San Felipe de 2026 y la Banda de la Victoria | falta fuente primaria específica de 2026 |
 
 ## 3. Matriz por sujeto y relación
 
 | Sujeto | Identidad/título | Sede y día 2026 | Titulares | Pasos | Itinerario 2026 | Evidencia `held` | Música | Resultado |
 |---|---|---|---|---|---|---|---|---|
-| Servitas | `F23` + `F09` | `F23` + `F09` | `F23` + `F09` | marzo concretado; posible REUSE en septiembre bloqueado | `F10` pendiente de extracción | `F13` cerrada | parcial | identidad y sede cerradas; una corporación para marzo y septiembre, sin inferir Paso compartido |
-| Esperanza | `F01` | `F01` + `F09` | `F01` | `F01` + `F09` | `F10` pendiente | `F14` + `F20` cerradas | pendiente | una corporación, dos Salidas acreditadas |
-| Amargura | `F07` | `F07` + `F09` | `F07` | `F07` + `F09` | `F10` pendiente | `F15` cerrada | parcial | dos crucificados distintos; Cristo de San Felipe queda fuera de la Salida 2026 |
-| Expiración | `F03` | `F03` + `F09` | `F03` | `F03` + `F09` | `F10` pendiente | `F16` cerrada | pendiente | separar titulares de cortejo |
-| Quinta Angustia | `F04` | `F04` + `F09` | `F04` | `F04` + `F09` | `F10` pendiente | `F17` cerrada | pendiente | confirmar sede vigente |
-| Santiago | `F05` | `F05` + `F09` | `F05` | `F05` + `F09` | `F10` pendiente | `F18` cerrada | pendiente | base estructural suficiente |
+| Servitas | `F23` + `F09` | `F23` + `F09` | `F23` + `F09` | marzo concretado; posible REUSE en septiembre bloqueado | `F10` pendiente de extracción | `F13` cerrada | marzo identificado por `F29`; septiembre no acreditado | identidad y sede cerradas; una corporación para marzo y septiembre, sin inferir Paso compartido |
+| Esperanza | `F01` | `F01` + `F09` | `F01` | `F01` + `F09` | `F10` pendiente | `F14` + `F20` cerradas | dos posiciones identificadas; faltan fuentes individuales estables | una corporación, dos Salidas acreditadas |
+| Amargura | `F07` | `F07` + `F09` | `F07` | `F07` + `F09` | `F10` pendiente | `F15` cerrada | Señor identificado por `F30`; falta fuente primaria 2026 | dos crucificados distintos; Cristo de San Felipe queda fuera de la Salida 2026 |
+| Expiración | `F03` | `F03` + `F09` | `F03` | `F03` + `F09` | `F10` pendiente | `F16` cerrada | palio cerrado por `F24` + `F16` | separar titulares de cortejo |
+| Quinta Angustia | `F04` | `F04` + `F09` | `F04` | `F04` + `F09` | `F10` pendiente | `F17` cerrada | palio cerrado por `F25` | confirmar sede vigente |
+| Santiago | `F05` | `F05` + `F09` | `F05` | `F05` + `F09` | `F10` pendiente | `F18` cerrada | misterio cerrado por `F26` + `F27` | base estructural suficiente |
 | Nuestro Padre | `F02` | `F02` + `F09` | `F02` | `F02` + `F09` | `F10` pendiente | `F19` cerrada | pendiente | Pastora fuera del cortejo penitencial salvo prueba |
 | Humildad | `F06` | `F06` + `F09` | `F06` | `F06` + `F09` | `F10` pendiente | `F21` cerrada | pendiente | confirmar relación actual de San Juan |
 | Santo Entierro | `F08` | `F08` + `F09` | `F08` | `F08` + `F09` | `F10` pendiente | `F22` cerrada | pendiente | Santa Ana fuera del cortejo salvo prueba |
@@ -65,7 +72,7 @@ Una fuente previa acredita un anuncio, no la celebración. Una captura, vídeo o
 | Denominación canónica de Servitas | **0 pendientes** | `CAR-F23` fija «Orden Seglar Siervos de María», «Orden Seglar Servita Carmona» y su sede |
 | Paso de la Salida servita de septiembre | 1 relación | fuente propia o evidencia posterior que pruebe si reutiliza el Paso de palio de marzo |
 | Participaciones de Imagen en Paso | 3 relaciones | prueba específica de 2026 para San Juan de la Esperanza, San Juan de Humildad y María Magdalena del Santo Entierro |
-| Acompañamientos musicales | 10 Salidas | anuncio oficial específico y, para `held`, evidencia posterior cuando se modele ejecución real |
+| Acompañamientos musicales | 8 posiciones identificadas; 3 cerradas y 5 pendientes de elevar/completar | anuncio oficial específico y, para `held`, evidencia posterior cuando se modele ejecución real; el resto de posiciones permanece `BLOCKED` |
 | Sedes vigentes | **0 pendientes estructurales** | Consejo + `CAR-F09`; 7 Lugares y 9 relaciones actuales documentadas, sin materializar filas |
 | Fuente ya cargada sin URL | 1 Fuente | recuperar URL y fecha o sustituirla por una fuente trazable |
 | Salida de septiembre aún `announced` | 1 Salida existente | verificación posterior independiente; fuera de este inventario penitencial |
