@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import CofradeTypeBadges from '@/components/CofradeTypeBadges'
 import BrotherhoodQuickFacts from '@/components/BrotherhoodQuickFacts'
+import EntityLastUpdated from '@/components/EntityLastUpdated'
 import { publicText } from '@/lib/supabase/public-entity-page'
 import styles from './BrotherhoodOverviewV2.module.css'
 import scheduleStyles from './BrotherhoodOverviewSchedule.module.css'
@@ -193,6 +194,7 @@ export default function BrotherhoodOverviewV2({ brotherhood, heroFactLabels = []
           <header className={styles.header}>
             <span className={styles.eyebrow}>De un vistazo</span>
             <h2>La Hermandad durante el año</h2>
+            <EntityLastUpdated value={brotherhood.updatedAt} />
           </header>
 
           <BrotherhoodQuickFacts brotherhood={brotherhood} heroFactLabels={heroFactLabels} />
