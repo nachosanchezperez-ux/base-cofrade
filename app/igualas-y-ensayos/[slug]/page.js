@@ -8,6 +8,7 @@ import {
   breadcrumbJsonLd,
   compactSeoTitle,
   pageTitle,
+  organizationJsonLdRef,
   schemaEventStatus,
   seoDescription,
   socialMetadata,
@@ -126,8 +127,10 @@ export default async function CrewEventDetailPage({ params }) {
     ...(schemaEventStatus(event) ? { eventStatus: schemaEventStatus(event) } : {}),
     url: canonicalUrl,
     organizer: {
-      '@type': 'Organization',
-      name: event.brotherhoodName,
+      ...organizationJsonLdRef({
+        name: event.brotherhoodName,
+        path: event.brotherhoodHref ? event.brotherhoodHref : '',
+      }),
       ...(event.brotherhoodHref ? { url: absoluteUrl(event.brotherhoodHref) } : {}),
     },
     location: {

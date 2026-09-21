@@ -168,9 +168,28 @@ export default async function ImagenPage({ params }) {
       <JsonLd data={breadcrumbJsonLd(breadcrumbs)} />
       <JsonLd data={{
         '@context': 'https://schema.org',
+        '@type': 'WebPage',
+        '@id': `${absoluteUrl(canonicalPath)}#webpage`,
+        url: absoluteUrl(canonicalPath),
+        name: imagen.nombre,
+        isPartOf: { '@id': `${absoluteUrl('/')}#website` },
+        mainEntity: { '@id': `${absoluteUrl(canonicalPath)}#artwork` },
+        about: [
+          { '@id': `${absoluteUrl(canonicalPath)}#artwork` },
+          ...(hermandad ? [{
+            '@type': 'Organization',
+            '@id': `${absoluteUrl(`/hermandades/${hermandad.slug}`)}#organization`,
+            url: absoluteUrl(`/hermandades/${hermandad.slug}`),
+            name: hermandad.nombreOficial || hermandad.nombrePopular,
+          }] : []),
+        ],
+      }} />
+      <JsonLd data={{
+        '@context': 'https://schema.org',
         '@type': 'VisualArtwork',
         '@id': `${absoluteUrl(canonicalPath)}#artwork`,
         url: absoluteUrl(canonicalPath),
+        mainEntityOfPage: absoluteUrl(canonicalPath),
         name: imagen.nombre,
         artform: imagen.tipologia || imagen.tipo,
         ...(entityMedia.length ? {
@@ -183,6 +202,7 @@ export default async function ImagenPage({ params }) {
             name: imagen.autor,
           },
         } : {}),
+
       }} />
       <ImageHeroV2
         entityType={hermandad ? 'Imagen titular' : 'Imagen'}
