@@ -348,8 +348,11 @@ async function materializeRelation(supabase, analysis, relation, endpointIds, so
     throw new Error(`La relación ${relation.relation_type} todavía no puede entrar en el lote gobernado.`)
   }
 
-  let query = supabase.from(table).select('id, relation_type').limit(1)
   const equivalentTypes = RELATION_TYPE_EQUIVALENTS[table]?.[relation.relation_type] || null
+  let query = supabase
+    .from(table)
+    .select(equivalentTypes?.length ? 'id, relation_type' : 'id')
+    .limit(1)
   for (const [column, value] of Object.entries(filters)) {
     if (column === 'relation_type' && equivalentTypes?.length) query = query.in(column, equivalentTypes)
     else query = query.eq(column, value)
