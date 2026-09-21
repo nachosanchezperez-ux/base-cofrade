@@ -36,7 +36,7 @@ La búsqueda nominal no localizó entidades carmonenses ocultas. Los resultados 
 
 | # | Nodo público propuesto | Naturaleza | Denominación institucional | Fundación/regla | Sede por verificar en staging | Cobertura fuente |
 |---:|---|---|---|---|---|---|
-| 1 | Orden Seglar de los Siervos de María de Carmona | Orden seglar | Orden Seglar de los Siervos de María de Carmona; nombre público abreviado «Orden Seglar Servita Carmona» | 1739 según Turismo provincial | Real Iglesia del Divino Salvador | Web oficial propia + Turismo provincial |
+| 1 | Orden Seglar Servita Carmona | Orden seglar | La web propia firma «Orden Seglar Siervos de María» y usa «Orden Seglar Servita Carmona» como nombre público | 1739 según Turismo provincial | Real Iglesia del Divino Salvador | Web oficial propia + Turismo provincial |
 | 2 | Esperanza de Carmona | Hermandad penitencial | Real, Ilustre y Fervorosa Hermandad del Santísimo Cristo de los Desamparados y Cofradía de Nazarenos de Nuestro Padre Jesús de la Coronación de Espinas, María Santísima de la Esperanza y San Juan Evangelista | 1566 | Real Iglesia del Divino Salvador | Consejo + Turismo |
 | 3 | Amargura de Carmona | Hermandad penitencial | Hermandad del Santísimo Cristo de San Felipe, Cofradía de Nazarenos del Señor de la Amargura y María Santísima del Mayor Dolor | Reglas de 1897 | Iglesia de San Felipe | Consejo + Turismo |
 | 4 | Expiración de Carmona | Hermandad penitencial | Hermandad de la Sagrada Expiración de Cristo Señor Nuestro, María Santísima de los Dolores, María Santísima del Calvario, san Juan Evangelista y san Blas | 1649 | Iglesia de San Blas | Consejo + Turismo |
@@ -93,7 +93,7 @@ Supabase contiene una única Salida carmonense:
 - origen y destino solo en texto: Iglesia del Salvador → Convento de Santa Clara;
 - una Fuente «Servitas Carmona · publicación oficial en Instagram», con `url = null`.
 
-Esta fila no es la Salida de Viernes de Dolores y no se duplica. La futura corporación Servita deberá ser única y, tras verificación, podrá enlazar tanto el cortejo del 27 de marzo como esta procesión de septiembre. El cambio de `announced` a `held` para la salida del 19 de septiembre queda expresamente fuera de esta puerta.
+Esta fila no es la Salida de Viernes de Dolores y no se duplica. La futura corporación Servita deberá ser única y, tras verificación, podrá enlazar tanto el cortejo del 27 de marzo como esta procesión de septiembre. No se presupone que ambas Salidas usen el mismo Paso: ese REUSE necesita una fuente específica. El cambio de `announced` a `held` para la salida del 19 de septiembre queda expresamente fuera de esta puerta.
 
 ## 7. Pasos, Bandas y media
 
