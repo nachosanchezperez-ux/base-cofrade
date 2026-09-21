@@ -43,6 +43,8 @@ Archivo conjunto: [Televisión Carmona · Semana Santa 2026](https://play.televi
 
 ## 4. Puerta siguiente
 
-La deuda «confirmación posterior de celebración» queda cerrada **10/10**. El siguiente paso autorizado por la secuencia canónica es documentar la participación efectiva por Salida: Imágenes, Pasos y relaciones de cortejo. Después vendrán acompañamientos musicales, sedes y normalización final de Servitas.
+La deuda «confirmación posterior de celebración» queda cerrada **10/10**. El modelado posterior documenta la participación efectiva de los diez cortejos, sus Pasos, las sedes y la identidad pública de Servitas. La puerta siguiente queda limitada a música efectiva y trazabilidad de la Salida servita de septiembre; hasta cerrarlas no procede plan row-by-row.
+
+Continuación: [`MODELADO-CARMONA-HC016-PARTICIPACION-PASOS-SEDES-MUSICA-SERVITAS-2026-09-21.md`](./MODELADO-CARMONA-HC016-PARTICIPACION-PASOS-SEDES-MUSICA-SERVITAS-2026-09-21.md).
 
 Continúan prohibidos staging, payload SQL, dry-run, Apply y publicación de datos hasta que exista un plan row-by-row revisado.
