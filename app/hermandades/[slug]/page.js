@@ -237,6 +237,7 @@ export default async function HermandadDetailPage({ params }) {
     })),
     ...musicalHeritage
       .filter((item) => item.workType === 'Marcha procesional' && item.slug)
+      .slice(-4)
       .map((item) => ({
         kind: 'Marcha',
         relation: 'Patrimonio musical',
