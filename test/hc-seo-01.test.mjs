@@ -36,6 +36,15 @@ test('HC-SEO-01 no convierte un fallo de indexabilidad en un sitemap 200 vacío'
   )
 })
 
+test('las previews con seed mínimo no relajan la cobertura SEO de producción', () => {
+  assert.match(publicIndexability, /export function shouldAssertSitemapFamilyCoverage/)
+  assert.match(publicIndexability, /process\.env\.VERCEL_ENV !== 'preview'/)
+  assert.match(
+    publicIndexability,
+    /if \(shouldAssertSitemapFamilyCoverage\(\)\) \{[\s\S]*?assertSitemapFamilyCoverage\(/,
+  )
+})
+
 test('las consultas amplias de las cuatro familias usan lotes o páginas', () => {
   for (const table of [
     'brotherhoods',

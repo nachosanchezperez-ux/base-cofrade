@@ -1,14 +1,14 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 20 de septiembre de 2026 · Osuna cerrada como séptimo macrolote municipal HC-016 · frente SEO reconciliado · puerta de Carmona libre
+**Corte operativo:** 21 de septiembre de 2026 · HC-SEO-09/10 cerrados en producción · discografías D-02C aplicadas y verificadas · puerta municipal de Carmona preservada
 
-**HEAD funcional de `main` y producción antes de esta actualización documental:** `0e01dd021a109661e1c6f150dfa358cc47d2746a` · #876, #877, #882, #878 y #881 fusionadas
+**HEAD funcional de `main` y producción antes de esta actualización documental:** `0f5ce11b8c9dd8d46eb87536f67f5f1d20345477` · #892–#896 fusionadas tras el frente SEO anterior
 
-**Producción funcional verificada:** READY · deployment `dpl_7hG6yPu3WiTj69Jwd5tjxSbPJKNL` · SHA coincidente · `hilocofrade.es` y `www.hilocofrade.es` sin error de alias
+**Producción funcional verificada:** READY · deployment `dpl_AMMeZuVj1M42juXHScZ1uSzUmMHj` · SHA coincidente · `hilocofrade.es` y `www.hilocofrade.es` sin error de alias
 
-**Supabase:** `ACTIVE_HEALTHY` · 12/12 migraciones estructurales activas · Osuna `c0160034-0000-4000-8000-000000000001` cerrada con **368/368 aplicadas · 0 inválidas · 0 fallos**
+**Supabase:** `ACTIVE_HEALTHY` · 12/12 migraciones estructurales activas · D-02C verificado con **18 ediciones y 116 pistas**, dentro de un total público de **551 ediciones y 3.429 pistas**
 
-**PR abiertas:** **0**
+**PR abiertas antes de esta rama:** **0** · #886 es la única PR de cierre documental y permanece sin fusionar
 
 **Staging editoriales activos:** **0**
 
@@ -16,7 +16,7 @@
 
 **Régimen:** FIRST EDITION FREEZE activo
 
-**Frente editorial municipal ACTIVO:** **ninguno**. Carmona permanece intacta y queda liberada como siguiente puerta para la fase exclusiva de evidencia posterior, sin staging, SQL ni Apply.
+**Frente editorial municipal ACTIVO:** **ninguno**. El único cierre en curso es la trazabilidad Git de D-02C, ya aplicada y verificada en producción; no autoriza una segunda ejecución del DML ni abre D-03. Carmona permanece intacta como siguiente puerta municipal para la fase exclusiva de evidencia posterior, sin staging, SQL ni Apply.
 
 > GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. Los rankings municipales previos son evidencia histórica, no una cola automática. El próximo municipio solo puede nacer de un recálculo provincial nuevo y una orden expresa.
 
@@ -53,6 +53,7 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | **CERRADO** | Macrolote transversal HC-016 · Glorias de octubre de Sevilla | 186/186 operaciones gobernadas, 0 inválidas, 0 fallos; quince corporaciones cubiertas, seis fichas creadas, cuatro completadas y cinco cierres preservados | Las advocaciones mixtas permanecen en su Hermandad canónica; las siete Salidas futuras siguen `announced` y no se anticipan las convocatorias posteriores al 12 de octubre |
 | **CERRADO** | Auditoría HC-016 · pasados en `announced` | Inventario inicial real 125; 13 estados elevados a `held` con evidencia posterior; 112 preservados; 30/30 operaciones, 0 inválidas y 0 fallos | No convertir convocatorias en hechos por el mero paso del tiempo; revisar de nuevo solo ante nueva evidencia posterior |
 | **CERRADO** | Macrofrente Bandas · trazabilidad pública | Lote `c0160025-0000-4000-8000-000000000001`: 23/23, 0 inválidas y 0 fallos; 18 fichas reciben Fuente directa y el duplicado de Los Gitanos Juvenil queda reconciliado sin borrar IDs | Mantener como deuda legítima municipio, multimedia, discografía o estrenos cuando no exista evidencia o derechos; no perseguir exhaustividad artificial |
+| **CERRADO** | Auditoría discográfica · D-02C | Gerena recibe 14 ediciones y 73 pistas; Rosario de Sanlúcar la Mayor, 4 ediciones y 43 pistas; 18/18 ediciones con carátula, cinco Fuentes canónicas y una sola entidad por formación. Producción cierra en 551 ediciones, 3.429 pistas y 36 Bandas con discografía | El SQL permanece archivado fuera de la cadena ejecutable y no debe reaplicarse; D-03 exige recálculo propio de las entidades restantes |
 | **CERRADO** | Subida múltiple de imágenes · Panel | La multimedia relacionada de Hermandades admite hasta 10 imágenes por lote, metadatos accesibles por archivo, progreso y recuperación parcial; la portada sigue siendo una selección única | Mantener la subida directa firmada a Storage, 10 MB por imagen y validación editorial de derechos y descripción |
 | **CERRADO** | Producto V4 y multimedia · #790, #793 y #794 | Navegación directa de Hermandades y Agenda, legibilidad V4.1 y fotografía independiente por Salida integradas | No reabrir sin una regresión reproducible |
 | **CERRADO** | Agenda de conciertos · #795 | Conciertos integrados en Agenda y relacionados con Bandas mediante esquema reproducible y RLS | Mantener la relación canónica; no duplicar actos ni Bandas |
@@ -75,6 +76,8 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | **CERRADO** | HC-SEO-01 · #867 | Sitemap y descubrimiento por familias estabilizados; Marchas paginadas; Open Graph, Twitter Cards, títulos y JSON-LD normalizados; producción `6da63631…` READY, sin cambiar rutas, slugs, canonical, esquema ni datos | No reabrir sin regresión reproducible. La siguiente iteración SEO exige auditoría nueva y una cola acotada |
 | **CERRADO** | HC-SEO-02/03/04/05/06 · #874, #876, #877, #878, #879 y remate #882 | Sitemaps segmentados; directorio de Marchas; índice SSR de Hermandades alineado con la indexabilidad; frescura anual de Agenda y Extraordinarias; facetas de Bandas preservadas. QA conjunto: 1.720 URL, 0 duplicadas, 0 ausencias entre sitemap general y segmentados | No reabrir ni ampliar el alcance sin auditoría nueva; conservar el corte temporal `Europe/Madrid` y la frontera editorial compartida |
 | **CERRADO** | HC-SEO-08 · #881 | Tipologías normalizadas de Imágenes y Pasos integradas tras reconciliación contra `main`; 14 facetas públicas, canonical, datos estructurados, navegación y sitemap verificados | No reabrir ni ampliar la taxonomía sin auditoría nueva; mantener el umbral editorial mínimo de tres fichas |
+| **CERRADO** | HC-SEO-09 · #884 | Directorio territorial de Hermandades integrado con once localidades elegibles, canonical, datos estructurados, navegación y sitemap alineados con la frontera pública compartida | Mantener el umbral editorial mínimo de tres fichas y no publicar localidades delgadas para completar artificialmente el mapa |
+| **CERRADO** | HC-SEO-10 · #885 | Facetas históricas de Semana Santa, Gloria, Sacramentales y Agrupaciones Parroquiales saneadas: 20 rutas fuertes en sitemap y 118 combinaciones débiles retiradas; rutas no elegibles en `404 + noindex` | Conservar una única fuente de verdad entre hubs, rutas dinámicas y sitemap; no reintroducir periodos ajenos a la taxonomía ni facetas con menos de tres fichas |
 | **CERRADO** | Navegación, búsqueda, SEO y repertorios · #811–#818 | Jornadas y municipios navegables; buscador ampliado y afinado; caché de directorios y fichas; repertorios de conciertos visibles | No reabrir sin regresión reproducible; los contadores de Home se corrigen de forma transversal sin alterar el modelo |
 | **CERRADO** | Cultos septiembre–diciembre de 2026 | Lote transversal HC-016 `c0162026-0909-4000-8000-000000000001`: 53/53, cuatro Hermandades y 0 DDL | Mantener ediciones futuras desde Fuentes oficiales; recurrencia no equivale a anuncio |
 | **CERRADO** | Carátulas de Discografía · #734 y #791 | Reintento del optimizador a la URL original y fallback accesible; #791 estabilizó las 17 carátulas de La Oliva que aún dependían del servidor antiguo | Mantener URLs estables y el fallback accesible como protección, no como deuda activa |
@@ -86,12 +89,12 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 
 ## Verdad de plataforma
 
-- GitHub: `main = 0e01dd021a109661e1c6f150dfa358cc47d2746a` en el corte funcional; #876, #877, #882, #878 y #881 están fusionadas y hay 0 PR abiertas.
-- Vercel: producción está READY en `dpl_7hG6yPu3WiTj69Jwd5tjxSbPJKNL`, exactamente sobre `0e01dd021a109661e1c6f150dfa358cc47d2746a`, con los alias públicos asignados y sin error.
-- Supabase: proyecto `Hilocofrade` ACTIVE_HEALTHY; 12/12 migraciones estructurales activas. Carmona conserva 1 municipio REUSE, 0 Hermandades, 0 Bandas, 0 Lugares, 0 localizaciones, 1 Salida, 0 staging activos y 0 operaciones aplicadas.
+- GitHub: `main = 0f5ce11b8c9dd8d46eb87536f67f5f1d20345477` en el corte funcional; #892–#896 están fusionadas y #886 permanece como única PR abierta de cierre documental.
+- Vercel: producción está READY en `dpl_AMMeZuVj1M42juXHScZ1uSzUmMHj`, exactamente sobre `0f5ce11b8c9dd8d46eb87536f67f5f1d20345477`, con los alias públicos asignados y sin error.
+- Supabase: proyecto `Hilocofrade` ACTIVE_HEALTHY; 12/12 migraciones estructurales activas. D-02C está aplicado y verificado con 18 ediciones, 116 pistas, 18 carátulas y cinco Fuentes canónicas; Carmona conserva intacta su puerta municipal.
 - Supabase Preview: #846 y la #822 reconstruida superaron previews nuevas con with_data=false. La cadena ejecuta 12 migraciones estructurales activas en orden y el seed mínimo conserva Sevilla, Maestro Tejera y Las Cigarreras.
 - Git ↔ Supabase: correspondencia 12/12 por versión y nombre. Se restauraron en Git las versiones remotas canónicas 20260915215828 y 20260916220756, y se recuperó exactamente 20260916205306_source_links_public_lookup_indexes. La deriva histórica queda **RESUELTA**.
-- Runtime: el postflight de `dpl_7hG6yPu3WiTj69Jwd5tjxSbPJKNL` no registró errores en el intervalo posterior al despliegue comprobado.
+- Runtime: el control de `dpl_AMMeZuVj1M42juXHScZ1uSzUmMHj` no registró errores en la hora comprobada posterior al despliegue.
 ## Reconciliación #789–#799
 
 | PR | Estado canónico | Resultado |
@@ -502,8 +505,18 @@ El cierre consecutivo de #870, #871 y #867 deja repositorio, producción y base 
 - #867 integró HC-SEO-01 sobre el cierre de Osuna y llevó `main` y producción a `6da63631f61bd6caa031a7861d83ba19cda89143`;
 - #876, #877 y #878 se reconciliaron contra el `main` sucesivo y se integraron con postflight individual; #882 corrigió el índice SSR de Hermandades para excluir 30 fichas públicas que no superaban el mínimo editorial del sitemap;
 - #881 se reconcilió después contra el `main` resultante y cerró HC-SEO-08 con siete tipologías públicas de Imágenes y siete de Pasos, sin perder las facetas territoriales ni ninguna superficie SEO previa;
-- el sitemap general y los ocho segmentados contienen exactamente 1.734 URL, sin duplicados, cruces, ausencias ni extras; Marchas, Bandas, Hermandades, Imágenes, Pasos, Agenda y Extraordinarias conservan canonical e indexabilidad coherentes;
+- #884 cerró HC-SEO-09 con once landings territoriales de Hermandades que superan la frontera editorial compartida;
+- #885 cerró HC-SEO-10 con 20 facetas históricas de Hermandades elegibles y retiró 118 combinaciones débiles; las rutas excluidas responden `404 + noindex` y no aparecen en el sitemap;
+- el sitemap general y los segmentados conservan Marchas, Bandas, Hermandades, Imágenes, Pasos, Agenda y Extraordinarias con canonical e indexabilidad coherentes; la familia de facetas de Hermandades contiene exactamente 20 URL únicas;
 - no quedan PR abiertas, staging editoriales activos ni errores runtime recientes.
+
+## Auditoría discográfica de Bandas · D-02C
+
+La revisión posterior al frente SEO preserva una única entidad canónica para la Banda Municipal de Música de Gerena y otra para la Banda de Música del Rosario de Sanlúcar la Mayor. El lote D-02C ya aplicado en Supabase incorpora 18 ediciones y 116 pistas: Gerena cierra en 14/73 y Rosario en 4/43. Las 18 ediciones están publicadas y disponen de carátula; los dos perfiles editoriales de Rosario quedan reconciliados sin convertir el recopilatorio de varios artistas *Partituras de Pasión, Vol. 2* en una edición propia.
+
+La verificación de producción del 21 de septiembre confirma 551 ediciones, 3.429 pistas, 36 Bandas con discografía publicada y cinco Fuentes canónicas para este lote. La receta determinista permanece en `migrations_archive/post-first-edition-editorial`, fuera de las 12 migraciones estructurales activas. Este cierre documenta el Apply ya realizado: no autoriza una segunda ejecución ni abre automáticamente D-03.
+
+La evidencia queda en [`MANIFIESTO-DISCOGRAFIAS-D02C-2026-09-21.md`](./MANIFIESTO-DISCOGRAFIAS-D02C-2026-09-21.md), [`CERTIFICACION-DISCOGRAFIAS-D02C-2026-09-21.md`](./CERTIFICACION-DISCOGRAFIAS-D02C-2026-09-21.md) y la receta archivada [`20260921053535_actualiza_discografias_gerena_rosario_d02c.sql`](../supabase/migrations_archive/post-first-edition-editorial/20260921053535_actualiza_discografias_gerena_rosario_d02c.sql).
 
 ## Octavo macrolote provincial · selección
 
