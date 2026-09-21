@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import JsonLd from '@/components/JsonLd'
+import EntityLastUpdated from '@/components/EntityLastUpdated'
 import { getPublicMarchBySlug } from '@/lib/supabase/public-marches'
 import { absoluteUrl, breadcrumbJsonLd, compactSeoTitle, socialMetadata } from '@/lib/seo'
 import styles from './marcha.module.css'
@@ -87,6 +88,8 @@ export default async function MarchDetailPage({ params }) {
           </div>
         </div>
       </header>
+
+      <EntityLastUpdated value={march.updatedAt} variant="bar" />
 
       <section className={styles.identitySection}>
         <div className={`shell ${styles.identityGrid}`}>
