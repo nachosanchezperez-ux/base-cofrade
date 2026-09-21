@@ -17,6 +17,7 @@ const concertEventBandsName = '20260916062216_create_concert_event_bands.sql'
 const concertEventBandsSecurityName = '20260916062223_secure_concert_event_bands.sql'
 const sourceLinksLookupIndexesName = '20260916205306_source_links_public_lookup_indexes.sql'
 const sourceLinksSourceIndexName = '20260916220756_add_source_links_source_id_index.sql'
+const editorialFreshnessName = '20260921234430_add_entity_editorial_freshness.sql'
 const baseline = readFileSync(new URL(baselineName, migrationsDirectory), 'utf8')
 const membershipStats = readFileSync(new URL(membershipStatsName, migrationsDirectory), 'utf8')
 const seed = readFileSync(new URL('../supabase/seed.sql', import.meta.url), 'utf8')
@@ -37,6 +38,7 @@ test('las ramas nuevas ejecutan únicamente el baseline y las evoluciones de esq
     concertEventBandsSecurityName,
     sourceLinksLookupIndexesName,
     sourceLinksSourceIndexName,
+    editorialFreshnessName,
   ])
 })
 
