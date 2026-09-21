@@ -512,6 +512,50 @@ function mergeEnrichmentRecord(batchContext, record) {
   return true
 }
 
+function blankValue(value) {
+  return value == null || (typeof value === 'string' && value.trim() === '')
+}
+
+function equivalentValue(left, right) {
+  if (left == null || right == null) return left == null && right == null
+  return normalizeComparableName(left) === normalizeComparableName(right)
+}
+
+async function refreshSafeEnrichmentRecord(supabase, record) {
+  const keyColumn = record.table === 'entities' ? 'id' : 'entity_id'
+  const keyValue = record.data?.[keyColumn]
+  const columns = Object.keys(record.data || {}).filter((column) => column !== keyColumn)
+  if (!keyValue || !columns.length) return { record: null, fillCount: 0, conflictCount: 0 }
+
+  const result = await supabase
+    .from(record.table)
+    .select([keyColumn, ...columns].join(','))
+    .eq(keyColumn, keyValue)
+    .maybeSingle()
+  const row = assertResult(result, `No se pudo revalidar el enriquecimiento de ${record.table}`)
+
+  if (!row && record.table === 'entities') {
+    throw new Error('ENRICHMENT_STALE: la entidad existente dejó de estar disponible antes del preflight.')
+  }
+
+  const safe = { [keyColumn]: keyValue }
+  let fillCount = 0
+  let conflictCount = 0
+  for (const column of columns) {
+    const proposed = record.data[column]
+    const current = row?.[column]
+    if (blankValue(current)) {
+      safe[column] = proposed
+      fillCount += 1
+    } else if (!equivalentValue(current, proposed)) {
+      conflictCount += 1
+    }
+  }
+
+  if (fillCount === 0) return { record: null, fillCount: 0, conflictCount }
+  return { record: { ...record, data: safe }, fillCount, conflictCount }
+}
+
 async function buildAssistedRecords(supabase, documentImport, reviewInput, options = {}) {
   const analysis = documentImport.analysis || {}
   const normalized = await normalizeReviewInput(supabase, analysis, reviewInput)
@@ -579,10 +623,13 @@ async function buildAssistedRecords(supabase, documentImport, reviewInput, optio
       }
     } else {
       const candidate = selectedExistingCandidate(item.entity, item.id)
-      enrichmentFillCount += candidate?.enrichment?.fills?.length || 0
       enrichmentConflictCount += candidate?.enrichment?.conflicts?.length || 0
       for (const enrichmentRecord of buildExistingEntityEnrichmentRecords(item.entity, candidate)) {
-        if (!mergeEnrichmentRecord(options.batchContext, enrichmentRecord)) records.push(enrichmentRecord)
+        const refreshed = await refreshSafeEnrichmentRecord(supabase, enrichmentRecord)
+        enrichmentFillCount += refreshed.fillCount
+        enrichmentConflictCount += refreshed.conflictCount
+        if (!refreshed.record) continue
+        if (!mergeEnrichmentRecord(options.batchContext, refreshed.record)) records.push(refreshed.record)
       }
     }
     if (!(await hasSourceLink(supabase, sourceRow?.id, { entity_id: item.id }))) {
