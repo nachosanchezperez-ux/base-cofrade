@@ -67,22 +67,6 @@
   }
 }
 
-@media (max-width: 560px) {
-  .group {
-    padding: 16px;
-    border-radius: 15px;
-  }
-
-  .heading {
-    display: block;
-  }
-
-  .heading span {
-    display: block;
-    margin-top: 4px;
-  }
-}
-
 
 .toggle {
   display: none;
