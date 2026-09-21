@@ -11,6 +11,7 @@ import {
   breadcrumbJsonLd,
   compactSeoTitle,
   pageTitle,
+  organizationJsonLdRef,
   schemaEventStatus,
   seoDescription,
   socialMetadata,
@@ -170,11 +171,10 @@ export default async function GloryDetailPage({ params }) {
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
     ...(schemaEventStatus(item) ? { eventStatus: schemaEventStatus(item) } : {}),
     ...(item.heroImagePath ? { image: [absoluteUrl(item.heroImagePath)] } : {}),
-    organizer: {
-      '@type': 'Organization',
+    organizer: organizationJsonLdRef({
       name: item.brotherhoodName,
-      ...(item.brotherhoodHref ? { url: absoluteUrl(item.brotherhoodHref) } : {}),
-    },
+      path: item.brotherhoodHref ? item.brotherhoodHref : '',
+    }),
     location: {
       '@type': 'Place',
       name: item.origin || item.municipality || 'Sevilla',
