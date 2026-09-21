@@ -7,6 +7,7 @@ import { createClient } from '@/lib/supabase/server'
 import { sourceUrlVariants } from '@/lib/sources/source-url'
 import {
   attachResolutionSuggestions,
+  buildExistingEntityEnrichmentRecords,
   buildNewEntityRecords,
   extractSourceAnalysis,
   fetchSourceDocument,
@@ -442,6 +443,10 @@ export async function saveAssistedReviewAction(importIdInput, reviewInput) {
   return { saved: true }
 }
 
+function selectedExistingCandidate(entity, entityId) {
+  return (entity.resolution?.candidates || []).find((candidate) => candidate.id === entityId) || null
+}
+
 async function buildAssistedRecords(supabase, documentImport, reviewInput, options = {}) {
   const analysis = documentImport.analysis || {}
   const normalized = await normalizeReviewInput(supabase, analysis, reviewInput)
@@ -504,6 +509,9 @@ async function buildAssistedRecords(supabase, documentImport, reviewInput, optio
         records.push(...buildNewEntityRecords(mergedEntity, item.id, target.id))
         createdNewEntityIds?.add(item.id)
       }
+    } else {
+      const candidate = selectedExistingCandidate(item.entity, item.id)
+      records.push(...buildExistingEntityEnrichmentRecords(item.entity, candidate))
     }
     if (!(await hasSourceLink(supabase, sourceRow?.id, { entity_id: item.id }))) {
       records.push(makeSourceLink(source.url, {
