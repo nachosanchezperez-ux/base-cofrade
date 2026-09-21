@@ -436,6 +436,7 @@ export default async function BandDetailPage({ params }) {
                     {band.outings.length ? <a href="#extraordinarias"><strong>{band.outings.length}</strong><span>{band.outings.length === 1 ? 'salida extraordinaria' : 'salidas extraordinarias'}</span></a> : null}
                     {hasMusicalRepertoires ? <a href="#crucetas-musicales"><strong>{musicalRepertoires.length}</strong><span>{musicalRepertoires.length === 1 ? 'cruceta documentada' : 'crucetas documentadas'}</span></a> : null}
                     {hasDiscography ? <a href="#discografia"><strong>{discography.length}</strong><span>{discography.length === 1 ? 'trabajo discográfico' : 'trabajos discográficos'}</span></a> : null}
+                    {discographyMarches.length ? <a href="#discografia"><strong>{discographyMarches.length}</strong><span>{discographyMarches.length === 1 ? 'Marcha con ficha en la discografía' : 'Marchas con ficha en la discografía'}</span></a> : null}
                   </div>
                 </div>
               ) : null}
