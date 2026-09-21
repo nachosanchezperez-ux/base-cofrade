@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 import { requirePanelUser } from '@/lib/panel/auth'
 import { getPanelMasterData } from '@/lib/panel/master-data'
 import { getPanelDataHealth } from '@/lib/panel/data-health'
+import { getPanelEditorialFreshnessSummary } from '@/lib/panel/editorial-freshness'
 import styles from '@/app/panel/panel.module.css'
 
 function ModuleRow({ href, label, count, note }) {
@@ -17,7 +18,7 @@ export default async function PanelMasterDataPage({ searchParams }) {
   if (savedRoute) redirect(`/panel/datos/${savedRoute}?saved=${query.saved}`)
 
   await requirePanelUser()
-  const [data, health] = await Promise.all([getPanelMasterData(), getPanelDataHealth()])
+  const [data, health, freshness] = await Promise.all([getPanelMasterData(), getPanelDataHealth(), getPanelEditorialFreshnessSummary()])
   const openIssues = health.issues.length
 
   return <div className={styles.pageWrap}>
@@ -37,6 +38,7 @@ export default async function PanelMasterDataPage({ searchParams }) {
       <div className={styles.panelCard}><div className={styles.moduleList}>
         <ModuleRow href="/panel/datos/salud" label="Salud del grafo" count={openIssues} note={`${health.bySeverity.critical} prioritarias · ${health.bySeverity.warning} para revisar · ${health.bySeverity.info} mejoras`} />
         <ModuleRow href="/panel/datos/referencias" label="Nodos de referencia" count={data.referenceNodes.length} note="Personas, Pasos y Hermandades que existen en relaciones pero aún no tienen ficha especializada" />
+        <ModuleRow href="/panel/datos/frescura" label="Frescura editorial" count={freshness.unreviewed + freshness.due + freshness.stale} note={`${freshness.unreviewed} sin revisar · ${freshness.due} próximas · ${freshness.stale} vencidas`} />
       </div></div>
     </section>
 
