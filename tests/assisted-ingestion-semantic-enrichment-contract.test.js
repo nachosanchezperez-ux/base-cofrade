@@ -68,3 +68,9 @@ test('los huecos se revalidan contra la base viva antes del preflight', () => {
   assert.match(actions, /blankValue\(current\)/)
   assert.match(actions, /if \(!refreshed\.record\) continue/)
 })
+
+test('las coincidencias nominales fuera del contexto no se autoseleccionan', () => {
+  assert.match(engine, /state: outsideContext \? 'contextual'/)
+  assert.match(engine, /default_choice: state === 'exact'/)
+  assert.match(review, /fuera del grafo actual de esta Hermandad/)
+})
