@@ -8,7 +8,7 @@
 
 **Supabase:** `ACTIVE_HEALTHY` · 12/12 migraciones estructurales activas · D-02C verificado con **18 ediciones y 116 pistas**, dentro de un total público de **551 ediciones y 3.429 pistas**
 
-**PR abiertas:** **0**
+**PR abiertas antes de esta rama:** **0** · #886 es la única PR de cierre documental y permanece sin fusionar
 
 **Staging editoriales activos:** **0**
 
