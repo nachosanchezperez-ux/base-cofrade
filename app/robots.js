@@ -2,11 +2,18 @@ import { absoluteUrl, SITE_URL } from '@/lib/seo';
 
 export default function robots() {
   return {
-    rules: {
-      userAgent: '*',
-      allow: '/',
-      disallow: ['/api/', '/panel/'],
-    },
+    rules: [
+      {
+        userAgent: 'OAI-SearchBot',
+        allow: '/',
+        disallow: ['/api/', '/panel/'],
+      },
+      {
+        userAgent: '*',
+        allow: '/',
+        disallow: ['/api/', '/panel/'],
+      },
+    ],
     sitemap: [
       absoluteUrl('/sitemap.xml'),
       absoluteUrl('/sitemaps/general.xml'),
