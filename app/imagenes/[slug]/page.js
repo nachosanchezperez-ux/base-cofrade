@@ -171,6 +171,7 @@ export default async function ImagenPage({ params }) {
         '@type': 'VisualArtwork',
         '@id': `${absoluteUrl(canonicalPath)}#artwork`,
         url: absoluteUrl(canonicalPath),
+        mainEntityOfPage: absoluteUrl(canonicalPath),
         name: imagen.nombre,
         artform: imagen.tipologia || imagen.tipo,
         ...(entityMedia.length ? {
@@ -181,6 +182,14 @@ export default async function ImagenPage({ params }) {
           creator: {
             '@type': 'Person',
             name: imagen.autor,
+          },
+        } : {}),
+        ...(hermandad ? {
+          isPartOf: {
+            '@type': 'Organization',
+            '@id': `${absoluteUrl(`/hermandades/${hermandad.slug}`)}#organization`,
+            url: absoluteUrl(`/hermandades/${hermandad.slug}`),
+            name: hermandad.nombreOficial || hermandad.nombrePopular,
           },
         } : {}),
       }} />
