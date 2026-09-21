@@ -4,12 +4,14 @@ import { randomUUID } from 'node:crypto'
 import { revalidatePath } from 'next/cache'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
-import { sourceUrlVariants } from '@/lib/sources/source-url'
+import { normalizeSourceUrl, sourceUrlVariants } from '@/lib/sources/source-url'
 import {
   attachResolutionSuggestions,
   buildNewEntityRecords,
   extractSourceAnalysis,
   fetchSourceDocument,
+  normalizeAssistedBatchUrls,
+  normalizeComparableName,
   STAGEABLE_RELATION_TYPES,
 } from '@/lib/panel/assisted-ingestion'
 import {
@@ -61,10 +63,44 @@ async function loadTargetBrotherhood(supabase, targetEntityId) {
   return target
 }
 
+function analysisWithBatchMembership(analysisInput, batchId) {
+  const analysis = analysisInput && typeof analysisInput === 'object' && !Array.isArray(analysisInput)
+    ? { ...analysisInput }
+    : {}
+  const capture = analysis.capture && typeof analysis.capture === 'object' && !Array.isArray(analysis.capture)
+    ? { ...analysis.capture }
+    : {}
+  const batchIds = Array.isArray(capture.batch_ids)
+    ? capture.batch_ids.filter((value) => UUID_PATTERN.test(String(value || '')))
+    : []
+  if (batchId && !batchIds.includes(batchId)) batchIds.push(batchId)
+  analysis.capture = { ...capture, batch_ids: batchIds }
+  return analysis
+}
+
+export async function prepareAssistedBatchAction(input) {
+  const user = await requirePanelEditor()
+  const supabase = await createClient()
+  const targetEntityId = assertUuid(input?.targetEntityId, 'Hermandad objetivo')
+  const target = await loadTargetBrotherhood(supabase, targetEntityId)
+  const urls = normalizeAssistedBatchUrls(input?.sourceUrls || [])
+  const batchId = randomUUID()
+
+  await audit(supabase, user, {
+    objectType: 'assisted_ingestion_batch',
+    objectId: batchId,
+    summary: `Tanda HC-AUTO-01 iniciada para ${target.name}`,
+    changedFields: { target_entity_id: target.id, source_count: urls.length },
+  })
+
+  return { batchId, targetEntityId: target.id, targetName: target.name, urls }
+}
+
 export async function analyseSourceAction(input) {
   const user = await requirePanelEditor()
   const supabase = await createClient()
   const targetEntityId = assertUuid(input?.targetEntityId, 'Hermandad objetivo')
+  const batchId = input?.batchId ? assertUuid(input.batchId, 'Lote de ingestión') : null
   const sourceUrl = cleanText(input?.sourceUrl, 2000)
   if (!sourceUrl) throw new Error('Indica la URL oficial que quieres analizar.')
 
@@ -73,7 +109,7 @@ export async function analyseSourceAction(input) {
 
   const duplicateResult = await supabase
     .from('document_imports')
-    .select('id, status, created_at, application_summary')
+    .select('id, status, created_at, application_summary, analysis')
     .eq('target_entity_id', targetEntityId)
     .eq('content_sha256', source.contentSha256)
     .in('status', ['review', 'applied'])
@@ -81,7 +117,18 @@ export async function analyseSourceAction(input) {
     .limit(1)
     .maybeSingle()
   const duplicate = assertResult(duplicateResult, 'No se pudo comprobar si la Fuente ya estaba analizada')
-  if (duplicate) return { id: duplicate.id, reused: true }
+  if (duplicate) {
+    if (batchId) {
+      const analysis = analysisWithBatchMembership(duplicate.analysis, batchId)
+      assertResult(
+        await supabase.from('document_imports').update({ analysis, updated_at: new Date().toISOString() }).eq('id', duplicate.id),
+        'No se pudo vincular la propuesta existente con la tanda',
+      )
+    }
+    revalidatePath('/panel/datos/ingestion')
+    if (batchId) revalidatePath(`/panel/datos/ingestion/lotes/${batchId}`)
+    return { id: duplicate.id, reused: true, batchId }
+  }
 
   const extracted = await extractSourceAnalysis({ source, targetName: target.name })
   const analysis = await attachResolutionSuggestions(supabase, {
@@ -94,6 +141,7 @@ export async function analyseSourceAction(input) {
       truncated_for_model: source.truncated,
       content_sha256: source.contentSha256,
       fetched_at: source.fetchedAt,
+      batch_ids: batchId ? [batchId] : [],
     },
   })
 
@@ -102,7 +150,7 @@ export async function analyseSourceAction(input) {
     source_url: source.url,
     source_title: analysis.source.title || source.title || source.url,
     status: 'review',
-    analysis_version: 2,
+    analysis_version: 3,
     analysis,
     model_name: extracted.model,
     content_sha256: source.contentSha256,
@@ -120,11 +168,13 @@ export async function analyseSourceAction(input) {
       entities: analysis.entities.length,
       relations: analysis.relations.length,
       model: extracted.model,
+      batch_id: batchId,
     },
   })
 
   revalidatePath('/panel/datos/ingestion')
-  return { id: created.id, reused: false }
+  if (batchId) revalidatePath(`/panel/datos/ingestion/lotes/${batchId}`)
+  return { id: created.id, reused: false, batchId }
 }
 
 function entityTypeForLocalRef(analysis, ref) {
