@@ -50,6 +50,8 @@ test('HC-SEO-10 solo publica facetas con al menos tres perfiles indexables', () 
 
 test('la taxonomía de Semana Santa normaliza Madrugá y descarta periodos ajenos', () => {
   const madruga = { localidad: 'Alcalá de Guadaíra', diaSalida: 'Madrugá', tipos: ['Penitencia'] }
+  const thursdayDawn = { localidad: 'Osuna', diaSalida: 'Madrugá del Jueves Santo', tipos: ['Penitencia'] }
+  const canonicalDawn = { localidad: 'Sevilla', diaSalida: 'Madrugada del Viernes Santo', tipos: ['Penitencia'] }
   const invalid = { localidad: 'Huévar del Aljarafe', diaSalida: 'Septiembre', tipos: ['Penitencia'] }
 
   assert.equal(directoryPeriod(madruga, 'semana-santa'), 'Madrugada')
@@ -57,6 +59,8 @@ test('la taxonomía de Semana Santa normaliza Madrugá y descarta periodos ajeno
     directoryPath(madruga, 'semana-santa'),
     '/hermandades/semana-santa/alcala-de-guadaira/madrugada'
   )
+  assert.equal(directoryPeriod(thursdayDawn, 'semana-santa'), 'Jueves Santo')
+  assert.equal(directoryPeriod(canonicalDawn, 'semana-santa'), 'Madrugada')
   assert.equal(directoryPath(invalid, 'semana-santa'), '')
 })
 
