@@ -248,6 +248,32 @@ export default async function HermandadDetailPage({ params }) {
   );
   const canonicalPath = `/hermandades/${h.slug}`;
   const description = brotherhoodSeoDescription(h);
+  const organizationJsonLdId = `${absoluteUrl(canonicalPath)}#organization`;
+  const organizationJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    '@id': organizationJsonLdId,
+    url: absoluteUrl(canonicalPath),
+    name: h.nombreOficial || h.nombrePopular,
+    alternateName: h.nombrePopular,
+    ...(h.enlacesOficiales?.length ? {
+      sameAs: h.enlacesOficiales.map((link) => link.url),
+    } : {}),
+    ...(authoritativeCrestPath ? {
+      logo: absoluteUrl(authoritativeCrestPath),
+    } : {}),
+    ...(heroMedia?.path ? {
+      image: absoluteUrl(heroMedia.path),
+    } : {}),
+    ...(h.localidad ? {
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: h.localidad,
+        addressRegion: h.provincia || 'Sevilla',
+        addressCountry: 'ES',
+      },
+    } : {}),
+  };
   const pageJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
@@ -260,20 +286,10 @@ export default async function HermandadDetailPage({ params }) {
       '@id': `${absoluteUrl('/')}#website`,
     },
     about: {
-      '@type': 'Organization',
-      name: h.nombreOficial || h.nombrePopular,
-      alternateName: h.nombrePopular,
-      ...(h.enlacesOficiales?.length ? {
-        sameAs: h.enlacesOficiales.map((link) => link.url),
-      } : {}),
-      ...(h.localidad ? {
-        address: {
-          '@type': 'PostalAddress',
-          addressLocality: h.localidad,
-          addressRegion: h.provincia || 'Sevilla',
-          addressCountry: 'ES',
-        },
-      } : {}),
+      '@id': organizationJsonLdId,
+    },
+    mainEntity: {
+      '@id': organizationJsonLdId,
     },
   };
 
@@ -290,6 +306,7 @@ export default async function HermandadDetailPage({ params }) {
         { name: 'Hermandades', path: '/hermandades' },
         { name: h.nombrePopular, path: canonicalPath },
       ])} />
+      <JsonLd data={organizationJsonLd} />
       <JsonLd data={pageJsonLd} />
 
       <BrotherhoodProgramHero
