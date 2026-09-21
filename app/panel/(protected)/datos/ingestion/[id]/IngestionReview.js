@@ -216,9 +216,13 @@ export default function IngestionReview({ documentImport, target, canEdit, batch
                 : 'Coincidencia semántica única. Revísala antes de aceptarla.'
               : entity.resolution?.state === 'contextual'
                 ? 'Existe una coincidencia nominal fuera del grafo actual de esta Hermandad. No se reutiliza automáticamente.'
-                : entity.resolution?.state === 'ambiguous'
-                  ? 'Hay varias coincidencias posibles: requiere elección manual.'
-                  : 'No se encontró una coincidencia suficientemente segura por nombre, tipo y contexto.'}
+                : entity.resolution?.state === 'potential'
+                  ? 'Existe una coincidencia débil por nombre corto. Se muestra para revisión, pero no se reutiliza ni se crea automáticamente.'
+                  : entity.resolution?.state === 'ambiguous'
+                    ? 'Hay varias coincidencias posibles: requiere elección manual.'
+                    : entity.resolution?.state === 'new' && entity.resolution?.default_choice !== 'new'
+                      ? 'No hay coincidencia segura, pero esta propuesta no tiene una relación escribible que justifique crearla automáticamente.'
+                      : 'No se encontró una coincidencia suficientemente segura por nombre, tipo y contexto.'}
         </small>
         {candidate ? <div className={styles.enrichmentBox}>
           <div className={styles.enrichmentHeader}>

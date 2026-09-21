@@ -13,6 +13,8 @@ import {
   fetchSourceDocument,
   normalizeAssistedBatchUrls,
   normalizeComparableName,
+  semanticNameScore,
+  shortNamePotentialScore,
   STAGEABLE_RELATION_TYPES,
 } from '@/lib/panel/assisted-ingestion'
 import {
@@ -716,6 +718,13 @@ function mergeEntityProposal(base, incoming) {
   }
 }
 
+function potentialSameNewEntity(left, right) {
+  if (!left || !right || left.entity_type !== right.entity_type) return false
+  if (normalizeComparableName(left.name) === normalizeComparableName(right.name)) return false
+  if (semanticNameScore(left.name, right.name) >= 0.82) return true
+  return left.entity_type === 'agent' && shortNamePotentialScore(left.name, right.name) > 0
+}
+
 function planSharedNewEntities(documentImports) {
   const groups = new Map()
   const forcedNewEntityIds = {}
@@ -738,6 +747,10 @@ function planSharedNewEntities(documentImports) {
         forcedNewEntityIds[`${documentImport.id}:${entity.local_id}`] = existing.id
         reusedAcrossSources += 1
       } else {
+        for (const group of groups.values()) {
+          if (!potentialSameNewEntity(group.entity, entity)) continue
+          throw new Error(`POSIBLE_DUPLICADO_DE_LOTE: «${group.entity.name}» y «${entity.name}» podrían representar la misma entidad nueva. Revisa ambas Fuentes y deja solo una propuesta como nueva antes de generar el lote.`)
+        }
         const id = randomUUID()
         groups.set(identity, { id, entity: mergeEntityProposal(entity, entity) })
         forcedNewEntityIds[`${documentImport.id}:${entity.local_id}`] = id
