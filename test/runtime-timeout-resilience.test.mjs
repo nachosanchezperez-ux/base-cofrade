@@ -37,3 +37,63 @@ test('una Gloria omite fuentes fallidas y reserva null para ausencia real', asyn
   assert.match(source, /if \(throwOnError\) throw error/)
   assert.match(source, /No se pudo cargar la ficha[\s\S]*throw error/)
 })
+
+test('las lecturas públicas cortan una petición Supabase antes del límite de Vercel', async () => {
+  const publicClient = await read('lib/supabase/public.js')
+  const publicServer = await read('lib/supabase/public-server.js')
+  const timedFetch = await read('lib/supabase/public-fetch.js')
+
+  assert.match(publicClient, /fetch:\s*fetchWithPublicQueryTimeout/)
+  assert.match(publicServer, /fetch:\s*fetchWithPublicQueryTimeout/)
+  assert.match(timedFetch, /DEFAULT_PUBLIC_QUERY_TIMEOUT_MS = 15_000/)
+  assert.match(timedFetch, /controller\.abort/)
+})
+
+test('Paso e Imagen resuelven solo la identidad ligera de su Hermandad', async () => {
+  const source = await read('lib/supabase/public-entity-pages.js')
+
+  assert.doesNotMatch(source, /getHermandadPageBySlug/)
+  assert.match(source, /official_name, popular_name, municipality_id, crest_path/)
+  assert.match(source, /No se pudo cargar el Paso público[\s\S]*throw error/)
+  assert.match(source, /No se pudo cargar la Imagen pública[\s\S]*throw error/)
+})
+
+test('la ficha de Paso conserva en caché sus módulos relacionales secundarios', async () => {
+  const crew = await read('components/StepCrewFacts.js')
+  const presence = await read('lib/supabase/relational-presence.js')
+
+  assert.match(crew, /unstable_cache/)
+  assert.match(crew, /revalidate:\s*900/)
+  assert.match(presence, /unstable_cache/)
+  assert.match(presence, /revalidate:\s*900/)
+})
+
+test('Bandas y Marchas no convierten errores temporales en fichas inexistentes', async () => {
+  const bands = await read('lib/supabase/bands-core.js')
+  const marches = await read('lib/supabase/public-marches.js')
+  const bandPage = await read('app/bandas/[slug]/page.js')
+
+  assert.match(bands, /No se pudo cargar la ficha de banda[\s\S]*throw error/)
+  assert.match(marches, /No se pudo cargar la ficha pública de la Marcha[\s\S]*throw error/)
+  assert.match(bandPage, /cache\(getBandBySlugUncached\)/)
+})
+
+test('los directorios patrimoniales comparten caché y pueden propagar fallos a la ruta', async () => {
+  const source = await read('lib/supabase/directories.js')
+  const imageRoute = await read('app/imagenes/localidad/[localidad]/page.js')
+  const stepRoute = await read('app/pasos/localidad/[localidad]/page.js')
+
+  assert.match(source, /unstable_cache/)
+  assert.match(source, /public-images-directory-v2/)
+  assert.match(source, /public-steps-directory-v2/)
+  assert.match(source, /throwOnError/)
+  assert.match(imageRoute, /throwOnError:\s*true/)
+  assert.match(stepRoute, /throwOnError:\s*true/)
+})
+
+test('la Marcha del día queda aislada del resto de Hoy 2.0', async () => {
+  const source = await read('lib/supabase/home-v2.js')
+
+  assert.match(source, /let publicMarch = null[\s\S]*No se pudo cargar la Marcha del día/)
+  assert.match(source, /return \{[\s\S]*ephemeris:[\s\S]*march: publicMarch/)
+})

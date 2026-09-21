@@ -9,14 +9,12 @@ import SectionTitle from '@/components/SectionTitle';
 import StepCrewFacts from '@/components/StepCrewFacts';
 import { getStepPhotoFraming } from '@/lib/step-photo-framing';
 import { heritageDirectoryTypePath, heritageTypeForValue } from '@/lib/heritage-directory';
-import { getPublishedEntityCoverMedia } from '@/lib/supabase/entity-media';
 import { getPasoPageBySlug } from '@/lib/supabase/public-entity-pages';
 import {
   meetsPublicEditorialMinimum,
   publicEditorialRobots,
   publicText,
 } from '@/lib/supabase/public-entity-page';
-import { getPublishedStepHeritage } from '@/lib/supabase/step-heritage';
 import styles from './step.module.css';
 import {
   absoluteUrl,
@@ -29,8 +27,6 @@ export const dynamic = 'force-static';
 export const revalidate = 900;
 
 const getPaso = cache(getPasoPageBySlug);
-const getCoverMedia = cache(getPublishedEntityCoverMedia);
-const getStepHeritage = cache(getPublishedStepHeritage);
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -43,11 +39,14 @@ export async function generateMetadata({ params }) {
     };
   }
 
-  const { paso, hermandad, imagenes = [], bandas = [] } = result;
-  const [coverMedia, heritage] = await Promise.all([
-    getCoverMedia(paso.id),
-    getStepHeritage(paso.id),
-  ]);
+  const {
+    paso,
+    hermandad,
+    imagenes = [],
+    bandas = [],
+    coverMedia = null,
+    heritage = { phases: [], pieces: [], sources: [] },
+  } = result;
   const title = paso.nombre;
   const description = seoDescription(
     hermandad
@@ -99,12 +98,15 @@ export default async function PasoDetailPage({params}){
   const {slug}=await params;
   const result=await getPaso(slug);
   if(!result) notFound();
-  const {paso,hermandad,imagenes=[],bandas=[]}=result;
+  const {
+    paso,
+    hermandad,
+    imagenes = [],
+    bandas = [],
+    coverMedia = null,
+    heritage = { phases: [], pieces: [], sources: [] },
+  } = result;
   const directoryType = heritageTypeForValue(paso.tipo, 'pasos');
-  const [coverMedia, heritage] = await Promise.all([
-    getCoverMedia(paso.id),
-    getStepHeritage(paso.id),
-  ]);
   const relationalItems = [
     ...(hermandad ? [{
       kind: 'Hermandad',

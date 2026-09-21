@@ -7,7 +7,7 @@ import { getImagesDirectory } from '@/lib/supabase/directories'
 
 export const revalidate = 900
 
-const getImages = cache(getImagesDirectory)
+const getImages = cache(() => getImagesDirectory({ throwOnError: true }))
 
 function pageData(images, localidad) {
   const items = heritageItemsForLocality(images, 'imagenes', localidad)

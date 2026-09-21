@@ -70,10 +70,12 @@ test('la agenda y las fichas de Igualás y Ensayos usan ISR de cinco minutos', (
 test('Pasos e Imágenes deduplican las consultas compartidas por metadata y página', () => {
   const stepPage = read('app/pasos/[slug]/page.js')
   const imagePage = read('app/imagenes/[slug]/page.js')
+  const publicEntityPages = read('lib/supabase/public-entity-pages.js')
 
   assert.match(stepPage, /const getPaso = cache\(getPasoPageBySlug\)/)
-  assert.match(stepPage, /const getCoverMedia = cache\(getPublishedEntityCoverMedia\)/)
-  assert.match(stepPage, /const getStepHeritage = cache\(getPublishedStepHeritage\)/)
+  assert.match(publicEntityPages, /unstable_cache/)
+  assert.match(publicEntityPages, /getPublishedEntityCoverMedia\(entity\.id\)/)
+  assert.match(publicEntityPages, /getPublishedStepHeritage\(entity\.id\)/)
   assert.match(imagePage, /const getImagen = cache\(getImagenPageBySlug\)/)
   assert.match(imagePage, /const getEntityMedia = cache\(getPublishedEntityMedia\)/)
 })
