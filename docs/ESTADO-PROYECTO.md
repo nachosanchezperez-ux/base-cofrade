@@ -1,22 +1,22 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 21 de septiembre de 2026 · producción en #902 · modelado de participación de Carmona cerrado documentalmente en #900
+**Corte operativo:** 21 de septiembre de 2026 · producción en #900 · modelado de Carmona reconciliado con evidencia musical adicional
 
-**HEAD funcional de `main` y producción antes de esta actualización documental:** `1cdfbaadef4442caf75800a528bb077b457c4b45` · #902 fusionada
+**HEAD funcional de `main` y producción antes de esta actualización documental:** `a9d18ce91249808eb41891599db2c16bdf40a8e2` · #900 fusionada
 
-**Producción funcional verificada:** READY · deployment `dpl_2k4fgz6dxAPnM2BQ6FrCZxfY5WMJ` · SHA coincidente con #902
+**Producción funcional verificada:** READY · deployment `dpl_DGtj2PFrGqAbmmExHH3Z2SZNBGod` · SHA coincidente con #900
 
 **Supabase:** `ACTIVE_HEALTHY` · 12/12 migraciones estructurales activas · D-02C verificado con **18 ediciones y 116 pistas**, dentro de un total público de **551 ediciones y 3.429 pistas**
 
-**PR abiertas en el preflight de esta rama:** **2** · #900 corresponde a este cierre documental; #899 es un frente de diseño independiente y no se modifica
+**PR abiertas antes de esta actualización documental:** **1** · #899 es un frente de diseño independiente y no se modifica
 
 **Staging editoriales activos:** **0**
 
-**Errores runtime recientes:** Vercel conserva 10 grupos en la ventana de 24 horas, principalmente timeouts y errores de upstream asociados a despliegues anteriores; no guardan relación con esta PR exclusivamente documental
+**Errores runtime recientes:** Vercel conserva 10 grupos en la ventana de 24 horas, principalmente timeouts y errores de upstream asociados a despliegues anteriores; ninguno señala el deployment productivo actual de #900 y no guardan relación con esta actualización exclusivamente documental
 
 **Régimen:** FIRST EDITION FREEZE activo
 
-**Frente editorial municipal ACTIVO:** **Carmona · cierre de música y trazabilidad servita**. La confirmación posterior 10/10, la participación penitencial, los Pasos, las sedes y la identidad pública de Servitas están documentados; la música y el posible REUSE del Paso servita de septiembre siguen bloqueantes. No están autorizados staging, SQL, dry-run, Apply ni publicación.
+**Frente editorial municipal ACTIVO:** **Carmona · cierre de música y trazabilidad servita**. La confirmación posterior 10/10, la participación penitencial, los Pasos, las sedes y la identidad pública de Servitas están documentados. Ocho posiciones musicales están identificadas y tres cerradas; las restantes y el posible REUSE del Paso servita de septiembre siguen bloqueantes. No están autorizados staging, SQL, dry-run, Apply ni publicación.
 
 > GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. Los rankings municipales previos son evidencia histórica, no una cola automática. El próximo municipio solo puede nacer de un recálculo provincial nuevo y una orden expresa.
 
@@ -26,7 +26,7 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 
 | Posición | Frente | Estado real | Regla |
 |---|---|---|---|
-| **ACTIVO** | Octavo macrolote municipal HC-016 · Carmona | Evidencia posterior 10/10; 28 titulares candidatos; 17 Pasos y 30 relaciones imagen–Paso documentadas para los diez cortejos; sedes e identidad servita cerradas | Cerrar música efectiva y la trazabilidad de septiembre; sin staging, SQL, dry-run, Apply ni publicación |
+| **ACTIVO** | Octavo macrolote municipal HC-016 · Carmona | Evidencia posterior 10/10; 28 titulares candidatos; 17 Pasos y 30 relaciones imagen–Paso documentadas; 8 posiciones musicales identificadas, 3 cerradas; sedes e identidad servita cerradas | Cerrar la música restante y la trazabilidad de septiembre; sin staging, SQL, dry-run, Apply ni publicación |
 | **CERRADO** | Orden operativo | Autoridad documental y cola única integradas en #712 | No reabrir salvo contradicción verificable |
 | **CERRADO** | [#492 · Supabase Preview Branches](https://github.com/nachosanchezperez-ux/base-cofrade/issues/492) | Incidencia cerrada; #846 reconcilió el historial y la cadena activa contiene 12 migraciones estructurales, reproducibles desde cero en preview sin datos | Todo cambio futuro de esquema debe nacer como migración reproducible y superar una preview sin datos |
 | **CERRADO** | Higiene de ramas | 817 ramas revisadas; 754 eliminadas por SHA; 63 preservadas; salvaguarda remota verificada | No borrar las 61 ramas con trabajo único sin una revisión futura específica |
@@ -535,7 +535,7 @@ Carmona queda seleccionada como candidata única del octavo macrolote municipal 
 
 La Semana Santa de 2026 ya es histórica: sus recorridos no se tratarán como agenda futura. Televisión Carmona aporta piezas posteriores e individualizadas para las diez Salidas, incluida la primera del Cristo de los Desamparados; la puerta `held` queda cerrada 10/10. El modelado confirma 17 Pasos y 30 relaciones imagen–Paso para esos cortejos, separa el Señor de la Amargura del Cristo de San Felipe y conserva tres participaciones de Imagen bloqueadas por falta de prueba específica. La Salida servita de septiembre es REUSE seguro como acontecimiento, pero no se presupone que compartiera el Paso de marzo.
 
-La puerta siguiente única es completar acompañamientos musicales con fuentes estables, reparar la procedencia de la Fuente servita de septiembre y resolver —o mantener `null`— el posible REUSE de su Paso. Solo después podrá abrirse el plan row-by-row. No se autorizan todavía staging, payload SQL, dry-run, Apply ni publicación del lote de Carmona. Agenda Cofrade continúa como mantenimiento paralelo y no constituye un segundo macrofrente.
+La puerta siguiente única es completar los acompañamientos musicales restantes: hay ocho posiciones identificadas, de las que Expiración, Quinta Angustia y Santiago quedan cerradas; las otras cinco necesitan elevar o completar evidencia y el resto de posiciones permanece bloqueado. También debe repararse la procedencia de la Fuente servita de septiembre y resolver —o mantener `null`— el posible REUSE de su Paso. Solo después podrá abrirse el plan row-by-row. No se autorizan todavía staging, payload SQL, dry-run, Apply ni publicación del lote de Carmona. Agenda Cofrade continúa como mantenimiento paralelo y no constituye un segundo macrofrente.
 
 Evidencia reciente:
 - [PR #870 · Restauración visual y cronología](https://github.com/nachosanchezperez-ux/base-cofrade/pull/870)
