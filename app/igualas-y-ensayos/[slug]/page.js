@@ -8,6 +8,7 @@ import {
   breadcrumbJsonLd,
   compactSeoTitle,
   pageTitle,
+  organizationJsonLdRef,
   schemaEventStatus,
   seoDescription,
   socialMetadata,
@@ -125,11 +126,10 @@ export default async function CrewEventDetailPage({ params }) {
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
     ...(schemaEventStatus(event) ? { eventStatus: schemaEventStatus(event) } : {}),
     url: canonicalUrl,
-    organizer: {
-      '@type': 'Organization',
+    organizer: organizationJsonLdRef({
       name: event.brotherhoodName,
-      ...(event.brotherhoodHref ? { url: absoluteUrl(event.brotherhoodHref) } : {}),
-    },
+      path: event.brotherhoodHref ? event.brotherhoodHref : '',
+    }),
     location: {
       '@type': 'Place',
       name: event.location || event.municipality || 'Sevilla',
