@@ -21,6 +21,7 @@ export default function AssistedBatchStart({ targets, canEdit, aiConfigured }) {
   const [progress, setProgress] = useState(null)
   const [error, setError] = useState('')
   const [failures, setFailures] = useState([])
+  const [skipped, setSkipped] = useState([])
   const [partialBatchId, setPartialBatchId] = useState(null)
 
   const lineCount = useMemo(() => sourceLines(sourceUrls).length, [sourceUrls])
@@ -31,6 +32,7 @@ export default function AssistedBatchStart({ targets, canEdit, aiConfigured }) {
     setWorking(true)
     setError('')
     setFailures([])
+    setSkipped([])
     setPartialBatchId(null)
     setProgress(null)
 
@@ -40,6 +42,7 @@ export default function AssistedBatchStart({ targets, canEdit, aiConfigured }) {
         sourceUrls: sourceLines(sourceUrls),
       })
       const failed = []
+      const ignored = []
       let completed = 0
       let successful = 0
 
@@ -50,12 +53,19 @@ export default function AssistedBatchStart({ targets, canEdit, aiConfigured }) {
           sourceUrl,
         })
         try {
-          await analyseSourceAction({
+          const result = await analyseSourceAction({
             sourceUrl,
             targetEntityId: prepared.targetEntityId,
             batchId: prepared.batchId,
           })
-          successful += 1
+          if (result.skipped) {
+            ignored.push({
+              sourceUrl,
+              message: 'Esta misma versión ya fue aplicada o está vinculada a otro lote; no se ha reabierto.',
+            })
+          } else {
+            successful += 1
+          }
         } catch (caught) {
           failed.push({
             sourceUrl,
@@ -66,12 +76,13 @@ export default function AssistedBatchStart({ targets, canEdit, aiConfigured }) {
       }
 
       setProgress({ current: completed, total: prepared.urls.length, sourceUrl: null })
+      setSkipped(ignored)
       if (!successful) {
         setFailures(failed)
-        throw new Error('Ninguna Fuente pudo incorporarse a la tanda. Revisa las incidencias antes de repetirla.')
+        throw new Error('Ninguna Fuente nueva o revisable pudo incorporarse a la tanda.')
       }
 
-      if (failed.length) {
+      if (failed.length || ignored.length) {
         setFailures(failed)
         setPartialBatchId(prepared.batchId)
       } else {
@@ -126,6 +137,11 @@ export default function AssistedBatchStart({ targets, canEdit, aiConfigured }) {
       <div><span>Progreso</span><strong>{progress.current}/{progress.total}</strong></div>
       <progress max={progress.total} value={progress.current} />
       {progress.sourceUrl ? <small>{progress.sourceUrl}</small> : null}
+    </div> : null}
+
+    {skipped.length ? <div className={styles.warningBox}>
+      <strong>{skipped.length} Fuente{skipped.length === 1 ? '' : 's'} ya procesada{skipped.length === 1 ? '' : 's'}</strong>
+      <ul>{skipped.map((item) => <li key={item.sourceUrl}><b>{item.sourceUrl}</b>: {item.message}</li>)}</ul>
     </div> : null}
 
     {failures.length ? <div className={styles.warningBox}>
