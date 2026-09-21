@@ -1,6 +1,9 @@
 import Link from 'next/link'
 import { displayName } from '@/lib/brotherhood-directory'
-import { groupBrotherhoodsByLocality } from '@/lib/brotherhood-public-index'
+import {
+  brotherhoodDirectoryLocalities,
+  groupBrotherhoodsByLocality,
+} from '@/lib/brotherhood-public-index'
 import styles from './BrotherhoodPublicIndex.module.css'
 
 function contextLine(item) {
@@ -9,6 +12,9 @@ function contextLine(item) {
 
 export default function BrotherhoodPublicIndex({ brotherhoods = [] }) {
   const groups = groupBrotherhoodsByLocality(brotherhoods)
+  const localityPages = new Map(
+    brotherhoodDirectoryLocalities(brotherhoods).map((item) => [item.slug, item])
+  )
 
   if (!groups.length) return null
 
@@ -23,12 +29,21 @@ export default function BrotherhoodPublicIndex({ brotherhoods = [] }) {
       </header>
 
       <nav className={styles.localities} aria-label="Ir a una localidad">
-        {groups.map((group) => (
-          <a href={`#hermandades-${group.key}`} key={group.key}>
-            <span>{group.locality === 'Sevilla' ? 'Sevilla capital' : group.locality}</span>
-            <strong>{group.items.length}</strong>
-          </a>
-        ))}
+        {groups.map((group) => {
+          const localityPage = localityPages.get(group.slug)
+          const content = (
+            <>
+              <span>{group.locality === 'Sevilla' ? 'Sevilla capital' : group.locality}</span>
+              <strong>{group.items.length}</strong>
+            </>
+          )
+
+          return localityPage ? (
+            <Link href={localityPage.href} key={group.key}>{content}</Link>
+          ) : (
+            <a href={`#hermandades-${group.key}`} key={group.key}>{content}</a>
+          )
+        })}
       </nav>
 
       <div className={styles.groups}>
