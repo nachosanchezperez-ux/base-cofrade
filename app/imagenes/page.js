@@ -20,7 +20,7 @@ export const metadata = {
 }
 
 export default async function ImagenesPage() {
-  const images = await getImagesDirectory()
+  const images = await getImagesDirectory({ throwOnError: true })
 
   return (
     <section className="section page-top">

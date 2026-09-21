@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { cache } from 'react'
 import { notFound } from 'next/navigation'
 import JsonLd from '@/components/JsonLd'
 import SourcesBlock from '@/components/SourcesBlock'
@@ -11,7 +12,7 @@ import BandDiscographySection from '@/components/bands/BandDiscographySection'
 import BandFeaturePhoto from '@/components/BandFeaturePhoto'
 import MusicalRepertoiresSection from '@/components/MusicalRepertoiresSection'
 import HistoricalAccompanimentsRail from './HistoricalAccompanimentsRail'
-import { getBandBySlug, youtubeEmbedUrl } from '@/lib/supabase/bands'
+import { getBandBySlug as getBandBySlugUncached, youtubeEmbedUrl } from '@/lib/supabase/bands'
 import { getBandDiscography } from '@/lib/supabase/bandDiscography'
 import { getPublishedBandColors } from '@/lib/supabase/bandColors'
 import { getBandOutingPublicLinks } from '@/lib/supabase/band-outing-links'
@@ -43,6 +44,8 @@ import {
 import styles from '../bandas.module.css'
 
 export const revalidate = 900
+
+const getBandBySlug = cache(getBandBySlugUncached)
 
 function dateLabel(value) {
   if (!value) return ''

@@ -1,5 +1,6 @@
 import 'server-only'
 
+import { unstable_cache } from 'next/cache'
 import { createPublicClient } from '@/lib/supabase/public'
 
 function isCapatazRole(value = '') {
@@ -10,48 +11,59 @@ function isCapatazRole(value = '') {
     .includes('capataz')
 }
 
+async function loadStepCrewFacts(stepId) {
+  const supabase = createPublicClient()
+  const [stepResult, personnelResult] = await Promise.all([
+    supabase
+      .from('steps')
+      .select('workbenches_count')
+      .eq('entity_id', stepId)
+      .maybeSingle(),
+    supabase
+      .from('step_personnel_periods')
+      .select('id, agent_entity_id, role_name, created_at')
+      .eq('step_entity_id', stepId)
+      .eq('is_current', true)
+      .eq('status', 'published')
+      .order('created_at', { ascending: true }),
+  ])
+
+  if (stepResult.error) throw stepResult.error
+  if (personnelResult.error) throw personnelResult.error
+
+  const workbenches = stepResult.data?.workbenches_count || null
+  const capatazPeriods = (personnelResult.data || []).filter((period) => isCapatazRole(period.role_name))
+  const agentIds = [...new Set(capatazPeriods.map((period) => period.agent_entity_id).filter(Boolean))]
+  const agentsResult = agentIds.length
+    ? await supabase
+        .from('entities')
+        .select('id, name')
+        .eq('entity_type', 'agent')
+        .eq('status', 'published')
+        .in('id', agentIds)
+    : { data: [], error: null }
+
+  if (agentsResult.error) throw agentsResult.error
+
+  const nameById = new Map((agentsResult.data || []).map((agent) => [agent.id, agent.name]))
+  const capataces = capatazPeriods
+    .map((period) => nameById.get(period.agent_entity_id))
+    .filter(Boolean)
+
+  return { workbenches, capataces }
+}
+
+const getCachedStepCrewFacts = unstable_cache(
+  loadStepCrewFacts,
+  ['hilo-cofrade-public-step-crew-v2'],
+  { revalidate: 900, tags: ['public-step-detail'] }
+)
+
 export default async function StepCrewFacts({ stepId }) {
   if (!stepId) return null
 
   try {
-    const supabase = createPublicClient()
-    const [stepResult, personnelResult] = await Promise.all([
-      supabase
-        .from('steps')
-        .select('workbenches_count')
-        .eq('entity_id', stepId)
-        .maybeSingle(),
-      supabase
-        .from('step_personnel_periods')
-        .select('id, agent_entity_id, role_name, created_at')
-        .eq('step_entity_id', stepId)
-        .eq('is_current', true)
-        .eq('status', 'published')
-        .order('created_at', { ascending: true }),
-    ])
-
-    if (stepResult.error) throw stepResult.error
-    if (personnelResult.error) throw personnelResult.error
-
-    const workbenches = stepResult.data?.workbenches_count || null
-    const capatazPeriods = (personnelResult.data || []).filter((period) => isCapatazRole(period.role_name))
-    const agentIds = [...new Set(capatazPeriods.map((period) => period.agent_entity_id).filter(Boolean))]
-    const agentsResult = agentIds.length
-      ? await supabase
-          .from('entities')
-          .select('id, name')
-          .eq('entity_type', 'agent')
-          .eq('status', 'published')
-          .in('id', agentIds)
-      : { data: [], error: null }
-
-    if (agentsResult.error) throw agentsResult.error
-
-    const nameById = new Map((agentsResult.data || []).map((agent) => [agent.id, agent.name]))
-    const capataces = capatazPeriods
-      .map((period) => nameById.get(period.agent_entity_id))
-      .filter(Boolean)
-
+    const { workbenches, capataces } = await getCachedStepCrewFacts(stepId)
     if (!workbenches && !capataces.length) return null
 
     return (
