@@ -202,11 +202,23 @@ export default async function MarchDetailPage({ params }) {
             <header className={styles.sectionHeading}><span>Archivo sonoro</span><h2>Escuchar la marcha</h2><p>Grabaciones y pistas enlazadas con esta obra.</p></header>
             <div className={styles.listenGrid}>
               {march.listenings.map((listening) => (
-                <a className={styles.listenCard} href={listening.url} target="_blank" rel="noopener noreferrer" key={listening.url} data-hilo-event="march_listen_click" data-hilo-provider={listening.provider.toLowerCase()}>
-                  <span aria-hidden="true">▶</span>
-                  <div><small>{listening.provider}{listening.year ? ` · ${listening.year}` : ''}</small><strong>{listening.title}</strong>{listening.band?.name ? <p>{listening.band.name}</p> : null}</div>
-                  <b aria-hidden="true">↗</b>
-                </a>
+                <article className={styles.listenCard} key={listening.url}>
+                  <a
+                    className={styles.listenPlay}
+                    href={listening.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Escuchar ${listening.title} en ${listening.provider}`}
+                    data-hilo-event="march_listen_click"
+                    data-hilo-provider={listening.provider.toLowerCase()}
+                  ><span aria-hidden="true">▶</span></a>
+                  <div>
+                    <small>{listening.provider}{listening.year ? ` · ${listening.year}` : ''}</small>
+                    <strong>{listening.title}</strong>
+                    {listening.band?.name ? <p>{listening.band.href ? <Link href={listening.band.href}>{listening.band.name}</Link> : listening.band.name}</p> : null}
+                  </div>
+                  <a className={styles.listenExternal} href={listening.url} target="_blank" rel="noopener noreferrer" aria-label="Abrir grabación"><span aria-hidden="true">↗</span></a>
+                </article>
               ))}
             </div>
           </div>
