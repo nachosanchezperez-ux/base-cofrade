@@ -1,18 +1,18 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 21 de septiembre de 2026 · producción en #900 · modelado de Carmona reconciliado con evidencia musical adicional
+**Corte operativo:** 21 de septiembre de 2026 · producción en #899 · modelado de Carmona reconciliado con evidencia musical adicional
 
-**HEAD funcional de `main` y producción antes de esta actualización documental:** `a9d18ce91249808eb41891599db2c16bdf40a8e2` · #900 fusionada
+**HEAD funcional de `main` y producción antes de esta actualización documental:** `e7d6823676063854831168e2c54a5da3589ef622` · #899 fusionada después de #900
 
-**Producción funcional verificada:** READY · deployment `dpl_DGtj2PFrGqAbmmExHH3Z2SZNBGod` · SHA coincidente con #900
+**Producción funcional verificada:** READY · deployment `dpl_GZs9dhXohss4VGWegbidVznc8Jbc` · SHA coincidente con #899
 
 **Supabase:** `ACTIVE_HEALTHY` · 12/12 migraciones estructurales activas · D-02C verificado con **18 ediciones y 116 pistas**, dentro de un total público de **551 ediciones y 3.429 pistas**
 
-**PR abiertas antes de esta actualización documental:** **1** · #899 es un frente de diseño independiente y no se modifica
+**PR abiertas antes de esta actualización documental:** **0** · #899 y #900 ya están fusionadas
 
 **Staging editoriales activos:** **0**
 
-**Errores runtime recientes:** Vercel conserva 10 grupos en la ventana de 24 horas, principalmente timeouts y errores de upstream asociados a despliegues anteriores; ninguno señala el deployment productivo actual de #900 y no guardan relación con esta actualización exclusivamente documental
+**Errores runtime recientes:** Vercel conserva 10 grupos en la ventana de 24 horas, principalmente timeouts y errores de upstream asociados a despliegues anteriores; ninguno señala el deployment productivo actual de #899 y no guardan relación con esta actualización exclusivamente documental
 
 **Régimen:** FIRST EDITION FREEZE activo
 
