@@ -263,6 +263,7 @@ export default async function BandDetailPage({ params }) {
     name: band.officialName,
     alternateName: band.popularName,
     url: absoluteUrl(`/bandas/${band.slug}`),
+    mainEntityOfPage: absoluteUrl(`/bandas/${band.slug}`),
     ...(publicText(band.summary) ? { description: publicText(band.summary) } : {}),
     foundingDate: schemaDate(publicText(band.foundation)),
     foundingLocation: publicText(band.municipality) || undefined,
