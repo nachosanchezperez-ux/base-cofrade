@@ -71,6 +71,26 @@ test('Banda prioriza pasos antes que Hermandades', () => {
   );
 });
 
+test('Marcha reparte la portada entre compositor, dedicatorias, bandas, crucetas y discografía', () => {
+  const items = [
+    item('Compositor', 'autor-1'),
+    ...Array.from({ length: 3 }, (_, index) => item('Dedicatoria', `dedicatoria-${index + 1}`)),
+    ...Array.from({ length: 4 }, (_, index) => item('Banda', `banda-${index + 1}`)),
+    ...Array.from({ length: 4 }, (_, index) => item('Cruceta', `cruceta-${index + 1}`)),
+    ...Array.from({ length: 3 }, (_, index) => item('Discografía', `disco-${index + 1}`)),
+  ];
+
+  const result = prepareRelationalItems(items, { profile: 'marcha', maxItems: 8 });
+  const kinds = result.visibleItems.map((entry) => entry.kind);
+
+  assert.equal(result.visibleItems.length, 8);
+  assert.equal(kinds.filter((kind) => kind === 'Compositor').length, 1);
+  assert.equal(kinds.filter((kind) => kind === 'Dedicatoria').length, 2);
+  assert.equal(kinds.filter((kind) => kind === 'Banda').length, 2);
+  assert.equal(kinds.filter((kind) => kind === 'Cruceta').length, 2);
+  assert.equal(kinds.filter((kind) => kind === 'Discografía').length, 1);
+});
+
 test('la misma ficha destino no se repite y gana la relación más prioritaria', () => {
   const result = prepareRelationalItems([
     item('Banda', 'banda-sol', { relation: 'Acompañamiento actual', priority: 40 }),
