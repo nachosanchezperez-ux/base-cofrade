@@ -12,7 +12,7 @@ La expresión institucional «hasta nueve hermandades» necesita una normalizaci
 - el [Consejo de Hermandades y Cofradías de Carmona](https://consejohermandadescarmona.es/hdaesperanza/) enumera **ocho hermandades penitenciales**;
 - Turismo de la Provincia incluye además a la **Orden Seglar de los Servitas**, que no aparece como novena hermandad penitencial en el directorio del Consejo;
 - la Hermandad de la Esperanza tiene dos cortejos en el programa de 2026: Coronación/Esperanza el Domingo de Ramos y el Cristo de los Desamparados el Viernes Santo;
-- por tanto, el universo de esta puerta es de **nueve sujetos corporativos y diez salidas históricas de 2026**.
+- por tanto, el universo de esta puerta es de **nueve sujetos corporativos y diez salidas penitenciales históricas de 2026**. La procesión servita del Santo Escapulario del 19 de septiembre constituye una undécima Salida histórica ya existente y se reutiliza.
 
 No deben crearse dos Hermandades para la Esperanza. Tampoco debe absorberse la Orden Seglar Servita dentro de otra corporación.
 
@@ -36,7 +36,7 @@ La búsqueda nominal no localizó entidades carmonenses ocultas. Los resultados 
 
 | # | Nodo público propuesto | Naturaleza | Denominación institucional | Fundación/regla | Sede por verificar en staging | Cobertura fuente |
 |---:|---|---|---|---|---|---|
-| 1 | Orden Seglar Servita de Carmona | Orden seglar | Denominación exacta pendiente de reglas o fuente propia; Turismo usa «Orden Seglar de Los Servitas» | 1739 según Turismo provincial | Real Iglesia del Divino Salvador | Provincial; fuente oficial social existente sin URL |
+| 1 | Orden Seglar Servita Carmona | Orden seglar | La web propia firma «Orden Seglar Siervos de María» y usa «Orden Seglar Servita Carmona» como nombre público | 1739 según Turismo provincial | Real Iglesia del Divino Salvador | Web oficial propia + Turismo provincial |
 | 2 | Esperanza de Carmona | Hermandad penitencial | Real, Ilustre y Fervorosa Hermandad del Santísimo Cristo de los Desamparados y Cofradía de Nazarenos de Nuestro Padre Jesús de la Coronación de Espinas, María Santísima de la Esperanza y San Juan Evangelista | 1566 | Real Iglesia del Divino Salvador | Consejo + Turismo |
 | 3 | Amargura de Carmona | Hermandad penitencial | Hermandad del Santísimo Cristo de San Felipe, Cofradía de Nazarenos del Señor de la Amargura y María Santísima del Mayor Dolor | Reglas de 1897 | Iglesia de San Felipe | Consejo + Turismo |
 | 4 | Expiración de Carmona | Hermandad penitencial | Hermandad de la Sagrada Expiración de Cristo Señor Nuestro, María Santísima de los Dolores, María Santísima del Calvario, san Juan Evangelista y san Blas | 1649 | Iglesia de San Blas | Consejo + Turismo |
@@ -54,7 +54,7 @@ Las sedes se consideran candidatas sólidas, no filas listas para Apply. En espe
 |---|---|---|
 | Servitas | María Santísima de los Dolores | 1 imagen candidata; identidad exacta pendiente de fuente propia |
 | Esperanza | Nuestro Padre Jesús de la Coronación de Espinas; María Santísima de la Esperanza; San Juan Evangelista; Santísimo Cristo de los Desamparados | 4 imágenes candidatas |
-| Amargura | Señor de la Amargura; María Santísima del Mayor Dolor | 2 imágenes candidatas; «Santísimo Cristo de San Felipe» se trata provisionalmente como denominación del Señor, no como tercera talla |
+| Amargura | Señor de la Amargura; María Santísima del Mayor Dolor; Santísimo Cristo de San Felipe | 3 imágenes candidatas; el Consejo documenta dos crucificados distintos. Solo Señor de la Amargura participa en el cortejo penitencial de 2026 |
 | Expiración | Nuestro Padre Jesús de la Expiración; María Santísima de los Dolores; María Santísima del Calvario; San Juan Evangelista; San Blas | 5 candidatos; no todos forman el cortejo anual |
 | Quinta Angustia | Cristo del Sagrado Descendimiento; Nuestra Señora de las Angustias; María Santísima de los Ángeles; Nuestro Padre Jesús Cautivo de Belén | 4 candidatos; deben separarse titularidad y presencia procesional |
 | Santiago | Nuestro Padre Jesús en la Columna; María Santísima de la Paciencia | 2 imágenes candidatas |
@@ -62,7 +62,7 @@ Las sedes se consideran candidatas sólidas, no filas listas para Apply. En espe
 | Humildad | Nuestro Padre Jesús de la Humildad y Paciencia; María Santísima de los Dolores; San Juan Evangelista | 3 imágenes candidatas |
 | Santo Entierro | Santísimo Cristo Nuestro Señor Yacente; María Santísima de la Soledad; Santa Ana | 3 candidatos; Santa Ana no se atribuye al cortejo penitencial |
 
-**Suelo documental:** 27 imágenes candidatas. La cifra no equivale a imágenes procesionadas ni autoriza todavía Pasos o relaciones de cortejo.
+**Suelo documental corregido:** 28 imágenes titulares candidatas. La cifra no equivale a imágenes procesionadas ni autoriza todavía Pasos o relaciones de cortejo.
 
 ## 5. Salidas históricas de 2026
 
@@ -93,7 +93,7 @@ Supabase contiene una única Salida carmonense:
 - origen y destino solo en texto: Iglesia del Salvador → Convento de Santa Clara;
 - una Fuente «Servitas Carmona · publicación oficial en Instagram», con `url = null`.
 
-Esta fila no es la Salida de Viernes de Dolores y no se duplica. La futura corporación Servita deberá ser única y, tras verificación, podrá enlazar tanto el cortejo del 27 de marzo como esta procesión de septiembre. El cambio de `announced` a `held` para la salida del 19 de septiembre queda expresamente fuera de esta puerta.
+Esta fila no es la Salida de Viernes de Dolores y no se duplica. La futura corporación Servita deberá ser única y, tras verificación, podrá enlazar tanto el cortejo del 27 de marzo como esta procesión de septiembre. No se presupone que ambas Salidas usen el mismo Paso: ese REUSE necesita una fuente específica. El cambio de `announced` a `held` para la salida del 19 de septiembre queda expresamente fuera de esta puerta.
 
 ## 7. Pasos, Bandas y media
 
@@ -103,6 +103,6 @@ Esta fila no es la Salida de Viernes de Dolores y no se duplica. La futura corpo
 
 ## 8. Decisión de cierre
 
-El inventario queda cerrado con **9 sujetos corporativos**, **27 imágenes candidatas** y **10 salidas históricas de 2026**. Permanecen abiertas, para una puerta posterior y expresa, la normalización exacta de Servitas, el inventario canónico de Pasos, la música, la evidencia posterior de celebración y los detalles de recorridos.
+El inventario queda cerrado con **9 sujetos corporativos**, **28 imágenes titulares candidatas**, **10 salidas penitenciales históricas de 2026** y una Salida servita de septiembre ya existente. Permanecen abiertas, para una puerta posterior y expresa, la normalización exacta de Servitas, el inventario canónico de Pasos, la música, la evidencia posterior de celebración y los detalles de recorridos.
 
 Este documento no autoriza staging, SQL, Apply ni una PR de datos.
