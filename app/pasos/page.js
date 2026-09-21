@@ -20,7 +20,7 @@ export const metadata = {
 }
 
 export default async function PasosPage() {
-  const steps = await getStepsDirectory()
+  const steps = await getStepsDirectory({ throwOnError: true })
 
   return (
     <section className="section page-top">

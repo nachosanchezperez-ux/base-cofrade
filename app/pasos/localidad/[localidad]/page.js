@@ -7,7 +7,7 @@ import { getStepsDirectory } from '@/lib/supabase/directories'
 
 export const revalidate = 900
 
-const getSteps = cache(getStepsDirectory)
+const getSteps = cache(() => getStepsDirectory({ throwOnError: true }))
 
 function pageData(steps, localidad) {
   const items = heritageItemsForLocality(steps, 'pasos', localidad)

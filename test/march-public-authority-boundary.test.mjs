@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises'
 
 const MARCH_PUBLIC_MODULES = [
   'lib/supabase/home-v2.js',
+  'lib/supabase/daily-march-candidates.js',
   'lib/supabase/bandDiscography.js',
 ]
 
@@ -21,14 +22,26 @@ test('las lecturas públicas de Marchas no dependen del cliente de sesión ni de
 
 test('la Marcha del día usa el cliente público stateless y parte de datos publicados', async () => {
   const home = await source('lib/supabase/home-v2.js')
+  const candidates = await source('lib/supabase/daily-march-candidates.js')
+  const selection = await source('lib/daily-march-selection.js')
   const publicServer = await source('lib/supabase/public-server.js')
 
   assert.match(home, /@\/lib\/supabase\/public-server['"]/)
-  assert.match(home, /\.from\('daily_march_candidates'\)/)
+  assert.match(home, /getDailyMarchCandidates/)
+  assert.doesNotMatch(home, /\.from\('daily_march_candidates'\)/)
   assert.match(home, /async function marchCard\(supabase, marchEntityId\)/)
   assert.match(home, /\.from\('marches'\)/)
   assert.match(home, /\.from\('march_recordings'\)/)
   assert.match(home, /\.eq\('status', 'published'\)/)
+
+  assert.match(candidates, /\.from\('marches'\)/)
+  assert.match(candidates, /\.eq\('eligible_for_daily', true\)/)
+  assert.match(candidates, /\.from\('march_authors'\)/)
+  assert.match(candidates, /\.from\('march_recordings'\)/)
+  assert.match(candidates, /\.from\('band_release_tracks'\)/)
+  assert.match(candidates, /buildDailyMarchCandidates/)
+  assert.match(selection, /publishedComposerIds/)
+  assert.match(selection, /publishedReleaseIds/)
 
   assert.match(publicServer, /@supabase\/supabase-js/)
   assert.doesNotMatch(publicServer, /@supabase\/ssr/)

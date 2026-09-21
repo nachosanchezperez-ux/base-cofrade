@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { stageAssistedImportAction } from '../actions'
+import { saveAssistedReviewAction, stageAssistedImportAction } from '../actions'
 import styles from '../ingestion.module.css'
 
 const TYPE_LABELS = {
@@ -31,18 +31,43 @@ function percentage(value) {
 }
 
 function initialEntityChoice(entity) {
-  const exact = entity.resolution?.state === 'exact' ? entity.resolution?.candidates?.[0] : null
-  if (exact) return `existing:${exact.id}`
-  return Number(entity.confidence) >= 0.82 && entity.resolution?.state === 'new' ? 'new' : 'ignore'
+  const preferred = entity.resolution?.default_choice
+  if (preferred?.startsWith('existing:')) return preferred
+  if (preferred === 'new' && Number(entity.confidence) >= 0.82) return 'new'
+  return 'ignore'
 }
 
-export default function IngestionReview({ documentImport, target, canEdit }) {
+function selectedCandidate(entity, decision) {
+  const value = String(decision || '')
+  if (!value.startsWith('existing:')) return null
+  const id = value.slice(9)
+  return (entity.resolution?.candidates || []).find((candidate) => candidate.id === id) || null
+}
+
+function fieldLabel(field) {
+  return String(field || '').replace(/_/g, ' ')
+}
+
+export default function IngestionReview({ documentImport, target, canEdit, batchId = null }) {
   const router = useRouter()
   const analysis = documentImport.analysis || { entities: [], relations: [], warnings: [] }
-  const [decisions, setDecisions] = useState(() => Object.fromEntries((analysis.entities || []).map((entity) => [entity.local_id, initialEntityChoice(entity)])))
-  const [selectedRelations, setSelectedRelations] = useState(() => new Set((analysis.relations || [])
-    .map((relation, index) => relation.stageable && Number(relation.confidence) >= 0.78 ? index : null)
-    .filter((index) => index !== null)))
+  const savedReview = documentImport.application_summary?.review || null
+  const [decisions, setDecisions] = useState(() => {
+    if (savedReview?.decisions) {
+      return Object.fromEntries((analysis.entities || []).map((entity) => [
+        entity.local_id,
+        savedReview.decisions[entity.local_id] || 'ignore',
+      ]))
+    }
+    return Object.fromEntries((analysis.entities || []).map((entity) => [entity.local_id, initialEntityChoice(entity)]))
+  })
+  const [selectedRelations, setSelectedRelations] = useState(() => new Set(
+    Array.isArray(savedReview?.selected_relation_indexes)
+      ? savedReview.selected_relation_indexes
+      : (analysis.relations || [])
+        .map((relation, index) => relation.stageable && Number(relation.confidence) >= 0.78 ? index : null)
+        .filter((index) => index !== null),
+  ))
   const [working, setWorking] = useState(false)
   const [error, setError] = useState('')
   const [message, setMessage] = useState('')
@@ -50,6 +75,16 @@ export default function IngestionReview({ documentImport, target, canEdit }) {
   const stagedBatchId = documentImport.application_summary?.bulk_import_id || null
   const acceptedEntities = useMemo(() => Object.values(decisions).filter((value) => value !== 'ignore').length, [decisions])
   const stageableRelations = useMemo(() => (analysis.relations || []).filter((relation) => relation.stageable).length, [analysis.relations])
+  const enrichmentSummary = useMemo(() => {
+    let fills = 0
+    let conflicts = 0
+    for (const entity of analysis.entities || []) {
+      const candidate = selectedCandidate(entity, decisions[entity.local_id])
+      fills += candidate?.enrichment?.fills?.length || 0
+      conflicts += candidate?.enrichment?.conflicts?.length || 0
+    }
+    return { fills, conflicts }
+  }, [analysis.entities, decisions])
 
   function relationEndpointsAccepted(relation) {
     for (const ref of [relation.source_ref, relation.target_ref]) {
@@ -80,6 +115,26 @@ export default function IngestionReview({ documentImport, target, canEdit }) {
       else next.add(index)
       return next
     })
+  }
+
+  async function saveReviewForBatch() {
+    if (!canEdit || !batchId || stagedBatchId || working) return
+    setWorking(true)
+    setError('')
+    setMessage('')
+    try {
+      await saveAssistedReviewAction(documentImport.id, {
+        decisions,
+        selectedRelations: [...selectedRelations],
+      })
+      setMessage('Revisión guardada. Volviendo a la tanda…')
+      router.push(`/panel/datos/ingestion/lotes/${batchId}`)
+      router.refresh()
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : 'No se pudo guardar la revisión editorial.')
+    } finally {
+      setWorking(false)
+    }
   }
 
   async function prepareBatch() {
@@ -126,8 +181,12 @@ export default function IngestionReview({ documentImport, target, canEdit }) {
         <div><span className={styles.kicker}>Paso 2</span><h2>Resolver entidades</h2></div>
         <span className={styles.status}>{acceptedEntities}/{analysis.entities?.length || 0} aceptadas</span>
       </div>
-      <p className={styles.lead}>Las coincidencias exactas se proponen contra el nodo existente. Las entidades nuevas nunca se publican desde aquí: se crearían como <code>draft</code>.</p>
-      {(analysis.entities || []).length ? <div className={styles.proposalList}>{analysis.entities.map((entity) => <article key={entity.local_id} className={decisions[entity.local_id] === 'ignore' ? styles.proposalMuted : ''}>
+      <p className={styles.lead}>Las coincidencias exactas y las variantes semánticas seguras se resuelven contra el nodo existente. Los huecos vacíos pueden enriquecerse; una contradicción nunca sustituye el dato publicado automáticamente. Las entidades nuevas siguen naciendo como <code>draft</code>.</p>
+      {(analysis.entities || []).length ? <div className={styles.proposalList}>{analysis.entities.map((entity) => {
+        const candidate = selectedCandidate(entity, decisions[entity.local_id])
+        const fills = candidate?.enrichment?.fills || []
+        const conflicts = candidate?.enrichment?.conflicts || []
+        return <article key={entity.local_id} className={decisions[entity.local_id] === 'ignore' ? styles.proposalMuted : ''}>
         <div className={styles.proposalHeader}>
           <div>
             <span className={styles.typePill}>{TYPE_LABELS[entity.entity_type] || entity.entity_type}</span>
@@ -143,11 +202,46 @@ export default function IngestionReview({ documentImport, target, canEdit }) {
           <select value={decisions[entity.local_id] || 'ignore'} onChange={(event) => updateDecision(entity.local_id, event.target.value)} disabled={!canEdit || working || Boolean(stagedBatchId)}>
             <option value="ignore">No incorporar</option>
             <option value="new">Crear nodo nuevo en borrador</option>
-            {(entity.resolution?.candidates || []).map((candidate) => <option key={candidate.id} value={`existing:${candidate.id}`}>Reutilizar: {candidate.name}{candidate.status ? ` · ${candidate.status}` : ''}</option>)}
+            {(entity.resolution?.candidates || []).map((candidate) => <option key={candidate.id} value={`existing:${candidate.id}`}>
+              Reutilizar: {candidate.name}{candidate.matched_name && candidate.matched_name !== candidate.name ? ` · coincide con «${candidate.matched_name}»` : ''}{candidate.match_score && candidate.match_score < 1 ? ` · ${percentage(candidate.match_score)}` : ''}{candidate.status ? ` · ${candidate.status}` : ''}
+            </option>)}
           </select>
         </label>
-        <small className={styles.resolutionNote}>{entity.resolution?.state === 'exact' ? 'Coincidencia exacta encontrada en Hilo Cofrade.' : entity.resolution?.state === 'ambiguous' ? 'Hay varias coincidencias exactas: requiere elección manual.' : 'No se encontró una coincidencia exacta por nombre y tipo.'}</small>
-      </article>)}</div> : <div className={styles.emptyBox}>La Fuente no ha generado nuevas entidades candidatas.</div>}
+        <small className={styles.resolutionNote}>
+          {entity.resolution?.state === 'exact'
+            ? 'Coincidencia exacta encontrada en Hilo Cofrade, incluido su catálogo de nombres alternativos.'
+            : entity.resolution?.state === 'semantic'
+              ? candidate?.context_match
+                ? 'Coincidencia semántica única confirmada por el contexto de esta Hermandad.'
+                : 'Coincidencia semántica única. Revísala antes de aceptarla.'
+              : entity.resolution?.state === 'contextual'
+                ? 'Existe una coincidencia nominal fuera del grafo actual de esta Hermandad. No se reutiliza automáticamente.'
+                : entity.resolution?.state === 'ambiguous'
+                  ? 'Hay varias coincidencias posibles: requiere elección manual.'
+                  : 'No se encontró una coincidencia suficientemente segura por nombre, tipo y contexto.'}
+        </small>
+        {candidate ? <div className={styles.enrichmentBox}>
+          <div className={styles.enrichmentHeader}>
+            <strong>Enriquecimiento diferencial</strong>
+            <span>{fills.length} hueco{fills.length === 1 ? '' : 's'} · {conflicts.length} conflicto{conflicts.length === 1 ? '' : 's'}</span>
+          </div>
+          {fills.length ? <div className={styles.enrichmentList}>
+            {fills.map((field) => <div key={`fill-${field.table}-${field.column}`}>
+              <b>+ {fieldLabel(field.column)}</b>
+              <span>{String(field.proposed_value)}</span>
+            </div>)}
+          </div> : <small className={styles.resolutionNote}>No hay huecos nuevos que rellenar en este nodo.</small>}
+          {conflicts.length ? <div className={styles.conflictList}>
+            {conflicts.map((field) => <div key={`conflict-${field.table}-${field.column}`}>
+              <b>Revisión · {fieldLabel(field.column)}</b>
+              <span><strong>Actual:</strong> {String(field.current_value)}</span>
+              <span><strong>Fuente:</strong> {String(field.proposed_value)}</span>
+              <em>No se sobrescribirá automáticamente.</em>
+            </div>)}
+          </div> : null}
+        </div> : null}
+      </article>
+      })}</div> : <div className={styles.emptyBox}>La Fuente no ha generado nuevas entidades candidatas.</div>}
     </section>
 
     <section className={styles.card}>
@@ -155,7 +249,7 @@ export default function IngestionReview({ documentImport, target, canEdit }) {
         <div><span className={styles.kicker}>Paso 3</span><h2>Validar relaciones</h2></div>
         <span className={styles.status}>{selectedRelations.size}/{stageableRelations}</span>
       </div>
-      <p className={styles.lead}>Una relación solo entra en el lote cuando sus dos extremos están aceptados y el contrato actual del importador permite escribirla con seguridad.</p>
+      <p className={styles.lead}>Una relación solo entra en el lote cuando sus dos extremos están aceptados y el contrato permite escribirla. HC-AUTO-02 comprueba además equivalencias históricas para no duplicar una relación ya existente con otro nombre.</p>
       {(analysis.relations || []).length ? <div className={styles.relationList}>{analysis.relations.map((relation, index) => {
         const endpointsReady = relationEndpointsAccepted(relation)
         const enabled = Boolean(relation.stageable && endpointsReady && canEdit && !working && !stagedBatchId)
@@ -187,13 +281,20 @@ export default function IngestionReview({ documentImport, target, canEdit }) {
         <div className={styles.guardrailGrid}>
           <div><strong>{acceptedEntities}</strong><span>entidades aceptadas</span></div>
           <div><strong>{selectedRelations.size}</strong><span>relaciones seleccionadas</span></div>
-          <div><strong>1</strong><span>Fuente normalizada</span></div>
-          <div><strong>0</strong><span>publicaciones automáticas</span></div>
+          <div><strong>{enrichmentSummary.fills}</strong><span>huecos seguros</span></div>
+          <div><strong>{enrichmentSummary.conflicts}</strong><span>conflictos solo revisión</span></div>
         </div>
+        {batchId ? <div className={styles.warningBox}>
+          <strong>Esta Fuente pertenece a una tanda HC-AUTO-02.</strong><br />Guarda aquí la revisión; el preflight se ejecutará una sola vez cuando todas las Fuentes de la tanda estén revisadas.
+        </div> : null}
         <div className={styles.actions}>
-          <button className={styles.primaryButton} type="button" onClick={prepareBatch} disabled={!canEdit || working}>
-            {working ? 'Ejecutando preflight…' : 'Generar lote y ejecutar preflight'}
-          </button>
+          {batchId
+            ? <button className={styles.primaryButton} type="button" onClick={saveReviewForBatch} disabled={!canEdit || working}>
+                {working ? 'Guardando revisión…' : 'Guardar revisión y volver a la tanda'}
+              </button>
+            : <button className={styles.primaryButton} type="button" onClick={prepareBatch} disabled={!canEdit || working}>
+                {working ? 'Ejecutando preflight…' : 'Generar lote y ejecutar preflight'}
+              </button>}
         </div>
       </>}
       {message ? <div className={styles.successBox}>{message}</div> : null}
