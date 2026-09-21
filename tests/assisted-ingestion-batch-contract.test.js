@@ -20,7 +20,7 @@ test('HC-AUTO-01 limita y normaliza tandas antes de analizar', () => {
 
 test('la pertenencia a una tanda queda trazada sin añadir tablas nuevas', () => {
   assert.match(actions, /batch_ids/)
-  assert.match(actions, /analysis_version: 3/)
+  assert.match(actions, /analysis_version: 4/)
   assert.match(batchPage, /contains\('analysis', \{ capture: \{ batch_ids: \[batchId\] \} \}\)/)
 })
 

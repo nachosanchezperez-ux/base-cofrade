@@ -40,7 +40,7 @@ export default async function AssistedIngestionBatchPage({ params }) {
   return <div className={panelStyles.pageWrap}>
     <header className={panelStyles.pageHeader}>
       <div>
-        <span className={panelStyles.eyebrow}>HC-AUTO-01 · Revisión por lote</span>
+        <span className={panelStyles.eyebrow}>HC-AUTO-02 · Revisión por lote</span>
         <h1>{targetResult.data.name}</h1>
         <p>{imports.length} propuesta{imports.length === 1 ? '' : 's'} de Fuente · revisión humana antes del preflight conjunto</p>
       </div>

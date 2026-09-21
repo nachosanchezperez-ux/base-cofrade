@@ -7,6 +7,7 @@ import { createClient } from '@/lib/supabase/server'
 import { sourceUrlVariants } from '@/lib/sources/source-url'
 import {
   attachResolutionSuggestions,
+  buildExistingEntityEnrichmentRecords,
   buildNewEntityRecords,
   extractSourceAnalysis,
   fetchSourceDocument,
@@ -22,6 +23,37 @@ import {
 
 const UUID_PATTERN = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i
 const ITEM_CHUNK_SIZE = 60
+
+const RELATION_TYPE_EQUIVALENTS = Object.freeze({
+  brotherhood_images: {
+    titular: ['titular', 'Titular'],
+  },
+  brotherhood_steps: {
+    processional_step: [
+      'processional_step',
+      'current',
+      'actual',
+      'Paso actual',
+      'Paso procesional',
+      'Procesional',
+      'processional',
+      'Paso titular',
+      'Paso del Señor',
+      'Paso de palio',
+      'Procesiona con',
+    ],
+  },
+  image_steps: {
+    processes_on: [
+      'processes_on',
+      'current_processional_step',
+      'Procesiona en',
+      'procesiona_en',
+      'processional',
+      'processional_image',
+    ],
+  },
+})
 
 function assertUuid(value, label = 'Identificador') {
   const normalized = String(value || '')
@@ -89,7 +121,7 @@ export async function prepareAssistedBatchAction(input) {
   await audit(supabase, user, {
     objectType: 'assisted_ingestion_batch',
     objectId: batchId,
-    summary: `Tanda HC-AUTO-01 iniciada para ${target.name}`,
+    summary: `Tanda HC-AUTO-02 iniciada para ${target.name}`,
     changedFields: { target_entity_id: target.id, source_count: urls.length },
   })
 
@@ -153,14 +185,14 @@ export async function analyseSourceAction(input) {
       fetched_at: source.fetchedAt,
       batch_ids: batchId ? [batchId] : [],
     },
-  })
+  }, { targetEntityId })
 
   const insertResult = await supabase.from('document_imports').insert({
     target_entity_id: targetEntityId,
     source_url: source.url,
     source_title: analysis.source.title || source.title || source.url,
     status: 'review',
-    analysis_version: 3,
+    analysis_version: 4,
     analysis,
     model_name: extracted.model,
     content_sha256: source.contentSha256,
@@ -316,8 +348,12 @@ async function materializeRelation(supabase, analysis, relation, endpointIds, so
     throw new Error(`La relación ${relation.relation_type} todavía no puede entrar en el lote gobernado.`)
   }
 
-  let query = supabase.from(table).select('id').limit(1)
-  for (const [column, value] of Object.entries(filters)) query = query.eq(column, value)
+  let query = supabase.from(table).select('id, relation_type').limit(1)
+  const equivalentTypes = RELATION_TYPE_EQUIVALENTS[table]?.[relation.relation_type] || null
+  for (const [column, value] of Object.entries(filters)) {
+    if (column === 'relation_type' && equivalentTypes?.length) query = query.in(column, equivalentTypes)
+    else query = query.eq(column, value)
+  }
   const existing = (assertResult(await query.maybeSingle(), `No se pudo comprobar ${table}`)) || null
   const records = []
   const relationKey = `${table}:${JSON.stringify(Object.entries(filters).sort(([a], [b]) => a.localeCompare(b)))}`
@@ -431,7 +467,7 @@ export async function saveAssistedReviewAction(importIdInput, reviewInput) {
     actionType: 'update',
     objectType: 'document_import',
     objectId: importId,
-    summary: 'Revisión editorial guardada para una tanda HC-AUTO-01',
+    summary: 'Revisión editorial guardada para una tanda HC-AUTO-02',
     changedFields: {
       accepted_entities: Object.values(normalized.decisions).filter((value) => value !== 'ignore').length,
       selected_relations: normalized.selectedRelations.length,
@@ -440,6 +476,84 @@ export async function saveAssistedReviewAction(importIdInput, reviewInput) {
 
   revalidatePath(`/panel/datos/ingestion/${importId}`)
   return { saved: true }
+}
+
+function selectedExistingCandidate(entity, entityId) {
+  return (entity.resolution?.candidates || []).find((candidate) => candidate.id === entityId) || null
+}
+
+function enrichmentRecordKey(record) {
+  const identity = record.data?.id || record.data?.entity_id
+  return identity ? `${record.table}:${identity}` : null
+}
+
+function mergeEnrichmentRecord(batchContext, record) {
+  if (!batchContext?.enrichmentRecords) return false
+  const key = enrichmentRecordKey(record)
+  if (!key) return false
+  const existing = batchContext.enrichmentRecords.get(key)
+  if (!existing) {
+    batchContext.enrichmentRecords.set(key, record)
+    return true
+  }
+
+  const merged = { ...existing.data }
+  for (const [column, value] of Object.entries(record.data || {})) {
+    if (column === 'id' || column === 'entity_id') continue
+    if (merged[column] == null || merged[column] === '') {
+      merged[column] = value
+      continue
+    }
+    if (normalizeComparableName(merged[column]) !== normalizeComparableName(value)) {
+      throw new Error(`CONFLICTO_DE_ENRIQUECIMIENTO: varias Fuentes proponen valores distintos para ${record.table}.${column}. Revisa las propuestas antes de generar el lote.`)
+    }
+  }
+  existing.data = merged
+  return true
+}
+
+function blankValue(value) {
+  return value == null || (typeof value === 'string' && value.trim() === '')
+}
+
+function equivalentValue(left, right) {
+  if (left == null || right == null) return left == null && right == null
+  return normalizeComparableName(left) === normalizeComparableName(right)
+}
+
+async function refreshSafeEnrichmentRecord(supabase, record) {
+  const keyColumn = record.table === 'entities' ? 'id' : 'entity_id'
+  const keyValue = record.data?.[keyColumn]
+  const columns = Object.keys(record.data || {}).filter((column) => column !== keyColumn)
+  if (!keyValue || !columns.length) return { record: null, fillCount: 0, conflictCount: 0 }
+
+  const result = await supabase
+    .from(record.table)
+    .select([keyColumn, ...columns].join(','))
+    .eq(keyColumn, keyValue)
+    .maybeSingle()
+  const row = assertResult(result, `No se pudo revalidar el enriquecimiento de ${record.table}`)
+
+  if (!row && record.table === 'entities') {
+    throw new Error('ENRICHMENT_STALE: la entidad existente dejó de estar disponible antes del preflight.')
+  }
+
+  const safe = { [keyColumn]: keyValue }
+  let fillCount = 0
+  let conflictCount = 0
+  for (const column of columns) {
+    const proposed = record.data[column]
+    const current = row?.[column]
+    if (blankValue(current)) {
+      safe[column] = proposed
+      fillCount += 1
+    } else if (!equivalentValue(current, proposed)) {
+      conflictCount += 1
+    }
+  }
+
+  if (fillCount === 0) return { record: null, fillCount: 0, conflictCount }
+  return { record: { ...record, data: safe }, fillCount, conflictCount }
 }
 
 async function buildAssistedRecords(supabase, documentImport, reviewInput, options = {}) {
@@ -481,7 +595,7 @@ async function buildAssistedRecords(supabase, documentImport, reviewInput, optio
       publication_date: /^\d{4}-\d{2}-\d{2}$/.test(String(source.publicationDate || '')) ? source.publicationDate : null,
       accessed_at: new Date().toISOString().slice(0, 10),
       notes: options.batchId
-        ? 'Fuente capturada mediante HC-AUTO-01; revisión editorial guardada antes del preflight conjunto.'
+        ? 'Fuente capturada mediante HC-AUTO-02; revisión editorial guardada antes del preflight conjunto.'
         : 'Fuente capturada mediante Ingestión asistida v1; revisión editorial obligatoria antes de Apply.',
     },
   }]
@@ -491,10 +605,13 @@ async function buildAssistedRecords(supabase, documentImport, reviewInput, optio
       entity_id: target.id,
       scope: 'ingestion_target',
       notes: options.batchId
-        ? 'Fuente incluida en una tanda HC-AUTO-01 para revisar y ampliar esta Hermandad.'
+        ? 'Fuente incluida en una tanda HC-AUTO-02 para revisar y ampliar esta Hermandad.'
         : 'Fuente utilizada para revisar y ampliar esta Hermandad mediante Ingestión asistida v1.',
     }))
   }
+
+  let enrichmentFillCount = 0
+  let enrichmentConflictCount = 0
 
   for (const item of accepted) {
     if (item.choice === 'new') {
@@ -503,6 +620,16 @@ async function buildAssistedRecords(supabase, documentImport, reviewInput, optio
         const mergedEntity = options.mergedNewEntitiesById?.[item.id] || item.entity
         records.push(...buildNewEntityRecords(mergedEntity, item.id, target.id))
         createdNewEntityIds?.add(item.id)
+      }
+    } else {
+      const candidate = selectedExistingCandidate(item.entity, item.id)
+      enrichmentConflictCount += candidate?.enrichment?.conflicts?.length || 0
+      for (const enrichmentRecord of buildExistingEntityEnrichmentRecords(item.entity, candidate)) {
+        const refreshed = await refreshSafeEnrichmentRecord(supabase, enrichmentRecord)
+        enrichmentFillCount += refreshed.fillCount
+        enrichmentConflictCount += refreshed.conflictCount
+        if (!refreshed.record) continue
+        if (!mergeEnrichmentRecord(options.batchContext, refreshed.record)) records.push(refreshed.record)
       }
     }
     if (!(await hasSourceLink(supabase, sourceRow?.id, { entity_id: item.id }))) {
@@ -534,6 +661,8 @@ async function buildAssistedRecords(supabase, documentImport, reviewInput, optio
     selectedRelations: normalized.selectedRelations,
     decisions: normalized.decisions,
     source,
+    enrichmentFillCount,
+    enrichmentConflictCount,
   }
 }
 
@@ -655,6 +784,9 @@ export async function stageAssistedImportAction(importIdInput, reviewInput) {
       model_name: documentImport.model_name,
       accepted_entities: built.accepted.length,
       selected_relations: built.selectedRelations.length,
+      enrichment_fills: built.enrichmentFillCount,
+      enrichment_conflicts_review_only: built.enrichmentConflictCount,
+      semantic_reconciliation: true,
       human_review_required: true,
       publication_mode: 'draft',
     },
@@ -689,6 +821,8 @@ export async function stageAssistedImportAction(importIdInput, reviewInput) {
       blocked: Boolean(final.blocked),
       accepted_entities: built.accepted.length,
       selected_relations: built.selectedRelations.length,
+      enrichment_fills: built.enrichmentFillCount,
+      enrichment_conflicts_review_only: built.enrichmentConflictCount,
     },
   })
 
@@ -715,12 +849,12 @@ export async function stageAssistedBatchAction(batchIdInput, importIdsInput) {
   const byId = new Map(rows.map((row) => [row.id, row]))
   const documentImports = importIds.map((id) => byId.get(id))
   const targetIds = new Set(documentImports.map((item) => item.target_entity_id))
-  if (targetIds.size !== 1) throw new Error('Una tanda HC-AUTO-01 solo puede agrupar Fuentes de una misma Hermandad.')
+  if (targetIds.size !== 1) throw new Error('Una tanda HC-AUTO-02 solo puede agrupar Fuentes de una misma Hermandad.')
   const target = await loadTargetBrotherhood(supabase, documentImports[0].target_entity_id)
 
   for (const documentImport of documentImports) {
     const memberships = documentImport.analysis?.capture?.batch_ids || []
-    if (!memberships.includes(batchId)) throw new Error('Una propuesta no pertenece a esta tanda HC-AUTO-01.')
+    if (!memberships.includes(batchId)) throw new Error('Una propuesta no pertenece a esta tanda HC-AUTO-02.')
     if (documentImport.status !== 'review') throw new Error('Todas las propuestas deben seguir disponibles para revisión.')
     if (documentImport.application_summary?.bulk_import_id) {
       throw new Error(`La Fuente «${documentImport.source_title || documentImport.source_url}» ya está vinculada a otro lote gobernado.`)
@@ -732,10 +866,12 @@ export async function stageAssistedBatchAction(batchIdInput, importIdsInput) {
 
   const sharing = planSharedNewEntities(documentImports)
   const createdNewEntityIds = new Set()
-  const batchContext = { relationIds: new Map(), relationSeen: new Set() }
+  const batchContext = { relationIds: new Map(), relationSeen: new Set(), enrichmentRecords: new Map() }
   const records = []
   let acceptedEntities = 0
   let selectedRelations = 0
+  let enrichmentFillCount = 0
+  let enrichmentConflictCount = 0
 
   for (const documentImport of documentImports) {
     const review = documentImport.application_summary.review
@@ -753,10 +889,14 @@ export async function stageAssistedBatchAction(batchIdInput, importIdsInput) {
     records.push(...built.records)
     acceptedEntities += built.accepted.length
     selectedRelations += built.selectedRelations.length
+    enrichmentFillCount += built.enrichmentFillCount
+    enrichmentConflictCount += built.enrichmentConflictCount
   }
 
+  records.push(...batchContext.enrichmentRecords.values())
+
   const bulkBatch = await createBulkImportAction({
-    label: `HC-AUTO-01 · ${target.name} · ${documentImports.length} Fuentes`,
+    label: `HC-AUTO-02 · ${target.name} · ${documentImports.length} Fuentes`,
     sourceName: `${documentImports.length} Fuentes revisadas`,
     sourceFormat: 'json',
     expectedItems: records.length,
@@ -771,6 +911,10 @@ export async function stageAssistedBatchAction(batchIdInput, importIdsInput) {
       selected_relations: selectedRelations,
       unique_new_entities: sharing.uniqueNewEntities,
       reused_new_entities_across_sources: sharing.reusedAcrossSources,
+      enrichment_fills: enrichmentFillCount,
+      enrichment_conflicts_review_only: enrichmentConflictCount,
+      semantic_reconciliation: true,
+      relation_equivalence_guard: true,
       human_review_required: true,
       publication_mode: 'draft',
     },
@@ -800,7 +944,7 @@ export async function stageAssistedBatchAction(batchIdInput, importIdsInput) {
   await audit(supabase, user, {
     objectType: 'assisted_ingestion_batch',
     objectId: batchId,
-    summary: `HC-AUTO-01 convertido en lote gobernado para ${target.name}`,
+    summary: `HC-AUTO-02 convertido en lote gobernado para ${target.name}`,
     changedFields: {
       bulk_import_id: bulkBatch.id,
       source_count: documentImports.length,
@@ -810,6 +954,8 @@ export async function stageAssistedBatchAction(batchIdInput, importIdsInput) {
       selected_relations: selectedRelations,
       unique_new_entities: sharing.uniqueNewEntities,
       reused_across_sources: sharing.reusedAcrossSources,
+      enrichment_fills: enrichmentFillCount,
+      enrichment_conflicts_review_only: enrichmentConflictCount,
     },
   })
 
