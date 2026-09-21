@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { cache } from 'react';
 import { notFound } from 'next/navigation';
 import EntitySectionNav from '@/components/EntitySectionNav';
+import EntityLastUpdated from '@/components/EntityLastUpdated';
 import EntityMediaGallery from '@/components/EntityMediaGallery';
 import ImageHeroV2 from '@/components/ImageHeroV2';
 import ImageRestorationsSection from '@/components/ImageRestorationsSection';
@@ -235,6 +236,7 @@ export default async function ImagenPage({ params }) {
           <div className="image-overview-copy-v2">
             <span className="eyebrow">De un vistazo</span>
             <h2>La imagen</h2>
+            <EntityLastUpdated value={imagen.updatedAt} />
             <p>
               Cada imagen mantiene una ficha propia y puede conectarse con Hermandades,
               autorías, vestidores, pasos y acontecimientos sin depender de esas relaciones para existir.
