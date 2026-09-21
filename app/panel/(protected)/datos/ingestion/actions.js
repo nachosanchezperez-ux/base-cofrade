@@ -530,6 +530,9 @@ async function buildAssistedRecords(supabase, documentImport, reviewInput, optio
     }))
   }
 
+  let enrichmentFillCount = 0
+  let enrichmentConflictCount = 0
+
   for (const item of accepted) {
     if (item.choice === 'new') {
       const alreadyPlanned = createdNewEntityIds?.has(item.id)
@@ -540,6 +543,8 @@ async function buildAssistedRecords(supabase, documentImport, reviewInput, optio
       }
     } else {
       const candidate = selectedExistingCandidate(item.entity, item.id)
+      enrichmentFillCount += candidate?.enrichment?.fills?.length || 0
+      enrichmentConflictCount += candidate?.enrichment?.conflicts?.length || 0
       for (const enrichmentRecord of buildExistingEntityEnrichmentRecords(item.entity, candidate)) {
         if (!mergeEnrichmentRecord(options.batchContext, enrichmentRecord)) records.push(enrichmentRecord)
       }
@@ -573,6 +578,8 @@ async function buildAssistedRecords(supabase, documentImport, reviewInput, optio
     selectedRelations: normalized.selectedRelations,
     decisions: normalized.decisions,
     source,
+    enrichmentFillCount,
+    enrichmentConflictCount,
   }
 }
 
@@ -775,6 +782,8 @@ export async function stageAssistedBatchAction(batchIdInput, importIdsInput) {
   const records = []
   let acceptedEntities = 0
   let selectedRelations = 0
+  let enrichmentFillCount = 0
+  let enrichmentConflictCount = 0
 
   for (const documentImport of documentImports) {
     const review = documentImport.application_summary.review
@@ -792,6 +801,8 @@ export async function stageAssistedBatchAction(batchIdInput, importIdsInput) {
     records.push(...built.records)
     acceptedEntities += built.accepted.length
     selectedRelations += built.selectedRelations.length
+    enrichmentFillCount += built.enrichmentFillCount
+    enrichmentConflictCount += built.enrichmentConflictCount
   }
 
   records.push(...batchContext.enrichmentRecords.values())
