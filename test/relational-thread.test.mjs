@@ -57,7 +57,7 @@ test('Paso prioriza imágenes antes que Hermandad y Banda', () => {
   );
 });
 
-test('Banda prioriza pasos antes que Hermandades', () => {
+test('Banda prioriza Hermandades y pasos cuando son las únicas relaciones', () => {
   const result = prepareRelationalItems([
     item('Hermandad', 'hermandad-1'),
     item('Paso', 'paso-1'),
@@ -67,8 +67,26 @@ test('Banda prioriza pasos antes que Hermandades', () => {
 
   assert.deepEqual(
     result.visibleItems.map((entry) => entry.kind),
-    ['Paso', 'Paso', 'Hermandad', 'Hermandad']
+    ['Hermandad', 'Hermandad', 'Paso', 'Paso']
   );
+});
+
+test('Banda reparte la portada entre Hermandades, pasos, crucetas y Marchas', () => {
+  const items = [
+    ...Array.from({ length: 4 }, (_, index) => item('Hermandad', `hermandad-${index + 1}`)),
+    ...Array.from({ length: 4 }, (_, index) => item('Paso', `paso-${index + 1}`)),
+    ...Array.from({ length: 4 }, (_, index) => item('Cruceta', `cruceta-${index + 1}`)),
+    ...Array.from({ length: 4 }, (_, index) => item('Marcha', `marcha-${index + 1}`)),
+  ];
+
+  const result = prepareRelationalItems(items, { profile: 'banda', maxItems: 8 });
+  const kinds = result.visibleItems.map((entry) => entry.kind);
+
+  assert.equal(result.visibleItems.length, 8);
+  assert.equal(kinds.filter((kind) => kind === 'Hermandad').length, 2);
+  assert.equal(kinds.filter((kind) => kind === 'Paso').length, 2);
+  assert.equal(kinds.filter((kind) => kind === 'Cruceta').length, 2);
+  assert.equal(kinds.filter((kind) => kind === 'Marcha').length, 2);
 });
 
 test('la misma ficha destino no se repite y gana la relación más prioritaria', () => {
