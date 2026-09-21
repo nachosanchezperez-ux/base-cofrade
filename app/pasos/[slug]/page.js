@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { cache } from 'react';
 import { notFound } from 'next/navigation';
 import EntitySectionNav from '@/components/EntitySectionNav';
+import EntityLastUpdated from '@/components/EntityLastUpdated';
 import JsonLd from '@/components/JsonLd';
 import RelationalEntityHero from '@/components/RelationalEntityHero';
 import RelationalThread from '@/components/RelationalThread';
@@ -210,6 +211,7 @@ export default async function PasoDetailPage({params}){
       <section className="section" id="resumen"><div className="shell content-grid">
         <div>
           <SectionTitle eyebrow="Configuración actual" title="Datos del paso" />
+          <EntityLastUpdated value={paso.updatedAt} />
           {publicText(paso.descripcion) ? <p className="body-large">{publicText(paso.descripcion)}</p> : null}
           <div className="step-facts">
             {hermandad ? <div>

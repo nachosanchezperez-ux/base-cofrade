@@ -1,0 +1,85 @@
+.meta {
+  display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
+  align-items: center;
+  gap: 9px;
+  margin-top: 11px;
+  color: #526579;
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.icon {
+  display: grid;
+  width: 26px;
+  height: 26px;
+  flex: 0 0 26px;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--brotherhood-primary, var(--band-primary, #153b69)) 18%, #dbe3ea);
+  border-radius: 50%;
+  color: var(--brotherhood-primary, var(--band-primary, #153b69));
+  background: color-mix(in srgb, var(--brotherhood-primary, var(--band-primary, #153b69)) 5%, #fff);
+}
+
+.icon svg {
+  width: 13px;
+  height: 13px;
+  stroke: currentColor;
+  stroke-width: 1.65;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.copy {
+  display: flex;
+  min-width: 0;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 7px;
+}
+
+.label {
+  color: #8795a3;
+  font-size: 8px;
+  font-weight: 850;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+}
+
+.copy time {
+  color: #526579;
+  font-size: 11px;
+  font-weight: 730;
+}
+
+.bar {
+  border-bottom: 1px solid #e7ebef;
+  background: #fff;
+}
+
+.bar .meta {
+  margin: 0;
+  padding: 10px 0;
+}
+
+@media (max-width: 620px) {
+  .meta {
+    gap: 8px;
+    margin-top: 9px;
+  }
+
+  .icon {
+    width: 24px;
+    height: 24px;
+    flex-basis: 24px;
+  }
+
+  .label {
+    font-size: 7px;
+  }
+
+  .copy time {
+    font-size: 10px;
+  }
+}

@@ -8,6 +8,7 @@ import OfficialLinks from '@/components/OfficialLinks'
 import RelationalThread from '@/components/RelationalThread'
 import RelationalEntityHero from '@/components/RelationalEntityHero'
 import EntitySectionNav from '@/components/EntitySectionNav'
+import EntityLastUpdated from '@/components/EntityLastUpdated'
 import BandDiscographySection from '@/components/bands/BandDiscographySection'
 import BandFeaturePhoto from '@/components/BandFeaturePhoto'
 import MusicalRepertoiresSection from '@/components/MusicalRepertoiresSection'
@@ -350,6 +351,7 @@ export default async function BandDetailPage({ params }) {
             <div className={styles.overviewCopy}>
               <div className={styles.sectionHeading}>
                 <h2>{band.popularName}, de un vistazo</h2>
+                <EntityLastUpdated value={band.updatedAt} />
               </div>
               <div className={styles.roleGrid}>
                 {publicText(band.type) ? <article>
