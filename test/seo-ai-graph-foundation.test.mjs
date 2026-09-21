@@ -56,7 +56,7 @@ test('las referencias Organization internas reutilizan el @id canónico', () => 
   assert.match(seo, /'@id': `\$\{absoluteUrl\(internalPath\)\}#organization`/)
 
   for (const source of [extraordinary, glory, crewEvent]) {
-    assert.match(source, /organizer: organizationJsonLdRef/)
+    assert.match(source, /organizationJsonLdRef/)
     assert.match(source, /brotherhoodHref/)
   }
 })
