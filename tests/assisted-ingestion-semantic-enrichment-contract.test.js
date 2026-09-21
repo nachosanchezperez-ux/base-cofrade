@@ -101,3 +101,9 @@ test('la tanda bloquea posibles duplicados semánticos entre propuestas nuevas',
   assert.match(actions, /shortNamePotentialScore/)
   assert.match(actions, /POSIBLE_DUPLICADO_DE_LOTE/)
 })
+
+test('el patrimonio conserva datación textual sin DDL', () => {
+  assert.match(engine, /heritage_asset:[\s\S]*date_from_text/)
+  assert.match(engine, /heritage_asset:[\s\S]*date_to_text/)
+  assert.match(engine, /asset_type, date_from_text, date_to_text, technique/)
+})
