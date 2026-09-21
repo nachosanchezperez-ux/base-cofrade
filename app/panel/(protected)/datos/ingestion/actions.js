@@ -24,6 +24,16 @@ import {
 const UUID_PATTERN = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i
 const ITEM_CHUNK_SIZE = 60
 
+const RELATION_TYPE_EQUIVALENTS = Object.freeze({
+  brotherhood_images: { titular: ['titular', 'Titular'] },
+  brotherhood_steps: {
+    processional_step: ['processional_step', 'current', 'actual', 'Paso actual', 'Paso procesional', 'Procesional', 'processional', 'Paso titular', 'Paso del Señor', 'Paso de palio', 'Procesiona con'],
+  },
+  image_steps: {
+    processes_on: ['processes_on', 'current_processional_step', 'Procesiona en', 'procesiona_en', 'processional', 'processional_image'],
+  },
+})
+
 function assertUuid(value, label = 'Identificador') {
   const normalized = String(value || '')
   if (!UUID_PATTERN.test(normalized)) throw new Error(`${label} no válido.`)
@@ -154,14 +164,14 @@ export async function analyseSourceAction(input) {
       fetched_at: source.fetchedAt,
       batch_ids: batchId ? [batchId] : [],
     },
-  })
+  }, { targetEntityId })
 
   const insertResult = await supabase.from('document_imports').insert({
     target_entity_id: targetEntityId,
     source_url: source.url,
     source_title: analysis.source.title || source.title || source.url,
     status: 'review',
-    analysis_version: 3,
+    analysis_version: 4,
     analysis,
     model_name: extracted.model,
     content_sha256: source.contentSha256,
@@ -317,8 +327,12 @@ async function materializeRelation(supabase, analysis, relation, endpointIds, so
     throw new Error(`La relación ${relation.relation_type} todavía no puede entrar en el lote gobernado.`)
   }
 
-  let query = supabase.from(table).select('id').limit(1)
-  for (const [column, value] of Object.entries(filters)) query = query.eq(column, value)
+  let query = supabase.from(table).select('id, relation_type').limit(1)
+  const equivalentTypes = RELATION_TYPE_EQUIVALENTS[table]?.[relation.relation_type] || null
+  for (const [column, value] of Object.entries(filters)) {
+    if (column === 'relation_type' && equivalentTypes?.length) query = query.in(column, equivalentTypes)
+    else query = query.eq(column, value)
+  }
   const existing = (assertResult(await query.maybeSingle(), `No se pudo comprobar ${table}`)) || null
   const records = []
   const relationKey = `${table}:${JSON.stringify(Object.entries(filters).sort(([a], [b]) => a.localeCompare(b)))}`
