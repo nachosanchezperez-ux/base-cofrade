@@ -2,6 +2,8 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import JsonLd from '@/components/JsonLd'
 import EntityLastUpdated from '@/components/EntityLastUpdated'
+import EntitySectionNav from '@/components/EntitySectionNav'
+import RelationalThread from '@/components/RelationalThread'
 import { getPublicMarchBySlug } from '@/lib/supabase/public-marches'
 import { absoluteUrl, breadcrumbJsonLd, compactSeoTitle, socialMetadata } from '@/lib/seo'
 import styles from './marcha.module.css'
@@ -55,8 +57,65 @@ export default async function MarchDetailPage({ params }) {
   const march = await getPublicMarchBySlug(slug)
   if (!march) notFound()
 
+  const relatedBands = [
+    ...(march.premiereBand?.href ? [{ ...march.premiereBand, relation: 'Estrenada por' }] : []),
+    ...march.listenings.filter((item) => item.band?.href).map((item) => ({ ...item.band, relation: 'Grabación' })),
+    ...march.repertoireHistory.filter((item) => item.band?.href).map((item) => ({ ...item.band, relation: 'Interpretación documentada' })),
+    ...march.discographyHistory.filter((item) => item.band?.href).map((item) => ({ ...item.band, relation: 'Discografía' })),
+  ]
+  const marchThreadItems = [
+    ...march.authors
+      .filter((author) => author.href)
+      .map((author) => ({
+        kind: 'Compositor',
+        relation: AUTHOR_LABELS[author.role] || 'Autoría',
+        title: author.name,
+        href: author.href,
+        context: 'Ver otras Marchas documentadas',
+      })),
+    ...march.dedications
+      .filter((dedication) => dedication.href)
+      .map((dedication) => ({
+        kind: 'Dedicatoria',
+        relation: 'Dedicada a',
+        title: dedication.name,
+        href: dedication.href,
+        context: [dedication.date, dedication.text !== dedication.name ? dedication.text : ''].filter(Boolean).join(' · '),
+      })),
+    ...relatedBands.map((band) => ({
+      kind: 'Banda',
+      relation: band.relation,
+      title: band.name,
+      href: band.href,
+      context: 'Formación vinculada a esta obra',
+    })),
+    ...march.repertoireHistory.map((item) => ({
+      kind: 'Cruceta',
+      relation: 'Interpretada en',
+      title: item.outingTitle || item.repertoireTitle,
+      href: item.repertoireHref,
+      context: [item.brotherhood?.name, item.band?.name, item.year].filter(Boolean).join(' · '),
+    })),
+    ...march.discographyHistory
+      .filter((item) => item.bandDiscographyHref)
+      .map((item) => ({
+        kind: 'Discografía',
+        relation: 'Incluida en',
+        title: item.title,
+        href: item.bandDiscographyHref,
+        context: [item.band?.name, item.year].filter(Boolean).join(' · '),
+      })),
+  ]
+
   return (
-    <div className={styles.page}>
+    <div
+      className={styles.page}
+      style={{
+        '--brotherhood-primary': '#102943',
+        '--brotherhood-secondary': '#c99f49',
+        '--brotherhood-dark': '#08131f',
+      }}
+    >
       <JsonLd data={breadcrumbJsonLd([
         { name: 'Inicio', path: '/' },
         { name: 'Marchas', path: '/marchas' },
@@ -83,15 +142,24 @@ export default async function MarchDetailPage({ params }) {
           </div>
           <div className={styles.metrics}>
             <div><strong>{march.documentedPerformances}</strong><span>{metricLabel(march.documentedPerformances, 'interpretación documentada', 'interpretaciones documentadas')}</span></div>
-            <div><strong>{march.repertoireHistory.length}</strong><span>{metricLabel(march.repertoireHistory.length, 'procesión relacionada', 'procesiones relacionadas')}</span></div>
+            <div><strong>{march.repertoireHistory.length}</strong><span>{metricLabel(march.repertoireHistory.length, 'cruceta relacionada', 'crucetas relacionadas')}</span></div>
             <div><strong>{march.listenings.length}</strong><span>{metricLabel(march.listenings.length, 'escucha disponible', 'escuchas disponibles')}</span></div>
+            <div><strong>{march.discographyHistory.length}</strong><span>{metricLabel(march.discographyHistory.length, 'aparición discográfica', 'apariciones discográficas')}</span></div>
           </div>
         </div>
       </header>
 
       <EntityLastUpdated value={march.updatedAt} variant="bar" />
 
-      <section className={styles.identitySection}>
+      <EntitySectionNav items={[
+        { href: '#resumen', label: 'Ficha musical' },
+        marchThreadItems.length > 0 && { href: '#tira-del-hilo', label: 'Conexiones' },
+        march.listenings.length > 0 && { href: '#escuchar', label: 'Escuchar' },
+        march.repertoireHistory.length > 0 && { href: '#crucetas', label: 'Crucetas' },
+        march.discographyHistory.length > 0 && { href: '#discografia', label: 'Discografía' },
+      ]} />
+
+      <section className={styles.identitySection} id="resumen">
         <div className={`shell ${styles.identityGrid}`}>
           <article>
             <span>Ficha musical</span>
@@ -105,7 +173,7 @@ export default async function MarchDetailPage({ params }) {
           <article>
             <span>Autoría</span>
             {march.authors.length ? (
-              <ul>{march.authors.map((author) => <li key={`${author.id}-${author.role}`}><small>{AUTHOR_LABELS[author.role] || 'Autoría'}</small><strong>{author.name}</strong></li>)}</ul>
+              <ul>{march.authors.map((author) => <li key={`${author.id}-${author.role}`}><small>{AUTHOR_LABELS[author.role] || 'Autoría'}</small><strong>{author.href ? <Link href={author.href}>{author.name}</Link> : author.name}</strong></li>)}</ul>
             ) : <p>Autoría todavía no documentada.</p>}
           </article>
           <article>
@@ -117,8 +185,19 @@ export default async function MarchDetailPage({ params }) {
         </div>
       </section>
 
+      <RelationalThread
+        currentLabel="Marcha"
+        currentName={march.name}
+        currentMeta={[march.compositionYear, march.musicType].filter(Boolean).join(' · ')}
+        items={marchThreadItems}
+        priorityProfile="marcha"
+        eyebrow="Descubre el hilo"
+        title="Conexiones de esta Marcha"
+        description="Continúa por su compositor, dedicatorias, bandas, crucetas y presencia discográfica. Cada vínculo parte de datos ya documentados en Hilo Cofrade."
+      />
+
       {march.listenings.length ? (
-        <section className={styles.listenSection}>
+        <section className={styles.listenSection} id="escuchar">
           <div className="shell">
             <header className={styles.sectionHeading}><span>Archivo sonoro</span><h2>Escuchar la marcha</h2><p>Grabaciones y pistas enlazadas con esta obra.</p></header>
             <div className={styles.listenGrid}>
@@ -135,7 +214,7 @@ export default async function MarchDetailPage({ params }) {
       ) : null}
 
       {march.repertoireHistory.length ? (
-        <section className={styles.historySection}>
+        <section className={styles.historySection} id="crucetas">
           <div className="shell">
             <header className={styles.sectionHeading}><span>Marcha → procesión → banda</span><h2>Interpretada en</h2><p>Presencia documentada en las crucetas musicales publicadas.</p></header>
             <div className={styles.historyList}>
@@ -145,9 +224,32 @@ export default async function MarchDetailPage({ params }) {
                   <div className={styles.historyCopy}>
                     <h3><Link href={item.repertoireHref}>{item.outingTitle} <span aria-hidden="true">→</span></Link></h3>
                     <p>{item.brotherhood?.href ? <Link href={item.brotherhood.href}>{item.brotherhood.name}</Link> : item.brotherhood?.name}</p>
-                    <small>{item.band?.href ? <Link href={item.band.href}>{item.band.name}</Link> : item.band?.name}</small>
+                    <small>
+                      {item.band?.href ? <Link href={item.band.href}>{item.band.name}</Link> : item.band?.name}
+                      {item.step?.name ? <> · {item.step.href ? <Link href={item.step.href}>{item.step.name}</Link> : item.step.name}</> : null}
+                    </small>
                   </div>
                   <strong className={styles.playCount}>{countLabel(item.count)}</strong>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      {march.discographyHistory.length ? (
+        <section className={styles.discographySection} id="discografia">
+          <div className="shell">
+            <header className={styles.sectionHeading}><span>Marcha → disco → banda</span><h2>En la discografía</h2><p>Trabajos publicados donde esta obra figura como pista documentada.</p></header>
+            <div className={styles.discographyList}>
+              {march.discographyHistory.map((item) => (
+                <article key={item.id}>
+                  <div className={styles.discographyYear}><strong>{item.year || '—'}</strong><span>Edición</span></div>
+                  <div>
+                    <h3>{item.bandDiscographyHref ? <Link href={item.bandDiscographyHref}>{item.title} <span aria-hidden="true">→</span></Link> : item.title}</h3>
+                    {item.band?.name ? <p>{item.band.href ? <Link href={item.band.href}>{item.band.name}</Link> : item.band.name}</p> : null}
+                  </div>
+                  {item.spotifyUrl ? <a className={styles.spotifyLink} href={item.spotifyUrl} target="_blank" rel="noopener noreferrer">Spotify ↗</a> : null}
                 </article>
               ))}
             </div>
