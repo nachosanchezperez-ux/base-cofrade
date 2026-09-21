@@ -11,6 +11,7 @@ import {
   breadcrumbJsonLd,
   compactSeoTitle,
   pageTitle,
+  organizationJsonLdRef,
   schemaEventStatus,
   seoDescription,
   socialMetadata,
@@ -232,11 +233,10 @@ export default async function ExtraordinaryDetailPage({ params }) {
     ...(schemaEventStatus(item) ? { eventStatus: schemaEventStatus(item) } : {}),
     ...(item.heroImagePath ? { image: [absoluteUrl(item.heroImagePath)] } : {}),
     ...(item.brotherhoodName ? {
-      organizer: {
-        '@type': 'Organization',
-        name: item.brotherhoodName,
-        ...(item.brotherhoodHref ? { url: absoluteUrl(item.brotherhoodHref) } : {}),
-      },
+      organizer: organizationJsonLdRef({
+      name: item.brotherhoodName,
+      path: item.brotherhoodHref ? item.brotherhoodHref : '',
+    }),
     } : {}),
     mainEntityOfPage: { '@id': `${canonicalUrl}#webpage` },
     location: {
