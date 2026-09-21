@@ -1,58 +1,65 @@
 import { notFound } from 'next/navigation'
 import DirectoryRoutePage from '@/components/DirectoryRoutePage'
 import {
-  directoryPeriod,
-  directorySlug,
-  hasDirectoryType,
   labelFromSlug,
-  localitySlug,
 } from '@/lib/brotherhood-directory'
+import { brotherhoodsForDirectoryRoute } from '@/lib/brotherhood-public-index'
 import { socialMetadata } from '@/lib/seo'
-import { getHermandadesDirectory } from '@/lib/supabase/brotherhood-directory'
+import { getIndexableBrotherhoodDirectory } from '@/lib/supabase/indexable-brotherhood-directory'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 900
 
-export async function generateMetadata({ params }) {
-  const { localidad, jornada } = await params
+async function pageData(localidad, jornada) {
+  const path = `/hermandades/semana-santa/${localidad}/${jornada}`
+  const items = brotherhoodsForDirectoryRoute(
+    await getIndexableBrotherhoodDirectory(),
+    'semana-santa',
+    path
+  )
   const localityName = labelFromSlug(localidad)
   const dayName = labelFromSlug(jornada)
   const title = `${dayName} en ${localityName}`
   const description = `Hermandades del ${dayName} en ${localityName}, con acceso a sus titulares, pasos, patrimonio, cultos y salidas.`
-  const path = `/hermandades/semana-santa/${localidad}/${jornada}`
+
+  return { items, localityName, dayName, path, title, description }
+}
+
+export async function generateMetadata({ params }) {
+  const { localidad, jornada } = await params
+  const data = await pageData(localidad, jornada)
+
+  if (!data.items.length) {
+    return {
+      title: 'Jornada de Semana Santa no encontrada',
+      robots: { index: false, follow: false },
+    }
+  }
 
   return {
-    title,
-    description,
-    ...socialMetadata({ title, description, path }),
+    title: data.title,
+    description: data.description,
+    ...socialMetadata({ title: data.title, description: data.description, path: data.path }),
   }
 }
 
 export default async function HolyWeekLocalityDayPage({ params }) {
   const { localidad, jornada } = await params
-  const hermandades = await getHermandadesDirectory()
-  const items = hermandades.filter((item) => (
-    hasDirectoryType(item, 'semana-santa')
-    && localitySlug(item) === localidad
-    && directorySlug(directoryPeriod(item, 'semana-santa')) === jornada
-  ))
+  const data = await pageData(localidad, jornada)
 
-  if (!items.length) notFound()
+  if (!data.items.length) notFound()
 
-  const localityName = labelFromSlug(localidad)
-  const dayName = labelFromSlug(jornada)
-  const path = `/hermandades/semana-santa/${localidad}/${jornada}`
   return (
     <DirectoryRoutePage
       eyebrow="Hermandades de Semana Santa"
-      title={`${dayName} en ${localityName}`}
-      description={`Hermandades que realizan su salida procesional el ${dayName} en ${localityName}.`}
-      hermandades={items}
-      path={path}
-      contextLabel={dayName}
+      title={data.title}
+      description={`Hermandades que realizan su salida procesional el ${data.dayName} en ${data.localityName}.`}
+      hermandades={data.items}
+      path={data.path}
+      contextLabel={data.dayName}
       breadcrumbs={[
         { label: 'Semana Santa', href: '/hermandades/semana-santa' },
-        { label: localityName },
-        { label: dayName },
+        { label: data.localityName },
+        { label: data.dayName },
       ]}
     />
   )

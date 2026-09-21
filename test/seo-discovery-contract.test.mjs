@@ -43,7 +43,7 @@ test('el sitemap descubre superficies públicas y rutas nacidas de datos', () =>
   assert.match(sitemap, /getExtraordinaryDirectory/)
   assert.match(sitemap, /getGloryDirectory/)
   assert.match(sitemap, /getCrewEventDirectory/)
-  assert.match(sitemap, /directoryPath/)
+  assert.match(sitemap, /brotherhoodDirectoryRoutes/)
   assert.match(sitemap, /\/extraordinarias\/\$\{outing\.slug\}/)
   assert.match(sitemap, /new Map\(entries\.map/)
 })
@@ -95,11 +95,8 @@ test('las Fuentes relacionales del sitemap heredan lotes y reintentos', () => {
 })
 
 test('el sitemap solo publica rutas segmentadas de la clasificación real', () => {
-  assert.match(sitemap, /hasDirectoryType/)
-  assert.match(
-    sitemap,
-    /\.filter\(\(brotherhood\) => hasDirectoryType\(brotherhood, key\)\)/
-  )
+  assert.match(sitemap, /brotherhoodDirectoryRoutes\(brotherhoods\)/)
+  assert.match(sitemap, /directoryEntries\(indexableBrotherhoods\)/)
 })
 
 test('los directorios principales declaran canonical y metadatos sociales', () => {
@@ -113,7 +110,7 @@ test('los directorios principales declaran canonical y metadatos sociales', () =
 test('las rutas segmentadas declaran canonical y datos estructurados', () => {
   for (const page of nestedDirectoryPages) {
     assert.match(page, /socialMetadata/)
-    assert.match(page, /path=\{path\}/)
+    assert.match(page, /path=\{data\.path\}/)
   }
 
   for (const component of [categoryDirectory, routeDirectory]) {

@@ -1,58 +1,65 @@
 import { notFound } from 'next/navigation'
 import DirectoryRoutePage from '@/components/DirectoryRoutePage'
 import {
-  directorySlug,
-  gloryMonth,
-  hasDirectoryType,
   labelFromSlug,
-  localitySlug,
 } from '@/lib/brotherhood-directory'
+import { brotherhoodsForDirectoryRoute } from '@/lib/brotherhood-public-index'
 import { socialMetadata } from '@/lib/seo'
-import { getHermandadesDirectory } from '@/lib/supabase/brotherhood-directory'
+import { getIndexableBrotherhoodDirectory } from '@/lib/supabase/indexable-brotherhood-directory'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 900
 
-export async function generateMetadata({ params }) {
-  const { localidad, mes } = await params
+async function pageData(localidad, mes) {
+  const path = `/hermandades/gloria/${localidad}/${mes}`
+  const items = brotherhoodsForDirectoryRoute(
+    await getIndexableBrotherhoodDirectory(),
+    'gloria',
+    path
+  )
   const localityName = labelFromSlug(localidad)
   const monthName = labelFromSlug(mes)
   const title = `Hermandades de Gloria de ${monthName} en ${localityName}`
   const description = `Hermandades de Gloria vinculadas al mes de ${monthName} en ${localityName}.`
-  const path = `/hermandades/gloria/${localidad}/${mes}`
+
+  return { items, localityName, monthName, path, title, description }
+}
+
+export async function generateMetadata({ params }) {
+  const { localidad, mes } = await params
+  const data = await pageData(localidad, mes)
+
+  if (!data.items.length) {
+    return {
+      title: 'Directorio de Gloria no encontrado',
+      robots: { index: false, follow: false },
+    }
+  }
 
   return {
-    title,
-    description,
-    ...socialMetadata({ title, description, path }),
+    title: data.title,
+    description: data.description,
+    ...socialMetadata({ title: data.title, description: data.description, path: data.path }),
   }
 }
 
 export default async function GloryLocalityMonthPage({ params }) {
   const { localidad, mes } = await params
-  const hermandades = await getHermandadesDirectory()
-  const items = hermandades.filter((item) => (
-    hasDirectoryType(item, 'gloria')
-    && localitySlug(item) === localidad
-    && directorySlug(gloryMonth(item)) === mes
-  ))
+  const data = await pageData(localidad, mes)
 
-  if (!items.length) notFound()
+  if (!data.items.length) notFound()
 
-  const localityName = labelFromSlug(localidad)
-  const monthName = labelFromSlug(mes)
-  const path = `/hermandades/gloria/${localidad}/${mes}`
   return (
     <DirectoryRoutePage
       eyebrow="Hermandades de Gloria"
-      title={`${monthName} en ${localityName}`}
-      description={`Hermandades cuya celebración o salida principal se sitúa en el mes de ${monthName}.`}
-      hermandades={items}
-      path={path}
-      contextLabel={monthName}
+      title={`${data.monthName} en ${data.localityName}`}
+      description={`Hermandades cuya celebración o salida principal se sitúa en el mes de ${data.monthName}.`}
+      hermandades={data.items}
+      path={data.path}
+      contextLabel={data.monthName}
       breadcrumbs={[
         { label: 'Glorias', href: '/hermandades/gloria' },
-        { label: localityName },
-        { label: monthName },
+        { label: data.localityName },
+        { label: data.monthName },
       ]}
     />
   )

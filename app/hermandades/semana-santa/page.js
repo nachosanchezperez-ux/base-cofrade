@@ -1,8 +1,8 @@
 import HermandadesCategoryDirectory from '@/components/HermandadesCategoryDirectory'
 import { socialMetadata } from '@/lib/seo'
-import { getHermandadesDirectory } from '@/lib/supabase/brotherhood-directory'
+import { getIndexableBrotherhoodDirectory } from '@/lib/supabase/indexable-brotherhood-directory'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 900
 
 const title = 'Hermandades de Semana Santa'
 const description = 'Hermandades de Semana Santa de Sevilla capital y provincia organizadas por localidad y jornada de salida.'
@@ -15,6 +15,6 @@ export const metadata = {
 }
 
 export default async function SemanaSantaDirectoryPage() {
-  const hermandades = await getHermandadesDirectory()
+  const hermandades = await getIndexableBrotherhoodDirectory()
   return <HermandadesCategoryDirectory hermandades={hermandades} typeKey="semana-santa" />
 }

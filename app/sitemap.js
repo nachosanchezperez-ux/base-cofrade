@@ -1,10 +1,6 @@
 import {
-  DIRECTORY_TYPES,
-  directoryPath,
-  hasDirectoryType,
-} from '@/lib/brotherhood-directory';
-import {
   brotherhoodDirectoryLocalities,
+  brotherhoodDirectoryRoutes,
   filterIndexableBrotherhoods,
 } from '@/lib/brotherhood-public-index';
 import { unstable_cache } from 'next/cache';
@@ -155,14 +151,8 @@ function entityEntries(items) {
 }
 
 function directoryEntries(brotherhoods) {
-  const paths = DIRECTORY_TYPES.flatMap(({ key }) => (
-    brotherhoods
-      .filter((brotherhood) => hasDirectoryType(brotherhood, key))
-      .map((brotherhood) => directoryPath(brotherhood, key))
-  )).filter(Boolean);
-
-  return [...new Set(paths)].map((path) => ({
-    url: absoluteUrl(path),
+  return brotherhoodDirectoryRoutes(brotherhoods).map((route) => ({
+    url: absoluteUrl(route.href),
     changeFrequency: 'weekly',
     priority: 0.72,
   }));
@@ -295,7 +285,7 @@ async function buildPublicSitemapEntries() {
   const entries = [
     ...staticEntries,
     ...entityEntries(indexableEntities),
-    ...directoryEntries(brotherhoodDirectory),
+    ...directoryEntries(indexableBrotherhoods),
     ...brotherhoodLocalityEntries(indexableBrotherhoods),
     ...bandDirectoryEntries(bandDirectory),
     ...heritageDirectoryEntries(imageDirectory, stepDirectory),
