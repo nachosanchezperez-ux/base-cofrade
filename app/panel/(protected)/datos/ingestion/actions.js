@@ -236,6 +236,8 @@ function assertRelationShape(analysis, relation) {
     processes_on: ['image', 'step'],
     belongs_to_brotherhood: ['band', 'brotherhood'],
     authored_by: ['march', 'agent'],
+    image_authored_by: ['image', 'agent'],
+    image_attributed_to: ['image', 'agent'],
     dedicated_to: ['march', '*'],
   }[relation.relation_type]
   if (!expected) throw new Error(`Relación ${relation.relation_type} no soportada.`)
@@ -304,11 +306,96 @@ function makeSourceLink(url, data) {
   }
 }
 
+async function materializeImageAuthorship(supabase, relation, sourceEntityId, targetEntityId, source, sourceId, batchContext = null) {
+  const proposedType = relation.relation_type === 'image_authored_by' ? 'author' : 'attributed_to'
+  const proposedCertainty = proposedType === 'author' ? 'documented' : 'attributed'
+  const evidence = cleanText(relation.evidence || relation.notes, 700) || null
+  const notes = cleanText(relation.notes, 700) || evidence
+
+  const existingRows = assertResult(
+    await supabase
+      .from('image_authorships')
+      .select('id, authorship_type, role_name, certainty')
+      .eq('image_entity_id', sourceEntityId)
+      .eq('agent_entity_id', targetEntityId)
+      .in('authorship_type', ['author', 'attributed_to'])
+      .limit(4),
+    'No se pudo comprobar la autoría existente de la Imagen',
+  ) || []
+
+  const documented = existingRows.find((row) => row.authorship_type === 'author')
+  const attributed = existingRows.find((row) => row.authorship_type === 'attributed_to')
+  let existing = null
+
+  if (proposedType === 'attributed_to') {
+    existing = documented || attributed || null
+  } else if (documented) {
+    existing = documented
+  } else if (attributed) {
+    throw new Error('AUTHORSHIP_CONFLICT: la Fuente propone autoría documentada para una relación que actualmente consta como atribución. Requiere revisión editorial.')
+  }
+
+  if (existing) {
+    if (!(await hasSourceLink(supabase, sourceId, { image_authorship_id: existing.id }))) {
+      return [makeSourceLink(source.url, {
+        image_authorship_id: existing.id,
+        scope: 'relation',
+        notes: evidence,
+      })]
+    }
+    return []
+  }
+
+  const key = `image_authorships:${sourceEntityId}:${targetEntityId}:${proposedType}`
+  let id = batchContext?.relationIds?.get(key) || null
+  const alreadyPlanned = Boolean(id)
+  if (!id) {
+    id = randomUUID()
+    batchContext?.relationIds?.set(key, id)
+  }
+
+  const records = []
+  if (!alreadyPlanned) {
+    records.push({
+      table: 'image_authorships',
+      operation: 'insert',
+      data: {
+        id,
+        image_entity_id: sourceEntityId,
+        agent_entity_id: targetEntityId,
+        authorship_type: proposedType,
+        role_name: 'autor',
+        certainty: proposedCertainty,
+        notes,
+        status: 'draft',
+      },
+    })
+  }
+  records.push(makeSourceLink(source.url, {
+    image_authorship_id: id,
+    scope: 'relation',
+    notes: evidence,
+  }))
+  return records
+}
+
 async function materializeRelation(supabase, analysis, relation, endpointIds, source, sourceId, batchContext = null) {
   assertRelationShape(analysis, relation)
   const sourceEntityId = relation.source_ref === '$target' ? endpointIds.$target : endpointIds[relation.source_ref]
   const targetEntityId = relation.target_ref === '$target' ? endpointIds.$target : endpointIds[relation.target_ref]
   if (!sourceEntityId || !targetEntityId) return []
+
+  if (relation.relation_type === 'image_authored_by' || relation.relation_type === 'image_attributed_to') {
+    return materializeImageAuthorship(
+      supabase,
+      relation,
+      sourceEntityId,
+      targetEntityId,
+      source,
+      sourceId,
+      batchContext,
+    )
+  }
 
   const evidence = cleanText(relation.evidence || relation.notes, 700) || null
   const notes = cleanText(relation.notes, 700) || null
