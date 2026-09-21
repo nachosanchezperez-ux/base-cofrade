@@ -1,8 +1,15 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
+import { isMissingPublicSupabaseConfig } from '../lib/supabase/public-error.js'
 
 const read = (path) => readFile(new URL(`../${path}`, import.meta.url), 'utf8')
+
+test('solo la ausencia de configuración pública activa el fallback de build', () => {
+  assert.equal(isMissingPublicSupabaseConfig(new Error('Falta la configuración pública de Supabase')), true)
+  assert.equal(isMissingPublicSupabaseConfig(new Error('Faltan las variables públicas de Supabase para el cliente de lectura.')), true)
+  assert.equal(isMissingPublicSupabaseConfig(new Error('canceling statement due to statement timeout')), false)
+})
 
 test('Hoy 2.0 acota la vista relacional y conserva un fallback completo', async () => {
   const source = await read('lib/supabase/home-v2.js')
@@ -80,6 +87,7 @@ test('Bandas y Marchas no convierten errores temporales en fichas inexistentes',
 
 test('los directorios patrimoniales comparten caché y pueden propagar fallos a la ruta', async () => {
   const source = await read('lib/supabase/directories.js')
+  const publicErrors = await read('lib/supabase/public-error.js')
   const imageRoute = await read('app/imagenes/localidad/[localidad]/page.js')
   const stepRoute = await read('app/pasos/localidad/[localidad]/page.js')
 
@@ -87,6 +95,8 @@ test('los directorios patrimoniales comparten caché y pueden propagar fallos a 
   assert.match(source, /public-images-directory-v2/)
   assert.match(source, /public-steps-directory-v2/)
   assert.match(source, /throwOnError/)
+  assert.match(source, /if \(isMissingPublicSupabaseConfig\(error\)\) return \[\]/)
+  assert.match(publicErrors, /export function isMissingPublicSupabaseConfig/)
   assert.match(imageRoute, /throwOnError:\s*true/)
   assert.match(stepRoute, /throwOnError:\s*true/)
 })
