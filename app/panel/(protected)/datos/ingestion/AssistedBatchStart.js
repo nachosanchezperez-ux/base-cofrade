@@ -98,10 +98,10 @@ export default function AssistedBatchStart({ targets, canEdit, aiConfigured }) {
 
   return <section className={styles.card}>
     <div className={styles.cardHeading}>
-      <div><span className={styles.kicker}>HC-AUTO-01</span><h2>Ingestión por lote de Fuentes</h2></div>
+      <div><span className={styles.kicker}>HC-AUTO-02</span><h2>Ingestión por lote de Fuentes</h2></div>
       <span className={styles.status}>2–30 URLs</span>
     </div>
-    <p className={styles.lead}>Agrupa varias páginas oficiales de una misma Hermandad. Cada Fuente conserva su huella y su propuesta independiente; después se revisan y se convierten en un único lote gobernado.</p>
+    <p className={styles.lead}>Agrupa varias páginas oficiales de una misma Hermandad. Además de deduplicar Fuentes, HC-AUTO-02 reconcilia variantes de nombre, propone enriquecimientos seguros y evita relaciones equivalentes duplicadas antes de construir un único lote gobernado.</p>
 
     {!aiConfigured ? <div className={styles.warningBox}><strong>Motor de extracción sin credencial.</strong><br />La tanda puede verse en el Panel, pero necesita <code>OPENAI_API_KEY</code> en el servidor para analizar sus Fuentes.</div> : null}
 
