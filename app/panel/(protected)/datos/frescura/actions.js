@@ -22,7 +22,7 @@ async function loadEntity(supabase, id) {
   return assertMutation(
     await supabase
       .from('entities')
-      .select('id, entity_type, name, slug, status')
+      .select('id, entity_type, name, slug, status, updated_at, content_updated_at')
       .eq('id', id)
       .single(),
     'No se pudo consultar la entidad'
@@ -59,11 +59,15 @@ export async function markEntityReviewedAction(formData) {
   const id = entityId(formData)
   const entity = await loadEntity(supabase, id)
   const reviewedAt = new Date().toISOString()
+  const legacyContentDate = entity.content_updated_at || entity.updated_at || null
 
   assertMutation(
     await supabase
       .from('entities')
-      .update({ editorial_reviewed_at: reviewedAt })
+      .update({
+        editorial_reviewed_at: reviewedAt,
+        ...(legacyContentDate ? { content_updated_at: legacyContentDate } : {}),
+      })
       .eq('id', id),
     'No se pudo registrar la revisión editorial'
   )
@@ -73,7 +77,10 @@ export async function markEntityReviewedAction(formData) {
     user,
     entity,
     `Ficha revisada: ${entity.name}`,
-    { editorial_reviewed_at: reviewedAt }
+    {
+      editorial_reviewed_at: reviewedAt,
+      ...(legacyContentDate ? { content_updated_at: legacyContentDate } : {}),
+    }
   )
   revalidateEntity(entity)
 }
