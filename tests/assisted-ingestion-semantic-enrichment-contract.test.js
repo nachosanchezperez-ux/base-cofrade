@@ -61,3 +61,10 @@ test('la revisión distingue resolución exacta, semántica, ambigua y nueva', (
   assert.match(review, /Hay varias coincidencias posibles/)
   assert.match(review, /Enriquecimiento diferencial/)
 })
+
+test('los huecos se revalidan contra la base viva antes del preflight', () => {
+  assert.match(actions, /refreshSafeEnrichmentRecord/)
+  assert.match(actions, /ENRICHMENT_STALE/)
+  assert.match(actions, /blankValue\(current\)/)
+  assert.match(actions, /if \(!refreshed\.record\) continue/)
+})
