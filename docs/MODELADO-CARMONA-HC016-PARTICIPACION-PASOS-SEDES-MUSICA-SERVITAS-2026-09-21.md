@@ -1,126 +1,152 @@
 # Modelado de participación, Pasos, sedes, música y Servitas · Carmona · HC-016
 
-**Fecha:** 21 de septiembre de 2026
-
-**Base:** `9055a35b30b1e6a4c05f654c3566a0d0e6ccf578`
-
-**Fase:** MODELADO PARCIAL CERRADO · MÚSICA AÚN BLOQUEANTE
-
+**Fecha:** 21 de septiembre de 2026  
+**Base:** `9055a35b30b1e6a4c05f654c3566a0d0e6ccf578`  
+**Fase:** FIRST EDITION FREEZE · MODELADO CERRADO CON BLOQUEOS EXPLÍCITOS  
 **Límites:** sin staging, payload SQL, dry-run, Apply, DDL, RLS ni publicación de datos
 
 ## 1. Resultado ejecutivo
 
-- 9 sujetos corporativos: 8 hermandades penitenciales y la Orden Seglar Servita Carmona, cuya web firma «Orden Seglar Siervos de María».
-- 10 Salidas penitenciales de 2026 acreditadas como celebradas y una Salida servita adicional, ya existente, del 19 de septiembre.
-- 17 Pasos únicos y 17 participaciones de Paso documentables en los diez cortejos penitenciales. El posible REUSE del Paso servita en septiembre queda bloqueado hasta disponer de prueba específica.
-- 30 relaciones `image_steps` confirmadas por fuente; 3 relaciones permanecen bloqueadas por no acreditar participación efectiva en 2026.
-- 7 Lugares y 9 relaciones de sede actual; no existe ningún Lugar carmonense previo en Supabase.
-- 5 posiciones musicales de 2026 identificadas con evidencia posterior o combinación previa/posterior suficiente; el resto sigue pendiente.
-- 3 Bandas son REUSE seguro; 2 serían INSERT si superan la puerta probatoria.
+- 9 sujetos corporativos: 8 hermandades penitenciales y la Orden Seglar Servita Carmona.
+- **11 Salidas penitenciales de 2026** acreditadas como celebradas y una Salida servita adicional, ya existente, del 19 de septiembre.
+- **18 Pasos únicos y 18 participaciones de Paso** documentables en los once cortejos penitenciales.
+- **31 relaciones `image_steps` confirmadas**; 3 relaciones adicionales permanecen bloqueadas.
+- 7 Lugares y 9 relaciones de sede actual.
+- **15 de 18 posiciones musicales penitenciales identificadas**; 3 permanecen bloqueadas.
+- 4 Bandas son REUSE seguro; 6 serían INSERT si una fase posterior autorizase materialización.
+- El posible REUSE del Paso servita en septiembre y el cambio de estado de esa Salida permanecen bloqueados.
 
-Este documento no es un manifiesto ni autoriza escrituras. El plan row-by-row definitivo continúa bloqueado hasta cerrar toda la música efectiva y elevar las fuentes secundarias indicadas.
+Este documento no es un manifiesto y no autoriza escrituras.
 
 ## 2. Participación efectiva por Salida
 
-| Fecha | Corporación | Paso | Imágenes confirmadas sobre el Paso | Exclusiones y bloqueos |
+| Fecha | Corporación | Paso | Imágenes confirmadas | Exclusiones y bloqueos |
 |---|---|---|---|---|
-| 2026-03-27 | Orden Seglar Servita Carmona | Paso de palio de María Santísima de los Dolores | María Santísima de los Dolores | ninguna adicional acreditada |
-| 2026-03-29 | Esperanza | Misterio de la Coronación de Espinas | Nuestro Padre Jesús de la Coronación de Espinas; un sanedrita; dos soldados romanos; Poncio Pilatos | San Juan Evangelista no se enlaza: la fuente solo acredita acompañamiento histórico variable |
-| 2026-03-29 | Esperanza | Paso de palio de la Esperanza | María Santísima de la Esperanza | San Juan queda bloqueado por falta de prueba específica de 2026 |
-| 2026-03-30 | Amargura | Paso del Señor de la Amargura | Señor de la Amargura | Santísimo Cristo de San Felipe es otra talla y queda fuera del cortejo 2026 |
-| 2026-03-30 | Amargura | Paso de palio del Mayor Dolor | María Santísima del Mayor Dolor | — |
-| 2026-03-31 | Expiración | Misterio de la Expiración | Nuestro Padre Jesús de la Expiración; Dimas; Gestas; María Magdalena | María Santísima del Calvario, San Juan Evangelista y San Blas son titulares, no participantes acreditados |
-| 2026-03-31 | Expiración | Paso de palio de los Dolores | María Santísima de los Dolores | — |
-| 2026-04-01 | Quinta Angustia | Misterio del Sagrado Descendimiento | Cristo del Sagrado Descendimiento; Virgen de las Lágrimas | no añadir personajes no nombrados por la fuente |
-| 2026-04-01 | Quinta Angustia | Paso de palio de las Angustias | Nuestra Señora y Madre de las Angustias | Cautivo de Belén y María Santísima de los Ángeles quedan fuera |
-| 2026-04-02 | Santiago | Misterio de la Columna | Nuestro Padre Jesús en la Columna; un sanedrita; un sayón negro; un centurión romano | el gallo de taxidermia es elemento iconográfico, no una Imagen |
-| 2026-04-02 | Santiago | Paso de palio de la Paciencia | María Santísima de la Paciencia | — |
-| 2026-04-03 | Nuestro Padre | Paso de Nuestro Padre Jesús Nazareno | Nuestro Padre Jesús Nazareno | no reconstruir el antiguo misterio con personajes históricos sin prueba actual |
-| 2026-04-03 | Nuestro Padre | Paso de palio de los Dolores | María Santísima de los Dolores | Divina Pastora excluida del cortejo penitencial |
-| 2026-04-03 | Esperanza | Urna del Cristo de los Desamparados | Santísimo Cristo de los Desamparados | una sola Hermandad de la Esperanza; no crear corporación separada |
-| 2026-04-03 | Humildad | Misterio de la Humildad y Paciencia | Nuestro Padre Jesús de la Humildad y Paciencia | San Juan Evangelista queda bloqueado por falta de prueba específica de 2026 |
-| 2026-04-03 | Humildad | Paso de palio de los Dolores | María Santísima de los Dolores | — |
-| 2026-04-04 | Santo Entierro | Misterio del Santo Entierro | Santísimo Cristo Nuestro Señor Yacente; José de Arimatea; Nicodemo | María Magdalena queda bloqueada; Soledad no tiene aún palio y Santa Ana no es penitencial |
+| 2026-03-27 | Servitas | Paso de palio de María Santísima de los Dolores | María Santísima de los Dolores | no inferir REUSE en septiembre |
+| 2026-03-29 | Humildad | **Paso de la Sagrada Entrada en Jerusalén · La Borriquita** | **Sagrada Entrada de Jesús en Jerusalén** | talla de José Antonio Navarro Arteaga, 2026; no añadir secundarios no nombrados |
+| 2026-03-29 | Esperanza | Misterio de la Coronación de Espinas | Coronación de Espinas; un sanedrita; dos soldados romanos; Poncio Pilatos | San Juan no acreditado en 2026 |
+| 2026-03-29 | Esperanza | Palio de la Esperanza | María Santísima de la Esperanza | San Juan bloqueado |
+| 2026-03-30 | Amargura | Paso del Señor de la Amargura | Señor de la Amargura | Cristo de San Felipe es otra talla |
+| 2026-03-30 | Amargura | Palio del Mayor Dolor | María Santísima del Mayor Dolor | — |
+| 2026-03-31 | Expiración | Misterio de la Expiración | Expiración; Dimas; Gestas; María Magdalena | Calvario, San Juan y San Blas no acreditados |
+| 2026-03-31 | Expiración | Palio de los Dolores | María Santísima de los Dolores | — |
+| 2026-04-01 | Quinta Angustia | Misterio del Sagrado Descendimiento | Cristo del Sagrado Descendimiento; Virgen de las Lágrimas | no añadir personajes no nombrados |
+| 2026-04-01 | Quinta Angustia | Palio de las Angustias | Nuestra Señora y Madre de las Angustias | Cautivo y Ángeles fuera |
+| 2026-04-02 | Santiago | Misterio de la Columna | Jesús en la Columna; sanedrita; sayón negro; centurión romano | el gallo es elemento iconográfico |
+| 2026-04-02 | Santiago | Palio de la Paciencia | María Santísima de la Paciencia | — |
+| 2026-04-03 | Nuestro Padre | Paso de Jesús Nazareno | Nuestro Padre Jesús Nazareno | no reconstruir el antiguo misterio |
+| 2026-04-03 | Nuestro Padre | Palio de los Dolores | María Santísima de los Dolores | Divina Pastora fuera |
+| 2026-04-03 | Esperanza | Urna del Cristo de los Desamparados | Santísimo Cristo de los Desamparados | no crear corporación separada |
+| 2026-04-03 | Humildad | Misterio de Humildad y Paciencia | Nuestro Padre Jesús de la Humildad y Paciencia | San Juan bloqueado |
+| 2026-04-03 | Humildad | Palio de los Dolores | María Santísima de los Dolores | — |
+| 2026-04-04 | Santo Entierro | Misterio del Santo Entierro | Cristo Yacente; José de Arimatea; Nicodemo | María Magdalena bloqueada; Soledad aún sin palio |
 
-Fuentes estructurales: [Consejo de Hermandades de Carmona](https://consejohermandadescarmona.es/) y las fichas `CAR-F01`–`CAR-F08`. Evidencia de celebración: `CAR-F13`–`CAR-F22`.
+Fuentes estructurales: fichas `CAR-F01`–`CAR-F10`. Evidencia posterior: `CAR-F13`–`CAR-F24`.
 
-El recuento de 30 relaciones considera por separado a cada uno de los dos soldados romanos del misterio de la Coronación. No agrupa dos esculturas en una sola Imagen.
+El recuento de 31 relaciones cuenta por separado a los dos soldados romanos de Coronación y añade la nueva Sagrada Entrada. La Salida de septiembre es REUSE seguro como acontecimiento, no como participación de Paso.
 
-La Salida `carmona-servitas-dolores-santo-escapulario-2026-09-19` es REUSE seguro como acontecimiento y pertenece al mismo sujeto corporativo, pero su relación con el Paso de palio de marzo queda `BLOCKED`: la unicidad de la Imagen y de la organización no demuestra que se emplearan las mismas andas.
+## 3. Dos correcciones de identidad
 
-## 3. Corrección de identidad en Amargura
+### Amargura
 
-El Consejo dedica apartados distintos al [Señor de la Amargura y al Cristo de San Felipe](https://consejohermandadescarmona.es/san-felipe/). Son dos crucificados diferentes:
+El [Consejo](https://consejohermandadescarmona.es/san-felipe/) documenta dos crucificados distintos:
 
-- Señor de la Amargura: obra concertada con Jorge Fernández Alemán en 1521; participa en el Lunes Santo de 2026.
-- Santísimo Cristo de San Felipe: crucificado gótico de tamaño académico; titular corporativo, pero sin participación acreditada en la Salida de 2026.
+- Señor de la Amargura: participa en el Lunes Santo de 2026;
+- Santísimo Cristo de San Felipe: titular, sin participación acreditada en ese cortejo.
 
-Por tanto, el inventario pasa de 27 a 28 imágenes titulares candidatas. No hay alias ni fusión de registros.
+No son alias.
+
+### Humildad y La Borriquita
+
+La guía municipal *Carmona Penitente 2026* documenta una nueva imagen de la Sagrada Entrada en Jerusalén, obra de José Antonio Navarro Arteaga (2026), y su Salida del Domingo de Ramos. [TV Carmona](https://play.televisioncarmona.com/v/JeNyAaqE2pPPq7ZqSd/LA-BORRIQUITA-HERMANDAD-DE-LA-HUMILDAD-REPORTAJE-TVC//) confirma la celebración.
+
+La Borriquita es un segundo cortejo de **Humildad**, no una hermandad nueva. Con esta corrección el suelo documental pasa de 28 a **29 imágenes titulares candidatas**.
 
 ## 4. Sedes actuales
 
 | Corporación | Sede 2026 | Decisión futura |
 |---|---|---|
-| Servitas | Real Iglesia del Divino Salvador | INSERT Lugar + relación actual |
-| Esperanza | Real Iglesia del Divino Salvador | REUSE del mismo Lugar; relación independiente |
+| Servitas | Real Iglesia del Divino Salvador | INSERT Lugar + relación |
+| Esperanza | Real Iglesia del Divino Salvador | REUSE del Lugar |
 | Amargura | Iglesia de San Felipe | INSERT |
 | Expiración | Iglesia de San Blas | INSERT |
-| Quinta Angustia | Capilla de San Francisco | INSERT; sede actual separada de la cronología conventual |
+| Quinta Angustia | Capilla de San Francisco | INSERT |
 | Santiago | Iglesia de Santiago | INSERT |
 | Nuestro Padre | Iglesia de San Bartolomé | INSERT |
 | Humildad | Iglesia de San Pedro | INSERT |
-| Santo Entierro | Iglesia de San Bartolomé | REUSE del mismo Lugar; traslado vigente desde 2006 |
+| Santo Entierro | Iglesia de San Bartolomé | REUSE del Lugar |
 
-Resultado: 7 Lugares, 9 `entity_locations`, 0 REUSE previo en Supabase. Las sedes históricas se conservan solo como cronología y nunca sustituyen a la sede vigente.
+Resultado: 7 Lugares, 9 `entity_locations`, 0 Lugares carmonenses preexistentes en Supabase.
 
 ## 5. Normalización de Servitas
 
-La [web oficial](https://servitascarmona.com/) firma **Orden Seglar Siervos de María**, usa **Orden Seglar Servita Carmona** como nombre público y sitúa la sede en la Real Iglesia del Salvador. No se amplía esa literalidad con preposiciones o topónimos no presentes en la firma propia.
+La [web oficial](https://servitascarmona.com/) firma **Orden Seglar Siervos de María**, usa **Orden Seglar Servita Carmona** como nombre público y sitúa su sede en la Real Iglesia del Salvador.
 
-Reglas de unicidad:
+Reglas:
 
-1. un único nodo corporativo;
+1. un nodo corporativo;
 2. una imagen de María Santísima de los Dolores;
-3. un Paso de palio documentado para la Salida penitencial del 27 de marzo; su posible reutilización el 19 de septiembre no se materializa sin una fuente específica;
-4. la Salida de septiembre es REUSE de `ea6ab0d1-e6c4-4ea1-8727-92cee4ce3218`; solo se enlazará a corporación, sede y Fuentes cuando exista autorización, mientras la relación al Paso permanece bloqueada;
-5. `event_status = announced` no se cambia a `held` dentro de esta puerta.
+3. un Paso documentado para el 27 de marzo;
+4. Salida de septiembre REUSE: `ea6ab0d1-e6c4-4ea1-8727-92cee4ce3218`;
+5. relación septiembre–Paso `BLOCKED`;
+6. `event_status = announced` no se modifica.
 
-La publicación oficial del 19 de septiembre acredita fecha, hora y recorrido; la Banda MAFERMAN figura en la información ya cargada, pero la Fuente de Supabase tiene URL y fecha nulas. Debe repararse la trazabilidad antes de materializar música.
+La [publicación oficial del 19 de septiembre](https://www.facebook.com/ServitasCarmona/posts/%EF%B8%8F-%F0%9D%90%82%F0%9D%90%94%F0%9D%90%8B%F0%9D%90%93%F0%9D%90%8E%F0%9D%90%92-%F0%9D%90%8F%F0%9D%90%AB%F0%9D%90%A8%F0%9D%90%9C%F0%9D%90%9E%F0%9D%90%AC%F0%9D%90%A2%C3%B3%F0%9D%90%A7-%F0%9D%90%86%F0%9D%90%9E%F0%9D%90%A7%F0%9D%90%9E%F0%9D%90%AB%F0%9D%90%9A%F0%9D%90%A5-%F0%9D%90%9D%F0%9D%90%9E%F0%9D%90%A5-%F0%9D%90%92%F0%9D%90%9A%F0%9D%90%A7%F0%9D%90%AD%F0%9D%90%A8-%F0%9D%90%84%F0%9D%90%AC%F0%9D%90%9C%F0%9D%90%9A%F0%9D%90%A9%F0%9D%90%AE%F0%9D%90%A5%F0%9D%90%9A%F0%9D%90%AB%F0%9D%90%A2%F0%9D%90%A8-s%C3%A1bado-19-de-septiembre-1800-hr/1392126423115930/) recupera fecha, recorrido y MAFERMAN, pero sigue siendo anuncio previo.
 
-## 6. Música 2026 y conciliación de Bandas
+## 6. Música 2026 por posición
 
-| Salida/posición | Banda | Evidencia disponible | Supabase | Estado |
-|---|---|---|---|---|
-| Esperanza · misterio de Coronación | Agrupación Musical Nuestra Señora de Valme de Dos Hermanas | vídeo posterior de 2026 con identificación musical | REUSE `4e4d493c-5273-44aa-8066-72dd1faa1ed8` | identificado; elevar a fuente propia |
-| Amargura · Señor | Banda de Cornetas y Tambores Santísimo Cristo de la Victoria de León | vídeo posterior de 30/03/2026; continuidad oficial publicada para 2025 | REUSE `97f62582-42f5-4d5f-80e0-376398af98e8` | efectivo; falta fuente primaria 2026 |
-| Expiración · palio de los Dolores | Banda Municipal de Música de Mairena del Alcor | [renovación oficial publicada el 24/10/2025](https://municipaldemairena.com/renovamos-nuestro-martes-santo-con-la-hermandad-de-san-blas/) para el Martes Santo 2026 + evidencia posterior del cortejo | REUSE `d6852052-92bb-4b54-b551-e52b656dea6d` | cerrado |
-| Quinta Angustia · palio de las Angustias | Banda de Música El Arrabal de Carmona | vídeo posterior identificado | no existe | candidato INSERT; elevar a fuente estable |
-| Santo Entierro · misterio | Banda de Música El Arrabal de Carmona | [Carmona Penitente 2026](https://www.larevistacarmona.es/texto-diario/mostrar/5825655/carmona-penitente-guia-imprescindible-semana-santa) + publicación posterior del 04/04/2026 | no existe | identificado; elevar la prueba posterior |
-| Esperanza · Desamparados | Banda Municipal de Música de Mairena del Alcor | vídeo posterior localizado con la marcha «La Virgen de los Desamparados» | REUSE | probable; no materializar aún |
-| Servitas · Santo Escapulario 19/09 | Banda de Música del Maestro Manuel Fernández Manzanar (MAFERMAN) | información oficial cargada y perfil oficial; Fuente actual sin URL/fecha | no existe | anunciado; no convertir a efectivo sin cierre posterior |
+| Salida/posición | Acompañamiento identificado | Conciliación | Estado probatorio |
+|---|---|---|---|
+| Servitas · palio, 27/03 | — | — | **BLOCKED** |
+| La Borriquita · paso | Agrupación Musical Paz y Caridad de Estepa | REUSE `c0160032-0402-4000-8000-000000000002` | guía municipal + [calendario oficial](https://www.ampazycaridad.com/semana-santa-2026.php) |
+| Esperanza · misterio | Agrupación Musical Nuestra Señora de Valme de Dos Hermanas | REUSE `4e4d493c-5273-44aa-8066-72dd1faa1ed8` | guía municipal + evidencia posterior |
+| Esperanza · palio | Banda de Música Nuestra Señora de Guaditoca, Guadalcanal | INSERT candidato | guía municipal |
+| Amargura · Señor | BCT Santísimo Cristo de la Victoria de León | REUSE `97f62582-42f5-4d5f-80e0-376398af98e8` | guía municipal + evidencia oficial/posterior |
+| Amargura · palio | Banda Municipal de Aznalcóllar | INSERT candidato | guía municipal |
+| Expiración · misterio | BCT Nuestro Padre Jesús Rescatado de La Solana | INSERT candidato | guía municipal + canal oficial |
+| Expiración · palio | Banda Municipal de Música de Mairena del Alcor | REUSE `d6852052-92bb-4b54-b551-e52b656dea6d` | [renovación oficial](https://municipaldemairena.com/renovamos-nuestro-martes-santo-con-la-hermandad-de-san-blas/) + guía |
+| Quinta Angustia · misterio | Música de capilla | no crea Banda sin conjunto nombrado | guía municipal; apoyo histórico |
+| Quinta Angustia · palio | Banda de Música El Arrabal de Carmona | INSERT candidato | guía + publicación posterior de la corporación |
+| Santiago · misterio | BCT Nuestra Señora de Gracia de Carmona | INSERT candidato | guía municipal + evidencia posterior |
+| Santiago · palio | Banda de Música El Arrabal de Carmona | mismo INSERT candidato | guía municipal |
+| Nuestro Padre · Cristo | Música de capilla | no crea Banda sin conjunto nombrado | guía municipal |
+| Nuestro Padre · palio | Música de capilla | no crea Banda sin conjunto nombrado | guía municipal |
+| Desamparados · urna | — | — | **BLOCKED; la guía omite música** |
+| Humildad · misterio | — | — | **BLOCKED** |
+| Humildad · palio | Banda de Música Nuestra Señora de Guaditoca, Guadalcanal | mismo INSERT candidato | guía municipal + publicación oficial posterior |
+| Santo Entierro · misterio | Banda de Música El Arrabal de Carmona | mismo INSERT candidato | guía municipal + evidencia posterior |
 
-Las demás posiciones musicales permanecen `BLOCKED`. No se heredan contratos de 2024/2025 ni se usa el sonido de un vídeo sin identificación inequívoca.
+La cruz de guía del Santo Entierro figura «de capilla», pero no es una posición de Paso y no aumenta el denominador de 18.
 
-## 7. Auditoría de duplicados
+La asociación anterior de Mairena con Desamparados se elimina: procedía de un vídeo insuficiente y la guía municipal no atribuye acompañamiento. No se heredan contratos ni se identifica por oído.
 
-- Municipio: REUSE exclusivo `bf024af2-3eda-4989-b1b5-0a723dcf9cb4`.
-- Hermandades/Orden, Lugares e Imágenes de Carmona: 0 REUSE nominal previo; los homónimos de otros municipios son `NO ACTION`.
-- Esperanza: una corporación, dos Salidas penitenciales.
-- Servitas: una corporación, dos Salidas de 2026; septiembre es REUSE.
-- Amargura: dos crucificados distintos; no alias.
-- Bandas: tres REUSE confirmados por UUID; El Arrabal y MAFERMAN son candidatos INSERT.
-- Ninguna relación bloqueada se convertirá en fila por inferencia.
+### Salida servita de septiembre
+
+| Posición | Banda | Conciliación | Estado |
+|---|---|---|---|
+| Santo Escapulario, 19/09 | Banda de Música del Maestro Manuel Fernández Manzanar (MAFERMAN) | INSERT candidato | anunciada por Servitas; ejecución aún no probada |
+
+## 7. Auditoría REUSE/INSERT de Bandas
+
+| Decisión documental | Bandas | Total |
+|---|---|---:|
+| REUSE | Paz y Caridad; Valme; Victoria de León; Mairena del Alcor | 4 |
+| INSERT candidato | Guaditoca; Municipal de Aznalcóllar; Rescatado de La Solana; El Arrabal; Nuestra Señora de Gracia; MAFERMAN | 6 |
+| Sin entidad Banda | posiciones «de capilla» sin conjunto nominal | 3 posiciones |
+| BLOCKED | Servitas marzo; Desamparados; misterio de Humildad | 3 posiciones |
+
+La consulta a Supabase fue exclusivamente de lectura. Ningún INSERT está autorizado.
 
 ## 8. Puerta row-by-row
 
-El orden futuro seguirá: `sources` → `places` → `entities` → `brotherhoods`/`bands` → `images` → `brotherhood_images` → `steps` → `brotherhood_steps` → `image_steps` → `outing_series` → `outings` → `outing_entities` → música → `source_links`.
+Orden futuro, solo si se autoriza otra fase: `sources` → `places` → `entities` → `brotherhoods`/`bands` → `images` → relaciones → `steps` → `outings` → música → `source_links`.
 
-Estado de la puerta:
+Estado de la primera edición:
 
-- participación de las diez Salidas penitenciales, Pasos, sedes e identidad de Servitas: cerrados con bloqueos explícitos;
-- posible REUSE del Paso servita en la Salida del 19 de septiembre: bloqueado por falta de prueba específica;
-- música: parcial y todavía bloqueante;
-- itinerarios/horarios penitenciales: no necesarios para el núcleo estructural y no se incorporan hasta disponer de la guía completa estable;
-- plan row-by-row definitivo, manifiesto y recuento DML: **no autorizados todavía**.
+- 11 Salidas penitenciales, 18 Pasos, sedes e identidad corporativa: cerrados;
+- 31 relaciones `image_steps`: confirmadas; 3 adicionales bloqueadas;
+- música penitencial: 15/18 posiciones identificadas; 3 bloqueadas;
+- septiembre: Salida REUSE y anuncio trazable; ejecución y Paso compartido bloqueados;
+- manifiesto, recuento DML, staging, SQL, dry-run y Apply: **no autorizados**.
 
-El siguiente avance válido es obtener Fuentes primarias o posteriores estables para cada posición musical pendiente, reparar la procedencia de la Fuente servita de septiembre, resolver —o conservar como `null`— el Paso de esa Salida y volver a auditar REUSE/INSERT. Hasta entonces: 0 staging, 0 SQL, 0 dry-run y 0 Apply.
+No se ampliará el alcance fuera de Carmona ni se resolverán bloqueos por inferencia.
