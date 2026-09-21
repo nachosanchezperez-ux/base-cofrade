@@ -48,14 +48,33 @@ export const metadata = {
 
 export const viewport = { themeColor: '#112339' };
 
+const publisherJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': `${SITE_URL}/#organization`,
+  url: SITE_URL,
+  name: SITE_NAME,
+  description: DEFAULT_DESCRIPTION,
+};
+
 const websiteJsonLd = {
-  '@context': 'https://schema.org', '@type': 'WebSite', '@id': `${SITE_URL}/#website`, url: SITE_URL, name: SITE_NAME, description: DEFAULT_DESCRIPTION, inLanguage: 'es',
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${SITE_URL}/#website`,
+  url: SITE_URL,
+  name: SITE_NAME,
+  description: DEFAULT_DESCRIPTION,
+  inLanguage: 'es',
+  publisher: {
+    '@id': `${SITE_URL}/#organization`,
+  },
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="es">
       <body id="hc-app">
+        <JsonLd data={publisherJsonLd} />
         <JsonLd data={websiteJsonLd} />
         <a className="skip-link" href="#main-content">Saltar al contenido</a>
         <HiloHeader />
