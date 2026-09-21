@@ -51,6 +51,14 @@ test('bandas y marchas declaran entidad principal canónica', () => {
 })
 
 
+test('las páginas de eventos reutilizan el identificador de Organization de la hermandad', () => {
+  assert.match(seo, /#organization/)
+  for (const source of [extraordinary, glory, crewEvent]) {
+    assert.match(source, /organizationJsonLdRef/)
+    assert.match(source, /brotherhoodHref/)
+  }
+})
+
 test('las referencias Organization internas reutilizan el @id canónico', () => {
   assert.match(seo, /export function organizationJsonLdRef/)
   assert.match(seo, /'@id': `\$\{absoluteUrl\(internalPath\)\}#organization`/)
