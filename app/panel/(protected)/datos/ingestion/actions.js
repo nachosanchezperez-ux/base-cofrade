@@ -153,14 +153,14 @@ export async function analyseSourceAction(input) {
       fetched_at: source.fetchedAt,
       batch_ids: batchId ? [batchId] : [],
     },
-  })
+  }, { targetEntityId })
 
   const insertResult = await supabase.from('document_imports').insert({
     target_entity_id: targetEntityId,
     source_url: source.url,
     source_title: analysis.source.title || source.title || source.url,
     status: 'review',
-    analysis_version: 3,
+    analysis_version: 4,
     analysis,
     model_name: extracted.model,
     content_sha256: source.contentSha256,
