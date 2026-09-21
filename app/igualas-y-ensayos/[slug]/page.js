@@ -126,10 +126,13 @@ export default async function CrewEventDetailPage({ params }) {
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
     ...(schemaEventStatus(event) ? { eventStatus: schemaEventStatus(event) } : {}),
     url: canonicalUrl,
-    organizer: organizationJsonLdRef({
-      name: event.brotherhoodName,
-      path: event.brotherhoodHref ? event.brotherhoodHref : '',
-    }),
+    organizer: {
+      ...organizationJsonLdRef({
+        name: event.brotherhoodName,
+        path: event.brotherhoodHref ? event.brotherhoodHref : '',
+      }),
+      ...(event.brotherhoodHref ? { url: absoluteUrl(event.brotherhoodHref) } : {}),
+    },
     location: {
       '@type': 'Place',
       name: event.location || event.municipality || 'Sevilla',
