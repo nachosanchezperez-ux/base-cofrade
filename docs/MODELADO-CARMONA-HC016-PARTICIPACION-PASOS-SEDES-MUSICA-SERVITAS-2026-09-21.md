@@ -7,9 +7,9 @@
 
 ## 1. Resultado ejecutivo
 
-- 9 sujetos corporativos: 8 hermandades penitenciales y la Orden Seglar de los Siervos de María de Carmona.
+- 9 sujetos corporativos: 8 hermandades penitenciales y la Orden Seglar Servita Carmona, cuya web firma «Orden Seglar Siervos de María».
 - 10 Salidas penitenciales de 2026 acreditadas como celebradas y una Salida servita adicional, ya existente, del 19 de septiembre.
-- 17 Pasos únicos documentables; 18 participaciones de Paso al reutilizarse el paso servita en marzo y septiembre.
+- 17 Pasos únicos y 17 participaciones de Paso documentables en los diez cortejos penitenciales. El posible REUSE del Paso servita en septiembre queda bloqueado hasta disponer de prueba específica.
 - 30 relaciones `image_steps` confirmadas por fuente; 3 relaciones permanecen bloqueadas por no acreditar participación efectiva en 2026.
 - 7 Lugares y 9 relaciones de sede actual; no existe ningún Lugar carmonense previo en Supabase.
 - 5 posiciones musicales de 2026 identificadas con evidencia posterior o combinación previa/posterior suficiente; el resto sigue pendiente.
@@ -21,7 +21,7 @@ Este documento no es un manifiesto ni autoriza escrituras. El plan row-by-row de
 
 | Fecha | Corporación | Paso | Imágenes confirmadas sobre el Paso | Exclusiones y bloqueos |
 |---|---|---|---|---|
-| 2026-03-27 | Orden Seglar de los Siervos de María | Paso de María Santísima de los Dolores | María Santísima de los Dolores | ninguna adicional acreditada |
+| 2026-03-27 | Orden Seglar Servita Carmona | Paso de palio de María Santísima de los Dolores | María Santísima de los Dolores | ninguna adicional acreditada |
 | 2026-03-29 | Esperanza | Misterio de la Coronación de Espinas | Nuestro Padre Jesús de la Coronación de Espinas; un sanedrita; dos soldados romanos; Poncio Pilatos | San Juan Evangelista no se enlaza: la fuente solo acredita acompañamiento histórico variable |
 | 2026-03-29 | Esperanza | Paso de palio de la Esperanza | María Santísima de la Esperanza | San Juan queda bloqueado por falta de prueba específica de 2026 |
 | 2026-03-30 | Amargura | Paso del Señor de la Amargura | Señor de la Amargura | Santísimo Cristo de San Felipe es otra talla y queda fuera del cortejo 2026 |
@@ -38,9 +38,12 @@ Este documento no es un manifiesto ni autoriza escrituras. El plan row-by-row de
 | 2026-04-03 | Humildad | Misterio de la Humildad y Paciencia | Nuestro Padre Jesús de la Humildad y Paciencia | San Juan Evangelista queda bloqueado por falta de prueba específica de 2026 |
 | 2026-04-03 | Humildad | Paso de palio de los Dolores | María Santísima de los Dolores | — |
 | 2026-04-04 | Santo Entierro | Misterio del Santo Entierro | Santísimo Cristo Nuestro Señor Yacente; José de Arimatea; Nicodemo | María Magdalena queda bloqueada; Soledad no tiene aún palio y Santa Ana no es penitencial |
-| 2026-09-19 | Orden Seglar de los Siervos de María | REUSE del paso de María Santísima de los Dolores | María Santísima de los Dolores | REUSE de la Salida `carmona-servitas-dolores-santo-escapulario-2026-09-19`; no crear otra fila |
 
 Fuentes estructurales: [Consejo de Hermandades de Carmona](https://consejohermandadescarmona.es/) y las fichas `CAR-F01`–`CAR-F08`. Evidencia de celebración: `CAR-F13`–`CAR-F22`.
+
+El recuento de 30 relaciones considera por separado a cada uno de los dos soldados romanos del misterio de la Coronación. No agrupa dos esculturas en una sola Imagen.
+
+La Salida `carmona-servitas-dolores-santo-escapulario-2026-09-19` es REUSE seguro como acontecimiento y pertenece al mismo sujeto corporativo, pero su relación con el Paso de palio de marzo queda `BLOCKED`: la unicidad de la Imagen y de la organización no demuestra que se emplearan las mismas andas.
 
 ## 3. Corrección de identidad en Amargura
 
@@ -69,14 +72,14 @@ Resultado: 7 Lugares, 9 `entity_locations`, 0 REUSE previo en Supabase. Las sede
 
 ## 5. Normalización de Servitas
 
-La fuente propia fija la denominación **Orden Seglar de los Siervos de María de Carmona**, con nombre público abreviado **Orden Seglar Servita Carmona**, y sede en la Real Iglesia del Salvador: [web oficial](https://servitascarmona.com/).
+La [web oficial](https://servitascarmona.com/) firma **Orden Seglar Siervos de María**, usa **Orden Seglar Servita Carmona** como nombre público y sitúa la sede en la Real Iglesia del Salvador. No se amplía esa literalidad con preposiciones o topónimos no presentes en la firma propia.
 
 Reglas de unicidad:
 
 1. un único nodo corporativo;
 2. una imagen de María Santísima de los Dolores;
-3. un Paso reutilizable en la Salida penitencial del 27 de marzo y en la procesión del Santo Escapulario del 19 de septiembre;
-4. la Salida de septiembre es REUSE de `ea6ab0d1-e6c4-4ea1-8727-92cee4ce3218`; solo se enlazará a corporación, sede, Paso y Fuentes cuando exista autorización;
+3. un Paso de palio documentado para la Salida penitencial del 27 de marzo; su posible reutilización el 19 de septiembre no se materializa sin una fuente específica;
+4. la Salida de septiembre es REUSE de `ea6ab0d1-e6c4-4ea1-8727-92cee4ce3218`; solo se enlazará a corporación, sede y Fuentes cuando exista autorización, mientras la relación al Paso permanece bloqueada;
 5. `event_status = announced` no se cambia a `held` dentro de esta puerta.
 
 La publicación oficial del 19 de septiembre acredita fecha, hora y recorrido; la Banda MAFERMAN figura en la información ya cargada, pero la Fuente de Supabase tiene URL y fecha nulas. Debe repararse la trazabilidad antes de materializar música.
@@ -111,9 +114,10 @@ El orden futuro seguirá: `sources` → `places` → `entities` → `brotherhood
 
 Estado de la puerta:
 
-- participación, Pasos, sedes y Servitas: cerrados con bloqueos explícitos;
+- participación de las diez Salidas penitenciales, Pasos, sedes e identidad de Servitas: cerrados con bloqueos explícitos;
+- posible REUSE del Paso servita en la Salida del 19 de septiembre: bloqueado por falta de prueba específica;
 - música: parcial y todavía bloqueante;
 - itinerarios/horarios penitenciales: no necesarios para el núcleo estructural y no se incorporan hasta disponer de la guía completa estable;
 - plan row-by-row definitivo, manifiesto y recuento DML: **no autorizados todavía**.
 
-El siguiente avance válido es obtener Fuentes primarias o posteriores estables para cada posición musical pendiente, reparar la procedencia de la Fuente servita de septiembre y volver a auditar REUSE/INSERT. Hasta entonces: 0 staging, 0 SQL, 0 dry-run y 0 Apply.
+El siguiente avance válido es obtener Fuentes primarias o posteriores estables para cada posición musical pendiente, reparar la procedencia de la Fuente servita de septiembre, resolver —o conservar como `null`— el Paso de esa Salida y volver a auditar REUSE/INSERT. Hasta entonces: 0 staging, 0 SQL, 0 dry-run y 0 Apply.
