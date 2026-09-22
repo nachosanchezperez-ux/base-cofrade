@@ -77,6 +77,9 @@ export default function MusicalRepertoiresSection({ items = [], context = 'broth
                 {context !== 'brotherhood' && item.brotherhood.href ? (
                   <Link href={item.brotherhood.href}><small>Hermandad</small><strong>{item.brotherhood.name}</strong></Link>
                 ) : null}
+                {context === 'band' && item.step?.slug ? (
+                  <Link href={`/pasos/${item.step.slug}`}><small>Paso</small><strong>{item.step.name}</strong></Link>
+                ) : null}
                 {context !== 'band' && item.band.href ? (
                   <Link href={item.band.href}><small>Banda</small><strong>{item.band.name}</strong></Link>
                 ) : null}
