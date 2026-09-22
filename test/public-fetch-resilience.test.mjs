@@ -47,24 +47,22 @@ test('una lectura GET reintenta una vez cuando el primer intento agota su timeou
   assert.equal(calls, 2)
 })
 
-test('una respuesta transitoria 503 de lectura se reintenta una sola vez', async () => {
+test('las respuestas HTTP transitorias se delegan al retry nativo de Supabase', async () => {
   let calls = 0
 
   const fakeFetch = async () => {
     calls += 1
-    return calls === 1
-      ? new Response('temporary', { status: 503 })
-      : new Response('[]', { status: 200 })
+    return new Response('temporary', { status: 503 })
   }
 
   const resilientFetch = createPublicQueryFetch(fakeFetch, { env: testEnv() })
   const response = await resilientFetch('https://example.test/rest/v1/entities', { method: 'GET' })
 
-  assert.equal(response.status, 200)
-  assert.equal(calls, 2)
+  assert.equal(response.status, 503)
+  assert.equal(calls, 1)
 })
 
-test('los errores de red de lectura no superan dos intentos', async () => {
+test('los errores de red se delegan al retry nativo de Supabase', async () => {
   let calls = 0
 
   const fakeFetch = async () => {
@@ -78,7 +76,7 @@ test('los errores de red de lectura no superan dos intentos', async () => {
     resilientFetch('https://example.test/rest/v1/entities', { method: 'GET' }),
     /network unavailable/
   )
-  assert.equal(calls, 2)
+  assert.equal(calls, 1)
 })
 
 test('las peticiones no idempotentes no se reintentan', async () => {
