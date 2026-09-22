@@ -57,7 +57,7 @@ test('las lecturas públicas reintentan una vez sin superar el presupuesto de Ve
   assert.match(publicServer, /db:\s*\{[\s\S]*retry:\s*false/)
   assert.match(timedFetch, /createPublicQueryFetch/)
   assert.match(timedFetchCore, /DEFAULT_PUBLIC_QUERY_TIMEOUT_MS = 15_000/)
-  assert.match(timedFetchCore, /DEFAULT_PUBLIC_QUERY_FIRST_ATTEMPT_TIMEOUT_MS = 10_000/)
+  assert.match(timedFetchCore, /SUPABASE_PUBLIC_QUERY_TOTAL_TIMEOUT_MS/)
   assert.match(timedFetchCore, /RETRYABLE_METHODS = new Set\(\['GET', 'HEAD'\]\)/)
   assert.match(timedFetchCore, /attempts < \(canRetry \? 2 : 1\)/)
 })
