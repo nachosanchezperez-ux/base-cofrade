@@ -31,6 +31,7 @@ import {
   seoDescription,
   socialMetadata,
 } from '@/lib/seo'
+import { resolveBandPageTheme } from '@/lib/bands/theme'
 import {
   groupGloryAccompaniments,
   partitionAccompanimentsBySeason,
@@ -229,7 +230,10 @@ export default async function BandDetailPage({ params }) {
   const hasDiscography = discography.length > 0
   const hasDirection = band.direction.length > 0
   const banderin = band.heritage?.find((item) => item.type === 'Banderín') || null
-  const accentColor = colors.find((item) => item.role === 'accent')?.hexValue || band.primaryColor
+  const primaryColor = colors.find((item) => item.role === 'primary')?.hexValue || band.primaryColor
+  const secondaryColor = colors.find((item) => item.role === 'secondary')?.hexValue || band.secondaryColor
+  const accentColor = colors.find((item) => item.role === 'accent')?.hexValue || primaryColor
+  const bandTheme = resolveBandPageTheme({ primaryColor, secondaryColor, accentColor })
   const currentRelations = [...orderedAccompaniments, ...gloryAccompaniments, ...upcomingAccompaniments]
   const bandThreadItems = [
     ...(band.linkedBrotherhoodSlug ? [{
@@ -275,14 +279,15 @@ export default async function BandDetailPage({ params }) {
     <div
       className={`${styles.module} ${styles.bandPage}`}
       style={{
-        '--band-primary': band.primaryColor,
-        '--band-secondary': band.secondaryColor,
-        '--bc-red': accentColor,
-        '--bc-blue': band.secondaryColor,
-        '--bc-dark': band.secondaryColor,
-        '--brotherhood-primary': band.primaryColor,
-        '--brotherhood-secondary': accentColor,
-        '--brotherhood-dark': band.secondaryColor,
+        '--band-primary': bandTheme.primary,
+        '--band-secondary': bandTheme.deep,
+        '--band-soft': bandTheme.soft,
+        '--bc-red': bandTheme.accent,
+        '--bc-blue': bandTheme.deep,
+        '--bc-dark': bandTheme.deep,
+        '--brotherhood-primary': bandTheme.primary,
+        '--brotherhood-secondary': bandTheme.accent,
+        '--brotherhood-dark': bandTheme.deep,
       }}
     >
       <JsonLd data={breadcrumbJsonLd([
