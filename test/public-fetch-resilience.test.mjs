@@ -9,6 +9,7 @@ const testEnv = (overrides = {}) => ({
   SUPABASE_PUBLIC_QUERY_TIMEOUT_MS: '10',
   SUPABASE_PUBLIC_QUERY_TOTAL_TIMEOUT_MS: '80',
   SUPABASE_PUBLIC_QUERY_RETRY_DELAY_MS: '1',
+  SUPABASE_PUBLIC_QUERY_MAX_CONCURRENCY: '4',
   ...overrides,
 })
 
@@ -18,6 +19,39 @@ test('la política pública mantiene un presupuesto total acotado', () => {
   assert.equal(policy.attemptTimeoutMs, 10)
   assert.equal(policy.totalTimeoutMs, 80)
   assert.equal(policy.retryDelayMs, 1)
+  assert.equal(policy.maxConcurrency, 4)
+  assert.equal(publicQueryFetchPolicy({}).maxConcurrency, 2)
+})
+
+test('la cola limita la concurrencia real sin perder lecturas', async () => {
+  let active = 0
+  let maximumActive = 0
+  const releases = []
+
+  const fakeFetch = async () => {
+    active += 1
+    maximumActive = Math.max(maximumActive, active)
+    await new Promise((resolve) => releases.push(resolve))
+    active -= 1
+    return new Response('[]', { status: 200 })
+  }
+
+  const resilientFetch = createPublicQueryFetch(fakeFetch, {
+    env: testEnv({ SUPABASE_PUBLIC_QUERY_MAX_CONCURRENCY: '2' }),
+  })
+  const requests = Array.from({ length: 4 }, () => (
+    resilientFetch('https://example.test/rest/v1/entities', { method: 'GET' })
+  ))
+
+  await new Promise((resolve) => setTimeout(resolve, 0))
+  assert.equal(maximumActive, 2)
+
+  releases.splice(0).forEach((resolve) => resolve())
+  await new Promise((resolve) => setTimeout(resolve, 0))
+  releases.splice(0).forEach((resolve) => resolve())
+  await Promise.all(requests)
+
+  assert.equal(maximumActive, 2)
 })
 
 test('una lectura GET reintenta una vez cuando el primer intento agota su timeout', async () => {
@@ -96,7 +130,7 @@ test('las peticiones no idempotentes no se reintentan', async () => {
   assert.equal(calls, 1)
 })
 
-test('un abort del llamante se respeta y nunca activa un segundo intento', async () => {
+test('un abort previo del llamante no abre conexión ni activa un segundo intento', async () => {
   let calls = 0
   const caller = new AbortController()
   caller.abort(new Error('caller aborted'))
@@ -116,5 +150,5 @@ test('un abort del llamante se respeta y nunca activa un segundo intento', async
     }),
     /caller aborted/
   )
-  assert.equal(calls, 1)
+  assert.equal(calls, 0)
 })

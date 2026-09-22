@@ -93,6 +93,27 @@ function creditedName(item) {
   return [item.name, ...(item.aliases || [])].join(' · ')
 }
 
+function discographyMarchRelations(releases = []) {
+  const seen = new Set()
+  const relations = []
+  for (const release of releases) {
+    for (const track of release.tracks || []) {
+      if (!track.marchSlug) continue
+      const href = `/marchas/${track.marchSlug}`
+      if (seen.has(href)) continue
+      seen.add(href)
+      relations.push({
+        kind: 'Marcha',
+        relation: 'En la discografía',
+        title: track.title,
+        href,
+        context: [[release.title, release.year].filter(Boolean).join(' · '), track.composers?.map((composer) => composer.name).filter(Boolean).join(' · ')].filter(Boolean).join(' · '),
+      })
+    }
+  }
+  return relations
+}
+
 function accompanimentHeaderLabel(item) {
   const label = publicText(presentAccompanimentMoment(item))
   const normalized = label
@@ -235,6 +256,14 @@ export default async function BandDetailPage({ params }) {
   const accentColor = colors.find((item) => item.role === 'accent')?.hexValue || primaryColor
   const bandTheme = resolveBandPageTheme({ primaryColor, secondaryColor, accentColor })
   const currentRelations = [...orderedAccompaniments, ...gloryAccompaniments, ...upcomingAccompaniments]
+  const discographyMarches = discographyMarchRelations(discography)
+  const repertoireThreadItems = musicalRepertoires.slice(0, 4).map((item) => ({
+    kind: 'Cruceta',
+    relation: 'Repertorio interpretado',
+    title: item.displayTitle,
+    href: item.href,
+    context: [item.brotherhood?.name, item.step?.name, item.year, item.worksCount ? `${item.worksCount} obras` : ''].filter(Boolean).join(' · '),
+  }))
   const bandThreadItems = [
     ...(band.linkedBrotherhoodSlug ? [{
       kind: 'Hermandad',
@@ -259,6 +288,8 @@ export default async function BandDetailPage({ params }) {
         context: [item.municipality, yearRange(item)].filter(Boolean).join(' · '),
       }] : []),
     ]),
+    ...repertoireThreadItems,
+    ...discographyMarches.slice(0, 6),
   ]
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -328,7 +359,7 @@ export default async function BandDetailPage({ params }) {
 
       <EntitySectionNav items={[
         { href: '#resumen', label: 'De un vistazo' },
-        bandThreadItems.length > 0 && { href: '#tira-del-hilo', label: 'Tira del hilo' },
+        bandThreadItems.length > 0 && { href: '#tira-del-hilo', label: 'Conexiones' },
         banderin && { href: '#banderin', label: 'Banderín' },
         hasAccompaniments && { href: '#acompanamientos', label: 'Dónde suena' },
         hasUpcomingAccompaniments && { href: '#proximos-acompanamientos', label: 'Próximos' },
@@ -386,17 +417,20 @@ export default async function BandDetailPage({ params }) {
                   ) : null}
                 </article> : null}
               </div>
-              {(hasAccompaniments || hasGloryAccompaniments || currentPremieres.length || band.outings.length) ? (
+              {(hasAccompaniments || hasGloryAccompaniments || currentPremieres.length || band.outings.length || hasMusicalRepertoires || hasDiscography) ? (
                 <div className={styles.impactPanel}>
                   <div className={styles.impactHeading}>
-                    <span>En cifras</span>
-                    <strong>{currentYear}</strong>
+                    <span>Actividad {currentYear} + archivo</span>
+                    <strong>Hilo</strong>
                   </div>
                   <div className={styles.impactMetrics}>
                     {hasAccompaniments ? <a href="#acompanamientos"><strong>{orderedAccompaniments.length}</strong><span>{orderedAccompaniments.length === 1 ? 'contrato de Semana Santa' : 'contratos de Semana Santa'}</span></a> : null}
                     {hasGloryAccompaniments ? <a href="#glorias"><strong>{gloryAccompaniments.length}</strong><span>{gloryAccompaniments.length === 1 ? 'contrato de Gloria o culto externo' : 'contratos de Glorias y cultos externos'}</span></a> : null}
                     {currentPremieres.length ? <a href="#repertorio"><strong>{currentPremieres.length}</strong><span>{currentPremieres.length === 1 ? `novedad musical en ${currentYear}` : `novedades musicales en ${currentYear}`}</span></a> : null}
                     {band.outings.length ? <a href="#extraordinarias"><strong>{band.outings.length}</strong><span>{band.outings.length === 1 ? 'salida extraordinaria' : 'salidas extraordinarias'}</span></a> : null}
+                    {hasMusicalRepertoires ? <a href="#crucetas-musicales"><strong>{musicalRepertoires.length}</strong><span>{musicalRepertoires.length === 1 ? 'cruceta documentada' : 'crucetas documentadas'}</span></a> : null}
+                    {hasDiscography ? <a href="#discografia"><strong>{discography.length}</strong><span>{discography.length === 1 ? 'trabajo discográfico' : 'trabajos discográficos'}</span></a> : null}
+                    {discographyMarches.length ? <a href="#discografia"><strong>{discographyMarches.length}</strong><span>{discographyMarches.length === 1 ? 'Marcha con ficha en la discografía' : 'Marchas con ficha en la discografía'}</span></a> : null}
                   </div>
                 </div>
               ) : null}
@@ -410,8 +444,10 @@ export default async function BandDetailPage({ params }) {
         currentName={band.popularName}
         currentMeta={[band.type, band.municipality].filter(Boolean).join(' · ')}
         items={bandThreadItems}
-        title="De la banda al paso y a la Hermandad"
-        description="Prioriza los vínculos institucionales y los acompañamientos vigentes para que una formación musical no sea un destino aislado, sino una puerta de entrada al resto de la enciclopedia."
+        priorityProfile="banda"
+        eyebrow="Descubre el hilo"
+        title="Conexiones de esta Banda"
+        description="Salta a las Hermandades y pasos que acompaña, abre sus crucetas documentadas y continúa por las Marchas que forman parte de su discografía."
       />
 
       {banderin ? <section className={`${styles.contentSection} ${styles.heritageSection}`} id="banderin">

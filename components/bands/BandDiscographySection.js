@@ -42,7 +42,11 @@ function TrackList({ tracks }) {
           <li key={track.id}>
             <span className={styles.trackNumber}>{String(track.sequenceNo).padStart(2, '0')}</span>
             <div className={styles.trackCopy}>
-              <strong className={styles.trackTitle}>{track.title}</strong>
+              {track.marchSlug ? (
+                <Link className={styles.trackTitle} href={`/marchas/${track.marchSlug}`}>
+                  {track.title}<span aria-hidden="true">↗</span>
+                </Link>
+              ) : <strong className={styles.trackTitle}>{track.title}</strong>}
               {track.composers.length ? (
                 <div className={styles.relationshipLine}>
                   <span>Composición</span>

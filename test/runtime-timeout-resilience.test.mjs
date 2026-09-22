@@ -56,8 +56,17 @@ test('las lecturas públicas reintentan una vez sin superar el presupuesto de Ve
   assert.match(timedFetch, /createPublicQueryFetch/)
   assert.match(timedFetchCore, /DEFAULT_PUBLIC_QUERY_TIMEOUT_MS = 15_000/)
   assert.match(timedFetchCore, /SUPABASE_PUBLIC_QUERY_TOTAL_TIMEOUT_MS/)
+  assert.match(timedFetchCore, /SUPABASE_PUBLIC_QUERY_MAX_CONCURRENCY/)
   assert.match(timedFetchCore, /RETRYABLE_METHODS = new Set\(\['GET', 'HEAD'\]\)/)
   assert.match(timedFetchCore, /attempts < \(canRetry \? 2 : 1\)/)
+})
+
+test('el prerender reduce la presión sobre Supabase en vez de multiplicar los retries', async () => {
+  const config = await read('next.config.mjs')
+
+  assert.match(config, /staticGenerationRetryCount:\s*1/)
+  assert.match(config, /staticGenerationMaxConcurrency:\s*1/)
+  assert.match(config, /staticGenerationMinPagesPerWorker:\s*50/)
 })
 
 test('Paso e Imagen resuelven solo la identidad ligera de su Hermandad', async () => {
