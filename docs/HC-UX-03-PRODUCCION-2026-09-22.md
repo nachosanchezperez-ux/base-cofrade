@@ -40,3 +40,15 @@ HEAD que contiene HC-UX-03 por ascendencia.
 
 Se autoriza por tanto un segundo reintento controlado desde el HEAD real de `main`,
 sin cambios funcionales, para comprobar que producción vuelve a completar el builder remoto.
+
+
+## HC-UX-01 + HC-UX-02 · reintento conjunto
+
+HC-UX-01 quedó fusionado mediante #921 y HC-UX-02 mediante #922.
+
+HEAD funcional:
+`6b692ed203461960d4c26c95172f089b50bd3e90`
+
+Ambos lotes superan GitHub Actions, pero los deployments automáticos de Vercel han reproducido la ventana transitoria `BUILD_UTILS_SPAWN_1`.
+
+Este commit no introduce cambios funcionales: sirve como reintento controlado conjunto para publicar Hermandades + Bandas relacionales sin generar más divergencia de código.
