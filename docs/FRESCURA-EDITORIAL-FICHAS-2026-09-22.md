@@ -30,3 +30,27 @@ La migración está aplicada en Supabase producción, con columnas nullable e í
 ## Despliegue
 
 El primer deployment automático de producción del merge #910 terminó con un error genérico de build de Vercel pese a que el mismo código había superado CI y preview. Este documento deja trazado el reintento controlado del deployment sin introducir cambios funcionales.
+
+
+## Priorización de la cola
+
+La cola editorial no se ordena alfabéticamente por defecto. La prioridad se recalcula con datos vivos y no se persiste como atributo de la entidad.
+
+Señales utilizadas:
+
+- actividad anunciada en los próximos 90 días;
+- ficha sin revisar o con revisión vencida;
+- cambios recientes en la entidad;
+- número de conexiones estructuradas dentro del grafo;
+- número de Fuentes directas vinculadas.
+
+Niveles operativos:
+
+- **Urgente**: 90 puntos o más;
+- **Alta**: 70–89;
+- **Media**: 55–69;
+- **Normal**: menos de 55.
+
+La interfaz muestra hasta cuatro motivos por ficha —por ejemplo, actividad próxima, ausencia de revisión, cambio reciente, conexiones o Fuentes— para que el orden sea explicable y auditable.
+
+La vista `public.entity_editorial_priority` usa `security_invoker = true`, no está disponible para `anon` y solo admite lectura desde el panel autenticado.
