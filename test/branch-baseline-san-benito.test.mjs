@@ -18,6 +18,7 @@ const concertEventBandsSecurityName = '20260916062223_secure_concert_event_bands
 const sourceLinksLookupIndexesName = '20260916205306_source_links_public_lookup_indexes.sql'
 const sourceLinksSourceIndexName = '20260916220756_add_source_links_source_id_index.sql'
 const editorialFreshnessName = '20260921234430_add_entity_editorial_freshness.sql'
+const editorialPriorityName = '20260922044145_add_editorial_priority_view.sql'
 const baseline = readFileSync(new URL(baselineName, migrationsDirectory), 'utf8')
 const membershipStats = readFileSync(new URL(membershipStatsName, migrationsDirectory), 'utf8')
 const seed = readFileSync(new URL('../supabase/seed.sql', import.meta.url), 'utf8')
@@ -39,7 +40,19 @@ test('las ramas nuevas ejecutan únicamente el baseline y las evoluciones de esq
     sourceLinksLookupIndexesName,
     sourceLinksSourceIndexName,
     editorialFreshnessName,
+    editorialPriorityName,
   ])
+})
+
+test('la prioridad editorial es dinámica, privada y respeta RLS', () => {
+  const migration = readFileSync(new URL(editorialPriorityName, migrationsDirectory), 'utf8')
+  assert.match(migration, /create or replace view public\.entity_editorial_priority/i)
+  assert.match(migration, /security_invoker\s*=\s*true/i)
+  assert.match(migration, /revoke all on public\.entity_editorial_priority from public, anon/i)
+  assert.match(migration, /grant select on public\.entity_editorial_priority to authenticated, service_role/i)
+  assert.match(migration, /priority_score\s*>=\s*90/i)
+  assert.match(migration, /priority_score\s*>=\s*70/i)
+  assert.match(migration, /priority_score\s*>=\s*55/i)
 })
 
 test('las consultas públicas de Fuentes disponen de índices reproducibles', () => {
