@@ -1,5 +1,6 @@
 import 'server-only'
 
+import Link from 'next/link'
 import { createPublicClient as createClient } from '@/lib/supabase/public'
 import { publicText } from '@/lib/supabase/public-entity-page'
 import styles from './BrotherhoodQuickFacts.module.css'
@@ -177,6 +178,7 @@ async function loadRelationalFacts(brotherhood) {
           name: agent.name,
           slug: agent.slug || '',
           image: image.nombre,
+          imageSlug: image.slug || '',
           period: periodLabel(relation),
         }
       })
@@ -207,8 +209,16 @@ export default async function BrotherhoodQuickFacts({ brotherhood }) {
   const activities = annualActivities(brotherhood, relational.recurringSeries)
   const facts = [
     publicText(brotherhood.fundacion) ? { label: 'Fundación', value: publicText(brotherhood.fundacion) } : null,
-    brotherhood.imagenes?.length ? { label: 'Titulares', value: String(brotherhood.imagenes.length) } : null,
-    brotherhood.pasos?.length ? { label: 'Pasos', value: String(brotherhood.pasos.length) } : null,
+    brotherhood.imagenes?.length ? {
+      label: 'Titulares',
+      value: String(brotherhood.imagenes.length),
+      href: '#titulares',
+    } : null,
+    brotherhood.pasos?.length ? {
+      label: 'Pasos',
+      value: String(brotherhood.pasos.length),
+      href: '#pasos',
+    } : null,
     relational.membership ? {
       label: 'Hermanos',
       value: relational.membership.value,
@@ -230,7 +240,13 @@ export default async function BrotherhoodQuickFacts({ brotherhood }) {
           {facts.map((fact) => (
             <div className={styles.fact} key={fact.label}>
               <dt>{fact.label}</dt>
-              <dd>{fact.value}</dd>
+              <dd>
+                {fact.href ? (
+                  <Link className={styles.inlineLink} href={fact.href}>
+                    {fact.value}<span aria-hidden="true">→</span>
+                  </Link>
+                ) : fact.value}
+              </dd>
               {fact.meta ? <small>{fact.meta}</small> : null}
             </div>
           ))}
@@ -263,7 +279,13 @@ export default async function BrotherhoodQuickFacts({ brotherhood }) {
           <div className={styles.dresserGrid}>
             {relational.dressers.map((dresser) => (
               <div className={styles.dresser} key={dresser.id}>
-                <small>{dresser.image}</small>
+                <small>
+                  {dresser.imageSlug ? (
+                    <Link className={styles.inlineLink} href={`/imagenes/${dresser.imageSlug}`}>
+                      {dresser.image}<span aria-hidden="true">↗</span>
+                    </Link>
+                  ) : dresser.image}
+                </small>
                 <strong>{dresser.name}</strong>
                 {dresser.period ? <span>{dresser.period}</span> : null}
               </div>
