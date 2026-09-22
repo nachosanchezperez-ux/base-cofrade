@@ -54,3 +54,12 @@ Niveles operativos:
 La interfaz muestra hasta cuatro motivos por ficha —por ejemplo, actividad próxima, ausencia de revisión, cambio reciente, conexiones o Fuentes— para que el orden sea explicable y auditable.
 
 La vista `public.entity_editorial_priority` usa `security_invoker = true`, no está disponible para `anon` y solo admite lectura desde el panel autenticado.
+
+
+### Corrección de la señal de cambio reciente
+
+La prioridad usa la **fecha efectiva de contenido** (`content_updated_at ?? updated_at`) para medir si una ficha ha cambiado recientemente.
+
+Esto evita que una acción meramente editorial como **Revisada hoy** —que puede mover el `updated_at` técnico por trigger— añada falsamente el motivo «Cambio reciente» o sume puntos de actualización.
+
+La migración correctiva `20260922045453_fix_editorial_priority_content_date` redefine la vista sin cambiar pesos, umbrales ni permisos.
