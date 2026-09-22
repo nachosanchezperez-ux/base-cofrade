@@ -18,6 +18,6 @@ export async function GET(request) {
     return NextResponse.json({ items }, { headers: { 'Cache-Control': 'no-store' } })
   } catch {
     console.error('[Hilo Cofrade] Error en autocompletado de Tira del hilo')
-    return NextResponse.json({ items: [] }, { status: 200, headers: { 'Cache-Control': 'no-store' } })
+    return NextResponse.json({ items: [], unavailable: true }, { status: 200, headers: { 'Cache-Control': 'no-store' } })
   }
 }

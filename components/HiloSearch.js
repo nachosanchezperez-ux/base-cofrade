@@ -12,6 +12,7 @@ import { decodeTiraSession, encodeTiraSession, TIRA_SESSION_KEY } from '@/lib/ti
 import { publicText } from '@/lib/supabase/public-entity-page';
 import styles from './HiloSearch.module.css';
 import responseStyles from './HiloSearchResponse.module.css';
+import upgradeStyles from './HiloSearchUpgrade.module.css';
 
 const starterQuestions = [
   '¿Qué imágenes de La Cena son anteriores al siglo XX?',
@@ -44,6 +45,7 @@ const searchResultMarks = {
   musical_repertoire: 'CR',
   heritage_update: 'ES',
   band_premiere: '♪',
+  directory: 'DIR',
 };
 
 function normalize(value = '') {
@@ -177,7 +179,7 @@ function SearchResultContent({ item }) {
         {descriptor ? <small>{descriptor}</small> : null}
       </span>
       <span className={styles.resultAction}>
-        <small>{item.href ? 'Abrir ficha' : 'Preguntar'}</small>
+        <small>{item.actionLabel || (item.href ? 'Abrir ficha' : 'Preguntar')}</small>
         <span className={styles.arrow} aria-hidden="true">{item.href ? '→' : '↗'}</span>
       </span>
     </>
@@ -288,6 +290,9 @@ export default function HiloSearch({
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const [searching, setSearching] = useState(false);
+  const [searchComplete, setSearchComplete] = useState(false);
+  const [searchError, setSearchError] = useState(false);
+  const [activeResultIndex, setActiveResultIndex] = useState(-1);
   const [messages, setMessages] = useState([]);
   const [context, setContext] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -297,6 +302,8 @@ export default function HiloSearch({
   const compact = homeCompact && !fullPage;
   const searchOrigin = universal ? 'global_search' : fullPage ? 'conversation_search' : 'home_search';
   const orderedResults = prioritizeHiloNavigationItems(results);
+  const inputId = universal ? 'hilo-search-universal' : fullPage ? 'hilo-search-full' : 'hilo-search';
+  const resultsId = `${inputId}-results`;
 
   useEffect(() => {
     try {
@@ -331,10 +338,16 @@ export default function HiloSearch({
     if (term.length < 2 || looksLikeQuestion(query)) {
       setResults([]);
       setSearching(false);
+      setSearchComplete(false);
+      setSearchError(false);
+      setActiveResultIndex(-1);
       return undefined;
     }
 
     const controller = new AbortController();
+    setSearchComplete(false);
+    setSearchError(false);
+    setActiveResultIndex(-1);
     const timer = window.setTimeout(async () => {
       setSearching(true);
       try {
@@ -346,13 +359,18 @@ export default function HiloSearch({
         const payload = await request.json();
         if (!request.ok) throw new Error(payload?.error || 'No se pudo buscar');
         setResults(Array.isArray(payload?.items) ? payload.items : []);
+        setSearchError(Boolean(payload?.unavailable));
       } catch (error) {
         if (error?.name !== 'AbortError') {
           console.error('[Hilo Cofrade] Error en autocompletado', error);
           setResults([]);
+          setSearchError(true);
         }
       } finally {
-        if (!controller.signal.aborted) setSearching(false);
+        if (!controller.signal.aborted) {
+          setSearching(false);
+          setSearchComplete(true);
+        }
       }
     }, 180);
 
@@ -434,9 +452,29 @@ export default function HiloSearch({
   };
 
   const handleKeyDown = (event) => {
+    if (event.key === 'ArrowDown' && orderedResults.length) {
+      event.preventDefault();
+      setActiveResultIndex((current) => current >= orderedResults.length - 1 ? 0 : current + 1);
+      return;
+    }
+    if (event.key === 'ArrowUp' && orderedResults.length) {
+      event.preventDefault();
+      setActiveResultIndex((current) => current <= 0 ? orderedResults.length - 1 : current - 1);
+      return;
+    }
+    if (event.key === 'Escape' && (orderedResults.length || searchComplete)) {
+      event.preventDefault();
+      setResults([]);
+      setSearchComplete(false);
+      setSearchError(false);
+      setActiveResultIndex(-1);
+      return;
+    }
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault();
-      ask(query);
+      const activeResult = orderedResults[activeResultIndex];
+      if (activeResult) useResult(activeResult);
+      else ask(query);
     }
   };
 
@@ -454,6 +492,9 @@ export default function HiloSearch({
     setQuery('');
     setResults([]);
     setSearching(false);
+    setSearchComplete(false);
+    setSearchError(false);
+    setActiveResultIndex(-1);
     initialHandled.current = true;
     try {
       window.sessionStorage.removeItem(TIRA_SESSION_KEY);
@@ -512,9 +553,9 @@ export default function HiloSearch({
           data-hilo-event="hilo_search"
           data-hilo-origin={universal ? 'global_form' : fullPage ? 'conversation_form' : 'form'}
         >
-          <label className={styles.srOnly} htmlFor={fullPage ? 'hilo-search-full' : 'hilo-search'}>{composerLabel}</label>
+          <label className={styles.srOnly} htmlFor={inputId}>{composerLabel}</label>
           <textarea
-            id={fullPage ? 'hilo-search-full' : 'hilo-search'}
+            id={inputId}
             rows={1}
             value={query}
             onChange={(event) => setQuery(event.target.value)}
@@ -522,6 +563,11 @@ export default function HiloSearch({
             placeholder={composerPlaceholder}
             autoComplete="off"
             disabled={loading}
+            role="combobox"
+            aria-autocomplete="list"
+            aria-expanded={Boolean(query.trim().length > 1 && !looksLikeQuestion(query) && (orderedResults.length || searching || searchComplete))}
+            aria-controls={resultsId}
+            aria-activedescendant={activeResultIndex >= 0 ? `${inputId}-result-${activeResultIndex}` : undefined}
           />
           <button type="submit" aria-label="Enviar pregunta" disabled={loading || !query.trim()}>
             <span aria-hidden="true">↑</span>
@@ -544,32 +590,42 @@ export default function HiloSearch({
         </div>
       ) : null}
 
-      {showComposer && query.trim().length > 1 && !looksLikeQuestion(query) && (results.length > 0 || searching) ? (
+      {showComposer && query.trim().length > 1 && !looksLikeQuestion(query) && (results.length > 0 || searching || searchComplete) ? (
         <div className={styles.results} aria-label="Fichas y coincidencias del grafo" aria-live="polite">
           <div className={styles.resultsHead}>
-            <span>{searching ? 'Buscando…' : 'Fichas y coincidencias'}</span>
-            <small>Abre una ficha directamente o sigue tirando del hilo</small>
+            <span>{searching ? 'Buscando…' : orderedResults.length ? `${orderedResults.length} resultados` : 'Sin coincidencias directas'}</span>
+            <small>{orderedResults.length ? 'Fichas, contenidos y listados relacionados' : 'Puedes convertir la búsqueda en una pregunta'}</small>
           </div>
-          <div className={styles.resultsList}>
+          <div className={styles.resultsList} id={resultsId} role="listbox">
             {orderedResults.map((item, index) => item.href ? (
               <Link
                 href={item.href}
-                className={`${styles.result} ${index === 0 ? styles.resultPrimary : ''}`}
+                id={`${inputId}-result-${index}`}
+                role="option"
+                aria-selected={activeResultIndex === index}
+                className={`${styles.result} ${index === 0 ? styles.resultPrimary : ''} ${activeResultIndex === index ? upgradeStyles.resultActive : ''}`}
                 key={`${item.entityId || item.type}-${item.title}`}
                 onClick={onNavigate}
+                onMouseEnter={() => setActiveResultIndex(index)}
+                onFocus={() => setActiveResultIndex(index)}
                 data-hilo-event="search_result_open"
                 data-hilo-origin={searchOrigin}
                 data-hilo-target-type={analyticsEntityType(item.type)}
-                aria-label={`Abrir ficha de ${item.title}`}
+                aria-label={`${item.actionLabel || 'Abrir ficha'}: ${item.title}`}
               >
                 <SearchResultContent item={item} />
               </Link>
             ) : (
               <button
                 type="button"
-                className={`${styles.result} ${styles.resultQuestion}`}
+                id={`${inputId}-result-${index}`}
+                role="option"
+                aria-selected={activeResultIndex === index}
+                className={`${styles.result} ${styles.resultQuestion} ${activeResultIndex === index ? upgradeStyles.resultActive : ''}`}
                 key={`${item.entityId || item.type}-${item.title}`}
                 onClick={() => useResult(item)}
+                onMouseEnter={() => setActiveResultIndex(index)}
+                onFocus={() => setActiveResultIndex(index)}
                 data-hilo-event="search_result_ask"
                 data-hilo-origin={searchOrigin}
                 data-hilo-target-type={analyticsEntityType(item.type)}
@@ -578,6 +634,16 @@ export default function HiloSearch({
                 <SearchResultContent item={item} />
               </button>
             ))}
+            {!searching && !orderedResults.length ? (
+              <div className={upgradeStyles.resultsEmpty} role="status">
+                <span aria-hidden="true">?</span>
+                <div>
+                  <strong>{searchError ? 'El buscador directo no está disponible ahora mismo' : 'No encuentro una ficha con esas palabras'}</strong>
+                  <small>Hilo Cofrade puede buscar la respuesta dentro de sus relaciones y datos publicados.</small>
+                </div>
+                <button type="button" onClick={() => ask(query)}>Preguntar</button>
+              </div>
+            ) : null}
           </div>
         </div>
       ) : null}
