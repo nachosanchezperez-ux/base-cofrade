@@ -433,6 +433,20 @@
   font-size: 0.94rem;
   font-weight: 700;
   line-height: 1.3;
+  text-decoration: none;
+}
+
+a.trackTitle:hover,
+a.trackTitle:focus-visible {
+  color: var(--band-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.trackTitle > span {
+  margin-left: 0.3rem;
+  color: var(--band-primary);
+  font-size: 0.72em;
 }
 
 .relationshipLine {
