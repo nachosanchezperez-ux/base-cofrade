@@ -45,15 +45,21 @@ test('una Gloria omite fuentes fallidas y reserva null para ausencia real', asyn
   assert.match(source, /No se pudo cargar la ficha[\s\S]*throw error/)
 })
 
-test('las lecturas públicas cortan una petición Supabase antes del límite de Vercel', async () => {
+test('las lecturas públicas reintentan una vez sin superar el presupuesto de Vercel', async () => {
   const publicClient = await read('lib/supabase/public.js')
   const publicServer = await read('lib/supabase/public-server.js')
   const timedFetch = await read('lib/supabase/public-fetch.js')
+  const timedFetchCore = await read('lib/supabase/public-fetch-core.js')
 
   assert.match(publicClient, /fetch:\s*fetchWithPublicQueryTimeout/)
   assert.match(publicServer, /fetch:\s*fetchWithPublicQueryTimeout/)
-  assert.match(timedFetch, /DEFAULT_PUBLIC_QUERY_TIMEOUT_MS = 15_000/)
-  assert.match(timedFetch, /controller\.abort/)
+  assert.match(publicClient, /db:\s*\{[\s\S]*retry:\s*false/)
+  assert.match(publicServer, /db:\s*\{[\s\S]*retry:\s*false/)
+  assert.match(timedFetch, /createPublicQueryFetch/)
+  assert.match(timedFetchCore, /DEFAULT_PUBLIC_QUERY_TIMEOUT_MS = 15_000/)
+  assert.match(timedFetchCore, /SUPABASE_PUBLIC_QUERY_TOTAL_TIMEOUT_MS/)
+  assert.match(timedFetchCore, /RETRYABLE_METHODS = new Set\(\['GET', 'HEAD'\]\)/)
+  assert.match(timedFetchCore, /attempts < \(canRetry \? 2 : 1\)/)
 })
 
 test('Paso e Imagen resuelven solo la identidad ligera de su Hermandad', async () => {
