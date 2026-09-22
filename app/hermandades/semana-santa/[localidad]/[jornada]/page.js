@@ -14,7 +14,8 @@ async function pageData(localidad, jornada) {
   const items = brotherhoodsForDirectoryRoute(
     await getIndexableBrotherhoodDirectory(),
     'semana-santa',
-    path
+    path,
+    1
   )
   const localityName = labelFromSlug(localidad)
   const dayName = labelFromSlug(jornada)
