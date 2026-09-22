@@ -6,8 +6,8 @@ import {
 } from '../lib/supabase/public-fetch-core.js'
 
 const testEnv = (overrides = {}) => ({
-  SUPABASE_PUBLIC_QUERY_TIMEOUT_MS: '80',
-  SUPABASE_PUBLIC_QUERY_FIRST_ATTEMPT_TIMEOUT_MS: '10',
+  SUPABASE_PUBLIC_QUERY_TIMEOUT_MS: '10',
+  SUPABASE_PUBLIC_QUERY_TOTAL_TIMEOUT_MS: '80',
   SUPABASE_PUBLIC_QUERY_RETRY_DELAY_MS: '1',
   ...overrides,
 })
@@ -15,8 +15,8 @@ const testEnv = (overrides = {}) => ({
 test('la política pública mantiene un presupuesto total acotado', () => {
   const policy = publicQueryFetchPolicy(testEnv())
 
+  assert.equal(policy.attemptTimeoutMs, 10)
   assert.equal(policy.totalTimeoutMs, 80)
-  assert.equal(policy.firstAttemptTimeoutMs, 10)
   assert.equal(policy.retryDelayMs, 1)
 })
 
