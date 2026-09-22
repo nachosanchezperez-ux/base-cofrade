@@ -19,6 +19,7 @@ const sourceLinksLookupIndexesName = '20260916205306_source_links_public_lookup_
 const sourceLinksSourceIndexName = '20260916220756_add_source_links_source_id_index.sql'
 const editorialFreshnessName = '20260921234430_add_entity_editorial_freshness.sql'
 const editorialPriorityName = '20260922044145_add_editorial_priority_view.sql'
+const editorialPriorityContentDateFixName = '20260922045453_fix_editorial_priority_content_date.sql'
 const baseline = readFileSync(new URL(baselineName, migrationsDirectory), 'utf8')
 const membershipStats = readFileSync(new URL(membershipStatsName, migrationsDirectory), 'utf8')
 const seed = readFileSync(new URL('../supabase/seed.sql', import.meta.url), 'utf8')
@@ -41,7 +42,15 @@ test('las ramas nuevas ejecutan únicamente el baseline y las evoluciones de esq
     sourceLinksSourceIndexName,
     editorialFreshnessName,
     editorialPriorityName,
+    editorialPriorityContentDateFixName,
   ])
+})
+
+test('la prioridad editorial distingue actualización de contenido y actualización técnica', () => {
+  const migration = readFileSync(new URL(editorialPriorityContentDateFixName, migrationsDirectory), 'utf8')
+  assert.match(migration, /coalesce\(t\.content_updated_at, t\.updated_at\)/i)
+  assert.match(migration, /coalesce\(s\.content_updated_at, s\.updated_at\)/i)
+  assert.doesNotMatch(migration, /when s\.updated_at >= now\(\) - interval '14 days'/i)
 })
 
 test('la prioridad editorial es dinámica, privada y respeta RLS', () => {
