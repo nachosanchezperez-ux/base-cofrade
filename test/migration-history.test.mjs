@@ -19,6 +19,7 @@ const EXECUTABLE_SCHEMA_MIGRATIONS = [
   "20260916220756_add_source_links_source_id_index.sql",
   "20260921234430_add_entity_editorial_freshness.sql",
   "20260922044145_add_editorial_priority_view.sql",
+  "20260922045453_fix_editorial_priority_content_date.sql",
 ];
 
 test("Supabase migration versions are unique and well formed", async () => {
