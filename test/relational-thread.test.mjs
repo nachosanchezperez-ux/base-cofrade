@@ -11,24 +11,25 @@ function item(kind, slug, extra = {}) {
   };
 }
 
-test('Hermandad reparte la portada entre imágenes, pasos y bandas', () => {
+test('Hermandad reparte la portada entre imágenes, pasos, bandas y marchas', () => {
   const items = [
     ...Array.from({ length: 6 }, (_, index) => item('Imagen', `imagen-${index + 1}`)),
     ...Array.from({ length: 5 }, (_, index) => item('Paso', `paso-${index + 1}`)),
     ...Array.from({ length: 4 }, (_, index) => item('Banda', `banda-${index + 1}`)),
+    ...Array.from({ length: 4 }, (_, index) => item('Marcha', `marcha-${index + 1}`)),
   ];
 
   const result = prepareRelationalItems(items, { profile: 'hermandad', maxItems: 8 });
   const kinds = result.visibleItems.map((entry) => entry.kind);
 
-  assert.equal(result.totalItems, 15);
+  assert.equal(result.totalItems, 19);
   assert.equal(result.visibleItems.length, 8);
-  assert.equal(result.hiddenItems.length, 7);
-  assert.equal(kinds.filter((kind) => kind === 'Imagen').length, 3);
-  assert.equal(kinds.filter((kind) => kind === 'Paso').length, 3);
+  assert.equal(result.hiddenItems.length, 11);
+  assert.equal(kinds.filter((kind) => kind === 'Imagen').length, 2);
+  assert.equal(kinds.filter((kind) => kind === 'Paso').length, 2);
   assert.equal(kinds.filter((kind) => kind === 'Banda').length, 2);
+  assert.equal(kinds.filter((kind) => kind === 'Marcha').length, 2);
 });
-
 test('Imagen prioriza Hermandad, Paso y después imágenes hermanas', () => {
   const result = prepareRelationalItems([
     item('Imagen', 'hermana-1'),
