@@ -2,8 +2,9 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { agendaLocationMatches, agendaMunicipalityOptions } from '@/lib/agenda-cofrade-location'
+import { getProcessionLiveState } from '@/lib/procession-live-status'
 import styles from './AgendaCofradeDirectoryV4.module.css'
 import concertStyles from './AgendaCofradeDirectoryV4Concerts.module.css'
 import visualStyles from './AgendaCofradeDirectoryV4Visuals.module.css'
@@ -189,15 +190,41 @@ export default function AgendaCofradeDirectoryV4({
   initialPeriod = 'upcoming',
   initialTerritory = 'all',
   initialMunicipality = '',
+  initialNowIso = '',
 }) {
   const [period, setPeriod] = useState(initialPeriod)
   const [category, setCategory] = useState(initialCategory)
   const [territory, setTerritory] = useState(initialTerritory)
   const [municipality, setMunicipality] = useState(initialMunicipality)
+  const [nowIso, setNowIso] = useState(initialNowIso || '1970-01-01T00:00:00.000Z')
+
+  useEffect(() => {
+    setNowIso(new Date().toISOString())
+    const timer = window.setInterval(() => setNowIso(new Date().toISOString()), 60_000)
+    return () => window.clearInterval(timer)
+  }, [])
+
+  const liveNow = useMemo(() => new Date(nowIso), [nowIso])
 
   const upcomingItems = useMemo(
     () => items.filter((item) => item.isUpcoming && !item.isCancelled),
     [items]
+  )
+
+  const liveItems = useMemo(() => upcomingItems
+    .filter((item) => ['processions', 'transfers', 'rosaries'].includes(item.category))
+    .map((item) => ({
+      ...item,
+      liveState: getProcessionLiveState({
+        date: item.date,
+        endDate: item.endDate,
+        startTime: item.startTime,
+        endTime: item.endTime,
+      }, liveNow),
+    }))
+    .filter((item) => item.liveState.isLive)
+    .sort((left, right) => String(left.startTime || '').localeCompare(String(right.startTime || ''))),
+  [liveNow, upcomingItems]
   )
 
   const periodCounts = useMemo(() => Object.fromEntries(
@@ -240,6 +267,34 @@ export default function AgendaCofradeDirectoryV4({
         </div>
         <p>Solo mostramos lo que está por venir. Elige cuándo, qué tipo de acto y dónde para localizar una cita de un vistazo.</p>
       </div>
+
+      {liveItems.length ? (
+        <section className={styles.livePanel} aria-labelledby="agenda-live-title">
+          <div className={styles.livePanelHead}>
+            <div>
+              <span><i aria-hidden="true" /> Ahora mismo</span>
+              <h3 id="agenda-live-title">{liveItems.length} {liveItems.length === 1 ? 'procesión en curso' : 'procesiones en curso'}</h3>
+            </div>
+            <p>Las salidas que están en la calle se mantienen arriba aunque coincidan varias a la vez.</p>
+          </div>
+          <div className={styles.liveList}>
+            {liveItems.map((item) => (
+              <article className={styles.liveItem} key={`live:${item.key}`}>
+                <div>
+                  <span>{item.categoryLabel}</span>
+                  <h4>{item.href ? <Link href={item.href}>{item.title}</Link> : item.title}</h4>
+                  <p>{[item.municipality, item.organizer].filter(Boolean).join(' · ')}</p>
+                </div>
+                <div className={styles.liveTimes}>
+                  {item.startTime ? <span>Salida <strong>{item.startTime}</strong></span> : null}
+                  {item.endTime ? <span>Entrada <strong>{item.endTime}</strong></span> : null}
+                </div>
+                {item.href ? <Link className={styles.liveAction} href={item.href}>Seguir <span aria-hidden="true">→</span></Link> : null}
+              </article>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       <div className={`${styles.quickTypes} ${concertStyles.quickTypesFive}`} aria-label="Elegir tipo de acto">
         {categoryOptions.map(([value, label]) => (
@@ -378,7 +433,17 @@ export default function AgendaCofradeDirectoryV4({
                 </div>
                 <div className={styles.cards}>
                   {group.items.map((item) => (
-                    <article className={`${styles.card} ${visualStyles.visualCard} ${item.category === 'concerts' ? concertStyles.concertCard : ''}`} key={item.key} data-category={item.category}>
+                    {(() => {
+                      const cardLiveState = ['processions', 'transfers', 'rosaries'].includes(item.category)
+                        ? getProcessionLiveState({
+                            date: item.date,
+                            endDate: item.endDate,
+                            startTime: item.startTime,
+                            endTime: item.endTime,
+                          }, liveNow)
+                        : { state: 'upcoming', isLive: false }
+                      return (
+                    <article className={`${styles.card} ${visualStyles.visualCard} ${item.category === 'concerts' ? concertStyles.concertCard : ''} ${cardLiveState.isLive ? styles.cardLive : ''}`} key={item.key} data-category={item.category} data-live={cardLiveState.isLive ? 'true' : undefined}>
                       <time className={styles.dateBlock} dateTime={item.date || undefined}>
                         <strong>{item.dateInfo.day}</strong>
                         <span>{item.dateInfo.month}</span>
@@ -388,6 +453,7 @@ export default function AgendaCofradeDirectoryV4({
                         <div className={styles.cardTopline}>
                           <span data-category={item.category}>{item.categoryLabel}</span>
                           {item.isExtraordinary && item.category === 'rosaries' ? <b>Extraordinario</b> : null}
+                          {cardLiveState.isLive ? <small className={styles.liveBadge}><i aria-hidden="true" /> En curso</small> : null}
                         </div>
                         <h4>{item.category === 'concerts' ? item.title : item.href ? <Link href={item.href}>{item.title}</Link> : item.title}</h4>
                         <p className={styles.organizer}>{item.organizer}</p>
@@ -402,6 +468,8 @@ export default function AgendaCofradeDirectoryV4({
                       </div>
                       <EventVisual item={item} />
                     </article>
+                      )
+                    })()}
                   ))}
                 </div>
               </section>
