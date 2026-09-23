@@ -52,6 +52,14 @@ test('la Agenda pública muestra solo actos próximos y elimina el acceso histó
   assert.doesNotMatch(page, /Próxima cita/)
 })
 
+test('Agenda conserva una procesión nocturna aunque su fecha de salida sea ayer', () => {
+  const source = read('lib/supabase/agenda-cofrade.js')
+  assert.match(source, /withProcessionLiveState/)
+  assert.match(source, /liveItem\.liveState\.isLive/)
+  assert.match(source, /isUpcoming: true/)
+  assert.match(source, /isPast: false/)
+})
+
 test('Agenda Cofrade destaca todas las procesiones que están en curso', () => {
   const directory = read('components/AgendaCofradeDirectoryV4.js')
   const page = read('app/agenda-cofrade/page.js')
