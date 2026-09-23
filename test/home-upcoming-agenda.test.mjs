@@ -9,7 +9,7 @@ test('la agenda de Home reúne extraordinarias y Glorias públicas por fecha', a
 
   assert.match(loader, /getNavigableHomeExtraordinaryOutings/)
   assert.match(loader, /getGloryDirectory/)
-  assert.match(loader, /!item\.isCancelled/)
+  assert.match(loader, /!item\.isCancelled && !item\.isPast/)
   assert.match(loader, /item\.liveState\.state !== 'done'/)
   assert.match(loader, /withProcessionLiveState/)
   assert.match(loader, /compareProcessionLiveItems/)
