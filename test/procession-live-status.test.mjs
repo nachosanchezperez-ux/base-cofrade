@@ -67,3 +67,22 @@ test('varias procesiones simultáneas conservan el orden de salida dentro del di
     ['earlier', 'later']
   )
 })
+
+
+test('una salida de una fecha pasada sin horarios queda finalizada', () => {
+  const state = getProcessionLiveState({
+    date: '2026-03-19',
+  }, new Date('2026-09-24T00:00:00Z'))
+
+  assert.equal(state.state, 'done')
+  assert.equal(state.label, 'Finalizada')
+})
+
+test('una salida futura sin horarios sigue siendo próxima', () => {
+  const state = getProcessionLiveState({
+    date: '2026-10-12',
+  }, new Date('2026-09-24T00:00:00Z'))
+
+  assert.equal(state.state, 'upcoming')
+  assert.equal(state.label, 'Próxima')
+})
