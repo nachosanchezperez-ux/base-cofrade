@@ -52,6 +52,18 @@ test('la Agenda pública muestra solo actos próximos y elimina el acceso histó
   assert.doesNotMatch(page, /Próxima cita/)
 })
 
+test('Agenda Cofrade destaca todas las procesiones que están en curso', () => {
+  const directory = read('components/AgendaCofradeDirectoryV4.js')
+  const page = read('app/agenda-cofrade/page.js')
+
+  assert.match(directory, /getProcessionLiveState/)
+  assert.match(directory, /Ahora mismo/)
+  assert.match(directory, /procesiones en curso/)
+  assert.match(directory, /setInterval\(\(\) => setNowIso/)
+  assert.match(directory, /cardLiveState\.isLive/)
+  assert.match(page, /initialNowIso=\{nowIso\}/)
+})
+
 test('igualás y ensayos conservan un calendario especializado relacionado', () => {
   const page = read('app/agenda-cofrade/page.js')
   assert.match(page, /getCrewEventDirectory/)
