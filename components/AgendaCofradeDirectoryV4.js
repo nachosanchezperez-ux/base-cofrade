@@ -432,17 +432,17 @@ export default function AgendaCofradeDirectoryV4({
                   </div>
                 </div>
                 <div className={styles.cards}>
-                  {group.items.map((item) => (
-                    {(() => {
-                      const cardLiveState = ['processions', 'transfers', 'rosaries'].includes(item.category)
-                        ? getProcessionLiveState({
-                            date: item.date,
-                            endDate: item.endDate,
-                            startTime: item.startTime,
-                            endTime: item.endTime,
-                          }, liveNow)
-                        : { state: 'upcoming', isLive: false }
-                      return (
+                  {group.items.map((item) => {
+                    const cardLiveState = ['processions', 'transfers', 'rosaries'].includes(item.category)
+                      ? getProcessionLiveState({
+                          date: item.date,
+                          endDate: item.endDate,
+                          startTime: item.startTime,
+                          endTime: item.endTime,
+                        }, liveNow)
+                      : { state: 'upcoming', isLive: false }
+
+                    return (
                     <article className={`${styles.card} ${visualStyles.visualCard} ${item.category === 'concerts' ? concertStyles.concertCard : ''} ${cardLiveState.isLive ? styles.cardLive : ''}`} key={item.key} data-category={item.category} data-live={cardLiveState.isLive ? 'true' : undefined}>
                       <time className={styles.dateBlock} dateTime={item.date || undefined}>
                         <strong>{item.dateInfo.day}</strong>
@@ -468,9 +468,8 @@ export default function AgendaCofradeDirectoryV4({
                       </div>
                       <EventVisual item={item} />
                     </article>
-                      )
-                    })()}
-                  ))}
+                    )
+                  })}
                 </div>
               </section>
             )
