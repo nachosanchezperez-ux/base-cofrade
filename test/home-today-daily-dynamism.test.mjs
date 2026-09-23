@@ -52,5 +52,5 @@ test('una protagonista sin fotografía se compacta y elimina también la fila vi
 
 test('la caché pública se renueva con el nuevo contrato de rotación', () => {
   const snapshot = read('lib/supabase/home-snapshot.js')
-  assert.match(snapshot, /hilo-cofrade-home-public-snapshot-v12/)
+  assert.match(snapshot, /hilo-cofrade-home-public-snapshot-v13/)
 })
