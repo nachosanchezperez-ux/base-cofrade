@@ -16,6 +16,16 @@ test('la agenda de Home reúne extraordinarias y Glorias públicas por fecha', a
   assert.match(loader, /typeLabel: 'Gloria'/)
 })
 
+test('la Home conserva una salida nocturna hasta su entrada real', async () => {
+  const homeLoader = await read('lib/supabase/home.js')
+  const agendaLoader = await read('lib/supabase/home-upcoming-agenda.js')
+
+  assert.match(homeLoader, /extraordinary_outings_directory/)
+  assert.match(homeLoader, /previousDateKey\(today\)/)
+  assert.match(homeLoader, /returnDate: item\.return_date/)
+  assert.match(agendaLoader, /item\.liveState\.state !== 'done'/)
+})
+
 test('la Home presenta una agenda común sin sustituir las guías de detalle', async () => {
   const home = await read('components/HomePageV2.js')
 
