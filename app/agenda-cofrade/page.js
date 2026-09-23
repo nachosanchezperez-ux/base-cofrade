@@ -32,6 +32,7 @@ export default async function AgendaCofradePage() {
     getCrewEventDirectory(),
   ])
   const { items, today } = agendaData
+  const nowIso = new Date().toISOString()
   const upcoming = items.filter((item) => item.isUpcoming && !item.isCancelled)
   const upcomingCrewCount = crewEvents.filter((item) => item.isUpcoming && !item.isCancelled).length
 
@@ -52,8 +53,8 @@ export default async function AgendaCofradePage() {
       </Suspense>
 
       <div className={`shell ${styles.content} ${v4Styles.contentV4}`}>
-        <Suspense fallback={<AgendaCofradeDirectoryV4 items={upcoming} today={today} />}>
-          <AgendaCofradeDirectoryFromUrl items={upcoming} today={today} />
+        <Suspense fallback={<AgendaCofradeDirectoryV4 items={upcoming} today={today} initialNowIso={nowIso} />}>
+          <AgendaCofradeDirectoryFromUrl items={upcoming} today={today} initialNowIso={nowIso} />
         </Suspense>
         <section className={styles.relatedCalendar} aria-labelledby="calendar-cuadrillas"><div><span>Calendario especializado</span><h2 id="calendar-cuadrillas">Igualás y ensayos</h2><p>Las convocatorias de cuadrillas quedan en un espacio propio, conectado con sus Hermandades y separado de la agenda de interés general.</p></div><Link href="/igualas-y-ensayos">Ver {upcomingCrewCount} próximas convocatorias <span>→</span></Link></section>
         <nav className={styles.relatedLinks} aria-label="Explorar contenidos relacionados"><span>Seguir explorando</span><Link href="/hermandades">Hermandades</Link><Link href="/bandas">Bandas</Link><Link href="/procesiones-de-gloria">Calendario de Glorias</Link><Link href="/extraordinarias">Calendario de extraordinarias</Link></nav>

@@ -9,10 +9,22 @@ test('la agenda de Home reúne extraordinarias y Glorias públicas por fecha', a
 
   assert.match(loader, /getNavigableHomeExtraordinaryOutings/)
   assert.match(loader, /getGloryDirectory/)
-  assert.match(loader, /item\.isUpcoming && !item\.isCancelled/)
-  assert.match(loader, /\.sort\(compareAgendaItems\)/)
+  assert.match(loader, /!item\.isCancelled/)
+  assert.match(loader, /item\.liveState\.state !== 'done'/)
+  assert.match(loader, /withProcessionLiveState/)
+  assert.match(loader, /compareProcessionLiveItems/)
   assert.match(loader, /typeLabel: 'Extraordinaria'/)
   assert.match(loader, /typeLabel: 'Gloria'/)
+})
+
+test('la Home conserva una salida nocturna hasta su entrada real', async () => {
+  const homeLoader = await read('lib/supabase/home.js')
+  const agendaLoader = await read('lib/supabase/home-upcoming-agenda.js')
+
+  assert.match(homeLoader, /extraordinary_outings_directory/)
+  assert.match(homeLoader, /previousDateKey\(today\)/)
+  assert.match(homeLoader, /returnDate: item\.return_date/)
+  assert.match(agendaLoader, /item\.liveState\.state !== 'done'/)
 })
 
 test('la Home presenta una agenda común sin sustituir las guías de detalle', async () => {
@@ -24,4 +36,6 @@ test('la Home presenta una agenda común sin sustituir las guías de detalle', a
   assert.match(home, /href="\/extraordinarias"/)
   assert.match(home, /href="\/procesiones-de-gloria"/)
   assert.match(home, /Las siguientes citas/)
+  assert.match(home, /procesiones en curso/)
+  assert.match(home, /multipleLive/)
 })

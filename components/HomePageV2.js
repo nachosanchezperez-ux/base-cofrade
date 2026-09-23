@@ -7,6 +7,7 @@ import HomeKnowledgeThreads from '@/components/HomeKnowledgeThreads'
 import HomeProjectOverview from '@/components/HomeProjectOverview'
 import { getExtraordinaryLiveState } from '@/lib/home-live-status'
 import { getHomeAdaptivePriority } from '@/lib/home-adaptive-priority'
+import { getProcessionLiveState } from '@/lib/procession-live-status'
 import styles from '@/app/home.module.css'
 import liveStyles from './HomeExtraordinaryLive.module.css'
 import navStyles from './HomeExtraordinaryNav.module.css'
@@ -52,14 +53,34 @@ export default function HomePageV2({
   discoveryThreads,
   exploreStats,
 }) {
-  const featuredOuting = upcomingAgenda[0] || null
-  const followingAgenda = upcomingAgenda.slice(1)
+  const liveOutings = upcomingAgenda.filter((item) => item.liveState?.state === 'live')
+  const featuredOuting = liveOutings[0]
+    || upcomingAgenda.find((item) => item.liveState?.state !== 'done')
+    || upcomingAgenda[0]
+    || null
+  const multipleLive = liveOutings.length > 1
+  const followingAgenda = upcomingAgenda.filter((item) => (
+    item.id !== featuredOuting?.id
+    && item.liveState?.state !== 'live'
+    && item.liveState?.state !== 'done'
+  ))
   const featuredGuideHref = featuredOuting?.href || featuredOuting?.calendarHref || '/extraordinarias'
   const todayKey = madridDateKey()
   const featuredIsToday = featuredOuting?.date === todayKey
-  const liveState = featuredOuting
+  const scheduleLiveState = featuredOuting
     ? getExtraordinaryLiveState(featuredOuting.date, featuredBriefing.schedule)
     : { state: 'upcoming', eyebrow: 'Próxima cita', nextId: '', pastIds: [] }
+  const genericLiveState = featuredOuting?.liveState || (featuredOuting
+    ? getProcessionLiveState({
+        date: featuredOuting.date,
+        endDate: featuredOuting.returnDate || '',
+        startTime: featuredOuting.departureTime || '',
+        endTime: featuredOuting.returnTime || '',
+      })
+    : { state: 'upcoming', isLive: false, label: 'Próxima', timingLabel: '' })
+  const liveState = genericLiveState.state === 'live' && scheduleLiveState.state !== 'live'
+    ? { ...scheduleLiveState, state: 'live', eyebrow: 'En curso · Procesión' }
+    : scheduleLiveState
   const homePriority = getHomeAdaptivePriority({
     dateKey: featuredOuting?.date || '',
     todayKey,
@@ -103,12 +124,47 @@ export default function HomePageV2({
       <div className="shell">
         <header className={styles.upcomingAgendaHead}>
           <div>
-            <span className={styles.eyebrow}>Salidas procesionales</span>
-            <h2 id="proximos-dias-title">En los próximos días</h2>
+            <span className={styles.eyebrow}>{multipleLive ? 'Ahora mismo' : 'Salidas procesionales'}</span>
+            <h2 id="proximos-dias-title">{multipleLive ? 'Varias procesiones están en la calle' : 'En los próximos días'}</h2>
           </div>
-          <p>Procesiones, traslados y salidas extraordinarias con guía detallada. Para rosarios, besamanos y conciertos, consulta la Agenda Cofrade.</p>
+          <p>{multipleLive
+            ? 'La portada agrupa las salidas que coinciden en tiempo real y deja las próximas citas inmediatamente después.'
+            : 'Procesiones, traslados y salidas extraordinarias con guía detallada. Para rosarios, besamanos y conciertos, consulta la Agenda Cofrade.'}</p>
         </header>
 
+        {multipleLive ? (
+          <section className={liveStyles.multipleLivePanel} aria-labelledby="multiple-live-title">
+            <div className={liveStyles.multipleLiveHead}>
+              <div>
+                <span><i aria-hidden="true" /> Ahora mismo</span>
+                <h3 id="multiple-live-title">{liveOutings.length} procesiones en curso</h3>
+              </div>
+              <p>Cuando coinciden varias salidas, todas tienen la misma prioridad en la portada.</p>
+            </div>
+            <div className={liveStyles.multipleLiveGrid}>
+              {liveOutings.map((outing) => (
+                <article className={liveStyles.multipleLiveCard} key={outing.id}>
+                  <div className={liveStyles.multipleLiveTopline}>
+                    <span>{outing.typeLabel || 'Procesión'}</span>
+                    <b><i aria-hidden="true" /> En curso</b>
+                  </div>
+                  <h4>{outing.title}</h4>
+                  <p>{[outing.municipality, outing.brotherhoodName].filter(Boolean).join(' · ')}</p>
+                  <div className={liveStyles.multipleLiveTiming}>
+                    {outing.departureTime ? <span>Salida <strong>{outing.departureTime}</strong></span> : null}
+                    {outing.returnTime ? <span>Entrada <strong>{outing.returnTime}</strong></span> : null}
+                  </div>
+                  <Link href={outing.href || outing.calendarHref || '/agenda-cofrade'}>
+                    Seguir procesión <span aria-hidden="true">→</span>
+                  </Link>
+                </article>
+              ))}
+            </div>
+            <Link className={liveStyles.multipleLiveAgendaLink} href="/agenda-cofrade?periodo=today#agenda">
+              Ver todas las citas de hoy en la Agenda Cofrade <span aria-hidden="true">→</span>
+            </Link>
+          </section>
+        ) : (
         <article className={`${styles.featuredExtraordinaryCard} ${polishStyles.extraordinaryCard} ${liveState.state === 'live' ? liveStyles.featuredExtraordinaryLive : ''} ${featuredOuting.heroImagePath ? '' : liveStyles.featuredExtraordinaryNoMedia}`}>
           {featuredOuting.heroImagePath ? (
             <figure className={styles.featuredExtraordinaryMedia}>
@@ -212,6 +268,7 @@ export default function HomePageV2({
             </div>
           </div>
         </article>
+        )}
 
         {followingAgenda.length ? (
           <div className={`${styles.nextExtraSection} ${polishStyles.nextExtraSection}`} id="siguientes-procesiones">
