@@ -13,7 +13,7 @@ function allowedValue(searchParams, name, allowed, fallback) {
   return allowed.has(value) ? value : fallback
 }
 
-export default function AgendaCofradeDirectoryFromUrl({ items, today }) {
+export default function AgendaCofradeDirectoryFromUrl({ items, today, initialNowIso }) {
   const searchParams = useSearchParams()
   const initialCategory = allowedValue(searchParams, 'categoria', CATEGORIES, 'all')
   const initialPeriod = allowedValue(searchParams, 'periodo', PERIODS, 'upcoming')
@@ -29,6 +29,7 @@ export default function AgendaCofradeDirectoryFromUrl({ items, today }) {
       key={stateKey}
       items={items}
       today={today}
+      initialNowIso={initialNowIso}
       initialCategory={initialCategory}
       initialPeriod={initialPeriod}
       initialTerritory={initialTerritory}
