@@ -1,7 +1,7 @@
 'use server'
 
 import { randomUUID } from 'node:crypto'
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import {
   assertStoredImageUpload,
@@ -120,6 +120,7 @@ function managedPreviousPath(context) {
 }
 
 async function refresh(context) {
+  revalidateTag('public-band-detail', { expire: 0 })
   revalidatePath('/panel')
   revalidatePath('/panel/bandas')
   revalidatePath(`/panel/bandas/${context.bandId}`)
