@@ -1,10 +1,10 @@
+import { connection } from 'next/server'
 import CrewEventDirectory from '@/components/CrewEventDirectory'
 import JsonLd from '@/components/JsonLd'
 import { breadcrumbJsonLd, collectionPageJsonLd, pageTitle } from '@/lib/seo'
-import { getCrewEventDirectory } from '@/lib/supabase/crew-events'
+import { getCrewEventDirectory } from '@/lib/supabase/public-directory-cache'
 import styles from './crew-events-page.module.css'
 
-export const dynamic = 'force-static'
 export const revalidate = 300
 
 const title = 'Calendario de Igualás y Ensayos'
@@ -19,6 +19,7 @@ export const metadata = {
 }
 
 export default async function CrewEventsPage() {
+  await connection()
   const events = await getCrewEventDirectory()
   const upcoming = events.filter((item) => item.isUpcoming)
   const brotherhoodCount = new Set(events.map((item) => item.brotherhoodId)).size

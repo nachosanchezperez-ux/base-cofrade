@@ -1,9 +1,10 @@
+import { connection } from 'next/server'
 import Link from 'next/link'
 import ExtraordinaryDirectory from '@/components/ExtraordinaryDirectory'
 import styles from '@/components/ExtraordinaryDirectory.module.css'
 import seoStyles from '@/components/ExtraordinarySeo.module.css'
 import JsonLd from '@/components/JsonLd'
-import { getExtraordinaryDirectory } from '@/lib/supabase/extraordinary-directory'
+import { getExtraordinaryDirectory } from '@/lib/supabase/public-directory-cache'
 import { breadcrumbJsonLd, collectionPageJsonLd, pageTitle } from '@/lib/seo'
 import { extraordinarySeoCopy, madridYear } from '@/lib/seo-calendar'
 
@@ -49,6 +50,7 @@ export function generateMetadata() {
 }
 
 export default async function ExtraordinariasPage() {
+  await connection()
   const currentYear = madridYear()
   const { title, description } = extraordinarySeoCopy(currentYear)
   const outings = await getExtraordinaryDirectory()

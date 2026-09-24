@@ -1,0 +1,72 @@
+▲ Next.js 16.3.0 (Turbopack)
+✓ Running next.config.mjs took 28ms
+- Experiments (use with caution):
+  · serverActions
+  · staticGenerationMaxConcurrency: 1
+  · staticGenerationMinPagesPerWorker: 50
+  · staticGenerationRetryCount: 1
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 7.5s
+  Running TypeScript ...
+  Finished TypeScript in 19ms ...
+  Collecting page data using 8 workers ...
+  Generating static pages using 8 workers (0/29) ...
+[Hilo Cofrade] No se pudo cargar el directorio público de bandas con cliente anónimo {
+  error: 'No se pudo consultar el directorio público de bandas: LOCAL_OUTAGE_FIXTURE'
+}
+  Generating static pages using 8 workers (7/29) 
+[Hilo Cofrade] No se pudieron cargar las crucetas musicales relacionadas { brotherhoodEntityId: '', bandEntityId: '', error: '[object Object]' }
+[Hilo Cofrade] No se pudo cargar el directorio de Hermandades desde Supabase {
+  error: 'No se pudo consultar el directorio de Hermandades: LOCAL_OUTAGE_FIXTURE'
+}
+[Hilo Cofrade] No se pudo cargar el directorio público de bandas con cliente anónimo {
+  error: 'No se pudo consultar el directorio público de bandas: LOCAL_OUTAGE_FIXTURE'
+}
+[Hilo Cofrade] No se pudo cargar el directorio de imágenes {
+  error: 'No se pudieron consultar las entidades relacionadas: LOCAL_OUTAGE_FIXTURE'
+}
+[Hilo Cofrade] No se pudo cargar el directorio de pasos {
+  error: 'No se pudieron consultar las entidades relacionadas: LOCAL_OUTAGE_FIXTURE'
+}
+[Hilo Cofrade] No se pudo cargar el directorio de extraordinarias {
+  error: 'No se pudo consultar el directorio de extraordinarias: LOCAL_OUTAGE_FIXTURE'
+}
+[Hilo Cofrade] No se pudo preparar la experiencia del histórico musical {
+  slug: 'el-baratillo',
+  error: 'No se pudo resolver la Hermandad para su histórico musical: LOCAL_OUTAGE_FIXTURE'
+}
+[Hilo Cofrade] No se pudo cargar la hermandad desde Supabase {
+  slug: 'el-baratillo',
+  error: Error: No se pudo consultar la hermandad: LOCAL_OUTAGE_FIXTURE
+      at m (lib/supabase/brotherhoods.js:29:11)
+      at B (lib/supabase/brotherhoods.js:254:18)
+      at async C (lib/supabase/brotherhoods.js:1226:20)
+      at async N (lib/supabase/brotherhood-display.js:442:25)
+      at async ah (lib/supabase/brotherhood-page.js:331:21)
+    27 | function assertQuery(result, label) {
+    28 |   if (result.error) {
+  > 29 |     throw new Error(`${label}: ${result.error.message}`)
+       |           ^
+    30 |   }
+    31 |
+    32 |   return result.data
+}
+Error occurred prerendering page "/hermandades/el-baratillo". Read more: https://nextjs.org/docs/messages/prerender-error
+Error: No se pudo consultar la hermandad: LOCAL_OUTAGE_FIXTURE
+    at m (lib/supabase/brotherhoods.js:29:11)
+    at B (lib/supabase/brotherhoods.js:254:18)
+    at async C (lib/supabase/brotherhoods.js:1226:20)
+    at async N (lib/supabase/brotherhood-display.js:442:25)
+    at async ah (lib/supabase/brotherhood-page.js:331:21)
+  27 | function assertQuery(result, label) {
+  28 |   if (result.error) {
+> 29 |     throw new Error(`${label}: ${result.error.message}`)
+     |           ^
+  30 |   }
+  31 |
+  32 |   return result.data {
+  digest: '272319078'
+}
+Export encountered an error on /hermandades/[slug]/page: /hermandades/el-baratillo, exiting the build.
+⨯ Next.js build worker exited with code: 1 and signal: null

@@ -1,0 +1,19 @@
+{
+  "timestamp": "2026-09-24T21:27:31.552Z",
+  "mode": "local-http-503",
+  "debugPrerender": false,
+  "exitCode": 0,
+  "timedOut": false,
+  "requestCount": 0,
+  "requests": {},
+  "prerendered": [
+    "/_global-error",
+    "/_not-found",
+    "/icon.svg",
+    "/manifest.webmanifest",
+    "/opengraph-image",
+    "/robots.txt"
+  ],
+  "failures": [],
+  "logPath": "corrected-build.log"
+}

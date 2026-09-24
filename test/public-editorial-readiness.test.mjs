@@ -38,7 +38,7 @@ test('el mínimo editorial exige identidad, contexto, relación y fuente reales'
 
 test('Home cuenta el mismo conjunto navegable que el directorio público', async () => {
   const loader = await readFile(new URL('../lib/supabase/home-v2.js', import.meta.url), 'utf8')
-  assert.match(loader, /getPublicEntityDirectory\(\)/)
+  assert.match(loader, /getPublicEntityDirectory\(\{ throwOnError \}\)/)
   assert.match(loader, /for \(const item of directoryItems\)/)
   assert.doesNotMatch(loader, /const types = \['brotherhood', 'image', 'step', 'band'/)
 })

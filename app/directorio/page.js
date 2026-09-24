@@ -1,9 +1,10 @@
+import { connection } from 'next/server'
 import { Suspense } from 'react'
 import Link from 'next/link'
 import EntityDirectoryExplorer from '@/components/EntityDirectoryExplorer'
 import EntityDirectoryExplorerFromUrl from '@/components/EntityDirectoryExplorerFromUrl'
 import JsonLd from '@/components/JsonLd'
-import { getPublicEntityDirectory } from '@/lib/supabase/public-entity-directory'
+import { getPublicEntityDirectory } from '@/lib/supabase/public-directory-cache'
 import { absoluteUrl, breadcrumbJsonLd, socialMetadata } from '@/lib/seo'
 import styles from './directorio.module.css'
 
@@ -23,6 +24,7 @@ export const metadata = {
 }
 
 export default async function DirectorioPage() {
+  await connection()
   const items = await getPublicEntityDirectory()
 
   const counts = items.reduce((result, item) => {

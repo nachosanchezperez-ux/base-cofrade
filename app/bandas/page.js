@@ -1,10 +1,11 @@
+import { connection } from 'next/server'
 import { Suspense } from 'react'
 import BandDirectoryFacets from '@/components/BandDirectoryFacets'
 import JsonLd from '@/components/JsonLd'
 import RelationalEntityDirectory from '@/components/RelationalEntityDirectory'
 import RelationalEntityDirectoryFromUrl from '@/components/RelationalEntityDirectoryFromUrl'
 import { bandDirectoryItems } from '@/lib/band-directory'
-import { getPublicBandsDirectory } from '@/lib/supabase/bands-directory-public'
+import { getPublicBandsDirectory } from '@/lib/supabase/public-directory-cache'
 import { breadcrumbJsonLd, collectionPageJsonLd, socialMetadata } from '@/lib/seo'
 
 export const revalidate = 900
@@ -23,6 +24,7 @@ export const metadata = {
 }
 
 export default async function BandasPage() {
+  await connection()
   const bands = await getPublicBandsDirectory()
   const items = bandDirectoryItems(bands)
 

@@ -1,3 +1,4 @@
+import { connection } from 'next/server'
 import HermandadesCategoryDirectory from '@/components/HermandadesCategoryDirectory'
 import { socialMetadata } from '@/lib/seo'
 import { getIndexableBrotherhoodDirectory } from '@/lib/supabase/indexable-brotherhood-directory'
@@ -15,6 +16,7 @@ export const metadata = {
 }
 
 export default async function GloriaDirectoryPage() {
+  await connection()
   const hermandades = await getIndexableBrotherhoodDirectory()
   return <HermandadesCategoryDirectory hermandades={hermandades} typeKey="gloria" />
 }

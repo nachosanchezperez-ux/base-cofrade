@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 import BandDirectoryRoutePage from '@/components/BandDirectoryRoutePage'
 import { bandsForDirectoryFacet } from '@/lib/band-directory'
 import { socialMetadata } from '@/lib/seo'
-import { getPublicBandsDirectory } from '@/lib/supabase/bands-directory-public'
+import { getPublicBandsDirectory } from '@/lib/supabase/public-directory-cache'
 
 export const revalidate = 900
 

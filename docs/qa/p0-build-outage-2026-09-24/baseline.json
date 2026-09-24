@@ -1,0 +1,33 @@
+{
+  "timestamp": "2026-09-24T21:14:18.607Z",
+  "mode": "local-http-503",
+  "exitCode": 1,
+  "timedOut": false,
+  "requestCount": 97,
+  "requests": {
+    "/rest/v1/entities [eq.band]": 8,
+    "/rest/v1/musical_repertoires": 4,
+    "/rest/v1/entities [eq.brotherhood]": 13,
+    "/rest/v1/entities [in.(brotherhood,agent)]": 8,
+    "/rest/v1/brotherhoods": 8,
+    "/rest/v1/municipalities": 8,
+    "/rest/v1/entities [eq.image]": 4,
+    "/rest/v1/images": 4,
+    "/rest/v1/image_brotherhood_history": 4,
+    "/rest/v1/current_image_locations": 4,
+    "/rest/v1/image_authorship_details": 4,
+    "/rest/v1/entity_relations": 4,
+    "/rest/v1/entities [eq.step]": 4,
+    "/rest/v1/steps": 4,
+    "/rest/v1/step_brotherhood_history": 4,
+    "/rest/v1/step_image_history": 4,
+    "/rest/v1/step_phase_details": 4,
+    "/rest/v1/extraordinary_outings_directory": 4
+  },
+  "prerendered": [],
+  "failures": [
+    "Error occurred prerendering page \"/hermandades/el-baratillo\". Read more: https://nextjs.org/docs/messages/prerender-error",
+    "Export encountered an error on /hermandades/[slug]/page: /hermandades/el-baratillo, exiting the build."
+  ],
+  "logPath": "baseline.log"
+}

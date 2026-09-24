@@ -1,6 +1,7 @@
+import { connection } from 'next/server'
 import Link from 'next/link'
 import JsonLd from '@/components/JsonLd'
-import { getMusicalRepertoires } from '@/lib/supabase/musical-repertoires'
+import { getMusicalRepertoires } from '@/lib/supabase/public-directory-cache'
 import { absoluteUrl, breadcrumbJsonLd, pageTitle } from '@/lib/seo'
 import styles from './crucetas.module.css'
 
@@ -18,6 +19,7 @@ export const metadata = {
 }
 
 export default async function MusicalRepertoiresDirectoryPage() {
+  await connection()
   const repertoires = await getMusicalRepertoires()
 
   return (
