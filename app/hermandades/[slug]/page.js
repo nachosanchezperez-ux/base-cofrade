@@ -30,7 +30,6 @@ import { getBrotherhoodMusicalHeritage } from '@/lib/supabase/brotherhood-musica
 import { getCrewEventsByBrotherhoodId } from '@/lib/supabase/crew-events';
 import { getMusicalRepertoires } from '@/lib/supabase/musical-repertoires';
 import { getHermandadPageBySlug } from '@/lib/supabase/brotherhood-page';
-import { getPublishedBrotherhoodCrestPath } from '@/lib/supabase/brotherhood-public-authority';
 import { getPublishedEntityCoverMediaMap } from '@/lib/supabase/entity-media';
 import {
   meetsPublicEditorialMinimum,
@@ -169,20 +168,23 @@ export default async function HermandadDetailPage({ params }) {
   const h = await getHermandad(slug);
   if (!h) notFound();
 
-  const [entityCoverMedia, musicalHeritage, authoritativeCrestPath, musicalRepertoires, crewEvents] = await Promise.all([
+  const coverEntityTypes = new Map([
+    [h.id, 'brotherhood'],
+    ...h.imagenes.map((imagen) => [imagen.id, 'image']),
+    ...h.pasos.map((paso) => [paso.id, 'step']),
+    ...(h.participacionesConsejo || []).map((participacion) => [participacion.id, 'event']),
+  ]);
+  const outingIds = (h.salidas || []).map((outing) => outing.id).filter(Boolean);
+  const [entityCoverMedia, musicalHeritage, musicalRepertoires, crewEvents] = await Promise.all([
     getPublishedEntityCoverMediaMap(
-      [
-        h.id,
-        ...h.imagenes.map((imagen) => imagen.id),
-        ...h.pasos.map((paso) => paso.id),
-        ...(h.participacionesConsejo || []).map((participacion) => participacion.id),
-      ]
+      [...coverEntityTypes.keys()],
+      { entityTypesById: coverEntityTypes }
     ),
     getBrotherhoodMusicalHeritage(h.id),
-    getPublishedBrotherhoodCrestPath(h.id),
-    getMusicalRepertoires({ brotherhoodEntityId: h.id }),
+    getMusicalRepertoires({ brotherhoodEntityId: h.id, outingIds }),
     getCrewEventsByBrotherhoodId(h.id),
   ]);
+  const authoritativeCrestPath = h.escudoPath || '';
   const heroMedia = entityCoverMedia.get(h.id)
     || h.imagenes.map((imagen) => entityCoverMedia.get(imagen.id)).find(Boolean)
     || null;
@@ -583,7 +585,13 @@ export default async function HermandadDetailPage({ params }) {
       </div></section>
       )}
 
-      <BrotherhoodOwnBands brotherhoodId={h.id} />
+      <BrotherhoodOwnBands
+        brotherhoodId={h.id}
+        brotherhoodName={h.nombrePopular}
+        images={h.imagenes}
+        steps={h.pasos}
+        currentAccompaniments={h.acompanamientoActual}
+      />
 
       {musicalHeritage.length > 0 ? (
         <BrotherhoodMusicalHeritage items={musicalHeritage} />
