@@ -109,3 +109,25 @@ test('los LCP principales usan carga prioritaria y las Glorias mantienen optimiz
   assert.match(imageHero, /quality=\{35\}/)
   assert.match(imageHero, /sizes="50vw"/)
 })
+
+
+test('Hermandades reutiliza escudo, tipos de entidad y relaciones ya cargadas', () => {
+  const page = read('app/hermandades/[slug]/page.js')
+  const media = read('lib/supabase/entity-media.js')
+  const relations = read('components/BrotherhoodRelationalExtras.js')
+
+  assert.doesNotMatch(page, /getPublishedBrotherhoodCrestPath/)
+  assert.match(page, /const authoritativeCrestPath = h\.escudoPath \|\| ''/)
+  assert.match(page, /entityTypesById: coverEntityTypes/)
+  assert.match(media, /needsEntityTypeLookup/)
+  assert.match(page, /currentAccompaniments=\{h\.acompanamientoActual\}/)
+  assert.match(relations, /preparedCurrentAccompaniments/)
+})
+
+test('Igualás de una Hermandad no escanea todos los lugares', () => {
+  const loader = read('lib/supabase/crew-events.js')
+
+  assert.match(loader, /const placeIds = \[\.\.\.new Set\(events\.map/)
+  assert.match(loader, /\.from\('places'\)[\s\S]*\.in\('id', placeIds\)/)
+  assert.doesNotMatch(loader, /await supabase\.from\('places'\)\.select\('id, name, municipality_id'\),/)
+})
