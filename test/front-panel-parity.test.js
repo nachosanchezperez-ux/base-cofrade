@@ -38,7 +38,8 @@ test('la ficha de Hermandad prioriza multimedia y escudo autoritativos', () => {
   assert.equal(page.includes('councilParticipationPhotoCreditBySlug'), false)
   assert.match(page, /const imageCredit = eventMedia\?\.credit \|\| participacion\.imagenCredito/)
   assert.match(page, /crestSrc: authoritativeCrestPath/)
-  assert.match(page, /getPublishedBrotherhoodCrestPath\(h\.id\)/)
+  assert.match(page, /const authoritativeCrestPath = h\.escudoPath \|\| ''/)
+  assert.doesNotMatch(page, /getPublishedBrotherhoodCrestPath/)
 })
 
 test('la ficha de Hermandad usa autorías, historia, Sede e imágenes procesionales canónicas', () => {
