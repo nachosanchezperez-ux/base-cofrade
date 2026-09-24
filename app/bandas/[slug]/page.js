@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { cache } from 'react'
+import { cache, Suspense } from 'react'
 import { notFound } from 'next/navigation'
 import JsonLd from '@/components/JsonLd'
 import SourcesBlock from '@/components/SourcesBlock'
@@ -176,6 +176,22 @@ function CuriosityIcon() {
   </svg>
 }
 
+async function BandRepertoiresAsync({ bandId }) {
+  const items = await getMusicalRepertoires({ bandEntityId: bandId })
+  return <MusicalRepertoiresSection items={items} context="band" />
+}
+
+async function BandDiscographyAsync({ bandId, bandName, logoPath }) {
+  const releases = await getBandDiscography(bandId)
+  return (
+    <BandDiscographySection
+      releases={releases}
+      bandName={bandName}
+      logoPath={logoPath}
+    />
+  )
+}
+
 export async function generateMetadata({ params }) {
   const { slug } = await params
   const band = await getBandBySlug(slug)
@@ -212,11 +228,7 @@ export default async function BandDetailPage({ params }) {
   const { slug } = await params
   const band = await getBandBySlug(slug)
   if (!band) notFound()
-  const [discography, colors, musicalRepertoires] = await Promise.all([
-    getBandDiscography(band.id),
-    getPublishedBandColors(band.id),
-    getMusicalRepertoires({ bandEntityId: band.id }),
-  ])
+  const colors = await getPublishedBandColors(band.id)
   const years = [...new Set(band.premieres.map((item) => item.year))].sort((a, b) => b - a)
   const currentYear = new Date().getFullYear()
   const currentPremieres = band.premieres.filter((item) => item.year === currentYear)
@@ -245,8 +257,6 @@ export default async function BandDetailPage({ params }) {
   const hasHistoricalAccompaniments = historicalAccompaniments.length > 0
   const hasOutings = band.outings.length > 0
   const hasPremieres = band.premieres.length > 0
-  const hasMusicalRepertoires = musicalRepertoires.length > 0
-  const hasDiscography = discography.length > 0
   const hasDirection = band.direction.length > 0
   const banderin = band.heritage?.find((item) => item.type === 'Banderín') || null
   const primaryColor = colors.find((item) => item.role === 'primary')?.hexValue || band.primaryColor
@@ -254,14 +264,6 @@ export default async function BandDetailPage({ params }) {
   const accentColor = colors.find((item) => item.role === 'accent')?.hexValue || primaryColor
   const bandTheme = resolveBandPageTheme({ primaryColor, secondaryColor, accentColor })
   const currentRelations = [...orderedAccompaniments, ...gloryAccompaniments, ...upcomingAccompaniments]
-  const discographyMarches = discographyMarchRelations(discography)
-  const repertoireThreadItems = musicalRepertoires.slice(0, 4).map((item) => ({
-    kind: 'Cruceta',
-    relation: 'Repertorio interpretado',
-    title: item.displayTitle,
-    href: item.href,
-    context: [item.brotherhood?.name, item.step?.name, item.year, item.worksCount ? `${item.worksCount} obras` : ''].filter(Boolean).join(' · '),
-  }))
   const bandThreadItems = [
     ...(band.linkedBrotherhoodSlug ? [{
       kind: 'Hermandad',
@@ -286,8 +288,6 @@ export default async function BandDetailPage({ params }) {
         context: [item.municipality, yearRange(item)].filter(Boolean).join(' · '),
       }] : []),
     ]),
-    ...repertoireThreadItems,
-    ...discographyMarches.slice(0, 6),
   ]
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -365,8 +365,6 @@ export default async function BandDetailPage({ params }) {
         hasHistoricalAccompaniments && { href: '#acompanamientos-historicos', label: 'Histórico' },
         hasOutings && { href: '#extraordinarias', label: 'Extraordinarias' },
         hasPremieres && { href: '#repertorio', label: 'Música' },
-        hasMusicalRepertoires && { href: '#crucetas-musicales', label: 'Crucetas' },
-        hasDiscography && { href: '#discografia', label: 'Discografía' },
         hasDirection && { href: '#direccion', label: 'Dirección' },
         band.interestLinks.length > 0 && { href: '#enlaces-de-interes', label: 'Enlaces de interés' },
         band.sources?.length > 0 && { href: '#fuentes', label: 'Fuentes' },
@@ -415,7 +413,7 @@ export default async function BandDetailPage({ params }) {
                   ) : null}
                 </article> : null}
               </div>
-              {(hasAccompaniments || hasGloryAccompaniments || currentPremieres.length || band.outings.length || hasMusicalRepertoires || hasDiscography) ? (
+              {(hasAccompaniments || hasGloryAccompaniments || currentPremieres.length || band.outings.length) ? (
                 <div className={styles.impactPanel}>
                   <div className={styles.impactHeading}>
                     <span>Actividad {currentYear} + archivo</span>
@@ -426,9 +424,6 @@ export default async function BandDetailPage({ params }) {
                     {hasGloryAccompaniments ? <a href="#glorias"><strong>{gloryAccompaniments.length}</strong><span>{gloryAccompaniments.length === 1 ? 'contrato de Gloria o culto externo' : 'contratos de Glorias y cultos externos'}</span></a> : null}
                     {currentPremieres.length ? <a href="#repertorio"><strong>{currentPremieres.length}</strong><span>{currentPremieres.length === 1 ? `novedad musical en ${currentYear}` : `novedades musicales en ${currentYear}`}</span></a> : null}
                     {band.outings.length ? <a href="#extraordinarias"><strong>{band.outings.length}</strong><span>{band.outings.length === 1 ? 'salida extraordinaria' : 'salidas extraordinarias'}</span></a> : null}
-                    {hasMusicalRepertoires ? <a href="#crucetas-musicales"><strong>{musicalRepertoires.length}</strong><span>{musicalRepertoires.length === 1 ? 'cruceta documentada' : 'crucetas documentadas'}</span></a> : null}
-                    {hasDiscography ? <a href="#discografia"><strong>{discography.length}</strong><span>{discography.length === 1 ? 'trabajo discográfico' : 'trabajos discográficos'}</span></a> : null}
-                    {discographyMarches.length ? <a href="#discografia"><strong>{discographyMarches.length}</strong><span>{discographyMarches.length === 1 ? 'Marcha con ficha en la discografía' : 'Marchas con ficha en la discografía'}</span></a> : null}
                   </div>
                 </div>
               ) : null}
@@ -663,9 +658,17 @@ export default async function BandDetailPage({ params }) {
         </div>
       </section> : null}
 
-      <MusicalRepertoiresSection items={musicalRepertoires} context="band" />
+      <Suspense fallback={null}>
+        <BandRepertoiresAsync bandId={band.id} />
+      </Suspense>
 
-      <BandDiscographySection releases={discography} />
+      <Suspense fallback={null}>
+        <BandDiscographyAsync
+          bandId={band.id}
+          bandName={band.popularName}
+          logoPath={band.logoPath}
+        />
+      </Suspense>
 
       {hasDirection ? <section className={`${styles.contentSection} ${styles.softSection}`} id="direccion">
         <div className="shell">
