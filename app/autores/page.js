@@ -4,6 +4,7 @@ import { getPublicAgentDirectory } from '@/lib/supabase/public-agents'
 import { collectionPageJsonLd, socialMetadata } from '@/lib/seo'
 import styles from '../marchas/marchas.module.css'
 
+export const dynamic = 'force-dynamic'
 export const revalidate = 900
 
 export const metadata = {
