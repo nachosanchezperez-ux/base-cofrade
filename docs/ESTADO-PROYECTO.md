@@ -1,11 +1,8 @@
-Warning: truncated output (original token count: 20231)
-Total output lines: 561
-
 # Hilo Cofrade · Estado canónico
 
 **Corte operativo:** 24 de septiembre de 2026, 22:36 UTC · P0 cerrado tras recuperación y ventana limpia
 
-**HEAD real de `main`:** `ba70771c94f11fd3aff70e4e651ab3093352fd28` · #932. Coincide con el despliegue servido por el dominio.
+**Código de aplicación integrado en `main`:** `ba70771c94f11fd3aff70e4e651ab3093352fd28` · #932. Los commits posteriores de cierre solo reconcilian documentación y evidencias; no cambian el árbol de aplicación servido por el dominio.
 
 **Dominio productivo:** `hilocofrade.es` y `www.hilocofrade.es` apuntan a `dpl_6V5TZZyVzoT36J3DvXg3seJ82ehF`, READY, SHA `ba70771c94f11fd3aff70e4e651ab3093352fd28`. Home, Agenda, Bandas, Hermandades, Autores, Igualás/Ensayos y El Baratillo verificados con HTTP 200 y contenido del nuevo deployment. Sitemap: 2.052 URL; imagen de Storage optimizada: HTTP 200.
 
@@ -100,7 +97,283 @@ Este apartado conserva el corte anterior. Para decisiones operativas prevalece e
 - GitHub: `main = 1cdfbaadef4442caf75800a528bb077b457c4b45` en el preflight; #900 es esta documentación y #899 permanece independiente.
 - Vercel: producción está READY en `dpl_2k4fgz6dxAPnM2BQ6FrCZxfY5WMJ`, exactamente sobre `1cdfbaadef4442caf75800a528bb077b457c4b45`.
 - Supabase: proyecto `Hilocofrade` ACTIVE_HEALTHY; 12/12 migraciones estructurales activas. D-02C está aplicado y verificado con 18 ediciones, 116 pistas, 18 carátulas y cinco Fuentes canónicas; Carmona conserva intacta su puerta municipal.
-- Supabase Preview: …8231 tokens truncated…ivo.
+- Supabase Preview: #846 y la #822 reconstruida superaron previews nuevas con with_data=false. La cadena ejecuta 12 migraciones estructurales activas en orden y el seed mínimo conserva Sevilla, Maestro Tejera y Las Cigarreras.
+- Git ↔ Supabase: correspondencia 12/12 por versión y nombre. Se restauraron en Git las versiones remotas canónicas 20260915215828 y 20260916220756, y se recuperó exactamente 20260916205306_source_links_public_lookup_indexes. La deriva histórica queda **RESUELTA**.
+- Runtime: la ventana de 24 horas conserva 10 grupos de error, sobre todo timeouts y fallos de upstream en despliegues anteriores. Esta PR no toca runtime ni producción; la deuda técnica no se oculta ni se convierte en un segundo frente editorial.
+## Reconciliación #789–#799
+
+| PR | Estado canónico | Resultado |
+|---|---|---|
+| [#789](https://github.com/nachosanchezperez-ux/base-cofrade/pull/789) | Fusionada | Subida múltiple de hasta 10 imágenes desde el Panel, con metadatos individuales, progreso y recuperación parcial |
+| [#790](https://github.com/nachosanchezperez-ux/base-cofrade/pull/790) | Fusionada | Navegación directa V4 en Hermandades y Agenda |
+| [#791](https://github.com/nachosanchezperez-ux/base-cofrade/pull/791) | Fusionada | Carátulas históricas de La Oliva estabilizadas; 27/27 recursos publicados quedaron en URLs estables |
+| [#792](https://github.com/nachosanchezperez-ux/base-cofrade/pull/792) | Fusionada | Igualás y ensayos relacionados con sus Hermandades |
+| [#793](https://github.com/nachosanchezperez-ux/base-cofrade/pull/793) | Fusionada | Mejora V4.1 de legibilidad |
+| [#794](https://github.com/nachosanchezperez-ux/base-cofrade/pull/794) | Fusionada | Fotografía independiente para cada Salida |
+| [#795](https://github.com/nachosanchezperez-ux/base-cofrade/pull/795) | Fusionada | Agenda de conciertos de Bandas y relación canónica concierto–Banda |
+| [#796](https://github.com/nachosanchezperez-ux/base-cofrade/pull/796) | Fusionada | Buscador de Hermandades por municipio |
+| [#797](https://github.com/nachosanchezperez-ux/base-cofrade/pull/797) | Fusionada | Home adaptada a la fotografía general del proyecto; incorpora la reconciliación de la cadena de migraciones |
+| [#798](https://github.com/nachosanchezperez-ux/base-cofrade/pull/798) | **Cerrada sin integrar; sustituida por #797** | No forma parte de `main` y no se contabiliza como trabajo fusionado |
+| [#799](https://github.com/nachosanchezperez-ux/base-cofrade/pull/799) | Fusionada | Buscador de Bandas vinculadas a Hermandades por municipio |
+
+## Reconciliación #801–#802
+
+| PR | Estado canónico | Resultado |
+|---|---|---|
+| [#801](https://github.com/nachosanchezperez-ux/base-cofrade/pull/801) | Fusionada | Agenda V4.2: meses como bloques navegables, navegación directa, contadores y diferenciación visual de tipos de actos, sin perder cronología ni filtros |
+| [#802](https://github.com/nachosanchezperez-ux/base-cofrade/pull/802) | Fusionada | Nueva jerarquía editorial de Home: Agenda prioritaria, Enciclopedia como núcleo documental y Música e Igualás como accesos especializados, sin alterar arquitectura ni rutas |
+
+## Primer macrolote provincial por municipios
+
+El mapa del grafo identifica 47 municipios provinciales con presencia real. En el corte inicial había 50 Hermandades publicadas y 24 fichas con deuda nuclear; tras el lote de Gerena hay 51 Hermandades publicadas y 22 fichas con ese tipo de deuda. El inventario completo está en [`MAPA-MUNICIPAL-PROVINCIA-2026-09-16.csv`](./MAPA-MUNICIPAL-PROVINCIA-2026-09-16.csv).
+
+El TOP 3 fue **Gerena**, Pilas y Utrera. Gerena ganó por tener un universo cerrable de tres corporaciones históricas, dos fichas incompletas, una tercera corporación verificable ausente, una Banda municipal sin nodo y fuentes suficientes para resolver el grafo sin DDL. Pilas y Utrera vuelven a **COLA**; no quedan abiertos.
+
+El lote de Gerena `c0160026-0000-4000-8000-000000000001` terminó `completed` con 83/83 operaciones, 77 insert/upsert, 6 update, 10 reutilizaciones, 0 inválidas y 0 fallos. Gran Poder y Vera-Cruz quedaron completadas; la Soledad Coronada y la Banda Municipal de Música quedaron incorporadas; se preservó la extraordinaria de la Coronación de la Sangre ya certificada. El postflight conserva 0 slugs duplicados, 0 huérfanos, 0 contaminación territorial y 0 Salidas pasadas de Gerena en `announced`.
+
+La QA transversal detectó que «Bandas de Gerena» se resolvía como una consulta de acompañamientos de una Hermandad. El lector común quedó corregido para que «Hermandades de [municipio]», «Bandas de [municipio]» y «Qué hay en [municipio]» consulten los directorios públicos y el grafo territorial, sin `slug`, localidad ni respuesta hardcodeados.
+
+No se fabricaron Agenda, Cultos fechados, conciertos, igualás, Crucetas ni multimedia. La recurrencia histórica no se convirtió en convocatoria 2026 y ninguna mención de 2027 se publicó como vigencia actual. La certificación está en [`CERTIFICACION-GERENA-MACROLOTE-MUNICIPAL-HC016-2026-09-16.md`](./CERTIFICACION-GERENA-MACROLOTE-MUNICIPAL-HC016-2026-09-16.md).
+
+## Segundo macrolote provincial por municipios
+
+El recálculo partió del grafo vivo posterior a Gerena, Dos Hermanas y Alcalá de Guadaíra. Auditó 47 municipios con presencia real, 87 nodos de Hermandad, 84 Hermandades publicadas, 41 Bandas públicas, 111 Cultos, 122 Salidas, 74 acontecimientos y 206 enlaces directos de Fuente a Hermandad. El mapa post-Apply está en [`MAPA-MUNICIPAL-PROVINCIA-SEGUNDO-MACROLOTE-2026-09-16.csv`](./MAPA-MUNICIPAL-PROVINCIA-SEGUNDO-MACROLOTE-2026-09-16.csv).
+
+El TOP 3 recalculado fue **Pilas**, Cantillana y Utrera. Pilas ganó con un universo verificable de cuatro corporaciones: dos publicadas pero incompletas y dos ausentes; una Banda local publicada y su formación juvenil en revisión; cinco convocatorias municipales de 2026 aún sin modelar; y fuentes institucionales suficientes para cerrar titulares, Pasos, Salidas, música y trazabilidad sin DDL. Cantillana quedó segunda por su valioso cruce entre Glorias, Penitencia, Banda y Cruceta, pero con un universo mayor. Utrera quedó tercera: su deuda es más grande, aunque cerrar trece cofradías y reconciliar sus nodos musicales presenta un riesgo de dispersión incompatible con este lote.
+
+Pilas y Utrera compitieron desde cero; no se reutilizó su posición histórica. El lote de Pilas `c0160029-0000-4000-8000-000000000001` terminó `completed` con 118/118 operaciones, 104 insert/upsert, 14 update, 13 reutilizaciones, 0 inválidas y 0 fallos. El resultado reúne cuatro corporaciones, dos Bandas locales, ocho titulares, ocho Pasos y ocho Salidas. La formación externa San Miguel Arcángel conserva identidad de Puertollano y solo se contextualiza como acompañamiento de la Borriquita.
+
+Las cinco Salidas de 2026 creadas a partir de convocatorias oficiales permanecen `announced`: la fecha pasada no acredita celebración. Tampoco se fabricaron Cultos fechados, Agenda futura, conciertos, igualás, Crucetas, acompañamientos no identificados ni multimedia sin derechos. El postflight de datos conserva 0 slugs publicados duplicados, 0 titulares o Pasos publicados huérfanos y 0 contaminación territorial. La certificación está en [`CERTIFICACION-PILAS-SEGUNDO-MACROLOTE-MUNICIPAL-HC016-2026-09-16.md`](./CERTIFICACION-PILAS-SEGUNDO-MACROLOTE-MUNICIPAL-HC016-2026-09-16.md).
+
+## Tercer macrolote provincial · Cantillana · CERTIFICADO
+
+Cantillana queda **CERRADA** como tercer macrolote municipal. El lote c0160030-0000-4000-8000-000000000001 permanece completed con **93/93 operaciones**, 0 inválidas y 0 fallos. No se repitió Apply durante la reconciliación de #822.
+
+Se preservan como identidades separadas **La Asunción de Cantillana**, **La Pastora de Cantillana** y **La Soledad de Cantillana**. También se preservan la Banda de Música de Nuestra Señora de la Soledad y la Cruceta HC-019 de la Pastora (48 obras / 60 interpretaciones).
+
+La Soledad queda certificada con **4 titulares, 3 Pasos, 7 Cultos y 7 ediciones 2026, una estación de penitencia celebrada el 3 de abril de 2026 y acompañamiento musical local publicado**. Septenario y Besamanos constan held; las otras cinco convocatorias cultuales continúan announced porque no existe evidencia posterior suficiente. «Montefrío» permanece como crédito textual sin crear una Banda ni una posición no acreditadas.
+
+QA final de grafo: 0 slugs publicados duplicados, 0 enlaces huérfanos de titulares/Pasos en Cantillana, 0 imágenes o Pasos compartidos indebidamente entre las tres Hermandades, 0 salidas duplicadas y 0 duplicados de Agenda.
+
+El buscador se valida mediante las rutas genéricas del grafo —«Hermandades de Cantillana», «Bandas de Cantillana» y «Qué hay en Cantillana»— y mediante una regresión V10 encadenada; no existe ninguna excepción nominal de Cantillana en la lógica del buscador.
+
+La certificación está en [CERTIFICACION-CANTILLANA-TERCER-MACROLOTE-MUNICIPAL-HC016-2026-09-17.md](./CERTIFICACION-CANTILLANA-TERCER-MACROLOTE-MUNICIPAL-HC016-2026-09-17.md).
+
+**No se abre un cuarto municipio.** Coria del Río y Utrera dejan de ser una cola reutilizable: el siguiente análisis municipal, cuando se ordene, debe recalcular desde cero la cobertura provincial posterior a Cantillana.
+## Supabase · conciertos
+
+El historial remoto y la cadena reproducible contienen estas versiones exactas:
+
+- `20260916062208_allow_concert_event_category`;
+- `20260916062216_create_concert_event_bands`;
+- `20260916062223_secure_concert_event_bands`.
+
+`public.concert_event_bands` está disponible, con RLS activa y cinco políticas vigentes: lectura de relaciones publicadas, lectura del Panel, alta y actualización editorial y borrado administrativo. Las restricciones de `public.events` aceptan la categoría `concert` y exigen fecha y tipo musical. El esquema remoto y el repositorio vuelven a ser equivalentes tras #846: la preview reproduce las doce migraciones activas sobre una base vacía y [#492](https://github.com/nachosanchezperez-ux/base-cofrade/issues/492) continúa cerrada.
+
+## Observación histórica de runtime
+
+Vercel registró un único `statement timeout` de «Hoy 2.0» en el deployment anterior `dpl_Fm3hi1C2v1qLs69uwvkNVDniGvfj`. La respuesta pública fue 200, el error no se ha repetido en `dpl_4aswaVTuu46Hn5ViGwY24GiyafLU` y no constituye un bloqueo. No se abre una corrección técnica sin reproducción en el deployment vigente.
+
+## Trabajo reciente ya cerrado
+
+No debe mantenerse en la cola lo que ya está integrado y desplegado:
+
+- portadas visuales y carátulas de la discografía de Bandas (#700 y #701);
+- circuito seguro de HC-016 y sus tres lotes reales: San Pablo, Mercedes de la Puerta Real y El Museo;
+- separación del Vía Crucis institucional y su posición editorial;
+- cabeceras de Bandas con el logotipo protagonista (#663);
+- ordenación de Hermandades y Bandas por jornada/tipología;
+- SEO P3 de Hermandades;
+- acompañamientos históricos y cronología musical por Paso de Las Aguas;
+- incorporación de Pasión de Linares, Esencia y cinco Bandas de la Semana Santa de Sevilla (#708 y #709);
+- paleta negra, blanca y dorada de El Museo (#711);
+- paletas de cinco Hermandades a partir de hábitos documentados (#713);
+- paletas de siete Hermandades de Sevilla (#715), de Milagrosa, Quinta Angustia y Montserrat (#716) y de otras seis Hermandades de Sevilla y provincia (#717);
+- limpieza recuperable de ramas: 817 revisadas, 754 eliminadas y 63 preservadas;
+- cuarto lote real de HC-016: El Cachorro;
+- eliminación del azul residual en las fichas de Hermandad (#721);
+- remate musical de Cristo del Perdón y quinto lote real de HC-016: El Carmen.
+- sexto lote real de HC-016: Cristo de Burgos, incluido el Vía Crucis institucional de 1999.
+- reversión trazada del séptimo lote concurrente de Las Siete Palabras, sin DDL y sin alterar el sexto cierre.
+- presentación de la cuadrilla actual en las fichas de Pasos (`00e241f` y `de55d81`), integrada y desplegada antes de este lote editorial.
+- paleta propia de Las Siete Palabras (#727), incorporada durante la ejecución y adoptada como nuevo HEAD prevalente.
+- séptimo lote real de HC-016: Las Siete Palabras, 270/270.
+- saneamiento de directorios y sitemap (#729): 553 URL servidas, fichas válidas 200 y exclusión de dos Pasos relacionales de La Estrella sin perfil público.
+- reconciliación de Supabase Preview Branches (#730): cadena activa de cuatro migraciones estructurales, 90 SQL editoriales archivados intactos y preview limpia certificada sin datos de producción.
+- Cultos de septiembre a diciembre de 2026: 53/53 operaciones gobernadas sobre San Pablo, Pino Montano, La Misión y Los Negritos, con ediciones, horarios, titulares y Fuentes oficiales.
+- carátulas de Discografía (#734): intento optimizado, reintento original y fallback accesible compartido para las fichas de Banda.
+- octavo lote real de HC-016: San Gonzalo, con titularidad sacramental, 3 imágenes titulares, 2 Pasos, 3 bandas vigentes, 13 Cultos, 5 Salidas, 11 piezas patrimoniales, 5 acontecimientos y 17 Fuentes visibles.
+- HC-019 · Crucetas Musicales (#740 y #741): directorio y ficha pública del piloto, relaciones reutilizables con Hermandad, Salida, Paso, Banda, Marchas y Fuente, y contrato estricto de música efectivamente interpretada.
+- HC-020 · Agenda Cofrade: centro provincial para procesiones, traslados, rosarios públicos, besamanos y besapiés; preguntas «qué ver hoy» y «este fin de semana», filtros de tipo y territorio, relaciones con Hermandades y calendarios de origen; igualás y ensayos quedan como calendario especializado enlazado.
+- noveno lote real de HC-016: Divina Pastora de Santa Marina, con titular canónica, andas, tres Cultos y tres Salidas de 2026, dos formaciones musicales, patrimonio del Paso, 11 Fuentes visibles y fotografía CC BY-SA 4.0 (#745).
+- décimo lote real de HC-016: Guadalupe de San Buenaventura, con titular de Juan Abascal Fuentes, Paso de Guzmán Bejarano, nueve Cultos, cinco hitos y doce Fuentes visibles.
+- undécimo lote real de HC-016: Divina Misericordia · Rosario de Santiago, con cuatro titulares, dos Pasos, nueve Cultos, doble calendario de Penitencia y Gloria y reutilización de la Banda de Alcalá.
+- duodécimo lote real de HC-016: Santo Entierro de Dos Hermanas, con tres titulares, dos Pasos, cinco Cultos y separación estricta entre Sábado Santo y Domingo de Resurrección.
+- decimotercer lote real de HC-016: Sagrada Resurrección de Sevilla, con cinco titulares, dos Pasos, cuatro Cultos, estación de penitencia de 2026, tres bandas vigentes y seis periodos musicales.
+- decimoquinto lote real de HC-016: Santa Ana de Dos Hermanas, con titular gótica, paso de tumbilla, tres Cultos, dos Salidas de julio, dos formaciones musicales y fotografía CC0 trazable.
+- decimosexto lote real de HC-016: Vera-Cruz de Alcalá del Río, con tres imágenes relacionadas, dos Pasos, cuatro Cultos, dos Salidas, cuatro periodos musicales vigentes, patrimonio y seis hitos históricos.
+- macrolote transversal HC-016 de la Madrugá: El Silencio y El Calvario creadas; Esperanza de Triana y Los Gitanos completadas; Macarena y Gran Poder preservadas; seis fichas reunidas en su jornada del directorio.
+- macrolote transversal HC-016 del Sábado Santo de Sevilla: El Sol publicado, Santo Entierro creado y Soledad de San Lorenzo completada; Trinidad y Servitas preservadas; cinco fichas reunidas en su jornada del directorio.
+- macrolote transversal HC-016 del Lunes Santo de Sevilla: Redención, Santa Genoveva, Santa Marta y Vera+Cruz completadas; cinco fichas previas preservadas; nueve cofradías reunidas en su jornada del directorio.
+- macrolote transversal HC-016 del Martes Santo de Sevilla: Candelaria, Los Javieres y Los Estudiantes completadas; cinco fichas previas preservadas; ocho cofradías reunidas en su jornada del directorio.
+- macrolote transversal HC-016 del Miércoles Santo de Sevilla: El Buen Fin publicado con seis imágenes, dos Pasos, diez Cultos, salida de 2026, patrimonio, hitos, música y Fuentes; ocho fichas previas preservadas y nueve cofradías reunidas en la jornada.
+- macrolote transversal HC-016 del Domingo de Ramos de Sevilla: Cena, Hiniesta, San Roque, Estrella, Amargura y Amor completadas; La Paz y Jesús Despojado preservadas; ocho corporaciones y nueve cortejos sin duplicar La Borriquita.
+- macrolote transversal HC-016 del Viernes Santo de Sevilla: La Carretería preservada; Cachorro, La O, San Isidoro, Montserrat, Sagrada Mortaja y Soledad de San Buenaventura completadas; siete corporaciones y siete cortejos sin mezclar San Isidoro con la Salud letífica.
+- macrolote transversal HC-016 del Jueves Santo de Sevilla: Los Negritos y El Valle preservados; Exaltación, Cigarreras, Monte-Sión, Quinta Angustia y Pasión completadas; siete corporaciones publicadas sin contaminación entre homónimos.
+- macrolote transversal HC-016 de Glorias de septiembre de Sevilla: once corporaciones cubiertas; cinco cierres preservados; Pastora de Triana, Valvanera, Santa Lucía, Sastres, Inmaculado Corazón de Torreblanca y Padre Pío completadas mediante 114/114 operaciones.
+- macrolote transversal HC-016 de Glorias de octubre de Sevilla: quince corporaciones cubiertas sin duplicar las dimensiones letíficas de Hermandades mixtas; seis fichas creadas, cuatro completadas y siete Salidas futuras publicadas mediante 186/186 operaciones.
+- subida múltiple de imágenes en el Panel de Hermandades: hasta 10 archivos por lote, descripción accesible y pie individual, crédito y derechos compartidos, subida directa secuencial con progreso y reanudación desde el primer fallo.
+- #789–#799: subida múltiple, navegación V4, estabilización de carátulas de La Oliva, relaciones de igualás y ensayos, legibilidad V4.1, fotografía por Salida, Agenda de conciertos, búsquedas municipales y nueva Home. #798 quedó cerrada sin integrar porque #797 absorbió su reconciliación.
+- #749–#756: paleta de Humildad y Caridad, Rosario 2026 de la Corona con AMUECI, directorio visual por municipios, desglose de Sevilla capital, paletas de cinco Bandas, memoria extraordinaria de la Corona en 2025, separación de extraordinarias futuras y cierre de Guadalupe. Todo está absorbido por `main`.
+- #757: cruceta interpretada de la Virgen del Castillo de Lebrija en 2026, absorbida durante este cierre concurrente sin invadir el contexto HC-016.
+- #758 y #759: cruceta de la Pastora de Padre Pío y paletas de seis Bandas integradas antes del Apply, sin invadir el contexto HC-016.
+- #760: cierre del Santo Entierro de Dos Hermanas como duodécimo contexto HC-016.
+- #761: conexiones públicas entre Crucetas, Marchas y escuchas, integradas antes del decimotercer cierre editorial.
+- #762: cierre de Sagrada Resurrección como decimotercer contexto HC-016, integrado y desplegado antes del macrolote de la Madrugá.
+
+## Dónde estamos ahora
+
+HC-016 funciona como método editorial operativo en dieciséis contextos individuales y en los macrolotes transversales ya certificados. Santa Ana de Dos Hermanas terminó 49/49 y Vera-Cruz de Alcalá del Río 45/45; ambos lotes conservan 0 duplicados, 0 huérfanos y 0 Salidas pasadas en `announced`. La evidencia está en [`CERTIFICACION-SANTA-ANA-DOS-HERMANAS-HC016-2026-09-15.md`](./CERTIFICACION-SANTA-ANA-DOS-HERMANAS-HC016-2026-09-15.md) y [`CERTIFICACION-VERA-CRUZ-ALCALA-DEL-RIO-HC016-2026-09-15.md`](./CERTIFICACION-VERA-CRUZ-ALCALA-DEL-RIO-HC016-2026-09-15.md). Todas las jornadas ordinarias de la Semana Santa de Sevilla y las Glorias de septiembre y octubre permanecen cerradas. No hay otro frente editorial abierto.
+
+El recálculo global posterior seleccionó **Bandas** frente a Hermandades provinciales y Marchas/Crucetas. El lote transversal `c0160025-0000-4000-8000-000000000001` terminó 23/23: las 18 fichas públicas que carecían de Fuente directa quedaron trazadas mediante evidencia que ya documentaba sus acompañamientos, y las dos relaciones del nodo duplicado de la Agrupación Juvenil de Los Gitanos se reunieron en el nodo canónico. El duplicado se conserva archivado, sin borrar ni reutilizar su ID. El resultado es 75 Bandas públicas, 0 sin `slug`, 0 sin descripción y 0 sin Fuente directa; el nodo canónico recupera además su resumen público. La evidencia completa está en [`CERTIFICACION-MACROFRENTE-BANDAS-2026-09-15.md`](./CERTIFICACION-MACROFRENTE-BANDAS-2026-09-15.md).
+
+HC-019 queda certificada con su piloto real: Pastora de Cantillana · Procesión de Gloria 2026 · Banda de Música de Nuestra Señora de la Soledad de Cantillana. El modelo conserva 48 obras y 60 interpretaciones mediante multiplicidades, sin inferir orden, ubicación ni consecutividad. La evidencia está en [`CERTIFICACION-HC019-CRUCETAS-MUSICALES-2026-09-10.md`](./CERTIFICACION-HC019-CRUCETAS-MUSICALES-2026-09-10.md).
+
+El lote transversal de Cultos 2026 demuestra además el uso rutinario del método sin abrir otra ficha: cuatro Hermandades existentes, 53/53 operaciones y separación estricta entre calendario recurrente y edición anunciada. La certificación está en [`CERTIFICACION-CULTOS-OTONO-2026-2026-09-09.md`](./CERTIFICACION-CULTOS-OTONO-2026-2026-09-09.md).
+
+Los cierres editoriales no incorporaron DDL, tablas, migraciones estructurales, cambios RLS ni excepciones por `slug`. El circuito gobernado sigue siendo:
+
+```text
+CARGA → STAGING → PREFLIGHT GLOBAL → REVISIÓN → APPLY → RESULTADOS
+```
+
+## Lotes anteriores que siguen certificados
+
+- **San Pablo:** 183 filas originales aplicadas, remediadas o descartadas con causa; su remate de 41/41 continúa cerrado. Las correcciones de #694, #695, #696, #698 y #699 siguen integradas.
+- **Mercedes de la Puerta Real:** segundo contexto real cerrado. La validación genérica de `image_authorships.authorship_type` de #705 impide que el fallo determinista descubierto alcance Apply; #706 mantiene separados motivo e itinerario de Salidas.
+
+## Manifiesto de ramas y cuarto lote
+
+El corte estricto posterior a #719 clasificó 817 ramas contra `main = 46a9ab51…`: 295 antecesoras, 219 equivalentes por parche y 303 con parches únicos. El cruce individual con 718 PR permitió reconocer 240 puntas exactas de PR fusionados sin convertir los PR cerrados sin fusionar en permiso de borrado.
+
+La limpieza eliminó 753 referencias en la primera pasada y la rama ya fusionada de #720 en la segunda. Quedan 63 ramas: 61 con trabajo único conservado, la rama de release de HC-018 y `archive/pre-cleanup-20260909`. La salvaguarda apunta a `1261c3d1…` y conserva todas las puntas que no siguen alcanzables desde `main`. La evidencia completa está en [`AUDITORIA-RAMAS-Y-DEUDA-HC016-2026-09-09.md`](./AUDITORIA-RAMAS-Y-DEUDA-HC016-2026-09-09.md).
+
+El TOP 3 actualizado fue El Cachorro, El Carmen y Cristo de Burgos. El Cachorro quedó primero por densidad relacional y profundidad de fuentes oficiales. La actualidad estricta detectó un lote ya preparado, evitó duplicarlo y permitió auditarlo antes de Apply.
+
+El lote `19d2d74c-ff8d-42cd-9a4e-42c8e3a56a7d` quedó `completed`: 90/90, 77 insert, 12 update, 1 reuse y 0 fallos. El lote previo `1e325c2a-c27d-4572-a69e-cc279ed9075f` quedó `cancelled` con 0 escrituras. La certificación está en [`CERTIFICACION-EL-CACHORRO-HC016-2026-09-09.md`](./CERTIFICACION-EL-CACHORRO-HC016-2026-09-09.md).
+
+## Quinto lote y remate de Cristo del Perdón
+
+El lote `c0160005-1000-4000-8000-000000000001` dejó El Carmen `completed`: 83/83, 74 insert, 6 update, 3 reuse y 0 fallos. Publicó 3 titulares, 2 Pasos, 9 Cultos, la Estación de Penitencia de 2026 y cuatro periodos musicales. La cronología diferencia la Soledad de Cantillana como vigente de Pasión de Linares, Virgen de los Reyes y Guadalrosal como periodos finalizados. La certificación está en [`CERTIFICACION-EL-CARMEN-HC016-2026-09-09.md`](./CERTIFICACION-EL-CARMEN-HC016-2026-09-09.md).
+
+El lote independiente `c0160005-0000-4000-8000-000000000001` cerró 5/5 operaciones sobre Cristo del Perdón. Las bandas del Cristo del Humilladero y Municipal Cristo del Perdón ya existían como vigentes; se conservaron y se añadieron dos Fuentes y tres vínculos sin duplicar acompañamientos. La carga del escudo anunciada por el editor queda fuera de este lote y se realizará desde el Panel.
+
+## Sexto lote · Cristo de Burgos
+
+El grafo se refrescó después de cerrar El Cachorro y El Carmen. Cristo de Burgos conservaba una deuda nuclear del 43 %, fuentes oficiales profundas y un alcance compatible con una sola ficha. Se seleccionó por delante de las señales preliminares de El Valle, Las Siete Palabras y Montserrat; ese orden no abre automáticamente el siguiente frente.
+
+El lote `c0160006-1000-4000-8000-000000000001` quedó `completed`: 110/110, 103 insert, 6 update, 1 reuse y 0 fallos. Publicó 2 titulares, 2 Pasos, 1 hábito, 10 Cultos, 2 Salidas, 4 piezas patrimoniales y 2 periodos musicales; conservó además el periodo vigente ya existente de Maestro Tejera.
+
+La verificación pública detectó que el acontecimiento ya existente del Vía Crucis de 1999 tenía su relación `involves` en borrador. El remate `c0160006-2000-4000-8000-000000000001` publicó esa relación y añadió su vínculo documental: 2/2, 0 fallos. La ficha muestra ya el módulo institucional sin cambios de código o presentación. La certificación está en [`CERTIFICACION-CRISTO-DE-BURGOS-HC016-2026-09-09.md`](./CERTIFICACION-CRISTO-DE-BURGOS-HC016-2026-09-09.md).
+
+## Reversión del séptimo lote concurrente
+
+Después del cierre de Cristo de Burgos apareció y se fusionó de forma concurrente un lote de Las Siete Palabras contrario a la orden de no abrir todavía una séptima Hermandad. GitHub ya había incorporado la certificación y Supabase registraba 270 operaciones aplicadas.
+
+La reversión se ejecutó de forma compensatoria y transaccional: preflight sin deriva ni dependencias externas, simulación completa seguida de `ROLLBACK` y Apply real. Se retiraron las 252 altas exclusivas, se reconciliaron las 18 actualizaciones sobre filas preexistentes y se preservó el historial del lote. `bulk_imports` lo registra como `cancelled`, `audit_log` conserva la restauración y la completitud de Las Siete Palabras vuelve al 43 %.
+
+No hubo DDL, nuevas tablas, migraciones ni cambios RLS. Las Siete Palabras vuelve a ser únicamente candidata y no cuenta como séptimo contexto certificado.
+
+## Séptimo lote gobernado · Las Siete Palabras
+
+Después de aquella reversión se recibió una orden específica, se refrescó de nuevo el grafo y se compararon seis Hermandades publicadas no certificadas. El TOP 3 nuevo fue Las Siete Palabras (43 %), El Valle (43 %) y La Amargura (71 %). Las Siete Palabras se eligió por su deuda nuclear, 13 fuentes oficiales disponibles y el mayor potencial relacional; no por el ranking anterior.
+
+El lote nuevo `f97aef97-12f9-4ed5-b1dd-201dd7c6f877` recorrió el circuito completo y quedó `completed`: **270/270**, **252 insert**, **18 update**, **0 reuse**, **0 inválidas** y **0 fallos**. Publicó 12 titulares/imágenes, 4 Pasos, 1 hábito, 16 Cultos, 2 Salidas, 27 piezas patrimoniales, 5 periodos musicales y 74 vínculos de Fuente. La completitud reproducible pasa del 43 % al 86 %.
+
+La actualidad se conservó de forma estricta: el Rosario de noviembre de 2026 sigue anunciado; el Réquiem conserva el 19 de noviembre sin hora inventada; Presentación al Pueblo queda histórica en 1992–2006; ningún anuncio de 2027 se convirtió en vigencia de 2026. El único incidente fue de presentación: el Panel perdió la etiqueta descriptiva y guardó el rótulo genérico «Importación masiva»; el UUID, contenido, preflight y Apply son íntegros.
+
+La evidencia completa está en [`CERTIFICACION-SIETE-PALABRAS-HC016-2026-09-09.md`](./CERTIFICACION-SIETE-PALABRAS-HC016-2026-09-09.md). El frente editorial queda cerrado y no se abre una octava Hermandad.
+
+## Recálculo de deuda y selección de El Museo
+
+La deuda se recalculó desde el grafo real entre Hermandades publicadas no certificadas, antes de escribir. No se confundieron ausencia documental, dato no aplicable, contenido no publicado, pendiente de verificar y deuda real.
+
+| Candidata | Completitud inicial aprox. | Deuda real y potencial | Fuentes | Dificultad | Valor editorial | Cierre con HC-016 |
+|---|---:|---|---|---|---|---:|
+| El Museo | 43 % | Titulares, Pasos, autorías, hábitos, patrimonio, Cultos, Salidas y relaciones | Buena y mayoritariamente oficial | Media-alta | Muy alto | 93 % |
+| El Cachorro | 43 % | Grafo artístico y procesional muy amplio, con más volumen y ambigüedad | Muy buena | Alta | Muy alto | 88 % |
+| Cristo de Burgos | 43 % | Núcleo penitencial, titulares, Pasos, Cultos y patrimonio | Buena, con web oficial | Media | Alto | 86 % |
+
+Se eligió **El Museo** porque combinaba fuentes oficiales suficientes, reutilización de nodos existentes y familias relacionales distintas de Mercedes. Era el mejor equilibrio para volver a demostrar el método sin optar simplemente por la ficha más vacía.
+
+## El Museo · diagnóstico inicial
+
+La identidad y la sede ya existían. No había titulares, Pasos, hábitos, Cultos, patrimonio ni media publicados. Sí existía el acompañamiento vigente de la Banda de Música de la Oliva de Salteras, asociado a un Paso de palio aún en borrador; también existían en borrador la Salida histórica del Vía Crucis del Consejo de 2014 y su relación institucional.
+
+La deuda abordable era editorial y relacional. La ausencia de fotografías con licencia reutilizable no justificaba inventar media ni bloquear el cierre.
+
+## Diseño y ejecución del lote
+
+El inventario respetó el orden Fuentes → entidades → Hermandad → titulares/Pasos → agentes → música → patrimonio → Cultos → Salidas → relaciones → `source_links`. Se canonicalizaron las Fuentes y se reutilizaron los nodos que representaban la misma realidad.
+
+### Lote principal
+
+`efbb56a9-640b-4207-9b67-287a39992479` · 114 filas en 17 tablas:
+
+| Familia | Filas |
+|---|---:|
+| Fuentes | 15 |
+| Entidades | 15 |
+| Hermandad | 1 |
+| Imágenes titulares | 2 |
+| Agentes | 4 |
+| Pasos | 2 |
+| Relaciones Hermandad–Imagen y Hermandad–Paso | 4 |
+| Autorías y relaciones Imagen–Paso | 4 |
+| Hábitos | 2 |
+| Patrimonio e intervenciones | 12 |
+| Cultos | 9 |
+| Salidas y participantes | 7 |
+| `source_links` | 37 |
+| **Total** | **114** |
+
+- Carga, Staging y Preflight global: 114/114 válidas, 0 incidencias.
+- Plan efectivo: 106 insert · 5 update · 3 reuse.
+- Apply: 114/114 procesadas, 0 inválidas, 0 fallos.
+
+Las tres reutilizaciones fueron las Fuentes oficiales de historia y música y la Fuente del Consejo. Los cinco UPDATE afectaron al perfil de El Museo, al Paso de palio y su relación, y a la Salida histórica de 2014; no duplicaron filas existentes.
+
+### Remates editoriales
+
+- `20010f90-60d5-474f-aa1d-80aa8daaa546` · 8/8 UPDATE, 0 fallos: ajustó los vínculos de Fuentes relacionales al contrato genérico `entity_id + scope` que consume el Panel.
+- `ec97160a-e0e5-44ec-b6bf-67501dd64fb3` · 2/2, 0 fallos: 1 insert y 1 update para publicar la relación del Vía Crucis del Consejo de 2014 y enlazar su Fuente oficial.
+
+Resultado acumulado: **124/124 operaciones procesadas**, con **107 insert, 14 update y 3 reuse**; ningún error determinista alcanzó Apply.
+
+La incidencia de visibilidad de ocho Fuentes fue una discordancia editorial del lote con el contrato de presentación ya vigente. Se corrigió en el propio lote. No reveló una carencia de validación, resolución, planificación, dependencias, permisos o Apply y no justificó un parche sistémico.
+
+## Certificación de El Museo
+
+La ficha pasa aproximadamente de **43 % a 92 %** de completitud editorial útil:
+
+- identidad, denominación, historia, sede y web oficial;
+- 2 titulares publicados con autoría, cronología y material documentados;
+- 2 Pasos publicados y relacionados con sus imágenes;
+- acompañamiento vigente de la Oliva de Salteras correctamente mostrado como música procesional del palio;
+- 2 hábitos penitenciales;
+- 9 Cultos recurrentes;
+- Estación de Penitencia de 2026 publicada como celebrada, con horario e itinerario documentados;
+- Vía Crucis del Consejo de 2014 publicado como salida histórica e integrado en el módulo institucional;
+- 6 piezas patrimoniales y 6 intervenciones asociadas;
+- 15 Fuentes visibles en la ficha pública y 38 vínculos de Fuente del lote;
+- 0 relaciones de El Museo en borrador, 0 duplicados activos de titulares, Pasos o Salidas y 0 enlaces huérfanos.
+
+Huecos legítimos o pendientes de verificar:
+
+- escudo y fotografías con derechos de reutilización comprobados;
+- canales sociales distintos de la web oficial;
+- capataces, vestidores u otros oficios actuales sin Fuente oficial inequívoca;
+- catálogo musical y patrimonial exhaustivo.
 
 No se transformaron anuncios en hechos celebrados ni se inventaron continuidades, fechas, autorías o responsables.
 
