@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { cache } from 'react';
+import { cache, Suspense } from 'react';
 import BrotherhoodCultsSection from '@/components/BrotherhoodCultsSection';
 import BrotherhoodCrewEventsSection from '@/components/BrotherhoodCrewEventsSection';
 import BrotherhoodMusicalHeritage from '@/components/BrotherhoodMusicalHeritage';
@@ -112,6 +112,16 @@ export function generateStaticParams() {
   return hermandades.map((item) => ({ slug: item.slug }));
 }
 
+async function BrotherhoodRepertoiresAsync({ brotherhoodId, outingIds }) {
+  const items = await getMusicalRepertoires({ brotherhoodEntityId: brotherhoodId, outingIds });
+  return <MusicalRepertoiresSection items={items} context="brotherhood" />;
+}
+
+async function BrotherhoodCrewEventsAsync({ brotherhoodId }) {
+  const events = await getCrewEventsByBrotherhoodId(brotherhoodId);
+  return <BrotherhoodCrewEventsSection events={events} />;
+}
+
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const h = await getHermandad(slug);
@@ -174,7 +184,7 @@ export default async function HermandadDetailPage({ params }) {
     ...(h.participacionesConsejo || []).map((participacion) => [participacion.id, 'event']),
   ]);
   const outingIds = (h.salidas || []).map((outing) => outing.id).filter(Boolean);
-  const [entityCoverMedia, musicalHeritage, musicalRepertoires, crewEvents] = await Promise.all([
+  const [entityCoverMedia, musicalHeritage] = await Promise.all([
     getPublishedEntityCoverMediaMap(
       [...coverEntityTypes.keys()],
       { entityTypesById: coverEntityTypes }
@@ -183,8 +193,6 @@ export default async function HermandadDetailPage({ params }) {
       imageIds: h.imagenes.map((imagen) => imagen.id),
       currentAccompaniments: h.acompanamientoActual,
     }),
-    getMusicalRepertoires({ brotherhoodEntityId: h.id, outingIds }),
-    getCrewEventsByBrotherhoodId(h.id),
   ]);
   const authoritativeCrestPath = h.escudoPath || '';
   const heroMedia = entityCoverMedia.get(h.id)
@@ -398,12 +406,10 @@ export default async function HermandadDetailPage({ params }) {
         brotherhoodThreadItems.length > 0 && { href: '#tira-del-hilo', label: 'Conexiones' },
         documentedCurrentAccompaniments.length > 0 && { href: '#acompanamiento-musical', label: 'Acompañamiento' },
         (musicalHeritage.length > 0 || fallbackMusicalHeritage.length > 0) && { href: '#musica', label: 'Patrimonio musical' },
-        musicalRepertoires.length > 0 && { href: '#crucetas-musicales', label: 'Crucetas' },
         h.cronologia?.length > 0 && { href: '#historia', label: 'Historia' },
         h.viaCrucisCofradias?.length > 0 && { href: '#via-crucis-cofradias', label: 'Vía Crucis' },
         h.habitos?.length > 0 && { href: '#tunica', label: 'Túnica' },
         h.salidas?.length > 0 && { href: '#salidas', label: 'Salidas' },
-        crewEvents.length > 0 && { href: '#igualas-y-ensayos', label: 'Igualás y ensayos' },
         h.cultos?.length > 0 && { href: '#cultos', label: 'Cultos' },
         h.simpecados?.length > 0 && { href: '#simpecados', label: 'Simpecados' },
         h.cartelesFiestas?.length > 0 && { href: '#carteles', label: 'Carteles' },
@@ -528,7 +534,9 @@ export default async function HermandadDetailPage({ params }) {
             <article className="image-card brotherhood-image-card" key={imagen.id}>{card}</article>
           );
         })}</div>
-        <BrotherhoodConceptualTitulars brotherhoodId={h.id} />
+        <Suspense fallback={null}>
+          <BrotherhoodConceptualTitulars brotherhoodId={h.id} />
+        </Suspense>
       </div></section>
       )}
 
@@ -587,13 +595,15 @@ export default async function HermandadDetailPage({ params }) {
       </div></section>
       )}
 
-      <BrotherhoodOwnBands
-        brotherhoodId={h.id}
-        brotherhoodName={h.nombrePopular}
-        images={h.imagenes}
-        steps={h.pasos}
-        currentAccompaniments={h.acompanamientoActual}
-      />
+      <Suspense fallback={null}>
+        <BrotherhoodOwnBands
+          brotherhoodId={h.id}
+          brotherhoodName={h.nombrePopular}
+          images={h.imagenes}
+          steps={h.pasos}
+          currentAccompaniments={h.acompanamientoActual}
+        />
+      </Suspense>
 
       {musicalHeritage.length > 0 ? (
         <BrotherhoodMusicalHeritage items={musicalHeritage} />
@@ -607,7 +617,9 @@ export default async function HermandadDetailPage({ params }) {
         </div></section>
       ) : null}
 
-      <MusicalRepertoiresSection items={musicalRepertoires} context="brotherhood" />
+      <Suspense fallback={null}>
+        <BrotherhoodRepertoiresAsync brotherhoodId={h.id} outingIds={outingIds} />
+      </Suspense>
 
       {h.cronologia?.length > 0 && <section className="section history-section" id="historia"><div className="shell">
         <SectionTitle eyebrow="Cronología" title="Historia" description="Una línea temporal para recorrer los grandes hitos y conectarlos con titulares, pasos y acontecimientos." />
@@ -651,7 +663,9 @@ export default async function HermandadDetailPage({ params }) {
 
       <BrotherhoodOutingsSection outings={h.salidas} />
 
-      <BrotherhoodCrewEventsSection events={crewEvents} />
+      <Suspense fallback={null}>
+        <BrotherhoodCrewEventsAsync brotherhoodId={h.id} />
+      </Suspense>
 
       <BrotherhoodCultsSection cults={h.cultos} />
 
