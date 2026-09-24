@@ -14,6 +14,8 @@ test('la invalidación de salidas distingue Extraordinarias y Procesiones de Glo
   assert.match(helper, /brotherhoodSlugById\.get\(outing\.brotherhood_entity_id\)/)
   assert.match(helper, /revalidatePath\(`\/extraordinarias\/\$\{outing\.slug\}`\)/)
   assert.match(helper, /revalidatePath\(`\/procesiones-de-gloria\/\$\{slug\}`\)/)
+  assert.match(helper, /revalidateTag\('public-glory-directory', \{ expire: 0 \}\)/)
+  assert.match(helper, /revalidateTag\('public-glory-detail', \{ expire: 0 \}\)/)
   assert.match(helper, /revalidatePath\('\/agenda-cofrade'\)/)
 })
 
