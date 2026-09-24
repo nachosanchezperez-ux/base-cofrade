@@ -159,3 +159,25 @@ test('Hermandades no bloquea la cabecera con módulos secundarios', () => {
   assert.match(page, /<Suspense fallback=\{null\}>[\s\S]*<BrotherhoodConceptualTitulars/)
   assert.match(overview, /<Suspense fallback=\{null\}>[\s\S]*<BrotherhoodQuickFacts/)
 })
+
+
+test('Bandas integra enlaces de salidas en la ficha cacheada', () => {
+  const page = read('app/bandas/[slug]/page.js')
+  const core = read('lib/supabase/bands-core.js')
+
+  assert.doesNotMatch(page, /getBandOutingPublicLinks/)
+  assert.match(core, /slug: outing\.slug \|\| ''/)
+  assert.match(core, /brotherhoodSlug: outingBrotherhoodById/)
+  assert.match(page, /outingSlug: item\.slug \|\| ''/)
+})
+
+test('Bandas transmite Discografía y Crucetas sin bloquear la cabecera', () => {
+  const page = read('app/bandas/[slug]/page.js')
+
+  assert.match(page, /import \{ cache, Suspense \} from 'react'/)
+  assert.match(page, /async function BandRepertoiresAsync/)
+  assert.match(page, /async function BandDiscographyAsync/)
+  assert.match(page, /const colors = await getPublishedBandColors\(band\.id\)/)
+  assert.match(page, /<Suspense fallback=\{null\}>[\s\S]*<BandRepertoiresAsync/)
+  assert.match(page, /<Suspense fallback=\{null\}>[\s\S]*<BandDiscographyAsync/)
+})
