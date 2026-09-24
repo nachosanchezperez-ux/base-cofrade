@@ -131,3 +131,18 @@ test('Igualás de una Hermandad no escanea todos los lugares', () => {
   assert.match(loader, /\.from\('places'\)[\s\S]*\.in\('id', placeIds\)/)
   assert.doesNotMatch(loader, /await supabase\.from\('places'\)\.select\('id, name, municipality_id'\),/)
 })
+
+
+test('Hermandades evita consultas duplicadas de censo, actividad anual y guantes', () => {
+  const page = read('app/hermandades/[slug]/page.js')
+  const quickFacts = read('components/BrotherhoodQuickFacts.js')
+  const loader = read('lib/supabase/brotherhoods.js')
+
+  assert.doesNotMatch(page, /BrotherhoodHabitGloves/)
+  assert.match(page, /item\.guantes \? <div><dt>Guantes<\/dt>/)
+  assert.match(loader, /gloves_color/)
+  assert.match(loader, /members_count, members_count_kind/)
+  assert.doesNotMatch(quickFacts, /from\('brotherhood_procession_stats'\)/)
+  assert.doesNotMatch(quickFacts, /from\('outing_series'\)/)
+  assert.match(quickFacts, /brotherhood\.datosJornada\.membersCount/)
+})
