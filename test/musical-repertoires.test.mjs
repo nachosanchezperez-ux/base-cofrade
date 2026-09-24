@@ -60,8 +60,18 @@ test('la sección es descubrible y enlaza las fichas de Hermandad y Banda', () =
 
   assert.match(header, /\['\/crucetas-musicales', 'Crucetas musicales'\]/)
   assert.match(sitemap, /getMusicalRepertoires/)
-  assert.match(brotherhood, /getMusicalRepertoires\(\{ brotherhoodEntityId: h\.id \}\)/)
+  assert.match(brotherhood, /getMusicalRepertoires\(\{ brotherhoodEntityId: h\.id, outingIds \}\)/)
   assert.match(band, /getMusicalRepertoires\(\{ bandEntityId: band\.id \}\)/)
   assert.match(detail, /href=\{repertoire\.brotherhood\.href\}/)
   assert.match(detail, /href=\{repertoire\.band\.href\}/)
+})
+
+
+test('la ficha de Hermandad reutiliza las salidas ya cargadas para localizar sus Crucetas', () => {
+  const brotherhood = source('app/hermandades/[slug]/page.js')
+  const loader = source('lib/supabase/musical-repertoires.js')
+
+  assert.match(brotherhood, /const outingIds = \(h\.salidas \|\| \[\]\)\.map/)
+  assert.match(loader, /const suppliedOutingIds = unique\(outingIds\)/)
+  assert.match(loader, /suppliedOutingIds\.length/)
 })
