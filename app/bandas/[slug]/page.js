@@ -181,13 +181,18 @@ async function BandRepertoiresAsync({ bandId }) {
   return <MusicalRepertoiresSection items={items} context="band" />
 }
 
-async function BandDiscographyAsync({ bandId, bandName, logoPath }) {
-  const releases = await getBandDiscography(bandId)
+async function BandDiscographyAsync({ bandId, bandName, logoPath, artistSpotifyUrl }) {
+  const releases = await getBandDiscography(bandId, {
+    bandName,
+    bandLogoPath: logoPath,
+    artistSpotifyUrl,
+  })
   return (
     <BandDiscographySection
       releases={releases}
       bandName={bandName}
       logoPath={logoPath}
+      artistSpotifyUrl={artistSpotifyUrl}
     />
   )
 }
@@ -263,6 +268,7 @@ export default async function BandDetailPage({ params }) {
   const secondaryColor = colors.find((item) => item.role === 'secondary')?.hexValue || band.secondaryColor
   const accentColor = colors.find((item) => item.role === 'accent')?.hexValue || primaryColor
   const bandTheme = resolveBandPageTheme({ primaryColor, secondaryColor, accentColor })
+  const artistSpotifyUrl = band.interestLinks.find((link) => link.platform === 'spotify')?.url || ''
   const currentRelations = [...orderedAccompaniments, ...gloryAccompaniments, ...upcomingAccompaniments]
   const bandThreadItems = [
     ...(band.linkedBrotherhoodSlug ? [{
@@ -667,6 +673,7 @@ export default async function BandDetailPage({ params }) {
           bandId={band.id}
           bandName={band.popularName}
           logoPath={band.logoPath}
+          artistSpotifyUrl={artistSpotifyUrl}
         />
       </Suspense>
 
