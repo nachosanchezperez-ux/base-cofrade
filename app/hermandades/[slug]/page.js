@@ -180,7 +180,10 @@ export default async function HermandadDetailPage({ params }) {
       [...coverEntityTypes.keys()],
       { entityTypesById: coverEntityTypes }
     ),
-    getBrotherhoodMusicalHeritage(h.id),
+    getBrotherhoodMusicalHeritage(h.id, {
+      imageIds: h.imagenes.map((imagen) => imagen.id),
+      currentAccompaniments: h.acompanamientoActual,
+    }),
     getMusicalRepertoires({ brotherhoodEntityId: h.id, outingIds }),
     getCrewEventsByBrotherhoodId(h.id),
   ]);
