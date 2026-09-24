@@ -1,6 +1,6 @@
 'use server'
 
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
 
@@ -78,6 +78,7 @@ export async function updateBrotherhoodPublicationAction(formData) {
   })
   if (auditError) console.error('[Hilo Cofrade] No se pudo registrar el cambio de publicación', auditError)
 
+  revalidateTag('public-brotherhood-detail', { expire: 0 })
   revalidatePath('/panel')
   revalidatePath('/panel/hermandades')
   revalidatePath(`/panel/hermandades/${brotherhoodId}`)
