@@ -4,6 +4,9 @@ import {
   filterIndexableBrotherhoods,
 } from '@/lib/brotherhood-public-index';
 import { unstable_cache } from 'next/cache';
+import { connection } from 'next/server';
+import { PUBLIC_SITEMAP_SEGMENTS, sitemapEntriesForSegment } from '@/lib/seo-sitemap-segments';
+import { getBandsDirectory } from '@/lib/supabase/bands';
 import { absoluteUrl } from '@/lib/seo';
 import { bandDirectoryFacets } from '@/lib/band-directory';
 import { heritageDirectoryLocalities, heritageDirectoryTypes } from '@/lib/heritage-directory';
@@ -277,60 +280,92 @@ function rosaryEntries(outings) {
     }));
 }
 
-async function buildPublicSitemapEntries() {
-  const [brotherhoodDirectory, bandDirectory, imageDirectory, stepDirectory, extraordinaryOutings, gloryOutings, crewEvents, musicalRepertoires, marches, authors, rosaryOutings] = await Promise.all([
-    getHermandadesDirectory(),
-    getPublicBandsDirectory(),
-    getImagesDirectory(),
-    getStepsDirectory(),
-    getExtraordinaryDirectory(),
-    getGloryDirectory(),
-    getCrewEventDirectory(),
-    getMusicalRepertoires(),
-    getPublicMarchSitemapEntries(),
-    getPublicAgentSitemapEntries(),
-    getRosaryOutings(),
-  ]);
-  const indexableEntities = await getPublicIndexableEntityEntries({
-    brotherhoods: brotherhoodDirectory,
-    images: imageDirectory,
-    steps: stepDirectory,
-  });
-  const indexableBrotherhoods = filterIndexableBrotherhoods(
-    brotherhoodDirectory,
-    indexableEntities
-  );
+// Each cache entry owns one family. Do not load the full graph before filtering.
+async function buildPublicSitemapSegmentEntries(segment) {
+  const strict = { throwOnError: true };
+  const entries = [...sitemapEntriesForSegment(staticEntries, segment)];
 
-  const entries = [
-    ...staticEntries,
-    ...entityEntries(indexableEntities),
-    ...directoryEntries(indexableBrotherhoods),
-    ...brotherhoodLocalityEntries(indexableBrotherhoods),
-    ...bandDirectoryEntries(bandDirectory),
-    ...heritageDirectoryEntries(imageDirectory, stepDirectory),
-    ...extraordinaryEntries(extraordinaryOutings),
-    ...gloryEntries(gloryOutings),
-    ...crewEventEntries(crewEvents),
-    ...musicalRepertoireEntries(musicalRepertoires),
-    ...marchEntries(marches),
-    ...authorEntries(authors),
-    ...rosaryEntries(rosaryOutings),
-  ];
+  if (segment === 'hermandades') {
+    const brotherhoodDirectory = await getHermandadesDirectory(strict);
+    // Child sources are part of the existing brotherhood indexability contract.
+    const imageDirectory = await getImagesDirectory(strict);
+    const stepDirectory = await getStepsDirectory(strict);
+    const indexableEntities = await getPublicIndexableEntityEntries({
+      brotherhoods: brotherhoodDirectory, bandDirectory: [],
+      images: imageDirectory, steps: stepDirectory,
+    });
+    const indexableBrotherhoods = filterIndexableBrotherhoods(brotherhoodDirectory, indexableEntities);
+    entries.push(...entityEntries(indexableEntities),
+      ...directoryEntries(indexableBrotherhoods), ...brotherhoodLocalityEntries(indexableBrotherhoods));
+  } else if (segment === 'bandas') {
+    const bandDirectory = await getPublicBandsDirectory(strict);
+    const bands = await getBandsDirectory(strict);
+    const indexableEntities = await getPublicIndexableEntityEntries({
+      bandDirectory: bands, images: [], steps: [],
+    });
+    entries.push(...entityEntries(indexableEntities), ...bandDirectoryEntries(bandDirectory));
+  } else if (segment === 'imagenes' || segment === 'pasos') {
+    const imageDirectory = segment === 'imagenes' ? await getImagesDirectory(strict) : [];
+    const stepDirectory = segment === 'pasos' ? await getStepsDirectory(strict) : [];
+    const indexableEntities = await getPublicIndexableEntityEntries({
+      bandDirectory: [], images: imageDirectory, steps: stepDirectory,
+    });
+    entries.push(...entityEntries(indexableEntities), ...heritageDirectoryEntries(imageDirectory, stepDirectory));
+  } else if (segment === 'agenda') {
+    // Sequence the source groups to avoid multiplying their internal fan-out.
+    const extraordinaryOutings = await getExtraordinaryDirectory(strict);
+    const gloryOutings = await getGloryDirectory(strict);
+    const crewEvents = await getCrewEventDirectory(strict);
+    const rosaryOutings = await getRosaryOutings(strict);
+    entries.push(...extraordinaryEntries(extraordinaryOutings), ...gloryEntries(gloryOutings),
+      ...crewEventEntries(crewEvents), ...rosaryEntries(rosaryOutings));
+  } else if (segment === 'crucetas') {
+    const musicalRepertoires = await getMusicalRepertoires(strict);
+    entries.push(...musicalRepertoireEntries(musicalRepertoires));
+  } else if (segment === 'marchas') {
+    const marches = await getPublicMarchSitemapEntries();
+    // The paginated canonical reader covers every published march, including
+    // those referenced by a repertoire, without loading repertoire relations.
+    entries.push(...marchEntries(marches));
+  } else if (segment === 'autores') {
+    const authors = await getPublicAgentSitemapEntries();
+    entries.push(...authorEntries(authors));
+  }
 
+  return [...new Map(sitemapEntriesForSegment(entries, segment)
+    .map((entry) => [entry.url, entry])).values()];
+}
+
+const getCachedPublicSitemapSegmentEntries = unstable_cache(
+  buildPublicSitemapSegmentEntries,
+  ['hilo-cofrade-public-sitemap-family-v1'],
+  { revalidate: 3600, tags: ['seo-sitemap'] }
+);
+
+// Coalesce simultaneous requests in the same process; failures are never kept.
+const pendingSegments = new Map();
+export async function getPublicSitemapSegmentEntries(segment) {
+  if (!PUBLIC_SITEMAP_SEGMENTS.includes(segment)) return null;
+  if (!pendingSegments.has(segment)) {
+    const pending = getCachedPublicSitemapSegmentEntries(segment)
+      .finally(() => pendingSegments.delete(segment));
+    pendingSegments.set(segment, pending);
+  }
+  return pendingSegments.get(segment);
+}
+
+export async function getPublicSitemapEntries() {
+  const entries = [];
+  for (const segment of PUBLIC_SITEMAP_SEGMENTS) {
+    entries.push(...await getPublicSitemapSegmentEntries(segment));
+  }
   return [...new Map(entries.map((entry) => [entry.url, entry])).values()];
 }
 
-const getCachedPublicSitemapEntries = unstable_cache(
-  buildPublicSitemapEntries,
-  ['hilo-cofrade-public-sitemap-v2'],
-  {
-    revalidate: 3600,
-    tags: ['seo-sitemap'],
-  }
-);
-
-export async function getPublicSitemapEntries() {
-  return getCachedPublicSitemapEntries();
+async function sitemap() {
+  // Production data must not determine whether the application can build.
+  await connection();
+  return getPublicSitemapEntries();
 }
 
-export default getPublicSitemapEntries;
+export default sitemap;
