@@ -1,0 +1,270 @@
+{
+  "checked_at": "2026-09-24T22:12:58Z",
+  "deployment": "dpl_DuEwFnmecfjUhrAm4ApVp8b1xh9C",
+  "results": [
+    {
+      "path": "/hermandades",
+      "status": 200,
+      "bytes": 392185,
+      "seconds": 8.09,
+      "type": "text/html; charset=utf-8",
+      "title": [
+        "Hermandades y Agrupaciones Parroquiales de Sevilla · Hilo Cofrade"
+      ],
+      "h1": [
+        "Hermandades y Agrupaciones Parroquiales"
+      ],
+      "items": [
+        "198"
+      ],
+      "canonical": [
+        "https://hilocofrade.es/hermandades"
+      ],
+      "error_payload": false
+    },
+    {
+      "path": "/imagenes",
+      "status": 200,
+      "bytes": 1569926,
+      "seconds": 6.95,
+      "type": "text/html; charset=utf-8",
+      "title": [
+        "Imágenes cofrades de Sevilla y provincia · Hilo Cofrade"
+      ],
+      "h1": [
+        "Directorio de imágenes"
+      ],
+      "items": [
+        "510"
+      ],
+      "canonical": [
+        "https://hilocofrade.es/imagenes"
+      ],
+      "error_payload": false
+    },
+    {
+      "path": "/pasos",
+      "status": 200,
+      "bytes": 1201930,
+      "seconds": 6.76,
+      "type": "text/html; charset=utf-8",
+      "title": [
+        "Pasos cofrades de Sevilla y provincia · Hilo Cofrade"
+      ],
+      "h1": [
+        "Directorio de pasos"
+      ],
+      "items": [
+        "368"
+      ],
+      "canonical": [
+        "https://hilocofrade.es/pasos"
+      ],
+      "error_payload": false
+    },
+    {
+      "path": "/autores",
+      "status": 200,
+      "bytes": 553448,
+      "seconds": 6.06,
+      "type": "text/html; charset=utf-8",
+      "title": [
+        "Autores y talleres cofrades · Hilo Cofrade"
+      ],
+      "h1": [
+        "Autores y talleres"
+      ],
+      "items": [
+        "388"
+      ],
+      "canonical": [
+        "https://hilocofrade.es/autores"
+      ],
+      "error_payload": false
+    },
+    {
+      "path": "/crucetas-musicales",
+      "status": 200,
+      "bytes": 32184,
+      "seconds": 6.24,
+      "type": "text/html; charset=utf-8",
+      "title": [
+        "Crucetas musicales y repertorios procesionales · Hilo Cofrade"
+      ],
+      "h1": [
+        "Crucetas musicales"
+      ],
+      "items": [],
+      "canonical": [
+        "https://hilocofrade.es/crucetas-musicales"
+      ],
+      "error_payload": false
+    },
+    {
+      "path": "/igualas-y-ensayos",
+      "status": 200,
+      "bytes": 105487,
+      "seconds": 6.0,
+      "type": "text/html; charset=utf-8",
+      "title": [
+        "Calendario de Igualás y Ensayos · Hilo Cofrade"
+      ],
+      "h1": [
+        "Calendario de Igualás y Ensayos"
+      ],
+      "items": [
+        "21"
+      ],
+      "canonical": [
+        "https://hilocofrade.es/igualas-y-ensayos"
+      ],
+      "error_payload": false
+    },
+    {
+      "path": "/hermandades/el-baratillo",
+      "status": 200,
+      "bytes": 272625,
+      "seconds": 7.88,
+      "type": "text/html; charset=utf-8",
+      "title": [
+        "El Baratillo (Sevilla): titulares, pasos e historia · Hilo Cofrade"
+      ],
+      "h1": [
+        "El Baratillo"
+      ],
+      "items": [],
+      "canonical": [
+        "https://hilocofrade.es/hermandades/el-baratillo"
+      ],
+      "error_payload": false
+    },
+    {
+      "path": "/sitemap.xml",
+      "status": 200,
+      "bytes": 378421,
+      "seconds": 13.38,
+      "type": "application/xml",
+      "urls": 2051,
+      "unique_urls": 2051,
+      "all_canonical": true
+    },
+    {
+      "path": "/sitemaps/general.xml",
+      "status": 200,
+      "bytes": 880,
+      "seconds": 6.06,
+      "type": "application/xml; charset=utf-8",
+      "urls": 6,
+      "unique_urls": 6,
+      "all_canonical": true
+    },
+    {
+      "path": "/sitemaps/hermandades.xml",
+      "status": 200,
+      "bytes": 46341,
+      "seconds": 6.12,
+      "type": "application/xml; charset=utf-8",
+      "urls": 234,
+      "unique_urls": 234,
+      "all_canonical": true
+    },
+    {
+      "path": "/sitemaps/bandas.xml",
+      "status": 200,
+      "bytes": 26208,
+      "seconds": 5.9,
+      "type": "application/xml; charset=utf-8",
+      "urls": 136,
+      "unique_urls": 136,
+      "all_canonical": true
+    },
+    {
+      "path": "/sitemaps/imagenes.xml",
+      "status": 200,
+      "bytes": 94006,
+      "seconds": 25.91,
+      "type": "application/xml; charset=utf-8",
+      "urls": 445,
+      "unique_urls": 445,
+      "all_canonical": true
+    },
+    {
+      "path": "/sitemaps/pasos.xml",
+      "status": 200,
+      "bytes": 11605,
+      "seconds": 25.65,
+      "type": "application/xml; charset=utf-8",
+      "urls": 61,
+      "unique_urls": 61,
+      "all_canonical": true
+    },
+    {
+      "path": "/sitemaps/marchas.xml",
+      "status": 200,
+      "bytes": 125215,
+      "seconds": 6.16,
+      "type": "application/xml; charset=utf-8",
+      "urls": 590,
+      "unique_urls": 590,
+      "all_canonical": true
+    },
+    {
+      "path": "/sitemaps/autores.xml",
+      "status": 200,
+      "bytes": 78335,
+      "seconds": 6.17,
+      "type": "application/xml; charset=utf-8",
+      "urls": 389,
+      "unique_urls": 389,
+      "all_canonical": true
+    },
+    {
+      "path": "/sitemaps/crucetas.xml",
+      "status": 200,
+      "bytes": 1324,
+      "seconds": 5.84,
+      "type": "application/xml; charset=utf-8",
+      "urls": 7,
+      "unique_urls": 7,
+      "all_canonical": true
+    },
+    {
+      "path": "/sitemaps/agenda.xml",
+      "status": 200,
+      "bytes": 35283,
+      "seconds": 5.9,
+      "type": "application/xml; charset=utf-8",
+      "urls": 183,
+      "unique_urls": 183,
+      "all_canonical": true
+    }
+  ],
+  "source_sha": "3e047a0ca3a8426f983b3773eb95c56ad7d985c1",
+  "additional_checks": {
+    "supabase_select_1": "2026-09-24T22:06:52.131550Z",
+    "public_api_status": 200,
+    "public_storage_status": 200,
+    "public_storage_bytes": 1978184,
+    "preview_bands": 103,
+    "preview_agenda_upcoming": 62,
+    "preview_crucetas": 6,
+    "preview_home_counts": {
+      "brotherhoods": 229,
+      "images": 510,
+      "steps": 368,
+      "bands": 103
+    },
+    "sitemap_union_equals_full": true,
+    "sitemap_unique_urls": 2051,
+    "production_before_fix": {
+      "bands": 0,
+      "agenda": 0
+    },
+    "connections_snapshot": {
+      "max_connections": 60,
+      "client_connections": 9,
+      "other_active": 0,
+      "idle_in_transaction": 0
+    }
+  }
+}

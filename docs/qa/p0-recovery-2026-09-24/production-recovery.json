@@ -1,0 +1,187 @@
+{
+  "checked_at": "2026-09-24T22:16:48Z",
+  "deployment": "dpl_6V5TZZyVzoT36J3DvXg3seJ82ehF",
+  "sha": "ba70771c94f11fd3aff70e4e651ab3093352fd28",
+  "results": [
+    {
+      "path": "/",
+      "status": 200,
+      "bytes": 118694,
+      "seconds": 8.19,
+      "type": "text/html; charset=utf-8",
+      "cache": "MISS",
+      "expected_deployment": true,
+      "title": [
+        "Hilo Cofrade | Enciclopedia cofrade de Sevilla y provincia"
+      ],
+      "h1": [
+        "Hilo Cofrade, <span>todo en las cofradías está relacionado</span>"
+      ],
+      "items": [],
+      "canonical": [
+        "https://hilocofrade.es"
+      ],
+      "error_payload": false
+    },
+    {
+      "path": "/agenda-cofrade",
+      "status": 200,
+      "bytes": 693719,
+      "seconds": 9.15,
+      "type": "text/html; charset=utf-8",
+      "cache": "MISS",
+      "expected_deployment": true,
+      "title": [
+        "Agenda cofrade de Sevilla y provincia 2026 · Hilo Cofrade"
+      ],
+      "h1": [
+        "Agenda Cofrade"
+      ],
+      "items": [
+        "63"
+      ],
+      "canonical": [
+        "https://hilocofrade.es/agenda-cofrade"
+      ],
+      "error_payload": false
+    },
+    {
+      "path": "/bandas",
+      "status": 200,
+      "bytes": 805905,
+      "seconds": 8.09,
+      "type": "text/html; charset=utf-8",
+      "cache": "MISS",
+      "expected_deployment": true,
+      "title": [
+        "Bandas de Sevilla y provincia · Hilo Cofrade"
+      ],
+      "h1": [
+        "Directorio de bandas"
+      ],
+      "items": [
+        "103"
+      ],
+      "canonical": [
+        "https://hilocofrade.es/bandas"
+      ],
+      "error_payload": false
+    },
+    {
+      "path": "/hermandades",
+      "status": 200,
+      "bytes": 392150,
+      "seconds": 8.08,
+      "type": "text/html; charset=utf-8",
+      "cache": "MISS",
+      "expected_deployment": true,
+      "title": [
+        "Hermandades y Agrupaciones Parroquiales de Sevilla · Hilo Cofrade"
+      ],
+      "h1": [
+        "Hermandades y Agrupaciones Parroquiales"
+      ],
+      "items": [
+        "198"
+      ],
+      "canonical": [
+        "https://hilocofrade.es/hermandades"
+      ],
+      "error_payload": false
+    },
+    {
+      "path": "/autores",
+      "status": 200,
+      "bytes": 553413,
+      "seconds": 9.33,
+      "type": "text/html; charset=utf-8",
+      "cache": "MISS",
+      "expected_deployment": true,
+      "title": [
+        "Autores y talleres cofrades · Hilo Cofrade"
+      ],
+      "h1": [
+        "Autores y talleres"
+      ],
+      "items": [
+        "388"
+      ],
+      "canonical": [
+        "https://hilocofrade.es/autores"
+      ],
+      "error_payload": false
+    },
+    {
+      "path": "/igualas-y-ensayos",
+      "status": 200,
+      "bytes": 105452,
+      "seconds": 7.12,
+      "type": "text/html; charset=utf-8",
+      "cache": "MISS",
+      "expected_deployment": true,
+      "title": [
+        "Calendario de Igualás y Ensayos · Hilo Cofrade"
+      ],
+      "h1": [
+        "Calendario de Igualás y Ensayos"
+      ],
+      "items": [
+        "21"
+      ],
+      "canonical": [
+        "https://hilocofrade.es/igualas-y-ensayos"
+      ],
+      "error_payload": false
+    },
+    {
+      "path": "/hermandades/el-baratillo",
+      "status": 200,
+      "bytes": 272742,
+      "seconds": 8.16,
+      "type": "text/html; charset=utf-8",
+      "cache": "HIT",
+      "expected_deployment": true,
+      "title": [
+        "El Baratillo (Sevilla): titulares, pasos e historia · Hilo Cofrade"
+      ],
+      "h1": [
+        "El Baratillo"
+      ],
+      "items": [],
+      "canonical": [
+        "https://hilocofrade.es/hermandades/el-baratillo"
+      ],
+      "error_payload": false
+    },
+    {
+      "path": "/sitemap.xml",
+      "status": 200,
+      "bytes": 378637,
+      "seconds": 7.05,
+      "type": "application/xml",
+      "cache": "MISS",
+      "urls": 2052,
+      "unique_urls": 2052,
+      "all_canonical": true
+    }
+  ],
+  "data_change_since_preview": {
+    "agenda_added": [
+      [
+        "https://hilocofrade.es/agenda-cofrade/rosarios/cigarreras-rosario-vespertino-victoria-2026",
+        "Rosario Vespertino de María Santísima de la Victoria · 2026"
+      ]
+    ],
+    "agenda_removed": [],
+    "sitemap_added": [
+      "https://hilocofrade.es/agenda-cofrade/rosarios/cigarreras-rosario-vespertino-victoria-2026"
+    ],
+    "sitemap_removed": [],
+    "verified_source": "public.outings",
+    "source_created_at": "2026-09-24T22:14:14.116350Z",
+    "source_status": "published",
+    "source_outing_date": "2026-10-03",
+    "written_by_this_intervention": false
+  },
+  "validation": "passed_after_reconciling_concurrent_published_record"
+}

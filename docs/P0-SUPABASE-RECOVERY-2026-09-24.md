@@ -1,6 +1,12 @@
 # Diagnóstico para recuperación de Supabase · Hilo Cofrade
 
-Estado a 24/09/2026, aproximadamente 19:50 UTC. Diagnóstico enviado por Gmail a support@supabase.com con autorización del usuario. Gmail confirmó etiqueta SENT; mensaje e hilo: 1a0d540fe251ab2c. Pendiente de respuesta y número de incidencia de Supabase.
+**Actualización 22:18 UTC:** el reinicio ejecutado por el usuario recuperó SQL,
+API pública y Storage. #932 ya está en producción, SHA `ba70771`. Véase
+[validación de recuperación](./P0-RECOVERY-VALIDATION-2026-09-24.md).
+Los apartados siguientes conservan el diagnóstico histórico previo. P0 sigue
+abierto hasta completar la observación sostenida.
+
+Estado a 24/09/2026, aproximadamente 19:50 UTC. Diagnóstico enviado por Gmail a support@supabase.com con autorización del usuario. Gmail confirmó etiqueta SENT; mensaje e hilo: 1a0d540fe251ab2c. Supabase acusó recibo automáticamente a las 21:15 UTC: ticket SU-484619, mensaje 1a0d545b9f3b2a06. Ofrece vincular la conversación a la cuenta del proyecto; aún no consta una respuesta técnica humana en el hilo leído a las 21:36 UTC.
 
 ## Solicitud preparada para soporte
 
@@ -41,3 +47,27 @@ La aplicación conserva un deployment previo READY. Hemos reducido consultas inn
 3. Completar el build/QA de #932; comparar cobertura de sitemaps y páginas con contenido real.
 4. Publicar únicamente el candidato validado y comprobar alineación de SHA.
 5. Medir 30–60 minutos sin errores para cerrar P0; mantener Carmona, HC-AUTO-03 y nuevos trabajos editoriales bloqueados hasta entonces.
+
+## Nueva revisión · 24/09/2026 21:37 UTC
+
+- `select 1 as connection_ok, now() as checked_at` sigue fallando con timeout de conexión.
+- Preview correctiva `dpl_DuEwFnmecfjUhrAm4ApVp8b1xh9C`: READY, SHA `3e047a0ca3a8426f983b3773eb95c56ad7d985c1`; PR #932 abierta/draft, main sin cambios.
+- Fetch de la preview protegida devuelve redirección SSO, no una respuesta de la aplicación; no se considera QA de contenido. El navegador remoto no permite listar pestañas (timeout).
+- La consulta de errores de esa preview no encuentra registros: sin tráfico validado, eso no acredita salud del runtime.
+- No se ha reiniciado Supabase, fusionado #932 ni promovido el candidato. La falta de conexión impide validar con datos reales antes de la publicación solicitada.
+- Soporte confirmó el ticket SU-484619 y ofrece vincularlo a la cuenta desde el enlace del correo para disponer del contexto de organización/proyecto. Es opcional; permite también continuar por correo.
+
+## Captura del usuario · 24/09/2026 23:50 CEST
+
+Observability Overview, ventana Last 24 hours: Disk Usage 16%, Disk IO 0%,
+Memory 72%, CPU 8%, Peak Connections sin dato (--). Service Health muestra
+Database 68,3% errors, Storage 50,8% errors y Realtime 49,7% errors. Son los
+valores de esa vista, no métricas instantáneas verificadas ni cuotas de facturación.
+No prueban agotamiento del plan y no descartan picos o agotamiento de conexiones.
+
+Consulta directa mínima repetida: continúa el timeout. Realtime confirma a las
+21:49:30 UTC `MigrationsFailedToRun`, conexión no disponible y descarte de la
+cola después de 15.000 ms. Es un error interno de acceso de Realtime a la base,
+no prueba de una migración de aplicación defectuosa. No se siguen las sugerencias
+genéricas/destructivas del mensaje de Ecto. Queda por inspeccionar Database
+Connections para distinguir límites de conexiones de indisponibilidad de instancia.

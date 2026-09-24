@@ -1,5 +1,11 @@
 # Corrección de las dependencias de build
 
+**Actualización 22:18 UTC:** Supabase recuperado tras el reinicio del usuario;
+QA real superado y PR #932 publicada en producción (`ba70771`). Véase
+[evidencia posterior](./P0-RECOVERY-VALIDATION-2026-09-24.md). Las limitaciones
+de publicación descritas en los cortes históricos siguientes ya fueron superadas;
+la ventana de estabilidad de P0 sigue pendiente.
+
 ## Cambio
 
 Las 15 páginas pendientes esperan a `connection()` antes de leer datos. La
@@ -56,3 +62,21 @@ de cerrar el P0.
 
 Sin cambios SQL, de esquema, permisos, datos, credenciales o infraestructura.
 No se fusiona con main ni se despliega a producción en esta corrección.
+
+## Comprobación remota · 24/09/2026 21:33 UTC
+
+PR #932 actualizada a `3e047a0ca3a8426f983b3773eb95c56ad7d985c1`.
+Árbol remoto idéntico al local validado: `f5b071286b61a0df890091cc89769faea759bf7c`.
+GitHub Actions CI 2534: completed/success. Estado de Vercel: success, preview
+`DuEwFnmecfjUhrAm4ApVp8b1xh9C`. La PR permanece draft, sin fusionar.
+
+A petición del usuario se comprueba Supabase real: proyecto Hilocofrade
+`kcevwkucqzcyrqaimyhl` sigue figurando ACTIVE_HEALTHY, pero
+`select 1 as connection_ok, now() as checked_at` falla con
+`Connection terminated due to connection timeout`. El éxito de la preview
+no acredita recuperación de la base. No se ejecutan migraciones ni cambios.
+
+La consulta de logs de 21:00 a 21:33 UTC devuelve 48 registros edge_logs,
+32 realtime_logs y 9 storage_logs. No devuelve grupo postgres_logs; esto
+no prueba por sí solo salud ni ausencia de actividad de PostgreSQL.
+QA con datos reales continúa pendiente.
