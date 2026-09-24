@@ -1,6 +1,6 @@
 'use server'
 
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
@@ -89,6 +89,7 @@ async function uniqueSlug(supabase, table, preferred, fallback = '') {
 
 async function refreshBrotherhood(supabase, brotherhoodId) {
   const { data } = await supabase.from('entities').select('slug').eq('id', brotherhoodId).maybeSingle()
+  revalidateTag('public-brotherhood-detail', { expire: 0 })
   revalidatePath(`/panel/hermandades/${brotherhoodId}`)
   revalidatePath('/panel/hermandades')
   revalidatePath('/hermandades')
