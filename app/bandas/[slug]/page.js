@@ -16,7 +16,6 @@ import HistoricalAccompanimentsRail from './HistoricalAccompanimentsRail'
 import { getBandBySlug as getBandBySlugUncached, youtubeEmbedUrl } from '@/lib/supabase/bands'
 import { getBandDiscography } from '@/lib/supabase/bandDiscography'
 import { getPublishedBandColors } from '@/lib/supabase/bandColors'
-import { getBandOutingPublicLinks } from '@/lib/supabase/band-outing-links'
 import { getMusicalRepertoires } from '@/lib/supabase/musical-repertoires'
 import {
   meetsPublicEditorialMinimum,
@@ -213,10 +212,9 @@ export default async function BandDetailPage({ params }) {
   const { slug } = await params
   const band = await getBandBySlug(slug)
   if (!band) notFound()
-  const [discography, colors, outingLinks, musicalRepertoires] = await Promise.all([
+  const [discography, colors, musicalRepertoires] = await Promise.all([
     getBandDiscography(band.id),
     getPublishedBandColors(band.id),
-    getBandOutingPublicLinks(band.outings.map((item) => item.id)),
     getMusicalRepertoires({ bandEntityId: band.id }),
   ])
   const years = [...new Set(band.premieres.map((item) => item.year))].sort((a, b) => b - a)
@@ -606,7 +604,10 @@ export default async function BandDetailPage({ params }) {
           <div className={styles.sectionHeading}><span className={styles.eyebrow}>Agenda</span><h2>Próximas salidas extraordinarias</h2></div>
           <div className={styles.outingList}>{band.outings.map((item) => {
             const event = eventDate(item.date)
-            const links = outingLinks[item.id] || {}
+            const links = {
+              outingSlug: item.slug || '',
+              brotherhoodSlug: item.brotherhoodSlug || '',
+            }
             return (
               <article key={item.id}>
                 <time dateTime={item.date} aria-label={dateLabel(item.date)}>
