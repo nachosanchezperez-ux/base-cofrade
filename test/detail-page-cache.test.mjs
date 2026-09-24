@@ -79,3 +79,33 @@ test('Pasos e Imágenes deduplican las consultas compartidas por metadata y pág
   assert.match(imagePage, /const getImagen = cache\(getImagenPageBySlug\)/)
   assert.match(imagePage, /const getEntityMedia = cache\(getPublishedEntityMedia\)/)
 })
+
+
+test('Procesiones de Gloria cachea directorio y detalle y acota la consulta por slug', () => {
+  const loader = read('lib/supabase/glory-directory.js')
+
+  assert.match(loader, /unstable_cache/)
+  assert.match(loader, /hilo-cofrade-public-glory-directory-v1/)
+  assert.match(loader, /hilo-cofrade-public-glory-detail-v1/)
+  assert.match(loader, /if \(slug\) query = query\.eq\('slug', slug\)/)
+  assert.match(loader, /const targetedDirectory = await getGloryDirectory\(\{ throwOnError: true, slug \}\)/)
+})
+
+test('las fichas evitan trabajo continuo de layout al hacer scroll', () => {
+  const nav = read('components/EntitySectionNav.js')
+
+  assert.match(nav, /new IntersectionObserver/)
+  assert.doesNotMatch(nav, /window\.addEventListener\('scroll'/)
+  assert.doesNotMatch(nav, /getBoundingClientRect\(\)/)
+})
+
+test('los LCP principales usan carga prioritaria y las Glorias mantienen optimización de imagen', () => {
+  const bandPhoto = read('components/BandFeaturePhoto.js')
+  const gloryDirectory = read('components/GloryDirectory.js')
+  const imageHero = read('components/ImageHeroV2.js')
+
+  assert.match(bandPhoto, /fill[\s\S]*preload[\s\S]*sizes=/)
+  assert.doesNotMatch(gloryDirectory, /unoptimized=\{(?:featured|outing)\.heroImagePath\.startsWith/)
+  assert.match(imageHero, /quality=\{35\}/)
+  assert.match(imageHero, /sizes="50vw"/)
+})
