@@ -131,14 +131,17 @@ export default async function MarchDetailPage({ params }) {
         dateCreated: march.compositionYear || undefined,
         composer: march.authors
           .filter((author) => author.role === 'composer')
-          .map((author) => ({
-            '@type': 'Person',
-            ...(author.href ? {
-              '@id': `${absoluteUrl(author.href)}#person`,
-              url: absoluteUrl(author.href),
-            } : {}),
-            name: author.name,
-          })),
+          .map((author) => {
+            const organizationAuthor = ['workshop', 'company', 'institution'].includes(author.kind)
+            return {
+              '@type': organizationAuthor ? 'Organization' : 'Person',
+              ...(author.href ? {
+                '@id': `${absoluteUrl(author.href)}#${organizationAuthor ? 'organization' : 'person'}`,
+                url: absoluteUrl(author.href),
+              } : {}),
+              name: author.name,
+            }
+          }),
       }} />
 
       <header className={styles.hero}>
