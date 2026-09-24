@@ -1,6 +1,6 @@
 'use server'
 
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import { getBrotherhoodHeroWorkspace } from '@/lib/panel/brotherhood-hero'
@@ -77,6 +77,7 @@ async function refreshBrotherhood(supabase, brotherhoodId) {
     .eq('id', brotherhoodId)
     .maybeSingle()
 
+  revalidateTag('public-brotherhood-detail', { expire: 0 })
   revalidatePath('/panel')
   revalidatePath('/panel/hermandades')
   revalidatePath(`/panel/hermandades/${brotherhoodId}`)
