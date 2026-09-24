@@ -13,9 +13,11 @@ test('la ficha de Hermandad recupera y enlaza sus igualás y ensayos', async () 
     source('lib/supabase/crew-events.js'),
   ])
 
-  assert.match(page, /getCrewEventsByBrotherhoodId\(h\.id\)/)
+  assert.match(page, /async function BrotherhoodCrewEventsAsync/)
+  assert.match(page, /getCrewEventsByBrotherhoodId\(brotherhoodId\)/)
   assert.match(page, /href: '#igualas-y-ensayos', label: 'Igualás y ensayos'/)
-  assert.match(page, /<BrotherhoodCrewEventsSection events=\{crewEvents\} \/>/)
+  assert.match(page, /<BrotherhoodCrewEventsSection events=\{events\} \/>/)
+  assert.match(page, /<Suspense fallback=\{null\}>[\s\S]*<BrotherhoodCrewEventsAsync/)
   assert.match(loader, /\.eq\('brotherhood_entity_id', brotherhoodId\)/)
   assert.match(loader, /export async function getCrewEventsByBrotherhoodId/)
   assert.match(section, /href=\{event\.detailHref\}/)
