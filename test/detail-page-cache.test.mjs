@@ -194,3 +194,16 @@ test('la ficha cacheada de Banda dura una hora y el Panel la invalida de inmedia
     assert.match(source, /revalidateTag\('public-band-detail', \{ expire: 0 \}\)/)
   }
 })
+
+
+test('Discografía reutiliza nombre, logo y Spotify ya cargados en la ficha de Banda', () => {
+  const page = read('app/bandas/[slug]/page.js')
+  const loader = read('lib/supabase/bandDiscography.js')
+
+  assert.match(page, /artistSpotifyUrl = band\.interestLinks\.find/)
+  assert.match(page, /getBandDiscography\(bandId, \{/)
+  assert.match(loader, /bandName = '', bandLogoPath = '', artistSpotifyUrl = ''/)
+  assert.match(loader, /artistSpotifyUrl\s*\? Promise\.resolve/)
+  assert.match(loader, /bandName\s*\? Promise\.resolve/)
+  assert.match(loader, /bandLogoPath\s*\? Promise\.resolve/)
+})
