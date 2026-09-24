@@ -146,3 +146,16 @@ test('Hermandades evita consultas duplicadas de censo, actividad anual y guantes
   assert.doesNotMatch(quickFacts, /from\('outing_series'\)/)
   assert.match(quickFacts, /brotherhood\.datosJornada\.membersCount/)
 })
+
+
+test('Hermandades no bloquea la cabecera con módulos secundarios', () => {
+  const page = read('app/hermandades/[slug]/page.js')
+  const overview = read('components/BrotherhoodOverviewV2.js')
+
+  assert.match(page, /import \{ cache, Suspense \} from 'react'/)
+  assert.match(page, /async function BrotherhoodRepertoiresAsync/)
+  assert.match(page, /async function BrotherhoodCrewEventsAsync/)
+  assert.match(page, /<Suspense fallback=\{null\}>[\s\S]*<BrotherhoodOwnBands/)
+  assert.match(page, /<Suspense fallback=\{null\}>[\s\S]*<BrotherhoodConceptualTitulars/)
+  assert.match(overview, /<Suspense fallback=\{null\}>[\s\S]*<BrotherhoodQuickFacts/)
+})
