@@ -46,14 +46,19 @@ test('las Marchas enlazan al Autor canónico y preservan la URL histórica con 3
   assert.match(legacy, /permanentRedirect\(`\/autores\/\$\{slug\}`\)/)
 })
 
-test('Autores entra en sitemap propio y robots lo anuncia', async () => {
+test('Autores entra en sitemap propio runtime y robots lo anuncia', async () => {
+  const directory = await read('app/autores/page.js')
   const sitemap = await read('app/sitemap.js')
+  const route = await read('app/sitemaps/[family]/route.js')
   const segments = await read('lib/seo-sitemap-segments.js')
   const robots = await read('app/robots.js')
 
-  assert.match(sitemap, /getPublicAgentSitemapEntries/)
+  assert.match(directory, /dynamic = 'force-dynamic'/)
   assert.match(sitemap, /url: absoluteUrl\('\/autores'\)/)
-  assert.match(sitemap, /\.\.\.authorEntries\(authors\)/)
+  assert.doesNotMatch(sitemap, /getPublicAgentSitemapEntries/)
+  assert.match(route, /dynamic = 'force-dynamic'/)
+  assert.match(route, /getPublicAgentSitemapEntries/)
+  assert.match(route, /segment === 'autores'/)
   assert.match(segments, /autores: \['\/autores'\]/)
   assert.match(robots, /\/sitemaps\/autores\.xml/)
 })
