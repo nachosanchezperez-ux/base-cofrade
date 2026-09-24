@@ -17,11 +17,11 @@ for (const section of ['hermandades', 'bandas']) {
   })
 }
 
-test('las fichas de Hermandades precalientan los slugs conocidos', () => {
+test('las fichas de Hermandades se generan bajo demanda sin precarga de datos', () => {
   const page = read('app/hermandades/[slug]/page.js')
 
   assert.match(page, /export function generateStaticParams\(\)/)
-  assert.match(page, /hermandades\.map\(\(item\) => \(\{ slug: item\.slug \}\)\)/)
+  assert.match(page, /return \[\];/)
 })
 
 for (const section of ['pasos', 'imagenes']) {
@@ -54,11 +54,13 @@ for (const section of ['procesiones-de-gloria', 'extraordinarias']) {
   })
 }
 
-test('la agenda y las fichas de Igualás y Ensayos usan ISR de cinco minutos', () => {
+test('Igualás y Ensayos difiere el directorio y conserva ISR en las fichas', () => {
   const directory = read('app/igualas-y-ensayos/page.js')
   const detail = read('app/igualas-y-ensayos/[slug]/page.js')
 
-  for (const page of [directory, detail]) {
+  assert.match(directory, /await connection\(\)/)
+  assert.match(directory, /public-directory-cache/)
+  for (const page of [detail]) {
     assert.match(page, /export const dynamic = ['"]force-static['"]/)
     assert.doesNotMatch(page, /force-dynamic/)
     assert.match(page, /export const revalidate = 300[;]?/)

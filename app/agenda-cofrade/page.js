@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { connection } from 'next/server'
 import { Suspense } from 'react'
 import AgendaCofradeDirectoryV4 from '@/components/AgendaCofradeDirectoryV4'
 import AgendaCofradeDirectoryFromUrl from '@/components/AgendaCofradeDirectoryFromUrl'
@@ -8,11 +9,8 @@ import JsonLd from '@/components/JsonLd'
 import { breadcrumbJsonLd, collectionPageJsonLd, pageTitle, seoDescription } from '@/lib/seo'
 import { agendaSeoCopy, madridYear } from '@/lib/seo-calendar'
 import { getAgendaCofrade } from '@/lib/supabase/agenda-cofrade'
-import { getCrewEventDirectory } from '@/lib/supabase/crew-events'
 import styles from './agenda-cofrade.module.css'
 import v4Styles from './agenda-cofrade-v4.module.css'
-
-export const revalidate = 300
 
 export function generateMetadata() {
   const { title, description } = agendaSeoCopy(madridYear())
@@ -26,15 +24,14 @@ export function generateMetadata() {
 }
 
 export default async function AgendaCofradePage() {
+  // La disponibilidad de Supabase no debe bloquear la compilación de la web.
+  // La caché de datos se mantiene en getAgendaCofrade, también en esta ruta dinámica.
+  await connection()
   const { title, description } = agendaSeoCopy(madridYear())
-  const [agendaData, crewEvents] = await Promise.all([
-    getAgendaCofrade(),
-    getCrewEventDirectory(),
-  ])
+  const agendaData = await getAgendaCofrade()
   const { items, today } = agendaData
   const nowIso = new Date().toISOString()
   const upcoming = items.filter((item) => item.isUpcoming && !item.isCancelled)
-  const upcomingCrewCount = crewEvents.filter((item) => item.isUpcoming && !item.isCancelled).length
 
   return (
     <div className={styles.page}>
@@ -56,7 +53,7 @@ export default async function AgendaCofradePage() {
         <Suspense fallback={<AgendaCofradeDirectoryV4 items={upcoming} today={today} initialNowIso={nowIso} />}>
           <AgendaCofradeDirectoryFromUrl items={upcoming} today={today} initialNowIso={nowIso} />
         </Suspense>
-        <section className={styles.relatedCalendar} aria-labelledby="calendar-cuadrillas"><div><span>Calendario especializado</span><h2 id="calendar-cuadrillas">Igualás y ensayos</h2><p>Las convocatorias de cuadrillas quedan en un espacio propio, conectado con sus Hermandades y separado de la agenda de interés general.</p></div><Link href="/igualas-y-ensayos">Ver {upcomingCrewCount} próximas convocatorias <span>→</span></Link></section>
+        <section className={styles.relatedCalendar} aria-labelledby="calendar-cuadrillas"><div><span>Calendario especializado</span><h2 id="calendar-cuadrillas">Igualás y ensayos</h2><p>Las convocatorias de cuadrillas quedan en un espacio propio, conectado con sus Hermandades y separado de la agenda de interés general.</p></div><Link href="/igualas-y-ensayos">Ver próximas convocatorias <span>→</span></Link></section>
         <nav className={styles.relatedLinks} aria-label="Explorar contenidos relacionados"><span>Seguir explorando</span><Link href="/hermandades">Hermandades</Link><Link href="/bandas">Bandas</Link><Link href="/procesiones-de-gloria">Calendario de Glorias</Link><Link href="/extraordinarias">Calendario de extraordinarias</Link></nav>
         <section className={styles.seoCopy} aria-labelledby="agenda-sevilla"><span>Agenda actualizada</span><h2 id="agenda-sevilla">Qué ver hoy y este fin de semana en la Sevilla cofrade</h2><p>{seoDescription('Hilo Cofrade reúne únicamente los próximos actos públicos de Sevilla capital y sus municipios en una cronología común. Procesiones, traslados, rosarios, besamanos, besapiés y conciertos permanecen conectados con sus calendarios, Bandas y Hermandades.')}</p></section>
       </div>

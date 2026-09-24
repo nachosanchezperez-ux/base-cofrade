@@ -1,7 +1,8 @@
+import { connection } from 'next/server'
 import Link from 'next/link'
 import JsonLd from '@/components/JsonLd'
 import { absoluteUrl, breadcrumbJsonLd, socialMetadata } from '@/lib/seo'
-import { getPublicMarchDirectory } from '@/lib/supabase/public-marches'
+import { getPublicMarchDirectory } from '@/lib/supabase/public-directory-cache'
 import styles from './marchas.module.css'
 
 export const revalidate = 900
@@ -43,6 +44,7 @@ function authorLabel(march) {
 }
 
 export default async function MarchesDirectoryPage() {
+  await connection()
   const marches = await getPublicMarchDirectory()
   const groups = groupsFor(marches)
   const authored = marches.filter((march) => march.authors.length).length

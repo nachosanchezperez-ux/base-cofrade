@@ -1,6 +1,7 @@
+import { connection } from 'next/server'
 import GloryDirectory from '@/components/GloryDirectory'
 import JsonLd from '@/components/JsonLd'
-import { getGloryDirectory } from '@/lib/supabase/glory-directory'
+import { getGloryDirectory } from '@/lib/supabase/public-directory-cache'
 import { breadcrumbJsonLd, collectionPageJsonLd, pageTitle } from '@/lib/seo'
 import styles from './glory-page.module.css'
 
@@ -39,6 +40,7 @@ export async function generateMetadata() {
 }
 
 export default async function ProcesionesDeGloriaPage() {
+  await connection()
   const outings = await getGloryDirectory()
   const visibleOutings = outings.filter((item) => !item.isCancelled)
   const currentYear = currentMadridYear()

@@ -1,0 +1,47 @@
+.status {
+  padding-block: 3rem;
+  color: #152538;
+}
+
+.status h1 {
+  max-width: 42rem;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.75rem, 5vw, 2.75rem);
+  font-weight: 500;
+}
+
+.status p {
+  max-width: 42rem;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.actions button {
+  min-height: 44px;
+  border: 0;
+  border-radius: 999px;
+  padding: .75rem 1.25rem;
+  background: #173047;
+  color: white;
+  font: inherit;
+  cursor: pointer;
+}
+
+.actions a {
+  color: #9f1730;
+  text-decoration: underline;
+  text-underline-offset: .2em;
+}
+
+.actions :focus-visible {
+  outline: 3px solid #a61931;
+  outline-offset: 4px;
+}

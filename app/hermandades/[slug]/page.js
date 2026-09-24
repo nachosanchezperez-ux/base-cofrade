@@ -23,7 +23,6 @@ import JsonLd from '@/components/JsonLd';
 import OfficialLinks from '@/components/OfficialLinks';
 import SectionTitle from '@/components/SectionTitle';
 import SourcesBlock from '@/components/SourcesBlock';
-import { hermandades } from '@/lib/data';
 import { holyWeekDay } from '@/lib/brotherhood-directory';
 import { getStepPhotoFraming } from '@/lib/step-photo-framing';
 import { getBrotherhoodMusicalHeritage } from '@/lib/supabase/brotherhood-musical-heritage';
@@ -111,7 +110,8 @@ function compactReleaseSummary(value = '') {
 }
 
 export function generateStaticParams() {
-  return hermandades.map((item) => ({ slug: item.slug }));
+  // Generate on first request and retain ISR; never query Supabase at build time.
+  return [];
 }
 
 export async function generateMetadata({ params }) {

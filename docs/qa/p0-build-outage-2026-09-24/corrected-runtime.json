@@ -1,0 +1,72 @@
+{
+  "outcomes": [
+    {
+      "route": "/",
+      "coldOutage": 500
+    },
+    {
+      "route": "/bandas",
+      "coldOutage": 500
+    },
+    {
+      "route": "/crucetas-musicales",
+      "coldOutage": 500
+    },
+    {
+      "route": "/directorio",
+      "coldOutage": 500
+    },
+    {
+      "route": "/extraordinarias",
+      "coldOutage": 500
+    },
+    {
+      "route": "/hermandades",
+      "coldOutage": 500
+    },
+    {
+      "route": "/hermandades/semana-santa",
+      "coldOutage": 500
+    },
+    {
+      "route": "/hermandades/gloria",
+      "coldOutage": 500
+    },
+    {
+      "route": "/hermandades/sacramentales",
+      "coldOutage": 500
+    },
+    {
+      "route": "/hermandades/agrupaciones-parroquiales",
+      "coldOutage": 500
+    },
+    {
+      "route": "/imagenes",
+      "coldOutage": 500
+    },
+    {
+      "route": "/pasos",
+      "coldOutage": 500
+    },
+    {
+      "route": "/marchas",
+      "coldOutage": 500
+    },
+    {
+      "route": "/igualas-y-ensayos",
+      "coldOutage": 500
+    },
+    {
+      "route": "/procesiones-de-gloria",
+      "coldOutage": 500
+    },
+    {
+      "route": "/hermandades/el-baratillo",
+      "coldOutage": 500
+    }
+  ],
+  "bandRecovery": 200,
+  "bandCachedDuringOutage": 200,
+  "cacheAdditionalCalls": 0,
+  "legitimateEmptyCalendar": 200
+}

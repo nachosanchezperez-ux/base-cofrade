@@ -1,0 +1,223 @@
+⚠ Prerendering is running in debug mode with NODE_ENV='development'. This will affect performance and should not be used for production.
+▲ Next.js 16.3.0 (Turbopack)
+✓ Running next.config.mjs took 24ms
+- Experiments (use with caution):
+  ✓ allowDevelopmentBuild (enabled by `--debug-prerender`)
+  ⨯ prerenderEarlyExit (disabled by `--debug-prerender`)
+  · serverActions
+  ✓ serverSourceMaps (enabled by `--debug-prerender`)
+  · staticGenerationMaxConcurrency: 1
+  · staticGenerationMinPagesPerWorker: 50
+  · staticGenerationRetryCount: 1
+  ⨯ turbopackMinify (disabled by `--debug-prerender`)
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 6.9s
+  Running TypeScript ...
+  Finished TypeScript in 43ms ...
+  Collecting page data using 8 workers ...
+  Generating static pages using 8 workers (0/29) ...
+[Hilo Cofrade] No se pudo cargar el directorio público de bandas con cliente anónimo {
+  error: 'No se pudo consultar el directorio público de bandas: LOCAL_OUTAGE_FIXTURE'
+}
+  Generating static pages using 8 workers (7/29) 
+[Hilo Cofrade] No se pudieron cargar las crucetas musicales relacionadas { brotherhoodEntityId: '', bandEntityId: '', error: '[object Object]' }
+[Hilo Cofrade] No se pudo cargar el directorio de Hermandades desde Supabase {
+  error: 'No se pudo consultar el directorio de Hermandades: LOCAL_OUTAGE_FIXTURE'
+}
+[Hilo Cofrade] No se pudo cargar el directorio público de bandas con cliente anónimo {
+  error: 'No se pudo consultar el directorio público de bandas: LOCAL_OUTAGE_FIXTURE'
+}
+[Hilo Cofrade] No se pudo cargar el directorio de imágenes {
+  error: 'No se pudieron consultar las entidades relacionadas: LOCAL_OUTAGE_FIXTURE'
+}
+[Hilo Cofrade] No se pudo cargar el directorio de pasos {
+  error: 'No se pudieron consultar las entidades relacionadas: LOCAL_OUTAGE_FIXTURE'
+}
+[Hilo Cofrade] No se pudo cargar el directorio de extraordinarias {
+  error: 'No se pudo consultar el directorio de extraordinarias: LOCAL_OUTAGE_FIXTURE'
+}
+[Hilo Cofrade] No se pudo preparar la experiencia del histórico musical {
+  slug: 'el-baratillo',
+  error: 'No se pudo resolver la Hermandad para su histórico musical: LOCAL_OUTAGE_FIXTURE'
+}
+[Hilo Cofrade] No se pudo cargar la hermandad desde Supabase {
+  slug: 'el-baratillo',
+  error: Error: No se pudo consultar la hermandad: LOCAL_OUTAGE_FIXTURE
+      at assertQuery (lib/supabase/brotherhoods.js:29:11)
+      at loadBrotherhoodFromSupabase (lib/supabase/brotherhoods.js:254:18)
+      at async getHermandadPageBySlug (lib/supabase/brotherhoods.js:1226:20)
+      at async getHermandadPageBySlug1 (lib/supabase/brotherhood-display.js:442:25)
+      at async loadHermandadPageBySlug (lib/supabase/brotherhood-page.js:331:21)
+    27 | function assertQuery(result, label) {
+    28 |   if (result.error) {
+  > 29 |     throw new Error(`${label}: ${result.error.message}`)
+       |           ^
+    30 |   }
+    31 |
+    32 |   return result.data
+}
+Error occurred prerendering page "/hermandades/el-baratillo". Read more: https://nextjs.org/docs/messages/prerender-error
+Error: No se pudo consultar la hermandad: LOCAL_OUTAGE_FIXTURE
+    at assertQuery (lib/supabase/brotherhoods.js:29:11)
+    at loadBrotherhoodFromSupabase (lib/supabase/brotherhoods.js:254:18)
+    at async getHermandadPageBySlug (lib/supabase/brotherhoods.js:1226:20)
+    at async getHermandadPageBySlug1 (lib/supabase/brotherhood-display.js:442:25)
+    at async loadHermandadPageBySlug (lib/supabase/brotherhood-page.js:331:21)
+  27 | function assertQuery(result, label) {
+  28 |   if (result.error) {
+> 29 |     throw new Error(`${label}: ${result.error.message}`)
+     |           ^
+  30 |   }
+  31 |
+  32 |   return result.data {
+  digest: '2353570619'
+}
+[Hilo Cofrade] No se pudo cargar la hermandad desde Supabase {
+  slug: 'el-baratillo',
+  error: Error: No se pudo consultar la hermandad: LOCAL_OUTAGE_FIXTURE
+      at assertQuery (lib/supabase/brotherhoods.js:29:11)
+      at loadBrotherhoodFromSupabase (lib/supabase/brotherhoods.js:254:18)
+      at async getHermandadPageBySlug (lib/supabase/brotherhoods.js:1226:20)
+      at async getHermandadPageBySlug1 (lib/supabase/brotherhood-display.js:442:25)
+      at async loadHermandadPageBySlug (lib/supabase/brotherhood-page.js:331:21)
+      at async Module.generateMetadata (app/hermandades/[slug]/page.js:119:13)
+    27 | function assertQuery(result, label) {
+    28 |   if (result.error) {
+  > 29 |     throw new Error(`${label}: ${result.error.message}`)
+       |           ^
+    30 |   }
+    31 |
+    32 |   return result.data
+}
+[Hilo Cofrade] No se pudo cargar el directorio de Hermandades desde Supabase {
+  error: 'No se pudo consultar el directorio de Hermandades: LOCAL_OUTAGE_FIXTURE'
+}
+[Hilo Cofrade] No se pudo cargar el directorio de Hermandades desde Supabase {
+  error: 'No se pudo consultar el directorio de Hermandades: LOCAL_OUTAGE_FIXTURE'
+}
+[Hilo Cofrade] No se pudo cargar el directorio de Hermandades desde Supabase {
+  error: 'No se pudo consultar el directorio de Hermandades: LOCAL_OUTAGE_FIXTURE'
+}
+[Hilo Cofrade] No se pudo cargar el directorio de Hermandades desde Supabase {
+  error: 'No se pudo consultar el directorio de Hermandades: LOCAL_OUTAGE_FIXTURE'
+}
+  Generating static pages using 8 workers (14/29) 
+[Hilo Cofrade] No se pudo cargar el directorio de Hermandades desde Supabase {
+  error: 'No se pudo consultar el directorio de Hermandades: LOCAL_OUTAGE_FIXTURE'
+}
+[Hilo Cofrade] No se pudo cargar el calendario de igualás y ensayos {
+  error: 'No se pudieron consultar las igualás y ensayos: LOCAL_OUTAGE_FIXTURE'
+}
+[Hilo Cofrade] No se pudo cargar el directorio de imágenes {
+  error: 'No se pudieron consultar las entidades relacionadas: LOCAL_OUTAGE_FIXTURE'
+}
+Error occurred prerendering page "/imagenes". Read more: https://nextjs.org/docs/messages/prerender-error
+Error: No se pudieron consultar las entidades relacionadas: LOCAL_OUTAGE_FIXTURE
+    at assertRows (lib/supabase/directories.js:9:62)
+    at commonContext (lib/supabase/directories.js:24:20)
+    at async loadImagesDirectory (lib/supabase/directories.js:33:125)
+    at async getImagesDirectory (lib/supabase/directories.js:86:12)
+    at async ImagenesPage (app/imagenes/page.js:23:18)
+   7 | import { createPublicClient } from '@/lib/supabase/public'
+   8 |
+>  9 | function assertRows(result, label) { if (result.error) throw new Error(`${label}: ${result.error.message}`); return result.data || [] }
+     |                                                              ^
+  10 | function unique(values) { return [...new Set(values.filter(Boolean))] }
+  11 | function currentRelation(items = []) { return items.find((item) => item.is_current) || items[0] || null }
+  12 | function relationMap(rows, key) { return rows.reduce((map, row) => { const id = row[key]; if (!id) return map; const current = map.get(id) || []; current.push(row); map.set(id, current); return map }, new Map()) } {
+  digest: '2281178'
+}
+Error occurred prerendering page "/marchas". Read more: https://nextjs.org/docs/messages/prerender-error
+Error: No se pudieron consultar las Marchas del directorio: LOCAL_OUTAGE_FIXTURE
+    at loadPublicRowsInPages (lib/supabase/public-query-batches.js:83:26)
+    at async getPublicMarchDirectory (lib/supabase/public-marches.js:94:20)
+    at async MarchesDirectoryPage (app/marchas/page.js:46:19)
+  81 |     }
+  82 |
+> 83 |     if (lastError) throw new Error(`${label}: ${errorMessage(lastError)}`)
+     |                          ^
+  84 |
+  85 |     rows.push(...page)
+  86 |     if (page.length < pageSize) return rows {
+  digest: '2380503340'
+}
+[Hilo Cofrade] No se pudo cargar el directorio de procesiones de Gloria {
+  error: Error: No se pudieron consultar las procesiones de Gloria: LOCAL_OUTAGE_FIXTURE
+      at assertRows (lib/supabase/glory-directory.js:6:27)
+      at getGloryDirectory (lib/supabase/glory-directory.js:115:18)
+      at async getHomeUpcomingAgenda (lib/supabase/home-upcoming-agenda.js:30:50)
+      at async loadHomeSnapshot (lib/supabase/home-snapshot.js:34:7)
+      at async HomePage (app/page.js:35:7)
+    4 |
+    5 | function assertRows(result, label) {
+  > 6 |   if (result.error) throw new Error(`${label}: ${result.error.message}`)
+      |                           ^
+    7 |   return result.data || []
+    8 | }
+    9 |
+}
+[Hilo Cofrade] No se pudo cargar el directorio de Hermandades desde Supabase {
+  error: 'No se pudo consultar el directorio de Hermandades: LOCAL_OUTAGE_FIXTURE'
+}
+[Hilo Cofrade] No se pudo cargar el directorio público de bandas con cliente anónimo {
+  error: 'No se pudo consultar el directorio público de bandas: LOCAL_OUTAGE_FIXTURE'
+}
+[Hilo Cofrade] No se pudo cargar Hoy 2.0 {
+  error: 'No se pudieron consultar las excepciones editoriales del día: LOCAL_OUTAGE_FIXTURE'
+}
+[Hilo Cofrade] No se pudieron cargar las extraordinarias de la Home {
+  error: 'No se pudieron consultar las próximas salidas extraordinarias: LOCAL_OUTAGE_FIXTURE'
+}
+[Hilo Cofrade] No se pudieron cargar los hilos de descubrimiento de la Home {
+  error: 'No se pudo consultar la actividad de conocimiento de la Home: LOCAL_OUTAGE_FIXTURE'
+}
+[Hilo Cofrade] No se pudo cargar el directorio de imágenes {
+  error: 'No se pudieron consultar las entidades relacionadas: LOCAL_OUTAGE_FIXTURE'
+}
+[Hilo Cofrade] No se pudo cargar el directorio de pasos {
+  error: 'No se pudieron consultar las entidades relacionadas: LOCAL_OUTAGE_FIXTURE'
+}
+[Hilo Cofrade] No se pudo contar march en la Home { error: '' }
+[Hilo Cofrade] No se pudo contar agent en la Home { error: '' }
+[Hilo Cofrade] No se pudo contar heritage_asset en la Home { error: '' }
+[Hilo Cofrade] No se pudo contar event en la Home { error: '' }
+  Generating static pages using 8 workers (21/29) 
+[Hilo Cofrade] No se pudo cargar el directorio de pasos {
+  error: 'No se pudieron consultar las entidades relacionadas: LOCAL_OUTAGE_FIXTURE'
+}
+Error occurred prerendering page "/pasos". Read more: https://nextjs.org/docs/messages/prerender-error
+Error: No se pudieron consultar las entidades relacionadas: LOCAL_OUTAGE_FIXTURE
+    at assertRows (lib/supabase/directories.js:9:62)
+    at commonContext (lib/supabase/directories.js:24:20)
+    at async loadStepsDirectory (lib/supabase/directories.js:57:101)
+    at async getStepsDirectory (lib/supabase/directories.js:96:12)
+    at async PasosPage (app/pasos/page.js:23:17)
+   7 | import { createPublicClient } from '@/lib/supabase/public'
+   8 |
+>  9 | function assertRows(result, label) { if (result.error) throw new Error(`${label}: ${result.error.message}`); return result.data || [] }
+     |                                                              ^
+  10 | function unique(values) { return [...new Set(values.filter(Boolean))] }
+  11 | function currentRelation(items = []) { return items.find((item) => item.is_current) || items[0] || null }
+  12 | function relationMap(rows, key) { return rows.reduce((map, row) => { const id = row[key]; if (!id) return map; const current = map.get(id) || []; current.push(row); map.set(id, current); return map }, new Map()) } {
+  digest: '2140327972'
+}
+[Hilo Cofrade] No se pudo cargar el directorio de procesiones de Gloria {
+  error: Error: No se pudieron consultar las procesiones de Gloria: LOCAL_OUTAGE_FIXTURE
+      at assertRows (lib/supabase/glory-directory.js:6:27)
+      at getGloryDirectory (lib/supabase/glory-directory.js:115:18)
+      at async ProcesionesDeGloriaPage (app/procesiones-de-gloria/page.js:42:19)
+    4 |
+    5 | function assertRows(result, label) {
+  > 6 |   if (result.error) throw new Error(`${label}: ${result.error.message}`)
+      |                           ^
+    7 |   return result.data || []
+    8 | }
+    9 |
+}
+
+> Export encountered errors on 4 paths:
+	/hermandades/[slug]/page: /hermandades/el-baratillo
+	/imagenes/page: /imagenes
+	/marchas/page: /marchas
+	/pasos/page: /pasos

@@ -1,9 +1,10 @@
+import { connection } from 'next/server'
 import HermandadesDirectoryV4 from '@/components/HermandadesDirectoryV4';
 import BrotherhoodPublicIndex from '@/components/BrotherhoodPublicIndex';
 import JsonLd from '@/components/JsonLd';
 import { filterIndexableBrotherhoods } from '@/lib/brotherhood-public-index';
-import { getHermandadesDirectory } from '@/lib/supabase/brotherhood-directory';
-import { getPublicIndexableEntityEntries } from '@/lib/supabase/public-indexability';
+import { getHermandadesDirectory } from '@/lib/supabase/public-directory-cache';
+import { getPublicIndexableEntityEntries } from '@/lib/supabase/public-directory-cache';
 import { absoluteUrl, breadcrumbJsonLd, pageTitle } from '@/lib/seo';
 
 export const revalidate = 900;
@@ -22,6 +23,7 @@ export const metadata = {
 };
 
 export default async function HermandadesPage() {
+  await connection()
   const hermandades = await getHermandadesDirectory();
   const indexableEntries = await getPublicIndexableEntityEntries({
     brotherhoods: hermandades,

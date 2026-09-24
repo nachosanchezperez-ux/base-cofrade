@@ -1,0 +1,176 @@
+▲ Next.js 16.3.0 (Turbopack)
+✓ Running next.config.mjs took 41ms
+- Experiments (use with caution):
+  · serverActions
+  · staticGenerationMaxConcurrency: 1
+  · staticGenerationMinPagesPerWorker: 50
+  · staticGenerationRetryCount: 1
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 13.9s
+  Running TypeScript ...
+  Finished TypeScript in 26ms ...
+  Collecting page data using 8 workers ...
+  Generating static pages using 8 workers (0/28) ...
+  Generating static pages using 8 workers (7/28) 
+  Generating static pages using 8 workers (14/28) 
+  Generating static pages using 8 workers (21/28) 
+✓ Generating static pages using 8 workers (28/28) in 703ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ○ /_not-found
+├ ƒ /agenda-cofrade
+├ ƒ /agenda-cofrade/rosarios/[slug]
+├ ƒ /api/analytics/relational-thread
+├ ƒ /api/panel/search
+├ ƒ /api/tira-del-hilo
+├ ƒ /api/tira-del-hilo/search
+├ ƒ /autores
+├ ƒ /autores/[slug]
+├ ƒ /aviso-legal
+├ ƒ /bandas
+├ ○ /bandas/[slug]
+├ ƒ /bandas/localidad/[localidad]
+├ ƒ /bandas/tipo/[tipo]
+├ ƒ /colabora
+├ ƒ /cookies
+├ ƒ /crucetas-musicales
+├ ○ /crucetas-musicales/[slug]
+├ ƒ /directorio
+├ ƒ /extraordinarias
+├ ○ /extraordinarias/[slug]
+├ ƒ /hermandades
+├ ○ /hermandades/[slug]
+├ ƒ /hermandades/[slug]/opengraph-image
+├ ƒ /hermandades/[slug]/twitter-image
+├ ƒ /hermandades/agrupaciones-parroquiales
+├ ƒ /hermandades/agrupaciones-parroquiales/[localidad]
+├ ƒ /hermandades/gloria
+├ ƒ /hermandades/gloria/[localidad]/[mes]
+├ ƒ /hermandades/localidad/[localidad]
+├ ƒ /hermandades/sacramentales
+├ ƒ /hermandades/sacramentales/[localidad]
+├ ƒ /hermandades/semana-santa
+├ ƒ /hermandades/semana-santa/[localidad]/[jornada]
+├ ○ /icon.svg
+├ ƒ /igualas-y-ensayos
+├ ○ /igualas-y-ensayos/[slug]
+├ ƒ /imagenes
+├ ○ /imagenes/[slug]
+├ ƒ /imagenes/localidad/[localidad]
+├ ƒ /imagenes/tipo/[tipo]
+├ ○ /manifest.webmanifest
+├ ƒ /marchas
+├ ○ /marchas/[slug]
+├ ƒ /marchas/autores/[slug]
+├ ○ /opengraph-image
+├ ƒ /panel
+├ ƒ /panel/acontecimientos
+├ ƒ /panel/acontecimientos/[id]
+├ ƒ /panel/agentes
+├ ƒ /panel/agentes/[id]
+├ ƒ /panel/agentes/[id]/disciplinas
+├ ƒ /panel/agentes/[id]/nombres
+├ ƒ /panel/agentes/[id]/obra
+├ ƒ /panel/agentes/[id]/roles
+├ ƒ /panel/agentes/nuevo
+├ ƒ /panel/aportaciones
+├ ƒ /panel/auth/recuperacion
+├ ƒ /panel/bandas
+├ ƒ /panel/bandas/[id]
+├ ƒ /panel/bandas/[id]/acompanamientos
+├ ƒ /panel/bandas/[id]/canales
+├ ƒ /panel/bandas/[id]/direccion
+├ ƒ /panel/bandas/[id]/discografia
+├ ƒ /panel/bandas/[id]/estrenos
+├ ƒ /panel/bandas/[id]/extraordinarias
+├ ƒ /panel/bandas/[id]/multimedia
+├ ƒ /panel/bandas/[id]/patrimonio
+├ ƒ /panel/conciertos
+├ ƒ /panel/conciertos/[id]
+├ ƒ /panel/datos
+├ ƒ /panel/datos/advocaciones
+├ ƒ /panel/datos/frescura
+├ ƒ /panel/datos/importar
+├ ƒ /panel/datos/importar/[id]
+├ ƒ /panel/datos/ingestion
+├ ƒ /panel/datos/ingestion/[id]
+├ ƒ /panel/datos/ingestion/lotes/[batchId]
+├ ƒ /panel/datos/lugares
+├ ƒ /panel/datos/municipios
+├ ƒ /panel/datos/referencias
+├ ƒ /panel/datos/salud
+├ ƒ /panel/equipo
+├ ƒ /panel/extraordinarias
+├ ƒ /panel/extraordinarias/[id]
+├ ƒ /panel/extraordinarias/[id]/fuentes
+├ ƒ /panel/extraordinarias/[id]/general
+├ ƒ /panel/extraordinarias/[id]/horarios
+├ ƒ /panel/extraordinarias/[id]/musica
+├ ƒ /panel/fuentes
+├ ƒ /panel/glorias
+├ ƒ /panel/hermandades
+├ ƒ /panel/hermandades/[id]
+├ ƒ /panel/hermandades/[id]/canales
+├ ƒ /panel/hermandades/[id]/cultos
+├ ƒ /panel/hermandades/[id]/habito
+├ ƒ /panel/hermandades/[id]/historia
+├ ƒ /panel/hermandades/[id]/jornada
+├ ƒ /panel/hermandades/[id]/multimedia
+├ ƒ /panel/hermandades/[id]/pasos
+├ ƒ /panel/hermandades/[id]/patrimonio
+├ ƒ /panel/hermandades/[id]/portada
+├ ƒ /panel/hermandades/[id]/salidas
+├ ƒ /panel/hermandades/[id]/salidas/recurrentes
+├ ƒ /panel/hermandades/[id]/titulares
+├ ƒ /panel/hermandades/nueva
+├ ƒ /panel/hoy
+├ ƒ /panel/hoy/banco
+├ ƒ /panel/hoy/programacion
+├ ƒ /panel/igualas-y-ensayos
+├ ƒ /panel/igualas-y-ensayos/[id]
+├ ƒ /panel/imagenes
+├ ƒ /panel/imagenes/[id]
+├ ƒ /panel/imagenes/[id]/autorias
+├ ƒ /panel/imagenes/[id]/intervenciones
+├ ƒ /panel/imagenes/[id]/portada
+├ ƒ /panel/imagenes/nueva
+├ ƒ /panel/legal
+├ ƒ /panel/login
+├ ƒ /panel/marchas
+├ ƒ /panel/marchas/[id]
+├ ƒ /panel/marchas/[id]/autoria
+├ ƒ /panel/marchas/[id]/dedicatorias
+├ ƒ /panel/marchas/[id]/grabaciones
+├ ƒ /panel/multimedia
+├ ƒ /panel/pasos
+├ ƒ /panel/pasos/[id]
+├ ƒ /panel/pasos/[id]/musica
+├ ƒ /panel/pasos/[id]/patrimonio
+├ ƒ /panel/pasos/[id]/responsables
+├ ƒ /panel/pasos/nuevo
+├ ƒ /panel/recuperar-contrasena
+├ ƒ /panel/relaciones
+├ ƒ /panel/relaciones/imagen-paso
+├ ƒ /panel/relaciones/titulares
+├ ƒ /panel/restablecer-contrasena
+├ ƒ /pasos
+├ ○ /pasos/[slug]
+├ ƒ /pasos/localidad/[localidad]
+├ ƒ /pasos/tipo/[tipo]
+├ ƒ /pregunta
+├ ƒ /privacidad
+├ ƒ /procesiones-de-gloria
+├ ○ /procesiones-de-gloria/[slug]
+├ ○ /robots.txt
+├ ƒ /sitemap.xml
+└ ƒ /sitemaps/[family]
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

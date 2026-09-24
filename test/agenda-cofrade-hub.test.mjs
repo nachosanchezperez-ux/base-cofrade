@@ -74,7 +74,8 @@ test('Agenda Cofrade destaca todas las procesiones que están en curso', () => {
 
 test('igualás y ensayos conservan un calendario especializado relacionado', () => {
   const page = read('app/agenda-cofrade/page.js')
-  assert.match(page, /getCrewEventDirectory/)
+  assert.doesNotMatch(page, /getCrewEventDirectory/)
+  assert.match(page, /Ver próximas convocatorias/)
   assert.match(page, /Calendario especializado/)
   assert.match(page, /\/igualas-y-ensayos/)
 })

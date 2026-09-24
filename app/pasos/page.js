@@ -1,3 +1,4 @@
+import { connection } from 'next/server'
 import JsonLd from '@/components/JsonLd'
 import HeritageDirectoryFacets from '@/components/HeritageDirectoryFacets'
 import RelationalEntityDirectory from '@/components/RelationalEntityDirectory'
@@ -20,6 +21,7 @@ export const metadata = {
 }
 
 export default async function PasosPage() {
+  await connection()
   const steps = await getStepsDirectory({ throwOnError: true })
 
   return (

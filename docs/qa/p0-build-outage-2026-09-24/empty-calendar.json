@@ -1,0 +1,12 @@
+{
+  "route": "/igualas-y-ensayos",
+  "mode": "debug-prerender local HTTP 503",
+  "prerenderHeaders": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/igualas-y-ensayos/layout,_N_T_/igualas-y-ensayos/page,_N_T_/igualas-y-ensayos"
+  },
+  "renderedZeroUpcoming": true,
+  "renderedZeroDocumented": true,
+  "limitation": "Generated diagnostic HTML, not a production HTTP response."
+}

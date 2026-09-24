@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { connection } from 'next/server'
 import JsonLd from '@/components/JsonLd'
 import { getPublicAgentDirectory } from '@/lib/supabase/public-agents'
 import { collectionPageJsonLd, socialMetadata } from '@/lib/seo'
@@ -24,6 +25,8 @@ function groupLabel(agent) {
 }
 
 export default async function AuthorsDirectoryPage() {
+  // El build no debe depender de la disponibilidad de Supabase.
+  await connection()
   const agents = await getPublicAgentDirectory()
   const groups = new Map()
 

@@ -1,7 +1,6 @@
-import { getPublicSitemapEntries } from '@/app/sitemap';
+import { getPublicSitemapSegmentEntries } from '@/app/sitemap';
 import {
   renderSitemapXml,
-  sitemapEntriesForSegment,
 } from '@/lib/seo-sitemap-segments';
 
 export const revalidate = 3600;
@@ -9,10 +8,7 @@ export const revalidate = 3600;
 export async function GET(_request, { params }) {
   const { family } = await params;
   const segment = family.endsWith('.xml') ? family.slice(0, -4) : family;
-  const entries = sitemapEntriesForSegment(
-    await getPublicSitemapEntries(),
-    segment
-  );
+  const entries = await getPublicSitemapSegmentEntries(segment);
 
   if (!entries) {
     return new Response('Sitemap no encontrado', { status: 404 });
