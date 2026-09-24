@@ -15,7 +15,6 @@ import { getCrewEventDirectory } from '@/lib/supabase/crew-events';
 import { getPublicIndexableEntityEntries } from '@/lib/supabase/public-indexability';
 import { getMusicalRepertoires } from '@/lib/supabase/musical-repertoires';
 import { getPublicMarchSitemapEntries } from '@/lib/supabase/public-marches';
-import { getPublicAgentSitemapEntries } from '@/lib/supabase/public-agents';
 import { getRosaryOutings } from '@/lib/supabase/rosary-outings';
 import { getImagesDirectory, getStepsDirectory } from '@/lib/supabase/directories';
 
@@ -254,18 +253,6 @@ function marchEntries(marches) {
   });
 }
 
-function authorEntries(authors) {
-  return authors.map((author) => {
-    const lastModified = validLastModified(author.updatedAt);
-    return {
-      url: absoluteUrl(`/autores/${author.slug}`),
-      ...(lastModified ? { lastModified } : {}),
-      changeFrequency: 'monthly',
-      priority: 0.64,
-    };
-  });
-}
-
 function rosaryEntries(outings) {
   return outings
     .filter((outing) => Boolean(outing.detailHref))
@@ -278,7 +265,7 @@ function rosaryEntries(outings) {
 }
 
 async function buildPublicSitemapEntries() {
-  const [brotherhoodDirectory, bandDirectory, imageDirectory, stepDirectory, extraordinaryOutings, gloryOutings, crewEvents, musicalRepertoires, marches, authors, rosaryOutings] = await Promise.all([
+  const [brotherhoodDirectory, bandDirectory, imageDirectory, stepDirectory, extraordinaryOutings, gloryOutings, crewEvents, musicalRepertoires, marches, rosaryOutings] = await Promise.all([
     getHermandadesDirectory(),
     getPublicBandsDirectory(),
     getImagesDirectory(),
@@ -288,7 +275,6 @@ async function buildPublicSitemapEntries() {
     getCrewEventDirectory(),
     getMusicalRepertoires(),
     getPublicMarchSitemapEntries(),
-    getPublicAgentSitemapEntries(),
     getRosaryOutings(),
   ]);
   const indexableEntities = await getPublicIndexableEntityEntries({
@@ -313,7 +299,6 @@ async function buildPublicSitemapEntries() {
     ...crewEventEntries(crewEvents),
     ...musicalRepertoireEntries(musicalRepertoires),
     ...marchEntries(marches),
-    ...authorEntries(authors),
     ...rosaryEntries(rosaryOutings),
   ];
 
