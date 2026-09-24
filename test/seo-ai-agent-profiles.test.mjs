@@ -41,7 +41,8 @@ test('las Marchas enlazan al Autor canónico y preservan la URL histórica con 3
   const legacy = await read('app/marchas/autores/[slug]/page.js')
 
   assert.match(marches, /return `\/autores\/\$\{entity\.slug\}`/)
-  assert.match(marchPage, /'@id': `\$\{absoluteUrl\(author\.href\)\}#person`/)
+  assert.match(marchPage, /organizationAuthor \? 'Organization' : 'Person'/)
+  assert.match(marchPage, /organizationAuthor \? 'organization' : 'person'/)
   assert.match(legacy, /permanentRedirect\(`\/autores\/\$\{slug\}`\)/)
 })
 
