@@ -181,3 +181,16 @@ test('Bandas transmite Discografía y Crucetas sin bloquear la cabecera', () => 
   assert.match(page, /<Suspense fallback=\{null\}>[\s\S]*<BandRepertoiresAsync/)
   assert.match(page, /<Suspense fallback=\{null\}>[\s\S]*<BandDiscographyAsync/)
 })
+
+
+test('la ficha cacheada de Banda dura una hora y el Panel la invalida de inmediato', () => {
+  const loader = read('lib/supabase/bands.js')
+  const mainActions = read('app/panel/(protected)/bandas/[id]/actions.js')
+  const directionActions = read('app/panel/(protected)/bandas/[id]/direccion/actions.js')
+  const multimediaActions = read('app/panel/(protected)/bandas/[id]/multimedia/actions.js')
+
+  assert.match(loader, /revalidate: 3600, tags: \['public-band-detail'\]/)
+  for (const source of [mainActions, directionActions, multimediaActions]) {
+    assert.match(source, /revalidateTag\('public-band-detail', \{ expire: 0 \}\)/)
+  }
+})
