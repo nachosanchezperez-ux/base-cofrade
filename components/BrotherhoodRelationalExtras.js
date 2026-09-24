@@ -499,79 +499,61 @@ function CurrentMusicSequence({ items }) {
   )
 }
 
-export async function BrotherhoodOwnBands({ brotherhoodId }) {
+export async function BrotherhoodOwnBands({
+  brotherhoodId,
+  brotherhoodName = 'Hermandad',
+  images = [],
+  steps = [],
+  currentAccompaniments = [],
+}) {
   try {
     const supabase = createPublicClient()
-    const [bands, threadData, currentAccompaniments] = await Promise.all([
+    const threadData = {
+      brotherhood: { id: brotherhoodId, name: brotherhoodName },
+      images: orderProcessionalItems(
+        images
+          .filter((item) => item?.id && item?.slug)
+          .map((item) => ({ id: item.id, name: item.nombre || item.name, slug: item.slug }))
+      ),
+      steps: orderProcessionalItems(
+        steps
+          .filter((item) => item?.id && item?.slug)
+          .map((item) => ({ id: item.id, name: item.nombre || item.name, slug: item.slug }))
+      ),
+    }
+    const preparedCurrentAccompaniments = currentAccompaniments
+      .filter((item) => item?.bandaSlug)
+      .map((item) => ({
+        id: item.id,
+        bandId: item.bandaId || '',
+        slug: item.bandaSlug,
+        nombre: item.banda,
+        posicion: item.posicion || 'Acompañamiento musical',
+        tipo: item.tipo || 'Formación musical',
+        logo: item.logo || '',
+        salida: item.salida || '',
+        periodo: item.periodo || '',
+        observaciones: item.observaciones || '',
+      }))
+      .sort((a, b) => processionRank(a.posicion) - processionRank(b.posicion) || a.posicion.localeCompare(b.posicion, 'es'))
+
+    const [bands, discoveryData] = await Promise.all([
       loadOwnBands(supabase, brotherhoodId),
-      loadBrotherhoodThreadData(supabase, brotherhoodId),
-      loadCurrentAccompaniments(supabase, brotherhoodId),
+      loadBrotherhoodDiscoveryData(
+        supabase,
+        brotherhoodId,
+        threadData,
+        preparedCurrentAccompaniments
+      ),
     ])
-    const discoveryData = await loadBrotherhoodDiscoveryData(
-      supabase,
-      brotherhoodId,
-      threadData,
-      currentAccompaniments
-    )
-    const threadItems = [
-      ...threadData.images.map((image) => ({
-        kind: 'Imagen',
-        relation: 'Titular',
-        title: image.name,
-        href: `/imagenes/${image.slug}`,
-        context: 'Imagen vinculada a la Hermandad',
-        priority: 10,
-      })),
-      ...threadData.steps.map((step) => ({
-        kind: 'Paso',
-        relation: 'Procesiona con',
-        title: step.name,
-        href: `/pasos/${step.slug}`,
-        context: 'Paso procesional de la Hermandad',
-        priority: 20,
-      })),
-      ...bands.map((band) => ({
-        kind: 'Banda',
-        relation: 'Vínculo institucional',
-        title: band.nombre,
-        href: `/bandas/${band.slug}`,
-        context: band.tipo,
-        priority: 30,
-      })),
-      ...currentAccompaniments.map((band) => ({
-        kind: 'Banda',
-        relation: 'Acompañamiento actual',
-        title: band.nombre,
-        href: `/bandas/${band.slug}`,
-        context: [band.posicion, band.salida, band.periodo].filter(Boolean).join(' · ') || band.tipo,
-        priority: 40,
-      })),
-    ]
 
     const hasDiscovery = discoveryData.dedicatedMarches > 0
       || discoveryData.connectedPeople > 0
       || (discoveryData.currentBands > 0 && discoveryData.otherBrotherhoodsViaMusic > 0)
-    if (!threadItems.length && !bands.length && !currentAccompaniments.length && !hasDiscovery) return null
-
-    const currentBandCount = new Set(currentAccompaniments.map((item) => item.slug).filter(Boolean)).size
-    const meta = [
-      `${threadData.images.length} imágenes`,
-      `${threadData.steps.length} pasos`,
-      currentBandCount ? `${currentBandCount} bandas actuales` : '',
-    ].filter(Boolean).join(' · ')
-    const brotherhoodName = threadData.brotherhood?.name || 'Hermandad'
+    if (!bands.length && !preparedCurrentAccompaniments.length && !hasDiscovery) return null
 
     return (
       <>
-        <RelationalThread
-          currentLabel="Hermandad"
-          currentName={brotherhoodName}
-          currentMeta={meta}
-          items={threadItems}
-          title="La Hermandad como nodo de la enciclopedia"
-          description="Tira del hilo hacia sus imágenes, sus pasos y su música vinculada. Los vínculos institucionales y los acompañamientos actuales se etiquetan de forma distinta para no confundir pertenencia con contrato procesional."
-        />
-
         <BrotherhoodDiscoveryPaths brotherhoodName={brotherhoodName} data={discoveryData} />
 
         {bands.length ? (
@@ -594,7 +576,7 @@ export async function BrotherhoodOwnBands({ brotherhoodId }) {
           </section>
         ) : null}
 
-        <CurrentMusicSequence items={currentAccompaniments} />
+        <CurrentMusicSequence items={preparedCurrentAccompaniments} />
       </>
     )
   } catch (error) {
