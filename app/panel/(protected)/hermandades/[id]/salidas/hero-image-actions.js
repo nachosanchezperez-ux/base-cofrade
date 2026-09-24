@@ -1,7 +1,7 @@
 'use server'
 
 import { randomUUID } from 'node:crypto'
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import {
   assertStoredImageUpload,
@@ -81,6 +81,7 @@ async function audit(supabase, user, entry) {
 }
 
 function refresh(context) {
+  revalidateTag('public-brotherhood-detail', { expire: 0 })
   revalidatePath('/panel')
   revalidatePath(`/panel/hermandades/${context.brotherhoodId}`)
   revalidatePath(`/panel/hermandades/${context.brotherhoodId}/salidas`)
