@@ -22,6 +22,7 @@ export default function robots() {
       absoluteUrl('/sitemaps/imagenes.xml'),
       absoluteUrl('/sitemaps/pasos.xml'),
       absoluteUrl('/sitemaps/marchas.xml'),
+      absoluteUrl('/sitemaps/autores.xml'),
       absoluteUrl('/sitemaps/crucetas.xml'),
       absoluteUrl('/sitemaps/agenda.xml'),
     ],
