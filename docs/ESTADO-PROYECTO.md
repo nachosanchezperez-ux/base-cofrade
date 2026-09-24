@@ -1,22 +1,22 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 21 de septiembre de 2026 · producción en #899 · modelado de Carmona reconciliado con evidencia musical adicional
+**Corte operativo:** 24 de septiembre de 2026 · P0 de producción abierto · candidato local de aislamiento del build de Agenda
 
-**HEAD funcional de `main` y producción antes de esta actualización documental:** `e7d6823676063854831168e2c54a5da3589ef622` · #899 fusionada después de #900
+**HEAD real de `main`:** `b71b945a9115f8dc4cb4d8f68f4495b00a267128` · #929. No coincide con el despliegue servido por el dominio.
 
-**Producción funcional verificada:** READY · deployment `dpl_GZs9dhXohss4VGWegbidVznc8Jbc` · SHA coincidente con #899
+**Dominio productivo:** Vercel resuelve `hilocofrade.es` a `dpl_GDismn8A8HXrr9Ki1H4Jq4QZZTDv`, READY, SHA `218bcabfa3a8e6f4a1a2413f310a1a8a06173a67` (#927). READY no certifica el runtime ni la disponibilidad de todas las consultas.
 
-**Supabase:** `ACTIVE_HEALTHY` · 12/12 migraciones estructurales activas · D-02C verificado con **18 ediciones y 116 pistas**, dentro de un total público de **551 ediciones y 3.429 pistas**
+**Supabase:** el control de proyecto indica `ACTIVE_HEALTHY`, pero tanto el diagnóstico SQL de conexiones como `list_migrations` fallan con `Connection terminated due to connection timeout`. No se puede recertificar presión, migraciones o staging en este corte. Las cifras editoriales del 21 de septiembre se conservan como evidencia histórica, no como medición actual.
 
-**PR abiertas antes de esta actualización documental:** **0** · #899 y #900 ya están fusionadas
+**PR abiertas en el preflight:** #931 (`perf/hc-speed-seo-01`, HEAD `7c40fe860659b14371a8a60c569706591d71c4d9`). #930 cerrada sin integrar: no se confirmó la hipótesis de Autores. El candidato P0 de Agenda se prepara en una rama independiente.
 
-**Staging editoriales activos:** **0**
+**Staging editoriales activos:** no verificable ahora por timeout; no se han ejecutado escrituras de datos.
 
-**Errores runtime recientes:** Vercel conserva 10 grupos en la ventana de 24 horas, principalmente timeouts y errores de upstream asociados a despliegues anteriores; ninguno señala el deployment productivo actual de #899 y no guardan relación con esta actualización exclusivamente documental
+**Bloqueo demostrado:** el build de #929 y la preview de #931 agotan lecturas públicas de Supabase (~30 s) y abortan al prerenderizar `/agenda-cofrade`. La causa de la indisponibilidad/conexión de PostgreSQL sigue sin determinar. No atribuirla sin medición a capacidad, RLS o una consulta concreta.
 
 **Régimen:** FIRST EDITION FREEZE activo
 
-**Frente editorial municipal ACTIVO:** **Carmona · cierre de música y trazabilidad servita**. La confirmación posterior 10/10, la participación penitencial, los Pasos, las sedes y la identidad pública de Servitas están documentados. Ocho posiciones musicales están identificadas y tres cerradas; las restantes y el posible REUSE del Paso servita de septiembre siguen bloqueantes. No están autorizados staging, SQL, dry-run, Apply ni publicación.
+**Frente ACTIVO:** P0 · estabilización de producción. Carmona, HC-AUTO-03, nuevos macrolotes y ampliaciones SEO/UX/Agenda permanecen bloqueados hasta QA y ventana limpia. La corrección de Agenda es contención del incidente, no una ampliación funcional. Véase [evidencia y pruebas del candidato](./P0-AGENDA-BUILD-RESILIENCE-2026-09-24.md).
 
 > GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. Los rankings municipales previos son evidencia histórica, no una cola automática. El próximo municipio solo puede nacer de un recálculo provincial nuevo y una orden expresa.
 
@@ -26,7 +26,8 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 
 | Posición | Frente | Estado real | Regla |
 |---|---|---|---|
-| **ACTIVO** | Octavo macrolote municipal HC-016 · Carmona | Evidencia posterior 10/10; 28 titulares candidatos; 17 Pasos y 30 relaciones imagen–Paso documentadas; 8 posiciones musicales identificadas, 3 cerradas; sedes e identidad servita cerradas | Cerrar la música restante y la trazabilidad de septiembre; sin staging, SQL, dry-run, Apply ni publicación |
+| **ACTIVO** | P0 · producción y timeouts | Candidato Agenda probado localmente; build productivo de main fallido; diagnóstico SQL remoto bloqueado | Validar preview y disponibilidad de datos antes de integrar; no declarar P0 cerrado por un build verde |
+| **BLOQUEADO** | Octavo macrolote municipal HC-016 · Carmona | Evidencia posterior 10/10; 28 titulares candidatos; 17 Pasos y 30 relaciones imagen–Paso documentadas; 8 posiciones musicales identificadas, 3 cerradas | Preservar el trabajo; no continuar mientras P0 esté abierto; sin staging, SQL, dry-run, Apply ni publicación |
 | **CERRADO** | Orden operativo | Autoridad documental y cola única integradas en #712 | No reabrir salvo contradicción verificable |
 | **CERRADO** | [#492 · Supabase Preview Branches](https://github.com/nachosanchezperez-ux/base-cofrade/issues/492) | Incidencia cerrada; #846 reconcilió el historial y la cadena activa contiene 12 migraciones estructurales, reproducibles desde cero en preview sin datos | Todo cambio futuro de esquema debe nacer como migración reproducible y superar una preview sin datos |
 | **CERRADO** | Higiene de ramas | 817 ramas revisadas; 754 eliminadas por SHA; 63 preservadas; salvaguarda remota verificada | No borrar las 61 ramas con trabajo único sin una revisión futura específica |
@@ -88,7 +89,9 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | **LABORATORIO** | Mejoras de producto y diseño | Ideas de cabeceras, nuevos campos, nuevas secciones y ampliaciones transversales | No activar mientras siga `FIRST EDITION FREEZE` |
 | **BLOQUEADO** | HC-018 · Aportaciones públicas | Implementación en código, activación expresamente bloqueada | No abrir `/colabora` hasta superar sus puertas de seguridad, privacidad y antiabuso |
 
-## Verdad de plataforma
+## Fotografía histórica de plataforma · 21 de septiembre
+
+Este apartado conserva el corte anterior. Para decisiones operativas prevalece el corte P0 del 24 de septiembre al inicio de este documento.
 
 - GitHub: `main = 1cdfbaadef4442caf75800a528bb077b457c4b45` en el preflight; #900 es esta documentación y #899 permanece independiente.
 - Vercel: producción está READY en `dpl_2k4fgz6dxAPnM2BQ6FrCZxfY5WMJ`, exactamente sobre `1cdfbaadef4442caf75800a528bb077b457c4b45`.
@@ -529,7 +532,7 @@ La evidencia y el método completos están en [`AUDITORIA-OCTAVO-MACROLOTE-MUNIC
 
 ## Siguiente puerta
 
-**Carmona es el único frente editorial municipal activo en fase previa.** El inventario, la matriz, la confirmación posterior, la participación de las diez Salidas penitenciales, los Pasos, las sedes y la identidad pública de Servitas están documentados. No se autorizan todavía staging, SQL, dry-run, Apply ni publicación.
+**Primero cerrar el P0 de producción. Carmona permanece bloqueada.** El inventario, la matriz, la confirmación posterior, la participación de las diez Salidas penitenciales, los Pasos, las sedes y la identidad pública de Servitas se conservan como trabajo previo. No se autorizan todavía staging, SQL, dry-run, Apply ni publicación.
 
 Carmona queda seleccionada como candidata única del octavo macrolote municipal HC-016. El **inventario canónico y la matriz de Fuentes** quedan cerrados: nueve sujetos corporativos, 28 imágenes titulares candidatas y diez Salidas penitenciales históricas de 2026. La Orden Seglar Servita comparte identidad organizadora con la Salida de septiembre ya existente; la Esperanza es una sola corporación con dos cortejos y no debe duplicarse.
 
