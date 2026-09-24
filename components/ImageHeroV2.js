@@ -131,9 +131,9 @@ export default function ImageHeroV2({
                 src={photoSrc}
                 alt=""
                 fill
-                priority
+                quality={35}
                 unoptimized={bypassImageOptimizer}
-                sizes="100vw"
+                sizes="50vw"
               />
               <div className={`${styles.subjectStage} ${roomStyles.subjectStage}`}>
                 <Image
@@ -141,7 +141,7 @@ export default function ImageHeroV2({
                   src={photoSrc}
                   alt=""
                   fill
-                  priority
+                  preload
                   unoptimized={bypassImageOptimizer}
                   sizes="(max-width: 780px) 100vw, 72vw"
                   onLoad={detectNaturalAspect}
@@ -154,7 +154,7 @@ export default function ImageHeroV2({
               src={photoSrc}
               alt=""
               fill
-              priority
+              preload
               unoptimized={bypassImageOptimizer}
               sizes="100vw"
               onLoad={detectNaturalAspect}
