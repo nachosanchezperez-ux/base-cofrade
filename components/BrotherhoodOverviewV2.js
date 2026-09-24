@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import Link from 'next/link'
 import CofradeTypeBadges from '@/components/CofradeTypeBadges'
 import BrotherhoodQuickFacts from '@/components/BrotherhoodQuickFacts'
@@ -197,7 +198,9 @@ export default function BrotherhoodOverviewV2({ brotherhood, heroFactLabels = []
             <EntityLastUpdated value={brotherhood.updatedAt} />
           </header>
 
-          <BrotherhoodQuickFacts brotherhood={brotherhood} heroFactLabels={heroFactLabels} />
+          <Suspense fallback={null}>
+            <BrotherhoodQuickFacts brotherhood={brotherhood} heroFactLabels={heroFactLabels} />
+          </Suspense>
 
           {(showIdentity || showSeat) ? (
             <div className={`${styles.grid} ${showIdentity && showSeat ? balanceStyles.balancedGrid : styles.gridSingle}`}>
