@@ -207,3 +207,14 @@ test('Discografía reutiliza nombre, logo y Spotify ya cargados en la ficha de B
   assert.match(loader, /bandName\s*\? Promise\.resolve/)
   assert.match(loader, /bandLogoPath\s*\? Promise\.resolve/)
 })
+
+
+test('Hermandades filtra Fuentes heredadas una sola vez al final del orquestador', () => {
+  const display = read('lib/supabase/brotherhood-display.js')
+  const pageLoader = read('lib/supabase/brotherhood-page.js')
+  const displayEntry = display.slice(display.indexOf('export async function getHermandadPageBySlug'))
+
+  assert.doesNotMatch(displayEntry, /filterBrotherhoodSourceScope/)
+  assert.match(pageLoader, /filterInheritedAgentSources/)
+  assert.match(pageLoader, /optionalBrotherhoodEnrichment\([\s\S]*filterInheritedAgentSources/)
+})
