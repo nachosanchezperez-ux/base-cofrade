@@ -1,6 +1,6 @@
 'use server'
 
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
@@ -77,6 +77,7 @@ async function requireSource(supabase, sourceId) {
 
 async function refresh(supabase, brotherhoodId) {
   const entity = await requireBrotherhood(supabase, brotherhoodId)
+  revalidateTag('public-brotherhood-detail', { expire: 0 })
   revalidatePath('/panel')
   revalidatePath(`/panel/hermandades/${brotherhoodId}`)
   revalidatePath(`/panel/hermandades/${brotherhoodId}/jornada`)
