@@ -17,6 +17,7 @@ const sample = [
   { url: 'https://hilocofrade.es/imagenes/jesus-presentado-al-pueblo' },
   { url: 'https://hilocofrade.es/pasos/andas-plata-setefilla-lora' },
   { url: 'https://hilocofrade.es/marchas/aurora-reina-manana-pablo-ojeda' },
+  { url: 'https://hilocofrade.es/autores/pablo-ojeda-jimenez' },
   { url: 'https://hilocofrade.es/crucetas-musicales/san-gonzalo-2026' },
   { url: 'https://hilocofrade.es/agenda-cofrade/rosarios/prueba' },
   { url: 'https://hilocofrade.es/extraordinarias/prueba' },
@@ -30,6 +31,7 @@ test('HC-SEO-02 reparte cada URL pública en una única familia medible', () => 
     'imagenes',
     'pasos',
     'marchas',
+    'autores',
     'crucetas',
     'agenda',
   ]);
@@ -60,7 +62,7 @@ test('los sitemaps segmentados generan XML canónico y escapan valores', () => {
   assert.match(xml, /<priority>0\.8<\/priority>/);
 });
 
-test('robots publica el sitemap completo y los ocho sitemaps de diagnóstico', () => {
+test('robots publica el sitemap completo y los sitemaps segmentados de diagnóstico', () => {
   const robots = read('app/robots.js');
   for (const segment of PUBLIC_SITEMAP_SEGMENTS) {
     assert.match(robots, new RegExp(`/sitemaps/${segment}\\.xml`));
