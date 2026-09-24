@@ -129,7 +129,16 @@ export default async function MarchDetailPage({ params }) {
         url: absoluteUrl(march.href),
         mainEntityOfPage: absoluteUrl(march.href),
         dateCreated: march.compositionYear || undefined,
-        composer: march.authors.filter((author) => author.role === 'composer').map((author) => ({ '@type': 'Person', name: author.name })),
+        composer: march.authors
+          .filter((author) => author.role === 'composer')
+          .map((author) => ({
+            '@type': 'Person',
+            ...(author.href ? {
+              '@id': `${absoluteUrl(author.href)}#person`,
+              url: absoluteUrl(author.href),
+            } : {}),
+            name: author.name,
+          })),
       }} />
 
       <header className={styles.hero}>
