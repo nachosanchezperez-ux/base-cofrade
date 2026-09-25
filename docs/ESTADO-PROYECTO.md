@@ -1,6 +1,6 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 25 de septiembre de 2026 · Écija · pre-row-by-row determinista cerrado
+**Corte operativo:** 25 de septiembre de 2026 · Écija · row-by-row cerrado y preflight SQL preparado
 
 **HEAD integrado en `main`:** `d20b26729181f0112da2f1892abaa748f97078e0` · #940, modelado, evidencia posterior y conciliación musical de Écija.
 
@@ -16,7 +16,7 @@
 
 **Régimen:** FIRST EDITION FREEZE activo
 
-**Frente ACTIVO:** HC-016 · Écija. Plan row-by-row y manifiesto determinista cerrados en 776 DML; detenido antes de preparar/ejecutar SQL. HC-AUTO-03 continúa bloqueado.
+**Frente ACTIVO:** HC-016 · Écija. Row-by-row y manifiesto determinista cerrados; SQL rollback-only preparado y no ejecutado. HC-AUTO-03 continúa bloqueado.
 
 > GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. Los rankings municipales previos son evidencia histórica, no una cola automática. El próximo municipio solo puede nacer de un recálculo provincial nuevo y una orden expresa.
 
@@ -29,7 +29,7 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | **CERRADO** | HC-PERF-SUPABASE-01 · capacidad Supabase / Home | Micro activo; migraciones `20260925051118` y `20260925051336` en producción y reproducidas en preview; consulta crítica ~115,4→~0,42 ms; 5 refrescos consecutivos `succeeded` en ~156–160 ms; CI tests+build verde; Home productiva HTTP 200; sin errores runtime Vercel | Reabrir solo ante regresión demostrada de RAM/SWAP, timeouts, cron o lectura pública |
 | **CERRADO** | P0 · producción y timeouts | Supabase recuperado; #932 publicada; ventana limpia >30 min; caché vencida renovada; contenido y sitemaps verificados | Reabrir solo ante una regresión demostrada; mantener SU-484619 como seguimiento de causa raíz |
 | **CERRADO** | Octavo macrolote municipal HC-016 · Carmona | 530/530 aplicadas; QA estructural/semántico PASS; 15/15 fichas públicas HTTP 200; 0 4xx/5xx/runtime errors | No reejecutar; reabrir solo ante incidencia demostrada o enriquecimiento editorial posterior |
-| **ACTIVO** | Noveno macrolote municipal HC-016 · Écija | Pre-row-by-row cerrado: 776 DML · 770 UPSERT · 6 UPDATE/REUSE · 15 nodos externos reutilizados · 0 DELETE | Siguiente gate: preparar preflight SQL rollback-only; no ejecutar sin autorización |
+| **ACTIVO** | Noveno macrolote municipal HC-016 · Écija | 776 DML planificadas · 15 REUSE · row-by-row cerrado · SQL rollback-only preparado · 0 ejecutadas | Siguiente gate: autorización expresa de preflight SQL; no staging/Apply |
 | **BLOQUEADO** | HC-AUTO-03 · El Calvario | Lote `ready` 55/55, 0 aplicado, preservado desde el 21/09 | No ejecutar Apply sin una orden específica y preflight actualizado |
 | **CERRADO** | Orden operativo | Autoridad documental y cola única integradas en #712 | No reabrir salvo contradicción verificable |
 | **CERRADO** | [#492 · Supabase Preview Branches](https://github.com/nachosanchezperez-ux/base-cofrade/issues/492) | Incidencia cerrada; #846 reconcilió el historial y la cadena activa contiene 12 migraciones estructurales, reproducibles desde cero en preview sin datos | Todo cambio futuro de esquema debe nacer como migración reproducible y superar una preview sin datos |
@@ -535,66 +535,43 @@ La evidencia y el método completos están en [`AUDITORIA-OCTAVO-MACROLOTE-MUNIC
 
 ## Siguiente puerta
 
-**Écija queda CERRADA EN PRE-ROW-BY-ROW y preparada para construir el preflight SQL.**
+**Écija queda preparada para ejecutar el PREFLIGHT SQL rollback-only, pero todavía no se ha ejecutado.**
 
 Contrato congelado:
 
 - **776 DML**;
-- **770 UPSERT**;
-- **6 UPDATE/REUSE** sobre 3 nodos draft existentes;
-- **15 nodos externos reutilizados**:
-  - 12 REUSE puros;
-  - 3 nodos UPDATE/REUSE;
+- **15 REUSE externos**;
 - **0 DELETE**;
 - **0 DDL**;
 - **0 RLS**;
-- namespace `c0160036-*` sin colisiones.
-
-Familias principales:
-
-- 40 Fuentes materializadas;
-- 11 Lugares nuevos;
-- 99 operaciones en `entities`;
-- 15 corporaciones;
-- 18 Bandas/Capillas nuevas;
-- 34 Imágenes procesionales primarias;
+- namespace `c0160036-*`;
+- 96 entidades nuevas;
+- 16 Salidas;
 - 32 Pasos;
-- 16 series;
-- 16 Salidas `held`;
-- 66 participaciones efectivas;
+- 34 Imágenes primarias;
 - 32 posiciones musicales;
 - 28 assignments;
 - 27 periodos musicales;
-- **227 source_links**.
+- 227 source_links.
 
-Decisiones protegidas:
+El payload está archivado y revisado estáticamente:
 
-- Expiración conserva `c6100000-0000-4000-8000-000000000009`;
-- Confalón conserva `e8b83412-786d-44a9-abc1-383b1c3fb82d`;
-- Columna y Azotes conserva `52d0bc09-c7a1-43a1-a285-9196257d1567`;
-- Álvarez Quintero usa el nodo canónico `7fafdc04-cb94-47d8-814f-5537639660ff`;
-- el duplicado legado queda fuera del DML;
-- Virgen del Valle recibe 0 relaciones;
-- Borriquita y Cautivo siguen siendo una corporación con dos Salidas;
-- Las Penas sigue como Agrupación Parroquial.
+`supabase/migrations_archive/post-first-edition-editorial/20260925083000_preflight_ecija_noveno_macrolote_hc016.sql`
 
-**Siguiente acción única permitida:** preparar y revisar estáticamente el SQL de preflight transaccional rollback-only.
+**Siguiente acción única:** ejecutar ese preflight únicamente con autorización expresa. Debe terminar en `PREFLIGHT_ECIJA_SQL_OK_ROLLED_BACK` y dejar 0 residuos.
 
-La preparación del archivo **no autoriza su ejecución**.
-
-Siguen en 0:
+Siguen prohibidos:
 
 - staging;
-- dry-run ejecutado;
-- Apply.
+- Apply;
+- DDL;
+- RLS.
 
 HC-AUTO-03 · El Calvario continúa bloqueado.
 
 Evidencia:
+- [Pre-row-by-row · Écija](./PRE-ROW-BY-ROW-ECIJA-NOVENO-MACROLOTE-HC016-2026-09-25.md)
 - [Plan row-by-row · Écija](./PLAN-ROW-BY-ROW-ECIJA-HC016-2026-09-25.md)
 - [Anexo source_links · Écija](./ANEXO-SOURCE-LINKS-ECIJA-HC016-2026-09-25.md)
 - [Manifiesto determinista · Écija](./MANIFIESTO-DETERMINISTA-ECIJA-HC016-2026-09-25.md)
-- [Cierre pre-row-by-row · Écija](./PRE-ROW-BY-ROW-ECIJA-HC016-2026-09-25.md)
-- [Modelado · Écija](./MODELADO-ECIJA-HC016-PARTICIPACION-PASOS-SEDE-MUSICA-2026-09-25.md)
-- [Evidencia posterior · Écija](./EVIDENCIA-POSTERIOR-ECIJA-NOVENO-MACROLOTE-MUNICIPAL-HC016-2026-09-25.md)
-- [Conciliación musical · Écija](./CONCILIACION-MUSICAL-ECIJA-HC016-2026-09-25.md)
+- [Preparación preflight SQL · Écija](./PREPARACION-PREFLIGHT-SQL-ECIJA-HC016-2026-09-25.md)
