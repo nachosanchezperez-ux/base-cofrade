@@ -2,13 +2,13 @@
 
 **Corte operativo:** 25 de septiembre de 2026 · HC-016 Écija cerrado, aplicado y QA de producción verde
 
-**HEAD integrado en `main`:** `1dbbf9cfaaf820b6214bd18ffef777a9653cce27` · #949, staging de Écija certificado y candidato de Apply preparado/no ejecutado.
+**HEAD integrado en `main`:** `f71c51dabb20db2f6a211f35b6847e355a203875` · #950, cierre certificado del noveno macrolote municipal de Écija.
 
-**Dominio productivo:** `hilocofrade.es` y `www.hilocofrade.es` sirven `dpl_8XyWfxxRtxdAZRmYEqzhabqbk3EE`, `READY`, SHA `1dbbf9cfaaf820b6214bd18ffef777a9653cce27`. Écija permanece con `applied_items=0`.
+**Dominio productivo:** `hilocofrade.es` y `www.hilocofrade.es` sirven `dpl_6uMY2ea6kJpubcY8r7intsATHQop`, `READY`, SHA `f71c51dabb20db2f6a211f35b6847e355a203875`. Écija: QA público PASS y staging `completed` 776/776.
 
 **Supabase:** `ACTIVE_HEALTHY` y actualizado por el usuario de Nano a Micro. Support confirmó sobreutilización de memoria, uso sostenido de SWAP y overcommitment durante el incidente; CPU/IO pueden haber contribuido, por lo que no se reduce toda la causalidad a RAM. La base ocupa ~45 MB. Tras Micro: `effective_cache_size` 384→768 MB y `maintenance_work_mem` 32→64 MB. Producción contiene 17 migraciones estructurales. HC-PERF-SUPABASE-01 materializa `home_knowledge_threads`: fuente/caché 2.052/2.052, 0 diferencias, lectura `anon` correcta, patrón medido ~115,4 ms→~0,42 ms y primer cron `succeeded` (~156,9 ms). Véase [seguimiento de capacidad](./P0-SUPABASE-CAPACITY-2026-09-25.md).
 
-**GitHub:** #949 fusionada; #948, #947, #940 y #939 cerradas. #946 y #931 continúan como frentes independientes. Écija queda detenida antes de Apply.
+**GitHub:** #950 fusionada y cerrada. #949, #948 y #947 quedan cerradas; #946 y #931 continúan como frentes UX/técnicos independientes. HC-016 · Écija queda CERRADO.
 
 **Staging editoriales:** Écija `c0160036-0000-4000-8000-000000000001` = `completed`, 776/776 aplicadas, 0 fallidas; Carmona `c0160035-0000-4000-8000-000000000001` = `completed`, 530/530 aplicadas; HC-AUTO-03 · El Calvario permanece `ready` 55/55 y 0 aplicado.
 
