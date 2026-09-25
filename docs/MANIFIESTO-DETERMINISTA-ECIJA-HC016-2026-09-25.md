@@ -4,7 +4,7 @@
 **Estado:** CERRADO · SIN SQL EJECUTADO  
 **Base:** `de420589baa03db98cfda4a11796606592761f50`  
 **Namespace:** `c0160036-*`  
-**Contrato:** **776 DML · 15 REUSE externos · 0 DELETE · 0 DDL · 0 RLS**
+**Contrato:** **776 DML · 770 UPSERT + 6 UPDATE/REUSE · 15 nodos externos reutilizados · 0 DELETE · 0 DDL · 0 RLS**
 
 ## Familias y recuentos
 
@@ -28,6 +28,12 @@
 | `source_links` | 227 |
 
 **TOTAL = 776.**
+
+Reutilización:
+- 12 REUSE externos puros;
+- 3 nodos draft UPDATE/REUSE;
+- 6 DML UPDATE/REUSE en total;
+- 770 UPSERT.
 
 ## Entidades y relaciones
 
