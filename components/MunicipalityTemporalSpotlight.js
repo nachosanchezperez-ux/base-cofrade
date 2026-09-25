@@ -23,6 +23,7 @@ function TemporalCard({ label, value, copy, href }) {
 export default function MunicipalityTemporalSpotlight({
   hub,
   todayHref,
+  tomorrowHref,
   weekendHref,
   filteredAgendaHref,
 }) {
@@ -83,7 +84,7 @@ export default function MunicipalityTemporalSpotlight({
             label="Mañana"
             value={(temporal.tomorrowItems || []).length}
             copy="Lo previsto para el día siguiente."
-            href={filteredAgendaHref}
+            href={tomorrowHref}
           />
           <TemporalCard
             label="Fin de semana"

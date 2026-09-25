@@ -26,7 +26,7 @@ No existe la modalidad «Rosario nocturno»: la hora del acto se expresa en su h
 - La lectura pública usa el cliente anónimo sin sesión y respeta RLS.
 - Las Hermandades o Bandas no publicadas pueden nombrarse, pero no generan enlaces a fichas privadas o incompletas.
 - La portada permite separar próximos y archivo, además de Sevilla capital y provincia.
-- La cronología común permite consultar hoy, el fin de semana y próximos actos, y filtrar por procesiones, traslados, rosarios, besamanos y besapiés, además de por territorio.
+- La cronología común permite consultar hoy, mañana, el fin de semana y próximos actos, y filtrar por procesiones, traslados, rosarios, besamanos y besapiés, además de por territorio.
 - Agenda Cofrade, Extraordinarias, Glorias e Igualás y ensayos comparten una navegación persistente y recíproca, tanto en sus directorios como en las fichas individuales; cada calendario marca su sección activa y permite saltar directamente a los otros tres sin volver a la portada.
 - Las fichas de actos exponen relaciones directas con su Hermandad, localidad, Bandas o Pasos ya documentados, el calendario de origen y la agenda de la Hermandad; estas conexiones reutilizan datos existentes y no añaden consultas relacionales pesadas por ficha.
 - Las fichas de Hermandad agregan sus próximas citas públicas de Agenda Cofrade, Glorias, Extraordinarias e Igualás y ensayos en una sección única, manteniendo después los módulos especializados como archivo y detalle.

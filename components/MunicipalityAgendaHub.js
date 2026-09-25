@@ -59,6 +59,9 @@ export default function MunicipalityAgendaHub({ hub }) {
   const todayHref = hub.slug === 'sevilla-capital'
     ? '/agenda-cofrade?territorio=capital&periodo=today#agenda'
     : `/agenda-cofrade?municipio=${hub.slug}&periodo=today#agenda`
+  const tomorrowHref = hub.slug === 'sevilla-capital'
+    ? '/agenda-cofrade?territorio=capital&periodo=tomorrow#agenda'
+    : `/agenda-cofrade?municipio=${hub.slug}&periodo=tomorrow#agenda`
   const weekendHref = hub.slug === 'sevilla-capital'
     ? '/agenda-cofrade?territorio=capital&periodo=weekend#agenda'
     : `/agenda-cofrade?municipio=${hub.slug}&periodo=weekend#agenda`
@@ -138,6 +141,7 @@ export default function MunicipalityAgendaHub({ hub }) {
       <MunicipalityTemporalSpotlight
         hub={hub}
         todayHref={todayHref}
+        tomorrowHref={tomorrowHref}
         weekendHref={weekendHref}
         filteredAgendaHref={filteredAgendaHref}
       />
