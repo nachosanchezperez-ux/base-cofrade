@@ -20,6 +20,10 @@ async function harness({ fail = '', delay = 0 } = {}) {
       calls.push(['indexability']);
       return [...brotherhoods, ...bandDirectory, ...images, ...steps];
     },
+    getIndexableBrotherhoodDirectory: async () => {
+      calls.push(['getIndexableBrotherhoodDirectory']);
+      return [{ id: 'h2', slug: 'hermandad-rinconada', localidad: 'La Rinconada' }];
+    },
   };
   const fixtures = {
     getHermandadesDirectory: [{ id: 'h', slug: 'hermandad', entityType: 'brotherhood' }],
@@ -60,7 +64,7 @@ const readersBySegment = {
   marchas: ['getPublicMarchSitemapEntries'],
   autores: ['getPublicAgentSitemapEntries'],
   crucetas: ['getMusicalRepertoires'],
-  agenda: ['getExtraordinaryDirectory', 'getGloryDirectory', 'getCrewEventDirectory', 'getRosaryOutings'],
+  agenda: ['getExtraordinaryDirectory', 'getGloryDirectory', 'getCrewEventDirectory', 'getRosaryOutings', 'getIndexableBrotherhoodDirectory'],
 };
 for (const [segment, expected] of Object.entries(readersBySegment)) {
   test(`sitemap ${segment} only loads its required sources`, async () => {
@@ -70,7 +74,9 @@ for (const [segment, expected] of Object.entries(readersBySegment)) {
     assert.ok(entries.length);
     assert.deepEqual(sitemapEntriesForSegment(entries, segment), entries);
     for (const [name, options] of api.calls) {
-      if (name !== 'indexability' && !name.endsWith('SitemapEntries')) assert.equal(options.throwOnError, true);
+      if (!['indexability', 'getIndexableBrotherhoodDirectory'].includes(name) && !name.endsWith('SitemapEntries')) {
+        assert.equal(options.throwOnError, true);
+      }
     }
   });
 }
@@ -107,7 +113,8 @@ test('full sitemap retains canonical detail URLs and unique march metadata', asy
   for (const path of ['/hermandades/hermandad', '/bandas/banda', '/imagenes/imagen', '/pasos/paso',
     '/marchas/marcha', '/autores/autor', '/crucetas-musicales/cruceta', '/extraordinarias/salida',
     '/procesiones-de-gloria/gloria', '/igualas-y-ensayos/ensayo', '/agenda-cofrade/rosarios/rosario',
-    '/agenda-cofrade/localidad/pilas', '/agenda-cofrade/hoy', '/agenda-cofrade/manana',
+    '/agenda-cofrade/localidad/pilas', '/agenda-cofrade/localidad/la-rinconada',
+    '/agenda-cofrade/hoy', '/agenda-cofrade/manana',
     '/agenda-cofrade/fin-de-semana']) {
     assert.ok(urls.includes(`https://hilocofrade.es${path}`), path);
   }

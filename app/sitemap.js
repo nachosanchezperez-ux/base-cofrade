@@ -22,6 +22,7 @@ import { getPublicMarchSitemapEntries } from '@/lib/supabase/public-marches';
 import { getPublicAgentSitemapEntries } from '@/lib/supabase/public-agents';
 import { getRosaryOutings } from '@/lib/supabase/rosary-outings';
 import { getImagesDirectory, getStepsDirectory } from '@/lib/supabase/directories';
+import { getIndexableBrotherhoodDirectory } from '@/lib/supabase/indexable-brotherhood-directory';
 
 export const revalidate = 3600;
 
@@ -237,7 +238,7 @@ function agendaMunicipalityEntries(groups = []) {
   const slugs = new Set()
   for (const items of groups) {
     for (const item of items || []) {
-      const slug = agendaMunicipalityRouteSlug(item.municipality || item.municipality_name || '')
+      const slug = agendaMunicipalityRouteSlug(item.municipality || item.municipality_name || item.localidad || '')
       if (slug) slugs.add(slug)
     }
   }
@@ -348,9 +349,22 @@ async function buildPublicSitemapSegmentEntries(segment) {
     const gloryOutings = await getGloryDirectory(strict);
     const crewEvents = await getCrewEventDirectory(strict);
     const rosaryOutings = await getRosaryOutings(strict);
+
+    // Municipality hubs are evergreen territorial pages: they remain useful even
+    // when a locality has no active event this week. Reuse the same indexable
+    // brotherhood contract as /hermandades/localidad/[localidad] so the sitemap
+    // never manufactures thin or non-public municipal hubs.
+    const indexableBrotherhoods = await getIndexableBrotherhoodDirectory();
+
     entries.push(...extraordinaryEntries(extraordinaryOutings), ...gloryEntries(gloryOutings),
       ...crewEventEntries(crewEvents), ...rosaryEntries(rosaryOutings),
-      ...agendaMunicipalityEntries([extraordinaryOutings, gloryOutings, crewEvents, rosaryOutings]));
+      ...agendaMunicipalityEntries([
+        extraordinaryOutings,
+        gloryOutings,
+        crewEvents,
+        rosaryOutings,
+        indexableBrotherhoods,
+      ]));
   } else if (segment === 'crucetas') {
     const musicalRepertoires = await getMusicalRepertoires(strict);
     entries.push(...musicalRepertoireEntries(musicalRepertoires));
