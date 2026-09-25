@@ -10,12 +10,12 @@
 - 11 slugs de Lugar = 0 colisiones;
 - 16 slugs de outing = 0 colisiones;
 - 18 nombres exactos de Bandas nuevas = 0 colisiones;
-- 44 Fuentes = 42 nuevas + 2 REUSE por URL;
+- 44 códigos de Fuente: 40 materializaciones nuevas + 2 REUSE por URL + 1 fuente documental no materializada (ECI-F26) + 1 alias lógico de ECI-F24 (ECI-F41);
 - 3 nodos draft detectados y preservados como UPDATE/REUSE.
 
 Contrato final:
 
-**730 DML · 724 UPSERT · 6 UPDATE/REUSE · 12 REUSE externos puros · 0 DELETE · 0 DDL · 0 RLS**
+**776 DML · 770 UPSERT · 6 UPDATE/REUSE · 12 REUSE externos puros · 0 DELETE · 0 DDL · 0 RLS**
 
 Los seis UPDATE/REUSE DML corresponden a tres nodos ya existentes:
 
@@ -36,7 +36,7 @@ No se cambia ninguno de sus UUID.
 - 32 posiciones musicales;
 - 28 assignments;
 - 27 periodos musicales cerrados a 2026;
-- 179 source_links.
+- 227 source_links.
 
 No se incorporan figuras secundarias de misterio ni titulares no procesionales sin evidencia individual.
 
