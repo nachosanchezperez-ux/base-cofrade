@@ -1,14 +1,14 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 25 de septiembre de 2026 · Morón de la Frontera · modelo documental cerrado y #953 reconciliada contra main
+**Corte operativo:** 25 de septiembre de 2026 · Morón de la Frontera · MODELO CERRADO · APTO PARA ROW-BY-ROW
 
-**HEAD integrado en `main`:** `800d1a80962ec6b53f555c3b8487734f25b22388` · producción y rama de Morón reconciliadas desde este corte antes del merge de #953.
+**HEAD integrado en `main`:** `2f9ac51db75148dcef581d2c41927ceccebe5f33` · #953 fusionada con el modelo documental de Morón reconciliado contra el main vigente.
 
-**Dominio productivo:** `hilocofrade.es` y `www.hilocofrade.es` tienen en despliegue productivo `dpl_EnkHsKVQFhp851aGoqrdFwSQUgfN` sobre `800d1a80962ec6b53f555c3b8487734f25b22388`; estaba `BUILDING` en este corte de reconciliación y se certificará antes del merge de #953.
+**Dominio productivo:** `hilocofrade.es` y `www.hilocofrade.es` sirven `dpl_3kJseRD4tABnskVqKCSngBAFbkDM`, `READY`, exactamente sobre `2f9ac51db75148dcef581d2c41927ceccebe5f33`; postflight runtime: 0 errores agrupados y 0 logs error/fatal en la ventana revisada.
 
 **Supabase:** `ACTIVE_HEALTHY` y actualizado por el usuario de Nano a Micro. Support confirmó sobreutilización de memoria, uso sostenido de SWAP y overcommitment durante el incidente; CPU/IO pueden haber contribuido, por lo que no se reduce toda la causalidad a RAM. La base ocupa ~45 MB. Tras Micro: `effective_cache_size` 384→768 MB y `maintenance_work_mem` 32→64 MB. Producción contiene 17 migraciones estructurales. HC-PERF-SUPABASE-01 materializa `home_knowledge_threads`: fuente/caché 2.052/2.052, 0 diferencias, lectura `anon` correcta, patrón medido ~115,4 ms→~0,42 ms y primer cron `succeeded` (~156,9 ms). Véase [seguimiento de capacidad](./P0-SUPABASE-CAPACITY-2026-09-25.md).
 
-**GitHub:** #953 reconciliada documentalmente contra el main vigente y pendiente de certificación técnica/merge; #955 cerrada como superseded porque main ya contiene su baseline de Écija; #931 conserva deuda de rendimiento independiente y no bloquea Morón.
+**GitHub:** #953 fusionada; #955 cerrada sin merge como superseded porque su baseline de Écija ya estaba absorbido; #931 permanece abierta como deuda técnica independiente con trabajo material no integrado y no bloquea Morón. #946 continúa como frente UX/técnico independiente.
 
 **Staging editoriales:** Écija `c0160036-0000-4000-8000-000000000001` = `completed`, 776/776 aplicadas, 0 fallidas; Carmona `c0160035-0000-4000-8000-000000000001` = `completed`, 530/530 aplicadas; HC-AUTO-03 · El Calvario permanece `ready` 55/55 y 0 aplicado.
 
@@ -16,7 +16,7 @@
 
 **Régimen:** FIRST EDITION FREEZE activo
 
-**Frente ACTIVO:** HC-016 · Morón de la Frontera. Modelo documental cerrado: municipio, universo, música, Bandas y participación conciliados. Siguiente puerta tras integrar/certificar #953: PLAN ROW-BY-ROW. HC-AUTO-03 continúa bloqueado.
+**Frente ACTIVO:** HC-016 · Morón de la Frontera. MODELO CERRADO · APTO PARA ROW-BY-ROW. Siguiente acción única: PLAN ROW-BY-ROW → MANIFIESTO DETERMINISTA → PREFLIGHT SQL DE MORÓN. HC-AUTO-03 continúa bloqueado.
 
 > GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. Los rankings municipales previos son evidencia histórica, no una cola automática. El próximo municipio solo puede nacer de un recálculo provincial nuevo y una orden expresa.
 
@@ -30,7 +30,7 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | **CERRADO** | P0 · producción y timeouts | Supabase recuperado; #932 publicada; ventana limpia >30 min; caché vencida renovada; contenido y sitemaps verificados | Reabrir solo ante una regresión demostrada; mantener SU-484619 como seguimiento de causa raíz |
 | **CERRADO** | Octavo macrolote municipal HC-016 · Carmona | 530/530 aplicadas; QA estructural/semántico PASS; 15/15 fichas públicas HTTP 200; 0 4xx/5xx/runtime errors | No reejecutar; reabrir solo ante incidencia demostrada o enriquecimiento editorial posterior |
 | **CERRADO** | Noveno macrolote municipal HC-016 · Écija | 776/776 aplicadas; QA estructural/semántico PASS; 15/15 corporaciones + 18/18 bandas HTTP 200; 12 muestras Imagen/Paso 200; 0 4xx/5xx en rutas Écija | No reejecutar; reabrir solo por incidencia demostrada o enriquecimiento posterior |
-| **ACTIVO** | Décimo macrolote municipal HC-016 · Morón de la Frontera | Modelo documental cerrado: 10 Hermandades · 10 Salidas held-ready · 18 Pasos · 37 figuras físicas / 35 Imágenes modelables · 8 sedes · música de Paso 18/18 · 4 REUSE musicales + 9 INSERT | Tras #953: PLAN ROW-BY-ROW → MANIFIESTO DETERMINISTA → PREFLIGHT SQL; no staging/dry-run/Apply |
+| **ACTIVO** | Décimo macrolote municipal HC-016 · Morón de la Frontera | **MODELO CERRADO · APTO PARA ROW-BY-ROW**: 10 Hermandades · 10 Salidas held-ready · 18 Pasos · 37 figuras físicas / 35 Imágenes canónicas · 8 sedes · música de Paso 18/18 · 4 REUSE musicales + 9 INSERT · 1 Cruz de Guía juvenil adicional | Próxima orden: PLAN ROW-BY-ROW → MANIFIESTO DETERMINISTA → PREFLIGHT SQL; no staging/dry-run/Apply |
 | **BLOQUEADO** | HC-AUTO-03 · El Calvario | Lote `ready` 55/55, 0 aplicado, preservado desde el 21/09 | No ejecutar Apply sin una orden específica y preflight actualizado |
 | **CERRADO** | Orden operativo | Autoridad documental y cola única integradas en #712 | No reabrir salvo contradicción verificable |
 | **CERRADO** | [#492 · Supabase Preview Branches](https://github.com/nachosanchezperez-ux/base-cofrade/issues/492) | Incidencia cerrada; #846 reconcilió el historial y la cadena activa contiene 12 migraciones estructurales, reproducibles desde cero en preview sin datos | Todo cambio futuro de esquema debe nacer como migración reproducible y superar una preview sin datos |
@@ -536,7 +536,7 @@ La evidencia y el método completos están en [`AUDITORIA-OCTAVO-MACROLOTE-MUNIC
 
 ## Siguiente puerta
 
-**Morón de la Frontera tiene el modelo documental cerrado.**
+**Morón de la Frontera tiene el modelo documental cerrado y queda APTO PARA ROW-BY-ROW.**
 
 Fotografía:
 
@@ -554,7 +554,7 @@ Fotografía:
 - #955: cerrada superseded;
 - #931: deuda técnica independiente, no bloqueo editorial.
 
-**Siguiente acción única tras integrar y certificar #953:** PLAN ROW-BY-ROW → MANIFIESTO DETERMINISTA → PREFLIGHT SQL DE MORÓN.
+**Siguiente acción única:** PLAN ROW-BY-ROW → MANIFIESTO DETERMINISTA → PREFLIGHT SQL DE MORÓN.
 
 Esta orden no autoriza staging, payload SQL, dry-run, Apply ni nuevo municipio.
 
