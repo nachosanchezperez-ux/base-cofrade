@@ -131,9 +131,9 @@ export default function ImageHeroV2({
                 src={photoSrc}
                 alt=""
                 fill
-                priority
+                quality={35}
                 unoptimized={bypassImageOptimizer}
-                sizes="100vw"
+                sizes="50vw"
               />
               <div className={`${styles.subjectStage} ${roomStyles.subjectStage}`}>
                 <Image
