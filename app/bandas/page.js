@@ -14,7 +14,7 @@ const title = 'Bandas de Sevilla y provincia'
 const description = 'Directorio de bandas cofrades de Sevilla y su provincia: historia, acompañamientos, dirección, salidas y estrenos.'
 
 export async function generateMetadata({ searchParams } = {}) {
-  const robots = filteredViewRobots(await searchParams)
+  const robots = filteredViewRobots(await searchParams, ['tipo', 'localidad'])
   return {
     title,
     description,
