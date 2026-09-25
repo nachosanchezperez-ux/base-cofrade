@@ -56,4 +56,5 @@ test('la guía municipal conserva slugs territoriales correctos para patrimonio 
   assert.match(source, /stepDirectorySlug/)
   assert.match(source, /imageDirectoryReady/)
   assert.match(source, /stepDirectoryReady/)
+  assert.match(source, /routeSlug === 'sevilla-capital'[\s\S]*'Sevilla capital'/)
 })
