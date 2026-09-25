@@ -5,7 +5,7 @@ import EntityDirectoryExplorer from '@/components/EntityDirectoryExplorer'
 import EntityDirectoryExplorerFromUrl from '@/components/EntityDirectoryExplorerFromUrl'
 import JsonLd from '@/components/JsonLd'
 import { getPublicEntityDirectory } from '@/lib/supabase/public-directory-cache'
-import { absoluteUrl, breadcrumbJsonLd, socialMetadata } from '@/lib/seo'
+import { absoluteUrl, breadcrumbJsonLd, filteredViewRobots, socialMetadata } from '@/lib/seo'
 import styles from './directorio.module.css'
 
 export const revalidate = 900
@@ -13,14 +13,18 @@ export const revalidate = 900
 const title = 'Directorio cofrade de Sevilla y provincia'
 const description = 'Busca y explora hermandades, imágenes, pasos y bandas documentadas en Hilo Cofrade, con navegación por ubicación, calendario y estilo.'
 
-export const metadata = {
-  title,
-  description,
-  ...socialMetadata({
-    title: 'Directorio',
+export async function generateMetadata({ searchParams } = {}) {
+  const robots = filteredViewRobots(await searchParams)
+  return {
+    title,
     description,
-    path: '/directorio',
-  }),
+    ...socialMetadata({
+      title: 'Directorio',
+      description,
+      path: '/directorio',
+    }),
+    ...(robots ? { robots } : {}),
+  }
 }
 
 export default async function DirectorioPage() {

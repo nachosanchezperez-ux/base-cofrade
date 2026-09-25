@@ -6,21 +6,25 @@ import RelationalEntityDirectory from '@/components/RelationalEntityDirectory'
 import RelationalEntityDirectoryFromUrl from '@/components/RelationalEntityDirectoryFromUrl'
 import { bandDirectoryItems } from '@/lib/band-directory'
 import { getPublicBandsDirectory } from '@/lib/supabase/public-directory-cache'
-import { breadcrumbJsonLd, collectionPageJsonLd, socialMetadata } from '@/lib/seo'
+import { breadcrumbJsonLd, collectionPageJsonLd, filteredViewRobots, socialMetadata } from '@/lib/seo'
 
 export const revalidate = 900
 
 const title = 'Bandas de Sevilla y provincia'
 const description = 'Directorio de bandas cofrades de Sevilla y su provincia: historia, acompañamientos, dirección, salidas y estrenos.'
 
-export const metadata = {
-  title,
-  description,
-  ...socialMetadata({
-    title: 'Directorio de bandas',
-    description: 'Consulta formaciones musicales y sus relaciones documentadas con hermandades, pasos, salidas, responsables y patrimonio musical.',
-    path: '/bandas',
-  }),
+export async function generateMetadata({ searchParams } = {}) {
+  const robots = filteredViewRobots(await searchParams)
+  return {
+    title,
+    description,
+    ...socialMetadata({
+      title: 'Directorio de bandas',
+      description: 'Consulta formaciones musicales y sus relaciones documentadas con hermandades, pasos, salidas, responsables y patrimonio musical.',
+      path: '/bandas',
+    }),
+    ...(robots ? { robots } : {}),
+  }
 }
 
 export default async function BandasPage() {

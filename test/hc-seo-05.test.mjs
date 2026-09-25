@@ -25,8 +25,10 @@ test('las dos páginas calculan metadata y contenido desde la fuente común', ()
   const agenda = read('app/agenda-cofrade/page.js')
   const extraordinary = read('app/extraordinarias/page.js')
 
+  assert.match(agenda, /export async function generateMetadata\(\{ searchParams \} = \{\}\)/)
+  assert.match(extraordinary, /export function generateMetadata\(\)/)
+
   for (const page of [agenda, extraordinary]) {
-    assert.match(page, /export function generateMetadata\(\)/)
     assert.match(page, /madridYear\(\)/)
   }
 
