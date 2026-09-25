@@ -2,13 +2,13 @@
 
 **Corte operativo:** 25 de septiembre de 2026 · Écija seleccionada · inventario canónico y matriz de Fuentes cerrados
 
-**HEAD integrado en `main`:** `533c1f9a2063fc8ce24ca4f41b4e9f81dda9198f` · cierre certificado de #933 sobre el código funcional previo `30ba99ade2210160eae04c45bf18c43627baf734`.
+**Base viva de `main` al cerrar esta fase:** `56046f87fc958b46b4e824fe3a51fa1df26b1609` · HC-PERF-SUPABASE-04, independiente del inventario de Écija.
 
-**Dominio productivo:** `hilocofrade.es` y `www.hilocofrade.es` apuntan al deployment del merge `dpl_2mJR25N32nZ541BqyyRXyg5ousFa`, `READY`, SHA `533c1f9a2063fc8ce24ca4f41b4e9f81dda9198f`. Carmona: 15/15 fichas nuevas HTTP 200; 0 4xx, 0 5xx y 0 errores runtime en el postflight.
+**Dominio productivo:** `hilocofrade.es` y `www.hilocofrade.es` sirven `dpl_6KrBrg8ET2gzunHA3KcCcgqsStWD`, `READY`, SHA `56046f87fc958b46b4e824fe3a51fa1df26b1609`. El cierre de Carmona continúa certificado; esta fase de Écija es exclusivamente documental.
 
 **Supabase:** `ACTIVE_HEALTHY` y actualizado por el usuario de Nano a Micro. Support confirmó sobreutilización de memoria, uso sostenido de SWAP y overcommitment durante el incidente; CPU/IO pueden haber contribuido, por lo que no se reduce toda la causalidad a RAM. La base ocupa ~45 MB. Tras Micro: `effective_cache_size` 384→768 MB y `maintenance_work_mem` 32→64 MB. Producción contiene 17 migraciones estructurales. HC-PERF-SUPABASE-01 materializa `home_knowledge_threads`: fuente/caché 2.052/2.052, 0 diferencias, lectura `anon` correcta, patrón medido ~115,4 ms→~0,42 ms y primer cron `succeeded` (~156,9 ms). Véase [seguimiento de capacidad](./P0-SUPABASE-CAPACITY-2026-09-25.md).
 
-**GitHub:** #933 fusionada y cerrada. Los frentes técnicos Supabase abiertos en paralelo son independientes de Carmona; el estado vivo de GitHub prevalece sobre esta fotografía.
+**GitHub:** #933 y #937 fusionadas; #931 permanece como frente técnico independiente. La rama de inventario de Écija parte del `main` vivo y no modifica código de aplicación.
 
 **Staging editoriales:** Carmona `c0160035-0000-4000-8000-000000000001` = `completed`, 530/530 aplicadas, 0 fallidas. HC-AUTO-03 · El Calvario permanece `ready` 55/55 y 0 aplicado.
 
