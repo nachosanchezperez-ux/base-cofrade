@@ -6,6 +6,7 @@ import HomeTemporalFocus from '@/components/HomeTemporalFocus'
 import HomeExploreV2 from '@/components/HomeExploreV2'
 import HomeKnowledgeThreads from '@/components/HomeKnowledgeThreads'
 import HomeProjectOverview from '@/components/HomeProjectOverview'
+import HomeProcessionGrid from '@/components/HomeProcessionGrid'
 import { getExtraordinaryLiveState } from '@/lib/home-live-status'
 import { getHomeAdaptivePriority } from '@/lib/home-adaptive-priority'
 import { getProcessionLiveState } from '@/lib/procession-live-status'
@@ -56,16 +57,14 @@ export default function HomePageV2({
   exploreStats,
 }) {
   const liveOutings = upcomingAgenda.filter((item) => item.liveState?.state === 'live')
-  const featuredOuting = liveOutings[0]
-    || upcomingAgenda.find((item) => item.liveState?.state !== 'done')
-    || upcomingAgenda[0]
-    || null
+  const featuredOuting = liveOutings[0] || null
   const multipleLive = liveOutings.length > 1
-  const followingAgenda = upcomingAgenda.filter((item) => (
-    item.id !== featuredOuting?.id
-    && item.liveState?.state !== 'live'
+  const futureOutings = upcomingAgenda.filter((item) => (
+    item.liveState?.state !== 'live'
     && item.liveState?.state !== 'done'
   ))
+  const followingAgenda = liveOutings.length ? futureOutings : []
+  const balancedUpcoming = liveOutings.length ? [] : futureOutings.slice(0, 4)
   const featuredGuideHref = featuredOuting?.href || featuredOuting?.calendarHref || '/extraordinarias'
   const todayKey = madridDateKey()
   const featuredIsToday = featuredOuting?.date === todayKey
@@ -116,7 +115,7 @@ export default function HomePageV2({
         ? `${homePriority.relativeDateLabel} · ${agendaTypeLabel}`
         : `Próxima cita · ${agendaTypeLabel}`
 
-  const upcomingSection = featuredOuting ? (
+  const upcomingSection = upcomingAgenda.length ? (
     <section
       className={`${styles.section} ${styles.featuredExtraordinary} ${polishStyles.extraordinarySection}`}
       id="proximos-dias"
@@ -126,12 +125,14 @@ export default function HomePageV2({
       <div className="shell">
         <header className={styles.upcomingAgendaHead}>
           <div>
-            <span className={styles.eyebrow}>{multipleLive ? 'Ahora mismo' : 'Salidas procesionales'}</span>
-            <h2 id="proximos-dias-title">{multipleLive ? 'Varias procesiones están en la calle' : 'En los próximos días'}</h2>
+            <span className={styles.eyebrow}>{liveOutings.length ? 'Ahora mismo' : 'Salidas procesionales'}</span>
+            <h2 id="proximos-dias-title">{multipleLive ? 'Varias procesiones están en la calle' : featuredOuting ? 'Procesión en curso' : 'En los próximos días'}</h2>
           </div>
           <p>{multipleLive
             ? 'La portada agrupa las salidas que coinciden en tiempo real y deja las próximas citas inmediatamente después.'
-            : 'Procesiones, traslados y salidas extraordinarias con guía detallada. Para rosarios, besamanos y conciertos, consulta la Agenda Cofrade.'}</p>
+            : featuredOuting
+              ? 'Una salida solo ocupa el gran formato de la portada cuando está realmente en curso.'
+              : 'Procesiones, traslados y salidas extraordinarias se muestran con el mismo peso visual y en orden cronológico. La cercanía de una cita no la convierte por sí sola en protagonista.'}</p>
         </header>
 
         {multipleLive ? (
@@ -166,8 +167,8 @@ export default function HomePageV2({
               Ver todas las citas de hoy en la Agenda Cofrade <span aria-hidden="true">→</span>
             </Link>
           </section>
-        ) : (
-        <article className={`${styles.featuredExtraordinaryCard} ${polishStyles.extraordinaryCard} ${liveState.state === 'live' ? liveStyles.featuredExtraordinaryLive : ''} ${featuredOuting.heroImagePath ? '' : liveStyles.featuredExtraordinaryNoMedia}`}>
+        ) : featuredOuting ? (
+        <article className={`${styles.featuredExtraordinaryCard} ${polishStyles.extraordinaryCard} ${liveStyles.featuredExtraordinaryLive} ${featuredOuting.heroImagePath ? '' : liveStyles.featuredExtraordinaryNoMedia}`}>
           {featuredOuting.heroImagePath ? (
             <figure className={styles.featuredExtraordinaryMedia}>
               <div className={`${styles.featuredExtraordinaryImageFrame} ${polishStyles.extraordinaryImageFrame}`}>
@@ -270,6 +271,8 @@ export default function HomePageV2({
             </div>
           </div>
         </article>
+        ) : (
+          <HomeProcessionGrid outings={balancedUpcoming} />
         )}
 
         {followingAgenda.length ? (
