@@ -32,7 +32,9 @@ test('un fallo de fuentes no convierte una hermandad publicada en 404', async ()
   const source = await read('lib/supabase/brotherhoods.js')
 
   assert.match(source, /Fuentes de la hermandad omitidas temporalmente/)
-  assert.match(source, /\{ attempts: 1 \}/)
+  assert.match(source, /buildSourceLinkOrFilters/)
+  assert.match(source, /for \(const filter of sourceLinkFilters\)/)
+  assert.match(source, /\.or\(filter\)/)
   assert.match(source, /if \(local \|\| isMissingPublicSupabaseConfig\(error\)\) return local\s+throw error/)
 })
 

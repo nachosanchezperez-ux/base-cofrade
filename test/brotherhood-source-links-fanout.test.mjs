@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
 import test from 'node:test'
 
-import { classifyBrotherhoodSourceLinks } from '../lib/brotherhood-source-scope.js'
+import { buildSourceLinkOrFilters, classifyBrotherhoodSourceLinks } from '../lib/brotherhood-source-scope.js'
 
 test('clasifica fuentes globales de agentes sin ocultar las que también documentan la ficha', () => {
   const rows = [
@@ -60,4 +60,40 @@ test('brotherhood-display hace una sola lectura de source_links para acotar Fuen
   assert.equal(matches.length, 1)
   assert.match(source, /\.in\('source_id', databaseSourceIds\)/)
   assert.match(source, /classifyBrotherhoodSourceLinks/)
+})
+
+
+test('agrupa objetivos de source_links en un OR y parte solo cuando supera el límite', () => {
+  const compact = buildSourceLinkOrFilters([
+    ['entity_id', ['a', 'b', 'a']],
+    ['cult_id', ['c']],
+  ])
+
+  assert.deepEqual(compact, ['entity_id.in.(a,b),cult_id.in.(c)'])
+
+  const split = buildSourceLinkOrFilters([
+    ['entity_id', ['a', 'b', 'c', 'd']],
+    ['step_phase_id', ['e', 'f', 'g']],
+  ], {
+    maxFilterLength: 35,
+    maxIdsPerClause: 2,
+  })
+
+  assert.ok(split.length > 1)
+  assert.ok(split.every((filter) => filter.length <= 35 || !filter.includes(',')))
+  const joined = split.join(',')
+  for (const value of ['a', 'b', 'c', 'd', 'e', 'f', 'g']) {
+    assert.match(joined, new RegExp(`(?:\\(|,)${value}(?:,|\\))`))
+  }
+})
+
+test('brotherhoods agrupa el primer pase de Fuentes con OR indexable', () => {
+  const source = readFileSync(
+    new URL('../lib/supabase/brotherhoods.js', import.meta.url),
+    'utf8'
+  )
+
+  assert.match(source, /buildSourceLinkOrFilters/)
+  assert.match(source, /\.from\('source_links'\)[\s\S]*?\.or\(filter\)/)
+  assert.doesNotMatch(source, /loadPublicRowsInBatches\(\s*sourceTargetIds/)
 })
