@@ -81,3 +81,27 @@ test('Pasos e Imágenes deduplican las consultas compartidas por metadata y pág
   assert.match(imagePage, /const getImagen = cache\(getImagenPageBySlug\)/)
   assert.match(imagePage, /const getEntityMedia = cache\(getPublishedEntityMedia\)/)
 })
+
+
+test('Procesiones de Gloria acota la consulta de detalle por slug y cachea la ficha', () => {
+  const loader = read('lib/supabase/glory-directory.js')
+  const directoryCache = read('lib/supabase/public-directory-cache.js')
+
+  assert.match(loader, /if \(slug\) query = query\.eq\('slug', slug\)/)
+  assert.match(loader, /const targetedDirectory = await getGloryDirectory\(\{ throwOnError: true, slug \}\)/)
+  assert.match(loader, /hilo-cofrade-public-glory-detail-v2/)
+  assert.match(loader, /tags: \['public-glory-detail'\]/)
+  assert.match(directoryCache, /tags: \['public-glory-directory'\]/)
+})
+
+test('los LCP inequívocos usan preload en Next 16', () => {
+  const bandPhoto = read('components/BandFeaturePhoto.js')
+  const imageHero = read('components/ImageHeroV2.js')
+
+  assert.match(bandPhoto, /fill[\s\S]*preload[\s\S]*sizes=/)
+  assert.doesNotMatch(bandPhoto, /\bpriority\b/)
+  assert.equal((imageHero.match(/\bpreload\b/g) || []).length, 2)
+  assert.doesNotMatch(imageHero, /\bpriority\b/)
+  assert.match(imageHero, /quality=\{35\}/)
+  assert.match(imageHero, /sizes="50vw"/)
+})
