@@ -1,7 +1,7 @@
 # Preparación del preflight SQL · Écija · HC-016
 
 **Fecha:** 25 de septiembre de 2026  
-**Estado:** PREPARADO Y REVISADO ESTÁTICAMENTE · **NO EJECUTADO**  
+**Estado:** PREPARADO, CORREGIDO Y REVISADO ESTÁTICAMENTE · **NO EJECUTADO**  
 **Rama:** `hc016/ecija-pre-row-by-row-20260925`  
 **Payload:** [`20260925083000_preflight_ecija_noveno_macrolote_hc016.sql`](../supabase/migrations_archive/post-first-edition-editorial/20260925083000_preflight_ecija_noveno_macrolote_hc016.sql)
 
@@ -46,7 +46,28 @@ Además:
 - 0 `COMMIT`;
 - 4 bloques `DO $$ … $$;`;
 - token de éxito único;
-- 0 sentencias `DELETE`, `ALTER`, `CREATE`, `DROP`, `TRUNCATE`, `GRANT` o `REVOKE`.
+- 0 sentencias `DELETE`, `ALTER`, `CREATE`, `DROP`, `TRUNCATE`, `GRANT` o `REVOKE`;
+- 4 bloques `DO $ … $;` correctamente cerrados;
+- 26 UUID externos auditados contra producción: **0 inexistentes**.
+
+## Corrección durante la revisión
+
+La primera revisión estática detectó un UUID de municipio de Utrera mal transcrito en la fila de BCT Nuestra Señora de la Palma.
+
+- UUID incorrecto: `e4319248-831a-4f4c-8a1f-d6cf83f2446e`;
+- UUID canónico: `e4319248-831a-4f4c-adb8-19c496f95dd6`.
+
+Se corrigió tanto en el plan row-by-row como en el payload SQL.
+
+Después de la corrección se auditaron **todos los UUID externos** del archivo y el resultado fue `missing = []`.
+
+El payload revisado conserva exactamente:
+
+- 776/776 filas lógicas;
+- 1 `BEGIN`;
+- 1 `ROLLBACK`;
+- 0 `COMMIT`;
+- token único `PREFLIGHT_ECIJA_SQL_OK_ROLLED_BACK`.
 
 ## Guardas del payload
 
