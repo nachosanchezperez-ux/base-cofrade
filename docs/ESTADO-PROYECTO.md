@@ -1,6 +1,6 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 25 de septiembre de 2026 · HC-016 Carmona cerrado, aplicado y QA de producción verde
+**Corte operativo:** 25 de septiembre de 2026 · Carmona cerrada · nuevo recálculo provincial certificado · Écija seleccionada
 
 **HEAD integrado en `main`:** `533c1f9a2063fc8ce24ca4f41b4e9f81dda9198f` · cierre certificado de #933 sobre el código funcional previo `30ba99ade2210160eae04c45bf18c43627baf734`.
 
@@ -16,7 +16,7 @@
 
 **Régimen:** FIRST EDITION FREEZE activo
 
-**Frente ACTIVO:** ninguno abierto por Carmona. HC-016 · Carmona queda CERRADO. HC-AUTO-03 sigue bloqueado; los frentes técnicos Supabase continúan independientes.
+**Frente ACTIVO:** ninguno editorial abierto. Écija queda **SELECCIONADA / COLA** como noveno macrolote municipal HC-016; no se ha abierto inventario ni matriz. HC-AUTO-03 continúa bloqueado.
 
 > GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. Los rankings municipales previos son evidencia histórica, no una cola automática. El próximo municipio solo puede nacer de un recálculo provincial nuevo y una orden expresa.
 
@@ -29,6 +29,7 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | **CERRADO** | HC-PERF-SUPABASE-01 · capacidad Supabase / Home | Micro activo; migraciones `20260925051118` y `20260925051336` en producción y reproducidas en preview; consulta crítica ~115,4→~0,42 ms; 5 refrescos consecutivos `succeeded` en ~156–160 ms; CI tests+build verde; Home productiva HTTP 200; sin errores runtime Vercel | Reabrir solo ante regresión demostrada de RAM/SWAP, timeouts, cron o lectura pública |
 | **CERRADO** | P0 · producción y timeouts | Supabase recuperado; #932 publicada; ventana limpia >30 min; caché vencida renovada; contenido y sitemaps verificados | Reabrir solo ante una regresión demostrada; mantener SU-484619 como seguimiento de causa raíz |
 | **CERRADO** | Octavo macrolote municipal HC-016 · Carmona | 530/530 aplicadas; QA estructural/semántico PASS; 15/15 fichas públicas HTTP 200; 0 4xx/5xx/runtime errors | No reejecutar; reabrir solo ante incidencia demostrada o enriquecimiento editorial posterior |
+| **COLA** | Noveno macrolote municipal HC-016 · Écija | Recálculo provincial 25/09: TOP 1 con 89/100; fuente institucional 2026 documenta 14 hermandades y 30 pasos; cobertura penitencial real actual 0/14 | Próxima orden: abrir solo inventario canónico + matriz de Fuentes; no staging, SQL ni Apply |
 | **BLOQUEADO** | HC-AUTO-03 · El Calvario | Lote `ready` 55/55, 0 aplicado, preservado desde el 21/09 | No ejecutar Apply sin una orden específica y preflight actualizado |
 | **CERRADO** | Orden operativo | Autoridad documental y cola única integradas en #712 | No reabrir salvo contradicción verificable |
 | **CERRADO** | [#492 · Supabase Preview Branches](https://github.com/nachosanchezperez-ux/base-cofrade/issues/492) | Incidencia cerrada; #846 reconcilió el historial y la cadena activa contiene 12 migraciones estructurales, reproducibles desde cero en preview sin datos | Todo cambio futuro de esquema debe nacer como migración reproducible y superar una preview sin datos |
@@ -534,25 +535,31 @@ La evidencia y el método completos están en [`AUDITORIA-OCTAVO-MACROLOTE-MUNIC
 
 ## Siguiente puerta
 
-**Carmona queda CERRADA Y PUBLICADA.**
+**Écija queda SELECCIONADA / COLA como noveno macrolote municipal HC-016.**
 
-Resultado final:
+Recálculo provincial del 25/09:
 
-- Apply: `APPLY_CARMONA_SQL_OK_COMMITTED`;
-- 530/530 operaciones aplicadas;
-- staging: `completed`, 0 fallidas;
-- QA estructural: PASS;
-- QA semántico: PASS;
-- 12 salidas históricas de 2026 en `held` contando el REUSE servita de septiembre;
-- 15 fichas públicas nuevas verificadas con HTTP 200;
-- 0 4xx, 0 5xx y 0 errores runtime en la ventana de QA;
-- #933 fusionada en `main` como `533c1f9a2063fc8ce24ca4f41b4e9f81dda9198f`; deployment del merge `READY`.
+1. Écija · **89/100**
+2. Marchena · **86/100**
+3. Mairena del Alcor · **85/100**
+4. Utrera · **82/100**
+5. Alcalá del Río · **75/100**
 
-Carmona no debe reabrirse automáticamente. La siguiente prioridad municipal, si se desea, deberá nacer de un nuevo recálculo provincial y una orden expresa. HC-AUTO-03 continúa bloqueado.
+Écija tiene **0/14 de cobertura penitencial real**: el único nodo corporativo actual del municipio es la Virgen del Valle, de gloria. La fuente institucional 2026 enumera 14 hermandades y 30 pasos.
 
-Evidencia operativa:
+**No se abre todavía el macrolote.** La siguiente orden permitida es únicamente inventario canónico + matriz de Fuentes de Écija.
+
+Siguen prohibidos para Écija hasta una puerta posterior:
+
+- staging;
+- SQL editorial;
+- dry-run;
+- Apply;
+- DDL;
+- RLS.
+
+HC-AUTO-03 · El Calvario continúa bloqueado.
+
+Evidencia:
+- [Auditoría noveno macrolote municipal · selección de Écija](./AUDITORIA-NOVENO-MACROLOTE-MUNICIPAL-HC016-2026-09-25.md)
 - [Certificación Apply y cierre · Carmona](./CERTIFICACION-APPLY-CARMONA-HC016-2026-09-25.md)
-- [Certificación de staging · Carmona](./CERTIFICACION-STAGING-CARMONA-HC016-2026-09-25.md)
-- [Certificación del preflight SQL · Carmona](./CERTIFICACION-PREFLIGHT-SQL-CARMONA-HC016-2026-09-25.md)
-- [Plan row-by-row · Carmona](./PLAN-ROW-BY-ROW-CARMONA-HC016-2026-09-25.md)
-- [Manifiesto determinista · Carmona](./MANIFIESTO-DETERMINISTA-CARMONA-HC016-2026-09-25.md)
