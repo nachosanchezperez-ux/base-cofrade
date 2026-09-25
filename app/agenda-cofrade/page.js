@@ -7,20 +7,23 @@ import AgendaCofradeNav from '@/components/AgendaCofradeNav'
 import AgendaCofradeNavFromUrl from '@/components/AgendaCofradeNavFromUrl'
 import AgendaTemporalNav from '@/components/AgendaTemporalNav'
 import JsonLd from '@/components/JsonLd'
-import { breadcrumbJsonLd, collectionPageJsonLd, pageTitle, seoDescription } from '@/lib/seo'
+import { breadcrumbJsonLd, collectionPageJsonLd, filteredViewRobots, pageTitle, seoDescription } from '@/lib/seo'
 import { agendaSeoCopy, madridYear } from '@/lib/seo-calendar'
 import { getAgendaCofrade } from '@/lib/supabase/agenda-cofrade'
 import styles from './agenda-cofrade.module.css'
 import v4Styles from './agenda-cofrade-v4.module.css'
 
-export function generateMetadata() {
+export async function generateMetadata({ searchParams } = {}) {
+  const params = await searchParams
   const { title, description } = agendaSeoCopy(madridYear())
+  const robots = filteredViewRobots(params)
   return {
     title,
     description,
     alternates: { canonical: '/agenda-cofrade' },
     openGraph: { title: pageTitle(title), description, url: '/agenda-cofrade' },
     twitter: { title: pageTitle(title), description },
+    ...(robots ? { robots } : {}),
   }
 }
 
