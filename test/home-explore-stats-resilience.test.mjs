@@ -20,3 +20,11 @@ test('la vista representa un dato no disponible con guion y texto accesible', as
   assert.match(view, /return hasCount\(item\) \? item\.count : '—'/)
   assert.match(view, /dato temporalmente no disponible/)
 })
+
+
+test('las magnitudes de Home reutilizan el directorio público cacheado', async () => {
+  const loader = await read('lib/supabase/home-v2.js')
+
+  assert.match(loader, /from '@\/lib\/supabase\/public-directory-cache'/)
+  assert.doesNotMatch(loader, /from '@\/lib\/supabase\/public-entity-directory'/)
+})
