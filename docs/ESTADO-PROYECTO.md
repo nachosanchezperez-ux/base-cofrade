@@ -1,6 +1,6 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 25 de septiembre de 2026, 05:20 UTC · capacidad Supabase optimizada y HC-PERF-SUPABASE-01 certificado
+**Corte operativo:** 25 de septiembre de 2026 · HC-016 Carmona cerrado, aplicado y QA de producción verde
 
 **Código de aplicación integrado en `main`:** `ba70771c94f11fd3aff70e4e651ab3093352fd28` · #932. Los commits posteriores de cierre solo reconcilian documentación y evidencias; no cambian el árbol de aplicación servido por el dominio.
 
@@ -10,13 +10,13 @@
 
 **PR abiertas tras el cierre de HC-PERF-SUPABASE-01:** #933 (Carmona, trabajo documental; 0 DML/DDL/staging/Apply) y #931 (`perf/hc-speed-seo-01`). #934 reconcilia las dos migraciones de rendimiento ya aplicadas y queda certificada para integración.
 
-**Staging editoriales:** un lote `ready`, HC-AUTO-03 · El Calvario, 55/55 válido y 0 aplicado. Se preserva bloqueado. Esta intervención no ejecutó escrituras de datos. Se detectó y reconcilió un Rosario publicado en paralelo a las 22:14:14 UTC: explica el paso de 62 a 63 actos entre preview y producción.
+**Staging editoriales:** Carmona `c0160035-0000-4000-8000-000000000001` = `completed`, 530/530 aplicadas, 0 fallidas. HC-AUTO-03 · El Calvario permanece `ready` 55/55 y 0 aplicado.
 
 **P0 del 24/09 cerrado; seguimiento de capacidad cerrado:** el build completo sigue aislado de Supabase durante prerender. La respuesta posterior de Support confirmó presión sostenida de memoria/SWAP y se aplicó una mitigación específica sobre `home_knowledge_threads`. CI pasa tests y build, Vercel no registra errores de runtime, la Home productiva responde HTTP 200 con hilos reales y el refresco periódico de la caché se mantiene estable.
 
 **Régimen:** FIRST EDITION FREEZE activo
 
-**Frente ACTIVO:** HC-016 · Carmona en #933, limitado al trabajo documental ya abierto y todavía con 0 DML, 0 DDL, 0 staging, 0 dry-run y 0 Apply. HC-PERF-SUPABASE-01 queda **CERRADO**. #931 continúa como trabajo técnico independiente. HC-AUTO-03 sigue bloqueado. Véanse [certificación del cierre operativo](./P0-RECOVERY-VALIDATION-2026-09-24.md) y [seguimiento de capacidad](./P0-SUPABASE-CAPACITY-2026-09-25.md).
+**Frente ACTIVO:** ninguno abierto por Carmona. HC-016 · Carmona queda CERRADO. HC-AUTO-03 sigue bloqueado; los frentes técnicos Supabase continúan independientes.
 
 > GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. Los rankings municipales previos son evidencia histórica, no una cola automática. El próximo municipio solo puede nacer de un recálculo provincial nuevo y una orden expresa.
 
@@ -28,7 +28,7 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 |---|---|---|---|
 | **CERRADO** | HC-PERF-SUPABASE-01 · capacidad Supabase / Home | Micro activo; migraciones `20260925051118` y `20260925051336` en producción y reproducidas en preview; consulta crítica ~115,4→~0,42 ms; 5 refrescos consecutivos `succeeded` en ~156–160 ms; CI tests+build verde; Home productiva HTTP 200; sin errores runtime Vercel | Reabrir solo ante regresión demostrada de RAM/SWAP, timeouts, cron o lectura pública |
 | **CERRADO** | P0 · producción y timeouts | Supabase recuperado; #932 publicada; ventana limpia >30 min; caché vencida renovada; contenido y sitemaps verificados | Reabrir solo ante una regresión demostrada; mantener SU-484619 como seguimiento de causa raíz |
-| **ACTIVO** | Octavo macrolote municipal HC-016 · Carmona | PR #933 abierta en fase documental pre-row-by-row; su contrato actual mantiene 0 DML, 0 DDL, 0 RLS, 0 staging, 0 dry-run y 0 Apply | Continuar únicamente dentro del alcance documental de #933; no ejecutar datos sin la autorización/gate correspondiente |
+| **CERRADO** | Octavo macrolote municipal HC-016 · Carmona | 530/530 aplicadas; QA estructural/semántico PASS; 15/15 fichas públicas HTTP 200; 0 4xx/5xx/runtime errors | No reejecutar; reabrir solo ante incidencia demostrada o enriquecimiento editorial posterior |
 | **BLOQUEADO** | HC-AUTO-03 · El Calvario | Lote `ready` 55/55, 0 aplicado, preservado desde el 21/09 | No ejecutar Apply sin una orden específica y preflight actualizado |
 | **CERRADO** | Orden operativo | Autoridad documental y cola única integradas en #712 | No reabrir salvo contradicción verificable |
 | **CERRADO** | [#492 · Supabase Preview Branches](https://github.com/nachosanchezperez-ux/base-cofrade/issues/492) | Incidencia cerrada; #846 reconcilió el historial y la cadena activa contiene 12 migraciones estructurales, reproducibles desde cero en preview sin datos | Todo cambio futuro de esquema debe nacer como migración reproducible y superar una preview sin datos |
@@ -534,29 +534,25 @@ La evidencia y el método completos están en [`AUDITORIA-OCTAVO-MACROLOTE-MUNIC
 
 ## Siguiente puerta
 
-**Primero cerrar el P0 de producción. Carmona permanece bloqueada.** El inventario, la matriz, la confirmación posterior, la participación de las diez Salidas penitenciales, los Pasos, las sedes y la identidad pública de Servitas se conservan como trabajo previo. No se autorizan todavía staging, SQL, dry-run, Apply ni publicación.
+**Carmona queda CERRADA Y PUBLICADA.**
 
-Carmona queda seleccionada como candidata única del octavo macrolote municipal HC-016. El **inventario canónico y la matriz de Fuentes** quedan cerrados: nueve sujetos corporativos, 28 imágenes titulares candidatas y diez Salidas penitenciales históricas de 2026. La Orden Seglar Servita comparte identidad organizadora con la Salida de septiembre ya existente; la Esperanza es una sola corporación con dos cortejos y no debe duplicarse.
+Resultado final:
 
-La Semana Santa de 2026 ya es histórica: sus recorridos no se tratarán como agenda futura. Televisión Carmona aporta piezas posteriores e individualizadas para las diez Salidas, incluida la primera del Cristo de los Desamparados; la puerta `held` queda cerrada 10/10. El modelado confirma 17 Pasos y 30 relaciones imagen–Paso para esos cortejos, separa el Señor de la Amargura del Cristo de San Felipe y conserva tres participaciones de Imagen bloqueadas por falta de prueba específica. La Salida servita de septiembre es REUSE seguro como acontecimiento, pero no se presupone que compartiera el Paso de marzo.
+- Apply: `APPLY_CARMONA_SQL_OK_COMMITTED`;
+- 530/530 operaciones aplicadas;
+- staging: `completed`, 0 fallidas;
+- QA estructural: PASS;
+- QA semántico: PASS;
+- 12 salidas históricas de 2026 en `held` contando el REUSE servita de septiembre;
+- 15 fichas públicas nuevas verificadas con HTTP 200;
+- 0 4xx, 0 5xx y 0 errores runtime en la ventana de QA;
+- #933 queda preparada para integración documental final.
 
-La puerta siguiente única es completar los acompañamientos musicales restantes: hay ocho posiciones identificadas, de las que Expiración, Quinta Angustia y Santiago quedan cerradas; las otras cinco necesitan elevar o completar evidencia y el resto de posiciones permanece bloqueado. También debe repararse la procedencia de la Fuente servita de septiembre y resolver —o mantener `null`— el posible REUSE de su Paso. Solo después podrá abrirse el plan row-by-row. No se autorizan todavía staging, payload SQL, dry-run, Apply ni publicación del lote de Carmona. Agenda Cofrade continúa como mantenimiento paralelo y no constituye un segundo macrofrente.
+Carmona no debe reabrirse automáticamente. La siguiente prioridad municipal, si se desea, deberá nacer de un nuevo recálculo provincial y una orden expresa. HC-AUTO-03 continúa bloqueado.
 
-Evidencia reciente:
-- [PR #870 · Restauración visual y cronología](https://github.com/nachosanchezperez-ux/base-cofrade/pull/870)
-- [PR #871 · Osuna · séptimo macrolote municipal](https://github.com/nachosanchezperez-ux/base-cofrade/pull/871)
-- [Inventario canónico de Osuna](./INVENTARIO-OSUNA-SEPTIMO-MACROLOTE-MUNICIPAL-HC016-2026-09-20.md)
-- [Inventario canónico de Carmona](./INVENTARIO-CARMONA-OCTAVO-MACROLOTE-MUNICIPAL-HC016-2026-09-20.md)
-- [Matriz de Fuentes de Carmona](./MATRIZ-FUENTES-CARMONA-OCTAVO-MACROLOTE-MUNICIPAL-HC016-2026-09-20.md)
-- [Evidencia posterior 10/10 de Carmona](./EVIDENCIA-POSTERIOR-CARMONA-OCTAVO-MACROLOTE-MUNICIPAL-HC016-2026-09-21.md)
-- [Modelado de participación, Pasos, sedes, música y Servitas](./MODELADO-CARMONA-HC016-PARTICIPACION-PASOS-SEDES-MUSICA-SERVITAS-2026-09-21.md)
-- [Plan row-by-row de Osuna](./PLAN-ROW-BY-ROW-OSUNA-HC016-2026-09-20.md)
-- [Manifiesto determinista de Osuna](./MANIFIESTO-DETERMINISTA-OSUNA-HC016-2026-09-20.md)
-- [Certificación de preflight SQL de Osuna](./CERTIFICACION-PREFLIGHT-SQL-OSUNA-HC016-2026-09-20.md)
-- [Certificación de staging y Apply de Osuna](./CERTIFICACION-STAGING-OSUNA-HC016-2026-09-20.md)
-- [SQL archivado de preflight de Osuna](../supabase/migrations_archive/post-first-edition-editorial/20260920180000_preflight_osuna_septimo_macrolote_hc016.sql)
-- [PR #867 · HC-SEO-01](https://github.com/nachosanchezperez-ux/base-cofrade/pull/867)
-- [PR #876 · HC-SEO-03](https://github.com/nachosanchezperez-ux/base-cofrade/pull/876)
-- [PR #881 · HC-SEO-08](https://github.com/nachosanchezperez-ux/base-cofrade/pull/881)
-- [PR #877 · HC-SEO-04](https://github.com/nachosanchezperez-ux/base-cofrade/pull/877)
-- [PR #878 · HC-SEO-05](https://github.com/nachosanchezperez-ux/base-cofrade/pull/878)
+Evidencia operativa:
+- [Certificación Apply y cierre · Carmona](./CERTIFICACION-APPLY-CARMONA-HC016-2026-09-25.md)
+- [Certificación de staging · Carmona](./CERTIFICACION-STAGING-CARMONA-HC016-2026-09-25.md)
+- [Certificación del preflight SQL · Carmona](./CERTIFICACION-PREFLIGHT-SQL-CARMONA-HC016-2026-09-25.md)
+- [Plan row-by-row · Carmona](./PLAN-ROW-BY-ROW-CARMONA-HC016-2026-09-25.md)
+- [Manifiesto determinista · Carmona](./MANIFIESTO-DETERMINISTA-CARMONA-HC016-2026-09-25.md)
