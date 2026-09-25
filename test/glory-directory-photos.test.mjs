@@ -10,7 +10,7 @@ test('Glory directory renders outing photographs when hero images exist', async 
   assert.match(component, /featured\.heroImagePath/)
   assert.match(component, /outing\.heroImagePath/)
   assert.match(component, /alt=\{outing\.heroImageAlt\}/)
-  assert.match(component, /unoptimized=\{outing\.heroImagePath\.startsWith\('\/'\)\}/)
+  assert.doesNotMatch(component, /unoptimized=\{(?:featured|outing)\.heroImagePath\.startsWith\('\/'\)\}/)
   assert.match(component, /!featured\.heroImagePath && featured\.crestPath/)
 })
 

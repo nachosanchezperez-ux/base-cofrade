@@ -67,30 +67,40 @@ export default function EntitySectionNav({ items = [] }) {
       .filter(Boolean);
     if (!sections.length) return undefined;
 
-    let frame = 0;
-    const updateActiveSection = () => {
-      window.cancelAnimationFrame(frame);
-      frame = window.requestAnimationFrame(() => {
-        const activationLine = 170;
-        const current = sections.reduce((selected, section) => (
-          section.getBoundingClientRect().top <= activationLine ? section : selected
-        ), sections[0]);
-        setActiveHref(`#${current.id}`);
-      });
+    const resolveHash = () => {
+      const hashTarget = window.location.hash;
+      if (navigationItems.some((item) => item.href === hashTarget)) {
+        setActiveHref(hashTarget);
+      }
     };
 
     const hashTarget = window.location.hash;
     setActiveHref(navigationItems.some((item) => item.href === hashTarget)
       ? hashTarget
       : navigationItems[0].href);
-    updateActiveSection();
-    window.addEventListener('scroll', updateActiveSection, { passive: true });
-    window.addEventListener('hashchange', updateActiveSection);
+
+    if (typeof IntersectionObserver === 'undefined') {
+      window.addEventListener('hashchange', resolveHash);
+      return () => window.removeEventListener('hashchange', resolveHash);
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      const visible = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((first, second) => first.boundingClientRect.top - second.boundingClientRect.top);
+
+      if (visible.length > 0) setActiveHref(`#${visible[0].target.id}`);
+    }, {
+      rootMargin: '-150px 0px -68% 0px',
+      threshold: [0, 1],
+    });
+
+    sections.forEach((section) => observer.observe(section));
+    window.addEventListener('hashchange', resolveHash);
 
     return () => {
-      window.cancelAnimationFrame(frame);
-      window.removeEventListener('scroll', updateActiveSection);
-      window.removeEventListener('hashchange', updateActiveSection);
+      observer.disconnect();
+      window.removeEventListener('hashchange', resolveHash);
     };
   }, [hrefKey, navigationItems]);
 

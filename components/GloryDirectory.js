@@ -83,7 +83,6 @@ export default function GloryDirectory({ outings }) {
                 alt={featured.heroImageAlt}
                 fill
                 priority
-                unoptimized={featured.heroImagePath.startsWith('/')}
                 className={photoStyles.featuredPhoto}
                 sizes="(max-width: 820px) 100vw, 38vw"
               />
@@ -271,7 +270,6 @@ export default function GloryDirectory({ outings }) {
                             src={outing.heroImagePath}
                             alt={outing.heroImageAlt}
                             fill
-                            unoptimized={outing.heroImagePath.startsWith('/')}
                             sizes="(max-width: 560px) 62px, (max-width: 820px) 70px, 92px"
                           />
                         </div>
