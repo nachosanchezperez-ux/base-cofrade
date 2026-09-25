@@ -52,7 +52,7 @@ export default function AgendaTemporalLanding({ landing }) {
       <AgendaCofradeNav activeSection="agenda" sticky={false} />
       <AgendaTemporalNav active={landing.period} />
 
-      <main>
+      <div>
         <section className={styles.overview}>
           <div className="shell">
             <div className={styles.territories}>
@@ -116,7 +116,7 @@ export default function AgendaTemporalLanding({ landing }) {
             </div>
           </section>
         )}
-      </main>
+      </div>
     </div>
   )
 }
