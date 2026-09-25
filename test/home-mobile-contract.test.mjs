@@ -20,13 +20,13 @@ test('mantiene las preguntas sugeridas en un carrusel horizontal legible', () =>
   assert.ok(css.includes('border-radius: 16px;'))
 })
 
-test('elimina escudos y logotipos ornamentales de Hoy en móvil, conservando fotos', () => {
-  assert.ok(today.includes('data-home-visual-kind={visual.kind'))
-  assert.ok(css.includes('[data-home-visual-kind="crest"]'))
-  assert.ok(css.includes('[data-home-visual-kind="logo"]'))
-  assert.ok(css.includes('[data-home-visual-kind="photo"]'))
-  assert.ok(css.includes('grid-template-columns: 34px minmax(0, 1fr);'))
-  assert.ok(css.includes('-webkit-line-clamp: 2;'))
+test('integra la identidad visual de los hilos sin iniciales ornamentales', () => {
+  assert.ok(today.includes("data-home-card-kind={card.kind || 'card'}"))
+  assert.ok(today.includes("card.kind !== 'discovery'"))
+  assert.ok(css.includes('#hc-app #descubre-hoy article[data-home-card-kind="discovery"]'))
+  assert.ok(css.includes('padding-right: 68px;'))
+  assert.ok(css.includes('width: 56px;'))
+  assert.ok(css.includes('top: 16px;'))
 })
 
 test('compacta los contadores de Enciclopedia para impedir desbordes', () => {
