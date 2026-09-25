@@ -20,6 +20,8 @@ const sourceLinksSourceIndexName = '20260916220756_add_source_links_source_id_in
 const editorialFreshnessName = '20260921234430_add_entity_editorial_freshness.sql'
 const editorialPriorityName = '20260922044145_add_editorial_priority_view.sql'
 const editorialPriorityContentDateFixName = '20260922045453_fix_editorial_priority_content_date.sql'
+const homeKnowledgeCacheName = '20260925051118_home_knowledge_threads_cache.sql'
+const homeKnowledgeCachePrivateName = '20260925051336_home_knowledge_threads_cache_private.sql'
 const baseline = readFileSync(new URL(baselineName, migrationsDirectory), 'utf8')
 const membershipStats = readFileSync(new URL(membershipStatsName, migrationsDirectory), 'utf8')
 const seed = readFileSync(new URL('../supabase/seed.sql', import.meta.url), 'utf8')
@@ -43,6 +45,8 @@ test('las ramas nuevas ejecutan únicamente el baseline y las evoluciones de esq
     editorialFreshnessName,
     editorialPriorityName,
     editorialPriorityContentDateFixName,
+    homeKnowledgeCacheName,
+    homeKnowledgeCachePrivateName,
   ])
 })
 
