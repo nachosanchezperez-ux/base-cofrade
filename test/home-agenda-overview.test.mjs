@@ -8,8 +8,9 @@ test('la Home ofrece accesos directos a los periodos y categorías reales de Age
   const overview = await read('components/HomeProjectOverview.js')
   const agenda = await read('components/AgendaCofradeDirectoryFromUrl.js')
 
-  assert.match(overview, /periodo=today#agenda/)
-  assert.match(overview, /periodo=weekend#agenda/)
+  assert.match(overview, /\/agenda-cofrade\/hoy/)
+  assert.match(overview, /\/agenda-cofrade\/manana/)
+  assert.match(overview, /\/agenda-cofrade\/fin-de-semana/)
 
   for (const category of ['processions', 'transfers', 'rosaries', 'devotions', 'concerts']) {
     assert.match(overview, new RegExp(`key: ['"]${category}['"]`))
