@@ -41,47 +41,31 @@
   }
 
   /*
-   * Hoy: en móvil los escudos y logotipos no aportan información suficiente
-   * para justificar una tercera columna. Las fotografías reales sí se conservan.
+   * Descubre hoy: los hilos relacionales prescinden de iniciales ornamentales.
+   * La identidad visual se integra como referencia compacta en la esquina superior
+   * y el contenido recupera todo el ancho debajo de la cabecera.
    */
-  #hc-app #hoy > .shell > div > article {
+  #hc-app #descubre-hoy article[data-home-card-kind="discovery"] {
     min-height: 0;
   }
 
-  #hc-app #hoy > .shell > div > article:has(> [data-home-visual-kind="crest"]),
-  #hc-app #hoy > .shell > div > article:has(> [data-home-visual-kind="logo"]),
-  #hc-app #hoy > .shell > div > article:has(> [data-home-visual-kind="context-crest"]),
-  #hc-app #hoy > .shell > div > article:has(> [data-home-visual-kind="identity"]) {
-    grid-template-columns: 34px minmax(0, 1fr);
+  #hc-app #descubre-hoy article[data-home-card-kind="discovery"]:has(> [data-home-visual-kind])
+    > div:first-of-type
+    > div:first-child {
+    min-height: 56px;
+    padding-right: 68px;
   }
 
-  #hc-app #hoy [data-home-visual-kind="crest"],
-  #hc-app #hoy [data-home-visual-kind="logo"],
-  #hc-app #hoy [data-home-visual-kind="context-crest"],
-  #hc-app #hoy [data-home-visual-kind="identity"] {
-    display: none;
-  }
-
-  #hc-app #hoy > .shell > div > article:has(> [data-home-visual-kind="photo"]) {
-    grid-template-columns: 34px minmax(0, 1fr) 58px;
-  }
-
-  #hc-app #hoy [data-home-visual-kind="photo"] {
-    grid-column: 3;
-    grid-row: 1;
-    align-self: start;
-    width: 58px;
-    height: 64px;
-    min-height: 64px;
-    max-height: 64px;
-    margin-top: 0;
-  }
-
-  #hc-app #hoy > .shell > div > article > div:first-of-type > p {
-    display: -webkit-box;
-    overflow: hidden;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
+  #hc-app #descubre-hoy article[data-home-card-kind="discovery"] > [data-home-visual-kind] {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    display: block;
+    width: 56px;
+    height: 56px;
+    min-height: 56px;
+    max-height: 56px;
+    margin: 0;
   }
 
   /*
