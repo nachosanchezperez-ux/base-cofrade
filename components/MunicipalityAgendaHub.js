@@ -7,7 +7,7 @@ import JsonLd from '@/components/JsonLd'
 import { breadcrumbJsonLd, collectionPageJsonLd } from '@/lib/seo'
 import styles from './MunicipalityAgendaHub.module.css'
 
-function EntityGroup({ label, items, hrefFor, nameFor, directoryHref = '' }) {
+function EntityGroup({ label, singular, items, hrefFor, nameFor, directoryHref = '' }) {
   if (!items.length) return null
 
   return (
@@ -19,7 +19,7 @@ function EntityGroup({ label, items, hrefFor, nameFor, directoryHref = '' }) {
       <div className={styles.entityGrid}>
         {items.slice(0, 6).map((item) => (
           <Link href={hrefFor(item)} key={item.id}>
-            <small>{label.slice(0, -1) || label}</small>
+            <small>{singular || label}</small>
             <strong>{nameFor(item)}</strong>
             <span>Ver ficha →</span>
           </Link>
@@ -68,10 +68,10 @@ export default function MunicipalityAgendaHub({ hub }) {
   const bandDirectoryHref = hub.bands.length
     ? `/bandas/localidad/${hub.bandDirectorySlug}`
     : ''
-  const imageDirectoryHref = hub.images.length >= 3
+  const imageDirectoryHref = hub.imageDirectoryReady
     ? `/imagenes/localidad/${hub.imageDirectorySlug}`
     : ''
-  const stepDirectoryHref = hub.steps.length >= 3
+  const stepDirectoryHref = hub.stepDirectoryReady
     ? `/pasos/localidad/${hub.stepDirectorySlug}`
     : ''
 
@@ -192,6 +192,7 @@ export default function MunicipalityAgendaHub({ hub }) {
             <div className={styles.entityGroups}>
               <EntityGroup
                 label="Hermandades"
+                singular="Hermandad"
                 items={hub.brotherhoods}
                 hrefFor={(item) => `/hermandades/${item.slug}`}
                 nameFor={(item) => item.nombrePopular || item.nombreOficial}
@@ -199,6 +200,7 @@ export default function MunicipalityAgendaHub({ hub }) {
               />
               <EntityGroup
                 label="Bandas"
+                singular="Banda"
                 items={hub.bands}
                 hrefFor={(item) => `/bandas/${item.slug}`}
                 nameFor={(item) => item.popularName || item.officialName}

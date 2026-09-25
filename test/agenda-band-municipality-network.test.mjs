@@ -54,4 +54,6 @@ test('la guía municipal conserva slugs territoriales correctos para patrimonio 
   assert.match(source, /bandDirectorySlug/)
   assert.match(source, /imageDirectorySlug/)
   assert.match(source, /stepDirectorySlug/)
+  assert.match(source, /imageDirectoryReady/)
+  assert.match(source, /stepDirectoryReady/)
 })
