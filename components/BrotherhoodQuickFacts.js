@@ -97,7 +97,7 @@ async function loadRelationalFacts(brotherhood) {
   const imageIds = (brotherhood.imagenes || []).map((item) => item.id).filter(Boolean)
   const currentYear = new Date().getUTCFullYear()
 
-  const [headResult, dresserResult, membershipResult, recurringSeriesResult] = await Promise.all([
+  const [headResult, dresserResult] = await Promise.all([
     supabase
       .from('entity_relations')
       .select('id, source_entity_id, relation_type, date_from, date_from_text, date_to, date_to_text')
@@ -112,27 +112,10 @@ async function loadRelationalFacts(brotherhood) {
           .eq('relation_type', 'dresser_of')
           .eq('status', 'published')
       : Promise.resolve({ data: [], error: null }),
-    supabase
-      .from('brotherhood_procession_stats')
-      .select('year, members_count, members_count_kind, members_source_id')
-      .eq('brotherhood_entity_id', brotherhood.id)
-      .eq('status', 'published')
-      .not('members_count', 'is', null)
-      .order('year', { ascending: false })
-      .limit(1)
-      .maybeSingle(),
-    supabase
-      .from('outing_series')
-      .select('id, outing_type, date_rule, time_text, display_order')
-      .eq('brotherhood_entity_id', brotherhood.id)
-      .eq('status', 'published')
-      .order('display_order'),
   ])
 
   if (headResult.error) throw new Error(`No se pudo consultar el gobierno actual: ${headResult.error.message}`)
   if (dresserResult.error) throw new Error(`No se pudieron consultar los vestidores: ${dresserResult.error.message}`)
-  if (membershipResult.error) throw new Error(`No se pudo consultar el número de hermanos: ${membershipResult.error.message}`)
-  if (recurringSeriesResult.error) throw new Error(`No se pudo consultar la actividad anual habitual: ${recurringSeriesResult.error.message}`)
 
   const headRelations = (headResult.data || []).filter((item) => isCurrentRelation(item, currentYear))
   const dresserRelations = (dresserResult.data || []).filter((item) => isCurrentRelation(item, currentYear))
@@ -184,13 +167,24 @@ async function loadRelationalFacts(brotherhood) {
       })
       .filter(Boolean)
       .sort((first, second) => first.image.localeCompare(second.image, 'es')),
-    membership: membershipResult.data?.members_count !== null && membershipResult.data?.members_count !== undefined
+    membership: brotherhood.datosJornada?.membersCount !== null
+      && brotherhood.datosJornada?.membersCount !== undefined
       ? {
-          value: membersLabel(membershipResult.data.members_count, membershipResult.data.members_count_kind),
-          year: membershipResult.data.year,
+          value: membersLabel(
+            brotherhood.datosJornada.membersCount,
+            brotherhood.datosJornada.membersCountKind
+          ),
+          year: brotherhood.datosJornada.ano,
         }
       : null,
-    recurringSeries: recurringSeriesResult.data || [],
+    recurringSeries: (brotherhood.salidas || [])
+      .filter((item) => item.estado === 'recurring')
+      .map((item) => ({
+        id: item.id,
+        outing_type: item.tipo,
+        date_rule: item.diaLiturgico || String(item.momento || '').split(' · ')[0],
+        time_text: String(item.momento || '').split(' · ').slice(1).join(' · '),
+      })),
   }
 }
 
