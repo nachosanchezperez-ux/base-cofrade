@@ -9,6 +9,7 @@ import { PUBLIC_SITEMAP_SEGMENTS, sitemapEntriesForSegment } from '@/lib/seo-sit
 import { getBandsDirectory } from '@/lib/supabase/bands';
 import { absoluteUrl } from '@/lib/seo';
 import { bandDirectoryFacets } from '@/lib/band-directory';
+import { agendaMunicipalityRouteSlug } from '@/lib/agenda-cofrade-location';
 import { heritageDirectoryLocalities, heritageDirectoryTypes } from '@/lib/heritage-directory';
 import { getPublicBandsDirectory } from '@/lib/supabase/bands-directory-public';
 import { getHermandadesDirectory } from '@/lib/supabase/brotherhood-directory';
@@ -217,6 +218,21 @@ function gloryEntries(outings) {
     }));
 }
 
+function agendaMunicipalityEntries(groups = []) {
+  const slugs = new Set()
+  for (const items of groups) {
+    for (const item of items || []) {
+      const slug = agendaMunicipalityRouteSlug(item.municipality || item.municipality_name || '')
+      if (slug) slugs.add(slug)
+    }
+  }
+  return [...slugs].map((slug) => ({
+    url: absoluteUrl(`/agenda-cofrade/localidad/${slug}`),
+    changeFrequency: 'daily',
+    priority: 0.78,
+  }))
+}
+
 function crewEventEntries(events) {
   return events
     .filter((event) => Boolean(event.detailHref))
@@ -318,7 +334,8 @@ async function buildPublicSitemapSegmentEntries(segment) {
     const crewEvents = await getCrewEventDirectory(strict);
     const rosaryOutings = await getRosaryOutings(strict);
     entries.push(...extraordinaryEntries(extraordinaryOutings), ...gloryEntries(gloryOutings),
-      ...crewEventEntries(crewEvents), ...rosaryEntries(rosaryOutings));
+      ...crewEventEntries(crewEvents), ...rosaryEntries(rosaryOutings),
+      ...agendaMunicipalityEntries([extraordinaryOutings, gloryOutings, crewEvents, rosaryOutings]));
   } else if (segment === 'crucetas') {
     const musicalRepertoires = await getMusicalRepertoires(strict);
     entries.push(...musicalRepertoireEntries(musicalRepertoires));

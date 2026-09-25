@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import BrotherhoodDirectoryCard from '@/components/BrotherhoodDirectoryCard'
 import DirectoryBreadcrumb from '@/components/DirectoryBreadcrumb'
 import JsonLd from '@/components/JsonLd'
@@ -15,6 +16,7 @@ export default function DirectoryRoutePage({
   contextLabel,
   itemSingular = 'hermandad',
   itemPlural = 'hermandades',
+  relatedAgendaHref = '',
 }) {
   const items = sortBrotherhoods(hermandades)
   const linkedBreadcrumbs = breadcrumbs
@@ -49,6 +51,11 @@ export default function DirectoryRoutePage({
         <span className="eyebrow">{eyebrow}</span>
         <h1 className="page-title">{title}</h1>
         <p className="page-lead">{description}</p>
+        {relatedAgendaHref ? (
+          <Link href={relatedAgendaHref} style={{ display: 'inline-flex', marginTop: 14, color: '#a71931', fontSize: 12, fontWeight: 850 }}>
+            Ver agenda cofrade de {contextLabel || breadcrumbs.at(-1)?.label || 'esta localidad'} →
+          </Link>
+        ) : null}
 
         <div className={styles.resultHead} style={{ marginTop: 34 }}>
           <div>

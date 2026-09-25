@@ -5,11 +5,14 @@ import {
   agendaLocationMatches,
   agendaMunicipalityOptions,
   agendaMunicipalitySlug,
+  agendaMunicipalityRouteSlug,
 } from '../lib/agenda-cofrade-location.js'
 
 test('normaliza municipios para enlaces estables', () => {
   assert.equal(agendaMunicipalitySlug('La Rinconada'), 'la-rinconada')
   assert.equal(agendaMunicipalitySlug('Alcalá de Guadaíra'), 'alcala-de-guadaira')
+  assert.equal(agendaMunicipalityRouteSlug('Sevilla'), 'sevilla-capital')
+  assert.equal(agendaMunicipalityRouteSlug('Dos Hermanas'), 'dos-hermanas')
 })
 
 test('construye un selector provincial sin duplicados', () => {

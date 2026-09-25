@@ -12,11 +12,13 @@ import EntityLastUpdated from '@/components/EntityLastUpdated'
 import BandDiscographySection from '@/components/bands/BandDiscographySection'
 import BandFeaturePhoto from '@/components/BandFeaturePhoto'
 import MusicalRepertoiresSection from '@/components/MusicalRepertoiresSection'
+import ContextAgendaSection from '@/components/ContextAgendaSection'
 import HistoricalAccompanimentsRail from './HistoricalAccompanimentsRail'
 import { getBandBySlug as getBandBySlugUncached, youtubeEmbedUrl } from '@/lib/supabase/bands'
 import { getBandDiscography } from '@/lib/supabase/bandDiscography'
 import { getPublishedBandColors } from '@/lib/supabase/bandColors'
 import { getBandOutingPublicLinks } from '@/lib/supabase/band-outing-links'
+import { getConcertEventDirectory } from '@/lib/supabase/public-directory-cache'
 import { getMusicalRepertoires } from '@/lib/supabase/musical-repertoires'
 import {
   meetsPublicEditorialMinimum,
@@ -32,6 +34,7 @@ import {
   socialMetadata,
 } from '@/lib/seo'
 import { resolveBandPageTheme } from '@/lib/bands/theme'
+import { buildBandUpcomingAgenda } from '@/lib/band-agenda'
 import {
   groupGloryAccompaniments,
   partitionAccompanimentsBySeason,
@@ -213,12 +216,17 @@ export default async function BandDetailPage({ params }) {
   const { slug } = await params
   const band = await getBandBySlug(slug)
   if (!band) notFound()
-  const [discography, colors, outingLinks, musicalRepertoires] = await Promise.all([
+  const [discography, colors, outingLinks, musicalRepertoires, concertEvents] = await Promise.all([
     getBandDiscography(band.id),
     getPublishedBandColors(band.id),
-    getBandOutingPublicLinks(band.outings.map((item) => item.id)),
+    getBandOutingPublicLinks((band.upcomingOutings || band.outings || []).map((item) => item.id)),
     getMusicalRepertoires({ bandEntityId: band.id }),
+    getConcertEventDirectory().catch((error) => {
+      console.error('[Hilo Cofrade] Conciertos relacionados omitidos temporalmente en la ficha de Banda', { slug: band.slug, error })
+      return []
+    }),
   ])
+  const upcomingAgendaItems = buildBandUpcomingAgenda({ band, outingLinks, concerts: concertEvents })
   const years = [...new Set(band.premieres.map((item) => item.year))].sort((a, b) => b - a)
   const currentYear = new Date().getFullYear()
   const currentPremieres = band.premieres.filter((item) => item.year === currentYear)
@@ -246,6 +254,7 @@ export default async function BandDetailPage({ params }) {
   const hasUpcomingAccompaniments = upcomingAccompaniments.length > 0
   const hasHistoricalAccompaniments = historicalAccompaniments.length > 0
   const hasOutings = band.outings.length > 0
+  const hasUpcomingAgenda = upcomingAgendaItems.length > 0
   const hasPremieres = band.premieres.length > 0
   const hasMusicalRepertoires = musicalRepertoires.length > 0
   const hasDiscography = discography.length > 0
@@ -359,6 +368,7 @@ export default async function BandDetailPage({ params }) {
 
       <EntitySectionNav items={[
         { href: '#resumen', label: 'De un vistazo' },
+        hasUpcomingAgenda && { href: '#agenda', label: 'Agenda' },
         bandThreadItems.length > 0 && { href: '#tira-del-hilo', label: 'Conexiones' },
         banderin && { href: '#banderin', label: 'Banderín' },
         hasAccompaniments && { href: '#acompanamientos', label: 'Dónde suena' },
@@ -438,6 +448,19 @@ export default async function BandDetailPage({ params }) {
           </div>
         </div>
       </section>
+
+      <ContextAgendaSection
+        id="agenda"
+        eyebrow="Agenda de la Banda"
+        title="Próximas actuaciones"
+        description="Salidas procesionales y conciertos ya documentados para esta formación, ordenados por fecha y conectados con cada calendario y entidad relacionada."
+        items={upcomingAgendaItems}
+        links={[
+          { href: '/agenda-cofrade', label: 'Agenda Cofrade' },
+          { href: '/procesiones-de-gloria', label: 'Glorias' },
+          { href: '/extraordinarias', label: 'Extraordinarias' },
+        ]}
+      />
 
       <RelationalThread
         currentLabel="Banda"
