@@ -2,7 +2,7 @@
 
 **Corte operativo:** 25 de septiembre de 2026 · Écija · pre-row-by-row cerrado y preflight SQL preparado/no ejecutado
 
-**Base viva de `main` al cerrar esta fase:** `2c3d1fe08aeed6db5cd6bdde29879d4f2ba7ba98` · HC-PERF-SUPABASE-09, independiente del lote de Écija.
+**HEAD integrado en `main`:** `e792ca363970d6e689a91270cdadb8a41387ad6d` · #947, pre-row-by-row determinista y preflight rollback-only de Écija preparados.
 
 **Dominio productivo:** `hilocofrade.es` y `www.hilocofrade.es` sirven `dpl_F45hGjsN8kUwiaJEznsqUEHUyfH6`, `READY`, SHA `e792ca363970d6e689a91270cdadb8a41387ad6d`. El payload de Écija está archivado pero **NO ejecutado**.
 
