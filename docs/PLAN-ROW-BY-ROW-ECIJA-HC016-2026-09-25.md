@@ -2,7 +2,7 @@
 
 **Fecha:** 25 de septiembre de 2026  
 **Fase:** ROW-BY-ROW CERRADO · SIN DML EJECUTADO  
-**Base:** `de420589baa03db98cfda4a11796606592761f50`  
+**Base:** `2c3d1fe08aeed6db5cd6bdde29879d4f2ba7ba98`  
 **Namespace:** `c0160036-*`  
 **Contrato:** **776 DML · 770 UPSERT + 6 UPDATE/REUSE · 15 nodos externos reutilizados · 0 DELETE · 0 DDL · 0 RLS**
 
