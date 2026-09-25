@@ -39,7 +39,7 @@ test('la navegación superior separa calendarios y deja las categorías al filtr
   assert.match(css, /grid-template-columns:repeat\(4,max-content\)/)
   assert.match(css, /grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/)
   assert.match(css, /\.navSelected\{/)
-  assert.match(css, /navSelected::after/)
+  assert.doesNotMatch(css, /navSelected::after/)
 })
 
 test('las cuatro agendas comparten el mismo navegador y marcan su sección activa', () => {
