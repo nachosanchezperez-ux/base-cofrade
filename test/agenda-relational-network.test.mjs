@@ -54,6 +54,6 @@ test('el hilo de un acto enlaza a más citas de su Hermandad y a su localidad', 
   assert.match(source, /Agenda de la Hermandad/)
   assert.match(source, /Localidad/)
   assert.match(source, /Calendario/)
-  assert.match(relations, /\/hermandades\/localidad\//)
+  assert.match(relations, /\/agenda-cofrade\/localidad\//)
   assert.match(relations, /#agenda/)
 })
