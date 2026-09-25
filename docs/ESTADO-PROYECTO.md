@@ -2,13 +2,13 @@
 
 **Corte operativo:** 25 de septiembre de 2026 · HC-016 Carmona cerrado, aplicado y QA de producción verde
 
-**Código de aplicación integrado en `main`:** `ba70771c94f11fd3aff70e4e651ab3093352fd28` · #932. Los commits posteriores de cierre solo reconcilian documentación y evidencias; no cambian el árbol de aplicación servido por el dominio.
+**HEAD integrado en `main`:** `533c1f9a2063fc8ce24ca4f41b4e9f81dda9198f` · cierre certificado de #933 sobre el código funcional previo `30ba99ade2210160eae04c45bf18c43627baf734`.
 
-**Dominio productivo:** `hilocofrade.es` y `www.hilocofrade.es` apuntan a `dpl_6V5TZZyVzoT36J3DvXg3seJ82ehF`, READY, SHA `ba70771c94f11fd3aff70e4e651ab3093352fd28`. Home, Agenda, Bandas, Hermandades, Autores, Igualás/Ensayos y El Baratillo verificados con HTTP 200 y contenido del nuevo deployment. Sitemap: 2.052 URL; imagen de Storage optimizada: HTTP 200.
+**Dominio productivo:** `hilocofrade.es` y `www.hilocofrade.es` apuntan al deployment del merge `dpl_2mJR25N32nZ541BqyyRXyg5ousFa`, `READY`, SHA `533c1f9a2063fc8ce24ca4f41b4e9f81dda9198f`. Carmona: 15/15 fichas nuevas HTTP 200; 0 4xx, 0 5xx y 0 errores runtime en el postflight.
 
 **Supabase:** `ACTIVE_HEALTHY` y actualizado por el usuario de Nano a Micro. Support confirmó sobreutilización de memoria, uso sostenido de SWAP y overcommitment durante el incidente; CPU/IO pueden haber contribuido, por lo que no se reduce toda la causalidad a RAM. La base ocupa ~45 MB. Tras Micro: `effective_cache_size` 384→768 MB y `maintenance_work_mem` 32→64 MB. Producción contiene 17 migraciones estructurales. HC-PERF-SUPABASE-01 materializa `home_knowledge_threads`: fuente/caché 2.052/2.052, 0 diferencias, lectura `anon` correcta, patrón medido ~115,4 ms→~0,42 ms y primer cron `succeeded` (~156,9 ms). Véase [seguimiento de capacidad](./P0-SUPABASE-CAPACITY-2026-09-25.md).
 
-**PR abiertas tras el cierre de HC-PERF-SUPABASE-01:** #933 (Carmona, trabajo documental; 0 DML/DDL/staging/Apply) y #931 (`perf/hc-speed-seo-01`). #934 reconcilia las dos migraciones de rendimiento ya aplicadas y queda certificada para integración.
+**GitHub:** #933 fusionada y cerrada. Los frentes técnicos Supabase abiertos en paralelo son independientes de Carmona; el estado vivo de GitHub prevalece sobre esta fotografía.
 
 **Staging editoriales:** Carmona `c0160035-0000-4000-8000-000000000001` = `completed`, 530/530 aplicadas, 0 fallidas. HC-AUTO-03 · El Calvario permanece `ready` 55/55 y 0 aplicado.
 
@@ -546,7 +546,7 @@ Resultado final:
 - 12 salidas históricas de 2026 en `held` contando el REUSE servita de septiembre;
 - 15 fichas públicas nuevas verificadas con HTTP 200;
 - 0 4xx, 0 5xx y 0 errores runtime en la ventana de QA;
-- #933 queda preparada para integración documental final.
+- #933 fusionada en `main` como `533c1f9a2063fc8ce24ca4f41b4e9f81dda9198f`; deployment del merge `READY`.
 
 Carmona no debe reabrirse automáticamente. La siguiente prioridad municipal, si se desea, deberá nacer de un nuevo recálculo provincial y una orden expresa. HC-AUTO-03 continúa bloqueado.
 
