@@ -41,6 +41,10 @@ function weekendRange(today) {
 function belongsToPeriod(item, period, today) {
   if (!item.isUpcoming || item.isCancelled) return false
   if (period === 'today') return item.date <= today && (item.endDate || item.date) >= today
+  if (period === 'tomorrow') {
+    const tomorrow = addDays(today, 1)
+    return Boolean(item.date) && item.date <= tomorrow && (item.endDate || item.date) >= tomorrow
+  }
   if (period === 'weekend') {
     const [start, end] = weekendRange(today)
     return Boolean(item.date) && item.date <= end && (item.endDate || item.date) >= start
@@ -229,7 +233,7 @@ export default function AgendaCofradeDirectoryV4({
   )
 
   const periodCounts = useMemo(() => Object.fromEntries(
-    ['today', 'weekend', 'upcoming'].map((value) => [
+    ['today', 'tomorrow', 'weekend', 'upcoming'].map((value) => [
       value,
       upcomingItems.filter((item) => belongsToPeriod(item, value, today)).length,
     ])
@@ -320,6 +324,7 @@ export default function AgendaCofradeDirectoryV4({
           <div className={styles.periodGrid} aria-label="Cuándo consultar la agenda">
             {[
               ['today', 'Hoy'],
+              ['tomorrow', 'Mañana'],
               ['weekend', 'Este fin de semana'],
               ['upcoming', 'Próximos actos'],
             ].map(([value, label]) => (

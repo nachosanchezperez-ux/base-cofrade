@@ -30,6 +30,8 @@ test('la Agenda pública muestra solo actos próximos y elimina el acceso histó
   const seoCalendar = read('lib/seo-calendar.js')
 
   assert.match(directory, /Hoy/)
+  assert.match(directory, /Mañana/)
+  assert.match(directory, /period === 'tomorrow'/)
   assert.match(directory, /Este fin de semana/)
   assert.match(directory, /Próximos actos/)
   assert.match(directory, /upcomingItems/)
@@ -44,6 +46,7 @@ test('la Agenda pública muestra solo actos próximos y elimina el acceso histó
   assert.match(directory, /Ver calendario/)
 
   assert.doesNotMatch(fromUrl, /'archive'/)
+  assert.match(fromUrl, /'tomorrow'/)
   assert.match(page, /items=\{upcoming\}/)
   assert.match(page, /Solo los próximos actos/)
   assert.match(page, /agendaSeoCopy/)
