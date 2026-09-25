@@ -48,6 +48,7 @@ export default async function ImageMunicipalityDirectoryPage({ params }) {
       path={data.path}
       contextLabel={data.label}
       initialMunicipalitySlug={localidad}
+      relatedAgendaHref={`/agenda-cofrade/localidad/${localidad === 'sevilla' ? 'sevilla-capital' : localidad}`}
     />
   )
 }
