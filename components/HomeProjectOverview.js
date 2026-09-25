@@ -10,8 +10,9 @@ const agendaCategories = [
 ]
 
 const agendaPeriods = [
-  { key: 'today', label: 'Hoy', href: '/agenda-cofrade?periodo=today#agenda' },
-  { key: 'weekend', label: 'Este fin de semana', href: '/agenda-cofrade?periodo=weekend#agenda' },
+  { key: 'today', label: 'Hoy', href: '/agenda-cofrade/hoy' },
+  { key: 'tomorrow', label: 'Mañana', href: '/agenda-cofrade/manana' },
+  { key: 'weekend', label: 'Este fin de semana', href: '/agenda-cofrade/fin-de-semana' },
 ]
 
 const secondaryAreas = [

@@ -22,10 +22,10 @@ export default function HomeTemporalFocus({ temporal }) {
   if (!temporal?.focusItems?.length) return null
 
   const metrics = [
-    { label: 'Ahora', count: temporal.liveItems?.length || 0, href: '/agenda-cofrade?periodo=today#agenda' },
-    { label: 'Hoy', count: temporal.todayItems?.length || 0, href: '/agenda-cofrade?periodo=today#agenda' },
-    { label: 'Mañana', count: temporal.tomorrowItems?.length || 0, href: '/agenda-cofrade?periodo=tomorrow#agenda' },
-    { label: 'Fin de semana', count: temporal.weekendItems?.length || 0, href: '/agenda-cofrade?periodo=weekend#agenda' },
+    { label: 'Ahora', count: temporal.liveItems?.length || 0, href: '/agenda-cofrade/hoy' },
+    { label: 'Hoy', count: temporal.todayItems?.length || 0, href: '/agenda-cofrade/hoy' },
+    { label: 'Mañana', count: temporal.tomorrowItems?.length || 0, href: '/agenda-cofrade/manana' },
+    { label: 'Fin de semana', count: temporal.weekendItems?.length || 0, href: '/agenda-cofrade/fin-de-semana' },
   ]
 
   return (

@@ -97,6 +97,21 @@ const staticEntries = [
     priority: 0.92,
   },
   {
+    url: absoluteUrl('/agenda-cofrade/hoy'),
+    changeFrequency: 'daily',
+    priority: 0.91,
+  },
+  {
+    url: absoluteUrl('/agenda-cofrade/manana'),
+    changeFrequency: 'daily',
+    priority: 0.9,
+  },
+  {
+    url: absoluteUrl('/agenda-cofrade/fin-de-semana'),
+    changeFrequency: 'daily',
+    priority: 0.9,
+  },
+  {
     url: absoluteUrl('/extraordinarias'),
     changeFrequency: 'daily',
     priority: 0.9,

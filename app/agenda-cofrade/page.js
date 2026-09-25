@@ -5,6 +5,7 @@ import AgendaCofradeDirectoryV4 from '@/components/AgendaCofradeDirectoryV4'
 import AgendaCofradeDirectoryFromUrl from '@/components/AgendaCofradeDirectoryFromUrl'
 import AgendaCofradeNav from '@/components/AgendaCofradeNav'
 import AgendaCofradeNavFromUrl from '@/components/AgendaCofradeNavFromUrl'
+import AgendaTemporalNav from '@/components/AgendaTemporalNav'
 import JsonLd from '@/components/JsonLd'
 import { breadcrumbJsonLd, collectionPageJsonLd, pageTitle, seoDescription } from '@/lib/seo'
 import { agendaSeoCopy, madridYear } from '@/lib/seo-calendar'
@@ -48,6 +49,7 @@ export default async function AgendaCofradePage() {
       <Suspense fallback={<AgendaCofradeNav />}>
         <AgendaCofradeNavFromUrl />
       </Suspense>
+      <AgendaTemporalNav />
 
       <div className={`shell ${styles.content} ${v4Styles.contentV4}`}>
         <Suspense fallback={<AgendaCofradeDirectoryV4 items={upcoming} today={today} initialNowIso={nowIso} />}>

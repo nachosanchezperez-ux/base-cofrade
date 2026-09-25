@@ -107,7 +107,8 @@ test('full sitemap retains canonical detail URLs and unique march metadata', asy
   for (const path of ['/hermandades/hermandad', '/bandas/banda', '/imagenes/imagen', '/pasos/paso',
     '/marchas/marcha', '/autores/autor', '/crucetas-musicales/cruceta', '/extraordinarias/salida',
     '/procesiones-de-gloria/gloria', '/igualas-y-ensayos/ensayo', '/agenda-cofrade/rosarios/rosario',
-    '/agenda-cofrade/localidad/pilas']) {
+    '/agenda-cofrade/localidad/pilas', '/agenda-cofrade/hoy', '/agenda-cofrade/manana',
+    '/agenda-cofrade/fin-de-semana']) {
     assert.ok(urls.includes(`https://hilocofrade.es${path}`), path);
   }
   const march = entries.find((entry) => entry.url.endsWith('/marchas/marcha'));
