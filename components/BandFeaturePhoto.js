@@ -25,7 +25,7 @@ export default function BandFeaturePhoto({
             src={src}
             alt={alt || `Fotografía representativa de ${name}`}
             fill
-            priority
+            preload
             sizes="(max-width: 900px) calc(100vw - 32px), 52vw"
             onError={() => setPhotoFailed(true)}
           />

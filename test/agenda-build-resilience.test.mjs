@@ -22,6 +22,7 @@ for (const [file, name] of [
     const failure = new Error('Database connection timeout')
     const module = loadModule(`lib/supabase/${file}.js`, {
       createPublicClient: () => { throw failure },
+      unstable_cache: (loader) => loader,
       console: { error() {} },
     }, [name])
     await assert.rejects(module[name]({ throwOnError: true }), (error) => error === failure)
