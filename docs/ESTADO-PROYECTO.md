@@ -1,6 +1,6 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 25 de septiembre de 2026 · Écija · staging 776/776 certificado · Apply candidate preparado/no autorizado
+**Corte operativo:** 25 de septiembre de 2026 · HC-016 Écija cerrado, aplicado y QA de producción verde
 
 **HEAD integrado en `main`:** `1dbbf9cfaaf820b6214bd18ffef777a9653cce27` · #949, staging de Écija certificado y candidato de Apply preparado/no ejecutado.
 
@@ -10,13 +10,13 @@
 
 **GitHub:** #949 fusionada; #948, #947, #940 y #939 cerradas. #946 y #931 continúan como frentes independientes. Écija queda detenida antes de Apply.
 
-**Staging editoriales:** Écija `c0160036-0000-4000-8000-000000000001` = `ready`, 776/776 válidas, 0 aplicadas; Carmona `c0160035-0000-4000-8000-000000000001` = `completed`, 530/530 aplicadas; HC-AUTO-03 · El Calvario = `ready`, 55/55 y 0 aplicado.
+**Staging editoriales:** Écija `c0160036-0000-4000-8000-000000000001` = `completed`, 776/776 aplicadas, 0 fallidas; Carmona `c0160035-0000-4000-8000-000000000001` = `completed`, 530/530 aplicadas; HC-AUTO-03 · El Calvario permanece `ready` 55/55 y 0 aplicado.
 
 **P0 del 24/09 cerrado; seguimiento de capacidad cerrado:** el build completo sigue aislado de Supabase durante prerender. La respuesta posterior de Support confirmó presión sostenida de memoria/SWAP y se aplicó una mitigación específica sobre `home_knowledge_threads`. CI pasa tests y build, Vercel no registra errores de runtime, la Home productiva responde HTTP 200 con hilos reales y el refresco periódico de la caché se mantiene estable.
 
 **Régimen:** FIRST EDITION FREEZE activo
 
-**Frente ACTIVO:** HC-016 · Écija. Staging cerrado y certificado; Apply candidate reversible preparado; detenido antes de Apply. HC-AUTO-03 continúa bloqueado.
+**Frente ACTIVO:** ninguno abierto por Écija. HC-016 · Écija queda CERRADO. HC-AUTO-03 continúa bloqueado; #946 y #931 siguen como frentes UX/técnicos independientes.
 
 > GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. Los rankings municipales previos son evidencia histórica, no una cola automática. El próximo municipio solo puede nacer de un recálculo provincial nuevo y una orden expresa.
 
@@ -29,7 +29,7 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | **CERRADO** | HC-PERF-SUPABASE-01 · capacidad Supabase / Home | Micro activo; migraciones `20260925051118` y `20260925051336` en producción y reproducidas en preview; consulta crítica ~115,4→~0,42 ms; 5 refrescos consecutivos `succeeded` en ~156–160 ms; CI tests+build verde; Home productiva HTTP 200; sin errores runtime Vercel | Reabrir solo ante regresión demostrada de RAM/SWAP, timeouts, cron o lectura pública |
 | **CERRADO** | P0 · producción y timeouts | Supabase recuperado; #932 publicada; ventana limpia >30 min; caché vencida renovada; contenido y sitemaps verificados | Reabrir solo ante una regresión demostrada; mantener SU-484619 como seguimiento de causa raíz |
 | **CERRADO** | Octavo macrolote municipal HC-016 · Carmona | 530/530 aplicadas; QA estructural/semántico PASS; 15/15 fichas públicas HTTP 200; 0 4xx/5xx/runtime errors | No reejecutar; reabrir solo ante incidencia demostrada o enriquecimiento editorial posterior |
-| **ACTIVO** | Noveno macrolote municipal HC-016 · Écija | staging `ready` 776/776; preflight post-staging verde; Apply candidate preparado y `authorized=false`; 0 aplicadas | Siguiente gate: autorización expresa de Apply |
+| **CERRADO** | Noveno macrolote municipal HC-016 · Écija | 776/776 aplicadas; QA estructural/semántico PASS; 15/15 corporaciones + 18/18 bandas HTTP 200; 12 muestras Imagen/Paso 200; 0 4xx/5xx en rutas Écija | No reejecutar; reabrir solo por incidencia demostrada o enriquecimiento posterior |
 | **BLOQUEADO** | HC-AUTO-03 · El Calvario | Lote `ready` 55/55, 0 aplicado, preservado desde el 21/09 | No ejecutar Apply sin una orden específica y preflight actualizado |
 | **CERRADO** | Orden operativo | Autoridad documental y cola única integradas en #712 | No reabrir salvo contradicción verificable |
 | **CERRADO** | [#492 · Supabase Preview Branches](https://github.com/nachosanchezperez-ux/base-cofrade/issues/492) | Incidencia cerrada; #846 reconcilió el historial y la cadena activa contiene 12 migraciones estructurales, reproducibles desde cero en preview sin datos | Todo cambio futuro de esquema debe nacer como migración reproducible y superar una preview sin datos |
@@ -535,45 +535,33 @@ La evidencia y el método completos están en [`AUDITORIA-OCTAVO-MACROLOTE-MUNIC
 
 ## Siguiente puerta
 
-**Écija queda CERRADA EN STAGING y preparada para autorización de Apply.**
+**Écija queda CERRADA Y PUBLICADA.**
 
-Estado:
+Resultado final:
 
-- import `c0160036-0000-4000-8000-000000000001`;
-- `status = ready`;
-- 776/776 válidas;
-- 0 inválidas;
-- 0 aplicadas;
+- Apply: `APPLY_ECIJA_SQL_OK_COMMITTED`;
+- 776/776 operaciones aplicadas;
+- staging: `completed`;
 - 0 fallidas;
-- 770 UPSERT;
-- 6 UPDATE/REUSE;
-- preflight post-staging = `PREFLIGHT_ECIJA_SQL_OK_ROLLED_BACK`;
-- 0 residuos editoriales;
-- Apply candidate = preparado;
-- Apply candidate = **NO autorizado**.
+- QA estructural: PASS;
+- QA semántico: PASS;
+- 16/16 Salidas 2026 en `held`;
+- 15/15 fichas corporativas HTTP 200;
+- 18/18 fichas de Bandas/Capillas HTTP 200;
+- 6/6 muestras de Imágenes HTTP 200;
+- 6/6 muestras de Pasos HTTP 200;
+- 0 4xx y 0 5xx en rutas de Écija;
+- 0 errores runtime;
+- dos 404 globales no relacionados (`/null`, `/imagenes/null`) quedan como observación técnica independiente.
 
-Candidato:
+Écija no debe reabrirse automáticamente.
 
-`supabase/migrations_archive/post-first-edition-editorial/20260925093000_apply_ecija_noveno_macrolote_hc016.sql`
-
-Token previsto:
-
-`APPLY_ECIJA_SQL_OK_COMMITTED`
-
-El candidato es reversible byte a byte contra el preflight certificado salvo cabecera, token y `COMMIT/ROLLBACK`.
-
-**Siguiente acción única:** autorización expresa de Apply.
-
-Siguen prohibidos hasta esa orden:
-
-- ejecutar Apply;
-- reconciliar el staging como completed;
-- DDL;
-- RLS.
+**Siguiente línea municipal:** nuevo recálculo provincial desde cero, únicamente mediante orden expresa.
 
 HC-AUTO-03 · El Calvario continúa bloqueado.
 
 Evidencia:
+- [Certificación Apply y cierre · Écija](./CERTIFICACION-APPLY-ECIJA-HC016-2026-09-25.md)
 - [Certificación staging · Écija](./CERTIFICACION-STAGING-ECIJA-HC016-2026-09-25.md)
 - [Preparación Apply · Écija](./PREPARACION-APPLY-ECIJA-HC016-2026-09-25.md)
 - [Certificación preflight SQL · Écija](./CERTIFICACION-PREFLIGHT-SQL-ECIJA-HC016-2026-09-25.md)
