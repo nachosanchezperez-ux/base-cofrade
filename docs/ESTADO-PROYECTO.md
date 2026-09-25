@@ -2,13 +2,13 @@
 
 **Corte operativo:** 25 de septiembre de 2026 · Morón de la Frontera · MODELO CERRADO · APTO PARA ROW-BY-ROW
 
-**HEAD integrado en `main`:** `2f9ac51db75148dcef581d2c41927ceccebe5f33` · #953 fusionada con el modelo documental de Morón reconciliado contra el main vigente.
+**HEAD integrado en `main`:** `8153519ec168973c0b35607399e840461ae1042c` · #968 y #969 integran la reconciliación de rendimiento/SEO técnico sobre el modelo documental de Morón ya fusionado en #953.
 
-**Dominio productivo:** `hilocofrade.es` y `www.hilocofrade.es` sirven `dpl_3kJseRD4tABnskVqKCSngBAFbkDM`, `READY`, exactamente sobre `2f9ac51db75148dcef581d2c41927ceccebe5f33`; postflight runtime: 0 errores agrupados y 0 logs error/fatal en la ventana revisada.
+**Dominio productivo:** `hilocofrade.es` y `www.hilocofrade.es` sirven `dpl_6t3u7geRZaZp4k3jmk6wpXWVzmCR`, `READY`, exactamente sobre `8153519ec168973c0b35607399e840461ae1042c`; postflight: Hermandad, Banda e Igualás HTTP 200, canonicals e indexabilidad correctos y 0 errores runtime agrupados en la ventana revisada.
 
 **Supabase:** `ACTIVE_HEALTHY` y actualizado por el usuario de Nano a Micro. Support confirmó sobreutilización de memoria, uso sostenido de SWAP y overcommitment durante el incidente; CPU/IO pueden haber contribuido, por lo que no se reduce toda la causalidad a RAM. La base ocupa ~45 MB. Tras Micro: `effective_cache_size` 384→768 MB y `maintenance_work_mem` 32→64 MB. Producción contiene 17 migraciones estructurales. HC-PERF-SUPABASE-01 materializa `home_knowledge_threads`: fuente/caché 2.052/2.052, 0 diferencias, lectura `anon` correcta, patrón medido ~115,4 ms→~0,42 ms y primer cron `succeeded` (~156,9 ms). Véase [seguimiento de capacidad](./P0-SUPABASE-CAPACITY-2026-09-25.md).
 
-**GitHub:** #953 fusionada; #955 cerrada sin merge como superseded porque su baseline de Écija ya estaba absorbido; #931 permanece abierta como deuda técnica independiente con trabajo material no integrado y no bloquea Morón. #946 continúa como frente UX/técnico independiente.
+**GitHub:** 0 PR abiertas. #953 fusionada; #955 cerrada sin merge como superseded porque su baseline de Écija ya estaba absorbido; #931 cerrada sin merge como superseded por #968/#969 tras reconciliar sobre `main` únicamente las optimizaciones todavía válidas. #946 quedó absorbida/cerrada antes de este corte.
 
 **Staging editoriales:** Écija `c0160036-0000-4000-8000-000000000001` = `completed`, 776/776 aplicadas, 0 fallidas; Carmona `c0160035-0000-4000-8000-000000000001` = `completed`, 530/530 aplicadas; HC-AUTO-03 · El Calvario permanece `ready` 55/55 y 0 aplicado.
 
@@ -27,6 +27,8 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | Posición | Frente | Estado real | Regla |
 |---|---|---|---|
 | **CERRADO** | HC-PERF-SUPABASE-01 · capacidad Supabase / Home | Micro activo; migraciones `20260925051118` y `20260925051336` en producción y reproducidas en preview; consulta crítica ~115,4→~0,42 ms; 5 refrescos consecutivos `succeeded` en ~156–160 ms; CI tests+build verde; Home productiva HTTP 200; sin errores runtime Vercel | Reabrir solo ante regresión demostrada de RAM/SWAP, timeouts, cron o lectura pública |
+
+| **CERRADO** | HC-SEO/PERF · saneamiento de filtros y fichas públicas · #966–#969 | Filtros combinatorios de Agenda/Bandas/Directorio conservan navegación pero usan `noindex, follow`; landings limpias mantienen canonical/indexación. #968 elimina lecturas redundantes en Bandas, acota/cachea Glorias e incorpora `preload` LCP; #969 reduce fan-out de Hermandades, Igualás y Discografía. CI/build verdes; producción 200; Glorias verificadas MISS→HIT; 0 errores runtime | #931 queda superseded y cerrada. Cualquier nueva optimización debe partir del `main` vigente y medirse de nuevo; no reabrir la rama histórica |
 | **CERRADO** | P0 · producción y timeouts | Supabase recuperado; #932 publicada; ventana limpia >30 min; caché vencida renovada; contenido y sitemaps verificados | Reabrir solo ante una regresión demostrada; mantener SU-484619 como seguimiento de causa raíz |
 | **CERRADO** | Octavo macrolote municipal HC-016 · Carmona | 530/530 aplicadas; QA estructural/semántico PASS; 15/15 fichas públicas HTTP 200; 0 4xx/5xx/runtime errors | No reejecutar; reabrir solo ante incidencia demostrada o enriquecimiento editorial posterior |
 | **CERRADO** | Noveno macrolote municipal HC-016 · Écija | 776/776 aplicadas; QA estructural/semántico PASS; 15/15 corporaciones + 18/18 bandas HTTP 200; 12 muestras Imagen/Paso 200; 0 4xx/5xx en rutas Écija | No reejecutar; reabrir solo por incidencia demostrada o enriquecimiento posterior |
