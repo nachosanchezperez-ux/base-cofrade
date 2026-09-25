@@ -12,7 +12,7 @@ test('la navegación de secciones evita trabajo de layout continuo al hacer scro
   assert.doesNotMatch(source, /getBoundingClientRect\(\)/)
 })
 
-test('la fotografía principal de Banda se carga con prioridad', () => {
+test('la fotografía principal de Banda precarga el LCP en Next 16', () => {
   const source = read('components/BandFeaturePhoto.js')
   const photo = source.slice(
     source.indexOf('{showPhoto ? ('),
@@ -20,11 +20,12 @@ test('la fotografía principal de Banda se carga con prioridad', () => {
   )
 
   assert.match(photo, /<Image/)
-  assert.match(photo, /\bpriority\b/)
+  assert.match(photo, /\bpreload\b/)
+  assert.doesNotMatch(photo, /\bpriority\b/)
   assert.match(photo, /sizes=/)
 })
 
-test('el hero de Imagen abarata el fondo duplicado y mantiene prioritario el sujeto', () => {
+test('el hero de Imagen abarata el fondo duplicado y precarga el sujeto LCP', () => {
   const source = read('components/ImageHeroV2.js')
   const backdropStart = source.indexOf('className={`${styles.photoBackdrop}')
   const stageStart = source.indexOf('className={`${styles.subjectStage}', backdropStart)
@@ -34,7 +35,8 @@ test('el hero de Imagen abarata el fondo duplicado y mantiene prioritario el suj
   assert.match(backdrop, /quality=\{35\}/)
   assert.match(backdrop, /sizes="50vw"/)
   assert.doesNotMatch(backdrop, /\bpriority\b/)
-  assert.match(subject, /\bpriority\b/)
+  assert.match(subject, /\bpreload\b/)
+  assert.doesNotMatch(subject, /\bpriority\b/)
 })
 
 test('Glorias permite a Next optimizar las fotografías locales', () => {
