@@ -2,13 +2,13 @@
 
 **Corte operativo:** 25 de septiembre de 2026 · Écija · pre-row-by-row cerrado y preflight SQL preparado/no ejecutado
 
-**HEAD integrado en `main`:** `d20b26729181f0112da2f1892abaa748f97078e0` · #940, modelado, evidencia posterior y conciliación musical de Écija.
+**Base viva de `main` al cerrar esta fase:** `2c3d1fe08aeed6db5cd6bdde29879d4f2ba7ba98` · HC-PERF-SUPABASE-09, independiente del lote de Écija.
 
-**Dominio productivo:** `hilocofrade.es` y `www.hilocofrade.es` sirven `dpl_C1NUWhLYZrR6pSSybDQueAqgpHYk`, `READY`, SHA `d20b26729181f0112da2f1892abaa748f97078e0`. Esta integración es documental: 0 DML sobre Écija.
+**Dominio productivo:** `hilocofrade.es` y `www.hilocofrade.es` sirven `dpl_CXpe9TGiHdjNzictSMif3Jn3Grmu`, `READY`, SHA `2c3d1fe08aeed6db5cd6bdde29879d4f2ba7ba98`. La fase de Écija sigue siendo documental: 0 DML ejecutado.
 
 **Supabase:** `ACTIVE_HEALTHY` y actualizado por el usuario de Nano a Micro. Support confirmó sobreutilización de memoria, uso sostenido de SWAP y overcommitment durante el incidente; CPU/IO pueden haber contribuido, por lo que no se reduce toda la causalidad a RAM. La base ocupa ~45 MB. Tras Micro: `effective_cache_size` 384→768 MB y `maintenance_work_mem` 32→64 MB. Producción contiene 17 migraciones estructurales. HC-PERF-SUPABASE-01 materializa `home_knowledge_threads`: fuente/caché 2.052/2.052, 0 diferencias, lectura `anon` correcta, patrón medido ~115,4 ms→~0,42 ms y primer cron `succeeded` (~156,9 ms). Véase [seguimiento de capacidad](./P0-SUPABASE-CAPACITY-2026-09-25.md).
 
-**GitHub:** #940 fusionada; #939, #937 y #933 cerradas; #931 continúa como frente técnico independiente. Écija queda detenida antes del pre-row-by-row.
+**GitHub:** #940, #939, #937 y #933 cerradas; #931 continúa como frente técnico independiente. La rama de pre-row-by-row de Écija parte del `main` vivo y no modifica código de aplicación.
 
 **Staging editoriales:** Carmona `c0160035-0000-4000-8000-000000000001` = `completed`, 530/530 aplicadas, 0 fallidas. HC-AUTO-03 · El Calvario permanece `ready` 55/55 y 0 aplicado.
 
