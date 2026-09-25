@@ -26,7 +26,8 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 
 | Posición | Frente | Estado real | Regla |
 |---|---|---|---|
-| **ACTIVO** | HC-PERF-SUPABASE-01 · capacidad Supabase / Home | Micro activo; migraciones `20260925051118` y `20260925051336` en producción; PR #934 draft; consulta crítica ~115,4→~0,42 ms; cron cada minuto | Cerrar solo tras CI, cron estable, Advisors sin regresión propia y QA público; no mezclar con Carmona |\n| **CERRADO** | P0 · producción y timeouts | Supabase recuperado; #932 publicada; ventana limpia >30 min; caché vencida renovada; contenido y sitemaps verificados | Reabrir solo ante una regresión demostrada; mantener SU-484619 como seguimiento de causa raíz |
+| **ACTIVO** | HC-PERF-SUPABASE-01 · capacidad Supabase / Home | Micro activo; migraciones `20260925051118` y `20260925051336` en producción; PR #934 draft; consulta crítica ~115,4→~0,42 ms; cron cada minuto | Cerrar solo tras CI, cron estable, Advisors sin regresión propia y QA público; no mezclar con Carmona |
+| **CERRADO** | P0 · producción y timeouts | Supabase recuperado; #932 publicada; ventana limpia >30 min; caché vencida renovada; contenido y sitemaps verificados | Reabrir solo ante una regresión demostrada; mantener SU-484619 como seguimiento de causa raíz |
 | **COLA** | Octavo macrolote municipal HC-016 · Carmona | Puerta liberada tras P0; evidencia posterior 10/10; 28 titulares candidatos; 17 Pasos y 30 relaciones imagen–Paso documentadas; 8 posiciones musicales identificadas, 3 cerradas | No ejecutar staging, SQL, dry-run, Apply ni publicación hasta orden expresa |
 | **BLOQUEADO** | HC-AUTO-03 · El Calvario | Lote `ready` 55/55, 0 aplicado, preservado desde el 21/09 | No ejecutar Apply sin una orden específica y preflight actualizado |
 | **CERRADO** | Orden operativo | Autoridad documental y cola única integradas en #712 | No reabrir salvo contradicción verificable |
