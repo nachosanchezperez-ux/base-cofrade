@@ -180,3 +180,44 @@ Estado resultante:
 - HC-AUTO-03 = **BLOQUEADO**.
 
 La próxima orden, si se decide continuar, debe abrir únicamente **inventario canónico + matriz de Fuentes de Écija**, no staging ni Apply.
+
+
+## 11. Rectificación posterior al inventario
+
+La selección de Écija **no cambia**, pero la primera fotografía de esta auditoría queda corregida por el cruce posterior con el Consejo oficial, la aplicación/programa municipal 2026 y las fuentes de cada cortejo.
+
+### Universo correcto
+
+- **14 Hermandades penitenciales canónicas**;
+- **1 Agrupación Parroquial**: Las Penas;
+- **15 sujetos corporativos**;
+- **16 Salidas procesionales 2026**;
+- **32 Pasos procesionales 2026**.
+
+### Por qué la primera lectura daba 14 / 30
+
+La ficha provincial funciona como una guía procesional, no como censo canónico de corporaciones:
+
+- separa **La Borriquita** y **El Cautivo** aunque pertenecen a una misma Hermandad;
+- no incorpora la **Hermandad del Amor** en esa relación inicial;
+- no incorpora a **Las Penas** como Agrupación Parroquial;
+- el programa oficial 2026 sí distingue las 16 Salidas efectivas.
+
+Por tanto, la deuda real no debe expresarse como «0/14 hermandades cargadas», sino como:
+
+- **0/14 Hermandades penitenciales** cargadas;
+- **0/1 Agrupación Parroquial** cargada;
+- **0/15 sujetos** del universo materializados.
+
+El único nodo corporativo actual de Écija, la Hermandad de Nuestra Señora del Valle Coronada, permanece fuera del universo por ser glorioso.
+
+### Puerta resultante
+
+Inventario y matriz de Fuentes quedan cerrados en:
+
+- [INVENTARIO-ECIJA-NOVENO-MACROLOTE-MUNICIPAL-HC016-2026-09-25.md](./INVENTARIO-ECIJA-NOVENO-MACROLOTE-MUNICIPAL-HC016-2026-09-25.md)
+- [MATRIZ-FUENTES-ECIJA-NOVENO-MACROLOTE-MUNICIPAL-HC016-2026-09-25.md](./MATRIZ-FUENTES-ECIJA-NOVENO-MACROLOTE-MUNICIPAL-HC016-2026-09-25.md)
+
+La siguiente fase permitida es **modelado de participación + evidencia posterior por Salida + conciliación musical**.
+
+No se autorizan todavía row-by-row, staging, SQL editorial, dry-run, Apply, DDL ni RLS.
