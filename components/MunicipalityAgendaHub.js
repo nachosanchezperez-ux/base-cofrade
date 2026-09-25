@@ -4,6 +4,7 @@ import AgendaCofradeNav from '@/components/AgendaCofradeNav'
 import ContextAgendaSection from '@/components/ContextAgendaSection'
 import DirectoryBreadcrumb from '@/components/DirectoryBreadcrumb'
 import JsonLd from '@/components/JsonLd'
+import MunicipalityTemporalSpotlight from '@/components/MunicipalityTemporalSpotlight'
 import { breadcrumbJsonLd, collectionPageJsonLd } from '@/lib/seo'
 import styles from './MunicipalityAgendaHub.module.css'
 
@@ -133,6 +134,13 @@ export default function MunicipalityAgendaHub({ hub }) {
       </section>
 
       <AgendaCofradeNav activeSection="agenda" sticky={false} />
+
+      <MunicipalityTemporalSpotlight
+        hub={hub}
+        todayHref={todayHref}
+        weekendHref={weekendHref}
+        filteredAgendaHref={filteredAgendaHref}
+      />
 
       <section className={styles.calendars}>
         <div className="shell">

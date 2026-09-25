@@ -41,6 +41,7 @@ const getHub = cache(async (slug) => {
     bands,
     images,
     steps,
+    today: agendaData.today,
   })
 })
 
