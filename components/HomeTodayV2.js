@@ -185,14 +185,14 @@ export default function HomeTodayV2({ today, content }) {
   return (
     <section
       className={`${styles.section} ${polishStyles.todaySection}`}
-      id="hoy"
+      id="descubre-hoy"
       data-daily-layout={featureRight ? 'lead-right' : 'lead-left'}
     >
       <div className="shell">
         <header className={`${styles.header} ${polishStyles.todayHeader}`}>
           <span className={styles.date}>{today}</span>
-          <h2>Hoy en Hilo Cofrade</h2>
-          <p>Una selección que cambia cada día para descubrir historias, relaciones, datos y música de la enciclopedia.</p>
+          <h2>Descubre hoy en Hilo Cofrade</h2>
+          <p>Efemérides, historias, relaciones, datos y música para seguir explorando la enciclopedia después de consultar qué ocurre hoy.</p>
         </header>
 
         {featured || secondaryCards.length ? (

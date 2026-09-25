@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import HiloSearch from '@/components/HiloSearch'
 import HomeTodayV2 from '@/components/HomeTodayV2'
+import HomeTemporalFocus from '@/components/HomeTemporalFocus'
 import HomeExploreV2 from '@/components/HomeExploreV2'
 import HomeKnowledgeThreads from '@/components/HomeKnowledgeThreads'
 import HomeProjectOverview from '@/components/HomeProjectOverview'
@@ -49,6 +50,7 @@ export default function HomePageV2({
   today,
   todayContent,
   upcomingAgenda = [],
+  homeTemporal = null,
   featuredBriefing,
   discoveryThreads,
   exploreStats,
@@ -353,6 +355,8 @@ export default function HomePageV2({
       </section>
 
       <HomeProjectOverview />
+
+      <HomeTemporalFocus temporal={homeTemporal} />
 
       {homePriority.extraordinaryFirst ? (
         <>

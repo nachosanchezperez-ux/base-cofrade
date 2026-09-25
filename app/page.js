@@ -31,6 +31,7 @@ export default async function HomePage() {
   const {
     todayContent,
     upcomingAgenda,
+    homeTemporal,
     featuredBriefing,
     discoveryThreads,
     exploreStats,
@@ -41,6 +42,7 @@ export default async function HomePage() {
       today={today}
       todayContent={todayContent}
       upcomingAgenda={upcomingAgenda}
+      homeTemporal={homeTemporal}
       featuredBriefing={featuredBriefing}
       discoveryThreads={discoveryThreads}
       exploreStats={exploreStats}
