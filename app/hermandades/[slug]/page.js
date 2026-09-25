@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { cache } from 'react';
+import BrotherhoodAgendaSection from '@/components/BrotherhoodAgendaSection';
 import BrotherhoodCultsSection from '@/components/BrotherhoodCultsSection';
 import BrotherhoodCrewEventsSection from '@/components/BrotherhoodCrewEventsSection';
 import BrotherhoodHabitGloves from '@/components/BrotherhoodHabitGloves';
@@ -24,8 +25,10 @@ import OfficialLinks from '@/components/OfficialLinks';
 import SectionTitle from '@/components/SectionTitle';
 import SourcesBlock from '@/components/SourcesBlock';
 import { holyWeekDay } from '@/lib/brotherhood-directory';
+import { brotherhoodUpcomingAgenda } from '@/lib/brotherhood-agenda';
 import { getStepPhotoFraming } from '@/lib/step-photo-framing';
 import { getBrotherhoodMusicalHeritage } from '@/lib/supabase/brotherhood-musical-heritage';
+import { getAgendaCofrade } from '@/lib/supabase/agenda-cofrade';
 import { getCrewEventsByBrotherhoodId } from '@/lib/supabase/crew-events';
 import { getMusicalRepertoires } from '@/lib/supabase/musical-repertoires';
 import { getHermandadPageBySlug } from '@/lib/supabase/brotherhood-page';
@@ -169,7 +172,8 @@ export default async function HermandadDetailPage({ params }) {
   const h = await getHermandad(slug);
   if (!h) notFound();
 
-  const [entityCoverMedia, musicalHeritage, authoritativeCrestPath, musicalRepertoires, crewEvents] = await Promise.all([
+  const canonicalPath = `/hermandades/${h.slug}`;
+  const [entityCoverMedia, musicalHeritage, authoritativeCrestPath, musicalRepertoires, crewEvents, agendaData] = await Promise.all([
     getPublishedEntityCoverMediaMap(
       [
         h.id,
@@ -182,7 +186,16 @@ export default async function HermandadDetailPage({ params }) {
     getPublishedBrotherhoodCrestPath(h.id),
     getMusicalRepertoires({ brotherhoodEntityId: h.id }),
     getCrewEventsByBrotherhoodId(h.id),
+    getAgendaCofrade().catch((error) => {
+      console.error('[Hilo Cofrade] Agenda relacionada omitida temporalmente en la ficha de Hermandad', { slug: h.slug, error });
+      return { items: [], today: '' };
+    }),
   ]);
+  const upcomingAgendaItems = brotherhoodUpcomingAgenda({
+    agendaItems: agendaData.items,
+    crewEvents,
+    brotherhoodHref: canonicalPath,
+  });
   const heroMedia = entityCoverMedia.get(h.id)
     || h.imagenes.map((imagen) => entityCoverMedia.get(imagen.id)).find(Boolean)
     || null;
@@ -296,7 +309,6 @@ export default async function HermandadDetailPage({ params }) {
     || (publicText(h.datosJornada?.totalHermanos) && !heroFactLabels.has('Hermanos'))
     || (h.imagenes?.length && !heroFactLabels.has('Titulares'))
   );
-  const canonicalPath = `/hermandades/${h.slug}`;
   const description = brotherhoodSeoDescription(h);
   const organizationJsonLdId = `${absoluteUrl(canonicalPath)}#organization`;
   const organizationJsonLd = {
@@ -389,6 +401,7 @@ export default async function HermandadDetailPage({ params }) {
 
       <EntitySectionNav items={[
         hasPracticalOverview && { href: '#resumen', label: 'Información' },
+        upcomingAgendaItems.length > 0 && { href: '#agenda', label: 'Agenda' },
         h.imagenes?.length > 0 && { href: '#titulares', label: 'Titulares' },
         h.pasos?.length > 0 && { href: '#pasos', label: 'Pasos' },
         brotherhoodThreadItems.length > 0 && { href: '#tira-del-hilo', label: 'Conexiones' },
@@ -416,6 +429,8 @@ export default async function HermandadDetailPage({ params }) {
         brotherhood={h}
         heroFactLabels={heroFacts.map((fact) => fact.label)}
       />
+
+      <BrotherhoodAgendaSection items={upcomingAgendaItems} />
 
       <RelationalThread
         currentLabel="Hermandad"

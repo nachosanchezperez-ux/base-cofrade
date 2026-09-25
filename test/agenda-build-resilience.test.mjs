@@ -44,6 +44,7 @@ function agendaFixture() {
     return []
   }]))
   dependencies.withProcessionLiveState = withProcessionLiveState
+  dependencies.agendaMunicipalityHref = () => ''
   dependencies.unstable_cache = (loader, keys, options) => {
     cacheOptions = { keys, ...options }
     const cache = new Map()

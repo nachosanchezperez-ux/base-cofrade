@@ -1,5 +1,6 @@
 import { connection } from 'next/server'
 import GloryDirectory from '@/components/GloryDirectory'
+import AgendaCofradeNav from '@/components/AgendaCofradeNav'
 import JsonLd from '@/components/JsonLd'
 import { getGloryDirectory } from '@/lib/supabase/public-directory-cache'
 import { breadcrumbJsonLd, collectionPageJsonLd, pageTitle } from '@/lib/seo'
@@ -77,7 +78,11 @@ export default async function ProcesionesDeGloriaPage() {
             Fechas, horarios y recorridos de las próximas procesiones de Gloria de Sevilla capital y provincia. Las salidas anteriores pueden consultarse por año.
           </p>
         </header>
+      </div>
 
+      <AgendaCofradeNav activeSection="glories" />
+
+      <div className="shell">
         <div className={styles.summary} aria-label={`Resumen del calendario de procesiones de Gloria de ${currentYear}`}>
           <div className={styles.summaryCopy}>
             <span className="eyebrow">Glorias · {currentYear}</span>
