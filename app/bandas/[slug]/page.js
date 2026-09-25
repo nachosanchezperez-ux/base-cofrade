@@ -216,8 +216,13 @@ export default async function BandDetailPage({ params }) {
   const { slug } = await params
   const band = await getBandBySlug(slug)
   if (!band) notFound()
+  const artistSpotifyUrl = band.interestLinks.find((link) => link.platform === 'spotify')?.url || ''
   const [discography, colors, outingLinks, musicalRepertoires, concertEvents] = await Promise.all([
-    getBandDiscography(band.id),
+    getBandDiscography(band.id, {
+      bandName: band.popularName || band.officialName,
+      bandLogoPath: band.logoPath,
+      artistSpotifyUrl,
+    }),
     getPublishedBandColors(band.id),
     getBandOutingPublicLinks((band.upcomingOutings || band.outings || []).map((item) => item.id)),
     getMusicalRepertoires({ bandEntityId: band.id }),
