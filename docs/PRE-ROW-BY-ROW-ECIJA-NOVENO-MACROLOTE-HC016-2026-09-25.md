@@ -2,7 +2,7 @@
 
 **Fecha:** 25 de septiembre de 2026  
 **Estado:** CERRADO · PLAN Y MANIFIESTO CONGELADOS · SIN DML EJECUTADO  
-**Base viva:** `de420589baa03db98cfda4a11796606592761f50`  
+**Base viva:** `2c3d1fe08aeed6db5cd6bdde29879d4f2ba7ba98`  
 **Namespace:** `c0160036-*`
 
 ## Contrato
