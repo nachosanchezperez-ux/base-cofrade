@@ -3,6 +3,8 @@ import Link from 'next/link'
 import { cache } from 'react'
 import { notFound } from 'next/navigation'
 import JsonLd from '@/components/JsonLd'
+import AgendaCofradeNav from '@/components/AgendaCofradeNav'
+import AgendaRelationLinks from '@/components/AgendaRelationLinks'
 import ProcessionRoute from '@/components/ProcessionRoute'
 import { buildProcessionRoute } from '@/lib/procession-route'
 import { getExtraordinaryDetail } from '@/lib/supabase/extraordinary-detail'
@@ -309,6 +311,17 @@ export default async function ExtraordinaryDetailPage({ params }) {
           </div>
         </div>
       </section>
+
+      <AgendaCofradeNav activeSection="extraordinary" sticky={false} />
+
+      <AgendaRelationLinks
+        brotherhoodName={item.brotherhoodName}
+        brotherhoodHref={item.brotherhoodHref}
+        municipality={item.municipality}
+        bands={item.music}
+        calendarHref="/extraordinarias"
+        calendarLabel="Extraordinarias"
+      />
 
       <nav className={styles.sectionNav} aria-label="Contenido de la guía">
         <div className="shell">

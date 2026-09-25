@@ -1,6 +1,7 @@
 import { connection } from 'next/server'
 import Link from 'next/link'
 import ExtraordinaryDirectory from '@/components/ExtraordinaryDirectory'
+import AgendaCofradeNav from '@/components/AgendaCofradeNav'
 import styles from '@/components/ExtraordinaryDirectory.module.css'
 import seoStyles from '@/components/ExtraordinarySeo.module.css'
 import JsonLd from '@/components/JsonLd'
@@ -96,7 +97,11 @@ export default async function ExtraordinariasPage() {
             </span>
           </div>
         </header>
+      </div>
 
+      <AgendaCofradeNav activeSection="extraordinary" />
+
+      <div className="shell">
         <ExtraordinaryDirectory outings={outings} />
 
         {monthGroups.length ? (

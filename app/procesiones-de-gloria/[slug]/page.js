@@ -2,6 +2,8 @@ import Link from 'next/link'
 import { cache } from 'react'
 import { notFound } from 'next/navigation'
 import JsonLd from '@/components/JsonLd'
+import AgendaCofradeNav from '@/components/AgendaCofradeNav'
+import AgendaRelationLinks from '@/components/AgendaRelationLinks'
 import ProcessionRoute from '@/components/ProcessionRoute'
 import { gloryDisplayTitle } from '@/lib/glory-display'
 import { buildProcessionRoute } from '@/lib/procession-route'
@@ -231,6 +233,17 @@ export default async function GloryDetailPage({ params }) {
           </div>
         </div>
       </section>
+
+      <AgendaCofradeNav activeSection="glories" sticky={false} />
+
+      <AgendaRelationLinks
+        brotherhoodName={item.brotherhoodName}
+        brotherhoodHref={item.brotherhoodHref}
+        municipality={item.municipality}
+        bands={item.music}
+        calendarHref="/procesiones-de-gloria"
+        calendarLabel="Glorias"
+      />
 
       <div className={`shell ${styles.body}`}>
         <section className={styles.section} aria-labelledby="datos-procesion-gloria">

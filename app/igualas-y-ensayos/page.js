@@ -1,5 +1,6 @@
 import { connection } from 'next/server'
 import CrewEventDirectory from '@/components/CrewEventDirectory'
+import AgendaCofradeNav from '@/components/AgendaCofradeNav'
 import JsonLd from '@/components/JsonLd'
 import { breadcrumbJsonLd, collectionPageJsonLd, pageTitle } from '@/lib/seo'
 import { getCrewEventDirectory } from '@/lib/supabase/public-directory-cache'
@@ -43,7 +44,11 @@ export default async function CrewEventsPage() {
           <div><span className="eyebrow">Costaleros · Sevilla y provincia</span><h1>Calendario de Igualás y Ensayos</h1></div>
           <p>Una agenda estructurada de las convocatorias de cuadrilla, conectada con cada Hermandad, sus Pasos y los capataces responsables.</p>
         </header>
+      </div>
 
+      <AgendaCofradeNav activeSection="crew" />
+
+      <div className="shell">
         <div className={styles.summary} aria-label="Resumen del calendario de igualás y ensayos">
           <div><span className="eyebrow">Archivo vivo</span><p>Las citas futuras aparecen primero y, una vez celebradas, permanecen disponibles en el histórico.</p></div>
           <div className={styles.stats}>

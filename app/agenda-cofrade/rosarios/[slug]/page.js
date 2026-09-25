@@ -3,6 +3,8 @@ import Link from 'next/link'
 import { cache } from 'react'
 import { notFound } from 'next/navigation'
 import JsonLd from '@/components/JsonLd'
+import AgendaCofradeNav from '@/components/AgendaCofradeNav'
+import AgendaRelationLinks from '@/components/AgendaRelationLinks'
 import {
   absoluteUrl,
   breadcrumbJsonLd,
@@ -156,6 +158,17 @@ export default async function RosaryDetailPage({ params }) {
           </div>
         </div>
       </header>
+
+      <AgendaCofradeNav activeSection="agenda" sticky={false} />
+
+      <AgendaRelationLinks
+        brotherhoodName={item.brotherhoodName}
+        brotherhoodHref={item.brotherhoodHref}
+        municipality={item.municipality}
+        bands={item.music}
+        calendarHref="/agenda-cofrade#agenda"
+        calendarLabel="Agenda Cofrade"
+      />
 
       <div className={`shell ${styles.content}`}>
         <article className={styles.mainColumn}>

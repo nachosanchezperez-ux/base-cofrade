@@ -2,6 +2,8 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { cache } from 'react'
 import JsonLd from '@/components/JsonLd'
+import AgendaCofradeNav from '@/components/AgendaCofradeNav'
+import AgendaRelationLinks from '@/components/AgendaRelationLinks'
 import { crewEventStatusLabel } from '@/lib/crew-events'
 import {
   absoluteUrl,
@@ -170,7 +172,20 @@ export default async function CrewEventDetailPage({ params }) {
             {event.summary ? <p>{event.summary}</p> : null}
           </div>
         </header>
+      </div>
 
+      <AgendaCofradeNav activeSection="crew" sticky={false} />
+
+      <AgendaRelationLinks
+        brotherhoodName={event.brotherhoodName}
+        brotherhoodHref={event.brotherhoodHref}
+        municipality={event.municipality}
+        steps={event.steps}
+        calendarHref="/igualas-y-ensayos"
+        calendarLabel="Igualás y ensayos"
+      />
+
+      <div className="shell">
         <div className={styles.layout}>
           <div className={styles.main}>
             <section className={styles.facts} aria-labelledby="datos-convocatoria">

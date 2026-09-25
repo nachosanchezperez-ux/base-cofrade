@@ -133,6 +133,7 @@ function EventActions({ item }) {
     <div className={styles.cardActions}>
       {item.href ? <Link href={item.href}>{item.actionLabel || 'Ver acto'} <span>→</span></Link> : null}
       {item.organizerHref ? <Link href={item.organizerHref}>Ver Hermandad</Link> : null}
+      {item.municipalityHref ? <Link href={item.municipalityHref}>Ver {item.municipality}</Link> : null}
       {item.categoryHref && item.categoryHref !== item.href && item.categoryHref !== item.organizerHref ? <Link href={item.categoryHref}>Ver calendario</Link> : null}
     </div>
   )
