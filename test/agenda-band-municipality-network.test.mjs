@@ -35,6 +35,7 @@ test('la localidad tiene una URL canónica de Agenda y conecta Hermandades y Ban
   assert.match(hub, /Este fin de semana/)
   assert.match(hub, /Patrimonio cofrade/)
   assert.match(hub, /Imágenes y Pasos/)
+  assert.match(hub, /MunicipalityTemporalSpotlight/)
 })
 
 test('los directorios territoriales enlazan de vuelta a la Agenda local', () => {
@@ -57,4 +58,18 @@ test('la guía municipal conserva slugs territoriales correctos para patrimonio 
   assert.match(source, /imageDirectoryReady/)
   assert.match(source, /stepDirectoryReady/)
   assert.match(source, /routeSlug === 'sevilla-capital'[\s\S]*'Sevilla capital'/)
+})
+
+
+test('la prioridad temporal municipal se deriva sin selección editorial', () => {
+  const source = read('lib/municipality-temporal.js')
+  const component = read('components/MunicipalityTemporalSpotlight.js')
+  assert.match(source, /liveItems/)
+  assert.match(source, /todayItems/)
+  assert.match(source, /tomorrowItems/)
+  assert.match(source, /weekendItems/)
+  assert.match(source, /closestItems/)
+  assert.match(component, /En la calle ahora/)
+  assert.match(component, /No te pierdas/)
+  assert.match(component, /No es una selección editorial manual/)
 })

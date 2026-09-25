@@ -33,6 +33,7 @@ No existe la modalidad «Rosario nocturno»: la hora del acto se expresa en su h
 - Las fichas de Bandas agregan sus próximas actuaciones documentadas: salidas con asignación musical canónica y conciertos publicados, sin reconstruir relaciones por texto.
 - Cada localidad con actividad o entidades documentadas obtiene un hub bajo `/agenda-cofrade/localidad/`, que conecta sus próximas citas con sus Hermandades, Bandas y los cuatro calendarios públicos.
 - El hub territorial funciona como guía cofrade local: añade accesos “hoy / fin de semana / próximos”, separa los cuatro ámbitos de Agenda y conecta patrimonio local mediante los directorios cacheados de Imágenes y Pasos, con retorno recíproco desde sus páginas por localidad.
+- La guía local prioriza automáticamente el tiempo: muestra actos “en la calle ahora” cuando el horario documentado lo permite, contabiliza hoy/mañana/fin de semana y genera “No te pierdas” con las tres citas más próximas por fecha y hora; no existe selección editorial manual ni puntuación de relevancia.
 - «Qué ver hoy» devuelve todos los actos del día; la cabecera no selecciona una única cita como protagonista.
 - El archivo queda como consulta secundaria y no compite con las tres preguntas temporales principales.
 - Los estados ordinarios anunciados no se repiten visualmente en cada tarjeta; solo se destaca una excepción relevante, como una cancelación.
