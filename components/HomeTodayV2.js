@@ -160,10 +160,13 @@ export default function HomeTodayV2({ today, content }) {
 
   const renderCard = (card, { isFeatured = false } = {}) => (
     <article
-      className={`${styles.card} ${isFeatured ? `${styles.featureCard} ${mobileFixStyles.featureCard} ${dynamicStyles.featureCardSlot}` : `${styles.compactCard} ${polishStyles.todayCard}`} ${card.kind === 'discovery' ? styles.discoveryCard : ''} ${card.visual?.path ? `${styles.cardWithVisual} ${isFeatured ? '' : polishStyles.todayCardWithVisual}` : ''}`}
+      className={`${styles.card} ${isFeatured ? `${styles.featureCard} ${mobileFixStyles.featureCard} ${dynamicStyles.featureCardSlot}` : `${styles.compactCard} ${polishStyles.todayCard}`} ${card.kind === 'discovery' ? `${styles.discoveryCard} ${mobileFixStyles.discoveryCard}` : ''} ${card.visual?.path ? `${styles.cardWithVisual} ${isFeatured ? '' : polishStyles.todayCardWithVisual}` : ''}`}
+      data-home-card-kind={card.kind || 'card'}
       key={`${card.kind}-${card.id}`}
     >
-      <span className={`${styles.icon} ${polishStyles.todayIcon} ${isFeatured ? mobileFixStyles.featureIcon : ''}`} aria-hidden="true">{card.icon}</span>
+      {card.kind !== 'discovery' ? (
+        <span className={`${styles.icon} ${polishStyles.todayIcon} ${isFeatured ? mobileFixStyles.featureIcon : ''}`} aria-hidden="true">{card.icon}</span>
+      ) : null}
       <div className={`${styles.copy} ${isFeatured ? mobileFixStyles.featureCopy : ''}`}>
         <div className={styles.topline}>
           <span className={styles.type}>{card.label}</span>
