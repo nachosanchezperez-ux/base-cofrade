@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import DirectoryBreadcrumb from '@/components/DirectoryBreadcrumb'
 import HeritageDirectoryFacets from '@/components/HeritageDirectoryFacets'
 import JsonLd from '@/components/JsonLd'
@@ -16,6 +17,7 @@ export default function HeritageDirectoryRoutePage({
   path,
   contextLabel,
   initialMunicipalitySlug = '',
+  relatedAgendaHref = '',
 }) {
   return (
     <section className="section page-top">
@@ -38,6 +40,11 @@ export default function HeritageDirectoryRoutePage({
         <span className="eyebrow">{eyebrow}</span>
         <h1 className="page-title">{title}</h1>
         <p className="page-lead">{description}</p>
+        {relatedAgendaHref ? (
+          <Link href={relatedAgendaHref} style={{ display: 'inline-flex', marginTop: 14, marginBottom: 8, color: '#a71931', fontSize: 12, fontWeight: 850 }}>
+            Ver agenda cofrade de {contextLabel} →
+          </Link>
+        ) : null}
         <HeritageDirectoryFacets items={allItems} section={section} title={directoryLabel} />
         <RelationalEntityDirectory
           items={items}
