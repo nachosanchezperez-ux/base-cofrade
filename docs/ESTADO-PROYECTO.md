@@ -2,13 +2,13 @@
 
 **Corte operativo:** 25 de septiembre de 2026 · Écija cerrada · nuevo recálculo provincial certificado · Morón de la Frontera seleccionado
 
-**HEAD integrado en `main`:** `f71c51dabb20db2f6a211f35b6847e355a203875` · #950, cierre certificado del noveno macrolote municipal de Écija.
+**HEAD integrado en `main`:** `bc505b7167bb6609b3b20c6e365e7a03fcc7a35e` · #951, recálculo provincial y selección de Morón de la Frontera como décimo macrolote municipal.
 
-**Dominio productivo:** `hilocofrade.es` y `www.hilocofrade.es` sirven `dpl_6uMY2ea6kJpubcY8r7intsATHQop`, `READY`, SHA `f71c51dabb20db2f6a211f35b6847e355a203875`. Écija: QA público PASS y staging `completed` 776/776.
+**Dominio productivo:** `hilocofrade.es` y `www.hilocofrade.es` sirven `dpl_5XqnsVJJfrTbRT8NZR5vX8i95dKQ`, `READY`, SHA `bc505b7167bb6609b3b20c6e365e7a03fcc7a35e`. Esta integración es documental: 0 DML.
 
 **Supabase:** `ACTIVE_HEALTHY` y actualizado por el usuario de Nano a Micro. Support confirmó sobreutilización de memoria, uso sostenido de SWAP y overcommitment durante el incidente; CPU/IO pueden haber contribuido, por lo que no se reduce toda la causalidad a RAM. La base ocupa ~45 MB. Tras Micro: `effective_cache_size` 384→768 MB y `maintenance_work_mem` 32→64 MB. Producción contiene 17 migraciones estructurales. HC-PERF-SUPABASE-01 materializa `home_knowledge_threads`: fuente/caché 2.052/2.052, 0 diferencias, lectura `anon` correcta, patrón medido ~115,4 ms→~0,42 ms y primer cron `succeeded` (~156,9 ms). Véase [seguimiento de capacidad](./P0-SUPABASE-CAPACITY-2026-09-25.md).
 
-**GitHub:** #950 fusionada y cerrada. #949, #948 y #947 quedan cerradas; #946 y #931 continúan como frentes UX/técnicos independientes. HC-016 · Écija queda CERRADO.
+**GitHub:** #951 fusionada y cerrada. #950, #949 y #948 cerradas; #946 y #931 continúan como frentes UX/técnicos independientes. Morón queda en cola antes de inventario.
 
 **Staging editoriales:** Écija `c0160036-0000-4000-8000-000000000001` = `completed`, 776/776 aplicadas, 0 fallidas; Carmona `c0160035-0000-4000-8000-000000000001` = `completed`, 530/530 aplicadas; HC-AUTO-03 · El Calvario permanece `ready` 55/55 y 0 aplicado.
 
