@@ -613,3 +613,102 @@
     margin-right: 17px;
   }
 }
+
+
+/* Hilos de descubrimiento · identidad integrada, sin bloques ornamentales */
+.discoveryCard {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  min-height: 0;
+}
+
+.discoveryCard.cardWithVisual {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.discoveryCard.cardWithVisual .topline {
+  min-height: 62px;
+  align-content: flex-start;
+  padding-right: 76px;
+}
+
+.discoveryCard.cardWithVisual .visual {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  display: block;
+  width: 62px;
+  height: 62px;
+  min-height: 62px;
+  max-height: 62px;
+  margin: 0;
+  align-self: auto;
+  border-radius: 14px;
+}
+
+.discoveryCard.cardWithVisual .visualIdentity {
+  display: block;
+}
+
+.discoveryCard.cardWithVisual .visualPhoto {
+  min-height: 62px;
+}
+
+.discoveryCard .link {
+  margin-top: 14px;
+  padding-top: 0;
+}
+
+@media (max-width: 619px) {
+  .discoveryCard {
+    padding: 16px;
+    border-radius: 18px;
+  }
+
+  .discoveryCard.cardWithVisual .topline {
+    min-height: 56px;
+    padding-right: 68px;
+  }
+
+  .discoveryCard.cardWithVisual .visual {
+    top: 16px;
+    right: 16px;
+    width: 56px;
+    height: 56px;
+    min-height: 56px;
+    max-height: 56px;
+    border-radius: 13px;
+  }
+}
+
+@media (min-width: 860px) {
+  .featureCard.discoveryCard {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto;
+    gap: 0;
+    min-height: 0;
+    padding: 24px 26px;
+    align-items: initial;
+  }
+
+  .featureCard.discoveryCard.cardWithVisual .copy {
+    grid-row: auto;
+  }
+
+  .featureCard.discoveryCard.cardWithVisual .featureVisual {
+    position: absolute;
+    top: 24px;
+    right: 26px;
+    display: block;
+    width: 66px;
+    height: 66px;
+    min-height: 66px;
+    max-height: 66px;
+    border-radius: 15px;
+  }
+
+  .featureCard.discoveryCard.cardWithVisual .topline {
+    min-height: 66px;
+    padding-right: 82px;
+  }
+}
