@@ -25,5 +25,5 @@ test('la marcha del día prioriza el escudo de la banda frente a la portada', ()
 test('la identidad musical conserva una caché pública versionada junto al contrato diario', () => {
   const snapshot = read('lib/supabase/home-snapshot.js')
 
-  assert.match(snapshot, /hilo-cofrade-home-public-snapshot-v15/)
+  assert.match(snapshot, /hilo-cofrade-home-public-snapshot-v16/)
 })
