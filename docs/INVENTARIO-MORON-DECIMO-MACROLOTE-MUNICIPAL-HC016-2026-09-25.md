@@ -1,8 +1,8 @@
 # Inventario canónico · Morón de la Frontera · décimo macrolote municipal HC-016
 
 **Fecha:** 25 de septiembre de 2026  
-**Estado:** INVENTARIO CERRADO · SIN DML  
-**Base:** `a7ab0d90b3b29911ee38af8d5f10c89a0f4172ab`  
+**Estado:** MODELO DOCUMENTAL CERRADO · SIN DML  
+**Base reconciliada:** `800d1a80962ec6b53f555c3b8487734f25b22388`
 **Municipio:** **NO EXISTE** todavía en producción  
 **Alcance:** corporaciones penitenciales 2026, Salidas, Pasos, sedes, Imágenes procesionales y música confirmada/pending  
 **Prohibido en esta fase:** staging · SQL editorial · dry-run · Apply · DDL · RLS
@@ -14,7 +14,9 @@ El cruce entre el Consejo General de Hermandades y Cofradías de Morón, Turismo
 - **10 Hermandades**;
 - **10 Salidas procesionales 2026**;
 - **18 Pasos**;
-- **37 imágenes procesionales identificables** entre titulares y figuras secundarias expresamente documentadas;
+- **37 figuras procesionales físicamente identificables** en las Fuentes;
+- **35 Imágenes modelables como nodos canónicos individuales**;
+- **2 sanedritas del Soberano documentados colectivamente, sin identidad individual estable y por tanto sin nodo propio en esta edición**;
 - **8 sedes canónicas únicas**;
 - 1 municipio nuevo necesario: **Morón de la Frontera**.
 
@@ -194,111 +196,145 @@ San Juan sí participa procesionalmente en el Paso de palio.
 **Paso de Nuestra Señora de los Dolores en su Soledad**
 - Nuestra Señora de los Dolores en su Soledad · anónima; restaurada por Sebastián Santos en 1942.
 
-## 6. Recuento de Imágenes procesionales
+## 6. Imágenes procesionales · cierre de modelado
 
-Primera fotografía inventarial:
+El inventario físico sigue siendo de **37 figuras procesionales identificables**. El row-by-row no materializará artificialmente las dos figuras que el Consejo documenta únicamente como «dos sanedritas» dentro del misterio del Soberano.
 
-- **37 imágenes procesionales identificables**:
-  - 20 imágenes titulares/primarias o cotitulares presentes en los Pasos;
-  - 17 figuras secundarias expresamente identificadas por el Consejo.
-- quedan fuera:
-  - titulares corporativos no procesionales;
-  - figuras no identificadas individualmente de Borriquita;
-  - cualquier ampliación inferida por fotografías.
+Resultado determinista:
 
-Este número podrá afinarse en modelado si una figura secundaria no debe tener entidad propia por falta de identidad canónica suficiente.
+- **35 Imágenes canónicas individualmente modelables**;
+- **2 figuras secundarias documentadas pero no individualizadas**: los dos sanedritas del Soberano;
+- las figuras delanteras no identificadas de Borriquita continúan fuera del universo;
+- ningún homónimo de otro municipio es REUSE.
 
-## 7. Música 2026 · estado de inventario
+La ausencia de nodo individual para esos dos sanedritas es deuda legítima y no altera los **18 Pasos** ni la composición conocida del misterio.
 
-### Confirmada con evidencia 2026 directa/posterior
+## 7. Música 2026 · 18/18 posiciones de Paso verificadas
 
-| Salida / Paso | Música | Estado |
-|---|---|---|
-| Soberano · misterio | BCT Nuestro Padre Jesús Nazareno de Arahal | **CONFIRMADA** por crónica posterior |
-| Soberano · palio | Banda Municipal de Música de Morón | **CONFIRMADA** por crónica posterior; continuidad renovada después hasta 2030 |
-| Buena Muerte · Cristo | Agrupación Vocal de Cámara Redentoris Mundi | **CONFIRMADA** por Radio Morón 2026 |
-| Loreto · palio | Banda de Música de El Saucejo | **CONFIRMADA** por renovación posterior que cita su estreno del Miércoles Santo 2026 |
-| Jesús · Cristo | Agrupación Musical Nuestro Padre Jesús de la Fuensanta · Morón | **CONFIRMADA** por Radio Morón 2026 |
-| Jesús · palio | Banda Municipal de Música de Morón | **CONFIRMADA** por Radio Morón 2026 |
-| Santo Entierro · Piedad | Banda de Música de El Campillo · Huelva | **CONFIRMADA** por agradecimiento oficial posterior |
-| Santo Entierro · Yacente | Capilla Musical Dulce Nombre · Alcalá de Guadaíra | **CONFIRMADA** por agradecimiento oficial posterior |
+«18/18» significa **18 posiciones de Paso con evidencia específica de 2026**; no significa que las 18 dispongan de prueba posterior de ejecución.
 
-### Pendiente de evidencia 2026 específica
+| # | Salida / Paso | Formación 2026 | Evidencia | Nodo |
+|---:|---|---|---|---|
+| 1 | Soberano · misterio | BCT Nuestro Padre Jesús Nazareno de Arahal | **EJECUTADA** | **REUSE** `0efc10f7-ca6e-4c8e-8d94-be35db689a7b` |
+| 2 | Soberano · palio | Banda Municipal de Música de Morón de la Frontera | **EJECUTADA** | **INSERT** |
+| 3 | Borriquita · Paso único | BCT Santísimo Cristo a la Columna «El Amarrado» de Ávila | **ANUNCIADA 2026** | **INSERT** |
+| 4 | Cautivo · Cristo | BCT Coronación de Espinas de Córdoba | **EJECUTADA** | **INSERT** |
+| 5 | Cautivo · palio | Banda Municipal de Música de Morón de la Frontera | **ANUNCIADA 2026** | **INSERT** |
+| 6 | Calvario · Cristo | Agrupación Musical Vera Cruz de Campillos | **ANUNCIADA 2026** | **REUSE** `c0160032-0407-4000-8000-000000000007` |
+| 7 | Calvario · palio | Asociación Musical de La Algaba | **ANUNCIADA 2026** | **REUSE** `aa0f526c-2b63-41f0-aa74-ecaa14365375` |
+| 8 | Buena Muerte · Cristo | Agrupación Vocal de Cámara Redentoris Mundi | **ANUNCIADA 2026** | **INSERT** |
+| 9 | Buena Muerte · palio | Banda Municipal de Música de Morón de la Frontera | **ANUNCIADA 2026** | **INSERT** |
+| 10 | Loreto · Cristo | Agrupación Musical Ntro. Padre Jesús Nazareno de la Fuensanta de Morón | **ANUNCIADA 2026** | **INSERT** |
+| 11 | Loreto · palio | Banda de Música de El Saucejo | **EJECUTADA** | **INSERT** |
+| 12 | Santa Cruz · Cristo | BCT Sayones de Ntro. Padre Jesús Nazareno de Pozoblanco | **ANUNCIADA 2026** | **INSERT** |
+| 13 | Santa Cruz · palio | Banda de Música Municipal Gailín de Puerto Serrano | **ANUNCIADA 2026** | **INSERT** |
+| 14 | Jesús · Cristo | Agrupación Musical Ntro. Padre Jesús Nazareno de la Fuensanta de Morón | **ANUNCIADA 2026** | **INSERT** |
+| 15 | Jesús · palio | Banda Municipal de Música de Morón de la Frontera | **ANUNCIADA 2026** | **INSERT** |
+| 16 | Santo Entierro · Piedad | Banda de Música de El Campillo · Huelva | **EJECUTADA** | **INSERT** |
+| 17 | Santo Entierro · Yacente | Capilla Musical Dulce Nombre · Alcalá de Guadaíra | **EJECUTADA** | **REUSE** `7d0aa85b-b657-4ca2-9846-1dc4f8f11c74` |
+| 18 | Soledad · Paso único | Banda Municipal de Música de Morón de la Frontera | **ANUNCIADA 2026** | **INSERT** |
 
-No se congela todavía música para estas diez posiciones:
+Corrección protegida: **Loreto · Cristo 2026 = Agrupación Musical de la Fuensanta de Morón**; no se arrastra Rescate de Linares desde 2025.
 
-- Borriquita · único Paso.
-- Cautivo · Cristo.
-- Cautivo · palio.
-- Calvario · Cristo.
-- Calvario · palio.
-- Buena Muerte · palio.
-- Loreto · Cristo.
-- Santa Cruz · Cristo.
-- Santa Cruz · palio.
-- Soledad · único Paso.
+### Posición adicional fuera del 18/18
 
-La documentación 2025 y varios contratos posteriores apuntan a continuidad de algunas formaciones, pero **no se reutiliza esa información como hecho 2026 sin prueba específica**.
+La guía del Viernes Santo de Diario de Morón documenta además:
 
-### Indicios no vinculantes
+- **Jesús · Cruz de Guía** → Agrupación Musical Juvenil Ntro. Padre Jesús Nazareno de la Fuensanta;
+- estado: **ANUNCIADA 2026**;
+- conciliación Supabase: **INSERT** futuro, sin nodo ni alias actual;
+- no se cuenta entre las 18 posiciones de Paso.
 
-- Calvario: Vera Cruz de Campillos estuvo vinculada desde 2025 y la relación terminó antes de contratar a La Estrella de Jaén para 2027–2028.
-- Calvario palio: Asociación Musical de La Algaba aparece en la información 2025.
-- Soledad: Ars Sacra + Banda Municipal de Morón constan en 2025.
-- Borriquita / Cautivo: Nazareno de Arahal y Banda Municipal de Morón constan en 2025.
+### Ars Sacra
 
-Estos datos son **pistas de investigación**, no assignments 2026.
+Capilla Musical Ars Sacra · `2f6c0b1b-b3c8-43d7-99ac-8f341a65f2d1` existe en Supabase, pero la evidencia localizada para la Cruz de Guía de Soledad pertenece a una edición anterior. Clasificación 2026: **HISTÓRICA · NO RELACIONAR**.
 
-## 8. REUSE detectados en producción
+## 8. Modelo de participación
 
-### Bandas seguras ya existentes
+Se reutiliza la taxonomía viva de producción; no se crean códigos específicos para Morón.
 
-- BCT / Nazareno de Arahal · `0efc10f7-ca6e-4c8e-8d94-be35db689a7b`.
-- Agrupación Musical Vera Cruz de Campillos · `c0160032-0407-4000-8000-000000000007`.
+- Pasos de Cristo, misterio o Paso único no-palio: `position_code = mystery`.
+- Pasos de palio: `position_code = palio`.
+- Posición adicional de Cruz de Guía, cuando proceda: `position_code = cross_guide` y `step_entity_id = NULL`.
+- `participation_mode = unspecified` cuando la Fuente acredita la formación pero no prueba de manera inequívoca ruta completa, tramo o alternancia.
+- `full_route` o `segment` solo con evidencia expresa.
+
+## 9. Conciliación viva de Bandas
+
+### REUSE asignados a Morón 2026
+
+- Nazareno de Arahal · `0efc10f7-ca6e-4c8e-8d94-be35db689a7b`.
+- Vera Cruz de Campillos · `c0160032-0407-4000-8000-000000000007`.
 - Asociación Musical de La Algaba · `aa0f526c-2b63-41f0-aa74-ecaa14365375`.
-- Capilla Musical Ars Sacra · `2f6c0b1b-b3c8-43d7-99ac-8f341a65f2d1`.
+- Capilla Musical Dulce Nombre · `7d0aa85b-b657-4ca2-9846-1dc4f8f11c74`.
 
-Solo Nazareno de Arahal está ya **confirmado en música 2026** de este inventario. Los demás REUSE quedan disponibles, pero no asignados todavía.
+### INSERT futuros · nodo ausente y evidencia 2026 suficiente
 
-### Bandas/formaciones que no existen aún como nodos canónicos
+1. Banda Municipal de Música de Morón de la Frontera.
+2. BCT Santísimo Cristo a la Columna «El Amarrado» de Ávila.
+3. BCT Coronación de Espinas de Córdoba.
+4. Agrupación Vocal de Cámara Redentoris Mundi.
+5. Agrupación Musical Ntro. Padre Jesús Nazareno de la Fuensanta de Morón.
+6. Banda de Música de El Saucejo.
+7. BCT Sayones de Ntro. Padre Jesús Nazareno de Pozoblanco.
+8. Banda de Música Municipal Gailín de Puerto Serrano.
+9. Banda de Música de El Campillo · Huelva.
+10. Agrupación Musical Juvenil Ntro. Padre Jesús Nazareno de la Fuensanta · solo para la posición adicional de Cruz de Guía de Jesús.
 
-Entre las formaciones confirmadas 2026 y pendientes de conciliación futura no aparecen actualmente:
+### NO RELACIONAR 2026
 
-- Banda Municipal de Música de Morón.
-- Agrupación Musical Nuestro Padre Jesús de la Fuensanta.
-- Redentoris Mundi.
-- Banda de Música de El Saucejo.
-- Banda de Música de El Campillo.
-- Capilla Musical Dulce Nombre de Alcalá de Guadaíra.
+- Capilla Musical Ars Sacra: nodo existente, pero sin prueba 2026 para la Soledad de Morón.
 
-## 9. Municipio
+## 10. Municipio y cobertura existente
 
-Morón de la Frontera **no existe** en `public.municipalities`.
+La auditoría viva de Supabase no devuelve:
 
-La siguiente fase deberá crear un único municipio canónico:
-- name: Morón de la Frontera;
-- slug: `moron-de-la-frontera`;
-- province: Sevilla.
+- municipio `Morón de la Frontera` ni variante `moron`;
+- Hermandades de Morón;
+- Lugares de Morón;
+- Salidas de Morón;
+- Pasos de Morón.
 
-No se asigna UUID en esta puerta.
+Los únicos `moron` existentes en `entities` son apellidos de agentes/autores o slugs derivados de esos autores.
 
-## 10. Cierre del inventario
+Resultado:
 
-**Inventario corporativo y procesional: CERRADO.**
+- municipio: **INSERT futuro** · `moron-de-la-frontera`;
+- 10 Hermandades: **INSERT futuro**;
+- 18 Pasos: **INSERT futuro**;
+- 8 sedes: **INSERT futuro**;
+- 10 Salidas históricas 2026: **INSERT futuro**;
+- 35 Imágenes canónicas individualizables: **INSERT futuro**;
+- 2 sanedritas: **NULL legítimo como nodos individuales** hasta disponer de identidad estable.
+
+No se asigna ningún UUID nuevo en esta puerta.
+
+## 11. Salidas 2026 · evidencia posterior 10/10
+
+La recapitulación posterior de Radio Morón/Cadena SER y el balance municipal posterior acreditan que las **diez cofradías** del universo procesionaron en 2026. Las diez Salidas históricas pueden planificarse como `held`.
+
+Los horarios, recorridos y el origen excepcional de Loreto son históricos de 2026 y no alimentan automáticamente Agenda futura.
+
+## 12. Cierre del modelo
+
+**Modelo documental de Morón: CERRADO.**
 
 Congelado:
 
-- 10 Hermandades;
-- 10 Salidas 2026;
-- 18 Pasos;
-- 37 Imágenes procesionales identificables;
-- 8 sedes canónicas;
-- 1 municipio nuevo;
-- 8 posiciones musicales confirmadas 2026;
-- 10 posiciones musicales pendientes de evidencia específica;
-- 4 REUSE musicales potenciales detectados en producción;
-- 0 corporaciones/pasos/salidas Morón existentes que deban conciliarse.
+- 10 Hermandades · **10 INSERT**;
+- 10 Salidas 2026 · **10 INSERT · held-ready**;
+- 18 Pasos · **18 INSERT**;
+- 37 figuras físicas inventariadas;
+- 35 Imágenes canónicas individualmente modelables · **35 INSERT**;
+- 2 sanedritas sin nodo individual · **NULL legítimo**;
+- 8 sedes · **8 INSERT**;
+- municipio · **1 INSERT futuro**;
+- música de Paso · **18/18 con evidencia 2026**;
+- música adicional · 1 Cruz de Guía documentada en Jesús;
+- Bandas para posiciones de Paso · **4 REUSE + 9 INSERT**;
+- formación juvenil adicional de Cruz de Guía · **1 INSERT**;
+- Ars Sacra · **HISTÓRICA / NO RELACIONAR en 2026**.
 
-**Siguiente puerta permitida:** modelado de participación + evidencia posterior 10/10 + cierre musical 18/18 + preconciliación del municipio.
+**Siguiente movimiento permitido tras integrar y certificar #953:** PLAN ROW-BY-ROW → MANIFIESTO DETERMINISTA → PREFLIGHT SQL DE MORÓN.
 
-Todavía no se autorizan row-by-row, staging, SQL, dry-run ni Apply.
+Esta puerta **no autoriza** staging, payload SQL, dry-run, Apply ni la creación material del municipio.

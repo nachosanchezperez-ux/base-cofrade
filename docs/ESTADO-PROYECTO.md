@@ -1,14 +1,14 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 25 de septiembre de 2026 · Morón de la Frontera · inventario canónico y matriz de Fuentes cerrados
+**Corte operativo:** 25 de septiembre de 2026 · Morón de la Frontera · modelo documental cerrado y #953 reconciliada contra main
 
-**HEAD integrado en `main`:** `75228483ce94869f29dd4dfa512881ba41cb47c7` · #952, inventario canónico y matriz de Fuentes de Morón de la Frontera.
+**HEAD integrado en `main`:** `800d1a80962ec6b53f555c3b8487734f25b22388` · producción y rama de Morón reconciliadas desde este corte antes del merge de #953.
 
-**Dominio productivo:** `hilocofrade.es` y `www.hilocofrade.es` sirven `dpl_F4h9R4mUWrngoFrGxNUa3RHoqT52`, `READY`, SHA `75228483ce94869f29dd4dfa512881ba41cb47c7`. Esta integración es documental: 0 DML.
+**Dominio productivo:** `hilocofrade.es` y `www.hilocofrade.es` tienen en despliegue productivo `dpl_EnkHsKVQFhp851aGoqrdFwSQUgfN` sobre `800d1a80962ec6b53f555c3b8487734f25b22388`; estaba `BUILDING` en este corte de reconciliación y se certificará antes del merge de #953.
 
 **Supabase:** `ACTIVE_HEALTHY` y actualizado por el usuario de Nano a Micro. Support confirmó sobreutilización de memoria, uso sostenido de SWAP y overcommitment durante el incidente; CPU/IO pueden haber contribuido, por lo que no se reduce toda la causalidad a RAM. La base ocupa ~45 MB. Tras Micro: `effective_cache_size` 384→768 MB y `maintenance_work_mem` 32→64 MB. Producción contiene 17 migraciones estructurales. HC-PERF-SUPABASE-01 materializa `home_knowledge_threads`: fuente/caché 2.052/2.052, 0 diferencias, lectura `anon` correcta, patrón medido ~115,4 ms→~0,42 ms y primer cron `succeeded` (~156,9 ms). Véase [seguimiento de capacidad](./P0-SUPABASE-CAPACITY-2026-09-25.md).
 
-**GitHub:** #952 fusionada; #951, #950 y #949 cerradas. #946 y #931 continúan como frentes UX/técnicos independientes. Morón queda detenido antes del modelado.
+**GitHub:** #953 reconciliada documentalmente contra el main vigente y pendiente de certificación técnica/merge; #955 cerrada como superseded porque main ya contiene su baseline de Écija; #931 conserva deuda de rendimiento independiente y no bloquea Morón.
 
 **Staging editoriales:** Écija `c0160036-0000-4000-8000-000000000001` = `completed`, 776/776 aplicadas, 0 fallidas; Carmona `c0160035-0000-4000-8000-000000000001` = `completed`, 530/530 aplicadas; HC-AUTO-03 · El Calvario permanece `ready` 55/55 y 0 aplicado.
 
@@ -16,7 +16,7 @@
 
 **Régimen:** FIRST EDITION FREEZE activo
 
-**Frente ACTIVO:** HC-016 · Morón de la Frontera. Inventario canónico + matriz de Fuentes cerrados; detenido antes del modelado de participación/evidencia/música. HC-AUTO-03 continúa bloqueado.
+**Frente ACTIVO:** HC-016 · Morón de la Frontera. Modelo documental cerrado: municipio, universo, música, Bandas y participación conciliados. Siguiente puerta tras integrar/certificar #953: PLAN ROW-BY-ROW. HC-AUTO-03 continúa bloqueado.
 
 > GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. Los rankings municipales previos son evidencia histórica, no una cola automática. El próximo municipio solo puede nacer de un recálculo provincial nuevo y una orden expresa.
 
@@ -30,7 +30,7 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | **CERRADO** | P0 · producción y timeouts | Supabase recuperado; #932 publicada; ventana limpia >30 min; caché vencida renovada; contenido y sitemaps verificados | Reabrir solo ante una regresión demostrada; mantener SU-484619 como seguimiento de causa raíz |
 | **CERRADO** | Octavo macrolote municipal HC-016 · Carmona | 530/530 aplicadas; QA estructural/semántico PASS; 15/15 fichas públicas HTTP 200; 0 4xx/5xx/runtime errors | No reejecutar; reabrir solo ante incidencia demostrada o enriquecimiento editorial posterior |
 | **CERRADO** | Noveno macrolote municipal HC-016 · Écija | 776/776 aplicadas; QA estructural/semántico PASS; 15/15 corporaciones + 18/18 bandas HTTP 200; 12 muestras Imagen/Paso 200; 0 4xx/5xx en rutas Écija | No reejecutar; reabrir solo por incidencia demostrada o enriquecimiento posterior |
-| **ACTIVO** | Décimo macrolote municipal HC-016 · Morón de la Frontera | Inventario cerrado: 10 Hermandades · 10 Salidas · 18 Pasos · 37 Imágenes identificables · 8 sedes · 8 posiciones musicales confirmadas | Siguiente gate: modelado + evidencia posterior 10/10 + música 18/18; no row-by-row/staging/SQL/Apply |
+| **ACTIVO** | Décimo macrolote municipal HC-016 · Morón de la Frontera | Modelo documental cerrado: 10 Hermandades · 10 Salidas held-ready · 18 Pasos · 37 figuras físicas / 35 Imágenes modelables · 8 sedes · música de Paso 18/18 · 4 REUSE musicales + 9 INSERT | Tras #953: PLAN ROW-BY-ROW → MANIFIESTO DETERMINISTA → PREFLIGHT SQL; no staging/dry-run/Apply |
 | **BLOQUEADO** | HC-AUTO-03 · El Calvario | Lote `ready` 55/55, 0 aplicado, preservado desde el 21/09 | No ejecutar Apply sin una orden específica y preflight actualizado |
 | **CERRADO** | Orden operativo | Autoridad documental y cola única integradas en #712 | No reabrir salvo contradicción verificable |
 | **CERRADO** | [#492 · Supabase Preview Branches](https://github.com/nachosanchezperez-ux/base-cofrade/issues/492) | Incidencia cerrada; #846 reconcilió el historial y la cadena activa contiene 12 migraciones estructurales, reproducibles desde cero en preview sin datos | Todo cambio futuro de esquema debe nacer como migración reproducible y superar una preview sin datos |
@@ -536,48 +536,30 @@ La evidencia y el método completos están en [`AUDITORIA-OCTAVO-MACROLOTE-MUNIC
 
 ## Siguiente puerta
 
-**Morón de la Frontera está ACTIVO, con INVENTARIO CANÓNICO + MATRIZ DE FUENTES CERRADOS.**
+**Morón de la Frontera tiene el modelo documental cerrado.**
 
-Universo congelado:
+Fotografía:
 
-- **10 Hermandades**;
-- **10 Salidas procesionales 2026**;
-- **18 Pasos**;
-- **37 Imágenes procesionales identificables**;
-- **8 sedes canónicas**;
-- 1 municipio nuevo aún no materializado;
-- **8 posiciones musicales 2026 confirmadas**;
-- **10 posiciones musicales pendientes de prueba específica**;
-- 4 Salidas con evidencia posterior individual suficiente;
-- 6 Salidas con evidencia posterior a reforzar;
-- 4 REUSE musicales potenciales detectados, pero solo Nazareno de Arahal está asignado ya con prueba 2026;
-- 0 corporaciones, Pasos o Salidas de Morón preexistentes.
+- municipio: INSERT futuro;
+- 10 Hermandades: INSERT;
+- 10 Salidas históricas 2026: INSERT · held-ready;
+- 18 Pasos: INSERT;
+- 37 figuras físicas / 35 Imágenes canónicas individualmente modelables;
+- 2 sanedritas sin identidad individual: NULL legítimo;
+- 8 sedes: INSERT;
+- música de Paso: 18/18 con evidencia 2026, diferenciando EJECUTADA y ANUNCIADA;
+- Bandas de Paso: 4 REUSE + 9 INSERT;
+- Jesús incorpora además una Cruz de Guía juvenil documentada, fuera del 18/18;
+- Ars Sacra: histórica, NO RELACIONAR 2026;
+- #955: cerrada superseded;
+- #931: deuda técnica independiente, no bloqueo editorial.
 
-Reglas protegidas:
+**Siguiente acción única tras integrar y certificar #953:** PLAN ROW-BY-ROW → MANIFIESTO DETERMINISTA → PREFLIGHT SQL DE MORÓN.
 
-- Soberano = Hermandad desde 2022;
-- Loreto conserva sede San Francisco aunque en 2026 saliera excepcionalmente desde San Miguel;
-- María Auxiliadora se comparte entre Borriquita y Buena Muerte;
-- San Miguel se comparte entre Cautivo y Soledad;
-- no crear entidades para figuras anónimas de Borriquita;
-- titulares corporativos no procesionales no generan Pasos;
-- no arrastrar música 2025 a 2026 por continuidad implícita.
-
-**Siguiente acción única permitida:** modelado de participación + evidencia posterior 10/10 + cierre musical 18/18 + conciliación de nuevas Bandas y municipio.
-
-Todavía no se autorizan:
-
-- row-by-row;
-- staging;
-- SQL editorial;
-- dry-run;
-- Apply;
-- DDL;
-- RLS.
-
-HC-AUTO-03 · El Calvario continúa bloqueado.
+Esta orden no autoriza staging, payload SQL, dry-run, Apply ni nuevo municipio.
 
 Evidencia:
 - [Inventario canónico · Morón](./INVENTARIO-MORON-DECIMO-MACROLOTE-MUNICIPAL-HC016-2026-09-25.md)
 - [Matriz de Fuentes · Morón](./MATRIZ-FUENTES-MORON-DECIMO-MACROLOTE-MUNICIPAL-HC016-2026-09-25.md)
-- [Auditoría décimo macrolote · selección de Morón](./AUDITORIA-DECIMO-MACROLOTE-MUNICIPAL-HC016-2026-09-25.md)
+- [Cierre de modelo · Morón](./CIERRE-GATE-MORON-EVIDENCIA-PARTICIPACION-MUSICA-HC016-2026-09-25.md)
+- [Certificación pre-row-by-row · Morón](./CERTIFICACION-MORON-PRE-ROW-BY-ROW-HC016-2026-09-25.md)
