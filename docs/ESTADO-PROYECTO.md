@@ -1,6 +1,6 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 25 de septiembre de 2026 · HC-016 Écija cerrado, aplicado y QA de producción verde
+**Corte operativo:** 25 de septiembre de 2026 · Écija cerrada · nuevo recálculo provincial certificado · Morón de la Frontera seleccionado
 
 **HEAD integrado en `main`:** `f71c51dabb20db2f6a211f35b6847e355a203875` · #950, cierre certificado del noveno macrolote municipal de Écija.
 
@@ -16,7 +16,7 @@
 
 **Régimen:** FIRST EDITION FREEZE activo
 
-**Frente ACTIVO:** ninguno abierto por Écija. HC-016 · Écija queda CERRADO. HC-AUTO-03 continúa bloqueado; #946 y #931 siguen como frentes UX/técnicos independientes.
+**Frente ACTIVO:** ninguno editorial abierto. Morón de la Frontera queda **SELECCIONADO / COLA** como décimo macrolote municipal HC-016; inventario y matriz aún no abiertos. HC-AUTO-03 continúa bloqueado.
 
 > GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. Los rankings municipales previos son evidencia histórica, no una cola automática. El próximo municipio solo puede nacer de un recálculo provincial nuevo y una orden expresa.
 
@@ -30,6 +30,7 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | **CERRADO** | P0 · producción y timeouts | Supabase recuperado; #932 publicada; ventana limpia >30 min; caché vencida renovada; contenido y sitemaps verificados | Reabrir solo ante una regresión demostrada; mantener SU-484619 como seguimiento de causa raíz |
 | **CERRADO** | Octavo macrolote municipal HC-016 · Carmona | 530/530 aplicadas; QA estructural/semántico PASS; 15/15 fichas públicas HTTP 200; 0 4xx/5xx/runtime errors | No reejecutar; reabrir solo ante incidencia demostrada o enriquecimiento editorial posterior |
 | **CERRADO** | Noveno macrolote municipal HC-016 · Écija | 776/776 aplicadas; QA estructural/semántico PASS; 15/15 corporaciones + 18/18 bandas HTTP 200; 12 muestras Imagen/Paso 200; 0 4xx/5xx en rutas Écija | No reejecutar; reabrir solo por incidencia demostrada o enriquecimiento posterior |
+| **COLA** | Décimo macrolote municipal HC-016 · Morón de la Frontera | Recálculo provincial 25/09: TOP 1 con 95/100; 10 sujetos, 10 Salidas y 18 Pasos documentados; cobertura real 0/10 · 0/10 · 0/18 | Próxima orden: abrir solo inventario canónico + matriz de Fuentes; no staging, SQL ni Apply |
 | **BLOQUEADO** | HC-AUTO-03 · El Calvario | Lote `ready` 55/55, 0 aplicado, preservado desde el 21/09 | No ejecutar Apply sin una orden específica y preflight actualizado |
 | **CERRADO** | Orden operativo | Autoridad documental y cola única integradas en #712 | No reabrir salvo contradicción verificable |
 | **CERRADO** | [#492 · Supabase Preview Branches](https://github.com/nachosanchezperez-ux/base-cofrade/issues/492) | Incidencia cerrada; #846 reconcilió el historial y la cadena activa contiene 12 migraciones estructurales, reproducibles desde cero en preview sin datos | Todo cambio futuro de esquema debe nacer como migración reproducible y superar una preview sin datos |
@@ -535,33 +536,39 @@ La evidencia y el método completos están en [`AUDITORIA-OCTAVO-MACROLOTE-MUNIC
 
 ## Siguiente puerta
 
-**Écija queda CERRADA Y PUBLICADA.**
+**Morón de la Frontera queda SELECCIONADO / COLA como décimo macrolote municipal HC-016.**
 
-Resultado final:
+Nuevo TOP provincial:
 
-- Apply: `APPLY_ECIJA_SQL_OK_COMMITTED`;
-- 776/776 operaciones aplicadas;
-- staging: `completed`;
-- 0 fallidas;
-- QA estructural: PASS;
-- QA semántico: PASS;
-- 16/16 Salidas 2026 en `held`;
-- 15/15 fichas corporativas HTTP 200;
-- 18/18 fichas de Bandas/Capillas HTTP 200;
-- 6/6 muestras de Imágenes HTTP 200;
-- 6/6 muestras de Pasos HTTP 200;
-- 0 4xx y 0 5xx en rutas de Écija;
-- 0 errores runtime;
-- dos 404 globales no relacionados (`/null`, `/imagenes/null`) quedan como observación técnica independiente.
+1. Morón de la Frontera · **95/100**
+2. Utrera · **87/100**
+3. Marchena · **85/100**
+4. Mairena del Alcor · **82/100**
+5. Pedrera · **69/100**
 
-Écija no debe reabrirse automáticamente.
+Universo inicial de Morón:
 
-**Siguiente línea municipal:** nuevo recálculo provincial desde cero, únicamente mediante orden expresa.
+- **10 sujetos corporativos**;
+- **10 Salidas 2026**;
+- **18 Pasos**;
+- cobertura productiva actual: **0 sujetos · 0 Salidas · 0 Pasos**;
+- municipio aún no materializado.
+
+La selección no abre todavía el lote.
+
+**Siguiente acción única permitida:** inventario canónico + matriz de Fuentes de Morón de la Frontera.
+
+Siguen prohibidos:
+
+- staging;
+- SQL editorial;
+- dry-run;
+- Apply;
+- DDL;
+- RLS.
 
 HC-AUTO-03 · El Calvario continúa bloqueado.
 
 Evidencia:
+- [Auditoría décimo macrolote municipal · selección de Morón](./AUDITORIA-DECIMO-MACROLOTE-MUNICIPAL-HC016-2026-09-25.md)
 - [Certificación Apply y cierre · Écija](./CERTIFICACION-APPLY-ECIJA-HC016-2026-09-25.md)
-- [Certificación staging · Écija](./CERTIFICACION-STAGING-ECIJA-HC016-2026-09-25.md)
-- [Preparación Apply · Écija](./PREPARACION-APPLY-ECIJA-HC016-2026-09-25.md)
-- [Certificación preflight SQL · Écija](./CERTIFICACION-PREFLIGHT-SQL-ECIJA-HC016-2026-09-25.md)
