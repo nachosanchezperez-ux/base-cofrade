@@ -105,3 +105,53 @@ test('los LCP inequívocos usan preload en Next 16', () => {
   assert.match(imageHero, /quality=\{35\}/)
   assert.match(imageHero, /sizes="50vw"/)
 })
+
+
+test('Hermandades reutiliza tipos de entidad y relaciones musicales ya cargadas', () => {
+  const page = read('app/hermandades/[slug]/page.js')
+  const media = read('lib/supabase/entity-media.js')
+  const heritage = read('lib/supabase/brotherhood-musical-heritage.js')
+
+  assert.match(page, /entityTypesById: coverEntityTypes/)
+  assert.match(media, /needsEntityTypeLookup/)
+  assert.match(page, /imageIds: h\.imagenes\.map/)
+  assert.match(page, /currentAccompaniments: h\.acompanamientoActual/)
+  assert.match(heritage, /suppliedImageIds/)
+  assert.match(heritage, /suppliedCurrentMusicRows/)
+})
+
+test('Igualás de una Hermandad no escanea todos los lugares', () => {
+  const loader = read('lib/supabase/crew-events.js')
+
+  assert.match(loader, /const placeIds = \[\.\.\.new Set\(events\.map/)
+  assert.match(loader, /\.from\('places'\)[\s\S]*\.in\('id', placeIds\)/)
+  assert.match(loader, /const \[stepLinks, agentLinks\] = await Promise\.all/)
+  assert.doesNotMatch(loader, /await supabase\.from\('places'\)\.select\('id, name, municipality_id'\),/)
+})
+
+test('Hermandades evita consultas duplicadas de censo, actividad anual y guantes', () => {
+  const page = read('app/hermandades/[slug]/page.js')
+  const quickFacts = read('components/BrotherhoodQuickFacts.js')
+  const loader = read('lib/supabase/brotherhoods.js')
+
+  assert.doesNotMatch(page, /BrotherhoodHabitGloves/)
+  assert.match(page, /item\.guantes \? <div><dt>Guantes<\/dt>/)
+  assert.match(loader, /gloves_color/)
+  assert.match(loader, /members_count, members_count_kind/)
+  assert.match(loader, /bandaId: period\.band_entity_id/)
+  assert.doesNotMatch(quickFacts, /from\('brotherhood_procession_stats'\)/)
+  assert.doesNotMatch(quickFacts, /from\('outing_series'\)/)
+  assert.match(quickFacts, /brotherhood\.datosJornada\.membersCount/)
+})
+
+test('Discografía reutiliza nombre, logo y Spotify ya cargados en la ficha de Banda', () => {
+  const page = read('app/bandas/[slug]/page.js')
+  const loader = read('lib/supabase/bandDiscography.js')
+
+  assert.match(page, /artistSpotifyUrl = band\.interestLinks\.find/)
+  assert.match(page, /getBandDiscography\(band\.id, \{/)
+  assert.match(loader, /bandName = '', bandLogoPath = '', artistSpotifyUrl = ''/)
+  assert.match(loader, /artistSpotifyUrl\s*\? Promise\.resolve/)
+  assert.match(loader, /bandName\s*\? Promise\.resolve/)
+  assert.match(loader, /bandLogoPath\s*\? Promise\.resolve/)
+})
