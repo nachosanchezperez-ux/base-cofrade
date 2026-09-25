@@ -1,7 +1,7 @@
 # Matriz de Fuentes · Morón de la Frontera · décimo macrolote municipal HC-016
 
 **Fecha:** 25 de septiembre de 2026  
-**Estado:** CERRADA PARA INVENTARIO · SIN DML  
+**Estado:** MODELO DOCUMENTAL CERRADO · SIN DML  
 **Regla:** prioridad 1 Consejo/Hermandad/Ayuntamiento; 2 Turismo institucional; 3 medio local especializado; 4 contraste secundario.
 
 ## 1. Fuentes maestras
@@ -33,151 +33,140 @@
 | MOR-F23 | https://www.morondelafrontera.es/es/servicios-municipales/fiestas-mayores | Ayuntamiento | Marco institucional: nueve cofradías Domingo de Ramos–Sábado Santo |
 | MOR-F24 | https://consejomoron.org/enlaces/ | Consejo oficial | Enlaces oficiales de Hermandades locales |
 
-## 2. Matriz por Hermandad
+## 2. Matriz final por Hermandad
 
-| Hermandad | Identidad | Sede / Pasos | Salida 2026 | Música 2026 | Evidencia posterior | Estado inventario |
-|---|---|---|---|---|---|---|
-| Soberano | **F05** | F05 + F02 | F03 | **F15/F20** | **F15/F22** | READY |
-| Borriquita | **F06** | F06 + F02 | F03 | pendiente | **F16** | READY · música pendiente |
-| Cautivo | **F07** | F07 + F02 | F03 | pendiente | pendiente individual | READY · música/evidencia posterior a reforzar |
-| Calvario | **F08** | F08 + F02 | F03 | F19 contextual; directa pendiente | pendiente individual | READY · música/evidencia posterior a reforzar |
-| Buena Muerte | **F09** | F09 + F02 | F03 | **F03 · Redentoris Mundi para Cristo**; palio pendiente | pendiente individual | READY · palio/evidencia posterior pendientes |
-| Loreto | **F10** | F10 + F02 | **F03 · salida excepcional desde San Miguel** | **F17/F21 · El Saucejo en palio** | **F17** | READY · Cristo pendiente |
-| Santa Cruz | **F11** | F11 + F02 | F03 | pendiente | pendiente individual | READY · música/evidencia posterior a reforzar |
-| Jesús | **F12** | F12 + F02 | F03 | **F03 · AM Fuensanta + Banda Municipal** | F01 video-resumen; individual pendiente | READY · evidencia posterior a reforzar |
-| Santo Entierro | **F13** | F13 + F02 | F03 | **F18 · El Campillo + Capilla Dulce Nombre** | **F18** | READY |
-| Soledad | **F14** | F14 + F02 | F03 | pendiente | pendiente individual | READY · música/evidencia posterior a reforzar |
+| Hermandad | Sede | Pasos | Salida 2026 | Música de Paso | Evidencia posterior | Estado |
+|---|---|---:|---|---|---|---|
+| Soberano | San José | 2 | 27/03 · held-ready | Cristo EJECUTADA · Palio EJECUTADA | específica + global | READY |
+| Borriquita | María Auxiliadora | 1 | 29/03 · held-ready | ANUNCIADA 2026 | específica + global | READY |
+| Cautivo | San Miguel | 2 | 29/03 · held-ready | Cristo EJECUTADA · Palio ANUNCIADA 2026 | global | READY |
+| Calvario | La Merced | 2 | 30/03 · held-ready | 2 ANUNCIADAS 2026 | global | READY |
+| Buena Muerte | María Auxiliadora | 2 | 31/03 · held-ready | 2 ANUNCIADAS 2026 | global | READY |
+| Loreto | San Francisco | 2 | 01/04 · held-ready · origen excepcional San Miguel | Cristo ANUNCIADA · Palio EJECUTADA | específica + global | READY |
+| Santa Cruz | San Ignacio | 2 | 02/04 · held-ready | 2 ANUNCIADAS 2026 | global | READY |
+| Jesús | Ermita de Jesús / Fuensanta | 2 | 03/04 · held-ready | 2 ANUNCIADAS 2026 | global | READY |
+| Santo Entierro | Ntra. Sra. de la Victoria | 2 | 03/04 · held-ready | Piedad EJECUTADA · Yacente EJECUTADA | específica + global | READY |
+| Soledad | San Miguel | 1 | 04/04 · held-ready | ANUNCIADA 2026 | global | READY |
 
-## 3. Matriz de relaciones críticas
+## 3. Reglas nucleares
 
-| Relación | Fuente | Regla |
-|---|---|---|
-| Soberano = Hermandad desde 2022 | MOR-F05 | No tipar como Agrupación |
-| Soberano · Rosario / San José | MOR-F05 | Titulares corporativos, no Pasos 2026 |
-| Borriquita · figuras delanteras no identificadas | MOR-F06 + MOR-F16 | No crear entidades anónimas |
-| Borriquita + Buena Muerte ↔ María Auxiliadora | MOR-F06 + F09 | Un único Lugar compartido |
-| Cautivo + Soledad ↔ San Miguel | MOR-F07 + F14 | Un único Lugar compartido |
-| Loreto · sede ↔ origen 2026 | MOR-F10 + F03/F17 | Sede San Francisco; origen histórico 2026 = San Miguel |
-| Loreto · Remedios | MOR-F10 | Titular corporativa; no Paso penitencial 2026 |
-| Santa Cruz · Santa Cruz / San Ignacio | MOR-F11 | Identidad corporativa; no crear Pasos extra |
-| Jesús · San Juan | MOR-F12 | Imagen presente en Paso de palio |
-| Santo Entierro · Piedad | MOR-F13 | Un Paso con Virgen de las Angustias + Cristo de la Victoria |
-| Santo Entierro · Yacente | MOR-F13/F18 | Segundo Paso independiente |
-| municipio Morón | producción + F23 | INSERT futuro; no existe REUSE |
+- Soberano = Hermandad desde 2022.
+- María Auxiliadora es una sola sede compartida por Borriquita y Buena Muerte.
+- San Miguel es una sola sede compartida por Cautivo y Soledad.
+- Loreto mantiene sede canónica San Francisco; su origen desde San Miguel en 2026 es histórico y excepcional.
+- los titulares corporativos no procesionales no generan Pasos.
+- las figuras delanteras no identificadas de Borriquita no generan Imágenes.
+- los «dos sanedritas» del Soberano permanecen como dos figuras físicas documentadas, pero sin dos nodos canónicos artificiales.
+- no se reutilizan homónimos de otros municipios.
 
-## 4. Música · conciliación inicial
+## 4. Música · cierre probatorio
 
-### Confirmaciones 2026 con Fuente específica
+| # | Posición | Formación | Evidencia 2026 | Conciliación |
+|---:|---|---|---|---|
+| 1 | Soberano · Cristo | Nazareno de Arahal | EJECUTADA | REUSE `0efc10f7-ca6e-4c8e-8d94-be35db689a7b` |
+| 2 | Soberano · Virgen | Banda Municipal de Morón | EJECUTADA | INSERT |
+| 3 | Borriquita | El Amarrado de Ávila | ANUNCIADA 2026 | INSERT |
+| 4 | Cautivo · Cristo | Coronación de Espinas de Córdoba | EJECUTADA | INSERT |
+| 5 | Cautivo · Virgen | Banda Municipal de Morón | ANUNCIADA 2026 | INSERT |
+| 6 | Calvario · Cristo | Vera Cruz de Campillos | ANUNCIADA 2026 | REUSE `c0160032-0407-4000-8000-000000000007` |
+| 7 | Calvario · Virgen | Asociación Musical de La Algaba | ANUNCIADA 2026 | REUSE `aa0f526c-2b63-41f0-aa74-ecaa14365375` |
+| 8 | Buena Muerte · Cristo | Redentoris Mundi | ANUNCIADA 2026 | INSERT |
+| 9 | Buena Muerte · Virgen | Banda Municipal de Morón | ANUNCIADA 2026 | INSERT |
+| 10 | Loreto · Cristo | AM Ntro. Padre Jesús Nazareno de la Fuensanta | ANUNCIADA 2026 | INSERT |
+| 11 | Loreto · Virgen | Banda de Música de El Saucejo | EJECUTADA | INSERT |
+| 12 | Santa Cruz · Cristo | BCT Sayones de Pozoblanco | ANUNCIADA 2026 | INSERT |
+| 13 | Santa Cruz · Virgen | BM Municipal Gailín de Puerto Serrano | ANUNCIADA 2026 | INSERT |
+| 14 | Jesús · Cristo | AM Ntro. Padre Jesús Nazareno de la Fuensanta | ANUNCIADA 2026 | INSERT |
+| 15 | Jesús · Virgen | Banda Municipal de Morón | ANUNCIADA 2026 | INSERT |
+| 16 | Santo Entierro · Piedad | Banda de Música de El Campillo | EJECUTADA | INSERT |
+| 17 | Santo Entierro · Yacente | Capilla Musical Dulce Nombre | EJECUTADA | REUSE `7d0aa85b-b657-4ca2-9846-1dc4f8f11c74` |
+| 18 | Soledad | Banda Municipal de Morón | ANUNCIADA 2026 | INSERT |
 
-| Posición | Formación | Fuente | Estado producción |
-|---|---|---|---|
-| Soberano · Cristo | Nazareno de Arahal | MOR-F15 | **REUSE** `0efc10f7-ca6e-4c8e-8d94-be35db689a7b` |
-| Soberano · Virgen | Banda Municipal de Música de Morón | MOR-F15/F20 | INSERT candidato |
-| Buena Muerte · Cristo | Redentoris Mundi | MOR-F03 | INSERT candidato |
-| Loreto · Virgen | Banda de Música de El Saucejo | MOR-F17/F21 | INSERT candidato |
-| Jesús · Cristo | Agrupación Musical Nuestro Padre Jesús de la Fuensanta | MOR-F03 | INSERT candidato |
-| Jesús · Virgen | Banda Municipal de Música de Morón | MOR-F03 | mismo INSERT |
-| Santo Entierro · Piedad | Banda de Música de El Campillo | MOR-F18 | INSERT candidato |
-| Santo Entierro · Yacente | Capilla Musical Dulce Nombre · Alcalá de Guadaíra | MOR-F18 | INSERT candidato |
+No existen posiciones de Paso clasificadas como HISTÓRICA o SIN EVIDENCIA.
 
-### REUSE disponibles pero aún no asignados a 2026
+### Fuera del 18/18
 
-- AM Vera Cruz de Campillos · `c0160032-0407-4000-8000-000000000007`.
-- Asociación Musical de La Algaba · `aa0f526c-2b63-41f0-aa74-ecaa14365375`.
-- Capilla Musical Ars Sacra · `2f6c0b1b-b3c8-43d7-99ac-8f341a65f2d1`.
+- Jesús · Cruz de Guía · Agrupación Musical Juvenil Ntro. Padre Jesús Nazareno de la Fuensanta · **ANUNCIADA 2026 · INSERT futuro**.
+- Soledad · Cruz de Guía · Ars Sacra · **HISTÓRICA · NO RELACIONAR 2026**.
 
-### Diez posiciones pendientes
+## 5. Modelo de participación
 
-1. Borriquita.
-2. Cautivo · Cristo.
-3. Cautivo · Virgen.
-4. Calvario · Cristo.
-5. Calvario · Virgen.
-6. Buena Muerte · Virgen.
-7. Loreto · Cristo.
-8. Santa Cruz · Cristo.
-9. Santa Cruz · Virgen.
-10. Soledad.
+Producción ya dispone de los códigos necesarios:
 
-No se convertirán contratos 2025 en música 2026 por continuidad implícita.
+- `mystery` para Cristo/misterio/Paso único no-palio;
+- `palio` para palios;
+- `cross_guide` para Cruz de Guía;
+- `participation_mode = unspecified` cuando la Fuente no delimita recorrido.
 
-## 5. Evidencia posterior · estado
+No se introducen `paso_cristo`, `paso_palio`, `paso_unico` ni otras excepciones de Morón.
 
-### Cerrada ya con prueba individual
+## 6. Conciliación de producción
 
-- Soberano · F15/F22.
-- Borriquita · F16.
-- Loreto · F17.
-- Santo Entierro · F18.
+Auditoría directa de Supabase:
 
-### Pendiente de reforzar individualmente
+- municipality Morón: 0;
+- brotherhoods Morón: 0;
+- places Morón: 0;
+- outings Morón: 0;
+- steps Morón: 0;
+- homónimos de otras localidades: **NO REUSE**;
+- falsos positivos `moron`: apellidos de agentes/autores y slugs de Marchas.
 
-- Cautivo.
-- Calvario.
-- Buena Muerte.
-- Santa Cruz.
-- Jesús.
-- Soledad.
+### Bandas REUSE
 
-El video-resumen 2026 del Consejo (F01) demuestra cobertura audiovisual global, pero el futuro modelado buscará una prueba textual/fotográfica individual suficiente antes de fijar `held`.
+- Nazareno de Arahal;
+- Vera Cruz de Campillos;
+- Asociación Musical de La Algaba;
+- Capilla Musical Dulce Nombre.
 
-## 6. Estado de producción antes del lote
+### Bandas INSERT para 2026
 
-### Cobertura Morón
+- Banda Municipal de Música de Morón;
+- El Amarrado de Ávila;
+- Coronación de Espinas de Córdoba;
+- Redentoris Mundi;
+- AM Ntro. Padre Jesús Nazareno de la Fuensanta de Morón;
+- Banda de Música de El Saucejo;
+- BCT Sayones de Pozoblanco;
+- BM Municipal Gailín de Puerto Serrano;
+- Banda de Música de El Campillo;
+- AM Juvenil Ntro. Padre Jesús Nazareno de la Fuensanta · solo Cruz de Guía de Jesús.
 
-- municipality: **0**;
-- brotherhoods: **0**;
-- places Morón: **0**;
-- outings Morón 2026: **0**;
-- steps Morón: **0**;
-- bandas Morón: **0**.
+### Existente pero no vigente 2026
 
-### Homónimos / falsos positivos
+- Ars Sacra: REUSE físico, **NO RELACIONAR** con Morón 2026.
 
-Las entidades con `Morón` existentes en nombres son autores/agentes con apellido Morón, no nodos del municipio.
+## 7. Imágenes, Pasos y Lugares
 
-No reutilizar por coincidencia nominal.
+- 37 figuras físicas inventariadas.
+- 35 Imágenes individualmente modelables.
+- 2 sanedritas del Soberano sin identidad individual: NULL legítimo como nodos.
+- 18 Pasos: INSERT.
+- 8 Lugares canónicos: INSERT.
+- no existe Paso compartido ni Lugar de otro municipio reutilizable.
+- no se materializa un titular no procesional como Paso.
 
-## 7. Calidad de cobertura
+## 8. Municipio
 
-### Cerrado en esta fase
+`Morón de la Frontera` no existe en `public.municipalities`, ni como variante ortográfica.
 
-- 10 identidades corporativas;
-- tipología de las 10: Hermandad;
-- 8 sedes canónicas;
-- 10 Salidas y fechas/horas 2026;
-- 18 Pasos;
-- 37 Imágenes procesionales identificables;
-- composición secundaria documentada en Soberano, Borriquita, Calvario, Loreto y Jesús;
-- 8 posiciones musicales confirmadas;
-- 4 Salidas con evidencia posterior individual suficiente;
-- REUSE/INSERT musical inicial;
-- ausencia de nodos Morón en producción.
+Clasificación: **INSERT futuro único**
+- name: Morón de la Frontera;
+- slug: `moron-de-la-frontera`;
+- province: Sevilla.
 
-### Pendiente legítimo para la siguiente puerta
+No se crea ni se asigna UUID en esta puerta.
 
-- evidencia posterior individual para 6 Salidas;
-- música 2026 de 10 posiciones;
-- decidir cuáles de las 17 figuras secundarias merecen entidad canónica en primera edición;
-- identidad/web/municipio de las nuevas formaciones musicales;
-- UUID determinista del nuevo municipio y del namespace futuro;
-- autorías/intervenciones adicionales de Imágenes;
-- recorridos completos como histórico 2026;
-- fotografías/escudos con licencia.
+## 9. Cobertura de Fuentes
 
-## 8. Puerta de salida
+Las diez Salidas tienen evidencia posterior suficiente para planificarse como `held`. La música de Paso está cerrada 18/18 diferenciando ejecución de anuncio 2026. Las deudas no probadas no se convierten en vigencias.
 
-**Inventario + matriz de Fuentes: CERRADOS.**
+## 10. Puerta de salida
 
-Próxima fase permitida:
+**MODELO DOCUMENTAL CERRADO.**
 
-**modelado de participación + evidencia posterior 10/10 + cierre musical 18/18 + conciliación de nuevas Bandas/municipio.**
+La siguiente fase, solo después de integrar/certificar #953, es:
 
-Todavía no se autorizan:
-- row-by-row;
-- staging;
-- SQL editorial;
-- dry-run;
-- Apply;
-- DDL;
-- RLS.
+**PLAN ROW-BY-ROW → MANIFIESTO DETERMINISTA → PREFLIGHT SQL DE MORÓN.**
+
+No autoriza staging, payload SQL, dry-run, Apply ni creación material del municipio.
