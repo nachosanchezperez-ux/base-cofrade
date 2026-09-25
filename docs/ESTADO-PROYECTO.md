@@ -2,13 +2,13 @@
 
 **Corte operativo:** 25 de septiembre de 2026 · Morón de la Frontera · inventario canónico y matriz de Fuentes cerrados
 
-**HEAD integrado en `main`:** `bc505b7167bb6609b3b20c6e365e7a03fcc7a35e` · #951, recálculo provincial y selección de Morón de la Frontera como décimo macrolote municipal.
+**HEAD integrado en `main`:** `75228483ce94869f29dd4dfa512881ba41cb47c7` · #952, inventario canónico y matriz de Fuentes de Morón de la Frontera.
 
-**Dominio productivo:** `hilocofrade.es` y `www.hilocofrade.es` sirven `dpl_5XqnsVJJfrTbRT8NZR5vX8i95dKQ`, `READY`, SHA `bc505b7167bb6609b3b20c6e365e7a03fcc7a35e`. Esta integración es documental: 0 DML.
+**Dominio productivo:** `hilocofrade.es` y `www.hilocofrade.es` sirven `dpl_F4h9R4mUWrngoFrGxNUa3RHoqT52`, `READY`, SHA `75228483ce94869f29dd4dfa512881ba41cb47c7`. Esta integración es documental: 0 DML.
 
 **Supabase:** `ACTIVE_HEALTHY` y actualizado por el usuario de Nano a Micro. Support confirmó sobreutilización de memoria, uso sostenido de SWAP y overcommitment durante el incidente; CPU/IO pueden haber contribuido, por lo que no se reduce toda la causalidad a RAM. La base ocupa ~45 MB. Tras Micro: `effective_cache_size` 384→768 MB y `maintenance_work_mem` 32→64 MB. Producción contiene 17 migraciones estructurales. HC-PERF-SUPABASE-01 materializa `home_knowledge_threads`: fuente/caché 2.052/2.052, 0 diferencias, lectura `anon` correcta, patrón medido ~115,4 ms→~0,42 ms y primer cron `succeeded` (~156,9 ms). Véase [seguimiento de capacidad](./P0-SUPABASE-CAPACITY-2026-09-25.md).
 
-**GitHub:** #951 fusionada y cerrada. #950, #949 y #948 cerradas; #946 y #931 continúan como frentes UX/técnicos independientes. Morón queda en cola antes de inventario.
+**GitHub:** #952 fusionada; #951, #950 y #949 cerradas. #946 y #931 continúan como frentes UX/técnicos independientes. Morón queda detenido antes del modelado.
 
 **Staging editoriales:** Écija `c0160036-0000-4000-8000-000000000001` = `completed`, 776/776 aplicadas, 0 fallidas; Carmona `c0160035-0000-4000-8000-000000000001` = `completed`, 530/530 aplicadas; HC-AUTO-03 · El Calvario permanece `ready` 55/55 y 0 aplicado.
 
