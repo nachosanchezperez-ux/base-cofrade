@@ -91,8 +91,14 @@ eliminado después del hardening.
 - rol `anon`: lectura correcta;
 - consulta equivalente de Home: ~0,42 ms después de materializar;
 - mejora observada del patrón medido: aproximadamente 270x;
-- primer refresh automático: `succeeded`, ~156,9 ms;
+- cinco refrescos consecutivos del cron final: `succeeded`, ~156–160 ms cada uno;
+- 7 conexiones cliente en la medición final, 1 activa y 0 `idle in transaction` persistentes;
+- 0 errores PostgreSQL `ERROR/FATAL/PANIC` en la ventana posterior a la migración;
 - `home_knowledge_threads` conserva `security_invoker=true`;
+- Preview Branch reproduce las 17 migraciones y la arquitectura `public`/`private` sin datos;
+- GitHub CI: 1.159 tests + build, verde;
+- Vercel preview: `READY`; 0 errores de runtime en la ventana de validación;
+- Home productiva: HTTP 200 y hilos reales renderizados tras la migración;
 - no se ha modificado contenido editorial.
 
 Performance Advisor conserva 65 avisos informativos de claves foráneas sin
@@ -102,6 +108,6 @@ antes de cualquier nueva DDL.
 ## Estado operativo
 
 La migración está en producción y reconciliada en la PR #934
-(`perf/home-knowledge-cache`). La PR permanece en draft hasta completar CI y
-una comprobación final de producción. Carmona y HC-AUTO-03 no forman parte de
-esta intervención.
+(`perf/home-knowledge-cache`). Todos los gates de cierre han quedado verdes y
+HC-PERF-SUPABASE-01 queda certificado para integración. Carmona y HC-AUTO-03 no
+forman parte de esta intervención.
