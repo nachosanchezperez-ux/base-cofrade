@@ -27,15 +27,21 @@ test('la Home conserva una salida nocturna hasta su entrada real', async () => {
   assert.match(agendaLoader, /item\.liveState\.state !== 'done'/)
 })
 
-test('la Home presenta una agenda común sin sustituir las guías de detalle', async () => {
+test('la Home solo usa gran protagonista cuando una salida está en curso', async () => {
   const home = await read('components/HomePageV2.js')
+  const grid = await read('components/HomeProcessionGrid.js')
+  const snapshot = await read('lib/supabase/home-snapshot.js')
 
   assert.match(home, /id="proximos-dias"/)
   assert.match(home, /En los próximos días/)
-  assert.match(home, /Abrir guía completa/)
-  assert.match(home, /href="\/extraordinarias"/)
-  assert.match(home, /href="\/procesiones-de-gloria"/)
-  assert.match(home, /Las siguientes citas/)
+  assert.match(home, /const featuredOuting = liveOutings\[0\] \|\| null/)
+  assert.match(home, /HomeProcessionGrid outings=\{balancedUpcoming\}/)
+  assert.match(home, /Procesión en curso/)
   assert.match(home, /procesiones en curso/)
   assert.match(home, /multipleLive/)
+  assert.match(grid, /data-home-procession-layout="equal"/)
+  assert.match(grid, /slice\(0, 4\)/)
+  assert.match(grid, /Guía de \{outing\.municipality\}/)
+  assert.match(snapshot, /find\(\(item\) => item\.liveState\?\.state === 'live'\)/)
+  assert.match(snapshot, /hilo-cofrade-home-public-snapshot-v17/)
 })
