@@ -34,14 +34,32 @@
 | ECI-F24 | https://www.bandademusicavillademarchena.es/inicio | Banda oficial | Confirma Villa de Marchena tras Quinta Angustia en 2026 |
 | ECI-F25 | https://www.ecijaweb.com/ecija/cofrade/penas-boceto-paso-misterio-tres-caidas/20260106225903028956.html | Medio local / anuncio corporativo | Las Penas: Jesús de las Tres Caídas aún era proyecto, no imagen ejecutada |
 | ECI-F26 | https://www.cofradiasyhermandades.es/fichasupra.php?Consejo+General+de+Hermandades+y+Cofrad%C3%ADas+de+%C3%89cija=&sc=70600 | Directorio registral secundario | Contraste de denominaciones largas; no prevalece sobre Consejo/Hermandad |
+| ECI-F27 | https://www.ecijaweb.com/comienza-una-semana-santa-en-ecija-marcada-por-el-cambio-de-hora-y-algo-de-viento/ | Medio local posterior | Borriquita, Amor y Cautivo: evidencia posterior individual del Domingo de Ramos |
+| ECI-F28 | https://hermandaddeconfalon.es/index.php?Itemid=270&id=61&option=com_sppagebuilder&view=page | Hermandad oficial | Identidad de la AM Sagrada Columna y Azotes de Écija |
+| ECI-F29 | https://infantes.org/concierto-de-la-banda-de-cc-y-tt-nuestro-padre-jesus-rescatado-en-honor-a-santo-tomas-de-villanueva/ | Ayuntamiento | Identidad de BCT Jesús Rescatado · Villanueva de los Infantes |
+| ECI-F30 | https://semanasantapozoblanco.es/banda-de-cornetas-y-tambores-los-del-perdon/ | Portal cofrade local | Identidad de “Los del Perdón” · Pozoblanco |
+| ECI-F31 | https://bandafuentesdeandalucia.com/ | Formación musical | Identidad de Banda de Música de Fuentes de Andalucía |
+| ECI-F32 | https://www.descendimientocordoba.org/acompanamiento-musical/ | Hermandad oficial | Identidad de BCT Caído y Fuensanta · Córdoba |
+| ECI-F33 | https://www.amjesusdespojado.com/ | Formación musical oficial | Identidad de AM Jesús Despojado · Jaén |
+| ECI-F34 | https://federband.org/banda/banda-de-musica-de-torredonjimeno | Federación | Identidad de Banda de Música de Torredonjimeno |
+| ECI-F35 | https://amsantacruz.jimdofree.com/ | Formación musical | Identidad de AM Santa Cruz · Huelva |
+| ECI-F36 | https://veracruzdealmogia.com/biografia/ | Formación/Hermandad | Identidad de Banda Vera+Cruz · Almogía |
+| ECI-F37 | https://bandasinfonica.dostorres.es/ | Formación musical oficial | Identidad de Banda Sinfónica Municipal de Dos Torres |
+| ECI-F38 | https://hermandaddesanbenito.net/cddvd/ | Hermandad oficial | Identidad de BCT Santísimo Cristo de la Sangre · San Benito |
+| ECI-F39 | https://amigosdelamusicadeherrera.com/ | Formación musical oficial | Identidad de Amigos de la Música · Herrera |
+| ECI-F40 | https://www.daimiel.es/es/noticias/sociedad/la-banda-de-cornetas-los-coloraos-pregonara-la-feria-y-fiestas-de-daimiel-y | Ayuntamiento | Identidad de BCT Cristo de la Columna “Los Coloraos” · Daimiel |
+| ECI-F41 | https://www.bandademusicavillademarchena.es/inicio | Formación musical oficial | Identidad de Banda de Música Villa de Marchena |
+| ECI-F42 | https://bandadelapalmamarchena.blogspot.com/ | Formación musical | Identidad de BCT María Santísima de la Palma · Marchena |
+| ECI-F43 | https://federband.org/banda/ateneo-musical-de-ecija | Federación | Identidad y continuidad histórica del Ateneo Musical de Écija |
+| ECI-F44 | https://www.bandaalvarezquintero.es/ | Formación musical oficial | Nodo canónico de Asociación Musical Álvarez Quintero · Utrera |
 
 ## 2. Matriz por sujeto corporativo
 
 | Sujeto | Identidad / sede | Salida 2026 | Pasos | Música | Evidencia posterior | Estado |
 |---|---|---|---|---|---|---|
 | Las Penas | F01 + F08 | F04 + F08 | F08 | F08 | **F07** | READY inventario |
-| Cautivo / Borriquita | F01 + F02 + F09/F11 | **F09 + F11** | F09/F11 | F09/F11 | F05; individual pendiente de reforzar | READY · 2 Salidas / 1 Hermandad |
-| Amor | F01 + F10 | F04 + F10 | F10 | F10 | F05 | READY |
+| Cautivo / Borriquita | F01 + F02 + F09/F11 | **F09 + F11** | F09/F11 | F09/F11 | **F27 directa** + F05 | READY · 2 Salidas / 1 Hermandad |
+| Amor | F01 + F10 | F04 + F10 | F10 | F10 | **F27 directa** + F05 | READY |
 | Yedra | **F06** + F01 | F04 + F12 | F12 | F12 | F05 | READY · fuente oficial directa |
 | Estudiantes / Santiago | F01 + F13 | F04 + F13 | F13 | F13 | F05 | READY |
 | San Gil | F01 + F14 | F04 + F14 | F14 | F14 | F05 | READY |
@@ -139,9 +157,7 @@ No crear ninguna entidad desde esta lista hasta comprobar identidad + municipio 
 ### Pendiente legítimo para la siguiente puerta
 
 - composición secundaria exacta de misterios;
-- evidencia posterior individual por cada una de las 16 Salidas;
-- conciliación de las 19 formaciones musicales aún no resueltas;
-- resolver Álvarez Quintero;
+- conciliación final por nombre+municipio de los 18 INSERT musicales justo antes de asignar UUID;
 - autorías, fechas e intervenciones de cada Imagen;
 - fotografías/escudos con licencia;
 - recorridos como datos históricos 2026, no Agenda futura.
@@ -150,9 +166,7 @@ No crear ninguna entidad desde esta lista hasta comprobar identidad + municipio 
 
 **Matriz de Fuentes: CERRADA para inventario.**
 
-Próxima fase permitida:
-
-**modelado de participación + evidencia posterior + conciliación musical**.
+La fase posterior de **modelado de participación + evidencia posterior + conciliación musical** queda cerrada en documentos específicos. La próxima puerta es **pre-row-by-row determinista**.
 
 Todavía no se autorizan:
 - row-by-row;
