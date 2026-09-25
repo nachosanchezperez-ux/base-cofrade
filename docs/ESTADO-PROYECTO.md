@@ -2,13 +2,13 @@
 
 **Corte operativo:** 25 de septiembre de 2026 · Écija · staging 776/776 certificado · Apply candidate preparado/no autorizado
 
-**HEAD integrado en `main`:** `e792ca363970d6e689a91270cdadb8a41387ad6d` · #947, pre-row-by-row determinista y preflight rollback-only de Écija preparados.
+**HEAD integrado en `main`:** `1dbbf9cfaaf820b6214bd18ffef777a9653cce27` · #949, staging de Écija certificado y candidato de Apply preparado/no ejecutado.
 
-**Dominio productivo:** `hilocofrade.es` y `www.hilocofrade.es` sirven `dpl_F45hGjsN8kUwiaJEznsqUEHUyfH6`, `READY`, SHA `e792ca363970d6e689a91270cdadb8a41387ad6d`. El payload de Écija está archivado pero **NO ejecutado**.
+**Dominio productivo:** `hilocofrade.es` y `www.hilocofrade.es` sirven `dpl_8XyWfxxRtxdAZRmYEqzhabqbk3EE`, `READY`, SHA `1dbbf9cfaaf820b6214bd18ffef777a9653cce27`. Écija permanece con `applied_items=0`.
 
 **Supabase:** `ACTIVE_HEALTHY` y actualizado por el usuario de Nano a Micro. Support confirmó sobreutilización de memoria, uso sostenido de SWAP y overcommitment durante el incidente; CPU/IO pueden haber contribuido, por lo que no se reduce toda la causalidad a RAM. La base ocupa ~45 MB. Tras Micro: `effective_cache_size` 384→768 MB y `maintenance_work_mem` 32→64 MB. Producción contiene 17 migraciones estructurales. HC-PERF-SUPABASE-01 materializa `home_knowledge_threads`: fuente/caché 2.052/2.052, 0 diferencias, lectura `anon` correcta, patrón medido ~115,4 ms→~0,42 ms y primer cron `succeeded` (~156,9 ms). Véase [seguimiento de capacidad](./P0-SUPABASE-CAPACITY-2026-09-25.md).
 
-**GitHub:** #947 fusionada; #940, #939, #937 y #933 cerradas. #946 y #931 continúan como frentes técnicos/UX independientes. Écija queda detenida antes del dry-run.
+**GitHub:** #949 fusionada; #948, #947, #940 y #939 cerradas. #946 y #931 continúan como frentes independientes. Écija queda detenida antes de Apply.
 
 **Staging editoriales:** Écija `c0160036-0000-4000-8000-000000000001` = `ready`, 776/776 válidas, 0 aplicadas; Carmona `c0160035-0000-4000-8000-000000000001` = `completed`, 530/530 aplicadas; HC-AUTO-03 · El Calvario = `ready`, 55/55 y 0 aplicado.
 
