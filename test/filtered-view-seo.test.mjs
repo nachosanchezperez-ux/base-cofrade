@@ -7,16 +7,28 @@ async function read(path) {
   return readFile(new URL(`../${path}`, import.meta.url), 'utf8')
 }
 
-test('las URLs limpias conservan indexación normal', () => {
-  assert.equal(filteredViewRobots(undefined), undefined)
-  assert.equal(filteredViewRobots({}), undefined)
-  assert.equal(filteredViewRobots(new URLSearchParams()), undefined)
+test('las URLs limpias y los parámetros técnicos conservan indexación normal', () => {
+  const agendaFilters = ['categoria', 'periodo', 'territorio', 'municipio']
+  assert.equal(filteredViewRobots(undefined, agendaFilters), undefined)
+  assert.equal(filteredViewRobots({}, agendaFilters), undefined)
+  assert.equal(filteredViewRobots(new URLSearchParams(), agendaFilters), undefined)
+  assert.equal(filteredViewRobots({ _vercel_share: 'token' }, agendaFilters), undefined)
+  assert.equal(filteredViewRobots({ utm_source: 'social' }, agendaFilters), undefined)
 })
 
-test('las vistas con parámetros quedan noindex, follow', () => {
-  assert.deepEqual(filteredViewRobots({ categoria: 'processions' }), { index: false, follow: true })
-  assert.deepEqual(filteredViewRobots({ localidad: 'cadiz', tipo: 'cornetas' }), { index: false, follow: true })
-  assert.deepEqual(filteredViewRobots(new URLSearchParams('q=macarena')), { index: false, follow: true })
+test('solo los filtros funcionales dejan la vista noindex, follow', () => {
+  assert.deepEqual(
+    filteredViewRobots({ categoria: 'processions', _vercel_share: 'token' }, ['categoria', 'periodo']),
+    { index: false, follow: true }
+  )
+  assert.deepEqual(
+    filteredViewRobots({ localidad: 'cadiz', tipo: 'cornetas' }, ['tipo', 'localidad']),
+    { index: false, follow: true }
+  )
+  assert.deepEqual(
+    filteredViewRobots(new URLSearchParams('q=macarena&utm_source=test'), ['q', 'tipo']),
+    { index: false, follow: true }
+  )
 })
 
 test('Agenda, Bandas y Directorio aplican el contrato a sus filtros', async () => {
