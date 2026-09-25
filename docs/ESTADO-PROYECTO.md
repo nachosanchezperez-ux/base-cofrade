@@ -1,6 +1,6 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 25 de septiembre de 2026 · Écija seleccionada · inventario canónico y matriz de Fuentes cerrados
+**Corte operativo:** 25 de septiembre de 2026 · Écija · modelado, evidencia posterior y conciliación musical cerrados
 
 **HEAD integrado en `main`:** `305f6d499cdf18b1e5f74e6e0cbde450023c4d8b` · #939, inventario canónico y matriz de Fuentes de Écija.
 
@@ -16,7 +16,7 @@
 
 **Régimen:** FIRST EDITION FREEZE activo
 
-**Frente ACTIVO:** HC-016 · Écija. Inventario canónico + matriz de Fuentes cerrados; detenido en la puerta de modelado de participación/evidencia/música. HC-AUTO-03 continúa bloqueado.
+**Frente ACTIVO:** HC-016 · Écija. Inventario, matriz, modelado de participación, evidencia posterior 16/16 y conciliación musical cerrados; detenido antes de pre-row-by-row. HC-AUTO-03 continúa bloqueado.
 
 > GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. Los rankings municipales previos son evidencia histórica, no una cola automática. El próximo municipio solo puede nacer de un recálculo provincial nuevo y una orden expresa.
 
@@ -29,7 +29,7 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | **CERRADO** | HC-PERF-SUPABASE-01 · capacidad Supabase / Home | Micro activo; migraciones `20260925051118` y `20260925051336` en producción y reproducidas en preview; consulta crítica ~115,4→~0,42 ms; 5 refrescos consecutivos `succeeded` en ~156–160 ms; CI tests+build verde; Home productiva HTTP 200; sin errores runtime Vercel | Reabrir solo ante regresión demostrada de RAM/SWAP, timeouts, cron o lectura pública |
 | **CERRADO** | P0 · producción y timeouts | Supabase recuperado; #932 publicada; ventana limpia >30 min; caché vencida renovada; contenido y sitemaps verificados | Reabrir solo ante una regresión demostrada; mantener SU-484619 como seguimiento de causa raíz |
 | **CERRADO** | Octavo macrolote municipal HC-016 · Carmona | 530/530 aplicadas; QA estructural/semántico PASS; 15/15 fichas públicas HTTP 200; 0 4xx/5xx/runtime errors | No reejecutar; reabrir solo ante incidencia demostrada o enriquecimiento editorial posterior |
-| **ACTIVO** | Noveno macrolote municipal HC-016 · Écija | Inventario cerrado: 14 Hermandades + 1 Agrupación, 16 Salidas, 32 Pasos; matriz de Fuentes cerrada; 0 DML | Siguiente gate: modelado de participación + evidencia posterior + conciliación musical; no row-by-row/staging/SQL/Apply |
+| **ACTIVO** | Noveno macrolote municipal HC-016 · Écija | 15 sujetos · 16 Salidas held habilitadas · 32 Pasos · música 32/32 resuelta · 8 REUSE musicales únicos + 18 INSERT candidatos · Álvarez Quintero resuelto | Siguiente gate: pre-row-by-row determinista; no staging/SQL/Apply |
 | **BLOQUEADO** | HC-AUTO-03 · El Calvario | Lote `ready` 55/55, 0 aplicado, preservado desde el 21/09 | No ejecutar Apply sin una orden específica y preflight actualizado |
 | **CERRADO** | Orden operativo | Autoridad documental y cola única integradas en #712 | No reabrir salvo contradicción verificable |
 | **CERRADO** | [#492 · Supabase Preview Branches](https://github.com/nachosanchezperez-ux/base-cofrade/issues/492) | Incidencia cerrada; #846 reconcilió el historial y la cadena activa contiene 12 migraciones estructurales, reproducibles desde cero en preview sin datos | Todo cambio futuro de esquema debe nacer como migración reproducible y superar una preview sin datos |
@@ -535,27 +535,27 @@ La evidencia y el método completos están en [`AUDITORIA-OCTAVO-MACROLOTE-MUNIC
 
 ## Siguiente puerta
 
-**Écija está ACTIVA, con INVENTARIO CANÓNICO + MATRIZ DE FUENTES CERRADOS.**
+**Écija queda preparada para PRE-ROW-BY-ROW, todavía sin abrirlo.**
 
-El inventario corrige la lectura inicial de la selección y fija el universo real:
+Puertas cerradas:
 
-- **14 Hermandades penitenciales**;
-- **1 Agrupación Parroquial** · Las Penas;
-- **15 sujetos corporativos**;
-- **16 Salidas procesionales 2026**;
-- **32 Pasos procesionales**;
-- 32 posiciones de acompañamiento descritas;
-- 6 formaciones musicales con REUSE productivo ya seguro;
-- Álvarez Quintero queda **BLOCKED** por doble nodo existente;
-- Virgen del Valle permanece fuera del universo penitencial;
-- Borriquita y Cautivo permanecen como **una Hermandad con dos Salidas**;
-- Las Penas permanece como **Agrupación Parroquial**.
+- inventario canónico;
+- matriz de **44 Fuentes**;
+- modelado corporación → Salida → Paso → Imagen primaria;
+- 16/16 Salidas habilitadas como `held`;
+- 32/32 posiciones musicales resueltas;
+- 27 posiciones con formación nominal;
+- 5 posiciones sin entidad Banda/Capilla;
+- 8 nodos musicales REUSE únicos;
+- 18 formaciones candidatas a INSERT;
+- Álvarez Quintero resuelto: nodo canónico `7fafdc04-cb94-47d8-814f-5537639660ff`;
+- duplicado legado `f492d28d-af48-4606-862c-89d5d3560a6b` preservado sin DELETE;
+- falsos REUSE de Rescatado y Columna/Azotes descartados.
 
-**Siguiente acción única permitida:** modelado de participación + evidencia posterior por Salida + conciliación musical REUSE/INSERT.
+**Siguiente acción única permitida:** abrir el pre-row-by-row determinista de Écija y enumerar cada operación/UUID/dependencia/Fuente antes de cualquier ensayo.
 
-Todavía no se autorizan:
+Siguen prohibidos hasta cerrar ese plan:
 
-- row-by-row;
 - staging;
 - SQL editorial;
 - dry-run;
@@ -566,6 +566,8 @@ Todavía no se autorizan:
 HC-AUTO-03 · El Calvario continúa bloqueado.
 
 Evidencia:
+- [Modelado Écija · participación, Pasos, sedes y música](./MODELADO-ECIJA-HC016-PARTICIPACION-PASOS-SEDE-MUSICA-2026-09-25.md)
+- [Evidencia posterior · Écija](./EVIDENCIA-POSTERIOR-ECIJA-NOVENO-MACROLOTE-MUNICIPAL-HC016-2026-09-25.md)
+- [Conciliación musical · Écija](./CONCILIACION-MUSICAL-ECIJA-HC016-2026-09-25.md)
 - [Inventario canónico de Écija](./INVENTARIO-ECIJA-NOVENO-MACROLOTE-MUNICIPAL-HC016-2026-09-25.md)
 - [Matriz de Fuentes de Écija](./MATRIZ-FUENTES-ECIJA-NOVENO-MACROLOTE-MUNICIPAL-HC016-2026-09-25.md)
-- [Auditoría noveno macrolote · selección de Écija](./AUDITORIA-NOVENO-MACROLOTE-MUNICIPAL-HC016-2026-09-25.md)
