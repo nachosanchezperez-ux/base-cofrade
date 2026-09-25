@@ -31,3 +31,20 @@ test('la Home diferencia la Agenda general del bloque de salidas procesionales',
   assert.match(home, /href="\/extraordinarias"/)
   assert.match(home, /href="\/procesiones-de-gloria"/)
 })
+
+
+test('la Home prioriza la Agenda temporal antes del contenido editorial', async () => {
+  const home = await read('components/HomePageV2.js')
+  const snapshot = await read('lib/supabase/home-snapshot.js')
+  const temporal = await read('components/HomeTemporalFocus.js')
+
+  assert.match(home, /HomeTemporalFocus/)
+  assert.match(home, /homeTemporal/)
+  assert.match(snapshot, /getAgendaCofrade/)
+  assert.match(snapshot, /buildHomeTemporalAgenda/)
+  assert.match(temporal, /data-home-temporal-mode/)
+  assert.match(temporal, /Guía de \{item\.municipality\}/)
+  assert.match(temporal, /Ahora/)
+  assert.match(temporal, /Mañana/)
+  assert.match(temporal, /Fin de semana/)
+})

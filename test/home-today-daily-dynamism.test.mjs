@@ -52,5 +52,15 @@ test('una protagonista sin fotografía se compacta y elimina también la fila vi
 
 test('la caché pública se renueva con el nuevo contrato de rotación', () => {
   const snapshot = read('lib/supabase/home-snapshot.js')
-  assert.match(snapshot, /hilo-cofrade-home-public-snapshot-v15/)
+  assert.match(snapshot, /hilo-cofrade-home-public-snapshot-v16/)
+})
+
+
+test('el ancla Hoy pertenece a la Agenda temporal y el editorial se presenta como Descubre hoy', () => {
+  const temporal = read('components/HomeTemporalFocus.js')
+  const editorial = read('components/HomeTodayV2.js')
+
+  assert.match(temporal, /id="hoy"/)
+  assert.match(editorial, /id="descubre-hoy"/)
+  assert.match(editorial, /Descubre hoy en Hilo Cofrade/)
 })
