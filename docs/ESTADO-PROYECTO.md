@@ -1,22 +1,22 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 24 de septiembre de 2026, 22:36 UTC · P0 cerrado tras recuperación y ventana limpia
+**Corte operativo:** 25 de septiembre de 2026, 05:15 UTC · seguimiento de capacidad Supabase activo tras upgrade a Micro
 
 **Código de aplicación integrado en `main`:** `ba70771c94f11fd3aff70e4e651ab3093352fd28` · #932. Los commits posteriores de cierre solo reconcilian documentación y evidencias; no cambian el árbol de aplicación servido por el dominio.
 
 **Dominio productivo:** `hilocofrade.es` y `www.hilocofrade.es` apuntan a `dpl_6V5TZZyVzoT36J3DvXg3seJ82ehF`, READY, SHA `ba70771c94f11fd3aff70e4e651ab3093352fd28`. Home, Agenda, Bandas, Hermandades, Autores, Igualás/Ensayos y El Baratillo verificados con HTTP 200 y contenido del nuevo deployment. Sitemap: 2.052 URL; imagen de Storage optimizada: HTTP 200.
 
-**Supabase:** recuperado después del reinicio ejecutado por el usuario. Ventana final de 31 min 55 s: SQL, API, Storage, PostgREST y Realtime operativos; 7 conexiones de cliente de 60, 0 activas ajenas y 0 `idle in transaction`. Quince migraciones recertificadas. La causa raíz permanece sin determinar.
+**Supabase:** `ACTIVE_HEALTHY` y actualizado por el usuario de Nano a Micro. Support confirmó sobreutilización de memoria, uso sostenido de SWAP y overcommitment durante el incidente; CPU/IO pueden haber contribuido, por lo que no se reduce toda la causalidad a RAM. La base ocupa ~45 MB. Tras Micro: `effective_cache_size` 384→768 MB y `maintenance_work_mem` 32→64 MB. Producción contiene 17 migraciones estructurales. HC-PERF-SUPABASE-01 materializa `home_knowledge_threads`: fuente/caché 2.052/2.052, 0 diferencias, lectura `anon` correcta, patrón medido ~115,4 ms→~0,42 ms y primer cron `succeeded` (~156,9 ms). Véase [seguimiento de capacidad](./P0-SUPABASE-CAPACITY-2026-09-25.md).
 
-**PR abiertas:** #931 (`perf/hc-speed-seo-01`), independiente y sin integrar. #932 fusionada y publicada. #930 cerrada sin integrar.
+**PR abiertas:** #934 (`perf/home-knowledge-cache`, draft; reconciliación de las migraciones ya aplicadas), #933 (Carmona, sin DML/DDL) y #931 (`perf/hc-speed-seo-01`). #932 fusionada y publicada; #930 cerrada sin integrar.
 
 **Staging editoriales:** un lote `ready`, HC-AUTO-03 · El Calvario, 55/55 válido y 0 aplicado. Se preserva bloqueado. Esta intervención no ejecutó escrituras de datos. Se detectó y reconcilió un Rosario publicado en paralelo a las 22:14:14 UTC: explica el paso de 62 a 63 actos entre preview y producción.
 
-**P0 cerrado:** el build completo compila sin consultar Supabase; las cachés estrictas no convierten fallos en directorios vacíos. La ventana limpia superó 30 minutos y las cachés vencidas se renovaron con contenido real. No atribuir la causa sin evidencia a cuota, capacidad, RLS o una consulta concreta.
+**P0 del 24/09 cerrado; seguimiento de capacidad activo:** el build completo sigue aislado de Supabase durante prerender y la recuperación operativa permanece certificada. La respuesta posterior de Support aporta evidencia de presión sostenida de memoria/SWAP. Se ha aplicado una mitigación específica sobre `home_knowledge_threads`; queda por cerrar CI, refresco periódico y QA final de producción antes de liberar de nuevo el frente técnico.
 
 **Régimen:** FIRST EDITION FREEZE activo
 
-**Frente ACTIVO:** ninguno abierto automáticamente tras el cierre. Carmona recupera su puerta como siguiente frente municipal, pendiente de una orden expresa. #931 continúa como trabajo técnico independiente. HC-AUTO-03 sigue bloqueado. Véase [certificación del cierre](./P0-RECOVERY-VALIDATION-2026-09-24.md).
+**Frente ACTIVO:** HC-PERF-SUPABASE-01 · presión de memoria y caché de Home. Carmona permanece en **COLA** y #933 no debe avanzar a DML/DDL mientras este seguimiento no quede certificado. #931 continúa como trabajo técnico independiente. HC-AUTO-03 sigue bloqueado. Véanse [certificación del cierre operativo](./P0-RECOVERY-VALIDATION-2026-09-24.md) y [seguimiento de capacidad](./P0-SUPABASE-CAPACITY-2026-09-25.md).
 
 > GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. Los rankings municipales previos son evidencia histórica, no una cola automática. El próximo municipio solo puede nacer de un recálculo provincial nuevo y una orden expresa.
 
@@ -26,7 +26,7 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 
 | Posición | Frente | Estado real | Regla |
 |---|---|---|---|
-| **CERRADO** | P0 · producción y timeouts | Supabase recuperado; #932 publicada; ventana limpia >30 min; caché vencida renovada; contenido y sitemaps verificados | Reabrir solo ante una regresión demostrada; mantener SU-484619 como seguimiento de causa raíz |
+| **ACTIVO** | HC-PERF-SUPABASE-01 · capacidad Supabase / Home | Micro activo; migraciones `20260925051118` y `20260925051336` en producción; PR #934 draft; consulta crítica ~115,4→~0,42 ms; cron cada minuto | Cerrar solo tras CI, cron estable, Advisors sin regresión propia y QA público; no mezclar con Carmona |\n| **CERRADO** | P0 · producción y timeouts | Supabase recuperado; #932 publicada; ventana limpia >30 min; caché vencida renovada; contenido y sitemaps verificados | Reabrir solo ante una regresión demostrada; mantener SU-484619 como seguimiento de causa raíz |
 | **COLA** | Octavo macrolote municipal HC-016 · Carmona | Puerta liberada tras P0; evidencia posterior 10/10; 28 titulares candidatos; 17 Pasos y 30 relaciones imagen–Paso documentadas; 8 posiciones musicales identificadas, 3 cerradas | No ejecutar staging, SQL, dry-run, Apply ni publicación hasta orden expresa |
 | **BLOQUEADO** | HC-AUTO-03 · El Calvario | Lote `ready` 55/55, 0 aplicado, preservado desde el 21/09 | No ejecutar Apply sin una orden específica y preflight actualizado |
 | **CERRADO** | Orden operativo | Autoridad documental y cola única integradas en #712 | No reabrir salvo contradicción verificable |
