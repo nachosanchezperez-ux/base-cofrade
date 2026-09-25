@@ -240,7 +240,7 @@ insert into public.bands ("entity_id","band_type","municipality_id","website_url
 ('c0160036-0409-4000-8000-000000000009','Banda de Música',null,null,'Formación documentada en el acompañamiento procesional de Écija 2026.','Almogía, Málaga'),
 ('c0160036-0410-4000-8000-000000000010','Banda de Música',null,null,'Formación documentada en el acompañamiento procesional de Écija 2026.','Dos Torres, Córdoba'),
 ('c0160036-0411-4000-8000-000000000011','Banda de Música',null,null,'Formación documentada en el acompañamiento procesional de Écija 2026.','Herrera, Sevilla'),
-('c0160036-0412-4000-8000-000000000012','Cornetas y Tambores','e4319248-831a-4f4c-8a1f-d6cf83f2446e',null,'Formación documentada en el acompañamiento procesional de Écija 2026.','Utrera'),
+('c0160036-0412-4000-8000-000000000012','Cornetas y Tambores','e4319248-831a-4f4c-adb8-19c496f95dd6',null,'Formación documentada en el acompañamiento procesional de Écija 2026.','Utrera'),
 ('c0160036-0413-4000-8000-000000000013','Capilla musical','f3fba0c4-fffa-4e8c-8495-3dc1c3bc94bf',null,'Formación documentada en el acompañamiento procesional de Écija 2026.','Écija'),
 ('c0160036-0414-4000-8000-000000000014','Capilla musical','24e0b757-f3fd-4d9c-82c9-2a758444f2d6',null,'Formación documentada en el acompañamiento procesional de Écija 2026.','Dos Hermanas'),
 ('c0160036-0415-4000-8000-000000000015','Cornetas y Tambores',null,null,'Formación documentada en el acompañamiento procesional de Écija 2026.','Daimiel, Ciudad Real'),
