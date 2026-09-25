@@ -4,7 +4,6 @@ import { cache } from 'react';
 import BrotherhoodAgendaSection from '@/components/BrotherhoodAgendaSection';
 import BrotherhoodCultsSection from '@/components/BrotherhoodCultsSection';
 import BrotherhoodCrewEventsSection from '@/components/BrotherhoodCrewEventsSection';
-import BrotherhoodHabitGloves from '@/components/BrotherhoodHabitGloves';
 import BrotherhoodMusicalHeritage from '@/components/BrotherhoodMusicalHeritage';
 import MusicalRepertoiresSection from '@/components/MusicalRepertoiresSection';
 import BrotherhoodOverviewV2 from '@/components/BrotherhoodOverviewV2';
@@ -173,16 +172,21 @@ export default async function HermandadDetailPage({ params }) {
   if (!h) notFound();
 
   const canonicalPath = `/hermandades/${h.slug}`;
+  const coverEntityTypes = new Map([
+    [h.id, 'brotherhood'],
+    ...h.imagenes.map((imagen) => [imagen.id, 'image']),
+    ...h.pasos.map((paso) => [paso.id, 'step']),
+    ...(h.participacionesConsejo || []).map((participacion) => [participacion.id, 'event']),
+  ]);
   const [entityCoverMedia, musicalHeritage, authoritativeCrestPath, musicalRepertoires, crewEvents, agendaData] = await Promise.all([
     getPublishedEntityCoverMediaMap(
-      [
-        h.id,
-        ...h.imagenes.map((imagen) => imagen.id),
-        ...h.pasos.map((paso) => paso.id),
-        ...(h.participacionesConsejo || []).map((participacion) => participacion.id),
-      ]
+      [...coverEntityTypes.keys()],
+      { entityTypesById: coverEntityTypes }
     ),
-    getBrotherhoodMusicalHeritage(h.id),
+    getBrotherhoodMusicalHeritage(h.id, {
+      imageIds: h.imagenes.map((imagen) => imagen.id),
+      currentAccompaniments: h.acompanamientoActual,
+    }),
     getPublishedBrotherhoodCrestPath(h.id),
     getMusicalRepertoires({ brotherhoodEntityId: h.id }),
     getCrewEventsByBrotherhoodId(h.id),
@@ -648,7 +652,7 @@ export default async function HermandadDetailPage({ params }) {
               <div><dt>Cíngulo</dt><dd>{item.cordon}</dd></div><div><dt>Botonadura</dt><dd>{item.botonadura}</dd></div>
               {item.escudo && <div><dt>Escudo</dt><dd>{item.escudo}</dd></div>}
               <div><dt>Calzado</dt><dd>{item.calzado}</dd></div>
-              <BrotherhoodHabitGloves habitId={item.id} />
+              {item.guantes ? <div><dt>Guantes</dt><dd>{item.guantes}</dd></div> : null}
             </dl></div>
           </article>
         ))}</div>
