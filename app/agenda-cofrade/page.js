@@ -16,7 +16,7 @@ import v4Styles from './agenda-cofrade-v4.module.css'
 export async function generateMetadata({ searchParams } = {}) {
   const params = await searchParams
   const { title, description } = agendaSeoCopy(madridYear())
-  const robots = filteredViewRobots(params)
+  const robots = filteredViewRobots(params, ['categoria', 'periodo', 'territorio', 'municipio'])
   return {
     title,
     description,

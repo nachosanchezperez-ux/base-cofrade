@@ -14,7 +14,10 @@ const title = 'Directorio cofrade de Sevilla y provincia'
 const description = 'Busca y explora hermandades, imágenes, pasos y bandas documentadas en Hilo Cofrade, con navegación por ubicación, calendario y estilo.'
 
 export async function generateMetadata({ searchParams } = {}) {
-  const robots = filteredViewRobots(await searchParams)
+  const robots = filteredViewRobots(
+    await searchParams,
+    ['q', 'tipo', 'territorio', 'localidad', 'subtipo', 'dia', 'mes', 'limite']
+  )
   return {
     title,
     description,
