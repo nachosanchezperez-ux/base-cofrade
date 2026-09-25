@@ -4,7 +4,7 @@
 **Fase:** ROW-BY-ROW CERRADO · SIN DML EJECUTADO  
 **Base:** `de420589baa03db98cfda4a11796606592761f50`  
 **Namespace:** `c0160036-*`  
-**Contrato:** **776 DML · 15 REUSE externos · 0 DELETE · 0 DDL · 0 RLS**
+**Contrato:** **776 DML · 770 UPSERT + 6 UPDATE/REUSE · 15 nodos externos reutilizados · 0 DELETE · 0 DDL · 0 RLS**
 
 ## Resumen
 
@@ -29,6 +29,18 @@
 | `music_accompaniment_periods` | 27 |
 | `source_links` | 227 |
 | **TOTAL DML** | **776** |
+
+## Reutilización congelada
+
+Los **15 nodos externos reutilizados** se dividen en:
+
+- **12 REUSE puros**, sin DML sobre el nodo: municipio Écija, lugar Santa Cruz, ECI-F38, ECI-F44 y 8 formaciones musicales canónicas.
+- **3 nodos draft UPDATE/REUSE**, que generan 6 DML porque actualizan tabla `entities` + tabla especializada:
+  - Expiración de Écija · `c6100000-0000-4000-8000-000000000009`;
+  - Confalón de Écija · `e8b83412-786d-44a9-abc1-383b1c3fb82d`;
+  - Paso del Cristo de la Columna y Azotes · `52d0bc09-c7a1-43a1-a285-9196257d1567`.
+
+**0 UUID externos cambian.**
 
 ## Notas
 
