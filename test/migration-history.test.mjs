@@ -20,6 +20,8 @@ const EXECUTABLE_SCHEMA_MIGRATIONS = [
   "20260921234430_add_entity_editorial_freshness.sql",
   "20260922044145_add_editorial_priority_view.sql",
   "20260922045453_fix_editorial_priority_content_date.sql",
+  "20260925051118_home_knowledge_threads_cache.sql",
+  "20260925051336_home_knowledge_threads_cache_private.sql",
 ];
 
 test("Supabase migration versions are unique and well formed", async () => {
