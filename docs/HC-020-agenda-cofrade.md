@@ -30,6 +30,8 @@ No existe la modalidad «Rosario nocturno»: la hora del acto se expresa en su h
 - Agenda Cofrade, Extraordinarias, Glorias e Igualás y ensayos comparten una navegación persistente y recíproca, tanto en sus directorios como en las fichas individuales; cada calendario marca su sección activa y permite saltar directamente a los otros tres sin volver a la portada.
 - Las fichas de actos exponen relaciones directas con su Hermandad, localidad, Bandas o Pasos ya documentados, el calendario de origen y la agenda de la Hermandad; estas conexiones reutilizan datos existentes y no añaden consultas relacionales pesadas por ficha.
 - Las fichas de Hermandad agregan sus próximas citas públicas de Agenda Cofrade, Glorias, Extraordinarias e Igualás y ensayos en una sección única, manteniendo después los módulos especializados como archivo y detalle.
+- Las fichas de Bandas agregan sus próximas actuaciones documentadas: salidas con asignación musical canónica y conciertos publicados, sin reconstruir relaciones por texto.
+- Cada localidad con actividad o entidades documentadas obtiene un hub bajo `/agenda-cofrade/localidad/`, que conecta sus próximas citas con sus Hermandades, Bandas y los cuatro calendarios públicos.
 - «Qué ver hoy» devuelve todos los actos del día; la cabecera no selecciona una única cita como protagonista.
 - El archivo queda como consulta secundaria y no compite con las tres preguntas temporales principales.
 - Los estados ordinarios anunciados no se repiten visualmente en cada tarjeta; solo se destaca una excepción relevante, como una cancelación.

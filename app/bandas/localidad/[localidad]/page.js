@@ -41,6 +41,7 @@ export default async function BandMunicipalityDirectoryPage({ params }) {
       description={data.description}
       path={data.path}
       contextLabel={data.label}
+      relatedAgendaHref={`/agenda-cofrade/localidad/${localidad}`}
     />
   )
 }

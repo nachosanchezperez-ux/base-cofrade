@@ -14,6 +14,7 @@ async function harness({ fail = '', delay = 0 } = {}) {
     brotherhoodDirectoryLocalities: () => [], brotherhoodDirectoryRoutes: () => [],
     filterIndexableBrotherhoods: (rows) => rows,
     bandDirectoryFacets: () => ({ types: [], municipalities: [] }),
+    agendaMunicipalityRouteSlug: (value = '') => String(value).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''),
     heritageDirectoryLocalities: () => [], heritageDirectoryTypes: () => [],
     getPublicIndexableEntityEntries: async ({ brotherhoods = [], bandDirectory = [], images = [], steps = [] }) => {
       calls.push(['indexability']);
@@ -26,10 +27,10 @@ async function harness({ fail = '', delay = 0 } = {}) {
     getBandsDirectory: [{ id: 'b', slug: 'banda', entityType: 'band' }],
     getImagesDirectory: [{ id: 'i', slug: 'imagen', entityType: 'image' }],
     getStepsDirectory: [{ id: 'p', slug: 'paso', entityType: 'step' }],
-    getExtraordinaryDirectory: [{ slug: 'salida' }],
-    getGloryDirectory: [{ detailHref: '/procesiones-de-gloria/gloria' }],
-    getCrewEventDirectory: [{ detailHref: '/igualas-y-ensayos/ensayo' }],
-    getRosaryOutings: [{ detailHref: '/agenda-cofrade/rosarios/rosario' }],
+    getExtraordinaryDirectory: [{ slug: 'salida', municipality: 'Pilas' }],
+    getGloryDirectory: [{ detailHref: '/procesiones-de-gloria/gloria', municipality: 'Pilas' }],
+    getCrewEventDirectory: [{ detailHref: '/igualas-y-ensayos/ensayo', municipality: 'Pilas' }],
+    getRosaryOutings: [{ detailHref: '/agenda-cofrade/rosarios/rosario', municipality: 'Pilas' }],
     getMusicalRepertoires: [{ href: '/crucetas-musicales/cruceta', entries: [{ marchHref: '/marchas/marcha' }] }],
     getPublicMarchSitemapEntries: [{ slug: 'marcha', updatedAt: '2026-09-24' }],
     getPublicAgentSitemapEntries: [{ slug: 'autor' }],
@@ -105,7 +106,8 @@ test('full sitemap retains canonical detail URLs and unique march metadata', asy
   assert.equal(new Set(urls).size, urls.length);
   for (const path of ['/hermandades/hermandad', '/bandas/banda', '/imagenes/imagen', '/pasos/paso',
     '/marchas/marcha', '/autores/autor', '/crucetas-musicales/cruceta', '/extraordinarias/salida',
-    '/procesiones-de-gloria/gloria', '/igualas-y-ensayos/ensayo', '/agenda-cofrade/rosarios/rosario']) {
+    '/procesiones-de-gloria/gloria', '/igualas-y-ensayos/ensayo', '/agenda-cofrade/rosarios/rosario',
+    '/agenda-cofrade/localidad/pilas']) {
     assert.ok(urls.includes(`https://hilocofrade.es${path}`), path);
   }
   const march = entries.find((entry) => entry.url.endsWith('/marchas/marcha'));

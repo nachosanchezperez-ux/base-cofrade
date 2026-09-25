@@ -49,6 +49,8 @@ export default async function BrotherhoodMunicipalityDirectoryPage({ params }) {
       hermandades={data.items}
       path={data.path}
       breadcrumbs={[{ label: data.label }]}
+      contextLabel={data.label}
+      relatedAgendaHref={`/agenda-cofrade/localidad/${localidad}`}
     />
   )
 }
