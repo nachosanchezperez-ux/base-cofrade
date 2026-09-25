@@ -2,13 +2,13 @@
 
 **Corte operativo:** 25 de septiembre de 2026 · Écija · modelado, evidencia posterior y conciliación musical cerrados
 
-**HEAD integrado en `main`:** `305f6d499cdf18b1e5f74e6e0cbde450023c4d8b` · #939, inventario canónico y matriz de Fuentes de Écija.
+**HEAD integrado en `main`:** `d20b26729181f0112da2f1892abaa748f97078e0` · #940, modelado, evidencia posterior y conciliación musical de Écija.
 
-**Dominio productivo:** `hilocofrade.es` y `www.hilocofrade.es` sirven `dpl_2gES1PLDax6MtYvApTnyb6imuh2C`, `READY`, SHA `305f6d499cdf18b1e5f74e6e0cbde450023c4d8b`. Esta integración es documental: no ha ejecutado datos de Écija.
+**Dominio productivo:** `hilocofrade.es` y `www.hilocofrade.es` sirven `dpl_C1NUWhLYZrR6pSSybDQueAqgpHYk`, `READY`, SHA `d20b26729181f0112da2f1892abaa748f97078e0`. Esta integración es documental: 0 DML sobre Écija.
 
 **Supabase:** `ACTIVE_HEALTHY` y actualizado por el usuario de Nano a Micro. Support confirmó sobreutilización de memoria, uso sostenido de SWAP y overcommitment durante el incidente; CPU/IO pueden haber contribuido, por lo que no se reduce toda la causalidad a RAM. La base ocupa ~45 MB. Tras Micro: `effective_cache_size` 384→768 MB y `maintenance_work_mem` 32→64 MB. Producción contiene 17 migraciones estructurales. HC-PERF-SUPABASE-01 materializa `home_knowledge_threads`: fuente/caché 2.052/2.052, 0 diferencias, lectura `anon` correcta, patrón medido ~115,4 ms→~0,42 ms y primer cron `succeeded` (~156,9 ms). Véase [seguimiento de capacidad](./P0-SUPABASE-CAPACITY-2026-09-25.md).
 
-**GitHub:** #939 fusionada; #933 y #937 permanecen cerradas; #931 continúa como frente técnico independiente. Écija queda detenida antes del modelado siguiente.
+**GitHub:** #940 fusionada; #939, #937 y #933 cerradas; #931 continúa como frente técnico independiente. Écija queda detenida antes del pre-row-by-row.
 
 **Staging editoriales:** Carmona `c0160035-0000-4000-8000-000000000001` = `completed`, 530/530 aplicadas, 0 fallidas. HC-AUTO-03 · El Calvario permanece `ready` 55/55 y 0 aplicado.
 
