@@ -65,7 +65,7 @@ function LeadThread({ thread }) {
     : ''
 
   return (
-    <Link className={`${styles.leadCard} ${polishStyles.threadsLead}`} href={thread.href}>
+    <Link className={`${styles.leadCard} ${polishStyles.threadsLead}`} href={thread.href} data-analytics-destination-name={thread.title}>
       <div className={styles.leadTopline}>
         <span className={styles.latest}><i aria-hidden="true" /> Más reciente</span>
         <ThreadStatus thread={thread} />
@@ -98,7 +98,7 @@ function CompactThread({ thread }) {
     : ''
 
   return (
-    <Link className={`${styles.compactCard} ${polishStyles.threadsCompact}`} href={thread.href}>
+    <Link className={`${styles.compactCard} ${polishStyles.threadsCompact}`} href={thread.href} data-analytics-destination-name={thread.title}>
       <div className={styles.compactTopline}>
         <span className={styles.relation}>{thread.label}</span>
         <ThreadStatus thread={thread} />
