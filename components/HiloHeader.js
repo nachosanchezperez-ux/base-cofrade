@@ -33,6 +33,7 @@ const directoryLinks = [
   ['/pasos', 'Pasos'],
   ['/bandas', 'Bandas'],
   ['/marchas', 'Marchas'],
+  ['/autores', 'Autores'],
   ['/crucetas-musicales', 'Crucetas musicales'],
 ];
 
