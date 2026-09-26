@@ -856,3 +856,14 @@
     border-radius: 27px;
   }
 }
+
+
+.followingAgendaSection {
+  padding-top: 0;
+  padding-bottom: 30px;
+  background: #fff;
+}
+
+.followingAgendaSection .nextExtraSection {
+  padding-top: 24px;
+}
