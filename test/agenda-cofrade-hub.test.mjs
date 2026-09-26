@@ -92,3 +92,11 @@ test('besamanos y besapiés parten de cultos y ediciones publicadas', () => {
   assert.match(source, /\.eq\('status', 'published'\)/)
   assert.match(source, /#cultos/)
 })
+
+
+test('la Agenda oculta el año actual y solo lo muestra al cambiar de año', () => {
+  const directory = read('components/AgendaCofradeDirectoryV4.js')
+
+  assert.match(directory, /const currentYear = String\(today \|\| ''\)\.slice\(0, 4\)/)
+  assert.match(directory, /item\.dateInfo\.year && String\(item\.dateInfo\.year\) !== currentYear/)
+})
