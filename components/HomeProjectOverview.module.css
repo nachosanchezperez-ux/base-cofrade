@@ -229,16 +229,16 @@
   background: #b998d2;
 }
 
+.agendaTypes a[data-category="romeries"]::before {
+  background: #a9b76a;
+}
+
 .agendaTypes a[data-category="devotions"]::before {
   background: #72b4a4;
 }
 
 .agendaTypes a[data-category="concerts"]::before {
   background: #70acd2;
-}
-
-.agendaTypes li:last-child {
-  grid-column: 1 / -1;
 }
 
 .agendaTypes a:hover {
@@ -527,10 +527,6 @@
     min-height: 43px;
     padding: 8px 10px 8px 13px;
     font-size: 11px;
-  }
-
-  .agendaTypes li:last-child {
-    grid-column: auto;
   }
 
   .encyclopediaCard {

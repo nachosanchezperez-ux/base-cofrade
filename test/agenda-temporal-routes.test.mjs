@@ -70,7 +70,7 @@ test('la cronología aplica un código visual sobrio por tipo de acto', () => {
 
   assert.match(landing, /data-category=\{category\.key\}/)
   assert.match(events, /data-category=\{item\.category \|\| 'other'\}/)
-  for (const category of ['processions', 'transfers', 'rosaries', 'devotions', 'concerts']) {
+  for (const category of ['processions', 'transfers', 'rosaries', 'romeries', 'devotions', 'concerts']) {
     assert.match(landingCss, new RegExp(`data-category=["']${category}["']`))
     assert.match(eventCss, new RegExp(`data-category=["']${category}["']`))
   }
