@@ -145,6 +145,19 @@ function sanitizedVercelEvent(event) {
   }
 }
 
+function sanitizedSpeedInsight(data) {
+  if (!data?.url || getStoredAnalyticsConsent() !== 'granted') return null
+  try {
+    const url = new URL(data.url, window.location.origin)
+    if (isPanelPath(url.pathname)) return null
+    url.search = ''
+    url.hash = ''
+    return { ...data, url: url.toString() }
+  } catch {
+    return null
+  }
+}
+
 function ensureVercelAnalyticsScript() {
   if (document.querySelector('script[data-hilo-analytics="true"]')) return
   const script = document.createElement('script')
@@ -317,7 +330,7 @@ export default function HiloAnalytics() {
   return (
     <>
       <CookieConsentBanner />
-      {analyticsActive ? <SpeedInsights /> : null}
+      {analyticsActive ? <SpeedInsights beforeSend={sanitizedSpeedInsight} /> : null}
     </>
   )
 }
