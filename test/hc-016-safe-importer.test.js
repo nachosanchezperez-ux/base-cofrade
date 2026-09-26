@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises'
 
 import {
   assertBulkImportBatchCanApply,
+  applyBulkImportRecord,
   preflightBulkImportBatch,
 } from '../lib/panel/bulk-import-preflight.js'
 
@@ -46,7 +47,7 @@ class FakeQuery {
   then(resolve, reject) { return Promise.resolve(this.execute()).then(resolve, reject) }
 }
 
-function fakeSupabase() {
+function fakeSupabase(brotherhoods = []) {
   const tables = {
     sources: [
       { id: '10000000-0000-0000-0000-000000000001', url: 'https://example.com/recurso?a=1&b=2', created_at: '2026-01-01T00:00:00Z' },
@@ -57,7 +58,7 @@ function fakeSupabase() {
       { id: '20000000-0000-0000-0000-000000000002', entity_type: 'brotherhood', name: 'Entidad ambigua', slug: 'ambigua-uno' },
       { id: '20000000-0000-0000-0000-000000000003', entity_type: 'brotherhood', name: 'Entidad ambigua', slug: 'ambigua-dos' }
     ],
-    brotherhoods: [],
+    brotherhoods,
     source_links: [],
   }
   return { from: (table) => new FakeQuery(tables[table] || []) }
@@ -169,4 +170,54 @@ test('rechaza antes de Apply un on_conflict sin restricción única real', async
   }])
   assert.equal(valid.canApply, true)
   assert.equal(valid.plans[0].effectiveOperation, 'insert')
+})
+
+const typedBrotherhood = {
+  table: 'brotherhoods', operation: 'upsert',
+  data: { entity_id: '30000000-0000-0000-0000-000000000001',
+    official_name: 'Hermandad de prueba', popular_name: 'Prueba', brotherhood_types: ['Penitencia'] },
+}
+
+test('HC-016 bloquea omisión como Morón y tipos vacíos, no canónicos o duplicados antes de escribir', async () => {
+  for (const types of [undefined, null, [], 'Penitencia', ['penitencia'], ['Penitencia', null],
+    ['Penitencia', 'Penitencia'], ['Otra'], [['Penitencia']], [' Penitencia']]) {
+    const record = structuredClone(typedBrotherhood)
+    if (types === undefined) delete record.data.brotherhood_types
+    else record.data.brotherhood_types = types
+    const client = fakeSupabase()
+    const preflight = await preflightBulkImportBatch(client, [fixture.new_record, record])
+    assert.equal(preflight.canApply, false, JSON.stringify(types))
+    assert.throws(() => assertBulkImportBatchCanApply(preflight), /PREFLIGHT_BLOCKED/)
+    // The fake client has no mutation methods: a mistaken write would fail this assertion.
+    await assert.rejects(applyBulkImportRecord(client, record), /MISSING_REQUIRED_FIELD|INVALID_VALUE/)
+  }
+})
+
+test('HC-016 admite combinaciones canónicas explícitas en altas', async () => {
+  for (const types of [['Penitencia'], ['Penitencia', 'Sacramental'], ['Penitencia', 'Gloria'], ['Agrupación Parroquial']]) {
+    const record = structuredClone(typedBrotherhood)
+    record.data.brotherhood_types = types
+    const preflight = await preflightBulkImportBatch(fakeSupabase(), [record])
+    assert.equal(preflight.canApply, true)
+    assert.equal(preflight.plans[0].effectiveOperation, 'insert')
+  }
+})
+
+test('HC-016 valida el tipo persistido de un UPDATE parcial sin añadirlo al payload', async () => {
+  const record = { ...typedBrotherhood, data: { entity_id: typedBrotherhood.data.entity_id, history_text: 'Texto' } }
+  for (const types of [[], null, ['penitencia'], ['Penitencia', 'Penitencia'], ['Gloria']]) {
+    const existing = { ...typedBrotherhood.data, brotherhood_types: types }
+    const preflight = await preflightBulkImportBatch(fakeSupabase([existing]), [record])
+    assert.equal(preflight.canApply, types?.[0] === 'Gloria')
+    assert.equal(Object.hasOwn(preflight.plans[0].payload, 'brotherhood_types'), false)
+  }
+})
+
+test('HC-016 permite corregir un tipo vacío y rechaza borrarlo o resolverlo por referencia', async () => {
+  const existing = { ...typedBrotherhood.data, brotherhood_types: [] }
+  assert.equal((await preflightBulkImportBatch(fakeSupabase([existing]), [typedBrotherhood])).canApply, true)
+  const empty = { ...typedBrotherhood, data: { ...typedBrotherhood.data, brotherhood_types: [] } }
+  assert.equal((await preflightBulkImportBatch(fakeSupabase([typedBrotherhood.data]), [empty])).canApply, false)
+  const reference = { ...typedBrotherhood, refs: { brotherhood_types: { table: 'entities', match: { slug: 'entidad-existente' } } } }
+  assert.equal((await preflightBulkImportBatch(fakeSupabase(), [reference])).canApply, false)
 })

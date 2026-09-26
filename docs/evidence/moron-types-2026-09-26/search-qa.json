@@ -1,0 +1,250 @@
+[
+  {
+    "question": "Hermandades de Morón de la Frontera",
+    "status": 200,
+    "result": {
+      "kind": "answer",
+      "answer": "En Hilo Cofrade hay 10 corporaciones publicadas de Morón de la Frontera.",
+      "path": [
+        "Hermandades",
+        "Morón de la Frontera",
+        "Directorio publicado"
+      ],
+      "entities": [],
+      "items": [
+        {
+          "label": "El Cautivo",
+          "meta": "Penitencia · Domingo de Ramos · tarde · Parroquia de San Miguel Arcángel",
+          "href": "/hermandades/cautivo-moron-de-la-frontera",
+          "group": "Hermandades"
+        },
+        {
+          "label": "El Soberano",
+          "meta": "Penitencia · Viernes de Dolores · Parroquia de San José",
+          "href": "/hermandades/soberano-moron-de-la-frontera",
+          "group": "Hermandades"
+        },
+        {
+          "label": "Jesús",
+          "meta": "Penitencia · Madrugada del Viernes Santo · Ermita de Jesús / Fuensanta",
+          "href": "/hermandades/jesus-nazareno-moron-de-la-frontera",
+          "group": "Hermandades"
+        },
+        {
+          "label": "La Borriquita",
+          "meta": "Penitencia · Domingo de Ramos · mañana · Capilla de María Auxiliadora · Salesianos",
+          "href": "/hermandades/borriquita-moron-de-la-frontera",
+          "group": "Hermandades"
+        },
+        {
+          "label": "La Compañía / Santa Cruz",
+          "meta": "Penitencia · Gloria · Jueves Santo · Iglesia de San Ignacio de Loyola · La Compañía",
+          "href": "/hermandades/santa-cruz-moron-de-la-frontera",
+          "group": "Hermandades"
+        },
+        {
+          "label": "La Merced / Calvario",
+          "meta": "Penitencia · Lunes Santo · Parroquia de Nuestra Señora de la Merced",
+          "href": "/hermandades/calvario-moron-de-la-frontera",
+          "group": "Hermandades"
+        },
+        {
+          "label": "La Soledad",
+          "meta": "Penitencia · Sábado Santo · Parroquia de San Miguel Arcángel",
+          "href": "/hermandades/soledad-moron-de-la-frontera",
+          "group": "Hermandades"
+        },
+        {
+          "label": "Los Salesianos / Buena Muerte",
+          "meta": "Penitencia · Martes Santo · Capilla de María Auxiliadora · Salesianos",
+          "href": "/hermandades/buena-muerte-moron-de-la-frontera",
+          "group": "Hermandades"
+        },
+        {
+          "label": "San Francisco / Loreto",
+          "meta": "Penitencia · Sacramental · Miércoles Santo · Parroquia de San Francisco de Asís",
+          "href": "/hermandades/loreto-moron-de-la-frontera",
+          "group": "Hermandades"
+        },
+        {
+          "label": "Santo Entierro",
+          "meta": "Penitencia · Viernes Santo · tarde · Parroquia de Nuestra Señora de la Victoria y del Espíritu Santo",
+          "href": "/hermandades/santo-entierro-moron-de-la-frontera",
+          "group": "Hermandades"
+        }
+      ],
+      "links": [
+        {
+          "label": "Ver las sacramentales de Morón de la Frontera",
+          "href": "/hermandades/sacramentales/moron-de-la-frontera"
+        }
+      ],
+      "evidence": [
+        {
+          "key": "brotherhood-directory-moron-de-la-frontera-all",
+          "label": "Directorio público de Hermandades",
+          "detail": "10 fichas publicadas · Morón de la Frontera"
+        }
+      ],
+      "references": [],
+      "referencesNote": "",
+      "followUps": [
+        "¿Qué tienen en común?",
+        "Ordénalas de más antigua a más reciente."
+      ],
+      "context": {
+        "entityId": null,
+        "entityType": null,
+        "name": "Morón de la Frontera",
+        "resultSet": {
+          "entityType": "brotherhood",
+          "entityIds": [
+            "c0160037-0303-4000-8000-000000000003",
+            "c0160037-0301-4000-8000-000000000001",
+            "c0160037-0308-4000-8000-000000000008",
+            "c0160037-0302-4000-8000-000000000002",
+            "c0160037-0307-4000-8000-000000000007",
+            "c0160037-0304-4000-8000-000000000004",
+            "c0160037-0310-4000-8000-000000000010",
+            "c0160037-0305-4000-8000-000000000005",
+            "c0160037-0306-4000-8000-000000000006",
+            "c0160037-0309-4000-8000-000000000009"
+          ],
+          "count": 10,
+          "label": "10 corporaciones de Morón de la Frontera",
+          "sourceIntent": "brotherhoods_by_municipality"
+        }
+      },
+      "compactItemLimit": 10
+    }
+  },
+  {
+    "question": "Hermandades sacramentales de Morón de la Frontera",
+    "status": 200,
+    "result": {
+      "kind": "answer",
+      "answer": "Amén. Composición del archivo musical de la Hermandad de San Benito.",
+      "path": [
+        "Marcha",
+        "Ficha",
+        "Relaciones"
+      ],
+      "entities": [
+        {
+          "id": "9dc5f523-fe82-40b9-b71e-b451f79ef2ec",
+          "entityType": "march",
+          "type": "Marcha",
+          "name": "Amén",
+          "href": "/marchas/marcha-amen-ct-2001",
+          "meta": "Composición del archivo musical de la Hermandad de San Benito."
+        }
+      ],
+      "items": [],
+      "followUps": [
+        "¿Quién compuso Amén?"
+      ],
+      "context": {
+        "entityId": "9dc5f523-fe82-40b9-b71e-b451f79ef2ec",
+        "entityType": "march",
+        "name": "Amén"
+      },
+      "evidence": [
+        {
+          "key": "published_entities",
+          "label": "Entidades publicadas",
+          "detail": "Datos visibles y relaciones disponibles en Hilo Cofrade"
+        }
+      ],
+      "references": [
+        {
+          "id": "6fb9acf1-9fab-470f-bc42-dd6b73951d5b",
+          "name": "Archivo musical · Cornetas y tambores · San Benito",
+          "url": "https://hermandaddesanbenito.net/banda-de-cornetas-y-tambores/",
+          "type": "Web oficial",
+          "publisher": "Hermandad de San Benito",
+          "publicationDate": null,
+          "scopes": [
+            "Título, autoría, año y clasificación musical"
+          ],
+          "linkedEntityCount": 1
+        }
+      ],
+      "referencesNote": "Fuentes asociadas a las entidades implicadas; la base de la respuesta indica qué relaciones y datos concretos se han usado."
+    }
+  },
+  {
+    "question": "Hermandades de Gloria de Morón de la Frontera",
+    "status": 200,
+    "result": {
+      "kind": "answer",
+      "answer": "En Hilo Cofrade hay 1 hermandad de gloria publicada de Morón de la Frontera.",
+      "path": [
+        "Hermandades",
+        "Gloria",
+        "Morón de la Frontera",
+        "Directorio publicado"
+      ],
+      "entities": [],
+      "items": [
+        {
+          "label": "La Compañía / Santa Cruz",
+          "meta": "Penitencia · Gloria · Jueves Santo · Iglesia de San Ignacio de Loyola · La Compañía",
+          "href": "/hermandades/santa-cruz-moron-de-la-frontera",
+          "group": "Hermandades"
+        }
+      ],
+      "links": [],
+      "evidence": [
+        {
+          "key": "brotherhood-directory-moron-de-la-frontera-gloria",
+          "label": "Directorio público de Hermandades",
+          "detail": "1 fichas publicadas · Morón de la Frontera"
+        }
+      ],
+      "references": [],
+      "referencesNote": "",
+      "followUps": [
+        "¿Qué tienen en común?",
+        "Ordénalas de más antigua a más reciente."
+      ],
+      "context": {
+        "entityId": null,
+        "entityType": null,
+        "name": "Morón de la Frontera",
+        "resultSet": {
+          "entityType": "brotherhood",
+          "entityIds": [
+            "c0160037-0307-4000-8000-000000000007"
+          ],
+          "count": 1,
+          "label": "1 hermandad de gloria publicada de Morón de la Frontera",
+          "sourceIntent": "brotherhoods_by_municipality"
+        }
+      },
+      "compactItemLimit": 1
+    }
+  },
+  {
+    "question": "Sacramentales de Morón de la Frontera",
+    "status": 200,
+    "result": {
+      "kind": "search_results",
+      "answer": "He encontrado esta ficha en Hilo Cofrade para «Sacramentales de Morón de la Frontera».",
+      "path": [
+        "Búsqueda directa"
+      ],
+      "entities": [],
+      "items": [
+        {
+          "label": "Sacramentales de Morón de la Frontera",
+          "meta": "Directorio · 1 ficha publicada",
+          "href": "/hermandades/sacramentales/moron-de-la-frontera"
+        }
+      ],
+      "evidence": [],
+      "references": [],
+      "followUps": [],
+      "context": null
+    }
+  }
+]

@@ -22,6 +22,7 @@ Debe comprobar como mínimo:
 4. Estado de previews y producción en Vercel.
 5. Migraciones pendientes o no reconciliadas cuando la tarea toque datos o esquema.
 6. Riesgo de pisar cambios en curso.
+7. En HC-016, aplicar la [barrera de tipos de Hermandad](./HC016-PREFLIGHT-TIPOS-2026-09-27.md): bloquear altas sin clasificación y candidatos SQL sin guard transaccional sobre todas las Hermandades del universo, incluidas REUSE.
 
 Si el estado registrado está desactualizado, prevalece el estado real de las herramientas y debe actualizarse `docs/ESTADO-PROYECTO.md` cuando esa diferencia cambie decisiones futuras.
 
