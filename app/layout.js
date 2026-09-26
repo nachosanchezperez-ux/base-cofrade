@@ -55,6 +55,10 @@ const publisherJsonLd = {
   url: SITE_URL,
   name: SITE_NAME,
   description: DEFAULT_DESCRIPTION,
+  logo: {
+    '@type': 'ImageObject',
+    url: `${SITE_URL}/brand/logo.svg`,
+  },
 };
 
 const websiteJsonLd = {

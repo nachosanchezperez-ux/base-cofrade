@@ -16,7 +16,14 @@ import navStyles from './HomeExtraordinaryNav.module.css'
 import polishStyles from './HomeResponsivePolish.module.css'
 
 const stackedNextExtraHeadStyle = { alignItems: 'flex-start', flexDirection: 'column', gap: 4 }
-const heroThread = ['Hermandades', 'Imágenes', 'Pasos', 'Bandas', 'Marchas', 'Autores']
+const heroThread = [
+  ['/hermandades', 'Hermandades'],
+  ['/imagenes', 'Imágenes'],
+  ['/pasos', 'Pasos'],
+  ['/bandas', 'Bandas'],
+  ['/marchas', 'Marchas'],
+  ['/autores', 'Autores'],
+]
 
 function madridDateKey(date = new Date()) {
   const parts = new Intl.DateTimeFormat('en-CA', {
@@ -337,9 +344,9 @@ export default function HomePageV2({
               </Link>
             </nav>
             <div className={`${styles.heroThread} ${polishStyles.heroThread}`} aria-label="Recorrido del conocimiento relacionado de Hilo Cofrade">
-              {heroThread.map((item, index) => (
-                <span key={item}>
-                  <b>{item}</b>
+              {heroThread.map(([href, label], index) => (
+                <span key={href}>
+                  <Link href={href}><b>{label}</b></Link>
                   {index < heroThread.length - 1 ? <i aria-hidden="true">→</i> : null}
                 </span>
               ))}

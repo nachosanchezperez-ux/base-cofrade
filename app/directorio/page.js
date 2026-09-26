@@ -11,7 +11,7 @@ import styles from './directorio.module.css'
 export const revalidate = 900
 
 const title = 'Directorio cofrade de Sevilla y provincia'
-const description = 'Busca y explora hermandades, imágenes, pasos y bandas documentadas en Hilo Cofrade, con navegación por ubicación, calendario y estilo.'
+const description = 'Busca y explora hermandades, imágenes, pasos, bandas, marchas y autores documentados en Hilo Cofrade, con navegación por ubicación, calendario, estilo y relaciones.'
 
 export async function generateMetadata({ searchParams } = {}) {
   const robots = filteredViewRobots(
@@ -58,6 +58,7 @@ export default async function DirectorioPage() {
       { '@type': 'CollectionPage', name: `Pasos (${counts.step || 0})`, url: absoluteUrl('/pasos') },
       { '@type': 'CollectionPage', name: `Bandas (${counts.band || 0})`, url: absoluteUrl('/bandas') },
       { '@type': 'CollectionPage', name: 'Marchas procesionales', url: absoluteUrl('/marchas') },
+      { '@type': 'CollectionPage', name: 'Autores y talleres cofrades', url: absoluteUrl('/autores') },
     ],
   }
 
@@ -72,11 +73,16 @@ export default async function DirectorioPage() {
         <span className="eyebrow">Enciclopedia cofrade</span>
         <h1 className="page-title">Directorio</h1>
         <p className="page-lead">
-          Hermandades, Imágenes, Pasos y Bandas comparten este buscador relacional. El archivo musical dispone además de un directorio propio para recorrer sus obras, compositores y conexiones procesionales.
+          Hermandades, Imágenes, Pasos y Bandas comparten este buscador relacional. Marchas y Autores completan la enciclopedia con directorios propios para recorrer obras, compositores, talleres y conexiones patrimoniales.
         </p>
-        <Link className={styles.marchesLink} href="/marchas">
-          Explorar el directorio de Marchas <span aria-hidden="true">→</span>
-        </Link>
+        <nav className={styles.specialDirectories} aria-label="Directorios especializados">
+          <Link className={styles.marchesLink} href="/marchas">
+            Explorar Marchas <span aria-hidden="true">→</span>
+          </Link>
+          <Link className={styles.marchesLink} href="/autores">
+            Explorar Autores <span aria-hidden="true">→</span>
+          </Link>
+        </nav>
         <Suspense fallback={<EntityDirectoryExplorer items={items} />}>
           <EntityDirectoryExplorerFromUrl items={items} />
         </Suspense>

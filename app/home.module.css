@@ -137,6 +137,17 @@
   gap: 6px;
 }
 
+.heroThread a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.heroThread a:hover b,
+.heroThread a:focus-visible b {
+  border-color: #c99f49;
+  background: #fff;
+}
+
 .heroThread b {
   padding: 7px 9px;
   border: 1px solid #dce6ef;
