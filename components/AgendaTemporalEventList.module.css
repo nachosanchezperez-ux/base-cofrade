@@ -21,6 +21,7 @@
 .row[data-category="processions"]{--event-accent:#9a721d;--event-soft:#f6f0df}
 .row[data-category="transfers"]{--event-accent:#a61931;--event-soft:#faecef}
 .row[data-category="rosaries"]{--event-accent:#72528c;--event-soft:#f2edf6}
+.row[data-category="romeries"]{--event-accent:#6f7d3c;--event-soft:#f0f3e5}
 .row[data-category="devotions"]{--event-accent:#397269;--event-soft:#ebf4f1}
 .row[data-category="concerts"]{--event-accent:#315d7a;--event-soft:#edf3f7}
 .row[data-category]{position:relative;padding-left:16px}
