@@ -6,9 +6,12 @@ import { useEffect, useMemo, useState } from 'react'
 import { agendaLocationMatches, agendaMunicipalityOptions } from '@/lib/agenda-cofrade-location'
 import { getProcessionLiveState } from '@/lib/procession-live-status'
 import { agendaTemporalRangeDate, withAgendaTemporalDay } from '@/lib/agenda-temporal-display'
+import { trackEvent } from '@/lib/analytics/client'
 import styles from './AgendaCofradeDirectoryV4.module.css'
 import concertStyles from './AgendaCofradeDirectoryV4Concerts.module.css'
 import visualStyles from './AgendaCofradeDirectoryV4Visuals.module.css'
+
+const AGENDA_TYPE = 'agenda_cofrade'
 
 const categoryOptions = [
   ['processions', 'Procesiones'],
@@ -138,25 +141,78 @@ function EventVisual({ item }) {
   )
 }
 
+function trackAgendaEventOpen(item) {
+  trackEvent('agenda_event_open', {
+    event_name: item.title,
+    event_type: item.category,
+    municipality: item.municipality,
+    event_date: item.date,
+    agenda_type: AGENDA_TYPE,
+  })
+}
+
+function trackAgendaEntityClick(item, destinationType, destinationName, linkContext) {
+  trackEvent('entity_click', {
+    source_entity_type: 'evento',
+    source_entity_name: item.title,
+    destination_entity_type: destinationType,
+    destination_entity_name: destinationName,
+    link_context: linkContext,
+  })
+}
+
 function EventActions({ item }) {
   if (item.category === 'concerts') {
     const visibleBands = (item.bands || []).filter((band) => band.href).slice(0, 3)
     return (
       <div className={styles.cardActions}>
         {visibleBands.map((band, index) => (
-          <Link href={band.href} key={band.id}>{index === 0 ? 'Ver banda' : band.name} {index === 0 ? <span>→</span> : null}</Link>
+          <Link
+            href={band.href}
+            key={band.id}
+            onClick={() => trackAgendaEntityClick(item, 'banda', band.name, 'agenda_event_actions')}
+            data-analytics-skip-entity="true"
+          >{index === 0 ? 'Ver banda' : band.name} {index === 0 ? <span>→</span> : null}</Link>
         ))}
-        {item.relatedBrotherhoodHref ? <Link href={item.relatedBrotherhoodHref}>Ver Hermandad</Link> : null}
+        {item.relatedBrotherhoodHref ? (
+          <Link
+            href={item.relatedBrotherhoodHref}
+            onClick={() => trackAgendaEntityClick(item, 'hermandad', item.organizer || 'Hermandad', 'agenda_event_actions')}
+            data-analytics-skip-entity="true"
+          >Ver Hermandad</Link>
+        ) : null}
       </div>
     )
   }
 
   return (
     <div className={styles.cardActions}>
-      {item.href ? <Link href={item.href}>{item.actionLabel || 'Ver acto'} <span>→</span></Link> : null}
-      {item.organizerHref ? <Link href={item.organizerHref}>Ver Hermandad</Link> : null}
-      {item.municipalityHref ? <Link href={item.municipalityHref}>Ver {item.municipality}</Link> : null}
-      {item.categoryHref && item.categoryHref !== item.href && item.categoryHref !== item.organizerHref ? <Link href={item.categoryHref}>Ver calendario</Link> : null}
+      {item.href ? <Link href={item.href} onClick={() => trackAgendaEventOpen(item)}>{item.actionLabel || 'Ver acto'} <span>→</span></Link> : null}
+      {item.organizerHref ? (
+        <Link
+          href={item.organizerHref}
+          onClick={() => trackAgendaEntityClick(item, 'hermandad', item.organizer || 'Hermandad', 'agenda_event_actions')}
+          data-analytics-skip-entity="true"
+        >Ver Hermandad</Link>
+      ) : null}
+      {item.municipalityHref ? (
+        <Link
+          href={item.municipalityHref}
+          onClick={() => trackAgendaEntityClick(item, 'municipio', item.municipality, 'agenda_event_actions')}
+          data-analytics-skip-entity="true"
+        >Ver {item.municipality}</Link>
+      ) : null}
+      {item.categoryHref && item.categoryHref !== item.href && item.categoryHref !== item.organizerHref ? (
+        <Link
+          href={item.categoryHref}
+          onClick={() => trackEvent('related_content_click', {
+            source_type: 'evento',
+            destination_type: 'agenda',
+            destination_name: 'Calendario',
+            section_name: 'agenda_event_actions',
+          })}
+        >Ver calendario</Link>
+      ) : null}
     </div>
   )
 }
@@ -289,6 +345,44 @@ export default function AgendaCofradeDirectoryV4({
       ? 'Sevilla capital'
       : selectedMunicipalityLabel || 'municipios'
 
+  const chooseCategory = (value) => {
+    const next = category === value ? 'all' : value
+    setCategory(next)
+    trackEvent('agenda_filter', {
+      filter_type: 'tipo_acto',
+      filter_value: next === 'all' ? 'todos' : next,
+      agenda_type: AGENDA_TYPE,
+    })
+  }
+
+  const choosePeriod = (value) => {
+    setPeriod(value)
+    trackEvent('agenda_period_select', {
+      period: value,
+      agenda_type: AGENDA_TYPE,
+    })
+  }
+
+  const chooseTerritory = (value) => {
+    setTerritory(value)
+    if (value !== 'province') setMunicipality('')
+    trackEvent('agenda_filter', {
+      filter_type: 'territorio',
+      filter_value: value,
+      agenda_type: AGENDA_TYPE,
+    })
+  }
+
+  const chooseMunicipality = (value) => {
+    setMunicipality(value)
+    const label = municipalityOptions.find((option) => option.slug === value)?.label || 'todos'
+    trackEvent('agenda_filter', {
+      filter_type: 'municipio',
+      filter_value: label,
+      agenda_type: AGENDA_TYPE,
+    })
+  }
+
   return (
     <section id="agenda" className={styles.directory} aria-labelledby="agenda-v4-title">
       <div className={styles.sectionHead}>
@@ -313,14 +407,14 @@ export default function AgendaCofradeDirectoryV4({
               <article className={styles.liveItem} key={`live:${item.key}`}>
                 <div>
                   <span>{item.categoryLabel}</span>
-                  <h4>{item.href ? <Link href={item.href}>{item.title}</Link> : item.title}</h4>
+                  <h4>{item.href ? <Link href={item.href} onClick={() => trackAgendaEventOpen(item)}>{item.title}</Link> : item.title}</h4>
                   <p>{[item.municipality, item.organizer].filter(Boolean).join(' · ')}</p>
                 </div>
                 <div className={styles.liveTimes}>
                   {item.startTime ? <span>Salida <strong>{item.startTime}</strong></span> : null}
                   {item.endTime ? <span>Entrada <strong>{item.endTime}</strong></span> : null}
                 </div>
-                {item.href ? <Link className={styles.liveAction} href={item.href}>Seguir <span aria-hidden="true">→</span></Link> : null}
+                {item.href ? <Link className={styles.liveAction} href={item.href} onClick={() => trackAgendaEventOpen(item)}>Seguir <span aria-hidden="true">→</span></Link> : null}
               </article>
             ))}
           </div>
@@ -334,7 +428,7 @@ export default function AgendaCofradeDirectoryV4({
             data-category={value}
             className={category === value ? `${styles.quickTypeActive} ${value === 'concerts' ? concertStyles.quickTypeConcertActive : ''}` : ''}
             aria-pressed={category === value}
-            onClick={() => setCategory(category === value ? 'all' : value)}
+            onClick={() => chooseCategory(value)}
             key={value}
           >
             <span>{label}</span>
@@ -358,7 +452,7 @@ export default function AgendaCofradeDirectoryV4({
                 type="button"
                 className={period === value ? styles.controlActive : ''}
                 aria-pressed={period === value}
-                onClick={() => setPeriod(value)}
+                onClick={() => choosePeriod(value)}
                 key={value}
               >
                 <span>{label}</span><strong>{periodCounts[value]}</strong>
@@ -379,10 +473,7 @@ export default function AgendaCofradeDirectoryV4({
                 type="button"
                 className={territory === value ? styles.controlActive : ''}
                 aria-pressed={territory === value}
-                onClick={() => {
-                  setTerritory(value)
-                  if (value !== 'province') setMunicipality('')
-                }}
+                onClick={() => chooseTerritory(value)}
                 key={value}
               >{label}</button>
             ))}
@@ -392,7 +483,7 @@ export default function AgendaCofradeDirectoryV4({
               <span className={styles.controlLabel}>Municipio concreto</span>
               <select
                 value={municipality}
-                onChange={(event) => setMunicipality(event.target.value)}
+                onChange={(event) => chooseMunicipality(event.target.value)}
                 aria-label="Elegir municipio"
                 style={{
                   width: '100%',
@@ -488,7 +579,7 @@ export default function AgendaCofradeDirectoryV4({
                           {item.isExtraordinary && item.category === 'rosaries' ? <b>Extraordinario</b> : null}
                           {cardLiveState.isLive ? <small className={styles.liveBadge}><i aria-hidden="true" /> En curso</small> : null}
                         </div>
-                        <h4>{item.category === 'concerts' ? item.title : item.href ? <Link href={item.href}>{item.title}</Link> : item.title}</h4>
+                        <h4>{item.category === 'concerts' ? item.title : item.href ? <Link href={item.href} onClick={() => trackAgendaEventOpen(item)}>{item.title}</Link> : item.title}</h4>
                         <p className={styles.organizer}>{item.organizer}</p>
                         <div className={styles.cardFacts}>
                           <span><b>Localidad</b>{item.municipality || 'Por confirmar'}</span>
