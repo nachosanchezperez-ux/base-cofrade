@@ -4,17 +4,19 @@ import test from 'node:test'
 
 const read = (path) => readFile(new URL(`../${path}`, import.meta.url), 'utf8')
 
-test('la agenda de Home reúne extraordinarias y Glorias públicas por fecha', async () => {
+test('la agenda de Home reúne extraordinarias, Glorias, procesiones generales y romerías por fecha', async () => {
   const loader = await read('lib/supabase/home-upcoming-agenda.js')
 
   assert.match(loader, /getNavigableHomeExtraordinaryOutings/)
   assert.match(loader, /getGloryDirectory/)
+  assert.match(loader, /getGeneralPublicOutings/)
   assert.match(loader, /!item\.isCancelled && !item\.isPast/)
   assert.match(loader, /item\.liveState\.state !== 'done'/)
   assert.match(loader, /withProcessionLiveState/)
   assert.match(loader, /compareProcessionLiveItems/)
   assert.match(loader, /typeLabel: 'Extraordinaria'/)
   assert.match(loader, /typeLabel: 'Gloria'/)
+  assert.match(loader, /typeLabel: isRomery \? 'Romería' : 'Procesión'/)
 })
 
 test('la Home conserva una salida nocturna hasta su entrada real', async () => {
