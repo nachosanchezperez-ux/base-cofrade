@@ -24,7 +24,7 @@ test('la Home ofrece accesos directos a los periodos y categorías reales de Age
 
   assert.match(overviewCss, /\.agendaQuick\s*\{[\s\S]*grid-template-columns:\s*repeat\(3,\s*minmax\(0,\s*1fr\)\)/)
   assert.match(overviewCss, /\.agendaQuick a\s*\{[\s\S]*border-radius:\s*10px/)
-  assert.match(overviewCss, /\.agendaQuick a::before/)
+  assert.doesNotMatch(overviewCss, /\.agendaQuick a::before/)
   assert.doesNotMatch(overviewCss, /\.agendaQuick a:first-child/)
   assert.doesNotMatch(overviewCss, /\.agendaQuick a\s*\{[\s\S]*border-radius:\s*999px/)
 })
