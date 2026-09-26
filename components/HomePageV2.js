@@ -139,7 +139,7 @@ export default function HomePageV2({
             ? 'La portada agrupa las salidas que coinciden en tiempo real y deja las próximas citas inmediatamente después.'
             : featuredOuting
               ? 'Una salida solo ocupa el gran formato de la portada cuando está realmente en curso.'
-              : 'Procesiones, traslados y salidas extraordinarias se muestran con el mismo peso visual y en orden cronológico. La cercanía de una cita no la convierte por sí sola en protagonista.'}</p>
+              : 'Procesiones, romerías, traslados y salidas extraordinarias se muestran con el mismo peso visual y en orden cronológico. La cercanía de una cita no la convierte por sí sola en protagonista.'}</p>
         </header>
 
         {multipleLive ? (
