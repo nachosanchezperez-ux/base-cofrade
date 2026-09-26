@@ -5,7 +5,7 @@ import ContextAgendaSection from '@/components/ContextAgendaSection'
 import DirectoryBreadcrumb from '@/components/DirectoryBreadcrumb'
 import JsonLd from '@/components/JsonLd'
 import MunicipalityTemporalSpotlight from '@/components/MunicipalityTemporalSpotlight'
-import { breadcrumbJsonLd, collectionPageJsonLd } from '@/lib/seo'
+import { absoluteUrl, breadcrumbJsonLd, collectionPageJsonLd, municipalityPlaceJsonLd } from '@/lib/seo'
 import styles from './MunicipalityAgendaHub.module.css'
 
 function EntityGroup({ label, singular, items, hrefFor, nameFor, directoryHref = '' }) {
@@ -81,6 +81,11 @@ export default function MunicipalityAgendaHub({ hub }) {
 
   const path = `/agenda-cofrade/localidad/${hub.slug}`
   const description = `Agenda cofrade de ${hub.label}: próximas citas, Hermandades, Bandas, Imágenes y Pasos conectados en una única guía local.`
+  const placeId = `${absoluteUrl(path)}#place`
+  const placeJsonLd = municipalityPlaceJsonLd({
+    path,
+    name: hub.label,
+  })
   const structuredItems = [
     ...hub.items.filter((item) => item.href).map((item) => ({ name: item.title, path: item.href })),
     ...hub.brotherhoods.slice(0, 12).map((item) => ({ name: item.nombrePopular || item.nombreOficial, path: `/hermandades/${item.slug}` })),
@@ -103,11 +108,14 @@ export default function MunicipalityAgendaHub({ hub }) {
         { name: 'Agenda Cofrade', path: '/agenda-cofrade' },
         { name: hub.label, path },
       ])} />
+      <JsonLd data={placeJsonLd} />
       <JsonLd data={collectionPageJsonLd({
         path,
         name: `Agenda cofrade de ${hub.label}`,
         description,
         items: structuredItems,
+        about: { '@id': placeId },
+        spatialCoverage: { '@id': placeId },
       })} />
 
       <section className={styles.hero}>
