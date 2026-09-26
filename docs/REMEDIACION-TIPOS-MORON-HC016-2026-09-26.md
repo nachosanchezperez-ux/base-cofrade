@@ -1,7 +1,7 @@
 # Morón de la Frontera · remediación post-Apply · HC-016
 
-**Fecha:** 26/09/2026. **Resultado: NO CERRADO.**
-El correctivo mínimo de tipos está aplicado y certificado en datos. El cierre integral no se emite porque el QA público/SEO conserva las incidencias reproducibles descritas abajo.
+**Fecha:** 26/09/2026. **Resultado vigente: CERRADO Y CERTIFICADO.**
+El correctivo mínimo de tipos y el QA final están verificados. Los apartados iniciales conservan el corte anterior al cierre; la certificación al final de este documento los sucede.
 
 ## Plataforma verificada
 - Base `main` y HEAD de producto: `9566caacde892d1a8d15c2abe862dbe4abdb1858`.
@@ -85,3 +85,27 @@ Snapshots, payloads y respuestas: [evidence/moron-types-2026-09-26](./evidence/m
 El usuario autoriza publicar la reconciliación y continuar. PR #1006. La nueva lectura pública de ambas URLs canónicas de sitemap devuelve HTTP 200 y contiene las diez fichas, el directorio municipal y el hub de Morón. La revalidación normal resolvió la ausencia: no se modificó el sitemap ni se forzó deployment.
 
 Se añade una corrección mínima del patrón nominal en `freeFactIntent`: admite «hermandades/cofradías/corporaciones cofrades sacramentales», sin excepciones por municipio. La regresión exacta de Morón y las guardas de música/Pasos pasan; suite completa: 1.276/1.276. El cierre sigue pendiente de comprobar esta respuesta en producción. No se repite ninguna escritura en Supabase.
+
+## Auditoría complementaria · continuación
+
+Consulta directa por municipio canónico: Estepa (`fbfcf834-c0d3-4a62-a20c-eaa74dc9ee11`) tiene 13 Hermandades y 0 arrays vacíos. Se añade a la revisión de municipios cerrados del corte anterior. No hay escrituras ajenas a las diez filas de Morón.
+
+PR #1006 integrada en `b6c58df963a493dc790ad01c135501a8397d13f4`; CI y build verdes. Producción `dpl_Fy1buETd7FtF5czMXeTZ2yn9Ju3m` READY, aliases canónicos correctos. La ampliación autorizada del buscador modifica un único patrón nominal y sus pruebas; no cambia contratos de importación ni aplica la corrección sistémica futura.
+
+## Certificación final · 21:54 UTC
+
+**MORÓN DE LA FRONTERA · DÉCIMO MACROLOTE MUNICIPAL HC-016 · CERRADO Y CERTIFICADO**
+
+- Lote principal: 504/504, 0 fallidas; conservado sin repetición.
+- Correctivo: exactamente 10 filas de brotherhoods y solo brotherhood_types; dry-run OK, rollback OK, residuos 0, Apply OK. 0 cambios ajenos y 0 cambios en otras columnas según comparación integral archivada.
+- Tipos: 10/10 Penitencia; Loreto también Sacramental; Santa Cruz también Gloria. 0 arrays vacíos, NULL, duplicados o tipos inesperados.
+- Supabase: ACTIVE_HEALTHY; 17 migraciones; QA de datos OK.
+- Web: diez fichas 200, canonical propio, index/follow, titulares/Pasos/Salidas/música/Fuentes conservados; hub y directorio 200, filtro municipal y navegación verificados.
+- Buscador productivo: «Hermandades sacramentales de Morón de la Frontera» → Loreto; general → diez; Gloria → Santa Cruz. Respuestas exactas archivadas.
+- SEO: diez fichas en sitemap de Hermandades y sitemap general; directorio municipal y hub en sus sitemaps. Sin noindex inesperados. La ausencia inicial quedó resuelta por revalidación normal.
+- Producto: main b6c58df963a493dc790ad01c135501a8397d13f4; PR #1006 integrada; deployment dpl_Fy1buETd7FtF5czMXeTZ2yn9Ju3m READY con aliases canónicos; sin logs error/fatal entre 21:43 y 21:54 UTC. CI/build y 1.276 pruebas verdes. PR #1000 permanece independiente.
+- Estado canónico reconciliado en ESTADO-PROYECTO.md. Este commit de cierre es documental; no fuerza despliegue ni escribe en Supabase.
+
+Evidencia final: `evidence/moron-types-2026-09-26/final-public-qa.json`, `final-hermandades.xml` y `final-agenda.xml`. Los resultados anteriores de NO CERRADO son históricos y quedan superados por este corte.
+
+Única recomendación: preparar, bajo una orden posterior, el refuerzo del preflight HC-016 que impida aplicar Hermandades sin tipo. No se ejecuta aquí ni se abre el siguiente municipio.
