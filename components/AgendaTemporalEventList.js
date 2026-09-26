@@ -8,7 +8,7 @@ function itemTime(item) {
 }
 
 function dayLabel(item) {
-  return item.dateInfo?.weekdayLabel || item.dateInfo?.label || item.date || 'Fecha por confirmar'
+  return item.temporalDateInfo?.weekdayLabel || item.dateInfo?.weekdayLabel || item.dateInfo?.label || item.temporalDate || item.date || 'Fecha por confirmar'
 }
 
 function groupByDate(items = []) {
@@ -16,13 +16,14 @@ function groupByDate(items = []) {
   const byDate = new Map()
 
   for (const item of items) {
-    const key = item.date || 'sin-fecha'
+    const key = item.temporalDate || item.date || 'sin-fecha'
+    const info = item.temporalDateInfo || item.dateInfo || {}
     if (!byDate.has(key)) {
       const group = {
         key,
         label: dayLabel(item),
-        day: item.dateInfo?.day || '',
-        month: item.dateInfo?.month || '',
+        day: info.day || '',
+        month: info.month || '',
         items: [],
       }
       byDate.set(key, group)
