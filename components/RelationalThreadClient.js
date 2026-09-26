@@ -37,7 +37,6 @@ function RelationCard({ item, sourceType, sourceName }) {
       href={item.href}
       key={item.href}
       data-analytics-skip-entity="true"
-      data-analytics-related-section="hilo_relacional"
       data-hilo-kind={item.kind || 'Relación'}
       data-hilo-relation={item.relation || ''}
       onClick={() => {
