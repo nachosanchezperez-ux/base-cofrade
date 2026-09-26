@@ -39,7 +39,7 @@ test('la Home solo usa gran protagonista cuando una salida está en curso', asyn
   assert.match(home, /const featuredOuting = liveOutings\[0\] \|\| null/)
   assert.match(home, /HomeProcessionGrid outings=\{balancedUpcoming\}/)
   assert.match(home, /Procesión en curso/)
-  assert.match(home, /procesiones en curso/)
+  assert.match(home, /Varias procesiones están en la calle/)
   assert.match(home, /multipleLive/)
   assert.match(grid, /data-home-procession-layout="equal"/)
   assert.match(grid, /slice\(0, 4\)/)

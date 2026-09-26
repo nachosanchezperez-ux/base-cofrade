@@ -36,7 +36,7 @@ export default function HomeTemporalFocus({ temporal }) {
             <span>{temporal.eyebrow}</span>
             <h2>{temporal.title}</h2>
           </div>
-          <p>La portada avanza automáticamente según fecha y horario documentados: ahora, hoy, mañana y fin de semana.</p>
+          <p>{temporal.description || 'La portada avanza automáticamente según fecha y horario documentados: ahora, hoy, mañana y fin de semana.'}</p>
         </header>
 
         <div className={styles.metrics} aria-label="Resumen temporal de la Agenda">

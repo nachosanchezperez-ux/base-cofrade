@@ -9,6 +9,7 @@ import HomeProjectOverview from '@/components/HomeProjectOverview'
 import HomeProcessionGrid from '@/components/HomeProcessionGrid'
 import { getExtraordinaryLiveState } from '@/lib/home-live-status'
 import { getHomeAdaptivePriority } from '@/lib/home-adaptive-priority'
+import { buildComplementaryHomeTemporal } from '@/lib/home-temporal-complement'
 import { getProcessionLiveState } from '@/lib/procession-live-status'
 import styles from '@/app/home.module.css'
 import liveStyles from './HomeExtraordinaryLive.module.css'
@@ -64,6 +65,9 @@ export default function HomePageV2({
   exploreStats,
 }) {
   const liveOutings = upcomingAgenda.filter((item) => item.liveState?.state === 'live')
+  const temporalFocus = liveOutings.length
+    ? buildComplementaryHomeTemporal(homeTemporal, upcomingAgenda)
+    : homeTemporal
   const featuredOuting = liveOutings[0] || null
   const multipleLive = liveOutings.length > 1
   const futureOutings = upcomingAgenda.filter((item) => (
@@ -124,7 +128,7 @@ export default function HomePageV2({
 
   const upcomingSection = upcomingAgenda.length ? (
     <section
-      className={`${styles.section} ${styles.featuredExtraordinary} ${polishStyles.extraordinarySection}`}
+      className={`${styles.section} ${styles.featuredExtraordinary} ${polishStyles.extraordinarySection} ${multipleLive ? liveStyles.multipleLiveSection : ''}`}
       id="proximos-dias"
       aria-labelledby="proximos-dias-title"
       data-home-urgency={homePriority.urgency}
@@ -132,7 +136,7 @@ export default function HomePageV2({
       <div className="shell">
         <header className={styles.upcomingAgendaHead}>
           <div>
-            <span className={styles.eyebrow}>{liveOutings.length ? 'Ahora mismo' : 'Salidas procesionales'}</span>
+            <span className={styles.eyebrow}>{multipleLive ? `Ahora mismo · ${liveOutings.length} en curso` : liveOutings.length ? 'Ahora mismo' : 'Salidas procesionales'}</span>
             <h2 id="proximos-dias-title">{multipleLive ? 'Varias procesiones están en la calle' : featuredOuting ? 'Procesión en curso' : 'En los próximos días'}</h2>
           </div>
           <p>{multipleLive
@@ -143,14 +147,7 @@ export default function HomePageV2({
         </header>
 
         {multipleLive ? (
-          <section className={liveStyles.multipleLivePanel} aria-labelledby="multiple-live-title">
-            <div className={liveStyles.multipleLiveHead}>
-              <div>
-                <span><i aria-hidden="true" /> Ahora mismo</span>
-                <h3 id="multiple-live-title">{liveOutings.length} procesiones en curso</h3>
-              </div>
-              <p>Cuando coinciden varias salidas, todas tienen la misma prioridad en la portada.</p>
-            </div>
+          <section className={liveStyles.multipleLivePanel} aria-label="Procesiones en curso">
             <div className={liveStyles.multipleLiveGrid}>
               {liveOutings.map((outing) => (
                 <article className={liveStyles.multipleLiveCard} key={outing.id}>
@@ -282,48 +279,55 @@ export default function HomePageV2({
           <HomeProcessionGrid outings={balancedUpcoming} />
         )}
 
-        {followingAgenda.length ? (
-          <div className={`${styles.nextExtraSection} ${polishStyles.nextExtraSection}`} id="siguientes-procesiones">
-            <div className={styles.nextExtraHead} style={stackedNextExtraHeadStyle}>
-              <span className={styles.eyebrow}>Después</span>
-              <h3>Las siguientes citas</h3>
-            </div>
-            <div className={`${styles.nextExtraList} ${polishStyles.nextExtraList}`}>
-              {followingAgenda.map((outing) => (
-                <Link
-                  className={`${styles.nextExtraRow} ${navStyles.row} ${polishStyles.nextExtraRow}`}
-                  href={outing.href || '/extraordinarias'}
-                  key={outing.id}
-                  aria-label={`Abrir guía de ${outing.title}`}
-                >
-                  <time dateTime={outing.date}>
-                    <strong>{outing.dateParts.day}</strong>
-                    <span>{outing.dateParts.month}</span>
-                  </time>
-                  <div>
-                    <span className={styles.agendaType}>{outing.typeLabel}</span>
-                    <h3>{outing.title}</h3>
-                    <p>{[outing.municipality, outing.brotherhoodName].filter(Boolean).join(' · ')}</p>
-                  </div>
-                </Link>
-              ))}
-            </div>
-            <nav className={styles.agendaCalendars} aria-label="Calendarios y Agenda Cofrade">
-              <Link className={navStyles.calendar} href="/agenda-cofrade">
-                Agenda Cofrade <span aria-hidden="true">→</span>
-              </Link>
-              <Link className={navStyles.calendar} href="/extraordinarias">
-                Extraordinarias <span aria-hidden="true">→</span>
-              </Link>
-              <Link className={navStyles.calendar} href="/procesiones-de-gloria">
-                Procesiones de Gloria <span aria-hidden="true">→</span>
-              </Link>
-            </nav>
-          </div>
-        ) : null}
       </div>
     </section>
   ) : null
+
+  const followingSection = followingAgenda.length ? (
+    <section className={`${styles.section} ${styles.followingAgendaSection}`} aria-labelledby="siguientes-procesiones-title">
+      <div className="shell">
+        <div className={`${styles.nextExtraSection} ${polishStyles.nextExtraSection}`} id="siguientes-procesiones">
+          <div className={styles.nextExtraHead} style={stackedNextExtraHeadStyle}>
+            <span className={styles.eyebrow}>Después</span>
+            <h3 id="siguientes-procesiones-title">Las siguientes citas</h3>
+          </div>
+          <div className={`${styles.nextExtraList} ${polishStyles.nextExtraList}`}>
+            {followingAgenda.map((outing) => (
+              <Link
+                className={`${styles.nextExtraRow} ${navStyles.row} ${polishStyles.nextExtraRow}`}
+                href={outing.href || '/extraordinarias'}
+                key={outing.id}
+                aria-label={`Abrir guía de ${outing.title}`}
+              >
+                <time dateTime={outing.date}>
+                  <strong>{outing.dateParts.day}</strong>
+                  <span>{outing.dateParts.month}</span>
+                </time>
+                <div>
+                  <span className={styles.agendaType}>{outing.typeLabel}</span>
+                  <h3>{outing.title}</h3>
+                  <p>{[outing.municipality, outing.brotherhoodName].filter(Boolean).join(' · ')}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+          <nav className={styles.agendaCalendars} aria-label="Calendarios y Agenda Cofrade">
+            <Link className={navStyles.calendar} href="/agenda-cofrade">
+              Agenda Cofrade <span aria-hidden="true">→</span>
+            </Link>
+            <Link className={navStyles.calendar} href="/extraordinarias">
+              Extraordinarias <span aria-hidden="true">→</span>
+            </Link>
+            <Link className={navStyles.calendar} href="/procesiones-de-gloria">
+              Procesiones de Gloria <span aria-hidden="true">→</span>
+            </Link>
+          </nav>
+        </div>
+      </div>
+    </section>
+  ) : null
+
+  const temporalSection = <HomeTemporalFocus temporal={temporalFocus} />
 
   const todaySection = <HomeTodayV2 today={today} content={todayContent} />
 
@@ -366,17 +370,27 @@ export default function HomePageV2({
 
       <HomeProjectOverview />
 
-      <HomeTemporalFocus temporal={homeTemporal} />
-
-      {homePriority.extraordinaryFirst ? (
+      {liveOutings.length ? (
         <>
           {upcomingSection}
+          {temporalSection}
+          {followingSection}
           {todaySection}
         </>
       ) : (
         <>
-          {todaySection}
-          {upcomingSection}
+          {temporalSection}
+          {homePriority.extraordinaryFirst ? (
+            <>
+              {upcomingSection}
+              {todaySection}
+            </>
+          ) : (
+            <>
+              {todaySection}
+              {upcomingSection}
+            </>
+          )}
         </>
       )}
 

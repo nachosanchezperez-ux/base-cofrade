@@ -388,3 +388,52 @@
     scroll-snap-align: start;
   }
 }
+
+
+/* Home live v2 · el directo se convierte en el gran bloque azul de la portada */
+.multipleLiveSection.multipleLiveSection {
+  border-top: 0;
+  border-bottom: 0;
+  background:
+    radial-gradient(circle at 88% 8%, rgba(118, 184, 236, .24), transparent 28%),
+    linear-gradient(145deg, #0a2139 0%, #123f6d 58%, #0d3156 100%);
+}
+
+.multipleLiveSection > div > header > div > span {
+  color: #b9d9f2;
+}
+
+.multipleLiveSection > div > header h2 {
+  color: #fff;
+}
+
+.multipleLiveSection > div > header p {
+  color: rgba(255, 255, 255, .72);
+}
+
+.multipleLiveSection .multipleLivePanel {
+  border-color: rgba(255, 255, 255, .13);
+  background: rgba(255, 255, 255, .055);
+  box-shadow: 0 20px 48px rgba(2, 15, 28, .18);
+}
+
+.multipleLiveSection .multipleLiveCard {
+  border-color: rgba(255, 255, 255, .18);
+  background: rgba(255, 255, 255, .96);
+  box-shadow: 0 9px 24px rgba(3, 22, 39, .12);
+}
+
+.multipleLiveSection .multipleLiveAgendaLink {
+  color: #fff;
+}
+
+.multipleLiveSection .multipleLiveAgendaLink span {
+  color: #b9d9f2;
+}
+
+@media (max-width: 720px) {
+  .multipleLiveSection.multipleLiveSection {
+    padding-top: 24px;
+    padding-bottom: 28px;
+  }
+}
