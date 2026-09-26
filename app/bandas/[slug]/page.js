@@ -34,6 +34,7 @@ import {
   socialMetadata,
 } from '@/lib/seo'
 import { resolveBandPageTheme } from '@/lib/bands/theme'
+import { bandSeoIdentity } from '@/lib/bands/seo'
 import { buildBandUpcomingAgenda } from '@/lib/band-agenda'
 import { agendaMunicipalityHref } from '@/lib/agenda-relations'
 import {
@@ -197,7 +198,7 @@ export async function generateMetadata({ params }) {
     sources: band.sources || [],
     publicValues: band,
   })
-  const title = compactSeoTitle(band.popularName)
+  const title = compactSeoTitle(bandSeoIdentity(band))
   const description = seoDescription(band.summary)
   const path = `/bandas/${slug}`
   return {
