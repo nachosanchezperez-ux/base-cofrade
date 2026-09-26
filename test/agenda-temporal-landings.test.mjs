@@ -36,7 +36,7 @@ test('Hoy filtra actos del día e incluye actos de varios días', () => {
       item('tomorrow', { date: '2026-09-26' }),
     ],
   })
-  assert.deepEqual(landing.items.map((entry) => entry.key), ['multi', 'today'])
+  assert.deepEqual(landing.items.map((entry) => entry.key), ['today', 'multi'])
   assert.equal(landing.capitalCount, 2)
 })
 
@@ -73,4 +73,30 @@ test('resume tipos y municipios activos con enlace territorial canónico', () =>
     ['processions', 1],
     ['devotions', 1],
   ])
+})
+
+
+test('Hoy proyecta un acto multidia sobre hoy y no sobre su fecha de inicio', () => {
+  const landing = buildAgendaTemporalLanding({
+    period: 'today',
+    today: '2026-09-26',
+    items: [
+      item('multi-friday', {
+        date: '2026-09-25',
+        endDate: '2026-09-27',
+        category: 'devotions',
+        categoryHref: '/agenda-cofrade',
+        daySchedules: [
+          { celebrationDate: '2026-09-25', startTime: '20:00', timeText: '20:00' },
+          { celebrationDate: '2026-09-26', startTime: '09:00', timeText: '09:00–14:00 y 17:00–21:00' },
+        ],
+      }),
+      item('saturday', { date: '2026-09-26', startTime: '18:30' }),
+    ],
+  })
+
+  assert.deepEqual(landing.items.map((entry) => entry.temporalDate), ['2026-09-26', '2026-09-26'])
+  const multi = landing.items.find((entry) => entry.key === 'multi-friday')
+  assert.equal(multi.temporalDateInfo.weekdayLabel, 'Sábado, 26 de septiembre')
+  assert.equal(multi.timeText, '09:00–14:00 y 17:00–21:00')
 })

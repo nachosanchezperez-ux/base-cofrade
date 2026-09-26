@@ -6,7 +6,7 @@ function eventHref(item) {
 }
 
 function dateLabel(item) {
-  return item?.dateInfo?.weekdayLabel || item?.dateInfo?.label || item?.date || 'Fecha por confirmar'
+  return item?.temporalDateInfo?.weekdayLabel || item?.dateInfo?.weekdayLabel || item?.dateInfo?.label || item?.temporalDate || item?.date || 'Fecha por confirmar'
 }
 
 function timingLabel(item) {

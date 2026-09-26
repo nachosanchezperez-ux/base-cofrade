@@ -77,3 +77,33 @@ test('los actos de varios días siguen disponibles mientras abarcan hoy', () => 
   assert.equal(temporal.mode, 'today')
   assert.equal(temporal.remainingTodayItems.length, 1)
 })
+
+
+test('un acto multidia usa la fecha y horario de la jornada actual', () => {
+  const temporal = buildHomeTemporalAgenda({
+    today: '2026-09-26',
+    now: new Date('2026-09-26T16:20:00Z'),
+    items: [
+      item({
+        key: 'sed',
+        category: 'devotions',
+        date: '2026-09-25',
+        endDate: '2026-09-27',
+        daySchedules: [
+          { celebrationDate: '2026-09-25', timeText: 'Al finalizar la Misa de las 20:00' },
+          { celebrationDate: '2026-09-26', startTime: '09:00', timeText: '09:00–14:00 y 17:00–21:00' },
+          { celebrationDate: '2026-09-27', startTime: '09:00', timeText: '09:00–14:00 y 17:00–21:00' },
+        ],
+      }),
+      item({ key: 'valvanera', category: 'processions', date: '2026-09-26', startTime: '18:30' }),
+    ],
+  })
+
+  assert.equal(temporal.mode, 'today')
+  assert.deepEqual(temporal.focusItems.map((entry) => entry.key), ['sed', 'valvanera'])
+  const sed = temporal.focusItems.find((entry) => entry.key === 'sed')
+  assert.equal(sed.temporalDate, '2026-09-26')
+  assert.equal(sed.temporalDateInfo.weekdayLabel, 'Sábado, 26 de septiembre')
+  assert.equal(sed.timeText, '09:00–14:00 y 17:00–21:00')
+  assert.equal(sed.endTime, '21:00')
+})
