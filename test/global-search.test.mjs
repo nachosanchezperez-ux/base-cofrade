@@ -67,6 +67,24 @@ test('el modal global se monta en body y no queda recortado por la cabecera stic
   assert.match(globalSearch, /typeof document !== ['"]undefined['"]/)
 })
 
+test('el buscador conserva lectura y objetivos táctiles cómodos en móvil', async () => {
+  const [globalStyles, searchStyles] = await Promise.all([
+    readFile(new URL('../components/GlobalHiloSearch.module.css', import.meta.url), 'utf8'),
+    readFile(new URL('../components/HiloSearch.module.css', import.meta.url), 'utf8'),
+  ])
+
+  const mobileDialog = globalStyles.slice(globalStyles.indexOf('@media(max-width:859px)'))
+  const mobileResults = searchStyles.slice(
+    searchStyles.indexOf('@media(max-width:620px)'),
+    searchStyles.indexOf('@media(min-width:860px)'),
+  )
+
+  assert.match(mobileDialog, /\.close\{width:44px;height:44px\}/)
+  assert.match(mobileResults, /\.resultType\{padding:4px 6px;font-size:9px\}/)
+  assert.match(mobileResults, /\.resultLocation\{font-size:10px\}/)
+  assert.match(mobileResults, /\.resultCopy>small\{font-size:10px\}/)
+})
+
 test('el autocompletado coloca las fichas navegables antes que otras coincidencias', async () => {
   const route = await readFile(new URL('../app/api/tira-del-hilo/search/route.js', import.meta.url), 'utf8')
 
