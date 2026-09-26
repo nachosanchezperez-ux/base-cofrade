@@ -43,5 +43,5 @@ test('la Home solo usa gran protagonista cuando una salida está en curso', asyn
   assert.match(grid, /slice\(0, 4\)/)
   assert.match(grid, /Guía de \{outing\.municipality\}/)
   assert.match(snapshot, /find\(\(item\) => item\.liveState\?\.state === 'live'\)/)
-  assert.match(snapshot, /hilo-cofrade-home-public-snapshot-v17/)
+  assert.match(snapshot, /hilo-cofrade-home-public-snapshot-v18/)
 })

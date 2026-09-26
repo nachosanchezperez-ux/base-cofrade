@@ -20,12 +20,14 @@ test('Hoy 2.0 acota la vista relacional y conserva un fallback completo', async 
   assert.match(source, /No se pudieron ampliar los hilos candidatos del día/)
 })
 
-test('el descubrimiento de portada evita la rama masiva entity_new', async () => {
+test('el descubrimiento de portada evita entity_new sin bloquear relaciones recientes', async () => {
   const source = await read('lib/supabase/home.js')
 
   assert.match(source, /\.in\('activity_kind', DISCOVERY_KINDS\)/)
-  assert.match(source, /\.gte\('priority', DISCOVERY_FAST_PATH_PRIORITY\)/)
-  assert.match(source, /No se pudo ampliar la actividad de conocimiento de la Home/)
+  assert.match(source, /\.order\('latest_at', \{ ascending: false \}\)/)
+  assert.match(source, /\.order\('priority', \{ ascending: false \}\)/)
+  assert.doesNotMatch(source, /\.gte\('priority', DISCOVERY_FAST_PATH_PRIORITY\)/)
+  assert.doesNotMatch(source, /No se pudo ampliar la actividad de conocimiento de la Home/)
 })
 
 test('un fallo de fuentes no convierte una hermandad publicada en 404', async () => {
