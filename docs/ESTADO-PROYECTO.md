@@ -1,22 +1,22 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 26 de septiembre de 2026 · Morón de la Frontera · DRY-RUN CERTIFICADO · APTO PARA APPLY · 504/504 · 0 APLICADAS
+**Corte operativo:** 26 de septiembre de 2026 · Morón de la Frontera · APPLY 504/504 COMMIT · QA PÚBLICO BLOQUEADO · MACROLOTE NO CERRADO
 
-**Corte GitHub del dry-run:** el ensayo se preparó inicialmente sobre `c8208e71b37c11694239b406b620e39460e2b682`; tras finalizar los frentes paralelos, el cierre de Morón se reconstruye sobre `main = 24fac9877c5fba972b9b4716a77d8107a8594662`. Los avances intermedios no añadieron migraciones ni alteraron el esquema usado por el lote.
+**Apply de Morón:** ejecutado el 26/09/2026 usando exactamente el blob certificado `29e83ff336ea4de8d7bcc99005d6a33ec948d90b`. Resultado `APPLY_MORON_SQL_OK_COMMITTED`; 504/504 aplicadas y 0 fallidas. El macrolote NO está cerrado porque el QA público detectó un bloqueo editorial.
 
-**Producción al cierre del dry-run:** se mantiene sobre el `main` vivo reconciliado; Supabase conserva 17 migraciones estructurales y el contrato de Morón no ha variado.
+**Producción durante el QA post-Apply:** Vercel READY y runtime sin errores materiales. 10/10 Hermandades, 10/10 bandas nuevas, 4/4 muestras de Imágenes y 4/4 muestras de Pasos responden HTTP 200; el hub municipal de Morón responde HTTP 404.
 
 **Supabase:** `ACTIVE_HEALTHY` y actualizado por el usuario de Nano a Micro. Support confirmó sobreutilización de memoria, uso sostenido de SWAP y overcommitment durante el incidente; CPU/IO pueden haber contribuido, por lo que no se reduce toda la causalidad a RAM. La base ocupa ~45 MB. Tras Micro: `effective_cache_size` 384→768 MB y `maintenance_work_mem` 32→64 MB. Producción contiene 17 migraciones estructurales. HC-PERF-SUPABASE-01 materializa `home_knowledge_threads`: fuente/caché 2.052/2.052, 0 diferencias, lectura `anon` correcta, patrón medido ~115,4 ms→~0,42 ms y primer cron `succeeded` (~156,9 ms). Véase [seguimiento de capacidad](./P0-SUPABASE-CAPACITY-2026-09-25.md).
 
-**GitHub al cierre del dry-run:** los frentes paralelos previos quedaron absorbidos en `main`; la PR de Morón se reconstruye encima sin sobrescribirlos. #931 permanece cerrada sin merge como superseded por #968/#969.
+**Bloqueo demostrado:** las 10 Hermandades de Morón tienen `brotherhood_types = []`; la indexabilidad compartida exige tipo documental y las excluye del hub. Corrección propuesta pero NO ejecutada: Penitencia para las 10, añadiendo Sacramental a Loreto y Gloria a Santa Cruz.
 
-**Staging editoriales:** Morón `c0160037-0000-4000-8000-000000000001` = `ready`, **504/504 válidas, 0 aplicadas, 0 fallidas**; Écija `c0160036-0000-4000-8000-000000000001` = `completed`, 776/776 aplicadas; Carmona `c0160035-0000-4000-8000-000000000001` = `completed`, 530/530 aplicadas; HC-AUTO-03 · El Calvario permanece `ready` 55/55 y 0 aplicado.
+**Staging editoriales:** Morón `c0160037-0000-4000-8000-000000000001` = `completed`, **504/504 aplicadas, 0 fallidas**, con `post_apply_public_qa = FAIL` y cierre bloqueado; Écija `c0160036-0000-4000-8000-000000000001` = `completed`, 776/776 aplicadas; Carmona `c0160035-0000-4000-8000-000000000001` = `completed`, 530/530 aplicadas; HC-AUTO-03 · El Calvario permanece `ready` 55/55 y 0 aplicado.
 
 **P0 del 24/09 cerrado; seguimiento de capacidad cerrado:** el build completo sigue aislado de Supabase durante prerender. La respuesta posterior de Support confirmó presión sostenida de memoria/SWAP y se aplicó una mitigación específica sobre `home_knowledge_threads`. CI pasa tests y build, Vercel no registra errores de runtime, la Home productiva responde HTTP 200 con hilos reales y el refresco periódico de la caché se mantiene estable.
 
 **Régimen:** FIRST EDITION FREEZE activo
 
-**Frente ACTIVO:** HC-016 · Morón de la Frontera. DRY-RUN CERRADO Y CERTIFICADO: import `c0160037-0000-4000-8000-000000000001` · 504/504 válidas · 0 aplicadas · `DRY_RUN_MORON_SQL_OK_ROLLED_BACK` · 0 residuos. Primer intento abortado limpiamente por secuencia duplicada de Jesús; corrección: Cruz de Guía 1 → Cristo 2 → Palio 3. Candidato Apply preparado y equivalente, **NO autorizado y NO ejecutado**. HC-AUTO-03 continúa bloqueado.
+**Frente ACTIVO:** HC-016 · Morón de la Frontera. APPLY ejecutado y reconciliado: `completed 504/504 · 0 fallos`; QA estructural PASS. **QA público BLOQUEADO** porque las 10 Hermandades carecen de `brotherhood_types`, quedan fuera de indexabilidad y el hub municipal devuelve 404. No cerrar Morón hasta remediar esas 10 filas mediante payload correctivo + dry-run específico. HC-AUTO-03 continúa bloqueado.
 
 > GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. Los rankings municipales previos son evidencia histórica, no una cola automática. El próximo municipio solo puede nacer de un recálculo provincial nuevo y una orden expresa.
 
@@ -32,7 +32,7 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | **CERRADO** | P0 · producción y timeouts | Supabase recuperado; #932 publicada; ventana limpia >30 min; caché vencida renovada; contenido y sitemaps verificados | Reabrir solo ante una regresión demostrada; mantener SU-484619 como seguimiento de causa raíz |
 | **CERRADO** | Octavo macrolote municipal HC-016 · Carmona | 530/530 aplicadas; QA estructural/semántico PASS; 15/15 fichas públicas HTTP 200; 0 4xx/5xx/runtime errors | No reejecutar; reabrir solo ante incidencia demostrada o enriquecimiento editorial posterior |
 | **CERRADO** | Noveno macrolote municipal HC-016 · Écija | 776/776 aplicadas; QA estructural/semántico PASS; 15/15 corporaciones + 18/18 bandas HTTP 200; 12 muestras Imagen/Paso 200; 0 4xx/5xx en rutas Écija | No reejecutar; reabrir solo por incidencia demostrada o enriquecimiento posterior |
-| **ACTIVO** | Décimo macrolote municipal HC-016 · Morón de la Frontera | **DRY-RUN CERTIFICADO · APTO PARA APPLY**: staging `ready 504/504 · 0 aplicado`; primer ensayo abortado limpiamente por secuencia musical duplicada de Jesús; corregido a Cruz de Guía 1 → Cristo 2 → Palio 3; segundo ensayo `DRY_RUN_MORON_SQL_OK_ROLLED_BACK`; 504 DML lógicas validadas; 0 residuos; candidato Apply reversible preparado | Apply real NO autorizado. Requiere orden expresa separada, revalidación inmediata de drift y ejecución del candidato exacto; HC-AUTO-03 sigue bloqueado |
+| **ACTIVO** | Décimo macrolote municipal HC-016 · Morón de la Frontera | **APPLY 504/504 · QA ESTRUCTURAL PASS · QA PÚBLICO BLOQUEADO**: 10 Hermandades + 10 bandas nuevas públicas 200; muestras Imagen/Paso 200; hub municipal 404. Causa: `brotherhood_types=[]` en 10/10 Hermandades, que impide su indexabilidad compartida | NO cerrar. Requiere autorización de remediación de 10 filas, dry-run correctivo rollback-only y nuevo QA público. No revertir las 504 filas; HC-AUTO-03 sigue bloqueado |
 | **BLOQUEADO** | HC-AUTO-03 · El Calvario | Lote `ready` 55/55, 0 aplicado, preservado desde el 21/09 | No ejecutar Apply sin una orden específica y preflight actualizado |
 | **CERRADO** | Orden operativo | Autoridad documental y cola única integradas en #712 | No reabrir salvo contradicción verificable |
 | **CERRADO** | [#492 · Supabase Preview Branches](https://github.com/nachosanchezperez-ux/base-cofrade/issues/492) | Incidencia cerrada; #846 reconcilió el historial y la cadena activa contiene 12 migraciones estructurales, reproducibles desde cero en preview sin datos | Todo cambio futuro de esquema debe nacer como migración reproducible y superar una preview sin datos |
