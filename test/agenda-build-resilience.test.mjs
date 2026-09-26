@@ -15,6 +15,7 @@ for (const [file, name] of [
   ['rosary-outings', 'getRosaryOutings'],
   ['extraordinary-directory', 'getExtraordinaryDirectory'],
   ['glory-directory', 'getGloryDirectory'],
+  ['general-public-outings', 'getGeneralPublicOutings'],
   ['kissing-devotions', 'getKissingDevotions'],
   ['concert-events', 'getConcertEventDirectory'],
 ]) {
@@ -34,7 +35,7 @@ function agendaFixture() {
   let fail = false
   let calls = 0
   let cacheOptions
-  const sources = ['getRosaryOutings', 'getExtraordinaryDirectory', 'getGloryDirectory', 'getKissingDevotions', 'getConcertEventDirectory']
+  const sources = ['getRosaryOutings', 'getExtraordinaryDirectory', 'getGloryDirectory', 'getGeneralPublicOutings', 'getKissingDevotions', 'getConcertEventDirectory']
   const dependencies = Object.fromEntries(sources.map((name) => [name, async (options) => {
     assert.equal(options.throwOnError, true)
     calls += 1
@@ -65,7 +66,7 @@ test('la agenda reutiliza una lectura completa y conserva la deduplicación de r
   const fixture = agendaFixture()
   const first = await fixture.getAgendaCofrade()
   const second = await fixture.getAgendaCofrade()
-  assert.equal(fixture.calls(), 5)
+  assert.equal(fixture.calls(), 6)
   assert.equal(fixture.options().revalidate, 300)
   assert.equal(first.items.length, 1)
   assert.equal(second.items[0].category, 'rosaries')
@@ -78,7 +79,7 @@ test('una fuente fallida no se convierte en éxito parcial ni queda cacheada', a
   await assert.rejects(fixture.getAgendaCofrade(), /concert timeout/)
   fixture.setFailure(false)
   const recovered = await fixture.getAgendaCofrade()
-  assert.equal(fixture.calls(), 10)
+  assert.equal(fixture.calls(), 12)
   assert.equal(recovered.items.length, 1)
 })
 
