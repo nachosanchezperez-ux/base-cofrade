@@ -20,6 +20,8 @@
 
 > GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. Los rankings municipales previos son evidencia histórica, no una cola automática. El próximo municipio solo puede nacer de un recálculo provincial nuevo y una orden expresa.
 
+**Refuerzo preventivo HC-016 autorizado:** barrera de tipos implementada y verificada (1.281 pruebas y build). Altas con clasificación explícita; actualizaciones parciales validan tipos persistidos. SQL directo exige guard transaccional por IDs del universo completo. Sin DML/DDL ni nuevo municipio. [Contrato y evidencia](./HC016-PREFLIGHT-TIPOS-2026-09-27.md).
+
 ## Tablero operativo único
 
 Este apartado sustituye cualquier instrucción de continuidad escrita en auditorías o certificaciones fechadas.
