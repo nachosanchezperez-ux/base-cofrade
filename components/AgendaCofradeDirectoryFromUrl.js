@@ -4,7 +4,7 @@ import { useSearchParams } from 'next/navigation'
 import AgendaCofradeDirectoryV4 from '@/components/AgendaCofradeDirectoryV4'
 import { agendaMunicipalitySlug } from '@/lib/agenda-cofrade-location'
 
-const CATEGORIES = new Set(['all', 'processions', 'transfers', 'rosaries', 'devotions', 'concerts'])
+const CATEGORIES = new Set(['all', 'processions', 'transfers', 'rosaries', 'romeries', 'devotions', 'concerts'])
 const PERIODS = new Set(['today', 'tomorrow', 'weekend', 'upcoming'])
 const TERRITORIES = new Set(['all', 'capital', 'province'])
 
