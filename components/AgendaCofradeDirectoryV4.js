@@ -17,6 +17,7 @@ const categoryOptions = [
   ['processions', 'Procesiones'],
   ['transfers', 'Traslados'],
   ['rosaries', 'Rosarios públicos'],
+  ['romeries', 'Romerías'],
   ['devotions', 'Besamanos y besapiés'],
   ['concerts', 'Conciertos'],
 ]
@@ -25,6 +26,7 @@ const visualFallbacks = {
   processions: { mark: 'PRO', label: 'Procesión' },
   transfers: { mark: 'TRA', label: 'Traslado' },
   rosaries: { mark: 'ROS', label: 'Rosario' },
+  romeries: { mark: 'ROM', label: 'Romería' },
   devotions: { mark: 'DEV', label: 'Culto' },
   concerts: { mark: 'MÚS', label: 'Concierto' },
 }
@@ -421,7 +423,7 @@ export default function AgendaCofradeDirectoryV4({
         </section>
       ) : null}
 
-      <div className={`${styles.quickTypes} ${concertStyles.quickTypesFive}`} aria-label="Elegir tipo de acto">
+      <div className={`${styles.quickTypes} ${concertStyles.quickTypesSix}`} aria-label="Elegir tipo de acto">
         {categoryOptions.map(([value, label]) => (
           <button
             type="button"

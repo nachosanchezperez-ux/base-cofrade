@@ -5,6 +5,7 @@ const agendaCategories = [
   { key: 'processions', label: 'Procesiones' },
   { key: 'transfers', label: 'Traslados' },
   { key: 'rosaries', label: 'Rosarios' },
+  { key: 'romeries', label: 'Romerías' },
   { key: 'devotions', label: 'Besamanos y besapiés' },
   { key: 'concerts', label: 'Conciertos' },
 ]

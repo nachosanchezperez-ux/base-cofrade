@@ -13,7 +13,7 @@ test('la Home ofrece accesos directos a los periodos y categorías reales de Age
   assert.match(overview, /\/agenda-cofrade\/manana/)
   assert.match(overview, /\/agenda-cofrade\/fin-de-semana/)
 
-  for (const category of ['processions', 'transfers', 'rosaries', 'devotions', 'concerts']) {
+  for (const category of ['processions', 'transfers', 'rosaries', 'romeries', 'devotions', 'concerts']) {
     assert.match(overview, new RegExp(`key: ['"]${category}['"]`))
     assert.match(agenda, new RegExp(`['"]${category}['"]`))
   }
@@ -34,7 +34,7 @@ test('la Home diferencia la Agenda general del bloque de salidas procesionales',
 
   assert.match(home, /Salidas procesionales/)
   assert.match(home, /En los próximos días/)
-  assert.match(home, /Procesiones, traslados y salidas extraordinarias/)
+  assert.match(home, /Procesiones, romerías, traslados y salidas extraordinarias/)
   assert.match(home, /href="\/agenda-cofrade"/)
   assert.match(home, /href="\/extraordinarias"/)
   assert.match(home, /href="\/procesiones-de-gloria"/)
