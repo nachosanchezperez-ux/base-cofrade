@@ -174,7 +174,7 @@ insert into public.brotherhoods(entity_id,official_name,popular_name,foundation_
 on conflict(entity_id) do update set official_name=excluded.official_name,popular_name=excluded.popular_name,foundation_text=excluded.foundation_text,municipality_id=excluded.municipality_id,canonical_see_place_id=excluded.canonical_see_place_id,current_procession_day=excluded.current_procession_day,notes=excluded.notes;
 
 -- 117–126 · Bandas
-insert into public.bands(entity_id,band_type,municipality_id,notes) values
+insert into public.bands(entity_id,band_type,municipality_id,description) values
 ('c0160037-0401-4000-8000-000000000001','Banda de Música','c0160037-0201-4000-8000-000000000001','Nodo musical documentado para Morón 2026.'),
 ('c0160037-0402-4000-8000-000000000002','Cornetas y Tambores',null,'Nodo musical documentado para Morón 2026.'),
 ('c0160037-0403-4000-8000-000000000003','Cornetas y Tambores',null,'Nodo musical documentado para Morón 2026.'),
@@ -185,7 +185,7 @@ insert into public.bands(entity_id,band_type,municipality_id,notes) values
 ('c0160037-0408-4000-8000-000000000008','Banda de Música',null,'Nodo musical documentado para Morón 2026.'),
 ('c0160037-0409-4000-8000-000000000009','Banda de Música',null,'Nodo musical documentado para Morón 2026.'),
 ('c0160037-0410-4000-8000-000000000010','Agrupación Musical','c0160037-0201-4000-8000-000000000001','Nodo musical documentado para Morón 2026.')
-on conflict(entity_id) do update set band_type=excluded.band_type,municipality_id=excluded.municipality_id,notes=excluded.notes;
+on conflict(entity_id) do update set band_type=excluded.band_type,municipality_id=excluded.municipality_id,description=excluded.description;
 
 -- 127–161 · Imágenes
 insert into public.images(entity_id,image_type,description,notes) values
