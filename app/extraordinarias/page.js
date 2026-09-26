@@ -85,10 +85,10 @@ export default async function ExtraordinariasPage() {
         <header className={styles.pageIntro}>
           <div>
             <span className="eyebrow">Sevilla capital y provincia</span>
-            <h1>Salidas extraordinarias</h1>
+            <h1>Procesiones y salidas extraordinarias de Sevilla {currentYear}</h1>
           </div>
           <div className={styles.introCopy}>
-            <p>Encuentra de forma rápida las próximas extraordinarias y distingue con un toque las de Sevilla capital y las de la provincia.</p>
+            <p>Consulta las extraordinarias de Sevilla en {currentYear}: próximas procesiones y salidas extraordinarias de la capital y la provincia, con fecha, horarios, recorrido y acompañamiento musical.</p>
             <span
               className={styles.introMeta}
               aria-label={`${upcomingCount} próximas: ${capitalCount} en Sevilla capital y ${provinceCount} en la provincia. ${yearOutings.length} documentadas en ${currentYear}.`}
