@@ -3,6 +3,9 @@
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import styles from './ExtraordinaryDirectory.module.css'
+import { trackEvent } from '@/lib/analytics/client'
+
+const AGENDA_TYPE = 'extraordinarias'
 
 function plural(count, singular, pluralForm) {
   return `${count} ${count === 1 ? singular : pluralForm}`
@@ -41,6 +44,16 @@ function monthAnchor(key) {
   return `extraordinarias-${String(key || 'sin-fecha').replace(/[^a-z0-9-]/gi, '-')}`
 }
 
+function trackExtraordinaryOpen(outing) {
+  trackEvent('agenda_event_open', {
+    event_name: outing.title,
+    event_type: 'extraordinaria',
+    municipality: outing.municipality,
+    event_date: outing.date,
+    agenda_type: AGENDA_TYPE,
+  })
+}
+
 export default function ExtraordinaryDirectory({ outings }) {
   const [status, setStatus] = useState('upcoming')
   const [territory, setTerritory] = useState('all')
@@ -77,6 +90,14 @@ export default function ExtraordinaryDirectory({ outings }) {
       ? 'Provincia de Sevilla'
       : 'Sevilla capital y provincia'
 
+  const trackFilter = (filterType, filterValue) => {
+    trackEvent('agenda_filter', {
+      filter_type: filterType,
+      filter_value: filterValue,
+      agenda_type: AGENDA_TYPE,
+    })
+  }
+
   return (
     <section className={styles.directory} id="calendario-extraordinarias" aria-labelledby="extraordinarias-list-title">
       <div className={styles.explorerHead}>
@@ -97,6 +118,7 @@ export default function ExtraordinaryDirectory({ outings }) {
               onClick={() => {
                 setStatus('upcoming')
                 setYear('all')
+                trackFilter('estado', 'proximas')
               }}
               aria-pressed={status === 'upcoming'}
             >
@@ -105,7 +127,7 @@ export default function ExtraordinaryDirectory({ outings }) {
             <button
               type="button"
               className={status === 'celebrated' ? styles.active : ''}
-              onClick={() => setStatus('celebrated')}
+              onClick={() => { setStatus('celebrated'); trackFilter('estado', 'celebradas') }}
               aria-pressed={status === 'celebrated'}
             >
               <span>Celebradas</span><strong>{celebrated.length}</strong>
@@ -125,7 +147,7 @@ export default function ExtraordinaryDirectory({ outings }) {
                 type="button"
                 key={value}
                 className={territory === value ? styles.active : ''}
-                onClick={() => setTerritory(value)}
+                onClick={() => { setTerritory(value); trackFilter('territorio', value) }}
                 aria-pressed={territory === value}
               >
                 <span>{label}</span><strong>{territoryCounts[value]}</strong>
@@ -137,7 +159,7 @@ export default function ExtraordinaryDirectory({ outings }) {
         {status === 'celebrated' && years.length > 1 ? (
           <label className={styles.yearFilter}>
             <span className={styles.filterLabel}>Año</span>
-            <select value={year} onChange={(event) => setYear(event.target.value)}>
+            <select value={year} onChange={(event) => { setYear(event.target.value); trackFilter('anio', event.target.value) }}>
               <option value="all">Todos</option>
               {years.map((item) => <option value={String(item)} key={item}>{item}</option>)}
             </select>
@@ -198,7 +220,7 @@ export default function ExtraordinaryDirectory({ outings }) {
                           <small data-status={outing.eventStatus} data-next={outing.id === nextId ? 'true' : undefined}>{outing.id === nextId ? 'PRÓXIMA' : statusLabel(outing)}</small>
                         </div>
 
-                        <h4><Link href={`/extraordinarias/${outing.slug}`}>{outing.title}</Link></h4>
+                        <h4><Link href={`/extraordinarias/${outing.slug}`} onClick={() => trackExtraordinaryOpen(outing)}>{outing.title}</Link></h4>
                         {outing.brotherhoodName ? <strong className={styles.organizer}>{outing.brotherhoodName}</strong> : null}
                         {outing.reason ? <p className={styles.reason}>{outing.reason}</p> : null}
 
@@ -215,7 +237,7 @@ export default function ExtraordinaryDirectory({ outings }) {
                           </div>
                         ) : null}
 
-                        <Link className={styles.cardDetailLink} href={`/extraordinarias/${outing.slug}`}>
+                        <Link className={styles.cardDetailLink} href={`/extraordinarias/${outing.slug}`} onClick={() => trackExtraordinaryOpen(outing)}>
                           Ver detalles <span>→</span>
                         </Link>
                       </div>
