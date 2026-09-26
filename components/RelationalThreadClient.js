@@ -2,9 +2,10 @@
 
 import Link from 'next/link';
 import styles from './RelationalThread.module.css';
+import { analyticsConsentGranted, trackEvent } from '@/lib/analytics/client';
 
 function sendTelemetry(payload) {
-  if (typeof window === 'undefined') return;
+  if (typeof window === 'undefined' || !analyticsConsentGranted()) return;
 
   const body = JSON.stringify({
     ...payload,
@@ -35,10 +36,25 @@ function RelationCard({ item, sourceType, sourceName }) {
       className={styles.card}
       href={item.href}
       key={item.href}
-      data-hilo-event="relational_thread_click"
+      data-analytics-skip-entity="true"
+      data-analytics-related-section="hilo_relacional"
       data-hilo-kind={item.kind || 'Relación'}
       data-hilo-relation={item.relation || ''}
-      onClick={() => sendTelemetry({
+      onClick={() => {
+        trackEvent('entity_click', {
+          source_entity_type: sourceType,
+          source_entity_name: sourceName,
+          destination_entity_type: item.kind || 'relacion',
+          destination_entity_name: item.title,
+          link_context: 'hilo_relacional',
+        });
+        trackEvent('related_content_click', {
+          source_type: sourceType,
+          destination_type: item.kind || 'relacion',
+          destination_name: item.title,
+          section_name: 'hilo_relacional',
+        });
+        sendTelemetry({
         event: 'relational_thread_click',
         sourceType,
         source: sourceName,
@@ -46,7 +62,8 @@ function RelationCard({ item, sourceType, sourceName }) {
         destination: item.href,
         relation: item.relation || '',
         hasPresence: Boolean(item.also?.detail),
-      })}
+        });
+      }}
     >
       <span className={styles.cardNode} aria-hidden="true" />
       <div className={styles.cardTopline}>
@@ -116,7 +133,6 @@ export default function RelationalThreadClient({
         {hiddenItems.length > 0 ? (
           <details
             className={styles.more}
-            data-hilo-event="relational_thread_expand"
             onToggle={(event) => {
               if (!event.currentTarget.open) return;
               sendTelemetry({
