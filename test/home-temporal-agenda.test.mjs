@@ -100,7 +100,7 @@ test('un acto multidia usa la fecha y horario de la jornada actual', () => {
   })
 
   assert.equal(temporal.mode, 'today')
-  assert.deepEqual(temporal.focusItems.map((entry) => entry.key), ['valvanera', 'sed'])
+  assert.deepEqual(temporal.focusItems.map((entry) => entry.key), ['sed', 'valvanera'])
   const sed = temporal.focusItems.find((entry) => entry.key === 'sed')
   assert.equal(sed.temporalDate, '2026-09-26')
   assert.equal(sed.temporalDateInfo.weekdayLabel, 'Sábado, 26 de septiembre')
