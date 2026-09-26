@@ -64,3 +64,22 @@ test('prefiere relaciones distintas cuando existen alternativas recientes', () =
     ['gran-poder-capataces', 'baratillo-musica', 'cena-titulares']
   )
 })
+
+
+test('no abandona una tanda reciente solo para buscar otro tipo de relación antiguo', () => {
+  const recent = Array.from({ length: 8 }, (_, index) => ({
+    id: `recent-${index + 1}`,
+    activityKind: 'titularity',
+  }))
+  const candidates = [
+    ...recent,
+    { id: 'older-music', activityKind: 'musical_heritage' },
+    { id: 'older-step', activityKind: 'step_personnel' },
+  ]
+  const families = new Map(candidates.map((item) => [item.id, `family:${item.id}`]))
+
+  assert.deepEqual(
+    selectDiverseHomeThreads(candidates, families, 3).map((item) => item.id),
+    ['recent-1', 'recent-2', 'recent-3']
+  )
+})
