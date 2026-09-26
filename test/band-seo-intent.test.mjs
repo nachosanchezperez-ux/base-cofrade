@@ -42,3 +42,9 @@ test('bandSeoIdentity añade la formación cuando el nombre popular no la explic
     'Banda Tres Caídas de Triana'
   )
 })
+
+
+test('la ficha de Banda permite un title suficientemente largo para conservar la localidad', () => {
+  const page = readFileSync(new URL('../app/bandas/[slug]/page.js', import.meta.url), 'utf8')
+  assert.match(page, /compactSeoTitle\(bandSeoIdentity\(band\), 58\)/)
+})
