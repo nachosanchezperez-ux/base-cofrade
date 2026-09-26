@@ -106,6 +106,13 @@ function musicTitle(section) {
   return 'Otros momentos musicales'
 }
 
+function shortBrotherhoodName(value = '') {
+  return String(value || '')
+    .replace(/^hermandad(?:\s+(?:sacramental|de penitencia|de gloria))?\s+(?:de|del|de la|de los|de las)\s+/i, '')
+    .replace(/^hermandad\s+/i, '')
+    .trim()
+}
+
 function seoCoverage(item) {
   const coverage = ['fecha']
   if (item.schedule.length || item.departureTime || item.returnTime) coverage.push('horarios')
@@ -116,9 +123,16 @@ function seoCoverage(item) {
 }
 
 function seoTitle(item) {
+  const brotherhood = shortBrotherhoodName(item.brotherhoodName)
+  const titleIncludesBrotherhood = brotherhood
+    && normalizeText(item.title).includes(normalizeText(brotherhood))
+  const eventLead = brotherhood && !titleIncludesBrotherhood
+    ? [item.outingType || 'Salida extraordinaria', brotherhood].filter(Boolean).join(' ')
+    : item.outingType
+
   return [
+    eventLead,
     item.title,
-    item.outingType,
     formatSeoDate(item.date),
     item.municipality,
   ].filter(Boolean).join(' · ')
@@ -153,7 +167,7 @@ export async function generateMetadata({ params }) {
     }
   }
 
-  const title = compactSeoTitle(seoTitle(item))
+  const title = compactSeoTitle(seoTitle(item), 58)
   const description = seoDescription(
     [
       `${item.title}${item.municipality ? ` en ${item.municipality}` : ''}`,
