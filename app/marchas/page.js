@@ -16,6 +16,18 @@ export const metadata = {
   ...socialMetadata({ title, description, path: '/marchas' }),
 }
 
+const marchTitleCollator = new Intl.Collator('es', {
+  sensitivity: 'base',
+  ignorePunctuation: true,
+  numeric: true,
+})
+
+function compareMarchTitles(a, b) {
+  const byName = marchTitleCollator.compare(String(a?.name || ''), String(b?.name || ''))
+  if (byName) return byName
+  return String(a?.id || '').localeCompare(String(b?.id || ''))
+}
+
 function initialFor(value) {
   const initial = String(value || '')
     .normalize('NFD')
@@ -27,13 +39,21 @@ function initialFor(value) {
 
 function groupsFor(marches) {
   const groups = new Map()
-  for (const march of marches) {
+
+  for (const march of [...marches].sort(compareMarchTitles)) {
     const initial = initialFor(march.name)
     const current = groups.get(initial) || []
     current.push(march)
     groups.set(initial, current)
   }
-  return [...groups.entries()].map(([initial, items]) => ({ initial, items }))
+
+  return [...groups.entries()]
+    .sort(([initialA], [initialB]) => {
+      if (initialA === '#') return 1
+      if (initialB === '#') return -1
+      return marchTitleCollator.compare(initialA, initialB)
+    })
+    .map(([initial, items]) => ({ initial, items }))
 }
 
 function authorLabel(march) {
