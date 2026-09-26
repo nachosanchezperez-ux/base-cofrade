@@ -1,14 +1,14 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 25 de septiembre de 2026 · Morón de la Frontera · MODELO CERRADO · APTO PARA ROW-BY-ROW
+**Corte operativo:** 26 de septiembre de 2026 · Morón de la Frontera · PREFLIGHT READ-ONLY CERTIFICADO · APTO PARA STAGING
 
-**HEAD integrado en `main`:** `1d56e43ad0a269b787044afc8eb662858dfeb0ef` · #971 amplía el descubrimiento SEO territorial sobre la reconciliación #966–#970.
+**Base viva reconciliada:** `09bc740336943e53a6ada6308fc058e30bad178a` · #972 integrada tras #971; el contrato documental de Morón parte exactamente de este corte limpio.
 
-**Dominio productivo:** `hilocofrade.es` y `www.hilocofrade.es` sirven `dpl_JVH2GKcCPbhdw2y44U4xZHzaigLd`, `READY`, exactamente sobre `1d56e43ad0a269b787044afc8eb662858dfeb0ef`; sitemap de Agenda HTTP 200 con 232 URLs y 43 hubs municipales; La Rinconada, Dos Hermanas y Écija verificadas 200, canonical propio e `index, follow`; 0 errores runtime en la ventana revisada.
+**Dominio productivo:** `hilocofrade.es` y `www.hilocofrade.es` sirven `dpl_DW3jk2xKKPKcceiLWYANokbbfcgL`, `READY`, exactamente sobre `09bc740336943e53a6ada6308fc058e30bad178a`; el corte previo al plan quedó con 0 errores runtime en la ventana revisada.
 
 **Supabase:** `ACTIVE_HEALTHY` y actualizado por el usuario de Nano a Micro. Support confirmó sobreutilización de memoria, uso sostenido de SWAP y overcommitment durante el incidente; CPU/IO pueden haber contribuido, por lo que no se reduce toda la causalidad a RAM. La base ocupa ~45 MB. Tras Micro: `effective_cache_size` 384→768 MB y `maintenance_work_mem` 32→64 MB. Producción contiene 17 migraciones estructurales. HC-PERF-SUPABASE-01 materializa `home_knowledge_threads`: fuente/caché 2.052/2.052, 0 diferencias, lectura `anon` correcta, patrón medido ~115,4 ms→~0,42 ms y primer cron `succeeded` (~156,9 ms). Véase [seguimiento de capacidad](./P0-SUPABASE-CAPACITY-2026-09-25.md).
 
-**GitHub:** 0 PR abiertas tras #971. #931 permanece cerrada sin merge como superseded por #968/#969; #971 queda integrada con CI/build verdes y extiende el sitemap territorial únicamente con municipios que tienen Hermandades indexables o actividad documentada.
+**GitHub al corte limpio previo a esta rama:** 0 PR abiertas tras fusionar #972. #931 permanece cerrada sin merge como superseded por #968/#969; #971 y #972 quedan integradas antes de congelar el row-by-row de Morón.
 
 **Staging editoriales:** Écija `c0160036-0000-4000-8000-000000000001` = `completed`, 776/776 aplicadas, 0 fallidas; Carmona `c0160035-0000-4000-8000-000000000001` = `completed`, 530/530 aplicadas; HC-AUTO-03 · El Calvario permanece `ready` 55/55 y 0 aplicado.
 
@@ -16,7 +16,7 @@
 
 **Régimen:** FIRST EDITION FREEZE activo
 
-**Frente ACTIVO:** HC-016 · Morón de la Frontera. MODELO CERRADO · APTO PARA ROW-BY-ROW. Siguiente acción única: PLAN ROW-BY-ROW → MANIFIESTO DETERMINISTA → PREFLIGHT SQL DE MORÓN. HC-AUTO-03 continúa bloqueado.
+**Frente ACTIVO:** HC-016 · Morón de la Frontera. PREFLIGHT READ-ONLY CERTIFICADO · APTO PARA STAGING. Contrato congelado: 504 operaciones futuras · 0 ejecutadas · namespace `c0160037-*`. Siguiente acción material solo bajo nueva orden: STAGING. HC-AUTO-03 continúa bloqueado.
 
 > GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. Los rankings municipales previos son evidencia histórica, no una cola automática. El próximo municipio solo puede nacer de un recálculo provincial nuevo y una orden expresa.
 
@@ -32,7 +32,7 @@ Este apartado sustituye cualquier instrucción de continuidad escrita en auditor
 | **CERRADO** | P0 · producción y timeouts | Supabase recuperado; #932 publicada; ventana limpia >30 min; caché vencida renovada; contenido y sitemaps verificados | Reabrir solo ante una regresión demostrada; mantener SU-484619 como seguimiento de causa raíz |
 | **CERRADO** | Octavo macrolote municipal HC-016 · Carmona | 530/530 aplicadas; QA estructural/semántico PASS; 15/15 fichas públicas HTTP 200; 0 4xx/5xx/runtime errors | No reejecutar; reabrir solo ante incidencia demostrada o enriquecimiento editorial posterior |
 | **CERRADO** | Noveno macrolote municipal HC-016 · Écija | 776/776 aplicadas; QA estructural/semántico PASS; 15/15 corporaciones + 18/18 bandas HTTP 200; 12 muestras Imagen/Paso 200; 0 4xx/5xx en rutas Écija | No reejecutar; reabrir solo por incidencia demostrada o enriquecimiento posterior |
-| **ACTIVO** | Décimo macrolote municipal HC-016 · Morón de la Frontera | **MODELO CERRADO · APTO PARA ROW-BY-ROW**: 10 Hermandades · 10 Salidas held-ready · 18 Pasos · 37 figuras físicas / 35 Imágenes canónicas · 8 sedes · música de Paso 18/18 · 4 REUSE musicales + 9 INSERT · 1 Cruz de Guía juvenil adicional | Próxima orden: PLAN ROW-BY-ROW → MANIFIESTO DETERMINISTA → PREFLIGHT SQL; no staging/dry-run/Apply |
+| **ACTIVO** | Décimo macrolote municipal HC-016 · Morón de la Frontera | **PREFLIGHT READ-ONLY CERTIFICADO · APTO PARA STAGING**: contrato determinista `c0160037-*` · 504 operaciones futuras · 10 Hermandades · 10 Salidas `held` · 18 Pasos · 37 figuras físicas / 35 Imágenes canónicas · 8 sedes · 19 posiciones musicales (18 de Paso + 1 Cruz de Guía) · 4 REUSE externos · token `PREFLIGHT_MORON_READ_ONLY_OK` · 0 DML / 0 staging | No ejecutar staging, `bulk_import`, payload DML, dry-run ni Apply sin nueva orden; HC-AUTO-03 sigue bloqueado |
 | **BLOQUEADO** | HC-AUTO-03 · El Calvario | Lote `ready` 55/55, 0 aplicado, preservado desde el 21/09 | No ejecutar Apply sin una orden específica y preflight actualizado |
 | **CERRADO** | Orden operativo | Autoridad documental y cola única integradas en #712 | No reabrir salvo contradicción verificable |
 | **CERRADO** | [#492 · Supabase Preview Branches](https://github.com/nachosanchezperez-ux/base-cofrade/issues/492) | Incidencia cerrada; #846 reconcilió el historial y la cadena activa contiene 12 migraciones estructurales, reproducibles desde cero en preview sin datos | Todo cambio futuro de esquema debe nacer como migración reproducible y superar una preview sin datos |
