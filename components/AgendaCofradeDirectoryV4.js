@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
 import { agendaLocationMatches, agendaMunicipalityOptions } from '@/lib/agenda-cofrade-location'
 import { getProcessionLiveState } from '@/lib/procession-live-status'
+import { agendaTemporalRangeDate, withAgendaTemporalDay } from '@/lib/agenda-temporal-display'
 import styles from './AgendaCofradeDirectoryV4.module.css'
 import concertStyles from './AgendaCofradeDirectoryV4Concerts.module.css'
 import visualStyles from './AgendaCofradeDirectoryV4Visuals.module.css'
@@ -52,16 +53,33 @@ function belongsToPeriod(item, period, today) {
   return true
 }
 
+function periodDisplayDate(item, period, today) {
+  if (period === 'today') return today
+  if (period === 'tomorrow') return addDays(today, 1)
+  if (period === 'weekend') {
+    const [start, end] = weekendRange(today)
+    return agendaTemporalRangeDate(item, start, end) || item.date
+  }
+  return ''
+}
+
+function compareDisplayItems(first, second) {
+  return `${first?.temporalDate || first?.date || '9999-12-31'}T${first?.startTime || '23:59'}`
+    .localeCompare(`${second?.temporalDate || second?.date || '9999-12-31'}T${second?.startTime || '23:59'}`)
+}
+
 function groupByMonth(items) {
   const groups = []
   const byKey = new Map()
   for (const item of items) {
-    if (!byKey.has(item.monthKey)) {
-      const group = { key: item.monthKey, label: item.monthLabel, items: [] }
+    const monthKey = item.temporalDateInfo?.monthKey || item.monthKey
+    const monthLabel = item.temporalDateInfo?.monthLabel || item.monthLabel
+    if (!byKey.has(monthKey)) {
+      const group = { key: monthKey, label: monthLabel, items: [] }
       groups.push(group)
-      byKey.set(item.monthKey, group)
+      byKey.set(monthKey, group)
     }
-    byKey.get(item.monthKey).items.push(item)
+    byKey.get(monthKey).items.push(item)
   }
   return groups
 }
@@ -247,11 +265,18 @@ export default function AgendaCofradeDirectoryV4({
 
   const municipalityOptions = useMemo(() => agendaMunicipalityOptions(upcomingItems), [upcomingItems])
 
-  const filtered = useMemo(() => upcomingItems.filter((item) => (
-    belongsToPeriod(item, period, today)
-    && (category === 'all' || item.category === category)
-    && agendaLocationMatches(item, territory, municipality)
-  )), [category, upcomingItems, municipality, period, territory, today])
+  const filtered = useMemo(() => upcomingItems
+    .filter((item) => (
+      belongsToPeriod(item, period, today)
+      && (category === 'all' || item.category === category)
+      && agendaLocationMatches(item, territory, municipality)
+    ))
+    .map((item) => {
+      const displayDate = periodDisplayDate(item, period, today)
+      return displayDate ? withAgendaTemporalDay(item, displayDate) : item
+    })
+    .sort(compareDisplayItems),
+  [category, upcomingItems, municipality, period, territory, today])
 
   const groups = useMemo(() => groupByMonth(filtered), [filtered])
   const selectedCategoryLabel = category === 'all'
@@ -440,6 +465,7 @@ export default function AgendaCofradeDirectoryV4({
                 </div>
                 <div className={styles.cards}>
                   {group.items.map((item) => {
+                    const displayDateInfo = item.temporalDateInfo || item.dateInfo
                     const cardLiveState = ['processions', 'transfers', 'rosaries'].includes(item.category)
                       ? getProcessionLiveState({
                           date: item.date,
@@ -451,10 +477,10 @@ export default function AgendaCofradeDirectoryV4({
 
                     return (
                     <article className={`${styles.card} ${visualStyles.visualCard} ${item.category === 'concerts' ? concertStyles.concertCard : ''} ${cardLiveState.isLive ? styles.cardLive : ''}`} key={item.key} data-category={item.category} data-live={cardLiveState.isLive ? 'true' : undefined}>
-                      <time className={styles.dateBlock} dateTime={item.date || undefined}>
-                        <strong>{item.dateInfo.day}</strong>
-                        <span>{item.dateInfo.month}</span>
-                        {item.dateInfo.year && String(item.dateInfo.year) !== currentYear ? <small>{item.dateInfo.year}</small> : null}
+                      <time className={styles.dateBlock} dateTime={item.temporalDate || item.date || undefined}>
+                        <strong>{displayDateInfo.day}</strong>
+                        <span>{displayDateInfo.month}</span>
+                        {displayDateInfo.year && String(displayDateInfo.year) !== currentYear ? <small>{displayDateInfo.year}</small> : null}
                       </time>
                       <div className={styles.cardBody}>
                         <div className={styles.cardTopline}>
