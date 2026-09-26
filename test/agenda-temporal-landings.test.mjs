@@ -36,7 +36,7 @@ test('Hoy filtra actos del día e incluye actos de varios días', () => {
       item('tomorrow', { date: '2026-09-26' }),
     ],
   })
-  assert.deepEqual(landing.items.map((entry) => entry.key), ['multi', 'today'])
+  assert.deepEqual(landing.items.map((entry) => entry.key), ['today', 'multi'])
   assert.equal(landing.capitalCount, 2)
 })
 
