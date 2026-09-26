@@ -35,6 +35,7 @@ import {
 } from '@/lib/seo'
 import { resolveBandPageTheme } from '@/lib/bands/theme'
 import { buildBandUpcomingAgenda } from '@/lib/band-agenda'
+import { agendaMunicipalityHref } from '@/lib/agenda-relations'
 import {
   groupGloryAccompaniments,
   partitionAccompanimentsBySeason,
@@ -216,6 +217,9 @@ export default async function BandDetailPage({ params }) {
   const { slug } = await params
   const band = await getBandBySlug(slug)
   if (!band) notFound()
+  const municipalityHubHref = band.province === 'Sevilla'
+    ? agendaMunicipalityHref(band.municipality)
+    : ''
   const artistSpotifyUrl = band.interestLinks.find((link) => link.platform === 'spotify')?.url || ''
   const [discography, colors, outingLinks, musicalRepertoires, concertEvents] = await Promise.all([
     getBandDiscography(band.id, {
@@ -361,7 +365,11 @@ export default async function BandDetailPage({ params }) {
         } : null}
         facts={[
           publicText(band.type) ? { label: 'Formación', value: publicText(band.type) } : null,
-          publicText(band.municipality) ? { label: 'Localidad', value: publicText(band.municipality) } : null,
+          publicText(band.municipality) ? {
+            label: 'Localidad',
+            value: publicText(band.municipality),
+            href: municipalityHubHref || undefined,
+          } : null,
           publicText(band.foundation) ? { label: 'Fundación', value: publicText(band.foundation) } : null,
         ]}
         media={{
@@ -415,6 +423,7 @@ export default async function BandDetailPage({ params }) {
                   <span>Localidad</span>
                   <strong>{publicText(band.municipality)}</strong>
                   {band.municipalitySlug ? <Link href={`/bandas/localidad/${band.municipalitySlug}`}>Bandas de {band.municipality} →</Link> : null}
+                  {municipalityHubHref ? <Link href={municipalityHubHref}>Guía cofrade de {band.municipality} →</Link> : null}
                 </article> : null}
                 {band.linkedBrotherhood ? <article>
                   <span>{band.linkedBrotherhoodRelationType === 'associated_with_brotherhood' ? 'Hermandad asociada' : 'Hermandad'}</span>

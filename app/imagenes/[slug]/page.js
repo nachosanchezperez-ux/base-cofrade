@@ -8,6 +8,7 @@ import ImageHeroV2 from '@/components/ImageHeroV2';
 import ImageRestorationsSection from '@/components/ImageRestorationsSection';
 import { imageRestorationCards, buildImageChronology } from '@/lib/image-restoration-display';
 import { heritageDirectoryTypePath, heritageTypeForValue } from '@/lib/heritage-directory';
+import { agendaMunicipalityHref } from '@/lib/agenda-relations';
 import JsonLd from '@/components/JsonLd';
 import RelationalThread from '@/components/RelationalThread';
 import SourcesBlock from '@/components/SourcesBlock';
@@ -100,6 +101,9 @@ export default async function ImagenPage({ params }) {
   if (!result) notFound();
 
   const { imagen, hermandad, pasos = [] } = result;
+  const municipalityHubHref = hermandad?.localidad
+    ? agendaMunicipalityHref(hermandad.localidad)
+    : '';
   const [entityMedia, dresser] = await Promise.all([
     getEntityMedia(imagen.id),
     getPublishedImageDresser(imagen.id),
@@ -269,6 +273,11 @@ export default async function ImagenPage({ params }) {
               <Link href={`/hermandades/${hermandad.slug}`}>
                 {hermandad.nombrePopular}
               </Link>
+            </article> : null}
+
+            {municipalityHubHref ? <article>
+              <small>Localidad</small>
+              <Link href={municipalityHubHref}>Guía cofrade de {hermandad.localidad}</Link>
             </article> : null}
 
             {publicText(imagen.autor) ? <article>
