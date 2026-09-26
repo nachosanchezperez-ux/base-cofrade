@@ -1,0 +1,620 @@
+{
+  "snapshot": {
+    "rows": [
+      {
+        "id": "c0160037-0301-4000-8000-000000000001",
+        "name": "El Soberano de Morón de la Frontera",
+        "slug": "soberano-moron-de-la-frontera",
+        "entity": {
+          "id": "c0160037-0301-4000-8000-000000000001",
+          "name": "El Soberano de Morón de la Frontera",
+          "slug": "soberano-moron-de-la-frontera",
+          "status": "published",
+          "summary": "Corporación de Morón de la Frontera documentada en HC-016.",
+          "created_at": "2026-09-26T13:16:07.822249+00:00",
+          "updated_at": "2026-09-26T13:16:07.822249+00:00",
+          "entity_type": "brotherhood",
+          "content_updated_at": null,
+          "editorial_reviewed_at": null
+        },
+        "status": "published",
+        "brotherhood": {
+          "notes": "Décimo macrolote municipal HC-016 · Morón.",
+          "entity_id": "c0160037-0301-4000-8000-000000000001",
+          "crest_path": null,
+          "website_url": null,
+          "history_text": null,
+          "neighborhood": null,
+          "popular_name": "El Soberano",
+          "instagram_url": null,
+          "official_name": "Hermandad y Cofradía de Nazarenos de Nuestro Padre Jesús de la Salud y el Perdón en su Soberano Poder ante Pilatos, María Santísima de los Ángeles y de la Cruz en sus Misterios Dolorosos, Nuestra Señora del Rosario y Bendito Patriarca San José",
+          "foundation_text": "2022 como Hermandad; origen 2009",
+          "municipality_id": "c0160037-0201-4000-8000-000000000001",
+          "brotherhood_types": [
+            "Penitencia"
+          ],
+          "canonical_see_place_id": "c0160037-0211-4000-8000-000000000001",
+          "current_procession_day": "Viernes de Dolores"
+        },
+        "municipality": "Morón de la Frontera",
+        "brotherhood_types": [
+          "Penitencia"
+        ]
+      },
+      {
+        "id": "c0160037-0302-4000-8000-000000000002",
+        "name": "La Borriquita de Morón de la Frontera",
+        "slug": "borriquita-moron-de-la-frontera",
+        "entity": {
+          "id": "c0160037-0302-4000-8000-000000000002",
+          "name": "La Borriquita de Morón de la Frontera",
+          "slug": "borriquita-moron-de-la-frontera",
+          "status": "published",
+          "summary": "Corporación de Morón de la Frontera documentada en HC-016.",
+          "created_at": "2026-09-26T13:16:07.822249+00:00",
+          "updated_at": "2026-09-26T13:16:07.822249+00:00",
+          "entity_type": "brotherhood",
+          "content_updated_at": null,
+          "editorial_reviewed_at": null
+        },
+        "status": "published",
+        "brotherhood": {
+          "notes": "Décimo macrolote municipal HC-016 · Morón.",
+          "entity_id": "c0160037-0302-4000-8000-000000000002",
+          "crest_path": null,
+          "website_url": null,
+          "history_text": null,
+          "neighborhood": null,
+          "popular_name": "La Borriquita",
+          "instagram_url": null,
+          "official_name": "Hermandad y Cofradía de Nazarenos del Santísimo Cristo de la Bondad en su Entrada Triunfal en Jerusalén, María Auxiliadora, San Juan Bosco y Santo Domingo Savio",
+          "foundation_text": "2007 como Hermandad; salida desde 1964",
+          "municipality_id": "c0160037-0201-4000-8000-000000000001",
+          "brotherhood_types": [
+            "Penitencia"
+          ],
+          "canonical_see_place_id": "c0160037-0212-4000-8000-000000000002",
+          "current_procession_day": "Domingo de Ramos · mañana"
+        },
+        "municipality": "Morón de la Frontera",
+        "brotherhood_types": [
+          "Penitencia"
+        ]
+      },
+      {
+        "id": "c0160037-0303-4000-8000-000000000003",
+        "name": "El Cautivo de Morón de la Frontera",
+        "slug": "cautivo-moron-de-la-frontera",
+        "entity": {
+          "id": "c0160037-0303-4000-8000-000000000003",
+          "name": "El Cautivo de Morón de la Frontera",
+          "slug": "cautivo-moron-de-la-frontera",
+          "status": "published",
+          "summary": "Corporación de Morón de la Frontera documentada en HC-016.",
+          "created_at": "2026-09-26T13:16:07.822249+00:00",
+          "updated_at": "2026-09-26T13:16:07.822249+00:00",
+          "entity_type": "brotherhood",
+          "content_updated_at": null,
+          "editorial_reviewed_at": null
+        },
+        "status": "published",
+        "brotherhood": {
+          "notes": "Décimo macrolote municipal HC-016 · Morón.",
+          "entity_id": "c0160037-0303-4000-8000-000000000003",
+          "crest_path": null,
+          "website_url": null,
+          "history_text": null,
+          "neighborhood": null,
+          "popular_name": "El Cautivo",
+          "instagram_url": null,
+          "official_name": "Hermandad y Cofradía de Nazarenos de Nuestro Padre Jesús Cautivo y María Santísima de la Paz",
+          "foundation_text": "1944",
+          "municipality_id": "c0160037-0201-4000-8000-000000000001",
+          "brotherhood_types": [
+            "Penitencia"
+          ],
+          "canonical_see_place_id": "c0160037-0213-4000-8000-000000000003",
+          "current_procession_day": "Domingo de Ramos · tarde"
+        },
+        "municipality": "Morón de la Frontera",
+        "brotherhood_types": [
+          "Penitencia"
+        ]
+      },
+      {
+        "id": "c0160037-0304-4000-8000-000000000004",
+        "name": "El Calvario de Morón de la Frontera",
+        "slug": "calvario-moron-de-la-frontera",
+        "entity": {
+          "id": "c0160037-0304-4000-8000-000000000004",
+          "name": "El Calvario de Morón de la Frontera",
+          "slug": "calvario-moron-de-la-frontera",
+          "status": "published",
+          "summary": "Corporación de Morón de la Frontera documentada en HC-016.",
+          "created_at": "2026-09-26T13:16:07.822249+00:00",
+          "updated_at": "2026-09-26T13:16:07.822249+00:00",
+          "entity_type": "brotherhood",
+          "content_updated_at": null,
+          "editorial_reviewed_at": null
+        },
+        "status": "published",
+        "brotherhood": {
+          "notes": "Décimo macrolote municipal HC-016 · Morón.",
+          "entity_id": "c0160037-0304-4000-8000-000000000004",
+          "crest_path": null,
+          "website_url": null,
+          "history_text": null,
+          "neighborhood": null,
+          "popular_name": "La Merced / Calvario",
+          "instagram_url": null,
+          "official_name": "Hermandad del Santísimo Cristo del Calvario y Nuestra Señora del Mayor Dolor",
+          "foundation_text": "1958; recuperada 1989",
+          "municipality_id": "c0160037-0201-4000-8000-000000000001",
+          "brotherhood_types": [
+            "Penitencia"
+          ],
+          "canonical_see_place_id": "c0160037-0214-4000-8000-000000000004",
+          "current_procession_day": "Lunes Santo"
+        },
+        "municipality": "Morón de la Frontera",
+        "brotherhood_types": [
+          "Penitencia"
+        ]
+      },
+      {
+        "id": "c0160037-0305-4000-8000-000000000005",
+        "name": "La Buena Muerte de Morón de la Frontera",
+        "slug": "buena-muerte-moron-de-la-frontera",
+        "entity": {
+          "id": "c0160037-0305-4000-8000-000000000005",
+          "name": "La Buena Muerte de Morón de la Frontera",
+          "slug": "buena-muerte-moron-de-la-frontera",
+          "status": "published",
+          "summary": "Corporación de Morón de la Frontera documentada en HC-016.",
+          "created_at": "2026-09-26T13:16:07.822249+00:00",
+          "updated_at": "2026-09-26T13:16:07.822249+00:00",
+          "entity_type": "brotherhood",
+          "content_updated_at": null,
+          "editorial_reviewed_at": null
+        },
+        "status": "published",
+        "brotherhood": {
+          "notes": "Décimo macrolote municipal HC-016 · Morón.",
+          "entity_id": "c0160037-0305-4000-8000-000000000005",
+          "crest_path": null,
+          "website_url": null,
+          "history_text": null,
+          "neighborhood": null,
+          "popular_name": "Los Salesianos / Buena Muerte",
+          "instagram_url": null,
+          "official_name": "Fervorosa Hermandad del Santísimo Cristo de la Buena Muerte, María Santísima de la Amargura y San Juan Bosco",
+          "foundation_text": "1944",
+          "municipality_id": "c0160037-0201-4000-8000-000000000001",
+          "brotherhood_types": [
+            "Penitencia"
+          ],
+          "canonical_see_place_id": "c0160037-0212-4000-8000-000000000002",
+          "current_procession_day": "Martes Santo"
+        },
+        "municipality": "Morón de la Frontera",
+        "brotherhood_types": [
+          "Penitencia"
+        ]
+      },
+      {
+        "id": "c0160037-0306-4000-8000-000000000006",
+        "name": "Loreto de Morón de la Frontera",
+        "slug": "loreto-moron-de-la-frontera",
+        "entity": {
+          "id": "c0160037-0306-4000-8000-000000000006",
+          "name": "Loreto de Morón de la Frontera",
+          "slug": "loreto-moron-de-la-frontera",
+          "status": "published",
+          "summary": "Corporación de Morón de la Frontera documentada en HC-016.",
+          "created_at": "2026-09-26T13:16:07.822249+00:00",
+          "updated_at": "2026-09-26T13:16:07.822249+00:00",
+          "entity_type": "brotherhood",
+          "content_updated_at": null,
+          "editorial_reviewed_at": null
+        },
+        "status": "published",
+        "brotherhood": {
+          "notes": "Décimo macrolote municipal HC-016 · Morón.",
+          "entity_id": "c0160037-0306-4000-8000-000000000006",
+          "crest_path": null,
+          "website_url": null,
+          "history_text": null,
+          "neighborhood": null,
+          "popular_name": "San Francisco / Loreto",
+          "instagram_url": null,
+          "official_name": "Hermandad Sacramental y Cofradía de Nazarenos del Santísimo Cristo de la Agonía en el Huerto, María Santísima de Loreto y Nuestra Señora de los Remedios",
+          "foundation_text": "1961",
+          "municipality_id": "c0160037-0201-4000-8000-000000000001",
+          "brotherhood_types": [
+            "Penitencia",
+            "Sacramental"
+          ],
+          "canonical_see_place_id": "c0160037-0215-4000-8000-000000000005",
+          "current_procession_day": "Miércoles Santo"
+        },
+        "municipality": "Morón de la Frontera",
+        "brotherhood_types": [
+          "Penitencia",
+          "Sacramental"
+        ]
+      },
+      {
+        "id": "c0160037-0307-4000-8000-000000000007",
+        "name": "Santa Cruz de Morón de la Frontera",
+        "slug": "santa-cruz-moron-de-la-frontera",
+        "entity": {
+          "id": "c0160037-0307-4000-8000-000000000007",
+          "name": "Santa Cruz de Morón de la Frontera",
+          "slug": "santa-cruz-moron-de-la-frontera",
+          "status": "published",
+          "summary": "Corporación de Morón de la Frontera documentada en HC-016.",
+          "created_at": "2026-09-26T13:16:07.822249+00:00",
+          "updated_at": "2026-09-26T13:16:07.822249+00:00",
+          "entity_type": "brotherhood",
+          "content_updated_at": null,
+          "editorial_reviewed_at": null
+        },
+        "status": "published",
+        "brotherhood": {
+          "notes": "Décimo macrolote municipal HC-016 · Morón.",
+          "entity_id": "c0160037-0307-4000-8000-000000000007",
+          "crest_path": null,
+          "website_url": null,
+          "history_text": null,
+          "neighborhood": null,
+          "popular_name": "La Compañía / Santa Cruz",
+          "instagram_url": null,
+          "official_name": "Real y Antigua Hermandad de Gloria de la Santa Cruz y Cofradía de Nazarenos del Santísimo Cristo de la Expiración, Nuestra Señora de la Esperanza y San Ignacio de Loyola",
+          "foundation_text": "1624; cofradía penitencial 1920",
+          "municipality_id": "c0160037-0201-4000-8000-000000000001",
+          "brotherhood_types": [
+            "Penitencia",
+            "Gloria"
+          ],
+          "canonical_see_place_id": "c0160037-0216-4000-8000-000000000006",
+          "current_procession_day": "Jueves Santo"
+        },
+        "municipality": "Morón de la Frontera",
+        "brotherhood_types": [
+          "Penitencia",
+          "Gloria"
+        ]
+      },
+      {
+        "id": "c0160037-0308-4000-8000-000000000008",
+        "name": "Jesús Nazareno de Morón de la Frontera",
+        "slug": "jesus-nazareno-moron-de-la-frontera",
+        "entity": {
+          "id": "c0160037-0308-4000-8000-000000000008",
+          "name": "Jesús Nazareno de Morón de la Frontera",
+          "slug": "jesus-nazareno-moron-de-la-frontera",
+          "status": "published",
+          "summary": "Corporación de Morón de la Frontera documentada en HC-016.",
+          "created_at": "2026-09-26T13:16:07.822249+00:00",
+          "updated_at": "2026-09-26T13:16:07.822249+00:00",
+          "entity_type": "brotherhood",
+          "content_updated_at": null,
+          "editorial_reviewed_at": null
+        },
+        "status": "published",
+        "brotherhood": {
+          "notes": "Décimo macrolote municipal HC-016 · Morón.",
+          "entity_id": "c0160037-0308-4000-8000-000000000008",
+          "crest_path": null,
+          "website_url": null,
+          "history_text": null,
+          "neighborhood": null,
+          "popular_name": "Jesús",
+          "instagram_url": null,
+          "official_name": "Real, Muy Antigua, Ilustre y Fervorosa Hermandad de Nuestro Padre Jesús Nazareno, María Santísima de los Dolores y San Juan Evangelista",
+          "foundation_text": "1602",
+          "municipality_id": "c0160037-0201-4000-8000-000000000001",
+          "brotherhood_types": [
+            "Penitencia"
+          ],
+          "canonical_see_place_id": "c0160037-0217-4000-8000-000000000007",
+          "current_procession_day": "Madrugada del Viernes Santo"
+        },
+        "municipality": "Morón de la Frontera",
+        "brotherhood_types": [
+          "Penitencia"
+        ]
+      },
+      {
+        "id": "c0160037-0309-4000-8000-000000000009",
+        "name": "Santo Entierro de Morón de la Frontera",
+        "slug": "santo-entierro-moron-de-la-frontera",
+        "entity": {
+          "id": "c0160037-0309-4000-8000-000000000009",
+          "name": "Santo Entierro de Morón de la Frontera",
+          "slug": "santo-entierro-moron-de-la-frontera",
+          "status": "published",
+          "summary": "Corporación de Morón de la Frontera documentada en HC-016.",
+          "created_at": "2026-09-26T13:16:07.822249+00:00",
+          "updated_at": "2026-09-26T13:16:07.822249+00:00",
+          "entity_type": "brotherhood",
+          "content_updated_at": null,
+          "editorial_reviewed_at": null
+        },
+        "status": "published",
+        "brotherhood": {
+          "notes": "Décimo macrolote municipal HC-016 · Morón.",
+          "entity_id": "c0160037-0309-4000-8000-000000000009",
+          "crest_path": null,
+          "website_url": null,
+          "history_text": null,
+          "neighborhood": null,
+          "popular_name": "Santo Entierro",
+          "instagram_url": null,
+          "official_name": "Hermandad del Santísimo Cristo Yacente, Nuestra Señora de las Angustias y Santísimo Cristo de la Victoria",
+          "foundation_text": "referencia 1541; recuperada 1984",
+          "municipality_id": "c0160037-0201-4000-8000-000000000001",
+          "brotherhood_types": [
+            "Penitencia"
+          ],
+          "canonical_see_place_id": "c0160037-0218-4000-8000-000000000008",
+          "current_procession_day": "Viernes Santo · tarde"
+        },
+        "municipality": "Morón de la Frontera",
+        "brotherhood_types": [
+          "Penitencia"
+        ]
+      },
+      {
+        "id": "c0160037-0310-4000-8000-000000000010",
+        "name": "La Soledad de Morón de la Frontera",
+        "slug": "soledad-moron-de-la-frontera",
+        "entity": {
+          "id": "c0160037-0310-4000-8000-000000000010",
+          "name": "La Soledad de Morón de la Frontera",
+          "slug": "soledad-moron-de-la-frontera",
+          "status": "published",
+          "summary": "Corporación de Morón de la Frontera documentada en HC-016.",
+          "created_at": "2026-09-26T13:16:07.822249+00:00",
+          "updated_at": "2026-09-26T13:16:07.822249+00:00",
+          "entity_type": "brotherhood",
+          "content_updated_at": null,
+          "editorial_reviewed_at": null
+        },
+        "status": "published",
+        "brotherhood": {
+          "notes": "Décimo macrolote municipal HC-016 · Morón.",
+          "entity_id": "c0160037-0310-4000-8000-000000000010",
+          "crest_path": null,
+          "website_url": null,
+          "history_text": null,
+          "neighborhood": null,
+          "popular_name": "La Soledad",
+          "instagram_url": null,
+          "official_name": "Ilustre y Fervorosa Hermandad de Esclavitud de los Sagrados Corazones de Jesús y de María y Cofradía de Nazarenos de Nuestra Señora de los Dolores en su Soledad",
+          "foundation_text": "siglo XIX; recuperada 1997",
+          "municipality_id": "c0160037-0201-4000-8000-000000000001",
+          "brotherhood_types": [
+            "Penitencia"
+          ],
+          "canonical_see_place_id": "c0160037-0213-4000-8000-000000000003",
+          "current_procession_day": "Sábado Santo"
+        },
+        "municipality": "Morón de la Frontera",
+        "brotherhood_types": [
+          "Penitencia"
+        ]
+      }
+    ],
+    "import": {
+      "id": "c0160037-0000-4000-8000-000000000001",
+      "label": "HC-016 · Morón de la Frontera · décimo macrolote municipal",
+      "status": "completed",
+      "metadata": {
+        "notes": "Staging únicamente. Registra el manifiesto de 504 filas; no ejecuta el payload editorial.",
+        "phase": "completed",
+        "scope": "Décimo macrolote municipal HC-016",
+        "counts": {
+          "ddl": 0,
+          "dml": 504,
+          "rls": 0,
+          "bands": 10,
+          "steps": 18,
+          "delete": 0,
+          "images": 35,
+          "places": 8,
+          "update": 0,
+          "upsert": 504,
+          "outings": 10,
+          "sources": 24,
+          "entities": 73,
+          "image_steps": 35,
+          "brotherhoods": 10,
+          "source_links": 112,
+          "music_periods": 19,
+          "outing_series": 10,
+          "external_reuse": 4,
+          "municipalities": 1,
+          "music_positions": 19,
+          "outing_entities": 53,
+          "entity_locations": 10,
+          "brotherhood_steps": 18,
+          "music_assignments": 19,
+          "brotherhood_images": 20
+        },
+        "dry_run": {
+          "result": "DRY_RUN_MORON_SQL_OK_ROLLED_BACK",
+          "certified": true,
+          "correction": "Jesus: cross_guide=1, mystery=2, palio=3",
+          "logical_dml": 504,
+          "payload_path": "supabase/migrations_archive/post-first-edition-editorial/20260926103000_dry_run_moron_decimo_macrolote_hc016.sql",
+          "first_attempt": "aborted_on outing_music_positions sequence uniqueness before commit",
+          "second_attempt": "pass",
+          "payload_blob_sha": "06da83b565c4c17b6f32a8d5ecaeda1201495528",
+          "production_residue": 0,
+          "reconciled_main_sha": "afc273b6db0b13661859ba6a5845c93c937d13db"
+        },
+        "documents": {
+          "plan": "docs/PLAN-ROW-BY-ROW-MORON-HC016-2026-09-26.md",
+          "manifest": "docs/MANIFIESTO-DETERMINISTA-MORON-HC016-2026-09-26.md",
+          "preflight": "docs/CERTIFICACION-PREFLIGHT-SQL-MORON-HC016-2026-09-26.md",
+          "source_links": "docs/ANEXO-SOURCE-LINKS-MORON-HC016-2026-09-26.md"
+        },
+        "namespace": "c0160037-*",
+        "next_gate": "explicit remediation authorization for brotherhood_types; do not reopen HC-AUTO-03",
+        "preflight": {
+          "checks": 16,
+          "result": "PREFLIGHT_MORON_READ_ONLY_OK",
+          "certified": true,
+          "write_operations": 0
+        },
+        "staged_at": "2026-09-26T10:09:28.688391+00:00",
+        "applied_at": "2026-09-26T13:17:11.716492+00:00",
+        "applied_dml": 504,
+        "valid_items": 504,
+        "apply_result": "APPLY_MORON_SQL_OK_COMMITTED",
+        "closure_gate": "BLOCKED_POST_APPLY_PUBLIC_QA",
+        "municipality": "Morón de la Frontera",
+        "staged_items": 504,
+        "invalid_items": 0,
+        "closure_result": "NOT_CLOSED",
+        "staging_result": "STAGING_MORON_MANIFEST_OK",
+        "apply_candidate": {
+          "path": "supabase/migrations_archive/post-first-edition-editorial/20260926113000_apply_moron_decimo_macrolote_hc016.sql",
+          "marker": "APPLY_MORON_SQL_OK_COMMITTED",
+          "prepared": true,
+          "authorized": false,
+          "git_blob_sha": "29e83ff336ea4de8d7bcc99005d6a33ec948d90b",
+          "git_commit_sha": "96d93728b052c2a3efe677c5b04b21fcbe539956",
+          "reversible_equivalence": true,
+          "derived_from_dry_run_blob_sha": "06da83b565c4c17b6f32a8d5ecaeda1201495528"
+        },
+        "apply_authorized": true,
+        "documentation_pr": 974,
+        "payload_blob_sha": "29e83ff336ea4de8d7bcc99005d6a33ec948d90b",
+        "dry_run_merge_sha": "b588b4b756cc71db6d1cea6d2c64ff3e83fc1e47",
+        "main_sha_at_apply": "14d8dfb2c1a5ce4b379eb8486a5b02088f5b2ea4",
+        "planning_base_sha": "95511d5575d2ff32af83c8fe01c0f038ec1486e2",
+        "staging_certified": true,
+        "staging_authorized": true,
+        "apply_authorized_by": "user explicit order 2026-09-26",
+        "authorization_basis": "Autorizo Apply de Morón de la Frontera usando exactamente el candidato certificado 29e83ff336ea4de8d7bcc99005d6a33ec948d90b sobre el staging c0160037-0000-4000-8000-000000000001",
+        "post_apply_public_qa": {
+          "result": "FAIL",
+          "blocking_cause": "10/10 Moron brotherhoods have empty brotherhood_types, so shared indexability excludes them and the municipality hub has no Seville anchor",
+          "required_correction": "Populate canonical brotherhood_types for the 10 Moron brotherhoods, then repeat targeted QA",
+          "step_samples_http_200": "4/4",
+          "image_samples_http_200": "4/4",
+          "apply_rollback_required": false,
+          "municipality_hub_status": 404,
+          "new_band_pages_http_200": "10/10",
+          "brotherhood_pages_http_200": "10/10"
+        },
+        "dry_run_deployment_id": "dpl_4ABMpR7NJX4AZgjz9hA9qcjJttZB",
+        "post_staging_preflight": {
+          "checks": 15,
+          "result": "POST_STAGING_PREFLIGHT_MORON_OK",
+          "family_counts_match": 19,
+          "checked_after_staging": true,
+          "editorial_namespace_rows": 0,
+          "municipality_materialized": false
+        },
+        "documentation_merge_sha": "95511d5575d2ff32af83c8fe01c0f038ec1486e2",
+        "dry_run_apply_authorized": true,
+        "dry_run_deployment_state": "READY",
+        "dry_run_documentation_pr": 981,
+        "post_apply_structural_qa": "PASS",
+        "schema_migrations_at_staging": 17,
+        "staging_certification_merge_sha": "751109881e11de2fb36c1d18da14d4320881750c",
+        "staging_certification_deployment_id": "dpl_5vsghDxJSrmjiZqnMiM7mVg9NcNA",
+        "staging_certification_deployment_state": "READY"
+      },
+      "created_at": "2026-09-26T10:09:28.688391+00:00",
+      "created_by": null,
+      "updated_at": "2026-09-26T13:26:22.179506+00:00",
+      "source_name": "GitHub · row-by-row + manifiesto + preflight read-only Morón · 2026-09-26",
+      "valid_items": 504,
+      "completed_at": null,
+      "failed_items": 0,
+      "staged_items": 504,
+      "applied_items": 504,
+      "invalid_items": 0,
+      "source_format": "manifest+read_only_preflight",
+      "expected_items": 504
+    },
+    "captured_at": "2026-09-26T19:14:26.086673+00:00",
+    "target_count": 10,
+    "item_statuses": [
+      {
+        "count": 504,
+        "status": "applied"
+      }
+    ],
+    "staging_types": [
+      {
+        "types": null,
+        "position": 107,
+        "has_types": false
+      },
+      {
+        "types": null,
+        "position": 108,
+        "has_types": false
+      },
+      {
+        "types": null,
+        "position": 109,
+        "has_types": false
+      },
+      {
+        "types": null,
+        "position": 110,
+        "has_types": false
+      },
+      {
+        "types": null,
+        "position": 111,
+        "has_types": false
+      },
+      {
+        "types": null,
+        "position": 112,
+        "has_types": false
+      },
+      {
+        "types": null,
+        "position": 113,
+        "has_types": false
+      },
+      {
+        "types": null,
+        "position": 114,
+        "has_types": false
+      },
+      {
+        "types": null,
+        "position": 115,
+        "has_types": false
+      },
+      {
+        "types": null,
+        "position": 116,
+        "has_types": false
+      }
+    ],
+    "all_entities_md5": "9acbadc65d471df429d4424f5e6acee9",
+    "municipality_count": 10,
+    "all_brotherhoods_md5": "2f696925425c0c9bae6243819418ae99",
+    "other_brotherhoods_md5": "4bcf2be90e2936b11112cc3fe7aeebef"
+  },
+  "checks": {
+    "changed_rows": 10,
+    "other_rows_equal": true,
+    "all_entities_equal": true,
+    "import_equal": true,
+    "other_columns_equal": true,
+    "types_exact": true,
+    "penitencia": 10,
+    "empty": 0
+  }
+}
