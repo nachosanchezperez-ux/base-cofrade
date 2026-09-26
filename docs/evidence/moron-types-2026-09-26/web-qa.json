@@ -1,0 +1,3850 @@
+{
+  "checked_at": "2026-09-26T20:22:25.943255+00:00",
+  "results": [
+    {
+      "path": "/hermandades/soberano-moron-de-la-frontera",
+      "status": 200,
+      "url": "https://hilocofrade.es/hermandades/soberano-moron-de-la-frontera",
+      "headers": {
+        "Age": "0",
+        "Cache-Control": "public, max-age=0, must-revalidate",
+        "Content-Length": "77795",
+        "Content-Type": "text/html; charset=utf-8",
+        "Date": "Sat, 26 Sep 2026 20:21:49 GMT",
+        "Etag": "\"fj0xwkmnha1nnv\"",
+        "Server": "Vercel",
+        "Strict-Transport-Security": "max-age=63072000",
+        "Vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "X-Matched-Path": "/hermandades/[slug]",
+        "X-Nextjs-Prerender": "1",
+        "X-Nextjs-Stale-Time": "300",
+        "X-Powered-By": "Next.js",
+        "X-Vercel-Cache": "MISS",
+        "X-Vercel-Id": "cdg1::dub1::gtkfm-1790454103968-862cc0507663",
+        "Connection": "close"
+      },
+      "title": "El Soberano (Morón de la Frontera): historia y pasos · Hilo Cofrade",
+      "canonical": "https://hilocofrade.es/hermandades/soberano-moron-de-la-frontera",
+      "robots": "index, follow",
+      "h1": [
+        "El Soberano"
+      ],
+      "headings": [
+        "La Hermandad durante el año",
+        "Parroquia de San José",
+        "Conexiones de esta Hermandad",
+        "Sagrados Titulares",
+        "Nuestro Padre Jesús de la Salud y el Perdón en su Soberano Poder ante Pilatos",
+        "María Santísima de los Ángeles y de la Cruz",
+        "Pasos procesionales",
+        "Misterio de Nuestro Padre Jesús de la Salud y el Perdón ante Pilatos",
+        "Palio de María Santísima de los Ángeles y de la Cruz",
+        "La Hermandad como nodo de la enciclopedia",
+        "Salidas",
+        "Otras salidas",
+        "El Soberano · Viernes de Dolores 2026",
+        "Acompañamientos Musicales Históricos",
+        "Nazareno de Arahal",
+        "Banda Municipal de Música de Morón de la Frontera",
+        "Fuentes"
+      ],
+      "links": [
+        {
+          "text": "Saltar al contenido",
+          "href": "#main-content"
+        },
+        {
+          "text": "",
+          "href": "/"
+        },
+        {
+          "text": "Inicio",
+          "href": "/#inicio"
+        },
+        {
+          "text": "Tira del hilo",
+          "href": "/#tiradelhilo"
+        },
+        {
+          "text": "Agenda",
+          "href": "/agenda-cofrade"
+        },
+        {
+          "text": "Igualás y ensayos",
+          "href": "/igualas-y-ensayos"
+        },
+        {
+          "text": "Hoy",
+          "href": "/#hoy"
+        },
+        {
+          "text": "Directorio →",
+          "href": "/directorio"
+        },
+        {
+          "text": "Hermandades →",
+          "href": "/hermandades"
+        },
+        {
+          "text": "Procesiones de Gloria →",
+          "href": "/procesiones-de-gloria"
+        },
+        {
+          "text": "Imágenes →",
+          "href": "/imagenes"
+        },
+        {
+          "text": "Pasos →",
+          "href": "/pasos"
+        },
+        {
+          "text": "Bandas →",
+          "href": "/bandas"
+        },
+        {
+          "text": "Marchas →",
+          "href": "/marchas"
+        },
+        {
+          "text": "Autores →",
+          "href": "/autores"
+        },
+        {
+          "text": "Crucetas musicales →",
+          "href": "/crucetas-musicales"
+        },
+        {
+          "text": "Inicio →",
+          "href": "/#inicio"
+        },
+        {
+          "text": "Tira del hilo →",
+          "href": "/#tiradelhilo"
+        },
+        {
+          "text": "Agenda →",
+          "href": "/agenda-cofrade"
+        },
+        {
+          "text": "Igualás y ensayos →",
+          "href": "/igualas-y-ensayos"
+        },
+        {
+          "text": "Hoy →",
+          "href": "/#hoy"
+        },
+        {
+          "text": "Directorio →",
+          "href": "/directorio"
+        },
+        {
+          "text": "Hermandades →",
+          "href": "/hermandades"
+        },
+        {
+          "text": "Procesiones de Gloria →",
+          "href": "/procesiones-de-gloria"
+        },
+        {
+          "text": "Imágenes →",
+          "href": "/imagenes"
+        },
+        {
+          "text": "Pasos →",
+          "href": "/pasos"
+        },
+        {
+          "text": "Bandas →",
+          "href": "/bandas"
+        },
+        {
+          "text": "Marchas →",
+          "href": "/marchas"
+        },
+        {
+          "text": "Autores →",
+          "href": "/autores"
+        },
+        {
+          "text": "Crucetas musicales →",
+          "href": "/crucetas-musicales"
+        },
+        {
+          "text": "Hermandades",
+          "href": "/hermandades"
+        },
+        {
+          "text": "Morón de la Frontera",
+          "href": "/agenda-cofrade/localidad/moron-de-la-frontera"
+        },
+        {
+          "text": "Información",
+          "href": "#resumen"
+        },
+        {
+          "text": "Titulares",
+          "href": "#titulares"
+        },
+        {
+          "text": "Pasos",
+          "href": "#pasos"
+        },
+        {
+          "text": "Conexiones",
+          "href": "#tira-del-hilo"
+        },
+        {
+          "text": "Salidas",
+          "href": "#salidas"
+        },
+        {
+          "text": "Histórico musical",
+          "href": "#acompanamientos"
+        },
+        {
+          "text": "Fuentes",
+          "href": "#fuentes"
+        },
+        {
+          "text": "2 →",
+          "href": "#titulares"
+        },
+        {
+          "text": "2 →",
+          "href": "#pasos"
+        },
+        {
+          "text": "Cómo llegar",
+          "href": "https://www.google.com/maps/search/?api=1&query=Parroquia%20de%20San%20Jos%C3%A9%2C%20C%2F%20San%20Jos%C3%A9%20de%20Calasanz%2C%201%2C%20Mor%C3%B3n%20de%20la%20Frontera%2C%20Sevilla"
+        },
+        {
+          "text": "Imagen Titular Nuestro Padre Jesús de la Salud y el Perdón en su Soberano Poder ante Pilatos Imagen procesional →",
+          "href": "/imagenes/jesus-salud-perdon-soberano-poder-moron"
+        },
+        {
+          "text": "Imagen Titular María Santísima de los Ángeles y de la Cruz Imagen procesional →",
+          "href": "/imagenes/maria-santisima-angeles-cruz-moron"
+        },
+        {
+          "text": "Paso Paso procesional Misterio de Nuestro Padre Jesús de la Salud y el Perdón ante Pilatos mystery →",
+          "href": "/pasos/misterio-soberano-poder-pilatos-moron"
+        },
+        {
+          "text": "Paso Paso procesional Palio de María Santísima de los Ángeles y de la Cruz palio →",
+          "href": "/pasos/palio-maria-santisima-angeles-cruz-moron"
+        },
+        {
+          "text": "NP Imagen procesional Nuestro Padre Jesús de la Salud y el Perdón en su Soberano Poder ante Pilatos Nuestro Padre Jesús de la Salud y el Perdón en su Soberano Poder ante Pilatos Descubrir titular →",
+          "href": "/imagenes/jesus-salud-perdon-soberano-poder-moron"
+        },
+        {
+          "text": "MS Imagen procesional María Santísima de los Ángeles y de la Cruz María Santísima de los Ángeles y de la Cruz Descubrir titular →",
+          "href": "/imagenes/maria-santisima-angeles-cruz-moron"
+        },
+        {
+          "text": "Nuestro Padre Jesús de la Salud y el Perdón en su Soberano Poder ante Pilatos",
+          "href": "/imagenes/jesus-salud-perdon-soberano-poder-moron"
+        },
+        {
+          "text": "Soldado romano del misterio del Soberano",
+          "href": "/imagenes/soldado-romano-soberano-moron"
+        },
+        {
+          "text": "Poncio Pilato del misterio del Soberano",
+          "href": "/imagenes/poncio-pilato-soberano-moron"
+        },
+        {
+          "text": "Ver ficha del paso →",
+          "href": "/pasos/misterio-soberano-poder-pilatos-moron"
+        },
+        {
+          "text": "María Santísima de los Ángeles y de la Cruz",
+          "href": "/imagenes/maria-santisima-angeles-cruz-moron"
+        },
+        {
+          "text": "Ver ficha del paso →",
+          "href": "/pasos/palio-maria-santisima-angeles-cruz-moron"
+        },
+        {
+          "text": "Imagen Titular Nuestro Padre Jesús de la Salud y el Perdón en su Soberano Poder ante Pilatos Imagen vinculada a la Hermandad →",
+          "href": "/imagenes/jesus-salud-perdon-soberano-poder-moron"
+        },
+        {
+          "text": "Imagen Titular María Santísima de los Ángeles y de la Cruz Imagen vinculada a la Hermandad →",
+          "href": "/imagenes/maria-santisima-angeles-cruz-moron"
+        },
+        {
+          "text": "Paso Procesiona con Misterio de Nuestro Padre Jesús de la Salud y el Perdón ante Pilatos Paso procesional de la Hermandad →",
+          "href": "/pasos/misterio-soberano-poder-pilatos-moron"
+        },
+        {
+          "text": "Paso Procesiona con Palio de María Santísima de los Ángeles y de la Cruz Paso procesional de la Hermandad →",
+          "href": "/pasos/palio-maria-santisima-angeles-cruz-moron"
+        },
+        {
+          "text": "Arte Sacro · Soberano 2026",
+          "href": "https://www.artesacro.org/Noticia/Ver/167294/provincia-viernes-dolores-moron-soberano-pantano"
+        },
+        {
+          "text": "Consejo · Hermandad del Soberano",
+          "href": "https://consejomoron.org/hermandad-del-soberano/"
+        },
+        {
+          "text": "Radio Morón · Semana Santa 2026",
+          "href": "https://www.radiomoron.es/semanasanta2026/"
+        },
+        {
+          "text": "Colabora",
+          "href": "/colabora"
+        },
+        {
+          "text": "Aviso legal",
+          "href": "/aviso-legal"
+        },
+        {
+          "text": "Privacidad",
+          "href": "/privacidad"
+        },
+        {
+          "text": "Cookies",
+          "href": "/cookies"
+        }
+      ],
+      "text": "El Soberano (Morón de la Frontera): historia y pasos · Hilo Cofrade Saltar al contenido Inicio Tira del hilo Agenda Igualás y ensayos Hoy Explorar Directorio → Hermandades → Procesiones de Gloria → Imágenes → Pasos → Bandas → Marchas → Autores → Crucetas musicales → ☰ Inicio → Tira del hilo → Agenda → Igualás y ensayos → Hoy → Enciclopedia Directorio → Hermandades → Procesiones de Gloria → Imágenes → Pasos → Bandas → Marchas → Autores → Crucetas musicales → Hermandades → Morón de la Frontera Hermandad de Penitencia Morón de la Frontera El Soberano Parroquia de San José · Morón de la Frontera Hermandad y Cofradía de Nazarenos de Nuestro Padre Jesús de la Salud y el Perdón en su Soberano Poder ante Pilatos, María Santísima de los Ángeles y de la Cruz en sus Misterios Dolorosos, Nuestra Señora del Rosario y Bendito Patriarca San José Semana Santa Viernes de Dolores · 2 pasos Explorar ficha ‹ Información Titulares Pasos Conexiones Salidas Histórico musical Fuentes › De un vistazo La Hermandad durante el año Última actualización 26 de septiembre de 2026 Fundación 2022 como Hermandad; origen 2009 Titulares 2 → Pasos 2 → Actividad anual habitual Qué hace la Hermandad durante el año Estación de penitencia Viernes de Dolores Sede canónica Parroquia Parroquia de San José C/ San José de Calasanz, 1 Cómo llegar Descubre el hilo Conexiones de esta Hermandad Continúa por sus Titulares, pasos, bandas y marchas documentadas. Cada relación abre una nueva ficha sin perder el contexto de la Hermandad de origen. Hermandad El Soberano Hermandad de Penitencia · Morón de la Frontera Imagen Titular Nuestro Padre Jesús de la Salud y el Perdón en su Soberano Poder ante Pilatos Imagen procesional → Imagen Titular María Santísima de los Ángeles y de la Cruz Imagen procesional → Paso Paso procesional Misterio de Nuestro Padre Jesús de la Salud y el Perdón ante Pilatos mystery → Paso Paso procesional Palio de María Santísima de los Ángeles y de la Cruz palio → Titularidad Sagrados Titulares Imágenes e identidades devocionales que conforman la titularidad documentada de la Hermandad. NP Imagen procesional Nuestro Padre Jesús de la Salud y el Perdón en su Soberano Poder ante Pilatos Nuestro Padre Jesús de la Salud y el Perdón en su Soberano Poder ante Pilatos Descubrir titular → MS Imagen procesional María Santísima de los Ángeles y de la Cruz María Santísima de los Ángeles y de la Cruz Descubrir titular → 2 pasos Pasos procesionales Imágenes, diseño, talla, orfebrería, bordados, reformas y evolución histórica. 0 1 Fotografía del paso mystery Misterio de Nuestro Padre Jesús de la Salud y el Perdón ante Pilatos Misterio de Nuestro Padre Jesús de la Salud y el Perdón ante Pilatos Imágenes que procesionan Nuestro Padre Jesús de la Salud y el Perdón en su Soberano Poder ante Pilatos Soldado romano del misterio del Soberano Poncio Pilato del misterio del Soberano Ver ficha del paso → 0 2 Fotografía del paso palio Palio de María Santísima de los Ángeles y de la Cruz Palio de María Santísima de los Ángeles y de la Cruz Imágenes que procesionan María Santísima de los Ángeles y de la Cruz Ver ficha del paso → Tira del hilo La Hermandad como nodo de la enciclopedia Tira del hilo hacia sus imágenes, sus pasos y su música vinculada. Los vínculos institucionales y los acompañamientos actuales se etiquetan de forma distinta para no confundir pertenencia con contrato procesional. Hermandad El Soberano de Morón de la Frontera 2 imágenes · 2 pasos Imagen Titular Nuestro Padre Jesús de la Salud y el Perdón en su Soberano Poder ante Pilatos Imagen vinculada a la Hermandad → Imagen Titular María Santísima de los Ángeles y de la Cruz Imagen vinculada a la Hermandad → Paso Procesiona con Misterio de Nuestro Padre Jesús de la Salud y el Perdón ante Pilatos Paso procesional de la Hermandad → Paso Procesiona con Palio de María Santísima de los Ángeles y de la Cruz Paso procesional de la Hermandad → La Hermandad en la calle Salidas Las salidas ordinarias, los cultos externos y la memoria extraordinaria se presentan como ámbitos distintos. Otros registros Otras salidas Salidas documentadas pendientes de una clasificación editorial más específica. 01 01 P Ordinaria Procesión Ordinaria El Soberano · Viernes de Dolores 2026 Nuestro Padre Jesús de la Salud y el Perdón en su Soberano Poder ante Pilatos · María Santísima de los Ángeles y de la Cruz Cuándo 27 de marzo de 2026 · 18:30 h Memoria sonora Acompañamientos Musicales Históricos Una cronología por paso para conocer qué formaciones musicales han acompañado a la Hermandad. 2026 Nazareno de Arahal Misterio de Nuestro Padre Jesús de la Salud y el Perdón ante Pilatos · Tras Nuestro Padre Jesús de la Salud y el Perdón Cornetas y Tambores 2026 Banda Municipal de Música de Morón de la Frontera Palio de María Santísima de los Ángeles y de la Cruz · Tras María Santísima de los Ángeles y de la Cruz Banda de Música Documentación Fuentes 3 fuentes ＋ Arte Sacro · Soberano 2026 Consejo · Hermandad del Soberano Radio Morón · Semana Santa 2026 Colabora Aviso legal Privacidad Cookies Proyecto creado por Nacho Sánchez · @desdeelarenal",
+      "body_sha256": "51c7cfb6683c8753cd0081b1190fbd91b084a5c0c3cdf651028b554e66d5e4af",
+      "breadcrumb_json_ld": true
+    },
+    {
+      "path": "/hermandades/borriquita-moron-de-la-frontera",
+      "status": 200,
+      "url": "https://hilocofrade.es/hermandades/borriquita-moron-de-la-frontera",
+      "headers": {
+        "Age": "0",
+        "Cache-Control": "public, max-age=0, must-revalidate",
+        "Content-Length": "69614",
+        "Content-Type": "text/html; charset=utf-8",
+        "Date": "Sat, 26 Sep 2026 20:21:49 GMT",
+        "Etag": "\"dpywoyh2861hfd\"",
+        "Server": "Vercel",
+        "Strict-Transport-Security": "max-age=63072000",
+        "Vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "X-Matched-Path": "/hermandades/[slug]",
+        "X-Nextjs-Prerender": "1",
+        "X-Nextjs-Stale-Time": "300",
+        "X-Powered-By": "Next.js",
+        "X-Vercel-Cache": "MISS",
+        "X-Vercel-Id": "cdg1::dub1::262h4-1790454104052-8ea348cdaec4",
+        "Connection": "close"
+      },
+      "title": "La Borriquita (Morón de la Frontera) · Hilo Cofrade",
+      "canonical": "https://hilocofrade.es/hermandades/borriquita-moron-de-la-frontera",
+      "robots": "index, follow",
+      "h1": [
+        "La Borriquita"
+      ],
+      "headings": [
+        "La Hermandad durante el año",
+        "Capilla de María Auxiliadora · Salesianos",
+        "Conexiones de esta Hermandad",
+        "Sagrados Titulares",
+        "Santísimo Cristo de la Bondad",
+        "Pasos procesionales",
+        "Paso de la Entrada Triunfal en Jerusalén · Borriquita",
+        "La Hermandad como nodo de la enciclopedia",
+        "Salidas",
+        "Domingo de Ramos · Estación de Penitencia",
+        "Edición 2026",
+        "Acompañamientos Musicales Históricos",
+        "Banda de Cornetas y Tambores Santísimo Cristo a la Columna «El Amarrado» de Ávila",
+        "Fuentes"
+      ],
+      "links": [
+        {
+          "text": "Saltar al contenido",
+          "href": "#main-content"
+        },
+        {
+          "text": "",
+          "href": "/"
+        },
+        {
+          "text": "Inicio",
+          "href": "/#inicio"
+        },
+        {
+          "text": "Tira del hilo",
+          "href": "/#tiradelhilo"
+        },
+        {
+          "text": "Agenda",
+          "href": "/agenda-cofrade"
+        },
+        {
+          "text": "Igualás y ensayos",
+          "href": "/igualas-y-ensayos"
+        },
+        {
+          "text": "Hoy",
+          "href": "/#hoy"
+        },
+        {
+          "text": "Directorio →",
+          "href": "/directorio"
+        },
+        {
+          "text": "Hermandades →",
+          "href": "/hermandades"
+        },
+        {
+          "text": "Procesiones de Gloria →",
+          "href": "/procesiones-de-gloria"
+        },
+        {
+          "text": "Imágenes →",
+          "href": "/imagenes"
+        },
+        {
+          "text": "Pasos →",
+          "href": "/pasos"
+        },
+        {
+          "text": "Bandas →",
+          "href": "/bandas"
+        },
+        {
+          "text": "Marchas →",
+          "href": "/marchas"
+        },
+        {
+          "text": "Autores →",
+          "href": "/autores"
+        },
+        {
+          "text": "Crucetas musicales →",
+          "href": "/crucetas-musicales"
+        },
+        {
+          "text": "Inicio →",
+          "href": "/#inicio"
+        },
+        {
+          "text": "Tira del hilo →",
+          "href": "/#tiradelhilo"
+        },
+        {
+          "text": "Agenda →",
+          "href": "/agenda-cofrade"
+        },
+        {
+          "text": "Igualás y ensayos →",
+          "href": "/igualas-y-ensayos"
+        },
+        {
+          "text": "Hoy →",
+          "href": "/#hoy"
+        },
+        {
+          "text": "Directorio →",
+          "href": "/directorio"
+        },
+        {
+          "text": "Hermandades →",
+          "href": "/hermandades"
+        },
+        {
+          "text": "Procesiones de Gloria →",
+          "href": "/procesiones-de-gloria"
+        },
+        {
+          "text": "Imágenes →",
+          "href": "/imagenes"
+        },
+        {
+          "text": "Pasos →",
+          "href": "/pasos"
+        },
+        {
+          "text": "Bandas →",
+          "href": "/bandas"
+        },
+        {
+          "text": "Marchas →",
+          "href": "/marchas"
+        },
+        {
+          "text": "Autores →",
+          "href": "/autores"
+        },
+        {
+          "text": "Crucetas musicales →",
+          "href": "/crucetas-musicales"
+        },
+        {
+          "text": "Hermandades",
+          "href": "/hermandades"
+        },
+        {
+          "text": "Morón de la Frontera",
+          "href": "/agenda-cofrade/localidad/moron-de-la-frontera"
+        },
+        {
+          "text": "Información",
+          "href": "#resumen"
+        },
+        {
+          "text": "Titulares",
+          "href": "#titulares"
+        },
+        {
+          "text": "Pasos",
+          "href": "#pasos"
+        },
+        {
+          "text": "Conexiones",
+          "href": "#tira-del-hilo"
+        },
+        {
+          "text": "Salidas",
+          "href": "#salidas"
+        },
+        {
+          "text": "Histórico musical",
+          "href": "#acompanamientos"
+        },
+        {
+          "text": "Fuentes",
+          "href": "#fuentes"
+        },
+        {
+          "text": "1 →",
+          "href": "#titulares"
+        },
+        {
+          "text": "1 →",
+          "href": "#pasos"
+        },
+        {
+          "text": "Cómo llegar",
+          "href": "https://www.google.com/maps/search/?api=1&query=Capilla%20de%20Mar%C3%ADa%20Auxiliadora%20%C2%B7%20Salesianos%2C%20C%2F%20Marquesa%20de%20Sales%2C%204%2C%20Mor%C3%B3n%20de%20la%20Frontera%2C%20Sevilla"
+        },
+        {
+          "text": "Los Salesianos / Buena Muerte →",
+          "href": "/hermandades/buena-muerte-moron-de-la-frontera"
+        },
+        {
+          "text": "Imagen Titular Santísimo Cristo de la Bondad Imagen procesional →",
+          "href": "/imagenes/cristo-bondad-moron"
+        },
+        {
+          "text": "Paso Paso procesional Paso de la Entrada Triunfal en Jerusalén · Borriquita mystery →",
+          "href": "/pasos/entrada-triunfal-jerusalen-borriquita-moron"
+        },
+        {
+          "text": "SC Imagen procesional Santísimo Cristo de la Bondad Santísimo Cristo de la Bondad Descubrir titular →",
+          "href": "/imagenes/cristo-bondad-moron"
+        },
+        {
+          "text": "Santísimo Cristo de la Bondad",
+          "href": "/imagenes/cristo-bondad-moron"
+        },
+        {
+          "text": "San Pedro de la Borriquita",
+          "href": "/imagenes/san-pedro-borriquita-moron"
+        },
+        {
+          "text": "Ver ficha del paso →",
+          "href": "/pasos/entrada-triunfal-jerusalen-borriquita-moron"
+        },
+        {
+          "text": "Imagen Titular Santísimo Cristo de la Bondad Imagen vinculada a la Hermandad →",
+          "href": "/imagenes/cristo-bondad-moron"
+        },
+        {
+          "text": "Paso Procesiona con Paso de la Entrada Triunfal en Jerusalén · Borriquita Paso procesional de la Hermandad →",
+          "href": "/pasos/entrada-triunfal-jerusalen-borriquita-moron"
+        },
+        {
+          "text": "Arte Sacro · Domingo de Ramos 2026 · Morón",
+          "href": "https://www.artesacro.org/Noticia/Ver/167319/provincia-manana-palmas-y-estrenos-domingo-ramos-moron-frontera"
+        },
+        {
+          "text": "Consejo · Hermandad de la Borriquita",
+          "href": "https://consejomoron.org/?p=260"
+        },
+        {
+          "text": "Radio Morón · Semana Santa 2026",
+          "href": "https://www.radiomoron.es/semanasanta2026/"
+        },
+        {
+          "text": "Colabora",
+          "href": "/colabora"
+        },
+        {
+          "text": "Aviso legal",
+          "href": "/aviso-legal"
+        },
+        {
+          "text": "Privacidad",
+          "href": "/privacidad"
+        },
+        {
+          "text": "Cookies",
+          "href": "/cookies"
+        }
+      ],
+      "text": "La Borriquita (Morón de la Frontera) · Hilo Cofrade Saltar al contenido Inicio Tira del hilo Agenda Igualás y ensayos Hoy Explorar Directorio → Hermandades → Procesiones de Gloria → Imágenes → Pasos → Bandas → Marchas → Autores → Crucetas musicales → ☰ Inicio → Tira del hilo → Agenda → Igualás y ensayos → Hoy → Enciclopedia Directorio → Hermandades → Procesiones de Gloria → Imágenes → Pasos → Bandas → Marchas → Autores → Crucetas musicales → Hermandades → Morón de la Frontera Hermandad de Penitencia Morón de la Frontera La Borriquita Capilla de María Auxiliadora · Salesianos · Morón de la Frontera Hermandad y Cofradía de Nazarenos del Santísimo Cristo de la Bondad en su Entrada Triunfal en Jerusalén, María Auxiliadora, San Juan Bosco y Santo Domingo Savio Semana Santa Domingo de Ramos · 1 paso Explorar ficha ‹ Información Titulares Pasos Conexiones Salidas Histórico musical Fuentes › De un vistazo La Hermandad durante el año Última actualización 26 de septiembre de 2026 Fundación 2007 como Hermandad; salida desde 1964 Titulares 1 → Pasos 1 → Actividad anual habitual Qué hace la Hermandad durante el año Estación de penitencia Domingo de Ramos · mañana Sede canónica Capilla Capilla de María Auxiliadora · Salesianos C/ Marquesa de Sales, 4 Cómo llegar También en esta sede Los Salesianos / Buena Muerte → Descubre el hilo Conexiones de esta Hermandad Continúa por sus Titulares, pasos, bandas y marchas documentadas. Cada relación abre una nueva ficha sin perder el contexto de la Hermandad de origen. Hermandad La Borriquita Hermandad de Penitencia · Morón de la Frontera Imagen Titular Santísimo Cristo de la Bondad Imagen procesional → Paso Paso procesional Paso de la Entrada Triunfal en Jerusalén · Borriquita mystery → Titularidad Sagrados Titulares Imágenes e identidades devocionales que conforman la titularidad documentada de la Hermandad. SC Imagen procesional Santísimo Cristo de la Bondad Santísimo Cristo de la Bondad Descubrir titular → 1 pasos Pasos procesionales Imágenes, diseño, talla, orfebrería, bordados, reformas y evolución histórica. 0 1 Fotografía del paso mystery Paso de la Entrada Triunfal en Jerusalén · Borriquita Paso de la Entrada Triunfal en Jerusalén · Borriquita Imágenes que procesionan Santísimo Cristo de la Bondad San Pedro de la Borriquita Ver ficha del paso → Tira del hilo La Hermandad como nodo de la enciclopedia Tira del hilo hacia sus imágenes, sus pasos y su música vinculada. Los vínculos institucionales y los acompañamientos actuales se etiquetan de forma distinta para no confundir pertenencia con contrato procesional. Hermandad La Borriquita de Morón de la Frontera 1 imagen · 1 paso Imagen Titular Santísimo Cristo de la Bondad Imagen vinculada a la Hermandad → Paso Procesiona con Paso de la Entrada Triunfal en Jerusalén · Borriquita Paso procesional de la Hermandad → La Hermandad en la calle Salidas Las salidas ordinarias, los cultos externos y la memoria extraordinaria se presentan como ámbitos distintos. Salida ordinaria Domingo de Ramos · Estación de Penitencia La estación de penitencia anual de la Hermandad, con sus tiempos y recorrido documentados por edición. 01 01 E Ordinaria Estación de Penitencia Ordinaria Edición 2026 Santísimo Cristo de la Bondad Cuándo 29 de marzo de 2026 · 10:20 h Memoria sonora Acompañamientos Musicales Históricos Una cronología por paso para conocer qué formaciones musicales han acompañado a la Hermandad. 2026 Banda de Cornetas y Tambores Santísimo Cristo a la Columna «El Amarrado» de Ávila Paso de la Entrada Triunfal en Jerusalén · Borriquita · Tras la Entrada Triunfal en Jerusalén Cornetas y Tambores Documentación Fuentes 3 fuentes ＋ Arte Sacro · Domingo de Ramos 2026 · Morón Consejo · Hermandad de la Borriquita Radio Morón · Semana Santa 2026 Colabora Aviso legal Privacidad Cookies Proyecto creado por Nacho Sánchez · @desdeelarenal",
+      "body_sha256": "41c40fa58106304af8ae028a684ac39f725108a154c88f2692b11cce81874da8",
+      "breadcrumb_json_ld": true
+    },
+    {
+      "path": "/hermandades/cautivo-moron-de-la-frontera",
+      "status": 200,
+      "url": "https://hilocofrade.es/hermandades/cautivo-moron-de-la-frontera",
+      "headers": {
+        "Age": "0",
+        "Cache-Control": "public, max-age=0, must-revalidate",
+        "Content-Length": "74828",
+        "Content-Type": "text/html; charset=utf-8",
+        "Date": "Sat, 26 Sep 2026 20:21:49 GMT",
+        "Etag": "\"ob0ivwaxby1lep\"",
+        "Server": "Vercel",
+        "Strict-Transport-Security": "max-age=63072000",
+        "Vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "X-Matched-Path": "/hermandades/[slug]",
+        "X-Nextjs-Prerender": "1",
+        "X-Nextjs-Stale-Time": "300",
+        "X-Powered-By": "Next.js",
+        "X-Vercel-Cache": "MISS",
+        "X-Vercel-Id": "cdg1::dub1::7k4m4-1790454103826-266976c3d47b",
+        "Connection": "close"
+      },
+      "title": "El Cautivo (Morón de la Frontera): titulares y pasos · Hilo Cofrade",
+      "canonical": "https://hilocofrade.es/hermandades/cautivo-moron-de-la-frontera",
+      "robots": "index, follow",
+      "h1": [
+        "El Cautivo"
+      ],
+      "headings": [
+        "La Hermandad durante el año",
+        "Parroquia de San Miguel Arcángel",
+        "Conexiones de esta Hermandad",
+        "Sagrados Titulares",
+        "Nuestro Padre Jesús Cautivo",
+        "María Santísima de la Paz",
+        "Pasos procesionales",
+        "Paso de Nuestro Padre Jesús Cautivo",
+        "Palio de María Santísima de la Paz",
+        "La Hermandad como nodo de la enciclopedia",
+        "Salidas",
+        "Domingo de Ramos · Estación de Penitencia",
+        "Edición 2026",
+        "Acompañamientos Musicales Históricos",
+        "Banda de Cornetas y Tambores Coronación de Espinas de Córdoba",
+        "Banda Municipal de Música de Morón de la Frontera",
+        "Fuentes"
+      ],
+      "links": [
+        {
+          "text": "Saltar al contenido",
+          "href": "#main-content"
+        },
+        {
+          "text": "",
+          "href": "/"
+        },
+        {
+          "text": "Inicio",
+          "href": "/#inicio"
+        },
+        {
+          "text": "Tira del hilo",
+          "href": "/#tiradelhilo"
+        },
+        {
+          "text": "Agenda",
+          "href": "/agenda-cofrade"
+        },
+        {
+          "text": "Igualás y ensayos",
+          "href": "/igualas-y-ensayos"
+        },
+        {
+          "text": "Hoy",
+          "href": "/#hoy"
+        },
+        {
+          "text": "Directorio →",
+          "href": "/directorio"
+        },
+        {
+          "text": "Hermandades →",
+          "href": "/hermandades"
+        },
+        {
+          "text": "Procesiones de Gloria →",
+          "href": "/procesiones-de-gloria"
+        },
+        {
+          "text": "Imágenes →",
+          "href": "/imagenes"
+        },
+        {
+          "text": "Pasos →",
+          "href": "/pasos"
+        },
+        {
+          "text": "Bandas →",
+          "href": "/bandas"
+        },
+        {
+          "text": "Marchas →",
+          "href": "/marchas"
+        },
+        {
+          "text": "Autores →",
+          "href": "/autores"
+        },
+        {
+          "text": "Crucetas musicales →",
+          "href": "/crucetas-musicales"
+        },
+        {
+          "text": "Inicio →",
+          "href": "/#inicio"
+        },
+        {
+          "text": "Tira del hilo →",
+          "href": "/#tiradelhilo"
+        },
+        {
+          "text": "Agenda →",
+          "href": "/agenda-cofrade"
+        },
+        {
+          "text": "Igualás y ensayos →",
+          "href": "/igualas-y-ensayos"
+        },
+        {
+          "text": "Hoy →",
+          "href": "/#hoy"
+        },
+        {
+          "text": "Directorio →",
+          "href": "/directorio"
+        },
+        {
+          "text": "Hermandades →",
+          "href": "/hermandades"
+        },
+        {
+          "text": "Procesiones de Gloria →",
+          "href": "/procesiones-de-gloria"
+        },
+        {
+          "text": "Imágenes →",
+          "href": "/imagenes"
+        },
+        {
+          "text": "Pasos →",
+          "href": "/pasos"
+        },
+        {
+          "text": "Bandas →",
+          "href": "/bandas"
+        },
+        {
+          "text": "Marchas →",
+          "href": "/marchas"
+        },
+        {
+          "text": "Autores →",
+          "href": "/autores"
+        },
+        {
+          "text": "Crucetas musicales →",
+          "href": "/crucetas-musicales"
+        },
+        {
+          "text": "Hermandades",
+          "href": "/hermandades"
+        },
+        {
+          "text": "Morón de la Frontera",
+          "href": "/agenda-cofrade/localidad/moron-de-la-frontera"
+        },
+        {
+          "text": "Información",
+          "href": "#resumen"
+        },
+        {
+          "text": "Titulares",
+          "href": "#titulares"
+        },
+        {
+          "text": "Pasos",
+          "href": "#pasos"
+        },
+        {
+          "text": "Conexiones",
+          "href": "#tira-del-hilo"
+        },
+        {
+          "text": "Salidas",
+          "href": "#salidas"
+        },
+        {
+          "text": "Histórico musical",
+          "href": "#acompanamientos"
+        },
+        {
+          "text": "Fuentes",
+          "href": "#fuentes"
+        },
+        {
+          "text": "2 →",
+          "href": "#titulares"
+        },
+        {
+          "text": "2 →",
+          "href": "#pasos"
+        },
+        {
+          "text": "Cómo llegar",
+          "href": "https://www.google.com/maps/search/?api=1&query=Parroquia%20de%20San%20Miguel%20Arc%C3%A1ngel%2C%20Plaza%20del%20Cardenal%20Sp%C3%ADnola%2C%20Mor%C3%B3n%20de%20la%20Frontera%2C%20Sevilla"
+        },
+        {
+          "text": "La Soledad →",
+          "href": "/hermandades/soledad-moron-de-la-frontera"
+        },
+        {
+          "text": "Imagen Titular Nuestro Padre Jesús Cautivo Imagen procesional →",
+          "href": "/imagenes/jesus-cautivo-moron"
+        },
+        {
+          "text": "Imagen Titular María Santísima de la Paz Imagen procesional →",
+          "href": "/imagenes/maria-santisima-paz-moron"
+        },
+        {
+          "text": "Paso Paso procesional Paso de Nuestro Padre Jesús Cautivo mystery →",
+          "href": "/pasos/paso-jesus-cautivo-moron"
+        },
+        {
+          "text": "Paso Paso procesional Palio de María Santísima de la Paz palio →",
+          "href": "/pasos/palio-maria-santisima-paz-moron"
+        },
+        {
+          "text": "NP Imagen procesional Nuestro Padre Jesús Cautivo Nuestro Padre Jesús Cautivo Descubrir titular →",
+          "href": "/imagenes/jesus-cautivo-moron"
+        },
+        {
+          "text": "MS Imagen procesional María Santísima de la Paz María Santísima de la Paz Descubrir titular →",
+          "href": "/imagenes/maria-santisima-paz-moron"
+        },
+        {
+          "text": "Nuestro Padre Jesús Cautivo",
+          "href": "/imagenes/jesus-cautivo-moron"
+        },
+        {
+          "text": "Ver ficha del paso →",
+          "href": "/pasos/paso-jesus-cautivo-moron"
+        },
+        {
+          "text": "María Santísima de la Paz",
+          "href": "/imagenes/maria-santisima-paz-moron"
+        },
+        {
+          "text": "Ver ficha del paso →",
+          "href": "/pasos/palio-maria-santisima-paz-moron"
+        },
+        {
+          "text": "Imagen Titular Nuestro Padre Jesús Cautivo Imagen vinculada a la Hermandad →",
+          "href": "/imagenes/jesus-cautivo-moron"
+        },
+        {
+          "text": "Imagen Titular María Santísima de la Paz Imagen vinculada a la Hermandad →",
+          "href": "/imagenes/maria-santisima-paz-moron"
+        },
+        {
+          "text": "Paso Procesiona con Paso de Nuestro Padre Jesús Cautivo Paso procesional de la Hermandad →",
+          "href": "/pasos/paso-jesus-cautivo-moron"
+        },
+        {
+          "text": "Paso Procesiona con Palio de María Santísima de la Paz Paso procesional de la Hermandad →",
+          "href": "/pasos/palio-maria-santisima-paz-moron"
+        },
+        {
+          "text": "Consejo · Hermandad del Cautivo",
+          "href": "https://consejomoron.org/hermandad-del-cautivo/"
+        },
+        {
+          "text": "Radio Morón · Semana Santa 2026",
+          "href": "https://www.radiomoron.es/semanasanta2026/"
+        },
+        {
+          "text": "Colabora",
+          "href": "/colabora"
+        },
+        {
+          "text": "Aviso legal",
+          "href": "/aviso-legal"
+        },
+        {
+          "text": "Privacidad",
+          "href": "/privacidad"
+        },
+        {
+          "text": "Cookies",
+          "href": "/cookies"
+        }
+      ],
+      "text": "El Cautivo (Morón de la Frontera): titulares y pasos · Hilo Cofrade Saltar al contenido Inicio Tira del hilo Agenda Igualás y ensayos Hoy Explorar Directorio → Hermandades → Procesiones de Gloria → Imágenes → Pasos → Bandas → Marchas → Autores → Crucetas musicales → ☰ Inicio → Tira del hilo → Agenda → Igualás y ensayos → Hoy → Enciclopedia Directorio → Hermandades → Procesiones de Gloria → Imágenes → Pasos → Bandas → Marchas → Autores → Crucetas musicales → Hermandades → Morón de la Frontera Hermandad de Penitencia Morón de la Frontera El Cautivo Parroquia de San Miguel Arcángel · Morón de la Frontera Hermandad y Cofradía de Nazarenos de Nuestro Padre Jesús Cautivo y María Santísima de la Paz Semana Santa Domingo de Ramos · 2 pasos Explorar ficha ‹ Información Titulares Pasos Conexiones Salidas Histórico musical Fuentes › De un vistazo La Hermandad durante el año Última actualización 26 de septiembre de 2026 Fundación 1944 Titulares 2 → Pasos 2 → Actividad anual habitual Qué hace la Hermandad durante el año Estación de penitencia Domingo de Ramos · tarde Sede canónica Parroquia Parroquia de San Miguel Arcángel Plaza del Cardenal Spínola Cómo llegar También en esta sede La Soledad → Descubre el hilo Conexiones de esta Hermandad Continúa por sus Titulares, pasos, bandas y marchas documentadas. Cada relación abre una nueva ficha sin perder el contexto de la Hermandad de origen. Hermandad El Cautivo Hermandad de Penitencia · Morón de la Frontera Imagen Titular Nuestro Padre Jesús Cautivo Imagen procesional → Imagen Titular María Santísima de la Paz Imagen procesional → Paso Paso procesional Paso de Nuestro Padre Jesús Cautivo mystery → Paso Paso procesional Palio de María Santísima de la Paz palio → Titularidad Sagrados Titulares Imágenes e identidades devocionales que conforman la titularidad documentada de la Hermandad. NP Imagen procesional Nuestro Padre Jesús Cautivo Nuestro Padre Jesús Cautivo Descubrir titular → MS Imagen procesional María Santísima de la Paz María Santísima de la Paz Descubrir titular → 2 pasos Pasos procesionales Imágenes, diseño, talla, orfebrería, bordados, reformas y evolución histórica. 0 1 Fotografía del paso mystery Paso de Nuestro Padre Jesús Cautivo Paso de Nuestro Padre Jesús Cautivo Imágenes que procesionan Nuestro Padre Jesús Cautivo Ver ficha del paso → 0 2 Fotografía del paso palio Palio de María Santísima de la Paz Palio de María Santísima de la Paz Imágenes que procesionan María Santísima de la Paz Ver ficha del paso → Tira del hilo La Hermandad como nodo de la enciclopedia Tira del hilo hacia sus imágenes, sus pasos y su música vinculada. Los vínculos institucionales y los acompañamientos actuales se etiquetan de forma distinta para no confundir pertenencia con contrato procesional. Hermandad El Cautivo de Morón de la Frontera 2 imágenes · 2 pasos Imagen Titular Nuestro Padre Jesús Cautivo Imagen vinculada a la Hermandad → Imagen Titular María Santísima de la Paz Imagen vinculada a la Hermandad → Paso Procesiona con Paso de Nuestro Padre Jesús Cautivo Paso procesional de la Hermandad → Paso Procesiona con Palio de María Santísima de la Paz Paso procesional de la Hermandad → La Hermandad en la calle Salidas Las salidas ordinarias, los cultos externos y la memoria extraordinaria se presentan como ámbitos distintos. Salida ordinaria Domingo de Ramos · Estación de Penitencia La estación de penitencia anual de la Hermandad, con sus tiempos y recorrido documentados por edición. 01 01 E Ordinaria Estación de Penitencia Ordinaria Edición 2026 Nuestro Padre Jesús Cautivo · María Santísima de la Paz Cuándo 29 de marzo de 2026 · 18:00 h Memoria sonora Acompañamientos Musicales Históricos Una cronología por paso para conocer qué formaciones musicales han acompañado a la Hermandad. 2026 Banda de Cornetas y Tambores Coronación de Espinas de Córdoba Paso de Nuestro Padre Jesús Cautivo · Tras Nuestro Padre Jesús Cautivo Cornetas y Tambores 2026 Banda Municipal de Música de Morón de la Frontera Palio de María Santísima de la Paz · Tras María Santísima de la Paz Banda de Música Documentación Fuentes 2 fuentes ＋ Consejo · Hermandad del Cautivo Radio Morón · Semana Santa 2026 Colabora Aviso legal Privacidad Cookies Proyecto creado por Nacho Sánchez · @desdeelarenal",
+      "body_sha256": "2f3d901c2e287035372f710d8da5ff72ec223233e907cfdeed13c8c5fa1d6f32",
+      "breadcrumb_json_ld": true
+    },
+    {
+      "path": "/hermandades/calvario-moron-de-la-frontera",
+      "status": 200,
+      "url": "https://hilocofrade.es/hermandades/calvario-moron-de-la-frontera",
+      "headers": {
+        "Age": "0",
+        "Cache-Control": "public, max-age=0, must-revalidate",
+        "Content-Length": "77180",
+        "Content-Type": "text/html; charset=utf-8",
+        "Date": "Sat, 26 Sep 2026 20:21:57 GMT",
+        "Etag": "\"6flteavb2f1n98\"",
+        "Server": "Vercel",
+        "Strict-Transport-Security": "max-age=63072000",
+        "Vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "X-Matched-Path": "/hermandades/[slug]",
+        "X-Nextjs-Prerender": "1",
+        "X-Nextjs-Stale-Time": "300",
+        "X-Powered-By": "Next.js",
+        "X-Vercel-Cache": "MISS",
+        "X-Vercel-Id": "cdg1::dub1::97qrd-1790454115179-c565d98fc509",
+        "Connection": "close"
+      },
+      "title": "La Merced / Calvario (Morón de la Frontera) · Hilo Cofrade",
+      "canonical": "https://hilocofrade.es/hermandades/calvario-moron-de-la-frontera",
+      "robots": "index, follow",
+      "h1": [
+        "La Merced / Calvario"
+      ],
+      "headings": [
+        "La Hermandad durante el año",
+        "Parroquia de Nuestra Señora de la Merced",
+        "Conexiones de esta Hermandad",
+        "Sagrados Titulares",
+        "Santísimo Cristo del Calvario",
+        "Nuestra Señora del Mayor Dolor",
+        "Pasos procesionales",
+        "Misterio del Santísimo Cristo del Calvario",
+        "Palio de Nuestra Señora del Mayor Dolor",
+        "La Hermandad como nodo de la enciclopedia",
+        "Salidas",
+        "Lunes Santo · Estación de Penitencia",
+        "Edición 2026",
+        "Acompañamientos Musicales Históricos",
+        "Agrupación Musical Vera Cruz de Campillos",
+        "Asociación Musical de La Algaba",
+        "Fuentes"
+      ],
+      "links": [
+        {
+          "text": "Saltar al contenido",
+          "href": "#main-content"
+        },
+        {
+          "text": "",
+          "href": "/"
+        },
+        {
+          "text": "Inicio",
+          "href": "/#inicio"
+        },
+        {
+          "text": "Tira del hilo",
+          "href": "/#tiradelhilo"
+        },
+        {
+          "text": "Agenda",
+          "href": "/agenda-cofrade"
+        },
+        {
+          "text": "Igualás y ensayos",
+          "href": "/igualas-y-ensayos"
+        },
+        {
+          "text": "Hoy",
+          "href": "/#hoy"
+        },
+        {
+          "text": "Directorio →",
+          "href": "/directorio"
+        },
+        {
+          "text": "Hermandades →",
+          "href": "/hermandades"
+        },
+        {
+          "text": "Procesiones de Gloria →",
+          "href": "/procesiones-de-gloria"
+        },
+        {
+          "text": "Imágenes →",
+          "href": "/imagenes"
+        },
+        {
+          "text": "Pasos →",
+          "href": "/pasos"
+        },
+        {
+          "text": "Bandas →",
+          "href": "/bandas"
+        },
+        {
+          "text": "Marchas →",
+          "href": "/marchas"
+        },
+        {
+          "text": "Autores →",
+          "href": "/autores"
+        },
+        {
+          "text": "Crucetas musicales →",
+          "href": "/crucetas-musicales"
+        },
+        {
+          "text": "Inicio →",
+          "href": "/#inicio"
+        },
+        {
+          "text": "Tira del hilo →",
+          "href": "/#tiradelhilo"
+        },
+        {
+          "text": "Agenda →",
+          "href": "/agenda-cofrade"
+        },
+        {
+          "text": "Igualás y ensayos →",
+          "href": "/igualas-y-ensayos"
+        },
+        {
+          "text": "Hoy →",
+          "href": "/#hoy"
+        },
+        {
+          "text": "Directorio →",
+          "href": "/directorio"
+        },
+        {
+          "text": "Hermandades →",
+          "href": "/hermandades"
+        },
+        {
+          "text": "Procesiones de Gloria →",
+          "href": "/procesiones-de-gloria"
+        },
+        {
+          "text": "Imágenes →",
+          "href": "/imagenes"
+        },
+        {
+          "text": "Pasos →",
+          "href": "/pasos"
+        },
+        {
+          "text": "Bandas →",
+          "href": "/bandas"
+        },
+        {
+          "text": "Marchas →",
+          "href": "/marchas"
+        },
+        {
+          "text": "Autores →",
+          "href": "/autores"
+        },
+        {
+          "text": "Crucetas musicales →",
+          "href": "/crucetas-musicales"
+        },
+        {
+          "text": "Hermandades",
+          "href": "/hermandades"
+        },
+        {
+          "text": "Morón de la Frontera",
+          "href": "/agenda-cofrade/localidad/moron-de-la-frontera"
+        },
+        {
+          "text": "Información",
+          "href": "#resumen"
+        },
+        {
+          "text": "Titulares",
+          "href": "#titulares"
+        },
+        {
+          "text": "Pasos",
+          "href": "#pasos"
+        },
+        {
+          "text": "Conexiones",
+          "href": "#tira-del-hilo"
+        },
+        {
+          "text": "Salidas",
+          "href": "#salidas"
+        },
+        {
+          "text": "Histórico musical",
+          "href": "#acompanamientos"
+        },
+        {
+          "text": "Fuentes",
+          "href": "#fuentes"
+        },
+        {
+          "text": "2 →",
+          "href": "#titulares"
+        },
+        {
+          "text": "2 →",
+          "href": "#pasos"
+        },
+        {
+          "text": "Cómo llegar",
+          "href": "https://www.google.com/maps/search/?api=1&query=Parroquia%20de%20Nuestra%20Se%C3%B1ora%20de%20la%20Merced%2C%20C%2F%20Marchena%2C%2053%2C%20Mor%C3%B3n%20de%20la%20Frontera%2C%20Sevilla"
+        },
+        {
+          "text": "Imagen Titular Santísimo Cristo del Calvario Imagen procesional →",
+          "href": "/imagenes/cristo-calvario-moron"
+        },
+        {
+          "text": "Imagen Titular Nuestra Señora del Mayor Dolor Imagen procesional →",
+          "href": "/imagenes/nuestra-senora-mayor-dolor-moron"
+        },
+        {
+          "text": "Paso Paso procesional Misterio del Santísimo Cristo del Calvario mystery →",
+          "href": "/pasos/misterio-cristo-calvario-moron"
+        },
+        {
+          "text": "Paso Paso procesional Palio de Nuestra Señora del Mayor Dolor palio →",
+          "href": "/pasos/palio-nuestra-senora-mayor-dolor-moron"
+        },
+        {
+          "text": "SC Imagen procesional Santísimo Cristo del Calvario Santísimo Cristo del Calvario Descubrir titular →",
+          "href": "/imagenes/cristo-calvario-moron"
+        },
+        {
+          "text": "NS Imagen procesional Nuestra Señora del Mayor Dolor Nuestra Señora del Mayor Dolor Descubrir titular →",
+          "href": "/imagenes/nuestra-senora-mayor-dolor-moron"
+        },
+        {
+          "text": "Santísimo Cristo del Calvario",
+          "href": "/imagenes/cristo-calvario-moron"
+        },
+        {
+          "text": "San Juan del misterio del Calvario",
+          "href": "/imagenes/san-juan-calvario-moron"
+        },
+        {
+          "text": "María Magdalena del misterio del Calvario",
+          "href": "/imagenes/maria-magdalena-calvario-moron"
+        },
+        {
+          "text": "María Salomé del misterio del Calvario",
+          "href": "/imagenes/maria-salome-calvario-moron"
+        },
+        {
+          "text": "María Cleofás del misterio del Calvario",
+          "href": "/imagenes/maria-cleofas-calvario-moron"
+        },
+        {
+          "text": "José de Arimatea del misterio del Calvario",
+          "href": "/imagenes/jose-arimatea-calvario-moron"
+        },
+        {
+          "text": "Nicodemo del misterio del Calvario",
+          "href": "/imagenes/nicodemo-calvario-moron"
+        },
+        {
+          "text": "Sayón romano del misterio del Calvario",
+          "href": "/imagenes/sayon-romano-calvario-moron"
+        },
+        {
+          "text": "Ver ficha del paso →",
+          "href": "/pasos/misterio-cristo-calvario-moron"
+        },
+        {
+          "text": "Nuestra Señora del Mayor Dolor",
+          "href": "/imagenes/nuestra-senora-mayor-dolor-moron"
+        },
+        {
+          "text": "Ver ficha del paso →",
+          "href": "/pasos/palio-nuestra-senora-mayor-dolor-moron"
+        },
+        {
+          "text": "Imagen Titular Santísimo Cristo del Calvario Imagen vinculada a la Hermandad →",
+          "href": "/imagenes/cristo-calvario-moron"
+        },
+        {
+          "text": "Imagen Titular Nuestra Señora del Mayor Dolor Imagen vinculada a la Hermandad →",
+          "href": "/imagenes/nuestra-senora-mayor-dolor-moron"
+        },
+        {
+          "text": "Paso Procesiona con Misterio del Santísimo Cristo del Calvario Paso procesional de la Hermandad →",
+          "href": "/pasos/misterio-cristo-calvario-moron"
+        },
+        {
+          "text": "Paso Procesiona con Palio de Nuestra Señora del Mayor Dolor Paso procesional de la Hermandad →",
+          "href": "/pasos/palio-nuestra-senora-mayor-dolor-moron"
+        },
+        {
+          "text": "Consejo · Hermandad del Calvario",
+          "href": "https://consejomoron.org/hermandad-del-calvario/"
+        },
+        {
+          "text": "El Pespunte · Calvario y Vera Cruz de Campillos",
+          "href": "https://www.elpespunte.es/articulo/cofrade/calvario-moron-firma-estrella-jaen-dos-proximos-lunes-santo/20260601121501135478.html"
+        },
+        {
+          "text": "Radio Morón · Semana Santa 2026",
+          "href": "https://www.radiomoron.es/semanasanta2026/"
+        },
+        {
+          "text": "Colabora",
+          "href": "/colabora"
+        },
+        {
+          "text": "Aviso legal",
+          "href": "/aviso-legal"
+        },
+        {
+          "text": "Privacidad",
+          "href": "/privacidad"
+        },
+        {
+          "text": "Cookies",
+          "href": "/cookies"
+        }
+      ],
+      "text": "La Merced / Calvario (Morón de la Frontera) · Hilo Cofrade Saltar al contenido Inicio Tira del hilo Agenda Igualás y ensayos Hoy Explorar Directorio → Hermandades → Procesiones de Gloria → Imágenes → Pasos → Bandas → Marchas → Autores → Crucetas musicales → ☰ Inicio → Tira del hilo → Agenda → Igualás y ensayos → Hoy → Enciclopedia Directorio → Hermandades → Procesiones de Gloria → Imágenes → Pasos → Bandas → Marchas → Autores → Crucetas musicales → Hermandades → Morón de la Frontera Hermandad de Penitencia Morón de la Frontera La Merced / Calvario Parroquia de Nuestra Señora de la Merced · Morón de la Frontera Hermandad del Santísimo Cristo del Calvario y Nuestra Señora del Mayor Dolor Semana Santa Lunes Santo · 2 pasos Explorar ficha ‹ Información Titulares Pasos Conexiones Salidas Histórico musical Fuentes › De un vistazo La Hermandad durante el año Última actualización 26 de septiembre de 2026 Fundación 1958; recuperada 1989 Titulares 2 → Pasos 2 → Actividad anual habitual Qué hace la Hermandad durante el año Estación de penitencia Lunes Santo Sede canónica Parroquia Parroquia de Nuestra Señora de la Merced C/ Marchena, 53 Cómo llegar Descubre el hilo Conexiones de esta Hermandad Continúa por sus Titulares, pasos, bandas y marchas documentadas. Cada relación abre una nueva ficha sin perder el contexto de la Hermandad de origen. Hermandad La Merced / Calvario Hermandad de Penitencia · Morón de la Frontera Imagen Titular Santísimo Cristo del Calvario Imagen procesional → Imagen Titular Nuestra Señora del Mayor Dolor Imagen procesional → Paso Paso procesional Misterio del Santísimo Cristo del Calvario mystery → Paso Paso procesional Palio de Nuestra Señora del Mayor Dolor palio → Titularidad Sagrados Titulares Imágenes e identidades devocionales que conforman la titularidad documentada de la Hermandad. SC Imagen procesional Santísimo Cristo del Calvario Santísimo Cristo del Calvario Descubrir titular → NS Imagen procesional Nuestra Señora del Mayor Dolor Nuestra Señora del Mayor Dolor Descubrir titular → 2 pasos Pasos procesionales Imágenes, diseño, talla, orfebrería, bordados, reformas y evolución histórica. 0 1 Fotografía del paso mystery Misterio del Santísimo Cristo del Calvario Misterio del Santísimo Cristo del Calvario Imágenes que procesionan Santísimo Cristo del Calvario San Juan del misterio del Calvario María Magdalena del misterio del Calvario María Salomé del misterio del Calvario María Cleofás del misterio del Calvario José de Arimatea del misterio del Calvario Nicodemo del misterio del Calvario Sayón romano del misterio del Calvario Ver ficha del paso → 0 2 Fotografía del paso palio Palio de Nuestra Señora del Mayor Dolor Palio de Nuestra Señora del Mayor Dolor Imágenes que procesionan Nuestra Señora del Mayor Dolor Ver ficha del paso → Tira del hilo La Hermandad como nodo de la enciclopedia Tira del hilo hacia sus imágenes, sus pasos y su música vinculada. Los vínculos institucionales y los acompañamientos actuales se etiquetan de forma distinta para no confundir pertenencia con contrato procesional. Hermandad El Calvario de Morón de la Frontera 2 imágenes · 2 pasos Imagen Titular Santísimo Cristo del Calvario Imagen vinculada a la Hermandad → Imagen Titular Nuestra Señora del Mayor Dolor Imagen vinculada a la Hermandad → Paso Procesiona con Misterio del Santísimo Cristo del Calvario Paso procesional de la Hermandad → Paso Procesiona con Palio de Nuestra Señora del Mayor Dolor Paso procesional de la Hermandad → La Hermandad en la calle Salidas Las salidas ordinarias, los cultos externos y la memoria extraordinaria se presentan como ámbitos distintos. Salida ordinaria Lunes Santo · Estación de Penitencia La estación de penitencia anual de la Hermandad, con sus tiempos y recorrido documentados por edición. 01 01 E Ordinaria Estación de Penitencia Ordinaria Edición 2026 Santísimo Cristo del Calvario · Nuestra Señora del Mayor Dolor Cuándo 30 de marzo de 2026 · 18:00 h Memoria sonora Acompañamientos Musicales Históricos Una cronología por paso para conocer qué formaciones musicales han acompañado a la Hermandad. 2026 Agrupación Musical Vera Cruz de Campillos Misterio del Santísimo Cristo del Calvario · Tras el Santísimo Cristo del Calvario Agrupación Musical 2026 Asociación Musical de La Algaba Palio de Nuestra Señora del Mayor Dolor · Tras Nuestra Señora del Mayor Dolor Banda de Música Documentación Fuentes 3 fuentes ＋ Consejo · Hermandad del Calvario El Pespunte · Calvario y Vera Cruz de Campillos Radio Morón · Semana Santa 2026 Colabora Aviso legal Privacidad Cookies Proyecto creado por Nacho Sánchez · @desdeelarenal",
+      "body_sha256": "7d7071065245a30496e5659ed0d5ddc318f45b5b9d6d03d82f777c292de83710",
+      "breadcrumb_json_ld": true
+    },
+    {
+      "path": "/hermandades/buena-muerte-moron-de-la-frontera",
+      "status": 200,
+      "url": "https://hilocofrade.es/hermandades/buena-muerte-moron-de-la-frontera",
+      "headers": {
+        "Age": "0",
+        "Cache-Control": "public, max-age=0, must-revalidate",
+        "Content-Length": "75602",
+        "Content-Type": "text/html; charset=utf-8",
+        "Date": "Sat, 26 Sep 2026 20:21:58 GMT",
+        "Etag": "\"4fai6sgk71m06\"",
+        "Server": "Vercel",
+        "Strict-Transport-Security": "max-age=63072000",
+        "Vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "X-Matched-Path": "/hermandades/[slug]",
+        "X-Nextjs-Prerender": "1",
+        "X-Nextjs-Stale-Time": "300",
+        "X-Powered-By": "Next.js",
+        "X-Vercel-Cache": "MISS",
+        "X-Vercel-Id": "cdg1::dub1::r9jrf-1790454115391-f47dc84066b3",
+        "Connection": "close"
+      },
+      "title": "Los Salesianos / Buena Muerte (Morón de la Frontera) · Hilo Cofrade",
+      "canonical": "https://hilocofrade.es/hermandades/buena-muerte-moron-de-la-frontera",
+      "robots": "index, follow",
+      "h1": [
+        "Los Salesianos / Buena Muerte"
+      ],
+      "headings": [
+        "La Hermandad durante el año",
+        "Capilla de María Auxiliadora · Salesianos",
+        "Conexiones de esta Hermandad",
+        "Sagrados Titulares",
+        "Santísimo Cristo de la Buena Muerte",
+        "María Santísima de la Amargura",
+        "Pasos procesionales",
+        "Paso del Santísimo Cristo de la Buena Muerte",
+        "Palio de María Santísima de la Amargura",
+        "La Hermandad como nodo de la enciclopedia",
+        "Salidas",
+        "Martes Santo · Estación de Penitencia",
+        "Edición 2026",
+        "Acompañamientos Musicales Históricos",
+        "Agrupación Vocal de Cámara Redentoris Mundi",
+        "Banda Municipal de Música de Morón de la Frontera",
+        "Fuentes"
+      ],
+      "links": [
+        {
+          "text": "Saltar al contenido",
+          "href": "#main-content"
+        },
+        {
+          "text": "",
+          "href": "/"
+        },
+        {
+          "text": "Inicio",
+          "href": "/#inicio"
+        },
+        {
+          "text": "Tira del hilo",
+          "href": "/#tiradelhilo"
+        },
+        {
+          "text": "Agenda",
+          "href": "/agenda-cofrade"
+        },
+        {
+          "text": "Igualás y ensayos",
+          "href": "/igualas-y-ensayos"
+        },
+        {
+          "text": "Hoy",
+          "href": "/#hoy"
+        },
+        {
+          "text": "Directorio →",
+          "href": "/directorio"
+        },
+        {
+          "text": "Hermandades →",
+          "href": "/hermandades"
+        },
+        {
+          "text": "Procesiones de Gloria →",
+          "href": "/procesiones-de-gloria"
+        },
+        {
+          "text": "Imágenes →",
+          "href": "/imagenes"
+        },
+        {
+          "text": "Pasos →",
+          "href": "/pasos"
+        },
+        {
+          "text": "Bandas →",
+          "href": "/bandas"
+        },
+        {
+          "text": "Marchas →",
+          "href": "/marchas"
+        },
+        {
+          "text": "Autores →",
+          "href": "/autores"
+        },
+        {
+          "text": "Crucetas musicales →",
+          "href": "/crucetas-musicales"
+        },
+        {
+          "text": "Inicio →",
+          "href": "/#inicio"
+        },
+        {
+          "text": "Tira del hilo →",
+          "href": "/#tiradelhilo"
+        },
+        {
+          "text": "Agenda →",
+          "href": "/agenda-cofrade"
+        },
+        {
+          "text": "Igualás y ensayos →",
+          "href": "/igualas-y-ensayos"
+        },
+        {
+          "text": "Hoy →",
+          "href": "/#hoy"
+        },
+        {
+          "text": "Directorio →",
+          "href": "/directorio"
+        },
+        {
+          "text": "Hermandades →",
+          "href": "/hermandades"
+        },
+        {
+          "text": "Procesiones de Gloria →",
+          "href": "/procesiones-de-gloria"
+        },
+        {
+          "text": "Imágenes →",
+          "href": "/imagenes"
+        },
+        {
+          "text": "Pasos →",
+          "href": "/pasos"
+        },
+        {
+          "text": "Bandas →",
+          "href": "/bandas"
+        },
+        {
+          "text": "Marchas →",
+          "href": "/marchas"
+        },
+        {
+          "text": "Autores →",
+          "href": "/autores"
+        },
+        {
+          "text": "Crucetas musicales →",
+          "href": "/crucetas-musicales"
+        },
+        {
+          "text": "Hermandades",
+          "href": "/hermandades"
+        },
+        {
+          "text": "Morón de la Frontera",
+          "href": "/agenda-cofrade/localidad/moron-de-la-frontera"
+        },
+        {
+          "text": "Información",
+          "href": "#resumen"
+        },
+        {
+          "text": "Titulares",
+          "href": "#titulares"
+        },
+        {
+          "text": "Pasos",
+          "href": "#pasos"
+        },
+        {
+          "text": "Conexiones",
+          "href": "#tira-del-hilo"
+        },
+        {
+          "text": "Salidas",
+          "href": "#salidas"
+        },
+        {
+          "text": "Histórico musical",
+          "href": "#acompanamientos"
+        },
+        {
+          "text": "Fuentes",
+          "href": "#fuentes"
+        },
+        {
+          "text": "2 →",
+          "href": "#titulares"
+        },
+        {
+          "text": "2 →",
+          "href": "#pasos"
+        },
+        {
+          "text": "Cómo llegar",
+          "href": "https://www.google.com/maps/search/?api=1&query=Capilla%20de%20Mar%C3%ADa%20Auxiliadora%20%C2%B7%20Salesianos%2C%20C%2F%20Marquesa%20de%20Sales%2C%204%2C%20Mor%C3%B3n%20de%20la%20Frontera%2C%20Sevilla"
+        },
+        {
+          "text": "La Borriquita →",
+          "href": "/hermandades/borriquita-moron-de-la-frontera"
+        },
+        {
+          "text": "Imagen Titular Santísimo Cristo de la Buena Muerte Imagen procesional →",
+          "href": "/imagenes/cristo-buena-muerte-moron"
+        },
+        {
+          "text": "Imagen Titular María Santísima de la Amargura Imagen procesional →",
+          "href": "/imagenes/maria-santisima-amargura-moron"
+        },
+        {
+          "text": "Paso Paso procesional Paso del Santísimo Cristo de la Buena Muerte mystery →",
+          "href": "/pasos/paso-cristo-buena-muerte-moron"
+        },
+        {
+          "text": "Paso Paso procesional Palio de María Santísima de la Amargura palio →",
+          "href": "/pasos/palio-maria-santisima-amargura-moron"
+        },
+        {
+          "text": "SC Imagen procesional Santísimo Cristo de la Buena Muerte Santísimo Cristo de la Buena Muerte Descubrir titular →",
+          "href": "/imagenes/cristo-buena-muerte-moron"
+        },
+        {
+          "text": "MS Imagen procesional María Santísima de la Amargura María Santísima de la Amargura Descubrir titular →",
+          "href": "/imagenes/maria-santisima-amargura-moron"
+        },
+        {
+          "text": "Santísimo Cristo de la Buena Muerte",
+          "href": "/imagenes/cristo-buena-muerte-moron"
+        },
+        {
+          "text": "Ver ficha del paso →",
+          "href": "/pasos/paso-cristo-buena-muerte-moron"
+        },
+        {
+          "text": "María Santísima de la Amargura",
+          "href": "/imagenes/maria-santisima-amargura-moron"
+        },
+        {
+          "text": "Ver ficha del paso →",
+          "href": "/pasos/palio-maria-santisima-amargura-moron"
+        },
+        {
+          "text": "Imagen Titular Santísimo Cristo de la Buena Muerte Imagen vinculada a la Hermandad →",
+          "href": "/imagenes/cristo-buena-muerte-moron"
+        },
+        {
+          "text": "Imagen Titular María Santísima de la Amargura Imagen vinculada a la Hermandad →",
+          "href": "/imagenes/maria-santisima-amargura-moron"
+        },
+        {
+          "text": "Paso Procesiona con Paso del Santísimo Cristo de la Buena Muerte Paso procesional de la Hermandad →",
+          "href": "/pasos/paso-cristo-buena-muerte-moron"
+        },
+        {
+          "text": "Paso Procesiona con Palio de María Santísima de la Amargura Paso procesional de la Hermandad →",
+          "href": "/pasos/palio-maria-santisima-amargura-moron"
+        },
+        {
+          "text": "Consejo · Hermandad de la Buena Muerte",
+          "href": "https://consejomoron.org/hermandad-de-la-buena-muerte/"
+        },
+        {
+          "text": "Radio Morón · Semana Santa 2026",
+          "href": "https://www.radiomoron.es/semanasanta2026/"
+        },
+        {
+          "text": "Colabora",
+          "href": "/colabora"
+        },
+        {
+          "text": "Aviso legal",
+          "href": "/aviso-legal"
+        },
+        {
+          "text": "Privacidad",
+          "href": "/privacidad"
+        },
+        {
+          "text": "Cookies",
+          "href": "/cookies"
+        }
+      ],
+      "text": "Los Salesianos / Buena Muerte (Morón de la Frontera) · Hilo Cofrade Saltar al contenido Inicio Tira del hilo Agenda Igualás y ensayos Hoy Explorar Directorio → Hermandades → Procesiones de Gloria → Imágenes → Pasos → Bandas → Marchas → Autores → Crucetas musicales → ☰ Inicio → Tira del hilo → Agenda → Igualás y ensayos → Hoy → Enciclopedia Directorio → Hermandades → Procesiones de Gloria → Imágenes → Pasos → Bandas → Marchas → Autores → Crucetas musicales → Hermandades → Morón de la Frontera Hermandad de Penitencia Morón de la Frontera Los Salesianos / Buena Muerte Capilla de María Auxiliadora · Salesianos · Morón de la Frontera Fervorosa Hermandad del Santísimo Cristo de la Buena Muerte, María Santísima de la Amargura y San Juan Bosco Semana Santa Martes Santo · 2 pasos Explorar ficha ‹ Información Titulares Pasos Conexiones Salidas Histórico musical Fuentes › De un vistazo La Hermandad durante el año Última actualización 26 de septiembre de 2026 Fundación 1944 Titulares 2 → Pasos 2 → Actividad anual habitual Qué hace la Hermandad durante el año Estación de penitencia Martes Santo Sede canónica Capilla Capilla de María Auxiliadora · Salesianos C/ Marquesa de Sales, 4 Cómo llegar También en esta sede La Borriquita → Descubre el hilo Conexiones de esta Hermandad Continúa por sus Titulares, pasos, bandas y marchas documentadas. Cada relación abre una nueva ficha sin perder el contexto de la Hermandad de origen. Hermandad Los Salesianos / Buena Muerte Hermandad de Penitencia · Morón de la Frontera Imagen Titular Santísimo Cristo de la Buena Muerte Imagen procesional → Imagen Titular María Santísima de la Amargura Imagen procesional → Paso Paso procesional Paso del Santísimo Cristo de la Buena Muerte mystery → Paso Paso procesional Palio de María Santísima de la Amargura palio → Titularidad Sagrados Titulares Imágenes e identidades devocionales que conforman la titularidad documentada de la Hermandad. SC Imagen procesional Santísimo Cristo de la Buena Muerte Santísimo Cristo de la Buena Muerte Descubrir titular → MS Imagen procesional María Santísima de la Amargura María Santísima de la Amargura Descubrir titular → 2 pasos Pasos procesionales Imágenes, diseño, talla, orfebrería, bordados, reformas y evolución histórica. 0 1 Fotografía del paso mystery Paso del Santísimo Cristo de la Buena Muerte Paso del Santísimo Cristo de la Buena Muerte Imágenes que procesionan Santísimo Cristo de la Buena Muerte Ver ficha del paso → 0 2 Fotografía del paso palio Palio de María Santísima de la Amargura Palio de María Santísima de la Amargura Imágenes que procesionan María Santísima de la Amargura Ver ficha del paso → Tira del hilo La Hermandad como nodo de la enciclopedia Tira del hilo hacia sus imágenes, sus pasos y su música vinculada. Los vínculos institucionales y los acompañamientos actuales se etiquetan de forma distinta para no confundir pertenencia con contrato procesional. Hermandad La Buena Muerte de Morón de la Frontera 2 imágenes · 2 pasos Imagen Titular Santísimo Cristo de la Buena Muerte Imagen vinculada a la Hermandad → Imagen Titular María Santísima de la Amargura Imagen vinculada a la Hermandad → Paso Procesiona con Paso del Santísimo Cristo de la Buena Muerte Paso procesional de la Hermandad → Paso Procesiona con Palio de María Santísima de la Amargura Paso procesional de la Hermandad → La Hermandad en la calle Salidas Las salidas ordinarias, los cultos externos y la memoria extraordinaria se presentan como ámbitos distintos. Salida ordinaria Martes Santo · Estación de Penitencia La estación de penitencia anual de la Hermandad, con sus tiempos y recorrido documentados por edición. 01 01 E Ordinaria Estación de Penitencia Ordinaria Edición 2026 Santísimo Cristo de la Buena Muerte · María Santísima de la Amargura Cuándo 31 de marzo de 2026 · 19:10 h Memoria sonora Acompañamientos Musicales Históricos Una cronología por paso para conocer qué formaciones musicales han acompañado a la Hermandad. 2026 Agrupación Vocal de Cámara Redentoris Mundi Paso del Santísimo Cristo de la Buena Muerte · Tras el Santísimo Cristo de la Buena Muerte Capilla musical 2026 Banda Municipal de Música de Morón de la Frontera Palio de María Santísima de la Amargura · Tras María Santísima de la Amargura Banda de Música Documentación Fuentes 2 fuentes ＋ Consejo · Hermandad de la Buena Muerte Radio Morón · Semana Santa 2026 Colabora Aviso legal Privacidad Cookies Proyecto creado por Nacho Sánchez · @desdeelarenal",
+      "body_sha256": "df876fcae19694277f79fe676df640c4ef0c9ad3309f70de6a31d258d66f7990",
+      "breadcrumb_json_ld": true
+    },
+    {
+      "path": "/hermandades/loreto-moron-de-la-frontera",
+      "status": 200,
+      "url": "https://hilocofrade.es/hermandades/loreto-moron-de-la-frontera",
+      "headers": {
+        "Age": "0",
+        "Cache-Control": "public, max-age=0, must-revalidate",
+        "Content-Length": "82882",
+        "Content-Type": "text/html; charset=utf-8",
+        "Date": "Sat, 26 Sep 2026 20:21:58 GMT",
+        "Etag": "\"3r36zhtifj1rln\"",
+        "Server": "Vercel",
+        "Strict-Transport-Security": "max-age=63072000",
+        "Vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "X-Matched-Path": "/hermandades/[slug]",
+        "X-Nextjs-Prerender": "1",
+        "X-Nextjs-Stale-Time": "300",
+        "X-Powered-By": "Next.js",
+        "X-Vercel-Cache": "MISS",
+        "X-Vercel-Id": "cdg1::dub1::7dnq6-1790454115429-3f70c9d17ab4",
+        "Connection": "close"
+      },
+      "title": "San Francisco / Loreto (Morón de la Frontera) · Hilo Cofrade",
+      "canonical": "https://hilocofrade.es/hermandades/loreto-moron-de-la-frontera",
+      "robots": "index, follow",
+      "h1": [
+        "San Francisco / Loreto"
+      ],
+      "headings": [
+        "La Hermandad durante el año",
+        "Parroquia de San Francisco de Asís",
+        "Conexiones de esta Hermandad",
+        "Sagrados Titulares",
+        "Santísimo Cristo de la Agonía en el Huerto",
+        "María Santísima de Loreto",
+        "Pasos procesionales",
+        "Misterio de la Agonía en el Huerto",
+        "Palio de María Santísima de Loreto",
+        "La Hermandad como nodo de la enciclopedia",
+        "Salidas",
+        "Miércoles Santo · Estación de Penitencia",
+        "Edición 2026",
+        "Acompañamientos Musicales Históricos",
+        "Agrupación Musical Nuestro Padre Jesús Nazareno de la Fuensanta de Morón",
+        "Banda de Música de El Saucejo",
+        "Fuentes"
+      ],
+      "links": [
+        {
+          "text": "Saltar al contenido",
+          "href": "#main-content"
+        },
+        {
+          "text": "",
+          "href": "/"
+        },
+        {
+          "text": "Inicio",
+          "href": "/#inicio"
+        },
+        {
+          "text": "Tira del hilo",
+          "href": "/#tiradelhilo"
+        },
+        {
+          "text": "Agenda",
+          "href": "/agenda-cofrade"
+        },
+        {
+          "text": "Igualás y ensayos",
+          "href": "/igualas-y-ensayos"
+        },
+        {
+          "text": "Hoy",
+          "href": "/#hoy"
+        },
+        {
+          "text": "Directorio →",
+          "href": "/directorio"
+        },
+        {
+          "text": "Hermandades →",
+          "href": "/hermandades"
+        },
+        {
+          "text": "Procesiones de Gloria →",
+          "href": "/procesiones-de-gloria"
+        },
+        {
+          "text": "Imágenes →",
+          "href": "/imagenes"
+        },
+        {
+          "text": "Pasos →",
+          "href": "/pasos"
+        },
+        {
+          "text": "Bandas →",
+          "href": "/bandas"
+        },
+        {
+          "text": "Marchas →",
+          "href": "/marchas"
+        },
+        {
+          "text": "Autores →",
+          "href": "/autores"
+        },
+        {
+          "text": "Crucetas musicales →",
+          "href": "/crucetas-musicales"
+        },
+        {
+          "text": "Inicio →",
+          "href": "/#inicio"
+        },
+        {
+          "text": "Tira del hilo →",
+          "href": "/#tiradelhilo"
+        },
+        {
+          "text": "Agenda →",
+          "href": "/agenda-cofrade"
+        },
+        {
+          "text": "Igualás y ensayos →",
+          "href": "/igualas-y-ensayos"
+        },
+        {
+          "text": "Hoy →",
+          "href": "/#hoy"
+        },
+        {
+          "text": "Directorio →",
+          "href": "/directorio"
+        },
+        {
+          "text": "Hermandades →",
+          "href": "/hermandades"
+        },
+        {
+          "text": "Procesiones de Gloria →",
+          "href": "/procesiones-de-gloria"
+        },
+        {
+          "text": "Imágenes →",
+          "href": "/imagenes"
+        },
+        {
+          "text": "Pasos →",
+          "href": "/pasos"
+        },
+        {
+          "text": "Bandas →",
+          "href": "/bandas"
+        },
+        {
+          "text": "Marchas →",
+          "href": "/marchas"
+        },
+        {
+          "text": "Autores →",
+          "href": "/autores"
+        },
+        {
+          "text": "Crucetas musicales →",
+          "href": "/crucetas-musicales"
+        },
+        {
+          "text": "Hermandades",
+          "href": "/hermandades"
+        },
+        {
+          "text": "Morón de la Frontera",
+          "href": "/agenda-cofrade/localidad/moron-de-la-frontera"
+        },
+        {
+          "text": "Información",
+          "href": "#resumen"
+        },
+        {
+          "text": "Titulares",
+          "href": "#titulares"
+        },
+        {
+          "text": "Pasos",
+          "href": "#pasos"
+        },
+        {
+          "text": "Conexiones",
+          "href": "#tira-del-hilo"
+        },
+        {
+          "text": "Salidas",
+          "href": "#salidas"
+        },
+        {
+          "text": "Histórico musical",
+          "href": "#acompanamientos"
+        },
+        {
+          "text": "Fuentes",
+          "href": "#fuentes"
+        },
+        {
+          "text": "2 →",
+          "href": "#titulares"
+        },
+        {
+          "text": "2 →",
+          "href": "#pasos"
+        },
+        {
+          "text": "Cómo llegar",
+          "href": "https://www.google.com/maps/search/?api=1&query=Parroquia%20de%20San%20Francisco%20de%20As%C3%ADs%2C%20Plaza%20San%20Francisco%2C%202%2C%20Mor%C3%B3n%20de%20la%20Frontera%2C%20Sevilla"
+        },
+        {
+          "text": "Imagen Titular Santísimo Cristo de la Agonía en el Huerto Imagen procesional →",
+          "href": "/imagenes/cristo-agonia-huerto-moron"
+        },
+        {
+          "text": "Imagen Titular María Santísima de Loreto Imagen procesional →",
+          "href": "/imagenes/maria-santisima-loreto-moron"
+        },
+        {
+          "text": "Paso Paso procesional Misterio de la Agonía en el Huerto mystery →",
+          "href": "/pasos/misterio-agonia-huerto-moron"
+        },
+        {
+          "text": "Paso Paso procesional Palio de María Santísima de Loreto palio →",
+          "href": "/pasos/palio-maria-santisima-loreto-moron"
+        },
+        {
+          "text": "SC Imagen procesional Santísimo Cristo de la Agonía en el Huerto Santísimo Cristo de la Agonía en el Huerto Descubrir titular →",
+          "href": "/imagenes/cristo-agonia-huerto-moron"
+        },
+        {
+          "text": "MS Imagen procesional María Santísima de Loreto María Santísima de Loreto Descubrir titular →",
+          "href": "/imagenes/maria-santisima-loreto-moron"
+        },
+        {
+          "text": "Santísimo Cristo de la Agonía en el Huerto",
+          "href": "/imagenes/cristo-agonia-huerto-moron"
+        },
+        {
+          "text": "San Juan del misterio de Loreto",
+          "href": "/imagenes/san-juan-loreto-moron"
+        },
+        {
+          "text": "San Pedro del misterio de Loreto",
+          "href": "/imagenes/san-pedro-loreto-moron"
+        },
+        {
+          "text": "Santiago del misterio de Loreto",
+          "href": "/imagenes/santiago-loreto-moron"
+        },
+        {
+          "text": "Ángel Confortador del misterio de Loreto",
+          "href": "/imagenes/angel-confortador-loreto-moron"
+        },
+        {
+          "text": "Ver ficha del paso →",
+          "href": "/pasos/misterio-agonia-huerto-moron"
+        },
+        {
+          "text": "María Santísima de Loreto",
+          "href": "/imagenes/maria-santisima-loreto-moron"
+        },
+        {
+          "text": "Ver ficha del paso →",
+          "href": "/pasos/palio-maria-santisima-loreto-moron"
+        },
+        {
+          "text": "Imagen Titular Santísimo Cristo de la Agonía en el Huerto Imagen vinculada a la Hermandad →",
+          "href": "/imagenes/cristo-agonia-huerto-moron"
+        },
+        {
+          "text": "Imagen Titular María Santísima de Loreto Imagen vinculada a la Hermandad →",
+          "href": "/imagenes/maria-santisima-loreto-moron"
+        },
+        {
+          "text": "Paso Procesiona con Misterio de la Agonía en el Huerto Paso procesional de la Hermandad →",
+          "href": "/pasos/misterio-agonia-huerto-moron"
+        },
+        {
+          "text": "Paso Procesiona con Palio de María Santísima de Loreto Paso procesional de la Hermandad →",
+          "href": "/pasos/palio-maria-santisima-loreto-moron"
+        },
+        {
+          "text": "Consejo · Hermandad de Loreto",
+          "href": "https://consejomoron.org/hermandad-de-loreto/"
+        },
+        {
+          "text": "El Pespunte · Loreto 2026 desde San Miguel",
+          "href": "https://www.elpespunte.es/articulo/cofrade/loreto-moron-renueva-saucejo-estrenarse-miercoles-santo-historico-san-miguel/20260519151729134656.html"
+        },
+        {
+          "text": "Radio Morón · Semana Santa 2026",
+          "href": "https://www.radiomoron.es/semanasanta2026/"
+        },
+        {
+          "text": "Colabora",
+          "href": "/colabora"
+        },
+        {
+          "text": "Aviso legal",
+          "href": "/aviso-legal"
+        },
+        {
+          "text": "Privacidad",
+          "href": "/privacidad"
+        },
+        {
+          "text": "Cookies",
+          "href": "/cookies"
+        }
+      ],
+      "text": "San Francisco / Loreto (Morón de la Frontera) · Hilo Cofrade Saltar al contenido Inicio Tira del hilo Agenda Igualás y ensayos Hoy Explorar Directorio → Hermandades → Procesiones de Gloria → Imágenes → Pasos → Bandas → Marchas → Autores → Crucetas musicales → ☰ Inicio → Tira del hilo → Agenda → Igualás y ensayos → Hoy → Enciclopedia Directorio → Hermandades → Procesiones de Gloria → Imágenes → Pasos → Bandas → Marchas → Autores → Crucetas musicales → Hermandades → Morón de la Frontera Hermandad de Penitencia Morón de la Frontera San Francisco / Loreto Parroquia de San Francisco de Asís · Morón de la Frontera Hermandad Sacramental y Cofradía de Nazarenos del Santísimo Cristo de la Agonía en el Huerto, María Santísima de Loreto y Nuestra Señora de los Remedios Semana Santa Miércoles Santo · 2 pasos Explorar ficha ‹ Información Titulares Pasos Conexiones Salidas Histórico musical Fuentes › De un vistazo La Hermandad durante el año Última actualización 26 de septiembre de 2026 Fundación 1961 Titulares 2 → Pasos 2 → Actividad anual habitual Qué hace la Hermandad durante el año Estación de penitencia Miércoles Santo Identidad Penitencia Sacramental Sede canónica Parroquia Parroquia de San Francisco de Asís Plaza San Francisco, 2 Cómo llegar Descubre el hilo Conexiones de esta Hermandad Continúa por sus Titulares, pasos, bandas y marchas documentadas. Cada relación abre una nueva ficha sin perder el contexto de la Hermandad de origen. Hermandad San Francisco / Loreto Hermandad de Penitencia · Morón de la Frontera Imagen Titular Santísimo Cristo de la Agonía en el Huerto Imagen procesional → Imagen Titular María Santísima de Loreto Imagen procesional → Paso Paso procesional Misterio de la Agonía en el Huerto mystery → Paso Paso procesional Palio de María Santísima de Loreto palio → Titularidad Sagrados Titulares Imágenes e identidades devocionales que conforman la titularidad documentada de la Hermandad. SC Imagen procesional Santísimo Cristo de la Agonía en el Huerto Santísimo Cristo de la Agonía en el Huerto Descubrir titular → MS Imagen procesional María Santísima de Loreto María Santísima de Loreto Descubrir titular → 2 pasos Pasos procesionales Imágenes, diseño, talla, orfebrería, bordados, reformas y evolución histórica. 0 1 Fotografía del paso mystery Misterio de la Agonía en el Huerto Misterio de la Agonía en el Huerto Imágenes que procesionan Santísimo Cristo de la Agonía en el Huerto San Juan del misterio de Loreto San Pedro del misterio de Loreto Santiago del misterio de Loreto Ángel Confortador del misterio de Loreto Ver ficha del paso → 0 2 Fotografía del paso palio Palio de María Santísima de Loreto Palio de María Santísima de Loreto Imágenes que procesionan María Santísima de Loreto Ver ficha del paso → Tira del hilo La Hermandad como nodo de la enciclopedia Tira del hilo hacia sus imágenes, sus pasos y su música vinculada. Los vínculos institucionales y los acompañamientos actuales se etiquetan de forma distinta para no confundir pertenencia con contrato procesional. Hermandad Loreto de Morón de la Frontera 2 imágenes · 2 pasos Imagen Titular Santísimo Cristo de la Agonía en el Huerto Imagen vinculada a la Hermandad → Imagen Titular María Santísima de Loreto Imagen vinculada a la Hermandad → Paso Procesiona con Misterio de la Agonía en el Huerto Paso procesional de la Hermandad → Paso Procesiona con Palio de María Santísima de Loreto Paso procesional de la Hermandad → La Hermandad en la calle Salidas Las salidas ordinarias, los cultos externos y la memoria extraordinaria se presentan como ámbitos distintos. Salida ordinaria Miércoles Santo · Estación de Penitencia La estación de penitencia anual de la Hermandad, con sus tiempos y recorrido documentados por edición. 01 01 E Ordinaria Estación de Penitencia Ordinaria Edición 2026 Santísimo Cristo de la Agonía en el Huerto · María Santísima de Loreto Cuándo 1 de abril de 2026 · 18:00 h Memoria sonora Acompañamientos Musicales Históricos Una cronología por paso para conocer qué formaciones musicales han acompañado a la Hermandad. 2026 Agrupación Musical Nuestro Padre Jesús Nazareno de la Fuensanta de Morón Misterio de la Agonía en el Huerto · Tras el Santísimo Cristo de la Agonía en el Huerto Agrupación Musical 2026 Banda de Música de El Saucejo Palio de María Santísima de Loreto · Tras María Santísima de Loreto Banda de Música Documentación Fuentes 3 fuentes ＋ Consejo · Hermandad de Loreto El Pespunte · Loreto 2026 desde San Miguel Radio Morón · Semana Santa 2026 Colabora Aviso legal Privacidad Cookies Proyecto creado por Nacho Sánchez · @desdeelarenal",
+      "body_sha256": "1066236998d22a149c289ecf0f9ede60f1c40eabba9b12a7a63fc8b298bee35e",
+      "breadcrumb_json_ld": true
+    },
+    {
+      "path": "/hermandades/santa-cruz-moron-de-la-frontera",
+      "status": 200,
+      "url": "https://hilocofrade.es/hermandades/santa-cruz-moron-de-la-frontera",
+      "headers": {
+        "Age": "0",
+        "Cache-Control": "public, max-age=0, must-revalidate",
+        "Content-Length": "81579",
+        "Content-Type": "text/html; charset=utf-8",
+        "Date": "Sat, 26 Sep 2026 20:22:06 GMT",
+        "Etag": "\"z2srfiietj1ql8\"",
+        "Server": "Vercel",
+        "Strict-Transport-Security": "max-age=63072000",
+        "Vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "X-Matched-Path": "/hermandades/[slug]",
+        "X-Nextjs-Prerender": "1",
+        "X-Nextjs-Stale-Time": "300",
+        "X-Powered-By": "Next.js",
+        "X-Vercel-Cache": "MISS",
+        "X-Vercel-Id": "cdg1::dub1::tkdzn-1790454123803-67acbac8fd21",
+        "Connection": "close"
+      },
+      "title": "La Compañía / Santa Cruz (Morón de la Frontera) · Hilo Cofrade",
+      "canonical": "https://hilocofrade.es/hermandades/santa-cruz-moron-de-la-frontera",
+      "robots": "index, follow",
+      "h1": [
+        "La Compañía / Santa Cruz"
+      ],
+      "headings": [
+        "La Hermandad durante el año",
+        "Iglesia de San Ignacio de Loyola · La Compañía",
+        "Conexiones de esta Hermandad",
+        "Sagrados Titulares",
+        "Santísimo Cristo de la Expiración",
+        "Nuestra Señora de la Esperanza",
+        "Pasos procesionales",
+        "Paso del Santísimo Cristo de la Expiración",
+        "Palio de Nuestra Señora de la Esperanza",
+        "La Hermandad como nodo de la enciclopedia",
+        "Salidas",
+        "Jueves Santo · Estación de Penitencia",
+        "Edición 2026",
+        "Acompañamientos Musicales Históricos",
+        "Banda de Cornetas y Tambores Sayones de Nuestro Padre Jesús Nazareno de Pozoblanco",
+        "Banda de Música Municipal Gailín de Puerto Serrano",
+        "Fuentes"
+      ],
+      "links": [
+        {
+          "text": "Saltar al contenido",
+          "href": "#main-content"
+        },
+        {
+          "text": "",
+          "href": "/"
+        },
+        {
+          "text": "Inicio",
+          "href": "/#inicio"
+        },
+        {
+          "text": "Tira del hilo",
+          "href": "/#tiradelhilo"
+        },
+        {
+          "text": "Agenda",
+          "href": "/agenda-cofrade"
+        },
+        {
+          "text": "Igualás y ensayos",
+          "href": "/igualas-y-ensayos"
+        },
+        {
+          "text": "Hoy",
+          "href": "/#hoy"
+        },
+        {
+          "text": "Directorio →",
+          "href": "/directorio"
+        },
+        {
+          "text": "Hermandades →",
+          "href": "/hermandades"
+        },
+        {
+          "text": "Procesiones de Gloria →",
+          "href": "/procesiones-de-gloria"
+        },
+        {
+          "text": "Imágenes →",
+          "href": "/imagenes"
+        },
+        {
+          "text": "Pasos →",
+          "href": "/pasos"
+        },
+        {
+          "text": "Bandas →",
+          "href": "/bandas"
+        },
+        {
+          "text": "Marchas →",
+          "href": "/marchas"
+        },
+        {
+          "text": "Autores →",
+          "href": "/autores"
+        },
+        {
+          "text": "Crucetas musicales →",
+          "href": "/crucetas-musicales"
+        },
+        {
+          "text": "Inicio →",
+          "href": "/#inicio"
+        },
+        {
+          "text": "Tira del hilo →",
+          "href": "/#tiradelhilo"
+        },
+        {
+          "text": "Agenda →",
+          "href": "/agenda-cofrade"
+        },
+        {
+          "text": "Igualás y ensayos →",
+          "href": "/igualas-y-ensayos"
+        },
+        {
+          "text": "Hoy →",
+          "href": "/#hoy"
+        },
+        {
+          "text": "Directorio →",
+          "href": "/directorio"
+        },
+        {
+          "text": "Hermandades →",
+          "href": "/hermandades"
+        },
+        {
+          "text": "Procesiones de Gloria →",
+          "href": "/procesiones-de-gloria"
+        },
+        {
+          "text": "Imágenes →",
+          "href": "/imagenes"
+        },
+        {
+          "text": "Pasos →",
+          "href": "/pasos"
+        },
+        {
+          "text": "Bandas →",
+          "href": "/bandas"
+        },
+        {
+          "text": "Marchas →",
+          "href": "/marchas"
+        },
+        {
+          "text": "Autores →",
+          "href": "/autores"
+        },
+        {
+          "text": "Crucetas musicales →",
+          "href": "/crucetas-musicales"
+        },
+        {
+          "text": "Hermandades",
+          "href": "/hermandades"
+        },
+        {
+          "text": "Morón de la Frontera",
+          "href": "/agenda-cofrade/localidad/moron-de-la-frontera"
+        },
+        {
+          "text": "Información",
+          "href": "#resumen"
+        },
+        {
+          "text": "Titulares",
+          "href": "#titulares"
+        },
+        {
+          "text": "Pasos",
+          "href": "#pasos"
+        },
+        {
+          "text": "Conexiones",
+          "href": "#tira-del-hilo"
+        },
+        {
+          "text": "Salidas",
+          "href": "#salidas"
+        },
+        {
+          "text": "Histórico musical",
+          "href": "#acompanamientos"
+        },
+        {
+          "text": "Fuentes",
+          "href": "#fuentes"
+        },
+        {
+          "text": "2 →",
+          "href": "#titulares"
+        },
+        {
+          "text": "2 →",
+          "href": "#pasos"
+        },
+        {
+          "text": "Cómo llegar",
+          "href": "https://www.google.com/maps/search/?api=1&query=Iglesia%20de%20San%20Ignacio%20de%20Loyola%20%C2%B7%20La%20Compa%C3%B1%C3%ADa%2C%20C%2F%20%C3%81nimas%2C%20Mor%C3%B3n%20de%20la%20Frontera%2C%20Sevilla"
+        },
+        {
+          "text": "Imagen Titular Santísimo Cristo de la Expiración Imagen procesional →",
+          "href": "/imagenes/cristo-expiracion-santa-cruz-moron"
+        },
+        {
+          "text": "Imagen Titular Nuestra Señora de la Esperanza Imagen procesional →",
+          "href": "/imagenes/nuestra-senora-esperanza-santa-cruz-moron"
+        },
+        {
+          "text": "Paso Paso procesional Paso del Santísimo Cristo de la Expiración mystery →",
+          "href": "/pasos/paso-cristo-expiracion-santa-cruz-moron"
+        },
+        {
+          "text": "Paso Paso procesional Palio de Nuestra Señora de la Esperanza palio →",
+          "href": "/pasos/palio-nuestra-senora-esperanza-santa-cruz-moron"
+        },
+        {
+          "text": "SC Imagen procesional Santísimo Cristo de la Expiración Santísimo Cristo de la Expiración Descubrir titular →",
+          "href": "/imagenes/cristo-expiracion-santa-cruz-moron"
+        },
+        {
+          "text": "NS Imagen procesional Nuestra Señora de la Esperanza Nuestra Señora de la Esperanza Descubrir titular →",
+          "href": "/imagenes/nuestra-senora-esperanza-santa-cruz-moron"
+        },
+        {
+          "text": "Santísimo Cristo de la Expiración",
+          "href": "/imagenes/cristo-expiracion-santa-cruz-moron"
+        },
+        {
+          "text": "Ver ficha del paso →",
+          "href": "/pasos/paso-cristo-expiracion-santa-cruz-moron"
+        },
+        {
+          "text": "Nuestra Señora de la Esperanza",
+          "href": "/imagenes/nuestra-senora-esperanza-santa-cruz-moron"
+        },
+        {
+          "text": "Ver ficha del paso →",
+          "href": "/pasos/palio-nuestra-senora-esperanza-santa-cruz-moron"
+        },
+        {
+          "text": "Imagen Titular Santísimo Cristo de la Expiración Imagen vinculada a la Hermandad →",
+          "href": "/imagenes/cristo-expiracion-santa-cruz-moron"
+        },
+        {
+          "text": "Imagen Titular Nuestra Señora de la Esperanza Imagen vinculada a la Hermandad →",
+          "href": "/imagenes/nuestra-senora-esperanza-santa-cruz-moron"
+        },
+        {
+          "text": "Paso Procesiona con Paso del Santísimo Cristo de la Expiración Paso procesional de la Hermandad →",
+          "href": "/pasos/paso-cristo-expiracion-santa-cruz-moron"
+        },
+        {
+          "text": "Paso Procesiona con Palio de Nuestra Señora de la Esperanza Paso procesional de la Hermandad →",
+          "href": "/pasos/palio-nuestra-senora-esperanza-santa-cruz-moron"
+        },
+        {
+          "text": "Consejo · Hermandad de la Santa Cruz",
+          "href": "https://consejomoron.org/hermandad-de-la-santa-cruz/"
+        },
+        {
+          "text": "Radio Morón · Semana Santa 2026",
+          "href": "https://www.radiomoron.es/semanasanta2026/"
+        },
+        {
+          "text": "Colabora",
+          "href": "/colabora"
+        },
+        {
+          "text": "Aviso legal",
+          "href": "/aviso-legal"
+        },
+        {
+          "text": "Privacidad",
+          "href": "/privacidad"
+        },
+        {
+          "text": "Cookies",
+          "href": "/cookies"
+        }
+      ],
+      "text": "La Compañía / Santa Cruz (Morón de la Frontera) · Hilo Cofrade Saltar al contenido Inicio Tira del hilo Agenda Igualás y ensayos Hoy Explorar Directorio → Hermandades → Procesiones de Gloria → Imágenes → Pasos → Bandas → Marchas → Autores → Crucetas musicales → ☰ Inicio → Tira del hilo → Agenda → Igualás y ensayos → Hoy → Enciclopedia Directorio → Hermandades → Procesiones de Gloria → Imágenes → Pasos → Bandas → Marchas → Autores → Crucetas musicales → Hermandades → Morón de la Frontera Hermandad de Penitencia Morón de la Frontera La Compañía / Santa Cruz Iglesia de San Ignacio de Loyola · La Compañía · Morón de la Frontera Real y Antigua Hermandad de Gloria de la Santa Cruz y Cofradía de Nazarenos del Santísimo Cristo de la Expiración, Nuestra Señora de la Esperanza y San Ignacio de Loyola Semana Santa Jueves Santo · 2 pasos Explorar ficha ‹ Información Titulares Pasos Conexiones Salidas Histórico musical Fuentes › De un vistazo La Hermandad durante el año Última actualización 26 de septiembre de 2026 Fundación 1624; cofradía penitencial 1920 Titulares 2 → Pasos 2 → Actividad anual habitual Qué hace la Hermandad durante el año Estación de penitencia Jueves Santo Identidad Penitencia Gloria Sede canónica Iglesia Iglesia de San Ignacio de Loyola · La Compañía C/ Ánimas Cómo llegar Descubre el hilo Conexiones de esta Hermandad Continúa por sus Titulares, pasos, bandas y marchas documentadas. Cada relación abre una nueva ficha sin perder el contexto de la Hermandad de origen. Hermandad La Compañía / Santa Cruz Hermandad de Penitencia · Morón de la Frontera Imagen Titular Santísimo Cristo de la Expiración Imagen procesional → Imagen Titular Nuestra Señora de la Esperanza Imagen procesional → Paso Paso procesional Paso del Santísimo Cristo de la Expiración mystery → Paso Paso procesional Palio de Nuestra Señora de la Esperanza palio → Titularidad Sagrados Titulares Imágenes e identidades devocionales que conforman la titularidad documentada de la Hermandad. SC Imagen procesional Santísimo Cristo de la Expiración Santísimo Cristo de la Expiración Descubrir titular → NS Imagen procesional Nuestra Señora de la Esperanza Nuestra Señora de la Esperanza Descubrir titular → 2 pasos Pasos procesionales Imágenes, diseño, talla, orfebrería, bordados, reformas y evolución histórica. 0 1 Fotografía del paso mystery Paso del Santísimo Cristo de la Expiración Paso del Santísimo Cristo de la Expiración Imágenes que procesionan Santísimo Cristo de la Expiración Ver ficha del paso → 0 2 Fotografía del paso palio Palio de Nuestra Señora de la Esperanza Palio de Nuestra Señora de la Esperanza Imágenes que procesionan Nuestra Señora de la Esperanza Ver ficha del paso → Tira del hilo La Hermandad como nodo de la enciclopedia Tira del hilo hacia sus imágenes, sus pasos y su música vinculada. Los vínculos institucionales y los acompañamientos actuales se etiquetan de forma distinta para no confundir pertenencia con contrato procesional. Hermandad Santa Cruz de Morón de la Frontera 2 imágenes · 2 pasos Imagen Titular Santísimo Cristo de la Expiración Imagen vinculada a la Hermandad → Imagen Titular Nuestra Señora de la Esperanza Imagen vinculada a la Hermandad → Paso Procesiona con Paso del Santísimo Cristo de la Expiración Paso procesional de la Hermandad → Paso Procesiona con Palio de Nuestra Señora de la Esperanza Paso procesional de la Hermandad → La Hermandad en la calle Salidas Las salidas ordinarias, los cultos externos y la memoria extraordinaria se presentan como ámbitos distintos. Salida ordinaria Jueves Santo · Estación de Penitencia La estación de penitencia anual de la Hermandad, con sus tiempos y recorrido documentados por edición. 01 01 E Ordinaria Estación de Penitencia Ordinaria Edición 2026 Santísimo Cristo de la Expiración · Nuestra Señora de la Esperanza Cuándo 2 de abril de 2026 · 18:30 h Memoria sonora Acompañamientos Musicales Históricos Una cronología por paso para conocer qué formaciones musicales han acompañado a la Hermandad. 2026 Banda de Cornetas y Tambores Sayones de Nuestro Padre Jesús Nazareno de Pozoblanco Paso del Santísimo Cristo de la Expiración · Tras el Santísimo Cristo de la Expiración Cornetas y Tambores 2026 Banda de Música Municipal Gailín de Puerto Serrano Palio de Nuestra Señora de la Esperanza · Tras Nuestra Señora de la Esperanza Banda de Música Documentación Fuentes 2 fuentes ＋ Consejo · Hermandad de la Santa Cruz Radio Morón · Semana Santa 2026 Colabora Aviso legal Privacidad Cookies Proyecto creado por Nacho Sánchez · @desdeelarenal",
+      "body_sha256": "42cea13d89c4f84ef4d925aa0b1b4cee7feb4654100ce641eba89dab5bcd74af",
+      "breadcrumb_json_ld": true
+    },
+    {
+      "path": "/hermandades/jesus-nazareno-moron-de-la-frontera",
+      "status": 200,
+      "url": "https://hilocofrade.es/hermandades/jesus-nazareno-moron-de-la-frontera",
+      "headers": {
+        "Age": "0",
+        "Cache-Control": "public, max-age=0, must-revalidate",
+        "Content-Length": "79163",
+        "Content-Type": "text/html; charset=utf-8",
+        "Date": "Sat, 26 Sep 2026 20:22:06 GMT",
+        "Etag": "\"5dsln9u9yw1opw\"",
+        "Server": "Vercel",
+        "Strict-Transport-Security": "max-age=63072000",
+        "Vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "X-Matched-Path": "/hermandades/[slug]",
+        "X-Nextjs-Prerender": "1",
+        "X-Nextjs-Stale-Time": "300",
+        "X-Powered-By": "Next.js",
+        "X-Vercel-Cache": "MISS",
+        "X-Vercel-Id": "cdg1::dub1::57kq8-1790454124020-301593e7386f",
+        "Connection": "close"
+      },
+      "title": "Jesús (Morón de la Frontera): titulares y pasos · Hilo Cofrade",
+      "canonical": "https://hilocofrade.es/hermandades/jesus-nazareno-moron-de-la-frontera",
+      "robots": "index, follow",
+      "h1": [
+        "Jesús"
+      ],
+      "headings": [
+        "La Hermandad durante el año",
+        "Ermita de Jesús / Fuensanta",
+        "Conexiones de esta Hermandad",
+        "Sagrados Titulares",
+        "Nuestro Padre Jesús Nazareno",
+        "María Santísima de los Dolores",
+        "San Juan Evangelista",
+        "Pasos procesionales",
+        "Paso de Nuestro Padre Jesús Nazareno",
+        "Palio de María Santísima de los Dolores",
+        "La Hermandad como nodo de la enciclopedia",
+        "Salidas",
+        "Madrugada del Viernes Santo · Estación de Penitencia",
+        "Edición 2026",
+        "Acompañamientos Musicales Históricos",
+        "Agrupación Musical Nuestro Padre Jesús Nazareno de la Fuensanta de Morón",
+        "Banda Municipal de Música de Morón de la Frontera",
+        "Agrupación Musical Juvenil Nuestro Padre Jesús Nazareno de la Fuensanta de Morón",
+        "Fuentes"
+      ],
+      "links": [
+        {
+          "text": "Saltar al contenido",
+          "href": "#main-content"
+        },
+        {
+          "text": "",
+          "href": "/"
+        },
+        {
+          "text": "Inicio",
+          "href": "/#inicio"
+        },
+        {
+          "text": "Tira del hilo",
+          "href": "/#tiradelhilo"
+        },
+        {
+          "text": "Agenda",
+          "href": "/agenda-cofrade"
+        },
+        {
+          "text": "Igualás y ensayos",
+          "href": "/igualas-y-ensayos"
+        },
+        {
+          "text": "Hoy",
+          "href": "/#hoy"
+        },
+        {
+          "text": "Directorio →",
+          "href": "/directorio"
+        },
+        {
+          "text": "Hermandades →",
+          "href": "/hermandades"
+        },
+        {
+          "text": "Procesiones de Gloria →",
+          "href": "/procesiones-de-gloria"
+        },
+        {
+          "text": "Imágenes →",
+          "href": "/imagenes"
+        },
+        {
+          "text": "Pasos →",
+          "href": "/pasos"
+        },
+        {
+          "text": "Bandas →",
+          "href": "/bandas"
+        },
+        {
+          "text": "Marchas →",
+          "href": "/marchas"
+        },
+        {
+          "text": "Autores →",
+          "href": "/autores"
+        },
+        {
+          "text": "Crucetas musicales →",
+          "href": "/crucetas-musicales"
+        },
+        {
+          "text": "Inicio →",
+          "href": "/#inicio"
+        },
+        {
+          "text": "Tira del hilo →",
+          "href": "/#tiradelhilo"
+        },
+        {
+          "text": "Agenda →",
+          "href": "/agenda-cofrade"
+        },
+        {
+          "text": "Igualás y ensayos →",
+          "href": "/igualas-y-ensayos"
+        },
+        {
+          "text": "Hoy →",
+          "href": "/#hoy"
+        },
+        {
+          "text": "Directorio →",
+          "href": "/directorio"
+        },
+        {
+          "text": "Hermandades →",
+          "href": "/hermandades"
+        },
+        {
+          "text": "Procesiones de Gloria →",
+          "href": "/procesiones-de-gloria"
+        },
+        {
+          "text": "Imágenes →",
+          "href": "/imagenes"
+        },
+        {
+          "text": "Pasos →",
+          "href": "/pasos"
+        },
+        {
+          "text": "Bandas →",
+          "href": "/bandas"
+        },
+        {
+          "text": "Marchas →",
+          "href": "/marchas"
+        },
+        {
+          "text": "Autores →",
+          "href": "/autores"
+        },
+        {
+          "text": "Crucetas musicales →",
+          "href": "/crucetas-musicales"
+        },
+        {
+          "text": "Hermandades",
+          "href": "/hermandades"
+        },
+        {
+          "text": "Morón de la Frontera",
+          "href": "/agenda-cofrade/localidad/moron-de-la-frontera"
+        },
+        {
+          "text": "Información",
+          "href": "#resumen"
+        },
+        {
+          "text": "Titulares",
+          "href": "#titulares"
+        },
+        {
+          "text": "Pasos",
+          "href": "#pasos"
+        },
+        {
+          "text": "Conexiones",
+          "href": "#tira-del-hilo"
+        },
+        {
+          "text": "Salidas",
+          "href": "#salidas"
+        },
+        {
+          "text": "Histórico musical",
+          "href": "#acompanamientos"
+        },
+        {
+          "text": "Fuentes",
+          "href": "#fuentes"
+        },
+        {
+          "text": "3 →",
+          "href": "#titulares"
+        },
+        {
+          "text": "2 →",
+          "href": "#pasos"
+        },
+        {
+          "text": "Cómo llegar",
+          "href": "https://www.google.com/maps/search/?api=1&query=Ermita%20de%20Jes%C3%BAs%20%2F%20Fuensanta%2C%20C%2F%20Fuensanta%2C%20Mor%C3%B3n%20de%20la%20Frontera%2C%20Sevilla"
+        },
+        {
+          "text": "Imagen Titular Nuestro Padre Jesús Nazareno Imagen procesional →",
+          "href": "/imagenes/jesus-nazareno-moron"
+        },
+        {
+          "text": "Imagen Titular María Santísima de los Dolores Imagen procesional →",
+          "href": "/imagenes/maria-santisima-dolores-jesus-moron"
+        },
+        {
+          "text": "Paso Paso procesional Paso de Nuestro Padre Jesús Nazareno mystery →",
+          "href": "/pasos/paso-jesus-nazareno-moron"
+        },
+        {
+          "text": "Paso Paso procesional Palio de María Santísima de los Dolores palio →",
+          "href": "/pasos/palio-maria-santisima-dolores-jesus-moron"
+        },
+        {
+          "text": "Imagen Titular San Juan Evangelista Imagen procesional →",
+          "href": "/imagenes/san-juan-evangelista-jesus-moron"
+        },
+        {
+          "text": "NP Imagen procesional Nuestro Padre Jesús Nazareno Nuestro Padre Jesús Nazareno Descubrir titular →",
+          "href": "/imagenes/jesus-nazareno-moron"
+        },
+        {
+          "text": "MS Imagen procesional María Santísima de los Dolores María Santísima de los Dolores Descubrir titular →",
+          "href": "/imagenes/maria-santisima-dolores-jesus-moron"
+        },
+        {
+          "text": "SJ Imagen procesional San Juan Evangelista San Juan Evangelista Descubrir titular →",
+          "href": "/imagenes/san-juan-evangelista-jesus-moron"
+        },
+        {
+          "text": "Nuestro Padre Jesús Nazareno",
+          "href": "/imagenes/jesus-nazareno-moron"
+        },
+        {
+          "text": "Simón de Cirene del paso de Jesús Nazareno",
+          "href": "/imagenes/cirineo-jesus-moron"
+        },
+        {
+          "text": "Ver ficha del paso →",
+          "href": "/pasos/paso-jesus-nazareno-moron"
+        },
+        {
+          "text": "María Santísima de los Dolores",
+          "href": "/imagenes/maria-santisima-dolores-jesus-moron"
+        },
+        {
+          "text": "San Juan Evangelista",
+          "href": "/imagenes/san-juan-evangelista-jesus-moron"
+        },
+        {
+          "text": "Ver ficha del paso →",
+          "href": "/pasos/palio-maria-santisima-dolores-jesus-moron"
+        },
+        {
+          "text": "Imagen Titular Nuestro Padre Jesús Nazareno Imagen vinculada a la Hermandad →",
+          "href": "/imagenes/jesus-nazareno-moron"
+        },
+        {
+          "text": "Imagen Titular María Santísima de los Dolores Imagen vinculada a la Hermandad →",
+          "href": "/imagenes/maria-santisima-dolores-jesus-moron"
+        },
+        {
+          "text": "Paso Procesiona con Paso de Nuestro Padre Jesús Nazareno Paso procesional de la Hermandad →",
+          "href": "/pasos/paso-jesus-nazareno-moron"
+        },
+        {
+          "text": "Paso Procesiona con Palio de María Santísima de los Dolores Paso procesional de la Hermandad →",
+          "href": "/pasos/palio-maria-santisima-dolores-jesus-moron"
+        },
+        {
+          "text": "Imagen Titular San Juan Evangelista Imagen vinculada a la Hermandad →",
+          "href": "/imagenes/san-juan-evangelista-jesus-moron"
+        },
+        {
+          "text": "Consejo · Hermandad de Jesús",
+          "href": "https://consejomoron.org/hermandad-de-jesus/"
+        },
+        {
+          "text": "Radio Morón · Semana Santa 2026",
+          "href": "https://www.radiomoron.es/semanasanta2026/"
+        },
+        {
+          "text": "Colabora",
+          "href": "/colabora"
+        },
+        {
+          "text": "Aviso legal",
+          "href": "/aviso-legal"
+        },
+        {
+          "text": "Privacidad",
+          "href": "/privacidad"
+        },
+        {
+          "text": "Cookies",
+          "href": "/cookies"
+        }
+      ],
+      "text": "Jesús (Morón de la Frontera): titulares y pasos · Hilo Cofrade Saltar al contenido Inicio Tira del hilo Agenda Igualás y ensayos Hoy Explorar Directorio → Hermandades → Procesiones de Gloria → Imágenes → Pasos → Bandas → Marchas → Autores → Crucetas musicales → ☰ Inicio → Tira del hilo → Agenda → Igualás y ensayos → Hoy → Enciclopedia Directorio → Hermandades → Procesiones de Gloria → Imágenes → Pasos → Bandas → Marchas → Autores → Crucetas musicales → Hermandades → Morón de la Frontera Hermandad de Penitencia Morón de la Frontera Jesús Ermita de Jesús / Fuensanta · Morón de la Frontera Real, Muy Antigua, Ilustre y Fervorosa Hermandad de Nuestro Padre Jesús Nazareno, María Santísima de los Dolores y San Juan Evangelista Semana Santa Madrugada · 2 pasos Explorar ficha ‹ Información Titulares Pasos Conexiones Salidas Histórico musical Fuentes › De un vistazo La Hermandad durante el año Última actualización 26 de septiembre de 2026 Fundación 1602 Titulares 3 → Pasos 2 → Actividad anual habitual Qué hace la Hermandad durante el año Estación de penitencia Madrugada del Viernes Santo Sede canónica Ermita Ermita de Jesús / Fuensanta C/ Fuensanta Cómo llegar Descubre el hilo Conexiones de esta Hermandad Continúa por sus Titulares, pasos, bandas y marchas documentadas. Cada relación abre una nueva ficha sin perder el contexto de la Hermandad de origen. Hermandad Jesús Hermandad de Penitencia · Morón de la Frontera Imagen Titular Nuestro Padre Jesús Nazareno Imagen procesional → Imagen Titular María Santísima de los Dolores Imagen procesional → Paso Paso procesional Paso de Nuestro Padre Jesús Nazareno mystery → Paso Paso procesional Palio de María Santísima de los Dolores palio → Imagen Titular San Juan Evangelista Imagen procesional → Titularidad Sagrados Titulares Imágenes e identidades devocionales que conforman la titularidad documentada de la Hermandad. NP Imagen procesional Nuestro Padre Jesús Nazareno Nuestro Padre Jesús Nazareno Descubrir titular → MS Imagen procesional María Santísima de los Dolores María Santísima de los Dolores Descubrir titular → SJ Imagen procesional San Juan Evangelista San Juan Evangelista Descubrir titular → 2 pasos Pasos procesionales Imágenes, diseño, talla, orfebrería, bordados, reformas y evolución histórica. 0 1 Fotografía del paso mystery Paso de Nuestro Padre Jesús Nazareno Paso de Nuestro Padre Jesús Nazareno Imágenes que procesionan Nuestro Padre Jesús Nazareno Simón de Cirene del paso de Jesús Nazareno Ver ficha del paso → 0 2 Fotografía del paso palio Palio de María Santísima de los Dolores Palio de María Santísima de los Dolores Imágenes que procesionan María Santísima de los Dolores San Juan Evangelista Ver ficha del paso → Tira del hilo La Hermandad como nodo de la enciclopedia Tira del hilo hacia sus imágenes, sus pasos y su música vinculada. Los vínculos institucionales y los acompañamientos actuales se etiquetan de forma distinta para no confundir pertenencia con contrato procesional. Hermandad Jesús Nazareno de Morón de la Frontera 3 imágenes · 2 pasos Imagen Titular Nuestro Padre Jesús Nazareno Imagen vinculada a la Hermandad → Imagen Titular María Santísima de los Dolores Imagen vinculada a la Hermandad → Paso Procesiona con Paso de Nuestro Padre Jesús Nazareno Paso procesional de la Hermandad → Paso Procesiona con Palio de María Santísima de los Dolores Paso procesional de la Hermandad → Imagen Titular San Juan Evangelista Imagen vinculada a la Hermandad → La Hermandad en la calle Salidas Las salidas ordinarias, los cultos externos y la memoria extraordinaria se presentan como ámbitos distintos. Salida ordinaria Madrugada del Viernes Santo · Estación de Penitencia La estación de penitencia anual de la Hermandad, con sus tiempos y recorrido documentados por edición. 01 01 E Ordinaria Estación de Penitencia Ordinaria Edición 2026 Nuestro Padre Jesús Nazareno · María Santísima de los Dolores · San Juan Evangelista Cuándo 3 de abril de 2026 · 05:30 h Memoria sonora Acompañamientos Musicales Históricos Una cronología por paso para conocer qué formaciones musicales han acompañado a la Hermandad. 2026 Agrupación Musical Nuestro Padre Jesús Nazareno de la Fuensanta de Morón Paso de Nuestro Padre Jesús Nazareno · Tras Nuestro Padre Jesús Nazareno Agrupación Musical 2026 Banda Municipal de Música de Morón de la Frontera Palio de María Santísima de los Dolores · Tras María Santísima de los Dolores Banda de Música 2026 Agrupación Musical Juvenil Nuestro Padre Jesús Nazareno de la Fuensanta de Morón Cruz de Guía de Jesús Agrupación Musical Documentación Fuentes 2 fuentes ＋ Consejo · Hermandad de Jesús Radio Morón · Semana Santa 2026 Colabora Aviso legal Privacidad Cookies Proyecto creado por Nacho Sánchez · @desdeelarenal",
+      "body_sha256": "37884ef48f7a6877d6cd6c20f301ebd1304185e7ed38eec6d2bfefd7331258da",
+      "breadcrumb_json_ld": true
+    },
+    {
+      "path": "/hermandades/santo-entierro-moron-de-la-frontera",
+      "status": 200,
+      "url": "https://hilocofrade.es/hermandades/santo-entierro-moron-de-la-frontera",
+      "headers": {
+        "Age": "0",
+        "Cache-Control": "public, max-age=0, must-revalidate",
+        "Content-Length": "79530",
+        "Content-Type": "text/html; charset=utf-8",
+        "Date": "Sat, 26 Sep 2026 20:22:06 GMT",
+        "Etag": "\"idpba2r9261p10\"",
+        "Server": "Vercel",
+        "Strict-Transport-Security": "max-age=63072000",
+        "Vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "X-Matched-Path": "/hermandades/[slug]",
+        "X-Nextjs-Prerender": "1",
+        "X-Nextjs-Stale-Time": "300",
+        "X-Powered-By": "Next.js",
+        "X-Vercel-Cache": "MISS",
+        "X-Vercel-Id": "cdg1::dub1::pmcrp-1790454124065-e660264c9a9a",
+        "Connection": "close"
+      },
+      "title": "Santo Entierro (Morón de la Frontera) · Hilo Cofrade",
+      "canonical": "https://hilocofrade.es/hermandades/santo-entierro-moron-de-la-frontera",
+      "robots": "index, follow",
+      "h1": [
+        "Santo Entierro"
+      ],
+      "headings": [
+        "La Hermandad durante el año",
+        "Parroquia de Nuestra Señora de la Victoria y del Espíritu Santo",
+        "Conexiones de esta Hermandad",
+        "Sagrados Titulares",
+        "Santísimo Cristo de la Victoria",
+        "Santísimo Cristo Yacente",
+        "Nuestra Señora de las Angustias",
+        "Pasos procesionales",
+        "Paso del Santo Entierro · Santísimo Cristo Yacente",
+        "Paso de la Piedad · Nuestra Señora de las Angustias",
+        "La Hermandad como nodo de la enciclopedia",
+        "Salidas",
+        "Viernes Santo · Estación de Penitencia",
+        "Edición 2026",
+        "Acompañamientos Musicales Históricos",
+        "Banda de Música de El Campillo",
+        "Capilla Musical Dulce Nombre",
+        "Fuentes"
+      ],
+      "links": [
+        {
+          "text": "Saltar al contenido",
+          "href": "#main-content"
+        },
+        {
+          "text": "",
+          "href": "/"
+        },
+        {
+          "text": "Inicio",
+          "href": "/#inicio"
+        },
+        {
+          "text": "Tira del hilo",
+          "href": "/#tiradelhilo"
+        },
+        {
+          "text": "Agenda",
+          "href": "/agenda-cofrade"
+        },
+        {
+          "text": "Igualás y ensayos",
+          "href": "/igualas-y-ensayos"
+        },
+        {
+          "text": "Hoy",
+          "href": "/#hoy"
+        },
+        {
+          "text": "Directorio →",
+          "href": "/directorio"
+        },
+        {
+          "text": "Hermandades →",
+          "href": "/hermandades"
+        },
+        {
+          "text": "Procesiones de Gloria →",
+          "href": "/procesiones-de-gloria"
+        },
+        {
+          "text": "Imágenes →",
+          "href": "/imagenes"
+        },
+        {
+          "text": "Pasos →",
+          "href": "/pasos"
+        },
+        {
+          "text": "Bandas →",
+          "href": "/bandas"
+        },
+        {
+          "text": "Marchas →",
+          "href": "/marchas"
+        },
+        {
+          "text": "Autores →",
+          "href": "/autores"
+        },
+        {
+          "text": "Crucetas musicales →",
+          "href": "/crucetas-musicales"
+        },
+        {
+          "text": "Inicio →",
+          "href": "/#inicio"
+        },
+        {
+          "text": "Tira del hilo →",
+          "href": "/#tiradelhilo"
+        },
+        {
+          "text": "Agenda →",
+          "href": "/agenda-cofrade"
+        },
+        {
+          "text": "Igualás y ensayos →",
+          "href": "/igualas-y-ensayos"
+        },
+        {
+          "text": "Hoy →",
+          "href": "/#hoy"
+        },
+        {
+          "text": "Directorio →",
+          "href": "/directorio"
+        },
+        {
+          "text": "Hermandades →",
+          "href": "/hermandades"
+        },
+        {
+          "text": "Procesiones de Gloria →",
+          "href": "/procesiones-de-gloria"
+        },
+        {
+          "text": "Imágenes →",
+          "href": "/imagenes"
+        },
+        {
+          "text": "Pasos →",
+          "href": "/pasos"
+        },
+        {
+          "text": "Bandas →",
+          "href": "/bandas"
+        },
+        {
+          "text": "Marchas →",
+          "href": "/marchas"
+        },
+        {
+          "text": "Autores →",
+          "href": "/autores"
+        },
+        {
+          "text": "Crucetas musicales →",
+          "href": "/crucetas-musicales"
+        },
+        {
+          "text": "Hermandades",
+          "href": "/hermandades"
+        },
+        {
+          "text": "Morón de la Frontera",
+          "href": "/agenda-cofrade/localidad/moron-de-la-frontera"
+        },
+        {
+          "text": "Información",
+          "href": "#resumen"
+        },
+        {
+          "text": "Titulares",
+          "href": "#titulares"
+        },
+        {
+          "text": "Pasos",
+          "href": "#pasos"
+        },
+        {
+          "text": "Conexiones",
+          "href": "#tira-del-hilo"
+        },
+        {
+          "text": "Salidas",
+          "href": "#salidas"
+        },
+        {
+          "text": "Histórico musical",
+          "href": "#acompanamientos"
+        },
+        {
+          "text": "Fuentes",
+          "href": "#fuentes"
+        },
+        {
+          "text": "3 →",
+          "href": "#titulares"
+        },
+        {
+          "text": "2 →",
+          "href": "#pasos"
+        },
+        {
+          "text": "Cómo llegar",
+          "href": "https://www.google.com/maps/search/?api=1&query=Parroquia%20de%20Nuestra%20Se%C3%B1ora%20de%20la%20Victoria%20y%20del%20Esp%C3%ADritu%20Santo%2C%20Plaza%20Santa%20%C3%81ngela%20de%20la%20Cruz%2C%201%2C%20Mor%C3%B3n%20de%20la%20Frontera%2C%20Sevilla"
+        },
+        {
+          "text": "Imagen Titular Santísimo Cristo de la Victoria Imagen procesional →",
+          "href": "/imagenes/cristo-victoria-santo-entierro-moron"
+        },
+        {
+          "text": "Imagen Titular Santísimo Cristo Yacente Imagen procesional →",
+          "href": "/imagenes/cristo-yacente-santo-entierro-moron"
+        },
+        {
+          "text": "Paso Paso procesional Paso del Santo Entierro · Santísimo Cristo Yacente mystery →",
+          "href": "/pasos/santo-entierro-cristo-yacente-moron"
+        },
+        {
+          "text": "Paso Paso procesional Paso de la Piedad · Nuestra Señora de las Angustias mystery →",
+          "href": "/pasos/piedad-nuestra-senora-angustias-moron"
+        },
+        {
+          "text": "Imagen Titular Nuestra Señora de las Angustias Imagen procesional →",
+          "href": "/imagenes/nuestra-senora-angustias-santo-entierro-moron"
+        },
+        {
+          "text": "SC Imagen procesional Santísimo Cristo de la Victoria Santísimo Cristo de la Victoria Descubrir titular →",
+          "href": "/imagenes/cristo-victoria-santo-entierro-moron"
+        },
+        {
+          "text": "SC Imagen procesional Santísimo Cristo Yacente Santísimo Cristo Yacente Descubrir titular →",
+          "href": "/imagenes/cristo-yacente-santo-entierro-moron"
+        },
+        {
+          "text": "NS Imagen procesional Nuestra Señora de las Angustias Nuestra Señora de las Angustias Descubrir titular →",
+          "href": "/imagenes/nuestra-senora-angustias-santo-entierro-moron"
+        },
+        {
+          "text": "Santísimo Cristo Yacente",
+          "href": "/imagenes/cristo-yacente-santo-entierro-moron"
+        },
+        {
+          "text": "Ver ficha del paso →",
+          "href": "/pasos/santo-entierro-cristo-yacente-moron"
+        },
+        {
+          "text": "Nuestra Señora de las Angustias",
+          "href": "/imagenes/nuestra-senora-angustias-santo-entierro-moron"
+        },
+        {
+          "text": "Santísimo Cristo de la Victoria",
+          "href": "/imagenes/cristo-victoria-santo-entierro-moron"
+        },
+        {
+          "text": "Ver ficha del paso →",
+          "href": "/pasos/piedad-nuestra-senora-angustias-moron"
+        },
+        {
+          "text": "Imagen Titular Santísimo Cristo de la Victoria Imagen vinculada a la Hermandad →",
+          "href": "/imagenes/cristo-victoria-santo-entierro-moron"
+        },
+        {
+          "text": "Imagen Titular Santísimo Cristo Yacente Imagen vinculada a la Hermandad →",
+          "href": "/imagenes/cristo-yacente-santo-entierro-moron"
+        },
+        {
+          "text": "Paso Procesiona con Paso del Santo Entierro · Santísimo Cristo Yacente Paso procesional de la Hermandad →",
+          "href": "/pasos/santo-entierro-cristo-yacente-moron"
+        },
+        {
+          "text": "Paso Procesiona con Paso de la Piedad · Nuestra Señora de las Angustias Paso procesional de la Hermandad →",
+          "href": "/pasos/piedad-nuestra-senora-angustias-moron"
+        },
+        {
+          "text": "Imagen Titular Nuestra Señora de las Angustias Imagen vinculada a la Hermandad →",
+          "href": "/imagenes/nuestra-senora-angustias-santo-entierro-moron"
+        },
+        {
+          "text": "Consejo · Hermandad del Santo Entierro",
+          "href": "https://consejomoron.org/hermandad-del-santo-entierro/"
+        },
+        {
+          "text": "Radio Morón · Semana Santa 2026",
+          "href": "https://www.radiomoron.es/semanasanta2026/"
+        },
+        {
+          "text": "Santo Entierro de Morón · agradecimientos Semana Santa 2026",
+          "href": "https://hermandaddelsantoentierromoron.blogspot.com/2026/04/agradecimientos-semana-santa-2026.html"
+        },
+        {
+          "text": "Colabora",
+          "href": "/colabora"
+        },
+        {
+          "text": "Aviso legal",
+          "href": "/aviso-legal"
+        },
+        {
+          "text": "Privacidad",
+          "href": "/privacidad"
+        },
+        {
+          "text": "Cookies",
+          "href": "/cookies"
+        }
+      ],
+      "text": "Santo Entierro (Morón de la Frontera) · Hilo Cofrade Saltar al contenido Inicio Tira del hilo Agenda Igualás y ensayos Hoy Explorar Directorio → Hermandades → Procesiones de Gloria → Imágenes → Pasos → Bandas → Marchas → Autores → Crucetas musicales → ☰ Inicio → Tira del hilo → Agenda → Igualás y ensayos → Hoy → Enciclopedia Directorio → Hermandades → Procesiones de Gloria → Imágenes → Pasos → Bandas → Marchas → Autores → Crucetas musicales → Hermandades → Morón de la Frontera Hermandad de Penitencia Morón de la Frontera Santo Entierro Parroquia de Nuestra Señora de la Victoria y del Espíritu Santo · Morón de la Frontera Hermandad del Santísimo Cristo Yacente, Nuestra Señora de las Angustias y Santísimo Cristo de la Victoria Semana Santa Viernes Santo · 2 pasos Explorar ficha ‹ Información Titulares Pasos Conexiones Salidas Histórico musical Fuentes › De un vistazo La Hermandad durante el año Última actualización 26 de septiembre de 2026 Fundación referencia 1541; recuperada 1984 Titulares 3 → Pasos 2 → Actividad anual habitual Qué hace la Hermandad durante el año Estación de penitencia Viernes Santo · tarde Sede canónica Parroquia Parroquia de Nuestra Señora de la Victoria y del Espíritu Santo Plaza Santa Ángela de la Cruz, 1 Cómo llegar Descubre el hilo Conexiones de esta Hermandad Continúa por sus Titulares, pasos, bandas y marchas documentadas. Cada relación abre una nueva ficha sin perder el contexto de la Hermandad de origen. Hermandad Santo Entierro Hermandad de Penitencia · Morón de la Frontera Imagen Titular Santísimo Cristo de la Victoria Imagen procesional → Imagen Titular Santísimo Cristo Yacente Imagen procesional → Paso Paso procesional Paso del Santo Entierro · Santísimo Cristo Yacente mystery → Paso Paso procesional Paso de la Piedad · Nuestra Señora de las Angustias mystery → Imagen Titular Nuestra Señora de las Angustias Imagen procesional → Titularidad Sagrados Titulares Imágenes e identidades devocionales que conforman la titularidad documentada de la Hermandad. SC Imagen procesional Santísimo Cristo de la Victoria Santísimo Cristo de la Victoria Descubrir titular → SC Imagen procesional Santísimo Cristo Yacente Santísimo Cristo Yacente Descubrir titular → NS Imagen procesional Nuestra Señora de las Angustias Nuestra Señora de las Angustias Descubrir titular → 2 pasos Pasos procesionales Imágenes, diseño, talla, orfebrería, bordados, reformas y evolución histórica. 0 1 Fotografía del paso mystery Paso del Santo Entierro · Santísimo Cristo Yacente Paso del Santo Entierro · Santísimo Cristo Yacente Imágenes que procesionan Santísimo Cristo Yacente Ver ficha del paso → 0 2 Fotografía del paso mystery Paso de la Piedad · Nuestra Señora de las Angustias Paso de la Piedad · Nuestra Señora de las Angustias Imágenes que procesionan Nuestra Señora de las Angustias Santísimo Cristo de la Victoria Ver ficha del paso → Tira del hilo La Hermandad como nodo de la enciclopedia Tira del hilo hacia sus imágenes, sus pasos y su música vinculada. Los vínculos institucionales y los acompañamientos actuales se etiquetan de forma distinta para no confundir pertenencia con contrato procesional. Hermandad Santo Entierro de Morón de la Frontera 3 imágenes · 2 pasos Imagen Titular Santísimo Cristo de la Victoria Imagen vinculada a la Hermandad → Imagen Titular Santísimo Cristo Yacente Imagen vinculada a la Hermandad → Paso Procesiona con Paso del Santo Entierro · Santísimo Cristo Yacente Paso procesional de la Hermandad → Paso Procesiona con Paso de la Piedad · Nuestra Señora de las Angustias Paso procesional de la Hermandad → Imagen Titular Nuestra Señora de las Angustias Imagen vinculada a la Hermandad → La Hermandad en la calle Salidas Las salidas ordinarias, los cultos externos y la memoria extraordinaria se presentan como ámbitos distintos. Salida ordinaria Viernes Santo · Estación de Penitencia La estación de penitencia anual de la Hermandad, con sus tiempos y recorrido documentados por edición. 01 01 E Ordinaria Estación de Penitencia Ordinaria Edición 2026 Nuestra Señora de las Angustias · Santísimo Cristo de la Victoria · Santísimo Cristo Yacente Cuándo 3 de abril de 2026 · 19:00 h Memoria sonora Acompañamientos Musicales Históricos Una cronología por paso para conocer qué formaciones musicales han acompañado a la Hermandad. 2026 Banda de Música de El Campillo Paso de la Piedad · Nuestra Señora de las Angustias · Tras la Piedad · Nuestra Señora de las Angustias Banda de Música 2026 Capilla Musical Dulce Nombre Paso del Santo Entierro · Santísimo Cristo Yacente · Tras el Santísimo Cristo Yacente Capilla Musical Documentación Fuentes 3 fuentes ＋ Consejo · Hermandad del Santo Entierro Radio Morón · Semana Santa 2026 Santo Entierro de Morón · agradecimientos Semana Santa 2026 Colabora Aviso legal Privacidad Cookies Proyecto creado por Nacho Sánchez · @desdeelarenal",
+      "body_sha256": "6bc91cb2ac46bde5573f08c6f1fbb2de87a7417c345817ac22be105127ca7832",
+      "breadcrumb_json_ld": true
+    },
+    {
+      "path": "/hermandades/soledad-moron-de-la-frontera",
+      "status": 200,
+      "url": "https://hilocofrade.es/hermandades/soledad-moron-de-la-frontera",
+      "headers": {
+        "Age": "0",
+        "Cache-Control": "public, max-age=0, must-revalidate",
+        "Content-Length": "68301",
+        "Content-Type": "text/html; charset=utf-8",
+        "Date": "Sat, 26 Sep 2026 20:22:14 GMT",
+        "Etag": "\"16vdrnlr9hm1gfp\"",
+        "Server": "Vercel",
+        "Strict-Transport-Security": "max-age=63072000",
+        "Vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "X-Matched-Path": "/hermandades/[slug]",
+        "X-Nextjs-Prerender": "1",
+        "X-Nextjs-Stale-Time": "300",
+        "X-Powered-By": "Next.js",
+        "X-Vercel-Cache": "MISS",
+        "X-Vercel-Id": "cdg1::dub1::dpkjp-1790454132799-dba08bebed9a",
+        "Connection": "close"
+      },
+      "title": "La Soledad (Morón de la Frontera): titulares y pasos · Hilo Cofrade",
+      "canonical": "https://hilocofrade.es/hermandades/soledad-moron-de-la-frontera",
+      "robots": "index, follow",
+      "h1": [
+        "La Soledad"
+      ],
+      "headings": [
+        "La Hermandad durante el año",
+        "Parroquia de San Miguel Arcángel",
+        "Conexiones de esta Hermandad",
+        "Sagrados Titulares",
+        "Nuestra Señora de los Dolores en su Soledad",
+        "Pasos procesionales",
+        "Paso de Nuestra Señora de los Dolores en su Soledad",
+        "La Hermandad como nodo de la enciclopedia",
+        "Salidas",
+        "Sábado Santo · Estación de Penitencia",
+        "Edición 2026",
+        "Acompañamientos Musicales Históricos",
+        "Banda Municipal de Música de Morón de la Frontera",
+        "Fuentes"
+      ],
+      "links": [
+        {
+          "text": "Saltar al contenido",
+          "href": "#main-content"
+        },
+        {
+          "text": "",
+          "href": "/"
+        },
+        {
+          "text": "Inicio",
+          "href": "/#inicio"
+        },
+        {
+          "text": "Tira del hilo",
+          "href": "/#tiradelhilo"
+        },
+        {
+          "text": "Agenda",
+          "href": "/agenda-cofrade"
+        },
+        {
+          "text": "Igualás y ensayos",
+          "href": "/igualas-y-ensayos"
+        },
+        {
+          "text": "Hoy",
+          "href": "/#hoy"
+        },
+        {
+          "text": "Directorio →",
+          "href": "/directorio"
+        },
+        {
+          "text": "Hermandades →",
+          "href": "/hermandades"
+        },
+        {
+          "text": "Procesiones de Gloria →",
+          "href": "/procesiones-de-gloria"
+        },
+        {
+          "text": "Imágenes →",
+          "href": "/imagenes"
+        },
+        {
+          "text": "Pasos →",
+          "href": "/pasos"
+        },
+        {
+          "text": "Bandas →",
+          "href": "/bandas"
+        },
+        {
+          "text": "Marchas →",
+          "href": "/marchas"
+        },
+        {
+          "text": "Autores →",
+          "href": "/autores"
+        },
+        {
+          "text": "Crucetas musicales →",
+          "href": "/crucetas-musicales"
+        },
+        {
+          "text": "Inicio →",
+          "href": "/#inicio"
+        },
+        {
+          "text": "Tira del hilo →",
+          "href": "/#tiradelhilo"
+        },
+        {
+          "text": "Agenda →",
+          "href": "/agenda-cofrade"
+        },
+        {
+          "text": "Igualás y ensayos →",
+          "href": "/igualas-y-ensayos"
+        },
+        {
+          "text": "Hoy →",
+          "href": "/#hoy"
+        },
+        {
+          "text": "Directorio →",
+          "href": "/directorio"
+        },
+        {
+          "text": "Hermandades →",
+          "href": "/hermandades"
+        },
+        {
+          "text": "Procesiones de Gloria →",
+          "href": "/procesiones-de-gloria"
+        },
+        {
+          "text": "Imágenes →",
+          "href": "/imagenes"
+        },
+        {
+          "text": "Pasos →",
+          "href": "/pasos"
+        },
+        {
+          "text": "Bandas →",
+          "href": "/bandas"
+        },
+        {
+          "text": "Marchas →",
+          "href": "/marchas"
+        },
+        {
+          "text": "Autores →",
+          "href": "/autores"
+        },
+        {
+          "text": "Crucetas musicales →",
+          "href": "/crucetas-musicales"
+        },
+        {
+          "text": "Hermandades",
+          "href": "/hermandades"
+        },
+        {
+          "text": "Morón de la Frontera",
+          "href": "/agenda-cofrade/localidad/moron-de-la-frontera"
+        },
+        {
+          "text": "Información",
+          "href": "#resumen"
+        },
+        {
+          "text": "Titulares",
+          "href": "#titulares"
+        },
+        {
+          "text": "Pasos",
+          "href": "#pasos"
+        },
+        {
+          "text": "Conexiones",
+          "href": "#tira-del-hilo"
+        },
+        {
+          "text": "Salidas",
+          "href": "#salidas"
+        },
+        {
+          "text": "Histórico musical",
+          "href": "#acompanamientos"
+        },
+        {
+          "text": "Fuentes",
+          "href": "#fuentes"
+        },
+        {
+          "text": "1 →",
+          "href": "#titulares"
+        },
+        {
+          "text": "1 →",
+          "href": "#pasos"
+        },
+        {
+          "text": "Cómo llegar",
+          "href": "https://www.google.com/maps/search/?api=1&query=Parroquia%20de%20San%20Miguel%20Arc%C3%A1ngel%2C%20Plaza%20del%20Cardenal%20Sp%C3%ADnola%2C%20Mor%C3%B3n%20de%20la%20Frontera%2C%20Sevilla"
+        },
+        {
+          "text": "El Cautivo →",
+          "href": "/hermandades/cautivo-moron-de-la-frontera"
+        },
+        {
+          "text": "Imagen Titular Nuestra Señora de los Dolores en su Soledad Imagen procesional →",
+          "href": "/imagenes/nuestra-senora-dolores-soledad-moron"
+        },
+        {
+          "text": "Paso Paso procesional Paso de Nuestra Señora de los Dolores en su Soledad mystery →",
+          "href": "/pasos/paso-nuestra-senora-dolores-soledad-moron"
+        },
+        {
+          "text": "NS Imagen procesional Nuestra Señora de los Dolores en su Soledad Nuestra Señora de los Dolores en su Soledad Descubrir titular →",
+          "href": "/imagenes/nuestra-senora-dolores-soledad-moron"
+        },
+        {
+          "text": "Nuestra Señora de los Dolores en su Soledad",
+          "href": "/imagenes/nuestra-senora-dolores-soledad-moron"
+        },
+        {
+          "text": "Ver ficha del paso →",
+          "href": "/pasos/paso-nuestra-senora-dolores-soledad-moron"
+        },
+        {
+          "text": "Imagen Titular Nuestra Señora de los Dolores en su Soledad Imagen vinculada a la Hermandad →",
+          "href": "/imagenes/nuestra-senora-dolores-soledad-moron"
+        },
+        {
+          "text": "Paso Procesiona con Paso de Nuestra Señora de los Dolores en su Soledad Paso procesional de la Hermandad →",
+          "href": "/pasos/paso-nuestra-senora-dolores-soledad-moron"
+        },
+        {
+          "text": "Consejo · Hermandad de la Soledad",
+          "href": "https://consejomoron.org/hermandad-de-la-soledad/"
+        },
+        {
+          "text": "Radio Morón · Semana Santa 2026",
+          "href": "https://www.radiomoron.es/semanasanta2026/"
+        },
+        {
+          "text": "Colabora",
+          "href": "/colabora"
+        },
+        {
+          "text": "Aviso legal",
+          "href": "/aviso-legal"
+        },
+        {
+          "text": "Privacidad",
+          "href": "/privacidad"
+        },
+        {
+          "text": "Cookies",
+          "href": "/cookies"
+        }
+      ],
+      "text": "La Soledad (Morón de la Frontera): titulares y pasos · Hilo Cofrade Saltar al contenido Inicio Tira del hilo Agenda Igualás y ensayos Hoy Explorar Directorio → Hermandades → Procesiones de Gloria → Imágenes → Pasos → Bandas → Marchas → Autores → Crucetas musicales → ☰ Inicio → Tira del hilo → Agenda → Igualás y ensayos → Hoy → Enciclopedia Directorio → Hermandades → Procesiones de Gloria → Imágenes → Pasos → Bandas → Marchas → Autores → Crucetas musicales → Hermandades → Morón de la Frontera Hermandad de Penitencia Morón de la Frontera La Soledad Parroquia de San Miguel Arcángel · Morón de la Frontera Ilustre y Fervorosa Hermandad de Esclavitud de los Sagrados Corazones de Jesús y de María y Cofradía de Nazarenos de Nuestra Señora de los Dolores en su Soledad Semana Santa Sábado Santo · 1 paso Explorar ficha ‹ Información Titulares Pasos Conexiones Salidas Histórico musical Fuentes › De un vistazo La Hermandad durante el año Última actualización 26 de septiembre de 2026 Fundación siglo XIX; recuperada 1997 Titulares 1 → Pasos 1 → Actividad anual habitual Qué hace la Hermandad durante el año Estación de penitencia Sábado Santo Sede canónica Parroquia Parroquia de San Miguel Arcángel Plaza del Cardenal Spínola Cómo llegar También en esta sede El Cautivo → Descubre el hilo Conexiones de esta Hermandad Continúa por sus Titulares, pasos, bandas y marchas documentadas. Cada relación abre una nueva ficha sin perder el contexto de la Hermandad de origen. Hermandad La Soledad Hermandad de Penitencia · Morón de la Frontera Imagen Titular Nuestra Señora de los Dolores en su Soledad Imagen procesional → Paso Paso procesional Paso de Nuestra Señora de los Dolores en su Soledad mystery → Titularidad Sagrados Titulares Imágenes e identidades devocionales que conforman la titularidad documentada de la Hermandad. NS Imagen procesional Nuestra Señora de los Dolores en su Soledad Nuestra Señora de los Dolores en su Soledad Descubrir titular → 1 pasos Pasos procesionales Imágenes, diseño, talla, orfebrería, bordados, reformas y evolución histórica. 0 1 Fotografía del paso mystery Paso de Nuestra Señora de los Dolores en su Soledad Paso de Nuestra Señora de los Dolores en su Soledad Imágenes que procesionan Nuestra Señora de los Dolores en su Soledad Ver ficha del paso → Tira del hilo La Hermandad como nodo de la enciclopedia Tira del hilo hacia sus imágenes, sus pasos y su música vinculada. Los vínculos institucionales y los acompañamientos actuales se etiquetan de forma distinta para no confundir pertenencia con contrato procesional. Hermandad La Soledad de Morón de la Frontera 1 imagen · 1 paso Imagen Titular Nuestra Señora de los Dolores en su Soledad Imagen vinculada a la Hermandad → Paso Procesiona con Paso de Nuestra Señora de los Dolores en su Soledad Paso procesional de la Hermandad → La Hermandad en la calle Salidas Las salidas ordinarias, los cultos externos y la memoria extraordinaria se presentan como ámbitos distintos. Salida ordinaria Sábado Santo · Estación de Penitencia La estación de penitencia anual de la Hermandad, con sus tiempos y recorrido documentados por edición. 01 01 E Ordinaria Estación de Penitencia Ordinaria Edición 2026 Nuestra Señora de los Dolores en su Soledad Cuándo 4 de abril de 2026 · 18:30 h Memoria sonora Acompañamientos Musicales Históricos Una cronología por paso para conocer qué formaciones musicales han acompañado a la Hermandad. 2026 Banda Municipal de Música de Morón de la Frontera Paso de Nuestra Señora de los Dolores en su Soledad · Tras Nuestra Señora de los Dolores en su Soledad Banda de Música Documentación Fuentes 2 fuentes ＋ Consejo · Hermandad de la Soledad Radio Morón · Semana Santa 2026 Colabora Aviso legal Privacidad Cookies Proyecto creado por Nacho Sánchez · @desdeelarenal",
+      "body_sha256": "ef05ece18cba7e4f5c91d3bf0544f6924effbbeeb27d583c483617a14aed321f",
+      "breadcrumb_json_ld": true
+    },
+    {
+      "path": "/agenda-cofrade/localidad/moron-de-la-frontera",
+      "status": 200,
+      "url": "https://hilocofrade.es/agenda-cofrade/localidad/moron-de-la-frontera",
+      "headers": {
+        "Age": "0",
+        "Cache-Control": "private, no-cache, no-store, max-age=0, must-revalidate",
+        "Content-Type": "text/html; charset=utf-8",
+        "Date": "Sat, 26 Sep 2026 20:22:13 GMT",
+        "Link": "</>; rel=preconnect; crossorigin=\"\", </brand/logo-header.svg?dpl=dpl_5K7jcfLRJ7SgECC8WSLd1Mwpgq7n>; rel=preload; as=\"image\", </_next/static/immutable/chunks/0p304e8xdmo6v.css>; rel=preload; as=\"style\", </_next/static/immutable/chunks/1nnlgs-ek4hkg.css>; rel=preload; as=\"style\", </_next/static/immutable/chunks/2zejr3la4mk-m.css>; rel=preload; as=\"style\", </_next/static/immutable/chunks/1whv8-sg4pfoh.css>; rel=preload; as=\"style\", </_next/static/immutable/chunks/02--o55-4xpp0.css>; rel=preload; as=\"style\"",
+        "Server": "Vercel",
+        "Strict-Transport-Security": "max-age=63072000",
+        "Vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "X-Matched-Path": "/agenda-cofrade/localidad/[localidad]",
+        "X-Powered-By": "Next.js",
+        "X-Vercel-Cache": "MISS",
+        "X-Vercel-Id": "cdg1::dub1::zscxk-1790454133047-9c8d3a9b73d5",
+        "Connection": "close",
+        "Transfer-Encoding": "chunked"
+      },
+      "title": "Cofradías de Morón de la Frontera: hermandades y agenda cofrade · Hilo Cofrade",
+      "canonical": "https://hilocofrade.es/agenda-cofrade/localidad/moron-de-la-frontera",
+      "robots": "index, follow",
+      "h1": [
+        "Guía cofrade de Morón de la Frontera"
+      ],
+      "headings": [
+        "Primero, lo más cercano en el tiempo",
+        "La agenda de Morón de la Frontera , por ámbitos",
+        "Sin próximas citas publicadas por ahora",
+        "Hermandades y Bandas de Morón de la Frontera",
+        "Imágenes y Pasos de Morón de la Frontera"
+      ],
+      "links": [
+        {
+          "text": "Saltar al contenido",
+          "href": "#main-content"
+        },
+        {
+          "text": "",
+          "href": "/"
+        },
+        {
+          "text": "Inicio",
+          "href": "/#inicio"
+        },
+        {
+          "text": "Tira del hilo",
+          "href": "/#tiradelhilo"
+        },
+        {
+          "text": "Agenda",
+          "href": "/agenda-cofrade"
+        },
+        {
+          "text": "Igualás y ensayos",
+          "href": "/igualas-y-ensayos"
+        },
+        {
+          "text": "Hoy",
+          "href": "/#hoy"
+        },
+        {
+          "text": "Directorio →",
+          "href": "/directorio"
+        },
+        {
+          "text": "Hermandades →",
+          "href": "/hermandades"
+        },
+        {
+          "text": "Procesiones de Gloria →",
+          "href": "/procesiones-de-gloria"
+        },
+        {
+          "text": "Imágenes →",
+          "href": "/imagenes"
+        },
+        {
+          "text": "Pasos →",
+          "href": "/pasos"
+        },
+        {
+          "text": "Bandas →",
+          "href": "/bandas"
+        },
+        {
+          "text": "Marchas →",
+          "href": "/marchas"
+        },
+        {
+          "text": "Autores →",
+          "href": "/autores"
+        },
+        {
+          "text": "Crucetas musicales →",
+          "href": "/crucetas-musicales"
+        },
+        {
+          "text": "Inicio →",
+          "href": "/#inicio"
+        },
+        {
+          "text": "Tira del hilo →",
+          "href": "/#tiradelhilo"
+        },
+        {
+          "text": "Agenda →",
+          "href": "/agenda-cofrade"
+        },
+        {
+          "text": "Igualás y ensayos →",
+          "href": "/igualas-y-ensayos"
+        },
+        {
+          "text": "Hoy →",
+          "href": "/#hoy"
+        },
+        {
+          "text": "Directorio →",
+          "href": "/directorio"
+        },
+        {
+          "text": "Hermandades →",
+          "href": "/hermandades"
+        },
+        {
+          "text": "Procesiones de Gloria →",
+          "href": "/procesiones-de-gloria"
+        },
+        {
+          "text": "Imágenes →",
+          "href": "/imagenes"
+        },
+        {
+          "text": "Pasos →",
+          "href": "/pasos"
+        },
+        {
+          "text": "Bandas →",
+          "href": "/bandas"
+        },
+        {
+          "text": "Marchas →",
+          "href": "/marchas"
+        },
+        {
+          "text": "Autores →",
+          "href": "/autores"
+        },
+        {
+          "text": "Crucetas musicales →",
+          "href": "/crucetas-musicales"
+        },
+        {
+          "text": "Agenda Cofrade",
+          "href": "/agenda-cofrade"
+        },
+        {
+          "text": "Ahora Qué ver hoy →",
+          "href": "/agenda-cofrade?municipio=moron-de-la-frontera&periodo=today#agenda"
+        },
+        {
+          "text": "Planifica Este fin de semana →",
+          "href": "/agenda-cofrade?municipio=moron-de-la-frontera&periodo=weekend#agenda"
+        },
+        {
+          "text": "Calendario Próximos actos →",
+          "href": "/agenda-cofrade?municipio=moron-de-la-frontera#agenda"
+        },
+        {
+          "text": "Agenda Cofrade",
+          "href": "/agenda-cofrade#agenda"
+        },
+        {
+          "text": "Extraordinarias",
+          "href": "/extraordinarias"
+        },
+        {
+          "text": "Glorias",
+          "href": "/procesiones-de-gloria"
+        },
+        {
+          "text": "Igualás y ensayos",
+          "href": "/igualas-y-ensayos"
+        },
+        {
+          "text": "Ahora 0 Sin actos con horario en curso. Ver citas →",
+          "href": "/agenda-cofrade?municipio=moron-de-la-frontera&periodo=today#agenda"
+        },
+        {
+          "text": "Hoy 0 Todas las citas documentadas para hoy. Ver citas →",
+          "href": "/agenda-cofrade?municipio=moron-de-la-frontera&periodo=today#agenda"
+        },
+        {
+          "text": "Mañana 0 Lo previsto para el día siguiente. Ver citas →",
+          "href": "/agenda-cofrade?municipio=moron-de-la-frontera&periodo=tomorrow#agenda"
+        },
+        {
+          "text": "Fin de semana 0 Citas del sábado y domingo más próximos. Ver citas →",
+          "href": "/agenda-cofrade?municipio=moron-de-la-frontera&periodo=weekend#agenda"
+        },
+        {
+          "text": "Agenda Cofrade 0 Cultos, rosarios, procesiones y conciertos. Explorar →",
+          "href": "/agenda-cofrade?municipio=moron-de-la-frontera#agenda"
+        },
+        {
+          "text": "Glorias 0 Salidas de Gloria documentadas. Explorar →",
+          "href": "/procesiones-de-gloria"
+        },
+        {
+          "text": "Extraordinarias 0 Traslados y salidas extraordinarias. Explorar →",
+          "href": "/extraordinarias"
+        },
+        {
+          "text": "Igualás y ensayos 0 Convocatorias de cuadrilla publicadas. Explorar →",
+          "href": "/igualas-y-ensayos"
+        },
+        {
+          "text": "Consultar Agenda Cofrade →",
+          "href": "/agenda-cofrade?municipio=moron-de-la-frontera#agenda"
+        },
+        {
+          "text": "Ver directorio →",
+          "href": "/hermandades/localidad/moron-de-la-frontera"
+        },
+        {
+          "text": "Hermandad La Merced / Calvario Ver ficha →",
+          "href": "/hermandades/calvario-moron-de-la-frontera"
+        },
+        {
+          "text": "Hermandad El Cautivo Ver ficha →",
+          "href": "/hermandades/cautivo-moron-de-la-frontera"
+        },
+        {
+          "text": "Hermandad El Soberano Ver ficha →",
+          "href": "/hermandades/soberano-moron-de-la-frontera"
+        },
+        {
+          "text": "Hermandad Jesús Ver ficha →",
+          "href": "/hermandades/jesus-nazareno-moron-de-la-frontera"
+        },
+        {
+          "text": "Hermandad La Borriquita Ver ficha →",
+          "href": "/hermandades/borriquita-moron-de-la-frontera"
+        },
+        {
+          "text": "Hermandad Los Salesianos / Buena Muerte Ver ficha →",
+          "href": "/hermandades/buena-muerte-moron-de-la-frontera"
+        },
+        {
+          "text": "Ver directorio →",
+          "href": "/bandas/localidad/moron-de-la-frontera"
+        },
+        {
+          "text": "Banda Agrupación Musical Juvenil Nuestro Padre Jesús Nazareno de la Fuensanta de Morón Ver ficha →",
+          "href": "/bandas/agrupacion-musical-juvenil-jesus-nazareno-fuensanta-moron"
+        },
+        {
+          "text": "Banda Agrupación Musical Nuestro Padre Jesús Nazareno de la Fuensanta de Morón Ver ficha →",
+          "href": "/bandas/agrupacion-musical-jesus-nazareno-fuensanta-moron"
+        },
+        {
+          "text": "Banda Banda Municipal de Música de Morón de la Frontera Ver ficha →",
+          "href": "/bandas/banda-municipal-musica-moron-de-la-frontera"
+        },
+        {
+          "text": "Ver todas →",
+          "href": "/imagenes/localidad/moron-de-la-frontera"
+        },
+        {
+          "text": "IMG Imagen procesional María Santísima de la Amargura La Buena Muerte de Morón de la Frontera",
+          "href": "/imagenes/maria-santisima-amargura-moron"
+        },
+        {
+          "text": "IMG Imagen procesional María Santísima de la Paz El Cautivo de Morón de la Frontera",
+          "href": "/imagenes/maria-santisima-paz-moron"
+        },
+        {
+          "text": "IMG Imagen procesional María Santísima de Loreto Loreto de Morón de la Frontera",
+          "href": "/imagenes/maria-santisima-loreto-moron"
+        },
+        {
+          "text": "IMG Imagen procesional María Santísima de los Ángeles y de la Cruz El Soberano de Morón de la Frontera",
+          "href": "/imagenes/maria-santisima-angeles-cruz-moron"
+        },
+        {
+          "text": "Ver todos →",
+          "href": "/pasos/localidad/moron-de-la-frontera"
+        },
+        {
+          "text": "PAS mystery Misterio de la Agonía en el Huerto Loreto de Morón de la Frontera",
+          "href": "/pasos/misterio-agonia-huerto-moron"
+        },
+        {
+          "text": "PAS mystery Misterio de Nuestro Padre Jesús de la Salud y el Perdón ante Pilatos El Soberano de Morón de la Frontera",
+          "href": "/pasos/misterio-soberano-poder-pilatos-moron"
+        },
+        {
+          "text": "PAS mystery Misterio del Santísimo Cristo del Calvario El Calvario de Morón de la Frontera",
+          "href": "/pasos/misterio-cristo-calvario-moron"
+        },
+        {
+          "text": "PAS palio Palio de María Santísima de la Amargura La Buena Muerte de Morón de la Frontera",
+          "href": "/pasos/palio-maria-santisima-amargura-moron"
+        },
+        {
+          "text": "Agenda completa",
+          "href": "/agenda-cofrade?municipio=moron-de-la-frontera#agenda"
+        },
+        {
+          "text": "Hermandades",
+          "href": "/hermandades/localidad/moron-de-la-frontera"
+        },
+        {
+          "text": "Bandas",
+          "href": "/bandas/localidad/moron-de-la-frontera"
+        },
+        {
+          "text": "Imágenes",
+          "href": "/imagenes/localidad/moron-de-la-frontera"
+        },
+        {
+          "text": "Pasos",
+          "href": "/pasos/localidad/moron-de-la-frontera"
+        },
+        {
+          "text": "Colabora",
+          "href": "/colabora"
+        },
+        {
+          "text": "Aviso legal",
+          "href": "/aviso-legal"
+        },
+        {
+          "text": "Privacidad",
+          "href": "/privacidad"
+        },
+        {
+          "text": "Cookies",
+          "href": "/cookies"
+        }
+      ],
+      "text": "Cofradías de Morón de la Frontera: hermandades y agenda cofrade · Hilo Cofrade Saltar al contenido Inicio Tira del hilo Agenda Igualás y ensayos Hoy Explorar Directorio → Hermandades → Procesiones de Gloria → Imágenes → Pasos → Bandas → Marchas → Autores → Crucetas musicales → ☰ Inicio → Tira del hilo → Agenda → Igualás y ensayos → Hoy → Enciclopedia Directorio → Hermandades → Procesiones de Gloria → Imágenes → Pasos → Bandas → Marchas → Autores → Crucetas musicales → Agenda Cofrade → Morón de la Frontera Cofradías, hermandades y agenda Guía cofrade de Morón de la Frontera Guía cofrade de Morón de la Frontera: agenda, Hermandades, Bandas, Imágenes y Pasos conectados en una única página local. Ahora Qué ver hoy → Planifica Este fin de semana → Calendario Próximos actos → 0 próximas citas 10 Hermandades 3 Bandas 20 Imágenes 18 Pasos Agenda Cofrade Extraordinarias Glorias Igualás y ensayos Qué ver en Morón de la Frontera Primero, lo más cercano en el tiempo La prioridad se calcula únicamente con fecha y horario documentados. No es una selección editorial manual. Ahora 0 Sin actos con horario en curso. Ver citas → Hoy 0 Todas las citas documentadas para hoy. Ver citas → Mañana 0 Lo previsto para el día siguiente. Ver citas → Fin de semana 0 Citas del sábado y domingo más próximos. Ver citas → Todo conectado La agenda de Morón de la Frontera , por ámbitos Los cuatro calendarios públicos siguen separados editorialmente, pero comparten una misma puerta territorial. Agenda Cofrade 0 Cultos, rosarios, procesiones y conciertos. Explorar → Glorias 0 Salidas de Gloria documentadas. Explorar → Extraordinarias 0 Traslados y salidas extraordinarias. Explorar → Igualás y ensayos 0 Convocatorias de cuadrilla publicadas. Explorar → Agenda abierta Sin próximas citas publicadas por ahora La guía de Morón de la Frontera sigue disponible a través de sus entidades y patrimonio. Cuando se publique una nueva cita documentada aparecerá aquí automáticamente. Consultar Agenda Cofrade → El mapa cofrade local Hermandades y Bandas de Morón de la Frontera Desde cada fecha se puede continuar hacia las entidades que organizan, acompañan y sostienen la vida cofrade del municipio. Hermandades 10 Ver directorio → Hermandad La Merced / Calvario Ver ficha → Hermandad El Cautivo Ver ficha → Hermandad El Soberano Ver ficha → Hermandad Jesús Ver ficha → Hermandad La Borriquita Ver ficha → Hermandad Los Salesianos / Buena Muerte Ver ficha → Bandas 3 Ver directorio → Banda Agrupación Musical Juvenil Nuestro Padre Jesús Nazareno de la Fuensanta de Morón Ver ficha → Banda Agrupación Musical Nuestro Padre Jesús Nazareno de la Fuensanta de Morón Ver ficha → Banda Banda Municipal de Música de Morón de la Frontera Ver ficha → Patrimonio cofrade Imágenes y Pasos de Morón de la Frontera La guía territorial continúa por el patrimonio documentado, enlazando titulares, pasos procesionales, Hermandades y autorías. Imágenes 20 Ver todas → IMG Imagen procesional María Santísima de la Amargura La Buena Muerte de Morón de la Frontera IMG Imagen procesional María Santísima de la Paz El Cautivo de Morón de la Frontera IMG Imagen procesional María Santísima de Loreto Loreto de Morón de la Frontera IMG Imagen procesional María Santísima de los Ángeles y de la Cruz El Soberano de Morón de la Frontera Pasos 18 Ver todos → PAS mystery Misterio de la Agonía en el Huerto Loreto de Morón de la Frontera PAS mystery Misterio de Nuestro Padre Jesús de la Salud y el Perdón ante Pilatos El Soberano de Morón de la Frontera PAS mystery Misterio del Santísimo Cristo del Calvario El Calvario de Morón de la Frontera PAS palio Palio de María Santísima de la Amargura La Buena Muerte de Morón de la Frontera Seguir explorando Morón de la Frontera Agenda completa Hermandades Bandas Imágenes Pasos Colabora Aviso legal Privacidad Cookies Proyecto creado por Nacho Sánchez · @desdeelarenal",
+      "body_sha256": "808b21430e310ef00ddefcb101a162c9f6e51804cb96acfacfffd029b5abcb4d",
+      "breadcrumb_json_ld": true
+    },
+    {
+      "path": "/hermandades/localidad/moron-de-la-frontera",
+      "status": 200,
+      "url": "https://hilocofrade.es/hermandades/localidad/moron-de-la-frontera",
+      "headers": {
+        "Age": "0",
+        "Cache-Control": "private, no-cache, no-store, max-age=0, must-revalidate",
+        "Content-Type": "text/html; charset=utf-8",
+        "Date": "Sat, 26 Sep 2026 20:22:13 GMT",
+        "Link": "</>; rel=preconnect; crossorigin=\"\", </brand/logo-header.svg?dpl=dpl_5K7jcfLRJ7SgECC8WSLd1Mwpgq7n>; rel=preload; as=\"image\", </_next/static/immutable/chunks/0p304e8xdmo6v.css>; rel=preload; as=\"style\", </_next/static/immutable/chunks/1nnlgs-ek4hkg.css>; rel=preload; as=\"style\", </_next/static/immutable/chunks/2zejr3la4mk-m.css>; rel=preload; as=\"style\", </_next/static/immutable/chunks/1whv8-sg4pfoh.css>; rel=preload; as=\"style\", </_next/static/immutable/chunks/1ypd7ecws7pe_.css>; rel=preload; as=\"style\"",
+        "Server": "Vercel",
+        "Strict-Transport-Security": "max-age=63072000",
+        "Vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "X-Matched-Path": "/hermandades/localidad/[localidad]",
+        "X-Powered-By": "Next.js",
+        "X-Vercel-Cache": "MISS",
+        "X-Vercel-Id": "cdg1::dub1::zxswk-1790454133003-bd6017e3e846",
+        "Connection": "close",
+        "Transfer-Encoding": "chunked"
+      },
+      "title": "Hermandades de Morón de la Frontera · Hilo Cofrade",
+      "canonical": "https://hilocofrade.es/hermandades/localidad/moron-de-la-frontera",
+      "robots": "index, follow",
+      "h1": [
+        "Hermandades de Morón de la Frontera"
+      ],
+      "headings": [],
+      "links": [
+        {
+          "text": "Saltar al contenido",
+          "href": "#main-content"
+        },
+        {
+          "text": "",
+          "href": "/"
+        },
+        {
+          "text": "Inicio",
+          "href": "/#inicio"
+        },
+        {
+          "text": "Tira del hilo",
+          "href": "/#tiradelhilo"
+        },
+        {
+          "text": "Agenda",
+          "href": "/agenda-cofrade"
+        },
+        {
+          "text": "Igualás y ensayos",
+          "href": "/igualas-y-ensayos"
+        },
+        {
+          "text": "Hoy",
+          "href": "/#hoy"
+        },
+        {
+          "text": "Directorio →",
+          "href": "/directorio"
+        },
+        {
+          "text": "Hermandades →",
+          "href": "/hermandades"
+        },
+        {
+          "text": "Procesiones de Gloria →",
+          "href": "/procesiones-de-gloria"
+        },
+        {
+          "text": "Imágenes →",
+          "href": "/imagenes"
+        },
+        {
+          "text": "Pasos →",
+          "href": "/pasos"
+        },
+        {
+          "text": "Bandas →",
+          "href": "/bandas"
+        },
+        {
+          "text": "Marchas →",
+          "href": "/marchas"
+        },
+        {
+          "text": "Autores →",
+          "href": "/autores"
+        },
+        {
+          "text": "Crucetas musicales →",
+          "href": "/crucetas-musicales"
+        },
+        {
+          "text": "Inicio →",
+          "href": "/#inicio"
+        },
+        {
+          "text": "Tira del hilo →",
+          "href": "/#tiradelhilo"
+        },
+        {
+          "text": "Agenda →",
+          "href": "/agenda-cofrade"
+        },
+        {
+          "text": "Igualás y ensayos →",
+          "href": "/igualas-y-ensayos"
+        },
+        {
+          "text": "Hoy →",
+          "href": "/#hoy"
+        },
+        {
+          "text": "Directorio →",
+          "href": "/directorio"
+        },
+        {
+          "text": "Hermandades →",
+          "href": "/hermandades"
+        },
+        {
+          "text": "Procesiones de Gloria →",
+          "href": "/procesiones-de-gloria"
+        },
+        {
+          "text": "Imágenes →",
+          "href": "/imagenes"
+        },
+        {
+          "text": "Pasos →",
+          "href": "/pasos"
+        },
+        {
+          "text": "Bandas →",
+          "href": "/bandas"
+        },
+        {
+          "text": "Marchas →",
+          "href": "/marchas"
+        },
+        {
+          "text": "Autores →",
+          "href": "/autores"
+        },
+        {
+          "text": "Crucetas musicales →",
+          "href": "/crucetas-musicales"
+        },
+        {
+          "text": "Hermandades",
+          "href": "/hermandades"
+        },
+        {
+          "text": "Ver agenda cofrade de Morón de la Frontera →",
+          "href": "/agenda-cofrade/localidad/moron-de-la-frontera"
+        },
+        {
+          "text": "El Cautivo Morón de la Frontera Parroquia de San Miguel Arcángel Morón de la Frontera Penitencia →",
+          "href": "/hermandades/cautivo-moron-de-la-frontera"
+        },
+        {
+          "text": "El Soberano Morón de la Frontera Parroquia de San José Morón de la Frontera Penitencia →",
+          "href": "/hermandades/soberano-moron-de-la-frontera"
+        },
+        {
+          "text": "Jesús Morón de la Frontera Ermita de Jesús / Fuensanta Morón de la Frontera Penitencia →",
+          "href": "/hermandades/jesus-nazareno-moron-de-la-frontera"
+        },
+        {
+          "text": "La Borriquita Morón de la Frontera Capilla de María Auxiliadora · Salesianos Morón de la Frontera Penitencia →",
+          "href": "/hermandades/borriquita-moron-de-la-frontera"
+        },
+        {
+          "text": "La Compañía / Santa Cruz Morón de la Frontera Iglesia de San Ignacio de Loyola · La Compañía Morón de la Frontera Penitencia Gloria →",
+          "href": "/hermandades/santa-cruz-moron-de-la-frontera"
+        },
+        {
+          "text": "La Merced / Calvario Morón de la Frontera Parroquia de Nuestra Señora de la Merced Morón de la Frontera Penitencia →",
+          "href": "/hermandades/calvario-moron-de-la-frontera"
+        },
+        {
+          "text": "La Soledad Morón de la Frontera Parroquia de San Miguel Arcángel Morón de la Frontera Penitencia →",
+          "href": "/hermandades/soledad-moron-de-la-frontera"
+        },
+        {
+          "text": "Los Salesianos / Buena Muerte Morón de la Frontera Capilla de María Auxiliadora · Salesianos Morón de la Frontera Penitencia →",
+          "href": "/hermandades/buena-muerte-moron-de-la-frontera"
+        },
+        {
+          "text": "San Francisco / Loreto Morón de la Frontera Parroquia de San Francisco de Asís Morón de la Frontera Penitencia Sacramental →",
+          "href": "/hermandades/loreto-moron-de-la-frontera"
+        },
+        {
+          "text": "Santo Entierro Morón de la Frontera Parroquia de Nuestra Señora de la Victoria y del Espíritu Santo Morón de la Frontera Penitencia →",
+          "href": "/hermandades/santo-entierro-moron-de-la-frontera"
+        },
+        {
+          "text": "Colabora",
+          "href": "/colabora"
+        },
+        {
+          "text": "Aviso legal",
+          "href": "/aviso-legal"
+        },
+        {
+          "text": "Privacidad",
+          "href": "/privacidad"
+        },
+        {
+          "text": "Cookies",
+          "href": "/cookies"
+        }
+      ],
+      "text": "Hermandades de Morón de la Frontera · Hilo Cofrade Saltar al contenido Inicio Tira del hilo Agenda Igualás y ensayos Hoy Explorar Directorio → Hermandades → Procesiones de Gloria → Imágenes → Pasos → Bandas → Marchas → Autores → Crucetas musicales → ☰ Inicio → Tira del hilo → Agenda → Igualás y ensayos → Hoy → Enciclopedia Directorio → Hermandades → Procesiones de Gloria → Imágenes → Pasos → Bandas → Marchas → Autores → Crucetas musicales → Hermandades → Morón de la Frontera Directorio territorial Hermandades de Morón de la Frontera Directorio de hermandades de Morón de la Frontera, con acceso a sus titulares, pasos, patrimonio, cultos, salidas y fuentes documentadas. Ver agenda cofrade de Morón de la Frontera → 10 hermandades Fichas publicadas en Hilo Cofrade El Cautivo Morón de la Frontera Parroquia de San Miguel Arcángel Morón de la Frontera Penitencia → El Soberano Morón de la Frontera Parroquia de San José Morón de la Frontera Penitencia → Jesús Morón de la Frontera Ermita de Jesús / Fuensanta Morón de la Frontera Penitencia → La Borriquita Morón de la Frontera Capilla de María Auxiliadora · Salesianos Morón de la Frontera Penitencia → La Compañía / Santa Cruz Morón de la Frontera Iglesia de San Ignacio de Loyola · La Compañía Morón de la Frontera Penitencia Gloria → La Merced / Calvario Morón de la Frontera Parroquia de Nuestra Señora de la Merced Morón de la Frontera Penitencia → La Soledad Morón de la Frontera Parroquia de San Miguel Arcángel Morón de la Frontera Penitencia → Los Salesianos / Buena Muerte Morón de la Frontera Capilla de María Auxiliadora · Salesianos Morón de la Frontera Penitencia → San Francisco / Loreto Morón de la Frontera Parroquia de San Francisco de Asís Morón de la Frontera Penitencia Sacramental → Santo Entierro Morón de la Frontera Parroquia de Nuestra Señora de la Victoria y del Espíritu Santo Morón de la Frontera Penitencia → Colabora Aviso legal Privacidad Cookies Proyecto creado por Nacho Sánchez · @desdeelarenal",
+      "body_sha256": "a42e0d3877fb5a4d42cabf658b4e3da4504969abc8bf10f6f87a20d6ddec3df4",
+      "breadcrumb_json_ld": true
+    },
+    {
+      "path": "/hermandades",
+      "status": 200,
+      "url": "https://hilocofrade.es/hermandades",
+      "headers": {
+        "Age": "0",
+        "Cache-Control": "private, no-cache, no-store, max-age=0, must-revalidate",
+        "Content-Type": "text/html; charset=utf-8",
+        "Date": "Sat, 26 Sep 2026 20:22:19 GMT",
+        "Link": "</>; rel=preconnect; crossorigin=\"\", </brand/logo-header.svg?dpl=dpl_5K7jcfLRJ7SgECC8WSLd1Mwpgq7n>; rel=preload; as=\"image\", </_next/static/immutable/chunks/0p304e8xdmo6v.css>; rel=preload; as=\"style\", </_next/static/immutable/chunks/1nnlgs-ek4hkg.css>; rel=preload; as=\"style\", </_next/static/immutable/chunks/2zejr3la4mk-m.css>; rel=preload; as=\"style\", </_next/static/immutable/chunks/1whv8-sg4pfoh.css>; rel=preload; as=\"style\", </_next/static/immutable/chunks/1ypd7ecws7pe_.css>; rel=preload; as=\"style\", </_next/static/immutable/chunks/0m-xpp6qcm9c4.css>; rel=preload; as=\"style\"",
+        "Server": "Vercel",
+        "Strict-Transport-Security": "max-age=63072000",
+        "Vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "X-Matched-Path": "/hermandades",
+        "X-Powered-By": "Next.js",
+        "X-Vercel-Cache": "MISS",
+        "X-Vercel-Id": "cdg1::dub1::2btsn-1790454139154-4ca42cbf7472",
+        "Connection": "close",
+        "Transfer-Encoding": "chunked"
+      },
+      "title": "Hermandades y Agrupaciones Parroquiales de Sevilla · Hilo Cofrade",
+      "canonical": "https://hilocofrade.es/hermandades",
+      "robots": "index, follow",
+      "h1": [
+        "Hermandades y Agrupaciones Parroquiales"
+      ],
+      "headings": [
+        "Sevilla capital",
+        "Semana Santa",
+        "Glorias",
+        "Municipios",
+        "Hermandades por localidad",
+        "Sevilla capital",
+        "Alcalá de Guadaíra",
+        "Alcalá del Río",
+        "Alcolea del Río",
+        "Aznalcázar",
+        "Aznalcóllar",
+        "Bollullos de la Mitación",
+        "Camas",
+        "Cantillana",
+        "Cañada Rosal",
+        "Carmona",
+        "Carrión de los Céspedes",
+        "Castilblanco de los Arroyos",
+        "Coria del Río",
+        "Dos Hermanas",
+        "Écija",
+        "Estepa",
+        "Gerena",
+        "Guadalcanal",
+        "Huévar del Aljarafe",
+        "La Algaba",
+        "La Puebla de Cazalla",
+        "La Rinconada",
+        "Lebrija",
+        "Lora del Río",
+        "Mairena del Aljarafe",
+        "Marchena",
+        "Marinaleda",
+        "Montellano",
+        "Morón de la Frontera",
+        "Osuna",
+        "Pilas",
+        "Tocina",
+        "Tomares",
+        "Utrera",
+        "Villaverde del Río"
+      ],
+      "links": [
+        {
+          "text": "Morón de la Frontera 10",
+          "href": "/hermandades/localidad/moron-de-la-frontera"
+        },
+        {
+          "text": "El Cautivo Domingo de Ramos · tarde · Parroquia de San Miguel Arcángel",
+          "href": "/hermandades/cautivo-moron-de-la-frontera"
+        },
+        {
+          "text": "El Soberano Viernes de Dolores · Parroquia de San José",
+          "href": "/hermandades/soberano-moron-de-la-frontera"
+        },
+        {
+          "text": "Jesús Madrugada del Viernes Santo · Ermita de Jesús / Fuensanta",
+          "href": "/hermandades/jesus-nazareno-moron-de-la-frontera"
+        },
+        {
+          "text": "La Borriquita Domingo de Ramos · mañana · Capilla de María Auxiliadora · Salesianos",
+          "href": "/hermandades/borriquita-moron-de-la-frontera"
+        },
+        {
+          "text": "La Compañía / Santa Cruz Jueves Santo · Iglesia de San Ignacio de Loyola · La Compañía",
+          "href": "/hermandades/santa-cruz-moron-de-la-frontera"
+        },
+        {
+          "text": "La Merced / Calvario Lunes Santo · Parroquia de Nuestra Señora de la Merced",
+          "href": "/hermandades/calvario-moron-de-la-frontera"
+        },
+        {
+          "text": "La Soledad Sábado Santo · Parroquia de San Miguel Arcángel",
+          "href": "/hermandades/soledad-moron-de-la-frontera"
+        },
+        {
+          "text": "Los Salesianos / Buena Muerte Martes Santo · Capilla de María Auxiliadora · Salesianos",
+          "href": "/hermandades/buena-muerte-moron-de-la-frontera"
+        },
+        {
+          "text": "San Francisco / Loreto Miércoles Santo · Parroquia de San Francisco de Asís",
+          "href": "/hermandades/loreto-moron-de-la-frontera"
+        },
+        {
+          "text": "Santo Entierro Viernes Santo · tarde · Parroquia de Nuestra Señora de la Victoria y del Espíritu Santo",
+          "href": "/hermandades/santo-entierro-moron-de-la-frontera"
+        }
+      ],
+      "body_sha256": "34a63239816c308c99fda69105eb4560f2875dc1fe2906dd46e242d492291e6e",
+      "breadcrumb_json_ld": true
+    },
+    {
+      "path": "/sitemaps/hermandades.xml",
+      "status": 200,
+      "url": "https://hilocofrade.es/sitemaps/hermandades.xml",
+      "headers": {
+        "Age": "0",
+        "Cache-Control": "public",
+        "Content-Type": "application/xml; charset=utf-8",
+        "Date": "Sat, 26 Sep 2026 20:22:20 GMT",
+        "Server": "Vercel",
+        "Strict-Transport-Security": "max-age=63072000",
+        "X-Matched-Path": "/sitemaps/[family]",
+        "X-Vercel-Cache": "MISS",
+        "X-Vercel-Id": "cdg1::dub1::p2bxs-1790454139377-91770ce35d9a",
+        "Connection": "close",
+        "Transfer-Encoding": "chunked"
+      },
+      "title": null,
+      "canonical": null,
+      "robots": null,
+      "h1": [],
+      "headings": [],
+      "body_sha256": "f1cc010286ff480433912149e4818743d6ff69bd1fd156d4ecd3d0da8c33fce3",
+      "breadcrumb_json_ld": false,
+      "moron_urls": []
+    },
+    {
+      "path": "/sitemaps/agenda.xml",
+      "status": 200,
+      "url": "https://hilocofrade.es/sitemaps/agenda.xml",
+      "headers": {
+        "Age": "0",
+        "Cache-Control": "public",
+        "Content-Type": "application/xml; charset=utf-8",
+        "Date": "Sat, 26 Sep 2026 20:22:19 GMT",
+        "Server": "Vercel",
+        "Strict-Transport-Security": "max-age=63072000",
+        "X-Matched-Path": "/sitemaps/[family]",
+        "X-Vercel-Cache": "MISS",
+        "X-Vercel-Id": "cdg1::dub1::pmcrp-1790454139361-931c7b7f8e5a",
+        "Connection": "close",
+        "Transfer-Encoding": "chunked"
+      },
+      "title": null,
+      "canonical": null,
+      "robots": null,
+      "h1": [],
+      "headings": [],
+      "body_sha256": "3143b652a40a0790e856d6f45f48ac9f14e020dcd41bfa8c214768e9708c3b93",
+      "breadcrumb_json_ld": false,
+      "moron_urls": []
+    },
+    {
+      "path": "/robots.txt",
+      "status": 200,
+      "url": "https://hilocofrade.es/robots.txt",
+      "headers": {
+        "Accept-Ranges": "bytes",
+        "Access-Control-Allow-Origin": "*",
+        "Age": "0",
+        "Cache-Control": "public, max-age=0, must-revalidate",
+        "Content-Disposition": "inline; filename=\"robots.txt\"",
+        "Content-Length": "680",
+        "Content-Type": "text/plain; charset=utf-8",
+        "Date": "Sat, 26 Sep 2026 20:22:25 GMT",
+        "Etag": "\"67ab5f7308619eeb208527d270170765\"",
+        "Last-Modified": "Sat, 26 Sep 2026 20:22:25 GMT",
+        "Server": "Vercel",
+        "Strict-Transport-Security": "max-age=63072000",
+        "X-Matched-Path": "/robots.txt",
+        "X-Vercel-Cache": "MISS",
+        "X-Vercel-Id": "cdg1::p8trn-1790454145684-182154001dac",
+        "Connection": "close"
+      },
+      "title": null,
+      "canonical": null,
+      "robots": null,
+      "h1": [],
+      "headings": [],
+      "links": [],
+      "text": "User-Agent: OAI-SearchBot\nAllow: /\nDisallow: /api/\nDisallow: /panel/\n\nUser-Agent: *\nAllow: /\nDisallow: /api/\nDisallow: /panel/\n\nHost: https://hilocofrade.es\nSitemap: https://hilocofrade.es/sitemap.xml\nSitemap: https://hilocofrade.es/sitemaps/general.xml\nSitemap: https://hilocofrade.es/sitemaps/hermandades.xml\nSitemap: https://hilocofrade.es/sitemaps/bandas.xml\nSitemap: https://hilocofrade.es/sitemaps/imagenes.xml\nSitemap: https://hilocofrade.es/sitemaps/pasos.xml\nSitemap: https://hilocofrade.es/sitemaps/marchas.xml\nSitemap: https://hilocofrade.es/sitemaps/autores.xml\nSitemap: https://hilocofrade.es/sitemaps/crucetas.xml\nSitemap: https://hilocofrade.es/sitemaps/agenda.xml",
+      "body_sha256": "45d67069d93e7193178ab066fbce708317a9375083ae47658672a18bd2439d66",
+      "breadcrumb_json_ld": false
+    }
+  ]
+}
