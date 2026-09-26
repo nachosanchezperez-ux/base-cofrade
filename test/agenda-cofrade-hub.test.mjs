@@ -6,12 +6,13 @@ function read(path) {
   return readFileSync(new URL(`../${path}`, import.meta.url), 'utf8')
 }
 
-test('Agenda Cofrade agrega las cuatro familias de interés general en paralelo', () => {
+test('Agenda Cofrade agrega las familias de interés general en paralelo', () => {
   const source = read('lib/supabase/agenda-cofrade.js')
   assert.match(source, /Promise\.all/)
   assert.match(source, /getExtraordinaryDirectory/)
   assert.match(source, /getGloryDirectory/)
   assert.match(source, /getRosaryOutings/)
+  assert.match(source, /getGeneralPublicOutings/)
   assert.match(source, /getKissingDevotions/)
   assert.doesNotMatch(source, /getCrewEventDirectory/)
 })
@@ -39,6 +40,7 @@ test('la Agenda pública muestra solo actos próximos y elimina el acceso histó
   assert.doesNotMatch(directory, /period === 'archive'/)
   assert.match(directory, /Procesiones/)
   assert.match(directory, /Traslados/)
+  assert.match(directory, /Romerías/)
   assert.match(directory, /Besamanos y besapiés/)
   assert.match(directory, /Sevilla capital/)
   assert.match(directory, /Municipios/)
