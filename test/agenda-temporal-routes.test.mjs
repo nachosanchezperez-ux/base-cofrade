@@ -60,3 +60,21 @@ test('la micro UX móvil mantiene targets táctiles y señales de scroll', () =>
   assert.match(eventCss, /font-variant-numeric:tabular-nums/)
   assert.match(eventCss, /min-height:40px/)
 })
+
+
+test('la cronología aplica un código visual sobrio por tipo de acto', () => {
+  const landing = read('components/AgendaTemporalLanding.js')
+  const landingCss = read('components/AgendaTemporalLanding.module.css')
+  const events = read('components/AgendaTemporalEventList.js')
+  const eventCss = read('components/AgendaTemporalEventList.module.css')
+
+  assert.match(landing, /data-category=\{category\.key\}/)
+  assert.match(events, /data-category=\{item\.category \|\| 'other'\}/)
+  for (const category of ['processions', 'transfers', 'rosaries', 'devotions', 'concerts']) {
+    assert.match(landingCss, new RegExp(`data-category=["']${category}["']`))
+    assert.match(eventCss, new RegExp(`data-category=["']${category}["']`))
+  }
+  assert.match(eventCss, /--event-accent/)
+  assert.match(eventCss, /--event-soft/)
+  assert.match(eventCss, /width:3px/)
+})
