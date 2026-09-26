@@ -202,6 +202,7 @@ export default function AgendaCofradeDirectoryV4({
   const [territory, setTerritory] = useState(initialTerritory)
   const [municipality, setMunicipality] = useState(initialMunicipality)
   const [nowIso, setNowIso] = useState(initialNowIso || '1970-01-01T00:00:00.000Z')
+  const currentYear = String(today || '').slice(0, 4)
 
   useEffect(() => {
     setNowIso(new Date().toISOString())
@@ -453,7 +454,7 @@ export default function AgendaCofradeDirectoryV4({
                       <time className={styles.dateBlock} dateTime={item.date || undefined}>
                         <strong>{item.dateInfo.day}</strong>
                         <span>{item.dateInfo.month}</span>
-                        {item.dateInfo.year ? <small>{item.dateInfo.year}</small> : null}
+                        {item.dateInfo.year && String(item.dateInfo.year) !== currentYear ? <small>{item.dateInfo.year}</small> : null}
                       </time>
                       <div className={styles.cardBody}>
                         <div className={styles.cardTopline}>
