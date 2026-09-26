@@ -10,7 +10,7 @@ test('las salidas generales cargan Romerías y Procesiones ordinarias publicadas
   const source = read('lib/supabase/general-public-outings.js')
 
   assert.match(source, /\.in\('outing_type', \['Romería', 'Procesión'\]\)/)
-  assert.match(source, /brotherhood\.municipality_id/)
+  assert.match(source, /brotherhood\?\.municipality_id/)
   assert.match(source, /kind === 'romery' \? 'Romería' : 'Procesión'/)
   assert.match(source, /returnDate: item\.return_date/)
 })
