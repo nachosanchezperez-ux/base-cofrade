@@ -16,3 +16,13 @@
   .categories header,.municipalities header{flex-wrap:wrap}
   .scrollHint{margin-left:0}
 }
+
+.categories a[data-category="processions"]{--agenda-accent:#9a721d;--agenda-soft:#f6f0df}
+.categories a[data-category="transfers"]{--agenda-accent:#a61931;--agenda-soft:#faecef}
+.categories a[data-category="rosaries"]{--agenda-accent:#72528c;--agenda-soft:#f2edf6}
+.categories a[data-category="devotions"]{--agenda-accent:#397269;--agenda-soft:#ebf4f1}
+.categories a[data-category="concerts"]{--agenda-accent:#315d7a;--agenda-soft:#edf3f7}
+.categories a[data-category]{position:relative;overflow:hidden;border-color:#e0e4e7}
+.categories a[data-category]::before{content:"";position:absolute;inset:0 auto 0 0;width:3px;background:var(--agenda-accent)}
+.categories a[data-category] strong{background:var(--agenda-soft);color:var(--agenda-accent)}
+.categories a[data-category]:hover{border-color:color-mix(in srgb,var(--agenda-accent) 28%,#dfe4e8);background:color-mix(in srgb,var(--agenda-soft) 40%,#fff)}

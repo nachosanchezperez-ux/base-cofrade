@@ -89,7 +89,11 @@ export default function AgendaTemporalLanding({ landing }) {
                   <header><span>Qué</span><h3 id="agenda-temporal-tipos">Por tipo de acto</h3><small className={styles.scrollHint}>Desliza →</small></header>
                   <div>
                     {landing.categories.map((category) => (
-                      <Link href={`/agenda-cofrade?periodo=${landing.queryPeriod}&categoria=${category.key}#agenda`} key={category.key}>
+                      <Link
+                        href={`/agenda-cofrade?periodo=${landing.queryPeriod}&categoria=${category.key}#agenda`}
+                        data-category={category.key}
+                        key={category.key}
+                      >
                         <span>{category.label}</span><strong>{category.count}</strong>
                       </Link>
                     ))}

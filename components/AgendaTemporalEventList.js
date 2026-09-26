@@ -70,7 +70,11 @@ export default function AgendaTemporalEventList({ landing }) {
 
               <div className={styles.list}>
                 {group.items.map((item) => (
-                  <article className={styles.row} key={item.key || item.href || item.id}>
+                  <article
+                    className={styles.row}
+                    data-category={item.category || 'other'}
+                    key={item.key || item.href || item.id}
+                  >
                     <div className={styles.time}>
                       <small>Hora</small>
                       <strong>{itemTime(item)}</strong>

@@ -17,3 +17,18 @@
   .actions{padding-left:0}
   .actions a{min-height:40px}
 }
+
+.row[data-category="processions"]{--event-accent:#9a721d;--event-soft:#f6f0df}
+.row[data-category="transfers"]{--event-accent:#a61931;--event-soft:#faecef}
+.row[data-category="rosaries"]{--event-accent:#72528c;--event-soft:#f2edf6}
+.row[data-category="devotions"]{--event-accent:#397269;--event-soft:#ebf4f1}
+.row[data-category="concerts"]{--event-accent:#315d7a;--event-soft:#edf3f7}
+.row[data-category]{position:relative;padding-left:16px}
+.row[data-category]::before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:3px;border-radius:999px;background:var(--event-accent,#a61931)}
+.row[data-category] .topline>span{display:inline-flex;align-items:center;min-height:22px;padding:0 7px;border-radius:999px;background:var(--event-soft,#faecef);color:var(--event-accent,#a61931)}
+.row[data-category] .actions .primary{background:var(--event-soft,#f9eaed);color:var(--event-accent,#a61931)}
+.row[data-category]:hover{background:color-mix(in srgb,var(--event-soft,#f7f9fb) 34%,#fff)}
+@media(max-width:720px){
+  .row[data-category]{padding-left:11px}
+  .row[data-category]::before{top:12px;bottom:12px;width:3px}
+}
