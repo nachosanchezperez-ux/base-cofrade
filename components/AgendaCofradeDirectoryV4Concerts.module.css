@@ -1,4 +1,4 @@
-.quickTypesSix{grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.quickTypesSix{grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
 .quickTypesSix.quickTypesSix button{min-height:66px;padding:11px 13px;border-left:4px solid #b01b32;box-shadow:none}
 .quickTypesSix.quickTypesSix button[data-category="processions"]{border-left-color:#ba8b1f}
 .quickTypesSix.quickTypesSix button[data-category="transfers"]{border-left-color:#b01b32}
@@ -33,4 +33,4 @@
 
 @media(max-width:860px){.quickTypesSix{grid-template-columns:repeat(6,minmax(0,1fr))}.quickTypesSix button{grid-column:span 2}.quickTypesSix button:nth-child(n+4){grid-column:span 3}}
 @media(max-width:560px){.quickTypesSix.quickTypesSix button{min-height:62px;padding:10px 11px}.quickTypesSix.quickTypesSix button span{font-size:11px}.quickTypesSix.quickTypesSix button strong{font-size:23px}.repertoire{margin-top:10px;padding-top:9px}.repertoire summary{min-height:40px;padding:0 10px;font-size:10px}.repertoire summary small{font-size:8px}.repertoireItem{grid-template-columns:25px minmax(0,1fr) auto;gap:8px;padding:9px}.repertoireNumber::before{width:22px;height:22px}.repertoireItem strong{font-size:11px}.repertoireItem div>span{font-size:8px}.repertoireItem>b{padding:4px 6px;font-size:6px}}
-@media(max-width:390px){.quickTypesSix{grid-template-columns:repeat(2,minmax(0,1fr))}.quickTypesSix button,.quickTypesSix button:nth-child(n+4){grid-column:auto}.quickTypesSix button:last-child{grid-column:1/-1}}
+@media(max-width:390px){.quickTypesSix{grid-template-columns:repeat(2,minmax(0,1fr))}.quickTypesSix button,.quickTypesSix button:nth-child(n+4){grid-column:auto}}
