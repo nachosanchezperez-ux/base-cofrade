@@ -85,11 +85,11 @@ export default function AgendaTemporalEventList({ landing }) {
                       <div className={styles.meta}>
                         {item.municipality ? (
                           item.municipalityHref
-                            ? <Link href={item.municipalityHref}>{item.municipality}</Link>
-                            : <strong>{item.municipality}</strong>
+                            ? <Link className={styles.municipality} href={item.municipalityHref}>{item.municipality}</Link>
+                            : <strong className={styles.municipality}>{item.municipality}</strong>
                         ) : null}
-                        {item.place ? <span>{item.place}</span> : null}
-                        {item.organizer ? <span>{item.organizer}</span> : null}
+                        {item.place ? <span className={styles.place}>{item.place}</span> : null}
+                        {item.organizer ? <span className={styles.organizer}>{item.organizer}</span> : null}
                       </div>
                       {item.summary ? <p>{item.summary}</p> : null}
                     </div>

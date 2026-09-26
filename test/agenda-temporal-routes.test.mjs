@@ -42,3 +42,21 @@ test('las landings temporales usan cronología propia y navegación responsive',
   assert.match(navCss, /position:sticky/)
   assert.match(navCss, /overflow-x:auto/)
 })
+
+
+test('la micro UX móvil mantiene targets táctiles y señales de scroll', () => {
+  const landing = read('components/AgendaTemporalLanding.js')
+  const landingCss = read('components/AgendaTemporalLanding.module.css')
+  const navCss = read('components/AgendaTemporalNav.module.css')
+  const events = read('components/AgendaTemporalEventList.js')
+  const eventCss = read('components/AgendaTemporalEventList.module.css')
+
+  assert.match(landing, /Desliza →/)
+  assert.match(landingCss, /min-height:44px/)
+  assert.match(landingCss, /scrollbar-width:none/)
+  assert.match(navCss, /flex:0 0 108px/)
+  assert.match(navCss, /min-height:42px/)
+  assert.match(events, /styles\.municipality/)
+  assert.match(eventCss, /font-variant-numeric:tabular-nums/)
+  assert.match(eventCss, /min-height:40px/)
+})

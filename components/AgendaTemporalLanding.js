@@ -86,7 +86,7 @@ export default function AgendaTemporalLanding({ landing }) {
 
               {landing.categories.length ? (
                 <section className={styles.categories} aria-labelledby="agenda-temporal-tipos">
-                  <header><span>Qué</span><h3 id="agenda-temporal-tipos">Por tipo de acto</h3></header>
+                  <header><span>Qué</span><h3 id="agenda-temporal-tipos">Por tipo de acto</h3><small className={styles.scrollHint}>Desliza →</small></header>
                   <div>
                     {landing.categories.map((category) => (
                       <Link href={`/agenda-cofrade?periodo=${landing.queryPeriod}&categoria=${category.key}#agenda`} key={category.key}>
@@ -100,7 +100,7 @@ export default function AgendaTemporalLanding({ landing }) {
 
             {landing.municipalities.length ? (
               <section className={styles.municipalities} aria-labelledby="agenda-temporal-municipios">
-                <header><span>Guías locales</span><h3 id="agenda-temporal-municipios">Municipios con actividad</h3></header>
+                <header><span>Guías locales</span><h3 id="agenda-temporal-municipios">Municipios con actividad</h3><small className={styles.scrollHint}>Desliza →</small></header>
                 <div>
                   {landing.municipalities.map((municipality) => (
                     <Link href={municipality.href} key={municipality.slug}>
