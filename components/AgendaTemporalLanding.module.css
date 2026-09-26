@@ -20,6 +20,7 @@
 .categories a[data-category="processions"]{--agenda-accent:#9a721d;--agenda-soft:#f6f0df}
 .categories a[data-category="transfers"]{--agenda-accent:#a61931;--agenda-soft:#faecef}
 .categories a[data-category="rosaries"]{--agenda-accent:#72528c;--agenda-soft:#f2edf6}
+.categories a[data-category="romeries"]{--agenda-accent:#6f7d3c;--agenda-soft:#f0f3e5}
 .categories a[data-category="devotions"]{--agenda-accent:#397269;--agenda-soft:#ebf4f1}
 .categories a[data-category="concerts"]{--agenda-accent:#315d7a;--agenda-soft:#edf3f7}
 .categories a[data-category]{position:relative;overflow:hidden;border-color:#e0e4e7}
