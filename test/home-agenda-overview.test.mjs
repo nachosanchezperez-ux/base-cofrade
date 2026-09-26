@@ -13,7 +13,7 @@ test('la Home ofrece accesos directos a los periodos y categorías reales de Age
   assert.match(overview, /\/agenda-cofrade\/manana/)
   assert.match(overview, /\/agenda-cofrade\/fin-de-semana/)
 
-  for (const category of ['processions', 'transfers', 'rosaries', 'devotions', 'concerts']) {
+  for (const category of ['processions', 'transfers', 'rosaries', 'romeries', 'devotions', 'concerts']) {
     assert.match(overview, new RegExp(`key: ['"]${category}['"]`))
     assert.match(agenda, new RegExp(`['"]${category}['"]`))
   }
