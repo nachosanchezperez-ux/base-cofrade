@@ -112,6 +112,8 @@ function RelationalCardMedia({ item, isBand, mediaPath, presentationClass }) {
   const [failed, setFailed] = useState(false)
   const hasMedia = Boolean(mediaPath) && !failed
   const shouldNormalizeBandLogo = isBand && item.logoPresentationMode !== 'integrated'
+  const mediaAlt = item.coverAlt
+    || (isBand ? `Logotipo de ${item.name}` : [item.name, item.brotherhoodName].filter(Boolean).join(' · '))
 
   return (
     <span className={`${enhancementStyles.media} ${contractStyles.media} ${isBand ? enhancementStyles.bandMedia : ''} ${presentationClass}`}>
@@ -120,7 +122,7 @@ function RelationalCardMedia({ item, isBand, mediaPath, presentationClass }) {
           <BrotherhoodDirectoryCrestImage
             className={enhancementStyles.bandLogoOptical}
             src={mediaPath}
-            alt=""
+            alt={mediaAlt}
             width={82}
             height={82}
             sizes="(max-width: 620px) 58px, 72px"
@@ -130,7 +132,7 @@ function RelationalCardMedia({ item, isBand, mediaPath, presentationClass }) {
         ) : (
           <Image
             src={mediaPath}
-            alt=""
+            alt={mediaAlt}
             fill
             sizes="(max-width: 620px) 58px, 72px"
             onError={() => setFailed(true)}
@@ -217,6 +219,7 @@ export default function RelationalEntityDirectory({
         ...(item.imageNames || []),
         ...(item.disciplines || []),
         ...(item.keywords || []),
+        item.searchText,
       ].filter(Boolean).join(' '))
       return matchesTerritory && matchesType && matchesMunicipality && (!needle || haystack.includes(needle))
     })

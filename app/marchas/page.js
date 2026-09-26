@@ -10,10 +10,26 @@ export const revalidate = 900
 const title = 'Marchas procesionales: obras y compositores'
 const description = 'Directorio de marchas procesionales documentadas en Hilo Cofrade: compositores, fechas, formaciones musicales, grabaciones y presencia en crucetas.'
 
-export const metadata = {
-  title,
-  description,
-  ...socialMetadata({ title, description, path: '/marchas' }),
+export async function generateMetadata({ searchParams } = {}) {
+  const params = await searchParams
+  const page = pageNumber(params?.pagina)
+  return {
+    title,
+    description,
+    ...socialMetadata({ title, description, path: '/marchas' }),
+    ...(page > 1 ? { robots: { index: false, follow: true } } : {}),
+  }
+}
+
+const PAGE_SIZE = 120
+
+function pageNumber(value) {
+  const parsed = Number.parseInt(String(value || '1'), 10)
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : 1
+}
+
+function pageHref(page) {
+  return page <= 1 ? '/marchas' : `/marchas?pagina=${page}`
 }
 
 const marchTitleCollator = new Intl.Collator('es', {
@@ -63,10 +79,14 @@ function authorLabel(march) {
   return `${names.slice(0, 2).join(' · ')} · +${names.length - 2}`
 }
 
-export default async function MarchesDirectoryPage() {
+export default async function MarchesDirectoryPage({ searchParams } = {}) {
   await connection()
-  const marches = await getPublicMarchDirectory()
-  const groups = groupsFor(marches)
+  const params = await searchParams
+  const marches = [...await getPublicMarchDirectory()].sort(compareMarchTitles)
+  const totalPages = Math.max(1, Math.ceil(marches.length / PAGE_SIZE))
+  const page = Math.min(pageNumber(params?.pagina), totalPages)
+  const pageItems = marches.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
+  const groups = groupsFor(pageItems)
   const authored = marches.filter((march) => march.authors.length).length
   const dated = marches.filter((march) => march.compositionYear).length
 
@@ -109,7 +129,7 @@ export default async function MarchesDirectoryPage() {
       <section className={`shell ${styles.directory}`} aria-labelledby="archivo-marchas">
         <header className={styles.directoryHeading}>
           <div><span>Índice público</span><h2 id="archivo-marchas">Todas las marchas</h2></div>
-          <p>Cada título abre su ficha musical y continúa el hilo hacia las procesiones donde aparece documentado.</p>
+          <p>Cada título abre su ficha musical y continúa el hilo hacia las procesiones donde aparece documentado. Página {page} de {totalPages}.</p>
         </header>
 
         {groups.length ? (
@@ -139,6 +159,19 @@ export default async function MarchesDirectoryPage() {
                 </section>
               ))}
             </div>
+            {totalPages > 1 ? (
+              <nav className={styles.pagination} aria-label="Páginas del directorio de Marchas">
+                {Array.from({ length: totalPages }, (_, index) => index + 1).map((number) => (
+                  <Link
+                    href={pageHref(number)}
+                    key={number}
+                    aria-current={number === page ? 'page' : undefined}
+                  >
+                    {number}
+                  </Link>
+                ))}
+              </nav>
+            ) : null}
           </>
         ) : (
           <div className={styles.empty}><strong>El archivo musical no está disponible ahora mismo.</strong><p>Las fichas individuales continúan accesibles desde la búsqueda y las crucetas.</p></div>

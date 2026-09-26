@@ -27,6 +27,46 @@ export async function generateMetadata({ searchParams } = {}) {
   }
 }
 
+function compactAgendaItem(item) {
+  return {
+    key: item.key,
+    date: item.date,
+    endDate: item.endDate,
+    dateInfo: item.dateInfo,
+    startTime: item.startTime,
+    endTime: item.endTime,
+    timeText: item.timeText,
+    title: item.title,
+    summary: item.summary,
+    category: item.category,
+    categoryLabel: item.categoryLabel,
+    categoryHref: item.categoryHref,
+    isExtraordinary: item.isExtraordinary,
+    isUpcoming: item.isUpcoming,
+    isCancelled: item.isCancelled,
+    monthKey: item.monthKey,
+    monthLabel: item.monthLabel,
+    municipality: item.municipality,
+    municipalityHref: item.municipalityHref,
+    organizer: item.organizer,
+    organizerHref: item.organizerHref,
+    place: item.place,
+    href: item.href,
+    actionLabel: item.actionLabel,
+    imagePath: item.imagePath,
+    imageFallbackPath: item.imageFallbackPath,
+    imageKind: item.imageKind,
+    imageAlt: item.imageAlt,
+    relatedBrotherhoodHref: item.relatedBrotherhoodHref,
+    repertoireText: item.repertoireText,
+    bands: (item.bands || []).map((band) => ({
+      id: band.id,
+      name: band.name,
+      href: band.href,
+    })),
+  }
+}
+
 export default async function AgendaCofradePage() {
   // La disponibilidad de Supabase no debe bloquear la compilación de la web.
   // La caché de datos se mantiene en getAgendaCofrade, también en esta ruta dinámica.
@@ -36,6 +76,7 @@ export default async function AgendaCofradePage() {
   const { items, today } = agendaData
   const nowIso = new Date().toISOString()
   const upcoming = items.filter((item) => item.isUpcoming && !item.isCancelled)
+  const interactiveItems = upcoming.map(compactAgendaItem)
 
   return (
     <div className={styles.page}>
@@ -55,8 +96,8 @@ export default async function AgendaCofradePage() {
       <AgendaTemporalNav />
 
       <div className={`shell ${styles.content} ${v4Styles.contentV4}`}>
-        <Suspense fallback={<AgendaCofradeDirectoryV4 items={upcoming} today={today} initialNowIso={nowIso} />}>
-          <AgendaCofradeDirectoryFromUrl items={upcoming} today={today} initialNowIso={nowIso} />
+        <Suspense fallback={<AgendaCofradeDirectoryV4 items={interactiveItems} today={today} initialNowIso={nowIso} />}>
+          <AgendaCofradeDirectoryFromUrl items={interactiveItems} today={today} initialNowIso={nowIso} />
         </Suspense>
         <section className={styles.relatedCalendar} aria-labelledby="calendar-cuadrillas"><div><span>Calendario especializado</span><h2 id="calendar-cuadrillas">Igualás y ensayos</h2><p>Las convocatorias de cuadrillas quedan en un espacio propio, conectado con sus Hermandades y separado de la agenda de interés general.</p></div><Link href="/igualas-y-ensayos">Ver próximas convocatorias <span>→</span></Link></section>
         <nav className={styles.relatedLinks} aria-label="Explorar contenidos relacionados"><span>Seguir explorando</span><Link href="/hermandades">Hermandades</Link><Link href="/bandas">Bandas</Link><Link href="/procesiones-de-gloria">Calendario de Glorias</Link><Link href="/extraordinarias">Calendario de extraordinarias</Link></nav>
