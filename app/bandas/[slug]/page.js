@@ -198,7 +198,7 @@ export async function generateMetadata({ params }) {
     sources: band.sources || [],
     publicValues: band,
   })
-  const title = compactSeoTitle(bandSeoIdentity(band))
+  const title = compactSeoTitle(bandSeoIdentity(band), 58)
   const description = seoDescription(band.summary)
   const path = `/bandas/${slug}`
   return {
