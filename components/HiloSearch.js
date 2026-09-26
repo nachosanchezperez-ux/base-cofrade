@@ -10,6 +10,7 @@ import HiloReferences from './HiloReferences';
 import { hiloEntityKey, prioritizeHiloNavigationItems } from '@/lib/tira-search-intent';
 import { decodeTiraSession, encodeTiraSession, TIRA_SESSION_KEY } from '@/lib/tira-session';
 import { publicText } from '@/lib/supabase/public-entity-page';
+import { trackEvent } from '@/lib/analytics/client';
 import styles from './HiloSearch.module.css';
 import responseStyles from './HiloSearchResponse.module.css';
 import upgradeStyles from './HiloSearchUpgrade.module.css';
@@ -60,15 +61,15 @@ function normalize(value = '') {
 
 function analyticsEntityType(value = '') {
   const type = normalize(value);
-  if (type.includes('hermandad')) return 'brotherhood';
-  if (type.includes('imagen')) return 'image';
-  if (type.includes('paso')) return 'step';
-  if (type.includes('banda')) return 'band';
-  if (type.includes('marcha')) return 'march';
-  if (type.includes('autor') || type.includes('profesional') || type.includes('agente')) return 'agent';
-  if (type.includes('acontecimiento')) return 'event';
-  if (type.includes('patrimonio')) return 'heritage_asset';
-  return 'other';
+  if (type.includes('hermandad')) return 'hermandad';
+  if (type.includes('imagen')) return 'imagen';
+  if (type.includes('paso')) return 'paso';
+  if (type.includes('banda')) return 'banda';
+  if (type.includes('marcha')) return 'marcha';
+  if (type.includes('autor') || type.includes('profesional') || type.includes('agente')) return 'autor';
+  if (type.includes('acontecimiento')) return 'acontecimiento';
+  if (type.includes('patrimonio')) return 'patrimonio';
+  return 'otro';
 }
 
 function looksLikeQuestion(value = '') {
@@ -305,6 +306,26 @@ export default function HiloSearch({
   const inputId = universal ? 'hilo-search-universal' : fullPage ? 'hilo-search-full' : 'hilo-search';
   const resultsId = `${inputId}-results`;
 
+  const trackSearch = (term, resultsCount = orderedResults.length) => {
+    const searchTerm = String(term || '').trim();
+    if (!searchTerm) return;
+    trackEvent('site_search', {
+      search_term: searchTerm,
+      results_count: Number(resultsCount) || 0,
+    });
+  };
+
+  const trackSearchResult = (item, index, term = query, includeSearch = true) => {
+    const searchTerm = String(term || '').trim();
+    if (includeSearch) trackSearch(searchTerm, orderedResults.length);
+    trackEvent('search_result_click', {
+      search_term: searchTerm,
+      entity_type: analyticsEntityType(item?.type),
+      entity_name: item?.title || '',
+      position: Number(index) + 1,
+    });
+  };
+
   useEffect(() => {
     try {
       const restored = decodeTiraSession(window.sessionStorage.getItem(TIRA_SESSION_KEY) || '');
@@ -386,14 +407,18 @@ export default function HiloSearch({
     router.push(href);
   };
 
-  const ask = async (value) => {
+  const ask = async (value, { trackSearchEvent = true } = {}) => {
     const question = String(value || query).trim();
     if (!question || loading) return;
+
+    if (trackSearchEvent) trackSearch(question, orderedResults.length);
 
     const questionKey = hiloEntityKey(question);
     const exactNavigation = orderedResults.find((item) => item.href && hiloEntityKey(item.title) === questionKey);
     const exact = exactNavigation || results.find((item) => normalize(item.title) === normalize(question));
     if (exact?.href && !looksLikeQuestion(question)) {
+      const exactIndex = Math.max(0, orderedResults.findIndex((item) => item === exact || item.href === exact.href));
+      trackSearchResult(exact, exactIndex, question, false);
       navigateTo(exact.href);
       return;
     }
@@ -473,17 +498,19 @@ export default function HiloSearch({
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault();
       const activeResult = orderedResults[activeResultIndex];
-      if (activeResult) useResult(activeResult);
+      if (activeResult) useResult(activeResult, activeResultIndex);
       else ask(query);
     }
   };
 
-  const useResult = (item) => {
+  const useResult = (item, index = orderedResults.indexOf(item)) => {
     if (item.href) {
+      trackSearchResult(item, Math.max(0, index), query, true);
       navigateTo(item.href);
       return;
     }
-    ask(`Cuéntame sobre ${item.title}`);
+    trackSearch(query, orderedResults.length);
+    ask(`Cuéntame sobre ${item.title}`, { trackSearchEvent: false });
   };
 
   const resetConversation = () => {
@@ -550,8 +577,6 @@ export default function HiloSearch({
         <form
           className={`${styles.form} ${hasConversation ? styles.formAfterConversation : ''}`}
           onSubmit={submit}
-          data-hilo-event="hilo_search"
-          data-hilo-origin={universal ? 'global_form' : fullPage ? 'conversation_form' : 'form'}
         >
           <label className={styles.srOnly} htmlFor={inputId}>{composerLabel}</label>
           <textarea
@@ -582,9 +607,6 @@ export default function HiloSearch({
               type="button"
               key={question}
               onClick={() => ask(question)}
-              data-hilo-event="hilo_search"
-              data-hilo-origin="suggestion"
-              data-hilo-outcome="question"
             >{question}</button>
           ))}
         </div>
@@ -605,12 +627,12 @@ export default function HiloSearch({
                 aria-selected={activeResultIndex === index}
                 className={`${styles.result} ${index === 0 ? styles.resultPrimary : ''} ${activeResultIndex === index ? upgradeStyles.resultActive : ''}`}
                 key={`${item.entityId || item.type}-${item.title}`}
-                onClick={onNavigate}
+                onClick={() => {
+                  trackSearchResult(item, index, query, true);
+                  onNavigate?.();
+                }}
                 onMouseEnter={() => setActiveResultIndex(index)}
                 onFocus={() => setActiveResultIndex(index)}
-                data-hilo-event="search_result_open"
-                data-hilo-origin={searchOrigin}
-                data-hilo-target-type={analyticsEntityType(item.type)}
                 aria-label={`${item.actionLabel || 'Abrir ficha'}: ${item.title}`}
               >
                 <SearchResultContent item={item} />
@@ -626,9 +648,6 @@ export default function HiloSearch({
                 onClick={() => useResult(item)}
                 onMouseEnter={() => setActiveResultIndex(index)}
                 onFocus={() => setActiveResultIndex(index)}
-                data-hilo-event="search_result_ask"
-                data-hilo-origin={searchOrigin}
-                data-hilo-target-type={analyticsEntityType(item.type)}
                 aria-label={`Preguntar sobre ${item.title}`}
               >
                 <SearchResultContent item={item} />

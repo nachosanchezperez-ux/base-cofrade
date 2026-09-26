@@ -125,7 +125,7 @@ export default function HomeKnowledgeThreads({ threads = [] }) {
   const [lead, ...secondary] = threads
 
   return (
-    <section className={`${styles.section} ${polishStyles.threadsSection}`} id="ultimos-hilos">
+    <section className={`${styles.section} ${polishStyles.threadsSection}`} id="ultimos-hilos" data-analytics-related-section="ultimos_hilos">
       <div className="shell">
         <header className={`${styles.header} ${polishStyles.threadsHeader}`}>
           <div>

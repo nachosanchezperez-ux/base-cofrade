@@ -18,7 +18,7 @@ export default function RelatedExtraordinaryOutings({ items = [], context = 'ent
     : 'Próximas extraordinarias de la Hermandad'
 
   return (
-    <section className={styles.section} id="proximas-extraordinarias" aria-labelledby="proximas-extraordinarias-title">
+    <section className={styles.section} id="proximas-extraordinarias" aria-labelledby="proximas-extraordinarias-title" data-analytics-related-section="proximas_extraordinarias">
       <div className="shell">
         <div className={styles.heading}>
           <div>

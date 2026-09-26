@@ -4,7 +4,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import { CREW_EVENT_TYPES, crewEventStatusLabel } from '@/lib/crew-events'
+import { trackEvent } from '@/lib/analytics/client'
 import styles from './CrewEventDirectory.module.css'
+
+const AGENDA_TYPE = 'igualas_ensayos'
 
 function uniqueOptions(items, selector) {
   const byValue = new Map()
@@ -44,6 +47,26 @@ function EventStatus({ event }) {
   return <span className={styles.status} data-status={event.eventStatus}>{label}</span>
 }
 
+function trackCrewOpen(event) {
+  trackEvent('agenda_event_open', {
+    event_name: event.title,
+    event_type: event.eventType,
+    municipality: event.municipality,
+    event_date: event.date,
+    agenda_type: AGENDA_TYPE,
+  })
+}
+
+function trackCrewBrotherhood(event) {
+  trackEvent('entity_click', {
+    source_entity_type: 'evento',
+    source_entity_name: event.title,
+    destination_entity_type: 'hermandad',
+    destination_entity_name: event.brotherhoodName,
+    link_context: 'agenda_igualas_ensayos',
+  })
+}
+
 function EventCard({ event }) {
   const time = event.timeText || event.startTime || 'Hora por confirmar'
   const primaryAgent = event.agents.find((item) => item.isPrimary) || event.agents[0]
@@ -60,9 +83,9 @@ function EventCard({ event }) {
           <span>{event.eventTypeLabel}</span>
           <EventStatus event={event} />
         </div>
-        <h3><Link href={event.detailHref}>{event.title}</Link></h3>
+        <h3><Link href={event.detailHref} onClick={() => trackCrewOpen(event)}>{event.title}</Link></h3>
         {event.brotherhoodHref ? (
-          <Link className={styles.brotherhood} href={event.brotherhoodHref}>{event.brotherhoodName}</Link>
+          <Link className={styles.brotherhood} href={event.brotherhoodHref} onClick={() => trackCrewBrotherhood(event)} data-analytics-skip-entity="true">{event.brotherhoodName}</Link>
         ) : <strong className={styles.brotherhood}>{event.brotherhoodName}</strong>}
 
         <div className={styles.relations}>
@@ -76,7 +99,7 @@ function EventCard({ event }) {
             <span><b>Localidad</b>{event.municipality}</span>
             {event.location ? <span><b>Lugar</b>{event.location}</span> : null}
           </div>
-          <Link className={styles.detailLink} href={event.detailHref}>Ver convocatoria <span>→</span></Link>
+          <Link className={styles.detailLink} href={event.detailHref} onClick={() => trackCrewOpen(event)}>Ver convocatoria <span>→</span></Link>
         </div>
       </div>
 
@@ -120,6 +143,19 @@ export default function CrewEventDirectory({ events }) {
   const hasFilters = [month, type, brotherhood, step, agent, municipality].some((value) => value !== 'all')
   const featured = upcoming[0] || null
 
+  function trackFilter(filterType, filterValue) {
+    trackEvent('agenda_filter', {
+      filter_type: filterType,
+      filter_value: filterValue,
+      agenda_type: AGENDA_TYPE,
+    })
+  }
+
+  function setTrackedFilter(setter, filterType, value) {
+    setter(value)
+    trackFilter(filterType, value)
+  }
+
   function clearFilters() {
     setMonth('all')
     setType('all')
@@ -127,6 +163,7 @@ export default function CrewEventDirectory({ events }) {
     setStep('all')
     setAgent('all')
     setMunicipality('all')
+    trackFilter('filtros', 'restablecidos')
   }
 
   if (!events.length) {
@@ -155,7 +192,7 @@ export default function CrewEventDirectory({ events }) {
           </div>
           <div className={styles.featuredCopy}>
             <span className={styles.kicker}>Próxima convocatoria · {featured.eventTypeLabel}</span>
-            <h2><Link href={featured.detailHref}>{featured.title}</Link></h2>
+            <h2><Link href={featured.detailHref} onClick={() => trackCrewOpen(featured)}>{featured.title}</Link></h2>
             <p className={styles.featuredBrotherhood}>{featured.brotherhoodName} · {featured.municipality}</p>
             <div className={styles.featuredFacts}>
               <span><b>Fecha</b>{featured.dateParts.weekdayLabel}</span>
@@ -163,7 +200,7 @@ export default function CrewEventDirectory({ events }) {
               <span><b>Paso</b>{featured.steps.map((item) => item.name).join(' · ') || 'Por confirmar'}</span>
               <span><b>Capataz</b>{featured.agents.map((item) => item.name).join(' · ') || 'Por confirmar'}</span>
             </div>
-            <Link className={styles.primaryAction} href={featured.detailHref}>Ver convocatoria <span>→</span></Link>
+            <Link className={styles.primaryAction} href={featured.detailHref} onClick={() => trackCrewOpen(featured)}>Ver convocatoria <span>→</span></Link>
           </div>
           {featured.crestPath ? (
             <Image className={styles.featuredCrest} src={featured.crestPath} alt={`Escudo de ${featured.brotherhoodName}`} width={150} height={150} sizes="150px" />
@@ -178,21 +215,21 @@ export default function CrewEventDirectory({ events }) {
         </div>
 
         <div className={styles.phaseTabs} aria-label="Filtrar por fecha de celebración">
-          <button type="button" className={phase === 'upcoming' ? styles.active : ''} aria-pressed={phase === 'upcoming'} onClick={() => { setPhase('upcoming'); setMonth('all') }}>
+          <button type="button" className={phase === 'upcoming' ? styles.active : ''} aria-pressed={phase === 'upcoming'} onClick={() => { setPhase('upcoming'); setMonth('all'); trackFilter('estado', 'proximas') }}>
             Próximas <small>{upcoming.length}</small>
           </button>
-          <button type="button" className={phase === 'archive' ? styles.active : ''} aria-pressed={phase === 'archive'} onClick={() => { setPhase('archive'); setMonth('all') }}>
+          <button type="button" className={phase === 'archive' ? styles.active : ''} aria-pressed={phase === 'archive'} onClick={() => { setPhase('archive'); setMonth('all'); trackFilter('estado', 'historico') }}>
             Histórico <small>{archived.length}</small>
           </button>
         </div>
 
         <div className={styles.filters}>
-          <SelectFilter label="Mes" value={month} onChange={setMonth} options={months} allLabel="Todos los meses" />
-          <SelectFilter label="Tipo" value={type} onChange={setType} options={typeOptions} allLabel="Todas las citas" />
-          <SelectFilter label="Hermandad" value={brotherhood} onChange={setBrotherhood} options={brotherhoods} allLabel="Todas" />
-          <SelectFilter label="Paso" value={step} onChange={setStep} options={steps} allLabel="Todos" />
-          <SelectFilter label="Capataz" value={agent} onChange={setAgent} options={agents} allLabel="Todos" />
-          <SelectFilter label="Localidad" value={municipality} onChange={setMunicipality} options={municipalities} allLabel="Todas" />
+          <SelectFilter label="Mes" value={month} onChange={(value) => setTrackedFilter(setMonth, 'mes', value)} options={months} allLabel="Todos los meses" />
+          <SelectFilter label="Tipo" value={type} onChange={(value) => setTrackedFilter(setType, 'tipo_evento', value)} options={typeOptions} allLabel="Todas las citas" />
+          <SelectFilter label="Hermandad" value={brotherhood} onChange={(value) => setTrackedFilter(setBrotherhood, 'hermandad', brotherhoods.find((item) => item.value === value)?.label || value)} options={brotherhoods} allLabel="Todas" />
+          <SelectFilter label="Paso" value={step} onChange={(value) => setTrackedFilter(setStep, 'paso', steps.find((item) => item.value === value)?.label || value)} options={steps} allLabel="Todos" />
+          <SelectFilter label="Capataz" value={agent} onChange={(value) => setTrackedFilter(setAgent, 'capataz', agents.find((item) => item.value === value)?.label || value)} options={agents} allLabel="Todos" />
+          <SelectFilter label="Localidad" value={municipality} onChange={(value) => setTrackedFilter(setMunicipality, 'municipio', municipalities.find((item) => item.value === value)?.label || value)} options={municipalities} allLabel="Todas" />
         </div>
 
         <div className={styles.resultHead}>
