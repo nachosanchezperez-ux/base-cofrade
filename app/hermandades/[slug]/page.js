@@ -25,6 +25,7 @@ import SectionTitle from '@/components/SectionTitle';
 import SourcesBlock from '@/components/SourcesBlock';
 import { holyWeekDay } from '@/lib/brotherhood-directory';
 import { brotherhoodUpcomingAgenda } from '@/lib/brotherhood-agenda';
+import { agendaMunicipalityHref } from '@/lib/agenda-relations';
 import { getStepPhotoFraming } from '@/lib/step-photo-framing';
 import { getBrotherhoodMusicalHeritage } from '@/lib/supabase/brotherhood-musical-heritage';
 import { getAgendaCofrade } from '@/lib/supabase/agenda-cofrade';
@@ -172,6 +173,7 @@ export default async function HermandadDetailPage({ params }) {
   if (!h) notFound();
 
   const canonicalPath = `/hermandades/${h.slug}`;
+  const municipalityHubHref = agendaMunicipalityHref(h.localidad);
   const coverEntityTypes = new Map([
     [h.id, 'brotherhood'],
     ...h.imagenes.map((imagen) => [imagen.id, 'image']),
@@ -380,6 +382,7 @@ export default async function HermandadDetailPage({ params }) {
         title={h.nombrePopular}
         officialName={h.nombreOficial}
         locality={publicText(h.localidad)}
+        localityHref={municipalityHubHref}
         seat={publicText(h.sede)}
         breadcrumbItems={[
           { label: 'Hermandades', href: '/hermandades' },
