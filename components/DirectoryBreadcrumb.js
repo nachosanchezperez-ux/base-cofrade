@@ -1,12 +1,12 @@
 import Link from 'next/link'
 import styles from './DirectoryBreadcrumb.module.css'
 
-export default function DirectoryBreadcrumb({ items = [] }) {
+export default function DirectoryBreadcrumb({ items = [], showAccent = true }) {
   if (!items.length) return null
 
   return (
     <nav className={styles.breadcrumb} aria-label="Ruta de navegación">
-      <span className={styles.accent} aria-hidden="true" />
+      {showAccent ? <span className={styles.accent} aria-hidden="true" /> : null}
       <ol>
         {items.map((item, index) => {
           const isCurrent = index === items.length - 1
