@@ -2,13 +2,13 @@
 
 **Corte operativo:** 26 de septiembre de 2026 · Morón de la Frontera · STAGING CERRADO Y CERTIFICADO · 504/504 VÁLIDAS · 0 APLICADAS
 
-**HEAD integrado en `main`:** `95511d5575d2ff32af83c8fe01c0f038ec1486e2` · #973 integra Plan ROW-BY-ROW, manifiesto determinista y preflight read-only de Morón.
+**Corte GitHub del staging:** base `95511d5575d2ff32af83c8fe01c0f038ec1486e2` tras #973; certificación de staging integrada mediante #974 con merge `751109881e11de2fb36c1d18da14d4320881750c`. Este campo documenta el corte certificado y no actúa como puntero mutable de HEAD.
 
-**Dominio productivo:** `hilocofrade.es` y `www.hilocofrade.es` sirven `dpl_6VyCsgpt95v3qGz2BqDZuESneqY8`, `READY`, exactamente sobre `95511d5575d2ff32af83c8fe01c0f038ec1486e2`; runtime limpio en la ventana revisada.
+**Deployment de certificación de staging:** `dpl_5vsghDxJSrmjiZqnMiM7mVg9NcNA`, `READY`, sobre `751109881e11de2fb36c1d18da14d4320881750c`; #974 solo modifica documentación y no cambia código ni datos editoriales.
 
 **Supabase:** `ACTIVE_HEALTHY` y actualizado por el usuario de Nano a Micro. Support confirmó sobreutilización de memoria, uso sostenido de SWAP y overcommitment durante el incidente; CPU/IO pueden haber contribuido, por lo que no se reduce toda la causalidad a RAM. La base ocupa ~45 MB. Tras Micro: `effective_cache_size` 384→768 MB y `maintenance_work_mem` 32→64 MB. Producción contiene 17 migraciones estructurales. HC-PERF-SUPABASE-01 materializa `home_knowledge_threads`: fuente/caché 2.052/2.052, 0 diferencias, lectura `anon` correcta, patrón medido ~115,4 ms→~0,42 ms y primer cron `succeeded` (~156,9 ms). Véase [seguimiento de capacidad](./P0-SUPABASE-CAPACITY-2026-09-25.md).
 
-**GitHub al corte previo al staging:** 0 PR abiertas tras fusionar #973. #931 permanece cerrada sin merge como superseded por #968/#969; #971–#973 quedan integradas.
+**GitHub en la certificación de staging:** #974 fusionada; 0 PR abiertas en ese corte. #931 permanece cerrada sin merge como superseded por #968/#969.
 
 **Staging editoriales:** Morón `c0160037-0000-4000-8000-000000000001` = `ready`, **504/504 válidas, 0 aplicadas, 0 fallidas**; Écija `c0160036-0000-4000-8000-000000000001` = `completed`, 776/776 aplicadas; Carmona `c0160035-0000-4000-8000-000000000001` = `completed`, 530/530 aplicadas; HC-AUTO-03 · El Calvario permanece `ready` 55/55 y 0 aplicado.
 
