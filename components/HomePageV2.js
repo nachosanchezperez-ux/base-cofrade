@@ -139,11 +139,11 @@ export default function HomePageV2({
             <span className={styles.eyebrow}>{multipleLive ? `Ahora mismo · ${liveOutings.length} en curso` : liveOutings.length ? 'Ahora mismo' : 'Salidas procesionales'}</span>
             <h2 id="proximos-dias-title">{multipleLive ? 'Varias procesiones están en la calle' : featuredOuting ? 'Procesión en curso' : 'En los próximos días'}</h2>
           </div>
-          <p>{multipleLive
-            ? 'La portada agrupa las salidas que coinciden en tiempo real y deja las próximas citas inmediatamente después.'
-            : featuredOuting
+          {multipleLive ? null : (
+            <p>{featuredOuting
               ? 'Una salida solo ocupa el gran formato de la portada cuando está realmente en curso.'
               : 'Procesiones, romerías, traslados y salidas extraordinarias se muestran con el mismo peso visual y en orden cronológico. La cercanía de una cita no la convierte por sí sola en protagonista.'}</p>
+          )}
         </header>
 
         {multipleLive ? (
