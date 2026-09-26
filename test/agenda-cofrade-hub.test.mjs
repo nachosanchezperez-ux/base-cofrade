@@ -47,7 +47,8 @@ test('la Agenda pública muestra solo actos próximos y elimina el acceso histó
 
   assert.doesNotMatch(fromUrl, /'archive'/)
   assert.match(fromUrl, /'tomorrow'/)
-  assert.match(page, /items=\{upcoming\}/)
+  assert.match(page, /interactiveItems = upcoming\.map\(compactAgendaItem\)/)
+  assert.match(page, /items=\{interactiveItems\}/)
   assert.match(page, /Solo los próximos actos/)
   assert.match(page, /agendaSeoCopy/)
   assert.match(seoCalendar, /Agenda cofrade de Sevilla y provincia/)
