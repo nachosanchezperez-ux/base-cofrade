@@ -20,9 +20,35 @@ export const metadata = {
   }),
 }
 
+function compactStepDirectoryItem(item) {
+  return {
+    id: item.id,
+    name: item.name,
+    href: item.href,
+    type: item.type,
+    date: item.date,
+    brotherhoodName: item.brotherhoodName,
+    municipality: item.municipality,
+    municipalitySlug: item.municipalitySlug,
+    imageNames: (item.imageNames || []).slice(0, 2),
+    authorNames: (item.authorNames || []).slice(0, 2),
+    coverPath: item.coverPath,
+    coverAlt: item.coverAlt || [item.name, item.brotherhoodName].filter(Boolean).join(' · '),
+    searchText: [
+      item.style,
+      item.materials,
+      item.condition,
+      ...(item.imageNames || []),
+      ...(item.authorNames || []),
+      ...(item.disciplines || []),
+    ].filter(Boolean).join(' '),
+  }
+}
+
 export default async function PasosPage() {
   await connection()
   const steps = await getStepsDirectory({ throwOnError: true })
+  const directoryItems = steps.map(compactStepDirectoryItem)
 
   return (
     <section className="section page-top">
@@ -34,7 +60,7 @@ export default async function PasosPage() {
         path: '/pasos',
         name: 'Directorio de pasos',
         description,
-        items: steps.map((item) => ({ name: item.name, path: item.href })),
+        items: directoryItems.map((item) => ({ name: item.name, path: item.href })),
       })} />
       <div className="shell">
         <span className="eyebrow">Patrimonio procesional</span>
@@ -42,8 +68,8 @@ export default async function PasosPage() {
         <p className="page-lead">
           Recorre los pasos procesionales por hermandad, localidad y tipología, y sigue sus imágenes, fases de ejecución, autores y talleres.
         </p>
-        <HeritageDirectoryFacets items={steps} section="pasos" title="Pasos" />
-        <RelationalEntityDirectory items={steps} kind="step" />
+        <HeritageDirectoryFacets items={directoryItems} section="pasos" title="Pasos" />
+        <RelationalEntityDirectory items={directoryItems} kind="step" />
       </div>
     </section>
   )
