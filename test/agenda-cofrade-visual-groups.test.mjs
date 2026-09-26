@@ -29,6 +29,7 @@ test('cada mes resume y cada tarjeta conserva el color de su tipo de acto', () =
   assert.match(styles, /data-category="processions"/)
   assert.match(styles, /data-category="transfers"/)
   assert.match(styles, /data-category="rosaries"/)
+  assert.match(styles, /data-category="romeries"/)
   assert.match(styles, /data-category="devotions"/)
   assert.match(styles, /data-category="concerts"/)
   assert.match(styles, /--category-accent/)
