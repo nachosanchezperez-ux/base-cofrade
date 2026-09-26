@@ -10,6 +10,7 @@ import SectionTitle from '@/components/SectionTitle';
 import StepCrewFacts from '@/components/StepCrewFacts';
 import { getStepPhotoFraming } from '@/lib/step-photo-framing';
 import { heritageDirectoryTypePath, heritageTypeForValue } from '@/lib/heritage-directory';
+import { agendaMunicipalityHref } from '@/lib/agenda-relations';
 import { getPasoPageBySlug } from '@/lib/supabase/public-entity-pages';
 import {
   meetsPublicEditorialMinimum,
@@ -108,6 +109,9 @@ export default async function PasoDetailPage({params}){
     heritage = { phases: [], pieces: [], sources: [] },
   } = result;
   const directoryType = heritageTypeForValue(paso.tipo, 'pasos');
+  const municipalityHubHref = hermandad?.localidad
+    ? agendaMunicipalityHref(hermandad.localidad)
+    : '';
   const relationalItems = [
     ...(hermandad ? [{
       kind: 'Hermandad',
@@ -231,6 +235,10 @@ export default async function PasoDetailPage({params}){
             {hermandad ? <div>
               <small>Hermandad</small>
               <strong>{hermandad.nombrePopular}</strong>
+            </div> : null}
+            {municipalityHubHref ? <div>
+              <small>Localidad</small>
+              <Link href={municipalityHubHref}>Guía cofrade de {hermandad.localidad} →</Link>
             </div> : null}
             {publicText(paso.tipo) ? <div><small>Tipo</small><strong>{publicText(paso.tipo)}</strong>{directoryType ? <Link href={heritageDirectoryTypePath('pasos', directoryType.slug)}>Ver {directoryType.label.toLowerCase()} →</Link> : null}</div> : null}
             {publicText(paso.ejecucion) ? <div><small>Ejecución</small><strong>{publicText(paso.ejecucion)}</strong></div> : null}
