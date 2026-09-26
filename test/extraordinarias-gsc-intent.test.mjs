@@ -10,8 +10,8 @@ test('Extraordinarias alinea el title con la consulta principal observada en GSC
   const seo = read('lib/seo-calendar.js')
   const page = read('app/extraordinarias/page.js')
 
-  assert.match(seo, /Extraordinarias Sevilla \\$\\{year\\}: calendario/)
-  assert.match(seo, /Procesiones y salidas extraordinarias de Sevilla en \\$\\{year\\}:/)
+  assert.match(seo, /Extraordinarias Sevilla \$\{year\}: calendario/)
+  assert.match(seo, /Procesiones y salidas extraordinarias de Sevilla en \$\{year\}:/)
   assert.match(page, /Procesiones y salidas extraordinarias de Sevilla \{currentYear\}/)
   assert.match(page, /Consulta las extraordinarias de Sevilla en \{currentYear\}/)
 })
