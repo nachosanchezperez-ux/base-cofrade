@@ -34,6 +34,7 @@ test('exige los NOT NULL sin default cuando la operación efectiva es INSERT', (
     [
       'MISSING_REQUIRED_FIELD: brotherhoods.official_name es obligatorio para INSERT.',
       'MISSING_REQUIRED_FIELD: brotherhoods.popular_name es obligatorio para INSERT.',
+      'MISSING_REQUIRED_FIELD: brotherhoods.brotherhood_types es obligatorio para INSERT.',
     ],
   )
 })
@@ -51,7 +52,7 @@ test('permite UPDATE parcial sin exigir campos que ya existen en la fila persist
 test('acepta los campos reales usados por entities, brotherhoods y bands', () => {
   const inputs = [
     { table: 'entities', operation: 'insert', data: { entity_type: 'band', name: 'Banda ejemplo' } },
-    { table: 'brotherhoods', operation: 'insert', data: { entity_id: '00000000-0000-0000-0000-000000000001', official_name: 'Hermandad', popular_name: 'Hermandad' } },
+    { table: 'brotherhoods', operation: 'insert', data: { entity_id: '00000000-0000-0000-0000-000000000001', official_name: 'Hermandad', popular_name: 'Hermandad', brotherhood_types: ['Penitencia'] } },
     { table: 'bands', operation: 'insert', data: { entity_id: '00000000-0000-0000-0000-000000000001', description: 'Descripción', linked_brotherhood_name: 'Hermandad' } },
   ]
 
