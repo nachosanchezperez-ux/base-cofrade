@@ -86,3 +86,27 @@ test('una salida futura sin horarios sigue siendo próxima', () => {
   assert.equal(state.state, 'upcoming')
   assert.equal(state.label, 'Próxima')
 })
+
+
+test('activa el directo tras la salida aunque falte la hora de entrada', () => {
+  const state = getProcessionLiveState({
+    date: '2026-09-26',
+    startTime: '18:30',
+    endTime: '',
+  }, new Date('2026-09-26T17:21:00Z'))
+
+  assert.equal(state.state, 'live')
+  assert.equal(state.isLive, true)
+  assert.equal(state.label, 'En curso')
+})
+
+test('una salida sin hora final no queda indefinidamente en directo', () => {
+  const state = getProcessionLiveState({
+    date: '2026-09-26',
+    startTime: '17:00',
+    endTime: '',
+  }, new Date('2026-09-27T00:30:00Z'))
+
+  assert.equal(state.state, 'done')
+  assert.equal(state.isLive, false)
+})
