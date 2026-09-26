@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
+import { readFileSync } from 'node:fs'
 import { bandSeoIdentity } from '../lib/bands/seo.js'
 
 test('bandSeoIdentity conserva nombres que ya incluyen su tipología', () => {
