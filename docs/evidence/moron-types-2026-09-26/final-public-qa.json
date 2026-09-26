@@ -1,0 +1,738 @@
+{
+  "checked_at": "2026-09-26T21:54:11.782139+00:00",
+  "product_sha": "b6c58df963a493dc790ad01c135501a8397d13f4",
+  "deployment": "dpl_Fy1buETd7FtF5czMXeTZ2yn9Ju3m",
+  "results": [
+    {
+      "path": "/hermandades/soberano-moron-de-la-frontera",
+      "status": 200,
+      "url": "https://hilocofrade.es/hermandades/soberano-moron-de-la-frontera",
+      "title": "El Soberano (Morón de la Frontera): historia y pasos · Hilo Cofrade",
+      "canonical": "https://hilocofrade.es/hermandades/soberano-moron-de-la-frontera",
+      "robots": "index, follow",
+      "headings": [
+        "El Soberano",
+        "La Hermandad durante el año",
+        "Parroquia de San José",
+        "Conexiones de esta Hermandad",
+        "Sagrados Titulares",
+        "Nuestro Padre Jesús de la Salud y el Perdón en su Soberano Poder ante Pilatos",
+        "María Santísima de los Ángeles y de la Cruz",
+        "Pasos procesionales",
+        "Misterio de Nuestro Padre Jesús de la Salud y el Perdón ante Pilatos",
+        "Palio de María Santísima de los Ángeles y de la Cruz",
+        "La Hermandad como nodo de la enciclopedia",
+        "Salidas",
+        "Otras salidas",
+        "El Soberano · Viernes de Dolores 2026",
+        "Acompañamientos Musicales Históricos",
+        "Nazareno de Arahal",
+        "Banda Municipal de Música de Morón de la Frontera",
+        "Fuentes"
+      ],
+      "moron_links": [
+        "/agenda-cofrade/localidad/moron-de-la-frontera"
+      ]
+    },
+    {
+      "path": "/hermandades/borriquita-moron-de-la-frontera",
+      "status": 200,
+      "url": "https://hilocofrade.es/hermandades/borriquita-moron-de-la-frontera",
+      "title": "La Borriquita (Morón de la Frontera) · Hilo Cofrade",
+      "canonical": "https://hilocofrade.es/hermandades/borriquita-moron-de-la-frontera",
+      "robots": "index, follow",
+      "headings": [
+        "La Borriquita",
+        "La Hermandad durante el año",
+        "Capilla de María Auxiliadora · Salesianos",
+        "Conexiones de esta Hermandad",
+        "Sagrados Titulares",
+        "Santísimo Cristo de la Bondad",
+        "Pasos procesionales",
+        "Paso de la Entrada Triunfal en Jerusalén · Borriquita",
+        "La Hermandad como nodo de la enciclopedia",
+        "Salidas",
+        "Domingo de Ramos · Estación de Penitencia",
+        "Edición 2026",
+        "Acompañamientos Musicales Históricos",
+        "Banda de Cornetas y Tambores Santísimo Cristo a la Columna «El Amarrado» de Ávila",
+        "Fuentes"
+      ],
+      "moron_links": [
+        "/agenda-cofrade/localidad/moron-de-la-frontera",
+        "/hermandades/buena-muerte-moron-de-la-frontera"
+      ]
+    },
+    {
+      "path": "/hermandades/cautivo-moron-de-la-frontera",
+      "status": 200,
+      "url": "https://hilocofrade.es/hermandades/cautivo-moron-de-la-frontera",
+      "title": "El Cautivo (Morón de la Frontera): titulares y pasos · Hilo Cofrade",
+      "canonical": "https://hilocofrade.es/hermandades/cautivo-moron-de-la-frontera",
+      "robots": "index, follow",
+      "headings": [
+        "El Cautivo",
+        "La Hermandad durante el año",
+        "Parroquia de San Miguel Arcángel",
+        "Conexiones de esta Hermandad",
+        "Sagrados Titulares",
+        "Nuestro Padre Jesús Cautivo",
+        "María Santísima de la Paz",
+        "Pasos procesionales",
+        "Paso de Nuestro Padre Jesús Cautivo",
+        "Palio de María Santísima de la Paz",
+        "La Hermandad como nodo de la enciclopedia",
+        "Salidas",
+        "Domingo de Ramos · Estación de Penitencia",
+        "Edición 2026",
+        "Acompañamientos Musicales Históricos",
+        "Banda de Cornetas y Tambores Coronación de Espinas de Córdoba",
+        "Banda Municipal de Música de Morón de la Frontera",
+        "Fuentes"
+      ],
+      "moron_links": [
+        "/agenda-cofrade/localidad/moron-de-la-frontera",
+        "/hermandades/soledad-moron-de-la-frontera"
+      ]
+    },
+    {
+      "path": "/hermandades/calvario-moron-de-la-frontera",
+      "status": 200,
+      "url": "https://hilocofrade.es/hermandades/calvario-moron-de-la-frontera",
+      "title": "La Merced / Calvario (Morón de la Frontera) · Hilo Cofrade",
+      "canonical": "https://hilocofrade.es/hermandades/calvario-moron-de-la-frontera",
+      "robots": "index, follow",
+      "headings": [
+        "La Merced / Calvario",
+        "La Hermandad durante el año",
+        "Parroquia de Nuestra Señora de la Merced",
+        "Conexiones de esta Hermandad",
+        "Sagrados Titulares",
+        "Santísimo Cristo del Calvario",
+        "Nuestra Señora del Mayor Dolor",
+        "Pasos procesionales",
+        "Misterio del Santísimo Cristo del Calvario",
+        "Palio de Nuestra Señora del Mayor Dolor",
+        "La Hermandad como nodo de la enciclopedia",
+        "Salidas",
+        "Lunes Santo · Estación de Penitencia",
+        "Edición 2026",
+        "Acompañamientos Musicales Históricos",
+        "Agrupación Musical Vera Cruz de Campillos",
+        "Asociación Musical de La Algaba",
+        "Fuentes"
+      ],
+      "moron_links": [
+        "/agenda-cofrade/localidad/moron-de-la-frontera"
+      ]
+    },
+    {
+      "path": "/hermandades/buena-muerte-moron-de-la-frontera",
+      "status": 200,
+      "url": "https://hilocofrade.es/hermandades/buena-muerte-moron-de-la-frontera",
+      "title": "Los Salesianos / Buena Muerte (Morón de la Frontera) · Hilo Cofrade",
+      "canonical": "https://hilocofrade.es/hermandades/buena-muerte-moron-de-la-frontera",
+      "robots": "index, follow",
+      "headings": [
+        "Los Salesianos / Buena Muerte",
+        "La Hermandad durante el año",
+        "Capilla de María Auxiliadora · Salesianos",
+        "Conexiones de esta Hermandad",
+        "Sagrados Titulares",
+        "Santísimo Cristo de la Buena Muerte",
+        "María Santísima de la Amargura",
+        "Pasos procesionales",
+        "Paso del Santísimo Cristo de la Buena Muerte",
+        "Palio de María Santísima de la Amargura",
+        "La Hermandad como nodo de la enciclopedia",
+        "Salidas",
+        "Martes Santo · Estación de Penitencia",
+        "Edición 2026",
+        "Acompañamientos Musicales Históricos",
+        "Agrupación Vocal de Cámara Redentoris Mundi",
+        "Banda Municipal de Música de Morón de la Frontera",
+        "Fuentes"
+      ],
+      "moron_links": [
+        "/agenda-cofrade/localidad/moron-de-la-frontera",
+        "/hermandades/borriquita-moron-de-la-frontera"
+      ]
+    },
+    {
+      "path": "/hermandades/loreto-moron-de-la-frontera",
+      "status": 200,
+      "url": "https://hilocofrade.es/hermandades/loreto-moron-de-la-frontera",
+      "title": "San Francisco / Loreto (Morón de la Frontera) · Hilo Cofrade",
+      "canonical": "https://hilocofrade.es/hermandades/loreto-moron-de-la-frontera",
+      "robots": "index, follow",
+      "headings": [
+        "San Francisco / Loreto",
+        "La Hermandad durante el año",
+        "Parroquia de San Francisco de Asís",
+        "Conexiones de esta Hermandad",
+        "Sagrados Titulares",
+        "Santísimo Cristo de la Agonía en el Huerto",
+        "María Santísima de Loreto",
+        "Pasos procesionales",
+        "Misterio de la Agonía en el Huerto",
+        "Palio de María Santísima de Loreto",
+        "La Hermandad como nodo de la enciclopedia",
+        "Salidas",
+        "Miércoles Santo · Estación de Penitencia",
+        "Edición 2026",
+        "Acompañamientos Musicales Históricos",
+        "Agrupación Musical Nuestro Padre Jesús Nazareno de la Fuensanta de Morón",
+        "Banda de Música de El Saucejo",
+        "Fuentes"
+      ],
+      "moron_links": [
+        "/agenda-cofrade/localidad/moron-de-la-frontera"
+      ]
+    },
+    {
+      "path": "/hermandades/santa-cruz-moron-de-la-frontera",
+      "status": 200,
+      "url": "https://hilocofrade.es/hermandades/santa-cruz-moron-de-la-frontera",
+      "title": "La Compañía / Santa Cruz (Morón de la Frontera) · Hilo Cofrade",
+      "canonical": "https://hilocofrade.es/hermandades/santa-cruz-moron-de-la-frontera",
+      "robots": "index, follow",
+      "headings": [
+        "La Compañía / Santa Cruz",
+        "La Hermandad durante el año",
+        "Iglesia de San Ignacio de Loyola · La Compañía",
+        "Conexiones de esta Hermandad",
+        "Sagrados Titulares",
+        "Santísimo Cristo de la Expiración",
+        "Nuestra Señora de la Esperanza",
+        "Pasos procesionales",
+        "Paso del Santísimo Cristo de la Expiración",
+        "Palio de Nuestra Señora de la Esperanza",
+        "La Hermandad como nodo de la enciclopedia",
+        "Salidas",
+        "Jueves Santo · Estación de Penitencia",
+        "Edición 2026",
+        "Acompañamientos Musicales Históricos",
+        "Banda de Cornetas y Tambores Sayones de Nuestro Padre Jesús Nazareno de Pozoblanco",
+        "Banda de Música Municipal Gailín de Puerto Serrano",
+        "Fuentes"
+      ],
+      "moron_links": [
+        "/agenda-cofrade/localidad/moron-de-la-frontera"
+      ]
+    },
+    {
+      "path": "/hermandades/jesus-nazareno-moron-de-la-frontera",
+      "status": 200,
+      "url": "https://hilocofrade.es/hermandades/jesus-nazareno-moron-de-la-frontera",
+      "title": "Jesús (Morón de la Frontera): titulares y pasos · Hilo Cofrade",
+      "canonical": "https://hilocofrade.es/hermandades/jesus-nazareno-moron-de-la-frontera",
+      "robots": "index, follow",
+      "headings": [
+        "Jesús",
+        "La Hermandad durante el año",
+        "Ermita de Jesús / Fuensanta",
+        "Conexiones de esta Hermandad",
+        "Sagrados Titulares",
+        "Nuestro Padre Jesús Nazareno",
+        "María Santísima de los Dolores",
+        "San Juan Evangelista",
+        "Pasos procesionales",
+        "Paso de Nuestro Padre Jesús Nazareno",
+        "Palio de María Santísima de los Dolores",
+        "La Hermandad como nodo de la enciclopedia",
+        "Salidas",
+        "Madrugada del Viernes Santo · Estación de Penitencia",
+        "Edición 2026",
+        "Acompañamientos Musicales Históricos",
+        "Agrupación Musical Nuestro Padre Jesús Nazareno de la Fuensanta de Morón",
+        "Banda Municipal de Música de Morón de la Frontera",
+        "Agrupación Musical Juvenil Nuestro Padre Jesús Nazareno de la Fuensanta de Morón",
+        "Fuentes"
+      ],
+      "moron_links": [
+        "/agenda-cofrade/localidad/moron-de-la-frontera"
+      ]
+    },
+    {
+      "path": "/hermandades/santo-entierro-moron-de-la-frontera",
+      "status": 200,
+      "url": "https://hilocofrade.es/hermandades/santo-entierro-moron-de-la-frontera",
+      "title": "Santo Entierro (Morón de la Frontera) · Hilo Cofrade",
+      "canonical": "https://hilocofrade.es/hermandades/santo-entierro-moron-de-la-frontera",
+      "robots": "index, follow",
+      "headings": [
+        "Santo Entierro",
+        "La Hermandad durante el año",
+        "Parroquia de Nuestra Señora de la Victoria y del Espíritu Santo",
+        "Conexiones de esta Hermandad",
+        "Sagrados Titulares",
+        "Santísimo Cristo de la Victoria",
+        "Santísimo Cristo Yacente",
+        "Nuestra Señora de las Angustias",
+        "Pasos procesionales",
+        "Paso del Santo Entierro · Santísimo Cristo Yacente",
+        "Paso de la Piedad · Nuestra Señora de las Angustias",
+        "La Hermandad como nodo de la enciclopedia",
+        "Salidas",
+        "Viernes Santo · Estación de Penitencia",
+        "Edición 2026",
+        "Acompañamientos Musicales Históricos",
+        "Banda de Música de El Campillo",
+        "Capilla Musical Dulce Nombre",
+        "Fuentes"
+      ],
+      "moron_links": [
+        "/agenda-cofrade/localidad/moron-de-la-frontera"
+      ]
+    },
+    {
+      "path": "/hermandades/soledad-moron-de-la-frontera",
+      "status": 200,
+      "url": "https://hilocofrade.es/hermandades/soledad-moron-de-la-frontera",
+      "title": "La Soledad (Morón de la Frontera): titulares y pasos · Hilo Cofrade",
+      "canonical": "https://hilocofrade.es/hermandades/soledad-moron-de-la-frontera",
+      "robots": "index, follow",
+      "headings": [
+        "La Soledad",
+        "La Hermandad durante el año",
+        "Parroquia de San Miguel Arcángel",
+        "Conexiones de esta Hermandad",
+        "Sagrados Titulares",
+        "Nuestra Señora de los Dolores en su Soledad",
+        "Pasos procesionales",
+        "Paso de Nuestra Señora de los Dolores en su Soledad",
+        "La Hermandad como nodo de la enciclopedia",
+        "Salidas",
+        "Sábado Santo · Estación de Penitencia",
+        "Edición 2026",
+        "Acompañamientos Musicales Históricos",
+        "Banda Municipal de Música de Morón de la Frontera",
+        "Fuentes"
+      ],
+      "moron_links": [
+        "/agenda-cofrade/localidad/moron-de-la-frontera",
+        "/hermandades/cautivo-moron-de-la-frontera"
+      ]
+    },
+    {
+      "path": "/agenda-cofrade/localidad/moron-de-la-frontera",
+      "status": 200,
+      "url": "https://hilocofrade.es/agenda-cofrade/localidad/moron-de-la-frontera",
+      "title": "Cofradías de Morón de la Frontera: hermandades y agenda cofrade · Hilo Cofrade",
+      "canonical": "https://hilocofrade.es/agenda-cofrade/localidad/moron-de-la-frontera",
+      "robots": "index, follow",
+      "headings": [
+        "Guía cofrade de Morón de la Frontera",
+        "Primero, lo más cercano en el tiempo",
+        "La agenda de Morón de la Frontera , por ámbitos",
+        "Sin próximas citas publicadas por ahora",
+        "Hermandades y Bandas de Morón de la Frontera",
+        "Imágenes y Pasos de Morón de la Frontera"
+      ],
+      "moron_links": [
+        "/agenda-cofrade?municipio=moron-de-la-frontera#agenda",
+        "/agenda-cofrade?municipio=moron-de-la-frontera&periodo=today#agenda",
+        "/agenda-cofrade?municipio=moron-de-la-frontera&periodo=tomorrow#agenda",
+        "/agenda-cofrade?municipio=moron-de-la-frontera&periodo=weekend#agenda",
+        "/bandas/banda-municipal-musica-moron-de-la-frontera",
+        "/bandas/localidad/moron-de-la-frontera",
+        "/hermandades/borriquita-moron-de-la-frontera",
+        "/hermandades/buena-muerte-moron-de-la-frontera",
+        "/hermandades/calvario-moron-de-la-frontera",
+        "/hermandades/cautivo-moron-de-la-frontera",
+        "/hermandades/jesus-nazareno-moron-de-la-frontera",
+        "/hermandades/localidad/moron-de-la-frontera",
+        "/hermandades/soberano-moron-de-la-frontera",
+        "/imagenes/localidad/moron-de-la-frontera",
+        "/pasos/localidad/moron-de-la-frontera"
+      ]
+    },
+    {
+      "path": "/hermandades/localidad/moron-de-la-frontera",
+      "status": 200,
+      "url": "https://hilocofrade.es/hermandades/localidad/moron-de-la-frontera",
+      "title": "Hermandades de Morón de la Frontera · Hilo Cofrade",
+      "canonical": "https://hilocofrade.es/hermandades/localidad/moron-de-la-frontera",
+      "robots": "index, follow",
+      "headings": [
+        "Hermandades de Morón de la Frontera"
+      ],
+      "moron_links": [
+        "/agenda-cofrade/localidad/moron-de-la-frontera",
+        "/hermandades/borriquita-moron-de-la-frontera",
+        "/hermandades/buena-muerte-moron-de-la-frontera",
+        "/hermandades/calvario-moron-de-la-frontera",
+        "/hermandades/cautivo-moron-de-la-frontera",
+        "/hermandades/jesus-nazareno-moron-de-la-frontera",
+        "/hermandades/loreto-moron-de-la-frontera",
+        "/hermandades/santa-cruz-moron-de-la-frontera",
+        "/hermandades/santo-entierro-moron-de-la-frontera",
+        "/hermandades/soberano-moron-de-la-frontera",
+        "/hermandades/soledad-moron-de-la-frontera"
+      ]
+    },
+    {
+      "path": "/hermandades",
+      "status": 200,
+      "url": "https://hilocofrade.es/hermandades",
+      "title": "Hermandades y Agrupaciones Parroquiales de Sevilla · Hilo Cofrade",
+      "canonical": "https://hilocofrade.es/hermandades",
+      "robots": "index, follow",
+      "headings": [
+        "Hermandades y Agrupaciones Parroquiales",
+        "Sevilla capital",
+        "Semana Santa",
+        "Glorias",
+        "Municipios",
+        "Hermandades por localidad",
+        "Sevilla capital",
+        "Alcalá de Guadaíra",
+        "Alcalá del Río",
+        "Alcolea del Río",
+        "Aznalcázar",
+        "Aznalcóllar",
+        "Bollullos de la Mitación",
+        "Camas",
+        "Cantillana",
+        "Cañada Rosal",
+        "Carmona",
+        "Carrión de los Céspedes",
+        "Castilblanco de los Arroyos",
+        "Coria del Río",
+        "Dos Hermanas",
+        "Écija",
+        "Estepa",
+        "Gerena",
+        "Guadalcanal",
+        "Huévar del Aljarafe",
+        "La Algaba",
+        "La Puebla de Cazalla",
+        "La Rinconada",
+        "Lebrija",
+        "Lora del Río",
+        "Mairena del Aljarafe",
+        "Marchena",
+        "Marinaleda",
+        "Montellano",
+        "Morón de la Frontera",
+        "Osuna",
+        "Pilas",
+        "Tocina",
+        "Tomares",
+        "Utrera",
+        "Villaverde del Río"
+      ],
+      "moron_links": [
+        "/hermandades/borriquita-moron-de-la-frontera",
+        "/hermandades/buena-muerte-moron-de-la-frontera",
+        "/hermandades/calvario-moron-de-la-frontera",
+        "/hermandades/cautivo-moron-de-la-frontera",
+        "/hermandades/jesus-nazareno-moron-de-la-frontera",
+        "/hermandades/localidad/moron-de-la-frontera",
+        "/hermandades/loreto-moron-de-la-frontera",
+        "/hermandades/santa-cruz-moron-de-la-frontera",
+        "/hermandades/santo-entierro-moron-de-la-frontera",
+        "/hermandades/soberano-moron-de-la-frontera",
+        "/hermandades/soledad-moron-de-la-frontera"
+      ]
+    },
+    {
+      "path": "/sitemaps/hermandades.xml",
+      "status": 200,
+      "url": "https://hilocofrade.es/sitemaps/hermandades.xml",
+      "url_count": 274,
+      "moron_urls": [
+        "https://hilocofrade.es/hermandades/soberano-moron-de-la-frontera",
+        "https://hilocofrade.es/hermandades/cautivo-moron-de-la-frontera",
+        "https://hilocofrade.es/hermandades/calvario-moron-de-la-frontera",
+        "https://hilocofrade.es/hermandades/borriquita-moron-de-la-frontera",
+        "https://hilocofrade.es/hermandades/buena-muerte-moron-de-la-frontera",
+        "https://hilocofrade.es/hermandades/loreto-moron-de-la-frontera",
+        "https://hilocofrade.es/hermandades/jesus-nazareno-moron-de-la-frontera",
+        "https://hilocofrade.es/hermandades/soledad-moron-de-la-frontera",
+        "https://hilocofrade.es/hermandades/santa-cruz-moron-de-la-frontera",
+        "https://hilocofrade.es/hermandades/santo-entierro-moron-de-la-frontera",
+        "https://hilocofrade.es/hermandades/localidad/moron-de-la-frontera"
+      ]
+    },
+    {
+      "path": "/sitemaps/agenda.xml",
+      "status": 200,
+      "url": "https://hilocofrade.es/sitemaps/agenda.xml",
+      "url_count": 234,
+      "moron_urls": [
+        "https://hilocofrade.es/agenda-cofrade/localidad/moron-de-la-frontera"
+      ]
+    },
+    {
+      "path": "/robots.txt",
+      "status": 200,
+      "url": "https://hilocofrade.es/robots.txt",
+      "body": "User-Agent: OAI-SearchBot\nAllow: /\nDisallow: /api/\nDisallow: /panel/\n\nUser-Agent: *\nAllow: /\nDisallow: /api/\nDisallow: /panel/\n\nHost: https://hilocofrade.es\nSitemap: https://hilocofrade.es/sitemap.xml\nSitemap: https://hilocofrade.es/sitemaps/general.xml\nSitemap: https://hilocofrade.es/sitemaps/hermandades.xml\nSitemap: https://hilocofrade.es/sitemaps/bandas.xml\nSitemap: https://hilocofrade.es/sitemaps/imagenes.xml\nSitemap: https://hilocofrade.es/sitemaps/pasos.xml\nSitemap: https://hilocofrade.es/sitemaps/marchas.xml\nSitemap: https://hilocofrade.es/sitemaps/autores.xml\nSitemap: https://hilocofrade.es/sitemaps/crucetas.xml\nSitemap: https://hilocofrade.es/sitemaps/agenda.xml\n"
+    },
+    {
+      "path": "/sitemap.xml",
+      "status": 200,
+      "url": "https://hilocofrade.es/sitemap.xml",
+      "url_count": 2256,
+      "moron_urls": [
+        "https://hilocofrade.es/hermandades/soberano-moron-de-la-frontera",
+        "https://hilocofrade.es/hermandades/cautivo-moron-de-la-frontera",
+        "https://hilocofrade.es/hermandades/calvario-moron-de-la-frontera",
+        "https://hilocofrade.es/hermandades/borriquita-moron-de-la-frontera",
+        "https://hilocofrade.es/hermandades/buena-muerte-moron-de-la-frontera",
+        "https://hilocofrade.es/hermandades/loreto-moron-de-la-frontera",
+        "https://hilocofrade.es/hermandades/jesus-nazareno-moron-de-la-frontera",
+        "https://hilocofrade.es/hermandades/soledad-moron-de-la-frontera",
+        "https://hilocofrade.es/hermandades/santa-cruz-moron-de-la-frontera",
+        "https://hilocofrade.es/hermandades/santo-entierro-moron-de-la-frontera",
+        "https://hilocofrade.es/hermandades/localidad/moron-de-la-frontera",
+        "https://hilocofrade.es/bandas/banda-municipal-musica-moron-de-la-frontera",
+        "https://hilocofrade.es/bandas/localidad/moron-de-la-frontera",
+        "https://hilocofrade.es/imagenes/localidad/moron-de-la-frontera",
+        "https://hilocofrade.es/pasos/localidad/moron-de-la-frontera",
+        "https://hilocofrade.es/agenda-cofrade/localidad/moron-de-la-frontera"
+      ]
+    }
+  ],
+  "search": [
+    {
+      "question": "Hermandades sacramentales de Morón de la Frontera",
+      "status": 200,
+      "response": {
+        "kind": "answer",
+        "answer": "En Hilo Cofrade hay 1 corporación sacramental publicada de Morón de la Frontera.",
+        "path": [
+          "Hermandades",
+          "Sacramental",
+          "Morón de la Frontera",
+          "Directorio publicado"
+        ],
+        "entities": [],
+        "items": [
+          {
+            "label": "San Francisco / Loreto",
+            "meta": "Penitencia · Sacramental · Miércoles Santo · Parroquia de San Francisco de Asís",
+            "href": "/hermandades/loreto-moron-de-la-frontera",
+            "group": "Hermandades"
+          }
+        ],
+        "links": [
+          {
+            "label": "Ver las sacramentales de Morón de la Frontera",
+            "href": "/hermandades/sacramentales/moron-de-la-frontera"
+          }
+        ],
+        "evidence": [
+          {
+            "key": "brotherhood-directory-moron-de-la-frontera-sacramental",
+            "label": "Directorio público de Hermandades",
+            "detail": "1 fichas publicadas · Morón de la Frontera"
+          }
+        ],
+        "references": [],
+        "referencesNote": "",
+        "followUps": [
+          "¿Qué tienen en común?",
+          "Ordénalas de más antigua a más reciente."
+        ],
+        "context": {
+          "entityId": null,
+          "entityType": null,
+          "name": "Morón de la Frontera",
+          "resultSet": {
+            "entityType": "brotherhood",
+            "entityIds": [
+              "c0160037-0306-4000-8000-000000000006"
+            ],
+            "count": 1,
+            "label": "1 corporación sacramental publicada de Morón de la Frontera",
+            "sourceIntent": "brotherhoods_by_municipality"
+          }
+        },
+        "compactItemLimit": 1
+      }
+    },
+    {
+      "question": "Hermandades de Morón de la Frontera",
+      "status": 200,
+      "response": {
+        "kind": "answer",
+        "answer": "En Hilo Cofrade hay 10 corporaciones publicadas de Morón de la Frontera.",
+        "path": [
+          "Hermandades",
+          "Morón de la Frontera",
+          "Directorio publicado"
+        ],
+        "entities": [],
+        "items": [
+          {
+            "label": "El Cautivo",
+            "meta": "Penitencia · Domingo de Ramos · tarde · Parroquia de San Miguel Arcángel",
+            "href": "/hermandades/cautivo-moron-de-la-frontera",
+            "group": "Hermandades"
+          },
+          {
+            "label": "El Soberano",
+            "meta": "Penitencia · Viernes de Dolores · Parroquia de San José",
+            "href": "/hermandades/soberano-moron-de-la-frontera",
+            "group": "Hermandades"
+          },
+          {
+            "label": "Jesús",
+            "meta": "Penitencia · Madrugada del Viernes Santo · Ermita de Jesús / Fuensanta",
+            "href": "/hermandades/jesus-nazareno-moron-de-la-frontera",
+            "group": "Hermandades"
+          },
+          {
+            "label": "La Borriquita",
+            "meta": "Penitencia · Domingo de Ramos · mañana · Capilla de María Auxiliadora · Salesianos",
+            "href": "/hermandades/borriquita-moron-de-la-frontera",
+            "group": "Hermandades"
+          },
+          {
+            "label": "La Compañía / Santa Cruz",
+            "meta": "Penitencia · Gloria · Jueves Santo · Iglesia de San Ignacio de Loyola · La Compañía",
+            "href": "/hermandades/santa-cruz-moron-de-la-frontera",
+            "group": "Hermandades"
+          },
+          {
+            "label": "La Merced / Calvario",
+            "meta": "Penitencia · Lunes Santo · Parroquia de Nuestra Señora de la Merced",
+            "href": "/hermandades/calvario-moron-de-la-frontera",
+            "group": "Hermandades"
+          },
+          {
+            "label": "La Soledad",
+            "meta": "Penitencia · Sábado Santo · Parroquia de San Miguel Arcángel",
+            "href": "/hermandades/soledad-moron-de-la-frontera",
+            "group": "Hermandades"
+          },
+          {
+            "label": "Los Salesianos / Buena Muerte",
+            "meta": "Penitencia · Martes Santo · Capilla de María Auxiliadora · Salesianos",
+            "href": "/hermandades/buena-muerte-moron-de-la-frontera",
+            "group": "Hermandades"
+          },
+          {
+            "label": "San Francisco / Loreto",
+            "meta": "Penitencia · Sacramental · Miércoles Santo · Parroquia de San Francisco de Asís",
+            "href": "/hermandades/loreto-moron-de-la-frontera",
+            "group": "Hermandades"
+          },
+          {
+            "label": "Santo Entierro",
+            "meta": "Penitencia · Viernes Santo · tarde · Parroquia de Nuestra Señora de la Victoria y del Espíritu Santo",
+            "href": "/hermandades/santo-entierro-moron-de-la-frontera",
+            "group": "Hermandades"
+          }
+        ],
+        "links": [
+          {
+            "label": "Ver las sacramentales de Morón de la Frontera",
+            "href": "/hermandades/sacramentales/moron-de-la-frontera"
+          }
+        ],
+        "evidence": [
+          {
+            "key": "brotherhood-directory-moron-de-la-frontera-all",
+            "label": "Directorio público de Hermandades",
+            "detail": "10 fichas publicadas · Morón de la Frontera"
+          }
+        ],
+        "references": [],
+        "referencesNote": "",
+        "followUps": [
+          "¿Qué tienen en común?",
+          "Ordénalas de más antigua a más reciente."
+        ],
+        "context": {
+          "entityId": null,
+          "entityType": null,
+          "name": "Morón de la Frontera",
+          "resultSet": {
+            "entityType": "brotherhood",
+            "entityIds": [
+              "c0160037-0303-4000-8000-000000000003",
+              "c0160037-0301-4000-8000-000000000001",
+              "c0160037-0308-4000-8000-000000000008",
+              "c0160037-0302-4000-8000-000000000002",
+              "c0160037-0307-4000-8000-000000000007",
+              "c0160037-0304-4000-8000-000000000004",
+              "c0160037-0310-4000-8000-000000000010",
+              "c0160037-0305-4000-8000-000000000005",
+              "c0160037-0306-4000-8000-000000000006",
+              "c0160037-0309-4000-8000-000000000009"
+            ],
+            "count": 10,
+            "label": "10 corporaciones de Morón de la Frontera",
+            "sourceIntent": "brotherhoods_by_municipality"
+          }
+        },
+        "compactItemLimit": 10
+      }
+    },
+    {
+      "question": "Hermandades de Gloria de Morón de la Frontera",
+      "status": 200,
+      "response": {
+        "kind": "answer",
+        "answer": "En Hilo Cofrade hay 1 hermandad de gloria publicada de Morón de la Frontera.",
+        "path": [
+          "Hermandades",
+          "Gloria",
+          "Morón de la Frontera",
+          "Directorio publicado"
+        ],
+        "entities": [],
+        "items": [
+          {
+            "label": "La Compañía / Santa Cruz",
+            "meta": "Penitencia · Gloria · Jueves Santo · Iglesia de San Ignacio de Loyola · La Compañía",
+            "href": "/hermandades/santa-cruz-moron-de-la-frontera",
+            "group": "Hermandades"
+          }
+        ],
+        "links": [],
+        "evidence": [
+          {
+            "key": "brotherhood-directory-moron-de-la-frontera-gloria",
+            "label": "Directorio público de Hermandades",
+            "detail": "1 fichas publicadas · Morón de la Frontera"
+          }
+        ],
+        "references": [],
+        "referencesNote": "",
+        "followUps": [
+          "¿Qué tienen en común?",
+          "Ordénalas de más antigua a más reciente."
+        ],
+        "context": {
+          "entityId": null,
+          "entityType": null,
+          "name": "Morón de la Frontera",
+          "resultSet": {
+            "entityType": "brotherhood",
+            "entityIds": [
+              "c0160037-0307-4000-8000-000000000007"
+            ],
+            "count": 1,
+            "label": "1 hermandad de gloria publicada de Morón de la Frontera",
+            "sourceIntent": "brotherhoods_by_municipality"
+          }
+        },
+        "compactItemLimit": 1
+      }
+    }
+  ],
+  "sitemap_sha256": "762441eaec59b7f66230c8b86d2a4a887f26a7f4cc02b665028c3c0d4e9e2767",
+  "checks": {
+    "fichas_200_canonical_indexable": 10,
+    "main_sitemap_all_ten": true,
+    "family_sitemap_all_ten": true,
+    "agenda_hub_in_sitemap": true,
+    "municipality_search_count": 10,
+    "sacramental_search": "Loreto",
+    "gloria_search": "Santa Cruz"
+  }
+}
