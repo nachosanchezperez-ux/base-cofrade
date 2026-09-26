@@ -80,7 +80,7 @@ export default function MunicipalityAgendaHub({ hub }) {
     : ''
 
   const path = `/agenda-cofrade/localidad/${hub.slug}`
-  const description = `Agenda cofrade de ${hub.label}: próximas citas, Hermandades, Bandas, Imágenes y Pasos conectados en una única guía local.`
+  const description = `Guía cofrade de ${hub.label}: agenda, Hermandades, Bandas, Imágenes y Pasos conectados en una única página local.`
   const placeId = `${absoluteUrl(path)}#place`
   const placeJsonLd = municipalityPlaceJsonLd({
     path,
@@ -111,7 +111,7 @@ export default function MunicipalityAgendaHub({ hub }) {
       <JsonLd data={placeJsonLd} />
       <JsonLd data={collectionPageJsonLd({
         path,
-        name: `Agenda cofrade de ${hub.label}`,
+        name: `Guía cofrade de ${hub.label}`,
         description,
         items: structuredItems,
         about: { '@id': placeId },
@@ -124,8 +124,8 @@ export default function MunicipalityAgendaHub({ hub }) {
             { label: 'Agenda Cofrade', href: '/agenda-cofrade' },
             { label: hub.label },
           ]} />
-          <span>Guía cofrade local</span>
-          <h1>Agenda cofrade de {hub.label}</h1>
+          <span>Cofradías, hermandades y agenda</span>
+          <h1>Guía cofrade de {hub.label}</h1>
           <p>{description}</p>
 
           <nav className={styles.quickActions} aria-label={`Qué ver en ${hub.label}`}>

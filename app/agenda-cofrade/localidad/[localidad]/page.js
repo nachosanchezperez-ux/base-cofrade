@@ -50,8 +50,8 @@ export async function generateMetadata({ params }) {
   const hub = await getHub(localidad)
   if (!hub.exists) return { title: 'Guía cofrade local no encontrada', robots: { index: false, follow: false } }
 
-  const title = `Agenda cofrade de ${hub.label}: procesiones y hermandades`
-  const description = `Guía cofrade de ${hub.label}: próximos actos, Hermandades, Bandas, Imágenes y Pasos relacionados en Hilo Cofrade.`
+  const title = `Cofradías de ${hub.label}: hermandades y agenda cofrade`
+  const description = `Guía cofrade de ${hub.label}: hermandades, procesiones, agenda, bandas, imágenes y pasos relacionados en Hilo Cofrade.`
   const path = `/agenda-cofrade/localidad/${hub.slug}`
   return { title, description, ...socialMetadata({ title, description, path }) }
 }
