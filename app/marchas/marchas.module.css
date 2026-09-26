@@ -40,3 +40,8 @@
 .empty p { margin: 8px 0 0; color: #716b62; }
 @media (max-width: 820px) { .directoryHeading { align-items: flex-start; flex-direction: column; gap: 14px; } .list { grid-template-columns: 1fr; } }
 @media (max-width: 620px) { .heroInner { padding-top: 22px; padding-bottom: 30px; } .heroCopy { padding: 42px 0 30px; } .heroCopy h1 { font-size: clamp(38px,12vw,52px); } .metrics { grid-template-columns: 1fr; } .metrics div,.metrics div:first-child { padding: 13px 0; } .metrics div + div { border-top: 1px solid rgba(255,255,255,.13); border-left: 0; } .card { grid-template-columns: minmax(0,1fr) 14px; } .cardMeta { grid-column: 1; grid-row: 2; justify-items: start; } .card > b { grid-column: 2; grid-row: 1 / span 2; } }
+
+.pagination { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 34px; }
+.pagination a { display: grid; min-width: 36px; height: 36px; padding: 0 10px; place-items: center; border: 1px solid #d8d1c7; border-radius: 999px; color: #153b69; background: #fff; font-size: 11px; font-weight: 850; }
+.pagination a:hover,.pagination a:focus-visible { border-color: #c99f49; background: #fffaf0; }
+.pagination a[aria-current="page"] { border-color: #153b69; color: #fff; background: #153b69; }
