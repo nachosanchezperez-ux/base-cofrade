@@ -62,6 +62,21 @@ test('reconoce listados de Hermandades por municipio sin secuestrar relaciones',
   assert.equal(freeFactIntent('¿Qué pasos tienen las hermandades de La Rinconada?'), null)
 })
 
+test('reconoce listados sacramentales nominales y conserva las preguntas relacionales', () => {
+  const expected = {
+    kind: 'brotherhoods_by_municipality',
+    entityTypes: ['brotherhood'],
+    brotherhoodType: 'Sacramental',
+  }
+  for (const question of [
+    'Hermandades sacramentales de Morón de la Frontera',
+    'Las cofradías sacramentales de Sevilla',
+    'Todas las corporaciones cofrades sacramentales en Dos Hermanas',
+  ]) assert.deepEqual(freeFactIntent(question), expected)
+  assert.equal(freeFactIntent('¿Qué bandas acompañan a las hermandades sacramentales de Morón de la Frontera?'), null)
+  assert.equal(freeFactIntent('Pasos de las hermandades sacramentales de Morón de la Frontera'), null)
+})
+
 test('reconoce una jornada de Semana Santa como listado territorial de Hermandades', () => {
   const expected = {
     kind: 'brotherhoods_by_municipality',

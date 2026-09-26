@@ -79,3 +79,9 @@ Snapshots, payloads y respuestas: [evidence/moron-types-2026-09-26](./evidence/m
 
 Única recomendación: resolver las dos puertas de QA pendientes (sitemap y consulta sacramental) antes de certificar Morón o recalcular el siguiente municipio.
 
+
+## Continuación autorizada · 21:49 UTC
+
+El usuario autoriza publicar la reconciliación y continuar. PR #1006. La nueva lectura pública de ambas URLs canónicas de sitemap devuelve HTTP 200 y contiene las diez fichas, el directorio municipal y el hub de Morón. La revalidación normal resolvió la ausencia: no se modificó el sitemap ni se forzó deployment.
+
+Se añade una corrección mínima del patrón nominal en `freeFactIntent`: admite «hermandades/cofradías/corporaciones cofrades sacramentales», sin excepciones por municipio. La regresión exacta de Morón y las guardas de música/Pasos pasan; suite completa: 1.276/1.276. El cierre sigue pendiente de comprobar esta respuesta en producción. No se repite ninguna escritura en Supabase.
