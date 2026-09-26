@@ -50,6 +50,7 @@ export default function BrotherhoodProgramHero({
   title,
   officialName = '',
   locality = '',
+  localityHref = '',
   seat = '',
   breadcrumbItems = [],
   facts = [],
@@ -133,7 +134,11 @@ export default function BrotherhoodProgramHero({
             <div className={styles.identityBody}>
               <div className={styles.identityCopy}>
                 <span>{entityType}</span>
-                {locality ? <small>{locality}</small> : null}
+                {locality ? (
+                  <small>
+                    {localityHref ? <Link href={localityHref}>{locality}</Link> : locality}
+                  </small>
+                ) : null}
               </div>
               <h1 id="brotherhood-program-title">{title}</h1>
             </div>
