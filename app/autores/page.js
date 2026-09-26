@@ -7,14 +7,28 @@ import styles from '../marchas/marchas.module.css'
 
 export const revalidate = 900
 
-export const metadata = {
-  title: 'Autores y talleres cofrades',
-  description: 'Autores, compositores, imagineros, restauradores y talleres documentados en Hilo Cofrade, relacionados con sus obras y patrimonio.',
-  ...socialMetadata({
-    title: 'Autores y talleres cofrades',
-    description: 'Autores, compositores, imagineros, restauradores y talleres documentados en Hilo Cofrade, relacionados con sus obras y patrimonio.',
-    path: '/autores',
-  }),
+const PAGE_SIZE = 100
+const title = 'Autores y talleres cofrades'
+const description = 'Autores, compositores, imagineros, restauradores y talleres documentados en Hilo Cofrade, relacionados con sus obras y patrimonio.'
+
+function pageNumber(value) {
+  const parsed = Number.parseInt(String(value || '1'), 10)
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : 1
+}
+
+function pageHref(page) {
+  return page <= 1 ? '/autores' : `/autores?pagina=${page}`
+}
+
+export async function generateMetadata({ searchParams } = {}) {
+  const params = await searchParams
+  const page = pageNumber(params?.pagina)
+  return {
+    title,
+    description,
+    ...socialMetadata({ title, description, path: '/autores' }),
+    ...(page > 1 ? { robots: { index: false, follow: true } } : {}),
+  }
 }
 
 function groupLabel(agent) {
@@ -24,13 +38,17 @@ function groupLabel(agent) {
   return 'Personas'
 }
 
-export default async function AuthorsDirectoryPage() {
+export default async function AuthorsDirectoryPage({ searchParams } = {}) {
   // El build no debe depender de la disponibilidad de Supabase.
   await connection()
+  const params = await searchParams
   const agents = await getPublicAgentDirectory()
+  const totalPages = Math.max(1, Math.ceil(agents.length / PAGE_SIZE))
+  const page = Math.min(pageNumber(params?.pagina), totalPages)
+  const pageItems = agents.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
   const groups = new Map()
 
-  for (const agent of agents) {
+  for (const agent of pageItems) {
     const label = groupLabel(agent)
     const current = groups.get(label) || []
     current.push(agent)
@@ -43,7 +61,7 @@ export default async function AuthorsDirectoryPage() {
         path: '/autores',
         name: 'Autores y talleres cofrades',
         description: 'Autores, compositores, imagineros, restauradores y talleres documentados en Hilo Cofrade.',
-        items: agents.map((agent) => ({ name: agent.name, path: `/autores/${agent.slug}` })),
+        items: pageItems.map((agent) => ({ name: agent.name, path: `/autores/${agent.slug}` })),
       })} />
 
       <header className={styles.hero}>
@@ -67,7 +85,7 @@ export default async function AuthorsDirectoryPage() {
       <section className={`shell ${styles.directory}`} aria-labelledby="directorio-autores">
         <header className={styles.directoryHeading}>
           <div><span>Directorio relacional</span><h2 id="directorio-autores">Perfiles documentados</h2></div>
-          <p>Solo se muestran perfiles que ya cuentan con obra relacionada, Fuentes o suficiente masa documental para sostener una ficha pública útil.</p>
+          <p>Solo se muestran perfiles que ya cuentan con obra relacionada, Fuentes o suficiente masa documental para sostener una ficha pública útil. Página {page} de {totalPages}.</p>
         </header>
 
         <div className={styles.groups}>
@@ -92,6 +110,19 @@ export default async function AuthorsDirectoryPage() {
             </section>
           ))}
         </div>
+        {totalPages > 1 ? (
+          <nav className={styles.pagination} aria-label="Páginas del directorio de Autores">
+            {Array.from({ length: totalPages }, (_, index) => index + 1).map((number) => (
+              <Link
+                href={pageHref(number)}
+                key={number}
+                aria-current={number === page ? 'page' : undefined}
+              >
+                {number}
+              </Link>
+            ))}
+          </nav>
+        ) : null}
       </section>
     </div>
   )
