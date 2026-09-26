@@ -112,7 +112,7 @@ export default function MunicipalityAgendaHub({ hub }) {
 
       <section className={styles.hero}>
         <div className="shell">
-          <DirectoryBreadcrumb items={[
+          <DirectoryBreadcrumb showAccent={false} items={[
             { label: 'Agenda Cofrade', href: '/agenda-cofrade' },
             { label: hub.label },
           ]} />
