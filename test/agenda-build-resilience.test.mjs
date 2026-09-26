@@ -87,7 +87,7 @@ test('la clave diaria no reutiliza flags de ayer', async () => {
   const fixture = agendaFixture()
   await fixture.getCachedAgendaSources('2026-09-24')
   await fixture.getCachedAgendaSources('2026-09-25')
-  assert.equal(fixture.calls(), 10)
+  assert.equal(fixture.calls(), 12)
   assert.match(read('lib/supabase/agenda-cofrade.js'), /getCachedAgendaSources\(madridDateKey\(\)\)/)
 })
 
