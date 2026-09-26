@@ -145,23 +145,6 @@
   transition: border-color .18s ease, background .18s ease, transform .18s ease;
 }
 
-.agendaQuick a::before {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 3px;
-  background: #70acd2;
-  content: "";
-}
-
-.agendaQuick a[data-period="tomorrow"]::before {
-  background: #f3a4b1;
-}
-
-.agendaQuick a[data-period="weekend"]::before {
-  background: #d6ad49;
-}
 
 .agendaQuick a:hover {
   transform: translateY(-1px);
