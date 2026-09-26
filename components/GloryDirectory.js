@@ -4,10 +4,13 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import { gloryDisplayTitle } from '@/lib/glory-display'
+import { trackEvent } from '@/lib/analytics/client'
 import BrotherhoodDirectoryCrestImage from './BrotherhoodDirectoryCrestImage'
 import styles from './GloryDirectory.module.css'
 import crestStyles from './GloryDirectoryCrests.module.css'
 import photoStyles from './GloryDirectoryPhotos.module.css'
+
+const AGENDA_TYPE = 'glorias'
 
 function plural(count, singular, pluralForm) {
   return `${count} ${count === 1 ? singular : pluralForm}`
@@ -34,6 +37,26 @@ function statusLabel(item) {
   if (item.isCelebrated) return 'Celebrada'
   if (item.isPast) return 'Fecha pasada'
   return item.urgencyLabel || 'Próxima'
+}
+
+function trackGloryOpen(outing) {
+  trackEvent('agenda_event_open', {
+    event_name: outing.title,
+    event_type: 'gloria',
+    municipality: outing.municipality,
+    event_date: outing.date,
+    agenda_type: AGENDA_TYPE,
+  })
+}
+
+function trackGloryBrotherhood(outing) {
+  trackEvent('entity_click', {
+    source_entity_type: 'evento',
+    source_entity_name: outing.title,
+    destination_entity_type: 'hermandad',
+    destination_entity_name: outing.brotherhoodName,
+    link_context: 'agenda_glorias',
+  })
 }
 
 export default function GloryDirectory({ outings }) {
@@ -71,6 +94,14 @@ export default function GloryDirectory({ outings }) {
     ? filtered.filter((item) => item.id !== featured.id)
     : filtered
   const monthGroups = useMemo(() => groupByMonth(visibleItems), [visibleItems])
+
+  const trackFilter = (filterType, filterValue) => {
+    trackEvent('agenda_filter', {
+      filter_type: filterType,
+      filter_value: filterValue,
+      agenda_type: AGENDA_TYPE,
+    })
+  }
 
   return (
     <div className={styles.directory}>
@@ -115,9 +146,9 @@ export default function GloryDirectory({ outings }) {
 
           <div className={styles.featuredCopy}>
             <span className={styles.kicker}>Próxima salida</span>
-            <h2><Link href={featured.detailHref}>{gloryDisplayTitle(featured.title, featured.year)}</Link></h2>
+            <h2><Link href={featured.detailHref} onClick={() => trackGloryOpen(featured)}>{gloryDisplayTitle(featured.title, featured.year)}</Link></h2>
             {featured.brotherhoodHref ? (
-              <Link className={styles.brotherhoodLink} href={featured.brotherhoodHref}>
+              <Link className={styles.brotherhoodLink} href={featured.brotherhoodHref} onClick={() => trackGloryBrotherhood(featured)} data-analytics-skip-entity="true">
                 {featured.brotherhoodName}
               </Link>
             ) : (
@@ -142,7 +173,7 @@ export default function GloryDirectory({ outings }) {
 
             {featured.description ? <p className={styles.featuredDescription}>{featured.description}</p> : null}
 
-            <Link className={styles.primaryAction} href={featured.detailHref}>
+            <Link className={styles.primaryAction} href={featured.detailHref} onClick={() => trackGloryOpen(featured)}>
               Ver detalles <span>→</span>
             </Link>
           </div>
@@ -164,7 +195,7 @@ export default function GloryDirectory({ outings }) {
               type="button"
               className={status === 'upcoming' ? styles.active : ''}
               aria-pressed={status === 'upcoming'}
-              onClick={() => setStatus('upcoming')}
+              onClick={() => { setStatus('upcoming'); trackFilter('estado', 'proximas') }}
             >
               Próximas <small>{upcoming.length}</small>
             </button>
@@ -172,7 +203,7 @@ export default function GloryDirectory({ outings }) {
               type="button"
               className={status === 'celebrated' ? styles.active : ''}
               aria-pressed={status === 'celebrated'}
-              onClick={() => setStatus('celebrated')}
+              onClick={() => { setStatus('celebrated'); trackFilter('estado', 'archivo') }}
             >
               Archivo <small>{celebrated.length}</small>
             </button>
@@ -189,7 +220,7 @@ export default function GloryDirectory({ outings }) {
                 key={value}
                 className={territory === value ? styles.active : ''}
                 aria-pressed={territory === value}
-                onClick={() => setTerritory(value)}
+                onClick={() => { setTerritory(value); trackFilter('territorio', value) }}
               >
                 {label}
               </button>
@@ -198,7 +229,7 @@ export default function GloryDirectory({ outings }) {
 
           <label className={styles.yearFilter}>
             <span className="sr-only">Filtrar por año</span>
-            <select value={year} onChange={(event) => setYear(event.target.value)}>
+            <select value={year} onChange={(event) => { setYear(event.target.value); trackFilter('anio', event.target.value) }}>
               <option value="all">Todos los años</option>
               {years.map((item) => <option key={item} value={String(item)}>{item}</option>)}
             </select>
@@ -216,6 +247,7 @@ export default function GloryDirectory({ outings }) {
               onClick={() => {
                 setTerritory('all')
                 setYear('all')
+                trackFilter('filtros', 'restablecidos')
               }}
             >
               Limpiar filtros
@@ -245,9 +277,9 @@ export default function GloryDirectory({ outings }) {
                           <span>{outing.municipality || 'Localidad por confirmar'}</span>
                           <small data-status={outing.eventStatus}>{statusLabel(outing)}</small>
                         </div>
-                        <h4><Link href={outing.detailHref}>{gloryDisplayTitle(outing.title, outing.year)}</Link></h4>
+                        <h4><Link href={outing.detailHref} onClick={() => trackGloryOpen(outing)}>{gloryDisplayTitle(outing.title, outing.year)}</Link></h4>
                         {outing.brotherhoodHref ? (
-                          <Link className={styles.organizer} href={outing.brotherhoodHref}>{outing.brotherhoodName}</Link>
+                          <Link className={styles.organizer} href={outing.brotherhoodHref} onClick={() => trackGloryBrotherhood(outing)} data-analytics-skip-entity="true">{outing.brotherhoodName}</Link>
                         ) : (
                           <strong className={styles.organizer}>{outing.brotherhoodName}</strong>
                         )}
@@ -258,7 +290,7 @@ export default function GloryDirectory({ outings }) {
                             {outing.returnTime ? <span><b>Entrada</b>{outing.returnTime}</span> : null}
                             {outing.routeSummary ? <span><b>Recorrido</b>Disponible</span> : null}
                           </div>
-                          <Link className={styles.detailLink} href={outing.detailHref}>
+                          <Link className={styles.detailLink} href={outing.detailHref} onClick={() => trackGloryOpen(outing)}>
                             Ver ficha <span>→</span>
                           </Link>
                         </div>
