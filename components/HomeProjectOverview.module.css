@@ -118,40 +118,55 @@
 }
 
 .agendaQuick {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
   margin-top: 18px;
 }
 
 .agendaQuick a {
-  display: inline-flex;
-  min-height: 36px;
+  position: relative;
+  display: flex;
+  min-width: 0;
+  width: 100%;
+  min-height: 39px;
+  overflow: hidden;
   align-items: center;
+  justify-content: space-between;
   gap: 8px;
-  padding: 0 11px;
-  border: 1px solid rgba(255, 255, 255, .2);
-  border-radius: 999px;
-  color: #fff;
-  background: rgba(255, 255, 255, .1);
-  font-size: 11px;
+  padding: 7px 9px 7px 12px;
+  border: 1px solid rgba(255, 255, 255, .13);
+  border-radius: 10px;
+  color: rgba(255, 255, 255, .92);
+  background: rgba(255, 255, 255, .075);
+  font-size: 10px;
   font-weight: 800;
+  line-height: 1.18;
   transition: border-color .18s ease, background .18s ease, transform .18s ease;
 }
 
-.agendaQuick a:first-child {
-  background: #fff;
-  color: #123a67;
+.agendaQuick a::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 3px;
+  background: #70acd2;
+  content: "";
+}
+
+.agendaQuick a[data-period="tomorrow"]::before {
+  background: #f3a4b1;
+}
+
+.agendaQuick a[data-period="weekend"]::before {
+  background: #d6ad49;
 }
 
 .agendaQuick a:hover {
   transform: translateY(-1px);
-  border-color: rgba(255, 255, 255, .42);
-  background: rgba(255, 255, 255, .16);
-}
-
-.agendaQuick a:first-child:hover {
-  background: #f5f8fb;
+  border-color: rgba(255, 255, 255, .3);
+  background: rgba(255, 255, 255, .13);
 }
 
 .agendaQuick a:focus-visible {
@@ -160,6 +175,8 @@
 }
 
 .agendaQuick b {
+  flex: 0 0 auto;
+  color: rgba(255, 255, 255, .66);
   font-size: 12px;
 }
 
@@ -511,6 +528,12 @@
 
   .agendaBody strong {
     font-size: 42px;
+  }
+
+  .agendaQuick a {
+    min-height: 43px;
+    padding: 8px 10px 8px 13px;
+    font-size: 11px;
   }
 
   .agendaTypes {
