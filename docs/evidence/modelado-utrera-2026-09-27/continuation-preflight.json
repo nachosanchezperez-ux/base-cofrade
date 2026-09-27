@@ -1,0 +1,275 @@
+{
+  "observed_at_utc": "2026-09-27T04:43:00.917186+00:00",
+  "main": "88fa02ffac5745ab9a8f2df59ab6a3b962210463",
+  "vercel": {
+    "id": "dpl_BvJa4CNTdVs3it9Q54tbCSA5xx5j",
+    "state": "READY",
+    "aliases": [
+      "hilocofrade.es",
+      "www.hilocofrade.es",
+      "base-cofrade-vert.vercel.app",
+      "base-cofrade-desdeel-arenal.vercel.app",
+      "base-cofrade-git-main-desdeel-arenal.vercel.app"
+    ],
+    "sha": "88fa02ffac5745ab9a8f2df59ab6a3b962210463"
+  },
+  "supabase_status": "ACTIVE_HEALTHY",
+  "migrations": 17,
+  "pull_request": {
+    "number": 1009,
+    "head": "docs/inventario-utrera-hc016-20260927",
+    "head_sha": "d385065abe8ef0401396b16f4c9728e4233fff01",
+    "draft": true
+  },
+  "snapshot": {
+    "places": [
+      {
+        "id": "09fb4082-dd92-4fc4-bb25-41fff021d284",
+        "name": "Santuario de Nuestra Señora de Consolación",
+        "slug": "santuario-nuestra-senora-consolacion-utrera",
+        "notes": "Santuario Diocesano de Peregrinaciones y sede canónica de la Hermandad.",
+        "address": "Paseo de Consolación, s/n, 41710 Utrera, Sevilla",
+        "latitude": null,
+        "longitude": null,
+        "created_at": "2026-09-05T14:23:50.801172+00:00",
+        "place_type": "Santuario",
+        "updated_at": "2026-09-05T14:23:50.801172+00:00",
+        "municipality_id": "e4319248-831a-4f4c-adb8-19c496f95dd6",
+        "opening_hours_text": null,
+        "opening_hours_verified_at": null
+      },
+      {
+        "id": "9b425ed3-943b-4b77-b351-93d87467b1cc",
+        "name": "Capilla de San Bartolomé",
+        "slug": "capilla-san-bartolome-utrera",
+        "notes": "Sede de la Hermandad de Jesús Nazareno de Utrera.",
+        "address": null,
+        "latitude": null,
+        "longitude": null,
+        "created_at": "2026-09-07T20:18:55.259769+00:00",
+        "place_type": "Capilla",
+        "updated_at": "2026-09-07T20:18:55.259769+00:00",
+        "municipality_id": "e4319248-831a-4f4c-adb8-19c496f95dd6",
+        "opening_hours_text": null,
+        "opening_hours_verified_at": null
+      },
+      {
+        "id": "f9dc025c-094b-468f-ad7c-4ee55c7167e8",
+        "name": "Iglesia de San Francisco",
+        "slug": "iglesia-san-francisco-utrera",
+        "notes": null,
+        "address": null,
+        "latitude": null,
+        "longitude": null,
+        "created_at": "2026-09-13T10:53:23.750467+00:00",
+        "place_type": "Iglesia",
+        "updated_at": "2026-09-13T10:53:23.750467+00:00",
+        "municipality_id": "e4319248-831a-4f4c-adb8-19c496f95dd6",
+        "opening_hours_text": null,
+        "opening_hours_verified_at": null
+      }
+    ],
+    "discovery": [
+      {
+        "id": "14c0028e-dca6-477a-a8c5-245c06424ea3",
+        "name": "Señora y Madre de Utrera",
+        "slug": "senora-y-madre-de-utrera-adrian-tinajero-2022",
+        "status": "published",
+        "entity_type": "march"
+      },
+      {
+        "id": "17705094-95fd-4aec-ae2d-c7f367102ec2",
+        "name": "Virgen de Consolación de Utrera · V Centenario",
+        "slug": "virgen-consolacion-utrera-v-centenario-2006",
+        "status": "published",
+        "entity_type": "march"
+      },
+      {
+        "id": "17846345-39de-4831-a38b-a1b343d18718",
+        "name": "L aniversario de la Coronación y Año Jubilar de Consolación 2014",
+        "slug": "jubileo-consolacion-utrera-2014",
+        "status": "published",
+        "entity_type": "event"
+      },
+      {
+        "id": "2f9d80fc-0c4f-4346-95fd-109d31c29b23",
+        "name": "Andas procesionales de Nuestra Señora de Consolación Coronada (2026)",
+        "slug": "andas-consolacion-coronada-utrera-2026",
+        "status": "published",
+        "entity_type": "step"
+      },
+      {
+        "id": "4550fd96-94d3-4929-8d61-af79ba7de8e7",
+        "name": "Nuestra Señora de las Angustias",
+        "slug": "nuestra-senora-angustias-utrera",
+        "status": "published",
+        "entity_type": "image"
+      },
+      {
+        "id": "46968f38-a4a1-43df-ad66-1436e19bb394",
+        "name": "Nuestra Señora de Consolación Coronada",
+        "slug": "nuestra-senora-consolacion-coronada-utrera",
+        "status": "published",
+        "entity_type": "image"
+      },
+      {
+        "id": "4c9e01e0-e671-41a5-a738-dd33fc15747a",
+        "name": "Trono de la Coronación de Nuestra Señora de Consolación",
+        "slug": "trono-coronacion-consolacion-utrera-1964",
+        "status": "published",
+        "entity_type": "step"
+      },
+      {
+        "id": "4e462b02-979d-4b88-ab98-0c97f2dbf0a0",
+        "name": "Hermandad de Jesús Nazareno de Utrera",
+        "slug": "hermandad-jesus-nazareno-utrera",
+        "status": "published",
+        "entity_type": "brotherhood"
+      },
+      {
+        "id": "7bab2fe6-c69e-48e5-9446-a247b4169910",
+        "name": "Hermandad de la Vera-Cruz y Santo Entierro de Utrera",
+        "slug": "vera-cruz-santo-entierro-utrera",
+        "status": "published",
+        "entity_type": "brotherhood"
+      },
+      {
+        "id": "7fafdc04-cb94-47d8-814f-5537639660ff",
+        "name": "Asociación Musical Álvarez Quintero",
+        "slug": "asociacion-musical-alvarez-quintero-utrera",
+        "status": "published",
+        "entity_type": "band"
+      },
+      {
+        "id": "8d4e62d9-a428-4363-afc7-6a2f9e8c1450",
+        "name": "Pontificia, Real e Ilustre Hermandad de Nuestra Señora de Consolación Coronada",
+        "slug": "consolacion-utrera",
+        "status": "published",
+        "entity_type": "brotherhood"
+      },
+      {
+        "id": "969ca232-3b65-459e-9f61-207902e1a5f4",
+        "name": "Coronas de la Coronación Canónica de Nuestra Señora de Consolación",
+        "slug": "coronas-coronacion-consolacion-utrera",
+        "status": "published",
+        "entity_type": "heritage_asset"
+      },
+      {
+        "id": "b1701c65-b84b-430e-afe0-e1ed35876d7e",
+        "name": "Nombramiento de Nuestra Señora de Consolación como Alcaldesa Perpetua de Utrera",
+        "slug": "alcaldesa-perpetua-consolacion-utrera-1962",
+        "status": "published",
+        "entity_type": "event"
+      },
+      {
+        "id": "b51dd99d-97fe-4636-b35e-59ac8fa92dc5",
+        "name": "Paso de palio de Nuestra Señora de las Angustias",
+        "slug": "paso-palio-angustias-utrera",
+        "status": "review",
+        "entity_type": "step"
+      },
+      {
+        "id": "b838a5f1-1d9f-4718-a820-de94e485224a",
+        "name": "Coronación Canónica de Nuestra Señora de Consolación",
+        "slug": "coronacion-canonica-consolacion-utrera-1964",
+        "status": "published",
+        "entity_type": "event"
+      },
+      {
+        "id": "c0160032-0406-4000-8000-000000000006",
+        "name": "Banda de Cornetas y Tambores Santa Vera+Cruz de Utrera",
+        "slug": "banda-cornetas-tambores-santa-vera-cruz-utrera",
+        "status": "published",
+        "entity_type": "band"
+      },
+      {
+        "id": "c0160036-0412-4000-8000-000000000012",
+        "name": "Banda de Cornetas y Tambores Nuestra Señora de la Palma de Utrera",
+        "slug": "bct-nuestra-senora-palma-utrera",
+        "status": "published",
+        "entity_type": "band"
+      },
+      {
+        "id": "e236bc7a-6b2d-4739-984f-5147947010ab",
+        "name": "Peana de plata de la Coronación de Nuestra Señora de Consolación",
+        "slug": "peana-coronacion-consolacion-utrera",
+        "status": "published",
+        "entity_type": "heritage_asset"
+      },
+      {
+        "id": "e5e90bac-4e73-4b72-b866-65c6fe347d93",
+        "name": "Himno de la Virgen de Consolación de Utrera",
+        "slug": "himno-virgen-consolacion-utrera",
+        "status": "published",
+        "entity_type": "march"
+      },
+      {
+        "id": "e875dbee-612f-4739-9f24-fd583d6b2df6",
+        "name": "Nuestra Señora de los Dolores",
+        "slug": "nuestra-senora-dolores-utrera-vera-cruz",
+        "status": "published",
+        "entity_type": "image"
+      },
+      {
+        "id": "e9584603-bca3-4234-aab4-23c692b84e85",
+        "name": "Barquito de Nuestra Señora de Consolación",
+        "slug": "barquito-virgen-consolacion-utrera",
+        "status": "published",
+        "entity_type": "heritage_asset"
+      },
+      {
+        "id": "f492d28d-af48-4606-862c-89d5d3560a6b",
+        "name": "Banda de Música Álvarez Quintero de Utrera",
+        "slug": "banda-musica-alvarez-quintero-utrera",
+        "status": "published",
+        "entity_type": "band"
+      },
+      {
+        "id": "fb303d3e-4739-4390-b1b6-e579c988b8d0",
+        "name": "Asociación Musical Utrerana",
+        "slug": "asociacion-musical-utrerana",
+        "status": "published",
+        "entity_type": "band"
+      },
+      {
+        "id": "fcb3c6ca-f439-448f-a430-1b244198216b",
+        "name": "V Centenario y Año Jubilar de Consolación 2007",
+        "slug": "jubileo-consolacion-utrera-2007",
+        "status": "published",
+        "entity_type": "event"
+      }
+    ],
+    "queried_at": "2026-09-27T04:43:00.917186+00:00",
+    "brotherhoods": [
+      {
+        "id": "4e462b02-979d-4b88-ab98-0c97f2dbf0a0",
+        "name": "Hermandad de Jesús Nazareno de Utrera",
+        "slug": "hermandad-jesus-nazareno-utrera",
+        "status": "published",
+        "brotherhood_types": [
+          "Penitencia"
+        ]
+      },
+      {
+        "id": "7bab2fe6-c69e-48e5-9446-a247b4169910",
+        "name": "Hermandad de la Vera-Cruz y Santo Entierro de Utrera",
+        "slug": "vera-cruz-santo-entierro-utrera",
+        "status": "published",
+        "brotherhood_types": [
+          "Penitencia"
+        ]
+      },
+      {
+        "id": "8d4e62d9-a428-4363-afc7-6a2f9e8c1450",
+        "name": "Pontificia, Real e Ilustre Hermandad de Nuestra Señora de Consolación Coronada",
+        "slug": "consolacion-utrera",
+        "status": "published",
+        "brotherhood_types": [
+          "Gloria"
+        ]
+      }
+    ]
+  },
+  "query": "SELECT jsonb_build_object('queried_at',now(),'brotherhoods', (SELECT jsonb_agg(to_jsonb(x)) FROM (SELECT e.id,e.name,e.slug,e.status,b.brotherhood_types FROM public.entities e JOIN public.brotherhoods b ON b.entity_id=e.id WHERE b.municipality_id='e4319248-831a-4f4c-adb8-19c496f95dd6' ORDER BY e.id) x),'places',(SELECT jsonb_agg(to_jsonb(p)) FROM public.places p WHERE p.municipality_id='e4319248-831a-4f4c-adb8-19c496f95dd6'),'discovery', (SELECT jsonb_agg(to_jsonb(x)) FROM (SELECT id,entity_type,name,slug,status FROM public.entities WHERE name ILIKE '%Utrera%' OR slug ILIKE '%utrera%' ORDER BY id) x)) snapshot;",
+  "note": "Lectura y descubrimiento nominal solamente. LIKE solo en consulta de descubrimiento; no existe payload Apply. No sustituye snapshot transaccional previo a DML."
+}

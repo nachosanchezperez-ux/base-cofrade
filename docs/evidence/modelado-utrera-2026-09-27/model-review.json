@@ -1276,8 +1276,8 @@
         "F20"
       ],
       "source": "F20",
-      "processional_membership": "UNRESOLVED",
-      "attribute_note": "Titular física confirmada por la Hermandad. F11 la sitúa en el paso en 2026; F01/F28 enumeran solo al Crucifijo. No generar image_steps/outing_entities para esta imagen hasta contrastar evidencia del cortejo."
+      "processional_membership": "EXCLUDED_FROM_PROCESSIONAL_RELATIONS_THIS_EDITION",
+      "attribute_note": "Titular física confirmada. Se conserva la relación corporativa, sin image_steps/outing_entities para 2026. No se afirma ausencia física: la relación no demostrada queda fuera del candidato, según gloria-and-closure.json."
     }
   ],
   "groups": [
@@ -1504,7 +1504,8 @@
     "timezone": "Europe/Madrid",
     "head": "88fa02ffac5745ab9a8f2df59ab6a3b962210463",
     "municipality_id": "e4319248-831a-4f4c-adb8-19c496f95dd6",
-    "phase": "DOCUMENTARY_MODEL_REVIEW",
+    "phase": "DOCUMENTARY_MODEL_REFINEMENT",
+    "refinement_file": "gloria-and-closure.json",
     "manifest_ready": false,
     "production_writes": 0,
     "notes": "Symbolic keys are documentary, not allocated database UUIDs. NEW is a candidate decision requiring final dedup/preflight.",
@@ -1515,22 +1516,12 @@
     {
       "key": "G01",
       "item": "Frontera municipal incompleta",
-      "impact": "Modelar Rocío/Fátima y revisar universo adicional antes de certificar todo Utrera."
+      "impact": "Rocío/Fátima modelados en gloria-and-closure.json. Falta resolver frontera ADMA, Resucitado y pedanías antes de certificar todo Utrera."
     },
     {
       "key": "G02",
       "item": "Matriz patrimonial y corporativa incompleta",
-      "impact": "Completar fichas de Pasos, historia/identidad corporativa y titulares físicos adicionales; el Paso de Angustias sigue review."
-    },
-    {
-      "key": "G03",
-      "item": "Concepción de Los Milagros: relación con paso",
-      "impact": "La titular existe; relación procesional de 2026 no congelada por divergencia de fuentes."
-    },
-    {
-      "key": "G04",
-      "item": "Evidencia de celebración y música efectiva",
-      "impact": "El programa acredita anuncio. Páginas del Consejo pueden contener solo itinerarios; no equivalen automáticamente a crónicas posteriores. No declarar held por fecha pasada."
+      "impact": "Completar fichas de los otros 20 Pasos, historia/identidad corporativa y titulares físicos adicionales. S18 Angustias y S21 Milagros ya tienen refinamiento editorial; Angustias sigue review en producción hasta Apply validado."
     },
     {
       "key": "G05",
@@ -1838,7 +1829,7 @@
       "source": "F01",
       "pdf_page": 26,
       "technical_attributes_status": "Pending per-field source matrix; no author/date inferred from image",
-      "publication_gate": "Estado review preservado hasta completar mínimo editorial; no duplicar ni publicar automáticamente."
+      "publication_gate": "Texto candidato y fuentes preparados en gloria-and-closure.json; validar manifiesto antes de publicar. Producción sigue review; no duplicar."
     },
     {
       "key": "S19",
@@ -1895,7 +1886,7 @@
       "source": "F01",
       "pdf_page": 30,
       "technical_attributes_status": "Pending per-field source matrix; no author/date inferred from image",
-      "additional_pending_image": "I35"
+      "excluded_processional_image": "I35"
     },
     {
       "key": "S22",
@@ -1931,7 +1922,8 @@
       "key": "H13",
       "name": "Rocío de Utrera",
       "id": null,
-      "action": "REVIEW_DEDUP_AND_MODEL",
+      "action": "MODELED_NEW_CANDIDATE",
+      "profile_file": "gloria-and-closure.json",
       "brotherhood_types": [
         "Gloria"
       ],
@@ -1945,7 +1937,8 @@
       "key": "H14",
       "name": "Rosario de Fátima y San Antonio de Padua",
       "id": null,
-      "action": "REVIEW_DEDUP_AND_MODEL",
+      "action": "MODELED_NEW_CANDIDATE",
+      "profile_file": "gloria-and-closure.json",
       "brotherhood_types": [
         "Gloria"
       ],
@@ -1956,7 +1949,7 @@
       ]
     }
   ],
-  "scope_gate": "11 corporaciones modeladas en núcleo; 14 identificadas en directorio del Consejo. No certificar cierre municipal integral con el primer núcleo. Revisar otras asociaciones/ADMA/pedanías explícitamente sin tratarlas como Hermandades por defecto.",
+  "scope_gate": "11 corporaciones del núcleo; Consolación preservada y Rocío/Fátima modelados en el suplemento. Las 14 institucionales no equivalen a censo municipal exhaustivo: ADMA, Resucitado y pedanías siguen en revisión explícita.",
   "resolutions": [
     {
       "key": "Q01",
@@ -1991,7 +1984,10 @@
     "Año de intervención de Sebastián Santos en Dolores: conservar discrepancia, sin fecha exacta inventada.",
     "Autor desconocido/atribuciones alternativas no se convierten en autores seguros.",
     "Recogida de O14 y música de O14/O15 desconocidas.",
-    "Recursos visuales solo con derechos; no fabricar completitud."
+    "Recursos visuales solo con derechos; no fabricar completitud.",
+    "Concepción acreditada como titular; relación procesional omitida en esta edición, sin afirmar ausencia del cortejo.",
+    "Salidas históricas sin evidencia posterior específica permanecen announced; no bloquean por sí mismas un manifiesto prudente.",
+    "Fátima 2026: punto y hora de salida discrepantes se omiten; no se altera la sede canónica por esa discrepancia."
   ],
   "execution_gates": {
     "model_frozen": false,

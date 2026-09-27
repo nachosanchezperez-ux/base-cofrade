@@ -2,18 +2,45 @@
   "structural_validation": "PASS",
   "corporations_in_core": 11,
   "corporations_in_institutional_review": 14,
-  "outings_in_core": 15,
+  "gloria_profiles_completed": 2,
+  "outings_in_model": 18,
+  "held_with_linked_evidence": 4,
+  "announced_historical": 14,
   "step_positions": 23,
   "proposed_physical_steps": 22,
-  "identified_images": 35,
-  "program_images": 34,
-  "additional_titular_with_unresolved_processional_link": 1,
-  "music_assignments": 20,
-  "silent_positions": 3,
-  "source_records": 28,
+  "identified_images": 36,
+  "additional_heritage_assets": 3,
+  "source_records": 40,
   "nonempty_valid_types": 14,
+  "candidate_editorial_minima": [
+    {
+      "key": "H13",
+      "ready": true
+    },
+    {
+      "key": "H14",
+      "ready": true
+    },
+    {
+      "key": "I36",
+      "ready": true
+    },
+    {
+      "key": "S18",
+      "ready": true
+    },
+    {
+      "key": "S21",
+      "ready": true
+    }
+  ],
   "production_writes": 0,
   "model_frozen": false,
   "apply_gate": "NO_GO",
-  "note": "Structural validation is not editorial completeness or production QA."
+  "open_gates": [
+    "G01",
+    "G02",
+    "G05"
+  ],
+  "note": "Validación offline del candidato: no acredita publicación, QA web/SEO ni censo municipal exhaustivo."
 }

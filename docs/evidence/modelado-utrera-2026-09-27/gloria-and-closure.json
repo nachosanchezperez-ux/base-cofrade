@@ -1,0 +1,174 @@
+{
+  "meta": {
+    "phase": "GLORIA_AND_RELATION_REFINEMENT",
+    "reviewed_at": "2026-09-27",
+    "base_model": "model-review.json",
+    "precedence": "Las decisiones por clave de este suplemento completan el modelo base; no constituyen payload SQL ni publicación.",
+    "production_writes": 0,
+    "source_access": "Fuentes F29–F40 leídas el 27/09/2026; solo hechos resumidos y enlaces, sin copiar páginas ni fotografías.",
+    "model_frozen": false
+  },
+  "corporations": [
+    {
+      "key": "H13",
+      "action": "NEW_CANDIDATE",
+      "official_name": "Real Hermandad de Nuestra Señora del Rocío de Utrera",
+      "popular_name": "Rocío de Utrera",
+      "brotherhood_types": ["Gloria"],
+      "place": "L08",
+      "foundation_text": "11 de febrero de 1986",
+      "summary": "Hermandad de Gloria de Utrera vinculada a la peregrinación al Rocío, con sede canónica en la parroquia de San José. Su representación procesional es el Simpecado que conduce en carreta hacia la aldea almonteña.",
+      "history_text": "Erigida en 1986, ocupa el número 68 entre las filiales y tiene como madrina a la Hermandad de Los Palacios. En 2026 conmemoró su cuarenta aniversario y anunció un recorrido urbano ampliado para la peregrinación de Pentecostés.",
+      "sources": ["F29", "F26", "F31"],
+      "heritage": ["A01", "A02"],
+      "outings": ["O16", "O17"],
+      "dedup_status": "NO_MATCH_IN_CURRENT_MUNICIPAL_ROWS_OR_UTRERA_NAME_SCAN; FINAL_GLOBAL_IDENTITY_CHECK_REQUIRED",
+      "safeguards": [
+        "La casa-hermandad y su capilla no sustituyen automáticamente a San José como sede canónica.",
+        "No crear una imagen utrerana de la Virgen del Rocío de Almonte ni trasladar su propiedad.",
+        "El Simpecado se modela como patrimonio; no como una talla autónoma de tamaño procesional."
+      ]
+    },
+    {
+      "key": "H14",
+      "action": "NEW_CANDIDATE",
+      "official_name": "Hermandad de Nuestra Señora del Rosario de Fátima y San Antonio de Padua",
+      "popular_name": "Fátima de Utrera",
+      "brotherhood_types": ["Gloria"],
+      "place": "L09",
+      "foundation_text": "1994; antecedentes devocionales desde 1959",
+      "summary": "Corporación de Gloria del barrio utrerano de Las Veredillas, dedicada a Nuestra Señora del Rosario de Fátima y San Antonio de Padua. Su capilla y la romería mariana articulan la vida de hermandad.",
+      "history_text": "La devoción del barrio nació en un centro de misiones en 1959. La primera romería se celebró en 1966 y la agrupación se convirtió en Hermandad en 1994. La capilla fue bendecida el 15 de mayo de 1995. Los sucesivos lugares de acampada no se confunden con una sede canónica distinta.",
+      "sources": ["F24", "F25", "F30", "F34"],
+      "images": ["I36"],
+      "heritage": ["A03"],
+      "outings": ["O18"],
+      "dedup_status": "NO_MATCH_IN_CURRENT_MUNICIPAL_ROWS_OR_UTRERA_NAME_SCAN; FINAL_GLOBAL_IDENTITY_CHECK_REQUIRED",
+      "safeguards": [
+        "No confundir con Fátima de Los Molares ni reutilizar sus datos artísticos.",
+        "San Antonio figura como titular corporativo; no se inventa una talla física sin identificarla.",
+        "La divergencia sobre la salida de 2026 no acredita un traslado de sede."
+      ]
+    }
+  ],
+  "places": [
+    {"key": "L08", "name": "Parroquia de San José", "place_type": "Parroquia", "municipality_id": "e4319248-831a-4f4c-adb8-19c496f95dd6", "action": "NEW_CANDIDATE", "sources": ["F29", "F31"]},
+    {"key": "L09", "name": "Capilla de Nuestra Señora de Fátima", "place_type": "Capilla", "municipality_id": "e4319248-831a-4f4c-adb8-19c496f95dd6", "action": "NEW_CANDIDATE", "sources": ["F24", "F25"]}
+  ],
+  "images": [
+    {
+      "key": "I36",
+      "name": "Nuestra Señora del Rosario de Fátima",
+      "brotherhood": "H14",
+      "action": "NEW_CANDIDATE",
+      "image_type": "Virgen de gloria",
+      "author_name": "Pepe Romero",
+      "authorship_type": "author",
+      "execution_date": null,
+      "execution_date_text": null,
+      "description": "Imagen mariana venerada por la Hermandad de Fátima de Utrera. Dos publicaciones locales identifican a Pepe Romero como su escultor; la crónica de 2022 documenta su participación en la romería sobre una carreta con templete.",
+      "sources": ["F30", "F34"],
+      "notes": "No expandir el nombre del artista por homonimia ni asignar a la talla la fecha del origen devocional de 1959. Fecha, medidas y material no contrastados."
+    }
+  ],
+  "heritage_assets": [
+    {
+      "key": "A01", "name": "Simpecado de la Hermandad del Rocío de Utrera", "parent": "H13", "asset_type": "Simpecado",
+      "date_from_text": "1986", "technique": "Bordado", "materials": "Oro sobre terciopelo verde; representación central y ángeles de marfil",
+      "description": "Insignia mariana de la filial utrerana, bordada en el taller de los sucesores de Elena Caro. Se conserva como un conjunto patrimonial, sin desdoblar sus figuras decorativas en titulares procesionales independientes.",
+      "author_credit_text": "Taller de los sucesores de Elena Caro; F29 emplea sobrinos de Elena Caro",
+      "sources": ["F29"], "agent_id": null,
+      "notes": "Identidad de taller pendiente de conciliación con agents. No inventar UUID ni atribuir la ejecución personalmente a Esperanza Elena Caro."
+    },
+    {
+      "key": "A02", "name": "Carreta del Simpecado del Rocío de Utrera", "parent": "H13", "asset_type": "Carreta",
+      "date_from_text": null, "materials": "Alpaca plateada y elementos de plata",
+      "description": "Carreta de seis varales para el Simpecado. El Consejo documenta su tracción por bueyes y una representación de Consolación en la delantera; no se identifica esa pequeña representación con la talla canónica del Santuario.",
+      "sources": ["F29", "F31"],
+      "notes": "Patrimonio, sin duplicación como Paso. No consta autor ni fecha del conjunto en la evidencia revisada."
+    },
+    {
+      "key": "A03", "name": "Carreta procesional de Nuestra Señora de Fátima de Utrera", "parent": "H14", "asset_type": "Carreta",
+      "date_from_text": null, "materials": null,
+      "description": "Soporte con templete para la imagen de Fátima. La crónica de 2022 lo describe tirado por un mulo. Esa configuración histórica no acredita por sí sola el vehículo ni la tracción utilizados en 2026.",
+      "sources": ["F24", "F34"],
+      "notes": "La mención periodística a plata no basta para certificar composición o ley del metal. Sin autor ni fecha contrastados. No duplicar como Paso."
+    }
+  ],
+  "outings": [
+    {
+      "key": "O16", "brotherhood": "H13", "name": "Rocío de Utrera · partida de la peregrinación 2026",
+      "date": "2026-05-19", "departure_time": null, "departure_place": "L08", "return_date": null, "return_time": null,
+      "event_status": "held", "held_sources": ["F31"], "sources": ["F26", "F31"], "positions": [], "heritage": ["A01", "A02"],
+      "times_status": "La crónica sitúa la salida aproximadamente a las 09:00; no se guarda como medición exacta.",
+      "note": "Partida urbana documentada, no un evento continuo del 19 al 28 ni una certificación del regreso. Sin asignación de banda inventada."
+    },
+    {
+      "key": "O17", "brotherhood": "H13", "name": "Rocío de Utrera · regreso anunciado de la peregrinación 2026",
+      "date": "2026-05-28", "departure_time": null, "departure_place": null, "return_date": "2026-05-28", "return_time": null, "return_place": "L08",
+      "event_status": "announced", "held_sources": [], "sources": ["F26", "F31"], "positions": [], "heritage": ["A01"],
+      "times_status": "Sin horas verificadas.",
+      "note": "La crónica del 19 de mayo todavía habla del regreso en futuro. No convertir en held por el paso del tiempo."
+    },
+    {
+      "key": "O18", "brotherhood": "H14", "name": "Romería de Nuestra Señora de Fátima de Utrera 2026",
+      "date": "2026-05-09", "departure_time": null, "departure_place": null, "return_date": "2026-05-09", "return_time": "22:30", "return_place": "L09",
+      "event_status": "announced", "held_sources": [], "sources": ["F25", "F32", "F33"], "positions": [], "images": ["I36"],
+      "times_status": "Regreso aproximado anunciado; no horario real medido.",
+      "note": "F32: capilla 08:30; F25: capilla 09:30; F33: San José 09:30. Se conservan las variantes sin imponer punto/hora. La fecha del 9 y regreso al entorno de las 22:30 coinciden. No usar el programa antiguo de dos días. No asignar la diana del tamborilero a todo el cortejo."
+    }
+  ],
+  "step_refinements": [
+    {
+      "key": "S18", "id": "b51dd99d-97fe-4636-b35e-59ac8fa92dc5", "production_status": "review", "candidate_publication_status": "READY_FOR_MANIFEST_REVIEW",
+      "step_type": "Paso de palio",
+      "description": "Paso de palio de Nuestra Señora de las Angustias, de la Hermandad de Jesús Nazareno de Utrera, con salida desde la capilla de San Bartolomé. Su historia incluye renovaciones de los bordados y de la orfebrería; no corresponde atribuir el conjunto a una única fecha o al autor de la imagen. El proyecto de palio anunciado en 2016 y el llamador anunciado en junio de 2026 se documentan como proyectos, sin dar por acreditada su terminación.",
+      "notes": "Conservar el UUID, las relaciones y las fuentes existentes. No elevar a published hasta que el manifiesto incorpore texto, relaciones y fuentes y supere QA. El llamador no se presenta como estrenado en Semana Santa 2026.",
+      "sources": ["F01", "F35", "F36", "F37"],
+      "components": [
+        {"name": "Renovación de palio y bambalinas", "event_date": "2016-06-02", "state": "announced_project", "design_credit": "Jesús Miguélez Fuentes", "execution_credit": null, "source": "F35"},
+        {"name": "Llamador", "event_date": "2026-06-19", "state": "announced_project", "design_credit": "Antonio Rodríguez Ledesma", "planned_execution_credit": "Orfebrería Alesco", "source": "F36"}
+      ],
+      "unknown_fields": ["Fecha única del conjunto", "Dimensiones", "Autoría integral", "Estado material actual"]
+    },
+    {
+      "key": "S21", "step_type": "Paso de Cristo", "materials": "Madera de cedro; apliques de bronce", "execution_date_text": null,
+      "description": "Paso del Santo Crucifijo de los Milagros, de la parroquia de Santa María de la Mesa de Utrera. La Hermandad atribuye la talla en cedro a Manuel Guzmán, la ornamentación en bronce al taller de Villarreal y las cartelas pintadas a Antonio Rodríguez Ledesma. La descripción se limita al Crucifijo; no incorpora a la Concepción al cortejo sin evidencia suficiente.",
+      "sources": ["F28", "F38"],
+      "credits": [{"name": "Manuel Guzmán", "role": "Talla"}, {"name": "Taller de Villarreal", "role": "Apliques de bronce"}, {"name": "Antonio Rodríguez Ledesma", "role": "Cartelas pintadas"}],
+      "notes": "Créditos textuales hasta dedup de agents; no completar apellidos por intuición ni atribuir al Paso la fecha del Cristo."
+    }
+  ],
+  "processional_relation_decision": {
+    "image": "I35", "brotherhood": "H10", "step": "S21", "outing": "O12",
+    "include_brotherhood_titular_relation": true,
+    "include_image_step_relation": false,
+    "include_outing_image_relation": false,
+    "status": "RESOLVED_BY_CONSERVATIVE_OMISSION",
+    "sources": ["F20", "F28", "F38", "F11"],
+    "note": "Se confirma la imagen titular; no se afirma ausencia física del cortejo. La relación procesional queda fuera del candidato de esta edición. Una relación no demostrada deja de ser un bloqueo de la ficha acreditada."
+  },
+  "temporal_decisions": [
+    {"outings": ["O01", "O02", "O03", "O04", "O05", "O06", "O07", "O08", "O09", "O13", "O14", "O15"], "event_status": "announced", "sources": ["F01"], "note": "Convocatorias históricas; sin prueba posterior específica vinculada en este modelo. Esto no afirma que no se celebraran."},
+    {"outings": ["O10", "O11", "O12"], "event_status": "held", "sources": ["F22"], "note": "Crónica posterior concreta. Horarios previstos no se convierten en reales; cada música conserva su evidencia propia."}
+  ],
+  "boundary_review": [
+    {"name": "Asociación Parroquial de Jesús Resucitado y María Santísima de la Estrella", "decision": "DISTINCT_ENTITY_REVIEW_REQUIRED", "sources": ["F39", "F40"], "note": "Entidad y Vía Lucis reales y distintos de O14/O15, las salidas eucarísticas de la mañana. La fuente primaria usa Asociación Parroquial; no equiparar automáticamente a erección canónica como Hermandad o Agrupación. No descartar la crónica como errónea ni absorberla en Cautivo."},
+    {"name": "María Auxiliadora / ADMA", "decision": "DISTINCT_ENTITY_REVIEW_REQUIRED", "sources": ["F24"], "note": "La fuente institucional distingue Archicofradía y corporación de los antiguos alumnos. No fusionar con H05 ni presentar la enumeración de 14 como censo exhaustivo."},
+    {"name": "Pedanías y resto del término municipal", "decision": "BOUNDARY_NOT_YET_CERTIFIED", "sources": [], "note": "El directorio de 14 no demuestra exhaustividad territorial. Resolver la frontera antes de una certificación municipal integral."}
+  ],
+  "sources": [
+    {"key": "F29", "title": "Rocío: sede, fundación y patrimonio", "publisher": "Consejo de Hermandades de Utrera", "url": "https://www.consejodehermandadesdeutrera.com/Hermandades/Rocio.php", "published_date": null},
+    {"key": "F30", "title": "Conferencia sobre la imagen de Fátima", "publisher": "UtreraWeb", "url": "https://www.utreraweb.com/noticias-de-utrera/hermandades/2020/11363/La-Hermandad-de-Fatima-de-Utrera-retoma-este-lunes-con-una-conferencia-los-actos-de-su-25-aniversario/", "published_date": "2020-01-13"},
+    {"key": "F31", "title": "Crónica de la partida del Rocío de Utrera", "publisher": "Utrera al día", "url": "https://utreraaldia.com/arranca-la-romeria-de-la-hermandad-del-rocio-de-utrera-rumbo-a-la-aldea-almontena-video-y-galeria/", "published_date": "2026-05-19"},
+    {"key": "F32", "title": "Itinerario anunciado de Fátima 2026", "publisher": "UtreraWeb", "url": "https://www.utreraweb.com/noticias-de-utrera/hermandades/2026/20894/La-Hermandad-de-la-Virgen-de-Fatima-de-Utrera-da-a-conocer-los-detalles-del-recorrido-y-horarios-de-su-romeria-2026/", "published_date": null, "date_note": "Cuerpo dice 29 de abril; no asumir la fecha de la cabecera del sitio."},
+    {"key": "F33", "title": "Anuncio de Fátima desde San José", "publisher": "Utrera al día", "url": "https://utreraaldia.com/la-hermandad-de-fatima-de-utrera-vivira-este-sabado-su-romeria-desde-la-iglesia-de-san-jose/", "published_date": "2026-05-07", "caution": "Llama martes al 13 de mayo de 2026, que es miércoles; no reutilizar el día de semana."},
+    {"key": "F34", "title": "Crónica de Fátima 2022: imagen y carreta", "publisher": "Arte Sacro", "url": "https://www.artesacro.org/Noticia/Ver/145238/provincia-utrera-volvio-peregrinar-junto-nuestra-senora-fatima", "published_date": "2022-05-09", "caution": "No es una crónica de 2026 aunque la cabecera del sitio sea actual."},
+    {"key": "F35", "title": "Proyecto de palio de Angustias", "publisher": "UtreraWeb", "url": "https://www.utreraweb.com/noticias-de-utrera/hermandades/2016/6638/La-Hermandad-de-Jesus-de-Utrera-inicia-el-proyecto-de-nuevo-palio-y-bambalinas-para-Nuestra-Senora-de-las-Angustias/", "published_date": "2016-06-02"},
+    {"key": "F36", "title": "Anuncio del llamador de Angustias", "publisher": "Utrera al día", "url": "https://utreraaldia.com/la-hermandad-de-jesus-nazareno-anuncia-el-estreno-de-un-nuevo-llamador-para-el-paso-de-palio-de-la-virgen-de-las-angustias/", "published_date": "2026-06-19"},
+    {"key": "F37", "title": "Historia de la Hermandad de Jesús", "publisher": "Hermandad de Jesús Nazareno de Utrera", "url": "https://jesusnazarenoutrera.es/hermandad/historia", "published_date": null},
+    {"key": "F38", "title": "Milagros: titulares y Paso", "publisher": "Consejo de Hermandades de Utrera", "url": "https://consejodehermandadesdeutrera.com/Hermandades/Milagros.php", "published_date": null},
+    {"key": "F39", "title": "Actualidad de la Asociación del Resucitado", "publisher": "Asociación Parroquial del Resucitado de Utrera", "url": "https://resucitadoutrera.blogspot.com/", "published_date": null, "date_note": "Entradas del 2, 5, 8 y 14 de abril de 2026."},
+    {"key": "F40", "title": "Vía Lucis del Resucitado: crónica posterior", "publisher": "UtreraWeb", "url": "https://www.utreraweb.com/noticias-de-utrera/hermandades/2026/20786/Utrera-celebra-con-gran-brillantez-el-Via-Lucis-del-Domingo-de-Resurreccion-con-el-Resucitado-como-protagonista-con-video/", "published_date": "2026-04-06"}
+  ]
+}
