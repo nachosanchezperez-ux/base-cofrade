@@ -1,0 +1,153 @@
+.section {
+  scroll-margin-top: 150px;
+  color: var(--brotherhood-dark);
+}
+
+.years {
+  display: grid;
+  gap: 12px;
+}
+
+.year {
+  min-width: 0;
+  border: 1px solid color-mix(in srgb, var(--brotherhood-primary) 20%, transparent);
+  border-radius: 12px;
+  background: var(--brotherhood-light);
+}
+
+.yearSummary,
+.entrySummary,
+.staticEntry {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  list-style: none;
+}
+
+.yearSummary,
+.entrySummary {
+  cursor: pointer;
+}
+
+.yearSummary::-webkit-details-marker,
+.entrySummary::-webkit-details-marker {
+  display: none;
+}
+
+.yearSummary {
+  min-height: 58px;
+  padding: 14px 18px;
+  border-radius: 11px;
+  background: color-mix(in srgb, var(--brotherhood-primary) 5%, var(--brotherhood-light));
+}
+
+.yearSummary > strong {
+  font-size: 1.125rem;
+  color: var(--brotherhood-primary);
+}
+
+.yearSummary > span {
+  font-size: .875rem;
+}
+
+.toggle {
+  flex: 0 0 24px;
+  margin-left: auto;
+  text-align: center;
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--brotherhood-primary);
+}
+
+.toggle::before { content: '+'; }
+.year[open] > .yearSummary > .toggle::before,
+.entry[open] > .entrySummary > .toggle::before { content: '−'; }
+
+.entries { padding: 0 18px; }
+.entry { min-width: 0; scroll-margin-top: 150px; }
+.entry + .entry,
+.staticEntry + .entry,
+.entry + .staticEntry,
+.staticEntry + .staticEntry {
+  border-top: 1px solid color-mix(in srgb, var(--brotherhood-primary) 14%, transparent);
+}
+
+.entrySummary,
+.staticEntry {
+  min-height: 76px;
+  padding: 14px 0;
+}
+
+.entryCopy {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.type {
+  font-size: .75rem;
+  font-weight: 600;
+  color: var(--brotherhood-primary);
+}
+
+.title {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.authorship {
+  font-size: .875rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.thumbnail {
+  position: relative;
+  flex: 0 0 52px;
+  width: 52px;
+  height: 52px;
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+.thumbnail img { object-fit: contain; }
+.detail { padding: 0 0 20px; }
+.description {
+  max-width: 80ch;
+  margin: 0 0 16px;
+  font-size: 1rem;
+  line-height: 1.7;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+.facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 32px;
+  margin: 0 0 16px;
+}
+
+.facts div { min-width: 0; }
+.facts dt { font-size: .8125rem; color: var(--brotherhood-primary); }
+.facts dd { margin: 3px 0 0; font-size: 1rem; overflow-wrap: anywhere; }
+.figure { width: 100%; max-width: 640px; margin: 16px 0; }
+.imageFrame { position: relative; aspect-ratio: 4 / 3; }
+.imageFrame img { object-fit: contain; }
+.figure figcaption { margin-top: 8px; font-size: .8125rem; line-height: 1.5; }
+.sourceLink { display: inline-flex; gap: 8px; align-items: center; min-height: 44px; font-size: .875rem; font-weight: 600; color: var(--brotherhood-primary); }
+
+.yearSummary:focus-visible,
+.entrySummary:focus-visible,
+.sourceLink:focus-visible {
+  outline: 2px solid var(--brotherhood-primary);
+  outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  .yearSummary { padding: 12px 14px; gap: 10px; }
+  .entries { padding: 0 14px; }
+  .entrySummary, .staticEntry { gap: 10px; }
+}
