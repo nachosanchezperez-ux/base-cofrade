@@ -6,6 +6,7 @@ import AgendaCofradeDirectoryFromUrl from '@/components/AgendaCofradeDirectoryFr
 import AgendaCofradeNav from '@/components/AgendaCofradeNav'
 import AgendaCofradeNavFromUrl from '@/components/AgendaCofradeNavFromUrl'
 import AgendaTemporalNav from '@/components/AgendaTemporalNav'
+import SiteBreadcrumb from '@/components/SiteBreadcrumb'
 import JsonLd from '@/components/JsonLd'
 import { breadcrumbJsonLd, collectionPageJsonLd, filteredViewRobots, pageTitle, seoDescription } from '@/lib/seo'
 import { agendaSeoCopy, madridYear } from '@/lib/seo-calendar'
@@ -85,7 +86,14 @@ export default async function AgendaCofradePage() {
 
       <header className={styles.hero}>
         <div className="shell">
-          <nav className={styles.breadcrumb} aria-label="Migas de pan"><Link href="/">Inicio</Link><span>›</span><strong>Agenda Cofrade</strong></nav>
+          <SiteBreadcrumb
+            items={[
+              { label: 'Inicio', href: '/' },
+              { label: 'Agenda Cofrade' },
+            ]}
+            tone="dark"
+            showAccent={false}
+          />
           <div className={styles.heroCopy}><span className={styles.eyebrow}>Qué ver · Qué sale · Dónde ir</span><h1>Agenda Cofrade</h1><p>Solo los próximos actos de interés público de Sevilla y su provincia, ordenados por fecha y claramente separados por tipo.</p></div>
         </div>
       </header>
