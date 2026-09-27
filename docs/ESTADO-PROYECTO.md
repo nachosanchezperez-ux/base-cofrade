@@ -1,19 +1,21 @@
 # Hilo Cofrade · Estado canónico
 
-**Frente autorizado, 27/09/2026:** corrección transversal de Fuentes públicas de
-Pasos en rama independiente desde main. El lector y el sitemap deben reconocer
-Fuentes directas, fases y piezas publicadas. Implementación y pruebas en
-`fix/fuentes-publicas-pasos-20260927`, pendiente de revisión e integración;
-no está desplegada en producción. [Detalle](./CORRECCION-FUENTES-PASOS-2026-09-27.md).
+**Cerrado, 27/09/2026:** corrección transversal de Fuentes públicas de Pasos
+integrada en #1012 y desplegada. El lector y el sitemap reconocen Fuentes
+directas, fases y piezas publicadas; 9/9 pruebas específicas, 1.303/1.303 suite,
+build y CI PASS. QA productivo: tres fichas 200, canonical propio, index/follow,
+Fuente enlazada una sola vez y presencia en sitemap (409 URLs). Runtime del
+deployment vigente sin filas error/fatal en la ventana consultada de 10 min,
+acotada a su corta vida. [Detalle](./CORRECCION-FUENTES-PASOS-2026-09-27.md).
 Utrera #1009 sigue en draft y NO-GO para staging: este cambio de producto no
 cierra sus cuatro decisiones editoriales ni ejecuta dry-run, staging o Apply.
 Morón y HC-AUTO-03 permanecen fuera de las escrituras.
 
-**Corte operativo:** 26 de septiembre de 2026 · Morón de la Frontera · APPLY PRINCIPAL 504/504 CONSERVADO · CORRECTIVO DE TIPOS 10/10 APLICADO · CERRADO Y CERTIFICADO
+**Corte operativo:** 27 de septiembre de 2026 · Fuentes de Pasos corregidas en producción · Morón cerrado · Utrera pendiente de sus cuatro decisiones editoriales y preflight/dry-run.
 
 **Apply de Morón:** lote principal `c0160037-0000-4000-8000-000000000001` completed, **504/504 aplicadas y 0 fallidas**, sin repetición. Correctivo autorizado ejecutado: **10 Hermandades**, SET exclusivo de `brotherhood_types`; dry-run OK, rollback verificado, 0 residuos y post-Apply PASS. Las diez incluyen Penitencia, Loreto también Sacramental y Santa Cruz también Gloria.
 
-**Plataforma verificada:** main de producto `3dc40693b070cb479c9b2914a635f531616c3308` (#1000 HC-ANALYTICS integrada); Vercel `dpl_AcaZg7ewGH5Y7BbdQPoVSBB9UJeb` READY sobre ese SHA, aliases `hilocofrade.es` y `www.hilocofrade.es`. PR #1009 abierta en borrador: inventario documental de Utrera, independiente de esta reconciliación y sin integración en este cierre. Comprobación directa del 27/09/2026: Supabase ACTIVE_HEALTHY, 17 migraciones; Morón conserva 504/504 items applied, 0 fallidas y las 10 Hermandades publicadas con los tipos correctos. Diez fichas, hub y directorio responden HTTP 200 sin noindex detectado. El QA integral y de runtime corresponde a la certificación anterior; no se presenta como una medición nueva. El commit que integra esta reconciliación será un HEAD documental posterior, sin cambio de producto ni deployment forzado.
+**Plataforma verificada:** main de producto `dd9c5a10a12636407366a5eed7e9f306242f05f2` (#1012 integrada); Vercel `dpl_B5oUi2UWkRqtGW1usbhR3rP8xp3Y` READY exactamente sobre ese SHA, aliases `hilocofrade.es` y `www.hilocofrade.es`. Supabase saludable; lectura de control a las 08:22 UTC: 17 migraciones, import Utrera inexistente, Morón completed 504/504 y HC-AUTO-03 ready 55/55, 0 aplicado. #1009 sigue abierta en borrador, con candidato preparado; no es ya un inventario general. Este cierre de producto no ejecuta DML del lote ni lo certifica. El commit de esta reconciliación será un HEAD documental posterior, sin deployment manual forzado.
 
 **Supabase:** `ACTIVE_HEALTHY` y actualizado por el usuario de Nano a Micro. Support confirmó sobreutilización de memoria, uso sostenido de SWAP y overcommitment durante el incidente; CPU/IO pueden haber contribuido, por lo que no se reduce toda la causalidad a RAM. La base ocupa ~45 MB. Tras Micro: `effective_cache_size` 384→768 MB y `maintenance_work_mem` 32→64 MB. Producción contiene 17 migraciones estructurales. HC-PERF-SUPABASE-01 materializa `home_knowledge_threads`: fuente/caché 2.052/2.052, 0 diferencias, lectura `anon` correcta, patrón medido ~115,4 ms→~0,42 ms y primer cron `succeeded` (~156,9 ms). Véase [seguimiento de capacidad](./P0-SUPABASE-CAPACITY-2026-09-25.md).
 
@@ -25,9 +27,9 @@ Morón y HC-AUTO-03 permanecen fuera de las escrituras.
 
 **Régimen:** FIRST EDITION FREEZE activo
 
-**Frente HC-016:** **MORÓN DE LA FRONTERA · DÉCIMO MACROLOTE MUNICIPAL HC-016 · CERRADO Y CERTIFICADO**. No repetir el Apply principal ni el correctivo. Detenerse aquí: el siguiente municipio requiere recálculo provincial y orden posterior; no abrir HC-AUTO-03 ni otro macrofrente.
+**Frente HC-016:** Utrera #1009, candidato 1.173 operaciones, continúa NO-GO para staging hasta cerrar I44/I45/S25/H17, reconciliar el main nuevo y superar auditoría pública y dry-run PostgreSQL con rollback y medición de residuos. La corrección de Fuentes de Pasos ya está en producción; no mantenerla como pendiente. Morón permanece CERRADO Y CERTIFICADO; no repetir su Apply ni correctivo. No abrir HC-AUTO-03 ni otro municipio.
 
-> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. Los rankings municipales previos son evidencia histórica, no una cola automática. El próximo municipio solo puede nacer de un recálculo provincial nuevo y una orden expresa.
+> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. Utrera cuenta con orden expresa posterior; los rankings municipales previos no constituyen una cola automática. No abrir otro municipio tras Utrera sin una nueva orden.
 
 **Refuerzo preventivo HC-016 autorizado:** barrera de tipos implementada y verificada (1.281 pruebas y build). Altas con clasificación explícita; actualizaciones parciales validan tipos persistidos. SQL directo exige guard transaccional por IDs del universo completo. Sin DML/DDL ni nuevo municipio. [Contrato y evidencia](./HC016-PREFLIGHT-TIPOS-2026-09-27.md).
 

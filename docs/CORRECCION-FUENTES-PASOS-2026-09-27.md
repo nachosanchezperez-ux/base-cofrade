@@ -1,5 +1,31 @@
 # Fuentes públicas de Pasos · corrección transversal
 
+## Cierre productivo · 27/09/2026, 10:22 Europe/Madrid
+
+#1012 fusionada sobre el HEAD verificado `a37160910b44b6599999be0a7c42b788909be5de`.
+Main resultante: `dd9c5a10a12636407366a5eed7e9f306242f05f2`.
+Deployment productivo `dpl_B5oUi2UWkRqtGW1usbhR3rP8xp3Y`, READY sobre ese SHA,
+con aliases hilocofrade.es y www.hilocofrade.es. CI previo completado con éxito.
+
+QA HTTP sobre el dominio canónico:
+
+| Ficha | HTTP | Robots | Canonical | Fuente visible | Sitemap |
+|---|---:|---|---|---|---|
+| amargura-alcala-guadaira-paso-cristo | 200 | index, follow | propio | 1 enlace al Consejo de Alcalá | incluida |
+| amargura-alcala-guadaira-paso-palio | 200 | index, follow | propio | 1 enlace al Consejo de Alcalá | incluida |
+| andas-angustias-estepa | 200 | index, follow | propio | 1 enlace al programa oficial 2026 | incluida |
+
+`/sitemaps/pasos`: HTTP 200, 409 URLs, las tres muestras incluidas.
+La lectura de anclas HTML confirma una sola aparición de cada Fuente: no se
+cuentan las copias del payload de React como enlaces visibles.
+Runtime error/fatal del deployment nuevo: sin filas en consulta de 10 min;
+ventana efectiva limitada al tiempo transcurrido desde su publicación.
+
+SQL de control a las 08:22:18 UTC: 17 migraciones; import Utrera inexistente;
+HC-AUTO-03 ready 55/55, 0 aplicado; Morón completed 504/504. Ningún DML ejecutado.
+La corrección queda cerrada. Las cuatro decisiones editoriales de Utrera y su
+auditoría/dry-run permanecen pendientes; no se certifica staging ni Apply.
+
 ## Problema
 
 El lector público ignoraba source_links cuyo entity_id era el propio Paso.
