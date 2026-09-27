@@ -1,6 +1,7 @@
 import { connection } from 'next/server'
 import Link from 'next/link'
 import JsonLd from '@/components/JsonLd'
+import SiteBreadcrumb from '@/components/SiteBreadcrumb'
 import { absoluteUrl, breadcrumbJsonLd, socialMetadata } from '@/lib/seo'
 import { getPublicMarchDirectory } from '@/lib/supabase/public-directory-cache'
 import styles from './marchas.module.css'
@@ -110,9 +111,14 @@ export default async function MarchesDirectoryPage({ searchParams } = {}) {
 
       <header className={styles.hero}>
         <div className={`shell ${styles.heroInner}`}>
-          <nav className={styles.breadcrumb} aria-label="Migas de pan">
-            <Link href="/">Inicio</Link><span>/</span><strong>Marchas</strong>
-          </nav>
+          <SiteBreadcrumb
+            items={[
+              { label: 'Inicio', href: '/' },
+              { label: 'Marchas' },
+            ]}
+            tone="dark"
+            showAccent={false}
+          />
           <div className={styles.heroCopy}>
             <span>Archivo musical</span>
             <h1>Marchas procesionales</h1>

@@ -213,7 +213,7 @@ export default async function ImagenPage({ params }) {
         title={imagen.nombre}
         breadcrumbItems={[
           { label: 'Imágenes', href: '/imagenes' },
-          { label: 'Ficha' },
+          { label: imagen.nombre },
         ]}
         relation={hermandad ? {
           label: 'Titular de',

@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { connection } from 'next/server'
 import JsonLd from '@/components/JsonLd'
+import SiteBreadcrumb from '@/components/SiteBreadcrumb'
 import { getPublicAgentDirectory } from '@/lib/supabase/public-agents'
 import { collectionPageJsonLd, socialMetadata } from '@/lib/seo'
 import styles from '../marchas/marchas.module.css'
@@ -66,9 +67,14 @@ export default async function AuthorsDirectoryPage({ searchParams } = {}) {
 
       <header className={styles.hero}>
         <div className={`shell ${styles.heroInner}`}>
-          <nav className={styles.breadcrumb} aria-label="Migas de pan">
-            <Link href="/">Inicio</Link><span>/</span><strong>Autores</strong>
-          </nav>
+          <SiteBreadcrumb
+            items={[
+              { label: 'Inicio', href: '/' },
+              { label: 'Autores' },
+            ]}
+            tone="dark"
+            showAccent={false}
+          />
           <div className={styles.heroCopy}>
             <span>Grafo de conocimiento</span>
             <h1>Autores y talleres</h1>

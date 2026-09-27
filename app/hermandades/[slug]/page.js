@@ -386,7 +386,8 @@ export default async function HermandadDetailPage({ params }) {
         seat={publicText(h.sede)}
         breadcrumbItems={[
           { label: 'Hermandades', href: '/hermandades' },
-          { label: h.localidad || 'Ficha' },
+          publicText(h.localidad) ? { label: publicText(h.localidad), href: municipalityHubHref || undefined } : null,
+          { label: h.nombrePopular },
         ]}
         facts={heroFacts}
         media={{

@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import JsonLd from '@/components/JsonLd'
+import SiteBreadcrumb from '@/components/SiteBreadcrumb'
 import { musicalRepertoireDateLabel } from '@/lib/musical-repertoires/presentation'
 import { getMusicalRepertoireBySlug } from '@/lib/supabase/musical-repertoires'
 import { absoluteUrl, breadcrumbJsonLd, compactSeoTitle, socialMetadata } from '@/lib/seo'
@@ -94,9 +95,15 @@ export default async function MusicalRepertoireDetailPage({ params }) {
 
       <header className={styles.detailHero}>
         <div className={`shell ${styles.detailHeroShell}`}>
-          <nav className={styles.breadcrumb} aria-label="Migas de pan">
-            <Link href="/">Inicio</Link><span>/</span><Link href="/crucetas-musicales">Crucetas musicales</Link>
-          </nav>
+          <SiteBreadcrumb
+            items={[
+              { label: 'Inicio', href: '/' },
+              { label: 'Crucetas musicales', href: '/crucetas-musicales' },
+              { label: repertoire.displayTitle },
+            ]}
+            tone="dark"
+            showAccent={false}
+          />
 
           <div className={styles.heroGrid}>
             <div className={styles.heroCopy}>

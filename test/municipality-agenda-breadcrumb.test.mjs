@@ -9,6 +9,7 @@ test('las guías municipales de la Agenda no muestran la raya decorativa del bre
   const municipalityHub = read('components/MunicipalityAgendaHub.js')
 
   assert.match(breadcrumb, /showAccent = true/)
-  assert.match(breadcrumb, /showAccent \? <span className=\{styles\.accent\}/)
+  assert.match(breadcrumb, /<SiteBreadcrumb/)
+  assert.match(breadcrumb, /showAccent=\{showAccent\}/)
   assert.match(municipalityHub, /<DirectoryBreadcrumb showAccent=\{false\}/)
 })
