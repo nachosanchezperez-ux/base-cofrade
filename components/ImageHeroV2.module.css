@@ -1,6 +1,7 @@
 .hero {
   --hero-accent: var(--brotherhood-secondary, #a71930);
   --hero-deep: var(--brotherhood-dark, #071a2f);
+  --hero-veil: color-mix(in srgb, var(--hero-deep) 80%, #000);
   position: relative;
   min-height: clamp(620px, 50vw, 735px);
   overflow: hidden;
@@ -8,7 +9,7 @@
   color: #fff;
   background:
     radial-gradient(circle at 80% 26%, color-mix(in srgb, var(--hero-accent) 22%, transparent), transparent 34%),
-    linear-gradient(135deg, var(--hero-deep), #061321 74%);
+    linear-gradient(135deg, var(--hero-deep), var(--hero-veil) 74%);
   isolation: isolate;
 }
 
@@ -57,31 +58,31 @@
   inset: 0;
   background:
     linear-gradient(90deg,
-      rgba(3, 15, 29, .995) 0%,
-      rgba(3, 16, 31, .985) 24%,
-      rgba(3, 17, 32, .92) 39%,
-      rgba(3, 18, 34, .7) 52%,
-      rgba(3, 18, 34, .27) 70%,
-      rgba(3, 18, 34, .05) 100%),
+      color-mix(in srgb, var(--hero-veil) 99.5%, transparent) 0%,
+      color-mix(in srgb, var(--hero-veil) 98.5%, transparent) 24%,
+      color-mix(in srgb, var(--hero-veil) 92%, transparent) 39%,
+      color-mix(in srgb, var(--hero-veil) 70%, transparent) 52%,
+      color-mix(in srgb, var(--hero-veil) 27%, transparent) 70%,
+      color-mix(in srgb, var(--hero-veil) 5%, transparent) 100%),
     linear-gradient(180deg,
-      rgba(2, 11, 22, .24) 0%,
-      rgba(2, 11, 22, .02) 44%,
-      rgba(2, 11, 22, .76) 100%);
+      color-mix(in srgb, var(--hero-veil) 24%, transparent) 0%,
+      color-mix(in srgb, var(--hero-veil) 2%, transparent) 44%,
+      color-mix(in srgb, var(--hero-veil) 76%, transparent) 100%);
   pointer-events: none;
 }
 
 .contained .photoVeil {
   background:
     linear-gradient(90deg,
-      rgba(3, 15, 29, .995) 0%,
-      rgba(3, 16, 31, .985) 28%,
-      rgba(3, 17, 32, .9) 45%,
-      rgba(3, 18, 34, .48) 62%,
-      rgba(3, 18, 34, .12) 100%),
+      color-mix(in srgb, var(--hero-veil) 99.5%, transparent) 0%,
+      color-mix(in srgb, var(--hero-veil) 98.5%, transparent) 28%,
+      color-mix(in srgb, var(--hero-veil) 90%, transparent) 45%,
+      color-mix(in srgb, var(--hero-veil) 48%, transparent) 62%,
+      color-mix(in srgb, var(--hero-veil) 12%, transparent) 100%),
     linear-gradient(180deg,
-      rgba(2, 11, 22, .18) 0%,
-      rgba(2, 11, 22, .04) 52%,
-      rgba(2, 11, 22, .78) 100%);
+      color-mix(in srgb, var(--hero-veil) 18%, transparent) 0%,
+      color-mix(in srgb, var(--hero-veil) 4%, transparent) 52%,
+      color-mix(in srgb, var(--hero-veil) 78%, transparent) 100%);
 }
 
 .vignette {
@@ -257,7 +258,7 @@
   border: 1px solid rgba(255, 255, 255, .18);
   border-radius: 15px;
   color: #fff;
-  background: rgba(5, 20, 38, .56);
+  background: color-mix(in srgb, var(--hero-veil) 56%, transparent);
   box-shadow: 0 14px 32px rgba(0, 0, 0, .12);
   text-decoration: none;
   backdrop-filter: blur(13px);
@@ -269,7 +270,7 @@
   transform: translateY(-2px);
   border-color: rgba(255, 255, 255, .36);
   outline: none;
-  background: rgba(8, 28, 51, .7);
+  background: color-mix(in srgb, var(--hero-veil) 70%, transparent);
 }
 
 .relationCrest,
@@ -335,7 +336,7 @@
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, .16);
   border-radius: 16px;
-  background: rgba(4, 18, 34, .52);
+  background: color-mix(in srgb, var(--hero-veil) 52%, transparent);
   backdrop-filter: blur(14px);
 }
 
@@ -413,15 +414,15 @@
   .photoVeil {
     background:
       linear-gradient(90deg,
-        rgba(3, 15, 29, .99) 0%,
-        rgba(3, 16, 31, .96) 29%,
-        rgba(3, 17, 32, .82) 48%,
-        rgba(3, 18, 34, .34) 75%,
-        rgba(3, 18, 34, .08) 100%),
+        color-mix(in srgb, var(--hero-veil) 99%, transparent) 0%,
+        color-mix(in srgb, var(--hero-veil) 96%, transparent) 29%,
+        color-mix(in srgb, var(--hero-veil) 82%, transparent) 48%,
+        color-mix(in srgb, var(--hero-veil) 34%, transparent) 75%,
+        color-mix(in srgb, var(--hero-veil) 8%, transparent) 100%),
       linear-gradient(180deg,
-        rgba(2, 11, 22, .2) 0%,
-        rgba(2, 11, 22, .04) 48%,
-        rgba(2, 11, 22, .78) 100%);
+        color-mix(in srgb, var(--hero-veil) 20%, transparent) 0%,
+        color-mix(in srgb, var(--hero-veil) 4%, transparent) 48%,
+        color-mix(in srgb, var(--hero-veil) 78%, transparent) 100%);
   }
 
   .subjectStage {
@@ -463,12 +464,12 @@
   .contained .photoVeil {
     background:
       linear-gradient(180deg,
-        rgba(3, 14, 27, .08) 0%,
-        rgba(3, 14, 27, .03) 27%,
-        rgba(3, 15, 29, .48) 47%,
-        rgba(3, 15, 29, .93) 61%,
-        rgba(3, 15, 29, .995) 76%,
-        rgba(3, 15, 29, 1) 100%);
+        color-mix(in srgb, var(--hero-veil) 8%, transparent) 0%,
+        color-mix(in srgb, var(--hero-veil) 3%, transparent) 27%,
+        color-mix(in srgb, var(--hero-veil) 48%, transparent) 47%,
+        color-mix(in srgb, var(--hero-veil) 93%, transparent) 61%,
+        color-mix(in srgb, var(--hero-veil) 99.5%, transparent) 76%,
+        color-mix(in srgb, var(--hero-veil) 100%, transparent) 100%);
   }
 
   .texture {
@@ -617,12 +618,12 @@
   .contained .photoVeil {
     background:
       linear-gradient(180deg,
-        rgba(3, 14, 27, .07) 0%,
-        rgba(3, 14, 27, .03) 24%,
-        rgba(3, 15, 29, .48) 43%,
-        rgba(3, 15, 29, .94) 56%,
-        rgba(3, 15, 29, .995) 70%,
-        rgba(3, 15, 29, 1) 100%);
+        color-mix(in srgb, var(--hero-veil) 7%, transparent) 0%,
+        color-mix(in srgb, var(--hero-veil) 3%, transparent) 24%,
+        color-mix(in srgb, var(--hero-veil) 48%, transparent) 43%,
+        color-mix(in srgb, var(--hero-veil) 94%, transparent) 56%,
+        color-mix(in srgb, var(--hero-veil) 99.5%, transparent) 70%,
+        color-mix(in srgb, var(--hero-veil) 100%, transparent) 100%);
   }
 
   .content h1 {
