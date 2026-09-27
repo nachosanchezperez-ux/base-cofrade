@@ -3653,12 +3653,12 @@ button, input { font: inherit; }
 
 /* Migas de pan · contrato visual global
    La sección actual siempre se diferencia del camino recorrido. */
-:is(nav[aria-label="Migas de pan"], nav[aria-label="Ruta de navegación"]) {
+:is(nav[aria-label="Migas de pan"], nav[aria-label="Ruta de navegación"]):not([data-site-breadcrumb="true"]) {
   max-width: 100%;
   min-width: 0;
 }
 
-:is(nav[aria-label="Migas de pan"], nav[aria-label="Ruta de navegación"]) :is(strong:last-child, [aria-current="page"]) {
+:is(nav[aria-label="Migas de pan"], nav[aria-label="Ruta de navegación"]):not([data-site-breadcrumb="true"]) :is(strong:last-child, [aria-current="page"]) {
   display: inline-flex;
   min-height: 29px;
   align-items: center;
@@ -3672,12 +3672,12 @@ button, input { font: inherit; }
   white-space: nowrap;
 }
 
-:is(nav[aria-label="Migas de pan"], nav[aria-label="Ruta de navegación"]) a {
+:is(nav[aria-label="Migas de pan"], nav[aria-label="Ruta de navegación"]):not([data-site-breadcrumb="true"]) a {
   text-underline-offset: 3px;
 }
 
 @media (max-width: 620px) {
-  :is(nav[aria-label="Migas de pan"], nav[aria-label="Ruta de navegación"]) {
+  :is(nav[aria-label="Migas de pan"], nav[aria-label="Ruta de navegación"]):not([data-site-breadcrumb="true"]) {
     flex-wrap: nowrap !important;
     overflow-x: auto;
     overscroll-behavior-inline: contain;
@@ -3685,19 +3685,19 @@ button, input { font: inherit; }
     -webkit-overflow-scrolling: touch;
   }
 
-  :is(nav[aria-label="Migas de pan"], nav[aria-label="Ruta de navegación"])::-webkit-scrollbar {
+  :is(nav[aria-label="Migas de pan"], nav[aria-label="Ruta de navegación"]):not([data-site-breadcrumb="true"])::-webkit-scrollbar {
     display: none;
   }
 
-  :is(nav[aria-label="Migas de pan"], nav[aria-label="Ruta de navegación"]) > * {
+  :is(nav[aria-label="Migas de pan"], nav[aria-label="Ruta de navegación"]):not([data-site-breadcrumb="true"]) > * {
     flex: 0 0 auto;
   }
 
-  :is(nav[aria-label="Migas de pan"], nav[aria-label="Ruta de navegación"]) ol {
+  :is(nav[aria-label="Migas de pan"], nav[aria-label="Ruta de navegación"]):not([data-site-breadcrumb="true"]) ol {
     flex-wrap: nowrap !important;
   }
 
-  :is(nav[aria-label="Migas de pan"], nav[aria-label="Ruta de navegación"]) :is(strong:last-child, [aria-current="page"]) {
+  :is(nav[aria-label="Migas de pan"], nav[aria-label="Ruta de navegación"]):not([data-site-breadcrumb="true"]) :is(strong:last-child, [aria-current="page"]) {
     min-height: 31px;
     padding: 0 10px !important;
   }
