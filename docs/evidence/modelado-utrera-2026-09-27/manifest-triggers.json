@@ -1,0 +1,72 @@
+[
+  {
+    "table_name": "bands",
+    "tgname": "bands_guard_identity_collision",
+    "definition": "CREATE TRIGGER bands_guard_identity_collision BEFORE INSERT OR UPDATE OF entity_id, municipality_id ON public.bands FOR EACH ROW EXECUTE FUNCTION guard_band_identity_collision()",
+    "proname": "guard_band_identity_collision",
+    "function_definition": "CREATE OR REPLACE FUNCTION public.guard_band_identity_collision()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'public', 'pg_temp'\nAS $function$\ndeclare\n  candidate_name text;\n  collision_name text;\nbegin\n  select e.name into candidate_name\n  from public.entities e\n  where e.id=new.entity_id and e.entity_type='band';\n\n  if candidate_name is null then return new; end if;\n\n  select e.name into collision_name\n  from public.bands b\n  join public.entities e on e.id=b.entity_id\n  where b.entity_id <> new.entity_id\n    and b.municipality_id is not distinct from new.municipality_id\n    and (\n      regexp_replace(lower(trim(e.name)), '[[:space:]]+', ' ', 'g') = regexp_replace(lower(trim(candidate_name)), '[[:space:]]+', ' ', 'g')\n      or exists (\n        select 1 from public.band_names bn\n        where bn.band_entity_id=b.entity_id\n          and bn.is_current=true\n          and (\n            regexp_replace(lower(trim(bn.name)), '[[:space:]]+', ' ', 'g') = regexp_replace(lower(trim(candidate_name)), '[[:space:]]+', ' ', 'g')\n            or (coalesce(trim(bn.short_name),'') <> '' and regexp_replace(lower(trim(bn.short_name)), '[[:space:]]+', ' ', 'g') = regexp_replace(lower(trim(candidate_name)), '[[:space:]]+', ' ', 'g'))\n          )\n      )\n    )\n  limit 1;\n\n  if collision_name is not null then\n    raise exception using errcode='23505', message=format('La formación «%s» coincide con una formación o denominación vigente ya existente en el mismo municipio: «%s». Reutiliza la entidad canónica.', candidate_name, collision_name);\n  end if;\n  return new;\nend $function$\n"
+  },
+  {
+    "table_name": "brotherhood_images",
+    "tgname": "brotherhood_images_guard_publication",
+    "definition": "CREATE TRIGGER brotherhood_images_guard_publication BEFORE INSERT OR UPDATE ON public.brotherhood_images FOR EACH ROW EXECUTE FUNCTION guard_core_relation_publication('brotherhood_entity_id', 'image_entity_id', 'brotherhood', 'image')",
+    "proname": "guard_core_relation_publication",
+    "function_definition": "CREATE OR REPLACE FUNCTION public.guard_core_relation_publication()\n RETURNS trigger\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO ''\nAS $function$\ndeclare\n  source_entity_id uuid;\n  target_entity_id uuid;\n  source_entity_type text;\n  target_entity_type text;\n  source_status text;\n  target_status text;\nbegin\n  if new.status <> 'published' then\n    return new;\n  end if;\n\n  source_entity_id := (to_jsonb(new) ->> tg_argv[0])::uuid;\n  target_entity_id := (to_jsonb(new) ->> tg_argv[1])::uuid;\n\n  select entity_type, status\n    into source_entity_type, source_status\n  from public.entities\n  where id = source_entity_id\n  for share;\n\n  select entity_type, status\n    into target_entity_type, target_status\n  from public.entities\n  where id = target_entity_id\n  for share;\n\n  if source_entity_type is distinct from tg_argv[2]\n     or target_entity_type is distinct from tg_argv[3]\n     or source_status is distinct from 'published'\n     or target_status is distinct from 'published' then\n    new.status := 'draft';\n  end if;\n\n  return new;\nend;\n$function$\n"
+  },
+  {
+    "table_name": "brotherhood_steps",
+    "tgname": "brotherhood_steps_guard_publication",
+    "definition": "CREATE TRIGGER brotherhood_steps_guard_publication BEFORE INSERT OR UPDATE ON public.brotherhood_steps FOR EACH ROW EXECUTE FUNCTION guard_core_relation_publication('brotherhood_entity_id', 'step_entity_id', 'brotherhood', 'step')",
+    "proname": "guard_core_relation_publication",
+    "function_definition": "CREATE OR REPLACE FUNCTION public.guard_core_relation_publication()\n RETURNS trigger\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO ''\nAS $function$\ndeclare\n  source_entity_id uuid;\n  target_entity_id uuid;\n  source_entity_type text;\n  target_entity_type text;\n  source_status text;\n  target_status text;\nbegin\n  if new.status <> 'published' then\n    return new;\n  end if;\n\n  source_entity_id := (to_jsonb(new) ->> tg_argv[0])::uuid;\n  target_entity_id := (to_jsonb(new) ->> tg_argv[1])::uuid;\n\n  select entity_type, status\n    into source_entity_type, source_status\n  from public.entities\n  where id = source_entity_id\n  for share;\n\n  select entity_type, status\n    into target_entity_type, target_status\n  from public.entities\n  where id = target_entity_id\n  for share;\n\n  if source_entity_type is distinct from tg_argv[2]\n     or target_entity_type is distinct from tg_argv[3]\n     or source_status is distinct from 'published'\n     or target_status is distinct from 'published' then\n    new.status := 'draft';\n  end if;\n\n  return new;\nend;\n$function$\n"
+  },
+  {
+    "table_name": "entities",
+    "tgname": "entities_demote_invalid_core_relations",
+    "definition": "CREATE TRIGGER entities_demote_invalid_core_relations AFTER UPDATE OF status, entity_type ON public.entities FOR EACH ROW WHEN (((old.status IS DISTINCT FROM new.status) OR (old.entity_type IS DISTINCT FROM new.entity_type))) EXECUTE FUNCTION demote_invalid_core_relations_after_entity_change()",
+    "proname": "demote_invalid_core_relations_after_entity_change",
+    "function_definition": "CREATE OR REPLACE FUNCTION public.demote_invalid_core_relations_after_entity_change()\n RETURNS trigger\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO ''\nAS $function$\nbegin\n  update public.brotherhood_images relation\n  set status = 'draft'\n  where relation.status = 'published'\n    and (\n      relation.brotherhood_entity_id = new.id\n      or relation.image_entity_id = new.id\n    )\n    and not exists (\n      select 1\n      from public.entities brotherhood\n      join public.entities image\n        on image.id = relation.image_entity_id\n      where brotherhood.id = relation.brotherhood_entity_id\n        and brotherhood.entity_type = 'brotherhood'\n        and brotherhood.status = 'published'\n        and image.entity_type = 'image'\n        and image.status = 'published'\n    );\n\n  update public.brotherhood_steps relation\n  set status = 'draft'\n  where relation.status = 'published'\n    and (\n      relation.brotherhood_entity_id = new.id\n      or relation.step_entity_id = new.id\n    )\n    and not exists (\n      select 1\n      from public.entities brotherhood\n      join public.entities step\n        on step.id = relation.step_entity_id\n      where brotherhood.id = relation.brotherhood_entity_id\n        and brotherhood.entity_type = 'brotherhood'\n        and brotherhood.status = 'published'\n        and step.entity_type = 'step'\n        and step.status = 'published'\n    );\n\n  update public.image_steps relation\n  set status = 'draft'\n  where relation.status = 'published'\n    and (\n      relation.image_entity_id = new.id\n      or relation.step_entity_id = new.id\n    )\n    and not exists (\n      select 1\n      from public.entities image\n      join public.entities step\n        on step.id = relation.step_entity_id\n      where image.id = relation.image_entity_id\n        and image.entity_type = 'image'\n        and image.status = 'published'\n        and step.entity_type = 'step'\n        and step.status = 'published'\n    );\n\n  return new;\nend;\n$function$\n"
+  },
+  {
+    "table_name": "entities",
+    "tgname": "entities_set_updated_at",
+    "definition": "CREATE TRIGGER entities_set_updated_at BEFORE UPDATE ON public.entities FOR EACH ROW EXECUTE FUNCTION set_updated_at()",
+    "proname": "set_updated_at",
+    "function_definition": "CREATE OR REPLACE FUNCTION public.set_updated_at()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO ''\nAS $function$\nbegin\n  new.updated_at = now();\n  return new;\nend;\n$function$\n"
+  },
+  {
+    "table_name": "entities",
+    "tgname": "guard_published_crew_event_entity",
+    "definition": "CREATE TRIGGER guard_published_crew_event_entity BEFORE INSERT OR UPDATE OF status, entity_type ON public.entities FOR EACH ROW EXECUTE FUNCTION guard_published_crew_event_entity()",
+    "proname": "guard_published_crew_event_entity",
+    "function_definition": "CREATE OR REPLACE FUNCTION public.guard_published_crew_event_entity()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO ''\nAS $function$\ndeclare\n  stored_category text;\n  stored_brotherhood_id uuid;\n  stored_brotherhood_status text;\nbegin\n  if new.entity_type = 'event' and new.status = 'published' then\n    select event_category, brotherhood_entity_id\n      into stored_category, stored_brotherhood_id\n    from public.events\n    where entity_id = new.id;\n\n    if stored_category = 'crew_call' then\n      select status\n        into stored_brotherhood_status\n      from public.entities\n      where id = stored_brotherhood_id\n        and entity_type = 'brotherhood';\n\n      if stored_brotherhood_status is distinct from 'published' then\n        raise exception 'crew_event_published_brotherhood_required';\n      end if;\n    end if;\n  end if;\n\n  return new;\nend;\n$function$\n"
+  },
+  {
+    "table_name": "image_steps",
+    "tgname": "image_steps_guard_publication",
+    "definition": "CREATE TRIGGER image_steps_guard_publication BEFORE INSERT OR UPDATE ON public.image_steps FOR EACH ROW EXECUTE FUNCTION guard_core_relation_publication('image_entity_id', 'step_entity_id', 'image', 'step')",
+    "proname": "guard_core_relation_publication",
+    "function_definition": "CREATE OR REPLACE FUNCTION public.guard_core_relation_publication()\n RETURNS trigger\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO ''\nAS $function$\ndeclare\n  source_entity_id uuid;\n  target_entity_id uuid;\n  source_entity_type text;\n  target_entity_type text;\n  source_status text;\n  target_status text;\nbegin\n  if new.status <> 'published' then\n    return new;\n  end if;\n\n  source_entity_id := (to_jsonb(new) ->> tg_argv[0])::uuid;\n  target_entity_id := (to_jsonb(new) ->> tg_argv[1])::uuid;\n\n  select entity_type, status\n    into source_entity_type, source_status\n  from public.entities\n  where id = source_entity_id\n  for share;\n\n  select entity_type, status\n    into target_entity_type, target_status\n  from public.entities\n  where id = target_entity_id\n  for share;\n\n  if source_entity_type is distinct from tg_argv[2]\n     or target_entity_type is distinct from tg_argv[3]\n     or source_status is distinct from 'published'\n     or target_status is distinct from 'published' then\n    new.status := 'draft';\n  end if;\n\n  return new;\nend;\n$function$\n"
+  },
+  {
+    "table_name": "outing_music_positions",
+    "tgname": "outing_music_positions_set_updated_at",
+    "definition": "CREATE TRIGGER outing_music_positions_set_updated_at BEFORE UPDATE ON public.outing_music_positions FOR EACH ROW EXECUTE FUNCTION set_updated_at()",
+    "proname": "set_updated_at",
+    "function_definition": "CREATE OR REPLACE FUNCTION public.set_updated_at()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO ''\nAS $function$\nbegin\n  new.updated_at = now();\n  return new;\nend;\n$function$\n"
+  },
+  {
+    "table_name": "outings",
+    "tgname": "outings_set_updated_at",
+    "definition": "CREATE TRIGGER outings_set_updated_at BEFORE UPDATE ON public.outings FOR EACH ROW EXECUTE FUNCTION set_updated_at()",
+    "proname": "set_updated_at",
+    "function_definition": "CREATE OR REPLACE FUNCTION public.set_updated_at()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO ''\nAS $function$\nbegin\n  new.updated_at = now();\n  return new;\nend;\n$function$\n"
+  },
+  {
+    "table_name": "places",
+    "tgname": "places_set_updated_at",
+    "definition": "CREATE TRIGGER places_set_updated_at BEFORE UPDATE ON public.places FOR EACH ROW EXECUTE FUNCTION set_updated_at()",
+    "proname": "set_updated_at",
+    "function_definition": "CREATE OR REPLACE FUNCTION public.set_updated_at()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO ''\nAS $function$\nbegin\n  new.updated_at = now();\n  return new;\nend;\n$function$\n"
+  }
+]

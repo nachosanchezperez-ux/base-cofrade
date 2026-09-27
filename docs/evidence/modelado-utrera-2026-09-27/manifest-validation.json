@@ -1,0 +1,28 @@
+{
+  "status": "PASS",
+  "counts": {
+    "corporations": 17,
+    "images": 47,
+    "steps": 25,
+    "heritage_assets": 6,
+    "bands": 17,
+    "outings": 20,
+    "positions": 25,
+    "operations": 1173,
+    "insert": 1166,
+    "update": 7,
+    "held": 7
+  },
+  "offline_only": true,
+  "apply_gate": "NO_GO_PUBLIC_CONTRACT",
+  "public_contract_blockers": [
+    "I44",
+    "I45",
+    "S25",
+    "H17"
+  ],
+  "production_writes": 0,
+  "dry_run": "PREPARED_NOT_EXECUTED",
+  "public_qa": "NOT_EXECUTED",
+  "seo_qa": "NOT_EXECUTED"
+}

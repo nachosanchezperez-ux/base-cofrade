@@ -1,0 +1,765 @@
+{
+  "meta": {
+    "version": 1,
+    "reviewed_at": "2026-09-27",
+    "municipality_id": "e4319248-831a-4f4c-adb8-19c496f95dd6",
+    "edition_scope_frozen": true,
+    "universal_census_certified": false,
+    "production_writes": 0,
+    "meaning": "Decisiones cerradas para el manifiesto de esta edición; no certifica inexistencia de otras asociaciones ni cierre público de Utrera."
+  },
+  "sources": [
+    {
+      "key": "F52",
+      "title": "Ad Deum Per Imagines · catálogo de imágenes de Jesús y María de Utrera",
+      "publisher": "Consejo de Hermandades de Utrera · Antonio Cabrera Carro y Antonio Cabrera Rodríguez",
+      "url": "https://consejodehermandadesdeutrera.org/wp-content/uploads/2024/11/Ad-Deum-Per-Images.pdf",
+      "sha256": "9ee2b11efd9d4a48642f037e225045952c71619ab87306023ece648110949594",
+      "access": "PDF descargado y texto leído; páginas PDF 24,54,56,62,72,96,136. No incluye un catálogo de santos."
+    },
+    {
+      "key": "F53",
+      "title": "María Auxiliadora · anuncio de la procesión del 24 de mayo de 2026",
+      "publisher": "Utrera al día",
+      "url": "https://utreraaldia.com/utrera-vivira-su-gran-dia-salesiano-con-la-salida-procesional-de-maria-auxiliadora-este-domingo/",
+      "published_date": "2026-05-22"
+    },
+    {
+      "key": "F54",
+      "title": "Nuestra Señora del Rosario · titular de Los Gitanos",
+      "publisher": "Hermandad de los Gitanos de Utrera",
+      "url": "https://hermandadgitanosdeutrera.com/ntra-sra-del-rosario/"
+    },
+    {
+      "key": "F55",
+      "title": "Imágenes titulares · Beato Ceferino",
+      "publisher": "Hermandad de los Gitanos de Utrera",
+      "url": "https://hermandadgitanosdeutrera.com/imagenes-titulares/"
+    },
+    {
+      "key": "F56",
+      "title": "Paso de la Virgen de la Esperanza",
+      "publisher": "Hermandad de los Gitanos de Utrera",
+      "url": "https://hermandadgitanosdeutrera.com/paso-de-la-virgen/"
+    },
+    {
+      "key": "F57",
+      "title": "Domingo de Ramos en la pedanía de Trajano",
+      "publisher": "Arte Sacro · Manuel Pinto Montero",
+      "url": "https://www.artesacro.org/Noticia/Ver/129421/provincia-domingo-ramos-pedania-trajano",
+      "published_date": "2019-04-24"
+    },
+    {
+      "key": "F58",
+      "title": "Nuestra Señora de Consolación y el Señor de Trajano",
+      "publisher": "Diego Gómez Ojeda",
+      "url": "https://diegogomezojeda.blogspot.com/2022/12/?m=0",
+      "published_date": null,
+      "access": "Archivo de diciembre de 2022, artículo sobre los actos del 7 y 8 de octubre. El enlace individual devuelve un control de acceso; se usa únicamente el archivo público leído."
+    },
+    {
+      "key": "F59",
+      "title": "Extracto de acuerdos de la Junta de Gobierno Local · 25 de abril de 2025",
+      "publisher": "Ayuntamiento de Utrera",
+      "url": "https://www.utrera.org/wp-content/uploads/2025/04/24-Or-250425-EXTRACTO-DEL-ACTA-JGL.pdf",
+      "published_date": "2025-04-25",
+      "sha256": "8b5275a8202962f2ff56cb2dc7221c62c37c51894a01e79cf01d26a3ca822ed1",
+      "pages_read": [
+        28,
+        29,
+        30
+      ]
+    },
+    {
+      "key": "F60",
+      "title": "El Torbiscal · historia y situación del poblado",
+      "publisher": "Sevilla Actualidad",
+      "url": "https://www.sevillaactualidad.com/sevilla/597704-el-pueblo-de-sevilla-que-tuvo-500-vecinos-cine-piscina-y-hasta-un-hangar-y-hoy-esta-en-ruinas/",
+      "published_date": "2026-08-31"
+    }
+  ],
+  "corporations": [
+    {
+      "key": "H15",
+      "name": "María Auxiliadora · ADMA",
+      "official_name": "Archicofradía de María Auxiliadora de Utrera",
+      "popular_name": "María Auxiliadora · ADMA",
+      "brotherhood_types": [
+        "Gloria"
+      ],
+      "place": "L05",
+      "summary": "Asociación salesiana de Utrera dedicada al culto de María Auxiliadora y a su procesión anual desde la basílica del colegio. Tiene identidad propia dentro de la familia salesiana.",
+      "history_text": "Salesianos la presenta como Archicofradía y Asociación de María Auxiliadora. Su actividad y sus cultos se distinguen de los de la Hermandad penitencial de los Estudiantes.",
+      "sources": [
+        "F49",
+        "F53"
+      ],
+      "classification_basis": "F49 usa Archicofradía y atribuye cultos/procesión. Precedente público ADMA Trinidad de Sevilla 165641a5-8f78-478f-9cf7-24cddc3ee257: Gloria. No implica que toda asociación civil entre en brotherhoods."
+    },
+    {
+      "key": "H16",
+      "name": "Borriquita de Trajano",
+      "official_name": "Agrupación Parroquial de Nuestro Padre Jesús en su Entrada en Jerusalén de Trajano",
+      "popular_name": "Borriquita de Trajano",
+      "brotherhood_types": [
+        "Agrupación Parroquial"
+      ],
+      "place": "L10",
+      "summary": "Agrupación Parroquial de Trajano, pedanía de Utrera, vinculada a San Pablo y a la Entrada en Jerusalén. Conserva la antigua Borriquita de la Trinidad utrerana.",
+      "history_text": "Las fuentes de 2019 y 2022 identifican la Agrupación y sus cultos. La crónica de 2022 incorpora la Virgen de Consolación a este contexto devocional y distingue a la Asociación de Romeros de Santa María la Blanca.",
+      "sources": [
+        "F57",
+        "F58",
+        "F52"
+      ],
+      "notes": "No declarar erección posterior como Hermandad sin decreto. No fusionar con Romeros de Trajano ni con Marismas de Pinzón."
+    },
+    {
+      "key": "H17",
+      "name": "Marismas de Pinzón",
+      "official_name": "Agrupación Parroquial de Nuestra Señora de las Marismas de Pinzón",
+      "popular_name": "Marismas de Pinzón",
+      "brotherhood_types": [
+        "Agrupación Parroquial"
+      ],
+      "place": null,
+      "summary": "Agrupación de culto mariano de Pinzón, pedanía de Utrera. La documentación municipal la identifica en relación con la romería de Nuestra Señora de las Marismas.",
+      "history_text": null,
+      "sources": [
+        "F59",
+        "F50"
+      ],
+      "notes": "F59 pp.28–30 nombra expresamente la Agrupación; el beneficiario jurídico de la romería es la Parroquia de San Pablo. F50 usa Hermandad. La discordancia del nombre parroquial en el acuerdo no se resuelve inventando sede ni independencia jurídica. La procesión de septiembre conserva su UUID y organizador no inferido desde la romería."
+    }
+  ],
+  "places": [
+    {
+      "key": "L10",
+      "name": "Parroquia de San Pablo · Trajano",
+      "place_type": "Parroquia",
+      "sources": [
+        "F57",
+        "F58"
+      ]
+    }
+  ],
+  "images": [
+    {
+      "key": "I39",
+      "name": "Nuestra Señora del Rosario",
+      "brotherhood": "H08",
+      "place": "L06",
+      "image_type": "Virgen de gloria",
+      "authorship_type": "anonymous",
+      "author_name": null,
+      "execution_date_text": "Siglo XVI",
+      "description": "Titular del Rosario incorporada a los cultos de Los Gitanos en 1997. Procede del antiguo convento dominico y recibió una restauración de Sebastián Martínez Zayas en 2005.",
+      "sources": [
+        "F54",
+        "F08"
+      ],
+      "notes": "Patronazgo: F54/F08 1585 y F52 1583. No fijar año en la ficha. Relación de culto, no transferencia de propiedad parroquial. Sin salida 2026 inferida."
+    },
+    {
+      "key": "I40",
+      "name": "Beato Ceferino Mártir",
+      "brotherhood": "H08",
+      "place": "L06",
+      "image_type": "Santo",
+      "authorship_type": "author",
+      "author_name": "Encarnación Hurtado Molina",
+      "execution_date_text": "1998",
+      "description": "Imagen del Beato Ceferino venerada por Los Gitanos de Utrera, realizada por Encarnación Hurtado Molina en 1998. Su bendición se celebró el 7 de mayo de ese año.",
+      "sources": [
+        "F55",
+        "F08"
+      ]
+    },
+    {
+      "key": "I41",
+      "name": "Inmaculada Concepción de la Sacramental de Santa María",
+      "brotherhood": "H11",
+      "place": "L03",
+      "image_type": "Inmaculada",
+      "authorship_type": "anonymous",
+      "author_name": null,
+      "execution_date_text": "Siglo XVIII",
+      "material": "Madera policromada",
+      "description": "Inmaculada de la Sacramental de Santa María, situada en el Sagrario. Es distinta de las imágenes de la misma advocación de Santiago y de Los Milagros.",
+      "sources": [
+        "F52"
+      ],
+      "source_page": 24
+    },
+    {
+      "key": "I42",
+      "name": "María Auxiliadora Coronada · imagen histórica",
+      "brotherhood": "H15",
+      "place": "L05",
+      "image_type": "Virgen de gloria",
+      "authorship_type": "anonymous",
+      "author_name": null,
+      "execution_date_text": "Anterior a 1885",
+      "material": "Pasta de madera",
+      "description": "Imagen histórica de María Auxiliadora venerada en la basílica salesiana. Se distingue de la réplica de madera realizada para las procesiones.",
+      "sources": [
+        "F52",
+        "F49"
+      ],
+      "source_page": 96,
+      "notes": "Propiedad del colegio salesiano; relación de culto con ADMA. No afirmar envío por Don Bosco como hecho documentado ni copiar la fecha de coronación como hechura."
+    },
+    {
+      "key": "I43",
+      "name": "María Auxiliadora · réplica procesional",
+      "brotherhood": "H15",
+      "place": "L05",
+      "image_type": "Virgen de gloria",
+      "authorship_type": "author",
+      "author_name": "Francisco Buiza",
+      "execution_date_text": "1967",
+      "material": "Madera",
+      "description": "Réplica procesional de María Auxiliadora realizada por Francisco Buiza. Su identidad material se conserva separada de la imagen histórica.",
+      "sources": [
+        "F52"
+      ],
+      "source_page": 96
+    },
+    {
+      "key": "I44",
+      "name": "Nuestro Padre Jesús Resucitado",
+      "brotherhood": null,
+      "place": "L06",
+      "organizer": "Asociación Parroquial de Jesús Resucitado y María Santísima de la Estrella",
+      "image_type": "Resucitado",
+      "authorship_type": "author",
+      "author_name": "Encarnación Hurtado Molina",
+      "execution_date_text": "2009",
+      "description": "Imagen del Resucitado venerada en Santiago y vinculada a la asociación parroquial que organiza el Vía Lucis vespertino. Se distingue de las procesiones eucarísticas de la mañana.",
+      "sources": [
+        "F52",
+        "F39",
+        "F40"
+      ],
+      "source_page": 54
+    },
+    {
+      "key": "I45",
+      "name": "María Santísima de la Estrella",
+      "brotherhood": null,
+      "place": "L06",
+      "organizer": "Asociación Parroquial de Jesús Resucitado y María Santísima de la Estrella",
+      "image_type": "Virgen",
+      "authorship_type": "author",
+      "author_name": "Encarnación Hurtado Molina",
+      "execution_date_text": "2006",
+      "description": "Imagen mariana vinculada a la asociación del Resucitado, conservada en Santiago. No se atribuye su presencia en el Vía Lucis de 2026 sin evidencia específica.",
+      "sources": [
+        "F52",
+        "F39"
+      ],
+      "source_page": 56
+    },
+    {
+      "key": "I46",
+      "name": "Jesús en su Entrada en Jerusalén de Trajano",
+      "brotherhood": "H16",
+      "place": "L10",
+      "image_type": "Entrada en Jerusalén",
+      "authorship_type": "anonymous",
+      "author_name": null,
+      "execution_date_text": "Siglo XX",
+      "description": "Borriquita de Trajano, antigua imagen de la Trinidad de Utrera. La crónica de 2019 documenta su procesión desde San Pablo y la restauración de Rafael Amaro en 2003.",
+      "sources": [
+        "F57",
+        "F52",
+        "F58"
+      ],
+      "notes": "Procedencia de Olot no identifica un taller concreto. No mezclar con la escultura de Salvador Madroñal de 1996."
+    },
+    {
+      "key": "I47",
+      "name": "Nuestra Señora de Consolación de Trajano",
+      "brotherhood": "H16",
+      "place": "L10",
+      "image_type": "Virgen de gloria",
+      "authorship_type": "author",
+      "author_name": "Sebastián Martínez Zayas",
+      "execution_date_text": null,
+      "description": "Imagen mariana de Trajano obra de Sebastián Martínez Zayas. La crónica local documenta su llegada en 2018 y los cultos y salida de octubre de 2022.",
+      "sources": [
+        "F58"
+      ],
+      "notes": "2018 es llegada documentada, no contrato de hechura. No confundir con la patrona del Santuario de Utrera."
+    }
+  ],
+  "image_overrides": [
+    {
+      "key": "I38",
+      "authorship_type": "attributed_to",
+      "author_name": "José Tiburcio González",
+      "execution_date_text": null,
+      "description": "Inmaculada de la Sacramental de Santiago. Su web la fecha hacia 1798 y la vincula a José Tiburcio González; el catálogo del Consejo propone una cronología anterior y plantea que su intervención pudiera ser una renovación.",
+      "sources": [
+        "F48",
+        "F52"
+      ],
+      "source_page": 72,
+      "notes": "Conservar las dos lecturas; no fechar con exactitud ni convertir atribución en autoría documentada. Distinta de la Inmaculada parroquial del mismo templo."
+    }
+  ],
+  "steps": [
+    {
+      "key": "S23",
+      "name": "Paso de María Auxiliadora",
+      "brotherhood": "H15",
+      "images": [
+        "I43"
+      ],
+      "positions": [
+        "O19-P1"
+      ],
+      "step_type": "Paso de gloria",
+      "description": "Soporte de la procesión anual de María Auxiliadora de Utrera. La tradición procesional emplea la réplica de madera, diferenciada de la imagen histórica del altar.",
+      "sources": [
+        "F52",
+        "F53"
+      ],
+      "notes": "No identificar sin prueba este soporte con las andas históricas de José Gil de 1912; fecha, autoría y componentes vigentes quedan sin asignar."
+    },
+    {
+      "key": "S24",
+      "name": "Paso de la Entrada en Jerusalén de Trajano",
+      "brotherhood": "H16",
+      "images": [
+        "I46"
+      ],
+      "positions": [],
+      "step_type": "Paso de Cristo",
+      "description": "Paso documentado en la salida de la Borriquita de Trajano desde San Pablo en 2019. Se conserva su contexto propio, separado del Paso de la Trinidad de Utrera.",
+      "sources": [
+        "F57"
+      ],
+      "notes": "Sin convocatoria 2026 verificada ni fecha de hechura atribuida al soporte."
+    },
+    {
+      "key": "S25",
+      "name": "Paso de Jesús Resucitado",
+      "brotherhood": null,
+      "place": "L06",
+      "images": [
+        "I44"
+      ],
+      "positions": [
+        "O20-P1"
+      ],
+      "step_type": "Paso de Cristo",
+      "description": "Paso de Jesús Resucitado utilizado en el Vía Lucis vespertino de Utrera. La crónica de 2026 describe un soporte plateado portado por veintiocho costaleros.",
+      "sources": [
+        "F40"
+      ],
+      "notes": "Sin Hermandad ficticia ni autoría inferida del autor de la imagen."
+    }
+  ],
+  "outings": [
+    {
+      "key": "O19",
+      "name": "María Auxiliadora · procesión de 2026",
+      "brotherhood": "H15",
+      "date": "2026-05-24",
+      "departure_time": "19:00",
+      "departure_place": "L05",
+      "return_place": "L05",
+      "return_date": null,
+      "return_time": null,
+      "event_status": "announced",
+      "sources": [
+        "F53"
+      ],
+      "positions": [
+        {
+          "key": "O19-P1",
+          "order": 1,
+          "step_key": "S23",
+          "music": "B17"
+        }
+      ],
+      "route_summary": "Basílica · San Juan Bosco · Virgen de Consolación · Altozano · Perafán de Rivera · La Plaza · Menéndez Pelayo · Preciosa · Sacramento · Álvarez Hazañas · Pío XII · San Juan Bosco · Basílica",
+      "note": "Convocatoria histórica: fecha pasada no acredita celebración. Banda anunciada."
+    },
+    {
+      "key": "O20",
+      "name": "Vía Lucis de Jesús Resucitado · 2026",
+      "brotherhood": null,
+      "organizer_name": "Asociación Parroquial de Jesús Resucitado y María Santísima de la Estrella",
+      "date": "2026-04-05",
+      "departure_time": "17:30",
+      "departure_place": "L06",
+      "return_place": "L06",
+      "return_date": "2026-04-05",
+      "return_time": null,
+      "event_status": "held",
+      "sources": [
+        "F39",
+        "F40"
+      ],
+      "held_sources": [
+        "F40"
+      ],
+      "positions": [
+        {
+          "key": "O20-P1",
+          "order": 1,
+          "step_key": "S25",
+          "music": "B04"
+        }
+      ],
+      "note": "Celebración acreditada por crónica del 6 de abril. Llegada posterior a las 21:00 sin minuto exacto. No enlazar automáticamente la Estrella."
+    }
+  ],
+  "bands": [
+    {
+      "key": "B17",
+      "name": "Asociación Musical Álvarez Quintero",
+      "id": "7fafdc04-cb94-47d8-814f-5537639660ff",
+      "action": "REUSE",
+      "sources": [
+        "F53"
+      ],
+      "notes": "Nodo local publicado desde 05/09. Duplicado f492d28d-af48-4606-862c-89d5d3560a6b detectado: no fusionar ni modificar en esta orden."
+    }
+  ],
+  "heritage_assets": [
+    {
+      "key": "A04",
+      "name": "Representación de San Pedro del palio de la Paz",
+      "parent": "S10",
+      "asset_type": "Imaginería del Paso",
+      "description": "Representación de San Pedro situada en el frontal del palio de la Paz de Los Aceituneros, documentada en la reseña del Consejo.",
+      "sources": [
+        "F07"
+      ],
+      "notes": "No inventar una segunda escultura exenta ni reutilizar el San Pedro de la Borriquita."
+    },
+    {
+      "key": "A05",
+      "name": "Palio eucarístico de la Sacramental de Santiago",
+      "parent": "H07",
+      "asset_type": "Palio eucarístico",
+      "description": "Palio de tisú de plata bordado en oro por Juan Bautista Carrasco y Alaras en 1821, con varas de Baltasar Miguel de 1601. Acompaña al Santísimo en la procesión sacramental.",
+      "sources": [
+        "F01"
+      ],
+      "source_page": 34,
+      "notes": "No es un Paso de palio ni una imagen. Cronologías de tejido y varas diferenciadas."
+    },
+    {
+      "key": "A06",
+      "name": "Palio eucarístico de la Sacramental de Santa María",
+      "parent": "H11",
+      "asset_type": "Palio eucarístico",
+      "description": "Palio eucarístico con bordados de Fulgencio Abril y Barea de 1799 y varales de José Guzmán de 1831. Figura en la procesión sacramental de Santa María de la Mesa.",
+      "sources": [
+        "F01"
+      ],
+      "source_page": 36,
+      "notes": "No duplicar como Paso ni confundir con el guión corporativo."
+    }
+  ],
+  "scope_decisions": [
+    {
+      "key": "C01",
+      "decision": "INCLUDE_H15_GLORIA",
+      "sources": [
+        "F49"
+      ],
+      "result": "ADMA separada de Estudiantes; dos imágenes, sin asignar propiedad a la asociación."
+    },
+    {
+      "key": "C02",
+      "decision": "INCLUDE_IMAGES_AND_STANDALONE_OUTING",
+      "sources": [
+        "F39",
+        "F40",
+        "F52"
+      ],
+      "result": "Resucitado y Estrella en Santiago; Vía Lucis con organizer_name y brotherhood_entity_id NULL. No alta de Hermandad."
+    },
+    {
+      "key": "C03",
+      "decision": "INCLUDE_H17_PARISH_GROUP_PRESERVE_EXISTING_OUTING",
+      "sources": [
+        "F50",
+        "F59"
+      ],
+      "result": "Agrupación de Marismas identificada por documento municipal. Salida 9210cbbb-e66e-415e-9f50-ca18ccb97d93 preservada sin modificación: el convenio es de la romería, no prueba organización de la procesión de septiembre. Sin sede canónica inventada."
+    },
+    {
+      "key": "C04",
+      "decision": "INCLUDE_H16_KEEP_ROMEROS_DISTINCT",
+      "sources": [
+        "F50",
+        "F57",
+        "F58"
+      ],
+      "result": "La Agrupación Borriquita de Trajano y los Romeros de Santa María la Blanca son entidades diferentes. Romeros se conserva como referencia asociativa sin alta en brotherhoods."
+    },
+    {
+      "key": "C05",
+      "decision": "NO_BROTHERHOOD_INSERT_GUADALEMA",
+      "sources": [
+        "F50"
+      ],
+      "result": "La parroquia y fiesta de Veredas no acreditan otra Hermandad en esta edición."
+    },
+    {
+      "key": "C06",
+      "decision": "OUTSIDE_MUNICIPALITY",
+      "sources": [
+        "F51"
+      ],
+      "result": "El Palmar de Troya es municipio independiente."
+    },
+    {
+      "key": "C07",
+      "decision": "NO_VERIFIED_CORPORATION_THIS_EDITION",
+      "sources": [
+        "F60"
+      ],
+      "result": "El Torbiscal revisado como enclave utrerano. Ninguna corporación acreditada en las fuentes consultadas; no afirma inexistencia universal."
+    }
+  ],
+  "secondary_title_decisions": [
+    {
+      "subject": "Rosario y Beato Ceferino · Gitanos",
+      "decision": "I39/I40",
+      "sources": [
+        "F54",
+        "F55",
+        "F08"
+      ]
+    },
+    {
+      "subject": "Inmaculada · Sacramental de Santa María",
+      "decision": "I41",
+      "sources": [
+        "F52"
+      ]
+    },
+    {
+      "subject": "Inmaculada · Sacramental de Santiago",
+      "decision": "I38 con autoría y cronología calificadas",
+      "sources": [
+        "F48",
+        "F52"
+      ]
+    },
+    {
+      "subject": "María Auxiliadora · ADMA",
+      "decision": "I42 histórica e I43 réplica; no fusión",
+      "sources": [
+        "F49",
+        "F52"
+      ]
+    },
+    {
+      "subject": "San Pedro · Aceituneros",
+      "decision": "A04 componente del palio; no escultura exenta deducida",
+      "sources": [
+        "F07"
+      ]
+    },
+    {
+      "subject": "Santa Ángela · Quinta Angustia",
+      "decision": "Título corporativo conservado; sin imagen autónoma por ausencia de identificación material en fuentes revisadas",
+      "sources": [
+        "F01",
+        "F41"
+      ]
+    },
+    {
+      "subject": "San Juan Bosco · Muchachos/Estudiantes",
+      "decision": "No duplicar una escultura solo por compartir título; referencia histórica al Paso en F06 no identifica la talla vigente",
+      "sources": [
+        "F01",
+        "F05",
+        "F06"
+      ]
+    },
+    {
+      "subject": "María Auxiliadora · Estudiantes",
+      "decision": "Devoción corporativa conservada; no nueva imagen ni relación con original/réplica concreta sin prueba material",
+      "sources": [
+        "F06",
+        "F52"
+      ]
+    },
+    {
+      "subject": "Inmaculada, San Bartolomé y Santa Bárbara · Jesús",
+      "decision": "Mantener título oficial existente; sin altas de esculturas inferidas",
+      "sources": [
+        "F37"
+      ]
+    },
+    {
+      "subject": "San Miguel · Milagros; Santísima Trinidad · Trinidad; Ánimas y Santísimo",
+      "decision": "Títulos y devociones no equivalen a objetos escultóricos identificados; sin imágenes inventadas",
+      "sources": [
+        "F17",
+        "F20",
+        "F42",
+        "F10"
+      ]
+    },
+    {
+      "subject": "Purísima Inmaculada Concepción y San Sebastián · Vera-Cruz",
+      "decision": "Títulos corporativos conservados; no objetos autónomos creados solo por el nombre",
+      "sources": [
+        "F09",
+        "F21"
+      ]
+    },
+    {
+      "subject": "San Antonio de Padua · Fátima",
+      "decision": "Título corporativo conservado; no nueva talla autónoma sin identificación material",
+      "sources": [
+        "F24"
+      ]
+    }
+  ],
+  "dedup_notes": [
+    {
+      "subject": "Juan Ventura",
+      "reuse": "ee06b3cf-beb0-4794-8e3a-321288b0e130",
+      "duplicate": "c0160033-0502-4000-8000-000000000002",
+      "decision": "Usar nodo anterior ya publicado y coincidente con la denominación de la fuente; registrar duplicidad, sin fusión sistémica."
+    }
+  ],
+  "excluded_relationships": [
+    "I35 no image_steps ni outing_entities en 2026",
+    "I42 histórica sin image_steps a S23",
+    "I45 Estrella sin outing_entities a O20",
+    "H17 no enlace automático a salida de septiembre desde evidencia de romería",
+    "Ningún nuevo objeto por título corporativo no identificado"
+  ],
+  "execution": {
+    "manifest_preparation": true,
+    "dry_run_executed": false,
+    "apply": false,
+    "public_qa": false,
+    "seo_qa": false
+  },
+  "corporate_overrides": [
+    {
+      "key": "H11",
+      "history_text": "El programa oficial de 2026 sitúa su fundación en 1541 y la fusión con la Hermandad de Ánimas Benditas, fundada en 1596, durante el siglo XVIII.",
+      "foundation_text": "1541",
+      "sources": [
+        "F01",
+        "F10"
+      ]
+    }
+  ],
+  "outing_refinements": [
+    {
+      "key": "O01",
+      "route_summary": "Cristo de los Afligidos · Plaza Virgen de la Cabeza · Plaza Ximénez Sandoval · Fernanda y Bernarda · Plaza de Santa Ana · Fuente Vieja · Sevilla · Álvarez Quintero · Clemente de la Cuadra · Ayuntamiento · Clemente de la Cuadra · Carrera Oficial · Plaza del Altozano · Perafán de Rivera · La Plaza · Plaza Enrique de la Cuadra · San Fernando · Juan de Anaya · Bambino · Parque del Muro · Virgen de los Desamparados · Cristo de los Afligidos",
+      "source": "F01",
+      "note": "Itinerario previsto; no recorrido real medido."
+    },
+    {
+      "key": "O02",
+      "route_summary": "Sor Marciala de la Cruz · Santa Ángela de la Cruz · Convento Hermanas de la Cruz · San Fernando · Plaza de Enrique de la Cuadra · Monumento Santa Ángela de la Cruz · Catalina de Perea · Ponce de León · Parroquia de Santiago · Ponce de León · Perafán de Rivera · Carrera Oficial · Virgen de Consolación · Vicente Giráldez · Canalejas · Afanador · Álvarez Quintero · Clemente de la Cuadra · Ayuntamiento · Alcalde Fernández Heredia · Sevilla · Plaza de la Constitución · Perafán de Rivera · Menéndez Pelayo · Padre Miguel Román",
+      "source": "F01",
+      "note": "Itinerario previsto; no recorrido real medido."
+    },
+    {
+      "key": "O03",
+      "route_summary": "San Juan Bosco · Álvarez Hazañas · Sacramento · Preciosa · Menéndez Pelayo · Mota de Santa María · Parroquia de Santa María · Porche de Santa María · Rodrigo Caro · La Plaza · Perafán de Rivera · Ponce de León · Parroquia de Santiago · Ruiz Gijón · Plaza de la Constitución · Carrera Oficial · Clemente de la Cuadra · Ramón y Cajal · Sevilla · Santiago Montoto · Doctor Pastor · Forcadell · Partera · Clemente de la Cuadra · Ayuntamiento · Clemente de la Cuadra · Virgen de Consolación · San Juan Bosco",
+      "source": "F01",
+      "note": "Itinerario previsto; no recorrido real medido."
+    },
+    {
+      "key": "O04",
+      "route_summary": "Santuario de Nuestra Señora de Consolación · Paseo de Consolación · Glorieta Profesor Joaquín Rivas Castillo · Avda. Juan XXIII · Hogar del Pensionista · Bernardino Álvarez · Molino · Avda. María Auxiliadora · Ramón y Cajal · Vicente Giráldez · Virgen de Consolación · Plaza del Altozano · Álvarez Hazañas · Alcalde Antonio Sousa · Fray Cipriano de Utrera · Menéndez Pelayo · Mota de Santa María · Parroquia de Santa María · Porche de Santa María · Rodrigo Caro · La Plaza · Perafán de Rivera · Carrera Oficial · Virgen de Consolación · Cristóbal Colón · Glorieta Profesor Joaquín Rivas · José María Trelles · Toná · Paseo de Consolación · Calle Real de Consolación",
+      "source": "F01",
+      "note": "Itinerario previsto; no recorrido real medido."
+    },
+    {
+      "key": "O05",
+      "route_summary": "San Juan Bosco · María Auxiliadora · Ramón y Cajal · Clemente de la Cuadra · Ayuntamiento · Clemente de la Cuadra · Partera · Sevilla · Alcalde Fernández Heredia · Clemente de la Cuadra · Plaza del Altozano · Álvarez Hazañas · Sacramento · Preciosa · Menéndez Pelayo · Padre Miguel Román · Parroquia de Santa María · Mota de Santa María · Rodrigo Caro · La Plaza · Perafán de Rivera · Plaza del Altozano · Carrera Oficial · Virgen de Consolación · San Juan Bosco",
+      "source": "F01",
+      "note": "Itinerario previsto; no recorrido real medido."
+    },
+    {
+      "key": "O06",
+      "route_summary": "Padre Miguel Román · Menéndez Pelayo · Santa Ángela de la Cruz · San Fernando · Plaza Enrique de la Cuadra · Catalina de Perea · Ponce de León · Parroquia de Santiago el Mayor · Plaza del Altozano · Carrera Oficial · Clemente de la Cuadra · Ramón y Cajal · Sevilla · Partera · Clemente de la Cuadra · Ayuntamiento · Clemente de la Cuadra · Plaza del Altozano · Álvarez Hazañas · Sacramento · Preciosa · Menéndez Pelayo · La Plaza · Rodrigo Caro",
+      "source": "F01",
+      "note": "Itinerario previsto; no recorrido real medido."
+    },
+    {
+      "key": "O07",
+      "route_summary": "Stmo. Cristo de los Afligidos · Resolana · Arco de la Villa · San Fernando · Antonio Maura · Parroquia de Santa María · Rodrigo Caro · La Plaza · Perafán de Rivera · Parroquia de Santiago · Ruiz Gijón · Plaza de la Constitución · Sevilla · Álvarez Quintero · Ayuntamiento · Clemente de la Cuadra · Carrera Oficial · Perafán de Rivera · La Plaza · San Fernando · Juan de Anaya · Parque del Muro · Virgen de los Desamparados · Stmo. Cristo de los Afligidos",
+      "source": "F01",
+      "note": "Itinerario previsto; no recorrido real medido."
+    },
+    {
+      "key": "O08",
+      "route_summary": "Ponce de León · Catalina de Perea · Plaza Enrique de la Cuadra · La Plaza · Rodrigo Caro · Porche de Santa María · Marcos Pérez · San Fernando · Santa Ángela de la Cruz · Sor Marciala de la Cruz · Parroquia de Santa María de la Mesa · Padre Miguel Román · Menéndez Pelayo · Fray Cipriano de Utrera · Alcalde Antonio Sousa · Álvarez Hazañas · Carrera Oficial · Plaza de la Constitución · Sevilla · Alcalde Fernández Heredia · Clemente de la Cuadra · Ayuntamiento · Álvarez Quintero · Sevilla · Santiago Montoto · Doctor Pastor · Ruiz Gijón · Ponce de León",
+      "source": "F01",
+      "note": "Itinerario previsto; no recorrido real medido."
+    },
+    {
+      "key": "O09",
+      "route_summary": "Ponce de León · Carrera Oficial · Virgen de Consolación · Alcalde Vicente Giráldez · Canalejas · Rueda · Ramón y Cajal · Sevilla · Alcalde Fernández Heredia · Clemente de la Cuadra · Ayuntamiento · Álvarez Quintero · Sevilla · Forcadell · Doctor Pastor · Ruíz Gijón · Ponce de León",
+      "source": "F01",
+      "note": "Itinerario previsto; no recorrido real medido."
+    },
+    {
+      "key": "O10",
+      "route_summary": "San Juan Bosco · Álvarez Hazañas · Sacramento · Fray Cipriano de Utrera · Menéndez Pelayo · Mota de Santa María · Parroquia de Santa María · Antonio Maura · Sor Marciala de la Cruz · Convento Hermanas de la Cruz · Santa Ángela de la Cruz · San Fernando · Marcos Pérez · Porche de Santa María · Rodrigo Caro · La Plaza · Plaza Enrique de la Cuadra · Monumento Santa Ángela de la Cruz · Catalina de Perea · Ponce de León · Parroquia de Santiago · Ponce de León · Plaza del Altozano · Plaza de la Constitución · Sevilla · Alcalde Fernández Heredia · Clemente de la Cuadra · Ayuntamiento · Clemente de la Cuadra · Partera · Forcadell · Doctor Pastor · Isaac Peral · La Corredera · Plaza de Santa Ana · Fuente Vieja · Plaza de la Constitución · Carrera Oficial · Virgen de Consolación · San Juan Bosco",
+      "source": "F01",
+      "note": "Itinerario previsto; no recorrido real medido."
+    },
+    {
+      "key": "O11",
+      "route_summary": "Álvarez Hazañas · Alcalde Antonio Sousa · Fray Cipriano de Utrera · Preciosa · Menéndez Pelayo · Padre Miguel Román · Parroquia de Santa María · Sor Marciala de la Cruz · Santa Ángela de la Cruz · Convento Hermanas de La Cruz · San Fernando · Marcos Pérez · Porche de Santa María · Mota de Santa María · Menéndez Pelayo · La Plaza · Plaza Enrique de la Cuadra · Monumento Santa Ángela de La Cruz · Catalina de Perea · Ponce de León · Parroquia de Santiago · Ponce de León · Carrera Oficial · Clemente de la Cuadra · Ayuntamiento · Álvarez Quintero · Alcalde Vicente Giráldez · Virgen de Consolación",
+      "source": "F01",
+      "note": "Itinerario previsto; no recorrido real medido."
+    },
+    {
+      "key": "O12",
+      "route_summary": "Sor Marciala de la Cruz · Santa Ángela de la Cruz · San Fernando · Marcos Pérez · Porche de Santa María · Rodrigo Caro · La Plaza · Perafán de Rivera · Ponce de León · Parroquia de Santiago · Ruiz Gijón · Plaza de la Constitución · Sevilla · Álvarez Quintero · Ayuntamiento · Clemente de la Cuadra · Canalejas · Rueda · Ramón y Cajal · Clemente de la Cuadra · Plaza del Altozano · Carrera Oficial · Perafán de Rivera · La Plaza · Menéndez Pelayo · Padre Miguel Román",
+      "source": "F01",
+      "note": "Itinerario previsto; no recorrido real medido."
+    },
+    {
+      "key": "O13",
+      "route_summary": "Álvarez Hazañas · Alcalde Antonio Sousa · Fray Cipriano de Utrera · Menéndez Pelayo · Padre Miguel Román · Parroquia de Santa María · Sor Marciala de la Cruz · Santa Ángela de la Cruz · Convento Santa Ángela de la Cruz · San Fernando · Marcos Pérez · Porche de Santa María · Rodrigo Caro · La Plaza · Perafán de Rivera · Plaza del Altozano · Carrera Oficial · Clemente de la Cuadra · Ayuntamiento · Clemente de la Cuadra · Partera · Sevilla · Alcalde Fernández Heredia · Canalejas · Rueda · Ramón y Cajal · Alcalde Vicente Giráldez · Virgen de Consolación",
+      "source": "F01",
+      "note": "Itinerario previsto; no recorrido real medido."
+    },
+    {
+      "key": "O14",
+      "route_summary": "Ponce de León · Ruiz Gijón · Plaza de la Constitución · Plaza del Altozano · Ponce de León · Parroquia de Santiago El Mayor",
+      "source": "F01",
+      "note": "Itinerario previsto; no recorrido real medido."
+    },
+    {
+      "key": "O15",
+      "route_summary": "Padre Miguel Román · Sor Marciala de la Cruz · Santa Ángela de la Cruz · San Fernando · Plaza Enrique de la Cuadra · La Plaza · Menéndez Pelayo · Padre Miguel Román",
+      "source": "F01",
+      "note": "Itinerario previsto; no recorrido real medido."
+    }
+  ],
+  "step_overrides": [
+    {
+      "key": "S16",
+      "description": "Palio de la Esperanza de Los Gitanos de Utrera. La Hermandad documenta sucesivas piezas de orfebrería de Villarreal y respiraderos de Jesús Miguélez y Mariano Martín Santonja. Sus bordados incluyen bambalinas de 1999 y techo de 2004, realizados por las hermanas bordadoras sobre diseños de José Ramón Paleteiro y Jesús Miguélez.",
+      "sources": [
+        "F01",
+        "F56"
+      ]
+    }
+  ]
+}

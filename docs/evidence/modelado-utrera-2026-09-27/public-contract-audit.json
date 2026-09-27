@@ -1,0 +1,47 @@
+{
+  "kind": "STATIC_PUBLIC_CONTRACT_AUDIT_NOT_WEB_QA",
+  "observed_at": "2026-09-27",
+  "main": "2c751d493189fd9640f4f7dc29935efeaf5892a4",
+  "result": "APPLY_NO_GO",
+  "affected_candidates": [
+    {
+      "key": "I44",
+      "name": "Jesús Resucitado",
+      "reason": "Sin Hermandad enlazada: el lector de metadata no usa entity_locations como contexto.",
+      "code": [
+        "lib/supabase/public-entity-pages.js",
+        "app/imagenes/[slug]/page.js",
+        "lib/supabase/public-indexability.js"
+      ]
+    },
+    {
+      "key": "I45",
+      "name": "María Santísima de la Estrella",
+      "reason": "Sin Hermandad enlazada ni Paso acreditado para 2026: faltan contexto y relación reconocidos por la frontera SEO actual.",
+      "code": [
+        "app/imagenes/[slug]/page.js",
+        "lib/supabase/public-indexability.js"
+      ]
+    },
+    {
+      "key": "S25",
+      "name": "Paso del Resucitado",
+      "reason": "Sin Hermandad enlazada: el contexto municipal no se deriva de la Salida ni de la Imagen en la frontera SEO actual.",
+      "code": [
+        "app/pasos/[slug]/page.js",
+        "lib/supabase/public-indexability.js"
+      ]
+    },
+    {
+      "key": "H17",
+      "name": "Marismas de Pinzón",
+      "reason": "Identidad y fuentes acreditadas, pero ninguna relación patrimonial/cultual/procesional corporativa acreditada en este candidato. No basta para el mínimo editorial de Hermandad.",
+      "code": [
+        "lib/supabase/public-indexability.js"
+      ]
+    }
+  ],
+  "resolution_required": "Resolver estas cuatro fichas antes de Apply: contexto público verificable de la asociación y relación sustantiva de Marismas. No fabricar una Hermandad del Resucitado ni enlazar la procesión de septiembre desde evidencia de la romería.",
+  "dry_run_preparation": "COMPLETE; ejecución no realizada",
+  "production_writes": 0
+}
