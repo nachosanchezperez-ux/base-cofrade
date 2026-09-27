@@ -61,32 +61,32 @@
 .photoVeil {
   background:
     linear-gradient(90deg,
-      rgba(3, 15, 29, .995) 0%,
-      rgba(3, 16, 31, .97) 19%,
-      rgba(3, 17, 32, .84) 32%,
-      rgba(3, 18, 34, .48) 45%,
-      rgba(3, 18, 34, .13) 59%,
-      rgba(3, 18, 34, .025) 78%,
-      rgba(3, 18, 34, 0) 100%),
+      color-mix(in srgb, var(--hero-veil) 99.5%, transparent) 0%,
+      color-mix(in srgb, var(--hero-veil) 97%, transparent) 19%,
+      color-mix(in srgb, var(--hero-veil) 84%, transparent) 32%,
+      color-mix(in srgb, var(--hero-veil) 48%, transparent) 45%,
+      color-mix(in srgb, var(--hero-veil) 13%, transparent) 59%,
+      color-mix(in srgb, var(--hero-veil) 2.5%, transparent) 78%,
+      color-mix(in srgb, var(--hero-veil) 0%, transparent) 100%),
     linear-gradient(180deg,
-      rgba(2, 11, 22, .18) 0%,
-      rgba(2, 11, 22, .01) 47%,
-      rgba(2, 11, 22, .68) 100%);
+      color-mix(in srgb, var(--hero-veil) 18%, transparent) 0%,
+      color-mix(in srgb, var(--hero-veil) 1%, transparent) 47%,
+      color-mix(in srgb, var(--hero-veil) 68%, transparent) 100%);
 }
 
 .containedVeil {
   background:
     linear-gradient(90deg,
-      rgba(3, 15, 29, .995) 0%,
-      rgba(3, 16, 31, .965) 18%,
-      rgba(3, 17, 32, .78) 31%,
-      rgba(3, 18, 34, .34) 45%,
-      rgba(3, 18, 34, .05) 59%,
-      rgba(3, 18, 34, 0) 100%),
+      color-mix(in srgb, var(--hero-veil) 99.5%, transparent) 0%,
+      color-mix(in srgb, var(--hero-veil) 96.5%, transparent) 18%,
+      color-mix(in srgb, var(--hero-veil) 78%, transparent) 31%,
+      color-mix(in srgb, var(--hero-veil) 34%, transparent) 45%,
+      color-mix(in srgb, var(--hero-veil) 5%, transparent) 59%,
+      color-mix(in srgb, var(--hero-veil) 0%, transparent) 100%),
     linear-gradient(180deg,
-      rgba(2, 11, 22, .1) 0%,
-      rgba(2, 11, 22, .015) 54%,
-      rgba(2, 11, 22, .64) 100%);
+      color-mix(in srgb, var(--hero-veil) 10%, transparent) 0%,
+      color-mix(in srgb, var(--hero-veil) 1.5%, transparent) 54%,
+      color-mix(in srgb, var(--hero-veil) 64%, transparent) 100%);
 }
 
 @media (max-width: 1120px) {
@@ -114,31 +114,31 @@
   .photoVeil {
     background:
       linear-gradient(90deg,
-        rgba(3, 15, 29, .99) 0%,
-        rgba(3, 16, 31, .94) 22%,
-        rgba(3, 17, 32, .74) 38%,
-        rgba(3, 18, 34, .32) 54%,
-        rgba(3, 18, 34, .07) 72%,
-        rgba(3, 18, 34, 0) 100%),
+        color-mix(in srgb, var(--hero-veil) 99%, transparent) 0%,
+        color-mix(in srgb, var(--hero-veil) 94%, transparent) 22%,
+        color-mix(in srgb, var(--hero-veil) 74%, transparent) 38%,
+        color-mix(in srgb, var(--hero-veil) 32%, transparent) 54%,
+        color-mix(in srgb, var(--hero-veil) 7%, transparent) 72%,
+        color-mix(in srgb, var(--hero-veil) 0%, transparent) 100%),
       linear-gradient(180deg,
-        rgba(2, 11, 22, .16) 0%,
-        rgba(2, 11, 22, .02) 50%,
-        rgba(2, 11, 22, .7) 100%);
+        color-mix(in srgb, var(--hero-veil) 16%, transparent) 0%,
+        color-mix(in srgb, var(--hero-veil) 2%, transparent) 50%,
+        color-mix(in srgb, var(--hero-veil) 70%, transparent) 100%);
   }
 
   .containedVeil {
     background:
       linear-gradient(90deg,
-        rgba(3, 15, 29, .99) 0%,
-        rgba(3, 16, 31, .93) 21%,
-        rgba(3, 17, 32, .68) 38%,
-        rgba(3, 18, 34, .22) 55%,
-        rgba(3, 18, 34, .03) 74%,
-        rgba(3, 18, 34, 0) 100%),
+        color-mix(in srgb, var(--hero-veil) 99%, transparent) 0%,
+        color-mix(in srgb, var(--hero-veil) 93%, transparent) 21%,
+        color-mix(in srgb, var(--hero-veil) 68%, transparent) 38%,
+        color-mix(in srgb, var(--hero-veil) 22%, transparent) 55%,
+        color-mix(in srgb, var(--hero-veil) 3%, transparent) 74%,
+        color-mix(in srgb, var(--hero-veil) 0%, transparent) 100%),
       linear-gradient(180deg,
-        rgba(2, 11, 22, .1) 0%,
-        rgba(2, 11, 22, .015) 54%,
-        rgba(2, 11, 22, .66) 100%);
+        color-mix(in srgb, var(--hero-veil) 10%, transparent) 0%,
+        color-mix(in srgb, var(--hero-veil) 1.5%, transparent) 54%,
+        color-mix(in srgb, var(--hero-veil) 66%, transparent) 100%);
   }
 }
 
@@ -222,12 +222,12 @@
   .containedVeil {
     background:
       linear-gradient(180deg,
-        rgba(3, 14, 27, .02) 0%,
-        rgba(3, 14, 27, .01) 36%,
-        rgba(3, 15, 29, .18) 53%,
-        rgba(3, 15, 29, .7) 66%,
-        rgba(3, 15, 29, .96) 78%,
-        rgba(3, 15, 29, 1) 100%);
+        color-mix(in srgb, var(--hero-veil) 2%, transparent) 0%,
+        color-mix(in srgb, var(--hero-veil) 1%, transparent) 36%,
+        color-mix(in srgb, var(--hero-veil) 18%, transparent) 53%,
+        color-mix(in srgb, var(--hero-veil) 70%, transparent) 66%,
+        color-mix(in srgb, var(--hero-veil) 96%, transparent) 78%,
+        color-mix(in srgb, var(--hero-veil) 100%, transparent) 100%);
   }
 
   .credit {
@@ -264,12 +264,12 @@
   .containedVeil {
     background:
       linear-gradient(180deg,
-        rgba(3, 14, 27, .02) 0%,
-        rgba(3, 14, 27, .01) 34%,
-        rgba(3, 15, 29, .18) 50%,
-        rgba(3, 15, 29, .7) 63%,
-        rgba(3, 15, 29, .96) 74%,
-        rgba(3, 15, 29, 1) 100%);
+        color-mix(in srgb, var(--hero-veil) 2%, transparent) 0%,
+        color-mix(in srgb, var(--hero-veil) 1%, transparent) 34%,
+        color-mix(in srgb, var(--hero-veil) 18%, transparent) 50%,
+        color-mix(in srgb, var(--hero-veil) 70%, transparent) 63%,
+        color-mix(in srgb, var(--hero-veil) 96%, transparent) 74%,
+        color-mix(in srgb, var(--hero-veil) 100%, transparent) 100%);
   }
 
   .credit {
