@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import EntityLastUpdated from '@/components/EntityLastUpdated'
 import JsonLd from '@/components/JsonLd'
+import SiteBreadcrumb from '@/components/SiteBreadcrumb'
 import SourcesBlock from '@/components/SourcesBlock'
 import { getPublicAgentBySlug } from '@/lib/supabase/public-agents'
 import {
@@ -155,9 +156,15 @@ export default async function AuthorPage({ params }) {
 
       <header className={styles.hero}>
         <div className={`shell ${styles.heroInner}`}>
-          <nav className={styles.breadcrumb} aria-label="Migas de pan">
-            <Link href="/">Inicio</Link><span>/</span><Link href="/autores">Autores</Link><span>/</span><strong>{agent.name}</strong>
-          </nav>
+          <SiteBreadcrumb
+            items={[
+              { label: 'Inicio', href: '/' },
+              { label: 'Autores', href: '/autores' },
+              { label: agent.name },
+            ]}
+            tone="dark"
+            showAccent={false}
+          />
 
           <div className={styles.heroCopy}>
             <span>{profileLabel(agent)}</span>

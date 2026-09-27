@@ -1,0 +1,111 @@
+{
+  "observed_at_utc": "2026-09-27 05:36:19.235772+00",
+  "main": "2c751d493189fd9640f4f7dc29935efeaf5892a4",
+  "local_merge_head": "95718aa5fa8dbdd7bde8ff8f21915b69a6b93fe2",
+  "vercel": {
+    "observed_at_utc": "2026-09-27T05:20:19Z",
+    "id": "dpl_5zqJGYYHEpZENYkcMNncTuh5N4PV",
+    "state": "READY",
+    "aliases": [
+      "hilocofrade.es",
+      "www.hilocofrade.es",
+      "base-cofrade-vert.vercel.app",
+      "base-cofrade-desdeel-arenal.vercel.app",
+      "base-cofrade-git-main-desdeel-arenal.vercel.app"
+    ],
+    "sha": "2c751d493189fd9640f4f7dc29935efeaf5892a4",
+    "runtime_measurement": "NOT_REPEATED"
+  },
+  "supabase_status": "ACTIVE_HEALTHY",
+  "migrations": 17,
+  "pull_request": {
+    "number": 1009,
+    "head": "docs/inventario-utrera-hc016-20260927",
+    "head_sha_at_preflight": "1fcedc60b404e1fc1164d13e8f877a6ed22b528d",
+    "draft": true,
+    "open_prs": [
+      1009
+    ]
+  },
+  "production_writes": 0,
+  "query": "select now() observed_at, (select count(*) from supabase_migrations.schema_migrations) migrations,\n(select jsonb_agg(jsonb_build_object('id',e.id,'name',e.name,'slug',e.slug,'status',e.status,'brotherhood_types',b.brotherhood_types) order by e.id) from public.entities e join public.brotherhoods b on b.entity_id=e.id where b.municipality_id='e4319248-831a-4f4c-adb8-19c496f95dd6') brotherhoods,\n(select to_jsonb(o) from public.outings o where o.id='9210cbbb-e66e-415e-9f50-ca18ccb97d93') pinzon_outing,\n(select jsonb_agg(to_jsonb(m)) from public.municipalities m where m.name in ('Utrera','Pinzón','Trajano','Guadalema de los Quintero','El Torbiscal','El Palmar de Troya')) municipality_catalog;",
+  "snapshot": {
+    "observed_at": "2026-09-27 05:36:19.235772+00",
+    "migrations": 17,
+    "brotherhoods": [
+      {
+        "id": "4e462b02-979d-4b88-ab98-0c97f2dbf0a0",
+        "name": "Hermandad de Jesús Nazareno de Utrera",
+        "slug": "hermandad-jesus-nazareno-utrera",
+        "status": "published",
+        "brotherhood_types": [
+          "Penitencia"
+        ]
+      },
+      {
+        "id": "7bab2fe6-c69e-48e5-9446-a247b4169910",
+        "name": "Hermandad de la Vera-Cruz y Santo Entierro de Utrera",
+        "slug": "vera-cruz-santo-entierro-utrera",
+        "status": "published",
+        "brotherhood_types": [
+          "Penitencia"
+        ]
+      },
+      {
+        "id": "8d4e62d9-a428-4363-afc7-6a2f9e8c1450",
+        "name": "Pontificia, Real e Ilustre Hermandad de Nuestra Señora de Consolación Coronada",
+        "slug": "consolacion-utrera",
+        "status": "published",
+        "brotherhood_types": [
+          "Gloria"
+        ]
+      }
+    ],
+    "pinzon_outing": {
+      "id": "9210cbbb-e66e-415e-9f50-ca18ccb97d93",
+      "slug": "pinzon-utrera-virgen-marismas-procesion-2026-09-19",
+      "year": 2026,
+      "route": null,
+      "title": "Procesión de Nuestra Señora de las Marismas 2026",
+      "reason": null,
+      "status": "published",
+      "character": "ordinary",
+      "created_at": "2026-09-19T10:09:43.724892+00:00",
+      "updated_at": "2026-09-19T10:09:43.724892+00:00",
+      "description": "Procesión de Nuestra Señora de las Marismas en la pedanía utrerana de Pinzón.",
+      "origin_text": "Iglesia de Pinzón",
+      "outing_date": "2026-09-19",
+      "outing_type": "Procesión de Gloria",
+      "return_date": null,
+      "return_time": null,
+      "event_status": "announced",
+      "public_notes": "Salida a las 21:30 desde la Iglesia de Pinzón. La agenda consultada indica acompañamiento de banda de música, sin identificar la formación.",
+      "route_summary": null,
+      "departure_time": "21:30:00",
+      "hero_image_alt": null,
+      "organizer_name": null,
+      "reference_code": "PINZON-MARISMAS-2026",
+      "hero_image_path": null,
+      "municipality_id": "e4319248-831a-4f4c-adb8-19c496f95dd6",
+      "organizer_notes": null,
+      "origin_place_id": null,
+      "destination_text": "Iglesia de Pinzón",
+      "outing_series_id": null,
+      "hero_image_credit": null,
+      "destination_place_id": null,
+      "brotherhood_entity_id": null
+    },
+    "municipality_catalog": [
+      {
+        "id": "e4319248-831a-4f4c-adb8-19c496f95dd6",
+        "name": "Utrera",
+        "slug": "utrera",
+        "country": "España",
+        "province": "Sevilla",
+        "created_at": "2026-08-22T15:04:10.642141+00:00",
+        "autonomous_community": "Andalucía"
+      }
+    ]
+  },
+  "interpretation": "No se deduce inexistencia de una localidad por faltar en municipalities. Pinzón conserva su UUID productivo; la segregación territorial de El Palmar prevalece sobre la falta de fila en el catálogo."
+}

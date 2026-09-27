@@ -2,6 +2,7 @@ import Link from 'next/link'
 import AgendaCofradeNav from '@/components/AgendaCofradeNav'
 import AgendaTemporalNav from '@/components/AgendaTemporalNav'
 import AgendaTemporalEventList from '@/components/AgendaTemporalEventList'
+import SiteBreadcrumb from '@/components/SiteBreadcrumb'
 import JsonLd from '@/components/JsonLd'
 import { breadcrumbJsonLd, collectionPageJsonLd } from '@/lib/seo'
 import styles from './AgendaTemporalLanding.module.css'
@@ -32,11 +33,15 @@ export default function AgendaTemporalLanding({ landing }) {
       <header className={styles.hero}>
         <div className={`shell ${styles.heroGrid}`}>
           <div className={styles.heroCopy}>
-            <nav className={styles.breadcrumb} aria-label="Migas de pan">
-              <Link href="/">Inicio</Link><span>›</span>
-              <Link href="/agenda-cofrade">Agenda Cofrade</Link><span>›</span>
-              <strong>{landing.period === 'today' ? 'Hoy' : landing.period === 'tomorrow' ? 'Mañana' : 'Fin de semana'}</strong>
-            </nav>
+            <SiteBreadcrumb
+              items={[
+                { label: 'Inicio', href: '/' },
+                { label: 'Agenda Cofrade', href: '/agenda-cofrade' },
+                { label: landing.period === 'today' ? 'Hoy' : landing.period === 'tomorrow' ? 'Mañana' : 'Fin de semana' },
+              ]}
+              tone="dark"
+              showAccent={false}
+            />
             <span className={styles.eyebrow}>{landing.eyebrow}</span>
             <h1>{landing.heading}</h1>
             <p>{landing.description}</p>

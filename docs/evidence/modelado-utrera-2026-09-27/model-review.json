@@ -1502,10 +1502,11 @@
   "meta": {
     "date_local": "2026-09-27",
     "timezone": "Europe/Madrid",
-    "head": "88fa02ffac5745ab9a8f2df59ab6a3b962210463",
+    "head": "2c751d493189fd9640f4f7dc29935efeaf5892a4",
     "municipality_id": "e4319248-831a-4f4c-adb8-19c496f95dd6",
     "phase": "DOCUMENTARY_MODEL_REFINEMENT",
     "refinement_file": "gloria-and-closure.json",
+    "step_and_scope_refinement_file": "steps-and-scope.json",
     "manifest_ready": false,
     "production_writes": 0,
     "notes": "Symbolic keys are documentary, not allocated database UUIDs. NEW is a candidate decision requiring final dedup/preflight.",
@@ -1516,12 +1517,12 @@
     {
       "key": "G01",
       "item": "Frontera municipal incompleta",
-      "impact": "Rocío/Fátima modelados en gloria-and-closure.json. Falta resolver frontera ADMA, Resucitado y pedanías antes de certificar todo Utrera."
+      "impact": "Siete decisiones explícitas en steps-and-scope.json. ADMA/Resucitado son asociaciones separadas; Pinzón queda dentro con su salida productiva preservada. Falta encaje de asociaciones, conciliación canónica de Marismas y cierre censal de El Torbiscal. Palmar de Troya queda fuera."
     },
     {
       "key": "G02",
-      "item": "Matriz patrimonial y corporativa incompleta",
-      "impact": "Completar fichas de los otros 20 Pasos, historia/identidad corporativa y titulares físicos adicionales. S18 Angustias y S21 Milagros ya tienen refinamiento editorial; Angustias sigue review en producción hasta Apply validado."
+      "item": "Revisión final de titulares corporativos",
+      "impact": "22/22 Pasos con perfil y 13 perfiles corporativos candidatos; Consolación preservada. Cristo de Santiago e Inmaculada añadidos: 38 imágenes. Resta decidir imágenes físicas de otros títulos secundarios sin inferirlas del nombre corporativo. Angustias sigue review en producción hasta Apply validado."
     },
     {
       "key": "G05",
@@ -1547,7 +1548,7 @@
       ],
       "source": "F01",
       "pdf_page": 4,
-      "technical_attributes_status": "Pending per-field source matrix; no author/date inferred from image"
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit"
     },
     {
       "key": "S02",
@@ -1566,7 +1567,7 @@
       ],
       "source": "F01",
       "pdf_page": 6,
-      "technical_attributes_status": "Pending per-field source matrix; no author/date inferred from image"
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit"
     },
     {
       "key": "S03",
@@ -1582,7 +1583,7 @@
       ],
       "source": "F01",
       "pdf_page": 6,
-      "technical_attributes_status": "Pending per-field source matrix; no author/date inferred from image"
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit"
     },
     {
       "key": "S04",
@@ -1601,7 +1602,7 @@
       ],
       "source": "F01",
       "pdf_page": 8,
-      "technical_attributes_status": "Pending per-field source matrix; no author/date inferred from image"
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit"
     },
     {
       "key": "S05",
@@ -1617,7 +1618,7 @@
       ],
       "source": "F01",
       "pdf_page": 10,
-      "technical_attributes_status": "Pending per-field source matrix; no author/date inferred from image"
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit"
     },
     {
       "key": "S06",
@@ -1633,7 +1634,7 @@
       ],
       "source": "F01",
       "pdf_page": 10,
-      "technical_attributes_status": "Pending per-field source matrix; no author/date inferred from image"
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit"
     },
     {
       "key": "S07",
@@ -1651,7 +1652,7 @@
       ],
       "source": "F01",
       "pdf_page": 12,
-      "technical_attributes_status": "Pending per-field source matrix; no author/date inferred from image"
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit"
     },
     {
       "key": "S08",
@@ -1667,7 +1668,7 @@
       ],
       "source": "F01",
       "pdf_page": 12,
-      "technical_attributes_status": "Pending per-field source matrix; no author/date inferred from image"
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit"
     },
     {
       "key": "S09",
@@ -1683,7 +1684,7 @@
       ],
       "source": "F01",
       "pdf_page": 14,
-      "technical_attributes_status": "Pending per-field source matrix; no author/date inferred from image"
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit"
     },
     {
       "key": "S10",
@@ -1699,7 +1700,7 @@
       ],
       "source": "F01",
       "pdf_page": 14,
-      "technical_attributes_status": "Pending per-field source matrix; no author/date inferred from image"
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit"
     },
     {
       "key": "S11",
@@ -1715,7 +1716,7 @@
       ],
       "source": "F01",
       "pdf_page": 18,
-      "technical_attributes_status": "Pending per-field source matrix; no author/date inferred from image"
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit"
     },
     {
       "key": "S12",
@@ -1731,7 +1732,7 @@
       ],
       "source": "F01",
       "pdf_page": 18,
-      "technical_attributes_status": "Pending per-field source matrix; no author/date inferred from image"
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit"
     },
     {
       "key": "S13",
@@ -1747,7 +1748,7 @@
       ],
       "source": "F01",
       "pdf_page": 20,
-      "technical_attributes_status": "Pending per-field source matrix; no author/date inferred from image"
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit"
     },
     {
       "key": "S14",
@@ -1763,7 +1764,7 @@
       ],
       "source": "F01",
       "pdf_page": 20,
-      "technical_attributes_status": "Pending per-field source matrix; no author/date inferred from image"
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit"
     },
     {
       "key": "S15",
@@ -1779,7 +1780,7 @@
       ],
       "source": "F01",
       "pdf_page": 22,
-      "technical_attributes_status": "Pending per-field source matrix; no author/date inferred from image"
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit"
     },
     {
       "key": "S16",
@@ -1795,7 +1796,7 @@
       ],
       "source": "F01",
       "pdf_page": 22,
-      "technical_attributes_status": "Pending per-field source matrix; no author/date inferred from image"
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit"
     },
     {
       "key": "S17",
@@ -1812,7 +1813,7 @@
       ],
       "source": "F01",
       "pdf_page": 26,
-      "technical_attributes_status": "Pending per-field source matrix; no author/date inferred from image"
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit"
     },
     {
       "key": "S18",
@@ -1828,7 +1829,7 @@
       ],
       "source": "F01",
       "pdf_page": 26,
-      "technical_attributes_status": "Pending per-field source matrix; no author/date inferred from image",
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit",
       "publication_gate": "Texto candidato y fuentes preparados en gloria-and-closure.json; validar manifiesto antes de publicar. Producción sigue review; no duplicar."
     },
     {
@@ -1845,7 +1846,7 @@
       ],
       "source": "F01",
       "pdf_page": 28,
-      "technical_attributes_status": "Pending per-field source matrix; no author/date inferred from image"
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit"
     },
     {
       "key": "S20",
@@ -1862,7 +1863,7 @@
       ],
       "source": "F01",
       "pdf_page": 28,
-      "technical_attributes_status": "Pending per-field source matrix; no author/date inferred from image",
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit",
       "identity_sources": [
         "F13",
         "F21",
@@ -1885,7 +1886,7 @@
       ],
       "source": "F01",
       "pdf_page": 30,
-      "technical_attributes_status": "Pending per-field source matrix; no author/date inferred from image",
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit",
       "excluded_processional_image": "I35"
     },
     {
@@ -1902,7 +1903,7 @@
       ],
       "source": "F01",
       "pdf_page": 32,
-      "technical_attributes_status": "Pending per-field source matrix; no author/date inferred from image"
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit"
     }
   ],
   "municipal_census_review": [

@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import SiteBreadcrumb from '@/components/SiteBreadcrumb'
 import BrotherhoodDirectoryCard from '@/components/BrotherhoodDirectoryCard'
 import JsonLd from '@/components/JsonLd'
 import {
@@ -85,10 +86,13 @@ export default function HermandadesCategoryDirectory({ hermandades, typeKey }) {
       })} />
 
       <div className="shell">
-        <nav className={styles.breadcrumbs} aria-label="Migas de pan">
-          <Link href="/hermandades">Hermandades</Link>
-          <span><span aria-hidden="true">/</span><strong>{config.label}</strong></span>
-        </nav>
+        <SiteBreadcrumb
+          items={[
+            { label: 'Hermandades', href: '/hermandades' },
+            { label: config.label },
+          ]}
+          tone="light"
+        />
 
         <div className={styles.categoryHeading}>
           <div>

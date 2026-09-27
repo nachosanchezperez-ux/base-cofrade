@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { cache } from 'react'
 import JsonLd from '@/components/JsonLd'
+import SiteBreadcrumb from '@/components/SiteBreadcrumb'
 import AgendaCofradeNav from '@/components/AgendaCofradeNav'
 import AgendaRelationLinks from '@/components/AgendaRelationLinks'
 import { crewEventStatusLabel } from '@/lib/crew-events'
@@ -158,7 +159,13 @@ export default async function CrewEventDetailPage({ params }) {
       <JsonLd data={pageJsonLd} />
       <JsonLd data={eventJsonLd} />
       <div className="shell">
-        <nav className={styles.breadcrumb} aria-label="Migas de pan"><Link href="/igualas-y-ensayos">Igualás y Ensayos</Link><span>→</span><strong>{event.eventTypeLabel}</strong></nav>
+        <SiteBreadcrumb
+          items={[
+            { label: 'Igualás y Ensayos', href: '/igualas-y-ensayos' },
+            { label: event.title },
+          ]}
+          tone="light"
+        />
 
         <header className={styles.hero}>
           <div className={styles.datePanel}>

@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import JsonLd from '@/components/JsonLd'
+import SiteBreadcrumb from '@/components/SiteBreadcrumb'
 import EntityLastUpdated from '@/components/EntityLastUpdated'
 import EntitySectionNav from '@/components/EntitySectionNav'
 import RelationalThread from '@/components/RelationalThread'
@@ -146,9 +147,15 @@ export default async function MarchDetailPage({ params }) {
 
       <header className={styles.hero}>
         <div className={`shell ${styles.heroShell}`}>
-          <nav className={styles.breadcrumb} aria-label="Migas de pan">
-            <Link href="/">Inicio</Link><span>/</span><Link href="/marchas">Marchas</Link><span>/</span><strong>{march.name}</strong>
-          </nav>
+          <SiteBreadcrumb
+            items={[
+              { label: 'Inicio', href: '/' },
+              { label: 'Marchas', href: '/marchas' },
+              { label: march.name },
+            ]}
+            tone="dark"
+            showAccent={false}
+          />
           <div className={styles.heroBody}>
             <span>{march.workType}</span>
             <h1>{march.name}</h1>

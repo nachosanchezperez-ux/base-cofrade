@@ -5,21 +5,22 @@ import { meetsPublicEditorialMinimum } from '../lib/supabase/public-entity-page.
 
 const folder = new URL('../docs/evidence/modelado-utrera-2026-09-27/', import.meta.url)
 export function readUtreraModel() {
-  return ['model-review.json', 'gloria-and-closure.json'].map((name) => JSON.parse(readFileSync(new URL(name, folder), 'utf8')))
+  return ['model-review.json', 'gloria-and-closure.json', 'steps-and-scope.json'].map((name) => JSON.parse(readFileSync(new URL(name, folder), 'utf8')))
 }
 
 // Offline documentary checks only: no credentials, network, SQL or production writes.
-export function validateUtreraModel(base, refinement) {
+export function validateUtreraModel(base, refinement, completion) {
   const assert = (condition, message) => { if (!condition) throw new Error(`UTRERA_MODEL: ${message}`) }
+  assert(completion?.meta && Array.isArray(completion.step_refinements), 'falta suplemento de Pasos y alcance')
   const keyed = (rows, label) => {
     const map = new Map(rows.map((row) => [row.key, row]))
     assert(map.size === rows.length && !map.has(undefined), `claves duplicadas o ausentes: ${label}`)
     return map
   }
-  const sources = keyed([...base.sources, ...refinement.sources], 'fuentes')
+  const sources = keyed([...base.sources, ...refinement.sources, ...completion.sources], 'fuentes')
   const corporations = keyed([...base.corporations, ...base.municipal_census_review], 'corporaciones')
   const places = keyed([...base.places, ...refinement.places], 'sedes')
-  const images = keyed([...base.images, ...refinement.images], 'imágenes')
+  const images = keyed([...base.images, ...refinement.images, ...completion.images], 'imágenes')
   const steps = keyed(base.steps, 'pasos')
   const assets = keyed(refinement.heritage_assets, 'patrimonio')
   const outings = keyed([...base.outings, ...refinement.outings], 'salidas')
@@ -67,6 +68,7 @@ export function validateUtreraModel(base, refinement) {
   }
   scanSources(base)
   scanSources(refinement)
+  scanSources(completion)
   const statuses = new Map()
   for (const row of refinement.temporal_decisions) {
     for (const key of row.outings) {
@@ -82,6 +84,16 @@ export function validateUtreraModel(base, refinement) {
     for (const key of ['departure_place', 'return_place']) if (row[key]) assert(places.has(row[key]), `lugar de ${row.key}`)
   }
   assert(statuses.size === outings.size, 'salidas sin decisión temporal')
+  const overridden = new Set()
+  for (const row of completion.temporal_overrides) {
+    assert(row.event_status === 'held' && row.sources.length > 0
+      && ['first_party_event_account_and_gallery', 'first_party_past_tense_account'].includes(row.evidence_kind), 'cambio temporal sin evidencia específica')
+    for (const key of row.outings) {
+      assert(statuses.has(key) && !overridden.has(key) && statuses.get(key) === 'announced', `sustitución temporal inválida: ${key}`)
+      statuses.set(key, row.event_status)
+      overridden.add(key)
+    }
+  }
   const decision = refinement.processional_relation_decision
   assert(decision.include_brotherhood_titular_relation && !decision.include_image_step_relation && !decision.include_outing_image_relation, 'Concepción: relación no demostrada')
   assert(images.has(decision.image) && images.get(decision.image).brotherhood === decision.brotherhood, 'Concepción: identidad')
@@ -92,21 +104,37 @@ export function validateUtreraModel(base, refinement) {
   assert(statuses.get('O17') === 'announced', 'regreso del Rocío elevado sin nueva evidencia')
   const minima = []
   for (const profile of refinement.corporations) minima.push({key: profile.key, ready: meetsPublicEditorialMinimum({identity: profile.popular_name, type: profile.brotherhood_types.join(' · '), context: 'Utrera', summary: profile.summary, relations: [profile.heritage], sources: profile.sources, publicValues: [profile.summary, profile.history_text]})})
-  for (const profile of refinement.images) minima.push({key: profile.key, ready: meetsPublicEditorialMinimum({identity: profile.name, type: profile.image_type, context: 'Utrera', summary: profile.description, relations: [profile.brotherhood], sources: profile.sources, publicValues: profile.description})})
-  for (const profile of refinement.step_refinements) {
+  for (const profile of [...refinement.images, ...completion.images]) minima.push({key: profile.key, ready: meetsPublicEditorialMinimum({identity: profile.name, type: profile.image_type, context: 'Utrera', summary: profile.description, relations: [profile.brotherhood], sources: profile.sources, publicValues: profile.description})})
+  const stepProfiles = keyed([...refinement.step_refinements, ...completion.step_refinements], 'perfiles de Pasos')
+  assert(stepProfiles.size === steps.size && [...steps.keys()].every((key) => stepProfiles.has(key)), 'Pasos sin perfil editorial')
+  for (const profile of stepProfiles.values()) {
     const original = steps.get(profile.key)
     assert(original && (!profile.id || profile.id === original.id), `ID de Paso alterado: ${profile.key}`)
     minima.push({key: profile.key, ready: meetsPublicEditorialMinimum({identity: original.name, type: profile.step_type, context: 'Utrera', summary: profile.description, relations: [original.brotherhood, original.images], sources: profile.sources, publicValues: profile.description})})
   }
+  const corporateProfiles = keyed(completion.corporate_profiles, 'perfiles corporativos')
+  assert(corporateProfiles.size === base.corporations.length && base.corporations.every(({key}) => corporateProfiles.has(key)), 'núcleo corporativo sin perfil')
+  for (const profile of corporateProfiles.values()) {
+    const original = corporations.get(profile.key)
+    assert(original && places.has(original.place), `perfil corporativo sin identidad/sede: ${profile.key}`)
+    minima.push({key: profile.key, ready: meetsPublicEditorialMinimum({identity: original.name, type: original.brotherhood_types.join(' · '), context: 'Utrera', summary: profile.summary, relations: [original.place], sources: profile.sources, publicValues: [profile.summary, profile.history_text]})})
+  }
+  const scope = keyed(completion.scope_decisions, 'decisiones de alcance')
+  assert(!completion.meta.scope_exhaustive, 'exhaustividad municipal no acreditada')
+  assert(scope.get('C03')?.municipality_in_scope === true
+    && scope.get('C03')?.preserve_outing_id === '9210cbbb-e66e-415e-9f50-ca18ccb97d93', 'Pinzón excluido o salida existente alterada')
+  assert(scope.get('C06')?.municipality_in_scope === false, 'Palmar de Troya incorporado a Utrera')
   assert(minima.every((row) => row.ready), 'mínimo editorial candidato insuficiente')
-  assert(base.meta.production_writes === 0 && refinement.meta.production_writes === 0, 'fotografía de solo modelado incoherente')
-  assert(!base.meta.model_frozen && !refinement.meta.model_frozen && !base.execution_gates.apply, 'certificación anticipada')
+  assert([base, refinement, completion].every(({meta}) => meta.production_writes === 0), 'fotografía de solo modelado incoherente')
+  assert([base, refinement, completion].every(({meta}) => !meta.model_frozen) && !base.execution_gates.apply, 'certificación anticipada')
   return {
     structural_validation: 'PASS', corporations_in_core: base.corporations.length,
     corporations_in_institutional_review: corporations.size, gloria_profiles_completed: refinement.corporations.length,
     outings_in_model: outings.size, held_with_linked_evidence: [...statuses.values()].filter((s) => s === 'held').length,
     announced_historical: [...statuses.values()].filter((s) => s === 'announced').length,
     step_positions: positions.length, proposed_physical_steps: steps.size, identified_images: images.size,
+    step_profiles_reviewed: stepProfiles.size, corporate_profiles_reviewed: corporateProfiles.size + refinement.corporations.length,
+    scope_decisions_recorded: scope.size, municipal_scope_exhaustive: completion.meta.scope_exhaustive,
     additional_heritage_assets: assets.size, source_records: sources.size,
     nonempty_valid_types: corporations.size, candidate_editorial_minima: minima,
     production_writes: 0, model_frozen: false, apply_gate: 'NO_GO',

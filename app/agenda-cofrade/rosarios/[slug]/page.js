@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { cache } from 'react'
 import { notFound } from 'next/navigation'
 import JsonLd from '@/components/JsonLd'
+import SiteBreadcrumb from '@/components/SiteBreadcrumb'
 import AgendaCofradeNav from '@/components/AgendaCofradeNav'
 import AgendaRelationLinks from '@/components/AgendaRelationLinks'
 import {
@@ -123,9 +124,16 @@ export default async function RosaryDetailPage({ params }) {
 
       <header className={styles.hero}>
         <div className={`shell ${styles.heroInner}`}>
-          <nav className={styles.breadcrumb} aria-label="Migas de pan">
-            <Link href="/">Inicio</Link><span>›</span><Link href="/agenda-cofrade">Agenda Cofrade</Link><span>›</span><strong>Rosarios</strong>
-          </nav>
+          <SiteBreadcrumb
+            items={[
+              { label: 'Inicio', href: '/' },
+              { label: 'Agenda Cofrade', href: '/agenda-cofrade' },
+              { label: 'Rosarios', href: '/agenda-cofrade?categoria=rosaries#agenda' },
+              { label: item.title },
+            ]}
+            tone="dark"
+            showAccent={false}
+          />
 
           <div className={styles.heroGrid}>
             <div className={styles.heroCopy}>

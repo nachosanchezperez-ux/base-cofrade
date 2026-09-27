@@ -186,7 +186,7 @@ export default async function PasoDetailPage({params}){
         title={paso.nombre}
         breadcrumbItems={[
           { label: 'Pasos', href: '/pasos' },
-          { label: 'Ficha' },
+          { label: paso.nombre },
         ]}
         badges={[
           paso.tipo,

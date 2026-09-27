@@ -4,36 +4,11 @@ import { getPublishedBrotherhoodCrestPathBySlug } from '@/lib/supabase/brotherho
 import BrotherhoodDirectoryCrestImage from './BrotherhoodDirectoryCrestImage';
 import EntityVisualFallback from './EntityVisualFallback';
 import RelationalEntityHeroMedia from './RelationalEntityHeroMedia';
+import SiteBreadcrumb from './SiteBreadcrumb';
 import styles from './RelationalEntityHero.module.css';
 import polishStyles from './RelationalEntityHeroPolish.module.css';
 import brotherhoodStyles from './RelationalEntityHeroBrotherhood.module.css';
 import bandStyles from './RelationalEntityHeroBand.module.css';
-
-function Breadcrumb({ items = [] }) {
-  if (!items.length) return null;
-
-  return (
-    <nav className={styles.breadcrumb} aria-label="Ruta de navegación">
-      <span className={styles.breadcrumbAccent} aria-hidden="true" />
-      <ol>
-        {items.map((item, index) => {
-          const isCurrent = index === items.length - 1;
-
-          return (
-            <li key={`${item.label}-${index}`}>
-              {item.href && !isCurrent ? (
-                <Link href={item.href}>{item.label}</Link>
-              ) : (
-                <span aria-current={isCurrent ? 'page' : undefined}>{item.label}</span>
-              )}
-              {!isCurrent ? <i aria-hidden="true">→</i> : null}
-            </li>
-          );
-        })}
-      </ol>
-    </nav>
-  );
-}
 
 function brotherhoodSlugFromRelation(relation) {
   const match = String(relation?.href || '').match(/^\/hermandades\/([^/?#]+)/);
@@ -202,7 +177,7 @@ export default async function RelationalEntityHero({
     >
       <div className={styles.texture} aria-hidden="true" />
       <div className="shell">
-        <Breadcrumb items={breadcrumbItems} />
+        <SiteBreadcrumb items={breadcrumbItems} tone="dark" ariaLabel="Ruta de navegación" />
 
         <div className={`${styles.grid} ${polishStyles.grid} ${isBand ? `${bandStyles.bandGrid} ${bandStyles.bandGridIdentityOnly}` : ''}`}>
           <div className={`${styles.copy} ${polishStyles.copy} ${isBand ? `${bandStyles.bandCopy} ${bandStyles.bandCopyIdentityOnly}` : ''}`}>
