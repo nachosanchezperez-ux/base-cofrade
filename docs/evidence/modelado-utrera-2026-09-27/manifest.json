@@ -5,10 +5,10 @@
     "namespace": "c0160038",
     "future_import_id": "c0160038-0000-4000-8000-000000000001",
     "municipality_id": "e4319248-831a-4f4c-adb8-19c496f95dd6",
-    "main": "15710dd5bcde2a4bd6dc87dc5d8c8846e213e406",
+    "main": "2d088746bd8c857e3daa27d0c0a12063edb8a2ab",
     "snapshot_at": "2026-09-27T06:00:27.121802+00:00",
     "status": "PREPARED_NOT_EXECUTED",
-    "apply_gate": "NO_GO_PUBLIC_CONTRACT",
+    "apply_gate": "NOT_AUTHORIZED",
     "production_writes": 0,
     "dry_run_executed": false,
     "apply": false,
@@ -1863,28 +1863,9 @@
   },
   "public_contract_audit": {
     "kind": "STATIC_PUBLIC_CONTRACT_AUDIT_NOT_WEB_QA",
-    "main": "15710dd5bcde2a4bd6dc87dc5d8c8846e213e406",
-    "result": "NO_GO",
-    "affected_candidates": [
-      {
-        "key": "H13",
-        "id": "c0160038-0300-4000-8000-f44c735d4b80",
-        "type": "brotherhood",
-        "published": true,
-        "sitemap": false,
-        "metadata": true,
-        "canonical": "/hermandades/rocio-de-utrera-de-utrera-utrera"
-      },
-      {
-        "key": "I13",
-        "id": "4550fd96-94d3-4929-8d61-af79ba7de8e7",
-        "type": "image",
-        "published": true,
-        "sitemap": false,
-        "metadata": false,
-        "canonical": "/imagenes/nuestra-senora-angustias-utrera"
-      }
-    ],
+    "main": "2d088746bd8c857e3daa27d0c0a12063edb8a2ab",
+    "result": "PASS",
+    "affected_candidates": [],
     "excluded": [
       {
         "key": "I44",
@@ -2030,7 +2011,7 @@
         "id": "c0160038-0300-4000-8000-f44c735d4b80",
         "type": "brotherhood",
         "published": true,
-        "sitemap": false,
+        "sitemap": true,
         "metadata": true,
         "canonical": "/hermandades/rocio-de-utrera-de-utrera-utrera"
       },
@@ -2174,8 +2155,8 @@
         "id": "4550fd96-94d3-4929-8d61-af79ba7de8e7",
         "type": "image",
         "published": true,
-        "sitemap": false,
-        "metadata": false,
+        "sitemap": true,
+        "metadata": true,
         "canonical": "/imagenes/nuestra-senora-angustias-utrera"
       },
       {

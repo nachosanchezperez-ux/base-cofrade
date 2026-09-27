@@ -14,13 +14,13 @@
     "held": 7
   },
   "offline_only": true,
-  "apply_gate": "NO_GO_PUBLIC_CONTRACT",
-  "public_contract_blockers": [
-    "H13",
-    "I13"
-  ],
+  "apply_gate": "NOT_AUTHORIZED",
+  "public_contract_blockers": [],
   "production_writes": 0,
-  "dry_run": "PREPARED_NOT_EXECUTED",
+  "dry_run": "PASS_ROLLED_BACK",
   "public_qa": "NOT_EXECUTED",
-  "seo_qa": "NOT_EXECUTED"
+  "seo_qa": "NOT_EXECUTED",
+  "residues": 0,
+  "staging_gate": "GO_FOR_STAGING_ONLY",
+  "execution_certificate": "execution-certificate.json"
 }

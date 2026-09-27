@@ -1,10 +1,10 @@
 # Utrera · manifiesto determinista HC-016
 
-**Preparado, sin ejecutar.** Corte 27/09/2026. Main `15710dd5bcde2a4bd6dc87dc5d8c8846e213e406`.
+**Dry-run ejecutado y certificado; rollback PASS, 0 residuos.** Corte 27/09/2026. Main `2d088746bd8c857e3daa27d0c0a12063edb8a2ab`.
 
 La congelación se limita a la edición documentada. No certifica censo universal, carga, publicación ni QA web/SEO.
 
-**Staging: NO-GO.** I44, I45, S25 y H17 se conservan en review, fuera de publicación. La auditoría completa detecta exclusión del sitemap para H13 y rechazo editorial del resumen existente de I13. Véase `evidence/modelado-utrera-2026-09-27/public-contract-audit.json`. No confundir mínimos genéricos del candidato con indexabilidad real.
+**GO PARA STAGING, sin crearlo.** Véase `UTRERA-GO-STAGING-2026-09-27.md`. I44, I45, S25 y H17 se conservan en review, fuera de publicación. La corrección transversal #1014 está integrada; consultar el certificado de ejecución para el resultado vigente de auditoría, preflight y dry-run. Véase `evidence/modelado-utrera-2026-09-27/public-contract-audit.json`. No confundir mínimos genéricos del candidato con indexabilidad real.
 
 ## Conteo
 

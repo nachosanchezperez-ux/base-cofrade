@@ -83,7 +83,8 @@ test('SQL preparado: rollback final, guard completo, deriva, protección y sin D
   assert.ok(sql.indexOf('$hc016_types$') < sql.indexOf('\nROLLBACK;'))
   for (const id of manifest.brotherhood_universe) assert.ok(sql.includes(id))
   for (const check of ['UTRERA_DRIFT', 'UTRERA_NATURAL_DUPLICATE', 'UTRERA_OTHER_COLUMN', 'UTRERA_OUTSIDE_SCOPE']) assert.ok(sql.includes(check))
-  assert.ok(sql.includes("nullif(to_jsonb(t)->%L, ''null''::jsonb)"))
+  assert.ok(sql.includes('t.%I IS NOT DISTINCT FROM r.%I'))
+  assert.ok(sql.includes('CROSS JOIN jsonb_populate_record(NULL::public.%I,$1) r'))
 })
 test('horas usan representación PostgreSQL y no hay timestamps manuales', () => {
   for (const row of manifest.operations.filter((r) => r.table === 'outings')) {

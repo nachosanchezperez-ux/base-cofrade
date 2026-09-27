@@ -1,6 +1,6 @@
 {
   "kind": "STATIC_PUBLIC_CONTRACT_AUDIT_NOT_WEB_QA",
-  "main": "2d088746bd8c857e3daa27d0c0a12063edb8a2ab",
+  "main": "15710dd5bcde2a4bd6dc87dc5d8c8846e213e406",
   "result": "PASS",
   "affected_candidates": [],
   "excluded": [

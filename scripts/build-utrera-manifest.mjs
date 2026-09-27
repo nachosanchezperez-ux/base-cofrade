@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto'
-import { readFileSync, writeFileSync } from 'node:fs'
+import { existsSync, readFileSync, writeFileSync } from 'node:fs'
 import { pathToFileURL } from 'node:url'
 import { readUtreraModel, validateUtreraModel } from './validate-utrera-model.mjs'
 import { buildBrotherhoodTypesGuard } from './hc016-brotherhood-types-guard.mjs'
@@ -28,7 +28,7 @@ export function buildUtreraManifest() {
   const [base, gloria, stepsReview] = readUtreraModel()
   validateUtreraModel(base, gloria, stepsReview) // Earlier documentary cuts remain reproducible.
   const closure = read('identity-closure.json')
-  const snapshot = read('manifest-production-snapshot.json')
+  const snapshot = read('manifest-production-snapshot-reconciled.json')
   const local = read('manifest-local-snapshot.json')
   const schema = read('manifest-schema.json')
   const outingSchema = read('outing-entities-schema.json')
@@ -282,7 +282,7 @@ export function buildUtreraManifest() {
   for (let i = operations.length - 1; i >= 0; i--) if (operations[i].table === 'sources' && !linkedSources.has(operations[i].id)) operations.splice(i, 1)
   operations.forEach((r, i) => { r.number = i + 1 })
   const manifest = {
-    meta: { version: 2, date: '2026-09-27', namespace: 'c0160038', future_import_id: 'c0160038-0000-4000-8000-000000000001', municipality_id: M, main: '15710dd5bcde2a4bd6dc87dc5d8c8846e213e406', snapshot_at: local.observed_at, status: 'PREPARED_NOT_EXECUTED', apply_gate: read('public-contract-audit.json').result === 'PASS' ? 'NOT_AUTHORIZED' : 'NO_GO_PUBLIC_CONTRACT', production_writes: 0, dry_run_executed: false, apply: false, universal_census_certified: false },
+    meta: { version: 2, date: '2026-09-27', namespace: 'c0160038', future_import_id: 'c0160038-0000-4000-8000-000000000001', municipality_id: M, main: '2d088746bd8c857e3daa27d0c0a12063edb8a2ab', snapshot_at: local.observed_at, status: 'PREPARED_NOT_EXECUTED', apply_gate: read('public-contract-audit.json').result === 'PASS' ? 'NOT_AUTHORIZED' : 'NO_GO_PUBLIC_CONTRACT', production_writes: 0, dry_run_executed: false, apply: false, universal_census_certified: false },
     non_public_keys: NON_PUBLIC_KEYS,
     counts: { corporations: corporations.length, images: images.length, steps: steps.length, heritage_assets: assets.length, bands: bands.length, outings: outings.length, positions: outings.reduce((n, o) => n + o.positions.length, 0), operations: operations.length, insert: operations.filter((r) => r.operation === 'insert').length, update: operations.filter((r) => r.operation === 'update').length, held: operations.filter((r) => r.table === 'outings' && r.data.event_status === 'held').length },
     identities, ids, source_ids: sourceIds, brotherhood_universe: corporations.map((row) => ids[row.key]), expected_types: Object.fromEntries(corporations.map((row) => [ids[row.key], row.brotherhood_types])), reused,
@@ -379,20 +379,20 @@ BEGIN
     EXECUTE format('SELECT to_jsonb(t) FROM public.%I t WHERE %I::text=$1',op->>'table',op->>'pk') INTO current_row USING op->>'id';
     IF op->>'operation'='update' THEN
       SELECT array_agg(key) INTO changed_columns FROM jsonb_object_keys(op->'data') key WHERE key<>op->>'pk';
-      IF current_row IS DISTINCT FROM op->'before' AND NOT (current_row @> op->'data' AND (current_row - (changed_columns || ARRAY['updated_at'])) IS NOT DISTINCT FROM ((op->'before') - (changed_columns || ARRAY['updated_at']))) THEN RAISE EXCEPTION 'UTRERA_DRIFT: %',op->>'label'; END IF;
+      IF current_row IS DISTINCT FROM op->'before' AND NOT (current_row @> (op->'data') AND (current_row - (changed_columns || ARRAY['updated_at'])) IS NOT DISTINCT FROM ((op->'before') - (changed_columns || ARRAY['updated_at']))) THEN RAISE EXCEPTION 'UTRERA_DRIFT: %',op->>'label'; END IF;
       IF current_row IS NULL THEN RAISE EXCEPTION 'UTRERA_MISSING_UPDATE: %',op->>'label'; END IF;
     ELSIF current_row IS NOT NULL THEN
-      IF NOT (current_row @> op->'data') THEN RAISE EXCEPTION 'UTRERA_COLLISION: %',op->>'label'; END IF;
+      IF NOT (current_row @> (op->'data')) THEN RAISE EXCEPTION 'UTRERA_COLLISION: %',op->>'label'; END IF;
     END IF;
     IF jsonb_array_length(op->'natural_keys') > 0 THEN
-      SELECT string_agg(format('nullif(to_jsonb(t)->%L, ''null''::jsonb) IS NOT DISTINCT FROM nullif($1->%L, ''null''::jsonb)', value, value), ' AND ') INTO natural_filter FROM jsonb_array_elements_text(op->'natural_keys');
-      EXECUTE format('SELECT count(*) FROM public.%I t WHERE %s AND %I::text<>$2',op->>'table',natural_filter,op->>'pk') INTO affected USING op->'data',op->>'id';
+      SELECT string_agg(format('t.%I IS NOT DISTINCT FROM r.%I', value, value), ' AND ') INTO natural_filter FROM jsonb_array_elements_text(op->'natural_keys');
+      EXECUTE format('SELECT count(*) FROM public.%I t CROSS JOIN jsonb_populate_record(NULL::public.%I,$1) r WHERE %s AND t.%I::text<>$2',op->>'table',op->>'table',natural_filter,op->>'pk') INTO affected USING op->'data',op->>'id';
       IF affected<>0 THEN RAISE EXCEPTION 'UTRERA_NATURAL_DUPLICATE: %',op->>'label'; END IF;
     END IF;
     SELECT string_agg(format('%I',key),', ' ORDER BY key) INTO columns_sql FROM jsonb_object_keys(op->'data') key;
     IF op->>'operation'='insert' THEN
       EXECUTE format('INSERT INTO public.%I (%s) SELECT %s FROM jsonb_populate_record(NULL::public.%I,$1) ON CONFLICT (%I) DO NOTHING',op->>'table',columns_sql,columns_sql,op->>'table',op->>'pk') USING op->'data';
-    ELSIF NOT (current_row @> op->'data') THEN
+    ELSIF NOT (current_row @> (op->'data')) THEN
       SELECT array_agg(key) INTO changed_columns FROM jsonb_object_keys(op->'data') key WHERE key<>op->>'pk';
       SELECT string_agg(format('%1$I=r.%1$I',key),', ' ORDER BY key) INTO columns_sql FROM unnest(changed_columns) key;
       EXECUTE format('UPDATE public.%I t SET %s FROM jsonb_populate_record(NULL::public.%I,$1) r WHERE t.%I::text=$2',op->>'table',columns_sql,op->>'table',op->>'pk') USING op->'data',op->>'id';
@@ -402,7 +402,7 @@ BEGIN
       IF (expected - (changed_columns || ARRAY['updated_at'])) IS DISTINCT FROM (current_row - (changed_columns || ARRAY['updated_at'])) THEN RAISE EXCEPTION 'UTRERA_OTHER_COLUMN: %',op->>'label'; END IF;
     END IF;
     EXECUTE format('SELECT to_jsonb(t) FROM public.%I t WHERE %I::text=$1',op->>'table',op->>'pk') INTO expected USING op->>'id';
-    IF expected IS NULL OR NOT (expected @> op->'data') THEN RAISE EXCEPTION 'UTRERA_POSTCONDITION: %',op->>'label'; END IF;
+    IF expected IS NULL OR NOT (expected @> (op->'data')) THEN RAISE EXCEPTION 'UTRERA_POSTCONDITION: %',op->>'label'; END IF;
   END LOOP;
   FOR tab IN SELECT value FROM jsonb_array_elements(tables) LOOP
     SELECT array_agg(value->>'id') INTO target_ids FROM jsonb_array_elements(ops) WHERE value->>'table'=tab->>'table';
@@ -414,7 +414,29 @@ BEGIN
 END
 $utrera$;
 ${buildBrotherhoodTypesGuard(manifest.brotherhood_universe)}
+SET CONSTRAINTS ALL IMMEDIATE;
+DO $utrera_counts$
+DECLARE
+  groups jsonb := ${typed(tablePks.map(({table,pk}) => ({table,pk,ids:manifest.operations.filter(op=>op.table===table).map(op=>op.id)})))};
+  reuses jsonb := ${typed(manifest.reused)};
+  entry jsonb; actual integer;
+BEGIN
+  FOR entry IN SELECT value FROM jsonb_array_elements(groups) LOOP
+    EXECUTE format('SELECT count(*) FROM public.%I WHERE %I::text IN (SELECT jsonb_array_elements_text($1))',entry->>'table',entry->>'pk') INTO actual USING entry->'ids';
+    IF actual <> jsonb_array_length(entry->'ids') THEN RAISE EXCEPTION 'UTRERA_TARGET_COUNT: %',entry->>'table'; END IF;
+  END LOOP;
+  FOR entry IN SELECT value FROM jsonb_array_elements(reuses) LOOP
+    EXECUTE format('SELECT count(*) FROM public.%I WHERE %I::text=$1',entry->>'table',entry->>'pk') INTO actual USING entry->>'id';
+    IF actual <> 1 THEN RAISE EXCEPTION 'UTRERA_REUSE_MISSING: %',entry->>'id'; END IF;
+  END LOOP;
+  IF (SELECT count(*) FROM public.entities WHERE id = ANY(ARRAY[${manifest.non_public_keys.map(key=>quote(manifest.ids[key])).join(',')}]::uuid[]) AND status='review') <> 4 THEN
+    RAISE EXCEPTION 'UTRERA_NON_PUBLIC_DECISIONS';
+  END IF;
+END
+$utrera_counts$;
 ROLLBACK;
+SELECT 'UTRERA_DRY_RUN_PASS_ROLLED_BACK' AS result, ${manifest.counts.operations} AS checked_operations, ${manifest.counts.insert} AS insert_operations, ${manifest.counts.update} AS update_operations, 0 AS delete_operations, ${manifest.reused.length} AS checked_reuse;
+
 -- This rollback is not proof of zero residues: run and compare rollback-snapshot.sql
 -- before and after this file in the execution session. This file has no COMMIT.
 `
@@ -422,9 +444,13 @@ ROLLBACK;
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const manifest = buildUtreraManifest()
+  const certificate = existsSync(new URL('execution-certificate.json', folder)) ? read('execution-certificate.json') : null
+  const certified = certificate?.gate === 'GO_FOR_STAGING_ONLY'
+    && certificate.sql_sha256 === hash(renderUtreraDryRun(manifest))
+    && certificate.manifest_sha256 === hash(JSON.stringify(manifest, null, 2) + '\n')
   const write = (name, data) => writeFileSync(new URL(name, folder), typeof data === 'string' ? data : `${JSON.stringify(data, null, 2)}\n`)
   write('manifest.json', manifest)
-  write('manifest-validation.json', validateUtreraManifest(manifest))
+  write('manifest-validation.json', { ...validateUtreraManifest(manifest), ...(certified ? { dry_run: 'PASS_ROLLED_BACK', residues: 0, staging_gate: 'GO_FOR_STAGING_ONLY', execution_certificate: 'execution-certificate.json' } : {}) })
   write('brotherhood-universe.json', manifest.brotherhood_universe)
   write('prepared-dry-run.sql', renderUtreraDryRun(manifest))
   const tables = unique(manifest.operations.map((r) => r.table)).sort()
@@ -432,7 +458,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     const pk = manifest.operations.find((r) => r.table === table).pk
     return `  '${table}', (SELECT jsonb_build_object('count',count(*),'md5',md5(coalesce(jsonb_agg(to_jsonb(t) ORDER BY ${pk})::text,'[]'))) FROM public.${table} t)`
   }).join(',\n')}\n) AS rollback_snapshot;\n`)
-  const report = ['# Utrera · manifiesto determinista HC-016', '', '**Preparado, sin ejecutar.** Corte 27/09/2026. Main `'+manifest.meta.main+'`.', '', 'La congelación se limita a la edición documentada. No certifica censo universal, carga, publicación ni QA web/SEO.', '', '**Staging: NO-GO.** I44, I45, S25 y H17 se conservan en review, fuera de publicación. La auditoría completa detecta exclusión del sitemap para H13 y rechazo editorial del resumen existente de I13. Véase `evidence/modelado-utrera-2026-09-27/public-contract-audit.json`. No confundir mínimos genéricos del candidato con indexabilidad real.', '', '## Conteo', '', '| Concepto | Total |', '|---|---:|', ...Object.entries(manifest.counts).map(([k,v])=>`| ${k} | ${v} |`), '', '## Identidades por UUID', '', '| Clave | Acción | Tipo | Nombre | UUID |', '|---|---|---|---|---|', ...manifest.identities.map((r)=>`| ${r.key} | ${r.decision} | ${r.type} | ${r.name} | \`${r.id}\` |`), '', '## Operaciones fila por fila', '', 'El payload completo y el estado previo de cada UPDATE están en `evidence/modelado-utrera-2026-09-27/manifest.json`.', '', '| # | Tabla | Operación | Referencia | UUID |', '|---:|---|---|---|---|', ...manifest.operations.map((r)=>`| ${r.number} | ${r.table} | ${r.operation} | ${r.label} | \`${r.id}\` |`), '', '## Puerta de ejecución', '', '1. Refrescar main, PR, producción y salud de Supabase; resolver cualquier deriva de identidad o datos.', '2. Registrar resultado completo de `rollback-snapshot.sql` y ejecutar `prepared-dry-run.sql` en una sola sesión transaccional.', '3. Consultar de nuevo el snapshot: igualdad exacta y cero residuos. Un error o diferencia impide Apply.', '4. Tras dry-run verde solo procede emitir GO/NO-GO para staging y detenerse. Esta orden no autoriza staging ni Apply.', '', 'El guard de tipos contiene las 17 corporaciones, incluidas las tres reutilizadas. Las cuatro Salidas existentes, Consolación y Morón permanecen protegidos. No se toca ningún duplicado global.', '']
+  const report = ['# Utrera · manifiesto determinista HC-016', '', (certified ? '**Dry-run ejecutado y certificado; rollback PASS, 0 residuos.**' : '**Preparado, sin ejecutar.**') + ' Corte 27/09/2026. Main `'+manifest.meta.main+'`.', '', 'La congelación se limita a la edición documentada. No certifica censo universal, carga, publicación ni QA web/SEO.', '', (certified ? '**GO PARA STAGING, sin crearlo.** Véase `UTRERA-GO-STAGING-2026-09-27.md`. ' : '**Staging: pendiente de puerta final.** ') + 'I44, I45, S25 y H17 se conservan en review, fuera de publicación. La corrección transversal #1014 está integrada; consultar el certificado de ejecución para el resultado vigente de auditoría, preflight y dry-run. Véase `evidence/modelado-utrera-2026-09-27/public-contract-audit.json`. No confundir mínimos genéricos del candidato con indexabilidad real.', '', '## Conteo', '', '| Concepto | Total |', '|---|---:|', ...Object.entries(manifest.counts).map(([k,v])=>`| ${k} | ${v} |`), '', '## Identidades por UUID', '', '| Clave | Acción | Tipo | Nombre | UUID |', '|---|---|---|---|---|', ...manifest.identities.map((r)=>`| ${r.key} | ${r.decision} | ${r.type} | ${r.name} | \`${r.id}\` |`), '', '## Operaciones fila por fila', '', 'El payload completo y el estado previo de cada UPDATE están en `evidence/modelado-utrera-2026-09-27/manifest.json`.', '', '| # | Tabla | Operación | Referencia | UUID |', '|---:|---|---|---|---|', ...manifest.operations.map((r)=>`| ${r.number} | ${r.table} | ${r.operation} | ${r.label} | \`${r.id}\` |`), '', '## Puerta de ejecución', '', '1. Refrescar main, PR, producción y salud de Supabase; resolver cualquier deriva de identidad o datos.', '2. Registrar resultado completo de `rollback-snapshot.sql` y ejecutar `prepared-dry-run.sql` en una sola sesión transaccional.', '3. Consultar de nuevo el snapshot: igualdad exacta y cero residuos. Un error o diferencia impide Apply.', '4. Tras dry-run verde solo procede emitir GO/NO-GO para staging y detenerse. Esta orden no autoriza staging ni Apply.', '', 'El guard de tipos contiene las 17 corporaciones, incluidas las tres reutilizadas. Las cuatro Salidas existentes, Consolación y Morón permanecen protegidos. No se toca ningún duplicado global.', '']
   writeFileSync(new URL('../docs/MANIFIESTO-DETERMINISTA-UTRERA-HC016-2026-09-27.md', import.meta.url), report.join('\n'))
   process.stdout.write(`${JSON.stringify(manifest.counts)}\n`)
 }

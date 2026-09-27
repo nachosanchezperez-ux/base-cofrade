@@ -1,3 +1,5 @@
+> Corte superado: tras #1014 y el dry-run PostgreSQL real, la puerta vigente es [GO PARA STAGING](./UTRERA-GO-STAGING-2026-09-27.md). Se conserva a continuación el diagnóstico anterior como evidencia histórica.
+
 # Utrera · puerta para staging · 27/09/2026
 
 **NO-GO PARA STAGING.** Cuatro casos originales resueltos mediante exclusión

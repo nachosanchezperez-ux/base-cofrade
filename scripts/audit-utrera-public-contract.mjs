@@ -1,3 +1,4 @@
+import { isBrotherhoodEditorialHeritageType } from '../lib/brotherhood-heritage-types.js'
 import { readFileSync, writeFileSync } from 'node:fs'
 import vm from 'node:vm'
 import { buildUtreraManifest } from './build-utrera-manifest.mjs'
@@ -5,7 +6,7 @@ import { meetsPublicEditorialMinimum } from '../lib/supabase/public-entity-page.
 import { loadPublicRowsInBatches, loadPublicRowsInPages } from '../lib/supabase/public-query-batches.js'
 const folder = new URL('../docs/evidence/modelado-utrera-2026-09-27/', import.meta.url)
 const read = (name) => JSON.parse(readFileSync(new URL(name, folder)))
-const m = buildUtreraManifest(), local = read('manifest-local-snapshot.json'), global = read('manifest-production-snapshot.json')
+const m = buildUtreraManifest(), local = read('manifest-local-snapshot.json'), global = read('manifest-production-snapshot-reconciled.json')
 const tables = { ...global, ...local, brotherhoods: global.brotherhoods }
 for (const op of m.operations) {
   const rows = tables[op.table] || [], old = rows.find((r) => r[op.pk] === op.id)
@@ -18,7 +19,7 @@ const client = { from(t) { let data = rows(t); return {
   order() { return this }, range(a,b) { data = data.slice(a,b+1); return this },
   then(resolve) { resolve({ data, error: null }) },
 } } }
-const context = vm.createContext({ createPublicClient:()=>client, console, meetsPublicEditorialMinimum,
+const context = vm.createContext({ isBrotherhoodEditorialHeritageType, createPublicClient:()=>client, console, meetsPublicEditorialMinimum,
   loadPublicRowsInBatches, loadPublicRowsInPages, process:{env:{VERCEL_ENV:'preview'}} })
 for (const file of ['public-indexability.js','step-heritage.js']) {
   const code = readFileSync(new URL(`../lib/supabase/${file}`,import.meta.url),'utf8')
