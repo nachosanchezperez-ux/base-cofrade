@@ -1,10 +1,24 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo:** 27 de septiembre de 2026 · Morón CERRADO Y CERTIFICADO · Utrera: alcance de edición congelado y manifiesto preparado, sin ejecutar. Después de Utrera: cierre editorial y visual de fichas y secciones existentes.
+**Cerrado, 27/09/2026:** corrección transversal de Fuentes públicas de Pasos
+integrada en #1012 y desplegada. El lector y el sitemap reconocen Fuentes
+directas, fases y piezas publicadas; 9/9 pruebas específicas, 1.303/1.303 suite,
+build y CI PASS. QA productivo: tres fichas 200, canonical propio, index/follow,
+Fuente enlazada una sola vez y presencia en sitemap (409 URLs). Runtime del
+deployment vigente sin filas error/fatal en la ventana consultada de 10 min,
+acotada a su corta vida. [Detalle](./CORRECCION-FUENTES-PASOS-2026-09-27.md).
+Utrera #1009 sigue en draft y NO-GO para staging. I44/I45/S25/H17 ya están
+resueltos en el candidato como identidades en review, sin ficha pública propia.
+La auditoría completa detecta dos excepciones adicionales: H13 queda fuera del
+sitemap porque su selector descarta patrimonio; I13 rechaza un resumen con
+incertidumbre de autoría legítima. Se detiene antes del dry-run. No staging ni Apply.
+Morón y HC-AUTO-03 permanecen fuera de las escrituras.
+
+**Corte operativo:** 27 de septiembre de 2026 · Fuentes de Pasos corregidas en producción · Morón cerrado · Utrera: cuatro decisiones cerradas en review; NO-GO por H13/I13 en contrato público.
 
 **Apply de Morón:** lote principal `c0160037-0000-4000-8000-000000000001` completed, **504/504 aplicadas y 0 fallidas**, sin repetición. Correctivo autorizado ejecutado: **10 Hermandades**, SET exclusivo de `brotherhood_types`; dry-run OK, rollback verificado, 0 residuos y post-Apply PASS. Las diez incluyen Penitencia, Loreto también Sacramental y Santa Cruz también Gloria.
 
-**Plataforma verificada:** main `2c751d493189fd9640f4f7dc29935efeaf5892a4` (breadcrumbs responsivos integrados; #1010 y #1000 GA4 integradas). Vercel `dpl_5zqJGYYHEpZENYkcMNncTuh5N4PV` READY sobre ese SHA, aliases canónicos. PR #1009: Utrera, en borrador y única PR abierta al preflight de las 07:49. Supabase ACTIVE_HEALTHY; 17 migraciones. Consulta de runtime del deployment vigente: sin filas error/fatal en la última hora. Es evidencia acotada de plataforma, no QA de un Apply de Utrera. No se solicita deployment de producción.
+**Plataforma verificada:** main `15710dd5bcde2a4bd6dc87dc5d8c8846e213e406` (#1013 integrada tras #1012); Vercel `dpl_B9Nk4BkELsCK8EPQKMXRg1Ym8XLL` READY exactamente sobre ese SHA, aliases `hilocofrade.es` y `www.hilocofrade.es`. Runtime vigente sin filas error/fatal en la consulta de 2 h, acotada a la edad del deployment. Supabase ACTIVE_HEALTHY; lectura de control a las 08:30:45 UTC: 17 migraciones, import Utrera inexistente, Morón completed 504/504 y HC-AUTO-03 ready 55/55, 0 aplicado. #1009 sigue abierta en borrador y reconciliada con ese main; NO-GO por H13/I13. Este corte no ejecuta DML, staging ni Apply y no fuerza deployment.
 
 **Supabase:** `ACTIVE_HEALTHY` y actualizado por el usuario de Nano a Micro. Support confirmó sobreutilización de memoria, uso sostenido de SWAP y overcommitment durante el incidente; CPU/IO pueden haber contribuido, por lo que no se reduce toda la causalidad a RAM. La base ocupa ~45 MB. Tras Micro: `effective_cache_size` 384→768 MB y `maintenance_work_mem` 32→64 MB. Producción contiene 17 migraciones estructurales. HC-PERF-SUPABASE-01 materializa `home_knowledge_threads`: fuente/caché 2.052/2.052, 0 diferencias, lectura `anon` correcta, patrón medido ~115,4 ms→~0,42 ms y primer cron `succeeded` (~156,9 ms). Véase [seguimiento de capacidad](./P0-SUPABASE-CAPACITY-2026-09-25.md).
 
@@ -16,9 +30,9 @@
 
 **Régimen:** FIRST EDITION FREEZE activo
 
-**Frente HC-016:** Utrera tiene [alcance de edición resuelto](./MODELADO-UTRERA-UNDECIMO-HC016-2026-09-27.md) y [manifiesto por UUID](./MANIFIESTO-DETERMINISTA-UTRERA-HC016-2026-09-27.md): **17 corporaciones, 47 imágenes del candidato, 25 Pasos, 6 bienes patrimoniales, 20 nuevas Salidas y 25 posiciones**. ADMA entra como Gloria; Borriquita de Trajano y Marismas de Pinzón como Agrupaciones Parroquiales. Resucitado conserva organizador propio sin Hermandad inventada. Las cuatro Salidas productivas se preservan. Las Salidas nuevas quedan en 7 `held` acreditadas y 13 anuncios históricos. **1.173 operaciones preparadas: 1.166 INSERT y 7 UPDATE; 1.323 pruebas, 0 fallos.** Incluye guard de tipos para las 17 corporaciones, snapshot y SQL transaccional con ROLLBACK. **Dry-run sin ejecutar; Apply sin ejecutar; 0 escrituras productivas.** No siguen abiertos el encaje de asociaciones ni la matriz de títulos de esta edición. La exhaustividad censal universal no se afirma. **Apply NO-GO por cuatro fichas**: Resucitado, Estrella y Paso del Resucitado necesitan un contexto público no corporativo; Marismas de Pinzón requiere relación editorial sustantiva acreditada. El mínimo genérico del candidato no equivale al lector real. Después: preflight/dry-run, cero residuos, Apply y QA de datos, web y SEO. Estado canónico actualizado en la rama #1009, aún sin fusionar. Morón no se reabre; HC-AUTO-03 permanece fuera de alcance.
+**Frente HC-016:** Utrera #1009 reconciliada con main `15710dd5bcde2a4bd6dc87dc5d8c8846e213e406`. Candidato de 1.173 operaciones, 1.166 INSERT y 7 UPDATE, UUID intactos. Cambian solo nueve estados editoriales asociados a I44/I45/S25/H17: identidades y relaciones en review. Publicación prevista: 16 corporaciones, 45 imágenes y 24 Pasos; universo conservado 17/47/25. Auditoría completa: H13 (Rocío, patrimonio omitido por sitemap) e I13 (Angustias, incertidumbre de autoría rechazada como placeholder) mantienen NO-GO. SQL bloqueado antes de DML; dry-run y residuos no medidos. 30 pruebas específicas y 1.333 de suite, build PASS. [Corte final](./UTRERA-PUERTA-STAGING-2026-09-27.md). Morón permanece CERRADO Y CERTIFICADO; HC-AUTO-03 ready 55/55, 0 aplicado. No abrir otro municipio.
 
-> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. Los rankings municipales previos son evidencia histórica, no una cola automática. Utrera parte del recálculo provincial existente y de la orden posterior expresa del usuario. Tras su cierre se detiene la expansión municipal: la prioridad acordada será completar las fichas y secciones ya publicadas, no abrir otro municipio.
+> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. Utrera cuenta con orden expresa posterior; los rankings municipales previos no constituyen una cola automática. No abrir otro municipio tras Utrera sin una nueva orden.
 
 **Refuerzo preventivo HC-016 autorizado:** barrera de tipos implementada y verificada (1.281 pruebas y build). Altas con clasificación explícita; actualizaciones parciales validan tipos persistidos. SQL directo exige guard transaccional por IDs del universo completo. Sin DML/DDL ni nuevo municipio. [Contrato y evidencia](./HC016-PREFLIGHT-TIPOS-2026-09-27.md).
 
@@ -240,7 +254,7 @@ No debe mantenerse en la cola lo que ya está integrado y desplegado:
 
 ## Dónde estamos ahora
 
-HC-016 funciona como método editorial operativo en dieciséis contextos individuales y en los macrolotes transversales ya certificados. Santa Ana de Dos Hermanas terminó 49/49 y Vera-Cruz de Alcalá del Río 45/45; ambos lotes conservan 0 duplicados, 0 huérfanos y 0 Salidas pasadas en `announced`. La evidencia está en [`CERTIFICACION-SANTA-ANA-DOS-HERMANAS-HC016-2026-09-15.md`](./CERTIFICACION-SANTA-ANA-DOS-HERMANAS-HC016-2026-09-15.md) y [`CERTIFICACION-VERA-CRUZ-ALCALA-DEL-RIO-HC016-2026-09-15.md`](./CERTIFICACION-VERA-CRUZ-ALCALA-DEL-RIO-HC016-2026-09-15.md). Todas las jornadas ordinarias de la Semana Santa de Sevilla y las Glorias de septiembre y octubre permanecen cerradas. La fotografía vigente del frente editorial figura en la cabecera: Utrera con manifiesto preparado por orden posterior, sin dry-run ni Apply ejecutados.
+HC-016 funciona como método editorial operativo en dieciséis contextos individuales y en los macrolotes transversales ya certificados. Santa Ana de Dos Hermanas terminó 49/49 y Vera-Cruz de Alcalá del Río 45/45; ambos lotes conservan 0 duplicados, 0 huérfanos y 0 Salidas pasadas en `announced`. La evidencia está en [`CERTIFICACION-SANTA-ANA-DOS-HERMANAS-HC016-2026-09-15.md`](./CERTIFICACION-SANTA-ANA-DOS-HERMANAS-HC016-2026-09-15.md) y [`CERTIFICACION-VERA-CRUZ-ALCALA-DEL-RIO-HC016-2026-09-15.md`](./CERTIFICACION-VERA-CRUZ-ALCALA-DEL-RIO-HC016-2026-09-15.md). Todas las jornadas ordinarias de la Semana Santa de Sevilla y las Glorias de septiembre y octubre permanecen cerradas. No hay otro frente editorial abierto.
 
 El recálculo global posterior seleccionó **Bandas** frente a Hermandades provinciales y Marchas/Crucetas. El lote transversal `c0160025-0000-4000-8000-000000000001` terminó 23/23: las 18 fichas públicas que carecían de Fuente directa quedaron trazadas mediante evidencia que ya documentaba sus acompañamientos, y las dos relaciones del nodo duplicado de la Agrupación Juvenil de Los Gitanos se reunieron en el nodo canónico. El duplicado se conserva archivado, sin borrar ni reutilizar su ID. El resultado es 75 Bandas públicas, 0 sin `slug`, 0 sin descripción y 0 sin Fuente directa; el nodo canónico recupera además su resumen público. La evidencia completa está en [`CERTIFICACION-MACROFRENTE-BANDAS-2026-09-15.md`](./CERTIFICACION-MACROFRENTE-BANDAS-2026-09-15.md).
 

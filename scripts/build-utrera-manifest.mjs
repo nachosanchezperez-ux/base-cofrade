@@ -11,6 +11,7 @@ const folder = new URL('../docs/evidence/modelado-utrera-2026-09-27/', import.me
 const read = (name) => JSON.parse(readFileSync(new URL(name, folder), 'utf8'))
 const hash = (value) => createHash('sha256').update(value).digest('hex')
 const M = 'e4319248-831a-4f4c-adb8-19c496f95dd6'
+const NON_PUBLIC_KEYS = ['I44', 'I45', 'S25', 'H17']
 const fail = (ok, message) => { if (!ok) throw new Error(`UTRERA_MANIFEST: ${message}`) }
 const slug = (value) => value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
 const unique = (rows) => [...new Set(rows.filter(Boolean))]
@@ -51,6 +52,10 @@ export function buildUtreraManifest() {
   }
   const usedIds = new Set(), allowedTypes = new Set(DIRECTORY_TYPES.map(({ type }) => type))
   const add = (table, data, label, sourceKeys = []) => {
+    // Keep documented identities for editors without inventing corporate links.
+    const privateIds = NON_PUBLIC_KEYS.map((key) => ids[key]).filter(Boolean)
+    if (data.status && ['entities', 'entity_locations', 'image_authorships', 'image_steps'].includes(table)
+      && Object.entries(data).some(([key, value]) => (key === 'id' || key.endsWith('entity_id')) && privateIds.includes(value))) data.status = 'review'
     const pk = columns.get(table)?.has('entity_id') && ['brotherhoods', 'images', 'steps', 'bands', 'agents', 'heritage_assets'].includes(table) ? 'entity_id' : 'id'
     for (const [column, value] of Object.entries(data)) if (columns.get(table)?.get(column)?.udt === 'time' && typeof value === 'string' && /^\d{2}:\d{2}$/.test(value)) data[column] = `${value}:00`
     const key = `${table}:${data[pk]}`
@@ -102,7 +107,7 @@ export function buildUtreraManifest() {
     fail(!snapshot.entities.some((e) => e.slug === candidateSlug && e.id !== ids[row.key]), `slug ocupado: ${candidateSlug}`)
     const ready = meetsPublicEditorialMinimum({ identity: name, type, context, summary, relations, sources: sourceKeys, publicValues: [summary] })
     fail(ready, `mínimo editorial ${row.key}`)
-    minima.push({ key: row.key, ready })
+    minima.push({ key: row.key, ready, public_profile: !NON_PUBLIC_KEYS.includes(row.key) })
     add('entities', { id: ids[row.key], entity_type: type, name: existing?.name || name, slug: candidateSlug, summary, status: 'published' }, row.key, sourceKeys)
     linkAll(sourceKeys, { entity_id: ids[row.key] })
   }
@@ -277,7 +282,8 @@ export function buildUtreraManifest() {
   for (let i = operations.length - 1; i >= 0; i--) if (operations[i].table === 'sources' && !linkedSources.has(operations[i].id)) operations.splice(i, 1)
   operations.forEach((r, i) => { r.number = i + 1 })
   const manifest = {
-    meta: { version: 1, date: '2026-09-27', namespace: 'c0160038', future_import_id: 'c0160038-0000-4000-8000-000000000001', municipality_id: M, main: '2c751d493189fd9640f4f7dc29935efeaf5892a4', snapshot_at: local.observed_at, status: 'PREPARED_NOT_EXECUTED', apply_gate: 'NO_GO_PUBLIC_CONTRACT', production_writes: 0, dry_run_executed: false, apply: false, universal_census_certified: false },
+    meta: { version: 2, date: '2026-09-27', namespace: 'c0160038', future_import_id: 'c0160038-0000-4000-8000-000000000001', municipality_id: M, main: '15710dd5bcde2a4bd6dc87dc5d8c8846e213e406', snapshot_at: local.observed_at, status: 'PREPARED_NOT_EXECUTED', apply_gate: read('public-contract-audit.json').result === 'PASS' ? 'NOT_AUTHORIZED' : 'NO_GO_PUBLIC_CONTRACT', production_writes: 0, dry_run_executed: false, apply: false, universal_census_certified: false },
+    non_public_keys: NON_PUBLIC_KEYS,
     counts: { corporations: corporations.length, images: images.length, steps: steps.length, heritage_assets: assets.length, bands: bands.length, outings: outings.length, positions: outings.reduce((n, o) => n + o.positions.length, 0), operations: operations.length, insert: operations.filter((r) => r.operation === 'insert').length, update: operations.filter((r) => r.operation === 'update').length, held: operations.filter((r) => r.table === 'outings' && r.data.event_status === 'held').length },
     identities, ids, source_ids: sourceIds, brotherhood_universe: corporations.map((row) => ids[row.key]), expected_types: Object.fromEntries(corporations.map((row) => [ids[row.key], row.brotherhood_types])), reused,
     protected: { outings: local.outings.map((r) => r.id), entities: ['8d4e62d9-a428-4363-afc7-6a2f9e8c1450', '46968f38-a4a1-43df-ad66-1436e19bb394', '2f9d80fc-0c4f-4346-95fd-109d31c29b23', '4c9e01e0-e671-41a5-a738-dd33fc15747a'], note: 'Morón, otros municipios, duplicados globales y salidas ya publicadas fuera del DML.' },
@@ -297,6 +303,7 @@ export function validateUtreraManifest(manifest, columns) {
   fail(!operations.some((r) => r.operation === 'delete' || ['import_batches', 'import_rows'].includes(r.table)), 'escritura fuera de preparación')
   fail(!operations.some((r) => Object.keys(r.data).some((c) => ['updated_at', 'created_at'].includes(c))), 'timestamp manual')
   const allowedTypes = new Set(DIRECTORY_TYPES.map(({ type }) => type))
+  for (const key of NON_PUBLIC_KEYS) fail(byTable('entities').find((r) => r.id === ids[key])?.data.status === 'review', `exclusión pública ${key}`)
   const entityIds = new Set(manifest.identities.filter((r) => !['place', 'outing'].includes(r.type)).map((r) => r.id))
   const targetIds = new Map()
   for (const r of [...manifest.reused, ...operations]) {
@@ -349,6 +356,7 @@ export function renderUtreraDryRun(manifest) {
   return `-- PREPARED ONLY: refresh production/preflight before execution. No staging or Apply.
 -- Manifest SHA256: ${hash(JSON.stringify(manifest))}
 BEGIN;
+${manifest.public_contract_audit.result === 'PASS' ? '-- Public contract gate PASS.' : "DO $public_gate$ BEGIN RAISE EXCEPTION 'UTRERA_PUBLIC_CONTRACT_NO_GO'; END $public_gate$;"}
 SET LOCAL lock_timeout = '5s';
 SET LOCAL statement_timeout = '60s';
 -- Serialize these tables for a consistent before/after safety comparison.
@@ -424,7 +432,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     const pk = manifest.operations.find((r) => r.table === table).pk
     return `  '${table}', (SELECT jsonb_build_object('count',count(*),'md5',md5(coalesce(jsonb_agg(to_jsonb(t) ORDER BY ${pk})::text,'[]'))) FROM public.${table} t)`
   }).join(',\n')}\n) AS rollback_snapshot;\n`)
-  const report = ['# Utrera · manifiesto determinista HC-016', '', '**Preparado, sin ejecutar.** Corte 27/09/2026. Main `'+manifest.meta.main+'`.', '', 'La congelación se limita a la edición documentada. No certifica censo universal, carga, publicación ni QA web/SEO.', '', '**Apply: NO-GO.** Auditoría del lector público: I44, I45 y S25 dependen de contexto distinto de Hermandad; H17 aún no tiene relación sustantiva acreditada. Véase `evidence/modelado-utrera-2026-09-27/public-contract-audit.json`. No confundir mínimos genéricos del candidato con indexabilidad real.', '', '## Conteo', '', '| Concepto | Total |', '|---|---:|', ...Object.entries(manifest.counts).map(([k,v])=>`| ${k} | ${v} |`), '', '## Identidades por UUID', '', '| Clave | Acción | Tipo | Nombre | UUID |', '|---|---|---|---|---|', ...manifest.identities.map((r)=>`| ${r.key} | ${r.decision} | ${r.type} | ${r.name} | \`${r.id}\` |`), '', '## Operaciones fila por fila', '', 'El payload completo y el estado previo de cada UPDATE están en `evidence/modelado-utrera-2026-09-27/manifest.json`.', '', '| # | Tabla | Operación | Referencia | UUID |', '|---:|---|---|---|---|', ...manifest.operations.map((r)=>`| ${r.number} | ${r.table} | ${r.operation} | ${r.label} | \`${r.id}\` |`), '', '## Puerta de ejecución', '', '1. Refrescar main, PR, producción y salud de Supabase; resolver cualquier deriva de identidad o datos.', '2. Registrar resultado completo de `rollback-snapshot.sql` y ejecutar `prepared-dry-run.sql` en una sola sesión transaccional.', '3. Consultar de nuevo el snapshot: igualdad exacta y cero residuos. Un error o diferencia impide Apply.', '4. Solo tras dry-run verde procede preparar/persistir el mismo DML y ejecutar QA de datos, web y SEO. Esta preparación no materializa un import ni contiene un Apply.', '', 'El guard de tipos contiene las 17 corporaciones, incluidas las tres reutilizadas. Las cuatro Salidas existentes, Consolación y Morón permanecen protegidos. No se toca ningún duplicado global.', '']
+  const report = ['# Utrera · manifiesto determinista HC-016', '', '**Preparado, sin ejecutar.** Corte 27/09/2026. Main `'+manifest.meta.main+'`.', '', 'La congelación se limita a la edición documentada. No certifica censo universal, carga, publicación ni QA web/SEO.', '', '**Staging: NO-GO.** I44, I45, S25 y H17 se conservan en review, fuera de publicación. La auditoría completa detecta exclusión del sitemap para H13 y rechazo editorial del resumen existente de I13. Véase `evidence/modelado-utrera-2026-09-27/public-contract-audit.json`. No confundir mínimos genéricos del candidato con indexabilidad real.', '', '## Conteo', '', '| Concepto | Total |', '|---|---:|', ...Object.entries(manifest.counts).map(([k,v])=>`| ${k} | ${v} |`), '', '## Identidades por UUID', '', '| Clave | Acción | Tipo | Nombre | UUID |', '|---|---|---|---|---|', ...manifest.identities.map((r)=>`| ${r.key} | ${r.decision} | ${r.type} | ${r.name} | \`${r.id}\` |`), '', '## Operaciones fila por fila', '', 'El payload completo y el estado previo de cada UPDATE están en `evidence/modelado-utrera-2026-09-27/manifest.json`.', '', '| # | Tabla | Operación | Referencia | UUID |', '|---:|---|---|---|---|', ...manifest.operations.map((r)=>`| ${r.number} | ${r.table} | ${r.operation} | ${r.label} | \`${r.id}\` |`), '', '## Puerta de ejecución', '', '1. Refrescar main, PR, producción y salud de Supabase; resolver cualquier deriva de identidad o datos.', '2. Registrar resultado completo de `rollback-snapshot.sql` y ejecutar `prepared-dry-run.sql` en una sola sesión transaccional.', '3. Consultar de nuevo el snapshot: igualdad exacta y cero residuos. Un error o diferencia impide Apply.', '4. Tras dry-run verde solo procede emitir GO/NO-GO para staging y detenerse. Esta orden no autoriza staging ni Apply.', '', 'El guard de tipos contiene las 17 corporaciones, incluidas las tres reutilizadas. Las cuatro Salidas existentes, Consolación y Morón permanecen protegidos. No se toca ningún duplicado global.', '']
   writeFileSync(new URL('../docs/MANIFIESTO-DETERMINISTA-UTRERA-HC016-2026-09-27.md', import.meta.url), report.join('\n'))
   process.stdout.write(`${JSON.stringify(manifest.counts)}\n`)
 }

@@ -1,10 +1,10 @@
 # Utrera · manifiesto determinista HC-016
 
-**Preparado, sin ejecutar.** Corte 27/09/2026. Main `2c751d493189fd9640f4f7dc29935efeaf5892a4`.
+**Preparado, sin ejecutar.** Corte 27/09/2026. Main `15710dd5bcde2a4bd6dc87dc5d8c8846e213e406`.
 
 La congelación se limita a la edición documentada. No certifica censo universal, carga, publicación ni QA web/SEO.
 
-**Apply: NO-GO.** Auditoría del lector público: I44, I45 y S25 dependen de contexto distinto de Hermandad; H17 aún no tiene relación sustantiva acreditada. Véase `evidence/modelado-utrera-2026-09-27/public-contract-audit.json`. No confundir mínimos genéricos del candidato con indexabilidad real.
+**Staging: NO-GO.** I44, I45, S25 y H17 se conservan en review, fuera de publicación. La auditoría completa detecta exclusión del sitemap para H13 y rechazo editorial del resumen existente de I13. Véase `evidence/modelado-utrera-2026-09-27/public-contract-audit.json`. No confundir mínimos genéricos del candidato con indexabilidad real.
 
 ## Conteo
 
@@ -1378,6 +1378,6 @@ El payload completo y el estado previo de cada UPDATE están en `evidence/modela
 1. Refrescar main, PR, producción y salud de Supabase; resolver cualquier deriva de identidad o datos.
 2. Registrar resultado completo de `rollback-snapshot.sql` y ejecutar `prepared-dry-run.sql` en una sola sesión transaccional.
 3. Consultar de nuevo el snapshot: igualdad exacta y cero residuos. Un error o diferencia impide Apply.
-4. Solo tras dry-run verde procede preparar/persistir el mismo DML y ejecutar QA de datos, web y SEO. Esta preparación no materializa un import ni contiene un Apply.
+4. Tras dry-run verde solo procede emitir GO/NO-GO para staging y detenerse. Esta orden no autoriza staging ni Apply.
 
 El guard de tipos contiene las 17 corporaciones, incluidas las tres reutilizadas. Las cuatro Salidas existentes, Consolación y Morón permanecen protegidos. No se toca ningún duplicado global.

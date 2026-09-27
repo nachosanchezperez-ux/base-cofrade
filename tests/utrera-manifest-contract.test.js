@@ -4,6 +4,19 @@ import { buildUtreraManifest, validateUtreraManifest, renderUtreraDryRun } from 
 
 const manifest = buildUtreraManifest()
 const copy = () => structuredClone(manifest)
+test('las cuatro identidades se conservan en review sin fabricar publicación', () => {
+  for (const key of ['I44', 'I45', 'S25', 'H17']) {
+    const m = copy()
+    const entity = m.operations.find((r) => r.table === 'entities' && r.id === m.ids[key])
+    assert.equal(entity.data.status, 'review')
+    entity.data.status = 'published'
+    assert.throws(() => validateUtreraManifest(m), /exclusión pública/)
+  }
+  const privateIds = new Set(manifest.non_public_keys.map((key) => manifest.ids[key]))
+  for (const row of manifest.operations.filter((r) => ['image_steps','image_authorships','entity_locations'].includes(r.table))) {
+    if (Object.entries(row.data).some(([k,v]) => k.endsWith('entity_id') && privateIds.has(v))) assert.equal(row.data.status, 'review')
+  }
+})
 test('Utrera: generación determinista, identidades exactas y producción no ejecutada', () => {
   assert.deepEqual(buildUtreraManifest(), manifest)
   assert.equal(manifest.counts.corporations, 17)

@@ -1,47 +1,824 @@
 {
   "kind": "STATIC_PUBLIC_CONTRACT_AUDIT_NOT_WEB_QA",
-  "observed_at": "2026-09-27",
-  "main": "2c751d493189fd9640f4f7dc29935efeaf5892a4",
-  "result": "APPLY_NO_GO",
+  "main": "15710dd5bcde2a4bd6dc87dc5d8c8846e213e406",
+  "result": "NO_GO",
   "affected_candidates": [
     {
+      "key": "H13",
+      "id": "c0160038-0300-4000-8000-f44c735d4b80",
+      "type": "brotherhood",
+      "published": true,
+      "sitemap": false,
+      "metadata": true,
+      "canonical": "/hermandades/rocio-de-utrera-de-utrera-utrera"
+    },
+    {
+      "key": "I13",
+      "id": "4550fd96-94d3-4929-8d61-af79ba7de8e7",
+      "type": "image",
+      "published": true,
+      "sitemap": false,
+      "metadata": false,
+      "canonical": "/imagenes/nuestra-senora-angustias-utrera"
+    }
+  ],
+  "excluded": [
+    {
       "key": "I44",
-      "name": "Jesús Resucitado",
-      "reason": "Sin Hermandad enlazada: el lector de metadata no usa entity_locations como contexto.",
-      "code": [
-        "lib/supabase/public-entity-pages.js",
-        "app/imagenes/[slug]/page.js",
-        "lib/supabase/public-indexability.js"
-      ]
+      "id": "c0160038-0600-4000-8000-4f955aea2c70",
+      "status": "review",
+      "public_profile": false
     },
     {
       "key": "I45",
-      "name": "María Santísima de la Estrella",
-      "reason": "Sin Hermandad enlazada ni Paso acreditado para 2026: faltan contexto y relación reconocidos por la frontera SEO actual.",
-      "code": [
-        "app/imagenes/[slug]/page.js",
-        "lib/supabase/public-indexability.js"
-      ]
+      "id": "c0160038-0600-4000-8000-b383b3f86c4b",
+      "status": "review",
+      "public_profile": false
     },
     {
       "key": "S25",
-      "name": "Paso del Resucitado",
-      "reason": "Sin Hermandad enlazada: el contexto municipal no se deriva de la Salida ni de la Imagen en la frontera SEO actual.",
-      "code": [
-        "app/pasos/[slug]/page.js",
-        "lib/supabase/public-indexability.js"
-      ]
+      "id": "c0160038-0700-4000-8000-9882cc2c672f",
+      "status": "review",
+      "public_profile": false
     },
     {
       "key": "H17",
-      "name": "Marismas de Pinzón",
-      "reason": "Identidad y fuentes acreditadas, pero ninguna relación patrimonial/cultual/procesional corporativa acreditada en este candidato. No basta para el mínimo editorial de Hermandad.",
-      "code": [
-        "lib/supabase/public-indexability.js"
-      ]
+      "id": "c0160038-0300-4000-8000-e0711d195338",
+      "status": "review",
+      "public_profile": false
     }
   ],
-  "resolution_required": "Resolver estas cuatro fichas antes de Apply: contexto público verificable de la asociación y relación sustantiva de Marismas. No fabricar una Hermandad del Resucitado ni enlazar la procesión de septiembre desde evidencia de la romería.",
-  "dry_run_preparation": "COMPLETE; ejecución no realizada",
-  "production_writes": 0
+  "counts": {
+    "corporations": 16,
+    "images": 45,
+    "steps": 24
+  },
+  "results": [
+    {
+      "key": "H01",
+      "id": "c0160038-0300-4000-8000-1462acfd3f73",
+      "type": "brotherhood",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/hermandades/trinidad-de-utrera-utrera"
+    },
+    {
+      "key": "H02",
+      "id": "4e462b02-979d-4b88-ab98-0c97f2dbf0a0",
+      "type": "brotherhood",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/hermandades/hermandad-jesus-nazareno-utrera"
+    },
+    {
+      "key": "H03",
+      "id": "c0160038-0300-4000-8000-9926b4b686fc",
+      "type": "brotherhood",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/hermandades/quinta-angustia-de-utrera-utrera"
+    },
+    {
+      "key": "H04",
+      "id": "c0160038-0300-4000-8000-97cecd61de50",
+      "type": "brotherhood",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/hermandades/muchachos-de-consolacion-de-utrera-utrera"
+    },
+    {
+      "key": "H05",
+      "id": "c0160038-0300-4000-8000-91f5dfe0c350",
+      "type": "brotherhood",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/hermandades/estudiantes-de-utrera-utrera"
+    },
+    {
+      "key": "H06",
+      "id": "c0160038-0300-4000-8000-3004d54bb4bf",
+      "type": "brotherhood",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/hermandades/aceituneros-de-utrera-utrera"
+    },
+    {
+      "key": "H07",
+      "id": "c0160038-0300-4000-8000-22b3d4eabf43",
+      "type": "brotherhood",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/hermandades/redentor-cautivo-sacramental-de-santiago-de-utrera-utrera"
+    },
+    {
+      "key": "H08",
+      "id": "c0160038-0300-4000-8000-834d42451cf5",
+      "type": "brotherhood",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/hermandades/gitanos-de-utrera-utrera"
+    },
+    {
+      "key": "H09",
+      "id": "7bab2fe6-c69e-48e5-9446-a247b4169910",
+      "type": "brotherhood",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/hermandades/vera-cruz-santo-entierro-utrera"
+    },
+    {
+      "key": "H10",
+      "id": "c0160038-0300-4000-8000-fcfee9dbaea5",
+      "type": "brotherhood",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/hermandades/milagros-de-utrera-utrera"
+    },
+    {
+      "key": "H11",
+      "id": "c0160038-0300-4000-8000-2a4a183c93ae",
+      "type": "brotherhood",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/hermandades/sacramental-de-santa-maria-de-utrera-utrera"
+    },
+    {
+      "key": "H12",
+      "id": "8d4e62d9-a428-4363-afc7-6a2f9e8c1450",
+      "type": "brotherhood",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/hermandades/consolacion-utrera"
+    },
+    {
+      "key": "H13",
+      "id": "c0160038-0300-4000-8000-f44c735d4b80",
+      "type": "brotherhood",
+      "published": true,
+      "sitemap": false,
+      "metadata": true,
+      "canonical": "/hermandades/rocio-de-utrera-de-utrera-utrera"
+    },
+    {
+      "key": "H14",
+      "id": "c0160038-0300-4000-8000-181cdf73d008",
+      "type": "brotherhood",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/hermandades/rosario-de-fatima-y-san-antonio-de-padua-de-utrera-utrera"
+    },
+    {
+      "key": "H15",
+      "id": "c0160038-0300-4000-8000-db92e37d7066",
+      "type": "brotherhood",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/hermandades/maria-auxiliadora-adma-de-utrera-utrera"
+    },
+    {
+      "key": "H16",
+      "id": "c0160038-0300-4000-8000-456e0feaf63d",
+      "type": "brotherhood",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/hermandades/borriquita-de-trajano-de-utrera-utrera"
+    },
+    {
+      "key": "I01",
+      "id": "c0160038-0600-4000-8000-f53815f462d6",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/jesus-en-su-entrada-triunfal-trinidad-utrera"
+    },
+    {
+      "key": "I02",
+      "id": "c0160038-0600-4000-8000-c2fac4631279",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/santiago-trinidad-utrera"
+    },
+    {
+      "key": "I03",
+      "id": "c0160038-0600-4000-8000-2e725f4357d2",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/san-pedro-trinidad-utrera"
+    },
+    {
+      "key": "I04",
+      "id": "c0160038-0600-4000-8000-bb130b035b57",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/san-juan-trinidad-utrera"
+    },
+    {
+      "key": "I05",
+      "id": "c0160038-0600-4000-8000-8d777f9118ae",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/cristo-de-los-afligidos-trinidad-utrera"
+    },
+    {
+      "key": "I06",
+      "id": "c0160038-0600-4000-8000-4ab7da8c3f63",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/virgen-de-los-desamparados-trinidad-utrera"
+    },
+    {
+      "key": "I07",
+      "id": "c0160038-0600-4000-8000-f826956e6a45",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/jesus-de-la-oracion-en-el-huerto-jesus-nazareno-utrera"
+    },
+    {
+      "key": "I08",
+      "id": "c0160038-0600-4000-8000-81b6a12c7ca6",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/san-juan-jesus-nazareno-utrera"
+    },
+    {
+      "key": "I09",
+      "id": "c0160038-0600-4000-8000-c20509867749",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/san-pedro-jesus-nazareno-utrera"
+    },
+    {
+      "key": "I10",
+      "id": "c0160038-0600-4000-8000-3d4418f6be7e",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/angel-confortador-jesus-nazareno-utrera"
+    },
+    {
+      "key": "I11",
+      "id": "c0160038-0600-4000-8000-ed19ec430965",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/jesus-nazareno-jesus-nazareno-utrera"
+    },
+    {
+      "key": "I12",
+      "id": "c0160038-0600-4000-8000-7116c75126b0",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/simon-de-cirene-jesus-nazareno-utrera"
+    },
+    {
+      "key": "I13",
+      "id": "4550fd96-94d3-4929-8d61-af79ba7de8e7",
+      "type": "image",
+      "published": true,
+      "sitemap": false,
+      "metadata": false,
+      "canonical": "/imagenes/nuestra-senora-angustias-utrera"
+    },
+    {
+      "key": "I14",
+      "id": "c0160038-0600-4000-8000-4f54ebcdd7ab",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/cristo-de-la-caridad-quinta-angustia-utrera"
+    },
+    {
+      "key": "I15",
+      "id": "c0160038-0600-4000-8000-4ed39c7b03c1",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/virgen-de-la-piedad-quinta-angustia-utrera"
+    },
+    {
+      "key": "I16",
+      "id": "c0160038-0600-4000-8000-b9ff3f6e71da",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/san-juan-quinta-angustia-utrera"
+    },
+    {
+      "key": "I17",
+      "id": "c0160038-0600-4000-8000-7b0535e89dad",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/maria-magdalena-quinta-angustia-utrera"
+    },
+    {
+      "key": "I18",
+      "id": "c0160038-0600-4000-8000-56a94b141048",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/virgen-de-los-angeles-quinta-angustia-utrera"
+    },
+    {
+      "key": "I19",
+      "id": "c0160038-0600-4000-8000-28ea6ca363fa",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/cristo-del-perdon-muchachos-de-consolacion-utrera"
+    },
+    {
+      "key": "I20",
+      "id": "c0160038-0600-4000-8000-259769d2992a",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/virgen-de-la-amargura-muchachos-de-consolacion-utrera"
+    },
+    {
+      "key": "I21",
+      "id": "c0160038-0600-4000-8000-ce9f0cb8a2ed",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/cristo-del-amor-estudiantes-utrera"
+    },
+    {
+      "key": "I22",
+      "id": "c0160038-0600-4000-8000-9e196474bba2",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/maria-magdalena-estudiantes-utrera"
+    },
+    {
+      "key": "I23",
+      "id": "c0160038-0600-4000-8000-7b4ff1075a4a",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/longinos-estudiantes-utrera"
+    },
+    {
+      "key": "I24",
+      "id": "c0160038-0600-4000-8000-70e431027a98",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/virgen-de-las-veredas-estudiantes-utrera"
+    },
+    {
+      "key": "I25",
+      "id": "c0160038-0600-4000-8000-0214cb4eff36",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/jesus-atado-a-la-columna-aceituneros-utrera"
+    },
+    {
+      "key": "I26",
+      "id": "c0160038-0600-4000-8000-4d52761714f9",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/virgen-de-la-paz-aceituneros-utrera"
+    },
+    {
+      "key": "I27",
+      "id": "c0160038-0600-4000-8000-666da16e28f7",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/jesus-redentor-cautivo-redentor-cautivo-sacramental-de-santiago-utrera"
+    },
+    {
+      "key": "I28",
+      "id": "c0160038-0600-4000-8000-8e71538c99ad",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/virgen-de-las-lagrimas-redentor-cautivo-sacramental-de-santiago-utrera"
+    },
+    {
+      "key": "I29",
+      "id": "c0160038-0600-4000-8000-196357e71894",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/cristo-de-la-buena-muerte-gitanos-utrera"
+    },
+    {
+      "key": "I30",
+      "id": "c0160038-0600-4000-8000-4887713715fe",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/virgen-de-la-esperanza-gitanos-utrera"
+    },
+    {
+      "key": "I31",
+      "id": "c0160038-0600-4000-8000-da052035cd83",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/jesus-atado-a-la-columna-vera-cruz-santo-entierro-utrera"
+    },
+    {
+      "key": "I32",
+      "id": "e875dbee-612f-4739-9f24-fd583d6b2df6",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/nuestra-senora-dolores-utrera-vera-cruz"
+    },
+    {
+      "key": "I33",
+      "id": "c0160038-0600-4000-8000-06602eec9cdd",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/cristo-yacente-vera-cruz-santo-entierro-utrera"
+    },
+    {
+      "key": "I34",
+      "id": "c0160038-0600-4000-8000-035ce4cf731b",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/crucifijo-de-los-milagros-milagros-utrera"
+    },
+    {
+      "key": "I35",
+      "id": "c0160038-0600-4000-8000-7c6b35c4ac71",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/maria-santisima-de-la-concepcion-milagros-utrera"
+    },
+    {
+      "key": "I36",
+      "id": "c0160038-0600-4000-8000-769ca814539f",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/nuestra-senora-del-rosario-de-fatima-rosario-de-fatima-y-san-antonio-de-padua-utrera"
+    },
+    {
+      "key": "I37",
+      "id": "c0160038-0600-4000-8000-6e21d76a42a5",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/santisimo-cristo-de-santiago-redentor-cautivo-sacramental-de-santiago-utrera"
+    },
+    {
+      "key": "I38",
+      "id": "c0160038-0600-4000-8000-96f42d8b8cb4",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/inmaculada-concepcion-de-la-sacramental-de-santiago-redentor-cautivo-sacramental-de-santiago-utrera"
+    },
+    {
+      "key": "I39",
+      "id": "c0160038-0600-4000-8000-c22ea7126c0f",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/nuestra-senora-del-rosario-gitanos-utrera"
+    },
+    {
+      "key": "I40",
+      "id": "c0160038-0600-4000-8000-33df6b59fd29",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/beato-ceferino-martir-gitanos-utrera"
+    },
+    {
+      "key": "I41",
+      "id": "c0160038-0600-4000-8000-04355c08bbe4",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/inmaculada-concepcion-de-la-sacramental-de-santa-maria-sacramental-de-santa-maria-utrera"
+    },
+    {
+      "key": "I42",
+      "id": "c0160038-0600-4000-8000-7e17d4a69592",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/maria-auxiliadora-coronada-imagen-historica-maria-auxiliadora-adma-utrera"
+    },
+    {
+      "key": "I43",
+      "id": "c0160038-0600-4000-8000-dee835ee53d0",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/maria-auxiliadora-replica-procesional-maria-auxiliadora-adma-utrera"
+    },
+    {
+      "key": "I46",
+      "id": "c0160038-0600-4000-8000-c5b9086cc604",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/jesus-en-su-entrada-en-jerusalen-de-trajano-borriquita-de-trajano-utrera"
+    },
+    {
+      "key": "I47",
+      "id": "c0160038-0600-4000-8000-1b1a0f8c6349",
+      "type": "image",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/imagenes/nuestra-senora-de-consolacion-de-trajano-borriquita-de-trajano-utrera"
+    },
+    {
+      "key": "S01",
+      "id": "c0160038-0700-4000-8000-ac7438e86cb8",
+      "type": "step",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/pasos/paso-de-entrada-en-jerusalen-trinidad-utrera"
+    },
+    {
+      "key": "S02",
+      "id": "c0160038-0700-4000-8000-bbe97d17449c",
+      "type": "step",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/pasos/paso-de-caridad-y-piedad-quinta-angustia-utrera"
+    },
+    {
+      "key": "S03",
+      "id": "c0160038-0700-4000-8000-217c48f2b7fd",
+      "type": "step",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/pasos/paso-de-angeles-quinta-angustia-utrera"
+    },
+    {
+      "key": "S04",
+      "id": "c0160038-0700-4000-8000-3491f905b529",
+      "type": "step",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/pasos/paso-de-oracion-en-el-huerto-jesus-nazareno-utrera"
+    },
+    {
+      "key": "S05",
+      "id": "c0160038-0700-4000-8000-39a6c3d9fd98",
+      "type": "step",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/pasos/paso-de-perdon-muchachos-de-consolacion-utrera"
+    },
+    {
+      "key": "S06",
+      "id": "c0160038-0700-4000-8000-3193b0ffb09a",
+      "type": "step",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/pasos/paso-de-amargura-muchachos-de-consolacion-utrera"
+    },
+    {
+      "key": "S07",
+      "id": "c0160038-0700-4000-8000-4fc42779a8a8",
+      "type": "step",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/pasos/paso-de-amor-lanzada-estudiantes-utrera"
+    },
+    {
+      "key": "S08",
+      "id": "c0160038-0700-4000-8000-33829b0e034a",
+      "type": "step",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/pasos/paso-de-veredas-estudiantes-utrera"
+    },
+    {
+      "key": "S09",
+      "id": "c0160038-0700-4000-8000-7e0b7c84ed21",
+      "type": "step",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/pasos/paso-de-columna-de-aceituneros-aceituneros-utrera"
+    },
+    {
+      "key": "S10",
+      "id": "c0160038-0700-4000-8000-3d16e90141e8",
+      "type": "step",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/pasos/paso-de-paz-aceituneros-utrera"
+    },
+    {
+      "key": "S11",
+      "id": "c0160038-0700-4000-8000-4a1bcaec718f",
+      "type": "step",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/pasos/paso-de-afligidos-trinidad-utrera"
+    },
+    {
+      "key": "S12",
+      "id": "c0160038-0700-4000-8000-d30b6fedc77f",
+      "type": "step",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/pasos/paso-de-desamparados-trinidad-utrera"
+    },
+    {
+      "key": "S13",
+      "id": "c0160038-0700-4000-8000-02cfcc7e2872",
+      "type": "step",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/pasos/paso-de-cautivo-redentor-cautivo-sacramental-de-santiago-utrera"
+    },
+    {
+      "key": "S14",
+      "id": "c0160038-0700-4000-8000-ec546f04a3d6",
+      "type": "step",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/pasos/paso-de-lagrimas-redentor-cautivo-sacramental-de-santiago-utrera"
+    },
+    {
+      "key": "S15",
+      "id": "c0160038-0700-4000-8000-dca468ba69cd",
+      "type": "step",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/pasos/paso-de-buena-muerte-gitanos-utrera"
+    },
+    {
+      "key": "S16",
+      "id": "c0160038-0700-4000-8000-866220331489",
+      "type": "step",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/pasos/paso-de-esperanza-gitanos-utrera"
+    },
+    {
+      "key": "S17",
+      "id": "c0160038-0700-4000-8000-b59848410d5d",
+      "type": "step",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/pasos/paso-de-nazareno-jesus-nazareno-utrera"
+    },
+    {
+      "key": "S18",
+      "id": "b51dd99d-97fe-4636-b35e-59ac8fa92dc5",
+      "type": "step",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/pasos/paso-palio-angustias-utrera"
+    },
+    {
+      "key": "S19",
+      "id": "c0160038-0700-4000-8000-d87f96c3835d",
+      "type": "step",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/pasos/paso-de-columna-de-vera-cruz-vera-cruz-santo-entierro-utrera"
+    },
+    {
+      "key": "S20",
+      "id": "c0160038-0700-4000-8000-7e830ff5e5fa",
+      "type": "step",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/pasos/paso-de-dolores-vera-cruz-santo-entierro-utrera"
+    },
+    {
+      "key": "S21",
+      "id": "c0160038-0700-4000-8000-56757a56803c",
+      "type": "step",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/pasos/paso-de-milagros-milagros-utrera"
+    },
+    {
+      "key": "S22",
+      "id": "c0160038-0700-4000-8000-b42bb4596754",
+      "type": "step",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/pasos/paso-de-yacente-vera-cruz-santo-entierro-utrera"
+    },
+    {
+      "key": "S23",
+      "id": "c0160038-0700-4000-8000-a1489528636a",
+      "type": "step",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/pasos/paso-de-maria-auxiliadora-maria-auxiliadora-adma-utrera"
+    },
+    {
+      "key": "S24",
+      "id": "c0160038-0700-4000-8000-aa82f28022e6",
+      "type": "step",
+      "published": true,
+      "sitemap": true,
+      "metadata": true,
+      "canonical": "/pasos/paso-de-la-entrada-en-jerusalen-de-trajano-borriquita-de-trajano-utrera"
+    }
+  ],
+  "method": "Actual shared sitemap selector, editorial predicates and step source reader on candidate plus original snapshots. Territorial context projected from the canonical municipal universe; live drift checked separately. No HTTP QA claimed."
 }

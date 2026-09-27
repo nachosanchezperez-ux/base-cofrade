@@ -16,10 +16,8 @@
   "offline_only": true,
   "apply_gate": "NO_GO_PUBLIC_CONTRACT",
   "public_contract_blockers": [
-    "I44",
-    "I45",
-    "S25",
-    "H17"
+    "H13",
+    "I13"
   ],
   "production_writes": 0,
   "dry_run": "PREPARED_NOT_EXECUTED",

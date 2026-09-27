@@ -1,0 +1,16 @@
+{
+  "observed_at": "2026-09-27",
+  "main": "15710dd5bcde2a4bd6dc87dc5d8c8846e213e406",
+  "decision": "KEEP_IDENTITIES_IN_REVIEW_NO_PUBLIC_PROFILE",
+  "scope": ["I44", "I45", "S25", "H17"],
+  "cases": [
+    {"key":"I44","reason":"La parroquia distingue Asociación del Resucitado de sus Hermandades. No hay identidad corporativa canónica reutilizable acreditada en el universo. Ubicación y organizador no sustituyen ese contexto público.","sources":["https://www.santiagodeutrera.es/","https://consejodehermandadesdeutrera.org/wp-content/uploads/2024/11/Ad-Deum-Per-Images.pdf","https://www.utreraweb.com/noticias-de-utrera/hermandades/2026/20786/Utrera-celebra-con-gran-brillantez-el-Via-Lucis-del-Domingo-de-Resurreccion-con-el-Resucitado-como-protagonista-con-video/"]},
+    {"key":"I45","reason":"Se preserva la identidad documental y su ubicación. No hay prueba específica de participación en el Vía Lucis 2026 ni Paso propio; no se crean relaciones por compartir templo.","sources":["https://consejodehermandadesdeutrera.org/wp-content/uploads/2024/11/Ad-Deum-Per-Images.pdf"]},
+    {"key":"S25","reason":"Se conserva el soporte del Vía Lucis documentado y su vínculo con I44 en review. No se crea ficha pública independiente ni Hermandad para suplir el contexto ausente.","sources":["https://www.utreraweb.com/noticias-de-utrera/hermandades/2026/20786/Utrera-celebra-con-gran-brillantez-el-Via-Lucis-del-Domingo-de-Resurreccion-con-el-Resucitado-como-protagonista-con-video/"]},
+    {"key":"H17","reason":"Identidad acreditada. El convenio de romería no acredita organización de la procesión de septiembre ni despeja la sede. No se amplía el universo para fabricar un mínimo editorial; se difiere la publicación profunda.","sources":["https://www.utrera.org/wp-content/uploads/2025/04/24-Or-250425-EXTRACTO-DEL-ACTA-JGL.pdf"]}
+  ],
+  "public_event_preserved": "O20: Vía Lucis con organizador documentado, banda y posición. Los lectores filtran entidades no publicadas o no construyen enlaces para ellas.",
+  "no_new_corporate_relationships": true,
+  "no_product_changes": true,
+  "meaning": "Decisiones cerradas para esta edición; no certifica cuatro fichas publicadas ni inexistencia universal de relaciones. Revisión editorial posterior exige evidencia."
+}
