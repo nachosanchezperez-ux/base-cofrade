@@ -1,5 +1,14 @@
 # Hilo Cofrade · Estado canónico
 
+**Frente autorizado, 27/09/2026:** corrección transversal de Fuentes públicas de
+Pasos en rama independiente desde main. El lector y el sitemap deben reconocer
+Fuentes directas, fases y piezas publicadas. Implementación y pruebas en
+`fix/fuentes-publicas-pasos-20260927`, pendiente de revisión e integración;
+no está desplegada en producción. [Detalle](./CORRECCION-FUENTES-PASOS-2026-09-27.md).
+Utrera #1009 sigue en draft y NO-GO para staging: este cambio de producto no
+cierra sus cuatro decisiones editoriales ni ejecuta dry-run, staging o Apply.
+Morón y HC-AUTO-03 permanecen fuera de las escrituras.
+
 **Corte operativo:** 26 de septiembre de 2026 · Morón de la Frontera · APPLY PRINCIPAL 504/504 CONSERVADO · CORRECTIVO DE TIPOS 10/10 APLICADO · CERRADO Y CERTIFICADO
 
 **Apply de Morón:** lote principal `c0160037-0000-4000-8000-000000000001` completed, **504/504 aplicadas y 0 fallidas**, sin repetición. Correctivo autorizado ejecutado: **10 Hermandades**, SET exclusivo de `brotherhood_types`; dry-run OK, rollback verificado, 0 residuos y post-Apply PASS. Las diez incluyen Penitencia, Loreto también Sacramental y Santa Cruz también Gloria.
