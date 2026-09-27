@@ -126,6 +126,20 @@
     gap: 7px;
   }
 
+  .breadcrumb li:not(:nth-last-child(-n+3)) {
+    display: none;
+  }
+
+  .breadcrumb ol:has(li:nth-child(4))::before {
+    content: "…";
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    color: var(--breadcrumb-separator);
+    font-size: 13px;
+    font-weight: 800;
+  }
+
   .breadcrumb a,
   .breadcrumb span[aria-current="page"],
   .breadcrumb li > span:not([aria-current]) {
