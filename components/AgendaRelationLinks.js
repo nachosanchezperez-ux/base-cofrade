@@ -28,7 +28,7 @@ export default function AgendaRelationLinks({
   if (!items.length) return null
 
   return (
-    <aside className={styles.wrap} aria-label="Relaciones de este acto">
+    <aside className={styles.wrap} aria-label="Relaciones de este acto" data-analytics-related-section="hilo_relacional">
       <div className={`shell ${styles.inner}`}>
         <div className={styles.heading}>
           <span>Hilo relacional</span>
@@ -36,7 +36,7 @@ export default function AgendaRelationLinks({
         </div>
         <nav className={styles.links}>
           {items.map((item) => (
-            <Link href={item.href} key={`${item.label}-${item.href}`}>
+            <Link href={item.href} key={`${item.label}-${item.href}`} data-analytics-destination-name={item.name}>
               <small>{item.label}</small>
               <span>{item.name}</span>
             </Link>

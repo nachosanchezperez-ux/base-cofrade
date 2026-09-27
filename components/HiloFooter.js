@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { ANALYTICS_PREFERENCES_EVENT } from '@/lib/analytics/client';
 import styles from './HiloFooter.module.css';
 
 export default function HiloFooter() {
@@ -27,6 +28,7 @@ export default function HiloFooter() {
             <Link href="/aviso-legal">Aviso legal</Link>
             <Link href="/privacidad">Privacidad</Link>
             <Link href="/cookies">Cookies</Link>
+            <button type="button" onClick={() => window.dispatchEvent(new Event(ANALYTICS_PREFERENCES_EVENT))}>Preferencias de cookies</button>
           </nav>
           <small>Proyecto creado por Nacho Sánchez · @desdeelarenal</small>
         </div>

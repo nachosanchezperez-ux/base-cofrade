@@ -18,7 +18,6 @@ import HiloHeader from '@/components/HiloHeader';
 import HiloFooter from '@/components/HiloFooter';
 import JsonLd from '@/components/JsonLd';
 import HiloAnalytics from '@/components/analytics/HiloAnalytics';
-import { SpeedInsights } from '@vercel/speed-insights/next';
 import { DEFAULT_DESCRIPTION, HOME_TITLE, SITE_NAME, SITE_URL } from '@/lib/seo';
 
 export const metadata = {
@@ -85,7 +84,6 @@ export default function RootLayout({ children }) {
         <main id="main-content" tabIndex={-1}>{children}</main>
         <HiloFooter />
         <HiloAnalytics />
-        <SpeedInsights />
       </body>
     </html>
   );
