@@ -142,6 +142,7 @@ export async function generateMetadata({ params }) {
       h.cronologia,
       h.acompanamientoActual,
       h.patrimonio,
+      h.simpecados,
       h.cultos,
     ],
     sources: h.fuentesFicha || [],

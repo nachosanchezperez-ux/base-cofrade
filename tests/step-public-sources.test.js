@@ -1,3 +1,4 @@
+import { isBrotherhoodEditorialHeritageType } from '../lib/brotherhood-heritage-types.js'
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
@@ -38,7 +39,7 @@ function fixture(kind, options = {}) {
     }
   } }
   const context = vm.createContext({ createPublicClient: () => client, console,
-    meetsPublicEditorialMinimum, publicEditorialRobots, loadPublicRowsInBatches, loadPublicRowsInPages,
+    isBrotherhoodEditorialHeritageType, meetsPublicEditorialMinimum, publicEditorialRobots, loadPublicRowsInBatches, loadPublicRowsInPages,
     process: { env: { VERCEL_ENV: 'preview' } }, seoDescription: (v) => v, pageTitle: (v) => v })
   load(context, 'lib/supabase/step-heritage.js')
   load(context, 'lib/supabase/public-indexability.js')

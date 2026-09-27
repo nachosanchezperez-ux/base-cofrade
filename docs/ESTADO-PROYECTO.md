@@ -1,5 +1,7 @@
 # Hilo Cofrade · Estado canónico
 
+**En revisión, 27/09/2026:** corrección transversal de indexabilidad por patrimonio corporativo e incertidumbre documental, en rama separada de main `15710dd5bcde2a4bd6dc87dc5d8c8846e213e406`. No desplegada. La proyección estática de Utrera con esta corrección da 85/85 y cero excepciones; no certifica datos vivos, dry-run ni staging. [Detalle](./CORRECCION-INDEXABILIDAD-PATRIMONIO-2026-09-27.md).
+
 **Cerrado, 27/09/2026:** corrección transversal de Fuentes públicas de Pasos
 integrada en #1012 y desplegada. El lector y el sitemap reconocen Fuentes
 directas, fases y piezas publicadas; 9/9 pruebas específicas, 1.303/1.303 suite,
@@ -7,11 +9,12 @@ build y CI PASS. QA productivo: tres fichas 200, canonical propio, index/follow,
 Fuente enlazada una sola vez y presencia en sitemap (409 URLs). Runtime del
 deployment vigente sin filas error/fatal en la ventana consultada de 10 min,
 acotada a su corta vida. [Detalle](./CORRECCION-FUENTES-PASOS-2026-09-27.md).
-Utrera #1009 sigue en draft y NO-GO para staging: este cambio de producto no
-cierra sus cuatro decisiones editoriales ni ejecuta dry-run, staging o Apply.
+Utrera #1009 sigue en draft y NO-GO para staging. Sus cuatro decisiones editoriales
+ya están resueltas mediante review sin ficha pública propia; quedan integración
+de esta corrección, conciliación viva y dry-run. No staging ni Apply.
 Morón y HC-AUTO-03 permanecen fuera de las escrituras.
 
-**Corte operativo:** 27 de septiembre de 2026 · Fuentes de Pasos corregidas en producción · Morón cerrado · Utrera pendiente de sus cuatro decisiones editoriales y preflight/dry-run.
+**Corte operativo:** 27 de septiembre de 2026 · Fuentes de Pasos corregidas en producción · Morón cerrado · Utrera: decisiones editoriales resueltas; corrección pública en revisión y preflight/dry-run pendientes.
 
 **Apply de Morón:** lote principal `c0160037-0000-4000-8000-000000000001` completed, **504/504 aplicadas y 0 fallidas**, sin repetición. Correctivo autorizado ejecutado: **10 Hermandades**, SET exclusivo de `brotherhood_types`; dry-run OK, rollback verificado, 0 residuos y post-Apply PASS. Las diez incluyen Penitencia, Loreto también Sacramental y Santa Cruz también Gloria.
 
@@ -27,7 +30,7 @@ Morón y HC-AUTO-03 permanecen fuera de las escrituras.
 
 **Régimen:** FIRST EDITION FREEZE activo
 
-**Frente HC-016:** Utrera #1009, candidato 1.173 operaciones, continúa NO-GO para staging hasta cerrar I44/I45/S25/H17, reconciliar el main nuevo y superar auditoría pública y dry-run PostgreSQL con rollback y medición de residuos. La corrección de Fuentes de Pasos ya está en producción; no mantenerla como pendiente. Morón permanece CERRADO Y CERTIFICADO; no repetir su Apply ni correctivo. No abrir HC-AUTO-03 ni otro municipio.
+**Frente HC-016:** Utrera #1009, candidato 1.173 operaciones, continúa NO-GO para staging. I44/I45/S25/H17 resueltos en review en la PR. H13/I13 pasan en la proyección local con la corrección de indexabilidad, todavía sin integrar. Pendientes reconciliación viva y dry-run PostgreSQL con rollback y medición de residuos. La corrección de Fuentes de Pasos ya está en producción; no mantenerla como pendiente. Morón permanece CERRADO Y CERTIFICADO; no repetir su Apply ni correctivo. No abrir HC-AUTO-03 ni otro municipio.
 
 > GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. Utrera cuenta con orden expresa posterior; los rankings municipales previos no constituyen una cola automática. No abrir otro municipio tras Utrera sin una nueva orden.
 
