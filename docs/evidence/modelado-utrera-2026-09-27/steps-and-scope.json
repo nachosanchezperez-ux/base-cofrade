@@ -1,0 +1,218 @@
+{
+  "meta": {
+    "phase": "STEP_PROFILES_AND_SCOPE_DECISIONS",
+    "reviewed_at": "2026-09-27",
+    "base_model": "model-review.json",
+    "precedence": "Completa perfiles por clave; las decisiones temporales sustituyen únicamente el estado de las Salidas indicadas. No es payload SQL.",
+    "production_writes": 0,
+    "model_frozen": false,
+    "scope_exhaustive": false
+  },
+  "step_refinements": [
+    {
+      "key": "S01", "step_type": "Paso de misterio",
+      "description": "Paso de la Entrada en Jerusalén de la Trinidad de Utrera. Reúne al Señor con los apóstoles y las hebreas. La reseña del Consejo describe una adaptación neobarroca de Antonio Lobato que aprovechó elementos anteriores.",
+      "sources": ["F01", "F17"],
+      "credits": [{"name": "Antonio Lobato", "role": "Adaptación del soporte", "source": "F17"}],
+      "execution_date_text": null,
+      "unknown_fields": ["Fecha de ejecución del conjunto", "Dimensiones", "Material exacto"],
+      "notes": "Salvador Madroñal corresponde a las imágenes, no al Paso. La descripción histórica del Consejo no certifica por sí sola todos los componentes presentes en 2026."
+    },
+    {
+      "key": "S02", "step_type": "Paso de misterio",
+      "description": "Paso de Caridad y Piedad de la Quinta Angustia de Utrera, con San Juan y María Magdalena. Su talla neobarroca en cedro reúne varias fases de trabajo, con intervención de Antonio Martín. Juan Ventura realizó las cartelas y evangelistas; Pedro Morilla intervino en su restauración y en los faroles.",
+      "sources": ["F01", "F43"], "materials": "Madera de cedro; ornamentación en madera de naranjo",
+      "execution_date_text": null,
+      "components": [
+        {"name": "Talla del soporte", "date_text": "1976–1979", "credit": "Fernando Aguacil", "source": "F43"},
+        {"name": "Continuación de talla", "date_text": "1979–1983", "credit": "Antonio Martín", "source": "F43"},
+        {"name": "Cartelas y evangelistas", "date_text": "1983", "credit": "Juan Ventura", "source": "F43"},
+        {"name": "Restauración de canasto y respiraderos; faroles", "date_text": "2004–2005; 2006", "credit": "Pedro Morilla", "source": "F43"}
+      ],
+      "unknown_fields": ["Dimensiones", "Autoría integral única"],
+      "notes": "Conservar la grafía Aguacil de F43 hasta deduplicar el artista; no crear agent ni normalizar por parecido con otro nombre. Su atribución ambigua del primer paso no se traslada a las imágenes."
+    },
+    {
+      "key": "S03", "step_type": "Paso de palio",
+      "description": "Paso de palio de Nuestra Señora de los Ángeles en su Soledad, de la Quinta Angustia de Utrera. Es el segundo soporte de su cortejo del Domingo de Ramos, con salida desde Santa María de la Mesa y acompañamiento musical propio.",
+      "sources": ["F01", "F41", "F43"], "execution_date_text": null, "credits": [],
+      "unknown_fields": ["Autoría del soporte y bordados", "Fecha del conjunto", "Materiales", "Dimensiones"],
+      "rejected_inferences": ["No atribuir el palio a Juan Ventura ni fecharlo en 1996: F43 usa palio al referirse a la sustitución de la imagen que F01 y F41 identifican como escultura."]
+    },
+    {
+      "key": "S04", "step_type": "Paso de misterio",
+      "description": "Paso de la Oración en el Huerto de la Hermandad de Jesús Nazareno de Utrera. El soporte se atribuye a José Gil y había servido al Nazareno antes de pasar al misterio del Huerto en 1988. Es distinto del tallado por Ángel de la Feria que fue vendido al Cerro del Águila.",
+      "sources": ["F01", "F44"], "execution_date_text": null,
+      "credits": [{"name": "José Gil", "role": "Talla atribuida", "authorship_type": "attributed", "source": "F44"}],
+      "unknown_fields": ["Fecha de ejecución acreditada", "Materiales", "Dimensiones"],
+      "notes": "1917 es la fecha de uso por el Nazareno recogida en F44; 1988 es cambio de utilización, no hechura. Pío Mollar y Luciano Galán corresponden a imágenes."
+    },
+    {
+      "key": "S05", "step_type": "Paso de Cristo",
+      "description": "Paso del Cristo del Perdón de los Muchachos de Consolación, con sede en el Santuario de Utrera. Su llamador incorpora el escudo de la corporación y una representación del Santuario. En el programa de 2026 encabeza un cortejo de dos Pasos.",
+      "sources": ["F01", "F05"], "execution_date_text": null, "credits": [],
+      "unknown_fields": ["Autoría y fecha del soporte", "Materiales", "Dimensiones"],
+      "rejected_inferences": ["Las salidas conjuntas del Cristo y la Amargura en 1957 y 2006 no prueban una composición conjunta en 2026."]
+    },
+    {
+      "key": "S06", "step_type": "Paso de palio",
+      "description": "Paso de palio de María Santísima de la Amargura, de los Muchachos de Consolación de Utrera. El Consejo describe cartelas marianas en las bambalinas, una pequeña representación de Consolación y un llamador con dos costaleros. El programa de 2026 anuncia una nueva bambalina trasera.",
+      "sources": ["F01", "F05"], "execution_date_text": null,
+      "components": [{"name": "Bambalina trasera", "credit": "Taller de Inmaculada García-Rayo Guerrero", "state": "announced_for_2026", "source": "F01"}],
+      "unknown_fields": ["Autoría integral", "Fecha del conjunto", "Dimensiones"],
+      "notes": "El estreno anunciado no acredita ejecución por sí solo; la miniatura de Consolación no es la imagen canónica del Santuario."
+    },
+    {
+      "key": "S07", "step_type": "Paso de misterio",
+      "description": "Paso neobarroco de la Sagrada Lanzada de los Estudiantes de Utrera. Manuel Durán talló el canasto en cedro; José Antonio Sanmartín Ledesma realizó el dorado y Encarnación Hurtado los evangelistas. El misterio reúne al Cristo del Amor, María Magdalena y Longinos.",
+      "sources": ["F01", "F06"], "materials": "Madera de cedro tallada y dorada", "execution_date_text": null,
+      "credits": [{"name": "Manuel Durán", "role": "Talla", "source": "F06"}, {"name": "José Antonio Sanmartín Ledesma", "role": "Dorado", "source": "F06"}, {"name": "Encarnación Hurtado", "role": "Evangelistas", "source": "F06"}],
+      "unknown_fields": ["Fecha exacta de terminación del soporte", "Dimensiones"],
+      "notes": "1993 es el acuerdo de renovación; 2003/2004 corresponden a incorporación y primera salida del misterio. El Paso prestado de San Juan Bosco en 1963 es otro soporte."
+    },
+    {
+      "key": "S08", "step_type": "Paso de palio",
+      "description": "Paso de palio de Nuestra Señora de las Veredas, de los Estudiantes de Utrera. El conjunto barroco de Orfebrería Santos comenzó a procesionar en 2006 y recibió su peana en 2010. Sustituyó al anterior diseño de José Pérez Conde realizado en Cruz y Frías.",
+      "sources": ["F01", "F06"], "execution_date_text": null,
+      "credits": [{"name": "Orfebrería Santos", "role": "Orfebrería del conjunto vigente descrito por el Consejo", "source": "F06"}],
+      "unknown_fields": ["Ley y composición de los metales", "Dimensiones"],
+      "rejected_inferences": ["No atribuir al conjunto de 2006 el diseño racionalista del soporte de 1975–1977."]
+    },
+    {
+      "key": "S09", "step_type": "Paso de Cristo",
+      "description": "Paso de Jesús Atado a la Columna de los Aceituneros de Utrera. Antonio Ibáñez realizó la talla y los talleres de Sanmartín el dorado. Sus capillas contienen escenas de Sebastián Martínez Zayas inspiradas en el entorno devocional del Señor. El Consejo sitúa el estreno en 2002 y la culminación en 2008.",
+      "sources": ["F01", "F07"], "execution_date_text": "2002–2008",
+      "credits": [{"name": "Antonio Ibáñez", "role": "Talla", "source": "F07"}, {"name": "Talleres de Sanmartín", "role": "Dorado", "source": "F07"}, {"name": "Sebastián Martínez Zayas", "role": "Escenas de las capillas", "source": "F07"}],
+      "unknown_fields": ["Especie de madera", "Dimensiones"],
+      "notes": "No confundir con el Paso de Columna de Vera-Cruz ni con el adquirido a Medinaceli de Cádiz en 1960."
+    },
+    {
+      "key": "S10", "step_type": "Paso de palio",
+      "description": "Paso de palio de María Santísima de la Paz, de los Aceituneros de Utrera. Las caídas estrenadas en 1998 responden al diseño de Jesús Miguélez y al trabajo de Fernández y Enríquez. El techo fue bordado por Manuel Solano para el cincuentenario de 2010.",
+      "sources": ["F01", "F07"], "execution_date_text": null,
+      "components": [{"name": "Caídas del palio", "date_text": "1998", "design_credit": "Jesús Miguélez", "execution_credit": "Fernández y Enríquez", "source": "F07"}, {"name": "Techo del palio", "date_text": "2010", "execution_credit": "Manuel Solano", "source": "F07"}],
+      "unknown_fields": ["Fecha integral del soporte", "Autoría de toda la orfebrería", "Dimensiones"],
+      "notes": "1987 corresponde a la Virgen. No usarlo como fecha del Paso. El llamador del programa de 2026 conserva la condición de anuncio."
+    },
+    {
+      "key": "S11", "step_type": "Paso de Cristo",
+      "description": "Paso neobarroco del Cristo de los Afligidos de la Trinidad de Utrera. El Consejo documenta talla de Antonio Martín y dorado de Luis Sánchez Jiménez dentro de una construcción desarrollada por etapas, con distintas intervenciones en canasto, respiraderos y candelabros.",
+      "sources": ["F01", "F17"], "execution_date_text": null,
+      "credits": [{"name": "Antonio Martín", "role": "Talla del canasto y águilas", "source": "F17"}, {"name": "Luis Sánchez Jiménez", "role": "Dorado", "source": "F17"}],
+      "unknown_fields": ["Fecha única del conjunto", "Dimensiones", "Material exacto"],
+      "notes": "La cronología de la reseña combina proyecto, daños, terminaciones y renovaciones. No convertir 1959 o 1987 en una fecha integral inequívoca."
+    },
+    {
+      "key": "S12", "step_type": "Paso de palio",
+      "description": "Paso de palio de Nuestra Señora de los Desamparados de la Trinidad de Utrera. La reseña institucional destaca el bordado en oro sobre terciopelo azul realizado en el taller de la Hermandad y piezas de orfebrería de Luis Jiménez de 1973.",
+      "sources": ["F01", "F17"], "execution_date_text": null,
+      "components": [{"name": "Bordados", "credit": "Taller de la Hermandad", "source": "F17"}, {"name": "Respiraderos, ánforas y crestería", "credit": "Luis Jiménez", "date_text": "1973", "source": "F17"}],
+      "unknown_fields": ["Fecha integral del soporte", "Dimensiones", "Ley de metales"],
+      "notes": "1959/1960 son hechura y bendición de la Virgen; no fechas del Paso."
+    },
+    {
+      "key": "S13", "step_type": "Paso de Cristo",
+      "description": "Paso de Nuestro Padre Jesús Redentor Cautivo, de la Hermandad Sacramental de Santiago de Utrera. Es el primero de los dos soportes de su estación del Jueves Santo. La crónica y galería de la Hermandad documentan el cortejo de 2026 junto al palio de las Lágrimas.",
+      "sources": ["F01", "F42", "F46"], "execution_date_text": null, "credits": [],
+      "unknown_fields": ["Autoría del soporte actual", "Fecha del soporte actual", "Materiales", "Dimensiones"],
+      "rejected_inferences": ["La compra de un Paso antiguo al Santo Entierro en 1955 no prueba continuidad material hasta 2026.", "José Paz Vélez y 1957 corresponden al Redentor Cautivo, no al soporte."]
+    },
+    {
+      "key": "S14", "step_type": "Paso de palio",
+      "description": "Paso de palio de Nuestra Señora de las Lágrimas, de la Sacramental de Santiago de Utrera. La reseña del Consejo registra desde 2007 un proyecto de orfebrería diseñado por Sebastián Martínez Zayas y ejecutado por Juan Borrero en Orfebrería Triana. La estación de 2026 está documentada por la Hermandad.",
+      "sources": ["F01", "F42", "F46"], "execution_date_text": null,
+      "components": [{"name": "Proyecto de orfebrería", "date_text": "Desde 2007", "design_credit": "Sebastián Martínez Zayas", "execution_credit": "Juan Borrero / Orfebrería Triana", "state": "historical_project_in_progress_in_source", "source": "F42"}],
+      "unknown_fields": ["Fecha de terminación del proyecto", "Alcance ejecutado a septiembre de 2026", "Dimensiones"],
+      "notes": "La reseña histórica no acredita terminación integral ni permite atribuir todos los componentes del palio al mismo taller."
+    },
+    {
+      "key": "S15", "step_type": "Paso de Cristo",
+      "description": "Paso del Cristo de la Buena Muerte de los Gitanos de Utrera, con salida desde Santiago en la Madrugada. El programa de 2026 anuncia cartelas centrales de Encarna Hurtado. La Hermandad tuvo un soporte neogótico en su primera salida de 1957, que pertenece a una etapa histórica distinta.",
+      "sources": ["F01", "F08"], "execution_date_text": null,
+      "components": [{"name": "Cartelas centrales", "credit": "Encarna Hurtado", "state": "announced_for_2026", "source": "F01"}],
+      "unknown_fields": ["Autoría integral del Paso vigente", "Fecha del conjunto", "Materiales", "Dimensiones"],
+      "rejected_inferences": ["El préstamo histórico del soporte neogótico no convierte este Paso en los actuales del Yacente, Perdón o Cautivo."]
+    },
+    {
+      "key": "S16", "step_type": "Paso de palio",
+      "description": "Paso de palio de Nuestra Señora de la Esperanza, de los Gitanos de Utrera. Forma con el Paso de la Buena Muerte el cortejo de la Madrugada desde la parroquia de Santiago. La primera salida mariana de 1958 fue sin palio, una configuración histórica diferente de la recogida en el programa de 2026.",
+      "sources": ["F01", "F08"], "execution_date_text": null, "credits": [],
+      "unknown_fields": ["Autoría del conjunto vigente", "Fecha de ejecución del conjunto", "Materiales", "Dimensiones"],
+      "notes": "Las fechas de la Virgen y su remodelación no se trasladan al Paso."
+    },
+    {
+      "key": "S17", "step_type": "Paso de misterio",
+      "description": "Paso de Jesús Nazareno y Simón de Cirene, de la capilla de San Bartolomé de Utrera. Participa en el cortejo de la mañana del Viernes Santo. El programa de 2026 recoge trabajos de restauración y conservación de José Antonio Sanmartín Ledesma, distintos de la autoría de las imágenes.",
+      "sources": ["F01", "F04"], "execution_date_text": null,
+      "components": [{"name": "Restauración y conservación anunciada para 2026", "credit": "José Antonio Sanmartín Ledesma", "state": "announced_for_2026", "source": "F01"}],
+      "unknown_fields": ["Fecha integral y fases del soporte", "Dimensiones"],
+      "notes": "1597 y 1881 son fechas de esculturas. La crónica F22 acredita la salida, sin resolver por sí sola la cronología del soporte."
+    },
+    {
+      "key": "S19", "step_type": "Paso de misterio",
+      "description": "Paso de Jesús Atado a la Columna de la Vera-Cruz de Utrera, con las figuras del misterio de la flagelación. El Consejo identifica su adquisición a la Esperanza de Triana en 1971. Su historia material se diferencia de la del soporte vendido a la Macarena de Barcelona.",
+      "sources": ["F01", "F09", "F19"], "execution_date_text": null, "credits": [],
+      "unknown_fields": ["Autoría del soporte comprobada por componente", "Fecha de hechura", "Materiales", "Dimensiones"],
+      "notes": "1971 es adquisición. Castillo Lastrucci y 1926 corresponden a figuras, con la excepción advertida en F19, no a todo el soporte."
+    },
+    {
+      "key": "S20", "step_type": "Paso de palio",
+      "description": "Paso de Nuestra Señora de los Dolores de Vera-Cruz de Utrera, utilizado también bajo la advocación de Soledad el Sábado Santo. El palio bordado de las Hermanas Antúnez y la orfebrería de Villarreal forman parte de su patrimonio. La configuración de luto incorpora el palio negro de Esperanza Elena Caro.",
+      "sources": ["F01", "F09", "F13", "F21"], "execution_date_text": null,
+      "components": [{"name": "Palio bordado", "credit": "Hermanas Antúnez", "date_text": "Adquirido en 1922", "source": "F09"}, {"name": "Orfebrería", "credit": "Villarreal", "date_text": "Terminada en 1960 según la reseña del Consejo", "source": "F09"}, {"name": "Palio de luto", "credit": "Esperanza Elena Caro", "date_text": "1968", "source": "F09"}],
+      "unknown_fields": ["Fecha integral del soporte", "Dimensiones", "Estado material de cada pieza en septiembre de 2026"],
+      "notes": "Un soporte, dos configuraciones y dos posiciones. No crear otro Paso ni otra imagen por el cambio de advocación o jornada."
+    },
+    {
+      "key": "S22", "step_type": "Paso de Cristo",
+      "description": "Paso del Cristo Yacente de Vera-Cruz de Utrera. El soporte de caoba fue tallado por Castillo Lastrucci en 1949 y porta la urna histórica de carey con apliques. La escultura del Yacente es de 2002, una fecha distinta de las del soporte y la urna.",
+      "sources": ["F01", "F09"], "materials": "Soporte de caoba; urna de carey con apliques de nácar y plata", "execution_date_text": "1949, soporte",
+      "credits": [{"name": "Castillo Lastrucci", "role": "Talla del soporte", "source": "F09"}],
+      "unknown_fields": ["Dimensiones", "Autoría de la urna"],
+      "notes": "1760 figura como donación de la urna en F09, no necesariamente su hechura. No confundir con el Paso antiguo vendido en 1955."
+    }
+  ],
+  "corporate_profiles": [
+    {"key": "H01", "summary": "La Trinidad es una Hermandad de Penitencia de Utrera con sede en su capilla. Organiza los cortejos de la Entrada en Jerusalén y de los Afligidos y Desamparados.", "history_text": "Su origen corporativo se sitúa en 1714 y sus primeras reglas fueron aprobadas en 1715.", "sources": ["F17"]},
+    {"key": "H02", "summary": "La Hermandad de Jesús Nazareno tiene su sede en la capilla de San Bartolomé de Utrera. Sus cortejos del Huerto y del Viernes Santo pertenecen a una sola corporación.", "history_text": "La historia de sus soportes incluye reutilizaciones entre el Nazareno y el Huerto; estas se documentan sin duplicar la Hermandad ni confundir las esculturas actuales con sus antecesoras.", "sources": ["F04", "F37", "F44"], "preserve_existing_history": true},
+    {"key": "H03", "summary": "La Quinta Angustia es una Hermandad de Penitencia de Santa María de la Mesa, en Utrera, vinculada a Caridad y Piedad y a la Virgen de los Ángeles.", "history_text": "Fue erigida canónicamente el 25 de septiembre de 1971 y realizó su primera estación de penitencia en 1972.", "sources": ["F41"]},
+    {"key": "H04", "summary": "Los Muchachos de Consolación tienen su sede en el Santuario utrerano y dan culto al Cristo del Perdón y a la Virgen de la Amargura. Constituyen una corporación distinta de la Hermandad de la patrona.", "history_text": "Sus reglas fueron aprobadas en 1956. La historia institucional recoge una primera salida conjunta de sus imágenes en 1957.", "sources": ["F05"]},
+    {"key": "H05", "summary": "Los Estudiantes son una Hermandad salesiana de Penitencia de Utrera, vinculada al Cristo del Amor y a la Virgen de las Veredas.", "history_text": "Nació en el entorno de los antiguos alumnos en 1963; sus reglas se aprobaron en 1964. Su identidad corporativa es distinta de ADMA, aunque ambas participan de la familia salesiana.", "sources": ["F06", "F49"]},
+    {"key": "H06", "summary": "Los Aceituneros son una Hermandad de Penitencia de Santa María de la Mesa de Utrera, dedicada a Jesús Atado a la Columna, la Virgen de la Paz y San Pedro.", "history_text": "Surgió entre trabajadores del sector de la aceituna en 1959 y recibió la aprobación de sus reglas en 1960.", "sources": ["F07"]},
+    {"key": "H07", "summary": "La Sacramental de Santiago y del Redentor Cautivo reúne en Utrera culto eucarístico y estación de penitencia. Sus titulares físicos incluyen al Cristo de Santiago, el Cautivo, las Lágrimas y la Inmaculada.", "history_text": "La fusión sacramental y penitencial se acordó en 1974. Sus antecedentes sacramentales y los de la cofradía de penitencia se conservan como etapas distintas.", "sources": ["F42", "F47", "F48"]},
+    {"key": "H08", "summary": "Los Gitanos son una Hermandad de Penitencia de la parroquia de Santiago de Utrera, vinculada al Cristo de la Buena Muerte y a la Virgen de la Esperanza.", "history_text": "Su primera estación de penitencia se celebró en 1957 con el Cristo; la primera salida de la Virgen tuvo lugar al año siguiente.", "sources": ["F08"]},
+    {"key": "H09", "summary": "Vera-Cruz y Santo Entierro forman una sola corporación utrerana con sede en San Francisco. Organiza cortejos distintos el Viernes y el Sábado Santo, conservando la identidad de la Virgen de los Dolores en ambas jornadas.", "history_text": "Su patrimonio incluye soportes, urna y bordados de distintas etapas. La compra de un componente no se usa como fecha de fundación ni de hechura de todo el conjunto.", "sources": ["F09", "F13", "F21"], "preserve_existing_history": true},
+    {"key": "H10", "summary": "Los Milagros son una Hermandad de Penitencia de Santa María de la Mesa de Utrera. Dan culto al Santo Crucifijo de los Milagros y a la Concepción; el Crucifijo preside el Paso de su cortejo del Viernes Santo.", "history_text": "La historia patrimonial de la Hermandad distingue la antigua talla del Crucifijo de la construcción y ornamentación de su soporte procesional.", "sources": ["F20", "F28", "F38"]},
+    {"key": "H11", "summary": "La Sacramental de Santa María de la Mesa es una corporación de culto eucarístico de Utrera. Su procesión del Domingo de Resurrección se distingue de la de Santiago y del Vía Lucis de la asociación del Resucitado.", "history_text": null, "sources": ["F01", "F10"], "unknown_fields": ["Cronología fundacional para el texto público"]}
+  ],
+  "images": [
+    {"key": "I37", "name": "Santísimo Cristo de Santiago", "brotherhood": "H07", "action": "NEW_CANDIDATE", "image_type": "Crucificado", "author_name": null, "execution_date": null, "execution_date_text": null, "description": "Crucificado venerado por la Sacramental de Santiago de Utrera. Fue nombrado patrono de la localidad en 1675 y restaurado por Francisco Berlanga de Ávila en 1990. Conserva una iconografía de Cristo muerto en la cruz.", "sources": ["F47"], "notes": "1675 es patronazgo, no hechura. Sin relación automática con los Pasos S13/S14 ni con la procesión eucarística O14."},
+    {"key": "I38", "name": "Inmaculada Concepción de la Sacramental de Santiago", "brotherhood": "H07", "action": "NEW_CANDIDATE", "image_type": "Inmaculada", "author_name": "José Tiburcio González", "authorship_type": "author", "execution_date": null, "execution_date_text": "Hacia 1798", "description": "Imagen de la Inmaculada realizada hacia 1798 por José Tiburcio González para la sala sacramental de Santiago de Utrera. Francisco Berlanga la restauró tras el incendio de 1988; Encarnación Hurtado volvió a intervenir en 1999.", "sources": ["F48"], "notes": "No confundir con la Concepción de los Milagros I35 ni crear una relación procesional sin evidencia. Fecha aproximada, no día exacto."}
+  ],
+  "temporal_overrides": [
+    {"outings": ["O08"], "event_status": "held", "sources": ["F46"], "evidence_kind": "first_party_event_account_and_gallery", "note": "La página específica de la estación de 2026 describe ambos titulares en las calles y ofrece una galería propia. No convierte horarios previstos en reales."},
+    {"outings": ["O14"], "event_status": "held", "sources": ["F45"], "evidence_kind": "first_party_past_tense_account", "note": "La Hermandad afirma expresamente la celebración tras la misa de Pascua. Se refiere a la procesión eucarística de Santiago, no al Vía Lucis vespertino del Resucitado."}
+  ],
+  "scope_decisions": [
+    {"key": "C01", "subject": "ADMA de Utrera", "decision": "SEPARATE_ASSOCIATION_NO_AUTOMATIC_BROTHERHOOD_INSERT", "municipality_in_scope": true, "sources": ["F49"], "reason": "Salesianos identifica una asociación propia, responsable de cultos y procesión mariana. No fusionar con H05 ni asignar Agrupación Parroquial por ausencia de otro tipo. Falta conciliar su representación con el contrato del directorio antes de certificar cobertura completa."},
+    {"key": "C02", "subject": "Asociación del Resucitado", "decision": "SEPARATE_ASSOCIATION_NO_AUTOMATIC_BROTHERHOOD_INSERT", "municipality_in_scope": true, "sources": ["F39", "F40"], "reason": "El Vía Lucis de 2026 está acreditado, pero F40 mantiene su naturaleza asociativa. No absorberlo en H07 ni en O14/O15. No inventar erección canónica."},
+    {"key": "C03", "subject": "Nuestra Señora de las Marismas · Pinzón", "decision": "IN_SCOPE_CANONICAL_IDENTITY_REVIEW_REQUIRED", "municipality_in_scope": true, "sources": ["F50"], "preserve_outing_id": "9210cbbb-e66e-415e-9f50-ca18ccb97d93", "reason": "El plan municipal 2024–2026 identifica a la Hermandad de las Marismas como destinataria de la romería de Pinzón. Producción ya contiene una salida de septiembre con municipio Utrera y sin Hermandad enlazada. No excluir la pedanía ni recrear su salida; falta conciliar la identidad canónica antes de crear una corporación."},
+    {"key": "C04", "subject": "Trajano", "decision": "IN_SCOPE_ASSOCIATION_NOT_AUTOMATIC_BROTHERHOOD", "municipality_in_scope": true, "sources": ["F50"], "reason": "El acuerdo municipal consultado identifica Asociación Romeros de Trajano. No equiparar sin prueba esa denominación con Santa María la Blanca ni elevar una asociación a Hermandad."},
+    {"key": "C05", "subject": "Guadalema de los Quintero", "decision": "IN_SCOPE_PARISH_EVENT_NOT_AUTOMATIC_BROTHERHOOD", "municipality_in_scope": true, "sources": ["F50"], "reason": "La destinataria que consta en el acuerdo es la Parroquia Nuestra Señora de las Veredas para la romería de Guadalema. No crear por inferencia una Hermandad de San Isidro ni confundirla con H05."},
+    {"key": "C06", "subject": "El Palmar de Troya", "decision": "OUTSIDE_UTRERA_MUNICIPAL_SCOPE", "municipality_in_scope": false, "sources": ["F51"], "reason": "Municipio independiente por segregación aprobada en 2018. La ausencia de una fila propia en el catálogo de municipios no autoriza adjudicar sus entidades a Utrera."},
+    {"key": "C07", "subject": "El Torbiscal", "decision": "CENSUS_UNRESOLVED_NO_NEGATIVE_ASSERTION", "municipality_in_scope": null, "sources": [], "reason": "La revisión realizada no acredita un censo religioso propio ni su inexistencia. No usar la falta de resultados como certificación de ausencia."}
+  ],
+  "sources": [
+    {"key": "F41", "title": "Quinta Angustia: historia corporativa", "publisher": "Consejo de Hermandades de Utrera", "url": "https://www.consejodehermandadesdeutrera.com/Hermandades/Quinta-Angustia.php", "published_date": null},
+    {"key": "F42", "title": "Sacramental de Santiago y Redentor Cautivo: historia y patrimonio", "publisher": "Consejo de Hermandades de Utrera", "url": "https://www.consejodehermandadesdeutrera.com/Hermandades/Cautivo1.php", "published_date": null},
+    {"key": "F43", "title": "Quinta Angustia: previa de Domingo de Ramos 2026", "publisher": "UtreraWeb", "url": "https://www.utreraweb.com/noticias-de-utrera/hermandades/2026/20760/La-Quinta-Angustia-pondra-el-epilogo-al-Domingo-de-Ramos-2026-de-Utrera-con-videos/", "published_date": "2026-03-29", "caution": "Usa palio de manera ambigua al describir una sustitución de la Virgen; no usar esa frase como autoría del soporte."},
+    {"key": "F44", "title": "Oración en el Huerto: previa de Domingo de Ramos 2026", "publisher": "UtreraWeb", "url": "https://www.utreraweb.com/noticias-de-utrera/hermandades/2026/20759/La-Oracion-en-el-Huerto-preparada-para-procesionar-por-las-calles-de-Utrera-este-Domingo-de-Ramos-2026-con-videos/", "published_date": "2026-03-29"},
+    {"key": "F45", "title": "Domingo de Resurrección 2026", "publisher": "Hermandad Sacramental y del Redentor Cautivo", "url": "https://redentorcautivo.org/domingo-de-resurreccion-2026/", "published_date": "2026-04-05"},
+    {"key": "F46", "title": "Estación de Penitencia: Jueves Santo 2026", "publisher": "Hermandad Sacramental y del Redentor Cautivo", "url": "https://redentorcautivo.org/estacion-de-penitencia-jueves-santo-2026/", "published_date": "2026-04-02"},
+    {"key": "F47", "title": "Santísimo Cristo de Santiago", "publisher": "Hermandad Sacramental y del Redentor Cautivo", "url": "https://redentorcautivo.org/stmo-cristo-de-santiago/", "published_date": null},
+    {"key": "F48", "title": "Inmaculada Concepción", "publisher": "Hermandad Sacramental y del Redentor Cautivo", "url": "https://redentorcautivo.org/inmaculada-concepcion/", "published_date": null},
+    {"key": "F49", "title": "Archicofradía María Auxiliadora: asociación local", "publisher": "Salesianos Utrera", "url": "https://utrera.salesianos.edu/familiasalesiana/archicofradia-ma-auxiliadora/", "published_date": null},
+    {"key": "F50", "title": "Acuerdo de 24 de abril de 2025: Plan Estratégico de Subvenciones 2024–2026", "publisher": "Ayuntamiento de Utrera", "url": "https://transparencia.utrera.org/wp-content/uploads/2025/04/ACUERDO-PLENO-24-ABRIL-2025-1.pdf", "published_date": "2025-04-24", "pages": [9, 10, 20, 21], "caution": "Identifica destinatarios municipales; no sustituye un decreto de erección canónica."},
+    {"key": "F51", "title": "Decreto 183/2018: creación del municipio de El Palmar de Troya", "publisher": "Junta de Andalucía · BOJA", "url": "https://www.juntadeandalucia.es/boja/2018/196/6", "published_date": "2018-10-09"}
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "observed_at": "2026-09-27 05:49:00.816076+00",
+  "main": "2c751d493189fd9640f4f7dc29935efeaf5892a4",
+  "pr": 1009,
+  "production": {
+    "deployment": "dpl_5zqJGYYHEpZENYkcMNncTuh5N4PV",
+    "state": "READY",
+    "team_id": "team_9AfR8H7h4v9O20HmVWf0iGh0",
+    "runtime": {
+      "content": [
+        {
+          "type": "text",
+          "text": "## Runtime Log Counts\n\n**Project:** prj_hx17EShZxuDpZQBwnoAqdzsenm9b\n**Grouped by:** level\n\n| level | count |\n|---|---|"
+        }
+      ],
+      "isError": false
+    },
+    "supabase": "ACTIVE_HEALTHY",
+    "migrations": 17
+  },
+  "classification_examples": [
+    {
+      "id": "165641a5-8f78-478f-9cf7-24cddc3ee257",
+      "name": "Archicofradía de María Auxiliadora Coronada",
+      "slug": "archicofradia-maria-auxiliadora-coronada-sevilla",
+      "profile": {
+        "notes": "Ficha separada de la Hermandad de la Trinidad aunque ambas comparten entorno salesiano y sede en María Auxiliadora.",
+        "entity_id": "165641a5-8f78-478f-9cf7-24cddc3ee257",
+        "crest_path": "https://kcevwkucqzcyrqaimyhl.supabase.co/storage/v1/object/public/hilo-media/hermandades/165641a5-8f78-478f-9cf7-24cddc3ee257/escudo/b8271318-272a-477a-84d2-616ec6e3e956.png",
+        "website_url": "https://auxiliadoracoronada.es/",
+        "history_text": "La asociación de devotos de María Auxiliadora de la Casa Salesiana de la Santísima Trinidad fue aprobada y agregada a la Primaria de Turín el 24 de mayo de 1896, un año después de la llegada de la imagen mariana a Sevilla.",
+        "neighborhood": "La Trinidad",
+        "popular_name": "María Auxiliadora de la Trinidad",
+        "instagram_url": "https://www.instagram.com/mauxiliadorac/",
+        "official_name": "Archicofradía de María Auxiliadora Coronada",
+        "foundation_text": "24 de mayo de 1896",
+        "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4",
+        "brotherhood_types": [
+          "Gloria"
+        ],
+        "canonical_see_place_id": "fa7d8ef4-2b1b-435f-867a-60bcbbcbf891",
+        "current_procession_day": "Finales de mayo"
+      }
+    },
+    {
+      "id": "c0160036-0315-4000-8000-000000000015",
+      "name": "Hermandad del Resucitado de Écija",
+      "slug": "hermandad-resucitado-ecija",
+      "profile": {
+        "notes": "Primera edición HC-016 Écija.",
+        "entity_id": "c0160036-0315-4000-8000-000000000015",
+        "crest_path": null,
+        "website_url": null,
+        "history_text": null,
+        "neighborhood": null,
+        "popular_name": "El Resucitado",
+        "instagram_url": null,
+        "official_name": "Hermandad del Santísimo Sacramento, Gloriosa Resurrección de Nuestro Señor Jesucristo, María Santísima de la Alegría y Santa María Magdalena",
+        "foundation_text": null,
+        "municipality_id": "f3fba0c4-fffa-4e8c-8495-3dc1c3bc94bf",
+        "brotherhood_types": [
+          "Penitencia"
+        ],
+        "canonical_see_place_id": "ba238706-78ac-4550-91d4-b826508fcb03",
+        "current_procession_day": "Domingo de Resurrección"
+      }
+    }
+  ],
+  "read_queries": [
+    "select now() observed_at,(select count(*) from supabase_migrations.schema_migrations) migrations,\n(select jsonb_agg(jsonb_build_object('id',e.id,'name',e.name,'slug',e.slug,'status',e.status,'profile',to_jsonb(b)) order by e.id) from public.entities e join public.brotherhoods b on b.entity_id=e.id where b.municipality_id='e4319248-831a-4f4c-adb8-19c496f95dd6') utrera,\n(select jsonb_agg(jsonb_build_object('id',e.id,'name',e.name,'slug',e.slug,'profile',to_jsonb(b))) from public.entities e join public.brotherhoods b on b.entity_id=e.id where e.name ilike '%auxiliadora%' or e.name ilike '%marisma%' or e.name ilike '%resucitado%') classification_examples,\n(select jsonb_agg(jsonb_build_object('table',table_name,'column',column_name,'data_type',data_type,'udt',udt_name,'nullable',is_nullable,'default',column_default) order by table_name,ordinal_position) from information_schema.columns where table_schema='public' and table_name in ('entities','brotherhoods','images','steps','outings','agents','places','sources','source_links','entity_locations','brotherhood_images','brotherhood_steps','step_images','heritage_assets','heritage_asset_agents','entity_agents','bands','music_accompaniment_periods','outing_steps','outing_music_accompaniments','outing_images')) schema;",
+    "select jsonb_build_object(\n'observed_at',now(),\n'tables',(select jsonb_agg(jsonb_build_object('table',table_name,'column',column_name,'type',data_type,'udt',udt_name,'nullable',is_nullable,'default',column_default) order by table_name,ordinal_position) from information_schema.columns where table_schema='public' and table_name in ('places','bands','agents','image_authorships','image_steps','outing_music_positions','outing_music_assignments','brotherhood_images','brotherhood_steps','entity_locations','heritage_assets','sources','source_links','outings','image_interventions','step_interventions')),\n'checks',(select jsonb_agg(jsonb_build_object('table',conrelid::regclass::text,'name',conname,'definition',pg_get_constraintdef(oid))) from pg_constraint where connamespace='public'::regnamespace and contype in ('c','u','f') and conrelid in (select c.oid from pg_class c where c.relnamespace='public'::regnamespace and c.relname in ('places','bands','agents','image_authorships','image_steps','outing_music_positions','outing_music_assignments','brotherhood_images','brotherhood_steps','entity_locations','heritage_assets','sources','source_links','outings'))),\n'namespace_collisions',(select count(*) from public.entities where id::text >= 'c0160038-' and id::text < 'c0160039-')\n) as data;",
+    "select jsonb_build_object('observed_at',now(),\n'entities',(select jsonb_agg(to_jsonb(e) order by id) from public.entities e),\n'places',(select jsonb_agg(to_jsonb(p) order by id) from public.places p),\n'municipalities',(select jsonb_agg(jsonb_build_object('id',id,'name',name,'slug',slug) order by id) from public.municipalities),\n'brotherhoods',(select jsonb_agg(to_jsonb(b) order by entity_id) from public.brotherhoods b),\n'bands',(select jsonb_agg(to_jsonb(b) order by entity_id) from public.bands b),\n'agents',(select jsonb_agg(jsonb_build_object('entity_id',entity_id,'agent_kind',agent_kind,'description',description) order by entity_id) from public.agents),\n'sources',(select jsonb_agg(to_jsonb(s) order by id) from public.sources s)\n) as data"
+  ],
+  "production_writes": 0,
+  "future_import_collisions": 0,
+  "aliases_reviewed": {
+    "bands": 84,
+    "agents": 165
+  },
+  "final_main_read": "2c751d493189fd9640f4f7dc29935efeaf5892a4",
+  "tests": {
+    "command": "node --test",
+    "passed": 1323,
+    "failed": 0
+  },
+  "manifest_sha256": "8cc03cf969e44c487d0529fd33f18f193f780720688ebb0b10924fc9d5ff5b96",
+  "prepared_dry_run_sha256": "b4ed6ba7793390b19c22f05bc499768fa31ee546410a8b679a4300ecb0e9f2fe",
+  "note": "Preparación offline. No se han ejecutado ni el dry-run ni el Apply; residuos tras rollback no medidos.",
+  "apply_gate": "NO_GO_PUBLIC_CONTRACT",
+  "public_contract_blockers": [
+    "I44",
+    "I45",
+    "S25",
+    "H17"
+  ]
+}

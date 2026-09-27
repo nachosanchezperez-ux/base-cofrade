@@ -1,0 +1,18 @@
+{
+  "main": "e86ba888c34ad7121be181708a2194815ea78ef2",
+  "production": "dpl_9QaCTZcRowb33vq3rgXyeyWu3gKa",
+  "supabase": "ACTIVE_HEALTHY",
+  "migrations": 17,
+  "public_contract": "PASS",
+  "live_reconciliation": "PASS_AFTER_UNRELATED_DRIFT_RECONCILIATION",
+  "dry_run": "PASS",
+  "rollback": "PASS",
+  "residues": 0,
+  "idempotence": "PASS",
+  "staging_created": false,
+  "apply_executed": false,
+  "certificate": "execution-certificate.json",
+  "gate": "GO_FOR_STAGING_ONLY",
+  "sql_preparation_main": "2d088746bd8c857e3daa27d0c0a12063edb8a2ab",
+  "later_main_reconciled": true
+}

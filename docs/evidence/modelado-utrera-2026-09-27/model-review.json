@@ -1,0 +1,2002 @@
+{
+  "corporations": [
+    {
+      "key": "H01",
+      "name": "Trinidad",
+      "id": null,
+      "brotherhood_types": [
+        "Penitencia"
+      ],
+      "place": "L01",
+      "action": "NEW",
+      "note": "Penitencia acreditada por F17. No añadir Gloria por el origen rosariano; la ausencia de clasificación adicional no bloquea el tipo probado."
+    },
+    {
+      "key": "H02",
+      "name": "Jesús Nazareno",
+      "id": "4e462b02-979d-4b88-ab98-0c97f2dbf0a0",
+      "brotherhood_types": [
+        "Penitencia"
+      ],
+      "place": "L02",
+      "action": "REUSE",
+      "note": "Oración en el Huerto y Viernes Santo son dos salidas de la misma corporación."
+    },
+    {
+      "key": "H03",
+      "name": "Quinta Angustia",
+      "id": null,
+      "brotherhood_types": [
+        "Penitencia"
+      ],
+      "place": "L03",
+      "action": "NEW",
+      "note": "No reutilizar homónimos de Sevilla, Carmona u Osuna."
+    },
+    {
+      "key": "H04",
+      "name": "Muchachos de Consolación",
+      "id": null,
+      "brotherhood_types": [
+        "Penitencia"
+      ],
+      "place": "L04",
+      "action": "NEW",
+      "note": "Distinta de Consolación Coronada."
+    },
+    {
+      "key": "H05",
+      "name": "Estudiantes",
+      "id": null,
+      "brotherhood_types": [
+        "Penitencia"
+      ],
+      "place": "L05",
+      "action": "NEW",
+      "note": "Titulares corporativos María Auxiliadora y San Juan Bosco no generan pasos penitenciales."
+    },
+    {
+      "key": "H06",
+      "name": "Aceituneros",
+      "id": null,
+      "brotherhood_types": [
+        "Penitencia"
+      ],
+      "place": "L03",
+      "action": "NEW",
+      "note": "Atado a la Columna distinto al de Vera-Cruz."
+    },
+    {
+      "key": "H07",
+      "name": "Redentor Cautivo / Sacramental de Santiago",
+      "id": null,
+      "brotherhood_types": [
+        "Penitencia",
+        "Sacramental"
+      ],
+      "place": "L06",
+      "action": "NEW",
+      "note": "Única corporación para Jueves Santo y Resurrección."
+    },
+    {
+      "key": "H08",
+      "name": "Gitanos",
+      "id": null,
+      "brotherhood_types": [
+        "Penitencia"
+      ],
+      "place": "L06",
+      "action": "NEW",
+      "note": "No reutilizar homónimo de Sevilla."
+    },
+    {
+      "key": "H09",
+      "name": "Vera-Cruz / Santo Entierro",
+      "id": "7bab2fe6-c69e-48e5-9446-a247b4169910",
+      "brotherhood_types": [
+        "Penitencia"
+      ],
+      "place": "L07",
+      "action": "REUSE",
+      "note": "Dolores y Dolores en Soledad: conservar el ID de la imagen existente."
+    },
+    {
+      "key": "H10",
+      "name": "Milagros",
+      "id": null,
+      "brotherhood_types": [
+        "Penitencia"
+      ],
+      "place": "L03",
+      "action": "NEW",
+      "note": "No confundir con Milagrosa de Sevilla."
+    },
+    {
+      "key": "H11",
+      "name": "Sacramental de Santa María",
+      "id": null,
+      "brotherhood_types": [
+        "Sacramental"
+      ],
+      "place": "L03",
+      "action": "NEW",
+      "note": "No asignar Penitencia por figurar en el programa de Semana Santa."
+    }
+  ],
+  "bands": [
+    {
+      "key": "B01",
+      "name": "AM Virgen de la Esperanza · Alcalá la Real",
+      "id": null,
+      "action": "NEW_CANDIDATE"
+    },
+    {
+      "key": "B02",
+      "name": "CCyTT Nazareno · Utrera",
+      "id": null,
+      "action": "NEW_CANDIDATE"
+    },
+    {
+      "key": "B03",
+      "name": "BM El Saucejo",
+      "id": "c0160037-0406-4000-8000-000000000006",
+      "action": "REUSE"
+    },
+    {
+      "key": "B04",
+      "name": "AM Muchachos de Consolación · Utrera",
+      "id": null,
+      "action": "NEW_CANDIDATE"
+    },
+    {
+      "key": "B05",
+      "name": "BM Municipal Coria del Río",
+      "id": "63f719d8-61ab-4357-a43f-cc7977bdda43",
+      "action": "REUSE"
+    },
+    {
+      "key": "B06",
+      "name": "CCyTT Expiración · Quesada",
+      "id": null,
+      "action": "NEW_CANDIDATE"
+    },
+    {
+      "key": "B07",
+      "name": "BM Municipal Arahal",
+      "id": "95e4daf1-9db6-4bdb-805a-9f68833c8da1",
+      "action": "REUSE"
+    },
+    {
+      "key": "B08",
+      "name": "CCyTT Cristo de los Remedios · Castilleja de la Cuesta",
+      "id": null,
+      "action": "NEW_CANDIDATE"
+    },
+    {
+      "key": "B09",
+      "name": "Asociación Musical Nuestra Señora del Águila · Alcalá de Guadaíra",
+      "id": null,
+      "action": "NEW_CANDIDATE"
+    },
+    {
+      "key": "B10",
+      "name": "CCyTT Nuestra Señora de los Llanos · Albacete",
+      "id": null,
+      "action": "NEW_CANDIDATE"
+    },
+    {
+      "key": "B11",
+      "name": "BM Municipal Paterna del Campo",
+      "id": null,
+      "action": "NEW_CANDIDATE"
+    },
+    {
+      "key": "B12",
+      "name": "CCyTT Vera-Cruz · Utrera",
+      "id": "c0160032-0406-4000-8000-000000000006",
+      "action": "REUSE"
+    },
+    {
+      "key": "B13",
+      "name": "BM Maestro Leyva · Churriana de la Vega",
+      "id": null,
+      "action": "NEW_CANDIDATE"
+    },
+    {
+      "key": "B14",
+      "name": "BM Virgen de las Angustias · Sanlúcar la Mayor",
+      "id": "8c35dfd4-342a-47ab-8d06-8c320255a29a",
+      "action": "REUSE"
+    },
+    {
+      "key": "B15",
+      "name": "Asociación Musical de La Algaba",
+      "id": "aa0f526c-2b63-41f0-aa74-ecaa14365375",
+      "action": "REUSE"
+    },
+    {
+      "key": "B16",
+      "name": "Coro De Profundis",
+      "id": "e4884d0e-204e-408c-955e-b4c639de92c9",
+      "action": "REUSE",
+      "identity_sources": [
+        "F14",
+        "F15",
+        "F16"
+      ],
+      "identity_basis": "Conciliación por director Sergio Asián, repertorio Responsoria Tenebrarum y relación con Los Negritos; no solo nombre.",
+      "performance_2026": "Voces y acompañamiento instrumental de viento; no crear otra banda genérica para el trío sin identidad propia.",
+      "performance_sources": [
+        "F14",
+        "F22"
+      ]
+    }
+  ],
+  "outings": [
+    {
+      "key": "O01",
+      "brotherhood": "H01",
+      "name": "Borriquita",
+      "date": "2026-03-29",
+      "departure_time": "11:00",
+      "return_date": "2026-03-29",
+      "return_time": "14:15",
+      "source": "F01",
+      "pdf_page": 4,
+      "temporal_status": "historical_2026",
+      "times_status": "official_programmed_not_actual_measured",
+      "positions": [
+        {
+          "key": "O01-P1",
+          "order": 1,
+          "step": "Entrada en Jerusalén",
+          "music": "B01",
+          "step_id": null,
+          "step_key": "S01"
+        }
+      ],
+      "note": ""
+    },
+    {
+      "key": "O02",
+      "brotherhood": "H03",
+      "name": "Quinta Angustia",
+      "date": "2026-03-29",
+      "departure_time": "17:30",
+      "return_date": "2026-03-29",
+      "return_time": "23:30",
+      "source": "F01",
+      "pdf_page": 6,
+      "temporal_status": "historical_2026",
+      "times_status": "official_programmed_not_actual_measured",
+      "positions": [
+        {
+          "key": "O02-P1",
+          "order": 1,
+          "step": "Caridad y Piedad",
+          "music": "B02",
+          "step_id": null,
+          "step_key": "S02"
+        },
+        {
+          "key": "O02-P2",
+          "order": 2,
+          "step": "Ángeles",
+          "music": "B03",
+          "step_id": null,
+          "step_key": "S03"
+        }
+      ],
+      "note": ""
+    },
+    {
+      "key": "O03",
+      "brotherhood": "H02",
+      "name": "Oración en el Huerto",
+      "date": "2026-03-29",
+      "departure_time": "17:30",
+      "return_date": "2026-03-29",
+      "return_time": "22:00",
+      "source": "F01",
+      "pdf_page": 8,
+      "temporal_status": "historical_2026",
+      "times_status": "official_programmed_not_actual_measured",
+      "positions": [
+        {
+          "key": "O03-P1",
+          "order": 1,
+          "step": "Oración en el Huerto",
+          "music": "B04",
+          "step_id": null,
+          "step_key": "S04"
+        }
+      ],
+      "note": ""
+    },
+    {
+      "key": "O04",
+      "brotherhood": "H04",
+      "name": "Muchachos de Consolación",
+      "date": "2026-03-30",
+      "departure_time": "18:00",
+      "return_date": "2026-03-31",
+      "return_time": "00:45",
+      "source": "F01",
+      "pdf_page": 10,
+      "temporal_status": "historical_2026",
+      "times_status": "official_programmed_not_actual_measured",
+      "positions": [
+        {
+          "key": "O04-P1",
+          "order": 1,
+          "step": "Perdón",
+          "music": "B04",
+          "step_id": null,
+          "step_key": "S05"
+        },
+        {
+          "key": "O04-P2",
+          "order": 2,
+          "step": "Amargura",
+          "music": "B05",
+          "step_id": null,
+          "step_key": "S06"
+        }
+      ],
+      "note": ""
+    },
+    {
+      "key": "O05",
+      "brotherhood": "H05",
+      "name": "Estudiantes",
+      "date": "2026-03-31",
+      "departure_time": "19:00",
+      "return_date": "2026-04-01",
+      "return_time": "00:00",
+      "source": "F01",
+      "pdf_page": 12,
+      "temporal_status": "historical_2026",
+      "times_status": "official_programmed_not_actual_measured",
+      "positions": [
+        {
+          "key": "O05-P1",
+          "order": 1,
+          "step": "Amor / Lanzada",
+          "music": "B06",
+          "step_id": null,
+          "step_key": "S07"
+        },
+        {
+          "key": "O05-P2",
+          "order": 2,
+          "step": "Veredas",
+          "music": "B07",
+          "step_id": null,
+          "step_key": "S08"
+        }
+      ],
+      "note": ""
+    },
+    {
+      "key": "O06",
+      "brotherhood": "H06",
+      "name": "Aceituneros",
+      "date": "2026-04-01",
+      "departure_time": "19:00",
+      "return_date": "2026-04-02",
+      "return_time": "00:00",
+      "source": "F01",
+      "pdf_page": 14,
+      "temporal_status": "historical_2026",
+      "times_status": "official_programmed_not_actual_measured",
+      "positions": [
+        {
+          "key": "O06-P1",
+          "order": 1,
+          "step": "Columna de Aceituneros",
+          "music": "B08",
+          "step_id": null,
+          "step_key": "S09"
+        },
+        {
+          "key": "O06-P2",
+          "order": 2,
+          "step": "Paz",
+          "music": "B09",
+          "step_id": null,
+          "step_key": "S10"
+        }
+      ],
+      "note": ""
+    },
+    {
+      "key": "O07",
+      "brotherhood": "H01",
+      "name": "Trinidad",
+      "date": "2026-04-02",
+      "departure_time": "19:00",
+      "return_date": "2026-04-03",
+      "return_time": "00:15",
+      "source": "F01",
+      "pdf_page": 18,
+      "temporal_status": "historical_2026",
+      "times_status": "official_programmed_not_actual_measured",
+      "positions": [
+        {
+          "key": "O07-P1",
+          "order": 1,
+          "step": "Afligidos",
+          "music": "B10",
+          "step_id": null,
+          "step_key": "S11"
+        },
+        {
+          "key": "O07-P2",
+          "order": 2,
+          "step": "Desamparados",
+          "music": "B11",
+          "step_id": null,
+          "step_key": "S12"
+        }
+      ],
+      "note": ""
+    },
+    {
+      "key": "O08",
+      "brotherhood": "H07",
+      "name": "Redentor Cautivo",
+      "date": "2026-04-02",
+      "departure_time": "22:00",
+      "return_date": "2026-04-03",
+      "return_time": "01:45",
+      "source": "F01",
+      "pdf_page": 20,
+      "temporal_status": "historical_2026",
+      "times_status": "official_programmed_not_actual_measured",
+      "positions": [
+        {
+          "key": "O08-P1",
+          "order": 1,
+          "step": "Cautivo",
+          "music": "SILENCE",
+          "step_id": null,
+          "step_key": "S13"
+        },
+        {
+          "key": "O08-P2",
+          "order": 2,
+          "step": "Lágrimas",
+          "music": "SILENCE",
+          "step_id": null,
+          "step_key": "S14"
+        }
+      ],
+      "note": ""
+    },
+    {
+      "key": "O09",
+      "brotherhood": "H08",
+      "name": "Gitanos",
+      "date": "2026-04-03",
+      "departure_time": "00:30",
+      "return_date": "2026-04-03",
+      "return_time": "05:30",
+      "source": "F01",
+      "pdf_page": 22,
+      "temporal_status": "historical_2026",
+      "times_status": "official_programmed_not_actual_measured",
+      "positions": [
+        {
+          "key": "O09-P1",
+          "order": 1,
+          "step": "Buena Muerte",
+          "music": "B12",
+          "step_id": null,
+          "step_key": "S15"
+        },
+        {
+          "key": "O09-P2",
+          "order": 2,
+          "step": "Esperanza",
+          "music": "B13",
+          "step_id": null,
+          "step_key": "S16"
+        }
+      ],
+      "note": ""
+    },
+    {
+      "key": "O10",
+      "brotherhood": "H02",
+      "name": "Jesús Nazareno",
+      "date": "2026-04-03",
+      "departure_time": "06:30",
+      "return_date": "2026-04-03",
+      "return_time": "12:45",
+      "source": "F01",
+      "pdf_page": 26,
+      "temporal_status": "historical_2026",
+      "times_status": "official_programmed_not_actual_measured",
+      "positions": [
+        {
+          "key": "O10-P1",
+          "order": 1,
+          "step": "Nazareno",
+          "music": "B04",
+          "step_id": null,
+          "step_key": "S17"
+        },
+        {
+          "key": "O10-P2",
+          "order": 2,
+          "step": "Angustias",
+          "music": "B14",
+          "step_id": "b51dd99d-97fe-4636-b35e-59ac8fa92dc5",
+          "step_key": "S18"
+        }
+      ],
+      "note": ""
+    },
+    {
+      "key": "O11",
+      "brotherhood": "H09",
+      "name": "Vera-Cruz",
+      "date": "2026-04-03",
+      "departure_time": "19:30",
+      "return_date": "2026-04-04",
+      "return_time": "00:20",
+      "source": "F01",
+      "pdf_page": 28,
+      "temporal_status": "historical_2026",
+      "times_status": "official_programmed_not_actual_measured",
+      "positions": [
+        {
+          "key": "O11-P1",
+          "order": 1,
+          "step": "Columna de Vera-Cruz",
+          "music": "B12",
+          "step_id": null,
+          "step_key": "S19"
+        },
+        {
+          "key": "O11-P2",
+          "order": 2,
+          "step": "Dolores",
+          "music": "B15",
+          "step_id": null,
+          "step_key": "S20"
+        }
+      ],
+      "note": ""
+    },
+    {
+      "key": "O12",
+      "brotherhood": "H10",
+      "name": "Milagros",
+      "date": "2026-04-03",
+      "departure_time": "22:30",
+      "return_date": "2026-04-04",
+      "return_time": "01:30",
+      "source": "F01",
+      "pdf_page": 30,
+      "temporal_status": "historical_2026",
+      "times_status": "official_programmed_not_actual_measured",
+      "positions": [
+        {
+          "key": "O12-P1",
+          "order": 1,
+          "step": "Milagros",
+          "music": "B16",
+          "step_id": null,
+          "step_key": "S21"
+        }
+      ],
+      "note": ""
+    },
+    {
+      "key": "O13",
+      "brotherhood": "H09",
+      "name": "Santo Entierro",
+      "date": "2026-04-04",
+      "departure_time": "19:15",
+      "return_date": "2026-04-04",
+      "return_time": "22:45",
+      "source": "F01",
+      "pdf_page": 32,
+      "temporal_status": "historical_2026",
+      "times_status": "official_programmed_not_actual_measured",
+      "positions": [
+        {
+          "key": "O13-P1",
+          "order": 1,
+          "step": "Yacente",
+          "music": "SILENCE",
+          "step_id": null,
+          "music_source": "F12",
+          "evidence_level": "secondary_explicit",
+          "step_key": "S22"
+        },
+        {
+          "key": "O13-P2",
+          "order": 2,
+          "step": "Dolores en Soledad",
+          "music": "B15",
+          "step_id": null,
+          "step_key": "S20"
+        }
+      ],
+      "note": ""
+    },
+    {
+      "key": "O14",
+      "brotherhood": "H07",
+      "name": "Resurrección · Santiago",
+      "date": "2026-04-05",
+      "departure_time": "11:45",
+      "return_date": null,
+      "return_time": null,
+      "source": "F01",
+      "pdf_page": 34,
+      "temporal_status": "historical_2026",
+      "times_status": "official_programmed_not_actual_measured",
+      "positions": [],
+      "note": "Santísimo bajo palio de mano; no crear Imagen ni Paso de palio de costaleros."
+    },
+    {
+      "key": "O15",
+      "brotherhood": "H11",
+      "name": "Resurrección · Santa María",
+      "date": "2026-04-05",
+      "departure_time": "13:00",
+      "return_date": "2026-04-05",
+      "return_time": "13:30",
+      "source": "F01",
+      "pdf_page": 36,
+      "temporal_status": "historical_2026",
+      "times_status": "official_programmed_not_actual_measured",
+      "positions": [],
+      "note": "Santísimo bajo palio de mano; no crear Imagen ni Paso de palio de costaleros."
+    }
+  ],
+  "places": [
+    {
+      "key": "L01",
+      "name": "Capilla de la Trinidad",
+      "id": null,
+      "action": "NEW_CANDIDATE"
+    },
+    {
+      "key": "L02",
+      "name": "Capilla de San Bartolomé",
+      "id": "9b425ed3-943b-4b77-b351-93d87467b1cc",
+      "action": "REUSE"
+    },
+    {
+      "key": "L03",
+      "name": "Parroquia de Santa María de la Mesa",
+      "id": null,
+      "action": "NEW_CANDIDATE"
+    },
+    {
+      "key": "L04",
+      "name": "Santuario de Consolación",
+      "id": "09fb4082-dd92-4fc4-bb25-41fff021d284",
+      "action": "REUSE"
+    },
+    {
+      "key": "L05",
+      "name": "Basílica de María Auxiliadora",
+      "id": null,
+      "action": "NEW_CANDIDATE"
+    },
+    {
+      "key": "L06",
+      "name": "Parroquia de Santiago el Mayor",
+      "id": null,
+      "action": "NEW_CANDIDATE"
+    },
+    {
+      "key": "L07",
+      "name": "Iglesia de San Francisco",
+      "id": "f9dc025c-094b-468f-ad7c-4ee55c7167e8",
+      "action": "REUSE"
+    }
+  ],
+  "images": [
+    {
+      "key": "I01",
+      "brotherhood": "H01",
+      "name": "Jesús en su Entrada Triunfal",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 4,
+      "action": "NEW_CANDIDATE",
+      "author_name": "Salvador Madroñal",
+      "authorship_type": "author",
+      "execution_date_text": "1996",
+      "attribute_sources": [
+        "F01",
+        "F17"
+      ],
+      "execution_date": null,
+      "attribute_note": "F01 fecha 1996; F17 menciona incorporación en 1997. No fundir hechura y sustitución en una fecha exacta sin contrastar."
+    },
+    {
+      "key": "I02",
+      "brotherhood": "H01",
+      "name": "Santiago",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 4,
+      "action": "NEW_CANDIDATE",
+      "author_name": "Salvador Madroñal",
+      "authorship_type": "author",
+      "execution_date_text": null,
+      "attribute_sources": [
+        "F01"
+      ],
+      "execution_date": null
+    },
+    {
+      "key": "I03",
+      "brotherhood": "H01",
+      "name": "San Pedro",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 4,
+      "action": "NEW_CANDIDATE",
+      "author_name": "Salvador Madroñal",
+      "authorship_type": "author",
+      "execution_date_text": null,
+      "attribute_sources": [
+        "F01"
+      ],
+      "execution_date": null
+    },
+    {
+      "key": "I04",
+      "brotherhood": "H01",
+      "name": "San Juan",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 4,
+      "action": "NEW_CANDIDATE",
+      "author_name": "Salvador Madroñal",
+      "authorship_type": "author",
+      "execution_date_text": null,
+      "attribute_sources": [
+        "F01"
+      ],
+      "execution_date": null
+    },
+    {
+      "key": "I05",
+      "brotherhood": "H01",
+      "name": "Cristo de los Afligidos",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 18,
+      "action": "NEW_CANDIDATE",
+      "author_name": "José Montes de Oca",
+      "authorship_type": "attributed_to",
+      "execution_date_text": "Siglo XVIII",
+      "attribute_sources": [
+        "F01"
+      ],
+      "execution_date": null
+    },
+    {
+      "key": "I06",
+      "brotherhood": "H01",
+      "name": "Virgen de los Desamparados",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 18,
+      "action": "NEW_CANDIDATE",
+      "author_name": "Sebastián Santos",
+      "authorship_type": "author",
+      "execution_date_text": "1959–1960",
+      "attribute_sources": [
+        "F01",
+        "F17"
+      ],
+      "execution_date": null,
+      "attribute_note": "F17 distingue realización en 1959 y bendición el 3/4/1960; F01 resume 1960. Conservar ambas como hechos distintos."
+    },
+    {
+      "key": "I07",
+      "brotherhood": "H02",
+      "name": "Jesús de la Oración en el Huerto",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 8,
+      "action": "NEW_CANDIDATE",
+      "author_name": "Pío Mollar Franch",
+      "authorship_type": "author",
+      "execution_date_text": "1917",
+      "attribute_sources": [
+        "F01"
+      ],
+      "execution_date": null
+    },
+    {
+      "key": "I08",
+      "brotherhood": "H02",
+      "name": "San Juan",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 8,
+      "action": "NEW_CANDIDATE",
+      "author_name": "Pío Mollar Franch",
+      "authorship_type": "author",
+      "execution_date_text": null,
+      "attribute_sources": [
+        "F01"
+      ],
+      "execution_date": null
+    },
+    {
+      "key": "I09",
+      "brotherhood": "H02",
+      "name": "San Pedro",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 8,
+      "action": "NEW_CANDIDATE",
+      "author_name": "Pío Mollar Franch",
+      "authorship_type": "author",
+      "execution_date_text": null,
+      "attribute_sources": [
+        "F01"
+      ],
+      "execution_date": null
+    },
+    {
+      "key": "I10",
+      "brotherhood": "H02",
+      "name": "Ángel confortador",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 8,
+      "action": "NEW_CANDIDATE",
+      "author_name": "Luciano Galán García",
+      "authorship_type": "author",
+      "execution_date_text": "2011",
+      "attribute_sources": [
+        "F01"
+      ],
+      "execution_date": null,
+      "attribute_note": "Imagen vigente de 2011; no mezclar con el ángel anterior perdido."
+    },
+    {
+      "key": "I11",
+      "brotherhood": "H02",
+      "name": "Jesús Nazareno",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 26,
+      "action": "NEW_CANDIDATE",
+      "author_name": "Marcos Cabrera",
+      "authorship_type": "author",
+      "execution_date_text": "1597",
+      "attribute_sources": [
+        "F01"
+      ],
+      "execution_date": null
+    },
+    {
+      "key": "I12",
+      "brotherhood": "H02",
+      "name": "Simón de Cirene",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 26,
+      "action": "NEW_CANDIDATE",
+      "author_name": "Francisco Escamilla",
+      "authorship_type": "author",
+      "execution_date_text": "1881",
+      "attribute_sources": [
+        "F01"
+      ],
+      "execution_date": null
+    },
+    {
+      "key": "I13",
+      "brotherhood": "H02",
+      "name": "Virgen de las Angustias",
+      "id": "4550fd96-94d3-4929-8d61-af79ba7de8e7",
+      "source": "F01",
+      "pdf_page": 26,
+      "action": "REUSE",
+      "author_name": null,
+      "authorship_type": "anonymous",
+      "execution_date_text": "Siglo XVIII",
+      "attribute_sources": [
+        "F01"
+      ],
+      "execution_date": null,
+      "attribute_note": "REUSE. Preservar la atribución tradicional al círculo de Duque Cornejo ya descrita en producción; F01 anónima no la invalida."
+    },
+    {
+      "key": "I14",
+      "brotherhood": "H03",
+      "name": "Cristo de la Caridad",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 6,
+      "action": "NEW_CANDIDATE",
+      "author_name": null,
+      "authorship_type": null,
+      "execution_date_text": null,
+      "attribute_sources": [
+        "F01"
+      ],
+      "execution_date": null,
+      "attribute_note": "F01 atribuye expresamente la Piedad; no transferir automáticamente la autoría al Cristo de la Caridad."
+    },
+    {
+      "key": "I15",
+      "brotherhood": "H03",
+      "name": "Virgen de la Piedad",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 6,
+      "action": "NEW_CANDIDATE",
+      "author_name": "Diego Roldán",
+      "authorship_type": "attributed_to",
+      "execution_date_text": "Mediados del siglo XVIII",
+      "attribute_sources": [
+        "F01"
+      ],
+      "execution_date": null
+    },
+    {
+      "key": "I16",
+      "brotherhood": "H03",
+      "name": "San Juan",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 6,
+      "action": "NEW_CANDIDATE",
+      "author_name": "Juan Ventura",
+      "authorship_type": "author",
+      "execution_date_text": "2005",
+      "attribute_sources": [
+        "F01"
+      ],
+      "execution_date": null
+    },
+    {
+      "key": "I17",
+      "brotherhood": "H03",
+      "name": "María Magdalena",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 6,
+      "action": "NEW_CANDIDATE",
+      "author_name": "Juan Ventura",
+      "authorship_type": "author",
+      "execution_date_text": "2005",
+      "attribute_sources": [
+        "F01"
+      ],
+      "execution_date": null
+    },
+    {
+      "key": "I18",
+      "brotherhood": "H03",
+      "name": "Virgen de los Ángeles",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 6,
+      "action": "NEW_CANDIDATE",
+      "author_name": "Juan Ventura",
+      "authorship_type": "author",
+      "execution_date_text": "1996",
+      "attribute_sources": [
+        "F01"
+      ],
+      "execution_date": null
+    },
+    {
+      "key": "I19",
+      "brotherhood": "H04",
+      "name": "Cristo del Perdón",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 10,
+      "action": "NEW_CANDIDATE",
+      "author_name": "Gaspar Núñez Delgado",
+      "authorship_type": "workshop_of",
+      "execution_date_text": "Siglo XVI",
+      "attribute_sources": [
+        "F01"
+      ],
+      "execution_date": null,
+      "attribute_note": "Atribución al taller, no autoría personal documentada."
+    },
+    {
+      "key": "I20",
+      "brotherhood": "H04",
+      "name": "Virgen de la Amargura",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 10,
+      "action": "NEW_CANDIDATE",
+      "author_name": "Juan de Astorga",
+      "authorship_type": "school_of",
+      "execution_date_text": "Siglo XIX",
+      "attribute_sources": [
+        "F01"
+      ],
+      "execution_date": null,
+      "attribute_note": "Escuela de Astorga; remodelación de Álvarez Duarte en el XX no es la ejecución original."
+    },
+    {
+      "key": "I21",
+      "brotherhood": "H05",
+      "name": "Cristo del Amor",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 12,
+      "action": "NEW_CANDIDATE",
+      "author_name": "José Pérez Conde",
+      "authorship_type": "author",
+      "execution_date_text": "1960",
+      "attribute_sources": [
+        "F01"
+      ],
+      "execution_date": null
+    },
+    {
+      "key": "I22",
+      "brotherhood": "H05",
+      "name": "María Magdalena",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 12,
+      "action": "NEW_CANDIDATE",
+      "author_name": "Sebastián Martínez Zayas",
+      "authorship_type": "author",
+      "execution_date_text": null,
+      "attribute_sources": [
+        "F01"
+      ],
+      "execution_date": null
+    },
+    {
+      "key": "I23",
+      "brotherhood": "H05",
+      "name": "Longinos",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 12,
+      "action": "NEW_CANDIDATE",
+      "author_name": "Sebastián Martínez Zayas",
+      "authorship_type": "author",
+      "execution_date_text": null,
+      "attribute_sources": [
+        "F01"
+      ],
+      "execution_date": null
+    },
+    {
+      "key": "I24",
+      "brotherhood": "H05",
+      "name": "Virgen de las Veredas",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 12,
+      "action": "NEW_CANDIDATE",
+      "author_name": "José Pérez Conde",
+      "authorship_type": "author",
+      "execution_date_text": "1970",
+      "attribute_sources": [
+        "F01"
+      ],
+      "execution_date": null,
+      "attribute_note": "Imagen vigente de 1970; no confundir con la talla anterior."
+    },
+    {
+      "key": "I25",
+      "brotherhood": "H06",
+      "name": "Jesús Atado a la Columna",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 14,
+      "action": "NEW_CANDIDATE",
+      "author_name": "Benito de Hita y Castillo",
+      "authorship_type": "attributed_to",
+      "execution_date_text": "Siglo XVIII",
+      "attribute_sources": [
+        "F01"
+      ],
+      "execution_date": null
+    },
+    {
+      "key": "I26",
+      "brotherhood": "H06",
+      "name": "Virgen de la Paz",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 14,
+      "action": "NEW_CANDIDATE",
+      "author_name": "Manuel Ramos Corona",
+      "authorship_type": "author",
+      "execution_date_text": "1987",
+      "attribute_sources": [
+        "F01"
+      ],
+      "execution_date": null
+    },
+    {
+      "key": "I27",
+      "brotherhood": "H07",
+      "name": "Jesús Redentor Cautivo",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 20,
+      "action": "NEW_CANDIDATE",
+      "author_name": "José Paz Vélez",
+      "authorship_type": "author",
+      "execution_date_text": "1957",
+      "attribute_sources": [
+        "F01"
+      ],
+      "execution_date": null
+    },
+    {
+      "key": "I28",
+      "brotherhood": "H07",
+      "name": "Virgen de las Lágrimas",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 20,
+      "action": "NEW_CANDIDATE",
+      "author_name": "Luis Álvarez Duarte",
+      "authorship_type": "author",
+      "execution_date_text": "1973",
+      "attribute_sources": [
+        "F01"
+      ],
+      "execution_date": null
+    },
+    {
+      "key": "I29",
+      "brotherhood": "H08",
+      "name": "Cristo de la Buena Muerte",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 22,
+      "action": "NEW_CANDIDATE",
+      "author_name": "Francisco de Ocampo",
+      "authorship_type": "circle_of",
+      "execution_date_text": "Siglo XVII",
+      "attribute_sources": [
+        "F01"
+      ],
+      "execution_date": null
+    },
+    {
+      "key": "I30",
+      "brotherhood": "H08",
+      "name": "Virgen de la Esperanza",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 22,
+      "action": "NEW_CANDIDATE",
+      "author_name": "José Moreno Alonso",
+      "authorship_type": "author",
+      "execution_date_text": "1952",
+      "attribute_sources": [
+        "F01"
+      ],
+      "execution_date": null
+    },
+    {
+      "key": "I31",
+      "brotherhood": "H09",
+      "name": "Jesús Atado a la Columna",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 28,
+      "action": "NEW_CANDIDATE",
+      "author_name": null,
+      "authorship_type": "anonymous",
+      "execution_date_text": "Siglo XVII",
+      "attribute_sources": [
+        "F01",
+        "F19"
+      ],
+      "execution_date": null,
+      "attribute_note": "F19 recoge atribuciones alternativas a Pedro Roldán y Ruiz Gijón; F01 dice círculo de Roldán. No adjudicar certeza ni seleccionar un autor único."
+    },
+    {
+      "key": "I32",
+      "brotherhood": "H09",
+      "name": "Virgen de los Dolores",
+      "id": "e875dbee-612f-4739-9f24-fd583d6b2df6",
+      "source": "F01",
+      "pdf_page": 28,
+      "action": "REUSE",
+      "author_name": null,
+      "authorship_type": "anonymous",
+      "execution_date_text": "Segunda mitad del siglo XIX",
+      "attribute_sources": [
+        "F01",
+        "F18"
+      ],
+      "execution_date": null,
+      "attribute_note": "Remodelación Castillo Lastrucci 1923. F18 fecha intervención de Sebastián Santos a inicios de los 50; F01 dice 1968. Mantener sin fecha exacta hasta resolver. Restauración Pedro Manzano 2023 documentada aparte; no duplicar imagen de Soledad."
+    },
+    {
+      "key": "I33",
+      "brotherhood": "H09",
+      "name": "Cristo Yacente",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 32,
+      "action": "NEW_CANDIDATE",
+      "author_name": "Manuel Martín Nieto",
+      "authorship_type": "author",
+      "execution_date_text": "2002",
+      "attribute_sources": [
+        "F01"
+      ],
+      "execution_date": null
+    },
+    {
+      "key": "I34",
+      "brotherhood": "H10",
+      "name": "Crucifijo de los Milagros",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 30,
+      "action": "NEW_CANDIDATE",
+      "author_name": null,
+      "authorship_type": "anonymous",
+      "execution_date_text": "Finales del siglo XVI",
+      "attribute_sources": [
+        "F01",
+        "F20"
+      ],
+      "execution_date": null
+    },
+    {
+      "key": "I35",
+      "brotherhood": "H10",
+      "name": "María Santísima de la Concepción",
+      "id": null,
+      "action": "NEW_CANDIDATE",
+      "author_name": "Cristóbal Ramos Tello",
+      "authorship_type": "attributed_to",
+      "execution_date_text": "Siglo XVIII",
+      "execution_date": null,
+      "attribute_sources": [
+        "F20"
+      ],
+      "source": "F20",
+      "processional_membership": "EXCLUDED_FROM_PROCESSIONAL_RELATIONS_THIS_EDITION",
+      "attribute_note": "Titular física confirmada. Se conserva la relación corporativa, sin image_steps/outing_entities para 2026. No se afirma ausencia física: la relación no demostrada queda fuera del candidato, según gloria-and-closure.json."
+    }
+  ],
+  "groups": [
+    {
+      "key": "G01",
+      "brotherhood": "H01",
+      "description": "Dos hebreas",
+      "count": 2,
+      "pdf_page": 4,
+      "action": "COLLECTIVE_ONLY; no individual invented identity"
+    },
+    {
+      "key": "G02",
+      "brotherhood": "H09",
+      "description": "Figuras del misterio de la Columna",
+      "count": 5,
+      "pdf_page": 28,
+      "action": "COLLECTIVE_ONLY; individual identity/count not established",
+      "composition": "Dos sayones, dos romanos y un miembro del Sanedrín",
+      "source": "F19",
+      "note": "Cuatro figuras de Castillo Lastrucci 1926; el romano identificado por posición en la foto institucional es posterior y obra de su hijo. No atribuir las cinco al mismo autor/año ni fabricar IDs numerados."
+    }
+  ],
+  "sources": [
+    {
+      "key": "F01",
+      "title": "Programa oficial Semana Santa Utrera 2026",
+      "publisher": "Consejo de Hermandades y Cofradías de Utrera",
+      "url": "https://aljarafeymas.com/system/images/20374/original/itinerario-ss-utrera-2026-1.pdf",
+      "access": "Downloaded mirror; publisher and year visually checked on cover and colophon",
+      "pages": 40,
+      "sha256": "caa85cdc7ac250fcf62d99ce2c03e582301e6d324f33c13b42d6fe34f2e10242"
+    },
+    {
+      "key": "F02",
+      "title": "Consejo: galerías Semana Santa 2026",
+      "url": "https://consejodehermandadesdeutrera.org/semana-santa/semana-santa-de-utrera-2026/"
+    },
+    {
+      "key": "F03",
+      "title": "Consejo: directorio corporativo histórico",
+      "url": "https://www.consejodehermandadesdeutrera.com/Hermandades/",
+      "caveat": "Historical site: do not reuse old offices, schedules or artwork attributions without checking."
+    },
+    {
+      "key": "F04",
+      "title": "Consejo: Jesús Nazareno",
+      "url": "https://www.consejodehermandadesdeutrera.com/Hermandades/Jesus_Nazareno.php"
+    },
+    {
+      "key": "F05",
+      "title": "Consejo: Muchachos",
+      "url": "https://www.consejodehermandadesdeutrera.com/Hermandades/Muchachos-Consolacion.php"
+    },
+    {
+      "key": "F06",
+      "title": "Consejo: Estudiantes",
+      "url": "https://www.consejodehermandadesdeutrera.com/Hermandades/Estudiantes.php"
+    },
+    {
+      "key": "F07",
+      "title": "Consejo: Aceituneros",
+      "url": "https://www.consejodehermandadesdeutrera.com/Hermandades/Aceituneros.php"
+    },
+    {
+      "key": "F08",
+      "title": "Consejo: Gitanos",
+      "url": "https://www.consejodehermandadesdeutrera.com/Hermandades/Gitanos.php"
+    },
+    {
+      "key": "F09",
+      "title": "Consejo: Vera-Cruz",
+      "url": "https://www.consejodehermandadesdeutrera.com/Hermandades/Vera-Cruz.php"
+    },
+    {
+      "key": "F10",
+      "title": "Consejo: Sacramental Santa María",
+      "url": "https://www.consejodehermandadesdeutrera.com/Hermandades/Sacramental.php"
+    },
+    {
+      "key": "F11",
+      "title": "Utrera al día: Milagros, crónica 04/04/2026",
+      "url": "https://utreraaldia.com/el-senor-del-altozano-y-el-recogimiento-del-crucifijo-de-los-milagros-marcan-el-viernes-santo-directo/",
+      "access": "search extract"
+    },
+    {
+      "key": "F12",
+      "title": "Utrera al día: Santo Entierro 04/04/2026",
+      "url": "https://utreraaldia.com/el-luto-y-el-silencio-cerraran-la-semana-santa-de-utrera-con-el-santo-entierro-este-sabado/",
+      "access": "full page read; explicitly silence for Yacente"
+    },
+    {
+      "key": "F13",
+      "title": "Mismo paso de Dolores en ambas jornadas",
+      "publisher": "Arte Sacro",
+      "url": "https://www.artesacro.org/Noticia/Ver/38547/provincia-mirada-provincia-hermandad-vera-cruz-utrera",
+      "published_date": "2008-05-28",
+      "access": "Read on 2026-09-27; F25/F26/F27/F28 initially indexed extracts; re-read before executable payload"
+    },
+    {
+      "key": "F14",
+      "title": "Canto al Cristo de los Milagros",
+      "publisher": "Hermandad de los Milagros",
+      "url": "https://www.xtodelosmilagros.es/casa-hermandad/noticias/canto-al-cristo-de-los-milagros",
+      "published_date": "2026-01-31",
+      "access": "Read on 2026-09-27; F25/F26/F27/F28 initially indexed extracts; re-read before executable payload"
+    },
+    {
+      "key": "F15",
+      "title": "Clausura 350 aniversario Cristo de Santiago",
+      "publisher": "Hermandad del Redentor Cautivo",
+      "url": "https://redentorcautivo.org/actos-de-clausura-por-el-350-aniversario-del-patronazgo-cristo-de-santiago/",
+      "published_date": null,
+      "access": "Read on 2026-09-27; F25/F26/F27/F28 initially indexed extracts; re-read before executable payload"
+    },
+    {
+      "key": "F16",
+      "title": "De Profundis y Responsoria Tenebrarum",
+      "publisher": "Arte Sacro",
+      "url": "https://www.artesacro.org/Noticia/Ver/157676/profundis-publica-responsoria-tenebrarum-su-primer-disco",
+      "published_date": "2024-10-11",
+      "access": "Read on 2026-09-27; F25/F26/F27/F28 initially indexed extracts; re-read before executable payload"
+    },
+    {
+      "key": "F17",
+      "title": "Trinidad: identidad penitencial e historia",
+      "publisher": "Consejo de Hermandades de Utrera",
+      "url": "https://www.consejodehermandadesdeutrera.com/Hermandades/Trinidad2.php",
+      "published_date": null,
+      "access": "Read on 2026-09-27; F25/F26/F27/F28 initially indexed extracts; re-read before executable payload"
+    },
+    {
+      "key": "F18",
+      "title": "Dolores: autoría e intervenciones",
+      "publisher": "Hermandad de Vera-Cruz",
+      "url": "https://veracruzdeutrera.org/imagenes-nuestra-senora-de-los-dolores/",
+      "published_date": null,
+      "access": "Read on 2026-09-27; F25/F26/F27/F28 initially indexed extracts; re-read before executable payload"
+    },
+    {
+      "key": "F19",
+      "title": "Columna: autoría y figuras secundarias",
+      "publisher": "Hermandad de Vera-Cruz",
+      "url": "https://veracruzdeutrera.org/imagenes-nuestro-padre-jesus-atado-a-la-columna/",
+      "published_date": null,
+      "access": "Read on 2026-09-27; F25/F26/F27/F28 initially indexed extracts; re-read before executable payload"
+    },
+    {
+      "key": "F20",
+      "title": "Titulares de Los Milagros",
+      "publisher": "Hermandad de los Milagros",
+      "url": "https://www.xtodelosmilagros.es/hermandad/nuestros-titulares",
+      "published_date": null,
+      "access": "Read on 2026-09-27; F25/F26/F27/F28 initially indexed extracts; re-read before executable payload"
+    },
+    {
+      "key": "F21",
+      "title": "Boletín oficial Vera-Cruz 2026",
+      "publisher": "Hermandad de Vera-Cruz",
+      "url": "https://veracruzdeutrera.org/wp-content/uploads/2026/02/Boletin-Vera-Cruz-2026.pdf",
+      "published_date": "2026-02-09",
+      "access": "PDF descargado y texto inspeccionado; pp. físicas 18 y 21",
+      "sha256": "1a16ba7fabe102a638fb0b04afa3f0231d35e9a5fcbd6a8b6723c50f1a901cb6"
+    },
+    {
+      "key": "F22",
+      "title": "Crónica Viernes Santo 2026",
+      "publisher": "UVITEL",
+      "url": "https://uvitelonline.com/vereda-santa-maria-utrera-intenso-viernes-santo/",
+      "published_date": "2026-04-04",
+      "access": "Read on 2026-09-27; F25/F26/F27/F28 initially indexed extracts; re-read before executable payload"
+    },
+    {
+      "key": "F23",
+      "title": "Directorio de corporaciones penitenciales, sacramentales y de Gloria",
+      "publisher": "Consejo de Hermandades de Utrera",
+      "url": "https://www.consejodehermandadesdeutrera.com/Hermandades/",
+      "published_date": null,
+      "access": "Read on 2026-09-27; F25/F26/F27/F28 initially indexed extracts; re-read before executable payload"
+    },
+    {
+      "key": "F24",
+      "title": "Fátima: historia e identidad de Gloria",
+      "publisher": "Consejo de Hermandades de Utrera",
+      "url": "https://www.consejodehermandadesdeutrera.com/Hermandades/Fatima.php",
+      "published_date": null,
+      "access": "Read on 2026-09-27; F25/F26/F27/F28 initially indexed extracts; re-read before executable payload"
+    },
+    {
+      "key": "F25",
+      "title": "Romería Fátima 2026",
+      "publisher": "UtreraWeb",
+      "url": "https://www.utreraweb.com/noticias-de-utrera/hermandades/2026/20912/Todo-listo-para-la-celebracion-este-sabado-en-Utrera-de-la-romeria-2026-de-la-Virgen-de-Fatima/",
+      "published_date": "2026-05-04",
+      "access": "Read in full on 2026-09-27"
+    },
+    {
+      "key": "F26",
+      "title": "Camino del Rocío 2026",
+      "publisher": "Utrera al día",
+      "url": "https://utreraaldia.com/la-hermandad-del-rocio-de-utrera-inicia-su-romeria-este-19-de-mayo-con-un-recorrido-modificado/",
+      "published_date": "2026-05-18",
+      "access": "Read in full on 2026-09-27"
+    },
+    {
+      "key": "F27",
+      "title": "Glorias de María 2026",
+      "publisher": "Consejo de Hermandades de Utrera",
+      "url": "https://consejodehermandadesdeutrera.org/presentacion-del-cartel-de-mayo-mariano-y-entrega-de-las-pastas-al-pregonero-de-las-glorias-de-maria-2026/",
+      "published_date": null,
+      "access": "Indexed official extract; full fetch failed. Corroborative only; not used alone for identity."
+    },
+    {
+      "key": "F28",
+      "title": "Historia y paso de Los Milagros",
+      "publisher": "Hermandad de los Milagros",
+      "url": "https://www.xtodelosmilagros.es/hermandad/resena-historica",
+      "published_date": null,
+      "access": "Read in full on 2026-09-27"
+    }
+  ],
+  "meta": {
+    "date_local": "2026-09-27",
+    "timezone": "Europe/Madrid",
+    "head": "2c751d493189fd9640f4f7dc29935efeaf5892a4",
+    "municipality_id": "e4319248-831a-4f4c-adb8-19c496f95dd6",
+    "phase": "DOCUMENTARY_MODEL_REFINEMENT",
+    "refinement_file": "gloria-and-closure.json",
+    "step_and_scope_refinement_file": "steps-and-scope.json",
+    "manifest_ready": false,
+    "production_writes": 0,
+    "notes": "Symbolic keys are documentary, not allocated database UUIDs. NEW is a candidate decision requiring final dedup/preflight.",
+    "model_frozen": false,
+    "next_after_utrera": "Cierre editorial y visual de fichas y secciones existentes; no nuevo municipio automático."
+  },
+  "blockers": [
+    {
+      "key": "G01",
+      "item": "Frontera municipal incompleta",
+      "impact": "Siete decisiones explícitas en steps-and-scope.json. ADMA/Resucitado son asociaciones separadas; Pinzón queda dentro con su salida productiva preservada. Falta encaje de asociaciones, conciliación canónica de Marismas y cierre censal de El Torbiscal. Palmar de Troya queda fuera."
+    },
+    {
+      "key": "G02",
+      "item": "Revisión final de titulares corporativos",
+      "impact": "22/22 Pasos con perfil y 13 perfiles corporativos candidatos; Consolación preservada. Cristo de Santiago e Inmaculada añadidos: 38 imágenes. Resta decidir imágenes físicas de otros títulos secundarios sin inferirlas del nombre corporativo. Angustias sigue review en producción hasta Apply validado."
+    },
+    {
+      "key": "G05",
+      "item": "Conciliación final y manifiesto",
+      "impact": "Falta dedup final de candidatas y universo UUID; sin guard por IDs, snapshot y dry-run no hay Apply."
+    }
+  ],
+  "steps": [
+    {
+      "key": "S01",
+      "name": "Entrada en Jerusalén",
+      "brotherhood": "H01",
+      "id": null,
+      "action": "NEW_CANDIDATE",
+      "positions": [
+        "O01-P1"
+      ],
+      "images": [
+        "I01",
+        "I02",
+        "I03",
+        "I04"
+      ],
+      "source": "F01",
+      "pdf_page": 4,
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit"
+    },
+    {
+      "key": "S02",
+      "name": "Caridad y Piedad",
+      "brotherhood": "H03",
+      "id": null,
+      "action": "NEW_CANDIDATE",
+      "positions": [
+        "O02-P1"
+      ],
+      "images": [
+        "I14",
+        "I15",
+        "I16",
+        "I17"
+      ],
+      "source": "F01",
+      "pdf_page": 6,
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit"
+    },
+    {
+      "key": "S03",
+      "name": "Ángeles",
+      "brotherhood": "H03",
+      "id": null,
+      "action": "NEW_CANDIDATE",
+      "positions": [
+        "O02-P2"
+      ],
+      "images": [
+        "I18"
+      ],
+      "source": "F01",
+      "pdf_page": 6,
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit"
+    },
+    {
+      "key": "S04",
+      "name": "Oración en el Huerto",
+      "brotherhood": "H02",
+      "id": null,
+      "action": "NEW_CANDIDATE",
+      "positions": [
+        "O03-P1"
+      ],
+      "images": [
+        "I07",
+        "I08",
+        "I09",
+        "I10"
+      ],
+      "source": "F01",
+      "pdf_page": 8,
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit"
+    },
+    {
+      "key": "S05",
+      "name": "Perdón",
+      "brotherhood": "H04",
+      "id": null,
+      "action": "NEW_CANDIDATE",
+      "positions": [
+        "O04-P1"
+      ],
+      "images": [
+        "I19"
+      ],
+      "source": "F01",
+      "pdf_page": 10,
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit"
+    },
+    {
+      "key": "S06",
+      "name": "Amargura",
+      "brotherhood": "H04",
+      "id": null,
+      "action": "NEW_CANDIDATE",
+      "positions": [
+        "O04-P2"
+      ],
+      "images": [
+        "I20"
+      ],
+      "source": "F01",
+      "pdf_page": 10,
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit"
+    },
+    {
+      "key": "S07",
+      "name": "Amor / Lanzada",
+      "brotherhood": "H05",
+      "id": null,
+      "action": "NEW_CANDIDATE",
+      "positions": [
+        "O05-P1"
+      ],
+      "images": [
+        "I21",
+        "I22",
+        "I23"
+      ],
+      "source": "F01",
+      "pdf_page": 12,
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit"
+    },
+    {
+      "key": "S08",
+      "name": "Veredas",
+      "brotherhood": "H05",
+      "id": null,
+      "action": "NEW_CANDIDATE",
+      "positions": [
+        "O05-P2"
+      ],
+      "images": [
+        "I24"
+      ],
+      "source": "F01",
+      "pdf_page": 12,
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit"
+    },
+    {
+      "key": "S09",
+      "name": "Columna de Aceituneros",
+      "brotherhood": "H06",
+      "id": null,
+      "action": "NEW_CANDIDATE",
+      "positions": [
+        "O06-P1"
+      ],
+      "images": [
+        "I25"
+      ],
+      "source": "F01",
+      "pdf_page": 14,
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit"
+    },
+    {
+      "key": "S10",
+      "name": "Paz",
+      "brotherhood": "H06",
+      "id": null,
+      "action": "NEW_CANDIDATE",
+      "positions": [
+        "O06-P2"
+      ],
+      "images": [
+        "I26"
+      ],
+      "source": "F01",
+      "pdf_page": 14,
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit"
+    },
+    {
+      "key": "S11",
+      "name": "Afligidos",
+      "brotherhood": "H01",
+      "id": null,
+      "action": "NEW_CANDIDATE",
+      "positions": [
+        "O07-P1"
+      ],
+      "images": [
+        "I05"
+      ],
+      "source": "F01",
+      "pdf_page": 18,
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit"
+    },
+    {
+      "key": "S12",
+      "name": "Desamparados",
+      "brotherhood": "H01",
+      "id": null,
+      "action": "NEW_CANDIDATE",
+      "positions": [
+        "O07-P2"
+      ],
+      "images": [
+        "I06"
+      ],
+      "source": "F01",
+      "pdf_page": 18,
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit"
+    },
+    {
+      "key": "S13",
+      "name": "Cautivo",
+      "brotherhood": "H07",
+      "id": null,
+      "action": "NEW_CANDIDATE",
+      "positions": [
+        "O08-P1"
+      ],
+      "images": [
+        "I27"
+      ],
+      "source": "F01",
+      "pdf_page": 20,
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit"
+    },
+    {
+      "key": "S14",
+      "name": "Lágrimas",
+      "brotherhood": "H07",
+      "id": null,
+      "action": "NEW_CANDIDATE",
+      "positions": [
+        "O08-P2"
+      ],
+      "images": [
+        "I28"
+      ],
+      "source": "F01",
+      "pdf_page": 20,
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit"
+    },
+    {
+      "key": "S15",
+      "name": "Buena Muerte",
+      "brotherhood": "H08",
+      "id": null,
+      "action": "NEW_CANDIDATE",
+      "positions": [
+        "O09-P1"
+      ],
+      "images": [
+        "I29"
+      ],
+      "source": "F01",
+      "pdf_page": 22,
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit"
+    },
+    {
+      "key": "S16",
+      "name": "Esperanza",
+      "brotherhood": "H08",
+      "id": null,
+      "action": "NEW_CANDIDATE",
+      "positions": [
+        "O09-P2"
+      ],
+      "images": [
+        "I30"
+      ],
+      "source": "F01",
+      "pdf_page": 22,
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit"
+    },
+    {
+      "key": "S17",
+      "name": "Nazareno",
+      "brotherhood": "H02",
+      "id": null,
+      "action": "NEW_CANDIDATE",
+      "positions": [
+        "O10-P1"
+      ],
+      "images": [
+        "I11",
+        "I12"
+      ],
+      "source": "F01",
+      "pdf_page": 26,
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit"
+    },
+    {
+      "key": "S18",
+      "name": "Angustias",
+      "brotherhood": "H02",
+      "id": "b51dd99d-97fe-4636-b35e-59ac8fa92dc5",
+      "action": "REUSE",
+      "positions": [
+        "O10-P2"
+      ],
+      "images": [
+        "I13"
+      ],
+      "source": "F01",
+      "pdf_page": 26,
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit",
+      "publication_gate": "Texto candidato y fuentes preparados en gloria-and-closure.json; validar manifiesto antes de publicar. Producción sigue review; no duplicar."
+    },
+    {
+      "key": "S19",
+      "name": "Columna de Vera-Cruz",
+      "brotherhood": "H09",
+      "id": null,
+      "action": "NEW_CANDIDATE",
+      "positions": [
+        "O11-P1"
+      ],
+      "images": [
+        "I31"
+      ],
+      "source": "F01",
+      "pdf_page": 28,
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit"
+    },
+    {
+      "key": "S20",
+      "name": "Dolores",
+      "brotherhood": "H09",
+      "id": null,
+      "action": "NEW_CANDIDATE",
+      "positions": [
+        "O11-P2",
+        "O13-P2"
+      ],
+      "images": [
+        "I32"
+      ],
+      "source": "F01",
+      "pdf_page": 28,
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit",
+      "identity_sources": [
+        "F13",
+        "F21",
+        "F01"
+      ],
+      "identity_decision": "ONE_SUPPORT_TWO_OUTING_CONFIGURATIONS",
+      "identity_note": "F13 dice expresamente mismo paso; F21 p18 alude al paso singular y mantos en plural. Continuidad documental, sin afirmar inspección física; dos configuraciones anuales, no fases históricas sucesivas."
+    },
+    {
+      "key": "S21",
+      "name": "Milagros",
+      "brotherhood": "H10",
+      "id": null,
+      "action": "NEW_CANDIDATE",
+      "positions": [
+        "O12-P1"
+      ],
+      "images": [
+        "I34"
+      ],
+      "source": "F01",
+      "pdf_page": 30,
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit",
+      "excluded_processional_image": "I35"
+    },
+    {
+      "key": "S22",
+      "name": "Yacente",
+      "brotherhood": "H09",
+      "id": null,
+      "action": "NEW_CANDIDATE",
+      "positions": [
+        "O13-P1"
+      ],
+      "images": [
+        "I33"
+      ],
+      "source": "F01",
+      "pdf_page": 32,
+      "technical_attributes_status": "Reviewed in gloria-and-closure.json and steps-and-scope.json; unknown fields remain explicit"
+    }
+  ],
+  "municipal_census_review": [
+    {
+      "key": "H12",
+      "name": "Consolación Coronada",
+      "id": "8d4e62d9-a428-4363-afc7-6a2f9e8c1450",
+      "action": "PRESERVE",
+      "brotherhood_types": [
+        "Gloria"
+      ],
+      "sources": [
+        "F23"
+      ]
+    },
+    {
+      "key": "H13",
+      "name": "Rocío de Utrera",
+      "id": null,
+      "action": "MODELED_NEW_CANDIDATE",
+      "profile_file": "gloria-and-closure.json",
+      "brotherhood_types": [
+        "Gloria"
+      ],
+      "sources": [
+        "F23",
+        "F26",
+        "F27"
+      ]
+    },
+    {
+      "key": "H14",
+      "name": "Rosario de Fátima y San Antonio de Padua",
+      "id": null,
+      "action": "MODELED_NEW_CANDIDATE",
+      "profile_file": "gloria-and-closure.json",
+      "brotherhood_types": [
+        "Gloria"
+      ],
+      "sources": [
+        "F23",
+        "F24",
+        "F25"
+      ]
+    }
+  ],
+  "scope_gate": "11 corporaciones del núcleo; Consolación preservada y Rocío/Fátima modelados en el suplemento. Las 14 institucionales no equivalen a censo municipal exhaustivo: ADMA, Resucitado y pedanías siguen en revisión explícita.",
+  "resolutions": [
+    {
+      "key": "Q01",
+      "status": "RESOLVED_DOCUMENTARY",
+      "result": "22 soportes propuestos, 23 posiciones; S20 reutilizado en dos jornadas",
+      "sources": [
+        "F13",
+        "F21",
+        "F01"
+      ]
+    },
+    {
+      "key": "Q02",
+      "status": "RESOLVED",
+      "result": "B16 REUSE",
+      "sources": [
+        "F14",
+        "F15",
+        "F16"
+      ]
+    },
+    {
+      "key": "Q04",
+      "status": "RESOLVED_TYPE",
+      "result": "Trinidad Penitencia; sin Gloria inferida",
+      "sources": [
+        "F17"
+      ]
+    }
+  ],
+  "nonblocking_uncertainties": [
+    "Año de intervención de Sebastián Santos en Dolores: conservar discrepancia, sin fecha exacta inventada.",
+    "Autor desconocido/atribuciones alternativas no se convierten en autores seguros.",
+    "Recogida de O14 y música de O14/O15 desconocidas.",
+    "Recursos visuales solo con derechos; no fabricar completitud.",
+    "Concepción acreditada como titular; relación procesional omitida en esta edición, sin afirmar ausencia del cortejo.",
+    "Salidas históricas sin evidencia posterior específica permanecen announced; no bloquean por sí mismas un manifiesto prudente.",
+    "Fátima 2026: punto y hora de salida discrepantes se omiten; no se altera la sede canónica por esa discrepancia."
+  ],
+  "execution_gates": {
+    "model_frozen": false,
+    "manifest": false,
+    "staging": false,
+    "dry_run": false,
+    "apply": false,
+    "public_qa": false,
+    "municipality_certified": false
+  }
+}

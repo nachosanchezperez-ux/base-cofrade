@@ -1,0 +1,167 @@
+{
+  "observed_at_utc": "2026-09-27T00:13:35.976219+00:00",
+  "main": "88fa02ffac5745ab9a8f2df59ab6a3b962210463",
+  "vercel": {
+    "id": "dpl_BvJa4CNTdVs3it9Q54tbCSA5xx5j",
+    "name": "base-cofrade",
+    "url": "base-cofrade-aej58doez-desdeel-arenal.vercel.app",
+    "type": "LAMBDAS",
+    "state": "READY",
+    "createdAt": 1790465778722,
+    "creator": {
+      "uid": "kt7txjSdoELpoYWKcfK3lMtm",
+      "username": "nachosanchezperez-ux"
+    },
+    "project": {
+      "id": "prj_hx17EShZxuDpZQBwnoAqdzsenm9b",
+      "name": "base-cofrade",
+      "framework": "nextjs"
+    },
+    "meta": {
+      "githubCommitRef": "main",
+      "githubCommitSha": "88fa02ffac5745ab9a8f2df59ab6a3b962210463",
+      "githubCommitMessage": "Merge PR #1010: reconciliación documental final de Morón\n\ndocs: reconciliación final de Morón y plataforma vigente",
+      "githubRepo": "base-cofrade",
+      "githubOrg": "nachosanchezperez-ux"
+    },
+    "alias": [
+      "hilocofrade.es",
+      "www.hilocofrade.es",
+      "base-cofrade-vert.vercel.app",
+      "base-cofrade-desdeel-arenal.vercel.app",
+      "base-cofrade-git-main-desdeel-arenal.vercel.app"
+    ],
+    "target": "production",
+    "regions": [
+      "dub1"
+    ],
+    "buildingAt": 1790465779969,
+    "ready": 1790465802437,
+    "readyState": "READY",
+    "source": "git",
+    "aliasError": null
+  },
+  "supabase": {
+    "projects": [
+      {
+        "id": "kcevwkucqzcyrqaimyhl",
+        "ref": "kcevwkucqzcyrqaimyhl",
+        "organization_id": "smgfgkdnnxagefcgwayz",
+        "organization_slug": "smgfgkdnnxagefcgwayz",
+        "name": "Hilocofrade",
+        "region": "eu-west-1",
+        "status": "ACTIVE_HEALTHY",
+        "database": {
+          "host": "db.kcevwkucqzcyrqaimyhl.supabase.co",
+          "version": "17.6.1.155",
+          "postgres_engine": "17",
+          "release_channel": "ga"
+        },
+        "created_at": "2026-08-11T20:38:54.027685Z"
+      }
+    ]
+  },
+  "snapshot": {
+    "at": "2026-09-27T00:13:35.976219+00:00",
+    "migrations": 17,
+    "brotherhoods": [
+      {
+        "entity": {
+          "id": "8d4e62d9-a428-4363-afc7-6a2f9e8c1450",
+          "name": "Pontificia, Real e Ilustre Hermandad de Nuestra Señora de Consolación Coronada",
+          "slug": "consolacion-utrera",
+          "status": "published",
+          "summary": "Hermandad de Gloria de Utrera dedicada a Nuestra Señora de Consolación Coronada, Patrona y Alcaldesa Perpetua de la ciudad, con sede canónica en su Santuario Diocesano.",
+          "created_at": "2026-08-25T20:58:05.642929+00:00",
+          "updated_at": "2026-09-05T14:23:50.801172+00:00",
+          "entity_type": "brotherhood",
+          "content_updated_at": null,
+          "editorial_reviewed_at": null
+        },
+        "brotherhood": {
+          "notes": null,
+          "entity_id": "8d4e62d9-a428-4363-afc7-6a2f9e8c1450",
+          "crest_path": null,
+          "website_url": "https://santuariodeconsolacion.org/",
+          "history_text": "La devoción a Nuestra Señora de Consolación se articula en Utrera desde el siglo XVI. La imagen llegó a la ciudad en 1507 y fue trasladada a la ermita levantada en 1520. El Santuario quedó vinculado a la Orden de los Mínimos desde 1560 y fue centro de grandes peregrinaciones hasta la suspensión de la antigua romería en 1771. La Virgen fue proclamada Alcaldesa Perpetua tras la inundación de 1962 y coronada canónicamente el 1 de mayo de 1964. En 2007 y 2014 el Santuario celebró sendos Años Jubilares. Desde 2026 la festividad del 8 de septiembre incorpora una salida anual al alba por el Real de Consolación.",
+          "neighborhood": null,
+          "popular_name": "Consolación de Utrera",
+          "instagram_url": null,
+          "official_name": "Pontificia, Real e Ilustre Hermandad de Nuestra Señora de Consolación Coronada",
+          "foundation_text": "Siglo XVI",
+          "municipality_id": "e4319248-831a-4f4c-adb8-19c496f95dd6",
+          "brotherhood_types": [
+            "Gloria"
+          ],
+          "canonical_see_place_id": "09fb4082-dd92-4fc4-bb25-41fff021d284",
+          "current_procession_day": "8 de septiembre · al alba"
+        }
+      },
+      {
+        "entity": {
+          "id": "4e462b02-979d-4b88-ab98-0c97f2dbf0a0",
+          "name": "Hermandad de Jesús Nazareno de Utrera",
+          "slug": "hermandad-jesus-nazareno-utrera",
+          "status": "published",
+          "summary": "Histórica Hermandad de Utrera con sede en la Capilla de San Bartolomé, vinculada al Nazareno, la Oración en el Huerto y Nuestra Señora de las Angustias.",
+          "created_at": "2026-08-31T22:09:40.307334+00:00",
+          "updated_at": "2026-09-07T20:19:10.888287+00:00",
+          "entity_type": "brotherhood",
+          "content_updated_at": null,
+          "editorial_reviewed_at": null
+        },
+        "brotherhood": {
+          "notes": "Alta mínima relacional. Pendiente de investigación editorial completa antes de publicación.",
+          "entity_id": "4e462b02-979d-4b88-ab98-0c97f2dbf0a0",
+          "crest_path": null,
+          "website_url": "https://www.jesusnazarenoutrera.es/",
+          "history_text": "Sus antecedentes documentales alcanzan 1538. La regla fundacional de San Bartolomé data de 1568 y la Hermandad de la Santa Cruz de Jerusalén se constituyó en 1586, fusionándose ambas corporaciones ese mismo año. En 1597 adquirió la imagen de Nuestro Padre Jesús Nazareno. La actual Capilla de San Bartolomé fue levantada a finales del siglo XVII.",
+          "neighborhood": null,
+          "popular_name": "Jesús Nazareno de Utrera",
+          "instagram_url": null,
+          "official_name": "Real e Ilustre Hermandad de Nuestro Padre Jesús Nazareno, Santa Cruz de Jerusalén, Sagrada Oración de Nuestro Señor Jesucristo en el Huerto, Nuestra Señora de las Angustias, de la Inmaculada Concepción, San Bartolomé Apóstol y Santa Bárbara",
+          "foundation_text": "Regla fundacional de San Bartolomé de 1568; Hermandad de la Santa Cruz de Jerusalén constituida en 1586 y fusionada ese mismo año.",
+          "municipality_id": "e4319248-831a-4f4c-adb8-19c496f95dd6",
+          "brotherhood_types": [
+            "Penitencia"
+          ],
+          "canonical_see_place_id": "9b425ed3-943b-4b77-b351-93d87467b1cc",
+          "current_procession_day": "Domingo de Ramos · Viernes Santo"
+        }
+      },
+      {
+        "entity": {
+          "id": "7bab2fe6-c69e-48e5-9446-a247b4169910",
+          "name": "Hermandad de la Vera-Cruz y Santo Entierro de Utrera",
+          "slug": "vera-cruz-santo-entierro-utrera",
+          "status": "published",
+          "summary": "Corporación penitencial de Utrera con sede en la Iglesia de San Francisco.",
+          "created_at": "2026-09-13T10:53:23.750467+00:00",
+          "updated_at": "2026-09-13T10:53:23.750467+00:00",
+          "entity_type": "brotherhood",
+          "content_updated_at": null,
+          "editorial_reviewed_at": null
+        },
+        "brotherhood": {
+          "notes": "Nodo inicial documentado para vincular la extraordinaria de septiembre de 2026; ficha pendiente de ampliación editorial.",
+          "entity_id": "7bab2fe6-c69e-48e5-9446-a247b4169910",
+          "crest_path": null,
+          "website_url": "https://veracruzdeutrera.org/",
+          "history_text": null,
+          "neighborhood": null,
+          "popular_name": "Vera-Cruz y Santo Entierro de Utrera",
+          "instagram_url": null,
+          "official_name": "Hermandad de la Vera-Cruz y Santo Entierro",
+          "foundation_text": "1280",
+          "municipality_id": "e4319248-831a-4f4c-adb8-19c496f95dd6",
+          "brotherhood_types": [
+            "Penitencia"
+          ],
+          "canonical_see_place_id": "f9dc025c-094b-468f-ad7c-4ee55c7167e8",
+          "current_procession_day": "Sábado Santo"
+        }
+      }
+    ]
+  },
+  "production_writes": 0
+}

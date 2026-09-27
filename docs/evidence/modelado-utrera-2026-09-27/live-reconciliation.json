@@ -1,0 +1,616 @@
+[
+  {
+    "table_name": "agents",
+    "expected_rows": 693,
+    "differences": [],
+    "additions": [
+      {
+        "email": null,
+        "phone": null,
+        "address": null,
+        "entity_id": "7226aac5-80db-4571-88a1-cf0078f5fb83",
+        "agent_kind": "person",
+        "description": "Escultor al que la Real Cofradía Sevillana de Nuestra Señora de la Cabeza identifica como autor de su imagen titular. La reseña artística distingue su obra de la posterior remodelación de Manuel Cerquera y de la restauración de Francisco Buiza.",
+        "website_url": null,
+        "active_notes": null,
+        "instagram_url": null,
+        "municipality_id": null,
+        "death_or_end_date": null,
+        "death_or_end_text": null,
+        "birth_or_foundation_date": null,
+        "foundation_or_birth_text": null
+      },
+      {
+        "email": null,
+        "phone": null,
+        "address": null,
+        "entity_id": "f2080526-0e69-4d30-884d-deb8c599024f",
+        "agent_kind": "person",
+        "description": "Autor de una remodelación de la Virgen de la Cabeza de Sevilla, realizada originalmente por Fernando Cruz, según la reseña artística publicada por la propia cofradía.",
+        "website_url": null,
+        "active_notes": null,
+        "instagram_url": null,
+        "municipality_id": null,
+        "death_or_end_date": null,
+        "death_or_end_text": null,
+        "birth_or_foundation_date": null,
+        "foundation_or_birth_text": null
+      },
+      {
+        "email": null,
+        "phone": null,
+        "address": null,
+        "entity_id": "9aabce6e-3d6f-4b8e-b714-d75e54f5708c",
+        "agent_kind": "workshop",
+        "description": "Autoras del manto verde de la Virgen de la Cabeza de Sevilla, ejecutado entre 1934 y 1935 y donado a la cofradía según acta de 30 de mayo de 1935. Se conserva la denominación colectiva empleada por la fuente institucional.",
+        "website_url": null,
+        "active_notes": null,
+        "instagram_url": null,
+        "municipality_id": null,
+        "death_or_end_date": null,
+        "death_or_end_text": null,
+        "birth_or_foundation_date": null,
+        "foundation_or_birth_text": null
+      },
+      {
+        "email": null,
+        "phone": null,
+        "address": null,
+        "entity_id": "ba7de89e-2e31-436a-9dbf-060d76bf0877",
+        "agent_kind": "workshop",
+        "description": "Talleres sevillanos responsables de seis candelabros de alpaca plateada para el paso de la Virgen de la Cabeza en 2010: cuatro de cinco brazos y dos de tres brazos.",
+        "website_url": null,
+        "active_notes": null,
+        "instagram_url": null,
+        "municipality_id": null,
+        "death_or_end_date": null,
+        "death_or_end_text": null,
+        "birth_or_foundation_date": null,
+        "foundation_or_birth_text": null
+      },
+      {
+        "email": null,
+        "phone": null,
+        "address": null,
+        "entity_id": "1b34f46e-7de8-4864-a5c3-9d02788342d6",
+        "agent_kind": "workshop",
+        "description": "Taller responsable del bordado de la insignia de caminos de la Virgen de la Cabeza de Sevilla, documentada en 2019. Empleó hilos de oro sobre tisú de plata y motivos florales en seda de colores.",
+        "website_url": null,
+        "active_notes": null,
+        "instagram_url": null,
+        "municipality_id": null,
+        "death_or_end_date": null,
+        "death_or_end_text": null,
+        "birth_or_foundation_date": null,
+        "foundation_or_birth_text": null
+      },
+      {
+        "email": null,
+        "phone": null,
+        "address": null,
+        "entity_id": "198def41-aa1d-4c3b-b1e4-6bc95ed790eb",
+        "agent_kind": "person",
+        "description": "Pintor del retrato al óleo de la Virgen de la Cabeza incorporado a la insignia de caminos de su cofradía sevillana, documentada en 2019. Se conserva el nombre publicado por la Hermandad.",
+        "website_url": null,
+        "active_notes": null,
+        "instagram_url": null,
+        "municipality_id": null,
+        "death_or_end_date": null,
+        "death_or_end_text": null,
+        "birth_or_foundation_date": null,
+        "foundation_or_birth_text": null
+      }
+    ],
+    "scope": "snapshot coverage"
+  },
+  {
+    "table_name": "bands",
+    "expected_rows": 153,
+    "differences": [
+      {
+        "id": "a02d98fc-7c05-4b40-bf82-9fc3eca8bdb4",
+        "kind": "changed",
+        "actual": {
+          "band_type": "Banda de Música",
+          "entity_id": "a02d98fc-7c05-4b40-bf82-9fc3eca8bdb4",
+          "logo_path": null,
+          "description": "Banda de Música Julián Cerdán de Sanlúcar de Barrameda.",
+          "website_url": "https://bandajuliancerdan.com/",
+          "youtube_url": null,
+          "instagram_url": null,
+          "primary_color": null,
+          "hero_image_alt": null,
+          "foundation_text": null,
+          "hero_image_path": null,
+          "municipality_id": "d7e1ac2d-775c-40b2-a2cd-d4cf02f7327e",
+          "secondary_color": null,
+          "headquarters_text": "Sanlúcar de Barrameda (Cádiz)",
+          "hero_image_credit": null,
+          "banderin_entity_id": null,
+          "logo_background_color": null,
+          "linked_brotherhood_name": null
+        },
+        "expected": {
+          "band_type": "Banda de Música",
+          "entity_id": "a02d98fc-7c05-4b40-bf82-9fc3eca8bdb4",
+          "municipality_id": null
+        }
+      }
+    ],
+    "additions": [
+      {
+        "band_type": "Banda de Música",
+        "entity_id": "4aeae4a5-d58c-40eb-ad01-451b5165ee78",
+        "logo_path": null,
+        "description": "La Banda Sinfónica del Liceo Municipal de la Música de Moguer desarrolla actividad de concierto y acompañamiento procesional. Su trayectoria en la Semana Santa de Sevilla incluye la vinculación histórica con el paso de palio de María Santísima de los Dolores y Misericordia, de la Hermandad de Jesús Despojado.",
+        "website_url": null,
+        "youtube_url": null,
+        "instagram_url": null,
+        "primary_color": null,
+        "hero_image_alt": null,
+        "foundation_text": null,
+        "hero_image_path": null,
+        "municipality_id": "b373985f-4796-4fbb-ab46-a1037363e145",
+        "secondary_color": null,
+        "headquarters_text": "Moguer (Huelva)",
+        "hero_image_credit": null,
+        "banderin_entity_id": null,
+        "logo_background_color": null,
+        "linked_brotherhood_name": null
+      }
+    ],
+    "scope": "snapshot coverage"
+  },
+  {
+    "table_name": "brotherhood_images",
+    "expected_rows": 3,
+    "differences": [],
+    "scope": "snapshot coverage"
+  },
+  {
+    "table_name": "brotherhood_steps",
+    "expected_rows": 3,
+    "differences": [],
+    "scope": "snapshot coverage"
+  },
+  {
+    "table_name": "brotherhoods",
+    "expected_rows": 3,
+    "differences": [],
+    "additions": [],
+    "scope": "3 canonical REUSE only"
+  },
+  {
+    "table_name": "entities",
+    "expected_rows": 3622,
+    "differences": [],
+    "additions": [
+      {
+        "id": "4aeae4a5-d58c-40eb-ad01-451b5165ee78",
+        "name": "Banda Sinfónica del Liceo Municipal de la Música de Moguer",
+        "slug": "banda-sinfonica-liceo-moguer",
+        "status": "published",
+        "summary": "Banda sinfónica de Moguer (Huelva), con actividad de concierto y acompañamiento procesional.",
+        "created_at": "2026-09-27T06:00:24.715042+00:00",
+        "updated_at": "2026-09-27T06:00:24.715042+00:00",
+        "entity_type": "band",
+        "content_updated_at": "2026-09-27T06:00:24.715042+00:00",
+        "editorial_reviewed_at": null
+      },
+      {
+        "id": "3d9b207f-6804-4f8d-a7b6-fe600888a65d",
+        "name": "Nueva insignia de caminos de la cofradía sevillana",
+        "slug": "insignia-caminos-cabeza-sevilla-2019",
+        "status": "published",
+        "summary": "En junio de 2019 la cofradía dio a conocer su nueva insignia de caminos, con bordados de Santa Clara, pintura de Pedro J. López Marcos y orfebrería de Artesanía Santos.",
+        "created_at": "2026-09-27T09:30:08.704817+00:00",
+        "updated_at": "2026-09-27T09:30:08.704817+00:00",
+        "entity_type": "event",
+        "content_updated_at": "2026-09-27T09:30:08.704817+00:00",
+        "editorial_reviewed_at": null
+      },
+      {
+        "id": "7226aac5-80db-4571-88a1-cf0078f5fb83",
+        "name": "Fernando Cruz",
+        "slug": "fernando-cruz",
+        "status": "published",
+        "summary": "Escultor al que la Real Cofradía Sevillana de Nuestra Señora de la Cabeza identifica como autor de su imagen titular. La reseña artística distingue su obra de la posterior remodelación de Manuel Cerquera y de la restauración de Francisco Buiza.",
+        "created_at": "2026-09-27T09:30:08.704817+00:00",
+        "updated_at": "2026-09-27T09:30:08.704817+00:00",
+        "entity_type": "agent",
+        "content_updated_at": "2026-09-27T09:30:08.704817+00:00",
+        "editorial_reviewed_at": null
+      },
+      {
+        "id": "f2080526-0e69-4d30-884d-deb8c599024f",
+        "name": "Manuel Cerquera",
+        "slug": "manuel-cerquera",
+        "status": "published",
+        "summary": "Autor de una remodelación de la Virgen de la Cabeza de Sevilla, realizada originalmente por Fernando Cruz, según la reseña artística publicada por la propia cofradía.",
+        "created_at": "2026-09-27T09:30:08.704817+00:00",
+        "updated_at": "2026-09-27T09:30:08.704817+00:00",
+        "entity_type": "agent",
+        "content_updated_at": "2026-09-27T09:30:08.704817+00:00",
+        "editorial_reviewed_at": null
+      },
+      {
+        "id": "9aabce6e-3d6f-4b8e-b714-d75e54f5708c",
+        "name": "Hermanas Navarro Calderón",
+        "slug": "hermanas-navarro-calderon",
+        "status": "published",
+        "summary": "Autoras del manto verde de la Virgen de la Cabeza de Sevilla, ejecutado entre 1934 y 1935 y donado a la cofradía según acta de 30 de mayo de 1935. Se conserva la denominación colectiva empleada por la fuente institucional.",
+        "created_at": "2026-09-27T09:30:08.704817+00:00",
+        "updated_at": "2026-09-27T09:30:08.704817+00:00",
+        "entity_type": "agent",
+        "content_updated_at": "2026-09-27T09:30:08.704817+00:00",
+        "editorial_reviewed_at": null
+      },
+      {
+        "id": "ba7de89e-2e31-436a-9dbf-060d76bf0877",
+        "name": "Pasión Cofrade",
+        "slug": "pasion-cofrade",
+        "status": "published",
+        "summary": "Talleres sevillanos responsables de seis candelabros de alpaca plateada para el paso de la Virgen de la Cabeza en 2010: cuatro de cinco brazos y dos de tres brazos.",
+        "created_at": "2026-09-27T09:30:08.704817+00:00",
+        "updated_at": "2026-09-27T09:30:08.704817+00:00",
+        "entity_type": "agent",
+        "content_updated_at": "2026-09-27T09:30:08.704817+00:00",
+        "editorial_reviewed_at": null
+      },
+      {
+        "id": "1b34f46e-7de8-4864-a5c3-9d02788342d6",
+        "name": "Bordados Santa Clara",
+        "slug": "bordados-santa-clara",
+        "status": "published",
+        "summary": "Taller responsable del bordado de la insignia de caminos de la Virgen de la Cabeza de Sevilla, documentada en 2019. Empleó hilos de oro sobre tisú de plata y motivos florales en seda de colores.",
+        "created_at": "2026-09-27T09:30:08.704817+00:00",
+        "updated_at": "2026-09-27T09:30:08.704817+00:00",
+        "entity_type": "agent",
+        "content_updated_at": "2026-09-27T09:30:08.704817+00:00",
+        "editorial_reviewed_at": null
+      },
+      {
+        "id": "198def41-aa1d-4c3b-b1e4-6bc95ed790eb",
+        "name": "Pedro J. López Marcos",
+        "slug": "pedro-j-lopez-marcos",
+        "status": "published",
+        "summary": "Pintor del retrato al óleo de la Virgen de la Cabeza incorporado a la insignia de caminos de su cofradía sevillana, documentada en 2019. Se conserva el nombre publicado por la Hermandad.",
+        "created_at": "2026-09-27T09:30:08.704817+00:00",
+        "updated_at": "2026-09-27T09:30:08.704817+00:00",
+        "entity_type": "agent",
+        "content_updated_at": "2026-09-27T09:30:08.704817+00:00",
+        "editorial_reviewed_at": null
+      },
+      {
+        "id": "a341ca1b-a386-479d-82f5-68dcc3ca345e",
+        "name": "Manto verde de Nuestra Señora de la Cabeza de Sevilla",
+        "slug": "manto-verde-virgen-cabeza-sevilla",
+        "status": "published",
+        "summary": "Manto verde realizado por las Hermanas Navarro Calderón entre 1934 y 1935. Su donación a la cofradía por Antonio Gutiérrez Rodrigo y Adela Naranjo Naranjo consta en un acta de 30 de mayo de 1935.",
+        "created_at": "2026-09-27T09:30:08.704817+00:00",
+        "updated_at": "2026-09-27T09:30:08.704817+00:00",
+        "entity_type": "heritage_asset",
+        "content_updated_at": "2026-09-27T09:30:08.704817+00:00",
+        "editorial_reviewed_at": null
+      },
+      {
+        "id": "e33581e7-aa63-4757-9fd5-d1dbfd7ab18e",
+        "name": "Candelabros del paso de Nuestra Señora de la Cabeza de Sevilla",
+        "slug": "candelabros-paso-virgen-cabeza-sevilla",
+        "status": "published",
+        "summary": "Seis candelabros realizados por los talleres de Pasión Cofrade en 2010: cuatro de cinco brazos para las esquinas y dos de tres brazos para los laterales. Fueron bendecidos el 12 de septiembre de 2010.",
+        "created_at": "2026-09-27T09:30:08.704817+00:00",
+        "updated_at": "2026-09-27T09:30:08.704817+00:00",
+        "entity_type": "heritage_asset",
+        "content_updated_at": "2026-09-27T09:30:08.704817+00:00",
+        "editorial_reviewed_at": null
+      },
+      {
+        "id": "9cca192a-705c-4655-a027-22c0300c8e15",
+        "name": "Insignia de caminos de la Virgen de la Cabeza de Sevilla",
+        "slug": "insignia-caminos-virgen-cabeza-sevilla",
+        "status": "published",
+        "summary": "Insignia documentada en junio de 2019. Bordados Santa Clara realizó el bordado sobre tisú de plata; Pedro J. López Marcos pintó al óleo el retrato de la Virgen y Artesanía Santos Orfebrería ejecutó el trabajo de orfebrería. Incorpora flores bordadas en seda, entre ellas la jara de la Sierra de Andújar.",
+        "created_at": "2026-09-27T09:30:08.704817+00:00",
+        "updated_at": "2026-09-27T09:30:08.704817+00:00",
+        "entity_type": "heritage_asset",
+        "content_updated_at": "2026-09-27T09:30:08.704817+00:00",
+        "editorial_reviewed_at": null
+      },
+      {
+        "id": "f5b9bc80-ea20-4142-ba70-bbc60172e105",
+        "name": "Fundación de la cofradía sevillana de la Virgen de la Cabeza",
+        "slug": "fundacion-virgen-cabeza-sevilla-1931",
+        "status": "published",
+        "summary": "La cofradía se constituyó el 8 de febrero de 1931 en la parroquia de San Vicente Mártir de Sevilla.",
+        "created_at": "2026-09-27T09:30:08.704817+00:00",
+        "updated_at": "2026-09-27T09:30:08.704817+00:00",
+        "entity_type": "event",
+        "content_updated_at": "2026-09-27T09:30:08.704817+00:00",
+        "editorial_reviewed_at": null
+      },
+      {
+        "id": "3b88b248-a19b-4fab-9875-fc7650605f21",
+        "name": "Donación del manto verde a la cofradía sevillana",
+        "slug": "donacion-manto-verde-cabeza-sevilla-1935",
+        "status": "published",
+        "summary": "Un acta de 30 de mayo de 1935 recoge la donación del manto verde por Antonio Gutiérrez Rodrigo y Adela Naranjo Naranjo.",
+        "created_at": "2026-09-27T09:30:08.704817+00:00",
+        "updated_at": "2026-09-27T09:30:08.704817+00:00",
+        "entity_type": "event",
+        "content_updated_at": "2026-09-27T09:30:08.704817+00:00",
+        "editorial_reviewed_at": null
+      }
+    ],
+    "scope": "snapshot coverage"
+  },
+  {
+    "table_name": "entity_locations",
+    "expected_rows": 2,
+    "differences": [],
+    "scope": "snapshot coverage"
+  },
+  {
+    "table_name": "image_authorships",
+    "expected_rows": 2,
+    "differences": [],
+    "scope": "snapshot coverage"
+  },
+  {
+    "table_name": "image_steps",
+    "expected_rows": 3,
+    "differences": [],
+    "scope": "snapshot coverage"
+  },
+  {
+    "table_name": "images",
+    "expected_rows": 3,
+    "differences": [],
+    "scope": "snapshot coverage"
+  },
+  {
+    "table_name": "municipalities",
+    "expected_rows": 70,
+    "differences": [],
+    "additions": [
+      {
+        "id": "b373985f-4796-4fbb-ab46-a1037363e145",
+        "name": "Moguer",
+        "slug": "moguer",
+        "country": "España",
+        "province": "Huelva",
+        "created_at": "2026-09-27T06:00:24.715042+00:00",
+        "autonomous_community": "Andalucía"
+      },
+      {
+        "id": "d7e1ac2d-775c-40b2-a2cd-d4cf02f7327e",
+        "name": "Sanlúcar de Barrameda",
+        "slug": "sanlucar-de-barrameda",
+        "country": "España",
+        "province": "Cádiz",
+        "created_at": "2026-09-27T06:08:43.944142+00:00",
+        "autonomous_community": "Andalucía"
+      }
+    ],
+    "scope": "snapshot coverage"
+  },
+  {
+    "table_name": "outing_music_positions",
+    "expected_rows": 6,
+    "differences": [],
+    "scope": "snapshot coverage"
+  },
+  {
+    "table_name": "outings",
+    "expected_rows": 4,
+    "differences": [],
+    "scope": "snapshot coverage"
+  },
+  {
+    "table_name": "places",
+    "expected_rows": 244,
+    "differences": [],
+    "additions": [],
+    "scope": "snapshot coverage"
+  },
+  {
+    "table_name": "source_links",
+    "expected_rows": 22,
+    "differences": [],
+    "scope": "snapshot coverage"
+  },
+  {
+    "table_name": "sources",
+    "expected_rows": 2445,
+    "differences": [],
+    "additions": [
+      {
+        "id": "ab6c9491-1ffe-4968-8714-ba3dfc5bef6d",
+        "url": "https://www.diariodesevilla.es/semana_santa/jesus-despojado-renueva-ano-liceo_0_2004481275.html",
+        "name": "Jesús Despojado renueva un año más al Liceo de Moguer tras Dolores y Misericordia",
+        "notes": "Documenta la vinculación desde 2012, el estreno procesional en 2013 y la renovación para 2026.",
+        "license": null,
+        "created_at": "2026-09-27T06:00:24.715042+00:00",
+        "accessed_at": "2026-09-27",
+        "source_type": "press",
+        "publication_date": "2025-07-30",
+        "author_or_publisher": "Manuel Lamprea · Diario de Sevilla"
+      },
+      {
+        "id": "24fb2fed-ca94-4b18-bc7c-81e0f5569d6b",
+        "url": "https://www.diariodesevilla.es/semana_santa/jesus-despojado-contrata-julian-cerdan_0_2006998236.html",
+        "name": "Jesús Despojado contrata a Julián Cerdán para el Domingo de Ramos 2027",
+        "notes": "Documenta la finalización en 2026 del vínculo con el Liceo de Moguer y la no renovación del contrato.",
+        "license": null,
+        "created_at": "2026-09-27T06:00:24.715042+00:00",
+        "accessed_at": "2026-09-27",
+        "source_type": "press",
+        "publication_date": "2026-06-11",
+        "author_or_publisher": "Manuel Lamprea · Diario de Sevilla"
+      },
+      {
+        "id": "9fcc4e49-d98d-4bdc-a9fe-8a3e7a0f3db2",
+        "url": "https://www.aytomoguer.es/es/area-de-edicion-noticias-tramites-varios-y-eventos/eventos/Los-Musicales-del-Liceo/",
+        "name": "Los Musicales del Liceo · Ayuntamiento de Moguer",
+        "notes": "Documenta la denominación de la Banda Sinfónica del Liceo Municipal de la Música de Moguer y su actividad de concierto.",
+        "license": null,
+        "created_at": "2026-09-27T06:00:24.715042+00:00",
+        "accessed_at": "2026-09-27",
+        "source_type": "official_website",
+        "publication_date": "2018-07-18",
+        "author_or_publisher": "Ayuntamiento de Moguer"
+      },
+      {
+        "id": "52db565a-b5b5-4021-a162-aa176c16b156",
+        "url": "https://www.santagenoveva.com/wp-content/uploads/2024/02/para-web.pdf",
+        "name": "Boletín de Santa Genoveva · enero 2024",
+        "notes": "Documenta que en el Rosario de la Aurora de 2023 el traslado de regreso contó con Carmen de Salteras y recoge el acuerdo firmado en noviembre de 2023 para los dos años siguientes.",
+        "license": null,
+        "created_at": "2026-09-27T06:02:41.48387+00:00",
+        "accessed_at": "2026-09-27",
+        "source_type": "Boletín oficial",
+        "publication_date": "2024-01-01",
+        "author_or_publisher": "Hermandad de Santa Genoveva"
+      },
+      {
+        "id": "c9f52223-ad00-4188-a20b-3983411608fb",
+        "url": "https://hermandadelbaratillo.es/cultos-de-regla/",
+        "name": "Cultos de Regla · María Santísima de la Caridad en su Soledad",
+        "notes": "Las Reglas sitúan el Triduo antes del penúltimo domingo de noviembre y la Función Solemne en la mañana de dicho domingo.",
+        "license": null,
+        "created_at": "2026-09-27T06:02:41.48387+00:00",
+        "accessed_at": "2026-09-27",
+        "source_type": "Fuente oficial",
+        "publication_date": null,
+        "author_or_publisher": "Hermandad del Baratillo"
+      },
+      {
+        "id": "3f9a3428-250b-4f41-9f6e-ab297380a297",
+        "url": "https://hermandadelbaratillo.es/cultos-en-honor-de-ma-stma-de-la-caridad-en-su-soledad/",
+        "name": "Cultos de la Caridad del Baratillo · 2025",
+        "notes": "Documenta la secuencia anual Función Solemne y traslado de regreso a la Capilla de la Piedad, con acompañamiento del Carmen de Salteras en la edición de 2025.",
+        "license": null,
+        "created_at": "2026-09-27T06:02:41.48387+00:00",
+        "accessed_at": "2026-09-27",
+        "source_type": "Fuente oficial",
+        "publication_date": "2025-11-15",
+        "author_or_publisher": "Hermandad del Baratillo"
+      },
+      {
+        "id": "9721be6d-dcb4-40cd-b22d-ee0fdda56875",
+        "url": "https://bandajuliancerdan.com/",
+        "name": "Banda de Música Julián Cerdán · sitio oficial",
+        "notes": "Fuente de identidad y procedencia de la banda: Sanlúcar de Barrameda (Cádiz).",
+        "license": null,
+        "created_at": "2026-09-27T06:08:43.944142+00:00",
+        "accessed_at": "2026-09-27",
+        "source_type": "official_website",
+        "publication_date": null,
+        "author_or_publisher": "Banda de Música Julián Cerdán"
+      },
+      {
+        "id": "56734e84-3402-4209-a600-96b384b81e54",
+        "url": "https://www.facebook.com/share/1EYYjLQt5p/",
+        "name": "Facebook · Real Cofradía Sevillana de Nuestra Señora de la Cabeza",
+        "notes": "Enlace de Facebook facilitado por Nacho Sánchez en esta conversación el 27/09/2026. Se conserva la ruta compartida, retirando mibextid. No ha sido posible resolver el perfil canónico ni leer sus publicaciones mediante acceso automatizado; no se atribuye contenido no consultado.",
+        "license": null,
+        "created_at": "2026-09-27T08:29:08.581264+00:00",
+        "accessed_at": null,
+        "source_type": "Canal oficial facilitado por la redacción",
+        "publication_date": null,
+        "author_or_publisher": "Real Cofradía Sevillana de Nuestra Señora de la Cabeza"
+      },
+      {
+        "id": "2a1f2fd5-c332-467c-8371-f9a2eab7aa4d",
+        "url": "https://www.instagram.com/vcabezasevilla/",
+        "name": "Instagram · Real Cofradía Sevillana de Nuestra Señora de la Cabeza",
+        "notes": "Perfil @vcabezasevilla facilitado por Nacho Sánchez en esta conversación el 27/09/2026. URL normalizada sin parámetros de seguimiento. El acceso automatizado no ha permitido leer las publicaciones; no se extraen datos históricos ni de agenda de este perfil.",
+        "license": null,
+        "created_at": "2026-09-27T08:29:08.581264+00:00",
+        "accessed_at": null,
+        "source_type": "Canal oficial facilitado por la redacción",
+        "publication_date": null,
+        "author_or_publisher": "Real Cofradía Sevillana de Nuestra Señora de la Cabeza"
+      },
+      {
+        "id": "3b8dc60d-34a2-4721-864f-61d51c6ea77b",
+        "url": "https://hdad-virgendelacabeza.blogspot.com/2009/02/",
+        "name": "Historia de la Hermandad · Virgen de la Cabeza de Sevilla",
+        "notes": "Reseña histórica y artística publicada el 8 de febrero de 2009. Sus descripciones de enseres en uso corresponden a ese corte histórico, no a 2026.",
+        "license": null,
+        "created_at": "2026-09-27T09:30:08.704817+00:00",
+        "accessed_at": "2026-09-27",
+        "source_type": "Fuente institucional",
+        "publication_date": "2009-02-08",
+        "author_or_publisher": "Real Cofradía Sevillana de Nuestra Señora de la Cabeza"
+      },
+      {
+        "id": "f5b02612-3bd1-4423-ba76-3170e0226ce7",
+        "url": "https://hdad-virgendelacabeza.blogspot.com/2019/02/actos-y-cultos-con-motivo-del-88.html",
+        "name": "Aniversario fundacional · Virgen de la Cabeza de Sevilla",
+        "notes": "Confirma la constitución de la Hermandad en San Vicente y el aniversario del 8 de febrero; se contrasta 1931 con la reseña histórica de 2009.",
+        "license": null,
+        "created_at": "2026-09-27T09:30:08.704817+00:00",
+        "accessed_at": "2026-09-27",
+        "source_type": "Fuente institucional",
+        "publication_date": "2019-02-04",
+        "author_or_publisher": "Real Cofradía Sevillana de Nuestra Señora de la Cabeza"
+      },
+      {
+        "id": "dd0b10d5-a5ff-47ae-b7a2-c0f4918d8780",
+        "url": "https://hdad-virgendelacabeza.blogspot.com/2019/09/cesion-del-manto-verde.html",
+        "name": "Cesión del manto verde · Virgen de la Cabeza de Sevilla",
+        "notes": "Documenta ejecución en 1934–1935, autoría de las Hermanas Navarro Calderón y acta de donación de 30 de mayo de 1935. La cesión temporal de 2019 no se convierte en cambio permanente de propiedad.",
+        "license": null,
+        "created_at": "2026-09-27T09:30:08.704817+00:00",
+        "accessed_at": "2026-09-27",
+        "source_type": "Fuente institucional",
+        "publication_date": "2019-09-02",
+        "author_or_publisher": "Real Cofradía Sevillana de Nuestra Señora de la Cabeza"
+      },
+      {
+        "id": "04602695-59dc-4d01-9f4e-3f66ecb4880c",
+        "url": "https://hdad-virgendelacabeza.blogspot.com/2010/09/nuestro-deseo-realizado.html",
+        "name": "Nuestro deseo realizado · Candelabros del paso de la Virgen de la Cabeza",
+        "notes": "Documenta seis candelabros de Pasión Cofrade, su distribución, alpaca plateada y bendición el 12 de septiembre de 2010.",
+        "license": null,
+        "created_at": "2026-09-27T09:30:08.704817+00:00",
+        "accessed_at": "2026-09-27",
+        "source_type": "Fuente institucional",
+        "publication_date": "2010-09-21",
+        "author_or_publisher": "Real Cofradía Sevillana de Nuestra Señora de la Cabeza"
+      },
+      {
+        "id": "2485f1d1-2ceb-41f1-baa3-e26a46dc2729",
+        "url": "https://hdad-virgendelacabeza.blogspot.com/2019/06/nueva-insignia-de-caminos.html",
+        "name": "Nueva insignia de caminos · Virgen de la Cabeza de Sevilla",
+        "notes": "Documenta bordados de Santa Clara, pintura de Pedro J. López Marcos y orfebrería de Artesanía Santos. El 19 de junio es fecha de publicación, no una fecha de estreno deducida.",
+        "license": null,
+        "created_at": "2026-09-27T09:30:08.704817+00:00",
+        "accessed_at": "2026-09-27",
+        "source_type": "Fuente institucional",
+        "publication_date": "2019-06-19",
+        "author_or_publisher": "Real Cofradía Sevillana de Nuestra Señora de la Cabeza"
+      },
+      {
+        "id": "8c45054d-c75d-4d05-9c47-1a053e8753b6",
+        "url": "https://hdad-virgendelacabeza.blogspot.com/2016/",
+        "name": "Pregón de las Glorias y salida extraordinaria · Virgen de la Cabeza · 2016",
+        "notes": "Archivo anual: convocatorias del Pregón de 29 de abril y referencia retrospectiva a la visita a la Capilla Real de 30 de abril. No se trasladan a 2026 horarios, itinerarios, vestidor o capataz de 2016.",
+        "license": null,
+        "created_at": "2026-09-27T09:30:08.704817+00:00",
+        "accessed_at": "2026-09-27",
+        "source_type": "Fuente institucional",
+        "publication_date": "2016-09-30",
+        "author_or_publisher": "Real Cofradía Sevillana de Nuestra Señora de la Cabeza"
+      }
+    ],
+    "scope": "snapshot coverage"
+  },
+  {
+    "table_name": "steps",
+    "expected_rows": 3,
+    "differences": [],
+    "scope": "snapshot coverage"
+  }
+]

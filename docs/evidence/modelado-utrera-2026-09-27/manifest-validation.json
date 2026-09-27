@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "counts": {
+    "corporations": 17,
+    "images": 47,
+    "steps": 25,
+    "heritage_assets": 6,
+    "bands": 17,
+    "outings": 20,
+    "positions": 25,
+    "operations": 1173,
+    "insert": 1166,
+    "update": 7,
+    "held": 7
+  },
+  "offline_only": true,
+  "apply_gate": "NOT_AUTHORIZED",
+  "public_contract_blockers": [],
+  "production_writes": 0,
+  "dry_run": "PASS_ROLLED_BACK",
+  "public_qa": "NOT_EXECUTED",
+  "seo_qa": "NOT_EXECUTED",
+  "residues": 0,
+  "staging_gate": "GO_FOR_STAGING_ONLY",
+  "execution_certificate": "execution-certificate.json"
+}

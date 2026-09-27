@@ -1,40 +1,18 @@
 # Hilo Cofrade · Estado canónico
 
-**En revisión, 27/09/2026:** corrección transversal de indexabilidad por patrimonio corporativo e incertidumbre documental, en rama separada de main `15710dd5bcde2a4bd6dc87dc5d8c8846e213e406`. No desplegada. La proyección estática de Utrera con esta corrección da 85/85 y cero excepciones; no certifica datos vivos, dry-run ni staging. [Detalle](./CORRECCION-INDEXABILIDAD-PATRIMONIO-2026-09-27.md).
+**Corte operativo, 27/09/2026:** correcciones públicas de Fuentes de Pasos (#1012) e indexabilidad por patrimonio/incertidumbre (#1014) integradas y verificadas en producción. No mantenerlas como bloqueos abiertos.
 
-**Cerrado, 27/09/2026:** corrección transversal de Fuentes públicas de Pasos
-integrada en #1012 y desplegada. El lector y el sitemap reconocen Fuentes
-directas, fases y piezas publicadas; 9/9 pruebas específicas, 1.303/1.303 suite,
-build y CI PASS. QA productivo: tres fichas 200, canonical propio, index/follow,
-Fuente enlazada una sola vez y presencia en sitemap (409 URLs). Runtime del
-deployment vigente sin filas error/fatal en la ventana consultada de 10 min,
-acotada a su corta vida. [Detalle](./CORRECCION-FUENTES-PASOS-2026-09-27.md).
-Utrera #1009 sigue en draft y NO-GO para staging. Sus cuatro decisiones editoriales
-ya están resueltas mediante review sin ficha pública propia; quedan integración
-de esta corrección, conciliación viva y dry-run. No staging ni Apply.
-Morón y HC-AUTO-03 permanecen fuera de las escrituras.
+**Plataforma verificada:** main `e86ba888c34ad7121be181708a2194815ea78ef2` (#1015, paletas heredadas, también reconciliada); Vercel `dpl_9QaCTZcRowb33vq3rgXyeyWu3gKa` READY sobre ese SHA, aliases hilocofrade.es y www.hilocofrade.es. Supabase ACTIVE_HEALTHY; 17 migraciones. Runtime vigente sin filas error/fatal en consulta de 15 min hasta las 11:00:17 UTC, acotada a la edad del deployment.
 
-**Corte operativo:** 27 de septiembre de 2026 · Fuentes de Pasos corregidas en producción · Morón cerrado · Utrera: decisiones editoriales resueltas; corrección pública en revisión y preflight/dry-run pendientes.
+**HC-016 · Utrera #1009:** **CERRADO Y CERTIFICADO**. Import `c0160038-0000-4000-8000-000000000001` completed 1.173/1.173, con 1.166 INSERT, 7 UPDATE, 0 DELETE y 33 REUSE; Apply `APPLY_UTRERA_SQL_OK_COMMITTED`. QA estructural, HTTP, runtime y sitemaps PASS. Cobertura exacta de sitemap: 16/16 Hermandades públicas, 45/45 Imágenes y 24/24 Pasos; H17/I44/I45/S25 siguen en review y fuera de publicación/indexación. HC-AUTO-03 permanece ready 55/55, 0 applied. [Cierre](./UTRERA-CIERRE-HC016-2026-09-27.md). No reabrir DML sin nueva orden y nueva evidencia de deriva.
 
-**Apply de Morón:** lote principal `c0160037-0000-4000-8000-000000000001` completed, **504/504 aplicadas y 0 fallidas**, sin repetición. Correctivo autorizado ejecutado: **10 Hermandades**, SET exclusivo de `brotherhood_types`; dry-run OK, rollback verificado, 0 residuos y post-Apply PASS. Las diez incluyen Penitencia, Loreto también Sacramental y Santa Cruz también Gloria.
+**Morón:** CERRADO Y CERTIFICADO. Lote principal completed 504/504, correctivo de tipos 10/10 y QA de cierre conservados. No repetir operaciones ni reabrir su deuda editorial. Las metadata históricas de su lote se conservan como evidencia del corte original.
 
-**Plataforma verificada:** main de producto `dd9c5a10a12636407366a5eed7e9f306242f05f2` (#1012 integrada); Vercel `dpl_B5oUi2UWkRqtGW1usbhR3rP8xp3Y` READY exactamente sobre ese SHA, aliases `hilocofrade.es` y `www.hilocofrade.es`. Supabase saludable; lectura de control a las 08:22 UTC: 17 migraciones, import Utrera inexistente, Morón completed 504/504 y HC-AUTO-03 ready 55/55, 0 aplicado. #1009 sigue abierta en borrador, con candidato preparado; no es ya un inventario general. Este cierre de producto no ejecuta DML del lote ni lo certifica. El commit de esta reconciliación será un HEAD documental posterior, sin deployment manual forzado.
+**HC-AUTO-03:** ready 55/55, 0 aplicado. Fuera de alcance. Carmona y Écija permanecen cerradas; no abrir otro municipio.
 
-**Supabase:** `ACTIVE_HEALTHY` y actualizado por el usuario de Nano a Micro. Support confirmó sobreutilización de memoria, uso sostenido de SWAP y overcommitment durante el incidente; CPU/IO pueden haber contribuido, por lo que no se reduce toda la causalidad a RAM. La base ocupa ~45 MB. Tras Micro: `effective_cache_size` 384→768 MB y `maintenance_work_mem` 32→64 MB. Producción contiene 17 migraciones estructurales. HC-PERF-SUPABASE-01 materializa `home_knowledge_threads`: fuente/caché 2.052/2.052, 0 diferencias, lectura `anon` correcta, patrón medido ~115,4 ms→~0,42 ms y primer cron `succeeded` (~156,9 ms). Véase [seguimiento de capacidad](./P0-SUPABASE-CAPACITY-2026-09-25.md).
+**Supabase/capacidad:** P0 cerrado, Micro activo y 17 migraciones estructurales. Se conserva la mitigación y caché de home_knowledge_threads, sin modificaciones en esta orden. [Seguimiento histórico](./P0-SUPABASE-CAPACITY-2026-09-25.md).
 
-**QA final de Morón:** 10/10 fichas HTTP 200, canonical propio e index/follow; hub y directorio municipal 200, diez Hermandades navegables y clasificación correcta. Sitemaps de Hermandades/Agenda y sitemap general incluyen las fichas y el hub. Buscador: general 10, sacramentales Loreto, Gloria Santa Cruz. #1006 corrige el patrón nominal sacramental; 1.276 pruebas, build y CI verdes, respuesta productiva verificada. Véase [remediación, auditoría y cierre](./REMEDIACION-TIPOS-MORON-HC016-2026-09-26.md).
-
-**Staging editoriales:** Morón `c0160037-0000-4000-8000-000000000001` = `completed`, **504/504 aplicadas, 0 fallidas**. La metadata FAIL del QA original se conserva como evidencia de aquel corte: no representa el estado actual de tipos/hub y no fue reescrita, porque la única escritura de datos autorizada era el correctivo de tipos. El QA actual está verde y Morón queda cerrado y certificado. Écija = completed 776/776; Carmona = completed 530/530; HC-AUTO-03 se conserva fuera de alcance.
-
-**P0 del 24/09 cerrado; seguimiento de capacidad cerrado:** el build completo sigue aislado de Supabase durante prerender. La respuesta posterior de Support confirmó presión sostenida de memoria/SWAP y se aplicó una mitigación específica sobre `home_knowledge_threads`. CI pasa tests y build, Vercel no registra errores de runtime, la Home productiva responde HTTP 200 con hilos reales y el refresco periódico de la caché se mantiene estable.
-
-**Régimen:** FIRST EDITION FREEZE activo
-
-**Frente HC-016:** Utrera #1009, candidato 1.173 operaciones, continúa NO-GO para staging. I44/I45/S25/H17 resueltos en review en la PR. H13/I13 pasan en la proyección local con la corrección de indexabilidad, todavía sin integrar. Pendientes reconciliación viva y dry-run PostgreSQL con rollback y medición de residuos. La corrección de Fuentes de Pasos ya está en producción; no mantenerla como pendiente. Morón permanece CERRADO Y CERTIFICADO; no repetir su Apply ni correctivo. No abrir HC-AUTO-03 ni otro municipio.
-
-> GitHub, Vercel y Supabase prevalecen sobre cualquier fotografía anterior. Utrera cuenta con orden expresa posterior; los rankings municipales previos no constituyen una cola automática. No abrir otro municipio tras Utrera sin una nueva orden.
-
-**Refuerzo preventivo HC-016 autorizado:** barrera de tipos implementada y verificada (1.281 pruebas y build). Altas con clasificación explícita; actualizaciones parciales validan tipos persistidos. SQL directo exige guard transaccional por IDs del universo completo. Sin DML/DDL ni nuevo municipio. [Contrato y evidencia](./HC016-PREFLIGHT-TIPOS-2026-09-27.md).
+**Régimen:** FIRST EDITION FREEZE activo. La barrera preventiva de tipos HC-016 sigue vigente. Esta fotografía vive en #1009 hasta su revisión; GitHub, Vercel y Supabase prevalecen sobre cortes anteriores.
 
 ## Tablero operativo único
 

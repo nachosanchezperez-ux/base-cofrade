@@ -1,0 +1,4292 @@
+{
+  "checks": [
+    {
+      "name": "agents_agent_kind_check",
+      "table": "agents",
+      "definition": "CHECK ((agent_kind = ANY (ARRAY['person'::text, 'workshop'::text, 'company'::text, 'institution'::text])))"
+    },
+    {
+      "name": "agents_entity_id_fkey",
+      "table": "agents",
+      "definition": "FOREIGN KEY (entity_id) REFERENCES entities(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "agents_municipality_id_fkey",
+      "table": "agents",
+      "definition": "FOREIGN KEY (municipality_id) REFERENCES municipalities(id) ON DELETE SET NULL"
+    },
+    {
+      "name": "bands_banderin_entity_id_fkey",
+      "table": "bands",
+      "definition": "FOREIGN KEY (banderin_entity_id) REFERENCES entities(id) ON DELETE SET NULL"
+    },
+    {
+      "name": "bands_entity_id_fkey",
+      "table": "bands",
+      "definition": "FOREIGN KEY (entity_id) REFERENCES entities(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "bands_logo_background_color_format",
+      "table": "bands",
+      "definition": "CHECK (((logo_background_color IS NULL) OR (logo_background_color ~ '^#[0-9A-F]{6}$'::text)))"
+    },
+    {
+      "name": "bands_municipality_id_fkey",
+      "table": "bands",
+      "definition": "FOREIGN KEY (municipality_id) REFERENCES municipalities(id) ON DELETE SET NULL"
+    },
+    {
+      "name": "bands_primary_color_format",
+      "table": "bands",
+      "definition": "CHECK (((primary_color IS NULL) OR (primary_color ~ '^#[0-9A-Fa-f]{6}$'::text)))"
+    },
+    {
+      "name": "bands_secondary_color_format",
+      "table": "bands",
+      "definition": "CHECK (((secondary_color IS NULL) OR (secondary_color ~ '^#[0-9A-Fa-f]{6}$'::text)))"
+    },
+    {
+      "name": "brotherhood_images_brotherhood_entity_id_fkey",
+      "table": "brotherhood_images",
+      "definition": "FOREIGN KEY (brotherhood_entity_id) REFERENCES entities(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "brotherhood_images_brotherhood_entity_id_image_entity_id_re_key",
+      "table": "brotherhood_images",
+      "definition": "UNIQUE (brotherhood_entity_id, image_entity_id, relation_type, date_from)"
+    },
+    {
+      "name": "brotherhood_images_image_entity_id_fkey",
+      "table": "brotherhood_images",
+      "definition": "FOREIGN KEY (image_entity_id) REFERENCES entities(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "brotherhood_images_status_check",
+      "table": "brotherhood_images",
+      "definition": "CHECK ((status = ANY (ARRAY['draft'::text, 'review'::text, 'published'::text, 'archived'::text])))"
+    },
+    {
+      "name": "brotherhood_steps_brotherhood_entity_id_fkey",
+      "table": "brotherhood_steps",
+      "definition": "FOREIGN KEY (brotherhood_entity_id) REFERENCES entities(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "brotherhood_steps_brotherhood_entity_id_step_entity_id_rela_key",
+      "table": "brotherhood_steps",
+      "definition": "UNIQUE (brotherhood_entity_id, step_entity_id, relation_type, date_from)"
+    },
+    {
+      "name": "brotherhood_steps_status_check",
+      "table": "brotherhood_steps",
+      "definition": "CHECK ((status = ANY (ARRAY['draft'::text, 'review'::text, 'published'::text, 'archived'::text])))"
+    },
+    {
+      "name": "brotherhood_steps_step_entity_id_fkey",
+      "table": "brotherhood_steps",
+      "definition": "FOREIGN KEY (step_entity_id) REFERENCES entities(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "entity_locations_custodian_entity_id_fkey",
+      "table": "entity_locations",
+      "definition": "FOREIGN KEY (custodian_entity_id) REFERENCES entities(id) ON DELETE SET NULL"
+    },
+    {
+      "name": "entity_locations_entity_id_fkey",
+      "table": "entity_locations",
+      "definition": "FOREIGN KEY (entity_id) REFERENCES entities(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "entity_locations_municipality_id_fkey",
+      "table": "entity_locations",
+      "definition": "FOREIGN KEY (municipality_id) REFERENCES municipalities(id) ON DELETE SET NULL"
+    },
+    {
+      "name": "entity_locations_place_id_fkey",
+      "table": "entity_locations",
+      "definition": "FOREIGN KEY (place_id) REFERENCES places(id) ON DELETE SET NULL"
+    },
+    {
+      "name": "entity_locations_status_check",
+      "table": "entity_locations",
+      "definition": "CHECK ((status = ANY (ARRAY['draft'::text, 'review'::text, 'published'::text, 'archived'::text])))"
+    },
+    {
+      "name": "heritage_assets_entity_id_fkey",
+      "table": "heritage_assets",
+      "definition": "FOREIGN KEY (entity_id) REFERENCES entities(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "heritage_assets_parent_entity_id_fkey",
+      "table": "heritage_assets",
+      "definition": "FOREIGN KEY (parent_entity_id) REFERENCES entities(id) ON DELETE SET NULL"
+    },
+    {
+      "name": "image_authorships_agent_entity_id_fkey",
+      "table": "image_authorships",
+      "definition": "FOREIGN KEY (agent_entity_id) REFERENCES entities(id) ON DELETE RESTRICT"
+    },
+    {
+      "name": "image_authorships_agent_presence_check",
+      "table": "image_authorships",
+      "definition": "CHECK ((((authorship_type = 'anonymous'::text) AND (agent_entity_id IS NULL) AND (certainty = 'unknown'::text)) OR ((authorship_type <> 'anonymous'::text) AND (agent_entity_id IS NOT NULL))))"
+    },
+    {
+      "name": "image_authorships_authorship_type_check",
+      "table": "image_authorships",
+      "definition": "CHECK ((authorship_type = ANY (ARRAY['author'::text, 'attributed_to'::text, 'workshop_of'::text, 'circle_of'::text, 'school_of'::text, 'anonymous'::text])))"
+    },
+    {
+      "name": "image_authorships_certainty_check",
+      "table": "image_authorships",
+      "definition": "CHECK ((certainty = ANY (ARRAY['documented'::text, 'attributed'::text, 'traditional'::text, 'unknown'::text])))"
+    },
+    {
+      "name": "image_authorships_image_entity_id_agent_entity_id_authorshi_key",
+      "table": "image_authorships",
+      "definition": "UNIQUE (image_entity_id, agent_entity_id, authorship_type, role_name)"
+    },
+    {
+      "name": "image_authorships_image_entity_id_fkey",
+      "table": "image_authorships",
+      "definition": "FOREIGN KEY (image_entity_id) REFERENCES entities(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "image_authorships_status_check",
+      "table": "image_authorships",
+      "definition": "CHECK ((status = ANY (ARRAY['draft'::text, 'review'::text, 'published'::text, 'archived'::text])))"
+    },
+    {
+      "name": "image_steps_image_entity_id_fkey",
+      "table": "image_steps",
+      "definition": "FOREIGN KEY (image_entity_id) REFERENCES entities(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "image_steps_image_entity_id_step_entity_id_relation_type_da_key",
+      "table": "image_steps",
+      "definition": "UNIQUE (image_entity_id, step_entity_id, relation_type, date_from)"
+    },
+    {
+      "name": "image_steps_status_check",
+      "table": "image_steps",
+      "definition": "CHECK ((status = ANY (ARRAY['draft'::text, 'review'::text, 'published'::text, 'archived'::text])))"
+    },
+    {
+      "name": "image_steps_step_entity_id_fkey",
+      "table": "image_steps",
+      "definition": "FOREIGN KEY (step_entity_id) REFERENCES entities(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "outing_music_assignments_band_entity_id_fkey",
+      "table": "outing_music_assignments",
+      "definition": "FOREIGN KEY (band_entity_id) REFERENCES entities(id) ON DELETE RESTRICT"
+    },
+    {
+      "name": "outing_music_assignments_band_required",
+      "table": "outing_music_assignments",
+      "definition": "CHECK (((band_entity_id IS NOT NULL) OR (NULLIF(btrim(band_name_text), ''::text) IS NOT NULL)))"
+    },
+    {
+      "name": "outing_music_assignments_music_position_id_band_entity_id_s_key",
+      "table": "outing_music_assignments",
+      "definition": "UNIQUE (music_position_id, band_entity_id, sequence_no)"
+    },
+    {
+      "name": "outing_music_assignments_music_position_id_fkey",
+      "table": "outing_music_assignments",
+      "definition": "FOREIGN KEY (music_position_id) REFERENCES outing_music_positions(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "outing_music_assignments_participation_mode_check",
+      "table": "outing_music_assignments",
+      "definition": "CHECK ((participation_mode = ANY (ARRAY['full_route'::text, 'segment'::text, 'alternating'::text, 'unspecified'::text])))"
+    },
+    {
+      "name": "outing_music_assignments_status_check",
+      "table": "outing_music_assignments",
+      "definition": "CHECK ((status = ANY (ARRAY['draft'::text, 'review'::text, 'published'::text, 'archived'::text])))"
+    },
+    {
+      "name": "outing_music_positions_outing_id_fkey",
+      "table": "outing_music_positions",
+      "definition": "FOREIGN KEY (outing_id) REFERENCES outings(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "outing_music_positions_outing_id_sequence_no_key",
+      "table": "outing_music_positions",
+      "definition": "UNIQUE (outing_id, sequence_no)"
+    },
+    {
+      "name": "outing_music_positions_status_check",
+      "table": "outing_music_positions",
+      "definition": "CHECK ((status = ANY (ARRAY['draft'::text, 'review'::text, 'published'::text, 'archived'::text])))"
+    },
+    {
+      "name": "outing_music_positions_step_entity_id_fkey",
+      "table": "outing_music_positions",
+      "definition": "FOREIGN KEY (step_entity_id) REFERENCES entities(id) ON DELETE SET NULL"
+    },
+    {
+      "name": "outings_brotherhood_entity_id_fkey",
+      "table": "outings",
+      "definition": "FOREIGN KEY (brotherhood_entity_id) REFERENCES entities(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "outings_character_check",
+      "table": "outings",
+      "definition": "CHECK ((\"character\" = ANY (ARRAY['ordinary'::text, 'extraordinary'::text])))"
+    },
+    {
+      "name": "outings_destination_place_id_fkey",
+      "table": "outings",
+      "definition": "FOREIGN KEY (destination_place_id) REFERENCES places(id) ON DELETE SET NULL"
+    },
+    {
+      "name": "outings_event_status_check",
+      "table": "outings",
+      "definition": "CHECK ((event_status = ANY (ARRAY['announced'::text, 'held'::text, 'cancelled'::text])))"
+    },
+    {
+      "name": "outings_municipality_id_fkey",
+      "table": "outings",
+      "definition": "FOREIGN KEY (municipality_id) REFERENCES municipalities(id) ON DELETE SET NULL"
+    },
+    {
+      "name": "outings_origin_place_id_fkey",
+      "table": "outings",
+      "definition": "FOREIGN KEY (origin_place_id) REFERENCES places(id) ON DELETE SET NULL"
+    },
+    {
+      "name": "outings_outing_series_id_fkey",
+      "table": "outings",
+      "definition": "FOREIGN KEY (outing_series_id) REFERENCES outing_series(id) ON DELETE SET NULL"
+    },
+    {
+      "name": "outings_status_check",
+      "table": "outings",
+      "definition": "CHECK ((status = ANY (ARRAY['draft'::text, 'review'::text, 'published'::text, 'archived'::text])))"
+    },
+    {
+      "name": "places_municipality_id_fkey",
+      "table": "places",
+      "definition": "FOREIGN KEY (municipality_id) REFERENCES municipalities(id) ON DELETE SET NULL"
+    },
+    {
+      "name": "places_slug_key",
+      "table": "places",
+      "definition": "UNIQUE (slug)"
+    },
+    {
+      "name": "source_links_agent_name_id_fkey",
+      "table": "source_links",
+      "definition": "FOREIGN KEY (agent_name_id) REFERENCES agent_names(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "source_links_agent_role_id_fkey",
+      "table": "source_links",
+      "definition": "FOREIGN KEY (agent_role_id) REFERENCES agent_roles(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "source_links_band_premiere_id_fkey",
+      "table": "source_links",
+      "definition": "FOREIGN KEY (band_premiere_id) REFERENCES band_premieres(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "source_links_brotherhood_habit_id_fkey",
+      "table": "source_links",
+      "definition": "FOREIGN KEY (brotherhood_habit_id) REFERENCES brotherhood_habits(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "source_links_brotherhood_image_id_fkey",
+      "table": "source_links",
+      "definition": "FOREIGN KEY (brotherhood_image_id) REFERENCES brotherhood_images(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "source_links_brotherhood_step_id_fkey",
+      "table": "source_links",
+      "definition": "FOREIGN KEY (brotherhood_step_id) REFERENCES brotherhood_steps(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "source_links_cult_id_fkey",
+      "table": "source_links",
+      "definition": "FOREIGN KEY (cult_id) REFERENCES cults(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "source_links_cult_occurrence_id_fkey",
+      "table": "source_links",
+      "definition": "FOREIGN KEY (cult_occurrence_id) REFERENCES cult_occurrences(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "source_links_editorial_content_id_fkey",
+      "table": "source_links",
+      "definition": "FOREIGN KEY (editorial_content_id) REFERENCES editorial_content(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "source_links_entity_id_fkey",
+      "table": "source_links",
+      "definition": "FOREIGN KEY (entity_id) REFERENCES entities(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "source_links_entity_location_id_fkey",
+      "table": "source_links",
+      "definition": "FOREIGN KEY (entity_location_id) REFERENCES entity_locations(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "source_links_entity_relation_id_fkey",
+      "table": "source_links",
+      "definition": "FOREIGN KEY (entity_relation_id) REFERENCES entity_relations(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "source_links_heritage_update_id_fkey",
+      "table": "source_links",
+      "definition": "FOREIGN KEY (heritage_update_id) REFERENCES heritage_updates(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "source_links_image_authorship_id_fkey",
+      "table": "source_links",
+      "definition": "FOREIGN KEY (image_authorship_id) REFERENCES image_authorships(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "source_links_image_step_id_fkey",
+      "table": "source_links",
+      "definition": "FOREIGN KEY (image_step_id) REFERENCES image_steps(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "source_links_intervention_id_fkey",
+      "table": "source_links",
+      "definition": "FOREIGN KEY (intervention_id) REFERENCES heritage_interventions(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "source_links_march_dedication_id_fkey",
+      "table": "source_links",
+      "definition": "FOREIGN KEY (march_dedication_id) REFERENCES march_dedications(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "source_links_march_recording_id_fkey",
+      "table": "source_links",
+      "definition": "FOREIGN KEY (march_recording_id) REFERENCES march_recordings(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "source_links_music_accompaniment_period_id_fkey",
+      "table": "source_links",
+      "definition": "FOREIGN KEY (music_accompaniment_period_id) REFERENCES music_accompaniment_periods(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "source_links_one_target",
+      "table": "source_links",
+      "definition": "CHECK ((num_nonnulls(entity_id, outing_id, cult_id, intervention_id, heritage_update_id, editorial_content_id, music_accompaniment_period_id, march_dedication_id, march_recording_id, image_authorship_id, brotherhood_image_id, entity_location_id, entity_relation_id, step_phase_id, step_personnel_period_id, brotherhood_step_id, image_step_id, agent_name_id, agent_role_id, cult_occurrence_id, outing_music_position_id, outing_music_assignment_id, outing_series_id, band_premiere_id, brotherhood_habit_id) = 1))"
+    },
+    {
+      "name": "source_links_outing_id_fkey",
+      "table": "source_links",
+      "definition": "FOREIGN KEY (outing_id) REFERENCES outings(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "source_links_outing_music_assignment_id_fkey",
+      "table": "source_links",
+      "definition": "FOREIGN KEY (outing_music_assignment_id) REFERENCES outing_music_assignments(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "source_links_outing_music_position_id_fkey",
+      "table": "source_links",
+      "definition": "FOREIGN KEY (outing_music_position_id) REFERENCES outing_music_positions(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "source_links_outing_series_id_fkey",
+      "table": "source_links",
+      "definition": "FOREIGN KEY (outing_series_id) REFERENCES outing_series(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "source_links_source_id_fkey",
+      "table": "source_links",
+      "definition": "FOREIGN KEY (source_id) REFERENCES sources(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "source_links_step_personnel_period_id_fkey",
+      "table": "source_links",
+      "definition": "FOREIGN KEY (step_personnel_period_id) REFERENCES step_personnel_periods(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "source_links_step_phase_id_fkey",
+      "table": "source_links",
+      "definition": "FOREIGN KEY (step_phase_id) REFERENCES step_phases(id) ON DELETE CASCADE"
+    }
+  ],
+  "tables": [
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "agents",
+      "column": "entity_id",
+      "default": null,
+      "nullable": "NO"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "agents",
+      "column": "agent_kind",
+      "default": null,
+      "nullable": "NO"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "agents",
+      "column": "municipality_id",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "agents",
+      "column": "foundation_or_birth_text",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "agents",
+      "column": "death_or_end_text",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "agents",
+      "column": "website_url",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "agents",
+      "column": "instagram_url",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "agents",
+      "column": "description",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "date",
+      "type": "date",
+      "table": "agents",
+      "column": "birth_or_foundation_date",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "date",
+      "type": "date",
+      "table": "agents",
+      "column": "death_or_end_date",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "agents",
+      "column": "address",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "agents",
+      "column": "email",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "agents",
+      "column": "phone",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "agents",
+      "column": "active_notes",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "bands",
+      "column": "entity_id",
+      "default": null,
+      "nullable": "NO"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "bands",
+      "column": "band_type",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "bands",
+      "column": "municipality_id",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "bands",
+      "column": "foundation_text",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "bands",
+      "column": "website_url",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "bands",
+      "column": "instagram_url",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "bands",
+      "column": "description",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "bands",
+      "column": "primary_color",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "bands",
+      "column": "secondary_color",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "bands",
+      "column": "logo_path",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "bands",
+      "column": "hero_image_path",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "bands",
+      "column": "hero_image_alt",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "bands",
+      "column": "hero_image_credit",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "bands",
+      "column": "linked_brotherhood_name",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "bands",
+      "column": "headquarters_text",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "bands",
+      "column": "youtube_url",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "bands",
+      "column": "banderin_entity_id",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "bands",
+      "column": "logo_background_color",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "brotherhood_images",
+      "column": "id",
+      "default": "gen_random_uuid()",
+      "nullable": "NO"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "brotherhood_images",
+      "column": "brotherhood_entity_id",
+      "default": null,
+      "nullable": "NO"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "brotherhood_images",
+      "column": "image_entity_id",
+      "default": null,
+      "nullable": "NO"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "brotherhood_images",
+      "column": "relation_type",
+      "default": "'titular'::text",
+      "nullable": "NO"
+    },
+    {
+      "udt": "date",
+      "type": "date",
+      "table": "brotherhood_images",
+      "column": "date_from",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "brotherhood_images",
+      "column": "date_from_text",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "date",
+      "type": "date",
+      "table": "brotherhood_images",
+      "column": "date_to",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "brotherhood_images",
+      "column": "date_to_text",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "brotherhood_images",
+      "column": "notes",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "brotherhood_images",
+      "column": "status",
+      "default": "'published'::text",
+      "nullable": "NO"
+    },
+    {
+      "udt": "timestamptz",
+      "type": "timestamp with time zone",
+      "table": "brotherhood_images",
+      "column": "created_at",
+      "default": "now()",
+      "nullable": "NO"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "brotherhood_steps",
+      "column": "id",
+      "default": "gen_random_uuid()",
+      "nullable": "NO"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "brotherhood_steps",
+      "column": "brotherhood_entity_id",
+      "default": null,
+      "nullable": "NO"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "brotherhood_steps",
+      "column": "step_entity_id",
+      "default": null,
+      "nullable": "NO"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "brotherhood_steps",
+      "column": "relation_type",
+      "default": "'processional_step'::text",
+      "nullable": "NO"
+    },
+    {
+      "udt": "date",
+      "type": "date",
+      "table": "brotherhood_steps",
+      "column": "date_from",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "brotherhood_steps",
+      "column": "date_from_text",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "date",
+      "type": "date",
+      "table": "brotherhood_steps",
+      "column": "date_to",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "brotherhood_steps",
+      "column": "date_to_text",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "brotherhood_steps",
+      "column": "notes",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "brotherhood_steps",
+      "column": "status",
+      "default": "'published'::text",
+      "nullable": "NO"
+    },
+    {
+      "udt": "timestamptz",
+      "type": "timestamp with time zone",
+      "table": "brotherhood_steps",
+      "column": "created_at",
+      "default": "now()",
+      "nullable": "NO"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "entity_locations",
+      "column": "id",
+      "default": "gen_random_uuid()",
+      "nullable": "NO"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "entity_locations",
+      "column": "entity_id",
+      "default": null,
+      "nullable": "NO"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "entity_locations",
+      "column": "place_id",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "entity_locations",
+      "column": "municipality_id",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "entity_locations",
+      "column": "custodian_entity_id",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "entity_locations",
+      "column": "location_type",
+      "default": "'physical_location'::text",
+      "nullable": "NO"
+    },
+    {
+      "udt": "date",
+      "type": "date",
+      "table": "entity_locations",
+      "column": "date_from",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "entity_locations",
+      "column": "date_from_text",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "date",
+      "type": "date",
+      "table": "entity_locations",
+      "column": "date_to",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "entity_locations",
+      "column": "date_to_text",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "bool",
+      "type": "boolean",
+      "table": "entity_locations",
+      "column": "is_current",
+      "default": "false",
+      "nullable": "NO"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "entity_locations",
+      "column": "notes",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "entity_locations",
+      "column": "status",
+      "default": "'published'::text",
+      "nullable": "NO"
+    },
+    {
+      "udt": "timestamptz",
+      "type": "timestamp with time zone",
+      "table": "entity_locations",
+      "column": "created_at",
+      "default": "now()",
+      "nullable": "NO"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "heritage_assets",
+      "column": "entity_id",
+      "default": null,
+      "nullable": "NO"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "heritage_assets",
+      "column": "parent_entity_id",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "heritage_assets",
+      "column": "asset_type",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "heritage_assets",
+      "column": "description",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "heritage_assets",
+      "column": "current_condition",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "heritage_assets",
+      "column": "notes",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "date",
+      "type": "date",
+      "table": "heritage_assets",
+      "column": "date_from",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "heritage_assets",
+      "column": "date_from_text",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "date",
+      "type": "date",
+      "table": "heritage_assets",
+      "column": "date_to",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "heritage_assets",
+      "column": "date_to_text",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "bool",
+      "type": "boolean",
+      "table": "heritage_assets",
+      "column": "is_current",
+      "default": "true",
+      "nullable": "NO"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "heritage_assets",
+      "column": "origin_notes",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "heritage_assets",
+      "column": "technique",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "heritage_assets",
+      "column": "materials",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "heritage_assets",
+      "column": "dimensions_text",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "heritage_assets",
+      "column": "iconography",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "heritage_assets",
+      "column": "historical_context",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "heritage_assets",
+      "column": "provenance_text",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "date",
+      "type": "date",
+      "table": "heritage_assets",
+      "column": "blessing_date",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "heritage_assets",
+      "column": "blessing_date_text",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "int4",
+      "type": "integer",
+      "table": "heritage_assets",
+      "column": "display_order",
+      "default": "0",
+      "nullable": "NO"
+    },
+    {
+      "udt": "bool",
+      "type": "boolean",
+      "table": "heritage_assets",
+      "column": "is_featured",
+      "default": "false",
+      "nullable": "NO"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "heritage_assets",
+      "column": "public_image_path",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "heritage_assets",
+      "column": "public_image_alt",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "heritage_assets",
+      "column": "public_image_credit",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "heritage_assets",
+      "column": "usage_text",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "image_authorships",
+      "column": "id",
+      "default": "gen_random_uuid()",
+      "nullable": "NO"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "image_authorships",
+      "column": "image_entity_id",
+      "default": null,
+      "nullable": "NO"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "image_authorships",
+      "column": "agent_entity_id",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "image_authorships",
+      "column": "authorship_type",
+      "default": null,
+      "nullable": "NO"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "image_authorships",
+      "column": "role_name",
+      "default": "'autor'::text",
+      "nullable": "NO"
+    },
+    {
+      "udt": "date",
+      "type": "date",
+      "table": "image_authorships",
+      "column": "date_from",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "image_authorships",
+      "column": "date_from_text",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "date",
+      "type": "date",
+      "table": "image_authorships",
+      "column": "date_to",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "image_authorships",
+      "column": "date_to_text",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "image_authorships",
+      "column": "certainty",
+      "default": "'documented'::text",
+      "nullable": "NO"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "image_authorships",
+      "column": "notes",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "image_authorships",
+      "column": "status",
+      "default": "'published'::text",
+      "nullable": "NO"
+    },
+    {
+      "udt": "timestamptz",
+      "type": "timestamp with time zone",
+      "table": "image_authorships",
+      "column": "created_at",
+      "default": "now()",
+      "nullable": "NO"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "image_steps",
+      "column": "id",
+      "default": "gen_random_uuid()",
+      "nullable": "NO"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "image_steps",
+      "column": "image_entity_id",
+      "default": null,
+      "nullable": "NO"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "image_steps",
+      "column": "step_entity_id",
+      "default": null,
+      "nullable": "NO"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "image_steps",
+      "column": "relation_type",
+      "default": "'processes_on'::text",
+      "nullable": "NO"
+    },
+    {
+      "udt": "date",
+      "type": "date",
+      "table": "image_steps",
+      "column": "date_from",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "image_steps",
+      "column": "date_from_text",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "date",
+      "type": "date",
+      "table": "image_steps",
+      "column": "date_to",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "image_steps",
+      "column": "date_to_text",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "image_steps",
+      "column": "notes",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "image_steps",
+      "column": "status",
+      "default": "'published'::text",
+      "nullable": "NO"
+    },
+    {
+      "udt": "timestamptz",
+      "type": "timestamp with time zone",
+      "table": "image_steps",
+      "column": "created_at",
+      "default": "now()",
+      "nullable": "NO"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "outing_music_assignments",
+      "column": "id",
+      "default": "gen_random_uuid()",
+      "nullable": "NO"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "outing_music_assignments",
+      "column": "music_position_id",
+      "default": null,
+      "nullable": "NO"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "outing_music_assignments",
+      "column": "band_entity_id",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "outing_music_assignments",
+      "column": "participation_mode",
+      "default": "'full_route'::text",
+      "nullable": "NO"
+    },
+    {
+      "udt": "int4",
+      "type": "integer",
+      "table": "outing_music_assignments",
+      "column": "sequence_no",
+      "default": "1",
+      "nullable": "NO"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "outing_music_assignments",
+      "column": "segment_start_label",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "outing_music_assignments",
+      "column": "segment_end_label",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "outing_music_assignments",
+      "column": "notes",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "outing_music_assignments",
+      "column": "status",
+      "default": "'published'::text",
+      "nullable": "NO"
+    },
+    {
+      "udt": "timestamptz",
+      "type": "timestamp with time zone",
+      "table": "outing_music_assignments",
+      "column": "created_at",
+      "default": "now()",
+      "nullable": "NO"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "outing_music_assignments",
+      "column": "band_name_text",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "outing_music_positions",
+      "column": "id",
+      "default": "gen_random_uuid()",
+      "nullable": "NO"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "outing_music_positions",
+      "column": "outing_id",
+      "default": null,
+      "nullable": "NO"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "outing_music_positions",
+      "column": "step_entity_id",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "outing_music_positions",
+      "column": "position_code",
+      "default": null,
+      "nullable": "NO"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "outing_music_positions",
+      "column": "position_label",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "int4",
+      "type": "integer",
+      "table": "outing_music_positions",
+      "column": "sequence_no",
+      "default": "1",
+      "nullable": "NO"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "outing_music_positions",
+      "column": "notes",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "outing_music_positions",
+      "column": "status",
+      "default": "'published'::text",
+      "nullable": "NO"
+    },
+    {
+      "udt": "timestamptz",
+      "type": "timestamp with time zone",
+      "table": "outing_music_positions",
+      "column": "created_at",
+      "default": "now()",
+      "nullable": "NO"
+    },
+    {
+      "udt": "timestamptz",
+      "type": "timestamp with time zone",
+      "table": "outing_music_positions",
+      "column": "updated_at",
+      "default": "now()",
+      "nullable": "NO"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "outings",
+      "column": "id",
+      "default": "gen_random_uuid()",
+      "nullable": "NO"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "outings",
+      "column": "brotherhood_entity_id",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "outings",
+      "column": "outing_type",
+      "default": null,
+      "nullable": "NO"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "outings",
+      "column": "character",
+      "default": "'ordinary'::text",
+      "nullable": "NO"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "outings",
+      "column": "title",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "date",
+      "type": "date",
+      "table": "outings",
+      "column": "outing_date",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "int4",
+      "type": "integer",
+      "table": "outings",
+      "column": "year",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "time",
+      "type": "time without time zone",
+      "table": "outings",
+      "column": "departure_time",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "time",
+      "type": "time without time zone",
+      "table": "outings",
+      "column": "return_time",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "outings",
+      "column": "municipality_id",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "outings",
+      "column": "origin_place_id",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "outings",
+      "column": "destination_place_id",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "outings",
+      "column": "reason",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "jsonb",
+      "type": "jsonb",
+      "table": "outings",
+      "column": "route",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "outings",
+      "column": "description",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "outings",
+      "column": "event_status",
+      "default": "'announced'::text",
+      "nullable": "NO"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "outings",
+      "column": "status",
+      "default": "'published'::text",
+      "nullable": "NO"
+    },
+    {
+      "udt": "timestamptz",
+      "type": "timestamp with time zone",
+      "table": "outings",
+      "column": "created_at",
+      "default": "now()",
+      "nullable": "NO"
+    },
+    {
+      "udt": "timestamptz",
+      "type": "timestamp with time zone",
+      "table": "outings",
+      "column": "updated_at",
+      "default": "now()",
+      "nullable": "NO"
+    },
+    {
+      "udt": "date",
+      "type": "date",
+      "table": "outings",
+      "column": "return_date",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "outings",
+      "column": "route_summary",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "outings",
+      "column": "public_notes",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "outings",
+      "column": "organizer_name",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "outings",
+      "column": "organizer_notes",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "outings",
+      "column": "outing_series_id",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "outings",
+      "column": "hero_image_path",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "outings",
+      "column": "hero_image_alt",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "outings",
+      "column": "hero_image_credit",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "outings",
+      "column": "slug",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "outings",
+      "column": "reference_code",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "outings",
+      "column": "origin_text",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "outings",
+      "column": "destination_text",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "places",
+      "column": "id",
+      "default": "gen_random_uuid()",
+      "nullable": "NO"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "places",
+      "column": "municipality_id",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "places",
+      "column": "name",
+      "default": null,
+      "nullable": "NO"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "places",
+      "column": "slug",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "places",
+      "column": "place_type",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "places",
+      "column": "address",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "numeric",
+      "type": "numeric",
+      "table": "places",
+      "column": "latitude",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "numeric",
+      "type": "numeric",
+      "table": "places",
+      "column": "longitude",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "places",
+      "column": "notes",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "timestamptz",
+      "type": "timestamp with time zone",
+      "table": "places",
+      "column": "created_at",
+      "default": "now()",
+      "nullable": "NO"
+    },
+    {
+      "udt": "timestamptz",
+      "type": "timestamp with time zone",
+      "table": "places",
+      "column": "updated_at",
+      "default": "now()",
+      "nullable": "NO"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "places",
+      "column": "opening_hours_text",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "date",
+      "type": "date",
+      "table": "places",
+      "column": "opening_hours_verified_at",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "source_links",
+      "column": "id",
+      "default": "gen_random_uuid()",
+      "nullable": "NO"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "source_links",
+      "column": "source_id",
+      "default": null,
+      "nullable": "NO"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "source_links",
+      "column": "entity_id",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "source_links",
+      "column": "outing_id",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "source_links",
+      "column": "cult_id",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "source_links",
+      "column": "intervention_id",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "source_links",
+      "column": "scope",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "source_links",
+      "column": "notes",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "timestamptz",
+      "type": "timestamp with time zone",
+      "table": "source_links",
+      "column": "created_at",
+      "default": "now()",
+      "nullable": "NO"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "source_links",
+      "column": "heritage_update_id",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "source_links",
+      "column": "editorial_content_id",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "source_links",
+      "column": "music_accompaniment_period_id",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "source_links",
+      "column": "march_dedication_id",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "source_links",
+      "column": "march_recording_id",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "source_links",
+      "column": "image_authorship_id",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "source_links",
+      "column": "brotherhood_image_id",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "source_links",
+      "column": "entity_location_id",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "source_links",
+      "column": "entity_relation_id",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "source_links",
+      "column": "step_phase_id",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "source_links",
+      "column": "step_personnel_period_id",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "source_links",
+      "column": "brotherhood_step_id",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "source_links",
+      "column": "image_step_id",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "source_links",
+      "column": "agent_name_id",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "source_links",
+      "column": "agent_role_id",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "source_links",
+      "column": "cult_occurrence_id",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "source_links",
+      "column": "outing_music_position_id",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "source_links",
+      "column": "outing_music_assignment_id",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "source_links",
+      "column": "outing_series_id",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "source_links",
+      "column": "band_premiere_id",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "source_links",
+      "column": "brotherhood_habit_id",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "uuid",
+      "type": "uuid",
+      "table": "sources",
+      "column": "id",
+      "default": "gen_random_uuid()",
+      "nullable": "NO"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "sources",
+      "column": "name",
+      "default": null,
+      "nullable": "NO"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "sources",
+      "column": "url",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "sources",
+      "column": "source_type",
+      "default": null,
+      "nullable": "NO"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "sources",
+      "column": "author_or_publisher",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "date",
+      "type": "date",
+      "table": "sources",
+      "column": "publication_date",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "date",
+      "type": "date",
+      "table": "sources",
+      "column": "accessed_at",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "sources",
+      "column": "license",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "text",
+      "type": "text",
+      "table": "sources",
+      "column": "notes",
+      "default": null,
+      "nullable": "YES"
+    },
+    {
+      "udt": "timestamptz",
+      "type": "timestamp with time zone",
+      "table": "sources",
+      "column": "created_at",
+      "default": "now()",
+      "nullable": "NO"
+    }
+  ],
+  "observed_at": "2026-09-27T05:57:32.817768+00:00",
+  "namespace_collisions": 0,
+  "initial": [
+    {
+      "udt": "uuid",
+      "table": "agents",
+      "column": "entity_id",
+      "default": null,
+      "nullable": "NO",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "text",
+      "table": "agents",
+      "column": "agent_kind",
+      "default": null,
+      "nullable": "NO",
+      "data_type": "text"
+    },
+    {
+      "udt": "uuid",
+      "table": "agents",
+      "column": "municipality_id",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "text",
+      "table": "agents",
+      "column": "foundation_or_birth_text",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "agents",
+      "column": "death_or_end_text",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "agents",
+      "column": "website_url",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "agents",
+      "column": "instagram_url",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "agents",
+      "column": "description",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "date",
+      "table": "agents",
+      "column": "birth_or_foundation_date",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "date"
+    },
+    {
+      "udt": "date",
+      "table": "agents",
+      "column": "death_or_end_date",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "date"
+    },
+    {
+      "udt": "text",
+      "table": "agents",
+      "column": "address",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "agents",
+      "column": "email",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "agents",
+      "column": "phone",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "agents",
+      "column": "active_notes",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "uuid",
+      "table": "bands",
+      "column": "entity_id",
+      "default": null,
+      "nullable": "NO",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "text",
+      "table": "bands",
+      "column": "band_type",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "uuid",
+      "table": "bands",
+      "column": "municipality_id",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "text",
+      "table": "bands",
+      "column": "foundation_text",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "bands",
+      "column": "website_url",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "bands",
+      "column": "instagram_url",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "bands",
+      "column": "description",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "bands",
+      "column": "primary_color",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "bands",
+      "column": "secondary_color",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "bands",
+      "column": "logo_path",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "bands",
+      "column": "hero_image_path",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "bands",
+      "column": "hero_image_alt",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "bands",
+      "column": "hero_image_credit",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "bands",
+      "column": "linked_brotherhood_name",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "bands",
+      "column": "headquarters_text",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "bands",
+      "column": "youtube_url",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "uuid",
+      "table": "bands",
+      "column": "banderin_entity_id",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "text",
+      "table": "bands",
+      "column": "logo_background_color",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "uuid",
+      "table": "brotherhood_images",
+      "column": "id",
+      "default": "gen_random_uuid()",
+      "nullable": "NO",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "brotherhood_images",
+      "column": "brotherhood_entity_id",
+      "default": null,
+      "nullable": "NO",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "brotherhood_images",
+      "column": "image_entity_id",
+      "default": null,
+      "nullable": "NO",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "text",
+      "table": "brotherhood_images",
+      "column": "relation_type",
+      "default": "'titular'::text",
+      "nullable": "NO",
+      "data_type": "text"
+    },
+    {
+      "udt": "date",
+      "table": "brotherhood_images",
+      "column": "date_from",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "date"
+    },
+    {
+      "udt": "text",
+      "table": "brotherhood_images",
+      "column": "date_from_text",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "date",
+      "table": "brotherhood_images",
+      "column": "date_to",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "date"
+    },
+    {
+      "udt": "text",
+      "table": "brotherhood_images",
+      "column": "date_to_text",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "brotherhood_images",
+      "column": "notes",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "brotherhood_images",
+      "column": "status",
+      "default": "'published'::text",
+      "nullable": "NO",
+      "data_type": "text"
+    },
+    {
+      "udt": "timestamptz",
+      "table": "brotherhood_images",
+      "column": "created_at",
+      "default": "now()",
+      "nullable": "NO",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "udt": "uuid",
+      "table": "brotherhood_steps",
+      "column": "id",
+      "default": "gen_random_uuid()",
+      "nullable": "NO",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "brotherhood_steps",
+      "column": "brotherhood_entity_id",
+      "default": null,
+      "nullable": "NO",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "brotherhood_steps",
+      "column": "step_entity_id",
+      "default": null,
+      "nullable": "NO",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "text",
+      "table": "brotherhood_steps",
+      "column": "relation_type",
+      "default": "'processional_step'::text",
+      "nullable": "NO",
+      "data_type": "text"
+    },
+    {
+      "udt": "date",
+      "table": "brotherhood_steps",
+      "column": "date_from",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "date"
+    },
+    {
+      "udt": "text",
+      "table": "brotherhood_steps",
+      "column": "date_from_text",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "date",
+      "table": "brotherhood_steps",
+      "column": "date_to",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "date"
+    },
+    {
+      "udt": "text",
+      "table": "brotherhood_steps",
+      "column": "date_to_text",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "brotherhood_steps",
+      "column": "notes",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "brotherhood_steps",
+      "column": "status",
+      "default": "'published'::text",
+      "nullable": "NO",
+      "data_type": "text"
+    },
+    {
+      "udt": "timestamptz",
+      "table": "brotherhood_steps",
+      "column": "created_at",
+      "default": "now()",
+      "nullable": "NO",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "udt": "uuid",
+      "table": "brotherhoods",
+      "column": "entity_id",
+      "default": null,
+      "nullable": "NO",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "text",
+      "table": "brotherhoods",
+      "column": "official_name",
+      "default": null,
+      "nullable": "NO",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "brotherhoods",
+      "column": "popular_name",
+      "default": null,
+      "nullable": "NO",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "brotherhoods",
+      "column": "foundation_text",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "uuid",
+      "table": "brotherhoods",
+      "column": "municipality_id",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "brotherhoods",
+      "column": "canonical_see_place_id",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "text",
+      "table": "brotherhoods",
+      "column": "neighborhood",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "brotherhoods",
+      "column": "website_url",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "brotherhoods",
+      "column": "instagram_url",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "brotherhoods",
+      "column": "crest_path",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "_text",
+      "table": "brotherhoods",
+      "column": "brotherhood_types",
+      "default": "'{}'::text[]",
+      "nullable": "NO",
+      "data_type": "ARRAY"
+    },
+    {
+      "udt": "text",
+      "table": "brotherhoods",
+      "column": "current_procession_day",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "brotherhoods",
+      "column": "notes",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "brotherhoods",
+      "column": "history_text",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "uuid",
+      "table": "entities",
+      "column": "id",
+      "default": "gen_random_uuid()",
+      "nullable": "NO",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "text",
+      "table": "entities",
+      "column": "entity_type",
+      "default": null,
+      "nullable": "NO",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "entities",
+      "column": "name",
+      "default": null,
+      "nullable": "NO",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "entities",
+      "column": "slug",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "entities",
+      "column": "summary",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "entities",
+      "column": "status",
+      "default": "'draft'::text",
+      "nullable": "NO",
+      "data_type": "text"
+    },
+    {
+      "udt": "timestamptz",
+      "table": "entities",
+      "column": "created_at",
+      "default": "now()",
+      "nullable": "NO",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "udt": "timestamptz",
+      "table": "entities",
+      "column": "updated_at",
+      "default": "now()",
+      "nullable": "NO",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "udt": "timestamptz",
+      "table": "entities",
+      "column": "content_updated_at",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "udt": "timestamptz",
+      "table": "entities",
+      "column": "editorial_reviewed_at",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "udt": "uuid",
+      "table": "entity_locations",
+      "column": "id",
+      "default": "gen_random_uuid()",
+      "nullable": "NO",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "entity_locations",
+      "column": "entity_id",
+      "default": null,
+      "nullable": "NO",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "entity_locations",
+      "column": "place_id",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "entity_locations",
+      "column": "municipality_id",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "entity_locations",
+      "column": "custodian_entity_id",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "text",
+      "table": "entity_locations",
+      "column": "location_type",
+      "default": "'physical_location'::text",
+      "nullable": "NO",
+      "data_type": "text"
+    },
+    {
+      "udt": "date",
+      "table": "entity_locations",
+      "column": "date_from",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "date"
+    },
+    {
+      "udt": "text",
+      "table": "entity_locations",
+      "column": "date_from_text",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "date",
+      "table": "entity_locations",
+      "column": "date_to",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "date"
+    },
+    {
+      "udt": "text",
+      "table": "entity_locations",
+      "column": "date_to_text",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "bool",
+      "table": "entity_locations",
+      "column": "is_current",
+      "default": "false",
+      "nullable": "NO",
+      "data_type": "boolean"
+    },
+    {
+      "udt": "text",
+      "table": "entity_locations",
+      "column": "notes",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "entity_locations",
+      "column": "status",
+      "default": "'published'::text",
+      "nullable": "NO",
+      "data_type": "text"
+    },
+    {
+      "udt": "timestamptz",
+      "table": "entity_locations",
+      "column": "created_at",
+      "default": "now()",
+      "nullable": "NO",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "udt": "uuid",
+      "table": "heritage_assets",
+      "column": "entity_id",
+      "default": null,
+      "nullable": "NO",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "heritage_assets",
+      "column": "parent_entity_id",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "text",
+      "table": "heritage_assets",
+      "column": "asset_type",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "heritage_assets",
+      "column": "description",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "heritage_assets",
+      "column": "current_condition",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "heritage_assets",
+      "column": "notes",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "date",
+      "table": "heritage_assets",
+      "column": "date_from",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "date"
+    },
+    {
+      "udt": "text",
+      "table": "heritage_assets",
+      "column": "date_from_text",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "date",
+      "table": "heritage_assets",
+      "column": "date_to",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "date"
+    },
+    {
+      "udt": "text",
+      "table": "heritage_assets",
+      "column": "date_to_text",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "bool",
+      "table": "heritage_assets",
+      "column": "is_current",
+      "default": "true",
+      "nullable": "NO",
+      "data_type": "boolean"
+    },
+    {
+      "udt": "text",
+      "table": "heritage_assets",
+      "column": "origin_notes",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "heritage_assets",
+      "column": "technique",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "heritage_assets",
+      "column": "materials",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "heritage_assets",
+      "column": "dimensions_text",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "heritage_assets",
+      "column": "iconography",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "heritage_assets",
+      "column": "historical_context",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "heritage_assets",
+      "column": "provenance_text",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "date",
+      "table": "heritage_assets",
+      "column": "blessing_date",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "date"
+    },
+    {
+      "udt": "text",
+      "table": "heritage_assets",
+      "column": "blessing_date_text",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "int4",
+      "table": "heritage_assets",
+      "column": "display_order",
+      "default": "0",
+      "nullable": "NO",
+      "data_type": "integer"
+    },
+    {
+      "udt": "bool",
+      "table": "heritage_assets",
+      "column": "is_featured",
+      "default": "false",
+      "nullable": "NO",
+      "data_type": "boolean"
+    },
+    {
+      "udt": "text",
+      "table": "heritage_assets",
+      "column": "public_image_path",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "heritage_assets",
+      "column": "public_image_alt",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "heritage_assets",
+      "column": "public_image_credit",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "heritage_assets",
+      "column": "usage_text",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "uuid",
+      "table": "images",
+      "column": "entity_id",
+      "default": null,
+      "nullable": "NO",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "images",
+      "column": "advocation_entity_id",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "text",
+      "table": "images",
+      "column": "image_type",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "date",
+      "table": "images",
+      "column": "execution_date",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "date"
+    },
+    {
+      "udt": "text",
+      "table": "images",
+      "column": "execution_date_text",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "images",
+      "column": "material",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "images",
+      "column": "current_condition",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "images",
+      "column": "description",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "images",
+      "column": "notes",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "images",
+      "column": "technique",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "images",
+      "column": "polychromy",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "images",
+      "column": "dimensions_text",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "numeric",
+      "table": "images",
+      "column": "height_cm",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "numeric"
+    },
+    {
+      "udt": "numeric",
+      "table": "images",
+      "column": "width_cm",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "numeric"
+    },
+    {
+      "udt": "numeric",
+      "table": "images",
+      "column": "depth_cm",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "numeric"
+    },
+    {
+      "udt": "text",
+      "table": "images",
+      "column": "iconography",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "images",
+      "column": "anatomical_type",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "bool",
+      "table": "images",
+      "column": "is_dress_image",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "boolean"
+    },
+    {
+      "udt": "text",
+      "table": "images",
+      "column": "current_state_notes",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "uuid",
+      "table": "music_accompaniment_periods",
+      "column": "id",
+      "default": "gen_random_uuid()",
+      "nullable": "NO",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "music_accompaniment_periods",
+      "column": "brotherhood_entity_id",
+      "default": null,
+      "nullable": "NO",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "music_accompaniment_periods",
+      "column": "band_entity_id",
+      "default": null,
+      "nullable": "NO",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "music_accompaniment_periods",
+      "column": "step_entity_id",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "text",
+      "table": "music_accompaniment_periods",
+      "column": "position",
+      "default": null,
+      "nullable": "NO",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "music_accompaniment_periods",
+      "column": "outing_type",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "date",
+      "table": "music_accompaniment_periods",
+      "column": "date_from",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "date"
+    },
+    {
+      "udt": "text",
+      "table": "music_accompaniment_periods",
+      "column": "date_from_text",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "int4",
+      "table": "music_accompaniment_periods",
+      "column": "year_from",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "integer"
+    },
+    {
+      "udt": "date",
+      "table": "music_accompaniment_periods",
+      "column": "date_to",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "date"
+    },
+    {
+      "udt": "text",
+      "table": "music_accompaniment_periods",
+      "column": "date_to_text",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "int4",
+      "table": "music_accompaniment_periods",
+      "column": "year_to",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "integer"
+    },
+    {
+      "udt": "bool",
+      "table": "music_accompaniment_periods",
+      "column": "is_current",
+      "default": "false",
+      "nullable": "NO",
+      "data_type": "boolean"
+    },
+    {
+      "udt": "text",
+      "table": "music_accompaniment_periods",
+      "column": "notes",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "music_accompaniment_periods",
+      "column": "status",
+      "default": "'published'::text",
+      "nullable": "NO",
+      "data_type": "text"
+    },
+    {
+      "udt": "timestamptz",
+      "table": "music_accompaniment_periods",
+      "column": "created_at",
+      "default": "now()",
+      "nullable": "NO",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "udt": "timestamptz",
+      "table": "music_accompaniment_periods",
+      "column": "updated_at",
+      "default": "now()",
+      "nullable": "NO",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "udt": "text",
+      "table": "music_accompaniment_periods",
+      "column": "public_brotherhood_name",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "music_accompaniment_periods",
+      "column": "public_step_name",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "music_accompaniment_periods",
+      "column": "public_brotherhood_slug",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "music_accompaniment_periods",
+      "column": "public_municipality_name",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "music_accompaniment_periods",
+      "column": "public_municipality_slug",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "music_accompaniment_periods",
+      "column": "public_province",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "uuid",
+      "table": "outings",
+      "column": "id",
+      "default": "gen_random_uuid()",
+      "nullable": "NO",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "outings",
+      "column": "brotherhood_entity_id",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "text",
+      "table": "outings",
+      "column": "outing_type",
+      "default": null,
+      "nullable": "NO",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "outings",
+      "column": "character",
+      "default": "'ordinary'::text",
+      "nullable": "NO",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "outings",
+      "column": "title",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "date",
+      "table": "outings",
+      "column": "outing_date",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "date"
+    },
+    {
+      "udt": "int4",
+      "table": "outings",
+      "column": "year",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "integer"
+    },
+    {
+      "udt": "time",
+      "table": "outings",
+      "column": "departure_time",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "time without time zone"
+    },
+    {
+      "udt": "time",
+      "table": "outings",
+      "column": "return_time",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "time without time zone"
+    },
+    {
+      "udt": "uuid",
+      "table": "outings",
+      "column": "municipality_id",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "outings",
+      "column": "origin_place_id",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "outings",
+      "column": "destination_place_id",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "text",
+      "table": "outings",
+      "column": "reason",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "jsonb",
+      "table": "outings",
+      "column": "route",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "jsonb"
+    },
+    {
+      "udt": "text",
+      "table": "outings",
+      "column": "description",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "outings",
+      "column": "event_status",
+      "default": "'announced'::text",
+      "nullable": "NO",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "outings",
+      "column": "status",
+      "default": "'published'::text",
+      "nullable": "NO",
+      "data_type": "text"
+    },
+    {
+      "udt": "timestamptz",
+      "table": "outings",
+      "column": "created_at",
+      "default": "now()",
+      "nullable": "NO",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "udt": "timestamptz",
+      "table": "outings",
+      "column": "updated_at",
+      "default": "now()",
+      "nullable": "NO",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "udt": "date",
+      "table": "outings",
+      "column": "return_date",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "date"
+    },
+    {
+      "udt": "text",
+      "table": "outings",
+      "column": "route_summary",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "outings",
+      "column": "public_notes",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "outings",
+      "column": "organizer_name",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "outings",
+      "column": "organizer_notes",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "uuid",
+      "table": "outings",
+      "column": "outing_series_id",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "text",
+      "table": "outings",
+      "column": "hero_image_path",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "outings",
+      "column": "hero_image_alt",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "outings",
+      "column": "hero_image_credit",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "outings",
+      "column": "slug",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "outings",
+      "column": "reference_code",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "outings",
+      "column": "origin_text",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "outings",
+      "column": "destination_text",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "uuid",
+      "table": "places",
+      "column": "id",
+      "default": "gen_random_uuid()",
+      "nullable": "NO",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "places",
+      "column": "municipality_id",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "text",
+      "table": "places",
+      "column": "name",
+      "default": null,
+      "nullable": "NO",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "places",
+      "column": "slug",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "places",
+      "column": "place_type",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "places",
+      "column": "address",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "numeric",
+      "table": "places",
+      "column": "latitude",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "numeric"
+    },
+    {
+      "udt": "numeric",
+      "table": "places",
+      "column": "longitude",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "numeric"
+    },
+    {
+      "udt": "text",
+      "table": "places",
+      "column": "notes",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "timestamptz",
+      "table": "places",
+      "column": "created_at",
+      "default": "now()",
+      "nullable": "NO",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "udt": "timestamptz",
+      "table": "places",
+      "column": "updated_at",
+      "default": "now()",
+      "nullable": "NO",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "udt": "text",
+      "table": "places",
+      "column": "opening_hours_text",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "date",
+      "table": "places",
+      "column": "opening_hours_verified_at",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "date"
+    },
+    {
+      "udt": "uuid",
+      "table": "source_links",
+      "column": "id",
+      "default": "gen_random_uuid()",
+      "nullable": "NO",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "source_links",
+      "column": "source_id",
+      "default": null,
+      "nullable": "NO",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "source_links",
+      "column": "entity_id",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "source_links",
+      "column": "outing_id",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "source_links",
+      "column": "cult_id",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "source_links",
+      "column": "intervention_id",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "text",
+      "table": "source_links",
+      "column": "scope",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "source_links",
+      "column": "notes",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "timestamptz",
+      "table": "source_links",
+      "column": "created_at",
+      "default": "now()",
+      "nullable": "NO",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "udt": "uuid",
+      "table": "source_links",
+      "column": "heritage_update_id",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "source_links",
+      "column": "editorial_content_id",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "source_links",
+      "column": "music_accompaniment_period_id",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "source_links",
+      "column": "march_dedication_id",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "source_links",
+      "column": "march_recording_id",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "source_links",
+      "column": "image_authorship_id",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "source_links",
+      "column": "brotherhood_image_id",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "source_links",
+      "column": "entity_location_id",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "source_links",
+      "column": "entity_relation_id",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "source_links",
+      "column": "step_phase_id",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "source_links",
+      "column": "step_personnel_period_id",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "source_links",
+      "column": "brotherhood_step_id",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "source_links",
+      "column": "image_step_id",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "source_links",
+      "column": "agent_name_id",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "source_links",
+      "column": "agent_role_id",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "source_links",
+      "column": "cult_occurrence_id",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "source_links",
+      "column": "outing_music_position_id",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "source_links",
+      "column": "outing_music_assignment_id",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "source_links",
+      "column": "outing_series_id",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "source_links",
+      "column": "band_premiere_id",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "source_links",
+      "column": "brotherhood_habit_id",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "uuid",
+      "table": "sources",
+      "column": "id",
+      "default": "gen_random_uuid()",
+      "nullable": "NO",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "text",
+      "table": "sources",
+      "column": "name",
+      "default": null,
+      "nullable": "NO",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "sources",
+      "column": "url",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "sources",
+      "column": "source_type",
+      "default": null,
+      "nullable": "NO",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "sources",
+      "column": "author_or_publisher",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "date",
+      "table": "sources",
+      "column": "publication_date",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "date"
+    },
+    {
+      "udt": "date",
+      "table": "sources",
+      "column": "accessed_at",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "date"
+    },
+    {
+      "udt": "text",
+      "table": "sources",
+      "column": "license",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "sources",
+      "column": "notes",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "timestamptz",
+      "table": "sources",
+      "column": "created_at",
+      "default": "now()",
+      "nullable": "NO",
+      "data_type": "timestamp with time zone"
+    },
+    {
+      "udt": "uuid",
+      "table": "steps",
+      "column": "entity_id",
+      "default": null,
+      "nullable": "NO",
+      "data_type": "uuid"
+    },
+    {
+      "udt": "text",
+      "table": "steps",
+      "column": "step_type",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "steps",
+      "column": "current_condition",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "steps",
+      "column": "description",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "steps",
+      "column": "notes",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "steps",
+      "column": "style",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "steps",
+      "column": "materials",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "steps",
+      "column": "dimensions_text",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "numeric",
+      "table": "steps",
+      "column": "length_cm",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "numeric"
+    },
+    {
+      "udt": "numeric",
+      "table": "steps",
+      "column": "width_cm",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "numeric"
+    },
+    {
+      "udt": "numeric",
+      "table": "steps",
+      "column": "height_cm",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "numeric"
+    },
+    {
+      "udt": "int4",
+      "table": "steps",
+      "column": "workbenches_count",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "integer"
+    },
+    {
+      "udt": "text",
+      "table": "steps",
+      "column": "carrier_system",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "steps",
+      "column": "execution_date_text",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    },
+    {
+      "udt": "text",
+      "table": "steps",
+      "column": "current_state_notes",
+      "default": null,
+      "nullable": "YES",
+      "data_type": "text"
+    }
+  ]
+}

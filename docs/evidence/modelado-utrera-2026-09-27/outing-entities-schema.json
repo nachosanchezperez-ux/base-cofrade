@@ -1,0 +1,68 @@
+{
+  "checks": [
+    "FOREIGN KEY (entity_id) REFERENCES entities(id) ON DELETE CASCADE",
+    "UNIQUE (outing_id, entity_id, role)",
+    "FOREIGN KEY (outing_id) REFERENCES outings(id) ON DELETE CASCADE",
+    "PRIMARY KEY (id)"
+  ],
+  "columns": [
+    {
+      "udt": "uuid",
+      "table": "outing_entities",
+      "column": "id",
+      "default": "gen_random_uuid()",
+      "nullable": "NO"
+    },
+    {
+      "udt": "uuid",
+      "table": "outing_entities",
+      "column": "outing_id",
+      "default": null,
+      "nullable": "NO"
+    },
+    {
+      "udt": "uuid",
+      "table": "outing_entities",
+      "column": "entity_id",
+      "default": null,
+      "nullable": "NO"
+    },
+    {
+      "udt": "text",
+      "table": "outing_entities",
+      "column": "role",
+      "default": null,
+      "nullable": "NO"
+    },
+    {
+      "udt": "text",
+      "table": "outing_entities",
+      "column": "notes",
+      "default": null,
+      "nullable": "YES"
+    }
+  ],
+  "local_rows": [
+    {
+      "id": "1d71adc2-9648-4a4e-af94-e124f539150f",
+      "role": "processional_image",
+      "notes": "Titular que protagoniza esta salida extraordinaria de 2026.",
+      "entity_id": "4550fd96-94d3-4929-8d61-af79ba7de8e7",
+      "outing_id": "1ccf8096-c5e3-417e-a7f4-97ad3a799492"
+    },
+    {
+      "id": "3070e6a8-bc42-461e-8777-60a04eee630e",
+      "role": "processional_step",
+      "notes": "Paso utilizado en esta salida extraordinaria.",
+      "entity_id": "b51dd99d-97fe-4636-b35e-59ac8fa92dc5",
+      "outing_id": "1ccf8096-c5e3-417e-a7f4-97ad3a799492"
+    },
+    {
+      "id": "0cd074ae-5540-4b71-ae18-6e65e33b5fb9",
+      "role": "processional_image",
+      "notes": "Titular protagonista del traslado extraordinario de 2026.",
+      "entity_id": "e875dbee-612f-4739-9f24-fd583d6b2df6",
+      "outing_id": "b639727d-e6c1-43fb-a4ea-22ec6230d58c"
+    }
+  ]
+}

@@ -1,0 +1,1132 @@
+{
+  "corporations": [
+    {
+      "key": "H01",
+      "name": "Trinidad",
+      "id": null,
+      "brotherhood_types": [
+        "Penitencia"
+      ],
+      "place": "L01",
+      "action": "NEW",
+      "note": "Rosario en el título: no inferir Gloria sin validación específica."
+    },
+    {
+      "key": "H02",
+      "name": "Jesús Nazareno",
+      "id": "4e462b02-979d-4b88-ab98-0c97f2dbf0a0",
+      "brotherhood_types": [
+        "Penitencia"
+      ],
+      "place": "L02",
+      "action": "REUSE",
+      "note": "Oración en el Huerto y Viernes Santo son dos salidas de la misma corporación."
+    },
+    {
+      "key": "H03",
+      "name": "Quinta Angustia",
+      "id": null,
+      "brotherhood_types": [
+        "Penitencia"
+      ],
+      "place": "L03",
+      "action": "NEW",
+      "note": "No reutilizar homónimos de Sevilla, Carmona u Osuna."
+    },
+    {
+      "key": "H04",
+      "name": "Muchachos de Consolación",
+      "id": null,
+      "brotherhood_types": [
+        "Penitencia"
+      ],
+      "place": "L04",
+      "action": "NEW",
+      "note": "Distinta de Consolación Coronada."
+    },
+    {
+      "key": "H05",
+      "name": "Estudiantes",
+      "id": null,
+      "brotherhood_types": [
+        "Penitencia"
+      ],
+      "place": "L05",
+      "action": "NEW",
+      "note": "Titulares corporativos María Auxiliadora y San Juan Bosco no generan pasos penitenciales."
+    },
+    {
+      "key": "H06",
+      "name": "Aceituneros",
+      "id": null,
+      "brotherhood_types": [
+        "Penitencia"
+      ],
+      "place": "L03",
+      "action": "NEW",
+      "note": "Atado a la Columna distinto al de Vera-Cruz."
+    },
+    {
+      "key": "H07",
+      "name": "Redentor Cautivo / Sacramental de Santiago",
+      "id": null,
+      "brotherhood_types": [
+        "Penitencia",
+        "Sacramental"
+      ],
+      "place": "L06",
+      "action": "NEW",
+      "note": "Única corporación para Jueves Santo y Resurrección."
+    },
+    {
+      "key": "H08",
+      "name": "Gitanos",
+      "id": null,
+      "brotherhood_types": [
+        "Penitencia"
+      ],
+      "place": "L06",
+      "action": "NEW",
+      "note": "No reutilizar homónimo de Sevilla."
+    },
+    {
+      "key": "H09",
+      "name": "Vera-Cruz / Santo Entierro",
+      "id": "7bab2fe6-c69e-48e5-9446-a247b4169910",
+      "brotherhood_types": [
+        "Penitencia"
+      ],
+      "place": "L07",
+      "action": "REUSE",
+      "note": "Dolores y Dolores en Soledad: conservar el ID de la imagen existente."
+    },
+    {
+      "key": "H10",
+      "name": "Milagros",
+      "id": null,
+      "brotherhood_types": [
+        "Penitencia"
+      ],
+      "place": "L03",
+      "action": "NEW",
+      "note": "No confundir con Milagrosa de Sevilla."
+    },
+    {
+      "key": "H11",
+      "name": "Sacramental de Santa María",
+      "id": null,
+      "brotherhood_types": [
+        "Sacramental"
+      ],
+      "place": "L03",
+      "action": "NEW",
+      "note": "No asignar Penitencia por figurar en el programa de Semana Santa."
+    }
+  ],
+  "bands": [
+    {
+      "key": "B01",
+      "name": "AM Virgen de la Esperanza · Alcalá la Real",
+      "id": null,
+      "action": "NEW_CANDIDATE"
+    },
+    {
+      "key": "B02",
+      "name": "CCyTT Nazareno · Utrera",
+      "id": null,
+      "action": "NEW_CANDIDATE"
+    },
+    {
+      "key": "B03",
+      "name": "BM El Saucejo",
+      "id": "c0160037-0406-4000-8000-000000000006",
+      "action": "REUSE"
+    },
+    {
+      "key": "B04",
+      "name": "AM Muchachos de Consolación · Utrera",
+      "id": null,
+      "action": "NEW_CANDIDATE"
+    },
+    {
+      "key": "B05",
+      "name": "BM Municipal Coria del Río",
+      "id": "63f719d8-61ab-4357-a43f-cc7977bdda43",
+      "action": "REUSE"
+    },
+    {
+      "key": "B06",
+      "name": "CCyTT Expiración · Quesada",
+      "id": null,
+      "action": "NEW_CANDIDATE"
+    },
+    {
+      "key": "B07",
+      "name": "BM Municipal Arahal",
+      "id": "95e4daf1-9db6-4bdb-805a-9f68833c8da1",
+      "action": "REUSE"
+    },
+    {
+      "key": "B08",
+      "name": "CCyTT Cristo de los Remedios · Castilleja de la Cuesta",
+      "id": null,
+      "action": "NEW_CANDIDATE"
+    },
+    {
+      "key": "B09",
+      "name": "Asociación Musical Nuestra Señora del Águila · Alcalá de Guadaíra",
+      "id": null,
+      "action": "NEW_CANDIDATE"
+    },
+    {
+      "key": "B10",
+      "name": "CCyTT Nuestra Señora de los Llanos · Albacete",
+      "id": null,
+      "action": "NEW_CANDIDATE"
+    },
+    {
+      "key": "B11",
+      "name": "BM Municipal Paterna del Campo",
+      "id": null,
+      "action": "NEW_CANDIDATE"
+    },
+    {
+      "key": "B12",
+      "name": "CCyTT Vera-Cruz · Utrera",
+      "id": "c0160032-0406-4000-8000-000000000006",
+      "action": "REUSE"
+    },
+    {
+      "key": "B13",
+      "name": "BM Maestro Leyva · Churriana de la Vega",
+      "id": null,
+      "action": "NEW_CANDIDATE"
+    },
+    {
+      "key": "B14",
+      "name": "BM Virgen de las Angustias · Sanlúcar la Mayor",
+      "id": "8c35dfd4-342a-47ab-8d06-8c320255a29a",
+      "action": "REUSE"
+    },
+    {
+      "key": "B15",
+      "name": "Asociación Musical de La Algaba",
+      "id": "aa0f526c-2b63-41f0-aa74-ecaa14365375",
+      "action": "REUSE"
+    },
+    {
+      "key": "B16",
+      "name": "Coro De Profundis",
+      "id": "e4884d0e-204e-408c-955e-b4c639de92c9",
+      "action": "REVIEW_IDENTITY"
+    }
+  ],
+  "outings": [
+    {
+      "key": "O01",
+      "brotherhood": "H01",
+      "name": "Borriquita",
+      "date": "2026-03-29",
+      "departure_time": "11:00",
+      "return_date": "2026-03-29",
+      "return_time": "14:15",
+      "source": "F01",
+      "pdf_page": 4,
+      "temporal_status": "historical_2026",
+      "times_status": "official_programmed_not_actual_measured",
+      "positions": [
+        {
+          "key": "O01-P1",
+          "order": 1,
+          "step": "Entrada en Jerusalén",
+          "music": "B01",
+          "step_id": null
+        }
+      ],
+      "note": ""
+    },
+    {
+      "key": "O02",
+      "brotherhood": "H03",
+      "name": "Quinta Angustia",
+      "date": "2026-03-29",
+      "departure_time": "17:30",
+      "return_date": "2026-03-29",
+      "return_time": "23:30",
+      "source": "F01",
+      "pdf_page": 6,
+      "temporal_status": "historical_2026",
+      "times_status": "official_programmed_not_actual_measured",
+      "positions": [
+        {
+          "key": "O02-P1",
+          "order": 1,
+          "step": "Caridad y Piedad",
+          "music": "B02",
+          "step_id": null
+        },
+        {
+          "key": "O02-P2",
+          "order": 2,
+          "step": "Ángeles",
+          "music": "B03",
+          "step_id": null
+        }
+      ],
+      "note": ""
+    },
+    {
+      "key": "O03",
+      "brotherhood": "H02",
+      "name": "Oración en el Huerto",
+      "date": "2026-03-29",
+      "departure_time": "17:30",
+      "return_date": "2026-03-29",
+      "return_time": "22:00",
+      "source": "F01",
+      "pdf_page": 8,
+      "temporal_status": "historical_2026",
+      "times_status": "official_programmed_not_actual_measured",
+      "positions": [
+        {
+          "key": "O03-P1",
+          "order": 1,
+          "step": "Oración en el Huerto",
+          "music": "B04",
+          "step_id": null
+        }
+      ],
+      "note": ""
+    },
+    {
+      "key": "O04",
+      "brotherhood": "H04",
+      "name": "Muchachos de Consolación",
+      "date": "2026-03-30",
+      "departure_time": "18:00",
+      "return_date": "2026-03-31",
+      "return_time": "00:45",
+      "source": "F01",
+      "pdf_page": 10,
+      "temporal_status": "historical_2026",
+      "times_status": "official_programmed_not_actual_measured",
+      "positions": [
+        {
+          "key": "O04-P1",
+          "order": 1,
+          "step": "Perdón",
+          "music": "B04",
+          "step_id": null
+        },
+        {
+          "key": "O04-P2",
+          "order": 2,
+          "step": "Amargura",
+          "music": "B05",
+          "step_id": null
+        }
+      ],
+      "note": ""
+    },
+    {
+      "key": "O05",
+      "brotherhood": "H05",
+      "name": "Estudiantes",
+      "date": "2026-03-31",
+      "departure_time": "19:00",
+      "return_date": "2026-04-01",
+      "return_time": "00:00",
+      "source": "F01",
+      "pdf_page": 12,
+      "temporal_status": "historical_2026",
+      "times_status": "official_programmed_not_actual_measured",
+      "positions": [
+        {
+          "key": "O05-P1",
+          "order": 1,
+          "step": "Amor / Lanzada",
+          "music": "B06",
+          "step_id": null
+        },
+        {
+          "key": "O05-P2",
+          "order": 2,
+          "step": "Veredas",
+          "music": "B07",
+          "step_id": null
+        }
+      ],
+      "note": ""
+    },
+    {
+      "key": "O06",
+      "brotherhood": "H06",
+      "name": "Aceituneros",
+      "date": "2026-04-01",
+      "departure_time": "19:00",
+      "return_date": "2026-04-02",
+      "return_time": "00:00",
+      "source": "F01",
+      "pdf_page": 14,
+      "temporal_status": "historical_2026",
+      "times_status": "official_programmed_not_actual_measured",
+      "positions": [
+        {
+          "key": "O06-P1",
+          "order": 1,
+          "step": "Columna de Aceituneros",
+          "music": "B08",
+          "step_id": null
+        },
+        {
+          "key": "O06-P2",
+          "order": 2,
+          "step": "Paz",
+          "music": "B09",
+          "step_id": null
+        }
+      ],
+      "note": ""
+    },
+    {
+      "key": "O07",
+      "brotherhood": "H01",
+      "name": "Trinidad",
+      "date": "2026-04-02",
+      "departure_time": "19:00",
+      "return_date": "2026-04-03",
+      "return_time": "00:15",
+      "source": "F01",
+      "pdf_page": 18,
+      "temporal_status": "historical_2026",
+      "times_status": "official_programmed_not_actual_measured",
+      "positions": [
+        {
+          "key": "O07-P1",
+          "order": 1,
+          "step": "Afligidos",
+          "music": "B10",
+          "step_id": null
+        },
+        {
+          "key": "O07-P2",
+          "order": 2,
+          "step": "Desamparados",
+          "music": "B11",
+          "step_id": null
+        }
+      ],
+      "note": ""
+    },
+    {
+      "key": "O08",
+      "brotherhood": "H07",
+      "name": "Redentor Cautivo",
+      "date": "2026-04-02",
+      "departure_time": "22:00",
+      "return_date": "2026-04-03",
+      "return_time": "01:45",
+      "source": "F01",
+      "pdf_page": 20,
+      "temporal_status": "historical_2026",
+      "times_status": "official_programmed_not_actual_measured",
+      "positions": [
+        {
+          "key": "O08-P1",
+          "order": 1,
+          "step": "Cautivo",
+          "music": "SILENCE",
+          "step_id": null
+        },
+        {
+          "key": "O08-P2",
+          "order": 2,
+          "step": "Lágrimas",
+          "music": "SILENCE",
+          "step_id": null
+        }
+      ],
+      "note": ""
+    },
+    {
+      "key": "O09",
+      "brotherhood": "H08",
+      "name": "Gitanos",
+      "date": "2026-04-03",
+      "departure_time": "00:30",
+      "return_date": "2026-04-03",
+      "return_time": "05:30",
+      "source": "F01",
+      "pdf_page": 22,
+      "temporal_status": "historical_2026",
+      "times_status": "official_programmed_not_actual_measured",
+      "positions": [
+        {
+          "key": "O09-P1",
+          "order": 1,
+          "step": "Buena Muerte",
+          "music": "B12",
+          "step_id": null
+        },
+        {
+          "key": "O09-P2",
+          "order": 2,
+          "step": "Esperanza",
+          "music": "B13",
+          "step_id": null
+        }
+      ],
+      "note": ""
+    },
+    {
+      "key": "O10",
+      "brotherhood": "H02",
+      "name": "Jesús Nazareno",
+      "date": "2026-04-03",
+      "departure_time": "06:30",
+      "return_date": "2026-04-03",
+      "return_time": "12:45",
+      "source": "F01",
+      "pdf_page": 26,
+      "temporal_status": "historical_2026",
+      "times_status": "official_programmed_not_actual_measured",
+      "positions": [
+        {
+          "key": "O10-P1",
+          "order": 1,
+          "step": "Nazareno",
+          "music": "B04",
+          "step_id": null
+        },
+        {
+          "key": "O10-P2",
+          "order": 2,
+          "step": "Angustias",
+          "music": "B14",
+          "step_id": "b51dd99d-97fe-4636-b35e-59ac8fa92dc5"
+        }
+      ],
+      "note": ""
+    },
+    {
+      "key": "O11",
+      "brotherhood": "H09",
+      "name": "Vera-Cruz",
+      "date": "2026-04-03",
+      "departure_time": "19:30",
+      "return_date": "2026-04-04",
+      "return_time": "00:20",
+      "source": "F01",
+      "pdf_page": 28,
+      "temporal_status": "historical_2026",
+      "times_status": "official_programmed_not_actual_measured",
+      "positions": [
+        {
+          "key": "O11-P1",
+          "order": 1,
+          "step": "Columna de Vera-Cruz",
+          "music": "B12",
+          "step_id": null
+        },
+        {
+          "key": "O11-P2",
+          "order": 2,
+          "step": "Dolores",
+          "music": "B15",
+          "step_id": null
+        }
+      ],
+      "note": ""
+    },
+    {
+      "key": "O12",
+      "brotherhood": "H10",
+      "name": "Milagros",
+      "date": "2026-04-03",
+      "departure_time": "22:30",
+      "return_date": "2026-04-04",
+      "return_time": "01:30",
+      "source": "F01",
+      "pdf_page": 30,
+      "temporal_status": "historical_2026",
+      "times_status": "official_programmed_not_actual_measured",
+      "positions": [
+        {
+          "key": "O12-P1",
+          "order": 1,
+          "step": "Milagros",
+          "music": "B16",
+          "step_id": null
+        }
+      ],
+      "note": ""
+    },
+    {
+      "key": "O13",
+      "brotherhood": "H09",
+      "name": "Santo Entierro",
+      "date": "2026-04-04",
+      "departure_time": "19:15",
+      "return_date": "2026-04-04",
+      "return_time": "22:45",
+      "source": "F01",
+      "pdf_page": 32,
+      "temporal_status": "historical_2026",
+      "times_status": "official_programmed_not_actual_measured",
+      "positions": [
+        {
+          "key": "O13-P1",
+          "order": 1,
+          "step": "Yacente",
+          "music": "SILENCE",
+          "step_id": null,
+          "music_source": "F12",
+          "evidence_level": "secondary_explicit"
+        },
+        {
+          "key": "O13-P2",
+          "order": 2,
+          "step": "Dolores en Soledad",
+          "music": "B15",
+          "step_id": null
+        }
+      ],
+      "note": ""
+    },
+    {
+      "key": "O14",
+      "brotherhood": "H07",
+      "name": "Resurrección · Santiago",
+      "date": "2026-04-05",
+      "departure_time": "11:45",
+      "return_date": null,
+      "return_time": null,
+      "source": "F01",
+      "pdf_page": 34,
+      "temporal_status": "historical_2026",
+      "times_status": "official_programmed_not_actual_measured",
+      "positions": [],
+      "note": "Santísimo bajo palio de mano; no crear Imagen ni Paso de palio de costaleros."
+    },
+    {
+      "key": "O15",
+      "brotherhood": "H11",
+      "name": "Resurrección · Santa María",
+      "date": "2026-04-05",
+      "departure_time": "13:00",
+      "return_date": "2026-04-05",
+      "return_time": "13:30",
+      "source": "F01",
+      "pdf_page": 36,
+      "temporal_status": "historical_2026",
+      "times_status": "official_programmed_not_actual_measured",
+      "positions": [],
+      "note": "Santísimo bajo palio de mano; no crear Imagen ni Paso de palio de costaleros."
+    }
+  ],
+  "places": [
+    {
+      "key": "L01",
+      "name": "Capilla de la Trinidad",
+      "id": null,
+      "action": "NEW_CANDIDATE"
+    },
+    {
+      "key": "L02",
+      "name": "Capilla de San Bartolomé",
+      "id": "9b425ed3-943b-4b77-b351-93d87467b1cc",
+      "action": "REUSE"
+    },
+    {
+      "key": "L03",
+      "name": "Parroquia de Santa María de la Mesa",
+      "id": null,
+      "action": "NEW_CANDIDATE"
+    },
+    {
+      "key": "L04",
+      "name": "Santuario de Consolación",
+      "id": "09fb4082-dd92-4fc4-bb25-41fff021d284",
+      "action": "REUSE"
+    },
+    {
+      "key": "L05",
+      "name": "Basílica de María Auxiliadora",
+      "id": null,
+      "action": "NEW_CANDIDATE"
+    },
+    {
+      "key": "L06",
+      "name": "Parroquia de Santiago el Mayor",
+      "id": null,
+      "action": "NEW_CANDIDATE"
+    },
+    {
+      "key": "L07",
+      "name": "Iglesia de San Francisco",
+      "id": "f9dc025c-094b-468f-ad7c-4ee55c7167e8",
+      "action": "REUSE"
+    }
+  ],
+  "images": [
+    {
+      "key": "I01",
+      "brotherhood": "H01",
+      "name": "Jesús en su Entrada Triunfal",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 4,
+      "action": "NEW_CANDIDATE",
+      "authorship_status": "Not frozen in this identification inventory; preserve attributed/anonymous distinctions in subsequent modeling."
+    },
+    {
+      "key": "I02",
+      "brotherhood": "H01",
+      "name": "Santiago",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 4,
+      "action": "NEW_CANDIDATE",
+      "authorship_status": "Not frozen in this identification inventory; preserve attributed/anonymous distinctions in subsequent modeling."
+    },
+    {
+      "key": "I03",
+      "brotherhood": "H01",
+      "name": "San Pedro",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 4,
+      "action": "NEW_CANDIDATE",
+      "authorship_status": "Not frozen in this identification inventory; preserve attributed/anonymous distinctions in subsequent modeling."
+    },
+    {
+      "key": "I04",
+      "brotherhood": "H01",
+      "name": "San Juan",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 4,
+      "action": "NEW_CANDIDATE",
+      "authorship_status": "Not frozen in this identification inventory; preserve attributed/anonymous distinctions in subsequent modeling."
+    },
+    {
+      "key": "I05",
+      "brotherhood": "H01",
+      "name": "Cristo de los Afligidos",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 18,
+      "action": "NEW_CANDIDATE",
+      "authorship_status": "Not frozen in this identification inventory; preserve attributed/anonymous distinctions in subsequent modeling."
+    },
+    {
+      "key": "I06",
+      "brotherhood": "H01",
+      "name": "Virgen de los Desamparados",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 18,
+      "action": "NEW_CANDIDATE",
+      "authorship_status": "Not frozen in this identification inventory; preserve attributed/anonymous distinctions in subsequent modeling."
+    },
+    {
+      "key": "I07",
+      "brotherhood": "H02",
+      "name": "Jesús de la Oración en el Huerto",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 8,
+      "action": "NEW_CANDIDATE",
+      "authorship_status": "Not frozen in this identification inventory; preserve attributed/anonymous distinctions in subsequent modeling."
+    },
+    {
+      "key": "I08",
+      "brotherhood": "H02",
+      "name": "San Juan",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 8,
+      "action": "NEW_CANDIDATE",
+      "authorship_status": "Not frozen in this identification inventory; preserve attributed/anonymous distinctions in subsequent modeling."
+    },
+    {
+      "key": "I09",
+      "brotherhood": "H02",
+      "name": "San Pedro",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 8,
+      "action": "NEW_CANDIDATE",
+      "authorship_status": "Not frozen in this identification inventory; preserve attributed/anonymous distinctions in subsequent modeling."
+    },
+    {
+      "key": "I10",
+      "brotherhood": "H02",
+      "name": "Ángel confortador",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 8,
+      "action": "NEW_CANDIDATE",
+      "authorship_status": "Not frozen in this identification inventory; preserve attributed/anonymous distinctions in subsequent modeling."
+    },
+    {
+      "key": "I11",
+      "brotherhood": "H02",
+      "name": "Jesús Nazareno",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 26,
+      "action": "NEW_CANDIDATE",
+      "authorship_status": "Not frozen in this identification inventory; preserve attributed/anonymous distinctions in subsequent modeling."
+    },
+    {
+      "key": "I12",
+      "brotherhood": "H02",
+      "name": "Simón de Cirene",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 26,
+      "action": "NEW_CANDIDATE",
+      "authorship_status": "Not frozen in this identification inventory; preserve attributed/anonymous distinctions in subsequent modeling."
+    },
+    {
+      "key": "I13",
+      "brotherhood": "H02",
+      "name": "Virgen de las Angustias",
+      "id": "4550fd96-94d3-4929-8d61-af79ba7de8e7",
+      "source": "F01",
+      "pdf_page": 26,
+      "action": "REUSE",
+      "authorship_status": "Not frozen in this identification inventory; preserve attributed/anonymous distinctions in subsequent modeling."
+    },
+    {
+      "key": "I14",
+      "brotherhood": "H03",
+      "name": "Cristo de la Caridad",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 6,
+      "action": "NEW_CANDIDATE",
+      "authorship_status": "Not frozen in this identification inventory; preserve attributed/anonymous distinctions in subsequent modeling."
+    },
+    {
+      "key": "I15",
+      "brotherhood": "H03",
+      "name": "Virgen de la Piedad",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 6,
+      "action": "NEW_CANDIDATE",
+      "authorship_status": "Not frozen in this identification inventory; preserve attributed/anonymous distinctions in subsequent modeling."
+    },
+    {
+      "key": "I16",
+      "brotherhood": "H03",
+      "name": "San Juan",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 6,
+      "action": "NEW_CANDIDATE",
+      "authorship_status": "Not frozen in this identification inventory; preserve attributed/anonymous distinctions in subsequent modeling."
+    },
+    {
+      "key": "I17",
+      "brotherhood": "H03",
+      "name": "María Magdalena",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 6,
+      "action": "NEW_CANDIDATE",
+      "authorship_status": "Not frozen in this identification inventory; preserve attributed/anonymous distinctions in subsequent modeling."
+    },
+    {
+      "key": "I18",
+      "brotherhood": "H03",
+      "name": "Virgen de los Ángeles",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 6,
+      "action": "NEW_CANDIDATE",
+      "authorship_status": "Not frozen in this identification inventory; preserve attributed/anonymous distinctions in subsequent modeling."
+    },
+    {
+      "key": "I19",
+      "brotherhood": "H04",
+      "name": "Cristo del Perdón",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 10,
+      "action": "NEW_CANDIDATE",
+      "authorship_status": "Not frozen in this identification inventory; preserve attributed/anonymous distinctions in subsequent modeling."
+    },
+    {
+      "key": "I20",
+      "brotherhood": "H04",
+      "name": "Virgen de la Amargura",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 10,
+      "action": "NEW_CANDIDATE",
+      "authorship_status": "Not frozen in this identification inventory; preserve attributed/anonymous distinctions in subsequent modeling."
+    },
+    {
+      "key": "I21",
+      "brotherhood": "H05",
+      "name": "Cristo del Amor",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 12,
+      "action": "NEW_CANDIDATE",
+      "authorship_status": "Not frozen in this identification inventory; preserve attributed/anonymous distinctions in subsequent modeling."
+    },
+    {
+      "key": "I22",
+      "brotherhood": "H05",
+      "name": "María Magdalena",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 12,
+      "action": "NEW_CANDIDATE",
+      "authorship_status": "Not frozen in this identification inventory; preserve attributed/anonymous distinctions in subsequent modeling."
+    },
+    {
+      "key": "I23",
+      "brotherhood": "H05",
+      "name": "Longinos",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 12,
+      "action": "NEW_CANDIDATE",
+      "authorship_status": "Not frozen in this identification inventory; preserve attributed/anonymous distinctions in subsequent modeling."
+    },
+    {
+      "key": "I24",
+      "brotherhood": "H05",
+      "name": "Virgen de las Veredas",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 12,
+      "action": "NEW_CANDIDATE",
+      "authorship_status": "Not frozen in this identification inventory; preserve attributed/anonymous distinctions in subsequent modeling."
+    },
+    {
+      "key": "I25",
+      "brotherhood": "H06",
+      "name": "Jesús Atado a la Columna",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 14,
+      "action": "NEW_CANDIDATE",
+      "authorship_status": "Not frozen in this identification inventory; preserve attributed/anonymous distinctions in subsequent modeling."
+    },
+    {
+      "key": "I26",
+      "brotherhood": "H06",
+      "name": "Virgen de la Paz",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 14,
+      "action": "NEW_CANDIDATE",
+      "authorship_status": "Not frozen in this identification inventory; preserve attributed/anonymous distinctions in subsequent modeling."
+    },
+    {
+      "key": "I27",
+      "brotherhood": "H07",
+      "name": "Jesús Redentor Cautivo",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 20,
+      "action": "NEW_CANDIDATE",
+      "authorship_status": "Not frozen in this identification inventory; preserve attributed/anonymous distinctions in subsequent modeling."
+    },
+    {
+      "key": "I28",
+      "brotherhood": "H07",
+      "name": "Virgen de las Lágrimas",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 20,
+      "action": "NEW_CANDIDATE",
+      "authorship_status": "Not frozen in this identification inventory; preserve attributed/anonymous distinctions in subsequent modeling."
+    },
+    {
+      "key": "I29",
+      "brotherhood": "H08",
+      "name": "Cristo de la Buena Muerte",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 22,
+      "action": "NEW_CANDIDATE",
+      "authorship_status": "Not frozen in this identification inventory; preserve attributed/anonymous distinctions in subsequent modeling."
+    },
+    {
+      "key": "I30",
+      "brotherhood": "H08",
+      "name": "Virgen de la Esperanza",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 22,
+      "action": "NEW_CANDIDATE",
+      "authorship_status": "Not frozen in this identification inventory; preserve attributed/anonymous distinctions in subsequent modeling."
+    },
+    {
+      "key": "I31",
+      "brotherhood": "H09",
+      "name": "Jesús Atado a la Columna",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 28,
+      "action": "NEW_CANDIDATE",
+      "authorship_status": "Not frozen in this identification inventory; preserve attributed/anonymous distinctions in subsequent modeling."
+    },
+    {
+      "key": "I32",
+      "brotherhood": "H09",
+      "name": "Virgen de los Dolores",
+      "id": "e875dbee-612f-4739-9f24-fd583d6b2df6",
+      "source": "F01",
+      "pdf_page": 28,
+      "action": "REUSE",
+      "authorship_status": "Not frozen in this identification inventory; preserve attributed/anonymous distinctions in subsequent modeling."
+    },
+    {
+      "key": "I33",
+      "brotherhood": "H09",
+      "name": "Cristo Yacente",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 32,
+      "action": "NEW_CANDIDATE",
+      "authorship_status": "Not frozen in this identification inventory; preserve attributed/anonymous distinctions in subsequent modeling."
+    },
+    {
+      "key": "I34",
+      "brotherhood": "H10",
+      "name": "Crucifijo de los Milagros",
+      "id": null,
+      "source": "F01",
+      "pdf_page": 30,
+      "action": "NEW_CANDIDATE",
+      "authorship_status": "Not frozen in this identification inventory; preserve attributed/anonymous distinctions in subsequent modeling."
+    }
+  ],
+  "groups": [
+    {
+      "key": "G01",
+      "brotherhood": "H01",
+      "description": "Dos hebreas",
+      "count": 2,
+      "pdf_page": 4,
+      "action": "COLLECTIVE_ONLY; no individual invented identity"
+    },
+    {
+      "key": "G02",
+      "brotherhood": "H09",
+      "description": "Figuras del misterio de la Columna",
+      "count": null,
+      "pdf_page": 28,
+      "action": "COLLECTIVE_ONLY; individual identity/count not established"
+    }
+  ],
+  "sources": [
+    {
+      "key": "F01",
+      "title": "Programa oficial Semana Santa Utrera 2026",
+      "publisher": "Consejo de Hermandades y Cofradías de Utrera",
+      "url": "https://aljarafeymas.com/system/images/20374/original/itinerario-ss-utrera-2026-1.pdf",
+      "access": "Downloaded mirror; publisher and year visually checked on cover and colophon",
+      "pages": 40,
+      "sha256": "caa85cdc7ac250fcf62d99ce2c03e582301e6d324f33c13b42d6fe34f2e10242"
+    },
+    {
+      "key": "F02",
+      "title": "Consejo: galerías Semana Santa 2026",
+      "url": "https://consejodehermandadesdeutrera.org/semana-santa/semana-santa-de-utrera-2026/"
+    },
+    {
+      "key": "F03",
+      "title": "Consejo: directorio corporativo histórico",
+      "url": "https://www.consejodehermandadesdeutrera.com/Hermandades/",
+      "caveat": "Historical site: do not reuse old offices, schedules or artwork attributions without checking."
+    },
+    {
+      "key": "F04",
+      "title": "Consejo: Jesús Nazareno",
+      "url": "https://www.consejodehermandadesdeutrera.com/Hermandades/Jesus_Nazareno.php"
+    },
+    {
+      "key": "F05",
+      "title": "Consejo: Muchachos",
+      "url": "https://www.consejodehermandadesdeutrera.com/Hermandades/Muchachos-Consolacion.php"
+    },
+    {
+      "key": "F06",
+      "title": "Consejo: Estudiantes",
+      "url": "https://www.consejodehermandadesdeutrera.com/Hermandades/Estudiantes.php"
+    },
+    {
+      "key": "F07",
+      "title": "Consejo: Aceituneros",
+      "url": "https://www.consejodehermandadesdeutrera.com/Hermandades/Aceituneros.php"
+    },
+    {
+      "key": "F08",
+      "title": "Consejo: Gitanos",
+      "url": "https://www.consejodehermandadesdeutrera.com/Hermandades/Gitanos.php"
+    },
+    {
+      "key": "F09",
+      "title": "Consejo: Vera-Cruz",
+      "url": "https://www.consejodehermandadesdeutrera.com/Hermandades/Vera-Cruz.php"
+    },
+    {
+      "key": "F10",
+      "title": "Consejo: Sacramental Santa María",
+      "url": "https://www.consejodehermandadesdeutrera.com/Hermandades/Sacramental.php"
+    },
+    {
+      "key": "F11",
+      "title": "Utrera al día: Milagros, crónica 04/04/2026",
+      "url": "https://utreraaldia.com/el-senor-del-altozano-y-el-recogimiento-del-crucifijo-de-los-milagros-marcan-el-viernes-santo-directo/",
+      "access": "search extract"
+    },
+    {
+      "key": "F12",
+      "title": "Utrera al día: Santo Entierro 04/04/2026",
+      "url": "https://utreraaldia.com/el-luto-y-el-silencio-cerraran-la-semana-santa-de-utrera-con-el-santo-entierro-este-sabado/",
+      "access": "full page read; explicitly silence for Yacente"
+    }
+  ],
+  "meta": {
+    "date_local": "2026-09-27",
+    "timezone": "Europe/Madrid",
+    "head": "25c5fc12a35be8ae144d1a4fa5cde98469301562",
+    "municipality_id": "e4319248-831a-4f4c-adb8-19c496f95dd6",
+    "phase": "DOCUMENTARY_IDENTIFICATION_INVENTORY",
+    "manifest_ready": false,
+    "production_writes": 0,
+    "notes": "Symbolic keys are documentary, not allocated database UUIDs. NEW is a candidate decision requiring final dedup/preflight."
+  },
+  "blockers": [
+    {
+      "key": "Q01",
+      "item": "Vera-Cruz: soporte físico del palio Dolores/Soledad",
+      "impact": "No congelar número de Pasos canónicos hasta decidir REUSE con configuración temporal o dos soportes diferenciados."
+    },
+    {
+      "key": "Q02",
+      "item": "Coro De Profundis",
+      "impact": "El nombre no prueba identidad con el grupo de voces graves asociado a Los Negritos en la base. Confirmar antes de REUSE o NEW."
+    },
+    {
+      "key": "Q03",
+      "item": "Enriquecimiento y relaciones por imagen",
+      "impact": "Fijar autorías y su grado de certeza; identificar figuras colectivas solo si existe fuente individual. No inventar nodos."
+    },
+    {
+      "key": "Q04",
+      "item": "Gloria en Trinidad y titulares corporativos",
+      "impact": "Penitencia acreditada; dimensión letífica adicional pendiente de reglas/fuente específica. No inferir tipo por palabra Rosario."
+    }
+  ]
+}

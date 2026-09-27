@@ -1,3 +1,13 @@
+# Cierre productivo · 27/09/2026
+
+Corte posterior reconciliado: #1015, main `e86ba888c34ad7121be181708a2194815ea78ef2`, producción `dpl_9QaCTZcRowb33vq3rgXyeyWu3gKa` READY. La corrección de indexabilidad sigue vigente; Angustias conserva 200 e index/follow.
+
+#1014 fusionada, CI correcto. Main `2d088746bd8c857e3daa27d0c0a12063edb8a2ab`; deployment `dpl_BHXKoq4j9v2ffPY9V4DQwe8VY4iF` READY con aliases canónicos. Angustias Utrera: HTTP 200, canonical propio, index/follow e incluida en sitemap de imágenes (541 URLs). Sitemap Hermandades: 200, 293 URLs. Paso Angustias Estepa: 200 e index/follow. Runtime nuevo sin filas error/fatal en ventana 10:40:18–10:55:18 UTC. Corrección cerrada; no se ejecutó DML editorial para publicarla.
+
+La continuación de #1009 ya tiene [dry-run/rollback certificados y GO para staging](./UTRERA-GO-STAGING-2026-09-27.md), sin crearlo. El texto siguiente conserva el corte de preparación previo a la fusión.
+
+---
+
 # Indexabilidad: patrimonio e incertidumbre documental
 
 Corrección general en rama independiente sobre main

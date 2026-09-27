@@ -1,0 +1,594 @@
+{
+  "main": "2d088746bd8c857e3daa27d0c0a12063edb8a2ab",
+  "production": "dpl_BHXKoq4j9v2ffPY9V4DQwe8VY4iF",
+  "attempts": [
+    {
+      "attempt": 1,
+      "result": "ABORTED_JSON_OPERATOR_PRECEDENCE",
+      "response": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"error\":{\"name\":\"HttpException\",\"message\":\"Failed to run sql query: ERROR:  42883: operator does not exist: boolean -> unknown\\nHINT:  No operator matches the given name and argument types. You might need to add explicit type casts.\\nQUERY:  expected IS NULL OR NOT (expected @> op->'data')\\nCONTEXT:  PL/pgSQL function inline_code_block line 42 at IF\\n\"}}"
+          }
+        ],
+        "structuredContent": {
+          "error_code": "INVALID_ARGUMENT"
+        },
+        "isError": true
+      },
+      "rollback_snapshot_equal": true
+    },
+    {
+      "attempt": 2,
+      "result": "ABORTED_NATURAL_KEY_GUARD_TIMEOUT_60S",
+      "response": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"error\":{\"name\":\"HttpException\",\"message\":\"Failed to run sql query: ERROR:  57014: canceling statement due to statement timeout\\nCONTEXT:  SQL statement \\\"SELECT count(*) FROM public.source_links t WHERE nullif(to_jsonb(t)->'source_id', 'null'::jsonb) IS NOT DISTINCT FROM nullif($1->'source_id', 'null'::jsonb) AND nullif(to_jsonb(t)->'image_step_id', 'null'::jsonb) IS NOT DISTINCT FROM nullif($1->'image_step_id', 'null'::jsonb) AND nullif(to_jsonb(t)->'scope', 'null'::jsonb) IS NOT DISTINCT FROM nullif($1->'scope', 'null'::jsonb) AND id::text<>$2\\\"\\nPL/pgSQL function inline_code_block line 26 at EXECUTE\\n\"}}"
+          }
+        ],
+        "structuredContent": {
+          "error_code": "INVALID_ARGUMENT"
+        },
+        "isError": true
+      },
+      "rollback_snapshot_equal": true
+    },
+    {
+      "attempt": 3,
+      "result": {
+        "result": "UTRERA_DRY_RUN_PASS_ROLLED_BACK",
+        "checked_operations": 1173,
+        "insert_operations": 1166,
+        "update_operations": 7,
+        "delete_operations": 0,
+        "checked_reuse": 33
+      },
+      "rollback_snapshot_equal": true
+    }
+  ],
+  "before": {
+    "bands": {
+      "md5": "d9231417ff950dd63855271bcf086610",
+      "count": 154
+    },
+    "steps": {
+      "md5": "93838f12081e9ee77a8c138ac821c2f1",
+      "count": 456
+    },
+    "agents": {
+      "md5": "a2c468c8ad339f60d0b36af998b2bb65",
+      "count": 699
+    },
+    "images": {
+      "md5": "2b7b0e379e39cbba1662bf2b5733eb64",
+      "count": 629
+    },
+    "places": {
+      "md5": "ec4d2ba230efee102ae30692012d5ee2",
+      "count": 244
+    },
+    "outings": {
+      "md5": "b4fe362c1535f435f8b477472067618d",
+      "count": 416
+    },
+    "sources": {
+      "md5": "df997c89b42ed8b77d07720be94904de",
+      "count": 2460
+    },
+    "entities": {
+      "md5": "9dd0a0f080b2a4aaee3c46bbe7476e2d",
+      "count": 3635
+    },
+    "image_steps": {
+      "md5": "6606c7abda34106e4b713d99b2f9a35b",
+      "count": 532
+    },
+    "brotherhoods": {
+      "md5": "3549605654ea61ed38fc785f68b12889",
+      "count": 327
+    },
+    "source_links": {
+      "md5": "d745e5a75027669f54724845497a431c",
+      "count": 7692
+    },
+    "heritage_assets": {
+      "md5": "8d7230ff614141f8a1868ac266d0f907",
+      "count": 353
+    },
+    "outing_entities": {
+      "md5": "c0166a6cc9be2214feb7ff4d50ce93cf",
+      "count": 583
+    },
+    "entity_locations": {
+      "md5": "c644e8075084680da4e0c3af53e2ae78",
+      "count": 159
+    },
+    "brotherhood_steps": {
+      "md5": "cebf2412a7c73ba405773f8a44f6f959",
+      "count": 451
+    },
+    "image_authorships": {
+      "md5": "0d06a22ecd24e7d49445641b1650cba0",
+      "count": 330
+    },
+    "brotherhood_images": {
+      "md5": "5459d7d261f9636d88917c48f85231c1",
+      "count": 575
+    },
+    "outing_music_positions": {
+      "md5": "81fa5d788dfa32418b587d5298d17dd5",
+      "count": 252
+    },
+    "outing_music_assignments": {
+      "md5": "466243132096cdb72c461e7268f6e5ab",
+      "count": 250
+    }
+  },
+  "after": {
+    "bands": {
+      "md5": "d9231417ff950dd63855271bcf086610",
+      "count": 154
+    },
+    "steps": {
+      "md5": "93838f12081e9ee77a8c138ac821c2f1",
+      "count": 456
+    },
+    "agents": {
+      "md5": "a2c468c8ad339f60d0b36af998b2bb65",
+      "count": 699
+    },
+    "images": {
+      "md5": "2b7b0e379e39cbba1662bf2b5733eb64",
+      "count": 629
+    },
+    "places": {
+      "md5": "ec4d2ba230efee102ae30692012d5ee2",
+      "count": 244
+    },
+    "outings": {
+      "md5": "b4fe362c1535f435f8b477472067618d",
+      "count": 416
+    },
+    "sources": {
+      "md5": "df997c89b42ed8b77d07720be94904de",
+      "count": 2460
+    },
+    "entities": {
+      "md5": "9dd0a0f080b2a4aaee3c46bbe7476e2d",
+      "count": 3635
+    },
+    "image_steps": {
+      "md5": "6606c7abda34106e4b713d99b2f9a35b",
+      "count": 532
+    },
+    "brotherhoods": {
+      "md5": "3549605654ea61ed38fc785f68b12889",
+      "count": 327
+    },
+    "source_links": {
+      "md5": "d745e5a75027669f54724845497a431c",
+      "count": 7692
+    },
+    "heritage_assets": {
+      "md5": "8d7230ff614141f8a1868ac266d0f907",
+      "count": 353
+    },
+    "outing_entities": {
+      "md5": "c0166a6cc9be2214feb7ff4d50ce93cf",
+      "count": 583
+    },
+    "entity_locations": {
+      "md5": "c644e8075084680da4e0c3af53e2ae78",
+      "count": 159
+    },
+    "brotherhood_steps": {
+      "md5": "cebf2412a7c73ba405773f8a44f6f959",
+      "count": 451
+    },
+    "image_authorships": {
+      "md5": "0d06a22ecd24e7d49445641b1650cba0",
+      "count": 330
+    },
+    "brotherhood_images": {
+      "md5": "5459d7d261f9636d88917c48f85231c1",
+      "count": 575
+    },
+    "outing_music_positions": {
+      "md5": "81fa5d788dfa32418b587d5298d17dd5",
+      "count": 252
+    },
+    "outing_music_assignments": {
+      "md5": "466243132096cdb72c461e7268f6e5ab",
+      "count": 250
+    }
+  },
+  "idempotence": {
+    "result": {
+      "result": "UTRERA_IDEMPOTENCE_PASS_ROLLED_BACK",
+      "checked_operations": 1173,
+      "insert_operations": 1166,
+      "update_operations": 7,
+      "delete_operations": 0,
+      "checked_reuse": 33
+    },
+    "before": {
+      "bands": {
+        "md5": "d9231417ff950dd63855271bcf086610",
+        "count": 154
+      },
+      "steps": {
+        "md5": "93838f12081e9ee77a8c138ac821c2f1",
+        "count": 456
+      },
+      "agents": {
+        "md5": "a2c468c8ad339f60d0b36af998b2bb65",
+        "count": 699
+      },
+      "images": {
+        "md5": "2b7b0e379e39cbba1662bf2b5733eb64",
+        "count": 629
+      },
+      "places": {
+        "md5": "ec4d2ba230efee102ae30692012d5ee2",
+        "count": 244
+      },
+      "outings": {
+        "md5": "b4fe362c1535f435f8b477472067618d",
+        "count": 416
+      },
+      "sources": {
+        "md5": "df997c89b42ed8b77d07720be94904de",
+        "count": 2460
+      },
+      "entities": {
+        "md5": "9dd0a0f080b2a4aaee3c46bbe7476e2d",
+        "count": 3635
+      },
+      "image_steps": {
+        "md5": "6606c7abda34106e4b713d99b2f9a35b",
+        "count": 532
+      },
+      "brotherhoods": {
+        "md5": "3549605654ea61ed38fc785f68b12889",
+        "count": 327
+      },
+      "source_links": {
+        "md5": "d745e5a75027669f54724845497a431c",
+        "count": 7692
+      },
+      "heritage_assets": {
+        "md5": "8d7230ff614141f8a1868ac266d0f907",
+        "count": 353
+      },
+      "outing_entities": {
+        "md5": "c0166a6cc9be2214feb7ff4d50ce93cf",
+        "count": 583
+      },
+      "entity_locations": {
+        "md5": "c644e8075084680da4e0c3af53e2ae78",
+        "count": 159
+      },
+      "brotherhood_steps": {
+        "md5": "cebf2412a7c73ba405773f8a44f6f959",
+        "count": 451
+      },
+      "image_authorships": {
+        "md5": "0d06a22ecd24e7d49445641b1650cba0",
+        "count": 330
+      },
+      "brotherhood_images": {
+        "md5": "5459d7d261f9636d88917c48f85231c1",
+        "count": 575
+      },
+      "outing_music_positions": {
+        "md5": "81fa5d788dfa32418b587d5298d17dd5",
+        "count": 252
+      },
+      "outing_music_assignments": {
+        "md5": "466243132096cdb72c461e7268f6e5ab",
+        "count": 250
+      }
+    },
+    "after": {
+      "bands": {
+        "md5": "d9231417ff950dd63855271bcf086610",
+        "count": 154
+      },
+      "steps": {
+        "md5": "93838f12081e9ee77a8c138ac821c2f1",
+        "count": 456
+      },
+      "agents": {
+        "md5": "a2c468c8ad339f60d0b36af998b2bb65",
+        "count": 699
+      },
+      "images": {
+        "md5": "2b7b0e379e39cbba1662bf2b5733eb64",
+        "count": 629
+      },
+      "places": {
+        "md5": "ec4d2ba230efee102ae30692012d5ee2",
+        "count": 244
+      },
+      "outings": {
+        "md5": "b4fe362c1535f435f8b477472067618d",
+        "count": 416
+      },
+      "sources": {
+        "md5": "df997c89b42ed8b77d07720be94904de",
+        "count": 2460
+      },
+      "entities": {
+        "md5": "9dd0a0f080b2a4aaee3c46bbe7476e2d",
+        "count": 3635
+      },
+      "image_steps": {
+        "md5": "6606c7abda34106e4b713d99b2f9a35b",
+        "count": 532
+      },
+      "brotherhoods": {
+        "md5": "3549605654ea61ed38fc785f68b12889",
+        "count": 327
+      },
+      "source_links": {
+        "md5": "d745e5a75027669f54724845497a431c",
+        "count": 7692
+      },
+      "heritage_assets": {
+        "md5": "8d7230ff614141f8a1868ac266d0f907",
+        "count": 353
+      },
+      "outing_entities": {
+        "md5": "c0166a6cc9be2214feb7ff4d50ce93cf",
+        "count": 583
+      },
+      "entity_locations": {
+        "md5": "c644e8075084680da4e0c3af53e2ae78",
+        "count": 159
+      },
+      "brotherhood_steps": {
+        "md5": "cebf2412a7c73ba405773f8a44f6f959",
+        "count": 451
+      },
+      "image_authorships": {
+        "md5": "0d06a22ecd24e7d49445641b1650cba0",
+        "count": 330
+      },
+      "brotherhood_images": {
+        "md5": "5459d7d261f9636d88917c48f85231c1",
+        "count": 575
+      },
+      "outing_music_positions": {
+        "md5": "81fa5d788dfa32418b587d5298d17dd5",
+        "count": 252
+      },
+      "outing_music_assignments": {
+        "md5": "466243132096cdb72c461e7268f6e5ab",
+        "count": 250
+      }
+    },
+    "equal": true,
+    "sql_sha256": "0ff3fdf38d6fe77ee2616a88bbc8fd737b4a5377cbd6fe1ed4fb6e67441e3fee"
+  },
+  "schema_and_targets": [
+    {
+      "check_name": "columns",
+      "differences": []
+    },
+    {
+      "check_name": "constraints",
+      "differences": []
+    },
+    {
+      "table_name": "agents",
+      "check_name": "insert_collisions",
+      "count": 0
+    },
+    {
+      "table_name": "bands",
+      "check_name": "insert_collisions",
+      "count": 0
+    },
+    {
+      "table_name": "brotherhood_images",
+      "check_name": "insert_collisions",
+      "count": 0
+    },
+    {
+      "table_name": "brotherhood_images",
+      "check_name": "update_targets",
+      "count": 1
+    },
+    {
+      "table_name": "brotherhood_steps",
+      "check_name": "insert_collisions",
+      "count": 0
+    },
+    {
+      "table_name": "brotherhood_steps",
+      "check_name": "update_targets",
+      "count": 1
+    },
+    {
+      "table_name": "brotherhoods",
+      "check_name": "insert_collisions",
+      "count": 0
+    },
+    {
+      "table_name": "brotherhoods",
+      "check_name": "update_targets",
+      "count": 2
+    },
+    {
+      "table_name": "entities",
+      "check_name": "insert_collisions",
+      "count": 0
+    },
+    {
+      "table_name": "entities",
+      "check_name": "update_targets",
+      "count": 1
+    },
+    {
+      "table_name": "entity_locations",
+      "check_name": "insert_collisions",
+      "count": 0
+    },
+    {
+      "table_name": "heritage_assets",
+      "check_name": "insert_collisions",
+      "count": 0
+    },
+    {
+      "table_name": "image_authorships",
+      "check_name": "insert_collisions",
+      "count": 0
+    },
+    {
+      "table_name": "image_steps",
+      "check_name": "insert_collisions",
+      "count": 0
+    },
+    {
+      "table_name": "image_steps",
+      "check_name": "update_targets",
+      "count": 1
+    },
+    {
+      "table_name": "images",
+      "check_name": "insert_collisions",
+      "count": 0
+    },
+    {
+      "table_name": "outing_entities",
+      "check_name": "insert_collisions",
+      "count": 0
+    },
+    {
+      "table_name": "outing_music_assignments",
+      "check_name": "insert_collisions",
+      "count": 0
+    },
+    {
+      "table_name": "outing_music_positions",
+      "check_name": "insert_collisions",
+      "count": 0
+    },
+    {
+      "table_name": "outings",
+      "check_name": "insert_collisions",
+      "count": 0
+    },
+    {
+      "table_name": "places",
+      "check_name": "insert_collisions",
+      "count": 0
+    },
+    {
+      "table_name": "source_links",
+      "check_name": "insert_collisions",
+      "count": 0
+    },
+    {
+      "table_name": "sources",
+      "check_name": "insert_collisions",
+      "count": 0
+    },
+    {
+      "table_name": "steps",
+      "check_name": "insert_collisions",
+      "count": 0
+    },
+    {
+      "table_name": "steps",
+      "check_name": "update_targets",
+      "count": 1
+    }
+  ],
+  "post_controls": {
+    "observed_at": "2026-09-27 10:52:57.202336+00",
+    "utrera_imports": 0,
+    "protected_imports": [
+      {
+        "id": "1701dea1-0cd8-4881-935b-67a3dfe9b2d8",
+        "status": "ready",
+        "valid_items": 55,
+        "failed_items": 0,
+        "applied_items": 0
+      },
+      {
+        "id": "c0160037-0000-4000-8000-000000000001",
+        "status": "completed",
+        "valid_items": 504,
+        "failed_items": 0,
+        "applied_items": 504
+      }
+    ]
+  },
+  "public_product_qa": {
+    "deployment": "dpl_BHXKoq4j9v2ffPY9V4DQwe8VY4iF",
+    "image": {
+      "slug": "nuestra-senora-angustias-utrera",
+      "http": 200,
+      "robots": "index, follow",
+      "canonical": "https://hilocofrade.es/imagenes/nuestra-senora-angustias-utrera",
+      "in_sitemap": true
+    },
+    "sitemaps": {
+      "images": {
+        "http": 200,
+        "urls": 541
+      },
+      "brotherhoods": {
+        "http": 200,
+        "urls": 293
+      }
+    },
+    "step_regression": {
+      "slug": "andas-angustias-estepa",
+      "http": 200,
+      "robots": "index, follow"
+    },
+    "runtime": {
+      "from": "2026-09-27T10:40:18.515Z",
+      "to": "2026-09-27T10:55:18.515Z",
+      "error_fatal_rows": 0
+    }
+  },
+  "residues": 0,
+  "staging_created": false,
+  "apply_executed": false,
+  "gate": "GO_FOR_STAGING_ONLY",
+  "sql_sha256": "a9c629b3e822116821fbb6c6e629fe51da919cd16f2a44f1ef9f97607988f6a3",
+  "manifest_sha256": "cbd9df1abd9654fd19894f48e4300aa4d986b4833ea1efb827d5bacc007f82ae",
+  "qa": {
+    "specific": {
+      "passed": 30,
+      "failed": 0
+    },
+    "suite": {
+      "passed": 1350,
+      "failed": 0
+    },
+    "build": "PASS",
+    "diff_check": "PASS"
+  },
+  "later_main_revalidation": {
+    "main": "e86ba888c34ad7121be181708a2194815ea78ef2",
+    "deployment": "dpl_9QaCTZcRowb33vq3rgXyeyWu3gKa",
+    "reason": "#1015 changes only palettes and detail cache keys; SQL candidate, operation data, UUID and public indexing predicates unchanged",
+    "public_audit": "PASS_85_OF_85",
+    "suite": {
+      "passed": 1366,
+      "failed": 0
+    },
+    "build": "PASS",
+    "image_http": 200,
+    "image_robots": "index, follow",
+    "runtime_error_fatal_rows": 0,
+    "runtime_window": "2026-09-27T10:45:17.534Z to 2026-09-27T11:00:17.534Z; effective window bounded by deployment age"
+  }
+}

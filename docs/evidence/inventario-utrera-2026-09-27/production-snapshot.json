@@ -1,0 +1,5059 @@
+{
+  "date_local": "2026-09-27",
+  "main": "25c5fc12a35be8ae144d1a4fa5cde98469301562",
+  "snapshot": {
+    "bands": [
+      {
+        "id": "f492d28d-af48-4606-862c-89d5d3560a6b",
+        "name": "Banda de Música Álvarez Quintero de Utrera",
+        "slug": "banda-musica-alvarez-quintero-utrera",
+        "status": "published",
+        "profile": {
+          "band_type": "Banda de Música",
+          "entity_id": "f492d28d-af48-4606-862c-89d5d3560a6b",
+          "logo_path": null,
+          "description": "Formación documentada en el acompañamiento procesional de Dos Hermanas en 2026.",
+          "website_url": null,
+          "youtube_url": null,
+          "instagram_url": null,
+          "primary_color": null,
+          "hero_image_alt": null,
+          "foundation_text": null,
+          "hero_image_path": null,
+          "municipality_id": "e4319248-831a-4f4c-adb8-19c496f95dd6",
+          "secondary_color": null,
+          "headquarters_text": "Utrera",
+          "hero_image_credit": null,
+          "banderin_entity_id": null,
+          "logo_background_color": null,
+          "linked_brotherhood_name": null
+        }
+      },
+      {
+        "id": "7fafdc04-cb94-47d8-814f-5537639660ff",
+        "name": "Asociación Musical Álvarez Quintero",
+        "slug": "asociacion-musical-alvarez-quintero-utrera",
+        "status": "published",
+        "profile": {
+          "band_type": "Banda de Música",
+          "entity_id": "7fafdc04-cb94-47d8-814f-5537639660ff",
+          "logo_path": null,
+          "description": "Asociación Musical Álvarez Quintero de Utrera.",
+          "website_url": "https://www.bandaalvarezquintero.es/",
+          "youtube_url": null,
+          "instagram_url": null,
+          "primary_color": null,
+          "hero_image_alt": null,
+          "foundation_text": "1963",
+          "hero_image_path": null,
+          "municipality_id": "e4319248-831a-4f4c-adb8-19c496f95dd6",
+          "secondary_color": null,
+          "headquarters_text": "Utrera, Sevilla",
+          "hero_image_credit": null,
+          "banderin_entity_id": null,
+          "logo_background_color": null,
+          "linked_brotherhood_name": null
+        }
+      },
+      {
+        "id": "fb303d3e-4739-4390-b1b6-e579c988b8d0",
+        "name": "Asociación Musical Utrerana",
+        "slug": "asociacion-musical-utrerana",
+        "status": "published",
+        "profile": {
+          "band_type": "Banda de Música",
+          "entity_id": "fb303d3e-4739-4390-b1b6-e579c988b8d0",
+          "logo_path": null,
+          "description": "Formación documentada en el acompañamiento procesional de Dos Hermanas en 2026.",
+          "website_url": null,
+          "youtube_url": null,
+          "instagram_url": null,
+          "primary_color": null,
+          "hero_image_alt": null,
+          "foundation_text": null,
+          "hero_image_path": null,
+          "municipality_id": "e4319248-831a-4f4c-adb8-19c496f95dd6",
+          "secondary_color": null,
+          "headquarters_text": "Utrera",
+          "hero_image_credit": null,
+          "banderin_entity_id": null,
+          "logo_background_color": null,
+          "linked_brotherhood_name": null
+        }
+      },
+      {
+        "id": "c0160032-0406-4000-8000-000000000006",
+        "name": "Banda de Cornetas y Tambores Santa Vera+Cruz de Utrera",
+        "slug": "banda-cornetas-tambores-santa-vera-cruz-utrera",
+        "status": "published",
+        "profile": {
+          "band_type": "Cornetas y Tambores",
+          "entity_id": "c0160032-0406-4000-8000-000000000006",
+          "logo_path": null,
+          "description": "Formación musical documentada para la edición de 2026.",
+          "website_url": "https://www.bandaveracruzutrera.es/",
+          "youtube_url": null,
+          "instagram_url": null,
+          "primary_color": null,
+          "hero_image_alt": null,
+          "foundation_text": null,
+          "hero_image_path": null,
+          "municipality_id": "e4319248-831a-4f4c-adb8-19c496f95dd6",
+          "secondary_color": null,
+          "headquarters_text": "Utrera",
+          "hero_image_credit": null,
+          "banderin_entity_id": null,
+          "logo_background_color": null,
+          "linked_brotherhood_name": null
+        }
+      },
+      {
+        "id": "c0160036-0412-4000-8000-000000000012",
+        "name": "Banda de Cornetas y Tambores Nuestra Señora de la Palma de Utrera",
+        "slug": "bct-nuestra-senora-palma-utrera",
+        "status": "published",
+        "profile": {
+          "band_type": "Cornetas y Tambores",
+          "entity_id": "c0160036-0412-4000-8000-000000000012",
+          "logo_path": null,
+          "description": "Formación documentada en el acompañamiento procesional de Écija 2026.",
+          "website_url": null,
+          "youtube_url": null,
+          "instagram_url": null,
+          "primary_color": null,
+          "hero_image_alt": null,
+          "foundation_text": null,
+          "hero_image_path": null,
+          "municipality_id": "e4319248-831a-4f4c-adb8-19c496f95dd6",
+          "secondary_color": null,
+          "headquarters_text": "Utrera",
+          "hero_image_credit": null,
+          "banderin_entity_id": null,
+          "logo_background_color": null,
+          "linked_brotherhood_name": null
+        }
+      }
+    ],
+    "music": [
+      {
+        "id": "1b5b079c-58c5-4b2e-934d-dc81707ec293",
+        "notes": null,
+        "status": "published",
+        "date_to": null,
+        "year_to": 1989,
+        "position": "Tras Nuestro Padre Jesús Nazareno",
+        "date_from": null,
+        "year_from": 1989,
+        "created_at": "2026-08-31T22:09:40.307334+00:00",
+        "is_current": false,
+        "updated_at": "2026-09-02T09:04:01.187517+00:00",
+        "outing_type": "Madrugá",
+        "date_to_text": "1989",
+        "band_entity_id": "31f46874-049b-4c33-aa68-b65ded5dfda9",
+        "date_from_text": "1989",
+        "step_entity_id": null,
+        "public_province": "Sevilla",
+        "public_step_name": null,
+        "brotherhood_entity_id": "4e462b02-979d-4b88-ab98-0c97f2dbf0a0",
+        "public_brotherhood_name": "Hermandad de Jesús Nazareno de Utrera",
+        "public_brotherhood_slug": "hermandad-jesus-nazareno-utrera",
+        "public_municipality_name": "Utrera",
+        "public_municipality_slug": "utrera"
+      }
+    ],
+    "steps": [
+      {
+        "entity": {
+          "id": "b51dd99d-97fe-4636-b35e-59ac8fa92dc5",
+          "name": "Paso de palio de Nuestra Señora de las Angustias",
+          "slug": "paso-palio-angustias-utrera",
+          "status": "review",
+          "summary": "Paso documentado en una salida extraordinaria de 2026; nodo de referencia pendiente de ficha técnica y patrimonial completa.",
+          "created_at": "2026-09-07T18:54:41.597849+00:00",
+          "updated_at": "2026-09-07T19:19:00.041132+00:00",
+          "entity_type": "step",
+          "content_updated_at": null,
+          "editorial_reviewed_at": null
+        },
+        "profile": {
+          "notes": "En 2026 estrena un llamador diseñado por Antonio Rodríguez Ledesma y ejecutado/fundido por Orfebrería Alesco. Pendiente de completar la historia artística del conjunto antes de publicación.",
+          "style": null,
+          "width_cm": null,
+          "entity_id": "b51dd99d-97fe-4636-b35e-59ac8fa92dc5",
+          "height_cm": null,
+          "length_cm": null,
+          "materials": null,
+          "step_type": "Paso de palio",
+          "description": "Paso documentado para la salida extraordinaria de 2026.",
+          "carrier_system": null,
+          "dimensions_text": null,
+          "current_condition": null,
+          "workbenches_count": null,
+          "current_state_notes": null,
+          "execution_date_text": null
+        },
+        "relation": {
+          "id": "e2a25a65-a3ac-49d0-a364-972db1f32997",
+          "notes": "Paso vinculado a la corporación por evidencia de la extraordinaria de 2026.",
+          "status": "review",
+          "date_to": null,
+          "date_from": null,
+          "created_at": "2026-09-07T18:54:41.597849+00:00",
+          "date_to_text": null,
+          "relation_type": "processional_step",
+          "date_from_text": null,
+          "step_entity_id": "b51dd99d-97fe-4636-b35e-59ac8fa92dc5",
+          "brotherhood_entity_id": "4e462b02-979d-4b88-ab98-0c97f2dbf0a0"
+        }
+      },
+      {
+        "entity": {
+          "id": "2f9d80fc-0c4f-4346-95fd-109d31c29b23",
+          "name": "Andas procesionales de Nuestra Señora de Consolación Coronada (2026)",
+          "slug": "andas-consolacion-coronada-utrera-2026",
+          "status": "published",
+          "summary": "Nuevas andas procesionales estrenadas para la salida del 8 de septiembre de 2026.",
+          "created_at": "2026-09-05T14:23:50.801172+00:00",
+          "updated_at": "2026-09-05T14:23:50.801172+00:00",
+          "entity_type": "step",
+          "content_updated_at": null,
+          "editorial_reviewed_at": null
+        },
+        "profile": {
+          "notes": "La autoría del taller no se fija como dato canónico en este cierre al no aparecer identificada en la Fuente local principal utilizada.",
+          "style": null,
+          "width_cm": null,
+          "entity_id": "2f9d80fc-0c4f-4346-95fd-109d31c29b23",
+          "height_cm": null,
+          "length_cm": null,
+          "materials": "Metal con acabado en baño de plata",
+          "step_type": "Gloria",
+          "description": "Andas de orfebrería realizadas mediante repujado y cincelado en metal, con acabado final en baño de plata, estrenadas en 2026.",
+          "carrier_system": null,
+          "dimensions_text": null,
+          "current_condition": "preserved",
+          "workbenches_count": null,
+          "current_state_notes": "Vigentes para la salida del 8 de septiembre de 2026.",
+          "execution_date_text": "2026"
+        },
+        "relation": {
+          "id": "a3bbadcf-f23f-476d-9a7f-53b126a3382a",
+          "notes": "Andas vigentes para la salida anual al alba.",
+          "status": "published",
+          "date_to": null,
+          "date_from": null,
+          "created_at": "2026-09-05T14:23:50.801172+00:00",
+          "date_to_text": null,
+          "relation_type": "processional_step",
+          "date_from_text": "2026",
+          "step_entity_id": "2f9d80fc-0c4f-4346-95fd-109d31c29b23",
+          "brotherhood_entity_id": "8d4e62d9-a428-4363-afc7-6a2f9e8c1450"
+        }
+      },
+      {
+        "entity": {
+          "id": "4c9e01e0-e671-41a5-a738-dd33fc15747a",
+          "name": "Trono de la Coronación de Nuestra Señora de Consolación",
+          "slug": "trono-coronacion-consolacion-utrera-1964",
+          "status": "published",
+          "summary": "Trono procesional de Fernando Marmolejo realizado para la Coronación Canónica de 1964 y recuperado para la procesión de Sevilla de 2024.",
+          "created_at": "2026-09-05T14:23:50.801172+00:00",
+          "updated_at": "2026-09-05T14:23:50.801172+00:00",
+          "entity_type": "step",
+          "content_updated_at": null,
+          "editorial_reviewed_at": null
+        },
+        "profile": {
+          "notes": null,
+          "style": null,
+          "width_cm": null,
+          "entity_id": "4c9e01e0-e671-41a5-a738-dd33fc15747a",
+          "height_cm": null,
+          "length_cm": null,
+          "materials": null,
+          "step_type": "Gloria",
+          "description": "Trono de la Coronación Canónica, obra de Fernando Marmolejo, recuperado y restaurado para la procesión de clausura del II Congreso Internacional de Hermandades de 2024.",
+          "carrier_system": null,
+          "dimensions_text": null,
+          "current_condition": "preserved",
+          "workbenches_count": null,
+          "current_state_notes": "Conservado como pieza histórica y utilizado de nuevo en 2024.",
+          "execution_date_text": "1964"
+        },
+        "relation": {
+          "id": "31dbe6f7-1556-4ffd-adb1-4b52508e717b",
+          "notes": "Trono histórico de la Coronación; utilizado en la salida extraordinaria de Sevilla de 2024.",
+          "status": "published",
+          "date_to": null,
+          "date_from": null,
+          "created_at": "2026-09-05T14:23:50.801172+00:00",
+          "date_to_text": null,
+          "relation_type": "historical_processional_step",
+          "date_from_text": "1964",
+          "step_entity_id": "4c9e01e0-e671-41a5-a738-dd33fc15747a",
+          "brotherhood_entity_id": "8d4e62d9-a428-4363-afc7-6a2f9e8c1450"
+        }
+      }
+    ],
+    "images": [
+      {
+        "entity": {
+          "id": "4550fd96-94d3-4929-8d61-af79ba7de8e7",
+          "name": "Nuestra Señora de las Angustias",
+          "slug": "nuestra-senora-angustias-utrera",
+          "status": "published",
+          "summary": "Dolorosa histórica de Utrera de autor desconocido, tradicionalmente vinculada al círculo de Pedro Duque Cornejo.",
+          "created_at": "2026-09-07T17:57:25.706718+00:00",
+          "updated_at": "2026-09-07T20:19:41.264603+00:00",
+          "entity_type": "image",
+          "content_updated_at": null,
+          "editorial_reviewed_at": null
+        },
+        "profile": {
+          "notes": "Nodo de referencia en draft creado desde EXTRAORDINARIAS-2026.",
+          "depth_cm": null,
+          "material": null,
+          "width_cm": null,
+          "entity_id": "4550fd96-94d3-4929-8d61-af79ba7de8e7",
+          "height_cm": null,
+          "technique": null,
+          "image_type": "Dolorosa",
+          "polychromy": null,
+          "description": "Imagen de autoría no documentada. La bibliografía local recoge su tradicional vinculación al círculo de Pedro Duque Cornejo por afinidades estilísticas; se considera una de las dolorosas bajo palio más antiguas de Utrera.",
+          "iconography": "Virgen dolorosa",
+          "execution_date": null,
+          "is_dress_image": true,
+          "anatomical_type": null,
+          "dimensions_text": null,
+          "current_condition": null,
+          "current_state_notes": null,
+          "execution_date_text": null,
+          "advocation_entity_id": null
+        },
+        "relation": {
+          "id": "a451285c-741d-4f1e-b462-16cf9bfebffa",
+          "notes": "Relación de titularidad documentada por la extraordinaria de 2026; mantener en draft hasta cierre editorial de la Imagen.",
+          "status": "published",
+          "date_to": null,
+          "date_from": null,
+          "created_at": "2026-09-07T17:57:25.706718+00:00",
+          "date_to_text": null,
+          "relation_type": "Titular",
+          "date_from_text": null,
+          "image_entity_id": "4550fd96-94d3-4929-8d61-af79ba7de8e7",
+          "brotherhood_entity_id": "4e462b02-979d-4b88-ab98-0c97f2dbf0a0"
+        }
+      },
+      {
+        "entity": {
+          "id": "46968f38-a4a1-43df-ad66-1436e19bb394",
+          "name": "Nuestra Señora de Consolación Coronada",
+          "slug": "nuestra-senora-consolacion-coronada-utrera",
+          "status": "published",
+          "summary": "Patrona de Utrera, conocida popularmente como la Virgen del barquito en la mano.",
+          "created_at": "2026-09-05T14:23:50.801172+00:00",
+          "updated_at": "2026-09-05T14:23:50.801172+00:00",
+          "entity_type": "image",
+          "content_updated_at": null,
+          "editorial_reviewed_at": null
+        },
+        "profile": {
+          "notes": null,
+          "depth_cm": null,
+          "material": "Madera tallada y policromada",
+          "width_cm": null,
+          "entity_id": "46968f38-a4a1-43df-ad66-1436e19bb394",
+          "height_cm": null,
+          "technique": null,
+          "image_type": "Virgen con Niño",
+          "polychromy": null,
+          "description": "Imagen mariana venerada en Utrera desde comienzos del siglo XVI. Su iconografía incorpora al Niño y el característico barquito de oro y cristal de roca que sostiene en la mano.",
+          "iconography": "Virgen con el Niño y pequeño galeón o perfumador en la mano derecha.",
+          "execution_date": null,
+          "is_dress_image": null,
+          "anatomical_type": null,
+          "dimensions_text": null,
+          "current_condition": "extant",
+          "current_state_notes": "Venerada en el camarín del Santuario de Nuestra Señora de Consolación.",
+          "execution_date_text": "Anterior a 1507 · autoría no documentada en las Fuentes oficiales consultadas",
+          "advocation_entity_id": null
+        },
+        "relation": {
+          "id": "08b59966-dd4d-412e-9116-5a50d202e981",
+          "notes": "Titular mariana, Patrona de Utrera.",
+          "status": "published",
+          "date_to": null,
+          "date_from": null,
+          "created_at": "2026-09-05T14:23:50.801172+00:00",
+          "date_to_text": null,
+          "relation_type": "titular",
+          "date_from_text": null,
+          "image_entity_id": "46968f38-a4a1-43df-ad66-1436e19bb394",
+          "brotherhood_entity_id": "8d4e62d9-a428-4363-afc7-6a2f9e8c1450"
+        }
+      },
+      {
+        "entity": {
+          "id": "e875dbee-612f-4739-9f24-fd583d6b2df6",
+          "name": "Nuestra Señora de los Dolores",
+          "slug": "nuestra-senora-dolores-utrera-vera-cruz",
+          "status": "published",
+          "summary": "Titular mariana de la Hermandad de la Vera-Cruz y Santo Entierro de Utrera.",
+          "created_at": "2026-09-13T10:53:23.750467+00:00",
+          "updated_at": "2026-09-13T10:53:23.750467+00:00",
+          "entity_type": "image",
+          "content_updated_at": null,
+          "editorial_reviewed_at": null
+        },
+        "profile": {
+          "notes": "Titular mariana de la Vera-Cruz y Santo Entierro de Utrera. Retocada en el siglo XX; ficha pendiente de desarrollo documental.",
+          "depth_cm": null,
+          "material": null,
+          "width_cm": null,
+          "entity_id": "e875dbee-612f-4739-9f24-fd583d6b2df6",
+          "height_cm": null,
+          "technique": null,
+          "image_type": "Dolorosa",
+          "polychromy": null,
+          "description": null,
+          "iconography": "Virgen dolorosa",
+          "execution_date": null,
+          "is_dress_image": true,
+          "anatomical_type": null,
+          "dimensions_text": null,
+          "current_condition": null,
+          "current_state_notes": null,
+          "execution_date_text": "Segunda mitad del siglo XIX",
+          "advocation_entity_id": null
+        },
+        "relation": {
+          "id": "bf7da95c-5bd0-4ba3-89d0-5b8653a8df00",
+          "notes": "Titular mariana de la Hermandad.",
+          "status": "published",
+          "date_to": null,
+          "date_from": null,
+          "created_at": "2026-09-13T10:53:23.750467+00:00",
+          "date_to_text": null,
+          "relation_type": "titular",
+          "date_from_text": null,
+          "image_entity_id": "e875dbee-612f-4739-9f24-fd583d6b2df6",
+          "brotherhood_entity_id": "7bab2fe6-c69e-48e5-9446-a247b4169910"
+        }
+      }
+    ],
+    "outings": [
+      {
+        "id": "d4debf08-2ffc-40ef-9e9b-001056634cf8",
+        "slug": "utrera-consolacion-2026-09-08",
+        "year": 2026,
+        "route": null,
+        "title": "Procesión Triunfal de Gloria de Nuestra Señora de Consolación Coronada 2026",
+        "reason": "Festividad de Nuestra Señora de Consolación Coronada, Patrona de Utrera",
+        "status": "published",
+        "character": "ordinary",
+        "created_at": "2026-08-25T20:58:05.642929+00:00",
+        "updated_at": "2026-09-15T07:20:16.592892+00:00",
+        "description": "Salida al alba de Nuestra Señora de Consolación Coronada, Patrona de Utrera, por el Real del Santuario y el entorno del Parque del V Centenario durante el rezo del Santo Rosario.",
+        "origin_text": "Santuario de Nuestra Señora de Consolación",
+        "outing_date": "2026-09-08",
+        "outing_type": "Procesión de Gloria",
+        "return_date": "2026-09-08",
+        "return_time": "09:00:00",
+        "event_status": "held",
+        "public_notes": "Salida anunciada para las 07:00 del 8 de septiembre de 2026 para el rezo del Santo Rosario por el Real de Consolación y el entorno del Parque del V Centenario. La Virgen será portada en sus nuevas andas, con acompañamiento del Coro de la Virgen. La entrada en el Santuario está prevista aproximadamente a las 09:00.",
+        "route_summary": "Santuario de Nuestra Señora de Consolación · Real de Consolación · Parque del V Centenario · Santuario de Nuestra Señora de Consolación",
+        "departure_time": "07:00:00",
+        "hero_image_alt": null,
+        "organizer_name": "Pontificia, Real e Ilustre Hermandad de Nuestra Señora de Consolación Coronada",
+        "reference_code": null,
+        "hero_image_path": null,
+        "municipality_id": "e4319248-831a-4f4c-adb8-19c496f95dd6",
+        "organizer_notes": null,
+        "origin_place_id": "09fb4082-dd92-4fc4-bb25-41fff021d284",
+        "destination_text": "Santuario de Nuestra Señora de Consolación",
+        "outing_series_id": "7ac88d7d-1c84-4f2c-bf85-1c55d187ab4b",
+        "hero_image_credit": null,
+        "destination_place_id": "09fb4082-dd92-4fc4-bb25-41fff021d284",
+        "brotherhood_entity_id": "8d4e62d9-a428-4363-afc7-6a2f9e8c1450"
+      },
+      {
+        "id": "1ccf8096-c5e3-417e-a7f4-97ad3a799492",
+        "slug": "utrera-angustias-2026",
+        "year": 2026,
+        "route": null,
+        "title": "Nuestra Señora de Las Angustias",
+        "reason": "Coronación Canónica",
+        "status": "published",
+        "character": "extraordinary",
+        "created_at": "2026-08-22T15:04:10.642141+00:00",
+        "updated_at": "2026-09-07T17:40:57.632283+00:00",
+        "description": null,
+        "origin_text": "Capilla de San Bartolomé",
+        "outing_date": "2026-10-03",
+        "outing_type": "Procesión extraordinaria",
+        "return_date": null,
+        "return_time": null,
+        "event_status": "announced",
+        "public_notes": "La ida tiene carácter de traslado hacia el Altozano. Tras la Coronación Canónica se celebrará la procesión triunfal de regreso. La entrada se producirá ya entrada la madrugada del 4 de octubre.",
+        "route_summary": "Ida: San Juan Bosco, Ramón y Cajal, Clemente de la Cuadra y Plaza del Altozano. Regreso: Plaza del Altozano, San Francisco, Clemente de la Cuadra, Ayuntamiento, Álvarez Quintero, Sevilla, Plaza de la Constitución, Ruiz Gijón, Parroquia de Santiago, Ponce de León, Catalina de Perea, Plaza Enrique de la Cuadra, San Fernando, Santa Ángela de la Cruz, Convento de las Hermanas de la Cruz, Sor Marciala de la Cruz, Parroquia de Santa María, Porche de Santa María, Mota de Santa María, Menéndez Pelayo, Fray Cipriano de Utrera, Alcalde Antonio Sousa, Álvarez Hazañas, Plaza del Altozano, Virgen de Consolación y San Juan Bosco, hasta finalizar en la Capilla de San Bartolomé.",
+        "departure_time": "16:30:00",
+        "hero_image_alt": null,
+        "organizer_name": "Real e Ilustre Hermandad de Nuestro Padre Jesús Nazareno, Santa Cruz de Jerusalén, Sagrada Oración de Nuestro Señor Jesucristo en El Huerto, Nuestra Señora de Las Angustias, de la Inmaculada Concepción, San Bartolomé Apóstol y Santa Bárbara",
+        "reference_code": "UTRERA-ANGUSTIAS-2026",
+        "hero_image_path": null,
+        "municipality_id": "e4319248-831a-4f4c-adb8-19c496f95dd6",
+        "organizer_notes": null,
+        "origin_place_id": null,
+        "destination_text": "Capilla de San Bartolomé",
+        "outing_series_id": null,
+        "hero_image_credit": null,
+        "destination_place_id": null,
+        "brotherhood_entity_id": "4e462b02-979d-4b88-ab98-0c97f2dbf0a0"
+      },
+      {
+        "id": "b639727d-e6c1-43fb-a4ea-22ec6230d58c",
+        "slug": "utrera-dolores-hermanas-cruz-2026",
+        "year": 2026,
+        "route": null,
+        "title": "Nuestra Señora de los Dolores",
+        "reason": "150 aniversario fundacional de las Hermanas de la Cruz",
+        "status": "published",
+        "character": "extraordinary",
+        "created_at": "2026-09-13T10:53:23.750467+00:00",
+        "updated_at": "2026-09-15T07:07:14.320792+00:00",
+        "description": "Traslado extraordinario de Nuestra Señora de los Dolores para visitar a la comunidad de las Hermanas de la Cruz.",
+        "origin_text": null,
+        "outing_date": "2026-09-19",
+        "outing_type": "Traslado extraordinario",
+        "return_date": "2026-09-20",
+        "return_time": "13:00:00",
+        "event_status": "announced",
+        "public_notes": "Traslado extraordinario en andas por el 150.º aniversario fundacional de las Hermanas de la Cruz. El sábado 19 la salida será a las 18:00 desde la Plaza del Altozano, con rezo del Santo Rosario durante el recorrido y llegada aproximada a las 19:00. La Virgen permanecerá durante la noche junto a la comunidad. El domingo 20 se celebrará eucaristía a las 10:00; el regreso comenzará aproximadamente a las 11:00 y la entrada está prevista a las 13:00. Acompañamiento musical: no consta confirmado en la fuente más reciente revisada.",
+        "route_summary": "Ida (19 de septiembre): Plaza del Altozano, Álvarez Hazañas, Sacramento, Preciosa, Menéndez Pelayo, Padre Miguel Román, Sor Marciala, Santa Ángela y San Fernando, con llegada al Convento de las Hermanas de la Cruz. Regreso (20 de septiembre): San Fernando, Plaza Enrique de la Cuadra, La Plaza, Perafán de Rivera, Plaza del Altozano, Plaza de la Constitución, Sevilla, Ramón y Cajal, Vicente Giráldez y Virgen de Consolación, hasta la Iglesia de San Francisco.",
+        "departure_time": "18:00:00",
+        "hero_image_alt": null,
+        "organizer_name": "Hermandad de la Vera-Cruz y Santo Entierro de Utrera",
+        "reference_code": "UTRERA-DOLORES-HERMANAS-CRUZ-2026",
+        "hero_image_path": null,
+        "municipality_id": "e4319248-831a-4f4c-adb8-19c496f95dd6",
+        "organizer_notes": null,
+        "origin_place_id": "f9dc025c-094b-468f-ad7c-4ee55c7167e8",
+        "destination_text": "Convento de las Hermanas de la Cruz",
+        "outing_series_id": null,
+        "hero_image_credit": null,
+        "destination_place_id": null,
+        "brotherhood_entity_id": "7bab2fe6-c69e-48e5-9446-a247b4169910"
+      },
+      {
+        "id": "9210cbbb-e66e-415e-9f50-ca18ccb97d93",
+        "slug": "pinzon-utrera-virgen-marismas-procesion-2026-09-19",
+        "year": 2026,
+        "route": null,
+        "title": "Procesión de Nuestra Señora de las Marismas 2026",
+        "reason": null,
+        "status": "published",
+        "character": "ordinary",
+        "created_at": "2026-09-19T10:09:43.724892+00:00",
+        "updated_at": "2026-09-19T10:09:43.724892+00:00",
+        "description": "Procesión de Nuestra Señora de las Marismas en la pedanía utrerana de Pinzón.",
+        "origin_text": "Iglesia de Pinzón",
+        "outing_date": "2026-09-19",
+        "outing_type": "Procesión de Gloria",
+        "return_date": null,
+        "return_time": null,
+        "event_status": "announced",
+        "public_notes": "Salida a las 21:30 desde la Iglesia de Pinzón. La agenda consultada indica acompañamiento de banda de música, sin identificar la formación.",
+        "route_summary": null,
+        "departure_time": "21:30:00",
+        "hero_image_alt": null,
+        "organizer_name": null,
+        "reference_code": "PINZON-MARISMAS-2026",
+        "hero_image_path": null,
+        "municipality_id": "e4319248-831a-4f4c-adb8-19c496f95dd6",
+        "organizer_notes": null,
+        "origin_place_id": null,
+        "destination_text": "Iglesia de Pinzón",
+        "outing_series_id": null,
+        "hero_image_credit": null,
+        "destination_place_id": null,
+        "brotherhood_entity_id": null
+      }
+    ],
+    "migrations": 17,
+    "brotherhoods": [
+      {
+        "entity": {
+          "id": "4e462b02-979d-4b88-ab98-0c97f2dbf0a0",
+          "name": "Hermandad de Jesús Nazareno de Utrera",
+          "slug": "hermandad-jesus-nazareno-utrera",
+          "status": "published",
+          "summary": "Histórica Hermandad de Utrera con sede en la Capilla de San Bartolomé, vinculada al Nazareno, la Oración en el Huerto y Nuestra Señora de las Angustias.",
+          "created_at": "2026-08-31T22:09:40.307334+00:00",
+          "updated_at": "2026-09-07T20:19:10.888287+00:00",
+          "entity_type": "brotherhood",
+          "content_updated_at": null,
+          "editorial_reviewed_at": null
+        },
+        "profile": {
+          "notes": "Alta mínima relacional. Pendiente de investigación editorial completa antes de publicación.",
+          "entity_id": "4e462b02-979d-4b88-ab98-0c97f2dbf0a0",
+          "crest_path": null,
+          "website_url": "https://www.jesusnazarenoutrera.es/",
+          "history_text": "Sus antecedentes documentales alcanzan 1538. La regla fundacional de San Bartolomé data de 1568 y la Hermandad de la Santa Cruz de Jerusalén se constituyó en 1586, fusionándose ambas corporaciones ese mismo año. En 1597 adquirió la imagen de Nuestro Padre Jesús Nazareno. La actual Capilla de San Bartolomé fue levantada a finales del siglo XVII.",
+          "neighborhood": null,
+          "popular_name": "Jesús Nazareno de Utrera",
+          "instagram_url": null,
+          "official_name": "Real e Ilustre Hermandad de Nuestro Padre Jesús Nazareno, Santa Cruz de Jerusalén, Sagrada Oración de Nuestro Señor Jesucristo en el Huerto, Nuestra Señora de las Angustias, de la Inmaculada Concepción, San Bartolomé Apóstol y Santa Bárbara",
+          "foundation_text": "Regla fundacional de San Bartolomé de 1568; Hermandad de la Santa Cruz de Jerusalén constituida en 1586 y fusionada ese mismo año.",
+          "municipality_id": "e4319248-831a-4f4c-adb8-19c496f95dd6",
+          "brotherhood_types": [
+            "Penitencia"
+          ],
+          "canonical_see_place_id": "9b425ed3-943b-4b77-b351-93d87467b1cc",
+          "current_procession_day": "Domingo de Ramos · Viernes Santo"
+        }
+      },
+      {
+        "entity": {
+          "id": "8d4e62d9-a428-4363-afc7-6a2f9e8c1450",
+          "name": "Pontificia, Real e Ilustre Hermandad de Nuestra Señora de Consolación Coronada",
+          "slug": "consolacion-utrera",
+          "status": "published",
+          "summary": "Hermandad de Gloria de Utrera dedicada a Nuestra Señora de Consolación Coronada, Patrona y Alcaldesa Perpetua de la ciudad, con sede canónica en su Santuario Diocesano.",
+          "created_at": "2026-08-25T20:58:05.642929+00:00",
+          "updated_at": "2026-09-05T14:23:50.801172+00:00",
+          "entity_type": "brotherhood",
+          "content_updated_at": null,
+          "editorial_reviewed_at": null
+        },
+        "profile": {
+          "notes": null,
+          "entity_id": "8d4e62d9-a428-4363-afc7-6a2f9e8c1450",
+          "crest_path": null,
+          "website_url": "https://santuariodeconsolacion.org/",
+          "history_text": "La devoción a Nuestra Señora de Consolación se articula en Utrera desde el siglo XVI. La imagen llegó a la ciudad en 1507 y fue trasladada a la ermita levantada en 1520. El Santuario quedó vinculado a la Orden de los Mínimos desde 1560 y fue centro de grandes peregrinaciones hasta la suspensión de la antigua romería en 1771. La Virgen fue proclamada Alcaldesa Perpetua tras la inundación de 1962 y coronada canónicamente el 1 de mayo de 1964. En 2007 y 2014 el Santuario celebró sendos Años Jubilares. Desde 2026 la festividad del 8 de septiembre incorpora una salida anual al alba por el Real de Consolación.",
+          "neighborhood": null,
+          "popular_name": "Consolación de Utrera",
+          "instagram_url": null,
+          "official_name": "Pontificia, Real e Ilustre Hermandad de Nuestra Señora de Consolación Coronada",
+          "foundation_text": "Siglo XVI",
+          "municipality_id": "e4319248-831a-4f4c-adb8-19c496f95dd6",
+          "brotherhood_types": [
+            "Gloria"
+          ],
+          "canonical_see_place_id": "09fb4082-dd92-4fc4-bb25-41fff021d284",
+          "current_procession_day": "8 de septiembre · al alba"
+        }
+      },
+      {
+        "entity": {
+          "id": "7bab2fe6-c69e-48e5-9446-a247b4169910",
+          "name": "Hermandad de la Vera-Cruz y Santo Entierro de Utrera",
+          "slug": "vera-cruz-santo-entierro-utrera",
+          "status": "published",
+          "summary": "Corporación penitencial de Utrera con sede en la Iglesia de San Francisco.",
+          "created_at": "2026-09-13T10:53:23.750467+00:00",
+          "updated_at": "2026-09-13T10:53:23.750467+00:00",
+          "entity_type": "brotherhood",
+          "content_updated_at": null,
+          "editorial_reviewed_at": null
+        },
+        "profile": {
+          "notes": "Nodo inicial documentado para vincular la extraordinaria de septiembre de 2026; ficha pendiente de ampliación editorial.",
+          "entity_id": "7bab2fe6-c69e-48e5-9446-a247b4169910",
+          "crest_path": null,
+          "website_url": "https://veracruzdeutrera.org/",
+          "history_text": null,
+          "neighborhood": null,
+          "popular_name": "Vera-Cruz y Santo Entierro de Utrera",
+          "instagram_url": null,
+          "official_name": "Hermandad de la Vera-Cruz y Santo Entierro",
+          "foundation_text": "1280",
+          "municipality_id": "e4319248-831a-4f4c-adb8-19c496f95dd6",
+          "brotherhood_types": [
+            "Penitencia"
+          ],
+          "canonical_see_place_id": "f9dc025c-094b-468f-ad7c-4ee55c7167e8",
+          "current_procession_day": "Sábado Santo"
+        }
+      }
+    ]
+  },
+  "places": [
+    {
+      "id": "09fb4082-dd92-4fc4-bb25-41fff021d284",
+      "municipality_id": "e4319248-831a-4f4c-adb8-19c496f95dd6",
+      "name": "Santuario de Nuestra Señora de Consolación",
+      "slug": "santuario-nuestra-senora-consolacion-utrera",
+      "place_type": "Santuario",
+      "address": "Paseo de Consolación, s/n, 41710 Utrera, Sevilla",
+      "latitude": null,
+      "longitude": null,
+      "notes": "Santuario Diocesano de Peregrinaciones y sede canónica de la Hermandad.",
+      "created_at": "2026-09-05 14:23:50.801172+00",
+      "updated_at": "2026-09-05 14:23:50.801172+00",
+      "opening_hours_text": null,
+      "opening_hours_verified_at": null
+    },
+    {
+      "id": "9b425ed3-943b-4b77-b351-93d87467b1cc",
+      "municipality_id": "e4319248-831a-4f4c-adb8-19c496f95dd6",
+      "name": "Capilla de San Bartolomé",
+      "slug": "capilla-san-bartolome-utrera",
+      "place_type": "Capilla",
+      "address": null,
+      "latitude": null,
+      "longitude": null,
+      "notes": "Sede de la Hermandad de Jesús Nazareno de Utrera.",
+      "created_at": "2026-09-07 20:18:55.259769+00",
+      "updated_at": "2026-09-07 20:18:55.259769+00",
+      "opening_hours_text": null,
+      "opening_hours_verified_at": null
+    },
+    {
+      "id": "f9dc025c-094b-468f-ad7c-4ee55c7167e8",
+      "municipality_id": "e4319248-831a-4f4c-adb8-19c496f95dd6",
+      "name": "Iglesia de San Francisco",
+      "slug": "iglesia-san-francisco-utrera",
+      "place_type": "Iglesia",
+      "address": null,
+      "latitude": null,
+      "longitude": null,
+      "notes": null,
+      "created_at": "2026-09-13 10:53:23.750467+00",
+      "updated_at": "2026-09-13 10:53:23.750467+00",
+      "opening_hours_text": null,
+      "opening_hours_verified_at": null
+    }
+  ],
+  "extra": {
+    "sources": [
+      {
+        "link": {
+          "id": "f98e8054-dd9e-4e8b-895b-cfdd1f25b96b",
+          "notes": "Fuente de cierre editorial de Hermandad madre.",
+          "scope": "Historia, fundación, sede y cultos externos",
+          "cult_id": null,
+          "entity_id": "4e462b02-979d-4b88-ab98-0c97f2dbf0a0",
+          "outing_id": null,
+          "source_id": "65242774-0e03-4742-bb34-82d2af573784",
+          "created_at": "2026-09-07T20:19:21.325604+00:00",
+          "agent_name_id": null,
+          "agent_role_id": null,
+          "image_step_id": null,
+          "step_phase_id": null,
+          "intervention_id": null,
+          "band_premiere_id": null,
+          "outing_series_id": null,
+          "cult_occurrence_id": null,
+          "entity_location_id": null,
+          "entity_relation_id": null,
+          "heritage_update_id": null,
+          "march_recording_id": null,
+          "brotherhood_step_id": null,
+          "image_authorship_id": null,
+          "march_dedication_id": null,
+          "brotherhood_habit_id": null,
+          "brotherhood_image_id": null,
+          "editorial_content_id": null,
+          "outing_music_position_id": null,
+          "step_personnel_period_id": null,
+          "outing_music_assignment_id": null,
+          "music_accompaniment_period_id": null
+        },
+        "source": {
+          "id": "65242774-0e03-4742-bb34-82d2af573784",
+          "url": "https://www.jesusnazarenoutrera.es/hermandad/historia",
+          "name": "Jesús Nazareno de Utrera · Historia",
+          "notes": "Historia, reglas fundacionales, sede y estación de penitencia.",
+          "license": null,
+          "created_at": "2026-09-07T20:18:55.259769+00:00",
+          "accessed_at": "2026-09-07",
+          "source_type": "Web oficial de la Hermandad",
+          "publication_date": null,
+          "author_or_publisher": "Hermandad de Jesús Nazareno de Utrera"
+        }
+      },
+      {
+        "link": {
+          "id": "14912d80-858a-4d10-a150-8a74a244ba12",
+          "notes": null,
+          "scope": "Identidad institucional y festividad del 8 de septiembre",
+          "cult_id": null,
+          "entity_id": "8d4e62d9-a428-4363-afc7-6a2f9e8c1450",
+          "outing_id": null,
+          "source_id": "678e9a35-d8a2-45db-8a7c-6d8a3db18052",
+          "created_at": "2026-08-25T20:58:05.642929+00:00",
+          "agent_name_id": null,
+          "agent_role_id": null,
+          "image_step_id": null,
+          "step_phase_id": null,
+          "intervention_id": null,
+          "band_premiere_id": null,
+          "outing_series_id": null,
+          "cult_occurrence_id": null,
+          "entity_location_id": null,
+          "entity_relation_id": null,
+          "heritage_update_id": null,
+          "march_recording_id": null,
+          "brotherhood_step_id": null,
+          "image_authorship_id": null,
+          "march_dedication_id": null,
+          "brotherhood_habit_id": null,
+          "brotherhood_image_id": null,
+          "editorial_content_id": null,
+          "outing_music_position_id": null,
+          "step_personnel_period_id": null,
+          "outing_music_assignment_id": null,
+          "music_accompaniment_period_id": null
+        },
+        "source": {
+          "id": "678e9a35-d8a2-45db-8a7c-6d8a3db18052",
+          "url": "https://www.utrera.org/procesion-y-actos-conmemorativos-en-honor-a-la-virgen-de-consolacion/",
+          "name": "Ayuntamiento de Utrera · Procesión y actos en honor a la Virgen de Consolación",
+          "notes": "Fuente institucional que documenta la Procesión Triunfal de Gloria del 8 de septiembre por el Real del Santuario.",
+          "license": null,
+          "created_at": "2026-08-25T20:58:05.642929+00:00",
+          "accessed_at": null,
+          "source_type": "Fuente institucional",
+          "publication_date": "2025-08-20",
+          "author_or_publisher": "Ayuntamiento de Utrera"
+        }
+      },
+      {
+        "link": {
+          "id": "8be475a3-707e-40f0-bab7-a6f9f2a4f9b0",
+          "notes": "Historia oficial del Santuario.",
+          "scope": "Historia institucional y devocional",
+          "cult_id": null,
+          "entity_id": "8d4e62d9-a428-4363-afc7-6a2f9e8c1450",
+          "outing_id": null,
+          "source_id": "cfd31962-7231-41dc-8188-30d0d747bf91",
+          "created_at": "2026-09-05T14:23:50.801172+00:00",
+          "agent_name_id": null,
+          "agent_role_id": null,
+          "image_step_id": null,
+          "step_phase_id": null,
+          "intervention_id": null,
+          "band_premiere_id": null,
+          "outing_series_id": null,
+          "cult_occurrence_id": null,
+          "entity_location_id": null,
+          "entity_relation_id": null,
+          "heritage_update_id": null,
+          "march_recording_id": null,
+          "brotherhood_step_id": null,
+          "image_authorship_id": null,
+          "march_dedication_id": null,
+          "brotherhood_habit_id": null,
+          "brotherhood_image_id": null,
+          "editorial_content_id": null,
+          "outing_music_position_id": null,
+          "step_personnel_period_id": null,
+          "outing_music_assignment_id": null,
+          "music_accompaniment_period_id": null
+        },
+        "source": {
+          "id": "cfd31962-7231-41dc-8188-30d0d747bf91",
+          "url": "https://santuariodeconsolacion.org/el-santuario/",
+          "name": "Santuario de Consolación · El Santuario",
+          "notes": "Historia del Santuario, devoción, patrimonio, Alcaldesa Perpetua, Coronación y Años Jubilares.",
+          "license": null,
+          "created_at": "2026-09-05T14:23:50.801172+00:00",
+          "accessed_at": "2026-09-05",
+          "source_type": "Web oficial",
+          "publication_date": null,
+          "author_or_publisher": "Santuario Diocesano de Nuestra Señora de Consolación Coronada"
+        }
+      },
+      {
+        "link": {
+          "id": "b2541475-1c26-4fc7-8878-f3baca5672f8",
+          "notes": "Directorio institucional para denominación y sede.",
+          "scope": "Identidad, fundación y sede",
+          "cult_id": null,
+          "entity_id": "8d4e62d9-a428-4363-afc7-6a2f9e8c1450",
+          "outing_id": null,
+          "source_id": "f4657e5d-a94d-4380-927f-371929bb538e",
+          "created_at": "2026-09-05T14:23:50.801172+00:00",
+          "agent_name_id": null,
+          "agent_role_id": null,
+          "image_step_id": null,
+          "step_phase_id": null,
+          "intervention_id": null,
+          "band_premiere_id": null,
+          "outing_series_id": null,
+          "cult_occurrence_id": null,
+          "entity_location_id": null,
+          "entity_relation_id": null,
+          "heritage_update_id": null,
+          "march_recording_id": null,
+          "brotherhood_step_id": null,
+          "image_authorship_id": null,
+          "march_dedication_id": null,
+          "brotherhood_habit_id": null,
+          "brotherhood_image_id": null,
+          "editorial_content_id": null,
+          "outing_music_position_id": null,
+          "step_personnel_period_id": null,
+          "outing_music_assignment_id": null,
+          "music_accompaniment_period_id": null
+        },
+        "source": {
+          "id": "f4657e5d-a94d-4380-927f-371929bb538e",
+          "url": "https://www.cofradiasyhermandades.es/fichacofradia-COFRADIAS-Utrera-PontificiaRealEIlustreHermandadDeNuestraSenoraDeConsolacionCoronada-R254Wnd0c2dkT1gxRkdDdEhrWGp4QT09",
+          "name": "Directorio diocesano · Consolación de Utrera",
+          "notes": "Denominación, fundación, registro y sede canónica/social.",
+          "license": null,
+          "created_at": "2026-09-05T14:23:50.801172+00:00",
+          "accessed_at": "2026-09-05",
+          "source_type": "Directorio institucional",
+          "publication_date": null,
+          "author_or_publisher": "Consejo Diocesano para las Hermandades y Cofradías de la Archidiócesis de Sevilla"
+        }
+      }
+    ],
+    "locations": [
+      {
+        "id": "7bc46406-ce83-4b8e-8c5d-0f31802d2d8d",
+        "notes": "Sede canónica y social documentada.",
+        "status": "published",
+        "date_to": null,
+        "place_id": "09fb4082-dd92-4fc4-bb25-41fff021d284",
+        "date_from": null,
+        "entity_id": "8d4e62d9-a428-4363-afc7-6a2f9e8c1450",
+        "created_at": "2026-09-05T14:23:50.801172+00:00",
+        "is_current": true,
+        "date_to_text": null,
+        "location_type": "canonical_see",
+        "date_from_text": null,
+        "municipality_id": "e4319248-831a-4f4c-adb8-19c496f95dd6",
+        "custodian_entity_id": null
+      },
+      {
+        "id": "af660641-e5ff-46ca-ab96-7f0685b1346c",
+        "notes": "Residencia ordinaria actual de Nuestra Señora de Consolación Coronada.",
+        "status": "published",
+        "date_to": null,
+        "place_id": "09fb4082-dd92-4fc4-bb25-41fff021d284",
+        "date_from": null,
+        "entity_id": "46968f38-a4a1-43df-ad66-1436e19bb394",
+        "created_at": "2026-09-05T14:23:50.801172+00:00",
+        "is_current": true,
+        "date_to_text": null,
+        "location_type": "Residencia de la Imagen",
+        "date_from_text": null,
+        "municipality_id": "e4319248-831a-4f4c-adb8-19c496f95dd6",
+        "custodian_entity_id": null
+      }
+    ],
+    "band_profiles": [
+      {
+        "entity": {
+          "id": "7fafdc04-cb94-47d8-814f-5537639660ff",
+          "name": "Asociación Musical Álvarez Quintero",
+          "slug": "asociacion-musical-alvarez-quintero-utrera",
+          "status": "published",
+          "summary": "Banda de música de Utrera fundada en 1963.",
+          "created_at": "2026-09-05T12:52:13.468878+00:00",
+          "updated_at": "2026-09-05T12:52:13.468878+00:00",
+          "entity_type": "band",
+          "content_updated_at": null,
+          "editorial_reviewed_at": null
+        },
+        "profile": {
+          "band_type": "Banda de Música",
+          "entity_id": "7fafdc04-cb94-47d8-814f-5537639660ff",
+          "logo_path": null,
+          "description": "Asociación Musical Álvarez Quintero de Utrera.",
+          "website_url": "https://www.bandaalvarezquintero.es/",
+          "youtube_url": null,
+          "instagram_url": null,
+          "primary_color": null,
+          "hero_image_alt": null,
+          "foundation_text": "1963",
+          "hero_image_path": null,
+          "municipality_id": "e4319248-831a-4f4c-adb8-19c496f95dd6",
+          "secondary_color": null,
+          "headquarters_text": "Utrera, Sevilla",
+          "hero_image_credit": null,
+          "banderin_entity_id": null,
+          "logo_background_color": null,
+          "linked_brotherhood_name": null
+        }
+      },
+      {
+        "entity": {
+          "id": "e4884d0e-204e-408c-955e-b4c639de92c9",
+          "name": "Grupo de Voces Graves De Profundis",
+          "slug": "grupo-voces-graves-de-profundis",
+          "status": "published",
+          "summary": "Conjunto vocal de voces graves.",
+          "created_at": "2026-09-06T23:41:40.024293+00:00",
+          "updated_at": "2026-09-06T23:41:40.024293+00:00",
+          "entity_type": "band",
+          "content_updated_at": null,
+          "editorial_reviewed_at": null
+        },
+        "profile": {
+          "band_type": "Música vocal",
+          "entity_id": "e4884d0e-204e-408c-955e-b4c639de92c9",
+          "logo_path": null,
+          "description": "Grupo que acompaña con voces graves al Cristo de la Fundación.",
+          "website_url": null,
+          "youtube_url": null,
+          "instagram_url": null,
+          "primary_color": null,
+          "hero_image_alt": null,
+          "foundation_text": null,
+          "hero_image_path": null,
+          "municipality_id": null,
+          "secondary_color": null,
+          "headquarters_text": null,
+          "hero_image_credit": null,
+          "banderin_entity_id": null,
+          "logo_background_color": null,
+          "linked_brotherhood_name": null
+        }
+      },
+      {
+        "entity": {
+          "id": "f492d28d-af48-4606-862c-89d5d3560a6b",
+          "name": "Banda de Música Álvarez Quintero de Utrera",
+          "slug": "banda-musica-alvarez-quintero-utrera",
+          "status": "published",
+          "summary": "Formación documentada en la Semana Santa de Dos Hermanas de 2026.",
+          "created_at": "2026-09-16T18:29:07.596038+00:00",
+          "updated_at": "2026-09-16T18:29:07.596038+00:00",
+          "entity_type": "band",
+          "content_updated_at": null,
+          "editorial_reviewed_at": null
+        },
+        "profile": {
+          "band_type": "Banda de Música",
+          "entity_id": "f492d28d-af48-4606-862c-89d5d3560a6b",
+          "logo_path": null,
+          "description": "Formación documentada en el acompañamiento procesional de Dos Hermanas en 2026.",
+          "website_url": null,
+          "youtube_url": null,
+          "instagram_url": null,
+          "primary_color": null,
+          "hero_image_alt": null,
+          "foundation_text": null,
+          "hero_image_path": null,
+          "municipality_id": "e4319248-831a-4f4c-adb8-19c496f95dd6",
+          "secondary_color": null,
+          "headquarters_text": "Utrera",
+          "hero_image_credit": null,
+          "banderin_entity_id": null,
+          "logo_background_color": null,
+          "linked_brotherhood_name": null
+        }
+      }
+    ]
+  },
+  "entities_name_scan": [
+    {
+      "id": "7fafdc04-cb94-47d8-814f-5537639660ff",
+      "name": "Asociación Musical Álvarez Quintero",
+      "slug": "asociacion-musical-alvarez-quintero-utrera",
+      "entity_type": "band",
+      "status": "published"
+    },
+    {
+      "id": "fb303d3e-4739-4390-b1b6-e579c988b8d0",
+      "name": "Asociación Musical Utrerana",
+      "slug": "asociacion-musical-utrerana",
+      "entity_type": "band",
+      "status": "published"
+    },
+    {
+      "id": "c0160036-0412-4000-8000-000000000012",
+      "name": "Banda de Cornetas y Tambores Nuestra Señora de la Palma de Utrera",
+      "slug": "bct-nuestra-senora-palma-utrera",
+      "entity_type": "band",
+      "status": "published"
+    },
+    {
+      "id": "c0160032-0406-4000-8000-000000000006",
+      "name": "Banda de Cornetas y Tambores Santa Vera+Cruz de Utrera",
+      "slug": "banda-cornetas-tambores-santa-vera-cruz-utrera",
+      "entity_type": "band",
+      "status": "published"
+    },
+    {
+      "id": "f492d28d-af48-4606-862c-89d5d3560a6b",
+      "name": "Banda de Música Álvarez Quintero de Utrera",
+      "slug": "banda-musica-alvarez-quintero-utrera",
+      "entity_type": "band",
+      "status": "published"
+    },
+    {
+      "id": "4e462b02-979d-4b88-ab98-0c97f2dbf0a0",
+      "name": "Hermandad de Jesús Nazareno de Utrera",
+      "slug": "hermandad-jesus-nazareno-utrera",
+      "entity_type": "brotherhood",
+      "status": "published"
+    },
+    {
+      "id": "7bab2fe6-c69e-48e5-9446-a247b4169910",
+      "name": "Hermandad de la Vera-Cruz y Santo Entierro de Utrera",
+      "slug": "vera-cruz-santo-entierro-utrera",
+      "entity_type": "brotherhood",
+      "status": "published"
+    },
+    {
+      "id": "8d4e62d9-a428-4363-afc7-6a2f9e8c1450",
+      "name": "Pontificia, Real e Ilustre Hermandad de Nuestra Señora de Consolación Coronada",
+      "slug": "consolacion-utrera",
+      "entity_type": "brotherhood",
+      "status": "published"
+    },
+    {
+      "id": "b838a5f1-1d9f-4718-a820-de94e485224a",
+      "name": "Coronación Canónica de Nuestra Señora de Consolación",
+      "slug": "coronacion-canonica-consolacion-utrera-1964",
+      "entity_type": "event",
+      "status": "published"
+    },
+    {
+      "id": "17846345-39de-4831-a38b-a1b343d18718",
+      "name": "L aniversario de la Coronación y Año Jubilar de Consolación 2014",
+      "slug": "jubileo-consolacion-utrera-2014",
+      "entity_type": "event",
+      "status": "published"
+    },
+    {
+      "id": "b1701c65-b84b-430e-afe0-e1ed35876d7e",
+      "name": "Nombramiento de Nuestra Señora de Consolación como Alcaldesa Perpetua de Utrera",
+      "slug": "alcaldesa-perpetua-consolacion-utrera-1962",
+      "entity_type": "event",
+      "status": "published"
+    },
+    {
+      "id": "fcb3c6ca-f439-448f-a430-1b244198216b",
+      "name": "V Centenario y Año Jubilar de Consolación 2007",
+      "slug": "jubileo-consolacion-utrera-2007",
+      "entity_type": "event",
+      "status": "published"
+    },
+    {
+      "id": "e9584603-bca3-4234-aab4-23c692b84e85",
+      "name": "Barquito de Nuestra Señora de Consolación",
+      "slug": "barquito-virgen-consolacion-utrera",
+      "entity_type": "heritage_asset",
+      "status": "published"
+    },
+    {
+      "id": "969ca232-3b65-459e-9f61-207902e1a5f4",
+      "name": "Coronas de la Coronación Canónica de Nuestra Señora de Consolación",
+      "slug": "coronas-coronacion-consolacion-utrera",
+      "entity_type": "heritage_asset",
+      "status": "published"
+    },
+    {
+      "id": "e236bc7a-6b2d-4739-984f-5147947010ab",
+      "name": "Peana de plata de la Coronación de Nuestra Señora de Consolación",
+      "slug": "peana-coronacion-consolacion-utrera",
+      "entity_type": "heritage_asset",
+      "status": "published"
+    },
+    {
+      "id": "46968f38-a4a1-43df-ad66-1436e19bb394",
+      "name": "Nuestra Señora de Consolación Coronada",
+      "slug": "nuestra-senora-consolacion-coronada-utrera",
+      "entity_type": "image",
+      "status": "published"
+    },
+    {
+      "id": "4550fd96-94d3-4929-8d61-af79ba7de8e7",
+      "name": "Nuestra Señora de las Angustias",
+      "slug": "nuestra-senora-angustias-utrera",
+      "entity_type": "image",
+      "status": "published"
+    },
+    {
+      "id": "e875dbee-612f-4739-9f24-fd583d6b2df6",
+      "name": "Nuestra Señora de los Dolores",
+      "slug": "nuestra-senora-dolores-utrera-vera-cruz",
+      "entity_type": "image",
+      "status": "published"
+    },
+    {
+      "id": "e5e90bac-4e73-4b72-b866-65c6fe347d93",
+      "name": "Himno de la Virgen de Consolación de Utrera",
+      "slug": "himno-virgen-consolacion-utrera",
+      "entity_type": "march",
+      "status": "published"
+    },
+    {
+      "id": "14c0028e-dca6-477a-a8c5-245c06424ea3",
+      "name": "Señora y Madre de Utrera",
+      "slug": "senora-y-madre-de-utrera-adrian-tinajero-2022",
+      "entity_type": "march",
+      "status": "published"
+    },
+    {
+      "id": "17705094-95fd-4aec-ae2d-c7f367102ec2",
+      "name": "Virgen de Consolación de Utrera · V Centenario",
+      "slug": "virgen-consolacion-utrera-v-centenario-2006",
+      "entity_type": "march",
+      "status": "published"
+    },
+    {
+      "id": "2f9d80fc-0c4f-4346-95fd-109d31c29b23",
+      "name": "Andas procesionales de Nuestra Señora de Consolación Coronada (2026)",
+      "slug": "andas-consolacion-coronada-utrera-2026",
+      "entity_type": "step",
+      "status": "published"
+    },
+    {
+      "id": "b51dd99d-97fe-4636-b35e-59ac8fa92dc5",
+      "name": "Paso de palio de Nuestra Señora de las Angustias",
+      "slug": "paso-palio-angustias-utrera",
+      "entity_type": "step",
+      "status": "review"
+    },
+    {
+      "id": "4c9e01e0-e671-41a5-a738-dd33fc15747a",
+      "name": "Trono de la Coronación de Nuestra Señora de Consolación",
+      "slug": "trono-coronacion-consolacion-utrera-1964",
+      "entity_type": "step",
+      "status": "published"
+    }
+  ],
+  "dedup_catalog": [
+    {
+      "id": "c0160032-0403-4000-8000-000000000003",
+      "name": "Agrupación Musical Dulce Nombre de Jesús de Estepa",
+      "slug": "agrupacion-musical-dulce-nombre-estepa",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "fbfcf834-c0d3-4a62-a20c-eaa74dc9ee11"
+    },
+    {
+      "id": "6d13a4dd-50e9-473a-97b4-07bc40a67508",
+      "name": "Agrupación Musical Dulce Nombre de Jesús de Marchena",
+      "slug": "agrupacion-musical-dulce-nombre-jesus-marchena",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "8f1ef927-afb7-4694-a253-69f281074d6e"
+    },
+    {
+      "id": "25531e20-2a86-44be-8a7e-08295853110c",
+      "name": "Agrupación Musical Juvenil María Santísima de las Angustias Coronada",
+      "slug": "agrupacion-musical-juvenil-angustias-coronada-gitanos",
+      "status": "archived",
+      "entity_type": "band",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "61bc9d3c-73ad-41e8-96b9-44056c223823",
+      "name": "Agrupación Musical Juvenil María Santísima del Rocío",
+      "slug": "agrupacion-musical-juvenil-maria-santisima-rocio-sevilla",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "c0160037-0410-4000-8000-000000000010",
+      "name": "Agrupación Musical Juvenil Nuestro Padre Jesús Nazareno de la Fuensanta de Morón",
+      "slug": "agrupacion-musical-juvenil-jesus-nazareno-fuensanta-moron",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "c0160037-0201-4000-8000-000000000001"
+    },
+    {
+      "id": "31d1e0bc-0047-457f-86b5-756d4d0d2a3b",
+      "name": "Agrupación Musical Juvenil Sagrada Presentación",
+      "slug": "agrupacion-musical-juvenil-sagrada-presentacion",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "9f3636a3-6b3e-4a63-9cd2-2f08383158f3",
+      "name": "Agrupación Musical Juvenil Santa María Magdalena de Arahal",
+      "slug": "agrupacion-musical-juvenil-santa-maria-magdalena-arahal",
+      "status": "draft",
+      "entity_type": "band",
+      "municipality_id": "b8196b90-6115-4d28-966d-590e4d3a4f68"
+    },
+    {
+      "id": "c4d5e8c5-0613-44c0-ae2b-776c5cd69cf9",
+      "name": "Agrupación Musical Juvenil Virgen de los Reyes",
+      "slug": "agrupacion-musical-juvenil-virgen-de-los-reyes-sevilla",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "d58fc1e2-d012-48ce-9598-7aac36a5073d",
+      "name": "Agrupación Musical Lágrimas de Dolores",
+      "slug": "agrupacion-musical-lagrimas-dolores-san-fernando",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "eb9b5d34-f926-4cde-ab3f-06ad57687016"
+    },
+    {
+      "id": "5e7f8e83-62a6-45ec-91b7-a49bbaa88b3e",
+      "name": "Agrupación Musical Nuestra Señora de la Estrella de Dos Hermanas",
+      "slug": "agrupacion-musical-estrella-dos-hermanas",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "24e0b757-f3fd-4d9c-82c9-2a758444f2d6"
+    },
+    {
+      "id": "4e4d493c-5273-44aa-8066-72dd1faa1ed8",
+      "name": "Agrupación Musical Nuestra Señora de Valme de Dos Hermanas",
+      "slug": "agrupacion-musical-valme-dos-hermanas",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "24e0b757-f3fd-4d9c-82c9-2a758444f2d6"
+    },
+    {
+      "id": "8e61ef54-adc1-401d-abab-0837e5c5631e",
+      "name": "Agrupación Musical Nuestro Padre Jesús Cautivo de Dos Hermanas",
+      "slug": "agrupacion-musical-cautivo-dos-hermanas",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "24e0b757-f3fd-4d9c-82c9-2a758444f2d6"
+    },
+    {
+      "id": "c0160033-0401-4000-8000-000000000001",
+      "name": "Agrupación Musical Nuestro Padre Jesús de los Afligidos de Puente Genil",
+      "slug": "agrupacion-musical-afligidos-puente-genil",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "c0160033-0201-4000-8000-000000000001"
+    },
+    {
+      "id": "c0160036-0406-4000-8000-000000000006",
+      "name": "Agrupación Musical Nuestro Padre Jesús Despojado de Jaén",
+      "slug": "agrupacion-musical-jesus-despojado-jaen",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "6d00fa87-1831-4694-a9fe-07de46ae0d75"
+    },
+    {
+      "id": "c0160037-0405-4000-8000-000000000005",
+      "name": "Agrupación Musical Nuestro Padre Jesús Nazareno de la Fuensanta de Morón",
+      "slug": "agrupacion-musical-jesus-nazareno-fuensanta-moron",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "c0160037-0201-4000-8000-000000000001"
+    },
+    {
+      "id": "c0160032-0402-4000-8000-000000000002",
+      "name": "Agrupación Musical Paz y Caridad de Estepa",
+      "slug": "agrupacion-musical-paz-caridad-estepa",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "fbfcf834-c0d3-4a62-a20c-eaa74dc9ee11"
+    },
+    {
+      "id": "3a207a7a-2e8e-4b16-8d76-29e38b31f054",
+      "name": "Agrupación Musical Polillas de Cádiz",
+      "slug": "agrupacion-musical-polillas-cadiz",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "53f3d66c-5a13-4a9d-8093-aa3aa3b31815"
+    },
+    {
+      "id": "c0160031-0401-4000-8000-000000000001",
+      "name": "Agrupación Musical San Lucas Evangelista de Coria del Río",
+      "slug": "agrupacion-musical-san-lucas-evangelista-coria-del-rio",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "fe884314-1f8b-4566-8bb9-7b11ecf42446"
+    },
+    {
+      "id": "9c4baab9-f8d7-4251-9b4a-f70a7ebd97aa",
+      "name": "Agrupación Musical San Miguel Arcángel de Puertollano",
+      "slug": "agrupacion-musical-san-miguel-arcangel-puertollano",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": null
+    },
+    {
+      "id": "6d6ceee7-53d0-4705-a58c-fadc364cb322",
+      "name": "Agrupación Musical Santa Cecilia de Sevilla",
+      "slug": "agrupacion-musical-santa-cecilia-sevilla",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "c0160036-0408-4000-8000-000000000008",
+      "name": "Agrupación Musical Santa Cruz de Huelva",
+      "slug": "agrupacion-musical-santa-cruz-huelva",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "045803c2-525c-419c-965c-f74d30551775"
+    },
+    {
+      "id": "546d616f-4a2c-4ab0-9839-4e980d41d5f1",
+      "name": "Agrupación Musical Santa María de la Esperanza",
+      "slug": "agrupacion-musical-santa-maria-esperanza-sevilla",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "f09ef266-0a70-4037-b792-5a768b1e1e94",
+      "name": "Agrupación Musical Santísima Trinidad",
+      "slug": "agrupacion-musical-santisima-trinidad-sevilla",
+      "status": "archived",
+      "entity_type": "band",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "e0575c52-0cd9-4a0b-b2ba-724b9f4c3378",
+      "name": "Agrupación Musical Santísimo Cristo de la Bondad",
+      "slug": "agrupacion-musical-cristo-bondad-alcala-guadaira",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "b1d9fe05-a80a-4cde-9e72-bf4f9647e0a3"
+    },
+    {
+      "id": "c0160036-0401-4000-8000-000000000001",
+      "name": "Agrupación Musical Santísimo Cristo de la Sagrada Columna y Azotes de Écija",
+      "slug": "agrupacion-musical-sagrada-columna-azotes-ecija",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "f3fba0c4-fffa-4e8c-8495-3dc1c3bc94bf"
+    },
+    {
+      "id": "c0160032-0407-4000-8000-000000000007",
+      "name": "Agrupación Musical Vera Cruz de Campillos",
+      "slug": "agrupacion-musical-vera-cruz-campillos",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "c0160032-0202-4000-8000-000000000002"
+    },
+    {
+      "id": "b829bf98-78fa-4f0f-9aeb-cd965c779853",
+      "name": "Agrupación Musical Virgen de los Reyes",
+      "slug": "agrupacion-musical-virgen-de-los-reyes-sevilla",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "c0160037-0404-4000-8000-000000000004",
+      "name": "Agrupación Vocal de Cámara Redentoris Mundi",
+      "slug": "agrupacion-vocal-camara-redentoris-mundi",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": null
+    },
+    {
+      "id": "17e1e5a8-a7b4-46ce-97ad-d27868ab8959",
+      "name": "Ánima Sacra",
+      "slug": "anima-sacra-capilla-musical",
+      "status": "review",
+      "entity_type": "band",
+      "municipality_id": null
+    },
+    {
+      "id": "c0160036-0411-4000-8000-000000000011",
+      "name": "Asociación Cultural Amigos de la Música de Herrera",
+      "slug": "banda-musica-amigos-herrera",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": null
+    },
+    {
+      "id": "7fafdc04-cb94-47d8-814f-5537639660ff",
+      "name": "Asociación Musical Álvarez Quintero",
+      "slug": "asociacion-musical-alvarez-quintero-utrera",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "e4319248-831a-4f4c-adb8-19c496f95dd6"
+    },
+    {
+      "id": "aa0f526c-2b63-41f0-aa74-ecaa14365375",
+      "name": "Asociación Musical de La Algaba",
+      "slug": "asociacion-musical-la-algaba",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "ca5d5f02-0012-4005-986e-852caacecb71"
+    },
+    {
+      "id": "fb303d3e-4739-4390-b1b6-e579c988b8d0",
+      "name": "Asociación Musical Utrerana",
+      "slug": "asociacion-musical-utrerana",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "e4319248-831a-4f4c-adb8-19c496f95dd6"
+    },
+    {
+      "id": "c0160036-0418-4000-8000-000000000018",
+      "name": "Ateneo Musical de Écija",
+      "slug": "ateneo-musical-ecija",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "f3fba0c4-fffa-4e8c-8495-3dc1c3bc94bf"
+    },
+    {
+      "id": "c0160033-0404-4000-8000-000000000004",
+      "name": "Banda Amor y Sacrificio de Lebrija",
+      "slug": "banda-amor-sacrificio-lebrija",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "07281b21-d892-4e5d-aa63-24ec0e9bf4d2"
+    },
+    {
+      "id": "8e754023-a46a-4587-8952-4696c70d0bd0",
+      "name": "Banda de Alcalá",
+      "slug": "banda-musica-alcala-guadaira",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "b1d9fe05-a80a-4cde-9e72-bf4f9647e0a3"
+    },
+    {
+      "id": "f23929c1-5887-473d-8706-b798cd3e5123",
+      "name": "Banda de Cornetas y Tambores Corona de Espinas",
+      "slug": "historica-corona-de-espinas-sevilla",
+      "status": "archived",
+      "entity_type": "band",
+      "municipality_id": null
+    },
+    {
+      "id": "c0160037-0403-4000-8000-000000000003",
+      "name": "Banda de Cornetas y Tambores Coronación de Espinas de Córdoba",
+      "slug": "bct-coronacion-espinas-cordoba",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": null
+    },
+    {
+      "id": "9d287c37-ffc7-44ab-858a-115a324f51c2",
+      "name": "Banda de Cornetas y Tambores Cristo del Humilladero",
+      "slug": "bct-cristo-humilladero-caceres",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": null
+    },
+    {
+      "id": "c0160036-0417-4000-8000-000000000017",
+      "name": "Banda de Cornetas y Tambores María Santísima de la Palma de Marchena",
+      "slug": "bct-maria-santisima-palma-marchena",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "8f1ef927-afb7-4694-a253-69f281074d6e"
+    },
+    {
+      "id": "c0160035-0405-4000-8000-000000000005",
+      "name": "Banda de Cornetas y Tambores Nuestra Señora de Gracia de Carmona",
+      "slug": "bct-nuestra-senora-gracia-carmona",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "bf024af2-3eda-4989-b1b5-0a723dcf9cb4"
+    },
+    {
+      "id": "c0160036-0412-4000-8000-000000000012",
+      "name": "Banda de Cornetas y Tambores Nuestra Señora de la Palma de Utrera",
+      "slug": "bct-nuestra-senora-palma-utrera",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "e4319248-831a-4f4c-adb8-19c496f95dd6"
+    },
+    {
+      "id": "d8485329-1137-4a02-b26a-525426115973",
+      "name": "Banda de Cornetas y Tambores Nuestra Señora de los Ángeles",
+      "slug": "banda-cornetas-tambores-nuestra-senora-angeles-sevilla",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "c0160034-0401-4000-8000-000000000001",
+      "name": "Banda de Cornetas y Tambores Nuestro Padre Jesús Caído de Osuna",
+      "slug": "bct-jesus-caido-osuna",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "d10878e4-8e9a-4fc5-937b-41d0282a9a0e"
+    },
+    {
+      "id": "c0160036-0405-4000-8000-000000000005",
+      "name": "Banda de Cornetas y Tambores Nuestro Padre Jesús Caído y Nuestra Señora de la Fuensanta de Córdoba",
+      "slug": "bct-caido-fuensanta-cordoba",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "cd06530b-5c9e-44da-b994-102418ff9129"
+    },
+    {
+      "id": "c0160031-0402-4000-8000-000000000002",
+      "name": "Banda de Cornetas y Tambores Nuestro Padre Jesús del Gran Poder de Coria del Río",
+      "slug": "banda-cornetas-tambores-gran-poder-coria-del-rio",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "fe884314-1f8b-4566-8bb9-7b11ecf42446"
+    },
+    {
+      "id": "965eb1f8-0171-4282-9f27-2e65bf3c5cad",
+      "name": "Banda de Cornetas y Tambores Nuestro Padre Jesús en su Prendimiento",
+      "slug": "banda-prendimiento-dos-hermanas",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "24e0b757-f3fd-4d9c-82c9-2a758444f2d6"
+    },
+    {
+      "id": "c0160035-0403-4000-8000-000000000003",
+      "name": "Banda de Cornetas y Tambores Nuestro Padre Jesús Rescatado de La Solana",
+      "slug": "bct-jesus-rescatado-la-solana",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": null
+    },
+    {
+      "id": "c0160036-0402-4000-8000-000000000002",
+      "name": "Banda de Cornetas y Tambores Nuestro Padre Jesús Rescatado de Villanueva de los Infantes",
+      "slug": "bct-jesus-rescatado-villanueva-infantes",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": null
+    },
+    {
+      "id": "a3cdb826-7e12-4966-98cf-ad56ba406557",
+      "name": "Banda de Cornetas y Tambores Rosario y Victoria",
+      "slug": "bct-rosario-victoria-brenes",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": null
+    },
+    {
+      "id": "5bbe416c-95b8-4f19-9d25-b5f199f2cdf0",
+      "name": "Banda de Cornetas y Tambores Sagrada Columna y Azotes",
+      "slug": "banda-cornetas-tambores-sagrada-columna-azotes-las-cigarreras",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "8f1ef8f6-515c-446d-8ede-5c9575dbca24",
+      "name": "Banda de Cornetas y Tambores Sagrado Corazón de Jesús",
+      "slug": "banda-cctt-sagrado-corazon-jesus-marchena",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "8f1ef927-afb7-4694-a253-69f281074d6e"
+    },
+    {
+      "id": "c0160032-0405-4000-8000-000000000005",
+      "name": "Banda de Cornetas y Tambores Santa Bárbara de La Línea de la Concepción",
+      "slug": "banda-cornetas-tambores-santa-barbara-la-linea",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "c0160032-0201-4000-8000-000000000001"
+    },
+    {
+      "id": "c0160032-0406-4000-8000-000000000006",
+      "name": "Banda de Cornetas y Tambores Santa Vera+Cruz de Utrera",
+      "slug": "banda-cornetas-tambores-santa-vera-cruz-utrera",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "e4319248-831a-4f4c-adb8-19c496f95dd6"
+    },
+    {
+      "id": "c0160037-0402-4000-8000-000000000002",
+      "name": "Banda de Cornetas y Tambores Santísimo Cristo a la Columna «El Amarrado» de Ávila",
+      "slug": "bct-amarrado-avila",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": null
+    },
+    {
+      "id": "c0160036-0415-4000-8000-000000000015",
+      "name": "Banda de Cornetas y Tambores Santísimo Cristo de la Columna Los Coloraos de Daimiel",
+      "slug": "bct-columna-coloraos-daimiel",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": null
+    },
+    {
+      "id": "97f62582-42f5-4d5f-80e0-376398af98e8",
+      "name": "Banda de Cornetas y Tambores Santísimo Cristo de la Victoria de León",
+      "slug": "banda-cornetas-tambores-cristo-victoria-leon",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": null
+    },
+    {
+      "id": "c0160036-0403-4000-8000-000000000003",
+      "name": "Banda de Cornetas y Tambores Santísimo Cristo del Perdón y Nuestra Señora de la Amargura de Pozoblanco",
+      "slug": "bct-perdon-amargura-pozoblanco",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": null
+    },
+    {
+      "id": "c0160037-0407-4000-8000-000000000007",
+      "name": "Banda de Cornetas y Tambores Sayones de Nuestro Padre Jesús Nazareno de Pozoblanco",
+      "slug": "bct-sayones-nazareno-pozoblanco",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": null
+    },
+    {
+      "id": "f492d28d-af48-4606-862c-89d5d3560a6b",
+      "name": "Banda de Música Álvarez Quintero de Utrera",
+      "slug": "banda-musica-alvarez-quintero-utrera",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "e4319248-831a-4f4c-adb8-19c496f95dd6"
+    },
+    {
+      "id": "045c9781-6a07-40f4-9a27-be97b736e5a9",
+      "name": "Banda de Música AMUECI",
+      "slug": "banda-musica-amueci",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "f3fba0c4-fffa-4e8c-8495-3dc1c3bc94bf"
+    },
+    {
+      "id": "c0160034-0402-4000-8000-000000000002",
+      "name": "Banda de Música Castillo de la Mota de Marchena",
+      "slug": "banda-musica-castillo-mota-marchena",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": null
+    },
+    {
+      "id": "98c7b480-9917-439f-aea4-d26e474add78",
+      "name": "Banda de Música Ciudad de Dos Hermanas",
+      "slug": "banda-musica-ciudad-dos-hermanas",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "24e0b757-f3fd-4d9c-82c9-2a758444f2d6"
+    },
+    {
+      "id": "c0160037-0409-4000-8000-000000000009",
+      "name": "Banda de Música de El Campillo",
+      "slug": "banda-musica-el-campillo-huelva",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": null
+    },
+    {
+      "id": "c0160037-0406-4000-8000-000000000006",
+      "name": "Banda de Música de El Saucejo",
+      "slug": "banda-musica-el-saucejo",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": null
+    },
+    {
+      "id": "c0160032-0401-4000-8000-000000000001",
+      "name": "Banda de Música de Estepa",
+      "slug": "banda-musica-estepa",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "fbfcf834-c0d3-4a62-a20c-eaa74dc9ee11"
+    },
+    {
+      "id": "c0160036-0404-4000-8000-000000000004",
+      "name": "Banda de Música de Fuentes de Andalucía",
+      "slug": "banda-musica-fuentes-andalucia",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "8cadaf29-0b07-4947-9799-960f8da7ba69"
+    },
+    {
+      "id": "a2208260-0000-0000-0000-000000000041",
+      "name": "Banda de Música de la Oliva de Salteras",
+      "slug": "banda-musica-oliva-salteras",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "a2208260-0000-0000-0000-000000000031"
+    },
+    {
+      "id": "7a0f25e9-4901-4fb2-b35e-c851c24fb845",
+      "name": "Banda de Música de Nuestra Señora de la Soledad de Cantillana",
+      "slug": "banda-de-musica-nuestra-senora-de-la-soledad-cantillana",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "30000000-0000-0000-0000-000000000001"
+    },
+    {
+      "id": "c0160036-0407-4000-8000-000000000007",
+      "name": "Banda de Música de Torredonjimeno",
+      "slug": "banda-musica-torredonjimeno",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": null
+    },
+    {
+      "id": "c0160035-0406-4000-8000-000000000006",
+      "name": "Banda de Música del Maestro Manuel Fernández Manzanar (MAFERMAN)",
+      "slug": "banda-musica-maferman-carmona",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "bf024af2-3eda-4989-b1b5-0a723dcf9cb4"
+    },
+    {
+      "id": "a0ab47f4-8cf7-4b96-b8b8-4e721f72cc68",
+      "name": "Banda de Música del Regimiento de Ingenieros",
+      "slug": "historica-bm-regimiento-ingenieros-sevilla",
+      "status": "archived",
+      "entity_type": "band",
+      "municipality_id": null
+    },
+    {
+      "id": "41b9aacc-2f26-4c85-bf00-9268b4dbafc0",
+      "name": "Banda de Música del Rosario de Sanlúcar la Mayor",
+      "slug": "banda-musica-rosario-sanlucar-la-mayor",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "b4a0dc88-9527-4e0f-b46b-75e02901b998"
+    },
+    {
+      "id": "c0160036-0409-4000-8000-000000000009",
+      "name": "Banda de Música del Santo Cristo de la Vera+Cruz de Almogía",
+      "slug": "banda-musica-vera-cruz-almogia",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": null
+    },
+    {
+      "id": "c0160035-0404-4000-8000-000000000004",
+      "name": "Banda de Música El Arrabal de Carmona",
+      "slug": "banda-musica-el-arrabal-carmona",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "bf024af2-3eda-4989-b1b5-0a723dcf9cb4"
+    },
+    {
+      "id": "e0cd6da0-603a-4f98-940b-70bd14fe4f52",
+      "name": "Banda de Música Guadalrosal",
+      "slug": "banda-musica-guadalrosal-los-rosales",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "ab41f6a8-e227-4cf8-9303-3c40ec19fa08"
+    },
+    {
+      "id": "a02d98fc-7c05-4b40-bf82-9fc3eca8bdb4",
+      "name": "Banda de Música Julián Cerdán",
+      "slug": "banda-musica-julian-cerdan-sanlucar",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": null
+    },
+    {
+      "id": "25157e96-54d1-4f24-bea9-2bb1d7f2607c",
+      "name": "Banda de Música Liceo de Sevilla",
+      "slug": "banda-musica-liceo-sevilla",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "c0160033-0402-4000-8000-000000000002",
+      "name": "Banda de Música Maestro Agripino Lozano de San Fernando",
+      "slug": "banda-musica-agripino-lozano-san-fernando",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "eb9b5d34-f926-4cde-ab3f-06ad57687016"
+    },
+    {
+      "id": "a23934c9-93e9-4bf1-886e-d98ec170b74f",
+      "name": "Banda de Música María Santísima de la Victoria",
+      "slug": "banda-musica-maria-santisima-victoria-las-cigarreras",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "81a3925a-2de3-459e-81d9-d283e6e5885c",
+      "name": "Banda de Música María Santísima de la Victoria «Las Cigarreras»",
+      "slug": "banda-musica-maria-santisima-victoria-cigarreras",
+      "status": "archived",
+      "entity_type": "band",
+      "municipality_id": null
+    },
+    {
+      "id": "c0160037-0408-4000-8000-000000000008",
+      "name": "Banda de Música Municipal Gailín de Puerto Serrano",
+      "slug": "banda-musica-municipal-gailin-puerto-serrano",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": null
+    },
+    {
+      "id": "c0160035-0401-4000-8000-000000000001",
+      "name": "Banda de Música Nuestra Señora de Guaditoca",
+      "slug": "banda-musica-nuestra-senora-guaditoca-guadalcanal",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "6ad7b2d3-6bbd-4b41-a7e7-bc2286608c99"
+    },
+    {
+      "id": "f8f8757d-ab6d-454d-83b5-ffd68f674318",
+      "name": "Banda de Música Nuestra Señora de la Hiniesta",
+      "slug": "historica-bm-hiniesta-cruz-roja-sevilla",
+      "status": "archived",
+      "entity_type": "band",
+      "municipality_id": null
+    },
+    {
+      "id": "c0160033-0403-4000-8000-000000000003",
+      "name": "Banda de Música Nuestra Señora del Rosario de El Cuervo",
+      "slug": "banda-musica-rosario-el-cuervo",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "c0160033-0202-4000-8000-000000000002"
+    },
+    {
+      "id": "1360a588-e570-4e27-a0d5-67f6cbd4ab34",
+      "name": "Banda de Música Nuestra Señora del Valle",
+      "slug": "banda-musica-nuestra-senora-valle-burguillos",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "11966cf5-303e-4fac-9f36-c4a3d59f6d5f"
+    },
+    {
+      "id": "49b5a3e0-c7d6-4dac-980e-3eddc355a7d1",
+      "name": "Banda de Música Santa Ana de Dos Hermanas",
+      "slug": "banda-musica-santa-ana-dos-hermanas",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "24e0b757-f3fd-4d9c-82c9-2a758444f2d6"
+    },
+    {
+      "id": "c0160036-0416-4000-8000-000000000016",
+      "name": "Banda de Música Villa de Marchena",
+      "slug": "banda-musica-villa-marchena",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "8f1ef927-afb7-4694-a253-69f281074d6e"
+    },
+    {
+      "id": "75fc797d-f287-4813-9e52-8f5c5ddf56ad",
+      "name": "Banda de Música Villa de Osuna",
+      "slug": "banda-musica-villa-osuna",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "d10878e4-8e9a-4fc5-937b-41d0282a9a0e"
+    },
+    {
+      "id": "8c35dfd4-342a-47ab-8d06-8c320255a29a",
+      "name": "Banda de Música Virgen de las Angustias",
+      "slug": "banda-musica-virgen-angustias-sanlucar-mayor",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "b4a0dc88-9527-4e0f-b46b-75e02901b998"
+    },
+    {
+      "id": "b5ab8fa7-e3e1-4667-a2db-23bea160aa52",
+      "name": "Banda de Música Virgen de las Mercedes de Bollullos del Condado",
+      "slug": "banda-musica-virgen-mercedes-bollullos-del-condado",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "a2208260-0000-0000-0000-000000000030"
+    },
+    {
+      "id": "c34e984b-bb36-4424-a0a5-85b22ab71f72",
+      "name": "Banda de Música Virgen del Castillo de Lebrija",
+      "slug": "banda-musica-virgen-castillo-lebrija",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "07281b21-d892-4e5d-aa63-24ec0e9bf4d2"
+    },
+    {
+      "id": "09577789-0c20-4bfa-a1e8-ff5374aad67b",
+      "name": "Banda del Nazareno de Huelva",
+      "slug": "banda-cornetas-tambores-jesus-nazareno-huelva",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "045803c2-525c-419c-965c-f74d30551775"
+    },
+    {
+      "id": "8c860cd1-11cb-4cbc-8a40-2eaec0543f8b",
+      "name": "Banda del Sol",
+      "slug": "banda-del-sol",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "fa970c04-73e6-46ee-84c1-91482d1fd7d0",
+      "name": "Banda Filarmónica Ciudad de Bollullos",
+      "slug": "banda-filarmonica-ciudad-bollullos",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "a2208260-0000-0000-0000-000000000030"
+    },
+    {
+      "id": "028505f2-c902-499f-aefd-d58836d19681",
+      "name": "Banda Municipal de Música Cristo del Perdón",
+      "slug": "banda-municipal-musica-cristo-del-perdon-la-rinconada",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "3e4c9f5f-52c3-4b42-a44f-219993f387f3"
+    },
+    {
+      "id": "95e4daf1-9db6-4bdb-805a-9f68833c8da1",
+      "name": "Banda Municipal de Música de Arahal",
+      "slug": "banda-municipal-musica-arahal",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "b8196b90-6115-4d28-966d-590e4d3a4f68"
+    },
+    {
+      "id": "c0160035-0402-4000-8000-000000000002",
+      "name": "Banda Municipal de Música de Aznalcóllar",
+      "slug": "banda-municipal-musica-aznalcollar",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "88ca0e56-bf93-4ac0-a72c-b2bee7a8e4d8"
+    },
+    {
+      "id": "a2208260-0000-0000-0000-000000000040",
+      "name": "Banda Municipal de Música de Bollullos del Condado",
+      "slug": "banda-municipal-musica-bollullos-del-condado",
+      "status": "draft",
+      "entity_type": "band",
+      "municipality_id": "a2208260-0000-0000-0000-000000000030"
+    },
+    {
+      "id": "63f719d8-61ab-4357-a43f-cc7977bdda43",
+      "name": "Banda Municipal de Música de Coria del Río",
+      "slug": "banda-musica-municipal-coria-del-rio",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "fe884314-1f8b-4566-8bb9-7b11ecf42446"
+    },
+    {
+      "id": "870f7ec0-8a57-4652-96ff-05725104a47b",
+      "name": "Banda Municipal de Música de Coria del Río",
+      "slug": "banda-municipal-musica-coria-del-rio",
+      "status": "archived",
+      "entity_type": "band",
+      "municipality_id": null
+    },
+    {
+      "id": "d0d31c12-11c7-4ba1-bbe6-4ceb731f4dd0",
+      "name": "Banda Municipal de Música de Gerena",
+      "slug": "banda-municipal-musica-gerena",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "a58d9378-8403-4c8e-97cd-0f7cbcc85b38"
+    },
+    {
+      "id": "da951f85-de4c-48a4-bd97-b8c9f835d9b4",
+      "name": "Banda Municipal de Música de La Puebla del Río",
+      "slug": "banda-municipal-de-musica-de-la-puebla-del-rio",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "5cf66a5f-5205-4fc1-b9bd-62918463a98a"
+    },
+    {
+      "id": "d6852052-92bb-4b54-b551-e52b656dea6d",
+      "name": "Banda Municipal de Música de Mairena del Alcor",
+      "slug": "banda-municipal-musica-mairena-del-alcor",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "ddbd8c6e-5607-4987-9843-a396e46b001d"
+    },
+    {
+      "id": "c0160037-0401-4000-8000-000000000001",
+      "name": "Banda Municipal de Música de Morón de la Frontera",
+      "slug": "banda-municipal-musica-moron-de-la-frontera",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "c0160037-0201-4000-8000-000000000001"
+    },
+    {
+      "id": "7ebfc711-28ed-49bd-a16c-5658df1663f2",
+      "name": "Banda Municipal de Música San Antonio de Padua",
+      "slug": "banda-municipal-san-antonio-padua-villanueva-ariscal",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "38bdbf52-9abe-472a-8188-fdc8a0588f16"
+    },
+    {
+      "id": "c0160036-0410-4000-8000-000000000010",
+      "name": "Banda Sinfónica Municipal de Dos Torres",
+      "slug": "banda-sinfonica-municipal-dos-torres",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": null
+    },
+    {
+      "id": "8480fe50-3ad1-42c4-af82-38d11bfd9071",
+      "name": "Banda Sinfónica Municipal de Sevilla",
+      "slug": "banda-sinfonica-municipal-sevilla",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "2f6c0b1b-b3c8-43d7-99ac-8f341a65f2d1",
+      "name": "Capilla Musical Ars Sacra",
+      "slug": "capilla-musical-ars-sacra",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": null
+    },
+    {
+      "id": "c0160600-0001-4000-8000-000000000011",
+      "name": "Capilla Musical de Sevilla",
+      "slug": "capilla-musical-de-sevilla",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "7d0aa85b-b657-4ca2-9846-1dc4f8f11c74",
+      "name": "Capilla Musical Dulce Nombre",
+      "slug": "capilla-musical-dulce-nombre-alcala",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "b1d9fe05-a80a-4cde-9e72-bf4f9647e0a3"
+    },
+    {
+      "id": "c0160036-0413-4000-8000-000000000013",
+      "name": "Capilla Musical El Cirineo de Écija",
+      "slug": "capilla-musical-el-cirineo-ecija",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "f3fba0c4-fffa-4e8c-8495-3dc1c3bc94bf"
+    },
+    {
+      "id": "895dd76d-9b7f-4e5e-bda0-7a3515e75532",
+      "name": "Capilla Musical Gólgota",
+      "slug": "capilla-musical-golgota-sevilla",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "c0160036-0414-4000-8000-000000000014",
+      "name": "Capilla Musical Hispalense de Dos Hermanas",
+      "slug": "capilla-musical-hispalense-dos-hermanas",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "24e0b757-f3fd-4d9c-82c9-2a758444f2d6"
+    },
+    {
+      "id": "bd8f3c45-bea7-4512-9a3c-e15db9882ff8",
+      "name": "Capilla Musical Lignum Crucis",
+      "slug": "capilla-musical-lignum-crucis-sevilla",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "d8b67456-156c-4228-8884-ad18ec33a0d3",
+      "name": "Capilla Musical María Auxiliadora",
+      "slug": "capilla-musical-maria-auxiliadora-sevilla",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "c0160032-0404-4000-8000-000000000004",
+      "name": "Capilla Musical Nuestra Señora de la Victoria de Estepa",
+      "slug": "capilla-musical-nuestra-senora-victoria-estepa",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "fbfcf834-c0d3-4a62-a20c-eaa74dc9ee11"
+    },
+    {
+      "id": "24e2b89a-4d72-4ea8-9144-8972cf751046",
+      "name": "Carmen de Salteras",
+      "slug": "carmen-de-salteras",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "a2208260-0000-0000-0000-000000000031"
+    },
+    {
+      "id": "9bd59d4e-2a61-499d-8d07-99012e9fb8d9",
+      "name": "Carmen de Villalba",
+      "slug": "banda-musica-carmen-villalba-alcor",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "1405dbb5-7f4f-401f-a0ad-bf81f643fcfc"
+    },
+    {
+      "id": "543613d9-cae7-4430-a4c9-d3160f0fc358",
+      "name": "Centuria Romana Macarena",
+      "slug": "centuria-romana-macarena",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "4820fdb6-8f58-4ae6-9e6e-af2f83b71a40",
+      "name": "Cornetas y Tambores de Artillería",
+      "slug": "historica-cctt-artilleria-sevilla",
+      "status": "archived",
+      "entity_type": "band",
+      "municipality_id": null
+    },
+    {
+      "id": "e58e04ba-8c23-420c-acc5-5a6409785cc5",
+      "name": "Cornetas y Tambores de Intendencia",
+      "slug": "historica-cctt-intendencia-sevilla",
+      "status": "archived",
+      "entity_type": "band",
+      "municipality_id": null
+    },
+    {
+      "id": "1ec549b8-3231-4c11-8d52-316db404568d",
+      "name": "Cornetas y Tambores de la Cruz Roja",
+      "slug": "historica-cctt-cruz-roja-sevilla",
+      "status": "archived",
+      "entity_type": "band",
+      "municipality_id": null
+    },
+    {
+      "id": "4a55e041-7699-4ae4-b520-e5dd19660f98",
+      "name": "Cornetas y Tambores de Sanidad Militar",
+      "slug": "historica-cctt-sanidad-militar-sevilla",
+      "status": "archived",
+      "entity_type": "band",
+      "municipality_id": null
+    },
+    {
+      "id": "c851baab-7758-4134-b2ca-821295a1a0cc",
+      "name": "Cornetas y Tambores de Zapadores y Transmisiones",
+      "slug": "historica-cctt-zapadores-transmisiones-sevilla",
+      "status": "archived",
+      "entity_type": "band",
+      "municipality_id": null
+    },
+    {
+      "id": "c6000000-0000-4000-8000-000000000001",
+      "name": "Cruz Roja",
+      "slug": "banda-musica-cruz-roja-sevilla",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "4c0f1466-35b5-4287-9125-7ef8c534184b",
+      "name": "Escolanía de María Santísima de la Trinidad",
+      "slug": "escolania-maria-santisima-trinidad-alcala",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "b1d9fe05-a80a-4cde-9e72-bf4f9647e0a3"
+    },
+    {
+      "id": "3582a51c-25a5-493b-8c5a-9dc22f9d11d2",
+      "name": "Escolanía Salesiana María Auxiliadora de Sevilla",
+      "slug": "escolania-salesiana-maria-auxiliadora-sevilla",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "0cee9e2f-7cef-4963-8ad2-b4a82821b7b8",
+      "name": "Esencia",
+      "slug": "banda-cornetas-tambores-esencia-sevilla",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "91dc3cfa-75c1-4306-97fb-7be35c3ed242",
+      "name": "Fernando Guerrero",
+      "slug": "banda-municipal-fernando-guerrero-los-palacios",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "83b5a03b-abe3-40fd-ab1f-b1a47996a28b"
+    },
+    {
+      "id": "e4884d0e-204e-408c-955e-b4c639de92c9",
+      "name": "Grupo de Voces Graves De Profundis",
+      "slug": "grupo-voces-graves-de-profundis",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": null
+    },
+    {
+      "id": "cb04a5d8-e81e-4405-a001-9d5a60840924",
+      "name": "La Encarnación",
+      "slug": "agrupacion-musical-nuestra-senora-de-la-encarnacion",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "77de2eda-7398-40e8-92f2-a1a3b3299a34",
+      "name": "La Estrella de Jaén",
+      "slug": "agrupacion-musical-la-estrella-jaen",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "6d00fa87-1831-4694-a9fe-07de46ae0d75"
+    },
+    {
+      "id": "b4330e30-e748-4b50-a626-64b4e015087b",
+      "name": "La Redención",
+      "slug": "agrupacion-musical-nuestro-padre-jesus-redencion-sevilla",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "295ed476-2265-4526-ba56-2c460ed8229d",
+      "name": "La Sentencia de Jerez",
+      "slug": "agrupacion-musical-la-sentencia-jerez",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "a1e00f6f-c513-4d19-82a2-92b4bb52a68d"
+    },
+    {
+      "id": "b1000000-0000-0000-0000-000000000001",
+      "name": "Las Cigarreras",
+      "slug": "las-cigarreras",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "c1611969-501b-4c33-8153-739ef4b2d588",
+      "name": "Las Nieves de Olivares",
+      "slug": "asociacion-filarmonica-cultural-santa-maria-nieves-olivares",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "fd48c686-dc84-4395-91c7-936c11815c10"
+    },
+    {
+      "id": "c6000000-0000-4000-8000-000000000003",
+      "name": "Los Gitanos",
+      "slug": "agrupacion-musical-nuestro-padre-jesus-salud-los-gitanos-sevilla",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "218bf3a6-9e00-4691-8306-bd86627a5d19",
+      "name": "Los Gitanos Juvenil",
+      "slug": "agrupacion-musical-maria-santisima-de-las-angustias-coronada",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "e1fe592f-c67d-42c3-9f2f-67137ef629ec",
+      "name": "Maestro Tejera",
+      "slug": "banda-de-musica-del-maestro-tejera",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "0efc10f7-ca6e-4c8e-8d94-be35db689a7b",
+      "name": "Nazareno de Arahal",
+      "slug": "banda-cornetas-tambores-jesus-nazareno-arahal",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "b8196b90-6115-4d28-966d-590e4d3a4f68"
+    },
+    {
+      "id": "de6bb885-b80e-4c26-a176-7f72af419d63",
+      "name": "Nazareno de La Algaba",
+      "slug": "agrupacion-musical-nazareno-la-algaba",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "ca5d5f02-0012-4005-986e-852caacecb71"
+    },
+    {
+      "id": "8b2e073f-17ae-482c-ae21-9dccd5aac09e",
+      "name": "Pasión de Linares",
+      "slug": "agrupacion-musical-pasion-de-linares",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "8909965e-2c9b-481d-a047-d69a289a4547"
+    },
+    {
+      "id": "31f46874-049b-4c33-aa68-b65ded5dfda9",
+      "name": "Presentación al Pueblo",
+      "slug": "banda-cornetas-tambores-presentacion-al-pueblo-dos-hermanas",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "24e0b757-f3fd-4d9c-82c9-2a758444f2d6"
+    },
+    {
+      "id": "15f8a3fe-b8f3-45ca-8e3c-984fd0638146",
+      "name": "Rosario de Cádiz",
+      "slug": "banda-cornetas-tambores-rosario-cadiz",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "53f3d66c-5a13-4a9d-8093-aa3aa3b31815"
+    },
+    {
+      "id": "9aef3c3e-e9c8-433f-8257-ea10f4c083b1",
+      "name": "Sangre de San Benito",
+      "slug": "sangre-de-san-benito",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "c6000000-0000-4000-8000-000000000002",
+      "name": "Santa María Magdalena de Arahal",
+      "slug": "agrupacion-musical-santa-maria-magdalena-arahal",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "b8196b90-6115-4d28-966d-590e4d3a4f68"
+    },
+    {
+      "id": "b6667898-7b1a-4d9d-a1cf-cf82ad8dce88",
+      "name": "Sociedad Filarmónica de Pilas",
+      "slug": "sociedad-filarmonica-pilas",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "a88dd7d3-bf0d-4f20-a0ca-7c9edc2c40a8"
+    },
+    {
+      "id": "52cb9964-ede4-4b58-bae1-b030c4ca631f",
+      "name": "Sociedad Filarmónica Juvenil de Pilas",
+      "slug": "sociedad-filarmonica-juvenil-pilas",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "a88dd7d3-bf0d-4f20-a0ca-7c9edc2c40a8"
+    },
+    {
+      "id": "0a86bfb1-afe6-448a-88b9-127867f5b1a9",
+      "name": "Tres Caídas de Triana",
+      "slug": "banda-cornetas-tambores-santisimo-cristo-tres-caidas-sevilla",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "8f6eb70e-312b-4f8f-a06a-d9701838f3e3",
+      "name": "Trío de Capilla Olmo, Vergara y Coca",
+      "slug": "trio-capilla-olmo-vergara-coca",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "e1740c97-c1ff-494b-9345-f22833d91ba3",
+      "name": "Unidad de Música del Cuartel General de la Fuerza Terrestre",
+      "slug": "unidad-musica-fuerza-terrestre-sevilla",
+      "status": "published",
+      "entity_type": "band",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "c0160036-0301-4000-8000-000000000001",
+      "name": "Agrupación Parroquial de Las Penas de Écija",
+      "slug": "agrupacion-parroquial-penas-ecija",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "f3fba0c4-fffa-4e8c-8495-3dc1c3bc94bf"
+    },
+    {
+      "id": "7bbbe567-4d3f-4be8-95fe-c51b14a2adf7",
+      "name": "Agrupación Parroquial del Dulce Nombre de Jesús",
+      "slug": "agrupacion-dulce-nombre-jesus-dos-hermanas",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "24e0b757-f3fd-4d9c-82c9-2a758444f2d6"
+    },
+    {
+      "id": "21279e61-2c75-4757-88d0-f8422e7e29ec",
+      "name": "Agrupación Parroquial Humildad y Caridad – El Olivo",
+      "slug": "humildad-caridad-el-olivo-san-jose-rinconada",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "3e4c9f5f-52c3-4b42-a44f-219993f387f3"
+    },
+    {
+      "id": "75c1871f-fe7e-4ed3-b6a6-6d8a257add62",
+      "name": "Agrupación Parroquial María Santísima de la Caridad de Santa Aurelia",
+      "slug": "agrupacion-parroquial-caridad-santa-aurelia-sevilla",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "1f170eb2-3ac3-4f29-b1c7-b39d9dc56d48",
+      "name": "Aguas Santas de Villaverde del Río",
+      "slug": "aguas-santas-villaverde-del-rio",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "fcbc2de8-8d82-410e-bde5-9f970cec0ef1"
+    },
+    {
+      "id": "c0160035-0303-4000-8000-000000000003",
+      "name": "Amargura de Carmona",
+      "slug": "amargura-carmona",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "bf024af2-3eda-4989-b1b5-0a723dcf9cb4"
+    },
+    {
+      "id": "eac61067-0899-4d03-bb71-70b58ec87560",
+      "name": "Amargura de Dos Hermanas",
+      "slug": "amargura-dos-hermanas",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "24e0b757-f3fd-4d9c-82c9-2a758444f2d6"
+    },
+    {
+      "id": "cdf907dc-f50e-4308-8f39-6c1d18bddb05",
+      "name": "Antigua, Real e Ilustre Hermandad de Nuestra Señora de la Luz",
+      "slug": "virgen-de-la-luz-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "165641a5-8f78-478f-9cf7-24cddc3ee257",
+      "name": "Archicofradía de María Auxiliadora Coronada",
+      "slug": "archicofradia-maria-auxiliadora-coronada-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "f800d9c7-547e-41aa-bb57-09e029ee9085",
+      "name": "Asociación del Santísimo Cristo del Amor de Huévar del Aljarafe",
+      "slug": "cristo-amor-entrada-triunfal-huevar",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "08373373-d283-4712-b385-29be8c1412ae",
+      "name": "Asociación Parroquial de la Merced de Marchena",
+      "slug": "asociacion-parroquial-merced-marchena",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "8f1ef927-afb7-4694-a253-69f281074d6e"
+    },
+    {
+      "id": "c0160032-0309-4000-8000-000000000009",
+      "name": "Asunción de Estepa",
+      "slug": "asuncion-estepa",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "fbfcf834-c0d3-4a62-a20c-eaa74dc9ee11"
+    },
+    {
+      "id": "20f519f8-54ee-46e0-a4ab-aa524c13227b",
+      "name": "Borriquita de Coria del Río",
+      "slug": "borriquita-coria-del-rio",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "fe884314-1f8b-4566-8bb9-7b11ecf42446"
+    },
+    {
+      "id": "c0160032-0301-4000-8000-000000000001",
+      "name": "Borriquita de Estepa",
+      "slug": "borriquita-estepa",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "fbfcf834-c0d3-4a62-a20c-eaa74dc9ee11"
+    },
+    {
+      "id": "f57b066d-1445-4523-a29c-2cada56e22b8",
+      "name": "Borriquita de Pilas",
+      "slug": "borriquita-pilas",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "a88dd7d3-bf0d-4f20-a0ca-7c9edc2c40a8"
+    },
+    {
+      "id": "c0160032-0311-4000-8000-000000000011",
+      "name": "Carmen de Estepa",
+      "slug": "carmen-estepa",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "fbfcf834-c0d3-4a62-a20c-eaa74dc9ee11"
+    },
+    {
+      "id": "71315853-49ed-44ad-903c-d2f03bea3245",
+      "name": "Cautivo y Dolores de Pilas",
+      "slug": "cautivo-dolores-pilas",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "a88dd7d3-bf0d-4f20-a0ca-7c9edc2c40a8"
+    },
+    {
+      "id": "2eb280f2-575f-4946-b713-8fa72867e537",
+      "name": "Columna",
+      "slug": "archicofradia-columna-cadiz",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "608d90ed-e6f3-4bae-83de-9db1a55d5e01",
+      "name": "Cristo de Burgos",
+      "slug": "cristo-de-burgos",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "1ae6f1a4-50b1-4df1-aa01-bb1f4697ebc8",
+      "name": "Cruz de Abajo de Aznalcóllar",
+      "slug": "cruz-abajo-aznalcollar",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "88ca0e56-bf93-4ac0-a72c-b2bee7a8e4d8"
+    },
+    {
+      "id": "ced91e3c-e022-441f-af0f-5384a0e97acd",
+      "name": "Desamparados del Santo Ángel",
+      "slug": "agrupacion-cristo-desamparados-santo-angel",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "15e73dd0-c6da-4116-8801-9c868bc09b86",
+      "name": "Divina Pastora de Marchena",
+      "slug": "divina-pastora-marchena",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "8f1ef927-afb7-4694-a253-69f281074d6e"
+    },
+    {
+      "id": "a4220000-0000-0000-0000-000000000002",
+      "name": "Divino Perdón",
+      "slug": "hermandad-del-divino-perdon",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "c0160033-0305-4000-8000-000000000005",
+      "name": "Dolores de Lebrija",
+      "slug": "dolores-lebrija",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "07281b21-d892-4e5d-aa63-24ec0e9bf4d2"
+    },
+    {
+      "id": "c1000000-0000-0000-0000-000000000004",
+      "name": "Dulce Nombre",
+      "slug": "hermandad-del-dulce-nombre-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "650dcdd9-f4c7-425a-929a-07ff6b9cd0da",
+      "name": "Dulce Nombre de Bellavista",
+      "slug": "dulce-nombre-bellavista",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "c0160034-0301-4000-8000-000000000001",
+      "name": "Dulce Nombre y Borriquita de Osuna",
+      "slug": "dulce-nombre-borriquita-osuna",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "d10878e4-8e9a-4fc5-937b-41d0282a9a0e"
+    },
+    {
+      "id": "c0160033-0304-4000-8000-000000000004",
+      "name": "Ecce-Homo de Lebrija",
+      "slug": "ecce-homo-lebrija",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "07281b21-d892-4e5d-aa63-24ec0e9bf4d2"
+    },
+    {
+      "id": "10000000-0000-0000-0000-000000000001",
+      "name": "El Baratillo",
+      "slug": "el-baratillo",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "6c50dc05-e054-4316-a046-900451467952",
+      "name": "El Calvario",
+      "slug": "el-calvario-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "c0160037-0304-4000-8000-000000000004",
+      "name": "El Calvario de Morón de la Frontera",
+      "slug": "calvario-moron-de-la-frontera",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "c0160037-0201-4000-8000-000000000001"
+    },
+    {
+      "id": "eed0dc91-db66-4bb1-a194-c13a0a5900fc",
+      "name": "El Carmen",
+      "slug": "carmen-doloroso",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "c0160037-0303-4000-8000-000000000003",
+      "name": "El Cautivo de Morón de la Frontera",
+      "slug": "cautivo-moron-de-la-frontera",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "c0160037-0201-4000-8000-000000000001"
+    },
+    {
+      "id": "0e696cc9-450d-4208-b3b2-7cfe19aeb3ef",
+      "name": "El Museo",
+      "slug": "el-museo",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "f69e5728-af3d-4f3a-963a-81068b417a85",
+      "name": "El Santo Entierro",
+      "slug": "santo-entierro-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "f94f1ab8-b8e9-4a94-ace4-a0b6c6c1c4e5",
+      "name": "El Silencio",
+      "slug": "el-silencio-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "c0160037-0301-4000-8000-000000000001",
+      "name": "El Soberano de Morón de la Frontera",
+      "slug": "soberano-moron-de-la-frontera",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "c0160037-0201-4000-8000-000000000001"
+    },
+    {
+      "id": "59c05600-c350-4ea7-a419-4c5952208cc5",
+      "name": "El Valle",
+      "slug": "el-valle",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "c0160033-0301-4000-8000-000000000001",
+      "name": "Entrada Triunfal de Lebrija",
+      "slug": "entrada-triunfal-lebrija",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "07281b21-d892-4e5d-aa63-24ec0e9bf4d2"
+    },
+    {
+      "id": "c0160035-0302-4000-8000-000000000002",
+      "name": "Esperanza de Carmona",
+      "slug": "esperanza-carmona",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "bf024af2-3eda-4989-b1b5-0a723dcf9cb4"
+    },
+    {
+      "id": "f3f06e37-23cd-4ab4-8129-21c9f8acadd3",
+      "name": "Esperanza de Triana",
+      "slug": "hermandad-esperanza-de-triana-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "f5b142a7-5f4e-44e5-b862-444244d30d56",
+      "name": "Estrella de Coria del Río",
+      "slug": "estrella-coria-del-rio",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "fe884314-1f8b-4566-8bb9-7b11ecf42446"
+    },
+    {
+      "id": "c0160035-0304-4000-8000-000000000004",
+      "name": "Expiración de Carmona",
+      "slug": "expiracion-carmona",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "bf024af2-3eda-4989-b1b5-0a723dcf9cb4"
+    },
+    {
+      "id": "d53478f8-3826-4bc8-a264-39ce3b8171da",
+      "name": "Franciscana Hermandad de Nuestra Señora de Guadalupe",
+      "slug": "guadalupe-san-buenaventura",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "7d5dcd35-28bd-4d2e-ba06-9165cf92716e",
+      "name": "Gran Poder de Dos Hermanas",
+      "slug": "gran-poder-dos-hermanas",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "24e0b757-f3fd-4d9c-82c9-2a758444f2d6"
+    },
+    {
+      "id": "b0e62209-dedc-4b58-b6e4-9f1dfa8b6a0f",
+      "name": "Gran Poder de Gerena",
+      "slug": "gran-poder-gerena",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "a58d9378-8403-4c8e-97cd-0f7cbcc85b38"
+    },
+    {
+      "id": "ebc57987-4f4e-4998-8ef8-0f3d886cc2c9",
+      "name": "Gran Poder de Montellano",
+      "slug": "gran-poder-montellano",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "6b90e9df-27d2-474b-a6d0-da0a012068af"
+    },
+    {
+      "id": "9d4f3de9-4f2e-4a45-a854-95056ad83f48",
+      "name": "Grupo Parroquial de Ntra. Sra. de Fátima de Los Rosales",
+      "slug": "grupo-parroquial-fatima-los-rosales",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "89e56e46-3b9b-44b0-8a1f-d6cf83f2446e"
+    },
+    {
+      "id": "09b20987-0de8-4d3d-a807-f1682d3151e7",
+      "name": "Hermandad de Belén de Pilas",
+      "slug": "hermandad-belen-pilas",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "a88dd7d3-bf0d-4f20-a0ca-7c9edc2c40a8"
+    },
+    {
+      "id": "c79f16ad-8b87-4a1e-9785-4252309cd05f",
+      "name": "Hermandad de Bendición y Esperanza",
+      "slug": "bendicion-y-esperanza",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "b2c5832d-5c09-474b-8820-9ba893a41b89",
+      "name": "Hermandad de Cuatrovitas",
+      "slug": "cuatrovitas-bollullos",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "c867d704-85e3-46fc-8db4-86427a007543"
+    },
+    {
+      "id": "c0160031-0301-4000-8000-000000000001",
+      "name": "Hermandad de Jesús Cautivo de Coria del Río",
+      "slug": "jesus-cautivo-coria-del-rio",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "fe884314-1f8b-4566-8bb9-7b11ecf42446"
+    },
+    {
+      "id": "d736d692-f8a1-46ed-8744-58786464e703",
+      "name": "Hermandad de Jesús de Alcalá de Guadaíra",
+      "slug": "jesus-nazareno-alcala-guadaira",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "b1d9fe05-a80a-4cde-9e72-bf4f9647e0a3"
+    },
+    {
+      "id": "c6100000-0000-4000-8000-000000000004",
+      "name": "Hermandad de Jesús de La Algaba",
+      "slug": "hermandad-jesus-la-algaba",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "25d7900f-5518-4e22-84a3-b5b3b44e9ab1",
+      "name": "Hermandad de Jesús Nazareno de Estepa",
+      "slug": "jesus-nazareno-estepa",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "fbfcf834-c0d3-4a62-a20c-eaa74dc9ee11"
+    },
+    {
+      "id": "8f2c3b18-d795-4956-9f9c-6f945f77e170",
+      "name": "Hermandad de Jesús Nazareno de Marinaleda",
+      "slug": "jesus-nazareno-marinaleda",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "0deb4349-a201-4adf-9027-3d463e84fc7a"
+    },
+    {
+      "id": "4e462b02-979d-4b88-ab98-0c97f2dbf0a0",
+      "name": "Hermandad de Jesús Nazareno de Utrera",
+      "slug": "hermandad-jesus-nazareno-utrera",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "e4319248-831a-4f4c-adb8-19c496f95dd6"
+    },
+    {
+      "id": "3d77cf1c-9adb-4389-8def-bb034892dfd3",
+      "name": "Hermandad de Jesús Preso de Moriles",
+      "slug": "jesus-preso-moriles",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "b2200000-0000-0000-0000-000000000001"
+    },
+    {
+      "id": "c0160036-0311-4000-8000-000000000011",
+      "name": "Hermandad de Jesús sin Soga de Écija",
+      "slug": "hermandad-jesus-sin-soga-ecija",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "f3fba0c4-fffa-4e8c-8495-3dc1c3bc94bf"
+    },
+    {
+      "id": "aae6486d-3c23-4ffe-a7b3-17d737233155",
+      "name": "Hermandad de la Amargura",
+      "slug": "hermandad-de-la-amargura",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "2a7c6722-f973-4a29-8201-d82ca2d62ebd",
+      "name": "Hermandad de la Amargura de Alcalá de Guadaíra",
+      "slug": "amargura-alcala-guadaira",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "b1d9fe05-a80a-4cde-9e72-bf4f9647e0a3"
+    },
+    {
+      "id": "1929ce51-b21c-4f5e-a4ee-02b0214d511d",
+      "name": "Hermandad de la Amargura de Jerez",
+      "slug": "hermandad-amargura-jerez",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "0578fdff-1c7c-4bca-bfa3-314f426a734e",
+      "name": "Hermandad de la Borriquita de Alcalá de Guadaíra",
+      "slug": "borriquita-alcala-guadaira",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "b1d9fe05-a80a-4cde-9e72-bf4f9647e0a3"
+    },
+    {
+      "id": "c6100000-0000-4000-8000-000000000007",
+      "name": "Hermandad de la Calle Real de Castilleja de la Cuesta",
+      "slug": "hermandad-calle-real-castilleja-cuesta",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "c6100000-0000-4000-8000-000000000003",
+      "name": "Hermandad de la Candelaria de Sevilla",
+      "slug": "hermandad-candelaria-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "204c595d-8112-436f-a1b1-22868d6fe283",
+      "name": "Hermandad de la Candelaria Madre de Dios",
+      "slug": "hermandad-candelaria-madre-de-dios-sevilla",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "83a9ad1b-e1f5-45bc-a234-d792c29b6ddb",
+      "name": "Hermandad de la Defensión",
+      "slug": "hermandad-defension-jerez",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": "a1e00f6f-c513-4d19-82a2-92b4bb52a68d"
+    },
+    {
+      "id": "4ff33303-55ae-4bfc-a81b-9d72a9e15722",
+      "name": "Hermandad de la Divina Misericordia · Rosario de Santiago",
+      "slug": "divina-misericordia-rosario-santiago-alcala",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "b1d9fe05-a80a-4cde-9e72-bf4f9647e0a3"
+    },
+    {
+      "id": "47db4c8f-a4af-4733-8099-d39754cb57b3",
+      "name": "Hermandad de la Divina Pastora de Capuchinos",
+      "slug": "hermandad-divina-pastora-capuchinos-sevilla",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "3c8b9955-d8ab-4b2f-b99f-6c55e841d3cf",
+      "name": "Hermandad de la Divina Pastora de Hinojos",
+      "slug": "hermandad-divina-pastora-hinojos",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "c6100000-0000-4000-8000-000000000010",
+      "name": "Hermandad de la Esperanza de Arahal",
+      "slug": "hermandad-esperanza-arahal",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "00ceafbe-548d-4dc3-a6f1-65ec15393703",
+      "name": "Hermandad de la Esperanza de Huelva",
+      "slug": "hermandad-esperanza-de-huelva",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": "045803c2-525c-419c-965c-f74d30551775"
+    },
+    {
+      "id": "b5c5c238-bf95-4270-a1f0-c73ffd54ea4c",
+      "name": "Hermandad de la Estrella",
+      "slug": "hermandad-de-la-estrella",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "c6100000-0000-4000-8000-000000000009",
+      "name": "Hermandad de la Expiración de Écija",
+      "slug": "hermandad-expiracion-ecija",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "f3fba0c4-fffa-4e8c-8495-3dc1c3bc94bf"
+    },
+    {
+      "id": "c6100000-0000-4000-8000-000000000008",
+      "name": "Hermandad de la Hiniesta",
+      "slug": "hermandad-hiniesta-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "d071de1d-47f8-4433-a88c-b29697824d66",
+      "name": "Hermandad de la Humildad de Mairena del Alcor",
+      "slug": "hermandad-humildad-mairena-del-alcor",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "c6100000-0000-4000-8000-000000000016",
+      "name": "Hermandad de la Humillación de Camas",
+      "slug": "hermandad-humillacion-camas",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "f51d8c0c-6436-470e-94f9-b83527d0661c",
+      "name": "Hermandad de la Inmaculada Concepción de Sevilla",
+      "slug": "hermandad-inmaculada-concepcion-sevilla",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "04d05809-d663-4e4c-b1b3-af7eb7823afb",
+      "name": "Hermandad de la Milagrosa",
+      "slug": "hermandad-milagrosa-sevilla",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "c1000000-0000-0000-0000-000000000001",
+      "name": "Hermandad de la Misión",
+      "slug": "hermandad-de-la-mision-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "c0160036-0312-4000-8000-000000000012",
+      "name": "Hermandad de la Mortaja de Écija",
+      "slug": "hermandad-mortaja-ecija",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "f3fba0c4-fffa-4e8c-8495-3dc1c3bc94bf"
+    },
+    {
+      "id": "75667214-b7e2-4997-8ee5-0b68bb7dfbc7",
+      "name": "Hermandad de La O",
+      "slug": "hermandad-de-la-o",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "a4220000-0000-0000-0000-000000000003",
+      "name": "Hermandad de la Paz",
+      "slug": "hermandad-de-la-paz",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "c0160036-0313-4000-8000-000000000013",
+      "name": "Hermandad de la Piedad y la Merced de Écija",
+      "slug": "hermandad-piedad-merced-ecija",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "f3fba0c4-fffa-4e8c-8495-3dc1c3bc94bf"
+    },
+    {
+      "id": "9a4f75e5-16c4-414c-ad4f-6d4afeca5103",
+      "name": "Hermandad de la Redención",
+      "slug": "hermandad-de-la-redencion",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "c6100000-0000-4000-8000-000000000011",
+      "name": "Hermandad de la Resurrección de La Rinconada",
+      "slug": "hermandad-resurreccion-la-rinconada",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "3e4c9f5f-52c3-4b42-a44f-219993f387f3"
+    },
+    {
+      "id": "48ee9020-71ed-473e-8693-34809f2d083c",
+      "name": "Hermandad de la Sagrada Lanzada",
+      "slug": "hermandad-sagrada-lanzada",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "30a13e82-819c-4a0d-b7c4-628c87597f44",
+      "name": "Hermandad de la Sagrada Oración en el Huerto",
+      "slug": "hermandad-oracion-huerto-el-puerto-de-santa-maria",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": "ae2f387c-f9e8-4ae6-9fd3-9eba8a35affd"
+    },
+    {
+      "id": "58e49ecd-b05c-4eb9-805a-f4238f5a0cba",
+      "name": "Hermandad de la Salud de La Rinconada",
+      "slug": "hermandad-salud-la-rinconada",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "3e4c9f5f-52c3-4b42-a44f-219993f387f3"
+    },
+    {
+      "id": "c0160036-0308-4000-8000-000000000008",
+      "name": "Hermandad de la Sangre de Écija",
+      "slug": "hermandad-sangre-ecija",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "f3fba0c4-fffa-4e8c-8495-3dc1c3bc94bf"
+    },
+    {
+      "id": "3cfd890d-d720-4b64-bdea-be3b17670af1",
+      "name": "Hermandad de la Santa Cruz de la Victoria de Cristo",
+      "slug": "hermandad-santa-cruz-victoria-cristo-paterna-campo",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "a7bf904c-a308-48d2-b683-eeef88998d13",
+      "name": "Hermandad de la Santa Cruz del Cerrillo y Santa Elena Emperatriz",
+      "slug": "santa-cruz-cerrillo-santa-elena-villalba-alcor",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "7a576010-348d-4ec1-a253-00ec9849dcd8",
+      "name": "Hermandad de la Sed",
+      "slug": "hermandad-de-la-sed",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "6c794422-c43c-4807-b84b-6c1ac5cfab71",
+      "name": "Hermandad de la Sentencia de Córdoba",
+      "slug": "hermandad-sentencia-cordoba",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": "cd06530b-5c9e-44da-b994-102418ff9129"
+    },
+    {
+      "id": "278b1fa8-b5b8-4abf-b298-3a211e000f0a",
+      "name": "Hermandad de la Soledad Coronada de Gerena",
+      "slug": "soledad-coronada-gerena",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "a58d9378-8403-4c8e-97cd-0f7cbcc85b38"
+    },
+    {
+      "id": "c6100000-0000-4000-8000-000000000005",
+      "name": "Hermandad de la Soledad de Alcalá del Río",
+      "slug": "hermandad-soledad-alcala-del-rio",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "c0160031-0305-4000-8000-000000000005",
+      "name": "Hermandad de la Soledad de Coria del Río",
+      "slug": "soledad-coria-del-rio",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "fe884314-1f8b-4566-8bb9-7b11ecf42446"
+    },
+    {
+      "id": "c0160036-0314-4000-8000-000000000014",
+      "name": "Hermandad de la Soledad de Écija",
+      "slug": "hermandad-soledad-ecija",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "f3fba0c4-fffa-4e8c-8495-3dc1c3bc94bf"
+    },
+    {
+      "id": "1441ed8e-8858-436f-879a-d6b86dc18fa7",
+      "name": "Hermandad de la Soledad de Huévar",
+      "slug": "hermandad-soledad-huevar",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "c6100000-0000-4000-8000-000000000006",
+      "name": "Hermandad de la Soledad de Marchena",
+      "slug": "hermandad-soledad-marchena",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "75c7956b-3966-42a4-a234-68107a3a2de2",
+      "name": "Hermandad de la Soledad de Olivares",
+      "slug": "hermandad-soledad-olivares",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "b1ef9fca-8758-4544-8287-c4c3f1196aea",
+      "name": "Hermandad de la Soledad de Pilas",
+      "slug": "soledad-pilas",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "a88dd7d3-bf0d-4f20-a0ca-7c9edc2c40a8"
+    },
+    {
+      "id": "f91f9445-e76c-4b00-8ccf-408eea2665d6",
+      "name": "Hermandad de la Tercera Palabra de Alcalá de Guadaíra",
+      "slug": "tercera-palabra-alcala-guadaira",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "b1d9fe05-a80a-4cde-9e72-bf4f9647e0a3"
+    },
+    {
+      "id": "c1000000-0000-0000-0000-000000000008",
+      "name": "Hermandad de la Trinidad",
+      "slug": "hermandad-de-la-trinidad-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "d7a8f7e9-df25-40bd-b62b-d2873717a51f",
+      "name": "Hermandad de la Vera Cruz y María Santísima de la Sangre Coronada",
+      "slug": "virgen-sangre-huevar",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "bd42c8f3-1b99-47d4-a1aa-ce3ae90cce7a"
+    },
+    {
+      "id": "00dc20d4-b0f2-4ceb-a16f-b8d0d37d2fb6",
+      "name": "Hermandad de la Vera-Cruz de Alcalá del Río",
+      "slug": "vera-cruz-alcala-del-rio",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "1d4fb3b2-6b33-4575-9516-35ec617c1d22"
+    },
+    {
+      "id": "f16c78a6-d872-40f5-af1f-723aaf21f121",
+      "name": "Hermandad de la Vera-Cruz de Olivares",
+      "slug": "hermandad-vera-cruz-olivares",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "7bab2fe6-c69e-48e5-9446-a247b4169910",
+      "name": "Hermandad de la Vera-Cruz y Santo Entierro de Utrera",
+      "slug": "vera-cruz-santo-entierro-utrera",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "e4319248-831a-4f4c-adb8-19c496f95dd6"
+    },
+    {
+      "id": "05c7d9b0-06e0-46fb-94ec-1b2aaebb86cc",
+      "name": "Hermandad de la Vera+Cruz",
+      "slug": "vera-cruz-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "c0160031-0304-4000-8000-000000000004",
+      "name": "Hermandad de la Vera+Cruz de Coria del Río",
+      "slug": "vera-cruz-coria-del-rio",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "fe884314-1f8b-4566-8bb9-7b11ecf42446"
+    },
+    {
+      "id": "9b9f2157-d526-4096-b846-f96c43e95eb6",
+      "name": "Hermandad de la Virgen del Águila",
+      "slug": "virgen-aguila-alcala-guadaira",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "b1d9fe05-a80a-4cde-9e72-bf4f9647e0a3"
+    },
+    {
+      "id": "59e7c679-2c52-4c45-9016-2bdb06b107b1",
+      "name": "Hermandad de la Virgen del Carmen de Paterna del Campo",
+      "slug": "hermandad-carmen-paterna-del-campo",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "7c783707-bbe3-4af5-be44-8d6d993e5e4c",
+      "name": "Hermandad de la Virgen del Espino de El Pedroso",
+      "slug": "hermandad-virgen-espino-el-pedroso",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "c0160036-0304-4000-8000-000000000004",
+      "name": "Hermandad de la Yedra de Écija",
+      "slug": "hermandad-yedra-ecija",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "f3fba0c4-fffa-4e8c-8495-3dc1c3bc94bf"
+    },
+    {
+      "id": "c0160032-0302-4000-8000-000000000002",
+      "name": "Hermandad de las Angustias",
+      "slug": "angustias-estepa",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "fbfcf834-c0d3-4a62-a20c-eaa74dc9ee11"
+    },
+    {
+      "id": "b2000000-0000-0000-0000-000000000001",
+      "name": "Hermandad de Las Cigarreras",
+      "slug": "hermandad-de-las-cigarreras",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "2595d8b0-6a77-4c0d-a4f5-d18718bfd3db",
+      "name": "Hermandad de las Mercedes de la Puerta Real",
+      "slug": "mercedes-puerta-real",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "4c8f6c96-8537-40ca-89f9-d3c2cf2d14e1",
+      "name": "Hermandad de las Nieves de Benacazón",
+      "slug": "hermandad-nieves-benacazon",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "0b355480-2d5a-4c1c-bf0f-de874f589dcf",
+      "name": "Hermandad de las Penas de Santiago",
+      "slug": "hermandad-penas-de-santiago-cordoba",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "9f5c6f70-67b0-4161-bff5-a4af0e4d7b40",
+      "name": "Hermandad de las Viñas",
+      "slug": "hermandad-las-vinas-jerez",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "c6100000-0000-4000-8000-000000000001",
+      "name": "Hermandad de los Ángeles de San Juan de Aznalfarache",
+      "slug": "hermandad-angeles-san-juan-aznalfarache",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "79b264d6-c0ad-4ce4-8ef6-f4bb46a54a6d",
+      "name": "Hermandad de los Blancos de Salteras",
+      "slug": "hermandad-blancos-salteras",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "f7f7ad08-54b5-4e85-b2a6-5a2a5d5e80bf",
+      "name": "Hermandad de los Dolores de La Rinconada",
+      "slug": "dolores-la-rinconada",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "3e4c9f5f-52c3-4b42-a44f-219993f387f3"
+    },
+    {
+      "id": "061f2c22-c1c8-4f55-8d63-4933bea12efc",
+      "name": "Hermandad de los Dolores de La Roda de Andalucía",
+      "slug": "hermandad-dolores-roda-andalucia",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "d19ca7f8-ab3b-49f5-8977-35f8c4bb5a0f",
+      "name": "Hermandad de los Dolores de Torreblanca",
+      "slug": "hermandad-dolores-torreblanca-sevilla",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "c0160032-0304-4000-8000-000000000004",
+      "name": "Hermandad de los Estudiantes",
+      "slug": "estudiantes-estepa",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "fbfcf834-c0d3-4a62-a20c-eaa74dc9ee11"
+    },
+    {
+      "id": "52c9fcc7-46fd-49e0-9395-f76653ac783e",
+      "name": "Hermandad de los Estudiantes",
+      "slug": "hermandad-de-los-estudiantes-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "fe21b491-a72f-4312-a2a1-45f0446f1ac8",
+      "name": "Hermandad de los Javieres",
+      "slug": "hermandad-los-javieres-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "18463c72-89ef-46f2-a889-b5192656ba2a",
+      "name": "Hermandad de los Negritos",
+      "slug": "hermandad-de-los-negritos",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "c1000000-0000-0000-0000-000000000005",
+      "name": "Hermandad de los Panaderos",
+      "slug": "hermandad-de-los-panaderos",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "41ff9689-fc1a-469a-be3a-d41ce9976b26",
+      "name": "Hermandad de los Remedios de Villarrasa",
+      "slug": "hermandad-remedios-villarrasa",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "947590f0-b8f5-4056-8914-90c833819d18",
+      "name": "Hermandad de Monte-Sión",
+      "slug": "hermandad-monte-sion-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "c7bcbe99-cbd5-4164-a857-4afbfd5ecfcc",
+      "name": "Hermandad de Nuestra Señora de Consolación, Patrona de Osuna",
+      "slug": "consolacion-osuna",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "d10878e4-8e9a-4fc5-937b-41d0282a9a0e"
+    },
+    {
+      "id": "726ce3ff-30db-427d-9c50-30b739163ace",
+      "name": "Hermandad de Nuestra Señora de Guaditoca",
+      "slug": "hermandad-guaditoca-guadalcanal",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "6ad7b2d3-6bbd-4b41-a7e7-bc2286608c99"
+    },
+    {
+      "id": "535791d4-c547-4beb-beaf-91ac25214486",
+      "name": "Hermandad de Nuestra Señora de la Salud de San Isidoro",
+      "slug": "hermandad-salud-san-isidoro-sevilla",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "be68d2bd-2914-40d3-9a61-e0530b31d851",
+      "name": "Hermandad de Nuestra Señora de la Sierra de Sevilla",
+      "slug": "virgen-sierra-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "26487cc1-d7a0-4da3-aa4c-db6a9c02321a",
+      "name": "Hermandad de Nuestra Señora de Montemayor de Sevilla",
+      "slug": "montemayor-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "2798a20f-c0dd-4fb4-bc08-0c3eea2c659f",
+      "name": "Hermandad de Nuestra Señora del Consuelo de Alcolea del Río",
+      "slug": "hermandad-nuestra-senora-consuelo-alcolea-del-rio",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "b0a9b0cd-27da-47ac-ad8d-2e8b483f4cbc"
+    },
+    {
+      "id": "c0160031-0306-4000-8000-000000000006",
+      "name": "Hermandad de Nuestra Señora del Rocío de Coria del Río",
+      "slug": "rocio-coria-del-rio",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "fe884314-1f8b-4566-8bb9-7b11ecf42446"
+    },
+    {
+      "id": "5b72e65c-4fc3-4154-8071-705a795ede52",
+      "name": "Hermandad de Nuestra Señora del Rosario del Barrio León",
+      "slug": "rosario-barrio-leon-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "c68b76d4-411e-4bcb-8c86-4535ed4bd984",
+      "name": "Hermandad de Nuestra Señora del Valle Coronada",
+      "slug": "virgen-del-valle-ecija",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "f3fba0c4-fffa-4e8c-8495-3dc1c3bc94bf"
+    },
+    {
+      "id": "ba68b65c-d9f7-458a-9d03-32cefcb7b91b",
+      "name": "Hermandad de Nuestro Padre Jesús Nazareno de La Puebla de Cazalla",
+      "slug": "jesus-nazareno-la-puebla-de-cazalla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "5da9ec1c-7765-4666-8376-4688abe7dd79"
+    },
+    {
+      "id": "c6100000-0000-4000-8000-000000000017",
+      "name": "Hermandad de Nuestro Padre Jesús Nazareno de Mairena del Alcor",
+      "slug": "hermandad-jesus-nazareno-mairena-alcor",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "c6100000-0000-4000-8000-000000000013",
+      "name": "Hermandad de Pasión de Huelva",
+      "slug": "hermandad-pasion-huelva",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "a1be680a-4f41-46e7-9a3d-03418fe9bb42",
+      "name": "Hermandad de Pasión y Muerte",
+      "slug": "pasion-y-muerte",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "a4220000-0000-0000-0000-000000000001",
+      "name": "Hermandad de Pino Montano",
+      "slug": "hermandad-de-pino-montano",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "5ca9e244-2bc9-42e8-8197-da6d6a99e082",
+      "name": "Hermandad de San Antonio de Padua de Arahal",
+      "slug": "hermandad-san-antonio-padua-arahal",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "206cf962-fd63-4fae-ad0d-9454554283d8",
+      "name": "Hermandad de San Benito",
+      "slug": "san-benito",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "e1000000-0000-0000-0000-000000000001",
+      "name": "Hermandad de San Bernardo",
+      "slug": "hermandad-de-san-bernardo",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "36b4d5c1-f7bb-4025-a09a-948e0d5d188f",
+      "name": "Hermandad de San Esteban",
+      "slug": "san-esteban",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "c0160036-0306-4000-8000-000000000006",
+      "name": "Hermandad de San Gil de Écija",
+      "slug": "hermandad-san-gil-ecija",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "f3fba0c4-fffa-4e8c-8495-3dc1c3bc94bf"
+    },
+    {
+      "id": "c1000000-0000-0000-0000-000000000003",
+      "name": "Hermandad de San Gonzalo",
+      "slug": "hermandad-de-san-gonzalo",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "33cb7482-167e-40ac-a25f-018751b979ac",
+      "name": "Hermandad de San Isidoro",
+      "slug": "hermandad-san-isidoro-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "c0160031-0302-4000-8000-000000000002",
+      "name": "Hermandad de San José de Coria del Río",
+      "slug": "san-jose-coria-del-rio",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "fe884314-1f8b-4566-8bb9-7b11ecf42446"
+    },
+    {
+      "id": "c0160036-0310-4000-8000-000000000010",
+      "name": "Hermandad de San Juan de Écija",
+      "slug": "hermandad-san-juan-ecija",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "f3fba0c4-fffa-4e8c-8495-3dc1c3bc94bf"
+    },
+    {
+      "id": "98199e78-36aa-4aed-9024-21a377761010",
+      "name": "Hermandad de San Mateo de Alcalá de Guadaíra",
+      "slug": "san-mateo-alcala-guadaira",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "b1d9fe05-a80a-4cde-9e72-bf4f9647e0a3"
+    },
+    {
+      "id": "6327f47e-e6f7-4978-9a89-ad9bbf782e62",
+      "name": "Hermandad de San Pablo",
+      "slug": "hermandad-de-san-pablo",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "c0160032-0303-4000-8000-000000000003",
+      "name": "Hermandad de San Pedro",
+      "slug": "san-pedro-estepa",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "fbfcf834-c0d3-4a62-a20c-eaa74dc9ee11"
+    },
+    {
+      "id": "c6100000-0000-4000-8000-000000000002",
+      "name": "Hermandad de San Roque de Sevilla",
+      "slug": "hermandad-san-roque-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "0e4d1e8e-54ed-4a3f-a3b3-951be6d43505",
+      "name": "Hermandad de Santa Genoveva",
+      "slug": "santa-genoveva",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "a30dc45e-1614-4da8-a1dd-04c47f9cb5b2",
+      "name": "Hermandad de Santa Lucía",
+      "slug": "santa-lucia-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "93de8c16-5c7b-45a4-bb6d-018ca5d9d193",
+      "name": "Hermandad de Santa María de las Nieves de Olivares",
+      "slug": "hermandad-santa-maria-nieves-olivares",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "655ccb4b-7878-4f76-a574-6e57e1266303",
+      "name": "Hermandad de Santa Marta",
+      "slug": "santa-marta-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "1611d490-3cb3-49bc-9789-5a179db03d8d",
+      "name": "Hermandad de Santa Marta de Los Molares",
+      "slug": "hermandad-santa-marta-los-molares",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "eb1674f4-855b-4ad6-be16-4f01ca727dce",
+      "name": "Hermandad de Santa Quiteria de Huete",
+      "slug": "hermandad-santa-quiteria-huete",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "46785221-e979-4ef6-970e-916840cd4df0",
+      "name": "Hermandad de Santiago de Aznalcázar",
+      "slug": "santiago-aznalcazar",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "a2208260-0000-0000-0000-000000000001"
+    },
+    {
+      "id": "52da914c-056f-47a1-85fc-c88f10a86bbe",
+      "name": "Hermandad de Valme",
+      "slug": "hermandad-valme-dos-hermanas",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "24e0b757-f3fd-4d9c-82c9-2a758444f2d6"
+    },
+    {
+      "id": "83c2ed5c-4f63-42da-89e8-8f8d9eb1f9e6",
+      "name": "Hermandad de Valvanera",
+      "slug": "valvanera-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "165e5e9a-b28b-44dc-97e6-b7a8f39c97e4",
+      "name": "Hermandad del Amor",
+      "slug": "hermandad-del-amor",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "c0160036-0303-4000-8000-000000000003",
+      "name": "Hermandad del Amor de Écija",
+      "slug": "hermandad-amor-ecija",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "f3fba0c4-fffa-4e8c-8495-3dc1c3bc94bf"
+    },
+    {
+      "id": "4e4034ab-f8f6-46dd-a458-26314edfd510",
+      "name": "Hermandad del Buen Fin",
+      "slug": "hermandad-buen-fin-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "fca6ffda-bf99-436d-9a04-6de87d764670",
+      "name": "Hermandad del Cachorro",
+      "slug": "hermandad-del-cachorro",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "c0160032-0306-4000-8000-000000000006",
+      "name": "Hermandad del Calvario",
+      "slug": "calvario-estepa",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "fbfcf834-c0d3-4a62-a20c-eaa74dc9ee11"
+    },
+    {
+      "id": "cde1ae4f-3bfc-49ba-a1ad-d108b2237a84",
+      "name": "Hermandad del Carmen de San Leandro",
+      "slug": "hermandad-carmen-san-leandro-sevilla",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "b88c97c3-d979-414f-bdc4-145d4f337703",
+      "name": "Hermandad del Castillo de Lebrija",
+      "slug": "castillo-lebrija",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "07281b21-d892-4e5d-aa63-24ec0e9bf4d2"
+    },
+    {
+      "id": "aae4a814-6f54-4d17-a355-c458e7d2ba77",
+      "name": "Hermandad del Cautivo de Dos Hermanas",
+      "slug": "hermandad-cautivo-dos-hermanas",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "24e0b757-f3fd-4d9c-82c9-2a758444f2d6"
+    },
+    {
+      "id": "c0160036-0302-4000-8000-000000000002",
+      "name": "Hermandad del Cautivo y La Borriquita de Écija",
+      "slug": "hermandad-cautivo-borriquita-ecija",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "f3fba0c4-fffa-4e8c-8495-3dc1c3bc94bf"
+    },
+    {
+      "id": "f4fc742b-3ec0-4ec0-8fdf-4e8e9353ad8f",
+      "name": "Hermandad del Cerro del Águila",
+      "slug": "hermandad-cerro-del-aguila-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "e8b83412-786d-44a9-abc1-383b1c3fb82d",
+      "name": "Hermandad del Confalón de Écija",
+      "slug": "hermandad-confalon-ecija",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "f3fba0c4-fffa-4e8c-8495-3dc1c3bc94bf"
+    },
+    {
+      "id": "c584b666-589a-4bd4-a9c9-763825b9a020",
+      "name": "Hermandad del Cristo del Perdón",
+      "slug": "cristo-del-perdon-san-jose-rinconada",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "3e4c9f5f-52c3-4b42-a44f-219993f387f3"
+    },
+    {
+      "id": "c0160032-0305-4000-8000-000000000005",
+      "name": "Hermandad del Dulce Nombre",
+      "slug": "dulce-nombre-estepa",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "fbfcf834-c0d3-4a62-a20c-eaa74dc9ee11"
+    },
+    {
+      "id": "3ce61836-80fe-40da-9496-0251436e1559",
+      "name": "Hermandad del Dulce Nombre de María de Alcalá de Guadaíra",
+      "slug": "hermandad-dulce-nombre-maria-alcala-guadaira",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "b1d9fe05-a80a-4cde-9e72-bf4f9647e0a3"
+    },
+    {
+      "id": "60fbff45-0869-4811-b196-7323b95e53ce",
+      "name": "Hermandad del Gran Poder",
+      "slug": "hermandad-del-gran-poder-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "38d9322f-d3b1-42e4-91bf-dc4cd606d002",
+      "name": "Hermandad del Gran Poder de Castilleja de la Cuesta",
+      "slug": "hermandad-gran-poder-castilleja",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "c0160031-0303-4000-8000-000000000003",
+      "name": "Hermandad del Gran Poder y Nuestra Señora del Carmen de Coria del Río",
+      "slug": "gran-poder-carmen-coria-del-rio",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "fe884314-1f8b-4566-8bb9-7b11ecf42446"
+    },
+    {
+      "id": "7ed59114-fd15-46fd-a836-9024728cf065",
+      "name": "Hermandad del Inmaculado Corazón de María de Torreblanca",
+      "slug": "inmaculado-corazon-maria-torreblanca",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "c6100000-0000-4000-8000-000000000012",
+      "name": "Hermandad del Nazareno del Amor de Cádiz",
+      "slug": "hermandad-nazareno-amor-cadiz",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "686a100a-c2e4-4a15-bf93-0ac8df687788",
+      "name": "Hermandad del Perdón de Alcalá de Guadaíra",
+      "slug": "perdon-alcala-guadaira",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "b1d9fe05-a80a-4cde-9e72-bf4f9647e0a3"
+    },
+    {
+      "id": "8783594a-ceec-4b2e-8c25-ded8e70c3023",
+      "name": "Hermandad del Pilar de San Pedro",
+      "slug": "pilar-san-pedro-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "d660956a-d74a-4b4d-9909-6920aba8d07d",
+      "name": "Hermandad del Prado",
+      "slug": "hermandad-del-prado",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "c6100000-0000-4000-8000-000000000014",
+      "name": "Hermandad del Prendimiento de Jerez",
+      "slug": "hermandad-prendimiento-jerez",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "c0160036-0315-4000-8000-000000000015",
+      "name": "Hermandad del Resucitado de Écija",
+      "slug": "hermandad-resucitado-ecija",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "f3fba0c4-fffa-4e8c-8495-3dc1c3bc94bf"
+    },
+    {
+      "id": "e9f381c9-939e-487f-b05e-891ea0251b40",
+      "name": "Hermandad del Rocío de Alcalá de Guadaíra",
+      "slug": "rocio-alcala-guadaira",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "b1d9fe05-a80a-4cde-9e72-bf4f9647e0a3"
+    },
+    {
+      "id": "3209da9d-50b7-43c9-ba80-9ad813522f70",
+      "name": "Hermandad del Rocío de Dos Hermanas",
+      "slug": "rocio-dos-hermanas",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "24e0b757-f3fd-4d9c-82c9-2a758444f2d6"
+    },
+    {
+      "id": "758ad386-e56a-4215-a527-52ea5ec4cb67",
+      "name": "Hermandad del Rocío de Montequinto",
+      "slug": "rocio-montequinto",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "24e0b757-f3fd-4d9c-82c9-2a758444f2d6"
+    },
+    {
+      "id": "8a069535-7064-4d05-be9a-957de5a3ca02",
+      "name": "Hermandad del Rosario de Alcalá de Guadaíra",
+      "slug": "rosario-alcala-guadaira",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "b1d9fe05-a80a-4cde-9e72-bf4f9647e0a3"
+    },
+    {
+      "id": "b1390a6a-a1fc-4099-9be4-1c7d01bd4e45",
+      "name": "Hermandad del Rosario de Burguillos",
+      "slug": "hermandad-rosario-burguillos",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "76cef2d9-9824-4d1f-95f5-9a184fdbde66",
+      "name": "Hermandad del Rosario de los Humeros",
+      "slug": "rosario-humeros-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "eb4b570e-f612-4f67-9bee-f57d82343553",
+      "name": "Hermandad del Rosario de Mairena del Aljarafe",
+      "slug": "hermandad-rosario-mairena-aljarafe",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "a0ad28f3-67ea-4d8d-8c2a-28b88ae27692",
+      "name": "Hermandad del Rosario de San Juan de Aznalfarache",
+      "slug": "hermandad-rosario-san-juan-aznalfarache",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "188ff734-f189-4e9d-a53b-a87ca6db5096",
+      "name": "Hermandad del Sagrado Corazón de Jesús",
+      "slug": "hermandad-sagrado-corazon-sevilla",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "9fc64fc8-858a-411e-8773-1e994dd95f11",
+      "name": "Hermandad del Santísimo Cristo de la Corona",
+      "slug": "cristo-de-la-corona",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "f84c0551-a85d-4e4a-9be4-3803cb5b89a0",
+      "name": "Hermandad del Santísimo Rosario de San Julián",
+      "slug": "rosario-san-julian-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "9d91fcd9-6358-44ea-9136-99906c79642f",
+      "name": "Hermandad del Santo Entierro de Alcalá de Guadaíra",
+      "slug": "santo-entierro-alcala-guadaira",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "b1d9fe05-a80a-4cde-9e72-bf4f9647e0a3"
+    },
+    {
+      "id": "c35cc7a2-c6fa-421a-8056-ff8e24b1529a",
+      "name": "Hermandad del Santo Entierro de Castilblanco de los Arroyos",
+      "slug": "santo-entierro-castilblanco-de-los-arroyos",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "7b892f9b-e970-4be9-9555-b2c87c334039"
+    },
+    {
+      "id": "2ab92ac4-833a-4e08-b565-dae0a3a1af08",
+      "name": "Hermandad del Santo Entierro de La Palma del Condado",
+      "slug": "hermandad-santo-entierro-la-palma",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "f0f741d1-75eb-43b5-b938-9eda31f6cc41",
+      "name": "Hermandad del Santo Entierro de Paradas",
+      "slug": "hermandad-santo-entierro-paradas",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "91eb87a6-b452-469d-a55a-87b21fc59c46",
+      "name": "Hermandad del Santo Rosario de Benacazón",
+      "slug": "hermandad-santo-rosario-benacazon",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "c0160036-0309-4000-8000-000000000009",
+      "name": "Hermandad del Silencio de Écija",
+      "slug": "hermandad-silencio-ecija",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "f3fba0c4-fffa-4e8c-8495-3dc1c3bc94bf"
+    },
+    {
+      "id": "9b09f881-49c2-436f-8977-5e9e584bad30",
+      "name": "Hermandad del Soberano Poder · Pusillus Grex",
+      "slug": "hermandad-soberano-poder-sanlucar",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "15848df8-9b23-4ea0-ac79-110c540ea50f",
+      "name": "Hermandad del Soberano Poder de Alcalá de Guadaíra",
+      "slug": "soberano-poder-alcala-guadaira",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "b1d9fe05-a80a-4cde-9e72-bf4f9647e0a3"
+    },
+    {
+      "id": "417a2bc3-0396-435f-af3f-44e2cb711c86",
+      "name": "Hermandad del Sol",
+      "slug": "hermandad-del-sol",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "4f47dd4d-f13d-4f06-a553-bd923e0d65a2",
+      "name": "Hermandad del Transporte",
+      "slug": "hermandad-transporte-jerez",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "ec5cbca9-9600-4a5b-a3b8-2ee957f03728",
+      "name": "Hermandad Mayor de Nuestra Señora de Setefilla",
+      "slug": "setefilla-lora-del-rio",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "3fd681bb-d5fe-465d-ba31-e907c9e4920d"
+    },
+    {
+      "id": "3ebe31fa-0feb-4976-a159-8cbd47f47723",
+      "name": "Hermandad Sacramental de Camas",
+      "slug": "dolores-camas",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "4f797242-816c-404a-9e0c-4f3093ee9f42"
+    },
+    {
+      "id": "4384896c-169d-4820-ac60-7fb1f44cfec3",
+      "name": "Hermandad Sacramental de Dos Hermanas",
+      "slug": "hermandad-sacramental-divina-pastora-dos-hermanas",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "24e0b757-f3fd-4d9c-82c9-2a758444f2d6"
+    },
+    {
+      "id": "503057d7-488d-4219-a9f1-1bdf3a18de75",
+      "name": "Hermandad Sacramental de San Juan Bautista",
+      "slug": "hermandad-sacramental-san-juan-bautista-san-juan-aznalfarache",
+      "status": "review",
+      "entity_type": "brotherhood",
+      "municipality_id": "bf27079b-0b84-44cf-92f7-e272022464e7"
+    },
+    {
+      "id": "2007feed-0bbb-42ef-9fe7-ddd629e5befe",
+      "name": "Hermandad Sacramental de Tomares",
+      "slug": "hermandad-sacramental-tomares",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "74f17f54-db56-4ff8-8cdd-c3bb434daa15"
+    },
+    {
+      "id": "867198c1-28a3-4509-9160-df267d44d82a",
+      "name": "Hermandad Servita de Jesús Cautivo de Alcalá de Guadaíra",
+      "slug": "hermandad-servita-cautivo-alcala-guadaira",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "b1d9fe05-a80a-4cde-9e72-bf4f9647e0a3"
+    },
+    {
+      "id": "c0160035-0308-4000-8000-000000000008",
+      "name": "Humildad de Carmona",
+      "slug": "humildad-carmona",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "bf024af2-3eda-4989-b1b5-0a723dcf9cb4"
+    },
+    {
+      "id": "c0160033-0303-4000-8000-000000000003",
+      "name": "Humildad de Lebrija",
+      "slug": "humildad-lebrija",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "07281b21-d892-4e5d-aa63-24ec0e9bf4d2"
+    },
+    {
+      "id": "c0160034-0302-4000-8000-000000000002",
+      "name": "Humildad y Paciencia de Osuna",
+      "slug": "humildad-paciencia-osuna",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "d10878e4-8e9a-4fc5-937b-41d0282a9a0e"
+    },
+    {
+      "id": "b0f1ff22-f1e5-447c-817b-d3c4adce682d",
+      "name": "Humildad y Pilar de Montequinto",
+      "slug": "humildad-pilar-montequinto",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "24e0b757-f3fd-4d9c-82c9-2a758444f2d6"
+    },
+    {
+      "id": "c0160034-0306-4000-8000-000000000006",
+      "name": "Jesús Caído y Dolores de Osuna",
+      "slug": "jesus-caido-dolores-osuna",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "d10878e4-8e9a-4fc5-937b-41d0282a9a0e"
+    },
+    {
+      "id": "0978bcd8-f990-4e5a-b3db-32e60f50466d",
+      "name": "Jesús Despojado",
+      "slug": "hermandad-jesus-despojado-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "c0160037-0308-4000-8000-000000000008",
+      "name": "Jesús Nazareno de Morón de la Frontera",
+      "slug": "jesus-nazareno-moron-de-la-frontera",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "c0160037-0201-4000-8000-000000000001"
+    },
+    {
+      "id": "c0160034-0307-4000-8000-000000000007",
+      "name": "Jesús Nazareno de Osuna",
+      "slug": "jesus-nazareno-osuna",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "d10878e4-8e9a-4fc5-937b-41d0282a9a0e"
+    },
+    {
+      "id": "30000000-0000-0000-0000-000000000002",
+      "name": "La Asunción de Cantillana",
+      "slug": "asuncion-de-cantillana",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "30000000-0000-0000-0000-000000000001"
+    },
+    {
+      "id": "7993705b-ea3d-46e9-8d5a-c03100b8a547",
+      "name": "La Borriquita de Dos Hermanas",
+      "slug": "borriquita-dos-hermanas",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "24e0b757-f3fd-4d9c-82c9-2a758444f2d6"
+    },
+    {
+      "id": "debb44a2-9151-4d30-9ed6-e43a3f0c9f4d",
+      "name": "La Borriquita de Mairena del Alcor",
+      "slug": "borriquita-mairena-del-alcor",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ddbd8c6e-5607-4987-9843-a396e46b001d"
+    },
+    {
+      "id": "c0160037-0302-4000-8000-000000000002",
+      "name": "La Borriquita de Morón de la Frontera",
+      "slug": "borriquita-moron-de-la-frontera",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "c0160037-0201-4000-8000-000000000001"
+    },
+    {
+      "id": "c0160037-0305-4000-8000-000000000005",
+      "name": "La Buena Muerte de Morón de la Frontera",
+      "slug": "buena-muerte-moron-de-la-frontera",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "c0160037-0201-4000-8000-000000000001"
+    },
+    {
+      "id": "c1000000-0000-0000-0000-000000000007",
+      "name": "La Carretería",
+      "slug": "hermandad-de-la-carreteria",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "c1000000-0000-0000-0000-000000000002",
+      "name": "La Cena",
+      "slug": "la-cena",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "cb8088c4-0824-4a7b-b016-77b8fa256df3",
+      "name": "La Entrega",
+      "slug": "hermandad-entrega-guadalcacin",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "fb073ae8-1673-4b3c-8024-0e10ed22db6b",
+      "name": "La Espiga",
+      "slug": "la-espiga-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "76eebd4c-3364-4744-9b12-2f4f37331e83",
+      "name": "La Exaltación",
+      "slug": "hermandad-de-la-exaltacion-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "9da8a301-5014-4783-b143-88261934f22b",
+      "name": "La Macarena",
+      "slug": "hermandad-de-la-macarena",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "eb4f4232-4fd4-4f30-a1da-0ad3188cfd07",
+      "name": "La Milagrosa",
+      "slug": "la-milagrosa-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "88f5cc41-7cca-4283-923f-bb025ea696fd",
+      "name": "La Pastora de Cantillana",
+      "slug": "pastora-de-cantillana",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "30000000-0000-0000-0000-000000000001"
+    },
+    {
+      "id": "f627ce61-52f2-441d-8c7f-2fd086109709",
+      "name": "La Quinta Angustia",
+      "slug": "quinta-angustia-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "4994d166-adcc-4a52-84ec-61473540ed82",
+      "name": "La Resurrección",
+      "slug": "la-resurreccion",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "967703f5-16dd-472f-9098-f12c5ce18dbc",
+      "name": "La Sagrada Mortaja",
+      "slug": "sagrada-mortaja",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "7f968a07-e7c0-43cc-93b6-e8dd8b91ab5d",
+      "name": "La Soledad de Cantillana",
+      "slug": "soledad-cantillana",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "30000000-0000-0000-0000-000000000001"
+    },
+    {
+      "id": "c0160037-0310-4000-8000-000000000010",
+      "name": "La Soledad de Morón de la Frontera",
+      "slug": "soledad-moron-de-la-frontera",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "c0160037-0201-4000-8000-000000000001"
+    },
+    {
+      "id": "1e85ab84-d074-49be-803c-b26201b20561",
+      "name": "La Soledad de San Lorenzo",
+      "slug": "la-soledad-de-san-lorenzo",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "dc7f2757-ed02-4cd6-a0e0-ef112d5b6515",
+      "name": "Las Aguas",
+      "slug": "las-aguas-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "95cbe0f8-3d86-4487-9d6a-cb592cc0f09c",
+      "name": "Las Maravillas de San Diego",
+      "slug": "maravillas-san-diego",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "fa4d9209-21e4-4a75-ad30-57892de21dfa",
+      "name": "Las Penas de San Vicente",
+      "slug": "las-penas-de-san-vicente",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "5aa62413-8a21-4aa0-ac94-a281435ef306",
+      "name": "Las Siete Palabras",
+      "slug": "siete-palabras-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "c0160037-0306-4000-8000-000000000006",
+      "name": "Loreto de Morón de la Frontera",
+      "slug": "loreto-moron-de-la-frontera",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "c0160037-0201-4000-8000-000000000001"
+    },
+    {
+      "id": "c6100000-0000-4000-8000-000000000015",
+      "name": "Los Gitanos",
+      "slug": "hermandad-gitanos-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "6ea89bcc-5f18-4218-85b1-119bf44ec641",
+      "name": "Los Servitas",
+      "slug": "servitas-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "b277068e-92e4-425d-8768-bff9e58ff1c9",
+      "name": "Madre de Dios del Rosario",
+      "slug": "madre-dios-rosario-triana",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "76b53aba-5305-4126-9469-91caebec54d4",
+      "name": "Misericordia de Dos Hermanas",
+      "slug": "misericordia-dos-hermanas",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "24e0b757-f3fd-4d9c-82c9-2a758444f2d6"
+    },
+    {
+      "id": "c0160034-0305-4000-8000-000000000005",
+      "name": "Misericordia de Osuna",
+      "slug": "misericordia-osuna",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "d10878e4-8e9a-4fc5-937b-41d0282a9a0e"
+    },
+    {
+      "id": "2e4d7de4-a321-4ab3-a393-0ea30e43ed74",
+      "name": "Misericordia y Dolores de Cañada Rosal",
+      "slug": "misericordia-dolores-canada-rosal",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "956afb76-a1f7-4393-812b-dc6fe584515c"
+    },
+    {
+      "id": "7b43bb17-e744-4456-b994-7777a4443530",
+      "name": "Misericordia y Dolores de El Castillo de las Guardas",
+      "slug": "misericordia-dolores-castillo-guardas",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "05d36dd0-2cd3-4c91-9fbf-774adac72b59"
+    },
+    {
+      "id": "b3897b5a-2a0c-4e59-930f-044d7aa26574",
+      "name": "Montserrat",
+      "slug": "montserrat",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "fbf7ebe0-9655-4d24-9beb-4fa0ab5039ca",
+      "name": "Nuestra Señora de Araceli",
+      "slug": "hermandad-araceli-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "55087e87-9fe7-4f8b-9a01-0fe8c3142751",
+      "name": "Nuestra Señora de las Nieves",
+      "slug": "hermandad-nieves-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "5a8117db-2dfb-480d-9821-74e5e02262b3",
+      "name": "Nuestra Señora de las Nieves Coronada",
+      "slug": "nieves-benacazon",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": "4dee56fa-21b5-4403-b816-fbe885d25299"
+    },
+    {
+      "id": "7bb3050f-c6ab-4159-bfa3-484a7095bee6",
+      "name": "Nuestra Señora de los Reyes · Sastres",
+      "slug": "reyes-sastres-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "fc0942dd-d555-43b2-9495-399daba54903",
+      "name": "Nuestra Señora del Amparo",
+      "slug": "amparo-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "c0160035-0307-4000-8000-000000000007",
+      "name": "Nuestro Padre de Carmona",
+      "slug": "nuestro-padre-carmona",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "bf024af2-3eda-4989-b1b5-0a723dcf9cb4"
+    },
+    {
+      "id": "3a9c0db7-15d4-493d-99e9-02a01b80602b",
+      "name": "Oración en el Huerto de Dos Hermanas",
+      "slug": "oracion-huerto-dos-hermanas",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "24e0b757-f3fd-4d9c-82c9-2a758444f2d6"
+    },
+    {
+      "id": "c0160033-0302-4000-8000-000000000002",
+      "name": "Oración en el Huerto de Lebrija",
+      "slug": "oracion-huerto-lebrija",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "07281b21-d892-4e5d-aa63-24ec0e9bf4d2"
+    },
+    {
+      "id": "c0160035-0301-4000-8000-000000000001",
+      "name": "Orden Seglar Servita Carmona",
+      "slug": "orden-seglar-servita-carmona",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "bf024af2-3eda-4989-b1b5-0a723dcf9cb4"
+    },
+    {
+      "id": "b0d76cda-d872-4f0f-b1a7-6cb6867b6735",
+      "name": "Padre Pío",
+      "slug": "padre-pio-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "e9391be0-b38a-4667-bd58-92c5368c8666",
+      "name": "Pasión",
+      "slug": "hermandad-de-pasion-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "bed07183-4624-4a2b-88b0-590d4088a339",
+      "name": "Pasión de Dos Hermanas",
+      "slug": "pasion-dos-hermanas",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "24e0b757-f3fd-4d9c-82c9-2a758444f2d6"
+    },
+    {
+      "id": "57856427-ae39-4e6d-9153-ac2ce3e01dd8",
+      "name": "Pastora de Padre Pío",
+      "slug": "pastora-padre-pio",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "bba71371-7526-45d3-bd5a-43bb9793752d",
+      "name": "Pastora de Santa Marina",
+      "slug": "pastora-de-santa-marina",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "c745bcac-65e8-47b6-8076-5caf040b382f",
+      "name": "Pastora de Triana",
+      "slug": "pastora-de-triana",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "c0160034-0310-4000-8000-000000000010",
+      "name": "Pax de Osuna",
+      "slug": "pax-osuna",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "d10878e4-8e9a-4fc5-937b-41d0282a9a0e"
+    },
+    {
+      "id": "c0160032-0307-4000-8000-000000000007",
+      "name": "Paz y Caridad",
+      "slug": "paz-caridad-estepa",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "fbfcf834-c0d3-4a62-a20c-eaa74dc9ee11"
+    },
+    {
+      "id": "aa6c2258-7544-451b-b573-cc5d649fbe25",
+      "name": "Paz y Misericordia",
+      "slug": "paz-y-misericordia-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "8d4e62d9-a428-4363-afc7-6a2f9e8c1450",
+      "name": "Pontificia, Real e Ilustre Hermandad de Nuestra Señora de Consolación Coronada",
+      "slug": "consolacion-utrera",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "e4319248-831a-4f4c-adb8-19c496f95dd6"
+    },
+    {
+      "id": "bc0f8c8a-9d93-4abc-9df1-b75bb6724327",
+      "name": "Prendimiento de Dos Hermanas",
+      "slug": "prendimiento-dos-hermanas",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "24e0b757-f3fd-4d9c-82c9-2a758444f2d6"
+    },
+    {
+      "id": "bb8cc02c-057a-464d-b4e0-464cb4711012",
+      "name": "Prueba CMS HQ",
+      "slug": "prueba-cms-hq",
+      "status": "archived",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "5d8d6faa-95b3-415e-9aab-42e38b813c6a",
+      "name": "Pura y Limpia del Postigo",
+      "slug": "pura-limpia-postigo-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "8c019b90-ee88-46ac-9d44-bb51bd279695",
+      "name": "Purísima de La Algaba",
+      "slug": "purisima-de-la-algaba",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca5d5f02-0012-4005-986e-852caacecb71"
+    },
+    {
+      "id": "c0160035-0305-4000-8000-000000000005",
+      "name": "Quinta Angustia de Carmona",
+      "slug": "quinta-angustia-carmona",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "bf024af2-3eda-4989-b1b5-0a723dcf9cb4"
+    },
+    {
+      "id": "c0160034-0309-4000-8000-000000000009",
+      "name": "Quinta Angustia de Osuna",
+      "slug": "quinta-angustia-osuna",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "d10878e4-8e9a-4fc5-937b-41d0282a9a0e"
+    },
+    {
+      "id": "2e5a02f7-7d7c-4488-a6a3-042d4bd104b6",
+      "name": "Real Cofradía Sevillana de Nuestra Señora de la Cabeza",
+      "slug": "hermandad-virgen-cabeza-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "fbd4fb0c-6fb6-4dc5-8667-5b681ce371f2",
+      "name": "Real Hermandad Sacramental del Juncal",
+      "slug": "juncal-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "08892b2c-c5e7-499e-9d9d-8281690c400f",
+      "name": "Real Hermandad Sacramental y Cofradía de Nuestra Señora de las Mercedes",
+      "slug": "mercedes-mairena-del-aljarafe",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "937e0fde-9e43-419b-8b74-091d8c2d968e"
+    },
+    {
+      "id": "fc17496c-081f-475e-a6be-7184f84edec6",
+      "name": "Real, Antigua e Ilustre Hermandad del Santísimo Cristo de la Vera Cruz, María Santísima de la Soledad y Nuestra Señora de Consolación",
+      "slug": "consolacion-carrion-cespedes",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "30f9ab21-e066-46a9-bdb8-7de4fbb20bb8"
+    },
+    {
+      "id": "73ab8507-9ee3-4d03-914e-ca7e813061a0",
+      "name": "Reina de Todos los Santos",
+      "slug": "reina-todos-santos-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "c0160032-0310-4000-8000-000000000010",
+      "name": "Remedios de Estepa",
+      "slug": "remedios-estepa",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "fbfcf834-c0d3-4a62-a20c-eaa74dc9ee11"
+    },
+    {
+      "id": "c0160033-0309-4000-8000-000000000009",
+      "name": "Rocío de Lebrija",
+      "slug": "rocio-lebrija",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "07281b21-d892-4e5d-aa63-24ec0e9bf4d2"
+    },
+    {
+      "id": "c0160033-0311-4000-8000-000000000011",
+      "name": "Sacramental de Lebrija",
+      "slug": "sacramental-lebrija",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "07281b21-d892-4e5d-aa63-24ec0e9bf4d2"
+    },
+    {
+      "id": "8b30bf51-a4d6-44e2-8b7a-753f10e0c42a",
+      "name": "Sacramental de San Pedro",
+      "slug": "sacramental-san-pedro-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "a5e7f330-5960-4dfe-93d6-a4e7060b060f",
+      "name": "Sacramental de Villanueva del Ariscal",
+      "slug": "sacramental-villanueva-ariscal",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": "38bdbf52-9abe-472a-8188-fdc8a0588f16"
+    },
+    {
+      "id": "a51c46ea-ec98-4549-8168-f17526235ea8",
+      "name": "Sagrada Cena de Dos Hermanas",
+      "slug": "sagrada-cena-dos-hermanas",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "24e0b757-f3fd-4d9c-82c9-2a758444f2d6"
+    },
+    {
+      "id": "c0160034-0304-4000-8000-000000000004",
+      "name": "Salud y Encarnación de Osuna",
+      "slug": "salud-encarnacion-osuna",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "d10878e4-8e9a-4fc5-937b-41d0282a9a0e"
+    },
+    {
+      "id": "c0160033-0310-4000-8000-000000000010",
+      "name": "San Benito de Lebrija",
+      "slug": "san-benito-lebrija",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "07281b21-d892-4e5d-aa63-24ec0e9bf4d2"
+    },
+    {
+      "id": "25e310c0-c39a-4af1-86ad-e1f781fb6b98",
+      "name": "San Jerónimo",
+      "slug": "san-jeronimo-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "c0b5681b-152b-47c2-89c5-a2bb96bb36f4",
+      "name": "San José Obrero",
+      "slug": "san-jose-obrero-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "4bfb37c4-06ff-4ac5-b04d-539e280861ba",
+      "name": "Santa Ana de Dos Hermanas",
+      "slug": "hermandad-santa-ana-dos-hermanas",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "24e0b757-f3fd-4d9c-82c9-2a758444f2d6"
+    },
+    {
+      "id": "c0160032-0312-4000-8000-000000000012",
+      "name": "Santa Ana de Estepa",
+      "slug": "hermandad-santa-ana-estepa",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "fbfcf834-c0d3-4a62-a20c-eaa74dc9ee11"
+    },
+    {
+      "id": "f85070f1-3f73-4dad-81d5-ed03f1a162cf",
+      "name": "Santa Cruz",
+      "slug": "santa-cruz",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "1f517f03-4ee7-4b29-8eeb-d2732ba01095",
+      "name": "Santa Cruz de Dos Hermanas",
+      "slug": "hermandad-santa-cruz-dos-hermanas",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "24e0b757-f3fd-4d9c-82c9-2a758444f2d6"
+    },
+    {
+      "id": "c0160037-0307-4000-8000-000000000007",
+      "name": "Santa Cruz de Morón de la Frontera",
+      "slug": "santa-cruz-moron-de-la-frontera",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "c0160037-0201-4000-8000-000000000001"
+    },
+    {
+      "id": "c0160035-0306-4000-8000-000000000006",
+      "name": "Santiago de Carmona",
+      "slug": "santiago-carmona",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "bf024af2-3eda-4989-b1b5-0a723dcf9cb4"
+    },
+    {
+      "id": "c0160035-0309-4000-8000-000000000009",
+      "name": "Santo Entierro de Carmona",
+      "slug": "santo-entierro-carmona",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "bf024af2-3eda-4989-b1b5-0a723dcf9cb4"
+    },
+    {
+      "id": "000e79af-9f0c-42d7-9c10-08a0eb2e8490",
+      "name": "Santo Entierro de Dos Hermanas",
+      "slug": "santo-entierro-dos-hermanas",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "24e0b757-f3fd-4d9c-82c9-2a758444f2d6"
+    },
+    {
+      "id": "c0160032-0308-4000-8000-000000000008",
+      "name": "Santo Entierro de Estepa",
+      "slug": "santo-entierro-estepa",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "fbfcf834-c0d3-4a62-a20c-eaa74dc9ee11"
+    },
+    {
+      "id": "c0160037-0309-4000-8000-000000000009",
+      "name": "Santo Entierro de Morón de la Frontera",
+      "slug": "santo-entierro-moron-de-la-frontera",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "c0160037-0201-4000-8000-000000000001"
+    },
+    {
+      "id": "c0160034-0311-4000-8000-000000000011",
+      "name": "Santo Entierro de Osuna",
+      "slug": "santo-entierro-osuna",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "d10878e4-8e9a-4fc5-937b-41d0282a9a0e"
+    },
+    {
+      "id": "2d406310-3024-4050-84ec-e8d54da55286",
+      "name": "Santo Entierro de Paradas",
+      "slug": "santo-entierro-paradas",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "aeb0b615-7e18-44e3-b6a3-e595efc88ba9"
+    },
+    {
+      "id": "c0160033-0307-4000-8000-000000000007",
+      "name": "Santo Sepulcro de Lebrija",
+      "slug": "santo-sepulcro-lebrija",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "07281b21-d892-4e5d-aa63-24ec0e9bf4d2"
+    },
+    {
+      "id": "c0160034-0308-4000-8000-000000000008",
+      "name": "Servitas de los Dolores de Osuna",
+      "slug": "servitas-dolores-osuna",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "d10878e4-8e9a-4fc5-937b-41d0282a9a0e"
+    },
+    {
+      "id": "6ac861e8-ab37-42f6-a367-21ff46b5aa52",
+      "name": "Soledad de La Algaba",
+      "slug": "hermandad-soledad-la-algaba",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca5d5f02-0012-4005-986e-852caacecb71"
+    },
+    {
+      "id": "c0160033-0308-4000-8000-000000000008",
+      "name": "Soledad de Lebrija",
+      "slug": "soledad-lebrija",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "07281b21-d892-4e5d-aa63-24ec0e9bf4d2"
+    },
+    {
+      "id": "09d2a6f8-d498-4881-a549-468c5e0793fe",
+      "name": "Soledad de San Buenaventura",
+      "slug": "soledad-san-buenaventura-sevilla",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "ce7dd915-3992-43d9-af72-d555b17c2c88",
+      "name": "Torreblanca",
+      "slug": "torreblanca-jesus-cautivo",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "ca85889c-21fe-4367-8477-a57656b25da4"
+    },
+    {
+      "id": "613e0836-9d4d-4fbf-a016-54a933158414",
+      "name": "Tres Caídas de Dos Hermanas",
+      "slug": "tres-caidas-dos-hermanas",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "24e0b757-f3fd-4d9c-82c9-2a758444f2d6"
+    },
+    {
+      "id": "306b565e-56c6-44f2-8f6d-2176db6f689e",
+      "name": "Vera Cruz de Salteras",
+      "slug": "hermandad-vera-cruz-salteras",
+      "status": "draft",
+      "entity_type": "brotherhood",
+      "municipality_id": null
+    },
+    {
+      "id": "7246f851-f910-48c8-9c13-655f6501fb56",
+      "name": "Vera Cruz de Sanlúcar la Mayor",
+      "slug": "vera-cruz-sanlucar-la-mayor",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "b4a0dc88-9527-4e0f-b46b-75e02901b998"
+    },
+    {
+      "id": "514d416a-fde0-469d-b166-c6ae24ef65a6",
+      "name": "Vera Cruz de Tocina",
+      "slug": "vera-cruz-tocina",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "89e56e46-3b9b-44b0-8a1f-d6cf83f2446e"
+    },
+    {
+      "id": "0de2cd22-2da7-4312-8336-82c02ee34777",
+      "name": "Vera Cruz y Encarnación de Aznalcázar",
+      "slug": "encarnacion-aznalcazar",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "a2208260-0000-0000-0000-000000000001"
+    },
+    {
+      "id": "7d6ed9c1-8b39-4a15-bbf3-fbb83df2563d",
+      "name": "Vera-Cruz de Aznalcóllar",
+      "slug": "vera-cruz-aznalcollar",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "88ca0e56-bf93-4ac0-a72c-b2bee7a8e4d8"
+    },
+    {
+      "id": "b8c059b8-88d5-4f6b-b754-2ab04822197b",
+      "name": "Vera-Cruz de Dos Hermanas",
+      "slug": "vera-cruz-dos-hermanas",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "24e0b757-f3fd-4d9c-82c9-2a758444f2d6"
+    },
+    {
+      "id": "c0160033-0306-4000-8000-000000000006",
+      "name": "Vera-Cruz de Lebrija",
+      "slug": "vera-cruz-lebrija",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "07281b21-d892-4e5d-aa63-24ec0e9bf4d2"
+    },
+    {
+      "id": "c0160034-0303-4000-8000-000000000003",
+      "name": "Vera-Cruz de Osuna",
+      "slug": "vera-cruz-osuna",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "d10878e4-8e9a-4fc5-937b-41d0282a9a0e"
+    },
+    {
+      "id": "986af4c9-b178-42fb-b97e-a0c6caf9240d",
+      "name": "Vera-Cruz y Virgen de la Sangre de Gerena",
+      "slug": "vera-cruz-sangre-gerena",
+      "status": "published",
+      "entity_type": "brotherhood",
+      "municipality_id": "a58d9378-8403-4c8e-97cd-0f7cbcc85b38"
+    }
+  ]
+}

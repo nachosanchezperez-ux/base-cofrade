@@ -1,0 +1,182 @@
+{
+  "structural_validation": "PASS",
+  "corporations_in_core": 11,
+  "corporations_in_institutional_review": 14,
+  "gloria_profiles_completed": 2,
+  "outings_in_model": 18,
+  "held_with_linked_evidence": 6,
+  "announced_historical": 12,
+  "step_positions": 23,
+  "proposed_physical_steps": 22,
+  "identified_images": 38,
+  "step_profiles_reviewed": 22,
+  "corporate_profiles_reviewed": 13,
+  "scope_decisions_recorded": 7,
+  "municipal_scope_exhaustive": false,
+  "additional_heritage_assets": 3,
+  "source_records": 51,
+  "nonempty_valid_types": 14,
+  "candidate_editorial_minima": [
+    {
+      "key": "H13",
+      "ready": true
+    },
+    {
+      "key": "H14",
+      "ready": true
+    },
+    {
+      "key": "I36",
+      "ready": true
+    },
+    {
+      "key": "I37",
+      "ready": true
+    },
+    {
+      "key": "I38",
+      "ready": true
+    },
+    {
+      "key": "S18",
+      "ready": true
+    },
+    {
+      "key": "S21",
+      "ready": true
+    },
+    {
+      "key": "S01",
+      "ready": true
+    },
+    {
+      "key": "S02",
+      "ready": true
+    },
+    {
+      "key": "S03",
+      "ready": true
+    },
+    {
+      "key": "S04",
+      "ready": true
+    },
+    {
+      "key": "S05",
+      "ready": true
+    },
+    {
+      "key": "S06",
+      "ready": true
+    },
+    {
+      "key": "S07",
+      "ready": true
+    },
+    {
+      "key": "S08",
+      "ready": true
+    },
+    {
+      "key": "S09",
+      "ready": true
+    },
+    {
+      "key": "S10",
+      "ready": true
+    },
+    {
+      "key": "S11",
+      "ready": true
+    },
+    {
+      "key": "S12",
+      "ready": true
+    },
+    {
+      "key": "S13",
+      "ready": true
+    },
+    {
+      "key": "S14",
+      "ready": true
+    },
+    {
+      "key": "S15",
+      "ready": true
+    },
+    {
+      "key": "S16",
+      "ready": true
+    },
+    {
+      "key": "S17",
+      "ready": true
+    },
+    {
+      "key": "S19",
+      "ready": true
+    },
+    {
+      "key": "S20",
+      "ready": true
+    },
+    {
+      "key": "S22",
+      "ready": true
+    },
+    {
+      "key": "H01",
+      "ready": true
+    },
+    {
+      "key": "H02",
+      "ready": true
+    },
+    {
+      "key": "H03",
+      "ready": true
+    },
+    {
+      "key": "H04",
+      "ready": true
+    },
+    {
+      "key": "H05",
+      "ready": true
+    },
+    {
+      "key": "H06",
+      "ready": true
+    },
+    {
+      "key": "H07",
+      "ready": true
+    },
+    {
+      "key": "H08",
+      "ready": true
+    },
+    {
+      "key": "H09",
+      "ready": true
+    },
+    {
+      "key": "H10",
+      "ready": true
+    },
+    {
+      "key": "H11",
+      "ready": true
+    }
+  ],
+  "production_writes": 0,
+  "model_frozen": false,
+  "apply_gate": "NO_GO",
+  "open_gates": [
+    "G01",
+    "G02",
+    "G05"
+  ],
+  "note": "Validación offline del candidato: no acredita publicación, QA web/SEO ni censo municipal exhaustivo."
+}
