@@ -3,34 +3,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
+import SiteBreadcrumb from './SiteBreadcrumb';
 import styles from './ImageHeroV2.module.css';
 import roomStyles from './ImageHeroV2Room.module.css';
-
-function Breadcrumb({ items = [] }) {
-  if (!items.length) return null;
-
-  return (
-    <nav className={styles.breadcrumb} aria-label="Ruta de navegación">
-      <span className={styles.breadcrumbAccent} aria-hidden="true" />
-      <ol>
-        {items.map((item, index) => {
-          const isCurrent = index === items.length - 1;
-
-          return (
-            <li key={`${item.label}-${index}`}>
-              {item.href && !isCurrent ? (
-                <Link href={item.href}>{item.label}</Link>
-              ) : (
-                <span aria-current={isCurrent ? 'page' : undefined}>{item.label}</span>
-              )}
-              {!isCurrent ? <i aria-hidden="true">→</i> : null}
-            </li>
-          );
-        })}
-      </ol>
-    </nav>
-  );
-}
 
 function isWikimediaUpload(photoSrc = '') {
   try {
@@ -173,7 +148,7 @@ export default function ImageHeroV2({
       <span className={styles.texture} aria-hidden="true" />
 
       <div className={`shell ${styles.shell}`}>
-        <Breadcrumb items={breadcrumbItems} />
+        <SiteBreadcrumb items={breadcrumbItems} tone="dark" ariaLabel="Ruta de navegación" />
 
         <div className={`${styles.content} ${roomStyles.content}`}>
           <div className={styles.entityMeta}>
