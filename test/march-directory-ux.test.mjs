@@ -22,7 +22,7 @@ test('el índice alfabético filtra el archivo completo y no solo la página act
 
   assert.match(page, /const initialGroups = groupsFor\(decadeItems\)/)
   assert.match(page, /const availableInitials = initialGroups\.map/)
-  assert.match(page, /letra: initial/)
+  assert.match(page, /letter: initial/)
   assert.match(page, /availableInitials\.map/)
 })
 
