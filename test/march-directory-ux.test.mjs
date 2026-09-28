@@ -54,3 +54,9 @@ test('el directorio de Marchas invalida la caché al incorporar createdAt', () =
   const cache = read('lib/supabase/public-directory-cache.js')
   assert.match(cache, /public-directory-public-marches-strict-v2/)
 })
+
+
+test('el filtro Nuevas se limita a una ventana reciente útil', () => {
+  const page = read('app/marchas/page.js')
+  assert.match(page, /const RECENT_DAYS = 7/)
+})
