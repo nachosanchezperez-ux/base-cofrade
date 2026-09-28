@@ -1,4 +1,3 @@
-import { connection } from 'next/server'
 import HomePageV2 from '@/components/HomePageV2'
 import { DEFAULT_DESCRIPTION, HOME_TITLE } from '@/lib/seo'
 import { getHomeSnapshot } from '@/lib/supabase/home-snapshot'
@@ -26,7 +25,6 @@ function getTodayLabel() {
 }
 
 export default async function HomePage() {
-  await connection()
   const today = getTodayLabel()
   const {
     todayContent,
