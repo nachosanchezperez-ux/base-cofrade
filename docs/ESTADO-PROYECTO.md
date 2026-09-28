@@ -2,9 +2,15 @@
 
 **Corte operativo, 27/09/2026:** correcciones públicas de Fuentes de Pasos (#1012) e indexabilidad por patrimonio/incertidumbre (#1014) integradas y verificadas en producción. No mantenerlas como bloqueos abiertos.
 
-**Plataforma verificada:** main `e86ba888c34ad7121be181708a2194815ea78ef2` (#1015, paletas heredadas, también reconciliada); Vercel `dpl_9QaCTZcRowb33vq3rgXyeyWu3gKa` READY sobre ese SHA, aliases hilocofrade.es y www.hilocofrade.es. Supabase ACTIVE_HEALTHY; 17 migraciones. Runtime vigente sin filas error/fatal en consulta de 15 min hasta las 11:00:17 UTC, acotada a la edad del deployment.
+**Plataforma verificada:** main/HEAD `41c8fbb12d1eda29e714d9aff0ecb946aac31ed1`; Vercel `dpl_FWVzTc7vWbDM4opqSBnMThcZSXaY` READY exactamente sobre ese SHA, con aliases hilocofrade.es y www.hilocofrade.es. GitHub: 0 PR abiertas al iniciar esta fase. Supabase ACTIVE_HEALTHY; PostgreSQL 17.6 y 17 migraciones estructurales. Runtime de producción: 0 errores/fatal en la ventana de 6 h comprobada el 28/09/2026.
 
 **HC-016 · Utrera #1009:** **CERRADO Y CERTIFICADO**. Import `c0160038-0000-4000-8000-000000000001` completed 1.173/1.173, con 1.166 INSERT, 7 UPDATE, 0 DELETE y 33 REUSE; Apply `APPLY_UTRERA_SQL_OK_COMMITTED`. QA estructural, HTTP, runtime y sitemaps PASS. Cobertura exacta de sitemap: 16/16 Hermandades públicas, 45/45 Imágenes y 24/24 Pasos; H17/I44/I45/S25 siguen en review y fuera de publicación/indexación. HC-AUTO-03 permanece ready 55/55, 0 applied. [Cierre](./UTRERA-CIERRE-HC016-2026-09-27.md). No reabrir DML sin nueva orden y nueva evidencia de deriva.
+
+**#1017 · HC-017 · Cruceta Rosario de las Mercedes:** CERRADO Y PUBLICADO. Repertorio del regreso del Rosario de la Aurora de Santa Genoveva del 27/09/2026 con Carmen de Salteras; ida con el Coro Nuestra Señora de las Mercedes preservada como tramo distinto; 12 obras y 13 interpretaciones, dry-run/Apply/postflight y suite PASS.
+
+**#1018 · Estrenos y restauraciones compactos:** CERRADO Y PUBLICADO. Presentación general compactada por años sin eliminar registros, fotografías opcionales sin placeholders; `Morena de luz de luna` incorporada al patrimonio musical de la Virgen de la Cabeza reutilizando compositor, banda, sencillo y pista existentes. Producción READY en el HEAD vigente.
+
+**FRENTE ACTIVO · PROFUNDIZACIÓN DE FICHAS PUBLICADAS:** calidad documental > expansión territorial. Reglas: no abrir nuevo municipio ni macrolote territorial; auditar el universo público; seleccionar UNA sola Hermandad; completar, QA y certificar antes de abrir otra; volver a 0 PR y recalcular prioridades desde cero tras cada cierre. FIRST EDITION FREEZE y HC-AUTO-03 bloqueado siguen vigentes.
 
 **Morón:** CERRADO Y CERTIFICADO. Lote principal completed 504/504, correctivo de tipos 10/10 y QA de cierre conservados. No repetir operaciones ni reabrir su deuda editorial. Las metadata históricas de su lote se conservan como evidencia del corte original.
 
@@ -12,7 +18,7 @@
 
 **Supabase/capacidad:** P0 cerrado, Micro activo y 17 migraciones estructurales. Se conserva la mitigación y caché de home_knowledge_threads, sin modificaciones en esta orden. [Seguimiento histórico](./P0-SUPABASE-CAPACITY-2026-09-25.md).
 
-**Régimen:** FIRST EDITION FREEZE activo. La barrera preventiva de tipos HC-016 sigue vigente. Esta fotografía vive en #1009 hasta su revisión; GitHub, Vercel y Supabase prevalecen sobre cortes anteriores.
+**Régimen:** FIRST EDITION FREEZE activo. La barrera preventiva de tipos HC-016 sigue vigente. El frente territorial queda congelado: no nuevo municipio, no nuevo macrolote territorial y una sola ficha publicada por ciclo. GitHub, Vercel y Supabase prevalecen sobre cortes anteriores.
 
 ## Tablero operativo único
 
