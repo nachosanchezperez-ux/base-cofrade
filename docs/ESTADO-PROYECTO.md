@@ -1,5 +1,13 @@
 # Hilo Cofrade · Estado canónico
 
+**Corte operativo, 28/09/2026 · profundización de fichas:** `main = 528a7457c9838180a58a98e4ad8c0be60bfa4c47`; producción previa `dpl_HkY74z49ZeUbFuJgTwH6uRQovTWr` READY sobre ese SHA; Supabase ACTIVE_HEALTHY. Universo real: **279 Hermandades públicas**.
+
+**Divina Pastora de Marchena:** **APARCADA, NO REVERTIDA**. Su lote editorial de #1019 ya está aplicado en Supabase y se conserva. Queda fuera del ranking por decisión editorial. #1019 permanece draft porque aún contiene trabajo técnico genérico y evidencia separables del frente Pastora; no autoriza continuar su profundización.
+
+**Nuevo frente único · Soledad de La Algaba:** seleccionada tras auditoría viva excluyendo Pastora, fichas certificadas y cierres municipales sin deuda material nueva. Se han completado Pasos, relaciones Titular–Paso, Salidas 2026, Cultos recurrentes, patrimonio musical, Banda propia, hitos históricos, patrimonio material y Fuentes. QA estructural actual: 0 duplicados deterministas y 0 huérfanos nucleares; señal técnica **64 % → 86 %**, completitud útil editorial **≈90 %** con deuda restante legítima. **Puerta pendiente:** QA público fresco de cabecera, Historia, sitemap y responsive antes de certificar. Evidencia: [PROFUNDIZACION-SOLEDAD-LA-ALGABA-2026-09-28.md](./PROFUNDIZACION-SOLEDAD-LA-ALGABA-2026-09-28.md).
+
+**Regla:** no abrir otra Hermandad hasta cerrar o declarar no cerrada Soledad de La Algaba.
+
 **Corte operativo, 27/09/2026:** correcciones públicas de Fuentes de Pasos (#1012) e indexabilidad por patrimonio/incertidumbre (#1014) integradas y verificadas en producción. No mantenerlas como bloqueos abiertos.
 
 **Plataforma verificada:** main `e86ba888c34ad7121be181708a2194815ea78ef2` (#1015, paletas heredadas, también reconciliada); Vercel `dpl_9QaCTZcRowb33vq3rgXyeyWu3gKa` READY sobre ese SHA, aliases hilocofrade.es y www.hilocofrade.es. Supabase ACTIVE_HEALTHY; 17 migraciones. Runtime vigente sin filas error/fatal en consulta de 15 min hasta las 11:00:17 UTC, acotada a la edad del deployment.
