@@ -12,6 +12,8 @@
 
 **FRENTE ACTIVO · PROFUNDIZACIÓN DE FICHAS PUBLICADAS:** calidad documental > expansión territorial. Reglas: no abrir nuevo municipio ni macrolote territorial; auditar el universo público; seleccionar UNA sola Hermandad; completar, QA y certificar antes de abrir otra; volver a 0 PR y recalcular prioridades desde cero tras cada cierre. FIRST EDITION FREEZE y HC-AUTO-03 bloqueado siguen vigentes.
 
+**Ficha activa · Divina Pastora de Marchena · #1019:** candidato determinista `c0160042` aplicado 54/54 (50 INSERT + 4 UPDATE), 0 inválidas y 0 fallos; dry-run/rollback PASS y 0 residuos. P0 de la ficha resueltos: Salida 19/09/2026 en `held` y acompañamiento puntual de Arahal cerrado como histórico. Titular, Paso, sede, tres Cultos, dos ediciones, dos capataces, serie procesional y relaciones incorporadas con fuentes scoped. QA de datos/web/runtime PASS. **NO CERTIFICADA todavía:** sitemaps de Imagen y Paso conservan temporalmente el Data Cache anterior; no fusionar #1019 hasta que ambos incorporen las nuevas URLs.
+
 **Morón:** CERRADO Y CERTIFICADO. Lote principal completed 504/504, correctivo de tipos 10/10 y QA de cierre conservados. No repetir operaciones ni reabrir su deuda editorial. Las metadata históricas de su lote se conservan como evidencia del corte original.
 
 **HC-AUTO-03:** ready 55/55, 0 aplicado. Fuera de alcance. Carmona y Écija permanecen cerradas; no abrir otro municipio.
