@@ -11,7 +11,7 @@ export const revalidate = 900
 const title = 'Marchas procesionales: obras y compositores'
 const description = 'Directorio de marchas procesionales documentadas en Hilo Cofrade: compositores, fechas, formaciones musicales, grabaciones y presencia en crucetas.'
 const PAGE_SIZE = 120
-const RECENT_DAYS = 30
+const RECENT_DAYS = 7
 const FILTERS = new Set(['all', 'recent', 'authored', 'dated'])
 
 export async function generateMetadata({ searchParams } = {}) {
