@@ -240,19 +240,47 @@ No bloquea el cierre editorial:
 
 ## 10. SEO y QA público
 
-Antes del refresco de esta rama, la URL pública ya daba:
+Preview fresco certificado: `dpl_D2GH5tCJbJoEPNwVbtHNRyp2mNMg` · READY · SHA `8705f0cdc6f04e170b824ac63868d4c067d75daf`.
+
+PASS funcional:
 
 - HTTP 200;
+- cabecera corregida: **«Viernes Santo · 2 pasos»**;
+- sección **Historia** visible con los seis hitos 1586 · 1761 · 1856 · 2014 · 2020 · 2026;
+- 3 titulares y 2 Pasos visibles;
+- 4 marchas documentadas visibles;
+- Salidas de 03/04/2026 y 05/04/2026 visibles;
+- 6 Cultos visibles;
+- patrimonio 2022 y estreno asociado visibles;
+- historical music visible;
 - canonical exacta;
 - `index, follow`;
-- título SEO correcto;
 - Breadcrumb visual + `BreadcrumbList` JSON-LD;
-- titulares, Pasos, Marchas, Salidas, Cultos, Patrimonio, histórico musical y Fuentes.
+- check Vercel: `success`;
+- 0 logs `error/fatal` en el preview revisado;
+- 0 respuestas 4xx en la ventana runtime revisada;
+- `sitemap.xml` y `/sitemaps/hermandades.xml`: ficha presente, con `lastmod=2026-09-28T22:13:43.819Z`;
+- `robots.txt` referencia el sitemap de Hermandades.
 
-**Pendiente de esta rama:** certificar en un preview fresco que la cabecera pasa a «Viernes Santo · 2 pasos» y que la sección Historia expone los seis hitos; comprobar sitemap, navegación responsive y ausencia de regresiones antes de declarar la ficha cerrada.
+QA responsive estructural:
+
+- el render contiene navegación desktop y menú móvil;
+- Hero: breakpoints 980 / 700 / 420 px;
+- variante corporativa del Hero: 920 / 620 px;
+- Salidas: 900 / 620 px;
+- Cultos: 900 / 560 px;
+- Historia: rejilla específica ≤620 px;
+- esta PR no modifica CSS, layout ni componentes públicos.
+
+El conector de preview no ofrece captura visual por viewport; la comprobación responsive de este lote se realiza mediante render HTML + contratos CSS existentes. Al no existir cambios de interfaz en la rama, no se detecta regresión atribuible a esta operación.
+
+### Diferencia preview / producción antes de promoción
+
+Producción continúa temporalmente en `dpl_HkY74z49ZeUbFuJgTwH6uRQovTWr` y puede servir el HTML cacheado anterior durante su ciclo ISR. El preview fresco ya consume el estado correcto de Supabase. La promoción de esta documentación a `main` provocará un deployment limpio y será seguida por postflight sobre `hilocofrade.es`.
 
 ## 11. Estado de certificación
 
-**PENDIENTE DE QA PÚBLICO FRESCO.**
+**QA PREVIEW: PASS · LISTA PARA PROMOCIÓN.**  
+**CERTIFICACIÓN FINAL: pendiente únicamente del postflight de producción del deployment nacido del merge de #1022.**
 
-No abrir otra Hermandad hasta resolver esta puerta.
+No abrir otra Hermandad hasta cerrar esa última puerta.
