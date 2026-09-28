@@ -10,7 +10,7 @@ test('Marchas reparte el directorio en páginas rastreables y no indexa duplicad
   const source = read('app/marchas/page.js')
   assert.match(source, /const PAGE_SIZE = 120/)
   assert.match(source, /robots: \{ index: false, follow: true \}/)
-  assert.match(source, /pageHref\(number\)/)
+  assert.match(source, /directoryHref\(\{ page: number, query, letter, decade, filter \}\)/)
   assert.match(source, /aria-label="Páginas del directorio de Marchas"/)
 })
 
