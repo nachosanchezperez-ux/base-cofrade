@@ -48,3 +48,9 @@ test('la exploración de Marchas se adapta a móvil sin envolver el alfabeto', (
   assert.match(css, /\.alphabet \{[\s\S]*flex-wrap: nowrap;[\s\S]*overflow-x: auto;/)
   assert.match(css, /\.latestGrid \{[\s\S]*overflow-x: auto;/)
 })
+
+
+test('el directorio de Marchas invalida la caché al incorporar createdAt', () => {
+  const cache = read('lib/supabase/public-directory-cache.js')
+  assert.match(cache, /public-directory-public-marches-strict-v2/)
+})
