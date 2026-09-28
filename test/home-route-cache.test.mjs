@@ -9,7 +9,12 @@ test('la Home vuelve a usar ISR sin desactivar el Full Route Cache', () => {
   const snapshot = read('lib/supabase/home-snapshot.js')
 
   assert.match(page, /export const revalidate = 60/)
-  assert.doesNotMatch(page, /connection\s*\(|from ['"]next\/server['"]/)
+  assert.match(page, /export const revalidate = 60/)
+  assert.match(page, /function hasPublicSupabaseConfig\(\)/)
+  assert.match(page, /NEXT_PUBLIC_SUPABASE_URL/)
+  assert.match(page, /NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY/)
+  assert.match(page, /if \(!hasPublicSupabaseConfig\(\)\) await connection\(\)/)
+  assert.ok(page.indexOf('if (!hasPublicSupabaseConfig()) await connection()') < page.indexOf('await getHomeSnapshot()'))
   assert.match(snapshot, /unstable_cache/)
   assert.match(snapshot, /revalidate:\s*60/)
   assert.match(snapshot, /tags:\s*\['home-public'\]/)
@@ -19,6 +24,7 @@ test('la corrección queda acotada a la Home y conserva la protección P0 de Age
   const home = read('app/page.js')
   const agenda = read('app/agenda-cofrade/page.js')
 
-  assert.doesNotMatch(home, /await connection\(\)/)
-  assert.match(agenda, /await connection\(\)/)
+  assert.doesNotMatch(home, /^\s*await connection\(\)/m)
+  assert.match(home, /if \(!hasPublicSupabaseConfig\(\)\) await connection\(\)/)
+  assert.match(agenda, /^\s*await connection\(\)/m)
 })
