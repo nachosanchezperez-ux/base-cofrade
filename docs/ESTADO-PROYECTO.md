@@ -12,6 +12,10 @@
 
 **Regla:** Gran Poder deja de bloquear la cola. El siguiente caso de contenido debe elegirse por demanda orgánica e intención de búsqueda verificables, no por porcentaje de completitud.
 
+**Nuevo frente único · San Esteban:** **ACTIVO · CONTENIDO PUBLICADO · POSTFLIGHT PENDIENTE**. Tercer caso de la fase de contenido, elegido por oportunidad orgánica: **23 impresiones · 0 clics · posición media 8,96** en los últimos 28 días. La guía `Conoce San Esteban` está publicada en `editorial_content` (id `6e520aef-bc7f-4725-8750-ffec5b0a1795`), con cinco relaciones de entidad y tres Fuentes oficiales. Explica fundación, Señor de la Ventana, Virgen de los Desamparados, primera estación de penitencia, sede histórica y centenario 1926–2026. La única puerta pendiente es certificar el render productivo, metadata y estado de indexación tras refrescar la caché de ficha.
+
+**Regla:** no abrir otra Hermandad de contenido mientras San Esteban permanezca ACTIVO.
+
 **Corte operativo, 27/09/2026:** correcciones públicas de Fuentes de Pasos (#1012) e indexabilidad por patrimonio/incertidumbre (#1014) integradas y verificadas en producción. No mantenerlas como bloqueos abiertos.
 
 **Plataforma verificada:** main `e86ba888c34ad7121be181708a2194815ea78ef2` (#1015, paletas heredadas, también reconciliada); Vercel `dpl_9QaCTZcRowb33vq3rgXyeyWu3gKa` READY sobre ese SHA, aliases hilocofrade.es y www.hilocofrade.es. Supabase ACTIVE_HEALTHY; 17 migraciones. Runtime vigente sin filas error/fatal en consulta de 15 min hasta las 11:00:17 UTC, acotada a la edad del deployment.
