@@ -15,10 +15,12 @@ test('clasifica disciplinas explícitas sin depender de mayúsculas ni tildes', 
   assert.equal(authorCategoryFor({ primaryDiscipline: 'Vestidor' }).key, 'dressing')
 })
 
-test('usa la descripción editorial para oficios todavía no normalizados', () => {
+test('usa nombre y descripción editorial para oficios todavía no normalizados', () => {
   assert.equal(authorCategoryFor({ description: 'Vestidor de imágenes sagradas.' }).key, 'dressing')
   assert.equal(authorCategoryFor({ description: 'Orfebre autor de piezas del paso de palio.' }).key, 'goldsmith')
   assert.equal(authorCategoryFor({ description: 'Conservadora-restauradora de bienes culturales.' }).key, 'restoration')
+  assert.equal(authorCategoryFor({ name: 'Bordados Santa Clara' }).key, 'textile')
+  assert.equal(authorCategoryFor({ name: 'Ballesteros Cascajares · Conservación & Restauración' }).key, 'restoration')
 })
 
 test('usa relaciones públicas como fallback cuando falta la disciplina', () => {
