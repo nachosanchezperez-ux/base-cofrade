@@ -1,12 +1,14 @@
 # Hilo Cofrade · Estado canónico
 
-**Corte operativo, 28/09/2026 · profundización de fichas:** `main = 528a7457c9838180a58a98e4ad8c0be60bfa4c47`; producción previa `dpl_HkY74z49ZeUbFuJgTwH6uRQovTWr` READY sobre ese SHA; Supabase ACTIVE_HEALTHY. Universo real: **279 Hermandades públicas**.
+**Corte operativo, 29/09/2026 · profundización editorial:** `main = 05c7df9fa36b2f0b2a66f6941cdf6e3a9566f641`; producción `dpl_G9ncL9kHfCQ6yQXH1neaDL7FAX6L` READY sobre ese SHA, con aliases `hilocofrade.es` y `www.hilocofrade.es`. Supabase ACTIVE_HEALTHY.
 
-**Divina Pastora de Marchena:** **APARCADA, NO REVERTIDA**. Su lote editorial de #1019 ya está aplicado en Supabase y se conserva. Queda fuera del ranking por decisión editorial. #1019 permanece draft porque aún contiene trabajo técnico genérico y evidencia separables del frente Pastora; no autoriza continuar su profundización.
+**Soledad de La Algaba · #1022:** **CERRADA Y CERTIFICADA**. El lote editorial aplicado queda preservado: 3 titulares, 2 Pasos, 2 Salidas publicadas de 2026, 6 Cultos, 3 periodos musicales históricos, patrimonio musical, Banda propia, 6 hitos históricos y patrimonio material. QA público y estructural PASS; la ficha supera el contrato editorial compartido que alimenta `/sitemaps/hermandades.xml`. Search Console todavía responde `URL is unknown to Google` el 29/09/2026: queda como deuda de descubrimiento/indexación, no como bloqueo editorial. Evidencia: [PROFUNDIZACION-SOLEDAD-LA-ALGABA-2026-09-28.md](./PROFUNDIZACION-SOLEDAD-LA-ALGABA-2026-09-28.md).
 
-**Nuevo frente único · Soledad de La Algaba:** seleccionada tras auditoría viva excluyendo Pastora, fichas certificadas y cierres municipales sin deuda material nueva. Se han completado Pasos, relaciones Titular–Paso, Salidas 2026, Cultos recurrentes, patrimonio musical, Banda propia, hitos históricos, patrimonio material y Fuentes. QA estructural: 0 duplicados deterministas y 0 huérfanos nucleares; señal técnica **64 % → 86 %**, completitud útil editorial **≈90 %** con deuda restante legítima. Preview `dpl_D2GH5tCJbJoEPNwVbtHNRyp2mNMg`: **PASS** (Viernes Santo · 2 pasos, Historia 6 hitos, canonical/indexación/breadcrumbs/sitemap, 0 error/fatal y 0 4xx revisados). **Puerta única restante:** postflight de producción tras promover #1022. Evidencia: [PROFUNDIZACION-SOLEDAD-LA-ALGABA-2026-09-28.md](./PROFUNDIZACION-SOLEDAD-LA-ALGABA-2026-09-28.md).
+**Divina Pastora de Marchena:** **APARCADA, NO REVERTIDA**. Su lote editorial de #1019 ya está aplicado en Supabase y se conserva. Queda fuera del ranking por decisión editorial; #1019 no autoriza continuar su profundización.
 
-**Regla:** no abrir otra Hermandad hasta cerrar o declarar no cerrada Soledad de La Algaba.
+**Nuevo frente único · El Baratillo / #1029:** **ACTIVO** como piloto de la nueva fase de contenido. Objetivo: convertir datos y relaciones existentes en una capa editorial rastreable `Conoce la Hermandad`, reutilizando `editorial_content` + `editorial_content_links`, sin nueva tabla y sin excepciones nominales. El primer artículo está en `review`, con cinco entidades relacionadas y dos fuentes oficiales; no es público hasta integrar el contrato técnico y promoverlo expresamente.
+
+**Regla:** no abrir una segunda Hermandad de contenido mientras El Baratillo permanezca ACTIVO.
 
 **Corte operativo, 27/09/2026:** correcciones públicas de Fuentes de Pasos (#1012) e indexabilidad por patrimonio/incertidumbre (#1014) integradas y verificadas en producción. No mantenerlas como bloqueos abiertos.
 
