@@ -19,17 +19,51 @@ const ENTITY_LABELS = {
   agent: 'Autor',
 }
 
-function guideBlocks(value = '') {
+function normalizedAnchor(value = '') {
   return String(value)
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
+}
+
+function guideChapters(value = '') {
+  const blocks = String(value)
     .split(/\n\s*\n/)
     .map((block) => block.trim())
     .filter(Boolean)
-    .map((block, index) => {
-      const heading = block.match(/^###\s+(.+)$/)
-      return heading
-        ? { id: `heading-${index}`, kind: 'heading', text: heading[1].trim() }
-        : { id: `paragraph-${index}`, kind: 'paragraph', text: block.replace(/\s*\n\s*/g, ' ') }
-    })
+
+  const chapters = []
+  let current = null
+
+  for (const block of blocks) {
+    const heading = block.match(/^###\s+(.+)$/)
+
+    if (heading) {
+      const title = heading[1].trim()
+      current = {
+        id: normalizedAnchor(title) || `clave-${chapters.length + 1}`,
+        title,
+        paragraphs: [],
+      }
+      chapters.push(current)
+      continue
+    }
+
+    const paragraph = block.replace(/\s*\n\s*/g, ' ')
+    if (!current) {
+      current = {
+        id: `clave-${chapters.length + 1}`,
+        title: '',
+        paragraphs: [],
+      }
+      chapters.push(current)
+    }
+    current.paragraphs.push(paragraph)
+  }
+
+  return chapters.filter((chapter) => chapter.title || chapter.paragraphs.length)
 }
 
 function relatedHref(entity) {
@@ -40,7 +74,7 @@ function relatedHref(entity) {
 export default function BrotherhoodEditorialGuide({ guide }) {
   if (!guide?.title || !(guide.summary || guide.body)) return null
 
-  const blocks = guideBlocks(guide.body)
+  const chapters = guideChapters(guide.body)
   const relatedEntities = (guide.relatedEntities || [])
     .map((entity) => ({ ...entity, href: relatedHref(entity) }))
     .filter((entity) => entity.href)
@@ -49,27 +83,63 @@ export default function BrotherhoodEditorialGuide({ guide }) {
     <section className={styles.section} id="conoce-hermandad" data-hilo-section="brotherhood-editorial-guide">
       <div className={`shell ${styles.shell}`}>
         <header className={styles.header}>
-          <span className={styles.eyebrow}>Conoce la Hermandad</span>
-          <h2>{guide.title}</h2>
-          {guide.subtitle ? <p className={styles.subtitle}>{guide.subtitle}</p> : null}
+          <div className={styles.headerCopy}>
+            <span className={styles.eyebrow}>Conoce la Hermandad</span>
+            <h2>{guide.title}</h2>
+            {guide.subtitle ? <p className={styles.subtitle}>{guide.subtitle}</p> : null}
+          </div>
+
+          <div className={styles.headerMarker} aria-hidden="true">
+            <span>{String(chapters.length).padStart(2, '0')}</span>
+            <small>claves</small>
+          </div>
         </header>
 
         {guide.summary ? <p className={styles.lead}>{guide.summary}</p> : null}
 
-        {blocks.length > 0 ? (
-          <article className={styles.article}>
-            {blocks.map((block) => (
-              block.kind === 'heading'
-                ? <h3 key={block.id}>{block.text}</h3>
-                : <p key={block.id}>{block.text}</p>
+        {chapters.length > 1 ? (
+          <nav className={styles.index} aria-label={`Índice de ${guide.title}`}>
+            <span className={styles.indexLabel}>En esta lectura</span>
+            <ol>
+              {chapters.map((chapter, index) => (
+                chapter.title ? (
+                  <li key={chapter.id}>
+                    <a href={`#${chapter.id}`}>
+                      <b>{String(index + 1).padStart(2, '0')}</b>
+                      <span>{chapter.title}</span>
+                    </a>
+                  </li>
+                ) : null
+              ))}
+            </ol>
+          </nav>
+        ) : null}
+
+        {chapters.length > 0 ? (
+          <ol className={styles.chapters}>
+            {chapters.map((chapter, index) => (
+              <li className={styles.chapter} id={chapter.id} key={chapter.id}>
+                <div className={styles.chapterNumber} aria-hidden="true">
+                  {String(index + 1).padStart(2, '0')}
+                </div>
+                <div className={styles.chapterCopy}>
+                  {chapter.title ? <h3>{chapter.title}</h3> : null}
+                  {chapter.paragraphs.map((paragraph, paragraphIndex) => (
+                    <p key={`${chapter.id}-${paragraphIndex}`}>{paragraph}</p>
+                  ))}
+                </div>
+              </li>
             ))}
-          </article>
+          </ol>
         ) : null}
 
         {relatedEntities.length > 0 ? (
           <nav className={styles.related} aria-label={`Entidades relacionadas con ${guide.title}`}>
-            <small>Sigue el hilo</small>
-            <div>
+            <div className={styles.relatedHeading}>
+              <small>Sigue el hilo</small>
+              <span>Continúa desde esta lectura hacia las fichas relacionadas.</span>
+            </div>
+            <div className={styles.relatedGrid}>
               {relatedEntities.map((entity) => (
                 <Link href={entity.href} key={`${guide.id}-${entity.id}`}>
                   <span>{ENTITY_LABELS[entity.entityType] || 'Relacionado'}</span>
