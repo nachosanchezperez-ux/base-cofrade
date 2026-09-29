@@ -82,7 +82,11 @@ test('la guía pública se carga desde Supabase y se renderiza sin tocar la pág
   assert.match(overview, /guide=\{brotherhood\.editorialGuide\}/)
   assert.match(component, /id="conoce-hermandad"/)
   assert.match(component, /<h2>\{guide\.title\}<\/h2>/)
-  assert.match(component, /<h3 key=\{block\.id\}>/)
+  assert.match(component, /guideChapters/)
+  assert.match(component, /className=\{styles\.index\}/)
+  assert.match(component, /className=\{styles\.chapters\}/)
+  assert.match(component, /<h3>\{chapter\.title\}<\/h3>/)
+  assert.match(component, /String\(index \+ 1\)\.padStart\(2, '0'\)/)
   assert.match(component, /<Link href=\{entity\.href\}/)
   assert.doesNotMatch(detailPage, /brotherhood_guide/)
 })
@@ -101,4 +105,19 @@ test('la cache de ficha usa el namespace editorial v6', () => {
   const aggregator = read('lib/supabase/brotherhood-page.js')
   assert.match(aggregator, /hilo-cofrade-public-brotherhood-detail-v6/)
   assert.doesNotMatch(aggregator, /hilo-cofrade-public-brotherhood-detail-v5/)
+})
+
+
+test('la guía editorial tiene una identidad visual propia y responsive', () => {
+  const component = read('components/BrotherhoodEditorialGuide.js')
+  const css = read('components/BrotherhoodEditorialGuide.module.css')
+
+  assert.match(component, /En esta lectura/)
+  assert.match(component, /claves/)
+  assert.match(css, /\.headerMarker/)
+  assert.match(css, /\.index/)
+  assert.match(css, /\.chapterNumber/)
+  assert.match(css, /position: sticky/)
+  assert.match(css, /@media \(max-width: 760px\)/)
+  assert.match(css, /grid-template-columns: 44px minmax\(0, 1fr\)/)
 })
