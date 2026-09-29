@@ -51,17 +51,20 @@ test('la Home solo usa gran protagonista cuando una salida está en curso', asyn
 })
 
 
-test('las próximas salidas eliminan la explicación redundante y ganan jerarquía en escritorio', async () => {
+test('las próximas salidas equilibran el peso visual en escritorio', async () => {
   const home = await read('components/HomePageV2.js')
   const styles = await read('components/HomeProcessionGrid.module.css')
 
   assert.doesNotMatch(home, /Procesiones, romerías, traslados y salidas extraordinarias se muestran con el mismo peso visual/)
   assert.doesNotMatch(home, /La cercanía de una cita no la convierte por sí sola en protagonista/)
   assert.match(styles, /@media\(min-width:900px\)/)
+  assert.match(styles, /grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/)
+  assert.match(styles, /grid-auto-rows:1fr/)
   assert.match(styles, /\.leadCard/)
-  assert.match(styles, /grid-template-columns:minmax\(0,1\.18fr\) minmax\(350px,\.82fr\)/)
-  assert.match(styles, /linear-gradient\(145deg,#0b223b 0%,#123d68 58%,#0d3156 100%\)/)
   assert.match(styles, /\.compactCard/)
+  assert.match(styles, /min-height:238px/)
+  assert.match(styles, /linear-gradient\(90deg,#123a67,#b71f37\)/)
+  assert.doesNotMatch(styles, /linear-gradient\(145deg,#0b223b 0%,#123d68 58%,#0d3156 100%\)/)
 })
 
 test('en móvil las próximas salidas conservan el carril horizontal', async () => {
