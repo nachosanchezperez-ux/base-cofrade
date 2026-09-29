@@ -4,6 +4,13 @@ import EntityLastUpdated from '@/components/EntityLastUpdated'
 import JsonLd from '@/components/JsonLd'
 import SiteBreadcrumb from '@/components/SiteBreadcrumb'
 import SourcesBlock from '@/components/SourcesBlock'
+import {
+  agentRelationBreakdown,
+  authorCategoryFor,
+  authorKindLabel,
+  authorProfileLabel,
+  authorWorkOrder,
+} from '@/lib/authors-presentation'
 import { getPublicAgentBySlug } from '@/lib/supabase/public-agents'
 import {
   absoluteUrl,
@@ -13,7 +20,7 @@ import {
   seoDescription,
   socialMetadata,
 } from '@/lib/seo'
-import styles from '../../marchas/marchas.module.css'
+import styles from '../autores.module.css'
 
 export const revalidate = 900
 
@@ -25,11 +32,111 @@ function schemaId(agent, canonicalPath) {
   return `${absoluteUrl(canonicalPath)}#${agent.kind === 'person' ? 'person' : 'organization'}`
 }
 
-function profileLabel(agent) {
-  if (agent.kind === 'workshop') return 'Taller'
-  if (agent.kind === 'company') return 'Empresa'
-  if (agent.kind === 'institution') return 'Institución'
-  return agent.primaryDiscipline || 'Autor'
+function profileMetrics(agent, categoryKey) {
+  const relations = agentRelationBreakdown(agent)
+  const sources = agent.sources.length
+
+  if (categoryKey === 'music') {
+    return [
+      { label: 'Marchas documentadas', value: relations.marches },
+      { label: 'Relaciones totales', value: agent.relationCount },
+      { label: 'Fuentes directas', value: sources },
+    ]
+  }
+
+  if (categoryKey === 'imagery') {
+    return [
+      { label: 'Imágenes documentadas', value: relations.images },
+      { label: 'Intervenciones', value: relations.heritage },
+      { label: 'Fuentes directas', value: sources },
+    ]
+  }
+
+  if (categoryKey === 'restoration') {
+    return [
+      { label: 'Intervenciones', value: relations.heritage },
+      { label: 'Obras relacionadas', value: relations.images + relations.steps },
+      { label: 'Fuentes directas', value: sources },
+    ]
+  }
+
+  if (categoryKey === 'dressing') {
+    return [
+      { label: 'Imágenes vestidas', value: relations.dressings },
+      { label: 'Relaciones totales', value: agent.relationCount },
+      { label: 'Fuentes directas', value: sources },
+    ]
+  }
+
+  if (['textile', 'goldsmith', 'carving'].includes(categoryKey)) {
+    return [
+      { label: 'Trabajos documentados', value: relations.heritage + relations.steps },
+      { label: 'Relaciones totales', value: agent.relationCount },
+      { label: 'Fuentes directas', value: sources },
+    ]
+  }
+
+  if (categoryKey === 'visual') {
+    return [
+      { label: 'Obras documentadas', value: relations.images + relations.heritage },
+      { label: 'Relaciones totales', value: agent.relationCount },
+      { label: 'Fuentes directas', value: sources },
+    ]
+  }
+
+  if (categoryKey === 'patrimony') {
+    return [
+      { label: 'Intervenciones', value: relations.heritage },
+      { label: 'Fases de paso', value: relations.steps },
+      { label: 'Fuentes directas', value: sources },
+    ]
+  }
+
+  return [
+    { label: 'Relaciones documentadas', value: agent.relationCount },
+    { label: 'Disciplinas', value: agent.disciplines.length },
+    { label: 'Fuentes directas', value: sources },
+  ]
+}
+
+function WorkGroup({ categoryKey, title, eyebrow, items }) {
+  if (!items.length) return null
+
+  return (
+    <section className={styles.group} data-category={categoryKey}>
+      <header className={styles.groupHeader}>
+        <span className={styles.groupHeaderMark}>{String(items.length).padStart(2, '0')}</span>
+        <span className={styles.groupHeaderCopy}>
+          <h3>{title}</h3>
+          <p>{eyebrow}</p>
+        </span>
+        <span className={styles.groupHeaderCount}>{items.length}</span>
+      </header>
+
+      <div className={styles.list}>
+        {items.map((item) => {
+          const body = (
+            <>
+              <span className={styles.cardCopy}>
+                <span className={styles.cardKicker}>{eyebrow}</span>
+                <strong>{item.name}</strong>
+                <small>{[item.role || item.type, item.phase, item.certainty].filter(Boolean).join(' · ') || eyebrow}</small>
+              </span>
+              <span className={styles.cardMeta}>
+                {item.date || item.year ? <time>{item.date || item.year}</time> : null}
+                <em>{item.href ? 'Abrir ficha' : 'Relación documental'}</em>
+              </span>
+              <span className={styles.cardArrow} aria-hidden="true">→</span>
+            </>
+          )
+
+          return item.href
+            ? <Link className={styles.card} href={item.href} key={item.id}>{body}</Link>
+            : <article className={styles.card} key={item.id}>{body}</article>
+        })}
+      </div>
+    </section>
+  )
 }
 
 export async function generateMetadata({ params }) {
@@ -44,11 +151,11 @@ export async function generateMetadata({ params }) {
   }
 
   const title = compactSeoTitle(
-    [agent.name, agent.primaryDiscipline || profileLabel(agent)].filter(Boolean).join(' · ')
+    [agent.name, agent.primaryDiscipline || authorProfileLabel(agent)].filter(Boolean).join(' · ')
   )
   const description = seoDescription(
     agent.description,
-    `${agent.name} en Hilo Cofrade: obras, marchas, imágenes, patrimonio, intervenciones y Fuentes documentales relacionadas.`
+    `${agent.name} en Hilo Cofrade: obra, autorías, intervenciones y Fuentes documentales relacionadas.`
   )
   const canonicalPath = `/autores/${agent.slug}`
 
@@ -66,46 +173,17 @@ export async function generateMetadata({ params }) {
   }
 }
 
-function WorkGroup({ title, eyebrow, items, emptyText }) {
-  if (!items.length) return null
-
-  return (
-    <section className={styles.group}>
-      <header><h3>{title}</h3><span>{items.length}</span></header>
-      <div className={styles.list}>
-        {items.map((item) => {
-          const body = (
-            <>
-              <span className={styles.cardCopy}>
-                <strong>{item.name}</strong>
-                <small>{[item.role || item.type, item.phase, item.certainty].filter(Boolean).join(' · ') || eyebrow}</small>
-              </span>
-              <span className={styles.cardMeta}>
-                {item.date || item.year ? <time>{item.date || item.year}</time> : null}
-                <em>{eyebrow}</em>
-              </span>
-              <b aria-hidden="true">→</b>
-            </>
-          )
-
-          return item.href
-            ? <Link className={styles.card} href={item.href} key={item.id}>{body}</Link>
-            : <article className={styles.card} key={item.id}>{body}</article>
-        })}
-      </div>
-      {!items.length && emptyText ? <p>{emptyText}</p> : null}
-    </section>
-  )
-}
-
 export default async function AuthorPage({ params }) {
   const { slug } = await params
   const agent = await getPublicAgentBySlug(slug)
   if (!agent) notFound()
 
+  const category = authorCategoryFor(agent)
+  const metrics = profileMetrics(agent, category.key)
   const canonicalPath = `/autores/${agent.slug}`
   const entityId = schemaId(agent, canonicalPath)
   const sameAs = [agent.websiteUrl, agent.instagramUrl].filter(Boolean)
+
   const entityJsonLd = {
     '@context': 'https://schema.org',
     '@type': schemaType(agent),
@@ -144,8 +222,36 @@ export default async function AuthorPage({ params }) {
     about: { '@id': entityId },
   }
 
+  const groups = {
+    marches: {
+      title: category.key === 'music' ? 'Marchas y composiciones' : 'Marchas',
+      eyebrow: 'Obra musical',
+      items: agent.marches,
+    },
+    images: {
+      title: category.key === 'imagery' ? 'Imágenes y esculturas' : 'Imágenes',
+      eyebrow: category.key === 'imagery' ? 'Autoría escultórica' : 'Autoría',
+      items: agent.images,
+    },
+    dressings: {
+      title: 'Imágenes vestidas',
+      eyebrow: 'Vestimenta documentada',
+      items: agent.dressings,
+    },
+    heritage: {
+      title: category.key === 'restoration' ? 'Restauraciones e intervenciones' : 'Intervenciones patrimoniales',
+      eyebrow: category.key === 'restoration' ? 'Conservación patrimonial' : 'Patrimonio',
+      items: agent.heritage,
+    },
+    steps: {
+      title: ['carving', 'goldsmith', 'textile'].includes(category.key) ? 'Pasos y fases de ejecución' : 'Pasos',
+      eyebrow: 'Paso procesional',
+      items: agent.steps,
+    },
+  }
+
   return (
-    <div className={styles.page}>
+    <div className={styles.page} data-category={category.key}>
       <JsonLd data={breadcrumbJsonLd([
         { name: 'Inicio', path: '/' },
         { name: 'Autores', path: '/autores' },
@@ -167,52 +273,72 @@ export default async function AuthorPage({ params }) {
           />
 
           <div className={styles.heroCopy}>
-            <span>{profileLabel(agent)}</span>
+            <span>{authorProfileLabel(agent)}</span>
             <h1>{agent.name}</h1>
-            <p>{agent.description || agent.summary || 'Perfil relacional construido a partir de obras y relaciones documentadas en Hilo Cofrade.'}</p>
+            <p>{agent.description || agent.summary || `Perfil de ${category.label.toLowerCase()} construido a partir de obras y relaciones documentadas en Hilo Cofrade.`}</p>
           </div>
 
           <dl className={styles.metrics}>
-            <div><dt>Relaciones documentadas</dt><dd>{agent.relationCount}</dd></div>
-            <div><dt>Disciplinas</dt><dd>{agent.disciplines.length}</dd></div>
-            <div><dt>Fuentes directas</dt><dd>{agent.sources.length}</dd></div>
+            {metrics.map((metric) => (
+              <div key={metric.label}>
+                <dt>{metric.label}</dt>
+                <dd>{metric.value}</dd>
+              </div>
+            ))}
           </dl>
         </div>
       </header>
 
       <EntityLastUpdated value={agent.updatedAt} variant="bar" />
 
-      <section className={`shell ${styles.directory}`} aria-labelledby="perfil-autor">
+      <section className={`shell ${styles.identityWrap}`} aria-label="Identidad del autor">
+        <div className={styles.identityCard}>
+          <div className={styles.identityLead}>
+            <span>{category.code}</span>
+            <div>
+              <small>Ámbito editorial</small>
+              <strong>{category.label}</strong>
+            </div>
+          </div>
+
+          <dl className={styles.identityFacts}>
+            <div>
+              <dt>Disciplina principal</dt>
+              <dd>{agent.primaryDiscipline || authorProfileLabel(agent)}</dd>
+            </div>
+            <div>
+              <dt>Tipo de perfil</dt>
+              <dd>{authorKindLabel(agent)}</dd>
+            </div>
+            <div>
+              <dt>Origen / cronología</dt>
+              <dd>
+                {[agent.municipality, [agent.birthText, agent.deathText].filter(Boolean).join(' — ')]
+                  .filter(Boolean)
+                  .join(' · ') || 'Dato pendiente de documentación'}
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <section className={`shell ${styles.directory} ${styles.profileDirectory}`} aria-labelledby="perfil-autor">
         <header className={styles.directoryHeading}>
-          <div><span>Perfil documentado</span><h2 id="perfil-autor">Tira del hilo por su obra</h2></div>
-          <p>
-            {[agent.primaryDiscipline, agent.municipality, agent.birthText, agent.deathText]
-              .filter(Boolean)
-              .join(' · ') || 'Relaciones documentadas con el patrimonio y la música procesional.'}
-          </p>
+          <div>
+            <span>{category.kicker}</span>
+            <h2 id="perfil-autor">{category.detailTitle}</h2>
+          </div>
+          <p>{category.detailCopy}</p>
         </header>
 
         <div className={styles.groups}>
-          <WorkGroup
-            title="Marchas"
-            eyebrow="Obra musical"
-            items={agent.marches}
-          />
-          <WorkGroup
-            title="Imágenes"
-            eyebrow="Autoría"
-            items={agent.images}
-          />
-          <WorkGroup
-            title="Intervenciones patrimoniales"
-            eyebrow="Patrimonio"
-            items={agent.heritage}
-          />
-          <WorkGroup
-            title="Pasos"
-            eyebrow="Paso procesional"
-            items={agent.steps}
-          />
+          {authorWorkOrder(category.key).map((key) => (
+            <WorkGroup
+              categoryKey={category.key}
+              key={key}
+              {...groups[key]}
+            />
+          ))}
 
           {!agent.relationCount ? (
             <div className={styles.empty}>

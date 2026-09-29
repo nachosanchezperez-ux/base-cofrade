@@ -18,7 +18,8 @@ test('Autores reparte el directorio en páginas rastreables y no indexa duplicad
   const source = read('app/autores/page.js')
   assert.match(source, /const PAGE_SIZE = 100/)
   assert.match(source, /robots: \{ index: false, follow: true \}/)
-  assert.match(source, /pageHref\(number\)/)
+  assert.match(source, /pageHref\(number, selectedCategory\?\.slug \|\| ''\)/)
+  assert.match(source, /page > 1 \|\| params\?\.categoria/)
   assert.match(source, /aria-label="Páginas del directorio de Autores"/)
 })
 
