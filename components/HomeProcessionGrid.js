@@ -11,13 +11,17 @@ export default function HomeProcessionGrid({ outings = [] }) {
   if (!visible.length) return null
 
   return (
-    <div className={styles.grid} data-home-procession-layout="equal">
-      {visible.map((outing) => {
+    <div className={styles.grid} data-home-procession-layout="editorial" data-count={visible.length}>
+      {visible.map((outing, index) => {
         const municipalityHref = agendaMunicipalityHref(outing.municipality)
+        const isLead = index === 0
         return (
-          <article className={styles.card} key={outing.id}>
+          <article className={`${styles.card} ${isLead ? styles.leadCard : styles.compactCard}`} key={outing.id}>
             <div className={styles.topline}>
-              <span>{outing.typeLabel || 'Procesión'}</span>
+              <span className={styles.typeStack}>
+                {isLead ? <small>La próxima</small> : null}
+                <b>{outing.typeLabel || 'Procesión'}</b>
+              </span>
               <time dateTime={outing.date}>
                 <strong>{outing.dateParts?.day || ''}</strong>
                 <small>{outing.dateParts?.month || ''}</small>
@@ -30,7 +34,7 @@ export default function HomeProcessionGrid({ outings = [] }) {
               {outing.returnTime ? <span>Entrada <strong>{outing.returnTime}</strong></span> : null}
             </div>
             <div className={styles.actions}>
-              <Link href={outingHref(outing)}>Abrir guía <span aria-hidden="true">→</span></Link>
+              <Link href={outingHref(outing)} aria-label={`Abrir guía de ${outing.title}`}>Abrir guía <span aria-hidden="true">→</span></Link>
               {municipalityHref ? <Link href={municipalityHref}>Guía de {outing.municipality}</Link> : null}
             </div>
           </article>
