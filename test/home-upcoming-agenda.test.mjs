@@ -41,9 +41,33 @@ test('la Home solo usa gran protagonista cuando una salida está en curso', asyn
   assert.match(home, /Procesión en curso/)
   assert.match(home, /Varias procesiones están en la calle/)
   assert.match(home, /multipleLive/)
-  assert.match(grid, /data-home-procession-layout="equal"/)
+  assert.match(grid, /data-home-procession-layout="editorial"/)
+  assert.match(grid, /const isLead = index === 0/)
+  assert.match(grid, /La próxima/)
   assert.match(grid, /slice\(0, 4\)/)
   assert.match(grid, /Guía de \{outing\.municipality\}/)
   assert.match(snapshot, /find\(\(item\) => item\.liveState\?\.state === 'live'\)/)
   assert.match(snapshot, /hilo-cofrade-home-public-snapshot-v19/)
+})
+
+
+test('las próximas salidas eliminan la explicación redundante y ganan jerarquía en escritorio', async () => {
+  const home = await read('components/HomePageV2.js')
+  const styles = await read('components/HomeProcessionGrid.module.css')
+
+  assert.doesNotMatch(home, /Procesiones, romerías, traslados y salidas extraordinarias se muestran con el mismo peso visual/)
+  assert.doesNotMatch(home, /La cercanía de una cita no la convierte por sí sola en protagonista/)
+  assert.match(styles, /@media\(min-width:900px\)/)
+  assert.match(styles, /\.leadCard/)
+  assert.match(styles, /grid-template-columns:minmax\(0,1\.18fr\) minmax\(350px,\.82fr\)/)
+  assert.match(styles, /linear-gradient\(145deg,#0b223b 0%,#123d68 58%,#0d3156 100%\)/)
+  assert.match(styles, /\.compactCard/)
+})
+
+test('en móvil las próximas salidas conservan el carril horizontal', async () => {
+  const styles = await read('components/HomeProcessionGrid.module.css')
+
+  assert.match(styles, /@media\(max-width:720px\)/)
+  assert.match(styles, /scroll-snap-type:x mandatory/)
+  assert.match(styles, /flex:0 0 min\(82vw,320px\)/)
 })
