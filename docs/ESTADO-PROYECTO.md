@@ -6,9 +6,11 @@
 
 **Divina Pastora de Marchena:** **APARCADA, NO REVERTIDA**. Su lote editorial de #1019 ya está aplicado en Supabase y se conserva. Queda fuera del ranking por decisión editorial; #1019 no autoriza continuar su profundización.
 
-**Nuevo frente único · El Baratillo / #1029:** **ACTIVO** como piloto de la nueva fase de contenido. Objetivo: convertir datos y relaciones existentes en una capa editorial rastreable `Conoce la Hermandad`, reutilizando `editorial_content` + `editorial_content_links`, sin nueva tabla y sin excepciones nominales. El primer artículo está en `review`, con cinco entidades relacionadas y dos fuentes oficiales; no es público hasta integrar el contrato técnico y promoverlo expresamente.
+**El Baratillo · piloto Conoce la Hermandad:** **CERRADO Y CERTIFICADO**. La capa editorial reutilizable quedó integrada por #1031 (sustituye al #1029 cerrado durante la realineación de rama) y el ajuste transversal de titles por #1032. Producción `dpl_3znA4ubmvAvUV9waWcbpu6odkkaP` READY sobre `1be228d92385071917be1c68e5cb9bbcc40ba05c`. La ficha publica seis bloques editoriales, cinco enlaces internos y resumen SEO específico; Google URL Inspection = PASS · Submitted and indexed. Baseline previo al cambio: **78 impresiones · 0 clics · posición media ≈36,5** en 28 días. El title productivo queda en 56 caracteres. La auditoría on-page no presenta incidencias críticas, altas ni medias; los dos `alt=""` restantes corresponden a logos decorativos de cabecera y pie y se preservan por accesibilidad.
 
-**Regla:** no abrir una segunda Hermandad de contenido mientras El Baratillo permanezca ACTIVO.
+**Nuevo frente único · Gran Poder:** **ACTIVO** como segundo caso de la fase de contenido, elegido por demanda observada en Google: **70 impresiones · 0 clics · posición media ≈40,9** en 28 días. La guía debe responder de forma documentada a las intenciones ya detectadas —historia, salida en la Madrugá, Señor, Virgen, pasos, sede y dimensión devocional— sin duplicar datos ni crear texto genérico.
+
+**Regla:** no abrir una segunda Hermandad de contenido mientras Gran Poder permanezca ACTIVO.
 
 **Corte operativo, 27/09/2026:** correcciones públicas de Fuentes de Pasos (#1012) e indexabilidad por patrimonio/incertidumbre (#1014) integradas y verificadas en producción. No mantenerlas como bloqueos abiertos.
 
