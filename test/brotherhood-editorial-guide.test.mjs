@@ -95,3 +95,10 @@ test('la meta description puede aprovechar el resumen editorial sin romper el fa
   assert.match(seo, /return seoDescription/)
   assert.match(seo, /const topics = \[\]/)
 })
+
+
+test('la cache de ficha usa el namespace editorial v5', () => {
+  const aggregator = read('lib/supabase/brotherhood-page.js')
+  assert.match(aggregator, /hilo-cofrade-public-brotherhood-detail-v5/)
+  assert.doesNotMatch(aggregator, /hilo-cofrade-public-brotherhood-detail-v4/)
+})
