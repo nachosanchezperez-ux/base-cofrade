@@ -12,9 +12,9 @@
 
 **Regla:** Gran Poder deja de bloquear la cola. El siguiente caso de contenido debe elegirse por demanda orgánica e intención de búsqueda verificables, no por porcentaje de completitud.
 
-**Nuevo frente único · San Esteban:** **ACTIVO · CONTENIDO PUBLICADO · POSTFLIGHT PENDIENTE**. Tercer caso de la fase de contenido, elegido por oportunidad orgánica: **23 impresiones · 0 clics · posición media 8,96** en los últimos 28 días. La guía `Conoce San Esteban` está publicada en `editorial_content` (id `6e520aef-bc7f-4725-8750-ffec5b0a1795`), con cinco relaciones de entidad y tres Fuentes oficiales. Explica fundación, Señor de la Ventana, Virgen de los Desamparados, primera estación de penitencia, sede histórica y centenario 1926–2026. La única puerta pendiente es certificar el render productivo, metadata y estado de indexación tras refrescar la caché de ficha.
+**San Esteban · tercer caso Conoce la Hermandad:** **CERRADO Y CERTIFICADO**. Elegido por oportunidad orgánica: baseline previo **23 impresiones · 0 clics · posición media 8,96** en 28 días. La guía `Conoce San Esteban` está publicada en `editorial_content` (id `6e520aef-bc7f-4725-8750-ffec5b0a1795`), con cinco relaciones de entidad y tres Fuentes oficiales. Producción renderiza seis bloques editoriales y cuatro enlaces internos a Titulares y Pasos; el resumen editorial alimenta la meta description. Postflight 29/09/2026: HTTP 200, canonical propia, `index, follow`, title de 55 caracteres, meta description de 158 caracteres, 1 H1, datos estructurados sin errores y Google URL Inspection = **PASS · Submitted and indexed · INDEXING_ALLOWED**. Auditoría on-page: 0 críticas, 0 altas, 0 medias; solo persiste la incidencia baja de 2 imágenes sin alt, integrada en la deuda transversal de accesibilidad.
 
-**Regla:** no abrir otra Hermandad de contenido mientras San Esteban permanezca ACTIVO.
+**Regla:** San Esteban deja de bloquear la cola. El siguiente caso de contenido debe seguir priorizando demanda orgánica e intención de búsqueda verificables.
 
 **Corte operativo, 27/09/2026:** correcciones públicas de Fuentes de Pasos (#1012) e indexabilidad por patrimonio/incertidumbre (#1014) integradas y verificadas en producción. No mantenerlas como bloqueos abiertos.
 
