@@ -14,15 +14,16 @@ const outingActions = read('app/panel/(protected)/hermandades/[id]/salidas/actio
 const outingHeroActions = read('app/panel/(protected)/hermandades/[id]/salidas/hero-image-actions.js')
 const outingPage = read('app/panel/(protected)/hermandades/[id]/salidas/page.js')
 
-test('las Curiosidades de Hermandad proceden del Banco editorial publicado y relacionado', () => {
+test('el Banco editorial de Hermandad carga Curiosidades y guías publicadas relacionadas', () => {
   assert.match(brotherhoodPage, /enrichBrotherhoodEditorialSections/)
   assert.match(editorialLoader, /createPublicClient/)
   assert.match(editorialLoader, /from\('editorial_content_links'\)/)
   assert.match(editorialLoader, /\.eq\('entity_id', brotherhood\.id\)/)
   assert.match(editorialLoader, /from\('editorial_content'\)/)
-  assert.match(editorialLoader, /\.eq\('content_type', 'curiosity'\)/)
+  assert.match(editorialLoader, /\.in\('content_type', \['curiosity', 'article'\]\)/)
   assert.match(editorialLoader, /\.eq\('status', 'published'\)/)
   assert.match(editorialLoader, /curiosidades: \[\]/)
+  assert.match(editorialLoader, /editorialGuide: null/)
 })
 
 test('el mapeo editorial conserva solo Curiosidades documentadas y prioriza el vínculo principal', () => {

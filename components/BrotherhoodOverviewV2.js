@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import CofradeTypeBadges from '@/components/CofradeTypeBadges'
 import BrotherhoodQuickFacts from '@/components/BrotherhoodQuickFacts'
+import BrotherhoodEditorialGuide from '@/components/BrotherhoodEditorialGuide'
 import EntityLastUpdated from '@/components/EntityLastUpdated'
 import { publicText } from '@/lib/supabase/public-entity-page'
 import styles from './BrotherhoodOverviewV2.module.css'
@@ -300,6 +301,7 @@ export default function BrotherhoodOverviewV2({ brotherhood, heroFactLabels = []
           ) : null}
         </div>
       </section>
+      <BrotherhoodEditorialGuide guide={brotherhood.editorialGuide} />
     </>
   )
 }
