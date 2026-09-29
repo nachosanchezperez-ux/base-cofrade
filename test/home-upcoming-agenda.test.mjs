@@ -59,10 +59,10 @@ test('las próximas salidas equilibran el peso visual en escritorio', async () =
   assert.doesNotMatch(home, /La cercanía de una cita no la convierte por sí sola en protagonista/)
   assert.match(styles, /@media\(min-width:900px\)/)
   assert.match(styles, /grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/)
-  assert.match(styles, /grid-auto-rows:1fr/)
+  assert.match(styles, /grid-auto-rows:auto/)
   assert.match(styles, /\.leadCard/)
   assert.match(styles, /\.compactCard/)
-  assert.match(styles, /min-height:238px/)
+  assert.match(styles, /min-height:198px/)
   assert.match(styles, /linear-gradient\(90deg,#123a67,#b71f37\)/)
   assert.doesNotMatch(styles, /linear-gradient\(145deg,#0b223b 0%,#123d68 58%,#0d3156 100%\)/)
 })
@@ -73,4 +73,14 @@ test('en móvil las próximas salidas conservan el carril horizontal', async () 
   assert.match(styles, /@media\(max-width:720px\)/)
   assert.match(styles, /scroll-snap-type:x mandatory/)
   assert.match(styles, /flex:0 0 min\(82vw,320px\)/)
+})
+
+
+test('las horas ganan jerarquía sin inflar las tarjetas en escritorio', async () => {
+  const styles = await read('components/HomeProcessionGrid.module.css')
+
+  assert.match(styles, /\.card \.timing span,[\s\S]*min-height:36px/)
+  assert.match(styles, /\.card \.timing strong,[\s\S]*font-size:15px/)
+  assert.match(styles, /\.card \.actions,[\s\S]*margin-top:0/)
+  assert.match(styles, /padding-top:13px/)
 })
