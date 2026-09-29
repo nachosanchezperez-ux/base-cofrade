@@ -101,10 +101,10 @@ test('la meta description puede aprovechar el resumen editorial sin romper el fa
 })
 
 
-test('la cache de ficha usa el namespace editorial v6', () => {
+test('la cache de ficha usa el namespace editorial v7', () => {
   const aggregator = read('lib/supabase/brotherhood-page.js')
-  assert.match(aggregator, /hilo-cofrade-public-brotherhood-detail-v6/)
-  assert.doesNotMatch(aggregator, /hilo-cofrade-public-brotherhood-detail-v5/)
+  assert.match(aggregator, /hilo-cofrade-public-brotherhood-detail-v7/)
+  assert.doesNotMatch(aggregator, /hilo-cofrade-public-brotherhood-detail-v6/)
 })
 
 
