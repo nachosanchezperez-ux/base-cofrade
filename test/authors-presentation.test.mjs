@@ -22,6 +22,7 @@ test('usa la descripción editorial para oficios todavía no normalizados', () =
 })
 
 test('usa relaciones públicas como fallback cuando falta la disciplina', () => {
+  assert.equal(authorCategoryFor({ relationBreakdown: { dressings: 2 } }).key, 'dressing')
   assert.equal(authorCategoryFor({ relationBreakdown: { marches: 3 } }).key, 'music')
   assert.equal(authorCategoryFor({ relationBreakdown: { images: 2 } }).key, 'imagery')
   assert.equal(authorCategoryFor({ relationBreakdown: { heritage: 2 } }).key, 'patrimony')
@@ -36,5 +37,6 @@ test('el orden de contenidos cambia con la idiosincrasia del oficio', () => {
   assert.deepEqual(authorWorkOrder('music').slice(0, 2), ['marches', 'heritage'])
   assert.deepEqual(authorWorkOrder('imagery').slice(0, 2), ['images', 'heritage'])
   assert.deepEqual(authorWorkOrder('restoration').slice(0, 2), ['heritage', 'images'])
+  assert.deepEqual(authorWorkOrder('dressing').slice(0, 2), ['dressings', 'images'])
   assert.deepEqual(authorWorkOrder('carving').slice(0, 2), ['steps', 'heritage'])
 })
