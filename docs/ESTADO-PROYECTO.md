@@ -16,6 +16,10 @@
 
 **Regla:** San Esteban deja de bloquear la cola. El siguiente caso de contenido debe seguir priorizando demanda orgánica e intención de búsqueda verificables.
 
+**Nuevo frente único · Pastora de Santa Marina:** **ACTIVO · CONTENIDO PUBLICADO · POSTFLIGHT PENDIENTE**. Cuarto caso de la fase de contenido, elegido por oportunidad orgánica: **35 impresiones · 0 clics · posición media 15,7** en 28 días. La guía `Conoce la Pastora de Santa Marina` está publicada en `editorial_content` (id `ace5a4de-4ec2-4f78-9dae-2a4650e316bb`), con tres relaciones de entidad y dos Fuentes institucionales. Explica origen de la advocación, primacía histórica, imagen atribuida a Francisco Antonio Gijón, sedes provisionales, dimensión universal y coronación canónica de 2025. La única puerta pendiente es certificar render productivo, metadata e indexación tras refrescar la caché.
+
+**Regla:** no abrir otra Hermandad de contenido mientras Pastora de Santa Marina permanezca ACTIVO.
+
 **Corte operativo, 27/09/2026:** correcciones públicas de Fuentes de Pasos (#1012) e indexabilidad por patrimonio/incertidumbre (#1014) integradas y verificadas en producción. No mantenerlas como bloqueos abiertos.
 
 **Plataforma verificada:** main `e86ba888c34ad7121be181708a2194815ea78ef2` (#1015, paletas heredadas, también reconciliada); Vercel `dpl_9QaCTZcRowb33vq3rgXyeyWu3gKa` READY sobre ese SHA, aliases hilocofrade.es y www.hilocofrade.es. Supabase ACTIVE_HEALTHY; 17 migraciones. Runtime vigente sin filas error/fatal en consulta de 15 min hasta las 11:00:17 UTC, acotada a la edad del deployment.
