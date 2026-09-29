@@ -4,16 +4,17 @@ import {
   brotherhoodSeoDescription,
   brotherhoodSeoTitle,
   intentSeoTitle,
+  pageTitle,
 } from '../lib/seo.js';
 
 test('brotherhoodSeoTitle añade intención sin perder nombre ni localidad', () => {
   assert.equal(
     brotherhoodSeoTitle({ nombrePopular: 'San Benito', localidad: 'Sevilla' }),
-    'San Benito (Sevilla): titulares, pasos e historia'
+    'San Benito (Sevilla): titulares y pasos'
   );
   assert.equal(
     brotherhoodSeoTitle({ nombrePopular: 'Asunción de Cantillana', localidad: 'Cantillana' }),
-    'Asunción de Cantillana: titulares, pasos e historia'
+    'Asunción de Cantillana: titulares y pasos'
   );
 });
 
@@ -61,4 +62,13 @@ test('brotherhoodSeoDescription ignora placeholders editoriales en el día de sa
   assert.match(description, /^Ficha de prueba en Sevilla: Agrupación Parroquial\./);
   assert.doesNotMatch(description, /Pendiente/i);
   assert.match(description, /Titulares, fuentes documentales\.$/);
+});
+
+
+test('brotherhoodSeoTitle mantiene el title completo por debajo de 60 caracteres cuando hay variante corta', () => {
+  const title = pageTitle(
+    brotherhoodSeoTitle({ nombrePopular: 'El Baratillo', localidad: 'Sevilla' })
+  );
+  assert.equal(title, 'El Baratillo (Sevilla): titulares y pasos · Hilo Cofrade');
+  assert.ok(title.length <= 60);
 });
