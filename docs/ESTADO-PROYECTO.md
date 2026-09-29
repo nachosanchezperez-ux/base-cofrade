@@ -16,9 +16,9 @@
 
 **Regla:** San Esteban deja de bloquear la cola. El siguiente caso de contenido debe seguir priorizando demanda orgánica e intención de búsqueda verificables.
 
-**Nuevo frente único · Pastora de Santa Marina:** **ACTIVO · CONTENIDO PUBLICADO · POSTFLIGHT PENDIENTE**. Cuarto caso de la fase de contenido, elegido por oportunidad orgánica: **35 impresiones · 0 clics · posición media 15,7** en 28 días. La guía `Conoce la Pastora de Santa Marina` está publicada en `editorial_content` (id `ace5a4de-4ec2-4f78-9dae-2a4650e316bb`), con tres relaciones de entidad y dos Fuentes institucionales. Explica origen de la advocación, primacía histórica, imagen atribuida a Francisco Antonio Gijón, sedes provisionales, dimensión universal y coronación canónica de 2025. La única puerta pendiente es certificar render productivo, metadata e indexación tras refrescar la caché.
+**Pastora de Santa Marina · cuarto caso Conoce la Hermandad:** **CERRADO Y CERTIFICADO**. Elegida por oportunidad orgánica: baseline previo **35 impresiones · 0 clics · posición media 15,7** en 28 días. La guía `Conoce la Pastora de Santa Marina` está publicada en `editorial_content` (id `ace5a4de-4ec2-4f78-9dae-2a4650e316bb`), con tres relaciones de entidad y dos Fuentes institucionales. Producción renderiza seis bloques editoriales y dos enlaces internos a Titular y Andas procesionales; el resumen editorial alimenta la meta description. Postflight 29/09/2026: HTTP 200, canonical propia, `index, follow`, title de 55 caracteres, meta description de 153 caracteres, 1 H1, datos estructurados sin errores y Google URL Inspection = **PASS · Submitted and indexed · INDEXING_ALLOWED**. Auditoría on-page: 0 críticas, 0 altas, 0 medias; solo persiste la incidencia baja de 2 imágenes sin alt, integrada en la deuda transversal de accesibilidad.
 
-**Regla:** no abrir otra Hermandad de contenido mientras Pastora de Santa Marina permanezca ACTIVO.
+**Regla:** Pastora de Santa Marina deja de bloquear la cola. El siguiente caso de contenido debe seguir priorizando demanda orgánica e intención de búsqueda verificables.
 
 **Corte operativo, 27/09/2026:** correcciones públicas de Fuentes de Pasos (#1012) e indexabilidad por patrimonio/incertidumbre (#1014) integradas y verificadas en producción. No mantenerlas como bloqueos abiertos.
 
