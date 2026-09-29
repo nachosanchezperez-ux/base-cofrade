@@ -62,8 +62,8 @@ function profileMetrics(agent, categoryKey) {
 
   if (categoryKey === 'dressing') {
     return [
-      { label: 'Trabajos documentados', value: relations.heritage },
-      { label: 'Imágenes relacionadas', value: relations.images },
+      { label: 'Imágenes vestidas', value: relations.dressings },
+      { label: 'Relaciones totales', value: agent.relationCount },
       { label: 'Fuentes directas', value: sources },
     ]
   }
@@ -233,6 +233,11 @@ export default async function AuthorPage({ params }) {
       eyebrow: category.key === 'imagery' ? 'Autoría escultórica' : 'Autoría',
       items: agent.images,
     },
+    dressings: {
+      title: 'Imágenes vestidas',
+      eyebrow: 'Vestimenta documentada',
+      items: agent.dressings,
+    },
     heritage: {
       title: category.key === 'restoration' ? 'Restauraciones e intervenciones' : 'Intervenciones patrimoniales',
       eyebrow: category.key === 'restoration' ? 'Conservación patrimonial' : 'Patrimonio',
@@ -299,7 +304,7 @@ export default async function AuthorPage({ params }) {
           <dl className={styles.identityFacts}>
             <div>
               <dt>Disciplina principal</dt>
-              <dd>{agent.primaryDiscipline || category.label}</dd>
+              <dd>{agent.primaryDiscipline || authorProfileLabel(agent)}</dd>
             </div>
             <div>
               <dt>Tipo de perfil</dt>
