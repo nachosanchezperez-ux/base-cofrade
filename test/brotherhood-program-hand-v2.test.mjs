@@ -46,7 +46,7 @@ test('De un vistazo amplía la portada con actividad anual y datos relacionales'
 
   assert.match(page, /import BrotherhoodOverviewV2 from '@\/components\/BrotherhoodOverviewV2'/)
   assert.match(page, /heroFactLabels=\{heroFacts\.map\(\(fact\) => fact\.label\)\}/)
-  assert.match(page, /href: '#resumen', label: 'Información'/)
+  assert.match(page, /href: '#resumen', label: 'Resumen'/)
   assert.equal(page.includes('key-data-card'), false)
   assert.equal(page.includes('Datos clave'), false)
   assert.equal(page.includes('BrotherhoodSeatSection'), false)
