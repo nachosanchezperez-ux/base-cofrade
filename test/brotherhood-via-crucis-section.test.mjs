@@ -18,14 +18,14 @@ test('el Vía Crucis institucional se separa de las participaciones genéricas s
 test('la ficha dispone de un módulo fijo y reutilizable para el Vía Crucis de las Cofradías', () => {
   assert.doesNotMatch(overview, /BrotherhoodViaCrucisSection/)
   assert.match(page, /BrotherhoodViaCrucisSection/)
-  assert.match(page, /h\.viaCrucisCofradias\?\.length > 0 && \{ href: '#via-crucis-cofradias', label: 'Vía Crucis' \}/)
+  assert.doesNotMatch(page, /href: '#via-crucis-cofradias'/)
   assert.match(section, /id="via-crucis-cofradias"/)
   assert.match(section, /Vía Crucis de las Cofradías/)
   assert.match(section, /Participación institucional/)
 })
 
 test('el Vía Crucis se renderiza después de Historia y antes de la Túnica y las Salidas', () => {
-  const historyIndex = page.indexOf('id="historia"')
+  const historyIndex = page.indexOf('<BrotherhoodHistoryTimeline items={h.cronologia || []} />')
   const viaCrucisIndex = page.indexOf('<BrotherhoodViaCrucisSection items={h.viaCrucisCofradias} />')
   const habitIndex = page.indexOf('id="tunica"')
   const outingsIndex = page.indexOf('<BrotherhoodOutingsSection outings={h.salidas} />')

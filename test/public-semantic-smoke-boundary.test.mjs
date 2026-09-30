@@ -50,7 +50,7 @@ test('la ficha de Hermandad publica un solo acompañamiento musical', async () =
   assert.doesNotMatch(page, /h\.acompanamientoActual\.map/)
   assert.equal((page.match(/id="acompanamiento-musical"/g) || []).length, 0)
   assert.equal((relational.match(/id="acompanamiento-musical"/g) || []).length, 1)
-  assert.match(page, /href:\s*'#acompanamiento-musical'/)
+  assert.doesNotMatch(page, /href:\s*'#acompanamiento-musical'/)
 })
 
 test('Web y redes usa la misma ancla que OfficialLinks', async () => {
@@ -60,7 +60,7 @@ test('Web y redes usa la misma ancla que OfficialLinks', async () => {
   const legacyAnchors = []
 
   assert.match(officialLinks, /id="enlaces-de-interes"/)
-  assert.match(brotherhood, /href:\s*'#enlaces-de-interes'/)
+  assert.doesNotMatch(brotherhood, /href:\s*'#enlaces-de-interes'/)
 
   for (const path of files) {
     const code = await source(path)

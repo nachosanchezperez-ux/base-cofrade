@@ -11,7 +11,7 @@ test('la ficha pública usa módulos propios para cultos y Simpecados', async ()
 
   assert.match(page, /BrotherhoodCultsSection/)
   assert.match(page, /BrotherhoodSimpecadosSection/)
-  assert.match(page, /href: '#simpecados'/)
+  assert.doesNotMatch(page, /href: '#simpecados'/)
   assert.match(page, /@\/lib\/supabase\/brotherhood-page/)
   assert.doesNotMatch(page, /bc-cult-grid/)
 })

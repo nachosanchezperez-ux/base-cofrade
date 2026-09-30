@@ -14,7 +14,7 @@ test('la ficha de Hermandad recupera y enlaza sus igualás y ensayos', async () 
   ])
 
   assert.match(page, /getCrewEventsByBrotherhoodId\(h\.id\)/)
-  assert.match(page, /href: '#igualas-y-ensayos', label: 'Igualás y ensayos'/)
+  assert.doesNotMatch(page, /href: '#igualas-y-ensayos'/)
   assert.match(page, /<BrotherhoodCrewEventsSection events=\{crewEvents\} \/>/)
   assert.match(loader, /\.eq\('brotherhood_entity_id', brotherhoodId\)/)
   assert.match(loader, /export async function getCrewEventsByBrotherhoodId/)

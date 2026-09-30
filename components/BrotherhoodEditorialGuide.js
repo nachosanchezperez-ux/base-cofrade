@@ -1,23 +1,4 @@
-import Link from 'next/link'
 import styles from './BrotherhoodEditorialGuide.module.css'
-
-const ENTITY_PATHS = {
-  brotherhood: 'hermandades',
-  image: 'imagenes',
-  step: 'pasos',
-  band: 'bandas',
-  march: 'marchas',
-  agent: 'autores',
-}
-
-const ENTITY_LABELS = {
-  brotherhood: 'Hermandad',
-  image: 'Titular',
-  step: 'Paso',
-  band: 'Banda',
-  march: 'Marcha',
-  agent: 'Autor',
-}
 
 function normalizedAnchor(value = '') {
   return String(value)
@@ -66,18 +47,10 @@ function guideChapters(value = '') {
   return chapters.filter((chapter) => chapter.title || chapter.paragraphs.length)
 }
 
-function relatedHref(entity) {
-  const segment = ENTITY_PATHS[entity?.entityType]
-  return segment && entity?.slug ? `/${segment}/${entity.slug}` : ''
-}
-
 export default function BrotherhoodEditorialGuide({ guide }) {
   if (!guide?.title || !(guide.summary || guide.body)) return null
 
   const chapters = guideChapters(guide.body)
-  const relatedEntities = (guide.relatedEntities || [])
-    .map((entity) => ({ ...entity, href: relatedHref(entity) }))
-    .filter((entity) => entity.href)
 
   return (
     <section className={styles.section} id="conoce-hermandad" data-hilo-section="brotherhood-editorial-guide">
@@ -97,58 +70,50 @@ export default function BrotherhoodEditorialGuide({ guide }) {
 
         {guide.summary ? <p className={styles.lead}>{guide.summary}</p> : null}
 
-        {chapters.length > 1 ? (
-          <nav className={styles.index} aria-label={`Índice de ${guide.title}`}>
-            <span className={styles.indexLabel}>En esta lectura</span>
-            <ol>
-              {chapters.map((chapter, index) => (
-                chapter.title ? (
-                  <li key={chapter.id}>
-                    <a href={`#${chapter.id}`}>
-                      <b>{String(index + 1).padStart(2, '0')}</b>
-                      <span>{chapter.title}</span>
-                    </a>
-                  </li>
-                ) : null
-              ))}
-            </ol>
-          </nav>
-        ) : null}
-
         {chapters.length > 0 ? (
-          <ol className={styles.chapters}>
-            {chapters.map((chapter, index) => (
-              <li className={styles.chapter} id={chapter.id} key={chapter.id}>
-                <div className={styles.chapterNumber} aria-hidden="true">
-                  {String(index + 1).padStart(2, '0')}
-                </div>
-                <div className={styles.chapterCopy}>
-                  {chapter.title ? <h3>{chapter.title}</h3> : null}
-                  {chapter.paragraphs.map((paragraph, paragraphIndex) => (
-                    <p key={`${chapter.id}-${paragraphIndex}`}>{paragraph}</p>
-                  ))}
-                </div>
-              </li>
-            ))}
-          </ol>
-        ) : null}
+          <details className={styles.disclosure}>
+            <summary>
+              <span>Leer las {chapters.length} claves</span>
+              <small>Una lectura breve para entender la Hermandad</small>
+              <b aria-hidden="true">＋</b>
+            </summary>
 
-        {relatedEntities.length > 0 ? (
-          <nav className={styles.related} aria-label={`Entidades relacionadas con ${guide.title}`}>
-            <div className={styles.relatedHeading}>
-              <small>Sigue el hilo</small>
-              <span>Continúa desde esta lectura hacia las fichas relacionadas.</span>
+            <div className={styles.disclosureBody}>
+              {chapters.length > 1 ? (
+                <nav className={styles.index} aria-label={`Índice de ${guide.title}`}>
+                  <span className={styles.indexLabel}>En esta lectura</span>
+                  <ol>
+                    {chapters.map((chapter, index) => (
+                      chapter.title ? (
+                        <li key={chapter.id}>
+                          <a href={`#${chapter.id}`}>
+                            <b>{String(index + 1).padStart(2, '0')}</b>
+                            <span>{chapter.title}</span>
+                          </a>
+                        </li>
+                      ) : null
+                    ))}
+                  </ol>
+                </nav>
+              ) : null}
+
+              <ol className={styles.chapters}>
+                {chapters.map((chapter, index) => (
+                  <li className={styles.chapter} id={chapter.id} key={chapter.id}>
+                    <div className={styles.chapterNumber} aria-hidden="true">
+                      {String(index + 1).padStart(2, '0')}
+                    </div>
+                    <div className={styles.chapterCopy}>
+                      {chapter.title ? <h3>{chapter.title}</h3> : null}
+                      {chapter.paragraphs.map((paragraph, paragraphIndex) => (
+                        <p key={`${chapter.id}-${paragraphIndex}`}>{paragraph}</p>
+                      ))}
+                    </div>
+                  </li>
+                ))}
+              </ol>
             </div>
-            <div className={styles.relatedGrid}>
-              {relatedEntities.map((entity) => (
-                <Link href={entity.href} key={`${guide.id}-${entity.id}`}>
-                  <span>{ENTITY_LABELS[entity.entityType] || 'Relacionado'}</span>
-                  <strong>{entity.name}</strong>
-                  <b aria-hidden="true">→</b>
-                </Link>
-              ))}
-            </div>
-          </nav>
+          </details>
         ) : null}
 
         {guide.authorName ? (

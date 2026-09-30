@@ -33,7 +33,7 @@ test('la ficha ofrece un acceso directo al bloque compacto de estrenos', () => {
   const page = readFileSync(new URL('../app/hermandades/[slug]/page.js', import.meta.url), 'utf8')
   const component = readFileSync(new URL('../components/BrotherhoodHeritageUpdates.js', import.meta.url), 'utf8')
 
-  assert.match(page, /href: '#estrenos', label: 'Estrenos'/)
+  assert.doesNotMatch(page, /href: '#estrenos'/)
   assert.match(page, /<BrotherhoodHeritageUpdates[\s\S]*?items=\{h\.estrenos\}/)
   assert.match(component, /className=\{`heritage-timeline-block \$\{styles\.section\}`\} id="estrenos"/)
   assert.match(component, /data-heritage-updates="compact"/)
