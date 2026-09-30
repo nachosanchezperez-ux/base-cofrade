@@ -32,11 +32,13 @@ test('la ficha no duplica las salidas extraordinarias en un módulo final', asyn
 test('los datos de salida, paso, música e historia permanecen en sus secciones naturales', async () => {
   const page = await source('app/hermandades/[slug]/page.js')
   const outings = await source('components/BrotherhoodOutingsSection.js')
+  const history = await source('components/BrotherhoodHistoryTimeline.js')
 
   assert.match(page, /id="pasos"/)
   assert.match(page, /BrotherhoodOwnBands/)
   assert.match(page, /BrotherhoodMusicalHeritage/)
-  assert.match(page, /id="historia"/)
+  assert.match(page, /<BrotherhoodHistoryTimeline items=\{h\.cronologia \|\| \[\]\} \/>/)
+  assert.match(history, /id="historia"/)
   assert.match(outings, /id="salidas"/)
 })
 
