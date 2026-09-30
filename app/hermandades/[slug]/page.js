@@ -5,6 +5,7 @@ import BrotherhoodAgendaSection from '@/components/BrotherhoodAgendaSection';
 import BrotherhoodCultsSection from '@/components/BrotherhoodCultsSection';
 import BrotherhoodCrewEventsSection from '@/components/BrotherhoodCrewEventsSection';
 import BrotherhoodHeritageUpdates from '@/components/BrotherhoodHeritageUpdates';
+import BrotherhoodHistoryTimeline from '@/components/BrotherhoodHistoryTimeline';
 import BrotherhoodMusicalHeritage from '@/components/BrotherhoodMusicalHeritage';
 import MusicalRepertoiresSection from '@/components/MusicalRepertoiresSection';
 import BrotherhoodOverviewV2 from '@/components/BrotherhoodOverviewV2';
@@ -390,29 +391,16 @@ export default async function HermandadDetailPage({ params }) {
       />
 
       <EntitySectionNav items={[
-        hasPracticalOverview && { href: '#resumen', label: 'Información' },
-        upcomingAgendaItems.length > 0 && { href: '#agenda', label: 'Agenda' },
+        hasPracticalOverview && { href: '#resumen', label: 'Resumen' },
         h.imagenes?.length > 0 && { href: '#titulares', label: 'Titulares' },
-        h.pasos?.length > 0 && { href: '#pasos', label: 'Pasos' },
-        brotherhoodThreadItems.length > 0 && { href: '#tira-del-hilo', label: 'Conexiones' },
-        documentedCurrentAccompaniments.length > 0 && { href: '#acompanamiento-musical', label: 'Acompañamiento' },
-        (musicalHeritage.length > 0 || fallbackMusicalHeritage.length > 0) && { href: '#musica', label: 'Patrimonio musical' },
-        musicalRepertoires.length > 0 && { href: '#crucetas-musicales', label: 'Crucetas' },
         h.cronologia?.length > 0 && { href: '#historia', label: 'Historia' },
-        h.viaCrucisCofradias?.length > 0 && { href: '#via-crucis-cofradias', label: 'Vía Crucis' },
-        h.habitos?.length > 0 && { href: '#tunica', label: 'Túnica' },
-        h.salidas?.length > 0 && { href: '#salidas', label: 'Salidas' },
-        crewEvents.length > 0 && { href: '#igualas-y-ensayos', label: 'Igualás y ensayos' },
-        h.cultos?.length > 0 && { href: '#cultos', label: 'Cultos' },
-        h.simpecados?.length > 0 && { href: '#simpecados', label: 'Simpecados' },
-        h.cartelesFiestas?.length > 0 && { href: '#carteles', label: 'Carteles' },
+        (musicalHeritage.length > 0 || fallbackMusicalHeritage.length > 0) && { href: '#musica', label: 'Música' },
         h.patrimonio?.length > 0 && { href: '#patrimonio', label: 'Patrimonio' },
-        h.estrenos?.length > 0 && { href: '#estrenos', label: 'Estrenos' },
-        documentedHistoricalAccompaniments.length > 0 && { href: '#acompanamientos', label: 'Histórico musical' },
-        h.noticias?.length > 0 && { href: '#noticias', label: 'Noticias' },
-        h.curiosidades?.length > 0 && { href: '#curiosidades', label: 'Curiosidades' },
-        h.enlacesOficiales?.length > 0 && { href: '#enlaces-de-interes', label: 'Web y redes' },
-        h.fuentesFicha?.length > 0 && { href: '#fuentes', label: 'Fuentes' },
+        upcomingAgendaItems.length > 0
+          ? { href: '#agenda', label: 'Agenda' }
+          : h.cultos?.length > 0
+            ? { href: '#cultos', label: 'Cultos' }
+            : null,
       ]} />
 
       <BrotherhoodOverviewV2
@@ -422,16 +410,7 @@ export default async function HermandadDetailPage({ params }) {
 
       <BrotherhoodAgendaSection items={upcomingAgendaItems} />
 
-      <RelationalThread
-        currentLabel="Hermandad"
-        currentName={h.nombrePopular}
-        currentMeta={[brotherhoodTypeLabel, publicText(h.localidad)].filter(Boolean).join(' · ')}
-        items={brotherhoodThreadItems}
-        priorityProfile="hermandad"
-        eyebrow="Descubre el hilo"
-        title="Conexiones de esta Hermandad"
-        description="Continúa por sus Titulares, pasos, bandas y marchas documentadas. Cada relación abre una nueva ficha sin perder el contexto de la Hermandad de origen."
-      />
+
 
       {h.participacionesConsejo?.length > 0 && (
         <section className="section"><div className="shell">
@@ -604,14 +583,7 @@ export default async function HermandadDetailPage({ params }) {
 
       <MusicalRepertoiresSection items={musicalRepertoires} context="brotherhood" />
 
-      {h.cronologia?.length > 0 && <section className="section history-section" id="historia"><div className="shell">
-        <SectionTitle eyebrow="Cronología" title="Historia" description="Una línea temporal para recorrer los grandes hitos y conectarlos con titulares, pasos y acontecimientos." />
-        <div className="history-timeline">{h.cronologia.map((item) => (
-          <article key={`${item.fecha}-${item.titulo}`}><div className="history-year">{item.fecha}</div><div className="history-line"><span /></div>
-            <div className="history-copy"><h3>{item.titulo}</h3><p>{item.texto}</p>{item.estado && <small>{item.estado}</small>}</div>
-          </article>
-        ))}</div>
-      </div></section>}
+      <BrotherhoodHistoryTimeline items={h.cronologia || []} />
 
       <BrotherhoodViaCrucisSection items={h.viaCrucisCofradias} />
 
@@ -748,6 +720,17 @@ export default async function HermandadDetailPage({ params }) {
         <SectionTitle eyebrow="¿Sabías que…?" title="Curiosidades" description="Datos singulares y divulgativos que solo se publicarán cuando estén documentados." />
         {h.curiosidades.map((c) => <div className="curiosity-card brotherhood-curiosity" key={c.id}><span className="curiosity-mark">?</span><div><span className="eyebrow">{c.categoria}</span><h3>{c.titulo}</h3><p>{c.texto}</p></div></div>)}
       </div></section>}
+
+      <RelationalThread
+        currentLabel="Hermandad"
+        currentName={h.nombrePopular}
+        currentMeta={[brotherhoodTypeLabel, publicText(h.localidad)].filter(Boolean).join(' · ')}
+        items={brotherhoodThreadItems}
+        priorityProfile="hermandad"
+        eyebrow="Descubre el hilo"
+        title="Conexiones de esta Hermandad"
+        description="Continúa por sus Titulares, pasos, bandas y marchas documentadas. Cada relación abre una nueva ficha sin perder el contexto de la Hermandad de origen."
+      />
 
       <OfficialLinks links={h.enlacesOficiales} />
       <SourcesBlock sources={h.fuentesFicha} />
