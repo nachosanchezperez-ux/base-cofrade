@@ -167,7 +167,7 @@ function EventActions({ item }) {
   if (item.category === 'concerts') {
     const visibleBands = (item.bands || []).filter((band) => band.href).slice(0, 3)
     return (
-      <div className={styles.cardActions}>
+      <div className={`${styles.cardActions} ${concertStyles.concertActions}`}>
         {visibleBands.map((band, index) => (
           <Link
             href={band.href}
@@ -219,27 +219,45 @@ function EventActions({ item }) {
   )
 }
 
-function repertoireEntries(value = '') {
-  return String(value)
-    .split('\n')
+function repertoireData(value = '') {
+  const raw = String(value).trim()
+  if (!raw) return { entries: [], presenter: '' }
+
+  const presenterMatch = raw.match(/(?:^|[.;]\s*|\n\s*)Presenta:\s*(.+?)\.?\s*$/i)
+  const presenter = presenterMatch?.[1]?.trim().replace(/\.$/, '') || ''
+  const repertoireText = (presenterMatch ? raw.slice(0, presenterMatch.index) : raw)
+    .trim()
+    .replace(/^repertorio\s*:\s*/i, '')
+
+  const entries = repertoireText
+    .split(/\n|;\s*/)
     .map((line) => line.trim())
     .filter(Boolean)
     .filter((line) => !/^repertorio\s*:?$/i.test(line))
     .map((line, index) => {
-      const isPremiere = /\(estreno\)/i.test(line)
-      const clean = line.replace(/\s*\(estreno\)\s*/i, '').trim()
+      const premiereMatch = line.match(/\((estreno(?: absoluto)?)\)/i)
+      const clean = line
+        .replace(/\s*\(estreno(?: absoluto)?\)\s*/i, ' ')
+        .replace(/^repertorio\s*:\s*/i, '')
+        .trim()
       const [title, ...authorParts] = clean.split(/\s+—\s+/)
+      const author = authorParts.join(' — ').trim().replace(/\.$/, '')
+
       return {
         key: `${index}-${clean}`,
         title: title || clean,
-        author: authorParts.join(' — '),
-        isPremiere,
+        author,
+        premiereLabel: premiereMatch
+          ? premiereMatch[1].replace(/^./, (letter) => letter.toUpperCase())
+          : '',
       }
     })
+
+  return { entries, presenter }
 }
 
 function ConcertRepertoire({ item }) {
-  const entries = repertoireEntries(item.repertoireText)
+  const { entries, presenter } = repertoireData(item.repertoireText)
   if (!entries.length) return null
 
   return (
@@ -256,10 +274,16 @@ function ConcertRepertoire({ item }) {
               <strong>{entry.title}</strong>
               {entry.author ? <span>{entry.author}</span> : null}
             </div>
-            {entry.isPremiere ? <b>Estreno</b> : null}
+            {entry.premiereLabel ? <b>{entry.premiereLabel}</b> : null}
           </li>
         ))}
       </ol>
+      {presenter ? (
+        <p className={concertStyles.repertoirePresenter}>
+          <span>Presenta</span>
+          <strong>{presenter}</strong>
+        </p>
+      ) : null}
     </details>
   )
 }
