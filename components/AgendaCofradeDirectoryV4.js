@@ -9,6 +9,7 @@ import { agendaTemporalRangeDate, withAgendaTemporalDay } from '@/lib/agenda-tem
 import { trackEvent } from '@/lib/analytics/client'
 import styles from './AgendaCofradeDirectoryV4.module.css'
 import concertStyles from './AgendaCofradeDirectoryV4Concerts.module.css'
+import routeStyles from './AgendaCofradeDirectoryV4Routes.module.css'
 import visualStyles from './AgendaCofradeDirectoryV4Visuals.module.css'
 
 const AGENDA_TYPE = 'agenda_cofrade'
@@ -216,6 +217,24 @@ function EventActions({ item }) {
         >Ver calendario</Link>
       ) : null}
     </div>
+  )
+}
+
+function EventRoute({ item }) {
+  const routeText = String(item.routeText || '').trim()
+  if (!routeText) return null
+
+  return (
+    <details className={routeStyles.route}>
+      <summary>
+        <span>Ver recorrido</span>
+        <small>{item.categoryLabel || 'Recorrido'}</small>
+      </summary>
+      <div className={routeStyles.routeBody}>
+        <span className={routeStyles.routeMark} aria-hidden="true">↗</span>
+        <p>{routeText}</p>
+      </div>
+    </details>
   )
 }
 
@@ -612,7 +631,9 @@ export default function AgendaCofradeDirectoryV4({
                           <span><b>Horario</b>{item.timeText || (item.startTime ? `${item.startTime}${item.endTime ? `–${item.endTime}` : ''} h` : 'Por confirmar')}</span>
                           {item.place ? <span><b>Lugar</b>{item.place}</span> : null}
                         </div>
-                        {item.summary ? <p className={styles.routePreview}>{item.summary}</p> : null}
+                        {item.routeText && ['processions', 'transfers', 'rosaries', 'romeries'].includes(item.category)
+                          ? <EventRoute item={item} />
+                          : item.summary ? <p className={styles.routePreview}>{item.summary}</p> : null}
                         {item.category === 'concerts' ? <ConcertRepertoire item={item} /> : null}
                         <EventActions item={item} />
                       </div>
