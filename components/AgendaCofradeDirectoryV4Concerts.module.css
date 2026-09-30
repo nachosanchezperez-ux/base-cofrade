@@ -14,23 +14,46 @@
 .quickTypesSix button.quickTypeConcertActive{border-color:#356b91;background:#356b91;color:#fff}
 .concertCard time{color:#356b91}
 .concertCard [data-category="concerts"]{color:#356b91}
-.repertoire{margin-top:12px;padding-top:10px;border-top:1px solid #e4e7ea}
-.repertoire summary{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:38px;padding:0 11px;border:1px solid #d9e3ea;border-radius:10px;background:#f7fafc;color:#234e6d;font-size:10px;font-weight:850;cursor:pointer;list-style:none}
+.concertActions{margin-top:14px;gap:10px 16px}
+.concertActions a{font-size:12px}
+.repertoire{margin-top:16px;padding-top:14px;border-top:1px solid #e4e7ea}
+.repertoire summary{display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:52px;padding:0 15px;border:1px solid #d9e3ea;border-radius:13px;background:#f7fafc;color:#234e6d;font-size:13px;font-weight:850;cursor:pointer;list-style:none}
 .repertoire summary::-webkit-details-marker{display:none}
-.repertoire summary span{display:flex;align-items:center;gap:7px}
-.repertoire summary span::before{content:'♫';font-size:12px}
-.repertoire summary small{display:flex;align-items:center;gap:8px;color:#6d7d88;font-size:9px;font-weight:750}
-.repertoire summary small::after{content:'+';display:grid;width:21px;height:21px;place-items:center;border-radius:50%;background:#fff;color:#356b91;font-size:15px;line-height:1;box-shadow:0 1px 4px rgba(28,53,74,.08)}
+.repertoire summary span{display:flex;align-items:center;gap:9px}
+.repertoire summary span::before{content:'♫';font-size:16px}
+.repertoire summary small{display:flex;align-items:center;gap:10px;color:#6d7d88;font-size:11px;font-weight:800}
+.repertoire summary small::after{content:'+';display:grid;width:30px;height:30px;place-items:center;border-radius:50%;background:#fff;color:#356b91;font-size:18px;line-height:1;box-shadow:0 1px 5px rgba(28,53,74,.1)}
 .repertoire[open] summary small::after{content:'−'}
-.repertoireList{display:grid;gap:0;margin:8px 0 0;padding:0;border:1px solid #e3e8ec;border-radius:11px;background:#fff;list-style:none;overflow:hidden;counter-reset:repertoire}
-.repertoireItem{counter-increment:repertoire;display:grid;grid-template-columns:28px minmax(0,1fr) auto;align-items:center;gap:10px;padding:9px 11px;border-bottom:1px solid #edf0f2}
+.repertoireList{display:grid;gap:0;margin:11px 0 0;padding:0;border:1px solid #e3e8ec;border-radius:14px;background:#fff;list-style:none;overflow:hidden;counter-reset:repertoire}
+.repertoireItem{counter-increment:repertoire;display:grid;grid-template-columns:36px minmax(0,1fr) auto;align-items:center;gap:13px;padding:14px 15px;border-bottom:1px solid #edf0f2}
 .repertoireItem:last-child{border-bottom:0}
-.repertoireNumber::before{content:counter(repertoire);display:grid;width:24px;height:24px;place-items:center;border-radius:50%;background:#edf4f8;color:#356b91;font-size:8px;font-weight:900}
-.repertoireItem div{display:grid;gap:2px;min-width:0}
-.repertoireItem strong{color:#1e3141;font-family:Georgia,'Times New Roman',serif;font-size:12px;font-weight:600;line-height:1.25}
-.repertoireItem div>span{color:#6d7780;font-size:9px;line-height:1.3}
-.repertoireItem>b{padding:4px 7px;border-radius:999px;background:#f3e7d8;color:#8c5826;font-size:7px;font-weight:900;letter-spacing:.06em;text-transform:uppercase}
+.repertoireNumber::before{content:counter(repertoire);display:grid;width:32px;height:32px;place-items:center;border-radius:50%;background:#edf4f8;color:#356b91;font-size:10px;font-weight:900}
+.repertoireItem div{display:grid;gap:4px;min-width:0}
+.repertoireItem strong{color:#1e3141;font-family:Georgia,'Times New Roman',serif;font-size:16px;font-weight:600;line-height:1.3}
+.repertoireItem div>span{color:#6d7780;font-size:12px;line-height:1.45}
+.repertoireItem>b{padding:5px 8px;border-radius:999px;background:#f3e7d8;color:#8c5826;font-size:9px;font-weight:900;letter-spacing:.055em;text-transform:uppercase;white-space:nowrap}
+.repertoirePresenter{display:flex;align-items:baseline;gap:9px;margin:10px 0 0;padding:11px 14px;border:1px solid #e3e8ec;border-radius:11px;background:#f7fafc;color:#334b5f}
+.repertoirePresenter span{color:#71808c;font-size:9px;font-weight:900;letter-spacing:.09em;text-transform:uppercase}
+.repertoirePresenter strong{font-size:12px;font-weight:800}
 
 @media(max-width:860px){.quickTypesSix{grid-template-columns:repeat(6,minmax(0,1fr))}.quickTypesSix button{grid-column:span 2}.quickTypesSix button:nth-child(n+4){grid-column:span 3}}
-@media(max-width:560px){.quickTypesSix.quickTypesSix button{min-height:62px;padding:10px 11px}.quickTypesSix.quickTypesSix button span{font-size:11px}.quickTypesSix.quickTypesSix button strong{font-size:23px}.repertoire{margin-top:10px;padding-top:9px}.repertoire summary{min-height:40px;padding:0 10px;font-size:10px}.repertoire summary small{font-size:8px}.repertoireItem{grid-template-columns:25px minmax(0,1fr) auto;gap:8px;padding:9px}.repertoireNumber::before{width:22px;height:22px}.repertoireItem strong{font-size:11px}.repertoireItem div>span{font-size:8px}.repertoireItem>b{padding:4px 6px;font-size:6px}}
-@media(max-width:390px){.quickTypesSix{grid-template-columns:repeat(2,minmax(0,1fr))}.quickTypesSix button,.quickTypesSix button:nth-child(n+4){grid-column:auto}}
+@media(max-width:560px){
+.quickTypesSix.quickTypesSix button{min-height:62px;padding:10px 11px}
+.quickTypesSix.quickTypesSix button span{font-size:11px}
+.quickTypesSix.quickTypesSix button strong{font-size:23px}
+.repertoire{margin-top:12px;padding-top:10px}
+.repertoire summary{min-height:46px;padding:0 12px;border-radius:12px;font-size:12px}
+.repertoire summary small{gap:8px;font-size:10px}
+.repertoire summary small::after{width:27px;height:27px;font-size:17px}
+.repertoireList{margin-top:9px;border-radius:12px}
+.repertoireItem{grid-template-columns:30px minmax(0,1fr) auto;gap:10px;padding:11px 10px}
+.repertoireNumber::before{width:28px;height:28px;font-size:9px}
+.repertoireItem strong{font-size:14px;line-height:1.32}
+.repertoireItem div>span{font-size:10.5px;line-height:1.4}
+.repertoireItem>b{padding:4px 6px;font-size:7.5px}
+.repertoirePresenter{align-items:flex-start;flex-direction:column;gap:3px;padding:10px 11px}
+.repertoirePresenter strong{font-size:11px}
+.concertActions{gap:9px 13px}
+.concertActions a{font-size:11px}
+}
+@media(max-width:390px){.quickTypesSix{grid-template-columns:repeat(2,minmax(0,1fr))}.quickTypesSix button,.quickTypesSix button:nth-child(n+4){grid-column:auto}.repertoireItem{grid-template-columns:28px minmax(0,1fr);}.repertoireItem>b{grid-column:2;justify-self:start}}
