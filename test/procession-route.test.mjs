@@ -140,6 +140,28 @@ test('filtra música y conserva hitos de horario dentro del recorrido', () => {
   assert.match(component, /annotation\.label/)
 })
 
+test('separa los horarios de salida y entrada cuando comparten el mismo templo', () => {
+  const route = buildProcessionRoute({
+    origin: 'Capilla de San Andrés',
+    destination: 'Capilla de San Andrés',
+    routeSummary: 'Ida: Capilla de San Andrés, Orfila, Convento de San Leandro. Vuelta: Convento de San Leandro, Orfila, Capilla de San Andrés.',
+    schedule: [
+      { label: 'Salida', time: '10:00', place: 'Capilla de San Andrés' },
+      { label: 'Entrada', time: '21:45', place: 'Capilla de San Andrés' },
+    ],
+  })
+
+  const outboundOrigin = route.legs[0].points[0]
+  const returnEntry = route.legs[1].points.at(-1)
+
+  assert.deepEqual(outboundOrigin.annotations, [
+    { type: 'schedule', label: 'Salida', time: '10:00' },
+  ])
+  assert.deepEqual(returnEntry.annotations, [
+    { type: 'schedule', label: 'Entrada', time: '21:45' },
+  ])
+})
+
 test('expone fases de una jornada compleja sin mezclarlas con las calles', () => {
   const route = buildProcessionRoute({
     route: {
