@@ -165,3 +165,4 @@
  .appointments li { grid-template-columns:1fr; gap:6px; }
 }
 @media(prefers-reduced-motion:reduce) { .reading * { scroll-behavior:auto !important; transition:none !important; } }
+.reading :global(.entity-section-nav-arrow) { min-width:44px; min-height:44px; }

@@ -14,6 +14,10 @@ function Disclosure({ title, count, children, id }) {
   </details>
 }
 
+function ReadingLink({ href, children, ...props }) {
+  return href?.startsWith('#') ? <a href={href} {...props}>{children}</a> : <Link href={href} {...props}>{children}</Link>
+}
+
 function NextAppointment({ item }) {
   if (!item) return null
   const date = new Date(`${item.date}T12:00:00Z`)
@@ -26,7 +30,7 @@ function NextAppointment({ item }) {
     <p className={styles.nextTime}>{item.startTime || item.timeText || 'Hora por confirmar'}</p>
     {route ? <details className={styles.inlineDisclosure}><summary>Recorrido <span aria-hidden="true">+</span></summary><p>{route}</p></details> : null}
     {item.musicSummary ? <p>{item.musicSummary}</p> : null}
-    <Link href={item.href || '#agenda'} className="text-link">{item.href?.startsWith('#') ? 'Consultar salida' : 'Ver detalle'} →</Link>
+    <ReadingLink href={item.href || '#agenda'} className="text-link">{item.href?.startsWith('#') ? 'Consultar salida' : 'Ver detalle'} →</ReadingLink>
   </aside>
 }
 
@@ -79,8 +83,8 @@ export default function BrotherhoodReadingLayout({ brotherhood: h, today, agenda
     </div></section> : null}
     {hasAgenda ? <section className={`section ${styles.area}`} id="agenda"><div className="shell">
       <SectionTitle eyebrow="Vida de hermandad" title="Agenda y cultos" />
-      {next ? <p className={styles.agendaSummary}>Próxima cita: <Link href={next.href}>{next.title}</Link> · <time dateTime={next.date}>{new Intl.DateTimeFormat('es-ES',{day:'numeric',month:'long',timeZone:'Europe/Madrid'}).format(new Date(`${next.date}T12:00:00Z`))}</time></p> : null}
-      {agendaItems.length > 1 ? <Disclosure title="Otras próximas citas" count={agendaItems.length - 1}><ul className={styles.appointments}>{agendaItems.filter(item => item.href !== next?.href).map(item => <li key={item.key}><time dateTime={item.date}>{item.date}</time><Link href={item.href}>{item.title}</Link><strong>{item.startTime || item.timeText || 'Hora por confirmar'}</strong></li>)}</ul></Disclosure> : null}
+      {next ? <p className={styles.agendaSummary}>Próxima cita: <ReadingLink href={next.href}>{next.title}</ReadingLink> · <time dateTime={next.date}>{new Intl.DateTimeFormat('es-ES',{day:'numeric',month:'long',timeZone:'Europe/Madrid'}).format(new Date(`${next.date}T12:00:00Z`))}</time></p> : null}
+      {agendaItems.length > 1 ? <Disclosure title="Otras próximas citas" count={agendaItems.length - 1}><ul className={styles.appointments}>{agendaItems.filter(item => item.href !== next?.href).map(item => <li key={item.key}><time dateTime={item.date}>{item.date}</time><ReadingLink href={item.href}>{item.title}</ReadingLink><strong>{item.startTime || item.timeText || 'Hora por confirmar'}</strong></li>)}</ul></Disclosure> : null}
       {h.salidas?.length ? <Disclosure title="Salidas · ediciones y archivo" count={h.salidas.length} id="archivo-salidas">{slots.outings}</Disclosure> : null}
       {h.cultos?.length ? <Disclosure title="Calendario de cultos y ediciones" count={h.cultos.length}>{slots.cults}</Disclosure> : null}
       {slots.crew}
