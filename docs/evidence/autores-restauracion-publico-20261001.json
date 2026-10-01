@@ -1,0 +1,110 @@
+[
+  {
+    "url": "https://hilocofrade.es/autores",
+    "status": 200,
+    "title": "Autores y oficios cofrades · Hilo Cofrade",
+    "h1": [
+      "Autores y oficios"
+    ],
+    "canonical": "https://hilocofrade.es/autores",
+    "robots": "index, follow",
+    "sitemap_locations": null
+  },
+  {
+    "url": "https://hilocofrade.es/autores?categoria=restauracion",
+    "status": 200,
+    "title": "Restauración y conservación · Autores cofrades · Hilo Cofrade",
+    "h1": [
+      "Restauración y conservación"
+    ],
+    "canonical": "https://hilocofrade.es/autores",
+    "robots": "noindex, follow",
+    "sitemap_locations": null
+  },
+  {
+    "url": "https://hilocofrade.es/sitemaps/autores.xml",
+    "status": 200,
+    "title": null,
+    "h1": [],
+    "canonical": null,
+    "robots": null,
+    "sitemap_locations": 423
+  },
+  {
+    "url": "https://hilocofrade.es/autores/almudena-fernandez-garcia",
+    "status": 200,
+    "title": "Almudena Fernández García · Restaurador / conservador · Hilo Cofrade",
+    "h1": [
+      "Almudena Fernández García"
+    ],
+    "canonical": "https://hilocofrade.es/autores/almudena-fernandez-garcia",
+    "robots": "index, follow",
+    "sitemap_locations": null
+  },
+  {
+    "url": "https://hilocofrade.es/autores/ballesteros-cascajares-conservacion-restauracion",
+    "status": 200,
+    "title": "Ballesteros Cascajares · Conservación & Restauración · Taller de restauración · Hilo Cofrade",
+    "h1": [
+      "Ballesteros Cascajares · Conservación & Restauración"
+    ],
+    "canonical": "https://hilocofrade.es/autores/ballesteros-cascajares-conservacion-restauracion",
+    "robots": "index, follow",
+    "sitemap_locations": null
+  },
+  {
+    "url": "https://hilocofrade.es/autores/cinta-rubio-faure",
+    "status": 200,
+    "title": "Cinta Rubio Faure · Restaurador / conservador · Hilo Cofrade",
+    "h1": [
+      "Cinta Rubio Faure"
+    ],
+    "canonical": "https://hilocofrade.es/autores/cinta-rubio-faure",
+    "robots": "index, follow",
+    "sitemap_locations": null
+  },
+  {
+    "url": "https://hilocofrade.es/autores/francisco-arquillo-de-la-torre",
+    "status": 200,
+    "title": "Francisco Arquillo de la Torre · Autor patrimonial · Hilo Cofrade",
+    "h1": [
+      "Francisco Arquillo de la Torre"
+    ],
+    "canonical": "https://hilocofrade.es/autores/francisco-arquillo-de-la-torre",
+    "robots": "index, follow",
+    "sitemap_locations": null
+  },
+  {
+    "url": "https://hilocofrade.es/autores/instituto-andaluz-patrimonio-historico",
+    "status": 200,
+    "title": "Instituto Andaluz del Patrimonio Histórico · Institución · Hilo Cofrade",
+    "h1": [
+      "Instituto Andaluz del Patrimonio Histórico"
+    ],
+    "canonical": "https://hilocofrade.es/autores/instituto-andaluz-patrimonio-historico",
+    "robots": "index, follow",
+    "sitemap_locations": null
+  },
+  {
+    "url": "https://hilocofrade.es/autores/jose-joaquin-fijo-leon",
+    "status": 200,
+    "title": "José Joaquín Fijo León · Restaurador / conservador · Hilo Cofrade",
+    "h1": [
+      "José Joaquín Fijo León"
+    ],
+    "canonical": "https://hilocofrade.es/autores/jose-joaquin-fijo-leon",
+    "robots": "index, follow",
+    "sitemap_locations": null
+  },
+  {
+    "url": "https://hilocofrade.es/autores/laura-perez-melendez",
+    "status": 200,
+    "title": "Laura Pérez Meléndez · Restaurador / conservador · Hilo Cofrade",
+    "h1": [
+      "Laura Pérez Meléndez"
+    ],
+    "canonical": "https://hilocofrade.es/autores/laura-perez-melendez",
+    "robots": "index, follow",
+    "sitemap_locations": null
+  }
+]
