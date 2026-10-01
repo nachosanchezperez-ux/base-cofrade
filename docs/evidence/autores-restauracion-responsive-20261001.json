@@ -1,0 +1,199 @@
+{
+  "method": "Chromium responsive emulation over a read-only verified HTTPS GET mirror of production; not physical-device or direct mobile HTTPS testing",
+  "candidateCss": false,
+  "navigation": {
+    "from": "/autores?categoria=restauracion",
+    "to": "/autores/francisco-arquillo-de-la-torre",
+    "clientNavigation": true
+  },
+  "results": [
+    {
+      "width": 320,
+      "scrollWidth": 320,
+      "h1": "Restauración y conservación",
+      "breadcrumbs": "INICIO\n→\nAUTORES",
+      "requestedWidth": 320,
+      "path": "/autores?categoria=restauracion",
+      "authorCards": 1,
+      "carouselEnd": {
+        "scrollLeft": 2422,
+        "lastVisible": true
+      }
+    },
+    {
+      "width": 390,
+      "scrollWidth": 390,
+      "h1": "Restauración y conservación",
+      "breadcrumbs": "INICIO\n→\nAUTORES",
+      "requestedWidth": 390,
+      "path": "/autores?categoria=restauracion",
+      "authorCards": 1,
+      "carouselEnd": {
+        "scrollLeft": 2728,
+        "lastVisible": true
+      }
+    },
+    {
+      "width": 430,
+      "scrollWidth": 430,
+      "h1": "Restauración y conservación",
+      "breadcrumbs": "INICIO\n→\nAUTORES",
+      "requestedWidth": 430,
+      "path": "/autores?categoria=restauracion",
+      "authorCards": 1,
+      "carouselEnd": {
+        "scrollLeft": 2688,
+        "lastVisible": true
+      }
+    },
+    {
+      "width": 768,
+      "scrollWidth": 768,
+      "h1": "Restauración y conservación",
+      "breadcrumbs": "INICIO\n→\nAUTORES",
+      "requestedWidth": 768,
+      "path": "/autores?categoria=restauracion",
+      "authorCards": 1
+    },
+    {
+      "width": 1440,
+      "scrollWidth": 1440,
+      "h1": "Restauración y conservación",
+      "breadcrumbs": "INICIO\n→\nAUTORES",
+      "requestedWidth": 1440,
+      "path": "/autores?categoria=restauracion",
+      "authorCards": 1
+    },
+    {
+      "width": 390,
+      "scrollWidth": 390,
+      "h1": "Almudena Fernández García",
+      "breadcrumbs": "INICIO\n→\nAUTORES\n→\nALMUDENA FERNÁNDEZ GARCÍA",
+      "requestedWidth": 390,
+      "path": "/autores/almudena-fernandez-garcia",
+      "sources": [
+        {
+          "url": "https://hermandaddelamparo.com/simpecado-de-gala/",
+          "visible": true
+        },
+        {
+          "url": "https://hermandaddelamparo.com/nuestra-senora-del-amparo/",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "scrollWidth": 390,
+      "h1": "Ballesteros Cascajares · Conservación & Restauración",
+      "breadcrumbs": "INICIO\n→\nAUTORES\n→\nBALLESTEROS CASCAJARES · CONSERVACIÓN & RESTAURACIÓN",
+      "requestedWidth": 390,
+      "path": "/autores/ballesteros-cascajares-conservacion-restauracion",
+      "sources": [
+        {
+          "url": "https://www.hermandadsanesteban.org/reposicion-al-culto-de-nuestro-padre-jesus-de-la-salud-y-buen-viaje/",
+          "visible": true
+        },
+        {
+          "url": "https://www.hermandadsanesteban.org/la-madre-de-los-desamparados-ha-sido-repuesta-al-culto/",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "scrollWidth": 390,
+      "h1": "Cinta Rubio Faure",
+      "breadcrumbs": "INICIO\n→\nAUTORES\n→\nCINTA RUBIO FAURE",
+      "requestedWidth": 390,
+      "path": "/autores/cinta-rubio-faure",
+      "sources": [
+        {
+          "url": "https://www.hermandadsanesteban.org/announcement/restauracion-del-senor-de-la-salud-y-buen-viaje/",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "scrollWidth": 390,
+      "h1": "Francisco Arquillo de la Torre",
+      "breadcrumbs": "INICIO\n→\nAUTORES\n→\nFRANCISCO ARQUILLO DE LA TORRE",
+      "requestedWidth": 390,
+      "path": "/autores/francisco-arquillo-de-la-torre",
+      "sources": [
+        {
+          "url": "https://www.tomares.es/node/9957",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "scrollWidth": 390,
+      "h1": "Instituto Andaluz del Patrimonio Histórico",
+      "breadcrumbs": "INICIO\n→\nAUTORES\n→\nINSTITUTO ANDALUZ DEL PATRIMONIO HISTÓRICO",
+      "requestedWidth": 390,
+      "path": "/autores/instituto-andaluz-patrimonio-historico",
+      "sources": [
+        {
+          "url": "https://www.juntadeandalucia.es/organismos/iaph/servicios/actualidad/noticias/detalle/233216.html",
+          "visible": true
+        },
+        {
+          "url": "https://repositorio.iaph.es/handle/11532/300003",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "scrollWidth": 390,
+      "h1": "José Joaquín Fijo León",
+      "breadcrumbs": "INICIO\n→\nAUTORES\n→\nJOSÉ JOAQUÍN FIJO LEÓN",
+      "requestedWidth": 390,
+      "path": "/autores/jose-joaquin-fijo-leon",
+      "sources": [
+        {
+          "url": "https://hermandaddelamparo.com/simpecado-de-gala/",
+          "visible": true
+        },
+        {
+          "url": "https://hermandaddelamparo.com/nuestra-senora-del-amparo/",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "scrollWidth": 390,
+      "h1": "Laura Pérez Meléndez",
+      "breadcrumbs": "INICIO\n→\nAUTORES\n→\nLAURA PÉREZ MELÉNDEZ",
+      "requestedWidth": 390,
+      "path": "/autores/laura-perez-melendez",
+      "sources": [
+        {
+          "url": "https://www.lauraperezrestauradora.com/",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "scrollWidth": 1440,
+      "h1": "Francisco Arquillo de la Torre",
+      "breadcrumbs": "INICIO\n→\nAUTORES\n→\nFRANCISCO ARQUILLO DE LA TORRE",
+      "requestedWidth": 1440,
+      "path": "/autores/francisco-arquillo-de-la-torre"
+    },
+    {
+      "width": 1440,
+      "scrollWidth": 1440,
+      "h1": "Instituto Andaluz del Patrimonio Histórico",
+      "breadcrumbs": "INICIO\n→\nAUTORES\n→\nINSTITUTO ANDALUZ DEL PATRIMONIO HISTÓRICO",
+      "requestedWidth": 1440,
+      "path": "/autores/instituto-andaluz-patrimonio-historico"
+    }
+  ],
+  "pageErrors": []
+}
