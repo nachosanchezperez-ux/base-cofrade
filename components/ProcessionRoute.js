@@ -30,7 +30,7 @@ function roleLabel(role, legId, circuit) {
 
 function RouteLeg({ leg, route, dense = false }) {
   const lastIndex = leg.points.length - 1
-  const visiblePoints = leg.points.filter((point, index) => {
+  const filteredPoints = leg.points.filter((point, index) => {
     const hasAnnotations = Boolean(point.annotations?.length)
     if (hasAnnotations) return true
 
@@ -43,6 +43,7 @@ function RouteLeg({ leg, route, dense = false }) {
 
     return true
   })
+  const visiblePoints = filteredPoints.length ? filteredPoints : leg.points
 
   return (
     <article className={styles.legCard} data-dense={dense ? 'true' : undefined}>
@@ -194,7 +195,11 @@ export default function ProcessionRoute({ route }) {
         <div className={styles.routeOverview}>
           <div>
             <span>Itinerario</span>
-            <strong>{totalPoints || '—'} {totalPoints === 1 ? 'punto documentado' : 'puntos documentados'}</strong>
+            <strong>
+              {totalPoints
+                ? `${totalPoints} ${totalPoints === 1 ? 'punto documentado' : 'puntos documentados'}`
+                : `${route.phases?.length || 0} ${route.phases?.length === 1 ? 'fase documentada' : 'fases documentadas'}`}
+            </strong>
           </div>
           <small>{legs.length > 1 ? `${legs.length} tramos` : legs.length === 1 ? 'Secuencia completa' : 'Jornada estructurada'}</small>
         </div>
