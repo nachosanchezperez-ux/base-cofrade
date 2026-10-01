@@ -1,5 +1,6 @@
 import SectionTitle from '@/components/SectionTitle'
 import styles from './BrotherhoodHistoryTimeline.module.css'
+import { representativeHistory } from '@/lib/brotherhood-reading'
 
 function previewIndexes(length, count = 5) {
   if (length <= count) return Array.from({ length }, (_, index) => index)
@@ -15,10 +16,10 @@ function previewIndexes(length, count = 5) {
   return [...new Set(raw)].slice(0, count)
 }
 
-export default function BrotherhoodHistoryTimeline({ items = [] }) {
+export default function BrotherhoodHistoryTimeline({ items = [], semanticPreview = false }) {
   if (!items.length) return null
 
-  const preview = previewIndexes(items.length).map((index) => items[index])
+  const preview = semanticPreview ? representativeHistory(items) : previewIndexes(items.length).map((index) => items[index])
 
   return (
     <section className="section history-section" id="historia">
@@ -44,7 +45,7 @@ export default function BrotherhoodHistoryTimeline({ items = [] }) {
               <summary>
                 <span>Ver cronología completa</span>
                 <small>{items.length} hitos documentados</small>
-                <b aria-hidden="true">＋</b>
+                <b aria-hidden="true">+</b>
               </summary>
 
               <div className="history-timeline">

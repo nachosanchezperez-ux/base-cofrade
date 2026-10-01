@@ -1,5 +1,7 @@
 # Hilo Cofrade · Estado canónico
 
+**1/10/2026 · Lectura de Hermandades · ACTIVO:** publicación autorizada del piloto El Baratillo tras QA de preview (#1055). Preflight main `4da1794a`, producción `dpl_3uFZWKyiJabTvGiyjzTnTnTE8f9f` READY; Supabase ACTIVE_HEALTHY. Se prepara activación por ID de entidad, sin condición por slug ni extensión a otras Hermandades. Los datos no se modifican. El PASS anterior corresponde al laboratorio; la URL pública requiere preview y postflight propios. #1019 permanece aparcada. [Evidencia del laboratorio](./HERMANDAD-LABORATORIO-LECTURA-2026-10-01.md).
+
 **Autores · primer lote Vestidores, 01/10/2026: CERRADO Y CERTIFICADO con QA responsive emulado.** #1051 y #1056 publicadas; producción `dpl_8pwqukkRBJHHBFXBeGrQsnNu76fX` READY sobre `6265f0acb7e6c30867cc75db74e5db0beaa67ce9`. Nueve INSERT preservados; 422 autores elegibles y siete Vestidores; sitemap, titles y categoría/principal verificados. La revisión emulada en 320/390/430/768/1440 px elimina el desbordamiento de 2 px y verifica navegación y Fuente. No equivale a prueba en teléfono físico o HTTPS móvil directo. [Cierre y evidencia](./AUTORES-VESTIDORES-POSTFLIGHT-2026-10-01.md). Siguiente frente en cola: auditoría de Restauración; no reejecutar el lote ni inferir oficios a partir de una intervención.
 
 **Corte operativo, 29/09/2026 · profundización editorial:** `main = 05c7df9fa36b2f0b2a66f6941cdf6e3a9566f641`; producción `dpl_G9ncL9kHfCQ6yQXH1neaDL7FAX6L` READY sobre ese SHA, con aliases `hilocofrade.es` y `www.hilocofrade.es`. Supabase ACTIVE_HEALTHY.

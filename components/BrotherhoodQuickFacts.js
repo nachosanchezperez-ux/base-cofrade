@@ -188,7 +188,7 @@ async function loadRelationalFacts(brotherhood) {
   }
 }
 
-export default async function BrotherhoodQuickFacts({ brotherhood }) {
+export default async function BrotherhoodQuickFacts({ brotherhood, heroFactLabels = [], compact = false }) {
   let relational = { head: null, dressers: [], membership: null, recurringSeries: [] }
 
   try {
@@ -223,9 +223,10 @@ export default async function BrotherhoodQuickFacts({ brotherhood }) {
       value: relational.head.name,
       meta: relational.head.period,
     } : null,
-  ].filter(Boolean)
+  ].filter(Boolean).filter((fact) => !compact || !heroFactLabels.includes(fact.label))
 
   if (!facts.length && !activities.length && !relational.dressers.length) return null
+  const DresserContainer = compact ? 'details' : 'div'
 
   return (
     <div className={styles.wrapper}>
@@ -247,7 +248,7 @@ export default async function BrotherhoodQuickFacts({ brotherhood }) {
         </dl>
       ) : null}
 
-      {activities.length ? (
+      {activities.length && !compact ? (
         <div className={styles.activities}>
           <div className={styles.blockTitle}>
             <span>Actividad anual habitual</span>
@@ -265,7 +266,8 @@ export default async function BrotherhoodQuickFacts({ brotherhood }) {
       ) : null}
 
       {relational.dressers.length ? (
-        <div className={styles.dressers}>
+        <DresserContainer className={styles.dressers}>
+          {compact && <summary>Vestidores actuales · {relational.dressers.length}</summary>}
           <div className={styles.blockTitle}>
             <span>Vestidores actuales</span>
             <small>Vinculación documentada con los Titulares</small>
@@ -285,7 +287,7 @@ export default async function BrotherhoodQuickFacts({ brotherhood }) {
               </div>
             ))}
           </div>
-        </div>
+        </DresserContainer>
       ) : null}
     </div>
   )

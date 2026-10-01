@@ -46,7 +46,7 @@ function EventList({ events }) {
   return <div className={styles.list}>{events.map((event) => <EventCard key={event.id} event={event} />)}</div>
 }
 
-export default function BrotherhoodCrewEventsSection({ events = [] }) {
+export default function BrotherhoodCrewEventsSection({ events = [], collapseHistory = false }) {
   if (!events.length) return null
 
   const upcoming = events.filter((event) => event.isUpcoming)
@@ -73,7 +73,7 @@ export default function BrotherhoodCrewEventsSection({ events = [] }) {
           ) : null}
 
           {historical.length ? (
-            <details className={styles.history} open={!upcoming.length}>
+            <details className={styles.history} open={!collapseHistory && !upcoming.length}>
               <summary>
                 <span>Histórico de convocatorias</span>
                 <strong>{historical.length}</strong>

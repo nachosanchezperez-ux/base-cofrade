@@ -7,7 +7,7 @@ const DISCOVERABLE_SECTIONS = [
   { href: '#musica', label: 'Patrimonio musical' },
 ];
 
-export default function EntitySectionNav({ items = [] }) {
+export default function EntitySectionNav({ items = [], discover = true, revealDisclosures = false }) {
   const visibleItems = useMemo(
     () => items.filter((item) => item?.href && item?.label),
     [items]
@@ -18,13 +18,40 @@ export default function EntitySectionNav({ items = [] }) {
   const scrollRef = useRef(null);
 
   useEffect(() => {
+    if (!revealDisclosures) return undefined;
+    function reveal(hash) {
+      if (!hash?.startsWith('#')) return;
+      const target = document.getElementById(decodeURIComponent(hash.slice(1)));
+      if (!target?.closest('main')) return;
+      let ancestor = target.parentElement;
+      while (ancestor) {
+        if (ancestor.tagName === 'DETAILS') ancestor.open = true;
+        ancestor = ancestor.parentElement;
+      }
+      return target;
+    }
+    const onClick = (event) => {
+      const link = event.target.closest('a[href^="#"]');
+      if (link?.closest('main')) reveal(link.getAttribute('href'));
+    };
+    const onHash = () => reveal(window.location.hash)?.scrollIntoView({ block: 'start' });
+    document.addEventListener('click', onClick, true);
+    window.addEventListener('hashchange', onHash);
+    if (window.location.hash) onHash();
+    return () => {
+      document.removeEventListener('click', onClick, true);
+      window.removeEventListener('hashchange', onHash);
+    };
+  }, [revealDisclosures]);
+
+  useEffect(() => {
     const existingHrefs = new Set(visibleItems.map((item) => item.href));
-    const discovered = DISCOVERABLE_SECTIONS.filter((item) => (
+    const discovered = discover ? DISCOVERABLE_SECTIONS.filter((item) => (
       !existingHrefs.has(item.href) && document.querySelector(item.href)
-    ));
+    )) : [];
 
     setDiscoveredItems(discovered);
-  }, [visibleItems]);
+  }, [visibleItems, discover]);
 
   const navigationItems = useMemo(
     () => [...visibleItems, ...discoveredItems],
@@ -107,8 +134,12 @@ export default function EntitySectionNav({ items = [] }) {
   useEffect(() => {
     const element = scrollRef.current;
     const activeLink = element?.querySelector(`a[href="${activeHref}"]`);
-    activeLink?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-  }, [activeHref]);
+    if (revealDisclosures && activeLink && element) {
+      element.scrollTo({ left: activeLink.offsetLeft - element.clientWidth / 2 + activeLink.offsetWidth / 2, behavior: 'smooth' });
+    } else {
+      activeLink?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+  }, [activeHref, revealDisclosures]);
 
   function moveFocus(event, currentIndex) {
     const keys = ['ArrowLeft', 'ArrowRight', 'Home', 'End'];

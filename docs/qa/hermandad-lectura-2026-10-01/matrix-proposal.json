@@ -1,0 +1,372 @@
+{
+  "status": 200,
+  "errors": [],
+  "results": [
+    {
+      "width": 390,
+      "total": 11069,
+      "overflow": 0,
+      "h1": 1,
+      "hero": 341,
+      "titulares": 1538,
+      "historia": 4962,
+      "menus": [
+        "Resumen",
+        "Titulares",
+        "Historia",
+        "Música",
+        "Patrimonio",
+        "Agenda / Cultos"
+      ],
+      "open": 1,
+      "duplicateIds": [],
+      "canonical": "https://hilocofrade.es/hermandades/el-baratillo",
+      "robots": "noindex, follow",
+      "headings": [
+        "La Hermandad en breve",
+        "Conoce El Baratillo",
+        "Sagrados Titulares",
+        "Pasos procesionales",
+        "Historia",
+        "Vía Crucis de las Cofradías",
+        "Música",
+        "Patrimonio",
+        "Túnica",
+        "Agenda y cultos",
+        "Salidas",
+        "Conexiones de esta Hermandad",
+        "Sigue tirando del hilo",
+        "Enlaces de interés",
+        "Fuentes"
+      ],
+      "sources": 18,
+      "completeHistory": 15,
+      "compositions": "39 composiciones documentadas",
+      "brokenImages": 0,
+      "schema": [
+        "Organization",
+        "WebSite",
+        "BreadcrumbList",
+        "Organization",
+        "WebPage"
+      ],
+      "title": "El Baratillo (Sevilla): titulares y pasos · Hilo Cofrade",
+      "description": "El Baratillo, Hermandad de Penitencia de Sevilla, se entiende desde la devoción a la Santa Cruz y a la Piedad, su transformación histórica y su arraigo en el…",
+      "historyNav": {
+        "active": "Historia",
+        "top": 198.046875
+      },
+      "historyOpens": true,
+      "hitos": 15,
+      "nextLink": {
+        "open": true,
+        "top": 205.78125
+      }
+    },
+    {
+      "width": 430,
+      "total": 10732,
+      "overflow": 0,
+      "h1": 1,
+      "hero": 345,
+      "titulares": 1548,
+      "historia": 4795,
+      "menus": [
+        "Resumen",
+        "Titulares",
+        "Historia",
+        "Música",
+        "Patrimonio",
+        "Agenda / Cultos"
+      ],
+      "open": 1,
+      "duplicateIds": [],
+      "canonical": "https://hilocofrade.es/hermandades/el-baratillo",
+      "robots": "noindex, follow",
+      "headings": [
+        "La Hermandad en breve",
+        "Conoce El Baratillo",
+        "Sagrados Titulares",
+        "Pasos procesionales",
+        "Historia",
+        "Vía Crucis de las Cofradías",
+        "Música",
+        "Patrimonio",
+        "Túnica",
+        "Agenda y cultos",
+        "Salidas",
+        "Conexiones de esta Hermandad",
+        "Sigue tirando del hilo",
+        "Enlaces de interés",
+        "Fuentes"
+      ],
+      "sources": 18,
+      "completeHistory": 15,
+      "compositions": "39 composiciones documentadas",
+      "brokenImages": 0,
+      "schema": [
+        "Organization",
+        "WebSite",
+        "BreadcrumbList",
+        "Organization",
+        "WebPage"
+      ],
+      "title": "El Baratillo (Sevilla): titulares y pasos · Hilo Cofrade",
+      "description": "El Baratillo, Hermandad de Penitencia de Sevilla, se entiende desde la devoción a la Santa Cruz y a la Piedad, su transformación histórica y su arraigo en el…",
+      "historyNav": {
+        "active": "Historia",
+        "top": 199.359375
+      },
+      "historyOpens": true,
+      "hitos": 15,
+      "nextLink": {
+        "open": true,
+        "top": 200.40625
+      }
+    },
+    {
+      "width": 768,
+      "total": 8825,
+      "overflow": 0,
+      "h1": 1,
+      "hero": 398,
+      "titulares": 1297,
+      "historia": 3307,
+      "menus": [
+        "Resumen",
+        "Titulares",
+        "Historia",
+        "Música",
+        "Patrimonio",
+        "Agenda / Cultos"
+      ],
+      "open": 1,
+      "duplicateIds": [],
+      "canonical": "https://hilocofrade.es/hermandades/el-baratillo",
+      "robots": "noindex, follow",
+      "headings": [
+        "La Hermandad en breve",
+        "Conoce El Baratillo",
+        "Sagrados Titulares",
+        "Pasos procesionales",
+        "Historia",
+        "Vía Crucis de las Cofradías",
+        "Música",
+        "Patrimonio",
+        "Túnica",
+        "Agenda y cultos",
+        "Salidas",
+        "Conexiones de esta Hermandad",
+        "Sigue tirando del hilo",
+        "Enlaces de interés",
+        "Fuentes"
+      ],
+      "sources": 18,
+      "completeHistory": 15,
+      "compositions": "39 composiciones documentadas",
+      "brokenImages": 0,
+      "schema": [
+        "Organization",
+        "WebSite",
+        "BreadcrumbList",
+        "Organization",
+        "WebPage"
+      ],
+      "title": "El Baratillo (Sevilla): titulares y pasos · Hilo Cofrade",
+      "description": "El Baratillo, Hermandad de Penitencia de Sevilla, se entiende desde la devoción a la Santa Cruz y a la Piedad, su transformación histórica y su arraigo en el…",
+      "historyNav": {
+        "active": "Historia",
+        "top": 200.3125
+      },
+      "historyOpens": true,
+      "hitos": 15,
+      "nextLink": {
+        "open": true,
+        "top": 208.09375
+      }
+    },
+    {
+      "width": 1024,
+      "total": 7669,
+      "overflow": 0,
+      "h1": 1,
+      "hero": 398,
+      "titulares": 1281,
+      "historia": 3135,
+      "menus": [
+        "Resumen",
+        "Titulares",
+        "Historia",
+        "Música",
+        "Patrimonio",
+        "Agenda / Cultos"
+      ],
+      "open": 1,
+      "duplicateIds": [],
+      "canonical": "https://hilocofrade.es/hermandades/el-baratillo",
+      "robots": "noindex, follow",
+      "headings": [
+        "La Hermandad en breve",
+        "Conoce El Baratillo",
+        "Sagrados Titulares",
+        "Pasos procesionales",
+        "Historia",
+        "Vía Crucis de las Cofradías",
+        "Música",
+        "Patrimonio",
+        "Túnica",
+        "Agenda y cultos",
+        "Salidas",
+        "Conexiones de esta Hermandad",
+        "Sigue tirando del hilo",
+        "Enlaces de interés",
+        "Fuentes"
+      ],
+      "sources": 18,
+      "completeHistory": 15,
+      "compositions": "39 composiciones documentadas",
+      "brokenImages": 0,
+      "schema": [
+        "Organization",
+        "WebSite",
+        "BreadcrumbList",
+        "Organization",
+        "WebPage"
+      ],
+      "title": "El Baratillo (Sevilla): titulares y pasos · Hilo Cofrade",
+      "description": "El Baratillo, Hermandad de Penitencia de Sevilla, se entiende desde la devoción a la Santa Cruz y a la Piedad, su transformación histórica y su arraigo en el…",
+      "historyNav": {
+        "active": "Historia",
+        "top": 200.671875
+      },
+      "historyOpens": true,
+      "hitos": 15,
+      "nextLink": {
+        "open": true,
+        "top": 208.671875
+      }
+    },
+    {
+      "width": 1366,
+      "total": 7507,
+      "overflow": 0,
+      "h1": 1,
+      "hero": 398,
+      "titulares": 1281,
+      "historia": 3021,
+      "menus": [
+        "Resumen",
+        "Titulares",
+        "Historia",
+        "Música",
+        "Patrimonio",
+        "Agenda / Cultos"
+      ],
+      "open": 1,
+      "duplicateIds": [],
+      "canonical": "https://hilocofrade.es/hermandades/el-baratillo",
+      "robots": "noindex, follow",
+      "headings": [
+        "La Hermandad en breve",
+        "Conoce El Baratillo",
+        "Sagrados Titulares",
+        "Pasos procesionales",
+        "Historia",
+        "Vía Crucis de las Cofradías",
+        "Música",
+        "Patrimonio",
+        "Túnica",
+        "Agenda y cultos",
+        "Salidas",
+        "Conexiones de esta Hermandad",
+        "Sigue tirando del hilo",
+        "Enlaces de interés",
+        "Fuentes"
+      ],
+      "sources": 18,
+      "completeHistory": 15,
+      "compositions": "39 composiciones documentadas",
+      "brokenImages": 0,
+      "schema": [
+        "Organization",
+        "WebSite",
+        "BreadcrumbList",
+        "Organization",
+        "WebPage"
+      ],
+      "title": "El Baratillo (Sevilla): titulares y pasos · Hilo Cofrade",
+      "description": "El Baratillo, Hermandad de Penitencia de Sevilla, se entiende desde la devoción a la Santa Cruz y a la Piedad, su transformación histórica y su arraigo en el…",
+      "historyNav": {
+        "active": "Historia",
+        "top": 201.78125
+      },
+      "historyOpens": true,
+      "hitos": 15,
+      "nextLink": {
+        "open": true,
+        "top": 203.578125
+      }
+    },
+    {
+      "width": 1600,
+      "total": 7507,
+      "overflow": 0,
+      "h1": 1,
+      "hero": 398,
+      "titulares": 1281,
+      "historia": 3021,
+      "menus": [
+        "Resumen",
+        "Titulares",
+        "Historia",
+        "Música",
+        "Patrimonio",
+        "Agenda / Cultos"
+      ],
+      "open": 1,
+      "duplicateIds": [],
+      "canonical": "https://hilocofrade.es/hermandades/el-baratillo",
+      "robots": "noindex, follow",
+      "headings": [
+        "La Hermandad en breve",
+        "Conoce El Baratillo",
+        "Sagrados Titulares",
+        "Pasos procesionales",
+        "Historia",
+        "Vía Crucis de las Cofradías",
+        "Música",
+        "Patrimonio",
+        "Túnica",
+        "Agenda y cultos",
+        "Salidas",
+        "Conexiones de esta Hermandad",
+        "Sigue tirando del hilo",
+        "Enlaces de interés",
+        "Fuentes"
+      ],
+      "sources": 18,
+      "completeHistory": 15,
+      "compositions": "39 composiciones documentadas",
+      "brokenImages": 0,
+      "schema": [
+        "Organization",
+        "WebSite",
+        "BreadcrumbList",
+        "Organization",
+        "WebPage"
+      ],
+      "title": "El Baratillo (Sevilla): titulares y pasos · Hilo Cofrade",
+      "description": "El Baratillo, Hermandad de Penitencia de Sevilla, se entiende desde la devoción a la Santa Cruz y a la Piedad, su transformación histórica y su arraigo en el…",
+      "historyNav": {
+        "active": "Historia",
+        "top": 201.78125
+      },
+      "historyOpens": true,
+      "hitos": 15,
+      "nextLink": {
+        "open": true,
+        "top": 203.578125
+      }
+    }
+  ]
+}

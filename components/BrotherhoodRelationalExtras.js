@@ -428,7 +428,8 @@ function BrotherhoodDiscoveryPaths({ brotherhoodName, data }) {
   )
 }
 
-function CurrentMusicSequence({ items }) {
+function CurrentMusicSequence({ items, nested = false }) {
+  const Heading = nested ? 'h3' : 'h2'
   if (!items.length) return null
 
   const groups = groupCurrentAccompaniments(items)
@@ -439,7 +440,7 @@ function CurrentMusicSequence({ items }) {
         <div className={styles.header}>
           <div className={styles.copy}>
             <span className="eyebrow">Música procesional</span>
-            <h2>Acompañamiento musical</h2>
+            <Heading>Acompañamiento musical</Heading>
             <p>Las formaciones vinculadas actualmente a la Hermandad, organizadas según la salida concreta a la que acompaña cada una.</p>
             <div className={styles.context}>
               <span>{items.length} {items.length === 1 ? 'formación' : 'formaciones'} · {groups.length} {groups.length === 1 ? 'salida' : 'salidas'}</span>
@@ -499,15 +500,15 @@ function CurrentMusicSequence({ items }) {
   )
 }
 
-export async function BrotherhoodOwnBands({ brotherhoodId }) {
+export async function BrotherhoodOwnBands({ brotherhoodId, musicOnly = false }) {
   try {
     const supabase = createPublicClient()
     const [bands, threadData, currentAccompaniments] = await Promise.all([
       loadOwnBands(supabase, brotherhoodId),
-      loadBrotherhoodThreadData(supabase, brotherhoodId),
+      musicOnly ? Promise.resolve({ brotherhood: null, images: [], steps: [] }) : loadBrotherhoodThreadData(supabase, brotherhoodId),
       loadCurrentAccompaniments(supabase, brotherhoodId),
     ])
-    const discoveryData = await loadBrotherhoodDiscoveryData(
+    const discoveryData = musicOnly ? {} : await loadBrotherhoodDiscoveryData(
       supabase,
       brotherhoodId,
       threadData,
@@ -563,22 +564,22 @@ export async function BrotherhoodOwnBands({ brotherhoodId }) {
 
     return (
       <>
-        <RelationalThread
+        {!musicOnly && <RelationalThread
           currentLabel="Hermandad"
           currentName={brotherhoodName}
           currentMeta={meta}
           items={threadItems}
           title="La Hermandad como nodo de la enciclopedia"
           description="Tira del hilo hacia sus imágenes, sus pasos y su música vinculada. Los vínculos institucionales y los acompañamientos actuales se etiquetan de forma distinta para no confundir pertenencia con contrato procesional."
-        />
+        />}
 
-        <BrotherhoodDiscoveryPaths brotherhoodName={brotherhoodName} data={discoveryData} />
+        {!musicOnly && <BrotherhoodDiscoveryPaths brotherhoodName={brotherhoodName} data={discoveryData} />}
 
         {bands.length ? (
           <section className="section brotherhood-soft" id="bandas-propias">
             <div className="shell">
               <span className="eyebrow">Vínculo institucional</span>
-              <h2>Bandas de la Hermandad</h2>
+              {musicOnly ? <h3>Bandas de la Hermandad</h3> : <h2>Bandas de la Hermandad</h2>}
               <p className="body-large">Formaciones vinculadas institucionalmente a la Hermandad, con independencia de sus acompañamientos procesionales concretos.</p>
               <div className="current-music-grid">
                 {bands.map((band) => (
@@ -594,11 +595,26 @@ export async function BrotherhoodOwnBands({ brotherhoodId }) {
           </section>
         ) : null}
 
-        <CurrentMusicSequence items={currentAccompaniments} />
+        <CurrentMusicSequence items={currentAccompaniments} nested={musicOnly} />
       </>
     )
   } catch (error) {
     console.error('[Hilo Cofrade] No se pudieron mostrar las relaciones principales de la hermandad', error)
+    return null
+  }
+}
+
+export async function BrotherhoodReadingDiscovery({ brotherhoodId }) {
+  try {
+    const supabase = createPublicClient()
+    const [thread, music] = await Promise.all([
+      loadBrotherhoodThreadData(supabase, brotherhoodId),
+      loadCurrentAccompaniments(supabase, brotherhoodId),
+    ])
+    const data = await loadBrotherhoodDiscoveryData(supabase, brotherhoodId, thread, music)
+    return <BrotherhoodDiscoveryPaths brotherhoodName={thread.brotherhood?.name || 'Hermandad'} data={data} />
+  } catch (error) {
+    console.error('[Hilo Cofrade] No se pudieron mostrar las rutas de descubrimiento', error)
     return null
   }
 }

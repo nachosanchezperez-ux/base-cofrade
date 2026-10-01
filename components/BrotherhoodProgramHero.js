@@ -5,6 +5,7 @@ import EntityVisualFallback from './EntityVisualFallback'
 import SiteBreadcrumb from './SiteBreadcrumb'
 import styles from './BrotherhoodProgramHero.module.css'
 import corporateStyles from './BrotherhoodProgramHeroCorporate.module.css'
+import readingHeroStyles from './BrotherhoodReadingHero.module.css'
 
 function isWikimediaUpload(photoSrc = '') {
   try {
@@ -35,6 +36,7 @@ export default function BrotherhoodProgramHero({
   breadcrumbItems = [],
   facts = [],
   media = {},
+  compact = false,
 }) {
   const visibleFacts = facts.filter((fact) => fact?.label && fact?.value).slice(0, 4)
   const hasPhoto = Boolean(media.photoSrc)
@@ -58,7 +60,7 @@ export default function BrotherhoodProgramHero({
 
   return (
     <section
-      className={`${styles.hero} ${corporateStyles.corporateHero} ${hasPhoto ? styles.hasPhoto : styles.noPhoto} ${resolvedFit === 'contain' ? styles.contained : styles.covered}`}
+      className={`${styles.hero} ${corporateStyles.corporateHero} ${compact ? readingHeroStyles.hero : ''} ${hasPhoto ? styles.hasPhoto : styles.noPhoto} ${resolvedFit === 'contain' ? styles.contained : styles.covered}`}
       aria-labelledby="brotherhood-program-title"
       style={heroStyle}
     >
@@ -125,7 +127,7 @@ export default function BrotherhoodProgramHero({
           </div>
 
           {context ? <p className={styles.context}>{context}</p> : null}
-          {officialName ? <p className={styles.officialName}>{officialName}</p> : null}
+          {officialName ? (compact ? <details className={readingHeroStyles.official}><summary>Nombre oficial <span aria-hidden="true">+</span></summary><p>{officialName}</p></details> : <p className={styles.officialName}>{officialName}</p>) : null}
 
           {visibleFacts.length ? (
             <dl className={`${styles.facts} ${corporateStyles.corporateFacts}`} data-count={visibleFacts.length}>

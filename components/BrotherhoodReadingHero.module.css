@@ -1,0 +1,35 @@
+.hero {
+  min-height: 0 !important;
+  border-bottom-width: 3px;
+}
+.hero :global([class*='__shell']) { padding-block: 22px 32px; }
+.hero :global([class*='__content']) { padding: 32px 0 0; width: min(100%, 900px); }
+.hero :global([class*='__identityLockup']) { grid-template-columns: 108px minmax(0, 1fr); gap: 24px; }
+.hero :global([class*='__crest']) { width: 108px; height: 126px; }
+.hero :global([class*='__identityBody']) h1 { font-size: clamp(36px, 4.5vw, 60px); line-height: 1.08; }
+.hero :global([class*='__context']), .hero :global([class*='__facts']) { margin-left: 132px; }
+.hero :global([class*='__context']) { margin-top: 12px; font-size: 13px; }
+.hero :global([class*='__facts']) { margin-top: 16px; width: fit-content; max-width: calc(100% - 132px); border: 0; border-radius: 0; background: transparent !important; display: flex; flex-wrap: wrap; }
+.hero :global([class*='__facts']) > div { min-height: 0; padding: 8px 18px 8px 0; }
+.hero :global([class*='__facts']) dt { font-size: 11px; }
+.hero :global([class*='__facts']) dd { font-size: 16px; max-width: none; }
+.official { margin: 8px 0 0 132px; max-width: 760px; font-size: 13px; color: #fff; }
+.official summary { cursor: pointer; min-height: 36px; display: flex; align-items: center; gap: 14px; list-style: none; }
+.official p { margin: 4px 0 12px; line-height: 1.55; }
+.official summary::-webkit-details-marker { display: none; }
+.official summary:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+@media(max-width:700px) {
+  .hero :global([class*='__shell']) { padding-block: 16px 24px; }
+  .hero :global([class*='__content']) { padding-top: 24px; justify-content: start; }
+  .hero :global([class*='__identityLockup']) { grid-template-columns: 70px minmax(0, 1fr); gap: 14px; align-items: center; }
+  .hero :global([class*='__crest']) { width: 70px; height: 85px; }
+  .hero :global([class*='__identityCopy']) { display: grid; gap: 7px; }
+  .hero :global([class*='__identityCopy']) span, .hero :global([class*='__identityCopy']) small { font-size: 10px; }
+  .hero :global([class*='__identityCopy']) small::before { display:none; }
+  .hero :global([class*='__context']), .hero :global([class*='__facts']), .official { margin-left: 0; }
+  .hero :global([class*='__facts']) { max-width: 100%; }
+  .hero :global([class*='__facts']) > div { padding: 7px 16px 7px 0; border: 0; }
+  :global(.brotherhood-page) .hero.hero:global([class*='__hero']):not(:global([class*='__noPhoto'])) :global([class*='BrotherhoodProgramHero-module'][class*='__photoVeil']) { background: linear-gradient(90deg,rgba(0,0,0,.92),rgba(0,0,0,.65)) !important; }
+}
+
+.hero :global([class*='__identityCopy']) small, .hero :global([class*='__facts']) dt { color:#d5d7d9 !important; }
