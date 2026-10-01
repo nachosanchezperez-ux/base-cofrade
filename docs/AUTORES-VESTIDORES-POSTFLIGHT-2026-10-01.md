@@ -1,6 +1,6 @@
 # Autores · ciclo 1 Vestidores · postflight
 
-Estado actual: **DATOS Y CORRECCIÓN PUBLICADOS; CERTIFICACIÓN PENDIENTE SOLO DE QA VISUAL MÓVIL**. No repetir el DML ni iniciar Restauración hasta completar esa revisión. Los apartados anteriores al postflight de producción conservan evidencia histórica de las incidencias ya resueltas.
+Estado actual: **PRIMER LOTE DE VESTIDORES CERRADO Y CERTIFICADO, CON QA RESPONSIVE EMULADO**. El cierre cubre las nueve operaciones revisadas y sus dependencias públicas; no certifica todos los candidatos o deudas de la auditoría 0. Los apartados anteriores al cierre conservan evidencia histórica.
 
 ## Corte y alcance
 
@@ -88,3 +88,26 @@ Castillo publica `Antonio Jesús del Castillo Fernández · Vestidor · Hilo Cof
 Vercel, deployment vigente: consulta error/fatal de 05:05:40–05:20:40 UTC del 01/10/2026 sin filas. La ausencia se limita a esa ventana. Pruebas locales 1.424/1.424 y build PASS.
 
 Única puerta pendiente de este lote: QA visual móvil real (categorías, desplazamiento horizontal, legibilidad, densidad, navegación y tarjetas de obra). El entorno disponible impide iniciar el navegador local y el navegador alternativo no expone control del viewport. No declarar el ciclo cerrado ni abrir la normalización de Restauración hasta completar esa puerta. Las deudas documentales generales de la auditoría 0 siguen separadas del alcance de estas nueve operaciones.
+
+
+## Cierre del primer lote · 01/10/2026
+
+#1056 fusionada en `6265f0acb7e6c30867cc75db74e5db0beaa67ce9`; producción `dpl_8pwqukkRBJHHBFXBeGrQsnNu76fX` READY. La revisión detectó 2 px de desbordamiento en 320, 390 y 430 px: el carrusel descontaba 16 px donde `.shell` deja 14. Se corrigieron únicamente margen y padding móviles del carrusel a 14 px. No hubo DML adicional, cambios de categorías/indexabilidad ni rediseño.
+
+Método: Chromium con viewport y entrada táctil emulados, sobre HTML/CSS/JS públicos de producción descargados por HTTPS verificado y servidos mediante una copia local GET de solo lectura. Se mantuvo la validación de certificados; el navegador directo no podía reconocer el certificado del entorno. Este control acredita responsive emulado y navegación interna de la copia, no Safari/iPhone físico ni HTTPS directo móvil. Esta limitación queda registrada; no se inventa una comprobación en hardware real.
+
+| Anchura | Ancho final del documento | Carrusel | Estado |
+|---:|---:|---|---|
+| 320 | 320 | Desplazamiento interno; última tarjeta accesible | PASS |
+| 390 | 390 | Desplazamiento interno; última tarjeta accesible | PASS |
+| 430 | 430 | Desplazamiento interno; última tarjeta accesible | PASS |
+| 768 | 768 | Rejilla sin desbordamiento | PASS |
+| 1440 | 1440 | Rejilla sin desbordamiento | PASS |
+
+La matriz final no aplica CSS de candidato: usa los recursos ya publicados. Se verificaron tarjetas, breadcrumbs, métricas, legibilidad, navegación desde Vestidores a Lozano, enlace a la Imagen y apertura de la Fuente de San Bernardo. Las fichas de Lozano, Castillo y Grande de León tienen ancho de documento de 390 px a viewport 390. Cero excepciones JavaScript observadas. Las descripciones truncadas en tarjetas conservan su comportamiento editorial anterior; no se rellenó contenido ni se alteró la trayectoria documentada.
+
+Validación: 1.432/1.432 tests locales con concurrencia 2, build PASS, diff limpio; CI del head `900d9ebb500486ff1de0120b5c72eecb99c3690c` SUCCESS y preview READY. La preview devuelve HTTP 200 y CSS compilado con los 14 px correctos. Consulta Vercel error/fatal del deployment de producción, 05:51:54–06:06:54 UTC: sin filas, limitada a ese deployment y ventana.
+
+[Evidencia visual y método](./evidence/autores-responsive-20261001.html) · [Métricas completas](./evidence/autores-responsive-20261001.json). El directorio y ambos sitemaps siguen en 422 perfiles elegibles; no se afirma que Google haya indexado los 422.
+
+Estado: lote de nueve INSERT cerrado; no reejecutar. Aguado y Álvaro Martín siguen pendientes de normalización documental; el posible duplicado Aguado, las seis relaciones sin Fuente específica y la deuda general de la auditoría 0 no se certifican por este cierre. Siguiente acción autorizada: auditoría de Restauración y conservación, cruzando fuentes, intervenciones y oficios, con nueva propuesta y dry-run propios antes de cualquier Apply.
