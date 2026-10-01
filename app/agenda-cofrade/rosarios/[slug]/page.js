@@ -6,6 +6,8 @@ import JsonLd from '@/components/JsonLd'
 import SiteBreadcrumb from '@/components/SiteBreadcrumb'
 import AgendaCofradeNav from '@/components/AgendaCofradeNav'
 import AgendaRelationLinks from '@/components/AgendaRelationLinks'
+import ProcessionRoute from '@/components/ProcessionRoute'
+import { buildProcessionRoute } from '@/lib/procession-route'
 import {
   absoluteUrl,
   breadcrumbJsonLd,
@@ -82,6 +84,13 @@ export default async function RosaryDetailPage({ params }) {
   const canonicalPath = `/agenda-cofrade/rosarios/${item.slug}`
   const canonicalUrl = absoluteUrl(canonicalPath)
   const description = item.description || `${item.mode} documentado en la Agenda Cofrade de Hilo Cofrade.`
+  const processionRoute = buildProcessionRoute({
+    route: item.route,
+    routeSummary: item.routeSummary,
+    origin: item.origin,
+    destination: item.destination || item.origin,
+    schedule: item.schedule,
+  })
   const eventJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Event',
@@ -188,11 +197,11 @@ export default async function RosaryDetailPage({ params }) {
             </section>
           ) : null}
 
-          {item.routeSummary ? (
+          {(processionRoute.summary || processionRoute.legs.length || processionRoute.phases.length) ? (
             <section>
               <span className={styles.eyebrow}>Por las calles</span>
               <h2>Recorrido</h2>
-              <p className={styles.route}>{item.routeSummary}</p>
+              <ProcessionRoute route={processionRoute} />
             </section>
           ) : null}
 
