@@ -1,0 +1,36 @@
+{
+  "before": {
+    "music": 213,
+    "imagery": 83,
+    "carving": 22,
+    "goldsmith": 20,
+    "restoration": 21,
+    "dressing": 7,
+    "patrimony": 19,
+    "visual": 17,
+    "textile": 20
+  },
+  "projected": {
+    "music": 213,
+    "imagery": 83,
+    "carving": 22,
+    "goldsmith": 20,
+    "restoration": 22,
+    "dressing": 7,
+    "patrimony": 18,
+    "visual": 17,
+    "textile": 20
+  },
+  "eligible_before": 422,
+  "eligible_projected": 422,
+  "category_changes": [
+    {
+      "id": "f9d65fd5-accc-407e-8405-3fe3b1aa8735",
+      "name": "Francisco Arquillo de la Torre",
+      "before": "patrimony",
+      "after": "restoration"
+    }
+  ],
+  "eligibility_changes": [],
+  "primary_errors": []
+}

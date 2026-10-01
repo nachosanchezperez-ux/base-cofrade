@@ -1,0 +1,251 @@
+[
+  {
+    "agent_entity_id": "8e92fc51-a98f-4f75-8f41-33b308d6907e",
+    "name": "Antonio Castillo Lastrucci",
+    "target_entity_id": "f171d7f2-0809-44e4-8c0a-048747923d1d",
+    "target_name": "Jesús Presentado al Pueblo",
+    "intervention_id": "4be38419-dc8f-4f90-882e-21dfacafc17d",
+    "discipline": "Imaginería",
+    "intervention_type": null,
+    "image_overlap": [
+      {
+        "id": "09cba838-cc39-43ce-a207-9c0a971ede37",
+        "role": "autor",
+        "type": "author"
+      }
+    ],
+    "graph_overlap": [],
+    "step_overlap": []
+  },
+  {
+    "agent_entity_id": "75cfa838-7f68-492e-b49f-e308c0a38496",
+    "name": "Antonio Joaquín Dubé de Luque",
+    "target_entity_id": "63b5bdb8-81c4-4996-a824-26bf2c54b1bc",
+    "target_name": "San Juan Evangelista",
+    "intervention_id": "9fe44781-98b7-498e-947d-701344ebf724",
+    "discipline": "Imaginería",
+    "intervention_type": "Restauración",
+    "image_overlap": [
+      {
+        "id": "0e335f12-5918-4c46-9236-33fc27520221",
+        "role": "Escultor",
+        "type": "author"
+      }
+    ],
+    "graph_overlap": [],
+    "step_overlap": []
+  },
+  {
+    "agent_entity_id": "75cfa838-7f68-492e-b49f-e308c0a38496",
+    "name": "Antonio Joaquín Dubé de Luque",
+    "target_entity_id": "3258ab18-7e18-489e-a77f-cdaa46d6e25c",
+    "target_name": "Santa María de Consolación Madre de la Iglesia",
+    "intervention_id": "5108f5db-c551-4b6b-a598-99863a6694f7",
+    "discipline": "Imaginería",
+    "intervention_type": "Restauración",
+    "image_overlap": [
+      {
+        "id": "090c1b10-ba94-4665-b55a-4363d2dcfe8b",
+        "role": "autor",
+        "type": "author"
+      },
+      {
+        "id": "e32e0bd6-e345-48d4-8534-8295390c4dbe",
+        "role": "Escultor",
+        "type": "author"
+      }
+    ],
+    "graph_overlap": [],
+    "step_overlap": []
+  },
+  {
+    "agent_entity_id": "75cfa838-7f68-492e-b49f-e308c0a38496",
+    "name": "Antonio Joaquín Dubé de Luque",
+    "target_entity_id": "3258ab18-7e18-489e-a77f-cdaa46d6e25c",
+    "target_name": "Santa María de Consolación Madre de la Iglesia",
+    "intervention_id": "d9266f25-cad1-4ae7-b0ae-dcca191a225d",
+    "discipline": "Imaginería",
+    "intervention_type": "Restauración",
+    "image_overlap": [
+      {
+        "id": "090c1b10-ba94-4665-b55a-4363d2dcfe8b",
+        "role": "autor",
+        "type": "author"
+      },
+      {
+        "id": "e32e0bd6-e345-48d4-8534-8295390c4dbe",
+        "role": "Escultor",
+        "type": "author"
+      }
+    ],
+    "graph_overlap": [],
+    "step_overlap": []
+  },
+  {
+    "agent_entity_id": "75cfa838-7f68-492e-b49f-e308c0a38496",
+    "name": "Antonio Joaquín Dubé de Luque",
+    "target_entity_id": "3258ab18-7e18-489e-a77f-cdaa46d6e25c",
+    "target_name": "Santa María de Consolación Madre de la Iglesia",
+    "intervention_id": "522eef22-2182-4a6c-bcbe-4b1992824f2f",
+    "discipline": "Imaginería",
+    "intervention_type": "Restauración",
+    "image_overlap": [
+      {
+        "id": "090c1b10-ba94-4665-b55a-4363d2dcfe8b",
+        "role": "autor",
+        "type": "author"
+      },
+      {
+        "id": "e32e0bd6-e345-48d4-8534-8295390c4dbe",
+        "role": "Escultor",
+        "type": "author"
+      }
+    ],
+    "graph_overlap": [],
+    "step_overlap": []
+  },
+  {
+    "agent_entity_id": "3ede2b51-8947-4940-a2e4-0a90f0a75917",
+    "name": "Francisca de Paula Zuloaga",
+    "target_entity_id": "fdb753db-0f67-4d15-be57-ad1687e894b1",
+    "target_name": "Simpecado de Gala",
+    "intervention_id": "56bacbce-2e35-4b5f-8cf9-5594ed710df4",
+    "discipline": "Bordado",
+    "intervention_type": "Autoría original",
+    "image_overlap": [],
+    "graph_overlap": [
+      {
+        "id": "2f3fbe2c-99d3-4204-bd06-8f27c20eee00",
+        "type": "author_of",
+        "notes": "Bordado y ejecución textil del Simpecado; documentada como maestra bordadora junto a cinco oficialas de su taller."
+      }
+    ],
+    "step_overlap": []
+  },
+  {
+    "agent_entity_id": "ee06b3cf-beb0-4794-8e3a-321288b0e130",
+    "name": "Juan Ventura",
+    "target_entity_id": "23ed3f46-35e3-4837-8f11-2e7a53924c2b",
+    "target_name": "Paso de misterio de Nuestro Padre Jesús Despojado",
+    "intervention_id": "7d230bcb-87af-4406-9e96-da4d7839b657",
+    "discipline": "Imaginería",
+    "intervention_type": "Restauración",
+    "image_overlap": [],
+    "graph_overlap": [],
+    "step_overlap": [
+      {
+        "id": "8f5a08a0-0099-4a14-8324-5cc681c1589f",
+        "role": "Restauración de las imágenes",
+        "discipline": "Imaginería"
+      }
+    ]
+  },
+  {
+    "agent_entity_id": "5e2ab038-a344-4289-afda-bee09730fd28",
+    "name": "Luis Álvarez Duarte",
+    "target_entity_id": "aba1b9ef-efa9-46c5-bb18-d3ae39bd1844",
+    "target_name": "Santísimo Cristo de la Sed",
+    "intervention_id": "fae57fd0-7bfa-4d91-9743-542b5927876c",
+    "discipline": "Imaginería",
+    "intervention_type": "Restauración",
+    "image_overlap": [
+      {
+        "id": "82d37b2f-e4c3-4e88-92bc-0e7ae8c42106",
+        "role": "Escultor",
+        "type": "author"
+      }
+    ],
+    "graph_overlap": [],
+    "step_overlap": []
+  },
+  {
+    "agent_entity_id": "5e2ab038-a344-4289-afda-bee09730fd28",
+    "name": "Luis Álvarez Duarte",
+    "target_entity_id": "aba1b9ef-efa9-46c5-bb18-d3ae39bd1844",
+    "target_name": "Santísimo Cristo de la Sed",
+    "intervention_id": "1bb14153-c48f-4c5a-afd8-679ff34b7f52",
+    "discipline": "Imaginería",
+    "intervention_type": "Restauración",
+    "image_overlap": [
+      {
+        "id": "82d37b2f-e4c3-4e88-92bc-0e7ae8c42106",
+        "role": "Escultor",
+        "type": "author"
+      }
+    ],
+    "graph_overlap": [],
+    "step_overlap": []
+  },
+  {
+    "agent_entity_id": "5e2ab038-a344-4289-afda-bee09730fd28",
+    "name": "Luis Álvarez Duarte",
+    "target_entity_id": "aba1b9ef-efa9-46c5-bb18-d3ae39bd1844",
+    "target_name": "Santísimo Cristo de la Sed",
+    "intervention_id": "cb07e9a8-18d3-403d-99b2-7d6b3ce53a7f",
+    "discipline": "Imaginería",
+    "intervention_type": "Restauración",
+    "image_overlap": [
+      {
+        "id": "82d37b2f-e4c3-4e88-92bc-0e7ae8c42106",
+        "role": "Escultor",
+        "type": "author"
+      }
+    ],
+    "graph_overlap": [],
+    "step_overlap": []
+  },
+  {
+    "agent_entity_id": "e2850e83-c40e-4114-bca9-9f4db6a6fdbb",
+    "name": "Manuel María Ariza",
+    "target_entity_id": "1cbe2700-ef03-4651-85fe-3b7495c55f06",
+    "target_name": "Manto procesional de Nuestra Señora del Amparo",
+    "intervention_id": "16f7aee3-3c26-4340-bfda-be19aa06a0cd",
+    "discipline": "Bordado",
+    "intervention_type": "Autoría original",
+    "image_overlap": [],
+    "graph_overlap": [
+      {
+        "id": "2176ae0d-e783-49ee-830e-e06b699554b1",
+        "type": "author_of",
+        "notes": "Autor del bordado y ejecución del manto procesional; la documentación oficial atribuye al mismo obrador la saya compañera."
+      }
+    ],
+    "step_overlap": []
+  },
+  {
+    "agent_entity_id": "ba7de89e-2e31-436a-9dbf-060d76bf0877",
+    "name": "Pasión Cofrade",
+    "target_entity_id": "e33581e7-aa63-4757-9fd5-d1dbfd7ab18e",
+    "target_name": "Candelabros del paso de Nuestra Señora de la Cabeza de Sevilla",
+    "intervention_id": "f976a431-6ed2-45a2-807e-2d6ec91b8880",
+    "discipline": "Orfebrería",
+    "intervention_type": "Ejecución",
+    "image_overlap": [],
+    "graph_overlap": [],
+    "step_overlap": [
+      {
+        "id": "8e66bbea-2959-4758-8086-935146007338",
+        "role": "Ejecución",
+        "discipline": "Orfebrería"
+      }
+    ]
+  },
+  {
+    "agent_entity_id": "50072a6b-49bb-4659-8dce-f4b4deebb67f",
+    "name": "Salvador Gutiérrez",
+    "target_entity_id": "fdb753db-0f67-4d15-be57-ad1687e894b1",
+    "target_name": "Simpecado de Gala",
+    "intervention_id": "e5a1f112-a607-4871-b053-7a50016613aa",
+    "discipline": "Pintura",
+    "intervention_type": "Autoría original",
+    "image_overlap": [],
+    "graph_overlap": [
+      {
+        "id": "8645238a-305d-4a28-879f-3d6addabe374",
+        "type": "author_of",
+        "notes": "Autor del lienzo central de Nuestra Señora del Amparo; la documentación interior parece relacionarlo también con el dibujo del conjunto."
+      }
+    ],
+    "step_overlap": []
+  }
+]

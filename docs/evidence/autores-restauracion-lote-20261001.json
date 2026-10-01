@@ -1,0 +1,292 @@
+{
+  "base_sha": "4da1794a9673c3ee7a3b7e42f6c482cc0ecb1605",
+  "profiles": [
+    {
+      "id": "dfe83027-6fe1-44e0-afc3-49ee5f0711ee",
+      "name": "Almudena Fernández García",
+      "slug": "almudena-fernandez-garcia",
+      "kind": "person",
+      "primary": "Restauración",
+      "secondary": [
+        "Conservación"
+      ]
+    },
+    {
+      "id": "14cff562-4631-4bc4-86f0-88431ea922e7",
+      "name": "Ballesteros Cascajares · Conservación & Restauración",
+      "slug": "ballesteros-cascajares-conservacion-restauracion",
+      "kind": "workshop",
+      "primary": "Conservación",
+      "secondary": [
+        "Restauración"
+      ]
+    },
+    {
+      "id": "5e8b3b9d-a9a7-4d03-aeb5-1c8001588879",
+      "name": "Cinta Rubio Faure",
+      "slug": "cinta-rubio-faure",
+      "kind": "person",
+      "primary": "Restauración",
+      "secondary": []
+    },
+    {
+      "id": "f9d65fd5-accc-407e-8405-3fe3b1aa8735",
+      "name": "Francisco Arquillo de la Torre",
+      "slug": "francisco-arquillo-de-la-torre",
+      "kind": "person",
+      "primary": "Restauración",
+      "secondary": []
+    },
+    {
+      "id": "451a6ad7-80eb-4c79-9ffd-db3f8f932f71",
+      "name": "Instituto Andaluz del Patrimonio Histórico",
+      "slug": "instituto-andaluz-patrimonio-historico",
+      "kind": "institution",
+      "primary": "Restauración",
+      "secondary": [
+        "Conservación"
+      ]
+    },
+    {
+      "id": "7938f41a-142a-4cad-b184-f1e76239a77d",
+      "name": "José Joaquín Fijo León",
+      "slug": "jose-joaquin-fijo-leon",
+      "kind": "person",
+      "primary": "Restauración",
+      "secondary": [
+        "Conservación"
+      ]
+    },
+    {
+      "id": "e34f4782-d09b-4578-a189-e8c28b9f44bf",
+      "name": "Laura Pérez Meléndez",
+      "slug": "laura-perez-melendez",
+      "kind": "person",
+      "primary": "Restauración",
+      "secondary": [
+        "Conservación"
+      ]
+    }
+  ],
+  "operations": [
+    {
+      "table": "agent_disciplines",
+      "action": "INSERT",
+      "id": "c0200002-0000-4000-8000-000000000001",
+      "agent_entity_id": "dfe83027-6fe1-44e0-afc3-49ee5f0711ee",
+      "discipline": "Restauración",
+      "is_primary": true,
+      "notes": "Ciclo 2 · Restauración. Actividad documentada por fuentes primarias revisadas; principal según el trabajo representado en esta ficha. No atribuye obras adicionales."
+    },
+    {
+      "table": "agent_disciplines",
+      "action": "INSERT",
+      "id": "c0200002-0000-4000-8000-000000000002",
+      "agent_entity_id": "dfe83027-6fe1-44e0-afc3-49ee5f0711ee",
+      "discipline": "Conservación",
+      "is_primary": false,
+      "notes": "Ciclo 2 · Conservación. Actividad documentada por fuentes primarias revisadas; principal según el trabajo representado en esta ficha. No atribuye obras adicionales."
+    },
+    {
+      "table": "source_links",
+      "action": "INSERT",
+      "id": "c0200002-0000-4000-8000-000000000003",
+      "entity_id": "dfe83027-6fe1-44e0-afc3-49ee5f0711ee",
+      "source_id": "0e7533d9-3e48-4b5e-984a-670d1da56e96",
+      "scope": "Oficio documentado · Restauración · Simpecado de Gala",
+      "notes": "Fuente existente de la intervención a0e4a907-4f32-449e-af69-07e52513315f; enlace directo al agente para permitir su consulta desde la ficha.",
+      "evidence_intervention_id": "a0e4a907-4f32-449e-af69-07e52513315f",
+      "url": "https://hermandaddelamparo.com/simpecado-de-gala/"
+    },
+    {
+      "table": "source_links",
+      "action": "INSERT",
+      "id": "c0200002-0000-4000-8000-000000000004",
+      "entity_id": "dfe83027-6fe1-44e0-afc3-49ee5f0711ee",
+      "source_id": "1ea34498-18ff-4f85-827c-d433f3feeece",
+      "scope": "Oficio documentado · Limpieza · Nuestra Señora del Amparo",
+      "notes": "Fuente existente de la intervención ae9b4d6f-e1bd-400f-a8ef-093d223904d4; enlace directo al agente para permitir su consulta desde la ficha.",
+      "evidence_intervention_id": "ae9b4d6f-e1bd-400f-a8ef-093d223904d4",
+      "url": "https://hermandaddelamparo.com/nuestra-senora-del-amparo/"
+    },
+    {
+      "table": "agent_disciplines",
+      "action": "INSERT",
+      "id": "c0200002-0000-4000-8000-000000000005",
+      "agent_entity_id": "14cff562-4631-4bc4-86f0-88431ea922e7",
+      "discipline": "Conservación",
+      "is_primary": true,
+      "notes": "Ciclo 2 · Conservación. Actividad documentada por fuentes primarias revisadas; principal según el trabajo representado en esta ficha. No atribuye obras adicionales."
+    },
+    {
+      "table": "agent_disciplines",
+      "action": "INSERT",
+      "id": "c0200002-0000-4000-8000-000000000006",
+      "agent_entity_id": "14cff562-4631-4bc4-86f0-88431ea922e7",
+      "discipline": "Restauración",
+      "is_primary": false,
+      "notes": "Ciclo 2 · Restauración. Actividad documentada por fuentes primarias revisadas; principal según el trabajo representado en esta ficha. No atribuye obras adicionales."
+    },
+    {
+      "table": "source_links",
+      "action": "INSERT",
+      "id": "c0200002-0000-4000-8000-000000000007",
+      "entity_id": "14cff562-4631-4bc4-86f0-88431ea922e7",
+      "source_id": "11708825-0630-4b06-a9e0-e5eed3520714",
+      "scope": "Oficio documentado · Conservación · Nuestro Padre Jesús de la Salud y Buen Viaje",
+      "notes": "Fuente existente de la intervención 2304b9ea-94a4-4bd8-8ee8-7782c9ec391b; enlace directo al agente para permitir su consulta desde la ficha.",
+      "evidence_intervention_id": "2304b9ea-94a4-4bd8-8ee8-7782c9ec391b",
+      "url": "https://www.hermandadsanesteban.org/reposicion-al-culto-de-nuestro-padre-jesus-de-la-salud-y-buen-viaje/"
+    },
+    {
+      "table": "source_links",
+      "action": "INSERT",
+      "id": "c0200002-0000-4000-8000-000000000008",
+      "entity_id": "14cff562-4631-4bc4-86f0-88431ea922e7",
+      "source_id": "15ff1310-0038-4d1c-9845-6ab7082bafc4",
+      "scope": "Oficio documentado · Conservación y limpieza · María Santísima Madre de los Desamparados",
+      "notes": "Fuente existente de la intervención d603702f-e068-4306-91a8-17983a1c66e9; enlace directo al agente para permitir su consulta desde la ficha.",
+      "evidence_intervention_id": "d603702f-e068-4306-91a8-17983a1c66e9",
+      "url": "https://www.hermandadsanesteban.org/la-madre-de-los-desamparados-ha-sido-repuesta-al-culto/"
+    },
+    {
+      "table": "agent_disciplines",
+      "action": "INSERT",
+      "id": "c0200002-0000-4000-8000-000000000009",
+      "agent_entity_id": "5e8b3b9d-a9a7-4d03-aeb5-1c8001588879",
+      "discipline": "Restauración",
+      "is_primary": true,
+      "notes": "Ciclo 2 · Restauración. Actividad documentada por fuentes primarias revisadas; principal según el trabajo representado en esta ficha. No atribuye obras adicionales."
+    },
+    {
+      "table": "source_links",
+      "action": "INSERT",
+      "id": "c0200002-0000-4000-8000-000000000010",
+      "entity_id": "5e8b3b9d-a9a7-4d03-aeb5-1c8001588879",
+      "source_id": "a45dc3e0-5858-4411-ba23-317e4cd1b5df",
+      "scope": "Oficio documentado · Restauración · Nuestro Padre Jesús de la Salud y Buen Viaje",
+      "notes": "Fuente existente de la intervención cb049e1b-ad56-4c1d-a117-23eccd1490f9; enlace directo al agente para permitir su consulta desde la ficha.",
+      "evidence_intervention_id": "cb049e1b-ad56-4c1d-a117-23eccd1490f9",
+      "url": "https://www.hermandadsanesteban.org/announcement/restauracion-del-senor-de-la-salud-y-buen-viaje/"
+    },
+    {
+      "table": "agent_disciplines",
+      "action": "INSERT",
+      "id": "c0200002-0000-4000-8000-000000000011",
+      "agent_entity_id": "f9d65fd5-accc-407e-8405-3fe3b1aa8735",
+      "discipline": "Restauración",
+      "is_primary": true,
+      "notes": "Ciclo 2 · Restauración. Actividad documentada por fuentes primarias revisadas; principal según el trabajo representado en esta ficha. No atribuye obras adicionales."
+    },
+    {
+      "table": "source_links",
+      "action": "INSERT",
+      "id": "c0200002-0000-4000-8000-000000000012",
+      "entity_id": "f9d65fd5-accc-407e-8405-3fe3b1aa8735",
+      "source_id": "37015423-fc63-4c85-a3f9-62c3fb6cc720",
+      "scope": "Oficio documentado · Restauración integral · Nuestra Señora de los Dolores",
+      "notes": "Fuente existente de la intervención 2d33fe29-310d-4066-8564-6a7c87f248a0; enlace directo al agente para permitir su consulta desde la ficha.",
+      "evidence_intervention_id": "2d33fe29-310d-4066-8564-6a7c87f248a0",
+      "url": "https://www.tomares.es/node/9957"
+    },
+    {
+      "table": "agent_disciplines",
+      "action": "INSERT",
+      "id": "c0200002-0000-4000-8000-000000000013",
+      "agent_entity_id": "451a6ad7-80eb-4c79-9ffd-db3f8f932f71",
+      "discipline": "Restauración",
+      "is_primary": true,
+      "notes": "Ciclo 2 · Restauración. Actividad documentada por fuentes primarias revisadas; principal según el trabajo representado en esta ficha. No atribuye obras adicionales."
+    },
+    {
+      "table": "agent_disciplines",
+      "action": "INSERT",
+      "id": "c0200002-0000-4000-8000-000000000014",
+      "agent_entity_id": "451a6ad7-80eb-4c79-9ffd-db3f8f932f71",
+      "discipline": "Conservación",
+      "is_primary": false,
+      "notes": "Ciclo 2 · Conservación. Actividad documentada por fuentes primarias revisadas; principal según el trabajo representado en esta ficha. No atribuye obras adicionales."
+    },
+    {
+      "table": "source_links",
+      "action": "INSERT",
+      "id": "c0200002-0000-4000-8000-000000000015",
+      "entity_id": "451a6ad7-80eb-4c79-9ffd-db3f8f932f71",
+      "source_id": "cd2e3d46-14c5-463c-8b26-f2b9ef425eeb",
+      "scope": "Oficio documentado · Restauración · Nuestra Señora Santa María de Aguas Santas Coronada",
+      "notes": "Fuente existente de la intervención 400e1c53-1b1c-4b37-a2dd-93e77cf69f3d; enlace directo al agente para permitir su consulta desde la ficha.",
+      "evidence_intervention_id": "400e1c53-1b1c-4b37-a2dd-93e77cf69f3d",
+      "url": "https://www.juntadeandalucia.es/organismos/iaph/servicios/actualidad/noticias/detalle/233216.html"
+    },
+    {
+      "table": "source_links",
+      "action": "INSERT",
+      "id": "c0200002-0000-4000-8000-000000000016",
+      "entity_id": "451a6ad7-80eb-4c79-9ffd-db3f8f932f71",
+      "source_id": "9e3f6999-7b17-452f-802c-fa72166f6669",
+      "scope": "Oficio documentado · Restauración · Primitivo Simpecado de Nuestra Señora de Aguas Santas",
+      "notes": "Fuente existente de la intervención 9eb87a31-c1f0-47c0-b920-85406c1166be; enlace directo al agente para permitir su consulta desde la ficha.",
+      "evidence_intervention_id": "9eb87a31-c1f0-47c0-b920-85406c1166be",
+      "url": "https://repositorio.iaph.es/handle/11532/300003"
+    },
+    {
+      "table": "agent_disciplines",
+      "action": "INSERT",
+      "id": "c0200002-0000-4000-8000-000000000017",
+      "agent_entity_id": "7938f41a-142a-4cad-b184-f1e76239a77d",
+      "discipline": "Restauración",
+      "is_primary": true,
+      "notes": "Ciclo 2 · Restauración. Actividad documentada por fuentes primarias revisadas; principal según el trabajo representado en esta ficha. No atribuye obras adicionales."
+    },
+    {
+      "table": "agent_disciplines",
+      "action": "INSERT",
+      "id": "c0200002-0000-4000-8000-000000000018",
+      "agent_entity_id": "7938f41a-142a-4cad-b184-f1e76239a77d",
+      "discipline": "Conservación",
+      "is_primary": false,
+      "notes": "Ciclo 2 · Conservación. Actividad documentada por fuentes primarias revisadas; principal según el trabajo representado en esta ficha. No atribuye obras adicionales."
+    },
+    {
+      "table": "source_links",
+      "action": "INSERT",
+      "id": "c0200002-0000-4000-8000-000000000019",
+      "entity_id": "7938f41a-142a-4cad-b184-f1e76239a77d",
+      "source_id": "0e7533d9-3e48-4b5e-984a-670d1da56e96",
+      "scope": "Oficio documentado · Restauración · Simpecado de Gala",
+      "notes": "Fuente existente de la intervención 93a096f8-937c-4e7e-a917-68d88c61e15d; enlace directo al agente para permitir su consulta desde la ficha.",
+      "evidence_intervention_id": "93a096f8-937c-4e7e-a917-68d88c61e15d",
+      "url": "https://hermandaddelamparo.com/simpecado-de-gala/"
+    },
+    {
+      "table": "source_links",
+      "action": "INSERT",
+      "id": "c0200002-0000-4000-8000-000000000020",
+      "entity_id": "7938f41a-142a-4cad-b184-f1e76239a77d",
+      "source_id": "1ea34498-18ff-4f85-827c-d433f3feeece",
+      "scope": "Oficio documentado · Limpieza · Nuestra Señora del Amparo",
+      "notes": "Fuente existente de la intervención fbdd3ff5-492c-40d0-b722-d0296a90a918; enlace directo al agente para permitir su consulta desde la ficha.",
+      "evidence_intervention_id": "fbdd3ff5-492c-40d0-b722-d0296a90a918",
+      "url": "https://hermandaddelamparo.com/nuestra-senora-del-amparo/"
+    },
+    {
+      "table": "agent_disciplines",
+      "action": "INSERT",
+      "id": "c0200002-0000-4000-8000-000000000021",
+      "agent_entity_id": "e34f4782-d09b-4578-a189-e8c28b9f44bf",
+      "discipline": "Restauración",
+      "is_primary": true,
+      "notes": "Ciclo 2 · Restauración. Actividad documentada por fuentes primarias revisadas; principal según el trabajo representado en esta ficha. No atribuye obras adicionales."
+    },
+    {
+      "table": "agent_disciplines",
+      "action": "INSERT",
+      "id": "c0200002-0000-4000-8000-000000000022",
+      "agent_entity_id": "e34f4782-d09b-4578-a189-e8c28b9f44bf",
+      "discipline": "Conservación",
+      "is_primary": false,
+      "notes": "Ciclo 2 · Conservación. Actividad documentada por fuentes primarias revisadas; principal según el trabajo representado en esta ficha. No atribuye obras adicionales."
+    }
+  ],
+  "status": "PROPOSED_NOT_APPLIED"
+}
