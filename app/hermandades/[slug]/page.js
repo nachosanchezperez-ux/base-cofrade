@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import BrotherhoodReadingLayout from '@/components/BrotherhoodReadingLayout';
 import readingStyles from '@/components/BrotherhoodReadingLayout.module.css';
+import { usesBrotherhoodReading } from '@/lib/brotherhood-reading-rollout';
 import Image from 'next/image';
 import { cache } from 'react';
 import BrotherhoodAgendaSection from '@/components/BrotherhoodAgendaSection';
@@ -153,10 +154,11 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default async function HermandadDetailPage({ params, reading = false }) {
+export default async function HermandadDetailPage({ params, reading: readingOverride }) {
   const { slug } = await params;
   const h = await getHermandad(slug);
   if (!h) notFound();
+  const reading = readingOverride ?? usesBrotherhoodReading(h.id);
 
   const canonicalPath = `/hermandades/${h.slug}`;
   const municipalityHubHref = agendaMunicipalityHref(h.localidad);
