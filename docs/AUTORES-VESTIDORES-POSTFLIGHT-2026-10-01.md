@@ -50,3 +50,29 @@ QA visual de escritorio: filtro con ocho tarjetas, métricas, navegación a Loza
 Álvaro Martín y Fernando José Aguado siguen por fallback. No se fusiona el posible duplicado Aguado ni se amplían trayectorias o vigencias. Las seis relaciones dresser_of sin Fuente específica y los solapamientos con otros sistemas continúan como deuda de la auditoría 0; este lote no los certifica.
 
 Siguiente acción: resolver los cuatro pendientes, renovar postflight público y documentar el cierre real del lote. Solo después procede la propuesta de Restauración y conservación.
+
+## Continuación del 01/10/2026 · estado actualizado
+
+Este apartado prevalece sobre los pendientes del corte anterior. El sitemap general y `/sitemaps/autores.xml` ya responden 200, contienen 422 URLs de autores e incluyen a Lozano. La caché se regeneró sin purga ni DML adicional.
+
+Corrección preparada en esta PR: la categoría respeta el principal solo cuando existe exactamente un is_primary; sin principal explícito o con varios, conserva la resolución anterior. El lector expone primaryDisciplineCount y renueva únicamente las claves de caché de directorio y detalle de Autores para evitar objetos del contrato anterior. Los umbrales de indexabilidad, relaciones y fuentes no cambian.
+
+Comparación del inventario de 751 entidades con las disciplinas actuales: siete cambios de categoría. Buiza, con dos principales, conserva su resolución anterior y sigue pendiente de revisión documental.
+
+| Perfil | Categoría actual en producción | Categoría con la corrección | Principal existente |
+|---|---|---|---|
+| Gabriel de Astorga | Imaginería | Restauración | Restauración |
+| Hermanas Zuloaga | Restauración | Bordado | Bordado |
+| José Antonio Grande de León | Vestidores | Bordado | Bordado |
+| Luis Miguel Garduño Lara | Restauración | Bordado | Bordado |
+| Manuel Caro | Bordado | Diseño | Diseño |
+| Taller de Bordados de José Antonio Grande de León | Restauración | Bordado | Bordado |
+| Talleres Santa Bárbara | Restauración | Bordado | Bordado |
+
+Recuentos esperados tras publicar: Música 213; Imaginería 83; Restauración 21; Vestidores 7; Bordado 20; Orfebrería 20; Talla 22; Diseño 17; Patrimonio 19. Total 422. Son efectos del lector sobre disciplinas ya existentes, sin normalizar datos de otras categorías.
+
+Los titles de Autores conservan nombre y oficio completos, usando el mismo resultado en metadata social; se retira únicamente en esta familia el compactador de 44 caracteres. Castillo queda `Antonio Jesús del Castillo Fernández · Vestidor · Hilo Cofrade`. El título completo puede superar 60 caracteres: se preserva identidad y oficio, sin prometer cómo lo mostrará Google.
+
+Validación local: 1.424/1.424 tests PASS, build Next.js 16.3.0 PASS y diff sin errores. Cuatro regresiones cubren prioridad del principal, fallback, principales ambiguos y titles completos. Build local sin credenciales públicas: valida compilación, no lectura real de datos.
+
+QA móvil continúa bloqueado: agent-browser 0.20 aporta diagnóstico reproducible `Failed to bind socket: Operation not permitted`; Chrome oficial confirma socket() prohibido en este entorno. No se solicita una escalación rechazada ni se declara PASS móvil. Antes del cierre siguen necesarios publicación del código, QA vivo de los siete cambios y revisión móvil en un entorno que permita renderizado.
