@@ -36,7 +36,7 @@ test('Historia conserva todos los hitos en HTML pero pliega cronologías largas'
   const component = read('components/BrotherhoodHistoryTimeline.js')
   const css = read('components/BrotherhoodHistoryTimeline.module.css')
 
-  assert.match(page, /<BrotherhoodHistoryTimeline items=\{h\.cronologia \|\| \[\]\} \/>/)
+  assert.match(page, /<BrotherhoodHistoryTimeline items=\{h\.cronologia \|\| \[\]\}(?: semanticPreview=\{reading\})? \/>/)
   assert.doesNotMatch(page, /h\.cronologia\.map/)
   assert.match(component, /items\.length > 5/)
   assert.match(component, /Ver cronología completa/)

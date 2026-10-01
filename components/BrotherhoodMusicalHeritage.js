@@ -122,7 +122,7 @@ function MarchStyleGroups({ items }) {
   );
 }
 
-export default function BrotherhoodMusicalHeritage({ items = [] }) {
+export default function BrotherhoodMusicalHeritage({ items = [], id = 'musica' }) {
   if (!items.length) return null;
 
   const groups = GROUPS.map((group) => ({
@@ -131,7 +131,7 @@ export default function BrotherhoodMusicalHeritage({ items = [] }) {
   })).filter((group) => group.items.length);
 
   return (
-    <section className={`section ${styles.section}`} id="musica">
+    <section className={`section ${styles.section}`} id={id}>
       <div className="shell">
         <div className={styles.intro}>
           <SectionTitle

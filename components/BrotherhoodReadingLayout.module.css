@@ -1,0 +1,165 @@
+.reading {
+  --brotherhood-surface-soft: #f6f7f8;
+  --brotherhood-surface-medium: #eef0f2;
+  --brotherhood-neutral-ink: #23272c;
+  background:#fff;
+  color:#23272c;
+}
+.reading :global(.section), .reading > :global(section[id='conoce-hermandad']) { padding-block:40px; }
+.reading :global(.section-heading) { max-width:800px; margin-bottom:22px; }
+.reading :global(.section-heading) h2 { font-size:clamp(28px,3vw,40px); line-height:1.12; margin:8px 0; }
+.reading :global(.section-heading) p { font-size:15px; line-height:1.55; }
+.reading :global(.eyebrow) { font-size:11px; color:#555d66; }
+.reading :global(.brotherhood-soft), .reading :global(.heritage-section), .reading :global(#patrimonio-musical), .reading :global(#acompanamiento-musical), .reading :global(#conoce-hermandad), .reading :global(.official-links-section) { background:#fff !important; }
+.reading :global(.brotherhood-nav) { background:#fff !important; border-bottom:1px solid #dde1e5 !important; box-shadow:0 3px 12px #00000008 !important; }
+.reading :global(.brotherhood-nav-shell) { min-height:52px; gap:20px; }
+.reading :global(.brotherhood-nav-label) { color:#60656b; border-color:#dde1e5; }
+.reading :global(.brotherhood-nav-list) a { height:52px; color:#535b64 !important; font-size:14px; }
+.reading :global(.brotherhood-nav-list) a[aria-current] { color:#171b20 !important; background:#f2f4f6; }
+.reading :global(.brotherhood-nav-list) a:not([aria-current])::after { display:none; }
+.reading :global(.entity-section-nav-arrow) { color:#303943; background:#f5f6f7; border-color:#dce1e5; }
+.reading :global(.brotherhood-nav-list) a[aria-current]::after { background:var(--brotherhood-primary) !important; }
+.overview { border-bottom:1px solid #e5e7ea; }
+.overviewGrid { display:grid; grid-template-columns:minmax(0,1.45fr) minmax(280px,1fr); gap:40px; align-items:start; }
+.overviewGrid:not(:has(.next)) { grid-template-columns:1fr; }
+.intro { font-size:16px; line-height:1.6; max-width:75ch; }
+.reading :global(#resumen [class*='__facts']) { display:flex; flex-wrap:wrap; gap:20px 32px; }
+.reading :global(#resumen [class*='__fact']) { border:0; border-radius:0; background:transparent; padding:0; }
+.reading :global(#resumen [class*='__facts']) dd { font-size:26px; }
+.reading :global(#resumen [class*='__wrapper']) { margin-bottom:18px; }
+.reading :global(#resumen [class*='__dressers']) { padding:0; border:0; border-radius:0; }
+.reading :global(#resumen [class*='__dressers']) summary { min-height:44px; cursor:pointer; font-weight:700; font-size:14px; color:#3f4953; }
+.reading :global(#resumen [class*='__dresserGrid']) { grid-template-columns:repeat(2,minmax(0,1fr)); }
+.reading :global(#resumen [class*='__dresser']) { background:#f6f7f8; }
+.reading :global(#resumen [class*='__blockTitle']) { display:none; }
+.reading :global(#sede-y-horarios) { padding:0; }
+.reading :global(#sede-y-horarios > .shell) { width:100%; padding:0; }
+.reading :global(#sede-y-horarios [class*='__seatCard']) { background:#f6f7f8; border:1px solid #e4e7eb; color:#252b31; box-shadow:none; padding:20px; }
+.reading :global(#sede-y-horarios [class*='__seatCard']) h3, .reading :global(#sede-y-horarios [class*='__seatCard']) p, .reading :global(#sede-y-horarios [class*='__cardTopline']) { color:#252b31; }
+.reading :global(#sede-y-horarios [class*='__hours']) { box-shadow:none; border-radius:8px; }
+.next { padding:24px; border:1px solid #dfe3e7; border-left:3px solid var(--brotherhood-primary); border-radius:4px; background:#f7f8f9; }
+.next time { display:block; margin-top:12px; font-size:22px; font-family:Georgia,serif; font-weight:700; }
+.next h3 { font-size:19px; line-height:1.3; margin:12px 0; }
+.nextTime { font-weight:700; margin:10px 0 16px; }
+.reading :global(#conoce-hermandad) { border-block:1px solid #e3e6e9; padding-block:0; }
+.reading :global(#conoce-hermandad)::before { width:3px; background:var(--brotherhood-primary); }
+.reading :global(#conoce-hermandad > .shell) { padding-block:28px; }
+.reading :global(#conoce-hermandad header) { align-items:start; }
+.reading :global(#conoce-hermandad h2) { font-size:clamp(26px,3vw,38px); line-height:1.15; }
+.reading :global(#conoce-hermandad [class*='__lead']) { margin-top:14px; font-size:16px; line-height:1.65; font-weight:400; }
+.reading :global(#conoce-hermandad [class*='__disclosure']) { margin-top:18px; }
+.reading :global(#conoce-hermandad summary) { min-height:54px; padding-block:10px; }
+.reading :global(#conoce-hermandad [class*='__subtitle']) { margin-top:8px; font-size:14px; }
+.reading :global(#conoce-hermandad [class*='__headerMarker']) { display:grid; min-width:54px; }
+.reading :global(#conoce-hermandad [class*='__headerMarker']) span { font-size:38px; color:#535d66; }
+.reading :global(.image-grid) { grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; }
+.reading :global(.brotherhood-image-card) { display:grid; grid-template-columns:140px minmax(0,1fr); border-radius:6px; box-shadow:none; border:1px solid #e1e5e9; }
+.reading :global(.image-grid > .brotherhood-image-card:only-child) { width:100%; max-width:800px; margin-inline:0; grid-template-columns:160px minmax(0,1fr); }
+.reading :global(.brotherhood-portrait) { min-height:220px; height:100%; aspect-ratio:auto; background:#f1f3f5 !important; }
+.reading :global(.brotherhood-portrait-image) { object-position:center 25%; }
+.reading :global(.image-card-body) { min-width:0; padding:18px; }
+.reading :global(.image-card-body) h3 { font-size:21px; line-height:1.2; margin:6px 0 10px; }
+.reading :global(.image-card-authorship) { font-size:14px; }
+.reading :global(.image-card-description) { font-size:14px; line-height:1.55; }
+.reading :global(.image-card-details) { font-size:13px; }
+.reading :global(.processional-grid) { gap:24px; align-items:start; }
+.reading :global(.processional-card) { border-radius:6px; box-shadow:none !important; }
+.reading :global(.processional-photo) { min-height:180px; }
+.reading :global(.processional-photo.has-image) { aspect-ratio:2.2; }
+.reading :global(.processional-body) { padding:20px; }
+.reading :global(.processional-body) h3 { font-size:24px; line-height:1.2; }
+.reading :global(.step-current-data) { border-radius:4px; background:#f6f7f8 !important; padding:12px; font-size:14px; }
+.reading :global(.step-current-data strong) { font-size:14px; }
+.reading :global(.related-row) { margin-block:16px; padding-top:14px; }
+.reading :global(.related-row) a { font-size:14px; }
+.reading :global(#historia) { background:#f7f8f9; }
+.reading :global(#historia [class*='__preview']) { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); overflow:visible; gap:12px; margin:20px 0; padding:0; }
+.reading :global(#historia [class*='__preview']) article { padding:12px 0; background:transparent; }
+.reading :global(#historia [class*='__preview']) strong { font-size:14px; }
+.reading :global(#historia [class*='__preview']) span { color:#414a54; }
+.reading :global(#historia [class*='__disclosure']) { margin-top:18px; }
+.reading :global(#historia summary) { min-height:54px; }
+.area { border-top:1px solid #e5e7ea; }
+.area :global(.section) { padding-block:0; }
+.area :global(.section > .shell) { width:100%; padding:0; }
+.musicGrid { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:32px; align-items:start; }
+.musicGrid :global(h2) { font-size:24px !important; }
+.musicGrid :global(.section-heading p) { font-size:14px; }
+.musicGrid :global([class*='__header']) { margin-bottom:18px; }
+.musicGrid :global([class*='__copy']) > h2 { font-size:24px; }
+.musicGrid :global([class*='__copy']) > p { font-size:14px; }
+.musicGrid :global([class*='__sequence']) { gap:8px; }
+.musicGrid :global([class*='__item']) { padding:14px; box-shadow:none; border-radius:6px; }
+.musicGrid :global([class*='__item']) h3 { font-size:17px; }
+.musicGrid :global([class*='__groupSummary']) { background:#f6f7f8 !important; }
+.musicGrid :global([class*='__intro']) { grid-template-columns:1fr auto; gap:12px; }
+.musicGrid :global([class*='__summary']) { padding:12px; min-width:0; }
+.musicGrid :global([class*='__summary']) strong { font-size:28px; }
+.musicGrid :global([class*='__summary']) span { font-size:10px; }
+.reading :global(.heritage-work) { border-radius:6px; box-shadow:none !important; }
+.reading :global(.heritage-work-visual) { min-height:220px; }
+.reading :global(.heritage-work-copy) { padding:22px; }
+.reading :global(.heritage-work-copy) h3 { font-size:26px; }
+.reading :global(.heritage-work-agents > div > span) { background:#f6f7f8 !important; }
+.supplement, .documentation { padding-block:12px 24px; }
+.disclosure { margin-block:12px; border-block:1px solid #dce1e6; }
+.disclosure > summary { display:flex; align-items:center; gap:14px; padding-block:14px; min-height:52px; cursor:pointer; font-size:15px; font-weight:700; color:#2a333c; list-style:none; }
+.disclosure > summary::-webkit-details-marker, .inlineDisclosure > summary::-webkit-details-marker { display:none; }
+.disclosure > summary small { font-size:13px; font-weight:400; color:#5a6570; }
+.disclosure > summary b { margin-left:auto; font-size:22px; font-weight:400; }
+.disclosure[open] > summary b { transform:rotate(45deg); }
+.disclosureBody { padding-block:16px 22px; }
+.disclosureBody :global(.section) { padding-block:16px; }
+.disclosureBody :global(.section > .shell) { width:100%; padding:0; }
+.inlineDisclosure { margin-block:14px; border-block:1px solid #e2e6ea; }
+.inlineDisclosure summary { display:flex; justify-content:space-between; align-items:center; min-height:44px; gap:12px; cursor:pointer; list-style:none; font-weight:700; font-size:14px; }
+.inlineDisclosure p { font-size:15px; line-height:1.65; }
+.reading :global(#tira-del-hilo) { padding-block:40px; }
+.reading :global(#tira-del-hilo h2) { font-size:clamp(28px,3vw,40px); }
+.reading :global(#tira-del-hilo [class*='__card']) { min-height:0; padding:18px; }
+.reading :global(#tira-del-hilo [class*='__grid']) { grid-template-columns:repeat(4,minmax(0,1fr)); }
+.reading :global(#fuentes) { padding-block:18px 30px; }
+.reading :global(#fuentes h2) { font-size:24px; }
+.reading a:focus-visible, .reading summary:focus-visible, .reading button:focus-visible { outline:3px solid #175f99; outline-offset:3px; }
+.agendaSummary { font-size:16px; line-height:1.6; }
+.appointments { padding:0; list-style:none; }
+.appointments li { display:grid; grid-template-columns:120px 1fr auto; gap:16px; padding:12px; border-bottom:1px solid #e2e6ea; }
+@media(max-width:980px) {
+ .reading :global(.image-grid) { grid-template-columns:repeat(2,minmax(0,1fr)); }
+ .reading :global(.brotherhood-image-card) { grid-template-columns:110px minmax(0,1fr); }
+ .musicGrid { grid-template-columns:1fr; }
+ .reading :global(#historia [class*='__preview']) { grid-template-columns:repeat(3,minmax(0,1fr)); }
+ .reading :global(#tira-del-hilo [class*='__grid']) { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media(max-width:700px) {
+ .reading :global(.section) { padding-block:28px; }
+ .overviewGrid { grid-template-columns:1fr; gap:20px; }
+ .reading :global(.brotherhood-nav-label) { display:none; }
+ .reading :global(.brotherhood-nav-shell) { gap:4px; }
+ .reading :global(.brotherhood-nav-list) a { padding-inline:12px; font-size:14px; }
+ .reading :global(.image-grid) { grid-template-columns:1fr; gap:14px; }
+ .reading :global(.brotherhood-image-card), .reading :global(.image-grid > .brotherhood-image-card:only-child) { grid-template-columns:105px minmax(0,1fr); }
+ .reading :global(.brotherhood-portrait) { min-height:190px; }
+ .reading :global(.image-card-body) { padding:14px; }
+ .reading :global(.image-card-body) h3 { font-size:19px; }
+ .reading :global(.brotherhood-portrait-credit) { font-size:9px; left:6px; right:6px; bottom:8px; }
+ .reading :global(.processional-grid) { grid-template-columns:1fr; }
+ .reading :global(.processional-body) h3 { font-size:22px; }
+ .reading :global(.processional-photo.has-image) { aspect-ratio:2.1; }
+ .reading :global(#historia [class*='__preview']) { grid-template-columns:1fr; gap:0; margin:18px 0; }
+ .reading :global(#historia [class*='__preview']) article { display:grid; grid-template-columns:48px minmax(0,1fr); gap:14px; border-top:1px solid #dce1e6; padding-block:12px; }
+ .reading :global(#historia [class*='__preview']) article:last-child { grid-column:auto; }
+ .reading :global(#historia [class*='__preview']) span { margin-bottom:0; }
+ .next { padding:20px; }
+ .reading :global(.heritage-work) { grid-template-columns:1fr; }
+ .reading :global(.heritage-work-visual) { min-height:180px; max-height:220px; }
+ .reading :global(.heritage-work-copy) { padding:18px; }
+ .reading :global(#tira-del-hilo [class*='__grid']) { grid-template-columns:1fr; }
+ .reading :global(#conoce-hermandad header) { grid-template-columns:1fr auto; gap:16px; }
+ .reading :global(#conoce-hermandad [class*='__headerMarker']) span { font-size:30px; }
+ .reading :global(#conoce-hermandad [class*='__byline']) { font-size:12px; }
+ .reading :global(#conoce-hermandad summary small) { display:none; }
+ .musicGrid :global([class*='__intro']) { grid-template-columns:1fr; }
+ .appointments li { grid-template-columns:1fr; gap:6px; }
+}
+@media(prefers-reduced-motion:reduce) { .reading * { scroll-behavior:auto !important; transition:none !important; } }

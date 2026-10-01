@@ -25,7 +25,7 @@ test('la ficha dispone de un módulo fijo y reutilizable para el Vía Crucis de 
 })
 
 test('el Vía Crucis se renderiza después de Historia y antes de la Túnica y las Salidas', () => {
-  const historyIndex = page.indexOf('<BrotherhoodHistoryTimeline items={h.cronologia || []} />')
+  const historyIndex = page.indexOf('<BrotherhoodHistoryTimeline items={h.cronologia || []}')
   const viaCrucisIndex = page.indexOf('<BrotherhoodViaCrucisSection items={h.viaCrucisCofradias} />')
   const habitIndex = page.indexOf('id="tunica"')
   const outingsIndex = page.indexOf('<BrotherhoodOutingsSection outings={h.salidas} />')

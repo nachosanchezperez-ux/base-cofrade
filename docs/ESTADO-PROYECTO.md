@@ -1,5 +1,8 @@
 # Hilo Cofrade · Estado canónico
 
+**1/10/2026 · LABORATORIO de lectura de Hermandades:** base y producción verificadas en `a993ca20e4402cdfcdede1ec7e94be043bcc299f`, Vercel `dpl_Dq6rTjTVKMWhjDDvQFxJu3hTdpLZ` READY, Supabase ACTIVE_HEALTHY. Rediseño genérico aislado en `/laboratorio/hermandades/[slug]`; El Baratillo es el caso de evaluación. Las fichas públicas conservan su diseño. Sin DML/DDL/RLS. Preview y QA visual pendientes; sin autorización para producción. #1050 y #1020 independientes; #1019 comparte el archivo de ficha y exige reconciliación antes de integración. Evidencia: [laboratorio de lectura](./HERMANDAD-LABORATORIO-LECTURA-2026-10-01.md).
+
+
 **Corte operativo, 29/09/2026 · profundización editorial:** `main = 05c7df9fa36b2f0b2a66f6941cdf6e3a9566f641`; producción `dpl_G9ncL9kHfCQ6yQXH1neaDL7FAX6L` READY sobre ese SHA, con aliases `hilocofrade.es` y `www.hilocofrade.es`. Supabase ACTIVE_HEALTHY.
 
 **Soledad de La Algaba · #1022:** **CERRADA Y CERTIFICADA**. El lote editorial aplicado queda preservado: 3 titulares, 2 Pasos, 2 Salidas publicadas de 2026, 6 Cultos, 3 periodos musicales históricos, patrimonio musical, Banda propia, 6 hitos históricos y patrimonio material. QA público y estructural PASS; la ficha supera el contrato editorial compartido que alimenta `/sitemaps/hermandades.xml`. Search Console todavía responde `URL is unknown to Google` el 29/09/2026: queda como deuda de descubrimiento/indexación, no como bloqueo editorial. Evidencia: [PROFUNDIZACION-SOLEDAD-LA-ALGABA-2026-09-28.md](./PROFUNDIZACION-SOLEDAD-LA-ALGABA-2026-09-28.md).

@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import BrotherhoodReadingLayout from '@/components/BrotherhoodReadingLayout';
+import readingStyles from '@/components/BrotherhoodReadingLayout.module.css';
 import Image from 'next/image';
 import { cache } from 'react';
 import BrotherhoodAgendaSection from '@/components/BrotherhoodAgendaSection';
@@ -16,6 +18,7 @@ import BrotherhoodSimpecadosSection from '@/components/BrotherhoodSimpecadosSect
 import {
   BrotherhoodConceptualTitulars,
   BrotherhoodOwnBands,
+  BrotherhoodReadingDiscovery,
 } from '@/components/BrotherhoodRelationalExtras';
 import EntitySectionNav from '@/components/EntitySectionNav';
 import RelationalThread from '@/components/RelationalThread';
@@ -150,7 +153,7 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default async function HermandadDetailPage({ params }) {
+export default async function HermandadDetailPage({ params, reading = false }) {
   const { slug } = await params;
   const h = await getHermandad(slug);
   if (!h) notFound();
@@ -344,75 +347,8 @@ export default async function HermandadDetailPage({ params }) {
     },
   };
 
-  return (
-    <div className="brotherhood-page" style={{
-      '--brotherhood-primary': h.colores?.primario || '#153B69',
-      '--brotherhood-secondary': h.colores?.secundario || '#A71930',
-      '--brotherhood-light': h.colores?.claro || '#FFFFFF',
-      '--brotherhood-dark': h.colores?.oscuro || '#0D2949',
-      '--brotherhood-on-secondary': h.colores?.sobreSecundario || '#FFFFFF'
-    }}>
-      <JsonLd data={breadcrumbJsonLd([
-        { name: 'Inicio', path: '/' },
-        { name: 'Hermandades', path: '/hermandades' },
-        { name: h.nombrePopular, path: canonicalPath },
-      ])} />
-      <JsonLd data={organizationJsonLd} />
-      <JsonLd data={pageJsonLd} />
-
-      <BrotherhoodProgramHero
-        entityType={brotherhoodTypeLabel}
-        title={h.nombrePopular}
-        officialName={h.nombreOficial}
-        locality={publicText(h.localidad)}
-        localityHref={municipalityHubHref}
-        seat={publicText(h.sede)}
-        breadcrumbItems={[
-          { label: 'Hermandades', href: '/hermandades' },
-          publicText(h.localidad) ? { label: publicText(h.localidad), href: municipalityHubHref || undefined } : null,
-          { label: h.nombrePopular },
-        ]}
-        facts={heroFacts}
-        media={{
-          photoSrc: heroMedia?.path || '',
-          photoAlt: heroMedia?.alt || `Fotografía de ${h.nombrePopular}`,
-          credit: heroMedia?.credit || '',
-          width: heroMedia?.width,
-          height: heroMedia?.height,
-          focusX: heroMedia?.focusX,
-          focusY: heroMedia?.focusY,
-          mobileFocusX: heroMedia?.mobileFocusX,
-          mobileFocusY: heroMedia?.mobileFocusY,
-          focusPosition: heroMedia?.focusPosition,
-          fitMode: heroMedia?.fitMode,
-          crestSrc: authoritativeCrestPath,
-          crestAlt: `Escudo de ${h.nombrePopular}`,
-        }}
-      />
-
-      <EntitySectionNav items={[
-        hasPracticalOverview && { href: '#resumen', label: 'Resumen' },
-        h.imagenes?.length > 0 && { href: '#titulares', label: 'Titulares' },
-        h.cronologia?.length > 0 && { href: '#historia', label: 'Historia' },
-        (musicalHeritage.length > 0 || fallbackMusicalHeritage.length > 0) && { href: '#musica', label: 'Música' },
-        h.patrimonio?.length > 0 && { href: '#patrimonio', label: 'Patrimonio' },
-        upcomingAgendaItems.length > 0
-          ? { href: '#agenda', label: 'Agenda' }
-          : h.cultos?.length > 0
-            ? { href: '#cultos', label: 'Cultos' }
-            : null,
-      ]} />
-
-      <BrotherhoodOverviewV2
-        brotherhood={h}
-        heroFactLabels={heroFacts.map((fact) => fact.label)}
-      />
-
-      <BrotherhoodAgendaSection items={upcomingAgendaItems} />
-
-
-
-      {h.participacionesConsejo?.length > 0 && (
+  const councilSection = (<>
+{h.participacionesConsejo?.length > 0 && (
         <section className="section"><div className="shell">
           <div className="council-participations">
             {h.participacionesConsejo.map((participacion) => {
@@ -452,8 +388,9 @@ export default async function HermandadDetailPage({ params }) {
           </div>
         </div></section>
       )}
-
-      {h.imagenes?.length > 0 && (
+  </>);
+  const titularsSection = (<>
+{h.imagenes?.length > 0 && (
       <section className="section brotherhood-soft" id="titulares"><div className="shell">
         <SectionTitle eyebrow="Titularidad" title="Sagrados Titulares" description="Imágenes e identidades devocionales que conforman la titularidad documentada de la Hermandad." />
         <div className="image-grid">{h.imagenes.map((imagen) => {
@@ -497,12 +434,12 @@ export default async function HermandadDetailPage({ params }) {
                     <p>{imagen.iconografia}</p>
                   </details>
                 )}
-                {imagen.fichaDisponible && <span className="text-link">Descubrir titular →</span>}
+                {imagen.fichaDisponible && (reading ? <Link href={`/imagenes/${imagen.slug}`} className="text-link">Descubrir titular →</Link> : <span className="text-link">Descubrir titular →</span>)}
               </div>
             </>
           );
 
-          return imagen.fichaDisponible ? (
+          return imagen.fichaDisponible && !reading ? (
             <Link href={`/imagenes/${imagen.slug}`} className="image-card brotherhood-image-card" key={imagen.id}>{card}</Link>
           ) : (
             <article className="image-card brotherhood-image-card" key={imagen.id}>{card}</article>
@@ -511,8 +448,9 @@ export default async function HermandadDetailPage({ params }) {
         <BrotherhoodConceptualTitulars brotherhoodId={h.id} />
       </div></section>
       )}
-
-      {h.pasos?.length > 0 && (
+  </>);
+  const stepsSection = (<>
+{h.pasos?.length > 0 && (
       <section className="section" id="pasos"><div className="shell">
         <SectionTitle eyebrow={`${h.pasos.length} pasos`} title="Pasos procesionales" description="Imágenes, diseño, talla, orfebrería, bordados, reformas y evolución histórica." />
         <div className="processional-grid">{h.pasos.map((paso, index) => (
@@ -536,14 +474,14 @@ export default async function HermandadDetailPage({ params }) {
             ) : (
               <div className="processional-photo"><span>0{index + 1}</span><small>Fotografía del paso</small></div>
             )}
-            <div className="processional-body"><span className="pill">{paso.tipo}</span><h3>{paso.nombre}</h3><p>{paso.descripcion}</p>
+            <div className="processional-body"><span className="pill">{paso.tipo}</span><h3>{paso.nombre}</h3>{!reading && <p>{paso.descripcion}</p>}
               {(publicText(paso.capatazActual) || publicText(paso.acompanamientoActual)) && (
                 <div className="step-current-data">
                   {publicText(paso.capatazActual) ? <div><small>Capataz actual</small><strong>{publicText(paso.capatazActual)}</strong></div> : null}
                   {publicText(paso.acompanamientoActual) ? <div><small>Acompañamiento musical</small><strong>{publicText(paso.acompanamientoActual)}</strong></div> : null}
                 </div>
               )}
-              {(paso.ejecucion || paso.sistemaPortadores || paso.materiales) && (
+              {reading ? <details className={readingStyles.inlineDisclosure}><summary>Diseño y datos técnicos <span aria-hidden="true">＋</span></summary><p>{paso.descripcion}</p>              {(paso.ejecucion || paso.sistemaPortadores || paso.materiales) && (
                 <div className="step-technical-data">
                   {paso.ejecucion && <div><small>Ejecución</small><strong>{paso.ejecucion}</strong></div>}
                   {paso.sistemaPortadores && <div><small>Sistema de portadores</small><strong>{paso.sistemaPortadores}</strong></div>}
@@ -551,6 +489,15 @@ export default async function HermandadDetailPage({ params }) {
                 </div>
               )}
               {paso.estadoActual && <p className="step-current-state">{paso.estadoActual}</p>}
+</details> : <>              {(paso.ejecucion || paso.sistemaPortadores || paso.materiales) && (
+                <div className="step-technical-data">
+                  {paso.ejecucion && <div><small>Ejecución</small><strong>{paso.ejecucion}</strong></div>}
+                  {paso.sistemaPortadores && <div><small>Sistema de portadores</small><strong>{paso.sistemaPortadores}</strong></div>}
+                  {paso.materiales && <div className="step-technical-wide"><small>Materiales</small><strong>{paso.materiales}</strong></div>}
+                </div>
+              )}
+              {paso.estadoActual && <p className="step-current-state">{paso.estadoActual}</p>}
+</>}
               {(paso.imagenesDetalle?.length || paso.imagenes?.length) ? <div className="related-row"><small>Imágenes que procesionan</small><div>{(
                 paso.imagenesDetalle?.length
                   ? paso.imagenesDetalle
@@ -566,13 +513,15 @@ export default async function HermandadDetailPage({ params }) {
         ))}</div>
       </div></section>
       )}
-
-      <BrotherhoodOwnBands brotherhoodId={h.id} />
-
-      {musicalHeritage.length > 0 ? (
-        <BrotherhoodMusicalHeritage items={musicalHeritage} />
+  </>);
+  const ownMusicSection = (<>
+<BrotherhoodOwnBands brotherhoodId={h.id} musicOnly={reading} />
+  </>);
+  const musicalHeritageSection = (<>
+{musicalHeritage.length > 0 ? (
+        <BrotherhoodMusicalHeritage items={musicalHeritage} id={reading ? "patrimonio-musical" : "musica"} />
       ) : fallbackMusicalHeritage.length > 0 ? (
-        <section className="section music-section" id="musica"><div className="shell">
+        <section className="section music-section" id={reading ? "patrimonio-musical" : "musica"}><div className="shell">
           <SectionTitle eyebrow="Sonidos propios" title="Patrimonio Musical" description="Marchas dedicadas a la Hermandad y a sus titulares, conectadas con sus autores y registros audiovisuales." />
           <div className="music-list">{fallbackMusicalHeritage.map((m) => (
             <article key={m.id}><div className="music-index">♪</div><div><h3>{m.nombre}</h3><p>{m.autor}</p></div><strong>{m.ano}</strong>
@@ -580,14 +529,18 @@ export default async function HermandadDetailPage({ params }) {
           ))}</div>
         </div></section>
       ) : null}
-
-      <MusicalRepertoiresSection items={musicalRepertoires} context="brotherhood" />
-
-      <BrotherhoodHistoryTimeline items={h.cronologia || []} />
-
-      <BrotherhoodViaCrucisSection items={h.viaCrucisCofradias} />
-
-      {h.habitos?.length > 0 && <section className="section brotherhood-dark" id="tunica"><div className="shell">
+  </>);
+  const repertoiresSection = (<>
+<MusicalRepertoiresSection items={musicalRepertoires} context="brotherhood" />
+  </>);
+  const historySection = (<>
+<BrotherhoodHistoryTimeline items={h.cronologia || []} semanticPreview={reading} />
+  </>);
+  const viaCrucisSection = (<>
+<BrotherhoodViaCrucisSection items={h.viaCrucisCofradias} />
+  </>);
+  const habitSection = (<>
+{h.habitos?.length > 0 && <section className="section brotherhood-dark" id="tunica"><div className="shell">
         <SectionTitle eyebrow="Estación de penitencia" title="Túnica" description="Descripción documentada de la indumentaria nazarena de la Hermandad." />
         <div className="habit-grid">{h.habitos.map((item, index) => (
           <article className={`habit-card brotherhood-habit ${index === 0 ? 'habit-red' : 'habit-white'}`} key={item.id}>
@@ -615,18 +568,24 @@ export default async function HermandadDetailPage({ params }) {
           </article>
         ))}</div>
       </div></section>}
-
-      <BrotherhoodOutingsSection outings={h.salidas} />
-
-      <BrotherhoodCrewEventsSection events={crewEvents} />
-
-      <BrotherhoodCultsSection cults={h.cultos} />
-
-      <BrotherhoodSimpecadosSection items={h.simpecados} />
-
-      <FestivalPostersSection posters={h.cartelesFiestas} />
-
-      {(h.patrimonio?.length > 0 || h.estrenos?.length > 0) && <section className="section heritage-section" id="patrimonio"><div className="shell">
+  </>);
+  const outingsSection = (<>
+<BrotherhoodOutingsSection outings={h.salidas} />
+  </>);
+  const crewSection = (<>
+<BrotherhoodCrewEventsSection events={crewEvents} collapseHistory={reading} />
+  </>);
+  const cultsSection = (<>
+<BrotherhoodCultsSection cults={h.cultos} />
+  </>);
+  const simpecadosSection = (<>
+<BrotherhoodSimpecadosSection items={h.simpecados} />
+  </>);
+  const postersSection = (<>
+<FestivalPostersSection posters={h.cartelesFiestas} />
+  </>);
+  const heritageSection = (<>
+{(h.patrimonio?.length > 0 || h.estrenos?.length > 0) && <section className="section heritage-section" id="patrimonio"><div className="shell">
         <SectionTitle eyebrow="Memoria material" title="Patrimonio" description="Obras, enseres y espacios documentados como piezas vivas: su historia, sus autores y las intervenciones que han definido su aspecto." />
 
         {h.patrimonio?.length > 0 && (
@@ -701,27 +660,153 @@ export default async function HermandadDetailPage({ params }) {
           sourcesHref={h.fuentesFicha?.length ? '#fuentes' : undefined}
         />
       </div></section>}
-
-      {documentedHistoricalAccompaniments.length > 0 && <section className="section brotherhood-soft" id="acompanamientos"><div className="shell">
+  </>);
+  const historicalMusicSection = (<>
+{documentedHistoricalAccompaniments.length > 0 && <section className="section brotherhood-soft" id="acompanamientos"><div className="shell">
         <SectionTitle eyebrow="Memoria sonora" title="Acompañamientos Musicales Históricos" description="Una cronología por paso para conocer qué formaciones musicales han acompañado a la Hermandad." />
         <div className="music-history-grid">{documentedHistoricalAccompaniments.map((a) => (
           <article key={a.id}>{publicText(a.periodo) ? <span className="music-period">{publicText(a.periodo)}</span> : null}<h3>{publicText(a.banda)}</h3>{publicText(a.paso) ? <p>{publicText(a.paso)}</p> : null}{publicText(a.tipo) ? <small>{publicText(a.tipo)}</small> : null}</article>
         ))}</div>
       </div></section>}
-
-      {h.noticias?.length > 0 && <section className="section brotherhood-white" id="noticias"><div className="shell">
+  </>);
+  const newsSection = (<>
+{h.noticias?.length > 0 && <section className="section brotherhood-white" id="noticias"><div className="shell">
         <SectionTitle eyebrow="Última hora" title="Noticias relacionadas" description="Actualidad vinculada directamente con la Hermandad, sus titulares, patrimonio y vida corporativa." />
         <div className="news-grid">{h.noticias.map((n) => (
           <article className="news-card" key={n.id}><div className="news-image-placeholder">Noticia</div><div><small>{n.fecha} · {n.categoria}</small><h3>{n.titulo}</h3><p>{n.extracto}</p>{n.url ? <a href={n.url} target="_blank" rel="noreferrer" className="text-link">Leer noticia ↗</a> : null}</div></article>
         ))}</div>
       </div></section>}
-
-      {h.curiosidades?.length > 0 && <section className="section brotherhood-soft" id="curiosidades"><div className="shell">
+  </>);
+  const curiositiesSection = (<>
+{h.curiosidades?.length > 0 && <section className="section brotherhood-soft" id="curiosidades"><div className="shell">
         <SectionTitle eyebrow="¿Sabías que…?" title="Curiosidades" description="Datos singulares y divulgativos que solo se publicarán cuando estén documentados." />
         {h.curiosidades.map((c) => <div className="curiosity-card brotherhood-curiosity" key={c.id}><span className="curiosity-mark">?</span><div><span className="eyebrow">{c.categoria}</span><h3>{c.titulo}</h3><p>{c.texto}</p></div></div>)}
       </div></section>}
+  </>);
+
+  return (
+    <div className={`brotherhood-page ${reading ? readingStyles.reading : ""}`} style={{
+      '--brotherhood-primary': h.colores?.primario || '#153B69',
+      '--brotherhood-secondary': h.colores?.secundario || '#A71930',
+      '--brotherhood-light': h.colores?.claro || '#FFFFFF',
+      '--brotherhood-dark': h.colores?.oscuro || '#0D2949',
+      '--brotherhood-on-secondary': h.colores?.sobreSecundario || '#FFFFFF'
+    }}>
+      <JsonLd data={breadcrumbJsonLd([
+        { name: 'Inicio', path: '/' },
+        { name: 'Hermandades', path: '/hermandades' },
+        { name: h.nombrePopular, path: canonicalPath },
+      ])} />
+      <JsonLd data={organizationJsonLd} />
+      <JsonLd data={pageJsonLd} />
+
+      <BrotherhoodProgramHero
+        compact={reading}
+        entityType={brotherhoodTypeLabel}
+        title={h.nombrePopular}
+        officialName={h.nombreOficial}
+        locality={publicText(h.localidad)}
+        localityHref={municipalityHubHref}
+        seat={publicText(h.sede)}
+        breadcrumbItems={[
+          { label: 'Hermandades', href: '/hermandades' },
+          publicText(h.localidad) ? { label: publicText(h.localidad), href: municipalityHubHref || undefined } : null,
+          { label: h.nombrePopular },
+        ]}
+        facts={heroFacts}
+        media={{
+          photoSrc: heroMedia?.path || '',
+          photoAlt: heroMedia?.alt || `Fotografía de ${h.nombrePopular}`,
+          credit: heroMedia?.credit || '',
+          width: heroMedia?.width,
+          height: heroMedia?.height,
+          focusX: heroMedia?.focusX,
+          focusY: heroMedia?.focusY,
+          mobileFocusX: heroMedia?.mobileFocusX,
+          mobileFocusY: heroMedia?.mobileFocusY,
+          focusPosition: heroMedia?.focusPosition,
+          fitMode: heroMedia?.fitMode,
+          crestSrc: authoritativeCrestPath,
+          crestAlt: `Escudo de ${h.nombrePopular}`,
+        }}
+      />
+
+      {reading ? (
+        <BrotherhoodReadingLayout
+          brotherhood={h}
+          today={agendaData.today}
+          agendaItems={upcomingAgendaItems}
+          heroFactLabels={heroFacts.map((fact) => fact.label)}
+          hasMusic={Boolean(documentedCurrentAccompaniments.length || musicalHeritage.length || fallbackMusicalHeritage.length || documentedHistoricalAccompaniments.length || musicalRepertoires.length)}
+          slots={{ titulars: titularsSection, steps: stepsSection, history: historySection,
+            ownMusic: ownMusicSection, musicalHeritage: musicalHeritageSection, repertoires: repertoiresSection,
+            historicalMusic: historicalMusicSection, heritage: heritageSection, simpecados: simpecadosSection,
+            posters: postersSection, habit: habitSection, council: councilSection, viaCrucis: viaCrucisSection,
+            outings: outingsSection, crew: crewSection, cults: cultsSection, news: newsSection, curiosities: curiositiesSection }}
+        />
+      ) : (<>
+      <EntitySectionNav items={[
+        hasPracticalOverview && { href: '#resumen', label: 'Resumen' },
+        h.imagenes?.length > 0 && { href: '#titulares', label: 'Titulares' },
+        h.cronologia?.length > 0 && { href: '#historia', label: 'Historia' },
+        (musicalHeritage.length > 0 || fallbackMusicalHeritage.length > 0) && { href: '#musica', label: 'Música' },
+        h.patrimonio?.length > 0 && { href: '#patrimonio', label: 'Patrimonio' },
+        upcomingAgendaItems.length > 0
+          ? { href: '#agenda', label: 'Agenda' }
+          : h.cultos?.length > 0
+            ? { href: '#cultos', label: 'Cultos' }
+            : null,
+      ]} />
+
+      <BrotherhoodOverviewV2
+        brotherhood={h}
+        heroFactLabels={heroFacts.map((fact) => fact.label)}
+      />
+
+      <BrotherhoodAgendaSection items={upcomingAgendaItems} />
+
+
+
+      {councilSection}
+
+      {titularsSection}
+
+      {stepsSection}
+
+      {ownMusicSection}
+
+      {musicalHeritageSection}
+
+      {repertoiresSection}
+
+      {historySection}
+
+      {viaCrucisSection}
+
+      {habitSection}
+
+      {outingsSection}
+
+      {crewSection}
+
+      {cultsSection}
+
+      {simpecadosSection}
+
+      {postersSection}
+
+      {heritageSection}
+
+      {historicalMusicSection}
+
+      {newsSection}
+
+      {curiositiesSection}
+
+      </>)}
 
       <RelationalThread
+        maxItems={reading ? 4 : 8}
         currentLabel="Hermandad"
         currentName={h.nombrePopular}
         currentMeta={[brotherhoodTypeLabel, publicText(h.localidad)].filter(Boolean).join(' · ')}
@@ -732,7 +817,9 @@ export default async function HermandadDetailPage({ params }) {
         description="Continúa por sus Titulares, pasos, bandas y marchas documentadas. Cada relación abre una nueva ficha sin perder el contexto de la Hermandad de origen."
       />
 
-      <OfficialLinks links={h.enlacesOficiales} />
+      {reading && <div className={`shell ${readingStyles.documentation}`}><details className={readingStyles.disclosure}><summary>Más rutas para tirar del hilo <b aria-hidden="true">＋</b></summary><BrotherhoodReadingDiscovery brotherhoodId={h.id} /></details></div>}
+
+      {reading && h.enlacesOficiales?.length ? <div className={`shell ${readingStyles.documentation}`}><details className={readingStyles.disclosure}><summary>Web y redes oficiales <span>{h.enlacesOficiales.length}</span><b aria-hidden="true">＋</b></summary><OfficialLinks links={h.enlacesOficiales} /></details></div> : <OfficialLinks links={h.enlacesOficiales} />}
       <SourcesBlock sources={h.fuentesFicha} />
     </div>
   );

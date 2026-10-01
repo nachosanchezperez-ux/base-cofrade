@@ -37,7 +37,7 @@ test('los datos de salida, paso, música e historia permanecen en sus secciones 
   assert.match(page, /id="pasos"/)
   assert.match(page, /BrotherhoodOwnBands/)
   assert.match(page, /BrotherhoodMusicalHeritage/)
-  assert.match(page, /<BrotherhoodHistoryTimeline items=\{h\.cronologia \|\| \[\]\} \/>/)
+  assert.match(page, /<BrotherhoodHistoryTimeline items=\{h\.cronologia \|\| \[\]\}(?: semanticPreview=\{reading\})? \/>/)
   assert.match(history, /id="historia"/)
   assert.match(outings, /id="salidas"/)
 })

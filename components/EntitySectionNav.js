@@ -7,7 +7,7 @@ const DISCOVERABLE_SECTIONS = [
   { href: '#musica', label: 'Patrimonio musical' },
 ];
 
-export default function EntitySectionNav({ items = [] }) {
+export default function EntitySectionNav({ items = [], discover = true }) {
   const visibleItems = useMemo(
     () => items.filter((item) => item?.href && item?.label),
     [items]
@@ -19,12 +19,12 @@ export default function EntitySectionNav({ items = [] }) {
 
   useEffect(() => {
     const existingHrefs = new Set(visibleItems.map((item) => item.href));
-    const discovered = DISCOVERABLE_SECTIONS.filter((item) => (
+    const discovered = discover ? DISCOVERABLE_SECTIONS.filter((item) => (
       !existingHrefs.has(item.href) && document.querySelector(item.href)
-    ));
+    )) : [];
 
     setDiscoveredItems(discovered);
-  }, [visibleItems]);
+  }, [visibleItems, discover]);
 
   const navigationItems = useMemo(
     () => [...visibleItems, ...discoveredItems],
