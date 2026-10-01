@@ -1,0 +1,102 @@
+{
+  "executed_at": "2026-10-01T06:24:25.618Z",
+  "result": [
+    {
+      "result": "RESTORATION_DRY_RUN_QA_OK_ROLLBACK",
+      "discipline_inserts": 12,
+      "source_link_inserts": 10,
+      "proposed_disciplines": [
+        {
+          "id": "c0200002-0000-4000-8000-000000000005",
+          "notes": "Ciclo 2 · Conservación. Actividad documentada por fuentes primarias revisadas; principal según el trabajo representado en esta ficha. No atribuye obras adicionales.",
+          "discipline": "Conservación",
+          "is_primary": true,
+          "agent_entity_id": "14cff562-4631-4bc4-86f0-88431ea922e7"
+        },
+        {
+          "id": "c0200002-0000-4000-8000-000000000006",
+          "notes": "Ciclo 2 · Restauración. Actividad documentada por fuentes primarias revisadas; principal según el trabajo representado en esta ficha. No atribuye obras adicionales.",
+          "discipline": "Restauración",
+          "is_primary": false,
+          "agent_entity_id": "14cff562-4631-4bc4-86f0-88431ea922e7"
+        },
+        {
+          "id": "c0200002-0000-4000-8000-000000000014",
+          "notes": "Ciclo 2 · Conservación. Actividad documentada por fuentes primarias revisadas; principal según el trabajo representado en esta ficha. No atribuye obras adicionales.",
+          "discipline": "Conservación",
+          "is_primary": false,
+          "agent_entity_id": "451a6ad7-80eb-4c79-9ffd-db3f8f932f71"
+        },
+        {
+          "id": "c0200002-0000-4000-8000-000000000013",
+          "notes": "Ciclo 2 · Restauración. Actividad documentada por fuentes primarias revisadas; principal según el trabajo representado en esta ficha. No atribuye obras adicionales.",
+          "discipline": "Restauración",
+          "is_primary": true,
+          "agent_entity_id": "451a6ad7-80eb-4c79-9ffd-db3f8f932f71"
+        },
+        {
+          "id": "c0200002-0000-4000-8000-000000000009",
+          "notes": "Ciclo 2 · Restauración. Actividad documentada por fuentes primarias revisadas; principal según el trabajo representado en esta ficha. No atribuye obras adicionales.",
+          "discipline": "Restauración",
+          "is_primary": true,
+          "agent_entity_id": "5e8b3b9d-a9a7-4d03-aeb5-1c8001588879"
+        },
+        {
+          "id": "c0200002-0000-4000-8000-000000000018",
+          "notes": "Ciclo 2 · Conservación. Actividad documentada por fuentes primarias revisadas; principal según el trabajo representado en esta ficha. No atribuye obras adicionales.",
+          "discipline": "Conservación",
+          "is_primary": false,
+          "agent_entity_id": "7938f41a-142a-4cad-b184-f1e76239a77d"
+        },
+        {
+          "id": "c0200002-0000-4000-8000-000000000017",
+          "notes": "Ciclo 2 · Restauración. Actividad documentada por fuentes primarias revisadas; principal según el trabajo representado en esta ficha. No atribuye obras adicionales.",
+          "discipline": "Restauración",
+          "is_primary": true,
+          "agent_entity_id": "7938f41a-142a-4cad-b184-f1e76239a77d"
+        },
+        {
+          "id": "c0200002-0000-4000-8000-000000000002",
+          "notes": "Ciclo 2 · Conservación. Actividad documentada por fuentes primarias revisadas; principal según el trabajo representado en esta ficha. No atribuye obras adicionales.",
+          "discipline": "Conservación",
+          "is_primary": false,
+          "agent_entity_id": "dfe83027-6fe1-44e0-afc3-49ee5f0711ee"
+        },
+        {
+          "id": "c0200002-0000-4000-8000-000000000001",
+          "notes": "Ciclo 2 · Restauración. Actividad documentada por fuentes primarias revisadas; principal según el trabajo representado en esta ficha. No atribuye obras adicionales.",
+          "discipline": "Restauración",
+          "is_primary": true,
+          "agent_entity_id": "dfe83027-6fe1-44e0-afc3-49ee5f0711ee"
+        },
+        {
+          "id": "c0200002-0000-4000-8000-000000000022",
+          "notes": "Ciclo 2 · Conservación. Actividad documentada por fuentes primarias revisadas; principal según el trabajo representado en esta ficha. No atribuye obras adicionales.",
+          "discipline": "Conservación",
+          "is_primary": false,
+          "agent_entity_id": "e34f4782-d09b-4578-a189-e8c28b9f44bf"
+        },
+        {
+          "id": "c0200002-0000-4000-8000-000000000021",
+          "notes": "Ciclo 2 · Restauración. Actividad documentada por fuentes primarias revisadas; principal según el trabajo representado en esta ficha. No atribuye obras adicionales.",
+          "discipline": "Restauración",
+          "is_primary": true,
+          "agent_entity_id": "e34f4782-d09b-4578-a189-e8c28b9f44bf"
+        },
+        {
+          "id": "c0200002-0000-4000-8000-000000000011",
+          "notes": "Ciclo 2 · Restauración. Actividad documentada por fuentes primarias revisadas; principal según el trabajo representado en esta ficha. No atribuye obras adicionales.",
+          "discipline": "Restauración",
+          "is_primary": true,
+          "agent_entity_id": "f9d65fd5-accc-407e-8405-3fe3b1aa8735"
+        }
+      ]
+    }
+  ],
+  "rollback_verified": {
+    "discipline_residue": 0,
+    "source_residue": 0,
+    "discipline_total": 103,
+    "source_link_total": 8494
+  }
+}
