@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
 import test from 'node:test'
-import { buildProcessionRoute } from '../lib/procession-route.js'
+import { buildProcessionRoute, routeSummarySections } from '../lib/procession-route.js'
 
 test('detecta salida y entrada en el mismo lugar y separa ida y regreso', () => {
   const route = buildProcessionRoute({
@@ -28,6 +28,33 @@ test('detecta salida y entrada en el mismo lugar y separa ida y regreso', () => 
   assert.equal(route.legs[1].points[0].label, 'Plaza Fernández Velasco')
   assert.equal(route.legs[1].points.at(-1).label, 'Iglesia de San Benito Abad')
   assert.equal(route.legs[1].points.at(-1).role, 'end')
+})
+
+test('reconoce Vuelta y separadores con flecha en recorridos heredados', () => {
+  const sections = routeSummarySections(
+    'Ida: Capilla de San Andrés → Orfila → Cuna → Plaza del Salvador. Vuelta: Plaza del Salvador → Cuna → Orfila → Capilla de San Andrés.'
+  )
+
+  assert.equal(sections.length, 2)
+  assert.equal(sections[0].id, 'outbound')
+  assert.equal(sections[0].label, 'Ida')
+  assert.deepEqual(sections[0].points, ['Capilla de San Andrés', 'Orfila', 'Cuna', 'Plaza del Salvador'])
+  assert.equal(sections[1].id, 'return')
+  assert.equal(sections[1].label, 'Vuelta')
+  assert.deepEqual(sections[1].points, ['Plaza del Salvador', 'Cuna', 'Orfila', 'Capilla de San Andrés'])
+})
+
+test('reconoce mañana, tarde y calificadores de fecha como tramos', () => {
+  const sections = routeSummarySections(
+    'Mañana: Capilla, Ayuntamiento, Parroquia. Por la tarde: Parroquia, Real, Capilla.'
+  )
+  const dated = routeSummarySections(
+    'Ida (20 de septiembre): Plaza A, Calle B, Templo C. Regreso (27 de septiembre): Templo C, Calle D, Plaza A.'
+  )
+
+  assert.deepEqual(sections.map((section) => section.label), ['Mañana', 'Por la tarde'])
+  assert.deepEqual(sections.map((section) => section.points.length), [3, 3])
+  assert.deepEqual(dated.map((section) => section.label), ['Ida · 20 de septiembre', 'Regreso · 27 de septiembre'])
 })
 
 test('un circuito estructurado de un solo tramo termina visualmente como entrada', () => {
@@ -73,7 +100,7 @@ test('mantiene origen y destino separados cuando la extraordinaria es un traslad
   assert.equal(route.legs[1].points.at(-1).label, 'Parroquia de Nuestra Señora de los Dolores')
 })
 
-test('filtra anotaciones musicales de recorridos estructurados para no duplicar acompañamientos', () => {
+test('filtra música y conserva hitos de horario dentro del recorrido', () => {
   const route = buildProcessionRoute({
     origin: 'Templo A',
     destination: 'Templo B',
@@ -96,20 +123,50 @@ test('filtra anotaciones musicales de recorridos estructurados para no duplicar 
         },
       ],
     },
+    schedule: [
+      { label: 'Rezo', time: '20:15', place: 'Plaza Mayor' },
+    ],
   })
 
   const plaza = route.legs[0].points.find((point) => point.label === 'Plaza Mayor')
-  assert.deepEqual(plaza.annotations, [{ type: 'note', label: 'Petalá' }])
+  assert.deepEqual(plaza.annotations, [
+    { type: 'note', label: 'Petalá' },
+    { type: 'schedule', label: 'Rezo', time: '20:15' },
+  ])
+
+  const component = readFileSync(new URL('../components/ProcessionRoute.js', import.meta.url), 'utf8')
+  assert.match(component, /point\.annotations\?\.length/)
+  assert.match(component, /annotation\.time/)
+  assert.match(component, /annotation\.label/)
 })
 
-test('la ficha maestra reserva el recorrido exclusivamente para el itinerario', () => {
-  const source = readFileSync(new URL('../components/ProcessionRoute.js', import.meta.url), 'utf8')
+test('expone fases de una jornada compleja sin mezclarlas con las calles', () => {
+  const route = buildProcessionRoute({
+    route: {
+      phases: [
+        {
+          id: 'manana',
+          eyebrow: 'Mañana',
+          title: 'Rosario de ida',
+          time: '07:00 → 10:00',
+          places: ['Templo A', 'Templo B'],
+          summary: 'Rosario hasta el templo de destino.',
+        },
+        {
+          id: 'tarde',
+          eyebrow: 'Tarde',
+          title: 'Traslado de regreso',
+          time: '17:30 → 22:15',
+          places: ['Templo B', 'Templo A'],
+        },
+      ],
+    },
+  })
 
-  assert.equal(source.includes('point.annotations'), false)
-  assert.equal(source.includes('annotation.time'), false)
-  assert.equal(source.includes('annotation.label'), false)
-  assert.equal(source.includes('departureTime'), false)
-  assert.equal(source.includes('entryTime'), false)
+  assert.equal(route.phases.length, 2)
+  assert.equal(route.phases[0].title, 'Rosario de ida')
+  assert.equal(route.phases[1].time, '17:30 → 22:15')
+  assert.equal(route.source, 'phases')
 })
 
 test('conserva el texto como fallback cuando no existe un itinerario separable', () => {
