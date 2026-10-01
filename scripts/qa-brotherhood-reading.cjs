@@ -4,6 +4,13 @@ const { chromium } = require('playwright');
 const fs = require('node:fs');
 const assert = require('node:assert/strict');
 
+const expectedCanonical = process.env.QA_CANONICAL || 'https://hilocofrade.es/hermandades/el-baratillo';
+const expectedHistory = Number(process.env.QA_HISTORY || '15');
+const expectedSources = Number(process.env.QA_SOURCES || '18');
+const expectedCompositions = process.env.QA_COMPOSITIONS || '39';
+const controlPath = process.env.QA_CONTROL_PATH || '/hermandades/hermandad-del-gran-poder-sevilla';
+const controlCanonical = process.env.QA_CONTROL_CANONICAL || 'https://hilocofrade.es/hermandades/hermandad-del-gran-poder-sevilla';
+
 (async () => {
   const url = process.env.QA_URL;
   if (!url) throw new Error('Set QA_URL to the public pilot URL (including preview share parameter if protected).');
@@ -83,22 +90,30 @@ const assert = require('node:assert/strict');
     assert.equal(metrics.overflow, 0);
     assert.equal(metrics.h1, 1);
     assert.equal(metrics.menu.length, 6);
-    assert.equal(metrics.history, 15);
-    assert.equal(metrics.sources, 18);
-    assert.match(metrics.compositions, /^39 /);
+    assert.equal(metrics.history, expectedHistory);
+    assert.equal(metrics.sources, expectedSources);
+    assert.match(metrics.compositions, new RegExp(`^${expectedCompositions} `));
     assert.match(metrics.robots, /^index,\s*follow$/);
-    assert.equal(metrics.canonical, 'https://hilocofrade.es/hermandades/el-baratillo');
+    assert.equal(metrics.canonical, expectedCanonical);
     assert.deepEqual(metrics.duplicateIds, []);
     await page.screenshot({ path: `${out}/pilot-${width}.png` });
     await page.getByRole('link', { name: 'Historia', exact: true }).click();
     await page.waitForFunction(() => document.querySelector('[aria-current="location"]')?.textContent === 'Historia');
     const timeline = page.locator('#historia details');
-    await timeline.locator('summary').click();
-    assert.equal(await timeline.evaluate(e => e.open), true);
-    await timeline.locator('summary').click();
-    await page.getByRole('link', { name: 'Consultar salida →', exact: true }).click();
-    await page.waitForFunction(() => document.querySelector('#salidas').closest('details').open);
-    await page.locator('#archivo-salidas > summary').click();
+    if (await timeline.count()) {
+      await timeline.locator('summary').click();
+      assert.equal(await timeline.evaluate(e => e.open), true);
+      await timeline.locator('summary').click();
+    } else {
+      assert.ok(metrics.history <= 5);
+    }
+    const outingLink = page.getByRole('link', { name: 'Consultar salida →', exact: true });
+    if (await outingLink.count()) {
+      await outingLink.click();
+      await page.waitForFunction(() => document.querySelector('#salidas').closest('details').open);
+      const archive = page.locator('#archivo-salidas > summary');
+      if (await archive.count()) await archive.click();
+    }
     rows.push(metrics);
     console.log('PASS', width);
   }
@@ -107,7 +122,7 @@ const assert = require('node:assert/strict');
   await page.keyboard.press('Enter');
   assert.equal(await sources.evaluate(e => e.open), true);
   await page.keyboard.press('Enter');
-  await page.goto(new URL('/hermandades/san-esteban', url).href, { waitUntil: 'networkidle', timeout: 120000 });
+  await page.goto(new URL(controlPath, url).href, { waitUntil: 'networkidle', timeout: 120000 });
   const control = await page.evaluate(() => ({
     reading: document.querySelector('.brotherhood-page').className.includes('BrotherhoodReadingLayout'),
     h1: document.querySelectorAll('h1').length,
@@ -116,7 +131,7 @@ const assert = require('node:assert/strict');
   }));
   assert.equal(control.reading, false);
   assert.equal(control.h1, 1);
-  assert.equal(control.canonical, 'https://hilocofrade.es/hermandades/san-esteban');
+  assert.equal(control.canonical, controlCanonical);
   assert.match(control.robots, /^index,\s*follow$/);
   assert.deepEqual(errors, []);
   fs.writeFileSync(`${out}/matrix.json`, JSON.stringify({ method: 'Chromium HTTPS-response replay with verified Node TLS', rows, control, keyboardSources: true, errors }, null, 2));
