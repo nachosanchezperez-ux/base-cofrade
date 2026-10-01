@@ -430,7 +430,7 @@ export default async function HermandadDetailPage({ params, reading = false }) {
                 )}
                 {imagen.iconografia && (
                   <details className="image-iconography">
-                    <summary>Iconografía <span>＋</span></summary>
+                    <summary>Iconografía <span>+</span></summary>
                     <p>{imagen.iconografia}</p>
                   </details>
                 )}
@@ -481,7 +481,7 @@ export default async function HermandadDetailPage({ params, reading = false }) {
                   {publicText(paso.acompanamientoActual) ? <div><small>Acompañamiento musical</small><strong>{publicText(paso.acompanamientoActual)}</strong></div> : null}
                 </div>
               )}
-              {reading ? <details className={readingStyles.inlineDisclosure}><summary>Diseño y datos técnicos <span aria-hidden="true">＋</span></summary><p>{paso.descripcion}</p>              {(paso.ejecucion || paso.sistemaPortadores || paso.materiales) && (
+              {reading ? <details className={readingStyles.inlineDisclosure}><summary>Diseño y datos técnicos <span aria-hidden="true">+</span></summary><p>{paso.descripcion}</p>              {(paso.ejecucion || paso.sistemaPortadores || paso.materiales) && (
                 <div className="step-technical-data">
                   {paso.ejecucion && <div><small>Ejecución</small><strong>{paso.ejecucion}</strong></div>}
                   {paso.sistemaPortadores && <div><small>Sistema de portadores</small><strong>{paso.sistemaPortadores}</strong></div>}
@@ -519,10 +519,10 @@ export default async function HermandadDetailPage({ params, reading = false }) {
   </>);
   const musicalHeritageSection = (<>
 {musicalHeritage.length > 0 ? (
-        <BrotherhoodMusicalHeritage items={musicalHeritage} id={reading ? "patrimonio-musical" : "musica"} />
+        <BrotherhoodMusicalHeritage items={musicalHeritage} headingLevel={reading ? 3 : 2} id={reading ? "patrimonio-musical" : "musica"} />
       ) : fallbackMusicalHeritage.length > 0 ? (
         <section className="section music-section" id={reading ? "patrimonio-musical" : "musica"}><div className="shell">
-          <SectionTitle eyebrow="Sonidos propios" title="Patrimonio Musical" description="Marchas dedicadas a la Hermandad y a sus titulares, conectadas con sus autores y registros audiovisuales." />
+          <SectionTitle level={reading ? 3 : 2} eyebrow="Sonidos propios" title="Patrimonio Musical" description="Marchas dedicadas a la Hermandad y a sus titulares, conectadas con sus autores y registros audiovisuales." />
           <div className="music-list">{fallbackMusicalHeritage.map((m) => (
             <article key={m.id}><div className="music-index">♪</div><div><h3>{m.nombre}</h3><p>{m.autor}</p></div><strong>{m.ano}</strong>
             {m.youtube ? <a href={m.youtube} target="_blank" rel="noreferrer" className="music-play">YouTube ↗</a> : null}</article>
@@ -531,7 +531,7 @@ export default async function HermandadDetailPage({ params, reading = false }) {
       ) : null}
   </>);
   const repertoiresSection = (<>
-<MusicalRepertoiresSection items={musicalRepertoires} context="brotherhood" />
+<MusicalRepertoiresSection items={musicalRepertoires} context="brotherhood" headingLevel={reading ? 3 : 2} />
   </>);
   const historySection = (<>
 <BrotherhoodHistoryTimeline items={h.cronologia || []} semanticPreview={reading} />
@@ -590,7 +590,7 @@ export default async function HermandadDetailPage({ params, reading = false }) {
 
         {h.patrimonio?.length > 0 && (
           <details className="heritage-catalog-disclosure" open={h.patrimonio.length <= 3}>
-            <summary><span>Explorar catálogo patrimonial</span><strong>{h.patrimonio.length} {h.patrimonio.length === 1 ? 'pieza' : 'piezas'}</strong><b aria-hidden="true">＋</b></summary>
+            <summary><span>Explorar catálogo patrimonial</span><strong>{h.patrimonio.length} {h.patrimonio.length === 1 ? 'pieza' : 'piezas'}</strong><b aria-hidden="true">+</b></summary>
           <div className="heritage-catalog">
             {h.patrimonio.map((pieza, index) => (
               <article className={`heritage-work ${pieza.destacado ? 'heritage-work-featured' : ''}`} key={pieza.id}>
@@ -637,7 +637,7 @@ export default async function HermandadDetailPage({ params, reading = false }) {
 
                   {(pieza.descripcion || pieza.iconografia || pieza.contexto || pieza.origen || pieza.tecnica || pieza.materiales || pieza.dimensiones) && (
                     <details className="heritage-work-details">
-                      <summary>Conocer la pieza <span>＋</span></summary>
+                      <summary>Conocer la pieza <span>+</span></summary>
                       <div className="heritage-work-story">
                         {pieza.descripcion && pieza.descripcion !== pieza.resumen && <p>{pieza.descripcion}</p>}
                         {pieza.contexto && <div><small>Contexto histórico</small><p>{pieza.contexto}</p></div>}
@@ -663,7 +663,7 @@ export default async function HermandadDetailPage({ params, reading = false }) {
   </>);
   const historicalMusicSection = (<>
 {documentedHistoricalAccompaniments.length > 0 && <section className="section brotherhood-soft" id="acompanamientos"><div className="shell">
-        <SectionTitle eyebrow="Memoria sonora" title="Acompañamientos Musicales Históricos" description="Una cronología por paso para conocer qué formaciones musicales han acompañado a la Hermandad." />
+        <SectionTitle level={reading ? 3 : 2} eyebrow="Memoria sonora" title="Acompañamientos Musicales Históricos" description="Una cronología por paso para conocer qué formaciones musicales han acompañado a la Hermandad." />
         <div className="music-history-grid">{documentedHistoricalAccompaniments.map((a) => (
           <article key={a.id}>{publicText(a.periodo) ? <span className="music-period">{publicText(a.periodo)}</span> : null}<h3>{publicText(a.banda)}</h3>{publicText(a.paso) ? <p>{publicText(a.paso)}</p> : null}{publicText(a.tipo) ? <small>{publicText(a.tipo)}</small> : null}</article>
         ))}</div>
@@ -742,7 +742,7 @@ export default async function HermandadDetailPage({ params, reading = false }) {
             ownMusic: ownMusicSection, musicalHeritage: musicalHeritageSection, repertoires: repertoiresSection,
             historicalMusic: historicalMusicSection, heritage: heritageSection, simpecados: simpecadosSection,
             posters: postersSection, habit: habitSection, council: councilSection, viaCrucis: viaCrucisSection,
-            outings: outingsSection, crew: crewSection, cults: cultsSection, news: newsSection, curiosities: curiositiesSection }}
+            outings: outingsSection, crew: crewSection, hasCrew: crewEvents.length > 0, cults: cultsSection, news: newsSection, curiosities: curiositiesSection }}
         />
       ) : (<>
       <EntitySectionNav items={[
@@ -807,6 +807,7 @@ export default async function HermandadDetailPage({ params, reading = false }) {
 
       <RelationalThread
         maxItems={reading ? 4 : 8}
+        diverse={reading}
         currentLabel="Hermandad"
         currentName={h.nombrePopular}
         currentMeta={[brotherhoodTypeLabel, publicText(h.localidad)].filter(Boolean).join(' · ')}
@@ -817,9 +818,9 @@ export default async function HermandadDetailPage({ params, reading = false }) {
         description="Continúa por sus Titulares, pasos, bandas y marchas documentadas. Cada relación abre una nueva ficha sin perder el contexto de la Hermandad de origen."
       />
 
-      {reading && <div className={`shell ${readingStyles.documentation}`}><details className={readingStyles.disclosure}><summary>Más rutas para tirar del hilo <b aria-hidden="true">＋</b></summary><BrotherhoodReadingDiscovery brotherhoodId={h.id} /></details></div>}
+      {reading && <div className={`shell ${readingStyles.documentation}`}><details className={readingStyles.disclosure}><summary>Más rutas para tirar del hilo <b aria-hidden="true">+</b></summary><BrotherhoodReadingDiscovery brotherhoodId={h.id} /></details></div>}
 
-      {reading && h.enlacesOficiales?.length ? <div className={`shell ${readingStyles.documentation}`}><details className={readingStyles.disclosure}><summary>Web y redes oficiales <span>{h.enlacesOficiales.length}</span><b aria-hidden="true">＋</b></summary><OfficialLinks links={h.enlacesOficiales} /></details></div> : <OfficialLinks links={h.enlacesOficiales} />}
+      {reading && h.enlacesOficiales?.length ? <div className={`shell ${readingStyles.documentation}`}><details className={readingStyles.disclosure}><summary>Web y redes oficiales <span>{h.enlacesOficiales.length}</span><b aria-hidden="true">+</b></summary><OfficialLinks links={h.enlacesOficiales} /></details></div> : <OfficialLinks links={h.enlacesOficiales} />}
       <SourcesBlock sources={h.fuentesFicha} />
     </div>
   );

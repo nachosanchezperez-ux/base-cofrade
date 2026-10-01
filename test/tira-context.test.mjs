@@ -6,6 +6,7 @@ import {
   genericSetIntent,
   normalizeTira,
   refersToPreviousSet,
+  singleEntityRelationIntent,
   typeNoun,
 } from '../lib/tira-context.js'
 
@@ -30,6 +31,12 @@ test('clasifica repreguntas sobre pasos y hermandades', () => {
   assert.equal(genericSetIntent('¿Quién lleva cada uno?', 'step'), 'step_personnel')
   assert.equal(genericSetIntent('¿Qué bandas acompañan estos pasos?', 'step'), 'step_bands')
   assert.equal(genericSetIntent('¿Cuántos pasos tiene cada una?', 'brotherhood'), 'brotherhood_steps')
+})
+
+test('reconoce preguntas directas sobre los pasos de una Hermandad sin exigir la palabra hermandad', () => {
+  assert.equal(singleEntityRelationIntent('¿Qué pasos tiene San Benito?'), 'steps_of_brotherhood')
+  assert.equal(singleEntityRelationIntent('¿Cuántos pasos posee El Baratillo?'), 'steps_of_brotherhood')
+  assert.equal(singleEntityRelationIntent('¿Quién lleva el paso de misterio de San Benito?'), null)
 })
 
 test('extrae disciplinas en lenguaje natural', () => {

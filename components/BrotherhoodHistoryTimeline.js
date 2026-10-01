@@ -45,7 +45,7 @@ export default function BrotherhoodHistoryTimeline({ items = [], semanticPreview
               <summary>
                 <span>Ver cronología completa</span>
                 <small>{items.length} hitos documentados</small>
-                <b aria-hidden="true">＋</b>
+                <b aria-hidden="true">+</b>
               </summary>
 
               <div className="history-timeline">

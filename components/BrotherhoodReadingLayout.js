@@ -9,7 +9,7 @@ import styles from './BrotherhoodReadingLayout.module.css'
 
 function Disclosure({ title, count, children, id }) {
   return <details className={styles.disclosure} id={id}>
-    <summary><span>{title}</span>{count ? <small>{count}</small> : null}<b aria-hidden="true">＋</b></summary>
+    <summary><span>{title}</span>{count ? <small>{count}</small> : null}<b aria-hidden="true">+</b></summary>
     <div className={styles.disclosureBody}>{children}</div>
   </details>
 }
@@ -24,7 +24,7 @@ function NextAppointment({ item }) {
     <time dateTime={item.date}>{label}</time>
     <h3>{item.title}</h3>
     <p className={styles.nextTime}>{item.startTime || item.timeText || 'Hora por confirmar'}</p>
-    {route ? <details className={styles.inlineDisclosure}><summary>Recorrido <span aria-hidden="true">＋</span></summary><p>{route}</p></details> : null}
+    {route ? <details className={styles.inlineDisclosure}><summary>Recorrido <span aria-hidden="true">+</span></summary><p>{route}</p></details> : null}
     {item.musicSummary ? <p>{item.musicSummary}</p> : null}
     <Link href={item.href || '#agenda'} className="text-link">{item.href?.startsWith('#') ? 'Consultar salida' : 'Ver detalle'} →</Link>
   </aside>
@@ -33,9 +33,9 @@ function NextAppointment({ item }) {
 export default function BrotherhoodReadingLayout({ brotherhood: h, today, agendaItems, heroFactLabels, hasMusic, slots }) {
   const next = nextBrotherhoodAppointment(agendaItems, h.salidas, today, h.cultos)
   const hasHeritage = h.patrimonio?.length || h.estrenos?.length || h.simpecados?.length || h.cartelesFiestas?.length || h.habitos?.length
-  const hasAgenda = h.salidas?.length || h.cultos?.length || agendaItems.length
+  const hasAgenda = h.salidas?.length || h.cultos?.length || agendaItems.length || slots.hasCrew
   return <>
-    <EntitySectionNav discover={false} items={[
+    <EntitySectionNav discover={false} revealDisclosures items={[
       {href:'#resumen',label:'Resumen'},
       h.imagenes?.length && {href:'#titulares',label:'Titulares'},
       h.cronologia?.length && {href:'#historia',label:'Historia'},

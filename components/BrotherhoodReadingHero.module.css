@@ -29,5 +29,7 @@
   .hero :global([class*='__context']), .hero :global([class*='__facts']), .official { margin-left: 0; }
   .hero :global([class*='__facts']) { max-width: 100%; }
   .hero :global([class*='__facts']) > div { padding: 7px 16px 7px 0; border: 0; }
-  .hero :global([class*='__photoVeil']) { background: linear-gradient(90deg,rgba(0,0,0,.92),rgba(0,0,0,.65)) !important; }
+  :global(.brotherhood-page) .hero:global([class*='__hero']):not(:global([class*='__noPhoto'])) :global([class*='BrotherhoodProgramHero-module'][class*='__photoVeil']) { background: linear-gradient(90deg,rgba(0,0,0,.92),rgba(0,0,0,.65)) !important; }
 }
+
+.hero :global([class*='__identityCopy']) small, .hero :global([class*='__facts']) dt { color:#d5d7d9 !important; }

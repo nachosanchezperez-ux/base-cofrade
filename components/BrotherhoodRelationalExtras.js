@@ -428,7 +428,8 @@ function BrotherhoodDiscoveryPaths({ brotherhoodName, data }) {
   )
 }
 
-function CurrentMusicSequence({ items }) {
+function CurrentMusicSequence({ items, nested = false }) {
+  const Heading = nested ? 'h3' : 'h2'
   if (!items.length) return null
 
   const groups = groupCurrentAccompaniments(items)
@@ -439,7 +440,7 @@ function CurrentMusicSequence({ items }) {
         <div className={styles.header}>
           <div className={styles.copy}>
             <span className="eyebrow">Música procesional</span>
-            <h2>Acompañamiento musical</h2>
+            <Heading>Acompañamiento musical</Heading>
             <p>Las formaciones vinculadas actualmente a la Hermandad, organizadas según la salida concreta a la que acompaña cada una.</p>
             <div className={styles.context}>
               <span>{items.length} {items.length === 1 ? 'formación' : 'formaciones'} · {groups.length} {groups.length === 1 ? 'salida' : 'salidas'}</span>
@@ -578,7 +579,7 @@ export async function BrotherhoodOwnBands({ brotherhoodId, musicOnly = false }) 
           <section className="section brotherhood-soft" id="bandas-propias">
             <div className="shell">
               <span className="eyebrow">Vínculo institucional</span>
-              <h2>Bandas de la Hermandad</h2>
+              {musicOnly ? <h3>Bandas de la Hermandad</h3> : <h2>Bandas de la Hermandad</h2>}
               <p className="body-large">Formaciones vinculadas institucionalmente a la Hermandad, con independencia de sus acompañamientos procesionales concretos.</p>
               <div className="current-music-grid">
                 {bands.map((band) => (
@@ -594,7 +595,7 @@ export async function BrotherhoodOwnBands({ brotherhoodId, musicOnly = false }) 
           </section>
         ) : null}
 
-        <CurrentMusicSequence items={currentAccompaniments} />
+        <CurrentMusicSequence items={currentAccompaniments} nested={musicOnly} />
       </>
     )
   } catch (error) {

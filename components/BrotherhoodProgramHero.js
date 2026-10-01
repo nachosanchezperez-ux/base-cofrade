@@ -127,7 +127,7 @@ export default function BrotherhoodProgramHero({
           </div>
 
           {context ? <p className={styles.context}>{context}</p> : null}
-          {officialName ? (compact ? <details className={readingHeroStyles.official}><summary>Nombre oficial <span aria-hidden="true">＋</span></summary><p>{officialName}</p></details> : <p className={styles.officialName}>{officialName}</p>) : null}
+          {officialName ? (compact ? <details className={readingHeroStyles.official}><summary>Nombre oficial <span aria-hidden="true">+</span></summary><p>{officialName}</p></details> : <p className={styles.officialName}>{officialName}</p>) : null}
 
           {visibleFacts.length ? (
             <dl className={`${styles.facts} ${corporateStyles.corporateFacts}`} data-count={visibleFacts.length}>

@@ -7,6 +7,7 @@ import SourcesBlock from '@/components/SourcesBlock'
 import {
   agentRelationBreakdown,
   authorCategoryFor,
+  authorSeoTitle,
   authorKindLabel,
   authorProfileLabel,
   authorWorkOrder,
@@ -15,7 +16,6 @@ import { getPublicAgentBySlug } from '@/lib/supabase/public-agents'
 import {
   absoluteUrl,
   breadcrumbJsonLd,
-  compactSeoTitle,
   pageTitle,
   seoDescription,
   socialMetadata,
@@ -150,9 +150,7 @@ export async function generateMetadata({ params }) {
     }
   }
 
-  const title = compactSeoTitle(
-    [agent.name, agent.primaryDiscipline || authorProfileLabel(agent)].filter(Boolean).join(' · ')
-  )
+  const title = authorSeoTitle(agent)
   const description = seoDescription(
     agent.description,
     `${agent.name} en Hilo Cofrade: obra, autorías, intervenciones y Fuentes documentales relacionadas.`
