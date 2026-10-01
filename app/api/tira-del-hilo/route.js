@@ -63,6 +63,7 @@ function sanitizeContext(raw) {
 function directLookupResponse(intent, matches) {
   const selected = selectHiloNavigationItems(matches, intent.term, {
     explicitNavigation: intent.explicitNavigation,
+    preferredEntityType: intent.preferredEntityType || '',
     limit: 5,
   })
   if (!selected.length) return null
