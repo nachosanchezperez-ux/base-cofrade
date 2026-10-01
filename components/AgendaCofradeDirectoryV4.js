@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
 import { agendaLocationMatches, agendaMunicipalityOptions } from '@/lib/agenda-cofrade-location'
 import { getProcessionLiveState } from '@/lib/procession-live-status'
+import { routeSummarySections } from '@/lib/procession-route'
 import { agendaTemporalRangeDate, withAgendaTemporalDay } from '@/lib/agenda-temporal-display'
 import { trackEvent } from '@/lib/analytics/client'
 import styles from './AgendaCofradeDirectoryV4.module.css'
@@ -224,16 +225,31 @@ function EventRoute({ item }) {
   const routeText = String(item.routeText || '').trim()
   if (!routeText) return null
 
+  const sections = routeSummarySections(routeText)
+  const pointCount = sections.reduce((total, section) => total + section.points.length, 0)
+
   return (
     <details className={routeStyles.route}>
       <summary>
         <span>Ver recorrido</span>
-        <small>{item.categoryLabel || 'Recorrido'}</small>
+        <small>{pointCount ? `${pointCount} ${pointCount === 1 ? 'punto' : 'puntos'}` : item.categoryLabel || 'Recorrido'}</small>
       </summary>
-      <div className={routeStyles.routeBody}>
-        <span className={routeStyles.routeMark} aria-hidden="true">↗</span>
-        <p>{routeText}</p>
-      </div>
+      {sections.length ? (
+        <div className={routeStyles.routeSections}>
+          {sections.map((section) => (
+            <section className={routeStyles.routeSection} key={section.id}>
+              <strong>{section.label}</strong>
+              <ol className={routeStyles.routePoints}>
+                {section.points.map((point, index) => (
+                  <li key={`${section.id}-${index}-${point}`}>{point}</li>
+                ))}
+              </ol>
+            </section>
+          ))}
+        </div>
+      ) : (
+        <p className={routeStyles.routeFallback}>{routeText}</p>
+      )}
     </details>
   )
 }
