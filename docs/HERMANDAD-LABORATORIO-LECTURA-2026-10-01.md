@@ -37,7 +37,7 @@ El laboratorio usa canonical de la ficha pública, `noindex, follow` para impedi
 
 ## Reconciliación y preview final
 
-Durante el trabajo main avanzó a `3c75b4432f081f99495fffa09b896ef280ac95dc`, incorporando #1050–#1054. Reconciliados buscador, Autores y recorridos; se preservó la documentación de Autores al resolver el único conflicto. #1019 y #1020 siguen fuera del laboratorio.
+Durante el trabajo main avanzó a `3c75b4432f081f99495fffa09b896ef280ac95dc`, incorporando #1050–#1054. Último preflight: main avanzó después a `6265f0ac` (#1056, ajuste CSS móvil de Autores), también reconciliado sin conflicto ni cambios del piloto. Reconciliados buscador, Autores y recorridos; se preservó la documentación de Autores al resolver el único conflicto. #1019 y #1020 siguen fuera del laboratorio.
 
 Código verificado: `eb54bfa244a063b2244bcc77aeffdc77f390c2d8`.
 Vercel `dpl_AFDm3UNxzy8XiTL3VtCDbV2TTNWf`, READY.
