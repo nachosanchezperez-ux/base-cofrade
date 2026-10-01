@@ -54,3 +54,30 @@ Puertas antes de integrar:
 - Gran Poder continúa fuera de la cohorte.
 
 Sin DML, DDL, migraciones, RLS ni cambios de contenido editorial.
+
+## Postflight productivo
+
+#1061 quedó fusionada en `035af7839c63c9ab498ab4ad3ec16ae9848856d4`.
+Vercel publicó el deployment `dpl_D7AZ5LMRHYtLD7McfuRA2nhFzgUh` en estado
+READY sobre ese mismo SHA. GitHub `verify` y Supabase Preview terminaron en
+SUCCESS.
+
+La URL pública `/hermandades/san-esteban` devuelve el nuevo sistema de lectura
+por cohorte: navegación compacta de seis entradas —Resumen, Titulares, Historia,
+Música, Patrimonio y Agenda—, guía `Conoce San Esteban`, Titulares, Pasos,
+Agenda, patrimonio musical y relaciones preservadas. La respuesta pública sigue
+siendo la URL canónica habitual de San Esteban.
+
+Como control fuera de cohorte, Gran Poder conserva la variante anterior del
+layout: no adopta la navegación compacta del piloto. Esto confirma que la
+activación sigue limitada por ID y no se ha generalizado por slug o por presencia
+de contenido `Conoce`.
+
+Los logs del deployment no muestran entradas `error` ni `fatal` en la ventana
+de veinte minutos consultada tras la publicación.
+
+**Límite de esta certificación:** en este entorno no se ha ejecutado la matriz
+visual Chromium 390/430/768/1024/1366/1600 ni se han generado screenshots del
+segundo piloto. Por tanto, el estado queda **PUBLICADO · POSTFLIGHT ESTRUCTURAL
+PASS · QA VISUAL MULTI-ANCHURA PENDIENTE**. No se generaliza el rollout hasta
+cerrar esa comprobación visual.
