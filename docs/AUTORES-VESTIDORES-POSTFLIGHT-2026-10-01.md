@@ -1,6 +1,6 @@
 # Autores · ciclo 1 Vestidores · postflight
 
-Estado: **APPLY CONFIRMADO; CERTIFICACIÓN PÚBLICA PENDIENTE**. No repetir el DML ni iniciar Restauración hasta resolver las comprobaciones pendientes.
+Estado actual: **DATOS Y CORRECCIÓN PUBLICADOS; CERTIFICACIÓN PENDIENTE SOLO DE QA VISUAL MÓVIL**. No repetir el DML ni iniciar Restauración hasta completar esa revisión. Los apartados anteriores al postflight de producción conservan evidencia histórica de las incidencias ya resueltas.
 
 ## Corte y alcance
 
@@ -76,3 +76,15 @@ Los titles de Autores conservan nombre y oficio completos, usando el mismo resul
 Validación local: 1.424/1.424 tests PASS, build Next.js 16.3.0 PASS y diff sin errores. Cuatro regresiones cubren prioridad del principal, fallback, principales ambiguos y titles completos. Build local sin credenciales públicas: valida compilación, no lectura real de datos.
 
 QA móvil continúa bloqueado: agent-browser 0.20 aporta diagnóstico reproducible `Failed to bind socket: Operation not permitted`; Chrome oficial confirma socket() prohibido en este entorno. No se solicita una escalación rechazada ni se declara PASS móvil. Antes del cierre siguen necesarios publicación del código, QA vivo de los siete cambios y revisión móvil en un entorno que permita renderizado.
+
+## Postflight de producción · 01/10/2026
+
+#1051 fusionada en `cf46c9d5c33caf481fd64eca761f506c3b025c52`; producción `dpl_7wT22n7CjoiyVDKhe5xC4rmqPDNV` READY sobre ese SHA. Preview del head `6185a15b02fa31462937e6d789cb60948756dc58` READY y GitHub CI SUCCESS; HTTP preview confirmó title completo de Castillo, Grande de León en Bordado con ocho imágenes vestidas conservadas y filtro de siete Vestidores.
+
+Producción: 14/14 rutas HTTP 200 (directorio, filtro, dos sitemaps, siete perfiles reclasificados, Castillo, Lozano y Buiza). Canonical y robots preservados. Las siete categorías de la tabla anterior coinciden con el contenido público; los siete perfiles contienen cinco bloques JSON-LD válidos. Los talleres conservan Organization; no se exige Person.jobTitle en ellos. Buiza permanece en la resolución anterior ante sus dos principales.
+
+Castillo publica `Antonio Jesús del Castillo Fernández · Vestidor · Hilo Cofrade`; Grande de León publica Bordado como principal y categoría. Vestidores muestra siete tarjetas y ya no incluye a Grande de León. El directorio y ambos sitemaps mantienen 422 autores y Lozano está incluido en ambos. No se alteró ni reaplicó el lote de nueve INSERT.
+
+Vercel, deployment vigente: consulta error/fatal de 05:05:40–05:20:40 UTC del 01/10/2026 sin filas. La ausencia se limita a esa ventana. Pruebas locales 1.424/1.424 y build PASS.
+
+Única puerta pendiente de este lote: QA visual móvil real (categorías, desplazamiento horizontal, legibilidad, densidad, navegación y tarjetas de obra). El entorno disponible impide iniciar el navegador local y el navegador alternativo no expone control del viewport. No declarar el ciclo cerrado ni abrir la normalización de Restauración hasta completar esa puerta. Las deudas documentales generales de la auditoría 0 siguen separadas del alcance de estas nueve operaciones.
