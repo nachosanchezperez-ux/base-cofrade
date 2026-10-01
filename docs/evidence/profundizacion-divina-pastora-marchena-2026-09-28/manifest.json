@@ -1,0 +1,929 @@
+{
+  "meta": {
+    "phase": "PREPARED_NOT_EXECUTED",
+    "scope": "Profundización de ficha pública · Divina Pastora de Marchena",
+    "namespace": "c0160042",
+    "future_import_id": "c0160042-0000-4000-8000-000000000001",
+    "base_main_sha": "41c8fbb12d1eda29e714d9aff0ecb946aac31ed1",
+    "pr": 1019,
+    "first_edition_freeze": true,
+    "ddl": 0,
+    "rls": 0,
+    "migrations": 0,
+    "operation_counts": {
+      "total": 54,
+      "insert": 50,
+      "update": 4,
+      "delete": 0,
+      "reuse": 10
+    },
+    "apply_authorized_by_order": true,
+    "apply_gate": "dry-run + rollback + zero residue + staging + recheck"
+  },
+  "legitimate_debt": [
+    "Fecha formal de constitución del actual Redil Eucarístico",
+    "Autoría de la Divina Pastora, no acreditada",
+    "Autoría y datación material del Paso procesional actual",
+    "Inventario exhaustivo de patrimonio y multimedia adicional"
+  ],
+  "reuse": [
+    {
+      "type": "brotherhood",
+      "id": "15e73dd0-c6da-4116-8801-9c868bc09b86",
+      "label": "Divina Pastora de Marchena"
+    },
+    {
+      "type": "municipality",
+      "id": "8f1ef927-afb7-4694-a253-69f281074d6e",
+      "label": "Marchena"
+    },
+    {
+      "type": "band",
+      "id": "95e4daf1-9db6-4bdb-805a-9f68833c8da1",
+      "label": "Banda Municipal de Música de Arahal"
+    },
+    {
+      "type": "outing",
+      "id": "5d8c29b6-9f66-49ea-a059-5314ce4d4495",
+      "label": "Procesión de Gloria 2026"
+    },
+    {
+      "type": "music_accompaniment_period",
+      "id": "100cbe0e-d284-43ec-bb09-1093200a6368",
+      "label": "Arahal · 19/09/2026"
+    },
+    {
+      "type": "outing_music_position",
+      "id": "bf8b7e54-d420-4de1-aa2e-759b62a73346",
+      "label": "Acompañamiento procesional"
+    },
+    {
+      "type": "outing_music_assignment",
+      "id": "ca8b4fb1-f1e4-4724-884d-da0682a87904",
+      "label": "Banda Municipal de Música de Arahal"
+    },
+    {
+      "type": "source",
+      "id": "36534e14-a7c7-4455-ad76-a3dae9d54e68",
+      "label": "Programa directo del Redil 2026"
+    },
+    {
+      "type": "source",
+      "id": "f79ed51f-a856-41ff-b67d-0f5edda7b5ac",
+      "label": "Marchena Secreta · anuncio previo"
+    },
+    {
+      "type": "media_asset",
+      "id": "49f07dae-f536-4fa4-997a-83856557efe5",
+      "label": "Fotografía autorizada de Luismi Martín"
+    }
+  ],
+  "operations": [
+    {
+      "position": 1,
+      "table": "places",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-0200-4000-8000-000000000001",
+      "data": {
+        "id": "c0160042-0200-4000-8000-000000000001",
+        "municipality_id": "8f1ef927-afb7-4694-a253-69f281074d6e",
+        "name": "Parroquia Matriz de San Juan Bautista",
+        "slug": "parroquia-matriz-san-juan-bautista-marchena",
+        "place_type": "Parroquia",
+        "notes": "Sede canónica del Redil Eucarístico de la Divina Pastora de las Almas de Marchena."
+      }
+    },
+    {
+      "position": 2,
+      "table": "entities",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-0600-4000-8000-000000000001",
+      "data": {
+        "id": "c0160042-0600-4000-8000-000000000001",
+        "entity_type": "image",
+        "name": "Divina Pastora de las Almas de Marchena",
+        "slug": "divina-pastora-almas-marchena",
+        "summary": "Imagen de vestir de la Divina Pastora de las Almas venerada en la Parroquia Matriz de San Juan Bautista de Marchena, datada en el último tercio del siglo XVIII.",
+        "status": "published"
+      }
+    },
+    {
+      "position": 3,
+      "table": "images",
+      "operation": "insert",
+      "pk": "entity_id",
+      "id": "c0160042-0600-4000-8000-000000000001",
+      "data": {
+        "entity_id": "c0160042-0600-4000-8000-000000000001",
+        "image_type": "Virgen de Gloria",
+        "execution_date_text": "Último tercio del siglo XVIII",
+        "current_condition": "extant",
+        "description": "Talla de vestir de la Divina Pastora de las Almas procedente del desaparecido convento de capuchinos de Marchena y venerada actualmente en San Juan Bautista.",
+        "iconography": "María bajo la advocación de la Divina Pastora de las Almas.",
+        "is_dress_image": true,
+        "current_state_notes": "Venerada en la Parroquia Matriz de San Juan Bautista de Marchena."
+      }
+    },
+    {
+      "position": 4,
+      "table": "brotherhood_images",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-3000-4000-8000-000000000001",
+      "data": {
+        "id": "c0160042-3000-4000-8000-000000000001",
+        "brotherhood_entity_id": "15e73dd0-c6da-4116-8801-9c868bc09b86",
+        "image_entity_id": "c0160042-0600-4000-8000-000000000001",
+        "relation_type": "titular",
+        "status": "published"
+      }
+    },
+    {
+      "position": 5,
+      "table": "entities",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-0700-4000-8000-000000000001",
+      "data": {
+        "id": "c0160042-0700-4000-8000-000000000001",
+        "entity_type": "step",
+        "name": "Paso procesional de la Divina Pastora de Marchena",
+        "slug": "paso-procesional-divina-pastora-marchena",
+        "summary": "Paso procesional actual de la Divina Pastora de las Almas en su salida de septiembre por Marchena.",
+        "status": "published"
+      }
+    },
+    {
+      "position": 6,
+      "table": "steps",
+      "operation": "insert",
+      "pk": "entity_id",
+      "id": "c0160042-0700-4000-8000-000000000001",
+      "data": {
+        "entity_id": "c0160042-0700-4000-8000-000000000001",
+        "step_type": "Paso procesional de Gloria",
+        "current_condition": "preserved",
+        "description": "Paso procesional en el que la Divina Pastora de las Almas realiza su salida anual por Marchena.",
+        "current_state_notes": "Documentado en uso procesional en la salida del 19 de septiembre de 2026."
+      }
+    },
+    {
+      "position": 7,
+      "table": "brotherhood_steps",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-3100-4000-8000-000000000001",
+      "data": {
+        "id": "c0160042-3100-4000-8000-000000000001",
+        "brotherhood_entity_id": "15e73dd0-c6da-4116-8801-9c868bc09b86",
+        "step_entity_id": "c0160042-0700-4000-8000-000000000001",
+        "relation_type": "processional_step",
+        "status": "published"
+      }
+    },
+    {
+      "position": 8,
+      "table": "image_steps",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-3200-4000-8000-000000000001",
+      "data": {
+        "id": "c0160042-3200-4000-8000-000000000001",
+        "image_entity_id": "c0160042-0600-4000-8000-000000000001",
+        "step_entity_id": "c0160042-0700-4000-8000-000000000001",
+        "relation_type": "processes_on",
+        "status": "published"
+      }
+    },
+    {
+      "position": 9,
+      "table": "entity_media",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-3300-4000-8000-000000000001",
+      "data": {
+        "id": "c0160042-3300-4000-8000-000000000001",
+        "entity_id": "c0160042-0600-4000-8000-000000000001",
+        "media_asset_id": "49f07dae-f536-4fa4-997a-83856557efe5",
+        "relation_type": "cover",
+        "sort_order": 0,
+        "is_cover": true,
+        "notes": "Fotografía autorizada reutilizada desde la ficha de la Hermandad.",
+        "focus_x": 50,
+        "focus_y": 50,
+        "fit_mode": "auto"
+      }
+    },
+    {
+      "position": 10,
+      "table": "entities",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-0800-4000-8000-000000000001",
+      "data": {
+        "id": "c0160042-0800-4000-8000-000000000001",
+        "entity_type": "agent",
+        "name": "Samuel González Ramírez",
+        "slug": "samuel-gonzalez-ramirez",
+        "summary": "Capataz del paso de la Divina Pastora de Marchena, nombrado para la procesión de 2026.",
+        "status": "published"
+      }
+    },
+    {
+      "position": 11,
+      "table": "agents",
+      "operation": "insert",
+      "pk": "entity_id",
+      "id": "c0160042-0800-4000-8000-000000000001",
+      "data": {
+        "entity_id": "c0160042-0800-4000-8000-000000000001",
+        "agent_kind": "person",
+        "municipality_id": "8f1ef927-afb7-4694-a253-69f281074d6e",
+        "description": "Capataz del paso de la Divina Pastora de Marchena, nombrado por la Junta Directiva en 2026.",
+        "active_notes": "Nombrado el 29 de junio de 2026."
+      }
+    },
+    {
+      "position": 12,
+      "table": "entities",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-0800-4000-8000-000000000002",
+      "data": {
+        "id": "c0160042-0800-4000-8000-000000000002",
+        "entity_type": "agent",
+        "name": "Sebastián Martín Morán",
+        "slug": "sebastian-martin-moran",
+        "summary": "Capataz del paso de la Divina Pastora de Marchena, nombrado para la procesión de 2026.",
+        "status": "published"
+      }
+    },
+    {
+      "position": 13,
+      "table": "agents",
+      "operation": "insert",
+      "pk": "entity_id",
+      "id": "c0160042-0800-4000-8000-000000000002",
+      "data": {
+        "entity_id": "c0160042-0800-4000-8000-000000000002",
+        "agent_kind": "person",
+        "municipality_id": "8f1ef927-afb7-4694-a253-69f281074d6e",
+        "description": "Capataz del paso de la Divina Pastora de Marchena, nombrado por la Junta Directiva en 2026.",
+        "active_notes": "Nombrado el 29 de junio de 2026."
+      }
+    },
+    {
+      "position": 14,
+      "table": "step_personnel_periods",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-3400-4000-8000-000000000001",
+      "data": {
+        "id": "c0160042-3400-4000-8000-000000000001",
+        "step_entity_id": "c0160042-0700-4000-8000-000000000001",
+        "agent_entity_id": "c0160042-0800-4000-8000-000000000001",
+        "role_name": "Capataz",
+        "date_from": "2026-06-29",
+        "date_from_text": "Nombrado el 29 de junio de 2026",
+        "year_from": 2026,
+        "is_current": true,
+        "notes": "Nuevo equipo de capataces designado para la procesión de 2026.",
+        "status": "published"
+      }
+    },
+    {
+      "position": 15,
+      "table": "step_personnel_periods",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-3400-4000-8000-000000000002",
+      "data": {
+        "id": "c0160042-3400-4000-8000-000000000002",
+        "step_entity_id": "c0160042-0700-4000-8000-000000000001",
+        "agent_entity_id": "c0160042-0800-4000-8000-000000000002",
+        "role_name": "Capataz",
+        "date_from": "2026-06-29",
+        "date_from_text": "Nombrado el 29 de junio de 2026",
+        "year_from": 2026,
+        "is_current": true,
+        "notes": "Nuevo equipo de capataces designado para la procesión de 2026.",
+        "status": "published"
+      }
+    },
+    {
+      "position": 16,
+      "table": "cults",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-0900-4000-8000-000000000001",
+      "data": {
+        "id": "c0160042-0900-4000-8000-000000000001",
+        "brotherhood_entity_id": "15e73dd0-c6da-4116-8801-9c868bc09b86",
+        "image_entity_id": "c0160042-0600-4000-8000-000000000001",
+        "cult_type": "Triduo",
+        "title": "Solemne Triduo en honor de la Divina Pastora de las Almas",
+        "date_rule": "En septiembre, en los días previos a la Función Principal",
+        "month": 9,
+        "place_id": "c0160042-0200-4000-8000-000000000001",
+        "description": "Culto anual en honor de la Divina Pastora de las Almas en San Juan Bautista.",
+        "status": "published",
+        "is_recurring": true,
+        "recurrence_label": "Septiembre",
+        "display_order": 10
+      }
+    },
+    {
+      "position": 17,
+      "table": "cults",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-0900-4000-8000-000000000002",
+      "data": {
+        "id": "c0160042-0900-4000-8000-000000000002",
+        "brotherhood_entity_id": "15e73dd0-c6da-4116-8801-9c868bc09b86",
+        "image_entity_id": "c0160042-0600-4000-8000-000000000001",
+        "cult_type": "Función Principal",
+        "title": "Solemne Función Principal en honor de la Divina Pastora de las Almas",
+        "date_rule": "En septiembre, tras el Triduo",
+        "month": 9,
+        "place_id": "c0160042-0200-4000-8000-000000000001",
+        "description": "Función principal anual en honor de la Divina Pastora de las Almas.",
+        "status": "published",
+        "is_recurring": true,
+        "recurrence_label": "Septiembre",
+        "display_order": 20
+      }
+    },
+    {
+      "position": 18,
+      "table": "cults",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-0900-4000-8000-000000000003",
+      "data": {
+        "id": "c0160042-0900-4000-8000-000000000003",
+        "brotherhood_entity_id": "15e73dd0-c6da-4116-8801-9c868bc09b86",
+        "image_entity_id": "c0160042-0600-4000-8000-000000000001",
+        "cult_type": "Rosario",
+        "title": "Rosario de Vísperas con el Simpecado de la Divina Pastora",
+        "cult_date": "2026-09-18",
+        "month": 9,
+        "time_text": "21:00 h",
+        "place_id": "c0160042-0200-4000-8000-000000000001",
+        "description": "Rosario de Vísperas celebrado en la jornada previa a la procesión de 2026.",
+        "status": "published",
+        "is_recurring": false,
+        "display_order": 30,
+        "notes": "Se modela como edición concreta de 2026; no se infiere recurrencia futura."
+      }
+    },
+    {
+      "position": 19,
+      "table": "cult_occurrences",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-0910-4000-8000-000000000001",
+      "data": {
+        "id": "c0160042-0910-4000-8000-000000000001",
+        "cult_id": "c0160042-0900-4000-8000-000000000001",
+        "year": 2026,
+        "title_override": "Triduo de la Divina Pastora de las Almas 2026",
+        "start_date": "2026-09-10",
+        "end_date": "2026-09-12",
+        "place_id": "c0160042-0200-4000-8000-000000000001",
+        "event_status": "held",
+        "status": "published",
+        "notes": "Edición celebrada los días 10, 11 y 12 de septiembre de 2026."
+      }
+    },
+    {
+      "position": 20,
+      "table": "cult_occurrences",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-0910-4000-8000-000000000002",
+      "data": {
+        "id": "c0160042-0910-4000-8000-000000000002",
+        "cult_id": "c0160042-0900-4000-8000-000000000002",
+        "year": 2026,
+        "title_override": "Función Principal de la Divina Pastora de las Almas 2026",
+        "start_date": "2026-09-13",
+        "end_date": "2026-09-13",
+        "place_id": "c0160042-0200-4000-8000-000000000001",
+        "description_override": "Solemne Función Principal celebrada a las 12:00 horas.",
+        "event_status": "held",
+        "status": "published",
+        "notes": "Edición celebrada el 13 de septiembre de 2026 a las 12:00."
+      }
+    },
+    {
+      "position": 21,
+      "table": "outing_series",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-1000-4000-8000-000000000001",
+      "data": {
+        "id": "c0160042-1000-4000-8000-000000000001",
+        "brotherhood_entity_id": "15e73dd0-c6da-4116-8801-9c868bc09b86",
+        "outing_type": "Procesión de Gloria",
+        "character": "ordinary",
+        "title": "Procesión de Gloria de la Divina Pastora de las Almas",
+        "month": 9,
+        "date_rule": "En septiembre",
+        "municipality_id": "8f1ef927-afb7-4694-a253-69f281074d6e",
+        "origin_place_id": "c0160042-0200-4000-8000-000000000001",
+        "destination_place_id": "c0160042-0200-4000-8000-000000000001",
+        "description": "Procesión anual de la Divina Pastora de las Almas por Marchena.",
+        "display_order": 10,
+        "status": "published",
+        "notes": "La recurrencia anual desde la recuperación de la procesión en 2015 está documentada; no se fija un día exacto permanente."
+      }
+    },
+    {
+      "position": 22,
+      "table": "outing_entities",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-1200-4000-8000-000000000001",
+      "data": {
+        "id": "c0160042-1200-4000-8000-000000000001",
+        "outing_id": "5d8c29b6-9f66-49ea-a059-5314ce4d4495",
+        "entity_id": "c0160042-0600-4000-8000-000000000001",
+        "role": "processional_image",
+        "notes": "Divina Pastora de las Almas en la procesión del 19 de septiembre de 2026."
+      }
+    },
+    {
+      "position": 23,
+      "table": "outing_entities",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-1200-4000-8000-000000000002",
+      "data": {
+        "id": "c0160042-1200-4000-8000-000000000002",
+        "outing_id": "5d8c29b6-9f66-49ea-a059-5314ce4d4495",
+        "entity_id": "c0160042-0700-4000-8000-000000000001",
+        "role": "processional_step",
+        "notes": "Paso procesional utilizado en la salida de 2026."
+      }
+    },
+    {
+      "position": 24,
+      "table": "entities",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-0500-4000-8000-000000000001",
+      "data": {
+        "id": "c0160042-0500-4000-8000-000000000001",
+        "entity_type": "event",
+        "name": "Recuperación del culto y de la procesión de la Divina Pastora en Marchena",
+        "slug": "recuperacion-culto-procesion-divina-pastora-marchena-2015",
+        "summary": "En 2015 se recuperó el culto público a la Divina Pastora de las Almas en San Juan Bautista y se impulsó de nuevo su procesión de septiembre.",
+        "status": "published"
+      }
+    },
+    {
+      "position": 25,
+      "table": "events",
+      "operation": "insert",
+      "pk": "entity_id",
+      "id": "c0160042-0500-4000-8000-000000000001",
+      "data": {
+        "entity_id": "c0160042-0500-4000-8000-000000000001",
+        "event_type": "Recuperación del culto y la procesión",
+        "event_date_text": "2015",
+        "place_id": "c0160042-0200-4000-8000-000000000001",
+        "description": "Un grupo juvenil de la Parroquia Matriz de San Juan Bautista recuperó en 2015 el culto público a la antigua imagen pastoreña y promovió de nuevo su procesión por Marchena.",
+        "event_category": "historical",
+        "brotherhood_entity_id": "15e73dd0-c6da-4116-8801-9c868bc09b86",
+        "municipality_id": "8f1ef927-afb7-4694-a253-69f281074d6e",
+        "event_status": "held",
+        "location_text": "Parroquia Matriz de San Juan Bautista · Marchena"
+      }
+    },
+    {
+      "position": 26,
+      "table": "sources",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-0100-4000-8000-000000000001",
+      "data": {
+        "id": "c0160042-0100-4000-8000-000000000001",
+        "name": "Agenda cofrade de Marchena · Divina Pastora · septiembre 2026",
+        "url": "https://marchenasecreta.com/agenda-cofrade-marchena-septiembre-2026-remedios-pastora-merced-san-isidro-soledad-angustias-dolores-vera-cruz/",
+        "source_type": "Medio local",
+        "author_or_publisher": "Marchena Secreta",
+        "publication_date": "2026-09-09",
+        "accessed_at": "2026-09-28"
+      }
+    },
+    {
+      "position": 27,
+      "table": "sources",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-0100-4000-8000-000000000002",
+      "data": {
+        "id": "c0160042-0100-4000-8000-000000000002",
+        "name": "La Divina Pastora ya recorre Marchena · 19 de septiembre de 2026",
+        "url": "https://marchenasecreta.com/la-divina-pastora-ya-recorre-marchena-imagenes-de-su-salida-desde-san-juan/",
+        "source_type": "Medio local",
+        "author_or_publisher": "Marchena Secreta",
+        "publication_date": "2026-09-19",
+        "accessed_at": "2026-09-28"
+      }
+    },
+    {
+      "position": 28,
+      "table": "sources",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-0100-4000-8000-000000000003",
+      "data": {
+        "id": "c0160042-0100-4000-8000-000000000003",
+        "name": "Horario y recorrido de la Divina Pastora de Marchena · nuevos capataces 2026",
+        "url": "https://www.diarioavanza.es/marchena/horario-recorrido-divina-pastora-marchena-sabado/20260916091441026885.amp.html",
+        "source_type": "Prensa local",
+        "author_or_publisher": "Diario Avanza",
+        "publication_date": "2026-09-16",
+        "accessed_at": "2026-09-28"
+      }
+    },
+    {
+      "position": 29,
+      "table": "sources",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-0100-4000-8000-000000000004",
+      "data": {
+        "id": "c0160042-0100-4000-8000-000000000004",
+        "name": "La Parroquia de San Juan de Marchena celebra besamanos y misa en honor de la Divina Pastora",
+        "url": "https://www.artesacro.org/Noticia/Ver/102355/provincia-parroquia-san-juan-marchena-celebra-besamanos-y-misa-honor",
+        "source_type": "Prensa cofrade",
+        "author_or_publisher": "ArteSacro",
+        "publication_date": "2015-04-25",
+        "accessed_at": "2026-09-28"
+      }
+    },
+    {
+      "position": 30,
+      "table": "brotherhoods",
+      "operation": "update",
+      "pk": "entity_id",
+      "id": "15e73dd0-c6da-4116-8801-9c868bc09b86",
+      "before": {
+        "canonical_see_place_id": null,
+        "history_text": null
+      },
+      "data": {
+        "canonical_see_place_id": "c0160042-0200-4000-8000-000000000001",
+        "history_text": "La imagen de la Divina Pastora de las Almas procede del desaparecido convento de capuchinos de Marchena. En 2015, un grupo juvenil de la Parroquia Matriz de San Juan Bautista impulsó la recuperación de su culto público y de la procesión de septiembre. Desde entonces la devoción pastoreña mantiene sus cultos principales y la salida anual desde San Juan."
+      }
+    },
+    {
+      "position": 31,
+      "table": "outings",
+      "operation": "update",
+      "pk": "id",
+      "id": "5d8c29b6-9f66-49ea-a059-5314ce4d4495",
+      "before": {
+        "event_status": "announced",
+        "origin_place_id": null,
+        "destination_place_id": null,
+        "outing_series_id": null
+      },
+      "data": {
+        "event_status": "held",
+        "origin_place_id": "c0160042-0200-4000-8000-000000000001",
+        "destination_place_id": "c0160042-0200-4000-8000-000000000001",
+        "outing_series_id": "c0160042-1000-4000-8000-000000000001"
+      }
+    },
+    {
+      "position": 32,
+      "table": "music_accompaniment_periods",
+      "operation": "update",
+      "pk": "id",
+      "id": "100cbe0e-d284-43ec-bb09-1093200a6368",
+      "before": {
+        "is_current": true,
+        "step_entity_id": null,
+        "notes": "Acompañamiento musical documentado para la procesión de Gloria de 2026."
+      },
+      "data": {
+        "is_current": false,
+        "step_entity_id": "c0160042-0700-4000-8000-000000000001",
+        "notes": "Acompañamiento musical documentado exclusivamente para la procesión de Gloria del 19 de septiembre de 2026; no se proyecta como vigente después de esta edición."
+      }
+    },
+    {
+      "position": 33,
+      "table": "outing_music_positions",
+      "operation": "update",
+      "pk": "id",
+      "id": "bf8b7e54-d420-4de1-aa2e-759b62a73346",
+      "before": {
+        "step_entity_id": null
+      },
+      "data": {
+        "step_entity_id": "c0160042-0700-4000-8000-000000000001"
+      }
+    },
+    {
+      "position": 34,
+      "table": "source_links",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-2000-4000-8000-000000000001",
+      "data": {
+        "id": "c0160042-2000-4000-8000-000000000001",
+        "source_id": "c0160042-0100-4000-8000-000000000004",
+        "entity_id": "c0160042-0600-4000-8000-000000000001",
+        "scope": "Procedencia, naturaleza de talla de vestir y datación aproximada de la Divina Pastora de Marchena",
+        "notes": null
+      }
+    },
+    {
+      "position": 35,
+      "table": "source_links",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-2000-4000-8000-000000000002",
+      "data": {
+        "id": "c0160042-2000-4000-8000-000000000002",
+        "source_id": "c0160042-0100-4000-8000-000000000004",
+        "entity_id": "15e73dd0-c6da-4116-8801-9c868bc09b86",
+        "scope": "Recuperación pública del culto a la Divina Pastora en San Juan Bautista en 2015",
+        "notes": null
+      }
+    },
+    {
+      "position": 36,
+      "table": "source_links",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-2000-4000-8000-000000000003",
+      "data": {
+        "id": "c0160042-2000-4000-8000-000000000003",
+        "source_id": "c0160042-0100-4000-8000-000000000004",
+        "entity_id": "c0160042-0500-4000-8000-000000000001",
+        "scope": "Recuperación del culto público y proyecto de procesión de septiembre en 2015",
+        "notes": null
+      }
+    },
+    {
+      "position": 37,
+      "table": "source_links",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-2000-4000-8000-000000000004",
+      "data": {
+        "id": "c0160042-2000-4000-8000-000000000004",
+        "source_id": "c0160042-0100-4000-8000-000000000004",
+        "brotherhood_image_id": "c0160042-3000-4000-8000-000000000001",
+        "scope": "Identidad de la Divina Pastora como imagen venerada por el grupo de San Juan",
+        "notes": null
+      }
+    },
+    {
+      "position": 38,
+      "table": "source_links",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-2000-4000-8000-000000000005",
+      "data": {
+        "id": "c0160042-2000-4000-8000-000000000005",
+        "source_id": "c0160042-0100-4000-8000-000000000001",
+        "cult_id": "c0160042-0900-4000-8000-000000000001",
+        "scope": "Triduo de la Divina Pastora de las Almas en septiembre de 2026",
+        "notes": null
+      }
+    },
+    {
+      "position": 39,
+      "table": "source_links",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-2000-4000-8000-000000000006",
+      "data": {
+        "id": "c0160042-2000-4000-8000-000000000006",
+        "source_id": "c0160042-0100-4000-8000-000000000001",
+        "cult_occurrence_id": "c0160042-0910-4000-8000-000000000001",
+        "scope": "Edición 2026 del Triduo: 10, 11 y 12 de septiembre",
+        "notes": null
+      }
+    },
+    {
+      "position": 40,
+      "table": "source_links",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-2000-4000-8000-000000000007",
+      "data": {
+        "id": "c0160042-2000-4000-8000-000000000007",
+        "source_id": "c0160042-0100-4000-8000-000000000001",
+        "cult_id": "c0160042-0900-4000-8000-000000000002",
+        "scope": "Función Principal en honor de la Divina Pastora",
+        "notes": null
+      }
+    },
+    {
+      "position": 41,
+      "table": "source_links",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-2000-4000-8000-000000000008",
+      "data": {
+        "id": "c0160042-2000-4000-8000-000000000008",
+        "source_id": "c0160042-0100-4000-8000-000000000001",
+        "cult_occurrence_id": "c0160042-0910-4000-8000-000000000002",
+        "scope": "Edición 2026 de la Función Principal: 13 de septiembre a las 12:00",
+        "notes": null
+      }
+    },
+    {
+      "position": 42,
+      "table": "source_links",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-2000-4000-8000-000000000009",
+      "data": {
+        "id": "c0160042-2000-4000-8000-000000000009",
+        "source_id": "c0160042-0100-4000-8000-000000000001",
+        "cult_id": "c0160042-0900-4000-8000-000000000003",
+        "scope": "Rosario de Vísperas del 18 de septiembre de 2026 a las 21:00",
+        "notes": null
+      }
+    },
+    {
+      "position": 43,
+      "table": "source_links",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-2000-4000-8000-000000000010",
+      "data": {
+        "id": "c0160042-2000-4000-8000-000000000010",
+        "source_id": "c0160042-0100-4000-8000-000000000001",
+        "outing_series_id": "c0160042-1000-4000-8000-000000000001",
+        "scope": "Procesión pastoreña de septiembre y continuidad de las fiestas de 2026",
+        "notes": null
+      }
+    },
+    {
+      "position": 44,
+      "table": "source_links",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-2000-4000-8000-000000000011",
+      "data": {
+        "id": "c0160042-2000-4000-8000-000000000011",
+        "source_id": "36534e14-a7c7-4455-ad76-a3dae9d54e68",
+        "outing_series_id": "c0160042-1000-4000-8000-000000000001",
+        "scope": "Programa directo del Redil para la procesión de septiembre de 2026",
+        "notes": null
+      }
+    },
+    {
+      "position": 45,
+      "table": "source_links",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-2000-4000-8000-000000000012",
+      "data": {
+        "id": "c0160042-2000-4000-8000-000000000012",
+        "source_id": "c0160042-0100-4000-8000-000000000002",
+        "outing_id": "5d8c29b6-9f66-49ea-a059-5314ce4d4495",
+        "scope": "Ejecución efectiva de la procesión del 19 de septiembre de 2026",
+        "notes": null
+      }
+    },
+    {
+      "position": 46,
+      "table": "source_links",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-2000-4000-8000-000000000013",
+      "data": {
+        "id": "c0160042-2000-4000-8000-000000000013",
+        "source_id": "c0160042-0100-4000-8000-000000000002",
+        "music_accompaniment_period_id": "100cbe0e-d284-43ec-bb09-1093200a6368",
+        "scope": "Banda Municipal de Música de Arahal en la procesión celebrada el 19 de septiembre de 2026",
+        "notes": null
+      }
+    },
+    {
+      "position": 47,
+      "table": "source_links",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-2000-4000-8000-000000000014",
+      "data": {
+        "id": "c0160042-2000-4000-8000-000000000014",
+        "source_id": "c0160042-0100-4000-8000-000000000002",
+        "entity_id": "c0160042-0700-4000-8000-000000000001",
+        "scope": "Uso procesional del Paso en la salida de 2026",
+        "notes": null
+      }
+    },
+    {
+      "position": 48,
+      "table": "source_links",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-2000-4000-8000-000000000015",
+      "data": {
+        "id": "c0160042-2000-4000-8000-000000000015",
+        "source_id": "c0160042-0100-4000-8000-000000000002",
+        "brotherhood_step_id": "c0160042-3100-4000-8000-000000000001",
+        "scope": "Paso procesional de la Divina Pastora en la salida de 2026",
+        "notes": null
+      }
+    },
+    {
+      "position": 49,
+      "table": "source_links",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-2000-4000-8000-000000000016",
+      "data": {
+        "id": "c0160042-2000-4000-8000-000000000016",
+        "source_id": "c0160042-0100-4000-8000-000000000002",
+        "image_step_id": "c0160042-3200-4000-8000-000000000001",
+        "scope": "La Divina Pastora procesiona sobre el Paso documentado en la salida de 2026",
+        "notes": null
+      }
+    },
+    {
+      "position": 50,
+      "table": "source_links",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-2000-4000-8000-000000000017",
+      "data": {
+        "id": "c0160042-2000-4000-8000-000000000017",
+        "source_id": "c0160042-0100-4000-8000-000000000003",
+        "step_personnel_period_id": "c0160042-3400-4000-8000-000000000001",
+        "scope": "Nombramiento de Samuel González Ramírez como capataz el 29 de junio de 2026",
+        "notes": null
+      }
+    },
+    {
+      "position": 51,
+      "table": "source_links",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-2000-4000-8000-000000000018",
+      "data": {
+        "id": "c0160042-2000-4000-8000-000000000018",
+        "source_id": "c0160042-0100-4000-8000-000000000003",
+        "step_personnel_period_id": "c0160042-3400-4000-8000-000000000002",
+        "scope": "Nombramiento de Sebastián Martín Morán como capataz el 29 de junio de 2026",
+        "notes": null
+      }
+    },
+    {
+      "position": 52,
+      "table": "source_links",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-2000-4000-8000-000000000019",
+      "data": {
+        "id": "c0160042-2000-4000-8000-000000000019",
+        "source_id": "c0160042-0100-4000-8000-000000000003",
+        "entity_id": "c0160042-0800-4000-8000-000000000001",
+        "scope": "Identidad y nombramiento de Samuel González Ramírez como capataz",
+        "notes": null
+      }
+    },
+    {
+      "position": 53,
+      "table": "source_links",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-2000-4000-8000-000000000020",
+      "data": {
+        "id": "c0160042-2000-4000-8000-000000000020",
+        "source_id": "c0160042-0100-4000-8000-000000000003",
+        "entity_id": "c0160042-0800-4000-8000-000000000002",
+        "scope": "Identidad y nombramiento de Sebastián Martín Morán como capataz",
+        "notes": null
+      }
+    },
+    {
+      "position": 54,
+      "table": "source_links",
+      "operation": "insert",
+      "pk": "id",
+      "id": "c0160042-2000-4000-8000-000000000021",
+      "data": {
+        "id": "c0160042-2000-4000-8000-000000000021",
+        "source_id": "c0160042-0100-4000-8000-000000000001",
+        "entity_id": "15e73dd0-c6da-4116-8801-9c868bc09b86",
+        "scope": "Cultos y programa pastoreño de septiembre de 2026",
+        "notes": null
+      }
+    }
+  ]
+}

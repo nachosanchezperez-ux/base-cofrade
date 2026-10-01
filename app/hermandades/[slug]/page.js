@@ -667,7 +667,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
 {documentedHistoricalAccompaniments.length > 0 && <section className="section brotherhood-soft" id="acompanamientos"><div className="shell">
         <SectionTitle level={reading ? 3 : 2} eyebrow="Memoria sonora" title="Acompañamientos Musicales Históricos" description="Una cronología por paso para conocer qué formaciones musicales han acompañado a la Hermandad." />
         <div className="music-history-grid">{documentedHistoricalAccompaniments.map((a) => (
-          <article key={a.id}>{publicText(a.periodo) ? <span className="music-period">{publicText(a.periodo)}</span> : null}<h3>{publicText(a.banda)}</h3>{publicText(a.paso) ? <p>{publicText(a.paso)}</p> : null}{publicText(a.tipo) ? <small>{publicText(a.tipo)}</small> : null}</article>
+          <article key={a.id}>{publicText(a.periodo) ? <span className="music-period">{publicText(a.periodo)}</span> : null}<h3>{a.bandaSlug ? <Link href={`/bandas/${a.bandaSlug}`}>{publicText(a.banda)}</Link> : publicText(a.banda)}</h3>{publicText(a.paso) ? <p>{publicText(a.paso)}</p> : null}{publicText(a.tipo) ? <small>{publicText(a.tipo)}</small> : null}</article>
         ))}</div>
       </div></section>}
   </>);
