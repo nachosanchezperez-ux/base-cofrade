@@ -1,5 +1,9 @@
 # Laboratorio de lectura de Hermandades · 1/10/2026
 
+Este informe conserva el corte histórico de preview. La autorización y la
+activación pública limitada al piloto se registran en
+[publicación controlada](./HERMANDAD-LECTURA-PUBLICACION-2026-10-01.md).
+
 ## Preflight verificado
 
 - main y producción: `a993ca20e4402cdfcdede1ec7e94be043bcc299f`.

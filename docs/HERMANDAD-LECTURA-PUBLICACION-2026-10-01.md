@@ -31,4 +31,19 @@ autorización de publicación. Sin DML, DDL, cambios RLS ni dependencias nuevas.
 1438/1438 tests PASS, incluidos dos nuevos contratos de la cohorte y del
 override del laboratorio. Build PASS. La certificación visual previa se
 conserva como evidencia del diseño; la ruta pública necesita comprobación
-propia de canonical, robots, SSR y activación. Preview y postflight en curso.
+propia de canonical, robots, SSR y activación.
+
+Preview pública verificada sobre `bf728f89` en
+`dpl_9YjEX6t87MisMpgvD5jHf6xGgDgh`, READY. Matriz 390/430/768/1024/1366/1600
+PASS: HTTP 200, lectura activada, seis opciones, cero overflow/IDs duplicados,
+un H1, canonical pública y `index, follow`; JSON-LD parseable, 15 hitos,
+39 composiciones y 18 fuentes. Clics de Historia, enlace al archivo de Salidas
+y teclado en Fuentes comprobados. San Esteban mantiene la variante anterior
+y metadata propia. Cero pageerror y sin error/fatal en logs de esta preview
+durante la ventana consultada. [Evidencia](./qa/hermandad-lectura-2026-10-01/public-preview.json).
+
+Se utiliza Chromium con las respuestas HTTPS entregadas mediante fetch Node
+con TLS verificado, preservando cuerpos e hidratación. No es ensayo en
+dispositivo físico. El script reproducible es
+`scripts/qa-brotherhood-reading.cjs`; Playwright pertenece al runner de QA,
+no a las dependencias de producto. Postflight productivo pendiente de merge.
