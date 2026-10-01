@@ -219,8 +219,8 @@
   .categoryGrid {
     display: flex;
     overflow-x: auto;
-    margin-right: -16px;
-    padding-right: 16px;
+    margin-right: -14px;
+    padding-right: 14px;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
   }
