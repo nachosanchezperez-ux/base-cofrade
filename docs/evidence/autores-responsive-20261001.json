@@ -1,0 +1,125 @@
+{
+  "method": "Verified HTTPS GET mirror of production HTML/assets, Chromium responsive emulation",
+  "candidateCss": false,
+  "results": [
+    {
+      "requestedWidth": 320,
+      "path": "/autores?categoria=vestidores",
+      "width": 320,
+      "innerWidth": 320,
+      "scrollWidth": 320,
+      "overflow": [],
+      "categoryGrid": {
+        "clientWidth": 306,
+        "scrollWidth": 2728,
+        "overflowX": "auto"
+      },
+      "h1": "Vestidores",
+      "carouselEnd": {
+        "scrollLeft": 2422,
+        "lastVisible": true
+      }
+    },
+    {
+      "requestedWidth": 390,
+      "path": "/autores?categoria=vestidores",
+      "width": 390,
+      "innerWidth": 390,
+      "scrollWidth": 390,
+      "overflow": [],
+      "categoryGrid": {
+        "clientWidth": 376,
+        "scrollWidth": 3104,
+        "overflowX": "auto"
+      },
+      "h1": "Vestidores",
+      "carouselEnd": {
+        "scrollLeft": 2728,
+        "lastVisible": true
+      }
+    },
+    {
+      "requestedWidth": 430,
+      "path": "/autores?categoria=vestidores",
+      "width": 430,
+      "innerWidth": 430,
+      "scrollWidth": 430,
+      "overflow": [],
+      "categoryGrid": {
+        "clientWidth": 416,
+        "scrollWidth": 3104,
+        "overflowX": "auto"
+      },
+      "h1": "Vestidores",
+      "carouselEnd": {
+        "scrollLeft": 2688,
+        "lastVisible": true
+      }
+    },
+    {
+      "requestedWidth": 768,
+      "path": "/autores?categoria=vestidores",
+      "width": 768,
+      "innerWidth": 768,
+      "scrollWidth": 768,
+      "overflow": [],
+      "categoryGrid": {
+        "clientWidth": 728,
+        "scrollWidth": 728,
+        "overflowX": "visible"
+      },
+      "h1": "Vestidores"
+    },
+    {
+      "requestedWidth": 1440,
+      "path": "/autores?categoria=vestidores",
+      "width": 1440,
+      "innerWidth": 1440,
+      "scrollWidth": 1440,
+      "overflow": [],
+      "categoryGrid": {
+        "clientWidth": 1160,
+        "scrollWidth": 1160,
+        "overflowX": "visible"
+      },
+      "h1": "Vestidores"
+    },
+    {
+      "requestedWidth": 390,
+      "path": "/autores/jose-manuel-lozano-rivero",
+      "h1": "José Manuel Lozano Rivero",
+      "width": 390,
+      "scrollWidth": 390,
+      "sourceLinks": [
+        {
+          "text": "Hermandad de San Bernardo · Nombramiento cargos de confianza",
+          "href": "https://www.hermandaddesanbernardo.com/nombramiento-cargos-de-confianza-3/"
+        }
+      ],
+      "imageLinks": [
+        "/imagenes/maria-santisima-refugio-san-bernardo"
+      ]
+    },
+    {
+      "requestedWidth": 390,
+      "path": "/autores/antonio-jesus-del-castillo-fernandez",
+      "h1": "Antonio Jesús del Castillo Fernández",
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "requestedWidth": 390,
+      "path": "/autores/jose-antonio-grande-de-leon",
+      "h1": "José Antonio Grande de León",
+      "width": 390,
+      "scrollWidth": 390
+    }
+  ],
+  "pageErrors": [],
+  "production_sha": "6265f0acb7e6c30867cc75db74e5db0beaa67ce9",
+  "deployment": "dpl_8pwqukkRBJHHBFXBeGrQsnNu76fX",
+  "limitations": [
+    "Chromium responsive emulation; verified HTTPS downloads served through a local read-only GET mirror.",
+    "Not physical-device or direct mobile-browser HTTPS testing."
+  ]
+}
