@@ -18,6 +18,10 @@ mediante SELECT en entities: El Baratillo, publicado. El componente público
 resuelve la variante tras obtener la entidad; no hay comparación por slug.
 El laboratorio sigue forzando la variante y devolviendo 404 en producción.
 
+La caché de ficha pasa de v8 a v9 para no reutilizar objetos serializados sin
+las fechas normalizadas de Salidas/Cultos. Mantiene revalidate 900 y sus tags;
+no se cambia la política de actualidad ni la base de datos.
+
 Para revertir solo la activación basta vaciar la cohorte, sin alterar datos,
 URLs o la implementación compartida. Cualquier ampliación requiere QA y
 autorización de publicación. Sin DML, DDL, cambios RLS ni dependencias nuevas.
