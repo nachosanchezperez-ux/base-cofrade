@@ -30,4 +30,24 @@ identidad frente a relaciones, homónimos y conservación de vigencia textual.
 El runner visual incorpora auditoría de contenido y abre Vestidores, Sede,
 Túnica y Salidas en las seis anchuras, además de navegación y Fuentes.
 
-La comprobación visual sobre preview queda pendiente hasta completar el runner.
+Preview `fa8f6a5c`, deployment `dpl_2QqLZRTq1mJGTBdEQMzHvctJBc2v` READY:
+PASS en 390/430/768/1024/1366/1600 px. Nombre completo visible, una persona
+y dos Titulares, Sede sin salida repetida, Túnica legible y ambas imágenes
+decodificadas, Salidas sin el encabezado contradictorio. Teclado, navegación,
+Fuentes y control Gran Poder PASS; cero overflow/IDs duplicados/pageerror.
+15 hitos, 39 composiciones y 18 Fuentes preservados. GitHub verify y Vercel
+PASS; Supabase Preview skipped al no haber cambios de esquema.
+
+Método: Chromium con respuestas HTTPS servidas por fetch Node con TLS
+verificado e hidratación real. Emulación de anchuras, no teléfono físico.
+Los screenshots de Túnica comprobaron un contraste heredado insuficiente
+durante la primera iteración; el corte certificado ya lo corrige y verifica.
+Evidencia estructural: `docs/qa/hermandad-lectura-2026-10-02/preview.json`.
+
+SELECT confirma que las dos relaciones publicadas de Vestidor comparten el
+ID `64b7fcf0-376a-40ec-b197-8e2d629ad88b` y «Vigente en 2026». No hay dos
+personas duplicadas en Supabase: el error estaba en su presentación.
+
+Main concurrente `abfc9370` incorpora únicamente documentación de Imaginería;
+se preserva íntegra. No se cierra por esta revisión la QA general pendiente
+de San Esteban ni se altera la cohorte existente.
