@@ -10,7 +10,7 @@
 .reading :global(.section-heading) h2 { font-size:clamp(28px,3vw,40px); line-height:1.12; margin:8px 0; }
 .reading :global(.section-heading) p { font-size:15px; line-height:1.55; }
 .reading :global(.eyebrow) { font-size:11px; color:#555d66; }
-.reading :global(.brotherhood-soft), .reading :global(.heritage-section), .reading :global(#patrimonio-musical), .reading :global(#acompanamiento-musical), .reading :global(#conoce-hermandad), .reading :global(.official-links-section) { background:#fff !important; }
+.reading :global(.brotherhood-soft), .reading :global(.heritage-section), .reading :global(#musica #patrimonio-musical), .reading :global(#acompanamiento-musical), .reading :global(#conoce-hermandad), .reading :global(.official-links-section) { background:#fff !important; }
 .reading :global(.brotherhood-nav) { background:#fff !important; border-bottom:1px solid #dde1e5 !important; box-shadow:0 3px 12px #00000008 !important; }
 .reading :global(.brotherhood-nav-shell) { min-height:52px; gap:20px; }
 .reading :global(.brotherhood-nav-label) { color:#60656b; border-color:#dde1e5; }
@@ -109,26 +109,26 @@
 .reading :global(#acompanamiento-musical [class*='__meta']) { font-size:12px; gap:4px 10px; }
 .reading :global(#acompanamiento-musical [class*='__meta'] span:nth-child(2)) { border:0; border-radius:0; background:transparent; padding:0; font-size:12px; font-weight:400; }
 .reading :global(#acompanamiento-musical [class*='__arrow']) { background:transparent; border-radius:0; }
-.reading :global(#patrimonio-musical) { border-top:1px solid #dde2e7; padding-top:30px; }
-.reading :global(#patrimonio-musical [class*='__intro']) { grid-template-columns:minmax(0,1fr) auto; align-items:center; }
-.reading :global(#patrimonio-musical [class*='__summary']) { margin:0; padding:0; border:0 !important; border-radius:0 !important; background:transparent !important; box-shadow:none !important; }
-.reading :global(#patrimonio-musical [class*='__groups']), .reading :global(#patrimonio-musical [class*='__group']) { border:0 !important; border-radius:0 !important; background:transparent !important; box-shadow:none !important; overflow:visible; }
-.reading :global(#patrimonio-musical [class*='__groupSummary']), .reading :global(#patrimonio-musical [class*='__styleSummary']) { grid-template-columns:minmax(0,1fr) 28px; padding:14px 0; border-bottom:1px solid #dde2e7; background:transparent !important; }
-.reading :global(#patrimonio-musical [class*='__groupMark']), .reading :global(#patrimonio-musical [class*='__styleMark']) { display:none; }
-.reading :global(#patrimonio-musical [class*='__groupToggle']), .reading :global(#patrimonio-musical [class*='__styleToggle']) { background:transparent; border-radius:0; min-height:44px; }
-.reading :global(#patrimonio-musical [class*='__styleGroups']) { padding:0; background:transparent !important; }
-.reading :global(#patrimonio-musical [class*='__styleGroup']) { border:0 !important; box-shadow:none !important; background:transparent !important; }
-.reading :global(#patrimonio-musical [class*='__styleHeading'] > h4) { font-size:17px; }
-.reading :global(#patrimonio-musical [class*='__tableHead']) { background:transparent !important; padding-inline:0; }
-.reading :global(#patrimonio-musical [class*='__march']) { padding-inline:0; }
-.reading :global(#patrimonio-musical [class*='__listen']) { border:0; border-radius:0; background:transparent; padding:0; min-height:44px; font-size:12px; }
+.reading :global(#musica #patrimonio-musical) { border-top:1px solid #dde2e7; padding-top:30px; }
+.reading :global(#musica #patrimonio-musical [class*='__intro']) { grid-template-columns:minmax(0,1fr) auto; align-items:center; }
+.reading :global(#musica #patrimonio-musical [class*='__summary']) { margin:0; padding:0; border:0 !important; border-radius:0 !important; background:transparent !important; box-shadow:none !important; }
+.reading :global(#musica #patrimonio-musical [class*='__groups']), .reading :global(#musica #patrimonio-musical [class*='__group']) { border:0 !important; border-radius:0 !important; background:transparent !important; box-shadow:none !important; overflow:visible; }
+.reading :global(#musica #patrimonio-musical [class*='__groupSummary']), .reading :global(#musica #patrimonio-musical [class*='__styleSummary']) { grid-template-columns:minmax(0,1fr) 28px; padding:14px 0; border-bottom:1px solid #dde2e7; background:transparent !important; }
+.reading :global(#musica #patrimonio-musical [class*='__groupMark']), .reading :global(#musica #patrimonio-musical [class*='__styleMark']) { display:none; }
+.reading :global(#musica #patrimonio-musical [class*='__groupToggle']), .reading :global(#musica #patrimonio-musical [class*='__styleToggle']) { background:transparent; border-radius:0; min-height:44px; }
+.reading :global(#musica #patrimonio-musical [class*='__styleGroups']) { padding:0; background:transparent !important; }
+.reading :global(#musica #patrimonio-musical [class*='__styleGroup']) { border:0 !important; box-shadow:none !important; background:transparent !important; }
+.reading :global(#musica #patrimonio-musical [class*='__styleHeading'] > h4) { font-size:17px; }
+.reading :global(#musica #patrimonio-musical [class*='__tableHead']) { background:transparent !important; padding-inline:0; }
+.reading :global(#musica #patrimonio-musical [class*='__march']) { padding-inline:0; }
+.reading :global(#musica #patrimonio-musical [class*='__listen']) { border:0; border-radius:0; background:transparent; padding:0; min-height:44px; font-size:12px; }
 .reading :global(#musica .music-history-grid) { grid-template-columns:1fr; gap:0; }
 .reading :global(#musica .music-history-grid article) { border:0; border-bottom:1px solid #dde2e7; border-radius:0; box-shadow:none; background:transparent; padding:18px 0; }
 @media(max-width:980px) {
  .reading :global(#acompanamiento-musical [class*='__sequence']) { grid-template-columns:1fr; gap:0; }
 }
 @media(max-width:700px) {
- .reading :global(#patrimonio-musical [class*='__intro']) { grid-template-columns:1fr; gap:12px; }
+ .reading :global(#musica #patrimonio-musical [class*='__intro']) { grid-template-columns:1fr; gap:12px; }
 }
 .reading :global(.heritage-work) { border-radius:6px; box-shadow:none !important; }
 .reading :global(.heritage-work-visual) { min-height:220px; }
