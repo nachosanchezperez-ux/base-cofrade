@@ -128,22 +128,51 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
     changes.some((change) => change.day === day.label)
   ))
   const daySlugs = new Set(dayOptions.map((day) => day.slug))
+  const municipalities = [...new Set(changes.map((item) => item.municipality).filter(Boolean))]
+    .sort((a, b) => a.localeCompare(b, 'es', { sensitivity: 'base' }))
+
   const requestedDay = String(params?.jornada || '')
   const requestedScope = String(params?.ambito || '')
+  const requestedMunicipality = String(params?.municipio || '')
+  const requestedType = String(params?.tipo || '')
+  const requestedQuery = String(params?.q || '').trim().slice(0, 80)
+
   const activeDay = daySlugs.has(requestedDay) ? requestedDay : ''
   const activeScope = ['capital', 'province'].includes(requestedScope) ? requestedScope : ''
+  const activeMunicipality = municipalities.includes(requestedMunicipality) ? requestedMunicipality : ''
+  const activeType = BAND_TYPES.some((item) => item.key === requestedType) ? requestedType : ''
+  const normalizedQuery = normalizeMusicChangeText(requestedQuery)
 
-  const filtered = changes.filter((change) => (
-    (!activeDay || musicChangeDaySlug(change.day) === activeDay)
-    && (!activeScope || change.scope === activeScope)
-  ))
+  const filtered = changes.filter((change) => {
+    const searchable = normalizeMusicChangeText([
+      change.brotherhoodName,
+      change.municipality,
+      change.stepName,
+      change.position,
+      change.previousBandName,
+      change.newBandName,
+      bandFamilyLabel(change),
+    ].filter(Boolean).join(' '))
+
+    return (
+      (!activeDay || musicChangeDaySlug(change.day) === activeDay)
+      && (!activeScope || change.scope === activeScope)
+      && (!activeMunicipality || change.municipality === activeMunicipality)
+      && (!activeType || bandFamilyKey(change) === activeType)
+      && (!normalizedQuery || searchable.includes(normalizedQuery))
+    )
+  })
 
   const brotherhoodCount = new Set(changes.map((item) => item.brotherhoodSlug || item.brotherhoodName)).size
   const newBandCount = new Set(changes.map((item) => item.newBandSlug || item.newBandName)).size
   const capitalCount = changes.filter((item) => item.scope === 'capital').length
   const provinceCount = changes.filter((item) => item.scope === 'province').length
+  const capitalPercent = changes.length ? Math.round((capitalCount / changes.length) * 100) : 0
   const lastUpdated = updatedLabel(changes)
   const groups = groupsFor(filtered)
+  const recent = latestChanges(changes)
+  const municipalityTop = municipalityRanking(changes)
+  const hasFilters = Boolean(activeDay || activeScope || activeMunicipality || activeType || requestedQuery)
 
   return (
     <div className={styles.page}>
