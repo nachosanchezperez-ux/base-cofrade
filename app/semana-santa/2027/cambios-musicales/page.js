@@ -10,7 +10,6 @@ import {
   SEMANA_SANTA_DAYS,
 } from '@/lib/music-changes'
 import {
-  absoluteUrl,
   breadcrumbJsonLd,
   collectionPageJsonLd,
   filteredViewRobots,
