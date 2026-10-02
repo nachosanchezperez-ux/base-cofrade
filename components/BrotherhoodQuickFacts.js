@@ -266,9 +266,10 @@ export default async function BrotherhoodQuickFacts({ brotherhood, heroFactLabel
             {dressers.map((dresser) => (
               <div className={styles.dresser} key={dresser.agentId || dresser.id}>
                 <strong>{dresser.name}</strong>
+                {dresser.commonPeriod && <span>{dresser.commonPeriod}</span>}
                 {dresser.images.map((image) => <div key={image.id}>
                   <small>{image.imageSlug ? <Link className={styles.inlineLink} href={`/imagenes/${image.imageSlug}`}>{image.image}<span aria-hidden="true">↗</span></Link> : image.image}</small>
-                  {image.period && <span>{image.period}</span>}
+                  {image.period && !dresser.commonPeriod && <span>{image.period}</span>}
                 </div>)}
               </div>
             ))}
