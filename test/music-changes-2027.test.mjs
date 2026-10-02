@@ -76,38 +76,32 @@ test('Cambios musicales 2027 queda descubrible e indexable', async () => {
     assert.match(source, /\/semana-santa\/2027\/cambios-musicales/)
   }
 
-  assert.match(page, /Las renovaciones sin cambio de formación no aparecen aquí/)
-  assert.match(page, /negociaciones, candidaturas o continuidades no confirmadas/)
+  assert.match(page, /Las renovaciones sin cambio de formación y los acuerdos no confirmados quedan fuera/)
 })
 
 
-test('el especial 2027 refuerza descubrimiento, filtros y lectura editorial sin duplicar main', async () => {
+test('el especial 2027 prioriza listado, filtros y contenido SEO útil', async () => {
   const page = await read('app/semana-santa/2027/cambios-musicales/page.js')
   const styles = await read('app/semana-santa/2027/cambios-musicales/cambios-musicales.module.css')
 
-  assert.match(page, /Cambios musicales de la Semana Santa de Sevilla 2027/)
-  assert.match(page, /Todos los cambios de bandas, en un solo hilo/)
-  assert.match(page, /Consulta los cambios por jornada o localidad/)
-  assert.doesNotMatch(page, /Confirmaciones recientes/)
+  assert.match(page, /Cambios musicales 2027/)
+  assert.match(page, /Cambios de bandas en la Semana Santa de Sevilla 2027/)
   assert.match(page, /name="municipio"/)
   assert.match(page, /name="tipo"/)
   assert.match(page, /name="q"/)
-  assert.match(page, /Preguntas frecuentes/)
   assert.match(page, /filteredViewRobots\(await searchParams, \['jornada', 'ambito', 'municipio', 'tipo', 'q'\]\)/)
+  assert.doesNotMatch(page, /Panorama 2027/)
+  assert.doesNotMatch(page, /Preguntas frecuentes/)
   assert.doesNotMatch(page, /<main\b/)
-  assert.match(styles, /\.panoramaGrid/)
   assert.match(styles, /\.searchPanel[\s\S]*flex-wrap: wrap/)
-  assert.match(styles, /\.brotherhoodList[\s\S]*display: grid/)
-  assert.match(styles, /\.transition[\s\S]*grid-template-columns: minmax\(0, 1fr\) 58px minmax\(0, 1fr\)[\s\S]*gap: 14px/)
-  assert.match(styles, /overflow-wrap: anywhere/)
-  assert.match(styles, /@media \(max-width: 720px\)[\s\S]*\.movement[\s\S]*grid-template-columns: 1fr/)
-  assert.match(styles, /@media \(max-width: 520px\)[\s\S]*\.transition[\s\S]*grid-template-columns: 1fr/)
-  assert.match(styles, /@media \(max-width: 520px\)/)
-  assert.match(styles, /@media \(max-width: 390px\)/)
+  assert.match(styles, /\.movement[\s\S]*grid-template-columns: minmax\(170px, \.9fr\) minmax\(0, 1fr\) 30px minmax\(0, 1fr\)/)
+  assert.match(styles, /\.heroCopy h1[\s\S]*font-size: clamp\(38px, 5vw, 58px\)/)
+  assert.match(styles, /@media \(max-width: 700px\)[\s\S]*\.movement[\s\S]*grid-template-columns: minmax\(0, 1fr\) 28px minmax\(0, 1fr\)/)
+  assert.match(styles, /@media \(max-width: 520px\)[\s\S]*\.movement[\s\S]*grid-template-columns: 1fr/)
 })
 
 
-test('los cambios de una misma Hermandad se agrupan en una sola zona visual', async () => {
+test('los cambios de una misma Hermandad siguen agrupados sin duplicar cabeceras', async () => {
   const page = await read('app/semana-santa/2027/cambios-musicales/page.js')
   const styles = await read('app/semana-santa/2027/cambios-musicales/cambios-musicales.module.css')
 
@@ -115,12 +109,10 @@ test('los cambios de una misma Hermandad se agrupan en una sola zona visual', as
   assert.match(page, /brotherhoods: groupBrotherhoodChanges\(items\)/)
   assert.match(page, /group\.brotherhoods\.map/)
   assert.match(page, /brotherhood\.changes\.map/)
-  assert.match(page, /cambios musicales/)
-  assert.match(page, /Relacionado|Entidad relacionada|Ver ficha de la Hermandad/)
+  assert.match(page, /brotherhood\.changes\.length > 1/)
   assert.match(styles, /\.brotherhoodCluster/)
   assert.match(styles, /\.clusterHeader/)
   assert.match(styles, /\.clusterChanges/)
-  assert.match(styles, /\.movement[\s\S]*grid-template-columns: minmax\(190px, \.34fr\) minmax\(0, 1fr\)/)
-  assert.match(styles, /\.clusterCount/)
-  assert.match(styles, /@media \(max-width: 520px\)[\s\S]*\.transition[\s\S]*grid-template-columns: 1fr/)
+  assert.doesNotMatch(styles, /\.clusterCount/)
+  assert.doesNotMatch(styles, /\.movementNumber/)
 })

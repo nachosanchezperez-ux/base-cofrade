@@ -112,18 +112,6 @@ function bandFamilyLabel(change) {
   return BAND_TYPES.find((item) => item.key === bandFamilyKey(change))?.label || 'Formación musical'
 }
 
-function municipalityRanking(changes) {
-  const counts = new Map()
-  for (const change of changes) {
-    if (!change.municipality) continue
-    counts.set(change.municipality, (counts.get(change.municipality) || 0) + 1)
-  }
-  return [...counts.entries()]
-    .map(([name, count]) => ({ name, count }))
-    .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name, 'es'))
-    .slice(0, 6)
-}
-
 function bandLink(change, previous = false) {
   const name = previous ? change.previousBandName : change.newBandName
   const href = previous ? change.previousBandHref : change.newBandHref
@@ -177,11 +165,8 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
 
   const brotherhoodCount = new Set(changes.map((item) => item.brotherhoodSlug || item.brotherhoodName)).size
   const newBandCount = new Set(changes.map((item) => item.newBandSlug || item.newBandName)).size
-  const capitalCount = changes.filter((item) => item.scope === 'capital').length
-  const provinceCount = changes.filter((item) => item.scope === 'province').length
   const lastUpdated = updatedLabel(changes)
   const groups = groupsFor(filtered)
-  const municipalityTop = municipalityRanking(changes)
   const hasFilters = Boolean(activeDay || activeScope || activeMunicipality || activeType || requestedQuery)
 
   return (
@@ -213,139 +198,63 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
             showAccent={false}
           />
 
-          <div className={styles.heroGrid}>
-            <div className={styles.heroCopy}>
-              <span>Especial · Archivo musical 2027</span>
-              <h1>Cambios musicales de la Semana Santa de Sevilla 2027</h1>
-              <p>
-                Relevos de bandas, nuevas incorporaciones y acompañamientos confirmados en Sevilla y
-                su provincia. Hilo Cofrade compara la fotografía musical de 2026 con la que ya se
-                dibuja para 2027.
-              </p>
-              <nav className={styles.heroActions} aria-label="Accesos rápidos a los cambios musicales">
-                <Link href={filterHref({ scope: 'capital' })}>Sevilla capital <b>{capitalCount}</b></Link>
-                <Link href={filterHref({ scope: 'province' })}>Provincia <b>{provinceCount}</b></Link>
-                <a href="#explorar-cambios">Explorar cambios <span aria-hidden="true">↓</span></a>
-              </nav>
+          <div className={styles.heroCopy}>
+            <span>Semana Santa de Sevilla · 2027</span>
+            <h1>Cambios musicales 2027</h1>
+            <p>
+              Relevos de bandas y nuevas incorporaciones confirmadas en las Hermandades de Sevilla y su provincia,
+              con comparación entre los acompañamientos de 2026 y 2027.
+            </p>
+            <div className={styles.heroMeta} aria-label="Resumen del archivo">
+              <span><strong>{changes.length}</strong> cambios</span>
+              <span><strong>{brotherhoodCount}</strong> corporaciones</span>
+              <span><strong>{newBandCount}</strong> formaciones entrantes</span>
+              {lastUpdated ? <span>Actualizado <strong>{lastUpdated}</strong></span> : null}
             </div>
-
-            <aside className={styles.heroScore} aria-label="Resumen de cambios musicales 2027">
-              <div className={styles.heroNumber}>
-                <strong>{changes.length}</strong>
-                <span>cambios confirmados</span>
-              </div>
-              <dl className={styles.heroStats}>
-                <div><dt>Corporaciones relacionadas</dt><dd>{brotherhoodCount}</dd></div>
-                <div><dt>Formaciones entrantes</dt><dd>{newBandCount}</dd></div>
-              </dl>
-              {lastUpdated ? <p>Actualizado el <strong>{lastUpdated}</strong></p> : null}
-            </aside>
           </div>
         </div>
       </header>
 
       <div className={`shell ${styles.content}`}>
-        <section className={styles.intro} aria-labelledby="guia-cambios-musicales-2027">
-          <div>
-            <span>Guía viva · Semana Santa 2027</span>
-            <h2 id="guia-cambios-musicales-2027">Todos los cambios de bandas, en un solo hilo</h2>
-          </div>
-          <div className={styles.introCopy}>
-            <p>
-              Esta guía reúne los cambios de acompañamiento musical ya confirmados para la Semana Santa
-              de Sevilla de 2027: contratos que provocan un relevo, nuevas bandas tras un paso y
-              modificaciones en posiciones como la Cruz de Guía. Cada movimiento se relaciona con la
-              Hermandad, el Paso y la formación musical cuando sus fichas están publicadas.
-            </p>
-            <p>
-              El objetivo es ofrecer una referencia estable: cada cambio se integra en la red de Hilo Cofrade
-              y se actualiza cuando las corporaciones y las bandas hacen oficiales sus acuerdos.
-            </p>
-          </div>
-        </section>
-
-        <section className={styles.panorama} aria-labelledby="panorama-musical-2027">
-          <header className={styles.sectionHeading}>
-            <div>
-              <span>Panorama 2027</span>
-              <h2 id="panorama-musical-2027">Consulta los cambios por jornada o localidad</h2>
-            </div>
-            <p>Dos accesos rápidos para llegar al dato sin recorrer toda la página.</p>
-          </header>
-
-          <div className={styles.panoramaGrid}>
-            <nav className={styles.dayMatrix} aria-label="Cambios musicales por jornada">
-              {dayOptions.map((day) => {
-                const count = changes.filter((item) => item.day === day.label).length
-                return (
-                  <Link
-                    href={filterHref({
-                      day: day.slug,
-                      scope: activeScope,
-                      municipality: activeMunicipality,
-                      type: activeType,
-                      query: requestedQuery,
-                    })}
-                    key={day.slug}
-                  >
-                    <span>{day.label}</span>
-                    <strong>{count}</strong>
-                  </Link>
-                )
-              })}
-            </nav>
-
-            <div className={styles.municipalityPanel}>
-              <div className={styles.panelTitle}>
-                <strong>Localidades con más movimientos</strong>
-                <span>{changes.length} cambios confirmados</span>
-              </div>
-              <ol>
-                {municipalityTop.map((item) => (
-                  <li key={item.name}>
-                    <Link href={filterHref({ municipality: item.name })}>
-                      <span>{item.name}</span>
-                      <strong>{item.count}</strong>
-                    </Link>
-                  </li>
-                ))}
-              </ol>
-            </div>
-          </div>
+        <section className={styles.seoIntro} aria-labelledby="guia-cambios-musicales-2027">
+          <h2 id="guia-cambios-musicales-2027">Cambios de bandas en la Semana Santa de Sevilla 2027</h2>
+          <p>
+            Hilo Cofrade reúne en esta guía los cambios de acompañamiento musical confirmados para 2027.
+            El listado relaciona cada Hermandad con su jornada, municipio, Paso y formación musical,
+            y permite consultar tanto los relevos de banda como las nuevas incorporaciones.
+          </p>
         </section>
 
         <section className={styles.explorer} id="explorar-cambios" aria-labelledby="explorar-cambios-musicales">
-          <header className={styles.sectionHeading}>
+          <div className={styles.explorerHeader}>
             <div>
-              <span>Buscador del especial</span>
-              <h2 id="explorar-cambios-musicales">Encuentra una Hermandad, una banda o una jornada</h2>
+              <span>Filtrar listado</span>
+              <h2 id="explorar-cambios-musicales">Encuentra un cambio musical</h2>
             </div>
-            <p>Combina filtros para acotar los {changes.length} cambios ya documentados.</p>
-          </header>
+            <p>{changes.length} cambios confirmados entre Sevilla capital y la provincia.</p>
+          </div>
 
           <form className={styles.searchPanel} action={PATH} method="get">
             <label className={styles.searchField}>
               <span>Buscar</span>
-              <input type="search" name="q" defaultValue={requestedQuery} placeholder="Hermandad, banda, paso…" autoComplete="off" />
+              <input type="search" name="q" defaultValue={requestedQuery} placeholder="Hermandad, banda o paso…" autoComplete="off" />
             </label>
             <label><span>Jornada</span><select name="jornada" defaultValue={activeDay}><option value="">Todas</option>{dayOptions.map((day) => <option value={day.slug} key={day.slug}>{day.label}</option>)}</select></label>
             <label><span>Ámbito</span><select name="ambito" defaultValue={activeScope}><option value="">Todo</option><option value="capital">Sevilla capital</option><option value="province">Provincia</option></select></label>
             <label><span>Municipio</span><select name="municipio" defaultValue={activeMunicipality}><option value="">Todos</option>{municipalities.map((municipality) => <option value={municipality} key={municipality}>{municipality}</option>)}</select></label>
-            <label><span>Formación entrante</span><select name="tipo" defaultValue={activeType}><option value="">Todas</option>{BAND_TYPES.map((item) => <option value={item.key} key={item.key}>{item.label}</option>)}</select></label>
-            <button type="submit">Aplicar filtros</button>
+            <label><span>Formación</span><select name="tipo" defaultValue={activeType}><option value="">Todas</option>{BAND_TYPES.map((item) => <option value={item.key} key={item.key}>{item.label}</option>)}</select></label>
+            <button type="submit">Aplicar</button>
             {hasFilters ? <Link href={PATH}>Limpiar</Link> : null}
           </form>
 
           <div className={styles.resultBar} aria-live="polite">
-            <div>
-              <strong>{filtered.length} {filtered.length === 1 ? 'cambio' : 'cambios'}</strong>
-              <span>
-                {activeDay ? dayOptions.find((day) => day.slug === activeDay)?.label : 'Semana Santa 2027'}
-                {activeScope ? ` · ${activeScope === 'capital' ? 'Sevilla capital' : 'Provincia'}` : ''}
-                {activeMunicipality ? ` · ${activeMunicipality}` : ''}
-              </span>
-            </div>
-            {hasFilters ? <Link href={PATH}>Ver los {changes.length} cambios</Link> : <span>Confirmados y documentados</span>}
+            <strong>{filtered.length} {filtered.length === 1 ? 'cambio' : 'cambios'}</strong>
+            <span>
+              {activeDay ? dayOptions.find((day) => day.slug === activeDay)?.label : 'Todas las jornadas'}
+              {activeScope ? ` · ${activeScope === 'capital' ? 'Sevilla capital' : 'Provincia'}` : ''}
+              {activeMunicipality ? ` · ${activeMunicipality}` : ''}
+            </span>
+            {hasFilters ? <Link href={PATH}>Ver listado completo</Link> : null}
           </div>
         </section>
 
@@ -354,86 +263,56 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
             {groups.map((group) => (
               <section className={styles.dayGroup} key={group.slug} aria-labelledby={`jornada-${group.slug}`}>
                 <header className={styles.dayHeading}>
-                  <div><span>Semana Santa 2027</span><h2 id={`jornada-${group.slug}`}>{group.label}</h2></div>
-                  <div className={styles.dayCount}>
-                    <strong>{group.items.length}</strong>
-                    <span>{group.items.length === 1 ? 'cambio' : 'cambios'} · {group.brotherhoods.length} {group.brotherhoods.length === 1 ? 'corporación' : 'corporaciones'}</span>
-                  </div>
+                  <h2 id={`jornada-${group.slug}`}>{group.label}</h2>
+                  <span>{group.items.length} {group.items.length === 1 ? 'cambio' : 'cambios'} · {group.brotherhoods.length} {group.brotherhoods.length === 1 ? 'corporación' : 'corporaciones'}</span>
                 </header>
 
                 <div className={styles.brotherhoodList}>
                   {group.brotherhoods.map((brotherhood) => (
-                    <article
-                      className={styles.brotherhoodCluster}
-                      data-multiple={brotherhood.changes.length > 1 ? 'true' : 'false'}
-                      key={brotherhood.key}
-                    >
+                    <article className={styles.brotherhoodCluster} key={brotherhood.key}>
                       <header className={styles.clusterHeader}>
                         <div>
-                          <span>{brotherhood.scope === 'capital' ? 'Sevilla capital' : brotherhood.municipality}</span>
                           <h3>
                             {brotherhood.brotherhoodHref
                               ? <Link href={brotherhood.brotherhoodHref}>{brotherhood.brotherhoodName}</Link>
                               : brotherhood.brotherhoodName}
                           </h3>
+                          <span>
+                            {brotherhood.scope === 'capital' ? 'Sevilla capital' : brotherhood.municipality}
+                            {brotherhood.changes.length > 1 ? ` · ${brotherhood.changes.length} cambios` : ''}
+                          </span>
                         </div>
-                        {brotherhood.changes.length > 1 ? (
-                          <div className={styles.clusterCount}>
-                            <strong>{brotherhood.changes.length}</strong>
-                            <span>cambios musicales</span>
-                          </div>
-                        ) : null}
                       </header>
 
                       <div className={styles.clusterChanges}>
-                        {brotherhood.changes.map((change, index) => (
+                        {brotherhood.changes.map((change) => (
                           <section
                             className={styles.movement}
-                            data-kind={change.kind}
                             id={`cambio-${change.id}`}
                             key={change.id}
                           >
                             <div className={styles.movementLead}>
-                              <span className={styles.movementNumber}>{String(index + 1).padStart(2, '0')}</span>
-                              <div>
-                                <div className={styles.movementEyebrow}>
-                                  <span>{musicChangeKindLabel(change.kind)}</span>
-                                  <i aria-hidden="true">·</i>
-                                  <span>{bandFamilyLabel(change)}</span>
-                                </div>
-                                <strong>
-                                  {change.stepHref ? <Link href={change.stepHref}>{change.stepName}</Link> : change.stepName}
-                                </strong>
-                                {change.position && change.position !== change.stepName ? <small>{change.position}</small> : null}
-                              </div>
+                              <strong>
+                                {change.stepHref ? <Link href={change.stepHref}>{change.stepName}</Link> : change.stepName}
+                              </strong>
+                              <span>{musicChangeKindLabel(change.kind)} · {bandFamilyLabel(change)}</span>
+                              {change.position && change.position !== change.stepName ? <small>{change.position}</small> : null}
                             </div>
 
-                            <div className={styles.transition} aria-label={`Cambio musical de ${brotherhood.brotherhoodName}`}>
-                              <div className={styles.bandBefore}>
-                                <div className={styles.yearLabel}><b>2026</b><span>Hasta ahora</span></div>
-                                {bandLink(change, true)}
-                              </div>
-                              <div className={styles.arrow} aria-hidden="true"><span>→</span></div>
-                              <div className={styles.bandAfter}>
-                                <div className={styles.yearLabel}><b>2027</b><span>Nueva etapa</span></div>
-                                {bandLink(change)}
-                              </div>
+                            <div className={styles.bandCell}>
+                              <span>2026</span>
+                              {bandLink(change, true)}
                             </div>
 
-                            <div className={styles.movementLinks}>
-                              {change.stepHref ? <Link href={change.stepHref}>Paso</Link> : null}
-                              {change.newBandHref ? <Link href={change.newBandHref}>Banda 2027</Link> : null}
+                            <div className={styles.arrow} aria-hidden="true">→</div>
+
+                            <div className={`${styles.bandCell} ${styles.bandCellNew}`}>
+                              <span>2027</span>
+                              {bandLink(change)}
                             </div>
                           </section>
                         ))}
                       </div>
-
-                      {brotherhood.brotherhoodHref ? (
-                        <footer className={styles.clusterFooter}>
-                          <span>Entidad relacionada</span>
-                          <Link href={brotherhood.brotherhoodHref}>Ver ficha de la Hermandad →</Link>
-                        </footer>
-                      ) : null}
                     </article>
                   ))}
                 </div>
@@ -441,23 +320,17 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
             ))}
           </div>
         ) : (
-          <div className={styles.empty}><strong>No hay cambios confirmados con esos filtros.</strong><p>Prueba otra jornada, municipio o formación.</p><Link href={PATH}>Ver todos los cambios →</Link></div>
+          <div className={styles.empty}>
+            <strong>No hay cambios confirmados con esos filtros.</strong>
+            <p>Prueba otra jornada, municipio o formación.</p>
+            <Link href={PATH}>Ver todos los cambios →</Link>
+          </div>
         )}
 
         <section className={styles.method} aria-labelledby="criterio-cambios-musicales">
-          <div><span>Criterio editorial</span><h2 id="criterio-cambios-musicales">Qué entra en este archivo</h2></div>
+          <div><span>Criterio editorial</span><h2 id="criterio-cambios-musicales">Solo cambios confirmados</h2></div>
           <div className={styles.methodCopy}>
-            <p>Se muestran únicamente nuevos acompañamientos publicados con inicio en 2027 y vinculados a una corporación de Sevilla o su provincia. Cuando existe un acompañamiento del mismo paso o posición cerrado en 2026, Hilo Cofrade lo presenta como relevo.</p>
-            <p>Las renovaciones sin cambio de formación no aparecen aquí. Tampoco se convierten en cambios las negociaciones, candidaturas o continuidades no confirmadas oficialmente.</p>
-          </div>
-        </section>
-
-        <section className={styles.faq} aria-labelledby="preguntas-cambios-musicales">
-          <header className={styles.sectionHeading}><div><span>Preguntas frecuentes</span><h2 id="preguntas-cambios-musicales">Cómo leer los cambios musicales de 2027</h2></div></header>
-          <div className={styles.faqGrid}>
-            <details><summary>¿Qué cambios de bandas aparecen en esta guía?</summary><p>Relevos confirmados, nuevas incorporaciones y cambios de formación o posición musical con vigencia desde la Semana Santa de 2027.</p></details>
-            <details><summary>¿Incluye Sevilla capital y la provincia?</summary><p>Sí. El archivo reúne movimientos de la capital y de los municipios de la provincia de Sevilla y permite filtrarlos por ámbito y localidad.</p></details>
-            <details><summary>¿Se publican rumores o acuerdos ligados a candidaturas?</summary><p>No. Hilo Cofrade solo incorpora el cambio cuando existe una confirmación suficientemente acreditada. Los escenarios pendientes quedan fuera del contador.</p></details>
+            <p>El listado incluye relevos y nuevas incorporaciones con vigencia desde 2027. Las renovaciones sin cambio de formación y los acuerdos no confirmados quedan fuera.</p>
           </div>
         </section>
 
