@@ -148,7 +148,7 @@ export default function BrotherhoodMusicalHeritage({ items = [], id = 'musica', 
 
         <div className={styles.groups}>
           {groups.map((group) => (
-            <details className={styles.group} key={group.key}>
+            <details className={styles.group} key={group.key} open={compact && groups.length === 1}>
               <summary className={styles.groupSummary}>
                 <span className={styles.groupMark} aria-hidden="true">{group.short}</span>
                 <div className={styles.groupHeading}>

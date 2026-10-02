@@ -86,7 +86,7 @@
 .area { border-top:1px solid #e5e7ea; }
 .area :global(.section) { padding-block:0; }
 .area :global(.section > .shell) { width:100%; padding:0; }
-.musicGrid { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:32px; align-items:start; }
+.musicGrid { display:grid; grid-template-columns:minmax(0,1fr); gap:40px; align-items:start; }
 .musicGrid :global(h2), .musicGrid :global(.section-heading h3), .musicGrid :global([class*='__copy'] > h3) { font-size:24px !important; }
 .musicGrid :global(.section-heading p) { font-size:14px; }
 .musicGrid :global([class*='__header']) { margin-bottom:18px; }
@@ -100,6 +100,34 @@
 .musicGrid :global([class*='__summary']) { padding:12px; min-width:0; }
 .musicGrid :global([class*='__summary']) strong { font-size:28px; }
 .musicGrid :global([class*='__summary']) span { font-size:10px; }
+
+/* Music reads as one continuous section, with lines rather than nested cards. */
+.reading :global(#acompanamiento-musical [class*='__sequence']) { grid-template-columns:repeat(3,minmax(0,1fr)); gap:24px; border:0; }
+.reading :global(#acompanamiento-musical [class*='__item']) { grid-template-columns:56px minmax(0,1fr) 24px; gap:12px; padding:16px 0; border-radius:0; background:transparent; box-shadow:none; border-bottom:1px solid #dde2e7; }
+.reading :global(#acompanamiento-musical [class*='__withoutLogo']) { grid-template-columns:minmax(0,1fr) 24px; }
+.reading :global(#acompanamiento-musical [class*='__logoWrap']) { width:52px; height:64px; border:0; border-radius:0; }
+.reading :global(#acompanamiento-musical [class*='__meta']) { font-size:12px; gap:4px 10px; }
+.reading :global(#acompanamiento-musical [class*='__meta'] span:nth-child(2)) { border:0; border-radius:0; background:transparent; padding:0; font-size:12px; font-weight:400; }
+.reading :global(#acompanamiento-musical [class*='__arrow']) { background:transparent; border-radius:0; }
+.reading :global(#patrimonio-musical) { border-top:1px solid #dde2e7; padding-top:30px; }
+.reading :global(#patrimonio-musical [class*='__intro']) { grid-template-columns:minmax(0,1fr) auto; align-items:center; }
+.reading :global(#patrimonio-musical [class*='__summary']) { margin:0; padding:0; border:0; border-radius:0; background:transparent; box-shadow:none; }
+.reading :global(#patrimonio-musical [class*='__groups']), .reading :global(#patrimonio-musical [class*='__group']) { border:0; border-radius:0; background:transparent; box-shadow:none; overflow:visible; }
+.reading :global(#patrimonio-musical [class*='__groupSummary']), .reading :global(#patrimonio-musical [class*='__styleSummary']) { grid-template-columns:minmax(0,1fr) 28px; padding:14px 0; border-bottom:1px solid #dde2e7; background:transparent; }
+.reading :global(#patrimonio-musical [class*='__groupMark']), .reading :global(#patrimonio-musical [class*='__styleMark']) { display:none; }
+.reading :global(#patrimonio-musical [class*='__groupToggle']), .reading :global(#patrimonio-musical [class*='__styleToggle']) { background:transparent; border-radius:0; min-height:44px; }
+.reading :global(#patrimonio-musical [class*='__styleGroups']) { padding:0; background:transparent; }
+.reading :global(#patrimonio-musical [class*='__styleGroup']) { border:0; }
+.reading :global(#patrimonio-musical [class*='__styleHeading'] > h4) { font-size:17px; }
+.reading :global(#patrimonio-musical [class*='__tableHead']) { background:transparent; padding-inline:0; }
+.reading :global(#patrimonio-musical [class*='__march']) { padding-inline:0; }
+.reading :global(#patrimonio-musical [class*='__listen']) { border:0; border-radius:0; background:transparent; padding:0; min-height:44px; font-size:12px; }
+@media(max-width:980px) {
+ .reading :global(#acompanamiento-musical [class*='__sequence']) { grid-template-columns:1fr; gap:0; }
+}
+@media(max-width:700px) {
+ .reading :global(#patrimonio-musical [class*='__intro']) { grid-template-columns:1fr; gap:12px; }
+}
 .reading :global(.heritage-work) { border-radius:6px; box-shadow:none !important; }
 .reading :global(.heritage-work-visual) { min-height:220px; }
 .reading :global(.heritage-work-copy) { padding:22px; }
