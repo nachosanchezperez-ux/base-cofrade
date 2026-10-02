@@ -59,6 +59,9 @@ test('la sección se alimenta del grafo musical y limita el alcance a Sevilla', 
   assert.match(loader, /province !== 'Sevilla'/)
   assert.match(loader, /previousBandHref/)
   assert.match(loader, /newBandHref/)
+  assert.match(loader, /public_band_name/)
+  assert.match(loader, /newBandPublished/)
+  assert.match(loader, /brotherhoodPublished/)
 })
 
 test('Cambios musicales 2027 queda descubrible e indexable', async () => {
