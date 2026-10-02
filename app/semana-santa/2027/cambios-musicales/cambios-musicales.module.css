@@ -45,10 +45,12 @@
 .searchPanel,
 .dayGroups,
 .dayGroup,
-.changeList,
-.changeCard,
-.cardHeader,
-.stepLine,
+.brotherhoodList,
+.brotherhoodCluster,
+.clusterHeader,
+.clusterChanges,
+.movement,
+.movementLead,
 .transition,
 .method,
 .methodCopy,
@@ -567,113 +569,178 @@
   text-transform: uppercase;
 }
 
-.changeList {
+.brotherhoodList {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 18px;
-  padding-top: 18px;
+  gap: 22px;
+  padding-top: 20px;
 }
 
-.changeCard {
-  display: grid;
-  min-width: 0;
-  align-content: start;
-  padding: clamp(20px, 3vw, 30px);
-  border: 1px solid #e2dad2;
-  border-radius: 18px;
+.brotherhoodCluster {
+  overflow: hidden;
+  border: 1px solid #e1d8cf;
+  border-radius: 20px;
   background: #fff;
-  box-shadow: 0 12px 34px rgba(40,32,28,.03);
+  box-shadow: 0 14px 38px rgba(39,31,27,.04);
+}
+
+.brotherhoodCluster[data-multiple="true"] {
+  border-color: #d2b7bd;
+  box-shadow: 0 16px 42px rgba(109,36,51,.06);
+}
+
+.clusterHeader {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: clamp(22px, 3vw, 30px);
+  border-bottom: 1px solid #e8dfd7;
+  background:
+    linear-gradient(100deg, rgba(109,36,51,.035), transparent 52%),
+    #fbf8f4;
+}
+
+.clusterHeader > div:first-child {
+  min-width: 0;
+}
+
+.clusterHeader > div:first-child > span {
+  display: block;
+  margin-bottom: 6px;
+  color: #8f817a;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.clusterHeader h3 {
+  margin: 0;
+  overflow-wrap: anywhere;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(28px, 3vw, 39px);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -.03em;
+}
+
+.clusterHeader h3 a:hover {
+  color: #6d2433;
+}
+
+.clusterCount {
+  display: grid;
+  min-width: 92px;
+  flex: 0 0 auto;
+  justify-items: center;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: #6d2433;
+  color: #fff;
+}
+
+.clusterCount strong {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 29px;
+  font-weight: 400;
+  line-height: .9;
+}
+
+.clusterCount span {
+  margin-top: 5px;
+  color: rgba(255,255,255,.72);
+  font-size: 6.5px;
+  font-weight: 900;
+  letter-spacing: .08em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.clusterChanges {
+  display: grid;
+}
+
+.movement {
+  display: grid;
+  grid-template-columns: minmax(190px, .34fr) minmax(0, 1fr);
+  gap: clamp(24px, 3vw, 38px);
+  padding: clamp(22px, 3vw, 30px);
+  border-bottom: 1px solid #eee7e0;
   scroll-margin-top: 110px;
 }
 
-.changeCard[data-kind="relevo"] {
-  border-top: 3px solid #7a3141;
+.movement:last-child {
+  border-bottom: 0;
 }
 
-.changeCard[data-kind="incorporacion"] {
-  border-top: 3px solid #9b7542;
+.movement[data-kind="relevo"] .movementNumber {
+  color: #7a3141;
+  background: #f4eaec;
 }
 
-.changeCard[data-kind="cruz-guia"] {
-  border-top: 3px solid #365d77;
+.movement[data-kind="incorporacion"] .movementNumber {
+  color: #8b6838;
+  background: #f5eee3;
 }
 
-.cardHeader {
+.movement[data-kind="cruz-guia"] .movementNumber {
+  color: #365d77;
+  background: #eaf0f4;
+}
+
+.movementLead {
   display: grid;
-  gap: 7px;
-  padding-bottom: 18px;
-  border-bottom: 1px solid #eee7e0;
+  grid-template-columns: 46px minmax(0, 1fr);
+  gap: 14px;
+  align-content: start;
 }
 
-.cardEyebrow {
+.movementNumber {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 50%;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 17px;
+}
+
+.movementLead > div {
+  display: grid;
+  min-width: 0;
+  gap: 5px;
+}
+
+.movementEyebrow {
   display: flex;
   min-width: 0;
   flex-wrap: wrap;
   gap: 4px 7px;
   color: #7a3947;
-  font-size: 8px;
+  font-size: 7px;
   font-weight: 900;
   letter-spacing: .07em;
   text-transform: uppercase;
 }
 
-.cardEyebrow i {
+.movementEyebrow i {
   color: #b7aca5;
   font-style: normal;
 }
 
-.cardHeader h3 {
-  max-width: 900px;
-  margin: 0;
-  overflow-wrap: anywhere;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(25px, 3vw, 36px);
-  font-weight: 400;
-  line-height: 1.08;
-  letter-spacing: -.025em;
-}
-
-.cardHeader h3 a:hover {
-  color: #6d2433;
-}
-
-.stepLine {
-  display: grid;
-  grid-template-columns: 112px minmax(0, 1fr);
-  gap: 12px 20px;
-  align-items: start;
-  padding: 18px 0;
-}
-
-.stepLine > span {
-  color: #948984;
-  font-size: 8px;
-  font-weight: 900;
-  letter-spacing: .09em;
-  text-transform: uppercase;
-}
-
-.stepLine > div {
-  display: grid;
-  min-width: 0;
-  gap: 4px;
-}
-
-.stepLine > div > a,
-.stepLine > div > strong {
-  width: fit-content;
-  max-width: 100%;
+.movementLead strong {
   overflow-wrap: anywhere;
   color: #263c50;
-  font-size: 11px;
-  font-weight: 850;
+  font-size: 12px;
+  line-height: 1.35;
 }
 
-.stepLine > div > a:hover {
+.movementLead strong a:hover {
   color: #6d2433;
 }
 
-.stepLine small {
+.movementLead small {
   overflow-wrap: anywhere;
   color: #7c736e;
   font-size: 9px;
@@ -682,8 +749,8 @@
 
 .transition {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 68px minmax(0, 1fr);
-  gap: 16px;
+  grid-template-columns: minmax(0, 1fr) 58px minmax(0, 1fr);
+  gap: 14px;
   align-items: stretch;
 }
 
@@ -691,7 +758,7 @@
 .bandAfter {
   display: grid;
   min-width: 0;
-  min-height: 132px;
+  min-height: 126px;
   align-content: center;
   padding: 18px 20px;
   border: 1px solid #e3dbd3;
@@ -743,7 +810,7 @@
   max-width: 100%;
   overflow-wrap: anywhere;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(18px, 2.1vw, 25px);
+  font-size: clamp(17px, 1.9vw, 23px);
   font-weight: 400;
   line-height: 1.22;
 }
@@ -765,71 +832,75 @@
   min-width: 0;
   place-items: center;
   align-content: center;
-  gap: 6px;
   color: #6d2433;
 }
 
 .arrow > span {
   display: grid;
-  width: 42px;
-  height: 42px;
+  width: 40px;
+  height: 40px;
   place-items: center;
   border: 1px solid #dbc8cc;
   border-radius: 50%;
   background: #fff;
-  font-size: 21px;
+  font-size: 20px;
 }
 
-.arrow small {
-  color: #9b908a;
-  font-size: 6px;
-  font-weight: 900;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-}
-
-.cardActions {
+.movementLinks {
+  grid-column: 2;
   display: flex;
   min-width: 0;
   flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px 18px;
-  margin-top: 19px;
-  padding-top: 15px;
-  border-top: 1px solid #eee7e0;
-}
-
-.cardActions > span {
-  color: #928882;
-  font-size: 7px;
-  font-weight: 900;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-}
-
-.cardActions > div {
-  display: flex;
-  min-width: 0;
-  flex-wrap: wrap;
+  justify-content: flex-end;
   gap: 7px;
+  margin-top: -10px;
 }
 
-.cardActions a {
+.movementLinks a {
   display: inline-flex;
-  min-height: 31px;
+  min-height: 30px;
   align-items: center;
   padding: 0 10px;
   border: 1px solid #e3dbd3;
   border-radius: 999px;
-  color: #4f6375;
+  color: #536879;
   font-size: 8px;
   font-weight: 900;
 }
 
-.cardActions a:hover {
+.movementLinks a:hover {
   border-color: #c9a6ae;
   color: #6d2433;
+}
+
+.clusterFooter {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 13px clamp(22px, 3vw, 30px);
+  border-top: 1px solid #e8dfd7;
+  background: #fcfaf7;
+}
+
+.clusterFooter span {
+  color: #948a84;
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.clusterFooter a {
+  color: #6d2433;
+  font-size: 9px;
+  font-weight: 900;
+}
+
+.clusterFooter a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .empty {
@@ -1099,40 +1170,19 @@
     gap: 0;
   }
 
-  .changeCard {
-    padding: 19px;
+  .movement {
+    grid-template-columns: 1fr;
+    gap: 18px;
   }
 
-  .stepLine {
-    grid-template-columns: 1fr;
-    gap: 6px;
+  .movementLinks {
+    grid-column: auto;
+    justify-content: flex-start;
+    margin-top: -3px;
   }
 
   .transition {
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
-
-  .bandBefore,
-  .bandAfter {
-    min-height: 112px;
-  }
-
-  .arrow {
-    min-height: 56px;
-  }
-
-  .arrow > span {
-    transform: rotate(90deg);
-  }
-
-  .cardActions {
-    display: grid;
-    justify-content: stretch;
-  }
-
-  .cardActions > div {
-    gap: 6px;
+    grid-template-columns: minmax(0, 1fr) 58px minmax(0, 1fr);
   }
 
   .method {
@@ -1214,28 +1264,64 @@
     font-size: 25px;
   }
 
-  .changeList {
-    gap: 14px;
+  .brotherhoodList {
+    gap: 16px;
   }
 
-  .changeCard {
-    padding: 16px;
-    border-radius: 15px;
+  .brotherhoodCluster {
+    border-radius: 16px;
   }
 
-  .cardHeader h3 {
-    font-size: 26px;
+  .clusterHeader {
+    align-items: flex-start;
+    padding: 18px;
   }
 
-  .cardEyebrow {
-    gap: 3px 6px;
-    font-size: 7px;
+  .clusterHeader h3 {
+    font-size: 28px;
+  }
+
+  .clusterCount {
+    min-width: 76px;
+    padding: 9px 10px;
+  }
+
+  .clusterCount strong {
+    font-size: 25px;
+  }
+
+  .movement {
+    padding: 18px;
+  }
+
+  .movementLead {
+    grid-template-columns: 40px minmax(0, 1fr);
+    gap: 11px;
+  }
+
+  .movementNumber {
+    width: 38px;
+    height: 38px;
+    font-size: 15px;
+  }
+
+  .transition {
+    grid-template-columns: 1fr;
+    gap: 10px;
   }
 
   .bandBefore,
   .bandAfter {
     min-height: 104px;
     padding: 15px;
+  }
+
+  .arrow {
+    min-height: 50px;
+  }
+
+  .arrow > span {
+    transform: rotate(90deg);
   }
 
   .bandBefore > a,
@@ -1258,13 +1344,19 @@
     height: 38px;
   }
 
-  .cardActions > div {
+  .movementLinks {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .cardActions a {
+  .movementLinks a {
     justify-content: center;
+  }
+
+  .clusterFooter {
+    display: grid;
+    gap: 5px;
+    padding: 12px 18px;
   }
 
   .method {
@@ -1295,8 +1387,19 @@
     grid-template-columns: 1fr;
   }
 
-  .cardActions > div {
+  .movementLinks {
     grid-template-columns: 1fr;
+  }
+
+  .clusterHeader {
+    display: grid;
+    gap: 12px;
+  }
+
+  .clusterCount {
+    width: fit-content;
+    min-width: 0;
+    justify-items: start;
   }
 
   .related > a {
