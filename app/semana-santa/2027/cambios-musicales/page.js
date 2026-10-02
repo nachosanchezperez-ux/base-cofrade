@@ -157,7 +157,6 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
   const newBandCount = new Set(changes.map((item) => item.newBandSlug || item.newBandName)).size
   const capitalCount = changes.filter((item) => item.scope === 'capital').length
   const provinceCount = changes.filter((item) => item.scope === 'province').length
-  const capitalPercent = changes.length ? Math.round((capitalCount / changes.length) * 100) : 0
   const lastUpdated = updatedLabel(changes)
   const groups = groupsFor(filtered)
   const municipalityTop = municipalityRanking(changes)
@@ -214,10 +213,8 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
                 <span>cambios confirmados</span>
               </div>
               <dl className={styles.heroStats}>
-                <div><dt>Corporaciones</dt><dd>{brotherhoodCount}</dd></div>
-                <div><dt>Bandas que llegan</dt><dd>{newBandCount}</dd></div>
-                <div><dt>Capital</dt><dd>{capitalCount}</dd></div>
-                <div><dt>Provincia</dt><dd>{provinceCount}</dd></div>
+                <div><dt>Corporaciones relacionadas</dt><dd>{brotherhoodCount}</dd></div>
+                <div><dt>Formaciones entrantes</dt><dd>{newBandCount}</dd></div>
               </dl>
               {lastUpdated ? <p>Actualizado el <strong>{lastUpdated}</strong></p> : null}
             </aside>
@@ -242,11 +239,6 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
               El objetivo es ofrecer una referencia estable: cada cambio se integra en la red de Hilo Cofrade
               y se actualiza cuando las corporaciones y las bandas hacen oficiales sus acuerdos.
             </p>
-            <nav className={styles.introLinks} aria-label="Explorar el archivo musical de Hilo Cofrade">
-              <Link href="/bandas">Directorio de Bandas →</Link>
-              <Link href="/hermandades">Hermandades →</Link>
-              <Link href="/crucetas-musicales">Crucetas musicales →</Link>
-            </nav>
           </div>
         </section>
 
@@ -409,10 +401,10 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
 
         <nav className={styles.related} aria-label="Seguir explorando la música cofrade">
           <div><span>Sigue tirando del hilo</span><strong>Del cambio musical a toda la enciclopedia</strong></div>
+          <Link href="/hermandades">Hermandades <span>→</span></Link>
           <Link href="/bandas">Bandas <span>→</span></Link>
           <Link href="/crucetas-musicales">Crucetas <span>→</span></Link>
           <Link href="/marchas">Marchas <span>→</span></Link>
-          <Link href="/agenda-cofrade">Agenda <span>→</span></Link>
         </nav>
       </div>
     </div>
