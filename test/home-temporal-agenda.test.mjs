@@ -1,5 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
+import { readFileSync } from 'node:fs'
 import { buildHomeTemporalAgenda } from '../lib/home-temporal-agenda.js'
 
 function item(overrides = {}) {
