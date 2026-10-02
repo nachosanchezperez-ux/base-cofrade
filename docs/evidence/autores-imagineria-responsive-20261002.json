@@ -1,0 +1,1023 @@
+{
+  "checked_at": "2026-10-02T05:19:47.542Z",
+  "method": "Playwright Chromium 151, mobile/touch emulation over read-only verified HTTPS GET responses from production. No ignoreHTTPSErrors; no physical-device or direct mobile HTTPS claim.",
+  "widths": [
+    320,
+    390,
+    430,
+    768
+  ],
+  "results": [
+    {
+      "width": 320,
+      "route": "directory",
+      "status": 200,
+      "client": 320,
+      "scroll": 320,
+      "h1": "Imaginería y escultura",
+      "font": "loaded",
+      "overflow": false,
+      "category83": true
+    },
+    {
+      "width": 320,
+      "route": "category-navigation",
+      "status": "PASS",
+      "from": "imagineria",
+      "via": "patrimonio",
+      "back": "imagineria"
+    },
+    {
+      "width": 320,
+      "route": "luis-ortega-bru",
+      "status": "PASS",
+      "client": 320,
+      "scroll": 320,
+      "h1": "Luis Ortega Bru",
+      "font": "loaded",
+      "overflow": false,
+      "identity": "Escultura",
+      "sources": [
+        {
+          "href": "https://hermandadelbaratillo.es/cultos-y-actos-por-el-lxxv-aniversario-del-stmo-cristo-de-la-misericordia/",
+          "target": "_blank",
+          "text": "LXXV aniversario del Santísimo Cristo de la Misericordia",
+          "rect": {
+            "width": 254,
+            "height": 65.1875
+          },
+          "visible": true
+        }
+      ],
+      "disclosureOpenClose": "PASS"
+    },
+    {
+      "width": 320,
+      "route": "sebastian-santos-rojas",
+      "status": "PASS",
+      "client": 320,
+      "scroll": 320,
+      "h1": "Sebastián Santos Rojas",
+      "font": "loaded",
+      "overflow": false,
+      "identity": "Escultura",
+      "sources": [
+        {
+          "href": "https://lacenadesevilla.es/senor-de-la-sagrada-cena/",
+          "target": "_blank",
+          "text": "Señor de la Sagrada Cena — ficha oficial",
+          "rect": {
+            "width": 254,
+            "height": 65.1875
+          },
+          "visible": true
+        }
+      ],
+      "disclosureOpenClose": "PASS"
+    },
+    {
+      "width": 320,
+      "route": "pedro-roldan",
+      "status": "PASS",
+      "client": 320,
+      "scroll": 320,
+      "h1": "Pedro Roldán",
+      "font": "loaded",
+      "overflow": false,
+      "identity": "Escultura",
+      "sources": [
+        {
+          "href": "https://siete-palabras.com/otros-titulares",
+          "target": "_blank",
+          "text": "Otros Titulares · Las Siete Palabras",
+          "rect": {
+            "width": 254,
+            "height": 65.1875
+          },
+          "visible": true
+        }
+      ],
+      "disclosureOpenClose": "PASS"
+    },
+    {
+      "width": 320,
+      "route": "antonio-illanes-rodriguez",
+      "status": "PASS",
+      "client": 320,
+      "scroll": 320,
+      "h1": "Antonio Illanes Rodríguez",
+      "font": "loaded",
+      "overflow": false,
+      "identity": "Escultura",
+      "sources": [
+        {
+          "href": "https://lanzada.org/titulares/santisimo-cristo-de-la-sagrada-lanzada",
+          "target": "_blank",
+          "text": "Santísimo Cristo de la Sagrada Lanzada · ficha oficial",
+          "rect": {
+            "width": 254,
+            "height": 65.1875
+          },
+          "visible": true
+        }
+      ],
+      "disclosureOpenClose": "PASS"
+    },
+    {
+      "width": 320,
+      "route": "luis-alvarez-duarte",
+      "status": "PASS",
+      "client": 320,
+      "scroll": 320,
+      "h1": "Luis Álvarez Duarte",
+      "font": "loaded",
+      "overflow": false,
+      "identity": "Escultura",
+      "sources": [
+        {
+          "href": "https://www.hermandades-de-sevilla.org/semanasanta/vd_bellavista.html",
+          "target": "_blank",
+          "text": "Dulce Nombre de Bellavista · Consejo de Cofradías",
+          "rect": {
+            "width": 254,
+            "height": 66.1875
+          },
+          "visible": true
+        },
+        {
+          "href": "https://hermandaddelased.org/stmo-cristo-de-la-sed/",
+          "target": "_blank",
+          "text": "La Sed · Santísimo Cristo de la Sed",
+          "rect": {
+            "width": 254,
+            "height": 65.1875
+          },
+          "visible": true
+        }
+      ],
+      "disclosureOpenClose": "PASS"
+    },
+    {
+      "width": 320,
+      "route": "juan-de-mesa",
+      "status": "PASS",
+      "client": 320,
+      "scroll": 320,
+      "h1": "Juan de Mesa",
+      "font": "loaded",
+      "overflow": false,
+      "identity": "Escultura",
+      "sources": [
+        {
+          "href": "https://www.hermandaddelamor.net/encargo-de-juan-de-mesa-de-las-imagenes-del-cristo-del-amor-y-de-nuestra-senora-del-socorro",
+          "target": "_blank",
+          "text": "Encargo de Juan de Mesa · Cristo del Amor y Nuestra Señora del Socorro",
+          "rect": {
+            "width": 254,
+            "height": 91.78125
+          },
+          "visible": true
+        },
+        {
+          "href": "https://www.gran-poder.es/imagenes/nuestro-padre-jesus-del-gran-poder/",
+          "target": "_blank",
+          "text": "Nuestro Padre Jesús del Gran Poder · Web oficial",
+          "rect": {
+            "width": 254,
+            "height": 65.1875
+          },
+          "visible": true
+        }
+      ],
+      "disclosureOpenClose": "PASS"
+    },
+    {
+      "width": 320,
+      "route": "juan-de-astorga",
+      "status": "PASS",
+      "client": 320,
+      "scroll": 320,
+      "h1": "Juan de Astorga",
+      "font": "loaded",
+      "overflow": false,
+      "identity": "Escultura",
+      "sources": [
+        {
+          "href": "https://lanzada.org/titulares/maria-santisima-del-buen-fin-2/",
+          "target": "_blank",
+          "text": "María Santísima del Buen Fin · Sagrada Lanzada",
+          "rect": {
+            "width": 254,
+            "height": 65.1875
+          },
+          "visible": true
+        }
+      ],
+      "disclosureOpenClose": "PASS"
+    },
+    {
+      "width": 390,
+      "route": "directory",
+      "status": 200,
+      "client": 390,
+      "scroll": 390,
+      "h1": "Imaginería y escultura",
+      "font": "loaded",
+      "overflow": false,
+      "category83": true
+    },
+    {
+      "width": 390,
+      "route": "category-navigation",
+      "status": "PASS",
+      "from": "imagineria",
+      "via": "patrimonio",
+      "back": "imagineria"
+    },
+    {
+      "width": 390,
+      "route": "luis-ortega-bru",
+      "status": "PASS",
+      "client": 390,
+      "scroll": 390,
+      "h1": "Luis Ortega Bru",
+      "font": "loaded",
+      "overflow": false,
+      "identity": "Escultura",
+      "sources": [
+        {
+          "href": "https://hermandadelbaratillo.es/cultos-y-actos-por-el-lxxv-aniversario-del-stmo-cristo-de-la-misericordia/",
+          "target": "_blank",
+          "text": "LXXV aniversario del Santísimo Cristo de la Misericordia",
+          "rect": {
+            "width": 324,
+            "height": 65.1875
+          },
+          "visible": true
+        }
+      ],
+      "disclosureOpenClose": "PASS"
+    },
+    {
+      "width": 390,
+      "route": "sebastian-santos-rojas",
+      "status": "PASS",
+      "client": 390,
+      "scroll": 390,
+      "h1": "Sebastián Santos Rojas",
+      "font": "loaded",
+      "overflow": false,
+      "identity": "Escultura",
+      "sources": [
+        {
+          "href": "https://lacenadesevilla.es/senor-de-la-sagrada-cena/",
+          "target": "_blank",
+          "text": "Señor de la Sagrada Cena — ficha oficial",
+          "rect": {
+            "width": 324,
+            "height": 39.59375
+          },
+          "visible": true
+        }
+      ],
+      "disclosureOpenClose": "PASS"
+    },
+    {
+      "width": 390,
+      "route": "pedro-roldan",
+      "status": "PASS",
+      "client": 390,
+      "scroll": 390,
+      "h1": "Pedro Roldán",
+      "font": "loaded",
+      "overflow": false,
+      "identity": "Escultura",
+      "sources": [
+        {
+          "href": "https://siete-palabras.com/otros-titulares",
+          "target": "_blank",
+          "text": "Otros Titulares · Las Siete Palabras",
+          "rect": {
+            "width": 324,
+            "height": 39.59375
+          },
+          "visible": true
+        }
+      ],
+      "disclosureOpenClose": "PASS"
+    },
+    {
+      "width": 390,
+      "route": "antonio-illanes-rodriguez",
+      "status": "PASS",
+      "client": 390,
+      "scroll": 390,
+      "h1": "Antonio Illanes Rodríguez",
+      "font": "loaded",
+      "overflow": false,
+      "identity": "Escultura",
+      "sources": [
+        {
+          "href": "https://lanzada.org/titulares/santisimo-cristo-de-la-sagrada-lanzada",
+          "target": "_blank",
+          "text": "Santísimo Cristo de la Sagrada Lanzada · ficha oficial",
+          "rect": {
+            "width": 324,
+            "height": 65.1875
+          },
+          "visible": true
+        }
+      ],
+      "disclosureOpenClose": "PASS"
+    },
+    {
+      "width": 390,
+      "route": "luis-alvarez-duarte",
+      "status": "PASS",
+      "client": 390,
+      "scroll": 390,
+      "h1": "Luis Álvarez Duarte",
+      "font": "loaded",
+      "overflow": false,
+      "identity": "Escultura",
+      "sources": [
+        {
+          "href": "https://www.hermandades-de-sevilla.org/semanasanta/vd_bellavista.html",
+          "target": "_blank",
+          "text": "Dulce Nombre de Bellavista · Consejo de Cofradías",
+          "rect": {
+            "width": 324,
+            "height": 66.1875
+          },
+          "visible": true
+        },
+        {
+          "href": "https://hermandaddelased.org/stmo-cristo-de-la-sed/",
+          "target": "_blank",
+          "text": "La Sed · Santísimo Cristo de la Sed",
+          "rect": {
+            "width": 324,
+            "height": 39.59375
+          },
+          "visible": true
+        }
+      ],
+      "disclosureOpenClose": "PASS"
+    },
+    {
+      "width": 390,
+      "route": "juan-de-mesa",
+      "status": "PASS",
+      "client": 390,
+      "scroll": 390,
+      "h1": "Juan de Mesa",
+      "font": "loaded",
+      "overflow": false,
+      "identity": "Escultura",
+      "sources": [
+        {
+          "href": "https://www.hermandaddelamor.net/encargo-de-juan-de-mesa-de-las-imagenes-del-cristo-del-amor-y-de-nuestra-senora-del-socorro",
+          "target": "_blank",
+          "text": "Encargo de Juan de Mesa · Cristo del Amor y Nuestra Señora del Socorro",
+          "rect": {
+            "width": 324,
+            "height": 66.1875
+          },
+          "visible": true
+        },
+        {
+          "href": "https://www.gran-poder.es/imagenes/nuestro-padre-jesus-del-gran-poder/",
+          "target": "_blank",
+          "text": "Nuestro Padre Jesús del Gran Poder · Web oficial",
+          "rect": {
+            "width": 324,
+            "height": 65.1875
+          },
+          "visible": true
+        }
+      ],
+      "disclosureOpenClose": "PASS"
+    },
+    {
+      "width": 390,
+      "route": "juan-de-astorga",
+      "status": "PASS",
+      "client": 390,
+      "scroll": 390,
+      "h1": "Juan de Astorga",
+      "font": "loaded",
+      "overflow": false,
+      "identity": "Escultura",
+      "sources": [
+        {
+          "href": "https://lanzada.org/titulares/maria-santisima-del-buen-fin-2/",
+          "target": "_blank",
+          "text": "María Santísima del Buen Fin · Sagrada Lanzada",
+          "rect": {
+            "width": 324,
+            "height": 65.1875
+          },
+          "visible": true
+        }
+      ],
+      "disclosureOpenClose": "PASS"
+    },
+    {
+      "width": 430,
+      "route": "directory",
+      "status": 200,
+      "client": 430,
+      "scroll": 430,
+      "h1": "Imaginería y escultura",
+      "font": "loaded",
+      "overflow": false,
+      "category83": true
+    },
+    {
+      "width": 430,
+      "route": "category-navigation",
+      "status": "PASS",
+      "from": "imagineria",
+      "via": "patrimonio",
+      "back": "imagineria"
+    },
+    {
+      "width": 430,
+      "route": "luis-ortega-bru",
+      "status": "PASS",
+      "client": 430,
+      "scroll": 430,
+      "h1": "Luis Ortega Bru",
+      "font": "loaded",
+      "overflow": false,
+      "identity": "Escultura",
+      "sources": [
+        {
+          "href": "https://hermandadelbaratillo.es/cultos-y-actos-por-el-lxxv-aniversario-del-stmo-cristo-de-la-misericordia/",
+          "target": "_blank",
+          "text": "LXXV aniversario del Santísimo Cristo de la Misericordia",
+          "rect": {
+            "width": 364,
+            "height": 65.1875
+          },
+          "visible": true
+        }
+      ],
+      "disclosureOpenClose": "PASS"
+    },
+    {
+      "width": 430,
+      "route": "sebastian-santos-rojas",
+      "status": "PASS",
+      "client": 430,
+      "scroll": 430,
+      "h1": "Sebastián Santos Rojas",
+      "font": "loaded",
+      "overflow": false,
+      "identity": "Escultura",
+      "sources": [
+        {
+          "href": "https://lacenadesevilla.es/senor-de-la-sagrada-cena/",
+          "target": "_blank",
+          "text": "Señor de la Sagrada Cena — ficha oficial",
+          "rect": {
+            "width": 364,
+            "height": 39.59375
+          },
+          "visible": true
+        }
+      ],
+      "disclosureOpenClose": "PASS"
+    },
+    {
+      "width": 430,
+      "route": "pedro-roldan",
+      "status": "PASS",
+      "client": 430,
+      "scroll": 430,
+      "h1": "Pedro Roldán",
+      "font": "loaded",
+      "overflow": false,
+      "identity": "Escultura",
+      "sources": [
+        {
+          "href": "https://siete-palabras.com/otros-titulares",
+          "target": "_blank",
+          "text": "Otros Titulares · Las Siete Palabras",
+          "rect": {
+            "width": 364,
+            "height": 39.59375
+          },
+          "visible": true
+        }
+      ],
+      "disclosureOpenClose": "PASS"
+    },
+    {
+      "width": 430,
+      "route": "antonio-illanes-rodriguez",
+      "status": "PASS",
+      "client": 430,
+      "scroll": 430,
+      "h1": "Antonio Illanes Rodríguez",
+      "font": "loaded",
+      "overflow": false,
+      "identity": "Escultura",
+      "sources": [
+        {
+          "href": "https://lanzada.org/titulares/santisimo-cristo-de-la-sagrada-lanzada",
+          "target": "_blank",
+          "text": "Santísimo Cristo de la Sagrada Lanzada · ficha oficial",
+          "rect": {
+            "width": 364,
+            "height": 65.1875
+          },
+          "visible": true
+        }
+      ],
+      "disclosureOpenClose": "PASS"
+    },
+    {
+      "width": 430,
+      "route": "luis-alvarez-duarte",
+      "status": "PASS",
+      "client": 430,
+      "scroll": 430,
+      "h1": "Luis Álvarez Duarte",
+      "font": "loaded",
+      "overflow": false,
+      "identity": "Escultura",
+      "sources": [
+        {
+          "href": "https://www.hermandades-de-sevilla.org/semanasanta/vd_bellavista.html",
+          "target": "_blank",
+          "text": "Dulce Nombre de Bellavista · Consejo de Cofradías",
+          "rect": {
+            "width": 364,
+            "height": 66.1875
+          },
+          "visible": true
+        },
+        {
+          "href": "https://hermandaddelased.org/stmo-cristo-de-la-sed/",
+          "target": "_blank",
+          "text": "La Sed · Santísimo Cristo de la Sed",
+          "rect": {
+            "width": 364,
+            "height": 39.59375
+          },
+          "visible": true
+        }
+      ],
+      "disclosureOpenClose": "PASS"
+    },
+    {
+      "width": 430,
+      "route": "juan-de-mesa",
+      "status": "PASS",
+      "client": 430,
+      "scroll": 430,
+      "h1": "Juan de Mesa",
+      "font": "loaded",
+      "overflow": false,
+      "identity": "Escultura",
+      "sources": [
+        {
+          "href": "https://www.hermandaddelamor.net/encargo-de-juan-de-mesa-de-las-imagenes-del-cristo-del-amor-y-de-nuestra-senora-del-socorro",
+          "target": "_blank",
+          "text": "Encargo de Juan de Mesa · Cristo del Amor y Nuestra Señora del Socorro",
+          "rect": {
+            "width": 364,
+            "height": 66.1875
+          },
+          "visible": true
+        },
+        {
+          "href": "https://www.gran-poder.es/imagenes/nuestro-padre-jesus-del-gran-poder/",
+          "target": "_blank",
+          "text": "Nuestro Padre Jesús del Gran Poder · Web oficial",
+          "rect": {
+            "width": 364,
+            "height": 39.59375
+          },
+          "visible": true
+        }
+      ],
+      "disclosureOpenClose": "PASS"
+    },
+    {
+      "width": 430,
+      "route": "juan-de-astorga",
+      "status": "PASS",
+      "client": 430,
+      "scroll": 430,
+      "h1": "Juan de Astorga",
+      "font": "loaded",
+      "overflow": false,
+      "identity": "Escultura",
+      "sources": [
+        {
+          "href": "https://lanzada.org/titulares/maria-santisima-del-buen-fin-2/",
+          "target": "_blank",
+          "text": "María Santísima del Buen Fin · Sagrada Lanzada",
+          "rect": {
+            "width": 364,
+            "height": 39.59375
+          },
+          "visible": true
+        }
+      ],
+      "disclosureOpenClose": "PASS"
+    },
+    {
+      "width": 768,
+      "route": "directory",
+      "status": 200,
+      "client": 768,
+      "scroll": 768,
+      "h1": "Imaginería y escultura",
+      "font": "loaded",
+      "overflow": false,
+      "category83": true
+    },
+    {
+      "width": 768,
+      "route": "category-navigation",
+      "status": "PASS",
+      "from": "imagineria",
+      "via": "patrimonio",
+      "back": "imagineria"
+    },
+    {
+      "width": 768,
+      "route": "luis-ortega-bru",
+      "status": "PASS",
+      "client": 768,
+      "scroll": 768,
+      "h1": "Luis Ortega Bru",
+      "font": "loaded",
+      "overflow": false,
+      "identity": "Escultura",
+      "sources": [
+        {
+          "href": "https://hermandadelbaratillo.es/cultos-y-actos-por-el-lxxv-aniversario-del-stmo-cristo-de-la-misericordia/",
+          "target": "_blank",
+          "text": "LXXV aniversario del Santísimo Cristo de la Misericordia",
+          "rect": {
+            "width": 672,
+            "height": 39.59375
+          },
+          "visible": true
+        }
+      ],
+      "disclosureOpenClose": "PASS"
+    },
+    {
+      "width": 768,
+      "route": "sebastian-santos-rojas",
+      "status": "PASS",
+      "client": 768,
+      "scroll": 768,
+      "h1": "Sebastián Santos Rojas",
+      "font": "loaded",
+      "overflow": false,
+      "identity": "Escultura",
+      "sources": [
+        {
+          "href": "https://lacenadesevilla.es/senor-de-la-sagrada-cena/",
+          "target": "_blank",
+          "text": "Señor de la Sagrada Cena — ficha oficial",
+          "rect": {
+            "width": 672,
+            "height": 39.59375
+          },
+          "visible": true
+        }
+      ],
+      "disclosureOpenClose": "PASS"
+    },
+    {
+      "width": 768,
+      "route": "pedro-roldan",
+      "status": "PASS",
+      "client": 768,
+      "scroll": 768,
+      "h1": "Pedro Roldán",
+      "font": "loaded",
+      "overflow": false,
+      "identity": "Escultura",
+      "sources": [
+        {
+          "href": "https://siete-palabras.com/otros-titulares",
+          "target": "_blank",
+          "text": "Otros Titulares · Las Siete Palabras",
+          "rect": {
+            "width": 672,
+            "height": 39.59375
+          },
+          "visible": true
+        }
+      ],
+      "disclosureOpenClose": "PASS"
+    },
+    {
+      "width": 768,
+      "route": "antonio-illanes-rodriguez",
+      "status": "PASS",
+      "client": 768,
+      "scroll": 768,
+      "h1": "Antonio Illanes Rodríguez",
+      "font": "loaded",
+      "overflow": false,
+      "identity": "Escultura",
+      "sources": [
+        {
+          "href": "https://lanzada.org/titulares/santisimo-cristo-de-la-sagrada-lanzada",
+          "target": "_blank",
+          "text": "Santísimo Cristo de la Sagrada Lanzada · ficha oficial",
+          "rect": {
+            "width": 672,
+            "height": 39.59375
+          },
+          "visible": true
+        }
+      ],
+      "disclosureOpenClose": "PASS"
+    },
+    {
+      "width": 768,
+      "route": "luis-alvarez-duarte",
+      "status": "PASS",
+      "client": 768,
+      "scroll": 768,
+      "h1": "Luis Álvarez Duarte",
+      "font": "loaded",
+      "overflow": false,
+      "identity": "Escultura",
+      "sources": [
+        {
+          "href": "https://www.hermandades-de-sevilla.org/semanasanta/vd_bellavista.html",
+          "target": "_blank",
+          "text": "Dulce Nombre de Bellavista · Consejo de Cofradías",
+          "rect": {
+            "width": 672,
+            "height": 40.59375
+          },
+          "visible": true
+        },
+        {
+          "href": "https://hermandaddelased.org/stmo-cristo-de-la-sed/",
+          "target": "_blank",
+          "text": "La Sed · Santísimo Cristo de la Sed",
+          "rect": {
+            "width": 672,
+            "height": 39.59375
+          },
+          "visible": true
+        }
+      ],
+      "disclosureOpenClose": "PASS"
+    },
+    {
+      "width": 768,
+      "route": "juan-de-mesa",
+      "status": "PASS",
+      "client": 768,
+      "scroll": 768,
+      "h1": "Juan de Mesa",
+      "font": "loaded",
+      "overflow": false,
+      "identity": "Escultura",
+      "sources": [
+        {
+          "href": "https://www.hermandaddelamor.net/encargo-de-juan-de-mesa-de-las-imagenes-del-cristo-del-amor-y-de-nuestra-senora-del-socorro",
+          "target": "_blank",
+          "text": "Encargo de Juan de Mesa · Cristo del Amor y Nuestra Señora del Socorro",
+          "rect": {
+            "width": 672,
+            "height": 40.59375
+          },
+          "visible": true
+        },
+        {
+          "href": "https://www.gran-poder.es/imagenes/nuestro-padre-jesus-del-gran-poder/",
+          "target": "_blank",
+          "text": "Nuestro Padre Jesús del Gran Poder · Web oficial",
+          "rect": {
+            "width": 672,
+            "height": 39.59375
+          },
+          "visible": true
+        }
+      ],
+      "disclosureOpenClose": "PASS"
+    },
+    {
+      "width": 768,
+      "route": "juan-de-astorga",
+      "status": "PASS",
+      "client": 768,
+      "scroll": 768,
+      "h1": "Juan de Astorga",
+      "font": "loaded",
+      "overflow": false,
+      "identity": "Escultura",
+      "sources": [
+        {
+          "href": "https://lanzada.org/titulares/maria-santisima-del-buen-fin-2/",
+          "target": "_blank",
+          "text": "María Santísima del Buen Fin · Sagrada Lanzada",
+          "rect": {
+            "width": 672,
+            "height": 39.59375
+          },
+          "visible": true
+        }
+      ],
+      "disclosureOpenClose": "PASS"
+    }
+  ],
+  "errors": [],
+  "networkFailures": [],
+  "shots": [
+    {
+      "name": "directorio-320",
+      "file": "directorio-320.jpg"
+    },
+    {
+      "name": "luis-ortega-bru-320",
+      "file": "luis-ortega-bru-320.jpg"
+    },
+    {
+      "name": "sebastian-santos-rojas-320",
+      "file": "sebastian-santos-rojas-320.jpg"
+    },
+    {
+      "name": "pedro-roldan-320",
+      "file": "pedro-roldan-320.jpg"
+    },
+    {
+      "name": "antonio-illanes-rodriguez-320",
+      "file": "antonio-illanes-rodriguez-320.jpg"
+    },
+    {
+      "name": "antonio-illanes-rodriguez-fuentes-320",
+      "file": "antonio-illanes-rodriguez-fuentes-320.jpg"
+    },
+    {
+      "name": "luis-alvarez-duarte-320",
+      "file": "luis-alvarez-duarte-320.jpg"
+    },
+    {
+      "name": "luis-alvarez-duarte-fuentes-320",
+      "file": "luis-alvarez-duarte-fuentes-320.jpg"
+    },
+    {
+      "name": "juan-de-mesa-320",
+      "file": "juan-de-mesa-320.jpg"
+    },
+    {
+      "name": "juan-de-astorga-320",
+      "file": "juan-de-astorga-320.jpg"
+    },
+    {
+      "name": "directorio-390",
+      "file": "directorio-390.jpg"
+    },
+    {
+      "name": "luis-ortega-bru-390",
+      "file": "luis-ortega-bru-390.jpg"
+    },
+    {
+      "name": "sebastian-santos-rojas-390",
+      "file": "sebastian-santos-rojas-390.jpg"
+    },
+    {
+      "name": "pedro-roldan-390",
+      "file": "pedro-roldan-390.jpg"
+    },
+    {
+      "name": "antonio-illanes-rodriguez-390",
+      "file": "antonio-illanes-rodriguez-390.jpg"
+    },
+    {
+      "name": "antonio-illanes-rodriguez-fuentes-390",
+      "file": "antonio-illanes-rodriguez-fuentes-390.jpg"
+    },
+    {
+      "name": "luis-alvarez-duarte-390",
+      "file": "luis-alvarez-duarte-390.jpg"
+    },
+    {
+      "name": "luis-alvarez-duarte-fuentes-390",
+      "file": "luis-alvarez-duarte-fuentes-390.jpg"
+    },
+    {
+      "name": "juan-de-mesa-390",
+      "file": "juan-de-mesa-390.jpg"
+    },
+    {
+      "name": "juan-de-astorga-390",
+      "file": "juan-de-astorga-390.jpg"
+    },
+    {
+      "name": "directorio-430",
+      "file": "directorio-430.jpg"
+    },
+    {
+      "name": "luis-ortega-bru-430",
+      "file": "luis-ortega-bru-430.jpg"
+    },
+    {
+      "name": "sebastian-santos-rojas-430",
+      "file": "sebastian-santos-rojas-430.jpg"
+    },
+    {
+      "name": "pedro-roldan-430",
+      "file": "pedro-roldan-430.jpg"
+    },
+    {
+      "name": "antonio-illanes-rodriguez-430",
+      "file": "antonio-illanes-rodriguez-430.jpg"
+    },
+    {
+      "name": "antonio-illanes-rodriguez-fuentes-430",
+      "file": "antonio-illanes-rodriguez-fuentes-430.jpg"
+    },
+    {
+      "name": "luis-alvarez-duarte-430",
+      "file": "luis-alvarez-duarte-430.jpg"
+    },
+    {
+      "name": "luis-alvarez-duarte-fuentes-430",
+      "file": "luis-alvarez-duarte-fuentes-430.jpg"
+    },
+    {
+      "name": "juan-de-mesa-430",
+      "file": "juan-de-mesa-430.jpg"
+    },
+    {
+      "name": "juan-de-astorga-430",
+      "file": "juan-de-astorga-430.jpg"
+    },
+    {
+      "name": "directorio-768",
+      "file": "directorio-768.jpg"
+    },
+    {
+      "name": "luis-ortega-bru-768",
+      "file": "luis-ortega-bru-768.jpg"
+    },
+    {
+      "name": "sebastian-santos-rojas-768",
+      "file": "sebastian-santos-rojas-768.jpg"
+    },
+    {
+      "name": "pedro-roldan-768",
+      "file": "pedro-roldan-768.jpg"
+    },
+    {
+      "name": "antonio-illanes-rodriguez-768",
+      "file": "antonio-illanes-rodriguez-768.jpg"
+    },
+    {
+      "name": "antonio-illanes-rodriguez-fuentes-768",
+      "file": "antonio-illanes-rodriguez-fuentes-768.jpg"
+    },
+    {
+      "name": "luis-alvarez-duarte-768",
+      "file": "luis-alvarez-duarte-768.jpg"
+    },
+    {
+      "name": "luis-alvarez-duarte-fuentes-768",
+      "file": "luis-alvarez-duarte-fuentes-768.jpg"
+    },
+    {
+      "name": "juan-de-mesa-768",
+      "file": "juan-de-mesa-768.jpg"
+    },
+    {
+      "name": "juan-de-astorga-768",
+      "file": "juan-de-astorga-768.jpg"
+    }
+  ],
+  "production_reference": {
+    "main": "89d7b0ed80361ef00bc3b4cb42d924a86b4b7926",
+    "deployment": "dpl_3mg1ENHyY4jf9QGVjeQUh399c8rj",
+    "state": "READY",
+    "author_code_unchanged_since": "abfc9370694ebae7879635f2f7f841dc4065b35e"
+  },
+  "visual_review": {
+    "representative_captures": [
+      "directorio-320",
+      "luis-ortega-bru-320",
+      "antonio-illanes-rodriguez-fuentes-320",
+      "juan-de-astorga-430",
+      "luis-alvarez-duarte-fuentes-390",
+      "directorio-768",
+      "pedro-roldan-768"
+    ],
+    "result": "PASS",
+    "complete_capture_report": "Hilo-Cofrade-Imagineria-QA-Responsive-20261002.html"
+  }
+}
