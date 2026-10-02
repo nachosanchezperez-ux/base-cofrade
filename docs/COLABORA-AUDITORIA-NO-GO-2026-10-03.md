@@ -94,7 +94,10 @@ No se ha modificado la UI ni colocado CTAs hacia un canal cerrado. Faltan prueba
 - Turnstile: token ausente, hostname ausente/incorrecto, action incorrecto, éxito no booleano, HTTP fallido, red y JSON inválido cubiertos con mocks. El timeout se conserva en código; no se declara prueba temporal ejecutada.
 - Consentimiento: ausente/no afirmativo y campos repetidos rechazados.
 - Adjuntos: tests previos de MIME falso, tipos permitidos, recodificación y eliminación EXIF, número/peso de archivos PASS. B1 demuestra que esa cobertura no certifica PDFs.
-- CI/preview: registrar su resultado al crearse la PR; no se presupone PASS.
+- SHA de código verificado: `664b51613a839f1b291540fdf15ba31411fec471`; [PR #1086](https://github.com/nachosanchezperez-ux/base-cofrade/pull/1086), draft, sin fusionar.
+- CI del SHA de código: PASS; workflow `37070997076`, job `111050145463`, checkout/install/tests/build SUCCESS.
+- Preview del SHA de código: `dpl_Crz8JT6X8QDPCSeBNgNw3yMZW6ji`, READY. `/colabora` HTTP 200, formulario de preview presente, envío deshabilitado y `noindex, follow`. No equivale a QA visual ni a readiness verificado.
+- La actualización documental posterior no cambia los módulos ya probados; comprobar también los checks del HEAD final antes de cualquier futura fusión.
 - QA visual, envío humano y producción de los cambios: **NO EJECUTADOS**; ninguna certificación de apertura.
 
 ## Continuación y condición de GO
