@@ -61,6 +61,7 @@ export default function HomePageV2({
   upcomingAgenda = [],
   homeTemporal = null,
   featuredBriefing,
+  editorialFeaturedOutingId = '',
   discoveryThreads,
   exploreStats,
 }) {
@@ -68,14 +69,20 @@ export default function HomePageV2({
   const temporalFocus = liveOutings.length
     ? buildComplementaryHomeTemporal(homeTemporal, upcomingAgenda)
     : homeTemporal
-  const featuredOuting = liveOutings[0] || null
+  const editorialFeaturedOuting = editorialFeaturedOutingId
+    ? upcomingAgenda.find((item) => item.id === editorialFeaturedOutingId) || null
+    : null
+  const featuredOuting = liveOutings[0] || editorialFeaturedOuting
+  const isEditorialFeature = !liveOutings.length && Boolean(editorialFeaturedOuting)
   const multipleLive = liveOutings.length > 1
   const futureOutings = upcomingAgenda.filter((item) => (
     item.liveState?.state !== 'live'
     && item.liveState?.state !== 'done'
   ))
-  const followingAgenda = liveOutings.length ? futureOutings : []
-  const balancedUpcoming = liveOutings.length ? [] : futureOutings.slice(0, 4)
+  const followingAgenda = featuredOuting
+    ? futureOutings.filter((item) => item.id !== featuredOuting.id).slice(0, 5)
+    : []
+  const balancedUpcoming = featuredOuting ? [] : futureOutings.slice(0, 4)
   const featuredGuideHref = featuredOuting?.href || featuredOuting?.calendarHref || '/extraordinarias'
   const todayKey = madridDateKey()
   const featuredIsToday = featuredOuting?.date === todayKey
@@ -136,11 +143,13 @@ export default function HomePageV2({
       <div className="shell">
         <header className={styles.upcomingAgendaHead}>
           <div>
-            <span className={styles.eyebrow}>{multipleLive ? `Ahora mismo · ${liveOutings.length} en curso` : liveOutings.length ? 'Ahora mismo' : 'Salidas procesionales'}</span>
-            <h2 id="proximos-dias-title">{multipleLive ? 'Varias procesiones están en la calle' : featuredOuting ? 'Procesión en curso' : 'En los próximos días'}</h2>
+            <span className={styles.eyebrow}>{multipleLive ? `Ahora mismo · ${liveOutings.length} en curso` : liveOutings.length ? 'Ahora mismo' : isEditorialFeature ? 'Extraordinaria destacada' : 'Salidas procesionales'}</span>
+            <h2 id="proximos-dias-title">{multipleLive ? 'Varias procesiones están en la calle' : liveOutings.length ? 'Procesión en curso' : isEditorialFeature ? 'Este fin de semana' : 'En los próximos días'}</h2>
           </div>
-          {!multipleLive && featuredOuting ? (
-            <p>Una salida solo ocupa el gran formato de la portada cuando está realmente en curso.</p>
+          {!multipleLive && liveOutings.length ? (
+            <p>Una salida en curso toma prioridad temporal sobre el resto de citas de la portada.</p>
+          ) : isEditorialFeature ? (
+            <p>María Santísima de Regla recupera el gran formato editorial de las citas extraordinarias, con horarios, música y lugares clave.</p>
           ) : null}
         </header>
 
