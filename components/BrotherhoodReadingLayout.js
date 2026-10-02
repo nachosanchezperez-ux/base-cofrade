@@ -51,7 +51,7 @@ export default function BrotherhoodReadingLayout({ brotherhood: h, today, agenda
       <div>
         <SectionTitle eyebrow="De un vistazo" title="La Hermandad en breve" />
         {!h.editorialGuide?.summary && h.resumen ? <p className={styles.intro}>{h.resumen}</p> : null}
-        <BrotherhoodQuickFacts brotherhood={h} compact heroFactLabels={[...heroFactLabels, 'Pasos']} />
+        <BrotherhoodQuickFacts brotherhood={h} compact hidePeople heroFactLabels={[...heroFactLabels, 'Pasos']} />
         <Disclosure title="Sede y horarios">
           <BrotherhoodOverviewV2 brotherhood={h} practicalOnly />
         </Disclosure>
