@@ -1,5 +1,7 @@
 # Autores · Imaginería · primer lote aplicado
 
+> Actualización posterior: la QA responsive emulada está completada y el primer lote cerrado. [Cierre del 02/10/2026](./AUTORES-IMAGINERIA-CIERRE-2026-10-02.md). Los estados pendientes que siguen describen el corte de aplicación anterior.
+
 ## Estado real
 
 **APLICADO CON COMMIT · INTEGRIDAD, POSTFLIGHT PÚBLICO Y ESCRITORIO PASS · QA MÓVIL PENDIENTE.** No se declara certificación responsive ni cierre completo del ciclo. No reejecutar los nueve INSERT.
