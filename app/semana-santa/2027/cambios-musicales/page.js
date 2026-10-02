@@ -6,6 +6,7 @@ import { getPublicMusicChanges2027 } from '@/lib/supabase/public-directory-cache
 import {
   musicChangeDaySlug,
   musicChangeKindLabel,
+  normalizeMusicChangeText,
   SEMANA_SANTA_DAYS,
 } from '@/lib/music-changes'
 import {
@@ -20,16 +21,22 @@ import styles from './cambios-musicales.module.css'
 export const revalidate = 300
 
 const PATH = '/semana-santa/2027/cambios-musicales'
-const title = 'Cambios musicales de la Semana Santa de Sevilla 2027'
-const description = 'Consulta los cambios de bandas confirmados para la Semana Santa de Sevilla y su provincia en 2027, comparados con los acompañamientos de 2026 y enlazados con Hermandades, Pasos y Bandas.'
+const title = 'Cambios de bandas en la Semana Santa de Sevilla 2027'
+const description = 'Todos los cambios musicales de la Semana Santa de Sevilla 2027: relevos de bandas, nuevas incorporaciones y acompañamientos confirmados en Sevilla y su provincia, comparados con 2026.'
+
+const BAND_TYPES = [
+  { key: 'agrupacion', label: 'Agrupación Musical' },
+  { key: 'cornetas', label: 'Cornetas y Tambores' },
+  { key: 'musica', label: 'Banda de Música' },
+]
 
 export async function generateMetadata({ searchParams } = {}) {
-  const robots = filteredViewRobots(await searchParams, ['jornada', 'ambito'])
+  const robots = filteredViewRobots(await searchParams, ['jornada', 'ambito', 'municipio', 'tipo', 'q'])
   return {
     title,
     description,
     ...socialMetadata({
-      title: 'Cambios musicales · Semana Santa 2027',
+      title: 'Cambios de bandas · Semana Santa de Sevilla 2027',
       description,
       path: PATH,
     }),
@@ -37,10 +44,13 @@ export async function generateMetadata({ searchParams } = {}) {
   }
 }
 
-function filterHref({ day = '', scope = '' } = {}) {
+function filterHref({ day = '', scope = '', municipality = '', type = '', query = '' } = {}) {
   const params = new URLSearchParams()
   if (day) params.set('jornada', day)
   if (scope) params.set('ambito', scope)
+  if (municipality) params.set('municipio', municipality)
+  if (type) params.set('tipo', type)
+  if (query) params.set('q', query)
   const suffix = params.toString()
   return suffix ? `${PATH}?${suffix}` : PATH
 }
@@ -67,6 +77,41 @@ function groupsFor(changes) {
   })
 }
 
+function bandFamilyKey(change) {
+  const value = normalizeMusicChangeText(
+    [change.newBandType, change.newBandName].filter(Boolean).join(' '),
+  )
+  if (value.includes('cornetas') || value.includes('tambores')) return 'cornetas'
+  if (value.includes('agrupacion musical')) return 'agrupacion'
+  return 'musica'
+}
+
+function bandFamilyLabel(change) {
+  return BAND_TYPES.find((item) => item.key === bandFamilyKey(change))?.label || 'Formación musical'
+}
+
+function latestChanges(changes) {
+  return [...changes]
+    .sort((a, b) => {
+      const aTime = a.updatedAt ? new Date(a.updatedAt).getTime() : 0
+      const bTime = b.updatedAt ? new Date(b.updatedAt).getTime() : 0
+      return bTime - aTime
+    })
+    .slice(0, 4)
+}
+
+function municipalityRanking(changes) {
+  const counts = new Map()
+  for (const change of changes) {
+    if (!change.municipality) continue
+    counts.set(change.municipality, (counts.get(change.municipality) || 0) + 1)
+  }
+  return [...counts.entries()]
+    .map(([name, count]) => ({ name, count }))
+    .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name, 'es'))
+    .slice(0, 6)
+}
+
 function bandLink(change, previous = false) {
   const name = previous ? change.previousBandName : change.newBandName
   const href = previous ? change.previousBandHref : change.newBandHref
@@ -83,22 +128,51 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
     changes.some((change) => change.day === day.label)
   ))
   const daySlugs = new Set(dayOptions.map((day) => day.slug))
+  const municipalities = [...new Set(changes.map((item) => item.municipality).filter(Boolean))]
+    .sort((a, b) => a.localeCompare(b, 'es', { sensitivity: 'base' }))
+
   const requestedDay = String(params?.jornada || '')
   const requestedScope = String(params?.ambito || '')
+  const requestedMunicipality = String(params?.municipio || '')
+  const requestedType = String(params?.tipo || '')
+  const requestedQuery = String(params?.q || '').trim().slice(0, 80)
+
   const activeDay = daySlugs.has(requestedDay) ? requestedDay : ''
   const activeScope = ['capital', 'province'].includes(requestedScope) ? requestedScope : ''
+  const activeMunicipality = municipalities.includes(requestedMunicipality) ? requestedMunicipality : ''
+  const activeType = BAND_TYPES.some((item) => item.key === requestedType) ? requestedType : ''
+  const normalizedQuery = normalizeMusicChangeText(requestedQuery)
 
-  const filtered = changes.filter((change) => (
-    (!activeDay || musicChangeDaySlug(change.day) === activeDay)
-    && (!activeScope || change.scope === activeScope)
-  ))
+  const filtered = changes.filter((change) => {
+    const searchable = normalizeMusicChangeText([
+      change.brotherhoodName,
+      change.municipality,
+      change.stepName,
+      change.position,
+      change.previousBandName,
+      change.newBandName,
+      bandFamilyLabel(change),
+    ].filter(Boolean).join(' '))
+
+    return (
+      (!activeDay || musicChangeDaySlug(change.day) === activeDay)
+      && (!activeScope || change.scope === activeScope)
+      && (!activeMunicipality || change.municipality === activeMunicipality)
+      && (!activeType || bandFamilyKey(change) === activeType)
+      && (!normalizedQuery || searchable.includes(normalizedQuery))
+    )
+  })
 
   const brotherhoodCount = new Set(changes.map((item) => item.brotherhoodSlug || item.brotherhoodName)).size
   const newBandCount = new Set(changes.map((item) => item.newBandSlug || item.newBandName)).size
   const capitalCount = changes.filter((item) => item.scope === 'capital').length
   const provinceCount = changes.filter((item) => item.scope === 'province').length
+  const capitalPercent = changes.length ? Math.round((capitalCount / changes.length) * 100) : 0
   const lastUpdated = updatedLabel(changes)
   const groups = groupsFor(filtered)
+  const recent = latestChanges(changes)
+  const municipalityTop = municipalityRanking(changes)
+  const hasFilters = Boolean(activeDay || activeScope || activeMunicipality || activeType || requestedQuery)
 
   return (
     <div className={styles.page}>
@@ -128,153 +202,230 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
             tone="dark"
             showAccent={false}
           />
+
           <div className={styles.heroGrid}>
             <div className={styles.heroCopy}>
-              <span>Archivo musical · 2027</span>
-              <h1>Cambios musicales</h1>
+              <span>Especial · Archivo musical 2027</span>
+              <h1>Cambios musicales de la Semana Santa de Sevilla 2027</h1>
               <p>
-                Los relevos de bandas confirmados para la Semana Santa de Sevilla y su provincia,
-                comparados con el acompañamiento documentado de 2026.
+                Relevos de bandas, nuevas incorporaciones y acompañamientos confirmados en Sevilla y
+                su provincia. Hilo Cofrade compara la fotografía musical de 2026 con la que ya se
+                dibuja para 2027.
               </p>
+              <nav className={styles.heroActions} aria-label="Accesos rápidos a los cambios musicales">
+                <Link href={filterHref({ scope: 'capital' })}>Sevilla capital <b>{capitalCount}</b></Link>
+                <Link href={filterHref({ scope: 'province' })}>Provincia <b>{provinceCount}</b></Link>
+                <a href="#explorar-cambios">Explorar cambios <span aria-hidden="true">↓</span></a>
+              </nav>
             </div>
-            <dl className={styles.metrics}>
-              <div><dt>Cambios confirmados</dt><dd>{changes.length}</dd></div>
-              <div><dt>Hermandades</dt><dd>{brotherhoodCount}</dd></div>
-              <div><dt>Bandas que llegan</dt><dd>{newBandCount}</dd></div>
-            </dl>
-          </div>
-          <div className={styles.heroMeta}>
-            <span>Sevilla capital: <strong>{capitalCount}</strong></span>
-            <span>Provincia: <strong>{provinceCount}</strong></span>
-            {lastUpdated ? <span>Actualizado: <strong>{lastUpdated}</strong></span> : null}
+
+            <aside className={styles.heroScore} aria-label="Resumen de cambios musicales 2027">
+              <div className={styles.heroNumber}>
+                <strong>{changes.length}</strong>
+                <span>cambios confirmados</span>
+              </div>
+              <dl className={styles.heroStats}>
+                <div><dt>Corporaciones</dt><dd>{brotherhoodCount}</dd></div>
+                <div><dt>Bandas que llegan</dt><dd>{newBandCount}</dd></div>
+                <div><dt>Capital</dt><dd>{capitalCount}</dd></div>
+                <div><dt>Provincia</dt><dd>{provinceCount}</dd></div>
+              </dl>
+              {lastUpdated ? <p>Actualizado el <strong>{lastUpdated}</strong></p> : null}
+            </aside>
           </div>
         </div>
       </header>
 
       <div className={`shell ${styles.content}`}>
-        <section className={styles.controls} aria-labelledby="filtrar-cambios-musicales">
-          <header>
-            <div>
-              <span>Explora 2027</span>
-              <h2 id="filtrar-cambios-musicales">Encuentra los cambios por jornada</h2>
-            </div>
-            <p>Los filtros no alteran los datos: solo acotan esta lectura del archivo.</p>
-          </header>
-
-          <div className={styles.filterBlock}>
-            <span className={styles.filterLabel}>Jornada</span>
-            <nav className={styles.filters} aria-label="Filtrar cambios por jornada">
-              <Link
-                href={filterHref({ scope: activeScope })}
-                className={!activeDay ? styles.activeFilter : ''}
-                aria-current={!activeDay ? 'page' : undefined}
-              >
-                Todas <b>{changes.length}</b>
-              </Link>
-              {dayOptions.map((day) => {
-                const count = changes.filter((item) => item.day === day.label).length
-                return (
-                  <Link
-                    href={filterHref({ day: day.slug, scope: activeScope })}
-                    className={activeDay === day.slug ? styles.activeFilter : ''}
-                    aria-current={activeDay === day.slug ? 'page' : undefined}
-                    key={day.slug}
-                  >
-                    {day.label} <b>{count}</b>
-                  </Link>
-                )
-              })}
-            </nav>
+        <section className={styles.intro} aria-labelledby="guia-cambios-musicales-2027">
+          <div>
+            <span>Guía viva · Semana Santa 2027</span>
+            <h2 id="guia-cambios-musicales-2027">Todos los cambios de bandas, en un solo hilo</h2>
           </div>
-
-          <div className={styles.filterBlock}>
-            <span className={styles.filterLabel}>Ámbito</span>
-            <nav className={styles.filters} aria-label="Filtrar cambios por ámbito">
-              <Link
-                href={filterHref({ day: activeDay })}
-                className={!activeScope ? styles.activeFilter : ''}
-                aria-current={!activeScope ? 'page' : undefined}
-              >
-                Todo
-              </Link>
-              <Link
-                href={filterHref({ day: activeDay, scope: 'capital' })}
-                className={activeScope === 'capital' ? styles.activeFilter : ''}
-                aria-current={activeScope === 'capital' ? 'page' : undefined}
-              >
-                Sevilla capital <b>{capitalCount}</b>
-              </Link>
-              <Link
-                href={filterHref({ day: activeDay, scope: 'province' })}
-                className={activeScope === 'province' ? styles.activeFilter : ''}
-                aria-current={activeScope === 'province' ? 'page' : undefined}
-              >
-                Provincia <b>{provinceCount}</b>
-              </Link>
+          <div className={styles.introCopy}>
+            <p>
+              Esta guía reúne los cambios de acompañamiento musical ya confirmados para la Semana Santa
+              de Sevilla de 2027: contratos que provocan un relevo, nuevas bandas tras un paso y
+              modificaciones en posiciones como la Cruz de Guía. Cada movimiento se relaciona con la
+              Hermandad, el Paso y la formación musical cuando sus fichas están publicadas.
+            </p>
+            <p>
+              No es una colección de rumores ni una sucesión de noticias: es un archivo relacional que
+              se actualiza conforme las corporaciones y las bandas hacen oficiales sus acuerdos.
+            </p>
+            <nav className={styles.introLinks} aria-label="Explorar el archivo musical de Hilo Cofrade">
+              <Link href="/bandas">Directorio de Bandas →</Link>
+              <Link href="/hermandades">Hermandades →</Link>
+              <Link href="/crucetas-musicales">Crucetas musicales →</Link>
             </nav>
           </div>
         </section>
 
-        <div className={styles.resultBar} aria-live="polite">
-          <div>
-            <strong>{filtered.length} {filtered.length === 1 ? 'cambio' : 'cambios'}</strong>
-            <span>
-              {activeDay ? dayOptions.find((day) => day.slug === activeDay)?.label : 'Semana Santa 2027'}
-              {activeScope ? ` · ${activeScope === 'capital' ? 'Sevilla capital' : 'Provincia'}` : ''}
-            </span>
+        <section className={styles.radar} aria-labelledby="radar-musical-2027">
+          <header className={styles.sectionHeading}>
+            <div>
+              <span>Radiografía 2027</span>
+              <h2 id="radar-musical-2027">Dónde se está moviendo la música</h2>
+            </div>
+            <p>Una lectura rápida del archivo antes de entrar en cada relevo.</p>
+          </header>
+
+          <div className={styles.radarGrid}>
+            <div className={styles.dayPanel}>
+              <div className={styles.panelTitle}>
+                <strong>Por jornadas</strong>
+                <span>{dayOptions.length} días con novedades</span>
+              </div>
+              <nav className={styles.dayMatrix} aria-label="Cambios musicales por jornada">
+                {dayOptions.map((day) => {
+                  const count = changes.filter((item) => item.day === day.label).length
+                  return (
+                    <Link
+                      href={filterHref({
+                        day: day.slug,
+                        scope: activeScope,
+                        municipality: activeMunicipality,
+                        type: activeType,
+                        query: requestedQuery,
+                      })}
+                      key={day.slug}
+                    >
+                      <span>{day.label}</span>
+                      <strong>{count}</strong>
+                    </Link>
+                  )
+                })}
+              </nav>
+            </div>
+
+            <div className={styles.scopePanel}>
+              <div className={styles.panelTitle}>
+                <strong>Capital y provincia</strong>
+                <span>{changes.length} movimientos</span>
+              </div>
+              <div className={styles.scopeNumbers}>
+                <div><strong>{capitalCount}</strong><span>Sevilla capital</span></div>
+                <div><strong>{provinceCount}</strong><span>Provincia</span></div>
+              </div>
+              <div className={styles.scopeBar} aria-label={`${capitalPercent}% en Sevilla capital y ${100 - capitalPercent}% en la provincia`}>
+                <span style={{ width: `${capitalPercent}%` }} />
+              </div>
+            </div>
+
+            <div className={styles.municipalityPanel}>
+              <div className={styles.panelTitle}>
+                <strong>Municipios con más cambios</strong>
+                <span>archivo actual</span>
+              </div>
+              <ol>
+                {municipalityTop.map((item) => (
+                  <li key={item.name}>
+                    <Link href={filterHref({ municipality: item.name })}>
+                      <span>{item.name}</span>
+                      <strong>{item.count}</strong>
+                    </Link>
+                  </li>
+                ))}
+              </ol>
+            </div>
           </div>
-          {(activeDay || activeScope) ? <Link href={PATH}>Limpiar filtros</Link> : <span>Confirmados y documentados</span>}
-        </div>
+        </section>
+
+        <section className={styles.latest} aria-labelledby="ultimas-confirmaciones-musicales">
+          <header className={styles.sectionHeading}>
+            <div>
+              <span>Últimos movimientos</span>
+              <h2 id="ultimas-confirmaciones-musicales">Confirmaciones recientes</h2>
+            </div>
+            <p>Los últimos registros incorporados al archivo musical de 2027.</p>
+          </header>
+          <div className={styles.latestGrid}>
+            {recent.map((change) => (
+              <a className={styles.latestCard} href={`#cambio-${change.id}`} key={change.id}>
+                <span>{change.day} · {change.municipality}</span>
+                <strong>{change.brotherhoodName}</strong>
+                <small>{musicChangeKindLabel(change.kind)}</small>
+                <p>{change.newBandName}</p>
+                <i aria-hidden="true">↘</i>
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <section className={styles.explorer} id="explorar-cambios" aria-labelledby="explorar-cambios-musicales">
+          <header className={styles.sectionHeading}>
+            <div>
+              <span>Buscador del especial</span>
+              <h2 id="explorar-cambios-musicales">Encuentra una Hermandad, una banda o una jornada</h2>
+            </div>
+            <p>Combina filtros para acotar los {changes.length} cambios ya documentados.</p>
+          </header>
+
+          <form className={styles.searchPanel} action={PATH} method="get">
+            <label className={styles.searchField}>
+              <span>Buscar</span>
+              <input type="search" name="q" defaultValue={requestedQuery} placeholder="Hermandad, banda, paso…" autoComplete="off" />
+            </label>
+            <label><span>Jornada</span><select name="jornada" defaultValue={activeDay}><option value="">Todas</option>{dayOptions.map((day) => <option value={day.slug} key={day.slug}>{day.label}</option>)}</select></label>
+            <label><span>Ámbito</span><select name="ambito" defaultValue={activeScope}><option value="">Todo</option><option value="capital">Sevilla capital</option><option value="province">Provincia</option></select></label>
+            <label><span>Municipio</span><select name="municipio" defaultValue={activeMunicipality}><option value="">Todos</option>{municipalities.map((municipality) => <option value={municipality} key={municipality}>{municipality}</option>)}</select></label>
+            <label><span>Formación entrante</span><select name="tipo" defaultValue={activeType}><option value="">Todas</option>{BAND_TYPES.map((item) => <option value={item.key} key={item.key}>{item.label}</option>)}</select></label>
+            <button type="submit">Aplicar filtros</button>
+            {hasFilters ? <Link href={PATH}>Limpiar</Link> : null}
+          </form>
+
+          <div className={styles.resultBar} aria-live="polite">
+            <div>
+              <strong>{filtered.length} {filtered.length === 1 ? 'cambio' : 'cambios'}</strong>
+              <span>
+                {activeDay ? dayOptions.find((day) => day.slug === activeDay)?.label : 'Semana Santa 2027'}
+                {activeScope ? ` · ${activeScope === 'capital' ? 'Sevilla capital' : 'Provincia'}` : ''}
+                {activeMunicipality ? ` · ${activeMunicipality}` : ''}
+              </span>
+            </div>
+            {hasFilters ? <Link href={PATH}>Ver los {changes.length} cambios</Link> : <span>Confirmados y documentados</span>}
+          </div>
+        </section>
 
         {groups.length ? (
           <div className={styles.dayGroups}>
             {groups.map((group) => (
               <section className={styles.dayGroup} key={group.slug} aria-labelledby={`jornada-${group.slug}`}>
                 <header className={styles.dayHeading}>
-                  <div>
-                    <span>Semana Santa 2027</span>
-                    <h2 id={`jornada-${group.slug}`}>{group.label}</h2>
-                  </div>
-                  <strong>{group.items.length}</strong>
+                  <div><span>Semana Santa 2027</span><h2 id={`jornada-${group.slug}`}>{group.label}</h2></div>
+                  <div className={styles.dayCount}><strong>{group.items.length}</strong><span>{group.items.length === 1 ? 'cambio' : 'cambios'}</span></div>
                 </header>
 
                 <div className={styles.changeList}>
                   {group.items.map((change) => (
-                    <article className={styles.changeCard} id={`cambio-${change.id}`} key={change.id}>
+                    <article className={styles.changeCard} data-kind={change.kind} id={`cambio-${change.id}`} key={change.id}>
                       <header className={styles.cardHeader}>
                         <div className={styles.cardIdentity}>
-                          <span>{musicChangeKindLabel(change.kind)}</span>
-                          <h3>
-                            {change.brotherhoodHref
-                              ? <Link href={change.brotherhoodHref}>{change.brotherhoodName}</Link>
-                              : change.brotherhoodName}
-                          </h3>
-                          <p>{change.municipality}</p>
+                          <div className={styles.cardEyebrow}><span>{musicChangeKindLabel(change.kind)}</span><i aria-hidden="true">·</i><span>{change.municipality}</span></div>
+                          <h3>{change.brotherhoodHref ? <Link href={change.brotherhoodHref}>{change.brotherhoodName}</Link> : change.brotherhoodName}</h3>
                         </div>
-                        <span className={styles.scope}>{change.scope === 'capital' ? 'Sevilla capital' : 'Provincia'}</span>
+                        <div className={styles.cardTags}><span>{change.scope === 'capital' ? 'Sevilla capital' : 'Provincia'}</span><span>{bandFamilyLabel(change)}</span></div>
                       </header>
 
                       <div className={styles.stepLine}>
-                        <span>Acompañamiento</span>
-                        {change.stepHref
-                          ? <Link href={change.stepHref}>{change.stepName}</Link>
-                          : <strong>{change.stepName}</strong>}
-                        {change.position && change.position !== change.stepName ? <small>{change.position}</small> : null}
+                        <span>Paso / posición</span>
+                        <div>
+                          {change.stepHref ? <Link href={change.stepHref}>{change.stepName}</Link> : <strong>{change.stepName}</strong>}
+                          {change.position && change.position !== change.stepName ? <small>{change.position}</small> : null}
+                        </div>
                       </div>
 
                       <div className={styles.transition} aria-label={`Cambio musical de ${change.brotherhoodName}`}>
-                        <div className={styles.bandBefore}>
-                          <span>Hasta 2026</span>
-                          {bandLink(change, true)}
-                        </div>
-                        <div className={styles.arrow} aria-hidden="true">
-                          <span>→</span>
-                        </div>
-                        <div className={styles.bandAfter}>
-                          <span>Desde 2027</span>
-                          {bandLink(change)}
-                        </div>
+                        <div className={styles.bandBefore}><div className={styles.yearLabel}><b>2026</b><span>Hasta ahora</span></div>{bandLink(change, true)}</div>
+                        <div className={styles.arrow} aria-hidden="true"><span>→</span><small>cambio</small></div>
+                        <div className={styles.bandAfter}><div className={styles.yearLabel}><b>2027</b><span>Nueva etapa</span></div>{bandLink(change)}</div>
                       </div>
+
+                      <footer className={styles.cardActions}>
+                        {change.brotherhoodHref ? <Link href={change.brotherhoodHref}>Ver Hermandad →</Link> : null}
+                        {change.newBandHref ? <Link href={change.newBandHref}>Ver banda 2027 →</Link> : null}
+                        {change.stepHref ? <Link href={change.stepHref}>Ver Paso →</Link> : null}
+                      </footer>
                     </article>
                   ))}
                 </div>
@@ -282,30 +433,34 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
             ))}
           </div>
         ) : (
-          <div className={styles.empty}>
-            <strong>No hay cambios confirmados con esos filtros.</strong>
-            <p>Prueba otra jornada o vuelve al listado completo.</p>
-            <Link href={PATH}>Ver todos los cambios →</Link>
-          </div>
+          <div className={styles.empty}><strong>No hay cambios confirmados con esos filtros.</strong><p>Prueba otra jornada, municipio o formación.</p><Link href={PATH}>Ver todos los cambios →</Link></div>
         )}
 
         <section className={styles.method} aria-labelledby="criterio-cambios-musicales">
-          <div>
-            <span>Criterio editorial</span>
-            <h2 id="criterio-cambios-musicales">Qué entra en esta sección</h2>
-          </div>
+          <div><span>Criterio editorial</span><h2 id="criterio-cambios-musicales">Qué entra en este archivo</h2></div>
           <div className={styles.methodCopy}>
-            <p>
-              Se muestran únicamente nuevos acompañamientos publicados con inicio en 2027 y vinculados
-              a una Hermandad de Sevilla o su provincia. Cuando existe un acompañamiento del mismo paso
-              o posición cerrado en 2026, Hilo Cofrade lo presenta como relevo.
-            </p>
-            <p>
-              Las renovaciones sin cambio de formación no aparecen aquí. Tampoco se convierten en
-              cambios las negociaciones, candidaturas o continuidades no confirmadas.
-            </p>
+            <p>Se muestran únicamente nuevos acompañamientos publicados con inicio en 2027 y vinculados a una corporación de Sevilla o su provincia. Cuando existe un acompañamiento del mismo paso o posición cerrado en 2026, Hilo Cofrade lo presenta como relevo.</p>
+            <p>Las renovaciones sin cambio de formación no aparecen aquí. Tampoco se convierten en cambios las negociaciones, candidaturas o continuidades no confirmadas oficialmente.</p>
           </div>
         </section>
+
+        <section className={styles.faq} aria-labelledby="preguntas-cambios-musicales">
+          <header className={styles.sectionHeading}><div><span>Preguntas frecuentes</span><h2 id="preguntas-cambios-musicales">Cómo leer los cambios musicales de 2027</h2></div></header>
+          <div className={styles.faqGrid}>
+            <details><summary>¿Qué cambios de bandas aparecen en esta guía?</summary><p>Relevos confirmados, nuevas incorporaciones y cambios de formación o posición musical con vigencia desde la Semana Santa de 2027.</p></details>
+            <details><summary>¿Incluye Sevilla capital y la provincia?</summary><p>Sí. El archivo reúne movimientos de la capital y de los municipios de la provincia de Sevilla y permite filtrarlos por ámbito y localidad.</p></details>
+            <details><summary>¿Se publican rumores o acuerdos ligados a candidaturas?</summary><p>No. Hilo Cofrade solo incorpora el cambio cuando existe una confirmación suficientemente acreditada. Los escenarios pendientes quedan fuera del contador.</p></details>
+            <details><summary>¿Por qué algunas bandas aparecen sin enlace?</summary><p>Porque el contrato está documentado, pero la ficha completa de la formación aún no alcanza el nivel editorial necesario para publicarse. El enlace se activa cuando la ficha está lista.</p></details>
+          </div>
+        </section>
+
+        <nav className={styles.related} aria-label="Seguir explorando la música cofrade">
+          <div><span>Sigue tirando del hilo</span><strong>Del cambio musical a toda la enciclopedia</strong></div>
+          <Link href="/bandas">Bandas <span>→</span></Link>
+          <Link href="/crucetas-musicales">Crucetas <span>→</span></Link>
+          <Link href="/marchas">Marchas <span>→</span></Link>
+          <Link href="/agenda-cofrade">Agenda <span>→</span></Link>
+        </nav>
       </div>
     </div>
   )
