@@ -6,6 +6,7 @@ import { getPublicMusicChanges2027 } from '@/lib/supabase/public-directory-cache
 import {
   musicChangeDaySlug,
   musicChangeKindLabel,
+  normalizeMusicChangeText,
   SEMANA_SANTA_DAYS,
 } from '@/lib/music-changes'
 import {
@@ -20,16 +21,22 @@ import styles from './cambios-musicales.module.css'
 export const revalidate = 300
 
 const PATH = '/semana-santa/2027/cambios-musicales'
-const title = 'Cambios musicales de la Semana Santa de Sevilla 2027'
-const description = 'Consulta los cambios de bandas confirmados para la Semana Santa de Sevilla y su provincia en 2027, comparados con los acompañamientos de 2026 y enlazados con Hermandades, Pasos y Bandas.'
+const title = 'Cambios de bandas en la Semana Santa de Sevilla 2027'
+const description = 'Todos los cambios musicales de la Semana Santa de Sevilla 2027: relevos de bandas, nuevas incorporaciones y acompañamientos confirmados en Sevilla y su provincia, comparados con 2026.'
+
+const BAND_TYPES = [
+  { key: 'agrupacion', label: 'Agrupación Musical' },
+  { key: 'cornetas', label: 'Cornetas y Tambores' },
+  { key: 'musica', label: 'Banda de Música' },
+]
 
 export async function generateMetadata({ searchParams } = {}) {
-  const robots = filteredViewRobots(await searchParams, ['jornada', 'ambito'])
+  const robots = filteredViewRobots(await searchParams, ['jornada', 'ambito', 'municipio', 'tipo', 'q'])
   return {
     title,
     description,
     ...socialMetadata({
-      title: 'Cambios musicales · Semana Santa 2027',
+      title: 'Cambios de bandas · Semana Santa de Sevilla 2027',
       description,
       path: PATH,
     }),
@@ -37,10 +44,13 @@ export async function generateMetadata({ searchParams } = {}) {
   }
 }
 
-function filterHref({ day = '', scope = '' } = {}) {
+function filterHref({ day = '', scope = '', municipality = '', type = '', query = '' } = {}) {
   const params = new URLSearchParams()
   if (day) params.set('jornada', day)
   if (scope) params.set('ambito', scope)
+  if (municipality) params.set('municipio', municipality)
+  if (type) params.set('tipo', type)
+  if (query) params.set('q', query)
   const suffix = params.toString()
   return suffix ? `${PATH}?${suffix}` : PATH
 }
@@ -65,6 +75,41 @@ function groupsFor(changes) {
     const items = changes.filter((change) => change.day === day.label)
     return items.length ? [{ ...day, items }] : []
   })
+}
+
+function bandFamilyKey(change) {
+  const value = normalizeMusicChangeText(
+    [change.newBandType, change.newBandName].filter(Boolean).join(' '),
+  )
+  if (value.includes('cornetas') || value.includes('tambores')) return 'cornetas'
+  if (value.includes('agrupacion musical')) return 'agrupacion'
+  return 'musica'
+}
+
+function bandFamilyLabel(change) {
+  return BAND_TYPES.find((item) => item.key === bandFamilyKey(change))?.label || 'Formación musical'
+}
+
+function latestChanges(changes) {
+  return [...changes]
+    .sort((a, b) => {
+      const aTime = a.updatedAt ? new Date(a.updatedAt).getTime() : 0
+      const bTime = b.updatedAt ? new Date(b.updatedAt).getTime() : 0
+      return bTime - aTime
+    })
+    .slice(0, 4)
+}
+
+function municipalityRanking(changes) {
+  const counts = new Map()
+  for (const change of changes) {
+    if (!change.municipality) continue
+    counts.set(change.municipality, (counts.get(change.municipality) || 0) + 1)
+  }
+  return [...counts.entries()]
+    .map(([name, count]) => ({ name, count }))
+    .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name, 'es'))
+    .slice(0, 6)
 }
 
 function bandLink(change, previous = false) {
