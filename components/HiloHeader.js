@@ -32,6 +32,7 @@ const directoryLinks = [
   ['/imagenes', 'Imágenes'],
   ['/pasos', 'Pasos'],
   ['/bandas', 'Bandas'],
+  ['/semana-santa/2027/cambios-musicales', 'Cambios musicales 2027'],
   ['/marchas', 'Marchas'],
   ['/autores', 'Autores'],
   ['/crucetas-musicales', 'Crucetas musicales'],

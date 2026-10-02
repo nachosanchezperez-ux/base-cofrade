@@ -78,6 +78,11 @@ const staticEntries = [
     priority: 0.9,
   },
   {
+    url: absoluteUrl('/semana-santa/2027/cambios-musicales'),
+    changeFrequency: 'daily',
+    priority: 0.9,
+  },
+  {
     url: absoluteUrl('/crucetas-musicales'),
     changeFrequency: 'weekly',
     priority: 0.86,
