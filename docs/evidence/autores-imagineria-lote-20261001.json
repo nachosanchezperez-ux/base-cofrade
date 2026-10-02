@@ -1,0 +1,109 @@
+{
+  "cycle": 3,
+  "category": "Imaginería y escultura",
+  "status": "PROPOSED_NOT_APPLIED",
+  "base_sha": "3b97c4fe4187f64b98e7b26fefbe7cab4c4fad72",
+  "operations": [
+    {
+      "id": "c0200003-0000-4000-8000-000000000001",
+      "table": "agent_disciplines",
+      "operation": "INSERT",
+      "agent_entity_id": "13000000-0000-0000-0000-000000000001",
+      "discipline": "Escultura",
+      "is_primary": true,
+      "notes": "Ciclo 3 · Oficio escultórico documentado en fuentes oficiales revisadas. Principal de la ficha; preserva autorías, atribuciones y restauraciones existentes.",
+      "name": "Luis Ortega Bru",
+      "slug": "luis-ortega-bru"
+    },
+    {
+      "id": "c0200003-0000-4000-8000-000000000002",
+      "table": "agent_disciplines",
+      "operation": "INSERT",
+      "agent_entity_id": "13fb6b36-f879-41ef-ab19-90d97e693972",
+      "discipline": "Escultura",
+      "is_primary": true,
+      "notes": "Ciclo 3 · Oficio escultórico documentado en fuentes oficiales revisadas. Principal de la ficha; preserva autorías, atribuciones y restauraciones existentes.",
+      "name": "Sebastián Santos Rojas",
+      "slug": "sebastian-santos-rojas"
+    },
+    {
+      "id": "c0200003-0000-4000-8000-000000000003",
+      "table": "agent_disciplines",
+      "operation": "INSERT",
+      "agent_entity_id": "262d4bc3-0c79-4344-b40c-9a2f689aafb5",
+      "discipline": "Escultura",
+      "is_primary": true,
+      "notes": "Ciclo 3 · Oficio escultórico documentado en fuentes oficiales revisadas. Principal de la ficha; preserva autorías, atribuciones y restauraciones existentes.",
+      "name": "Pedro Roldán",
+      "slug": "pedro-roldan"
+    },
+    {
+      "id": "c0200003-0000-4000-8000-000000000004",
+      "table": "agent_disciplines",
+      "operation": "INSERT",
+      "agent_entity_id": "3c317cca-c1ac-4339-8994-78226fa57737",
+      "discipline": "Escultura",
+      "is_primary": true,
+      "notes": "Ciclo 3 · Oficio escultórico documentado en fuentes oficiales revisadas. Principal de la ficha; preserva autorías, atribuciones y restauraciones existentes.",
+      "name": "Antonio Illanes Rodríguez",
+      "slug": "antonio-illanes-rodriguez"
+    },
+    {
+      "id": "c0200003-0000-4000-8000-000000000005",
+      "table": "agent_disciplines",
+      "operation": "INSERT",
+      "agent_entity_id": "5e2ab038-a344-4289-afda-bee09730fd28",
+      "discipline": "Escultura",
+      "is_primary": true,
+      "notes": "Ciclo 3 · Oficio escultórico documentado en fuentes oficiales revisadas. Principal de la ficha; preserva autorías, atribuciones y restauraciones existentes.",
+      "name": "Luis Álvarez Duarte",
+      "slug": "luis-alvarez-duarte"
+    },
+    {
+      "id": "c0200003-0000-4000-8000-000000000006",
+      "table": "agent_disciplines",
+      "operation": "INSERT",
+      "agent_entity_id": "68d39c3f-c9d7-43d3-9986-fb616de2b164",
+      "discipline": "Escultura",
+      "is_primary": true,
+      "notes": "Ciclo 3 · Oficio escultórico documentado en fuentes oficiales revisadas. Principal de la ficha; preserva autorías, atribuciones y restauraciones existentes.",
+      "name": "Juan de Mesa",
+      "slug": "juan-de-mesa"
+    },
+    {
+      "id": "c0200003-0000-4000-8000-000000000007",
+      "table": "agent_disciplines",
+      "operation": "INSERT",
+      "agent_entity_id": "a5264497-9e32-49ab-9773-130fe8ae7a76",
+      "discipline": "Escultura",
+      "is_primary": true,
+      "notes": "Ciclo 3 · Oficio escultórico documentado en fuentes oficiales revisadas. Principal de la ficha; preserva autorías, atribuciones y restauraciones existentes.",
+      "name": "Juan de Astorga",
+      "slug": "juan-de-astorga"
+    },
+    {
+      "id": "c0200003-0000-4000-8000-000000000008",
+      "table": "source_links",
+      "operation": "INSERT",
+      "entity_id": "3c317cca-c1ac-4339-8994-78226fa57737",
+      "source_id": "deee7018-3817-4d06-ae7d-22ec015c72bf",
+      "scope": "Oficio escultórico · Autoría documentada",
+      "notes": "Fuente oficial existente de autoría; enlace directo al autor para consultar desde su ficha. No duplica autorías ni altera certeza.",
+      "name": "Antonio Illanes Rodríguez",
+      "url": "https://lanzada.org/titulares/santisimo-cristo-de-la-sagrada-lanzada",
+      "existing_authorship_id": "94d48f40-9de2-468b-ad07-dc4cd4ec1f8c"
+    },
+    {
+      "id": "c0200003-0000-4000-8000-000000000009",
+      "table": "source_links",
+      "operation": "INSERT",
+      "entity_id": "5e2ab038-a344-4289-afda-bee09730fd28",
+      "source_id": "e4a699b3-b529-47e9-8908-d03da81b8fcb",
+      "scope": "Oficio escultórico · Autoría documentada",
+      "notes": "Fuente oficial existente de autoría; enlace directo al autor para consultar desde su ficha. No duplica autorías ni altera certeza.",
+      "name": "Luis Álvarez Duarte",
+      "url": "https://hermandaddelased.org/stmo-cristo-de-la-sed/",
+      "existing_authorship_id": "82d37b2f-e4c3-4e88-92bc-0e7ae8c42106"
+    }
+  ]
+}
