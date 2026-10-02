@@ -97,6 +97,34 @@ const controlCanonical = process.env.QA_CONTROL_CANONICAL || 'https://hilocofrad
     assert.equal(metrics.canonical, expectedCanonical);
     assert.deepEqual(metrics.duplicateIds, []);
     await page.screenshot({ path: `${out}/pilot-${width}.png` });
+    if (process.env.QA_MUSIC_FLOW === '1') {
+      const music = page.locator('#musica');
+      const heritage = page.locator('#patrimonio-musical');
+      assert.equal(await music.locator('#acompanamiento-musical a[class*="__item"]').count(), 3);
+      assert.equal(await music.locator('#acompanamiento-musical a[class*="__item"]').first().evaluate(e => getComputedStyle(e).borderRadius), '0px');
+      assert.equal(await music.locator('#acompanamiento-musical [class*="__groups"]').evaluate(e => getComputedStyle(e).boxShadow), 'none');
+      assert.equal(await heritage.locator('[class*="__groups"]').evaluate(e => getComputedStyle(e).boxShadow), 'none');
+      assert.equal(await heritage.locator('details').first().evaluate(e => e.open), true);
+      for (const image of await music.locator('#acompanamiento-musical img').all()) {
+        await image.scrollIntoViewIfNeeded();
+        await image.evaluate(e => e.decode());
+      }
+      await music.scrollIntoViewIfNeeded();
+      if ([390, 1366].includes(width)) await music.screenshot({ path: `${out}/music-${width}.png` });
+      const style = heritage.locator('details details').first();
+      await style.locator(':scope > summary').focus();
+      await page.keyboard.press('Enter');
+      assert.equal(await style.evaluate(e => e.open), true);
+      assert.equal(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth), 0);
+      assert.equal(await heritage.locator('article').count(), 39);
+      if ([390, 1366].includes(width)) {
+        await style.locator('article').first().scrollIntoViewIfNeeded();
+        await page.screenshot({ path: `${out}/catalog-${width}.png` });
+      }
+      await style.locator(':scope > summary').focus();
+      await page.keyboard.press('Enter');
+      assert.equal(await style.evaluate(e => e.open), false);
+    }
     if (process.env.QA_CONTENT_AUDIT === '1') {
       const official = page.locator('main section p[class*="__official"]');
       assert.match(await official.innerText(), /Antigua y Fervorosa Hermandad/);
