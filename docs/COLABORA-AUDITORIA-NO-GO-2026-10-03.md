@@ -2,11 +2,25 @@
 
 Corte: 3 de octubre de 2026, Europe/Madrid (2/10, 22:07 UTC).
 
+## Continuación · PDF y reserva atómica (2/10, UTC)
+
+**Se mantiene NO-GO. Esta sección actualiza el corte inicial conservado debajo.**
+
+- Base reconciliada con `main=d892a396f9f1124beec301a6d06f5649a40c9510`, producción `dpl_4o2ECTrBgmoMaAJG9kmqWLvtiMKZ` READY. Sin operaciones sobre #1019/#1020 ni fusión de esta propuesta.
+- B1: sustituido el reconocimiento por marcadores por un parser estructural real (`pdf-lib` 1.17.1 fijado). Rechaza cabecera desplazada, referencias inválidas, ausencia de páginas, cifrado, formularios, JavaScript, acciones automáticas y archivos incrustados, incluidos nombres escapados y objetos comprimidos. Se exige `startxref` reconocible y EOF final sin payload añadido. Ejecución aislada con límite de memoria, complejidad y seis segundos; falla cerrada. Los documentos siguen privados y sin previsualización. **No es antivirus ni certifica que cualquier lector PDF pueda abrirlos sin riesgos.**
+- B2: migración mínima `20261002221858_atomic_contribution_reservation.sql`, sin tablas nuevas ni endpoint público. Un trigger reserva y comprueba el hash dentro del INSERT, serializando la ventana de 24h con advisory lock. El contador global también usa un lock único; se conserva 5/15min, 20/24h y 300/h. Ambos rechazan aislamiento distinto de READ COMMITTED. Hash normalizado con fuentes/archivos ordenados, sin contacto personal. Se elimina el SELECT previo vulnerable a carreras.
+- La migración se ejecutó **solo dentro de BEGIN/ROLLBACK**: primer INSERT aceptado, segundo hash rechazado con `23505`, una sola fila y privilegios de ejecución denegados a `anon`/`authenticated`; transacción revertida. No queda instalada en producción. Antes de usar este código para recibir envíos debe desplegarse y verificarse la migración.
+- Advisor consultado tras rollback: INFO de `contribution_attempts` sin políticas, coherente con su uso exclusivamente privilegiado; seis WARN preexistentes de funciones privadas del Panel/importación ejecutables por autenticados. No se amplían grants ni se cambia RLS.
+- QA local: **1466/1466 tests PASS**, cero fallos/omisiones; `npm run build` PASS y `git diff --check` PASS. La trazabilidad de `/colabora` incluye `pdf-lib`. Regresiones: PDF real aceptado, HTML con marcadores/falso PDF rechazado, JavaScript/AA comprimidos y sin comprimir, nombre `/J#53` conservado en bytes reales y payload tras EOF rechazados. Se vuelve a comprobar el límite agregado de 10 MiB después de recodificar imágenes.
+- Verificación adicional `npm run verify:contribution-pdf-build` **PASS**, incorporada a CI tras el build: ejecuta el módulo minificado real con un harness de sus dependencias síncronas, acepta un PDF válido y rechaza JavaScript desde su worker nativo, y comprueba el parser en el trace. Detectó y permitió corregir la sustitución incorrecta de `require.resolve` por un ID del empaquetador. No equivale al envío end-to-end en Vercel.
+- CI y preview de este nuevo corte: pendientes al guardar esta actualización; los identificadores posteriores del corte inicial no certifican este código.
+- **Límites pendientes:** prueba concurrente real y migración en preview, validación del worker en el runtime desplegado, conservación demostrable (B3), variables/widget reales (B4), cinco modalidades y matriz UX completa (B5). Supabase solo dispone de rama `main`; no se crea una rama de pago sin confirmación. El conector Vercel sigue sin permitir inspeccionar variables; cualquier fallback al navegador requiere permiso del usuario.
+
 ## Resultado
 
 **NO-GO. `/colabora` continúa cerrado. La apertura no está certificada.**
 
-Esta intervención audita la implementación existente y prepara un endurecimiento mínimo en una rama aislada. No activa el flag, no fusiona cambios, no promueve deployments y no cambia datos editoriales ni esquema. No duplica formulario, tablas o Panel.
+Esta intervención audita la implementación existente y prepara un endurecimiento mínimo en una rama aislada. No activa el flag, no fusiona cambios, no promueve deployments y no deja cambios de datos editoriales ni esquema en producción. No duplica formulario, tablas o Panel. El resto del informe registra el corte inicial; la continuación anterior incorpora una dependencia y una migración candidatas todavía no productivas.
 
 ## Preflight y actualidad
 
