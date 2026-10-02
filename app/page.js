@@ -33,6 +33,7 @@ export default async function HomePage() {
     upcomingAgenda,
     homeTemporal,
     featuredBriefing,
+    editorialFeaturedOutingId,
     discoveryThreads,
     exploreStats,
   } = await getHomeSnapshot()
@@ -44,6 +45,7 @@ export default async function HomePage() {
       upcomingAgenda={upcomingAgenda}
       homeTemporal={homeTemporal}
       featuredBriefing={featuredBriefing}
+      editorialFeaturedOutingId={editorialFeaturedOutingId}
       discoveryThreads={discoveryThreads}
       exploreStats={exploreStats}
     />
