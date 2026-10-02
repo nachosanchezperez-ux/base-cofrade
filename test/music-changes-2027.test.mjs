@@ -76,8 +76,7 @@ test('Cambios musicales 2027 queda descubrible e indexable', async () => {
     assert.match(source, /\/semana-santa\/2027\/cambios-musicales/)
   }
 
-  assert.match(page, /Las renovaciones sin cambio de formación no aparecen aquí/)
-  assert.match(page, /negociaciones, candidaturas o continuidades no confirmadas/)
+  assert.match(page, /Las renovaciones sin cambio de formación y los acuerdos no confirmados quedan fuera/)
 })
 
 
