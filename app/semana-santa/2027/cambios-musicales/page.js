@@ -236,7 +236,7 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
         </div>
       </header>
 
-      <main className={`shell ${styles.content}`}>
+      <div className={`shell ${styles.content}`}>
         <section className={styles.intro} aria-labelledby="guia-cambios-musicales-2027">
           <div>
             <span>Guía viva · Semana Santa 2027</span>
@@ -461,7 +461,7 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
           <Link href="/marchas">Marchas <span>→</span></Link>
           <Link href="/agenda-cofrade">Agenda <span>→</span></Link>
         </nav>
-      </main>
+      </div>
     </div>
   )
 }
