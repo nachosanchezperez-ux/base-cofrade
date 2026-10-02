@@ -105,7 +105,9 @@
 .reading :global(.heritage-work-copy) { padding:22px; }
 .reading :global(.heritage-work-copy) h3 { font-size:26px; }
 .reading :global(.heritage-work-agents > div > span) { background:#f6f7f8 !important; }
-.reading :global(#tunica) { background:#fff; color:#23272c; }
+.reading :global(#tunica) { background:#fff !important; color:#23272c !important; }
+.reading :global(#tunica h2), .reading :global(#tunica h3), .reading :global(#tunica dd) { color:#23272c !important; }
+.reading :global(#tunica .eyebrow) { color:#555d66 !important; }
 .reading :global(#tunica .section-heading p), .reading :global(#tunica .habit-card dt) { color:#586370; }
 .reading :global(#tunica .habit-card) { background:#f6f7f8; border:1px solid #dfe3e7; box-shadow:none; border-radius:6px; }
 .reading :global(#tunica .habit-card dl div) { border-color:#dfe3e7; }

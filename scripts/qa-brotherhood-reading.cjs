@@ -118,6 +118,14 @@ const controlCanonical = process.env.QA_CONTROL_CANONICAL || 'https://hilocofrad
       assert.equal(await page.locator('#tunica').evaluate(e => getComputedStyle(e).backgroundColor), 'rgb(255, 255, 255)');
       assert.equal(await page.locator('#tunica .habit-card').count(), 2);
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth), 0);
+      assert.equal(await page.locator('#tunica h2').evaluate(e => getComputedStyle(e).color), 'rgb(35, 39, 44)');
+      assert.equal(await page.locator('#tunica dd').first().evaluate(e => getComputedStyle(e).color), 'rgb(35, 39, 44)');
+      for (const image of await page.locator('#tunica img').all()) {
+        await image.scrollIntoViewIfNeeded();
+        await image.evaluate(e => e.decode());
+      }
+      await page.locator('#tunica h2').scrollIntoViewIfNeeded();
+      await page.locator('#tunica h2').click();
       await page.locator('#tunica').screenshot({ path: `${out}/habit-${width}.png` });
       await habit.locator(':scope > summary').click();
       const archive = page.locator('#archivo-salidas');
