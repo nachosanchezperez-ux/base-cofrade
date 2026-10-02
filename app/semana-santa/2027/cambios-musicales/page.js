@@ -69,10 +69,33 @@ function updatedLabel(changes) {
   }).format(new Date(Math.max(...timestamps)))
 }
 
+function groupBrotherhoodChanges(items = []) {
+  const groups = new Map()
+
+  for (const change of items) {
+    const key = change.brotherhoodSlug || change.brotherhoodName
+    if (!groups.has(key)) {
+      groups.set(key, {
+        key,
+        brotherhoodName: change.brotherhoodName,
+        brotherhoodHref: change.brotherhoodHref,
+        municipality: change.municipality,
+        scope: change.scope,
+        changes: [],
+      })
+    }
+    groups.get(key).changes.push(change)
+  }
+
+  return [...groups.values()]
+}
+
 function groupsFor(changes) {
   return SEMANA_SANTA_DAYS.flatMap((day) => {
     const items = changes.filter((change) => change.day === day.label)
-    return items.length ? [{ ...day, items }] : []
+    return items.length
+      ? [{ ...day, items, brotherhoods: groupBrotherhoodChanges(items) }]
+      : []
   })
 }
 
@@ -332,45 +355,85 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
               <section className={styles.dayGroup} key={group.slug} aria-labelledby={`jornada-${group.slug}`}>
                 <header className={styles.dayHeading}>
                   <div><span>Semana Santa 2027</span><h2 id={`jornada-${group.slug}`}>{group.label}</h2></div>
-                  <div className={styles.dayCount}><strong>{group.items.length}</strong><span>{group.items.length === 1 ? 'cambio' : 'cambios'}</span></div>
+                  <div className={styles.dayCount}>
+                    <strong>{group.items.length}</strong>
+                    <span>{group.items.length === 1 ? 'cambio' : 'cambios'} · {group.brotherhoods.length} {group.brotherhoods.length === 1 ? 'corporación' : 'corporaciones'}</span>
+                  </div>
                 </header>
 
-                <div className={styles.changeList}>
-                  {group.items.map((change) => (
-                    <article className={styles.changeCard} data-kind={change.kind} id={`cambio-${change.id}`} key={change.id}>
-                      <header className={styles.cardHeader}>
-                        <div className={styles.cardEyebrow}>
-                          <span>{musicChangeKindLabel(change.kind)}</span>
-                          <i aria-hidden="true">·</i>
-                          <span>{change.municipality}</span>
-                          <i aria-hidden="true">·</i>
-                          <span>{bandFamilyLabel(change)}</span>
+                <div className={styles.brotherhoodList}>
+                  {group.brotherhoods.map((brotherhood) => (
+                    <article
+                      className={styles.brotherhoodCluster}
+                      data-multiple={brotherhood.changes.length > 1 ? 'true' : 'false'}
+                      key={brotherhood.key}
+                    >
+                      <header className={styles.clusterHeader}>
+                        <div>
+                          <span>{brotherhood.scope === 'capital' ? 'Sevilla capital' : brotherhood.municipality}</span>
+                          <h3>
+                            {brotherhood.brotherhoodHref
+                              ? <Link href={brotherhood.brotherhoodHref}>{brotherhood.brotherhoodName}</Link>
+                              : brotherhood.brotherhoodName}
+                          </h3>
                         </div>
-                        <h3>{change.brotherhoodHref ? <Link href={change.brotherhoodHref}>{change.brotherhoodName}</Link> : change.brotherhoodName}</h3>
+                        {brotherhood.changes.length > 1 ? (
+                          <div className={styles.clusterCount}>
+                            <strong>{brotherhood.changes.length}</strong>
+                            <span>cambios musicales</span>
+                          </div>
+                        ) : null}
                       </header>
 
-                      <div className={styles.stepLine}>
-                        <span>Paso / posición</span>
-                        <div>
-                          {change.stepHref ? <Link href={change.stepHref}>{change.stepName}</Link> : <strong>{change.stepName}</strong>}
-                          {change.position && change.position !== change.stepName ? <small>{change.position}</small> : null}
-                        </div>
+                      <div className={styles.clusterChanges}>
+                        {brotherhood.changes.map((change, index) => (
+                          <section
+                            className={styles.movement}
+                            data-kind={change.kind}
+                            id={`cambio-${change.id}`}
+                            key={change.id}
+                          >
+                            <div className={styles.movementLead}>
+                              <span className={styles.movementNumber}>{String(index + 1).padStart(2, '0')}</span>
+                              <div>
+                                <div className={styles.movementEyebrow}>
+                                  <span>{musicChangeKindLabel(change.kind)}</span>
+                                  <i aria-hidden="true">·</i>
+                                  <span>{bandFamilyLabel(change)}</span>
+                                </div>
+                                <strong>
+                                  {change.stepHref ? <Link href={change.stepHref}>{change.stepName}</Link> : change.stepName}
+                                </strong>
+                                {change.position && change.position !== change.stepName ? <small>{change.position}</small> : null}
+                              </div>
+                            </div>
+
+                            <div className={styles.transition} aria-label={`Cambio musical de ${brotherhood.brotherhoodName}`}>
+                              <div className={styles.bandBefore}>
+                                <div className={styles.yearLabel}><b>2026</b><span>Hasta ahora</span></div>
+                                {bandLink(change, true)}
+                              </div>
+                              <div className={styles.arrow} aria-hidden="true"><span>→</span></div>
+                              <div className={styles.bandAfter}>
+                                <div className={styles.yearLabel}><b>2027</b><span>Nueva etapa</span></div>
+                                {bandLink(change)}
+                              </div>
+                            </div>
+
+                            <div className={styles.movementLinks}>
+                              {change.stepHref ? <Link href={change.stepHref}>Paso</Link> : null}
+                              {change.newBandHref ? <Link href={change.newBandHref}>Banda 2027</Link> : null}
+                            </div>
+                          </section>
+                        ))}
                       </div>
 
-                      <div className={styles.transition} aria-label={`Cambio musical de ${change.brotherhoodName}`}>
-                        <div className={styles.bandBefore}><div className={styles.yearLabel}><b>2026</b><span>Hasta ahora</span></div>{bandLink(change, true)}</div>
-                        <div className={styles.arrow} aria-hidden="true"><span>→</span><small>cambio</small></div>
-                        <div className={styles.bandAfter}><div className={styles.yearLabel}><b>2027</b><span>Nueva etapa</span></div>{bandLink(change)}</div>
-                      </div>
-
-                      <footer className={styles.cardActions}>
-                        <span>Relacionado en Hilo Cofrade</span>
-                        <div>
-                          {change.brotherhoodHref ? <Link href={change.brotherhoodHref}>Hermandad</Link> : null}
-                          {change.stepHref ? <Link href={change.stepHref}>Paso</Link> : null}
-                          {change.newBandHref ? <Link href={change.newBandHref}>Banda 2027</Link> : null}
-                        </div>
-                      </footer>
+                      {brotherhood.brotherhoodHref ? (
+                        <footer className={styles.clusterFooter}>
+                          <span>Entidad relacionada</span>
+                          <Link href={brotherhood.brotherhoodHref}>Ver ficha de la Hermandad →</Link>
+                        </footer>
+                      ) : null}
                     </article>
                   ))}
                 </div>
