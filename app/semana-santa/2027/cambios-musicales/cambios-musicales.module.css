@@ -812,115 +812,115 @@
 
 @media (min-width: 901px) {
   .dayGroup {
-    padding-top: 46px;
+    padding-top: 48px;
   }
 
   .dayHeading {
-    padding-bottom: 15px;
+    padding-bottom: 16px;
   }
 
   .dayHeading h2 {
-    font-size: clamp(42px, 3.2vw, 48px);
+    font-size: clamp(44px, 3.35vw, 50px);
   }
 
   .dayHeading > span {
-    font-size: 11px;
+    font-size: 12px;
   }
 
   .clusterHeader {
-    padding: 23px 0 15px;
+    padding: 24px 0 16px;
   }
 
   .clusterHeader h3 {
-    font-size: clamp(27px, 2vw, 30px);
+    font-size: clamp(29px, 2.15vw, 32px);
     line-height: 1.12;
   }
 
   .clusterHeader span {
-    margin-top: 5px;
-    font-size: 12px;
+    margin-top: 6px;
+    font-size: 13px;
   }
 
   .movement {
-    grid-template-columns: minmax(230px, .95fr) minmax(0, 1fr) 40px minmax(0, 1fr);
-    gap: 18px;
-    padding: 19px 0;
+    grid-template-columns: minmax(250px, 1fr) minmax(0, 1fr) 42px minmax(0, 1fr);
+    gap: 20px;
+    padding: 21px 0;
   }
 
   .movementLead {
-    gap: 5px;
+    gap: 6px;
   }
 
   .movementLead strong {
-    font-size: clamp(14px, 1.05vw, 16px);
-    line-height: 1.42;
+    font-size: clamp(16px, 1.15vw, 17px);
+    line-height: 1.45;
   }
 
   .movementLead > span {
-    font-size: 10px;
-    letter-spacing: .025em;
+    font-size: 11px;
+    letter-spacing: .02em;
   }
 
   .movementLead small {
-    font-size: 12px;
+    font-size: 13px;
     line-height: 1.45;
   }
 
   .bandCell {
-    gap: 6px;
+    gap: 7px;
   }
 
   .bandCell > span {
-    font-size: 10px;
+    font-size: 11px;
   }
 
   .bandCell > a,
   .bandCell > strong {
-    font-size: clamp(14px, 1.05vw, 16px);
+    font-size: clamp(16px, 1.15vw, 17px);
     line-height: 1.45;
   }
 
   .arrow {
-    width: 38px;
-    height: 38px;
-    font-size: 19px;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
   }
 
   .resultBar {
-    font-size: 11px;
+    font-size: 12px;
   }
 
   .resultBar strong {
-    font-size: 14px;
+    font-size: 15px;
   }
 
   .searchPanel label > span {
-    font-size: 9px;
+    font-size: 10px;
   }
 
   .searchPanel input,
   .searchPanel select {
-    font-size: 12px;
+    font-size: 13px;
   }
 
   .searchPanel button,
   .searchPanel > a {
-    font-size: 10px;
+    font-size: 11px;
   }
 
   .summaryHeading > span {
-    font-size: 12px;
+    font-size: 13px;
   }
 
   .summaryHeading small {
-    font-size: 9px;
+    font-size: 10px;
   }
 
   .municipalityList a {
-    font-size: 12px;
+    font-size: 13px;
   }
 
   .municipalityList a strong {
-    font-size: 20px;
+    font-size: 21px;
   }
 }
