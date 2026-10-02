@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { createPublicClient as createClient } from '@/lib/supabase/public'
 import { publicText } from '@/lib/supabase/public-entity-page'
 import styles from './BrotherhoodQuickFacts.module.css'
+import { groupBrotherhoodDressers, relationPeriod } from '@/lib/brotherhood-people'
 
 const CURRENT_HEAD_RELATIONS = ['hermano_mayor_of', 'hermana_mayor_of']
 
@@ -24,20 +25,6 @@ function isCurrentRelation(item, currentYear) {
   if (item.date_to) return Number(String(item.date_to).slice(0, 4)) >= currentYear
   const textYear = latestYear(item.date_to_text)
   return textYear ? textYear >= currentYear : !publicText(item.date_to_text)
-}
-
-function periodLabel(item = {}) {
-  const from = publicText(item.date_from_text) || (item.date_from ? String(item.date_from).slice(0, 4) : '')
-  const to = publicText(item.date_to_text) || (item.date_to ? String(item.date_to).slice(0, 4) : '')
-
-  if (from && to) {
-    const fromYear = latestYear(from) || from
-    const toYear = latestYear(to) || to
-    return `${fromYear}–${toYear}`
-  }
-  if (from) return /^desde\b/i.test(from) ? from : `Desde ${from}`
-  if (to) return /^hasta\b/i.test(to) ? to : `Hasta ${to}`
-  return ''
 }
 
 function membersLabel(count, kind) {
@@ -148,7 +135,7 @@ async function loadRelationalFacts(brotherhood) {
           name: headAgent.name,
           slug: headAgent.slug || '',
           label: headRelation.relation_type === 'hermana_mayor_of' ? 'Hermana Mayor' : 'Hermano Mayor',
-          period: periodLabel(headRelation),
+          period: relationPeriod(headRelation),
         }
       : null,
     dressers: dresserRelations
@@ -158,11 +145,13 @@ async function loadRelationalFacts(brotherhood) {
         if (!agent || !image) return null
         return {
           id: relation.id,
+          agentId: agent.id,
+          imageId: image.id,
           name: agent.name,
           slug: agent.slug || '',
           image: image.nombre,
           imageSlug: image.slug || '',
-          period: periodLabel(relation),
+          period: relationPeriod(relation),
         }
       })
       .filter(Boolean)
@@ -227,6 +216,7 @@ export default async function BrotherhoodQuickFacts({ brotherhood, heroFactLabel
 
   if (!facts.length && !activities.length && !relational.dressers.length) return null
   const DresserContainer = compact ? 'details' : 'div'
+  const dressers = groupBrotherhoodDressers(relational.dressers)
 
   return (
     <div className={styles.wrapper}>
@@ -267,23 +257,20 @@ export default async function BrotherhoodQuickFacts({ brotherhood, heroFactLabel
 
       {relational.dressers.length ? (
         <DresserContainer className={styles.dressers}>
-          {compact && <summary>Vestidores actuales · {relational.dressers.length}</summary>}
+          {compact && <summary>{dressers.length === 1 ? 'Vestidor actual' : 'Vestidores actuales'} · {dressers.length}</summary>}
           <div className={styles.blockTitle}>
             <span>Vestidores actuales</span>
             <small>Vinculación documentada con los Titulares</small>
           </div>
           <div className={styles.dresserGrid}>
-            {relational.dressers.map((dresser) => (
-              <div className={styles.dresser} key={dresser.id}>
-                <small>
-                  {dresser.imageSlug ? (
-                    <Link className={styles.inlineLink} href={`/imagenes/${dresser.imageSlug}`}>
-                      {dresser.image}<span aria-hidden="true">↗</span>
-                    </Link>
-                  ) : dresser.image}
-                </small>
+            {dressers.map((dresser) => (
+              <div className={styles.dresser} key={dresser.agentId || dresser.id}>
                 <strong>{dresser.name}</strong>
-                {dresser.period ? <span>{dresser.period}</span> : null}
+                {dresser.commonPeriod && <span>{dresser.commonPeriod}</span>}
+                {dresser.images.map((image) => <div key={image.id}>
+                  <small>{image.imageSlug ? <Link className={styles.inlineLink} href={`/imagenes/${image.imageSlug}`}>{image.image}<span aria-hidden="true">↗</span></Link> : image.image}</small>
+                  {image.period && !dresser.commonPeriod && <span>{image.period}</span>}
+                </div>)}
               </div>
             ))}
           </div>

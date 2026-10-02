@@ -122,7 +122,7 @@ function MarchStyleGroups({ items }) {
   );
 }
 
-export default function BrotherhoodMusicalHeritage({ items = [], id = 'musica', headingLevel = 2 }) {
+export default function BrotherhoodMusicalHeritage({ items = [], id = 'musica', headingLevel = 2, compact = false }) {
   if (!items.length) return null;
 
   const groups = GROUPS.map((group) => ({
@@ -138,7 +138,7 @@ export default function BrotherhoodMusicalHeritage({ items = [], id = 'musica', 
             level={headingLevel}
             eyebrow="Sonidos propios"
             title="Patrimonio musical"
-            description="Obras relacionadas de forma independiente con la Hermandad, sus Titulares, autores, formaciones, estrenos y fuentes. Las marchas procesionales se ordenan por estilo musical; la música para cultos, himnos, coplas y adaptaciones se conserva como repertorio diferenciado."
+            description={compact ? 'Marchas y otras obras vinculadas a la Hermandad y sus Titulares.' : 'Obras relacionadas de forma independiente con la Hermandad, sus Titulares, autores, formaciones, estrenos y fuentes. Las marchas procesionales se ordenan por estilo musical; la música para cultos, himnos, coplas y adaptaciones se conserva como repertorio diferenciado.'}
           />
           <div className={styles.summary} aria-label={`${items.length} composiciones documentadas`}>
             <strong>{items.length}</strong>

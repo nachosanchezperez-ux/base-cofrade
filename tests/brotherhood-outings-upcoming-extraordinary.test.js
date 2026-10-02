@@ -7,7 +7,7 @@ const source = readFileSync(new URL('../components/BrotherhoodOutingsSection.js'
 test('separa las extraordinarias anunciadas del histórico', () => {
   assert.match(source, /const state = normalized\(outing\?\.estado\)/)
   assert.match(source, /state === 'announced' && extraordinary\) return 'upcoming'/)
-  assert.match(source, /title: 'Próximas extraordinarias'/)
+  assert.match(source, /title: 'Próximas salidas y traslados'/)
   assert.match(source, /\['penitence', 'glory', 'upcoming', 'external', 'historical', 'other'\]/)
 })
 

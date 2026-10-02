@@ -13,7 +13,7 @@
 .hero :global([class*='__facts']) > div { min-height: 0; padding: 8px 18px 8px 0; }
 .hero :global([class*='__facts']) dt { font-size: 11px; }
 .hero :global([class*='__facts']) dd { font-size: 16px; max-width: none; }
-.official { margin: 8px 0 0 132px; max-width: 760px; font-size: 13px; color: #fff; }
+.official { margin: 12px 0 0 132px; max-width: 760px; font-size: 14px; line-height: 1.6; color: #fff; }
 .official summary { cursor: pointer; min-height: 36px; display: flex; align-items: center; gap: 14px; list-style: none; }
 .official p { margin: 4px 0 12px; line-height: 1.55; }
 .official summary::-webkit-details-marker { display: none; }

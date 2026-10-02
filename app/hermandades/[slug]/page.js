@@ -521,7 +521,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
   </>);
   const musicalHeritageSection = (<>
 {musicalHeritage.length > 0 ? (
-        <BrotherhoodMusicalHeritage items={musicalHeritage} headingLevel={reading ? 3 : 2} id={reading ? "patrimonio-musical" : "musica"} />
+        <BrotherhoodMusicalHeritage items={musicalHeritage} compact={reading} headingLevel={reading ? 3 : 2} id={reading ? "patrimonio-musical" : "musica"} />
       ) : fallbackMusicalHeritage.length > 0 ? (
         <section className="section music-section" id={reading ? "patrimonio-musical" : "musica"}><div className="shell">
           <SectionTitle level={reading ? 3 : 2} eyebrow="Sonidos propios" title="Patrimonio Musical" description="Marchas dedicadas a la Hermandad y a sus titulares, conectadas con sus autores y registros audiovisuales." />
@@ -644,7 +644,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
                         {pieza.descripcion && pieza.descripcion !== pieza.resumen && <p>{pieza.descripcion}</p>}
                         {pieza.contexto && <div><small>Contexto histórico</small><p>{pieza.contexto}</p></div>}
                         {pieza.iconografia && <div><small>Diseño e iconografía</small><p>{pieza.iconografia}</p></div>}
-                        {pieza.origen && <div><small>Origen y evolución</small><p>{pieza.origen}</p></div>}
+                        {pieza.origen && pieza.origen.trim() !== pieza.contexto?.trim() && <div><small>Origen y evolución</small><p>{pieza.origen}</p></div>}
                         {(pieza.tecnica || pieza.materiales || pieza.dimensiones) && <p className="heritage-work-tech">{[pieza.tecnica, pieza.materiales, pieza.dimensiones].filter(Boolean).join(' · ')}</p>}
                       </div>
                     </details>

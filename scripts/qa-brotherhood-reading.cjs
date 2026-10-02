@@ -97,6 +97,42 @@ const controlCanonical = process.env.QA_CONTROL_CANONICAL || 'https://hilocofrad
     assert.equal(metrics.canonical, expectedCanonical);
     assert.deepEqual(metrics.duplicateIds, []);
     await page.screenshot({ path: `${out}/pilot-${width}.png` });
+    if (process.env.QA_CONTENT_AUDIT === '1') {
+      const official = page.locator('main section p[class*="__official"]');
+      assert.match(await official.innerText(), /Antigua y Fervorosa Hermandad/);
+      assert.equal(await official.isVisible(), true);
+      const dressers = page.locator('#resumen details').filter({ has: page.locator('summary', { hasText: 'Vestidor actual · 1' }) });
+      await dressers.locator('summary').focus();
+      await page.keyboard.press('Enter');
+      assert.equal(await dressers.getByText('José Antonio Grande de León', { exact: true }).count(), 1);
+      assert.equal(await dressers.locator('a[href^="/imagenes/"]').count(), 2);
+      assert.equal((await dressers.innerText()).includes('Desde Vigente'), false);
+      await dressers.screenshot({ path: `${out}/dressers-${width}.png` });
+      await dressers.locator('summary').click();
+      const seat = page.locator('#resumen details').filter({ has: page.locator('summary', { hasText: 'Sede y horarios' }) });
+      await seat.locator('summary').click();
+      assert.equal((await seat.innerText()).includes('Salida habitual'), false);
+      await seat.locator('summary').click();
+      const habit = page.locator('details').filter({ has: page.locator('#tunica') });
+      await habit.locator(':scope > summary').click();
+      assert.equal(await page.locator('#tunica').evaluate(e => getComputedStyle(e).backgroundColor), 'rgb(255, 255, 255)');
+      assert.equal(await page.locator('#tunica .habit-card').count(), 2);
+      assert.equal(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth), 0);
+      assert.equal(await page.locator('#tunica h2').evaluate(e => getComputedStyle(e).color), 'rgb(35, 39, 44)');
+      assert.equal(await page.locator('#tunica dd').first().evaluate(e => getComputedStyle(e).color), 'rgb(35, 39, 44)');
+      for (const image of await page.locator('#tunica img').all()) {
+        await image.scrollIntoViewIfNeeded();
+        await image.evaluate(e => e.decode());
+      }
+      await page.locator('#tunica h2').scrollIntoViewIfNeeded();
+      await page.locator('#tunica h2').click();
+      await page.locator('#tunica').screenshot({ path: `${out}/habit-${width}.png` });
+      await habit.locator(':scope > summary').click();
+      const archive = page.locator('#archivo-salidas');
+      await archive.locator(':scope > summary').click();
+      assert.equal((await archive.innerText()).includes('Próximas extraordinarias'), false);
+      await archive.locator(':scope > summary').click();
+    }
     await page.getByRole('link', { name: 'Historia', exact: true }).click();
     await page.waitForFunction(() => document.querySelector('[aria-current="location"]')?.textContent === 'Historia');
     const timeline = page.locator('#historia details');
