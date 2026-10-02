@@ -116,3 +116,19 @@ test('los cambios de una misma Hermandad siguen agrupados sin duplicar cabeceras
   assert.doesNotMatch(styles, /\.clusterCount/)
   assert.doesNotMatch(styles, /\.movementNumber/)
 })
+
+
+test('el listado recupera resumen territorial y mejora legibilidad de escritorio', async () => {
+  const page = await read('app/semana-santa/2027/cambios-musicales/page.js')
+  const styles = await read('app/semana-santa/2027/cambios-musicales/cambios-musicales.module.css')
+
+  assert.match(page, /function municipalityRanking\(changes, limit = 6\)/)
+  assert.match(page, /Municipios con más cambios/)
+  assert.match(page, /cambios confirmados/)
+  assert.match(page, /municipalityTop\.map/)
+  assert.match(styles, /\.summaryStrip/)
+  assert.match(styles, /\.municipalityList/)
+  assert.match(styles, /@media \(min-width: 901px\)[\s\S]*\.clusterHeader h3[\s\S]*font-size: 25px/)
+  assert.match(styles, /@media \(min-width: 901px\)[\s\S]*\.movementLead strong[\s\S]*font-size: 13px/)
+  assert.match(styles, /@media \(min-width: 901px\)[\s\S]*\.bandCell > a,[\s\S]*font-size: 13px/)
+})
