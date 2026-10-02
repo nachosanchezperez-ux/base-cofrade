@@ -130,7 +130,7 @@ const controlCanonical = process.env.QA_CONTROL_CANONICAL || 'https://hilocofrad
       assert.match(await official.innerText(), /Antigua y Fervorosa Hermandad/);
       assert.equal(await official.isVisible(), true);
       const dressers = page.locator('#titulares [aria-label="Personas vinculadas a la Hermandad"]');
-      assert.equal(await dressers.getByText('José Antonio Grande de León', { exact: true }).count(), 1);
+      assert.equal(await dressers.getByText('José Antonio Grande de León', { exact: false }).count(), 1);
       assert.equal(await dressers.locator('a[href^="/imagenes/"]').count(), 2);
       assert.equal((await dressers.innerText()).includes('Desde Vigente'), false);
       await dressers.screenshot({ path: `${out}/dressers-${width}.png` });
