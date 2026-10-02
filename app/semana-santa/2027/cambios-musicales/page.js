@@ -99,6 +99,19 @@ function groupsFor(changes) {
   })
 }
 
+function municipalityRanking(changes, limit = 6) {
+  const counts = new Map()
+  for (const change of changes) {
+    if (!change.municipality) continue
+    counts.set(change.municipality, (counts.get(change.municipality) || 0) + 1)
+  }
+
+  return [...counts.entries()]
+    .map(([name, count]) => ({ name, count }))
+    .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name, 'es'))
+    .slice(0, limit)
+}
+
 function bandFamilyKey(change) {
   const value = normalizeMusicChangeText(
     [change.newBandType, change.newBandName].filter(Boolean).join(' '),
@@ -166,6 +179,7 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
   const brotherhoodCount = new Set(changes.map((item) => item.brotherhoodSlug || item.brotherhoodName)).size
   const newBandCount = new Set(changes.map((item) => item.newBandSlug || item.newBandName)).size
   const lastUpdated = updatedLabel(changes)
+  const municipalityTop = municipalityRanking(changes)
   const groups = groupsFor(filtered)
   const hasFilters = Boolean(activeDay || activeScope || activeMunicipality || activeType || requestedQuery)
 
@@ -223,6 +237,28 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
             El listado relaciona cada Hermandad con su jornada, municipio, Paso y formación musical,
             y permite consultar tanto los relevos de banda como las nuevas incorporaciones.
           </p>
+        </section>
+
+        <section className={styles.summaryStrip} aria-label="Resumen de cambios musicales 2027">
+          <div className={styles.totalChanges}>
+            <strong>{changes.length}</strong>
+            <span>cambios confirmados</span>
+          </div>
+
+          <div className={styles.municipalitySummary}>
+            <div className={styles.summaryHeading}>
+              <span>Municipios con más cambios</span>
+              <small>Consulta rápida por localidad</small>
+            </div>
+            <nav className={styles.municipalityList} aria-label="Municipios con más cambios musicales">
+              {municipalityTop.map((item) => (
+                <Link href={filterHref({ municipality: item.name })} key={item.name}>
+                  <span>{item.name === 'Sevilla' ? 'Sevilla capital' : item.name}</span>
+                  <strong>{item.count}</strong>
+                </Link>
+              ))}
+            </nav>
+          </div>
         </section>
 
         <section className={styles.explorer} id="explorar-cambios" aria-labelledby="explorar-cambios-musicales">
