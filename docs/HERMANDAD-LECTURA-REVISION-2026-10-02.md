@@ -51,3 +51,15 @@ personas duplicadas en Supabase: el error estaba en su presentación.
 Main concurrente `abfc9370` incorpora únicamente documentación de Imaginería;
 se preserva íntegra. No se cierra por esta revisión la QA general pendiente
 de San Esteban ni se altera la cohorte existente.
+
+## Postflight de producción · PASS
+
+#1064 integrada en `55d6d6389607f1724fd1b118282eab3a90850f93`;
+producción `dpl_61ESkdf2784U98GxwhyxzaQDNrx5` READY. La matriz y auditoría
+de contenido se repiten en la URL canónica: seis anchuras PASS, nombre
+completo, una persona/dos Titulares, vigencia única correcta, Sede y Salidas
+coherentes, Túnica con contraste e imágenes cargadas. Navegación y teclado
+PASS; cero overflow/IDs duplicados/pageerror. Control Gran Poder PASS.
+Sin error/fatal en los logs consultados hasta 05:06:51 UTC.
+La evidencia de Autores de main concurrente permanece byte a byte intacta.
+Evidencia: `docs/qa/hermandad-lectura-2026-10-02/production.json`.
