@@ -2,6 +2,18 @@
 
 Corte: 3 de octubre de 2026, Europe/Madrid (2/10, 22:07 UTC).
 
+## Continuación de modalidades y conservación · 3/10/2026
+
+Propuesta local, todavía no productiva. Cinco opciones explícitas: corrección, agenda, música, fotografías/documentos y sugerencia. Agenda y música se guardan como `new_record`; su contexto validado se incorpora a la explicación visible en el Panel existente, sin nuevas tablas ni migración adicional. Se mantiene compatibilidad con envíos del contrato anterior de cuatro tipos.
+
+Agenda exige hermandad/banda, fecha real, lugar y municipio; hora opcional validada. Música exige entidad y asunto conocido; año opcional 1800–2100. Ambas conservan la exigencia de fuente o archivo. El servidor rechaza modalidad/tipo incoherentes, campos repetidos/no textuales, HTML y explicaciones que superen 6.000 caracteres incluyendo contexto. Precarga opcional `kind`/`page`, limitada a modalidades conocidas y URLs HTTPS de Hilo Cofrade, sin credenciales, puerto, query ni fragmento; no otorga autoridad y se vuelve a validar al enviar. No se añaden CTAs públicos hacia un canal cerrado.
+
+Textos del formulario conservados en estado de React ante errores; foco dirigido al aviso o éxito, CAPTCHA reiniciado y aviso de reselección de archivos cuando corresponde. Controles y etiquetas de 16px, ayudas de 14px, opciones en filas abiertas y widget compacto preparado para anchuras pequeñas. El canal cerrado muestra un aviso dirigido al lector sin detalles técnicos internos.
+
+Conservación: el Panel incorpora filtro `retention=due`, aplicado por `expires_at` antes del límite de 100 filas; conserva el filtro al abrir cada aportación y muestra la fecha de revisión. Se advierte expresamente que marcar Caducada no suprime datos ni archivos. **Esto prepara la revisión manual; no implementa supresión, extensión de plazo ni un job automático. B3 permanece abierto**, incluida la afirmación de depuración a 48h en la política real. No se modifica la política publicada ni se ejecuta limpieza destructiva.
+
+QA: 1471/1471 tests PASS, incluidas cinco regresiones de modalidades/contexto. Build final y verificación PDF compilada PASS, incluido el ajuste de reselección. `git diff --check` PASS. El servidor local de preview arrancó con envíos bloqueados; el daemon de `agent-browser` no pudo arrancar en dos intentos (normal/debug), sin detalle adicional. **QA visual, errores/éxito interactivos, teclado y matriz 320–1600px NO certificados.** Turnstile real, concurrencia/migración en preview, mantenimiento y configuración real siguen pendientes. Mantener NO-GO.
+
 ## Inspección Vercel autorizada · 3/10/2026, Europe/Madrid
 
 Sesión autenticada en el dashboard de `DesdeelArenal / base-cofrade`. Revisión de metadatos visibles con filtros All Types, All Environments, All Editors y All Variables, pestañas Project y Shared. No se pulsó Reveal Value ni se leyeron valores secretos. No se modificaron variables, credenciales, permisos ni deployments.

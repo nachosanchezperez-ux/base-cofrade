@@ -3,3 +3,20 @@
 @media(min-width:680px){.process ol{grid-template-columns:repeat(2,minmax(0,1fr))}.formCard,.successCard{padding:28px}.typeGrid,.fieldGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.fieldWide{grid-column:1/-1}.submitRow{flex-direction:row;align-items:center;justify-content:space-between}.submitRow button{min-width:210px}.submitRow small{max-width:260px}}
 @media(min-width:980px){.hero{padding:70px 0 62px}.content{padding-top:44px;padding-bottom:90px}.process ol{grid-template-columns:repeat(4,minmax(0,1fr))}.formLayout{grid-template-columns:minmax(0,2fr) minmax(250px,.78fr);align-items:start;gap:28px;margin-top:44px}.aside{position:sticky;top:24px}.formCard,.successCard{padding:34px}}
 .quarantineNote{margin:12px 0 0;color:var(--collab-muted);font-size:11px;line-height:1.5}
+
+/* Readable controls and open rows across narrow phones and desktop. */
+.page{font-size:16px;line-height:1.6;overflow-wrap:anywhere}
+.hero p,.process strong,.process p,.formHeading p,.pendingNotice,.errorNotice,
+.form legend,.fieldGrid label>span,.typeGrid strong,.checkRow,.contactFieldset>p,
+.aside ul,.securityCard strong,.securityCard p,.successCard p{font-size:16px}
+.typeGrid small,.fieldGrid small,.fileMessage,.consentBox p,.submitRow small,.help,.quarantineNote{font-size:14px}
+.fieldGrid input,.fieldGrid textarea,.fieldGrid select,.submitRow button,.successCard button{font-size:16px}
+.fieldGrid select{width:100%;min-height:44px;padding:8px 12px;border:1px solid #cfdbe5;border-radius:10px;background:#fff;color:var(--collab-ink);font:inherit}
+.fieldGrid select:focus-visible,.form button:focus-visible,.successCard button:focus-visible{outline:3px solid var(--collab-blue);outline-offset:3px}
+.process li{padding:14px 0;border:0;border-top:1px solid var(--collab-line);border-radius:0}
+.formCard,.successCard{box-shadow:none;border-radius:0}
+.typeGrid{grid-template-columns:1fr}
+.typeGrid label{border:0;border-bottom:1px solid var(--collab-line);border-radius:0;padding:14px 8px}
+.typeGrid .typeActive{box-shadow:inset 3px 0 var(--collab-blue)}
+.turnstile{min-height:150px;max-width:100%}
+@media(max-width:389px){.formCard,.successCard{padding:16px 12px}.consentBox{padding:12px}.hero h1{font-size:38px}}
