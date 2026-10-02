@@ -355,7 +355,10 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
               <section className={styles.dayGroup} key={group.slug} aria-labelledby={`jornada-${group.slug}`}>
                 <header className={styles.dayHeading}>
                   <div><span>Semana Santa 2027</span><h2 id={`jornada-${group.slug}`}>{group.label}</h2></div>
-                  <div className={styles.dayCount}><strong>{group.items.length}</strong><span>{group.items.length === 1 ? 'cambio' : 'cambios'}</span></div>
+                  <div className={styles.dayCount}>
+                    <strong>{group.items.length}</strong>
+                    <span>{group.items.length === 1 ? 'cambio' : 'cambios'} · {group.brotherhoods.length} {group.brotherhoods.length === 1 ? 'corporación' : 'corporaciones'}</span>
+                  </div>
                 </header>
 
                 <div className={styles.brotherhoodList}>
@@ -374,10 +377,12 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
                               : brotherhood.brotherhoodName}
                           </h3>
                         </div>
-                        <div className={styles.clusterCount}>
-                          <strong>{brotherhood.changes.length}</strong>
-                          <span>{brotherhood.changes.length === 1 ? 'cambio' : 'cambios'}</span>
-                        </div>
+                        {brotherhood.changes.length > 1 ? (
+                          <div className={styles.clusterCount}>
+                            <strong>{brotherhood.changes.length}</strong>
+                            <span>cambios musicales</span>
+                          </div>
+                        ) : null}
                       </header>
 
                       <div className={styles.clusterChanges}>
