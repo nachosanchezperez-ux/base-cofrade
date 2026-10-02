@@ -1,0 +1,2698 @@
+{
+  "checked_at": "2026-10-02T04:49:41.011460+00:00",
+  "stage": "POST_APPLY",
+  "results": [
+    {
+      "path": "/autores",
+      "status": 200,
+      "title": "Autores y oficios cofrades · Hilo Cofrade",
+      "h1": [
+        "Autores y oficios"
+      ],
+      "canonical": "https://hilocofrade.es/autores",
+      "robots": "index, follow",
+      "jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "@id": "https://hilocofrade.es/#organization",
+          "url": "https://hilocofrade.es",
+          "name": "Hilo Cofrade",
+          "description": "Enciclopedia cofrade de Sevilla y su provincia: hermandades, imágenes, pasos, bandas, marchas, autores, patrimonio, cultos y salidas relacionados.",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://hilocofrade.es/brand/logo.svg"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "@id": "https://hilocofrade.es/#website",
+          "url": "https://hilocofrade.es",
+          "name": "Hilo Cofrade",
+          "description": "Enciclopedia cofrade de Sevilla y su provincia: hermandades, imágenes, pasos, bandas, marchas, autores, patrimonio, cultos y salidas relacionados.",
+          "inLanguage": "es",
+          "publisher": {
+            "@id": "https://hilocofrade.es/#organization"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "@id": "https://hilocofrade.es/autores#collection",
+          "url": "https://hilocofrade.es/autores",
+          "name": "Autores y oficios cofrades",
+          "description": "Compositores, imagineros, restauradores, vestidores, bordadores, orfebres y talleres documentados en Hilo Cofrade, relacionados con sus obras.",
+          "inLanguage": "es",
+          "isPartOf": {
+            "@id": "https://hilocofrade.es/#website"
+          },
+          "mainEntity": {
+            "@type": "ItemList",
+            "numberOfItems": 100,
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Abel Moreno Gómez",
+                "url": "https://hilocofrade.es/autores/abel-moreno-gomez"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Abraham Padilla Consuegra",
+                "url": "https://hilocofrade.es/autores/abraham-padilla-consuegra"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Abraham Peña Escobar",
+                "url": "https://hilocofrade.es/autores/abraham-pena-escobar"
+              },
+              {
+                "@type": "ListItem",
+                "position": 4,
+                "name": "Adrián Tinajero Cadenas",
+                "url": "https://hilocofrade.es/autores/adrian-tinajero-cadenas"
+              },
+              {
+                "@type": "ListItem",
+                "position": 5,
+                "name": "Agustín Castro Rodríguez",
+                "url": "https://hilocofrade.es/autores/agustin-castro-rodriguez"
+              },
+              {
+                "@type": "ListItem",
+                "position": 6,
+                "name": "Agustín de Perea",
+                "url": "https://hilocofrade.es/autores/agustin-de-perea"
+              },
+              {
+                "@type": "ListItem",
+                "position": 7,
+                "name": "Alberto Barea Tejada",
+                "url": "https://hilocofrade.es/autores/alberto-barea-tejada"
+              },
+              {
+                "@type": "ListItem",
+                "position": 8,
+                "name": "Alberto Escámez",
+                "url": "https://hilocofrade.es/autores/alberto-escamez"
+              },
+              {
+                "@type": "ListItem",
+                "position": 9,
+                "name": "Alberto Escámez López",
+                "url": "https://hilocofrade.es/autores/alberto-escamez-lopez"
+              },
+              {
+                "@type": "ListItem",
+                "position": 10,
+                "name": "Alberto González Ponce",
+                "url": "https://hilocofrade.es/autores/alberto-gonzalez-ponce"
+              },
+              {
+                "@type": "ListItem",
+                "position": 11,
+                "name": "Alejandro Blanco Hernández",
+                "url": "https://hilocofrade.es/autores/agente-alejandro-blanco-hernandez"
+              },
+              {
+                "@type": "ListItem",
+                "position": 12,
+                "name": "Alejandro Cascajares",
+                "url": "https://hilocofrade.es/autores/alejandro-cascajares"
+              },
+              {
+                "@type": "ListItem",
+                "position": 13,
+                "name": "Alejandro Marmolejo",
+                "url": "https://hilocofrade.es/autores/alejandro-marmolejo"
+              },
+              {
+                "@type": "ListItem",
+                "position": 14,
+                "name": "Alfonso Lozano Ruiz",
+                "url": "https://hilocofrade.es/autores/alfonso-lozano-ruiz"
+              },
+              {
+                "@type": "ListItem",
+                "position": 15,
+                "name": "Almudena Fernández García",
+                "url": "https://hilocofrade.es/autores/almudena-fernandez-garcia"
+              },
+              {
+                "@type": "ListItem",
+                "position": 16,
+                "name": "Álvaro Martín González",
+                "url": "https://hilocofrade.es/autores/alvaro-martin-gonzalez"
+              },
+              {
+                "@type": "ListItem",
+                "position": 17,
+                "name": "Amadeo Vives",
+                "url": "https://hilocofrade.es/autores/amadeo-vives"
+              },
+              {
+                "@type": "ListItem",
+                "position": 18,
+                "name": "Ana Amparo Cerrejón Lozano",
+                "url": "https://hilocofrade.es/autores/ana-amparo-cerrejon-lozano"
+              },
+              {
+                "@type": "ListItem",
+                "position": 19,
+                "name": "Andrés de Carvajal y Campos",
+                "url": "https://hilocofrade.es/autores/andres-de-carvajal-campos"
+              },
+              {
+                "@type": "ListItem",
+                "position": 20,
+                "name": "Ángel Alcaide Barroso",
+                "url": "https://hilocofrade.es/autores/angel-alcaide-barroso"
+              },
+              {
+                "@type": "ListItem",
+                "position": 21,
+                "name": "Antonio Amodeo",
+                "url": "https://hilocofrade.es/autores/antonio-amodeo"
+              },
+              {
+                "@type": "ListItem",
+                "position": 22,
+                "name": "Antonio Bejarano Ruiz",
+                "url": "https://hilocofrade.es/autores/antonio-bejarano-ruiz"
+              },
+              {
+                "@type": "ListItem",
+                "position": 23,
+                "name": "Antonio Cardoso de Quirós",
+                "url": "https://hilocofrade.es/autores/antonio-cardoso-de-quiros"
+              },
+              {
+                "@type": "ListItem",
+                "position": 24,
+                "name": "Antonio Castillo Lastrucci",
+                "url": "https://hilocofrade.es/autores/antonio-castillo-lastrucci"
+              },
+              {
+                "@type": "ListItem",
+                "position": 25,
+                "name": "Antonio Castro del Pozo",
+                "url": "https://hilocofrade.es/autores/antonio-castro-del-pozo"
+              },
+              {
+                "@type": "ListItem",
+                "position": 26,
+                "name": "Antonio Cruz Gómez",
+                "url": "https://hilocofrade.es/autores/antonio-cruz-gomez"
+              },
+              {
+                "@type": "ListItem",
+                "position": 27,
+                "name": "Antonio David Rodríguez Gómez",
+                "url": "https://hilocofrade.es/autores/antonio-david-rodriguez-gomez"
+              },
+              {
+                "@type": "ListItem",
+                "position": 28,
+                "name": "Antonio de Alfián",
+                "url": "https://hilocofrade.es/autores/antonio-de-alfian"
+              },
+              {
+                "@type": "ListItem",
+                "position": 29,
+                "name": "Antonio Díaz Fernández",
+                "url": "https://hilocofrade.es/autores/antonio-diaz-fernandez"
+              },
+              {
+                "@type": "ListItem",
+                "position": 30,
+                "name": "Antonio Dubé de Luque",
+                "url": "https://hilocofrade.es/autores/antonio-dube-de-luque"
+              },
+              {
+                "@type": "ListItem",
+                "position": 31,
+                "name": "Antonio Eslava Rubio",
+                "url": "https://hilocofrade.es/autores/antonio-eslava-rubio"
+              },
+              {
+                "@type": "ListItem",
+                "position": 32,
+                "name": "Antonio Garduño Navas",
+                "url": "https://hilocofrade.es/autores/antonio-garduno-navas"
+              },
+              {
+                "@type": "ListItem",
+                "position": 33,
+                "name": "Antonio Herranz",
+                "url": "https://hilocofrade.es/autores/antonio-herranz"
+              },
+              {
+                "@type": "ListItem",
+                "position": 34,
+                "name": "Antonio Illanes Rodríguez",
+                "url": "https://hilocofrade.es/autores/antonio-illanes-rodriguez"
+              },
+              {
+                "@type": "ListItem",
+                "position": 35,
+                "name": "Antonio J. Caparros Ridao",
+                "url": "https://hilocofrade.es/autores/antonio-j-caparros-ridao"
+              },
+              {
+                "@type": "ListItem",
+                "position": 36,
+                "name": "Antonio Javier Rodríguez Rojas",
+                "url": "https://hilocofrade.es/autores/antonio-javier-rodriguez-rojas"
+              },
+              {
+                "@type": "ListItem",
+                "position": 37,
+                "name": "Antonio Jesús del Castillo Fernández",
+                "url": "https://hilocofrade.es/autores/antonio-jesus-del-castillo-fernandez"
+              },
+              {
+                "@type": "ListItem",
+                "position": 38,
+                "name": "Antonio José López Escalante",
+                "url": "https://hilocofrade.es/autores/antonio-jose-lopez-escalante"
+              },
+              {
+                "@type": "ListItem",
+                "position": 39,
+                "name": "Antonio Manuel López Carrión",
+                "url": "https://hilocofrade.es/autores/antonio-manuel-lopez-carrion"
+              },
+              {
+                "@type": "ListItem",
+                "position": 40,
+                "name": "Antonio Martín Fernández",
+                "url": "https://hilocofrade.es/autores/antonio-martin-fernandez"
+              },
+              {
+                "@type": "ListItem",
+                "position": 41,
+                "name": "Antonio Moreno Pozo",
+                "url": "https://hilocofrade.es/autores/antonio-moreno-pozo"
+              },
+              {
+                "@type": "ListItem",
+                "position": 42,
+                "name": "Antonio Pantión Pérez",
+                "url": "https://hilocofrade.es/autores/antonio-pantion-perez"
+              },
+              {
+                "@type": "ListItem",
+                "position": 43,
+                "name": "Antonio Sánchez González",
+                "url": "https://hilocofrade.es/autores/antonio-sanchez-gonzalez"
+              },
+              {
+                "@type": "ListItem",
+                "position": 44,
+                "name": "Arturo Barea Tejada",
+                "url": "https://hilocofrade.es/autores/arturo-barea-tejada"
+              },
+              {
+                "@type": "ListItem",
+                "position": 45,
+                "name": "Ballesteros Cascajares · Conservación & Restauración",
+                "url": "https://hilocofrade.es/autores/ballesteros-cascajares-conservacion-restauracion"
+              },
+              {
+                "@type": "ListItem",
+                "position": 46,
+                "name": "Bartolomé Pérez Casas",
+                "url": "https://hilocofrade.es/autores/bartolome-perez-casas"
+              },
+              {
+                "@type": "ListItem",
+                "position": 47,
+                "name": "Benjamín Monje Brenes",
+                "url": "https://hilocofrade.es/autores/benjamin-monje-brenes"
+              },
+              {
+                "@type": "ListItem",
+                "position": 48,
+                "name": "Bienvenido Puelles Oliver",
+                "url": "https://hilocofrade.es/autores/bienvenido-puelles-oliver"
+              },
+              {
+                "@type": "ListItem",
+                "position": 49,
+                "name": "Blas Molner",
+                "url": "https://hilocofrade.es/autores/blas-molner"
+              },
+              {
+                "@type": "ListItem",
+                "position": 50,
+                "name": "Bordados Santa Clara",
+                "url": "https://hilocofrade.es/autores/bordados-santa-clara"
+              },
+              {
+                "@type": "ListItem",
+                "position": 51,
+                "name": "Braulio Uralde Bringas",
+                "url": "https://hilocofrade.es/autores/braulio-uralde-bringas"
+              },
+              {
+                "@type": "ListItem",
+                "position": 52,
+                "name": "Carlos Guillén González",
+                "url": "https://hilocofrade.es/autores/carlos-guillen-gonzalez"
+              },
+              {
+                "@type": "ListItem",
+                "position": 53,
+                "name": "Carlos Jiménez García",
+                "url": "https://hilocofrade.es/autores/carlos-jimenez-garcia"
+              },
+              {
+                "@type": "ListItem",
+                "position": 54,
+                "name": "Carlos Peñuela Jordán",
+                "url": "https://hilocofrade.es/autores/carlos-penuela-jordan"
+              },
+              {
+                "@type": "ListItem",
+                "position": 55,
+                "name": "Carlos Puelles Cervantes",
+                "url": "https://hilocofrade.es/autores/agente-carlos-puelles-cervantes"
+              },
+              {
+                "@type": "ListItem",
+                "position": 56,
+                "name": "Carpintería Melo",
+                "url": "https://hilocofrade.es/autores/carpinteria-melo"
+              },
+              {
+                "@type": "ListItem",
+                "position": 57,
+                "name": "Cayetano González",
+                "url": "https://hilocofrade.es/autores/cayetano-gonzalez"
+              },
+              {
+                "@type": "ListItem",
+                "position": 58,
+                "name": "Cinta Rubio Faure",
+                "url": "https://hilocofrade.es/autores/cinta-rubio-faure"
+              },
+              {
+                "@type": "ListItem",
+                "position": 59,
+                "name": "Claudio Gómez",
+                "url": "https://hilocofrade.es/autores/claudio-gomez-compositor"
+              },
+              {
+                "@type": "ListItem",
+                "position": 60,
+                "name": "Convento de Santa Isabel",
+                "url": "https://hilocofrade.es/autores/convento-santa-isabel-bordados"
+              },
+              {
+                "@type": "ListItem",
+                "position": 61,
+                "name": "Cristóbal López Gándara",
+                "url": "https://hilocofrade.es/autores/cristobal-lopez-gandara"
+              },
+              {
+                "@type": "ListItem",
+                "position": 62,
+                "name": "Cristóbal Oudrid",
+                "url": "https://hilocofrade.es/autores/cristobal-oudrid"
+              },
+              {
+                "@type": "ListItem",
+                "position": 63,
+                "name": "Cristopher Jiménez Cabeza",
+                "url": "https://hilocofrade.es/autores/cristopher-jimenez-cabeza"
+              },
+              {
+                "@type": "ListItem",
+                "position": 64,
+                "name": "Daniel Albarrán Acosta",
+                "url": "https://hilocofrade.es/autores/daniel-albarran-acosta"
+              },
+              {
+                "@type": "ListItem",
+                "position": 65,
+                "name": "Daniel Oller García",
+                "url": "https://hilocofrade.es/autores/daniel-oller-garcia"
+              },
+              {
+                "@type": "ListItem",
+                "position": 66,
+                "name": "Darío Fernández Parra",
+                "url": "https://hilocofrade.es/autores/dario-fernandez-parra"
+              },
+              {
+                "@type": "ListItem",
+                "position": 67,
+                "name": "Darío Ojeda Cordero",
+                "url": "https://hilocofrade.es/autores/dario-ojeda-cordero"
+              },
+              {
+                "@type": "ListItem",
+                "position": 68,
+                "name": "David Álvarez García",
+                "url": "https://hilocofrade.es/autores/david-alvarez-garcia"
+              },
+              {
+                "@type": "ListItem",
+                "position": 69,
+                "name": "David Calleja Ruiz",
+                "url": "https://hilocofrade.es/autores/david-calleja-ruiz"
+              },
+              {
+                "@type": "ListItem",
+                "position": 70,
+                "name": "David Gómez Ramírez",
+                "url": "https://hilocofrade.es/autores/david-gomez-ramirez"
+              },
+              {
+                "@type": "ListItem",
+                "position": 71,
+                "name": "David Hurtado Torres",
+                "url": "https://hilocofrade.es/autores/david-hurtado-torres"
+              },
+              {
+                "@type": "ListItem",
+                "position": 72,
+                "name": "David Payán Campos",
+                "url": "https://hilocofrade.es/autores/david-payan-campos"
+              },
+              {
+                "@type": "ListItem",
+                "position": 73,
+                "name": "Diego Alejandro Moreno Álvarez",
+                "url": "https://hilocofrade.es/autores/diego-alejandro-moreno-alvarez"
+              },
+              {
+                "@type": "ListItem",
+                "position": 74,
+                "name": "Diego Gallegos",
+                "url": "https://hilocofrade.es/autores/diego-gallegos-platero"
+              },
+              {
+                "@type": "ListItem",
+                "position": 75,
+                "name": "Diego Márquez",
+                "url": "https://hilocofrade.es/autores/diego-marquez"
+              },
+              {
+                "@type": "ListItem",
+                "position": 76,
+                "name": "Diego Roldán y Serrallonga",
+                "url": "https://hilocofrade.es/autores/diego-roldan-serrallonga"
+              },
+              {
+                "@type": "ListItem",
+                "position": 77,
+                "name": "Dionisio Buñuel Gutiérrez",
+                "url": "https://hilocofrade.es/autores/dionisio-bunuel-gutierrez"
+              },
+              {
+                "@type": "ListItem",
+                "position": 78,
+                "name": "Edwin González Solís",
+                "url": "https://hilocofrade.es/autores/edwin-gonzalez-solis"
+              },
+              {
+                "@type": "ListItem",
+                "position": 79,
+                "name": "Elías Santiago Vico",
+                "url": "https://hilocofrade.es/autores/elias-santiago-vico"
+              },
+              {
+                "@type": "ListItem",
+                "position": 80,
+                "name": "Eliseo Capel Paricio",
+                "url": "https://hilocofrade.es/autores/eliseo-capel-paricio"
+              },
+              {
+                "@type": "ListItem",
+                "position": 81,
+                "name": "Eloy García López",
+                "url": "https://hilocofrade.es/autores/eloy-garcia-lopez"
+              },
+              {
+                "@type": "ListItem",
+                "position": 82,
+                "name": "Emilio Cebrián Ruiz",
+                "url": "https://hilocofrade.es/autores/emilio-cebrian-ruiz"
+              },
+              {
+                "@type": "ListItem",
+                "position": 83,
+                "name": "Emilio García Armenta",
+                "url": "https://hilocofrade.es/autores/emilio-garcia-armenta"
+              },
+              {
+                "@type": "ListItem",
+                "position": 84,
+                "name": "Emilio Muñoz Serna",
+                "url": "https://hilocofrade.es/autores/emilio-munoz-serna"
+              },
+              {
+                "@type": "ListItem",
+                "position": 85,
+                "name": "Emilio Pizarro Cruz",
+                "url": "https://hilocofrade.es/autores/emilio-pizarro-cruz"
+              },
+              {
+                "@type": "ListItem",
+                "position": 86,
+                "name": "Encarnación Hurtado Molina",
+                "url": "https://hilocofrade.es/autores/encarnacion-hurtado-molina"
+              },
+              {
+                "@type": "ListItem",
+                "position": 87,
+                "name": "Enrique Castellanos Luque",
+                "url": "https://hilocofrade.es/autores/enrique-castellanos-luque"
+              },
+              {
+                "@type": "ListItem",
+                "position": 88,
+                "name": "Enrique Gutiérrez Carrasquilla",
+                "url": "https://hilocofrade.es/autores/enrique-gutierrez-carrasquilla"
+              },
+              {
+                "@type": "ListItem",
+                "position": 89,
+                "name": "Esperanza Elena Caro",
+                "url": "https://hilocofrade.es/autores/esperanza-elena-caro"
+              },
+              {
+                "@type": "ListItem",
+                "position": 90,
+                "name": "Eva Villanueva Romera",
+                "url": "https://hilocofrade.es/autores/eva-villanueva-romera"
+              },
+              {
+                "@type": "ListItem",
+                "position": 91,
+                "name": "Felipe de Ribas",
+                "url": "https://hilocofrade.es/autores/felipe-de-ribas"
+              },
+              {
+                "@type": "ListItem",
+                "position": 92,
+                "name": "Felipe de Rivas",
+                "url": "https://hilocofrade.es/autores/felipe-de-rivas"
+              },
+              {
+                "@type": "ListItem",
+                "position": 93,
+                "name": "Felipe Martínez",
+                "url": "https://hilocofrade.es/autores/felipe-martinez"
+              },
+              {
+                "@type": "ListItem",
+                "position": 94,
+                "name": "Felipe Sigüenza",
+                "url": "https://hilocofrade.es/autores/felipe-siguenza"
+              },
+              {
+                "@type": "ListItem",
+                "position": 95,
+                "name": "Félix de Carboneras",
+                "url": "https://hilocofrade.es/autores/felix-de-carboneras"
+              },
+              {
+                "@type": "ListItem",
+                "position": 96,
+                "name": "Fernández y Enríquez",
+                "url": "https://hilocofrade.es/autores/fernandez-y-enriquez"
+              },
+              {
+                "@type": "ListItem",
+                "position": 97,
+                "name": "Fernando Aguado Hernández",
+                "url": "https://hilocofrade.es/autores/agente-fernando-aguado-hernandez"
+              },
+              {
+                "@type": "ListItem",
+                "position": 98,
+                "name": "Fernando Castejón López",
+                "url": "https://hilocofrade.es/autores/fernando-castejon-lopez"
+              },
+              {
+                "@type": "ListItem",
+                "position": 99,
+                "name": "Fernando Cruz",
+                "url": "https://hilocofrade.es/autores/fernando-cruz"
+              },
+              {
+                "@type": "ListItem",
+                "position": 100,
+                "name": "Fernando José Aguado Hernández",
+                "url": "https://hilocofrade.es/autores/fernando-jose-aguado-hernandez"
+              }
+            ]
+          }
+        }
+      ],
+      "source_urls": []
+    },
+    {
+      "path": "/autores?categoria=imagineria",
+      "status": 200,
+      "title": "Imaginería y escultura · Autores cofrades · Hilo Cofrade",
+      "h1": [
+        "Imaginería y escultura"
+      ],
+      "canonical": "https://hilocofrade.es/autores",
+      "robots": "noindex, follow",
+      "jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "@id": "https://hilocofrade.es/#organization",
+          "url": "https://hilocofrade.es",
+          "name": "Hilo Cofrade",
+          "description": "Enciclopedia cofrade de Sevilla y su provincia: hermandades, imágenes, pasos, bandas, marchas, autores, patrimonio, cultos y salidas relacionados.",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://hilocofrade.es/brand/logo.svg"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "@id": "https://hilocofrade.es/#website",
+          "url": "https://hilocofrade.es",
+          "name": "Hilo Cofrade",
+          "description": "Enciclopedia cofrade de Sevilla y su provincia: hermandades, imágenes, pasos, bandas, marchas, autores, patrimonio, cultos y salidas relacionados.",
+          "inLanguage": "es",
+          "publisher": {
+            "@id": "https://hilocofrade.es/#organization"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "@id": "https://hilocofrade.es/autores#collection",
+          "url": "https://hilocofrade.es/autores",
+          "name": "Autores y oficios cofrades",
+          "description": "Compositores, imagineros, restauradores, vestidores, bordadores, orfebres y talleres documentados en Hilo Cofrade, relacionados con sus obras.",
+          "inLanguage": "es",
+          "isPartOf": {
+            "@id": "https://hilocofrade.es/#website"
+          },
+          "mainEntity": {
+            "@type": "ItemList",
+            "numberOfItems": 83,
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Agustín de Perea",
+                "url": "https://hilocofrade.es/autores/agustin-de-perea"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Andrés de Carvajal y Campos",
+                "url": "https://hilocofrade.es/autores/andres-de-carvajal-campos"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Antonio Cardoso de Quirós",
+                "url": "https://hilocofrade.es/autores/antonio-cardoso-de-quiros"
+              },
+              {
+                "@type": "ListItem",
+                "position": 4,
+                "name": "Antonio Castillo Lastrucci",
+                "url": "https://hilocofrade.es/autores/antonio-castillo-lastrucci"
+              },
+              {
+                "@type": "ListItem",
+                "position": 5,
+                "name": "Antonio Eslava Rubio",
+                "url": "https://hilocofrade.es/autores/antonio-eslava-rubio"
+              },
+              {
+                "@type": "ListItem",
+                "position": 6,
+                "name": "Antonio Illanes Rodríguez",
+                "url": "https://hilocofrade.es/autores/antonio-illanes-rodriguez"
+              },
+              {
+                "@type": "ListItem",
+                "position": 7,
+                "name": "Blas Molner",
+                "url": "https://hilocofrade.es/autores/blas-molner"
+              },
+              {
+                "@type": "ListItem",
+                "position": 8,
+                "name": "Darío Fernández Parra",
+                "url": "https://hilocofrade.es/autores/dario-fernandez-parra"
+              },
+              {
+                "@type": "ListItem",
+                "position": 9,
+                "name": "Diego Márquez",
+                "url": "https://hilocofrade.es/autores/diego-marquez"
+              },
+              {
+                "@type": "ListItem",
+                "position": 10,
+                "name": "Diego Roldán y Serrallonga",
+                "url": "https://hilocofrade.es/autores/diego-roldan-serrallonga"
+              },
+              {
+                "@type": "ListItem",
+                "position": 11,
+                "name": "Edwin González Solís",
+                "url": "https://hilocofrade.es/autores/edwin-gonzalez-solis"
+              },
+              {
+                "@type": "ListItem",
+                "position": 12,
+                "name": "Emilio Pizarro Cruz",
+                "url": "https://hilocofrade.es/autores/emilio-pizarro-cruz"
+              },
+              {
+                "@type": "ListItem",
+                "position": 13,
+                "name": "Encarnación Hurtado Molina",
+                "url": "https://hilocofrade.es/autores/encarnacion-hurtado-molina"
+              },
+              {
+                "@type": "ListItem",
+                "position": 14,
+                "name": "Felipe de Ribas",
+                "url": "https://hilocofrade.es/autores/felipe-de-ribas"
+              },
+              {
+                "@type": "ListItem",
+                "position": 15,
+                "name": "Felipe de Rivas",
+                "url": "https://hilocofrade.es/autores/felipe-de-rivas"
+              },
+              {
+                "@type": "ListItem",
+                "position": 16,
+                "name": "Felipe Martínez",
+                "url": "https://hilocofrade.es/autores/felipe-martinez"
+              },
+              {
+                "@type": "ListItem",
+                "position": 17,
+                "name": "Fernando Castejón López",
+                "url": "https://hilocofrade.es/autores/fernando-castejon-lopez"
+              },
+              {
+                "@type": "ListItem",
+                "position": 18,
+                "name": "Fernando Cruz",
+                "url": "https://hilocofrade.es/autores/fernando-cruz"
+              },
+              {
+                "@type": "ListItem",
+                "position": 19,
+                "name": "Francisco Antonio Ruiz Gijón",
+                "url": "https://hilocofrade.es/autores/francisco-antonio-ruiz-gijon"
+              },
+              {
+                "@type": "ListItem",
+                "position": 20,
+                "name": "Francisco Berlanga de Ávila",
+                "url": "https://hilocofrade.es/autores/francisco-berlanga-de-avila"
+              },
+              {
+                "@type": "ListItem",
+                "position": 21,
+                "name": "Francisco Buiza Fernández",
+                "url": "https://hilocofrade.es/autores/francisco-buiza"
+              },
+              {
+                "@type": "ListItem",
+                "position": 22,
+                "name": "Francisco de Ocampo",
+                "url": "https://hilocofrade.es/autores/francisco-de-ocampo"
+              },
+              {
+                "@type": "ListItem",
+                "position": 23,
+                "name": "Francisco Escamilla",
+                "url": "https://hilocofrade.es/autores/francisco-escamilla"
+              },
+              {
+                "@type": "ListItem",
+                "position": 24,
+                "name": "Francisco José Reyes Villadiego",
+                "url": "https://hilocofrade.es/autores/francisco-jose-reyes-villadiego"
+              },
+              {
+                "@type": "ListItem",
+                "position": 25,
+                "name": "Francisco Romero Zafra",
+                "url": "https://hilocofrade.es/autores/francisco-romero-zafra"
+              },
+              {
+                "@type": "ListItem",
+                "position": 26,
+                "name": "Gaspar Núñez Delgado",
+                "url": "https://hilocofrade.es/autores/gaspar-nunez-delgado"
+              },
+              {
+                "@type": "ListItem",
+                "position": 27,
+                "name": "Israel Redondo Pérez",
+                "url": "https://hilocofrade.es/autores/israel-redondo-perez"
+              },
+              {
+                "@type": "ListItem",
+                "position": 28,
+                "name": "Jerónimo Hernández",
+                "url": "https://hilocofrade.es/autores/jeronimo-hernandez"
+              },
+              {
+                "@type": "ListItem",
+                "position": 29,
+                "name": "Jesús Méndez Lastrucci",
+                "url": "https://hilocofrade.es/autores/jesus-mendez-lastrucci"
+              },
+              {
+                "@type": "ListItem",
+                "position": 30,
+                "name": "José Antonio Navarro Arteaga",
+                "url": "https://hilocofrade.es/autores/jose-antonio-navarro-arteaga"
+              },
+              {
+                "@type": "ListItem",
+                "position": 31,
+                "name": "José López Egreja",
+                "url": "https://hilocofrade.es/autores/jose-lopez-egreja"
+              },
+              {
+                "@type": "ListItem",
+                "position": 32,
+                "name": "José Manuel Bonilla Cornejo",
+                "url": "https://hilocofrade.es/autores/jose-manuel-bonilla-cornejo"
+              },
+              {
+                "@type": "ListItem",
+                "position": 33,
+                "name": "José María Gamero Viñau",
+                "url": "https://hilocofrade.es/autores/jose-maria-gamero-vinau"
+              },
+              {
+                "@type": "ListItem",
+                "position": 34,
+                "name": "José Montes de Oca y León",
+                "url": "https://hilocofrade.es/autores/jose-montes-de-oca"
+              },
+              {
+                "@type": "ListItem",
+                "position": 35,
+                "name": "José Moreno Alonso",
+                "url": "https://hilocofrade.es/autores/jose-moreno-alonso"
+              },
+              {
+                "@type": "ListItem",
+                "position": 36,
+                "name": "José Parellada",
+                "url": "https://hilocofrade.es/autores/jose-parellada"
+              },
+              {
+                "@type": "ListItem",
+                "position": 37,
+                "name": "José Paz Vélez",
+                "url": "https://hilocofrade.es/autores/jose-paz-velez"
+              },
+              {
+                "@type": "ListItem",
+                "position": 38,
+                "name": "José Pérez Conde",
+                "url": "https://hilocofrade.es/autores/jose-perez-conde"
+              },
+              {
+                "@type": "ListItem",
+                "position": 39,
+                "name": "José Rodríguez Fernández-Andes",
+                "url": "https://hilocofrade.es/autores/jose-rodriguez-fernandez-andes"
+              },
+              {
+                "@type": "ListItem",
+                "position": 40,
+                "name": "José Romero Morillo",
+                "url": "https://hilocofrade.es/autores/jose-romero-morillo"
+              },
+              {
+                "@type": "ListItem",
+                "position": 41,
+                "name": "José Sánchez Muñoz",
+                "url": "https://hilocofrade.es/autores/jose-sanchez-munoz"
+              },
+              {
+                "@type": "ListItem",
+                "position": 42,
+                "name": "José Sanjuán Navarro",
+                "url": "https://hilocofrade.es/autores/jose-sanjuan-navarro"
+              },
+              {
+                "@type": "ListItem",
+                "position": 43,
+                "name": "José Tiburcio González",
+                "url": "https://hilocofrade.es/autores/jose-tiburcio-gonzalez"
+              },
+              {
+                "@type": "ListItem",
+                "position": 44,
+                "name": "Juan Abascal Fuentes",
+                "url": "https://hilocofrade.es/autores/juan-abascal-fuentes"
+              },
+              {
+                "@type": "ListItem",
+                "position": 45,
+                "name": "Juan Antonio Blanco",
+                "url": "https://hilocofrade.es/autores/juan-antonio-blanco"
+              },
+              {
+                "@type": "ListItem",
+                "position": 46,
+                "name": "Juan Antonio Blanco Ramos",
+                "url": "https://hilocofrade.es/autores/juan-antonio-blanco-ramos"
+              },
+              {
+                "@type": "ListItem",
+                "position": 47,
+                "name": "Juan Antonio González García «Ventura»",
+                "url": "https://hilocofrade.es/autores/juan-antonio-gonzalez-garcia-ventura"
+              },
+              {
+                "@type": "ListItem",
+                "position": 48,
+                "name": "Juan Bautista Patrone y Quartín",
+                "url": "https://hilocofrade.es/autores/juan-bautista-patrone-y-quartin"
+              },
+              {
+                "@type": "ListItem",
+                "position": 49,
+                "name": "Juan Bautista Vázquez el Viejo",
+                "url": "https://hilocofrade.es/autores/juan-bautista-vazquez-el-viejo"
+              },
+              {
+                "@type": "ListItem",
+                "position": 50,
+                "name": "Juan de Astorga",
+                "url": "https://hilocofrade.es/autores/juan-de-astorga"
+              },
+              {
+                "@type": "ListItem",
+                "position": 51,
+                "name": "Juan de Mesa",
+                "url": "https://hilocofrade.es/autores/juan-de-mesa"
+              },
+              {
+                "@type": "ListItem",
+                "position": 52,
+                "name": "Juan de Santamaría",
+                "url": "https://hilocofrade.es/autores/juan-de-santamaria"
+              },
+              {
+                "@type": "ListItem",
+                "position": 53,
+                "name": "Juan Herrera Cala",
+                "url": "https://hilocofrade.es/autores/juan-herrera-cala"
+              },
+              {
+                "@type": "ListItem",
+                "position": 54,
+                "name": "Juan Manuel Miñarro López",
+                "url": "https://hilocofrade.es/autores/juan-manuel-minarro-lopez"
+              },
+              {
+                "@type": "ListItem",
+                "position": 55,
+                "name": "Juan Manuel Montaño",
+                "url": "https://hilocofrade.es/autores/juan-manuel-montano"
+              },
+              {
+                "@type": "ListItem",
+                "position": 56,
+                "name": "Juan Martínez Montañés",
+                "url": "https://hilocofrade.es/autores/juan-martinez-montanes"
+              },
+              {
+                "@type": "ListItem",
+                "position": 57,
+                "name": "Juan Ventura",
+                "url": "https://hilocofrade.es/autores/juan-ventura"
+              },
+              {
+                "@type": "ListItem",
+                "position": 58,
+                "name": "Luciano Galán García",
+                "url": "https://hilocofrade.es/autores/luciano-galan-garcia"
+              },
+              {
+                "@type": "ListItem",
+                "position": 59,
+                "name": "Luis Álvarez Duarte",
+                "url": "https://hilocofrade.es/autores/luis-alvarez-duarte"
+              },
+              {
+                "@type": "ListItem",
+                "position": 60,
+                "name": "Luis Ortega Bru",
+                "url": "https://hilocofrade.es/autores/luis-ortega-bru"
+              },
+              {
+                "@type": "ListItem",
+                "position": 61,
+                "name": "Luis Peyré Azcárraga",
+                "url": "https://hilocofrade.es/autores/luis-peyre-azcarraga"
+              },
+              {
+                "@type": "ListItem",
+                "position": 62,
+                "name": "Manuel Escamilla Cabezas",
+                "url": "https://hilocofrade.es/autores/manuel-escamilla-cabezas"
+              },
+              {
+                "@type": "ListItem",
+                "position": 63,
+                "name": "Manuel Galiano Delgado",
+                "url": "https://hilocofrade.es/autores/manuel-galiano-delgado"
+              },
+              {
+                "@type": "ListItem",
+                "position": 64,
+                "name": "Manuel Gutiérrez Reyes-Cano",
+                "url": "https://hilocofrade.es/autores/manuel-gutierrez-reyes-cano"
+              },
+              {
+                "@type": "ListItem",
+                "position": 65,
+                "name": "Manuel Martín Nieto",
+                "url": "https://hilocofrade.es/autores/manuel-martin-nieto"
+              },
+              {
+                "@type": "ListItem",
+                "position": 66,
+                "name": "Manuel Pereira",
+                "url": "https://hilocofrade.es/autores/manuel-pereira-escultor"
+              },
+              {
+                "@type": "ListItem",
+                "position": 67,
+                "name": "Manuel Ramos Corona",
+                "url": "https://hilocofrade.es/autores/manuel-ramos-corona"
+              },
+              {
+                "@type": "ListItem",
+                "position": 68,
+                "name": "Marcos de Cabrera",
+                "url": "https://hilocofrade.es/autores/marcos-de-cabrera"
+              },
+              {
+                "@type": "ListItem",
+                "position": 69,
+                "name": "Mariano Sánchez del Pino",
+                "url": "https://hilocofrade.es/autores/mariano-sanchez-del-pino"
+              },
+              {
+                "@type": "ListItem",
+                "position": 70,
+                "name": "Miguel Ángel Valverde",
+                "url": "https://hilocofrade.es/autores/miguel-angel-valverde"
+              },
+              {
+                "@type": "ListItem",
+                "position": 71,
+                "name": "Pedro de Mena",
+                "url": "https://hilocofrade.es/autores/pedro-de-mena"
+              },
+              {
+                "@type": "ListItem",
+                "position": 72,
+                "name": "Pedro Roldán",
+                "url": "https://hilocofrade.es/autores/pedro-roldan"
+              },
+              {
+                "@type": "ListItem",
+                "position": 73,
+                "name": "Pío Mollar Franch",
+                "url": "https://hilocofrade.es/autores/pio-mollar-franch"
+              },
+              {
+                "@type": "ListItem",
+                "position": 74,
+                "name": "Rafael Barbero",
+                "url": "https://hilocofrade.es/autores/rafael-barbero"
+              },
+              {
+                "@type": "ListItem",
+                "position": 75,
+                "name": "Rafael Barbero Medina",
+                "url": "https://hilocofrade.es/autores/rafael-barbero-medina"
+              },
+              {
+                "@type": "ListItem",
+                "position": 76,
+                "name": "Ricardo Rivera Martínez",
+                "url": "https://hilocofrade.es/autores/ricardo-rivera-martinez"
+              },
+              {
+                "@type": "ListItem",
+                "position": 77,
+                "name": "Roque de Balduque",
+                "url": "https://hilocofrade.es/autores/roque-de-balduque"
+              },
+              {
+                "@type": "ListItem",
+                "position": 78,
+                "name": "Salvador Madroñal",
+                "url": "https://hilocofrade.es/autores/salvador-madronal"
+              },
+              {
+                "@type": "ListItem",
+                "position": 79,
+                "name": "Sebastián Martínez Zayas",
+                "url": "https://hilocofrade.es/autores/sebastian-martinez-zayas"
+              },
+              {
+                "@type": "ListItem",
+                "position": 80,
+                "name": "Sebastián Rodríguez",
+                "url": "https://hilocofrade.es/autores/sebastian-rodriguez-escultor"
+              },
+              {
+                "@type": "ListItem",
+                "position": 81,
+                "name": "Sebastián Santos Rojas",
+                "url": "https://hilocofrade.es/autores/sebastian-santos-rojas"
+              },
+              {
+                "@type": "ListItem",
+                "position": 82,
+                "name": "Talleres de Olot",
+                "url": "https://hilocofrade.es/autores/talleres-de-olot"
+              },
+              {
+                "@type": "ListItem",
+                "position": 83,
+                "name": "Talleres de Vélez Bracho",
+                "url": "https://hilocofrade.es/autores/talleres-velez-bracho"
+              }
+            ]
+          }
+        }
+      ],
+      "source_urls": []
+    },
+    {
+      "path": "/sitemaps/autores.xml",
+      "status": 200,
+      "author_locations": [
+        "https://hilocofrade.es/autores/abel-moreno-gomez",
+        "https://hilocofrade.es/autores/abraham-padilla-consuegra",
+        "https://hilocofrade.es/autores/abraham-pena-escobar",
+        "https://hilocofrade.es/autores/adrian-tinajero-cadenas",
+        "https://hilocofrade.es/autores/agustin-castro-rodriguez",
+        "https://hilocofrade.es/autores/agustin-de-perea",
+        "https://hilocofrade.es/autores/alberto-barea-tejada",
+        "https://hilocofrade.es/autores/alberto-escamez",
+        "https://hilocofrade.es/autores/alberto-escamez-lopez",
+        "https://hilocofrade.es/autores/alberto-gonzalez-ponce",
+        "https://hilocofrade.es/autores/agente-alejandro-blanco-hernandez",
+        "https://hilocofrade.es/autores/alejandro-cascajares",
+        "https://hilocofrade.es/autores/alejandro-marmolejo",
+        "https://hilocofrade.es/autores/alfonso-lozano-ruiz",
+        "https://hilocofrade.es/autores/almudena-fernandez-garcia",
+        "https://hilocofrade.es/autores/alvaro-martin-gonzalez",
+        "https://hilocofrade.es/autores/amadeo-vives",
+        "https://hilocofrade.es/autores/ana-amparo-cerrejon-lozano",
+        "https://hilocofrade.es/autores/andres-de-carvajal-campos",
+        "https://hilocofrade.es/autores/angel-alcaide-barroso",
+        "https://hilocofrade.es/autores/antonio-amodeo",
+        "https://hilocofrade.es/autores/antonio-bejarano-ruiz",
+        "https://hilocofrade.es/autores/antonio-cardoso-de-quiros",
+        "https://hilocofrade.es/autores/antonio-castillo-lastrucci",
+        "https://hilocofrade.es/autores/antonio-castro-del-pozo",
+        "https://hilocofrade.es/autores/antonio-cruz-gomez",
+        "https://hilocofrade.es/autores/antonio-david-rodriguez-gomez",
+        "https://hilocofrade.es/autores/antonio-de-alfian",
+        "https://hilocofrade.es/autores/antonio-diaz-fernandez",
+        "https://hilocofrade.es/autores/antonio-dube-de-luque",
+        "https://hilocofrade.es/autores/antonio-eslava-rubio",
+        "https://hilocofrade.es/autores/antonio-garduno-navas",
+        "https://hilocofrade.es/autores/antonio-herranz",
+        "https://hilocofrade.es/autores/antonio-illanes-rodriguez",
+        "https://hilocofrade.es/autores/antonio-j-caparros-ridao",
+        "https://hilocofrade.es/autores/antonio-javier-rodriguez-rojas",
+        "https://hilocofrade.es/autores/antonio-jesus-del-castillo-fernandez",
+        "https://hilocofrade.es/autores/antonio-jose-lopez-escalante",
+        "https://hilocofrade.es/autores/antonio-manuel-lopez-carrion",
+        "https://hilocofrade.es/autores/antonio-martin-fernandez",
+        "https://hilocofrade.es/autores/antonio-moreno-pozo",
+        "https://hilocofrade.es/autores/antonio-pantion-perez",
+        "https://hilocofrade.es/autores/antonio-sanchez-gonzalez",
+        "https://hilocofrade.es/autores/arturo-barea-tejada",
+        "https://hilocofrade.es/autores/ballesteros-cascajares-conservacion-restauracion",
+        "https://hilocofrade.es/autores/bartolome-perez-casas",
+        "https://hilocofrade.es/autores/benjamin-monje-brenes",
+        "https://hilocofrade.es/autores/bienvenido-puelles-oliver",
+        "https://hilocofrade.es/autores/blas-molner",
+        "https://hilocofrade.es/autores/bordados-santa-clara",
+        "https://hilocofrade.es/autores/braulio-uralde-bringas",
+        "https://hilocofrade.es/autores/carlos-guillen-gonzalez",
+        "https://hilocofrade.es/autores/carlos-jimenez-garcia",
+        "https://hilocofrade.es/autores/carlos-penuela-jordan",
+        "https://hilocofrade.es/autores/agente-carlos-puelles-cervantes",
+        "https://hilocofrade.es/autores/carpinteria-melo",
+        "https://hilocofrade.es/autores/cayetano-gonzalez",
+        "https://hilocofrade.es/autores/cinta-rubio-faure",
+        "https://hilocofrade.es/autores/claudio-gomez-compositor",
+        "https://hilocofrade.es/autores/convento-santa-isabel-bordados",
+        "https://hilocofrade.es/autores/cristobal-lopez-gandara",
+        "https://hilocofrade.es/autores/cristobal-oudrid",
+        "https://hilocofrade.es/autores/cristopher-jimenez-cabeza",
+        "https://hilocofrade.es/autores/daniel-albarran-acosta",
+        "https://hilocofrade.es/autores/daniel-oller-garcia",
+        "https://hilocofrade.es/autores/dario-fernandez-parra",
+        "https://hilocofrade.es/autores/dario-ojeda-cordero",
+        "https://hilocofrade.es/autores/david-alvarez-garcia",
+        "https://hilocofrade.es/autores/david-calleja-ruiz",
+        "https://hilocofrade.es/autores/david-gomez-ramirez",
+        "https://hilocofrade.es/autores/david-hurtado-torres",
+        "https://hilocofrade.es/autores/david-payan-campos",
+        "https://hilocofrade.es/autores/diego-alejandro-moreno-alvarez",
+        "https://hilocofrade.es/autores/diego-gallegos-platero",
+        "https://hilocofrade.es/autores/diego-marquez",
+        "https://hilocofrade.es/autores/diego-roldan-serrallonga",
+        "https://hilocofrade.es/autores/dionisio-bunuel-gutierrez",
+        "https://hilocofrade.es/autores/edwin-gonzalez-solis",
+        "https://hilocofrade.es/autores/elias-santiago-vico",
+        "https://hilocofrade.es/autores/eliseo-capel-paricio",
+        "https://hilocofrade.es/autores/eloy-garcia-lopez",
+        "https://hilocofrade.es/autores/emilio-cebrian-ruiz",
+        "https://hilocofrade.es/autores/emilio-garcia-armenta",
+        "https://hilocofrade.es/autores/emilio-munoz-serna",
+        "https://hilocofrade.es/autores/emilio-pizarro-cruz",
+        "https://hilocofrade.es/autores/encarnacion-hurtado-molina",
+        "https://hilocofrade.es/autores/enrique-castellanos-luque",
+        "https://hilocofrade.es/autores/enrique-gutierrez-carrasquilla",
+        "https://hilocofrade.es/autores/esperanza-elena-caro",
+        "https://hilocofrade.es/autores/eva-villanueva-romera",
+        "https://hilocofrade.es/autores/felipe-de-ribas",
+        "https://hilocofrade.es/autores/felipe-de-rivas",
+        "https://hilocofrade.es/autores/felipe-martinez",
+        "https://hilocofrade.es/autores/felipe-siguenza",
+        "https://hilocofrade.es/autores/felix-de-carboneras",
+        "https://hilocofrade.es/autores/fernandez-y-enriquez",
+        "https://hilocofrade.es/autores/agente-fernando-aguado-hernandez",
+        "https://hilocofrade.es/autores/fernando-castejon-lopez",
+        "https://hilocofrade.es/autores/fernando-cruz",
+        "https://hilocofrade.es/autores/fernando-jose-aguado-hernandez",
+        "https://hilocofrade.es/autores/fernando-marmolejo",
+        "https://hilocofrade.es/autores/fernando-murciano-abad",
+        "https://hilocofrade.es/autores/fernando-oliveras-gonzalez",
+        "https://hilocofrade.es/autores/francis-gonzalez-rios",
+        "https://hilocofrade.es/autores/francisco-antonio-ruiz-gijon",
+        "https://hilocofrade.es/autores/francisco-arquillo-de-la-torre",
+        "https://hilocofrade.es/autores/francisco-bailac",
+        "https://hilocofrade.es/autores/francisco-berlanga-de-avila",
+        "https://hilocofrade.es/autores/francisco-buiza",
+        "https://hilocofrade.es/autores/francisco-cano-ruiz",
+        "https://hilocofrade.es/autores/francisco-david-alvarez-barroso",
+        "https://hilocofrade.es/autores/francisco-de-ocampo",
+        "https://hilocofrade.es/autores/francisco-del-toro-zamora",
+        "https://hilocofrade.es/autores/francisco-escamilla",
+        "https://hilocofrade.es/autores/francisco-grau-vegara",
+        "https://hilocofrade.es/autores/francisco-japon-rodriguez",
+        "https://hilocofrade.es/autores/francisco-javier-barbero-duque",
+        "https://hilocofrade.es/autores/agente-francisco-javier-cebrero-arias",
+        "https://hilocofrade.es/autores/francisco-javier-fernandez-perez",
+        "https://hilocofrade.es/autores/francisco-javier-gonzalez-rios",
+        "https://hilocofrade.es/autores/francisco-javier-sojo-blanco",
+        "https://hilocofrade.es/autores/francisco-javier-torres-simon",
+        "https://hilocofrade.es/autores/francisco-jose-caba-moya",
+        "https://hilocofrade.es/autores/francisco-jose-carrasco-benitez",
+        "https://hilocofrade.es/autores/francisco-jose-escobar-lamas",
+        "https://hilocofrade.es/autores/francisco-jose-martinez-perez",
+        "https://hilocofrade.es/autores/francisco-jose-reyes-villadiego",
+        "https://hilocofrade.es/autores/francisco-manuel-lopez-lopez",
+        "https://hilocofrade.es/autores/francisco-moraza-cienfuegos",
+        "https://hilocofrade.es/autores/francisco-ortiz-moron",
+        "https://hilocofrade.es/autores/francisco-pastor-bueno",
+        "https://hilocofrade.es/autores/francisco-rivero-gallardo",
+        "https://hilocofrade.es/autores/francisco-romero-zafra",
+        "https://hilocofrade.es/autores/francisco-rosado-castillo",
+        "https://hilocofrade.es/autores/fulgencio-moron-rodenas",
+        "https://hilocofrade.es/autores/gabriel-de-astorga",
+        "https://hilocofrade.es/autores/gallardo",
+        "https://hilocofrade.es/autores/gaspar-nunez-delgado",
+        "https://hilocofrade.es/autores/german-alvarez-beigbeder",
+        "https://hilocofrade.es/autores/german-perez-vargas",
+        "https://hilocofrade.es/autores/hermanas-antunez",
+        "https://hilocofrade.es/autores/hermanas-navarro-calderon",
+        "https://hilocofrade.es/autores/hermanas-zuloaga",
+        "https://hilocofrade.es/autores/hermanos-caballeros",
+        "https://hilocofrade.es/autores/hermanos-rosendo-navarro",
+        "https://hilocofrade.es/autores/ignacio-borrego-gonzalez",
+        "https://hilocofrade.es/autores/ignacio-gomez-millan",
+        "https://hilocofrade.es/autores/instituto-andaluz-patrimonio-historico",
+        "https://hilocofrade.es/autores/isaac-gomez",
+        "https://hilocofrade.es/autores/ismael-martinez-lunar",
+        "https://hilocofrade.es/autores/israel-jimenez-chozas",
+        "https://hilocofrade.es/autores/israel-redondo-perez",
+        "https://hilocofrade.es/autores/j-antonio-blanco-compositor",
+        "https://hilocofrade.es/autores/javier-alonso-delgado",
+        "https://hilocofrade.es/autores/javier-calvo-gavino",
+        "https://hilocofrade.es/autores/javier-romero-compositor",
+        "https://hilocofrade.es/autores/javier-sanchez-de-los-reyes",
+        "https://hilocofrade.es/autores/jeronimo-hernandez",
+        "https://hilocofrade.es/autores/jesus-dieguez-garcia",
+        "https://hilocofrade.es/autores/jesus-dominguez-orfebre",
+        "https://hilocofrade.es/autores/jesus-gomez-rodriguez",
+        "https://hilocofrade.es/autores/jesus-jimenez-palma",
+        "https://hilocofrade.es/autores/jesus-joaquin-espinosa-de-los-monteros-perez",
+        "https://hilocofrade.es/autores/jesus-manuel-martin-prieto",
+        "https://hilocofrade.es/autores/jesus-mendez-lastrucci",
+        "https://hilocofrade.es/autores/jesus-rosado-borja",
+        "https://hilocofrade.es/autores/jesus-sanz-lagares",
+        "https://hilocofrade.es/autores/joaquin-caballero-payan",
+        "https://hilocofrade.es/autores/joaquin-francisco-drake-garcia",
+        "https://hilocofrade.es/autores/joaquin-lorenzo-gomez",
+        "https://hilocofrade.es/autores/joaquin-turina",
+        "https://hilocofrade.es/autores/jonathan-jimenez-cabeza",
+        "https://hilocofrade.es/autores/jorge-aguila-ordonez",
+        "https://hilocofrade.es/autores/jorge-ferrer-orfebre",
+        "https://hilocofrade.es/autores/jorge-martin-puerto",
+        "https://hilocofrade.es/autores/jose-albero-frances",
+        "https://hilocofrade.es/autores/jose-antonio-grande-de-leon",
+        "https://hilocofrade.es/autores/jose-antonio-herrera-solis",
+        "https://hilocofrade.es/autores/jose-antonio-navarro-arteaga",
+        "https://hilocofrade.es/autores/jose-antonio-ramirez-garcia",
+        "https://hilocofrade.es/autores/jose-campano-bravo",
+        "https://hilocofrade.es/autores/jose-de-la-vega-sanchez",
+        "https://hilocofrade.es/autores/jose-gil",
+        "https://hilocofrade.es/autores/jose-gil-vazquez",
+        "https://hilocofrade.es/autores/jose-guillermo-carrasquilla-perea",
+        "https://hilocofrade.es/autores/jose-ignacio-cansino-gonzalez",
+        "https://hilocofrade.es/autores/jose-joaquin-fijo-leon",
+        "https://hilocofrade.es/autores/jose-leon-alapont",
+        "https://hilocofrade.es/autores/jose-lopez-egreja",
+        "https://hilocofrade.es/autores/jose-luis-asian-cano",
+        "https://hilocofrade.es/autores/jose-luis-gomez-jaldon",
+        "https://hilocofrade.es/autores/jose-m-sanchez-molero",
+        "https://hilocofrade.es/autores/jose-manuel-bernal",
+        "https://hilocofrade.es/autores/jose-manuel-bonilla-cornejo",
+        "https://hilocofrade.es/autores/jose-manuel-delgado-rodriguez",
+        "https://hilocofrade.es/autores/jose-manuel-franco-gomez",
+        "https://hilocofrade.es/autores/jose-manuel-garcia-pulido",
+        "https://hilocofrade.es/autores/jose-manuel-jodar-marin",
+        "https://hilocofrade.es/autores/jose-manuel-lozano-rivero",
+        "https://hilocofrade.es/autores/jose-manuel-mena-hervas",
+        "https://hilocofrade.es/autores/jose-manuel-ortega-cruz",
+        "https://hilocofrade.es/autores/jose-manuel-parrado-lato",
+        "https://hilocofrade.es/autores/jose-manuel-ramos-orfebre",
+        "https://hilocofrade.es/autores/jose-manuel-reina-romero",
+        "https://hilocofrade.es/autores/jose-manuel-rodriguez-melo",
+        "https://hilocofrade.es/autores/jose-manuel-toscano",
+        "https://hilocofrade.es/autores/jose-manuel-toscano-perez",
+        "https://hilocofrade.es/autores/jose-maria-dorantes-ramos",
+        "https://hilocofrade.es/autores/jose-maria-gamero-vinau",
+        "https://hilocofrade.es/autores/jose-maria-jimenez-oliva",
+        "https://hilocofrade.es/autores/agente-jose-maria-sanchez-martin",
+        "https://hilocofrade.es/autores/jose-martin-martin",
+        "https://hilocofrade.es/autores/jose-martin-palma",
+        "https://hilocofrade.es/autores/agente-jose-miguel-lopez-rueda",
+        "https://hilocofrade.es/autores/jose-montes-de-oca",
+        "https://hilocofrade.es/autores/jose-moreno-alonso",
+        "https://hilocofrade.es/autores/jose-parellada",
+        "https://hilocofrade.es/autores/jose-paz-velez",
+        "https://hilocofrade.es/autores/jose-perez-conde",
+        "https://hilocofrade.es/autores/jose-pinto-sanchez",
+        "https://hilocofrade.es/autores/jose-ramon-lozano-garrido",
+        "https://hilocofrade.es/autores/jose-ramon-lozano-pina",
+        "https://hilocofrade.es/autores/jose-ramon-paleteiro",
+        "https://hilocofrade.es/autores/jose-ramon-perez-soto",
+        "https://hilocofrade.es/autores/jose-rivero-carrera-paso-asuncion-cantillana",
+        "https://hilocofrade.es/autores/jose-rodriguez-fernandez-andes",
+        "https://hilocofrade.es/autores/jose-rodriguez-gil-currito-el-dorador",
+        "https://hilocofrade.es/autores/jose-rodriguez-rivero-carrera",
+        "https://hilocofrade.es/autores/jose-romero-morillo",
+        "https://hilocofrade.es/autores/jose-salazar-rodriguez",
+        "https://hilocofrade.es/autores/jose-sanchez-munoz",
+        "https://hilocofrade.es/autores/jose-sanjuan-navarro",
+        "https://hilocofrade.es/autores/jose-sapena-matarredona",
+        "https://hilocofrade.es/autores/jose-tiburcio-gonzalez",
+        "https://hilocofrade.es/autores/jose-velez-garcia",
+        "https://hilocofrade.es/autores/jose-vicente-mico-alvarez",
+        "https://hilocofrade.es/autores/juan-abascal-fuentes",
+        "https://hilocofrade.es/autores/juan-acuna-compositor",
+        "https://hilocofrade.es/autores/juan-antonio-barros-jodar",
+        "https://hilocofrade.es/autores/juan-antonio-blanco",
+        "https://hilocofrade.es/autores/juan-antonio-blanco-ramos",
+        "https://hilocofrade.es/autores/juan-antonio-carmona-paez",
+        "https://hilocofrade.es/autores/juan-antonio-gonzalez-garcia-ventura",
+        "https://hilocofrade.es/autores/juan-antonio-rodriguez-pintor-simpecado-rojo",
+        "https://hilocofrade.es/autores/juan-asian-compositor",
+        "https://hilocofrade.es/autores/juan-bautista-patrone-y-quartin",
+        "https://hilocofrade.es/autores/juan-bautista-vazquez-el-viejo",
+        "https://hilocofrade.es/autores/juan-brachi-dominguez",
+        "https://hilocofrade.es/autores/juan-carlos-sempere-bomboi",
+        "https://hilocofrade.es/autores/juan-de-astorga",
+        "https://hilocofrade.es/autores/juan-de-dios-espinosa-ordonez",
+        "https://hilocofrade.es/autores/juan-de-los-santos-sanchez",
+        "https://hilocofrade.es/autores/juan-de-mesa",
+        "https://hilocofrade.es/autores/juan-de-santamaria",
+        "https://hilocofrade.es/autores/juan-de-zamora-pintor-sevilla",
+        "https://hilocofrade.es/autores/juan-fernandez",
+        "https://hilocofrade.es/autores/juan-herrera-cala",
+        "https://hilocofrade.es/autores/juan-jose-puntas-fernandez",
+        "https://hilocofrade.es/autores/juan-luis-del-valle",
+        "https://hilocofrade.es/autores/juan-manuel-chaves-ramirez",
+        "https://hilocofrade.es/autores/juan-manuel-cutino-garrido",
+        "https://hilocofrade.es/autores/juan-manuel-fernandez-carranza",
+        "https://hilocofrade.es/autores/juan-manuel-gomez-sanchez",
+        "https://hilocofrade.es/autores/juan-manuel-martinez-lara",
+        "https://hilocofrade.es/autores/juan-manuel-minarro-lopez",
+        "https://hilocofrade.es/autores/juan-manuel-montano",
+        "https://hilocofrade.es/autores/juan-manuel-rodriguez-ojeda",
+        "https://hilocofrade.es/autores/juan-martinez-montanes",
+        "https://hilocofrade.es/autores/juan-miguel-martin-mena",
+        "https://hilocofrade.es/autores/juan-perez-calvo",
+        "https://hilocofrade.es/autores/juan-ramon-rivera-fe",
+        "https://hilocofrade.es/autores/juan-sanchez-vela",
+        "https://hilocofrade.es/autores/juan-velazquez-sanchez",
+        "https://hilocofrade.es/autores/juan-ventura",
+        "https://hilocofrade.es/autores/juan-vicente-mas-quiles",
+        "https://hilocofrade.es/autores/laura-perez-melendez",
+        "https://hilocofrade.es/autores/leandro-gonzalez-ruiz",
+        "https://hilocofrade.es/autores/leopoldo-padilla",
+        "https://hilocofrade.es/autores/lucas-de-prada",
+        "https://hilocofrade.es/autores/luciano-galan-garcia",
+        "https://hilocofrade.es/autores/luis-alfonso-miraut-lago",
+        "https://hilocofrade.es/autores/luis-alvarez-duarte",
+        "https://hilocofrade.es/autores/luis-dominguez",
+        "https://hilocofrade.es/autores/luis-miguel-garduno-lara",
+        "https://hilocofrade.es/autores/luis-ortega-bru",
+        "https://hilocofrade.es/autores/luis-peyre-azcarraga",
+        "https://hilocofrade.es/autores/luis-sanchez-jimenez-dorador",
+        "https://hilocofrade.es/autores/luis-tovar-morilla",
+        "https://hilocofrade.es/autores/manolo-y-antonio-doradores",
+        "https://hilocofrade.es/autores/manuel-alejandro-gonzalez-cruz",
+        "https://hilocofrade.es/autores/manuel-amador-infantes",
+        "https://hilocofrade.es/autores/manuel-ballesteros",
+        "https://hilocofrade.es/autores/manuel-borrego-hernandez",
+        "https://hilocofrade.es/autores/manuel-cabalgante-ortiz",
+        "https://hilocofrade.es/autores/manuel-caro",
+        "https://hilocofrade.es/autores/manuel-cerquera",
+        "https://hilocofrade.es/autores/manuel-de-los-rios",
+        "https://hilocofrade.es/autores/manuel-de-los-rios-e-hijos",
+        "https://hilocofrade.es/autores/manuel-escamilla-cabezas",
+        "https://hilocofrade.es/autores/manuel-galiano-delgado",
+        "https://hilocofrade.es/autores/manuel-garcia-adaptador-gloria-a-ti",
+        "https://hilocofrade.es/autores/manuel-garcia-martin",
+        "https://hilocofrade.es/autores/manuel-gutierrez-reyes-cano",
+        "https://hilocofrade.es/autores/manuel-guzman-bejarano",
+        "https://hilocofrade.es/autores/manuel-herrera-raya",
+        "https://hilocofrade.es/autores/manuel-jesus-castro-gomila",
+        "https://hilocofrade.es/autores/manuel-jesus-guerrero-marin",
+        "https://hilocofrade.es/autores/manuel-jesus-rodriguez-lara",
+        "https://hilocofrade.es/autores/manuel-lopez-farfan",
+        "https://hilocofrade.es/autores/manuel-martin-nieto",
+        "https://hilocofrade.es/autores/manuel-marvizon-carvallo",
+        "https://hilocofrade.es/autores/manuel-mejias-perez",
+        "https://hilocofrade.es/autores/manuel-ortega",
+        "https://hilocofrade.es/autores/manuel-pereira-escultor",
+        "https://hilocofrade.es/autores/manuel-ramos-carmona",
+        "https://hilocofrade.es/autores/manuel-ramos-corona",
+        "https://hilocofrade.es/autores/manuel-ramos-rincon",
+        "https://hilocofrade.es/autores/manuel-retobollo-orden",
+        "https://hilocofrade.es/autores/manuel-rodriguez-ruiz",
+        "https://hilocofrade.es/autores/manuel-roman-seco",
+        "https://hilocofrade.es/autores/manuel-seco-velasco",
+        "https://hilocofrade.es/autores/manuel-toledano-gomez",
+        "https://hilocofrade.es/autores/manuel-torres-diez",
+        "https://hilocofrade.es/autores/manuel-verdugo",
+        "https://hilocofrade.es/autores/manuel-vespia-roman",
+        "https://hilocofrade.es/autores/manuela-carrero-fuentes",
+        "https://hilocofrade.es/autores/marcelo-duran",
+        "https://hilocofrade.es/autores/marco-frisina",
+        "https://hilocofrade.es/autores/marcos-de-cabrera",
+        "https://hilocofrade.es/autores/maria-del-carmen-gomez-tocon",
+        "https://hilocofrade.es/autores/mariano-sanchez-del-pino",
+        "https://hilocofrade.es/autores/mario-infante-jurado",
+        "https://hilocofrade.es/autores/martin-salas-martinez",
+        "https://hilocofrade.es/autores/melchor-cano-arquitecto",
+        "https://hilocofrade.es/autores/miguel-angel-font-morgado",
+        "https://hilocofrade.es/autores/miguel-angel-lanzarote-fernandez",
+        "https://hilocofrade.es/autores/miguel-angel-valverde",
+        "https://hilocofrade.es/autores/miguel-vazquez-garfia",
+        "https://hilocofrade.es/autores/montenegro-proyectista-amparo",
+        "https://hilocofrade.es/autores/musae-restauracion",
+        "https://hilocofrade.es/autores/natalia-de-martin",
+        "https://hilocofrade.es/autores/nicolas-miguel-barbero-rivas",
+        "https://hilocofrade.es/autores/orfebreria-ramos",
+        "https://hilocofrade.es/autores/orfebreria-villarreal",
+        "https://hilocofrade.es/autores/oscar-navarro-gonzalez",
+        "https://hilocofrade.es/autores/pablo-ojeda-jimenez",
+        "https://hilocofrade.es/autores/pablo-perea-garrido",
+        "https://hilocofrade.es/autores/pablo-sanchez-sanchez",
+        "https://hilocofrade.es/autores/paco-coria-compositor",
+        "https://hilocofrade.es/autores/paco-lola",
+        "https://hilocofrade.es/autores/pascual-gonzalez-moreno",
+        "https://hilocofrade.es/autores/pascual-marquina-narro",
+        "https://hilocofrade.es/autores/pasion-cofrade",
+        "https://hilocofrade.es/autores/pedro-brana-martinez",
+        "https://hilocofrade.es/autores/pedro-de-mena",
+        "https://hilocofrade.es/autores/pedro-galvez-jimenez",
+        "https://hilocofrade.es/autores/pedro-gamez-laserna",
+        "https://hilocofrade.es/autores/pedro-j-lopez-marcos",
+        "https://hilocofrade.es/autores/pedro-m-benitez-carrion",
+        "https://hilocofrade.es/autores/pedro-manuel-pacheco-palomo",
+        "https://hilocofrade.es/autores/pedro-manzano-restaurador",
+        "https://hilocofrade.es/autores/pedro-morales-munoz",
+        "https://hilocofrade.es/autores/pedro-pablo-gallardo-gutierrez",
+        "https://hilocofrade.es/autores/pedro-roldan",
+        "https://hilocofrade.es/autores/pedro-vicedo-beneyto",
+        "https://hilocofrade.es/autores/piedad-munoz",
+        "https://hilocofrade.es/autores/pio-mollar-franch",
+        "https://hilocofrade.es/autores/plata-villa",
+        "https://hilocofrade.es/autores/policia-armada",
+        "https://hilocofrade.es/autores/rafael-barbero",
+        "https://hilocofrade.es/autores/rafael-barbero-medina",
+        "https://hilocofrade.es/autores/rafael-bermudez-medina",
+        "https://hilocofrade.es/autores/rafael-dominguez",
+        "https://hilocofrade.es/autores/rafael-fernandez-del-toro",
+        "https://hilocofrade.es/autores/rafael-romero-foncubierta",
+        "https://hilocofrade.es/autores/rafael-vazquez-mateo",
+        "https://hilocofrade.es/autores/rafael-wals-dantas",
+        "https://hilocofrade.es/autores/ramiro-minguez-martinez",
+        "https://hilocofrade.es/autores/ramon-leon-orfebreria",
+        "https://hilocofrade.es/autores/ramon-montoya-molina",
+        "https://hilocofrade.es/autores/ramon-saez-de-adana-lauzurica",
+        "https://hilocofrade.es/autores/raul-castizo-romero",
+        "https://hilocofrade.es/autores/raul-rodriguez-dominguez",
+        "https://hilocofrade.es/autores/ricardo-gil-lozano",
+        "https://hilocofrade.es/autores/ricardo-rivera-martinez",
+        "https://hilocofrade.es/autores/roman-san-jose-redondo",
+        "https://hilocofrade.es/autores/roque-de-balduque",
+        "https://hilocofrade.es/autores/ruben-jordan-flores",
+        "https://hilocofrade.es/autores/salvador-gutierrez-pintor-amparo",
+        "https://hilocofrade.es/autores/salvador-hidalgo-dorado",
+        "https://hilocofrade.es/autores/salvador-madronal",
+        "https://hilocofrade.es/autores/santiago-ramos-castro",
+        "https://hilocofrade.es/autores/sebastian-martinez-zayas",
+        "https://hilocofrade.es/autores/sebastian-rodriguez-escultor",
+        "https://hilocofrade.es/autores/sebastian-santos-rojas",
+        "https://hilocofrade.es/autores/sergio-asian-almanza",
+        "https://hilocofrade.es/autores/sergio-larrinaga",
+        "https://hilocofrade.es/autores/sergio-perez-rodriguez",
+        "https://hilocofrade.es/autores/sergio-roman-vazquez",
+        "https://hilocofrade.es/autores/sobrinos-de-jose-caro",
+        "https://hilocofrade.es/autores/taller-carrasquilla",
+        "https://hilocofrade.es/autores/taller-antonio-corrales",
+        "https://hilocofrade.es/autores/taller-bordados-jose-antonio-grande-de-leon",
+        "https://hilocofrade.es/autores/taller-bordados-hermanas-ramas-brenes",
+        "https://hilocofrade.es/autores/taller-charo-bernardino",
+        "https://hilocofrade.es/autores/taller-de-guzman-bejarano",
+        "https://hilocofrade.es/autores/taller-herrera-y-feria",
+        "https://hilocofrade.es/autores/taller-de-jimenez-orfebreria-paso-asuncion-cantillana",
+        "https://hilocofrade.es/autores/taller-manuel-casana",
+        "https://hilocofrade.es/autores/taller-nuestra-senora-del-carmen",
+        "https://hilocofrade.es/autores/talleres-calvo",
+        "https://hilocofrade.es/autores/talleres-olaya-y-govea",
+        "https://hilocofrade.es/autores/talleres-de-olot",
+        "https://hilocofrade.es/autores/talleres-velez-bracho",
+        "https://hilocofrade.es/autores/talleres-santa-barbara",
+        "https://hilocofrade.es/autores/vicente-chazeta-doblas",
+        "https://hilocofrade.es/autores/vicente-munoz-garcia",
+        "https://hilocofrade.es/autores/victor-arturo-lopez-lopez",
+        "https://hilocofrade.es/autores/victor-manuel-ferrer-castillo",
+        "https://hilocofrade.es/autores/victor-ramirez-perez",
+        "https://hilocofrade.es/autores/viuda-de-villarreal",
+        "https://hilocofrade.es/autores/vladimir-vavilov"
+      ]
+    },
+    {
+      "path": "/sitemap.xml",
+      "status": 200,
+      "author_locations": [
+        "https://hilocofrade.es/autores/abel-moreno-gomez",
+        "https://hilocofrade.es/autores/abraham-padilla-consuegra",
+        "https://hilocofrade.es/autores/abraham-pena-escobar",
+        "https://hilocofrade.es/autores/adrian-tinajero-cadenas",
+        "https://hilocofrade.es/autores/agustin-castro-rodriguez",
+        "https://hilocofrade.es/autores/agustin-de-perea",
+        "https://hilocofrade.es/autores/alberto-barea-tejada",
+        "https://hilocofrade.es/autores/alberto-escamez",
+        "https://hilocofrade.es/autores/alberto-escamez-lopez",
+        "https://hilocofrade.es/autores/alberto-gonzalez-ponce",
+        "https://hilocofrade.es/autores/agente-alejandro-blanco-hernandez",
+        "https://hilocofrade.es/autores/alejandro-cascajares",
+        "https://hilocofrade.es/autores/alejandro-marmolejo",
+        "https://hilocofrade.es/autores/alfonso-lozano-ruiz",
+        "https://hilocofrade.es/autores/almudena-fernandez-garcia",
+        "https://hilocofrade.es/autores/alvaro-martin-gonzalez",
+        "https://hilocofrade.es/autores/amadeo-vives",
+        "https://hilocofrade.es/autores/ana-amparo-cerrejon-lozano",
+        "https://hilocofrade.es/autores/andres-de-carvajal-campos",
+        "https://hilocofrade.es/autores/angel-alcaide-barroso",
+        "https://hilocofrade.es/autores/antonio-amodeo",
+        "https://hilocofrade.es/autores/antonio-bejarano-ruiz",
+        "https://hilocofrade.es/autores/antonio-cardoso-de-quiros",
+        "https://hilocofrade.es/autores/antonio-castillo-lastrucci",
+        "https://hilocofrade.es/autores/antonio-castro-del-pozo",
+        "https://hilocofrade.es/autores/antonio-cruz-gomez",
+        "https://hilocofrade.es/autores/antonio-david-rodriguez-gomez",
+        "https://hilocofrade.es/autores/antonio-de-alfian",
+        "https://hilocofrade.es/autores/antonio-diaz-fernandez",
+        "https://hilocofrade.es/autores/antonio-dube-de-luque",
+        "https://hilocofrade.es/autores/antonio-eslava-rubio",
+        "https://hilocofrade.es/autores/antonio-garduno-navas",
+        "https://hilocofrade.es/autores/antonio-herranz",
+        "https://hilocofrade.es/autores/antonio-illanes-rodriguez",
+        "https://hilocofrade.es/autores/antonio-j-caparros-ridao",
+        "https://hilocofrade.es/autores/antonio-javier-rodriguez-rojas",
+        "https://hilocofrade.es/autores/antonio-jesus-del-castillo-fernandez",
+        "https://hilocofrade.es/autores/antonio-jose-lopez-escalante",
+        "https://hilocofrade.es/autores/antonio-manuel-lopez-carrion",
+        "https://hilocofrade.es/autores/antonio-martin-fernandez",
+        "https://hilocofrade.es/autores/antonio-moreno-pozo",
+        "https://hilocofrade.es/autores/antonio-pantion-perez",
+        "https://hilocofrade.es/autores/antonio-sanchez-gonzalez",
+        "https://hilocofrade.es/autores/arturo-barea-tejada",
+        "https://hilocofrade.es/autores/ballesteros-cascajares-conservacion-restauracion",
+        "https://hilocofrade.es/autores/bartolome-perez-casas",
+        "https://hilocofrade.es/autores/benjamin-monje-brenes",
+        "https://hilocofrade.es/autores/bienvenido-puelles-oliver",
+        "https://hilocofrade.es/autores/blas-molner",
+        "https://hilocofrade.es/autores/bordados-santa-clara",
+        "https://hilocofrade.es/autores/braulio-uralde-bringas",
+        "https://hilocofrade.es/autores/carlos-guillen-gonzalez",
+        "https://hilocofrade.es/autores/carlos-jimenez-garcia",
+        "https://hilocofrade.es/autores/carlos-penuela-jordan",
+        "https://hilocofrade.es/autores/agente-carlos-puelles-cervantes",
+        "https://hilocofrade.es/autores/carpinteria-melo",
+        "https://hilocofrade.es/autores/cayetano-gonzalez",
+        "https://hilocofrade.es/autores/cinta-rubio-faure",
+        "https://hilocofrade.es/autores/claudio-gomez-compositor",
+        "https://hilocofrade.es/autores/convento-santa-isabel-bordados",
+        "https://hilocofrade.es/autores/cristobal-lopez-gandara",
+        "https://hilocofrade.es/autores/cristobal-oudrid",
+        "https://hilocofrade.es/autores/cristopher-jimenez-cabeza",
+        "https://hilocofrade.es/autores/daniel-albarran-acosta",
+        "https://hilocofrade.es/autores/daniel-oller-garcia",
+        "https://hilocofrade.es/autores/dario-fernandez-parra",
+        "https://hilocofrade.es/autores/dario-ojeda-cordero",
+        "https://hilocofrade.es/autores/david-alvarez-garcia",
+        "https://hilocofrade.es/autores/david-calleja-ruiz",
+        "https://hilocofrade.es/autores/david-gomez-ramirez",
+        "https://hilocofrade.es/autores/david-hurtado-torres",
+        "https://hilocofrade.es/autores/david-payan-campos",
+        "https://hilocofrade.es/autores/diego-alejandro-moreno-alvarez",
+        "https://hilocofrade.es/autores/diego-gallegos-platero",
+        "https://hilocofrade.es/autores/diego-marquez",
+        "https://hilocofrade.es/autores/diego-roldan-serrallonga",
+        "https://hilocofrade.es/autores/dionisio-bunuel-gutierrez",
+        "https://hilocofrade.es/autores/edwin-gonzalez-solis",
+        "https://hilocofrade.es/autores/elias-santiago-vico",
+        "https://hilocofrade.es/autores/eliseo-capel-paricio",
+        "https://hilocofrade.es/autores/eloy-garcia-lopez",
+        "https://hilocofrade.es/autores/emilio-cebrian-ruiz",
+        "https://hilocofrade.es/autores/emilio-garcia-armenta",
+        "https://hilocofrade.es/autores/emilio-munoz-serna",
+        "https://hilocofrade.es/autores/emilio-pizarro-cruz",
+        "https://hilocofrade.es/autores/encarnacion-hurtado-molina",
+        "https://hilocofrade.es/autores/enrique-castellanos-luque",
+        "https://hilocofrade.es/autores/enrique-gutierrez-carrasquilla",
+        "https://hilocofrade.es/autores/esperanza-elena-caro",
+        "https://hilocofrade.es/autores/eva-villanueva-romera",
+        "https://hilocofrade.es/autores/felipe-de-ribas",
+        "https://hilocofrade.es/autores/felipe-de-rivas",
+        "https://hilocofrade.es/autores/felipe-martinez",
+        "https://hilocofrade.es/autores/felipe-siguenza",
+        "https://hilocofrade.es/autores/felix-de-carboneras",
+        "https://hilocofrade.es/autores/fernandez-y-enriquez",
+        "https://hilocofrade.es/autores/agente-fernando-aguado-hernandez",
+        "https://hilocofrade.es/autores/fernando-castejon-lopez",
+        "https://hilocofrade.es/autores/fernando-cruz",
+        "https://hilocofrade.es/autores/fernando-jose-aguado-hernandez",
+        "https://hilocofrade.es/autores/fernando-marmolejo",
+        "https://hilocofrade.es/autores/fernando-murciano-abad",
+        "https://hilocofrade.es/autores/fernando-oliveras-gonzalez",
+        "https://hilocofrade.es/autores/francis-gonzalez-rios",
+        "https://hilocofrade.es/autores/francisco-antonio-ruiz-gijon",
+        "https://hilocofrade.es/autores/francisco-arquillo-de-la-torre",
+        "https://hilocofrade.es/autores/francisco-bailac",
+        "https://hilocofrade.es/autores/francisco-berlanga-de-avila",
+        "https://hilocofrade.es/autores/francisco-buiza",
+        "https://hilocofrade.es/autores/francisco-cano-ruiz",
+        "https://hilocofrade.es/autores/francisco-david-alvarez-barroso",
+        "https://hilocofrade.es/autores/francisco-de-ocampo",
+        "https://hilocofrade.es/autores/francisco-del-toro-zamora",
+        "https://hilocofrade.es/autores/francisco-escamilla",
+        "https://hilocofrade.es/autores/francisco-grau-vegara",
+        "https://hilocofrade.es/autores/francisco-japon-rodriguez",
+        "https://hilocofrade.es/autores/francisco-javier-barbero-duque",
+        "https://hilocofrade.es/autores/agente-francisco-javier-cebrero-arias",
+        "https://hilocofrade.es/autores/francisco-javier-fernandez-perez",
+        "https://hilocofrade.es/autores/francisco-javier-gonzalez-rios",
+        "https://hilocofrade.es/autores/francisco-javier-sojo-blanco",
+        "https://hilocofrade.es/autores/francisco-javier-torres-simon",
+        "https://hilocofrade.es/autores/francisco-jose-caba-moya",
+        "https://hilocofrade.es/autores/francisco-jose-carrasco-benitez",
+        "https://hilocofrade.es/autores/francisco-jose-escobar-lamas",
+        "https://hilocofrade.es/autores/francisco-jose-martinez-perez",
+        "https://hilocofrade.es/autores/francisco-jose-reyes-villadiego",
+        "https://hilocofrade.es/autores/francisco-manuel-lopez-lopez",
+        "https://hilocofrade.es/autores/francisco-moraza-cienfuegos",
+        "https://hilocofrade.es/autores/francisco-ortiz-moron",
+        "https://hilocofrade.es/autores/francisco-pastor-bueno",
+        "https://hilocofrade.es/autores/francisco-rivero-gallardo",
+        "https://hilocofrade.es/autores/francisco-romero-zafra",
+        "https://hilocofrade.es/autores/francisco-rosado-castillo",
+        "https://hilocofrade.es/autores/fulgencio-moron-rodenas",
+        "https://hilocofrade.es/autores/gabriel-de-astorga",
+        "https://hilocofrade.es/autores/gallardo",
+        "https://hilocofrade.es/autores/gaspar-nunez-delgado",
+        "https://hilocofrade.es/autores/german-alvarez-beigbeder",
+        "https://hilocofrade.es/autores/german-perez-vargas",
+        "https://hilocofrade.es/autores/hermanas-antunez",
+        "https://hilocofrade.es/autores/hermanas-navarro-calderon",
+        "https://hilocofrade.es/autores/hermanas-zuloaga",
+        "https://hilocofrade.es/autores/hermanos-caballeros",
+        "https://hilocofrade.es/autores/hermanos-rosendo-navarro",
+        "https://hilocofrade.es/autores/ignacio-borrego-gonzalez",
+        "https://hilocofrade.es/autores/ignacio-gomez-millan",
+        "https://hilocofrade.es/autores/instituto-andaluz-patrimonio-historico",
+        "https://hilocofrade.es/autores/isaac-gomez",
+        "https://hilocofrade.es/autores/ismael-martinez-lunar",
+        "https://hilocofrade.es/autores/israel-jimenez-chozas",
+        "https://hilocofrade.es/autores/israel-redondo-perez",
+        "https://hilocofrade.es/autores/j-antonio-blanco-compositor",
+        "https://hilocofrade.es/autores/javier-alonso-delgado",
+        "https://hilocofrade.es/autores/javier-calvo-gavino",
+        "https://hilocofrade.es/autores/javier-romero-compositor",
+        "https://hilocofrade.es/autores/javier-sanchez-de-los-reyes",
+        "https://hilocofrade.es/autores/jeronimo-hernandez",
+        "https://hilocofrade.es/autores/jesus-dieguez-garcia",
+        "https://hilocofrade.es/autores/jesus-dominguez-orfebre",
+        "https://hilocofrade.es/autores/jesus-gomez-rodriguez",
+        "https://hilocofrade.es/autores/jesus-jimenez-palma",
+        "https://hilocofrade.es/autores/jesus-joaquin-espinosa-de-los-monteros-perez",
+        "https://hilocofrade.es/autores/jesus-manuel-martin-prieto",
+        "https://hilocofrade.es/autores/jesus-mendez-lastrucci",
+        "https://hilocofrade.es/autores/jesus-rosado-borja",
+        "https://hilocofrade.es/autores/jesus-sanz-lagares",
+        "https://hilocofrade.es/autores/joaquin-caballero-payan",
+        "https://hilocofrade.es/autores/joaquin-francisco-drake-garcia",
+        "https://hilocofrade.es/autores/joaquin-lorenzo-gomez",
+        "https://hilocofrade.es/autores/joaquin-turina",
+        "https://hilocofrade.es/autores/jonathan-jimenez-cabeza",
+        "https://hilocofrade.es/autores/jorge-aguila-ordonez",
+        "https://hilocofrade.es/autores/jorge-ferrer-orfebre",
+        "https://hilocofrade.es/autores/jorge-martin-puerto",
+        "https://hilocofrade.es/autores/jose-albero-frances",
+        "https://hilocofrade.es/autores/jose-antonio-grande-de-leon",
+        "https://hilocofrade.es/autores/jose-antonio-herrera-solis",
+        "https://hilocofrade.es/autores/jose-antonio-navarro-arteaga",
+        "https://hilocofrade.es/autores/jose-antonio-ramirez-garcia",
+        "https://hilocofrade.es/autores/jose-campano-bravo",
+        "https://hilocofrade.es/autores/jose-de-la-vega-sanchez",
+        "https://hilocofrade.es/autores/jose-gil",
+        "https://hilocofrade.es/autores/jose-gil-vazquez",
+        "https://hilocofrade.es/autores/jose-guillermo-carrasquilla-perea",
+        "https://hilocofrade.es/autores/jose-ignacio-cansino-gonzalez",
+        "https://hilocofrade.es/autores/jose-joaquin-fijo-leon",
+        "https://hilocofrade.es/autores/jose-leon-alapont",
+        "https://hilocofrade.es/autores/jose-lopez-egreja",
+        "https://hilocofrade.es/autores/jose-luis-asian-cano",
+        "https://hilocofrade.es/autores/jose-luis-gomez-jaldon",
+        "https://hilocofrade.es/autores/jose-m-sanchez-molero",
+        "https://hilocofrade.es/autores/jose-manuel-bernal",
+        "https://hilocofrade.es/autores/jose-manuel-bonilla-cornejo",
+        "https://hilocofrade.es/autores/jose-manuel-delgado-rodriguez",
+        "https://hilocofrade.es/autores/jose-manuel-franco-gomez",
+        "https://hilocofrade.es/autores/jose-manuel-garcia-pulido",
+        "https://hilocofrade.es/autores/jose-manuel-jodar-marin",
+        "https://hilocofrade.es/autores/jose-manuel-lozano-rivero",
+        "https://hilocofrade.es/autores/jose-manuel-mena-hervas",
+        "https://hilocofrade.es/autores/jose-manuel-ortega-cruz",
+        "https://hilocofrade.es/autores/jose-manuel-parrado-lato",
+        "https://hilocofrade.es/autores/jose-manuel-ramos-orfebre",
+        "https://hilocofrade.es/autores/jose-manuel-reina-romero",
+        "https://hilocofrade.es/autores/jose-manuel-rodriguez-melo",
+        "https://hilocofrade.es/autores/jose-manuel-toscano",
+        "https://hilocofrade.es/autores/jose-manuel-toscano-perez",
+        "https://hilocofrade.es/autores/jose-maria-dorantes-ramos",
+        "https://hilocofrade.es/autores/jose-maria-gamero-vinau",
+        "https://hilocofrade.es/autores/jose-maria-jimenez-oliva",
+        "https://hilocofrade.es/autores/agente-jose-maria-sanchez-martin",
+        "https://hilocofrade.es/autores/jose-martin-martin",
+        "https://hilocofrade.es/autores/jose-martin-palma",
+        "https://hilocofrade.es/autores/agente-jose-miguel-lopez-rueda",
+        "https://hilocofrade.es/autores/jose-montes-de-oca",
+        "https://hilocofrade.es/autores/jose-moreno-alonso",
+        "https://hilocofrade.es/autores/jose-parellada",
+        "https://hilocofrade.es/autores/jose-paz-velez",
+        "https://hilocofrade.es/autores/jose-perez-conde",
+        "https://hilocofrade.es/autores/jose-pinto-sanchez",
+        "https://hilocofrade.es/autores/jose-ramon-lozano-garrido",
+        "https://hilocofrade.es/autores/jose-ramon-lozano-pina",
+        "https://hilocofrade.es/autores/jose-ramon-paleteiro",
+        "https://hilocofrade.es/autores/jose-ramon-perez-soto",
+        "https://hilocofrade.es/autores/jose-rivero-carrera-paso-asuncion-cantillana",
+        "https://hilocofrade.es/autores/jose-rodriguez-fernandez-andes",
+        "https://hilocofrade.es/autores/jose-rodriguez-gil-currito-el-dorador",
+        "https://hilocofrade.es/autores/jose-rodriguez-rivero-carrera",
+        "https://hilocofrade.es/autores/jose-romero-morillo",
+        "https://hilocofrade.es/autores/jose-salazar-rodriguez",
+        "https://hilocofrade.es/autores/jose-sanchez-munoz",
+        "https://hilocofrade.es/autores/jose-sanjuan-navarro",
+        "https://hilocofrade.es/autores/jose-sapena-matarredona",
+        "https://hilocofrade.es/autores/jose-tiburcio-gonzalez",
+        "https://hilocofrade.es/autores/jose-velez-garcia",
+        "https://hilocofrade.es/autores/jose-vicente-mico-alvarez",
+        "https://hilocofrade.es/autores/juan-abascal-fuentes",
+        "https://hilocofrade.es/autores/juan-acuna-compositor",
+        "https://hilocofrade.es/autores/juan-antonio-barros-jodar",
+        "https://hilocofrade.es/autores/juan-antonio-blanco",
+        "https://hilocofrade.es/autores/juan-antonio-blanco-ramos",
+        "https://hilocofrade.es/autores/juan-antonio-carmona-paez",
+        "https://hilocofrade.es/autores/juan-antonio-gonzalez-garcia-ventura",
+        "https://hilocofrade.es/autores/juan-antonio-rodriguez-pintor-simpecado-rojo",
+        "https://hilocofrade.es/autores/juan-asian-compositor",
+        "https://hilocofrade.es/autores/juan-bautista-patrone-y-quartin",
+        "https://hilocofrade.es/autores/juan-bautista-vazquez-el-viejo",
+        "https://hilocofrade.es/autores/juan-brachi-dominguez",
+        "https://hilocofrade.es/autores/juan-carlos-sempere-bomboi",
+        "https://hilocofrade.es/autores/juan-de-astorga",
+        "https://hilocofrade.es/autores/juan-de-dios-espinosa-ordonez",
+        "https://hilocofrade.es/autores/juan-de-los-santos-sanchez",
+        "https://hilocofrade.es/autores/juan-de-mesa",
+        "https://hilocofrade.es/autores/juan-de-santamaria",
+        "https://hilocofrade.es/autores/juan-de-zamora-pintor-sevilla",
+        "https://hilocofrade.es/autores/juan-fernandez",
+        "https://hilocofrade.es/autores/juan-herrera-cala",
+        "https://hilocofrade.es/autores/juan-jose-puntas-fernandez",
+        "https://hilocofrade.es/autores/juan-luis-del-valle",
+        "https://hilocofrade.es/autores/juan-manuel-chaves-ramirez",
+        "https://hilocofrade.es/autores/juan-manuel-cutino-garrido",
+        "https://hilocofrade.es/autores/juan-manuel-fernandez-carranza",
+        "https://hilocofrade.es/autores/juan-manuel-gomez-sanchez",
+        "https://hilocofrade.es/autores/juan-manuel-martinez-lara",
+        "https://hilocofrade.es/autores/juan-manuel-minarro-lopez",
+        "https://hilocofrade.es/autores/juan-manuel-montano",
+        "https://hilocofrade.es/autores/juan-manuel-rodriguez-ojeda",
+        "https://hilocofrade.es/autores/juan-martinez-montanes",
+        "https://hilocofrade.es/autores/juan-miguel-martin-mena",
+        "https://hilocofrade.es/autores/juan-perez-calvo",
+        "https://hilocofrade.es/autores/juan-ramon-rivera-fe",
+        "https://hilocofrade.es/autores/juan-sanchez-vela",
+        "https://hilocofrade.es/autores/juan-velazquez-sanchez",
+        "https://hilocofrade.es/autores/juan-ventura",
+        "https://hilocofrade.es/autores/juan-vicente-mas-quiles",
+        "https://hilocofrade.es/autores/laura-perez-melendez",
+        "https://hilocofrade.es/autores/leandro-gonzalez-ruiz",
+        "https://hilocofrade.es/autores/leopoldo-padilla",
+        "https://hilocofrade.es/autores/lucas-de-prada",
+        "https://hilocofrade.es/autores/luciano-galan-garcia",
+        "https://hilocofrade.es/autores/luis-alfonso-miraut-lago",
+        "https://hilocofrade.es/autores/luis-alvarez-duarte",
+        "https://hilocofrade.es/autores/luis-dominguez",
+        "https://hilocofrade.es/autores/luis-miguel-garduno-lara",
+        "https://hilocofrade.es/autores/luis-ortega-bru",
+        "https://hilocofrade.es/autores/luis-peyre-azcarraga",
+        "https://hilocofrade.es/autores/luis-sanchez-jimenez-dorador",
+        "https://hilocofrade.es/autores/luis-tovar-morilla",
+        "https://hilocofrade.es/autores/manolo-y-antonio-doradores",
+        "https://hilocofrade.es/autores/manuel-alejandro-gonzalez-cruz",
+        "https://hilocofrade.es/autores/manuel-amador-infantes",
+        "https://hilocofrade.es/autores/manuel-ballesteros",
+        "https://hilocofrade.es/autores/manuel-borrego-hernandez",
+        "https://hilocofrade.es/autores/manuel-cabalgante-ortiz",
+        "https://hilocofrade.es/autores/manuel-caro",
+        "https://hilocofrade.es/autores/manuel-cerquera",
+        "https://hilocofrade.es/autores/manuel-de-los-rios",
+        "https://hilocofrade.es/autores/manuel-de-los-rios-e-hijos",
+        "https://hilocofrade.es/autores/manuel-escamilla-cabezas",
+        "https://hilocofrade.es/autores/manuel-galiano-delgado",
+        "https://hilocofrade.es/autores/manuel-garcia-adaptador-gloria-a-ti",
+        "https://hilocofrade.es/autores/manuel-garcia-martin",
+        "https://hilocofrade.es/autores/manuel-gutierrez-reyes-cano",
+        "https://hilocofrade.es/autores/manuel-guzman-bejarano",
+        "https://hilocofrade.es/autores/manuel-herrera-raya",
+        "https://hilocofrade.es/autores/manuel-jesus-castro-gomila",
+        "https://hilocofrade.es/autores/manuel-jesus-guerrero-marin",
+        "https://hilocofrade.es/autores/manuel-jesus-rodriguez-lara",
+        "https://hilocofrade.es/autores/manuel-lopez-farfan",
+        "https://hilocofrade.es/autores/manuel-martin-nieto",
+        "https://hilocofrade.es/autores/manuel-marvizon-carvallo",
+        "https://hilocofrade.es/autores/manuel-mejias-perez",
+        "https://hilocofrade.es/autores/manuel-ortega",
+        "https://hilocofrade.es/autores/manuel-pereira-escultor",
+        "https://hilocofrade.es/autores/manuel-ramos-carmona",
+        "https://hilocofrade.es/autores/manuel-ramos-corona",
+        "https://hilocofrade.es/autores/manuel-ramos-rincon",
+        "https://hilocofrade.es/autores/manuel-retobollo-orden",
+        "https://hilocofrade.es/autores/manuel-rodriguez-ruiz",
+        "https://hilocofrade.es/autores/manuel-roman-seco",
+        "https://hilocofrade.es/autores/manuel-seco-velasco",
+        "https://hilocofrade.es/autores/manuel-toledano-gomez",
+        "https://hilocofrade.es/autores/manuel-torres-diez",
+        "https://hilocofrade.es/autores/manuel-verdugo",
+        "https://hilocofrade.es/autores/manuel-vespia-roman",
+        "https://hilocofrade.es/autores/manuela-carrero-fuentes",
+        "https://hilocofrade.es/autores/marcelo-duran",
+        "https://hilocofrade.es/autores/marco-frisina",
+        "https://hilocofrade.es/autores/marcos-de-cabrera",
+        "https://hilocofrade.es/autores/maria-del-carmen-gomez-tocon",
+        "https://hilocofrade.es/autores/mariano-sanchez-del-pino",
+        "https://hilocofrade.es/autores/mario-infante-jurado",
+        "https://hilocofrade.es/autores/martin-salas-martinez",
+        "https://hilocofrade.es/autores/melchor-cano-arquitecto",
+        "https://hilocofrade.es/autores/miguel-angel-font-morgado",
+        "https://hilocofrade.es/autores/miguel-angel-lanzarote-fernandez",
+        "https://hilocofrade.es/autores/miguel-angel-valverde",
+        "https://hilocofrade.es/autores/miguel-vazquez-garfia",
+        "https://hilocofrade.es/autores/montenegro-proyectista-amparo",
+        "https://hilocofrade.es/autores/musae-restauracion",
+        "https://hilocofrade.es/autores/natalia-de-martin",
+        "https://hilocofrade.es/autores/nicolas-miguel-barbero-rivas",
+        "https://hilocofrade.es/autores/orfebreria-ramos",
+        "https://hilocofrade.es/autores/orfebreria-villarreal",
+        "https://hilocofrade.es/autores/oscar-navarro-gonzalez",
+        "https://hilocofrade.es/autores/pablo-ojeda-jimenez",
+        "https://hilocofrade.es/autores/pablo-perea-garrido",
+        "https://hilocofrade.es/autores/pablo-sanchez-sanchez",
+        "https://hilocofrade.es/autores/paco-coria-compositor",
+        "https://hilocofrade.es/autores/paco-lola",
+        "https://hilocofrade.es/autores/pascual-gonzalez-moreno",
+        "https://hilocofrade.es/autores/pascual-marquina-narro",
+        "https://hilocofrade.es/autores/pasion-cofrade",
+        "https://hilocofrade.es/autores/pedro-brana-martinez",
+        "https://hilocofrade.es/autores/pedro-de-mena",
+        "https://hilocofrade.es/autores/pedro-galvez-jimenez",
+        "https://hilocofrade.es/autores/pedro-gamez-laserna",
+        "https://hilocofrade.es/autores/pedro-j-lopez-marcos",
+        "https://hilocofrade.es/autores/pedro-m-benitez-carrion",
+        "https://hilocofrade.es/autores/pedro-manuel-pacheco-palomo",
+        "https://hilocofrade.es/autores/pedro-manzano-restaurador",
+        "https://hilocofrade.es/autores/pedro-morales-munoz",
+        "https://hilocofrade.es/autores/pedro-pablo-gallardo-gutierrez",
+        "https://hilocofrade.es/autores/pedro-roldan",
+        "https://hilocofrade.es/autores/pedro-vicedo-beneyto",
+        "https://hilocofrade.es/autores/piedad-munoz",
+        "https://hilocofrade.es/autores/pio-mollar-franch",
+        "https://hilocofrade.es/autores/plata-villa",
+        "https://hilocofrade.es/autores/policia-armada",
+        "https://hilocofrade.es/autores/rafael-barbero",
+        "https://hilocofrade.es/autores/rafael-barbero-medina",
+        "https://hilocofrade.es/autores/rafael-bermudez-medina",
+        "https://hilocofrade.es/autores/rafael-dominguez",
+        "https://hilocofrade.es/autores/rafael-fernandez-del-toro",
+        "https://hilocofrade.es/autores/rafael-romero-foncubierta",
+        "https://hilocofrade.es/autores/rafael-vazquez-mateo",
+        "https://hilocofrade.es/autores/rafael-wals-dantas",
+        "https://hilocofrade.es/autores/ramiro-minguez-martinez",
+        "https://hilocofrade.es/autores/ramon-leon-orfebreria",
+        "https://hilocofrade.es/autores/ramon-montoya-molina",
+        "https://hilocofrade.es/autores/ramon-saez-de-adana-lauzurica",
+        "https://hilocofrade.es/autores/raul-castizo-romero",
+        "https://hilocofrade.es/autores/raul-rodriguez-dominguez",
+        "https://hilocofrade.es/autores/ricardo-gil-lozano",
+        "https://hilocofrade.es/autores/ricardo-rivera-martinez",
+        "https://hilocofrade.es/autores/roman-san-jose-redondo",
+        "https://hilocofrade.es/autores/roque-de-balduque",
+        "https://hilocofrade.es/autores/ruben-jordan-flores",
+        "https://hilocofrade.es/autores/salvador-gutierrez-pintor-amparo",
+        "https://hilocofrade.es/autores/salvador-hidalgo-dorado",
+        "https://hilocofrade.es/autores/salvador-madronal",
+        "https://hilocofrade.es/autores/santiago-ramos-castro",
+        "https://hilocofrade.es/autores/sebastian-martinez-zayas",
+        "https://hilocofrade.es/autores/sebastian-rodriguez-escultor",
+        "https://hilocofrade.es/autores/sebastian-santos-rojas",
+        "https://hilocofrade.es/autores/sergio-asian-almanza",
+        "https://hilocofrade.es/autores/sergio-larrinaga",
+        "https://hilocofrade.es/autores/sergio-perez-rodriguez",
+        "https://hilocofrade.es/autores/sergio-roman-vazquez",
+        "https://hilocofrade.es/autores/sobrinos-de-jose-caro",
+        "https://hilocofrade.es/autores/taller-carrasquilla",
+        "https://hilocofrade.es/autores/taller-antonio-corrales",
+        "https://hilocofrade.es/autores/taller-bordados-jose-antonio-grande-de-leon",
+        "https://hilocofrade.es/autores/taller-bordados-hermanas-ramas-brenes",
+        "https://hilocofrade.es/autores/taller-charo-bernardino",
+        "https://hilocofrade.es/autores/taller-de-guzman-bejarano",
+        "https://hilocofrade.es/autores/taller-herrera-y-feria",
+        "https://hilocofrade.es/autores/taller-de-jimenez-orfebreria-paso-asuncion-cantillana",
+        "https://hilocofrade.es/autores/taller-manuel-casana",
+        "https://hilocofrade.es/autores/taller-nuestra-senora-del-carmen",
+        "https://hilocofrade.es/autores/talleres-calvo",
+        "https://hilocofrade.es/autores/talleres-olaya-y-govea",
+        "https://hilocofrade.es/autores/talleres-de-olot",
+        "https://hilocofrade.es/autores/talleres-velez-bracho",
+        "https://hilocofrade.es/autores/talleres-santa-barbara",
+        "https://hilocofrade.es/autores/vicente-chazeta-doblas",
+        "https://hilocofrade.es/autores/vicente-munoz-garcia",
+        "https://hilocofrade.es/autores/victor-arturo-lopez-lopez",
+        "https://hilocofrade.es/autores/victor-manuel-ferrer-castillo",
+        "https://hilocofrade.es/autores/victor-ramirez-perez",
+        "https://hilocofrade.es/autores/viuda-de-villarreal",
+        "https://hilocofrade.es/autores/vladimir-vavilov"
+      ]
+    },
+    {
+      "path": "/autores/luis-ortega-bru",
+      "status": 200,
+      "title": "Luis Ortega Bru · Escultura · Hilo Cofrade",
+      "h1": [
+        "Luis Ortega Bru"
+      ],
+      "canonical": "https://hilocofrade.es/autores/luis-ortega-bru",
+      "robots": "index, follow",
+      "jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "@id": "https://hilocofrade.es/#organization",
+          "url": "https://hilocofrade.es",
+          "name": "Hilo Cofrade",
+          "description": "Enciclopedia cofrade de Sevilla y su provincia: hermandades, imágenes, pasos, bandas, marchas, autores, patrimonio, cultos y salidas relacionados.",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://hilocofrade.es/brand/logo.svg"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "@id": "https://hilocofrade.es/#website",
+          "url": "https://hilocofrade.es",
+          "name": "Hilo Cofrade",
+          "description": "Enciclopedia cofrade de Sevilla y su provincia: hermandades, imágenes, pasos, bandas, marchas, autores, patrimonio, cultos y salidas relacionados.",
+          "inLanguage": "es",
+          "publisher": {
+            "@id": "https://hilocofrade.es/#organization"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Inicio",
+              "item": "https://hilocofrade.es/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Autores",
+              "item": "https://hilocofrade.es/autores"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Luis Ortega Bru",
+              "item": "https://hilocofrade.es/autores/luis-ortega-bru"
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "Person",
+          "@id": "https://hilocofrade.es/autores/luis-ortega-bru#person",
+          "url": "https://hilocofrade.es/autores/luis-ortega-bru",
+          "name": "Luis Ortega Bru",
+          "jobTitle": "Escultura"
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "ProfilePage",
+          "@id": "https://hilocofrade.es/autores/luis-ortega-bru#profile",
+          "url": "https://hilocofrade.es/autores/luis-ortega-bru",
+          "name": "Luis Ortega Bru · Hilo Cofrade",
+          "inLanguage": "es",
+          "isPartOf": {
+            "@id": "https://hilocofrade.es/#website"
+          },
+          "mainEntity": {
+            "@id": "https://hilocofrade.es/autores/luis-ortega-bru#person"
+          },
+          "about": {
+            "@id": "https://hilocofrade.es/autores/luis-ortega-bru#person"
+          }
+        }
+      ],
+      "source_urls": [
+        "https://hermandadelbaratillo.es/cultos-y-actos-por-el-lxxv-aniversario-del-stmo-cristo-de-la-misericordia/"
+      ]
+    },
+    {
+      "path": "/autores/sebastian-santos-rojas",
+      "status": 200,
+      "title": "Sebastián Santos Rojas · Escultura · Hilo Cofrade",
+      "h1": [
+        "Sebastián Santos Rojas"
+      ],
+      "canonical": "https://hilocofrade.es/autores/sebastian-santos-rojas",
+      "robots": "index, follow",
+      "jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "@id": "https://hilocofrade.es/#organization",
+          "url": "https://hilocofrade.es",
+          "name": "Hilo Cofrade",
+          "description": "Enciclopedia cofrade de Sevilla y su provincia: hermandades, imágenes, pasos, bandas, marchas, autores, patrimonio, cultos y salidas relacionados.",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://hilocofrade.es/brand/logo.svg"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "@id": "https://hilocofrade.es/#website",
+          "url": "https://hilocofrade.es",
+          "name": "Hilo Cofrade",
+          "description": "Enciclopedia cofrade de Sevilla y su provincia: hermandades, imágenes, pasos, bandas, marchas, autores, patrimonio, cultos y salidas relacionados.",
+          "inLanguage": "es",
+          "publisher": {
+            "@id": "https://hilocofrade.es/#organization"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Inicio",
+              "item": "https://hilocofrade.es/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Autores",
+              "item": "https://hilocofrade.es/autores"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Sebastián Santos Rojas",
+              "item": "https://hilocofrade.es/autores/sebastian-santos-rojas"
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "Person",
+          "@id": "https://hilocofrade.es/autores/sebastian-santos-rojas#person",
+          "url": "https://hilocofrade.es/autores/sebastian-santos-rojas",
+          "name": "Sebastián Santos Rojas",
+          "jobTitle": "Escultura"
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "ProfilePage",
+          "@id": "https://hilocofrade.es/autores/sebastian-santos-rojas#profile",
+          "url": "https://hilocofrade.es/autores/sebastian-santos-rojas",
+          "name": "Sebastián Santos Rojas · Hilo Cofrade",
+          "inLanguage": "es",
+          "isPartOf": {
+            "@id": "https://hilocofrade.es/#website"
+          },
+          "mainEntity": {
+            "@id": "https://hilocofrade.es/autores/sebastian-santos-rojas#person"
+          },
+          "about": {
+            "@id": "https://hilocofrade.es/autores/sebastian-santos-rojas#person"
+          }
+        }
+      ],
+      "source_urls": [
+        "https://lacenadesevilla.es/senor-de-la-sagrada-cena/"
+      ]
+    },
+    {
+      "path": "/autores/pedro-roldan",
+      "status": 200,
+      "title": "Pedro Roldán · Escultura · Hilo Cofrade",
+      "h1": [
+        "Pedro Roldán"
+      ],
+      "canonical": "https://hilocofrade.es/autores/pedro-roldan",
+      "robots": "index, follow",
+      "jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "@id": "https://hilocofrade.es/#organization",
+          "url": "https://hilocofrade.es",
+          "name": "Hilo Cofrade",
+          "description": "Enciclopedia cofrade de Sevilla y su provincia: hermandades, imágenes, pasos, bandas, marchas, autores, patrimonio, cultos y salidas relacionados.",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://hilocofrade.es/brand/logo.svg"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "@id": "https://hilocofrade.es/#website",
+          "url": "https://hilocofrade.es",
+          "name": "Hilo Cofrade",
+          "description": "Enciclopedia cofrade de Sevilla y su provincia: hermandades, imágenes, pasos, bandas, marchas, autores, patrimonio, cultos y salidas relacionados.",
+          "inLanguage": "es",
+          "publisher": {
+            "@id": "https://hilocofrade.es/#organization"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Inicio",
+              "item": "https://hilocofrade.es/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Autores",
+              "item": "https://hilocofrade.es/autores"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Pedro Roldán",
+              "item": "https://hilocofrade.es/autores/pedro-roldan"
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "Person",
+          "@id": "https://hilocofrade.es/autores/pedro-roldan#person",
+          "url": "https://hilocofrade.es/autores/pedro-roldan",
+          "name": "Pedro Roldán",
+          "description": "Escultor del barroco sevillano.",
+          "jobTitle": "Escultura",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Sevilla",
+            "addressRegion": "Sevilla",
+            "addressCountry": "ES"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "ProfilePage",
+          "@id": "https://hilocofrade.es/autores/pedro-roldan#profile",
+          "url": "https://hilocofrade.es/autores/pedro-roldan",
+          "name": "Pedro Roldán · Hilo Cofrade",
+          "inLanguage": "es",
+          "isPartOf": {
+            "@id": "https://hilocofrade.es/#website"
+          },
+          "mainEntity": {
+            "@id": "https://hilocofrade.es/autores/pedro-roldan#person"
+          },
+          "about": {
+            "@id": "https://hilocofrade.es/autores/pedro-roldan#person"
+          }
+        }
+      ],
+      "source_urls": [
+        "https://siete-palabras.com/otros-titulares"
+      ]
+    },
+    {
+      "path": "/autores/antonio-illanes-rodriguez",
+      "status": 200,
+      "title": "Antonio Illanes Rodríguez · Escultura · Hilo Cofrade",
+      "h1": [
+        "Antonio Illanes Rodríguez"
+      ],
+      "canonical": "https://hilocofrade.es/autores/antonio-illanes-rodriguez",
+      "robots": "index, follow",
+      "jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "@id": "https://hilocofrade.es/#organization",
+          "url": "https://hilocofrade.es",
+          "name": "Hilo Cofrade",
+          "description": "Enciclopedia cofrade de Sevilla y su provincia: hermandades, imágenes, pasos, bandas, marchas, autores, patrimonio, cultos y salidas relacionados.",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://hilocofrade.es/brand/logo.svg"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "@id": "https://hilocofrade.es/#website",
+          "url": "https://hilocofrade.es",
+          "name": "Hilo Cofrade",
+          "description": "Enciclopedia cofrade de Sevilla y su provincia: hermandades, imágenes, pasos, bandas, marchas, autores, patrimonio, cultos y salidas relacionados.",
+          "inLanguage": "es",
+          "publisher": {
+            "@id": "https://hilocofrade.es/#organization"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Inicio",
+              "item": "https://hilocofrade.es/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Autores",
+              "item": "https://hilocofrade.es/autores"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Antonio Illanes Rodríguez",
+              "item": "https://hilocofrade.es/autores/antonio-illanes-rodriguez"
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "Person",
+          "@id": "https://hilocofrade.es/autores/antonio-illanes-rodriguez#person",
+          "url": "https://hilocofrade.es/autores/antonio-illanes-rodriguez",
+          "name": "Antonio Illanes Rodríguez",
+          "description": "Escultor e imaginero español, autor del Santísimo Cristo de las Aguas de Sevilla.",
+          "jobTitle": "Escultura"
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "ProfilePage",
+          "@id": "https://hilocofrade.es/autores/antonio-illanes-rodriguez#profile",
+          "url": "https://hilocofrade.es/autores/antonio-illanes-rodriguez",
+          "name": "Antonio Illanes Rodríguez · Hilo Cofrade",
+          "inLanguage": "es",
+          "isPartOf": {
+            "@id": "https://hilocofrade.es/#website"
+          },
+          "mainEntity": {
+            "@id": "https://hilocofrade.es/autores/antonio-illanes-rodriguez#person"
+          },
+          "about": {
+            "@id": "https://hilocofrade.es/autores/antonio-illanes-rodriguez#person"
+          }
+        }
+      ],
+      "source_urls": [
+        "https://lanzada.org/titulares/santisimo-cristo-de-la-sagrada-lanzada"
+      ]
+    },
+    {
+      "path": "/autores/luis-alvarez-duarte",
+      "status": 200,
+      "title": "Luis Álvarez Duarte · Escultura · Hilo Cofrade",
+      "h1": [
+        "Luis Álvarez Duarte"
+      ],
+      "canonical": "https://hilocofrade.es/autores/luis-alvarez-duarte",
+      "robots": "index, follow",
+      "jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "@id": "https://hilocofrade.es/#organization",
+          "url": "https://hilocofrade.es",
+          "name": "Hilo Cofrade",
+          "description": "Enciclopedia cofrade de Sevilla y su provincia: hermandades, imágenes, pasos, bandas, marchas, autores, patrimonio, cultos y salidas relacionados.",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://hilocofrade.es/brand/logo.svg"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "@id": "https://hilocofrade.es/#website",
+          "url": "https://hilocofrade.es",
+          "name": "Hilo Cofrade",
+          "description": "Enciclopedia cofrade de Sevilla y su provincia: hermandades, imágenes, pasos, bandas, marchas, autores, patrimonio, cultos y salidas relacionados.",
+          "inLanguage": "es",
+          "publisher": {
+            "@id": "https://hilocofrade.es/#organization"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Inicio",
+              "item": "https://hilocofrade.es/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Autores",
+              "item": "https://hilocofrade.es/autores"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Luis Álvarez Duarte",
+              "item": "https://hilocofrade.es/autores/luis-alvarez-duarte"
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "Person",
+          "@id": "https://hilocofrade.es/autores/luis-alvarez-duarte#person",
+          "url": "https://hilocofrade.es/autores/luis-alvarez-duarte",
+          "name": "Luis Álvarez Duarte",
+          "jobTitle": "Escultura"
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "ProfilePage",
+          "@id": "https://hilocofrade.es/autores/luis-alvarez-duarte#profile",
+          "url": "https://hilocofrade.es/autores/luis-alvarez-duarte",
+          "name": "Luis Álvarez Duarte · Hilo Cofrade",
+          "inLanguage": "es",
+          "isPartOf": {
+            "@id": "https://hilocofrade.es/#website"
+          },
+          "mainEntity": {
+            "@id": "https://hilocofrade.es/autores/luis-alvarez-duarte#person"
+          },
+          "about": {
+            "@id": "https://hilocofrade.es/autores/luis-alvarez-duarte#person"
+          }
+        }
+      ],
+      "source_urls": [
+        "https://www.hermandades-de-sevilla.org/semanasanta/vd_bellavista.html",
+        "https://hermandaddelased.org/stmo-cristo-de-la-sed/"
+      ]
+    },
+    {
+      "path": "/autores/juan-de-mesa",
+      "status": 200,
+      "title": "Juan de Mesa · Escultura · Hilo Cofrade",
+      "h1": [
+        "Juan de Mesa"
+      ],
+      "canonical": "https://hilocofrade.es/autores/juan-de-mesa",
+      "robots": "index, follow",
+      "jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "@id": "https://hilocofrade.es/#organization",
+          "url": "https://hilocofrade.es",
+          "name": "Hilo Cofrade",
+          "description": "Enciclopedia cofrade de Sevilla y su provincia: hermandades, imágenes, pasos, bandas, marchas, autores, patrimonio, cultos y salidas relacionados.",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://hilocofrade.es/brand/logo.svg"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "@id": "https://hilocofrade.es/#website",
+          "url": "https://hilocofrade.es",
+          "name": "Hilo Cofrade",
+          "description": "Enciclopedia cofrade de Sevilla y su provincia: hermandades, imágenes, pasos, bandas, marchas, autores, patrimonio, cultos y salidas relacionados.",
+          "inLanguage": "es",
+          "publisher": {
+            "@id": "https://hilocofrade.es/#organization"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Inicio",
+              "item": "https://hilocofrade.es/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Autores",
+              "item": "https://hilocofrade.es/autores"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Juan de Mesa",
+              "item": "https://hilocofrade.es/autores/juan-de-mesa"
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "Person",
+          "@id": "https://hilocofrade.es/autores/juan-de-mesa#person",
+          "url": "https://hilocofrade.es/autores/juan-de-mesa",
+          "name": "Juan de Mesa",
+          "description": "Escultor e imaginero documentado en obras de la Semana Santa sevillana del siglo XVII.",
+          "jobTitle": "Escultura"
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "ProfilePage",
+          "@id": "https://hilocofrade.es/autores/juan-de-mesa#profile",
+          "url": "https://hilocofrade.es/autores/juan-de-mesa",
+          "name": "Juan de Mesa · Hilo Cofrade",
+          "inLanguage": "es",
+          "isPartOf": {
+            "@id": "https://hilocofrade.es/#website"
+          },
+          "mainEntity": {
+            "@id": "https://hilocofrade.es/autores/juan-de-mesa#person"
+          },
+          "about": {
+            "@id": "https://hilocofrade.es/autores/juan-de-mesa#person"
+          }
+        }
+      ],
+      "source_urls": [
+        "https://www.hermandaddelamor.net/encargo-de-juan-de-mesa-de-las-imagenes-del-cristo-del-amor-y-de-nuestra-senora-del-socorro",
+        "https://www.gran-poder.es/imagenes/nuestro-padre-jesus-del-gran-poder/"
+      ]
+    },
+    {
+      "path": "/autores/juan-de-astorga",
+      "status": 200,
+      "title": "Juan de Astorga · Escultura · Hilo Cofrade",
+      "h1": [
+        "Juan de Astorga"
+      ],
+      "canonical": "https://hilocofrade.es/autores/juan-de-astorga",
+      "robots": "index, follow",
+      "jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "@id": "https://hilocofrade.es/#organization",
+          "url": "https://hilocofrade.es",
+          "name": "Hilo Cofrade",
+          "description": "Enciclopedia cofrade de Sevilla y su provincia: hermandades, imágenes, pasos, bandas, marchas, autores, patrimonio, cultos y salidas relacionados.",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://hilocofrade.es/brand/logo.svg"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "@id": "https://hilocofrade.es/#website",
+          "url": "https://hilocofrade.es",
+          "name": "Hilo Cofrade",
+          "description": "Enciclopedia cofrade de Sevilla y su provincia: hermandades, imágenes, pasos, bandas, marchas, autores, patrimonio, cultos y salidas relacionados.",
+          "inLanguage": "es",
+          "publisher": {
+            "@id": "https://hilocofrade.es/#organization"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Inicio",
+              "item": "https://hilocofrade.es/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Autores",
+              "item": "https://hilocofrade.es/autores"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Juan de Astorga",
+              "item": "https://hilocofrade.es/autores/juan-de-astorga"
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "Person",
+          "@id": "https://hilocofrade.es/autores/juan-de-astorga#person",
+          "url": "https://hilocofrade.es/autores/juan-de-astorga",
+          "name": "Juan de Astorga",
+          "description": "Escultor documentado como autor de María Santísima del Buen Fin en 1810.",
+          "jobTitle": "Escultura"
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "ProfilePage",
+          "@id": "https://hilocofrade.es/autores/juan-de-astorga#profile",
+          "url": "https://hilocofrade.es/autores/juan-de-astorga",
+          "name": "Juan de Astorga · Hilo Cofrade",
+          "inLanguage": "es",
+          "isPartOf": {
+            "@id": "https://hilocofrade.es/#website"
+          },
+          "mainEntity": {
+            "@id": "https://hilocofrade.es/autores/juan-de-astorga#person"
+          },
+          "about": {
+            "@id": "https://hilocofrade.es/autores/juan-de-astorga#person"
+          }
+        }
+      ],
+      "source_urls": [
+        "https://lanzada.org/titulares/maria-santisima-del-buen-fin-2/"
+      ]
+    }
+  ]
+}
