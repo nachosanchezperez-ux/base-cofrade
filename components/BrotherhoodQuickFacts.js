@@ -1,6 +1,7 @@
 import 'server-only'
 
 import Link from 'next/link'
+import { cache } from 'react'
 import { createPublicClient as createClient } from '@/lib/supabase/public'
 import { publicText } from '@/lib/supabase/public-entity-page'
 import styles from './BrotherhoodQuickFacts.module.css'
@@ -77,7 +78,7 @@ function annualActivities(brotherhood, recurringSeries = []) {
   })
 }
 
-async function loadRelationalFacts(brotherhood) {
+const loadRelationalFacts = cache(async function loadRelationalFacts(brotherhood) {
   if (!brotherhood?.id) return { head: null, dressers: [], membership: null, recurringSeries: [] }
 
   const supabase = createClient()
@@ -175,9 +176,9 @@ async function loadRelationalFacts(brotherhood) {
         time_text: String(item.momento || '').split(' · ').slice(1).join(' · '),
       })),
   }
-}
+})
 
-export default async function BrotherhoodQuickFacts({ brotherhood, heroFactLabels = [], compact = false }) {
+export default async function BrotherhoodQuickFacts({ brotherhood, heroFactLabels = [], compact = false, peopleOnly = false, hidePeople = false }) {
   let relational = { head: null, dressers: [], membership: null, recurringSeries: [] }
 
   try {
@@ -190,6 +191,26 @@ export default async function BrotherhoodQuickFacts({ brotherhood, heroFactLabel
   }
 
   const activities = annualActivities(brotherhood, relational.recurringSeries)
+  const dressers = groupBrotherhoodDressers(relational.dressers)
+  if (peopleOnly) {
+    if (!relational.head && !dressers.length) return null
+    return <aside className={styles.people} aria-label="Personas vinculadas a la Hermandad">
+      {relational.head ? <div className={styles.person}>
+        <span className={styles.personRole}>{relational.head.label}</span>
+        <strong>{relational.head.name}</strong>
+        {relational.head.period ? <span className={styles.personPeriod}>{relational.head.period}</span> : null}
+      </div> : null}
+      {dressers.map(dresser => <div className={styles.person} key={dresser.agentId || dresser.id}>
+        <span className={styles.personRole}>Vestidor</span>
+        <strong>{dresser.slug ? <Link href={`/autores/${dresser.slug}`}>{dresser.name} <span aria-hidden="true">↗</span></Link> : dresser.name}</strong>
+        {dresser.commonPeriod ? <span className={styles.personPeriod}>{dresser.commonPeriod}</span> : null}
+        <ul className={styles.personImages}>{dresser.images.map(image => <li key={image.id}>
+          {image.imageSlug ? <Link href={`/imagenes/${image.imageSlug}`}>{image.image}</Link> : image.image}
+          {image.period && !dresser.commonPeriod ? <span className={styles.personPeriod}>{image.period}</span> : null}
+        </li>)}</ul>
+      </div>)}
+    </aside>
+  }
   const facts = [
     publicText(brotherhood.fundacion) ? { label: 'Fundación', value: publicText(brotherhood.fundacion) } : null,
     brotherhood.imagenes?.length ? {
@@ -207,7 +228,7 @@ export default async function BrotherhoodQuickFacts({ brotherhood, heroFactLabel
       value: relational.membership.value,
       meta: `Dato de ${relational.membership.year}`,
     } : null,
-    relational.head ? {
+    relational.head && !hidePeople ? {
       label: relational.head.label,
       value: relational.head.name,
       meta: relational.head.period,
@@ -216,7 +237,6 @@ export default async function BrotherhoodQuickFacts({ brotherhood, heroFactLabel
 
   if (!facts.length && !activities.length && !relational.dressers.length) return null
   const DresserContainer = compact ? 'details' : 'div'
-  const dressers = groupBrotherhoodDressers(relational.dressers)
 
   return (
     <div className={styles.wrapper}>
@@ -255,7 +275,7 @@ export default async function BrotherhoodQuickFacts({ brotherhood, heroFactLabel
         </div>
       ) : null}
 
-      {relational.dressers.length ? (
+      {relational.dressers.length && !hidePeople ? (
         <DresserContainer className={styles.dressers}>
           {compact && <summary>{dressers.length === 1 ? 'Vestidor actual' : 'Vestidores actuales'} · {dressers.length}</summary>}
           <div className={styles.blockTitle}>

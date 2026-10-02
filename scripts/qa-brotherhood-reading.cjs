@@ -129,14 +129,12 @@ const controlCanonical = process.env.QA_CONTROL_CANONICAL || 'https://hilocofrad
       const official = page.locator('main section p[class*="__official"]');
       assert.match(await official.innerText(), /Antigua y Fervorosa Hermandad/);
       assert.equal(await official.isVisible(), true);
-      const dressers = page.locator('#resumen details').filter({ has: page.locator('summary', { hasText: 'Vestidor actual · 1' }) });
-      await dressers.locator('summary').focus();
-      await page.keyboard.press('Enter');
+      const dressers = page.locator('#titulares [aria-label="Personas vinculadas a la Hermandad"]');
       assert.equal(await dressers.getByText('José Antonio Grande de León', { exact: true }).count(), 1);
       assert.equal(await dressers.locator('a[href^="/imagenes/"]').count(), 2);
       assert.equal((await dressers.innerText()).includes('Desde Vigente'), false);
       await dressers.screenshot({ path: `${out}/dressers-${width}.png` });
-      await dressers.locator('summary').click();
+      assert.equal(await page.locator('#resumen').getByText('José Antonio Grande de León', { exact: true }).count(), 0);
       const seat = page.locator('#resumen details').filter({ has: page.locator('summary', { hasText: 'Sede y horarios' }) });
       await seat.locator('summary').click();
       assert.equal((await seat.innerText()).includes('Salida habitual'), false);
@@ -160,6 +158,25 @@ const controlCanonical = process.env.QA_CONTROL_CANONICAL || 'https://hilocofrad
       await archive.locator(':scope > summary').click();
       assert.equal((await archive.innerText()).includes('Próximas extraordinarias'), false);
       await archive.locator(':scope > summary').click();
+    }
+    if (process.env.QA_PEOPLE_MUSIC === '1') {
+      const people = page.locator('#titulares [aria-label="Personas vinculadas a la Hermandad"]');
+      assert.equal(await people.getByText('José Antonio Grande de León', { exact: false }).count(), 1);
+      assert.equal(await people.locator('a[href^="/imagenes/"]').count(), 2);
+      assert.equal(await people.locator('a[href^="/autores/"]').count(), 1);
+      assert.equal(await page.locator('#resumen').getByText('José Antonio Grande de León', { exact: true }).count(), 0);
+      if ([390, 1366].includes(width)) await page.locator('#titulares').screenshot({ path: `${out}/titulares-${width}.png` });
+      const history = page.locator('#musica details').filter({ has: page.locator('#acompanamientos') });
+      await history.locator(':scope > summary').focus();
+      await page.keyboard.press('Enter');
+      const band = page.locator('#acompanamientos a[href="/bandas/sangre-de-san-benito"]');
+      assert.equal(await band.count(), 1);
+      assert.equal(await band.isVisible(), true);
+      assert.ok(await band.locator('xpath=ancestor::article').evaluate(e => parseFloat(getComputedStyle(e).paddingLeft)) >= 16);
+      assert.equal(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth), 0);
+      if ([390, 1366].includes(width)) await page.locator('#acompanamientos').screenshot({ path: `${out}/historico-${width}.png` });
+      await history.locator(':scope > summary').focus();
+      await page.keyboard.press('Enter');
     }
     await page.getByRole('link', { name: 'Historia', exact: true }).click();
     await page.waitForFunction(() => document.querySelector('[aria-current="location"]')?.textContent === 'Historia');
