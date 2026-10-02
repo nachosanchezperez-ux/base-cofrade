@@ -2,6 +2,25 @@
 
 Corte: 3 de octubre de 2026, Europe/Madrid (2/10, 22:07 UTC).
 
+## Inspección Vercel autorizada · 3/10/2026, Europe/Madrid
+
+Sesión autenticada en el dashboard de `DesdeelArenal / base-cofrade`. Revisión de metadatos visibles con filtros All Types, All Environments, All Editors y All Variables, pestañas Project y Shared. No se pulsó Reveal Value ni se leyeron valores secretos. No se modificaron variables, credenciales, permisos ni deployments.
+
+| Variable | Producción | Preview de `audit/colabora-no-go-20261003` |
+| --- | --- | --- |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | No encontrada | No encontrada |
+| `TURNSTILE_SECRET_KEY` | No encontrada | No encontrada |
+| `CONTRIBUTION_FORM_SECRET` | No encontrada | No encontrada |
+| `PUBLIC_CONTRIBUTIONS_ENABLED` | No encontrada | No encontrada |
+| `NEXT_PUBLIC_SUPABASE_URL` | Presente | Presente (asignación Production and Preview) |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Presente | Presente (asignación Production and Preview) |
+| `SUPABASE_SECRET_KEY` | Presente, tipo Secret | Sin asignación aplicable a esta rama |
+| `SUPABASE_SERVICE_ROLE_KEY` | Presente, tipo Secret | Sin asignación aplicable a esta rama |
+
+Las búsquedas TURNSTILE y CONTRIBUTION devolvieron No Results Found tanto en Project como en Shared. Las claves privilegiadas de preview observadas están limitadas a `codex/cierra-consolacion-osuna` y `feat/band-logo-background-20260830`; no habilitan el preview actual. No se infiere su validez, vigencia o proyecto de destino a partir de su presencia. Tampoco se certifican longitud/entropía del secreto, hostname del widget ni verificación humana: aún no hay configuración Turnstile registrada en este proyecto.
+
+**B4 deja de ser desconocido y pasa a configuración pendiente comprobada. Se mantiene NO-GO.** Requiere provisionar widget/claves reales y secreto independiente, preparar credenciales exclusivas del preview, verificar migración/concurrencia y el flujo humano privado antes de considerar apertura. El permiso recibido cubre esta inspección, no la activación ni la creación de recursos de pago. Conservación y UX siguen pendientes.
+
 ## Continuación · PDF y reserva atómica (2/10, UTC)
 
 **Se mantiene NO-GO. Esta sección actualiza el corte inicial conservado debajo.**
@@ -14,7 +33,7 @@ Corte: 3 de octubre de 2026, Europe/Madrid (2/10, 22:07 UTC).
 - QA local: **1466/1466 tests PASS**, cero fallos/omisiones; `npm run build` PASS y `git diff --check` PASS. La trazabilidad de `/colabora` incluye `pdf-lib`. Regresiones: PDF real aceptado, HTML con marcadores/falso PDF rechazado, JavaScript/AA comprimidos y sin comprimir, nombre `/J#53` conservado en bytes reales y payload tras EOF rechazados. Se vuelve a comprobar el límite agregado de 10 MiB después de recodificar imágenes.
 - Verificación adicional `npm run verify:contribution-pdf-build` **PASS**, incorporada a CI tras el build: ejecuta el módulo minificado real con un harness de sus dependencias síncronas, acepta un PDF válido y rechaza JavaScript desde su worker nativo, y comprueba el parser en el trace. Detectó y permitió corregir la sustitución incorrecta de `require.resolve` por un ID del empaquetador. No equivale al envío end-to-end en Vercel.
 - Código verificado: `2b1ba4d5febeea630ce1be96acd96c472d8ac76e`, #1086 draft. CI **SUCCESS**, workflow `37073366192`, incluida la verificación PDF post-build. Preview `dpl_4cT5LAzmbGsQdB8VXF5UZgTAdec8` **READY** para ese mismo SHA; `/colabora` HTTP 200, formulario visible con envío bloqueado y `noindex, follow`. No equivale a QA visual ni a recepción end-to-end.
-- **Límites pendientes:** prueba concurrente real y migración en preview, validación del worker en el runtime desplegado, conservación demostrable (B3), variables/widget reales (B4), cinco modalidades y matriz UX completa (B5). Supabase solo dispone de rama `main`; no se crea una rama de pago sin confirmación. El conector Vercel sigue sin permitir inspeccionar variables; cualquier fallback al navegador requiere permiso del usuario.
+- **Límites pendientes:** prueba concurrente real y migración en preview, validación del worker en el runtime desplegado, conservación demostrable (B3), configurar variables/widget reales (B4; inspección autorizada registrada arriba), cinco modalidades y matriz UX completa (B5). Supabase solo dispone de rama `main`; no se crea una rama de pago sin confirmación.
 
 ## Resultado
 
