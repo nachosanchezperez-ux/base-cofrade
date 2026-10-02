@@ -202,25 +202,36 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
             tone="dark"
             showAccent={false}
           />
+
           <div className={styles.heroGrid}>
             <div className={styles.heroCopy}>
-              <span>Archivo musical · 2027</span>
-              <h1>Cambios musicales</h1>
+              <span>Especial · Archivo musical 2027</span>
+              <h1>Cambios musicales de la Semana Santa de Sevilla 2027</h1>
               <p>
-                Los relevos de bandas confirmados para la Semana Santa de Sevilla y su provincia,
-                comparados con el acompañamiento documentado de 2026.
+                Relevos de bandas, nuevas incorporaciones y acompañamientos confirmados en Sevilla y
+                su provincia. Hilo Cofrade compara la fotografía musical de 2026 con la que ya se
+                dibuja para 2027.
               </p>
+              <nav className={styles.heroActions} aria-label="Accesos rápidos a los cambios musicales">
+                <Link href={filterHref({ scope: 'capital' })}>Sevilla capital <b>{capitalCount}</b></Link>
+                <Link href={filterHref({ scope: 'province' })}>Provincia <b>{provinceCount}</b></Link>
+                <a href="#explorar-cambios">Explorar cambios <span aria-hidden="true">↓</span></a>
+              </nav>
             </div>
-            <dl className={styles.metrics}>
-              <div><dt>Cambios confirmados</dt><dd>{changes.length}</dd></div>
-              <div><dt>Hermandades</dt><dd>{brotherhoodCount}</dd></div>
-              <div><dt>Bandas que llegan</dt><dd>{newBandCount}</dd></div>
-            </dl>
-          </div>
-          <div className={styles.heroMeta}>
-            <span>Sevilla capital: <strong>{capitalCount}</strong></span>
-            <span>Provincia: <strong>{provinceCount}</strong></span>
-            {lastUpdated ? <span>Actualizado: <strong>{lastUpdated}</strong></span> : null}
+
+            <aside className={styles.heroScore} aria-label="Resumen de cambios musicales 2027">
+              <div className={styles.heroNumber}>
+                <strong>{changes.length}</strong>
+                <span>cambios confirmados</span>
+              </div>
+              <dl className={styles.heroStats}>
+                <div><dt>Corporaciones</dt><dd>{brotherhoodCount}</dd></div>
+                <div><dt>Bandas que llegan</dt><dd>{newBandCount}</dd></div>
+                <div><dt>Capital</dt><dd>{capitalCount}</dd></div>
+                <div><dt>Provincia</dt><dd>{provinceCount}</dd></div>
+              </dl>
+              {lastUpdated ? <p>Actualizado el <strong>{lastUpdated}</strong></p> : null}
+            </aside>
           </div>
         </div>
       </header>
