@@ -37,6 +37,7 @@ export default async function PanelMasterDataPage({ searchParams }) {
       <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>Control de calidad</span><h2>Estado del grafo</h2></div><p>Las alertas se calculan en tiempo real: desaparecen cuando resuelves el dato subyacente.</p></div>
       <div className={styles.panelCard}><div className={styles.moduleList}>
         <ModuleRow href="/panel/datos/salud" label="Salud del grafo" count={openIssues} note={`${health.bySeverity.critical} prioritarias · ${health.bySeverity.warning} para revisar · ${health.bySeverity.info} mejoras`} />
+        <ModuleRow href="/panel/datos/profundidad" label="Profundidad documental" count="6 tipos" note="Puntuación viva de identidad, contexto, cronología, relaciones, Fuentes, uso y apoyo; prioriza qué completar después" />
         <ModuleRow href="/panel/datos/referencias" label="Nodos de referencia" count={data.referenceNodes.length} note="Personas, Pasos y Hermandades que existen en relaciones pero aún no tienen ficha especializada" />
         <ModuleRow href="/panel/datos/frescura" label="Frescura editorial" count={freshness.unreviewed + freshness.due + freshness.stale} note={`${freshness.unreviewed} sin revisar · ${freshness.due} próximas · ${freshness.stale} vencidas`} />
       </div></div>
