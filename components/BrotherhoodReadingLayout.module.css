@@ -31,6 +31,9 @@
 .reading :global(#resumen [class*='__dressers']) summary { min-height:44px; cursor:pointer; font-weight:700; font-size:14px; color:#3f4953; }
 .reading :global(#resumen [class*='__dresserGrid']) { grid-template-columns:repeat(2,minmax(0,1fr)); }
 .reading :global(#resumen [class*='__dresser']) { background:#f6f7f8; }
+.reading :global(#resumen [class*='__dresserGrid'] > div:only-child) { grid-column:1 / -1; }
+.reading :global(#resumen [class*='__dresser'] > div) { margin-top:12px; }
+.reading :global(#resumen [class*='__dresser'] > div > span) { display:block; margin-top:4px; font-size:12px; color:#586370; }
 .reading :global(#resumen [class*='__blockTitle']) { display:none; }
 .reading :global(#sede-y-horarios) { padding:0; }
 .reading :global(#sede-y-horarios > .shell) { width:100%; padding:0; }
@@ -102,6 +105,10 @@
 .reading :global(.heritage-work-copy) { padding:22px; }
 .reading :global(.heritage-work-copy) h3 { font-size:26px; }
 .reading :global(.heritage-work-agents > div > span) { background:#f6f7f8 !important; }
+.reading :global(#tunica) { background:#fff; color:#23272c; }
+.reading :global(#tunica .section-heading p), .reading :global(#tunica .habit-card dt) { color:#586370; }
+.reading :global(#tunica .habit-card) { background:#f6f7f8; border:1px solid #dfe3e7; box-shadow:none; border-radius:6px; }
+.reading :global(#tunica .habit-card dl div) { border-color:#dfe3e7; }
 .supplement, .documentation { padding-block:12px 24px; }
 .disclosure { margin-block:12px; border-block:1px solid #dce1e6; }
 .disclosure > summary { display:flex; align-items:center; gap:14px; padding-block:14px; min-height:52px; cursor:pointer; font-size:15px; font-weight:700; color:#2a333c; list-style:none; }

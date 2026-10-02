@@ -441,7 +441,7 @@ function CurrentMusicSequence({ items, nested = false }) {
           <div className={styles.copy}>
             <span className="eyebrow">Música procesional</span>
             <Heading>Acompañamiento musical</Heading>
-            <p>Las formaciones vinculadas actualmente a la Hermandad, organizadas según la salida concreta a la que acompaña cada una.</p>
+            <p>Formaciones actuales, agrupadas por salida y posición en el cortejo.</p>
             <div className={styles.context}>
               <span>{items.length} {items.length === 1 ? 'formación' : 'formaciones'} · {groups.length} {groups.length === 1 ? 'salida' : 'salidas'}</span>
             </div>

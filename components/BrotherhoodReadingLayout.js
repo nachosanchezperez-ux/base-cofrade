@@ -52,10 +52,8 @@ export default function BrotherhoodReadingLayout({ brotherhood: h, today, agenda
         <SectionTitle eyebrow="De un vistazo" title="La Hermandad en breve" />
         {!h.editorialGuide?.summary && h.resumen ? <p className={styles.intro}>{h.resumen}</p> : null}
         <BrotherhoodQuickFacts brotherhood={h} compact heroFactLabels={[...heroFactLabels, 'Pasos']} />
-        <Disclosure title="Sede, horarios y actividad anual">
+        <Disclosure title="Sede y horarios">
           <BrotherhoodOverviewV2 brotherhood={h} practicalOnly />
-          {h.diaSalida ? <p>Salida habitual: {h.diaSalida}</p> : null}
-          {(h.salidas || []).filter(item => item.estado === 'recurring').map(item => <p key={item.id}><strong>{item.nombre}</strong> · {item.momento}</p>)}
         </Disclosure>
       </div>
       <NextAppointment item={next} />

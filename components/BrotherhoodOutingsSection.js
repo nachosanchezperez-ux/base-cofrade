@@ -45,7 +45,7 @@ function categoryCopy(key, outings) {
     const day = String(first?.diaLiturgico || first?.momento || '').split('·')[0].trim()
     return {
       eyebrow: 'Salida ordinaria',
-      title: [day, first?.tipo].filter(Boolean).join(' · '),
+      title: day || first?.tipo,
       description: 'La estación de penitencia anual de la Hermandad, con sus tiempos y recorrido documentados por edición.',
     }
   }
@@ -64,8 +64,8 @@ function categoryCopy(key, outings) {
   if (key === 'upcoming') {
     return {
       eyebrow: 'Próximas citas',
-      title: 'Próximas extraordinarias',
-      description: 'Traslados y salidas extraordinarias ya anunciados para fechas futuras.',
+      title: 'Próximas salidas y traslados',
+      description: 'Salidas y traslados anunciados, con su carácter ordinario o extraordinario indicado en cada ficha.',
     }
   }
 
