@@ -102,6 +102,7 @@ const controlCanonical = process.env.QA_CONTROL_CANONICAL || 'https://hilocofrad
       const heritage = page.locator('#patrimonio-musical');
       assert.equal(await music.locator('#acompanamiento-musical a[class*="__item"]').count(), 3);
       assert.equal(await music.locator('#acompanamiento-musical a[class*="__item"]').first().evaluate(e => getComputedStyle(e).borderRadius), '0px');
+      assert.equal(await music.locator('#acompanamiento-musical [class*="__groups"]').evaluate(e => getComputedStyle(e).boxShadow), 'none');
       assert.equal(await heritage.locator('[class*="__groups"]').evaluate(e => getComputedStyle(e).boxShadow), 'none');
       assert.equal(await heritage.locator('details').first().evaluate(e => e.open), true);
       for (const image of await music.locator('#acompanamiento-musical img').all()) {

@@ -113,7 +113,7 @@ function MarchStyleGroups({ items }) {
               <h4>{group.label}</h4>
               <small>{group.items.length} {group.items.length === 1 ? 'marcha documentada' : 'marchas documentadas'}</small>
             </div>
-            <span className={styles.styleToggle} aria-hidden="true">＋</span>
+            <span className={styles.styleToggle} aria-hidden="true">+</span>
           </summary>
           <MusicList items={group.items} showStyle={false} headingLevel={5} />
         </details>
@@ -155,7 +155,7 @@ export default function BrotherhoodMusicalHeritage({ items = [], id = 'musica', 
                   <h3>{group.label}</h3>
                   <small>{group.items.length} {group.noun} documentadas</small>
                 </div>
-                <span className={styles.groupToggle} aria-hidden="true">＋</span>
+                <span className={styles.groupToggle} aria-hidden="true">+</span>
               </summary>
               {group.key === 'Marcha procesional'
                 ? <MarchStyleGroups items={group.items} />
