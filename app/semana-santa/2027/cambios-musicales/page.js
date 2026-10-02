@@ -151,7 +151,7 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
         </div>
       </header>
 
-      <main className={`shell ${styles.content}`}>
+      <div className={`shell ${styles.content}`}>
         <section className={styles.controls} aria-labelledby="filtrar-cambios-musicales">
           <header>
             <div>
@@ -306,7 +306,7 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
             </p>
           </div>
         </section>
-      </main>
+      </div>
     </div>
   )
 }
