@@ -1,0 +1,52 @@
+[
+  {
+    "t": "agents",
+    "n": 718,
+    "hash": "33e08ad4aa153b3297fdae4219a5fe4d"
+  },
+  {
+    "t": "entities",
+    "n": 3825,
+    "hash": "2fc7cb0f596710796cd3b300ceeec4e8"
+  },
+  {
+    "t": "agent_disciplines",
+    "n": 115,
+    "hash": "635b5d116b855d7cbede785f7edb433b"
+  },
+  {
+    "t": "source_links",
+    "n": 8521,
+    "hash": "3db35f3852e0036637905d7ed1966440"
+  },
+  {
+    "t": "image_authorships",
+    "n": 372,
+    "hash": "25a6e39e385636ed3b9fec4c2cb161ae"
+  },
+  {
+    "t": "heritage_interventions",
+    "n": 272,
+    "hash": "26705e2c0d6f510f51f95007166192d9"
+  },
+  {
+    "t": "step_phase_agents",
+    "n": 149,
+    "hash": "7208f47ad35e1dd2f2f8867f9edfd77b"
+  },
+  {
+    "t": "march_authors",
+    "n": 650,
+    "hash": "8503df4b022827cbeec0558ba5167c89"
+  },
+  {
+    "t": "entity_relations",
+    "n": 484,
+    "hash": "7d6286d54fd81887e88826adac282b59"
+  },
+  {
+    "t": "sources",
+    "n": 2776,
+    "hash": "222f8d50ae531f074c9224874f23530b"
+  }
+]

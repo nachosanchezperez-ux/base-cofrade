@@ -1,0 +1,465 @@
+[
+  {
+    "agent_id": "160be307-5396-41a2-8903-7467a8c330f3",
+    "name": "Francisco Buiza Fernández",
+    "target_id": "8620d9f5-f489-418f-9f56-9c2a92a057b6",
+    "systems": [
+      "images",
+      "relations"
+    ],
+    "rows": {
+      "images": [
+        "ca41bd84-f695-478b-9fd2-d2faf1dd954f"
+      ],
+      "relations": [
+        "1b1eda72-3b5e-4211-9efb-3eccf68a47c5"
+      ]
+    }
+  },
+  {
+    "agent_id": "13fb6b36-f879-41ef-ab19-90d97e693972",
+    "name": "Sebastián Santos Rojas",
+    "target_id": "dd65d560-5236-497d-a0cf-5892a6d6031c",
+    "systems": [
+      "images",
+      "relations"
+    ],
+    "rows": {
+      "images": [
+        "e35ac46b-c842-4630-8893-bed4b09108df"
+      ],
+      "relations": [
+        "a77d667a-5ece-4bf5-a66e-f60b94031155"
+      ]
+    }
+  },
+  {
+    "agent_id": "c0160600-0001-4000-8000-000000000006",
+    "name": "Manuel Gutiérrez Reyes-Cano",
+    "target_id": "c0160700-3000-4000-8000-000000000004",
+    "systems": [
+      "images",
+      "relations"
+    ],
+    "rows": {
+      "images": [
+        "c0160700-7200-4000-8000-000000000004"
+      ],
+      "relations": [
+        "c0160700-7300-4000-8000-000000000004"
+      ]
+    }
+  },
+  {
+    "agent_id": "75cfa838-7f68-492e-b49f-e308c0a38496",
+    "name": "Antonio Joaquín Dubé de Luque",
+    "target_id": "63b5bdb8-81c4-4996-a824-26bf2c54b1bc",
+    "systems": [
+      "images",
+      "interventions"
+    ],
+    "rows": {
+      "images": [
+        "0e335f12-5918-4c46-9236-33fc27520221"
+      ],
+      "interventions": [
+        "9fe44781-98b7-498e-947d-701344ebf724"
+      ]
+    }
+  },
+  {
+    "agent_id": "13000000-0000-0000-0000-000000000002",
+    "name": "José Rodríguez Fernández-Andes",
+    "target_id": "12000000-0000-0000-0000-000000000003",
+    "systems": [
+      "images",
+      "relations"
+    ],
+    "rows": {
+      "images": [
+        "c13ab7bc-6346-4669-8497-b57b55fc4573"
+      ],
+      "relations": [
+        "db8bcc15-efb3-4920-a1b8-e4dc8806ae92"
+      ]
+    }
+  },
+  {
+    "agent_id": "5e2ab038-a344-4289-afda-bee09730fd28",
+    "name": "Luis Álvarez Duarte",
+    "target_id": "aba1b9ef-efa9-46c5-bb18-d3ae39bd1844",
+    "systems": [
+      "images",
+      "interventions"
+    ],
+    "rows": {
+      "images": [
+        "82d37b2f-e4c3-4e88-92bc-0e7ae8c42106"
+      ],
+      "interventions": [
+        "cb07e9a8-18d3-403d-99b2-7d6b3ce53a7f",
+        "fae57fd0-7bfa-4d91-9743-542b5927876c",
+        "1bb14153-c48f-4c5a-afd8-679ff34b7f52"
+      ]
+    }
+  },
+  {
+    "agent_id": "262d4bc3-0c79-4344-b40c-9a2f689aafb5",
+    "name": "Pedro Roldán",
+    "target_id": "c0160700-3000-4000-8000-000000000009",
+    "systems": [
+      "images",
+      "relations"
+    ],
+    "rows": {
+      "images": [
+        "c0160700-7200-4000-8000-000000000009"
+      ],
+      "relations": [
+        "c0160700-7300-4000-8000-000000000009"
+      ]
+    }
+  },
+  {
+    "agent_id": "13000000-0000-0000-0000-000000000001",
+    "name": "Luis Ortega Bru",
+    "target_id": "12000000-0000-0000-0000-000000000001",
+    "systems": [
+      "images",
+      "relations"
+    ],
+    "rows": {
+      "images": [
+        "80afab8f-c5f3-4c27-8115-cfc82208c44d"
+      ],
+      "relations": [
+        "a9f802ea-55fb-48cd-98b5-87d6c43553dc"
+      ]
+    }
+  },
+  {
+    "agent_id": "c0160700-5000-4000-8000-000000000004",
+    "name": "José Sánchez Muñoz",
+    "target_id": "c0160700-3000-4000-8000-000000000006",
+    "systems": [
+      "images",
+      "relations"
+    ],
+    "rows": {
+      "images": [
+        "c0160700-7200-4000-8000-000000000006"
+      ],
+      "relations": [
+        "c0160700-7300-4000-8000-000000000006"
+      ]
+    }
+  },
+  {
+    "agent_id": "02810542-45cb-4792-bb49-66bc22309768",
+    "name": "José Antonio Navarro Arteaga",
+    "target_id": "03ead0cc-0de7-441b-9863-3f05e0eae877",
+    "systems": [
+      "images",
+      "relations"
+    ],
+    "rows": {
+      "images": [
+        "797826e1-8fc2-4a0a-a2fb-6377e71b966e"
+      ],
+      "relations": [
+        "9e0de939-ae93-4386-aede-31a825e5f334"
+      ]
+    }
+  },
+  {
+    "agent_id": "13000000-0000-0000-0000-000000000002",
+    "name": "José Rodríguez Fernández-Andes",
+    "target_id": "12000000-0000-0000-0000-000000000002",
+    "systems": [
+      "images",
+      "relations"
+    ],
+    "rows": {
+      "images": [
+        "69100b80-59e4-4bce-9cfa-787f8a4aaa70"
+      ],
+      "relations": [
+        "a595f833-b27c-4419-bfe5-1c399336c9ff"
+      ]
+    }
+  },
+  {
+    "agent_id": "19da04e8-3ef6-4aa8-b6cd-3c05336e3988",
+    "name": "Talleres de Olot",
+    "target_id": "8a69a424-c759-4d19-9690-81730240cccb",
+    "systems": [
+      "images",
+      "relations"
+    ],
+    "rows": {
+      "images": [
+        "bbe0f980-ed0b-49d6-8a71-ba6302597259"
+      ],
+      "relations": [
+        "75a6eada-2760-4ad5-8209-e200edc6586e"
+      ]
+    }
+  },
+  {
+    "agent_id": "c0160700-5000-4000-8000-000000000003",
+    "name": "Emilio Pizarro Cruz",
+    "target_id": "c0160700-3000-4000-8000-000000000007",
+    "systems": [
+      "images",
+      "relations"
+    ],
+    "rows": {
+      "images": [
+        "c0160700-7200-4000-8000-000000000007"
+      ],
+      "relations": [
+        "c0160700-7300-4000-8000-000000000007"
+      ]
+    }
+  },
+  {
+    "agent_id": "25abc551-3611-4c9f-8176-ee1b569ef8d6",
+    "name": "Juan Abascal Fuentes",
+    "target_id": "ea0a853d-e4ed-43c7-afe9-2a6e788ea2b3",
+    "systems": [
+      "images",
+      "relations"
+    ],
+    "rows": {
+      "images": [
+        "a145adaf-78d3-4e8c-bc02-5e1a93ce18bf"
+      ],
+      "relations": [
+        "5d36f330-3ba7-4c36-bad4-18fbde8d7b39"
+      ]
+    }
+  },
+  {
+    "agent_id": "3c317cca-c1ac-4339-8994-78226fa57737",
+    "name": "Antonio Illanes Rodríguez",
+    "target_id": "c0bf54c4-1037-4cf8-996f-6b4ee6fd3c89",
+    "systems": [
+      "images",
+      "relations"
+    ],
+    "rows": {
+      "images": [
+        "85f23224-ee4c-4e1d-9139-94dfd425ac43"
+      ],
+      "relations": [
+        "c753c874-007f-45fa-b6c3-5e59dbcbb725"
+      ]
+    }
+  },
+  {
+    "agent_id": "7334e390-bb8d-483f-8660-317865ef591f",
+    "name": "Fernando Murciano Abad",
+    "target_id": "5ad15e35-eed4-492b-add7-2969ac69be1b",
+    "systems": [
+      "images",
+      "relations"
+    ],
+    "rows": {
+      "images": [
+        "609e6147-cf24-4d8d-b9bf-8373ced2dc17"
+      ],
+      "relations": [
+        "451920ea-42bd-4018-9cad-dd02dc2209dd"
+      ]
+    }
+  },
+  {
+    "agent_id": "ee06b3cf-beb0-4794-8e3a-321288b0e130",
+    "name": "Juan Ventura",
+    "target_id": "23ed3f46-35e3-4837-8f11-2e7a53924c2b",
+    "systems": [
+      "interventions",
+      "steps"
+    ],
+    "rows": {
+      "interventions": [
+        "7d230bcb-87af-4406-9e96-da4d7839b657"
+      ],
+      "steps": [
+        "8f5a08a0-0099-4a14-8324-5cc681c1589f"
+      ]
+    }
+  },
+  {
+    "agent_id": "c0160700-5000-4000-8000-000000000001",
+    "name": "Felipe de Rivas",
+    "target_id": "c0160700-3000-4000-8000-000000000001",
+    "systems": [
+      "images",
+      "relations"
+    ],
+    "rows": {
+      "images": [
+        "c0160700-7200-4000-8000-000000000001"
+      ],
+      "relations": [
+        "c0160700-7300-4000-8000-000000000001"
+      ]
+    }
+  },
+  {
+    "agent_id": "c0160600-0001-4000-8000-000000000006",
+    "name": "Manuel Gutiérrez Reyes-Cano",
+    "target_id": "c0160700-3000-4000-8000-000000000010",
+    "systems": [
+      "images",
+      "relations"
+    ],
+    "rows": {
+      "images": [
+        "c0160700-7200-4000-8000-000000000010"
+      ],
+      "relations": [
+        "c0160700-7300-4000-8000-000000000010"
+      ]
+    }
+  },
+  {
+    "agent_id": "75cfa838-7f68-492e-b49f-e308c0a38496",
+    "name": "Antonio Joaquín Dubé de Luque",
+    "target_id": "3258ab18-7e18-489e-a77f-cdaa46d6e25c",
+    "systems": [
+      "images",
+      "interventions"
+    ],
+    "rows": {
+      "images": [
+        "e32e0bd6-e345-48d4-8534-8295390c4dbe"
+      ],
+      "interventions": [
+        "5108f5db-c551-4b6b-a598-99863a6694f7",
+        "d9266f25-cad1-4ae7-b0ae-dcca191a225d",
+        "522eef22-2182-4a6c-bcbe-4b1992824f2f"
+      ]
+    }
+  },
+  {
+    "agent_id": "7226aac5-80db-4571-88a1-cf0078f5fb83",
+    "name": "Fernando Cruz",
+    "target_id": "4d2f8634-ae8b-4cd1-997d-0fdde4940b90",
+    "systems": [
+      "images",
+      "relations"
+    ],
+    "rows": {
+      "images": [
+        "cf9f4ed3-8ae8-41e9-a026-a9d173657541"
+      ],
+      "relations": [
+        "cdf0c619-6adb-411c-9168-c946cad257e8"
+      ]
+    }
+  },
+  {
+    "agent_id": "c0160600-0001-4000-8000-000000000006",
+    "name": "Manuel Gutiérrez Reyes-Cano",
+    "target_id": "c0160700-3000-4000-8000-000000000012",
+    "systems": [
+      "images",
+      "relations"
+    ],
+    "rows": {
+      "images": [
+        "c0160700-7200-4000-8000-000000000012"
+      ],
+      "relations": [
+        "c0160700-7300-4000-8000-000000000012"
+      ]
+    }
+  },
+  {
+    "agent_id": "5e2ab038-a344-4289-afda-bee09730fd28",
+    "name": "Luis Álvarez Duarte",
+    "target_id": "5b1b1dc8-25f1-4388-ab4e-fb09efdc5179",
+    "systems": [
+      "images",
+      "relations"
+    ],
+    "rows": {
+      "images": [
+        "dc4ba6f2-5ffb-409f-a8ce-d60753afc067"
+      ],
+      "relations": [
+        "1a0b394a-ee5b-4689-bc63-1bd0161831b2"
+      ]
+    }
+  },
+  {
+    "agent_id": "c0160700-5000-4000-8000-000000000003",
+    "name": "Emilio Pizarro Cruz",
+    "target_id": "bf01eb4f-6068-4d5b-9226-deb36c987f9b",
+    "systems": [
+      "images",
+      "relations"
+    ],
+    "rows": {
+      "images": [
+        "c0160700-7200-4000-8000-000000000003"
+      ],
+      "relations": [
+        "c0160700-7300-4000-8000-000000000003"
+      ]
+    }
+  },
+  {
+    "agent_id": "c0160700-5000-4000-8000-000000000002",
+    "name": "Felipe Martínez",
+    "target_id": "c0160700-3000-4000-8000-000000000002",
+    "systems": [
+      "images",
+      "relations"
+    ],
+    "rows": {
+      "images": [
+        "c0160700-7200-4000-8000-000000000002"
+      ],
+      "relations": [
+        "c0160700-7300-4000-8000-000000000002"
+      ]
+    }
+  },
+  {
+    "agent_id": "62dbe08b-b99f-4db2-a9a0-ebbc6930e827",
+    "name": "Roque de Balduque",
+    "target_id": "c0160700-3000-4000-8000-000000000008",
+    "systems": [
+      "images",
+      "relations"
+    ],
+    "rows": {
+      "images": [
+        "c0160700-7200-4000-8000-000000000008"
+      ],
+      "relations": [
+        "c0160700-7300-4000-8000-000000000008"
+      ]
+    }
+  },
+  {
+    "agent_id": "c0160600-0001-4000-8000-000000000006",
+    "name": "Manuel Gutiérrez Reyes-Cano",
+    "target_id": "c0160700-3000-4000-8000-000000000011",
+    "systems": [
+      "images",
+      "relations"
+    ],
+    "rows": {
+      "images": [
+        "c0160700-7200-4000-8000-000000000011"
+      ],
+      "relations": [
+        "c0160700-7300-4000-8000-000000000011"
+      ]
+    }
+  }
+]

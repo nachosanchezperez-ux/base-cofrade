@@ -1,0 +1,19 @@
+{
+  "total": 751,
+  "published": 744,
+  "eligible": 422,
+  "candidates": 122,
+  "eligibleCandidates": 89,
+  "missingDisciplines": 105,
+  "categories": {
+    "music": 213,
+    "textile": 20,
+    "patrimony": 18,
+    "goldsmith": 20,
+    "imagery": 83,
+    "visual": 17,
+    "carving": 22,
+    "dressing": 7,
+    "restoration": 22
+  }
+}
