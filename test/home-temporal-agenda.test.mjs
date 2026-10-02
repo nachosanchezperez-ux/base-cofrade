@@ -1,5 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
+import { readFileSync } from 'node:fs'
 import { buildHomeTemporalAgenda } from '../lib/home-temporal-agenda.js'
 
 function item(overrides = {}) {
@@ -106,4 +107,18 @@ test('un acto multidia usa la fecha y horario de la jornada actual', () => {
   assert.equal(sed.temporalDateInfo.weekdayLabel, 'Sábado, 26 de septiembre')
   assert.equal(sed.timeText, '09:00–14:00 y 17:00–21:00')
   assert.equal(sed.endTime, '21:00')
+})
+
+
+test('la Home da jerarquía visual a los horarios de la Agenda en móvil', () => {
+  const component = readFileSync(new URL('../components/HomeTemporalFocus.js', import.meta.url), 'utf8')
+  const styles = readFileSync(new URL('../components/HomeTemporalFocus.module.css', import.meta.url), 'utf8')
+
+  assert.match(component, /className=\{styles\.schedule\}/)
+  assert.match(component, /<small>Horario<\/small>/)
+  assert.match(component, /<strong>\{timingLabel\(item\)\}<\/strong>/)
+  assert.match(styles, /@media\(max-width:480px\)/)
+  assert.match(styles, /\.schedule\{order:-1;display:flex;flex:1 0 100%;min-height:44px/)
+  assert.match(styles, /\.schedule strong\{color:#123a67;font-size:14px;font-weight:900/)
+  assert.match(styles, /font-variant-numeric:tabular-nums/)
 })
