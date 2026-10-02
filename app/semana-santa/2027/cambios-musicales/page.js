@@ -165,8 +165,6 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
 
   const brotherhoodCount = new Set(changes.map((item) => item.brotherhoodSlug || item.brotherhoodName)).size
   const newBandCount = new Set(changes.map((item) => item.newBandSlug || item.newBandName)).size
-  const capitalCount = changes.filter((item) => item.scope === 'capital').length
-  const provinceCount = changes.filter((item) => item.scope === 'province').length
   const lastUpdated = updatedLabel(changes)
   const groups = groupsFor(filtered)
   const hasFilters = Boolean(activeDay || activeScope || activeMunicipality || activeType || requestedQuery)
