@@ -242,19 +242,6 @@
   line-height: 1.72;
 }
 
-.introLinks {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 20px;
-  margin-top: 7px;
-}
-
-.introLinks a {
-  color: #6d2433;
-  font-size: 10px;
-  font-weight: 900;
-}
-
 .panorama,
 .explorer,
 .faq {
