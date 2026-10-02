@@ -14,6 +14,8 @@ Conservación: el Panel incorpora filtro `retention=due`, aplicado por `expires_
 
 QA: 1471/1471 tests PASS, incluidas cinco regresiones de modalidades/contexto. Build final y verificación PDF compilada PASS, incluido el ajuste de reselección. `git diff --check` PASS. El servidor local de preview arrancó con envíos bloqueados; el daemon de `agent-browser` no pudo arrancar en dos intentos (normal/debug), sin detalle adicional. **QA visual, errores/éxito interactivos, teclado y matriz 320–1600px NO certificados.** Turnstile real, concurrencia/migración en preview, mantenimiento y configuración real siguen pendientes. Mantener NO-GO.
 
+Comprobación posterior en navegador cloud del preview `dpl_FPtfWRn95XuHQyoNKSs8c6nbgdQP`, READY sobre código `335a69f77f16ebed1a184862871d91c1e721681b`; CI SUCCESS, run `37078125836`: cinco radios presentes; selección agenda muestra fecha/hora/lugar/municipio y música muestra asunto/año; sugerencia retira los campos musicales. Título conservado al alternar modalidades. Tecla ArrowUp cambia sugerencia a archivos y conserva foco en el radio. Vista de 1363×936px sin desbordamiento horizontal y control de título a 16px; envío deshabilitado y `noindex, follow`. Es **QA parcial de escritorio**, no matriz multi-anchura, prueba de adjuntos/error/éxito ni envío humano. No se enviaron datos de prueba ni se modificó Supabase.
+
 ## Inspección Vercel autorizada · 3/10/2026, Europe/Madrid
 
 Sesión autenticada en el dashboard de `DesdeelArenal / base-cofrade`. Revisión de metadatos visibles con filtros All Types, All Environments, All Editors y All Variables, pestañas Project y Shared. No se pulsó Reveal Value ni se leyeron valores secretos. No se modificaron variables, credenciales, permisos ni deployments.
