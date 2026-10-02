@@ -62,6 +62,8 @@ test('la sección se alimenta del grafo musical y limita el alcance a Sevilla', 
   assert.match(loader, /public_band_name/)
   assert.match(loader, /newBandPublished/)
   assert.match(loader, /brotherhoodPublished/)
+  assert.match(loader, /band_type/)
+  assert.match(loader, /newBandType/)
 })
 
 test('Cambios musicales 2027 queda descubrible e indexable', async () => {
@@ -76,4 +78,26 @@ test('Cambios musicales 2027 queda descubrible e indexable', async () => {
 
   assert.match(page, /Las renovaciones sin cambio de formación no aparecen aquí/)
   assert.match(page, /negociaciones, candidaturas o continuidades no confirmadas/)
+})
+
+
+test('el especial 2027 refuerza descubrimiento, filtros y lectura editorial sin duplicar main', async () => {
+  const page = await read('app/semana-santa/2027/cambios-musicales/page.js')
+  const styles = await read('app/semana-santa/2027/cambios-musicales/cambios-musicales.module.css')
+
+  assert.match(page, /Cambios musicales de la Semana Santa de Sevilla 2027/)
+  assert.match(page, /Todos los cambios de bandas, en un solo hilo/)
+  assert.match(page, /Dónde se está moviendo la música/)
+  assert.match(page, /Confirmaciones recientes/)
+  assert.match(page, /name="municipio"/)
+  assert.match(page, /name="tipo"/)
+  assert.match(page, /name="q"/)
+  assert.match(page, /Preguntas frecuentes/)
+  assert.match(page, /filteredViewRobots\(await searchParams, \['jornada', 'ambito', 'municipio', 'tipo', 'q'\]\)/)
+  assert.doesNotMatch(page, /<main\b/)
+  assert.match(styles, /\.radarGrid/)
+  assert.match(styles, /\.latestGrid/)
+  assert.match(styles, /\.searchPanel/)
+  assert.match(styles, /\.changeList[\s\S]*grid-template-columns: repeat\(2/)
+  assert.match(styles, /@media \(max-width: 680px\)/)
 })
