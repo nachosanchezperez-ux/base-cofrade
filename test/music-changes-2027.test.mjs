@@ -104,3 +104,22 @@ test('el especial 2027 refuerza descubrimiento, filtros y lectura editorial sin 
   assert.match(styles, /@media \(max-width: 520px\)/)
   assert.match(styles, /@media \(max-width: 390px\)/)
 })
+
+
+test('los cambios de una misma Hermandad se agrupan en una sola zona visual', async () => {
+  const page = await read('app/semana-santa/2027/cambios-musicales/page.js')
+  const styles = await read('app/semana-santa/2027/cambios-musicales/cambios-musicales.module.css')
+
+  assert.match(page, /function groupBrotherhoodChanges\(items = \[\]\)/)
+  assert.match(page, /brotherhoods: groupBrotherhoodChanges\(items\)/)
+  assert.match(page, /group\.brotherhoods\.map/)
+  assert.match(page, /brotherhood\.changes\.map/)
+  assert.match(page, /cambios musicales/)
+  assert.match(page, /Relacionado|Entidad relacionada|Ver ficha de la Hermandad/)
+  assert.match(styles, /\.brotherhoodCluster/)
+  assert.match(styles, /\.clusterHeader/)
+  assert.match(styles, /\.clusterChanges/)
+  assert.match(styles, /\.movement[\s\S]*grid-template-columns: minmax\(190px, \.34fr\) minmax\(0, 1fr\)/)
+  assert.match(styles, /\.clusterCount/)
+  assert.match(styles, /@media \(max-width: 520px\)[\s\S]*\.transition[\s\S]*grid-template-columns: 1fr/)
+})
