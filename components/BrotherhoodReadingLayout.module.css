@@ -113,13 +113,13 @@
 .reading :global(#patrimonio-musical [class*='__intro']) { grid-template-columns:minmax(0,1fr) auto; align-items:center; }
 .reading :global(#patrimonio-musical [class*='__summary']) { margin:0; padding:0; border:0 !important; border-radius:0 !important; background:transparent !important; box-shadow:none !important; }
 .reading :global(#patrimonio-musical [class*='__groups']), .reading :global(#patrimonio-musical [class*='__group']) { border:0 !important; border-radius:0 !important; background:transparent !important; box-shadow:none !important; overflow:visible; }
-.reading :global(#patrimonio-musical [class*='__groupSummary']), .reading :global(#patrimonio-musical [class*='__styleSummary']) { grid-template-columns:minmax(0,1fr) 28px; padding:14px 0; border-bottom:1px solid #dde2e7; background:transparent; }
+.reading :global(#patrimonio-musical [class*='__groupSummary']), .reading :global(#patrimonio-musical [class*='__styleSummary']) { grid-template-columns:minmax(0,1fr) 28px; padding:14px 0; border-bottom:1px solid #dde2e7; background:transparent !important; }
 .reading :global(#patrimonio-musical [class*='__groupMark']), .reading :global(#patrimonio-musical [class*='__styleMark']) { display:none; }
 .reading :global(#patrimonio-musical [class*='__groupToggle']), .reading :global(#patrimonio-musical [class*='__styleToggle']) { background:transparent; border-radius:0; min-height:44px; }
-.reading :global(#patrimonio-musical [class*='__styleGroups']) { padding:0; background:transparent; }
-.reading :global(#patrimonio-musical [class*='__styleGroup']) { border:0; }
+.reading :global(#patrimonio-musical [class*='__styleGroups']) { padding:0; background:transparent !important; }
+.reading :global(#patrimonio-musical [class*='__styleGroup']) { border:0 !important; box-shadow:none !important; background:transparent !important; }
 .reading :global(#patrimonio-musical [class*='__styleHeading'] > h4) { font-size:17px; }
-.reading :global(#patrimonio-musical [class*='__tableHead']) { background:transparent; padding-inline:0; }
+.reading :global(#patrimonio-musical [class*='__tableHead']) { background:transparent !important; padding-inline:0; }
 .reading :global(#patrimonio-musical [class*='__march']) { padding-inline:0; }
 .reading :global(#patrimonio-musical [class*='__listen']) { border:0; border-radius:0; background:transparent; padding:0; min-height:44px; font-size:12px; }
 .reading :global(#musica .music-history-grid) { grid-template-columns:1fr; gap:0; }
