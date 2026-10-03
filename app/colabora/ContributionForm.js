@@ -187,7 +187,7 @@ export default function ContributionForm({ enabled, formTicket, turnstileSiteKey
                 <span>Seleccionar archivos</span>
                 <input name="attachments" type="file" accept="image/jpeg,image/png,image/webp,application/pdf,.pdf" multiple onChange={validateFiles} disabled={pending} />
                 <small>Hasta 3 archivos · JPG, PNG, WebP o PDF · 8 MB por archivo y 10 MB en total. Office, SVG, GIF y ZIP no se admiten.</small>
-                {fileMessage ? <em className={styles.fileMessage}>{fileMessage}</em> : null}
+                <em className={styles.fileMessage} role="status" aria-live="polite" aria-atomic="true">{fileMessage}</em>
               </label>
               {hasPhotos ? (
                 <>

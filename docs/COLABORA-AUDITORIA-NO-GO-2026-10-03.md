@@ -2,6 +2,18 @@
 
 Corte: 3 de octubre de 2026, Europe/Madrid (2/10, 22:07 UTC).
 
+## QA del lector · 3/10/2026 · emulación local PASS
+
+Se supera el bloqueo de Chromium con un navegador temporal de pruebas de `@sparticuz/chromium` 153.0.0 y Playwright, sin añadir dependencias al producto ni tocar servicios externos. La descarga CDN habitual devolvió HTML en lugar del ZIP; la extracción del paquete necesitó omitir cambios de propietario y usar las fuentes del sistema. Se desactiva WebGL/GPU en el runner. No se repiten intentos del daemon de agent-browser ni del bloqueo de Cloudflare.
+
+Sobre el **build local real de Next**, con React hidratado, recepción/mantenimiento apagados y claves privilegiadas/CAPTCHA vacías: **35 combinaciones PASS**, cinco modalidades por 320/390/430/768/1024/1366/1600px. Sin desbordamiento horizontal ni campos fuera de la ventana; controles de texto de al menos 16px/44px; un H1 y noindex. Modalidad/tipo coherentes y URL obligatoria solo en correcciones. Capturas revisadas de móvil y escritorio, incluidos adjuntos y rechazo. Es emulación de viewport; no teléfono físico, Safari/iOS ni un envío al preview desplegado.
+
+Teclado PASS: flecha entre radios conserva foco y Tab pasa al título. Texto conservado al alternar modalidades; lugar/fecha de agenda y asunto musical reaparecen sin perder valores. Límites del selector cliente PASS: más de tres archivos, MIME prohibido, archivo mayor de 8 MB y total mayor de 10 MB se rechazan/limpian; selección de imagen exige crédito y derechos. Los fixtures son sintéticos y solo verifican selección/MIME declarado, no sustituyen parser de imagen/PDF del servidor ni pruebas Storage. Los avisos de archivo ahora tienen una región persistente `role=status`, `aria-live=polite`, `aria-atomic=true`; no se certifica experiencia con lector de pantalla físico.
+
+Se provoca por `requestSubmit()` una llamada a la **acción real del servidor local cerrado**, aun con botón deshabilitado: rechazo genérico PASS, foco en alerta y alerta dentro de viewport tras el desplazamiento, título/explicación preservados, archivos reseteados y reselección avisada, botón sigue bloqueado. No se invoca cliente privilegiado ni se registran aportaciones/objetos; peticiones externas del navegador bloqueadas, cero errores de página. No se certifica pantalla de éxito, CAPTCHA ni comportamiento del canal activo.
+
+Validación final: **1478/1478 tests**, build, worker PDF compilado, HTTP post-build y `git diff --check` PASS. Harness reproducible: `scripts/qa-contribution-form.cjs` (runner con Playwright + `QA_CHROMIUM`, `QA_OUTPUT` opcional). Métricas: `docs/COLABORA-QA-LECTOR-2026-10-03.json`. B5 cierra la matriz emulada, teclado, selector y recuperación por rechazo del canal cerrado; **siguen pendientes éxito/Turnstile humano y flujo activo completo**. NO-GO permanece por configuración real, concurrencia/migración, mantenimiento/Storage y política de conservación. #1019/#1020 intactas.
+
 ## Continuación HTTP compilada · 3/10/2026
 
 El HEAD documental `f868b0b` tiene CI SUCCESS (run `37100052961`) y preview `dpl_4MTghJRJFWaKuytyxjKgEa6FV16B` READY. La autenticación del deployment sigue sin certificar el endpoint por el conector. Se añade `verify:contribution-http-build` a CI: arranca dos servidores reales del build en localhost, fuerza recepción/mantenimiento desactivados y vacía claves privilegiadas/CAPTCHA. No contacta con el mantenimiento desplegado ni activa recepción.

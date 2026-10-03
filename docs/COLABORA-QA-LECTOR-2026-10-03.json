@@ -1,0 +1,329 @@
+{
+  "method": "Local compiled Next build, real React hydration and closed server action; Chromium viewport emulation",
+  "rows": [
+    {
+      "width": 320,
+      "kind": "correction",
+      "overflow": 0,
+      "escapedControls": [],
+      "minControlFont": 16,
+      "minControlHeight": 44,
+      "h1": 1
+    },
+    {
+      "width": 320,
+      "kind": "agenda",
+      "overflow": 0,
+      "escapedControls": [],
+      "minControlFont": 16,
+      "minControlHeight": 44,
+      "h1": 1
+    },
+    {
+      "width": 320,
+      "kind": "music",
+      "overflow": 0,
+      "escapedControls": [],
+      "minControlFont": 16,
+      "minControlHeight": 44,
+      "h1": 1
+    },
+    {
+      "width": 320,
+      "kind": "media",
+      "overflow": 0,
+      "escapedControls": [],
+      "minControlFont": 16,
+      "minControlHeight": 44,
+      "h1": 1
+    },
+    {
+      "width": 320,
+      "kind": "suggestion",
+      "overflow": 0,
+      "escapedControls": [],
+      "minControlFont": 16,
+      "minControlHeight": 44,
+      "h1": 1
+    },
+    {
+      "width": 390,
+      "kind": "correction",
+      "overflow": 0,
+      "escapedControls": [],
+      "minControlFont": 16,
+      "minControlHeight": 44,
+      "h1": 1
+    },
+    {
+      "width": 390,
+      "kind": "agenda",
+      "overflow": 0,
+      "escapedControls": [],
+      "minControlFont": 16,
+      "minControlHeight": 44,
+      "h1": 1
+    },
+    {
+      "width": 390,
+      "kind": "music",
+      "overflow": 0,
+      "escapedControls": [],
+      "minControlFont": 16,
+      "minControlHeight": 44,
+      "h1": 1
+    },
+    {
+      "width": 390,
+      "kind": "media",
+      "overflow": 0,
+      "escapedControls": [],
+      "minControlFont": 16,
+      "minControlHeight": 44,
+      "h1": 1
+    },
+    {
+      "width": 390,
+      "kind": "suggestion",
+      "overflow": 0,
+      "escapedControls": [],
+      "minControlFont": 16,
+      "minControlHeight": 44,
+      "h1": 1
+    },
+    {
+      "width": 430,
+      "kind": "correction",
+      "overflow": 0,
+      "escapedControls": [],
+      "minControlFont": 16,
+      "minControlHeight": 44,
+      "h1": 1
+    },
+    {
+      "width": 430,
+      "kind": "agenda",
+      "overflow": 0,
+      "escapedControls": [],
+      "minControlFont": 16,
+      "minControlHeight": 44,
+      "h1": 1
+    },
+    {
+      "width": 430,
+      "kind": "music",
+      "overflow": 0,
+      "escapedControls": [],
+      "minControlFont": 16,
+      "minControlHeight": 44,
+      "h1": 1
+    },
+    {
+      "width": 430,
+      "kind": "media",
+      "overflow": 0,
+      "escapedControls": [],
+      "minControlFont": 16,
+      "minControlHeight": 44,
+      "h1": 1
+    },
+    {
+      "width": 430,
+      "kind": "suggestion",
+      "overflow": 0,
+      "escapedControls": [],
+      "minControlFont": 16,
+      "minControlHeight": 44,
+      "h1": 1
+    },
+    {
+      "width": 768,
+      "kind": "correction",
+      "overflow": 0,
+      "escapedControls": [],
+      "minControlFont": 16,
+      "minControlHeight": 44,
+      "h1": 1
+    },
+    {
+      "width": 768,
+      "kind": "agenda",
+      "overflow": 0,
+      "escapedControls": [],
+      "minControlFont": 16,
+      "minControlHeight": 44,
+      "h1": 1
+    },
+    {
+      "width": 768,
+      "kind": "music",
+      "overflow": 0,
+      "escapedControls": [],
+      "minControlFont": 16,
+      "minControlHeight": 44,
+      "h1": 1
+    },
+    {
+      "width": 768,
+      "kind": "media",
+      "overflow": 0,
+      "escapedControls": [],
+      "minControlFont": 16,
+      "minControlHeight": 44,
+      "h1": 1
+    },
+    {
+      "width": 768,
+      "kind": "suggestion",
+      "overflow": 0,
+      "escapedControls": [],
+      "minControlFont": 16,
+      "minControlHeight": 44,
+      "h1": 1
+    },
+    {
+      "width": 1024,
+      "kind": "correction",
+      "overflow": 0,
+      "escapedControls": [],
+      "minControlFont": 16,
+      "minControlHeight": 44,
+      "h1": 1
+    },
+    {
+      "width": 1024,
+      "kind": "agenda",
+      "overflow": 0,
+      "escapedControls": [],
+      "minControlFont": 16,
+      "minControlHeight": 44,
+      "h1": 1
+    },
+    {
+      "width": 1024,
+      "kind": "music",
+      "overflow": 0,
+      "escapedControls": [],
+      "minControlFont": 16,
+      "minControlHeight": 44,
+      "h1": 1
+    },
+    {
+      "width": 1024,
+      "kind": "media",
+      "overflow": 0,
+      "escapedControls": [],
+      "minControlFont": 16,
+      "minControlHeight": 44,
+      "h1": 1
+    },
+    {
+      "width": 1024,
+      "kind": "suggestion",
+      "overflow": 0,
+      "escapedControls": [],
+      "minControlFont": 16,
+      "minControlHeight": 44,
+      "h1": 1
+    },
+    {
+      "width": 1366,
+      "kind": "correction",
+      "overflow": 0,
+      "escapedControls": [],
+      "minControlFont": 16,
+      "minControlHeight": 44,
+      "h1": 1
+    },
+    {
+      "width": 1366,
+      "kind": "agenda",
+      "overflow": 0,
+      "escapedControls": [],
+      "minControlFont": 16,
+      "minControlHeight": 44,
+      "h1": 1
+    },
+    {
+      "width": 1366,
+      "kind": "music",
+      "overflow": 0,
+      "escapedControls": [],
+      "minControlFont": 16,
+      "minControlHeight": 44,
+      "h1": 1
+    },
+    {
+      "width": 1366,
+      "kind": "media",
+      "overflow": 0,
+      "escapedControls": [],
+      "minControlFont": 16,
+      "minControlHeight": 44,
+      "h1": 1
+    },
+    {
+      "width": 1366,
+      "kind": "suggestion",
+      "overflow": 0,
+      "escapedControls": [],
+      "minControlFont": 16,
+      "minControlHeight": 44,
+      "h1": 1
+    },
+    {
+      "width": 1600,
+      "kind": "correction",
+      "overflow": 0,
+      "escapedControls": [],
+      "minControlFont": 16,
+      "minControlHeight": 44,
+      "h1": 1
+    },
+    {
+      "width": 1600,
+      "kind": "agenda",
+      "overflow": 0,
+      "escapedControls": [],
+      "minControlFont": 16,
+      "minControlHeight": 44,
+      "h1": 1
+    },
+    {
+      "width": 1600,
+      "kind": "music",
+      "overflow": 0,
+      "escapedControls": [],
+      "minControlFont": 16,
+      "minControlHeight": 44,
+      "h1": 1
+    },
+    {
+      "width": 1600,
+      "kind": "media",
+      "overflow": 0,
+      "escapedControls": [],
+      "minControlFont": 16,
+      "minControlHeight": 44,
+      "h1": 1
+    },
+    {
+      "width": 1600,
+      "kind": "suggestion",
+      "overflow": 0,
+      "escapedControls": [],
+      "minControlFont": 16,
+      "minControlHeight": 44,
+      "h1": 1
+    }
+  ],
+  "keyboard": true,
+  "clientFileLimits": true,
+  "draftPreserved": true,
+  "errorFocused": true,
+  "fileReselection": true,
+  "writes": false,
+  "successAndTurnstile": "not tested",
+  "blockedExternalHosts": [],
+  "errors": []
+}
