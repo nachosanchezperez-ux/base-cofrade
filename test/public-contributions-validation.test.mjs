@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import sharp from 'sharp'
+import { PDFDocument, PDFName } from 'pdf-lib'
 import { validateContributionAttachment } from '../lib/contributions/attachment-validation.js'
 import { validateContributionPhoto } from '../lib/contributions/image-validation.js'
 import {
@@ -69,7 +70,9 @@ test('una propuesta de información nueva exige al menos una fuente o un archivo
 
 test('admite PDF como adjunto y conserva los documentos enlazados', async () => {
   const form = validForm({ contribution_type: 'media' })
-  const pdf = new File(['%PDF-1.7\n1 0 obj\n<< /Type /Catalog >>\nendobj\nstartxref\n0\n%%EOF'], 'documento.pdf', { type: 'application/pdf' })
+  const doc = await PDFDocument.create()
+  doc.addPage()
+  const pdf = new File([await doc.save()], 'documento.pdf', { type: 'application/pdf' })
   form.set('attachments', pdf)
   const parsed = parseContributionForm(form)
   assert.equal(parsed.attachments.length, 1)
@@ -90,11 +93,50 @@ test('rechaza PDF falsos, cifrados o con contenido activo', async () => {
   const fake = new File(['contenido arbitrario'], 'falso.pdf', { type: 'application/pdf' })
   await assert.rejects(() => validateContributionAttachment(fake), /estructura reconocible/i)
 
-  const active = new File(['%PDF-1.7\n/JavaScript /OpenAction\n%%EOF'], 'activo.pdf', { type: 'application/pdf' })
+  const doc = await PDFDocument.create()
+  doc.addPage()
+  doc.addJavaScript('test', 'app.alert("test")')
+  const active = new File([await doc.save()], 'activo.pdf', { type: 'application/pdf' })
   await assert.rejects(() => validateContributionAttachment(active), /contenido activo/i)
 
   const disguised = new File(['%PDF-1.7\n%%EOF'], 'documento.jpg', { type: 'application/pdf' })
   await assert.rejects(() => validateContributionAttachment(disguised), /terminar en \.pdf/i)
+})
+
+test('rechaza HTML con marcadores PDF, PDF malformado, datos tras EOF y nombres escapados', async () => {
+  for (const bytes of ['<html><script>alert(1)</script></html>\n%PDF-1.7\nnot a PDF\n%%EOF', '%PDF-1.7\n%%EOF']) {
+    await assert.rejects(() => validateContributionAttachment(new File([bytes], 'fake.pdf', { type: 'application/pdf' })))
+  }
+  const valid = await PDFDocument.create()
+  valid.addPage()
+  const validBytes = await valid.save({ useObjectStreams: false })
+  await assert.rejects(() => validateContributionAttachment(new File([validBytes, '<script>bad</script>'], 'tail.pdf', { type: 'application/pdf' })))
+  for (const compress of [false, true]) {
+    const doc = await PDFDocument.create()
+    doc.addPage()
+    doc.catalog.set(PDFName.of('AA'), doc.context.obj({ S: 'JavaScript', JS: 'test' }))
+    await assert.rejects(async () => validateContributionAttachment(new File([await doc.save({ useObjectStreams: compress })], 'active.pdf', { type: 'application/pdf' })), /contenido activo/i)
+  }
+  // Construct exact xref offsets without reserializing: the escaped name must
+  // remain escaped in the actual bytes presented to the validator.
+  let source = '%PDF-1.7\n'
+  const offsets = [0]
+  const objects = [
+    '<< /Type /Catalog /Pages 2 0 R /J#53 (test) >>',
+    '<< /Type /Pages /Kids [3 0 R] /Count 1 >>',
+    '<< /Type /Page /Parent 2 0 R /MediaBox [0 0 100 100] >>',
+  ]
+  for (const [index, object] of objects.entries()) {
+    offsets.push(Buffer.byteLength(source, 'latin1'))
+    source += `${index + 1} 0 obj\n${object}\nendobj\n`
+  }
+  const xref = Buffer.byteLength(source, 'latin1')
+  source += 'xref\n0 4\n0000000000 65535 f \n'
+  for (const offset of offsets.slice(1)) source += `${String(offset).padStart(10, '0')} 00000 n \n`
+  source += `trailer\n<< /Size 4 /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF\n`
+  const escaped = Buffer.from(source, 'latin1')
+  assert.ok(escaped.includes(Buffer.from('/J#53')))
+  await assert.rejects(() => validateContributionAttachment(new File([escaped], 'escaped.pdf', { type: 'application/pdf' })), /contenido activo/i)
 })
 
 test('limita el número y el peso acumulado de los adjuntos', () => {

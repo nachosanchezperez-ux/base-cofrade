@@ -32,6 +32,8 @@ export async function reviewContributionAction(formData) {
     .eq('id', contributionId)
     .maybeSingle()
   if (current.error || !current.data) throw new Error('La aportación ya no está disponible.')
+  if (current.data.status === 'expired') throw new Error('Una aportación caducada está cerrada para la supresión y no puede reabrirse.')
+  if (status === 'expired' && !resolutionSummary) throw new Error('Indica el motivo de cierre para conservación.')
 
   const payload = {
     status,
@@ -48,6 +50,7 @@ export async function reviewContributionAction(formData) {
     .from('contributions')
     .update(payload)
     .eq('id', contributionId)
+    .eq('status', current.data.status)
     .select('id')
     .single()
   if (updated.error) throw new Error(`No se pudo actualizar la aportación: ${updated.error.message}`)
@@ -74,7 +77,7 @@ export async function reviewContributionAction(formData) {
     action_type: 'update',
     object_type: 'contribution',
     object_id: contributionId,
-    summary: `Aportación revisada: ${current.data.title}`,
+    summary: `Aportación revisada: ${status}`,
     changed_fields: {
       previous_status: current.data.status,
       status,
@@ -89,4 +92,3 @@ export async function reviewContributionAction(formData) {
   revalidatePath('/panel/aportaciones')
   redirect(`/panel/aportaciones?id=${contributionId}&saved=reviewed`)
 }
-
