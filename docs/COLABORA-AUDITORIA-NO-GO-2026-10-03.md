@@ -10,6 +10,8 @@ La supresión manual acepta un único UUID y, por defecto, solo inspecciona. Exi
 
 Validación local: **1478/1478 tests PASS**, build PASS, verificación PDF compilada PASS y diff-check PASS. Siete pruebas nuevas cubren autorización, cierre por defecto, umbral de 48h, ausencia de escrituras en inspección, guardas, orden de eliminación, fallos/reintentos y cierre del Panel. Prueba SQL con dos aportaciones y un metadato sintéticos dentro de **BEGIN/ROLLBACK**: solo se limpia la huella antigua, se conserva la reciente y el borrado de la caducada elimina el metadato por cascade; transacción revertida. No se subieron objetos ni se ejecutó el purgador real.
 
+CI del código `981593c12ce4feee6118253a3186cb81646df0c7`: SUCCESS, run `37099912718`; preview `dpl_3FqvVrCSLNEhZDSkt7JJ5bconq7E` READY. El fetch del endpoint privado quedó bloqueado por autenticación del deployment (`deployment_authentication_required`, 401); **no es una respuesta certificada de la ruta de aplicación**. Cierre sin autorización demostrado localmente, pero postflight desplegado pendiente.
+
 Procedimiento: `docs/COLABORA-CONSERVACION.md`. **B3 sigue abierto**: falta ensayo de Storage y mantenimiento en entorno de prueba, horario/configuración reales, conciliación con la política publicada, solicitudes anticipadas, extensiones y reglas de copias/exportaciones. No se han suprimido datos reales ni activado recepción. Mantener NO-GO; widget/env reales, concurrencia y QA completa también pendientes.
 
 ## Continuación de modalidades y conservación · 3/10/2026
