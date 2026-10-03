@@ -103,7 +103,7 @@ export default async function PanelContributionsPage({ searchParams }) {
           <p className={localStyles.privacyNote}>Datos restringidos al equipo editorial. No copies el correo ni los archivos fuera del flujo necesario para revisar la aportación.</p>
           <p className={localStyles.privacyNote}>Revisión de conservación: {formatDate(focused.expires_at)}. Marcar «Caducada» no elimina los datos ni los archivos. La supresión requiere el procedimiento de mantenimiento.</p>
 
-          {canEdit ? (
+          {canEdit && focused.status !== 'expired' ? (
             <form action={reviewContributionAction} className={localStyles.reviewForm}>
               <input type="hidden" name="contribution_id" value={focused.id} />
               <div className={localStyles.reviewGrid}>

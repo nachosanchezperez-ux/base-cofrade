@@ -2,6 +2,16 @@
 
 Corte: 3 de octubre de 2026, Europe/Madrid (2/10, 22:07 UTC).
 
+## Continuación de conservación · propuesta sin activar
+
+Se añade mantenimiento privado que elimina intentos y desvincula huellas de aportaciones con más de 48 horas. La ruta exige `CRON_SECRET` de al menos 32 bytes y `CONTRIBUTION_RETENTION_ENABLED=true`; por defecto falla cerrada. No se añade horario a `vercel.json` ni se cambia configuración de Vercel. La ejecución periódica real y el cumplimiento del plazo publicado siguen sin certificar.
+
+La supresión manual acepta un único UUID y, por defecto, solo inspecciona. Exige estado Caducada y plazo vencido; valida que los archivos pertenezcan a esa aportación. Al aplicar, sanea el resumen de auditoría, elimina objetos mediante la API de Storage y después la fila con guardas de estado/plazo; los metadatos asociados usan el cascade existente. Los fallos de Storage impiden borrar la fila y permiten reintento. No hay transacción conjunta Storage/Postgres: el procedimiento requiere evitar ediciones administrativas concurrentes. Caducada queda terminal en el Panel y exige motivo; sus actualizaciones comprueban el estado leído para rechazar cambios concurrentes. Los nuevos resúmenes de auditoría omiten títulos aportados por lectores.
+
+Validación local: **1478/1478 tests PASS**, build PASS, verificación PDF compilada PASS y diff-check PASS. Siete pruebas nuevas cubren autorización, cierre por defecto, umbral de 48h, ausencia de escrituras en inspección, guardas, orden de eliminación, fallos/reintentos y cierre del Panel. Prueba SQL con dos aportaciones y un metadato sintéticos dentro de **BEGIN/ROLLBACK**: solo se limpia la huella antigua, se conserva la reciente y el borrado de la caducada elimina el metadato por cascade; transacción revertida. No se subieron objetos ni se ejecutó el purgador real.
+
+Procedimiento: `docs/COLABORA-CONSERVACION.md`. **B3 sigue abierto**: falta ensayo de Storage y mantenimiento en entorno de prueba, horario/configuración reales, conciliación con la política publicada, solicitudes anticipadas, extensiones y reglas de copias/exportaciones. No se han suprimido datos reales ni activado recepción. Mantener NO-GO; widget/env reales, concurrencia y QA completa también pendientes.
+
 ## Continuación de modalidades y conservación · 3/10/2026
 
 Propuesta local, todavía no productiva. Cinco opciones explícitas: corrección, agenda, música, fotografías/documentos y sugerencia. Agenda y música se guardan como `new_record`; su contexto validado se incorpora a la explicación visible en el Panel existente, sin nuevas tablas ni migración adicional. Se mantiene compatibilidad con envíos del contrato anterior de cuatro tipos.
