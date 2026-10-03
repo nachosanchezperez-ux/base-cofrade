@@ -7,6 +7,7 @@
     "dev": "next dev",
     "build": "next build",
     "verify:contribution-pdf-build": "node scripts/verify-contribution-pdf-build.mjs",
+    "verify:contribution-http-build": "node scripts/verify-contribution-http-build.mjs",
     "test": "node --test",
     "start": "next start"
   },

@@ -2,6 +2,14 @@
 
 Corte: 3 de octubre de 2026, Europe/Madrid (2/10, 22:07 UTC).
 
+## Continuación HTTP compilada · 3/10/2026
+
+El HEAD documental `f868b0b` tiene CI SUCCESS (run `37100052961`) y preview `dpl_4MTghJRJFWaKuytyxjKgEa6FV16B` READY. La autenticación del deployment sigue sin certificar el endpoint por el conector. Se añade `verify:contribution-http-build` a CI: arranca dos servidores reales del build en localhost, fuerza recepción/mantenimiento desactivados y vacía claves privilegiadas/CAPTCHA. No contacta con el mantenimiento desplegado ni activa recepción.
+
+Comprobación HTTP local PASS: producción `/colabora` 200, aviso de cierre, sin formulario y noindex; preview 200, cinco radios, envío deshabilitado y noindex. Mantenimiento sin secreto o token ausente/incorrecto devuelve 401; token sintético correcto con flag apagado devuelve 503, sin requerir cliente privilegiado. Ambas respuestas llevan no-store/noindex y solo error genérico. No se prueba el caso activo ni se escribe en Supabase. El token es exclusivamente un fixture de pruebas, no una credencial provisionada.
+
+QA visual local bloqueada por ausencia de Chromium (Playwright instalado, ejecutable ausente); no se descargó navegador ni se modificó infraestructura. **No se certifican responsive/hidratación, CAPTCHA humano, envío real, concurrencia ni supresión Storage.** El fallo previo del daemon de agent-browser no se repite. NO-GO permanece; siguientes pasos requieren configuración real y acceso al entorno de prueba. Esta prueba HTTP protege regresiones del cierre, no sustituye las verificaciones pendientes.
+
 ## Continuación de conservación · propuesta sin activar
 
 Se añade mantenimiento privado que elimina intentos y desvincula huellas de aportaciones con más de 48 horas. La ruta exige `CRON_SECRET` de al menos 32 bytes y `CONTRIBUTION_RETENTION_ENABLED=true`; por defecto falla cerrada. No se añade horario a `vercel.json` ni se cambia configuración de Vercel. La ejecución periódica real y el cumplimiento del plazo publicado siguen sin certificar.
