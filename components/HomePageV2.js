@@ -150,8 +150,6 @@ export default function HomePageV2({
           </div>
           {!multipleLive && liveOutings.length ? (
             <p>Una salida en curso toma prioridad temporal sobre el resto de citas de la portada.</p>
-          ) : isEditorialFeature ? (
-            <p>María Santísima de Regla recupera el gran formato editorial de las citas extraordinarias, con horarios, música y lugares clave.</p>
           ) : null}
         </header>
 

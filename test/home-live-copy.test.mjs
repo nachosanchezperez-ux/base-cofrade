@@ -15,3 +15,11 @@ test('el modo directo no muestra textos explicativos redundantes', () => {
   assert.doesNotMatch(complement, /Además de las salidas que ya están en la calle/)
   assert.match(temporal, /temporal\.mode === 'complement' \? null/)
 })
+
+
+test('la destacada del fin de semana no añade una entradilla editorial redundante', () => {
+  const home = read('components/HomePageV2.js')
+
+  assert.doesNotMatch(home, /María Santísima de Regla recupera el gran formato editorial/)
+  assert.doesNotMatch(home, /con horarios, música y lugares clave/)
+})
