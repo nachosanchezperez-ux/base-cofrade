@@ -21,7 +21,6 @@ export default function HomeFeaturedVideo({ video }) {
             {video.description ? <p className={styles.description}>{video.description}</p> : null}
             <div className={styles.actions}>
               <Link href={video.href}>Abrir ficha completa <span aria-hidden="true">→</span></Link>
-              <a href={video.sourceUrl} target="_blank" rel="noreferrer">Ver en YouTube ↗</a>
             </div>
           </div>
 
