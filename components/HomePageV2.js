@@ -5,6 +5,7 @@ import HomeTodayV2 from '@/components/HomeTodayV2'
 import HomeTemporalFocus from '@/components/HomeTemporalFocus'
 import HomeExploreV2 from '@/components/HomeExploreV2'
 import HomeKnowledgeThreads from '@/components/HomeKnowledgeThreads'
+import HomeFeaturedVideo from '@/components/HomeFeaturedVideo'
 import HomeProjectOverview from '@/components/HomeProjectOverview'
 import HomeProcessionGrid from '@/components/HomeProcessionGrid'
 import { getExtraordinaryLiveState } from '@/lib/home-live-status'
@@ -62,6 +63,7 @@ export default function HomePageV2({
   homeTemporal = null,
   featuredBriefing,
   editorialFeaturedOutingId = '',
+  featuredVideo = null,
   discoveryThreads,
   exploreStats,
 }) {
@@ -376,6 +378,8 @@ export default function HomePageV2({
       </section>
 
       <HomeProjectOverview />
+
+      <HomeFeaturedVideo video={featuredVideo} />
 
       {liveOutings.length ? (
         <>
