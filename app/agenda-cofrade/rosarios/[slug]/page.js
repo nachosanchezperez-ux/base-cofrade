@@ -197,6 +197,28 @@ export default async function RosaryDetailPage({ params }) {
             </section>
           ) : null}
 
+          {item.video ? (
+            <section>
+              <span className={styles.eyebrow}>Retransmisión</span>
+              <h2>{item.video.title || 'Vídeo'}</h2>
+              {item.video.description ? <p className={styles.videoLead}>{item.video.description}</p> : null}
+              <div className={styles.videoFrame}>
+                <iframe
+                  src={item.video.embedUrl}
+                  title={item.video.title || `Vídeo de ${item.title}`}
+                  loading="lazy"
+                  allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                />
+              </div>
+              <div className={styles.videoMeta}>
+                {item.video.author ? <span>{item.video.author}</span> : null}
+                <a href={item.video.url} target="_blank" rel="noreferrer">Ver en YouTube <span aria-hidden="true">↗</span></a>
+              </div>
+            </section>
+          ) : null}
+
           {(processionRoute.summary || processionRoute.legs.length || processionRoute.phases.length) ? (
             <section>
               <span className={styles.eyebrow}>Por las calles</span>
