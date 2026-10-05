@@ -169,3 +169,10 @@ for (const [file, name] of [
     await assert.rejects(reader({ throwOnError: true }), (error) => error === failure);
   });
 }
+
+
+test('el sitemap usa namespace v2 para no servir familias anteriores al lastmod de hubs', async () => {
+  const source = await readFile(new URL('../app/sitemap.js', import.meta.url), 'utf8');
+  assert.match(source, /hilo-cofrade-public-sitemap-family-v2/);
+  assert.doesNotMatch(source, /hilo-cofrade-public-sitemap-family-v1/);
+});
