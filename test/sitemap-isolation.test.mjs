@@ -30,14 +30,14 @@ async function harness({ fail = '', delay = 0 } = {}) {
     getPublicBandsDirectory: [],
     getBandsDirectory: [{ id: 'b', slug: 'banda', entityType: 'band' }],
     getImagesDirectory: [{ id: 'i', slug: 'imagen', entityType: 'image' }],
-    getStepsDirectory: [{ id: 'p', slug: 'paso', entityType: 'step' }],
+    getStepsDirectory: [{ id: 'p', slug: 'paso', entityType: 'step', updatedAt: '2026-10-01' }],
     getExtraordinaryDirectory: [{ slug: 'salida', municipality: 'Pilas' }],
     getGloryDirectory: [{ detailHref: '/procesiones-de-gloria/gloria', municipality: 'Pilas' }],
-    getCrewEventDirectory: [{ detailHref: '/igualas-y-ensayos/ensayo', municipality: 'Pilas' }],
-    getRosaryOutings: [{ detailHref: '/agenda-cofrade/rosarios/rosario', municipality: 'Pilas' }],
+    getCrewEventDirectory: [{ detailHref: '/igualas-y-ensayos/ensayo', municipality: 'Pilas', updatedAt: '2026-10-03' }],
+    getRosaryOutings: [{ detailHref: '/agenda-cofrade/rosarios/rosario', municipality: 'Pilas', updatedAt: '2026-10-02' }],
     getMusicalRepertoires: [{ href: '/crucetas-musicales/cruceta', entries: [{ marchHref: '/marchas/marcha' }] }],
     getPublicMarchSitemapEntries: [{ slug: 'marcha', updatedAt: '2026-09-24' }],
-    getPublicAgentSitemapEntries: [{ slug: 'autor' }],
+    getPublicAgentSitemapEntries: [{ slug: 'autor', updatedAt: '2026-09-30' }],
   };
   for (const [name, value] of Object.entries(fixtures)) {
     context[name] = async (options) => {
@@ -103,6 +103,32 @@ test('source failure never returns a successful partial Agenda sitemap', async (
   const api = await harness({ fail: 'getGloryDirectory' });
   await assert.rejects(api.getPublicSitemapSegmentEntries('agenda'), /backend unavailable/);
   assert.deepEqual(api.calls.map(([name]) => name), ['getExtraordinaryDirectory', 'getGloryDirectory']);
+});
+
+
+test('los hubs SEO heredan un lastmod real de su familia', async () => {
+  const api = await harness();
+  const expected = {
+    pasos: ['https://hilocofrade.es/pasos', '2026-10-01T00:00:00.000Z'],
+    marchas: ['https://hilocofrade.es/marchas', '2026-09-24T00:00:00.000Z'],
+    autores: ['https://hilocofrade.es/autores', '2026-09-30T00:00:00.000Z'],
+    agenda: ['https://hilocofrade.es/agenda-cofrade', '2026-10-03T00:00:00.000Z'],
+  };
+
+  for (const [segment, [hubUrl, iso]] of Object.entries(expected)) {
+    const entries = await api.getPublicSitemapSegmentEntries(segment);
+    const hub = entries.find((entry) => entry.url === hubUrl);
+    assert.ok(hub, segment);
+    assert.equal(hub.lastModified?.toISOString(), iso, segment);
+  }
+});
+
+test('un hub no inventa lastmod cuando su familia no tiene fechas fiables', async () => {
+  const api = await harness();
+  const entries = await api.getPublicSitemapSegmentEntries('general');
+  const home = entries.find((entry) => entry.url === 'https://hilocofrade.es/');
+  assert.ok(home);
+  assert.equal(home.lastModified, undefined);
 });
 
 test('full sitemap retains canonical detail URLs and unique march metadata', async () => {
