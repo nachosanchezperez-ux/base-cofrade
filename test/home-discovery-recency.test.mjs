@@ -21,9 +21,11 @@ test('Últimos hilos prioriza recencia y usa prioridad solo como desempate', () 
   )
   assert.doesNotMatch(block, /\.gte\('priority'/)
   assert.doesNotMatch(block, /DISCOVERY_FAST_PATH_PRIORITY/)
+  assert.match(block, /buildRecentMarchPublicationThread/)
+  assert.match(block, /\.eq\('entity_type', 'march'\)/)
 })
 
 test('el snapshot público cambia de versión para descartar la selección antigua', () => {
   const snapshot = read('lib/supabase/home-snapshot.js')
-  assert.match(snapshot, /hilo-cofrade-home-public-snapshot-v18/)
+  assert.match(snapshot, /hilo-cofrade-home-public-snapshot-v21/)
 })

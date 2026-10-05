@@ -11,13 +11,6 @@ export const metadata = {
   twitter: { title: HOME_TITLE, description: DEFAULT_DESCRIPTION },
 }
 
-function hasPublicSupabaseConfig() {
-  return Boolean(
-    process.env.NEXT_PUBLIC_SUPABASE_URL
-    && process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
-  )
-}
-
 function getTodayLabel() {
   const formatter = new Intl.DateTimeFormat('es-ES', {
     timeZone: 'Europe/Madrid',
@@ -32,17 +25,23 @@ function getTodayLabel() {
   return `${weekday.charAt(0).toUpperCase()}${weekday.slice(1)} · ${value('day')} de ${value('month')} de ${value('year')}`
 }
 
-export default async function HomePage() {
-  // Mantiene la resiliencia P0 en builds sin configuración, sin volver dinámica
-  // la Home en Vercel cuando el cliente público de Supabase sí está disponible.
-  if (!hasPublicSupabaseConfig()) await connection()
+function hasPublicSupabaseConfig() {
+  return Boolean(
+    process.env.NEXT_PUBLIC_SUPABASE_URL
+    && process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
+  )
+}
 
+export default async function HomePage() {
+  // Mantiene la resiliencia P0 en builds sin configuración, sin volver dinámica la Home en Vercel cuando el cliente público de Supabase sí está disponible.
+  if (!hasPublicSupabaseConfig()) await connection()
   const today = getTodayLabel()
   const {
     todayContent,
     upcomingAgenda,
     homeTemporal,
     featuredBriefing,
+    editorialFeaturedOutingId,
     discoveryThreads,
     exploreStats,
   } = await getHomeSnapshot()
@@ -54,6 +53,7 @@ export default async function HomePage() {
       upcomingAgenda={upcomingAgenda}
       homeTemporal={homeTemporal}
       featuredBriefing={featuredBriefing}
+      editorialFeaturedOutingId={editorialFeaturedOutingId}
       discoveryThreads={discoveryThreads}
       exploreStats={exploreStats}
     />

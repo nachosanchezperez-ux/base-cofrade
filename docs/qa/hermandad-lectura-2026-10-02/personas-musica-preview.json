@@ -1,0 +1,199 @@
+{
+  "method": "Chromium HTTPS-response replay with verified Node TLS",
+  "rows": [
+    {
+      "width": 390,
+      "total": 11137,
+      "overflow": 0,
+      "hero": 421,
+      "titulares": 1560,
+      "historia": 5210,
+      "h1": 1,
+      "reading": true,
+      "canonical": "https://hilocofrade.es/hermandades/el-baratillo",
+      "robots": "index, follow",
+      "menu": [
+        "Resumen",
+        "Titulares",
+        "Historia",
+        "Música",
+        "Patrimonio",
+        "Agenda / Cultos"
+      ],
+      "history": 15,
+      "sources": 18,
+      "compositions": "39 composiciones documentadas",
+      "schema": [
+        "Organization",
+        "WebSite",
+        "BreadcrumbList",
+        "Organization",
+        "WebPage"
+      ],
+      "duplicateIds": []
+    },
+    {
+      "width": 430,
+      "total": 10873,
+      "overflow": 0,
+      "hero": 403,
+      "titulares": 1548,
+      "historia": 5020,
+      "h1": 1,
+      "reading": true,
+      "canonical": "https://hilocofrade.es/hermandades/el-baratillo",
+      "robots": "index, follow",
+      "menu": [
+        "Resumen",
+        "Titulares",
+        "Historia",
+        "Música",
+        "Patrimonio",
+        "Agenda / Cultos"
+      ],
+      "history": 15,
+      "sources": 18,
+      "compositions": "39 composiciones documentadas",
+      "schema": [
+        "Organization",
+        "WebSite",
+        "BreadcrumbList",
+        "Organization",
+        "WebPage"
+      ],
+      "duplicateIds": []
+    },
+    {
+      "width": 768,
+      "total": 8970,
+      "overflow": 0,
+      "hero": 433,
+      "titulares": 1332,
+      "historia": 3568,
+      "h1": 1,
+      "reading": true,
+      "canonical": "https://hilocofrade.es/hermandades/el-baratillo",
+      "robots": "index, follow",
+      "menu": [
+        "Resumen",
+        "Titulares",
+        "Historia",
+        "Música",
+        "Patrimonio",
+        "Agenda / Cultos"
+      ],
+      "history": 15,
+      "sources": 18,
+      "compositions": "39 composiciones documentadas",
+      "schema": [
+        "Organization",
+        "WebSite",
+        "BreadcrumbList",
+        "Organization",
+        "WebPage"
+      ],
+      "duplicateIds": []
+    },
+    {
+      "width": 1024,
+      "total": 8080,
+      "overflow": 0,
+      "hero": 433,
+      "titulares": 1293,
+      "historia": 3370,
+      "h1": 1,
+      "reading": true,
+      "canonical": "https://hilocofrade.es/hermandades/el-baratillo",
+      "robots": "index, follow",
+      "menu": [
+        "Resumen",
+        "Titulares",
+        "Historia",
+        "Música",
+        "Patrimonio",
+        "Agenda / Cultos"
+      ],
+      "history": 15,
+      "sources": 18,
+      "compositions": "39 composiciones documentadas",
+      "schema": [
+        "Organization",
+        "WebSite",
+        "BreadcrumbList",
+        "Organization",
+        "WebPage"
+      ],
+      "duplicateIds": []
+    },
+    {
+      "width": 1366,
+      "total": 7892,
+      "overflow": 0,
+      "hero": 433,
+      "titulares": 1271,
+      "historia": 3236,
+      "h1": 1,
+      "reading": true,
+      "canonical": "https://hilocofrade.es/hermandades/el-baratillo",
+      "robots": "index, follow",
+      "menu": [
+        "Resumen",
+        "Titulares",
+        "Historia",
+        "Música",
+        "Patrimonio",
+        "Agenda / Cultos"
+      ],
+      "history": 15,
+      "sources": 18,
+      "compositions": "39 composiciones documentadas",
+      "schema": [
+        "Organization",
+        "WebSite",
+        "BreadcrumbList",
+        "Organization",
+        "WebPage"
+      ],
+      "duplicateIds": []
+    },
+    {
+      "width": 1600,
+      "total": 7892,
+      "overflow": 0,
+      "hero": 433,
+      "titulares": 1271,
+      "historia": 3236,
+      "h1": 1,
+      "reading": true,
+      "canonical": "https://hilocofrade.es/hermandades/el-baratillo",
+      "robots": "index, follow",
+      "menu": [
+        "Resumen",
+        "Titulares",
+        "Historia",
+        "Música",
+        "Patrimonio",
+        "Agenda / Cultos"
+      ],
+      "history": 15,
+      "sources": 18,
+      "compositions": "39 composiciones documentadas",
+      "schema": [
+        "Organization",
+        "WebSite",
+        "BreadcrumbList",
+        "Organization",
+        "WebPage"
+      ],
+      "duplicateIds": []
+    }
+  ],
+  "control": {
+    "reading": false,
+    "h1": 1,
+    "canonical": "https://hilocofrade.es/hermandades/hermandad-del-gran-poder-sevilla",
+    "robots": "index, follow"
+  },
+  "keyboardSources": true,
+  "errors": []
+}

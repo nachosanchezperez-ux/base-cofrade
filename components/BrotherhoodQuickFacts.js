@@ -1,9 +1,11 @@
 import 'server-only'
 
 import Link from 'next/link'
+import { cache } from 'react'
 import { createPublicClient as createClient } from '@/lib/supabase/public'
 import { publicText } from '@/lib/supabase/public-entity-page'
 import styles from './BrotherhoodQuickFacts.module.css'
+import { groupBrotherhoodDressers, relationPeriod } from '@/lib/brotherhood-people'
 
 const CURRENT_HEAD_RELATIONS = ['hermano_mayor_of', 'hermana_mayor_of']
 
@@ -24,20 +26,6 @@ function isCurrentRelation(item, currentYear) {
   if (item.date_to) return Number(String(item.date_to).slice(0, 4)) >= currentYear
   const textYear = latestYear(item.date_to_text)
   return textYear ? textYear >= currentYear : !publicText(item.date_to_text)
-}
-
-function periodLabel(item = {}) {
-  const from = publicText(item.date_from_text) || (item.date_from ? String(item.date_from).slice(0, 4) : '')
-  const to = publicText(item.date_to_text) || (item.date_to ? String(item.date_to).slice(0, 4) : '')
-
-  if (from && to) {
-    const fromYear = latestYear(from) || from
-    const toYear = latestYear(to) || to
-    return `${fromYear}–${toYear}`
-  }
-  if (from) return /^desde\b/i.test(from) ? from : `Desde ${from}`
-  if (to) return /^hasta\b/i.test(to) ? to : `Hasta ${to}`
-  return ''
 }
 
 function membersLabel(count, kind) {
@@ -90,7 +78,7 @@ function annualActivities(brotherhood, recurringSeries = []) {
   })
 }
 
-async function loadRelationalFacts(brotherhood) {
+const loadRelationalFacts = cache(async function loadRelationalFacts(brotherhood) {
   if (!brotherhood?.id) return { head: null, dressers: [], membership: null, recurringSeries: [] }
 
   const supabase = createClient()
@@ -148,7 +136,7 @@ async function loadRelationalFacts(brotherhood) {
           name: headAgent.name,
           slug: headAgent.slug || '',
           label: headRelation.relation_type === 'hermana_mayor_of' ? 'Hermana Mayor' : 'Hermano Mayor',
-          period: periodLabel(headRelation),
+          period: relationPeriod(headRelation),
         }
       : null,
     dressers: dresserRelations
@@ -158,11 +146,13 @@ async function loadRelationalFacts(brotherhood) {
         if (!agent || !image) return null
         return {
           id: relation.id,
+          agentId: agent.id,
+          imageId: image.id,
           name: agent.name,
           slug: agent.slug || '',
           image: image.nombre,
           imageSlug: image.slug || '',
-          period: periodLabel(relation),
+          period: relationPeriod(relation),
         }
       })
       .filter(Boolean)
@@ -186,9 +176,9 @@ async function loadRelationalFacts(brotherhood) {
         time_text: String(item.momento || '').split(' · ').slice(1).join(' · '),
       })),
   }
-}
+})
 
-export default async function BrotherhoodQuickFacts({ brotherhood }) {
+export default async function BrotherhoodQuickFacts({ brotherhood, heroFactLabels = [], compact = false, peopleOnly = false, hidePeople = false }) {
   let relational = { head: null, dressers: [], membership: null, recurringSeries: [] }
 
   try {
@@ -201,6 +191,26 @@ export default async function BrotherhoodQuickFacts({ brotherhood }) {
   }
 
   const activities = annualActivities(brotherhood, relational.recurringSeries)
+  const dressers = groupBrotherhoodDressers(relational.dressers)
+  if (peopleOnly) {
+    if (!relational.head && !dressers.length) return null
+    return <aside className={styles.people} aria-label="Personas vinculadas a la Hermandad">
+      {relational.head ? <div className={styles.person}>
+        <span className={styles.personRole}>{relational.head.label}</span>
+        <strong>{relational.head.name}</strong>
+        {relational.head.period ? <span className={styles.personPeriod}>{relational.head.period}</span> : null}
+      </div> : null}
+      {dressers.map(dresser => <div className={styles.person} key={dresser.agentId || dresser.id}>
+        <span className={styles.personRole}>Vestidor</span>
+        <strong>{dresser.slug ? <Link href={`/autores/${dresser.slug}`}>{dresser.name} <span aria-hidden="true">↗</span></Link> : dresser.name}</strong>
+        {dresser.commonPeriod ? <span className={styles.personPeriod}>{dresser.commonPeriod}</span> : null}
+        <ul className={styles.personImages}>{dresser.images.map(image => <li key={image.id}>
+          {image.imageSlug ? <Link href={`/imagenes/${image.imageSlug}`}>{image.image}</Link> : image.image}
+          {image.period && !dresser.commonPeriod ? <span className={styles.personPeriod}>{image.period}</span> : null}
+        </li>)}</ul>
+      </div>)}
+    </aside>
+  }
   const facts = [
     publicText(brotherhood.fundacion) ? { label: 'Fundación', value: publicText(brotherhood.fundacion) } : null,
     brotherhood.imagenes?.length ? {
@@ -218,14 +228,15 @@ export default async function BrotherhoodQuickFacts({ brotherhood }) {
       value: relational.membership.value,
       meta: `Dato de ${relational.membership.year}`,
     } : null,
-    relational.head ? {
+    relational.head && !hidePeople ? {
       label: relational.head.label,
       value: relational.head.name,
       meta: relational.head.period,
     } : null,
-  ].filter(Boolean)
+  ].filter(Boolean).filter((fact) => !compact || !heroFactLabels.includes(fact.label))
 
   if (!facts.length && !activities.length && !relational.dressers.length) return null
+  const DresserContainer = compact ? 'details' : 'div'
 
   return (
     <div className={styles.wrapper}>
@@ -247,7 +258,7 @@ export default async function BrotherhoodQuickFacts({ brotherhood }) {
         </dl>
       ) : null}
 
-      {activities.length ? (
+      {activities.length && !compact ? (
         <div className={styles.activities}>
           <div className={styles.blockTitle}>
             <span>Actividad anual habitual</span>
@@ -264,28 +275,26 @@ export default async function BrotherhoodQuickFacts({ brotherhood }) {
         </div>
       ) : null}
 
-      {relational.dressers.length ? (
-        <div className={styles.dressers}>
+      {relational.dressers.length && !hidePeople ? (
+        <DresserContainer className={styles.dressers}>
+          {compact && <summary>{dressers.length === 1 ? 'Vestidor actual' : 'Vestidores actuales'} · {dressers.length}</summary>}
           <div className={styles.blockTitle}>
             <span>Vestidores actuales</span>
             <small>Vinculación documentada con los Titulares</small>
           </div>
           <div className={styles.dresserGrid}>
-            {relational.dressers.map((dresser) => (
-              <div className={styles.dresser} key={dresser.id}>
-                <small>
-                  {dresser.imageSlug ? (
-                    <Link className={styles.inlineLink} href={`/imagenes/${dresser.imageSlug}`}>
-                      {dresser.image}<span aria-hidden="true">↗</span>
-                    </Link>
-                  ) : dresser.image}
-                </small>
+            {dressers.map((dresser) => (
+              <div className={styles.dresser} key={dresser.agentId || dresser.id}>
                 <strong>{dresser.name}</strong>
-                {dresser.period ? <span>{dresser.period}</span> : null}
+                {dresser.commonPeriod && <span>{dresser.commonPeriod}</span>}
+                {dresser.images.map((image) => <div key={image.id}>
+                  <small>{image.imageSlug ? <Link className={styles.inlineLink} href={`/imagenes/${image.imageSlug}`}>{image.image}<span aria-hidden="true">↗</span></Link> : image.image}</small>
+                  {image.period && !dresser.commonPeriod && <span>{image.period}</span>}
+                </div>)}
               </div>
             ))}
           </div>
-        </div>
+        </DresserContainer>
       ) : null}
     </div>
   )

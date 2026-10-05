@@ -22,11 +22,13 @@ export default async function RelationalThread({
   items = [],
   maxItems = 8,
   priorityProfile = '',
+  diverse = false,
 }) {
   const sourceType = priorityProfile || currentLabel;
   const { visibleItems, hiddenItems } = prepareRelationalItems(items, {
     profile: sourceType,
     maxItems,
+    diverse,
   });
 
   if (!currentName || visibleItems.length === 0) return null;

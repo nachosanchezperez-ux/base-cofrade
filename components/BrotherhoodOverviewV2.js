@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import CofradeTypeBadges from '@/components/CofradeTypeBadges'
 import BrotherhoodQuickFacts from '@/components/BrotherhoodQuickFacts'
+import BrotherhoodEditorialGuide from '@/components/BrotherhoodEditorialGuide'
 import EntityLastUpdated from '@/components/EntityLastUpdated'
 import { publicText } from '@/lib/supabase/public-entity-page'
 import styles from './BrotherhoodOverviewV2.module.css'
@@ -176,7 +177,7 @@ function ArrowUpRightIcon({ className = '' }) {
   )
 }
 
-export default function BrotherhoodOverviewV2({ brotherhood, heroFactLabels = [] }) {
+export default function BrotherhoodOverviewV2({ brotherhood, heroFactLabels = [], practicalOnly = false }) {
   const seat = brotherhood.sedeDetalle
   const types = brotherhood.tipos || []
   const mapUrl = directionsUrl(seat)
@@ -189,15 +190,15 @@ export default function BrotherhoodOverviewV2({ brotherhood, heroFactLabels = []
 
   return (
     <>
-      <section className={styles.section} id="resumen">
+      <section className={styles.section} id={practicalOnly ? 'sede-y-horarios' : 'resumen'}>
         <div className={`shell ${styles.shell}`}>
-          <header className={styles.header}>
+          {!practicalOnly && <header className={styles.header}>
             <span className={styles.eyebrow}>De un vistazo</span>
             <h2>La Hermandad durante el año</h2>
             <EntityLastUpdated value={brotherhood.updatedAt} />
-          </header>
+          </header>}
 
-          <BrotherhoodQuickFacts brotherhood={brotherhood} heroFactLabels={heroFactLabels} />
+          {!practicalOnly && <BrotherhoodQuickFacts brotherhood={brotherhood} heroFactLabels={heroFactLabels} />}
 
           {(showIdentity || showSeat) ? (
             <div className={`${styles.grid} ${showIdentity && showSeat ? balanceStyles.balancedGrid : styles.gridSingle}`}>
@@ -300,6 +301,7 @@ export default function BrotherhoodOverviewV2({ brotherhood, heroFactLabels = []
           ) : null}
         </div>
       </section>
+      {!practicalOnly && <BrotherhoodEditorialGuide guide={brotherhood.editorialGuide} />}
     </>
   )
 }

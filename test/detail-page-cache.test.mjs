@@ -89,7 +89,7 @@ test('Procesiones de Gloria acota la consulta de detalle por slug y cachea la fi
 
   assert.match(loader, /if \(slug\) query = query\.eq\('slug', slug\)/)
   assert.match(loader, /const targetedDirectory = await getGloryDirectory\(\{ throwOnError: true, slug \}\)/)
-  assert.match(loader, /hilo-cofrade-public-glory-detail-v2/)
+  assert.match(loader, /hilo-cofrade-public-glory-detail-v4/)
   assert.match(loader, /tags: \['public-glory-detail'\]/)
   assert.match(directoryCache, /tags: \['public-glory-directory'\]/)
 })

@@ -17,6 +17,11 @@ test('detecta búsquedas directas de fichas sin secuestrar preguntas relacionale
     term: 'Baratillo',
     explicitNavigation: true,
   })
+  assert.deepEqual(getHiloLookupIntent('Abre la ficha de la marcha Baratillo'), {
+    term: 'Baratillo',
+    explicitNavigation: true,
+    preferredEntityType: 'march',
+  })
   assert.deepEqual(getHiloLookupIntent('Baratillo'), {
     term: 'Baratillo',
     explicitNavigation: false,
@@ -37,6 +42,34 @@ test('prioriza la ficha navegable frente a una coincidencia no navegable', () =>
 
   assert.equal(selected.length, 1)
   assert.equal(selected[0].href, '/hermandades/el-baratillo')
+})
+
+test('la intención de ficha prioriza la Hermandad cuando comparte nombre con una Marcha', () => {
+  const items = [
+    { title: 'Baratillo', entityType: 'march', href: '/marchas/marcha-baratillo' },
+    { title: 'El Baratillo', entityType: 'brotherhood', href: '/hermandades/el-baratillo' },
+    { title: 'Caridad del Baratillo', entityType: 'march', href: '/marchas/caridad-del-baratillo' },
+  ]
+
+  const selected = selectHiloNavigationItems(items, 'Baratillo', { explicitNavigation: true })
+
+  assert.equal(selected.length, 1)
+  assert.equal(selected[0].entityType, 'brotherhood')
+  assert.equal(selected[0].href, '/hermandades/el-baratillo')
+})
+
+test('la intención de tipo explícita permite pedir la Marcha homónima', () => {
+  const items = [
+    { title: 'Baratillo', entityType: 'march', href: '/marchas/marcha-baratillo' },
+    { title: 'El Baratillo', entityType: 'brotherhood', href: '/hermandades/el-baratillo' },
+  ]
+
+  const selected = selectHiloNavigationItems(items, 'Baratillo', {
+    explicitNavigation: true,
+    preferredEntityType: 'march',
+  })
+
+  assert.equal(selected[0].entityType, 'march')
 })
 
 test('la cabecera usa el mismo motor de Tira del hilo como buscador global', async () => {
@@ -89,7 +122,7 @@ test('el autocompletado coloca las fichas navegables antes que otras coincidenci
   const route = await readFile(new URL('../app/api/tira-del-hilo/search/route.js', import.meta.url), 'utf8')
 
   assert.match(route, /prioritizeHiloNavigationItems\(await searchPublicHiloEntities/)
-  assert.doesNotMatch(route, /if \(intent\?\.explicitNavigation\)/)
+  assert.match(route, /explicitNavigation: Boolean\(intent\?\.explicitNavigation\)/)
 })
 
 test('el autocompletado no registra el texto escrito por el usuario cuando falla', async () => {

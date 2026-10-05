@@ -1,0 +1,113 @@
+.preview {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 26px;
+}
+
+.preview article {
+  min-width: 0;
+  padding: 15px 14px;
+  border-top: 3px solid color-mix(in srgb, var(--brotherhood-primary) 34%, #d7dee5);
+  background: color-mix(in srgb, var(--brotherhood-primary) 3%, #ffffff);
+}
+
+.preview span {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--brotherhood-secondary);
+  font-size: 0.76rem;
+  font-weight: 850;
+  letter-spacing: 0.05em;
+}
+
+.preview strong {
+  display: block;
+  color: #26384b;
+  font-size: 0.88rem;
+  line-height: 1.32;
+}
+
+.disclosure {
+  margin-top: 22px;
+  border-block: 1px solid color-mix(in srgb, var(--brotherhood-primary) 16%, #d9e0e7);
+}
+
+.disclosure > summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 4px 16px;
+  align-items: center;
+  min-height: 76px;
+  padding: 14px 0;
+  cursor: pointer;
+  list-style: none;
+}
+
+.disclosure > summary::-webkit-details-marker {
+  display: none;
+}
+
+.disclosure > summary span {
+  color: var(--brotherhood-primary);
+  font-size: 0.98rem;
+  font-weight: 850;
+}
+
+.disclosure > summary small {
+  grid-column: 1;
+  color: #718092;
+  font-size: 0.8rem;
+}
+
+.disclosure > summary b {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  color: var(--brotherhood-secondary);
+  font-size: 1.45rem;
+  font-weight: 500;
+  transition: transform 180ms ease;
+}
+
+.disclosure[open] > summary b {
+  transform: rotate(45deg);
+}
+
+.disclosure :global(.history-timeline) {
+  padding-top: 8px;
+}
+
+@media (max-width: 860px) {
+  .preview {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .preview article:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 560px) {
+  .preview {
+    display: flex;
+    gap: 8px;
+    margin-inline: -20px;
+    padding-inline: 20px;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+  }
+
+  .preview::-webkit-scrollbar {
+    display: none;
+  }
+
+  .preview article {
+    flex: 0 0 min(76vw, 280px);
+    scroll-snap-align: start;
+  }
+
+  .disclosure > summary {
+    min-height: 70px;
+  }
+}

@@ -58,7 +58,14 @@ export default function HomeTemporalFocus({ temporal }) {
                 <small>{dateLabel(item)}</small>
               </div>
               <h3>{item.title}</h3>
-              <p className={styles.meta}>{[item.municipality, timingLabel(item), item.place].filter(Boolean).join(' · ')}</p>
+              <div className={styles.meta}>
+                {item.municipality ? <span className={styles.municipality}>{item.municipality}</span> : null}
+                <span className={styles.schedule}>
+                  <small>Horario</small>
+                  <strong>{timingLabel(item)}</strong>
+                </span>
+                {item.place ? <span className={styles.place}>{item.place}</span> : null}
+              </div>
               {item.summary ? <p className={styles.summary}>{item.summary}</p> : null}
               <div className={styles.actions}>
                 <Link href={eventHref(item)}>{item.liveState?.isLive ? 'Seguir ahora' : 'Ver cita'} <span aria-hidden="true">→</span></Link>

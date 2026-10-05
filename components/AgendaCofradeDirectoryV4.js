@@ -5,10 +5,12 @@ import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
 import { agendaLocationMatches, agendaMunicipalityOptions } from '@/lib/agenda-cofrade-location'
 import { getProcessionLiveState } from '@/lib/procession-live-status'
+import { routeSummarySections } from '@/lib/procession-route'
 import { agendaTemporalRangeDate, withAgendaTemporalDay } from '@/lib/agenda-temporal-display'
 import { trackEvent } from '@/lib/analytics/client'
 import styles from './AgendaCofradeDirectoryV4.module.css'
 import concertStyles from './AgendaCofradeDirectoryV4Concerts.module.css'
+import routeStyles from './AgendaCofradeDirectoryV4Routes.module.css'
 import visualStyles from './AgendaCofradeDirectoryV4Visuals.module.css'
 
 const AGENDA_TYPE = 'agenda_cofrade'
@@ -167,7 +169,7 @@ function EventActions({ item }) {
   if (item.category === 'concerts') {
     const visibleBands = (item.bands || []).filter((band) => band.href).slice(0, 3)
     return (
-      <div className={styles.cardActions}>
+      <div className={`${styles.cardActions} ${concertStyles.concertActions}`}>
         {visibleBands.map((band, index) => (
           <Link
             href={band.href}
@@ -219,27 +221,78 @@ function EventActions({ item }) {
   )
 }
 
-function repertoireEntries(value = '') {
-  return String(value)
-    .split('\n')
+function EventRoute({ item }) {
+  const routeText = String(item.routeText || '').trim()
+  if (!routeText) return null
+
+  const sections = routeSummarySections(routeText)
+  const pointCount = sections.reduce((total, section) => total + section.points.length, 0)
+
+  return (
+    <details className={routeStyles.route}>
+      <summary>
+        <span>Ver recorrido</span>
+        <small>{pointCount ? `${pointCount} ${pointCount === 1 ? 'punto' : 'puntos'}` : item.categoryLabel || 'Recorrido'}</small>
+      </summary>
+      {sections.length ? (
+        <div className={routeStyles.routeSections}>
+          {sections.map((section) => (
+            <section className={routeStyles.routeSection} key={section.id}>
+              <strong>{section.label}</strong>
+              <ol className={routeStyles.routePoints}>
+                {section.points.map((point, index) => (
+                  <li key={`${section.id}-${index}-${point}`}>{point}</li>
+                ))}
+              </ol>
+            </section>
+          ))}
+        </div>
+      ) : (
+        <p className={routeStyles.routeFallback}>{routeText}</p>
+      )}
+    </details>
+  )
+}
+
+function repertoireData(value = '') {
+  const raw = String(value).trim()
+  if (!raw) return { entries: [], presenter: '' }
+
+  const presenterMatch = raw.match(/(?:^|[.;]\s*|\n\s*)Presenta:\s*(.+?)\.?\s*$/i)
+  const presenter = presenterMatch?.[1]?.trim().replace(/\.$/, '') || ''
+  const repertoireText = (presenterMatch ? raw.slice(0, presenterMatch.index) : raw)
+    .trim()
+    .replace(/^repertorio\s*:\s*/i, '')
+
+  const entries = repertoireText
+    .split(/\n|;\s*/)
     .map((line) => line.trim())
     .filter(Boolean)
     .filter((line) => !/^repertorio\s*:?$/i.test(line))
     .map((line, index) => {
-      const isPremiere = /\(estreno\)/i.test(line)
-      const clean = line.replace(/\s*\(estreno\)\s*/i, '').trim()
+      const premiereMatch = line.match(/\((estreno(?: absoluto)?)\)/i)
+      const clean = line
+        .replace(/\s*\(estreno(?: absoluto)?\)\s*/i, ' ')
+        .replace(/^repertorio\s*:\s*/i, '')
+        .trim()
       const [title, ...authorParts] = clean.split(/\s+—\s+/)
+      const author = authorParts.join(' — ').trim().replace(/\.$/, '')
+
       return {
         key: `${index}-${clean}`,
         title: title || clean,
-        author: authorParts.join(' — '),
-        isPremiere,
+        author,
+        premiereLabel: premiereMatch
+          ? premiereMatch[1].replace(/^./, (letter) => letter.toUpperCase())
+          : '',
       }
     })
+
+  return { entries, presenter }
 }
 
 function ConcertRepertoire({ item }) {
-  const entries = repertoireEntries(item.repertoireText)
+  const { entries, presenter } = repertoireData(item.repertoireText)
   if (!entries.length) return null
 
   return (
@@ -256,10 +309,16 @@ function ConcertRepertoire({ item }) {
               <strong>{entry.title}</strong>
               {entry.author ? <span>{entry.author}</span> : null}
             </div>
-            {entry.isPremiere ? <b>Estreno</b> : null}
+            {entry.premiereLabel ? <b>{entry.premiereLabel}</b> : null}
           </li>
         ))}
       </ol>
+      {presenter ? (
+        <p className={concertStyles.repertoirePresenter}>
+          <span>Presenta</span>
+          <strong>{presenter}</strong>
+        </p>
+      ) : null}
     </details>
   )
 }
@@ -588,7 +647,9 @@ export default function AgendaCofradeDirectoryV4({
                           <span><b>Horario</b>{item.timeText || (item.startTime ? `${item.startTime}${item.endTime ? `–${item.endTime}` : ''} h` : 'Por confirmar')}</span>
                           {item.place ? <span><b>Lugar</b>{item.place}</span> : null}
                         </div>
-                        {item.summary ? <p className={styles.routePreview}>{item.summary}</p> : null}
+                        {item.routeText && ['processions', 'transfers', 'rosaries', 'romeries'].includes(item.category)
+                          ? <EventRoute item={item} />
+                          : item.summary ? <p className={styles.routePreview}>{item.summary}</p> : null}
                         {item.category === 'concerts' ? <ConcertRepertoire item={item} /> : null}
                         <EventActions item={item} />
                       </div>

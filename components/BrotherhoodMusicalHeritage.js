@@ -113,7 +113,7 @@ function MarchStyleGroups({ items }) {
               <h4>{group.label}</h4>
               <small>{group.items.length} {group.items.length === 1 ? 'marcha documentada' : 'marchas documentadas'}</small>
             </div>
-            <span className={styles.styleToggle} aria-hidden="true">＋</span>
+            <span className={styles.styleToggle} aria-hidden="true">+</span>
           </summary>
           <MusicList items={group.items} showStyle={false} headingLevel={5} />
         </details>
@@ -122,7 +122,7 @@ function MarchStyleGroups({ items }) {
   );
 }
 
-export default function BrotherhoodMusicalHeritage({ items = [] }) {
+export default function BrotherhoodMusicalHeritage({ items = [], id = 'musica', headingLevel = 2, compact = false }) {
   if (!items.length) return null;
 
   const groups = GROUPS.map((group) => ({
@@ -131,13 +131,14 @@ export default function BrotherhoodMusicalHeritage({ items = [] }) {
   })).filter((group) => group.items.length);
 
   return (
-    <section className={`section ${styles.section}`} id="musica">
+    <section className={`section ${styles.section}`} id={id}>
       <div className="shell">
         <div className={styles.intro}>
           <SectionTitle
+            level={headingLevel}
             eyebrow="Sonidos propios"
             title="Patrimonio musical"
-            description="Obras relacionadas de forma independiente con la Hermandad, sus Titulares, autores, formaciones, estrenos y fuentes. Las marchas procesionales se ordenan por estilo musical; la música para cultos, himnos, coplas y adaptaciones se conserva como repertorio diferenciado."
+            description={compact ? 'Marchas y otras obras vinculadas a la Hermandad y sus Titulares.' : 'Obras relacionadas de forma independiente con la Hermandad, sus Titulares, autores, formaciones, estrenos y fuentes. Las marchas procesionales se ordenan por estilo musical; la música para cultos, himnos, coplas y adaptaciones se conserva como repertorio diferenciado.'}
           />
           <div className={styles.summary} aria-label={`${items.length} composiciones documentadas`}>
             <strong>{items.length}</strong>
@@ -147,14 +148,14 @@ export default function BrotherhoodMusicalHeritage({ items = [] }) {
 
         <div className={styles.groups}>
           {groups.map((group) => (
-            <details className={styles.group} key={group.key}>
+            <details className={styles.group} key={group.key} open={compact && groups.length === 1}>
               <summary className={styles.groupSummary}>
                 <span className={styles.groupMark} aria-hidden="true">{group.short}</span>
                 <div className={styles.groupHeading}>
                   <h3>{group.label}</h3>
                   <small>{group.items.length} {group.noun} documentadas</small>
                 </div>
-                <span className={styles.groupToggle} aria-hidden="true">＋</span>
+                <span className={styles.groupToggle} aria-hidden="true">+</span>
               </summary>
               {group.key === 'Marcha procesional'
                 ? <MarchStyleGroups items={group.items} />

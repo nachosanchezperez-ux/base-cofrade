@@ -1,0 +1,16 @@
+{
+  "eligible": 422,
+  "published": 744,
+  "with_disciplines": 94,
+  "distribution": {
+    "music": 213,
+    "imagery": 83,
+    "carving": 22,
+    "goldsmith": 20,
+    "restoration": 22,
+    "dressing": 7,
+    "patrimony": 18,
+    "visual": 17,
+    "textile": 20
+  }
+}

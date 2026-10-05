@@ -1,0 +1,199 @@
+{
+  "method": "Chromium HTTPS-response replay with verified Node TLS",
+  "rows": [
+    {
+      "width": 390,
+      "total": 11069,
+      "overflow": 0,
+      "hero": 341,
+      "titulares": 1538,
+      "historia": 4962,
+      "h1": 1,
+      "reading": true,
+      "canonical": "https://hilocofrade.es/hermandades/el-baratillo",
+      "robots": "index, follow",
+      "menu": [
+        "Resumen",
+        "Titulares",
+        "Historia",
+        "Música",
+        "Patrimonio",
+        "Agenda / Cultos"
+      ],
+      "history": 15,
+      "sources": 18,
+      "compositions": "39 composiciones documentadas",
+      "schema": [
+        "Organization",
+        "WebSite",
+        "BreadcrumbList",
+        "Organization",
+        "WebPage"
+      ],
+      "duplicateIds": []
+    },
+    {
+      "width": 430,
+      "total": 10732,
+      "overflow": 0,
+      "hero": 345,
+      "titulares": 1548,
+      "historia": 4795,
+      "h1": 1,
+      "reading": true,
+      "canonical": "https://hilocofrade.es/hermandades/el-baratillo",
+      "robots": "index, follow",
+      "menu": [
+        "Resumen",
+        "Titulares",
+        "Historia",
+        "Música",
+        "Patrimonio",
+        "Agenda / Cultos"
+      ],
+      "history": 15,
+      "sources": 18,
+      "compositions": "39 composiciones documentadas",
+      "schema": [
+        "Organization",
+        "WebSite",
+        "BreadcrumbList",
+        "Organization",
+        "WebPage"
+      ],
+      "duplicateIds": []
+    },
+    {
+      "width": 768,
+      "total": 8825,
+      "overflow": 0,
+      "hero": 398,
+      "titulares": 1297,
+      "historia": 3307,
+      "h1": 1,
+      "reading": true,
+      "canonical": "https://hilocofrade.es/hermandades/el-baratillo",
+      "robots": "index, follow",
+      "menu": [
+        "Resumen",
+        "Titulares",
+        "Historia",
+        "Música",
+        "Patrimonio",
+        "Agenda / Cultos"
+      ],
+      "history": 15,
+      "sources": 18,
+      "compositions": "39 composiciones documentadas",
+      "schema": [
+        "Organization",
+        "WebSite",
+        "BreadcrumbList",
+        "Organization",
+        "WebPage"
+      ],
+      "duplicateIds": []
+    },
+    {
+      "width": 1024,
+      "total": 7666,
+      "overflow": 0,
+      "hero": 398,
+      "titulares": 1281,
+      "historia": 3132,
+      "h1": 1,
+      "reading": true,
+      "canonical": "https://hilocofrade.es/hermandades/el-baratillo",
+      "robots": "index, follow",
+      "menu": [
+        "Resumen",
+        "Titulares",
+        "Historia",
+        "Música",
+        "Patrimonio",
+        "Agenda / Cultos"
+      ],
+      "history": 15,
+      "sources": 18,
+      "compositions": "39 composiciones documentadas",
+      "schema": [
+        "Organization",
+        "WebSite",
+        "BreadcrumbList",
+        "Organization",
+        "WebPage"
+      ],
+      "duplicateIds": []
+    },
+    {
+      "width": 1366,
+      "total": 7507,
+      "overflow": 0,
+      "hero": 398,
+      "titulares": 1281,
+      "historia": 3021,
+      "h1": 1,
+      "reading": true,
+      "canonical": "https://hilocofrade.es/hermandades/el-baratillo",
+      "robots": "index, follow",
+      "menu": [
+        "Resumen",
+        "Titulares",
+        "Historia",
+        "Música",
+        "Patrimonio",
+        "Agenda / Cultos"
+      ],
+      "history": 15,
+      "sources": 18,
+      "compositions": "39 composiciones documentadas",
+      "schema": [
+        "Organization",
+        "WebSite",
+        "BreadcrumbList",
+        "Organization",
+        "WebPage"
+      ],
+      "duplicateIds": []
+    },
+    {
+      "width": 1600,
+      "total": 7507,
+      "overflow": 0,
+      "hero": 398,
+      "titulares": 1281,
+      "historia": 3021,
+      "h1": 1,
+      "reading": true,
+      "canonical": "https://hilocofrade.es/hermandades/el-baratillo",
+      "robots": "index, follow",
+      "menu": [
+        "Resumen",
+        "Titulares",
+        "Historia",
+        "Música",
+        "Patrimonio",
+        "Agenda / Cultos"
+      ],
+      "history": 15,
+      "sources": 18,
+      "compositions": "39 composiciones documentadas",
+      "schema": [
+        "Organization",
+        "WebSite",
+        "BreadcrumbList",
+        "Organization",
+        "WebPage"
+      ],
+      "duplicateIds": []
+    }
+  ],
+  "control": {
+    "reading": false,
+    "h1": 1,
+    "canonical": "https://hilocofrade.es/hermandades/san-esteban",
+    "robots": "index, follow"
+  },
+  "keyboardSources": true,
+  "errors": []
+}

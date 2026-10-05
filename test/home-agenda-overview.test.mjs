@@ -34,7 +34,8 @@ test('la Home diferencia la Agenda general del bloque de salidas procesionales',
 
   assert.match(home, /Salidas procesionales/)
   assert.match(home, /En los próximos días/)
-  assert.match(home, /Procesiones, romerías, traslados y salidas extraordinarias/)
+  assert.doesNotMatch(home, /Procesiones, romerías, traslados y salidas extraordinarias se muestran con el mismo peso visual/)
+  assert.match(home, /HomeProcessionGrid/)
   assert.match(home, /href="\/agenda-cofrade"/)
   assert.match(home, /href="\/extraordinarias"/)
   assert.match(home, /href="\/procesiones-de-gloria"/)

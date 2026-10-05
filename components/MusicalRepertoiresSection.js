@@ -7,9 +7,10 @@ function metricLabel(count, singular, plural) {
   return count === 1 ? singular : plural
 }
 
-export default function MusicalRepertoiresSection({ items = [], context = 'brotherhood' }) {
+export default function MusicalRepertoiresSection({ items = [], context = 'brotherhood', headingLevel = 2 }) {
   if (!items.length) return null
 
+  const Heading = `h${headingLevel}`
   const first = items[0]
   const title = context === 'band' ? 'Crucetas interpretadas' : 'Crucetas musicales'
   const description = context === 'band'
@@ -29,7 +30,7 @@ export default function MusicalRepertoiresSection({ items = [], context = 'broth
         <header className={styles.heading}>
           <span>Archivo sonoro</span>
           <div>
-            <h2>{title}</h2>
+            <Heading>{title}</Heading>
             <p>{description}</p>
           </div>
         </header>

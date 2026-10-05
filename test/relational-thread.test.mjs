@@ -124,3 +124,11 @@ test('si faltan categorías, rellena la capacidad sin ocultar relaciones útiles
   assert.equal(result.visibleItems.length, 5);
   assert.equal(result.hiddenItems.length, 1);
 });
+
+test('Vista compacta conserva diversidad y todas las conexiones restantes', () => {
+  const items = [item('Imagen', 'i1'), item('Imagen', 'i2'), item('Paso', 'p1'), item('Paso', 'p2'), item('Banda', 'b1'), item('Marcha', 'm1')];
+  const result = prepareRelationalItems(items, { profile: 'hermandad', maxItems: 4, diverse: true });
+  assert.deepEqual(result.visibleItems.map(entry => entry.kind), ['Imagen', 'Paso', 'Banda', 'Marcha']);
+  assert.equal(result.totalItems, 6);
+  assert.equal(new Set([...result.visibleItems, ...result.hiddenItems].map(entry => entry.href)).size, 6);
+});

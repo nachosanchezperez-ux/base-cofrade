@@ -29,21 +29,59 @@ test('la Home conserva una salida nocturna hasta su entrada real', async () => {
   assert.match(agendaLoader, /item\.liveState\.state !== 'done'/)
 })
 
-test('la Home solo usa gran protagonista cuando una salida está en curso', async () => {
+test('la Home permite un foco editorial previo sin quitar prioridad al directo', async () => {
   const home = await read('components/HomePageV2.js')
   const grid = await read('components/HomeProcessionGrid.js')
   const snapshot = await read('lib/supabase/home-snapshot.js')
 
   assert.match(home, /id="proximos-dias"/)
-  assert.match(home, /En los próximos días/)
-  assert.match(home, /const featuredOuting = liveOutings\[0\] \|\| null/)
+  assert.match(home, /const editorialFeaturedOuting = editorialFeaturedOutingId/)
+  assert.match(home, /const featuredOuting = liveOutings\[0\] \|\| editorialFeaturedOuting/)
+  assert.match(home, /isEditorialFeature/)
+  assert.match(home, /Extraordinaria destacada/)
+  assert.match(home, /Este fin de semana/)
   assert.match(home, /HomeProcessionGrid outings=\{balancedUpcoming\}/)
   assert.match(home, /Procesión en curso/)
   assert.match(home, /Varias procesiones están en la calle/)
-  assert.match(home, /multipleLive/)
-  assert.match(grid, /data-home-procession-layout="equal"/)
+  assert.match(grid, /data-home-procession-layout="editorial"/)
   assert.match(grid, /slice\(0, 4\)/)
-  assert.match(grid, /Guía de \{outing\.municipality\}/)
-  assert.match(snapshot, /find\(\(item\) => item\.liveState\?\.state === 'live'\)/)
-  assert.match(snapshot, /hilo-cofrade-home-public-snapshot-v18/)
+  assert.match(snapshot, /getHomeEditorialFocus/)
+  assert.match(snapshot, /liveFeaturedOuting/)
+  assert.match(snapshot, /editorialFeaturedOutingId/)
+  assert.match(snapshot, /hilo-cofrade-home-public-snapshot-v21/)
+})
+
+
+test('las próximas salidas equilibran el peso visual en escritorio', async () => {
+  const home = await read('components/HomePageV2.js')
+  const styles = await read('components/HomeProcessionGrid.module.css')
+
+  assert.doesNotMatch(home, /Procesiones, romerías, traslados y salidas extraordinarias se muestran con el mismo peso visual/)
+  assert.doesNotMatch(home, /La cercanía de una cita no la convierte por sí sola en protagonista/)
+  assert.match(styles, /@media\(min-width:900px\)/)
+  assert.match(styles, /grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/)
+  assert.match(styles, /grid-auto-rows:auto/)
+  assert.match(styles, /\.leadCard/)
+  assert.match(styles, /\.compactCard/)
+  assert.match(styles, /min-height:198px/)
+  assert.match(styles, /linear-gradient\(90deg,#123a67,#b71f37\)/)
+  assert.doesNotMatch(styles, /linear-gradient\(145deg,#0b223b 0%,#123d68 58%,#0d3156 100%\)/)
+})
+
+test('en móvil las próximas salidas conservan el carril horizontal', async () => {
+  const styles = await read('components/HomeProcessionGrid.module.css')
+
+  assert.match(styles, /@media\(max-width:720px\)/)
+  assert.match(styles, /scroll-snap-type:x mandatory/)
+  assert.match(styles, /flex:0 0 min\(82vw,320px\)/)
+})
+
+
+test('las horas ganan jerarquía sin inflar las tarjetas en escritorio', async () => {
+  const styles = await read('components/HomeProcessionGrid.module.css')
+
+  assert.match(styles, /\.card \.timing span,[\s\S]*min-height:36px/)
+  assert.match(styles, /\.card \.timing strong,[\s\S]*font-size:15px/)
+  assert.match(styles, /\.card \.actions,[\s\S]*margin-top:0/)
+  assert.match(styles, /padding-top:13px/)
 })

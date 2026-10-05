@@ -14,7 +14,10 @@ export async function GET(request) {
   const term = intent?.term || rawTerm
 
   try {
-    const items = prioritizeHiloNavigationItems(await searchPublicHiloEntities(term, 8))
+    const items = prioritizeHiloNavigationItems(await searchPublicHiloEntities(term, 8), term, {
+      explicitNavigation: Boolean(intent?.explicitNavigation),
+      preferredEntityType: intent?.preferredEntityType || '',
+    })
     return NextResponse.json({ items }, { headers: { 'Cache-Control': 'no-store' } })
   } catch {
     console.error('[Hilo Cofrade] Error en autocompletado de Tira del hilo')

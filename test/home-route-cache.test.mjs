@@ -9,7 +9,6 @@ test('la Home vuelve a usar ISR sin desactivar el Full Route Cache', () => {
   const snapshot = read('lib/supabase/home-snapshot.js')
 
   assert.match(page, /export const revalidate = 60/)
-  assert.match(page, /export const revalidate = 60/)
   assert.match(page, /function hasPublicSupabaseConfig\(\)/)
   assert.match(page, /NEXT_PUBLIC_SUPABASE_URL/)
   assert.match(page, /NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY/)

@@ -1,0 +1,75 @@
+{
+  "date": "2026-10-02",
+  "stage": "POST_APPLY",
+  "desktop": {
+    "viewportWidth": 1363,
+    "clientWidth": 1348,
+    "scrollWidth": 1348,
+    "directoryCategoryCount": 83,
+    "sevenCardsLabel": "ESCULTURA · PERSONA",
+    "profiles": [
+      {
+        "slug": "luis-ortega-bru",
+        "EsculturaVisible": true,
+        "clientWidth": 1348,
+        "scrollWidth": 1348
+      },
+      {
+        "slug": "sebastian-santos-rojas",
+        "EsculturaVisible": true,
+        "clientWidth": 1348,
+        "scrollWidth": 1348
+      },
+      {
+        "slug": "pedro-roldan",
+        "EsculturaVisible": true,
+        "clientWidth": 1348,
+        "scrollWidth": 1348
+      },
+      {
+        "slug": "antonio-illanes-rodriguez",
+        "EsculturaVisible": true,
+        "clientWidth": 1348,
+        "scrollWidth": 1348
+      },
+      {
+        "slug": "luis-alvarez-duarte",
+        "EsculturaVisible": true,
+        "clientWidth": 1348,
+        "scrollWidth": 1348
+      },
+      {
+        "slug": "juan-de-mesa",
+        "EsculturaVisible": true,
+        "clientWidth": 1348,
+        "scrollWidth": 1348
+      },
+      {
+        "slug": "juan-de-astorga",
+        "EsculturaVisible": true,
+        "clientWidth": 1348,
+        "scrollWidth": 1348
+      }
+    ],
+    "screenshotsInspected": true
+  },
+  "mobile": {
+    "status": "NOT_EXECUTED",
+    "reason": "No viewport capability advertised; F12 and Ctrl+Shift+M did not activate emulation controls."
+  },
+  "database": {
+    "disciplines": 122,
+    "source_links": 8523,
+    "batch_primary": 7,
+    "batch_links": 2
+  },
+  "runtime": {
+    "content": [
+      {
+        "type": "text",
+        "text": "## Runtime Logs\n\n**Project:** prj_hx17EShZxuDpZQBwnoAqdzsenm9b\n**Deployment:** dpl_BnHKLigg6mq3xdCNTJV4w5HVXbTP\n**Time range:** 2026-10-02T04:38:29.070Z → 2026-10-02T04:53:29.070Z\n\nNo logs found for the specified criteria."
+      }
+    ],
+    "isError": false
+  }
+}
