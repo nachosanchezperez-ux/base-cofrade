@@ -389,7 +389,7 @@ async function buildPublicSitemapSegmentEntries(segment) {
 
 const getCachedPublicSitemapSegmentEntries = unstable_cache(
   buildPublicSitemapSegmentEntries,
-  ['hilo-cofrade-public-sitemap-family-v1'],
+  ['hilo-cofrade-public-sitemap-family-v2'],
   { revalidate: 3600, tags: ['seo-sitemap'] }
 );
 
