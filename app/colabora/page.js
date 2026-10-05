@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { createContributionFormTicket, contributionReadiness } from '@/lib/contributions/security'
 import { socialMetadata } from '@/lib/seo'
 import ContributionForm from './ContributionForm'
+import { contributionContext } from '@/lib/contributions/context'
 import styles from './page.module.css';
 
 const title = 'Colabora con Hilo Cofrade'
@@ -34,8 +35,8 @@ function ClosedContributionsPage() {
           <span className={styles.eyebrow}>Colabora con Hilo Cofrade</span>
           <h1>Las aportaciones públicas aún no están abiertas</h1>
           <p>
-            La infraestructura permanece cerrada mientras se completan el corte
-            específico de privacidad, seguridad, Turnstile y QA.
+            Estamos preparando un canal seguro para recibir tus aportaciones.
+            Podrás utilizarlo cuando terminemos las comprobaciones necesarias.
           </p>
         </div>
       </header>
@@ -50,10 +51,11 @@ function ClosedContributionsPage() {
   )
 }
 
-export default function ColaboraPage() {
+export default async function ColaboraPage({ searchParams }) {
   const readiness = contributionReadiness()
   const isDeploymentPreview = process.env.VERCEL_ENV === 'preview'
   if (!readiness.enabled && !isDeploymentPreview) return <ClosedContributionsPage />
+  const context = contributionContext(await searchParams)
 
   const formTicket = readiness.enabled ? createContributionFormTicket() : ''
 
@@ -91,6 +93,8 @@ export default function ColaboraPage() {
             enabled={readiness.enabled}
             formTicket={formTicket}
             turnstileSiteKey={readiness.siteKey}
+            initialKind={context.kind}
+            initialPageUrl={context.pageUrl}
           />
 
           <aside className={styles.aside} aria-label="Condiciones de la aportación">

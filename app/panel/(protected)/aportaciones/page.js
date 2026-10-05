@@ -31,7 +31,7 @@ function safeExternalUrl(value) {
 
 function queryHref(query, id) {
   const params = new URLSearchParams()
-  for (const key of ['status', 'type', 'search']) {
+  for (const key of ['status', 'type', 'search', 'retention']) {
     if (query?.[key]) params.set(key, String(query[key]))
   }
   params.set('id', id)
@@ -46,6 +46,7 @@ export default async function PanelContributionsPage({ searchParams }) {
       status: query?.status,
       type: query?.type,
       search: query?.search,
+      retention: query?.retention,
       focusedId: String(query?.id || ''),
     }),
   ])
@@ -76,6 +77,7 @@ export default async function PanelContributionsPage({ searchParams }) {
         <label><span>Estado</span><select name="status" defaultValue={String(query?.status || '')}><option value="">Todos</option>{Object.entries(CONTRIBUTION_STATUS_LABELS).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label>
         <label><span>Tipo</span><select name="type" defaultValue={String(query?.type || '')}><option value="">Todos</option>{Object.entries(CONTRIBUTION_TYPE_LABELS).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label>
         <label><span>Buscar título</span><input name="search" defaultValue={String(query?.search || '')} maxLength={100} /></label>
+        <label><span>Conservación</span><select name="retention" defaultValue={query?.retention === 'due' ? 'due' : ''}><option value="">Todas</option><option value="due">Revisión de plazo vencida</option></select></label>
         <button className={styles.secondaryButton} type="submit">Filtrar</button>
       </form>
 
@@ -99,8 +101,9 @@ export default async function PanelContributionsPage({ searchParams }) {
           </div>
 
           <p className={localStyles.privacyNote}>Datos restringidos al equipo editorial. No copies el correo ni los archivos fuera del flujo necesario para revisar la aportación.</p>
+          <p className={localStyles.privacyNote}>Revisión de conservación: {formatDate(focused.expires_at)}. Marcar «Caducada» no elimina los datos ni los archivos. La supresión requiere el procedimiento de mantenimiento.</p>
 
-          {canEdit ? (
+          {canEdit && focused.status !== 'expired' ? (
             <form action={reviewContributionAction} className={localStyles.reviewForm}>
               <input type="hidden" name="contribution_id" value={focused.id} />
               <div className={localStyles.reviewGrid}>

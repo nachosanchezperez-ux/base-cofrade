@@ -1,6 +1,7 @@
 'use client'
 
-import { useActionState, useEffect, useState } from 'react'
+import { useActionState, useEffect, useRef, useState } from 'react'
+import { CONTRIBUTION_KINDS } from '@/lib/contributions/config'
 import Link from 'next/link'
 import Script from 'next/script'
 import { submitContributionAction } from './actions'
@@ -12,19 +13,31 @@ const MAX_TOTAL_FILE_BYTES = 10 * 1024 * 1024
 const ALLOWED_FILE_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp', 'application/pdf'])
 const TYPES = [
   ['correction', 'Corregir una ficha', 'Un dato que ya aparece en la web no es correcto o está incompleto.'],
-  ['new_record', 'Proponer información', 'Quieres documentar una ficha, un hecho o un contenido nuevo.'],
+  ['agenda', 'Añadir un acto a la agenda', 'Un culto, procesión, concierto u otra cita documentada.'],
+  ['music', 'Aportar información musical', 'Un acompañamiento, contrato, marcha o disco.'],
   ['media', 'Fotografías o documentos', 'Adjuntas imágenes propias/autorizadas, PDF o enlaces a otras fuentes.'],
   ['suggestion', 'Sugerencia general', 'Has encontrado una incidencia o propones mejorar la web.'],
 ]
 
-export default function ContributionForm({ enabled, formTicket, turnstileSiteKey }) {
+export default function ContributionForm({ enabled, formTicket, turnstileSiteKey, initialKind = 'correction', initialPageUrl = '' }) {
   const [state, formAction, pending] = useActionState(submitContributionAction, INITIAL_STATE)
-  const [type, setType] = useState('correction')
+  const [kind, setKind] = useState(initialKind)
+  const type = CONTRIBUTION_KINDS[kind]
+  const feedback = useRef(null)
+  const [draft, setDraft] = useState({ page_url: initialPageUrl })
+  function field(name) {
+    return { value: draft[name] || '', onChange: (event) => setDraft((previous) => ({ ...previous, [name]: event.target.value })) }
+  }
   const [fileMessage, setFileMessage] = useState('')
   const [hasPhotos, setHasPhotos] = useState(false)
 
   useEffect(() => {
-    if (state.status === 'error') window.turnstile?.reset?.()
+    if (state.status === 'error') {
+      window.turnstile?.reset?.()
+      setHasPhotos(false)
+      setFileMessage((previous) => previous ? 'Si adjuntaste archivos, selecciónalos de nuevo antes de reenviar.' : '')
+    }
+    if (state.status === 'error' || state.status === 'success') feedback.current?.focus()
   }, [state])
 
   function validateFiles(event) {
@@ -56,7 +69,7 @@ export default function ContributionForm({ enabled, formTicket, turnstileSiteKey
 
   if (state.status === 'success') {
     return (
-      <section className={styles.successCard} aria-live="polite">
+      <section className={styles.successCard} aria-live="polite" ref={feedback} tabIndex={-1}>
         <span className={styles.successMark} aria-hidden="true">✓</span>
         <span className={styles.eyebrow}>Aportación recibida</span>
         <h2>Gracias por ayudar a documentar Hilo Cofrade</h2>
@@ -83,10 +96,11 @@ export default function ContributionForm({ enabled, formTicket, turnstileSiteKey
           <span>El formulario está diseñado, pero los envíos seguirán bloqueados hasta activar la protección antirobot y la política de privacidad actualizada.</span>
         </div>
       ) : null}
-      {state.status === 'error' ? <div className={styles.errorNotice} role="alert">{state.message}</div> : null}
+      {state.status === 'error' ? <div className={styles.errorNotice} role="alert" ref={feedback} tabIndex={-1}>{state.message}</div> : null}
 
       <form action={formAction} className={styles.form} aria-busy={pending}>
         <input type="hidden" name="form_ticket" value={formTicket} />
+        <input type="hidden" name="contribution_type" value={type} />
         <label className={styles.trap} aria-hidden="true">
           No rellenar este campo
           <input name="website" tabIndex={-1} autoComplete="off" />
@@ -96,13 +110,13 @@ export default function ContributionForm({ enabled, formTicket, turnstileSiteKey
           <legend>¿Qué quieres enviar? *</legend>
           <div className={styles.typeGrid}>
             {TYPES.map(([value, label, copy]) => (
-              <label key={value} className={type === value ? styles.typeActive : ''}>
+              <label key={value} className={kind === value ? styles.typeActive : ''}>
                 <input
                   type="radio"
-                  name="contribution_type"
+                  name="contribution_kind"
                   value={value}
-                  checked={type === value}
-                  onChange={() => setType(value)}
+                  checked={kind === value}
+                  onChange={() => setKind(value)}
                   disabled={pending}
                 />
                 <span><strong>{label}</strong><small>{copy}</small></span>
@@ -114,15 +128,43 @@ export default function ContributionForm({ enabled, formTicket, turnstileSiteKey
         <div className={styles.fieldGrid}>
           <label className={styles.fieldWide}>
             <span>Título breve *</span>
-            <input name="title" required minLength={5} maxLength={140} disabled={pending} placeholder="Ej. Corrección de la fecha fundacional" />
+            <input name="title" {...field('title')} required minLength={5} maxLength={140} disabled={pending} placeholder="Ej. Corrección de la fecha fundacional" />
           </label>
           <label className={styles.fieldWide}>
             <span>URL de la ficha o página relacionada {type === 'correction' ? '*' : '(opcional)'}</span>
-            <input name="page_url" type="url" required={type === 'correction'} maxLength={2048} disabled={pending} placeholder="https://hilocofrade.es/…" />
+            <input name="page_url" {...field('page_url')} type="url" required={type === 'correction'} maxLength={2048} disabled={pending} placeholder="https://hilocofrade.es/…" />
           </label>
+          {kind === 'agenda' || kind === 'music' ? (
+            <label className={styles.fieldWide}>
+              <span>Hermandad o banda relacionada *</span>
+              <input name="related_entity" {...field('related_entity')} required maxLength={180} disabled={pending} />
+            </label>
+          ) : null}
+          {kind === 'agenda' ? (
+            <>
+              <label><span>Fecha del acto *</span><input name="event_date" {...field('event_date')} type="date" required disabled={pending} /></label>
+              <label><span>Hora (opcional)</span><input name="event_time" {...field('event_time')} type="time" disabled={pending} /></label>
+              <label><span>Lugar *</span><input name="event_place" {...field('event_place')} required maxLength={180} disabled={pending} /></label>
+              <label><span>Municipio *</span><input name="event_locality" {...field('event_locality')} required maxLength={180} disabled={pending} /></label>
+            </>
+          ) : null}
+          {kind === 'music' ? (
+            <>
+              <label><span>Asunto musical *</span>
+                <select name="music_topic" {...field('music_topic')} required disabled={pending}>
+                  <option value="" disabled>Selecciona un asunto</option>
+                  <option value="contract">Contrato o acompañamiento</option>
+                  <option value="march">Marcha</option>
+                  <option value="discography">Discografía</option>
+                  <option value="other">Otra información musical</option>
+                </select>
+              </label>
+              <label><span>Año (opcional)</span><input name="music_year" {...field('music_year')} type="number" min={1800} max={2100} disabled={pending} /></label>
+            </>
+          ) : null}
           <label className={styles.fieldWide}>
             <span>Explicación detallada *</span>
-            <textarea name="description" required minLength={30} maxLength={6000} rows={8} disabled={pending} placeholder="Indica qué dato debemos revisar, cuál sería la información correcta y por qué…" />
+            <textarea name="description" {...field('description')} required minLength={30} maxLength={6000} rows={8} disabled={pending} placeholder="Indica qué dato debemos revisar, cuál sería la información correcta y por qué…" />
             <small>Texto plano · entre 30 y 6.000 caracteres · no incluyas datos sensibles.</small>
           </label>
           <label className={styles.fieldWide}>
@@ -130,7 +172,7 @@ export default function ContributionForm({ enabled, formTicket, turnstileSiteKey
               Fuentes y documentos enlazados
               {type === 'new_record' ? ' (obligatorio si no adjuntas un archivo)' : ''}
             </span>
-            <textarea name="sources" rows={4} disabled={pending} placeholder={'https://web-oficial.es/…\nhttps://archivo-publico.es/documento.pdf'} />
+            <textarea name="sources" {...field('sources')} rows={4} disabled={pending} placeholder={'https://web-oficial.es/…\nhttps://archivo-publico.es/documento.pdf'} />
             <small>
               Una URL pública HTTP/HTTPS por línea · máximo 8. No abrimos previsualizaciones automáticas.
               {type === 'new_record' ? ' Para proponer información nueva, añade al menos una fuente o un archivo.' : ''}
@@ -145,17 +187,17 @@ export default function ContributionForm({ enabled, formTicket, turnstileSiteKey
                 <span>Seleccionar archivos</span>
                 <input name="attachments" type="file" accept="image/jpeg,image/png,image/webp,application/pdf,.pdf" multiple onChange={validateFiles} disabled={pending} />
                 <small>Hasta 3 archivos · JPG, PNG, WebP o PDF · 8 MB por archivo y 10 MB en total. Office, SVG, GIF y ZIP no se admiten.</small>
-                {fileMessage ? <em className={styles.fileMessage}>{fileMessage}</em> : null}
+                <em className={styles.fileMessage} role="status" aria-live="polite" aria-atomic="true">{fileMessage}</em>
               </label>
               {hasPhotos ? (
                 <>
                   <label>
                     <span>Autoría o crédito de las fotografías *</span>
-                    <input name="photo_credit" required maxLength={180} disabled={pending} placeholder="Nombre de la persona autora" />
+                    <input name="photo_credit" {...field('photo_credit')} required maxLength={180} disabled={pending} placeholder="Nombre de la persona autora" />
                   </label>
                   <label>
                     <span>Texto alternativo</span>
-                    <input name="photo_alt_text" maxLength={300} disabled={pending} placeholder="Qué aparece en la imagen" />
+                    <input name="photo_alt_text" {...field('photo_alt_text')} maxLength={300} disabled={pending} placeholder="Qué aparece en la imagen" />
                   </label>
                 </>
               ) : null}
@@ -175,11 +217,11 @@ export default function ContributionForm({ enabled, formTicket, turnstileSiteKey
           <div className={styles.fieldGrid}>
             <label>
               <span>Nombre o entidad</span>
-              <input name="contact_name" maxLength={120} autoComplete="name" disabled={pending} />
+              <input name="contact_name" {...field('contact_name')} maxLength={120} autoComplete="name" disabled={pending} />
             </label>
             <label>
               <span>Correo</span>
-              <input name="contact_email" type="email" maxLength={254} autoComplete="email" disabled={pending} />
+              <input name="contact_email" {...field('contact_email')} type="email" maxLength={254} autoComplete="email" disabled={pending} />
             </label>
           </div>
         </fieldset>
@@ -201,6 +243,7 @@ export default function ContributionForm({ enabled, formTicket, turnstileSiteKey
             data-action="public_contribution"
             data-theme="light"
             data-language="es"
+            data-size="compact"
           />
         ) : null}
 

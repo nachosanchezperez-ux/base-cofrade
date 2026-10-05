@@ -1,9 +1,10 @@
 'use server'
 
-import { createHash, randomUUID } from 'node:crypto'
+import { randomUUID } from 'node:crypto'
 import { headers } from 'next/headers'
-import { CONTRIBUTION_BUCKET, CONTRIBUTION_PRIVACY_VERSION } from '@/lib/contributions/config'
+import { CONTRIBUTION_BUCKET, CONTRIBUTION_LIMITS, CONTRIBUTION_PRIVACY_VERSION } from '@/lib/contributions/config'
 import { validateContributionAttachment } from '@/lib/contributions/attachment-validation'
+import { contributionSubmissionHash } from '@/lib/contributions/submission-hash'
 import {
   contributionFingerprint,
   contributionReadiness,
@@ -20,18 +21,6 @@ import {
 import { createAdminClient } from '@/lib/supabase/admin'
 
 const GENERIC_ERROR = 'No hemos podido recibir la aportación de forma segura. Espera unos minutos y vuelve a intentarlo.'
-
-function submissionHash(payload, attachments) {
-  const normalized = JSON.stringify({
-    type: payload.contributionType,
-    title: payload.title.toLocaleLowerCase('es-ES'),
-    description: payload.description,
-    pageUrl: payload.pageUrl,
-    sources: payload.sources,
-    attachments: attachments.map((attachment) => attachment.sha256),
-  })
-  return createHash('sha256').update(normalized).digest('hex')
-}
 
 async function removeUploadedAttachments(supabase, paths) {
   if (!paths.length) return
@@ -85,18 +74,12 @@ export async function submitContributionAction(_previousState, formData) {
 
     const attachments = []
     for (const file of payload.attachments) attachments.push(await validateContributionAttachment(file))
+    if (attachments.reduce((total, attachment) => total + attachment.byteSize, 0) > CONTRIBUTION_LIMITS.totalAttachmentBytes) {
+      throw new ContributionValidationError('Los archivos verificados pueden ocupar como máximo 10 MB en total.')
+    }
 
-    const contentHash = submissionHash(payload, attachments)
-    const duplicateThreshold = new Date(Date.now() - 24 * 60 * 60_000).toISOString()
-    const duplicate = await supabase
-      .from('contributions')
-      .select('id')
-      .eq('submission_hash', contentHash)
-      .gte('created_at', duplicateThreshold)
-      .limit(1)
-      .maybeSingle()
-    if (duplicate.error) throw new Error(`Duplicate check failed: ${duplicate.error.message}`)
-    if (duplicate.data) throw new Error('Recent duplicate contribution')
+    const contentHash = contributionSubmissionHash(payload, attachments)
+    // Database trigger serializes duplicate reservation + INSERT in one transaction.
 
     const created = await supabase
       .from('contributions')

@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "verify:contribution-pdf-build": "node scripts/verify-contribution-pdf-build.mjs",
+    "verify:contribution-http-build": "node scripts/verify-contribution-http-build.mjs",
     "test": "node --test",
     "start": "next start"
   },
@@ -15,6 +17,7 @@
     "@supabase/supabase-js": "^2.112.3",
     "@vercel/speed-insights": "^2.0.0",
     "next": "16.3.0",
+    "pdf-lib": "1.17.1",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "sharp": "0.35.3"

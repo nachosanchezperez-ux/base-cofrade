@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  serverExternalPackages: ['pdf-lib'],
   experimental: {
     staticGenerationRetryCount: 1,
     staticGenerationMaxConcurrency: 1,
