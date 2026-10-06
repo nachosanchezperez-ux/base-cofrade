@@ -1,6 +1,7 @@
 import { connection } from 'next/server'
 import HermandadesDirectoryV4 from '@/components/HermandadesDirectoryV4';
 import BrotherhoodPublicIndex from '@/components/BrotherhoodPublicIndex';
+import DirectoryIntroLink from '@/components/DirectoryIntroLink';
 import JsonLd from '@/components/JsonLd';
 import { filterIndexableBrotherhoods } from '@/lib/brotherhood-public-index';
 import { getHermandadesDirectory } from '@/lib/supabase/public-directory-cache';
@@ -65,7 +66,9 @@ export default async function HermandadesPage() {
         <span className="eyebrow">Enciclopedia cofrade</span>
         <h1 className="page-title">Hermandades y Agrupaciones Parroquiales</h1>
         <p className="page-lead">
-          Recorre las corporaciones de Sevilla capital y su provincia por su carácter, localidad y momento principal del calendario.
+          Recorre las corporaciones de Sevilla capital y su provincia por su carácter, localidad y momento principal del calendario. Consulta los próximos actos en la{' '}
+          <DirectoryIntroLink href="/agenda-cofrade">agenda cofrade</DirectoryIntroLink>{' '}
+          y descubre sus <DirectoryIntroLink href="/pasos">pasos procesionales</DirectoryIntroLink>.
         </p>
         <HermandadesDirectoryV4 hermandades={hermandades} />
         <BrotherhoodPublicIndex brotherhoods={indexableHermandades} />
