@@ -1,0 +1,20 @@
+[
+  {
+    "sample": "hc-preview-auth.html",
+    "visible_date_labels": [
+      "Lunes, 5 de octubre",
+      "Lunes, 5 de octubre",
+      "Lunes · 5 de octubre de 2026"
+    ],
+    "date_context": "capturado el 6 de octubre de 2026 UTC; primera respuesta autenticada y comprobación posterior"
+  },
+  {
+    "sample": "hc-preview-latest.html",
+    "visible_date_labels": [
+      "Martes, 6 de octubre",
+      "Martes, 6 de octubre",
+      "Martes · 6 de octubre de 2026"
+    ],
+    "date_context": "capturado el 6 de octubre de 2026 UTC; primera respuesta autenticada y comprobación posterior"
+  }
+]

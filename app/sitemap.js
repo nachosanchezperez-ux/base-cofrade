@@ -161,6 +161,40 @@ const entitySitemapConfig = {
   step: { segment: 'pasos', changeFrequency: 'monthly', priority: 0.7 },
 };
 
+const segmentHubPaths = {
+  hermandades: '/hermandades',
+  bandas: '/bandas',
+  imagenes: '/imagenes',
+  pasos: '/pasos',
+  marchas: '/marchas',
+  autores: '/autores',
+  crucetas: '/crucetas-musicales',
+  agenda: '/agenda-cofrade',
+};
+
+function latestEntryModified(entries = []) {
+  return entries.reduce((latest, entry) => {
+    const current = validLastModified(entry.lastModified);
+    if (!current) return latest;
+    return !latest || current > latest ? current : latest;
+  }, null);
+}
+
+function refreshSegmentHubLastModified(entries, segment) {
+  const hubPath = segmentHubPaths[segment];
+  if (!hubPath) return entries;
+
+  const hubUrl = absoluteUrl(hubPath);
+  const latest = latestEntryModified(entries.filter((entry) => entry.url !== hubUrl));
+  if (!latest) return entries;
+
+  return entries.map((entry) => (
+    entry.url === hubUrl
+      ? { ...entry, lastModified: latest }
+      : entry
+  ));
+}
+
 function validLastModified(value) {
   if (!value) return null;
   const date = new Date(value);
@@ -383,13 +417,15 @@ async function buildPublicSitemapSegmentEntries(segment) {
     entries.push(...authorEntries(authors));
   }
 
-  return [...new Map(sitemapEntriesForSegment(entries, segment)
+  const uniqueEntries = [...new Map(sitemapEntriesForSegment(entries, segment)
     .map((entry) => [entry.url, entry])).values()];
+
+  return refreshSegmentHubLastModified(uniqueEntries, segment);
 }
 
 const getCachedPublicSitemapSegmentEntries = unstable_cache(
   buildPublicSitemapSegmentEntries,
-  ['hilo-cofrade-public-sitemap-family-v1'],
+  ['hilo-cofrade-public-sitemap-family-v2'],
   { revalidate: 3600, tags: ['seo-sitemap'] }
 );
 
