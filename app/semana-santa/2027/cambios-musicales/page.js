@@ -6,6 +6,7 @@ import { getPublicMusicChanges2027 } from '@/lib/supabase/public-directory-cache
 import {
   musicChangeDaySlug,
   musicChangeKindLabel,
+  musicChangePositionLabel,
   normalizeMusicChangeText,
   SEMANA_SANTA_DAYS,
 } from '@/lib/music-changes'
@@ -126,7 +127,9 @@ function bandFamilyLabel(change) {
 }
 
 function bandLink(change, previous = false) {
-  const name = previous ? change.previousBandName : change.newBandName
+  const name = previous
+    ? change.previousBandDisplayName || change.previousBandName
+    : change.newBandDisplayName || change.newBandName
   const href = previous ? change.previousBandHref : change.newBandHref
   if (!name) return <strong>Sin acompañamiento anterior documentado</strong>
   return href ? <Link href={href}>{name}</Link> : <strong>{name}</strong>
@@ -163,7 +166,9 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
       change.stepName,
       change.position,
       change.previousBandName,
+      change.previousBandDisplayName,
       change.newBandName,
+      change.newBandDisplayName,
       bandFamilyLabel(change),
     ].filter(Boolean).join(' '))
 
@@ -321,33 +326,35 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
                       </header>
 
                       <div className={styles.clusterChanges}>
-                        {brotherhood.changes.map((change) => (
-                          <section
-                            className={styles.movement}
-                            id={`cambio-${change.id}`}
-                            key={change.id}
-                          >
-                            <div className={styles.movementLead}>
-                              <strong>
-                                {change.stepHref ? <Link href={change.stepHref}>{change.stepName}</Link> : change.stepName}
-                              </strong>
-                              <span>{musicChangeKindLabel(change.kind)} · {bandFamilyLabel(change)}</span>
-                              {change.position && change.position !== change.stepName ? <small>{change.position}</small> : null}
-                            </div>
+                        {brotherhood.changes.map((change) => {
+                          const positionLabel = musicChangePositionLabel(change)
+                          return (
+                            <section
+                              className={styles.movement}
+                              id={`cambio-${change.id}`}
+                              key={change.id}
+                            >
+                              <div className={styles.movementLead}>
+                                <strong>
+                                  {change.stepHref ? <Link href={change.stepHref}>{change.stepName}</Link> : change.stepName}
+                                </strong>
+                                {positionLabel ? <small>{positionLabel}</small> : null}
+                                <span>{musicChangeKindLabel(change.kind)} · {bandFamilyLabel(change)}</span>
+                              </div>
 
-                            <div className={styles.bandCell}>
-                              <span>2026</span>
-                              {bandLink(change, true)}
-                            </div>
-
-                            <div className={styles.arrow} aria-hidden="true">→</div>
-
-                            <div className={`${styles.bandCell} ${styles.bandCellNew}`}>
-                              <span>2027</span>
-                              {bandLink(change)}
-                            </div>
-                          </section>
-                        ))}
+                              <dl className={styles.bandComparison} aria-label="Acompañamiento musical en 2026 y 2027">
+                                <div className={styles.bandCell}>
+                                  <dt>2026</dt>
+                                  <dd>{bandLink(change, true)}</dd>
+                                </div>
+                                <div className={`${styles.bandCell} ${styles.bandCellNew}`}>
+                                  <dt>2027</dt>
+                                  <dd>{bandLink(change)}</dd>
+                                </div>
+                              </dl>
+                            </section>
+                          )
+                        })}
                       </div>
                     </article>
                   ))}
