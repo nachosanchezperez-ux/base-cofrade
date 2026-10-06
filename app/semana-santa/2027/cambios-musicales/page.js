@@ -9,6 +9,7 @@ import {
   musicChangePositionLabel,
   normalizeMusicChangeText,
   SEMANA_SANTA_DAYS,
+  sortMusicChanges,
 } from '@/lib/music-changes'
 import {
   breadcrumbJsonLd,
@@ -74,10 +75,12 @@ function groupBrotherhoodChanges(items = []) {
   const groups = new Map()
 
   for (const change of items) {
-    const key = change.brotherhoodSlug || change.brotherhoodName
+    const identity = change.brotherhoodEntityId || change.brotherhoodSlug || change.brotherhoodName
+    const key = `${change.day}:${identity}`
     if (!groups.has(key)) {
       groups.set(key, {
         key,
+        day: change.day,
         brotherhoodName: change.brotherhoodName,
         brotherhoodHref: change.brotherhoodHref,
         municipality: change.municipality,
@@ -92,12 +95,29 @@ function groupBrotherhoodChanges(items = []) {
 }
 
 function groupsFor(changes) {
-  return SEMANA_SANTA_DAYS.flatMap((day) => {
-    const items = changes.filter((change) => change.day === day.label)
-    return items.length
-      ? [{ ...day, items, brotherhoods: groupBrotherhoodChanges(items) }]
-      : []
-  })
+  const municipalities = new Map()
+
+  for (const change of sortMusicChanges(changes)) {
+    const municipality = change.municipality || ''
+    if (!municipalities.has(municipality)) municipalities.set(municipality, [])
+    municipalities.get(municipality).push(change)
+  }
+
+  return [...municipalities.entries()]
+    .sort(([a], [b]) => {
+      if (!a) return 1
+      if (!b) return -1
+      return a.localeCompare(b, 'es', { sensitivity: 'base' })
+    })
+    .map(([municipality, items]) => ({
+      slug: normalizeMusicChangeText(municipality).replaceAll(' ', '-') || 'sin-municipio',
+      label: municipality === 'Sevilla' ? 'Sevilla capital' : municipality || 'Municipio por confirmar',
+      items,
+      brotherhoodCount: new Set(items.map((change) => (
+        change.brotherhoodEntityId || change.brotherhoodSlug || change.brotherhoodName
+      ))).size,
+      brotherhoods: groupBrotherhoodChanges(items),
+    }))
 }
 
 function municipalityRanking(changes, limit = 6) {
@@ -185,8 +205,9 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
   const newBandCount = new Set(changes.map((item) => item.newBandSlug || item.newBandName)).size
   const lastUpdated = updatedLabel(changes)
   const municipalityTop = municipalityRanking(changes)
-  const groups = groupsFor(filtered)
   const hasFilters = Boolean(activeDay || activeScope || activeMunicipality || activeType || requestedQuery)
+  const allGroups = groupsFor(changes)
+  const groups = hasFilters ? groupsFor(filtered) : allGroups
 
   return (
     <div className={styles.page}>
@@ -199,7 +220,7 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
         path: PATH,
         name: title,
         description,
-        items: changes.map((change) => ({
+        items: allGroups.flatMap((group) => group.items).map((change) => ({
           name: `${change.brotherhoodName}: ${change.newBandName}`,
           path: `${PATH}#cambio-${change.id}`,
         })),
@@ -291,6 +312,7 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
           <div className={styles.resultBar} aria-live="polite">
             <strong>{filtered.length} {filtered.length === 1 ? 'cambio' : 'cambios'}</strong>
             <span>
+              Municipios A–Z ·{' '}
               {activeDay ? dayOptions.find((day) => day.slug === activeDay)?.label : 'Todas las jornadas'}
               {activeScope ? ` · ${activeScope === 'capital' ? 'Sevilla capital' : 'Provincia'}` : ''}
               {activeMunicipality ? ` · ${activeMunicipality}` : ''}
@@ -300,12 +322,12 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
         </section>
 
         {groups.length ? (
-          <div className={styles.dayGroups}>
+          <div className={styles.municipalityGroups}>
             {groups.map((group) => (
-              <section className={styles.dayGroup} key={group.slug} aria-labelledby={`jornada-${group.slug}`}>
-                <header className={styles.dayHeading}>
-                  <h2 id={`jornada-${group.slug}`}>{group.label}</h2>
-                  <span>{group.items.length} {group.items.length === 1 ? 'cambio' : 'cambios'} · {group.brotherhoods.length} {group.brotherhoods.length === 1 ? 'corporación' : 'corporaciones'}</span>
+              <section className={styles.municipalityGroup} key={group.slug} aria-labelledby={`municipio-${group.slug}`}>
+                <header className={styles.municipalityHeading}>
+                  <h2 id={`municipio-${group.slug}`}>{group.label}</h2>
+                  <span>{group.items.length} {group.items.length === 1 ? 'cambio' : 'cambios'} · {group.brotherhoodCount} {group.brotherhoodCount === 1 ? 'corporación' : 'corporaciones'}</span>
                 </header>
 
                 <div className={styles.brotherhoodList}>
@@ -319,7 +341,7 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
                               : brotherhood.brotherhoodName}
                           </h3>
                           <span>
-                            {brotherhood.scope === 'capital' ? 'Sevilla capital' : brotherhood.municipality}
+                            {brotherhood.day}
                             {brotherhood.changes.length > 1 ? ` · ${brotherhood.changes.length} cambios` : ''}
                           </span>
                         </div>
