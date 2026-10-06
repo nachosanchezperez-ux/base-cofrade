@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import OpenUpdatesButton from './OpenUpdatesButton'
 import styles from './HomeKnowledgeThreads.module.css'
 import polishStyles from './HomeResponsivePolish.module.css'
 
@@ -36,7 +37,11 @@ function ThreadStatus({ thread }) {
           {thread.activityStatus}
         </strong>
       ) : null}
-      {thread.dateLabel ? <time dateTime={thread.dateTime}>{thread.dateLabel}</time> : null}
+      {thread.dateLabel ? (
+        <time dateTime={thread.dateTime}>
+          {thread.dateVerb ? `${thread.dateVerb} ` : ''}{thread.dateVerb && /^(Hoy|Ayer)$/.test(thread.dateLabel) ? thread.dateLabel.toLowerCase() : thread.dateLabel}
+        </time>
+      ) : null}
     </span>
   )
 }
@@ -65,7 +70,7 @@ function LeadThread({ thread }) {
     : ''
 
   return (
-    <Link className={`${styles.leadCard} ${polishStyles.threadsLead}`} href={thread.href} data-analytics-destination-name={thread.title}>
+    <Link className={`${styles.leadCard} ${polishStyles.threadsLead}`} href={thread.href} prefetch={false} data-analytics-destination-name={thread.title} data-platform-update-id={thread.id}>
       <div className={styles.leadTopline}>
         <span className={styles.latest}><i aria-hidden="true" /> Más reciente</span>
         <ThreadStatus thread={thread} />
@@ -85,7 +90,7 @@ function LeadThread({ thread }) {
       <ThreadPath thread={thread} />
 
       <span className={`${styles.leadCta} ${polishStyles.threadsLeadCta}`}>
-        <span>{thread.cta}</span>
+        <span>{thread.cta?.replace(/\s*→\s*$/, '')}</span>
         <b aria-hidden="true">→</b>
       </span>
     </Link>
@@ -98,7 +103,7 @@ function CompactThread({ thread }) {
     : ''
 
   return (
-    <Link className={`${styles.compactCard} ${polishStyles.threadsCompact}`} href={thread.href} data-analytics-destination-name={thread.title}>
+    <Link className={`${styles.compactCard} ${polishStyles.threadsCompact}`} href={thread.href} prefetch={false} data-analytics-destination-name={thread.title} data-platform-update-id={thread.id}>
       <div className={styles.compactTopline}>
         <span className={styles.relation}>{thread.label}</span>
         <ThreadStatus thread={thread} />
@@ -132,7 +137,10 @@ export default function HomeKnowledgeThreads({ threads = [] }) {
             <span className={styles.eyebrow}>Conocimiento en movimiento</span>
             <h2>Últimos hilos incorporados</h2>
           </div>
-          <p>Lo último que ha crecido dentro de la enciclopedia, priorizando incorporaciones y relaciones distintas para que cada visita abra un camino nuevo.</p>
+          <div className={styles.headerActions}>
+            <p>Nuevos contenidos, cambios musicales y relaciones que ya puedes consultar en Hilo Cofrade.</p>
+            <OpenUpdatesButton className={styles.allUpdates} />
+          </div>
         </header>
 
         <div className={`${styles.layout} ${polishStyles.threadsLayout}`}>
