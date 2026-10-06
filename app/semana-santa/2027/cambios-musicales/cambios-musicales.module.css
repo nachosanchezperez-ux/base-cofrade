@@ -24,6 +24,16 @@
   gap: 20px;
 }
 
+.hero [data-site-breadcrumb] ol {
+  flex-wrap: wrap;
+  overflow-x: visible;
+  row-gap: 6px;
+}
+
+:global(#hc-app) .page:not(:global(#hc-panel)) .hero [data-site-breadcrumb] li > span {
+  font-size: 12px;
+}
+
 .heroCopy {
   max-width: 920px;
 }
@@ -375,6 +385,7 @@
 
 :global(#hc-app) .page:not(:global(#hc-panel)) .dayHeading h2 {
   margin: 0;
+  scroll-margin-top: 100px;
   font-size: var(--music-day);
   font-weight: 800;
   line-height: 1.2;
@@ -435,7 +446,7 @@
   min-width: 0;
   gap: 12px;
   align-items: start;
-  scroll-margin-top: 100px;
+  scroll-margin-top: 220px;
 }
 
 .movement + .movement {
@@ -777,6 +788,7 @@
   .movement {
     grid-template-columns: minmax(220px, .8fr) minmax(0, 1.8fr);
     gap: 24px;
+    scroll-margin-top: 160px;
   }
 
   .bandComparison {
