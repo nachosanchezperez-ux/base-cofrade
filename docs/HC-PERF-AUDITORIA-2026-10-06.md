@@ -2,6 +2,8 @@
 
 ## Decisión
 
+**Actualización posterior:** la propuesta ISR descrita en esta auditoría se ha sustituido por la corrección de datos/reloj documentada al final. Las 168 mediciones y el QA anterior conservan su SHA original; no certifican el código nuevo. NO-GO pendiente de las puertas restantes.
+
 **NO-GO para producción de la propuesta ISR de #1020.** No hay autorización de fusión ni despliegue productivo. Se conserva la candidata en borrador para revisión; no se presenta como corrección certificada. No se han cambiado consultas de Pasos/Marchas ni datos editoriales, ejecutado migraciones/índices, purgado producción o ampliado planes.
 
 ## Preflight y reconciliación
@@ -72,3 +74,28 @@ Riesgo principal de la candidata: servir día/estado de acto anterior hasta la r
 Si en una orden posterior se publicara esta candidata y apareciese una regresión, revertir únicamente su cambio en `app/page.js` para recuperar `await connection()` incondicional, mediante PR y build/preview; conservar cambios posteriores de main. No revertir migraciones ni contenido editorial. Este procedimiento no autoriza desplegar ahora.
 
 Antes de GO: separar el reloj/cálculo temporal de los datos reutilizables, comprobar medianoche/inicio/final sobre respuesta real y caché vencida en entorno aislado, demostrar invalidación desde Panel, completar QA responsive e interacciones y reproducir frío controlado de Paso/Marcha. La mejora de TTFB por sí sola no satisface esas puertas.
+
+
+## Corrección posterior · datos reutilizables y reloj por petición
+
+Se descarta la activación de ISR de toda la portada: `connection()` vuelve a ser incondicional. No se intenta convertir el MISS de HTML en HIT a costa de la actualidad. La cabecera y la snapshot reciben un único `now` por petición, en Europe/Madrid.
+
+`home-public-data-v22` conserva lecturas de contenido diario, candidatos de salidas, últimas incorporaciones, identidades visuales y contadores durante 60 s, con clave por día Madrid. No almacena la selección «en curso», las agrupaciones Hoy/Mañana ni el foco editorial temporal. Agenda se obtiene en paralelo a esa lectura y sigue reutilizando sus fuentes 300 s por día; su estado horario se calcula fuera de caché. El briefing se reutiliza por ID/fecha, 60 s. Las tres cachés participan en `home-public`, que ya invalida el Panel Hoy. No cambia ningún SQL, fuente, relación, metadato ni función editorial.
+
+La selección de próximas salidas deja de descartar `isPast` antes de evaluar el horario: una Gloria que empezó ayer puede seguir en la calle tras medianoche. Canceladas y celebradas no se reactivan. Se preserva la convención previa de minuto final inclusivo; al minuto siguiente desaparece del directo. Los lectores originales siguen aportando las fechas/horas y contenidos públicos; no se añade acceso de sesión.
+
+Esto mantiene la reutilización de consultas por visita y permite paralelizar la lectura de Agenda con los datos de portada. No se promete un porcentaje de mejora ni una caducidad editorial dura de 60 s: las lecturas siguen usando stale-while-revalidate. Lo que se recalcula en cada petición es el reloj sobre los datos disponibles. Tampoco implica actualización automática de una pestaña que permanece abierta sin nueva petición.
+
+### Pruebas de la corrección
+
+- **1473/1473 PASS** con `TZ=UTC npm test`; `npm run build` PASS y `git diff --check` PASS. Build sin configuración Supabase. Una primera compilación del worktree con node_modules enlazado fue rechazada por Turbopack; repetir con dependencias dentro del worktree completó el build.
+- `home-snapshot-clock.test.mjs` ejecuta el ensamblador real y `unstable_cache`/`IncrementalCache` de Next instalado, con fuentes de prueba aisladas y sin HTTP/Supabase. Usa un proveedor local de caché de Next, en memoria y sin flush a disco. Para comprobar STALE envejece el timestamp de la entrada leída; Next decide la revalidación y la ejecuta realmente.
+- Dos peticiones previas/posteriores al inicio comparten una lectura; el estado pasa a directo. La entrada vencida dispara revalidación. Medianoche de Madrid cambia la clave y promueve el besamanos del nuevo día manteniendo la salida nocturna. Final y minuto posterior cambian el estado sin nuevas consultas. `home-public` con expire=0 obliga a releer el contenido modificado en la fuente de prueba. Se comprueban banda/briefing y la exclusión de canceladas/celebradas.
+- Esto prueba el comportamiento de la caché local de Next y el ensamblado; **no** acredita propagación distribuida en Vercel, formulario/autorización del Panel ni escritura en una base de preview. No se escribe producción.
+- QA básico de escritorio anterior (HEAD `7d864de`, viewport 1363×936): siete rutas con contenido real, sin overflow horizontal observado; enlace Marcha → Cruceta funcional, 66 obras/80 interpretaciones. Móvil pendiente por falta de emulación en la API del navegador disponible.
+
+### Puertas restantes y reversión de esta corrección
+
+La PR permanece NO-GO hasta verificar preview/checks del nuevo SHA, comparar sus respuestas bajo condiciones equivalentes, validar edición real desde Panel sobre datos aislados y completar móvil/frío controlado de Pasos y Marchas. No hay optimización de fichas basada en una causa no reproducida.
+
+Reversión de esta corrección: revertir su commit conservando `connection()` incondicional como en producción; no restaurar la candidata ISR insegura de forma automática. No hay datos o migraciones que deshacer. Ninguna reversión se ejecuta en producción en esta orden.

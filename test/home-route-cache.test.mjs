@@ -4,26 +4,19 @@ import test from 'node:test'
 
 const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8')
 
-test('la Home vuelve a usar ISR sin desactivar el Full Route Cache', () => {
+test('el reloj de Home se renderiza por petición también con Supabase configurado', () => {
   const page = read('app/page.js')
-  const snapshot = read('lib/supabase/home-snapshot.js')
-
-  assert.match(page, /export const revalidate = 60/)
-  assert.match(page, /function hasPublicSupabaseConfig\(\)/)
-  assert.match(page, /NEXT_PUBLIC_SUPABASE_URL/)
-  assert.match(page, /NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY/)
-  assert.match(page, /if \(!hasPublicSupabaseConfig\(\)\) await connection\(\)/)
-  assert.ok(page.indexOf('if (!hasPublicSupabaseConfig()) await connection()') < page.indexOf('await getHomeSnapshot()'))
-  assert.match(snapshot, /unstable_cache/)
-  assert.match(snapshot, /revalidate:\s*60/)
-  assert.match(snapshot, /tags:\s*\['home-public'\]/)
+  assert.match(page, /^  await connection\(\)/m)
+  assert.doesNotMatch(page, /hasPublicSupabaseConfig/)
+  assert.ok(page.indexOf('await connection()') < page.indexOf('const now = new Date()'))
+  assert.match(page, /getTodayLabel\(now\)/)
+  assert.match(page, /await getHomeSnapshot\(now\)/)
 })
 
-test('la corrección queda acotada a la Home y conserva la protección P0 de Agenda', () => {
-  const home = read('app/page.js')
-  const agenda = read('app/agenda-cofrade/page.js')
-
-  assert.doesNotMatch(home, /^\s*await connection\(\)/m)
-  assert.match(home, /if \(!hasPublicSupabaseConfig\(\)\) await connection\(\)/)
-  assert.match(agenda, /^\s*await connection\(\)/m)
+test('Panel puede invalidar datos de portada, agenda y briefing con home-public', () => {
+  for (const path of ['lib/supabase/home-snapshot.js', 'lib/supabase/agenda-cofrade.js']) {
+    assert.match(read(path), /tags: \['home-public'\]/)
+  }
+  assert.match(read('app/panel/(protected)/hoy/actions.js'), /updateTag\('home-public'\)/)
+  assert.match(read('app/agenda-cofrade/page.js'), /^\s*await connection\(\)/m)
 })

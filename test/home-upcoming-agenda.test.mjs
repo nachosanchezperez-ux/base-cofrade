@@ -5,12 +5,12 @@ import test from 'node:test'
 const read = (path) => readFile(new URL(`../${path}`, import.meta.url), 'utf8')
 
 test('la agenda de Home reúne extraordinarias, Glorias, procesiones generales y romerías por fecha', async () => {
-  const loader = await read('lib/supabase/home-upcoming-agenda.js')
+  const loader = await read('lib/supabase/home-upcoming-agenda.js') + await read('lib/home-upcoming-selection.js')
 
   assert.match(loader, /getNavigableHomeExtraordinaryOutings/)
   assert.match(loader, /getGloryDirectory/)
   assert.match(loader, /getGeneralPublicOutings/)
-  assert.match(loader, /!item\.isCancelled && !item\.isPast/)
+  assert.match(loader, /!item\.isCancelled && item\.eventStatus !== 'held'/)
   assert.match(loader, /item\.liveState\.state !== 'done'/)
   assert.match(loader, /withProcessionLiveState/)
   assert.match(loader, /compareProcessionLiveItems/)
@@ -21,7 +21,7 @@ test('la agenda de Home reúne extraordinarias, Glorias, procesiones generales y
 
 test('la Home conserva una salida nocturna hasta su entrada real', async () => {
   const homeLoader = await read('lib/supabase/home.js')
-  const agendaLoader = await read('lib/supabase/home-upcoming-agenda.js')
+  const agendaLoader = await read('lib/supabase/home-upcoming-agenda.js') + await read('lib/home-upcoming-selection.js')
 
   assert.match(homeLoader, /extraordinary_outings_directory/)
   assert.match(homeLoader, /previousDateKey\(today\)/)
@@ -48,7 +48,7 @@ test('la Home permite un foco editorial previo sin quitar prioridad al directo',
   assert.match(snapshot, /getHomeEditorialFocus/)
   assert.match(snapshot, /liveFeaturedOuting/)
   assert.match(snapshot, /editorialFeaturedOutingId/)
-  assert.match(snapshot, /hilo-cofrade-home-public-snapshot-v21/)
+  assert.match(snapshot, /hilo-cofrade-home-public-data-v22/)
 })
 
 

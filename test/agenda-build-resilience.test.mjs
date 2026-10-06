@@ -88,7 +88,7 @@ test('la clave diaria no reutiliza flags de ayer', async () => {
   await fixture.getCachedAgendaSources('2026-09-24')
   await fixture.getCachedAgendaSources('2026-09-25')
   assert.equal(fixture.calls(), 12)
-  assert.match(read('lib/supabase/agenda-cofrade.js'), /getCachedAgendaSources\(madridDateKey\(\)\)/)
+  assert.match(read('lib/supabase/agenda-cofrade.js'), /getCachedAgendaSources\(madridDateKey\(now\)\)/)
 })
 
 test('connection precede las consultas y no se carga un calendario entero para un contador', () => {
