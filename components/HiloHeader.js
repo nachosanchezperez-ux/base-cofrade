@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import GlobalHiloSearch from './GlobalHiloSearch';
+import HiloUpdates from './HiloUpdates';
 import styles from './HiloHeader.module.css';
 
 const sections = [
@@ -66,6 +67,19 @@ export default function HiloHeader() {
     exploreRef.current?.removeAttribute('open');
     if (pathname !== '/') setActive(routeActive(pathname));
   }, [pathname]);
+
+  useEffect(() => {
+    const closeMenus = () => {
+      setOpen(false);
+      exploreRef.current?.removeAttribute('open');
+    };
+    window.addEventListener('hilo:open-updates', closeMenus);
+    window.addEventListener('hilo:open-search', closeMenus);
+    return () => {
+      window.removeEventListener('hilo:open-updates', closeMenus);
+      window.removeEventListener('hilo:open-search', closeMenus);
+    };
+  }, []);
 
   useEffect(() => {
     if (!open) return undefined;
@@ -171,11 +185,13 @@ export default function HiloHeader() {
             </details>
           </nav>
 
-          <GlobalHiloSearch />
-
-          <button className={`${styles.menuButton} ${open ? styles.menuOpen : ''}`} type="button" aria-label={open ? 'Cerrar menú' : 'Abrir menú'} aria-expanded={open} aria-controls="hilo-mobile-menu" onClick={() => setOpen((value) => !value)}>
-            {open ? '×' : '☰'}
-          </button>
+          <div className={styles.actions}>
+            <HiloUpdates />
+            <GlobalHiloSearch />
+            <button className={`${styles.menuButton} ${open ? styles.menuOpen : ''}`} type="button" aria-label={open ? 'Cerrar menú' : 'Abrir menú'} aria-expanded={open} aria-controls="hilo-mobile-menu" onClick={() => setOpen((value) => !value)}>
+              {open ? '×' : '☰'}
+            </button>
+          </div>
         </div>
         <div className={styles.accent} />
       </header>

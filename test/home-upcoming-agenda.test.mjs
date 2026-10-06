@@ -48,7 +48,7 @@ test('la Home permite un foco editorial previo sin quitar prioridad al directo',
   assert.match(snapshot, /getHomeEditorialFocus/)
   assert.match(snapshot, /liveFeaturedOuting/)
   assert.match(snapshot, /editorialFeaturedOutingId/)
-  assert.match(snapshot, /hilo-cofrade-home-public-snapshot-v21/)
+  assert.match(snapshot, /hilo-cofrade-home-public-snapshot-v22/)
 })
 
 

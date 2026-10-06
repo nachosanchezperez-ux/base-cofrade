@@ -40,6 +40,37 @@
   line-height: 1.6;
 }
 
+.headerActions {
+  display: grid;
+  justify-items: start;
+  gap: 8px;
+  min-width: 0;
+}
+
+.allUpdates {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border: 0;
+  color: #123a67;
+  background: transparent;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+
+.allUpdates:hover { text-decoration: underline; }
+
+.allUpdates:focus-visible {
+  border-radius: 4px;
+  outline: 3px solid #123a67;
+  outline-offset: 4px;
+}
+
 .layout {
   display: grid;
   gap: 12px;
