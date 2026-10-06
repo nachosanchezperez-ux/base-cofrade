@@ -296,7 +296,12 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
             <p>{changes.length} cambios confirmados entre Sevilla capital y la provincia.</p>
           </div>
 
-          <form className={styles.searchPanel} action={PATH} method="get">
+          <form
+            key={filterHref({ day: activeDay, scope: activeScope, municipality: activeMunicipality, type: activeType, query: requestedQuery })}
+            className={styles.searchPanel}
+            action={PATH}
+            method="get"
+          >
             <label className={styles.searchField}>
               <span>Buscar</span>
               <input type="search" name="q" defaultValue={requestedQuery} placeholder="Hermandad, banda o paso…" autoComplete="off" />
