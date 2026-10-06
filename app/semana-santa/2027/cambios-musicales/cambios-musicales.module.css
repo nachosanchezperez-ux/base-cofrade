@@ -5,7 +5,7 @@
   --music-soft: #f3f7fb;
   --music-display: 30px;
   --music-heading: 22px;
-  --music-day: 24px;
+  --music-municipality: 24px;
   --music-brotherhood: 19px;
   min-width: 0;
   background: #fff;
@@ -360,19 +360,19 @@
   text-underline-offset: 3px;
 }
 
-.dayGroups,
+.municipalityGroups,
 .brotherhoodList,
 .clusterChanges {
   display: grid;
   min-width: 0;
 }
 
-.dayGroup {
+.municipalityGroup {
   min-width: 0;
   padding-top: 30px;
 }
 
-.dayHeading {
+.municipalityHeading {
   display: flex;
   min-width: 0;
   flex-wrap: wrap;
@@ -383,17 +383,17 @@
   border-bottom: 2px solid #c7d5e2;
 }
 
-:global(#hc-app) .page:not(:global(#hc-panel)) .dayHeading h2 {
+:global(#hc-app) .page:not(:global(#hc-panel)) .municipalityHeading h2 {
   margin: 0;
   scroll-margin-top: 100px;
-  font-size: var(--music-day);
+  font-size: var(--music-municipality);
   font-weight: 800;
   line-height: 1.2;
   letter-spacing: -.025em;
   text-wrap: pretty;
 }
 
-:global(#hc-app) .page:not(:global(#hc-panel)) .dayHeading > span {
+:global(#hc-app) .page:not(:global(#hc-panel)) .municipalityHeading > span {
   color: var(--music-muted);
   font-size: 13px;
   font-weight: 600;
@@ -683,7 +683,7 @@
     padding-inline: 10px;
   }
 
-  .dayHeading {
+  .municipalityHeading {
     display: grid;
   }
 
@@ -696,7 +696,7 @@
   .page {
     --music-display: 40px;
     --music-heading: 24px;
-    --music-day: 28px;
+    --music-municipality: 28px;
     --music-brotherhood: 21px;
   }
 
@@ -757,7 +757,7 @@
 @media (min-width: 900px) {
   .page {
     --music-display: 44px;
-    --music-day: 30px;
+    --music-municipality: 30px;
     --music-brotherhood: 22px;
   }
 
@@ -777,7 +777,7 @@
     text-align: right;
   }
 
-  .dayGroup {
+  .municipalityGroup {
     padding-top: 36px;
   }
 
