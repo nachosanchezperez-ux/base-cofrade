@@ -6,6 +6,7 @@ import {
   canonicalSemanaSantaDay,
   musicChangeDaySlug,
   musicChangeKind,
+  musicChangePositionLabel,
   sortMusicChanges,
 } from '../lib/music-changes.js'
 
@@ -51,6 +52,57 @@ test('ordena los cambios por jornada y después por Hermandad', () => {
   )
 })
 
+test('compacta la repetición exacta del paso conservando la orientación', () => {
+  assert.equal(musicChangePositionLabel({
+    stepName: 'Paso de palio de Nuestra Señora de la Esperanza de Triana',
+    position: 'Tras el paso de palio de Nuestra Señora de la Esperanza de Triana',
+  }), 'Tras el paso')
+  assert.equal(musicChangePositionLabel({
+    stepName: 'Paso de Nuestra Señora de la Esperanza',
+    position: 'Tras Nuestra Señora de la Esperanza',
+  }), 'Tras el paso')
+  assert.equal(musicChangePositionLabel({
+    stepName: 'Paso del Santísimo Cristo de la Salud',
+    position: 'Tras el Santísimo Cristo de la Salud',
+  }), 'Tras el paso')
+  assert.equal(musicChangePositionLabel({
+    stepName: 'Paso de Cristo',
+    position: 'Delante del paso de Cristo',
+  }), 'Delante del paso')
+  assert.equal(musicChangePositionLabel({
+    stepName: 'Paso de Cristo',
+    position: 'Detrás del paso de Cristo',
+  }), 'Detrás del paso')
+  assert.equal(musicChangePositionLabel({
+    stepName: 'Cruz de Guía',
+    position: 'Cruz de Guía',
+  }), '')
+  assert.equal(musicChangePositionLabel(), '')
+})
+
+test('conserva posiciones distintas, acompañamientos compartidos y matices de recorrido', () => {
+  const cases = [
+    {
+      stepName: 'Paso de Nuestro Padre Jesús del Gran Poder',
+      position: 'Tras el paso del Señor del Gran Poder',
+    },
+    {
+      stepName: 'Paso de Nuestro Padre Jesús de la Pasión',
+      position: 'Acompañamiento compartido tras Nuestro Padre Jesús de la Pasión · Bondad',
+    },
+    {
+      stepName: 'Paso de Nuestra Señora de la Esperanza',
+      position: 'Tras Nuestra Señora de la Esperanza durante la ida',
+    },
+    { stepName: 'Paso de Cristo', position: 'Cruz de Guía' },
+    { stepName: 'Paso de Cristo', position: 'Tras el paso de otro titular' },
+    { stepName: '', position: 'Cruz de Guía' },
+  ]
+  for (const change of cases) {
+    assert.equal(musicChangePositionLabel(change), change.position)
+  }
+})
+
 test('la sección se alimenta del grafo musical y limita el alcance a Sevilla', async () => {
   const loader = await read('lib/supabase/music-changes.js')
   assert.match(loader, /music_accompaniment_periods/)
@@ -82,7 +134,6 @@ test('Cambios musicales 2027 queda descubrible e indexable', async () => {
 
 test('el especial 2027 prioriza listado, filtros y contenido SEO útil', async () => {
   const page = await read('app/semana-santa/2027/cambios-musicales/page.js')
-  const styles = await read('app/semana-santa/2027/cambios-musicales/cambios-musicales.module.css')
 
   assert.match(page, /Cambios musicales 2027/)
   assert.match(page, /Cambios de bandas en la Semana Santa de Sevilla 2027/)
@@ -93,11 +144,6 @@ test('el especial 2027 prioriza listado, filtros y contenido SEO útil', async (
   assert.doesNotMatch(page, /Panorama 2027/)
   assert.doesNotMatch(page, /Preguntas frecuentes/)
   assert.doesNotMatch(page, /<main\b/)
-  assert.match(styles, /\.searchPanel[\s\S]*flex-wrap: wrap/)
-  assert.match(styles, /\.movement[\s\S]*grid-template-columns: minmax\(170px, \.9fr\) minmax\(0, 1fr\) 30px minmax\(0, 1fr\)/)
-  assert.match(styles, /\.heroCopy h1[\s\S]*font-size: clamp\(38px, 5vw, 58px\)/)
-  assert.match(styles, /@media \(max-width: 700px\)[\s\S]*\.movement[\s\S]*grid-template-columns: minmax\(0, 1fr\) 28px minmax\(0, 1fr\)/)
-  assert.match(styles, /@media \(max-width: 520px\)[\s\S]*\.movement[\s\S]*grid-template-columns: 1fr/)
 })
 
 
@@ -118,19 +164,11 @@ test('los cambios de una misma Hermandad siguen agrupados sin duplicar cabeceras
 })
 
 
-test('el listado recupera resumen territorial y mejora legibilidad de escritorio', async () => {
+test('el listado conserva el resumen territorial', async () => {
   const page = await read('app/semana-santa/2027/cambios-musicales/page.js')
-  const styles = await read('app/semana-santa/2027/cambios-musicales/cambios-musicales.module.css')
 
   assert.match(page, /function municipalityRanking\(changes, limit = 6\)/)
   assert.match(page, /Municipios con más cambios/)
   assert.match(page, /cambios confirmados/)
   assert.match(page, /municipalityTop\.map/)
-  assert.match(styles, /\.summaryStrip/)
-  assert.match(styles, /\.municipalityList/)
-  assert.match(styles, /@media \(min-width: 901px\)[\s\S]*\.clusterHeader h3[\s\S]*font-size: clamp\(29px, 2\.15vw, 32px\)/)
-  assert.match(styles, /@media \(min-width: 901px\)[\s\S]*\.movementLead strong[\s\S]*font-size: clamp\(16px, 1\.15vw, 17px\)/)
-  assert.match(styles, /@media \(min-width: 901px\)[\s\S]*\.bandCell > a,[\s\S]*font-size: clamp\(16px, 1\.15vw, 17px\)/)
-  assert.match(styles, /@media \(min-width: 901px\)[\s\S]*\.movementLead > span[\s\S]*font-size: 11px/)
-  assert.match(styles, /@media \(min-width: 901px\)[\s\S]*\.movementLead small[\s\S]*font-size: 13px/)
 })
