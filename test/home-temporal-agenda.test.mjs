@@ -122,3 +122,82 @@ test('la Home da jerarquía visual a los horarios de la Agenda en móvil', () =>
   assert.match(styles, /\.schedule strong\{color:#123a67;font-size:14px;font-weight:900/)
   assert.match(styles, /font-variant-numeric:tabular-nums/)
 })
+
+
+test('la transición de una procesión respeta el inicio y el final documentados', () => {
+  const fixture = [
+    item({
+      key: 'boundary',
+      category: 'processions',
+      date: '2026-09-28',
+      startTime: '19:00',
+      endTime: '21:00',
+    }),
+  ]
+
+  const before = buildHomeTemporalAgenda({
+    today: '2026-09-28',
+    now: new Date('2026-09-28T16:59:00Z'),
+    items: fixture,
+  })
+  assert.equal(before.mode, 'today')
+
+  const started = buildHomeTemporalAgenda({
+    today: '2026-09-28',
+    now: new Date('2026-09-28T17:00:00Z'),
+    items: fixture,
+  })
+  assert.equal(started.mode, 'live')
+
+  const atEnd = buildHomeTemporalAgenda({
+    today: '2026-09-28',
+    now: new Date('2026-09-28T19:00:00Z'),
+    items: fixture,
+  })
+  assert.equal(atEnd.mode, 'live')
+
+  const finished = buildHomeTemporalAgenda({
+    today: '2026-09-28',
+    now: new Date('2026-09-28T19:01:00Z'),
+    items: fixture,
+  })
+  assert.equal(finished.liveItems.length, 0)
+  assert.equal(finished.focusItems.length, 0)
+})
+
+test('una procesión sin fecha de regreso documentada puede cruzar medianoche', () => {
+  const temporal = buildHomeTemporalAgenda({
+    today: '2026-09-29',
+    now: new Date('2026-09-28T22:15:00Z'),
+    items: [
+      item({
+        key: 'overnight',
+        category: 'processions',
+        date: '2026-09-28',
+        startTime: '23:30',
+        endTime: '01:30',
+      }),
+    ],
+  })
+
+  assert.equal(temporal.mode, 'live')
+  assert.deepEqual(temporal.focusItems.map((entry) => entry.key), ['overnight'])
+})
+
+test('el cambio de día usa Europe/Madrid y promueve las citas de la nueva jornada', () => {
+  const temporal = buildHomeTemporalAgenda({
+    now: new Date('2026-09-28T22:01:00Z'),
+    items: [
+      item({
+        key: 'new-day',
+        category: 'devotions',
+        date: '2026-09-29',
+        startTime: '08:00',
+      }),
+    ],
+  })
+
+  assert.equal(temporal.today, '2026-09-29')
+  assert.equal(temporal.mode, 'today')
+  assert.deepEqual(temporal.focusItems.map((entry) => entry.key), ['new-day'])
+})

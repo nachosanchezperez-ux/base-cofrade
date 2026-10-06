@@ -11,7 +11,7 @@ export const metadata = {
   twitter: { title: HOME_TITLE, description: DEFAULT_DESCRIPTION },
 }
 
-function getTodayLabel() {
+function getTodayLabel(now) {
   const formatter = new Intl.DateTimeFormat('es-ES', {
     timeZone: 'Europe/Madrid',
     weekday: 'long',
@@ -19,15 +19,17 @@ function getTodayLabel() {
     month: 'long',
     year: 'numeric',
   })
-  const parts = formatter.formatToParts(new Date())
+  const parts = formatter.formatToParts(now)
   const value = (type) => parts.find((part) => part.type === type)?.value || ''
   const weekday = value('weekday')
   return `${weekday.charAt(0).toUpperCase()}${weekday.slice(1)} · ${value('day')} de ${value('month')} de ${value('year')}`
 }
 
 export default async function HomePage() {
+  // El reloj se resuelve por petición; solo las lecturas reutilizables se cachean.
   await connection()
-  const today = getTodayLabel()
+  const now = new Date()
+  const today = getTodayLabel(now)
   const {
     todayContent,
     upcomingAgenda,
@@ -36,7 +38,7 @@ export default async function HomePage() {
     editorialFeaturedOutingId,
     discoveryThreads,
     exploreStats,
-  } = await getHomeSnapshot()
+  } = await getHomeSnapshot(now)
 
   return (
     <HomePageV2

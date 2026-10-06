@@ -1,0 +1,128 @@
+[
+  {
+    "file": "preview-reuse-0-5.html",
+    "title": "Hilo Cofrade | Enciclopedia cofrade de Sevilla y provincia",
+    "h1": 1,
+    "canonical": "https://hilocofrade.es",
+    "robots": "index, follow",
+    "jsonld": 2,
+    "jsonld_errors": []
+  },
+  {
+    "file": "preview-reuse-1-5.html",
+    "title": "El Baratillo (Sevilla): titulares y pasos · Hilo Cofrade",
+    "h1": 1,
+    "canonical": "https://hilocofrade.es/hermandades/el-baratillo",
+    "robots": "index, follow",
+    "jsonld": 5,
+    "jsonld_errors": []
+  },
+  {
+    "file": "preview-reuse-2-5.html",
+    "title": "Banda del Sol · Hilo Cofrade",
+    "h1": 1,
+    "canonical": "https://hilocofrade.es/bandas/banda-del-sol",
+    "robots": "index, follow",
+    "jsonld": 4,
+    "jsonld_errors": []
+  },
+  {
+    "file": "preview-reuse-3-5.html",
+    "title": "Paso de misterio de Bendición y Esperanza · Hilo Cofrade",
+    "h1": 1,
+    "canonical": "https://hilocofrade.es/pasos/paso-misterio-bendicion-esperanza",
+    "robots": "index, follow",
+    "jsonld": 5,
+    "jsonld_errors": []
+  },
+  {
+    "file": "preview-reuse-4-5.html",
+    "title": "Jesús Presentado al Pueblo · Hilo Cofrade",
+    "h1": 1,
+    "canonical": "https://hilocofrade.es/imagenes/jesus-presentado-al-pueblo",
+    "robots": "index, follow",
+    "jsonld": 5,
+    "jsonld_errors": []
+  },
+  {
+    "file": "preview-reuse-5-5.html",
+    "title": "Aurora, Reina de la Mañana · Marcha… · Hilo Cofrade",
+    "h1": 1,
+    "canonical": "https://hilocofrade.es/marchas/aurora-reina-manana-pablo-ojeda",
+    "robots": "index, follow",
+    "jsonld": 4,
+    "jsonld_errors": []
+  },
+  {
+    "file": "preview-reuse-6-5.html",
+    "title": "San Gonzalo · Lunes Santo 2026: cruceta de… · Hilo Cofrade",
+    "h1": 1,
+    "canonical": "https://hilocofrade.es/crucetas-musicales/virgen-salud-san-gonzalo-lunes-santo-2026",
+    "robots": "index, follow",
+    "jsonld": 4,
+    "jsonld_errors": []
+  },
+  {
+    "file": "production-reuse-0-5.html",
+    "title": "Hilo Cofrade | Enciclopedia cofrade de Sevilla y provincia",
+    "h1": 1,
+    "canonical": "https://hilocofrade.es",
+    "robots": "index, follow",
+    "jsonld": 2,
+    "jsonld_errors": []
+  },
+  {
+    "file": "production-reuse-1-5.html",
+    "title": "El Baratillo (Sevilla): titulares y pasos · Hilo Cofrade",
+    "h1": 1,
+    "canonical": "https://hilocofrade.es/hermandades/el-baratillo",
+    "robots": "index, follow",
+    "jsonld": 5,
+    "jsonld_errors": []
+  },
+  {
+    "file": "production-reuse-2-5.html",
+    "title": "Banda del Sol · Hilo Cofrade",
+    "h1": 1,
+    "canonical": "https://hilocofrade.es/bandas/banda-del-sol",
+    "robots": "index, follow",
+    "jsonld": 4,
+    "jsonld_errors": []
+  },
+  {
+    "file": "production-reuse-3-5.html",
+    "title": "Paso de misterio de Bendición y Esperanza · Hilo Cofrade",
+    "h1": 1,
+    "canonical": "https://hilocofrade.es/pasos/paso-misterio-bendicion-esperanza",
+    "robots": "index, follow",
+    "jsonld": 5,
+    "jsonld_errors": []
+  },
+  {
+    "file": "production-reuse-4-5.html",
+    "title": "Jesús Presentado al Pueblo · Hilo Cofrade",
+    "h1": 1,
+    "canonical": "https://hilocofrade.es/imagenes/jesus-presentado-al-pueblo",
+    "robots": "index, follow",
+    "jsonld": 5,
+    "jsonld_errors": []
+  },
+  {
+    "file": "production-reuse-5-5.html",
+    "title": "Aurora, Reina de la Mañana · Marcha… · Hilo Cofrade",
+    "h1": 1,
+    "canonical": "https://hilocofrade.es/marchas/aurora-reina-manana-pablo-ojeda",
+    "robots": "index, follow",
+    "jsonld": 4,
+    "jsonld_errors": []
+  },
+  {
+    "file": "production-reuse-6-5.html",
+    "title": "San Gonzalo · Lunes Santo 2026: cruceta de… · Hilo Cofrade",
+    "h1": 1,
+    "canonical": "https://hilocofrade.es/crucetas-musicales/virgen-salud-san-gonzalo-lunes-santo-2026",
+    "robots": "index, follow",
+    "jsonld": 4,
+    "jsonld_errors": []
+  }
+]
