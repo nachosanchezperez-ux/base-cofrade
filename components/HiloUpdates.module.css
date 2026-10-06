@@ -230,6 +230,22 @@
 
 .cta b { font-size: 19px; }
 
+/* Keep this dialog's reading sizes above the legacy global 14 px rules. */
+:global(#hc-app) .panel .summary {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+:global(#hc-app) .panel .retry {
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+:global(#hc-app) .panel .close {
+  font-size: 28px;
+  line-height: 1;
+}
+
 @media (max-width: 859px) {
   .panel {
     inset: 80px 12px auto auto;
