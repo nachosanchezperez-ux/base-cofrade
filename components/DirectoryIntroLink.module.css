@@ -1,0 +1,18 @@
+.link {
+  color: var(--wine);
+  font-size: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 0.06em;
+  text-underline-offset: 0.15em;
+}
+
+.link:hover {
+  color: var(--wine-dark);
+}
+
+.link:focus-visible {
+  border-radius: 2px;
+  outline: 2px solid var(--wine);
+  outline-offset: 3px;
+}
