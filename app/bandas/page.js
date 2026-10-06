@@ -1,5 +1,6 @@
 import { connection } from 'next/server'
 import { Suspense } from 'react'
+import Link from 'next/link'
 import BandDirectoryFacets from '@/components/BandDirectoryFacets'
 import JsonLd from '@/components/JsonLd'
 import RelationalEntityDirectory from '@/components/RelationalEntityDirectory'
@@ -49,6 +50,11 @@ export default async function BandasPage() {
         <h1 className="page-title">Directorio de bandas</h1>
         <p className="page-lead">
           Formaciones conectadas con hermandades, pasos, salidas, responsables y patrimonio musical.
+        </p>
+        <p>
+          <Link className="button button-ghost" href="/acompanamientos-musicales" style={{ fontSize: '16px', gap: '10px' }}>
+            Consultar acompañamientos por banda <span aria-hidden="true">→</span>
+          </Link>
         </p>
         <BandDirectoryFacets bands={bands} />
         <Suspense fallback={<RelationalEntityDirectory items={items} kind="band" />}>
