@@ -99,3 +99,8 @@ Esto mantiene la reutilización de consultas por visita y permite paralelizar la
 La PR permanece NO-GO hasta verificar preview/checks del nuevo SHA, comparar sus respuestas bajo condiciones equivalentes, validar edición real desde Panel sobre datos aislados y completar móvil/frío controlado de Pasos y Marchas. No hay optimización de fichas basada en una causa no reproducida.
 
 Reversión de esta corrección: revertir su commit conservando `connection()` incondicional como en producción; no restaurar la candidata ISR insegura de forma automática. No hay datos o migraciones que deshacer. Ninguna reversión se ejecuta en producción en esta orden.
+
+
+## Postflight de la corrección
+
+La medición del código `fc7bcd54` está cerrada en [HC-PERF-CLOCK-MEDICION-2026-10-06.md](./HC-PERF-CLOCK-MEDICION-2026-10-06.md): 168 intentos, 163 HTTP 200 y 5 fallos de transporte. CI SUCCESS y preview READY. La mediana de portada observada es mayor que producción; no se acredita una mejora de velocidad y se mantiene NO-GO. Se verificó el contenido de las siete rutas y la actualidad de los doce HTML de portada de preview. Persisten móvil, aislamiento para Panel y frío controlado. Este apartado sustituye los pendientes de preview/checks y nueva tabla indicados arriba; no altera la evidencia histórica ISR.
