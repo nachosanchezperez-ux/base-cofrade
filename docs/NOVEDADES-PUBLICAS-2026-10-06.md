@@ -2,10 +2,12 @@
 
 ## Estado y alcance
 
-Implementación en `feat/novedades-publicas-20261006`, pendiente de preview y QA de navegador.
+PR **#1098**, rama `feat/novedades-publicas-20261006`: **preview verificada en escritorio**, con límites de QA indicados abajo.
+Código `bcfac4b1a18f2227562b63cce867beaf05688d30`; despliegue `dpl_8NEbokAbaBadxDRcU6gms41XkTPm` **READY**.
+[Preview verificada](https://base-cofrade-lgokze1pd-desdeel-arenal.vercel.app/).
 Objetivo: hacer visibles las incorporaciones recientes desde cualquier página pública.
 La petición inicial toma como ejemplo el cambio musical de la Calle Real de Castilleja.
-Este documento no certifica publicación en producción ni una decisión GO definitiva.
+Este corte registra el código y la QA previa a la integración; el cierre productivo se registra en la [PR #1098](https://github.com/nachosanchezperez-ux/base-cofrade/pull/1098).
 
 ## Contrato funcional
 
@@ -81,18 +83,27 @@ Ese fallback conserva los hilos anteriores y la cuarta tarjeta de Hoy sin presen
 | --- | --- |
 | Suite completa de pruebas, ejecutada por el responsable de implementación | **1.477/1.477 PASS** |
 | Build de producción | **PASS** |
+| CI `verify` de la PR #1098 | **PASS** |
 | Auditoría independiente de código | Realizada: contrato, foco, almacenamiento, fechas, errores y selección de portada |
 | Fechas en frontera de año y cambio de hora de Madrid | Comprobaciones puntuales con Node correctas |
-| Incidencias detectadas durante revisión | Corregidas: flecha duplicada en panel/portada y conservación de la cuarta tarjeta de Hoy |
-| Preview del cambio | **Pendiente** |
-| QA visual y funcional en navegador | **Pendiente** |
+| Incidencias detectadas durante revisión | Corregidas: flecha duplicada, conservación de la cuarta tarjeta de Hoy y regla global que reducía el resumen a 14 px |
+| Preview del cambio | **READY**, sobre el SHA indicado arriba |
+| QA visual y funcional | CUA en escritorio **1363 × 936 px**; captura final inspeccionada |
+| Contenido mostrado | **10 avisos y 3 entradas de portada**; Calle Real primero y Utrera segundo |
+| Navegación desde Calle Real | **PASS**: abre el cambio y su tarjeta anclada queda visible |
+| Teclado y cierre | **PASS**: Escape, clic fuera, Tab/Shift+Tab dentro del panel y devolución del foco |
+| Apertura desde portada y paso al buscador | **PASS**: Ctrl+K abre Search y su campo recibe el foco al asentarse |
+| Estado de lectura | Origen nuevo: `unread=true` → `false` al abrir; la recarga del origen anterior conserva `false` |
+| Estilos calculados tras la corrección final | Resumen/fecha **16 px**, h3 **18 px**, h2 **25 px**, cierre **28 px** en **44 × 44 px**; sin desbordamiento observado |
 
-Agent-browser y Chrome están disponibles, pero su arranque local falla al crear sockets:
-`Operation not permitted (os error 1)`. No se ha sustituido esa comprobación por un supuesto PASS.
-Quedan por comprobar en preview: carga real, diez novedades, tres entradas de portada y enlace de Calle Real;
-anchuras de 320, 390, 430, 768, 1024, 1366 y 1600 px; foco, Escape, cierre exterior y Ctrl+K;
-ausencia de desbordamiento, texto del panel de 16 px, controles de 44 px y persistencia tras recarga.
-Los estados de error, vacío, reintento y almacenamiento denegado requieren evidencia de ejecución adicional.
+La verificación CUA anterior sí se ejecutó; no equivale a una matriz de anchuras ni a prueba en teléfono físico.
+Agent-browser/Chrome locales no arrancaron por `Operation not permitted (os error 1)` al crear sockets.
+El navegador remoto disponible no ofrecía capacidad de redimensionado; no se ejecutaron las siete anchuras previstas.
+La revisión móvil se limita al CSS y al cálculo de cabecera a 320 px:
+logo 144 + tres controles de 44 + dos separaciones de 6 + separación de 8 = **296 px**, espacio interior disponible.
+Ese cálculo no sustituye una medición de renderizado en móvil.
+Carga simulada, error, vacío, reintento y almacenamiento denegado se revisaron en código, sin inyectarlos en navegador.
+La reaparición del indicador por una revisión nueva y la sincronización entre pestañas también quedan sin QA de navegador.
 
 ## Límites y convivencia
 
@@ -103,4 +114,4 @@ La edición actual cubre las tres fuentes descritas; no anuncia automáticamente
 Es una novedad dentro de la web, sin notificaciones push, suscripciones ni envíos a otras aplicaciones.
 La PR **#1020** coincide en `lib/supabase/home-snapshot.js`: reconciliar su evolución sin adoptar su trabajo de rendimiento.
 La PR **#1097** puede coincidir en documentación de estado; comprobar esa convivencia antes de integrar.
-Este corte no modifica `docs/ESTADO-PROYECTO.md`; el estado canónico se actualizará con la evidencia de preview y la decisión final.
+El estado canónico recoge esta preview y sus límites; la PR #1098 conserva la evidencia posterior de integración y producción.
