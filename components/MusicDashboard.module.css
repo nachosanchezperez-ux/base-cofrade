@@ -80,7 +80,7 @@
 .donutRow { display: flex; align-items: center; gap: 24px; margin-top: 24px; }
 .donut { flex: 0 0 46%; max-width: 195px; position: relative; aspect-ratio: 1; min-width: 0; }
 .donut svg { width: 100%; display: block; }
-.donut circle { fill: none; stroke-width: 15; }
+.donut circle { fill: none; stroke-width: 15px; }
 .donutTrack { stroke: var(--soft); }
 .donutProvince { stroke: var(--province); }
 .donutCapital { stroke: var(--capital); }
@@ -102,7 +102,8 @@
 .histogramBars > div { display: flex; flex-direction: column; align-items: center; min-width: 0; }
 .histogramBars strong { font-size: 16px; font-variant-numeric: tabular-nums; }
 .histogramBars b { font-size: 13px; margin-top: 8px; }
-.histogramBars small { font-size: 10px; color: var(--muted); margin-top: 5px; }
+/* The heading already names the unit. Repeating it in each narrow bin overlaps. */
+.histogramBars small { display: none; }
 .histogramArea { display: flex; align-items: end; height: 80px; width: 80%; }
 .histogramArea span { width: 100%; background: var(--capital); border-radius: 7px 7px 0 0; }
 .perspective { display: grid; grid-template-columns: 1.1fr 1.6fr; gap: 12px 26px; align-items: center; margin-top: 20px; }
@@ -209,6 +210,5 @@
   .perspective > dl { grid-template-columns: 1fr; }
   .perspective dt { min-height: auto; }
   .histogramBars { gap: 7px; }
-  .histogramBars small { font-size: 9px; }
 }
 @media (prefers-reduced-motion: reduce) { .dashboard * { scroll-behavior: auto; } }
