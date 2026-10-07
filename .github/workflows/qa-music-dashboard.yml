@@ -1,0 +1,47 @@
+name: Music dashboard review
+on:
+  push:
+    branches: ['qa/panel-musical-*']
+permissions:
+  contents: read
+jobs:
+  dashboard-review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      TZ: UTC
+      NEXT_TELEMETRY_DISABLED: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Preserve installed guides and source for review
+        run: |
+          mkdir -p qa-evidence/framework-guides qa-evidence/baseline
+          find node_modules/next/dist/docs -type f \( -name '*page*' -o -name '*css*' -o -name '*link*' -o -name '*server-and-client*' \) -exec cp {} qa-evidence/framework-guides/ \;
+          tar -czf qa-evidence/source.tgz app components lib docs scripts tests AGENTS.md package.json package-lock.json next.config.mjs jsconfig.json 2>/dev/null || test -s qa-evidence/source.tgz
+          curl --fail --max-time 35 --retry 1 -sS 'https://hilocofrade.es/acompanamientos-musicales' -o qa-evidence/baseline/2026.html
+          curl --fail --max-time 35 --retry 1 -sS 'https://hilocofrade.es/acompanamientos-musicales?temporada=2027' -o qa-evidence/baseline/2027.html
+      - name: Test dashboard and existing application
+        if: ${{ hashFiles('lib/music-dashboard.js') != '' }}
+        run: |
+          npm test > qa-evidence/tests.log 2>&1
+          npm run build > qa-evidence/build.log 2>&1
+      - name: Prepare isolated browser runner
+        if: ${{ hashFiles('scripts/qa-music-dashboard.py') != '' }}
+        run: |
+          python -m venv "$RUNNER_TEMP/dashboard-qa"
+          "$RUNNER_TEMP/dashboard-qa/bin/pip" install playwright==1.57.0 beautifulsoup4==4.13.4
+          "$RUNNER_TEMP/dashboard-qa/bin/playwright" install --with-deps chromium webkit
+      - name: Verify candidate with public baseline data, no production writes
+        if: ${{ hashFiles('scripts/qa-music-dashboard.py') != '' }}
+        run: "$RUNNER_TEMP/dashboard-qa/bin/python scripts/qa-music-dashboard.py"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: music-dashboard-review
+          path: qa-evidence
+          retention-days: 1
