@@ -88,7 +88,8 @@ def browser_qa():
                             with page.expect_download() as dl:page.get_by_role('button',name='Exportar CSV',exact=True).click()
                             dest=OUT/f'{engine}-{width}-{year}-all.csv';dl.value.save_as(str(dest));records=list(csv.reader(io.StringIO(dest.read_text(encoding='utf-8-sig')),delimiter=';'))
                             assert len(records)-1==snapshots[str(year)]['bandsCount']
-                            total_column=records[0].index('Total')
+                            assert records[0]==['Temporada','Banda','Formación','Sevilla capital','Resto de la provincia','Total documentado']
+                            total_column=records[0].index('Total documentado')
                             assert sum(int(row[total_column]) for row in records[1:])==snapshots[str(year)]['totals']['total']
                             page.locator('select[name="ambito"]').select_option('province');expect(page.locator('[data-kpi="capital"]')).to_have_text('0');no_overflow()
                             page.go_back(wait_until='domcontentloaded');expect(page.locator('select[name="ambito"]')).to_have_value('')
