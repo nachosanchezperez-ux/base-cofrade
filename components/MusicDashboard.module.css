@@ -212,3 +212,15 @@
   .histogramBars { gap: 7px; }
 }
 @media (prefers-reduced-motion: reduce) { .dashboard * { scroll-behavior: auto; } }
+
+/* Capital-focused presentation; the all-territory view retains its existing layout. */
+.capitalCharts .ranking { grid-row: auto; }
+.capitalCharts { align-items: start; }
+.extraFilters { grid-column: 1 / -1; border-top: 1px solid var(--line); padding-top: 4px; }
+.extraFilterFields { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 14px; padding-block: 10px; }
+.dayList li + li { margin-top: 3px; }
+.dayList .track { height: 6px; }
+.dashboard button[aria-pressed="true"] { background: var(--soft); box-shadow: inset 3px 0 var(--capital); padding-left: 10px; }
+.capitalTable thead th:first-child { width: 52%; }
+@media (min-width: 1280px) { .filters { grid-template-columns: 1fr 1fr 1.6fr 1.2fr; } }
+@media (max-width: 767px) { .capitalTable .dataRow { grid-template-columns: repeat(4,minmax(0,1fr)); } .extraFilterFields { grid-template-columns: 1fr; } .capitalTable .mobileLabel { min-height: 36px; display: flex; align-items: center; justify-content: center; } }

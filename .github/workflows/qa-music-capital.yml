@@ -1,0 +1,47 @@
+name: Sevilla capital dashboard review
+on:
+  push:
+    branches: ['ui/panel-musical-sevilla-*']
+permissions:
+  contents: read
+jobs:
+  capital-review:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    env:
+      TZ: UTC
+      NEXT_TELEMETRY_DISABLED: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Tests and build of exact candidate
+        run: |
+          mkdir -p qa-capital
+          git rev-parse HEAD > qa-capital/commit.txt
+          npm test > qa-capital/tests.log 2>&1
+          npm run build > qa-capital/build.log 2>&1
+      - name: Isolated browser dependencies
+        run: |
+          python -m venv "$RUNNER_TEMP/capital-qa"
+          "$RUNNER_TEMP/capital-qa/bin/pip" install playwright==1.57.0
+          "$RUNNER_TEMP/capital-qa/bin/playwright" install --with-deps chromium webkit
+      - name: Audited public baseline for runner-only adapter
+        run: "$RUNNER_TEMP/capital-qa/bin/python scripts/qa-music-capital.py snapshot"
+      - name: Compiled component review
+        run: |
+          npm run build > qa-capital/fixture-build.log 2>&1
+          npm start -- --port 3100 > qa-capital/server.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 40); do curl -sf http://127.0.0.1:3100/acompanamientos-musicales > /dev/null && break; sleep 1; done
+          "$RUNNER_TEMP/capital-qa/bin/python" scripts/qa-music-capital.py browser
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: music-capital-review
+          path: qa-capital
+          retention-days: 3
