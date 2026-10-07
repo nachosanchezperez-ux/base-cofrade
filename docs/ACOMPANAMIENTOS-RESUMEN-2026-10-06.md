@@ -53,5 +53,24 @@ Sin DML, DDL, migraciones, cambios RLS ni dependencias nuevas. #1097, #1086, #10
 
 - Auditoría independiente del lector público, cálculo y datos reales: GO, con dos ajustes incorporados para excluir actos ajenos a Semana Santa y unir un snapshot de paso con su ID inequívoco.
 - 15 pruebas nuevas de comportamiento PASS: temporadas, futuros, fechas exactas, exclusiones, territorio, identidad, deduplicación, tramos, ambigüedad y orden municipal.
-- La compilación, el conjunto completo y la evidencia de preview/producción se registrarán en la PR de `feat/resumen-acompanamientos-20261006`.
-- El visor responsive temporal solo se usa en preview y se retira antes de integrar.
+- Compilación PASS y 1.494 pruebas en UTC PASS en el primer corte. La evidencia de integración y despliegue se registra en la PR #1104.
+- El visor responsive temporal se ha retirado del resultado final.
+
+## Actualización y límite de verificación · 7/10/2026
+
+Se incorpora `main` `32b9cd9da6713fe2fab6be86a62fdb2cdd2e4ef3` sin conflictos, conservando las actualizaciones independientes de #1105–#1108. Las 1.499 pruebas del conjunto integrado pasan en UTC. Este frente no vuelve a aplicar sus operaciones SQL.
+
+El archivo musical pasa a 550 periodos publicados por actualizaciones editoriales realizadas en paralelo. Una nueva lectura y el HTML de la preview confirman este corte:
+
+| Temporada | Capital | Resto de la provincia | Total | Bandas con cifra | Vínculos por revisar |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 2026 | 142 | 176 | 318 | 139 | 0 |
+| Avance 2027 | 12 | 48 | 60 | 44 | 190 |
+
+La respuesta SSR de 2026 devuelve las 139 identidades esperadas: cada fila coincide con el cálculo auditado, la suma es 318 y el número de acompañamientos de cada desglose coincide con su cifra. La búsqueda de Santa Ana en el avance devuelve 3 acompañamientos en la capital, junto a sus vínculos por revisar. Formulario GET, temporada seleccionada, canonical y robots se comprueban en el HTML servido. Las pruebas de filtros y el postflight del despliegue final se registran en #1104.
+
+La respuesta completa del avance contiene las 44 bandas, 60 acompañamientos y 190 vínculos por revisar esperados. El estado vacío devuelve 200 y Limpiar conserva la temporada en su enlace; el listado de cambios mantiene 44 anclas únicas y su acceso a la nueva zona. Son comprobaciones SSR, no clics de navegador.
+
+La comprobación de búsqueda detectó que el nombre formal de la BM María Santísima de la Victoria omitía «Las Cigarreras». La búsqueda incluye ahora su ruta pública, donde consta ese nombre habitual. Una prueba de regresión protege el alias, los acentos y los guiones; las **16 pruebas específicas** pasan. La validación final de este ajuste se realiza en la nueva preview y CI de #1104.
+
+**QA visual pendiente:** la herramienta de navegador agota su espera tanto al consultar la página como al reiniciar la sesión (dos intentos de 300 segundos). No se ha observado un bloqueo del sitio ni se atribuye a Vercel. Se verifican código, datos, HTML servido, pruebas, compilación y despliegue; esto no acredita una revisión visual responsive, de teclado ni de interacción hidratada. No hay screenshot de esta nueva zona. El límite queda registrado y no se declara certificación visual completa.

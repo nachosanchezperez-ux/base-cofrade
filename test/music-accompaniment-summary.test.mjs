@@ -1,7 +1,19 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 
-import { buildMusicAccompanimentSummary } from '../lib/music-accompaniment-summary.js'
+import { buildMusicAccompanimentSummary, musicAccompanimentBandMatchesQuery } from '../lib/music-accompaniment-summary.js'
+
+test('la búsqueda encuentra el nombre habitual de Las Cigarreras en su ruta pública', () => {
+  const band = {
+    name: 'Banda de Música María Santísima de la Victoria',
+    href: '/bandas/banda-musica-maria-santisima-victoria-las-cigarreras',
+  }
+  assert.equal(musicAccompanimentBandMatchesQuery(band, 'Las Cigarreras'), true)
+  assert.equal(musicAccompanimentBandMatchesQuery(band, 'María Santísima'), true)
+  assert.equal(musicAccompanimentBandMatchesQuery(band, 'las-cigarreras'), true)
+  assert.equal(musicAccompanimentBandMatchesQuery(band, 'Santa Ana'), false)
+  assert.equal(musicAccompanimentBandMatchesQuery(band, ''), true)
+})
 
 function period(overrides = {}) {
   return {

@@ -4,6 +4,7 @@ import JsonLd from '@/components/JsonLd'
 import SiteBreadcrumb from '@/components/SiteBreadcrumb'
 import { musicChangePositionLabel } from '@/lib/music-changes'
 import { getPublicMusicAccompanimentSummary } from '@/lib/supabase/public-directory-cache'
+import { musicAccompanimentBandMatchesQuery } from '@/lib/music-accompaniment-summary'
 import {
   breadcrumbJsonLd,
   collectionPageJsonLd,
@@ -32,15 +33,6 @@ const SORT_OPTIONS = [
 
 function parameter(value) {
   return String(Array.isArray(value) ? value[0] || '' : value || '')
-}
-
-function normalized(value) {
-  return String(value || '')
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLocaleLowerCase('es')
-    .replace(/\s+/g, ' ')
-    .trim()
 }
 
 function filterHref({ year = 2026, query = '', type = '', order = 'nombre' } = {}) {
@@ -153,10 +145,9 @@ export default async function AcompanamientosMusicalesPage({ searchParams } = {}
   ])).values()].sort((first, second) => first.label.localeCompare(second.label, 'es'))
   const activeType = typeOptions.some((type) => type.key === requestedType) ? requestedType : ''
   const activeOrder = SORT_OPTIONS.some((order) => order.key === requestedOrder) ? requestedOrder : 'nombre'
-  const normalizedQuery = normalized(query)
   const matchingBands = bands.filter((band) => (
     (!activeType || bandTypeKey(band) === activeType)
-    && (!normalizedQuery || normalized(band.name).includes(normalizedQuery))
+    && musicAccompanimentBandMatchesQuery(band, query)
   ))
   const recordedBands = matchingBands.filter((band) => band.total > 0).sort(compareBands(activeOrder))
   const pendingBands = matchingBands.filter((band) => band.pendingCount > 0)
