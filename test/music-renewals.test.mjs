@@ -109,3 +109,10 @@ test('incluye una renovación expresada como hasta 2028 aunque no cite 2027', ()
     notes: 'La formación fue renovada hasta 2028.',
   })), true)
 })
+
+
+test('reconoce la forma verbal renueva', () => {
+  assert.equal(isExplicitMusicRenewalForYear(period({
+    notes: 'La formación renueva su acompañamiento para el Miércoles Santo de 2027.',
+  })), true)
+})
