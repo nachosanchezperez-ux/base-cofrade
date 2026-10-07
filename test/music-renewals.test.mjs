@@ -87,3 +87,25 @@ test('construye la lectura sin convertirla en cambio', () => {
   assert.equal(result[0].renewalLabel, 'Continuidad confirmada para 2027')
   assert.equal(result[0].scope, 'capital')
 })
+
+
+test('excluye una continuidad que sigue pendiente de confirmación', () => {
+  assert.equal(isExplicitMusicRenewalForYear(period({
+    notes: 'La última renovación cubre 2025 y 2026; continuidad desde 2027 pendiente de confirmación.',
+  })), false)
+})
+
+test('excluye un Rosario aunque la Hermandad tenga jornada penitencial', () => {
+  assert.equal(isExplicitMusicRenewalForYear(period({
+    day: 'Lunes Santo',
+    outingType: 'Rosario de la Aurora',
+    notes: 'Acuerdo renovado en diciembre de 2025 por varios años.',
+  })), false)
+})
+
+test('incluye una renovación expresada como hasta 2028 aunque no cite 2027', () => {
+  assert.equal(isExplicitMusicRenewalForYear(period({
+    yearTo: null,
+    notes: 'La formación fue renovada hasta 2028.',
+  })), true)
+})
