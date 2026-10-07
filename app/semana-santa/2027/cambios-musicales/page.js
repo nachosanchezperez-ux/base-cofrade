@@ -22,7 +22,7 @@ import styles from './cambios-musicales.module.css'
 export const revalidate = 300
 
 const PATH = '/semana-santa/2027/cambios-musicales'
-const title = 'Cambios de bandas en la Semana Santa de Sevilla 2027'
+const title = 'Música de la Semana Santa de Sevilla 2027: cambios y renovaciones'
 const description = 'Música de la Semana Santa de Sevilla 2027: cambios de bandas y renovaciones confirmadas en Sevilla y su provincia, con cada acuerdo relacionado con su Hermandad, jornada y paso.'
 
 const BAND_TYPES = [
@@ -37,7 +37,7 @@ export async function generateMetadata({ searchParams } = {}) {
     title,
     description,
     ...socialMetadata({
-      title: 'Cambios de bandas · Semana Santa de Sevilla 2027',
+      title: 'Música 2027 · Cambios y renovaciones · Semana Santa de Sevilla',
       description,
       path: PATH,
     }),
@@ -218,7 +218,7 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
       <JsonLd data={breadcrumbJsonLd([
         { name: 'Inicio', path: '/' },
         { name: 'Semana Santa 2027', path: PATH },
-        { name: 'Cambios musicales', path: PATH },
+        { name: 'Música 2027', path: PATH },
       ])} />
       <JsonLd data={collectionPageJsonLd({
         path: PATH,
@@ -242,7 +242,7 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
             items={[
               { label: 'Inicio', href: '/' },
               { label: 'Semana Santa 2027' },
-              { label: 'Cambios musicales' },
+              { label: 'Música 2027' },
             ]}
             tone="dark"
             showAccent={false}
