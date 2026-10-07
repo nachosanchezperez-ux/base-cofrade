@@ -1,0 +1,26 @@
+name: Prepare Sevilla capital dashboard
+on:
+  push:
+    branches: ['ui/panel-musical-sevilla-20261008']
+    paths: ['scripts/prepare-music-capital.py', '.github/workflows/prepare-music-capital.yml']
+permissions:
+  contents: write
+jobs:
+  prepare:
+    if: github.ref == 'refs/heads/ui/panel-musical-sevilla-20261008'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+      - name: Apply guarded presentation patch to this branch only
+        run: |
+          python scripts/prepare-music-capital.py
+          git config user.name 'nachosanchezperez-ux'
+          git config user.email '277694990+nachosanchezperez-ux@users.noreply.github.com'
+          git add components/MusicDashboard.js components/MusicDashboard.module.css app/acompanamientos-musicales/page.js docs/ESTADO-PROYECTO.md
+          git rm scripts/prepare-music-capital.py .github/workflows/prepare-music-capital.yml
+          git commit -m 'feat: centra el panel musical en Sevilla capital'
+          git push origin HEAD:refs/heads/ui/panel-musical-sevilla-20261008
+          git rev-parse HEAD
