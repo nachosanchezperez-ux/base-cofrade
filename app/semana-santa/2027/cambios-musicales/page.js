@@ -251,6 +251,9 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
               <span><strong>{newBandCount}</strong> formaciones entrantes</span>
               {lastUpdated ? <span>Actualizado <strong>{lastUpdated}</strong></span> : null}
             </div>
+            <Link className={styles.accompanimentLink} href="/acompanamientos-musicales?temporada=2027">
+              Acompañamientos por banda · Avance de 2027 <span aria-hidden="true">→</span>
+            </Link>
           </div>
         </div>
       </header>
