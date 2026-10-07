@@ -1,0 +1,31 @@
+name: QA acompannamientos responsive
+on:
+  push:
+    branches: [qa/acompanamientos-responsive-20261007]
+    paths:
+      - scripts/qa-acompanamientos-responsive.py
+      - .github/workflows/qa-acompanamientos-responsive.yml
+permissions:
+  contents: read
+jobs:
+  browser-qa:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Install isolated browser test dependency
+        run: python3 -m pip install playwright==1.57.0
+      - name: Install test browsers
+        run: python3 -m playwright install --with-deps chromium webkit
+      - name: Inspect public production without data writes
+        run: python3 scripts/qa-acompanamientos-responsive.py
+      - name: Keep evidence for review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: acompanamientos-responsive-evidence
+          path: qa-evidence/
+          retention-days: 1
+          if-no-files-found: warn
