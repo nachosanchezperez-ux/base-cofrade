@@ -1,5 +1,6 @@
 """Public data snapshot, isolated compiled-component review; no credentials or data writes."""
 import csv, io, json, re, sys, urllib.request
+from datetime import datetime, timezone
 from pathlib import Path
 OUT=Path('qa-capital'); OUT.mkdir(exist_ok=True)
 
@@ -22,6 +23,7 @@ def snapshot():
         audit[year]={'capital':len(capital),'bands':sum(any(i['scope']=='capital' for i in b['items']) for b in s['bands']),'pendingCapital':len(pending),'byDay':{day:sum(i['day']==day for i in capital) for day in sorted(set(i['day'] for i in capital))},'pendingByDay':{day:sum(i['day']==day for i in pending) for day in sorted(set(i['day'] for i in pending))}}
     (OUT/'public-summary.json').write_text(json.dumps(summaries,ensure_ascii=False),encoding='utf-8')
     (OUT/'capital-audit.json').write_text(json.dumps(audit,ensure_ascii=False,indent=2),encoding='utf-8')
+    (OUT/'snapshot-time.txt').write_text(datetime.now(timezone.utc).isoformat())
     Path('lib/__qa-capital-fixture.js').write_text("import { readFileSync } from 'node:fs'\nexport async function getPublicMusicAccompanimentSummary(year) { return JSON.parse(readFileSync('qa-capital/public-summary.json','utf8'))[year] }\n")
     p=Path('app/acompanamientos-musicales/page.js');original=p.read_text();(OUT/'server-page-original.js').write_text(original)
     assert original.count('@/lib/supabase/public-directory-cache')==1
@@ -51,7 +53,11 @@ def browser_qa():
                         assert page.locator('select[name="municipio"]').count()==0
                         def no_overflow():assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'),'horizontal overflow'
                         no_overflow();page.screenshot(path=str(OUT/f'{engine}-{width}-{year}-overview.png'))
-                        page.locator('#bandas-musicales').scroll_into_view_if_needed();page.screenshot(path=str(OUT/f'{engine}-{width}-{year}-charts.png'))
+                        if width==1366:page.screenshot(path=str(OUT/f'{engine}-{width}-{year}-full.png'),full_page=True)
+                        page.locator('#bandas-musicales').scroll_into_view_if_needed();page.evaluate('scrollBy(0,-100)');page.screenshot(path=str(OUT/f'{engine}-{width}-{year}-charts.png'))
+                        page.locator('#jornadas-musicales').screenshot(path=str(OUT/f'{engine}-{width}-{year}-jornadas.png'))
+                        first_detail=page.locator('#tabla-musical details').first
+                        first_detail.locator('summary').click();expect(first_detail).to_have_attribute('open','');no_overflow();first_detail.locator('summary').click()
                         if width in (390,1366):
                             reset=lambda:page.get_by_role('button',name='Restablecer filtros',exact=True).first.click()
                             advanced=page.locator('details').filter(has=page.locator('select[name="jornada"]')).first
@@ -63,7 +69,8 @@ def browser_qa():
                             expect(page.locator('[data-kpi="total"]')).to_have_text(str(expected))
                             page.reload(wait_until='domcontentloaded');expect(page.locator('[data-music-dashboard]')).to_have_attribute('data-hydrated','true');expect(page.locator('select[name="jornada"]')).to_have_value('Martes Santo');expect(page.locator('[data-kpi="total"]')).to_have_text(str(expected))
                             reset();expect(page.locator('select[name="temporada"]')).to_have_value(str(year));expect(page.locator('select[name="ambito"]')).to_have_value('capital')
-                            page.get_by_role('button',name='Cruz de guía',exact=True).click()
+                            # The accessible button name includes its numeric count.
+                            page.locator('#posiciones-musicales').get_by_role('button',name=re.compile(r'^Cruz de guía\b')).click()
                             expect(page.locator('[data-kpi="steps"]')).to_have_text('0')
                             total=int(page.locator('[data-kpi="total"]').inner_text());expect(page.locator('[data-kpi="guides"]')).to_have_text(str(total))
                             page.locator('select[name="seccion"]').select_option('juvenil');no_overflow();reset()
@@ -72,7 +79,7 @@ def browser_qa():
                             total=int(page.locator('[data-kpi="total"]').inner_text())
                             page.locator('#tabla-musical summary').first.focus();page.keyboard.press('Enter');expect(page.locator('#tabla-musical details').first).to_have_attribute('open','')
                             assert page.locator('#tabla-musical tbody li').count()==total
-                            no_overflow();page.screenshot(path=str(OUT/f'{engine}-{width}-{year}-detail.png'))
+                            no_overflow();page.locator('#tabla-musical').scroll_into_view_if_needed();page.evaluate('scrollBy(0,-100)');page.screenshot(path=str(OUT/f'{engine}-{width}-{year}-detail.png'))
                             reset();page.locator('select[name="ambito"]').select_option('')
                             expect(page.locator('[data-kpi="total"]')).to_have_text(str(snapshots[str(year)]['totals']['total']))
                             assert 'ambito=todos' in page.url
