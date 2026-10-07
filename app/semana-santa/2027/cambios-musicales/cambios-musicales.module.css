@@ -734,7 +734,7 @@
 }
 
 :global(#hc-app) .page:not(:global(#hc-panel)) .renewalCard > strong,
-:global(#hc-app) .page:not(:global(#hc-panel)) .renewalCard > strong > a {
+:global(#hc-app) .page:not(:global(#hc-panel)) .renewalBandLink {
   min-width: 0;
   overflow-wrap: anywhere;
   color: var(--music-ink);
@@ -743,7 +743,7 @@
   line-height: 1.45;
 }
 
-.renewalCard > strong > a:hover {
+.renewalBandLink:hover {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
