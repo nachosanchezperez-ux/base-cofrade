@@ -1,12 +1,13 @@
-"""Read-only, bounded browser QA of the public accompaniment directory.
-Run: pip install playwright==1.57.0 && playwright install --with-deps chromium webkit
-No login, private data, production writes, fabricated content or CSS overrides.
-The workflow is restricted to its dedicated QA branch and uses a read-only token.
+"""Bounded read-only browser QA of public production, with genuine screenshots.
+Uses Playwright 1.57.0. No login, private routes, data writes or injected page styles.
+Only rejects optional cookies in the isolated test browser. This is emulation,
+not a physical iPhone/Safari test. Source copies are public repository files only.
 """
 import json
 import os
 import re
 import sys
+import traceback
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import urljoin
@@ -16,8 +17,14 @@ BASE = 'https://hilocofrade.es'
 PATH = '/acompanamientos-musicales'
 OUT = Path('qa-evidence')
 OUT.mkdir(exist_ok=True)
+for filename in ['docs/ESTADO-PROYECTO.md', 'app/acompanamientos-musicales/page.js',
+                 'app/acompanamientos-musicales/acompanamientos-musicales.module.css']:
+    destination = OUT / 'source' / filename
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    destination.write_bytes(Path(filename).read_bytes())
 report = {'startedAt': datetime.now(timezone.utc).isoformat(), 'testedBase': BASE,
-          'repositoryCommit': os.getenv('GITHUB_SHA'), 'cases': [], 'flows': [], 'errors': []}
+          'repositoryCommit': os.getenv('GITHUB_SHA'), 'cases': [], 'flows': [], 'errors': [],
+          'harnessCorrection': 'An accessible zero contains explanatory text with year 2027. Read its visible dash as zero, not the year inside the screen-reader label. No application change.'}
 ROWS = 'table tbody[id^="banda-"]'
 
 
@@ -35,15 +42,20 @@ def load(page, url):
         raise RuntimeError(f'Page returned {response.status if response else "no response"}: {url}')
     expect(page.locator('h1')).to_have_count(1)
     expect(page.locator('#temporada-acompanamientos')).to_be_visible(timeout=20000)
-    # Wait for actual font/layout completion, without injecting styles or markup.
     page.evaluate('() => document.fonts.ready')
+    reject = page.get_by_role('button', name='Rechazar', exact=True)
+    if reject.is_visible():
+        reject.click()
+        expect(reject).not_to_be_visible()
     return response
 
 
 def rows(page):
     return page.locator(ROWS).evaluate_all('''elements => elements.map(el => {
       const row = el.querySelector('tr');
-      const values = [...row.querySelectorAll('td > strong')].map(x => Number(x.innerText.replace(/[^0-9]/g, '')) || 0);
+      const values = [...row.querySelectorAll('td > strong')].map(x =>
+        x.querySelector('[aria-hidden="true"]')?.textContent.trim()==='—'
+          ? 0 : Number(x.innerText.replace(/[^0-9]/g, '')) || 0);
       return {id:el.id,name:row.querySelector('h3').innerText,values,
         detailCount:el.querySelectorAll('details li').length};
     })''')
@@ -61,6 +73,11 @@ def layout(page):
           (r.right>document.documentElement.clientWidth+2 || r.left < -2);
       }).slice(0,12).map(el=>({tag:el.tagName,text:el.textContent.slice(0,90)}))
     })''')
+
+
+def assert_layout(metrics):
+    assert metrics['scrollWidth'] <= metrics['width']+1, f'Horizontal overflow: {metrics}'
+    assert all(c['fontSize']>=16 and c['height']>=43.5 for c in metrics['controls']), f'Control size: {metrics["controls"]}'
 
 
 def submit(page):
@@ -82,6 +99,14 @@ def flow(page, engine, width, year, baseline):
     result = {'engine': engine, 'width': width, 'year': year, 'steps': []}
     report['flows'].append(result)
     try:
+        if year == 2026:
+            page.locator('select[name=temporada]').select_option('2027')
+            submit(page)
+            expect(page.locator('#temporada-acompanamientos')).to_have_text('Avance de 2027')
+            page.locator('select[name=temporada]').select_option('2026')
+            submit(page)
+            expect(page.locator(ROWS)).to_have_count(len(baseline))
+            result['steps'].append('season-switch-2026-2027-2026')
         query = 'Las Cigarreras' if year == 2026 else 'Santa Ana'
         page.locator('input[name=q]').fill(query)
         page.locator('select[name=tipo]').select_option('musica')
@@ -100,6 +125,7 @@ def flow(page, engine, width, year, baseline):
         expect(first.locator('details')).to_have_attribute('open', '')
         first.scroll_into_view_if_needed()
         shot(page, f'{engine}-{width}-{year}-filtered-open')
+        assert_layout(layout(page))
         clear(page, year, len(baseline))
         result['steps'].append('clear-preserves-season-and-resets-controls')
         page.locator('input[name=q]').fill('hcqa-sin-resultados-762932')
@@ -135,7 +161,7 @@ def flow(page, engine, width, year, baseline):
         result['steps'].append('band-profile-navigation')
         result['status'] = 'pass'
     except Exception as error:
-        result.update(status='fail', error=str(error))
+        result.update(status='fail', error=str(error), trace=traceback.format_exc())
         shot(page, f'{engine}-{width}-{year}-flow-failure')
     save_report()
 
@@ -156,9 +182,9 @@ with sync_playwright() as p:
             page.set_default_timeout(15000)
             js_errors = []
             page.on('pageerror', lambda error: js_errors.append(str(error)))
-            # No automated cookie acceptance, login, private routes, or data-changing forms.
             inaccessible = False
             for year in [2026,2027]:
+                js_errors.clear()
                 case = {'engine':engine,'width':width,'year':year}
                 report['cases'].append(case)
                 try:
@@ -169,33 +195,49 @@ with sync_playwright() as p:
                     assert len(case['rows'])>0, 'Empty baseline'
                     case['totals'] = page.locator('section[aria-label^="Resumen de los registros"] dl dd').all_inner_texts()
                     totals = [int(re.sub(r'[^0-9]','',n) or '0') for n in case['totals']]
-                    assert len(totals)==3 and totals[0]+totals[1]==totals[2]
-                    assert len({r['id'] for r in case['rows']})==len(case['rows'])
-                    assert all(r['values'][0]+r['values'][1]==r['values'][2]==r['detailCount'] for r in case['rows'])
-                    assert [sum(r['values'][i] for r in case['rows']) for i in range(3)]==totals
+                    assert len(totals)==3 and totals[0]+totals[1]==totals[2], 'Global totals do not sum'
+                    assert len({r['id'] for r in case['rows']})==len(case['rows']), 'Duplicate band IDs'
+                    assert all(r['values'][0]+r['values'][1]==r['values'][2]==r['detailCount'] for r in case['rows']), 'Band totals/detail mismatch'
+                    assert [sum(r['values'][i] for r in case['rows']) for i in range(3)]==totals, 'Band aggregate mismatch'
                     shot(page, f'{engine}-{width}-{year}-top')
+                    page.locator('section[aria-label^="Resumen de los registros"]').scroll_into_view_if_needed()
+                    shot(page, f'{engine}-{width}-{year}-overview')
                     first=page.locator(ROWS).first
                     first.locator('summary').click()
                     expect(first.locator('details')).to_have_attribute('open','')
                     first.scroll_into_view_if_needed()
                     case['openLayout']=layout(page)
                     shot(page, f'{engine}-{width}-{year}-open')
-                    for state in ['closedLayout','openLayout']:
-                        m=case[state]
-                        assert m['scrollWidth']<=m['width']+1, f'Horizontal overflow {state}: {m}'
-                        assert all(c['fontSize']>=16 and c['height']>=43.5 for c in m['controls']), f'Control size: {m["controls"]}'
                     first.locator('summary').click()
+                    for state in ['closedLayout','openLayout']: assert_layout(case[state])
+                    if year==2027:
+                        pending=page.locator('section[aria-labelledby="vinculos-por-revisar"]')
+                        disclosure=pending.locator(':scope > details')
+                        assert not disclosure.evaluate('el=>el.open'), 'Pending archive unexpectedly open'
+                        disclosure.locator(':scope > summary').click()
+                        expect(disclosure).to_have_attribute('open','')
+                        nested=disclosure.locator('details').first
+                        nested.locator(':scope > summary').click()
+                        expect(nested).to_have_attribute('open','')
+                        case['pendingText']=disclosure.locator(':scope > summary').inner_text()
+                        case['pendingItems']=pending.locator('li').count()
+                        case['pendingLayout']=layout(page)
+                        assert_layout(case['pendingLayout'])
+                        assert rows(page)==case['rows'], 'Pending archive affects counted totals'
+                        pending.scroll_into_view_if_needed()
+                        shot(page,f'{engine}-{width}-{year}-pending')
+                        nested.locator(':scope > summary').click()
+                        disclosure.locator(':scope > summary').click()
                     case['jsErrors']=list(js_errors)
                     assert not js_errors, f'JavaScript errors: {js_errors}'
                     case['status']='pass'
                     if width==390 or (engine=='chromium' and width==1366):
                         flow(page,engine,width,year,case['rows'])
                 except Exception as error:
-                    case.update(status='fail',error=str(error),jsErrors=list(js_errors))
+                    case.update(status='fail',error=str(error),trace=traceback.format_exc(),jsErrors=list(js_errors))
                     try: shot(page,f'{engine}-{width}-{year}-failure')
                     except Exception: pass
-                    if 'net::' in str(error) or 'Page returned' in str(error):
-                        inaccessible=True
+                    if 'net::' in str(error) or 'Page returned' in str(error): inaccessible=True
                 save_report()
                 if inaccessible: break
             context.close()
