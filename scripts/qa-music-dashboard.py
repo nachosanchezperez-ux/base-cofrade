@@ -1,5 +1,5 @@
 """Read-only public baseline -> isolated Next application QA. No credentials or production writes."""
-import json, os, re, sys, time, urllib.request
+import csv, io, json, re, sys, urllib.request
 from pathlib import Path
 
 OUT = Path('qa-evidence')
@@ -16,7 +16,6 @@ def snapshot():
     snapshots = {}
     for year in (2026, 2027):
         soup = BeautifulSoup(fetch(f'https://hilocofrade.es/acompanamientos-musicales?temporada={year}'), 'html.parser')
-        # This fixture is explicitly derived from the preceding public SSR directory, not invented contracts.
         bands = {}
         def items(container):
             result = []
@@ -49,7 +48,7 @@ def snapshot():
             expected = int(row.select_one('[class*="bandTotal"] > strong').get_text(strip=True).replace('.',''))
             assert band['total']==expected,(band['name'],band['total'],expected)
             bands[band['id']] = band
-        assert bands, 'Public baseline has changed; reconcile the parser rather than manufacturing a fixture.'
+        assert bands, 'Public baseline changed: reconcile parser, do not manufacture fixture.'
         for index, container in enumerate(soup.select('details[class*="pendingBand"]')):
             name = container.select_one('summary strong').get_text(' ',strip=True)
             found = next((b for b in bands.values() if b['name']==name),None)
@@ -63,7 +62,7 @@ def snapshot():
         totals={key:sum(b[key] for b in values) for key in ('capital','province','total')}
         snapshots[year]={'year':year,'isAdvance':year==2027,'bands':values,'totals':totals,'bandsCount':sum(b['total']>0 for b in values),'pendingTotal':sum(b['pendingCount'] for b in values)}
     (OUT/'public-summary.json').write_text(json.dumps(snapshots,ensure_ascii=False),encoding='utf-8')
-    # Runner-only adapter, after the unmodified candidate has passed its normal build.
+    # Runner-only adapter AFTER the unmodified candidate has passed its normal build.
     Path('lib/__qa-music-fixture.js').write_text("import { readFileSync } from 'node:fs'\nexport async function getPublicMusicAccompanimentSummary(year) { return JSON.parse(readFileSync('qa-evidence/public-summary.json','utf8'))[year] }\n")
     page=Path('app/acompanamientos-musicales/page.js'); original=page.read_text();(OUT/'server-page-original.js').write_text(original)
     page.write_text(original.replace("@/lib/supabase/public-directory-cache", "@/lib/__qa-music-fixture"))
@@ -78,38 +77,61 @@ def browser_qa():
             for width in widths:
                 for year in (2026,2027):
                     context=browser.new_context(viewport={'width':width,'height':920},accept_downloads=True)
-                    page=context.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
+                    page=context.new_page();page.set_default_timeout(10000)
+                    errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
                     case={'engine':engine,'width':width,'year':year}
                     try:
-                        page.goto(f'http://127.0.0.1:3100/acompanamientos-musicales?temporada={year}',wait_until='networkidle')
+                        # Global header/background requests are not dashboard readiness.
+                        page.goto(f'http://127.0.0.1:3100/acompanamientos-musicales?temporada={year}',wait_until='domcontentloaded')
                         expect(page.locator('[data-music-dashboard]')).to_have_attribute('data-hydrated','true')
+                        reject=page.get_by_role('button',name='Rechazar',exact=True)
+                        if reject.is_visible(): reject.click()
                         for key in ('capital','province','total'):
                             expect(page.locator(f'[data-kpi="{key}"]')).to_have_text(str(snapshots[str(year)]['totals'][key]))
                         def no_overflow():
                             assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), 'horizontal overflow'
                         no_overflow()
+                        case['controlMetrics']=page.locator('[data-music-dashboard] form input:not([type="hidden"]), [data-music-dashboard] form select').evaluate_all('(els)=>els.map(e=>({name:e.name,font:parseFloat(getComputedStyle(e).fontSize),height:e.getBoundingClientRect().height}))')
+                        assert all(x['font']>=16 and x['height']>=44 for x in case['controlMetrics'])
                         page.screenshot(path=str(OUT/f'{engine}-{width}-{year}-overview.png'),full_page=False)
                         page.locator('#bandas-musicales').scroll_into_view_if_needed();page.screenshot(path=str(OUT/f'{engine}-{width}-{year}-charts.png'),full_page=False)
                         if width in (390,1366):
                             total_before=page.locator('[data-kpi="total"]').inner_text()
                             page.get_by_role('button',name='Siguiente',exact=True).click();expect(page.locator('[data-kpi="total"]')).to_have_text(total_before)
-                            page.get_by_role('button',name='Restablecer filtros',exact=True).first.click()
-                            page.get_by_label('Buscar banda',exact=True).fill('Las Cigarreras' if year==2026 else 'Santa Ana')
-                            page.get_by_label('Formación',exact=True).select_option('musica')
+                            # Export on page two must include ALL filtered bands, not ten rows.
+                            with page.expect_download() as dl: page.get_by_role('button',name='Exportar CSV',exact=True).click()
+                            csv_path=OUT/f'{engine}-{width}-{year}-all.csv';dl.value.save_as(str(csv_path))
+                            records=list(csv.reader(io.StringIO(csv_path.read_text(encoding='utf-8-sig')),delimiter=';'))
+                            assert len(records)-1==snapshots[str(year)]['bandsCount']
+                            assert sum(int(row[-1]) for row in records[1:])==int(total_before)
+                            reset=lambda:page.get_by_role('button',name='Restablecer filtros',exact=True).first.click()
+                            reset()
+                            page.locator('input[name="q"]').fill('Las Cigarreras' if year==2026 else 'Santa Ana')
+                            # Names inspected in application source; implicit label text includes options in some engines.
+                            page.locator('select[name="tipo"]').select_option('musica')
                             expect(page.locator('[data-kpi="bands"]')).to_have_text('1')
                             total=int(page.locator('[data-kpi="total"]').inner_text())
                             page.locator('#tabla-musical summary').first.focus();page.keyboard.press('Enter')
                             expect(page.locator('#tabla-musical details').first).to_have_attribute('open','')
                             assert page.locator('#tabla-musical tbody li').count()==total
                             no_overflow();page.screenshot(path=str(OUT/f'{engine}-{width}-{year}-detail.png'),full_page=False)
+                            page.keyboard.press('Space');assert not page.locator('#tabla-musical details').first.evaluate('(e)=>e.open')
                             with page.expect_download() as dl: page.get_by_role('button',name='Exportar CSV',exact=True).click()
-                            dl.value.save_as(str(OUT/f'{engine}-{width}-{year}.csv'))
-                            page.get_by_label('Ámbito',exact=True).select_option('capital');expect(page.locator('[data-kpi="province"]')).to_have_text('0')
-                            page.get_by_role('button',name='Restablecer filtros',exact=True).first.click()
-                            page.get_by_label('Temporada',exact=True).select_option(str(2027 if year==2026 else 2026));page.go_back();expect(page.get_by_label('Temporada',exact=True)).to_have_value(str(year))
-                            page.get_by_label('Buscar banda',exact=True).fill('prueba-sin-resultados');expect(page.locator('[data-kpi="total"]')).to_have_text('0');expect(page.get_by_role('button',name='Exportar CSV')).to_be_disabled()
-                            page.get_by_role('button',name='Restablecer filtros',exact=True).first.click();expect(page.locator('[data-kpi="total"]')).to_have_text(total_before)
+                            dl.value.save_as(str(OUT/f'{engine}-{width}-{year}-filtered.csv'))
+                            page.locator('select[name="ambito"]').select_option('capital');expect(page.locator('[data-kpi="province"]')).to_have_text('0')
+                            reset()
+                            page.locator('select[name="municipio"]').select_option('Sevilla');expect(page.locator('[data-kpi="province"]')).to_have_text('0')
+                            expect(page.locator('[data-kpi="total"]')).to_have_text(str(snapshots[str(year)]['totals']['capital']))
+                            reset()
+                            page.locator('select[name="temporada"]').select_option(str(2027 if year==2026 else 2026));page.go_back(wait_until='domcontentloaded');expect(page.locator('select[name="temporada"]')).to_have_value(str(year))
+                            page.locator('input[name="q"]').fill('prueba-sin-resultados');expect(page.locator('[data-kpi="total"]')).to_have_text('0');expect(page.get_by_role('button',name='Exportar CSV')).to_be_disabled()
+                            reset();expect(page.locator('[data-kpi="total"]')).to_have_text(total_before)
                             page.locator('#bandas-musicales button').first.click();expect(page.locator('[data-kpi="bands"]')).to_have_text('1');no_overflow()
+                            reset()
+                            if year==2027:
+                                page.locator('#archivo-musical-pendiente > details > summary').click()
+                                no_overflow();expect(page.locator('[data-kpi="total"]')).to_have_text(total_before)
+                            case['journey']='PASS'
                         case.update(ok=True,pageErrors=errors)
                         if errors: case['ok']=False
                     except Exception as e:
