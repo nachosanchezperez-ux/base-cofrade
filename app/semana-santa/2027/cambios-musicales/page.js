@@ -2,7 +2,7 @@ import { connection } from 'next/server'
 import Link from 'next/link'
 import JsonLd from '@/components/JsonLd'
 import SiteBreadcrumb from '@/components/SiteBreadcrumb'
-import { getPublicMusicChanges2027 } from '@/lib/supabase/public-directory-cache'
+import { getPublicMusicChanges2027, getPublicMusicRenewals2027 } from '@/lib/supabase/public-directory-cache'
 import {
   musicChangeDaySlug,
   musicChangeKindLabel,
@@ -23,7 +23,7 @@ export const revalidate = 300
 
 const PATH = '/semana-santa/2027/cambios-musicales'
 const title = 'Cambios de bandas en la Semana Santa de Sevilla 2027'
-const description = 'Todos los cambios musicales de la Semana Santa de Sevilla 2027: relevos de bandas, nuevas incorporaciones y acompañamientos confirmados en Sevilla y su provincia, comparados con 2026.'
+const description = 'Música de la Semana Santa de Sevilla 2027: cambios de bandas y renovaciones confirmadas en Sevilla y su provincia, con cada acuerdo relacionado con su Hermandad, jornada y paso.'
 
 const BAND_TYPES = [
   { key: 'agrupacion', label: 'Agrupación Musical' },
@@ -135,7 +135,7 @@ function municipalityRanking(changes, limit = 6) {
 
 function bandFamilyKey(change) {
   const value = normalizeMusicChangeText(
-    [change.newBandType, change.newBandName].filter(Boolean).join(' '),
+    [change.newBandType || change.bandType, change.newBandName || change.bandName].filter(Boolean).join(' '),
   )
   if (value.includes('cornetas') || value.includes('tambores')) return 'cornetas'
   if (value.includes('agrupacion musical')) return 'agrupacion'
@@ -158,7 +158,10 @@ function bandLink(change, previous = false) {
 export default async function CambiosMusicales2027Page({ searchParams } = {}) {
   await connection()
   const params = await searchParams
-  const changes = await getPublicMusicChanges2027()
+  const [changes, renewals] = await Promise.all([
+    getPublicMusicChanges2027(),
+    getPublicMusicRenewals2027(),
+  ])
 
   const dayOptions = SEMANA_SANTA_DAYS.filter((day) => (
     changes.some((change) => change.day === day.label)
@@ -203,11 +206,13 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
 
   const brotherhoodCount = new Set(changes.map((item) => item.brotherhoodSlug || item.brotherhoodName)).size
   const newBandCount = new Set(changes.map((item) => item.newBandSlug || item.newBandName)).size
-  const lastUpdated = updatedLabel(changes)
+  const lastUpdated = updatedLabel([...changes, ...renewals])
   const municipalityTop = municipalityRanking(changes)
   const hasFilters = Boolean(activeDay || activeScope || activeMunicipality || activeType || requestedQuery)
   const allGroups = groupsFor(changes)
   const groups = hasFilters ? groupsFor(filtered) : allGroups
+  const renewalGroups = groupsFor(renewals)
+  const renewalBrotherhoodCount = new Set(renewals.map((item) => item.brotherhoodEntityId || item.brotherhoodName)).size
 
   return (
     <div className={styles.page}>
@@ -220,10 +225,16 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
         path: PATH,
         name: title,
         description,
-        items: allGroups.flatMap((group) => group.items).map((change) => ({
-          name: `${change.brotherhoodName}: ${change.newBandName}`,
-          path: `${PATH}#cambio-${change.id}`,
-        })),
+        items: [
+          ...allGroups.flatMap((group) => group.items).map((change) => ({
+            name: `${change.brotherhoodName}: ${change.newBandName}`,
+            path: `${PATH}#cambio-${change.id}`,
+          })),
+          ...renewals.map((renewal) => ({
+            name: `${renewal.brotherhoodName}: renovación con ${renewal.bandName}`,
+            path: `${PATH}#renovacion-${renewal.id}`,
+          })),
+        ],
       })} />
 
       <header className={styles.hero}>
@@ -240,17 +251,21 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
 
           <div className={styles.heroCopy}>
             <span>Semana Santa de Sevilla · 2027</span>
-            <h1>Cambios musicales 2027</h1>
+            <h1>Música 2027: cambios y renovaciones</h1>
             <p>
-              Relevos de bandas y nuevas incorporaciones confirmadas en las Hermandades de Sevilla y su provincia,
-              con comparación entre los acompañamientos de 2026 y 2027.
+              Una lectura conjunta del mapa musical de la Semana Santa de Sevilla y su provincia:
+              qué acompañamientos cambian y cuáles han renovado expresamente su continuidad para 2027.
             </p>
-            <div className={styles.heroMeta} aria-label="Resumen del archivo">
+            <div className={styles.heroMeta} aria-label="Resumen del archivo musical de 2027">
               <span><strong>{changes.length}</strong> cambios</span>
-              <span><strong>{brotherhoodCount}</strong> corporaciones</span>
-              <span><strong>{newBandCount}</strong> formaciones entrantes</span>
+              <span><strong>{renewals.length}</strong> renovaciones</span>
+              <span><strong>{brotherhoodCount}</strong> corporaciones con cambios</span>
               {lastUpdated ? <span>Actualizado <strong>{lastUpdated}</strong></span> : null}
             </div>
+            <nav className={styles.modeNav} aria-label="Lecturas de la música de 2027">
+              <Link href="#cambios-musicales">Cambios <strong>{changes.length}</strong></Link>
+              <Link href="#renovaciones-musicales">Renovaciones <strong>{renewals.length}</strong></Link>
+            </nav>
             <Link className={styles.accompanimentLink} href="/acompanamientos-musicales?temporada=2027">
               Acompañamientos por banda · Avance de 2027 <span aria-hidden="true">→</span>
             </Link>
@@ -259,7 +274,7 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
       </header>
 
       <div className={`shell ${styles.content}`}>
-        <section className={styles.seoIntro} aria-labelledby="guia-cambios-musicales-2027">
+        <section className={styles.seoIntro} id="cambios-musicales" aria-labelledby="guia-cambios-musicales-2027">
           <h2 id="guia-cambios-musicales-2027">Cambios de bandas en la Semana Santa de Sevilla 2027</h2>
           <p>
             Hilo Cofrade reúne en esta guía los cambios de acompañamiento musical confirmados para 2027.
@@ -400,10 +415,84 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
           </div>
         )}
 
+        <section className={styles.renewalsSection} id="renovaciones-musicales" aria-labelledby="titulo-renovaciones-musicales">
+          <div className={styles.renewalsIntro}>
+            <div>
+              <span>Continuidades confirmadas</span>
+              <h2 id="titulo-renovaciones-musicales">Renovaciones musicales 2027</h2>
+            </div>
+            <p>
+              Acuerdos de continuidad documentados expresamente para 2027. No se contabilizan como cambios:
+              la formación musical se mantiene y se conserva el periodo histórico de la relación.
+            </p>
+          </div>
+
+          <div className={styles.renewalSummary} aria-label="Resumen de renovaciones musicales">
+            <strong>{renewals.length}</strong>
+            <span>{renewals.length === 1 ? 'renovación confirmada' : 'renovaciones confirmadas'} · {renewalBrotherhoodCount} {renewalBrotherhoodCount === 1 ? 'corporación' : 'corporaciones'}</span>
+          </div>
+
+          {renewalGroups.length ? (
+            <div className={styles.municipalityGroups}>
+              {renewalGroups.map((group) => (
+                <section className={styles.municipalityGroup} key={`renovaciones-${group.slug}`} aria-labelledby={`renovaciones-municipio-${group.slug}`}>
+                  <header className={styles.municipalityHeading}>
+                    <h2 id={`renovaciones-municipio-${group.slug}`}>{group.label}</h2>
+                    <span>{group.items.length} {group.items.length === 1 ? 'renovación' : 'renovaciones'} · {group.brotherhoodCount} {group.brotherhoodCount === 1 ? 'corporación' : 'corporaciones'}</span>
+                  </header>
+
+                  <div className={styles.brotherhoodList}>
+                    {group.brotherhoods.map((brotherhood) => (
+                      <article className={styles.brotherhoodCluster} key={`renovacion-${brotherhood.key}`}>
+                        <header className={styles.clusterHeader}>
+                          <div>
+                            <h3>
+                              {brotherhood.brotherhoodHref
+                                ? <Link href={brotherhood.brotherhoodHref}>{brotherhood.brotherhoodName}</Link>
+                                : brotherhood.brotherhoodName}
+                            </h3>
+                            <span>{brotherhood.day}{brotherhood.changes.length > 1 ? ` · ${brotherhood.changes.length} renovaciones` : ''}</span>
+                          </div>
+                        </header>
+
+                        <div className={styles.clusterChanges}>
+                          {brotherhood.changes.map((renewal) => {
+                            const positionLabel = musicChangePositionLabel(renewal)
+                            return (
+                              <section className={styles.movement} id={`renovacion-${renewal.id}`} key={renewal.id}>
+                                <div className={styles.movementLead}>
+                                  <strong>
+                                    {renewal.stepHref ? <Link href={renewal.stepHref}>{renewal.stepName}</Link> : renewal.stepName || renewal.position}
+                                  </strong>
+                                  {positionLabel ? <small>{positionLabel}</small> : null}
+                                  <span>Renovación · {bandFamilyLabel(renewal)}</span>
+                                </div>
+                                <div className={styles.renewalCard}>
+                                  <span className={styles.renewalBadge}>{renewal.renewalLabel}</span>
+                                  <strong>{bandLink(renewal)}</strong>
+                                </div>
+                              </section>
+                            )
+                          })}
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                </section>
+              ))}
+            </div>
+          ) : (
+            <div className={styles.empty}>
+              <strong>No hay renovaciones documentadas para 2027.</strong>
+              <p>Esta lectura solo incorpora acuerdos de continuidad expresamente confirmados.</p>
+            </div>
+          )}
+        </section>
+
         <section className={styles.method} aria-labelledby="criterio-cambios-musicales">
-          <div><span>Criterio editorial</span><h2 id="criterio-cambios-musicales">Solo cambios confirmados</h2></div>
+          <div><span>Criterio editorial</span><h2 id="criterio-cambios-musicales">Cambios y renovaciones no son lo mismo</h2></div>
           <div className={styles.methodCopy}>
-            <p>El listado incluye relevos y nuevas incorporaciones con vigencia desde 2027. Las renovaciones sin cambio de formación y los acuerdos no confirmados quedan fuera.</p>
+            <p>Los {changes.length} cambios reúnen relevos y nuevas incorporaciones. Las {renewals.length} renovaciones muestran únicamente acuerdos de continuidad expresamente documentados para 2027 y nunca incrementan el contador de cambios.</p>
           </div>
         </section>
 
