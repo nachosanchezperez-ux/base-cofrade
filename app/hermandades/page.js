@@ -3,6 +3,7 @@ import HermandadesDirectoryV4 from '@/components/HermandadesDirectoryV4';
 import BrotherhoodPublicIndex from '@/components/BrotherhoodPublicIndex';
 import JsonLd from '@/components/JsonLd';
 import { filterIndexableBrotherhoods } from '@/lib/brotherhood-public-index';
+import { buildBrotherhoodDirectoryNavigation } from '@/lib/brotherhood-directory-navigation';
 import { getHermandadesDirectory } from '@/lib/supabase/public-directory-cache';
 import { getPublicIndexableEntityEntries } from '@/lib/supabase/public-directory-cache';
 import { absoluteUrl, breadcrumbJsonLd, pageTitle } from '@/lib/seo';
@@ -67,7 +68,10 @@ export default async function HermandadesPage() {
         <p className="page-lead">
           Recorre las corporaciones de Sevilla capital y su provincia por su carácter, localidad y momento principal del calendario.
         </p>
-        <HermandadesDirectoryV4 hermandades={hermandades} />
+        <HermandadesDirectoryV4
+          hermandades={hermandades}
+          navigation={buildBrotherhoodDirectoryNavigation(indexableHermandades)}
+        />
         <BrotherhoodPublicIndex brotherhoods={indexableHermandades} />
       </div>
     </section>

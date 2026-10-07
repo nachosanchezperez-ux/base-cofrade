@@ -1,18 +1,17 @@
 'use client'
 
 import Link from 'next/link'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import BrotherhoodDirectoryCard from '@/components/BrotherhoodDirectoryCard'
+import { filterDirectoryBrotherhoods } from '@/lib/brotherhood-directory-navigation'
 import {
   DIRECTORY_TYPES,
   HOLY_WEEK_DAYS,
   MONTHS,
   directoryPeriod,
   directorySlug,
-  displayName,
   hasDirectoryType,
   normalizeDirectoryValue,
-  sortBrotherhoods,
 } from '@/lib/brotherhood-directory'
 import styles from './HermandadesDirectoryV4.module.css'
 
@@ -28,13 +27,12 @@ function periodRows(items, typeKey, orderedPeriods) {
   })).filter((row) => row.items.length)
 
   const undocumented = items.filter((item) => !directoryPeriod(item, typeKey))
-  if (undocumented.length) rows.push({ label: 'Sin fecha documentada', items: undocumented, unavailable: true })
+  if (undocumented.length) rows.push({ label: 'Sin fecha documentada', period: '', items: undocumented })
   return rows
 }
 
-function CapitalFamily({ title, kicker, typeKey, items, orderedPeriods }) {
+function CapitalFamily({ title, kicker, typeKey, items, orderedPeriods, routes, onSelect }) {
   const rows = periodRows(items, typeKey, orderedPeriods)
-  const type = DIRECTORY_TYPES.find((item) => item.key === typeKey)
 
   return (
     <section className={styles.familyCard} data-family={typeKey}>
@@ -43,30 +41,32 @@ function CapitalFamily({ title, kicker, typeKey, items, orderedPeriods }) {
           <span>{kicker}</span>
           <h3>{title}</h3>
         </div>
-        <Link href={type?.href || '/hermandades'} aria-label={`Ver todo ${title}`}>
-          {items.length}<b aria-hidden="true">→</b>
-        </Link>
+        <button type="button" onClick={() => onSelect(typeKey)} aria-label={`Ver todas las de ${title} en Sevilla capital`}>
+          Ver todas <b aria-hidden="true">→</b>
+        </button>
       </header>
       <div className={styles.periodGrid}>
-        {rows.map((row) => row.unavailable ? (
-          <span className={styles.periodDisabled} key={`${typeKey}-${row.label}`}>
-            <span>{row.label}</span><strong>{row.items.length}</strong>
-          </span>
-        ) : (
-          <Link
-            className={styles.periodLink}
-            href={`/hermandades/${typeKey}/sevilla-capital/${directorySlug(row.label)}`}
-            key={`${typeKey}-${row.label}`}
-          >
-            <span>{row.label}</span><strong>{row.items.length}</strong>
-          </Link>
-        ))}
+        {rows.map((row) => {
+          const period = row.period ?? row.label
+          const href = `/hermandades/${typeKey}/sevilla-capital/${directorySlug(period)}`
+          const count = routes[href]
+
+          return count ? (
+            <Link className={styles.periodLink} href={href} prefetch={false} key={`${typeKey}-${row.label}`}>
+              <span>{row.label}</span><strong>{count}</strong>
+            </Link>
+          ) : (
+            <button className={styles.periodLink} type="button" onClick={() => onSelect(typeKey, period)} key={`${typeKey}-${row.label}`}>
+              <span>{row.label}</span><strong>{row.items.length}</strong>
+            </button>
+          )
+        })}
       </div>
     </section>
   )
 }
 
-function CapitalHub({ items }) {
+function CapitalHub({ items, routes, onSelect }) {
   const byType = Object.fromEntries(DIRECTORY_TYPES.map((type) => [
     type.key,
     items.filter((item) => hasDirectoryType(item, type.key)),
@@ -76,20 +76,10 @@ function CapitalHub({ items }) {
     <section className={styles.capitalHub} aria-labelledby="capital-v4-title">
       <div className={styles.hubHeading}>
         <div>
-          <span>Capital</span>
           <h2 id="capital-v4-title">Sevilla capital</h2>
         </div>
         <strong>{items.length} corporaciones</strong>
       </div>
-
-      <nav className={styles.capitalQuick} aria-label="Accesos rápidos del directorio de Sevilla capital">
-        {DIRECTORY_TYPES.map((type) => (
-          <Link href={type.key === 'sacramentales' || type.key === 'agrupaciones-parroquiales' ? `${type.href}/sevilla-capital` : type.href} key={type.key}>
-            <span>{type.label}</span>
-            <strong>{byType[type.key].length}</strong>
-          </Link>
-        ))}
-      </nav>
 
       <div className={styles.calendarGrid}>
         <CapitalFamily
@@ -98,6 +88,8 @@ function CapitalHub({ items }) {
           typeKey="semana-santa"
           items={byType['semana-santa']}
           orderedPeriods={HOLY_WEEK_DAYS}
+          routes={routes}
+          onSelect={onSelect}
         />
         <CapitalFamily
           title="Glorias"
@@ -105,71 +97,44 @@ function CapitalHub({ items }) {
           typeKey="gloria"
           items={byType.gloria}
           orderedPeriods={MONTHS}
+          routes={routes}
+          onSelect={onSelect}
         />
       </div>
 
-      <div className={styles.institutionalGrid}>
-        <Link href="/hermandades/sacramentales/sevilla-capital">
-          <span>Directorio específico</span>
-          <strong>Sacramentales de Sevilla</strong>
-          <b>{byType.sacramentales.length} →</b>
-        </Link>
-        <Link href="/hermandades/agrupaciones-parroquiales/sevilla-capital">
-          <span>Carácter de la corporación</span>
-          <strong>Agrupaciones Parroquiales</strong>
-          <b>{byType['agrupaciones-parroquiales'].length} →</b>
-        </Link>
-      </div>
+      <nav className={styles.institutionalGrid} aria-label="Otros directorios de Sevilla capital">
+        {DIRECTORY_TYPES.filter((type) => ['sacramentales', 'agrupaciones-parroquiales'].includes(type.key)).map((type) => {
+          const href = `${type.href}/sevilla-capital`
+          const count = routes[href]
+          const content = <><span>{type.label}</span><strong>{count ?? byType[type.key].length}</strong><b aria-hidden="true">→</b></>
+          return count ? (
+            <Link href={href} prefetch={false} key={type.key}>{content}</Link>
+          ) : (
+            <button type="button" onClick={() => onSelect(type.key)} key={type.key}>{content}</button>
+          )
+        })}
+      </nav>
     </section>
   )
 }
 
 function ProvinceHub({ stats, onSelect }) {
-  const [municipalityQuery, setMunicipalityQuery] = useState('')
   const [showAll, setShowAll] = useState(false)
-  const total = stats.reduce((sum, item) => sum + item.count, 0)
-  const normalizedQuery = normalizeDirectoryValue(municipalityQuery)
 
   const quickStats = useMemo(() => [...stats]
     .sort((first, second) => second.count - first.count
       || first.label.localeCompare(second.label, 'es', { sensitivity: 'base' }))
     .slice(0, 6), [stats])
 
-  const searchMatches = useMemo(() => {
-    if (!normalizedQuery) return []
-    return stats.filter((item) => normalizeDirectoryValue(item.label).includes(normalizedQuery))
-  }, [normalizedQuery, stats])
-
-  const visibleStats = normalizedQuery ? searchMatches : (showAll ? stats : quickStats)
-  const sectionLabel = normalizedQuery ? 'Resultados' : (showAll ? 'Todos los municipios' : 'Accesos rápidos')
+  const visibleStats = showAll ? stats : quickStats
 
   return (
     <section className={styles.provinceHub} aria-labelledby="province-v4-title">
       <div className={styles.hubHeading}>
         <div>
-          <span>Provincia</span>
-          <h2 id="province-v4-title">Municipios</h2>
+          <h2 id="province-v4-title">Municipios de la provincia</h2>
         </div>
-        <strong>{total} corporaciones</strong>
-      </div>
-      <p className={styles.provinceIntro}>Busca una localidad o entra desde los accesos rápidos.</p>
-
-      <label className={styles.municipalitySearch} htmlFor="hermandades-v4-municipality-search">
-        <span className="sr-only">Buscar municipio</span>
-        <input
-          id="hermandades-v4-municipality-search"
-          type="search"
-          value={municipalityQuery}
-          onChange={(event) => setMunicipalityQuery(event.target.value)}
-          placeholder="Buscar municipio…"
-          autoComplete="off"
-        />
-        <span aria-hidden="true">⌕</span>
-      </label>
-
-      <div className={styles.municipalitySectionHead}>
-        <span>{sectionLabel}</span>
-        <small>{normalizedQuery ? `${searchMatches.length} ${searchMatches.length === 1 ? 'municipio' : 'municipios'}` : `${stats.length} municipios`}</small>
+        <strong>{stats.length} municipios</strong>
       </div>
 
       {visibleStats.length ? (
@@ -187,7 +152,7 @@ function ProvinceHub({ stats, onSelect }) {
         </div>
       )}
 
-      {!normalizedQuery && stats.length > quickStats.length ? (
+      {stats.length > quickStats.length ? (
         <button
           type="button"
           className={styles.municipalityToggle}
@@ -202,15 +167,14 @@ function ProvinceHub({ stats, onSelect }) {
   )
 }
 
-export default function HermandadesDirectoryV4({ hermandades }) {
+export default function HermandadesDirectoryV4({ hermandades, navigation }) {
   const [query, setQuery] = useState('')
   const [territory, setTerritory] = useState('todos')
   const [municipality, setMunicipality] = useState('todos')
-
-  const categoryCounts = useMemo(() => Object.fromEntries(DIRECTORY_TYPES.map((type) => [
-    type.key,
-    hermandades.filter((item) => hasDirectoryType(item, type.key)).length,
-  ])), [hermandades])
+  const [calendar, setCalendar] = useState(null)
+  const searchRef = useRef(null)
+  const resultsRef = useRef(null)
+  const focusResults = useRef(false)
 
   const capitalItems = useMemo(() => hermandades.filter((item) => normalizeDirectoryValue(item.localidad) === 'sevilla'), [hermandades])
   const provinceItems = useMemo(() => hermandades.filter((item) => normalizeDirectoryValue(item.localidad) !== 'sevilla'), [hermandades])
@@ -231,53 +195,67 @@ export default function HermandadesDirectoryV4({ hermandades }) {
     ...municipalityStats.map(({ key, label }) => ({ key, label })),
   ], [municipalityStats])
 
-  const filtered = useMemo(() => {
-    const search = normalizeDirectoryValue(query)
-    return sortBrotherhoods(hermandades.filter((item) => {
-      const locality = normalizeDirectoryValue(item.localidad)
-      const isCapital = locality === 'sevilla'
-      const matchesTerritory = territory === 'todos'
-        || (territory === 'capital' && isCapital)
-        || (territory === 'provincia' && !isCapital)
-      const matchesMunicipality = municipality === 'todos' || locality === municipality
-      const haystack = normalizeDirectoryValue([
-        displayName(item), item.nombreOficial, item.localidad, item.barrio, item.sede, item.diaSalida,
-      ].filter(Boolean).join(' '))
-      return matchesTerritory && matchesMunicipality && (!search || haystack.includes(search))
-    }))
-  }, [hermandades, municipality, query, territory])
+  const filtered = useMemo(() => filterDirectoryBrotherhoods(hermandades, {
+    query, territory, municipality,
+    typeKey: calendar?.typeKey,
+    period: calendar?.period ?? null,
+  }), [hermandades, municipality, query, territory, calendar])
 
-  const showResults = Boolean(query.trim()) || municipality !== 'todos'
+  const showResults = Boolean(query.trim()) || municipality !== 'todos' || Boolean(calendar)
+  const context = [
+    municipalityOptions.find((item) => item.key === municipality)?.label
+      || ({ capital: 'Sevilla capital', provincia: 'Provincia' })[territory],
+    DIRECTORY_TYPES.find((type) => type.key === calendar?.typeKey)?.label,
+    calendar?.period === '' ? 'Sin fecha documentada' : calendar?.period,
+  ].filter(Boolean).join(' · ')
+
+  useEffect(() => {
+    if (showResults && focusResults.current) {
+      resultsRef.current?.focus()
+      focusResults.current = false
+    }
+  }, [showResults, municipality, calendar])
 
   function changeTerritory(next) {
+    focusResults.current = false
+    setCalendar(null)
     setTerritory(next)
     if (next === 'capital' && municipality !== 'sevilla') setMunicipality('todos')
     if (next === 'provincia' && municipality === 'sevilla') setMunicipality('todos')
   }
 
-  function changeMunicipality(next) {
+  function changeMunicipality(next, moveFocus = false) {
+    focusResults.current = moveFocus
+    setCalendar(null)
     setMunicipality(next)
     if (next === 'todos') return
     setTerritory(next === 'sevilla' ? 'capital' : 'provincia')
   }
 
+  function selectCalendar(typeKey, period = null) {
+    setCalendar({ typeKey, period })
+    setMunicipality('sevilla')
+    setTerritory('capital')
+    focusResults.current = true
+  }
+
+  function clearFilters() {
+    focusResults.current = false
+    setQuery('')
+    setMunicipality('todos')
+    setTerritory('todos')
+    setCalendar(null)
+    searchRef.current?.focus()
+  }
+
   return (
     <div className={styles.directory}>
-      <nav className={styles.primaryNav} aria-label="Tipos de corporaciones">
-        {DIRECTORY_TYPES.map((type) => (
-          <Link href={type.href} key={type.key}>
-            <small>{categoryCounts[type.key]} {countLabel(type, categoryCounts[type.key])}</small>
-            <strong>{type.label}</strong>
-            <span aria-hidden="true">→</span>
-          </Link>
-        ))}
-      </nav>
-
       <section className={styles.finder} aria-label="Buscar y navegar por el directorio">
         <label className={styles.searchBox} htmlFor="hermandades-v4-search">
           <span className="sr-only">Buscar hermandad o corporación</span>
           <input
             id="hermandades-v4-search"
+            ref={searchRef}
             type="search"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
@@ -309,11 +287,24 @@ export default function HermandadesDirectoryV4({ hermandades }) {
         </div>
       </section>
 
+      <nav className={styles.primaryNav} aria-label="Tipos de corporaciones">
+        {DIRECTORY_TYPES.map((type) => (
+          <Link href={type.href} prefetch={false} key={type.key}>
+            <strong>{type.label}</strong>
+            <small>{navigation.counts[type.key]} {countLabel(type, navigation.counts[type.key])}</small>
+            <span aria-hidden="true">→</span>
+          </Link>
+        ))}
+      </nav>
+
       {showResults ? (
         <section className={styles.results} aria-live="polite">
           <div className={styles.resultsHead}>
-            <div><span>Resultado</span><h2>{filtered.length} {filtered.length === 1 ? 'corporación' : 'corporaciones'}</h2></div>
-            <button type="button" onClick={() => { setQuery(''); setMunicipality('todos'); setTerritory('todos') }}>Limpiar filtros</button>
+            <div>
+              <h2 ref={resultsRef} tabIndex={-1}>{filtered.length} {filtered.length === 1 ? 'corporación' : 'corporaciones'}</h2>
+              {context ? <p>{context}</p> : null}
+            </div>
+            <button type="button" onClick={clearFilters}>Limpiar filtros</button>
           </div>
           {filtered.length ? (
             <div className={styles.cardList}>{filtered.map((item) => <BrotherhoodDirectoryCard hermandad={item} key={item.id} />)}</div>
@@ -323,8 +314,8 @@ export default function HermandadesDirectoryV4({ hermandades }) {
         </section>
       ) : (
         <div className={styles.hubs}>
-          {territory !== 'provincia' ? <CapitalHub items={capitalItems} /> : null}
-          {territory !== 'capital' ? <ProvinceHub stats={municipalityStats} onSelect={changeMunicipality} /> : null}
+          {territory !== 'provincia' ? <CapitalHub items={capitalItems} routes={navigation.routes} onSelect={selectCalendar} /> : null}
+          {territory !== 'capital' ? <ProvinceHub stats={municipalityStats} onSelect={(next) => changeMunicipality(next, true)} /> : null}
         </div>
       )}
     </div>

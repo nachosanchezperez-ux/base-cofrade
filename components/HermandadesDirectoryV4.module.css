@@ -1,17 +1,197 @@
-.directory{display:grid;gap:18px;margin-top:26px}.primaryNav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.primaryNav a{position:relative;display:grid;min-height:96px;padding:15px 42px 15px 16px;border:1px solid #dbe4eb;border-radius:15px;background:#fff;color:#173a61;box-shadow:0 8px 24px rgba(18,58,103,.045);transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease}.primaryNav a:hover{transform:translateY(-2px);border-color:#b7c9d8;box-shadow:0 12px 28px rgba(18,58,103,.08)}.primaryNav small{align-self:start;color:#73808c;font-size:9px;font-weight:800}.primaryNav strong{align-self:end;font-family:Georgia,'Times New Roman',serif;font-size:18px;line-height:1.08}.primaryNav a>span{position:absolute;right:15px;bottom:14px;color:#b71f37;font-size:19px}.finder{display:grid;grid-template-columns:minmax(280px,1.1fr) minmax(420px,.9fr);gap:10px;padding:11px;border:1px solid #dbe4eb;border-radius:17px;background:#f8fafb}.searchBox{display:flex;align-items:center;gap:10px;min-height:48px;padding:0 14px;border:1px solid #dce4ea;border-radius:12px;background:#fff}.searchBox:focus-within{border-color:#123a67;box-shadow:0 0 0 3px rgba(18,58,103,.08)}.searchBox input{width:100%;min-width:0;border:0;outline:0;background:transparent;color:#172b40;font:inherit;font-size:13px}.searchBox input::placeholder{color:#8a959e}.searchBox>span:last-child{color:#123a67;font-size:20px}.finderControls{display:grid;grid-template-columns:minmax(0,1fr) minmax(180px,.75fr);gap:8px}.territoryTabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;padding:4px;border-radius:12px;background:#edf1f4}.territoryTabs button,.finderControls select{min-height:40px;border:0;border-radius:9px;font:inherit;font-size:10px;font-weight:850;cursor:pointer}.territoryTabs button{padding:0 8px;background:transparent;color:#64717d}.territoryTabs button.active{background:#fff;color:#123a67;box-shadow:0 3px 10px rgba(20,43,66,.08)}.finderControls select{width:100%;padding:0 32px 0 12px;border:1px solid #dce4ea;background:#fff;color:#2c435a}.territoryTabs button:focus-visible,.finderControls select:focus-visible,.municipalityGrid button:focus-visible,.resultsHead button:focus-visible,.primaryNav a:focus-visible,.capitalQuick a:focus-visible,.periodLink:focus-visible,.institutionalGrid a:focus-visible{outline:3px solid rgba(18,58,103,.22);outline-offset:2px}.hubs{display:grid;gap:18px}.capitalHub,.provinceHub{display:grid;gap:14px;padding:18px;border:1px solid #ccdbe7;border-radius:20px;background:#fbfcfd}.hubHeading{display:flex;align-items:end;justify-content:space-between;gap:16px}.hubHeading>div>span{display:block;margin-bottom:4px;color:#b71f37;font-size:9px;font-weight:900;letter-spacing:.13em;text-transform:uppercase}.hubHeading h2{margin:0;color:#123a67;font-family:Georgia,'Times New Roman',serif;font-size:26px;line-height:1}.hubHeading>strong{color:#6c7884;font-size:11px}.capitalQuick{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}.capitalQuick a{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:42px;padding:0 11px;border:1px solid #dfe7ed;border-radius:11px;background:#fff;color:#40556a;font-size:9px;font-weight:850;transition:border-color .15s ease,background .15s ease}.capitalQuick a:hover{border-color:#bdccd8;background:#f7fafc}.capitalQuick strong{display:grid;place-items:center;min-width:24px;height:24px;padding:0 5px;border-radius:999px;background:#f1f4f6;color:#b71f37;font-size:8px}.calendarGrid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:10px;align-items:start}.familyCard{display:grid;gap:12px;padding:15px;border:1px solid #dce5ec;border-top:3px solid #123a67;border-radius:16px;background:#fff}.familyCard[data-family="gloria"]{border-top-color:#b71f37}.familyHeader{display:flex;align-items:center;justify-content:space-between;gap:12px}.familyHeader span{display:block;color:#b71f37;font-size:8px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}.familyHeader h3{margin:3px 0 0;color:#102942;font-family:Georgia,'Times New Roman',serif;font-size:21px;line-height:1}.familyHeader>a{display:flex;align-items:center;gap:7px;padding:6px 8px 6px 10px;border-radius:999px;background:#f2f5f7;color:#123a67;font-size:10px;font-weight:900}.familyHeader>a b{color:#b71f37;font-size:13px}.periodGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.periodLink,.periodDisabled{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:38px;padding:0 10px;border:1px solid #e1e7ec;border-radius:10px;background:#f8fafb;color:#314b64;font-size:9px;font-weight:850}.periodLink{transition:background .15s ease,border-color .15s ease,transform .15s ease}.periodLink:hover{transform:translateY(-1px);border-color:#bfd0dc;background:#fff}.periodLink strong,.periodDisabled strong{display:grid;place-items:center;min-width:22px;height:22px;padding:0 5px;border-radius:999px;background:#fff;color:#b71f37;font-size:8px}.periodDisabled{color:#89939b}.institutionalGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.institutionalGrid a{position:relative;display:grid;gap:3px;min-height:76px;padding:13px 78px 13px 14px;border:1px solid #dce5ec;border-radius:14px;background:#fff;color:#123a67}.institutionalGrid a:hover{border-color:#b9cbd8}.institutionalGrid span{color:#b71f37;font-size:8px;font-weight:900;letter-spacing:.1em;text-transform:uppercase}.institutionalGrid strong{font-family:Georgia,'Times New Roman',serif;font-size:17px}.institutionalGrid b{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:#687684;font-size:10px}.provinceHub>p{margin:-4px 0 0;color:#74808b;font-size:10px}.municipalityGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}.municipalityGrid button{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:43px;padding:0 11px;border:1px solid #dfe7ed;border-radius:11px;background:#fff;color:#344e67;font:inherit;font-size:9px;font-weight:850;cursor:pointer;transition:border-color .15s ease,transform .15s ease}.municipalityGrid button:hover{transform:translateY(-1px);border-color:#b8cad7}.municipalityGrid button>span{flex:1;min-width:0;text-align:left;white-space:normal;line-height:1.2}.municipalityGrid strong{display:grid;place-items:center;flex:0 0 auto;min-width:24px;height:24px;padding:0 5px;border-radius:999px;background:#f1f4f6;color:#b71f37;font-size:8px}.results{display:grid;gap:13px;padding-top:2px}.resultsHead{display:flex;align-items:end;justify-content:space-between;gap:16px}.resultsHead span{display:block;color:#b71f37;font-size:8px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}.resultsHead h2{margin:3px 0 0;color:#123a67;font-family:Georgia,'Times New Roman',serif;font-size:23px}.resultsHead button{padding:8px 11px;border:1px solid #dce4ea;border-radius:999px;background:#fff;color:#5d6d7a;font:inherit;font-size:9px;font-weight:850;cursor:pointer}.cardList{display:grid;gap:10px}.empty{display:grid;gap:5px;padding:30px;border:1px dashed #cad5dd;border-radius:16px;background:#fff;text-align:center}.empty strong{color:#183a5e;font-family:Georgia,'Times New Roman',serif;font-size:20px}.empty span{color:#77838d;font-size:10px}
+.directory {
+  display: grid;
+  gap: 22px;
+  margin-top: 26px;
+  color: #173a61;
+}
 
-@media(max-width:980px){.primaryNav{grid-template-columns:repeat(2,minmax(0,1fr))}.finder{grid-template-columns:1fr}.calendarGrid{grid-template-columns:1fr}.municipalityGrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.finder {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) auto;
+  gap: 12px;
+}
 
-@media(max-width:640px){.directory{gap:14px;margin-top:20px}.primaryNav{gap:7px}.primaryNav a{min-height:78px;padding:12px 32px 11px 12px;border-radius:13px}.primaryNav small{font-size:8px}.primaryNav strong{font-size:15px}.primaryNav a>span{right:11px;bottom:10px;font-size:16px}.finder{padding:8px;border-radius:14px}.searchBox{min-height:45px}.finderControls{grid-template-columns:1fr}.territoryTabs button,.finderControls select{min-height:42px}.capitalHub,.provinceHub{padding:12px;border-radius:16px}.hubHeading{align-items:center}.hubHeading h2{font-size:22px}.hubHeading>strong{font-size:9px}.capitalQuick{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.capitalQuick a{min-height:40px;padding:0 9px}.calendarGrid{gap:8px}.familyCard{padding:11px;border-radius:14px}.familyHeader h3{font-size:19px}.periodGrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}.periodLink,.periodDisabled{min-height:40px;padding:0 8px;font-size:8px}.institutionalGrid{grid-template-columns:1fr;gap:7px}.institutionalGrid a{min-height:66px}.municipalityGrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.municipalityGrid button{min-height:42px;padding:0 9px}.resultsHead{align-items:center}.resultsHead h2{font-size:20px}}
+.searchBox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 50px;
+  padding: 0 14px;
+  border: 1px solid #cad6df;
+  border-radius: 12px;
+  background: #fff;
+}
 
-@media(max-width:390px){.primaryNav{grid-template-columns:1fr 1fr}.capitalQuick{grid-template-columns:1fr 1fr}.periodGrid{grid-template-columns:1fr}.municipalityGrid{grid-template-columns:1fr 1fr}.hubHeading>strong{max-width:92px;text-align:right}}
+.searchBox:focus-within {
+  border-color: #123a67;
+  box-shadow: 0 0 0 3px rgb(18 58 103 / 10%);
+}
 
-/* V4.1 · legibilidad de navegación */
-.capitalQuick a{min-height:48px;padding:0 13px;font-size:12px;line-height:1.2}.capitalQuick strong{min-width:27px;height:27px;font-size:10px}.familyHeader span{font-size:10px}.familyHeader h3{font-size:24px}.periodLink,.periodDisabled{min-height:50px;padding:0 14px;font-size:14px;font-weight:800;line-height:1.2}.periodLink strong,.periodDisabled strong{min-width:28px;height:28px;font-size:10px}.municipalityGrid button{min-height:48px;padding:0 13px;font-size:12px}.municipalityGrid strong{min-width:27px;height:27px;font-size:10px}.institutionalGrid span{font-size:9px}.institutionalGrid strong{font-size:19px}
+.searchBox input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #172b40;
+  font: inherit;
+  font-size: 16px;
+}
 
-@media(max-width:640px){.capitalQuick a{min-height:48px;padding:0 10px;font-size:12px}.familyHeader span{font-size:9px}.familyHeader h3{font-size:21px}.periodLink,.periodDisabled{min-height:48px;padding:0 10px;font-size:12px}.periodLink strong,.periodDisabled strong{min-width:26px;height:26px;font-size:9px}.municipalityGrid button{min-height:46px;padding:0 10px;font-size:11px}}
+.searchBox input::placeholder { color: #687784; }
+.searchBox > span:last-child { font-size: 22px; }
 
-/* V4.3 · hub provincial compacto */
-.provinceHub{gap:11px}.provinceIntro{margin:-2px 0 1px!important;font-size:12px!important;line-height:1.4}.municipalitySearch{display:flex;align-items:center;gap:10px;min-height:46px;padding:0 13px;border:1px solid #dce4ea;border-radius:12px;background:#fff;transition:border-color .15s ease,box-shadow .15s ease}.municipalitySearch:focus-within{border-color:#123a67;box-shadow:0 0 0 3px rgba(18,58,103,.08)}.municipalitySearch input{width:100%;min-width:0;border:0;outline:0;background:transparent;color:#172b40;font:inherit;font-size:13px;font-weight:700}.municipalitySearch input::placeholder{color:#8a959e;font-weight:600}.municipalitySearch>span:last-child{color:#123a67;font-size:20px}.municipalitySectionHead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:2px}.municipalitySectionHead>span{color:#b71f37;font-size:9px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}.municipalitySectionHead>small{color:#7a8792;font-size:10px;font-weight:800}.municipalityToggle{display:flex;align-items:center;justify-content:center;gap:9px;min-height:43px;padding:0 14px;border:1px solid #d8e2e9;border-radius:12px;background:#f4f7f9;color:#173a61;font:inherit;font-size:11px;font-weight:850;cursor:pointer;transition:background .15s ease,border-color .15s ease}.municipalityToggle:hover{border-color:#b8cad7;background:#fff}.municipalityToggle b{color:#b71f37;font-size:14px}.municipalityToggle:focus-visible{outline:3px solid rgba(18,58,103,.22);outline-offset:2px}.municipalityEmpty{display:grid;gap:3px;padding:18px;border:1px dashed #cad5dd;border-radius:12px;background:#fff;text-align:center}.municipalityEmpty strong{color:#173a61;font-size:13px}.municipalityEmpty span{color:#7b8791;font-size:10px}
+.finderControls {
+  display: flex;
+  gap: 10px;
+  min-width: 0;
+}
 
-@media(max-width:640px){.provinceHub{gap:9px}.provinceIntro{font-size:11px!important}.municipalitySearch{min-height:44px;padding:0 11px}.municipalitySearch input{font-size:12px}.municipalitySectionHead>span{font-size:8px}.municipalitySectionHead>small{font-size:9px}.municipalityToggle{min-height:44px;font-size:11px}.provinceHub .municipalityGrid button{min-height:44px;padding:0 10px;font-size:11px;line-height:1.15}}
+.territoryTabs {
+  display: flex;
+  gap: 3px;
+  padding: 3px;
+  border-radius: 12px;
+  background: #edf1f4;
+}
+
+.territoryTabs button,
+.finderControls select {
+  min-height: 44px;
+  border: 0;
+  border-radius: 9px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.territoryTabs button { padding: 0 12px; background: transparent; color: #536474; }
+.territoryTabs button.active { background: #fff; color: #123a67; box-shadow: 0 2px 8px rgb(20 43 66 / 7%); }
+.finderControls select { width: 225px; min-width: 0; padding: 0 32px 0 12px; border: 1px solid #cad6df; background: #fff; color: #2c435a; }
+
+.directory a:focus-visible,
+.directory button:focus-visible,
+.directory select:focus-visible {
+  outline: 3px solid #123a67;
+  outline-offset: 3px;
+}
+
+.primaryNav {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.primaryNav a {
+  position: relative;
+  display: grid;
+  align-content: center;
+  gap: 4px;
+  min-height: 78px;
+  padding: 12px 32px 12px 14px;
+  border: 1px solid #dce4eb;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.primaryNav a:hover { border-color: #9eb5c8; background: #f8fafc; }
+.primaryNav strong { font-size: 17px; line-height: 1.3; }
+.primaryNav small { color: #617180; font-size: 13px; line-height: 1.4; }
+.primaryNav a > span { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: #b71f37; font-size: 18px; }
+
+.hubs { display: grid; gap: 30px; }
+.capitalHub,
+.provinceHub { display: grid; gap: 16px; }
+.hubHeading { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
+.hubHeading h2 { margin: 0; color: #123a67; font-size: 27px; line-height: 1.2; }
+.hubHeading > strong { flex-shrink: 0; color: #617180; font-size: 14px; font-weight: 600; }
+
+.calendarGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: start; }
+.familyCard { display: grid; gap: 14px; padding: 16px; border: 1px solid #dce4eb; border-radius: 14px; background: #fff; }
+.familyHeader { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.familyHeader span { display: block; color: #657482; font-size: 13px; }
+.familyHeader h3 { margin: 2px 0 0; color: #173a61; font-size: 23px; line-height: 1.2; }
+.familyHeader button { display: inline-flex; align-items: center; gap: 7px; min-height: 44px; padding: 0 4px 0 10px; border: 0; border-radius: 6px; background: transparent; color: #173a61; font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; }
+.familyHeader button:hover { text-decoration: underline; text-underline-offset: 3px; }
+.familyHeader button b { color: #b71f37; }
+
+.periodGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
+.periodLink { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-width: 0; min-height: 48px; padding: 9px 11px; border: 1px solid #e0e7ed; border-radius: 9px; background: #f8fafb; color: #314b64; font: inherit; font-size: 15px; font-weight: 700; line-height: 1.3; text-align: left; cursor: pointer; }
+.periodLink:hover { border-color: #aebfcc; background: #fff; }
+.periodLink strong { display: grid; place-items: center; flex-shrink: 0; min-width: 26px; height: 26px; padding: 0 5px; border-radius: 50%; background: #fff; color: #a72035; font-size: 12px; }
+
+.institutionalGrid { display: flex; flex-wrap: wrap; gap: 8px 24px; padding-top: 2px; }
+.institutionalGrid a,
+.institutionalGrid button { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; max-width: 100%; padding: 6px 0; border: 0; border-radius: 3px; background: transparent; color: #314b64; font: inherit; font-size: 15px; font-weight: 700; cursor: pointer; }
+.institutionalGrid a:hover > span,
+.institutionalGrid button:hover > span { text-decoration: underline; text-underline-offset: 3px; }
+.institutionalGrid strong { color: #617180; font-size: 13px; }
+.institutionalGrid b { color: #b71f37; }
+
+.provinceHub { padding-top: 24px; border-top: 1px solid #dce4eb; }
+.municipalityGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.municipalityGrid button { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 48px; padding: 10px 13px; border: 1px solid #dce4eb; border-radius: 10px; background: #fff; color: #314b64; font: inherit; font-size: 16px; font-weight: 700; cursor: pointer; }
+.municipalityGrid button:hover { border-color: #9eb5c8; background: #f8fafc; }
+.municipalityGrid button > span { flex: 1; min-width: 0; text-align: left; line-height: 1.35; }
+.municipalityGrid strong { flex-shrink: 0; color: #a72035; font-size: 13px; }
+.municipalityToggle { justify-self: start; display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 6px 2px; border: 0; border-radius: 3px; background: transparent; color: #173a61; font: inherit; font-size: 15px; font-weight: 700; cursor: pointer; }
+.municipalityToggle:hover { text-decoration: underline; text-underline-offset: 3px; }
+.municipalityToggle b { color: #b71f37; }
+
+.results { display: grid; gap: 16px; }
+.resultsHead { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.resultsHead h2 { margin: 0; color: #123a67; font-size: 27px; line-height: 1.2; scroll-margin-top: 110px; }
+.resultsHead h2:focus { outline: none; }
+.resultsHead p { margin: 6px 0 0; color: #617180; font-size: 15px; }
+.resultsHead button { flex-shrink: 0; min-height: 44px; padding: 8px 13px; border: 1px solid #cbd7df; border-radius: 9px; background: #fff; color: #314b64; font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; }
+.cardList { display: grid; gap: 12px; }
+.empty,
+.municipalityEmpty { display: grid; gap: 6px; padding: 24px; border: 1px dashed #cad5dd; border-radius: 12px; background: #fff; text-align: center; }
+.empty strong,
+.municipalityEmpty strong { color: #173a61; font-size: 20px; }
+.empty span,
+.municipalityEmpty span { color: #617180; font-size: 15px; }
+
+@media (max-width: 1100px) {
+  .finder { grid-template-columns: 1fr; }
+  .finderControls { justify-content: space-between; }
+  .finderControls select { flex: 1; max-width: 360px; }
+}
+
+@media (max-width: 800px) {
+  .primaryNav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .calendarGrid { grid-template-columns: 1fr; }
+  .municipalityGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 560px) {
+  .directory { gap: 20px; margin-top: 22px; }
+  .finderControls { display: grid; grid-template-columns: 1fr; }
+  .territoryTabs button { flex: 1; padding: 0 7px; font-size: 14px; }
+  .finderControls select { width: 100%; max-width: none; min-height: 48px; font-size: 16px; }
+  .primaryNav { gap: 8px; }
+  .primaryNav a { padding: 12px 26px 12px 12px; }
+  .primaryNav strong { font-size: 16px; }
+  .primaryNav small { font-size: 13px; }
+  .primaryNav a > span { right: 9px; }
+  .hubHeading { align-items: start; }
+  .hubHeading h2 { font-size: 24px; }
+  .hubHeading > strong { max-width: 100px; font-size: 13px; text-align: right; }
+  .familyCard { padding: 12px; }
+  .familyHeader h3 { font-size: 22px; }
+  .periodLink { padding: 9px; font-size: 14px; }
+  .institutionalGrid { display: grid; gap: 4px; }
+  .institutionalGrid a,
+  .institutionalGrid button { justify-content: start; }
+  .municipalityGrid button { font-size: 15px; }
+  .resultsHead { align-items: start; flex-wrap: wrap; }
+  .resultsHead h2 { font-size: 24px; }
+}
+
+@media (max-width: 390px) {
+  .primaryNav a { padding-inline: 10px; }
+  .primaryNav a > span { display: none; }
+  .periodGrid,
+  .municipalityGrid { grid-template-columns: 1fr; }
+}

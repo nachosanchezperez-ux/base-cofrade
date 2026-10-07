@@ -20,52 +20,41 @@ export default function BrotherhoodPublicIndex({ brotherhoods = [] }) {
 
   return (
     <section className={styles.index} aria-labelledby="indice-hermandades">
-      <header className={styles.heading}>
-        <div>
-          <span>Índice completo</span>
+      <details className={styles.disclosure}>
+        <summary className={styles.summary}>
           <h2 id="indice-hermandades">Hermandades por localidad</h2>
+        </summary>
+
+        <div className={styles.groups}>
+          {groups.map((group) => {
+            const localityPage = localityPages.get(group.slug)
+            const localityName = group.locality === 'Sevilla' ? 'Sevilla capital' : group.locality
+
+            return (
+              <section className={`${styles.group} ${group.key === 'sevilla' ? styles.capitalGroup : ''}`} id={`hermandades-${group.key}`} key={group.key} aria-labelledby={`hermandades-${group.key}-titulo`}>
+                <header>
+                  <h3 id={`hermandades-${group.key}-titulo`}>
+                    {localityPage ? (
+                      <Link href={localityPage.href}>{localityName} <span aria-hidden="true">→</span></Link>
+                    ) : localityName}
+                  </h3>
+                  <span className={styles.count}>{group.items.length} {group.items.length === 1 ? 'corporación' : 'corporaciones'}</span>
+                </header>
+                <ul>
+                  {group.items.map((item) => (
+                    <li key={item.id || item.slug}>
+                      <Link href={`/hermandades/${item.slug}`} prefetch={false}>
+                        <strong>{displayName(item)}</strong>
+                        {contextLine(item) ? <span>{contextLine(item)}</span> : null}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )
+          })}
         </div>
-        <p>Accede directamente a cada ficha de Sevilla capital y su provincia.</p>
-      </header>
-
-      <nav className={styles.localities} aria-label="Ir a una localidad">
-        {groups.map((group) => {
-          const localityPage = localityPages.get(group.slug)
-          const content = (
-            <>
-              <span>{group.locality === 'Sevilla' ? 'Sevilla capital' : group.locality}</span>
-              <strong>{group.items.length}</strong>
-            </>
-          )
-
-          return localityPage ? (
-            <Link href={localityPage.href} key={group.key}>{content}</Link>
-          ) : (
-            <a href={`#hermandades-${group.key}`} key={group.key}>{content}</a>
-          )
-        })}
-      </nav>
-
-      <div className={styles.groups}>
-        {groups.map((group) => (
-          <section className={styles.group} id={`hermandades-${group.key}`} key={group.key} aria-labelledby={`hermandades-${group.key}-titulo`}>
-            <header>
-              <h3 id={`hermandades-${group.key}-titulo`}>{group.locality === 'Sevilla' ? 'Sevilla capital' : group.locality}</h3>
-              <span>{group.items.length} {group.items.length === 1 ? 'corporación' : 'corporaciones'}</span>
-            </header>
-            <ul>
-              {group.items.map((item) => (
-                <li key={item.id || item.slug}>
-                  <Link href={`/hermandades/${item.slug}`} prefetch={false}>
-                    <strong>{displayName(item)}</strong>
-                    {contextLine(item) ? <span>{contextLine(item)}</span> : null}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </section>
-        ))}
-      </div>
+      </details>
     </section>
   )
 }
