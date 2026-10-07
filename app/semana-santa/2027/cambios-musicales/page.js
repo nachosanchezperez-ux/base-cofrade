@@ -205,7 +205,6 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
   })
 
   const brotherhoodCount = new Set(changes.map((item) => item.brotherhoodSlug || item.brotherhoodName)).size
-  const newBandCount = new Set(changes.map((item) => item.newBandSlug || item.newBandName)).size
   const lastUpdated = updatedLabel([...changes, ...renewals])
   const municipalityTop = municipalityRanking(changes)
   const hasFilters = Boolean(activeDay || activeScope || activeMunicipality || activeType || requestedQuery)
@@ -469,7 +468,9 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
                                 </div>
                                 <div className={styles.renewalCard}>
                                   <span className={styles.renewalBadge}>{renewal.renewalLabel}</span>
-                                  <strong>{bandLink(renewal)}</strong>
+                                  {renewal.newBandHref
+                                    ? <Link className={styles.renewalBandLink} href={renewal.newBandHref}>{renewal.newBandName}</Link>
+                                    : <strong>{renewal.newBandName}</strong>}
                                 </div>
                               </section>
                             )
