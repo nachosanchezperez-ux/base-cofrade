@@ -1,10 +1,9 @@
 import { connection } from 'next/server'
 import HermandadesDirectoryV4 from '@/components/HermandadesDirectoryV4';
-import BrotherhoodPublicIndex from '@/components/BrotherhoodPublicIndex';
 import JsonLd from '@/components/JsonLd';
-import { filterIndexableBrotherhoods } from '@/lib/brotherhood-public-index';
-import { getHermandadesDirectory } from '@/lib/supabase/public-directory-cache';
-import { getPublicIndexableEntityEntries } from '@/lib/supabase/public-directory-cache';
+import { brotherhoodDirectoryLocalities, filterIndexableBrotherhoods } from '@/lib/brotherhood-public-index';
+import { buildBrotherhoodDirectoryNavigation } from '@/lib/brotherhood-directory-navigation';
+import { getHermandadesDirectory, getPublicIndexableEntityEntries } from '@/lib/supabase/public-directory-cache';
 import { absoluteUrl, breadcrumbJsonLd, pageTitle } from '@/lib/seo';
 
 export const revalidate = 900;
@@ -12,9 +11,7 @@ export const revalidate = 900;
 export const metadata = {
   title: 'Hermandades y Agrupaciones Parroquiales de Sevilla',
   description: 'Directorio de hermandades de Semana Santa, Gloria, Sacramentales y Agrupaciones Parroquiales de Sevilla capital y provincia.',
-  alternates: {
-    canonical: '/hermandades',
-  },
+  alternates: { canonical: '/hermandades' },
   openGraph: {
     title: pageTitle('Directorio de hermandades y Agrupaciones Parroquiales'),
     description: 'Consulta hermandades y Agrupaciones Parroquiales de Sevilla capital y provincia.',
@@ -26,10 +23,7 @@ export default async function HermandadesPage() {
   await connection()
   const hermandades = await getHermandadesDirectory();
   const indexableEntries = await getPublicIndexableEntityEntries({
-    brotherhoods: hermandades,
-    bandDirectory: [],
-    images: [],
-    steps: [],
+    brotherhoods: hermandades, bandDirectory: [], images: [], steps: [],
   });
   const indexableHermandades = filterIndexableBrotherhoods(hermandades, indexableEntries);
   const directoryJsonLd = {
@@ -39,16 +33,12 @@ export default async function HermandadesPage() {
     url: absoluteUrl('/hermandades'),
     name: 'Directorio de hermandades y Agrupaciones Parroquiales',
     inLanguage: 'es',
-    isPartOf: {
-      '@id': `${absoluteUrl('/')}#website`,
-    },
+    isPartOf: { '@id': `${absoluteUrl('/')}#website` },
     mainEntity: {
       '@type': 'ItemList',
       numberOfItems: indexableHermandades.length,
       itemListElement: indexableHermandades.map((hermandad, index) => ({
-        '@type': 'ListItem',
-        position: index + 1,
-        name: hermandad.nombrePopular,
+        '@type': 'ListItem', position: index + 1, name: hermandad.nombrePopular,
         url: absoluteUrl(`/hermandades/${hermandad.slug}`),
       })),
     },
@@ -57,8 +47,7 @@ export default async function HermandadesPage() {
   return (
     <section className="section page-top">
       <JsonLd data={breadcrumbJsonLd([
-        { name: 'Inicio', path: '/' },
-        { name: 'Hermandades', path: '/hermandades' },
+        { name: 'Inicio', path: '/' }, { name: 'Hermandades', path: '/hermandades' },
       ])} />
       <JsonLd data={directoryJsonLd} />
       <div className="shell">
@@ -67,8 +56,11 @@ export default async function HermandadesPage() {
         <p className="page-lead">
           Recorre las corporaciones de Sevilla capital y su provincia por su carácter, localidad y momento principal del calendario.
         </p>
-        <HermandadesDirectoryV4 hermandades={hermandades} />
-        <BrotherhoodPublicIndex brotherhoods={indexableHermandades} />
+        <HermandadesDirectoryV4 hermandades={hermandades} navigation={{
+          ...buildBrotherhoodDirectoryNavigation(indexableHermandades),
+          indexableIds: indexableHermandades.map((item) => item.id),
+          localities: brotherhoodDirectoryLocalities(indexableHermandades),
+        }} />
       </div>
     </section>
   );
