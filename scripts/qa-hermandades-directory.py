@@ -117,6 +117,10 @@ def browser_qa():
                                 assert group.locator('[aria-pressed="true"]').count() == 1
                                 for button in group.locator('button').all():
                                     expect(button).to_be_visible()
+                                # Measure the rendered text, not just the parent button.
+                                label_fonts = group.locator('button > span:first-child').evaluate_all('els => els.map(e => parseFloat(getComputedStyle(e).fontSize))')
+                                assert len(label_fonts) == 5 and min(label_fonts) >= 16, ('Filter label too small', label_fonts)
+                                case['filterLabelFontsPx'] = label_fonts
                                 assert group.evaluate('e => e.scrollWidth <= e.clientWidth + 1'), 'Hidden horizontal filter options'
                                 assert group.locator('button').evaluate_all('''els => els.every(e => e.scrollWidth <= e.clientWidth + 1 && e.scrollHeight <= e.clientHeight + 1)'''), 'Clipped filter label'
 
