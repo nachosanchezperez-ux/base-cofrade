@@ -13,6 +13,7 @@ export default function HermandadesDirectoryV4({ hermandades, navigation }) {
   const [territory, setTerritory] = useState('todos')
   const [municipality, setMunicipality] = useState('todos')
   const [reset, setReset] = useState(0)
+  const [hydrated, setHydrated] = useState(false)
   const [hashTarget, setHashTarget] = useState(null)
   const searchRef = useRef(null)
   const allGroups = useMemo(() => groupBrotherhoodsByLocality(hermandades), [hermandades])
@@ -21,6 +22,8 @@ export default function HermandadesDirectoryV4({ hermandades, navigation }) {
   }), [hermandades, navigation.indexableIds, query, territory, municipality])
   const lookup = Boolean(query.trim()) || municipality !== 'todos'
   const hasFilters = lookup || territory !== 'todos'
+
+  useEffect(() => { setHydrated(true) }, [])
 
   useEffect(() => {
     function revealLocality() {
@@ -47,6 +50,12 @@ export default function HermandadesDirectoryV4({ hermandades, navigation }) {
     return () => window.cancelAnimationFrame(frame)
   }, [hashTarget])
 
+  function changeQuery(next) {
+    setQuery(next)
+    // A new search must not inherit a locality's calendar or character filter.
+    setReset((value) => value + 1)
+  }
+
   function changeTerritory(next) {
     setTerritory(next)
     setMunicipality('todos')
@@ -68,12 +77,12 @@ export default function HermandadesDirectoryV4({ hermandades, navigation }) {
   }
 
   return (
-    <div className={styles.directory}>
+    <div className={styles.directory} data-hermandades-directory data-hydrated={hydrated}>
       <section className={styles.finder} aria-label="Buscar y navegar por el directorio">
         <label className={styles.searchBox} htmlFor="hermandades-v4-search">
           <span className="sr-only">Buscar hermandad o corporación</span>
           <input id="hermandades-v4-search" ref={searchRef} type="search" value={query}
-            onChange={(event) => setQuery(event.target.value)}
+            onChange={(event) => changeQuery(event.target.value)}
             placeholder="Buscar hermandad, templo o localidad…" />
           <span aria-hidden="true">⌕</span>
         </label>
