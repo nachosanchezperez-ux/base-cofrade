@@ -9,7 +9,7 @@ import * as localityCalendar from '../lib/brotherhood-locality-calendar.js'
 import { buildBrotherhoodDirectoryNavigation } from '../lib/brotherhood-directory-navigation.js'
 
 const require = createRequire(import.meta.url)
-const { transform } = require('next/dist/build/swc')
+const { loadBindings, transform } = require('next/dist/build/swc')
 
 // Exercise the real JSX components and React SSR, without a DOM or effects.
 // Only CSS is replaced: this is a server-rendering test, NOT visual/browser QA.
@@ -17,6 +17,7 @@ const { transform } = require('next/dist/build/swc')
 async function compileComponent(path, dependencies) {
   const file = new URL(`../${path}`, import.meta.url)
   const source = await readFile(file, 'utf8')
+  await loadBindings()
   const { code } = await transform(source, {
     filename: fileURLToPath(file),
     jsc: {
