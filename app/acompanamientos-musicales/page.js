@@ -3,7 +3,7 @@ import JsonLd from '@/components/JsonLd'
 import SiteBreadcrumb from '@/components/SiteBreadcrumb'
 import MusicDashboard from '@/components/MusicDashboard'
 import { getPublicMusicAccompanimentSummary } from '@/lib/supabase/public-directory-cache'
-import { DASHBOARD_PATH, dashboardFilters, dashboardHref, selectMusicDashboard } from '@/lib/music-dashboard'
+import { DASHBOARD_PATH, dashboardFilters, dashboardHref, selectMusicDashboard } from '@/lib/music-dashboard-capital'
 import { breadcrumbJsonLd, collectionPageJsonLd, filteredViewRobots, socialMetadata } from '@/lib/seo'
 import styles from '@/components/MusicDashboard.module.css'
 
@@ -12,9 +12,9 @@ const DESCRIPTION = 'Datos y estadísticas de acompañamientos musicales por ban
 
 export async function generateMetadata({ searchParams } = {}) {
   const params = await searchParams
-  const { year } = dashboardFilters(params)
-  const title = `Panel de acompañamientos musicales · ${year === 2027 ? 'Avance 2027' : 'Semana Santa 2026'}`
-  const robots = filteredViewRobots(params, ['temporada', 'q', 'tipo', 'orden', 'ambito', 'municipio', 'banda', 'pagina'])
+  const { year, scope, municipality } = dashboardFilters(params)
+  const title = `${scope === 'capital' || municipality === 'Sevilla' ? 'Música de la Semana Santa de Sevilla' : 'Panel de acompañamientos musicales'} · ${year === 2027 ? 'Avance 2027' : 'Semana Santa 2026'}`
+  const robots = filteredViewRobots(params, ['temporada', 'q', 'tipo', 'orden', 'ambito', 'municipio', 'banda', 'pagina', 'jornada', 'posicion', 'seccion'])
   return { title, description: DESCRIPTION, ...socialMetadata({ title, description: DESCRIPTION, path: DASHBOARD_PATH }), ...(robots ? { robots } : {}) }
 }
 
