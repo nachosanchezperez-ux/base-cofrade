@@ -1,4 +1,4 @@
-.directory { display: grid; gap: 24px; margin-top: 26px; color: var(--ink, #173a61); }
+.directory { --readability-interactive: 16px; display: grid; gap: 24px; margin-top: 26px; color: var(--ink, #173a61); }
 .finder { display: grid; grid-template-columns: minmax(220px, 1fr) auto; gap: 12px; }
 .searchBox { display: flex; align-items: center; gap: 10px; min-height: 50px; padding: 0 14px; border: 1px solid #cad6df; border-radius: 10px; background: #fff; }
 .searchBox:focus-within { outline: 3px solid #123a67; outline-offset: 2px; }
