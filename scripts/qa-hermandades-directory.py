@@ -108,7 +108,16 @@ def browser_qa():
                         def geometry():
                             assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1'), 'Horizontal page overflow'
                             controls = root.locator('input, select, button').evaluate_all('''els => els.filter(e => e.getClientRects().length).map(e => ({text: e.getAttribute('aria-label') || e.textContent, font: parseFloat(getComputedStyle(e).fontSize), height: e.getBoundingClientRect().height, left: e.getBoundingClientRect().left, right: e.getBoundingClientRect().right}))''')
-                            assert all(c['font'] >= 16 and c['height'] >= 44 and c['left'] >= -1 and c['right'] <= width + 1 for c in controls), controls
+                            bad = [c for c in controls if c['font'] < 16 or c['height'] < 44 or c['left'] < -1 or c['right'] > width + 1]
+                            assert not bad, bad
+
+                        def capture_at(locator, label):
+                            # Native instant scrolling stops the application's smooth scroll.
+                            # The app's CSS and layout remain unmodified during the capture.
+                            locator.evaluate("el => window.scrollTo({top: window.scrollY + el.getBoundingClientRect().top - 95, behavior: 'instant'})")
+                            page.wait_for_function('document.fonts.status === "loaded"')
+                            page.screenshot(path=str(OUT / f'{engine}-{width}-{label}.png'))
+
                         geometry()
                         page.screenshot(path=str(OUT / f'{engine}-{width}-overview.png'))
                         capital = root.locator('#hermandades-sevilla')
@@ -118,13 +127,12 @@ def browser_qa():
                         expect(capital.get_by_role('heading', name='Madrugá', exact=True)).to_be_visible()
                         assert root.locator('details[open]').count() == 1
                         geometry()
-                        capital.locator('summary').scroll_into_view_if_needed()
-                        page.evaluate('scrollBy(0,-90)')
-                        page.screenshot(path=str(OUT / f'{engine}-{width}-capital.png'))
+                        capture_at(capital.locator('summary'), 'capital')
                         if width in (390, 1366):
                             capital.get_by_role('button', name=re.compile(r'^Glorias')).click()
                             expect(capital.get_by_role('heading', name='Octubre', exact=True)).to_be_visible()
                             expect(capital.get_by_role('heading', name='Madrugá', exact=True)).to_have_count(0)
+                            capture_at(capital.get_by_role('heading', name='Octubre', exact=True), 'glorias')
                             search.fill('Baratillo')
                             expect(capital.locator('a[href="/hermandades/el-baratillo"]')).to_be_visible()
                             expect(capital.get_by_role('button', name=re.compile(r'^Todas'))).to_have_attribute('aria-pressed', 'true')
@@ -160,7 +168,7 @@ def browser_qa():
                             expect(locality).to_have_attribute('open', '')
                             expect(locality.locator('summary')).to_be_focused()
                             geometry()
-                            page.screenshot(path=str(OUT / f'{engine}-{width}-locality.png'))
+                            capture_at(locality.locator('summary'), 'locality')
                             case['interactive'] = 'PASS'
                         assert not errors, errors
                         case['status'] = 'PASS'
