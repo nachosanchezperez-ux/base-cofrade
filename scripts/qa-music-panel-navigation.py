@@ -1,9 +1,11 @@
 """Navigation smoke test. Install Playwright only in the QA environment.
 
-Usage: python3 scripts/qa-music-panel-navigation.py http://localhost:3000 /tmp/music-nav-qa
-Does not edit data, set cookies, or submit forms.
+Usage: python3 scripts/qa-music-panel-navigation.py https://preview.example /tmp/music-nav-qa
+QA_ACCESS_URL may contain the temporary access URL issued by Vercel for that same host.
+Does not edit data or submit forms. The access URL is never written to the report.
 """
 import json
+import os
 import sys
 from pathlib import Path
 from urllib.parse import urlparse
@@ -12,6 +14,9 @@ from playwright.sync_api import sync_playwright, expect
 BASE = (sys.argv[1] if len(sys.argv) > 1 else 'http://localhost:3000').rstrip('/')
 OUTPUT = Path(sys.argv[2] if len(sys.argv) > 2 else '/tmp/music-nav-qa')
 OUTPUT.mkdir(parents=True, exist_ok=True)
+ACCESS_URL = os.environ.get('QA_ACCESS_URL', '')
+if ACCESS_URL and urlparse(ACCESS_URL).netloc != urlparse(BASE).netloc:
+    raise ValueError('The access URL must belong to the tested host')
 TARGET = '/acompanamientos-musicales'
 VIEWS = [(320, 740), (390, 844), (430, 932), (768, 1024), (860, 600), (1024, 390), (1366, 900)]
 results = []
@@ -23,6 +28,8 @@ with sync_playwright() as pw:
             page = browser.new_page(viewport={'width': width, 'height': height})
             page.set_default_timeout(15000)
             errors = []
+            if ACCESS_URL:
+                page.goto(ACCESS_URL, wait_until='domcontentloaded', timeout=45000)
             page.on('pageerror', lambda error: errors.append(str(error)))
             response = page.goto(BASE + '/directorio', wait_until='networkidle', timeout=45000)
             assert response and response.status == 200, 'Directory response'
