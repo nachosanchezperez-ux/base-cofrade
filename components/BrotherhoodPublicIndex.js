@@ -8,6 +8,12 @@ import { groupBrotherhoodsByLocality } from '@/lib/brotherhood-public-index'
 import { CALENDAR_VIEWS, calendarSelection, calendarSections, localityAnchor } from '@/lib/brotherhood-locality-calendar'
 import styles from './BrotherhoodPublicIndex.module.css'
 
+const LOCALITY_FILTERS = [
+  ...CALENDAR_VIEWS,
+  { key: 'sacramentales', label: 'Sacramentales' },
+  { key: 'agrupaciones-parroquiales', label: 'Agrupaciones Parroquiales' },
+]
+
 function BrotherhoodRow({ item, showCrest }) {
   const secondary = [
     hasDirectoryType(item, 'sacramentales') ? 'Sacramental' : '',
@@ -31,16 +37,15 @@ function BrotherhoodRow({ item, showCrest }) {
 
 function LocalityCalendar({ group, navigation, expand }) {
   const [open, setOpen] = useState(expand)
-  const [view, setView] = useState('todos')
-  const [character, setCharacter] = useState('todos')
+  const [filter, setFilter] = useState('todos')
+  // One visible selection; character views still preserve the existing calendar.
+  // Derived values cannot retain a hidden cross-filter from a previous choice.
+  const character = ['sacramentales', 'agrupaciones-parroquiales'].includes(filter) ? filter : 'todos'
+  const view = character === 'todos' ? filter : 'todos'
   const id = localityAnchor(group)
   const name = group.key === 'sevilla' ? 'Sevilla capital' : group.locality
   const selected = calendarSelection(group.items, view, character)
   const sections = calendarSections(group.items, view, character)
-  const characterOptions = [
-    ['sacramentales', 'Sacramentales'],
-    ['agrupaciones-parroquiales', 'Agrupaciones Parroquiales'],
-  ].filter(([key]) => group.items.some((item) => hasDirectoryType(item, key)))
   const localityPage = navigation.localities.find((item) => item.slug === group.slug)
 
   useEffect(() => { if (expand) setOpen(true) }, [expand])
@@ -55,25 +60,17 @@ function LocalityCalendar({ group, navigation, expand }) {
       </summary>
       <div className={styles.content}>
         <div className={styles.controls}>
-          <div role="group" aria-label={`Calendario de ${name}`} className={styles.views}>
-            {CALENDAR_VIEWS.filter((entry) => entry.key === 'todos' || group.items.some((item) => hasDirectoryType(item, entry.key))).map((entry) => (
-              <button type="button" key={entry.key} aria-pressed={view === entry.key}
-                className={view === entry.key ? styles.selected : ''} onClick={() => setView(entry.key)}>
-                {entry.label}<span>{calendarSelection(group.items, entry.key, character).length}</span>
+          <div role="group" aria-label={`Filtrar corporaciones de ${name}`} className={styles.views} data-locality-filters="true">
+            {LOCALITY_FILTERS.map((entry) => (
+              <button type="button" key={entry.key} data-directory-filter={entry.key} aria-pressed={filter === entry.key}
+                className={filter === entry.key ? styles.selected : ''} onClick={() => setFilter(entry.key)}>
+                <span className={styles.viewLabel}>{entry.label}</span>
+                <span className={styles.viewCount}>{calendarSelection(group.items, entry.key).length}</span>
               </button>
             ))}
           </div>
-          {characterOptions.length ? (
-            <label className={styles.character} htmlFor={`${id}-caracter`}>
-              <span>Carácter</span>
-              <select id={`${id}-caracter`} value={character} onChange={(event) => setCharacter(event.target.value)}>
-                <option value="todos">Todos</option>
-                {characterOptions.map(([key, label]) => <option key={key} value={key}>{label}</option>)}
-              </select>
-            </label>
-          ) : null}
         </div>
-        <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">{selected.length} corporaciones en {name}</p>
+        <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">{selected.length} {selected.length === 1 ? 'corporación' : 'corporaciones'} en {name}</p>
         {sections.length ? sections.map((section) => (
           <section className={styles.calendar} key={section.key} aria-labelledby={`${id}-${section.key}`}>
             <h4 id={`${id}-${section.key}`}>{section.label}</h4>
@@ -91,8 +88,8 @@ function LocalityCalendar({ group, navigation, expand }) {
           </section>
         )) : (
           <div className={styles.empty}>
-            <p>No hay corporaciones con esta combinación de calendario y carácter.</p>
-            <button type="button" onClick={() => { setView('todos'); setCharacter('todos') }}>Ver todas las de {name}</button>
+            <p>No hay corporaciones de esta categoría en {name}.</p>
+            <button type="button" onClick={() => setFilter('todos')}>Ver todas las de {name}</button>
           </div>
         )}
         {localityPage ? <Link href={localityPage.href} prefetch={false} className={styles.localityLink}>Ver directorio completo de {name} <span>({localityPage.count} fichas)</span> <span aria-hidden="true">→</span></Link> : null}

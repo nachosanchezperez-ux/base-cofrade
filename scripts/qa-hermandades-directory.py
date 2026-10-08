@@ -75,6 +75,7 @@ def browser_qa():
     data = json.loads((OUT / 'public-snapshot.json').read_text())
     results = []
     base = 'http://127.0.0.1:3100/hermandades'
+    filter_keys = ['todos', 'semana-santa', 'gloria', 'sacramentales', 'agrupaciones-parroquiales']
     with sync_playwright() as pw:
         for engine, widths in [('chromium', [320, 390, 430, 768, 1024, 1366, 1600]), ('webkit', [390, 430, 768])]:
             browser = getattr(pw, engine).launch()
@@ -99,6 +100,7 @@ def browser_qa():
                         expect(top_status).to_contain_text(str(len(data['index'])))
                         assert root.locator('input[type="search"]').count() == 1
                         assert root.locator('details details').count() == 0
+                        assert root.locator('details select').count() == 0
                         assert root.locator('details[open]').count() == 0
                         assert root.locator('details').first.get_attribute('id') == 'hermandades-sevilla'
                         index_slugs = {row['slug'] for row in data['rows'] if any(i['id'] == row['id'] for i in data['index'])}
@@ -110,13 +112,30 @@ def browser_qa():
                             controls = root.locator('input, select, button').evaluate_all('''els => els.filter(e => e.getClientRects().length).map(e => ({text: e.getAttribute('aria-label') || e.textContent, font: parseFloat(getComputedStyle(e).fontSize), height: e.getBoundingClientRect().height, left: e.getBoundingClientRect().left, right: e.getBoundingClientRect().right}))''')
                             bad = [c for c in controls if c['font'] < 16 or c['height'] < 44 or c['left'] < -1 or c['right'] > width + 1]
                             assert not bad, bad
+                            for group in root.locator('details[open] [data-locality-filters]').all():
+                                assert group.locator('button').count() == 5
+                                assert group.locator('[aria-pressed="true"]').count() == 1
+                                for button in group.locator('button').all():
+                                    expect(button).to_be_visible()
+                                assert group.evaluate('e => e.scrollWidth <= e.clientWidth + 1'), 'Hidden horizontal filter options'
+                                assert group.locator('button').evaluate_all('''els => els.every(e => e.scrollWidth <= e.clientWidth + 1 && e.scrollHeight <= e.clientHeight + 1)'''), 'Clipped filter label'
 
                         def capture_at(locator, label):
-                            # Native instant scrolling stops the application's smooth scroll.
-                            # The app's CSS and layout remain unmodified during the capture.
                             locator.evaluate("el => window.scrollTo({top: window.scrollY + el.getBoundingClientRect().top - 95, behavior: 'instant'})")
                             page.wait_for_function('document.fonts.status === "loaded"')
                             page.screenshot(path=str(OUT / f'{engine}-{width}-{label}.png'))
+
+                        def choose(locality, key):
+                            button = locality.locator(f'[data-directory-filter="{key}"]')
+                            count = int(button.locator('span').last.inner_text())
+                            button.click()
+                            expect(button).to_have_attribute('aria-pressed', 'true')
+                            expect(locality.locator('[data-locality-filters] [aria-pressed="true"]')).to_have_count(1)
+                            expect(locality.locator('p[role="status"]')).to_contain_text(f'{count} ')
+                            links = locality.locator('li > a').evaluate_all('(els) => els.map(e => e.getAttribute("href"))')
+                            assert len(set(links)) == count, (key, count, links)
+                            geometry()
+                            return links
 
                         geometry()
                         page.screenshot(path=str(OUT / f'{engine}-{width}-overview.png'))
@@ -126,20 +145,34 @@ def browser_qa():
                         expect(capital).to_have_attribute('open', '')
                         expect(capital.get_by_role('heading', name='Madrugá', exact=True)).to_be_visible()
                         assert root.locator('details[open]').count() == 1
+                        assert capital.locator('[data-directory-filter]').evaluate_all('(els) => els.map(e => e.dataset.directoryFilter)') == filter_keys
                         geometry()
                         capture_at(capital.locator('summary'), 'capital')
+                        choose(capital, 'sacramentales')
+                        assert all('Sacramental' in text for text in capital.locator('li > a').all_text_contents())
+                        choose(capital, 'gloria')
+                        expect(capital.get_by_role('heading', name='Octubre', exact=True)).to_be_visible()
+                        expect(capital.get_by_role('heading', name='Madrugá', exact=True)).to_have_count(0)
+                        choose(capital, 'agrupaciones-parroquiales')
+                        assert all('Agrupación Parroquial' in text for text in capital.locator('li > a').all_text_contents())
+                        choose(capital, 'semana-santa')
+                        expect(capital.get_by_role('heading', name='Madrugá', exact=True)).to_be_visible()
+                        choose(capital, 'todos')
+                        case['fiveVisibleFilters'] = 'PASS'
                         if width in (390, 1366):
-                            capital.get_by_role('button', name=re.compile(r'^Glorias')).click()
-                            expect(capital.get_by_role('heading', name='Octubre', exact=True)).to_be_visible()
-                            expect(capital.get_by_role('heading', name='Madrugá', exact=True)).to_have_count(0)
-                            capture_at(capital.get_by_role('heading', name='Octubre', exact=True), 'glorias')
+                            choose(capital, 'gloria')
+                            capture_at(capital.locator('summary'), 'glorias')
                             search.fill('Baratillo')
                             expect(capital.locator('a[href="/hermandades/el-baratillo"]')).to_be_visible()
-                            expect(capital.get_by_role('button', name=re.compile(r'^Todas'))).to_have_attribute('aria-pressed', 'true')
+                            expect(capital.locator('[data-directory-filter="todos"]')).to_have_attribute('aria-pressed', 'true')
                             root.get_by_role('button', name='Limpiar filtros', exact=True).click()
                             capital.locator('summary').click()
-                            capital.locator('select').select_option('sacramentales')
+                            choose(capital, 'sacramentales')
                             search.fill('Baratillo')
+                            expect(capital.locator('a[href="/hermandades/el-baratillo"]')).to_be_visible()
+                            choose(capital, 'agrupaciones-parroquiales')
+                            expect(capital.get_by_text('No hay corporaciones de esta categoría en Sevilla capital.', exact=True)).to_be_visible()
+                            capital.get_by_role('button', name='Ver todas las de Sevilla capital', exact=True).click()
                             expect(capital.locator('a[href="/hermandades/el-baratillo"]')).to_be_visible()
                             search.fill('qzx-sin-resultados-987654')
                             expect(root.get_by_text('No hay resultados', exact=True)).to_be_visible()
@@ -154,10 +187,10 @@ def browser_qa():
                             locality = root.locator('#hermandades-la-rinconada')
                             expect(locality).to_have_attribute('open', '')
                             expect(root.locator('details')).to_have_count(1)
-                            locality.locator('select').select_option('agrupaciones-parroquiales')
+                            choose(locality, 'agrupaciones-parroquiales')
                             expect(locality.locator('a[href="/hermandades/humildad-caridad-el-olivo-san-jose-rinconada"]')).to_be_visible()
                             root.get_by_role('combobox', name='Elegir localidad', exact=True).select_option(label='Sevilla capital')
-                            expect(capital.locator('select')).to_have_value('todos')
+                            expect(capital.locator('[data-directory-filter="todos"]')).to_have_attribute('aria-pressed', 'true')
                             geometry()
                             search.fill('San Martín')
                             expect(capital.locator('a[href="/hermandades/hermandad-sagrada-lanzada"]')).to_have_count(2)
@@ -167,6 +200,12 @@ def browser_qa():
                             expect(root).to_have_attribute('data-hydrated', 'true')
                             expect(locality).to_have_attribute('open', '')
                             expect(locality.locator('summary')).to_be_focused()
+                            grouped = locality.locator('[data-directory-filter="agrupaciones-parroquiales"]')
+                            grouped.focus()
+                            page.keyboard.press('Space')
+                            expect(grouped).to_have_attribute('aria-pressed', 'true')
+                            expect(grouped).to_be_focused()
+                            choose(locality, 'todos')
                             geometry()
                             capture_at(locality.locator('summary'), 'locality')
                             case['interactive'] = 'PASS'
