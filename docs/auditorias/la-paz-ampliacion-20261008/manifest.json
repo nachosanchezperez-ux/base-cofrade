@@ -1,0 +1,1205 @@
+[
+  {
+    "type": "insert",
+    "table": "sources",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000001",
+      "name": "Marchas dedicadas · Hermandad de la Paz",
+      "url": "https://www.hermandaddelapaz.org/marchas/",
+      "source_type": "Web oficial",
+      "author_or_publisher": "Hermandad de la Paz",
+      "accessed_at": "2026-10-08",
+      "notes": "Catálogo oficial. Se incorporan seis obras seleccionadas, diferenciando compositores y modalidades."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000002",
+      "source_id": "b1082026-1008-4a91-8d62-000000000001",
+      "entity_id": "a4220000-0000-0000-0000-000000000003",
+      "scope": "Patrimonio musical",
+      "notes": "Ampliación editorial La Paz · 8/10/2026."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "entities",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000003",
+      "name": "Óscar Mosteiro",
+      "slug": "oscar-mosteiro",
+      "entity_type": "agent",
+      "summary": "Compositor de Esplendor del Porvenir (2025), incluida en el catálogo musical de la Hermandad de la Paz.",
+      "status": "published"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "agents",
+    "row": {
+      "entity_id": "b1082026-1008-4a91-8d62-000000000003",
+      "agent_kind": "person",
+      "description": "Autor de la marcha para banda de música Esplendor del Porvenir (2025), según el catálogo oficial de la Hermandad de la Paz."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "agent_disciplines",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000004",
+      "agent_entity_id": "b1082026-1008-4a91-8d62-000000000003",
+      "discipline": "Composición musical",
+      "is_primary": true
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000005",
+      "source_id": "b1082026-1008-4a91-8d62-000000000001",
+      "entity_id": "b1082026-1008-4a91-8d62-000000000003",
+      "scope": "Autoría musical",
+      "notes": "Ampliación editorial La Paz · 8/10/2026."
+    }
+  },
+  {
+    "type": "update",
+    "table": "marches",
+    "key": "entity_id",
+    "value": "7771fb4e-2d84-4a8a-a4c3-dcab2a5d5364",
+    "old": {
+      "composition_year": null
+    },
+    "fields": {
+      "composition_year": 1956
+    }
+  },
+  {
+    "type": "insert",
+    "table": "march_dedications",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000006",
+      "march_entity_id": "7771fb4e-2d84-4a8a-a4c3-dcab2a5d5364",
+      "dedicatee_entity_id": "a4220000-0000-0000-0000-000000000003",
+      "dedication_type": "dedicated_to",
+      "dedication_text": "Hermandad de la Paz de Sevilla",
+      "notes": "Vinculación a la corporación documentada en su catálogo oficial de marchas.",
+      "status": "published"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000007",
+      "source_id": "b1082026-1008-4a91-8d62-000000000001",
+      "march_dedication_id": "b1082026-1008-4a91-8d62-000000000006",
+      "scope": "Dedicatoria",
+      "notes": "Ampliación editorial La Paz · 8/10/2026."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000008",
+      "source_id": "b1082026-1008-4a91-8d62-000000000001",
+      "entity_id": "7771fb4e-2d84-4a8a-a4c3-dcab2a5d5364",
+      "scope": "Composición, autoría y año",
+      "notes": "Ampliación editorial La Paz · 8/10/2026."
+    }
+  },
+  {
+    "type": "update",
+    "table": "marches",
+    "key": "entity_id",
+    "value": "bc098242-0928-4b21-9e36-f29a67d5dd7d",
+    "old": {
+      "composition_year": null
+    },
+    "fields": {
+      "composition_year": 1970
+    }
+  },
+  {
+    "type": "insert",
+    "table": "march_dedications",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000009",
+      "march_entity_id": "bc098242-0928-4b21-9e36-f29a67d5dd7d",
+      "dedicatee_entity_id": "a4220000-0000-0000-0000-000000000003",
+      "dedication_type": "dedicated_to",
+      "dedication_text": "Hermandad de la Paz de Sevilla",
+      "notes": "Vinculación a la corporación documentada en su catálogo oficial de marchas.",
+      "status": "published"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000010",
+      "source_id": "b1082026-1008-4a91-8d62-000000000001",
+      "march_dedication_id": "b1082026-1008-4a91-8d62-000000000009",
+      "scope": "Dedicatoria",
+      "notes": "Ampliación editorial La Paz · 8/10/2026."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000011",
+      "source_id": "b1082026-1008-4a91-8d62-000000000001",
+      "entity_id": "bc098242-0928-4b21-9e36-f29a67d5dd7d",
+      "scope": "Composición, autoría y año",
+      "notes": "Ampliación editorial La Paz · 8/10/2026."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "entities",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000012",
+      "name": "Paz del Porvenir",
+      "slug": "paz-del-porvenir-abel-moreno",
+      "entity_type": "march",
+      "summary": "Marcha de 1989 para banda de música, recogida en el catálogo de la Hermandad de la Paz de Sevilla.",
+      "status": "published"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "marches",
+    "row": {
+      "entity_id": "b1082026-1008-4a91-8d62-000000000012",
+      "work_type": "Marcha procesional",
+      "music_type": "Banda de Música",
+      "composition_year": 1989,
+      "description": "Composición de 1989 incluida en el patrimonio musical documentado por la Hermandad de la Paz de Sevilla."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "march_authors",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000013",
+      "march_entity_id": "b1082026-1008-4a91-8d62-000000000012",
+      "agent_entity_id": "98b303c8-0cd5-44e7-b0b4-48f4656e8675",
+      "author_role": "composer",
+      "status": "published"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "march_dedications",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000014",
+      "march_entity_id": "b1082026-1008-4a91-8d62-000000000012",
+      "dedicatee_entity_id": "a4220000-0000-0000-0000-000000000003",
+      "dedication_type": "dedicated_to",
+      "dedication_text": "Hermandad de la Paz de Sevilla",
+      "notes": "Vinculación a la corporación documentada en su catálogo oficial de marchas.",
+      "status": "published"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000015",
+      "source_id": "b1082026-1008-4a91-8d62-000000000001",
+      "march_dedication_id": "b1082026-1008-4a91-8d62-000000000014",
+      "scope": "Dedicatoria",
+      "notes": "Ampliación editorial La Paz · 8/10/2026."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000016",
+      "source_id": "b1082026-1008-4a91-8d62-000000000001",
+      "entity_id": "b1082026-1008-4a91-8d62-000000000012",
+      "scope": "Composición, autoría y año",
+      "notes": "Ampliación editorial La Paz · 8/10/2026."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "entities",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000017",
+      "name": "Nuestro Padre Jesús de la Victoria",
+      "slug": "nuestro-padre-jesus-de-la-victoria-mena-hervas",
+      "entity_type": "march",
+      "summary": "Marcha de 1995 para agrupación musical, recogida en el catálogo de la Hermandad de la Paz de Sevilla.",
+      "status": "published"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "marches",
+    "row": {
+      "entity_id": "b1082026-1008-4a91-8d62-000000000017",
+      "work_type": "Marcha procesional",
+      "music_type": "Agrupación Musical",
+      "composition_year": 1995,
+      "description": "Composición de 1995 incluida en el patrimonio musical documentado por la Hermandad de la Paz de Sevilla."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "march_authors",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000018",
+      "march_entity_id": "b1082026-1008-4a91-8d62-000000000017",
+      "agent_entity_id": "38632553-d839-48cf-91c9-1d5f077e4ded",
+      "author_role": "composer",
+      "status": "published"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "march_dedications",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000019",
+      "march_entity_id": "b1082026-1008-4a91-8d62-000000000017",
+      "dedicatee_entity_id": "a4220000-0000-0000-0000-000000000003",
+      "dedication_type": "dedicated_to",
+      "dedication_text": "Hermandad de la Paz de Sevilla",
+      "notes": "Vinculación a la corporación documentada en su catálogo oficial de marchas.",
+      "status": "published"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000020",
+      "source_id": "b1082026-1008-4a91-8d62-000000000001",
+      "march_dedication_id": "b1082026-1008-4a91-8d62-000000000019",
+      "scope": "Dedicatoria",
+      "notes": "Ampliación editorial La Paz · 8/10/2026."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000021",
+      "source_id": "b1082026-1008-4a91-8d62-000000000001",
+      "entity_id": "b1082026-1008-4a91-8d62-000000000017",
+      "scope": "Composición, autoría y año",
+      "notes": "Ampliación editorial La Paz · 8/10/2026."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "entities",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000022",
+      "name": "Coronación de la Paz",
+      "slug": "coronacion-de-la-paz-david-hurtado",
+      "entity_type": "march",
+      "summary": "Marcha de 2016 para banda de música, recogida en el catálogo de la Hermandad de la Paz de Sevilla.",
+      "status": "published"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "marches",
+    "row": {
+      "entity_id": "b1082026-1008-4a91-8d62-000000000022",
+      "work_type": "Marcha procesional",
+      "music_type": "Banda de Música",
+      "composition_year": 2016,
+      "description": "Composición de 2016 incluida en el patrimonio musical documentado por la Hermandad de la Paz de Sevilla."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "march_authors",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000023",
+      "march_entity_id": "b1082026-1008-4a91-8d62-000000000022",
+      "agent_entity_id": "2af5ddb9-cec4-4aa9-908a-2bb3c5cd908d",
+      "author_role": "composer",
+      "status": "published"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "march_dedications",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000024",
+      "march_entity_id": "b1082026-1008-4a91-8d62-000000000022",
+      "dedicatee_entity_id": "a4220000-0000-0000-0000-000000000003",
+      "dedication_type": "dedicated_to",
+      "dedication_text": "Hermandad de la Paz de Sevilla",
+      "notes": "Vinculación a la corporación documentada en su catálogo oficial de marchas.",
+      "status": "published"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000025",
+      "source_id": "b1082026-1008-4a91-8d62-000000000001",
+      "march_dedication_id": "b1082026-1008-4a91-8d62-000000000024",
+      "scope": "Dedicatoria",
+      "notes": "Ampliación editorial La Paz · 8/10/2026."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000026",
+      "source_id": "b1082026-1008-4a91-8d62-000000000001",
+      "entity_id": "b1082026-1008-4a91-8d62-000000000022",
+      "scope": "Composición, autoría y año",
+      "notes": "Ampliación editorial La Paz · 8/10/2026."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "entities",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000027",
+      "name": "Esplendor del Porvenir",
+      "slug": "esplendor-del-porvenir-oscar-mosteiro",
+      "entity_type": "march",
+      "summary": "Marcha de 2025 para banda de música, recogida en el catálogo de la Hermandad de la Paz de Sevilla.",
+      "status": "published"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "marches",
+    "row": {
+      "entity_id": "b1082026-1008-4a91-8d62-000000000027",
+      "work_type": "Marcha procesional",
+      "music_type": "Banda de Música",
+      "composition_year": 2025,
+      "description": "Composición de 2025 incluida en el patrimonio musical documentado por la Hermandad de la Paz de Sevilla."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "march_authors",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000028",
+      "march_entity_id": "b1082026-1008-4a91-8d62-000000000027",
+      "agent_entity_id": "b1082026-1008-4a91-8d62-000000000003",
+      "author_role": "composer",
+      "status": "published"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "march_dedications",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000029",
+      "march_entity_id": "b1082026-1008-4a91-8d62-000000000027",
+      "dedicatee_entity_id": "a4220000-0000-0000-0000-000000000003",
+      "dedication_type": "dedicated_to",
+      "dedication_text": "Hermandad de la Paz de Sevilla",
+      "notes": "Vinculación a la corporación documentada en su catálogo oficial de marchas.",
+      "status": "published"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000030",
+      "source_id": "b1082026-1008-4a91-8d62-000000000001",
+      "march_dedication_id": "b1082026-1008-4a91-8d62-000000000029",
+      "scope": "Dedicatoria",
+      "notes": "Ampliación editorial La Paz · 8/10/2026."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000031",
+      "source_id": "b1082026-1008-4a91-8d62-000000000001",
+      "entity_id": "b1082026-1008-4a91-8d62-000000000027",
+      "scope": "Composición, autoría y año",
+      "notes": "Ampliación editorial La Paz · 8/10/2026."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "entities",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000032",
+      "name": "Corona de María Santísima de la Paz",
+      "slug": "corona-maria-santisima-paz-juan-fernandez",
+      "entity_type": "heritage_asset",
+      "summary": "Corona de plata realizada por Juan Fernández en 1949. La historia de la hermandad documenta su restauración y enriquecimiento por los Hermanos Delgado para la coronación de 2016.",
+      "status": "published"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "heritage_assets",
+    "row": {
+      "entity_id": "b1082026-1008-4a91-8d62-000000000032",
+      "parent_entity_id": "a4220000-0000-0000-0000-000000000003",
+      "asset_type": "Corona",
+      "description": "Corona de plata realizada por Juan Fernández en 1949. La historia de la hermandad documenta su restauración y enriquecimiento por los Hermanos Delgado para la coronación de 2016.",
+      "date_from_text": "1949",
+      "materials": "Plata",
+      "is_current": true,
+      "current_condition": "preserved"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "entity_relations",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000033",
+      "source_entity_id": "1d28e55e-7923-4729-bf72-4d6bfd51c8f7",
+      "relation_type": "author_of",
+      "target_entity_id": "b1082026-1008-4a91-8d62-000000000032",
+      "date_from_text": "1949",
+      "notes": "Autoría documentada por la Hermandad de la Paz.",
+      "status": "published"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "entity_relations",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000034",
+      "source_entity_id": "b1082026-1008-4a91-8d62-000000000032",
+      "relation_type": "adorns",
+      "target_entity_id": "55663ce8-b243-477b-bb6e-54cec1ac980f",
+      "notes": "Pieza vinculada a la imagen o al paso descrito en la fuente oficial.",
+      "status": "published"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000035",
+      "source_id": "af15eca4-1f2d-4f00-922f-bf9733a70147",
+      "entity_id": "b1082026-1008-4a91-8d62-000000000032",
+      "scope": "Patrimonio y autoría",
+      "notes": "Ampliación editorial La Paz · 8/10/2026."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000036",
+      "source_id": "af15eca4-1f2d-4f00-922f-bf9733a70147",
+      "entity_relation_id": "b1082026-1008-4a91-8d62-000000000033",
+      "scope": "Autoría",
+      "notes": "Ampliación editorial La Paz · 8/10/2026."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000037",
+      "source_id": "f7e7ed55-934f-421e-9c7f-d58dca3c1110",
+      "entity_id": "b1082026-1008-4a91-8d62-000000000032",
+      "scope": "Enriquecimiento para la coronación de 2016",
+      "notes": "Ampliación editorial La Paz · 8/10/2026."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "entities",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000038",
+      "name": "Templete de Nuestra Señora del Prado del palio de la Paz",
+      "slug": "templete-prado-palio-paz",
+      "entity_type": "heritage_asset",
+      "summary": "Miniatura de Nuestra Señora del Prado situada en la delantera del palio. Obra de los Hermanos Delgado de 1991, donada por los hermanos costaleros.",
+      "status": "published"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "heritage_assets",
+    "row": {
+      "entity_id": "b1082026-1008-4a91-8d62-000000000038",
+      "parent_entity_id": "a4220000-0000-0000-0000-000000000003",
+      "asset_type": "Templete",
+      "description": "Miniatura de Nuestra Señora del Prado situada en la delantera del palio. Obra de los Hermanos Delgado de 1991, donada por los hermanos costaleros.",
+      "date_from_text": "1991",
+      "materials": "Plata y marfil",
+      "is_current": true,
+      "current_condition": "preserved"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "entity_relations",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000039",
+      "source_entity_id": "e6d35099-654f-4299-b097-5c7ea861ad9c",
+      "relation_type": "author_of",
+      "target_entity_id": "b1082026-1008-4a91-8d62-000000000038",
+      "date_from_text": "1991",
+      "notes": "Autoría documentada por la Hermandad de la Paz.",
+      "status": "published"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "entity_relations",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000040",
+      "source_entity_id": "b1082026-1008-4a91-8d62-000000000038",
+      "relation_type": "part_of",
+      "target_entity_id": "0cbcaf53-900b-4cc5-a889-ffc29544adbe",
+      "notes": "Pieza vinculada a la imagen o al paso descrito en la fuente oficial.",
+      "status": "published"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000041",
+      "source_id": "af15eca4-1f2d-4f00-922f-bf9733a70147",
+      "entity_id": "b1082026-1008-4a91-8d62-000000000038",
+      "scope": "Patrimonio y autoría",
+      "notes": "Ampliación editorial La Paz · 8/10/2026."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000042",
+      "source_id": "af15eca4-1f2d-4f00-922f-bf9733a70147",
+      "entity_relation_id": "b1082026-1008-4a91-8d62-000000000039",
+      "scope": "Autoría",
+      "notes": "Ampliación editorial La Paz · 8/10/2026."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "entities",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000043",
+      "name": "Ángeles del paso de Jesús de la Victoria",
+      "slug": "angeles-paso-victoria-buiza",
+      "entity_type": "heritage_asset",
+      "summary": "Cuatro ángeles de Francisco Buiza, fechados en 1954, situados en las esquinas del paso de misterio de Jesús de la Victoria.",
+      "status": "published"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "heritage_assets",
+    "row": {
+      "entity_id": "b1082026-1008-4a91-8d62-000000000043",
+      "parent_entity_id": "a4220000-0000-0000-0000-000000000003",
+      "asset_type": "Escultura",
+      "description": "Cuatro ángeles de Francisco Buiza, fechados en 1954, situados en las esquinas del paso de misterio de Jesús de la Victoria.",
+      "date_from_text": "1954",
+      "materials": null,
+      "is_current": true,
+      "current_condition": "preserved"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "entity_relations",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000044",
+      "source_entity_id": "160be307-5396-41a2-8903-7467a8c330f3",
+      "relation_type": "author_of",
+      "target_entity_id": "b1082026-1008-4a91-8d62-000000000043",
+      "date_from_text": "1954",
+      "notes": "Autoría documentada por la Hermandad de la Paz.",
+      "status": "published"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "entity_relations",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000045",
+      "source_entity_id": "b1082026-1008-4a91-8d62-000000000043",
+      "relation_type": "part_of",
+      "target_entity_id": "b4220000-0000-0000-0000-000000000003",
+      "notes": "Pieza vinculada a la imagen o al paso descrito en la fuente oficial.",
+      "status": "published"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000046",
+      "source_id": "521aecc4-22fa-4410-9226-8151ed9849a8",
+      "entity_id": "b1082026-1008-4a91-8d62-000000000043",
+      "scope": "Patrimonio y autoría",
+      "notes": "Ampliación editorial La Paz · 8/10/2026."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000047",
+      "source_id": "521aecc4-22fa-4410-9226-8151ed9849a8",
+      "entity_relation_id": "b1082026-1008-4a91-8d62-000000000044",
+      "scope": "Autoría",
+      "notes": "Ampliación editorial La Paz · 8/10/2026."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "heritage_updates",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000048",
+      "brotherhood_entity_id": "a4220000-0000-0000-0000-000000000003",
+      "update_type": "restauracion",
+      "title": "Restauración de María Santísima de la Paz",
+      "year": 1979,
+      "target_entity_id": "55663ce8-b243-477b-bb6e-54cec1ac980f",
+      "element_name": "María Santísima de la Paz",
+      "discipline": "Conservación y restauración",
+      "description": "Intervención de Francisco Arquillo de la Torre tras los daños en la encarnadura provocados por un incendio fortuito en el altar de quinario.",
+      "status": "published"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "heritage_update_agents",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000049",
+      "heritage_update_id": "b1082026-1008-4a91-8d62-000000000048",
+      "agent_entity_id": "f9d65fd5-accc-407e-8405-3fe3b1aa8735",
+      "role_name": "Restauración",
+      "discipline": "Conservación y restauración"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000050",
+      "source_id": "09c57b84-54f2-4964-a4e8-c84412b105e1",
+      "heritage_update_id": "b1082026-1008-4a91-8d62-000000000048",
+      "scope": "Restauración documentada",
+      "notes": "Ampliación editorial La Paz · 8/10/2026."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "heritage_updates",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000051",
+      "brotherhood_entity_id": "a4220000-0000-0000-0000-000000000003",
+      "update_type": "restauracion",
+      "title": "Restauración de María Santísima de la Paz",
+      "year": 2002,
+      "target_entity_id": "55663ce8-b243-477b-bb6e-54cec1ac980f",
+      "element_name": "María Santísima de la Paz",
+      "discipline": "Conservación y restauración",
+      "description": "Restauración de María Santísima de la Paz realizada por Juan Manuel Miñarro López en 2002.",
+      "status": "published"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "heritage_update_agents",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000052",
+      "heritage_update_id": "b1082026-1008-4a91-8d62-000000000051",
+      "agent_entity_id": "67ccc278-fa71-4aaf-87a7-d42093a6ad7e",
+      "role_name": "Restauración",
+      "discipline": "Conservación y restauración"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000053",
+      "source_id": "09c57b84-54f2-4964-a4e8-c84412b105e1",
+      "heritage_update_id": "b1082026-1008-4a91-8d62-000000000051",
+      "scope": "Restauración documentada",
+      "notes": "Ampliación editorial La Paz · 8/10/2026."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "heritage_updates",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000054",
+      "brotherhood_entity_id": "a4220000-0000-0000-0000-000000000003",
+      "update_type": "restauracion",
+      "title": "Restauración de Nuestra Señora del Prado",
+      "year": 2018,
+      "target_entity_id": "07f7a00b-2339-48d3-a768-122ad0767de1",
+      "element_name": "Nuestra Señora del Prado",
+      "discipline": "Conservación y restauración",
+      "description": "Restauración de Nuestra Señora del Prado realizada por Enrique Gutiérrez Carrasquilla en 2018.",
+      "status": "published"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "heritage_update_agents",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000055",
+      "heritage_update_id": "b1082026-1008-4a91-8d62-000000000054",
+      "agent_entity_id": "f8c5a823-aa20-46ca-a6f4-1aca2b2318da",
+      "role_name": "Restauración",
+      "discipline": "Conservación y restauración"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000056",
+      "source_id": "41656a4c-c6df-4947-9996-cf4a00aa828c",
+      "heritage_update_id": "b1082026-1008-4a91-8d62-000000000054",
+      "scope": "Restauración documentada",
+      "notes": "Ampliación editorial La Paz · 8/10/2026."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "heritage_updates",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000057",
+      "brotherhood_entity_id": "a4220000-0000-0000-0000-000000000003",
+      "update_type": "restauracion",
+      "title": "Restauración de San Sebastián",
+      "year": 2024,
+      "target_entity_id": "048f7f93-6ed6-49c9-8779-d60c90076273",
+      "element_name": "San Sebastián",
+      "discipline": "Conservación y restauración",
+      "description": "Restauración de la imagen de San Sebastián documentada en 2024 por la Hermandad de la Paz. La página consultada no identifica al restaurador.",
+      "status": "published"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000058",
+      "source_id": "c58f0db9-2452-4e90-b5a0-dc74ac39bec6",
+      "heritage_update_id": "b1082026-1008-4a91-8d62-000000000057",
+      "scope": "Restauración documentada",
+      "notes": "Ampliación editorial La Paz · 8/10/2026."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "entity_relations",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000059",
+      "source_entity_id": "a4220000-0000-0000-0000-000000000003",
+      "relation_type": "has_titular",
+      "target_entity_id": "d335bf75-18ce-42db-a10b-cb8942a7b05a",
+      "notes": "Titularidad sacramental; identidad devocional conceptual, sin crear una imagen física.",
+      "status": "published"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "sources",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000060",
+      "name": "Titulares · Hermandad de la Paz",
+      "url": "https://www.hermandaddelapaz.org/titulares/",
+      "source_type": "Web oficial",
+      "author_or_publisher": "Hermandad de la Paz",
+      "accessed_at": "2026-10-08"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000061",
+      "source_id": "b1082026-1008-4a91-8d62-000000000060",
+      "entity_relation_id": "b1082026-1008-4a91-8d62-000000000059",
+      "scope": "Titularidad sacramental",
+      "notes": "Ampliación editorial La Paz · 8/10/2026."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000062",
+      "source_id": "b1082026-1008-4a91-8d62-000000000060",
+      "entity_id": "a4220000-0000-0000-0000-000000000003",
+      "scope": "Titulares",
+      "notes": "Ampliación editorial La Paz · 8/10/2026."
+    }
+  },
+  {
+    "type": "update",
+    "table": "brotherhoods",
+    "key": "entity_id",
+    "value": "a4220000-0000-0000-0000-000000000003",
+    "old": {
+      "history_text": "La Hermandad de la Paz nació en 1939 en El Porvenir a partir de un grupo de jóvenes cofrades vinculados al Parque Farmacéutico del Ejército, con la idea de fundar una cofradía que atravesara el Parque de María Luisa. Realizó su primera estación de penitencia el Domingo de Ramos, 17 de marzo de 1940. A lo largo de su historia consolidó una marcada identidad estética en torno al blanco y a las advocaciones de Jesús de la Victoria y María Santísima de la Paz. La Virgen de la Paz fue coronada canónicamente el 1 de octubre de 2016."
+    },
+    "fields": {
+      "history_text": "La Hermandad de la Paz nació en 1939 en El Porvenir a partir de un grupo de jóvenes cofrades vinculados al Parque Farmacéutico del Ejército, con la idea de fundar una cofradía que atravesara el Parque de María Luisa. Realizó su primera estación de penitencia el Domingo de Ramos, 17 de marzo de 1940. A lo largo de su historia consolidó una marcada identidad estética en torno al blanco y a las advocaciones de Jesús de la Victoria y María Santísima de la Paz. La Virgen de la Paz fue coronada canónicamente el 1 de octubre de 2016.\n\nSu primera salida se organizó con la colaboración de otras corporaciones: el Señor procesionó en un paso cedido por la Hermandad de Jesús Nazareno de Alcalá de Guadaíra y la Virgen utilizó elementos del palio de Los Gitanos. La vida de la hermandad reúne la devoción penitencial a Jesús de la Victoria y María Santísima de la Paz con el culto al Santísimo Sacramento, San Sebastián y Nuestra Señora del Prado, cuya procesión de septiembre prolonga su presencia en las calles del barrio."
+    }
+  },
+  {
+    "type": "update",
+    "table": "images",
+    "key": "entity_id",
+    "value": "55663ce8-b243-477b-bb6e-54cec1ac980f",
+    "old": {
+      "notes": null
+    },
+    "fields": {
+      "notes": "Datación pendiente de conciliación documental: el Consejo de Hermandades de Sevilla indica ejecución en 1937 y bendición en 1939; la ficha oficial de la Hermandad fecha la talla en 1939. Se conserva la datación de 1937 previamente registrada, sin presentar la discrepancia como resuelta."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000063",
+      "source_id": "c4220000-0000-0000-0000-000000000006",
+      "entity_id": "55663ce8-b243-477b-bb6e-54cec1ac980f",
+      "scope": "Datación de la imagen: 1937 según el Consejo",
+      "notes": "Ampliación editorial La Paz · 8/10/2026."
+    }
+  },
+  {
+    "type": "update",
+    "table": "brotherhood_habits",
+    "key": "id",
+    "value": "d0640c37-e56a-47ab-ab17-4112bab9f9d1",
+    "old": {
+      "gloves_color": null
+    },
+    "fields": {
+      "gloves_color": "Blanco"
+    }
+  },
+  {
+    "type": "update",
+    "table": "brotherhood_habits",
+    "key": "id",
+    "value": "2b390d31-1953-4f69-af2f-1b6833a78a13",
+    "old": {
+      "gloves_color": null
+    },
+    "fields": {
+      "gloves_color": "Blanco"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000064",
+      "source_id": "09c57b84-54f2-4964-a4e8-c84412b105e1",
+      "entity_id": "a4220000-0000-0000-0000-000000000003",
+      "scope": "Ampliación: titulares, patrimonio y música",
+      "notes": "Ampliación editorial La Paz · 8/10/2026."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000065",
+      "source_id": "41656a4c-c6df-4947-9996-cf4a00aa828c",
+      "entity_id": "a4220000-0000-0000-0000-000000000003",
+      "scope": "Ampliación: titulares, patrimonio y música",
+      "notes": "Ampliación editorial La Paz · 8/10/2026."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000066",
+      "source_id": "c58f0db9-2452-4e90-b5a0-dc74ac39bec6",
+      "entity_id": "a4220000-0000-0000-0000-000000000003",
+      "scope": "Ampliación: titulares, patrimonio y música",
+      "notes": "Ampliación editorial La Paz · 8/10/2026."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000067",
+      "source_id": "521aecc4-22fa-4410-9226-8151ed9849a8",
+      "entity_id": "a4220000-0000-0000-0000-000000000003",
+      "scope": "Ampliación: titulares, patrimonio y música",
+      "notes": "Ampliación editorial La Paz · 8/10/2026."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000068",
+      "source_id": "af15eca4-1f2d-4f00-922f-bf9733a70147",
+      "entity_id": "a4220000-0000-0000-0000-000000000003",
+      "scope": "Ampliación: titulares, patrimonio y música",
+      "notes": "Ampliación editorial La Paz · 8/10/2026."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000069",
+      "source_id": "5ff826b7-9055-4444-b568-6014086051d3",
+      "entity_id": "a4220000-0000-0000-0000-000000000003",
+      "scope": "Ampliación: titulares, patrimonio y música",
+      "notes": "Ampliación editorial La Paz · 8/10/2026."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "editorial_content",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000070",
+      "content_type": "article",
+      "title": "Conoce La Paz",
+      "subtitle": "El Porvenir, sus titulares y su patrimonio",
+      "summary": "Una lectura de la Hermandad de la Paz a través de su historia, sus imágenes y su música.",
+      "body": "La Paz nació en 1939 en El Porvenir, impulsada por jóvenes vinculados al Parque Farmacéutico del Ejército. La idea de una cofradía atravesando María Luisa se hizo realidad el Domingo de Ramos de 1940.\n\nAntonio Illanes realizó a Jesús de la Victoria y a María Santísima de la Paz. El Señor, tallado en 1940, representa a Jesús recibiendo la cruz; un romano, un sumo sacerdote y dos sayones completan el misterio. La Virgen fue bendecida el 25 de julio de 1939 y coronada canónicamente el 1 de octubre de 2016. Las fuentes institucionales discrepan sobre el año de ejecución de la Dolorosa: el Consejo indica 1937 y la web de la hermandad, 1939.\n\nEl blanco de los nazarenos y del palio forma parte de la identidad de la corporación. Los cíngulos y botones distinguen los tramos: burdeos para el Señor y azul cobalto para la Virgen. En el palio, la miniatura del Prado enlaza las devociones penitencial y gloriosa de la hermandad.\n\nNuestra Señora del Prado, fechada en el último tercio del siglo XVI y atribuida principalmente a Jerónimo Hernández, sostiene al Niño y una pera. Su procesión de septiembre tiene una especial vinculación con los más pequeños. San Sebastián y el Santísimo Sacramento completan el ámbito devocional.\n\nLa Encarnación acompaña al misterio y la Banda Municipal de La Puebla del Río al palio. El catálogo de marchas permite seguir otro hilo de esta historia: Regina Pacis, Virgen de la Paz, Paz del Porvenir, Nuestro Padre Jesús de la Victoria, Coronación de la Paz y Esplendor del Porvenir.\n\nLa conservación también forma parte de su historia. Junto a las intervenciones antiguas de sus titulares, el Señor de la Victoria fue restaurado en 2026 por Pedro Manzano y repuesto al culto el 8 de octubre. Los cultos anuales y las salidas de cada edición se consultan en sus apartados propios.",
+      "publish_date": "2026-10-08",
+      "author_name": "Redacción de Hilo Cofrade",
+      "eligible_for_daily": false,
+      "status": "published"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "editorial_content_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000071",
+      "editorial_content_id": "b1082026-1008-4a91-8d62-000000000070",
+      "entity_id": "a4220000-0000-0000-0000-000000000003",
+      "relation_type": "brotherhood_guide",
+      "is_primary": true
+    }
+  },
+  {
+    "type": "insert",
+    "table": "editorial_content_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000072",
+      "editorial_content_id": "b1082026-1008-4a91-8d62-000000000070",
+      "entity_id": "2d1f1259-e92c-4094-97a2-ab98a9bb1a82",
+      "relation_type": "related",
+      "is_primary": false
+    }
+  },
+  {
+    "type": "insert",
+    "table": "editorial_content_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000073",
+      "editorial_content_id": "b1082026-1008-4a91-8d62-000000000070",
+      "entity_id": "55663ce8-b243-477b-bb6e-54cec1ac980f",
+      "relation_type": "related",
+      "is_primary": false
+    }
+  },
+  {
+    "type": "insert",
+    "table": "editorial_content_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000074",
+      "editorial_content_id": "b1082026-1008-4a91-8d62-000000000070",
+      "entity_id": "07f7a00b-2339-48d3-a768-122ad0767de1",
+      "relation_type": "related",
+      "is_primary": false
+    }
+  },
+  {
+    "type": "insert",
+    "table": "editorial_content_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000075",
+      "editorial_content_id": "b1082026-1008-4a91-8d62-000000000070",
+      "entity_id": "048f7f93-6ed6-49c9-8779-d60c90076273",
+      "relation_type": "related",
+      "is_primary": false
+    }
+  },
+  {
+    "type": "insert",
+    "table": "editorial_content_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000076",
+      "editorial_content_id": "b1082026-1008-4a91-8d62-000000000070",
+      "entity_id": "7771fb4e-2d84-4a8a-a4c3-dcab2a5d5364",
+      "relation_type": "related",
+      "is_primary": false
+    }
+  },
+  {
+    "type": "insert",
+    "table": "editorial_content_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000077",
+      "editorial_content_id": "b1082026-1008-4a91-8d62-000000000070",
+      "entity_id": "bc098242-0928-4b21-9e36-f29a67d5dd7d",
+      "relation_type": "related",
+      "is_primary": false
+    }
+  },
+  {
+    "type": "insert",
+    "table": "editorial_content_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000078",
+      "editorial_content_id": "b1082026-1008-4a91-8d62-000000000070",
+      "entity_id": "b1082026-1008-4a91-8d62-000000000012",
+      "relation_type": "related",
+      "is_primary": false
+    }
+  },
+  {
+    "type": "insert",
+    "table": "editorial_content_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000079",
+      "editorial_content_id": "b1082026-1008-4a91-8d62-000000000070",
+      "entity_id": "b1082026-1008-4a91-8d62-000000000017",
+      "relation_type": "related",
+      "is_primary": false
+    }
+  },
+  {
+    "type": "insert",
+    "table": "editorial_content_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000080",
+      "editorial_content_id": "b1082026-1008-4a91-8d62-000000000070",
+      "entity_id": "b1082026-1008-4a91-8d62-000000000022",
+      "relation_type": "related",
+      "is_primary": false
+    }
+  },
+  {
+    "type": "insert",
+    "table": "editorial_content_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000081",
+      "editorial_content_id": "b1082026-1008-4a91-8d62-000000000070",
+      "entity_id": "b1082026-1008-4a91-8d62-000000000027",
+      "relation_type": "related",
+      "is_primary": false
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000082",
+      "source_id": "b1082026-1008-4a91-8d62-000000000001",
+      "editorial_content_id": "b1082026-1008-4a91-8d62-000000000070",
+      "scope": "Documentación de la guía",
+      "notes": "Ampliación editorial La Paz · 8/10/2026."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000083",
+      "source_id": "f7e7ed55-934f-421e-9c7f-d58dca3c1110",
+      "editorial_content_id": "b1082026-1008-4a91-8d62-000000000070",
+      "scope": "Documentación de la guía",
+      "notes": "Ampliación editorial La Paz · 8/10/2026."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000084",
+      "source_id": "09c57b84-54f2-4964-a4e8-c84412b105e1",
+      "editorial_content_id": "b1082026-1008-4a91-8d62-000000000070",
+      "scope": "Documentación de la guía",
+      "notes": "Ampliación editorial La Paz · 8/10/2026."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000085",
+      "source_id": "d35f8608-7102-4944-ba4a-418ca676e2ba",
+      "editorial_content_id": "b1082026-1008-4a91-8d62-000000000070",
+      "scope": "Documentación de la guía",
+      "notes": "Ampliación editorial La Paz · 8/10/2026."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000086",
+      "source_id": "41656a4c-c6df-4947-9996-cf4a00aa828c",
+      "editorial_content_id": "b1082026-1008-4a91-8d62-000000000070",
+      "scope": "Documentación de la guía",
+      "notes": "Ampliación editorial La Paz · 8/10/2026."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000087",
+      "source_id": "578de551-dfa2-439d-ae2b-f80ab6574598",
+      "editorial_content_id": "b1082026-1008-4a91-8d62-000000000070",
+      "scope": "Documentación de la guía",
+      "notes": "Ampliación editorial La Paz · 8/10/2026."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000088",
+      "source_id": "166ecf63-7e77-4f68-a691-17bf15ddc7f0",
+      "editorial_content_id": "b1082026-1008-4a91-8d62-000000000070",
+      "scope": "Documentación de la guía",
+      "notes": "Ampliación editorial La Paz · 8/10/2026."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b1082026-1008-4a91-8d62-000000000089",
+      "source_id": "c4220000-0000-0000-0000-000000000006",
+      "editorial_content_id": "b1082026-1008-4a91-8d62-000000000070",
+      "scope": "Documentación de la guía",
+      "notes": "Ampliación editorial La Paz · 8/10/2026."
+    }
+  }
+]
