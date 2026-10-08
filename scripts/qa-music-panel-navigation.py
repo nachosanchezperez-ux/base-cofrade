@@ -1,8 +1,10 @@
 """Navigation smoke test. Install Playwright only in the QA environment.
 
 Usage: python3 scripts/qa-music-panel-navigation.py https://preview.example /tmp/music-nav-qa
-QA_ACCESS_URL may contain the temporary access URL issued by Vercel for that same host.
-Does not edit data or submit forms. The access URL is never written to the report.
+QA_ACCESS_URL: temporary Vercel access URL for the same tested host.
+QA_BASELINE_URL: optional published site for document-overflow regression checks.
+Every new link is checked independently. Existing overflow is reported, not hidden.
+Does not edit data or submit forms. Access URLs are never written to the report.
 """
 import json
 import os
@@ -15,6 +17,7 @@ BASE = (sys.argv[1] if len(sys.argv) > 1 else 'http://localhost:3000').rstrip('/
 OUTPUT = Path(sys.argv[2] if len(sys.argv) > 2 else '/tmp/music-nav-qa')
 OUTPUT.mkdir(parents=True, exist_ok=True)
 ACCESS_URL = os.environ.get('QA_ACCESS_URL', '')
+BASELINE_URL = os.environ.get('QA_BASELINE_URL', '').rstrip('/')
 if ACCESS_URL and urlparse(ACCESS_URL).netloc != urlparse(BASE).netloc:
     raise ValueError('The access URL must belong to the tested host')
 TARGET = '/acompanamientos-musicales'
@@ -25,6 +28,13 @@ with sync_playwright() as pw:
     browser = pw.chromium.launch()
     try:
         for width, height in VIEWS:
+            baseline_overflow = 0
+            if BASELINE_URL:
+                baseline = browser.new_page(viewport={'width': width, 'height': height})
+                response = baseline.goto(BASELINE_URL + '/directorio', wait_until='networkidle', timeout=45000)
+                assert response and response.status == 200, 'Baseline response'
+                baseline_overflow = baseline.evaluate('document.documentElement.scrollWidth - document.documentElement.clientWidth')
+                baseline.close()
             page = browser.new_page(viewport={'width': width, 'height': height})
             page.set_default_timeout(15000)
             errors = []
@@ -37,7 +47,12 @@ with sync_playwright() as pw:
             cta = page.get_by_role('navigation', name='Directorios especializados').locator('a[href="' + TARGET + '"]')
             expect(cta).to_have_count(1)
             expect(cta).to_be_visible()
-            assert page.evaluate('document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1'), 'Directory overflow'
+            directory_overflow = page.evaluate('document.documentElement.scrollWidth - document.documentElement.clientWidth')
+            assert directory_overflow <= baseline_overflow + 1, 'New directory overflow'
+            assert cta.evaluate('(el) => el.scrollWidth <= el.clientWidth + 1'), 'Directory link overflow'
+            cta_box = cta.bounding_box()
+            assert cta_box and cta_box['x'] >= 0 and cta_box['x'] + cta_box['width'] <= width + 1, 'Directory link bounds'
+            print(json.dumps({'width': width, 'baselineOverflow': baseline_overflow, 'directoryOverflow': directory_overflow}), flush=True)
             page.screenshot(path=str(OUTPUT / ('directory-' + str(width) + '.png')))
             if width < 860:
                 opener = page.get_by_role('button', name='Abrir menú', exact=True)
@@ -59,7 +74,7 @@ with sync_playwright() as pw:
             box = link.bounding_box()
             assert box and box['x'] >= 0 and box['x'] + box['width'] <= width + 1, 'Link horizontal bounds'
             assert box['y'] >= 0 and box['y'] + box['height'] <= height + 1, 'Link vertical bounds'
-            assert page.evaluate('document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1'), 'Menu overflow'
+            assert page.evaluate('document.documentElement.scrollWidth - document.documentElement.clientWidth') <= baseline_overflow + 1, 'New menu overflow'
             page.screenshot(path=str(OUTPUT / ('menu-' + str(width) + '.png')))
             link.focus()
             page.keyboard.press('Enter')
@@ -86,7 +101,7 @@ with sync_playwright() as pw:
             page.wait_for_url('**' + TARGET, timeout=30000)
             expect(page.locator('h1')).to_have_text('La música de la Semana Santa de Sevilla')
             assert not errors, errors
-            results.append({'width': width, 'height': height, 'menu': 'PASS', 'directory': 'PASS', 'keyboard': 'PASS', 'pageErrors': errors})
+            results.append({'width': width, 'height': height, 'menu': 'PASS', 'directory': 'PASS', 'keyboard': 'PASS', 'pageErrors': errors, 'baselineOverflow': baseline_overflow, 'directoryOverflow': directory_overflow})
             print(json.dumps(results[-1], ensure_ascii=False), flush=True)
             page.close()
     finally:
