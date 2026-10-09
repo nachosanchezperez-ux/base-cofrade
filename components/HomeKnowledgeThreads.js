@@ -1,3 +1,5 @@
+import { Suspense } from 'react'
+import HiloMovementsSection from './HiloMovementsSection'
 import Image from 'next/image'
 import Link from 'next/link'
 import OpenUpdatesButton from './OpenUpdatesButton'
@@ -125,11 +127,13 @@ function CompactThread({ thread }) {
 }
 
 export default function HomeKnowledgeThreads({ threads = [] }) {
-  if (!threads.length) return null
+  if (!threads.length) return <Suspense fallback={null}><HiloMovementsSection /></Suspense>
 
   const [lead, ...secondary] = threads
 
   return (
+    <>
+    <Suspense fallback={null}><HiloMovementsSection /></Suspense>
     <section className={`${styles.section} ${polishStyles.threadsSection}`} id="ultimos-hilos" data-analytics-related-section="ultimos_hilos">
       <div className="shell">
         <header className={`${styles.header} ${polishStyles.threadsHeader}`}>
@@ -157,5 +161,6 @@ export default function HomeKnowledgeThreads({ threads = [] }) {
         </div>
       </div>
     </section>
+    </>
   )
 }
