@@ -1,0 +1,117 @@
+{
+  "ids": [
+    "a5c5bd29-51f8-40c1-a128-62580a0b9db5",
+    "5f4a5628-0675-48cf-94f3-c531c0df5166",
+    "5cbd62ce-558f-4329-97bd-fb79a45b2753",
+    "2397b43d-3d38-49be-a3c5-83872766c823",
+    "eee7b4dc-54ba-478b-a8cf-b4e55de1e07c",
+    "5e75eae8-ddc4-41df-93e3-3b1de18f6937",
+    "67974275-e80d-4b6b-95d3-c1338ce4e608",
+    "1af6ad3d-8a01-44d1-9c45-38dbfcd7fc88",
+    "5e1829d3-f34e-492e-9200-1adb3503c92d",
+    "285f8d6b-d25e-4470-9609-303344eabd6e"
+  ],
+  "updates": [
+    [
+      "images",
+      "a658cd94-3577-4953-a98c-2657c9d6222a",
+      "0351a17bf0c6c03d4921d959957b245f",
+      {
+        "material": "Madera policromada",
+        "description": "Nazareno de vestir fechado hacia 1610–1615, vinculado a Juan Martínez Montañés por testimonios históricos y estudios estilísticos. La Hermandad señala que no se conserva el contrato de ejecución. Tiene hombros y codos articulados, cabeza inclinada hacia la derecha y el peso del cuerpo apoyado sobre la pierna izquierda. Se venera en la capilla sacramental del Salvador.",
+        "iconography": "Jesús camino del Calvario con la cruz a cuestas."
+      },
+      3
+    ],
+    [
+      "images",
+      "cb0b275f-a57b-4bee-88cb-d52aaf17dcc5",
+      "9d269479de141913a4b0fada413f84ff",
+      {
+        "material": "Madera de ciprés en rostro y manos",
+        "description": "Dolorosa de Sebastián Santos incorporada a la Hermandad en 1966. Su expresión serena combina ojos de cristal de color miel, siete lágrimas y labios entreabiertos. El rostro y las manos muestran carnaciones pálidas y rosadas. La sustitución de la imagen anterior fue aprobada en cabildo el 6 de febrero de 1966."
+      },
+      4
+    ],
+    [
+      "steps",
+      "fefa1e26-3c40-42c5-b3d9-445b7bdd757b",
+      "60dc04bff568f597d8e49c2d4f156cfa",
+      {
+        "materials": "Plata, marfil y madera dorada",
+        "description": "Paso diseñado y ejecutado por Cayetano González Gómez, cuya canastilla se estrenó en 1943. Sus cuatro capillas representan el Triunfo de la Eucaristía, la Virgen de la Merced como Madre de Misericordia, la Transfiguración y la Exaltación de la Santa Cruz. Los ángulos incorporan a san Miguel, san Rafael, san Gabriel y el Ángel Custodio; cuatro faroles octogonales completan la iluminación.",
+        "notes": "La web oficial menciona el conjunto terminado en 1946 y la conclusión de los respiraderos en 1949. Se conserva la cronología por fases 1943–1949."
+      },
+      5
+    ],
+    [
+      "steps",
+      "ea34723d-ab74-482a-b7ff-776afda6f50a",
+      "523d94d133f8ae7558869e845dd42429",
+      {
+        "materials": "Terciopelo azul, bordados en oro y orfebrería de plata; candelería de alpaca plateada",
+        "description": "Palio de concepción neogótica estrenado en 1929. Antonio Amiáns diseñó los bordados ejecutados por el taller de Carmen Capmany, con la hoja de cardina como motivo destacado. Los varales de Cayetano González, incorporados en 1956, desarrollan escenas de la vida de María. Los respiraderos actuales son obra de los Hermanos Delgado, estrenados en 2000 en sustitución de los originales."
+      },
+      6
+    ]
+  ],
+  "sources": [
+    [
+      3,
+      "Nuestro Padre Jesús de la Pasión",
+      "https://www.hermandaddepasion.org/ntro-padre-jesus-la-pasion/"
+    ],
+    [
+      4,
+      "Nuestra Madre y Señora de la Merced",
+      "https://www.hermandaddepasion.org/ntra-madre-sra-la-merced/"
+    ],
+    [
+      5,
+      "Paso del Señor",
+      "https://www.hermandaddepasion.org/pasos/"
+    ],
+    [
+      6,
+      "Paso de la Santísima Virgen",
+      "https://www.hermandaddepasion.org/paso-palio-la-stma-virgen/"
+    ],
+    [
+      7,
+      "El Señor de Pasión, marcha de 1897",
+      "https://www.hermandaddepasion.org/noticias/la-marcha-procesional-mas-antigua-que-conserva-nuestra-archicofradia/"
+    ],
+    [
+      8,
+      "Merced, Luz de Pasión: estreno",
+      "https://www.hermandaddepasion.org/noticias/marcha-procesional-merced-luz-pasion-cristobal-lopez-gandara/"
+    ],
+    [
+      9,
+      "Noche grande en el Salvador",
+      "https://laolivadesalteras.com/noche-grande-en-el-salvador/"
+    ]
+  ],
+  "marches": [
+    [
+      0,
+      "El Señor de Pasión",
+      "el-senor-de-pasion-ramon-gonzalez-varela",
+      1897,
+      "5cbd62ce-558f-4329-97bd-fb79a45b2753",
+      "a658cd94-3577-4953-a98c-2657c9d6222a",
+      7,
+      "Marcha firmada el 20 de marzo de 1897. Sus partituras se recuperaron en 1995, año en que La Oliva de Salteras la grabó."
+    ],
+    [
+      1,
+      "Merced, Luz de Pasión",
+      "merced-luz-de-pasion-cristobal-lopez-gandara",
+      null,
+      "d1000000-0000-0000-0000-000000000003",
+      "cb0b275f-a57b-4bee-88cb-d52aaf17dcc5",
+      9,
+      "Marcha dedicada a Nuestra Madre y Señora de la Merced y estrenada por La Oliva de Salteras en marzo de 2020, en la Colegial del Salvador."
+    ]
+  ]
+}
