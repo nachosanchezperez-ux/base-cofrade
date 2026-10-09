@@ -479,5 +479,35 @@
     "Victoria → paso de misterio",
     "Paz → paso de palio",
     "Prado → paso de gloria"
-  ]
+  ],
+  "follow_up_observation": {
+    "date": "2026-10-09",
+    "target": "https://hilocofrade.es/hermandades/hermandad-de-la-paz",
+    "production_deployment": "dpl_2jCDeirE6miwQohgXrpj9L7PJg4X",
+    "status": 200,
+    "main_sha": "59edee119b5c81b470897c4899ffc8ecc5a4c25b",
+    "links": [
+      {
+        "image": "/imagenes/nuestro-padre-jesus-de-la-victoria-la-paz",
+        "step": "/pasos/paso-jesus-de-la-victoria-la-paz",
+        "brotherhood_card": true,
+        "image_card_reverse": true
+      },
+      {
+        "image": "/imagenes/maria-santisima-de-la-paz-sevilla",
+        "step": "/pasos/paso-palio-maria-santisima-paz",
+        "brotherhood_card": true,
+        "image_card_reverse": true
+      },
+      {
+        "image": "/imagenes/nuestra-senora-del-prado-la-paz",
+        "step": "/pasos/paso-nuestra-senora-del-prado-la-paz",
+        "brotherhood_card": true,
+        "image_card_reverse": true
+      }
+    ],
+    "reciprocal_image_step_links": "6/6 PASS",
+    "desktop_visual_review": "Three step cards visibly contain their corresponding image links. Step photographs remain unavailable and show the page's image placeholders.",
+    "responsive_mobile": "Not certified; no application code or layout changed in this editorial data correction."
+  }
 }
