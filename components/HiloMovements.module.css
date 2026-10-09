@@ -91,3 +91,6 @@
 .brotherhoodBrief[open] > summary b { transform: rotate(45deg); }
 @media (max-width: 900px) { .list { grid-template-columns: 1fr; } .list .connections { grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); } }
 @media (max-width: 760px) { .hero { padding: 26px 22px; border-radius: 16px; } .heroGuide { gap: 8px; font-size: 12px; } .heroGuide span { padding: 6px 9px; } .identity { padding: 18px; gap: 14px; } .crest { width: 64px; height: 76px; flex-basis: 64px; } .brotherhood { font-size: 25px; } .story { margin: 20px 18px 22px 24px; padding-left: 16px; } .section { padding-block: 28px; } .filters { gap: 18px; padding: 18px; } .filters button { flex: 1; } }
+
+@media (min-width: 761px) and (max-width: 1100px) { .filters label:first-child { flex-basis: 100%; } .filters label { flex-basis: 220px; } }
+@media (max-width: 400px) { .heroGuide { display: grid; grid-template-columns: 1fr; justify-items: start; } .heroGuide b { display: none; } }
