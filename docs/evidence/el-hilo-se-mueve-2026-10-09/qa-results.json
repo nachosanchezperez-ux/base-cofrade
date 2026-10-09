@@ -1,0 +1,91 @@
+{
+  "results": [
+    {
+      "width": 320,
+      "overflow": false,
+      "axe": []
+    },
+    {
+      "width": 390,
+      "overflow": false,
+      "axe": []
+    },
+    {
+      "width": 430,
+      "overflow": false,
+      "axe": []
+    },
+    {
+      "width": 768,
+      "overflow": false,
+      "axe": []
+    },
+    {
+      "width": 1024,
+      "overflow": false,
+      "axe": []
+    },
+    {
+      "width": 1440,
+      "overflow": false,
+      "axe": []
+    }
+  ],
+  "statuses": [
+    {
+      "href": "/hermandades/san-esteban",
+      "status": 200
+    },
+    {
+      "href": "/bandas/banda-musica-maria-santisima-victoria-las-cigarreras",
+      "status": 200
+    },
+    {
+      "href": "/bandas/banda-musica-santa-ana-dos-hermanas",
+      "status": 200
+    },
+    {
+      "href": "/semana-santa/2027/cambios-musicales#cambio-30d8477f-79ce-423d-8b36-d9366b37bf48",
+      "status": 200
+    },
+    {
+      "href": "/hermandades/el-baratillo",
+      "status": 200
+    },
+    {
+      "href": "/bandas/agrupacion-musical-maria-santisima-de-las-angustias-coronada",
+      "status": 200
+    },
+    {
+      "href": "/bandas/banda-del-sol",
+      "status": 200
+    },
+    {
+      "href": "/bandas/carmen-de-salteras",
+      "status": 200
+    },
+    {
+      "href": "/hermandades/el-baratillo#musica",
+      "status": 200
+    }
+  ],
+  "errors": [],
+  "mobileMenu": true,
+  "municipalityTopicFilters": true,
+  "filteredNoindex": true,
+  "canonical": true,
+  "keyboardSources": true,
+  "fragmentTargets": true,
+  "sitemap": true,
+  "commit": "fc54571f6ed357aec7bc146aa10046bfd1bcbff1",
+  "browser": "Chromium 153 / Playwright",
+  "ciRun": 37924419753,
+  "preview": "https://base-cofrade-2wxj1nrnv-desdeel-arenal.vercel.app",
+  "tests": 1596,
+  "build": "pass",
+  "scope": "Read-only; WCAG A/AA scan of main content. No physical-device or screen-reader certification.",
+  "filters": true,
+  "empty": true,
+  "home": true,
+  "fiches": true
+}
