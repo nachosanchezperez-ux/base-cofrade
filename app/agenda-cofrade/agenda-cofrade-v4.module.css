@@ -5,3 +5,9 @@
 @media(max-width:390px){.agendaNavV4 a{min-height:46px;font-size:10px}}
 
 .agendaNavV4[data-sticky="false"]{position:relative;top:auto}
+
+/* Keep specialist links available after the event list on mobile. */
+@media(max-width:720px){
+  .desktopNavigation{display:none}
+  .contentV4{padding-top:14px}
+}

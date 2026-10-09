@@ -1,0 +1,45 @@
+{
+  "screens": [
+    {
+      "width": 320,
+      "firstCardTop": 545.546875,
+      "hourTop": 639.734375,
+      "scroll": 320
+    },
+    {
+      "width": 390,
+      "firstCardTop": 532.34375,
+      "hourTop": 626.53125,
+      "scroll": 390
+    },
+    {
+      "width": 430,
+      "firstCardTop": 518.25,
+      "hourTop": 612.4375,
+      "scroll": 430
+    },
+    {
+      "width": 768,
+      "firstCardTop": 1061.5,
+      "hourTop": 1097.6875,
+      "scroll": 768
+    },
+    {
+      "width": 1366,
+      "firstCardTop": 964.890625,
+      "hourTop": 1003.078125,
+      "scroll": 1366
+    }
+  ],
+  "interactions": [
+    "Hoy: 1 acto",
+    "Un toque abre información y enlaces",
+    "Mañana: 10 actos",
+    "Municipio filtra correctamente",
+    "Vacío y limpieza restablecen 61 actos",
+    "Fin de semana: 20 actos",
+    "Recorrido visible con un toque",
+    "Teclado abre/cierra el detalle"
+  ],
+  "errors": []
+}

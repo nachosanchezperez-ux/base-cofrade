@@ -6,12 +6,13 @@ import { useEffect, useMemo, useState } from 'react'
 import { agendaLocationMatches, agendaMunicipalityOptions } from '@/lib/agenda-cofrade-location'
 import { getProcessionLiveState } from '@/lib/procession-live-status'
 import { routeSummarySections } from '@/lib/procession-route'
-import { agendaTemporalRangeDate, withAgendaTemporalDay } from '@/lib/agenda-temporal-display'
+import { agendaTemporalDateInfo, agendaTemporalRangeDate, withAgendaTemporalDay } from '@/lib/agenda-temporal-display'
 import { trackEvent } from '@/lib/analytics/client'
 import styles from './AgendaCofradeDirectoryV4.module.css'
 import concertStyles from './AgendaCofradeDirectoryV4Concerts.module.css'
 import routeStyles from './AgendaCofradeDirectoryV4Routes.module.css'
 import visualStyles from './AgendaCofradeDirectoryV4Visuals.module.css'
+import mobileStyles from './AgendaCofradeDirectoryMobile.module.css'
 
 const AGENDA_TYPE = 'agenda_cofrade'
 
@@ -113,7 +114,7 @@ function EventVisual({ item }) {
 
   if (!src) {
     return (
-      <div className={`${styles.cardVisual} ${visualStyles.visualContainer} ${visualStyles.fallbackFrame}`} aria-hidden="true">
+      <div className={`${styles.cardVisual} ${visualStyles.visualContainer} ${mobileStyles.visual} ${visualStyles.fallbackFrame}`} aria-hidden="true">
         <span className={visualStyles.fallbackMark}>{emptyVisual.mark}</span>
         <small>{emptyVisual.label}</small>
       </div>
@@ -131,7 +132,7 @@ function EventVisual({ item }) {
   }
 
   return (
-    <div className={`${styles.cardVisual} ${visualStyles.visualContainer} ${kind === 'photo' ? visualStyles.photoFrame : visualStyles.crestFrame}`}>
+    <div className={`${styles.cardVisual} ${visualStyles.visualContainer} ${mobileStyles.visual} ${kind === 'photo' ? visualStyles.photoFrame : visualStyles.crestFrame}`}>
       <Image
         key={src}
         src={src}
@@ -221,19 +222,21 @@ function EventActions({ item }) {
   )
 }
 
-function EventRoute({ item }) {
+function EventRoute({ item, inline = false }) {
   const routeText = String(item.routeText || '').trim()
   if (!routeText) return null
 
   const sections = routeSummarySections(routeText)
   const pointCount = sections.reduce((total, section) => total + section.points.length, 0)
+  const Container = inline ? 'section' : 'details'
+  const Heading = inline ? 'h5' : 'summary'
 
   return (
-    <details className={routeStyles.route}>
-      <summary>
-        <span>Ver recorrido</span>
+    <Container className={routeStyles.route}>
+      <Heading>
+        <span>{inline ? 'Recorrido' : 'Ver recorrido'}</span>
         <small>{pointCount ? `${pointCount} ${pointCount === 1 ? 'punto' : 'puntos'}` : item.categoryLabel || 'Recorrido'}</small>
-      </summary>
+      </Heading>
       {sections.length ? (
         <div className={routeStyles.routeSections}>
           {sections.map((section) => (
@@ -250,7 +253,7 @@ function EventRoute({ item }) {
       ) : (
         <p className={routeStyles.routeFallback}>{routeText}</p>
       )}
-    </details>
+    </Container>
   )
 }
 
@@ -291,16 +294,18 @@ function repertoireData(value = '') {
   return { entries, presenter }
 }
 
-function ConcertRepertoire({ item }) {
+function ConcertRepertoire({ item, inline = false }) {
   const { entries, presenter } = repertoireData(item.repertoireText)
   if (!entries.length) return null
+  const Container = inline ? 'section' : 'details'
+  const Heading = inline ? 'h5' : 'summary'
 
   return (
-    <details className={concertStyles.repertoire}>
-      <summary>
-        <span>Ver repertorio</span>
+    <Container className={concertStyles.repertoire}>
+      <Heading>
+        <span>{inline ? 'Repertorio' : 'Ver repertorio'}</span>
         <small>{entries.length} {entries.length === 1 ? 'marcha' : 'marchas'}</small>
-      </summary>
+      </Heading>
       <ol className={concertStyles.repertoireList}>
         {entries.map((entry) => (
           <li className={concertStyles.repertoireItem} key={entry.key}>
@@ -319,7 +324,7 @@ function ConcertRepertoire({ item }) {
           <strong>{presenter}</strong>
         </p>
       ) : null}
-    </details>
+    </Container>
   )
 }
 
@@ -353,7 +358,10 @@ export default function AgendaCofradeDirectoryV4({
   )
 
   const liveItems = useMemo(() => upcomingItems
-    .filter((item) => ['processions', 'transfers', 'rosaries'].includes(item.category))
+    .filter((item) => ['processions', 'transfers', 'rosaries'].includes(item.category)
+      && belongsToPeriod(item, period, today)
+      && (category === 'all' || item.category === category)
+      && agendaLocationMatches(item, territory, municipality))
     .map((item) => ({
       ...item,
       liveState: getProcessionLiveState({
@@ -365,20 +373,24 @@ export default function AgendaCofradeDirectoryV4({
     }))
     .filter((item) => item.liveState.isLive)
     .sort((left, right) => String(left.startTime || '').localeCompare(String(right.startTime || ''))),
-  [liveNow, upcomingItems]
+  [liveNow, upcomingItems, period, today, category, territory, municipality]
   )
 
   const periodCounts = useMemo(() => Object.fromEntries(
     ['today', 'tomorrow', 'weekend', 'upcoming'].map((value) => [
       value,
-      upcomingItems.filter((item) => belongsToPeriod(item, value, today)).length,
+      upcomingItems.filter((item) => belongsToPeriod(item, value, today)
+        && (category === 'all' || item.category === category)
+        && agendaLocationMatches(item, territory, municipality)).length,
     ])
-  ), [upcomingItems, today])
+  ), [upcomingItems, today, category, territory, municipality])
 
   const categoryCounts = useMemo(() => Object.fromEntries(categoryOptions.map(([value]) => [
     value,
-    upcomingItems.filter((item) => item.category === value).length,
-  ])), [upcomingItems])
+    upcomingItems.filter((item) => item.category === value
+      && belongsToPeriod(item, period, today)
+      && agendaLocationMatches(item, territory, municipality)).length,
+  ])), [upcomingItems, period, today, territory, municipality])
 
   const municipalityOptions = useMemo(() => agendaMunicipalityOptions(upcomingItems), [upcomingItems])
 
@@ -390,7 +402,9 @@ export default function AgendaCofradeDirectoryV4({
     ))
     .map((item) => {
       const displayDate = periodDisplayDate(item, period, today)
-      return displayDate ? withAgendaTemporalDay(item, displayDate) : item
+      // In the all-upcoming view, ongoing multi-day events use today's schedule.
+      const visibleDate = displayDate || (item.date < today && (item.endDate || item.date) >= today ? today : item.date)
+      return visibleDate ? withAgendaTemporalDay(item, visibleDate) : item
     })
     .sort(compareDisplayItems),
   [category, upcomingItems, municipality, period, territory, today])
@@ -406,6 +420,11 @@ export default function AgendaCofradeDirectoryV4({
       ? 'Sevilla capital'
       : selectedMunicipalityLabel || 'municipios'
 
+  const [weekendStart, weekendEnd] = weekendRange(today)
+  const shortDate = (value) => new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'short', timeZone: 'Europe/Madrid' }).format(new Date(`${value}T12:00:00Z`))
+  const periodDates = { today: shortDate(today), tomorrow: shortDate(addDays(today, 1)), weekend: weekendStart.slice(0, 7) === weekendEnd.slice(0, 7) ? `${Number(weekendStart.slice(8))}–${shortDate(weekendEnd)}` : `${shortDate(weekendStart)} – ${shortDate(weekendEnd)}`, upcoming: 'Todas las fechas' }
+  const clearFilters = () => { setCategory('all'); setTerritory('all'); setMunicipality('') }
+
   const chooseCategory = (value) => {
     const next = category === value ? 'all' : value
     setCategory(next)
@@ -418,6 +437,7 @@ export default function AgendaCofradeDirectoryV4({
 
   const choosePeriod = (value) => {
     setPeriod(value)
+    document.getElementById('agenda')?.scrollIntoView({ block: 'start' })
     trackEvent('agenda_period_select', {
       period: value,
       agenda_type: AGENDA_TYPE,
@@ -445,8 +465,8 @@ export default function AgendaCofradeDirectoryV4({
   }
 
   return (
-    <section id="agenda" className={styles.directory} aria-labelledby="agenda-v4-title">
-      <div className={styles.sectionHead}>
+    <section id="agenda" className={`${styles.directory} ${mobileStyles.directory}`} aria-labelledby="agenda-v4-title">
+      <div className={`${styles.sectionHead} ${mobileStyles.sectionHead}`}>
         <div>
           <span>Sevilla y provincia</span>
           <h2 id="agenda-v4-title">Agenda de actos</h2>
@@ -454,60 +474,14 @@ export default function AgendaCofradeDirectoryV4({
         <p>Solo mostramos lo que está por venir. Elige cuándo, qué tipo de acto y dónde para localizar una cita de un vistazo.</p>
       </div>
 
-      {liveItems.length ? (
-        <section className={styles.livePanel} aria-labelledby="agenda-live-title">
-          <div className={styles.livePanelHead}>
-            <div>
-              <span><i aria-hidden="true" /> Ahora mismo</span>
-              <h3 id="agenda-live-title">{liveItems.length} {liveItems.length === 1 ? 'procesión en curso' : 'procesiones en curso'}</h3>
-            </div>
-            <p>Las salidas que están en la calle se mantienen arriba aunque coincidan varias a la vez.</p>
-          </div>
-          <div className={styles.liveList}>
-            {liveItems.map((item) => (
-              <article className={styles.liveItem} key={`live:${item.key}`}>
-                <div>
-                  <span>{item.categoryLabel}</span>
-                  <h4>{item.href ? <Link href={item.href} onClick={() => trackAgendaEventOpen(item)}>{item.title}</Link> : item.title}</h4>
-                  <p>{[item.municipality, item.organizer].filter(Boolean).join(' · ')}</p>
-                </div>
-                <div className={styles.liveTimes}>
-                  {item.startTime ? <span>Salida <strong>{item.startTime}</strong></span> : null}
-                  {item.endTime ? <span>Entrada <strong>{item.endTime}</strong></span> : null}
-                </div>
-                {item.href ? <Link className={styles.liveAction} href={item.href} onClick={() => trackAgendaEventOpen(item)}>Seguir <span aria-hidden="true">→</span></Link> : null}
-              </article>
-            ))}
-          </div>
-        </section>
-      ) : null}
-
-      <div className={`${styles.quickTypes} ${concertStyles.quickTypesSix}`} aria-label="Elegir tipo de acto">
-        {categoryOptions.map(([value, label]) => (
-          <button
-            type="button"
-            data-category={value}
-            className={category === value ? `${styles.quickTypeActive} ${value === 'concerts' ? concertStyles.quickTypeConcertActive : ''}` : ''}
-            aria-pressed={category === value}
-            onClick={() => chooseCategory(value)}
-            key={value}
-          >
-            <span>{label}</span>
-            <strong>{categoryCounts[value]}</strong>
-            <small>próximos</small>
-          </button>
-        ))}
-      </div>
-
-      <div className={styles.controlPanel}>
-        <div className={styles.controlBlock}>
-          <span className={styles.controlLabel}>Cuándo</span>
-          <div className={styles.periodGrid} aria-label="Cuándo consultar la agenda">
+        <div className={`${styles.controlBlock} ${mobileStyles.whenControls}`}>
+          <span className={`${styles.controlLabel} ${mobileStyles.whenLabel}`}>Cuándo</span>
+          <div className={`${styles.periodGrid} ${mobileStyles.periodGrid}`} aria-label="Cuándo consultar la agenda">
             {[
               ['today', 'Hoy'],
               ['tomorrow', 'Mañana'],
-              ['weekend', 'Este fin de semana'],
-              ['upcoming', 'Próximos actos'],
+              ['weekend', 'Fin de semana'],
+              ['upcoming', 'Próximos'],
             ].map(([value, label]) => (
               <button
                 type="button"
@@ -516,12 +490,15 @@ export default function AgendaCofradeDirectoryV4({
                 onClick={() => choosePeriod(value)}
                 key={value}
               >
-                <span>{label}</span><strong>{periodCounts[value]}</strong>
+                <span>{label}<small>{periodDates[value]}</small></span><strong>{periodCounts[value]}</strong>
               </button>
             ))}
           </div>
         </div>
 
+      <details className={mobileStyles.filters}>
+        <summary><span>Filtrar por lugar y tipo</span><small>{category !== 'all' || territory !== 'all' ? 'Activos' : ''} <b aria-hidden="true">+</b></small></summary>
+        <div className={mobileStyles.filterContent}>
         <div className={styles.controlBlock}>
           <span className={styles.controlLabel}>Dónde</span>
           <div className={styles.territoryGrid} aria-label="Dónde consultar la agenda">
@@ -555,7 +532,7 @@ export default function AgendaCofradeDirectoryV4({
                   background: '#fff',
                   color: '#26394c',
                   font: 'inherit',
-                  fontSize: '12px',
+                  fontSize: '16px',
                   fontWeight: 750,
                 }}
               >
@@ -567,21 +544,69 @@ export default function AgendaCofradeDirectoryV4({
             </label>
           ) : null}
         </div>
+      <div className={`${styles.quickTypes} ${concertStyles.quickTypesSix}`} aria-label="Elegir tipo de acto">
+        {categoryOptions.map(([value, label]) => (
+          <button
+            type="button"
+            data-category={value}
+            className={category === value ? `${styles.quickTypeActive} ${value === 'concerts' ? concertStyles.quickTypeConcertActive : ''}` : ''}
+            aria-pressed={category === value}
+            onClick={() => chooseCategory(value)}
+            key={value}
+          >
+            <span>{label}</span>
+            <strong>{categoryCounts[value]}</strong>
+            <small>actos</small>
+          </button>
+        ))}
       </div>
 
-      <div className={styles.resultSummary} aria-live="polite">
+          <button type="button" className={mobileStyles.clearFilters} onClick={clearFilters}>Limpiar filtros</button>
+        </div>
+      </details>
+
+      {liveItems.length ? (
+        <section className={styles.livePanel} aria-labelledby="agenda-live-title">
+          <div className={styles.livePanelHead}>
+            <div>
+              <span><i aria-hidden="true" /> Ahora mismo</span>
+              <h3 id="agenda-live-title">{liveItems.length} {liveItems.length === 1 ? 'procesión en curso' : 'procesiones en curso'}</h3>
+            </div>
+            <p>Las salidas que están en la calle se mantienen arriba aunque coincidan varias a la vez.</p>
+          </div>
+          <div className={styles.liveList}>
+            {liveItems.map((item) => (
+              <article className={styles.liveItem} key={`live:${item.key}`}>
+                <div>
+                  <span>{item.categoryLabel}</span>
+                  <h4>{item.href ? <Link href={item.href} onClick={() => trackAgendaEventOpen(item)}>{item.title}</Link> : item.title}</h4>
+                  <p>{[item.municipality, item.organizer].filter(Boolean).join(' · ')}</p>
+                </div>
+                <div className={styles.liveTimes}>
+                  {item.startTime ? <span>Salida <strong>{item.startTime}</strong></span> : null}
+                  {item.endTime ? <span>Entrada <strong>{item.endTime}</strong></span> : null}
+                </div>
+                {item.href ? <Link className={styles.liveAction} href={item.href} onClick={() => trackAgendaEventOpen(item)}>Seguir <span aria-hidden="true">→</span></Link> : null}
+              </article>
+            ))}
+          </div>
+        </section>
+      ) : null}
+
+      <div className={`${styles.resultSummary} ${mobileStyles.resultSummary}`} aria-live="polite">
         <div>
           <strong>{filtered.length} {filtered.length === 1 ? 'acto' : 'actos'}</strong>
           <span>{selectedCategoryLabel} · {territoryLabel}</span>
         </div>
-        {category !== 'all' ? (
+        {category !== 'all' || territory !== 'all' ? (
           <div className={styles.summaryActions}>
-            <button type="button" onClick={() => setCategory('all')}>Ver todos los tipos</button>
+            <button type="button" onClick={clearFilters}>Limpiar filtros</button>
           </div>
         ) : null}
       </div>
 
       {groups.length > 1 ? (
+        <details className={mobileStyles.monthPicker}><summary>Ir a otro mes <span aria-hidden="true">⌄</span></summary>
         <nav className={styles.monthNavigation} aria-label="Ir directamente a un mes">
           {groups.map((group) => (
             <a href={`#${monthAnchor(group.key)}`} key={group.key}>
@@ -589,7 +614,7 @@ export default function AgendaCofradeDirectoryV4({
               <strong>{group.items.length}</strong>
             </a>
           ))}
-        </nav>
+        </nav></details>
       ) : null}
 
       {groups.length ? (
@@ -599,13 +624,13 @@ export default function AgendaCofradeDirectoryV4({
             const anchor = monthAnchor(group.key)
             return (
               <section className={styles.monthGroup} id={anchor} key={group.key} aria-labelledby={`${anchor}-title`}>
-                <div className={styles.monthHeading}>
+                <div className={`${styles.monthHeading} ${mobileStyles.monthHeading}`}>
                   <div className={styles.monthIdentity}>
                     <span>Mes</span>
                     <h3 id={`${anchor}-title`}>{group.label}</h3>
                     <strong>{group.items.length} {group.items.length === 1 ? 'acto' : 'actos'}</strong>
                   </div>
-                  <div className={styles.monthTypeSummary} aria-label={`Tipos de actos en ${group.label}`}>
+                  <div className={`${styles.monthTypeSummary} ${mobileStyles.monthTypeSummary}`} aria-label={`Tipos de actos en ${group.label}`}>
                     {breakdown.map((type) => (
                       <span data-category={type.value} key={type.value}>
                         <i aria-hidden="true" />
@@ -617,7 +642,7 @@ export default function AgendaCofradeDirectoryV4({
                 </div>
                 <div className={styles.cards}>
                   {group.items.map((item) => {
-                    const displayDateInfo = item.temporalDateInfo || item.dateInfo
+                    const displayDateInfo = item.temporalDateInfo || item.dateInfo || agendaTemporalDateInfo(item.date)
                     const cardLiveState = ['processions', 'transfers', 'rosaries'].includes(item.category)
                       ? getProcessionLiveState({
                           date: item.date,
@@ -628,30 +653,44 @@ export default function AgendaCofradeDirectoryV4({
                       : { state: 'upcoming', isLive: false }
 
                     return (
-                    <article className={`${styles.card} ${visualStyles.visualCard} ${item.category === 'concerts' ? concertStyles.concertCard : ''} ${cardLiveState.isLive ? styles.cardLive : ''}`} key={item.key} data-category={item.category} data-live={cardLiveState.isLive ? 'true' : undefined}>
-                      <time className={styles.dateBlock} dateTime={item.temporalDate || item.date || undefined}>
+                    <article className={`${styles.card} ${visualStyles.visualCard} ${mobileStyles.card} ${item.category === 'concerts' ? concertStyles.concertCard : ''} ${cardLiveState.isLive ? styles.cardLive : ''}`} key={item.key} data-category={item.category} data-live={cardLiveState.isLive ? 'true' : undefined}>
+                      <time className={`${styles.dateBlock} ${mobileStyles.dateBlock}`} dateTime={item.temporalDate || item.date || undefined}>
+                        <em className={mobileStyles.weekday}>{displayDateInfo.weekdayLabel?.split(',')[0]?.split(' ')[0]}</em>
                         <strong>{displayDateInfo.day}</strong>
                         <span>{displayDateInfo.month}</span>
                         {displayDateInfo.year && String(displayDateInfo.year) !== currentYear ? <small>{displayDateInfo.year}</small> : null}
                       </time>
-                      <div className={styles.cardBody}>
+                      <div className={`${styles.cardBody} ${mobileStyles.cardBody}`}>
+                        <span className={mobileStyles.schedule}><b>Horario</b><strong>{item.timeText || (item.startTime ? `${item.startTime}${item.endTime ? `–${item.endTime}` : ''} h` : 'Por confirmar')}</strong></span>
                         <div className={styles.cardTopline}>
                           <span data-category={item.category}>{item.categoryLabel}</span>
                           {item.isExtraordinary && item.category === 'rosaries' ? <b>Extraordinario</b> : null}
                           {cardLiveState.isLive ? <small className={styles.liveBadge}><i aria-hidden="true" /> En curso</small> : null}
                         </div>
                         <h4>{item.category === 'concerts' ? item.title : item.href ? <Link href={item.href} onClick={() => trackAgendaEventOpen(item)}>{item.title}</Link> : item.title}</h4>
-                        <p className={styles.organizer}>{item.organizer}</p>
-                        <div className={styles.cardFacts}>
+                        <p className={`${styles.organizer} ${mobileStyles.organizer}`}>{item.organizer}</p>
+                        {item.endDate && item.endDate !== item.date ? <p className={mobileStyles.dateRange}>Del {shortDate(item.date)} al {shortDate(item.endDate)}{item.endDate.slice(0, 4) !== currentYear ? ` de ${item.endDate.slice(0, 4)}` : ''}</p> : null}
+                        <div className={`${styles.cardFacts} ${mobileStyles.cardFacts}`}>
                           <span><b>Localidad</b>{item.municipality || 'Por confirmar'}</span>
-                          <span><b>Horario</b>{item.timeText || (item.startTime ? `${item.startTime}${item.endTime ? `–${item.endTime}` : ''} h` : 'Por confirmar')}</span>
                           {item.place ? <span><b>Lugar</b>{item.place}</span> : null}
                         </div>
-                        {item.routeText && ['processions', 'transfers', 'rosaries', 'romeries'].includes(item.category)
-                          ? <EventRoute item={item} />
-                          : item.summary ? <p className={styles.routePreview}>{item.summary}</p> : null}
-                        {item.category === 'concerts' ? <ConcertRepertoire item={item} /> : null}
-                        <EventActions item={item} />
+                        <details className={mobileStyles.eventDetails}>
+                          <summary><span>{item.routeText ? 'Información y recorrido' : 'Información del evento'}</span><b aria-hidden="true">+</b></summary>
+                          <div className={mobileStyles.eventDetailBody}>
+                            {item.daySchedules?.length > 1 ? (
+                              <section className={mobileStyles.daySchedules} aria-label="Horarios por día">
+                                <h5>Horarios por día</h5>
+                                {item.daySchedules.map((day, index) => (
+                                  <p key={`${day.celebrationDate}-${index}`}><time dateTime={day.celebrationDate}>{agendaTemporalDateInfo(day.celebrationDate).weekdayLabel}</time><strong>{day.timeText || (day.startTime ? `${day.startTime}${day.endTime ? `–${day.endTime}` : ''} h` : 'Por confirmar')}</strong></p>
+                                ))}
+                              </section>
+                            ) : null}
+                            {item.summary && item.summary !== item.routeText ? <p>{item.summary}</p> : null}
+                            {item.routeText && ['processions', 'transfers', 'rosaries', 'romeries'].includes(item.category) ? <EventRoute item={item} inline /> : null}
+                            {item.category === 'concerts' ? <ConcertRepertoire item={item} inline /> : null}
+                            <EventActions item={item} />
+                          </div>
+                        </details>
                       </div>
                       <EventVisual item={item} />
                     </article>
@@ -666,6 +705,7 @@ export default function AgendaCofradeDirectoryV4({
         <div className={styles.empty}>
           <strong>No hay próximos actos en esta selección</strong>
           <p>Prueba con otro tipo de acto, territorio, municipio o periodo.</p>
+          <button type="button" className={mobileStyles.clearFilters} onClick={() => { clearFilters(); choosePeriod('upcoming') }}>Ver todos los próximos actos</button>
         </div>
       )}
     </section>

@@ -1,0 +1,90 @@
+/* Agenda: the same palette, with date, time and one-touch disclosures first. */
+.directory { min-width: 0; }
+.directory .periodGrid { grid-template-columns: repeat(4,minmax(0,1fr)); }
+.directory .periodGrid button { min-height: 64px; gap: 8px; }
+.directory .periodGrid button > span { display: grid; gap: 3px; text-align: left; }
+.directory .periodGrid small { display: block; font-size: 12px; font-weight: 600; }
+.directory .periodGrid button[aria-pressed="true"] { background: #a61931; color: #fff; }
+.directory .periodGrid button[aria-pressed="true"] strong { background: #fff; color: #a61931; }
+.filters { border: 1px solid #dedbd4; border-radius: 13px; background: #fff; }
+.filters > summary, .monthPicker > summary, .eventDetails > summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 48px; padding: 10px 14px; list-style: none; cursor: pointer; color: #26394c; font-weight: 700; }
+.filters > summary::-webkit-details-marker, .monthPicker > summary::-webkit-details-marker, .eventDetails > summary::-webkit-details-marker { display: none; }
+.filters > summary small { color: #64707b; text-align: right; }
+.filters > summary b, .eventDetails > summary b { display: inline-block; color: #a61931; font-size: 20px; }
+.filters[open] > summary b, .eventDetails[open] > summary b { transform: rotate(45deg); }
+.filterContent { display: grid; gap: 14px; padding: 0 14px 14px; }
+.clearFilters { min-height: 44px; padding: 8px 14px; border: 1px solid #dccbd0; border-radius: 10px; background: #fff7f8; color: #9f1730; font: inherit; font-weight: 700; cursor: pointer; }
+.directory .card { min-width: 0; }
+.directory .cardBody { min-width: 0; }
+.directory .cardFacts { flex-wrap: wrap; }
+.directory .cardFacts .schedule { flex-basis: 100%; align-items: baseline; flex-wrap: wrap; order: -1; }
+.schedule strong { color: #123a67; font-size: 22px; line-height: 1.35; font-weight: 800; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.weekday { margin-bottom: 8px; font-size: 12px; font-style: normal; font-weight: 700; text-transform: capitalize; }
+.dateRange { margin: 6px 0 0; font-size: 13px; color: #5e6c79; }
+.eventDetails { margin-top: 14px; border-top: 1px solid #e7e1d9; }
+.eventDetails > summary { padding: 8px 0; color: #9f1730; }
+.eventDetailBody { padding: 0 0 8px; overflow-wrap: anywhere; }
+.eventDetailBody > p { font-size: 15px; line-height: 1.65; white-space: pre-line; }
+.eventDetailBody h5 { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin: 12px 0; color: #26394c; font-size: 16px; }
+.eventDetailBody h5 small { color: #677580; }
+.eventDetailBody a { display: inline-flex; align-items: center; min-height: 44px; padding: 6px 0; }
+.monthPicker > summary { padding: 2px; color: #9f1730; justify-content: flex-start; }
+@media (max-width: 720px) {
+  .directory { gap: 10px; scroll-margin-top: calc(var(--hc-app-header-height) + 12px); }
+  .directory .sectionHead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .directory > div > span:first-child:not([class]) { font-size: 12px; }
+  .directory .periodGrid { grid-template-columns: repeat(2,minmax(0,1fr)); padding: 4px; gap: 4px; border-radius: 14px; }
+  .directory .periodGrid button { padding: 8px 10px; min-height: 62px; }
+  .directory .periodGrid button strong { min-width: 24px; height: 24px; }
+  .filters > summary { padding: 8px 12px; }
+  .filters > summary small { max-width: 120px; }
+  .directory .resultSummary { gap: 6px; margin: 4px 0 0; }
+  .directory .resultSummary > div:first-child { flex-wrap: wrap; gap: 4px 8px; }
+  .directory .resultSummary span { white-space: normal; overflow: visible; font-size: 12px; }
+  .directory .monthHeading { padding: 8px 0; background: transparent; border: 0; border-radius: 0; box-shadow: none; }
+  .directory .monthHeading h3 { font-size: 19px; }
+  .directory .monthHeading > div:first-child { display: flex; align-items: baseline; gap: 10px; }
+  .directory .monthHeading > div:first-child > span { display: none; }
+  .directory .monthHeading > div:first-child > strong { font-size: 12px; }
+  .directory .monthTypeSummary { display: none; }
+  /* A full-width body avoids squeezing names between the date and photograph. */
+  .directory .card { grid-template-columns: minmax(0,1fr) 72px !important; grid-template-rows: auto 1fr; border-left-width: 4px; border-radius: 16px; }
+  .directory .dateBlock { grid-column: 1; grid-row: 1; flex-direction: row; justify-content: flex-start; gap: 8px; padding: 10px 14px; border-right: 0; border-bottom: 1px solid #ece7df; }
+  .directory .dateBlock strong { font-size: 32px; font-weight: 800; }
+  .directory .dateBlock span { margin: 0; }
+  .directory .dateBlock .weekday { margin: 0 4px 0 0; }
+  .directory .visual { grid-column: 2; grid-row: 1; min-height: 70px; border-bottom: 1px solid #ece7df; }
+  .directory .cardBody { grid-column: 1/-1; grid-row: 2; padding: 14px 16px 4px; }
+  .directory .cardBody h4 { font-size: 21px; line-height: 1.25; text-wrap: pretty; }
+  .directory .cardFacts { display: flex; flex-direction: column; gap: 6px; }
+  .directory .cardFacts > span { overflow-wrap: anywhere; }
+  .directory .cardFacts .schedule { width: 100%; display: grid; gap: 2px; }
+  .schedule strong { font-size: 24px; }
+  .eventDetails { margin-top: 12px; }
+  .eventDetails > summary { min-height: 48px; }
+  .eventDetailBody h5 { flex-wrap: wrap; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .directory .card, .directory button { transition: none; }
+}
+.directory .cardBody > .schedule { display: grid; gap: 2px; margin-bottom: 10px; }
+.directory .cardBody > .schedule > b { color: #66717d; font-size: 12px; font-weight: 700; }
+@media(max-width:720px){
+  .directory .periodGrid { grid-template-columns: repeat(4,minmax(0,1fr)); }
+  .directory .periodGrid button { display: flex; align-items: flex-start; justify-content: flex-start; padding: 10px 7px; position: relative; }
+  .directory .periodGrid button > span { font-size: 13px; line-height: 1.25; }
+  .directory .periodGrid button strong { display: none; }
+  .directory .periodGrid button small { font-size: 11px; }
+  .whenLabel { display: none; }
+  .filters > summary small { display: flex; align-items: center; gap: 8px; }
+  .directory .dateBlock { padding-top: 6px; padding-bottom: 6px; }
+  .directory .visual { min-height: 58px; }
+  .directory .cardBody > .schedule { margin-bottom: 12px; }
+}
+.daySchedules p { display: grid; gap: 4px; padding-bottom: 10px; border-bottom: 1px solid #e7e1d9; font-size: 14px; }
+.daySchedules strong { color: #123a67; font-variant-numeric: tabular-nums; }
+
+.directory .organizer { font-size: 13px; line-height: 1.45; }
+@media(max-width:720px){
+  .whenControls { position: sticky; top: var(--hc-app-header-height); z-index: 20; padding: 5px 0; background: #f6f4ef; }
+}
