@@ -1,5 +1,12 @@
 # Pino Montano · ampliación de contenido · 8/10/2026
 
+## Revalidación viva · 9/10/2026
+18/18 INSERT y 2/2 UPDATE coinciden campo a campo; hashes de música y salidas idénticos. Cero duplicados por claves lógicas auditadas, cero FK huérfanas; titulares y dos relaciones Imagen–Paso publicados y navegables. Hermandad, dos Imágenes y dos Pasos: 200, canonical exacta, index/follow, metadata, JSON-LD y sitemap PASS.
+La advocación correcta es María Santísima del Amor. «Esperanza» figura en la miniatura de la Macarena y en la marcha; no se crea ni renombra ninguna Imagen. Miniatura de 2008, candelabros de 2009 y dimensiones visibles. Se preservan las notas que distinguen piezas históricas del proyecto aprobado en 2025. No se certifica ejecución del proyecto ni inventario exhaustivo de secundarias.
+Responsive no certificado por timeout del navegador. #1122 permanece NO-GO por el contrato relacional de La Paz y QA visual incompleta. Ver `../cierre-1122-20261009/README.md`.
+
+## Evidencia histórica del 8/10 (no es estado pendiente actual)
+
 ## Aplicación
 Continuación del encargo de contenido de Hermandades al recibir https://hermandadpinomontano.es.
 Aplicado en producción: 18 INSERT + 2 UPDATE del manifiesto; tres marcas de frescura editorial y una auditoría adicional.

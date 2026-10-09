@@ -1,5 +1,12 @@
 # La Paz · ampliación aplicada · 8/10/2026
 
+## Revalidación viva · 9/10/2026
+97/97 INSERT y 6/6 UPDATE coinciden con todos los campos del manifiesto mediante SELECT. Hashes preservados coincidentes. Cero duplicados por las claves lógicas auditadas y cero FK huérfanas en esas filas.
+El pendiente de patrimonio del corte original queda resuelto: HTML 200 muestra corona (1949), templete (1991), ángeles (1954) y seis restauraciones, incluidas las cuatro nuevas. Música, titularidad conceptual y fuentes son públicas. La guía conserva su límite de rollout; no se certifica en la cohorte de lectura.
+**NO-GO del cierre:** `image_steps` no contiene vínculos para Victoria, Paz y Prado; las tres Imágenes y los tres Pasos tampoco ofrecen navegación recíproca. No corregido: requeriría DML nuevo fuera del alcance documental. Responsive no certificado por timeout del navegador. Ver `../cierre-1122-20261009/README.md`.
+
+## Evidencia histórica del 8/10 (no es estado pendiente actual)
+
 Orden del usuario: «Inclúyelo», tras propuesta basada en https://www.hermandaddelapaz.org.
 
 ## Estado

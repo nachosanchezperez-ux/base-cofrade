@@ -1,5 +1,14 @@
 # La Misión · ampliación oficial · 8/10/2026
 
+## Revalidación viva · 9/10/2026
+Las seis filas finales, fusionando los ajustes descriptivos posteriores, coinciden con el manifiesto campo a campo. Cultos, música y salidas conservan los hashes registrados y tipos Gloria/Sacramental/Penitencia. Cero FK huérfanas en filas auditadas. No se ejecuta DML.
+**Caché descriptiva resuelta:** HTML público confirma la prohibición de guantes y las descripciones finales de San Juan y Amparo. Se diferencia la titular de Bonilla de 1999 del precedente de 1967 remodelado en 1975. No se fuerza invalidación ni redeploy.
+**Historia:** el lector recupera `history_text`, pero `app/hermandades/[slug]/page.js` entrega exclusivamente `h.cronologia` a `BrotherhoodHistoryTimeline`; el componente no renderiza si no hay hitos. El contrato de lectura documenta Historia como cronología. Mismo comportamiento en main y en esta PR, sin cambios de aplicación: no hay regresión objetiva atribuible a #1122. La corrección parisina está preservada en datos; no se certifica visible ni se amplía el producto.
+Hermandad, cuatro Imágenes y tres Pasos: HTTP/SEO/sitemap PASS. Cuatro relaciones físicas Imagen–Paso navegables. El Paso de San Antonio María Claret permanece vinculado a la Hermandad; no se inventa Imagen física para la identidad devocional conceptual. Responsive no certificado por timeout del navegador.
+Ver `../cierre-1122-20261009/README.md`; #1122 sigue NO-GO.
+
+## Evidencia histórica del 8/10 (no es estado pendiente actual)
+
 Continuación del encargo de contenido al recibir https://archicofradiamision.es.
 
 ## Datos aplicados
