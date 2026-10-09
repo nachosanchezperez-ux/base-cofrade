@@ -45,3 +45,15 @@ El prototipo local compiló y pasó las 1.500 pruebas existentes más 17 pruebas
 Rama reconciliada sin conflictos con main `59edee119b5c81b470897c4899ffc8ecc5a4c25b`. Se mantiene el modelo editorial y las fuentes del piloto. Cabecera burdeos, tarjetas marfil, escudos destacados, protagonistas visibles desde portada y lenguaje cofrade («Entre varales y cornetas», «Relevo de sones», «Sones que siguen»). Acceso permanente desde Explorar en móvil y escritorio. Encabezados de novedades h2 en el directorio y h3 en portada; foco visible, filtros GET etiquetados y fuentes desplegables nativas. Alta canónica en sitemap general; filtros conservan noindex.
 
 Verificación local: 1.596/1.596 pruebas, compilación Next.js correcta, diff sin errores de espacios. La revisión visual y funcional del commit final y el postflight son necesarios antes del GO.
+
+### QA visual y funcional cerrada · GO a integración
+
+Candidato `fc54571f6ed357aec7bc146aa10046bfd1bcbff1`, preview `dpl_9EhaFE8c1P47M8UGNhHbZe515ryF` READY. CI 37924419753 success. Build local correcto y 1.596 pruebas correctas.
+
+Chromium real con viewports de 320, 390, 430, 768, 1024 y 1440 px: inspección de capturas y ausencia de desbordamiento; filtros por texto, municipio y tema, quitar filtros, vacío Utrera y fuentes desplegables. Apertura de fuentes con Enter. Las dos tarjetas de portada llevan al capítulo correcto. Las dos fichas de hermandad muestran únicamente su entrada al abrir el resumen. Menú móvil permite acceder directamente a la sección. Los nueve destinos canónicos/internos responden HTTP 200 y los fragmentos de cambios musicales y música del Baratillo existen. Canonical propia, vistas filtradas noindex y ruta incluida en sitemap general.
+
+Axe-core: cero infracciones de las reglas WCAG 2 A/AA y 2.1 AA examinadas en el contenido principal para las seis anchuras. No equivale a certificación completa con lector de pantalla ni pruebas en dispositivos físicos. El entorno usa Chromium de runner aislado, sin añadir dependencias a la aplicación. Se corrigieron selectores del arnés (nombre accesible con flecha del menú y etiquetas de select), no fallos funcionales de la sección.
+
+Resultado reproducible: `scripts/qa-hilo-movements.cjs`; configurar QA_BASE_URL, QA_CHROMIUM_PATH y QA_AXE_PATH. QA_ACCESS_FILE acepta un JSON local de acceso temporal a preview; no versionar ese archivo ni sus cookies. QA_PROXY_TLS=1 solo se utilizó para el certificado del proxy del entorno de pruebas. Evidencia sin credenciales: `docs/evidence/el-hilo-se-mueve-2026-10-09/qa-results.json`.
+
+La decisión original NO-GO queda superada por esta revisión: **GO a integración**, conservando el piloto curado y sin escrituras en Supabase. La certificación de despliegue productivo y sus SHAs se registra en el cierre de la PR #1113.
