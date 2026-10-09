@@ -87,4 +87,17 @@
 .directory .organizer { font-size: 13px; line-height: 1.45; }
 @media(max-width:720px){
   .whenControls { position: sticky; top: var(--hc-app-header-height); z-index: 20; padding: 5px 0; background: #f6f4ef; }
+  .directory .card { border-left: 1px solid #e5e0d8; border-top: 3px solid var(--category-accent); box-shadow: 0 4px 18px rgba(21,37,56,.045); }
+  .directory .dateBlock { gap: 7px; border-bottom: 0; background: transparent; padding: 12px 16px 0; }
+  .directory .dateBlock strong { font-size: 36px; line-height: 1; }
+  .directory .dateBlock .weekday { color: #64707b; font-size: 13px; }
+  .directory .dateBlock span { font-size: 13px; font-weight: 800; }
+  .directory .cardBody { padding-top: 12px; padding-bottom: 12px; }
+  .directory .cardBody > .schedule { border-radius: 10px; padding: 8px 12px; background: #f1f4f7; }
+  .directory .cardBody > .schedule > b { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; }
+  .directory .cardFacts { gap: 8px; margin-top: 14px; }
+  .eventDetails { border-top: 0; }
+  .eventDetails > summary { min-height: 48px; padding: 10px 12px; border-radius: 10px; background: #fbf0f2; font-size: 13px; }
+  .eventDetails > summary b { display: grid; place-items: center; flex: 0 0 26px; height: 26px; border-radius: 50%; background: #fff; }
+  .eventDetails[open] > summary { margin-bottom: 12px; }
 }
