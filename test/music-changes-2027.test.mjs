@@ -128,15 +128,16 @@ test('Cambios musicales 2027 queda descubrible e indexable', async () => {
     assert.match(source, /\/semana-santa\/2027\/cambios-musicales/)
   }
 
-  assert.match(page, /Las renovaciones sin cambio de formación y los acuerdos no confirmados quedan fuera/)
+  assert.match(page, /Cambios y renovaciones no son lo mismo/)
+  assert.match(page, /nunca incrementan el contador de cambios/)
 })
 
 
 test('el especial 2027 prioriza listado, filtros y contenido SEO útil', async () => {
   const page = await read('app/semana-santa/2027/cambios-musicales/page.js')
 
-  assert.match(page, /Cambios musicales 2027/)
-  assert.match(page, /Cambios de bandas en la Semana Santa de Sevilla 2027/)
+  assert.match(page, /Música 2027: cambios y renovaciones/)
+  assert.match(page, /Música de la Semana Santa de Sevilla 2027: cambios y renovaciones/)
   assert.match(page, /name="municipio"/)
   assert.match(page, /name="tipo"/)
   assert.match(page, /name="q"/)
