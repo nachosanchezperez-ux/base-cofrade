@@ -24,6 +24,7 @@ const homeKnowledgeCacheName = '20260925051118_home_knowledge_threads_cache.sql'
 const homeKnowledgeCachePrivateName = '20260925051336_home_knowledge_threads_cache_private.sql'
 const musicAccompanimentSnapshotsName = '20261002144739_music_accompaniment_public_band_snapshots.sql'
 const musicalRepertoireThemeName = '20261008064500_add_musical_repertoire_theme.sql'
+const concertProgramsName = '20261009123758_concert_programs.sql'
 const baseline = readFileSync(new URL(baselineName, migrationsDirectory), 'utf8')
 const membershipStats = readFileSync(new URL(membershipStatsName, migrationsDirectory), 'utf8')
 const seed = readFileSync(new URL('../supabase/seed.sql', import.meta.url), 'utf8')
@@ -51,6 +52,7 @@ test('las ramas nuevas ejecutan únicamente el baseline y las evoluciones de esq
     homeKnowledgeCachePrivateName,
     musicAccompanimentSnapshotsName,
     musicalRepertoireThemeName,
+    concertProgramsName,
   ])
 })
 
