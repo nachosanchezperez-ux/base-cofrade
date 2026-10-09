@@ -1,0 +1,55 @@
+name: Hermandades directory browser review
+on:
+  push:
+    branches: ['ui/depurar-directorio-hermandades-*']
+permissions:
+  contents: read
+concurrency:
+  group: hermandades-browser-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  directory-review:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      TZ: UTC
+      NEXT_TELEMETRY_DISABLED: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Exact candidate tests and build
+        run: |
+          mkdir -p qa-hermandades
+          git rev-parse HEAD > qa-hermandades/commit.txt
+          npm test > qa-hermandades/tests.log 2>&1
+          npm run build > qa-hermandades/build.log 2>&1
+      - name: Isolated browser dependencies
+        run: |
+          python -m venv "$RUNNER_TEMP/hermandades-qa"
+          "$RUNNER_TEMP/hermandades-qa/bin/pip" install playwright==1.57.0
+          "$RUNNER_TEMP/hermandades-qa/bin/playwright" install --with-deps chromium webkit
+      - name: Read-only public snapshot
+        run: "$RUNNER_TEMP/hermandades-qa/bin/python scripts/qa-hermandades-directory.py snapshot"
+      - name: Real page browser review with runner-only readers
+        run: |
+          npm run build > qa-hermandades/fixture-build.log 2>&1
+          npm start -- --port 3100 > qa-hermandades/server.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 40); do curl -sf http://127.0.0.1:3100/hermandades > /dev/null && break; sleep 1; done
+          "$RUNNER_TEMP/hermandades-qa/bin/python" scripts/qa-hermandades-directory.py browser
+      - name: Restore exact source
+        if: always()
+        run: |
+          python scripts/qa-hermandades-directory.py restore
+          git diff --exit-code
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hermandades-directory-review
+          path: qa-hermandades
+          retention-days: 3

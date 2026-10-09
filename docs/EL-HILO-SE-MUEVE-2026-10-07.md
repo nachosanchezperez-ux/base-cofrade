@@ -39,3 +39,9 @@ Base `bb967bc7103ceba3b4df2e1a59b463976cbab310`, árbol `da2d2f85890abd2c9aae96d
 ## Verificación
 
 El prototipo local compiló y pasó las 1.500 pruebas existentes más 17 pruebas específicas. El HTML del nuevo hub respondió HTTP 200 con los dos capítulos y datos públicos. La PR debe registrar la repetición de build y suite completa sobre el commit remoto exacto, CI, preview y revisión visual. No se da por realizada ninguna prueba de navegador solo por compilar CSS.
+
+## Revisión del 9 de octubre de 2026
+
+Rama reconciliada sin conflictos con main `59edee119b5c81b470897c4899ffc8ecc5a4c25b`. Se mantiene el modelo editorial y las fuentes del piloto. Cabecera burdeos, tarjetas marfil, escudos destacados, protagonistas visibles desde portada y lenguaje cofrade («Entre varales y cornetas», «Relevo de sones», «Sones que siguen»). Acceso permanente desde Explorar en móvil y escritorio. Encabezados de novedades h2 en el directorio y h3 en portada; foco visible, filtros GET etiquetados y fuentes desplegables nativas. Alta canónica en sitemap general; filtros conservan noindex.
+
+Verificación local: 1.596/1.596 pruebas, compilación Next.js correcta, diff sin errores de espacios. La revisión visual y funcional del commit final y el postflight son necesarios antes del GO.

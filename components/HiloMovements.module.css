@@ -17,9 +17,9 @@
 .story { position: relative; border-left: 2px solid var(--wine); padding: 0 0 6px 24px; margin-left: 27px; }
 .story::before { content: ''; position: absolute; top: 3px; left: -5px; width: 8px; height: 8px; background: var(--wine); border-radius: 50%; }
 .date { font-size: 14px; color: var(--ink-soft); margin: 0 0 10px; line-height: 1.6; }
-.story h3 { margin: 0 0 12px; font-size: 21px; line-height: 1.4; font-weight: 750; }
-.story h3 a { color: inherit; text-decoration: none; }
-.story h3 a:hover { text-decoration: underline; }
+.story :is(h2, h3) { margin: 0 0 12px; font-size: 21px; line-height: 1.4; font-weight: 750; }
+.story :is(h2, h3) a { color: inherit; text-decoration: none; }
+.story :is(h2, h3) a:hover { text-decoration: underline; }
 .summary, .context { font-size: 16px; line-height: 1.75; margin: 0 0 16px; }
 .context { color: var(--ink-soft); }
 .effective { margin: 0 0 18px; font-size: 15px; font-weight: 700; }
@@ -55,3 +55,39 @@
 .chapter, .hero, .filters { overflow-wrap: anywhere; }
 .srOnly { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
 @media (max-width: 760px) { .sectionHeader { align-items: start; flex-direction: column; gap: 12px; } .compactList { grid-template-columns: 1fr; gap: 32px; } .story { padding-left: 18px; margin-left: 14px; } .section { padding: 22px 0; } .filters label { flex-basis: 100%; } .hero { padding-top: 20px; } .brotherhood { font-size: 22px; } }
+
+/* Editorial identity: wine, ivory and a continuous thread. */
+.section { background: #f5efea; border-block: 1px solid #e4d7cf; padding-block: 42px; }
+.sectionHeader .eyebrow { text-transform: uppercase; letter-spacing: .12em; font-size: 12px; }
+.sectionHeader h2 { font-size: clamp(32px, 4vw, 48px); }
+.chapter { border: 1px solid #e4d7cf; border-radius: 18px; background: #fff; overflow: hidden; box-shadow: 0 8px 26px #48151f09; }
+.identity { padding: 22px 26px; background: #f8f3ec; border-top: 5px solid var(--wine); gap: 20px; }
+.crest { width: 76px; height: 88px; flex-basis: 76px; padding: 8px; background: white; border: 1px solid #e8ded2; border-radius: 12px; }
+.identity > div { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; }
+.kind { display: inline-flex; padding: 4px 10px; border-radius: 20px; color: #fff; background: var(--wine-dark); font-size: 12px; font-weight: 750; line-height: 1.5; }
+.brotherhood { width: 100%; font-family: Georgia, serif; font-size: 28px; }
+.story { margin: 24px 26px 26px 38px; padding-left: 22px; }
+.story :is(h2, h3) { font-family: Georgia, serif; font-size: clamp(24px, 2.3vw, 32px); line-height: 1.25; }
+.compactList .story h3 { font-size: 25px; }
+.compactConnections { color: var(--ink-soft); font-size: 14px; line-height: 1.65; margin: 0 0 16px; }
+.effective { display: inline-block; color: var(--wine-dark); background: #f5ede5; border-radius: 6px; padding: 8px 12px; }
+.connections { margin-top: 10px; }
+.story .connectionTitle { font-weight: 750; line-height: 1.5; font-family: inherit; font-size: 15px; margin-bottom: 10px; }
+.connections a { height: 100%; background: #f8f3ec; border: 1px solid #e8ded2; border-radius: 10px; padding: 14px; }
+.connections a:hover { border-color: var(--wine); }
+.hero { position: relative; isolation: isolate; background: var(--wine-dark); color: #fff; border-radius: 22px; padding: 42px; margin-top: 20px; overflow: hidden; }
+.hero::after { content: ''; position: absolute; z-index: -1; width: 260px; height: 260px; border: 2px solid #bc926b; border-radius: 50%; right: -85px; top: -100px; box-shadow: 0 0 0 35px #ffffff05, 0 0 0 70px #ffffff05, 0 0 0 105px #ffffff05; }
+.hero .eyebrow { color: #f0cfaa; text-transform: uppercase; letter-spacing: .12em; font-size: 12px; }
+.hero h1 { max-width: none; font-size: clamp(38px, 5vw, 64px); }
+.hero p { color: #f4e7e2; max-width: 64ch; }
+.heroGuide { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 26px; font-size: 14px; }
+.heroGuide span { border: 1px solid #b68b81; border-radius: 24px; padding: 8px 14px; }
+.filters { background: #f8f3ec; border: 1px solid #e4d7cf; border-radius: 14px; padding: 20px; }
+.filters label:first-child { flex-grow: 2; }
+.list { max-width: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; align-items: start; }
+.list > li + li { margin-top: 0; }
+.list .connections { grid-template-columns: 1fr; }
+.brotherhoodBrief { padding: 0 20px; border: 1px solid #e4d7cf; border-radius: 14px; background: white; }
+.brotherhoodBrief[open] > summary b { transform: rotate(45deg); }
+@media (max-width: 900px) { .list { grid-template-columns: 1fr; } .list .connections { grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); } }
+@media (max-width: 760px) { .hero { padding: 26px 22px; border-radius: 16px; } .heroGuide { gap: 8px; font-size: 12px; } .heroGuide span { padding: 6px 9px; } .identity { padding: 18px; gap: 14px; } .crest { width: 64px; height: 76px; flex-basis: 64px; } .brotherhood { font-size: 25px; } .story { margin: 20px 18px 22px 24px; padding-left: 16px; } .section { padding-block: 28px; } .filters { gap: 18px; padding: 18px; } .filters button { flex: 1; } }

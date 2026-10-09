@@ -27,12 +27,14 @@ const homeScrollSections = [
 ];
 
 const directoryLinks = [
+  ['/el-hilo-se-mueve', 'El Hilo se mueve'],
   ['/directorio', 'Directorio'],
   ['/hermandades', 'Hermandades'],
   ['/procesiones-de-gloria', 'Procesiones de Gloria'],
   ['/imagenes', 'Imágenes'],
   ['/pasos', 'Pasos'],
   ['/bandas', 'Bandas'],
+  ['/acompanamientos-musicales', 'Estadísticas musicales'],
   ['/semana-santa/2027/cambios-musicales', 'Cambios musicales 2027'],
   ['/marchas', 'Marchas'],
   ['/autores', 'Autores'],

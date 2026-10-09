@@ -30,16 +30,16 @@ export default async function HiloMovementsPage({ searchParams }) {
     <div className="shell">
       <SiteBreadcrumb items={[{ label: 'El Hilo se mueve' }]} />
       <JsonLd data={breadcrumbJsonLd([{ name: 'Inicio', path: '/' }, { name: 'El Hilo se mueve', path: HILO_MOVEMENTS_PATH }])} />
-      <header className={styles.hero}><span className={styles.eyebrow}>La vida de nuestras hermandades, conectada</span><h1>El Hilo se mueve</h1><p>Una nueva música, un proyecto que avanza, una fecha que se confirma. Cada novedad tiene una hermandad detrás y una historia de la que tirar.</p></header>
+      <header className={styles.hero}><span className={styles.eyebrow}>Entre varales y cornetas</span><h1>El Hilo se mueve</h1><p>Un relevo tras el palio, unos sones que siguen, un nuevo capítulo en la hermandad. Aquí te contamos qué se mueve y te llevamos a quienes forman parte de cada historia.</p><div className={styles.heroGuide}><span>La novedad</span><b aria-hidden="true">→</b><span>Sus protagonistas</span><b aria-hidden="true">→</b><span>Su historia</span></div></header>
       {unavailable ? <p className={styles.empty} role="status">No hemos podido recuperar las novedades. Puedes consultar las <Link href="/hermandades">hermandades</Link> y la <Link href="/agenda-cofrade">agenda</Link>.</p> : <>
         <form key={JSON.stringify(filters)} className={styles.filters} action={HILO_MOVEMENTS_PATH} method="get" role="search" aria-label="Buscar novedades de hermandades">
           <label>Hermandad, banda o novedad<input type="search" name="q" maxLength={120} defaultValue={filters.q} placeholder="¿De qué hilo quieres tirar?" /></label>
           <label>Municipio<select name="municipio" defaultValue={filters.municipio}><option value="">Todos los municipios</option>{filters.municipio && !municipalities.includes(filters.municipio) ? <option value={filters.municipio}>{filters.municipio}</option> : null}{municipalities.map((name) => <option key={name} value={name}>{name}</option>)}</select></label>
           <label>Tema<select name="tema" defaultValue={filters.tema}><option value="">Todos los temas</option>{filters.tema && !topics.includes(filters.tema) ? <option value={filters.tema}>{HILO_TOPIC_LABELS[filters.tema] || 'Otro tema'}</option> : null}{topics.map((topic) => <option key={topic} value={topic}>{HILO_TOPIC_LABELS[topic]}</option>)}</select></label>
-          <button type="submit">Buscar</button><Link className={styles.more} href={HILO_MOVEMENTS_PATH} prefetch={false}>Limpiar</Link>
+          <button type="submit">Buscar novedades</button><Link className={styles.more} href={HILO_MOVEMENTS_PATH} prefetch={false}>Quitar filtros</Link>
         </form>
         <p className={styles.results}>{selected.length} {selected.length === 1 ? 'novedad documentada' : 'novedades documentadas'} · Ordenadas por fecha del anuncio, cuando se conoce.</p>
-        {selected.length ? <HiloMovementCards items={selected} /> : <p className={styles.empty}>No hay novedades publicadas con estos filtros. <Link href={HILO_MOVEMENTS_PATH} prefetch={false}>Ver todas las novedades</Link>.</p>}
+        {selected.length ? <HiloMovementCards items={selected} headingLevel={2} /> : <p className={styles.empty}>No hay novedades publicadas con estos filtros. <Link href={HILO_MOVEMENTS_PATH} prefetch={false}>Ver todas las novedades</Link>.</p>}
       </>}
     </div>
   </div>

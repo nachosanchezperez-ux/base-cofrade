@@ -15,13 +15,13 @@ export default async function HiloMovementsSection({ brotherhoodId = '', brother
     return null
   }
   if (!items.length) return null
-  return <section className={styles.section} aria-label="El Hilo se mueve" data-analytics-related-section="el_hilo_se_mueve">
+  return <section id={brotherhoodId ? undefined : 'el-hilo-se-mueve'} className={styles.section} aria-label="El Hilo se mueve" data-analytics-related-section="el_hilo_se_mueve">
     <div className="shell">
       {brotherhoodId ? <details className={styles.brotherhoodBrief}>
         <summary><span><strong>El Hilo se mueve</strong><span>En {brotherhoodName || items[0].brotherhood.label}: {items[0].title}</span></span><b aria-hidden="true">+</b></summary>
         <HiloMovementCards items={items} compact />
       </details> : <>
-        <header className={styles.sectionHeader}><div><span className={styles.eyebrow}>La vida de nuestras hermandades</span><h2>El Hilo se mueve</h2><p>Nuevos capítulos, con su historia y sus protagonistas.</p></div><Link className={styles.more} href={HILO_MOVEMENTS_PATH} prefetch={false}>Ver todas las novedades <span aria-hidden="true">→</span></Link></header>
+        <header className={styles.sectionHeader}><div><span className={styles.eyebrow}>Entre varales y cornetas</span><h2>El Hilo se mueve</h2><p>Lo que se anuncia en nuestras hermandades, con sus protagonistas y su historia.</p></div><Link className={styles.more} href={HILO_MOVEMENTS_PATH} prefetch={false}>Entrar en El Hilo se mueve <span aria-hidden="true">→</span></Link></header>
         <HiloMovementCards items={items} compact />
       </>}
     </div>

@@ -1,0 +1,49 @@
+name: Music dashboard review
+on:
+  push:
+    branches: ['feat/panel-estadisticas-musicales-*']
+permissions:
+  contents: read
+jobs:
+  dashboard-review:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      TZ: UTC
+      NEXT_TELEMETRY_DISABLED: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Preserve exact installed Next guides
+        run: |
+          mkdir -p qa-evidence/framework-guides
+          find node_modules/next/dist/docs -type f \( -name '*page*' -o -name '*css*' -o -name '*link*' -o -name '*server-and-client*' \) -exec cp {} qa-evidence/framework-guides/ \;
+      - name: Test and build unmodified candidate
+        run: |
+          npm test > qa-evidence/tests.log 2>&1
+          npm run build > qa-evidence/build.log 2>&1
+      - name: Isolated browser dependencies, outside app package
+        run: |
+          python -m venv "$RUNNER_TEMP/music-qa"
+          "$RUNNER_TEMP/music-qa/bin/pip" install playwright==1.57.0 beautifulsoup4==4.13.4
+          "$RUNNER_TEMP/music-qa/bin/playwright" install --with-deps chromium webkit
+      - name: Copy public SSR baseline into runner-only adapter
+        run: "$RUNNER_TEMP/music-qa/bin/python scripts/qa-music-dashboard.py snapshot"
+      - name: Build and review exact component with public baseline
+        run: |
+          npm run build > qa-evidence/fixture-build.log 2>&1
+          npm start -- --port 3100 > qa-evidence/server.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 40); do curl -sf http://127.0.0.1:3100/acompanamientos-musicales > /dev/null && break; sleep 1; done
+          "$RUNNER_TEMP/music-qa/bin/python" scripts/qa-music-dashboard.py browser
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: music-dashboard-review
+          path: qa-evidence
+          retention-days: 3

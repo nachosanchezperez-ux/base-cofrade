@@ -23,6 +23,7 @@ const EXECUTABLE_SCHEMA_MIGRATIONS = [
   "20260925051118_home_knowledge_threads_cache.sql",
   "20260925051336_home_knowledge_threads_cache_private.sql",
   "20261002144739_music_accompaniment_public_band_snapshots.sql",
+  "20261008064500_add_musical_repertoire_theme.sql",
 ];
 
 test("Supabase migration versions are unique and well formed", async () => {

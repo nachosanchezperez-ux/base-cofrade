@@ -23,6 +23,7 @@ const editorialPriorityContentDateFixName = '20260922045453_fix_editorial_priori
 const homeKnowledgeCacheName = '20260925051118_home_knowledge_threads_cache.sql'
 const homeKnowledgeCachePrivateName = '20260925051336_home_knowledge_threads_cache_private.sql'
 const musicAccompanimentSnapshotsName = '20261002144739_music_accompaniment_public_band_snapshots.sql'
+const musicalRepertoireThemeName = '20261008064500_add_musical_repertoire_theme.sql'
 const baseline = readFileSync(new URL(baselineName, migrationsDirectory), 'utf8')
 const membershipStats = readFileSync(new URL(membershipStatsName, migrationsDirectory), 'utf8')
 const seed = readFileSync(new URL('../supabase/seed.sql', import.meta.url), 'utf8')
@@ -49,7 +50,17 @@ test('las ramas nuevas ejecutan únicamente el baseline y las evoluciones de esq
     homeKnowledgeCacheName,
     homeKnowledgeCachePrivateName,
     musicAccompanimentSnapshotsName,
+    musicalRepertoireThemeName,
   ])
+})
+
+test('las crucetas admiten una paleta propia documentada por su fuente visual', () => {
+  const migration = readFileSync(new URL(musicalRepertoireThemeName, migrationsDirectory), 'utf8')
+
+  assert.match(migration, /add column if not exists primary_color text/i)
+  assert.match(migration, /add column if not exists accent_color text/i)
+  assert.match(migration, /musical_repertoires_primary_color_format/i)
+  assert.match(migration, /musical_repertoires_accent_color_format/i)
 })
 
 test('la prioridad editorial distingue actualización de contenido y actualización técnica', () => {
@@ -116,9 +127,13 @@ test('el DML posterior al baseline permanece íntegro y fuera de la cadena ejecu
     .filter((file) => file.endsWith('.sql'))
     .sort()
 
-  assert.equal(archived.length, 151)
+  assert.equal(archived.length, 155)
   assert.equal(archived[0], '20260831074355_publica_tres_igualas_septiembre_2026.sql')
-  assert.equal(archived.at(-1), '20261007005000_corrige_rosario_santiponce_2026.sql')
+  assert.equal(archived.at(-1), '20261008061516_publica_cruceta_merced_ecija_estepa_2026.sql')
+  assert.ok(archived.includes('20261008061516_publica_cruceta_merced_ecija_estepa_2026.sql'))
+  assert.ok(archived.includes('20261008010014_publica_cruceta_divina_enfermera_paz_malaga_2026.sql'))
+  assert.ok(archived.includes('20261007233320_publica_cruceta_lagrimas_puebla_gerena_2026.sql'))
+  assert.ok(archived.includes('20261007141226_publica_crucetas_panaderos_santa_lucia_2026.sql'))
   assert.ok(archived.includes('20261007005000_corrige_rosario_santiponce_2026.sql'))
   assert.ok(archived.includes('20261006215000_publica_rosario_caridad_el_olivo_2026.sql'))
   assert.ok(archived.includes('20261006203500_actualiza_pastora_carmona_amparo_2026.sql'))
