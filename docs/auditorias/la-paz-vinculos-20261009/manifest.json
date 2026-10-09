@@ -1,0 +1,23 @@
+[
+  {
+    "id": "0275e09f-2cae-43bf-bcd0-a52b3eda73f5",
+    "image_entity_id": "2d1f1259-e92c-4094-97a2-ab98a9bb1a82",
+    "step_entity_id": "b4220000-0000-0000-0000-000000000003",
+    "source_id": "521aecc4-22fa-4410-9226-8151ed9849a8",
+    "source_link_id": "851f13fe-1003-4801-9489-70f66728ce10"
+  },
+  {
+    "id": "d019dd0c-47f5-401a-b1a2-1b67f476b3e6",
+    "image_entity_id": "55663ce8-b243-477b-bb6e-54cec1ac980f",
+    "step_entity_id": "0cbcaf53-900b-4cc5-a889-ffc29544adbe",
+    "source_id": "af15eca4-1f2d-4f00-922f-bf9733a70147",
+    "source_link_id": "d9fb1d50-7dc3-4311-9d68-aa6a5f373988"
+  },
+  {
+    "id": "d0884b85-02d5-4d32-97ad-7daea82639d4",
+    "image_entity_id": "07f7a00b-2339-48d3-a768-122ad0767de1",
+    "step_entity_id": "6b14bec1-bc08-47fa-a821-ab80924bd08f",
+    "source_id": "41656a4c-c6df-4947-9996-cf4a00aa828c",
+    "source_link_id": "0667ee76-d021-4660-9047-ee9f0b191a30"
+  }
+]
