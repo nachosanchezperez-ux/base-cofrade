@@ -1,0 +1,397 @@
+{
+  "rows": [
+    {
+      "id": "64c18d72-705c-4456-9fa2-21ab7f2d7072",
+      "name": "Triana de Esperanza",
+      "year": 2004,
+      "desc": "Marcha de Claudio Gómez Calado dedicada a Nuestra Señora de la Esperanza de Triana."
+    },
+    {
+      "id": "fcc73b91-38f4-48ed-90cd-5c7fbdb0bc9f",
+      "name": "Soleá, dame la mano",
+      "year": 1918,
+      "desc": "Marcha de Manuel Font de Anta vinculada tradicionalmente a las saetas de los presos al paso de la Esperanza de Triana por la cárcel del Pópulo. La dedicatoria original se dirige a los presos de Sevilla, por lo que no se registra como dedicatoria formal a la Hermandad."
+    },
+    {
+      "id": "f8d09b0c-a76c-4737-8e4f-a2199a4e6f0f",
+      "name": "La Esperanza de Triana",
+      "year": 1925,
+      "desc": "Marcha de Manuel López Farfán dedicada a Nuestra Señora de la Esperanza de Triana."
+    },
+    {
+      "id": "14207a63-0863-4c62-a6ad-85e35d6584a6",
+      "name": "Cristo de las Tres Caídas",
+      "year": 1996,
+      "desc": "Marcha para banda de música de Ángel Alcaide Barroso Vázquez dedicada al Santísimo Cristo de las Tres Caídas de la Hermandad de la Esperanza de Triana.",
+      "slug": "cristo-de-las-tres-caidas-angel-alcaide",
+      "author": "616c8db3-41ca-4f6d-90e2-b10b08d1a312"
+    },
+    {
+      "id": "c9a6941e-4047-4d51-ab28-4b1883321914",
+      "name": "Yo soy la Esperanza",
+      "year": 2015,
+      "desc": "Marcha de Daniel Albarrán Acosta dedicada a Nuestra Señora de la Esperanza de Triana.",
+      "slug": "yo-soy-la-esperanza-daniel-albarran",
+      "author": "d87b6f73-60a5-4b9a-9919-414954ee1da9"
+    },
+    {
+      "id": "b38dc0b2-f79b-49c6-9d3d-5a1d869fdaab",
+      "name": "Triana, tu Esperanza",
+      "year": 2003,
+      "desc": "Marcha de José de la Vega Sánchez dedicada a Nuestra Señora de la Esperanza de Triana."
+    },
+    {
+      "id": "bf3ec24f-6026-4690-ad4f-e7e3920f158f",
+      "name": "Siempre la Esperanza",
+      "year": 2012,
+      "desc": "Marcha de Jesús Joaquín Espinosa de los Monteros Pérez dedicada a Nuestra Señora de la Esperanza de Triana."
+    },
+    {
+      "id": "7557fb74-5f52-45a7-b49a-fc86ed8f88c1",
+      "name": "Se arrodilla Triana",
+      "year": 2019,
+      "desc": "Marcha para banda de música de David Hurtado Torres dedicada a Nuestra Señora de la Esperanza de Triana."
+    }
+  ],
+  "sources": [
+    {
+      "id": "5e9014dc-5628-45e4-a71b-2ec42ba3ab22",
+      "name": "Esperanza de Triana · catálogo de marchas dedicadas",
+      "url": "https://www.cofradiasyhermandades.es/fichaimagineriaytallas.php?ii=7594602",
+      "type": "Catálogo especializado",
+      "publisher": "Cofradías y Hermandades"
+    },
+    {
+      "id": "63ffc2bb-93ec-4eab-85a1-411f4760de0b",
+      "name": "Cristo de las Tres Caídas · Ángel Alcaide · 1996",
+      "url": "https://discografiasdemarchasprocesionales.com/marchas/7016/",
+      "type": "Catálogo musical",
+      "publisher": "Discografías de Marchas Procesionales"
+    },
+    {
+      "id": "b41dcfc0-5a4e-4579-b1e8-60a3ad496330",
+      "name": "Soleá, dame la mano · dedicatoria e inspiración",
+      "url": "https://www.lalineacofrade.com/patrimonio-musica/manuel-font-de-anta/",
+      "type": "Fuente especializada",
+      "publisher": "La Línea Cofrade"
+    },
+    {
+      "id": "4cfbcd58-9369-44f4-a437-d624fbebc171",
+      "name": "Santa Ana · programa del concierto en la Esperanza de Triana · 9/10/2026",
+      "url": null,
+      "type": "Aportación directa",
+      "publisher": "Banda de Música Santa Ana de Dos Hermanas",
+      "notes": "Lámina del programa aportada por la redacción el 9/10/2026 (IMG_4272.jpeg). Documenta ocho títulos y sus autores; acredita programación, no ejecución efectiva ni estreno. No se dispone de URL pública de la lámina."
+    }
+  ],
+  "before": {
+    "agents": [
+      {
+        "id": "616c8db3-41ca-4f6d-90e2-b10b08d1a312",
+        "name": "Ángel Alcaide Barroso"
+      },
+      {
+        "id": "2af5ddb9-cec4-4aa9-908a-2bb3c5cd908d",
+        "name": "David Hurtado Torres"
+      },
+      {
+        "id": "d87b6f73-60a5-4b9a-9919-414954ee1da9",
+        "name": "Daniel Albarrán Acosta"
+      },
+      {
+        "id": "5746f3f4-e204-40b5-b0de-12d3d3072dce",
+        "name": "Alonso Álvarez Albarrán"
+      },
+      {
+        "id": "c0160038-0500-4000-8000-eb9874e9bd98",
+        "name": "Encarnación Hurtado Molina"
+      }
+    ],
+    "existing": [
+      {
+        "march": {
+          "notes": null,
+          "entity_id": "64c18d72-705c-4456-9fa2-21ab7f2d7072",
+          "work_type": "Marcha procesional",
+          "music_type": "Banda de Música",
+          "description": "Interpretada por la Banda de Música Virgen de las Angustias durante la procesión triunfal de Nuestra Señora de las Angustias de Utrera el 3 de octubre de 2026.",
+          "premiere_date": null,
+          "daily_priority": 0,
+          "score_reference": null,
+          "composition_year": null,
+          "youtube_video_id": null,
+          "premiere_place_id": null,
+          "eligible_for_daily": false,
+          "premiere_date_text": null,
+          "composition_date_text": null,
+          "premiered_by_band_entity_id": null
+        },
+        "entity": {
+          "id": "64c18d72-705c-4456-9fa2-21ab7f2d7072",
+          "name": "Triana de Esperanza",
+          "slug": "triana-de-esperanza-claudio-gomez-calado",
+          "status": "published",
+          "summary": "Obra documentada en el repertorio interpretado por la Banda de Música Virgen de las Angustias en Utrera el 3 de octubre de 2026.",
+          "created_at": "2026-10-05T23:24:50.458295+00:00",
+          "updated_at": "2026-10-05T23:24:50.458295+00:00",
+          "entity_type": "march",
+          "content_updated_at": null,
+          "editorial_reviewed_at": null
+        },
+        "authors": [
+          {
+            "row": {
+              "id": "a5721d61-a462-453d-abe4-c654da287294",
+              "notes": "Autoría publicada en la fuente del repertorio o contrastada en su edición musical.",
+              "status": "published",
+              "author_role": "composer",
+              "agent_entity_id": "cb4e0711-f32f-4812-932b-108aab2488c6",
+              "march_entity_id": "64c18d72-705c-4456-9fa2-21ab7f2d7072"
+            },
+            "name": "Claudio Gómez Calado"
+          }
+        ],
+        "dedications": null
+      },
+      {
+        "march": {
+          "notes": null,
+          "entity_id": "7557fb74-5f52-45a7-b49a-fc86ed8f88c1",
+          "work_type": "Marcha procesional",
+          "music_type": "Banda de Música",
+          "description": "Interpretada en la procesión triunfal de la Divina Pastora de Cantillana de 2026.",
+          "premiere_date": null,
+          "daily_priority": 0,
+          "score_reference": null,
+          "composition_year": null,
+          "youtube_video_id": null,
+          "premiere_place_id": null,
+          "eligible_for_daily": false,
+          "premiere_date_text": null,
+          "composition_date_text": null,
+          "premiered_by_band_entity_id": null
+        },
+        "entity": {
+          "id": "7557fb74-5f52-45a7-b49a-fc86ed8f88c1",
+          "name": "Se arrodilla Triana",
+          "slug": "se-arrodilla-triana-david-hurtado",
+          "status": "published",
+          "summary": "Obra documentada en el repertorio interpretado tras la Divina Pastora de Cantillana el 8 de septiembre de 2026.",
+          "created_at": "2026-09-10T20:17:41.000453+00:00",
+          "updated_at": "2026-09-10T20:17:41.000453+00:00",
+          "entity_type": "march",
+          "content_updated_at": null,
+          "editorial_reviewed_at": null
+        },
+        "authors": [
+          {
+            "row": {
+              "id": "5d42b021-71c7-443a-9cbf-587bcdad1192",
+              "notes": null,
+              "status": "published",
+              "author_role": "composer",
+              "agent_entity_id": "2af5ddb9-cec4-4aa9-908a-2bb3c5cd908d",
+              "march_entity_id": "7557fb74-5f52-45a7-b49a-fc86ed8f88c1"
+            },
+            "name": "David Hurtado Torres"
+          }
+        ],
+        "dedications": null
+      },
+      {
+        "march": {
+          "notes": null,
+          "entity_id": "b38dc0b2-f79b-49c6-9d3d-5a1d869fdaab",
+          "work_type": "Marcha procesional",
+          "music_type": "Banda de Música",
+          "description": "Interpretada en la procesión triunfal de la Divina Pastora de Cantillana de 2026.",
+          "premiere_date": null,
+          "daily_priority": 0,
+          "score_reference": null,
+          "composition_year": null,
+          "youtube_video_id": null,
+          "premiere_place_id": null,
+          "eligible_for_daily": false,
+          "premiere_date_text": null,
+          "composition_date_text": null,
+          "premiered_by_band_entity_id": null
+        },
+        "entity": {
+          "id": "b38dc0b2-f79b-49c6-9d3d-5a1d869fdaab",
+          "name": "Triana, tú Esperanza",
+          "slug": "triana-tu-esperanza-jose-de-la-vega",
+          "status": "published",
+          "summary": "Obra documentada en el repertorio interpretado tras la Divina Pastora de Cantillana el 8 de septiembre de 2026.",
+          "created_at": "2026-09-10T20:17:41.000453+00:00",
+          "updated_at": "2026-09-10T20:17:41.000453+00:00",
+          "entity_type": "march",
+          "content_updated_at": null,
+          "editorial_reviewed_at": null
+        },
+        "authors": [
+          {
+            "row": {
+              "id": "560bc5f1-90b2-474b-a1cb-b31df08e784f",
+              "notes": null,
+              "status": "published",
+              "author_role": "composer",
+              "agent_entity_id": "555193f3-ff47-4a37-b835-d16fa5d5ea94",
+              "march_entity_id": "b38dc0b2-f79b-49c6-9d3d-5a1d869fdaab"
+            },
+            "name": "José de la Vega Sánchez"
+          }
+        ],
+        "dedications": null
+      },
+      {
+        "march": {
+          "notes": null,
+          "entity_id": "bf3ec24f-6026-4690-ad4f-e7e3920f158f",
+          "work_type": "Marcha procesional",
+          "music_type": "Banda de Música",
+          "description": "Interpretada en la procesión triunfal de la Divina Pastora de Cantillana de 2026.",
+          "premiere_date": null,
+          "daily_priority": 0,
+          "score_reference": null,
+          "composition_year": null,
+          "youtube_video_id": null,
+          "premiere_place_id": null,
+          "eligible_for_daily": false,
+          "premiere_date_text": null,
+          "composition_date_text": null,
+          "premiered_by_band_entity_id": null
+        },
+        "entity": {
+          "id": "bf3ec24f-6026-4690-ad4f-e7e3920f158f",
+          "name": "Siempre la Esperanza",
+          "slug": "siempre-la-esperanza-jesus-joaquin-espinosa",
+          "status": "published",
+          "summary": "Obra documentada en el repertorio interpretado tras la Divina Pastora de Cantillana el 8 de septiembre de 2026.",
+          "created_at": "2026-09-10T20:17:41.000453+00:00",
+          "updated_at": "2026-09-10T20:17:41.000453+00:00",
+          "entity_type": "march",
+          "content_updated_at": null,
+          "editorial_reviewed_at": null
+        },
+        "authors": [
+          {
+            "row": {
+              "id": "490f1158-d91f-4ae2-8105-6240783fa40d",
+              "notes": null,
+              "status": "published",
+              "author_role": "composer",
+              "agent_entity_id": "692014b4-8767-42dd-ae96-6c25686748ee",
+              "march_entity_id": "bf3ec24f-6026-4690-ad4f-e7e3920f158f"
+            },
+            "name": "Jesús Joaquín Espinosa de los Monteros Pérez"
+          }
+        ],
+        "dedications": null
+      },
+      {
+        "march": {
+          "notes": null,
+          "entity_id": "f8d09b0c-a76c-4737-8e4f-a2199a4e6f0f",
+          "work_type": "Marcha procesional",
+          "music_type": "Banda de Música",
+          "description": "Interpretada en la procesión de Gloria de Nuestra Señora del Castillo Coronada de Lebrija en 2026.",
+          "premiere_date": null,
+          "daily_priority": 0,
+          "score_reference": null,
+          "composition_year": null,
+          "youtube_video_id": null,
+          "premiere_place_id": null,
+          "eligible_for_daily": false,
+          "premiere_date_text": null,
+          "composition_date_text": null,
+          "premiered_by_band_entity_id": null
+        },
+        "entity": {
+          "id": "f8d09b0c-a76c-4737-8e4f-a2199a4e6f0f",
+          "name": "La Esperanza de Triana",
+          "slug": "la-esperanza-de-triana-manuel-lopez-farfan",
+          "status": "published",
+          "summary": "Obra documentada en el repertorio interpretado tras Nuestra Señora del Castillo Coronada el 12 de septiembre de 2026.",
+          "created_at": "2026-09-13T18:43:30.387358+00:00",
+          "updated_at": "2026-09-13T18:43:30.387358+00:00",
+          "entity_type": "march",
+          "content_updated_at": null,
+          "editorial_reviewed_at": null
+        },
+        "authors": [
+          {
+            "row": {
+              "id": "f9b72ee6-bdf6-4d45-a688-948ebfa3e1e7",
+              "notes": null,
+              "status": "published",
+              "author_role": "composer",
+              "agent_entity_id": "d3010000-0000-0000-0000-000000000001",
+              "march_entity_id": "f8d09b0c-a76c-4737-8e4f-a2199a4e6f0f"
+            },
+            "name": "Manuel López Farfán"
+          }
+        ],
+        "dedications": null
+      },
+      {
+        "march": {
+          "notes": null,
+          "entity_id": "fcc73b91-38f4-48ed-90cd-5c7fbdb0bc9f",
+          "work_type": "Marcha procesional",
+          "music_type": "Banda de Música",
+          "description": "Interpretada y documentada en una cruceta musical sevillana del 4 de octubre de 2026.",
+          "premiere_date": null,
+          "daily_priority": 0,
+          "score_reference": null,
+          "composition_year": null,
+          "youtube_video_id": null,
+          "premiere_place_id": null,
+          "eligible_for_daily": false,
+          "premiere_date_text": null,
+          "composition_date_text": null,
+          "premiered_by_band_entity_id": null
+        },
+        "entity": {
+          "id": "fcc73b91-38f4-48ed-90cd-5c7fbdb0bc9f",
+          "name": "Soleá, dame la mano",
+          "slug": "solea-dame-la-mano-manuel-font-de-anta",
+          "status": "published",
+          "summary": "Obra documentada en una cruceta musical sevillana del 4 de octubre de 2026.",
+          "created_at": "2026-10-07T16:24:28.417962+00:00",
+          "updated_at": "2026-10-07T16:24:28.417962+00:00",
+          "entity_type": "march",
+          "content_updated_at": null,
+          "editorial_reviewed_at": null
+        },
+        "authors": [
+          {
+            "row": {
+              "id": "a5d577f6-1945-4d23-ac35-0f865f8946e9",
+              "notes": "Autoría literal publicada en la lámina de la cruceta.",
+              "status": "published",
+              "author_role": "composer",
+              "agent_entity_id": "cdc5b980-4a3f-46de-a19e-0ae53cf56a40",
+              "march_entity_id": "fcc73b91-38f4-48ed-90cd-5c7fbdb0bc9f"
+            },
+            "name": "Manuel Font de Anta"
+          }
+        ],
+        "dedications": null
+      }
+    ],
+    "constraints": [
+      "CHECK ((work_type = ANY (ARRAY['Marcha procesional'::text, 'Himno'::text, 'Copla'::text, 'Adaptación'::text])))",
+      "CHECK ((status = ANY (ARRAY['draft'::text, 'review'::text, 'published'::text, 'archived'::text])))"
+    ]
+  },
+  "programme_date": "2026-10-09",
+  "status": "applied_public_verified",
+  "counts": {
+    "new_marches": 2,
+    "enriched": 6,
+    "dedications_added": 7,
+    "total_dedications": 8,
+    "sources": 4,
+    "source_links": 24
+  }
+}
