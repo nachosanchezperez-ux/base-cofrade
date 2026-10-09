@@ -1,6 +1,8 @@
 # Pasión y Muerte · 9/10/2026
 
-Estado: PREPARADO, NO APLICADO. El dry-run pasó y el rollback dejó cero residuos. Dos intentos de Apply devolvieron Invalid or expired requestState. La lectura posterior confirma cero entidades nuevas y foundation_text original. No se certifica publicación. No hubo rechazo de aprobación explícito ni se intentó otra credencial.
+Estado actual: APLICADO Y VERIFICADO el 9/10/2026 tras orden expresa del usuario. COMMIT aceptado con los hashes previos y el guard HC016 del candidato. Dos marchas nuevas, cada una con autoría y dedicatoria; ambas fechadas en la década de 1990. Ficha pública HTTP 200: La Virgen del Desconsuelo y Visitación, Francisco Javier Navarro Blanco, hachones morados, 1991 y 1992 presentes en texto SSR. No se certifica QA visual responsive. SQL ya aplicado: NO REEJECUTAR; ROLLBACK archivado como evidencia. Los errores de conexión descritos abajo quedan como históricos.
+
+Corte anterior: PREPARADO, NO APLICADO. El dry-run pasó y el rollback dejó cero residuos. Dos intentos de Apply devolvieron Invalid or expired requestState. La lectura posterior confirma cero entidades nuevas y foundation_text original. No se certifica publicación. No hubo rechazo de aprobación explícito ni se intentó otra credencial.
 
 Preflight: main 954b07f352366af4437519b7621222f3a8c4b9bf; producción dpl_476dioXtgMbQTFFfNUaCSuynrx4i READY. 19 migraciones remotas; sin DDL. #1123 documental de Esperanza y otras PR independientes. ESTADO-PROYECTO es compartido y requiere reconciliación.
 
