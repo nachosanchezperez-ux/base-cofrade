@@ -7,8 +7,7 @@
 
 .visualContainer{position:relative;display:flex;min-height:100%;align-items:center;justify-content:center;overflow:hidden;border-left:1px solid #ece7df;background:#f7f4ee}
 .photoFrame{background:#e7e0d8}
-.crestFrame{background:linear-gradient(145deg,#fff,#f3efe8)}
-.crestFrame::after{position:absolute;inset:8px;border:1px solid color-mix(in srgb,var(--visual-accent) 12%,transparent);border-radius:12px;content:"";pointer-events:none}
+.visualCard .crestFrame{border:0;background:transparent;box-shadow:none}
 .fallbackFrame{display:flex;flex-direction:column;gap:5px;align-items:center;justify-content:center;padding:10px;color:var(--visual-accent);background:linear-gradient(145deg,color-mix(in srgb,var(--visual-accent) 8%,#fff),#f8f5ef);text-align:center}
 .fallbackMark{display:grid;width:40px;height:40px;place-items:center;border:1px solid color-mix(in srgb,var(--visual-accent) 30%,#fff);border-radius:50%;background:#fff;font-family:Georgia,'Times New Roman',serif;font-size:15px;font-weight:700;letter-spacing:.03em}
 .fallbackFrame small{max-width:88px;color:#66737e;font-size:8px;font-weight:850;line-height:1.2;text-transform:uppercase}
