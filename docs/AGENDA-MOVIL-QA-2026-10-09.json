@@ -41,5 +41,17 @@
     "Recorrido visible con un toque",
     "Teclado abre/cierra el detalle"
   ],
-  "errors": []
+  "errors": [],
+  "connectedPreview": {
+    "sha": "c8bda6744392766a44fcbba98d65a42815f9e904",
+    "deployment": "dpl_CRgTQuJb2YtKMRVyZ1msoiFBcmx9",
+    "width": 390,
+    "height": 844,
+    "initial": 61,
+    "municipality": "La Rinconada",
+    "filtered": 1,
+    "routeOpened": true,
+    "overflow": false,
+    "pageErrors": []
+  }
 }

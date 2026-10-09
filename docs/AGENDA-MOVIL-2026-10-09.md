@@ -31,3 +31,11 @@ Evidencia automática: [QA de cinco anchuras e interacciones](./AGENDA-MOVIL-QA-
 ## Entrega
 
 La PR y su preview registran el estado remoto de CI y despliegue. No afirmar publicación hasta verificar el SHA servido en producción.
+
+## Reconciliación y preview conectada
+
+Main actualizado a `51d7e28d` (#1113, El Hilo se mueve); conflicto exclusivamente documental resuelto conservando ambas entradas. 1.597 tests PASS tras reconciliar. Código candidato `c8bda6744392766a44fcbba98d65a42815f9e904`: CI verify SUCCESS, Vercel `dpl_CRgTQuJb2YtKMRVyZ1msoiFBcmx9` READY. Preview: https://base-cofrade-4v94su0bg-desdeel-arenal.vercel.app/agenda-cofrade .
+
+QA conectada en Chromium 390×844: 61 actos iniciales, Mañana, Municipios → La Rinconada (1 acto), recorrido visible con un toque, cero errores de página y sin desbordamiento. En el navegador de QA se aceptó el certificado del proxy del ejecutor; no es una auditoría de TLS. La prueba local de cinco anchuras sigue siendo la evidencia responsive amplia.
+
+Decisión GO para la integración solicitada. Cierre y SHA productivo en [PR #1124](https://github.com/nachosanchezperez-ux/base-cofrade/pull/1124). Este commit de documentación no altera la aplicación validada.
