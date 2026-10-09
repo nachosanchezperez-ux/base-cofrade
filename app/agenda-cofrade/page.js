@@ -37,6 +37,7 @@ function compactAgendaItem(item) {
     startTime: item.startTime,
     endTime: item.endTime,
     timeText: item.timeText,
+    daySchedules: item.daySchedules,
     title: item.title,
     summary: item.summary,
     routeText: item.routeText,
@@ -49,6 +50,7 @@ function compactAgendaItem(item) {
     monthKey: item.monthKey,
     monthLabel: item.monthLabel,
     municipality: item.municipality,
+    scope: item.scope,
     municipalityHref: item.municipalityHref,
     organizer: item.organizer,
     organizerHref: item.organizerHref,
@@ -95,14 +97,16 @@ export default async function AgendaCofradePage() {
             tone="dark"
             showAccent={false}
           />
-          <div className={styles.heroCopy}><span className={styles.eyebrow}>Qué ver · Qué sale · Dónde ir</span><h1>Agenda Cofrade</h1><p>Solo los próximos actos de interés público de Sevilla y su provincia, ordenados por fecha y claramente separados por tipo.</p></div>
+          <div className={styles.heroCopy}><span className={styles.eyebrow}>Qué ver · Qué sale · Dónde ir</span><h1>Agenda Cofrade</h1><p>Elige tu día. Encuentra tu próxima cita en Sevilla y su provincia.</p></div>
         </div>
       </header>
 
+      <div className={v4Styles.desktopNavigation}>
       <Suspense fallback={<AgendaCofradeNav />}>
         <AgendaCofradeNavFromUrl />
       </Suspense>
       <AgendaTemporalNav />
+      </div>
 
       <div className={`shell ${styles.content} ${v4Styles.contentV4}`}>
         <Suspense fallback={<AgendaCofradeDirectoryV4 items={interactiveItems} today={today} initialNowIso={nowIso} />}>

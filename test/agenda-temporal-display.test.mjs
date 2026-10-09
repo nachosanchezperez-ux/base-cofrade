@@ -35,3 +35,24 @@ test('al solaparse con el fin de semana usa el primer dia del rango', () => {
     '2026-09-26',
   )
 })
+
+test('el paso servidor → cliente conserva horarios diarios y no inventa el de una fecha sin horario', async () => {
+  const { readFileSync } = await import('node:fs')
+  const page = readFileSync(new URL('../app/agenda-cofrade/page.js', import.meta.url), 'utf8')
+  const source = page.slice(page.indexOf('function compactAgendaItem('), page.indexOf('export default async function'))
+  const compact = new Function(`${source}; return compactAgendaItem`)()
+  const item = compact({
+    scope: 'province', municipality: 'La Rinconada', key: 'devotion:fixture', date: '2026-10-09', endDate: '2026-10-11', timeText: 'Horario general',
+    daySchedules: [
+      { celebrationDate: '2026-10-09', timeText: '10:00–14:00 y 17:00–21:00' },
+      { celebrationDate: '2026-10-10', startTime: '18:00', timeText: '18:00–20:00' },
+    ],
+  })
+  const { agendaLocationMatches, agendaMunicipalityOptions } = await import('../lib/agenda-cofrade-location.js')
+  assert.equal(agendaLocationMatches(item, 'province', 'la-rinconada'), true)
+  assert.equal(agendaLocationMatches(item, 'capital'), false)
+  assert.deepEqual(agendaMunicipalityOptions([item]), [{ slug: 'la-rinconada', label: 'La Rinconada' }])
+  assert.equal(withAgendaTemporalDay(item, '2026-10-09').timeText, '10:00–14:00 y 17:00–21:00')
+  assert.equal(withAgendaTemporalDay(item, '2026-10-10').startTime, '18:00')
+  assert.equal(withAgendaTemporalDay(item, '2026-10-11').timeText, '')
+})
