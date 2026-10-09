@@ -57,3 +57,5 @@ Axe-core: cero infracciones de las reglas WCAG 2 A/AA y 2.1 AA examinadas en el 
 Resultado reproducible: `scripts/qa-hilo-movements.cjs`; configurar QA_BASE_URL, QA_CHROMIUM_PATH y QA_AXE_PATH. QA_ACCESS_FILE acepta un JSON local de acceso temporal a preview; no versionar ese archivo ni sus cookies. QA_PROXY_TLS=1 solo se utilizó para el certificado del proxy del entorno de pruebas. Evidencia sin credenciales: `docs/evidence/el-hilo-se-mueve-2026-10-09/qa-results.json`.
 
 La decisión original NO-GO queda superada por esta revisión: **GO a integración**, conservando el piloto curado y sin escrituras en Supabase. La certificación de despliegue productivo y sus SHAs se registra en el cierre de la PR #1113.
+
+Reconciliación final: main avanzó a `d1086171d26c7fcff2de8c2dd414f8c69c349391` durante QA. Su cambio es documental (#1122); se conserva íntegro y se resuelve la inserción concurrente del tablero manteniendo ambas entradas. No hay cambios de aplicación frente al candidato visual validado.

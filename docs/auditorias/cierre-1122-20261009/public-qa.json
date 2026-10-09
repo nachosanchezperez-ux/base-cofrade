@@ -1,0 +1,513 @@
+{
+  "date": "2026-10-09",
+  "method": "HTTP GET + HTML parse; not browser responsive QA",
+  "hermandades": [
+    {
+      "slug": "hermandad-de-la-paz",
+      "status": 200,
+      "canonical": [
+        "https://hilocofrade.es/hermandades/hermandad-de-la-paz"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "title": "La Paz (Sevilla): titulares, pasos e historia · Hilo Cofrade",
+      "ld": 5,
+      "headers": {
+        "Age": "18937",
+        "Cache-Control": "public, max-age=0, must-revalidate",
+        "Content-Encoding": "gzip",
+        "Content-Type": "text/html; charset=utf-8",
+        "Date": "Thu, 08 Oct 2026 20:52:27 GMT",
+        "Etag": "W/\"fjijo4l0hw63g3\"",
+        "Server": "Vercel",
+        "Strict-Transport-Security": "max-age=63072000",
+        "Vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "X-Matched-Path": "/hermandades/[slug]",
+        "X-Nextjs-Prerender": "1",
+        "X-Nextjs-Stale-Time": "300",
+        "X-Powered-By": "Next.js",
+        "X-Vercel-Cache": "STALE",
+        "X-Vercel-Id": "cle1::dub1::z9nzr-1791527001282-62429c5b1927",
+        "Transfer-Encoding": "chunked"
+      },
+      "sections": [
+        "resumen",
+        "conoce-hermandad",
+        "titulares",
+        "pasos",
+        "tira-del-hilo",
+        "acompanamiento-musical",
+        "musica",
+        "historia",
+        "tunica",
+        "salidas",
+        "igualas-y-ensayos",
+        "cultos",
+        "patrimonio",
+        "tira-del-hilo",
+        "enlaces-de-interes",
+        "fuentes"
+      ],
+      "links": [
+        "/imagenes/maria-santisima-de-la-paz-sevilla",
+        "/imagenes/nuestra-senora-del-prado-la-paz",
+        "/imagenes/nuestro-padre-jesus-de-la-victoria-la-paz",
+        "/imagenes/senor-san-sebastian-la-paz",
+        "/pasos/paso-jesus-de-la-victoria-la-paz",
+        "/pasos/paso-nuestra-senora-del-prado-la-paz",
+        "/pasos/paso-palio-maria-santisima-paz"
+      ]
+    },
+    {
+      "slug": "hermandad-de-pino-montano",
+      "status": 200,
+      "canonical": [
+        "https://hilocofrade.es/hermandades/hermandad-de-pino-montano"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "title": "Pino Montano (Sevilla): titulares y pasos · Hilo Cofrade",
+      "ld": 5,
+      "headers": {
+        "Age": "18937",
+        "Cache-Control": "public, max-age=0, must-revalidate",
+        "Content-Encoding": "gzip",
+        "Content-Type": "text/html; charset=utf-8",
+        "Date": "Fri, 09 Oct 2026 01:07:43 GMT",
+        "Etag": "W/\"v1qa2vx6665arz\"",
+        "Server": "Vercel",
+        "Strict-Transport-Security": "max-age=63072000",
+        "Vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "X-Matched-Path": "/hermandades/[slug]",
+        "X-Nextjs-Prerender": "1",
+        "X-Nextjs-Stale-Time": "300",
+        "X-Powered-By": "Next.js",
+        "X-Vercel-Cache": "STALE",
+        "X-Vercel-Id": "cle1::dub1::lj8rd-1791527001196-8369e99f020b",
+        "Transfer-Encoding": "chunked"
+      },
+      "sections": [
+        "resumen",
+        "agenda",
+        "titulares",
+        "pasos",
+        "tira-del-hilo",
+        "acompanamiento-musical",
+        "musica",
+        "historia",
+        "tunica",
+        "salidas",
+        "cultos",
+        "patrimonio",
+        "tira-del-hilo",
+        "enlaces-de-interes",
+        "fuentes"
+      ],
+      "links": [
+        "/imagenes/maria-santisima-amor-pino-montano",
+        "/imagenes/nuestro-padre-jesus-de-nazaret-pino-montano",
+        "/pasos/paso-misterio-jesus-de-nazaret-pino-montano",
+        "/pasos/paso-palio-maria-santisima-amor-pino-montano"
+      ]
+    },
+    {
+      "slug": "hermandad-de-la-mision-sevilla",
+      "status": 200,
+      "canonical": [
+        "https://hilocofrade.es/hermandades/hermandad-de-la-mision-sevilla"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "title": "La Misión (Sevilla): titulares y pasos · Hilo Cofrade",
+      "ld": 5,
+      "headers": {
+        "Age": "13490",
+        "Cache-Control": "public, max-age=0, must-revalidate",
+        "Content-Encoding": "gzip",
+        "Content-Type": "text/html; charset=utf-8",
+        "Date": "Thu, 08 Oct 2026 23:36:31 GMT",
+        "Etag": "W/\"205qgl29e84xgh\"",
+        "Server": "Vercel",
+        "Strict-Transport-Security": "max-age=63072000",
+        "Vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "X-Matched-Path": "/hermandades/[slug]",
+        "X-Nextjs-Prerender": "1",
+        "X-Nextjs-Stale-Time": "300",
+        "X-Powered-By": "Next.js",
+        "X-Vercel-Cache": "STALE",
+        "X-Vercel-Id": "cle1::dub1::vhfwk-1791527001335-2443173a609e",
+        "Transfer-Encoding": "chunked"
+      },
+      "sections": [
+        "resumen",
+        "agenda",
+        "titulares",
+        "pasos",
+        "tira-del-hilo",
+        "acompanamiento-musical",
+        "tunica",
+        "salidas",
+        "igualas-y-ensayos",
+        "cultos",
+        "tira-del-hilo",
+        "enlaces-de-interes",
+        "fuentes"
+      ],
+      "links": [
+        "/imagenes/inmaculado-corazon-maria-mision-sevilla",
+        "/imagenes/nuestra-senora-amparo-mision",
+        "/imagenes/san-juan-evangelista-mision-sevilla",
+        "/imagenes/santo-cristo-mision-sevilla",
+        "/pasos/paso-inmaculado-corazon-maria-mision-sevilla",
+        "/pasos/paso-misterio-jesus-mision-sevilla",
+        "/pasos/paso-san-antonio-maria-claret-mision-sevilla"
+      ]
+    }
+  ],
+  "linked_pages": [
+    {
+      "path": "/imagenes/inmaculado-corazon-maria-mision-sevilla",
+      "status": 200,
+      "canonical": [
+        "https://hilocofrade.es/imagenes/inmaculado-corazon-maria-mision-sevilla"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "title": "Inmaculado Corazón de María · Hilo Cofrade",
+      "ld": 5,
+      "relations": [
+        "/hermandades/hermandad-de-la-mision-sevilla",
+        "/imagenes/tipo/imagenes-de-gloria",
+        "/pasos/paso-inmaculado-corazon-maria-mision-sevilla"
+      ]
+    },
+    {
+      "path": "/imagenes/maria-santisima-amor-pino-montano",
+      "status": 200,
+      "canonical": [
+        "https://hilocofrade.es/imagenes/maria-santisima-amor-pino-montano"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "title": "María Santísima del Amor · Hilo Cofrade",
+      "ld": 5,
+      "relations": [
+        "/hermandades/hermandad-de-pino-montano",
+        "/imagenes/tipo/dolorosas",
+        "/pasos/paso-palio-maria-santisima-amor-pino-montano"
+      ]
+    },
+    {
+      "path": "/imagenes/maria-santisima-de-la-paz-sevilla",
+      "status": 200,
+      "canonical": [
+        "https://hilocofrade.es/imagenes/maria-santisima-de-la-paz-sevilla"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "title": "María Santísima de la Paz · Hilo Cofrade",
+      "ld": 5,
+      "relations": [
+        "/hermandades/hermandad-de-la-paz",
+        "/imagenes/tipo/dolorosas"
+      ]
+    },
+    {
+      "path": "/imagenes/nuestra-senora-amparo-mision",
+      "status": 200,
+      "canonical": [
+        "https://hilocofrade.es/imagenes/nuestra-senora-amparo-mision"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "title": "Nuestra Señora del Amparo · Hilo Cofrade",
+      "ld": 5,
+      "relations": [
+        "/hermandades/hermandad-de-la-mision-sevilla",
+        "/imagenes/tipo/dolorosas",
+        "/pasos/paso-misterio-jesus-mision-sevilla"
+      ]
+    },
+    {
+      "path": "/imagenes/nuestra-senora-del-prado-la-paz",
+      "status": 200,
+      "canonical": [
+        "https://hilocofrade.es/imagenes/nuestra-senora-del-prado-la-paz"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "title": "Nuestra Señora del Prado · Hilo Cofrade",
+      "ld": 5,
+      "relations": [
+        "/hermandades/hermandad-de-la-paz",
+        "/imagenes/tipo/imagenes-de-gloria"
+      ]
+    },
+    {
+      "path": "/imagenes/nuestro-padre-jesus-de-la-victoria-la-paz",
+      "status": 200,
+      "canonical": [
+        "https://hilocofrade.es/imagenes/nuestro-padre-jesus-de-la-victoria-la-paz"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "title": "Nuestro Padre Jesús de la Victoria · Hilo Cofrade",
+      "ld": 5,
+      "relations": [
+        "/hermandades/hermandad-de-la-paz",
+        "/imagenes/tipo/nazarenos"
+      ]
+    },
+    {
+      "path": "/imagenes/nuestro-padre-jesus-de-nazaret-pino-montano",
+      "status": 200,
+      "canonical": [
+        "https://hilocofrade.es/imagenes/nuestro-padre-jesus-de-nazaret-pino-montano"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "title": "Nuestro Padre Jesús de Nazaret · Hilo Cofrade",
+      "ld": 5,
+      "relations": [
+        "/hermandades/hermandad-de-pino-montano",
+        "/imagenes/tipo/imagenes-cristiferas",
+        "/pasos/paso-misterio-jesus-de-nazaret-pino-montano"
+      ]
+    },
+    {
+      "path": "/imagenes/san-juan-evangelista-mision-sevilla",
+      "status": 200,
+      "canonical": [
+        "https://hilocofrade.es/imagenes/san-juan-evangelista-mision-sevilla"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "title": "San Juan Evangelista · Hilo Cofrade",
+      "ld": 5,
+      "relations": [
+        "/hermandades/hermandad-de-la-mision-sevilla",
+        "/imagenes/tipo/santos",
+        "/pasos/paso-misterio-jesus-mision-sevilla"
+      ]
+    },
+    {
+      "path": "/imagenes/santo-cristo-mision-sevilla",
+      "status": 200,
+      "canonical": [
+        "https://hilocofrade.es/imagenes/santo-cristo-mision-sevilla"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "title": "Santo Cristo de la Misión · Hilo Cofrade",
+      "ld": 5,
+      "relations": [
+        "/hermandades/hermandad-de-la-mision-sevilla",
+        "/imagenes/tipo/imagenes-cristiferas",
+        "/pasos/paso-misterio-jesus-mision-sevilla"
+      ]
+    },
+    {
+      "path": "/imagenes/senor-san-sebastian-la-paz",
+      "status": 200,
+      "canonical": [
+        "https://hilocofrade.es/imagenes/senor-san-sebastian-la-paz"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "title": "Señor San Sebastián · Hilo Cofrade",
+      "ld": 5,
+      "relations": [
+        "/hermandades/hermandad-de-la-paz",
+        "/imagenes/tipo/santos"
+      ]
+    },
+    {
+      "path": "/pasos/paso-inmaculado-corazon-maria-mision-sevilla",
+      "status": 200,
+      "canonical": [
+        "https://hilocofrade.es/pasos/paso-inmaculado-corazon-maria-mision-sevilla"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "title": "Paso del Inmaculado Corazón de María · Hilo Cofrade",
+      "ld": 5,
+      "relations": [
+        "/hermandades/hermandad-de-la-mision-sevilla",
+        "/imagenes/inmaculado-corazon-maria-mision-sevilla",
+        "/pasos/tipo/pasos-de-gloria"
+      ]
+    },
+    {
+      "path": "/pasos/paso-jesus-de-la-victoria-la-paz",
+      "status": 200,
+      "canonical": [
+        "https://hilocofrade.es/pasos/paso-jesus-de-la-victoria-la-paz"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "title": "Paso de Nuestro Padre Jesús de la Victoria · Hilo Cofrade",
+      "ld": 5,
+      "relations": [
+        "/hermandades/hermandad-de-la-paz",
+        "/pasos/tipo/pasos-de-misterio"
+      ]
+    },
+    {
+      "path": "/pasos/paso-misterio-jesus-de-nazaret-pino-montano",
+      "status": 200,
+      "canonical": [
+        "https://hilocofrade.es/pasos/paso-misterio-jesus-de-nazaret-pino-montano"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "title": "Paso de misterio de Nuestro Padre Jesús de Nazaret · Hilo Cofrade",
+      "ld": 5,
+      "relations": [
+        "/hermandades/hermandad-de-pino-montano",
+        "/imagenes/nuestro-padre-jesus-de-nazaret-pino-montano",
+        "/pasos/tipo/pasos-de-misterio"
+      ]
+    },
+    {
+      "path": "/pasos/paso-misterio-jesus-mision-sevilla",
+      "status": 200,
+      "canonical": [
+        "https://hilocofrade.es/pasos/paso-misterio-jesus-mision-sevilla"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "title": "Paso de misterio del Santo Cristo de la Misión · Hilo Cofrade",
+      "ld": 5,
+      "relations": [
+        "/hermandades/hermandad-de-la-mision-sevilla",
+        "/imagenes/nuestra-senora-amparo-mision",
+        "/imagenes/san-juan-evangelista-mision-sevilla",
+        "/imagenes/santo-cristo-mision-sevilla",
+        "/pasos/tipo/pasos-de-misterio"
+      ]
+    },
+    {
+      "path": "/pasos/paso-nuestra-senora-del-prado-la-paz",
+      "status": 200,
+      "canonical": [
+        "https://hilocofrade.es/pasos/paso-nuestra-senora-del-prado-la-paz"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "title": "Paso de Nuestra Señora del Prado · Hilo Cofrade",
+      "ld": 5,
+      "relations": [
+        "/hermandades/hermandad-de-la-paz",
+        "/pasos/tipo/pasos-de-gloria"
+      ]
+    },
+    {
+      "path": "/pasos/paso-palio-maria-santisima-amor-pino-montano",
+      "status": 200,
+      "canonical": [
+        "https://hilocofrade.es/pasos/paso-palio-maria-santisima-amor-pino-montano"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "title": "Paso de palio de María Santísima del Amor · Hilo Cofrade",
+      "ld": 5,
+      "relations": [
+        "/hermandades/hermandad-de-pino-montano",
+        "/imagenes/maria-santisima-amor-pino-montano",
+        "/pasos/tipo/pasos-de-palio"
+      ]
+    },
+    {
+      "path": "/pasos/paso-palio-maria-santisima-paz",
+      "status": 200,
+      "canonical": [
+        "https://hilocofrade.es/pasos/paso-palio-maria-santisima-paz"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "title": "Paso de palio de María Santísima de la Paz · Hilo Cofrade",
+      "ld": 5,
+      "relations": [
+        "/hermandades/hermandad-de-la-paz",
+        "/pasos/tipo/pasos-de-palio"
+      ]
+    },
+    {
+      "path": "/pasos/paso-san-antonio-maria-claret-mision-sevilla",
+      "status": 200,
+      "canonical": [
+        "https://hilocofrade.es/pasos/paso-san-antonio-maria-claret-mision-sevilla"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "title": "Paso procesional de San Antonio María Claret · Hilo Cofrade",
+      "ld": 5,
+      "relations": [
+        "/hermandades/hermandad-de-la-mision-sevilla",
+        "/pasos/tipo/pasos-de-gloria"
+      ]
+    }
+  ],
+  "sitemap": {
+    "root": "{http://www.sitemaps.org/schemas/sitemap/0.9}urlset",
+    "tested": 21,
+    "found": 21,
+    "missing": []
+  },
+  "paz_missing_image_step_links": [
+    "Victoria → paso de misterio",
+    "Paz → paso de palio",
+    "Prado → paso de gloria"
+  ],
+  "follow_up_observation": {
+    "date": "2026-10-09",
+    "target": "https://hilocofrade.es/hermandades/hermandad-de-la-paz",
+    "production_deployment": "dpl_2jCDeirE6miwQohgXrpj9L7PJg4X",
+    "status": 200,
+    "main_sha": "59edee119b5c81b470897c4899ffc8ecc5a4c25b",
+    "links": [
+      {
+        "image": "/imagenes/nuestro-padre-jesus-de-la-victoria-la-paz",
+        "step": "/pasos/paso-jesus-de-la-victoria-la-paz",
+        "brotherhood_card": true,
+        "image_card_reverse": true
+      },
+      {
+        "image": "/imagenes/maria-santisima-de-la-paz-sevilla",
+        "step": "/pasos/paso-palio-maria-santisima-paz",
+        "brotherhood_card": true,
+        "image_card_reverse": true
+      },
+      {
+        "image": "/imagenes/nuestra-senora-del-prado-la-paz",
+        "step": "/pasos/paso-nuestra-senora-del-prado-la-paz",
+        "brotherhood_card": true,
+        "image_card_reverse": true
+      }
+    ],
+    "reciprocal_image_step_links": "6/6 PASS",
+    "desktop_visual_review": "Three step cards visibly contain their corresponding image links. Step photographs remain unavailable and show the page's image placeholders.",
+    "responsive_mobile": "Not certified; no application code or layout changed in this editorial data correction."
+  }
+}
