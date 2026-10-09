@@ -41,6 +41,8 @@ function compactAgendaItem(item) {
     title: item.title,
     summary: item.summary,
     routeText: item.routeText,
+    schedule: item.schedule,
+    music: item.music,
     category: item.category,
     categoryLabel: item.categoryLabel,
     categoryHref: item.categoryHref,

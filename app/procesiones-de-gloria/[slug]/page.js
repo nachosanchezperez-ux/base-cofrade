@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { cache } from 'react'
-import { notFound } from 'next/navigation'
+import { notFound, permanentRedirect } from 'next/navigation'
+import { agendaEventDetailHref, isPreservedAgendaEventPath } from '@/lib/agenda-event-url-policy'
 import JsonLd from '@/components/JsonLd'
 import AgendaCofradeNav from '@/components/AgendaCofradeNav'
 import AgendaRelationLinks from '@/components/AgendaRelationLinks'
@@ -95,6 +96,7 @@ function seoCoverage(item) {
 export async function generateMetadata({ params }) {
   const { slug } = await params
   const item = await getGlory(slug)
+  if (item && !isPreservedAgendaEventPath(`/procesiones-de-gloria/${slug}`)) permanentRedirect(agendaEventDetailHref(item, 'procesiones-de-gloria'))
 
   if (!item) {
     return {
@@ -128,6 +130,7 @@ export async function generateMetadata({ params }) {
 export default async function GloryDetailPage({ params }) {
   const { slug } = await params
   const item = await getGlory(slug)
+  if (item && !isPreservedAgendaEventPath(`/procesiones-de-gloria/${slug}`)) permanentRedirect(agendaEventDetailHref(item, 'procesiones-de-gloria'))
   if (!item) notFound()
 
   const canonicalPath = item.detailHref

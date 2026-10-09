@@ -6,3 +6,40 @@
 
 .videoLead{max-width:760px;margin:-3px 0 17px;color:#596873;font-size:13px;line-height:1.7}.videoFrame{position:relative;aspect-ratio:16/9;overflow:hidden;border-radius:18px;background:#09111a;box-shadow:0 18px 38px rgba(24,36,49,.12)}.videoFrame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}.videoMeta{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px;color:#6b7680;font-size:10px;font-weight:750}.videoMeta a{color:#a71931;font-weight:850}
 @media(max-width:520px){.videoFrame{border-radius:14px}.videoMeta{align-items:flex-start;flex-direction:column}}
+
+/* Practical information first; preserve the existing URL and palette. */
+.heroFacts { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); overflow: visible; max-width: 650px; }
+.heroFacts div { min-width: 0; padding: 14px 16px; }
+.heroFacts div:first-child { grid-column: 1/-1; }
+.heroFacts span { font-size: 12px; }
+.heroFacts strong { font-size: 18px; }
+.heroFacts .timeFact strong { font-size: 34px; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.heroFacts small { font-size: 13px; color: #f1d4da; }
+.location { display: grid; gap: 5px; font-size: 16px !important; line-height: 1.5; }
+.location strong { color: #fff; }
+.location span { font-size: 14px; }
+.quickLinks { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.quickLinks a { display: inline-flex; align-items: center; min-height: 44px; padding: 10px 16px; border-radius: 9px; background: #fff; color: #17334f; font-size: 14px; font-weight: 750; }
+.crestVisual { background: transparent; box-shadow: none; border: 0; border-radius: 0; }
+.heroCrest { padding: 25px; }
+.routeSection { scroll-margin-top: calc(var(--hc-app-header-height) + 20px); }
+.routeDisclosure > summary { padding: 14px 16px; min-height: 48px; border-radius: 10px; background: #f4e8eb; color: #941a31; font-size: 15px; font-weight: 700; cursor: pointer; }
+.routeDisclosure[open] > summary { margin-bottom: 18px; }
+.row b,.row a { font-size: 16px; }
+.row span,.row small { font-size: 14px; line-height: 1.5; }
+.row > strong { font-family: inherit; font-size: 20px; }
+.sources a,.sources p { font-size: 14px; }
+.sources > span,.eyebrow { font-size: 12px; }
+@media(max-width:820px){
+  .heroFacts div { flex: initial; }
+  .aside { grid-row: auto; }
+  .heroVisual { min-height: 180px; }
+  .crestVisual { min-height: 100px; max-width: 130px; }
+  .heroCrest { padding: 0; }
+  .hero h1 { font-size: clamp(28px,7vw,38px); line-height: 1.1; }
+  .heroFacts { margin-top: 18px; }
+  .hero { padding-bottom: 24px; }
+  .content { padding-top: 26px; }
+}
+.hero :global(nav li) { max-width: 100%; }
+.hero :global([aria-current="page"]) { max-width: 100%; white-space: normal; overflow-wrap: anywhere; }

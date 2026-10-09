@@ -74,7 +74,7 @@ test('cada familia del sitemap queda cacheada durante una hora', () => {
   const sitemap = read('app/sitemap.js');
   const route = read('app/sitemaps/[family]/route.js');
   assert.match(sitemap, /unstable_cache/);
-  assert.match(sitemap, /hilo-cofrade-public-sitemap-family-v2/);
+  assert.match(sitemap, /hilo-cofrade-public-sitemap-family-v3/);
   assert.match(sitemap, /revalidate: 3600/);
   assert.match(route, /getPublicSitemapSegmentEntries\(segment\)/);
   assert.match(route, /Content-Type.*application\/xml/s);
