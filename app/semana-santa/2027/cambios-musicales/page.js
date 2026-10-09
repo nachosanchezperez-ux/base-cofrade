@@ -389,7 +389,10 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
                               <dl className={styles.bandComparison} aria-label="Acompañamiento musical en 2026 y 2027">
                                 <div className={styles.bandCell}>
                                   <dt>2026</dt>
-                                  <dd>{bandLink(change, true)}</dd>
+                                  <dd>
+                                    {bandLink(change, true)}
+                                    {change.previousStartYear ? <small className={styles.tenure}>Desde {change.previousStartYear}</small> : null}
+                                  </dd>
                                 </div>
                                 <div className={`${styles.bandCell} ${styles.bandCellNew}`}>
                                   <dt>2027</dt>
@@ -471,6 +474,7 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
                                   {renewal.newBandHref
                                     ? <Link className={styles.renewalBandLink} href={renewal.newBandHref}>{renewal.newBandName}</Link>
                                     : <strong>{renewal.newBandName}</strong>}
+                                  {renewal.startYear ? <small className={styles.tenure}>Desde {renewal.startYear}</small> : null}
                                 </div>
                               </section>
                             )

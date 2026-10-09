@@ -116,6 +116,8 @@ test('la sección se alimenta del grafo musical y limita el alcance a Sevilla', 
   assert.match(loader, /brotherhoodPublished/)
   assert.match(loader, /band_type/)
   assert.match(loader, /newBandType/)
+  assert.match(loader, /year_from, year_to, date_from_text, notes/)
+  assert.match(loader, /previousStartYear/)
 })
 
 test('Cambios musicales 2027 queda descubrible e indexable', async () => {
@@ -138,6 +140,8 @@ test('el especial 2027 prioriza listado, filtros y contenido SEO útil', async (
 
   assert.match(page, /Música 2027: cambios y renovaciones/)
   assert.match(page, /Música de la Semana Santa de Sevilla 2027: cambios y renovaciones/)
+  assert.match(page, /change\.previousStartYear/)
+  assert.match(page, /Desde \{change\.previousStartYear\}/)
   assert.match(page, /name="municipio"/)
   assert.match(page, /name="tipo"/)
   assert.match(page, /name="q"/)
