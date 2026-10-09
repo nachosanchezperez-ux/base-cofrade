@@ -2,15 +2,15 @@
 
 ## Estado posterior a la nueva orden
 
-El usuario autorizó corregir los vínculos de La Paz. Las tres relaciones ya están publicadas, documentadas y verificadas con navegación pública recíproca 6/6. El bloqueo de datos descrito en el corte inferior queda resuelto; no es una orden pendiente. Evidencia: `../la-paz-vinculos-20261009/README.md`. #1122 sigue draft: QA visual no certificada y bloque Pasos de la ficha de Hermandad todavía cacheado en la última muestra. Los lotes originales no se repiten.
+El correctivo autorizado ya está aplicado una sola vez y conciliado. Corte público posterior del 9/10/2026: las tres tarjetas de Paso de la ficha de La Paz enlazan a su Imagen y cada Imagen devuelve el Paso en «Procesiona en»; **6/6 enlaces recíprocos PASS** sobre producción. Evidencia: `../la-paz-vinculos-20261009/README.md`. La última revisión visual de escritorio confirma la relación; faltan fotografías propias de los pasos, que siguen mostrando marcadores. No se repiten los lotes históricos.
 
 ## Auditoría anterior al correctivo (evidencia histórica)
 
-## Puerta: NO-GO
+## Puerta inicial: NO-GO (resuelta en el corte actual)
 
-No se saca de draft ni se fusiona. El contrato Imagen–Paso falla en La Paz: no existen las relaciones de Jesús de la Victoria, María Santísima de la Paz y Nuestra Señora del Prado con sus tres pasos en `image_steps`; las seis fichas públicas tampoco contienen enlaces recíprocos. Son relaciones ausentes, no huérfanos. Repararlas requeriría DML nuevo, prohibido en este cierre documental.
+El bloqueo inicial era la ausencia de tres relaciones Imagen–Paso en La Paz. El correctivo autorizado se aplicó una vez, con preflight, dry-run/ROLLBACK, COMMIT y postflight; no se reejecutaron SQL históricos. En la comprobación pública posterior, producción sirve las tres parejas en ambos sentidos, 6/6, con HTTP 200. La ficha general fue revisada visualmente en escritorio; el bloque Pasos ya refleja las imágenes relacionadas. No hubo cambio de código ni de despliegue para lograrlo.
 
-La revisión visual de escritorio y móvil tampoco queda certificada: el navegador remoto agotó la espera; la instalación del navegador de QA local no pudo completarse. HTML/SEO no sustituyen QA responsive.
+La revisión responsive móvil/interacción completa queda fuera de esta corrección editorial, que solo añadió relaciones de contenido. No se certifica. Las fotos de los pasos son un recurso gráfico pendiente, independiente de los vínculos ya visibles.
 
 ## Precheck
 
@@ -34,7 +34,7 @@ Se compararon IDs y todos los campos del manifiesto con `to_jsonb(row) @> expect
 
 ### La Paz
 
-Patrimonio renovado: tres piezas y seis restauraciones visibles. Titularidad sacramental conceptual preservada sin Imagen física nueva. Se mantienen discrepancia 1937/1939, restaurador de San Sebastián no acreditado y rollout de la guía. El bloqueo relacional no se reclasifica como deuda legítima.
+Patrimonio renovado: tres piezas y seis restauraciones visibles. Titularidad sacramental conceptual preservada sin Imagen física nueva. Se mantienen discrepancia 1937/1939, restaurador de San Sebastián no acreditado y rollout de la guía. Las relaciones de Paso con Jesús de la Victoria, María Santísima de la Paz y Nuestra Señora del Prado ya están publicadas y navegables en ambos sentidos.
 
 ### Pino Montano
 
@@ -48,12 +48,12 @@ Cuatro Imágenes y hábito actualizados. Descripciones públicas finales de Ampa
 
 21 páginas comprobadas: 3 Hermandades, 10 Imágenes, 8 Pasos. Todas responden 200; canonical absoluta exacta; index/follow; título, description, OG y Twitter; cinco bloques JSON-LD parseables por página, incluyendo BreadcrumbList. 21/21 figuran en el sitemap general, que es un urlset, no un sitemapindex. Evidencia resumida en `public-qa.json`.
 
-Hermandad → Imagen y Hermandad → Paso navegan en las tres. Imagen ↔ Paso pasa en Pino Montano y las cuatro Imágenes de La Misión; falla en La Paz. Fuentes, música, patrimonio y cronologías disponibles comprobados en HTML. No se certifica visualización de `history_text` ni interacción responsive.
+Hermandad → Imagen y Hermandad → Paso navegan en las tres. Imagen ↔ Paso pasa en Pino Montano, las cuatro Imágenes de La Misión y las tres parejas de La Paz; estas últimas se comprobaron de nuevo en producción el 9/10, con enlaces en las tarjetas de Paso y en «Procesiona en» de las fichas de Imagen. Fuentes, música, patrimonio y cronologías disponibles comprobados en HTML. No se certifica visualización de `history_text` ni QA móvil/interacción.
 
 ## Validación y cierre
 
 La suite inicial ejecutada localmente sobre `13fda40…`: 1579/1579, sin fallos ni omitidos. El build local no produjo un cierre completo verificable (última salida: 24/33 páginas); no se declara PASS por compilación parcial. CI remoto inicial verify SUCCESS; la validación final debe consultarse sobre el commit documental reconciliado, sin reutilizar estos números como resultado de otro HEAD. `git diff --check` inicial limpio.
 
-No hay merge, SHA productivo nuevo ni postflight de despliegue. El estado final de checks/preview del commit documental se reporta en la entrega, sin sustituir el NO-GO funcional.
+El cambio de esta PR es documental; los datos corregidos ya están activos en producción. Los checks/preview deben confirmarse en el HEAD documental final antes del merge. El deployment de producción consultado para la QA relacional es `dpl_2jCDeirE6miwQohgXrpj9L7PJg4X` sobre `main` `59edee1…`.
 
 PR restantes al corte: #1113, #1111, #1097, #1086, #1020, #1019, intactas. HC-AUTO-03 ready 55/55, 0 aplicado: NO APPLY. No se abre otro frente. No se modifican SQL históricos, manifiestos ni preserved snapshots.
