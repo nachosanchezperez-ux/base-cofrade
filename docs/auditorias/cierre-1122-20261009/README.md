@@ -1,5 +1,11 @@
 # #1122 · Auditoría de cierre · 9 de octubre de 2026
 
+## Estado posterior a la nueva orden
+
+El usuario autorizó corregir los vínculos de La Paz. Las tres relaciones ya están publicadas, documentadas y verificadas con navegación pública recíproca 6/6. El bloqueo de datos descrito en el corte inferior queda resuelto; no es una orden pendiente. Evidencia: `../la-paz-vinculos-20261009/README.md`. #1122 sigue draft: QA visual no certificada y bloque Pasos de la ficha de Hermandad todavía cacheado en la última muestra. Los lotes originales no se repiten.
+
+## Auditoría anterior al correctivo (evidencia histórica)
+
 ## Puerta: NO-GO
 
 No se saca de draft ni se fusiona. El contrato Imagen–Paso falla en La Paz: no existen las relaciones de Jesús de la Victoria, María Santísima de la Paz y Nuestra Señora del Prado con sus tres pasos en `image_steps`; las seis fichas públicas tampoco contienen enlaces recíprocos. Son relaciones ausentes, no huérfanos. Repararlas requeriría DML nuevo, prohibido en este cierre documental.

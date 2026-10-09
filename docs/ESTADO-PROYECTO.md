@@ -1,5 +1,9 @@
 # Hilo Cofrade · Estado canónico
 
+**9/10/2026 · #1122 · CORRECTIVO RELACIONAL DE LA PAZ APLICADO:** por nueva orden expresa se han añadido únicamente tres vínculos Imagen–Paso (Victoria, Paz y Prado), tres enlaces a Fuentes existentes, siete marcas de frescura y una auditoría. Dry-run/ROLLBACK sin residuos, COMMIT y postflight PASS; 3 parejas únicas, 0 huérfanos, hashes de cultos/salidas/música y tipos preservados. **Las seis fichas públicas ya ofrecen navegación recíproca Imagen ↔ Paso (6/6), HTTP 200 y SEO conservado.** El bloqueo de datos anterior queda resuelto. Persiste QA visual no certificada; la última muestra del bloque Pasos en la ficha de Hermandad conserva HTML anterior sujeto a TTL 900 s. Invalidación por tag devuelve 404; sin purga global/redeploy. #1122 sigue draft y NO-GO para cierre integral. Evidencia: [correctivo](./auditorias/la-paz-vinculos-20261009/README.md). No reejecutar SQL históricos ni abrir otro frente.
+
+### Corte previo a la autorización del correctivo (histórico)
+
 **9/10/2026 · #1122 · NO-GO DOCUMENTADO, SIN MERGE:** auditoría viva de las ampliaciones de La Paz, Pino Montano y La Misión. `main` y producción: `59edee119b5c81b470897c4899ffc8ecc5a4c25b`; Vercel `READY`, deployment `dpl_2jCDeirE6miwQohgXrpj9L7PJg4X`; Supabase `ACTIVE_HEALTHY`. Ventana runtime inicial 05:19–06:19 UTC: sin registros error/fatal. La PR sigue draft; no se repite DML ni se altera aplicación, esquema o RLS.
 
 - **La Paz:** 97 INSERT + 6 UPDATE contrastados campo a campo; hashes de cultos, salidas y música y clasificación preservados. Ya son públicos las tres piezas patrimoniales y las seis restauraciones (cuatro nuevas). **Bloqueo:** faltan las tres relaciones canónicas Imagen–Paso de Victoria, Paz y Prado; tampoco hay navegación recíproca pública. No son filas huérfanas: son aristas ausentes. Esta orden solo permite correcciones documentales, por lo que no se insertan.

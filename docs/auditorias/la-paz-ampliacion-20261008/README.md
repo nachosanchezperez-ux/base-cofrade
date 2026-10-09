@@ -1,5 +1,10 @@
 # La Paz · ampliación aplicada · 8/10/2026
 
+## Actualización posterior: vínculos corregidos el 9/10
+
+La nueva orden del usuario autorizó el correctivo de tres relaciones y sus Fuentes. Datos y seis enlaces públicos recíprocos verificados; las limitaciones anteriores sobre relaciones ausentes quedan resueltas. Continúan QA visual no certificada y renovación del bloque Pasos de la ficha de Hermandad. Ver `../la-paz-vinculos-20261009/README.md`. No se reaplicó esta ampliación del 8/10.
+
+
 ## Revalidación viva · 9/10/2026
 97/97 INSERT y 6/6 UPDATE coinciden con todos los campos del manifiesto mediante SELECT. Hashes preservados coincidentes. Cero duplicados por las claves lógicas auditadas y cero FK huérfanas en esas filas.
 El pendiente de patrimonio del corte original queda resuelto: HTML 200 muestra corona (1949), templete (1991), ángeles (1954) y seis restauraciones, incluidas las cuatro nuevas. Música, titularidad conceptual y fuentes son públicas. La guía conserva su límite de rollout; no se certifica en la cohorte de lectura.
