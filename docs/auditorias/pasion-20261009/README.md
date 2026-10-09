@@ -1,6 +1,10 @@
 # Pasión · ampliación desde la web oficial · 9/10/2026
 
-Estado: PREPARADO, NO APLICADO. Base main d013d28f49d979eb949c383c3789d438b6109ae4; producción dpl_3Bsm3wjBnchmFWfwPPMHyMm1K62N READY. PR abiertas #1126/#1123/#1111/#1097/#1086/#1020/#1019 sin intervención. Sin código, DDL, RLS o despliegue.
+Estado actual: APLICADO Y VERIFICADO el 9/10/2026 tras nueva autorización del usuario. El conector aceptó COMMIT; hashes previos y guard HC016 incluidos. Postflight: dos marchas con una autoría y una dedicatoria cada una, clasificación Penitencia/Sacramental y dos descripciones de Imágenes correctas. SSR público de Hermandad contiene ambas marchas, Sacramental, Triunfo de la Eucaristía y hoja de cardina. SQL ya aplicado: NO REEJECUTAR; su cierre ROLLBACK se conserva como evidencia. No se acredita reproducción de vídeo ni QA visual responsive.
+
+Los errores de conexión y el estado NO APLICADO descritos abajo corresponden al corte anterior y quedan superados. Pasión y Muerte #1126 no se ha reaplicado en este cierre.
+
+Corte anterior: PREPARADO, NO APLICADO. Base main d013d28f49d979eb949c383c3789d438b6109ae4; producción dpl_3Bsm3wjBnchmFWfwPPMHyMm1K62N READY. PR abiertas #1126/#1123/#1111/#1097/#1086/#1020/#1019 sin intervención. Sin código, DDL, RLS o despliegue.
 
 Cinco actualizaciones: dos Imágenes, dos Pasos y clasificación Penitencia + Sacramental. Dos marchas: El Señor de Pasión (Ramón González Varela, firma 20/03/1897) y Merced, Luz de Pasión (Cristóbal López Gándara, estreno marzo de 2020, año de composición no fijado). Un compositor nuevo; dos autorías y dos dedicatorias directas a titulares; ocho fuentes oficiales. La Oliva y López Gándara se reutilizan. Enlace YouTube de la primera marcha tomado de la fuente oficial, sin prueba de reproducción.
 
