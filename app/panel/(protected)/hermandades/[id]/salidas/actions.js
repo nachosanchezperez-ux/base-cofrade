@@ -145,6 +145,7 @@ export async function saveOutingAction(formData) {
     brotherhood_entity_id: brotherhoodId,
     outing_series_id: seriesId,
     outing_type: required(formData, 'outing_type', 'El tipo de salida'),
+    outing_subtype: nullable(formData, 'outing_subtype'),
     character,
     title: nullable(formData, 'title'),
     outing_date: outingDate,

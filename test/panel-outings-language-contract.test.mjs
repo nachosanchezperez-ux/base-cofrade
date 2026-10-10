@@ -29,20 +29,39 @@ test('Salidas contempla el calendario habitual y cada edición concreta', () => 
 
 test('el vocabulario de Salidas cubre los actos anuales reales de una Hermandad', () => {
   for (const label of [
-    'Estación de penitencia',
+    'Estación de Penitencia',
     'Procesión de Gloria',
+    'Procesión sacramental',
     'Vía Crucis',
-    'Rosario público',
+    'Vía Lucis',
+    'Rosario Matutino',
+    'Rosario de la Aurora',
+    'Rosario Vespertino',
+    'Rosario Público',
+    'Rosario Extraordinario',
     'Traslado',
     'Romería',
     'Subida',
     'Bajada',
-    'Procesión sacramental',
-    'Procesión extraordinaria',
   ]) {
-    assert.match(outings, new RegExp(label))
-    assert.match(habitual, new RegExp(label))
+    assert.match(outings, new RegExp(`<option value="${label}" />`))
+    assert.match(habitual, new RegExp(`<option value="${label}" />`))
   }
+})
+
+test('el Panel ya no sugiere las variantes antiguas del tipo de salida', () => {
+  for (const legacy of ['Estación de penitencia', 'Rosario público', 'Procesión extraordinaria']) {
+    assert.doesNotMatch(outings, new RegExp(`<option value="${legacy}" />`))
+    assert.doesNotMatch(habitual, new RegExp(`<option value="${legacy}" />`))
+  }
+})
+
+test('Salidas permite indicar el subtipo y lo guarda como outing_subtype', () => {
+  const actions = read('app/panel/(protected)/hermandades/[id]/salidas/actions.js')
+
+  assert.match(outings, /name="outing_subtype"/)
+  assert.match(outings, /defaultValue=\{item\?\.outing_subtype \|\| ''\}/)
+  assert.match(actions, /outing_subtype: nullable\(formData, 'outing_subtype'\)/)
 })
 
 test('el editor anual oculta la terminología técnica de Series al usuario', () => {

@@ -62,7 +62,7 @@ export async function createExtraordinaryAction(formData) {
   const payload = {
     title,
     slug,
-    outing_type: value(formData, 'outing_type') || 'Procesión extraordinaria',
+    outing_type: value(formData, 'outing_type') || 'Procesión',
     character: 'extraordinary',
     outing_date: outingDate,
     year: outingDate ? Number(outingDate.slice(0, 4)) : null,
