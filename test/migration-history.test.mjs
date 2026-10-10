@@ -25,6 +25,12 @@ const EXECUTABLE_SCHEMA_MIGRATIONS = [
   "20261002144739_music_accompaniment_public_band_snapshots.sql",
   "20261008064500_add_musical_repertoire_theme.sql",
   "20261009123758_concert_programs.sql",
+  "20261009183652_add_fk_indexes_source_links_and_agenda_paths.sql",
+  "20261009184302_add_outings_outing_subtype.sql",
+  "20261009192755_outing_municipality_backup_20261009.sql",
+  "20261010073542_outing_type_reapply_procesion_20261010.sql",
+  "20261010100000_home_knowledge_threads_cache_every_15_minutes.sql",
+  "20261010100100_normalize_outing_type_trigger.sql",
 ];
 
 test("Supabase migration versions are unique and well formed", async () => {

@@ -100,16 +100,21 @@ export default async function BrotherhoodRecurringOutingsPage({ params, searchPa
   return (
     <div className={styles.pageWrap}>
       <datalist id="habitual-outing-types">
-        <option value="Estación de penitencia" />
+        <option value="Estación de Penitencia" />
         <option value="Procesión de Gloria" />
+        <option value="Procesión sacramental" />
+        <option value="Procesión" />
         <option value="Vía Crucis" />
-        <option value="Rosario público" />
+        <option value="Vía Lucis" />
+        <option value="Rosario Matutino" />
+        <option value="Rosario de la Aurora" />
+        <option value="Rosario Vespertino" />
+        <option value="Rosario Público" />
+        <option value="Rosario Extraordinario" />
         <option value="Traslado" />
         <option value="Romería" />
         <option value="Subida" />
         <option value="Bajada" />
-        <option value="Procesión sacramental" />
-        <option value="Procesión extraordinaria" />
         <option value="Otra salida pública" />
       </datalist>
 
