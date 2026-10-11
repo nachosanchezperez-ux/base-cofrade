@@ -27,6 +27,7 @@ import { getIndexableBrotherhoodDirectory } from '@/lib/supabase/indexable-broth
 export const revalidate = 3600;
 
 const staticEntries = [
+  { url: absoluteUrl('/el-hilo-se-mueve'), changeFrequency: 'daily', priority: 0.85 },
   {
     url: absoluteUrl('/'),
     changeFrequency: 'daily',

@@ -1,0 +1,107 @@
+[
+  {
+    "path": "/imagenes/nuestro-padre-jesus-de-la-victoria-la-paz",
+    "status": 200,
+    "linked": true,
+    "target": "/pasos/paso-jesus-de-la-victoria-la-paz",
+    "cache": "HIT",
+    "age": "26",
+    "canonical": [
+      "https://hilocofrade.es/imagenes/nuestro-padre-jesus-de-la-victoria-la-paz"
+    ],
+    "robots": [
+      "index, follow"
+    ],
+    "image_links_in_steps": null
+  },
+  {
+    "path": "/imagenes/maria-santisima-de-la-paz-sevilla",
+    "status": 200,
+    "linked": true,
+    "target": "/pasos/paso-palio-maria-santisima-paz",
+    "cache": "HIT",
+    "age": "26",
+    "canonical": [
+      "https://hilocofrade.es/imagenes/maria-santisima-de-la-paz-sevilla"
+    ],
+    "robots": [
+      "index, follow"
+    ],
+    "image_links_in_steps": null
+  },
+  {
+    "path": "/imagenes/nuestra-senora-del-prado-la-paz",
+    "status": 200,
+    "linked": true,
+    "target": "/pasos/paso-nuestra-senora-del-prado-la-paz",
+    "cache": "HIT",
+    "age": "26",
+    "canonical": [
+      "https://hilocofrade.es/imagenes/nuestra-senora-del-prado-la-paz"
+    ],
+    "robots": [
+      "index, follow"
+    ],
+    "image_links_in_steps": null
+  },
+  {
+    "path": "/pasos/paso-jesus-de-la-victoria-la-paz",
+    "status": 200,
+    "linked": true,
+    "target": "/imagenes/nuestro-padre-jesus-de-la-victoria-la-paz",
+    "cache": "HIT",
+    "age": "25",
+    "canonical": [
+      "https://hilocofrade.es/pasos/paso-jesus-de-la-victoria-la-paz"
+    ],
+    "robots": [
+      "index, follow"
+    ],
+    "image_links_in_steps": null
+  },
+  {
+    "path": "/pasos/paso-palio-maria-santisima-paz",
+    "status": 200,
+    "linked": true,
+    "target": "/imagenes/maria-santisima-de-la-paz-sevilla",
+    "cache": "HIT",
+    "age": "25",
+    "canonical": [
+      "https://hilocofrade.es/pasos/paso-palio-maria-santisima-paz"
+    ],
+    "robots": [
+      "index, follow"
+    ],
+    "image_links_in_steps": null
+  },
+  {
+    "path": "/pasos/paso-nuestra-senora-del-prado-la-paz",
+    "status": 200,
+    "linked": true,
+    "target": "/imagenes/nuestra-senora-del-prado-la-paz",
+    "cache": "HIT",
+    "age": "25",
+    "canonical": [
+      "https://hilocofrade.es/pasos/paso-nuestra-senora-del-prado-la-paz"
+    ],
+    "robots": [
+      "index, follow"
+    ],
+    "image_links_in_steps": null
+  },
+  {
+    "path": "/hermandades/hermandad-de-la-paz",
+    "status": 200,
+    "linked": null,
+    "target": null,
+    "cache": "HIT",
+    "age": "80",
+    "canonical": [
+      "https://hilocofrade.es/hermandades/hermandad-de-la-paz"
+    ],
+    "robots": [
+      "index, follow"
+    ],
+    "image_links_in_steps": 0
+  }
+]

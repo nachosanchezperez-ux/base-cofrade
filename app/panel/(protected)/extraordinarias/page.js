@@ -167,7 +167,7 @@ export default async function PanelExtraordinaryOutingsPage({ searchParams }) {
             <div className={styles.formGrid}>
               <label className={styles.fieldWide}><span>Titular / título</span><input name="title" required placeholder="María Santísima de…" /></label>
               <label><span>Fecha</span><input name="outing_date" type="date" /></label>
-              <label><span>Tipo</span><input name="outing_type" defaultValue="Procesión extraordinaria" /></label>
+              <label><span>Tipo</span><input name="outing_type" defaultValue="Procesión" /></label>
               <label><span>Localidad</span><select name="municipality_id" defaultValue=""><option value="">Por documentar</option>{createOptions.municipalities.map((item) => <option value={item.id} key={item.id}>{item.name}</option>)}</select></label>
               <label><span>Hermandad relacionada</span><select name="brotherhood_entity_id" defaultValue=""><option value="">Sin ficha relacionada</option>{createOptions.brotherhoods.map((item) => <option value={item.id} key={item.id}>{item.name}</option>)}</select></label>
               <label className={styles.fieldWide}><span>Organizador visible</span><input name="organizer_name" placeholder="Nombre literal de Hermandad / entidad" /></label>

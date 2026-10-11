@@ -1,0 +1,143 @@
+{
+  "initial": [
+    {
+      "table": "brotherhoods",
+      "key": "entity_id",
+      "value": "c1000000-0000-0000-0000-000000000001",
+      "old": {
+        "history_text": "La devoción al Inmaculado Corazón de María nació en la iglesia parisina de Saint-Eugène en 1836 y tuvo una primera implantación sevillana en 1907. Tras la llegada de los claretianos a Heliópolis en 1940, la reorganización comenzó en 1948 y la Archicofradía quedó agregada y estatutariamente configurada en 1949. Incorporó su carácter sacramental en 1987 y el penitencial en 2007; estrenó túnicas el Viernes de Dolores de 2008."
+      },
+      "fields": {
+        "history_text": "La Archicofradía matriz del Inmaculado Corazón de María se fundó en Nuestra Señora de las Victorias de París el 11 de diciembre de 1836. La devoción tuvo una primera implantación sevillana en 1907. Tras la llegada de los claretianos a Heliópolis en 1940, la reorganización comenzó en 1948; el 27 de febrero de 1949 se celebraron las primeras imposiciones de escapularios y el 1 de marzo quedó agregada a la matriz parisina. El decreto de 25 de marzo de 1987 incorporó el carácter sacramental. El Cristo de la Misión fue bendecido el 3 de marzo de 1988 y realizó su primera salida el día 25 de ese mes. Las reglas aprobadas el 25 de diciembre de 2007 reconocieron el carácter penitencial, y la corporación estrenó túnicas el Viernes de Dolores de 2008. El fervorín de la procesión gloriosa recuerda la consagración de Heliópolis al Inmaculado Corazón de María."
+      }
+    },
+    {
+      "table": "images",
+      "key": "entity_id",
+      "value": "3ad88fc9-8647-4d4a-b4bb-0d61574027c4",
+      "old": {
+        "anatomical_type": null,
+        "dimensions_text": null,
+        "iconography": null,
+        "notes": "Llegó a La Misión en 1986 procedente de Jesús Despojado."
+      },
+      "fields": {
+        "anatomical_type": "Talla completa",
+        "dimensions_text": "Tamaño natural",
+        "iconography": "San Juan representado como un adolescente, concebido para situarse a la derecha de la Virgen.",
+        "notes": "Obra de Antonio Eslava Rubio de 1970. Llegó a La Misión el 28 de mayo de 1986, procedente de Jesús Despojado, donde había procesionado en el paso de palio."
+      }
+    },
+    {
+      "table": "images",
+      "key": "entity_id",
+      "value": "bf663726-2602-43df-b43d-d7911617eb8f",
+      "old": {
+        "anatomical_type": null,
+        "dimensions_text": null,
+        "iconography": null,
+        "notes": "La imagen actual es réplica de la anterior de 1967."
+      },
+      "fields": {
+        "anatomical_type": "Candelero",
+        "dimensions_text": "Tamaño natural",
+        "iconography": "Virgen Dolorosa.",
+        "notes": "La titular actual fue realizada por José Manuel Bonilla Cornejo en el verano de 1999 como réplica de la imagen anterior de Miguel Laínez Capote (1967), remodelada por Alfonso Berraquero en 1975. Aquella imagen procedía de Santa Rosalía y fue cedida por Gabriel Solís Carvajal en depósito en 1983 y a perpetuidad en 1987. Las intervenciones de 1967 y 1975 corresponden a la imagen precedente."
+      }
+    },
+    {
+      "table": "images",
+      "key": "entity_id",
+      "value": "7219955c-09d9-4917-828a-545d0dee7ec7",
+      "old": {
+        "height_cm": null,
+        "dimensions_text": null,
+        "anatomical_type": null,
+        "technique": null,
+        "iconography": null,
+        "description": "Nazareno de talla completa salvo los brazos articulados, con la cruz sobre el hombro derecho."
+      },
+      "fields": {
+        "height_cm": 172,
+        "dimensions_text": "172 cm de altura",
+        "anatomical_type": "Talla completa con brazos articulados",
+        "technique": "Talla en madera policromada",
+        "iconography": "Nazareno que carga la cruz sobre el hombro derecho y extiende la mano izquierda hacia el pueblo.",
+        "description": "Nazareno de José Manuel Bonilla Cornejo, entregado en 1988. Representa el encuentro con su Madre y las Santas Mujeres. La peana incorpora piedras de la Vía Sacra y una lagartija tallada junto al pie derecho identifica la firma del escultor."
+      }
+    },
+    {
+      "table": "images",
+      "key": "entity_id",
+      "value": "456764e0-88c1-4814-ad7b-9dab1e030269",
+      "old": {
+        "dimensions_text": null,
+        "technique": null,
+        "polychromy": null,
+        "anatomical_type": null,
+        "iconography": null,
+        "description": "Imagen neobarroca sedente del Inmaculado Corazón de María con el Niño Jesús."
+      },
+      "fields": {
+        "dimensions_text": "165 × 80 × 79 cm",
+        "technique": "Talla en madera, policromía al óleo, dorado y estofado",
+        "polychromy": "Al óleo, con dorado y estofado",
+        "anatomical_type": "Talla completa sedente",
+        "iconography": "Virgen sentada sobre un escabel con el Niño Jesús sobre las rodillas en actitud de bendecir.",
+        "description": "Obra neobarroca de Rafael Barbero Medina, realizada en 1960. Durante su procesión los hermanos colocan en las manos de la Virgen el escapulario cordimariano."
+      }
+    },
+    {
+      "table": "brotherhood_habits",
+      "key": "id",
+      "value": "4c1f4a4a-cee0-4075-902a-1043a33c0b2b",
+      "old": {
+        "notes": "Indumentaria penitencial.",
+        "cord_description": "Cíngulo azul y blanco.",
+        "hood_description": "Antifaz azul pavo.",
+        "tunic_description": "Túnica de sarga blanca con escapulario azul pavo."
+      },
+      "fields": {
+        "notes": "Indumentaria penitencial. Las normas oficiales prohíben los guantes de cualquier color. La medalla se lleva sobre el escapulario. Se permite realizar la estación descalzo, sin calcetines.",
+        "cord_description": "Cíngulo de seda trenzada, con un hilo blanco y dos azul pavo, rematado en borlas y anudado al lado izquierdo.",
+        "hood_description": "Antifaz azul pavo con el escudo a la altura del pecho; capirote de hasta 70 cm.",
+        "tunic_description": "Túnica de sarga blanca sin cola, con escapulario azul pavo hasta las rodillas y de hasta 30 cm de ancho."
+      }
+    }
+  ],
+  "public_descriptions": [
+    {
+      "table": "brotherhood_habits",
+      "key": "id",
+      "value": "4c1f4a4a-cee0-4075-902a-1043a33c0b2b",
+      "old": {
+        "tunic_description": "Túnica de sarga blanca sin cola, con escapulario azul pavo hasta las rodillas y de hasta 30 cm de ancho."
+      },
+      "fields": {
+        "tunic_description": "Túnica de sarga blanca sin cola, con escapulario azul pavo hasta las rodillas y de hasta 30 cm de ancho. No se permite llevar guantes de ningún color."
+      }
+    },
+    {
+      "table": "images",
+      "key": "entity_id",
+      "value": "bf663726-2602-43df-b43d-d7911617eb8f",
+      "old": {
+        "description": "Dolorosa de candelero a tamaño natural."
+      },
+      "fields": {
+        "description": "Dolorosa de candelero a tamaño natural, realizada por José Manuel Bonilla Cornejo en 1999 como réplica de la imagen de Miguel Laínez Capote de 1967, remodelada por Alfonso Berraquero en 1975."
+      }
+    },
+    {
+      "table": "images",
+      "key": "entity_id",
+      "value": "3ad88fc9-8647-4d4a-b4bb-0d61574027c4",
+      "old": {
+        "description": "San Juan Evangelista representado como un joven adolescente."
+      },
+      "fields": {
+        "description": "San Juan adolescente, de talla completa, realizado por Antonio Eslava Rubio en 1970. Llegó a La Misión el 28 de mayo de 1986 desde Jesús Despojado, en cuyo palio había procesionado."
+      }
+    }
+  ]
+}

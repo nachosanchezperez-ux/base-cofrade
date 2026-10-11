@@ -89,6 +89,42 @@
   color: #fff;
 }
 
+.modeNav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+:global(#hc-app) .page:not(:global(#hc-panel)) .modeNav a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 1px solid rgba(255, 255, 255, .34);
+  border-radius: 7px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 650;
+  line-height: 1.4;
+}
+
+.modeNav a:hover {
+  background: rgba(255, 255, 255, .08);
+}
+
+.modeNav strong {
+  display: inline-grid;
+  min-width: 25px;
+  min-height: 25px;
+  place-items: center;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .14);
+  font-size: 13px;
+}
+
 :global(#hc-app) .page:not(:global(#hc-panel)) .accompanimentLink {
   display: inline-flex;
   min-height: 44px;
@@ -613,6 +649,105 @@
   text-underline-offset: 3px;
 }
 
+
+.renewalsSection {
+  margin-top: 42px;
+  padding-top: 8px;
+  scroll-margin-top: 100px;
+}
+
+.renewalsIntro {
+  display: grid;
+  gap: 12px;
+  padding: 24px 0 18px;
+  border-top: 2px solid var(--music-ink);
+  border-bottom: 1px solid var(--music-line);
+}
+
+.renewalsIntro > div > span {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--music-muted);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+:global(#hc-app) .page:not(:global(#hc-panel)) .renewalsIntro h2 {
+  margin: 0;
+  font-size: var(--music-heading);
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -.025em;
+}
+
+.renewalsIntro p {
+  margin: 0;
+  color: var(--music-muted);
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.renewalSummary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 12px;
+  padding: 16px 0 2px;
+}
+
+.renewalSummary strong {
+  color: var(--music-ink);
+  font-size: 30px;
+  line-height: 1;
+  letter-spacing: -.04em;
+}
+
+.renewalSummary span {
+  color: var(--music-muted);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.renewalCard {
+  display: grid;
+  min-width: 0;
+  gap: 6px;
+  padding: 12px 14px;
+  border: 1px solid var(--music-line);
+  border-radius: 9px;
+  background: var(--music-soft);
+}
+
+.renewalBadge {
+  width: fit-content;
+  padding: 4px 7px;
+  border-radius: 5px;
+  background: var(--music-ink);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 750;
+  line-height: 1.35;
+}
+
+:global(#hc-app) .page:not(:global(#hc-panel)) .renewalCard > strong,
+:global(#hc-app) .page:not(:global(#hc-panel)) .renewalBandLink {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: var(--music-ink);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.renewalBandLink:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .method {
   display: grid;
   gap: 12px;
@@ -756,6 +891,12 @@
 
   .resultBar a {
     margin-left: auto;
+  }
+
+  .renewalsIntro {
+    grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+    gap: 30px;
+    align-items: start;
   }
 
   .method {

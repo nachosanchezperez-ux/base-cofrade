@@ -27,6 +27,7 @@ const homeScrollSections = [
 ];
 
 const directoryLinks = [
+  ['/el-hilo-se-mueve', 'El Hilo se mueve'],
   ['/directorio', 'Directorio'],
   ['/hermandades', 'Hermandades'],
   ['/procesiones-de-gloria', 'Procesiones de Gloria'],
