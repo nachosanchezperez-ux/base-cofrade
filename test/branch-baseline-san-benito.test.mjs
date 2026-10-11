@@ -25,6 +25,12 @@ const homeKnowledgeCachePrivateName = '20260925051336_home_knowledge_threads_cac
 const musicAccompanimentSnapshotsName = '20261002144739_music_accompaniment_public_band_snapshots.sql'
 const musicalRepertoireThemeName = '20261008064500_add_musical_repertoire_theme.sql'
 const concertProgramsName = '20261009123758_concert_programs.sql'
+const sourceLinksForeignKeyIndexesName = '20261009183652_add_fk_indexes_source_links_and_agenda_paths.sql'
+const outingSubtypeName = '20261009184302_add_outings_outing_subtype.sql'
+const outingMunicipalityBackupName = '20261009192755_outing_municipality_backup_20261009.sql'
+const outingTypeReapplyName = '20261010073542_outing_type_reapply_procesion_20261010.sql'
+const homeKnowledgeCacheFifteenMinutesName = '20261010100000_home_knowledge_threads_cache_every_15_minutes.sql'
+const outingTypeNormalizationName = '20261010100100_normalize_outing_type_trigger.sql'
 const baseline = readFileSync(new URL(baselineName, migrationsDirectory), 'utf8')
 const membershipStats = readFileSync(new URL(membershipStatsName, migrationsDirectory), 'utf8')
 const seed = readFileSync(new URL('../supabase/seed.sql', import.meta.url), 'utf8')
@@ -53,6 +59,12 @@ test('las ramas nuevas ejecutan únicamente el baseline y las evoluciones de esq
     musicAccompanimentSnapshotsName,
     musicalRepertoireThemeName,
     concertProgramsName,
+    sourceLinksForeignKeyIndexesName,
+    outingSubtypeName,
+    outingMunicipalityBackupName,
+    outingTypeReapplyName,
+    homeKnowledgeCacheFifteenMinutesName,
+    outingTypeNormalizationName,
   ])
 })
 

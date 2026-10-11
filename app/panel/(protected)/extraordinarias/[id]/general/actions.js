@@ -133,7 +133,7 @@ export async function saveExtraordinaryGeneralAction(formData) {
     title,
     slug,
     reference_code: referenceCode,
-    outing_type: value(formData, 'outing_type') || 'Procesión extraordinaria',
+    outing_type: value(formData, 'outing_type') || 'Procesión',
     outing_date: outingDate,
     year: outingDate ? Number(outingDate.slice(0, 4)) : null,
     departure_time: timeValue(formData, 'departure_time'),
