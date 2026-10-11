@@ -294,30 +294,93 @@ function repertoireData(value = '') {
   return { entries, presenter }
 }
 
+function concertProgramsForDisplay(item) {
+  const structured = Array.isArray(item.programs)
+    ? item.programs.filter((program) => Array.isArray(program.entries) && program.entries.length)
+    : []
+
+  if (structured.length) {
+    return {
+      structured: true,
+      presenter: '',
+      programs: structured.map((program) => ({
+        ...program,
+        entries: program.entries.map((entry, index) => ({
+          ...entry,
+          key: entry.id || `${program.id || 'program'}-${entry.order || index + 1}-${entry.title}`,
+        })),
+      })),
+    }
+  }
+
+  const legacy = repertoireData(item.repertoireText)
+  if (!legacy.entries.length) return { structured: false, presenter: '', programs: [] }
+
+  return {
+    structured: false,
+    presenter: legacy.presenter,
+    programs: [{
+      id: 'legacy',
+      title: 'Repertorio',
+      programKind: 'legacy',
+      bandName: '',
+      entries: legacy.entries,
+    }],
+  }
+}
+
 function ConcertRepertoire({ item, inline = false }) {
-  const { entries, presenter } = repertoireData(item.repertoireText)
-  if (!entries.length) return null
+  const { structured, presenter, programs } = concertProgramsForDisplay(item)
+  const entryCount = programs.reduce((total, program) => total + program.entries.length, 0)
+  if (!entryCount) return null
+
   const Container = inline ? 'section' : 'details'
   const Heading = inline ? 'h5' : 'summary'
+  const headingLabel = structured
+    ? (inline ? 'Programa musical' : 'Ver programa')
+    : (inline ? 'Repertorio' : 'Ver repertorio')
 
   return (
     <Container className={concertStyles.repertoire}>
       <Heading>
-        <span>{inline ? 'Repertorio' : 'Ver repertorio'}</span>
-        <small>{entries.length} {entries.length === 1 ? 'marcha' : 'marchas'}</small>
+        <span>{headingLabel}</span>
+        <small>{entryCount} {entryCount === 1 ? 'marcha' : 'marchas'}</small>
       </Heading>
-      <ol className={concertStyles.repertoireList}>
-        {entries.map((entry) => (
-          <li className={concertStyles.repertoireItem} key={entry.key}>
-            <span className={concertStyles.repertoireNumber} aria-hidden="true" />
-            <div>
-              <strong>{entry.title}</strong>
-              {entry.author ? <span>{entry.author}</span> : null}
-            </div>
-            {entry.premiereLabel ? <b>{entry.premiereLabel}</b> : null}
-          </li>
+      <div className={concertStyles.programGroups}>
+        {programs.map((program) => (
+          <section className={concertStyles.programGroup} key={program.id || program.title}>
+            {structured ? (
+              <div className={concertStyles.programGroupHeader}>
+                <div>
+                  <strong>{program.title || 'Programa musical'}</strong>
+                  {program.bandName ? <small>{program.bandName}</small> : null}
+                </div>
+                <span>{program.programKind === 'performed' ? 'Interpretado' : 'Programa anunciado'}</span>
+              </div>
+            ) : null}
+            <ol className={concertStyles.repertoireList}>
+              {program.entries.map((entry) => (
+                <li className={concertStyles.repertoireItem} key={entry.key}>
+                  <span className={concertStyles.repertoireNumber} aria-hidden="true" />
+                  <div>
+                    <strong>
+                      {entry.href ? (
+                        <Link
+                          href={entry.href}
+                          onClick={() => trackAgendaEntityClick(item, 'marcha', entry.title, 'agenda_concert_program')}
+                          data-analytics-skip-entity="true"
+                        >{entry.title}</Link>
+                      ) : entry.title}
+                    </strong>
+                    {entry.author ? <span>{entry.author}</span> : null}
+                  </div>
+                  {entry.premiereLabel ? <b>{entry.premiereLabel}</b> : null}
+                </li>
+              ))}
+            </ol>
+          </section>
         ))}
-      </ol>
+      </div>
       {presenter ? (
         <p className={concertStyles.repertoirePresenter}>
           <span>Presenta</span>
