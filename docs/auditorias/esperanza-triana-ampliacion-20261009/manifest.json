@@ -1,0 +1,103 @@
+{
+  "date": "2026-10-09",
+  "status": "applied_public_verified",
+  "base": "59edee119b5c81b470897c4899ffc8ecc5a4c25b",
+  "brotherhood_id": "f3f06e37-23cd-4ab4-8129-21c9f8acadd3",
+  "operations": [
+    {
+      "table": "steps",
+      "key": "entity_id",
+      "value": "75f532f3-f458-47e6-a18b-f7d5a3e9c799",
+      "old": {
+        "description": "Paso de misterio del Santísimo Cristo de las Tres Caídas, con una historia material documentada desde comienzos del siglo XVIII.",
+        "execution_date_text": null,
+        "materials": null
+      },
+      "fields": {
+        "description": "Paso de Manuel Guzmán Bejarano, realizado por fases entre 1970 y 1973: respiraderos en 1970, canastilla y candelabros en 1971, y dorado de Antonio Sánchez y cartelas de plata de Villarreal en 1973. Los faldones bordados de los talleres de Caro, según dibujo de Juan Antonio Borrero, se incorporaron en 1993–1994.",
+        "execution_date_text": "1970–1973; faldones de 1993–1994",
+        "materials": "Madera tallada y dorada, cartelas de plata y faldones de terciopelo burdeos bordado"
+      }
+    },
+    {
+      "table": "steps",
+      "key": "entity_id",
+      "value": "81f272ef-3d6c-41cd-a0cd-251fe7990231",
+      "old": {
+        "description": "Conjunto regionalista inspirado en la cerámica y la simbología marinera de Triana.",
+        "execution_date_text": null,
+        "materials": "Orfebrería y bordados"
+      },
+      "fields": {
+        "description": "Palio regionalista de inspiración cerámica trianera y simbología marinera. Su evolución reúne diseños de José Recio del Rivero y labores de Miguel Olmo, Santa Isabel y los talleres de Caro. Las bambalinas exteriores son de Caro (1971) y las interiores de Santa Isabel (1951). Los varales de plata son de Orfebrería Triana (1988), la peana de Villarreal (1962) y la candelería, de noventa piezas, de Orfebrería Triana (1991).",
+        "execution_date_text": "Conjunto formado y enriquecido por fases durante el siglo XX",
+        "materials": "Orfebrería en plata de ley y bordados en oro y sedas, con terciopelo y malla"
+      }
+    },
+    {
+      "table": "images",
+      "key": "entity_id",
+      "value": "2889b9e9-8d41-447d-aed1-0922a7ae9c19",
+      "old": {
+        "description": "Talla policromada realizada en torno a 1607 y atribuida tradicionalmente a Marcos de Cabrera.",
+        "execution_date_text": "En torno a 1607",
+        "iconography": null,
+        "notes": null
+      },
+      "fields": {
+        "description": "Nazareno caído de comienzos del siglo XVII, de autoría no documentada. La atribución tradicional a Marcos Cabrera ha sido discutida por estudios posteriores; la web de la Hermandad propone una datación entre 1608 y 1616. Apoya la rodilla y la mano derechas en el suelo, mientras sostiene la cruz con la izquierda.",
+        "execution_date_text": "Comienzos del siglo XVII; propuesta de datación 1608–1616",
+        "iconography": "Cristo caído bajo la cruz, con la pierna izquierda flexionada en ademán de incorporarse.",
+        "notes": "Se conserva la atribución histórica a Marcos Cabrera como atribución, no como autoría probada. La ficha oficial también recoge la consideración de obra anónima."
+      }
+    },
+    {
+      "table": "images",
+      "key": "entity_id",
+      "value": "8acc8be8-ad29-4fc6-a778-8688920a32fc",
+      "old": {
+        "height_cm": null,
+        "anatomical_type": null,
+        "description": "Dolorosa de 1,70 m que conserva cuerpo y cuello de origen y responde a rasgos formales del siglo XVII; su autoría permanece incierta.",
+        "iconography": null
+      },
+      "fields": {
+        "height_cm": 170,
+        "anatomical_type": "Candelero",
+        "description": "Dolorosa de 1,70 m y autoría incierta, con rasgos formales del siglo XVII. Su aspecto actual es fruto de sucesivas intervenciones: Gumersindo Jiménez Astorga tras el incendio de 1898, José Ordóñez en 1913 y Castillo Lastrucci en 1929. Luis Álvarez Duarte sustituyó el candelero y los brazos en 1981.",
+        "iconography": "Dolorosa de vestir; la disposición tradicional de sus manos ofrece el pañuelo al pueblo y señala el ancla de la pechera."
+      }
+    },
+    {
+      "table": "image_authorships",
+      "key": "id",
+      "value": "889793a0-d2e9-4066-a6e4-e5552096841f",
+      "old": {
+        "notes": "Atribución mantenida por especialistas; no consta documentación de autoría.",
+        "date_from_text": "En torno a 1607"
+      },
+      "fields": {
+        "notes": "Atribución histórica a Marcos Cabrera sin respaldo documental, discutida por parte de la historiografía recogida en la web oficial. Se conserva como atribución, no como autoría probada.",
+        "date_from_text": "Comienzos del siglo XVII"
+      }
+    }
+  ],
+  "preserved": [
+    {
+      "preserved": {
+        "music": "1b133c477925fd1fcd36e0f5ec71a550",
+        "outings": "e8cb450f389a5d7af58b6bdc20e6878b",
+        "image_steps": "760b2c94c4ddf90487e6459b3f5d57d9"
+      }
+    }
+  ],
+  "public_qa": {
+    "http": 200,
+    "visible_markers": [
+      "respiraderos en 1970",
+      "noventa piezas",
+      "autoría no documentada",
+      "sustituyó el candelero"
+    ]
+  }
+}
