@@ -24,12 +24,22 @@
 .repertoire summary small{display:flex;align-items:center;gap:10px;color:#6d7d88;font-size:11px;font-weight:800}
 .repertoire summary small::after{content:'+';display:grid;width:30px;height:30px;place-items:center;border-radius:50%;background:#fff;color:#356b91;font-size:18px;line-height:1;box-shadow:0 1px 5px rgba(28,53,74,.1)}
 .repertoire[open] summary small::after{content:'−'}
+.programGroups{display:grid;gap:12px;margin-top:11px}
+.programGroup{display:grid;gap:9px}
+.programGroup .repertoireList{margin-top:0}
+.programGroupHeader{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:10px 12px;border:1px solid #e3e8ec;border-radius:12px;background:#f7fafc}
+.programGroupHeader>div{display:grid;gap:2px;min-width:0}
+.programGroupHeader strong{color:#234e6d;font-size:12px;font-weight:900;line-height:1.3}
+.programGroupHeader small{color:#71808c;font-size:10px;font-weight:750;line-height:1.35}
+.programGroupHeader>span{padding:5px 8px;border-radius:999px;background:#edf4f8;color:#356b91;font-size:8px;font-weight:900;letter-spacing:.055em;text-transform:uppercase;white-space:nowrap}
 .repertoireList{display:grid;gap:0;margin:11px 0 0;padding:0;border:1px solid #e3e8ec;border-radius:14px;background:#fff;list-style:none;overflow:hidden;counter-reset:repertoire}
 .repertoireItem{counter-increment:repertoire;display:grid;grid-template-columns:36px minmax(0,1fr) auto;align-items:center;gap:13px;padding:14px 15px;border-bottom:1px solid #edf0f2}
 .repertoireItem:last-child{border-bottom:0}
 .repertoireNumber::before{content:counter(repertoire);display:grid;width:32px;height:32px;place-items:center;border-radius:50%;background:#edf4f8;color:#356b91;font-size:10px;font-weight:900}
 .repertoireItem div{display:grid;gap:4px;min-width:0}
 .repertoireItem strong{color:#1e3141;font-family:Georgia,'Times New Roman',serif;font-size:16px;font-weight:600;line-height:1.3}
+.repertoireItem strong a{color:inherit;text-decoration:none;text-underline-offset:3px}
+.repertoireItem strong a:hover{text-decoration:underline}
 .repertoireItem div>span{color:#6d7780;font-size:12px;line-height:1.45}
 .repertoireItem>b{padding:5px 8px;border-radius:999px;background:#f3e7d8;color:#8c5826;font-size:9px;font-weight:900;letter-spacing:.055em;text-transform:uppercase;white-space:nowrap}
 .repertoirePresenter{display:flex;align-items:baseline;gap:9px;margin:10px 0 0;padding:11px 14px;border:1px solid #e3e8ec;border-radius:11px;background:#f7fafc;color:#334b5f}
@@ -45,6 +55,12 @@
 .repertoire summary{min-height:46px;padding:0 12px;border-radius:12px;font-size:12px}
 .repertoire summary small{gap:8px;font-size:10px}
 .repertoire summary small::after{width:27px;height:27px;font-size:17px}
+.programGroups{gap:10px;margin-top:9px}
+.programGroup{gap:7px}
+.programGroupHeader{align-items:flex-start;padding:9px 10px}
+.programGroupHeader strong{font-size:11px}
+.programGroupHeader small{font-size:9px}
+.programGroupHeader>span{padding:4px 6px;font-size:7px}
 .repertoireList{margin-top:9px;border-radius:12px}
 .repertoireItem{grid-template-columns:30px minmax(0,1fr) auto;gap:10px;padding:11px 10px}
 .repertoireNumber::before{width:28px;height:28px;font-size:9px}

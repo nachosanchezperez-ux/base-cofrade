@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import HomeFeaturedOuting from '@/components/HomeFeaturedOuting'
 import Link from 'next/link'
 import HiloSearch from '@/components/HiloSearch'
 import HomeTodayV2 from '@/components/HomeTodayV2'
@@ -62,6 +62,7 @@ export default function HomePageV2({
   homeTemporal = null,
   featuredBriefing,
   editorialFeaturedOutingId = '',
+  editorialHighlights = [],
   discoveryThreads,
   exploreStats,
 }) {
@@ -177,109 +178,7 @@ export default function HomePageV2({
             </Link>
           </section>
         ) : featuredOuting ? (
-        <article className={`${styles.featuredExtraordinaryCard} ${polishStyles.extraordinaryCard} ${liveStyles.featuredExtraordinaryLive} ${featuredOuting.heroImagePath ? '' : liveStyles.featuredExtraordinaryNoMedia}`}>
-          {featuredOuting.heroImagePath ? (
-            <figure className={styles.featuredExtraordinaryMedia}>
-              <div className={`${styles.featuredExtraordinaryImageFrame} ${polishStyles.extraordinaryImageFrame}`}>
-                <Image
-                  src={featuredOuting.heroImagePath}
-                  alt={featuredOuting.heroImageAlt}
-                  fill
-                  sizes="(max-width: 859px) calc(100vw - 32px), 33vw"
-                  priority
-                />
-                {liveState.state === 'live' ? (
-                  <span className={liveStyles.liveImageBadge}><i aria-hidden="true" /> En curso</span>
-                ) : null}
-              </div>
-              {featuredOuting.heroImageCredit ? (
-                <figcaption>{featuredOuting.heroImageCredit}</figcaption>
-              ) : null}
-            </figure>
-          ) : null}
-
-          <div className={`${styles.featuredExtraordinaryCopy} ${polishStyles.extraordinaryCopy}`}>
-            <div className={styles.featuredExtraordinaryIntro}>
-              <span className={`${styles.eyebrow} ${liveState.state === 'live' ? liveStyles.liveEyebrow : ''}`}>{agendaEyebrow}</span>
-              <h3 className={`${styles.featuredAgendaTitle} ${polishStyles.extraordinaryTitle}`}>{featuredOuting.title}</h3>
-              <div className={`${styles.featuredExtraordinaryMeta} ${polishStyles.extraordinaryMeta}`}>
-                <strong>{featuredMeta}</strong>
-              </div>
-              {featuredOuting.reason ? <p>{featuredOuting.reason}</p> : null}
-            </div>
-
-            <div className={`${styles.extraordinaryBriefing} ${polishStyles.extraordinaryBriefing}`}>
-              {featuredBriefing.schedule.length ? (
-                <section className={styles.briefingBlock} aria-labelledby="briefing-horarios">
-                  <span className={styles.briefingLabel} id="briefing-horarios">Horarios</span>
-                  <div className={styles.briefingRows}>
-                    {featuredBriefing.schedule.map((item) => {
-                      const isNext = item.id === liveState.nextId
-                      const isPast = pastScheduleIds.has(item.id)
-                      const mobileVisible = mobileVisibleScheduleIds.has(item.id)
-                      return (
-                        <div
-                          className={`${styles.briefingRow} ${polishStyles.briefingRow} ${mobileVisible ? '' : polishStyles.mobileScheduleHidden} ${isNext ? liveStyles.briefingRowNext : ''} ${isPast ? liveStyles.briefingRowPast : ''}`}
-                          key={item.id}
-                        >
-                          <strong>{item.time}</strong>
-                          <span>
-                            <span className={liveStyles.briefingTitleLine}>
-                              <b>{item.label}</b>
-                              {isNext ? <em className={liveStyles.briefingStatus}>{liveState.state === 'live' ? 'Siguiente' : 'Primer hito'}</em> : null}
-                            </span>
-                            {item.dayLabel ? <small>{item.dayLabel}</small> : null}
-                            {item.place ? <small>{item.place}</small> : null}
-                            {item.label === 'Misa estacional' && featuredBriefing.liturgicalMusic[0]?.name
-                              ? <small>Música · {featuredBriefing.liturgicalMusic[0].name}</small>
-                              : null}
-                          </span>
-                        </div>
-                      )
-                    })}
-                  </div>
-                  {featuredBriefing.schedule.length > 3 ? (
-                    <small className={polishStyles.mobileScheduleNote}>La guía completa reúne todos los horarios y detalles.</small>
-                  ) : null}
-                </section>
-              ) : null}
-
-              {featuredBriefing.bands.length ? (
-                <section className={styles.briefingBlock} aria-labelledby="briefing-bandas">
-                  <span className={styles.briefingLabel} id="briefing-bandas">Bandas</span>
-                  <div className={styles.briefingRows}>
-                    {featuredBriefing.bands.map((band) => (
-                      <div className={styles.bandRow} key={band.id}>
-                        {band.href
-                          ? <Link className={styles.bandEntityLink} href={band.href}>{band.name}</Link>
-                          : <strong>{band.name}</strong>}
-                        {band.context ? <small>{band.context}</small> : null}
-                      </div>
-                    ))}
-                  </div>
-                </section>
-              ) : null}
-
-              {featuredBriefing.places.length ? (
-                <section className={`${styles.briefingBlock} ${styles.briefingPlaces}`} aria-labelledby="briefing-lugares">
-                  <span className={styles.briefingLabel} id="briefing-lugares">Lugares clave</span>
-                  <div className={`${styles.placePills} ${polishStyles.placePills}`}>
-                    {featuredBriefing.places.map((place) => <span key={place.id}>{place.name}</span>)}
-                  </div>
-                </section>
-              ) : null}
-            </div>
-
-            <div className={navStyles.actions}>
-              <Link className={navStyles.primary} href={featuredGuideHref}>
-                Abrir guía completa <span aria-hidden="true">→</span>
-              </Link>
-              <Link className={navStyles.secondary} href={featuredOuting.calendarHref}>
-                Ver {featuredOuting.calendarLabel}
-              </Link>
-            </div>
-          </div>
-        </article>
+        <HomeFeaturedOuting featuredOuting={featuredOuting} featuredBriefing={featuredBriefing} />
         ) : (
           <HomeProcessionGrid outings={balancedUpcoming} />
         )}
@@ -375,6 +274,24 @@ export default function HomePageV2({
 
       <HomeProjectOverview />
 
+
+      {editorialHighlights.length ? (
+        <section className={`${styles.section} ${styles.featuredExtraordinary} ${polishStyles.extraordinarySection}`} aria-labelledby="editorial-extraordinarias-title">
+          <div className="shell">
+            <header className={styles.upcomingAgendaHead}>
+              <div>
+                <span className={styles.eyebrow}>Extraordinarias destacadas</span>
+                <h2 id="editorial-extraordinarias-title">Un día extraordinario</h2>
+              </div>
+            </header>
+            <div className={liveStyles.editorialHighlights}>
+            {editorialHighlights.map(({ outing, briefing }) => (
+              <HomeFeaturedOuting key={outing.id} featuredOuting={outing} featuredBriefing={briefing} />
+            ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       {liveOutings.length ? (
         <>

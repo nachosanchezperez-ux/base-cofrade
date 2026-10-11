@@ -1,6 +1,3 @@
--- Permite que cada cruceta conserve la identidad cromática de su documento
--- original sin alterar la paleta general de la Hermandad o de la Banda.
-
 alter table public.musical_repertoires
   add column if not exists primary_color text,
   add column if not exists accent_color text;
