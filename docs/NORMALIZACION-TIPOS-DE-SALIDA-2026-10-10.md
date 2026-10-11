@@ -42,6 +42,18 @@ identifica a cada uno es `organizer_name` (nombre oficial del Consejo) junto con
 `municipality_id`. Los 40 Vía Crucis actuales son del Consejo General de Sevilla y llevan
 ya el municipio de Sevilla.
 
+### Consejos de la provincia con Vía Crucis general documentado (11/10/2026)
+
+Alcalá de Guadaíra, Arahal, Carmona, Coria del Río, Dos Hermanas, Écija, Estepa, Lebrija,
+Los Palacios y Villafranca, Marchena, Morón de la Frontera, Osuna y Utrera. Los 13
+municipios ya existen en `public.municipalities`. A la fecha no hay ninguna salida cargada
+de estos Consejos: falta el nombre oficial de cada uno (para `organizer_name`) y los datos
+de cada Vía Crucis (año, fecha, recorrido y fuente).
+
+Pendiente de confirmar: el Vía Crucis de la Humildad y Paciencia de Osuna (30/03/2026,
+ordinario, sin organizador) figura con la Hermandad como protagonista. Si fuera el del
+Consejo de Osuna, habría que ponerle el subtipo y el organizador; hasta entonces no se toca.
+
 ## Un fallo de la primera aplicación
 
 `getGeneralPublicOutings` lee los tipos `Romería` y `Procesión`. Al renombrar "Procesión
