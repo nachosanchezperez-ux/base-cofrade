@@ -2,6 +2,7 @@ import { connection } from 'next/server'
 import { Suspense } from 'react'
 import Link from 'next/link'
 import BandDirectoryFacets from '@/components/BandDirectoryFacets'
+import DirectoryIntroLink from '@/components/DirectoryIntroLink'
 import JsonLd from '@/components/JsonLd'
 import RelationalEntityDirectory from '@/components/RelationalEntityDirectory'
 import RelationalEntityDirectoryFromUrl from '@/components/RelationalEntityDirectoryFromUrl'
@@ -49,7 +50,9 @@ export default async function BandasPage() {
         <span className="eyebrow">Enciclopedia musical</span>
         <h1 className="page-title">Directorio de bandas</h1>
         <p className="page-lead">
-          Formaciones conectadas con hermandades, pasos, salidas, responsables y patrimonio musical.
+          Formaciones conectadas con hermandades, pasos, salidas, responsables y patrimonio musical. Explora el archivo de{' '}
+          <DirectoryIntroLink href="/marchas">marchas procesionales</DirectoryIntroLink>{' '}
+          y el directorio de <DirectoryIntroLink href="/autores">autores y oficios</DirectoryIntroLink>.
         </p>
         <p>
           <Link className="button button-ghost" href="/acompanamientos-musicales" style={{ fontSize: '16px', gap: '10px' }}>
