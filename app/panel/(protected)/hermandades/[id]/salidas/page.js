@@ -41,6 +41,7 @@ function OutingFields({ item = null, data }) {
     <div className={styles.formGrid}>
       <label className={styles.fieldWide}><span>Título público</span><input name="title" defaultValue={item?.title || ''} placeholder="Vía Crucis, Rosario, Traslado, Procesión…" /></label>
       <label><span>Tipo de salida</span><input name="outing_type" list="outing-types" defaultValue={item?.outing_type || ''} placeholder="Selecciona o escribe el tipo" required /></label>
+      <label><span>Subtipo (opcional)</span><input name="outing_subtype" list="outing-subtypes" defaultValue={item?.outing_subtype || ''} placeholder="Variante del tipo: misional, de regreso…" /></label>
       <label><span>Carácter</span><select name="character" defaultValue={item?.character || 'ordinary'}><option value="ordinary">Ordinaria</option><option value="extraordinary">Extraordinaria</option></select></label>
       <label><span>Estado del evento</span><select name="event_status" defaultValue={item?.event_status || 'announced'}><option value="announced">Anunciada</option><option value="held">Celebrada</option><option value="cancelled">Cancelada</option></select></label>
       <label><span>Estado editorial</span><StatusSelect defaultValue={item?.status || 'draft'} /></label>
@@ -78,17 +79,34 @@ export default async function BrotherhoodOutingsPage({ params, searchParams }) {
   return (
     <div className={styles.pageWrap}>
       <datalist id="outing-types">
-        <option value="Estación de penitencia" />
+        <option value="Estación de Penitencia" />
         <option value="Procesión de Gloria" />
+        <option value="Procesión sacramental" />
+        <option value="Procesión" />
         <option value="Vía Crucis" />
-        <option value="Rosario público" />
+        <option value="Vía Lucis" />
+        <option value="Rosario Matutino" />
+        <option value="Rosario de la Aurora" />
+        <option value="Rosario Vespertino" />
+        <option value="Rosario Público" />
+        <option value="Rosario Extraordinario" />
         <option value="Traslado" />
         <option value="Romería" />
         <option value="Subida" />
         <option value="Bajada" />
-        <option value="Procesión sacramental" />
-        <option value="Procesión extraordinaria" />
         <option value="Otra salida pública" />
+      </datalist>
+      <datalist id="outing-subtypes">
+        <option value="del Consejo de Hermandades y Cofradías" />
+        <option value="de regreso" />
+        <option value="en Vía Crucis" />
+        <option value="colectivo" />
+        <option value="misional" />
+        <option value="Corpus Christi" />
+        <option value="Resurrección" />
+        <option value="de alabanza" />
+        <option value="histórica" />
+        <option value="solemne" />
       </datalist>
 
       <header className={styles.editorHeader}>
