@@ -86,6 +86,7 @@ test('construye la lectura sin convertirla en cambio', () => {
   assert.equal(result[0].newBandName, 'Banda de prueba')
   assert.equal(result[0].renewalLabel, 'Continuidad confirmada para 2027')
   assert.equal(result[0].scope, 'capital')
+  assert.equal(result[0].startYear, 2026)
 })
 
 

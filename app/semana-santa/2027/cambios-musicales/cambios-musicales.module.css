@@ -748,6 +748,15 @@
   text-underline-offset: 3px;
 }
 
+.tenure {
+  display: block;
+  margin-top: 2px;
+  color: var(--music-muted);
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1.4;
+}
+
 .method {
   display: grid;
   gap: 12px;
