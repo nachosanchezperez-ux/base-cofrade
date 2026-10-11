@@ -101,3 +101,18 @@
   .eventDetails > summary b { display: grid; place-items: center; flex: 0 0 26px; height: 26px; border-radius: 50%; background: #fff; }
   .eventDetails[open] > summary { margin-bottom: 12px; }
 }
+
+/* A timetable belongs to the card, not to an additional event page. */
+.eventTitle { display: block; padding: 0; border: 0; background: none; color: inherit; font: inherit; font-weight: inherit; text-align: left; cursor: pointer; min-height: 44px; }
+.directory .card { scroll-margin-top: calc(var(--hc-app-header-height) + 100px); }
+.outingTimes { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; margin-bottom: 14px; }
+.outingTimes > div { min-width: 0; display: grid; align-content: start; gap: 3px; padding: 12px; border-radius: 12px; background: #edf1f5; color: #123a67; }
+.outingTimes > div:first-child { background: #152d46; color: #fff; }
+.outingTimes span { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
+.outingTimes strong { font-size: clamp(19px,5vw,30px); font-variant-numeric: tabular-nums; line-height: 1.2; overflow-wrap: anywhere; }
+.outingTimes small { font-size: 12px; }
+.eventTimetable > div { display: grid; grid-template-columns: minmax(58px,auto) minmax(0,1fr); gap: 12px; padding: 10px 0; border-bottom: 1px solid #e7e1d9; font-size: 14px; }
+.eventTimetable > div > strong { color: #a61931; }
+.eventTimetable small,.eventMusic small { display: block; margin-top: 4px; color: #586777; font-size: 13px; line-height: 1.5; }
+.eventMusic p { margin: 0 0 10px; font-size: 15px; }
+.eventMusic a { font-weight: 700; }

@@ -1,12 +1,15 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { cache } from 'react'
-import { notFound } from 'next/navigation'
+import { notFound, permanentRedirect } from 'next/navigation'
+import { agendaEventDetailHref, isPreservedAgendaEventPath } from '@/lib/agenda-event-url-policy'
 import JsonLd from '@/components/JsonLd'
+import DetailsAnchorLink from '@/components/DetailsAnchorLink'
 import SiteBreadcrumb from '@/components/SiteBreadcrumb'
 import AgendaCofradeNav from '@/components/AgendaCofradeNav'
 import AgendaRelationLinks from '@/components/AgendaRelationLinks'
 import ProcessionRoute from '@/components/ProcessionRoute'
+import { agendaDirectionsHref, schedulePrecision } from '@/lib/agenda-event-presentation'
 import { buildProcessionRoute } from '@/lib/procession-route'
 import {
   absoluteUrl,
@@ -52,6 +55,7 @@ function dateTime(date, time) {
 export async function generateMetadata({ params }) {
   const { slug } = await params
   const item = await getRosary(slug)
+  if (item && !isPreservedAgendaEventPath(`/agenda-cofrade/rosarios/${slug}`)) permanentRedirect(agendaEventDetailHref(item, 'agenda-cofrade/rosarios'))
   if (!item) return { title: 'Rosario no encontrado', robots: { index: false, follow: false } }
 
   const title = compactSeoTitle(`${item.title}${item.municipality ? ` en ${item.municipality}` : ''}`)
@@ -79,6 +83,7 @@ export async function generateMetadata({ params }) {
 export default async function RosaryDetailPage({ params }) {
   const { slug } = await params
   const item = await getRosary(slug)
+  if (item && !isPreservedAgendaEventPath(`/agenda-cofrade/rosarios/${slug}`)) permanentRedirect(agendaEventDetailHref(item, 'agenda-cofrade/rosarios'))
   if (!item) notFound()
 
   const canonicalPath = `/agenda-cofrade/rosarios/${item.slug}`
@@ -154,9 +159,15 @@ export default async function RosaryDetailPage({ params }) {
               <p>{item.brotherhoodName}</p>
               <div className={styles.heroFacts}>
                 <div><span>Fecha</span><strong>{formatDate(item.date)}</strong></div>
-                <div><span>Salida</span><strong>{item.departureTime ? `${item.departureTime} h` : 'Por confirmar'}</strong></div>
-                <div><span>Localidad</span><strong>{item.municipality || 'Por confirmar'}</strong></div>
+                <div className={styles.timeFact}><span>Salida</span><strong>{item.departureTime || 'Por confirmar'}</strong><small>{schedulePrecision(item.schedule, 'departure')}</small></div>
+                <div className={styles.timeFact}><span>Entrada</span><strong>{item.returnTime || 'Por confirmar'}</strong><small>{schedulePrecision(item.schedule, 'arrival')}</small></div>
+
               </div>
+              <p className={styles.location}><strong>{item.origin || 'Lugar por confirmar'}</strong><span>{item.municipality}</span></p>
+              <nav className={styles.quickLinks} aria-label="Información práctica">
+                <DetailsAnchorLink targetId="recorrido">Ver recorrido ↓</DetailsAnchorLink>
+                {agendaDirectionsHref(item.origin, item.municipality) ? <a href={agendaDirectionsHref(item.origin, item.municipality)} target="_blank" rel="noreferrer">Cómo llegar ↗</a> : null}
+              </nav>
             </div>
 
             {item.heroImagePath || item.crestPath ? (
@@ -178,17 +189,37 @@ export default async function RosaryDetailPage({ params }) {
 
       <AgendaCofradeNav activeSection="agenda" sticky={false} />
 
-      <AgendaRelationLinks
-        brotherhoodName={item.brotherhoodName}
-        brotherhoodHref={item.brotherhoodHref}
-        municipality={item.municipality}
-        bands={item.music}
-        calendarHref="/agenda-cofrade#agenda"
-        calendarLabel="Agenda Cofrade"
-      />
-
       <div className={`shell ${styles.content}`}>
         <article className={styles.mainColumn}>
+          {item.schedule.length ? (
+            <section>
+              <span className={styles.eyebrow}>Hitos previstos</span>
+              <h2>Horarios</h2>
+              <div className={styles.rows}>
+                {item.schedule.map((row) => (
+                  <div className={styles.row} key={row.id}>
+                    <strong>{row.time || row.timeText || '—'}</strong>
+                    <div><b>{row.label}</b>{row.place ? <span>{row.place}</span> : null}{row.notes ? <small>{row.notes}</small> : null}</div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          ) : null}
+
+          {item.music.length ? (
+            <section>
+              <span className={styles.eyebrow}>Acompañamiento</span>
+              <h2>Música</h2>
+              <div className={styles.rows}>
+                {item.music.map((row, index) => (
+                  <div className={styles.row} key={row.id || `${row.name}-${index}`}>
+                    <strong>{String(index + 1).padStart(2, '0')}</strong>
+                    <div>{row.href ? <Link href={row.href}>{row.name}</Link> : <b>{row.name}</b>}{row.context ? <span>{row.context}</span> : null}</div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          ) : null}
           {description ? (
             <section>
               <span className={styles.eyebrow}>El rosario</span>
@@ -220,55 +251,18 @@ export default async function RosaryDetailPage({ params }) {
           ) : null}
 
           {(processionRoute.summary || processionRoute.legs.length || processionRoute.phases.length) ? (
-            <section>
+            <section id="recorrido" className={styles.routeSection}>
               <span className={styles.eyebrow}>Por las calles</span>
               <h2>Recorrido</h2>
-              <ProcessionRoute route={processionRoute} />
+              <details className={styles.routeDisclosure}><summary>Ver recorrido completo{processionRoute.totalPoints ? ` · ${processionRoute.totalPoints} puntos` : ''}</summary><ProcessionRoute route={processionRoute} /></details>
             </section>
           ) : null}
 
-          {item.schedule.length ? (
-            <section>
-              <span className={styles.eyebrow}>Hitos previstos</span>
-              <h2>Horarios</h2>
-              <div className={styles.rows}>
-                {item.schedule.map((row) => (
-                  <div className={styles.row} key={row.id}>
-                    <strong>{row.time || row.timeText || '—'}</strong>
-                    <div><b>{row.label}</b>{row.place ? <span>{row.place}</span> : null}{row.notes ? <small>{row.notes}</small> : null}</div>
-                  </div>
-                ))}
-              </div>
-            </section>
-          ) : null}
 
-          {item.music.length ? (
-            <section>
-              <span className={styles.eyebrow}>Acompañamiento</span>
-              <h2>Música</h2>
-              <div className={styles.rows}>
-                {item.music.map((row, index) => (
-                  <div className={styles.row} key={row.id || `${row.name}-${index}`}>
-                    <strong>{String(index + 1).padStart(2, '0')}</strong>
-                    <div>{row.href ? <Link href={row.href}>{row.name}</Link> : <b>{row.name}</b>}{row.context ? <span>{row.context}</span> : null}</div>
-                  </div>
-                ))}
-              </div>
-            </section>
-          ) : null}
         </article>
 
         <aside className={styles.aside}>
-          <div className={styles.summaryCard}>
-            <span>De un vistazo</span>
-            <dl>
-              <div><dt>Modalidad</dt><dd>{item.mode}</dd></div>
-              <div><dt>Salida</dt><dd>{item.origin || 'Por confirmar'}</dd></div>
-              {item.destination ? <div><dt>Destino</dt><dd>{item.destination}</dd></div> : null}
-              <div><dt>Entrada</dt><dd>{item.returnTime ? `${item.returnTime} h` : 'Por confirmar'}</dd></div>
-            </dl>
-            {item.brotherhoodHref ? <Link href={item.brotherhoodHref}>Ver ficha de la Hermandad <span>→</span></Link> : null}
-          </div>
+
 
           {item.sources.length ? (
             <div className={styles.sources}>
@@ -280,6 +274,14 @@ export default async function RosaryDetailPage({ params }) {
           ) : null}
         </aside>
       </div>
+      <AgendaRelationLinks
+        brotherhoodName={item.brotherhoodName}
+        brotherhoodHref={item.brotherhoodHref}
+        municipality={item.municipality}
+        bands={item.music}
+        calendarHref="/agenda-cofrade#agenda"
+        calendarLabel="Agenda Cofrade"
+      />
     </div>
   )
 }

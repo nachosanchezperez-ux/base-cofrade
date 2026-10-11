@@ -1,3 +1,8 @@
+import { allowAgendaSitemapUrl } from '../lib/agenda-event-url-policy.js';
+import { preservedAgendaEventPaths } from '../lib/agenda-preserved-event-paths.js';
+const extraPath = [...preservedAgendaEventPaths].find((p) => p.startsWith('/extraordinarias/'));
+const gloryPath = [...preservedAgendaEventPaths].find((p) => p.startsWith('/procesiones-de-gloria/'));
+const rosaryPath = [...preservedAgendaEventPaths].find((p) => p.startsWith('/agenda-cofrade/rosarios/'));
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -8,7 +13,7 @@ import { PUBLIC_SITEMAP_SEGMENTS, sitemapEntriesForSegment } from '../lib/seo-si
 async function harness({ fail = '', delay = 0 } = {}) {
   const calls = [];
   const context = {
-    PUBLIC_SITEMAP_SEGMENTS, sitemapEntriesForSegment, connection: async () => {},
+    allowAgendaSitemapUrl, PUBLIC_SITEMAP_SEGMENTS, sitemapEntriesForSegment, connection: async () => {},
     absoluteUrl: (path) => `https://hilocofrade.es${path}`,
     unstable_cache: (fn) => fn,
     brotherhoodDirectoryLocalities: () => [], brotherhoodDirectoryRoutes: () => [],
@@ -31,10 +36,10 @@ async function harness({ fail = '', delay = 0 } = {}) {
     getBandsDirectory: [{ id: 'b', slug: 'banda', entityType: 'band' }],
     getImagesDirectory: [{ id: 'i', slug: 'imagen', entityType: 'image' }],
     getStepsDirectory: [{ id: 'p', slug: 'paso', entityType: 'step', updatedAt: '2026-10-01' }],
-    getExtraordinaryDirectory: [{ slug: 'salida', municipality: 'Pilas' }],
-    getGloryDirectory: [{ detailHref: '/procesiones-de-gloria/gloria', municipality: 'Pilas' }],
+    getExtraordinaryDirectory: [{ slug: extraPath.split('/').at(-1), municipality: 'Pilas' }],
+    getGloryDirectory: [{ detailHref: gloryPath, municipality: 'Pilas' }],
     getCrewEventDirectory: [{ detailHref: '/igualas-y-ensayos/ensayo', municipality: 'Pilas', updatedAt: '2026-10-03' }],
-    getRosaryOutings: [{ detailHref: '/agenda-cofrade/rosarios/rosario', municipality: 'Pilas', updatedAt: '2026-10-02' }],
+    getRosaryOutings: [{ detailHref: rosaryPath, municipality: 'Pilas', updatedAt: '2026-10-02' }],
     getMusicalRepertoires: [{ href: '/crucetas-musicales/cruceta', entries: [{ marchHref: '/marchas/marcha' }] }],
     getPublicMarchSitemapEntries: [{ slug: 'marcha', updatedAt: '2026-09-24' }],
     getPublicAgentSitemapEntries: [{ slug: 'autor', updatedAt: '2026-09-30' }],
@@ -137,8 +142,8 @@ test('full sitemap retains canonical detail URLs and unique march metadata', asy
   const urls = entries.map((entry) => entry.url);
   assert.equal(new Set(urls).size, urls.length);
   for (const path of ['/hermandades/hermandad', '/bandas/banda', '/imagenes/imagen', '/pasos/paso',
-    '/marchas/marcha', '/autores/autor', '/crucetas-musicales/cruceta', '/extraordinarias/salida',
-    '/procesiones-de-gloria/gloria', '/igualas-y-ensayos/ensayo', '/agenda-cofrade/rosarios/rosario',
+    '/marchas/marcha', '/autores/autor', '/crucetas-musicales/cruceta', extraPath,
+    gloryPath, '/igualas-y-ensayos/ensayo', rosaryPath,
     '/agenda-cofrade/localidad/pilas', '/agenda-cofrade/localidad/la-rinconada',
     '/agenda-cofrade/hoy', '/agenda-cofrade/manana',
     '/agenda-cofrade/fin-de-semana']) {
@@ -171,8 +176,8 @@ for (const [file, name] of [
 }
 
 
-test('el sitemap usa namespace v2 para no servir familias anteriores al lastmod de hubs', async () => {
+test('el sitemap usa namespace v3 para no servir familias anteriores al lastmod de hubs', async () => {
   const source = await readFile(new URL('../app/sitemap.js', import.meta.url), 'utf8');
-  assert.match(source, /hilo-cofrade-public-sitemap-family-v2/);
+  assert.match(source, /hilo-cofrade-public-sitemap-family-v3/);
   assert.doesNotMatch(source, /hilo-cofrade-public-sitemap-family-v1/);
 });

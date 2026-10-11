@@ -1,6 +1,7 @@
 import { connection } from 'next/server'
 import JsonLd from '@/components/JsonLd'
 import HeritageDirectoryFacets from '@/components/HeritageDirectoryFacets'
+import DirectoryIntroLink from '@/components/DirectoryIntroLink'
 import RelationalEntityDirectory from '@/components/RelationalEntityDirectory'
 import { getImagesDirectory } from '@/lib/supabase/directories'
 import { breadcrumbJsonLd, collectionPageJsonLd, socialMetadata } from '@/lib/seo'
@@ -40,7 +41,9 @@ export default async function ImagenesPage() {
         <span className="eyebrow">Enciclopedia cofrade</span>
         <h1 className="page-title">Directorio de imágenes</h1>
         <p className="page-lead">
-          Descubre titulares y otras imágenes físicas a través de su hermandad, localidad, autoría, datación y relaciones documentadas.
+          Descubre titulares y otras imágenes físicas a través de su hermandad, localidad, autoría y datación. Sigue sus relaciones documentadas en los directorios de{' '}
+          <DirectoryIntroLink href="/autores">autores y oficios</DirectoryIntroLink>{' '}
+          y de <DirectoryIntroLink href="/pasos">pasos procesionales</DirectoryIntroLink>.
         </p>
         <HeritageDirectoryFacets items={images} section="imagenes" title="Imágenes" />
         <RelationalEntityDirectory items={images} kind="image" />

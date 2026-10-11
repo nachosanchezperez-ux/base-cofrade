@@ -200,3 +200,18 @@ test('conserva el texto como fallback cuando no existe un itinerario separable',
   assert.equal(route.summary, 'Procesión por las calles de Montellano.')
   assert.equal(route.source, 'summary')
 })
+
+test('un circuito de un tramo distingue entrada y salida y no duplica la misa previa', () => {
+  const route = buildProcessionRoute({
+    origin: 'Parroquia del Rocío', destination: 'Parroquia del Rocío',
+    routeSummary: 'Parroquia del Rocío, Iberia, Betis, Parroquia del Rocío',
+    schedule: [
+      { label: 'Santa Eucaristía', time: '19:30', place: 'Parroquia del Rocío' },
+      { label: 'Salida', time: '21:00', place: 'Parroquia del Rocío' },
+      { label: 'Entrada', time: '23:30', place: 'Parroquia del Rocío' },
+    ],
+  })
+  assert.equal(route.legs[0].points.at(-1).role, 'end')
+  assert.deepEqual(route.legs[0].points[0].annotations.map((row) => row.time), ['21:00'])
+  assert.deepEqual(route.legs[0].points.at(-1).annotations.map((row) => row.time), ['23:30'])
+})

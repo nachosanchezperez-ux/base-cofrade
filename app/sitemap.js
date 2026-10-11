@@ -1,3 +1,4 @@
+import { allowAgendaSitemapUrl } from '@/lib/agenda-event-url-policy';
 import {
   brotherhoodDirectoryLocalities,
   brotherhoodDirectoryRoutes,
@@ -424,6 +425,7 @@ async function buildPublicSitemapSegmentEntries(segment) {
   }
 
   const uniqueEntries = [...new Map(sitemapEntriesForSegment(entries, segment)
+    .filter((entry) => allowAgendaSitemapUrl(entry.url))
     .map((entry) => [entry.url, entry])).values()];
 
   return refreshSegmentHubLastModified(uniqueEntries, segment);
@@ -431,7 +433,7 @@ async function buildPublicSitemapSegmentEntries(segment) {
 
 const getCachedPublicSitemapSegmentEntries = unstable_cache(
   buildPublicSitemapSegmentEntries,
-  ['hilo-cofrade-public-sitemap-family-v2'],
+  ['hilo-cofrade-public-sitemap-family-v3'],
   { revalidate: 3600, tags: ['seo-sitemap'] }
 );
 

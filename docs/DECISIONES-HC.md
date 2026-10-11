@@ -83,3 +83,8 @@ La elección entre escudo, logotipo, fotografía, cartel, portada o galería per
 7. El próximo ID no se reserva hasta que exista una decisión estructural aprobada.
 
 **DECISIONES HC → 🟢 SINCRONIZADAS CON EL PRODUCTO REAL**
+
+
+## 2026-10-09 · Agenda: información en tarjeta, URLs permanentes solo para recurrencias
+
+Por instrucción del usuario, las nuevas citas puntuales se consultan dentro de Agenda y no deben originar páginas propias. Los actos anuales pueden tener una URL única sin año, con ediciones documentadas. Preservar enlaces existentes hasta una consolidación auditada. [Contrato y alcance implementado](./AGENDA-DETALLE-Y-URLS-2026-10-09.md).
