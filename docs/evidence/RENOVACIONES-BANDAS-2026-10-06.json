@@ -1,0 +1,313 @@
+{
+  "task": "Renovaciones de bandas · petición de Nacho del 6 de octubre de 2026",
+  "applied_at": "2026-10-06T18:55:46.076058Z",
+  "verified_at": "2026-10-07T02:13:16Z",
+  "repository": "nachosanchezperez-ux/base-cofrade",
+  "preflight_main": "8e91ac026cc73f22b7d0bb44e1c083a87c1ef710",
+  "documentation_base_main": "32b9cd9da6713fe2fab6be86a62fdb2cdd2e4ef3",
+  "production_data_project": "kcevwkucqzcyrqaimyhl",
+  "writes": {
+    "period_updates": 4,
+    "period_inserts": 0,
+    "period_deletes": 0,
+    "new_sources": 3,
+    "new_source_links": 5
+  },
+  "dry_run": {
+    "result": "PASS",
+    "transaction_end": "ROLLBACK",
+    "all_five_original_row_hashes_preserved": true,
+    "source_residue": 0
+  },
+  "static_review": "GO · review_data_plan",
+  "baseline_and_postflight": {
+    "period_count": 551,
+    "eligible_changes_2027": 44,
+    "other_periods_hash": "4a6296300e467afdd1f753791d5e59e4",
+    "outings_hash": "2d58cd5278cf5ca990663bbc6ba77c96",
+    "positions_hash": "4a7a921a58c7bee4e75d34fb6a17c3b7",
+    "assignments_hash": "e3cb38fd83aa8d6d29bc2994862bbb2d",
+    "exact_match": true
+  },
+  "before_hashes": {
+    "13ddbd73-ac98-4d1d-871e-34ed8e77bcd2": "8ee88dff26af7956c2f1b83f29f33212",
+    "79511741-cf06-4d8e-8640-5c89e91101a2": "520f6bc5c459613530d31947b3cd8c9b",
+    "9d5bab12-c743-4fde-a2cb-93e6c00137eb": "4d5decf36c093d3e09fe1f5b6e2954b5",
+    "a6a2fef0-2c70-4d1b-90ac-4915ebfbc4f1": "37925d14a55efce99fa0dea6c93c1107",
+    "e8cd8c55-00e0-4e8b-826a-f046ddf45df4": "d956f3d6fb52a88b46ec019e49596927"
+  },
+  "after_periods": [
+    {
+      "id": "13ddbd73-ac98-4d1d-871e-34ed8e77bcd2",
+      "brotherhood_entity_id": "10000000-0000-0000-0000-000000000001",
+      "band_entity_id": "218bf3a6-9e00-4691-8306-bd86627a5d19",
+      "step_entity_id": null,
+      "position": "Cruz de Guía",
+      "outing_type": "Miércoles Santo",
+      "date_from": null,
+      "date_from_text": "Desde 2024",
+      "year_from": 2024,
+      "date_to": null,
+      "date_to_text": null,
+      "year_to": null,
+      "is_current": true,
+      "notes": "La Agrupación Musical Juvenil María Santísima de las Angustias Coronada (Los Gitanos Juvenil) renueva el acompañamiento de la Cruz de Guía del Baratillo para el Miércoles Santo de 2027. La Hermandad ratificó la continuidad en su comunicado del 24 de septiembre de 2026.",
+      "status": "published",
+      "created_at": "2026-08-22 01:11:19.568187+00",
+      "updated_at": "2026-10-06 18:55:46.076058+00",
+      "public_brotherhood_name": null,
+      "public_step_name": null,
+      "public_brotherhood_slug": null,
+      "public_municipality_name": "Sevilla",
+      "public_municipality_slug": "sevilla",
+      "public_province": "Sevilla",
+      "public_band_name": null,
+      "public_band_slug": null,
+      "row_hash": "a234bd2f5dd23831409b16eb02650c6e"
+    },
+    {
+      "id": "79511741-cf06-4d8e-8640-5c89e91101a2",
+      "brotherhood_entity_id": "1f517f03-4ee7-4b29-8eeb-d2732ba01095",
+      "band_entity_id": "a23934c9-93e9-4bf1-886e-d98ec170b74f",
+      "step_entity_id": "34da0353-c9b6-44d2-839a-15c0f5430efd",
+      "position": "Tras el paso de palio",
+      "outing_type": "Lunes Santo",
+      "date_from": null,
+      "date_from_text": "Vigente en 2026; inicio no documentado",
+      "year_from": null,
+      "date_to": null,
+      "date_to_text": null,
+      "year_to": null,
+      "is_current": true,
+      "notes": "La guía de 2026 acredita este acompañamiento. Renovación para el Lunes Santo de 2027 tras el palio de Nuestra Señora del Amor y Sacrificio, comunicada a Hilo Cofrade el 6 de octubre de 2026. El plazo completo del contrato no está documentado.",
+      "status": "published",
+      "created_at": "2026-09-16 18:29:24.50332+00",
+      "updated_at": "2026-10-06 18:55:46.076058+00",
+      "public_brotherhood_name": "Amor y Sacrificio",
+      "public_step_name": "Paso de palio de Nuestra Señora del Amor y Sacrificio",
+      "public_brotherhood_slug": "hermandad-santa-cruz-dos-hermanas",
+      "public_municipality_name": "Dos Hermanas",
+      "public_municipality_slug": "dos-hermanas",
+      "public_province": "Sevilla",
+      "public_band_name": null,
+      "public_band_slug": null,
+      "row_hash": "bd00a43839d77b55af00d089648b8356"
+    },
+    {
+      "id": "9d5bab12-c743-4fde-a2cb-93e6c00137eb",
+      "brotherhood_entity_id": "a4220000-0000-0000-0000-000000000003",
+      "band_entity_id": "da951f85-de4c-48a4-bd97-b8c9f835d9b4",
+      "step_entity_id": "0cbcaf53-900b-4cc5-a889-ffc29544adbe",
+      "position": "Tras el paso de palio",
+      "outing_type": "Domingo de Ramos",
+      "date_from": null,
+      "date_from_text": null,
+      "year_from": 2025,
+      "date_to": null,
+      "date_to_text": null,
+      "year_to": null,
+      "is_current": true,
+      "notes": "La Banda Municipal de Música de La Puebla del Río se incorporó al palio de María Santísima de la Paz en 2025. La vinculación fue renovada para los Domingos de Ramos de 2026 y 2027.",
+      "status": "published",
+      "created_at": "2026-08-19 13:16:08.576529+00",
+      "updated_at": "2026-09-17 22:02:57.294062+00",
+      "public_brotherhood_name": "Hermandad de la Paz",
+      "public_step_name": "Paso de palio de María Santísima de la Paz",
+      "public_brotherhood_slug": "hermandad-de-la-paz",
+      "public_municipality_name": "Sevilla",
+      "public_municipality_slug": "sevilla",
+      "public_province": "Sevilla",
+      "public_band_name": null,
+      "public_band_slug": null,
+      "row_hash": "4d5decf36c093d3e09fe1f5b6e2954b5"
+    },
+    {
+      "id": "a6a2fef0-2c70-4d1b-90ac-4915ebfbc4f1",
+      "brotherhood_entity_id": "10000000-0000-0000-0000-000000000001",
+      "band_entity_id": "8c860cd1-11cb-4cbc-8a40-2eaec0543f8b",
+      "step_entity_id": "14000000-0000-0000-0000-000000000001",
+      "position": "Paso de la Piedad",
+      "outing_type": "Miércoles Santo",
+      "date_from": null,
+      "date_from_text": "Desde 2005",
+      "year_from": 2005,
+      "date_to": null,
+      "date_to_text": "Hasta 2029",
+      "year_to": 2029,
+      "is_current": true,
+      "notes": "Acompañamiento musical renovado para los Miércoles Santos de 2027, 2028 y 2029. No implica pertenencia ni asociación institucional con el Baratillo.\n\nLa Hermandad del Baratillo ratificó esta continuidad en su comunicado del 24 de septiembre de 2026.",
+      "status": "published",
+      "created_at": "2026-08-20 06:51:42.576655+00",
+      "updated_at": "2026-10-06 18:55:46.076058+00",
+      "public_brotherhood_name": "Hermandad del Baratillo",
+      "public_step_name": "Paso del Santísimo Cristo de la Misericordia y Nuestra Señora de la Piedad",
+      "public_brotherhood_slug": "el-baratillo",
+      "public_municipality_name": "Sevilla",
+      "public_municipality_slug": "sevilla",
+      "public_province": "Sevilla",
+      "public_band_name": null,
+      "public_band_slug": null,
+      "row_hash": "55f1fb134a79b4480ee178293f664508"
+    },
+    {
+      "id": "e8cd8c55-00e0-4e8b-826a-f046ddf45df4",
+      "brotherhood_entity_id": "10000000-0000-0000-0000-000000000001",
+      "band_entity_id": "24e2b89a-4d72-4ea8-9144-8972cf751046",
+      "step_entity_id": "14000000-0000-0000-0000-000000000002",
+      "position": "Palio de la Caridad",
+      "outing_type": "Miércoles Santo",
+      "date_from": null,
+      "date_from_text": "Desde 1980",
+      "year_from": 1980,
+      "date_to": null,
+      "date_to_text": "Hasta el Miércoles Santo de 2029",
+      "year_to": 2029,
+      "is_current": true,
+      "notes": "Acompañamiento ininterrumpido desde 1980. Es un contrato musical y no una asociación institucional con el Baratillo.\n\nRenovación por tres años más, hasta 2029, anunciada por la formación el 24 de septiembre de 2026. El Carmen de Salteras continuará tras el palio de María Santísima de la Caridad en su Soledad.",
+      "status": "published",
+      "created_at": "2026-08-20 06:51:42.576655+00",
+      "updated_at": "2026-10-06 18:55:46.076058+00",
+      "public_brotherhood_name": "Hermandad del Baratillo",
+      "public_step_name": "Paso de palio de María Santísima de la Caridad en su Soledad",
+      "public_brotherhood_slug": "el-baratillo",
+      "public_municipality_name": "Sevilla",
+      "public_municipality_slug": "sevilla",
+      "public_province": "Sevilla",
+      "public_band_name": null,
+      "public_band_slug": null,
+      "row_hash": "d2b2f264e172483bc3b8554dea4a59f7"
+    }
+  ],
+  "new_sources": [
+    {
+      "id": "562ab60e-6d02-40c5-b85e-eb4319e12ff5",
+      "type": "Información editorial directa",
+      "url": null,
+      "period_ids": [
+        "79511741-cf06-4d8e-8640-5c89e91101a2"
+      ]
+    },
+    {
+      "id": "909ceba7-d467-4a99-aad2-45a963dfff74",
+      "type": "Web oficial",
+      "url": "https://hermandadelbaratillo.es/renovacion-del-acompanamiento-musical/",
+      "period_ids": [
+        "13ddbd73-ac98-4d1d-871e-34ed8e77bcd2",
+        "a6a2fef0-2c70-4d1b-90ac-4915ebfbc4f1",
+        "e8cd8c55-00e0-4e8b-826a-f046ddf45df4"
+      ]
+    },
+    {
+      "id": "eec04b26-1a14-46f5-8e26-f9690cdf5f02",
+      "type": "Red social oficial",
+      "url": "https://x.com/CarmenDSalteras/status/2103055199698923564/photo/1",
+      "period_ids": [
+        "e8cd8c55-00e0-4e8b-826a-f046ddf45df4"
+      ],
+      "retrieval": "Extracto indexado de la publicación oficial; fecha visible 24/09/2026; apertura directa 403."
+    }
+  ],
+  "public_verification": {
+    "method": "Respuesta HTTP 200 y contenido HTML servido por producción, consultado con el conector de Vercel; scripts retirados para comprobar los textos renderizados.",
+    "pages": [
+      {
+        "key": "carmen",
+        "url": "https://hilocofrade.es/bandas/carmen-de-salteras",
+        "status": 200,
+        "renewal_in_rendered_html": true,
+        "excerpt": "interrumpido desde 1980. Es un contrato musical y no una asociación institucional con el Baratillo. Renovación por tres años más, hasta 2029, anunciada por la formación el 24 de septiembre de 2026. El Carmen de Salteras continuará tras el palio de María Santísima de la Caridad en su Soledad. Ver ficha de la hermandad → Jueves Santo Vigente · 2026 Hermandad del Gran Poder de Castilleja de la Cuesta Paso de misterio Santísimo Cristo de la Vera Cruz Acompañamiento incluido en el calendario penitencial oficial de la formación pa"
+      },
+      {
+        "key": "cigarreras",
+        "url": "https://hilocofrade.es/bandas/banda-musica-maria-santisima-victoria-las-cigarreras",
+        "status": 200,
+        "renewal_in_rendered_html": true,
+        "excerpt": " Paso de palio Nuestra Señora del Amor y Sacrificio → La guía de 2026 acredita este acompañamiento. Renovación para el Lunes Santo de 2027 tras el palio de Nuestra Señora del Amor y Sacrificio, comunicada a Hilo Cofrade el 6 de octubre de 2026. El plazo completo del contrato no está documentado. Ver ficha de la hermandad → Martes Santo 2009–2026 Sevilla Hermandad de San Esteban Paso de Virgen María Santísima Madre de los Desamparados → Vinculación iniciada en 2009 entre la Banda de Música María Santísima de la Victoria de La"
+      },
+      {
+        "key": "gitanos",
+        "url": "https://hilocofrade.es/bandas/agrupacion-musical-maria-santisima-de-las-angustias-coronada",
+        "status": 200,
+        "renewal_in_rendered_html": true,
+        "excerpt": " Guía La Agrupación Musical Juvenil María Santísima de las Angustias Coronada (Los Gitanos Juvenil) renueva el acompañamiento de la Cruz de Guía del Baratillo para el Miércoles Santo de 2027. La Hermandad ratificó la continuidad en su comunicado del 24 de septiembre de 2026. Ver ficha de la hermandad → Organización Dirección actual Director musical Domingo Daza Librero Nombramiento oficial en 2023; vigencia pública confirmada por Canal Sur en abril de 2025. Documentación Fuentes 6 fuentes ＋ San Roque · Consejo de Hermandades"
+      },
+      {
+        "key": "sol",
+        "url": "https://hilocofrade.es/bandas/banda-del-sol",
+        "status": 200,
+        "renewal_in_rendered_html": true,
+        "excerpt": "29. No implica pertenencia ni asociación institucional con el Baratillo. La Hermandad del Baratillo ratificó esta continuidad en su comunicado del 24 de septiembre de 2026. Ver ficha de la hermandad → Viernes Santo Vigente en 2026 Sevilla Hermandad de La O Tras Nuestro Padre Jesús Nazareno → Vigencia constatada para 2026; no presupone continuidad posterior. Ver ficha de la hermandad → Sábado Santo Vigente · 2026 Sevilla Hermandad del Sol Paso del Santo Cristo Varón de Dolores → Ver ficha de la hermandad → Dónde suena · Sevil"
+      },
+      {
+        "key": "puebla",
+        "url": "https://hilocofrade.es/bandas/banda-municipal-de-musica-de-la-puebla-del-rio",
+        "status": 200,
+        "renewal_in_rendered_html": true,
+        "excerpt": "de La Puebla del Río se incorporó al palio de María Santísima de la Paz en 2025. La vinculación fue renovada para los Domingos de Ramos de 2026 y 2027. Ver ficha de la hermandad → Lunes Santo Desde 2025 Sevilla Hermandad de San Pablo Paso de palio Nuestra Señora del Rosario Doloroso → Acuerdo para los Lunes Santos de 2025, 2026 y 2027. La Puebla acompaña al palio desde la Catedral hasta San Ignacio de Loyola; la ida corresponde a la Banda de las Nieves de Olivares. Ver ficha de la hermandad → Martes Santo Desde 2001 Sevilla "
+      },
+      {
+        "key": "baratillo",
+        "url": "https://hilocofrade.es/hermandades/el-baratillo",
+        "status": 200,
+        "sources": [
+          {
+            "needle": "El Baratillo · renovación del acompañamiento musical",
+            "found": true,
+            "in_rendered_html": true
+          },
+          {
+            "needle": "El Carmen de Salteras · renovación con el Baratillo hasta 2029",
+            "found": true,
+            "in_rendered_html": true
+          }
+        ]
+      },
+      {
+        "key": "santacruz",
+        "url": "https://hilocofrade.es/hermandades/hermandad-santa-cruz-dos-hermanas",
+        "status": 200,
+        "sources": [
+          {
+            "needle": "Confirmación editorial · renovación de Las Cigarreras",
+            "found": true,
+            "in_rendered_html": true
+          }
+        ]
+      },
+      {
+        "key": "lapaz",
+        "url": "https://hilocofrade.es/hermandades/hermandad-de-la-paz",
+        "status": 200,
+        "sources": [
+          {
+            "needle": "La Paz · renovación con La Puebla para 2027",
+            "found": true,
+            "in_rendered_html": true
+          }
+        ]
+      }
+    ],
+    "changes": {
+      "url": "https://hilocofrade.es/semana-santa/2027/cambios-musicales",
+      "status": 200,
+      "changes": 44,
+      "brotherhoods": 39,
+      "incoming_bands": 34
+    }
+  },
+  "limitations": [
+    "El navegador de QA agotó su tiempo de espera; no se afirma validación visual ni captura de pantalla.",
+    "Las Cigarreras: renovación aportada por el usuario/editor; no se recuperó comunicado público ni duración total.",
+    "Los Gitanos Juvenil: ratificación oficial para la próxima estación de penitencia; no se fija el plazo de tres años observado solo en espejos de X.",
+    "Las notas y las fuentes no acreditan automáticamente cobertura temporal para el resumen propuesto en PR #1104; Carmen sí incorpora el límite contractual documentado de 2029."
+  ],
+  "preserved_prs": [
+    1104,
+    1097,
+    1086,
+    1020,
+    1019
+  ],
+  "schema_changes": 0,
+  "reexecute": false
+}

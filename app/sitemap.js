@@ -27,6 +27,7 @@ import { getIndexableBrotherhoodDirectory } from '@/lib/supabase/indexable-broth
 export const revalidate = 3600;
 
 const staticEntries = [
+  { url: absoluteUrl('/el-hilo-se-mueve'), changeFrequency: 'daily', priority: 0.85 },
   {
     url: absoluteUrl('/'),
     changeFrequency: 'daily',
@@ -76,6 +77,11 @@ const staticEntries = [
     url: absoluteUrl('/bandas'),
     changeFrequency: 'weekly',
     priority: 0.9,
+  },
+  {
+    url: absoluteUrl('/acompanamientos-musicales'),
+    changeFrequency: 'daily',
+    priority: 0.86,
   },
   {
     url: absoluteUrl('/semana-santa/2027/cambios-musicales'),

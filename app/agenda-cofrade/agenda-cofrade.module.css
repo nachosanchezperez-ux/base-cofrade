@@ -12,3 +12,16 @@
 
 @media(max-width:820px){.heroCopy>p{font-size:14px}.relatedCalendar{align-items:flex-start;flex-direction:column}.relatedLinks{align-items:flex-start;flex-wrap:wrap}}
 @media(max-width:560px){.hero{padding-bottom:32px}.questionFilters{display:flex}.resultSummary{align-items:flex-start;flex-direction:column;gap:9px}.relatedCalendar{padding:22px}.relatedCalendar>a{width:100%;text-align:center}.relatedLinks>span{width:100%}}
+
+@media(max-width:720px){
+  .page .hero{padding:16px 0 20px}
+  .page .hero h1{font-size:34px;line-height:1.08}
+  .page .heroCopy>p{margin-top:10px;font-size:14px;line-height:1.5}
+  .page .hero :global(nav){margin-bottom:10px}
+  .page .eyebrow{margin-bottom:7px}
+}
+@media(max-width:720px){
+  .page .hero :global(nav){display:none}
+  .page .hero{padding:17px 0}
+  .page .heroCopy>p{font-size:13px;line-height:1.4}
+}

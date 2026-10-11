@@ -437,3 +437,9 @@
     padding-bottom: 28px;
   }
 }
+
+.editorialHighlights {
+  display: grid;
+  gap: 24px;
+  min-width: 0;
+}

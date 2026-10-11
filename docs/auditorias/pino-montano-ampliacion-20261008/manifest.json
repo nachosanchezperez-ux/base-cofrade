@@ -1,0 +1,259 @@
+[
+  {
+    "type": "insert",
+    "table": "entities",
+    "row": {
+      "id": "b2082026-1008-4a91-8d62-000000000001",
+      "entity_type": "march",
+      "name": "Amor y Esperanza",
+      "slug": "amor-y-esperanza-alejandro-blanco",
+      "summary": "Marcha dedicada al hermanamiento entre Pino Montano y la Macarena.",
+      "status": "published"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "marches",
+    "row": {
+      "entity_id": "b2082026-1008-4a91-8d62-000000000001",
+      "music_type": "Banda de Música",
+      "premiere_date_text": "2015",
+      "premiered_by_band_entity_id": "c6000000-0000-4000-8000-000000000001",
+      "description": "Obra de Alejandro Blanco Hernández, con letra de Luis Castejón López, estrenada por la Banda de la Cruz Roja en 2015 para conmemorar el hermanamiento de ambas corporaciones.",
+      "notes": "La historia oficial fecha el estreno, sin precisar el día ni la fecha de composición."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "march_authors",
+    "row": {
+      "id": "b2082026-1008-4a91-8d62-000000000002",
+      "march_entity_id": "b2082026-1008-4a91-8d62-000000000001",
+      "agent_entity_id": "bc4a2ac0-cf0e-4290-9232-bf70faf37f52",
+      "author_role": "composer",
+      "status": "published"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "march_dedications",
+    "row": {
+      "id": "b2082026-1008-4a91-8d62-000000000003",
+      "march_entity_id": "b2082026-1008-4a91-8d62-000000000001",
+      "dedicatee_entity_id": "a4220000-0000-0000-0000-000000000001",
+      "dedication_type": "dedicated_to",
+      "dedication_text": "Hermanamiento de Pino Montano con la Hermandad de la Macarena",
+      "status": "published"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b2082026-1008-4a91-8d62-000000000004",
+      "source_id": "16b06e33-22ea-4b31-b25b-02d8db6bf25d",
+      "entity_id": "b2082026-1008-4a91-8d62-000000000001",
+      "scope": "Ampliación documental · Pino Montano",
+      "notes": "Contraste con la web oficial el 8 de octubre de 2026."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b2082026-1008-4a91-8d62-000000000005",
+      "source_id": "16b06e33-22ea-4b31-b25b-02d8db6bf25d",
+      "march_dedication_id": "b2082026-1008-4a91-8d62-000000000003",
+      "scope": "Ampliación documental · Pino Montano",
+      "notes": "Contraste con la web oficial el 8 de octubre de 2026."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "entities",
+    "row": {
+      "id": "b2082026-1008-4a91-8d62-000000000006",
+      "entity_type": "heritage_asset",
+      "name": "Miniatura de la Esperanza Macarena del palio del Amor",
+      "slug": "miniatura-macarena-palio-amor-pino-montano",
+      "summary": "Réplica para la delantera del palio, realizada por Fernando Marmolejo y terminada por sus hijos. Fue donada por la Hermandad de la Macarena.",
+      "status": "published"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "heritage_assets",
+    "row": {
+      "entity_id": "b2082026-1008-4a91-8d62-000000000006",
+      "parent_entity_id": "a4220000-0000-0000-0000-000000000001",
+      "asset_type": "Miniatura",
+      "description": "Réplica para la delantera del palio, realizada por Fernando Marmolejo y terminada por sus hijos. Fue donada por la Hermandad de la Macarena.",
+      "date_from_text": "Estrenada en 2008",
+      "materials": "Plata y marfil",
+      "usage_text": "Paso de palio de María Santísima del Amor",
+      "notes": "Pieza documentada históricamente; la fuente no acredita su situación dentro del proyecto de renovación aprobado en 2025.",
+      "display_order": 5
+    }
+  },
+  {
+    "type": "insert",
+    "table": "entity_relations",
+    "row": {
+      "id": "b2082026-1008-4a91-8d62-000000000007",
+      "source_entity_id": "b2082026-1008-4a91-8d62-000000000006",
+      "relation_type": "part_of",
+      "target_entity_id": "33d9e835-056f-4801-8cc2-773c0fc69ce8",
+      "notes": "Vinculación histórica documentada en el año de estreno.",
+      "status": "published"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b2082026-1008-4a91-8d62-000000000008",
+      "source_id": "16b06e33-22ea-4b31-b25b-02d8db6bf25d",
+      "entity_id": "b2082026-1008-4a91-8d62-000000000006",
+      "scope": "Ampliación documental · Pino Montano",
+      "notes": "Contraste con la web oficial el 8 de octubre de 2026."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b2082026-1008-4a91-8d62-000000000009",
+      "source_id": "16b06e33-22ea-4b31-b25b-02d8db6bf25d",
+      "entity_relation_id": "b2082026-1008-4a91-8d62-000000000007",
+      "scope": "Ampliación documental · Pino Montano",
+      "notes": "Contraste con la web oficial el 8 de octubre de 2026."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "entities",
+    "row": {
+      "id": "b2082026-1008-4a91-8d62-000000000010",
+      "entity_type": "heritage_asset",
+      "name": "Candelabros de cola del palio de María Santísima del Amor",
+      "slug": "candelabros-cola-palio-amor-pino-montano",
+      "summary": "Candelabros de cola realizados en el taller de Emilio Méndez para el palio de la Virgen del Amor.",
+      "status": "published"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "heritage_assets",
+    "row": {
+      "entity_id": "b2082026-1008-4a91-8d62-000000000010",
+      "parent_entity_id": "a4220000-0000-0000-0000-000000000001",
+      "asset_type": "Candelabros",
+      "description": "Candelabros de cola realizados en el taller de Emilio Méndez para el palio de la Virgen del Amor.",
+      "date_from_text": "Estrenados en 2009",
+      "materials": null,
+      "usage_text": "Paso de palio de María Santísima del Amor",
+      "notes": "Pieza documentada históricamente; la fuente no acredita su situación dentro del proyecto de renovación aprobado en 2025.",
+      "display_order": 6
+    }
+  },
+  {
+    "type": "insert",
+    "table": "entity_relations",
+    "row": {
+      "id": "b2082026-1008-4a91-8d62-000000000011",
+      "source_entity_id": "b2082026-1008-4a91-8d62-000000000010",
+      "relation_type": "part_of",
+      "target_entity_id": "33d9e835-056f-4801-8cc2-773c0fc69ce8",
+      "notes": "Vinculación histórica documentada en el año de estreno.",
+      "status": "published"
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b2082026-1008-4a91-8d62-000000000012",
+      "source_id": "16b06e33-22ea-4b31-b25b-02d8db6bf25d",
+      "entity_id": "b2082026-1008-4a91-8d62-000000000010",
+      "scope": "Ampliación documental · Pino Montano",
+      "notes": "Contraste con la web oficial el 8 de octubre de 2026."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b2082026-1008-4a91-8d62-000000000013",
+      "source_id": "16b06e33-22ea-4b31-b25b-02d8db6bf25d",
+      "entity_relation_id": "b2082026-1008-4a91-8d62-000000000011",
+      "scope": "Ampliación documental · Pino Montano",
+      "notes": "Contraste con la web oficial el 8 de octubre de 2026."
+    }
+  },
+  {
+    "type": "update",
+    "table": "images",
+    "key": "entity_id",
+    "value": "4da6958b-fc11-43f4-bbd5-7fac291fae93",
+    "old": {
+      "height_cm": null,
+      "dimensions_text": null,
+      "technique": null,
+      "polychromy": null,
+      "anatomical_type": null,
+      "iconography": null
+    },
+    "fields": {
+      "height_cm": 165,
+      "dimensions_text": "1,65 m de altura",
+      "technique": "Talla en madera y policromía al óleo",
+      "polychromy": "Al óleo",
+      "anatomical_type": "Candelero",
+      "iconography": "Virgen Dolorosa."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b2082026-1008-4a91-8d62-000000000014",
+      "source_id": "ca3bc6d5-7d89-471f-938f-3cd73337bbae",
+      "entity_id": "4da6958b-fc11-43f4-bbd5-7fac291fae93",
+      "scope": "Ampliación documental · Pino Montano",
+      "notes": "Contraste con la web oficial el 8 de octubre de 2026."
+    }
+  },
+  {
+    "type": "update",
+    "table": "images",
+    "key": "entity_id",
+    "value": "f4700000-0000-0000-0000-000000000003",
+    "old": {
+      "height_cm": null,
+      "dimensions_text": null,
+      "technique": null,
+      "polychromy": null,
+      "anatomical_type": null,
+      "iconography": null
+    },
+    "fields": {
+      "height_cm": 175,
+      "dimensions_text": "1,75 m de altura",
+      "technique": "Talla en madera y policromía al óleo",
+      "polychromy": "Al óleo",
+      "anatomical_type": "Cuerpo anatómico completo",
+      "iconography": "Jesús apresado en el huerto de los Olivos, conducido por un sayón."
+    }
+  },
+  {
+    "type": "insert",
+    "table": "source_links",
+    "row": {
+      "id": "b2082026-1008-4a91-8d62-000000000015",
+      "source_id": "a615caf8-733e-493f-82de-57b87b103d66",
+      "entity_id": "f4700000-0000-0000-0000-000000000003",
+      "scope": "Ampliación documental · Pino Montano",
+      "notes": "Contraste con la web oficial el 8 de octubre de 2026."
+    }
+  }
+]

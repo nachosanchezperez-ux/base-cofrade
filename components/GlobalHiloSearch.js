@@ -14,11 +14,17 @@ export default function GlobalHiloSearch() {
   const previousFocusRef = useRef(null)
 
   const openDialog = useCallback(() => {
+    window.dispatchEvent(new CustomEvent('hilo:open-search'))
     previousFocusRef.current = document.activeElement
     setOpen(true)
   }, [])
 
   const closeDialog = useCallback(() => setOpen(false), [])
+
+  useEffect(() => {
+    window.addEventListener('hilo:open-updates', closeDialog)
+    return () => window.removeEventListener('hilo:open-updates', closeDialog)
+  }, [closeDialog])
 
   useEffect(() => {
     setOpen(false)

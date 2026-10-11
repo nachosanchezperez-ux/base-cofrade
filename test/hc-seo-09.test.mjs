@@ -6,6 +6,7 @@ import {
   brotherhoodLocalityPath,
   brotherhoodsForLocality,
 } from '../lib/brotherhood-public-index.js'
+import { renderBrotherhoodDirectory } from '../test-support/brotherhood-directory-ssr.mjs'
 
 const read = (path) => readFile(new URL(`../${path}`, import.meta.url), 'utf8')
 
@@ -34,7 +35,6 @@ test('la landing municipal comparte la frontera pública de indexabilidad', asyn
     read('app/hermandades/localidad/[localidad]/page.js'),
     read('lib/supabase/indexable-brotherhood-directory.js'),
   ])
-
   assert.match(page, /getIndexableBrotherhoodDirectory/)
   assert.match(sharedDirectory, /getPublicIndexableEntityEntries/)
   assert.match(sharedDirectory, /filterIndexableBrotherhoods/)
@@ -45,14 +45,18 @@ test('la landing municipal comparte la frontera pública de indexabilidad', asyn
   assert.match(page, /DirectoryRoutePage/)
 })
 
-test('el índice SSR y el sitemap descubren las páginas municipales canónicas', async () => {
-  const [index, sitemap] = await Promise.all([
-    read('components/BrotherhoodPublicIndex.js'),
+test('el HTML inicial y el sitemap descubren solo páginas municipales canónicas elegibles', async () => {
+  const [page, sitemap, html] = await Promise.all([
+    read('app/hermandades/page.js'),
     read('app/sitemap.js'),
+    renderBrotherhoodDirectory(sample),
   ])
-
-  assert.match(index, /brotherhoodDirectoryLocalities/)
-  assert.match(index, /<Link href=\{localityPage\.href\}/)
+  assert.match(page, /localities: brotherhoodDirectoryLocalities\(indexableHermandades\)/)
+  const hrefs = [...html.matchAll(/href="(\/hermandades\/localidad\/[^"?#]+)"/g)].map((match) => match[1])
+  assert.deepEqual(hrefs, ['/hermandades/localidad/sevilla-capital'])
+  // A locality below the landing threshold keeps its individual profile links.
+  assert.match(html, /href="\/hermandades\/d"/)
+  assert.match(html, /href="\/hermandades\/e"/)
   assert.match(sitemap, /filterIndexableBrotherhoods/)
   assert.match(sitemap, /brotherhoodLocalityEntries\(indexableBrotherhoods\)/)
 })

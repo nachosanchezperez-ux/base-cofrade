@@ -15,9 +15,12 @@ test('el logo de cabecera usa el activo oficial con una firma visible y compacta
   assert.match(header, /\.inner\{min-height:68px;[^}]*gap:22px\}/)
   assert.match(header, /\.brand\{display:flex;align-items:center;flex:0 0 auto;white-space:nowrap;min-width:0\}/)
   assert.match(header, /\.brandLogo\{display:block;width:170px;height:auto\}/)
-  assert.match(header, /@media\(max-width:859px\)[\s\S]*\.brandLogo\{width:200px\}/)
-  assert.match(header, /@media\(max-width:390px\)[\s\S]*\.inner\{gap:8px\}[\s\S]*\.brandLogo\{width:194px\}/)
-  assert.match(header, /@media\(max-width:340px\)[\s\S]*\.brandLogo\{width:174px\}/)
+  // La marca conserva su activo y proporción, compartiendo la cabecera móvil
+  // con Novedades, Buscar y Menú: tres objetivos de 44 px, sin desbordar a 320 px.
+  assert.match(header, /\.actions\{[^}]*gap:6px\}/)
+  assert.match(header, /\.actions>button\{width:44px;height:44px;min-width:44px;/)
+  assert.match(header, /@media\(max-width:859px\)\{\.inner\{gap:8px\}\.brandLogo\{width:clamp\(128px,calc\(100vw - 192px\),200px\)\}\}/)
+  assert.match(header, /@media\(max-width:390px\)\{\.header \.inner\{width:calc\(100% - 24px\)\}\.brandLogo\{width:clamp\(144px,calc\(100vw - 176px\),200px\)\}\}/)
   assert.match(header, /@media\(min-width:860px\)[\s\S]*--hc-app-header-height:78px/)
   assert.match(header, /@media\(min-width:860px\)[\s\S]*\.brandLogo\{width:170px\}/)
 

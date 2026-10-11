@@ -1,0 +1,941 @@
+.page {
+  --music-ink: var(--hc-navy, #112339);
+  --music-muted: #536578;
+  --music-line: #dce4eb;
+  --music-soft: #f3f7fb;
+  --music-display: 30px;
+  --music-heading: 22px;
+  min-width: 0;
+  background: #fff;
+  color: var(--music-ink);
+  font-size: 16px;
+}
+
+.hero {
+  padding: 24px 0 28px;
+  background: linear-gradient(125deg, #112339, #183d5f);
+  color: #fff;
+}
+
+.heroInner {
+  display: grid;
+  min-width: 0;
+  gap: 20px;
+}
+
+.hero [data-site-breadcrumb] ol {
+  flex-wrap: wrap;
+  overflow-x: visible;
+  row-gap: 6px;
+}
+
+.heroCopy {
+  max-width: 900px;
+}
+
+.heroCopy > span,
+.eyebrow {
+  display: block;
+  margin-bottom: 7px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.heroCopy > span {
+  color: #c5d9ea;
+}
+
+.eyebrow {
+  color: #61748a;
+}
+
+:global(#hc-app) .page:not(:global(#hc-panel)) .heroCopy h1 {
+  margin: 0;
+  font-size: var(--music-display);
+  font-weight: 800;
+  line-height: 1.14;
+  letter-spacing: -.035em;
+  text-wrap: pretty;
+}
+
+.heroCopy p {
+  max-width: 800px;
+  margin: 12px 0 0;
+  color: #dce7f0;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.heroLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 22px;
+}
+
+:global(#hc-app) .page:not(:global(#hc-panel)) .heroLinks a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 650;
+  line-height: 1.4;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.content {
+  min-width: 0;
+  padding-bottom: 60px;
+}
+
+.seasonIntro {
+  display: grid;
+  gap: 12px;
+  padding: 26px 0;
+  border-bottom: 1px solid var(--music-line);
+}
+
+:global(#hc-app) .page:not(:global(#hc-panel)) :is(.seasonIntro, .explorerHeading, .pendingHeading, .method) h2 {
+  margin: 0;
+  font-size: var(--music-heading);
+  font-weight: 750;
+  line-height: 1.3;
+  letter-spacing: -.025em;
+  text-wrap: pretty;
+}
+
+.seasonIntro p,
+.method p,
+.pendingHeading p {
+  margin: 0;
+  color: var(--music-muted);
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.overview {
+  padding: 22px 0 26px;
+}
+
+.overviewHeading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px 18px;
+  margin-bottom: 14px;
+}
+
+.overviewHeading > span,
+.overviewHeading > strong {
+  color: var(--music-muted);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.overviewHeading > strong {
+  color: var(--music-ink);
+  font-weight: 650;
+}
+
+.totals {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--music-line);
+  border-radius: 10px;
+}
+
+.totals > div {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px 10px;
+}
+
+.totals > div + div {
+  border-left: 1px solid var(--music-line);
+}
+
+:global(#hc-app) .page:not(:global(#hc-panel)) .totals dt {
+  min-height: 38px;
+  margin: 0;
+  color: var(--music-muted);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+:global(#hc-app) .page:not(:global(#hc-panel)) .totals dd {
+  margin: auto 0 0;
+  color: var(--music-ink);
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -.025em;
+  font-variant-numeric: tabular-nums;
+}
+
+.totals .totalCombined {
+  background: var(--music-ink);
+}
+
+:global(#hc-app) .page:not(:global(#hc-panel)) .totalCombined dt {
+  color: #d5e3ee;
+}
+
+:global(#hc-app) .page:not(:global(#hc-panel)) .totalCombined dd {
+  color: #fff;
+}
+
+.explorerHeading {
+  display: grid;
+  gap: 6px;
+  margin: 4px 0 16px;
+}
+
+.explorerHeading p {
+  margin: 0;
+  color: var(--music-muted);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.searchPanel {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: end;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid var(--music-line);
+  border-radius: 9px;
+  background: var(--music-soft);
+}
+
+.searchField,
+.formActions {
+  grid-column: 1 / -1;
+}
+
+.searchPanel label {
+  display: grid;
+  min-width: 0;
+  gap: 6px;
+}
+
+.searchPanel label > span {
+  color: var(--music-muted);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+:global(#hc-app) .page:not(:global(#hc-panel)) .searchPanel input,
+:global(#hc-app) .page:not(:global(#hc-panel)) .searchPanel select {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: 9px 10px;
+  border: 1px solid #c9d5e0;
+  border-radius: 6px;
+  background: #fff;
+  color: var(--music-ink);
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+.searchPanel input::placeholder {
+  color: #66788a;
+  opacity: 1;
+}
+
+.formActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+}
+
+:global(#hc-app) .page:not(:global(#hc-panel)) .formActions button {
+  min-height: 44px;
+  flex: 1 1 120px;
+  padding: 10px 16px;
+  border: 1px solid var(--music-ink);
+  border-radius: 6px;
+  background: var(--music-ink);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.formActions button:hover {
+  background: #234765;
+}
+
+:global(#hc-app) .page:not(:global(#hc-panel)) .formActions a,
+:global(#hc-app) .page:not(:global(#hc-panel)) .resultBar a,
+:global(#hc-app) .page:not(:global(#hc-panel)) .empty a,
+:global(#hc-app) .page:not(:global(#hc-panel)) .bandProfileLink {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 8px;
+  color: var(--music-ink);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.resultBar {
+  display: flex;
+  min-width: 0;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 14px;
+  padding: 17px 0;
+  color: var(--music-muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.resultBar strong {
+  color: var(--music-ink);
+  font-size: 15px;
+}
+
+.resultBar span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.tableContainer {
+  min-width: 0;
+}
+
+.bandTable {
+  width: 100%;
+  min-width: 0;
+  table-layout: fixed;
+  border-collapse: collapse;
+  border-top: 2px solid #c7d5e2;
+}
+
+.nameColumn {
+  width: 52%;
+}
+
+:global(#hc-app) .page:not(:global(#hc-panel)) .bandTable thead th {
+  padding: 16px 12px;
+  border-bottom: 1px solid var(--music-line);
+  background: var(--music-soft);
+  color: var(--music-muted);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.bandTable thead th:first-child {
+  text-align: left;
+}
+
+.bandTable tbody {
+  scroll-margin-top: 110px;
+}
+
+.bandTable tbody:target {
+  outline: 2px solid #9bbbd5;
+  outline-offset: 3px;
+}
+
+.bandRow th,
+.bandRow td {
+  padding: 20px 12px 3px;
+  vertical-align: middle;
+}
+
+.bandIdentity {
+  text-align: left;
+}
+
+:global(#hc-app) .page:not(:global(#hc-panel)) .bandIdentity h3 {
+  margin: 0;
+  overflow-wrap: anywhere;
+  color: var(--music-ink);
+  font-size: 18px;
+  font-weight: 750;
+  line-height: 1.4;
+  letter-spacing: -.015em;
+}
+
+.bandIdentity h3 a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+}
+
+:global(#hc-app) .page:not(:global(#hc-panel)) .bandIdentity > span {
+  display: block;
+  margin-top: 2px;
+  color: var(--music-muted);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.bandRow td {
+  text-align: center;
+}
+
+:global(#hc-app) .page:not(:global(#hc-panel)) .bandRow td > strong {
+  display: block;
+  color: #40586e;
+  font-size: 25px;
+  font-weight: 600;
+  line-height: 1.25;
+  font-variant-numeric: tabular-nums;
+}
+
+.bandRow .bandTotal {
+  background: var(--music-soft);
+}
+
+:global(#hc-app) .page:not(:global(#hc-panel)) .bandRow .bandTotal > strong {
+  color: var(--music-ink);
+  font-weight: 800;
+}
+
+.mobileColumnLabel {
+  display: none;
+}
+
+.detailRow > td {
+  padding: 3px 12px 17px;
+  border-bottom: 1px solid var(--music-line);
+}
+
+:global(#hc-app) .page:not(:global(#hc-panel)) .bandDetails > summary {
+  width: fit-content;
+  min-height: 44px;
+  align-content: center;
+  color: var(--music-ink);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+.bandDetails > summary::marker {
+  color: #71899e;
+}
+
+.bandDetails[open] > summary {
+  margin-bottom: 8px;
+}
+
+.bandReviewNote {
+  margin: 0;
+  color: var(--music-muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.accompanimentGroups {
+  display: grid;
+  min-width: 0;
+  gap: 18px;
+  padding: 16px;
+  border: 1px solid var(--music-line);
+  border-radius: 7px;
+  background: #f8fafc;
+}
+
+.accompanimentGroup {
+  min-width: 0;
+}
+
+:global(#hc-app) .page:not(:global(#hc-panel)) .accompanimentGroup h4 {
+  margin: 0 0 6px;
+  color: #49637b;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.accompanimentList {
+  display: grid;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.accompanimentList li {
+  display: grid;
+  min-width: 0;
+  gap: 6px;
+  padding: 11px 0;
+}
+
+.accompanimentList li + li {
+  border-top: 1px solid var(--music-line);
+}
+
+.accompanimentList li:last-child {
+  padding-bottom: 0;
+}
+
+.accompanimentIdentity,
+.accompanimentContext {
+  min-width: 0;
+}
+
+:global(#hc-app) .page:not(:global(#hc-panel)) .accompanimentIdentity strong {
+  display: block;
+  overflow-wrap: anywhere;
+  color: var(--music-ink);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.accompanimentIdentity strong a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+}
+
+.bandIdentity h3 a:hover,
+.accompanimentIdentity strong a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.accompanimentIdentity > span,
+.accompanimentContext > span {
+  display: block;
+  color: var(--music-muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.accompanimentContext p {
+  margin: 0 0 3px;
+  overflow-wrap: anywhere;
+  color: #425a70;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.figureNote {
+  margin: 16px 0 0;
+  color: var(--music-muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.empty {
+  padding: 24px 0;
+  border-top: 1px solid var(--music-line);
+  border-bottom: 1px solid var(--music-line);
+}
+
+.empty strong {
+  display: block;
+  color: var(--music-ink);
+  font-size: 18px;
+  line-height: 1.45;
+}
+
+.empty p {
+  margin: 10px 0 5px;
+  color: var(--music-muted);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.pendingSection {
+  margin-top: 34px;
+  padding: 22px 18px 4px;
+  border: 1px solid var(--music-line);
+  border-radius: 9px;
+  background: #fafbfd;
+}
+
+.pendingHeading p {
+  max-width: 810px;
+  margin-top: 10px;
+}
+
+.pendingDisclosure > summary {
+  display: flex;
+  min-height: 52px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 20px;
+  padding: 12px 0;
+  color: var(--music-ink);
+  font-size: 15px;
+  font-weight: 650;
+  line-height: 1.5;
+  list-style: none;
+  cursor: pointer;
+}
+
+.pendingDisclosure > summary::-webkit-details-marker,
+.pendingBand > summary::-webkit-details-marker {
+  display: none;
+}
+
+.disclosureAction {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.disclosureAction::after {
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid #657e94;
+  border-bottom: 2px solid #657e94;
+  content: '';
+  transform: rotate(45deg) translateY(-2px);
+}
+
+.pendingDisclosure[open] > summary .disclosureAction::after {
+  transform: rotate(225deg) translate(-2px, -2px);
+}
+
+.pendingBands {
+  padding-bottom: 16px;
+}
+
+.pendingBand {
+  border-top: 1px solid var(--music-line);
+}
+
+.pendingBand > summary {
+  display: flex;
+  min-height: 64px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 0;
+  list-style: none;
+  cursor: pointer;
+}
+
+.pendingBand > summary > span:first-child {
+  min-width: 0;
+}
+
+:global(#hc-app) .page:not(:global(#hc-panel)) .pendingBand > summary strong {
+  display: block;
+  overflow-wrap: anywhere;
+  color: var(--music-ink);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+:global(#hc-app) .page:not(:global(#hc-panel)) .pendingBand > summary small {
+  display: block;
+  margin-top: 3px;
+  color: var(--music-muted);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.pendingBand > summary > span:last-child {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 14px;
+  color: var(--music-muted);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.pendingBand > summary > span:last-child::after {
+  width: 7px;
+  height: 7px;
+  border-right: 1.5px solid #657e94;
+  border-bottom: 1.5px solid #657e94;
+  content: '';
+  transform: rotate(45deg) translateY(-2px);
+}
+
+.pendingBand[open] > summary > span:last-child::after {
+  transform: rotate(225deg) translate(-2px, -2px);
+}
+
+.pendingBandContent {
+  display: grid;
+  min-width: 0;
+  gap: 10px;
+  padding-bottom: 18px;
+}
+
+.method {
+  display: grid;
+  gap: 12px;
+  margin-top: 34px;
+  padding: 24px 0;
+  border-top: 1px solid var(--music-line);
+}
+
+.method p + p {
+  margin-top: 12px;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+:global(#hc-app) .page:not(:global(#hc-panel)) :is(a, button, input, select, summary):focus-visible {
+  outline: 2px solid #23699b;
+  outline-offset: 3px;
+}
+
+:global(#hc-app) .page:not(:global(#hc-panel)) .hero a:focus-visible {
+  outline-color: #fff;
+}
+
+@media (max-width: 699px) {
+  .bandTable,
+  .bandTable tbody,
+  .detailRow,
+  .detailRow > td {
+    display: block;
+  }
+
+  .bandTable colgroup {
+    display: none;
+  }
+
+  .bandTable thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+
+  .bandRow {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    padding-top: 16px;
+  }
+
+  .bandRow .bandIdentity {
+    display: block;
+    grid-column: 1 / -1;
+    padding: 0 0 14px;
+  }
+
+  .bandRow td {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px 7px;
+    border-top: 1px solid var(--music-line);
+    border-bottom: 1px solid var(--music-line);
+    background: #fbfcfd;
+  }
+
+  .bandRow td + td {
+    border-left: 1px solid var(--music-line);
+  }
+
+  .mobileColumnLabel {
+    display: block;
+    min-height: 36px;
+    color: var(--music-muted);
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .bandRow td > strong {
+    margin-top: auto;
+  }
+
+  .detailRow > td {
+    padding: 7px 0 18px;
+  }
+
+  .pendingDisclosure > summary {
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-block: 16px;
+  }
+
+  .pendingBand > summary {
+    align-items: start;
+  }
+
+  .pendingBand > summary > span:last-child {
+    padding-top: 4px;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 359px) {
+  .searchPanel {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 12px;
+  }
+
+  .totals > div {
+    padding-inline: 8px;
+  }
+
+  :global(#hc-app) .page:not(:global(#hc-panel)) .totals dd {
+    font-size: 28px;
+  }
+
+  .pendingSection {
+    padding-inline: 12px;
+  }
+
+  .pendingBand > summary {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .pendingBand > summary > span:last-child {
+    padding-top: 0;
+  }
+
+  .accompanimentGroups {
+    padding: 12px;
+  }
+}
+
+@media (min-width: 700px) {
+  .page {
+    --music-display: 40px;
+    --music-heading: 24px;
+  }
+
+  .hero {
+    padding: 30px 0 34px;
+  }
+
+  .seasonIntro,
+  .method {
+    grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr);
+    gap: 32px;
+    padding-block: 30px;
+  }
+
+  .totals > div {
+    padding: 20px 24px;
+  }
+
+  :global(#hc-app) .page:not(:global(#hc-panel)) .totals dt {
+    min-height: 0;
+    font-size: 15px;
+  }
+
+  :global(#hc-app) .page:not(:global(#hc-panel)) .totals dd {
+    font-size: 42px;
+  }
+
+  .searchPanel {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .searchField {
+    grid-column: 1 / 3;
+  }
+
+  .formActions {
+    grid-column: 2 / -1;
+    justify-content: flex-end;
+  }
+
+  :global(#hc-app) .page:not(:global(#hc-panel)) .formActions button {
+    flex: 0 1 160px;
+  }
+
+  .resultBar a {
+    margin-left: auto;
+  }
+
+  .accompanimentList li {
+    grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+    align-items: start;
+    gap: 24px;
+  }
+
+  .accompanimentContext {
+    padding-top: 8px;
+  }
+
+  .pendingSection {
+    padding: 24px 24px 4px;
+  }
+}
+
+@media (min-width: 1000px) {
+  .page {
+    --music-display: 44px;
+  }
+
+  .explorerHeading {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .searchPanel {
+    grid-template-columns: minmax(220px, 1.5fr) repeat(3, minmax(0, 1fr));
+  }
+
+  .searchField {
+    grid-column: auto;
+  }
+
+  .formActions {
+    grid-column: 1 / -1;
+  }
+
+  .bandRow th,
+  .bandRow td {
+    padding-top: 22px;
+  }
+
+  :global(#hc-app) .page:not(:global(#hc-panel)) .bandIdentity h3 {
+    font-size: 19px;
+  }
+}

@@ -23,6 +23,14 @@ const editorialPriorityContentDateFixName = '20260922045453_fix_editorial_priori
 const homeKnowledgeCacheName = '20260925051118_home_knowledge_threads_cache.sql'
 const homeKnowledgeCachePrivateName = '20260925051336_home_knowledge_threads_cache_private.sql'
 const musicAccompanimentSnapshotsName = '20261002144739_music_accompaniment_public_band_snapshots.sql'
+const musicalRepertoireThemeName = '20261008060205_add_musical_repertoire_theme.sql'
+const concertProgramsName = '20261009123758_concert_programs.sql'
+const sourceLinksForeignKeyIndexesName = '20261009183652_add_fk_indexes_source_links_and_agenda_paths.sql'
+const outingSubtypeName = '20261009184302_add_outings_outing_subtype.sql'
+const outingMunicipalityBackupName = '20261009192755_outing_municipality_backup_20261009.sql'
+const outingTypeReapplyName = '20261010073542_outing_type_reapply_procesion_20261010.sql'
+const homeKnowledgeCacheFifteenMinutesName = '20261010100000_home_knowledge_threads_cache_every_15_minutes.sql'
+const outingTypeNormalizationName = '20261010100100_normalize_outing_type_trigger.sql'
 const baseline = readFileSync(new URL(baselineName, migrationsDirectory), 'utf8')
 const membershipStats = readFileSync(new URL(membershipStatsName, migrationsDirectory), 'utf8')
 const seed = readFileSync(new URL('../supabase/seed.sql', import.meta.url), 'utf8')
@@ -49,7 +57,24 @@ test('las ramas nuevas ejecutan únicamente el baseline y las evoluciones de esq
     homeKnowledgeCacheName,
     homeKnowledgeCachePrivateName,
     musicAccompanimentSnapshotsName,
+    musicalRepertoireThemeName,
+    concertProgramsName,
+    sourceLinksForeignKeyIndexesName,
+    outingSubtypeName,
+    outingMunicipalityBackupName,
+    outingTypeReapplyName,
+    homeKnowledgeCacheFifteenMinutesName,
+    outingTypeNormalizationName,
   ])
+})
+
+test('las crucetas admiten una paleta propia documentada por su fuente visual', () => {
+  const migration = readFileSync(new URL(musicalRepertoireThemeName, migrationsDirectory), 'utf8')
+
+  assert.match(migration, /add column if not exists primary_color text/i)
+  assert.match(migration, /add column if not exists accent_color text/i)
+  assert.match(migration, /musical_repertoires_primary_color_format/i)
+  assert.match(migration, /musical_repertoires_accent_color_format/i)
 })
 
 test('la prioridad editorial distingue actualización de contenido y actualización técnica', () => {
@@ -116,9 +141,19 @@ test('el DML posterior al baseline permanece íntegro y fuera de la cadena ejecu
     .filter((file) => file.endsWith('.sql'))
     .sort()
 
-  assert.equal(archived.length, 145)
+  assert.equal(archived.length, 155)
   assert.equal(archived[0], '20260831074355_publica_tres_igualas_septiembre_2026.sql')
-  assert.equal(archived.at(-1), '20260927204551_publica_cruceta_rosario_mercedes_santa_genoveva_2026.sql')
+  assert.equal(archived.at(-1), '20261008061516_publica_cruceta_merced_ecija_estepa_2026.sql')
+  assert.ok(archived.includes('20261008061516_publica_cruceta_merced_ecija_estepa_2026.sql'))
+  assert.ok(archived.includes('20261008010014_publica_cruceta_divina_enfermera_paz_malaga_2026.sql'))
+  assert.ok(archived.includes('20261007233320_publica_cruceta_lagrimas_puebla_gerena_2026.sql'))
+  assert.ok(archived.includes('20261007141226_publica_crucetas_panaderos_santa_lucia_2026.sql'))
+  assert.ok(archived.includes('20261007005000_corrige_rosario_santiponce_2026.sql'))
+  assert.ok(archived.includes('20261006215000_publica_rosario_caridad_el_olivo_2026.sql'))
+  assert.ok(archived.includes('20261006203500_actualiza_pastora_carmona_amparo_2026.sql'))
+  assert.ok(archived.includes('20261006193000_publica_cruceta_angustias_utrera_2026.sql'))
+  assert.ok(archived.includes('20261006131000_actualiza_pilar_san_pedro_2026.sql'))
+  assert.ok(archived.includes('20261006094500_actualiza_agenda_10_12_octubre_2026.sql'))
   assert.ok(archived.includes('20260927204551_publica_cruceta_rosario_mercedes_santa_genoveva_2026.sql'))
   assert.ok(archived.includes('20260926103000_dry_run_moron_decimo_macrolote_hc016.sql'))
   assert.ok(archived.includes('20260926113000_apply_moron_decimo_macrolote_hc016.sql'))

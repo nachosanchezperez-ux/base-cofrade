@@ -64,7 +64,7 @@ export default async function ExtraordinaryGeneralPage({ params, searchParams })
             description="Datos que identifican la salida en Home, directorio, buscador y guía individual."
           >
             <label className={styles.fieldWide}><span>Titular / título</span><input name="title" defaultValue={outing.title || ''} required disabled={!canEdit} /></label>
-            <label><span>Tipo</span><input name="outing_type" defaultValue={outing.outing_type || ''} placeholder="Procesión extraordinaria" required disabled={!canEdit} /></label>
+            <label><span>Tipo</span><input name="outing_type" defaultValue={outing.outing_type || ''} placeholder="Procesión" required disabled={!canEdit} /></label>
             <label><span>REF</span><input name="reference_code" defaultValue={outing.reference_code || ''} placeholder="SEVILLA-TITULAR-2027" disabled={!canEdit} /></label>
             <label className={styles.fieldWide}><span>Slug público</span><input name="slug" defaultValue={outing.slug || ''} placeholder="Se conserva o se genera automáticamente" disabled={!canEdit} /></label>
             <label><span>Estado del evento</span><select name="event_status" defaultValue={outing.event_status || 'announced'} disabled={!canEdit}><option value="announced">Anunciada</option><option value="held">Celebrada</option><option value="cancelled">Cancelada</option></select></label>

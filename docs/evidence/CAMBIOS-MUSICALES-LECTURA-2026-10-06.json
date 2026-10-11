@@ -1,0 +1,168 @@
+{
+  "codeSha": "663342a52b08ad689fbd5dae2efda1287bb390ec",
+  "deploymentId": "dpl_gpPgMi7X9WZfjeAM3pKBALYYVK2X",
+  "method": "Real preview in same-origin iframes, Chromium desktop; no physical phone or Safari emulation",
+  "measurements": [
+    {
+      "width": 320,
+      "bandFont": "16px",
+      "changes": 43,
+      "clientWidth": 305,
+      "columns": "275px",
+      "dayFont": "24px",
+      "fields16": true,
+      "minFieldHeight": 44,
+      "overflow": [],
+      "scrollWidth": 305,
+      "yearOrder": [
+        "2026",
+        "2027"
+      ]
+    },
+    {
+      "width": 390,
+      "bandFont": "16px",
+      "changes": 43,
+      "clientWidth": 375,
+      "columns": "345px",
+      "dayFont": "24px",
+      "fields16": true,
+      "minFieldHeight": 44,
+      "overflow": [],
+      "scrollWidth": 375,
+      "yearOrder": [
+        "2026",
+        "2027"
+      ]
+    },
+    {
+      "width": 430,
+      "bandFont": "16px",
+      "changes": 43,
+      "clientWidth": 415,
+      "columns": "385px",
+      "dayFont": "24px",
+      "fields16": true,
+      "minFieldHeight": 44,
+      "overflow": [],
+      "scrollWidth": 415,
+      "yearOrder": [
+        "2026",
+        "2027"
+      ]
+    },
+    {
+      "width": 768,
+      "bandFont": "16px",
+      "changes": 43,
+      "clientWidth": 753,
+      "columns": "711px",
+      "dayFont": "28px",
+      "fields16": true,
+      "minFieldHeight": 44,
+      "overflow": [],
+      "scrollWidth": 753,
+      "yearOrder": [
+        "2026",
+        "2027"
+      ]
+    },
+    {
+      "width": 1024,
+      "bandFont": "16px",
+      "changes": 43,
+      "clientWidth": 1009,
+      "columns": "326.109px 326.125px",
+      "dayFont": "30px",
+      "fields16": true,
+      "minFieldHeight": 44,
+      "overflow": [],
+      "scrollWidth": 1009,
+      "yearOrder": [
+        "2026",
+        "2027"
+      ]
+    },
+    {
+      "width": 1200,
+      "bandFont": "16px",
+      "changes": 43,
+      "clientWidth": 1185,
+      "columns": "387.031px 387.047px",
+      "dayFont": "30px",
+      "fields16": true,
+      "minFieldHeight": 44,
+      "overflow": [],
+      "scrollWidth": 1185,
+      "yearOrder": [
+        "2026",
+        "2027"
+      ]
+    }
+  ],
+  "calleRealAnchor": {
+    "headingTop": 137.75,
+    "links": [
+      "/bandas/agrupacion-musical-valme-dos-hermanas",
+      "/bandas/banda-musica-maria-santisima-victoria-las-cigarreras"
+    ],
+    "scrollMargin": "220px",
+    "text": "Hermandad de la Calle Real de Castilleja de la CuestaCastilleja de la CuestaPaso de Nuestro Padre Jesús del Gran PoderTras el paso del Señor del Gran PoderRelevo de banda · Banda de Música2026Agrupación Musical Nuestra Señora de Valme de Dos Hermanas2027Banda de Música María Santísima de la Victoria (Las Cigarreras)",
+    "top": 219.875
+  },
+  "jornadaAnchorTop": 100.140625,
+  "sameAnchors": true,
+  "ids": [
+    "cambio-82805953-88c0-4b37-ae31-f8f6dd7115d9",
+    "cambio-11409428-7d07-4bdf-bf35-a543be8fe032",
+    "cambio-cf1a7ec3-4c4f-4cda-904c-e8a7cec55402",
+    "cambio-2cfef198-5a12-4d69-9e56-73673a7c6c64",
+    "cambio-05412757-de5f-4c10-8a76-ff47da1809ac",
+    "cambio-ed6e5b85-e8dd-4e61-b4e0-001e53cbbba2",
+    "cambio-7b6a7d83-cd93-467d-a79f-3b17ee097d72",
+    "cambio-0490f78f-1d9d-46b5-bda9-b3f74bfa9b62",
+    "cambio-4e43737b-ae39-4e64-add4-d5ae360eaa22",
+    "cambio-61b6dffc-489b-4741-9454-642a4ca7a336",
+    "cambio-b62b49ae-5052-45d5-8194-50f15a3ecc26",
+    "cambio-93016dcf-f70f-4c5c-9ffc-944cc35d62e1",
+    "cambio-820523a7-7031-4c61-9563-70b9ad21d501",
+    "cambio-fc0b9a40-f602-47ad-993c-ac4525206adc",
+    "cambio-fb14453d-6b67-4583-87cd-b22ed9449156",
+    "cambio-6c639a27-bba1-4598-8e92-88699f81f874",
+    "cambio-ecbd1ab2-f7d4-47f2-aa4e-7a85e7bfbebd",
+    "cambio-e2536373-6be5-455b-bd76-3177c9fa7286",
+    "cambio-e5f83df0-06db-497d-9592-f286ed65f609",
+    "cambio-1846a375-a147-4bd5-8f4f-bce70294ffb9",
+    "cambio-6dd51356-65ef-46ae-80e6-7664b41ce494",
+    "cambio-823014ac-7ba0-4520-8b71-abf65d2fffd4",
+    "cambio-2828db32-1779-4836-8499-7bb45057437a",
+    "cambio-d852e0fb-6edb-4251-97f6-0a49308617bb",
+    "cambio-293d0660-05e4-45e1-b8d2-31d224f2e386",
+    "cambio-f347eba2-1659-42a9-a7b8-c13ec7fe3e9f",
+    "cambio-9fca3218-ef6e-4e42-ba81-43cda00a1f0e",
+    "cambio-56e63ade-cc25-4ea2-a379-230dda0e4b2d",
+    "cambio-de2ea892-49ec-434e-ab55-a7b0013cd5a7",
+    "cambio-7a90fc70-1d1b-46c8-a324-6bfea7da9275",
+    "cambio-a797986d-fa50-4aeb-afc1-50dc4ec58f81",
+    "cambio-19d2b094-793e-4199-a571-0d07909643ad",
+    "cambio-e56e8f4c-a974-40a5-a10e-e6c4c068ced5",
+    "cambio-2113e48e-1b29-431f-8725-d37899e2081e",
+    "cambio-15c7978e-ca6e-4f0b-b951-c7745fdc60d0",
+    "cambio-3e6860be-9d68-4b90-858b-362ba8984c59",
+    "cambio-8d774484-2835-4052-95e3-ce2c9e4a14b6",
+    "cambio-d0cd74c4-3e1b-48f6-9dee-d561353060d8",
+    "cambio-69e37af7-c32c-421b-a9ec-a1a777db9959",
+    "cambio-3b163a4b-5b65-4aa8-9419-1774357ec7de",
+    "cambio-a9583483-67ea-4c36-b3fe-78f776e99649",
+    "cambio-022f5673-e001-470e-bef0-9fc61d352423",
+    "cambio-03ad37af-c7b3-46d6-ad3c-1931eae9c1b8"
+  ],
+  "checks": {
+    "combinedSearch": "Cigarreras + Madrugá + Castilleja + Banda de Música = Calle Real",
+    "emptySearch": "0 results; noindex, follow",
+    "clearFilters": "43 results",
+    "trinidad": "2 changes; Cruz de Guía + Sagrado Decreto",
+    "keyboard": "Tab from search to jornada; 2px outline, 3px offset",
+    "bandNavigation": "Banda de Música Las Cigarreras, canonical preserved"
+  }
+}

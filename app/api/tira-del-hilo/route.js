@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { askPublicHiloCofrade, searchPublicHiloEntities } from '@/lib/supabase/tira-public'
 import { getHiloLookupIntent, selectHiloNavigationItems } from '@/lib/tira-search-intent'
+import { clientKey, tiraQuestionLimiter } from '@/lib/request-rate-limit'
 
 export const dynamic = 'force-dynamic'
 
@@ -95,6 +96,26 @@ function directLookupResponse(intent, matches) {
 }
 
 export async function POST(request) {
+  const quota = tiraQuestionLimiter.consume(clientKey(request.headers))
+  if (!quota.allowed) {
+    // Sin campo `error` ni `context`: el cliente lo muestra como respuesta normal
+    // y conserva el hilo de la conversación.
+    return NextResponse.json(
+      {
+        kind: 'not_documented',
+        answer: 'Has hecho muchas consultas seguidas. Espera un momento y vuelve a preguntar.',
+        path: [],
+        entities: [],
+        items: [],
+        followUps: [],
+      },
+      {
+        status: 429,
+        headers: { 'Cache-Control': 'no-store', 'Retry-After': String(quota.retryAfterSeconds) },
+      },
+    )
+  }
+
   try {
     const body = await request.json()
     const question = String(body?.question || '').trim()

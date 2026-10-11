@@ -11,7 +11,7 @@ import styles from './directorio.module.css'
 export const revalidate = 900
 
 const title = 'Directorio cofrade de Sevilla y provincia'
-const description = 'Busca y explora hermandades, imágenes, pasos, bandas, marchas, autores y cambios musicales documentados en Hilo Cofrade, con navegación por ubicación, calendario, estilo y relaciones.'
+const description = 'Busca y explora hermandades, imágenes, pasos, bandas, marchas, autores, cambios y estadísticas musicales en Hilo Cofrade, con navegación por ubicación, calendario, estilo y relaciones.'
 
 export async function generateMetadata({ searchParams } = {}) {
   const robots = filteredViewRobots(
@@ -58,6 +58,7 @@ export default async function DirectorioPage() {
       { '@type': 'CollectionPage', name: `Pasos (${counts.step || 0})`, url: absoluteUrl('/pasos') },
       { '@type': 'CollectionPage', name: `Bandas (${counts.band || 0})`, url: absoluteUrl('/bandas') },
       { '@type': 'CollectionPage', name: 'Marchas procesionales', url: absoluteUrl('/marchas') },
+      { '@type': 'CollectionPage', name: 'Estadísticas musicales', url: absoluteUrl('/acompanamientos-musicales') },
       { '@type': 'CollectionPage', name: 'Cambios musicales de la Semana Santa 2027', url: absoluteUrl('/semana-santa/2027/cambios-musicales') },
       { '@type': 'CollectionPage', name: 'Autores y talleres cofrades', url: absoluteUrl('/autores') },
     ],
@@ -74,7 +75,7 @@ export default async function DirectorioPage() {
         <span className="eyebrow">Enciclopedia cofrade</span>
         <h1 className="page-title">Directorio</h1>
         <p className="page-lead">
-          Hermandades, Imágenes, Pasos y Bandas comparten este buscador relacional. Marchas, Autores y los cambios musicales de 2027 completan la enciclopedia con lecturas propias para recorrer obras, personas y relaciones.
+          Hermandades, Imágenes, Pasos y Bandas comparten este buscador relacional. Marchas, Autores, cambios y estadísticas musicales completan la enciclopedia con lecturas propias para recorrer obras, personas y relaciones.
         </p>
         <nav className={styles.specialDirectories} aria-label="Directorios especializados">
           <Link className={styles.marchesLink} href="/marchas">
@@ -82,6 +83,9 @@ export default async function DirectorioPage() {
           </Link>
           <Link className={styles.marchesLink} href="/autores">
             Explorar Autores <span aria-hidden="true">→</span>
+          </Link>
+          <Link className={styles.marchesLink} href="/acompanamientos-musicales">
+            Estadísticas musicales <span aria-hidden="true">→</span>
           </Link>
           <Link className={styles.marchesLink} href="/semana-santa/2027/cambios-musicales">
             Cambios musicales 2027 <span aria-hidden="true">→</span>
