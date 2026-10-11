@@ -66,11 +66,9 @@ export default function HomeFeaturedOuting({ featuredOuting, featuredBriefing })
     || featuredOuting?.dateParts?.weekdayLabel
     || featuredOuting?.dateParts?.label
     || ''
-  const featuredTimingLabel = nextScheduleItem?.time
-    ? `${liveState.state === 'live' ? 'Siguiente' : 'Comienza'} · ${nextScheduleItem.time}`
-    : featuredIsToday && featuredOuting?.departureTime
-      ? `Salida · ${featuredOuting.departureTime}`
-      : ''
+  const featuredTimingLabel = featuredOuting?.departureTime
+    ? `Salida · ${featuredOuting.departureTime}`
+    : ''
   const featuredMeta = [
     featuredOuting?.municipality,
     featuredOuting?.brotherhoodName,
