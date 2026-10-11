@@ -7,6 +7,7 @@ import { agendaLocationMatches, agendaMunicipalityOptions } from '@/lib/agenda-c
 import { getProcessionLiveState } from '@/lib/procession-live-status'
 import { routeSummarySections } from '@/lib/procession-route'
 import { agendaTemporalDateInfo, agendaTemporalRangeDate, withAgendaTemporalDay } from '@/lib/agenda-temporal-display'
+import { agendaEventAnchor, agendaDirectionsHref, isOutingEvent, schedulePrecision } from '@/lib/agenda-event-presentation'
 import { trackEvent } from '@/lib/analytics/client'
 import styles from './AgendaCofradeDirectoryV4.module.css'
 import concertStyles from './AgendaCofradeDirectoryV4Concerts.module.css'
@@ -192,7 +193,7 @@ function EventActions({ item }) {
 
   return (
     <div className={styles.cardActions}>
-      {item.href ? <Link href={item.href} onClick={() => trackAgendaEventOpen(item)}>{item.actionLabel || 'Ver acto'} <span>→</span></Link> : null}
+      {item.href ? <Link href={item.href} onClick={() => trackAgendaEventOpen(item)}>Ver ficha publicada <span>→</span></Link> : null}
       {item.organizerHref ? (
         <Link
           href={item.organizerHref}
@@ -406,6 +407,29 @@ export default function AgendaCofradeDirectoryV4({
   const [municipality, setMunicipality] = useState(initialMunicipality)
   const [nowIso, setNowIso] = useState(initialNowIso || '1970-01-01T00:00:00.000Z')
   const currentYear = String(today || '').slice(0, 4)
+
+  function openEvent(item) {
+    const detail = document.getElementById(`${agendaEventAnchor(item)}-detail`)
+    if (detail) { detail.open = true; detail.querySelector('summary')?.focus() }
+  }
+
+  useEffect(() => {
+    function openSharedEvent() {
+      const id = window.location.hash.slice(1)
+      if (!id.startsWith('acto-')) return
+      const item = items.find((entry) => agendaEventAnchor(entry) === id)
+      if (!item) return
+      setPeriod('upcoming'); setCategory('all'); setTerritory('all'); setMunicipality('')
+      window.requestAnimationFrame(() => {
+        const detail = document.getElementById(`${id}-detail`)
+        if (detail) { detail.open = true; detail.querySelector('summary')?.focus(); document.getElementById(id)?.scrollIntoView({ block: 'start' }) }
+      })
+    }
+    openSharedEvent()
+    window.addEventListener('hashchange', openSharedEvent)
+    return () => window.removeEventListener('hashchange', openSharedEvent)
+  }, [items])
+
 
   useEffect(() => {
     setNowIso(new Date().toISOString())
@@ -716,7 +740,7 @@ export default function AgendaCofradeDirectoryV4({
                       : { state: 'upcoming', isLive: false }
 
                     return (
-                    <article className={`${styles.card} ${visualStyles.visualCard} ${mobileStyles.card} ${item.category === 'concerts' ? concertStyles.concertCard : ''} ${cardLiveState.isLive ? styles.cardLive : ''}`} key={item.key} data-category={item.category} data-live={cardLiveState.isLive ? 'true' : undefined}>
+                    <article className={`${styles.card} ${visualStyles.visualCard} ${mobileStyles.card} ${item.category === 'concerts' ? concertStyles.concertCard : ''} ${cardLiveState.isLive ? styles.cardLive : ''}`} key={item.key} id={agendaEventAnchor(item)} data-category={item.category} data-live={cardLiveState.isLive ? 'true' : undefined}>
                       <time className={`${styles.dateBlock} ${mobileStyles.dateBlock}`} dateTime={item.temporalDate || item.date || undefined}>
                         <em className={mobileStyles.weekday}>{displayDateInfo.weekdayLabel?.split(',')[0]?.split(' ')[0]}</em>
                         <strong>{displayDateInfo.day}</strong>
@@ -724,20 +748,25 @@ export default function AgendaCofradeDirectoryV4({
                         {displayDateInfo.year && String(displayDateInfo.year) !== currentYear ? <small>{displayDateInfo.year}</small> : null}
                       </time>
                       <div className={`${styles.cardBody} ${mobileStyles.cardBody}`}>
-                        <span className={mobileStyles.schedule}><b>Horario</b><strong>{item.timeText || (item.startTime ? `${item.startTime}${item.endTime ? `–${item.endTime}` : ''} h` : 'Por confirmar')}</strong></span>
+                        {isOutingEvent(item) && !item.timeText ? (
+                          <div className={mobileStyles.outingTimes}>
+                            <div><span>Salida</span><strong>{item.startTime || 'Por confirmar'}</strong><small>{schedulePrecision(item.schedule, 'departure')}</small></div>
+                            <div><span>Entrada</span><strong>{item.endTime || 'Por confirmar'}</strong><small>{schedulePrecision(item.schedule, 'arrival')}</small></div>
+                          </div>
+                        ) : <span className={mobileStyles.schedule}><b>Horario</b><strong>{item.timeText || (item.startTime ? `${item.startTime}${item.endTime ? `–${item.endTime}` : ''} h` : 'Por confirmar')}</strong></span>}
                         <div className={styles.cardTopline}>
                           <span data-category={item.category}>{item.categoryLabel}</span>
                           {item.isExtraordinary && item.category === 'rosaries' ? <b>Extraordinario</b> : null}
                           {cardLiveState.isLive ? <small className={styles.liveBadge}><i aria-hidden="true" /> En curso</small> : null}
                         </div>
-                        <h4>{item.category === 'concerts' ? item.title : item.href ? <Link href={item.href} onClick={() => trackAgendaEventOpen(item)}>{item.title}</Link> : item.title}</h4>
+                        <h4><button type="button" className={mobileStyles.eventTitle} onClick={() => openEvent(item)} aria-controls={`${agendaEventAnchor(item)}-detail`}>{item.title}</button></h4>
                         <p className={`${styles.organizer} ${mobileStyles.organizer}`}>{item.organizer}</p>
                         {item.endDate && item.endDate !== item.date ? <p className={mobileStyles.dateRange}>Del {shortDate(item.date)} al {shortDate(item.endDate)}{item.endDate.slice(0, 4) !== currentYear ? ` de ${item.endDate.slice(0, 4)}` : ''}</p> : null}
                         <div className={`${styles.cardFacts} ${mobileStyles.cardFacts}`}>
                           <span><b>Localidad</b>{item.municipality || 'Por confirmar'}</span>
                           {item.place ? <span><b>Lugar</b>{item.place}</span> : null}
                         </div>
-                        <details className={mobileStyles.eventDetails}>
+                        <details id={`${agendaEventAnchor(item)}-detail`} className={mobileStyles.eventDetails} onToggle={(event) => { if (event.currentTarget.open) trackAgendaEventOpen(item) }}>
                           <summary><span>{item.routeText ? 'Información y recorrido' : 'Información del evento'}</span><b aria-hidden="true">+</b></summary>
                           <div className={mobileStyles.eventDetailBody}>
                             {item.daySchedules?.length > 1 ? (
@@ -748,9 +777,13 @@ export default function AgendaCofradeDirectoryV4({
                                 ))}
                               </section>
                             ) : null}
+                            {item.schedule?.length ? <section className={mobileStyles.eventTimetable}><h5>Horarios del acto</h5>{item.schedule.map((row) => <div key={row.id}><strong>{row.time || row.timeText || 'Por confirmar'}</strong><span>{row.label}{row.notes ? <small>{row.notes}</small> : null}</span></div>)}</section> : null}
+                            {item.music?.length ? <section className={mobileStyles.eventMusic}><h5>Acompañamiento musical</h5>{item.music.map((band, index) => <p key={band.id || index}>{band.href ? <Link href={band.href}>{band.name}</Link> : <strong>{band.name}</strong>}{band.context ? <small>{band.context}</small> : null}</p>)}</section> : null}
+                            {agendaDirectionsHref(item.place, item.municipality) ? <a href={agendaDirectionsHref(item.place, item.municipality)} target="_blank" rel="noreferrer">{isOutingEvent(item) ? 'Cómo llegar a la salida' : 'Cómo llegar'} ↗</a> : null}
                             {item.summary && item.summary !== item.routeText ? <p>{item.summary}</p> : null}
                             {item.routeText && ['processions', 'transfers', 'rosaries', 'romeries'].includes(item.category) ? <EventRoute item={item} inline /> : null}
                             {item.category === 'concerts' ? <ConcertRepertoire item={item} inline /> : null}
+                            <a href={`#${agendaEventAnchor(item)}`}>Enlace a este acto</a>
                             <EventActions item={item} />
                           </div>
                         </details>

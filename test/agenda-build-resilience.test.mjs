@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
 import test from 'node:test'
+import { agendaEventDetailHref } from '../lib/agenda-event-url-policy.js'
 import { withProcessionLiveState } from '../lib/procession-live-status.js'
 
 const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8')
@@ -45,6 +46,8 @@ function agendaFixture() {
     }
     return []
   }]))
+  dependencies.agendaEventDetailHref = agendaEventDetailHref
+  dependencies.withAgendaOutingContext = async (groups) => groups
   dependencies.withProcessionLiveState = withProcessionLiveState
   dependencies.agendaMunicipalityHref = () => ''
   dependencies.unstable_cache = (loader, keys, options) => {
