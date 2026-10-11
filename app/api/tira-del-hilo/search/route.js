@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { searchPublicHiloEntities } from '@/lib/supabase/tira-public'
 import { getHiloLookupIntent, prioritizeHiloNavigationItems } from '@/lib/tira-search-intent'
+import { clientKey, tiraSearchLimiter } from '@/lib/request-rate-limit'
 
 export const dynamic = 'force-dynamic'
 
@@ -8,6 +9,14 @@ export async function GET(request) {
   const rawTerm = String(request.nextUrl.searchParams.get('q') || '').trim()
   if (rawTerm.length < 2) {
     return NextResponse.json({ items: [] }, { headers: { 'Cache-Control': 'no-store' } })
+  }
+
+  const quota = tiraSearchLimiter.consume(clientKey(request.headers))
+  if (!quota.allowed) {
+    return NextResponse.json(
+      { items: [], unavailable: true, error: 'Demasiadas búsquedas seguidas. Espera un momento.' },
+      { status: 429, headers: { 'Cache-Control': 'no-store', 'Retry-After': String(quota.retryAfterSeconds) } },
+    )
   }
 
   const intent = getHiloLookupIntent(rawTerm, { allowBare: false })
