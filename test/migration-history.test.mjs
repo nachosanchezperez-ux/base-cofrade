@@ -23,7 +23,7 @@ const EXECUTABLE_SCHEMA_MIGRATIONS = [
   "20260925051118_home_knowledge_threads_cache.sql",
   "20260925051336_home_knowledge_threads_cache_private.sql",
   "20261002144739_music_accompaniment_public_band_snapshots.sql",
-  "20261008064500_add_musical_repertoire_theme.sql",
+  "20261008060205_add_musical_repertoire_theme.sql",
   "20261009123758_concert_programs.sql",
   "20261009183652_add_fk_indexes_source_links_and_agenda_paths.sql",
   "20261009184302_add_outings_outing_subtype.sql",
