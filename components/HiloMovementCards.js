@@ -4,6 +4,7 @@ import { hiloDayLabel, HILO_TOPIC_LABELS } from '@/lib/hilo-movements'
 import styles from './HiloMovements.module.css'
 
 const archivePhotos = {
+  'cigarreras-soberana-entrega-panaderos-2026': { src: '/bandas/las-cigarreras/cigarreras-corneta.jpg', alt: 'Corneta y paño bordado de Las Cigarreras' },
   'san-esteban-santa-ana-2027': { src: '/hermandades/san-esteban/cabecera-cortejo.jpg', alt: 'Cruz de guía y nazarenos de San Esteban' },
   'baratillo-continuidad-musical-2027': { src: '/bandas/banda-del-sol/formacion-baratillo-2026.jpg', alt: 'La Banda del Sol tras el paso de la Piedad del Baratillo' },
 }
