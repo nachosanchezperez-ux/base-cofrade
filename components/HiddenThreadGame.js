@@ -312,45 +312,99 @@ export default function HiddenThreadGame({ initialDayKey = '' }) {
               ) : null}
 
               <div className={styles.riddle}>
-                <span className={styles.riddleLabel}>El primer cabo · {word.category}</span>
-                <blockquote>{word.clue}</blockquote>
-                <span className={styles.letters}>
-                  {normalizeHiddenAnswer(word.answer).length} letras
-                  {canPlay && usedErrors === HILO_GAME_MAX_ERRORS - 1 ? (
-                    <> · empieza por <strong>«{word.answer.charAt(0)}»</strong></>
-                  ) : null}
+                <div className={styles.riddleTop}>
+                  <span className={styles.riddleLabel}>{word.category} · Cabo {progress.stage + 1}</span>
+                  <span className={styles.potentialScore}>✦ {round.status === 'won' ? stagePoints : Math.max(10, 100 - (round.hints.length * HILO_GAME_HINT_COST) - (usedErrors * 18))} puntos</span>
+                </div>
+                <div className={styles.riddleScene}>
+                  <span className={styles.riddleEmblem} aria-hidden="true">?</span>
+                  <blockquote>{word.clue}</blockquote>
+                </div>
+                <span className={styles.riddleFootnote}>
+                  {canPlay ? 'Sigue el hilo: descubre la palabra oculta' : 'El misterio de este cabo ya está resuelto'}
                 </span>
               </div>
 
-              {canPlay ? (
-                <form className={styles.guessForm} onSubmit={submitAnswer}>
-                  <label htmlFor="hidden-thread-answer">¿Qué palabra se esconde?</label>
-                  <div className={styles.guessRow}>
-                    <input
-                      id="hidden-thread-answer"
-                      type="text"
-                      name="respuesta"
-                      value={answer}
-                      onChange={(event) => {
-                        setAnswer(event.target.value)
-                        setFeedback('')
-                      }}
-                      maxLength={32}
-                      autoCapitalize="characters"
-                      autoComplete="off"
-                      autoCorrect="off"
-                      spellCheck={false}
-                      placeholder="Escribe tu respuesta"
-                    />
-                    <button type="submit" disabled={!answer.trim()}>Probar <span aria-hidden="true">→</span></button>
+              <section className={styles.choicePanel} aria-label="Adivina tocando una opción">
+                <div className={styles.choiceHeading}>
+                  <h3>¿Cuál es la respuesta?</h3>
+                  <span>Elige una tarjeta</span>
+                </div>
+                <div className={styles.choiceGrid} role="group" aria-label="Cuatro respuestas posibles">
+                  {options.map((option, index) => {
+                    const selected = round.guesses.includes(normalizeHiddenAnswer(option))
+                    const correct = !canPlay && hiddenGuessMatches(word, option)
+                    const wrong = selected && !hiddenGuessMatches(word, option)
+                    return (
+                      <button
+                        type="button"
+                        key={option}
+                        className={[
+                          styles.choiceTile,
+                          wrong ? styles.choiceWrong : '',
+                          correct ? styles.choiceCorrect : '',
+                        ].filter(Boolean).join(' ')}
+                        onClick={() => chooseAnswer(option)}
+                        disabled={!canPlay || wrong}
+                        aria-label={'Respuesta ' + (index + 1) + ': ' + option}
+                      >
+                        <span className={styles.choiceLetter} aria-hidden="true">{String.fromCharCode(65 + index)}</span>
+                        <span className={styles.choiceName}>{option.toLocaleLowerCase('es-ES')}</span>
+                        <span className={styles.choiceIndicator} aria-hidden="true">{wrong ? '×' : correct ? '✓' : '↗'}</span>
+                      </button>
+                    )
+                  })}
+                </div>
+                {canPlay ? (
+                  <div className={styles.choiceAttempts}>
+                    <span className={styles.attemptLights} aria-hidden="true">
+                      {[0, 1, 2].map((index) => (
+                        <i key={index} className={index < usedErrors ? styles.attemptSpent : ''} />
+                      ))}
+                    </span>
+                    <span>{Math.max(0, 3 - usedErrors)} oportunidades al tocar · sin teclado</span>
                   </div>
-                  <span className={styles.attemptInfo}>Intentos disponibles: <strong>{HILO_GAME_MAX_ERRORS - usedErrors}</strong> de {HILO_GAME_MAX_ERRORS}</span>
-                </form>
+                ) : null}
+              </section>
+
+              <p
+                className={styles.feedback + (feedback.tone ? ' ' + styles['feedback_' + feedback.tone] : '')}
+                role="status"
+                aria-live="polite"
+                hidden={!feedback.text}
+              >{feedback.text}</p>
+
+              {canPlay ? (
+                <details className={styles.manualEntry}>
+                  <summary>Prefiero escribir mi respuesta <span aria-hidden="true">✎</span></summary>
+                  <form className={styles.guessForm} onSubmit={submitAnswer}>
+                    <label htmlFor="hidden-thread-answer">Escribe tu palabra ({normalizeHiddenAnswer(word.answer).length} letras)</label>
+                    <div className={styles.guessRow}>
+                      <input
+                        id="hidden-thread-answer"
+                        type="text"
+                        name="respuesta"
+                        value={answer}
+                        onChange={(event) => { setAnswer(event.target.value); setFeedback('') }}
+                        maxLength={32}
+                        autoCapitalize="characters"
+                        autoComplete="off"
+                        autoCorrect="off"
+                        spellCheck={false}
+                        placeholder="Tu respuesta"
+                      />
+                      <button type="submit" disabled={!answer.trim()}>Comprobar <span aria-hidden="true">→</span></button>
+                    </div>
+                    <span className={styles.attemptInfo}>Al escribir, tienes hasta {HILO_GAME_MAX_ERRORS} intentos en total.
+                      {usedErrors === HILO_GAME_MAX_ERRORS - 1 ? ' Empieza por «' + word.answer.charAt(0) + '».' : ''}
+                    </span>
+                  </form>
+                </details>
               ) : null}
 
               {round.guesses.length ? (
                 <div className={styles.guesses} aria-label="Historial de respuestas">
-                  <span>Lo que has probado</span>
+                  <span>Respuestas anteriores</span>
                   <div>
                     {round.guesses.map((guess, index) => (
                       <span key={index} className={hiddenGuessMatches(word, guess) ? styles.guessCorrect : styles.guessWrong}>
@@ -360,13 +414,6 @@ export default function HiddenThreadGame({ initialDayKey = '' }) {
                   </div>
                 </div>
               ) : null}
-
-              <p
-                className={styles.feedback + (feedback.tone ? ' ' + styles['feedback_' + feedback.tone] : '')}
-                role="status"
-                aria-live="polite"
-                hidden={!feedback.text}
-              >{feedback.text}</p>
 
               {canPlay ? (
                 <div className={styles.hints}>
