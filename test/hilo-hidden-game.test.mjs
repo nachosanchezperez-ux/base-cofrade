@@ -3,6 +3,7 @@ import assert from 'node:assert/strict'
 import { HILO_HIDDEN_CHAINS } from '../lib/hilo-hidden-game-data.js'
 import {
   getHiddenChallenge,
+  getHiddenChoiceOptions,
   HILO_HIDDEN_WORDS,
   HILO_GAME_MAX_ERRORS,
   hiddenDaySerial,
@@ -235,4 +236,34 @@ test('en la última chicotá ninguna pista adelanta la respuesta de un cabo post
       }
     })
   }
+})
+
+
+test('las opciones se pueden tocar y son iguales para todos los visitantes del mismo día', () => {
+  for (const day of ['2026-10-12','2026-10-13','2026-11-04','2027-01-01']) {
+    for (const mode of ['daily','expert']) {
+      const challenge=getHiddenChallenge(day,mode)
+      challenge.words.forEach((word,index)=>{
+        const options=getHiddenChoiceOptions(challenge,index)
+        assert.equal(options.length,4)
+        assert.equal(new Set(options.map(normalizeHiddenAnswer)).size,4)
+        assert.equal(options.filter(answer=>normalizeHiddenAnswer(answer)===normalizeHiddenAnswer(word.answer)).length,1)
+        assert.deepEqual(options,getHiddenChoiceOptions(challenge,index))
+        assert.ok(options.every(answer=>HILO_HIDDEN_WORDS.some(w=>w.answer===answer)))
+        for(const later of challenge.words.filter(w=>w.answer!==word.answer)){
+          assert.ok(!options.includes(later.answer),'una respuesta futura no puede aparecer como opción')
+        }
+      })
+    }
+  }
+})
+
+test('las opciones en el modo visual resultan próximas a la temática de la respuesta', () => {
+  const challenge=getHiddenChallenge('2026-10-12','daily')
+  const options=getHiddenChoiceOptions(challenge,0)
+  const category=challenge.words[0].category
+  const entries=options.map(answer=>HILO_HIDDEN_WORDS.find(w=>w.answer===answer))
+  const count=HILO_HIDDEN_WORDS.filter(w=>w.category===category).length
+  if(count>=4)assert.ok(entries.filter(w=>w.category===category).length>=2)
+  assert.deepEqual(getHiddenChoiceOptions(null),[])
 })
