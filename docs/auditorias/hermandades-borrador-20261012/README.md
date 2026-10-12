@@ -199,7 +199,7 @@ Verificado en `/hermandades/hermandad-esperanza-arahal`.
 - **San Pedro** (Velázquez Vega, 2014): se vincula como imagen secundaria del misterio.
 - **Pasos:** misterio de las Negaciones y palio, sin autor documentado.
 - **No se ha creado:** la Inmaculada Concepción ni la Virgen Gloriosa, porque ninguna fuente las describe.
-- **Música:** Santa María Magdalena de Arahal, tras el misterio desde 2024, enlazada al paso.
+- **Música:** Santa María Magdalena de Arahal, tras el misterio desde 2024, enlazada al paso. El propietario confirmó que es la banda actual; su confirmación queda registrada como fuente del periodo.
 
 ### Propuesto, sin aplicar
 

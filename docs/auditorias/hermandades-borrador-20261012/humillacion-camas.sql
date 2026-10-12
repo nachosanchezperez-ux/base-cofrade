@@ -95,3 +95,12 @@ select v.s, v.e, v.bs, v.isx, 'Documentación de la Hermandad de la Humillación
 ) v(s, e, bs, isx)
 where not exists (select 1 from public.source_links x where x.source_id = v.s and x.entity_id is not distinct from v.e
   and x.brotherhood_step_id is not distinct from v.bs and x.image_step_id is not distinct from v.isx);
+
+-- 7 · Confirmación del propietario (12/10/2026): «Actualmente toca A.M. Santa María Magdalena de Arahal tras el misterio».
+insert into public.sources (id, name, url, source_type, author_or_publisher, accessed_at, notes) values
+ ('7a5c0e05-2026-4012-8000-00000000ca28', 'Humillación de Camas · banda del misterio · confirmación editorial', null, 'Aportación directa', 'Dirección de Hilo Cofrade', '2026-10-12',
+  'El propietario confirma el 12/10/2026 que actualmente acompaña al misterio la A.M. Santa María Magdalena de Arahal.')
+on conflict (id) do nothing;
+insert into public.source_links (source_id, music_accompaniment_period_id, scope)
+select '7a5c0e05-2026-4012-8000-00000000ca28', '8a294ba7-a11f-4525-8cef-e7fd2ef6b38d', 'Confirmación editorial del acompañamiento vigente'
+where not exists (select 1 from public.source_links where source_id = '7a5c0e05-2026-4012-8000-00000000ca28' and music_accompaniment_period_id = '8a294ba7-a11f-4525-8cef-e7fd2ef6b38d');
