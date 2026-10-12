@@ -77,5 +77,16 @@ Calendario editorial de tres meses o más sin repetición, vinculación con glos
 
 - **GO editorial humano** sobre las 52 palabras y 17 cadenas (este documento no lo sustituye).
 - Ampliar el banco antes de la publicación estable: a partir del día 53 el ciclo diario se repite.
-- QA visual interactiva sobre la preview en 320/375/390/430/768/1366 px.
+- Ver el juego en un iPhone físico (la QA se hizo en Chromium con emulación móvil).
 - Enlazar cada término a su ficha del glosario «De capirote a trabajadera» cuando esté publicado; hoy enlazan a directorios existentes.
+
+## QA visual e interactiva · 12/10/2026
+
+La preview de Vercel no es accesible desde el navegador de esta sesión (el proxy bloquea `*.vercel.app`), así que el componente real se empaquetó con los estilos globales del sitio y se probó en Chromium con emulación táctil. La preview sí se verificó por HTTP (200, canonical y prerender).
+
+- **Anchuras 320, 375, 390, 430, 768 y 1366 px:** sin desplazamiento horizontal, sin textos menores de 11 px y sin errores de JavaScript.
+- **Primera pantalla en móvil:** el campo de respuesta pasa a ir justo bajo la adivinanza y las pistas debajo; cabecera del juego compactada. En un iPhone de 390×844 la adivinanza y el campo quedan visibles sin desplazar (antes el campo aparecía a ~1.050 px). En 375×667 la adivinanza es visible y el campo queda a un desplazamiento corto.
+- **Flujo diario:** longitud errónea y palabra repetida no consumen intento; pista abierta; tres fallos con su aviso; primera letra en el último intento; MARTILLO aceptado; definición y enlace; +31 puntos; cuenta atrás; racha; texto compartido sin solución; partida conservada al recargar.
+- **Flujo experto:** tres cabos con un fallo intercalado, progreso por cabo, conexión final, 282/300 y línea `✦ ✓ ✦`.
+- **Corregido en la QA:** el contador «01 / 01» del modo diario (sin significado) se retira; al terminar el modo experto el tercer cabo seguía como «en curso».
+- **Teclado:** el foco recorre enlace de vuelta, modalidades, enlace de la respuesta, compartir y Cofradle con foco visible.

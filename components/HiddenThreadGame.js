@@ -263,7 +263,9 @@ export default function HiddenThreadGame() {
                   <h2>{challenge.title}</h2>
                   <p>{challenge.subtitle}</p>
                 </div>
-                <span className={styles.gameNumber}>{mode === 'daily' ? '01 / 01' : String(progress.stage + 1).padStart(2, '0') + ' / 03'}</span>
+                {mode === 'expert' ? (
+                  <span className={styles.gameNumber}>{String(progress.stage + 1).padStart(2, '0')} / 03</span>
+                ) : null}
               </header>
 
               {mode === 'expert' ? (
@@ -272,12 +274,12 @@ export default function HiddenThreadGame() {
                     <span
                       key={index}
                       role="listitem"
-                      className={index < progress.stage ? styles.stageDone : index === progress.stage ? styles.stageCurrent : ''}
+                      className={index < progress.stage || completed ? styles.stageDone : index === progress.stage ? styles.stageCurrent : ''}
                       aria-label={'Cabo ' + (index + 1) + ': ' + (
-                        index < progress.stage ? 'terminado'
+                        index < progress.stage || completed ? 'terminado'
                           : index === progress.stage ? 'en curso' : 'pendiente'
                       )}
-                    >{index < progress.stage ? '✓' : index + 1}</span>
+                    >{index < progress.stage || completed ? '✓' : index + 1}</span>
                   ))}
                 </div>
               ) : null}
@@ -291,35 +293,6 @@ export default function HiddenThreadGame() {
                     <> · empieza por <strong>«{word.answer.charAt(0)}»</strong></>
                   ) : null}
                 </span>
-              </div>
-
-              <div className={styles.hints}>
-                <div className={styles.hintHeader}>
-                  <h3>Tira de otro cabo</h3>
-                  <span>Cada pista resta {HILO_GAME_HINT_COST} puntos</span>
-                </div>
-                <div className={styles.hintButtons}>
-                  {word.hints.map((hint, index) => (
-                    <button
-                      type="button"
-                      key={index}
-                      disabled={!canPlay || round.hints.includes(index)}
-                      className={round.hints.includes(index) ? styles.hintRevealed : ''}
-                      onClick={() => revealHint(index)}
-                      aria-label={round.hints.includes(index) ? hint.title + ', pista abierta' : 'Abrir pista: ' + hint.title}
-                    >
-                      <span aria-hidden="true">{round.hints.includes(index) ? '✓' : '+'}</span>
-                      {hint.title}
-                    </button>
-                  ))}
-                </div>
-                {round.hints.length > 0 ? (
-                  <div className={styles.revealedHints} aria-live="polite">
-                    {round.hints.map((index) => (
-                      <p key={index}><strong>{word.hints[index].title}</strong> {word.hints[index].text}</p>
-                    ))}
-                  </div>
-                ) : null}
               </div>
 
               {canPlay ? (
@@ -367,6 +340,37 @@ export default function HiddenThreadGame() {
                 aria-live="polite"
                 hidden={!feedback.text}
               >{feedback.text}</p>
+
+              {canPlay ? (
+                <div className={styles.hints}>
+                  <div className={styles.hintHeader}>
+                    <h3>Tira de otro cabo</h3>
+                    <span>Cada pista resta {HILO_GAME_HINT_COST} puntos</span>
+                  </div>
+                  <div className={styles.hintButtons}>
+                    {word.hints.map((hint, index) => (
+                      <button
+                        type="button"
+                        key={index}
+                        disabled={!canPlay || round.hints.includes(index)}
+                        className={round.hints.includes(index) ? styles.hintRevealed : ''}
+                        onClick={() => revealHint(index)}
+                        aria-label={round.hints.includes(index) ? hint.title + ', pista abierta' : 'Abrir pista: ' + hint.title}
+                      >
+                        <span aria-hidden="true">{round.hints.includes(index) ? '✓' : '+'}</span>
+                        {hint.title}
+                      </button>
+                    ))}
+                  </div>
+                  {round.hints.length > 0 ? (
+                    <div className={styles.revealedHints} aria-live="polite">
+                      {round.hints.map((index) => (
+                        <p key={index}><strong>{word.hints[index].title}</strong> {word.hints[index].text}</p>
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
+              ) : null}
 
               {round.status !== 'playing' ? (
                 <div className={styles.answerCard + ' ' + (round.status === 'won' ? styles.answerWon : styles.answerLost)}>

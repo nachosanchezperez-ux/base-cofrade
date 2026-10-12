@@ -363,7 +363,13 @@
 }
 
 .guessForm {
-  margin-top: 23px;
+  margin-top: 4px;
+}
+
+/* Las pistas van después del campo de respuesta: en móvil, adivinanza y respuesta
+   quedan en la primera pantalla. */
+.hints {
+  margin-top: 26px;
 }
 
 .guessForm label {
@@ -767,20 +773,24 @@
     line-height: 1.5;
   }
   .hero {
-    padding: 14px 0 33px;
+    padding: 6px 0 20px;
   }
   .heroEyebrow {
-    margin-top: 12px;
+    display: none;
+  }
+  .hero h1 {
+    font-size: 36px;
+    margin: 4px 0 8px;
   }
   .gameSection {
-    padding: 15px 0 45px;
+    padding: 12px 0 45px;
   }
   .modes {
     gap: 7px;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
   }
   .modes button {
-    min-height: 70px;
+    min-height: 60px;
     padding: 10px;
     gap: 7px;
   }
@@ -804,18 +814,18 @@
     gap: 8px;
   }
   .gameHeader h2 {
-    font-size: 27px;
+    font-size: 24px;
   }
   .gameHeader p {
-    font-size: 12px;
+    font-size: 13px;
   }
   .gameNumber {
     padding: 5px 8px;
     font-size: 11px;
   }
   .riddle {
-    margin: 19px 0;
-    padding: 22px 15px;
+    margin: 14px 0 16px;
+    padding: 16px 14px;
   }
   .riddle blockquote {
     font-size: clamp(22px, 6vw, 27px);
