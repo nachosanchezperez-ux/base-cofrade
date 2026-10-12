@@ -1049,3 +1049,277 @@
 @media (prefers-reduced-motion: reduce) {
   .recommendationCard { transition: none; }
 }
+
+
+/* Mesa de juego: la incógnita y las respuestas se ven antes de cualquier explicación. */
+.gameSection { padding-top: 12px; }
+.modes { max-width: none; margin-bottom: 13px; }
+.modes button {
+  min-height: 65px;
+  border-radius: 14px;
+  background: #fff;
+}
+.modes button.modeActive {
+  border-color: #8c3b50;
+  box-shadow: inset 0 0 0 1px #8c3b50, 0 7px 18px rgba(89,39,59,.07);
+}
+.layout { grid-template-columns: minmax(0,1fr) 205px; gap: 15px; }
+.gameCard { padding: clamp(16px,2.5vw,24px); border-radius: 18px; }
+.gameHeader { gap: 10px; }
+.gameHeader .eyebrow { font-size: 10px; }
+.gameHeader h2 { margin-top: 3px; font-size: clamp(23px,3vw,29px); }
+.gameHeader p { margin-top: 3px; max-width: 620px; line-height: 1.35; }
+.riddle {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  margin: 13px 0 14px;
+  padding: 17px clamp(15px,3vw,22px);
+  border: 1px solid rgba(119,43,68,.3);
+  border-radius: 17px;
+  color: #fff;
+  background:
+    radial-gradient(circle at 91% -24%, rgba(242,212,166,.27), transparent 46%),
+    linear-gradient(130deg, #51243a, #752b47 80%, #4d2238);
+  text-align: left;
+  box-shadow: 0 12px 29px rgba(81,35,57,.13);
+}
+.riddle::after {
+  content: "";
+  position: absolute;
+  right: -39px;
+  bottom: -92px;
+  z-index: -1;
+  width: 175px;
+  height: 175px;
+  border: 1px solid rgba(251,235,214,.12);
+  border-radius: 50%;
+  box-shadow: 0 0 0 36px rgba(255,255,255,.024);
+}
+.riddleTop { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.riddle .riddleLabel {
+  color: #f1d7bf;
+  font-size: 10px;
+  letter-spacing: .085em;
+}
+.potentialScore {
+  flex: 0 0 auto;
+  padding: 5px 9px;
+  border: 1px solid rgba(255,242,220,.23);
+  border-radius: 100px;
+  background: rgba(255,255,255,.12);
+  color: #fff4db;
+  font-size: 11px;
+  font-weight: 850;
+  font-variant-numeric: tabular-nums;
+}
+.riddleScene { display: grid; grid-template-columns: 50px minmax(0,1fr); align-items: center; gap: 16px; margin: 18px 0 14px; }
+.riddleEmblem {
+  display: grid;
+  width: 50px;
+  height: 61px;
+  place-items: center;
+  border: 1px solid rgba(255,239,209,.36);
+  border-radius: 11px;
+  background: rgba(255,248,231,.10);
+  color: #ffebc8;
+  font: 700 36px/1 Georgia,serif;
+  transform: rotate(-5deg);
+}
+.riddle blockquote {
+  margin: 0;
+  color: #fff;
+  font: 700 clamp(21px,3.2vw,29px)/1.28 Georgia,'Times New Roman',serif;
+  letter-spacing: -.02em;
+}
+.riddleFootnote {
+  display: block;
+  border-top: 1px solid rgba(255,244,225,.17);
+  padding-top: 11px;
+  color: #f5dfe5;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+.choicePanel { margin-top: 8px; }
+.choiceHeading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  margin-bottom: 9px;
+}
+.choiceHeading h3 { margin: 0; color: #2e2930; font-size: 16px; font-weight: 850; }
+.choiceHeading > span { color: #886873; font-size: 11px; font-weight: 750; }
+.choiceGrid {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 9px;
+}
+.choiceTile {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  min-height: 70px;
+  gap: 10px;
+  padding: 12px 13px;
+  border: 2px solid #eadfd7;
+  border-radius: 13px;
+  background: #fffcf8;
+  color: #312e37;
+  cursor: pointer;
+  text-align: left;
+  box-shadow: 0 2px 0 rgba(112,53,66,.055);
+  transition: background .16s ease, transform .16s ease, border-color .16s ease;
+}
+.choiceTile:hover:not(:disabled) {
+  transform: translateY(-2px);
+  border-color: #ae7181;
+  background: #faf0ef;
+}
+.choiceTile:active:not(:disabled) { transform: translateY(0); }
+.choiceTile:focus-visible { outline: 3px solid #b77948; outline-offset: 2px; }
+.choiceTile:disabled { opacity: 1; cursor: default; }
+.choiceLetter {
+  display: grid;
+  flex: 0 0 31px;
+  width: 31px;
+  height: 31px;
+  place-items: center;
+  border: 1px solid #efd8d3;
+  border-radius: 9px;
+  background: #f9e9e5;
+  color: #933a53;
+  font-size: 13px;
+  font-weight: 850;
+}
+.choiceName {
+  min-width: 0;
+  flex: 1;
+  font-size: clamp(12px,1.5vw,15px);
+  font-weight: 850;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+  text-transform: capitalize;
+}
+.choiceIndicator { color: #995469; font-size: 18px; line-height: 1; }
+.choiceWrong { border-color: #e3b9b6; background: #fcf1f0; }
+.choiceWrong .choiceLetter { color: #993d43; background: #f9d8d4; border-color: #eec9c2; }
+.choiceWrong .choiceIndicator { color: #a84848; }
+.choiceCorrect { border-color: #7bb295; background: #edf8f0; }
+.choiceCorrect .choiceLetter { color: #306d4b; background: #d4ecd9; border-color: #a6d3b0; }
+.choiceCorrect .choiceIndicator { color: #277349; }
+.choiceAttempts {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  margin-top: 10px;
+  color: #786b70;
+  font-size: 11px;
+  line-height: 1.5;
+}
+.attemptLights { display: flex; flex: 0 0 auto; gap: 4px; }
+.attemptLights i {
+  display: block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #bd945e;
+}
+.attemptLights i.attemptSpent { background: #e0d6d3; }
+.manualEntry { margin-top: 12px; border-top: 1px solid #ece1da; padding-top: 11px; }
+.manualEntry summary {
+  width: fit-content;
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 8px;
+  padding: 5px 9px;
+  color: #76354b;
+  font-size: 12px;
+  font-weight: 850;
+  cursor: pointer;
+  list-style: none;
+}
+.manualEntry summary::-webkit-details-marker { display: none; }
+.manualEntry summary:focus-visible { outline: 3px solid #b77948; outline-offset: 2px; }
+.manualEntry[open] { padding-bottom: 10px; }
+.manualEntry[open] summary { background: #f8ede8; }
+.manualEntry .guessForm { margin-top: 10px; }
+.manualEntry .guessForm label { font-size: 12px; }
+.feedback { margin-top: 13px; border-radius: 9px; padding: 10px 12px; background: #f9f3eb; }
+.feedback_success { background: #e8f6ec; }
+.feedback_error { background: #fcf0ee; }
+.guesses { margin-top: 12px; }
+.hints { margin-top: 18px; }
+.scoreCard {
+  border: 1px solid #e9ded9;
+  border-radius: 15px;
+  padding: 17px;
+  background: #fff;
+}
+.scoreBig {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 8px 0 12px;
+  color: #682c43;
+}
+.scoreBig > span { align-self: center; color: #a87949; font-size: 21px; }
+.scoreBig strong { font: 850 38px/1 Georgia,serif; font-variant-numeric: tabular-nums; }
+.scoreBig small { color: #77686d; font-size: 12px; }
+.scoreLine { display: flex; justify-content: space-between; gap: 8px; margin-top: 10px; border-top: 1px solid #f0e8e1; padding-top: 10px; font-size: 11px; line-height: 1.35; }
+.scoreLine span { color: #766c73; }
+.scoreLine strong { color: #57273e; text-align: right; }
+.scoreCard p { margin: 14px 0 0; color: #7e7476; font-size: 11px; line-height: 1.55; }
+.gameIntro { padding-bottom: 12px; }
+.gameIntroLine p { margin-top: 5px; }
+@media (max-width: 920px) {
+  .layout { grid-template-columns: 1fr; }
+  .aside { display: block; }
+  .scoreCard { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; align-items: center; }
+  .scoreCard > .eyebrow { grid-column: 1 / -1; }
+  .scoreBig { margin: 0; }
+  .scoreLine { border-top: none; margin-top: 0; padding-top: 0; }
+  .scoreCard p { grid-column: 1 / -1; margin-top: 0; }
+}
+@media (max-width: 620px) {
+  .gameIntroLine h1 { font-size: 31px; }
+  .gameIntroLine p { font-size: 12px; }
+  .modes { margin-bottom: 9px; }
+  .modes button { min-height: 54px; padding: 9px; }
+  .modes strong { font-size: 12px; }
+  .modes small { font-size: 10px; }
+  .gameCard { padding: 12px; border-radius: 15px; }
+  .gameHeader h2 { font-size: 20px; }
+  .gameHeader p { display: none; }
+  .gameHeader .eyebrow { font-size: 10px; }
+  .riddle { margin: 10px 0 12px; padding: 13px; border-radius: 13px; }
+  .riddleScene { grid-template-columns: 40px minmax(0,1fr); gap: 10px; margin: 13px 0 11px; }
+  .riddleEmblem { width: 40px; height: 53px; font-size: 31px; }
+  .riddle blockquote { font-size: clamp(19px,5.3vw,23px); }
+  .riddleFootnote { padding-top: 8px; font-size: 10px; }
+  .potentialScore { font-size: 10px; padding: 4px 7px; }
+  .choiceTile { min-height: 62px; gap: 7px; padding: 8px; border-radius: 10px; }
+  .choiceLetter { flex-basis: 25px; width: 25px; height: 28px; font-size: 11px; }
+  .choiceName { font-size: clamp(11.5px,3.6vw,13px); }
+  .choiceIndicator { font-size: 15px; }
+  .choiceHeading h3 { font-size: 14px; }
+  .choiceGrid { gap: 7px; }
+  .scoreCard { grid-template-columns: 1fr 1fr; gap: 8px; padding: 14px; }
+  .scoreBig { grid-column: 1 / -1; }
+  .scoreCard p { font-size: 10px; }
+}
+@media (max-width: 350px) {
+  .choiceTile { padding: 6px; gap: 5px; }
+  .choiceLetter { flex-basis: 21px; width: 21px; height: 26px; }
+  .choiceName { font-size: 11px; }
+  .riddleLabel { font-size: 9px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .choiceTile { transition: none; }
+  .choiceTile:hover:not(:disabled) { transform: none; }
+}
