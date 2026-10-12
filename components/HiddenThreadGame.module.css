@@ -1411,3 +1411,200 @@
   .progressiveHint { transition: none; }
   .progressiveHint:hover { transform: none; }
 }
+
+
+/* Dos formas de jugar: el diario se toca; el experto se responde escribiendo. */
+.expertPanel {
+  border: 1px solid #e4d5cb;
+  border-radius: 15px;
+  padding: clamp(15px,2.5vw,23px);
+  background: linear-gradient(140deg,#fffdfa,#f9f2eb);
+}
+.expertLabel {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 13px;
+}
+.expertLabel span {
+  color: #913e55;
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: .09em;
+}
+.expertLabel strong {
+  white-space: nowrap;
+  font-size: 12px;
+  color: #654a4c;
+}
+.expertForm label {
+  display: block;
+  margin-bottom: 9px;
+  color: #322933;
+  font-size: 16px;
+  font-weight: 800;
+}
+.expertForm .guessRow button {
+  background: #6c273e;
+  color: white;
+}
+.expertForm .attemptInfo { font-size: 12px; line-height: 1.5; }
+.summaryRibbon {
+  color: #753949;
+  font-size: 12px;
+  font-weight: 850;
+}
+.socialShare {
+  display: grid;
+  grid-template-columns: minmax(0,.72fr) minmax(0,1.28fr);
+  align-items: stretch;
+  gap: 19px;
+  margin-top: 19px;
+  padding: 14px;
+  border: 1px solid #e7d6cb;
+  border-radius: 18px;
+  background: #fffaf3;
+}
+.socialPreview {
+  display: flex;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 312px;
+  gap: 9px;
+  padding: 20px 16px;
+  border: 1px solid rgba(255,228,194,.3);
+  border-radius: 14px;
+  color: #fff;
+  background: linear-gradient(135deg,#172c45 0%,#58243b 75%,#312038 100%);
+  text-align: center;
+}
+.socialPreview::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  right: -55px;
+  top: -30px;
+  width: 150px;
+  height: 150px;
+  border: 1px solid rgba(255,238,207,.17);
+  border-radius: 50%;
+  box-shadow: 0 0 0 27px rgba(255,255,255,.026);
+}
+.socialPreviewBrand {
+  color: #efcda9;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .16em;
+}
+.socialPreview strong {
+  margin-top: 10px;
+  color: #fff7eb;
+  font-family: Georgia,'Times New Roman',serif;
+  font-size: clamp(23px,3vw,34px);
+  line-height: 1.06;
+  letter-spacing: -.028em;
+}
+.socialPreviewMode {
+  color: #dfbcc2;
+  font-size: 10px;
+  line-height: 1.4;
+}
+.socialPreviewScore {
+  font: 800 clamp(42px,5vw,63px)/1 Georgia,serif;
+  color: #fff7e9;
+  font-variant-numeric: tabular-nums;
+}
+.socialPreviewScore small { font: 650 15px/1 Arial,sans-serif; color: #e4c7cb; }
+.socialPreviewMarks {
+  color: #ffe2aa;
+  font-size: 25px;
+  font-weight: 850;
+  letter-spacing: .1em;
+}
+.socialPreviewSite {
+  display: block;
+  border-top: 1px solid rgba(255,229,205,.18);
+  padding-top: 10px;
+  color: #f1d4b0;
+  font-size: 10px;
+  font-weight: 850;
+}
+.socialShareActions { display: flex; flex-direction: column; align-items: stretch; justify-content: center; min-width: 0; gap: 10px; }
+.socialShareActions h4 {
+  margin: -4px 0 0;
+  color: #402d37;
+  font: 700 clamp(19px,2.4vw,25px)/1.17 Georgia,serif;
+}
+.socialShareActions p {
+  margin: 0 0 5px;
+  color: #726268;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.socialShareMain,
+.socialShareStory {
+  display: flex;
+  width: 100%;
+  min-height: 48px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 15px;
+  border-radius: 11px;
+  font-size: 13px;
+  font-weight: 850;
+  text-align: left;
+  cursor: pointer;
+}
+.socialShareMain { border: 1px solid #702c43; color: #fff; background: #702c43; }
+.socialShareMain:hover { background: #502036; }
+.socialShareStory { border: 1px solid #ba9e9b; color: #66364c; background: #fff; }
+.socialShareStory:hover { border-color: #753d4c; background: #fff6f1; }
+.socialShareLinks { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 6px; }
+.socialShareLinks a,
+.socialShareLinks button {
+  display: flex;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-width: 0;
+  padding: 7px;
+  border: 1px solid #e4d7d3;
+  border-radius: 8px;
+  color: #704054;
+  background: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+.socialShareLinks a:hover,
+.socialShareLinks button:hover { border-color: #bd938e; background: #fcf0eb; }
+.socialShareActions small { color: #837276; font-size: 10px; line-height: 1.5; }
+.socialShareMain:focus-visible,
+.socialShareStory:focus-visible,
+.socialShareLinks a:focus-visible,
+.socialShareLinks button:focus-visible {
+  outline: 3px solid #b98255;
+  outline-offset: 2px;
+}
+@media (max-width: 720px) {
+  .socialShare { grid-template-columns: 1fr; padding: 12px; gap: 14px; }
+  .socialPreview { min-height: 175px; gap: 4px; padding: 15px; }
+  .socialPreview strong { margin-top: 2px; font-size: 25px; }
+  .socialPreviewScore { font-size: 39px; }
+  .socialPreviewMarks { font-size: 21px; }
+  .socialPreviewSite { padding-top: 6px; }
+  .socialShareActions h4 { font-size: 23px; }
+}
+@media (max-width: 375px) {
+  .socialShare { border-radius: 12px; padding: 9px; }
+  .socialShareLinks a, .socialShareLinks button { font-size: 10px; }
+  .expertPanel { padding: 12px; }
+}
