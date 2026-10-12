@@ -1,0 +1,85 @@
+name: Integridad de datos
+
+# Control de integridad de la enciclopedia (Tarea 07). Solo lectura.
+#
+# Coste: GitHub Actions es gratuito en repositorios públicos; cada ejecución dura
+# alrededor de un minuto y hace unas 35 lecturas a Supabase. No usa Vercel.
+#
+# Configuración (una vez, en Settings → Secrets and variables → Actions):
+#   NEXT_PUBLIC_SUPABASE_URL
+#   NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
+# Ambos valores ya son públicos (los usa el navegador); no hace falta la clave
+# secreta. Mientras no existan, el flujo termina sin error y lo indica en el resumen.
+
+on:
+  schedule:
+    # Lunes a las 05:47 UTC (07:47 en Madrid en horario de verano).
+    - cron: '47 5 * * 1'
+  workflow_dispatch:
+    inputs:
+      fail_on:
+        description: 'Marcar la ejecución como fallida si hay…'
+        required: false
+        type: choice
+        default: never
+        options: [never, error, warning]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: integrity-audit
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      TZ: Europe/Madrid
+      NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || vars.NEXT_PUBLIC_SUPABASE_URL }}
+      NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || vars.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
+    steps:
+      - name: Comprobar configuración
+        id: config
+        run: |
+          if [ -z "$NEXT_PUBLIC_SUPABASE_URL" ] || [ -z "$NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY" ]; then
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+            echo "### Integridad de datos · sin configurar" >> "$GITHUB_STEP_SUMMARY"
+            echo "Faltan NEXT_PUBLIC_SUPABASE_URL y/o NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY en los secretos o variables del repositorio. No se ha ejecutado ninguna lectura." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.config.outputs.configured == 'true'
+
+      - uses: actions/setup-node@v4
+        if: steps.config.outputs.configured == 'true'
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Instalar dependencias
+        if: steps.config.outputs.configured == 'true'
+        run: npm ci --ignore-scripts --no-audit --no-fund
+
+      - name: Ejecutar comprobaciones (solo lectura, modo público)
+        if: steps.config.outputs.configured == 'true'
+        env:
+          FAIL_ON: ${{ inputs.fail_on || 'never' }}
+        run: node scripts/integrity-audit.mjs --mode=public --out=integrity-report --fail-on="$FAIL_ON"
+
+      - name: Publicar resumen
+        if: always() && steps.config.outputs.configured == 'true'
+        run: |
+          if [ -f integrity-report/integrity-report.md ]; then
+            cat integrity-report/integrity-report.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.config.outputs.configured == 'true'
+        with:
+          name: integrity-report
+          path: integrity-report
+          retention-days: 30
