@@ -1,5 +1,11 @@
 # HC-018 · /colabora · NO-GO de apertura
 
+## Actualización 12/10/2026 · Supabase local PASS, NO-GO
+
+Resultados de Terminal aportados por Nacho tras ejecutar pruebas guiadas en su Mac sobre código `94a7486`: concurrencia de duplicados, límites por huella/global/diario, permisos/RLS, Storage privado y purgador real, limpieza 48h con casos 49h/47h PASS. Fixtures limpiados; puertos locales restringidos a 127.0.0.1. El asistente no ha ejecutado directamente ese entorno. [Registro de resultados y alcance](./COLABORA-QA-LOCAL-2026-10-12.md).
+
+Esta evidencia supera los bloqueos de ensayo local de B2 y parte de B3; no certifica producción, scheduler ni envío activo. Cero costes externos adicionales exigidos por el usuario: se descarta la rama remota de pago. Turnstile/configuración reales, envío y Panel completos, mantenimiento HTTP activo/política y postflight desplegado mantienen NO-GO. Las secciones anteriores conservan sus cortes históricos.
+
 Corte: 3 de octubre de 2026, Europe/Madrid (2/10, 22:07 UTC).
 
 ## QA del lector · 3/10/2026 · emulación local PASS
