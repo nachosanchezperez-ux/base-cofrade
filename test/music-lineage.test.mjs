@@ -3,8 +3,10 @@ import test from 'node:test'
 import {
   accompanimentStartLabel,
   findDocumentedPredecessor,
+  historicalPeriodLabel,
   predecessorLabel,
   resolvePredecessor,
+  stepMusicHistory,
 } from '../lib/music-lineage.js'
 
 const brotherhood = 'h-1'
@@ -87,4 +89,40 @@ test('el nombre se resuelve con la banda publicada ya cargada y, si falta, con l
   assert.equal(resolvePredecessor({ ...predecessor, name: 'Banda Archivada' }, new Map()).name, 'Banda Archivada')
   assert.equal(resolvePredecessor(predecessor, new Map()), null)
   assert.equal(predecessorLabel(null), '')
+})
+
+test('etiqueta temporal de los periodos acotados', () => {
+  assert.equal(historicalPeriodLabel({ year_from: 1992, year_to: 2024 }), '1992–2024')
+  assert.equal(historicalPeriodLabel({ year_from: 2026, year_to: 2026 }), '2026')
+  assert.equal(historicalPeriodLabel({ year_to: 1995 }), 'Hasta 1995')
+  assert.equal(historicalPeriodLabel({ year_from: 1980 }), 'Desde 1980')
+  assert.equal(historicalPeriodLabel({}), '')
+})
+
+test('el histórico del paso excluye vigentes, futuros y no publicados, y ordena del más reciente al más antiguo', () => {
+  const bands = new Map([
+    ['b-1', { name: 'Banda Uno', slug: 'banda-uno' }],
+    ['b-2', { name: 'Banda Dos', slug: 'banda-dos' }],
+  ])
+  const periods = [
+    { id: 'vigente', band_entity_id: 'b-1', is_current: true, year_from: 2025 },
+    { id: 'futuro', band_entity_id: 'b-2', is_current: false, year_from: 2027, year_to: null },
+    { id: 'borrador', band_entity_id: 'b-2', is_current: false, year_from: 1990, year_to: 1991, status: 'draft' },
+    { id: 'antiguo', band_entity_id: 'b-2', is_current: false, year_from: 1954, year_to: 1963, position: 'Tras el paso de palio' },
+    { id: 'reciente', band_entity_id: 'b-1', is_current: false, year_from: 1992, year_to: 2024, position: 'Tras el paso de misterio' },
+  ]
+  assert.deepEqual(stepMusicHistory(periods, bands, { referenceYear: 2026 }), [
+    { id: 'reciente', name: 'Banda Uno', slug: 'banda-uno', period: '1992–2024', position: 'Tras el paso de misterio' },
+    { id: 'antiguo', name: 'Banda Dos', slug: 'banda-dos', period: '1954–1963', position: 'Tras el paso de palio' },
+  ])
+})
+
+test('el histórico usa la instantánea pública para bandas archivadas y omite las que no tienen nombre', () => {
+  const periods = [
+    { id: 'archivada', band_entity_id: 'x', is_current: false, year_from: 1940, year_to: 1946, public_band_name: 'Banda Histórica' },
+    { id: 'sin-nombre', band_entity_id: 'y', is_current: false, year_from: 1930, year_to: 1935 },
+  ]
+  assert.deepEqual(stepMusicHistory(periods, new Map(), { referenceYear: 2026 }), [
+    { id: 'archivada', name: 'Banda Histórica', slug: '', period: '1940–1946', position: '' },
+  ])
 })

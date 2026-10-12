@@ -102,3 +102,64 @@ Simulación de solo lectura de la nueva regla, que mide sobre las capas canónic
 | Hermandades publicadas con señal `music` | 44 | 211 |
 
 Solo Servitas de La Puebla del Río perdería la señal hasta aplicar la conversión, porque su única música es la fila heredada del grupo C.
+
+---
+
+## Aplicación en producción · 12/10/2026
+
+Autorizada por el propietario tras la fusión de #1139 (`6a6146e6`), que aplicó la migración `20261012010000` mediante la integración Supabase–GitHub.
+
+### 1 · Conversión del legado (`candidate.sql`)
+
+- **Resultado:** 60/60 posiciones y 60/60 asignaciones creadas en 34 salidas. Posiciones 303 → 363; asignaciones 301 → 361.
+- **Integridad después de aplicar:**
+
+  | Comprobación | Valor |
+  |---|---:|
+  | `legado_sin_cobertura_canonica` | 0 |
+  | `posiciones_secuencia_duplicada` | 0 |
+  | `info_posiciones_convertidas` | 60 |
+
+- **Señal `music`:** 259 Hermandades. Servitas la recupera con la conversión.
+- **Fila heredada sin música en su salida:** solo queda 1 (Camas, 13/09/2026), pendiente de revisión editorial.
+- **Reversión:** `rollback.sql`.
+
+### 2 · Regla Coronada · Los Panaderos · Rosario Matutino 04/10/2026
+
+Dato aportado por el propietario: a la ida acompaña la camerata de la Banda de Santa Ana y al regreso, la banda completa.
+
+| Posición | Etiqueta | Tramo | Banda enlazada |
+|---|---|---|---|
+| 1 | «Ida · Camerata de la Banda» | San Andrés → San Leandro | Santa Ana |
+| 2 | «Regreso · Banda completa» (`md5('regla-2026-10-04-regreso-banda-completa')`) | San Leandro → San Andrés | Santa Ana |
+
+- La camerata conserva `band_name_text`. Como la vista muestra el nombre de la entidad enlazada, la identidad de la camerata se mantiene en la etiqueta.
+- No se enlaza al paso de palio: el Rosario Matutino no acredita en qué paso sale la imagen. La salida ya está ligada a la Hermandad y a la Imagen.
+- **Reversión:** devolver la asignación de regreso a la posición `b1f00c31…`, borrar la posición nueva y restaurar la etiqueta «Acompañamiento musical» y las notas originales («Acompañamiento musical durante el recorrido de ida y rezo de los Misterios Gloriosos.» / «Acompañamiento musical durante todo el recorrido de regreso.»).
+
+### 3 · Periodos musicales enlazados a su Paso (`step-links-plan.sql`)
+
+- **Resultado:** 27 periodos enlazados (10 vigentes y 17 históricos) en 15 Hermandades. Todos los pasos pertenecen a su Hermandad.
+- **Revisión manual de la primera versión del plan:** descartó 4 propuestas erróneas (San Gil de Écija, Quinta Angustia, Vera Cruz de Tocina y Maravillas de San Diego) y endureció las reglas.
+- **Registro:** `private.music_period_step_links_20261012`.
+- **Reversión:** `update public.music_accompaniment_periods m set step_entity_id = null from private.music_period_step_links_20261012 l where m.id = l.period_id;`
+
+**Periodos publicados que siguen sin paso: 126.**
+
+| Situación | Periodos | Motivo |
+|---|---:|---|
+| Cruz de Guía, apertura o cortejo | 26 | Correcto: no van tras un paso |
+| Hermandades sin pasos creados | 88 | 64 Hermandades, 57 de ellas en borrador. Requiere crear los pasos, una decisión editorial |
+| Ambiguos | 12 | Revisión editorial |
+
+### 4 · Bandas de las salidas enlazadas a su ficha
+
+- **7 asignaciones** que tenían la banda solo como texto se enlazan a su entidad publicada: Puertollano, Filarmónica de Pilas, Amigos de la Música de Herrera ×2, Aznalcóllar, Cornetas Cristo de los Remedios y la camerata de Álvarez Quintero. Esta última conserva «Camerata de la Banda» en la etiqueta.
+- **2 duplicados archivados**, no borrados: Filarmónica de Pilas y Filarmónica Juvenil de Pilas aparecían dos veces en la misma posición de Belén Coronada (04/10 y 11/10), una como texto y otra enlazada.
+- **Registro:** `private.music_assignment_band_links_20261012`, con los valores anteriores.
+- **Pendientes:** 37 asignaciones siguen solo como texto. Son coros, capillas, tambores y bandas sin ficha.
+
+### 5 · Visualización
+
+- La ficha de Paso muestra el **histórico musical del paso**: periodos cerrados y publicados, sin los futuros.
+- **Alcance:** 135 pasos con histórico (177 periodos). 105 de ellos no mostraban ninguna música porque solo tenían bandas históricas.
