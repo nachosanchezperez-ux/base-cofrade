@@ -1,0 +1,856 @@
+.page {
+  background: #fbfaf7;
+  min-height: 78vh;
+  color: #16283a;
+}
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 32px 0 42px;
+  background: linear-gradient(122deg, #24131c 0%, #5c2433 62%, #812c42 100%);
+  color: #fff;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  width: 480px;
+  height: 480px;
+  right: -190px;
+  top: -185px;
+  border: 1px solid rgba(244, 219, 184, .23);
+  border-radius: 50%;
+  box-shadow: 0 0 0 68px rgba(251, 228, 203, .042), 0 0 0 138px rgba(251, 228, 203, .028);
+  pointer-events: none;
+}
+
+.hero > :global(.shell) {
+  position: relative;
+  z-index: 1;
+}
+
+.heroBack {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 12px;
+  color: #f2c9c9;
+  font-weight: 700;
+}
+
+.heroBack:hover,
+.heroBack:focus-visible {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.heroEyebrow,
+.eyebrow {
+  display: block;
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1.6;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+}
+
+.heroEyebrow {
+  color: #e7c39b;
+  margin-top: 20px;
+}
+
+.hero h1 {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(42px, 7vw, 72px);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -.045em;
+  margin: 9px 0 13px;
+  max-width: 760px;
+}
+
+.hero p {
+  max-width: 680px;
+  margin: 0;
+  color: rgba(255, 255, 255, .85);
+  font-size: clamp(14px, 2vw, 18px);
+  line-height: 1.65;
+}
+
+.gameSection {
+  padding: 24px 0 68px;
+}
+
+.wrap {
+  max-width: 1120px;
+}
+
+.modes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: 780px;
+  gap: 10px;
+  margin: 0 0 24px;
+}
+
+.modes button {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  min-height: 74px;
+  gap: 12px;
+  padding: 13px 16px;
+  background: #fff;
+  border: 1px solid #e5ddd5;
+  border-radius: 16px;
+  color: #5e5960;
+  cursor: pointer;
+  text-align: left;
+  transition: border .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+
+.modes button:hover {
+  border-color: #8f4d5e;
+}
+
+.modes button.modeActive {
+  border-color: #72283a;
+  color: #552432;
+  background: #fffaf7;
+  box-shadow: 0 6px 24px rgba(81, 31, 46, .08);
+}
+
+.modeIcon {
+  flex: 0 0 38px;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: #f7eeed;
+  color: #712439;
+  font-family: Georgia, serif;
+  font-size: 22px;
+}
+
+.modes strong,
+.modes small {
+  display: block;
+}
+
+.modes strong {
+  font-size: 14px;
+  line-height: 1.3;
+}
+
+.modes small {
+  margin-top: 3px;
+  font-size: 11px;
+  color: #756a70;
+  line-height: 1.3;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(230px, .55fr);
+  align-items: start;
+  gap: 22px;
+}
+
+.gameCard {
+  min-width: 0;
+  border: 1px solid #eadfd5;
+  border-radius: 24px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 16px 46px rgba(45, 27, 29, .055);
+  padding: clamp(20px, 3vw, 34px);
+}
+
+.gameHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 14px;
+}
+
+.eyebrow {
+  color: #a63d55;
+}
+
+.gameHeader h2 {
+  margin: 6px 0 4px;
+  color: #2c1c23;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(27px, 4vw, 36px);
+  line-height: 1.1;
+}
+
+.gameHeader p {
+  color: #716b6d;
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.gameNumber {
+  flex: 0 0 auto;
+  border-radius: 100px;
+  border: 1px solid #eadfdb;
+  color: #724356;
+  padding: 6px 10px;
+  font-size: 11px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.stageSteps {
+  display: flex;
+  gap: 10px;
+  margin-top: 23px;
+}
+
+.stageSteps span {
+  display: grid;
+  place-items: center;
+  flex: 1 1 0;
+  min-width: 0;
+  height: 28px;
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: 800;
+  color: #948d8e;
+  background: #f3f0ec;
+}
+
+.stageSteps span.stageCurrent {
+  background: #772a40;
+  color: #fff;
+}
+
+.stageSteps span.stageDone {
+  background: #24785d;
+  color: #fff;
+}
+
+.riddle {
+  margin: 25px 0 22px;
+  padding: clamp(22px, 4vw, 36px) clamp(20px, 4vw, 32px);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(238, 211, 169, .24), transparent 38%),
+    #f7f2ea;
+  border: 1px solid #eee0cd;
+  text-align: center;
+}
+
+.riddleLabel,
+.letters {
+  display: inline-flex;
+  color: #825c4a;
+  font-size: 11px;
+  font-weight: 850;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+}
+
+.riddle blockquote {
+  margin: 16px auto;
+  max-width: 610px;
+  color: #30202a;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(23px, 3.5vw, 32px);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -.025em;
+}
+
+.letters {
+  padding: 7px 13px;
+  border: 1px solid #decbb6;
+  border-radius: 100px;
+}
+
+.hintHeader {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  align-items: baseline;
+  margin-bottom: 11px;
+}
+
+.hintHeader h3 {
+  margin: 0;
+  color: #2d2630;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.hintHeader span {
+  font-size: 11px;
+  color: #7c7372;
+}
+
+.hintButtons {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.hintButtons button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 47px;
+  border-radius: 11px;
+  border: 1px solid #dbcbd1;
+  padding: 9px;
+  background: #fffcfa;
+  color: #762c42;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1.3;
+  cursor: pointer;
+}
+
+.hintButtons button:hover:not(:disabled) {
+  background: #f9eeef;
+  border-color: #a35e6d;
+}
+
+.hintButtons button.hintRevealed {
+  background: #f3efec;
+  border-color: #e8e1dc;
+  color: #6e6768;
+}
+
+.hintButtons button:disabled {
+  cursor: default;
+  opacity: .78;
+}
+
+.hintButtons button span {
+  color: #bd5066;
+  font-size: 17px;
+  line-height: 1;
+}
+
+.revealedHints {
+  display: grid;
+  gap: 9px;
+  margin-top: 13px;
+}
+
+.revealedHints p {
+  border-left: 3px solid #be8f57;
+  padding: 10px 14px;
+  border-radius: 0 9px 9px 0;
+  background: #fcf8f1;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #4c4650;
+}
+
+.revealedHints strong {
+  display: block;
+  color: #5b3c2e;
+  font-size: 11px;
+}
+
+.guessForm {
+  margin-top: 23px;
+}
+
+.guessForm label {
+  display: block;
+  margin-bottom: 9px;
+  color: #2c2430;
+  font-size: 14px;
+  font-weight: 850;
+}
+
+.guessRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 9px;
+}
+
+.guessRow input {
+  display: block;
+  min-width: 0;
+  min-height: 53px;
+  border: 2px solid #d9dfe3;
+  border-radius: 11px;
+  padding: 0 14px;
+  color: #152d3e;
+  background: #fff;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+.guessRow input:focus {
+  border-color: #8a3548;
+  outline: 3px solid rgba(138, 53, 72, .12);
+}
+
+.guessRow button,
+.nextButton,
+.summaryTop button {
+  min-height: 53px;
+  border: 0;
+  border-radius: 11px;
+  background: #76273f;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 850;
+  font-size: 13px;
+  padding: 0 19px;
+}
+
+.guessRow button:hover:not(:disabled),
+.nextButton:hover,
+.summaryTop button:hover {
+  background: #552033;
+}
+
+.guessRow button:disabled {
+  opacity: .55;
+  cursor: default;
+}
+
+.attemptInfo {
+  display: block;
+  color: #7c7475;
+  font-size: 11px;
+  margin-top: 9px;
+}
+
+.guesses {
+  margin-top: 24px;
+}
+
+.guesses > span {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: #766b6a;
+  font-weight: 800;
+  margin-bottom: 9px;
+}
+
+.guesses > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.guesses > div span {
+  border: 1px solid #e3d8d3;
+  background: #f8f4f1;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .07em;
+  padding: 6px 10px;
+}
+
+.guesses > div span.guessCorrect {
+  background: #e8f5ed;
+  border-color: #a8d7be;
+  color: #276646;
+}
+
+.guesses > div span.guessWrong {
+  color: #705e62;
+}
+
+.feedback,
+.shareStatus {
+  margin: 13px 0 0;
+  color: #78344c;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.answerCard {
+  margin-top: 24px;
+  padding: 22px;
+  border-radius: 16px;
+  border: 1px solid #d9e9dd;
+  background: #f3f8f2;
+}
+
+.answerKicker {
+  color: #416d50;
+  font-size: 11px;
+  font-weight: 850;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+}
+
+.answerCard h3 {
+  color: #23563f;
+  font-family: Georgia, serif;
+  font-size: clamp(25px, 4vw, 35px);
+  line-height: 1.1;
+  margin: 7px 0 9px;
+}
+
+.answerCard p {
+  color: #3a5445;
+  margin: 0;
+  line-height: 1.6;
+  font-size: 13px;
+}
+
+.answerFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.answerFooter a {
+  color: #306949;
+  font-size: 12px;
+  font-weight: 850;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.answerFooter strong {
+  font-size: 12px;
+  color: #23563f;
+}
+
+.nextButton {
+  margin-top: 18px;
+  width: 100%;
+}
+
+.summary {
+  margin-top: 18px;
+  border-top: 1px solid #e9e4df;
+  padding-top: 19px;
+}
+
+.summaryTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.summaryTop h3 {
+  color: #752c42;
+  font-size: 29px;
+  font-weight: 850;
+  line-height: 1.2;
+  margin: 4px 0 0;
+}
+
+.summaryTop h3 span {
+  color: #87777d;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.summaryTop button {
+  min-height: 45px;
+}
+
+.connection {
+  padding: 19px 0 0;
+}
+
+.connection strong {
+  color: #283b4e;
+  font-size: 15px;
+}
+
+.connection p,
+.dailyDone {
+  color: #6b6570;
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 8px 0 0;
+}
+
+.connectionWords {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+  margin-top: 13px;
+}
+
+.connectionWords span {
+  border: 1px solid #e5d6c8;
+  border-radius: 9px;
+  padding: 6px 9px;
+  font-size: 11px;
+  font-weight: 850;
+  color: #875839;
+  background: #fff8ee;
+}
+
+.aside {
+  display: grid;
+  gap: 14px;
+}
+
+.asideCard,
+.howTo,
+.privacyNote,
+.anotherGame {
+  border-radius: 16px;
+  border: 1px solid #e8e0da;
+  background: #fff;
+  padding: 20px;
+}
+
+.gameStat {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: 16px;
+  font-size: 12px;
+  color: #6d6568;
+}
+
+.gameStat strong {
+  color: #562c3a;
+  font-size: 13px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.howTo {
+  background: #faf4ed;
+  border-color: #eedfcd;
+}
+
+.howTo h3 {
+  margin: 9px 0;
+  color: #4b3439;
+  font-family: Georgia, serif;
+  font-size: 23px;
+  line-height: 1.15;
+}
+
+.howTo p,
+.anotherGame p,
+.privacyNote p {
+  margin: 8px 0 0;
+  color: #6a6265;
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.privacyNote {
+  display: flex;
+  align-items: start;
+  gap: 10px;
+}
+
+.privacyNote > span {
+  color: #7f3e50;
+  font-size: 19px;
+}
+
+.privacyNote p {
+  margin: 0;
+}
+
+.anotherGame a {
+  color: #7e2c43;
+  font-weight: 850;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.loading {
+  min-height: 250px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #e7dfd8;
+  border-radius: 20px;
+  color: #685d62;
+  background: #fff;
+  font-size: 14px;
+}
+
+.teaser {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-top: 18px;
+  padding: 15px 18px;
+  border-radius: 16px;
+  border: 1px solid #e3cfc9;
+  background: linear-gradient(100deg, #f9eee9, #fff8f0);
+}
+
+.teaserCopy {
+  min-width: 0;
+}
+
+.teaserCopy span {
+  display: block;
+  color: #9a3a4f;
+  text-transform: uppercase;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .1em;
+}
+
+.teaserCopy strong {
+  display: block;
+  margin-top: 4px;
+  color: #37232d;
+  font-family: Georgia, serif;
+  font-size: 18px;
+  line-height: 1.3;
+}
+
+.teaserLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  min-height: 44px;
+  border-radius: 100px;
+  background: #74273c;
+  padding: 0 18px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 850;
+  white-space: nowrap;
+}
+
+.teaserLink:hover {
+  background: #4b1b2e;
+}
+
+.gameSection button:focus-visible,
+.modes button:focus-visible,
+.hero a:focus-visible,
+.gameSection a:focus-visible,
+.teaser a:focus-visible {
+  outline: 3px solid #d8a34b;
+  outline-offset: 3px;
+}
+
+@media (max-width: 850px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+  .aside {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 550px) {
+  .hero {
+    padding: 14px 0 33px;
+  }
+  .heroEyebrow {
+    margin-top: 12px;
+  }
+  .gameSection {
+    padding: 15px 0 45px;
+  }
+  .modes {
+    gap: 7px;
+    margin-bottom: 14px;
+  }
+  .modes button {
+    min-height: 70px;
+    padding: 10px;
+    gap: 7px;
+  }
+  .modeIcon {
+    width: 30px;
+    height: 30px;
+    flex-basis: 30px;
+    font-size: 18px;
+  }
+  .modes strong {
+    font-size: 11.5px;
+  }
+  .modes small {
+    font-size: 10px;
+  }
+  .gameCard {
+    border-radius: 16px;
+    padding: 17px;
+  }
+  .gameHeader {
+    gap: 8px;
+  }
+  .gameHeader h2 {
+    font-size: 27px;
+  }
+  .gameHeader p {
+    font-size: 12px;
+  }
+  .gameNumber {
+    padding: 5px 7px;
+    font-size: 9px;
+  }
+  .riddle {
+    margin: 19px 0;
+    padding: 22px 15px;
+  }
+  .riddle blockquote {
+    font-size: clamp(22px, 6vw, 27px);
+  }
+  .hintButtons {
+    grid-template-columns: 1fr;
+  }
+  .hintButtons button {
+    justify-content: flex-start;
+    min-height: 44px;
+    padding: 10px 14px;
+    font-size: 12px;
+  }
+  .guessRow {
+    grid-template-columns: 1fr;
+  }
+  .guessRow button {
+    width: 100%;
+    min-height: 49px;
+  }
+  .aside {
+    grid-template-columns: 1fr;
+  }
+  .teaser {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 14px;
+    gap: 12px;
+  }
+  .teaserCopy strong {
+    font-size: 17px;
+  }
+  .teaserLink {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modes button {
+    transition: none;
+  }
+}
