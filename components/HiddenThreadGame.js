@@ -476,7 +476,7 @@ export default function HiddenThreadGame({ initialDayKey = '' }) {
                       <span className={styles.eyebrow}>Reto completado</span>
                       <h3>{hiddenTotalScore(progress)} <span>/ {challenge.words.length * 100} puntos</span></h3>
                     </div>
-                    <button type="button" onClick={share}>Compartir resultado <span aria-hidden="true">↗</span></button>
+                    <span className={styles.summaryRibbon}>✦ Un reto más desenredado</span>
                   </div>
                   <div className={styles.achievement} aria-label="Distinción conseguida">
                     <span aria-hidden="true">❖</span>
@@ -498,6 +498,35 @@ export default function HiddenThreadGame({ initialDayKey = '' }) {
                   )}
                   {minutesLeft ? (
                     <p className={styles.countdown}>Próximo reto en <strong>{countdownLabel(minutesLeft)}</strong>, a medianoche en Sevilla.</p>
+                  ) : null}
+                  {shareData && socialLinks ? (
+                    <section className={styles.socialShare} aria-label="Comparte tu resultado en redes sociales">
+                      <div className={styles.socialPreview} aria-label={'Tu resultado: ' + shareData.score + ' de ' + shareData.maxScore + ' puntos'}>
+                        <span className={styles.socialPreviewBrand}>HILO COFRADE</span>
+                        <strong>El hilo escondido</strong>
+                        <span className={styles.socialPreviewMode}>{shareData.mode} · {shareData.date}</span>
+                        <div className={styles.socialPreviewScore}>{shareData.score} <small>/ {shareData.maxScore}</small></div>
+                        <span className={styles.socialPreviewMarks}>{shareData.marks}</span>
+                        <span className={styles.socialPreviewSite}>hilocofrade.es</span>
+                      </div>
+                      <div className={styles.socialShareActions}>
+                        <span className={styles.eyebrow}>Presume de partida, sin dar pistas</span>
+                        <h4>¿Quién se atreve a superarte?</h4>
+                        <p>Comparte tus puntos y desafía a otros cofrades sin revelar la palabra.</p>
+                        <button type="button" className={styles.socialShareMain} onClick={share}>
+                          Compartir resultado <span aria-hidden="true">↗</span>
+                        </button>
+                        <button type="button" className={styles.socialShareStory} onClick={shareStory}>
+                          Imagen para historias (9:16) <span aria-hidden="true">↓</span>
+                        </button>
+                        <div className={styles.socialShareLinks}>
+                          <a href={socialLinks.whatsapp} target="_blank" rel="noopener noreferrer">WhatsApp ↗</a>
+                          <a href={socialLinks.x} target="_blank" rel="noopener noreferrer">X ↗</a>
+                          <button type="button" onClick={copyResult}>Copiar texto <span aria-hidden="true">⧉</span></button>
+                        </div>
+                        <small>Para Instagram, utiliza «Imagen para historias» y elige la aplicación o guarda el PNG.</small>
+                      </div>
+                    </section>
                   ) : null}
                   <button
                     type="button"
