@@ -160,3 +160,17 @@ Detalle en `owner-fixes-2.sql` y su reversión, `owner-fixes-2-rollback.sql`.
 **Cifras actualizadas:**
 - Bandas en borrador en salidas publicadas: queda Ánima Sacra, más el posible duplicado de Bollullos.
 - Periodos históricos invisibles: 0.
+
+## Tercera tanda del propietario · 12/10/2026 · aplicada
+
+Detalle en `owner-fixes-3.sql` y su reversión, `owner-fixes-3-rollback.sql`.
+
+1. **Bollullos:** una sola ficha con el nombre correcto, «Banda Municipal de Bollullos del Condado». Sigue en borrador.
+   - Sus 2 asignaciones de Aznalcázar llevan ya el nombre nuevo.
+   - El periodo 2027–2028 de la Esperanza de Arahal pasa a esta ficha, sin enlace público.
+   - La ficha duplicada «… Bollullos Par del Condado» se archiva, no se borra. No tenía otras referencias.
+2. **Ánima Sacra:** solo como texto en el Corpus del Cerro. La ficha, en revisión, no se toca.
+
+**Verificado en `outing_music_details`:**
+- Los nombres se muestran correctamente.
+- Asignaciones publicadas cuya banda no está publicada y que no tienen texto: **0**.
