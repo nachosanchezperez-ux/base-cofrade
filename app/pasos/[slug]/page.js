@@ -46,6 +46,7 @@ export async function generateMetadata({ params }) {
     hermandad,
     imagenes = [],
     bandas = [],
+    historicoMusical = [],
     coverMedia = null,
     heritage = { phases: [], pieces: [], sources: [] },
   } = result;
@@ -61,7 +62,7 @@ export async function generateMetadata({ params }) {
     type: paso.tipo,
     context: hermandad?.localidad || hermandad?.nombrePopular,
     summary: paso.descripcion,
-    relations: [hermandad?.id, imagenes, bandas, heritage.phases, heritage.pieces],
+    relations: [hermandad?.id, imagenes, bandas, historicoMusical, heritage.phases, heritage.pieces],
     sources: heritage.sources || [],
     publicValues: [paso, heritage.phases, heritage.pieces],
   });
@@ -105,6 +106,7 @@ export default async function PasoDetailPage({params}){
     hermandad,
     imagenes = [],
     bandas = [],
+    historicoMusical = [],
     coverMedia = null,
     heritage = { phases: [], pieces: [], sources: [] },
   } = result;
@@ -133,6 +135,13 @@ export default async function PasoDetailPage({params}){
       title: banda.nombre,
       href: `/bandas/${banda.slug}`,
       context: [banda.salida, banda.periodo].filter(Boolean).join(' · '),
+    })),
+    ...historicoMusical.filter((item) => item.slug).map((item) => ({
+      kind: 'Banda',
+      relation: 'Acompañó a este paso',
+      title: item.name,
+      href: `/bandas/${item.slug}`,
+      context: [item.period, item.position].filter(Boolean).join(' · '),
     })),
   ];
   const canonicalPath = `/pasos/${paso.slug}`;
@@ -222,7 +231,7 @@ export default async function PasoDetailPage({params}){
       <EntitySectionNav items={[
         { href: '#resumen', label: 'Resumen' },
         relationalItems.length > 0 && { href: '#tira-del-hilo', label: 'Tira del hilo' },
-        bandas.length > 0 && { href: '#acompanamiento', label: 'Acompañamiento' },
+        (bandas.length > 0 || historicoMusical.length > 0) && { href: '#acompanamiento', label: 'Acompañamiento' },
         (heritage.phases.length > 0 || heritage.pieces.length > 0 || heritage.sources.length > 0) && { href: '#patrimonio', label: 'Patrimonio y evolución' },
       ]} />
 
@@ -266,15 +275,17 @@ export default async function PasoDetailPage({params}){
         description="Desde aquí puedes volver a la Hermandad, abrir las fichas de las imágenes que procesionan o continuar hacia las formaciones musicales vinculadas actualmente."
       />
 
-      {bandas.length > 0 && (
+      {(bandas.length > 0 || historicoMusical.length > 0) && (
         <section className={`section ${styles.accompanimentSection}`} id="acompanamiento">
           <div className="shell">
             <SectionTitle
-              eyebrow="Relación actual"
+              eyebrow={bandas.length > 0 ? 'Relación actual' : 'Histórico'}
               title="Acompañamiento musical"
-              description="Formaciones vinculadas actualmente a este paso mediante acompañamientos documentados."
+              description={bandas.length > 0
+                ? 'Formaciones vinculadas a este paso mediante acompañamientos documentados, con su histórico.'
+                : 'Formaciones que acompañaron a este paso en periodos documentados.'}
             />
-            <div className={styles.accompanimentGrid}>
+            {bandas.length > 0 ? <div className={styles.accompanimentGrid}>
               {bandas.map((banda) => (
                 <Link className={styles.accompanimentCard} href={`/bandas/${banda.slug}`} key={banda.id}>
                   <span>{banda.posicion}</span>
@@ -284,7 +295,20 @@ export default async function PasoDetailPage({params}){
                   <em aria-hidden="true">→</em>
                 </Link>
               ))}
-            </div>
+            </div> : null}
+            {historicoMusical.length > 0 ? (
+              <div className={styles.musicHistory}>
+                <h3>Histórico musical del paso</h3>
+                <ol>
+                  {historicoMusical.map((item) => (
+                    <li key={item.id}>
+                      {item.slug ? <Link href={`/bandas/${item.slug}`}>{item.name}</Link> : <strong>{item.name}</strong>}
+                      <small>{[item.period, item.position].filter(Boolean).join(' · ')}</small>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            ) : null}
           </div>
         </section>
       )}

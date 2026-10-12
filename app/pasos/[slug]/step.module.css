@@ -329,3 +329,65 @@
     line-height: 1.68;
   }
 }
+
+/* Histórico musical del paso: lista compacta, legible en móvil. */
+.musicHistory {
+  margin-top: 26px;
+  padding-top: 20px;
+  border-top: 1px solid #e5ebf0;
+}
+
+.musicHistory h3 {
+  margin: 0 0 10px;
+  color: var(--brotherhood-secondary, #a71930);
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.musicHistory ol {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.musicHistory li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 4px 16px;
+  align-items: baseline;
+  padding: 10px 0;
+  border-bottom: 1px solid #eef2f5;
+}
+
+.musicHistory li a,
+.musicHistory li strong {
+  color: #132d49;
+  font-size: 14px;
+  font-weight: 750;
+  line-height: 1.3;
+}
+
+.musicHistory li a:hover {
+  color: var(--brotherhood-secondary, #a71930);
+}
+
+.musicHistory li small {
+  color: #6f7d8b;
+  font-size: 11px;
+  line-height: 1.4;
+  text-align: right;
+}
+
+@media (max-width: 620px) {
+  .musicHistory li {
+    grid-template-columns: 1fr;
+  }
+
+  .musicHistory li small {
+    text-align: left;
+  }
+}
