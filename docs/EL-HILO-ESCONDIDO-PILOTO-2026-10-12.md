@@ -90,3 +90,18 @@ La preview de Vercel no es accesible desde el navegador de esta sesión (el prox
 - **Flujo experto:** tres cabos con un fallo intercalado, progreso por cabo, conexión final, 282/300 y línea `✦ ✓ ✦`.
 - **Corregido en la QA:** el contador «01 / 01» del modo diario (sin significado) se retira; al terminar el modo experto el tercer cabo seguía como «en curso».
 - **Teclado:** el foco recorre enlace de vuelta, modalidades, enlace de la respuesta, compartir y Cofradle con foco visible.
+
+## Acceso directo y promoción de Cofradle · 12/10/2026 (noche)
+
+**Problema de usabilidad:** tras el primer rediseño, las cinco categorías, los indicadores y otros bloques se encontraban antes de la partida real; la invitación a Cofradle quedaba tras todo el juego. La promoción anterior además produjo JSX inválido y provocó fallo de compilación, por lo que no era publicable.
+
+**Solución implementada en la misma PR #1146:**
+
+- En la cabecera hay dos acciones visibles sin explorar menús: «Jugar aquí» (salta a una ancla existente desde el render inicial) y «Jugar en Cofradle» (abre el sitio externo de forma independiente).
+- Las modalidades y el formulario aparecen antes que las estadísticas, las categorías futuras y la información editorial. La prioridad es poder empezar a jugar inmediatamente.
+- Cofradle tiene además una tarjeta visual completa y pulsable, con dos motivos ilustrativos de hermandades y música, un botón gráfico «Jugar ahora» y una advertencia clara sobre el destino externo.
+- En móvil, dentro de la tarjeta Cofradle se muestra primero el titular y la acción; la composición decorativa queda detrás, para no demorar el clic.
+- El recuadro decorativo no promete enlaces independientes a cada modalidad: toda la tarjeta lleva a la portada de cofradle.es.
+- No se añaden nuevas URLs, dependencias ni migraciones. Prueba de regresión de enlaces y orden de lectura en `test/hilo-hidden-play-entry.test.mjs`.
+
+**Barrera de cierre:** comprobar CI y preview del SHA final; conservar pendiente la revisión editorial del banco y el ensayo en iPhone físico. No considerar el juego publicado.
