@@ -6,27 +6,15 @@ function read(path) {
   return readFileSync(new URL(`../${path}`, import.meta.url), 'utf8')
 }
 
-test('el directo múltiple usa un único bloque azul y no repite una cabecera interna', () => {
+// Desde la PR B (Tarea 06) las procesiones en curso aparecen en la pestaña «Ahora» de la
+// agenda inmediata y la primera se destaca con su horario completo. La selección se prueba
+// por comportamiento en home-agenda-now.test.mjs.
+test('con salidas en curso, la agenda va primero y el destacado en directo después', () => {
   const home = read('components/HomePageV2.js')
-  const styles = read('components/HomeExtraordinaryLive.module.css')
-
-  assert.match(home, /multipleLive \? liveStyles\.multipleLiveSection/)
-  assert.match(home, /Varias procesiones están en la calle/)
-  assert.doesNotMatch(home, /className=\{liveStyles\.multipleLiveHead\}/)
-  assert.match(styles, /\.multipleLiveSection\.multipleLiveSection/)
-  assert.match(styles, /linear-gradient\(145deg, #0a2139/)
-  assert.match(styles, /color: #fff/)
-})
-
-test('con salidas en curso la secuencia es directo, otros actos y después próximas citas', () => {
-  const home = read('components/HomePageV2.js')
-
-  assert.match(home, /buildComplementaryHomeTemporal\(homeTemporal, upcomingAgenda\)/)
-  const liveBranch = home.slice(home.indexOf('{liveOutings.length ? ('))
-  const direct = liveBranch.indexOf('{upcomingSection}')
-  const other = liveBranch.indexOf('{temporalSection}')
-  const after = liveBranch.indexOf('{followingSection}')
-  const editorial = liveBranch.indexOf('{todaySection}')
-
-  assert.ok(direct >= 0 && other > direct && after > other && editorial > after)
+  assert.match(home, /selectHomeFeaturedOuting\(/)
+  assert.match(home, /Procesión en curso/)
+  const agenda = home.indexOf('<HomeAgendaNow')
+  const featured = home.indexOf('{featuredSection}')
+  const today = home.indexOf('<HomeTodayV2')
+  assert.ok(agenda >= 0 && featured > agenda && today > featured)
 })
