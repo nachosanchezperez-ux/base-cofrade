@@ -30,16 +30,24 @@ export default async function HiloMovementsPage({ searchParams }) {
     <div className="shell">
       <SiteBreadcrumb items={[{ label: 'El Hilo se mueve' }]} />
       <JsonLd data={breadcrumbJsonLd([{ name: 'Inicio', path: '/' }, { name: 'El Hilo se mueve', path: HILO_MOVEMENTS_PATH }])} />
-      <header className={styles.hero}><span className={styles.eyebrow}>Entre varales y cornetas</span><h1>El Hilo se mueve</h1><p>Un relevo tras el palio, unos sones que siguen, un nuevo capítulo en la hermandad. Aquí te contamos qué se mueve y te llevamos a quienes forman parte de cada historia.</p><div className={styles.heroGuide}><span>La novedad</span><b aria-hidden="true">→</b><span>Sus protagonistas</span><b aria-hidden="true">→</b><span>Su historia</span></div></header>
+      <header className={styles.hero}>
+        <div><span className={styles.eyebrow}>La actualidad también tiene su hilo</span><h1>El Hilo <em>se mueve</em></h1><p>Lo que cambia en nuestras hermandades. Los sones que llegan, el patrimonio que vuelve y las historias que siguen.</p></div>
+        <a className={styles.heroLink} href="#novedades">Tira del hilo <span aria-hidden="true">↓</span></a>
+      </header>
       {unavailable ? <p className={styles.empty} role="status">No hemos podido recuperar las novedades. Puedes consultar las <Link href="/hermandades">hermandades</Link> y la <Link href="/agenda-cofrade">agenda</Link>.</p> : <>
+        <nav className={styles.topicNav} aria-label="Novedades por tema"><Link href={HILO_MOVEMENTS_PATH} aria-current={!filters.tema ? 'page' : undefined}>Todo el hilo</Link>{topics.map((topic) => <Link key={topic} href={`${HILO_MOVEMENTS_PATH}?tema=${topic}`} aria-current={filters.tema === topic ? 'page' : undefined}>{HILO_TOPIC_LABELS[topic]}</Link>)}</nav>
+        <details className={styles.filterDisclosure} open={!!(filters.q || filters.municipio || filters.tema)}><summary>Busca tu hermandad, banda o municipio <span aria-hidden="true">+</span></summary>
         <form key={JSON.stringify(filters)} className={styles.filters} action={HILO_MOVEMENTS_PATH} method="get" role="search" aria-label="Buscar novedades de hermandades">
           <label>Hermandad, banda o novedad<input type="search" name="q" maxLength={120} defaultValue={filters.q} placeholder="¿De qué hilo quieres tirar?" /></label>
           <label>Municipio<select name="municipio" defaultValue={filters.municipio}><option value="">Todos los municipios</option>{filters.municipio && !municipalities.includes(filters.municipio) ? <option value={filters.municipio}>{filters.municipio}</option> : null}{municipalities.map((name) => <option key={name} value={name}>{name}</option>)}</select></label>
           <label>Tema<select name="tema" defaultValue={filters.tema}><option value="">Todos los temas</option>{filters.tema && !topics.includes(filters.tema) ? <option value={filters.tema}>{HILO_TOPIC_LABELS[filters.tema] || 'Otro tema'}</option> : null}{topics.map((topic) => <option key={topic} value={topic}>{HILO_TOPIC_LABELS[topic]}</option>)}</select></label>
           <button type="submit">Buscar novedades</button><Link className={styles.more} href={HILO_MOVEMENTS_PATH} prefetch={false}>Quitar filtros</Link>
-        </form>
-        <p className={styles.results}>{selected.length} {selected.length === 1 ? 'novedad documentada' : 'novedades documentadas'} · Ordenadas por fecha del anuncio, cuando se conoce.</p>
-        {selected.length ? <HiloMovementCards items={selected} headingLevel={2} /> : <p className={styles.empty}>No hay novedades publicadas con estos filtros. <Link href={HILO_MOVEMENTS_PATH} prefetch={false}>Ver todas las novedades</Link>.</p>}
+        </form></details>
+        <p id="novedades" className={styles.results}>{selected.length} {selected.length === 1 ? 'novedad documentada' : 'novedades documentadas'} · Ordenadas por fecha del anuncio, cuando se conoce.</p>
+        {selected.length ? <>
+          <HiloMovementCards items={selected.slice(0, 1)} headingLevel={2} featured />
+          {selected.length > 1 ? <section aria-labelledby="el-hilo-sigue"><header className={styles.followHeader}><h2 id="el-hilo-sigue">El hilo sigue</h2><p>Más capítulos de la vida cofrade</p></header><HiloMovementCards items={selected.slice(1)} headingLevel={3} /></section> : null}
+        </> : <p className={styles.empty}>No hay novedades publicadas con estos filtros. <Link href={HILO_MOVEMENTS_PATH} prefetch={false}>Ver todas las novedades</Link>.</p>}
       </>}
     </div>
   </div>
