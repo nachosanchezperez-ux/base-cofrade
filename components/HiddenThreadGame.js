@@ -8,11 +8,11 @@ import {
   hiddenEffectiveStreak,
   evaluateHiddenGuess,
   hiddenGuessMatches,
+  HILO_GAME_ERROR_COST,
   HILO_GAME_HINT_COST,
   HILO_GAME_MAX_ERRORS,
   hiddenPriorDayKey,
   hiddenRoundScore,
-  hiddenShareText,
   hiddenTotalScore,
   madridHiddenDayKey,
   makeHiddenProgress,
@@ -20,12 +20,14 @@ import {
   normalizeHiddenAnswer,
   validHiddenProgress,
 } from '@/lib/hilo-hidden-game'
-import styles from './HiddenThreadGame.module.css'
 import { HILO_SHARE_URL, hiddenInviteText, hiddenShareData, hiddenShareSocialLinks, hiddenStoryFilename } from '@/lib/hilo-hidden-share'
 import { createHiddenStoryFile, saveHiddenStoryFile } from '@/lib/hilo-hidden-share-card'
+import styles from './HiddenThreadGame.module.css'
 
 const GAME_STORAGE = 'hc-hilo-escondido-v2:'
 const STREAK_STORAGE = 'hc-hilo-escondido-racha-v1'
+// Pausa breve para que se vea la tarjeta elegida antes de revelar si es correcta.
+const SELECT_DELAY_MS = 380
 
 function getProgress(challenge, storageKey) {
   try {
@@ -50,7 +52,7 @@ function getStreak() {
 function readableDay(dayKey) {
   const [year, month, day] = dayKey.split('-').map(Number)
   return new Intl.DateTimeFormat('es-ES', {
-    timeZone: 'Europe/Madrid', day: 'numeric', month: 'long', year: 'numeric',
+    timeZone: 'Europe/Madrid', weekday: 'long', day: 'numeric', month: 'long',
   }).format(new Date(Date.UTC(year, month - 1, day, 12)))
 }
 
@@ -65,21 +67,28 @@ function roundErrors(round) {
   return round.guesses.length - (round.status === 'won' ? 1 : 0)
 }
 
+function prefersReducedMotion() {
+  return Boolean(window.matchMedia?.('(prefers-reduced-motion: reduce)').matches)
+}
+
 export default function HiddenThreadGame({ initialDayKey = '' }) {
   const [dateKey, setDateKey] = useState(initialDayKey)
-  const gameHeadingRef = useRef(null)
   const [mode, setMode] = useState('daily')
-  // La pista debe existir en SSR: el almacenamiento local se reconcilia al hidratar.
+  // La adivinanza existe ya en el HTML del servidor; el progreso local se reconcilia al hidratar.
   const [state, setState] = useState(() => initialDayKey ? {
     key: GAME_STORAGE + 'daily-' + initialDayKey,
     progress: makeHiddenProgress(getHiddenChallenge(initialDayKey, 'daily')),
   } : null)
   const [answer, setAnswer] = useState('')
+  const [pending, setPending] = useState('')
   const [feedback, setFeedbackState] = useState({ text: '', tone: '' })
   const setFeedback = (text, tone = 'info') => setFeedbackState({ text, tone: text ? tone : '' })
   const [shareStatus, setShareStatus] = useState('')
   const [streak, setStreak] = useState(0)
   const [minutesLeft, setMinutesLeft] = useState(0)
+  const riddleRef = useRef(null)
+  const resultRef = useRef(null)
+  const pendingTimer = useRef(0)
 
   useEffect(() => {
     const updateDay = () => setDateKey(madridHiddenDayKey())
@@ -92,6 +101,7 @@ export default function HiddenThreadGame({ initialDayKey = '' }) {
     return () => {
       document.removeEventListener('visibilitychange', onVisibility)
       window.removeEventListener('focus', updateDay)
+      window.clearTimeout(pendingTimer.current)
     }
   }, [])
 
@@ -105,6 +115,7 @@ export default function HiddenThreadGame({ initialDayKey = '' }) {
     if (!challenge) return
     setState({ key: storageKey, progress: getProgress(challenge, storageKey) })
     setAnswer('')
+    setPending('')
     setFeedback('')
     setShareStatus('')
     setStreak(hiddenEffectiveStreak(getStreak(), challenge.dateKey))
@@ -123,10 +134,7 @@ export default function HiddenThreadGame({ initialDayKey = '' }) {
     () => completed ? hiddenShareData(challenge, progress) : null,
     [challenge, progress, completed]
   )
-  const socialLinks = useMemo(
-    () => hiddenShareSocialLinks(shareData),
-    [shareData]
-  )
+  const socialLinks = useMemo(() => hiddenShareSocialLinks(shareData), [shareData])
 
   useEffect(() => {
     if (mode !== 'daily' || !progress?.finished || !dateKey) return
@@ -140,9 +148,8 @@ export default function HiddenThreadGame({ initialDayKey = '' }) {
     const count = won
       ? (previous.date === hiddenPriorDayKey(dateKey) ? previous.count + 1 : 1)
       : 0
-    const next = { date: dateKey, count }
     try {
-      window.localStorage.setItem(STREAK_STORAGE, JSON.stringify(next))
+      window.localStorage.setItem(STREAK_STORAGE, JSON.stringify({ date: dateKey, count }))
     } catch {
       // La partida sigue funcionando si el navegador bloquea el almacenamiento.
     }
@@ -168,9 +175,7 @@ export default function HiddenThreadGame({ initialDayKey = '' }) {
   }
 
   function patchRound(nextRound, otherFields = {}) {
-    const rounds = progress.rounds.map((item, index) => (
-      index === progress.stage ? nextRound : item
-    ))
+    const rounds = progress.rounds.map((item, index) => (index === progress.stage ? nextRound : item))
     saveProgress({ ...progress, ...otherFields, rounds })
   }
 
@@ -180,11 +185,18 @@ export default function HiddenThreadGame({ initialDayKey = '' }) {
     setFeedback('')
   }
 
+  function bringResultIntoView() {
+    window.requestAnimationFrame(() => resultRef.current?.scrollIntoView({
+      behavior: prefersReducedMotion() ? 'auto' : 'smooth',
+      block: 'nearest',
+    }))
+  }
+
   function tryGuess(value, tapped = false) {
     if (!canPlay || (mode === 'daily') !== tapped) return
     const result = evaluateHiddenGuess({ word, round, value, isChoice: tapped })
     if (result.kind === 'empty') {
-      setFeedback('Escribe una palabra o toca una tarjeta.')
+      setFeedback('Escribe una palabra.')
       return
     }
     if (result.kind === 'length') {
@@ -197,6 +209,7 @@ export default function HiddenThreadGame({ initialDayKey = '' }) {
     }
     if (!result.nextRound) return
 
+    setShareStatus('')
     patchRound(result.nextRound, {
       finished: result.nextRound.status !== 'playing' && progress.stage === challenge.words.length - 1,
     })
@@ -204,29 +217,40 @@ export default function HiddenThreadGame({ initialDayKey = '' }) {
     if (result.kind === 'won') {
       setFeedback(
         result.proposed === normalizeHiddenAnswer(word.answer)
-          ? '¡Eso es! Has desenredado el hilo.'
-          : '¡Correcto! «' + String(value).trim().toLocaleUpperCase('es-ES') + '» también vale. La palabra es ' + word.answer + '.',
+          ? '¡Eso es!'
+          : '¡Correcto! «' + String(value).trim().toLocaleUpperCase('es-ES') + '» también vale.',
         'success'
       )
+      bringResultIntoView()
     } else if (result.kind === 'lost') {
-      setFeedback('No quedan intentos. Descubre la respuesta y sigue aprendiendo.', 'error')
+      setFeedback('Se acabaron los intentos.', 'error')
+      bringResultIntoView()
     } else {
       setFeedback(
         result.remaining === 1
-          ? '¡Último intento! Puedes pedir una pista antes de responder.'
-          : 'No era esa. Te quedan ' + result.remaining + ' intentos.',
+          ? 'No es esa. Último intento: una pista puede ayudarte.'
+          : 'No es esa. Te quedan ' + result.remaining + ' intentos.',
         'error'
       )
     }
   }
 
+  function chooseAnswer(option) {
+    if (!canPlay || pending) return
+    if (prefersReducedMotion()) {
+      tryGuess(option, true)
+      return
+    }
+    setPending(option)
+    pendingTimer.current = window.setTimeout(() => {
+      setPending('')
+      tryGuess(option, true)
+    }, SELECT_DELAY_MS)
+  }
+
   function submitAnswer(event) {
     event.preventDefault()
     tryGuess(answer)
-  }
-
-  function chooseAnswer(value) {
-    tryGuess(value, true)
   }
 
   function nextStage() {
@@ -235,16 +259,24 @@ export default function HiddenThreadGame({ initialDayKey = '' }) {
     setAnswer('')
     setFeedback('')
     window.requestAnimationFrame(() => {
-      gameHeadingRef.current?.focus({ preventScroll: true })
-      gameHeadingRef.current?.scrollIntoView({
-        behavior: window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
-        block: 'start',
-      })
+      riddleRef.current?.focus({ preventScroll: true })
+      riddleRef.current?.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'start' })
     })
   }
 
+  function changeMode(nextMode) {
+    if (mode === nextMode) return
+    window.clearTimeout(pendingTimer.current)
+    setMode(nextMode)
+    setFeedback('')
+    setShareStatus('')
+    window.requestAnimationFrame(() => document.getElementById('partida-del-hilo')?.scrollIntoView({
+      behavior: prefersReducedMotion() ? 'auto' : 'smooth',
+      block: 'start',
+    }))
+  }
+
   async function shareInvitation() {
-    const inviteText = hiddenInviteText()
     if (typeof navigator.share === 'function') {
       try {
         await navigator.share({
@@ -259,19 +291,19 @@ export default function HiddenThreadGame({ initialDayKey = '' }) {
       }
     }
     try {
-      await navigator.clipboard.writeText(inviteText)
-      setShareStatus('Invitación copiada. Puedes enviarla a tus amigos.')
+      await navigator.clipboard.writeText(hiddenInviteText())
+      setShareStatus('Invitación copiada. Pégala donde quieras.')
     } catch {
       setShareStatus('Comparte este enlace: ' + HILO_SHARE_URL)
     }
   }
 
-  async function share() {
+  async function shareResult() {
     if (!shareData) return
     if (typeof navigator.share === 'function') {
       try {
         await navigator.share({ title: shareData.title, text: shareData.text })
-        setShareStatus('Has enviado tu resultado a la aplicación elegida.')
+        setShareStatus('Resultado compartido.')
         return
       } catch (error) {
         if (error?.name === 'AbortError') return
@@ -286,24 +318,20 @@ export default function HiddenThreadGame({ initialDayKey = '' }) {
       await navigator.clipboard.writeText(shareData.text)
       setShareStatus('Resultado copiado. Pégalo en tu red social o conversación.')
     } catch {
-      setShareStatus('Tu navegador no permite copiar automáticamente. Puedes usar WhatsApp o X.')
+      setShareStatus('Tu navegador no permite copiar. Usa WhatsApp o X.')
     }
   }
 
   async function shareStory() {
     if (!shareData || !challenge) return
     try {
-      // Se genera en el mismo gesto del usuario, para no perder activación del diálogo nativo.
+      // Se genera dentro del mismo gesto para no perder el permiso del menú nativo.
       const image = createHiddenStoryFile(shareData, hiddenStoryFilename(challenge))
       if (typeof navigator.share === 'function'
         && typeof navigator.canShare === 'function'
         && navigator.canShare({ files: [image] })) {
         try {
-          await navigator.share({
-            files: [image],
-            title: shareData.title,
-            text: '¿Superas mi resultado? ' + shareData.url,
-          })
+          await navigator.share({ files: [image], title: shareData.title, text: '¿Superas mi resultado? ' + shareData.url })
           setShareStatus('Imagen enviada a la aplicación elegida.')
           return
         } catch (error) {
@@ -311,325 +339,244 @@ export default function HiddenThreadGame({ initialDayKey = '' }) {
         }
       }
       saveHiddenStoryFile(image)
-      setShareStatus('Imagen preparada para subir como historia. Puedes compartirla desde tu galería.')
+      setShareStatus('Imagen descargada. Súbela a tu historia desde la galería.')
     } catch {
-      setShareStatus('No ha sido posible crear la imagen. Comparte el resultado como texto.')
+      setShareStatus('No se ha podido crear la imagen. Comparte el resultado como texto.')
     }
   }
 
-  function changeMode(nextMode) {
-    if (mode === nextMode) return
-    setMode(nextMode)
-    setFeedback('')
-    setShareStatus('')
-    window.requestAnimationFrame(() => document.getElementById('partida-del-hilo')?.scrollIntoView({
-      behavior: window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
-      block: 'start',
-    }))
+  if (!progress || !challenge || !word) {
+    return (
+      <section className={styles.game} aria-label="El hilo escondido">
+        <div className={'shell ' + styles.wrap}>
+          <p className={styles.loading} role="status">Preparando el reto de hoy…</p>
+        </div>
+      </section>
+    )
   }
 
-  const careerPoints = progress ? hiddenTotalScore(progress) : 0
-  const earnedBadge = streak >= 7 ? 'Siete días de hilo' : completed && careerPoints >= 80 ? 'Buen conocedor' : completed ? 'Primer cabo' : 'Por descubrir'
-  const isFinalRound = Boolean(progress && progress.stage === challenge.words.length - 1)
-  const stagePoints = round ? hiddenRoundScore(round) : 0
-  const usedErrors = round ? roundErrors(round) : 0
+  const isDaily = mode === 'daily'
+  const isFinalRound = progress.stage === challenge.words.length - 1
+  const usedErrors = roundErrors(round)
+  const attemptsLeft = Math.max(0, HILO_GAME_MAX_ERRORS - usedErrors)
+  const roundPoints = round.status === 'won'
+    ? hiddenRoundScore(round)
+    : round.status === 'lost' ? 0
+      : Math.max(10, 100 - (round.hints.length * HILO_GAME_HINT_COST) - (usedErrors * HILO_GAME_ERROR_COST))
   const nextHintIndex = canPlay ? word.hints.findIndex((_, index) => !round.hints.includes(index)) : -1
+  const totalScore = hiddenTotalScore(progress)
 
   return (
-    <section className={styles.gameSection} aria-label="Juega a El hilo escondido">
+    <section className={styles.game} aria-label="El hilo escondido">
       <div className={'shell ' + styles.wrap}>
-        <div className={styles.modes} id="partida-del-hilo" role="group" aria-label="Elige una modalidad">
-          <button type="button" aria-pressed={mode === 'daily'} className={mode === 'daily' ? styles.modeActive : ''} onClick={() => changeMode('daily')}>
-            <span className={styles.modeIcon} aria-hidden="true">✦</span>
-            <span><strong>El hilo del día</strong><small>Una palabra</small></span>
+        <div className={styles.modes} role="tablist" aria-label="Modalidad">
+          <button
+            type="button"
+            role="tab"
+            aria-selected={isDaily}
+            className={styles.mode}
+            onClick={() => changeMode('daily')}
+          >
+            <strong>El hilo del día</strong>
+            <small>1 palabra</small>
           </button>
-          <button type="button" aria-pressed={mode === 'expert'} className={mode === 'expert' ? styles.modeActive : ''} onClick={() => changeMode('expert')}>
-            <span className={styles.modeIcon} aria-hidden="true">♜</span>
-            <span><strong>La última chicotá</strong><small>Tres palabras conectadas</small></span>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={!isDaily}
+            className={styles.mode}
+            onClick={() => changeMode('expert')}
+          >
+            <strong>La última chicotá</strong>
+            <small>3 palabras · experto</small>
           </button>
         </div>
 
-        {!progress || !challenge || !word ? (
-          <div className={styles.loading} role="status">Preparando el reto cofrade de hoy…</div>
-        ) : (
-          <>
-          <div className={styles.layout}>
-            <div className={styles.gameCard}>
-              <header className={styles.gameHeader}>
-                <div>
-                  <span className={styles.eyebrow}>Reto del {readableDay(dateKey)}</span>
-                  <h2 ref={gameHeadingRef} tabIndex={-1} className={styles.gameFocusHeading}>{challenge.title}</h2>
-                  <p>{challenge.subtitle}</p>
-                </div>
-                <div className={styles.gameHeaderActions}>
-                  {mode === 'expert' ? (
-                    <span className={styles.gameNumber}>{String(progress.stage + 1).padStart(2, '0')} / 03</span>
-                  ) : null}
-                  <button type="button" className={styles.inviteToPlay} onClick={shareInvitation}>
-                    <span aria-hidden="true">↗</span> Compartir juego
-                  </button>
-                </div>
-              </header>
-              {shareStatus ? <p className={styles.shareStatus} role="status" aria-live="polite">{shareStatus}</p> : null}
+        <article className={styles.board} id="partida-del-hilo" aria-labelledby="hilo-reto-titulo">
+          <header className={styles.boardTop}>
+            <h2 id="hilo-reto-titulo" className={styles.srOnly}>{challenge.title} · {readableDay(dateKey)}</h2>
+            <span className={styles.boardDate} aria-hidden="true">{readableDay(dateKey)}</span>
+            <button type="button" className={styles.inviteButton} onClick={shareInvitation}>
+              <span aria-hidden="true">↗</span> Compartir juego
+            </button>
+          </header>
 
-              {mode === 'expert' ? (
-                <div className={styles.stageSteps} role="list" aria-label="Progreso de los tres cabos">
-                  {challenge.words.map((item, index) => (
-                    <span
-                      key={index}
-                      role="listitem"
-                      className={index < progress.stage || completed ? styles.stageDone : index === progress.stage ? styles.stageCurrent : ''}
-                      aria-label={'Cabo ' + (index + 1) + ': ' + (
-                        index < progress.stage || completed ? 'terminado'
-                          : index === progress.stage ? 'en curso' : 'pendiente'
-                      )}
-                    >{index < progress.stage || completed ? '✓' : index + 1}</span>
-                  ))}
-                </div>
-              ) : null}
+          <div className={styles.scoreboard} aria-label="Marcador">
+            <span className={styles.scorePoints}>
+              <strong>{isDaily ? roundPoints : totalScore + (canPlay ? roundPoints : 0)}</strong>
+              <small>{canPlay ? 'puntos en juego' : 'puntos'}</small>
+            </span>
+            {!isDaily ? (
+              <ol className={styles.stages} aria-label="Cabos">
+                {challenge.words.map((item, index) => {
+                  const status = completed || index < progress.stage
+                    ? progress.rounds[index].status
+                    : index === progress.stage ? 'current' : 'pending'
+                  return (
+                    <li key={index} className={styles['stage_' + status]} aria-label={'Cabo ' + (index + 1) + ': ' + (
+                      status === 'won' ? 'acertado' : status === 'lost' ? 'fallado' : status === 'current' ? 'en juego' : 'pendiente'
+                    )}>
+                      {status === 'won' ? '✓' : status === 'lost' ? '✕' : index + 1}
+                    </li>
+                  )
+                })}
+              </ol>
+            ) : null}
+            <span className={styles.attempts} aria-label={attemptsLeft + ' intentos de ' + HILO_GAME_MAX_ERRORS}>
+              {Array.from({ length: HILO_GAME_MAX_ERRORS }, (_, index) => (
+                <i key={index} className={index < usedErrors ? styles.attemptUsed : ''} aria-hidden="true" />
+              ))}
+              <small>{attemptsLeft} {attemptsLeft === 1 ? 'intento' : 'intentos'}</small>
+            </span>
+          </div>
 
-              <div className={styles.riddle}>
-                <div className={styles.riddleTop}>
-                  <span className={styles.riddleLabel}>{word.category} · Cabo {progress.stage + 1}</span>
-                  <span className={styles.potentialScore}>✦ {round.status === 'won' ? stagePoints : Math.max(10, 100 - (round.hints.length * HILO_GAME_HINT_COST) - (usedErrors * 18))} puntos</span>
-                </div>
-                <div className={styles.riddleScene}>
-                  <span className={styles.riddleEmblem} aria-hidden="true">?</span>
-                  <blockquote>{word.clue}</blockquote>
-                </div>
-                <span className={styles.riddleFootnote}>
-                  {canPlay ? 'Sigue el hilo: descubre la palabra oculta' : 'El misterio de este cabo ya está resuelto'}
-                </span>
-              </div>
+          {shareStatus && !completed ? <p className={styles.status} role="status">{shareStatus}</p> : null}
 
-              {mode === 'daily' ? (
-              <section className={styles.choicePanel} aria-label="Adivina tocando una opción">
-                <div className={styles.choiceHeading}>
-                  <h3>¿Cuál es la respuesta?</h3>
-                  <span>Elige una tarjeta</span>
-                </div>
-                <div className={styles.choiceGrid} role="group" aria-label="Cuatro respuestas posibles">
-                  {options.map((option, index) => {
-                    const selected = round.guesses.includes(normalizeHiddenAnswer(option))
-                    const correct = !canPlay && hiddenGuessMatches(word, option)
-                    const wrong = selected && !hiddenGuessMatches(word, option)
-                    return (
-                      <button
-                        type="button"
-                        key={option}
-                        className={[
-                          styles.choiceTile,
-                          wrong ? styles.choiceWrong : '',
-                          correct ? styles.choiceCorrect : '',
-                        ].filter(Boolean).join(' ')}
-                        onClick={() => chooseAnswer(option)}
-                        disabled={!canPlay || wrong}
-                        aria-label={'Respuesta ' + (index + 1) + ': ' + option}
-                      >
-                        <span className={styles.choiceLetter} aria-hidden="true">{String.fromCharCode(65 + index)}</span>
-                        <span className={styles.choiceName}>{option.toLocaleLowerCase('es-ES')}</span>
-                        <span className={styles.choiceIndicator} aria-hidden="true">{wrong ? '×' : correct ? '✓' : '↗'}</span>
-                      </button>
-                    )
-                  })}
-                </div>
-                {canPlay ? (
-                  <div className={styles.choiceAttempts}>
-                    <span className={styles.attemptLights} aria-hidden="true">
-                      {Array.from({ length: HILO_GAME_MAX_ERRORS }, (_, index) => index).map((index) => (
-                        <i key={index} className={index < usedErrors ? styles.attemptSpent : ''} />
-                      ))}
-                    </span>
-                    <span>{Math.max(0, HILO_GAME_MAX_ERRORS - usedErrors)} intentos · elige una tarjeta</span>
-                  </div>
-                ) : null}
-              </section>
-              ) : canPlay ? (
-                <section className={styles.expertPanel} aria-label="Escribe la palabra en el nivel experto">
-                  <div className={styles.expertLabel}>
-                    <span>✎ LA ÚLTIMA CHICOTÁ</span>
-                    <strong>{normalizeHiddenAnswer(word.answer).length} letras</strong>
-                  </div>
-                  <form className={styles.expertForm} onSubmit={submitAnswer}>
-                    <label htmlFor="hidden-thread-answer">¿Qué palabra une este cabo?</label>
-                    <div className={styles.guessRow}>
-                      <input
-                        id="hidden-thread-answer"
-                        type="text"
-                        name="respuesta"
-                        value={answer}
-                        onChange={(event) => { setAnswer(event.target.value); setFeedback('') }}
-                        maxLength={40}
-                        autoCapitalize="characters"
-                        autoComplete="off"
-                        autoCorrect="off"
-                        spellCheck={false}
-                        placeholder="Escribe la palabra"
-                      />
-                      <button type="submit" disabled={!answer.trim()}>Responder <span aria-hidden="true">→</span></button>
-                    </div>
-                    <span className={styles.attemptInfo}>
-                      {Math.max(0, HILO_GAME_MAX_ERRORS - usedErrors)} intentos disponibles.
-                      {usedErrors === HILO_GAME_MAX_ERRORS - 1 ? ' Pista final: comienza por «' + word.answer.charAt(0) + '».' : ''}
-                    </span>
-                  </form>
-                </section>
-              ) : null}
+          <div className={styles.riddle} ref={riddleRef} tabIndex={-1}>
+            <span className={styles.riddleLabel}>
+              {isDaily ? word.category : 'Cabo ' + (progress.stage + 1) + ' de 3 · ' + word.category}
+            </span>
+            <blockquote>{word.clue}</blockquote>
+            <span className={styles.riddleLetters}>
+              {normalizeHiddenAnswer(word.answer).length} letras
+              {canPlay && attemptsLeft === 1 ? <> · empieza por <strong>«{word.answer.charAt(0)}»</strong></> : null}
+            </span>
+          </div>
 
-              <p
-                className={styles.feedback + (feedback.tone ? ' ' + styles['feedback_' + feedback.tone] : '')}
-                role="status"
-                aria-live="polite"
-                hidden={!feedback.text}
-              >{feedback.text}</p>
-
-              {round.status !== 'playing' ? (
-                <div className={styles.answerCard + ' ' + (round.status === 'won' ? styles.answerWon : styles.answerLost)}>
-                  <span className={styles.answerKicker}>{round.status === 'won' ? 'Cabo desenredado' : 'El hilo se ha descubierto'}</span>
-                  <h3>{word.answer}</h3>
-                  <p>{word.definition}</p>
-                  <div className={styles.answerFooter}>
-                    <Link href={word.link.href}>{word.link.text} <span aria-hidden="true">↗</span></Link>
-                    <strong>{round.status === 'won' ? '+' + stagePoints + ' puntos' : '0 puntos'}</strong>
-                  </div>
-                  {completed ? (
-                    <button type="button" className={styles.shareNow} onClick={share}>
-                      <span aria-hidden="true">↗</span> Compartir mi resultado
-                    </button>
-                  ) : null}
-                  {!isFinalRound ? (
-                    <button className={styles.nextButton} type="button" onClick={nextStage}>Tira del siguiente cabo <span aria-hidden="true">→</span></button>
-                  ) : null}
-                </div>
-              ) : null}
-
-              {completed ? (
-                <div className={styles.summary}>
-                  <div className={styles.summaryTop}>
-                    <div>
-                      <span className={styles.eyebrow}>Reto completado</span>
-                      <h3>{hiddenTotalScore(progress)} <span>/ {challenge.words.length * 100} puntos</span></h3>
-                    </div>
-                    <span className={styles.summaryRibbon}>✦ Un reto más desenredado</span>
-                  </div>
-                  <div className={styles.achievement} aria-label="Distinción conseguida">
-                    <span aria-hidden="true">❖</span>
-                    <div><strong>{earnedBadge}</strong><small>Tu distinción cofrade de esta partida</small></div>
-                  </div>
-                  {mode === 'expert' ? (
-                    <div className={styles.connection}>
-                      <strong>Ahí estaba la conexión</strong>
-                      <p>{challenge.connection}</p>
-                      <div className={styles.connectionWords}>
-                        {challenge.words.map((item) => <span key={item.answer}>{item.answer}</span>)}
-                      </div>
-                    </div>
-                  ) : (
-                    <p className={styles.dailyDone}>
-                      {streak > 1 ? 'Llevas ' + streak + ' días seguidos acertando. ' : ''}
-                      Un nuevo hilo se esconde mañana.
-                    </p>
-                  )}
-                  {minutesLeft ? (
-                    <p className={styles.countdown}>Próximo reto en <strong>{countdownLabel(minutesLeft)}</strong>, a medianoche en Sevilla.</p>
-                  ) : null}
-                  {shareData && socialLinks ? (
-                    <section className={styles.socialShare} aria-label="Comparte tu resultado en redes sociales">
-                      <div className={styles.socialPreview} aria-label={'Tu resultado: ' + shareData.score + ' de ' + shareData.maxScore + ' puntos'}>
-                        <span className={styles.socialPreviewBrand}>HILO COFRADE</span>
-                        <strong>El hilo escondido</strong>
-                        <span className={styles.socialPreviewMode}>{shareData.mode} · {shareData.date}</span>
-                        <div className={styles.socialPreviewScore}>{shareData.score} <small>/ {shareData.maxScore}</small></div>
-                        <span className={styles.socialPreviewMarks}>{shareData.marks}</span>
-                        <span className={styles.socialPreviewSite}>hilocofrade.es</span>
-                      </div>
-                      <div className={styles.socialShareActions}>
-                        <span className={styles.eyebrow}>Presume de partida, sin dar pistas</span>
-                        <h4>¿Quién se atreve a superarte?</h4>
-                        <p>Comparte tus puntos y desafía a otros cofrades sin revelar la palabra.</p>
-                        <button type="button" className={styles.socialShareMain} onClick={share}>
-                          Compartir resultado <span aria-hidden="true">↗</span>
-                        </button>
-                        <button type="button" className={styles.socialShareStory} onClick={shareStory}>
-                          Imagen para historias (9:16) <span aria-hidden="true">↓</span>
-                        </button>
-                        <div className={styles.socialShareLinks}>
-                          <a href={socialLinks.whatsapp} target="_blank" rel="noopener noreferrer">WhatsApp ↗</a>
-                          <a href={socialLinks.x} target="_blank" rel="noopener noreferrer">X ↗</a>
-                          <button type="button" onClick={copyResult}>Copiar texto <span aria-hidden="true">⧉</span></button>
-                        </div>
-                        <small>Para Instagram, utiliza «Imagen para historias» y elige la aplicación o guarda el PNG.</small>
-                      </div>
-                    </section>
-                  ) : null}
+          {isDaily ? (
+            <div className={styles.choices} role="group" aria-label="Elige la respuesta">
+              {options.map((option) => {
+                const tried = round.guesses.includes(normalizeHiddenAnswer(option))
+                const isAnswer = hiddenGuessMatches(word, option)
+                const state = pending === option ? 'selected'
+                  : tried && !isAnswer ? 'wrong'
+                    : !canPlay && isAnswer ? 'correct'
+                      : 'idle'
+                return (
                   <button
                     type="button"
-                    className={styles.continuePlaying}
-                    onClick={() => changeMode(mode === 'daily' ? 'expert' : 'daily')}
+                    key={option}
+                    className={styles.choice}
+                    data-state={state}
+                    onClick={() => chooseAnswer(option)}
+                    disabled={!canPlay || state === 'wrong' || Boolean(pending)}
+                    aria-pressed={state === 'selected'}
                   >
-                    {mode === 'daily' ? 'Seguir con La última chicotá' : 'Jugar al reto del día'}
-                    <span aria-hidden="true">→</span>
+                    <span>{option.toLocaleLowerCase('es-ES')}</span>
+                    {state === 'wrong' ? <b aria-label="incorrecta">✕</b> : null}
+                    {state === 'correct' ? <b aria-label="correcta">✓</b> : null}
                   </button>
-                </div>
-              ) : null}
-              {canPlay ? (
-                <section className={styles.hints} aria-label="Pistas del juego">
-                  {nextHintIndex >= 0 ? (
-                    <button
-                      type="button"
-                      className={styles.progressiveHint}
-                      onClick={() => revealHint(nextHintIndex)}
-                      aria-label={round.hints.length ? 'Desvelar otra pista (resta 15 puntos)' : 'Pedir una pista (resta 15 puntos)'}
-                    >
-                      <span className={styles.progressiveHintIcon} aria-hidden="true">✧</span>
-                      <span className={styles.progressiveHintCopy}>
-                        <strong>{round.hints.length ? 'Dame otra pista' : '¿Necesitas una pista?'}</strong>
-                        <small>{round.hints.length} de {word.hints.length} descubiertas</small>
-                      </span>
-                      <span className={styles.progressiveHintCost}>−{HILO_GAME_HINT_COST} pts</span>
-                    </button>
-                  ) : null}
-                  {round.hints.length > 0 ? (
-                    <div className={styles.revealedHints} aria-live="polite">
-                      {round.hints.map((index) => (
-                        <p key={index}><strong>{word.hints[index].title}</strong> {word.hints[index].text}</p>
-                      ))}
-                    </div>
-                  ) : null}
-                </section>
-              ) : null}
-
-              {round.guesses.length ? (
-                <div className={styles.guesses} aria-label="Historial de respuestas">
-                  <span>Respuestas anteriores</span>
-                  <div>
-                    {round.guesses.map((guess, index) => (
-                      <span key={index} className={hiddenGuessMatches(word, guess) ? styles.guessCorrect : styles.guessWrong}>
-                        {hiddenGuessMatches(word, guess) ? '✓ ' : '× '}{guess}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ) : null}
-
+                )
+              })}
             </div>
+          ) : canPlay ? (
+            <form className={styles.expertForm} onSubmit={submitAnswer}>
+              <label htmlFor="hidden-thread-answer" className={styles.srOnly}>Escribe la palabra</label>
+              <input
+                id="hidden-thread-answer"
+                type="text"
+                name="respuesta"
+                value={answer}
+                onChange={(event) => { setAnswer(event.target.value); setFeedback('') }}
+                maxLength={40}
+                autoCapitalize="characters"
+                autoComplete="off"
+                autoCorrect="off"
+                spellCheck={false}
+                enterKeyHint="send"
+                placeholder="Escribe la palabra"
+              />
+              <button type="submit" disabled={!answer.trim()}>Responder</button>
+            </form>
+          ) : null}
 
-            <aside className={styles.aside} aria-label="Tu marcador">
-              <div className={styles.scoreCard}>
-                <span className={styles.eyebrow}>Así va tu partida</span>
-                <div className={styles.scoreBig}><span aria-hidden="true">✦</span><strong>{careerPoints}</strong><small>puntos</small></div>
-                <div className={styles.scoreLine}><span>Racha de aciertos</span><strong>{streak} {streak === 1 ? 'día' : 'días'}</strong></div>
-                <div className={styles.scoreLine}><span>Pistas utilizadas</span><strong>{round.hints.length} / 3</strong></div>
-                <p>Una nueva palabra cada día. Tus resultados se guardan en este navegador.</p>
+          <p
+            className={styles.feedback}
+            data-tone={feedback.tone || undefined}
+            role="status"
+            aria-live="polite"
+            hidden={!feedback.text}
+          >{feedback.text}</p>
+
+          {canPlay ? (
+            <div className={styles.hints}>
+              {nextHintIndex >= 0 ? (
+                <button type="button" className={styles.hintButton} onClick={() => revealHint(nextHintIndex)}>
+                  <span>{round.hints.length ? 'Otra pista' : 'Pedir una pista'}</span>
+                  <small>{round.hints.length}/{word.hints.length} · −{HILO_GAME_HINT_COST} puntos</small>
+                </button>
+              ) : null}
+              {round.hints.length ? (
+                <ul className={styles.hintList} aria-live="polite">
+                  {round.hints.map((index) => (
+                    <li key={index}><strong>{word.hints[index].title}</strong> {word.hints[index].text}</li>
+                  ))}
+                </ul>
+              ) : null}
+            </div>
+          ) : null}
+
+          {round.status !== 'playing' ? (
+            <section className={styles.result} data-status={round.status} ref={resultRef} aria-label="Solución">
+              <span className={styles.resultKicker}>
+                {round.status === 'won' ? '+' + hiddenRoundScore(round) + ' puntos' : 'La palabra era'}
+              </span>
+              <h3>{word.answer}</h3>
+              <p>{word.definition}</p>
+              <Link className={styles.resultLink} href={word.link.href}>{word.link.text} <span aria-hidden="true">→</span></Link>
+              {!isFinalRound ? (
+                <button className={styles.primaryButton} type="button" onClick={nextStage}>
+                  Siguiente cabo ({progress.stage + 2} de 3) <span aria-hidden="true">→</span>
+                </button>
+              ) : null}
+            </section>
+          ) : null}
+
+          {completed && shareData ? (
+            <section className={styles.finale} aria-labelledby="hilo-final-titulo">
+              <h3 id="hilo-final-titulo">¡Reto completado! Comparte tu resultado</h3>
+
+              {!isDaily ? (
+                <div className={styles.connection}>
+                  <strong>{challenge.words.map((item) => item.answer).join(' · ')}</strong>
+                  <p>{challenge.connection}</p>
+                </div>
+              ) : null}
+
+              <div className={styles.shareCard} aria-label={'Tu resultado: ' + shareData.score + ' de ' + shareData.maxScore + ' puntos'}>
+                <span className={styles.shareBrand}>Hilo Cofrade · El hilo escondido</span>
+                <span className={styles.shareMode}>{shareData.mode} · {shareData.date}</span>
+                <strong className={styles.shareScore}>{shareData.score}<small> / {shareData.maxScore}</small></strong>
+                <span className={styles.shareMarks} aria-label={shareData.winners + ' de ' + shareData.rounds + ' acertadas'}>{shareData.marks}</span>
+                <span className={styles.shareInvite}>¿Lo superas? hilocofrade.es</span>
               </div>
-            </aside>
-          </div>
-          <div className={styles.nextTopics} aria-label="Próximos retos de la enciclopedia">
-            <span className={styles.eyebrow}>El juego seguirá creciendo</span>
-            <p>Próximamente: hermandades, imágenes, marchas y autores.</p>
-          </div>
-          </>
-        )}
+
+              <div className={styles.shareActions}>
+                <button type="button" className={styles.primaryButton} onClick={shareResult}>
+                  Compartir resultado <span aria-hidden="true">↗</span>
+                </button>
+                <button type="button" className={styles.secondaryButton} onClick={shareStory} aria-label="Imagen para historias de Instagram">
+                  Historia 9:16
+                </button>
+                <a className={styles.secondaryButton} href={socialLinks.whatsapp} target="_blank" rel="noopener noreferrer" aria-label="Compartir en WhatsApp">WhatsApp</a>
+                <a className={styles.secondaryButton} href={socialLinks.x} target="_blank" rel="noopener noreferrer" aria-label="Compartir en X">X</a>
+                <button type="button" className={styles.secondaryButton} onClick={copyResult} aria-label="Copiar resultado">Copiar</button>
+              </div>
+              {shareStatus ? <p className={styles.status} role="status">{shareStatus}</p> : null}
+              <p className={styles.shareNote}>Sin respuestas ni pistas. Para Instagram, usa «Historia 9:16».</p>
+
+              <p className={styles.comeBack}>
+                {isDaily && streak > 1 ? <>Llevas <strong>{streak} días</strong> seguidos acertando. </> : null}
+                {minutesLeft ? <>Nuevo reto en <strong>{countdownLabel(minutesLeft)}</strong>.</> : 'Nuevo reto mañana.'}
+              </p>
+              <button type="button" className={styles.secondaryButton} onClick={() => changeMode(isDaily ? 'expert' : 'daily')}>
+                {isDaily ? 'Jugar a La última chicotá' : 'Volver al hilo del día'} <span aria-hidden="true">→</span>
+              </button>
+            </section>
+          ) : null}
+        </article>
+
+        <p className={styles.privacy}>Una partida nueva cada día. Tu progreso se guarda solo en este navegador.</p>
       </div>
     </section>
   )

@@ -2,74 +2,32 @@ import test from 'node:test'
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
 
+// Contratos estructurales mínimos de la página. El comportamiento del juego se prueba en
+// hilo-hidden-game.test.mjs y hilo-hidden-share.test.mjs, y la experiencia visual con QA en
+// navegador (docs/EL-HILO-ESCONDIDO-PILOTO-2026-10-12.md).
 const page = readFileSync(new URL('../app/juegos/el-hilo-escondido/page.js', import.meta.url), 'utf8')
 const game = readFileSync(new URL('../components/HiddenThreadGame.js', import.meta.url), 'utf8')
-const styles = readFileSync(new URL('../components/HiddenThreadGame.module.css', import.meta.url), 'utf8')
 
-test('El hilo escondido es el título principal y el usuario juega sin pantalla de selección', () => {
+test('la página entra directamente en el juego, con la adivinanza desde el servidor', () => {
   assert.match(page, /<h1>El hilo escondido<\/h1>/)
-  assert.match(page, /Nuestro juego diario/)
   assert.match(page, /<HiddenThreadGame initialDayKey=\{initialDayKey\} \/>/)
-  assert.doesNotMatch(page, /entryChoices|Elige tu juego|Dos desafíos cofrades|href="#partida-del-hilo"/)
-  assert.match(game, /className=\{styles\.modes\} id="partida-del-hilo"/)
-  assert.match(game, /className=\{styles\.gameCard\}/)
-  assert.match(game, /¿Cuál es la respuesta\?/)
-  assert.match(game, /Elige una tarjeta/)
-  assert.match(game, /onClick=\{\(\) => chooseAnswer\(option\)\}/)
-  assert.match(game, /mode === 'daily' \? \(/)
-  assert.match(game, /className=\{styles\.expertPanel\}/)
-  assert.match(game, /Escribe la palabra/)
-  assert.doesNotMatch(game, /Prefiero escribir mi respuesta/)
-  assert.match(game, /Dame otra pista/)
-  assert.match(game, /className=\{styles\.progressiveHint\}/)
-  assert.match(game, /className=\{styles\.continuePlaying\}/)
-  assert.match(game, /gameHeadingRef\.current\?\.scrollIntoView/)
-  assert.match(styles, /\.progressiveHint:focus-visible/)
-  assert.match(styles, /\.continuePlaying:focus-visible/)
-  assert.match(game, /className=\{styles\.socialShare\}/)
-  assert.match(game, /Imagen para historias \(9:16\)/)
-  assert.match(game, /href=\{socialLinks\.whatsapp\}/)
-  assert.match(game, /href=\{socialLinks\.x\}/)
-  assert.match(game, /onClick=\{copyResult\}/)
-  assert.match(game, /onClick=\{shareStory\}/)
-  assert.match(game, /onClick=\{share\}/)
-  assert.match(game, /sin revelar la palabra/)
-  assert.match(game, /className=\{styles\.inviteToPlay\} onClick=\{shareInvitation\}/)
-  assert.match(game, /Compartir juego/)
-  assert.match(game, /className=\{styles\.shareNow\} onClick=\{share\}/)
-  assert.match(game, /Compartir mi resultado/)
-  assert.match(styles, /\.inviteToPlay:focus-visible/)
-  assert.match(styles, /\.shareNow:focus-visible/)
-  assert.match(page, /await connection\(\)/)
+  // Sin render por visita: ISR y corrección del día en el navegador.
+  assert.match(page, /export const revalidate = 300/)
+  assert.doesNotMatch(page, /connection\(\)/)
 })
 
-test('Cofradle aparece solo como recomendación final, nunca al comenzar', () => {
-  const positionGame = page.indexOf('<HiddenThreadGame initialDayKey={initialDayKey} />')
-  const positionRecommended = page.indexOf('className={styles.recommendationSection}')
-  assert.ok(positionGame > -1 && positionRecommended > positionGame)
-  assert.equal((page.match(/href="https:\/\/cofradle\.es\/"/g) || []).length, 1)
-  assert.match(page, /Cofradle es un proyecto externo e independiente/)
-  assert.match(page, /favicons\?domain=cofradle\.es&sz=128/)
-  assert.match(page, /recommendationBrand/)
-  assert.doesNotMatch(page, /♜ <span>♫<\/span>/)
-  assert.match(page, /target="_blank"/)
+test('Cofradle aparece solo al final, como enlace externo y sin recursos de terceros', () => {
+  const gameAt = page.indexOf('<HiddenThreadGame')
+  const cofradleAt = page.indexOf('https://cofradle.es/')
+  assert.ok(gameAt > -1 && cofradleAt > gameAt)
+  assert.equal((page.match(/https:\/\/cofradle\.es\//g) || []).length, 1)
   assert.match(page, /rel="noopener noreferrer"/)
-  assert.doesNotMatch(game, /className=\{styles\.cofradleFeature\}/)
+  assert.match(page, /proyecto externo e independiente/)
+  // No se usa un favicon servido por Google como si fuera el logotipo oficial.
+  assert.doesNotMatch(page, /google\.com\/s2\/favicons/)
+  assert.doesNotMatch(game, /cofradle/i)
 })
 
-test('el acceso a Cofradle es visual pero secundario y sin controles anidados', () => {
-  assert.match(page, /<a\s+className=\{styles\.recommendationCard\}/)
-  assert.match(page, /Visitar Cofradle/)
-  assert.match(styles, /\.recommendationSection\s*\{/)
-  assert.match(styles, /\.recommendationCard:focus-visible/)
-  assert.match(styles, /@media \(max-width: 620px\)/)
-  assert.match(styles, /prefers-reduced-motion: reduce/)
-})
-
-test('la partida precede al contenido futuro y tiene una sola ancla', () => {
-  assert.equal((game.match(/id="partida-del-hilo"/g) || []).length, 1)
-  assert.ok(game.indexOf('className={styles.modes}') < game.indexOf('className={styles.gameCard}'))
-  assert.ok(game.indexOf('className={styles.gameCard}') < game.indexOf('className={styles.nextTopics}'))
-  assert.match(game, /Próximamente: hermandades, imágenes, marchas y autores/)
-  assert.doesNotMatch(game, /className=\{styles\.gameLobby\}|className=\{styles\.topicCard/)
+test('no se muestran distinciones ni contenidos futuros inventados', () => {
+  assert.doesNotMatch(game, /Buen conocedor|Siete días de hilo|Próximamente/)
 })

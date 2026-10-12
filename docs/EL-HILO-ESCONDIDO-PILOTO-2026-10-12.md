@@ -182,3 +182,45 @@ La rama continúa en borrador. Antes de integrar: CI/build, preview móvil real,
 - **Sin URL nueva, migración, base de datos o publicación en producción.**
 
 **Pendiente:** comprobar el favicon cargado visualmente desde el navegador de un usuario real y validar compartir texto/imagen en iPhone, además de QA editorial y revisión de la PR frente al main actualizado.
+
+## Rediseño definitivo · 13/10/2026
+
+Sobre la implementación existente de #1146 (sin nuevo juego, ruta ni datos).
+
+**Depuración**
+- `HiddenThreadGame.module.css` reescrito desde cero: de 1.702 a unas 850 líneas, mobile-first, con tokens de color propios. Sin `!important` ni capas de parches.
+- Retirado: marcador lateral duplicado, distinción inventada («Buen conocedor», «Siete días de hilo»), aviso «Próximamente» de contenidos inexistentes, emblema «?» y textos de apoyo.
+- La página deja de renderizarse en cada visita (`connection()`): pasa a ISR de 5 min y el navegador corrige el día con la hora de Madrid. La adivinanza sigue en el HTML inicial.
+
+**Primera pantalla (iPhone 390 × 844, con la cabecera global de 64 px)**: nombre del juego, las dos modalidades, la fecha con «Compartir juego», un marcador de puntos e intentos, la adivinanza y las cuatro respuestas, que terminan en y ≈ 654 px. En 375 × 667 también caben las cuatro; en 320 × 568 la adivinanza se ve completa y las respuestas tras un desplazamiento corto.
+
+**Juego**
+- *El hilo del día*: cuatro tarjetas táctiles con estados normal, seleccionada (380 ms visibles antes de evaluar), correcta e incorrecta, sin campo de escritura; tres intentos y pista progresiva.
+- *La última chicotá*: respuesta escrita, tres intentos por cabo, indicador de cabos acertados o fallados, botón «Siguiente cabo (n de 3)» que lleva el foco a la nueva adivinanza y explicación final de la conexión.
+- Se conservan la rotación diaria, los sinónimos y la puntuación.
+
+**Compartir**
+- «Compartir juego» desde el inicio: invitación sin respuestas, con menú nativo o copia.
+- Al terminar, «¡Reto completado! Comparte tu resultado», con una tarjeta visual (marca, modalidad, fecha, puntos, aciertos y fallos en símbolos y la URL) y estas opciones:
+  - Compartir, con menú nativo o copia;
+  - Historia 9:16, un PNG de 1080 × 1920 que se comparte con el menú nativo si admite archivos y, si no, se descarga;
+  - WhatsApp;
+  - X;
+  - Copiar.
+- En la imagen del reto diario figura «Palabra descubierta» en lugar de «1 de 1 cabos».
+
+**Cofradle**: solo al final, como tarjeta tipográfica discreta y enlace externo.
+- Se retira el favicon servido por Google.
+- **Logotipo auténtico: no verificado.** El acceso a `cofradle.es` desde esta sesión requería una autorización que caducó sin respuesta. No se ha inventado ninguna marca. Pendiente: obtener el logotipo oficial con permiso del proyecto antes de usarlo.
+
+**QA (Chromium con emulación táctil, componente real con estilos globales)**
+- 320, 375, 390, 430, 768 y 1366 px: sin desplazamiento horizontal, sin textos menores de 11 px, todos los controles de 40 px o más y sin errores de JavaScript.
+- Flujo diario completo:
+  - compartir antes de jugar, pista, estado «seleccionada», fallo con su intento descontado y acierto;
+  - solución, enlace y final con compartir;
+  - texto copiado sin la respuesta, enlaces de WhatsApp y X;
+  - PNG de 1080 × 1920 generado y descargado;
+  - persistencia al recargar.
+- Flujo experto: tres cabos con un fallo intercalado, foco en la nueva adivinanza tras «Siguiente cabo», conexión final y texto sin respuestas.
+- `navigator.share` simulado: invitación con URL, resultado como texto e historia como archivo PNG.
+- **Pendiente:** Safari real o iPhone físico, que confirmará el menú nativo de iOS y la compartición de archivos.

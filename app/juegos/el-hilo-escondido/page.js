@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import { connection } from 'next/server'
 import JsonLd from '@/components/JsonLd'
 import HiddenThreadGame from '@/components/HiddenThreadGame'
 import { breadcrumbJsonLd, socialMetadata } from '@/lib/seo'
@@ -7,7 +6,11 @@ import { HILO_GAME_PATH, madridHiddenDayKey } from '@/lib/hilo-hidden-game'
 import styles from '@/components/HiddenThreadGame.module.css'
 
 const TITLE = 'El hilo escondido · Juego cofrade del día'
-const DESCRIPTION = 'Un juego diario de vocabulario cofrade: sigue las pistas, adivina la palabra y descubre cómo todo está relacionado en Hilo Cofrade.'
+const DESCRIPTION = 'Un juego diario de vocabulario cofrade: lee la adivinanza, toca la respuesta y comparte tu resultado en Hilo Cofrade.'
+
+// La adivinanza se sirve ya en el HTML. Se regenera cada 5 minutos y el navegador corrige
+// el día con la hora de Madrid, así que no hace falta renderizar en cada visita.
+export const revalidate = 300
 
 export const metadata = {
   title: TITLE,
@@ -16,8 +19,7 @@ export const metadata = {
   ...socialMetadata({ title: TITLE, description: DESCRIPTION, path: HILO_GAME_PATH }),
 }
 
-export default async function HiddenThreadPage() {
-  await connection()
+export default function HiddenThreadPage() {
   const initialDayKey = madridHiddenDayKey()
 
   return (
@@ -27,49 +29,30 @@ export default async function HiddenThreadPage() {
         { name: 'El hilo escondido', path: HILO_GAME_PATH },
       ])} />
 
-      <header className={styles.gameIntro}>
+      <header className={styles.intro}>
         <div className="shell">
-          <Link className={styles.gameIntroBack} href="/#descubre-hoy">← Volver a Hilo Cofrade</Link>
-          <div className={styles.gameIntroLine}>
-            <div>
-              <span className={styles.gameIntroEyebrow}>Hilo Cofrade · Nuestro juego diario</span>
-              <h1>El hilo escondido</h1>
-              <p>¿Qué palabra cofrade se esconde hoy? Lee la pista y empieza a jugar.</p>
-            </div>
-            <span className={styles.gameIntroSymbol} aria-hidden="true">✦</span>
-          </div>
+          <Link className={styles.introBack} href="/#descubre-hoy">← Hilo Cofrade</Link>
+          <h1>El hilo escondido</h1>
         </div>
       </header>
 
       <HiddenThreadGame initialDayKey={initialDayKey} />
 
-      <aside className={styles.recommendationSection} aria-label="Otro juego cofrade recomendado">
+      <aside className={styles.recommendation} aria-label="Otro juego cofrade">
         <div className="shell">
           <a
             className={styles.recommendationCard}
             href="https://cofradle.es/"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Conoce Cofradle, otros juegos cofrades en una web externa e independiente"
           >
-            <span className={styles.recommendationArtwork} aria-hidden="true">
-              <img
-                src="https://www.google.com/s2/favicons?domain=cofradle.es&sz=128"
-                alt=""
-                width="64"
-                height="64"
-                loading="lazy"
-                referrerPolicy="no-referrer"
-              />
+            <span className={styles.recommendationText}>
+              <small>¿Quieres más retos?</small>
+              <strong>Juega también en <span className={styles.recommendationBrand}>Cofradle</span></strong>
             </span>
-            <span className={styles.recommendationCopy}>
-              <small>¿Te has quedado con ganas de más?</small>
-              <strong>También puedes jugar en <span className={styles.recommendationBrand}>Cofradle</span></strong>
-              <span>Más retos de hermandades y marchas en una web independiente.</span>
-            </span>
-            <span className={styles.recommendationLink}>Visitar Cofradle <span aria-hidden="true">↗</span></span>
+            <span className={styles.recommendationLink} aria-hidden="true">↗</span>
           </a>
-          <p className={styles.recommendationDisclaimer}>Cofradle es un proyecto externo e independiente de Hilo Cofrade.</p>
+          <p className={styles.recommendationNote}>Cofradle es un proyecto externo e independiente de Hilo Cofrade.</p>
         </div>
       </aside>
     </div>
