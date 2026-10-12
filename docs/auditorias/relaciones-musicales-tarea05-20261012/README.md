@@ -253,3 +253,10 @@ Detalle en `fusiones-y-olivares.sql` y su reversión, `fusiones-y-olivares-rollb
 - 16 periodos mostraban un código interno, como «procesion_gloria» en la ficha de Olivares o «station_of_penance».
 - Pasan a «Procesión de Gloria», «Estación de penitencia», «Procesión penitencial» y «Romería».
 - Las estaciones de penitencia se clasifican ahora en Semana Santa en la ficha de banda (antes, en Glorias).
+
+**Maestro Tejera en Benacazón** (`tejera-castilleja.sql`; reversión: `tejera-castilleja-rollback.sql`): aplicado.
+
+- Según el propietario, la fuente del periodo (vídeo de la banda del 2 de agosto de 2026) es de Castilleja de la Cuesta.
+- [El Pespunte](https://www.elpespunte.es/articulo/cofrade/procesiones-virgen-nieves-benacazon-2026-recorridos-bandas/20260805094516144171.html) confirma que en Benacazón acompañan Cruz Roja (5 de agosto) y Virgen de las Mercedes (6 de agosto).
+- El periodo se archiva hasta identificar a qué Hermandad de Castilleja corresponde.
+- Se asigna el municipio Castilleja de la Cuesta a la «Hermandad del Gran Poder de Castilleja de la Cuesta», que estaba en borrador y sin municipio.
