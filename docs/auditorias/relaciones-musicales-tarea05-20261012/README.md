@@ -225,3 +225,31 @@ Indicación del propietario: el municipio está al final del nombre (por ejemplo
 - Quedan fuera, por indicación del propietario: Hinojos, Paterna del Campo y Villarrasa (Huelva), y Huete (Cuenca).
 - Un municipio sin bandas publicadas no genera página ni entrada en el sitemap.
 - **Resultado: 43 de 57 con municipio.**
+
+## Hermandades en borrador · primeras resoluciones · 12/10/2026 · aplicado y verificado
+
+Detalle en `fusiones-y-olivares.sql` y su reversión, `fusiones-y-olivares-rollback.sql`.
+
+- **Nieves de Olivares:** no existe Hermandad. La Patrona la gestiona la comunidad parroquial, que solicitó la coronación (29/04/2028).
+  - La ficha pasa a ser **Parroquia de Santa María de las Nieves de Olivares**, publicada.
+  - Incluye la imagen (María Roldán, según la Archidiócesis), su paso y la música de Las Nieves de Olivares, todo con fuentes.
+  - Verificada en `/hermandades/parroquia-santa-maria-nieves-olivares`.
+- **La Milagrosa (Sevilla):** el borrador duplicaba la Hermandad publicada.
+  - Sus 2 periodos pasan a su misterio: La Redención 2008–2025 y Virgen de los Reyes desde 2026.
+  - Verificado en la web.
+- **Torreblanca (Sevilla):** el borrador duplicaba la Hermandad publicada.
+  - Las Nieves de Olivares pasa a su palio desde 1996.
+  - También se trasladan la salida en borrador del Vía Crucis 2018 y su relación.
+  - Verificado en la web.
+- **Nieves de Benacazón:** se fusionan los dos borradores en «Nuestra Señora de las Nieves Coronada», que sigue en borrador.
+  - Cruz Roja, el 5 de agosto.
+  - Virgen de las Mercedes de Bollullos, el 6 de agosto (periodo nuevo).
+  - **Pendiente:** el periodo de Maestro Tejera, con fuente de 2026, que contradice este dato.
+- **Pendiente de confirmar:** Santo Entierro de Paradas parece duplicar la Hermandad publicada.
+- Los 3 borradores duplicados se archivan. No se borra nada.
+
+**Tipos de salida legibles** (`tipos-salida.sql` y su reversión, `tipos-salida-rollback.sql`):
+
+- 16 periodos mostraban un código interno, como «procesion_gloria» en la ficha de Olivares o «station_of_penance».
+- Pasan a «Procesión de Gloria», «Estación de penitencia», «Procesión penitencial» y «Romería».
+- Las estaciones de penitencia se clasifican ahora en Semana Santa en la ficha de banda (antes, en Glorias).
