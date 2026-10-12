@@ -432,3 +432,12 @@
     height: 24px;
   }
 }
+
+/* Formación anterior documentada en el mismo paso (HC-006 · música canónica). */
+.predecessor {
+  margin: 6px 0 0;
+  color: #71808e;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.4;
+}

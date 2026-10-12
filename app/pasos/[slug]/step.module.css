@@ -51,6 +51,13 @@
   line-height: 1.45;
 }
 
+/* Formación anterior documentada en este mismo paso; deja sitio a la flecha. */
+.accompanimentCard .accompanimentPredecessor {
+  padding-right: 34px;
+  color: #8a96a1;
+  font-size: 10px;
+}
+
 .accompanimentCard em {
   position: absolute;
   right: 20px;

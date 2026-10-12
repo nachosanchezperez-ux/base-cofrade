@@ -3,6 +3,7 @@ import Image from 'next/image'
 import RelationalThread from '@/components/RelationalThread'
 import { orderProcessionalItems } from '@/lib/brotherhood-processional-order'
 import { futureMusicAccompanimentPeriodIds } from '@/lib/music-accompaniment-effective'
+import { accompanimentStartLabel, findDocumentedPredecessor, predecessorLabel, resolvePredecessor } from '@/lib/music-lineage'
 import styles from '@/components/BrotherhoodCurrentMusic.module.css'
 import discoveryStyles from '@/components/BrotherhoodRelationalDiscovery.module.css'
 import { getPublishedEntityCoverMediaMap } from '@/lib/supabase/entity-media'
@@ -36,7 +37,7 @@ function processionRank(position = '') {
 
 function publicPeriod(period = '') {
   const value = String(period).trim()
-  return /^desde\s+\d{4}\b/i.test(value) ? value : ''
+  return /^(al menos )?desde\s+\d{4}\b/i.test(value) ? value : ''
 }
 
 function outingLabel(value = '') {
@@ -145,20 +146,29 @@ async function loadOwnBands(supabase, brotherhoodId) {
 }
 
 async function loadCurrentAccompaniments(supabase, brotherhoodId) {
-  const periods = assertRows(
+  // Una sola lectura de todos los periodos publicados: los vigentes alimentan la
+  // sección y los finalizados permiten indicar la formación anterior del mismo paso.
+  const allPeriods = assertRows(
     await supabase
       .from('music_accompaniment_periods')
-      .select('id, band_entity_id, step_entity_id, position, outing_type, date_from, date_from_text, year_from, notes')
+      .select('id, brotherhood_entity_id, band_entity_id, step_entity_id, position, outing_type, date_from, date_from_text, year_from, year_to, is_current, notes, public_band_name, public_band_slug')
       .eq('brotherhood_entity_id', brotherhoodId)
-      .eq('is_current', true)
       .eq('status', 'published'),
     'No se pudieron consultar los acompañamientos actuales'
   )
+  const periods = allPeriods.filter((period) => period.is_current === true)
 
   const futureIds = futureMusicAccompanimentPeriodIds(periods)
   const effectivePeriods = periods.filter((period) => !futureIds.has(period.id))
   const bandIds = unique(effectivePeriods.map((item) => item.band_entity_id))
   if (!bandIds.length) return []
+
+  const predecessorByPeriodId = new Map(
+    effectivePeriods
+      .map((period) => [period.id, findDocumentedPredecessor(period, allPeriods)])
+      .filter(([, predecessor]) => predecessor)
+  )
+  const nameIds = unique([...bandIds, ...[...predecessorByPeriodId.values()].map((item) => item.bandEntityId)])
 
   const [entitiesResult, bandsResult] = await Promise.all([
     supabase
@@ -166,7 +176,7 @@ async function loadCurrentAccompaniments(supabase, brotherhoodId) {
       .select('id, name, slug')
       .eq('entity_type', 'band')
       .eq('status', 'published')
-      .in('id', bandIds),
+      .in('id', nameIds),
     supabase
       .from('bands')
       .select('entity_id, band_type, logo_path')
@@ -193,7 +203,8 @@ async function loadCurrentAccompaniments(supabase, brotherhoodId) {
         tipo: band.band_type || 'Formación musical',
         logo: band.logo_path || '',
         salida: period.outing_type || '',
-        periodo: period.date_from_text || (period.year_from ? `Desde ${period.year_from}` : ''),
+        periodo: accompanimentStartLabel(period),
+        anterior: predecessorLabel(resolvePredecessor(predecessorByPeriodId.get(period.id), entityById)),
         observaciones: period.notes || '',
       }
     })
@@ -486,6 +497,7 @@ function CurrentMusicSequence({ items, nested = false }) {
                           <span>{item.tipo}</span>
                           {period ? <span>{period}</span> : null}
                         </div>
+                        {item.anterior ? <p className={styles.predecessor}>{item.anterior}</p> : null}
                       </div>
                       <span className={styles.arrow} aria-hidden="true">→</span>
                     </Link>

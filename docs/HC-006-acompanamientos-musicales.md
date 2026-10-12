@@ -181,3 +181,14 @@ Cualquier funcionalidad futura que maneje acompañamientos musicales deberá:
 5. no inferir pertenencia institucional a partir de un contrato musical;
 6. utilizar posiciones y asignaciones de salida para describir procesiones concretas con varias Bandas o tramos;
 7. evitar nuevas escrituras en la tabla legada `accompaniments` salvo decisión arquitectónica posterior.
+## Tabla heredada `accompaniments` · decisión del 12/10/2026
+
+`public.accompaniments` es anterior a este modelo y **no forma parte de la fuente de verdad**. Ningún lector público la consulta; solo la usaba la señal `music` de completitud, lo que llevó a seguir escribiendo filas que nunca llegaban a la web.
+
+- La señal `music` de `brotherhood_completeness_signals` mide ahora las capas canónicas: periodo vigente publicado o música publicada en una salida de la Hermandad.
+- La tabla queda congelada: un trigger rechaza inserciones nuevas. Las filas existentes se conservan como evidencia.
+- La música de una salida concreta se registra **solo** en `outing_music_positions` + `outing_music_assignments`; la relación estable, **solo** en `music_accompaniment_periods`.
+- Las vistas de salida clasifican la música con un único criterio (`lib/outing-music-sections.js`): todo código posicional es acompañamiento; solo `liturgical_music`, `announcement_music` y `other` se separan.
+- Hermandad y Paso muestran el inicio documentado con la regla de Música 2027 (`lib/music-tenure.js`) y la formación anterior del mismo paso cuando existe un periodo cerrado documentado (`lib/music-lineage.js`).
+
+Auditoría, clasificación de las 97 filas y conversión propuesta: `docs/auditorias/acompanamientos-legado-20261012/`.
