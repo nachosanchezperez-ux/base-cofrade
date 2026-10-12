@@ -60,7 +60,7 @@ test('la sección es descubrible y enlaza las fichas de Hermandad y Banda', () =
 
   assert.match(header, /\['\/crucetas-musicales', 'Crucetas musicales'\]/)
   assert.match(sitemap, /getMusicalRepertoires/)
-  assert.match(brotherhood, /getMusicalRepertoires\(\{ brotherhoodEntityId: h\.id \}\)/)
+  assert.match(brotherhood, /getCachedBrotherhoodRepertoires\(h\.id\)/)
   assert.match(band, /getMusicalRepertoires\(\{ bandEntityId: band\.id \}\)/)
   assert.match(detail, /href=\{repertoire\.brotherhood\.href\}/)
   assert.match(detail, /href=\{repertoire\.band\.href\}/)
