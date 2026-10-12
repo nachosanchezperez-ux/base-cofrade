@@ -236,14 +236,6 @@ export default function HiddenThreadGame() {
 
   const careerPoints = progress ? hiddenTotalScore(progress) : 0
   const earnedBadge = streak >= 7 ? 'Siete días de hilo' : completed && careerPoints >= 80 ? 'Buen conocedor' : completed ? 'Primer cabo' : 'Por descubrir'
-  const topicCards = [
-    { icon: '✦', title: 'Vocabulario', caption: 'La palabra escondida', live: true },
-    { icon: '♜', title: 'Hermandades', caption: 'Su historia y sus titulares' },
-    { icon: '✧', title: 'Imágenes', caption: 'La talla y su advocación' },
-    { icon: '♫', title: 'Marchas', caption: 'Tras los sones' },
-    { icon: '✎', title: 'Autores', caption: 'La firma de cada obra' },
-  ]
-
   const isFinalRound = Boolean(progress && progress.stage === challenge.words.length - 1)
   const stagePoints = round ? hiddenRoundScore(round) : 0
   const usedErrors = round ? roundErrors(round) : 0
@@ -453,66 +445,10 @@ export default function HiddenThreadGame() {
 
             </aside>
           </div>
-          <a
-            className={styles.cofradleFeature}
-            href="https://cofradle.es/"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-labelledby="cofradle-heading"
-            aria-describedby="cofradle-independent"
-          >
-            <div className={styles.cofradleVisual} aria-hidden="true">
-              <div className={styles.cofradleVisualHeader}>
-                <span className={styles.cofradleVisualName}>COFRADLE</span>
-                <span>JUEGOS COFRADES</span>
-              </div>
-              <div className={styles.cofradleChallengeCards}>
-                <div className={styles.cofradleChallengeCard}>
-                  <span>ADIVINA</span>
-                  <strong>¿Qué hermandad?</strong>
-                  <div className={styles.cofradleMystery}>? ? ?</div>
-                </div>
-                <div className={styles.cofradleChallengeCard + ' ' + styles.cofradleMusicCard}>
-                  <span>DESCUBRE</span>
-                  <strong>¿Qué marcha?</strong>
-                  <div className={styles.cofradleSound}>♫ ♪ ♫</div>
-                </div>
-              </div>
-            </div>
-            <div className={styles.cofradleContent}>
-              <span className={styles.cofradleEyebrow}>¿Otra partida? · Juego externo</span>
-              <h2 id="cofradle-heading">Cofradle. <em>¿Juegas?</em></h2>
-              <p>Adivina hermandades y reconoce marchas. El siguiente reto está a un clic.</p>
-              <span className={styles.cofradleAction}>Jugar ahora <span aria-hidden="true">↗</span></span>
-              <small id="cofradle-independent">Abrirás cofradle.es, un proyecto independiente de Hilo Cofrade.</small>
-            </div>
-          </a>
-
-        <div className={styles.gameLobby}>
-          <div className={styles.lobbyIntro}>
-            <span className={styles.eyebrow}>La enciclopedia también se juega</span>
-            <h2>Un cabo por descubrir. Una historia por contar.</h2>
-            <p>Resuelve el desafío del día y sigue el hilo hacia la historia que se esconde detrás de cada respuesta.</p>
+          <div className={styles.nextTopics} aria-label="Próximos retos de la enciclopedia">
+            <span className={styles.eyebrow}>El juego seguirá creciendo</span>
+            <p>Próximamente: hermandades, imágenes, marchas y autores.</p>
           </div>
-          <div className={styles.lobbyScoreboard} aria-label="Tu progreso en el juego">
-            <div><span aria-hidden="true">♜</span><strong>{streak}</strong><small>{streak === 1 ? 'Día de racha' : 'Días de racha'}</small></div>
-            <div><span aria-hidden="true">✦</span><strong>{careerPoints}</strong><small>Puntos de este reto</small></div>
-            <div><span aria-hidden="true">❖</span><strong>{earnedBadge}</strong><small>Tu distinción</small></div>
-          </div>
-          <div className={styles.lobbyTopics}>
-            <div className={styles.topicHeader}><h3>Los universos del Hilo</h3><span>Una enciclopedia, muchos retos</span></div>
-            <div className={styles.topicGrid}>
-              {topicCards.map((item) => (
-                <div key={item.title} className={styles.topicCard + (item.live ? ' ' + styles.topicLive : '')}>
-                  <span className={styles.topicSymbol} aria-hidden="true">{item.icon}</span>
-                  <strong>{item.title}</strong>
-                  <small>{item.caption}</small>
-                  <span className={styles.topicStatus}>{item.live ? 'Disponible ahora' : 'En preparación'}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
           </>
         )}
       </div>
