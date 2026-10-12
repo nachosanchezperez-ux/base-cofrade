@@ -906,3 +906,59 @@
   .topicCard { min-height: 123px; }
 }
 @media (prefers-reduced-motion: reduce) { .gameLobby *, .achievement * { animation: none !important; } }
+
+
+/* Recomendación editorial visible sin confundir la marca ajena con Hilo Cofrade. */
+.cofradleFeature {
+  display: grid;
+  grid-template-columns: minmax(0,.7fr) minmax(0,1.3fr);
+  margin-top: 23px;
+  overflow: hidden;
+  border: 1px solid #d9dfe8;
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 12px 38px rgba(18,37,59,.075);
+}
+.cofradleVisual {
+  min-height: 265px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 24px;
+  color: #fff;
+  background:
+    radial-gradient(circle at 105% 0%, rgba(225,188,120,.27), transparent 45%),
+    repeating-linear-gradient(145deg, transparent 0 24px, rgba(255,255,255,.025) 24px 26px),
+    linear-gradient(145deg,#102c4a,#193c62 65%,#62283a);
+}
+.cofradleVisualMark {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  border: 2px solid rgba(248,225,190,.8);
+  border-radius: 17px;
+  color: #f7dcc0;
+  font: bold 51px/1 Georgia,serif;
+}
+.cofradleVisualLines { display: grid; gap: 10px; }
+.cofradleVisualLines span { width: fit-content; padding: 6px 11px; border: 1px solid rgba(255,255,255,.18); border-radius: 6px; color: #e8e4e2; font-size: 11px; font-weight: 850; letter-spacing: .07em; }
+.cofradleContent { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; min-width: 0; padding: clamp(22px,4vw,39px); }
+.cofradleEyebrow { color: #934057; font-size: 11px; font-weight: 850; letter-spacing: .1em; text-transform: uppercase; }
+.cofradleContent h2 { margin: 9px 0 10px; color: #202b3b; font: bold clamp(26px,3.5vw,38px)/1.12 Georgia,serif; letter-spacing: -.03em; }
+.cofradleContent h2 em { color: #7d2f46; font-style: normal; }
+.cofradleContent p { max-width: 600px; margin: 0 0 22px; color: #5b6674; font-size: 14px; line-height: 1.65; }
+.cofradleAction { display: inline-flex; align-items: center; justify-content: space-between; gap: 26px; min-height: 48px; padding: 0 19px; border-radius: 11px; color: #fff; background: #6c273d; font-size: 14px; font-weight: 850; }
+.cofradleAction:hover { color: #fff; background: #4a1e30; }
+.cofradleContent small { display: block; margin-top: 13px; color: #75808c; font-size: 11px; line-height: 1.5; }
+.cofradleAction:focus-visible { outline: 3px solid #d8a34b; outline-offset: 3px; }
+@media (max-width: 720px) {
+  .cofradleFeature { grid-template-columns: 1fr; border-radius: 16px; margin-top: 15px; }
+  .cofradleVisual { min-height: 110px; flex-direction: row; align-items: center; padding: 15px; }
+  .cofradleVisualMark { width: 63px; height: 63px; font-size: 44px; }
+  .cofradleVisualLines { gap: 5px; }
+  .cofradleVisualLines span { padding: 3px 6px; font-size: 9px; }
+  .cofradleContent { padding: 19px; }
+  .cofradleContent p { margin-bottom: 17px; }
+  .cofradleAction { width: 100%; }
+}
