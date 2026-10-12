@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs'
 
 const loader = readFileSync(new URL('../lib/supabase/musical-repertoires.js', import.meta.url), 'utf8')
 const detail = readFileSync(new URL('../app/crucetas-musicales/[slug]/page.js', import.meta.url), 'utf8')
+const explorer = readFileSync(new URL('../app/crucetas-musicales/[slug]/RepertoireExplorer.js', import.meta.url), 'utf8')
 const marchLoader = readFileSync(new URL('../lib/supabase/public-marches.js', import.meta.url), 'utf8')
 const marchDetail = readFileSync(new URL('../app/marchas/[slug]/page.js', import.meta.url), 'utf8')
 const sitemap = readFileSync(new URL('../app/sitemap.js', import.meta.url), 'utf8')
@@ -17,10 +18,12 @@ test('la cruceta resuelve cada obra desde la Marcha canónica', () => {
 })
 
 test('la cruceta muestra autoría, dedicatoria, veces interpretada y escucha', () => {
-  assert.match(detail, />Autoría</)
-  assert.match(detail, />Dedicatoria</)
-  assert.match(detail, /performanceLabel\(entry\.count\)/)
-  assert.match(detail, />Escuchar /)
+  assert.match(explorer, />Autoría</)
+  assert.match(explorer, />Dedicatoria</)
+  assert.match(explorer, /entry\.count > 1/)
+  assert.doesNotMatch(explorer, /1 vez/)
+  assert.match(explorer, />Escuchar /)
+  assert.match(explorer, />Ver ficha</)
   assert.match(detail, /No se deduce el orden, el lugar ni si las interpretaciones fueron consecutivas/)
 })
 

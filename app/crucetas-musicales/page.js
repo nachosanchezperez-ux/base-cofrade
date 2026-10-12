@@ -1,9 +1,9 @@
 import { connection } from 'next/server'
-import Link from 'next/link'
 import JsonLd from '@/components/JsonLd'
 import { getMusicalRepertoires } from '@/lib/supabase/public-directory-cache'
 import { absoluteUrl, breadcrumbJsonLd, pageTitle } from '@/lib/seo'
 import styles from './crucetas.module.css'
+import CrucetasDirectory from './CrucetasDirectory'
 
 export const revalidate = 900
 
@@ -21,6 +21,18 @@ export const metadata = {
 export default async function MusicalRepertoiresDirectoryPage() {
   await connection()
   const repertoires = await getMusicalRepertoires()
+  const directoryItems = repertoires.map((item) => ({
+    id: item.id,
+    href: item.href,
+    year: item.year,
+    displayTitle: item.displayTitle,
+    worksCount: item.worksCount,
+    performancesCount: item.performancesCount,
+    colors: item.colors,
+    municipality: item.municipality ? { name: item.municipality.name } : null,
+    brotherhood: { name: item.brotherhood.name },
+    band: { name: item.band.name },
+  }))
 
   return (
     <div className={styles.directory}>
@@ -49,28 +61,7 @@ export default async function MusicalRepertoiresDirectoryPage() {
             <span>Repertorios documentados</span>
             <strong>{repertoires.length}</strong>
           </div>
-          {repertoires.length ? (
-            <div className={styles.directoryGrid}>
-              {repertoires.map((item) => (
-                <article
-                  className={styles.directoryCard}
-                  key={item.id}
-                  style={{ '--repertoire-primary': item.colors.primary, '--repertoire-accent': item.colors.accent }}
-                >
-                  <div className={styles.directoryYear}>{item.year}</div>
-                  <span>Repertorio interpretado</span>
-                  <h2>{item.displayTitle}</h2>
-                  <p>Cruceta de <strong>{item.band.name}</strong></p>
-                  <dl>
-                    <div><dt>Obras</dt><dd>{item.worksCount}</dd></div>
-                    <div><dt>Interpretaciones</dt><dd>{item.performancesCount}</dd></div>
-                  </dl>
-                  <small>{item.step?.name || 'Procesión documentada'}</small>
-                  <Link href={item.href}>Abrir cruceta <b aria-hidden="true">→</b></Link>
-                </article>
-              ))}
-            </div>
-          ) : (
+          {repertoires.length ? <CrucetasDirectory repertoires={directoryItems} /> : (
             <p className={styles.empty}>Las primeras crucetas documentadas se publicarán próximamente.</p>
           )}
         </div>

@@ -7,6 +7,7 @@ import { musicalRepertoireDateLabel } from '@/lib/musical-repertoires/presentati
 import { getMusicalRepertoireBySlug } from '@/lib/supabase/musical-repertoires'
 import { absoluteUrl, breadcrumbJsonLd, compactSeoTitle, socialMetadata } from '@/lib/seo'
 import styles from '../crucetas.module.css'
+import RepertoireExplorer from './RepertoireExplorer'
 
 export const dynamic = 'force-static'
 export const revalidate = 900
@@ -24,25 +25,6 @@ function BandLogo({ band, size = 36 }) {
       style={{ width: size, height: size, objectFit: 'contain', display: 'block' }}
     />
   )
-}
-
-function authorship(entry) {
-  const composers = entry.authors.filter((author) => author.role === 'composer')
-  const primary = composers.length ? composers : entry.authors
-  return primary.map((author) => author.name).join(' · ') || entry.credit || ''
-}
-
-function secondaryAuthorship(entry) {
-  const composers = entry.authors.filter((author) => author.role === 'composer')
-  if (!composers.length) return ''
-  return entry.authors
-    .filter((author) => author.role !== 'composer')
-    .map((author) => `${author.role === 'adapter' ? 'Adaptación' : author.role === 'lyricist' ? 'Letra' : 'Autoría'}: ${author.name}`)
-    .join(' · ')
-}
-
-function performanceLabel(count) {
-  return count === 1 ? '1 vez' : `${count} veces`
 }
 
 export async function generateMetadata({ params }) {
@@ -171,54 +153,7 @@ export default async function MusicalRepertoireDetailPage({ params }) {
             <p>La cifra indica cuántas veces fue interpretada cada obra según la información facilitada. No se deduce el orden, el lugar ni si las interpretaciones fueron consecutivas.</p>
           </header>
 
-          <div className={styles.worksGrid}>
-            {repertoire.entries.map((entry) => (
-              <article className={styles.workCard} key={entry.id}>
-                <div className={styles.note} aria-hidden="true">♪</div>
-                <div className={styles.workCopy}>
-                  <div className={styles.workTitle}>
-                    <span>{entry.workType || 'Marcha vinculada'}{entry.compositionYear ? ` · ${entry.compositionYear}` : ''}</span>
-                    <h3>{entry.marchHref ? <Link href={entry.marchHref}>{entry.title} <b aria-hidden="true">→</b></Link> : entry.title}</h3>
-                  </div>
-                  <dl className={styles.workRelations}>
-                    <div>
-                      <dt>Autoría</dt>
-                      <dd>{authorship(entry) || 'No documentada'}</dd>
-                      {secondaryAuthorship(entry) ? <small>{secondaryAuthorship(entry)}</small> : null}
-                    </div>
-                    {entry.dedications.length ? (
-                      <div>
-                        <dt>Dedicatoria</dt>
-                        <dd>{entry.dedications.map((dedication, index) => (
-                          <span key={`${dedication.id}-${index}`}>
-                            {index ? ' · ' : ''}
-                            {dedication.href ? <Link href={dedication.href}>{dedication.name}</Link> : dedication.name}
-                          </span>
-                        ))}</dd>
-                      </div>
-                    ) : null}
-                  </dl>
-                </div>
-                <div className={styles.workActions}>
-                  <strong className={styles.count} aria-label={`${entry.count} ${entry.count === 1 ? 'interpretación' : 'interpretaciones'}`}>{performanceLabel(entry.count)}</strong>
-                  {entry.listening ? (
-                    <a
-                      className={styles.listen}
-                      href={entry.listening.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`Escuchar ${entry.title} en ${entry.listening.provider}`}
-                      data-hilo-event="repertoire_listen_click"
-                      data-hilo-provider={entry.listening.provider.toLowerCase()}
-                    >
-                      <span aria-hidden="true">▶</span>
-                      <span>Escuchar <small>{entry.listening.provider}</small></span>
-                    </a>
-                  ) : null}
-                </div>
-              </article>
-            ))}
-          </div>
+          <RepertoireExplorer entries={repertoire.entries} />
         </div>
       </section>
 
