@@ -1152,3 +1152,7 @@
   .cofradleFeature, .heroPlayActions a { transition: none; }
   .cofradleFeature:hover, .heroPlayActions a:hover { transform: none; }
 }
+
+/* El espacio de descubrimiento aparece después de las acciones de juego. */
+.gameLobby { margin-top: 21px; margin-bottom: 0; }
+@media (max-width: 550px) { .gameLobby { margin-top: 14px; margin-bottom: 0; } }
