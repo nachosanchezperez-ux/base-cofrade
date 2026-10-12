@@ -218,3 +218,10 @@ Indicación del propietario: el municipio está al final del nombre (por ejemplo
 - Quedan 17:
   - 7 municipios por dar de alta: Hinojos, Paterna del Campo, El Pedroso, Villarrasa, Los Molares, Brenes y Huete.
   - 10 nombres de barrio o parroquia, o sin lugar.
+
+**Alta de municipios de Sevilla** (`municipios-sevilla.sql`; reversión: `municipios-sevilla-rollback.sql`):
+
+- Se dan de alta El Pedroso, Los Molares y Brenes, y se asignan a sus Hermandades.
+- Quedan fuera, por indicación del propietario: Hinojos, Paterna del Campo y Villarrasa (Huelva), y Huete (Cuenca).
+- Un municipio sin bandas publicadas no genera página ni entrada en el sitemap.
+- **Resultado: 43 de 57 con municipio.**

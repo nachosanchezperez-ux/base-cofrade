@@ -16,12 +16,12 @@ Recuento: 1 · Urgente: 1, 2 · Alta: 35, 3 · Media: 11, 4 · Baja: 10
 | 2 · Alta | Asociación del Santísimo Cristo del Amor de Huévar del Aljarafe | Huévar del Aljarafe | 1 (1/0) | 1 | Santísimo Cristo del Amor en su Entrada Triunfal en Jerusalén | La Redención |
 | 2 · Alta | Hermandad de Jesús de La Algaba | La Algaba | 1 (1/0) | 1 | Nuestra Señora de los Dolores | Cruz Roja |
 | 2 · Alta | Hermandad de Nuestra Señora de la Salud de San Isidoro | Por confirmar: el nombre no indica un municipio | 1 (1/0) | 1 | Nuestra Señora de la Salud | Las Nieves de Olivares |
-| 2 · Alta | Hermandad de Santa Marta de Los Molares | Los Molares (no existe en la tabla de municipios) | 1 (1/0) | 1 | Santa Marta | Las Nieves de Olivares |
-| 2 · Alta | Hermandad de Santa Quiteria de Huete | Huete (no existe en la tabla de municipios) | 1 (1/0) | 1 | — | Cruz Roja |
+| 2 · Alta | Hermandad de Santa Marta de Los Molares | Los Molares | 1 (1/0) | 1 | Santa Marta | Las Nieves de Olivares |
+| 2 · Alta | Hermandad de Santa Quiteria de Huete | Huete (fuera de la provincia de Sevilla) | 1 (1/0) | 1 | — | Cruz Roja |
 | 2 · Alta | Hermandad de la Calle Real de Castilleja de la Cuesta | Castilleja de la Cuesta | 3 (2/1) | 3 | Inmaculada Concepción Coronada / Paso de Nuestro Padre Jesús del Gran Poder | Agrupación Musical Nuestra Señora de Valme de Dos Hermanas / Banda de Música María Santísima de la Victoria / Cruz Roja |
 | 2 · Alta | Hermandad de la Defensión | Jerez de la Frontera | 2 (2/0) | 2 | el paso del Santísimo Cristo de la Defensión / Paso de palio de María Santísima de la O | Banda de Música de Nuestra Señora de la Soledad de Cantillana / Presentación al Pueblo |
 | 2 · Alta | Hermandad de la Divina Pastora de Capuchinos | Por confirmar: el nombre no indica un municipio | 1 (1/0) | 1 | Divina Pastora de las Almas Coronada | Las Nieves de Olivares |
-| 2 · Alta | Hermandad de la Divina Pastora de Hinojos | Hinojos (no existe en la tabla de municipios) | 1 (1/0) | 1 | — | Cruz Roja |
+| 2 · Alta | Hermandad de la Divina Pastora de Hinojos | Hinojos (fuera de la provincia de Sevilla) | 1 (1/0) | 1 | — | Cruz Roja |
 | 2 · Alta | Hermandad de la Esperanza de Arahal | Arahal | 3 (1/1) | 1 | Paso de palio de Nuestra Señora de las Angustias | Banda de Música AMUECI / Banda Municipal de Bollullos del Condado / Santa María Magdalena de Arahal |
 | 2 · Alta | Hermandad de la Humillación de Camas | Camas | 1 (1/0) | 1 | — | Santa María Magdalena de Arahal |
 | 2 · Alta | Hermandad de la Inmaculada Concepción de Sevilla | Sevilla | 1 (1/0) | 1 | — | Cruz Roja |
@@ -30,11 +30,11 @@ Recuento: 1 · Urgente: 1, 2 · Alta: 35, 3 · Media: 11, 4 · Baja: 10
 | 2 · Alta | Hermandad de la Soledad de Huévar | Huévar del Aljarafe | 1 (1/0) | 1 | — | Cruz Roja |
 | 2 · Alta | Hermandad de la Soledad de Marchena | Marchena | 1 (1/0) | 1 | Nuestra Señora y Madre de la Soledad Coronada | Cruz Roja |
 | 2 · Alta | Hermandad de la Soledad de Olivares | Olivares | 1 (1/0) | 1 | Nuestra Señora de los Dolores en su Soledad | Las Nieves de Olivares |
-| 2 · Alta | Hermandad de la Virgen del Carmen de Paterna del Campo | Paterna del Campo (no existe en la tabla de municipios) | 1 (1/0) | 1 | — | Cruz Roja |
-| 2 · Alta | Hermandad de la Virgen del Espino de El Pedroso | El Pedroso (no existe en la tabla de municipios) | 1 (1/0) | 1 | — | Cruz Roja |
+| 2 · Alta | Hermandad de la Virgen del Carmen de Paterna del Campo | Paterna del Campo (fuera de la provincia de Sevilla) | 1 (1/0) | 1 | — | Cruz Roja |
+| 2 · Alta | Hermandad de la Virgen del Espino de El Pedroso | El Pedroso | 1 (1/0) | 1 | — | Cruz Roja |
 | 2 · Alta | Hermandad de las Nieves de Benacazón | Benacazón | 1 (1/0) | 1 | — | Cruz Roja |
 | 2 · Alta | Hermandad de los Dolores de Torreblanca | Por confirmar: el nombre no indica un municipio | 1 (1/0) | 1 | María Santísima de los Dolores | Las Nieves de Olivares |
-| 2 · Alta | Hermandad de los Remedios de Villarrasa | Villarrasa (no existe en la tabla de municipios) | 1 (1/0) | 1 | — | Cruz Roja |
+| 2 · Alta | Hermandad de los Remedios de Villarrasa | Villarrasa (fuera de la provincia de Sevilla) | 1 (1/0) | 1 | — | Cruz Roja |
 | 2 · Alta | Hermandad de los Ángeles de San Juan de Aznalfarache | San Juan de Aznalfarache | 1 (1/0) | 1 | Nuestra Señora de los Ángeles | Cruz Roja |
 | 2 · Alta | Hermandad del Carmen de San Leandro | Por confirmar: el nombre no indica un municipio | 1 (1/0) | 1 | — | Cruz Roja |
 | 2 · Alta | Hermandad del Rosario de Burguillos | Burguillos | 3 (3/0) | 3 | Nuestra Señora del Rosario Coronada / Simpecado de Nuestra Señora del Rosario Coronada | Cruz Roja / Las Nieves de Olivares |
@@ -66,11 +66,12 @@ Recuento: 1 · Urgente: 1, 2 · Alta: 35, 3 · Media: 11, 4 · Baja: 10
 | 4 · Baja | Hermandad de los Gitanos de Lebrija | Lebrija | 2 (0/1) | 0 | Paso de Cristo | Agrupación Musical Nuestra Señora del Rosario de Crevillent / Agrupación Musical Santa Cecilia de Sevilla |
 | 4 · Baja | Hermandad de los Gitanos de Écija | Écija | 1 (0/1) | 0 | Paso de Cristo | Agrupación Musical Nuestra Señora del Rosario de Crevillent |
 | 4 · Baja | Hermandad del Gran Poder de Bollullos de la Mitación | Bollullos de la Mitación | 2 (0/1) | 0 | Paso de Nuestro Padre Jesús del Gran Poder | Agrupación Musical Nuestro Padre Jesús Cautivo de Dos Hermanas / Agrupación Musical Santísimo Cristo de la Humillación de Lucena |
-| 4 · Baja | Hermandad del Gran Poder de Brenes | Brenes (no existe en la tabla de municipios) | 2 (0/1) | 0 | Paso de Nuestro Padre Jesús del Gran Poder | Banda de Cornetas y Tambores Jesús del Gran Poder de Granada / Banda de Cornetas y Tambores Redención de Benalmádena |
+| 4 · Baja | Hermandad del Gran Poder de Brenes | Brenes | 2 (0/1) | 0 | Paso de Nuestro Padre Jesús del Gran Poder | Banda de Cornetas y Tambores Jesús del Gran Poder de Granada / Banda de Cornetas y Tambores Redención de Benalmádena |
 | 4 · Baja | Hermandad del Gran Poder de Los Palacios y Villafranca | Los Palacios y Villafranca | 2 (0/1) | 0 | Paso de Nuestro Padre Jesús del Gran Poder | Agrupación Musical Nuestro Padre Jesús del Gran Poder de Los Palacios y Villafranca / Agrupación Musical Polillas de Cádiz |
 
-**Municipio:** 40 de 57 ya lo tienen asignado. Se ha deducido del final del nombre (`municipios.sql`, con su reversión `municipios-rollback.sql`). Quedan 17:
-- **7 municipios que no existen en la tabla:** Hinojos, Paterna del Campo, El Pedroso, Villarrasa, Los Molares, Brenes y Huete (Cuenca). Hay que dar de alta el municipio.
+**Municipio:** 43 de 57 ya lo tienen asignado. Se ha deducido del final del nombre (`municipios.sql`, con su reversión `municipios-rollback.sql`). Quedan 14:
+- **3 municipios de Sevilla dados de alta** (`municipios-sevilla.sql`): El Pedroso, Los Molares y Brenes, ya asignados.
+- **4 fuera de la provincia de Sevilla, sin dar de alta** por indicación del propietario: Hinojos, Paterna del Campo y Villarrasa (Huelva), y Huete (Cuenca).
 - **10 nombres que no indican municipio o solo un barrio o parroquia:** Capuchinos, Torreblanca, San Isidoro, San Leandro, Milagrosa, Viñas, Sagrado Corazón, Transporte, Candelaria Madre de Dios y Santa Cruz del Cerrillo. Por confirmar.
 
 La columna «Qué falta» del CSV detalla cada caso.
