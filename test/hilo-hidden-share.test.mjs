@@ -8,6 +8,7 @@ import {
 } from '../lib/hilo-hidden-game.js'
 import {
   HILO_SHARE_URL,
+  hiddenInviteText,
   hiddenShareData,
   hiddenShareSocialLinks,
   hiddenStoryFilename,
@@ -87,4 +88,14 @@ test('la tarjeta de historias usa formato 9:16 y un nombre reconocible por reto'
   assert.match(source, /new File\(\[bytes\], filename, \{ type: 'image\/png' \}\)/)
   assert.match(source, /saveHiddenStoryFile/)
   assert.doesNotMatch(source, /word\.answer/)
+})
+
+
+test('la invitación a jugar existe incluso sin haber completado la partida', () => {
+  const text=hiddenInviteText()
+  assert.ok(text.includes('¿Sabes desenredar el hilo de hoy?'))
+  assert.ok(text.includes(HILO_SHARE_URL))
+  for (const answer of ['LLAMADOR','PALIO','COSTAL']) {
+    assert.ok(!text.includes(answer),'La invitación no debe revelar palabras')
+  }
 })
