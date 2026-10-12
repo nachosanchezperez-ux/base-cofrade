@@ -92,3 +92,28 @@ Todo queda en **borrador** hasta que el propietario autorice publicarlo.
 - **Paso:** un único paso, el de la Entrada Triunfal, que llegó a Huévar en 1993.
 - **Música:** La Redención (A.M. Nuestro Padre Jesús de la Redención), confirmada en 2026, enlazada al paso.
 - **Verificado** en `/hermandades/cristo-amor-entrada-triunfal-huevar`.
+
+## Hermandad de Jesús de La Algaba · 12/10/2026 · aplicado y publicado
+
+`jesus-la-algaba.sql`; reversión: `jesus-la-algaba-rollback.sql`.
+
+### Fuentes
+
+- [Guía «La Algaba: Patrimonio entre naranjos»](https://sites.google.com/g.educaand.es/guiapatrimoniomatilde/hermandad-de-jes%C3%BAs-nazareno-jes%C3%BAs).
+- [Banda de la Cruz Roja · Madrugá](https://www.bandacruzroja.es/hermandades/semana-santa/la-madruga).
+
+### Ficha
+
+- **Nombre oficial:** Pontificia, Real e Ilustre Hermandad de Nuestro Padre Jesús Nazareno. Sede: Iglesia de Jesús. Salida: Madrugá.
+- **Titulares:**
+  - Jesús Nazareno: anónimo de 1685, atribuido a La Roldana.
+  - Dolores: de candelero, atribuida a Juan de Astorga.
+  - San Juan Evangelista: Miguel Ángel Domínguez, 2005.
+- **Pasos:**
+  - Jesús Nazareno: Antonio Martín, 1958; caídas de Hermanas Ramas, 2008.
+  - Palio de los Dolores.
+- **Música:** Cruz Roja tras el palio, desde 2019.
+
+Verificado en `/hermandades/hermandad-jesus-la-algaba`.
+
+**Hallazgo técnico, sin tocar:** en las fichas de Hermandad, el recuento de Hermandades de una banda difiere entre la tarjeta («11 con acompañamiento actual») y el bloque «Sigue tirando del hilo» (10). Parece que uno excluye la propia Hermandad. Revisar en una tarea de código aparte.
