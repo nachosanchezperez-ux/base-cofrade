@@ -4,6 +4,7 @@ import { HILO_HIDDEN_CHAINS } from '../lib/hilo-hidden-game-data.js'
 import {
   getHiddenChallenge,
   getHiddenChoiceOptions,
+  evaluateHiddenGuess,
   HILO_HIDDEN_WORDS,
   HILO_GAME_MAX_ERRORS,
   hiddenDaySerial,
@@ -101,7 +102,7 @@ test('la puntuación penaliza pistas y errores, nunca una palabra no acertada', 
   assert.ok(hiddenShareText(game, progress).includes('100/100 puntos'))
   assert.ok(!hiddenShareText(game, progress).includes(game.words[0].answer))
   assert.equal(hiddenShareText(game, { ...progress, finished: false }), '')
-  assert.equal(HILO_GAME_MAX_ERRORS, 4)
+  assert.equal(HILO_GAME_MAX_ERRORS, 3)
 })
 
 test('no se permite completar una partida con cabos pendientes', () => {
@@ -212,7 +213,7 @@ test('el resultado compartido resume cada cabo sin revelar soluciones', () => {
   progress.rounds = [
     { status: 'won', guesses: [normalizeHiddenAnswer(expert.words[0].answer)], hints: [] },
     { status: 'won', guesses: ['XXXX', normalizeHiddenAnswer(expert.words[1].answer)], hints: [0] },
-    { status: 'lost', guesses: ['A', 'B', 'C', 'D'], hints: [0, 1, 2] },
+    { status: 'lost', guesses: ['A', 'B', 'C'], hints: [0, 1, 2] },
   ]
   progress.stage = 2
   progress.finished = true
@@ -266,4 +267,52 @@ test('las opciones en el modo visual resultan próximas a la temática de la res
   const count=HILO_HIDDEN_WORDS.filter(w=>w.category===category).length
   if(count>=4)assert.ok(entries.filter(w=>w.category===category).length>=2)
   assert.deepEqual(getHiddenChoiceOptions(null),[])
+})
+
+
+test('tocar o escribir consume el mismo cupo de tres fallos', () => {
+  const challenge = getHiddenChallenge('2026-10-12', 'daily')
+  const word = challenge.words[0]
+  const fresh = makeHiddenProgress(challenge)
+  const options = getHiddenChoiceOptions(challenge, 0)
+  const wrong = options.filter((option) => normalizeHiddenAnswer(option) !== normalizeHiddenAnswer(word.answer))
+  assert.equal(wrong.length, 3)
+
+  const first = evaluateHiddenGuess({ word, round: fresh.rounds[0], value: wrong[0], isChoice: true })
+  assert.equal(first.kind, 'wrong')
+  assert.equal(first.remaining, 2)
+  const duplicate = evaluateHiddenGuess({ word, round: first.nextRound, value: wrong[0], isChoice: true })
+  assert.equal(duplicate.kind, 'duplicate')
+
+  const second = evaluateHiddenGuess({ word, round: first.nextRound, value: wrong[1], isChoice: true })
+  assert.equal(second.kind, 'wrong')
+  assert.equal(second.remaining, 1)
+  const third = evaluateHiddenGuess({ word, round: second.nextRound, value: wrong[2], isChoice: true })
+  assert.equal(third.kind, 'lost')
+  assert.equal(third.remaining, 0)
+  assert.equal(third.nextRound.guesses.length, 3)
+
+  const locked = evaluateHiddenGuess({ word, round: third.nextRound, value: word.answer })
+  assert.equal(locked.kind, 'locked')
+
+  const success = evaluateHiddenGuess({ word, round: second.nextRound, value: word.answer })
+  assert.equal(success.kind, 'won')
+  assert.equal(success.remaining, 1)
+  assert.equal(success.nextRound.guesses.length, 3)
+})
+
+test('el modo escrito evita penalizar entradas vacías o con longitud distinta', () => {
+  const challenge = getHiddenChallenge('2026-10-12', 'daily')
+  const word = challenge.words[0]
+  const round = makeHiddenProgress(challenge).rounds[0]
+  assert.equal(evaluateHiddenGuess({word,round,value:'   '}).kind,'empty')
+  const short = evaluateHiddenGuess({word,round,value:'X'})
+  assert.equal(short.kind,'length')
+  assert.equal(short.expectedLength,normalizeHiddenAnswer(word.answer).length)
+  assert.equal(evaluateHiddenGuess({word,round,value:word.answer}).kind,'won')
+  const stale = { ...round, guesses:['A','B','C','D'] }
+  const game = makeHiddenProgress(challenge)
+  game.rounds[0] = stale
+  assert.equal(validHiddenProgress(game,challenge),false)
+  assert.equal(game.version,2)
 })
