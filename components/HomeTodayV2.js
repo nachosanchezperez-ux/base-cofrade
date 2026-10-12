@@ -8,6 +8,7 @@ import styles from './HomeTodayV2.module.css'
 import polishStyles from './HomeResponsivePolish.module.css'
 import mobileFixStyles from './HomeTodayMobileFix.module.css'
 import dynamicStyles from './HomeTodayDynamic.module.css'
+import gameStyles from './HiddenThreadGame.module.css'
 
 const MONTH_INDEX = {
   enero: 0,
@@ -258,6 +259,16 @@ export default function HomeTodayV2({ today, content }) {
             </div>
           </article>
         ) : null}
+
+        <aside className={gameStyles.teaser} aria-label="El hilo escondido, juego cofrade del día">
+          <div className={gameStyles.teaserCopy}>
+            <span>Un reto cofrade cada día</span>
+            <strong>El hilo escondido: ¿adivinas la palabra de hoy?</strong>
+          </div>
+          <Link className={gameStyles.teaserLink} href="/juegos/el-hilo-escondido">
+            Jugar ahora <span aria-hidden="true">→</span>
+          </Link>
+        </aside>
       </div>
     </section>
   )
