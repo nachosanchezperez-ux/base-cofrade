@@ -117,3 +117,30 @@ Todo queda en **borrador** hasta que el propietario autorice publicarlo.
 Verificado en `/hermandades/hermandad-jesus-la-algaba`.
 
 **Hallazgo técnico, sin tocar:** en las fichas de Hermandad, el recuento de Hermandades de una banda difiere entre la tarjeta («11 con acompañamiento actual») y el bloque «Sigue tirando del hilo» (10). Parece que uno excluye la propia Hermandad. Revisar en una tarea de código aparte.
+
+## Hermandad de la Divina Pastora de Capuchinos (Sevilla) · 12/10/2026 · aplicado y publicado
+
+`divina-pastora-capuchinos.sql`; reversión: `divina-pastora-capuchinos-rollback.sql`. El propietario confirmó que es de Sevilla.
+
+### Fuentes
+
+- [Archidiócesis de Sevilla · La Pastora de Capuchinos](https://www.archisevillasiempreadelante.org/pastora-de-capuchinos/).
+- [Banda Las Nieves de Olivares · Pastora de Capuchinos](https://lasnievesdeolivares.com/divina-pastora-de-las-almas-pastora-de-capuchinos/).
+- [Gente de Paz · Las Nieves acompañará a la Pastora de Capuchinos (2022)](https://www.gentedepaz.es/las-nieves-de-olivares-acompanara-a-la-pastora-de-capuchinos-en-su-procesion-triunfal-de-mayo-de-2022-con-motivo-del-centenario-de-su-coronacion/).
+- [ArteSacro · Procesión de 2025](https://www.artesacro.org/Noticia/Ver/161920/emocion-devocion-procesion-divina-pastora-capuchinos).
+
+### Ficha
+
+- **Datos generales:**
+  - Municipio: Sevilla; barrio: Capuchinos.
+  - Tipo: Gloria; sale el último domingo de mayo.
+  - Sede: convento de las Santas Justa y Rufina.
+  - El nombre oficial no se cambia, porque ninguna fuente lo documenta completo.
+- **Titular:** Divina Pastora de las Almas Coronada.
+  - Su autoría no es unánime y se recogen las dos versiones: atribución a José Fernández Guerrero (Archidiócesis y Gente de Paz, citando a Martínez Alcalde) o talla anónima (web de la banda).
+  - Restaurada por Sebastián Santos en 1956; nuevo cuerpo de Buiza en 1982.
+  - Coronada en 1921; coronación canónica en 2004.
+- **Paso:** paso procesional de Gloria; autor y fecha no documentados.
+- **Música:** Las Nieves de Olivares tras el paso, desde 2022, enlazada al paso.
+
+Verificado en `/hermandades/hermandad-divina-pastora-capuchinos-sevilla`.
