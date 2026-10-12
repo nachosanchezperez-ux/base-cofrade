@@ -1,11 +1,12 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import {
   getHiddenChallenge,
   getHiddenChoiceOptions,
   hiddenEffectiveStreak,
+  evaluateHiddenGuess,
   hiddenGuessMatches,
   HILO_GAME_HINT_COST,
   HILO_GAME_MAX_ERRORS,
@@ -21,7 +22,7 @@ import {
 } from '@/lib/hilo-hidden-game'
 import styles from './HiddenThreadGame.module.css'
 
-const GAME_STORAGE = 'hc-hilo-escondido-v1:'
+const GAME_STORAGE = 'hc-hilo-escondido-v2:'
 const STREAK_STORAGE = 'hc-hilo-escondido-racha-v1'
 
 function getProgress(challenge, storageKey) {
@@ -64,6 +65,7 @@ function roundErrors(round) {
 
 export default function HiddenThreadGame({ initialDayKey = '' }) {
   const [dateKey, setDateKey] = useState(initialDayKey)
+  const gameHeadingRef = useRef(null)
   const [mode, setMode] = useState('daily')
   // La pista debe existir en SSR: el almacenamiento local se reconcilia al hidratar.
   const [state, setState] = useState(() => initialDayKey ? {
@@ -170,46 +172,39 @@ export default function HiddenThreadGame({ initialDayKey = '' }) {
 
   function tryGuess(value, tapped = false) {
     if (!canPlay) return
-    const proposed = normalizeHiddenAnswer(value)
-    const expected = normalizeHiddenAnswer(word.answer)
-    if (!proposed) {
-      setFeedback('Escribe una respuesta o toca una de las tarjetas.')
+    const result = evaluateHiddenGuess({ word, round, value, isChoice: tapped })
+    if (result.kind === 'empty') {
+      setFeedback('Escribe una palabra o toca una tarjeta.')
       return
     }
-    const won = hiddenGuessMatches(word, proposed)
-    if (!tapped && !won && proposed.length !== expected.length) {
-      setFeedback('Buscamos ' + expected.length + ' letras. No cuenta como intento.')
+    if (result.kind === 'length') {
+      setFeedback('Buscamos ' + result.expectedLength + ' letras. No cuenta como intento.')
       return
     }
-    if (round.guesses.includes(proposed)) {
-      setFeedback('Esa palabra ya se ha intentado. Puedes probar otra.')
+    if (result.kind === 'duplicate') {
+      setFeedback('Esa respuesta ya se ha probado. No cuenta como intento.')
       return
     }
-    const guesses = [...round.guesses, proposed]
-    const limit = tapped ? 3 : HILO_GAME_MAX_ERRORS
-    const lost = !won && guesses.length >= limit
-    const status = won ? 'won' : lost ? 'lost' : 'playing'
-    patchRound(
-      { ...round, guesses, status },
-      { finished: status !== 'playing' && progress.stage === challenge.words.length - 1 }
-    )
+    if (!result.nextRound) return
+
+    patchRound(result.nextRound, {
+      finished: result.nextRound.status !== 'playing' && progress.stage === challenge.words.length - 1,
+    })
     setAnswer('')
-    const remaining = Math.max(0, limit - guesses.length)
-    if (won) {
+    if (result.kind === 'won') {
       setFeedback(
-        proposed === expected ? '¡Has acertado! El hilo sigue.'
+        result.proposed === normalizeHiddenAnswer(word.answer)
+          ? '¡Eso es! Has desenredado el hilo.'
           : '¡Correcto! «' + String(value).trim().toLocaleUpperCase('es-ES') + '» también vale. La palabra es ' + word.answer + '.',
         'success'
       )
-    } else if (lost) {
-      setFeedback('Se han agotado los intentos. Aquí tienes la solución:', 'error')
-    } else if (tapped) {
-      setFeedback('No era esa. ' + (remaining === 1 ? 'Queda una oportunidad tocando otra tarjeta.' : 'Toca otra tarjeta o pide una pista.'), 'error')
+    } else if (result.kind === 'lost') {
+      setFeedback('No quedan intentos. Descubre la respuesta y sigue aprendiendo.', 'error')
     } else {
       setFeedback(
-        remaining === 1
-          ? 'No es esa. Te queda un intento: te regalamos la primera letra.'
-          : 'No es esa. Te quedan ' + remaining + ' intentos.',
+        result.remaining === 1
+          ? '¡Último intento! Puedes pedir una pista antes de responder.'
+          : 'No era esa. Te quedan ' + result.remaining + ' intentos.',
         'error'
       )
     }
@@ -229,6 +224,13 @@ export default function HiddenThreadGame({ initialDayKey = '' }) {
     saveProgress({ ...progress, stage: progress.stage + 1 })
     setAnswer('')
     setFeedback('')
+    window.requestAnimationFrame(() => {
+      gameHeadingRef.current?.focus({ preventScroll: true })
+      gameHeadingRef.current?.scrollIntoView({
+        behavior: window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+        block: 'start',
+      })
+    })
   }
 
   async function share() {
@@ -287,7 +289,7 @@ export default function HiddenThreadGame({ initialDayKey = '' }) {
               <header className={styles.gameHeader}>
                 <div>
                   <span className={styles.eyebrow}>Reto del {readableDay(dateKey)}</span>
-                  <h2>{challenge.title}</h2>
+                  <h2 ref={gameHeadingRef} tabIndex={-1} className={styles.gameFocusHeading}>{challenge.title}</h2>
                   <p>{challenge.subtitle}</p>
                 </div>
                 {mode === 'expert' ? (
@@ -358,11 +360,11 @@ export default function HiddenThreadGame({ initialDayKey = '' }) {
                 {canPlay ? (
                   <div className={styles.choiceAttempts}>
                     <span className={styles.attemptLights} aria-hidden="true">
-                      {[0, 1, 2].map((index) => (
+                      {Array.from({ length: HILO_GAME_MAX_ERRORS }, (_, index) => index).map((index) => (
                         <i key={index} className={index < usedErrors ? styles.attemptSpent : ''} />
                       ))}
                     </span>
-                    <span>{Math.max(0, 3 - usedErrors)} oportunidades al tocar · sin teclado</span>
+                    <span>{Math.max(0, HILO_GAME_MAX_ERRORS - usedErrors)} intentos · elige una tarjeta</span>
                   </div>
                 ) : null}
               </section>
@@ -395,7 +397,7 @@ export default function HiddenThreadGame({ initialDayKey = '' }) {
                       />
                       <button type="submit" disabled={!answer.trim()}>Comprobar <span aria-hidden="true">→</span></button>
                     </div>
-                    <span className={styles.attemptInfo}>Al escribir, tienes hasta {HILO_GAME_MAX_ERRORS} intentos en total.
+                    <span className={styles.attemptInfo}>Las tarjetas y el teclado comparten {HILO_GAME_MAX_ERRORS} intentos en total.
                       {usedErrors === HILO_GAME_MAX_ERRORS - 1 ? ' Empieza por «' + word.answer.charAt(0) + '».' : ''}
                     </span>
                   </form>
