@@ -142,3 +142,18 @@ test('los titulares de El Hilo se mueve en portada: los más recientes, uno por 
   assert.equal(news[0].href, '/el-hilo-se-mueve#a')
   assert.deepEqual(buildHomeNews(null), [])
 })
+
+test('titulares ágiles: fecha relativa en días de Madrid y enlace a las fichas', async () => {
+  const { buildHomeNews, homeNewsDayLabel } = await import('../lib/home-news.js')
+  assert.equal(homeNewsDayLabel('2026-10-13', '2026-10-13'), 'Hoy')
+  assert.equal(homeNewsDayLabel('2026-10-12', '2026-10-13'), 'Ayer')
+  assert.equal(homeNewsDayLabel('2026-10-09', '2026-10-13'), 'Hace 4 días')
+  assert.equal(homeNewsDayLabel('2026-10-05', '2026-10-13'), '5 oct')
+  assert.equal(homeNewsDayLabel('', '2026-10-13'), '')
+  const [withLink, withoutLink] = buildHomeNews([
+    { id: 'a', href: '/el-hilo-se-mueve#a', title: 'A', topic: 'musica', brotherhood: { id: 'h1', label: 'H1' }, announcedOn: '2026-10-12', discover: { label: 'Descubre', href: '/hermandades/h1' } },
+    { id: 'b', href: '/el-hilo-se-mueve#b', title: 'B', topic: 'agenda', brotherhood: { id: 'h2', label: 'H2' }, announcedOn: '2026-10-11' },
+  ])
+  assert.deepEqual(withLink.discover, { label: 'Descubre', href: '/hermandades/h1' })
+  assert.equal(withoutLink.discover, null)
+})

@@ -1,214 +1,180 @@
 /*
- * El Hilo se mueve · primera plana de noticias en la portada.
- * Paleta de la portada (azul #0f2742 / #123a67, rojo #b71f37, blanco y grises
- * azulados), con cabecera de doble filete como la de un periódico y titulares
- * jerarquizados.
- * La tipografía es la del sitio (Open Sans, impuesta en typography.css).
+ * El Hilo se mueve · titulares ágiles en la portada.
+ * Paleta de la Home (azul #0f2742 / #123a67, rojo de marca #b71f37, grises
+ * azulados). Sin resúmenes: titular, tema, fecha relativa y el enlace a las
+ * fichas de Hilo Cofrade, que es lo que el lector no encuentra en otro medio.
  */
 .section {
   scroll-margin-top: calc(var(--hc-app-header-height, 70px) + 14px);
-  padding: 28px 0 30px;
+  padding: 26px 0 28px;
   border-top: 1px solid #e3e9ef;
-  border-bottom: 1px solid #e3e9ef;
   background: #fff;
-  color: #0f2742;
 }
 
-/* Cabecera: doble filete burdeos arriba y fino abajo. */
-.masthead {
+.head {
   display: flex;
-  flex-wrap: wrap;
-  align-items: end;
+  align-items: center;
   justify-content: space-between;
-  gap: 8px 16px;
-  padding: 12px 0 12px;
-  border-top: 4px double #123a67;
-  border-bottom: 1px solid #123a67;
-}
-
-.tag {
-  margin: 0 0 2px;
-  color: #b71f37;
-  font-size: 13px;
-  font-weight: 750;
+  gap: 12px;
+  margin-bottom: 12px;
 }
 
 :global(#hc-app #el-hilo-se-mueve) .title {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   margin: 0;
   color: #0f2742;
-  font-size: clamp(30px, 8.5vw, 40px);
+  font-size: 22px;
   font-weight: 800;
-  line-height: 1;
-  letter-spacing: -.035em;
+  line-height: 1.15;
+  letter-spacing: -.02em;
 }
 
-.title em {
-  color: #b71f37;
-  font-style: italic;
-  font-weight: 400;
+/* Punto rojo: actualidad, en el mismo lenguaje que «En curso» de la agenda. */
+.pulse {
+  width: 9px;
+  height: 9px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: #b71f37;
+  box-shadow: 0 0 0 4px rgba(183, 31, 55, .14);
 }
 
 .all {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
   min-height: 44px;
-  color: #123a67;
+  color: #b71f37;
   font-size: 14px;
   font-weight: 750;
+  white-space: nowrap;
 }
 
-.all span {
+.list {
   display: grid;
-  width: 30px;
-  height: 30px;
-  place-items: center;
-  border: 1px solid #123a67;
-  border-radius: 50%;
-  font-size: 15px;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.all:hover span {
-  background: #123a67;
-  color: #fff;
-}
-
-.front {
+.item {
   display: grid;
-  gap: 0;
-}
-
-.lead {
   min-width: 0;
-  border-bottom: 1px solid #e3e9ef;
+  overflow: hidden;
+  border: 1px solid #dce5ed;
+  border-radius: 12px;
+  background: #fff;
 }
 
-.leadLink {
+.story {
   display: grid;
-  gap: 8px;
-  padding: 16px 0 18px;
+  grid-template-columns: 36px minmax(0, 1fr);
+  align-items: start;
+  gap: 12px;
+  padding: 14px 14px 12px;
   color: inherit;
 }
 
-.dateline {
+/* Escudo sin recuadro, con su proporción. */
+.crest {
+  width: 36px;
+  height: auto;
+  max-height: 44px;
+  object-fit: contain;
+}
+
+.crestSpace {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #eef2f6;
+}
+
+.copy {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.meta {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
   gap: 2px 10px;
   color: #5f7080;
   font-size: 13px;
-  line-height: 1.35;
+  line-height: 1.3;
 }
 
-.topic {
+.meta b {
   color: #b71f37;
-  font-weight: 800;
+  font-weight: 750;
 }
 
-:global(#hc-app #el-hilo-se-mueve) .leadTitle {
-  margin: 0;
-  color: #0f2742;
-  font-size: 23px;
-  font-weight: 800;
-  line-height: 1.18;
-  letter-spacing: -.02em;
-}
-
-.summary {
+.headline {
   display: -webkit-box;
-  margin: 0;
   overflow: hidden;
-  color: #4d6073;
-  font-size: 15px;
-  line-height: 1.5;
+  color: #0f2742;
+  font-size: 16px;
+  font-weight: 750;
+  line-height: 1.3;
+  letter-spacing: -.01em;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
 }
 
-.byline {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 2px;
+.who {
+  color: #5f7080;
+  font-size: 13px;
+  line-height: 1.3;
 }
 
-/* Escudo sin recuadro: la imagen sola, con su proporción. */
-.crest {
-  flex: 0 0 auto;
-  width: 34px;
-  height: auto;
-  max-height: 42px;
-  object-fit: contain;
-}
-
-.byline > span {
-  display: grid;
-  min-width: 0;
-}
-
-.byline strong {
+.story:hover .headline {
   color: #123a67;
-  font-size: 14px;
-  font-weight: 750;
-  line-height: 1.3;
-}
-
-.byline span span {
-  color: #5f7080;
-  font-size: 13px;
-  line-height: 1.3;
-}
-
-.headlines {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.headlines li + li {
-  border-top: 1px solid #e3e9ef;
-}
-
-.headline {
-  display: grid;
-  gap: 5px;
-  padding: 14px 0;
-  color: inherit;
-}
-
-:global(#hc-app #el-hilo-se-mueve) .headlineTitle {
-  margin: 0;
-  color: #0f2742;
-  font-size: 17px;
-  font-weight: 750;
-  line-height: 1.28;
-  letter-spacing: -.01em;
-}
-
-.headlineMeta {
-  color: #5f7080;
-  font-size: 13px;
-  line-height: 1.35;
-}
-
-.leadLink:hover :global(h3),
-.headline:hover :global(h3) {
-  color: #b71f37;
   text-decoration: underline;
   text-decoration-thickness: 1px;
-  text-underline-offset: 4px;
+  text-underline-offset: 3px;
 }
 
-.leadLink:focus-visible,
-.headline:focus-visible,
+/* Lo que aporta Hilo Cofrade: el salto a las fichas relacionadas. */
+.discover {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 44px;
+  padding: 8px 14px;
+  border-top: 1px solid #e8eef3;
+  background: #f6f8fa;
+  color: #123a67;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.discover::after {
+  content: "→";
+  flex: 0 0 auto;
+  color: #b71f37;
+  font-weight: 800;
+}
+
+.discover:hover {
+  background: #eef3f7;
+}
+
+.story:focus-visible,
+.discover:focus-visible,
 .all:focus-visible,
 .fallback a:focus-visible {
   outline: 3px solid #123a67;
-  outline-offset: 3px;
+  outline-offset: -3px;
 }
 
 .fallback {
-  margin: 14px 0 0;
+  margin: 0;
   font-size: 15px;
   line-height: 1.5;
 }
@@ -222,22 +188,19 @@
 
 @media (min-width: 768px) {
   .section {
-    padding: 36px 0 38px;
+    padding: 32px 0 34px;
   }
 
-  .front {
-    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
-    gap: 0 32px;
-    padding-top: 6px;
+  :global(#hc-app #el-hilo-se-mueve) .title {
+    font-size: 26px;
   }
 
-  .lead {
-    border-bottom: 0;
-    border-right: 1px solid #e3e9ef;
-    padding-right: 32px;
+  .list {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px;
   }
 
-  :global(#hc-app #el-hilo-se-mueve) .leadTitle {
-    font-size: 28px;
+  .item {
+    grid-template-rows: 1fr auto;
   }
 }

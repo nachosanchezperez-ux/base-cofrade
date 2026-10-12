@@ -1,11 +1,12 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { homeNewsDayLabel } from '@/lib/home-news'
 import styles from './HomeUpdatesLink.module.css'
 
-// «El Hilo se mueve» en la portada: una pequeña primera plana con la noticia
-// más reciente y dos titulares más, en la paleta de la portada (azul, rojo de
-// marca y blanco) con formato de periódico. Si no hay titulares, queda el acceso.
-// Cuando el juego propio esté publicado, se añadirá aquí como acceso aparte.
+// «El Hilo se mueve» en la portada, en formato ágil: la noticia se lee antes en
+// los medios especializados, así que aquí solo van el titular, el tema, cuándo
+// se supo y, sobre todo, lo que Hilo Cofrade añade: el enlace a sus fichas.
+// Si no hay titulares, queda el acceso a la sección.
 export const HOME_SECONDARY_LINKS = [
   {
     href: '/el-hilo-se-mueve',
@@ -14,78 +15,60 @@ export const HOME_SECONDARY_LINKS = [
   },
 ]
 
-function Crest({ path }) {
-  if (!path) return null
-  return (
-    <Image
-      className={styles.crest}
-      src={path}
-      alt=""
-      width={44}
-      height={52}
-      unoptimized={/\.svg(?:$|\?)/i.test(path)}
-    />
-  )
-}
-
-function Kicker({ item }) {
-  return (
-    <span className={styles.dateline}>
-      {item.topic ? <span className={styles.topic}>{item.topic}</span> : null}
-      {item.dateLabel ? <time dateTime={item.date}>{item.dateLabel}</time> : null}
-    </span>
-  )
+function madridToday() {
+  return new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Madrid' }).format(new Date())
 }
 
 export default function HomeUpdatesLink({ news = [] }) {
-  const [lead, ...rest] = Array.isArray(news) ? news : []
+  const items = Array.isArray(news) ? news : []
+  const today = madridToday()
 
   return (
     <section className={styles.section} id="el-hilo-se-mueve" aria-labelledby="noticias-title">
       <div className="shell">
-        <header className={styles.masthead}>
-          <div>
-            <p className={styles.tag}>Actualidad cofrade</p>
-            <h2 id="noticias-title" className={styles.title}>El Hilo <em>se mueve</em></h2>
-          </div>
-          <Link className={styles.all} href="/el-hilo-se-mueve">
-            Todas las noticias <span aria-hidden="true">→</span>
-          </Link>
-        </header>
+        <div className={styles.head}>
+          <h2 id="noticias-title" className={styles.title}>
+            <i className={styles.pulse} aria-hidden="true" />
+            El Hilo se mueve
+          </h2>
+          <Link className={styles.all} href="/el-hilo-se-mueve">Ver todas</Link>
+        </div>
 
-        {lead ? (
-          <div className={styles.front}>
-            <article className={styles.lead}>
-              <Link className={styles.leadLink} href={lead.href}>
-                <Kicker item={lead} />
-                <h3 className={styles.leadTitle}>{lead.title}</h3>
-                {lead.summary ? <p className={styles.summary}>{lead.summary}</p> : null}
-                <span className={styles.byline}>
-                  <Crest path={lead.crestPath} />
-                  <span>
-                    <strong>{lead.brotherhood}</strong>
-                    {lead.municipality ? <span>{lead.municipality}</span> : null}
-                  </span>
-                </span>
-              </Link>
-            </article>
-
-            {rest.length ? (
-              <ul className={styles.headlines}>
-                {rest.map((item) => (
-                  <li key={item.id}>
-                    <Link className={styles.headline} href={item.href}>
-                      <Kicker item={item} />
-                      <h3 className={styles.headlineTitle}>{item.title}</h3>
-                      <span className={styles.headlineMeta}>
-                        {[item.brotherhood, item.municipality].filter(Boolean).join(', ')}
+        {items.length ? (
+          <ul className={styles.list}>
+            {items.map((item) => {
+              const when = homeNewsDayLabel(item.date, today)
+              return (
+                <li className={styles.item} key={item.id}>
+                  <Link className={styles.story} href={item.href}>
+                    {item.crestPath ? (
+                      <Image
+                        className={styles.crest}
+                        src={item.crestPath}
+                        alt=""
+                        width={36}
+                        height={44}
+                        unoptimized={/\.svg(?:$|\?)/i.test(item.crestPath)}
+                      />
+                    ) : <span className={styles.crestSpace} aria-hidden="true" />}
+                    <span className={styles.copy}>
+                      <span className={styles.meta}>
+                        {item.topic ? <b>{item.topic}</b> : null}
+                        {when ? <time dateTime={item.date}>{when}</time> : null}
                       </span>
+                      <span className={styles.headline}>{item.title}</span>
+                      {item.brotherhood ? <span className={styles.who}>{item.brotherhood}</span> : null}
+                    </span>
+                  </Link>
+                  {item.discover ? (
+                    <Link className={styles.discover} href={item.discover.href}>
+                      {item.discover.label}
                     </Link>
-                  </li>
-                ))}
-              </ul>
-            ) : null}
-          </div>
+                  ) : null}
+                </li>
+              )
+            })}
+          </ul>
         ) : (
           <p className={styles.fallback}>
             <Link href={HOME_SECONDARY_LINKS[0].href}>{HOME_SECONDARY_LINKS[0].detail}</Link>
