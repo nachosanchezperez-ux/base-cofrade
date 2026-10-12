@@ -118,3 +118,16 @@ Ninguna coincide con una ficha existente, ni por nombre oficial ni por nombres a
 | Asignaciones solo como texto | 37 | 37 (24 correctas así) |
 
 Ganado hoy en las tareas 04 y 05 (ya aplicado y verificado esta mañana): 27 periodos enlazados a su paso, 7 bandas enlazadas en salidas y 135 pasos con histórico musical visible.
+
+## Datos aportados por el propietario · 12/10/2026 (preparados, pendientes de ejecutar)
+
+`owner-fixes.sql` y su reversión, `owner-fixes-rollback.sql`, que contiene literalmente los valores anteriores:
+
+1. **Camas · Gloria 2026: acompañó Cruz Roja.**
+   - El periodo de Cruz Roja pasa a vigente en 2026, sin año de inicio, enlazado al paso de palio que usa la Gloria y con fuente editorial.
+   - El periodo de Maestro Tejera «vigente en 2026» se **archiva, no se borra**. Su única fuente era la procesión extraordinaria del 30/05, cuya música curada es Virgen de las Angustias y Cruz Roja.
+   - La fila heredada `1d36a39e` sigue congelada como evidencia; la web no la lee.
+2. **La Banda Juvenil de Santa Ana se integra en la ficha de la Banda de Música Santa Ana.**
+   - Sus 3 asignaciones se enlazan a esa ficha.
+   - `band_name_text` conserva el nombre juvenil y la nota visible indica «Banda Juvenil de la Banda de Música Santa Ana de Dos Hermanas».
+   - No se cambia la etiqueta de posición, que comparten los coros.
