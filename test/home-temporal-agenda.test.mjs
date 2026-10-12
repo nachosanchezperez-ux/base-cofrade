@@ -110,15 +110,15 @@ test('un acto multidia usa la fecha y horario de la jornada actual', () => {
 })
 
 
-test('la Home da jerarquía visual a los horarios de la Agenda en móvil', () => {
-  const component = readFileSync(new URL('../components/HomeTemporalFocus.js', import.meta.url), 'utf8')
-  const styles = readFileSync(new URL('../components/HomeTemporalFocus.module.css', import.meta.url), 'utf8')
+test('la Home da jerarquía visual a fecha y hora de la Agenda en móvil', () => {
+  const component = readFileSync(new URL('../components/HomeAgendaNow.js', import.meta.url), 'utf8')
+  const styles = readFileSync(new URL('../components/HomeAgendaNow.module.css', import.meta.url), 'utf8')
 
-  assert.match(component, /className=\{styles\.schedule\}/)
-  assert.match(component, /<small>Horario<\/small>/)
-  assert.match(component, /<strong>\{timingLabel\(item\)\}<\/strong>/)
-  assert.match(styles, /@media\(max-width:480px\)/)
-  assert.match(styles, /\.schedule\{order:-1;display:flex;flex:1 0 100%;min-height:44px/)
-  assert.match(styles, /\.schedule strong\{color:#123a67;font-size:14px;font-weight:900/)
-  assert.match(styles, /font-variant-numeric:tabular-nums/)
+  assert.match(component, /className=\{styles\.leafDay\}/)
+  assert.match(component, /className=\{styles\.time\}/)
+  assert.match(component, /Horario por confirmar/)
+  assert.match(styles, /\.leafDay \{[^}]*font-size: 28px/)
+  assert.match(styles, /\.time \{[^}]*font-size: 22px/)
+  assert.match(styles, /font-variant-numeric: tabular-nums/)
+  assert.match(styles, /min-height: 44px/)
 })

@@ -1,0 +1,35 @@
+import Link from 'next/link'
+import { buildHomeDiscover, HOME_DISCOVER_SECONDARY } from '@/lib/home-discover'
+import styles from './HomeDiscover.module.css'
+
+// Accesos a las secciones principales de la enciclopedia. Conserva el id
+// «enciclopedia», que usa el enlace «Explorar» de la cabecera.
+export default function HomeDiscover({ stats }) {
+  const items = buildHomeDiscover(stats)
+
+  return (
+    <section className={styles.section} id="enciclopedia" aria-labelledby="descubre-title">
+      <div className="shell">
+        <h2 id="descubre-title" className={styles.title}>Descubre Hilo Cofrade</h2>
+        <p className={styles.lead}>Cada ficha enlaza con su historia, su patrimonio y su música.</p>
+
+        <ul className={styles.grid}>
+          {items.map((item) => (
+            <li key={item.key}>
+              <Link className={styles.tile} href={item.href} data-key={item.key}>
+                <strong>{item.label}</strong>
+                {item.detail ? <span>{item.detail}</span> : null}
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        <nav className={styles.more} aria-label="Más secciones de Hilo Cofrade">
+          {HOME_DISCOVER_SECONDARY.map((item) => (
+            <Link href={item.href} key={item.href}>{item.label}</Link>
+          ))}
+        </nav>
+      </div>
+    </section>
+  )
+}

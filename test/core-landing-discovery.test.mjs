@@ -11,14 +11,12 @@ test('Autores forma parte de la navegación global de la enciclopedia', () => {
   assert.match(header, /\['\/autores', 'Autores'\]/)
 })
 
-test('la Home enlaza las seis familias del hilo de conocimiento', () => {
-  const home = read('components/HomePageV2.js')
+test('la Home enlaza las familias del hilo de conocimiento desde «Descubre Hilo Cofrade»', () => {
+  const discover = read('lib/home-discover.js')
 
-  for (const href of ['/hermandades', '/imagenes', '/pasos', '/bandas', '/marchas', '/autores']) {
-    assert.match(home, new RegExp(`\\['${href.replaceAll('/', '\\/')}',`))
+  for (const href of ['/hermandades', '/imagenes', '/pasos', '/bandas', '/marchas', '/autores', '/directorio']) {
+    assert.match(discover, new RegExp(`href: '${href.replaceAll('/', '\\/')}'`))
   }
-
-  assert.match(home, /<Link href=\{href\}><b>\{label\}<\/b><\/Link>/)
 })
 
 test('el Directorio enlaza Marchas y Autores y los declara en hasPart', () => {

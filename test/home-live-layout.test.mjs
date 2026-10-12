@@ -14,7 +14,7 @@ test('con salidas en curso, la agenda va primero y el destacado en directo despu
   assert.match(home, /selectHomeFeaturedOuting\(/)
   assert.match(home, /Procesión en curso/)
   const agenda = home.indexOf('<HomeAgendaNow')
-  const featured = home.indexOf('{featuredSection}')
+  const featured = home.indexOf('id="extraordinarias"')
   const today = home.indexOf('<HomeTodayV2')
   assert.ok(agenda >= 0 && featured > agenda && today > featured)
 })

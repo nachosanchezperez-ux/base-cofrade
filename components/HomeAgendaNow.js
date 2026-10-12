@@ -12,18 +12,31 @@ const EMPTY_TEXT = {
   weekend: 'No hay citas documentadas para este fin de semana.',
 }
 
-function AgendaCard({ card }) {
+function AgendaRow({ card }) {
+  const { day, weekday, month } = card.dateParts || {}
+  const time = card.time || {}
   return (
-    <li className={styles.card}>
-      <Link href={card.href} className={styles.cardLink}>
-        <span className={styles.when}>
-          <time dateTime={card.date}>{card.dateLabel}</time>
-          {card.timeLabel ? <strong>{card.timeLabel}</strong> : <span className={styles.noTime}>Horario por confirmar</span>}
-          {card.isLive ? <b className={styles.live}><i aria-hidden="true" /> En curso</b> : null}
+    <li className={styles.row} data-live={card.isLive ? 'true' : undefined}>
+      <Link href={card.href} className={styles.rowLink}>
+        <time className={styles.leaf} dateTime={card.date} aria-label={card.dateLabel}>
+          <span className={styles.leafWeekday}>{weekday}</span>
+          <strong className={styles.leafDay}>{day || '—'}</strong>
+          <span className={styles.leafMonth}>{month}</span>
+        </time>
+        <span className={styles.body}>
+          <span className={styles.when}>
+            {card.isLive ? <b className={styles.live}><i aria-hidden="true" />En curso</b> : null}
+            {time.main ? <strong className={styles.time}>{time.main}</strong> : null}
+            {time.detail ? <span className={styles.timeDetail}>{time.detail}</span> : null}
+            {!time.main && !time.detail ? <span className={styles.timeDetail}>Horario por confirmar</span> : null}
+          </span>
+          <span className={styles.title}>{card.title}</span>
+          {card.organizer ? <span className={styles.organizer}>{card.organizer}</span> : null}
+          <span className={styles.meta}>
+            {card.municipality ? <span>{card.municipality}</span> : null}
+            {card.type ? <span className={styles.type}>{card.type}</span> : null}
+          </span>
         </span>
-        <span className={styles.title}>{card.title}</span>
-        {card.organizer ? <span className={styles.organizer}>{card.organizer}</span> : null}
-        <span className={styles.meta}>{[card.municipality, card.type].filter(Boolean).join(' · ')}</span>
       </Link>
     </li>
   )
@@ -54,12 +67,12 @@ export default function HomeAgendaNow({ agenda }) {
   return (
     <section className={styles.section} id="hoy" aria-labelledby="agenda-inmediata-title">
       <div className="shell">
-        <header className={styles.header}>
-          <span className={styles.eyebrow}>Agenda cofrade</span>
-          <h2 id="agenda-inmediata-title">Lo que está pasando</h2>
-        </header>
+        <div className={styles.head}>
+          <h2 id="agenda-inmediata-title">Agenda cofrade</h2>
+          <Link className={styles.headLink} href="/agenda-cofrade">Agenda completa</Link>
+        </div>
 
-        <div className={styles.tabs} role="tablist" aria-label="Periodo de la agenda">
+        <div className={styles.tabs} role="tablist" aria-label="Periodo de la agenda" data-tabs={agenda.tabs.length}>
           {agenda.tabs.map((item, index) => (
             <button
               key={item.key}
@@ -74,6 +87,7 @@ export default function HomeAgendaNow({ agenda }) {
               onClick={() => setActive(item.key)}
               onKeyDown={(event) => onKeyDown(event, index)}
             >
+              {item.key === 'now' ? <i className={styles.tabDot} aria-hidden="true" /> : null}
               <span>{item.label}</span>
               <b aria-label={`${item.count} ${item.count === 1 ? 'cita' : 'citas'}`}>{item.count}</b>
             </button>
@@ -88,7 +102,7 @@ export default function HomeAgendaNow({ agenda }) {
         >
           {current.cards.length ? (
             <ul className={styles.list}>
-              {current.cards.map((card) => <AgendaCard card={card} key={card.key} />)}
+              {current.cards.map((card) => <AgendaRow card={card} key={card.key} />)}
             </ul>
           ) : (
             <p className={styles.empty}>{EMPTY_TEXT[current.key]}</p>
@@ -98,17 +112,15 @@ export default function HomeAgendaNow({ agenda }) {
             <>
               <h3 className={styles.upcomingTitle}>Próximas citas</h3>
               <ul className={styles.list}>
-                {agenda.upcoming.map((card) => <AgendaCard card={card} key={card.key} />)}
+                {agenda.upcoming.map((card) => <AgendaRow card={card} key={card.key} />)}
               </ul>
             </>
           ) : null}
         </div>
 
-        <nav className={styles.footer} aria-label="Seguir en la Agenda Cofrade">
-          {more ? <Link href={current.href}>{more} <span aria-hidden="true">→</span></Link> : null}
-          <Link href="/agenda-cofrade">Agenda completa <span aria-hidden="true">→</span></Link>
-          <Link href="/extraordinarias">Extraordinarias</Link>
-        </nav>
+        {more ? (
+          <Link className={styles.more} href={current.href}>{more}</Link>
+        ) : null}
       </div>
     </section>
   )

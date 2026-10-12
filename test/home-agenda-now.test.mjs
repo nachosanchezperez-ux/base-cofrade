@@ -100,3 +100,25 @@ test('el destacado prioriza la procesión en curso y no se duplica con los del P
   assert.equal(selectHomeFeaturedOuting({ upcomingAgenda: [editorial], editorialFeaturedOutingId: 'ed', editorialHighlights: [{ outing: editorial }] }), null)
   assert.equal(selectHomeFeaturedOuting({ upcomingAgenda: [editorial] }), null)
 })
+
+test('la hoja de calendario usa la fecha de Madrid y la hora queda separada de su fin', async () => {
+  const { homeAgendaDateParts, homeAgendaTimeParts } = await import('../lib/home-agenda-now.js')
+  assert.deepEqual(homeAgendaDateParts('2026-10-17'), { day: '17', weekday: 'SÁB', month: 'oct', weekdayLong: 'sábado' })
+  assert.deepEqual(homeAgendaDateParts(''), { day: '', weekday: '', month: '', weekdayLong: '' })
+  assert.deepEqual(homeAgendaTimeParts({ startTime: '17:50:00', endTime: '22:00:00' }), { main: '17:50', detail: 'hasta 22:00' })
+  assert.deepEqual(homeAgendaTimeParts({ timeText: '10:00–14:30 y 17:00–19:00' }), { main: '', detail: '10:00–14:30 y 17:00–19:00' })
+  assert.deepEqual(homeAgendaTimeParts({}), { main: '', detail: '' })
+})
+
+test('el cambio de día se calcula en Madrid: a las 00:30 «Hoy» ya es el día siguiente', () => {
+  // 13/10/2026 00:30 en Madrid = 12/10/2026 22:30 UTC.
+  const lateNight = new Date('2026-10-12T22:30:00.000Z')
+  const items = [
+    item('lunes', '2026-10-12', { startTime: '20:00', endTime: '21:00' }),
+    item('martes', '2026-10-13', { startTime: '19:00' }),
+  ]
+  const agenda = buildHomeAgendaNow(buildHomeTemporalAgenda({ items, today: '2026-10-13', now: lateNight }))
+  const today = agenda.tabs.find((tab) => tab.key === 'today')
+  assert.deepEqual(today.cards.map((card) => card.title), ['Acto martes'])
+  assert.equal(today.cards[0].dateParts.day, '13')
+})

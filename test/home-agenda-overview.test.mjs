@@ -7,18 +7,14 @@ const read = (path) => readFile(new URL(`../${path}`, import.meta.url), 'utf8')
 // Desde la PR B (Tarea 06) los periodos Hoy/Mañana/Fin de semana viven en la agenda
 // inmediata (comportamiento cubierto en home-agenda-now.test.mjs); aquí solo quedan las
 // categorías del bloque de áreas, que se retirará con la PR D.
-test('la Home ofrece accesos directos a las categorías reales de Agenda', async () => {
-  const overview = await read('components/HomeProjectOverview.js')
-  const agenda = await read('components/AgendaCofradeDirectoryFromUrl.js')
+test('la Home lleva a la Agenda completa y a sus periodos con rutas existentes', async () => {
+  const agendaView = await read('components/HomeAgendaNow.js')
+  const model = await read('lib/home-agenda-now.js')
 
-  for (const category of ['processions', 'transfers', 'rosaries', 'romeries', 'devotions', 'concerts']) {
-    assert.match(overview, new RegExp(`key: ['"]${category}['"]`))
-    assert.match(agenda, new RegExp(`['"]${category}['"]`))
+  assert.match(agendaView, /href="\/agenda-cofrade"/)
+  for (const route of ['/agenda-cofrade/hoy', '/agenda-cofrade/manana', '/agenda-cofrade/fin-de-semana']) {
+    assert.ok(model.includes(`'${route}'`), route)
   }
-
-  assert.ok(overview.includes('categoria=${category.key}#agenda'))
-  assert.match(overview, /Por tipo de acto/)
-  assert.match(overview, /Igualás y ensayos/)
 })
 
 test('la Home tiene una sola agenda, alimentada por la agenda temporal del snapshot', async () => {

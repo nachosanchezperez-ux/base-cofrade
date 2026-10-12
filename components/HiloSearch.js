@@ -302,7 +302,9 @@ export default function HiloSearch({
   const initialHandled = useRef(false);
   const compact = homeCompact && !fullPage;
   // En móvil el placeholder largo no cabe en una línea y se corta: se usa uno corto.
-  const [narrowScreen, setNarrowScreen] = useState(false);
+  // Se parte del corto (mobile-first) para que el HTML del servidor ya quepa en
+  // 320 px; en pantallas anchas se cambia al largo tras hidratar.
+  const [narrowScreen, setNarrowScreen] = useState(true);
   useEffect(() => {
     if (typeof window === 'undefined' || !window.matchMedia) return undefined;
     const query = window.matchMedia('(max-width: 620px)');
@@ -546,7 +548,7 @@ export default function HiloSearch({
   const composerPlaceholder = activeContextLabel
     ? `Sigue preguntando sobre ${activeContextLabel}…`
     : narrowScreen
-      ? (universal ? 'Busca o pregunta…' : 'Pregunta a Hilo Cofrade…')
+      ? (universal ? 'Busca o pregunta…' : 'Hermandad, banda, marcha…')
       : universal
       ? 'Busca una ficha o pregunta sobre hermandades, imágenes, pasos, bandas, marchas…'
       : 'Pregunta sobre hermandades, imágenes, pasos, bandas, marchas, autores…';

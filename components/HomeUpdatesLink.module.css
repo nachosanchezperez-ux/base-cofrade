@@ -1,0 +1,63 @@
+/* Actualidad · acceso secundario y compacto. */
+.section {
+  padding: 22px 0;
+  background: #fff;
+}
+
+.list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.link {
+  display: grid;
+  gap: 4px;
+  padding: 16px 44px 16px 16px;
+  border: 1px solid #e7cdd3;
+  border-radius: 12px;
+  background: #fbf4f5;
+  color: inherit;
+  position: relative;
+}
+
+.link::after {
+  content: "→";
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  color: #b71f37;
+  font-size: 18px;
+  font-weight: 800;
+  transform: translateY(-50%);
+}
+
+.link strong {
+  color: #8a1a2c;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.link span {
+  color: #4d5f70;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.link:hover {
+  border-color: #b71f37;
+}
+
+.link:focus-visible {
+  outline: 3px solid #123a67;
+  outline-offset: 2px;
+}
+
+@media (min-width: 768px) {
+  .list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
