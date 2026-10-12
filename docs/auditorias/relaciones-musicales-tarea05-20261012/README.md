@@ -260,3 +260,13 @@ Detalle en `fusiones-y-olivares.sql` y su reversión, `fusiones-y-olivares-rollb
 - [El Pespunte](https://www.elpespunte.es/articulo/cofrade/procesiones-virgen-nieves-benacazon-2026-recorridos-bandas/20260805094516144171.html) confirma que en Benacazón acompañan Cruz Roja (5 de agosto) y Virgen de las Mercedes (6 de agosto).
 - El periodo se archiva hasta identificar a qué Hermandad de Castilleja corresponde.
 - Se asigna el municipio Castilleja de la Cuesta a la «Hermandad del Gran Poder de Castilleja de la Cuesta», que estaba en borrador y sin municipio.
+
+**Calle Real de Castilleja** (`calle-real-castilleja.sql`; reversión: `calle-real-castilleja-rollback.sql`): aplicado.
+
+- El propietario confirma que el borrador «Gran Poder de Castilleja de la Cuesta» es la misma Hermandad que la Calle Real.
+- Su periodo pasa a la Calle Real: Carmen de Salteras, tras el misterio del Santísimo Cristo de la Vera Cruz, el Jueves Santo.
+- El duplicado se archiva.
+- La Calle Real queda con 4 periodos:
+  - Jueves Santo: Vera Cruz.
+  - Madrugá: Gran Poder, con Valme hasta 2026 y Las Cigarreras desde 2027.
+  - Domingo de Resurrección: Inmaculada con Cruz Roja.
