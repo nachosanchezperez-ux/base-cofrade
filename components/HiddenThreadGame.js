@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
 import {
   getHiddenChallenge,
+  getHiddenChoiceOptions,
   hiddenEffectiveStreak,
   hiddenGuessMatches,
   HILO_GAME_HINT_COST,
@@ -61,10 +62,14 @@ function roundErrors(round) {
   return round.guesses.length - (round.status === 'won' ? 1 : 0)
 }
 
-export default function HiddenThreadGame() {
-  const [dateKey, setDateKey] = useState('')
+export default function HiddenThreadGame({ initialDayKey = '' }) {
+  const [dateKey, setDateKey] = useState(initialDayKey)
   const [mode, setMode] = useState('daily')
-  const [state, setState] = useState(null)
+  // La pista debe existir en SSR: el almacenamiento local se reconcilia al hidratar.
+  const [state, setState] = useState(() => initialDayKey ? {
+    key: GAME_STORAGE + 'daily-' + initialDayKey,
+    progress: makeHiddenProgress(getHiddenChallenge(initialDayKey, 'daily')),
+  } : null)
   const [answer, setAnswer] = useState('')
   const [feedback, setFeedbackState] = useState({ text: '', tone: '' })
   const setFeedback = (text, tone = 'info') => setFeedbackState({ text, tone: text ? tone : '' })
@@ -106,6 +111,10 @@ export default function HiddenThreadGame() {
   const word = challenge?.words[progress?.stage || 0] || null
   const completed = Boolean(progress?.finished)
   const canPlay = Boolean(progress && round && word && round.status === 'playing')
+  const options = useMemo(
+    () => (challenge && progress ? getHiddenChoiceOptions(challenge, progress.stage) : []),
+    [challenge, progress?.stage]
+  )
 
   useEffect(() => {
     if (mode !== 'daily' || !progress?.finished || !dateKey) return
@@ -159,37 +168,43 @@ export default function HiddenThreadGame() {
     setFeedback('')
   }
 
-  function submitAnswer(event) {
-    event.preventDefault()
+  function tryGuess(value, tapped = false) {
     if (!canPlay) return
-    const proposed = normalizeHiddenAnswer(answer)
+    const proposed = normalizeHiddenAnswer(value)
     const expected = normalizeHiddenAnswer(word.answer)
+    if (!proposed) {
+      setFeedback('Escribe una respuesta o toca una de las tarjetas.')
+      return
+    }
     const won = hiddenGuessMatches(word, proposed)
-    if (!won && proposed.length !== expected.length) {
-      setFeedback('La palabra tiene ' + expected.length + ' letras y tú has escrito ' + proposed.length + '. No te cuenta como intento.')
+    if (!tapped && !won && proposed.length !== expected.length) {
+      setFeedback('Buscamos ' + expected.length + ' letras. No cuenta como intento.')
       return
     }
     if (round.guesses.includes(proposed)) {
-      setFeedback('Ya habías probado esa palabra. No te cuenta como intento.')
+      setFeedback('Esa palabra ya se ha intentado. Puedes probar otra.')
       return
     }
     const guesses = [...round.guesses, proposed]
-    const lost = !won && guesses.length >= HILO_GAME_MAX_ERRORS
+    const limit = tapped ? 3 : HILO_GAME_MAX_ERRORS
+    const lost = !won && guesses.length >= limit
     const status = won ? 'won' : lost ? 'lost' : 'playing'
     patchRound(
       { ...round, guesses, status },
       { finished: status !== 'playing' && progress.stage === challenge.words.length - 1 }
     )
     setAnswer('')
-    const remaining = HILO_GAME_MAX_ERRORS - guesses.length
+    const remaining = Math.max(0, limit - guesses.length)
     if (won) {
       setFeedback(
-        proposed === expected ? '¡Has desenredado este cabo!'
-          : '¡Correcto! «' + answer.trim().toLocaleUpperCase('es-ES') + '» también vale: la palabra que buscábamos es ' + word.answer + '.',
+        proposed === expected ? '¡Has acertado! El hilo sigue.'
+          : '¡Correcto! «' + String(value).trim().toLocaleUpperCase('es-ES') + '» también vale. La palabra es ' + word.answer + '.',
         'success'
       )
     } else if (lost) {
-      setFeedback('Se han agotado los intentos. Así se desenreda este cabo:', 'error')
+      setFeedback('Se han agotado los intentos. Aquí tienes la solución:', 'error')
+    } else if (tapped) {
+      setFeedback('No era esa. ' + (remaining === 1 ? 'Queda una oportunidad tocando otra tarjeta.' : 'Toca otra tarjeta o pide una pista.'), 'error')
     } else {
       setFeedback(
         remaining === 1
@@ -198,6 +213,15 @@ export default function HiddenThreadGame() {
         'error'
       )
     }
+  }
+
+  function submitAnswer(event) {
+    event.preventDefault()
+    tryGuess(answer)
+  }
+
+  function chooseAnswer(value) {
+    tryGuess(value, true)
   }
 
   function nextStage() {
