@@ -13,11 +13,15 @@ test('El hilo escondido es el título principal y el usuario juega sin pantalla 
   assert.doesNotMatch(page, /entryChoices|Elige tu juego|Dos desafíos cofrades|href="#partida-del-hilo"/)
   assert.match(game, /className=\{styles\.modes\} id="partida-del-hilo"/)
   assert.match(game, /className=\{styles\.gameCard\}/)
-  assert.match(game, /¿Qué palabra se esconde\?/)
+  assert.match(game, /¿Cuál es la respuesta\?/)
+  assert.match(game, /Elige una tarjeta/)
+  assert.match(game, /onClick=\{\(\) => chooseAnswer\(option\)\}/)
+  assert.match(game, /Prefiero escribir mi respuesta/)
+  assert.match(page, /await connection\(\)/)
 })
 
 test('Cofradle aparece solo como recomendación final, nunca al comenzar', () => {
-  const positionGame = page.indexOf('<HiddenThreadGame />')
+  const positionGame = page.indexOf('<HiddenThreadGame initialDayKey=\{initialDayKey\} />')
   const positionRecommended = page.indexOf('className={styles.recommendationSection}')
   assert.ok(positionGame > -1 && positionRecommended > positionGame)
   assert.equal((page.match(/href="https:\/\/cofradle\.es\/"/g) || []).length, 1)
