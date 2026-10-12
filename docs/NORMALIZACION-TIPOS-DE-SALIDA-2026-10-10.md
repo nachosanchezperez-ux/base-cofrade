@@ -58,10 +58,12 @@ Consejo de Osuna, habría que ponerle el subtipo y el organizador; hasta entonce
 
 `getGeneralPublicOutings` lee los tipos `Romería` y `Procesión`. Al renombrar "Procesión
 extraordinaria" a "Procesión", 41 salidas extraordinarias entraron también por esa lectura
-y quedaron duplicadas en la Agenda y en la Home. Esta rama añade `.eq('character',
-'ordinary')` y, mientras no se desplegó, esas 41 filas se devolvieron a su tipo original.
-El mapeo previsto se conserva en `private.outing_type_reapply_20261010` para reaplicarlo
-después del despliegue.
+y quedaron duplicadas en la Agenda y en la Home. La PR #1135 añadió `.eq('character',
+'ordinary')`; hasta que se desplegó, esas 41 filas se devolvieron a su tipo original.
+Estado a 12/10/2026: el filtro está desplegado, el trigger y el cron de 15 minutos están
+activos en producción y las 41 filas ya tienen el tipo y subtipo previstos (se
+reaplicaron el 11/10/2026 a las 20:47, hora de Madrid). El mapeo sigue guardado en
+`private.outing_type_reapply_20261010`.
 
 ## Trigger de normalización
 

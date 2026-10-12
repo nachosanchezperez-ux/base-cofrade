@@ -34,13 +34,15 @@ import { holyWeekDay } from '@/lib/brotherhood-directory';
 import { brotherhoodUpcomingAgenda } from '@/lib/brotherhood-agenda';
 import { agendaMunicipalityHref } from '@/lib/agenda-relations';
 import { getStepPhotoFraming } from '@/lib/step-photo-framing';
-import { getBrotherhoodMusicalHeritage } from '@/lib/supabase/brotherhood-musical-heritage';
 import { getAgendaCofrade } from '@/lib/supabase/agenda-cofrade';
-import { getCrewEventsByBrotherhoodId } from '@/lib/supabase/crew-events';
-import { getMusicalRepertoires } from '@/lib/supabase/musical-repertoires';
 import { getHermandadPageBySlug } from '@/lib/supabase/brotherhood-page';
-import { getPublishedBrotherhoodCrestPath } from '@/lib/supabase/brotherhood-public-authority';
-import { getPublishedEntityCoverMediaMap } from '@/lib/supabase/entity-media';
+import {
+  getCachedBrotherhoodCoverMedia,
+  getCachedBrotherhoodCrestPath,
+  getCachedBrotherhoodCrewEvents,
+  getCachedBrotherhoodMusicalHeritage,
+  getCachedBrotherhoodRepertoires,
+} from '@/lib/supabase/brotherhood-page-cached';
 import {
   meetsPublicEditorialMinimum,
   publicEditorialRobots,
@@ -170,17 +172,17 @@ export default async function HermandadDetailPage({ params, reading: readingOver
     ...(h.participacionesConsejo || []).map((participacion) => [participacion.id, 'event']),
   ]);
   const [entityCoverMedia, musicalHeritage, authoritativeCrestPath, musicalRepertoires, crewEvents, agendaData] = await Promise.all([
-    getPublishedEntityCoverMediaMap(
+    getCachedBrotherhoodCoverMedia(
       [...coverEntityTypes.keys()],
-      { entityTypesById: coverEntityTypes }
+      Object.fromEntries(coverEntityTypes)
     ),
-    getBrotherhoodMusicalHeritage(h.id, {
+    getCachedBrotherhoodMusicalHeritage(h.id, {
       imageIds: h.imagenes.map((imagen) => imagen.id),
       currentAccompaniments: h.acompanamientoActual,
     }),
-    getPublishedBrotherhoodCrestPath(h.id),
-    getMusicalRepertoires({ brotherhoodEntityId: h.id }),
-    getCrewEventsByBrotherhoodId(h.id),
+    getCachedBrotherhoodCrestPath(h.id),
+    getCachedBrotherhoodRepertoires(h.id),
+    getCachedBrotherhoodCrewEvents(h.id),
     getAgendaCofrade().catch((error) => {
       console.error('[Hilo Cofrade] Agenda relacionada omitida temporalmente en la ficha de Hermandad', { slug: h.slug, error });
       return { items: [], today: '' };

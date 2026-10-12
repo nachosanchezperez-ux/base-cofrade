@@ -54,3 +54,93 @@ Continuación de `docs/auditorias/relaciones-musicales-tarea05-20261012/` (lista
 - Valme figura en el histórico.
 - Las Cigarreras (Gran Poder, desde 2027) aparece en Música 2027 y no como vigente, porque es un contrato futuro.
 - La cabecera indica «3 pasos» de Semana Santa y, aparte, la Gloria. Es el diseño de la ficha.
+
+## Caridad de Santa Aurelia (Sevilla) · 12/10/2026 · aplicado, en borrador
+
+`caridad-santa-aurelia.sql`; reversión: `caridad-santa-aurelia-rollback.sql`.
+
+### Fuentes
+
+- [Banda Las Nieves de Olivares · Agrupación Parroquial María Santísima de la Caridad](https://lasnievesdeolivares.com/agrupacion-parroquial-maria-santisima-de-la-caridad/): sede en San Lucas Evangelista (Santa Aurelia), imagen de Antonio Joaquín Dubé de Luque, salida el quinto sábado de Cuaresma, banda desde 2025.
+- [Inri Información (2022)](https://inriinformacion.com/2022/04/02/la-virgen-de-la-caridad-de-san-lucas-hara-su-salida-procesional-por-santa-aurelia/): primera procesión el 2 de abril de 2022, **bajo palio**, con el Maestro Tejera.
+
+### Ficha
+
+- Titular: María Santísima de la Caridad, de Dubé de Luque. **Las fuentes discrepan en la fecha (1998 o 2008)**; se recogen las dos.
+- Paso de palio de María Santísima de la Caridad.
+
+### Música
+
+- Las Nieves de Olivares, desde 2025, enlazada al palio.
+- **Nuevo periodo histórico documentado:** Maestro Tejera en 2022.
+
+### Estado
+
+Todo queda en **borrador** hasta que el propietario autorice publicarlo.
+
+**Publicada el 12/10/2026** con autorización del propietario: la Agrupación, su imagen, su paso y sus relaciones. Verificada en `/hermandades/agrupacion-parroquial-caridad-santa-aurelia-sevilla`. Reversión de la publicación: devolver esas 3 entidades y sus 3 relaciones a `draft`.
+
+## La Borriquita de Huévar del Aljarafe · 12/10/2026 · aplicado y publicado
+
+`cristo-amor-huevar.sql`; reversión: `cristo-amor-huevar-rollback.sql`. Autorizado por el propietario («Hazlo todo»).
+
+- **Fuentes:** [ArteSacro, abril de 2026](https://www.artesacro.org/Noticia.asp?idreg=167374) y [ArteSacro, abril de 2025](https://www.artesacro.org/Noticia/Ver/161370/provincia-domingo-ramos-huevar-aljarafe).
+- **Nombre:** Agrupación Parroquial del Santísimo Cristo del Amor en su Entrada Triunfal en Jerusalén.
+  - Antes figuraba como «Asociación de Fieles Devotos».
+  - Sede: parroquia de Nuestra Señora de la Asunción.
+- **Titular:** Cristo del Amor, de los Talleres de Olot (finales del siglo XX).
+- **Paso:** un único paso, el de la Entrada Triunfal, que llegó a Huévar en 1993.
+- **Música:** La Redención (A.M. Nuestro Padre Jesús de la Redención), confirmada en 2026, enlazada al paso.
+- **Verificado** en `/hermandades/cristo-amor-entrada-triunfal-huevar`.
+
+## Hermandad de Jesús de La Algaba · 12/10/2026 · aplicado y publicado
+
+`jesus-la-algaba.sql`; reversión: `jesus-la-algaba-rollback.sql`.
+
+### Fuentes
+
+- [Guía «La Algaba: Patrimonio entre naranjos»](https://sites.google.com/g.educaand.es/guiapatrimoniomatilde/hermandad-de-jes%C3%BAs-nazareno-jes%C3%BAs).
+- [Banda de la Cruz Roja · Madrugá](https://www.bandacruzroja.es/hermandades/semana-santa/la-madruga).
+
+### Ficha
+
+- **Nombre oficial:** Pontificia, Real e Ilustre Hermandad de Nuestro Padre Jesús Nazareno. Sede: Iglesia de Jesús. Salida: Madrugá.
+- **Titulares:**
+  - Jesús Nazareno: anónimo de 1685, atribuido a La Roldana.
+  - Dolores: de candelero, atribuida a Juan de Astorga.
+  - San Juan Evangelista: Miguel Ángel Domínguez, 2005.
+- **Pasos:**
+  - Jesús Nazareno: Antonio Martín, 1958; caídas de Hermanas Ramas, 2008.
+  - Palio de los Dolores.
+- **Música:** Cruz Roja tras el palio, desde 2019.
+
+Verificado en `/hermandades/hermandad-jesus-la-algaba`.
+
+**Hallazgo técnico, sin tocar:** en las fichas de Hermandad, el recuento de Hermandades de una banda difiere entre la tarjeta («11 con acompañamiento actual») y el bloque «Sigue tirando del hilo» (10). Parece que uno excluye la propia Hermandad. Revisar en una tarea de código aparte.
+
+## Hermandad de la Divina Pastora de Capuchinos (Sevilla) · 12/10/2026 · aplicado y publicado
+
+`divina-pastora-capuchinos.sql`; reversión: `divina-pastora-capuchinos-rollback.sql`. El propietario confirmó que es de Sevilla.
+
+### Fuentes
+
+- [Archidiócesis de Sevilla · La Pastora de Capuchinos](https://www.archisevillasiempreadelante.org/pastora-de-capuchinos/).
+- [Banda Las Nieves de Olivares · Pastora de Capuchinos](https://lasnievesdeolivares.com/divina-pastora-de-las-almas-pastora-de-capuchinos/).
+- [Gente de Paz · Las Nieves acompañará a la Pastora de Capuchinos (2022)](https://www.gentedepaz.es/las-nieves-de-olivares-acompanara-a-la-pastora-de-capuchinos-en-su-procesion-triunfal-de-mayo-de-2022-con-motivo-del-centenario-de-su-coronacion/).
+- [ArteSacro · Procesión de 2025](https://www.artesacro.org/Noticia/Ver/161920/emocion-devocion-procesion-divina-pastora-capuchinos).
+
+### Ficha
+
+- **Datos generales:**
+  - Municipio: Sevilla; barrio: Capuchinos.
+  - Tipo: Gloria; sale el último domingo de mayo.
+  - Sede: convento de las Santas Justa y Rufina.
+  - El nombre oficial no se cambia, porque ninguna fuente lo documenta completo.
+- **Titular:** Divina Pastora de las Almas Coronada.
+  - Su autoría no es unánime y se recogen las dos versiones: atribución a José Fernández Guerrero (Archidiócesis y Gente de Paz, citando a Martínez Alcalde) o talla anónima (web de la banda).
+  - Restaurada por Sebastián Santos en 1956; nuevo cuerpo de Buiza en 1982.
+  - Coronada en 1921; coronación canónica en 2004.
+- **Paso:** paso procesional de Gloria; autor y fecha no documentados.
+- **Música:** Las Nieves de Olivares tras el paso, desde 2022, enlazada al paso.
+
+Verificado en `/hermandades/hermandad-divina-pastora-capuchinos-sevilla`.
