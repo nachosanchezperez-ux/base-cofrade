@@ -4,6 +4,7 @@ export default function HomeEditorialLayout({ children }) {
   const root = '/panel/hoy'
   const items = [
     { href: root, label: 'Resumen', mark: 'R', match: 'exact' },
+    { href: `${root}/destacados`, label: 'Destacados', mark: 'D' },
     { href: `${root}/programacion`, label: 'Programación', mark: 'P' },
     { href: `${root}/banco`, label: 'Banco editorial', mark: 'B' },
   ]
