@@ -167,3 +167,18 @@ La promoción grande de Cofradle situada **después de la partida** y el tablero
 - **Pruebas:** verificar el flujo diario, escritura experta, que el resultado solo esté disponible al completar, que los enlaces no filtren soluciones, el funcionamiento de Web Share y el fallback PNG/clipboard en iOS y escritorio.
 
 La rama continúa en borrador. Antes de integrar: CI/build, preview móvil real, revisión editorial de los términos y QA manual de acciones de compartir.
+
+
+## Visibilidad de compartir y marca externa · 12/10/2026 (segunda revisión)
+
+**Incidencia comunicada:** el usuario no veía ni el icono de Cofradle ni dónde compartir. Causa: el bloque de redes estaba condicionado a \`completed\`, por tanto quedaba invisible para cualquiera que aún estuviera jugando; la recomendación de Cofradle usaba iconos de ajedrez/música inventados, no su marca.
+
+**Aplicado en la misma PR #1146:**
+
+- **Antes de empezar y durante el reto:** acción «Compartir juego» visible dentro de la cabecera de la partida. Usa compartir nativo de móvil si está disponible y, en su defecto, copia una invitación con la URL estable, sin spoilers. El resultado no aparece antes de completar, pues todavía no existe.
+- **Al resolver la partida:** «Compartir mi resultado» aparece justo debajo de la explicación y los puntos. Sigue disponible, más abajo, la tarjeta de marcador con formato 9:16, acciones de WhatsApp y X y copia del texto.
+- **Cofradle al final:** desaparece el icono inventado ♜♫. Se muestra el nombre claramente y se intenta cargar el favicon público asociado al dominio mediante \`https://www.google.com/s2/favicons?domain=cofradle.es&sz=128\`. **Limitación importante:** no ha sido posible recuperar/verificar un archivo original de logotipo desde cofradle.es en este entorno. Este favicon es solo una referencia provisional, no debe describirse como el logotipo oficial completo. Sustituirlo cuando se disponga del PNG/SVG original, respetando su marca. Cofradle sigue como recomendación final, no como alternativa principal.
+- **Sin contaminación de datos:** enlaces de compartir solo llevan invitación/puntos; el texto y la tarjeta de historia no incluyen la respuesta del juego.
+- **Sin URL nueva, migración, base de datos o publicación en producción.**
+
+**Pendiente:** comprobar el favicon cargado visualmente desde el navegador de un usuario real y validar compartir texto/imagen en iPhone, además de QA editorial y revisión de la PR frente al main actualizado.
