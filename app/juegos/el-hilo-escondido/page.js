@@ -22,55 +22,43 @@ export default function HiddenThreadPage() {
         { name: 'Inicio', path: '/' },
         { name: 'El hilo escondido', path: HILO_GAME_PATH },
       ])} />
-      <header className={styles.entryHero}>
+
+      <header className={styles.gameIntro}>
         <div className="shell">
-          <Link className={styles.entryBack} href="/#descubre-hoy">← Volver a Hilo Cofrade</Link>
-          <div className={styles.entryIntro}>
+          <Link className={styles.gameIntroBack} href="/#descubre-hoy">← Volver a Hilo Cofrade</Link>
+          <div className={styles.gameIntroLine}>
             <div>
-              <span className={styles.entryEyebrow}>Hilo Cofrade · Zona de juego</span>
-              <h1>¿Jugamos?</h1>
-              <p>Dos desafíos cofrades. Elige y empieza.</p>
+              <span className={styles.gameIntroEyebrow}>Hilo Cofrade · Nuestro juego diario</span>
+              <h1>El hilo escondido</h1>
+              <p>¿Qué palabra cofrade se esconde hoy? Lee la pista y empieza a jugar.</p>
             </div>
-            <span className={styles.entryOrnament} aria-hidden="true">✦</span>
+            <span className={styles.gameIntroSymbol} aria-hidden="true">✦</span>
           </div>
-
-          <nav className={styles.entryChoices} aria-label="Elige tu juego">
-            <a className={styles.entryChoice + ' ' + styles.entryChoiceHilo} href="#partida-del-hilo">
-              <div className={styles.entryChoiceCopy}>
-                <span className={styles.entryChoiceType}><span className={styles.entryStatusDot} aria-hidden="true" /> El reto del día</span>
-                <h2>El hilo escondido</h2>
-                <p>Una pista. Una palabra. ¿La sabes?</p>
-                <span className={styles.entryChoiceAction}>Jugar aquí <span aria-hidden="true">↓</span></span>
-              </div>
-              <div className={styles.entryChoiceArt + ' ' + styles.entryChoiceArtHilo} aria-hidden="true">
-                <span className={styles.entryHiloQuestion}>¿?</span>
-                <span className={styles.entryHiloTrail}><i /> <i /> <i /></span>
-              </div>
-            </a>
-
-            <a
-              className={styles.entryChoice + ' ' + styles.entryChoiceCofradle}
-              href="https://cofradle.es/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-describedby="cofradle-external-note"
-            >
-              <div className={styles.entryChoiceCopy}>
-                <span className={styles.entryChoiceType}>Más juegos cofrades · Web externa</span>
-                <h2>Cofradle</h2>
-                <p>Hermandades, marchas y otros retos.</p>
-                <span className={styles.entryChoiceAction}>Jugar en Cofradle <span aria-hidden="true">↗</span></span>
-              </div>
-              <div className={styles.entryChoiceArt + ' ' + styles.entryChoiceArtCofradle} aria-hidden="true">
-                <span className={styles.entryMiniCard}><strong>?</strong><small>HERMANDAD</small></span>
-                <span className={styles.entryMiniCard + ' ' + styles.entryMiniCardMusic}><strong>♫</strong><small>MARCHA</small></span>
-              </div>
-            </a>
-          </nav>
-          <p className={styles.entryExternalNote} id="cofradle-external-note">Cofradle es un proyecto independiente de Hilo Cofrade y se abre en su propia web.</p>
         </div>
       </header>
+
       <HiddenThreadGame />
+
+      <aside className={styles.recommendationSection} aria-label="Otro juego cofrade recomendado">
+        <div className="shell">
+          <a
+            className={styles.recommendationCard}
+            href="https://cofradle.es/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Conoce Cofradle, otros juegos cofrades en una web externa e independiente"
+          >
+            <span className={styles.recommendationArtwork} aria-hidden="true">♜ <span>♫</span></span>
+            <span className={styles.recommendationCopy}>
+              <small>¿Te has quedado con ganas de más?</small>
+              <strong>También puedes jugar en Cofradle</strong>
+              <span>Más retos de hermandades y marchas en una web independiente.</span>
+            </span>
+            <span className={styles.recommendationLink}>Visitar Cofradle <span aria-hidden="true">↗</span></span>
+          </a>
+          <p className={styles.recommendationDisclaimer}>Cofradle es un proyecto externo e independiente de Hilo Cofrade.</p>
+        </div>
+      </aside>
     </div>
   )
 }
