@@ -38,15 +38,16 @@ test('las Glorias se distinguen por Hermandad y fecha completa', () => {
 
 test('directorio, ficha y bloques relacionados priorizan la identidad común y la Banda', () => {
   const directory = readFileSync(new URL('../app/crucetas-musicales/page.js', import.meta.url), 'utf8')
+  const directoryExplorer = readFileSync(new URL('../app/crucetas-musicales/CrucetasDirectory.js', import.meta.url), 'utf8')
   const detail = readFileSync(new URL('../app/crucetas-musicales/[slug]/page.js', import.meta.url), 'utf8')
   const related = readFileSync(new URL('../components/MusicalRepertoiresSection.js', import.meta.url), 'utf8')
 
-  for (const source of [directory, detail, related]) {
+  for (const source of [directoryExplorer, detail, related]) {
     assert.match(source, /displayTitle/)
     assert.doesNotMatch(source, /<h[123]>\{(?:item|repertoire)\.outing\.title\}<\/h[123]>/)
   }
 
-  assert.match(directory, /Cruceta de <strong>\{item\.band\.name\}<\/strong>/)
+  assert.match(directoryExplorer, /Por <strong>\{item\.band\.name\}<\/strong>/)
   assert.match(detail, /Cruceta de \{repertoire\.band\.name\}/)
   assert.match(related, /Cruceta de \{item\.band\.name\}/)
 })
