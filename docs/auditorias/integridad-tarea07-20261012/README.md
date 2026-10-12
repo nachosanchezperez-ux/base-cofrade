@@ -72,7 +72,7 @@ Lo sano: 0 referencias rotas, 0 relaciones a entidades de otro tipo, 0 relacione
 | Periodos solapados | San Esteban · palio · Las Cigarreras | `18ca9f4a…` (2009–2026) y `a9562180…` (2009–2020) | Mismo inicio y dos fines distintos: fin contradictorio | Conservar 2009–2026 (coherente con el cambio de 2027) y archivar el otro tras revisar su fuente |
 | Periodos solapados | Valvanera · Las Nieves de Olivares | `6f5a60f6…` (desde 2014, vigente) y `8f1650c1…` (2026–2026, vigente) | La misma banda vigente dos veces en el mismo paso | Unificar en el periodo «desde 2014» y pasar la fuente de 2026 a ese registro |
 | Periodos solapados | Confalón de Écija · Columna · Sangre de San Benito | `a5cdcae8…` (2020–2026) y `c0160036-1313-…` (2026–2026) | El periodo de 2026 está contenido en el de 2020–2026 | Unificar conservando la fuente de 2026 |
-| URL conservada que da 404 | `/extraordinarias/nuestro-padre-jesus-preso-moriles-2026` | Salida extraordinaria de Jesús Preso de Moriles | Está en el manifiesto de 209 URLs, pero Moriles es de la provincia de Córdoba y la ruta de extraordinarias solo lee la provincia de Sevilla (`extraordinary-detail.js`). Confirmado por código; **pendiente de comprobar por HTTP** | Decidir: admitir esa salida en la ruta (excepción documentada) o redirigirla con 301 a su ficha de Hermandad |
+| URL conservada que da 404 | `/extraordinarias/nuestro-padre-jesus-preso-moriles-2026` | Salida extraordinaria de Jesús Preso de Moriles | Está en el manifiesto de 209 URLs, pero Moriles es de la provincia de Córdoba y la ruta de extraordinarias solo lee la provincia de Sevilla (`extraordinary-detail.js`). Confirmado por código | **Decidido el 12/10: Moriles queda fuera del proyecto.** La URL se retira del manifiesto (208 URLs conservadas). No estaba en el sitemap |
 
 ### Revisar (33)
 
@@ -82,7 +82,7 @@ Lo sano: 0 referencias rotas, 0 relaciones a entidades de otro tipo, 0 relacione
 | Acompañamiento en paso que la Hermandad no muestra | 9 | Mismos pasos de Divino Perdón (×2), Desamparados y Montserrat; Castilblanco, Mairena del Alcor (×2) y Santa Cruz con el paso en revisión o borrador; Calle Real de Castilleja (paso de misterio en borrador y sin relación) |
 | Salida sin Hermandad, organizador ni entidades | 6 | Aurora (Fuentes de Andalucía), Corona Dolorosa (Arahal), Lignum Crucis (Valencina), Marismas (Pinzón), Mayor Dolor y Traspaso (Tocina), San Francisco (Estepa) |
 | Salida de Hermandad no publicada | 2 | Traslado de los Dolores de La Roda (2/11, próximo) y Rosario de San Juan Bautista: se muestran por el nombre del organizador, sin enlace |
-| Alta de Música 2027 ya marcada vigente | 2 | San Esteban (`30d8477f…`, Santa Ana) y Calle Real de Castilleja (`15c7978e…`, Cigarreras). Son las únicas 2 de 46 altas 2027 marcadas así; las fichas las presentan como acompañamiento actual. **Requiere decidir el criterio** |
+| Alta de Música 2027 ya marcada vigente | 2 | San Esteban (`30d8477f…`, Santa Ana) y Calle Real de Castilleja (`15c7978e…`, Cigarreras). Son las únicas 2 de 46 altas 2027 marcadas así; las fichas las presentan como acompañamiento actual. **Confirmado el 12/10: ambas Hermandades han cambiado de banda estos días.** El cambio es real; queda por unificar el criterio de «vigente» con las otras 44 altas |
 | Posible marcha duplicada | 1 | «Tú eres el orgullo de nuestro pueblo» (Pablo Ojeda), dos slugs. Ya señalada el 11/10 |
 | Culto a imagen sin relación con su Hermandad | 1 | Eucaristía a San Juan Bosco (Trinidad): la imagen no está vinculada a ninguna Hermandad (P2-3 del 11/10) |
 
@@ -102,18 +102,18 @@ Lo sano: 0 referencias rotas, 0 relaciones a entidades de otro tipo, 0 relacione
 - **Vocabulario de relaciones irregular.** Un mismo significado aparece con varios valores: `processes_on`, `Procesiona en`, `procesiona_en`, `processional`…; `titular` y `Titular`. Hoy no rompe nada (las comprobaciones lo normalizan), pero conviene unificarlo en una tarea propia con migración reproducible.
 - **33 personas publicadas sin ficha de Persona.** Ya las informa Salud como «Nodo publicado sin ficha editable».
 
-## Catálogo de comprobaciones (34)
+## Catálogo de comprobaciones (36)
 
 | Área | Comprobación | Nivel |
 |---|---|---|
 | Hermandades, imágenes y pasos | Relación con entidad de otro tipo · Relación publicada hacia no publicada* · Relación sin publicar entre publicadas* · Relación vigente duplicada · Imagen en paso de otra Hermandad | Error / Revisar |
-| | Imagen titular de varias Hermandades · Paso en varias Hermandades · Posible duplicado en la misma Hermandad · Posible marcha duplicada · Portada que la web descarta* · Portada ambigua o compartida | Revisar |
+| | Imagen titular de varias Hermandades · Paso en varias Hermandades · Posible duplicado en la misma Hermandad · Posible marcha duplicada · Portada que la web descarta* · Portada ambigua o compartida · Hermandad fuera de la provincia de Sevilla | Revisar |
 | | Fichas sin portada (resumen por tipo) | Incompleto |
 | Bandas y acompañamientos | Referencia de otro tipo · Sin nombre de banda · Fechas invertidas · Vigente con fin pasado · Periodos solapados de la misma banda · Música de la próxima temporada contradice el histórico · Formación repetida en la misma posición · Música en paso de otra Hermandad | Error |
 | | Paso que la Hermandad no muestra · Alta futura ya vigente · Posición sin banda ni explicación | Revisar |
 | | Banda en borrador · Histórico sin fin · Banda sin ficha en una salida | Incompleto |
 | Agenda | Salida duplicada · Fechas incoherentes · URL conservada que no resuelve | Error |
-| | Sin organizador · Hermandad no publicada · Culto a imagen ajena | Revisar |
+| | Sin organizador · Hermandad no publicada · Culto a imagen ajena · Salida fuera de la provincia de Sevilla | Revisar |
 | | Vinculada a ficha no publicada · Próxima cita incompleta | Incompleto |
 
 \* Requieren lectura completa (clave secreta). En modo público se indican como «no evaluadas».
@@ -151,3 +151,13 @@ Opcional, en una fase posterior: mostrar el informe en Panel → Datos → Salud
 - Si una regla editorial cambia (por ejemplo, el criterio de las altas de Música 2027), la comprobación correspondiente puede necesitar ajuste.
 - Las comprobaciones de duplicados son heurísticas («Revisar»), salvo cuando hay solape demostrado («Error»).
 - La primera ejecución en vivo puede revelar diferencias de permisos de lectura no vistas en SQL; el script informa cada comprobación fallida sin detener el resto.
+
+## Decisiones del propietario · 12/10/2026 (tarde)
+
+- **#1156 autorizada y fusionada** (`16ef752`). Producción READY sobre ese commit y CI en verde. El flujo «Integridad de datos» se lanzó a mano y terminó correctamente sin leer nada, porque aún faltan `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`.
+- **San Esteban y Calle Real de Castilleja** han cambiado de banda estos días: los dos avisos de «alta 2027 ya vigente» responden a cambios reales. Siguen en «Revisar» hasta unificar el criterio con las otras 44 altas.
+- **Moriles (Córdoba) queda fuera del proyecto.** En la PR «fix(agenda): Moriles fuera del ámbito»:
+  - se retira su URL del manifiesto de la Agenda;
+  - se añaden dos comprobaciones de ámbito («Hermandad / salida fuera de la provincia de Sevilla») para detectar casos futuros.
+- Con esa PR, las cifras esperadas en modo público pasan a: **6 errores, 23 a revisar** (se suman la Hermandad y la salida de Moriles) **y 44 datos incompletos**.
+- **Propuesto, sin ejecutar (requiere autorización):** archivar las tres fichas publicadas de Moriles: la Hermandad (`/hermandades/jesus-preso-moriles`), su imagen titular y la salida del 19/09. Es reversible, pero deja de servir una página pública.
