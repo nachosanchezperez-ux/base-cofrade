@@ -144,3 +144,35 @@ Verificado en `/hermandades/hermandad-jesus-la-algaba`.
 - **Música:** Las Nieves de Olivares tras el paso, desde 2022, enlazada al paso.
 
 Verificado en `/hermandades/hermandad-divina-pastora-capuchinos-sevilla`.
+
+## Hermandad de la Esperanza de Arahal · 12/10/2026 · aplicado y publicado
+
+`esperanza-arahal.sql`; reversión: `esperanza-arahal-rollback.sql`.
+
+### Fuentes
+
+- [Web de la Hermandad · Santísimo Cristo de la Esperanza](https://hermandadesperanzaarahal.es/blog/santisimo-cristo-de-la-esperanza/).
+- [ArteSacro · Una mirada a la provincia (2009)](https://www.artesacro.org/Noticia/Ver/49049/provincia-mirada-provincia-hermandad-esperanza-arahal).
+- [Archidiócesis de Sevilla · Jubileo 2025](https://www.archisevilla.org/jubileo-2025-santisimo-cristo-de-la-esperanza-parroquia-de-santa-maria-magdalena-arahal/).
+
+### Ficha
+
+- **Nombre oficial:** Hermandad Sacramental y Cofradía de Nazarenos del Santísimo Cristo de la Esperanza, Nuestra Señora de las Angustias, San Juan Evangelista y Santa María Magdalena.
+  - Sede: parroquia de Santa María Magdalena.
+  - Sale la tarde del Viernes Santo.
+- **Titulares:** los tres son de Manuel Pineda Calderón.
+  - Cristo de la Esperanza, 1946-1947.
+  - Angustias, 1938 según ArteSacro.
+  - San Juan Evangelista.
+- **Pasos:**
+  - Cristo: neobarroco, sin autor documentado.
+  - Palio: de los años 60, de Villarreal, con bordados de Francisco Expósito y respiraderos de Seco Imberg procedentes del Buen Fin.
+- **No se ha creado:**
+  - La imagen de Santa María Magdalena: es cotitular en el nombre, pero ninguna fuente la describe.
+  - La relación de San Juan con un paso: las fuentes no dicen en cuál procesiona.
+- **Música:** se enlazan los tres periodos existentes, sin cambiar fechas ni bandas.
+  - Santa María Magdalena de Arahal, tras el Cristo, vigente.
+  - AMUECI, tras el palio, 2026.
+  - Bollullos, tras el palio, 2027-2028. No se muestra en la web porque la ficha de la banda sigue en borrador.
+
+Verificado en `/hermandades/hermandad-esperanza-arahal`.
