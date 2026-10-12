@@ -122,3 +122,23 @@ test('el cambio de día se calcula en Madrid: a las 00:30 «Hoy» ya es el día 
   assert.deepEqual(today.cards.map((card) => card.title), ['Acto martes'])
   assert.equal(today.cards[0].dateParts.day, '13')
 })
+
+test('los titulares de El Hilo se mueve en portada: los más recientes, uno por Hermandad', async () => {
+  const { buildHomeNews } = await import('../lib/home-news.js')
+  const item = (id, brotherhood, announcedOn) => ({
+    id, href: `/el-hilo-se-mueve#${id}`, title: `Noticia ${id}`, summary: 'Resumen', kind: 'Cambio', topic: 'musica',
+    brotherhood: { id: brotherhood, label: `Hermandad ${brotherhood}` }, municipality: 'Sevilla', announcedOn, crestPath: '',
+  })
+  const news = buildHomeNews([
+    item('a', 'h1', '2026-10-12'),
+    item('b', 'h1', '2026-10-11'),
+    item('c', 'h2', '2026-10-10'),
+    item('d', 'h3', '2026-10-09'),
+    item('e', 'h4', '2026-10-08'),
+  ])
+  assert.deepEqual(news.map((n) => n.id), ['a', 'c', 'd'])
+  assert.equal(news[0].topic, 'Música')
+  assert.equal(news[0].dateLabel, '12 de octubre de 2026')
+  assert.equal(news[0].href, '/el-hilo-se-mueve#a')
+  assert.deepEqual(buildHomeNews(null), [])
+})

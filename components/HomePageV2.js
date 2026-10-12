@@ -26,6 +26,7 @@ export default function HomePageV2({
   editorialHighlights = [],
   discoveryThreads,
   exploreStats,
+  news = [],
 }) {
   const agendaNow = buildHomeAgendaNow(homeTemporal)
 
@@ -64,7 +65,7 @@ export default function HomePageV2({
 
       <HomeDiscover stats={exploreStats} />
 
-      <HomeUpdatesLink />
+      <HomeUpdatesLink news={news} />
 
       <HomeTodayV2 today={today} content={todayContent} />
 
