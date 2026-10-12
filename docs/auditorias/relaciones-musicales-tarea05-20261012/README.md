@@ -142,3 +142,21 @@ Ganado hoy en las tareas 04 y 05 (ya aplicado y verificado esta mañana): 27 per
 **Cifras actualizadas:**
 - Formaciones solo como texto: 34 (24 correctas así, 9 bandas sin ficha, 1 ambigua).
 - Camas deja de estar bloqueado.
+
+## Segunda tanda del propietario · 12/10/2026 · aplicada
+
+Detalle en `owner-fixes-2.sql` y su reversión, `owner-fixes-2-rollback.sql`.
+
+1. **Nombres de los 12 periodos históricos** de San Bernardo (×11) y la Trinidad (×1): 12/12.
+   - Verificado en la web: `/pasos/paso-cristo-salud-san-bernardo` muestra ahora los 12 periodos, de Cruz Roja (1930) a Corona de Espinas (2003–2006).
+2. **AM Juvenil Santa María Magdalena de Arahal** (San Pablo, Cruz de Guía 2026): enlazada a la A.M. Santa María Magdalena de Arahal.
+   - Conserva el nombre juvenil como texto y en la nota visible.
+   - La ficha juvenil en borrador no se toca.
+   - Verificado en `outing_music_details`.
+3. **Camas · Jueves Santo · Banda Virgen de las Angustias:** confirmada, con fuente editorial.
+   - 2026 pasa a ser una constatación y no un inicio, así que la web deja de decir «Desde 2026».
+   - Verificada la etiqueta resultante (vacía). La página tiene una caché de 15 minutos.
+
+**Cifras actualizadas:**
+- Bandas en borrador en salidas publicadas: queda Ánima Sacra, más el posible duplicado de Bollullos.
+- Periodos históricos invisibles: 0.
