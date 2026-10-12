@@ -21,7 +21,7 @@ import {
   validHiddenProgress,
 } from '@/lib/hilo-hidden-game'
 import styles from './HiddenThreadGame.module.css'
-import { hiddenShareData, hiddenShareSocialLinks, hiddenStoryFilename } from '@/lib/hilo-hidden-share'
+import { HILO_SHARE_URL, hiddenInviteText, hiddenShareData, hiddenShareSocialLinks, hiddenStoryFilename } from '@/lib/hilo-hidden-share'
 import { createHiddenStoryFile, saveHiddenStoryFile } from '@/lib/hilo-hidden-share-card'
 
 const GAME_STORAGE = 'hc-hilo-escondido-v2:'
@@ -243,6 +243,29 @@ export default function HiddenThreadGame({ initialDayKey = '' }) {
     })
   }
 
+  async function shareInvitation() {
+    const inviteText = hiddenInviteText()
+    if (typeof navigator.share === 'function') {
+      try {
+        await navigator.share({
+          title: 'El hilo escondido · Hilo Cofrade',
+          text: '🧵 ¿Te atreves con el reto cofrade de hoy?',
+          url: HILO_SHARE_URL,
+        })
+        setShareStatus('Invitación compartida.')
+        return
+      } catch (error) {
+        if (error?.name === 'AbortError') return
+      }
+    }
+    try {
+      await navigator.clipboard.writeText(inviteText)
+      setShareStatus('Invitación copiada. Puedes enviarla a tus amigos.')
+    } catch {
+      setShareStatus('Comparte este enlace: ' + HILO_SHARE_URL)
+    }
+  }
+
   async function share() {
     if (!shareData) return
     if (typeof navigator.share === 'function') {
@@ -338,10 +361,16 @@ export default function HiddenThreadGame({ initialDayKey = '' }) {
                   <h2 ref={gameHeadingRef} tabIndex={-1} className={styles.gameFocusHeading}>{challenge.title}</h2>
                   <p>{challenge.subtitle}</p>
                 </div>
-                {mode === 'expert' ? (
-                  <span className={styles.gameNumber}>{String(progress.stage + 1).padStart(2, '0')} / 03</span>
-                ) : null}
+                <div className={styles.gameHeaderActions}>
+                  {mode === 'expert' ? (
+                    <span className={styles.gameNumber}>{String(progress.stage + 1).padStart(2, '0')} / 03</span>
+                  ) : null}
+                  <button type="button" className={styles.inviteToPlay} onClick={shareInvitation}>
+                    <span aria-hidden="true">↗</span> Compartir juego
+                  </button>
+                </div>
               </header>
+              {shareStatus ? <p className={styles.shareStatus} role="status" aria-live="polite">{shareStatus}</p> : null}
 
               {mode === 'expert' ? (
                 <div className={styles.stageSteps} role="list" aria-label="Progreso de los tres cabos">
@@ -463,6 +492,11 @@ export default function HiddenThreadGame({ initialDayKey = '' }) {
                     <Link href={word.link.href}>{word.link.text} <span aria-hidden="true">↗</span></Link>
                     <strong>{round.status === 'won' ? '+' + stagePoints + ' puntos' : '0 puntos'}</strong>
                   </div>
+                  {completed ? (
+                    <button type="button" className={styles.shareNow} onClick={share}>
+                      <span aria-hidden="true">↗</span> Compartir mi resultado
+                    </button>
+                  ) : null}
                   {!isFinalRound ? (
                     <button className={styles.nextButton} type="button" onClick={nextStage}>Tira del siguiente cabo <span aria-hidden="true">→</span></button>
                   ) : null}
@@ -536,7 +570,6 @@ export default function HiddenThreadGame({ initialDayKey = '' }) {
                     {mode === 'daily' ? 'Seguir con La última chicotá' : 'Jugar al reto del día'}
                     <span aria-hidden="true">→</span>
                   </button>
-                  {shareStatus ? <p className={styles.shareStatus} role="status">{shareStatus}</p> : null}
                 </div>
               ) : null}
               {canPlay ? (
