@@ -176,3 +176,41 @@ Verificado en `/hermandades/hermandad-divina-pastora-capuchinos-sevilla`.
   - Bollullos, tras el palio, 2027-2028. No se muestra en la web porque la ficha de la banda sigue en borrador.
 
 Verificado en `/hermandades/hermandad-esperanza-arahal`.
+
+## Hermandad de la Humillación de Camas · 12/10/2026 · aplicado y publicado
+
+`humillacion-camas.sql`; reversión: `humillacion-camas-rollback.sql`.
+
+### Fuentes
+
+- [Turismo Aljarafe · Hermandad de la Humillación](https://turismo.aljarafe.com/recursos-turisticos/guias-turisticas/Hermandad-de-la-Humillacion.).
+- [ArteSacro · Estreno de San Pedro (2014)](https://www.artesacro.org/Noticia.asp?idreg=94562).
+- [Ayuntamiento de Camas · Camas Cofrade 2023](https://www.camas.es/export/sites/camas/.galleries/documentos-noticias/camas-cofrade-2023.pdf).
+
+### Ficha
+
+- **Nombre oficial:** según «Camas Cofrade 2023». Turismo Aljarafe recoge la denominación anterior de Agrupación Parroquial.
+  - Sale el Sábado de Pasión.
+  - Orígenes en 1991; Agrupación Parroquial desde 2009; primera estación de penitencia en 2013.
+  - No se indica sede: ninguna fuente la confirma.
+- **Titulares,** de Ángel Velázquez Vega:
+  - Soberano Poder (2006);
+  - Humillación (2004).
+- **San Pedro** (Velázquez Vega, 2014): se vincula como imagen secundaria del misterio.
+- **Pasos:** misterio de las Negaciones y palio, sin autor documentado.
+- **No se ha creado:** la Inmaculada Concepción ni la Virgen Gloriosa, porque ninguna fuente las describe.
+- **Música:** Santa María Magdalena de Arahal, tras el misterio desde 2024, enlazada al paso.
+
+### Propuesto, sin aplicar
+
+Estos acompañamientos aparecen en las fuentes pero no están en la base:
+
+- Virgen de los Reyes tras el misterio (2023), según «Camas Cofrade 2023».
+- Cigarreras tras el palio, desde 2018, según «Camas Cofrade 2023» y El Pespunte. El año de fin no está confirmado.
+- Mairena del Alcor tras el palio en 2026, según El Pespunte del 12/12/2025.
+
+### Hallazgo técnico, sin tocar
+
+La ficha de Hermandad muestra todas las imágenes vinculadas dentro de «Titulares», también las de tipo `secondary_image` (aquí, San Pedro). Revisar en una tarea de código aparte.
+
+Verificado en `/hermandades/hermandad-humillacion-camas`.
