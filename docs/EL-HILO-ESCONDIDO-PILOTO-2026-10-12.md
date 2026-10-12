@@ -105,3 +105,17 @@ La preview de Vercel no es accesible desde el navegador de esta sesión (el prox
 - No se añaden nuevas URLs, dependencias ni migraciones. Prueba de regresión de enlaces y orden de lectura en `test/hilo-hidden-play-entry.test.mjs`.
 
 **Barrera de cierre:** comprobar CI y preview del SHA final; conservar pendiente la revisión editorial del banco y el ensayo en iPhone físico. No considerar el juego publicado.
+
+## Replanteamiento visual de entrada · 12/10/2026 (revisión)
+
+La promoción grande de Cofradle situada **después de la partida** y el tablero de cinco categorías bloqueadas no conseguían transmitir «entrar y jugar». Esta revisión sustituye expresamente el diseño descrito en el apartado anterior; el texto anterior se conserva como contexto histórico.
+
+- **Primera pantalla:** cabecera compacta «¿Jugamos?» y dos grandes tarjetas, cada una entera pulsable: «El hilo escondido» (ancla hacia la partida ya disponible) y «Cofradle» (enlace directo externo). No es necesario pulsar botones intermedios, entrar en un menú ni completar antes el juego local.
+- **Visual propio:** carta burdeos con misterio y tres cabos para Hilo Cofrade; carta azul con una miniatura tipográfica de hermandad y marcha para Cofradle. No se reutiliza ni se inventa un logotipo oficial de Cofradle.
+- **Móvil:** tarjetas apiladas y compactas; la acción de cada juego aparece antes de la ilustración. Ambas opciones quedan inmediatamente bajo el titular.
+- **Después de elegir:** la partida aparece directamente con sus modos, adivinanza y campo de respuesta; desaparecen la promoción duplicada de Cofradle y el tablero de cinco opciones todavía inactivas.
+- **Categorías futuras:** se anuncian solo en una línea secundaria al final, sin presentarlas como clicables.
+- **Identidad y límites:** jerarquía de juego, colores Hilo Cofrade y aviso de que Cofradle es externo e independiente. Sin nueva dependencia, modelo de datos, URL ni cambio de mecánica.
+- **Regresión:** `test/hilo-hidden-play-entry.test.mjs` comprueba que los dos enlaces son reales, que la partida tiene ancla SSR, que no existen duplicados promocionales y que la versión móvil está prevista.
+
+**Por certificar:** revisión visual/interactiva del nuevo selector en pantallas reales, posterior al rediseño. No reutilizar como evidencia las capturas y pruebas visuales de la versión anterior.
