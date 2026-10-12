@@ -5,7 +5,7 @@
 .hero {
   position: relative;
   overflow: hidden;
-  padding: 22px 0 24px;
+  padding: 18px 0 20px;
   color: #fff;
   background:
     radial-gradient(circle at 92% 8%, rgba(97, 163, 221, .22), transparent 34%),
@@ -23,7 +23,7 @@
 .inner {
   position: relative;
   display: grid;
-  gap: 18px;
+  gap: 14px;
 }
 
 .copy {
@@ -90,7 +90,7 @@
   text-align: left;
 }
 
-.search :global([aria-label="Preguntas sugeridas"] button:nth-child(n + 3)) {
+.search :global([aria-label="Preguntas sugeridas"] button:nth-child(n + 2)) {
   display: none;
 }
 
@@ -118,7 +118,7 @@
     font-size: 16px;
   }
 
-  .search :global([aria-label="Preguntas sugeridas"] button:nth-child(n + 3)) {
+  .search :global([aria-label="Preguntas sugeridas"] button:nth-child(n + 2)) {
     display: inline-flex;
   }
 }
