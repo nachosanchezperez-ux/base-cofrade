@@ -54,3 +54,26 @@ Continuación de `docs/auditorias/relaciones-musicales-tarea05-20261012/` (lista
 - Valme figura en el histórico.
 - Las Cigarreras (Gran Poder, desde 2027) aparece en Música 2027 y no como vigente, porque es un contrato futuro.
 - La cabecera indica «3 pasos» de Semana Santa y, aparte, la Gloria. Es el diseño de la ficha.
+
+## Caridad de Santa Aurelia (Sevilla) · 12/10/2026 · aplicado, en borrador
+
+`caridad-santa-aurelia.sql`; reversión: `caridad-santa-aurelia-rollback.sql`.
+
+### Fuentes
+
+- [Banda Las Nieves de Olivares · Agrupación Parroquial María Santísima de la Caridad](https://lasnievesdeolivares.com/agrupacion-parroquial-maria-santisima-de-la-caridad/): sede en San Lucas Evangelista (Santa Aurelia), imagen de Antonio Joaquín Dubé de Luque, salida el quinto sábado de Cuaresma, banda desde 2025.
+- [Inri Información (2022)](https://inriinformacion.com/2022/04/02/la-virgen-de-la-caridad-de-san-lucas-hara-su-salida-procesional-por-santa-aurelia/): primera procesión el 2 de abril de 2022, **bajo palio**, con el Maestro Tejera.
+
+### Ficha
+
+- Titular: María Santísima de la Caridad, de Dubé de Luque. **Las fuentes discrepan en la fecha (1998 o 2008)**; se recogen las dos.
+- Paso de palio de María Santísima de la Caridad.
+
+### Música
+
+- Las Nieves de Olivares, desde 2025, enlazada al palio.
+- **Nuevo periodo histórico documentado:** Maestro Tejera en 2022.
+
+### Estado
+
+Todo queda en **borrador** hasta que el propietario autorice publicarlo.
