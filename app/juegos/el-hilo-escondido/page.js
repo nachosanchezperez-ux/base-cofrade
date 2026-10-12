@@ -46,6 +46,16 @@ export default function HiddenThreadPage() {
             target="_blank"
             rel="noopener noreferrer"
           >
+            {/* Favicon oficial de cofradle.es, sin alterar, usado con permiso (13/10/2026). */}
+            <img
+              className={styles.recommendationLogo}
+              src="/externos/cofradle-favicon.svg"
+              alt=""
+              width="40"
+              height="40"
+              loading="lazy"
+              decoding="async"
+            />
             <span className={styles.recommendationText}>
               <small>¿Quieres más retos?</small>
               <strong>Juega también en <span className={styles.recommendationBrand}>Cofradle</span></strong>

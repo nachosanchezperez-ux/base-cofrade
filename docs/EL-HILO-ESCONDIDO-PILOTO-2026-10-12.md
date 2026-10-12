@@ -209,9 +209,14 @@ Sobre la implementación existente de #1146 (sin nuevo juego, ruta ni datos).
   - Copiar.
 - En la imagen del reto diario figura «Palabra descubierta» en lugar de «1 de 1 cabos».
 
-**Cofradle**: solo al final, como tarjeta tipográfica discreta y enlace externo.
+**Cofradle**: solo al final, como tarjeta discreta y enlace externo.
 - Se retira el favicon servido por Google.
-- **Logotipo auténtico: no verificado.** El acceso a `cofradle.es` desde esta sesión requería una autorización que caducó sin respuesta. No se ha inventado ninguna marca. Pendiente: obtener el logotipo oficial con permiso del proyecto antes de usarlo.
+- **Logotipo auténtico: verificado (13/10/2026).** El propietario de Hilo Cofrade confirma que tiene permiso para usar el logotipo de Cofradle y señala su favicon como fuente.
+  - Origen: `https://cofradle.es/favicon.svg`, declarado en el `<head>` de cofradle.es con `<link rel="icon" type="image/svg+xml">`.
+  - Copia local sin modificar: `public/externos/cofradle-favicon.svg` (575 bytes, SHA-256 `c06a59d0…6ed7bf0b`, sin scripts ni recursos externos).
+  - Se sirve desde nuestro dominio, así que no hay petición a terceros.
+  - Aparece a 40 px junto al nombre. Su `alt` está vacío para que los lectores de pantalla no repitan «Cofradle», ya escrito al lado.
+  - Si Cofradle cambia su marca, basta con sustituir ese archivo.
 
 **QA (Chromium con emulación táctil, componente real con estilos globales)**
 - 320, 375, 390, 430, 768 y 1366 px: sin desplazamiento horizontal, sin textos menores de 11 px, todos los controles de 40 px o más y sin errores de JavaScript.
