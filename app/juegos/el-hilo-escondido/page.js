@@ -52,10 +52,19 @@ export default async function HiddenThreadPage() {
             rel="noopener noreferrer"
             aria-label="Conoce Cofradle, otros juegos cofrades en una web externa e independiente"
           >
-            <span className={styles.recommendationArtwork} aria-hidden="true">♜ <span>♫</span></span>
+            <span className={styles.recommendationArtwork} aria-hidden="true">
+              <img
+                src="https://www.google.com/s2/favicons?domain=cofradle.es&sz=128"
+                alt=""
+                width="64"
+                height="64"
+                loading="lazy"
+                referrerPolicy="no-referrer"
+              />
+            </span>
             <span className={styles.recommendationCopy}>
               <small>¿Te has quedado con ganas de más?</small>
-              <strong>También puedes jugar en Cofradle</strong>
+              <strong>También puedes jugar en <span className={styles.recommendationBrand}>Cofradle</span></strong>
               <span>Más retos de hermandades y marchas en una web independiente.</span>
             </span>
             <span className={styles.recommendationLink}>Visitar Cofradle <span aria-hidden="true">↗</span></span>
