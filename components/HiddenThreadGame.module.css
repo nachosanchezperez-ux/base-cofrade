@@ -1,0 +1,851 @@
+/*
+ * El hilo escondido · estilos del juego.
+ * Mobile-first: la base es un iPhone de 390 px; las mejoras para pantallas mayores van al final.
+ * Paleta de Hilo Cofrade: burdeos, marfil, blanco y dorado.
+ */
+.page {
+  --hg-wine: #6f2337;
+  --hg-wine-dark: #4b1626;
+  --hg-wine-soft: #f6ebee;
+  --hg-ivory: #fbf7f0;
+  --hg-paper: #fffdf9;
+  --hg-gold: #c79a4b;
+  --hg-gold-soft: #f3e4c6;
+  --hg-ink: #2a1f24;
+  --hg-muted: #6c6066;
+  --hg-line: #eadfd6;
+  --hg-ok: #2f6a43;
+  --hg-ok-soft: #eaf4ec;
+  --hg-ko: #9a2f45;
+  --hg-ko-soft: #fbecee;
+  --hg-focus: #d8a34b;
+  background: var(--hg-ivory);
+  color: var(--hg-ink);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ── Cabecera de la página ───────────────────────────────────────── */
+.intro {
+  padding: 4px 0 12px;
+  background: var(--hg-wine);
+  color: #fff;
+}
+
+.introBack {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  color: #f2d9c2;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.intro h1 {
+  margin: 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 28px;
+  line-height: 1.05;
+  letter-spacing: -.02em;
+}
+
+/* ── Juego ───────────────────────────────────────────────────────── */
+.game {
+  padding: 10px 0 28px;
+}
+
+.wrap {
+  max-width: 720px;
+}
+
+.loading {
+  padding: 40px 0;
+  color: var(--hg-muted);
+  text-align: center;
+}
+
+.modes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  margin-bottom: 10px;
+  padding: 4px;
+  border-radius: 14px;
+  background: #efe4da;
+}
+
+.mode {
+  display: grid;
+  gap: 1px;
+  min-width: 0;
+  min-height: 48px;
+  padding: 6px 8px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--hg-muted);
+  font: inherit;
+  text-align: center;
+  cursor: pointer;
+}
+
+.mode strong {
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.mode small {
+  font-size: 11px;
+  line-height: 1.2;
+}
+
+.mode[aria-selected='true'] {
+  background: var(--hg-paper);
+  color: var(--hg-wine);
+  box-shadow: 0 2px 8px rgba(75, 22, 38, .12);
+}
+
+.board {
+  padding: 12px;
+  border: 1px solid var(--hg-line);
+  border-radius: 18px;
+  background: var(--hg-paper);
+  box-shadow: 0 10px 30px rgba(42, 31, 36, .06);
+  scroll-margin-top: 80px;
+}
+
+.boardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.boardDate {
+  color: var(--hg-muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.boardDate::first-letter {
+  text-transform: uppercase;
+}
+
+.inviteButton {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--hg-line);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--hg-wine);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.scoreboard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 10px;
+  padding: 6px 12px;
+  border-radius: 12px;
+  background: var(--hg-ivory);
+}
+
+.scorePoints {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+}
+
+.scorePoints strong {
+  color: var(--hg-wine);
+  font-size: 22px;
+  font-variant-numeric: tabular-nums;
+}
+
+.scorePoints small,
+.attempts small {
+  color: var(--hg-muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.stages {
+  display: flex;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stages li {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border: 1px solid var(--hg-line);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--hg-muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.stages .stage_current {
+  border-color: var(--hg-wine);
+  color: var(--hg-wine);
+}
+
+.stages .stage_won {
+  border-color: var(--hg-ok);
+  background: var(--hg-ok);
+  color: #fff;
+}
+
+.stages .stage_lost {
+  border-color: var(--hg-ko);
+  background: var(--hg-ko-soft);
+  color: var(--hg-ko);
+}
+
+.attempts {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.attempts i {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--hg-gold);
+}
+
+.attempts i.attemptUsed {
+  background: #ddd2c8;
+}
+
+.attempts small {
+  margin-left: 4px;
+}
+
+.status {
+  margin: 10px 0 0;
+  color: var(--hg-wine);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* Adivinanza: protagonista de la pantalla. */
+.riddle {
+  margin-top: 10px;
+  padding: 16px 14px;
+  border-radius: 14px;
+  background: var(--hg-wine);
+  color: #fff;
+  text-align: center;
+  outline: none;
+  scroll-margin-top: 80px;
+}
+
+.riddle:focus-visible {
+  box-shadow: 0 0 0 3px var(--hg-focus);
+}
+
+.riddleLabel {
+  display: block;
+  color: var(--hg-gold-soft);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.riddle blockquote {
+  margin: 10px 0 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 23px;
+  line-height: 1.25;
+}
+
+.riddleLetters {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .12);
+  color: #f6e7da;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.riddleLetters strong {
+  color: #fff;
+}
+
+/* Respuestas táctiles: normal, seleccionada, correcta e incorrecta. */
+.choices {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.choice {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60px;
+  padding: 8px 10px;
+  border: 2px solid var(--hg-line);
+  border-radius: 14px;
+  background: #fff;
+  color: var(--hg-ink);
+  font: inherit;
+  font-size: 17px;
+  font-weight: 800;
+  text-align: center;
+  cursor: pointer;
+  transition: transform .15s ease, border-color .15s ease, background-color .15s ease;
+}
+
+.choice span {
+  overflow-wrap: anywhere;
+}
+
+.choice span::first-letter {
+  text-transform: uppercase;
+}
+
+.choice b {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  font-size: 13px;
+}
+
+.choice:not(:disabled):hover {
+  border-color: var(--hg-wine);
+}
+
+.choice:not(:disabled):active {
+  transform: scale(.98);
+}
+
+.choice[data-state='selected'] {
+  border-color: var(--hg-wine);
+  background: var(--hg-wine-soft);
+  color: var(--hg-wine);
+}
+
+.choice[data-state='correct'] {
+  border-color: var(--hg-ok);
+  background: var(--hg-ok-soft);
+  color: var(--hg-ok);
+  animation: hgPop .3s ease-out;
+}
+
+.choice[data-state='wrong'] {
+  border-color: #e7c6cd;
+  background: var(--hg-ko-soft);
+  color: var(--hg-ko);
+  text-decoration: line-through;
+  animation: hgShake .3s ease-out;
+}
+
+.choice:disabled {
+  cursor: default;
+}
+
+.choice[data-state='idle']:disabled {
+  opacity: .55;
+}
+
+/* Modo experto: respuesta escrita. */
+.expertForm {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.expertForm input {
+  min-width: 0;
+  min-height: 52px;
+  padding: 0 14px;
+  border: 2px solid var(--hg-line);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--hg-ink);
+  font: inherit;
+  font-size: 17px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.expertForm input:focus {
+  border-color: var(--hg-wine);
+  outline: none;
+}
+
+.expertForm button {
+  min-height: 52px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--hg-wine);
+  color: #fff;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.expertForm button:disabled {
+  opacity: .5;
+  cursor: default;
+}
+
+.feedback {
+  margin: 10px 0 0;
+  font-size: 15px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.feedback[hidden] {
+  display: none;
+}
+
+.feedback[data-tone='success'] {
+  color: var(--hg-ok);
+}
+
+.feedback[data-tone='error'] {
+  color: var(--hg-ko);
+}
+
+/* Pistas: una sola acción progresiva. */
+.hints {
+  margin-top: 12px;
+}
+
+.hintButton {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  min-height: 48px;
+  padding: 8px 14px;
+  border: 1px dashed var(--hg-gold);
+  border-radius: 12px;
+  background: #fffaf0;
+  color: var(--hg-wine-dark);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.hintButton small {
+  color: var(--hg-muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.hintList {
+  display: grid;
+  gap: 6px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hintList li {
+  padding: 10px 12px;
+  border-left: 3px solid var(--hg-gold);
+  border-radius: 8px;
+  background: var(--hg-ivory);
+  font-size: 15px;
+  line-height: 1.4;
+  animation: hgReveal .25s ease-out;
+}
+
+.hintList strong {
+  display: block;
+  color: var(--hg-wine);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+/* Solución de cada cabo. */
+.result {
+  margin-top: 14px;
+  padding: 16px;
+  border: 1px solid #cfe3d4;
+  border-radius: 14px;
+  background: var(--hg-ok-soft);
+  animation: hgReveal .3s ease-out;
+  scroll-margin-top: 80px;
+}
+
+.result[data-status='lost'] {
+  border-color: #ecd3d8;
+  background: var(--hg-ko-soft);
+}
+
+.resultKicker {
+  color: var(--hg-ok);
+  font-size: 13px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+.result[data-status='lost'] .resultKicker {
+  color: var(--hg-ko);
+}
+
+.result h3 {
+  margin: 4px 0 0;
+  color: var(--hg-ink);
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 28px;
+  letter-spacing: .02em;
+}
+
+.result p {
+  margin: 6px 0 0;
+  color: #43393e;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.resultLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 40px;
+  color: var(--hg-wine);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+/* Botones comunes. */
+.primaryButton,
+.secondaryButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 48px;
+  padding: 0 16px;
+  border-radius: 12px;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 800;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.primaryButton {
+  width: 100%;
+  margin-top: 10px;
+  border: 0;
+  background: var(--hg-wine);
+  color: #fff;
+}
+
+.secondaryButton {
+  border: 1px solid var(--hg-line);
+  background: #fff;
+  color: var(--hg-wine);
+}
+
+/* Final de la partida: recompensa y compartir. */
+.finale {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--hg-line);
+}
+
+.finale h3 {
+  margin: 0;
+  color: var(--hg-wine);
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 22px;
+  line-height: 1.2;
+}
+
+.connection {
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 12px;
+  background: var(--hg-ivory);
+}
+
+.connection strong {
+  color: var(--hg-wine);
+  font-size: 14px;
+  letter-spacing: .04em;
+}
+
+.connection p {
+  margin: 4px 0 0;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.shareCard {
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  margin-top: 12px;
+  padding: 18px 14px;
+  border-radius: 16px;
+  background: linear-gradient(160deg, #172a40 0%, var(--hg-wine) 60%, #2b1a2b 100%);
+  color: #fff;
+  text-align: center;
+}
+
+.shareBrand {
+  color: var(--hg-gold-soft);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.shareMode {
+  color: #eadbd6;
+  font-size: 13px;
+}
+
+.shareScore {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 46px;
+  line-height: 1;
+}
+
+.shareScore small {
+  font-size: 16px;
+  color: #eadbd6;
+}
+
+.shareMarks {
+  font-size: 24px;
+  letter-spacing: .1em;
+}
+
+.shareInvite {
+  color: var(--hg-gold-soft);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.shareActions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.shareActions .primaryButton {
+  grid-column: 1 / -1;
+  margin-top: 0;
+}
+
+.shareNote {
+  margin: 8px 0 0;
+  color: var(--hg-muted);
+  font-size: 13px;
+}
+
+.comeBack {
+  margin: 14px 0 8px;
+  font-size: 15px;
+}
+
+.comeBack strong {
+  color: var(--hg-wine);
+}
+
+.finale > .secondaryButton {
+  width: 100%;
+}
+
+.privacy {
+  margin: 12px 0 0;
+  color: var(--hg-muted);
+  font-size: 12px;
+  text-align: center;
+}
+
+/* ── Recomendación final: Cofradle ───────────────────────────────── */
+.recommendation {
+  padding: 4px 0 32px;
+}
+
+.recommendationCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  max-width: 720px;
+  min-height: 56px;
+  margin: 0 auto;
+  padding: 10px 14px;
+  border: 1px solid var(--hg-line);
+  border-radius: 14px;
+  background: #fff;
+  color: var(--hg-ink);
+  text-decoration: none;
+}
+
+.recommendationLogo {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+}
+
+.recommendationText {
+  display: grid;
+  flex: 1;
+  gap: 1px;
+}
+
+.recommendationText small {
+  color: var(--hg-muted);
+  font-size: 12px;
+}
+
+.recommendationText strong {
+  font-size: 15px;
+}
+
+.recommendationBrand {
+  color: var(--hg-wine);
+}
+
+.recommendationLink {
+  color: var(--hg-wine);
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.recommendationNote {
+  max-width: 720px;
+  margin: 6px auto 0;
+  color: var(--hg-muted);
+  font-size: 12px;
+}
+
+/* ── Foco visible ────────────────────────────────────────────────── */
+.mode:focus-visible,
+.inviteButton:focus-visible,
+.choice:focus-visible,
+.expertForm button:focus-visible,
+.hintButton:focus-visible,
+.primaryButton:focus-visible,
+.secondaryButton:focus-visible,
+.resultLink:focus-visible,
+.introBack:focus-visible,
+.recommendationCard:focus-visible {
+  outline: 3px solid var(--hg-focus);
+  outline-offset: 2px;
+}
+
+/* ── Animaciones discretas ───────────────────────────────────────── */
+@keyframes hgReveal {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes hgPop {
+  0% { transform: scale(.97); }
+  60% { transform: scale(1.03); }
+  100% { transform: none; }
+}
+
+@keyframes hgShake {
+  0%, 100% { transform: none; }
+  30% { transform: translateX(-3px); }
+  65% { transform: translateX(3px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .choice,
+  .choice[data-state='correct'],
+  .choice[data-state='wrong'],
+  .hintList li,
+  .result {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* ── Pantallas pequeñas (320 px) ─────────────────────────────────── */
+@media (max-width: 359px) {
+  .board {
+    padding: 12px;
+  }
+  .riddle blockquote {
+    font-size: 20px;
+  }
+  .choice {
+    font-size: 15px;
+  }
+  .inviteButton {
+    padding: 0 10px;
+    font-size: 12px;
+  }
+}
+
+/* ── Tablet y escritorio ─────────────────────────────────────────── */
+@media (min-width: 760px) {
+  .intro {
+    padding: 16px 0 22px;
+  }
+  .intro h1 {
+    font-size: 40px;
+  }
+  .game {
+    padding-top: 20px;
+  }
+  .board {
+    padding: 22px;
+  }
+  .riddle {
+    padding: 26px 24px;
+  }
+  .riddle blockquote {
+    font-size: 28px;
+  }
+  .choice {
+    min-height: 68px;
+    font-size: 19px;
+  }
+  .shareActions {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}

@@ -39,6 +39,7 @@ const directoryLinks = [
   ['/marchas', 'Marchas'],
   ['/autores', 'Autores'],
   ['/crucetas-musicales', 'Crucetas musicales'],
+  ['/juegos/el-hilo-escondido', 'El hilo escondido'],
 ];
 
 function routeActive(pathname) {

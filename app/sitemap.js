@@ -29,6 +29,7 @@ export const revalidate = 3600;
 
 const staticEntries = [
   { url: absoluteUrl('/el-hilo-se-mueve'), changeFrequency: 'daily', priority: 0.85 },
+  { url: absoluteUrl('/juegos/el-hilo-escondido'), changeFrequency: 'daily', priority: 0.7 },
   {
     url: absoluteUrl('/'),
     changeFrequency: 'daily',

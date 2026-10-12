@@ -656,3 +656,5 @@ Evidencia:
 - [Matriz de Fuentes · Morón](./MATRIZ-FUENTES-MORON-DECIMO-MACROLOTE-MUNICIPAL-HC016-2026-09-25.md)
 - [Cierre de modelo · Morón](./CIERRE-GATE-MORON-EVIDENCIA-PARTICIPACION-MUSICA-HC016-2026-09-25.md)
 - [Certificación pre-row-by-row · Morón](./CERTIFICACION-MORON-PRE-ROW-BY-ROW-HC016-2026-09-25.md)
+
+**12/10/2026 · El hilo escondido · #1146 REVISIÓN INTEGRAL · DRAFT, SIN MERGE:** rotación diaria sin temas consecutivos ni repeticiones en 52 días, calendario experto de 17 cadenas sin destripar el reto diario, sinónimos documentados, racha real, cuenta atrás y banco editorial corregido. **Conflicto:** #1147 implementa el mismo juego en la misma URL (`app/juegos/el-hilo-escondido/page.js`): recomendación cerrarla como sustituida. Pendiente GO editorial y QA visual en preview. [Detalle](./EL-HILO-ESCONDIDO-PILOTO-2026-10-12.md).
