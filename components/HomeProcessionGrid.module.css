@@ -248,8 +248,9 @@
   .grid{
     display:flex;
     overflow-x:auto;
-    margin-right:-16px;
-    padding-right:16px;
+    /* Igual al margen lateral de .shell en móvil (14px): con -16px desbordaba 2px. */
+    margin-right:-14px;
+    padding-right:14px;
     padding-bottom:4px;
     scroll-snap-type:x mandatory
   }
