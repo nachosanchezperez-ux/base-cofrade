@@ -1,16 +1,17 @@
 /*
  * El Hilo se mueve · primera plana de noticias en la portada.
- * Identidad de la sección: burdeos (#6d2433 / #48151f) sobre marfil, cabecera
- * con doble filete como la de un periódico y titulares jerarquizados.
+ * Paleta de la portada (azul #0f2742 / #123a67, rojo #b71f37, blanco y grises
+ * azulados), con cabecera de doble filete como la de un periódico y titulares
+ * jerarquizados.
  * La tipografía es la del sitio (Open Sans, impuesta en typography.css).
  */
 .section {
   scroll-margin-top: calc(var(--hc-app-header-height, 70px) + 14px);
   padding: 28px 0 30px;
-  border-top: 1px solid #e9ddcd;
-  border-bottom: 1px solid #e9ddcd;
-  background: #f7f1e8;
-  color: #2a1a1d;
+  border-top: 1px solid #e3e9ef;
+  border-bottom: 1px solid #e3e9ef;
+  background: #fff;
+  color: #0f2742;
 }
 
 /* Cabecera: doble filete burdeos arriba y fino abajo. */
@@ -21,20 +22,20 @@
   justify-content: space-between;
   gap: 8px 16px;
   padding: 12px 0 12px;
-  border-top: 4px double #6d2433;
-  border-bottom: 1px solid #6d2433;
+  border-top: 4px double #123a67;
+  border-bottom: 1px solid #123a67;
 }
 
 .tag {
   margin: 0 0 2px;
-  color: #6d2433;
+  color: #b71f37;
   font-size: 13px;
   font-weight: 750;
 }
 
 :global(#hc-app #el-hilo-se-mueve) .title {
   margin: 0;
-  color: #2a1a1d;
+  color: #0f2742;
   font-size: clamp(30px, 8.5vw, 40px);
   font-weight: 800;
   line-height: 1;
@@ -42,7 +43,7 @@
 }
 
 .title em {
-  color: #6d2433;
+  color: #b71f37;
   font-style: italic;
   font-weight: 400;
 }
@@ -52,7 +53,7 @@
   align-items: center;
   gap: 8px;
   min-height: 44px;
-  color: #48151f;
+  color: #123a67;
   font-size: 14px;
   font-weight: 750;
 }
@@ -62,13 +63,13 @@
   width: 30px;
   height: 30px;
   place-items: center;
-  border: 1px solid #6d2433;
+  border: 1px solid #123a67;
   border-radius: 50%;
   font-size: 15px;
 }
 
 .all:hover span {
-  background: #6d2433;
+  background: #123a67;
   color: #fff;
 }
 
@@ -79,7 +80,7 @@
 
 .lead {
   min-width: 0;
-  border-bottom: 1px solid #dccbb8;
+  border-bottom: 1px solid #e3e9ef;
 }
 
 .leadLink {
@@ -94,19 +95,19 @@
   flex-wrap: wrap;
   align-items: baseline;
   gap: 2px 10px;
-  color: #6b5a52;
+  color: #5f7080;
   font-size: 13px;
   line-height: 1.35;
 }
 
 .topic {
-  color: #6d2433;
+  color: #b71f37;
   font-weight: 800;
 }
 
 :global(#hc-app #el-hilo-se-mueve) .leadTitle {
   margin: 0;
-  color: #2a1a1d;
+  color: #0f2742;
   font-size: 23px;
   font-weight: 800;
   line-height: 1.18;
@@ -117,7 +118,7 @@
   display: -webkit-box;
   margin: 0;
   overflow: hidden;
-  color: #4a3a35;
+  color: #4d6073;
   font-size: 15px;
   line-height: 1.5;
   -webkit-box-orient: vertical;
@@ -146,14 +147,14 @@
 }
 
 .byline strong {
-  color: #48151f;
+  color: #123a67;
   font-size: 14px;
   font-weight: 750;
   line-height: 1.3;
 }
 
 .byline span span {
-  color: #6b5a52;
+  color: #5f7080;
   font-size: 13px;
   line-height: 1.3;
 }
@@ -165,7 +166,7 @@
 }
 
 .headlines li + li {
-  border-top: 1px solid #dccbb8;
+  border-top: 1px solid #e3e9ef;
 }
 
 .headline {
@@ -177,7 +178,7 @@
 
 :global(#hc-app #el-hilo-se-mueve) .headlineTitle {
   margin: 0;
-  color: #2a1a1d;
+  color: #0f2742;
   font-size: 17px;
   font-weight: 750;
   line-height: 1.28;
@@ -185,14 +186,14 @@
 }
 
 .headlineMeta {
-  color: #6b5a52;
+  color: #5f7080;
   font-size: 13px;
   line-height: 1.35;
 }
 
 .leadLink:hover :global(h3),
 .headline:hover :global(h3) {
-  color: #6d2433;
+  color: #b71f37;
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 4px;
@@ -202,7 +203,7 @@
 .headline:focus-visible,
 .all:focus-visible,
 .fallback a:focus-visible {
-  outline: 3px solid #6d2433;
+  outline: 3px solid #123a67;
   outline-offset: 3px;
 }
 
@@ -213,7 +214,7 @@
 }
 
 .fallback a {
-  color: #48151f;
+  color: #123a67;
   font-weight: 650;
   text-decoration: underline;
   text-underline-offset: 4px;
@@ -232,7 +233,7 @@
 
   .lead {
     border-bottom: 0;
-    border-right: 1px solid #dccbb8;
+    border-right: 1px solid #e3e9ef;
     padding-right: 32px;
   }
 

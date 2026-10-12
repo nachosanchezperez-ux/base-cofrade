@@ -3,8 +3,8 @@ import Link from 'next/link'
 import styles from './HomeUpdatesLink.module.css'
 
 // «El Hilo se mueve» en la portada: una pequeña primera plana con la noticia
-// más reciente y dos titulares más, con la identidad de la sección (burdeos,
-// marfil y titulares en Georgia). Si no hay titulares, queda el acceso.
+// más reciente y dos titulares más, en la paleta de la portada (azul, rojo de
+// marca y blanco) con formato de periódico. Si no hay titulares, queda el acceso.
 // Cuando el juego propio esté publicado, se añadirá aquí como acceso aparte.
 export const HOME_SECONDARY_LINKS = [
   {
