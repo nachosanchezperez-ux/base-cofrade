@@ -17,6 +17,12 @@ test('El hilo escondido es el título principal y el usuario juega sin pantalla 
   assert.match(game, /Elige una tarjeta/)
   assert.match(game, /onClick=\{\(\) => chooseAnswer\(option\)\}/)
   assert.match(game, /Prefiero escribir mi respuesta/)
+  assert.match(game, /Dame otra pista/)
+  assert.match(game, /className=\{styles\.progressiveHint\}/)
+  assert.match(game, /className=\{styles\.continuePlaying\}/)
+  assert.match(game, /gameHeadingRef\.current\?\.scrollIntoView/)
+  assert.match(styles, /\.progressiveHint:focus-visible/)
+  assert.match(styles, /\.continuePlaying:focus-visible/)
   assert.match(page, /await connection\(\)/)
 })
 
