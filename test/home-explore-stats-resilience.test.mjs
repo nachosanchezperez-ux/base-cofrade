@@ -22,8 +22,8 @@ test('la vista no convierte un dato no disponible en cero: muestra la sección s
   const byKey = Object.fromEntries(items.map((item) => [item.key, item.detail]))
 
   assert.equal(byKey.brotherhood, '')
-  assert.equal(byKey.band, '0 bandas')
-  assert.equal(byKey.march, '1234 marchas'.replace('1234', new Intl.NumberFormat('es-ES').format(1234)))
+  assert.equal(byKey.band, '0 fichas')
+  assert.equal(byKey.march, `${new Intl.NumberFormat('es-ES').format(1234)} fichas`)
   assert.equal(byKey.agenda, 'Hoy, mañana y fin de semana')
   assert.equal(buildHomeDiscover(null).length, 6)
 })

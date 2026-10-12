@@ -14,7 +14,7 @@ export default function HomeHero() {
         </div>
 
         <div className={styles.search} id="tiradelhilo">
-          <h2 className={styles.searchTitle}>Busca o pregunta</h2>
+          <h2 className={styles.searchTitle}>Tira del hilo: busca una ficha o pregunta</h2>
           <HiloSearch homeCompact />
         </div>
       </div>

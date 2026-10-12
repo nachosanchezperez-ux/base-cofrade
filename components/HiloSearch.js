@@ -548,7 +548,7 @@ export default function HiloSearch({
   const composerPlaceholder = activeContextLabel
     ? `Sigue preguntando sobre ${activeContextLabel}…`
     : narrowScreen
-      ? (universal ? 'Busca o pregunta…' : 'Hermandad, banda, marcha…')
+      ? 'Busca o pregunta…'
       : universal
       ? 'Busca una ficha o pregunta sobre hermandades, imágenes, pasos, bandas, marchas…'
       : 'Pregunta sobre hermandades, imágenes, pasos, bandas, marchas, autores…';

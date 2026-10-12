@@ -61,11 +61,15 @@
   scroll-margin-top: calc(var(--hc-app-header-height, 70px) + 14px);
 }
 
-.searchTitle {
+/* El rótulo del buscador es un H2 por estructura, pero visualmente secundario:
+   se gana a la escala global de H2 (#hc-app > main > :not(#hc-panel) h2). */
+:global(#hc-app #tiradelhilo) .searchTitle {
   margin: 0 0 8px;
-  color: #fff;
+  color: #f3c8d0;
   font-size: 15px;
-  font-weight: 800;
+  font-weight: 750;
+  line-height: 1.3;
+  letter-spacing: 0;
 }
 
 /* Sugerencias: se ajustan en varias líneas, sin carrusel horizontal. */
