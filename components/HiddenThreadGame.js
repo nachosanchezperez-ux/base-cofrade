@@ -251,7 +251,7 @@ export default function HiddenThreadGame() {
   return (
     <section className={styles.gameSection} aria-label="Juega a El hilo escondido">
       <div className={'shell ' + styles.wrap}>
-        <div className={styles.modes} role="group" aria-label="Elige una modalidad">
+        <div className={styles.modes} id="partida-del-hilo" role="group" aria-label="Elige una modalidad">
           <button type="button" aria-pressed={mode === 'daily'} className={mode === 'daily' ? styles.modeActive : ''} onClick={() => changeMode('daily')}>
             <span className={styles.modeIcon} aria-hidden="true">✦</span>
             <span><strong>El hilo del día</strong><small>Una palabra</small></span>
@@ -266,7 +266,7 @@ export default function HiddenThreadGame() {
           <div className={styles.loading} role="status">Preparando el reto cofrade de hoy…</div>
         ) : (
           <>
-          <div className={styles.layout} id="partida-del-hilo">
+          <div className={styles.layout}>
             <div className={styles.gameCard}>
               <header className={styles.gameHeader}>
                 <div>
