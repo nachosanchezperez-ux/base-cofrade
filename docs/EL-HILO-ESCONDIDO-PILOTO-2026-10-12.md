@@ -39,3 +39,43 @@ Un banco estático inicial de vocabulario, con tres pistas y una definición edi
 ## Siguiente fase, fuera de esta PR
 
 Calendario editorial de tres meses o más sin repetición, vinculación con glosario y fichas documentadas por término, telemetría agregada solo conforme a consentimiento y controles de privacidad existentes; no asumir ni desplegar estas funciones sin una decisión posterior.
+
+## Revisión integral · 12/10/2026 (tarde)
+
+**Reconciliación:** la PR #1147 implementa el mismo juego en la misma URL con otra base de código. Se mantiene #1146 como implementación única; de #1147 se incorporan dos términos revisados (CANDELERÍA y FALDÓN). Se descarta su pista de CANASTO («arquitectura sobre ruedas»: los pasos no llevan ruedas). Recomendación: cerrar #1147 como sustituida. Rama reconciliada con `main` por merge (sin reescribir historia), incluidas #1144, #1145 y #1148.
+
+### Problemas reales corregidos
+
+| Problema | Corrección |
+|---|---|
+| El reto diario recorría el banco en orden: 42 de 59 días seguidos repetían ámbito (siete días «Bajo el paso» consecutivos) | Orden que reparte los ámbitos por todo el ciclo: 0 días seguidos del mismo tema; ninguna palabra se repite en 52 días |
+| La última chicotá del 12/10 resolvía PALIO, que era el reto diario del 13/10; dos días con el mismo término en ambos modos | Calendario experto alineado con el ciclo: ninguna cadena contiene el reto diario de ±5 días y ninguna se repite antes de 6 días |
+| Solo 8 cadenas expertas (repetición semanal) | 17 cadenas, todas en rotación |
+| La pista de LLAMADOR decía «también se le llama martillo» y escribir MARTILLO contaba como error | Sinónimos documentados aceptados: MARTILLO, MECHA, TURÍBULO, CANASTO, BACALAO |
+| Pistas que adelantaban el cabo siguiente en el modo experto (CAPIROTE → antifaz, CORNETA → tambor, CERA → cirios, CRUCETA → marchas, INSIGNIA → estandartes, CANASTILLA → respiraderos) | Pistas reescritas y orden de cadena corregido; test automático que lo impide |
+| La racha mostrada no caducaba: tras días sin jugar seguía mostrando la anterior | La racha visible vuelve a 0 si se salta un día |
+| La portada importaba el CSS completo del juego (~850 líneas) para un acceso de una línea | Módulo propio `HiddenThreadTeaser.module.css` |
+| Textos de 9–10 px en móvil (contador, modalidades, etiquetas) | Mínimo de 11 px; botones de pista a 14 px |
+
+### Contenido revisado
+
+- ZANCADA no es vocabulario cofrade propio: se sustituye por **ARRIÁ** (par de LEVANTÁ).
+- **TÚNICA** y **PENITENTE** no se distinguían de HÁBITO y NAZARENO: nuevas adivinanzas («en lugar de cirio llevo una cruz al hombro»).
+- **ESTANDARTE**: se diferencia de la bandera (tela pendiente de un travesaño) y se añade «bacalao».
+- **SIMPECADO**, **EXORNO**, **CHICOTÁ** y **CANASTILLA**: afirmaciones imprecisas o circulares corregidas.
+- Test automático: ninguna adivinanza o pista contiene su propia respuesta.
+
+### Mejoras de juego
+
+- **Último intento con primera letra**: cuando queda una oportunidad se revela la inicial, sin coste.
+- Una respuesta con un número de letras distinto o repetida **no consume intento**, y se dice expresamente.
+- **Cuenta atrás** hasta el próximo reto (medianoche de Sevilla) y mención de la racha al terminar.
+- Resultado compartido con una línea de cabos (`✦` sin ayudas, `✓` acertado, `✕` fallado), sin revelar soluciones y sin cuadrícula de colores.
+- Retroalimentación visual de acierto y fallo, con `prefers-reduced-motion` respetado.
+
+### Pendiente
+
+- **GO editorial humano** sobre las 52 palabras y 17 cadenas (este documento no lo sustituye).
+- Ampliar el banco antes de la publicación estable: a partir del día 53 el ciclo diario se repite.
+- QA visual interactiva sobre la preview en 320/375/390/430/768/1366 px.
+- Enlazar cada término a su ficha del glosario «De capirote a trabajadera» cuando esté publicado; hoy enlazan a directorios existentes.
