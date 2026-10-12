@@ -8,7 +8,7 @@ Auditoría de solo lectura sobre producción (`main = 492129a`). **No se ha modi
 |---|---|
 | `matriz.csv` | Matriz completa: 141 casos con las columnas pedidas, filtrable |
 | `matriz.md` | La misma matriz, legible en GitHub |
-| `candidate.sql` | Los únicos cambios respaldados por datos confirmados. **No aplicado**: requiere autorización |
+| `candidate.sql` | Cambios respaldados por datos confirmados. Parte 2 (nombres históricos): **aplicada** mediante `owner-fixes-2.sql`. Parte 1 (Utrera 1989): **pendiente de autorización** |
 | `rollback.sql` | Reversión de `candidate.sql` |
 
 Criterios:
