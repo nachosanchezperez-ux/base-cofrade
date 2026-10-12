@@ -265,6 +265,7 @@ export default function HiddenThreadGame({ initialDayKey = '' }) {
   const isFinalRound = Boolean(progress && progress.stage === challenge.words.length - 1)
   const stagePoints = round ? hiddenRoundScore(round) : 0
   const usedErrors = round ? roundErrors(round) : 0
+  const nextHintIndex = canPlay ? word.hints.findIndex((_, index) => !round.hints.includes(index)) : -1
 
   return (
     <section className={styles.gameSection} aria-label="Juega a El hilo escondido">
@@ -418,26 +419,22 @@ export default function HiddenThreadGame({ initialDayKey = '' }) {
               ) : null}
 
               {canPlay ? (
-                <div className={styles.hints}>
-                  <div className={styles.hintHeader}>
-                    <h3>Tira de otro cabo</h3>
-                    <span>Cada pista resta {HILO_GAME_HINT_COST} puntos</span>
-                  </div>
-                  <div className={styles.hintButtons}>
-                    {word.hints.map((hint, index) => (
-                      <button
-                        type="button"
-                        key={index}
-                        disabled={!canPlay || round.hints.includes(index)}
-                        className={round.hints.includes(index) ? styles.hintRevealed : ''}
-                        onClick={() => revealHint(index)}
-                        aria-label={round.hints.includes(index) ? hint.title + ', pista abierta' : 'Abrir pista: ' + hint.title}
-                      >
-                        <span aria-hidden="true">{round.hints.includes(index) ? '✓' : '+'}</span>
-                        {hint.title}
-                      </button>
-                    ))}
-                  </div>
+                <section className={styles.hints} aria-label="Pistas del juego">
+                  {nextHintIndex >= 0 ? (
+                    <button
+                      type="button"
+                      className={styles.progressiveHint}
+                      onClick={() => revealHint(nextHintIndex)}
+                      aria-label={round.hints.length ? 'Desvelar otra pista (resta 15 puntos)' : 'Pedir una pista (resta 15 puntos)'}
+                    >
+                      <span className={styles.progressiveHintIcon} aria-hidden="true">✧</span>
+                      <span className={styles.progressiveHintCopy}>
+                        <strong>{round.hints.length ? 'Dame otra pista' : '¿Necesitas una pista?'}</strong>
+                        <small>{round.hints.length} de {word.hints.length} descubiertas</small>
+                      </span>
+                      <span className={styles.progressiveHintCost}>−{HILO_GAME_HINT_COST} pts</span>
+                    </button>
+                  ) : null}
                   {round.hints.length > 0 ? (
                     <div className={styles.revealedHints} aria-live="polite">
                       {round.hints.map((index) => (
@@ -445,7 +442,7 @@ export default function HiddenThreadGame({ initialDayKey = '' }) {
                       ))}
                     </div>
                   ) : null}
-                </div>
+                </section>
               ) : null}
 
               {round.status !== 'playing' ? (
