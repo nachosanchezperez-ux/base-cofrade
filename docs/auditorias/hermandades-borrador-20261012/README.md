@@ -54,3 +54,41 @@ Continuación de `docs/auditorias/relaciones-musicales-tarea05-20261012/` (lista
 - Valme figura en el histórico.
 - Las Cigarreras (Gran Poder, desde 2027) aparece en Música 2027 y no como vigente, porque es un contrato futuro.
 - La cabecera indica «3 pasos» de Semana Santa y, aparte, la Gloria. Es el diseño de la ficha.
+
+## Caridad de Santa Aurelia (Sevilla) · 12/10/2026 · aplicado, en borrador
+
+`caridad-santa-aurelia.sql`; reversión: `caridad-santa-aurelia-rollback.sql`.
+
+### Fuentes
+
+- [Banda Las Nieves de Olivares · Agrupación Parroquial María Santísima de la Caridad](https://lasnievesdeolivares.com/agrupacion-parroquial-maria-santisima-de-la-caridad/): sede en San Lucas Evangelista (Santa Aurelia), imagen de Antonio Joaquín Dubé de Luque, salida el quinto sábado de Cuaresma, banda desde 2025.
+- [Inri Información (2022)](https://inriinformacion.com/2022/04/02/la-virgen-de-la-caridad-de-san-lucas-hara-su-salida-procesional-por-santa-aurelia/): primera procesión el 2 de abril de 2022, **bajo palio**, con el Maestro Tejera.
+
+### Ficha
+
+- Titular: María Santísima de la Caridad, de Dubé de Luque. **Las fuentes discrepan en la fecha (1998 o 2008)**; se recogen las dos.
+- Paso de palio de María Santísima de la Caridad.
+
+### Música
+
+- Las Nieves de Olivares, desde 2025, enlazada al palio.
+- **Nuevo periodo histórico documentado:** Maestro Tejera en 2022.
+
+### Estado
+
+Todo queda en **borrador** hasta que el propietario autorice publicarlo.
+
+**Publicada el 12/10/2026** con autorización del propietario: la Agrupación, su imagen, su paso y sus relaciones. Verificada en `/hermandades/agrupacion-parroquial-caridad-santa-aurelia-sevilla`. Reversión de la publicación: devolver esas 3 entidades y sus 3 relaciones a `draft`.
+
+## La Borriquita de Huévar del Aljarafe · 12/10/2026 · aplicado y publicado
+
+`cristo-amor-huevar.sql`; reversión: `cristo-amor-huevar-rollback.sql`. Autorizado por el propietario («Hazlo todo»).
+
+- **Fuentes:** [ArteSacro, abril de 2026](https://www.artesacro.org/Noticia.asp?idreg=167374) y [ArteSacro, abril de 2025](https://www.artesacro.org/Noticia/Ver/161370/provincia-domingo-ramos-huevar-aljarafe).
+- **Nombre:** Agrupación Parroquial del Santísimo Cristo del Amor en su Entrada Triunfal en Jerusalén.
+  - Antes figuraba como «Asociación de Fieles Devotos».
+  - Sede: parroquia de Nuestra Señora de la Asunción.
+- **Titular:** Cristo del Amor, de los Talleres de Olot (finales del siglo XX).
+- **Paso:** un único paso, el de la Entrada Triunfal, que llegó a Huévar en 1993.
+- **Música:** La Redención (A.M. Nuestro Padre Jesús de la Redención), confirmada en 2026, enlazada al paso.
+- **Verificado** en `/hermandades/cristo-amor-entrada-triunfal-huevar`.
