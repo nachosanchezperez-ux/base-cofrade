@@ -1323,3 +1323,91 @@
   .choiceTile { transition: none; }
   .choiceTile:hover:not(:disabled) { transform: none; }
 }
+
+/* Un gesto para pedir pistas: ocupa menos y mantiene el foco en la pregunta. */
+.progressiveHint {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 12px;
+  min-height: 62px;
+  padding: 11px 14px;
+  border: 1px solid #dfcbb7;
+  border-radius: 13px;
+  background: linear-gradient(105deg,#fff9ef,#f7f1e8);
+  color: #583b31;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color .16s ease, transform .16s ease, background .16s ease;
+}
+.progressiveHint:hover {
+  border-color: #b88a5a;
+  background: #fff4e2;
+  transform: translateY(-1px);
+}
+.progressiveHint:focus-visible,
+.continuePlaying:focus-visible {
+  outline: 3px solid #a87548;
+  outline-offset: 3px;
+}
+.progressiveHintIcon {
+  display: grid;
+  flex: 0 0 36px;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border-radius: 11px;
+  background: #f5e5c9;
+  color: #93633f;
+  font-size: 26px;
+  line-height: 1;
+}
+.progressiveHintCopy { flex: 1; min-width: 0; }
+.progressiveHintCopy strong,
+.progressiveHintCopy small { display: block; }
+.progressiveHintCopy strong { color: #53352b; font-size: 13px; line-height: 1.2; }
+.progressiveHintCopy small { margin-top: 3px; color: #876d61; font-size: 11px; line-height: 1.2; }
+.progressiveHintCost {
+  flex: 0 0 auto;
+  color: #865d41;
+  font-size: 12px;
+  font-weight: 850;
+  font-variant-numeric: tabular-nums;
+}
+.hints .revealedHints { margin-top: 10px; }
+.hints .revealedHints p { border-left-color: #aa754a; }
+.answerCard { margin-top: 12px; }
+.answerCard .answerFooter a { font-size: 13px; }
+.summary { margin-top: 11px; }
+.continuePlaying {
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  min-height: 48px;
+  gap: 15px;
+  margin-top: 16px;
+  padding: 0 17px;
+  border: none;
+  border-radius: 11px;
+  color: #fff;
+  background: #6f263e;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 850;
+}
+.continuePlaying:hover { background: #4c1d32; }
+.continuePlaying > span { font-size: 20px; }
+.gameFocusHeading:focus { outline: none; }
+.gameFocusHeading { scroll-margin-top: calc(var(--hc-app-header-height,78px) + 15px); }
+@media (max-width: 620px) {
+  .progressiveHint { min-height: 54px; padding: 10px 11px; gap: 9px; }
+  .progressiveHintIcon { width: 31px; height: 31px; flex-basis: 31px; font-size: 22px; }
+  .progressiveHintCopy strong { font-size: 12px; }
+  .progressiveHintCost { font-size: 11px; }
+  .continuePlaying { min-height: 49px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .progressiveHint { transition: none; }
+  .progressiveHint:hover { transform: none; }
+}
