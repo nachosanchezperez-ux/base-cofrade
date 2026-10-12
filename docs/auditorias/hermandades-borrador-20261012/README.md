@@ -39,3 +39,18 @@ Continuación de `docs/auditorias/relaciones-musicales-tarea05-20261012/` (lista
 - Todo queda en **borrador**, como la Hermandad. Publicarla requiere autorización del propietario.
 - Las autorías se recogen en la descripción de cada imagen, citando su fuente. No se crean vínculos con autores.
 - No se crean San Juan ni Magdalena (figuras secundarias del paso de la Vera Cruz).
+
+### Publicación · 12/10/2026 · aplicado y verificado
+
+`calle-real-publicacion.sql`; reversión: `calle-real-publicacion-rollback.sql`.
+
+- Con autorización del propietario se publican la Hermandad, sus 5 imágenes, sus 4 pasos y todas sus relaciones.
+- Nuevo periodo, confirmado por el propietario: Banda de Música del Rosario de Sanlúcar la Mayor, tras el palio de los Dolores, en la Madrugá, «al menos desde 2019».
+
+**Verificado en `/hermandades/hermandad-calle-real-castilleja-cuesta`:**
+
+- Aparecen los 5 titulares y los 4 pasos.
+- Música actual: Carmen de Salteras (Jueves Santo), Sanlúcar (Madrugá, palio) y Cruz Roja (Domingo de Resurrección).
+- Valme figura en el histórico.
+- Las Cigarreras (Gran Poder, desde 2027) aparece en Música 2027 y no como vigente, porque es un contrato futuro.
+- La cabecera indica «3 pasos» de Semana Santa y, aparte, la Gloria. Es el diseño de la ficha.
