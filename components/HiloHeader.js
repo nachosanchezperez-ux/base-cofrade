@@ -27,6 +27,7 @@ const homeScrollSections = [
 ];
 
 const directoryLinks = [
+  ['/juegos/el-hilo-escondido', 'El hilo escondido'],
   ['/el-hilo-se-mueve', 'El Hilo se mueve'],
   ['/directorio', 'Directorio'],
   ['/hermandades', 'Hermandades'],
