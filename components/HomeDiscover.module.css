@@ -109,11 +109,16 @@
   list-style: none;
 }
 
+.moreList li {
+  display: flex;
+}
+
 .moreList li + li {
   border-top: 1px solid #e8eef3;
 }
 
 .moreLink {
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: space-between;
