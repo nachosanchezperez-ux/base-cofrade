@@ -377,74 +377,6 @@ export default function HiddenThreadGame({ initialDayKey = '' }) {
                 hidden={!feedback.text}
               >{feedback.text}</p>
 
-              {canPlay ? (
-                <details className={styles.manualEntry}>
-                  <summary>Prefiero escribir mi respuesta <span aria-hidden="true">✎</span></summary>
-                  <form className={styles.guessForm} onSubmit={submitAnswer}>
-                    <label htmlFor="hidden-thread-answer">Escribe tu palabra ({normalizeHiddenAnswer(word.answer).length} letras)</label>
-                    <div className={styles.guessRow}>
-                      <input
-                        id="hidden-thread-answer"
-                        type="text"
-                        name="respuesta"
-                        value={answer}
-                        onChange={(event) => { setAnswer(event.target.value); setFeedback('') }}
-                        maxLength={32}
-                        autoCapitalize="characters"
-                        autoComplete="off"
-                        autoCorrect="off"
-                        spellCheck={false}
-                        placeholder="Tu respuesta"
-                      />
-                      <button type="submit" disabled={!answer.trim()}>Comprobar <span aria-hidden="true">→</span></button>
-                    </div>
-                    <span className={styles.attemptInfo}>Las tarjetas y el teclado comparten {HILO_GAME_MAX_ERRORS} intentos en total.
-                      {usedErrors === HILO_GAME_MAX_ERRORS - 1 ? ' Empieza por «' + word.answer.charAt(0) + '».' : ''}
-                    </span>
-                  </form>
-                </details>
-              ) : null}
-
-              {round.guesses.length ? (
-                <div className={styles.guesses} aria-label="Historial de respuestas">
-                  <span>Respuestas anteriores</span>
-                  <div>
-                    {round.guesses.map((guess, index) => (
-                      <span key={index} className={hiddenGuessMatches(word, guess) ? styles.guessCorrect : styles.guessWrong}>
-                        {hiddenGuessMatches(word, guess) ? '✓ ' : '× '}{guess}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ) : null}
-
-              {canPlay ? (
-                <section className={styles.hints} aria-label="Pistas del juego">
-                  {nextHintIndex >= 0 ? (
-                    <button
-                      type="button"
-                      className={styles.progressiveHint}
-                      onClick={() => revealHint(nextHintIndex)}
-                      aria-label={round.hints.length ? 'Desvelar otra pista (resta 15 puntos)' : 'Pedir una pista (resta 15 puntos)'}
-                    >
-                      <span className={styles.progressiveHintIcon} aria-hidden="true">✧</span>
-                      <span className={styles.progressiveHintCopy}>
-                        <strong>{round.hints.length ? 'Dame otra pista' : '¿Necesitas una pista?'}</strong>
-                        <small>{round.hints.length} de {word.hints.length} descubiertas</small>
-                      </span>
-                      <span className={styles.progressiveHintCost}>−{HILO_GAME_HINT_COST} pts</span>
-                    </button>
-                  ) : null}
-                  {round.hints.length > 0 ? (
-                    <div className={styles.revealedHints} aria-live="polite">
-                      {round.hints.map((index) => (
-                        <p key={index}><strong>{word.hints[index].title}</strong> {word.hints[index].text}</p>
-                      ))}
-                    </div>
-                  ) : null}
-                </section>
-              ) : null}
-
               {round.status !== 'playing' ? (
                 <div className={styles.answerCard + ' ' + (round.status === 'won' ? styles.answerWon : styles.answerLost)}>
                   <span className={styles.answerKicker}>{round.status === 'won' ? 'Cabo desenredado' : 'El hilo se ha descubierto'}</span>
@@ -490,9 +422,85 @@ export default function HiddenThreadGame({ initialDayKey = '' }) {
                   {minutesLeft ? (
                     <p className={styles.countdown}>Próximo reto en <strong>{countdownLabel(minutesLeft)}</strong>, a medianoche en Sevilla.</p>
                   ) : null}
+                  <button
+                    type="button"
+                    className={styles.continuePlaying}
+                    onClick={() => changeMode(mode === 'daily' ? 'expert' : 'daily')}
+                  >
+                    {mode === 'daily' ? 'Seguir con La última chicotá' : 'Jugar al reto del día'}
+                    <span aria-hidden="true">→</span>
+                  </button>
                   {shareStatus ? <p className={styles.shareStatus} role="status">{shareStatus}</p> : null}
                 </div>
               ) : null}
+              {canPlay ? (
+                <section className={styles.hints} aria-label="Pistas del juego">
+                  {nextHintIndex >= 0 ? (
+                    <button
+                      type="button"
+                      className={styles.progressiveHint}
+                      onClick={() => revealHint(nextHintIndex)}
+                      aria-label={round.hints.length ? 'Desvelar otra pista (resta 15 puntos)' : 'Pedir una pista (resta 15 puntos)'}
+                    >
+                      <span className={styles.progressiveHintIcon} aria-hidden="true">✧</span>
+                      <span className={styles.progressiveHintCopy}>
+                        <strong>{round.hints.length ? 'Dame otra pista' : '¿Necesitas una pista?'}</strong>
+                        <small>{round.hints.length} de {word.hints.length} descubiertas</small>
+                      </span>
+                      <span className={styles.progressiveHintCost}>−{HILO_GAME_HINT_COST} pts</span>
+                    </button>
+                  ) : null}
+                  {round.hints.length > 0 ? (
+                    <div className={styles.revealedHints} aria-live="polite">
+                      {round.hints.map((index) => (
+                        <p key={index}><strong>{word.hints[index].title}</strong> {word.hints[index].text}</p>
+                      ))}
+                    </div>
+                  ) : null}
+                </section>
+              ) : null}
+
+              {canPlay ? (
+                <details className={styles.manualEntry}>
+                  <summary>Prefiero escribir mi respuesta <span aria-hidden="true">✎</span></summary>
+                  <form className={styles.guessForm} onSubmit={submitAnswer}>
+                    <label htmlFor="hidden-thread-answer">Escribe tu palabra ({normalizeHiddenAnswer(word.answer).length} letras)</label>
+                    <div className={styles.guessRow}>
+                      <input
+                        id="hidden-thread-answer"
+                        type="text"
+                        name="respuesta"
+                        value={answer}
+                        onChange={(event) => { setAnswer(event.target.value); setFeedback('') }}
+                        maxLength={32}
+                        autoCapitalize="characters"
+                        autoComplete="off"
+                        autoCorrect="off"
+                        spellCheck={false}
+                        placeholder="Tu respuesta"
+                      />
+                      <button type="submit" disabled={!answer.trim()}>Comprobar <span aria-hidden="true">→</span></button>
+                    </div>
+                    <span className={styles.attemptInfo}>Las tarjetas y el teclado comparten {HILO_GAME_MAX_ERRORS} intentos en total.
+                      {usedErrors === HILO_GAME_MAX_ERRORS - 1 ? ' Empieza por «' + word.answer.charAt(0) + '».' : ''}
+                    </span>
+                  </form>
+                </details>
+              ) : null}
+
+              {round.guesses.length ? (
+                <div className={styles.guesses} aria-label="Historial de respuestas">
+                  <span>Respuestas anteriores</span>
+                  <div>
+                    {round.guesses.map((guess, index) => (
+                      <span key={index} className={hiddenGuessMatches(word, guess) ? styles.guessCorrect : styles.guessWrong}>
+                        {hiddenGuessMatches(word, guess) ? '✓ ' : '× '}{guess}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
+
             </div>
 
             <aside className={styles.aside} aria-label="Tu marcador">
