@@ -270,3 +270,9 @@ Detalle en `fusiones-y-olivares.sql` y su reversión, `fusiones-y-olivares-rollb
   - Jueves Santo: Vera Cruz.
   - Madrugá: Gran Poder, con Valme hasta 2026 y Las Cigarreras desde 2027.
   - Domingo de Resurrección: Inmaculada con Cruz Roja.
+
+**Santo Entierro de Paradas** (`paradas.sql`; reversión: `paradas-rollback.sql`): aplicado con autorización del propietario.
+
+- El periodo de Presentación al Pueblo (tras el misterio, Viernes Santo) pasa a la ficha publicada.
+- El borrador duplicado se archiva.
+- La ficha publicada aún no tiene pasos creados, así que el periodo queda sin paso.
