@@ -7,7 +7,7 @@ Piloto autocontenido para Hilo Cofrade. Se desarrolla en rama independiente y PR
 - **Ruta permanente:** /juegos/el-hilo-escondido (un solo canonical, sin páginas por partida).
 - **Acceso:** enlace discreto en «Descubre hoy», más «Explorar» en navegación.
 - **Dos juegos:** «El hilo del día» (una palabra); «La última chicotá» (tres palabras encadenadas).
-- **Mecánica propia:** adivinanza inicial + tres pistas temáticas voluntarias + cuatro intentos erróneos como máximo. No se copia la cuadrícula ni la clasificación de otros juegos.
+- **Mecánica propia:** adivinanza inicial + tres pistas temáticas voluntarias + tres errores como máximo para cualquier forma de responder. No se copia la cuadrícula ni la clasificación de otros juegos.
 - **Puntuación:** 100 por palabra acertada, menos 15 por pista abierta y 18 por error anterior, mínimo 10 si acierta; 0 si agota las oportunidades. Experto: hasta 300.
 - **Vínculo enciclopédico:** al terminar una palabra, se muestra definición y enlace al directorio relevante. Cuando exista el glosario «De capirote a trabajadera», los vínculos podrán apuntar a su ficha editorial verificada.
 - **Cofradle:** mención opcional como recurso externo independiente, nunca incrustado ni presentado como socio.
@@ -133,3 +133,20 @@ La promoción grande de Cofradle situada **después de la partida** y el tablero
 - Barrera automática: `test/hilo-hidden-play-entry.test.mjs` impide volver a situar Cofradle antes del juego.
 
 **GO:** se requiere CI y preview READY del SHA final, más comprobación visual móvil antes de publicar. Esta revisión no implica merge a producción.
+
+
+## Mejora del ritmo del juego · 12/10/2026 (corte de revisión)
+
+**Objetivo:** reforzar la sensación de jugar sin volver a añadir pantallas, modalidades falsas ni promociones antes del desafío.
+
+- **Intentos unificados:** tarjetas y respuesta escrita descuentan del mismo máximo de **3 errores** por cabo. Antes las tarjetas limitaban a 3 y el teclado a 4, una inconsistencia que podía cerrar partidas inesperadamente al alternarlos.
+- **Pista en un toque:** un botón progresivo presenta una pista adicional cada vez (-15 puntos), con contexto inmediato. Sustituye la fila de tres botones de pistas.
+- **Victoria inmediata:** definición, puntuación y acción de continuación aparecen **justo bajo las tarjetas de respuesta**, no escondidas después de los botones y el historial.
+- **Segunda partida:** el reto diario completado invita a jugar «La última chicotá»; al terminar el experto se puede volver al reto del día. No se crean partidas infinitas, se respetan los retos de cada fecha y su progreso.
+- **Continuar el experto:** el siguiente cabo desplaza y enfoca de manera accesible la cabecera de la pregunta nueva, respetando «reducir movimiento».
+- **Persistencia de preview:** el progreso local pasa a versión 2 para no reutilizar partidas incompatibles con el nuevo límite. Los visitantes que hubiesen jugado en previews anteriores pueden ver su partida restablecida; el piloto aún no está publicado en producción.
+- **Alcance:** ningún cambio en contenidos relacionales, Supabase, fichas, sitemap, datos personales, Vercel producción ni URL. Cofradle sigue siendo una recomendación final externa e independiente.
+
+**Pruebas añadidas:** intentos mezclados (teclado + toque), opciones duplicadas, límite compartido, progreso local versión 2 y presencia del nuevo flujo visual.
+
+**Pendientes antes del GO:** comprobar la última preview e interacción real en móvil, además de revisión editorial del banco de palabras. No confundir build verde con QA táctil completada.
