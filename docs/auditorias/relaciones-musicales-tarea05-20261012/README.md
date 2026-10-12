@@ -174,3 +174,35 @@ Detalle en `owner-fixes-3.sql` y su reversión, `owner-fixes-3-rollback.sql`.
 **Verificado en `outing_music_details`:**
 - Los nombres se muestran correctamente.
 - Asignaciones publicadas cuya banda no está publicada y que no tienen texto: **0**.
+
+## Los 88 periodos sin paso · creación de pasos · 12/10/2026
+
+### Diagnóstico
+
+- **7 Hermandades publicadas** (7 periodos). Se han revisado con sus fuentes:
+  - **Paso documentado, creado y publicado** (`pasos-nuevos.sql` y su reversión, `pasos-nuevos-rollback.sql`):
+    - **Soledad de Castilblanco** · Paso de Nuestra Señora de los Dolores en su Soledad. Fuente: la banda Las Nieves de Olivares cita «ambos pasos» del Sábado Santo y acompaña desde 2023.
+    - **Pura y Limpia del Postigo** · Paso de la Pura y Limpia Concepción. Fuente: su web cita el paso y su capataz. Maestro Tejera.
+    - **Santo Ángel** · Paso de palio de María Santísima de la Salud. Fuente: el palio está en ejecución en 2026 para estrenarse en la Semana Santa siguiente. Se enlaza también a la imagen de la Salud. Carmen de Salteras (2027). La ficha del paso no muestra este acompañamiento porque es futuro: se ve en Música 2027.
+  - **No se crean, por falta de fuente:**
+    - **Araceli** (no consta si es paso o andas).
+    - **Sacramental de San Pedro** (la fuente no menciona custodia ni paso).
+    - **Dulce Nombre de Alcalá.** La salida de 2026 la acompañó la Banda de Música de La Puebla del Río, no Cruz Roja: **el periodo de Cruz Roja, marcado como vigente, debe revisarse** ([fuente](https://www.ssantadealcala.org/2026/05/salida-dulce-nombre.html)).
+    - **Vera Cruz y Sangre de Huévar** (sin imágenes y sin fuente).
+- **57 Hermandades en borrador** (81 periodos): son fichas vacías, sin imágenes, sin pasos y casi todas sin municipio. Crear sus pasos exige completar las fichas.
+  - Lista priorizada en `hermandades-borrador-prioridad.md` / `.csv`: 1 urgente (Nieves de Olivares, con 2 salidas publicadas), 35 de prioridad alta, 11 media y 10 baja.
+
+### Verificación (web en producción)
+
+- `/pasos/paso-soledad-castilblanco`, `/pasos/paso-pura-limpia-postigo` y `/pasos/paso-palio-salud-santo-angel` cargan con su Hermandad.
+- Castilblanco muestra Las Nieves de Olivares desde 2023 y Pura y Limpia muestra Maestro Tejera.
+
+### Hallazgo adicional (sin tocar)
+
+16 relaciones en borrador cuyos dos extremos están publicados no se ven en la web:
+
+- 3 Hermandad–Paso, entre ellas el Cristo de los Desamparados del Santo Ángel;
+- 3 Imagen–Paso;
+- 10 Hermandad–Imagen.
+
+Pueden ser restos de una despublicación temporal. Revisar antes de publicarlas.
