@@ -280,6 +280,7 @@ export default async function PasoDetailPage({params}){
                   <span>{banda.posicion}</span>
                   <strong>{banda.nombre}</strong>
                   <small>{[banda.salida, banda.periodo].filter(Boolean).join(' · ')}</small>
+                  {banda.anterior ? <small className={styles.accompanimentPredecessor}>{banda.anterior}</small> : null}
                   <em aria-hidden="true">→</em>
                 </Link>
               ))}
