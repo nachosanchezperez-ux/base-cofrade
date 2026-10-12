@@ -1608,3 +1608,95 @@
   .socialShareLinks a, .socialShareLinks button { font-size: 10px; }
   .expertPanel { padding: 12px; }
 }
+
+
+/* Compartir visible desde el primer fotograma sin desplazar la adivinanza. */
+.gameHeaderActions {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-start;
+  gap: 8px;
+}
+.inviteToPlay {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 43px;
+  padding: 8px 12px;
+  border: 1px solid #d4b7c1;
+  border-radius: 11px;
+  background: #fff2ef;
+  color: #712a44;
+  font-size: 12px;
+  font-weight: 850;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.inviteToPlay span { font-size: 19px; line-height: 1; }
+.inviteToPlay:hover { background: #fae3e6; border-color: #b97f91; }
+.shareNow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 47px;
+  margin-top: 14px;
+  padding: 10px 16px;
+  border: 1px solid #743047;
+  border-radius: 11px;
+  color: #fff;
+  background: #743047;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 850;
+}
+.shareNow:hover { background: #532137; }
+.shareNow span { font-size: 18px; }
+.inviteToPlay:focus-visible,
+.shareNow:focus-visible {
+  outline: 3px solid #b38250;
+  outline-offset: 3px;
+}
+.gameCard > .shareStatus {
+  margin: 11px 0 0;
+  padding: 9px 12px;
+  border: 1px solid #e5d8c8;
+  border-radius: 9px;
+  color: #694836;
+  background: #fff8ed;
+  font-size: 12px;
+}
+.recommendationArtwork {
+  overflow: hidden;
+  border: 1px solid #e7dbce;
+  background: #fffaf2;
+  color: #26354b;
+  letter-spacing: 0;
+}
+.recommendationArtwork img {
+  display: block;
+  width: 55px;
+  height: 55px;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+.recommendationBrand {
+  color: #6d2b45;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: 800;
+  letter-spacing: -.02em;
+}
+@media (max-width: 620px) {
+  .gameHeaderActions { gap: 5px; }
+  .inviteToPlay { min-height: 40px; padding: 7px 9px; font-size: 11px; }
+  .recommendationArtwork img { width: 35px; height: 35px; }
+}
+@media (max-width: 350px) {
+  .gameHeader { flex-wrap: wrap; }
+  .gameHeaderActions { flex-direction: row; align-items: center; }
+}
