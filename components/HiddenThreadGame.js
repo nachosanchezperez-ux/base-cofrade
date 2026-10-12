@@ -496,24 +496,14 @@ export default function HiddenThreadGame({ initialDayKey = '' }) {
               ) : null}
             </div>
 
-            <aside className={styles.aside} aria-label="Información del juego">
-              <div className={styles.asideCard}>
-                <span className={styles.eyebrow}>Tu partida</span>
-                <div className={styles.gameStat}><span>Pistas abiertas</span><strong>{round.hints.length} / 3</strong></div>
-                <div className={styles.gameStat}><span>Errores de este cabo</span><strong>{usedErrors} / {HILO_GAME_MAX_ERRORS}</strong></div>
-                <div className={styles.gameStat}><span>Racha diaria de aciertos</span><strong>{streak} {streak === 1 ? 'día' : 'días'}</strong></div>
+            <aside className={styles.aside} aria-label="Tu marcador">
+              <div className={styles.scoreCard}>
+                <span className={styles.eyebrow}>Así va tu partida</span>
+                <div className={styles.scoreBig}><span aria-hidden="true">✦</span><strong>{careerPoints}</strong><small>puntos</small></div>
+                <div className={styles.scoreLine}><span>Racha de aciertos</span><strong>{streak} {streak === 1 ? 'día' : 'días'}</strong></div>
+                <div className={styles.scoreLine}><span>Pistas utilizadas</span><strong>{round.hints.length} / 3</strong></div>
+                <p>Una nueva palabra cada día. Tus resultados se guardan en este navegador.</p>
               </div>
-              <div className={styles.howTo}>
-                <span className={styles.eyebrow}>Cómo se juega</span>
-                <h3>¿Sabes de qué estamos hablando?</h3>
-                <p>Lee la adivinanza, escribe una palabra y descubre pistas solo cuando las necesites. Cuantas menos ayudas utilices, más puntos sumarás.</p>
-                <p>En el nivel experto hay tres palabras enlazadas. Cada una descubre un pedazo de la historia.</p>
-              </div>
-              <div className={styles.privacyNote}>
-                <span aria-hidden="true">↳</span>
-                <p>Una partida nueva cada día, según la hora de Sevilla. Tu progreso se guarda solo en este navegador, sin registro ni clasificación pública.</p>
-              </div>
-
             </aside>
           </div>
           <div className={styles.nextTopics} aria-label="Próximos retos de la enciclopedia">
