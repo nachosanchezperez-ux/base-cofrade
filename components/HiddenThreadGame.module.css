@@ -908,57 +908,247 @@
 @media (prefers-reduced-motion: reduce) { .gameLobby *, .achievement * { animation: none !important; } }
 
 
-/* Recomendación editorial visible sin confundir la marca ajena con Hilo Cofrade. */
+/* Accesos inmediatos: ambas opciones a un toque desde la cabecera. */
+.heroPlayActions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: 475px;
+  gap: 10px;
+  margin-top: 20px;
+}
+.heroPlayActions a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 0;
+  min-height: 49px;
+  gap: 8px;
+  padding: 11px 15px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 850;
+  line-height: 1.35;
+  text-decoration: none;
+  transition: transform .15s ease, background .15s ease;
+}
+.heroPlayActions a:hover { transform: translateY(-2px); }
+.heroPlayActions a span { flex: 0 0 auto; font-size: 17px; }
+.heroPlayActions .heroPrimaryPlay {
+  background: #f6e9d5;
+  color: #452636;
+}
+.heroPlayActions .heroPrimaryPlay:hover { background: #fff5e8; color: #452636; }
+.heroPlayActions .heroCofradlePlay {
+  border-color: rgba(255, 255, 255, .54);
+  color: #fff;
+  background: rgba(255, 255, 255, .09);
+}
+.heroPlayActions .heroCofradlePlay:hover { background: rgba(255, 255, 255, .18); color: #fff; }
+.heroExternalNote {
+  display: block;
+  margin-top: 8px;
+  color: rgba(255, 255, 255, .76);
+  font-size: 11px;
+  line-height: 1.4;
+}
+.heroPlayActions a:focus-visible {
+  outline: 3px solid #f1c58f;
+  outline-offset: 3px;
+}
+#partida-del-hilo {
+  scroll-margin-top: calc(var(--hc-app-header-height, 78px) + 14px);
+}
+/* La tarjeta completa es un único enlace real. Las dos fichas son decorativas. */
 .cofradleFeature {
   display: grid;
-  grid-template-columns: minmax(0,.7fr) minmax(0,1.3fr);
-  margin-top: 23px;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+  margin-top: 21px;
   overflow: hidden;
-  border: 1px solid #d9dfe8;
-  border-radius: 22px;
+  border: 1px solid #cfdbe7;
+  border-radius: 21px;
+  color: inherit;
   background: #fff;
-  box-shadow: 0 12px 38px rgba(18,37,59,.075);
+  box-shadow: 0 15px 44px rgba(19, 40, 63, .09);
+  text-decoration: none;
+  transition: transform .17s ease, box-shadow .17s ease, border-color .17s ease;
+}
+.cofradleFeature:hover {
+  transform: translateY(-3px);
+  border-color: #9baec1;
+  box-shadow: 0 20px 52px rgba(19, 40, 63, .14);
+}
+.cofradleFeature:focus-visible {
+  outline: 3px solid #b67b40;
+  outline-offset: 4px;
 }
 .cofradleVisual {
-  min-height: 265px;
   display: flex;
+  position: relative;
   flex-direction: column;
+  gap: 18px;
   justify-content: space-between;
-  padding: 24px;
+  min-width: 0;
+  min-height: 270px;
+  padding: 22px;
   color: #fff;
   background:
-    radial-gradient(circle at 105% 0%, rgba(225,188,120,.27), transparent 45%),
-    repeating-linear-gradient(145deg, transparent 0 24px, rgba(255,255,255,.025) 24px 26px),
-    linear-gradient(145deg,#102c4a,#193c62 65%,#62283a);
+    radial-gradient(ellipse at 85% -20%, rgba(232, 188, 112, .28), transparent 57%),
+    radial-gradient(ellipse at -5% 115%, rgba(143, 51, 78, .44), transparent 57%),
+    linear-gradient(125deg, #122d49, #143c5d 75%, #2a354e);
 }
-.cofradleVisualMark {
+.cofradleVisual::after {
+  content: "";
+  position: absolute;
+  right: -74px;
+  top: -88px;
+  width: 220px;
+  height: 220px;
+  border: 1px solid rgba(255, 255, 255, .11);
+  border-radius: 50%;
+  box-shadow: 0 0 0 37px rgba(255, 255, 255, .025);
+  pointer-events: none;
+}
+.cofradleVisualHeader {
+  display: flex;
+  position: relative;
+  z-index: 1;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.cofradleVisualName {
+  color: #fff0d8;
+  font: 800 clamp(19px, 2.1vw, 26px)/1 Georgia, serif;
+  letter-spacing: -.03em;
+}
+.cofradleVisualHeader > span:last-child {
+  color: #e3d2c6;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .13em;
+}
+.cofradleChallengeCards {
+  position: relative;
+  z-index: 1;
   display: grid;
-  place-items: center;
-  width: 72px;
-  height: 72px;
-  border: 2px solid rgba(248,225,190,.8);
-  border-radius: 17px;
-  color: #f7dcc0;
-  font: bold 51px/1 Georgia,serif;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: center;
+  gap: 12px;
 }
-.cofradleVisualLines { display: grid; gap: 10px; }
-.cofradleVisualLines span { width: fit-content; padding: 6px 11px; border: 1px solid rgba(255,255,255,.18); border-radius: 6px; color: #e8e4e2; font-size: 11px; font-weight: 850; letter-spacing: .07em; }
-.cofradleContent { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; min-width: 0; padding: clamp(22px,4vw,39px); }
-.cofradleEyebrow { color: #934057; font-size: 11px; font-weight: 850; letter-spacing: .1em; text-transform: uppercase; }
-.cofradleContent h2 { margin: 9px 0 10px; color: #202b3b; font: bold clamp(26px,3.5vw,38px)/1.12 Georgia,serif; letter-spacing: -.03em; }
-.cofradleContent h2 em { color: #7d2f46; font-style: normal; }
-.cofradleContent p { max-width: 600px; margin: 0 0 22px; color: #5b6674; font-size: 14px; line-height: 1.65; }
-.cofradleAction { display: inline-flex; align-items: center; justify-content: space-between; gap: 26px; min-height: 48px; padding: 0 19px; border-radius: 11px; color: #fff; background: #6c273d; font-size: 14px; font-weight: 850; }
-.cofradleAction:hover { color: #fff; background: #4a1e30; }
-.cofradleContent small { display: block; margin-top: 13px; color: #75808c; font-size: 11px; line-height: 1.5; }
-.cofradleAction:focus-visible { outline: 3px solid #d8a34b; outline-offset: 3px; }
+.cofradleChallengeCard {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 137px;
+  padding: 13px;
+  border: 1px solid rgba(255, 255, 255, .18);
+  border-radius: 13px;
+  background: rgba(255, 253, 247, .96);
+  color: #1c3247;
+  box-shadow: 0 12px 26px rgba(9, 23, 40, .17);
+}
+.cofradleChallengeCard > span {
+  color: #945069;
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: .09em;
+}
+.cofradleChallengeCard strong {
+  margin-top: 7px;
+  font-size: clamp(12px, 1.3vw, 15px);
+  line-height: 1.25;
+}
+.cofradleMystery,
+.cofradleSound {
+  margin-top: auto;
+  color: #893d55;
+  font: 800 clamp(19px, 2.5vw, 26px)/1.2 Georgia, serif;
+  letter-spacing: .1em;
+}
+.cofradleMusicCard { transform: translateY(11px) rotate(1.5deg); }
+.cofradleSound { color: #31587c; }
+.cofradleContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  min-width: 0;
+  padding: clamp(21px, 4vw, 42px);
+}
+.cofradleEyebrow {
+  color: #93435a;
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.cofradleContent h2 {
+  margin: 10px 0;
+  color: #19354e;
+  font: 800 clamp(30px, 3.8vw, 44px)/1.08 Georgia, serif;
+  letter-spacing: -.04em;
+}
+.cofradleContent h2 em { color: #8d344f; font-style: normal; }
+.cofradleContent p {
+  max-width: 520px;
+  margin: 0 0 21px;
+  color: #536576;
+  font-size: 14px;
+  line-height: 1.55;
+}
+.cofradleAction {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 26px;
+  width: min(100%, 280px);
+  min-height: 50px;
+  padding: 0 18px;
+  border-radius: 12px;
+  color: #fff;
+  background: #70263c;
+  box-shadow: 0 9px 22px rgba(112, 38, 60, .15);
+  font-size: 15px;
+  font-weight: 850;
+}
+.cofradleAction span { font-size: 20px; }
+.cofradleFeature:hover .cofradleAction { background: #501c2f; }
+.cofradleContent small {
+  display: block;
+  margin-top: 12px;
+  color: #6d7883;
+  font-size: 11px;
+  line-height: 1.55;
+}
 @media (max-width: 720px) {
-  .cofradleFeature { grid-template-columns: 1fr; border-radius: 16px; margin-top: 15px; }
-  .cofradleVisual { min-height: 110px; flex-direction: row; align-items: center; padding: 15px; }
-  .cofradleVisualMark { width: 63px; height: 63px; font-size: 44px; }
-  .cofradleVisualLines { gap: 5px; }
-  .cofradleVisualLines span { padding: 3px 6px; font-size: 9px; }
-  .cofradleContent { padding: 19px; }
+  .cofradleFeature {
+    display: flex;
+    flex-direction: column;
+    margin-top: 14px;
+    border-radius: 16px;
+  }
+  .cofradleContent { order: -1; padding: 21px 19px 19px; }
+  .cofradleContent h2 { font-size: clamp(28px, 7vw, 34px); }
   .cofradleContent p { margin-bottom: 17px; }
   .cofradleAction { width: 100%; }
+  .cofradleVisual { min-height: 170px; gap: 10px; padding: 17px; }
+  .cofradleChallengeCards { gap: 10px; }
+  .cofradleChallengeCard { min-height: 86px; padding: 9px 11px; }
+  .cofradleChallengeCard strong { margin-top: 5px; font-size: 12px; }
+  .cofradleMystery, .cofradleSound { font-size: 18px; }
+}
+@media (max-width: 550px) {
+  .heroPlayActions { margin-top: 13px; gap: 8px; }
+  .heroPlayActions a { min-height: 46px; padding: 10px 11px; font-size: 12px; }
+}
+@media (max-width: 340px) {
+  .heroPlayActions a { font-size: 11.5px; padding: 9px; gap: 3px; }
+  .cofradleVisualHeader > span:last-child { font-size: 9px; }
+  .cofradleChallengeCard strong { font-size: 11px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cofradleFeature, .heroPlayActions a { transition: none; }
+  .cofradleFeature:hover, .heroPlayActions a:hover { transform: none; }
 }
