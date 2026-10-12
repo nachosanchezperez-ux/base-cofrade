@@ -119,3 +119,17 @@ La promoción grande de Cofradle situada **después de la partida** y el tablero
 - **Regresión:** `test/hilo-hidden-play-entry.test.mjs` comprueba que los dos enlaces son reales, que la partida tiene ancla SSR, que no existen duplicados promocionales y que la versión móvil está prevista.
 
 **Por certificar:** revisión visual/interactiva del nuevo selector en pantallas reales, posterior al rediseño. No reutilizar como evidencia las capturas y pruebas visuales de la versión anterior.
+
+## Contrato definitivo de jerarquía · 12/10/2026 (noche)
+
+**Decisión editorial del propietario:** Cofradle no es una segunda opción equivalente al juego propio. Se recomienda únicamente **al final**. Por tanto, las decisiones de «dos tarjetas de elección» y de «promoción destacada junto al juego» de los apartados anteriores quedan **sustituidas**; se conservan solo para trazabilidad.
+
+- La URL pública del juego comienza con cabecera compacta **«El hilo escondido»** y lleva directamente a las modalidades y a la adivinanza, sin tarjeta intermedia ni botón de inicio.
+- La partida propia tiene prioridad de lectura, atención y espacio visible, tanto en móvil como en escritorio.
+- Las futuras categorías (hermandades, imágenes, marchas y autores) se mencionan discretamente después de la partida mientras no sean jugables.
+- Una vez terminado el componente del juego aparece una sola recomendación final, compacta pero reconocible, para **Cofradle**.
+- Cofradle enlaza a su página oficial como sitio externo e independiente, sin marca simulada ni mecánicas copiadas. No aparece en la cabecera ni como opción principal.
+- No se modifican palabras, pistas, puntuación, progreso, Supabase ni rutas. No hay nuevas dependencias.
+- Barrera automática: `test/hilo-hidden-play-entry.test.mjs` impide volver a situar Cofradle antes del juego.
+
+**GO:** se requiere CI y preview READY del SHA final, más comprobación visual móvil antes de publicar. Esta revisión no implica merge a producción.
