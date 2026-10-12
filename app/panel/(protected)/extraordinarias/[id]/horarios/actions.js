@@ -1,6 +1,6 @@
 'use server'
 
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { requirePanelAdmin, requirePanelEditor } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
@@ -62,6 +62,7 @@ async function audit(supabase, user, outing, actionType, summary, changedFields)
 
 function refresh(outing) {
   revalidatePath('/')
+  revalidateTag('home-public', { expire: 0 })
   revalidatePath('/extraordinarias')
   revalidatePath(`/extraordinarias/${outing.slug}`)
   revalidatePath(`/panel/extraordinarias/${outing.id}`)
