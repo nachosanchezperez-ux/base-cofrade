@@ -30,10 +30,10 @@ export default function HiddenThreadPage() {
           <p>Una pista, una palabra. ¿La descubres? Juega aquí o continúa el desafío en Cofradle.</p>
           <nav className={styles.heroPlayActions} aria-label="Elige dónde jugar">
             <a className={styles.heroPrimaryPlay} href="#partida-del-hilo">
-              Jugar al reto de hoy <span aria-hidden="true">↓</span>
+              Jugar aquí <span aria-hidden="true">↓</span>
             </a>
             <a className={styles.heroCofradlePlay} href="https://cofradle.es/" target="_blank" rel="noopener noreferrer">
-              Jugar a Cofradle <span aria-hidden="true">↗</span>
+              Jugar en Cofradle <span aria-hidden="true">↗</span>
             </a>
           </nav>
           <span className={styles.heroExternalNote}>Cofradle abre en otra web independiente.</span>
