@@ -251,32 +251,6 @@ export default function HiddenThreadGame() {
   return (
     <section className={styles.gameSection} aria-label="Juega a El hilo escondido">
       <div className={'shell ' + styles.wrap}>
-        <div className={styles.gameLobby}>
-          <div className={styles.lobbyIntro}>
-            <span className={styles.eyebrow}>La enciclopedia también se juega</span>
-            <h2>Un cabo por descubrir. Una historia por contar.</h2>
-            <p>Resuelve el desafío del día y sigue el hilo hacia la historia que se esconde detrás de cada respuesta.</p>
-          </div>
-          <div className={styles.lobbyScoreboard} aria-label="Tu progreso en el juego">
-            <div><span aria-hidden="true">♜</span><strong>{streak}</strong><small>{streak === 1 ? 'Día de racha' : 'Días de racha'}</small></div>
-            <div><span aria-hidden="true">✦</span><strong>{careerPoints}</strong><small>Puntos de este reto</small></div>
-            <div><span aria-hidden="true">❖</span><strong>{earnedBadge}</strong><small>Tu distinción</small></div>
-          </div>
-          <div className={styles.lobbyTopics}>
-            <div className={styles.topicHeader}><h3>Los universos del Hilo</h3><span>Una enciclopedia, muchos retos</span></div>
-            <div className={styles.topicGrid}>
-              {topicCards.map((item) => (
-                <div key={item.title} className={styles.topicCard + (item.live ? ' ' + styles.topicLive : '')}>
-                  <span className={styles.topicSymbol} aria-hidden="true">{item.icon}</span>
-                  <strong>{item.title}</strong>
-                  <small>{item.caption}</small>
-                  <span className={styles.topicStatus}>{item.live ? 'Disponible ahora' : 'En preparación'}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
         <div className={styles.modes} role="group" aria-label="Elige una modalidad">
           <button type="button" aria-pressed={mode === 'daily'} className={mode === 'daily' ? styles.modeActive : ''} onClick={() => changeMode('daily')}>
             <span className={styles.modeIcon} aria-hidden="true">✦</span>
@@ -291,6 +265,7 @@ export default function HiddenThreadGame() {
         {!progress || !challenge || !word ? (
           <div className={styles.loading} role="status">Preparando el reto cofrade de hoy…</div>
         ) : (
+          <>
           <div className={styles.layout} id="partida-del-hilo">
             <div className={styles.gameCard}>
               <header className={styles.gameHeader}>
@@ -478,25 +453,67 @@ export default function HiddenThreadGame() {
 
             </aside>
           </div>
-          <section className={styles.cofradleFeature} aria-labelledby="cofradle-heading">
+          <a
+            className={styles.cofradleFeature}
+            href="https://cofradle.es/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-labelledby="cofradle-heading"
+            aria-describedby="cofradle-independent"
+          >
             <div className={styles.cofradleVisual} aria-hidden="true">
-              <div className={styles.cofradleVisualMark}>C</div>
-              <div className={styles.cofradleVisualLines}>
-                <span>¿QUÉ HERMANDAD?</span>
-                <span>¿QUÉ MARCHA?</span>
-                <span>¿CUÁNTO SABES?</span>
+              <div className={styles.cofradleVisualHeader}>
+                <span className={styles.cofradleVisualName}>COFRADLE</span>
+                <span>JUEGOS COFRADES</span>
+              </div>
+              <div className={styles.cofradleChallengeCards}>
+                <div className={styles.cofradleChallengeCard}>
+                  <span>ADIVINA</span>
+                  <strong>¿Qué hermandad?</strong>
+                  <div className={styles.cofradleMystery}>? ? ?</div>
+                </div>
+                <div className={styles.cofradleChallengeCard + ' ' + styles.cofradleMusicCard}>
+                  <span>DESCUBRE</span>
+                  <strong>¿Qué marcha?</strong>
+                  <div className={styles.cofradleSound}>♫ ♪ ♫</div>
+                </div>
               </div>
             </div>
             <div className={styles.cofradleContent}>
-              <span className={styles.cofradleEyebrow}>Sigue jugando · Propuesta externa</span>
-              <h2 id="cofradle-heading">¿Te atreves con <em>Cofradle</em>?</h2>
-              <p>Cuando termines tu reto en Hilo Cofrade, pon a prueba tus conocimientos cofrades con otros desafíos en Cofradle.</p>
-              <a className={styles.cofradleAction} href="https://cofradle.es/" target="_blank" rel="noopener noreferrer">
-                Descubrir Cofradle <span aria-hidden="true">↗</span>
-              </a>
-              <small>Cofradle es una web independiente. El enlace abre su sitio oficial.</small>
+              <span className={styles.cofradleEyebrow}>¿Otra partida? · Juego externo</span>
+              <h2 id="cofradle-heading">Cofradle. <em>¿Juegas?</em></h2>
+              <p>Adivina hermandades y reconoce marchas. El siguiente reto está a un clic.</p>
+              <span className={styles.cofradleAction}>Jugar ahora <span aria-hidden="true">↗</span></span>
+              <small id="cofradle-independent">Abrirás cofradle.es, un proyecto independiente de Hilo Cofrade.</small>
             </div>
-          </section>
+          </a>
+
+        <div className={styles.gameLobby}>
+          <div className={styles.lobbyIntro}>
+            <span className={styles.eyebrow}>La enciclopedia también se juega</span>
+            <h2>Un cabo por descubrir. Una historia por contar.</h2>
+            <p>Resuelve el desafío del día y sigue el hilo hacia la historia que se esconde detrás de cada respuesta.</p>
+          </div>
+          <div className={styles.lobbyScoreboard} aria-label="Tu progreso en el juego">
+            <div><span aria-hidden="true">♜</span><strong>{streak}</strong><small>{streak === 1 ? 'Día de racha' : 'Días de racha'}</small></div>
+            <div><span aria-hidden="true">✦</span><strong>{careerPoints}</strong><small>Puntos de este reto</small></div>
+            <div><span aria-hidden="true">❖</span><strong>{earnedBadge}</strong><small>Tu distinción</small></div>
+          </div>
+          <div className={styles.lobbyTopics}>
+            <div className={styles.topicHeader}><h3>Los universos del Hilo</h3><span>Una enciclopedia, muchos retos</span></div>
+            <div className={styles.topicGrid}>
+              {topicCards.map((item) => (
+                <div key={item.title} className={styles.topicCard + (item.live ? ' ' + styles.topicLive : '')}>
+                  <span className={styles.topicSymbol} aria-hidden="true">{item.icon}</span>
+                  <strong>{item.title}</strong>
+                  <small>{item.caption}</small>
+                  <span className={styles.topicStatus}>{item.live ? 'Disponible ahora' : 'En preparación'}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+          </>
         )}
       </div>
     </section>
