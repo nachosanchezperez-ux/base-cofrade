@@ -21,6 +21,8 @@ import {
   validHiddenProgress,
 } from '@/lib/hilo-hidden-game'
 import styles from './HiddenThreadGame.module.css'
+import { hiddenShareData, hiddenShareSocialLinks, hiddenStoryFilename } from '@/lib/hilo-hidden-share'
+import { createHiddenStoryFile, saveHiddenStoryFile } from '@/lib/hilo-hidden-share-card'
 
 const GAME_STORAGE = 'hc-hilo-escondido-v2:'
 const STREAK_STORAGE = 'hc-hilo-escondido-racha-v1'
@@ -114,8 +116,16 @@ export default function HiddenThreadGame({ initialDayKey = '' }) {
   const completed = Boolean(progress?.finished)
   const canPlay = Boolean(progress && round && word && round.status === 'playing')
   const options = useMemo(
-    () => (challenge && progress ? getHiddenChoiceOptions(challenge, progress.stage) : []),
+    () => (challenge?.mode === 'daily' && progress ? getHiddenChoiceOptions(challenge, progress.stage) : []),
     [challenge, progress?.stage]
+  )
+  const shareData = useMemo(
+    () => completed ? hiddenShareData(challenge, progress) : null,
+    [challenge, progress, completed]
+  )
+  const socialLinks = useMemo(
+    () => hiddenShareSocialLinks(shareData),
+    [shareData]
   )
 
   useEffect(() => {
@@ -234,22 +244,53 @@ export default function HiddenThreadGame({ initialDayKey = '' }) {
   }
 
   async function share() {
-    if (!completed) return
-    const text = hiddenShareText(challenge, progress)
-    if (navigator.share) {
+    if (!shareData) return
+    if (typeof navigator.share === 'function') {
       try {
-        await navigator.share({ text })
-        setShareStatus('Resultado compartido.')
+        await navigator.share({ title: shareData.title, text: shareData.text })
+        setShareStatus('Has enviado tu resultado a la aplicación elegida.')
         return
       } catch (error) {
         if (error?.name === 'AbortError') return
       }
     }
+    await copyResult()
+  }
+
+  async function copyResult() {
+    if (!shareData) return
     try {
-      await navigator.clipboard.writeText(text)
-      setShareStatus('Resultado copiado para compartir.')
+      await navigator.clipboard.writeText(shareData.text)
+      setShareStatus('Resultado copiado. Pégalo en tu red social o conversación.')
     } catch {
-      setShareStatus('Tu navegador no permite copiarlo automáticamente.')
+      setShareStatus('Tu navegador no permite copiar automáticamente. Puedes usar WhatsApp o X.')
+    }
+  }
+
+  async function shareStory() {
+    if (!shareData || !challenge) return
+    try {
+      // Se genera en el mismo gesto del usuario, para no perder activación del diálogo nativo.
+      const image = createHiddenStoryFile(shareData, hiddenStoryFilename(challenge))
+      if (typeof navigator.share === 'function'
+        && typeof navigator.canShare === 'function'
+        && navigator.canShare({ files: [image] })) {
+        try {
+          await navigator.share({
+            files: [image],
+            title: shareData.title,
+            text: '¿Superas mi resultado? ' + shareData.url,
+          })
+          setShareStatus('Imagen enviada a la aplicación elegida.')
+          return
+        } catch (error) {
+          if (error?.name === 'AbortError') return
+        }
+      }
+      saveHiddenStoryFile(image)
+      setShareStatus('Imagen preparada para subir como historia. Puedes compartirla desde tu galería.')
+    } catch {
+      setShareStatus('No ha sido posible crear la imagen. Comparte el resultado como texto.')
     }
   }
 
@@ -258,6 +299,10 @@ export default function HiddenThreadGame({ initialDayKey = '' }) {
     setMode(nextMode)
     setFeedback('')
     setShareStatus('')
+    window.requestAnimationFrame(() => document.getElementById('partida-del-hilo')?.scrollIntoView({
+      behavior: window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+      block: 'start',
+    }))
   }
 
   const careerPoints = progress ? hiddenTotalScore(progress) : 0
