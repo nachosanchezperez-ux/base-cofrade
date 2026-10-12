@@ -24,10 +24,21 @@ export default function HomeDiscover({ stats }) {
           ))}
         </ul>
 
-        <nav className={styles.more} aria-label="Más secciones de Hilo Cofrade">
-          {HOME_DISCOVER_SECONDARY.map((item) => (
-            <Link href={item.href} key={item.href}>{item.label}</Link>
-          ))}
+        <nav className={styles.more} aria-labelledby="descubre-mas-title">
+          <h3 id="descubre-mas-title" className={styles.moreTitle}>Más en Hilo Cofrade</h3>
+          <ul className={styles.moreList}>
+            {HOME_DISCOVER_SECONDARY.map((item) => (
+              <li key={item.href}>
+                <Link className={styles.moreLink} href={item.href}>
+                  <span className={styles.moreText}>
+                    <strong>{item.label}</strong>
+                    <span>{item.detail}</span>
+                  </span>
+                  <b className={styles.moreArrow} aria-hidden="true">→</b>
+                </Link>
+              </li>
+            ))}
+          </ul>
         </nav>
       </div>
     </section>
