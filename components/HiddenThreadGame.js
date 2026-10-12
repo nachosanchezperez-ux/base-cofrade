@@ -475,12 +475,28 @@ export default function HiddenThreadGame() {
                 <span aria-hidden="true">↳</span>
                 <p>Una partida nueva cada día, según la hora de Sevilla. Tu progreso se guarda solo en este navegador, sin registro ni clasificación pública.</p>
               </div>
-              <div className={styles.anotherGame}>
-                <span className={styles.eyebrow}>¿Más retos cofrades?</span>
-                <p>Puedes seguir jugando en <a href="https://cofradle.es/" target="_blank" rel="noopener noreferrer">Cofradle ↗</a>, una web externa e independiente.</p>
-              </div>
+
             </aside>
           </div>
+          <section className={styles.cofradleFeature} aria-labelledby="cofradle-heading">
+            <div className={styles.cofradleVisual} aria-hidden="true">
+              <div className={styles.cofradleVisualMark}>C</div>
+              <div className={styles.cofradleVisualLines}>
+                <span>¿QUÉ HERMANDAD?</span>
+                <span>¿QUÉ MARCHA?</span>
+                <span>¿CUÁNTO SABES?</span>
+              </div>
+            </div>
+            <div className={styles.cofradleContent}>
+              <span className={styles.cofradleEyebrow}>Sigue jugando · Propuesta externa</span>
+              <h2 id="cofradle-heading">¿Te atreves con <em>Cofradle</em>?</h2>
+              <p>Cuando termines tu reto en Hilo Cofrade, pon a prueba tus conocimientos cofrades con otros desafíos en Cofradle.</p>
+              <a className={styles.cofradleAction} href="https://cofradle.es/" target="_blank" rel="noopener noreferrer">
+                Descubrir Cofradle <span aria-hidden="true">↗</span>
+              </a>
+              <small>Cofradle es una web independiente. El enlace abre su sitio oficial.</small>
+            </div>
+          </section>
         )}
       </div>
     </section>
