@@ -6,41 +6,40 @@ const page = readFileSync(new URL('../app/juegos/el-hilo-escondido/page.js', imp
 const game = readFileSync(new URL('../components/HiddenThreadGame.js', import.meta.url), 'utf8')
 const styles = readFileSync(new URL('../components/HiddenThreadGame.module.css', import.meta.url), 'utf8')
 
-test('dos tarjetas jugables se ven antes de la partida, sin botones ficticios', () => {
-  assert.match(page, /<nav className=\{styles\.entryChoices\} aria-label="Elige tu juego">/)
-  assert.match(page, /href="#partida-del-hilo"/)
-  assert.match(page, /Jugar aquí/)
-  assert.match(page, /href="https:\/\/cofradle\.es\/"/)
-  assert.match(page, /Jugar en Cofradle/)
-  assert.match(page, /target="_blank"/)
-  assert.match(page, /rel="noopener noreferrer"/)
-  assert.ok(page.indexOf('className={styles.entryChoices}') < page.indexOf('<HiddenThreadGame />'))
+test('El hilo escondido es el título principal y el usuario juega sin pantalla de selección', () => {
+  assert.match(page, /<h1>El hilo escondido<\/h1>/)
+  assert.match(page, /Nuestro juego diario/)
+  assert.match(page, /<HiddenThreadGame \/>/)
+  assert.doesNotMatch(page, /entryChoices|Elige tu juego|Dos desafíos cofrades|href="#partida-del-hilo"/)
+  assert.match(game, /className=\{styles\.modes\} id="partida-del-hilo"/)
+  assert.match(game, /className=\{styles\.gameCard\}/)
+  assert.match(game, /¿Qué palabra se esconde\?/)
 })
 
-test('Cofradle es un enlace externo independiente y no duplica llamadas en el pie', () => {
-  assert.match(page, /Cofradle es un proyecto independiente de Hilo Cofrade/)
+test('Cofradle aparece solo como recomendación final, nunca al comenzar', () => {
+  const positionGame = page.indexOf('<HiddenThreadGame />')
+  const positionRecommended = page.indexOf('className={styles.recommendationSection}')
+  assert.ok(positionGame > -1 && positionRecommended > positionGame)
   assert.equal((page.match(/href="https:\/\/cofradle\.es\/"/g) || []).length, 1)
+  assert.match(page, /Cofradle es un proyecto externo e independiente/)
+  assert.match(page, /target="_blank"/)
+  assert.match(page, /rel="noopener noreferrer"/)
   assert.doesNotMatch(game, /className=\{styles\.cofradleFeature\}/)
 })
 
-test('el juego local se puede alcanzar sin esperar a hidratarse', () => {
-  assert.match(game, /className=\{styles\.modes\} id="partida-del-hilo"/)
+test('el acceso a Cofradle es visual pero secundario y sin controles anidados', () => {
+  assert.match(page, /<a\s+className=\{styles\.recommendationCard\}/)
+  assert.match(page, /Visitar Cofradle/)
+  assert.match(styles, /\.recommendationSection\s*\{/)
+  assert.match(styles, /\.recommendationCard:focus-visible/)
+  assert.match(styles, /@media \(max-width: 620px\)/)
+  assert.match(styles, /prefers-reduced-motion: reduce/)
+})
+
+test('la partida precede al contenido futuro y tiene una sola ancla', () => {
   assert.equal((game.match(/id="partida-del-hilo"/g) || []).length, 1)
   assert.ok(game.indexOf('className={styles.modes}') < game.indexOf('className={styles.gameCard}'))
   assert.ok(game.indexOf('className={styles.gameCard}') < game.indexOf('className={styles.nextTopics}'))
-})
-
-test('las categorías sin juego no obstaculizan la primera pantalla', () => {
-  assert.doesNotMatch(game, /className=\{styles\.gameLobby\}/)
-  assert.doesNotMatch(game, /className=\{styles\.topicCard/)
   assert.match(game, /Próximamente: hermandades, imágenes, marchas y autores/)
-})
-
-test('dos superficies completas, enfoque accesible y responsive', () => {
-  assert.match(styles, /\.entryChoices\s*\{[^}]*grid-template-columns:\s*repeat\(2/)
-  assert.match(styles, /\.entryChoice:focus-visible/)
-  assert.match(styles, /@media \(max-width: 620px\)/)
-  assert.match(styles, /@media \(max-width: 350px\)/)
-  assert.match(styles, /prefers-reduced-motion: reduce/)
-  assert.match(styles, /#partida-del-hilo/)
+  assert.doesNotMatch(game, /className=\{styles\.gameLobby\}|className=\{styles\.topicCard/)
 })
