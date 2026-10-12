@@ -181,7 +181,7 @@ export default function HiddenThreadGame({ initialDayKey = '' }) {
   }
 
   function tryGuess(value, tapped = false) {
-    if (!canPlay) return
+    if (!canPlay || (mode === 'daily') !== tapped) return
     const result = evaluateHiddenGuess({ word, round, value, isChoice: tapped })
     if (result.kind === 'empty') {
       setFeedback('Escribe una palabra o toca una tarjeta.')
@@ -373,6 +373,7 @@ export default function HiddenThreadGame({ initialDayKey = '' }) {
                 </span>
               </div>
 
+              {mode === 'daily' ? (
               <section className={styles.choicePanel} aria-label="Adivina tocando una opción">
                 <div className={styles.choiceHeading}>
                   <h3>¿Cuál es la respuesta?</h3>
@@ -414,6 +415,37 @@ export default function HiddenThreadGame({ initialDayKey = '' }) {
                   </div>
                 ) : null}
               </section>
+              ) : canPlay ? (
+                <section className={styles.expertPanel} aria-label="Escribe la palabra en el nivel experto">
+                  <div className={styles.expertLabel}>
+                    <span>✎ LA ÚLTIMA CHICOTÁ</span>
+                    <strong>{normalizeHiddenAnswer(word.answer).length} letras</strong>
+                  </div>
+                  <form className={styles.expertForm} onSubmit={submitAnswer}>
+                    <label htmlFor="hidden-thread-answer">¿Qué palabra une este cabo?</label>
+                    <div className={styles.guessRow}>
+                      <input
+                        id="hidden-thread-answer"
+                        type="text"
+                        name="respuesta"
+                        value={answer}
+                        onChange={(event) => { setAnswer(event.target.value); setFeedback('') }}
+                        maxLength={40}
+                        autoCapitalize="characters"
+                        autoComplete="off"
+                        autoCorrect="off"
+                        spellCheck={false}
+                        placeholder="Escribe la palabra"
+                      />
+                      <button type="submit" disabled={!answer.trim()}>Responder <span aria-hidden="true">→</span></button>
+                    </div>
+                    <span className={styles.attemptInfo}>
+                      {Math.max(0, HILO_GAME_MAX_ERRORS - usedErrors)} intentos disponibles.
+                      {usedErrors === HILO_GAME_MAX_ERRORS - 1 ? ' Pista final: comienza por «' + word.answer.charAt(0) + '».' : ''}
+                    </span>
+                  </form>
+                </section>
+              ) : null}
 
               <p
                 className={styles.feedback + (feedback.tone ? ' ' + styles['feedback_' + feedback.tone] : '')}
@@ -503,34 +535,6 @@ export default function HiddenThreadGame({ initialDayKey = '' }) {
                     </div>
                   ) : null}
                 </section>
-              ) : null}
-
-              {canPlay ? (
-                <details className={styles.manualEntry}>
-                  <summary>Prefiero escribir mi respuesta <span aria-hidden="true">✎</span></summary>
-                  <form className={styles.guessForm} onSubmit={submitAnswer}>
-                    <label htmlFor="hidden-thread-answer">Escribe tu palabra ({normalizeHiddenAnswer(word.answer).length} letras)</label>
-                    <div className={styles.guessRow}>
-                      <input
-                        id="hidden-thread-answer"
-                        type="text"
-                        name="respuesta"
-                        value={answer}
-                        onChange={(event) => { setAnswer(event.target.value); setFeedback('') }}
-                        maxLength={32}
-                        autoCapitalize="characters"
-                        autoComplete="off"
-                        autoCorrect="off"
-                        spellCheck={false}
-                        placeholder="Tu respuesta"
-                      />
-                      <button type="submit" disabled={!answer.trim()}>Comprobar <span aria-hidden="true">→</span></button>
-                    </div>
-                    <span className={styles.attemptInfo}>Las tarjetas y el teclado comparten {HILO_GAME_MAX_ERRORS} intentos en total.
-                      {usedErrors === HILO_GAME_MAX_ERRORS - 1 ? ' Empieza por «' + word.answer.charAt(0) + '».' : ''}
-                    </span>
-                  </form>
-                </details>
               ) : null}
 
               {round.guesses.length ? (
