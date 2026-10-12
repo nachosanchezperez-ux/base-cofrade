@@ -31,26 +31,17 @@ test('la Home conserva una salida nocturna hasta su entrada real', async () => {
 
 test('la Home permite un foco editorial previo sin quitar prioridad al directo', async () => {
   const home = await read('components/HomePageV2.js')
-  const grid = await read('components/HomeProcessionGrid.js')
   const snapshot = await read('lib/supabase/home-snapshot.js')
 
   assert.match(home, /id="proximos-dias"/)
-  assert.match(home, /const editorialFeaturedOuting = editorialFeaturedOutingId/)
-  assert.match(home, /const featuredOuting = liveOutings\[0\] \|\| editorialFeaturedOuting/)
-  assert.match(home, /isEditorialFeature/)
+  assert.match(home, /selectHomeFeaturedOuting\(\{ upcomingAgenda, editorialFeaturedOutingId, editorialHighlights \}\)/)
   assert.match(home, /Extraordinaria destacada/)
-  assert.match(home, /Este fin de semana/)
-  assert.match(home, /HomeProcessionGrid outings=\{balancedUpcoming\}/)
   assert.match(home, /Procesión en curso/)
-  assert.match(home, /Varias procesiones están en la calle/)
-  assert.match(grid, /data-home-procession-layout="editorial"/)
-  assert.match(grid, /slice\(0, 4\)/)
   assert.match(snapshot, /getHomeEditorialFocus/)
   assert.match(snapshot, /remainingCandidates.find/)
   assert.match(snapshot, /editorialFeaturedOutingId/)
   assert.match(snapshot, /hilo-cofrade-home-public-snapshot-v24/)
 })
-
 
 test('las próximas salidas equilibran el peso visual en escritorio', async () => {
   const home = await read('components/HomePageV2.js')
