@@ -150,3 +150,20 @@ La promoción grande de Cofradle situada **después de la partida** y el tablero
 **Pruebas añadidas:** intentos mezclados (teclado + toque), opciones duplicadas, límite compartido, progreso local versión 2 y presencia del nuevo flujo visual.
 
 **Pendientes antes del GO:** comprobar la última preview e interacción real en móvil, además de revisión editorial del banco de palabras. No confundir build verde con QA táctil completada.
+
+
+## Compartir en redes y modos diferenciados · 12/10/2026 (última revisión)
+
+**Decisión de producto:** el modo diario es un juego táctil sin teclado; «La última chicotá» exige escribir la solución. No se mezclan las dos mecánicas en una misma pantalla.
+
+- **El hilo del día:** cuatro tarjetas de respuesta con tres intentos máximos; las pistas progresivas se conservan.
+- **La última chicotá:** un campo de escritura visible directamente bajo la adivinanza, sin cuatro opciones a la vista. Los tres cabos y el marcador existente permanecen.
+- **Compartir al completar:** tarjeta de resultado en burdeos/azul marino, con puntuación, fecha, tipo de reto, marcas de acierto y URL permanente; nunca revela la solución.
+- **Compartir nativo:** el botón principal abre el menú de compartir del teléfono (cuando el navegador lo permite). En navegadores sin ese menú, copia el texto si hay permiso.
+- **Instagram e historias:** «Imagen para historias (9:16)» genera localmente una imagen PNG de 1080×1920 usando Canvas con el nombre del juego, los puntos y el enlace. Si el navegador admite compartir archivos, abre el menú nativo; en caso contrario, descarga la imagen para que el usuario la publique manualmente. **No existe publicación directa automática en Instagram desde la web**.
+- **WhatsApp y X:** accesos específicos con un texto previamente preparado que incluye el enlace a Hilo Cofrade y una puntuación sin respuestas.
+- **Privacidad y coste:** sin datos personales, sin subidas al servidor, sin dependencias ni nueva base de datos. La creación del PNG se ejecuta en el navegador únicamente al solicitarla.
+- **Cofradle:** permanece como recomendación externa al final de la página, sin aparecer en la tarjeta compartida.
+- **Pruebas:** verificar el flujo diario, escritura experta, que el resultado solo esté disponible al completar, que los enlaces no filtren soluciones, el funcionamiento de Web Share y el fallback PNG/clipboard en iOS y escritorio.
+
+La rama continúa en borrador. Antes de integrar: CI/build, preview móvil real, revisión editorial de los términos y QA manual de acciones de compartir.
