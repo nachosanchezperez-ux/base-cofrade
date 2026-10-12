@@ -860,3 +860,49 @@
     animation: none;
   }
 }
+
+
+/* El juego conserva la paleta editorial de la enciclopedia y añade sensación de recorrido. */
+.gameLobby { margin-bottom: 23px; border: 1px solid #e8ddd4; border-radius: 22px; padding: clamp(16px, 2.8vw, 27px); background: radial-gradient(circle at 96% 2%, rgba(165,118,71,.11), transparent 32%), #fff; box-shadow: 0 12px 40px rgba(45,27,29,.045); }
+.lobbyIntro { max-width: 670px; }
+.lobbyIntro h2 { color: #31202a; font-family: Georgia,serif; font-size: clamp(23px,3.5vw,32px); line-height: 1.15; letter-spacing: -.025em; margin: 6px 0 7px; }
+.lobbyIntro p { margin: 0; color: #71666b; font-size: 13px; line-height: 1.55; }
+.lobbyScoreboard { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 10px; margin-top: 19px; }
+.lobbyScoreboard > div { display: grid; grid-template-columns: auto minmax(0,1fr); column-gap: 10px; align-items: center; border: 1px solid #e7dcd4; border-radius: 13px; padding: 12px; background: #faf7f2; min-width: 0; }
+.lobbyScoreboard > div > span { grid-row: span 2; color: #9d6a45; font-size: 25px; }
+.lobbyScoreboard strong { color: #57273a; font-size: 19px; line-height: 1.2; overflow-wrap: anywhere; }
+.lobbyScoreboard small { color: #786d70; font-size: 11px; line-height: 1.3; }
+.lobbyScoreboard > div:last-child strong { font-size: 14px; }
+.lobbyTopics { margin-top: 23px; padding-top: 18px; border-top: 1px solid #eee3db; }
+.topicHeader { display: flex; align-items: baseline; justify-content: space-between; gap: 9px; margin-bottom: 11px; }
+.topicHeader h3 { margin: 0; color: #2e2530; font-size: 15px; }
+.topicHeader > span { color: #796d70; font-size: 11px; }
+.topicGrid { display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); gap: 8px; }
+.topicCard { display: flex; flex-direction: column; min-height: 145px; min-width: 0; border: 1px solid #eae1db; border-radius: 12px; padding: 12px 10px; background: #fdfbf8; color: #40323d; }
+.topicLive { border-color: #b98673; background: #fcf3ed; }
+.topicSymbol { font-size: 26px; color: #8f4856; line-height: 1.2; }
+.topicCard strong { font-size: 12px; margin-top: 8px; line-height: 1.25; overflow-wrap: anywhere; }
+.topicCard small { font-size: 11px; line-height: 1.35; color: #70666b; margin-top: 4px; }
+.topicStatus { font-size: 10px; text-transform: uppercase; letter-spacing: .035em; font-weight: 800; color: #857b7a; margin-top: auto; padding-top: 11px; }
+.topicLive .topicStatus { color: #844056; }
+.achievement { display: flex; gap: 13px; align-items: center; background: #f8f1e7; border: 1px solid #ead7b9; border-radius: 13px; padding: 12px 15px; margin-top: 17px; }
+.achievement > span { color: #98683c; font-size: 28px; }
+.achievement strong, .achievement small { display: block; }
+.achievement strong { color: #683b37; font-size: 15px; }
+.achievement small { color: #826f67; font-size: 11px; margin-top: 2px; }
+@media (max-width: 760px) { .topicGrid { grid-template-columns: repeat(3,minmax(0,1fr)); } }
+@media (max-width: 550px) {
+  .gameLobby { border-radius: 16px; padding: 15px; margin-bottom: 14px; }
+  .lobbyIntro h2 { font-size: 23px; }
+  .lobbyScoreboard { gap: 6px; margin-top: 13px; }
+  .lobbyScoreboard > div { display: flex; flex-direction: column; align-items: start; gap: 2px; padding: 10px 7px; }
+  .lobbyScoreboard > div > span { font-size: 21px; }
+  .lobbyScoreboard strong { font-size: 17px; }
+  .lobbyScoreboard > div:last-child strong { font-size: 11px; }
+  .lobbyScoreboard small { font-size: 10px; }
+  .topicHeader { display: block; }
+  .topicHeader > span { display: block; margin-top: 3px; }
+  .topicGrid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .topicCard { min-height: 123px; }
+}
+@media (prefers-reduced-motion: reduce) { .gameLobby *, .achievement * { animation: none !important; } }
