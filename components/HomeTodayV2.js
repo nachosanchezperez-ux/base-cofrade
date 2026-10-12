@@ -8,7 +8,7 @@ import styles from './HomeTodayV2.module.css'
 import polishStyles from './HomeResponsivePolish.module.css'
 import mobileFixStyles from './HomeTodayMobileFix.module.css'
 import dynamicStyles from './HomeTodayDynamic.module.css'
-import gameStyles from './HiddenThreadGame.module.css'
+import gameStyles from './HiddenThreadTeaser.module.css'
 
 const MONTH_INDEX = {
   enero: 0,

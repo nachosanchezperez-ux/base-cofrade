@@ -4,6 +4,8 @@ import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
 import {
   getHiddenChallenge,
+  hiddenEffectiveStreak,
+  hiddenGuessMatches,
   HILO_GAME_HINT_COST,
   HILO_GAME_MAX_ERRORS,
   hiddenPriorDayKey,
@@ -12,6 +14,7 @@ import {
   hiddenTotalScore,
   madridHiddenDayKey,
   makeHiddenProgress,
+  minutesUntilMadridMidnight,
   normalizeHiddenAnswer,
   validHiddenProgress,
 } from '@/lib/hilo-hidden-game'
@@ -47,6 +50,13 @@ function readableDay(dayKey) {
   }).format(new Date(Date.UTC(year, month - 1, day, 12)))
 }
 
+function countdownLabel(minutes) {
+  const hours = Math.floor(minutes / 60)
+  const rest = minutes % 60
+  if (!hours) return rest + ' min'
+  return hours + ' h ' + String(rest).padStart(2, '0') + ' min'
+}
+
 function roundErrors(round) {
   return round.guesses.length - (round.status === 'won' ? 1 : 0)
 }
@@ -56,9 +66,11 @@ export default function HiddenThreadGame() {
   const [mode, setMode] = useState('daily')
   const [state, setState] = useState(null)
   const [answer, setAnswer] = useState('')
-  const [feedback, setFeedback] = useState('')
+  const [feedback, setFeedbackState] = useState({ text: '', tone: '' })
+  const setFeedback = (text, tone = 'info') => setFeedbackState({ text, tone: text ? tone : '' })
   const [shareStatus, setShareStatus] = useState('')
   const [streak, setStreak] = useState(0)
+  const [minutesLeft, setMinutesLeft] = useState(0)
 
   useEffect(() => {
     const updateDay = () => setDateKey(madridHiddenDayKey())
@@ -86,7 +98,7 @@ export default function HiddenThreadGame() {
     setAnswer('')
     setFeedback('')
     setShareStatus('')
-    setStreak(getStreak().count)
+    setStreak(hiddenEffectiveStreak(getStreak(), challenge.dateKey))
   }, [challenge, storageKey])
 
   const progress = state?.key === storageKey ? state.progress : null
@@ -102,6 +114,7 @@ export default function HiddenThreadGame() {
       setStreak(previous.count)
       return
     }
+    if (progress.challengeId !== 'daily-' + dateKey) return
     const won = progress.rounds[0]?.status === 'won'
     const count = won
       ? (previous.date === hiddenPriorDayKey(dateKey) ? previous.count + 1 : 1)
@@ -114,6 +127,14 @@ export default function HiddenThreadGame() {
     }
     setStreak(count)
   }, [mode, dateKey, progress?.finished, progress?.rounds])
+
+  useEffect(() => {
+    if (!completed) return undefined
+    const tick = () => setMinutesLeft(minutesUntilMadridMidnight())
+    tick()
+    const timer = window.setInterval(tick, 30000)
+    return () => window.clearInterval(timer)
+  }, [completed])
 
   function saveProgress(next) {
     if (!progress || !storageKey) return
@@ -143,15 +164,15 @@ export default function HiddenThreadGame() {
     if (!canPlay) return
     const proposed = normalizeHiddenAnswer(answer)
     const expected = normalizeHiddenAnswer(word.answer)
-    if (proposed.length !== expected.length) {
-      setFeedback('La palabra tiene ' + expected.length + ' letras. Prueba con otra respuesta.')
+    const won = hiddenGuessMatches(word, proposed)
+    if (!won && proposed.length !== expected.length) {
+      setFeedback('La palabra tiene ' + expected.length + ' letras y tú has escrito ' + proposed.length + '. No te cuenta como intento.')
       return
     }
     if (round.guesses.includes(proposed)) {
-      setFeedback('Ya habías probado esa palabra.')
+      setFeedback('Ya habías probado esa palabra. No te cuenta como intento.')
       return
     }
-    const won = proposed === expected
     const guesses = [...round.guesses, proposed]
     const lost = !won && guesses.length >= HILO_GAME_MAX_ERRORS
     const status = won ? 'won' : lost ? 'lost' : 'playing'
@@ -160,11 +181,23 @@ export default function HiddenThreadGame() {
       { finished: status !== 'playing' && progress.stage === challenge.words.length - 1 }
     )
     setAnswer('')
-    setFeedback(
-      won ? '¡Has desenredado este cabo!'
-        : lost ? 'Se han agotado los intentos. Descubre la respuesta y sigue tirando del hilo.'
-          : 'No es esa. Todavía puedes descubrirla.'
-    )
+    const remaining = HILO_GAME_MAX_ERRORS - guesses.length
+    if (won) {
+      setFeedback(
+        proposed === expected ? '¡Has desenredado este cabo!'
+          : '¡Correcto! «' + answer.trim().toLocaleUpperCase('es-ES') + '» también vale: la palabra que buscábamos es ' + word.answer + '.',
+        'success'
+      )
+    } else if (lost) {
+      setFeedback('Se han agotado los intentos. Así se desenreda este cabo:', 'error')
+    } else {
+      setFeedback(
+        remaining === 1
+          ? 'No es esa. Te queda un intento: te regalamos la primera letra.'
+          : 'No es esa. Te quedan ' + remaining + ' intentos.',
+        'error'
+      )
+    }
   }
 
   function nextStage() {
@@ -208,7 +241,7 @@ export default function HiddenThreadGame() {
   return (
     <section className={styles.gameSection} aria-label="Juega a El hilo escondido">
       <div className={'shell ' + styles.wrap}>
-        <nav className={styles.modes} aria-label="Elige una modalidad">
+        <div className={styles.modes} role="group" aria-label="Elige una modalidad">
           <button type="button" aria-pressed={mode === 'daily'} className={mode === 'daily' ? styles.modeActive : ''} onClick={() => changeMode('daily')}>
             <span className={styles.modeIcon} aria-hidden="true">✦</span>
             <span><strong>El hilo del día</strong><small>Una palabra</small></span>
@@ -217,7 +250,7 @@ export default function HiddenThreadGame() {
             <span className={styles.modeIcon} aria-hidden="true">♜</span>
             <span><strong>La última chicotá</strong><small>Tres palabras conectadas</small></span>
           </button>
-        </nav>
+        </div>
 
         {!progress || !challenge || !word ? (
           <div className={styles.loading} role="status">Preparando el reto cofrade de hoy…</div>
@@ -252,7 +285,12 @@ export default function HiddenThreadGame() {
               <div className={styles.riddle}>
                 <span className={styles.riddleLabel}>El primer cabo · {word.category}</span>
                 <blockquote>{word.clue}</blockquote>
-                <span className={styles.letters}>{normalizeHiddenAnswer(word.answer).length} letras</span>
+                <span className={styles.letters}>
+                  {normalizeHiddenAnswer(word.answer).length} letras
+                  {canPlay && usedErrors === HILO_GAME_MAX_ERRORS - 1 ? (
+                    <> · empieza por <strong>«{word.answer.charAt(0)}»</strong></>
+                  ) : null}
+                </span>
               </div>
 
               <div className={styles.hints}>
@@ -315,18 +353,23 @@ export default function HiddenThreadGame() {
                   <span>Lo que has probado</span>
                   <div>
                     {round.guesses.map((guess, index) => (
-                      <span key={index} className={guess === normalizeHiddenAnswer(word.answer) ? styles.guessCorrect : styles.guessWrong}>
-                        {guess === normalizeHiddenAnswer(word.answer) ? '✓ ' : '× '}{guess}
+                      <span key={index} className={hiddenGuessMatches(word, guess) ? styles.guessCorrect : styles.guessWrong}>
+                        {hiddenGuessMatches(word, guess) ? '✓ ' : '× '}{guess}
                       </span>
                     ))}
                   </div>
                 </div>
               ) : null}
 
-              {feedback ? <p className={styles.feedback} role="status">{feedback}</p> : null}
+              <p
+                className={styles.feedback + (feedback.tone ? ' ' + styles['feedback_' + feedback.tone] : '')}
+                role="status"
+                aria-live="polite"
+                hidden={!feedback.text}
+              >{feedback.text}</p>
 
               {round.status !== 'playing' ? (
-                <div className={styles.answerCard} aria-live="polite">
+                <div className={styles.answerCard + ' ' + (round.status === 'won' ? styles.answerWon : styles.answerLost)}>
                   <span className={styles.answerKicker}>{round.status === 'won' ? 'Cabo desenredado' : 'El hilo se ha descubierto'}</span>
                   <h3>{word.answer}</h3>
                   <p>{word.definition}</p>
@@ -358,8 +401,14 @@ export default function HiddenThreadGame() {
                       </div>
                     </div>
                   ) : (
-                    <p className={styles.dailyDone}>Un nuevo hilo se esconde mañana. Vuelve a desenredarlo.</p>
+                    <p className={styles.dailyDone}>
+                      {streak > 1 ? 'Llevas ' + streak + ' días seguidos acertando. ' : ''}
+                      Un nuevo hilo se esconde mañana.
+                    </p>
                   )}
+                  {minutesLeft ? (
+                    <p className={styles.countdown}>Próximo reto en <strong>{countdownLabel(minutesLeft)}</strong>, a medianoche en Sevilla.</p>
+                  ) : null}
                   {shareStatus ? <p className={styles.shareStatus} role="status">{shareStatus}</p> : null}
                 </div>
               ) : null}

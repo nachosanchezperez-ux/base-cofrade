@@ -111,3 +111,128 @@ test('no se permite completar una partida con cabos pendientes', () => {
   progress.stage = 2
   assert.equal(validHiddenProgress(progress, expert), false)
 })
+
+// ── Revisión integral (12/10): rotación, sinónimos, rachas y contenido ──
+import {
+  HILO_HIDDEN_DAILY_ORDER,
+  HILO_HIDDEN_EXPERT_SCHEDULE,
+  hiddenEffectiveStreak,
+  hiddenGuessMatches,
+  minutesUntilMadridMidnight,
+} from '../lib/hilo-hidden-game.js'
+
+function dayKeyFrom(offset) {
+  return new Date(Date.UTC(2026, 9, 12 + offset)).toISOString().slice(0, 10)
+}
+
+test('el reto diario no repite palabra en todo el ciclo ni encadena dos días del mismo ámbito', () => {
+  assert.equal(HILO_HIDDEN_DAILY_ORDER.length, HILO_HIDDEN_WORDS.length)
+  const seen = new Set()
+  let previous = null
+  for (let day = 0; day < HILO_HIDDEN_WORDS.length; day++) {
+    const word = getHiddenChallenge(dayKeyFrom(day)).words[0]
+    assert.ok(!seen.has(word.answer), 'repetida antes de cerrar el ciclo: ' + word.answer)
+    seen.add(word.answer)
+    if (previous) assert.notEqual(word.category, previous.category, dayKeyFrom(day))
+    previous = word
+  }
+  // También al cerrar un ciclo y empezar el siguiente.
+  assert.notEqual(HILO_HIDDEN_DAILY_ORDER.at(-1).category, HILO_HIDDEN_DAILY_ORDER[0].category)
+})
+
+test('la última chicotá no destripa el reto diario cercano ni repite cadena en días próximos', () => {
+  const lastSeen = new Map()
+  for (let day = 0; day < 365; day++) {
+    const expert = getHiddenChallenge(dayKeyFrom(day), 'expert')
+    const answers = new Set(expert.words.map((word) => word.answer))
+    for (let offset = -5; offset <= 5; offset++) {
+      const daily = getHiddenChallenge(dayKeyFrom(day + offset)).words[0]
+      assert.ok(!answers.has(daily.answer), dayKeyFrom(day) + ' revela ' + daily.answer)
+    }
+    const chainId = expert.id.slice(('expert-' + dayKeyFrom(day) + '-').length)
+    if (lastSeen.has(chainId)) assert.ok(day - lastSeen.get(chainId) >= 6, chainId + ' se repite demasiado pronto')
+    lastSeen.set(chainId, day)
+  }
+  assert.equal(new Set(HILO_HIDDEN_EXPERT_SCHEDULE.map((chain) => chain.id)).size, HILO_HIDDEN_CHAINS.length)
+})
+
+test('las cadenas expertas son únicas y solo usan términos del banco', () => {
+  assert.equal(new Set(HILO_HIDDEN_CHAINS.map((chain) => chain.id)).size, HILO_HIDDEN_CHAINS.length)
+  const signatures = HILO_HIDDEN_CHAINS.map((chain) => chain.answers.map(normalizeHiddenAnswer).sort().join('|'))
+  assert.equal(new Set(signatures).size, signatures.length)
+  for (const chain of HILO_HIDDEN_CHAINS) {
+    assert.equal(chain.answers.length, 3)
+    assert.ok(chain.title && chain.connection)
+  }
+  assert.ok(hiddenWordBankAudit())
+})
+
+test('ninguna adivinanza ni pista contiene la propia respuesta', () => {
+  for (const word of HILO_HIDDEN_WORDS) {
+    const target = normalizeHiddenAnswer(word.answer)
+    for (const text of [word.clue, ...word.hints.map((hint) => hint.text)]) {
+      const tokens = text.split(/[^\p{L}]+/u).map(normalizeHiddenAnswer)
+      assert.ok(!tokens.includes(target), word.answer + ' aparece en: ' + text)
+    }
+  }
+})
+
+test('se aceptan los sinónimos documentados y no chocan con otras respuestas', () => {
+  const answers = new Set(HILO_HIDDEN_WORDS.map((word) => normalizeHiddenAnswer(word.answer)))
+  for (const word of HILO_HIDDEN_WORDS) {
+    for (const option of word.accepted) assert.ok(!answers.has(normalizeHiddenAnswer(option)), option)
+  }
+  const llamador = HILO_HIDDEN_WORDS.find((word) => word.answer === 'LLAMADOR')
+  assert.equal(hiddenGuessMatches(llamador, 'martillo'), true)
+  assert.equal(hiddenGuessMatches(llamador, 'Llamador'), true)
+  assert.equal(hiddenGuessMatches(llamador, 'capataz'), false)
+  assert.equal(hiddenGuessMatches(llamador, ''), false)
+  const pabilo = HILO_HIDDEN_WORDS.find((word) => word.answer === 'PABILO')
+  assert.equal(hiddenGuessMatches(pabilo, 'mecha'), true)
+})
+
+test('la racha visible caduca si se deja pasar un día', () => {
+  assert.equal(hiddenEffectiveStreak({ date: '2026-10-12', count: 4 }, '2026-10-12'), 4)
+  assert.equal(hiddenEffectiveStreak({ date: '2026-10-11', count: 4 }, '2026-10-12'), 4)
+  assert.equal(hiddenEffectiveStreak({ date: '2026-10-09', count: 4 }, '2026-10-12'), 0)
+  assert.equal(hiddenEffectiveStreak({ date: '', count: 0 }, '2026-10-12'), 0)
+  assert.equal(hiddenEffectiveStreak(null, '2026-10-12'), 0)
+})
+
+test('la cuenta atrás llega a medianoche de Madrid', () => {
+  assert.equal(minutesUntilMadridMidnight(new Date('2026-10-12T21:30:00.000Z')), 30)
+  assert.equal(minutesUntilMadridMidnight(new Date('2026-12-31T22:00:00.000Z')), 60)
+  assert.equal(minutesUntilMadridMidnight(new Date('2026-10-12T22:00:00.000Z')), 24 * 60)
+})
+
+test('el resultado compartido resume cada cabo sin revelar soluciones', () => {
+  const expert = getHiddenChallenge('2026-10-12', 'expert')
+  const progress = makeHiddenProgress(expert)
+  progress.rounds = [
+    { status: 'won', guesses: [normalizeHiddenAnswer(expert.words[0].answer)], hints: [] },
+    { status: 'won', guesses: ['XXXX', normalizeHiddenAnswer(expert.words[1].answer)], hints: [0] },
+    { status: 'lost', guesses: ['A', 'B', 'C', 'D'], hints: [0, 1, 2] },
+  ]
+  progress.stage = 2
+  progress.finished = true
+  assert.equal(validHiddenProgress(progress, expert), true)
+  const text = hiddenShareText(expert, progress)
+  assert.ok(text.includes('Cabos: ✦ ✓ ✕'))
+  for (const word of expert.words) assert.ok(!text.toUpperCase().includes(word.answer))
+})
+
+test('en la última chicotá ninguna pista adelanta la respuesta de un cabo posterior', () => {
+  const byAnswer = new Map(HILO_HIDDEN_WORDS.map((word) => [normalizeHiddenAnswer(word.answer), word]))
+  for (const chain of HILO_HIDDEN_CHAINS) {
+    chain.answers.forEach((answer, index) => {
+      const word = byAnswer.get(normalizeHiddenAnswer(answer))
+      const later = chain.answers.slice(index + 1).map(normalizeHiddenAnswer)
+      for (const text of [word.clue, ...word.hints.map((hint) => hint.text)]) {
+        const tokens = text.split(/[^\p{L}]+/u).map(normalizeHiddenAnswer)
+        for (const target of later) {
+          assert.ok(!tokens.some((token) => token === target || token === target + 'S'), chain.id + ': «' + text + '» adelanta ' + target)
+        }
+      }
+    })
+  }
+})
