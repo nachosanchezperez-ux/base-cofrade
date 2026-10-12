@@ -1,5 +1,9 @@
 # HC-018 · /colabora · NO-GO de apertura
 
+## Envío humano local sin adjuntos · 12/10/2026
+
+Captura de éxito HC-378EC672 revisada y postflight READ ONLY aportado por Nacho: correction/pending, consentimiento y hashes presentes, 0 adjuntos, 1 auditoría. Widget real localhost y proceso local; éxito de Siteverify inferido del código obligatorio previo al INSERT, sin log independiente de su respuesta. Primer rechazo Turnstile de causa no determinada. Caso retenido para ensayo del Panel. [Registro ampliado](./COLABORA-QA-LOCAL-2026-10-12.md). NO-GO público: quedan moderación, adjuntos por Server Action, mantenimiento HTTP/scheduler/política y validación desplegada.
+
 ## Actualización 12/10/2026 · Supabase local PASS, NO-GO
 
 Resultados de Terminal aportados por Nacho tras ejecutar pruebas guiadas en su Mac sobre código `94a7486`: concurrencia de duplicados, límites por huella/global/diario, permisos/RLS, Storage privado y purgador real, limpieza 48h con casos 49h/47h PASS. Fixtures limpiados; puertos locales restringidos a 127.0.0.1. El asistente no ha ejecutado directamente ese entorno. [Registro de resultados y alcance](./COLABORA-QA-LOCAL-2026-10-12.md).

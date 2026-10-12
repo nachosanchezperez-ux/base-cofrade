@@ -34,3 +34,15 @@ Las pruebas usaron identificadores/huellas aleatorios y limpieza limitada a sus 
 B2 dispone ahora de ensayo concurrente real en Postgres local. B3 dispone de ensayo real de objeto privado, purgador y limpieza de huellas locales. Estos resultados no certifican configuración, migración o ejecución en producción ni el scheduler.
 
 Pendientes: widget/variables reales de Turnstile; envío humano completo, Server Action activa y revisión autenticada en Panel; mantenimiento HTTP activo y horario efectivo; política reconciliada (supresión anticipada, extensiones, copias/exportaciones); runtime desplegado y reconciliación de rama con main antes de integración. No se activan recepción ni mantenimiento, no se fusiona/promueve la PR. NO-GO permanece. #1019/#1020 intactas.
+
+## Envío humano local · 12/10/2026, 23:14–23:18 Europe/Madrid
+
+El usuario creó el widget real «Hilo Cofrade · Pruebas», hostname localhost, y configuró las claves únicamente en el Mac. Next dev se lanzó en 127.0.0.1:3000 con Supabase 127.0.0.1:55321, HMAC independiente y recepción habilitada solo en el proceso local; mantenimiento desactivado.
+
+Un primer envío devolvió «Turnstile rejected contribution». Se reinició el proceso y se volvieron a introducir las claves; no se recibieron logs de Siteverify que permitan atribuir la causa exacta. No se eludió la validación ni se usaron claves ficticias.
+
+Captura de pantalla aportada y revisada por el asistente: éxito con referencia HC-378EC672. Postflight SQL READ ONLY aportado por el usuario: id 378ec672-9e67-41c1-b2b2-2b09b71b28a9, contribution_type=correction, status=pending, consentimiento_registrado=t, hash_duplicados=t, huella_antispam=t, adjuntos=0, registros_auditoria=1. Se documenta corrección, aunque la instrucción de ensayo había propuesto sugerencia; no se certifican por este envío todas las modalidades.
+
+El código probado exige éxito de Siteverify, action public_contribution y hostname coincidente antes del INSERT. El éxito y la fila constituyen evidencia del recorrido humano local sin adjuntos, sin disponer de la respuesta sanitizada de Cloudflare como evidencia independiente. No son prueba de preview/producción ni de recepción de archivos por Server Action.
+
+La aportación y su auditoría se conservan en la base local para verificar el Panel; no se ha emitido instrucción de limpieza de este envío. Las limpiezas con cero residuos descritas arriba corresponden a los fixtures anteriores, no a una base actualmente vacía. Quedan la moderación autenticada, envío con adjuntos, mantenimiento HTTP/scheduler/política y postflight desplegado; widget de producción y variables aún no certificados. NO-GO permanece.
