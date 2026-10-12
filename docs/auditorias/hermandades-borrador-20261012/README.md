@@ -79,3 +79,16 @@ Continuación de `docs/auditorias/relaciones-musicales-tarea05-20261012/` (lista
 Todo queda en **borrador** hasta que el propietario autorice publicarlo.
 
 **Publicada el 12/10/2026** con autorización del propietario: la Agrupación, su imagen, su paso y sus relaciones. Verificada en `/hermandades/agrupacion-parroquial-caridad-santa-aurelia-sevilla`. Reversión de la publicación: devolver esas 3 entidades y sus 3 relaciones a `draft`.
+
+## La Borriquita de Huévar del Aljarafe · 12/10/2026 · aplicado y publicado
+
+`cristo-amor-huevar.sql`; reversión: `cristo-amor-huevar-rollback.sql`. Autorizado por el propietario («Hazlo todo»).
+
+- **Fuentes:** [ArteSacro, abril de 2026](https://www.artesacro.org/Noticia.asp?idreg=167374) y [ArteSacro, abril de 2025](https://www.artesacro.org/Noticia/Ver/161370/provincia-domingo-ramos-huevar-aljarafe).
+- **Nombre:** Agrupación Parroquial del Santísimo Cristo del Amor en su Entrada Triunfal en Jerusalén.
+  - Antes figuraba como «Asociación de Fieles Devotos».
+  - Sede: parroquia de Nuestra Señora de la Asunción.
+- **Titular:** Cristo del Amor, de los Talleres de Olot (finales del siglo XX).
+- **Paso:** un único paso, el de la Entrada Triunfal, que llegó a Huévar en 1993.
+- **Música:** La Redención (A.M. Nuestro Padre Jesús de la Redención), confirmada en 2026, enlazada al paso.
+- **Verificado** en `/hermandades/cristo-amor-entrada-triunfal-huevar`.
