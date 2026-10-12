@@ -77,3 +77,5 @@ Continuación de `docs/auditorias/relaciones-musicales-tarea05-20261012/` (lista
 ### Estado
 
 Todo queda en **borrador** hasta que el propietario autorice publicarlo.
+
+**Publicada el 12/10/2026** con autorización del propietario: la Agrupación, su imagen, su paso y sus relaciones. Verificada en `/hermandades/agrupacion-parroquial-caridad-santa-aurelia-sevilla`. Reversión de la publicación: devolver esas 3 entidades y sus 3 relaciones a `draft`.
