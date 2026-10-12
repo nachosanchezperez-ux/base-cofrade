@@ -27,7 +27,16 @@ export default function HiddenThreadPage() {
           <Link className={styles.heroBack} href="/#descubre-hoy">← Volver a Descubre hoy</Link>
           <span className={styles.heroEyebrow}>Hilo Cofrade · Un juego para seguir descubriendo</span>
           <h1>El hilo escondido</h1>
-          <p>Una palabra del lenguaje de nuestras cofradías se oculta tras una adivinanza. Tira de las pistas, desenreda el término y descubre por dónde continúa la historia.</p>
+          <p>Una pista, una palabra. ¿La descubres? Juega aquí o continúa el desafío en Cofradle.</p>
+          <nav className={styles.heroPlayActions} aria-label="Elige dónde jugar">
+            <a className={styles.heroPrimaryPlay} href="#partida-del-hilo">
+              Jugar al reto de hoy <span aria-hidden="true">↓</span>
+            </a>
+            <a className={styles.heroCofradlePlay} href="https://cofradle.es/" target="_blank" rel="noopener noreferrer">
+              Jugar a Cofradle <span aria-hidden="true">↗</span>
+            </a>
+          </nav>
+          <span className={styles.heroExternalNote}>Cofradle abre en otra web independiente.</span>
         </div>
       </header>
       <HiddenThreadGame />
