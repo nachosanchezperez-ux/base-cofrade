@@ -234,6 +234,16 @@ export default function HiddenThreadGame() {
     setShareStatus('')
   }
 
+  const careerPoints = progress ? hiddenTotalScore(progress) : 0
+  const earnedBadge = streak >= 7 ? 'Siete días de hilo' : completed && careerPoints >= 80 ? 'Buen conocedor' : completed ? 'Primer cabo' : 'Por descubrir'
+  const topicCards = [
+    { icon: '✦', title: 'Vocabulario', caption: 'La palabra escondida', live: true },
+    { icon: '♜', title: 'Hermandades', caption: 'Su historia y sus titulares' },
+    { icon: '✧', title: 'Imágenes', caption: 'La talla y su advocación' },
+    { icon: '♫', title: 'Marchas', caption: 'Tras los sones' },
+    { icon: '✎', title: 'Autores', caption: 'La firma de cada obra' },
+  ]
+
   const isFinalRound = Boolean(progress && progress.stage === challenge.words.length - 1)
   const stagePoints = round ? hiddenRoundScore(round) : 0
   const usedErrors = round ? roundErrors(round) : 0
@@ -241,6 +251,32 @@ export default function HiddenThreadGame() {
   return (
     <section className={styles.gameSection} aria-label="Juega a El hilo escondido">
       <div className={'shell ' + styles.wrap}>
+        <div className={styles.gameLobby}>
+          <div className={styles.lobbyIntro}>
+            <span className={styles.eyebrow}>La enciclopedia también se juega</span>
+            <h2>Un cabo por descubrir. Una historia por contar.</h2>
+            <p>Resuelve el desafío del día y sigue el hilo hacia la historia que se esconde detrás de cada respuesta.</p>
+          </div>
+          <div className={styles.lobbyScoreboard} aria-label="Tu progreso en el juego">
+            <div><span aria-hidden="true">♜</span><strong>{streak}</strong><small>{streak === 1 ? 'Día de racha' : 'Días de racha'}</small></div>
+            <div><span aria-hidden="true">✦</span><strong>{careerPoints}</strong><small>Puntos de este reto</small></div>
+            <div><span aria-hidden="true">❖</span><strong>{earnedBadge}</strong><small>Tu distinción</small></div>
+          </div>
+          <div className={styles.lobbyTopics}>
+            <div className={styles.topicHeader}><h3>Los universos del Hilo</h3><span>Una enciclopedia, muchos retos</span></div>
+            <div className={styles.topicGrid}>
+              {topicCards.map((item) => (
+                <div key={item.title} className={styles.topicCard + (item.live ? ' ' + styles.topicLive : '')}>
+                  <span className={styles.topicSymbol} aria-hidden="true">{item.icon}</span>
+                  <strong>{item.title}</strong>
+                  <small>{item.caption}</small>
+                  <span className={styles.topicStatus}>{item.live ? 'Disponible ahora' : 'En preparación'}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
         <div className={styles.modes} role="group" aria-label="Elige una modalidad">
           <button type="button" aria-pressed={mode === 'daily'} className={mode === 'daily' ? styles.modeActive : ''} onClick={() => changeMode('daily')}>
             <span className={styles.modeIcon} aria-hidden="true">✦</span>
@@ -255,7 +291,7 @@ export default function HiddenThreadGame() {
         {!progress || !challenge || !word ? (
           <div className={styles.loading} role="status">Preparando el reto cofrade de hoy…</div>
         ) : (
-          <div className={styles.layout}>
+          <div className={styles.layout} id="partida-del-hilo">
             <div className={styles.gameCard}>
               <header className={styles.gameHeader}>
                 <div>
@@ -395,6 +431,10 @@ export default function HiddenThreadGame() {
                       <h3>{hiddenTotalScore(progress)} <span>/ {challenge.words.length * 100} puntos</span></h3>
                     </div>
                     <button type="button" onClick={share}>Compartir resultado <span aria-hidden="true">↗</span></button>
+                  </div>
+                  <div className={styles.achievement} aria-label="Distinción conseguida">
+                    <span aria-hidden="true">❖</span>
+                    <div><strong>{earnedBadge}</strong><small>Tu distinción cofrade de esta partida</small></div>
                   </div>
                   {mode === 'expert' ? (
                     <div className={styles.connection}>
