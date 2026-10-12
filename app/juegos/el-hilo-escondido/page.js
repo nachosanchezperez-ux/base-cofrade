@@ -17,7 +17,7 @@ export const metadata = {
 
 export default function HiddenThreadPage() {
   return (
-    <main className={styles.page}>
+    <div className={styles.page}>
       <JsonLd data={breadcrumbJsonLd([
         { name: 'Inicio', path: '/' },
         { name: 'El hilo escondido', path: HILO_GAME_PATH },
@@ -31,6 +31,6 @@ export default function HiddenThreadPage() {
         </div>
       </header>
       <HiddenThreadGame />
-    </main>
+    </div>
   )
 }
