@@ -112,7 +112,7 @@ test('Hermandades reutiliza tipos de entidad y relaciones musicales ya cargadas'
   const media = read('lib/supabase/entity-media.js')
   const heritage = read('lib/supabase/brotherhood-musical-heritage.js')
 
-  assert.match(page, /entityTypesById: coverEntityTypes/)
+  assert.match(page, /Object\.fromEntries\(coverEntityTypes\)/)
   assert.match(media, /needsEntityTypeLookup/)
   assert.match(page, /imageIds: h\.imagenes\.map/)
   assert.match(page, /currentAccompaniments: h\.acompanamientoActual/)

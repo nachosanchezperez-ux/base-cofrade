@@ -2,7 +2,7 @@ import { Suspense } from 'react'
 import HiloMovementsSection from '@/components/HiloMovementsSection'
 import { HILO_MOVEMENTS } from '@/lib/hilo-movements-data'
 import BrotherhoodHistoricalMusicPortal from '@/components/BrotherhoodHistoricalMusicPortal'
-import { getHistoricalMusicByBrotherhoodSlug } from '@/lib/supabase/historical-music'
+import { getCachedHistoricalMusicByBrotherhoodSlug } from '@/lib/supabase/brotherhood-page-cached'
 
 export const dynamic = 'force-static'
 
@@ -12,7 +12,7 @@ export default async function BrotherhoodDetailLayout({ children, params }) {
   let historicalMusic = []
 
   try {
-    historicalMusic = await getHistoricalMusicByBrotherhoodSlug(slug)
+    historicalMusic = await getCachedHistoricalMusicByBrotherhoodSlug(slug)
   } catch (error) {
     console.error('[Hilo Cofrade] No se pudo preparar la experiencia del histórico musical', {
       slug,
