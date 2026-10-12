@@ -189,7 +189,7 @@ Detalle en `owner-fixes-3.sql` y su reversión, `owner-fixes-3-rollback.sql`.
     - **Sacramental de San Pedro** (la fuente no menciona custodia ni paso).
     - **Dulce Nombre de Alcalá.** La salida de 2026 la acompañó la Banda de Música de La Puebla del Río, no Cruz Roja: **el periodo de Cruz Roja, marcado como vigente, debe revisarse** ([fuente](https://www.ssantadealcala.org/2026/05/salida-dulce-nombre.html)).
     - **Vera Cruz y Sangre de Huévar** (sin imágenes y sin fuente).
-- **57 Hermandades en borrador** (81 periodos): son fichas vacías, sin imágenes, sin pasos y casi todas sin municipio. Crear sus pasos exige completar las fichas.
+- **57 Hermandades en borrador** (81 periodos): son fichas vacías, sin imágenes ni pasos. Crear sus pasos exige completar las fichas.
   - Lista priorizada en `hermandades-borrador-prioridad.md` / `.csv`: 1 urgente (Nieves de Olivares, con 2 salidas publicadas), 35 de prioridad alta, 11 media y 10 baja.
 
 ### Verificación (web en producción)
@@ -206,3 +206,15 @@ Detalle en `owner-fixes-3.sql` y su reversión, `owner-fixes-3-rollback.sql`.
 - 10 Hermandad–Imagen.
 
 Pueden ser restos de una despublicación temporal. Revisar antes de publicarlas.
+
+### Municipios de las Hermandades en borrador · aplicado
+
+Indicación del propietario: el municipio está al final del nombre (por ejemplo, Nieves «de Olivares» o Jesús «de La Algaba»).
+
+- `municipios.sql` lo asigna solo cuando coincide exactamente con un municipio existente, más dos formas abreviadas: «Jerez» → Jerez de la Frontera y «Huévar» → Huévar del Aljarafe.
+- Solo rellena municipios vacíos: 25 actualizados.
+- Crea la fila de Hermandad que faltaba en otras 10, con la convención de los borradores.
+- **Resultado: 40 de 57 con municipio.** Reversión: `municipios-rollback.sql`.
+- Quedan 17:
+  - 7 municipios por dar de alta: Hinojos, Paterna del Campo, El Pedroso, Villarrasa, Los Molares, Brenes y Huete.
+  - 10 nombres de barrio o parroquia, o sin lugar.
