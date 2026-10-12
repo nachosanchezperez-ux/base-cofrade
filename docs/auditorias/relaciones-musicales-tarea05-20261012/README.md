@@ -119,7 +119,7 @@ Ninguna coincide con una ficha existente, ni por nombre oficial ni por nombres a
 
 Ganado hoy en las tareas 04 y 05 (ya aplicado y verificado esta mañana): 27 periodos enlazados a su paso, 7 bandas enlazadas en salidas y 135 pasos con histórico musical visible.
 
-## Datos aportados por el propietario · 12/10/2026 (preparados, pendientes de ejecutar)
+## Datos aportados por el propietario · 12/10/2026 · **aplicado y verificado**
 
 `owner-fixes.sql` y su reversión, `owner-fixes-rollback.sql`, que contiene literalmente los valores anteriores:
 
@@ -131,3 +131,14 @@ Ganado hoy en las tareas 04 y 05 (ya aplicado y verificado esta mañana): 27 per
    - Sus 3 asignaciones se enlazan a esa ficha.
    - `band_name_text` conserva el nombre juvenil y la nota visible indica «Banda Juvenil de la Banda de Música Santa Ana de Dos Hermanas».
    - No se cambia la etiqueta de posición, que comparten los coros.
+
+**Aplicado el 12/10/2026 con autorización del propietario.** Resultado: 2 fuentes, Cruz Roja 1/1, Maestro Tejera archivado 1/1, Juvenil 3/3 y 4 enlaces a fuentes.
+
+**Verificación:**
+- `outing_music_details` muestra «Banda de Música Santa Ana de Dos Hermanas» con la nota juvenil en las 3 salidas.
+- La web del paso (`/pasos/paso-dolores-coronada-camas`) muestra Cruz Roja en la Gloria y ya no muestra Maestro Tejera.
+- La ficha de banda solo lista salidas futuras (diseño existente), así que muestra Las Portadas (25/10). Las dos salidas pasadas se ven en sus directorios.
+
+**Cifras actualizadas:**
+- Formaciones solo como texto: 34 (24 correctas así, 9 bandas sin ficha, 1 ambigua).
+- Camas deja de estar bloqueado.
