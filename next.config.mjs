@@ -11,6 +11,13 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        // Duplicate record of the same march (Pablo Ojeda), merged on 13/10/2026:
+        // its only repertoire entry now points to the canonical ficha.
+        source: '/marchas/tu-eres-orgullo-nuestro-pueblo-pablo-ojeda',
+        destination: '/marchas/tu-eres-el-orgullo-de-nuestro-pueblo-pablo-ojeda',
+        permanent: true,
+      },
+      {
         // Legacy facet slug; bands-directory-public already folds it into
         // «Cornetas y Tambores», whose public facet is /bandas/tipo/cornetas-y-tambores.
         source: '/bandas/tipo/banda-de-cornetas-y-tambores',
