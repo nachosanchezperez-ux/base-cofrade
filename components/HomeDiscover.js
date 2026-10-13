@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import HomeDiscoverIcon from '@/components/HomeDiscoverIcon'
 import { buildHomeDiscover, HOME_DISCOVER_SECONDARY } from '@/lib/home-discover'
 import styles from './HomeDiscover.module.css'
 
@@ -17,8 +18,17 @@ export default function HomeDiscover({ stats }) {
           {items.map((item) => (
             <li key={item.key}>
               <Link className={styles.tile} href={item.href} data-key={item.key}>
-                <strong>{item.label}</strong>
-                {item.detail ? <span>{item.detail}</span> : null}
+                <HomeDiscoverIcon name={item.key} className={styles.ghost} />
+                <span className={styles.glyph}>
+                  <HomeDiscoverIcon name={item.key} />
+                </span>
+                <strong className={styles.name}>{item.label}</strong>
+                {item.total ? (
+                  <span className={styles.figure}><b>{item.total}</b> {item.unit}</span>
+                ) : item.detail ? (
+                  <span className={styles.hint}>{item.detail}</span>
+                ) : null}
+                <i className={styles.go} aria-hidden="true">→</i>
               </Link>
             </li>
           ))}

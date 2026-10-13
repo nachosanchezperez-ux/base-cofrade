@@ -26,6 +26,11 @@ test('la vista no convierte un dato no disponible en cero: muestra la sección s
   assert.equal(byKey.march, `${new Intl.NumberFormat('es-ES').format(1234)} fichas`)
   assert.equal(byKey.agenda, 'Hoy, mañana y fin de semana')
   assert.equal(buildHomeDiscover(null).length, 6)
+  const march = items.find((item) => item.key === 'march')
+  assert.equal(march.total, new Intl.NumberFormat('es-ES').format(1234))
+  assert.equal(march.unit, 'fichas')
+  const brotherhood = items.find((item) => item.key === 'brotherhood')
+  assert.equal(brotherhood.total, '')
 })
 
 test('las magnitudes de Home reutilizan el directorio público cacheado', async () => {
