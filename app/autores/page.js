@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { connection } from 'next/server'
+import { notFound } from 'next/navigation'
 import JsonLd from '@/components/JsonLd'
 import SiteBreadcrumb from '@/components/SiteBreadcrumb'
 import {
@@ -36,15 +37,23 @@ export async function generateMetadata({ searchParams } = {}) {
   const page = pageNumber(params?.pagina)
   const category = authorCategoryBySlug(params?.categoria)
 
+  // Unfiltered pages are the only crawl path to authors 101+: each one is a
+  // self-canonical, indexable listing. Category views stay noindex, follow.
+  const filtered = Boolean(params?.categoria)
+  const paginated = !filtered && page > 1
+  const pageTitle = category
+    ? `${category.label} · Autores cofrades`
+    : paginated ? `${title} · página ${page}` : title
+
   return {
-    title: category ? `${category.label} · Autores cofrades` : title,
+    title: pageTitle,
     description: category?.description || description,
     ...socialMetadata({
-      title: category ? `${category.label} · Autores cofrades` : title,
+      title: pageTitle,
       description: category?.description || description,
-      path: '/autores',
+      path: paginated ? pageHref(page) : '/autores',
     }),
-    ...(page > 1 || params?.categoria ? { robots: { index: false, follow: true } } : {}),
+    ...(filtered ? { robots: { index: false, follow: true } } : {}),
   }
 }
 
@@ -78,7 +87,10 @@ export default async function AuthorsDirectoryPage({ searchParams } = {}) {
     : agents
 
   const totalPages = Math.max(1, Math.ceil(filteredAgents.length / PAGE_SIZE))
-  const page = Math.min(pageNumber(params?.pagina), totalPages)
+  const requestedPage = pageNumber(params?.pagina)
+  // An indexable page number must exist: never serve page N as a copy of the last one.
+  if (!params?.categoria && requestedPage > totalPages) notFound()
+  const page = Math.min(requestedPage, totalPages)
   const pageItems = filteredAgents.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
 
   const groups = AUTHOR_CATEGORIES
@@ -91,7 +103,7 @@ export default async function AuthorsDirectoryPage({ searchParams } = {}) {
   return (
     <div className={styles.page} data-category={selectedCategory?.key || 'all'}>
       <JsonLd data={collectionPageJsonLd({
-        path: '/autores',
+        path: !selectedCategory && page > 1 ? pageHref(page) : '/autores',
         name: 'Autores y oficios cofrades',
         description,
         items: pageItems.map((agent) => ({ name: agent.name, path: `/autores/${agent.slug}` })),

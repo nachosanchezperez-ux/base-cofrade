@@ -1,4 +1,5 @@
 import { connection } from 'next/server'
+import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import JsonLd from '@/components/JsonLd'
 import SiteBreadcrumb from '@/components/SiteBreadcrumb'
@@ -24,11 +25,17 @@ export async function generateMetadata({ searchParams } = {}) {
     || (params?.filtro && params.filtro !== 'all')
   )
 
+  // Unfiltered pages are the only crawl path to marches 121+: each one is a
+  // self-canonical, indexable listing. Filtered views stay noindex, follow.
+  const paginated = !filtered && page > 1
+  const pageTitle = paginated ? `${title} · página ${page}` : title
+  const path = paginated ? directoryHref({ page }) : '/marchas'
+
   return {
-    title,
+    title: pageTitle,
     description,
-    ...socialMetadata({ title, description, path: '/marchas' }),
-    ...(page > 1 || filtered ? { robots: { index: false, follow: true } } : {}),
+    ...socialMetadata({ title: pageTitle, description, path }),
+    ...(filtered ? { robots: { index: false, follow: true } } : {}),
   }
 }
 
@@ -193,10 +200,14 @@ export default async function MarchesDirectoryPage({ searchParams } = {}) {
     : decadeItems
 
   const totalPages = Math.max(1, Math.ceil(filteredItems.length / PAGE_SIZE))
-  const page = Math.min(pageNumber(params?.pagina), totalPages)
+  const hasFilters = Boolean(query || letter || decade || filter !== 'all')
+  const requestedPage = pageNumber(params?.pagina)
+  // An indexable page number must exist: never serve page N as a copy of the last one.
+  if (!hasFilters && requestedPage > totalPages) notFound()
+  const page = Math.min(requestedPage, totalPages)
   const pageItems = filteredItems.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
   const groups = groupsFor(pageItems)
-  const hasFilters = Boolean(query || letter || decade || filter !== 'all')
+  const collectionPath = !hasFilters && page > 1 ? directoryHref({ page }) : '/marchas'
 
   const filterCards = [
     { key: 'all', label: 'Todas', count: marches.length },
@@ -219,8 +230,8 @@ export default async function MarchesDirectoryPage({ searchParams } = {}) {
       <JsonLd data={{
         '@context': 'https://schema.org',
         '@type': 'CollectionPage',
-        '@id': `${absoluteUrl('/marchas')}#collection`,
-        url: absoluteUrl('/marchas'),
+        '@id': `${absoluteUrl(collectionPath)}#collection`,
+        url: absoluteUrl(collectionPath),
         name: title,
         description,
         inLanguage: 'es',

@@ -6,21 +6,31 @@ function read(path) {
   return readFileSync(new URL(`../${path}`, import.meta.url), 'utf8')
 }
 
-test('Marchas reparte el directorio en páginas rastreables y no indexa duplicados', () => {
+test('Marchas reparte el directorio en páginas rastreables e indexables, sin indexar filtros', () => {
   const source = read('app/marchas/page.js')
   assert.match(source, /const PAGE_SIZE = 120/)
-  assert.match(source, /robots: \{ index: false, follow: true \}/)
   assert.match(source, /directoryHref\(\{ page: number, query, letter, decade, filter \}\)/)
   assert.match(source, /aria-label="Páginas del directorio de Marchas"/)
+  // Sin filtros, cada página es canónica e indexable: es la única vía de rastreo a las marchas 121+.
+  assert.match(source, /const paginated = !filtered && page > 1/)
+  assert.match(source, /const path = paginated \? directoryHref\(\{ page \}\) : '\/marchas'/)
+  assert.match(source, /`\$\{title\} · página \$\{page\}`/)
+  assert.match(source, /\.\.\.\(filtered \? \{ robots: \{ index: false, follow: true \} \} : \{\}\)/)
+  assert.doesNotMatch(source, /page > 1 \|\| filtered/)
+  assert.match(source, /if \(!hasFilters && requestedPage > totalPages\) notFound\(\)/)
 })
 
-test('Autores reparte el directorio en páginas rastreables y no indexa duplicados', () => {
+test('Autores reparte el directorio en páginas rastreables e indexables, sin indexar categorías', () => {
   const source = read('app/autores/page.js')
   assert.match(source, /const PAGE_SIZE = 100/)
-  assert.match(source, /robots: \{ index: false, follow: true \}/)
   assert.match(source, /pageHref\(number, selectedCategory\?\.slug \|\| ''\)/)
-  assert.match(source, /page > 1 \|\| params\?\.categoria/)
   assert.match(source, /aria-label="Páginas del directorio de Autores"/)
+  // Sin categoría, cada página es canónica e indexable: es la única vía de rastreo a los autores 101+.
+  assert.match(source, /const paginated = !filtered && page > 1/)
+  assert.match(source, /path: paginated \? pageHref\(page\) : '\/autores'/)
+  assert.match(source, /\.\.\.\(filtered \? \{ robots: \{ index: false, follow: true \} \} : \{\}\)/)
+  assert.doesNotMatch(source, /page > 1 \|\| params\?\.categoria/)
+  assert.match(source, /if \(!params\?\.categoria && requestedPage > totalPages\) notFound\(\)/)
 })
 
 test('Pasos envía al cliente solo el contrato necesario del directorio', () => {
