@@ -826,7 +826,8 @@ export default async function HermandadDetailPage({ params, reading: readingOver
               : titularsSection,
             steps: magazineProcession.steps.length ? <BrotherhoodProcession steps={magazineProcession.steps} head={magazineProcession.head} /> : stepsSection,
             history: magazineHistory === undefined ? historySection : magazineHistory,
-            ownMusic: magazine ? <BrotherhoodOwnBands brotherhoodId={h.id} musicOnly skipCurrent={magazineProcession.steps.length > 0} /> : ownMusicSection, musicalHeritage: musicalHeritageSection, repertoires: repertoiresSection,
+            ownMusic: magazine ? <BrotherhoodOwnBands brotherhoodId={h.id} musicOnly compact skipCurrent={magazineProcession.steps.length > 0} /> : ownMusicSection,
+            musicItems: magazine ? musicalHeritage : null, musicalHeritage: musicalHeritageSection, repertoires: repertoiresSection,
             historicalMusic: historicalMusicSection, heritage: heritageSection, simpecados: simpecadosSection,
             posters: postersSection, habit: habitSection, council: councilSection, viaCrucis: viaCrucisSection,
             outings: outingsSection, crew: crewSection, hasCrew: crewEvents.length > 0, cults: cultsSection, news: newsSection, curiosities: curiositiesSection }}

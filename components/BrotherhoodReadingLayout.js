@@ -4,6 +4,7 @@ import SectionTitle from './SectionTitle'
 import BrotherhoodQuickFacts from './BrotherhoodQuickFacts'
 import BrotherhoodOverviewV2 from './BrotherhoodOverviewV2'
 import BrotherhoodEditorialGuide from './BrotherhoodEditorialGuide'
+import MusicSoundtrack from './ficha/MusicSoundtrack'
 import { nextBrotherhoodAppointment } from '@/lib/brotherhood-reading'
 import styles from './BrotherhoodReadingLayout.module.css'
 
@@ -18,14 +19,15 @@ function ReadingLink({ href, children, ...props }) {
   return href?.startsWith('#') ? <a href={href} {...props}>{children}</a> : <Link href={href} {...props}>{children}</Link>
 }
 
-function NextAppointment({ item }) {
+function NextAppointment({ item, big = false }) {
   if (!item) return null
   const date = new Date(`${item.date}T12:00:00Z`)
   const label = new Intl.DateTimeFormat('es-ES', {day:'numeric',month:'long',year:'numeric',timeZone:'Europe/Madrid'}).format(date)
   const route = item.route || item.routeText || item.routeSummary || (Array.isArray(item.processionRoute) ? item.processionRoute.join(' · ') : '')
-  return <aside className={styles.next} aria-label="Próxima cita de la Hermandad">
+  const part = (options) => new Intl.DateTimeFormat('es-ES', {...options, timeZone:'Europe/Madrid'}).format(date)
+  return <aside className={`${styles.next} ${big ? styles.nextBig : ''}`} aria-label="Próxima cita de la Hermandad">
     <span className="eyebrow">Próxima cita</span>
-    <time dateTime={item.date}>{label}</time>
+    {big ? <time dateTime={item.date} className={styles.dateTile}><span>{part({weekday:'long'})}</span><b>{part({day:'numeric'})}</b><span>{part({month:'short'}).replace('.', '')}</span></time> : <time dateTime={item.date}>{label}</time>}
     <h3>{item.title}</h3>
     <p className={styles.nextTime}>{item.startTime || item.timeText || 'Hora por confirmar'}</p>
     {route ? <details className={styles.inlineDisclosure}><summary>Recorrido <span aria-hidden="true">+</span></summary><p>{route}</p></details> : null}
@@ -63,7 +65,7 @@ export default function BrotherhoodReadingLayout({ brotherhood: h, today, agenda
       {slots.steps}
       {slots.keys}
       {slots.history}
-      {next ? <div className={`shell ${styles.supplement}`}><NextAppointment item={next} /></div> : null}
+      {next ? <div className={`shell ${styles.supplement}`}><NextAppointment item={next} big /></div> : null}
       {slots.titulars}
     </> : <>
     <section className={`section ${styles.overview}`} id="resumen"><div className={`shell ${styles.overviewGrid}`}>
@@ -83,7 +85,10 @@ export default function BrotherhoodReadingLayout({ brotherhood: h, today, agenda
     {slots.history}
     </>}
     {(h.viaCrucisCofradias?.length || h.participacionesConsejo?.length) ? <div className={`shell ${styles.supplement}`}><Disclosure title="Participaciones institucionales y Vía Crucis">{slots.council}{slots.viaCrucis}</Disclosure></div> : null}
-    {hasMusic ? <section className={`section ${styles.area}`} id="musica"><div className="shell">
+    {hasMusic && magazine && slots.musicItems?.length ? <MusicSoundtrack items={slots.musicItems} name={h.nombrePopular}>
+      {slots.ownMusic}{slots.musicalHeritage}{slots.repertoires}
+      {h.acompanamientos?.length ? <Disclosure title="Acompañamientos históricos" count={h.acompanamientos.length}>{slots.historicalMusic}</Disclosure> : null}
+    </MusicSoundtrack> : hasMusic ? <section className={`section ${styles.area}`} id="musica"><div className="shell">
       <SectionTitle eyebrow="Identidad sonora" title="Música" />
       <div className={styles.musicGrid}>
         <div>{slots.ownMusic}</div>
@@ -97,7 +102,7 @@ export default function BrotherhoodReadingLayout({ brotherhood: h, today, agenda
       {slots.heritage}
       {h.simpecados?.length ? <Disclosure title="Simpecados" count={h.simpecados.length}>{slots.simpecados}</Disclosure> : null}
       {h.cartelesFiestas?.length ? <Disclosure title="Carteles" count={h.cartelesFiestas.length}>{slots.posters}</Disclosure> : null}
-      {h.habitos?.length ? <Disclosure title="Túnica e indumentaria" count={h.habitos.length}>{slots.habit}</Disclosure> : null}
+      {h.habitos?.length ? (magazine ? slots.habit : <Disclosure title="Túnica e indumentaria" count={h.habitos.length}>{slots.habit}</Disclosure>) : null}
     </div></section> : null}
     {hasAgenda ? <section className={`section ${styles.area}`} id="agenda"><div className="shell">
       <SectionTitle eyebrow="Vida de hermandad" title="Agenda y cultos" />

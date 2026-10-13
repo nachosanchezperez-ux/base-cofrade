@@ -85,3 +85,30 @@ test('entradilla de tarjeta: corta en un punto y conserva el resto', () => {
   assert.deepEqual(splitLead('Corto.'), { lead: 'Corto.', rest: '' })
   assert.equal(yearOf('Siglo XVI'), null)
 })
+
+test('musicByDecade agrupa por décadas, rellena huecos y no estima años', async () => {
+  const { musicByDecade } = await import('../lib/brotherhood-magazine.js')
+  const result = musicByDecade([{ year: '1925' }, { year: 1948 }, { year: 'c. 1949' }, { year: '' }, { year: 'sin fecha' }])
+  assert.equal(result.dated, 3)
+  assert.deepEqual(result.decades.map((d) => [d.decade, d.count]), [[1920, 1], [1930, 0], [1940, 2]])
+  assert.equal(result.max, 2)
+  assert.deepEqual(musicByDecade([]).decades, [])
+})
+
+test('topComposers solo muestra autores con dos o más obras', async () => {
+  const { topComposers } = await import('../lib/brotherhood-magazine.js')
+  const a = { name: 'A', slug: 'a' }
+  const b = { name: 'B', slug: 'b' }
+  const result = topComposers([{ composers: [a] }, { composers: [a, b] }, { composers: [a] }, { composers: [] }])
+  assert.deepEqual(result, [{ name: 'A', slug: 'a', count: 3 }])
+})
+
+test('listeningPicks reparte la selección a lo largo de la cronología', async () => {
+  const { listeningPicks } = await import('../lib/brotherhood-magazine.js')
+  const items = Array.from({ length: 10 }, (_, i) => ({ id: i, listening: i % 3 === 1 ? null : { url: `https://example.org/${i}` } }))
+  const picks = listeningPicks(items, 4)
+  assert.equal(picks.length, 4)
+  assert.equal(picks[0].id, 0)
+  assert.equal(picks.at(-1).id, 9)
+  assert.ok(picks.every((item) => item.listening))
+})
