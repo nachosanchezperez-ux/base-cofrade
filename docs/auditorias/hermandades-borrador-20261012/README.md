@@ -200,12 +200,12 @@ Verificado en `/hermandades/hermandad-esperanza-arahal`.
 - **Pasos:** misterio de las Negaciones y palio, sin autor documentado.
 - **No se ha creado:** la Inmaculada Concepción ni la Virgen Gloriosa, porque ninguna fuente las describe.
 - **Música:** Santa María Magdalena de Arahal, tras el misterio desde 2024, enlazada al paso. El propietario confirmó que es la banda actual; su confirmación queda registrada como fuente del periodo.
+- **Música histórica (13/10/2026):** periodo nuevo de la A.M. Virgen de los Reyes tras el misterio hasta 2023, confirmado por el propietario y por «Camas Cofrade 2023». No hay año de inicio documentado, así que se deja como texto.
 
 ### Propuesto, sin aplicar
 
 Estos acompañamientos aparecen en las fuentes pero no están en la base:
 
-- Virgen de los Reyes tras el misterio (2023), según «Camas Cofrade 2023».
 - Cigarreras tras el palio, desde 2018, según «Camas Cofrade 2023» y El Pespunte. El año de fin no está confirmado.
 - Mairena del Alcor tras el palio en 2026, según El Pespunte del 12/12/2025.
 

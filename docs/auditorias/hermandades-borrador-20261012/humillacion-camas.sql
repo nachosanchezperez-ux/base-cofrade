@@ -104,3 +104,24 @@ on conflict (id) do nothing;
 insert into public.source_links (source_id, music_accompaniment_period_id, scope)
 select '7a5c0e05-2026-4012-8000-00000000ca28', '8a294ba7-a11f-4525-8cef-e7fd2ef6b38d', 'Confirmación editorial del acompañamiento vigente'
 where not exists (select 1 from public.source_links where source_id = '7a5c0e05-2026-4012-8000-00000000ca28' and music_accompaniment_period_id = '8a294ba7-a11f-4525-8cef-e7fd2ef6b38d');
+
+-- 8 · Confirmación del propietario (13/10/2026): «La A.M. Virgen de los Reyes deja el misterio en 2023 y en 2024 llega Santa María Magdalena de Arahal».
+--     Periodo histórico nuevo. El año de inicio no está documentado: se deja como texto (sin inventar año).
+insert into public.sources (id, name, url, source_type, author_or_publisher, accessed_at, notes) values
+ ('7a5c0e05-2026-4012-8000-00000000ca29', 'Humillación de Camas · Virgen de los Reyes hasta 2023 · confirmación editorial', null, 'Aportación directa', 'Dirección de Hilo Cofrade', '2026-10-13',
+  'El propietario confirma el 13/10/2026 que la A.M. Virgen de los Reyes deja el misterio en 2023 y que en 2024 llega Santa María Magdalena de Arahal.')
+on conflict (id) do nothing;
+insert into public.music_accompaniment_periods (id, brotherhood_entity_id, band_entity_id, step_entity_id, position, outing_type,
+  date_from_text, date_to_text, year_to, is_current, notes, status, public_step_name, public_brotherhood_name, public_brotherhood_slug) values
+ ('7a5c0e05-2026-4012-8000-0000000061a3', 'c6100000-0000-4000-8000-000000000016', 'b829bf98-78fa-4f0f-9aeb-cd965c779853', '7a5c0e05-2026-4012-8000-0000000005f4',
+  'Tras el paso de misterio', 'Sábado de Pasión', 'Inicio no documentado · consta en 2023', 'Hasta el Sábado de Pasión de 2023', 2023, false,
+  'Tras Nuestro Padre Jesús del Soberano Poder en las Negaciones de San Pedro. En 2024 le sucede Santa María Magdalena de Arahal.',
+  'published', 'Paso de misterio de las Negaciones de San Pedro', 'Hermandad de la Humillación de Camas', 'hermandad-humillacion-camas')
+on conflict (id) do nothing;
+insert into public.source_links (source_id, music_accompaniment_period_id, scope)
+select v.s, v.p, v.sc from (values
+  ('7a5c0e05-2026-4012-8000-00000000ca27'::uuid, '7a5c0e05-2026-4012-8000-0000000061a3'::uuid, 'Camas Cofrade 2023: Virgen de los Reyes tras el misterio'),
+  ('7a5c0e05-2026-4012-8000-00000000ca29'::uuid, '7a5c0e05-2026-4012-8000-0000000061a3'::uuid, 'Confirmación editorial del fin del acompañamiento en 2023'),
+  ('7a5c0e05-2026-4012-8000-00000000ca29'::uuid, '8a294ba7-a11f-4525-8cef-e7fd2ef6b38d'::uuid, 'Confirmación editorial del inicio en 2024')
+) v(s, p, sc)
+where not exists (select 1 from public.source_links x where x.source_id = v.s and x.music_accompaniment_period_id = v.p);
