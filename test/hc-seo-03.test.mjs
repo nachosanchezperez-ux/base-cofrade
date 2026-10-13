@@ -13,7 +13,8 @@ const sitemap = read('app/sitemap.js')
 
 test('HC-SEO-03 publica un hub canónico para las 560 fichas de Marchas', () => {
   assert.match(page, /getPublicMarchDirectory/)
-  assert.match(page, /socialMetadata\(\{ title, description, path: '\/marchas' \}\)/)
+  assert.match(page, /socialMetadata\(\{ title: pageTitle, description, path \}\)/)
+  assert.match(page, /const path = paginated \? directoryHref\(\{ page \}\) : '\/marchas'/)
   assert.match(page, /CollectionPage/)
   assert.match(page, /marches\.length/)
   assert.match(page, /group\.items\.map/)
