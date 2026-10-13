@@ -48,6 +48,6 @@ test('Historia conserva todos los hitos en HTML pero pliega cronologías largas'
 
 test('Historia sin hitos conserva el texto documental y no desaparece', () => {
   const component = read('components/BrotherhoodHistoryTimeline.js')
-  assert.match(component, /if \\(!items\\.length && !introduction\\) return null/)
-  assert.match(component, /className=\\{styles\\.introduction\\}.*\\{introduction\\}/)
+  assert.ok(component.includes('if (!items.length && !introduction) return null'))
+  assert.ok(component.includes('<p className={styles.introduction}>{introduction}</p>'))
 })
