@@ -3,6 +3,13 @@ import BrotherhoodReadingLayout from '@/components/BrotherhoodReadingLayout';
 import BrotherhoodQuickFacts from '@/components/BrotherhoodQuickFacts';
 import readingStyles from '@/components/BrotherhoodReadingLayout.module.css';
 import { usesBrotherhoodReading } from '@/lib/brotherhood-reading-rollout';
+import { brotherhoodFigures, brotherhoodProcession, guideCoversHistory, milestonesFromText, usesBrotherhoodMagazine } from '@/lib/brotherhood-magazine';
+import FichaHero from '@/components/ficha/FichaHero';
+import FichaFigures from '@/components/ficha/FichaFigures';
+import BrotherhoodProcession from '@/components/ficha/BrotherhoodProcession';
+import EditorialKeys from '@/components/ficha/EditorialKeys';
+import HistoryMilestones from '@/components/ficha/HistoryMilestones';
+import TitularGallery from '@/components/ficha/TitularGallery';
 import Image from 'next/image';
 import { cache } from 'react';
 import BrotherhoodAgendaSection from '@/components/BrotherhoodAgendaSection';
@@ -161,7 +168,10 @@ export default async function HermandadDetailPage({ params, reading: readingOver
   const { slug } = await params;
   const h = await getHermandad(slug);
   if (!h) notFound();
-  const reading = readingOverride ?? usesBrotherhoodReading(h.id);
+  // Diseño «enciclopedia × revista» (Tarea 09): cohorte por ID. Se apoya en la
+  // lectura de Hermandades, que queda activa para estas fichas.
+  const magazine = usesBrotherhoodMagazine(h.id);
+  const reading = (readingOverride ?? usesBrotherhoodReading(h.id)) || magazine;
 
   const canonicalPath = `/hermandades/${h.slug}`;
   const municipalityHubHref = agendaMunicipalityHref(h.localidad);
@@ -298,6 +308,39 @@ export default async function HermandadDetailPage({ params, reading: readingOver
     { label: 'Titulares', value: h.imagenes?.length ? String(h.imagenes.length) : '' },
   ].filter((item) => item?.value);
   const heroFacts = isPenitencia ? penitentialFacts : gloryFacts;
+  const historyInGuide = guideCoversHistory(h);
+  const magazineFigures = magazine ? brotherhoodFigures({
+    brotherhood: h,
+    marchCount: musicalHeritage.filter((item) => item.workType === 'Marcha procesional').length,
+    currentYear: Number(String(agendaData.today || '').slice(0, 4)) || undefined,
+    foundationHref: historyInGuide ? '#conoce-hermandad' : '#historia',
+  }) : [];
+  const magazineProcession = magazine && isPenitencia ? brotherhoodProcession({
+    steps: holyWeekSteps,
+    images: h.imagenes || [],
+    acompanamientoActual: h.acompanamientoActual || [],
+    coverMedia: entityCoverMedia,
+    framing: (stepSlug) => getStepPhotoFraming(stepSlug).card,
+  }) : { head: [], steps: [] };
+  const magazineMilestones = magazine && !historyInGuide && !(h.cronologia?.length)
+    ? milestonesFromText(publicText(h.historia))
+    : [];
+  const magazineHistory = !magazine ? null
+    : historyInGuide ? null
+    : magazineMilestones.length >= 3 ? <HistoryMilestones items={magazineMilestones} kicker={`${magazineMilestones.length} fechas`} />
+    : undefined;
+  const magazineTitulars = magazine ? (h.imagenes || []).map((imagen) => {
+    const media = entityCoverMedia.get(imagen.id);
+    return {
+      id: imagen.id,
+      name: imagen.nombre,
+      type: publicText(imagen.tipo),
+      authorship: [publicText(imagen.autor), publicText(imagen.fecha)].filter(Boolean).join(' · '),
+      href: imagen.fichaDisponible && imagen.slug ? `/imagenes/${imagen.slug}` : '',
+      photo: media?.path ? { src: media.path, alt: media.alt, credit: media.credit } : null,
+      initials: imagen.iniciales,
+    };
+  }) : [];
   const heroFactLabels = new Set(heroFacts.map((fact) => fact.label));
   const hasPracticalOverview = Boolean(
     publicText(h.sedeDetalle?.nombre)
@@ -706,6 +749,33 @@ export default async function HermandadDetailPage({ params, reading: readingOver
       <JsonLd data={organizationJsonLd} />
       <JsonLd data={pageJsonLd} />
 
+      {magazine ? (
+      <FichaHero
+        kind={[holyWeekDay(h) || publicText(h.diaSalida), brotherhoodTypeLabel].filter(Boolean).join(' · ')}
+        title={h.nombrePopular}
+        officialName={h.nombreOficial}
+        context={[
+          { label: publicText(h.sede) },
+          { label: publicText(h.localidad), href: municipalityHubHref || undefined },
+        ]}
+        breadcrumbItems={[
+          { label: 'Hermandades', href: '/hermandades' },
+          publicText(h.localidad) ? { label: publicText(h.localidad), href: municipalityHubHref || undefined } : null,
+          { label: h.nombrePopular },
+        ]}
+        crest={authoritativeCrestPath ? { src: authoritativeCrestPath, alt: `Escudo de ${h.nombrePopular}` } : null}
+        media={{
+          photoSrc: heroMedia?.path || '',
+          photoAlt: heroMedia?.alt || `Fotografía de ${h.nombrePopular}`,
+          credit: heroMedia?.credit || '',
+          focusX: heroMedia?.focusX,
+          focusY: heroMedia?.focusY,
+          mobileFocusX: heroMedia?.mobileFocusX,
+          mobileFocusY: heroMedia?.mobileFocusY,
+          focusPosition: heroMedia?.focusPosition,
+        }}
+      />
+      ) : (
       <BrotherhoodProgramHero
         compact={reading}
         entityType={brotherhoodTypeLabel}
@@ -736,6 +806,9 @@ export default async function HermandadDetailPage({ params, reading: readingOver
           crestAlt: `Escudo de ${h.nombrePopular}`,
         }}
       />
+      )}
+
+      {magazine ? <FichaFigures items={magazineFigures} label={`${h.nombrePopular} en cifras`} /> : null}
 
       {reading ? (
         <BrotherhoodReadingLayout
@@ -744,8 +817,16 @@ export default async function HermandadDetailPage({ params, reading: readingOver
           agendaItems={upcomingAgendaItems}
           heroFactLabels={heroFacts.map((fact) => fact.label)}
           hasMusic={Boolean(documentedCurrentAccompaniments.length || musicalHeritage.length || fallbackMusicalHeritage.length || documentedHistoricalAccompaniments.length || musicalRepertoires.length)}
-          slots={{ titulars: titularsSection, steps: stepsSection, history: historySection,
-            ownMusic: ownMusicSection, musicalHeritage: musicalHeritageSection, repertoires: repertoiresSection,
+          variant={magazine ? 'magazine' : 'reading'}
+          slots={{
+            hasProcession: magazineProcession.steps.length > 0,
+            keys: magazine ? <EditorialKeys guide={h.editorialGuide} name={h.nombrePopular} /> : null,
+            titulars: magazine
+              ? <TitularGallery items={magazineTitulars}><BrotherhoodConceptualTitulars brotherhoodId={h.id} /><BrotherhoodQuickFacts brotherhood={h} peopleOnly /></TitularGallery>
+              : titularsSection,
+            steps: magazineProcession.steps.length ? <BrotherhoodProcession steps={magazineProcession.steps} head={magazineProcession.head} /> : stepsSection,
+            history: magazineHistory === undefined ? historySection : magazineHistory,
+            ownMusic: magazine ? <BrotherhoodOwnBands brotherhoodId={h.id} musicOnly skipCurrent={magazineProcession.steps.length > 0} /> : ownMusicSection, musicalHeritage: musicalHeritageSection, repertoires: repertoiresSection,
             historicalMusic: historicalMusicSection, heritage: heritageSection, simpecados: simpecadosSection,
             posters: postersSection, habit: habitSection, council: councilSection, viaCrucis: viaCrucisSection,
             outings: outingsSection, crew: crewSection, hasCrew: crewEvents.length > 0, cults: cultsSection, news: newsSection, curiosities: curiositiesSection }}
@@ -811,7 +892,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
 
       </>)}
 
-      <RelationalThread
+      {magazine ? null : <RelationalThread
         maxItems={reading ? 4 : 8}
         diverse={reading}
         currentLabel="Hermandad"
@@ -822,9 +903,9 @@ export default async function HermandadDetailPage({ params, reading: readingOver
         eyebrow="Descubre el hilo"
         title="Conexiones de esta Hermandad"
         description="Continúa por sus Titulares, pasos, bandas y marchas documentadas. Cada relación abre una nueva ficha sin perder el contexto de la Hermandad de origen."
-      />
+      />}
 
-      {reading && <div className={`shell ${readingStyles.documentation}`}><details className={readingStyles.disclosure}><summary>Más rutas para tirar del hilo <b aria-hidden="true">+</b></summary><BrotherhoodReadingDiscovery brotherhoodId={h.id} /></details></div>}
+      {magazine ? <BrotherhoodReadingDiscovery brotherhoodId={h.id} /> : reading && <div className={`shell ${readingStyles.documentation}`}><details className={readingStyles.disclosure}><summary>Más rutas para tirar del hilo <b aria-hidden="true">+</b></summary><BrotherhoodReadingDiscovery brotherhoodId={h.id} /></details></div>}
 
       {reading && h.enlacesOficiales?.length ? <div className={`shell ${readingStyles.documentation}`}><details className={readingStyles.disclosure}><summary>Web y redes oficiales <span>{h.enlacesOficiales.length}</span><b aria-hidden="true">+</b></summary><OfficialLinks links={h.enlacesOficiales} /></details></div> : <OfficialLinks links={h.enlacesOficiales} />}
       <SourcesBlock sources={h.fuentesFicha} />

@@ -1,0 +1,128 @@
+.section {
+  padding: 44px 0;
+  background: var(--brotherhood-dark, var(--hc-navy, #112339));
+  color: #fff;
+}
+
+.head { display: grid; gap: 6px; margin-bottom: 20px; }
+
+.kicker,
+.type {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--brotherhood-secondary, #B01B32) 30%, #fff);
+}
+
+.head h2 {
+  margin: 0;
+  font-size: clamp(38px, 11vw, 68px);
+  font-weight: 800;
+  line-height: .92;
+  letter-spacing: -.03em;
+  text-transform: uppercase;
+  text-wrap: balance;
+  color: #fff;
+}
+
+.procession { display: grid; gap: 14px; margin: 0; padding: 0; list-style: none; }
+
+.stop {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: 340px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--brotherhood-dark, #112339) 70%, #000);
+  isolation: isolate;
+}
+
+.photo { z-index: -2; object-fit: cover; }
+
+.stop::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, rgba(10, 6, 14, 0) 30%, rgba(10, 6, 14, .9) 100%);
+}
+
+.noPhoto { min-height: 0; }
+.noPhoto::after { display: none; }
+.noPhoto .copy { padding-top: 72px; }
+
+.marker {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--brotherhood-dark, #112339);
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.marker svg { width: 22px; height: 22px; }
+
+.credit {
+  position: absolute;
+  top: 18px;
+  right: 12px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, .8);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, .6);
+}
+
+.copy { width: 100%; padding: 18px; }
+
+.copy h3,
+.crossCopy h3 {
+  margin: 4px 0 6px;
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+.copy h3 a { color: #fff; text-decoration: none; }
+.copy h3 a:hover { text-decoration: underline; }
+
+.titulars { margin: 0; font-size: 15px; line-height: 1.45; color: rgba(255, 255, 255, .82); }
+.titulars a { color: #fff; text-decoration: underline; text-decoration-color: rgba(255, 255, 255, .4); text-underline-offset: 3px; }
+
+.music { display: grid; gap: 2px; margin: 12px 0 0; padding: 12px 0 0; list-style: none; border-top: 1px solid rgba(255, 255, 255, .2); }
+.music li { display: flex; align-items: center; gap: 10px; min-height: 44px; }
+.music svg { flex: 0 0 30px; width: 30px; height: 30px; color: color-mix(in srgb, var(--brotherhood-secondary, #B01B32) 30%, #fff); }
+.music li > span { display: flex; flex-direction: column; }
+.music a,
+.music strong { font-size: 16px; font-weight: 700; color: #fff; text-decoration: none; }
+.music a:hover { text-decoration: underline; }
+.music small { font-size: 12px; font-weight: 600; color: rgba(255, 255, 255, .7); }
+
+.cross {
+  position: relative;
+  padding: 16px 16px 16px 72px;
+  border: 1px dashed rgba(255, 255, 255, .35);
+  border-radius: 16px;
+}
+
+.cross .marker { top: 16px; }
+.crossCopy h3 { font-size: 22px; }
+.crossCopy .music { border-top: 0; margin-top: 4px; padding-top: 0; }
+
+@media (min-width: 760px) {
+  .section { padding: 64px 0; }
+  .procession { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+  .cross { grid-column: 1 / -1; }
+  .stop { min-height: 420px; }
+}
+
+@media (min-width: 1100px) {
+  .procession { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
