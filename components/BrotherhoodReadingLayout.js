@@ -34,12 +34,20 @@ function NextAppointment({ item }) {
   </aside>
 }
 
-export default function BrotherhoodReadingLayout({ brotherhood: h, today, agendaItems, heroFactLabels, hasMusic, slots }) {
+export default function BrotherhoodReadingLayout({ brotherhood: h, today, agendaItems, heroFactLabels, hasMusic, slots, prototype = false }) {
   const next = nextBrotherhoodAppointment(agendaItems, h.salidas, today, h.cultos)
   const hasHeritage = h.patrimonio?.length || h.estrenos?.length || h.simpecados?.length || h.cartelesFiestas?.length || h.habitos?.length
   const hasAgenda = h.salidas?.length || h.cultos?.length || agendaItems.length || slots.hasCrew
   return <>
-    <EntitySectionNav discover={false} revealDisclosures items={[
+    <EntitySectionNav discover={false} revealDisclosures items={prototype ? [
+      slots.hasProcession && {href:'#cortejo',label:'Cortejo'},
+      slots.keys && {href:'#conoce-hermandad',label:'Claves'},
+      (h.historia?.trim() || h.cronologia?.length) && {href:'#historia',label:'Historia'},
+      h.imagenes?.length && {href:'#titulares',label:'Titulares'},
+      hasMusic && {href:'#musica',label:'Música'},
+      hasHeritage && {href:'#patrimonio-area',label:'Patrimonio'},
+      hasAgenda && {href:'#agenda',label:'Agenda'},
+    ] : [
       {href:'#resumen',label:'Resumen'},
       h.imagenes?.length && {href:'#titulares',label:'Titulares'},
       (h.historia?.trim() || h.cronologia?.length) && {href:'#historia',label:'Historia'},
@@ -47,6 +55,13 @@ export default function BrotherhoodReadingLayout({ brotherhood: h, today, agenda
       hasHeritage && {href:'#patrimonio-area',label:'Patrimonio'},
       hasAgenda && {href:'#agenda',label:'Agenda / Cultos'},
     ]} />
+    {prototype ? <>
+      {slots.steps}
+      {slots.keys}
+      {slots.history}
+      {next ? <div className={`shell ${styles.supplement}`}><NextAppointment item={next} /></div> : null}
+      {slots.titulars}
+    </> : <>
     <section className={`section ${styles.overview}`} id="resumen"><div className={`shell ${styles.overviewGrid}`}>
       <div>
         <SectionTitle eyebrow="De un vistazo" title="La Hermandad en breve" />
@@ -62,6 +77,7 @@ export default function BrotherhoodReadingLayout({ brotherhood: h, today, agenda
     {slots.titulars}
     {slots.steps}
     {slots.history}
+    </>}
     {(h.viaCrucisCofradias?.length || h.participacionesConsejo?.length) ? <div className={`shell ${styles.supplement}`}><Disclosure title="Participaciones institucionales y Vía Crucis">{slots.council}{slots.viaCrucis}</Disclosure></div> : null}
     {hasMusic ? <section className={`section ${styles.area}`} id="musica"><div className="shell">
       <SectionTitle eyebrow="Identidad sonora" title="Música" />
@@ -81,7 +97,8 @@ export default function BrotherhoodReadingLayout({ brotherhood: h, today, agenda
     </div></section> : null}
     {hasAgenda ? <section className={`section ${styles.area}`} id="agenda"><div className="shell">
       <SectionTitle eyebrow="Vida de hermandad" title="Agenda y cultos" />
-      {next ? <p className={styles.agendaSummary}>Próxima cita: <ReadingLink href={next.href}>{next.title}</ReadingLink> · <time dateTime={next.date}>{new Intl.DateTimeFormat('es-ES',{day:'numeric',month:'long',timeZone:'Europe/Madrid'}).format(new Date(`${next.date}T12:00:00Z`))}</time></p> : null}
+      {prototype ? <Disclosure title="Sede y horarios"><BrotherhoodOverviewV2 brotherhood={h} practicalOnly /></Disclosure> : null}
+      {next && !prototype ? <p className={styles.agendaSummary}>Próxima cita: <ReadingLink href={next.href}>{next.title}</ReadingLink> · <time dateTime={next.date}>{new Intl.DateTimeFormat('es-ES',{day:'numeric',month:'long',timeZone:'Europe/Madrid'}).format(new Date(`${next.date}T12:00:00Z`))}</time></p> : null}
       {agendaItems.length > 1 ? <Disclosure title="Otras próximas citas" count={agendaItems.length - 1}><ul className={styles.appointments}>{agendaItems.filter(item => item.href !== next?.href).map(item => <li key={item.key}><time dateTime={item.date}>{item.date}</time><ReadingLink href={item.href}>{item.title}</ReadingLink><strong>{item.startTime || item.timeText || 'Hora por confirmar'}</strong></li>)}</ul></Disclosure> : null}
       {h.salidas?.length ? <Disclosure title="Salidas · ediciones y archivo" count={h.salidas.length} id="archivo-salidas">{slots.outings}</Disclosure> : null}
       {h.cultos?.length ? <Disclosure title="Calendario de cultos y ediciones" count={h.cultos.length}>{slots.cults}</Disclosure> : null}

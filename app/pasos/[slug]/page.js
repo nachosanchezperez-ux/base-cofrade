@@ -312,11 +312,11 @@ export default async function PasoDetailPage({params}){
           <EntityLastUpdated value={paso.updatedAt} />
           {publicText(paso.descripcion) ? <p className="body-large">{publicText(paso.descripcion)}</p> : null}
           <div className="step-facts">
-            {hermandad ? <div>
+            {hermandad && !fichaPrototype ? <div>
               <small>Hermandad</small>
               <strong>{hermandad.nombrePopular}</strong>
             </div> : null}
-            {municipalityHubHref ? <div>
+            {municipalityHubHref && !fichaPrototype ? <div>
               <small>Localidad</small>
               <Link href={municipalityHubHref}>Guía cofrade de {hermandad.localidad} →</Link>
             </div> : null}

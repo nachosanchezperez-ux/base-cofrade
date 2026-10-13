@@ -265,10 +265,6 @@ export default async function ImagenPage({ params }) {
           { label: 'Imágenes', href: '/imagenes' },
           { label: imagen.nombre },
         ]}
-        context={[
-          hermandad ? { label: `Hermandad de ${hermandad.nombrePopular}`, href: `/hermandades/${hermandad.slug}` } : null,
-          hermandad?.localidad ? { label: hermandad.localidad, href: municipalityHubHref || undefined } : null,
-        ]}
         crest={hermandad?.escudoPath ? { src: hermandad.escudoPath, alt: `Escudo de ${hermandad.nombrePopular}` } : null}
         facts={[
           publicText(imagen.autor) ? {

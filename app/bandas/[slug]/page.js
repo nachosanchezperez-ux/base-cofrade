@@ -369,10 +369,6 @@ export default async function BandDetailPage({ params }) {
           { label: 'Bandas', href: '/bandas' },
           { label: band.popularName },
         ]}
-        context={[
-          publicText(band.municipality) ? { label: publicText(band.municipality), href: municipalityHubHref || undefined } : null,
-          band.linkedBrotherhoodSlug ? { label: `Hermandad de ${band.linkedBrotherhood}`, href: `/hermandades/${band.linkedBrotherhoodSlug}` } : null,
-        ]}
         crest={band.logoPath ? { src: band.logoPath, alt: `Logotipo de ${band.popularName}` } : null}
         facts={[
           publicText(band.foundation) ? { label: 'Fundación', value: publicText(band.foundation) } : null,

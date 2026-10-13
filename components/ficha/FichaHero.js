@@ -4,23 +4,17 @@ import BrotherhoodDirectoryCrestImage from '../BrotherhoodDirectoryCrestImage'
 import SiteBreadcrumb from '../SiteBreadcrumb'
 import styles from './FichaHero.module.css'
 
-// Cabecera común de las fichas (Tarea 09). La fotografía ocupa su propio
-// espacio y nunca queda tapada por el título; la identidad (escudo, tipo,
-// municipio, nombre y contexto) va en una placa con el color de la entidad.
+// Portada de las fichas (Tarea 09 · dirección «enciclopedia × revista").
+// Fotografía a sangre, nombre en grande y una entradilla. Sin datos sueltos:
+// las cifras y los detalles tienen su propio bloque más abajo, para no
+// repetir información.
 
 function bypassOptimizer(src = '') {
-  if (String(src).startsWith('/')) return true
   try {
     return new URL(src).hostname === 'upload.wikimedia.org'
   } catch {
     return false
   }
-}
-
-function FactValue({ fact }) {
-  return fact.href
-    ? <a href={fact.href} className={styles.factLink}>{fact.value}</a>
-    : <>{fact.value}</>
 }
 
 function ContextItem({ item }) {
@@ -31,69 +25,64 @@ function ContextItem({ item }) {
 export default function FichaHero({
   kind,
   title,
+  dek = '',
   officialName = '',
   context = [],
   breadcrumbItems = [],
-  facts = [],
   media = {},
   crest = null,
   titleId = 'ficha-title',
 }) {
-  const visibleFacts = facts.filter((fact) => fact?.label && fact?.value !== undefined && fact?.value !== null && fact?.value !== '').slice(0, 4)
   const visibleContext = context.filter((item) => item?.label)
   const hasPhoto = Boolean(media.photoSrc)
-  const width = Number(media.width)
-  const height = Number(media.height)
-  const portrait = width > 0 && height > 0 ? height / width >= 1.05 : Boolean(media.portrait)
   const focus = media.focusPosition || `${media.focusX ?? 50}% ${media.focusY ?? 35}%`
   const mobileFocus = media.mobileFocusPosition || `${media.mobileFocusX ?? media.focusX ?? 50}% ${media.mobileFocusY ?? media.focusY ?? 35}%`
+  const longTitle = String(title || '').length > 26
 
   return (
     <header
-      className={`${styles.hero} ${hasPhoto ? styles.withPhoto : styles.noPhoto} ${portrait ? styles.portrait : styles.landscape}`}
+      className={`${styles.hero} ${hasPhoto ? styles.withPhoto : styles.noPhoto}`}
       aria-labelledby={titleId}
       style={{ '--ficha-focus': focus, '--ficha-focus-mobile': mobileFocus }}
     >
-      <div className={`shell ${styles.crumbs}`}>
-        <SiteBreadcrumb items={breadcrumbItems} ariaLabel="Ruta de navegación" showAccent={false} />
+      <div className={styles.crumbs}>
+        <div className="shell">
+          <SiteBreadcrumb items={breadcrumbItems} ariaLabel="Ruta de navegación" showAccent={false} tone="dark" />
+        </div>
       </div>
 
-      <div className={styles.frame}>
-        {hasPhoto ? (
-          <figure className={styles.photo}>
-            <Image
-              src={media.photoSrc}
-              alt={media.photoAlt || `Fotografía de ${title}`}
-              fill
-              priority
-              unoptimized={bypassOptimizer(media.photoSrc)}
-              sizes="(max-width: 979px) 100vw, 52vw"
-            />
-            {media.credit ? <figcaption>{media.credit}</figcaption> : null}
-          </figure>
-        ) : null}
+      {hasPhoto ? (
+        <figure className={styles.photo}>
+          <Image
+            src={media.photoSrc}
+            alt={media.photoAlt || `Fotografía de ${title}`}
+            fill
+            priority
+            unoptimized={bypassOptimizer(media.photoSrc)}
+            sizes="(max-width: 979px) 100vw, 60vw"
+          />
+          {media.credit ? <figcaption>{media.credit}</figcaption> : null}
+        </figure>
+      ) : null}
 
-        <div className={styles.plate}>
-          <div className={styles.identity}>
-            {crest?.src ? (
-              <span className={styles.crest}>
-                <BrotherhoodDirectoryCrestImage
-                  src={crest.src}
-                  alt={crest.alt || `Escudo de ${title}`}
-                  width={120}
-                  height={136}
-                  sizes="(max-width: 979px) 64px, 96px"
-                  priority
-                  fallbackClassName={styles.crest}
-                />
-              </span>
-            ) : null}
-            <div className={styles.identityCopy}>
-              <p className={styles.kind}>{kind}</p>
-              <h1 id={titleId} data-long={String(title || '').length > 34 ? 'true' : undefined}>{title}</h1>
-            </div>
-          </div>
-
+      <div className={styles.copy}>
+        <div className={`shell ${styles.copyInner}`}>
+          {crest?.src ? (
+            <span className={styles.crest}>
+              <BrotherhoodDirectoryCrestImage
+                src={crest.src}
+                alt={crest.alt || `Escudo de ${title}`}
+                width={120}
+                height={136}
+                sizes="(max-width: 979px) 64px, 88px"
+                priority
+                fallbackClassName={styles.crest}
+              />
+            </span>
+          ) : null}
+          {kind ? <p className={styles.kind}>{kind}</p> : null}
+          <h1 id={titleId} data-long={longTitle ? 'true' : undefined}>{title}</h1>
+          {dek ? <p className={styles.dek}>{dek}</p> : null}
           {visibleContext.length ? (
             <p className={styles.context}>
               {visibleContext.map((item, index) => (
@@ -104,23 +93,11 @@ export default function FichaHero({
               ))}
             </p>
           ) : null}
-
           {officialName ? (
             <details className={styles.official}>
               <summary>Nombre oficial <span aria-hidden="true">+</span></summary>
               <p>{officialName}</p>
             </details>
-          ) : null}
-
-          {visibleFacts.length ? (
-            <dl className={styles.facts} data-count={visibleFacts.length}>
-              {visibleFacts.map((fact) => (
-                <div key={fact.label}>
-                  <dt>{fact.label}</dt>
-                  <dd><FactValue fact={fact} /></dd>
-                </div>
-              ))}
-            </dl>
           ) : null}
         </div>
       </div>

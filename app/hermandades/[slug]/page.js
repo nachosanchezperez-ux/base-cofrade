@@ -7,6 +7,8 @@ import { usesFichaPrototype } from '@/lib/ficha-prototype';
 import FichaHero from '@/components/ficha/FichaHero';
 import FichaFigures from '@/components/ficha/FichaFigures';
 import BrotherhoodProcession from '@/components/ficha/BrotherhoodProcession';
+import EditorialKeys from '@/components/ficha/EditorialKeys';
+import HistoryMilestones, { milestonesFromText } from '@/components/ficha/HistoryMilestones';
 import fichaSystem from '@/components/ficha/fichaSystem.module.css';
 import Image from 'next/image';
 import { cache } from 'react';
@@ -306,20 +308,20 @@ export default async function HermandadDetailPage({ params, reading: readingOver
   const heroFacts = isPenitencia ? penitentialFacts : gloryFacts;
   const foundationYear = String(publicText(h.fundacion) || '').match(/(1[0-9]{3}|20[0-9]{2})/)?.[1] || '';
   const marchCount = musicalHeritage.filter((item) => item.workType === 'Marcha procesional').length;
+  const currentYearForFigures = Number(String(agendaData.today || '').slice(0, 4)) || new Date().getUTCFullYear();
   const fichaFigures = fichaPrototype ? [
-    foundationYear ? { value: foundationYear, label: 'año de fundación', href: '#historia' } : null,
+    foundationYear ? { value: currentYearForFigures - Number(foundationYear), label: `años desde ${foundationYear}`, href: '#historia' } : null,
     h.datosJornada?.totalNazarenos ? { value: h.datosJornada.totalNazarenos, label: h.datosJornada?.ano ? `nazarenos en ${h.datosJornada.ano}` : 'nazarenos' } : null,
-    h.imagenes?.length ? { value: h.imagenes.length, label: h.imagenes.length === 1 ? 'titular' : 'titulares', href: '#titulares' } : null,
-    holyWeekSteps.length ? { value: holyWeekSteps.length, label: holyWeekSteps.length === 1 ? 'paso en la calle' : 'pasos en la calle', href: '#cortejo' } : null,
-    marchCount ? { value: marchCount, label: marchCount === 1 ? 'marcha en su patrimonio' : 'marchas en su patrimonio', href: '#musica' } : null,
-    h.fuentesFicha?.length ? { value: h.fuentesFicha.length, label: 'fuentes documentales', href: '#fuentes' } : null,
+    marchCount ? { value: marchCount, label: marchCount === 1 ? 'marcha dedicada' : 'marchas dedicadas', href: '#musica' } : null,
+    h.cultos?.length ? { value: h.cultos.length, label: h.cultos.length === 1 ? 'culto al año' : 'cultos al año', href: '#agenda' } : null,
   ] : [];
+  const historyMilestones = fichaPrototype && !(h.cronologia?.length) ? milestonesFromText(publicText(h.historia)) : [];
   const currentMusicByStep = new Map();
   const headMusic = [];
   for (const item of (h.acompanamientoActual || [])) {
     const band = publicText(item.banda);
     if (!band) continue;
-    const entry = { id: item.id, band, href: item.bandaSlug ? `/bandas/${item.bandaSlug}` : '', position: publicText(item.posicion) };
+    const entry = { id: item.id, band, href: item.bandaSlug ? `/bandas/${item.bandaSlug}` : '', position: publicText(item.posicion), since: publicText(item.periodo) };
     if (item.pasoId && stepById.has(item.pasoId)) {
       currentMusicByStep.set(item.pasoId, [...(currentMusicByStep.get(item.pasoId) || []), entry]);
     } else if (/cruz|cabeza/i.test(entry.position)) {
@@ -750,7 +752,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
 
       {fichaPrototype ? (
       <FichaHero
-        kind={brotherhoodTypeLabel}
+        kind={[holyWeekDay(h) || publicText(h.diaSalida), brotherhoodTypeLabel].filter(Boolean).join(' · ')}
         title={h.nombrePopular}
         officialName={h.nombreOficial}
         context={[
@@ -762,7 +764,6 @@ export default async function HermandadDetailPage({ params, reading: readingOver
           publicText(h.localidad) ? { label: publicText(h.localidad), href: municipalityHubHref || undefined } : null,
           { label: h.nombrePopular },
         ]}
-        facts={heroFacts}
         crest={authoritativeCrestPath ? { src: authoritativeCrestPath, alt: `Escudo de ${h.nombrePopular}` } : null}
         media={{
           photoSrc: heroMedia?.path || '',
@@ -819,8 +820,9 @@ export default async function HermandadDetailPage({ params, reading: readingOver
           agendaItems={upcomingAgendaItems}
           heroFactLabels={heroFacts.map((fact) => fact.label)}
           hasMusic={Boolean(documentedCurrentAccompaniments.length || musicalHeritage.length || fallbackMusicalHeritage.length || documentedHistoricalAccompaniments.length || musicalRepertoires.length)}
-          slots={{ titulars: titularsSection, steps: processionSteps.length ? <BrotherhoodProcession day={holyWeekDay(h) || publicText(h.diaSalida)} steps={processionSteps} head={headMusic} /> : stepsSection, history: historySection,
-            ownMusic: ownMusicSection, musicalHeritage: musicalHeritageSection, repertoires: repertoiresSection,
+          prototype={fichaPrototype}
+          slots={{ hasProcession: processionSteps.length > 0, keys: fichaPrototype ? <EditorialKeys guide={h.editorialGuide} name={h.nombrePopular} /> : null, titulars: titularsSection, steps: processionSteps.length ? <BrotherhoodProcession steps={processionSteps} head={headMusic} /> : stepsSection, history: historyMilestones.length >= 3 ? <HistoryMilestones items={historyMilestones} title="Historia" kicker={`${historyMilestones.length} fechas`} /> : historySection,
+            ownMusic: fichaPrototype ? <BrotherhoodOwnBands brotherhoodId={h.id} musicOnly skipCurrent={processionSteps.length > 0} /> : ownMusicSection, musicalHeritage: musicalHeritageSection, repertoires: repertoiresSection,
             historicalMusic: historicalMusicSection, heritage: heritageSection, simpecados: simpecadosSection,
             posters: postersSection, habit: habitSection, council: councilSection, viaCrucis: viaCrucisSection,
             outings: outingsSection, crew: crewSection, hasCrew: crewEvents.length > 0, cults: cultsSection, news: newsSection, curiosities: curiositiesSection }}
@@ -886,7 +888,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
 
       </>)}
 
-      <RelationalThread
+      {fichaPrototype ? null : <RelationalThread
         maxItems={reading ? 4 : 8}
         diverse={reading}
         currentLabel="Hermandad"
@@ -897,9 +899,9 @@ export default async function HermandadDetailPage({ params, reading: readingOver
         eyebrow="Descubre el hilo"
         title="Conexiones de esta Hermandad"
         description="Continúa por sus Titulares, pasos, bandas y marchas documentadas. Cada relación abre una nueva ficha sin perder el contexto de la Hermandad de origen."
-      />
+      />}
 
-      {reading && <div className={`shell ${readingStyles.documentation}`}><details className={readingStyles.disclosure}><summary>Más rutas para tirar del hilo <b aria-hidden="true">+</b></summary><BrotherhoodReadingDiscovery brotherhoodId={h.id} /></details></div>}
+      {fichaPrototype ? <BrotherhoodReadingDiscovery brotherhoodId={h.id} /> : reading && <div className={`shell ${readingStyles.documentation}`}><details className={readingStyles.disclosure}><summary>Más rutas para tirar del hilo <b aria-hidden="true">+</b></summary><BrotherhoodReadingDiscovery brotherhoodId={h.id} /></details></div>}
 
       {reading && h.enlacesOficiales?.length ? <div className={`shell ${readingStyles.documentation}`}><details className={readingStyles.disclosure}><summary>Web y redes oficiales <span>{h.enlacesOficiales.length}</span><b aria-hidden="true">+</b></summary><OfficialLinks links={h.enlacesOficiales} /></details></div> : <OfficialLinks links={h.enlacesOficiales} />}
       <SourcesBlock sources={h.fuentesFicha} />

@@ -1,134 +1,111 @@
-/* Tarea 09 · cabecera común de fichas. Mobile-first; 3 cortes: 620 / 980 / 1240. */
+/* Tarea 09 · portada de ficha (enciclopedia × revista). Mobile-first. */
 .hero {
   --ficha-tone: var(--brotherhood-dark, var(--hc-navy, #112339));
   --ficha-accent: var(--brotherhood-secondary, var(--hc-red, #B01B32));
-  background: var(--paper, #fffdf9);
-  color: var(--ink, #191516);
+  position: relative;
+  background: var(--ficha-tone);
+  color: #fff;
+  overflow: hidden;
 }
 
 .crumbs {
-  padding-block: 10px 8px;
-  overflow: hidden;
+  position: relative;
+  z-index: 3;
+  padding-block: 10px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, .45), rgba(0, 0, 0, 0));
 }
 
-.crumbs :global([data-site-breadcrumb]) {
-  font-size: 13px;
-}
+.withPhoto .crumbs { position: absolute; inset: 0 0 auto; }
 
-.frame {
-  display: grid;
-}
-
-/* Fotografía: protagonista, sin texto encima. */
 .photo {
   position: relative;
   margin: 0;
+  aspect-ratio: 4 / 5;
+  max-height: 80svh;
+  width: 100%;
   background: #0b1626;
-  overflow: hidden;
 }
 
-.portrait .photo { aspect-ratio: 4 / 5; max-height: 68svh; }
-.landscape .photo { aspect-ratio: 3 / 2; }
+.photo img { object-fit: cover; object-position: var(--ficha-focus-mobile); }
 
-.photo img {
-  object-fit: cover;
-  object-position: var(--ficha-focus-mobile);
+.photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 40%, color-mix(in srgb, var(--ficha-tone) 60%, transparent) 68%, var(--ficha-tone) 99%);
 }
 
 .photo figcaption {
   position: absolute;
+  z-index: 2;
   right: 8px;
-  bottom: 8px;
-  max-width: calc(100% - 16px);
-  padding: 3px 8px;
-  border-radius: 4px;
-  background: rgba(8, 14, 24, .62);
-  color: rgba(255, 255, 255, .9);
-  font-size: 12px;
-  line-height: 1.35;
+  top: 52px;
+  writing-mode: vertical-rl;
+  font-size: 11px;
+  color: rgba(255, 255, 255, .78);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, .6);
 }
 
-/* Placa de identidad */
-.plate {
-  position: relative;
-  padding: 22px 16px 26px;
-  background: var(--ficha-tone);
-  color: #fff;
-  border-top: 4px solid var(--ficha-accent);
-}
-
-.identity {
-  display: flex;
-  gap: 14px;
-  align-items: flex-start;
-}
+.copy { position: relative; z-index: 2; }
+.withPhoto .copy { margin-top: -150px; }
+.copyInner { padding-block: 0 30px; }
+.noPhoto .copyInner { padding-top: 64px; }
 
 .crest {
-  flex: 0 0 auto;
   display: block;
-  width: 64px;
-  height: 72px;
   position: relative;
+  width: 60px;
+  height: 68px;
+  margin-bottom: 10px;
 }
 
-.crest img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, .35));
-}
-
-.identityCopy { min-width: 0; }
-
-.identity h1[data-long] { font-size: clamp(26px, 7vw, 34px); line-height: 1.1; }
+.crest img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 3px 8px rgba(0, 0, 0, .45)); }
 
 .kind {
-  margin: 0 0 6px;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: .08em;
+  margin: 0;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .14em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, .78);
+  color: color-mix(in srgb, var(--ficha-accent) 30%, #fff);
 }
 
-.identity h1 {
-  margin: 0;
-  font-size: clamp(30px, 8.6vw, 44px);
+.copy h1 {
+  margin: 6px 0 12px;
+  font-size: clamp(54px, 17vw, 120px);
   font-weight: 800;
-  line-height: 1.04;
-  letter-spacing: -.02em;
+  line-height: .88;
+  letter-spacing: -.035em;
+  text-transform: uppercase;
+  text-wrap: balance;
   color: #fff;
   overflow-wrap: anywhere;
+}
+
+.copy h1[data-long] { font-size: clamp(34px, 9.5vw, 68px); line-height: .95; letter-spacing: -.025em; }
+
+.dek {
+  margin: 0;
+  max-width: 34ch;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: #fff;
+  text-wrap: pretty;
 }
 
 .context {
   display: flex;
   flex-wrap: wrap;
-  gap: 2px 0;
   margin: 14px 0 0;
-  font-size: 16px;
-  line-height: 1.45;
-  color: rgba(255, 255, 255, .92);
+  font-size: 15px;
+  color: rgba(255, 255, 255, .86);
 }
 
-.context i {
-  padding-inline: 8px;
-  font-style: normal;
-  color: rgba(255, 255, 255, .5);
-}
+.context i { padding-inline: 8px; font-style: normal; color: rgba(255, 255, 255, .5); }
+.context a { color: #fff; text-decoration: underline; text-decoration-color: rgba(255, 255, 255, .45); text-underline-offset: 3px; }
 
-.context a {
-  color: #fff;
-  text-decoration: underline;
-  text-decoration-color: rgba(255, 255, 255, .45);
-  text-underline-offset: 3px;
-}
-
-.official {
-  margin-top: 12px;
-  border-top: 1px solid rgba(255, 255, 255, .16);
-}
-
+.official { margin-top: 14px; border-top: 1px solid rgba(255, 255, 255, .18); max-width: 640px; }
 .official summary {
   display: flex;
   justify-content: space-between;
@@ -136,105 +113,24 @@
   min-height: 44px;
   cursor: pointer;
   font-size: 14px;
-  font-weight: 600;
-  color: rgba(255, 255, 255, .85);
+  font-weight: 700;
+  color: rgba(255, 255, 255, .86);
   list-style: none;
 }
-
 .official summary::-webkit-details-marker { display: none; }
-.official[open] summary span { transform: rotate(45deg); }
 .official summary span { font-size: 20px; transition: transform .2s; }
-
-.official p {
-  margin: 0 0 10px;
-  font-size: 15px;
-  line-height: 1.5;
-  color: rgba(255, 255, 255, .85);
-}
-
-.facts {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0 18px;
-  margin: 16px 0 0;
-}
-
-.facts div {
-  padding: 12px 0 2px;
-  border-top: 1px solid rgba(255, 255, 255, .18);
-}
-
-.facts[data-count="1"] { grid-template-columns: 1fr; }
-.facts[data-count="3"] div:first-child { grid-column: 1 / -1; }
-
-.facts dt {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, .7);
-}
-
-.facts dd {
-  margin: 4px 0 0;
-  font-size: 17px;
-  font-weight: 700;
-  line-height: 1.3;
-}
-
-.factLink {
-  color: #fff;
-  text-decoration: underline;
-  text-decoration-color: rgba(255, 255, 255, .45);
-  text-underline-offset: 3px;
-}
-
-.noPhoto .plate { border-top-width: 6px; }
-.noPhoto .crest { width: 88px; height: 100px; }
-
-@media (min-width: 620px) {
-  .plate { padding: 28px 28px 32px; }
-  .facts { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-  .facts[data-count="2"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .facts[data-count="3"] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .facts[data-count="3"] div:first-child { grid-column: auto; }
-  .portrait .photo { max-height: 72svh; }
-}
+.official[open] summary span { transform: rotate(45deg); }
+.official p { margin: 0 0 12px; font-size: 15px; line-height: 1.5; color: rgba(255, 255, 255, .86); }
 
 @media (min-width: 980px) {
-  .hero { padding-bottom: 12px; }
-  .crumbs { padding-block: 14px 12px; }
-  .frame {
-    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
-    width: min(1240px, calc(100% - 64px));
-    margin-inline: auto;
-    border-radius: 6px;
-    overflow: hidden;
-    background: var(--ficha-tone);
-  }
-  .noPhoto .frame { grid-template-columns: 1fr; }
-  .photo {
-    order: 2;
-    aspect-ratio: auto !important;
-    max-height: none !important;
-    min-height: 520px;
-  }
-  .portrait .photo { min-height: 600px; }
+  .withPhoto { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); min-height: 620px; }
+  .withPhoto .crumbs { grid-column: 1 / -1; }
+  .photo { grid-column: 2; grid-row: 1; aspect-ratio: auto; max-height: none; min-height: 620px; height: 100%; }
   .photo img { object-position: var(--ficha-focus); }
-  .plate {
-    order: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 40px 40px 44px;
-    border-top: 0;
-    border-left: 5px solid var(--ficha-accent);
-  }
-  .crest { width: 96px; height: 108px; }
-  .identity { flex-direction: column; align-items: flex-start; gap: 18px; }
-  .identity h1 { font-size: clamp(40px, 3.6vw, 56px); }
-  .identity h1[data-long] { font-size: clamp(32px, 2.8vw, 42px); }
-  .facts,
-  .facts[data-count="3"],
-  .facts[data-count="2"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .photo::after { background: linear-gradient(90deg, var(--ficha-tone) 0%, transparent 28%); }
+  .withPhoto .copy { grid-column: 1; grid-row: 1; margin-top: 0; display: flex; align-items: flex-end; }
+  .withPhoto .copyInner { width: 100%; padding: 90px 36px 48px max(32px, calc((100vw - 1240px) / 2)); }
+  .copy h1 { font-size: clamp(72px, 7.4vw, 128px); }
+  .copy h1[data-long] { font-size: clamp(44px, 4.2vw, 68px); }
+  .crest { width: 84px; height: 96px; }
 }
