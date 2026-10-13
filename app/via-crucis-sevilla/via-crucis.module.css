@@ -321,3 +321,49 @@
   .matrixGrid { grid-template-columns:repeat(2,minmax(0,1fr)); }
   .matrixCard { padding:12px; }
 }
+
+
+/* Interactive, touch-first decade timeline */
+.chronology { margin:25px 0 28px; padding:clamp(17px,3vw,28px); background:#f2f5f6; border:1px solid #e0e5e9; border-radius:19px; }
+.chronologyIntro { display:flex; justify-content:space-between; align-items:end; gap:24px; margin-bottom:17px; }
+.chronologyIntro h3 { font:600 clamp(23px,2.8vw,32px)/1.15 Georgia,serif; letter-spacing:-.03em; margin:0; }
+.chronologyIntro p { color:#657380; font-size:12px; line-height:1.65; max-width:340px; margin:0; }
+.periodPicker { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:6px; margin-bottom:13px; }
+.periodPicker button { min-width:0; border:1px solid #d9e0e5; border-radius:9px; padding:11px 5px; background:white; color:#566878; font-size:12px; font-weight:800; cursor:pointer; }
+.periodPicker button[aria-pressed="true"] { background:var(--vc-navy); color:white; border-color:var(--vc-navy); }
+.chronologyYears { display:grid; grid-template-columns:repeat(14,minmax(0,1fr)); gap:5px; }
+.chronologyYears button { display:flex; flex-direction:column; align-items:center; justify-content:space-between; min-width:0; min-height:60px; padding:8px 2px; border:1px solid #e1e6ea; border-radius:8px; background:white; cursor:pointer; }
+.chronologyYears button[aria-pressed="true"] { border-color:var(--vc-navy); outline:2px solid var(--vc-navy); outline-offset:0; }
+.chronologyYears button span { color:#526273; font-size:11px; font-weight:800; font-variant-numeric:tabular-nums; }
+.chronologyYears button i { display:block; width:85%; height:16px; background:var(--kind-color); border-radius:4px; }
+.chronologyYears [data-kind="crucificado"],.chronologyLegend [data-kind="crucificado"] { --kind-color:#b01b32; }
+.chronologyYears [data-kind="nazareno"],.chronologyLegend [data-kind="nazareno"] { --kind-color:#2f5d80; }
+.chronologyYears [data-kind="cautivo"],.chronologyLegend [data-kind="cautivo"] { --kind-color:#98703d; }
+.chronologyYears [data-kind="otros"],.chronologyLegend [data-kind="otros"] { --kind-color:#74748b; }
+.chronologyYears [data-kind="yacente"],.chronologyLegend [data-kind="yacente"] { --kind-color:#537b70; }
+.chronologyYears [data-kind="mariana"],.chronologyLegend [data-kind="mariana"] { --kind-color:#976a8f; }
+.chronologyYears [data-kind="extraordinario"],.chronologyLegend [data-kind="extraordinario"] { --kind-color:#a0a7af; }
+.chronologyDetail { display:flex; gap:19px; padding:20px; margin-top:13px; background:white; border:1px solid #e0e5e9; border-radius:13px; }
+.chronologyDetailYear { flex:0 0 105px; display:flex; flex-direction:column; justify-content:center; border-right:1px solid #e1e6ea; padding-right:16px; }
+.chronologyDetailYear strong { font:600 40px/1 Georgia,serif; letter-spacing:-.05em; }
+.chronologyDetailYear span { font-size:10px; color:#697783; padding-top:7px; }
+.chronologyDetailBody { min-width:0; }
+.chronologyDetailBody .eyebrow { margin-bottom:7px; }
+.chronologyDetailBody h4 { font:600 clamp(20px,2.3vw,27px)/1.15 Georgia,serif; margin:0 0 7px; }
+.chronologyDetailBody p { font-size:12px; color:#687681; margin:0 0 10px; }
+.chronologyDetailBody a { color:var(--vc-red); font-size:12px; font-weight:800; text-decoration:underline; text-underline-offset:3px; }
+.chronologyLegend { display:flex; flex-wrap:wrap; gap:9px 15px; padding-top:15px; }
+.chronologyLegend span { display:inline-flex; align-items:center; gap:6px; font-size:10px; color:#596b79; }
+.chronologyLegend i { width:9px; height:9px; flex:0 0 9px; background:var(--kind-color); border-radius:3px; }
+@media(max-width:760px) {
+  .chronologyIntro { display:block; }
+  .chronologyIntro p { margin-top:9px; }
+  .periodPicker { display:flex; overflow-x:auto; padding-bottom:3px; scrollbar-width:thin; }
+  .periodPicker button { flex:0 0 auto; padding:11px 13px; }
+  .chronologyYears { grid-template-columns:repeat(7,minmax(0,1fr)); }
+  .chronologyDetail { padding:15px; gap:12px; }
+  .chronologyDetailYear { flex-basis:75px; padding-right:9px; }
+  .chronologyDetailYear strong { font-size:29px; }
+  .chronologyDetailYear span { font-size:9px; }
+  .chronologyDetailBody h4 { font-size:20px; }
+}
