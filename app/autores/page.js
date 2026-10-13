@@ -201,7 +201,7 @@ export default async function AuthorsDirectoryPage({ searchParams } = {}) {
 
               <div className={styles.list}>
                 {items.map((agent) => (
-                  <Link className={styles.card} href={`/autores/${agent.slug}`} key={agent.id} prefetch={false}>
+                  <Link className={styles.card} href={`/autores/${agent.slug}`} key={agent.id}>
                     <span className={styles.cardCopy}>
                       <span className={styles.cardKicker}>
                         {agent.primaryDiscipline || category.label} · {authorKindLabel(agent)}

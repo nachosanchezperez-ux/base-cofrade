@@ -1,8 +1,9 @@
 import { absoluteUrl, SITE_URL } from '@/lib/seo';
 
-// `_rsc` responses are Next.js navigation prefetches, not pages. The HTML is
-// server-rendered, so crawlers do not need them; blocking them keeps the crawl
-// budget for public fichas (GSC 12/10/2026: ~60 % of requests were `?_rsc=`).
+// `_rsc` responses are Next.js client-navigation payloads, not pages. The HTML
+// is server-rendered, so crawlers do not need them. GSC (12/10/2026) shows ~60 %
+// of Googlebot requests over 90 days were `?_rsc=` URLs (Aug–8 Sep); blocking
+// them keeps any future crawl for public fichas.
 export default function robots() {
   return {
     rules: [

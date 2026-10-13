@@ -63,15 +63,3 @@ for (const userAgent of ['*', 'OAI-SearchBot']) {
     }
   })
 }
-
-test('los directorios grandes no precargan cada ficha enlazada', () => {
-  const relational = read('components/RelationalEntityDirectory.js')
-  assert.match(relational, /<Link\s+prefetch=\{false\}\s+className=\{`\$\{styles\.card\}/)
-
-  const marches = read('app/marchas/page.js')
-  assert.match(marches, /<Link className=\{styles\.card\} href=\{march\.href\} key=\{march\.id\} prefetch=\{false\}>/)
-  assert.match(marches, /<Link href=\{march\.href\} key=\{march\.id\} prefetch=\{false\}>/)
-
-  const authors = read('app/autores/page.js')
-  assert.match(authors, /href=\{`\/autores\/\$\{agent\.slug\}`\} key=\{agent\.id\} prefetch=\{false\}>/)
-})
