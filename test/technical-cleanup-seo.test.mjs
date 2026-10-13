@@ -19,3 +19,8 @@ test('el alias antiguo de la faceta de cornetas redirige de forma permanente', (
   const config = read('next.config.mjs')
   assert.match(config, /source: '\/bandas\/tipo\/banda-de-cornetas-y-tambores',\s*destination: '\/bandas\/tipo\/cornetas-y-tambores',\s*permanent: true,/)
 })
+
+test('la marcha duplicada de Pablo Ojeda redirige a su ficha canónica', () => {
+  const config = read('next.config.mjs')
+  assert.match(config, /source: '\/marchas\/tu-eres-orgullo-nuestro-pueblo-pablo-ojeda',\s*destination: '\/marchas\/tu-eres-el-orgullo-de-nuestro-pueblo-pablo-ojeda',\s*permanent: true,/)
+})
