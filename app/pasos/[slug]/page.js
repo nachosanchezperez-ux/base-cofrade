@@ -245,7 +245,6 @@ export default async function PasoDetailPage({params}){
           publicText(paso.ejecucion) ? { label: 'Ejecución', value: publicText(paso.ejecucion) } : null,
           publicText(paso.sistemaPortadores) ? { label: 'Portadores', value: publicText(paso.sistemaPortadores) } : null,
           bandas[0] ? { label: 'Música actual', value: bandas[0].nombre, href: '#acompanamiento' } : null,
-          imagenes.length ? { label: 'Imágenes', value: String(imagenes.length), href: '#resumen' } : null,
         ]}
         media={{
           photoSrc: coverMedia?.path || '',

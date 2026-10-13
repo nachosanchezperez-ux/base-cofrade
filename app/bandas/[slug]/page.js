@@ -375,9 +375,7 @@ export default async function BandDetailPage({ params }) {
         crest={band.logoPath ? { src: band.logoPath, alt: `Logotipo de ${band.popularName}` } : null}
         facts={[
           publicText(band.foundation) ? { label: 'Fundación', value: publicText(band.foundation) } : null,
-          hasAccompaniments ? { label: `Semana Santa ${currentYear}`, value: `${orderedAccompaniments.length} ${orderedAccompaniments.length === 1 ? 'paso' : 'pasos'}`, href: '#acompanamientos' } : null,
-          hasUpcomingAccompaniments ? { label: 'Próxima temporada', value: `${upcomingAccompaniments.length} ${upcomingAccompaniments.length === 1 ? 'contrato' : 'contratos'}`, href: '#proximos-acompanamientos' } : null,
-          hasDiscography ? { label: 'Discografía', value: `${discography.length} ${discography.length === 1 ? 'trabajo' : 'trabajos'}`, href: '#discografia' } : null,
+          publicText(band.headquarters) && band.headquarters !== band.municipality ? { label: 'Sede', value: publicText(band.headquarters) } : null,
         ]}
         media={{
           photoSrc: band.heroImagePath || '',
@@ -425,7 +423,7 @@ export default async function BandDetailPage({ params }) {
         hasUpcomingAgenda && { href: '#agenda', label: 'Agenda' },
         bandThreadItems.length > 0 && { href: '#tira-del-hilo', label: 'Conexiones' },
         banderin && { href: '#banderin', label: 'Banderín' },
-        hasAccompaniments && { href: '#acompanamientos', label: 'Dónde suena' },
+        hasAccompaniments && !fichaPrototype && { href: '#acompanamientos', label: 'Dónde suena' },
         hasUpcomingAccompaniments && { href: '#proximos-acompanamientos', label: 'Próximos' },
         hasGloryAccompaniments && { href: '#glorias', label: 'Glorias y eucarísticas' },
         hasHistoricalAccompaniments && { href: '#acompanamientos-historicos', label: 'Histórico' },
@@ -569,7 +567,7 @@ export default async function BandDetailPage({ params }) {
         </div>
       </section> : null}
 
-      {hasAccompaniments ? <section className={`${styles.contentSection} ${styles.softSection}`} id="acompanamientos">
+      {hasAccompaniments && !fichaPrototype ? <section className={`${styles.contentSection} ${styles.softSection}`} id="acompanamientos">
         <div className="shell">
           <div className={styles.sectionHeading}>
             <span className={styles.eyebrow}>Dónde suena · Semana Santa · {currentYear}</span>

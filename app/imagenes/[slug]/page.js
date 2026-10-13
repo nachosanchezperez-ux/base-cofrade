@@ -341,9 +341,9 @@ export default async function ImagenPage({ params }) {
         hasImageOverview && { href: '#resumen', label: 'Resumen' },
         hasRelatedEntities && { href: '#tira-del-hilo', label: 'Tira del hilo' },
         galleryMedia.length > 0 && { href: '#galeria', label: 'Galería' },
-        imagen.restauraciones?.length > 0 && { href: '#restauraciones', label: 'Restauraciones' },
-        imagen.acontecimientos?.length > 0 && { href: '#hitos', label: 'Hitos' },
-        cronologia.length > 0 && { href: '#cronologia', label: 'Cronología' },
+        imagen.restauraciones?.length > 0 && { href: '#restauraciones', label: fichaPrototype ? 'Vida de la imagen' : 'Restauraciones' },
+        !(fichaPrototype && lifeTimeline.length > 1) && imagen.acontecimientos?.length > 0 && { href: '#hitos', label: 'Hitos' },
+        !(fichaPrototype && lifeTimeline.length > 1) && cronologia.length > 0 && { href: '#cronologia', label: 'Cronología' },
         imagen.fuentes?.length > 0 && { href: '#fuentes', label: 'Fuentes' },
       ], fichaPrototype, ['#resumen','#galeria','#restauraciones','#hitos','#cronologia','#tira-del-hilo','#fuentes'])} />
 
