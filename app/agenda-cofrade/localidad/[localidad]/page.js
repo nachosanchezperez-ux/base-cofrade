@@ -53,7 +53,12 @@ export async function generateMetadata({ params }) {
   const title = `Cofradías de ${hub.label}: hermandades y agenda cofrade`
   const description = `Guía cofrade de ${hub.label}: hermandades, procesiones, agenda, bandas, imágenes y pasos relacionados en Hilo Cofrade.`
   const path = `/agenda-cofrade/localidad/${hub.slug}`
-  return { title, description, ...socialMetadata({ title, description, path }) }
+  return {
+    title,
+    description,
+    ...socialMetadata({ title, description, path }),
+    ...(hub.evergreen ? {} : { robots: { index: false, follow: true } }),
+  }
 }
 
 export default async function MunicipalityAgendaPage({ params }) {
