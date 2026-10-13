@@ -54,6 +54,16 @@ function trackExtraordinaryOpen(outing) {
   })
 }
 
+function trackExtraordinaryBrotherhood(outing) {
+  trackEvent('entity_click', {
+    source_entity_type: 'evento',
+    source_entity_name: outing.title,
+    destination_entity_type: 'hermandad',
+    destination_entity_name: outing.brotherhoodName,
+    link_context: 'agenda_extraordinarias',
+  })
+}
+
 export default function ExtraordinaryDirectory({ outings }) {
   const [status, setStatus] = useState('upcoming')
   const [territory, setTerritory] = useState('all')
@@ -221,7 +231,11 @@ export default function ExtraordinaryDirectory({ outings }) {
                         </div>
 
                         <h4><Link href={`/extraordinarias/${outing.slug}`} onClick={() => trackExtraordinaryOpen(outing)}>{outing.title}</Link></h4>
-                        {outing.brotherhoodName ? <strong className={styles.organizer}>{outing.brotherhoodName}</strong> : null}
+                        {outing.brotherhoodName ? (
+                          outing.brotherhoodHref ? (
+                            <Link className={styles.organizer} href={outing.brotherhoodHref} prefetch={false} onClick={() => trackExtraordinaryBrotherhood(outing)} data-analytics-skip-entity="true">{outing.brotherhoodName}</Link>
+                          ) : <strong className={styles.organizer}>{outing.brotherhoodName}</strong>
+                        ) : null}
                         {outing.reason ? <p className={styles.reason}>{outing.reason}</p> : null}
 
                         <div className={styles.cardFacts}>
