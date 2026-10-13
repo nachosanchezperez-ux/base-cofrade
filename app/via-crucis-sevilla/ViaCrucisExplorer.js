@@ -167,7 +167,22 @@ function DayCoverageMatrix() {
         <small>{row.missing.length ? `${row.missing.length} sin protagonizarlo` : 'Todas han participado'}</small>
       </button>)}
     </div>
-    {chosen && <div className={styles.matrixDetail}><div><strong>{chosen.day}</strong><button type="button" onClick={()=>setSelection(null)} aria-label="Cerrar detalles">✕</button></div><p>{chosen.represented.length} de {chosen.members.length} hermandades ya lo han presidido.</p><div>{chosen.missing.length ? chosen.missing.map(item=><Link href={item.href} key={item.slug}>{item.name} ↗</Link>) : <span>No quedan hermandades pendientes.</span>}</div></div>}
+    {chosen && <div className={styles.matrixDetail}>
+      <div className={styles.matrixDetailHeading}><div><strong>{chosen.day}</strong><p>{chosen.represented.length} de {chosen.members.length} hermandades ya lo han presidido.</p></div><button type="button" onClick={()=>setSelection(null)} aria-label="Cerrar detalles de la jornada">✕</button></div>
+      <div className={styles.matrixDetailColumns}>
+        <section aria-label="Hermandades que han presidido el Vía Crucis">
+          <h4>Ya han presidido <span>{chosen.represented.length}</span></h4>
+          <div className={styles.matrixDetailLinks}>{chosen.represented.map(item=>{
+            const years = councilViaCrucisEditions.filter(edition => edition.brotherhoodSlug === item.slug).map(edition=>edition.year).sort((a,b)=>a-b)
+            return <Link href={item.href} key={item.slug}>{item.name}<small>{years.join(' · ')} ↗</small></Link>
+          })}{!chosen.represented.length && <p>Esta jornada todavía no ha presidido ninguna edición.</p>}</div>
+        </section>
+        <section aria-label="Hermandades que no lo han presidido">
+          <h4>Por estrenar <span>{chosen.missing.length}</span></h4>
+          <div className={styles.matrixDetailLinks}>{chosen.missing.length ? chosen.missing.map(item=><Link href={item.href} key={item.slug}>{item.name}<small>{item.slug === councilNextEdition.brotherhoodSlug ? 'Designada 2027' : 'Pendiente'} ↗</small></Link>) : <p>El pleno está completo: todas las hermandades de esta jornada han participado.</p>}</div>
+        </section>
+      </div>
+    </div>}
   </section>
 }
 
