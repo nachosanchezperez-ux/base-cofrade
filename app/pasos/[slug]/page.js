@@ -362,7 +362,7 @@ export default async function PasoDetailPage({params}){
                       <div className={styles.people} aria-label={`Responsables de ${phase.title}`}>
                         {phase.responsibles.map((person) => (
                           <div className={styles.person} key={person.id}>
-                            <strong>{person.name}</strong>
+                            <strong>{person.slug ? <Link href={`/autores/${person.slug}`} prefetch={false}>{person.name}</Link> : person.name}</strong>
                             <small>{[person.role, person.discipline].filter(Boolean).join(' · ')}</small>
                           </div>
                         ))}

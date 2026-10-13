@@ -120,6 +120,15 @@ export default async function ImagenPage({ params }) {
   const canonicalPath = `/imagenes/${imagen.slug}`;
   const directoryType = heritageTypeForValue(imagen.tipo, 'imagenes');
   const restorationCards = imageRestorationCards(imagen.restauraciones);
+  const imageAuthors = (imagen.autores || []).filter((author) => publicText(author?.label));
+  const linkedAuthors = imageAuthors.filter((author) => author.slug);
+  // The hero fact and JSON-LD accept a single creator link; only use it when it
+  // is unambiguous (one author, named plainly rather than "Atribuido a …").
+  const singleLinkedAuthor = imageAuthors.length === 1
+    && linkedAuthors.length === 1
+    && linkedAuthors[0].label === linkedAuthors[0].name
+    ? linkedAuthors[0]
+    : null;
   const cronologia = buildImageChronology(imagen, restorationCards);
   const otrasImagenes = hermandad?.imagenes?.filter(
     (otraImagen) => otraImagen.slug !== imagen.slug
@@ -208,6 +217,7 @@ export default async function ImagenPage({ params }) {
           creator: {
             '@type': 'Person',
             name: imagen.autor,
+            ...(singleLinkedAuthor ? { url: absoluteUrl(`/autores/${singleLinkedAuthor.slug}`) } : {}),
           },
         } : {}),
 
@@ -226,7 +236,11 @@ export default async function ImagenPage({ params }) {
           crestSrc: hermandad.escudoPath || '',
         } : null}
         facts={[
-          publicText(imagen.autor) ? { label: 'Autoría', value: publicText(imagen.autor) } : null,
+          publicText(imagen.autor) ? {
+            label: 'Autoría',
+            value: publicText(imagen.autor),
+            href: singleLinkedAuthor ? `/autores/${singleLinkedAuthor.slug}` : undefined,
+          } : null,
           publicText(imagen.fecha) ? { label: 'Datación', value: publicText(imagen.fecha) } : null,
           primaryStep ? {
             label: 'Procesiona en',
@@ -286,7 +300,12 @@ export default async function ImagenPage({ params }) {
 
             {publicText(imagen.autor) ? <article>
               <small>Autor</small>
-              <strong>{publicText(imagen.autor)}</strong>
+              {linkedAuthors.length ? <strong>
+                {imageAuthors.map((author, index) => <span key={author.label}>
+                  {index > 0 ? ' · ' : null}
+                  {author.slug ? <Link href={`/autores/${author.slug}`} prefetch={false}>{author.label}</Link> : author.label}
+                </span>)}
+              </strong> : <strong>{publicText(imagen.autor)}</strong>}
             </article> : null}
 
             {dresser?.name ? <article>

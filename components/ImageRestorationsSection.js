@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import styles from './ImageRestorationsSection.module.css';
 
 export default function ImageRestorationsSection({ items = [] }) {
@@ -21,7 +22,7 @@ export default function ImageRestorationsSection({ items = [] }) {
 
               <dl className={styles.facts}>
                 {item.fecha ? <div><dt>Periodo</dt><dd>{item.fecha}</dd></div> : null}
-                {item.responsable ? <div><dt>Responsable</dt><dd>{item.responsable}</dd></div> : null}
+                {item.responsable ? <div><dt>Responsable</dt><dd>{item.responsableSlug ? <Link href={`/autores/${item.responsableSlug}`} prefetch={false}>{item.responsable}</Link> : item.responsable}</dd></div> : null}
                 {item.disciplina ? <div><dt>Disciplina</dt><dd>{item.disciplina}</dd></div> : null}
               </dl>
 
