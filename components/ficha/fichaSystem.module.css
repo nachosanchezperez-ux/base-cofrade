@@ -293,13 +293,11 @@
   margin: 0 !important;
 }
 .system :global([class*="RelationalThread-module"][class$="__card"]) {
-  display: grid !important;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 2px 14px;
-  min-height: 64px;
+  display: block !important;
+  position: relative;
+  min-height: 0 !important;
   margin: 0 !important;
-  padding: 12px 0 !important;
+  padding: 14px 40px 14px 0 !important;
   border: 0 !important;
   border-top: 1px solid var(--line, #e5ddd6) !important;
   border-radius: 0 !important;
@@ -307,9 +305,13 @@
   box-shadow: none !important;
   transform: none !important;
 }
-.system :global([class*="RelationalThread-module"][class$="__card"] *) { font-size: max(13px, 1em); }
-.system :global([class*="RelationalThread-module"][class$="__card"] h3) { margin: 2px 0; font-size: 17px; }
-.system :global([class*="RelationalThread-module"][class$="__arrow"]) { grid-row: 1 / span 3; grid-column: 2; }
+.system :global([class*="RelationalThread-module"][class$="__card"])::after { display: none; }
+.system :global([class*="RelationalThread-module"][class$="__cardTopline"]) { margin-bottom: 4px !important; }
+.system :global([class*="RelationalThread-module"][class$="__cardTopline"] small),
+.system :global([class*="RelationalThread-module"][class$="__cardTopline"] span) { font-size: 12px !important; }
+.system :global([class*="RelationalThread-module"][class$="__card"] > strong) { display: block; font-size: 17px; line-height: 1.3; }
+.system :global([class*="RelationalThread-module"][class$="__cardFooter"]) { margin-top: 4px; font-size: 14px; color: var(--ink-soft, #5f5759); }
+.system :global([class*="RelationalThread-module"][class$="__arrow"]) { position: absolute !important; right: 4px; top: 50%; transform: translateY(-50%); }
 @media (min-width: 980px) {
   .system :global([class*="RelationalThread-module"][class$="__destinations"]) { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; column-gap: 40px !important; }
 }
