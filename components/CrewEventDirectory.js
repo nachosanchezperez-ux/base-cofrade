@@ -2,10 +2,11 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { CREW_EVENT_TYPES, crewEventStatusLabel } from '@/lib/crew-events'
 import { trackEvent } from '@/lib/analytics/client'
 import styles from './CrewEventDirectory.module.css'
+import { hasCrewEventPage } from '@/lib/crew-event-url-policy'
 
 const AGENDA_TYPE = 'igualas_ensayos'
 
@@ -70,8 +71,9 @@ function trackCrewBrotherhood(event) {
 function EventCard({ event }) {
   const time = event.timeText || event.startTime || 'Hora por confirmar'
   const primaryAgent = event.agents.find((item) => item.isPrimary) || event.agents[0]
+  const hasPage = hasCrewEventPage(event.detailHref)
   return (
-    <article className={styles.card}>
+    <article className={styles.card} id={event.anchor}>
       <time className={styles.dateBlock} dateTime={event.date}>
         <strong>{event.dateParts.day}</strong>
         <span>{event.dateParts.month}</span>
@@ -83,7 +85,7 @@ function EventCard({ event }) {
           <span>{event.eventTypeLabel}</span>
           <EventStatus event={event} />
         </div>
-        <h3><Link href={event.detailHref} onClick={() => trackCrewOpen(event)}>{event.title}</Link></h3>
+        <h3>{hasPage ? <Link href={event.detailHref} onClick={() => trackCrewOpen(event)}>{event.title}</Link> : event.title}</h3>
         {event.brotherhoodHref ? (
           <Link className={styles.brotherhood} href={event.brotherhoodHref} onClick={() => trackCrewBrotherhood(event)} data-analytics-skip-entity="true">{event.brotherhoodName}</Link>
         ) : <strong className={styles.brotherhood}>{event.brotherhoodName}</strong>}
@@ -99,7 +101,7 @@ function EventCard({ event }) {
             <span><b>Localidad</b>{event.municipality}</span>
             {event.location ? <span><b>Lugar</b>{event.location}</span> : null}
           </div>
-          <Link className={styles.detailLink} href={event.detailHref} onClick={() => trackCrewOpen(event)}>Ver convocatoria <span>→</span></Link>
+          {hasPage ? <Link className={styles.detailLink} href={event.detailHref} onClick={() => trackCrewOpen(event)}>Ver convocatoria <span>→</span></Link> : null}
         </div>
       </div>
 
@@ -114,6 +116,17 @@ function EventCard({ event }) {
 
 export default function CrewEventDirectory({ events }) {
   const [phase, setPhase] = useState('upcoming')
+
+  // Links from Hermandades, Agenda or hubs point to /igualas-y-ensayos#convocatoria-…;
+  // a past convocatoria is only rendered under «Celebradas», so open that tab.
+  useEffect(() => {
+    const anchor = decodeURIComponent(window.location.hash.slice(1))
+    if (!anchor) return
+    const target = events.find((item) => item.anchor === anchor)
+    if (!target) return
+    if (!target.isUpcoming) setPhase('archive')
+    window.requestAnimationFrame(() => document.getElementById(anchor)?.scrollIntoView({ block: 'start' }))
+  }, [events])
   const [month, setMonth] = useState('all')
   const [type, setType] = useState('all')
   const [brotherhood, setBrotherhood] = useState('all')
@@ -192,7 +205,7 @@ export default function CrewEventDirectory({ events }) {
           </div>
           <div className={styles.featuredCopy}>
             <span className={styles.kicker}>Próxima convocatoria · {featured.eventTypeLabel}</span>
-            <h2><Link href={featured.detailHref} onClick={() => trackCrewOpen(featured)}>{featured.title}</Link></h2>
+            <h2>{hasCrewEventPage(featured.detailHref) ? <Link href={featured.detailHref} onClick={() => trackCrewOpen(featured)}>{featured.title}</Link> : featured.title}</h2>
             <p className={styles.featuredBrotherhood}>{featured.brotherhoodName} · {featured.municipality}</p>
             <div className={styles.featuredFacts}>
               <span><b>Fecha</b>{featured.dateParts.weekdayLabel}</span>
@@ -200,7 +213,7 @@ export default function CrewEventDirectory({ events }) {
               <span><b>Paso</b>{featured.steps.map((item) => item.name).join(' · ') || 'Por confirmar'}</span>
               <span><b>Capataz</b>{featured.agents.map((item) => item.name).join(' · ') || 'Por confirmar'}</span>
             </div>
-            <Link className={styles.primaryAction} href={featured.detailHref} onClick={() => trackCrewOpen(featured)}>Ver convocatoria <span>→</span></Link>
+            {hasCrewEventPage(featured.detailHref) ? <Link className={styles.primaryAction} href={featured.detailHref} onClick={() => trackCrewOpen(featured)}>Ver convocatoria <span>→</span></Link> : <a className={styles.primaryAction} href={`#${featured.anchor}`}>Ver en el calendario <span>→</span></a>}
           </div>
           {featured.crestPath ? (
             <Image className={styles.featuredCrest} src={featured.crestPath} alt={`Escudo de ${featured.brotherhoodName}`} width={150} height={150} sizes="150px" />

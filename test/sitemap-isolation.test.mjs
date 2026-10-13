@@ -7,13 +7,14 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { PUBLIC_SITEMAP_SEGMENTS, sitemapEntriesForSegment } from '../lib/seo-sitemap-segments.js';
+import { hasCrewEventPage } from '../lib/crew-event-url-policy.js';
 
 // Execute the real sitemap orchestration with controlled readers. No network,
 // production credentials, or framework cache is needed to verify its contract.
 async function harness({ fail = '', delay = 0 } = {}) {
   const calls = [];
   const context = {
-    allowAgendaSitemapUrl, PUBLIC_SITEMAP_SEGMENTS, sitemapEntriesForSegment, connection: async () => {},
+    allowAgendaSitemapUrl, hasCrewEventPage, PUBLIC_SITEMAP_SEGMENTS, sitemapEntriesForSegment, connection: async () => {},
     absoluteUrl: (path) => `https://hilocofrade.es${path}`,
     unstable_cache: (fn) => fn,
     brotherhoodDirectoryLocalities: () => [], brotherhoodDirectoryRoutes: () => [],
@@ -38,7 +39,11 @@ async function harness({ fail = '', delay = 0 } = {}) {
     getStepsDirectory: [{ id: 'p', slug: 'paso', entityType: 'step', updatedAt: '2026-10-01' }],
     getExtraordinaryDirectory: [{ slug: extraPath.split('/').at(-1), municipality: 'Pilas' }],
     getGloryDirectory: [{ detailHref: gloryPath, municipality: 'Pilas' }],
-    getCrewEventDirectory: [{ detailHref: '/igualas-y-ensayos/ensayo', municipality: 'Pilas', updatedAt: '2026-10-03' }],
+    getCrewEventDirectory: [
+      { detailHref: '/igualas-y-ensayos/ensayo', municipality: 'Pilas', updatedAt: '2026-10-03' },
+      // A new convocatoria lives in the calendar card: it must not reach the sitemap.
+      { detailHref: '/igualas-y-ensayos#convocatoria-nueva-2027', municipality: 'Pilas', updatedAt: '2026-10-03' },
+    ],
     getRosaryOutings: [{ detailHref: rosaryPath, municipality: 'Pilas', updatedAt: '2026-10-02' }],
     getMusicalRepertoires: [{ href: '/crucetas-musicales/cruceta', entries: [{ marchHref: '/marchas/marcha' }] }],
     getPublicMarchSitemapEntries: [{ slug: 'marcha', updatedAt: '2026-09-24' }],
@@ -152,6 +157,7 @@ test('full sitemap retains canonical detail URLs and unique march metadata', asy
   // Pilas only appears through dated events (no indexable Hermandad): its hub
   // is not evergreen and stays out of the sitemap.
   assert.equal(urls.includes('https://hilocofrade.es/agenda-cofrade/localidad/pilas'), false);
+  assert.equal(urls.some((url) => url.includes('#convocatoria-')), false);
   const march = entries.find((entry) => entry.url.endsWith('/marchas/marcha'));
   assert.equal(march.lastModified.toISOString(), '2026-09-24T00:00:00.000Z');
 });
