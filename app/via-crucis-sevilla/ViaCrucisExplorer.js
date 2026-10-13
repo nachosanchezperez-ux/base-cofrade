@@ -12,9 +12,9 @@ import {
 import styles from './via-crucis.module.css'
 
 const tabOptions = [
-  { id: 'historico', label: 'El histórico' },
-  { id: 'estadisticas', label: 'Las estadísticas' },
-  { id: 'pendientes', label: 'Por estrenar' },
+  { id: 'estadisticas', label: 'Radiografía' },
+  { id: 'pendientes', label: 'Las que faltan' },
+  { id: 'historico', label: 'Archivo por años' },
 ]
 
 function normalize(value) {
@@ -110,6 +110,70 @@ function HistoricalView() {
   )
 }
 
+function DashboardSnapshot() {
+  const covered = councilSummary.representedBrotherhoods
+  const total = councilSummary.census
+  const pct = Math.round(covered / total * 100)
+  const iconography = councilIconographyStats
+  const last = [...councilViaCrucisEditions].sort((a,b) => b.year - a.year).slice(0, 8)
+  return (
+    <div className={styles.dashboardSnapshot}>
+      <div className={styles.snapshotHead}>
+        <div><span className={styles.eyebrow}>El Vía Crucis en cifras</span><h2>50 años de historia. <em>Una radiografía.</em></h2></div>
+        <span className={styles.snapshotScope}>1976–2026 · Ediciones ordinarias</span>
+      </div>
+      <div className={styles.snapshotGrid}>
+        <div className={styles.snapshotPrimary}><span>Jornada con más protagonismo</span><strong>La Madrugada</strong><p><b>8</b> designaciones · {Math.round(8/50*100)}% del histórico</p></div>
+        <div className={styles.snapshotMetric}><span>Iconografía más frecuente</span><strong>36%</strong><p>Crucificados · 18 de 50</p></div>
+        <div className={styles.snapshotMetric}><span>Hermandades sin presidirlo</span><strong>{councilSummary.pending}</strong><p>{councilSummary.withoutNextDesignation} sin designación anunciada</p></div>
+        <div className={styles.snapshotMetric}><span>Hermandades que han repetido</span><strong>{councilRepeatedBrotherhoods.length}</strong><p>Gran Poder · Gitanos · Santo Entierro</p></div>
+      </div>
+      <div className={styles.snapshotVisuals}>
+        <section className={styles.coverageVisual} aria-label={`${covered} de ${total} hermandades han presidido el Vía Crucis`}>
+          <div className={styles.coverageDonut} style={{ '--coverage': `${pct}%` }}><div><strong>{pct}%</strong><small>ya han participado</small></div></div>
+          <div><span className={styles.eyebrow}>¿Quién ha salido ya?</span><h3>47 de 71 hermandades</h3><p>{councilSummary.pending} aún no lo habían presidido hasta 2026. La Exaltación está designada para 2027.</p></div>
+        </section>
+        <section className={styles.iconOverview} aria-label="Distribución de las 50 presidencias por iconografía">
+          <div><span className={styles.eyebrow}>Qué imágenes han presidido</span><h3>La Pasión, en proporciones</h3></div>
+          <div className={styles.iconStack}>
+            {iconography.map(item => <div key={item.key} data-kind={item.key} style={{flex:item.count}} title={`${item.label}: ${item.count} (${Math.round(item.count/50*100)}%)`} />)}
+          </div>
+          <div className={styles.iconOverviewLegend}>
+            {iconography.map(item => <span key={item.key} data-kind={item.key}><i aria-hidden="true" /><strong>{item.count}</strong> {item.shortLabel} <small>{Math.round(item.count/50*100)}%</small></span>)}
+          </div>
+        </section>
+      </div>
+      <section className={styles.recentRibbon} aria-labelledby="recent-ribbon">
+        <div><span className={styles.eyebrow}>La sucesión más reciente</span><h3 id="recent-ribbon">De un golpe de vista</h3></div>
+        <div className={styles.recentYears}>
+          {last.map(item => <div key={item.year} data-kind={item.iconography} title={`${item.year} · ${item.imageName}`}><strong>{item.year}</strong><span>{item.brotherhood.name}</span></div>)}
+        </div>
+      </section>
+    </div>
+  )
+}
+
+function DayCoverageMatrix() {
+  const [selection,setSelection] = useState(null)
+  const rows = DAYS.map(day => {
+    const members = councilBrotherhoods.filter(item => item.day === day)
+    const participated = new Set(councilViaCrucisEditions.filter(item => item.brotherhood.day === day).map(item => item.brotherhoodSlug))
+    return {day,members,represented:members.filter(item=>participated.has(item.slug)),missing:members.filter(item=>!participated.has(item.slug))}
+  }).filter(row=>row.members.length)
+  const chosen=rows.find(row=>row.day===selection)
+  return <section className={styles.coverageMatrix} aria-labelledby="matrix-heading">
+    <div className={styles.matrixTop}><div><span className={styles.eyebrow}>Radiografía por jornadas</span><h3 id="matrix-heading">¿Qué días han completado el pleno?</h3></div><p>Pulsa sobre una jornada para ver qué hermandades faltan. La Madrugada es la única con todas sus hermandades representadas.</p></div>
+    <div className={styles.matrixGrid}>
+      {rows.map(row=><button type="button" key={row.day} className={styles.matrixCard} data-selected={selection===row.day} onClick={()=>setSelection(selection===row.day?null:row.day)} aria-pressed={selection===row.day}>
+        <span>{row.day}</span><strong>{row.represented.length}<small>/{row.members.length}</small></strong>
+        <div className={styles.matrixProgress} aria-hidden="true"><i style={{width:`${row.represented.length/row.members.length*100}%`}} /></div>
+        <small>{row.missing.length ? `${row.missing.length} sin protagonizarlo` : 'Todas han participado'}</small>
+      </button>)}
+    </div>
+    {chosen && <div className={styles.matrixDetail}><div><strong>{chosen.day}</strong><button type="button" onClick={()=>setSelection(null)} aria-label="Cerrar detalles">✕</button></div><p>{chosen.represented.length} de {chosen.members.length} hermandades ya lo han presidido.</p><div>{chosen.missing.length ? chosen.missing.map(item=><Link href={item.href} key={item.slug}>{item.name} ↗</Link>) : <span>No quedan hermandades pendientes.</span>}</div></div>}
+  </section>
+}
+
 function StatisticsView() {
   const most = councilDayStats[0]?.count || 0
   const largestIconography = councilIconographyStats[0]?.count || 0
@@ -122,6 +186,8 @@ function StatisticsView() {
         <div><p className={styles.eyebrow}>El dato también es patrimonio</p><h2 id="estadisticas-titulo">Las cifras del Vía Crucis</h2></div>
         <p>Un análisis de las {councilSummary.editions} designaciones ordinarias documentadas, sin sumar el extraordinario de 2013 ni anticipar 2027.</p>
       </header>
+      <DashboardSnapshot />
+      <DayCoverageMatrix />
       <div className={styles.statsColumns}>
         <section className={styles.barPanel} aria-labelledby="por-jornada">
           <h3 id="por-jornada">¿Qué jornada ha protagonizado más?</h3>
@@ -217,7 +283,7 @@ function PendingView() {
 }
 
 export default function ViaCrucisExplorer() {
-  const [tab, setTab] = useState('historico')
+  const [tab, setTab] = useState('estadisticas')
 
   return (
     <>
@@ -225,7 +291,7 @@ export default function ViaCrucisExplorer() {
         <div className={styles.heroMain}>
           <span className={styles.eyebrow}>Archivo histórico · Sevilla</span>
           <h1>El Vía Crucis <em>del Consejo</em></h1>
-          <p>Cincuenta ediciones, una ciudad y las imágenes que han presidido el primer gran acto colectivo de cada Cuaresma. Recorre el histórico, descubre las cifras y conoce las hermandades que aún esperan su turno.</p>
+          <p>La historia contada con datos. Descubre qué jornada manda, cómo se alternan las iconografías y cuántas hermandades esperan su primera designación.</p>
           <div className={styles.heroMetrics}>
             <div><strong>{councilSummary.editions}</strong><span>ediciones ordinarias</span></div>
             <div><strong>{councilSummary.representedBrotherhoods}</strong><span>hermandades protagonistas</span></div>
