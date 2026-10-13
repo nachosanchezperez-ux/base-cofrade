@@ -3,8 +3,8 @@
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import {
-  CUTOFF_YEAR, DAYS, ICONOGRAPHY_BY_KEY, SOURCE_CENSUS, SOURCE_HISTORY,
-  SOURCE_2013, SOURCE_2027, councilBrotherhoods, councilDayStats,
+  CUTOFF_YEAR, DAYS, ICONOGRAPHY_BY_KEY, SOURCE_2013,
+  councilBrotherhoods, councilDayStats,
   councilExtraordinary2013, councilIconographyStats, councilNextEdition,
   councilRepeatedBrotherhoods, councilSummary, councilViaCrucisEditions,
   pendingBrotherhoods, pendingWithoutNextDesignation,
@@ -115,22 +115,25 @@ function DashboardSnapshot() {
   const total = councilSummary.census
   const pct = Math.round(covered / total * 100)
   const iconography = councilIconographyStats
+  const topDay = councilDayStats[0]
+  const topType = councilIconographyStats[0]
+  const topPercentage = Math.round(topType.count / councilSummary.editions * 100)
   return (
     <div className={styles.dashboardSnapshot}>
       <div className={styles.snapshotHead}>
-        <div><span className={styles.eyebrow}>El Vía Crucis en cifras</span><h2>50 ediciones. <em>Una radiografía.</em></h2></div>
+        <div><span className={styles.eyebrow}>El Vía Crucis en cifras</span><h2 id="estadisticas-titulo">50 ediciones. <em>Una radiografía.</em></h2></div>
         <span className={styles.snapshotScope}>1976–2026 · Ediciones ordinarias</span>
       </div>
       <div className={styles.snapshotGrid}>
-        <div className={styles.snapshotPrimary}><span>Jornada con más protagonismo</span><strong>La Madrugada</strong><p><b>8</b> designaciones · {Math.round(8/50*100)}% del histórico</p></div>
-        <div className={styles.snapshotMetric}><span>Iconografía más frecuente</span><strong>36%</strong><p>Crucificados · 18 de 50</p></div>
+        <div className={styles.snapshotPrimary}><span>Jornada con más protagonismo</span><strong>{topDay.day}</strong><p><b>{topDay.count}</b> designaciones · {Math.round(topDay.count/councilSummary.editions*100)}% del histórico</p></div>
+        <div className={styles.snapshotMetric}><span>Iconografía más frecuente</span><strong>{topPercentage}%</strong><p>{topType.label} · {topType.count} de {councilSummary.editions}</p></div>
         <div className={styles.snapshotMetric}><span>Hermandades sin presidirlo</span><strong>{councilSummary.pending}</strong><p>{councilSummary.withoutNextDesignation} sin designación anunciada</p></div>
         <div className={styles.snapshotMetric}><span>Hermandades que han repetido</span><strong>{councilRepeatedBrotherhoods.length}</strong><p>Gran Poder · Gitanos · Santo Entierro</p></div>
       </div>
       <div className={styles.snapshotVisuals}>
         <section className={styles.coverageVisual} aria-label={`${covered} de ${total} hermandades han presidido el Vía Crucis`}>
           <div className={styles.coverageDonut} style={{ '--coverage': `${pct}%` }}><div><strong>{pct}%</strong><small>han presidido</small></div></div>
-          <div><span className={styles.eyebrow}>¿Quién ha salido ya?</span><h3>47 de 71 hermandades</h3><p>{councilSummary.pending} aún no lo habían presidido hasta 2026. La Exaltación está designada para 2027.</p></div>
+          <div><span className={styles.eyebrow}>¿Quién ha salido ya?</span><h3>{covered} de {total} hermandades</h3><p>{councilSummary.pending} aún no lo habían presidido hasta 2026. La Exaltación está designada para 2027.</p></div>
         </section>
         <section className={styles.iconOverview} aria-label="Distribución de las 50 presidencias por iconografía">
           <div><span className={styles.eyebrow}>Qué imágenes han presidido</span><h3>La Pasión, en proporciones</h3></div>
@@ -197,7 +200,7 @@ function InteractiveChronology() {
     <div className={styles.periodPicker} role="group" aria-label="Seleccionar época">
       {DECADE_GROUPS.map((group,index)=><button key={group.label} type="button" aria-pressed={period===index} onClick={()=>choosePeriod(index)}>{group.label}</button>)}
     </div>
-    <div className={styles.chronologyYears} role="group" aria-label={`Años de ${years.start} a ${years.end}`}>
+    <div className={styles.chronologyYears} style={{ '--year-columns': years.end - years.start + 1 }} role="group" aria-label={`Años de ${years.start} a ${years.end}`}>
       {Array.from({length:years.end-years.start+1},(_,i)=>years.start+i).map(value=>{
         const edition=byYear.get(value)
         const kind=edition?.iconography||'extraordinario'
@@ -228,10 +231,6 @@ function StatisticsView() {
 
   return (
     <section className={styles.panel} aria-labelledby="estadisticas-titulo">
-      <header className={styles.panelHeader}>
-        <div><p className={styles.eyebrow}>El dato también es patrimonio</p><h2 id="estadisticas-titulo">Las cifras del Vía Crucis</h2></div>
-        <p>Un análisis de las {councilSummary.editions} designaciones ordinarias documentadas, sin sumar el extraordinario de 2013 ni anticipar 2027.</p>
-      </header>
       <DashboardSnapshot />
       <DayCoverageMatrix />
       <InteractiveChronology />
@@ -310,6 +309,16 @@ function PendingView() {
 
 export default function ViaCrucisExplorer() {
   const [tab, setTab] = useState('estadisticas')
+  const onTabKeyDown = (event, index) => {
+    const last = tabOptions.length - 1
+    const next = event.key === 'ArrowRight' ? (index + 1) % tabOptions.length
+      : event.key === 'ArrowLeft' ? (index + last) % tabOptions.length
+      : event.key === 'Home' ? 0 : event.key === 'End' ? last : -1
+    if (next === -1) return
+    event.preventDefault()
+    setTab(tabOptions[next].id)
+    event.currentTarget.parentElement?.querySelectorAll('[role="tab"]')[next]?.focus()
+  }
 
   return (
     <>
@@ -318,11 +327,7 @@ export default function ViaCrucisExplorer() {
           <span className={styles.eyebrow}>Archivo histórico · Sevilla</span>
           <h1>El Vía Crucis <em>del Consejo</em></h1>
           <p>La historia contada con datos. Descubre qué jornada manda, cómo se alternan las iconografías y cuántas hermandades esperan su primera designación.</p>
-          <div className={styles.heroMetrics}>
-            <div><strong>{councilSummary.editions}</strong><span>ediciones ordinarias</span></div>
-            <div><strong>{councilSummary.representedBrotherhoods}</strong><span>hermandades protagonistas</span></div>
-            <div><strong>{councilSummary.pending}</strong><span>por estrenar hasta 2026</span></div>
-          </div>
+          <a className={styles.sourceJump} href="#fuentes">Documentación y fuentes <span aria-hidden="true">↘</span></a>
         </div>
         <aside className={styles.nextEdition}>
           <div className={styles.nextTop}><span>Próxima edición</span><span>Designada</span></div>
@@ -334,25 +339,20 @@ export default function ViaCrucisExplorer() {
         </aside>
       </header>
       <nav className={styles.tabs} aria-label="Explorar Vía Crucis" role="tablist">
-        {tabOptions.map((option) => <button key={option.id} type="button" role="tab" aria-selected={tab === option.id} aria-controls="contenido-via-crucis" onClick={() => setTab(option.id)} className={tab === option.id ? styles.activeTab : ''}>
+        {tabOptions.map((option, index) => <button key={option.id} id={`via-crucis-tab-${option.id}`} type="button" role="tab" aria-selected={tab === option.id} aria-controls="contenido-via-crucis" tabIndex={tab === option.id ? 0 : -1} onClick={() => setTab(option.id)} onKeyDown={(event) => onTabKeyDown(event, index)} className={tab === option.id ? styles.activeTab : ''}>
           {option.label}{option.id === 'historico' ? <small>{councilSummary.editions}</small> : option.id === 'pendientes' ? <small>{councilSummary.pending}</small> : null}
         </button>)}
       </nav>
-      <div role="tabpanel" id="contenido-via-crucis" aria-live="polite">
+      <div role="tabpanel" id="contenido-via-crucis" aria-labelledby={`via-crucis-tab-${tab}`} tabIndex={0}>
         {tab === 'historico' ? <HistoricalView /> : null}
         {tab === 'estadisticas' ? <StatisticsView /> : null}
         {tab === 'pendientes' ? <PendingView /> : null}
       </div>
-      <footer className={styles.sources}>
-        <h2>Criterio de archivo y fuentes</h2>
-        <p>Histórico 1976–2026, con recuento de 50 ediciones ordinarias. 2013 se documenta como acto extraordinario celebrado sin los pasos previstos; 2021 sí figura en el histórico, pero no hubo traslado. Las tipologías son una clasificación editorial por iconografía. Censo de las hermandades de penitencia del Consejo consultado en octubre de 2026. No se incluyen asociaciones ni agrupaciones ajenas a la nómina oficial.</p>
-        <div className={styles.sourceLinks}>
-          <a href={SOURCE_HISTORY} target="_blank" rel="noopener noreferrer">Histórico oficial del Consejo ↗</a>
-          <a href={SOURCE_CENSUS} target="_blank" rel="noopener noreferrer">Nómina de penitencia ↗</a>
-          <a href={SOURCE_2013} target="_blank" rel="noopener noreferrer">Extraordinario de 2013 ↗</a>
-          <a href={SOURCE_2027} target="_blank" rel="noopener noreferrer">Designación de 2027 ↗</a>
-        </div>
-      </footer>
+      <aside className={styles.methodology} aria-label="Criterio estadístico">
+        <strong>Cómo se han calculado estas cifras</strong>
+        <p>Se cuentan las 50 designaciones ordinarias de 1976 a 2026, no los pasos anunciados en el Vía Crucis extraordinario de 2013. La edición de 2021 figura en el histórico sin traslado procesional y la de 2027 permanece como designada. La clasificación iconográfica es editorial; el listado de pendientes se cruza con el censo de 71 hermandades de penitencia del Consejo.</p>
+        <a href="#fuentes">Consultar las cuatro fuentes oficiales <span aria-hidden="true">↓</span></a>
+      </aside>
     </>
   )
 }
