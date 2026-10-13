@@ -3,7 +3,9 @@ import {
   renderSitemapXml,
 } from '@/lib/seo-sitemap-segments';
 
-export const revalidate = 3600;
+// Family sitemaps must not lag behind /sitemap.xml: newly published fichas
+// were missing for hours behind a day-long stale-while-revalidate.
+export const revalidate = 900;
 
 export async function GET(_request, { params }) {
   const { family } = await params;
@@ -17,7 +19,7 @@ export async function GET(_request, { params }) {
   return new Response(renderSitemapXml(entries), {
     headers: {
       'Content-Type': 'application/xml; charset=utf-8',
-      'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
+      'Cache-Control': 'public, s-maxage=900, stale-while-revalidate=900',
     },
   });
 }

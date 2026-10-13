@@ -184,3 +184,11 @@ test('el sitemap usa namespace v3 para no servir familias anteriores al lastmod 
   assert.match(source, /hilo-cofrade-public-sitemap-family-v3/);
   assert.doesNotMatch(source, /hilo-cofrade-public-sitemap-family-v1/);
 });
+
+test('los sitemaps por familia no sirven copias de hasta un día', async () => {
+  const { readFileSync } = await import('node:fs');
+  const route = readFileSync(new URL('../app/sitemaps/[family]/route.js', import.meta.url), 'utf8');
+  assert.match(route, /export const revalidate = 900;/);
+  assert.match(route, /'Cache-Control': 'public, s-maxage=900, stale-while-revalidate=900'/);
+  assert.doesNotMatch(route, /stale-while-revalidate=86400/);
+});
