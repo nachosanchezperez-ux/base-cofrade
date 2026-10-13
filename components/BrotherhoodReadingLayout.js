@@ -42,7 +42,7 @@ export default function BrotherhoodReadingLayout({ brotherhood: h, today, agenda
     <EntitySectionNav discover={false} revealDisclosures items={prototype ? [
       slots.hasProcession && {href:'#cortejo',label:'Cortejo'},
       slots.keys && {href:'#conoce-hermandad',label:'Claves'},
-      (h.historia?.trim() || h.cronologia?.length) && {href:'#historia',label:'Historia'},
+      slots.history && {href:'#historia',label:'Historia'},
       h.imagenes?.length && {href:'#titulares',label:'Titulares'},
       hasMusic && {href:'#musica',label:'Música'},
       hasHeritage && {href:'#patrimonio-area',label:'Patrimonio'},

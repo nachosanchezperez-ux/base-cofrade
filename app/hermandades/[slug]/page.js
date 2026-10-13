@@ -310,11 +310,14 @@ export default async function HermandadDetailPage({ params, reading: readingOver
   const marchCount = musicalHeritage.filter((item) => item.workType === 'Marcha procesional').length;
   const currentYearForFigures = Number(String(agendaData.today || '').slice(0, 4)) || new Date().getUTCFullYear();
   const fichaFigures = fichaPrototype ? [
-    foundationYear ? { value: currentYearForFigures - Number(foundationYear), label: `años desde ${foundationYear}`, href: '#historia' } : null,
+    foundationYear ? { value: currentYearForFigures - Number(foundationYear), label: `años desde ${foundationYear}`, href: h.editorialGuide?.body && !(h.cronologia?.length) ? '#conoce-hermandad' : '#historia' } : null,
     h.datosJornada?.totalNazarenos ? { value: h.datosJornada.totalNazarenos, label: h.datosJornada?.ano ? `nazarenos en ${h.datosJornada.ano}` : 'nazarenos' } : null,
     marchCount ? { value: marchCount, label: marchCount === 1 ? 'marcha dedicada' : 'marchas dedicadas', href: '#musica' } : null,
     h.cultos?.length ? { value: h.cultos.length, label: h.cultos.length === 1 ? 'culto al año' : 'cultos al año', href: '#agenda' } : null,
   ] : [];
+  // Si la guía editorial ya cuenta la historia y no hay cronología propia,
+  // no se repite el mismo relato en un segundo bloque.
+  const guideCoversHistory = Boolean(h.editorialGuide?.body) && !(h.cronologia?.length);
   const historyMilestones = fichaPrototype && !(h.cronologia?.length) ? milestonesFromText(publicText(h.historia)) : [];
   const currentMusicByStep = new Map();
   const headMusic = [];
@@ -821,7 +824,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
           heroFactLabels={heroFacts.map((fact) => fact.label)}
           hasMusic={Boolean(documentedCurrentAccompaniments.length || musicalHeritage.length || fallbackMusicalHeritage.length || documentedHistoricalAccompaniments.length || musicalRepertoires.length)}
           prototype={fichaPrototype}
-          slots={{ hasProcession: processionSteps.length > 0, keys: fichaPrototype ? <EditorialKeys guide={h.editorialGuide} name={h.nombrePopular} /> : null, titulars: titularsSection, steps: processionSteps.length ? <BrotherhoodProcession steps={processionSteps} head={headMusic} /> : stepsSection, history: historyMilestones.length >= 3 ? <HistoryMilestones items={historyMilestones} title="Historia" kicker={`${historyMilestones.length} fechas`} /> : historySection,
+          slots={{ hasProcession: processionSteps.length > 0, keys: fichaPrototype ? <EditorialKeys guide={h.editorialGuide} name={h.nombrePopular} /> : null, titulars: titularsSection, steps: processionSteps.length ? <BrotherhoodProcession steps={processionSteps} head={headMusic} /> : stepsSection, history: fichaPrototype && guideCoversHistory ? null : historyMilestones.length >= 3 ? <HistoryMilestones items={historyMilestones} title="Historia" kicker={`${historyMilestones.length} fechas`} /> : historySection,
             ownMusic: fichaPrototype ? <BrotherhoodOwnBands brotherhoodId={h.id} musicOnly skipCurrent={processionSteps.length > 0} /> : ownMusicSection, musicalHeritage: musicalHeritageSection, repertoires: repertoiresSection,
             historicalMusic: historicalMusicSection, heritage: heritageSection, simpecados: simpecadosSection,
             posters: postersSection, habit: habitSection, council: councilSection, viaCrucis: viaCrucisSection,
