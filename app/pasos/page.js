@@ -3,6 +3,7 @@ import JsonLd from '@/components/JsonLd'
 import HeritageDirectoryFacets from '@/components/HeritageDirectoryFacets'
 import RelationalEntityDirectory from '@/components/RelationalEntityDirectory'
 import { getStepsDirectory } from '@/lib/supabase/directories'
+import { compactStepDirectoryItem } from '@/lib/directory-client-items'
 import { breadcrumbJsonLd, collectionPageJsonLd, socialMetadata } from '@/lib/seo'
 
 export const revalidate = 900
@@ -18,31 +19,6 @@ export const metadata = {
     description: 'Consulta pasos procesionales documentados y sus relaciones con hermandades, imágenes, autores, talleres y patrimonio.',
     path: '/pasos',
   }),
-}
-
-function compactStepDirectoryItem(item) {
-  return {
-    id: item.id,
-    name: item.name,
-    href: item.href,
-    type: item.type,
-    date: item.date,
-    brotherhoodName: item.brotherhoodName,
-    municipality: item.municipality,
-    municipalitySlug: item.municipalitySlug,
-    imageNames: (item.imageNames || []).slice(0, 2),
-    authorNames: (item.authorNames || []).slice(0, 2),
-    coverPath: item.coverPath,
-    coverAlt: item.coverAlt || [item.name, item.brotherhoodName].filter(Boolean).join(' · '),
-    searchText: [
-      item.style,
-      item.materials,
-      item.condition,
-      ...(item.imageNames || []),
-      ...(item.authorNames || []),
-      ...(item.disciplines || []),
-    ].filter(Boolean).join(' '),
-  }
 }
 
 export default async function PasosPage() {
