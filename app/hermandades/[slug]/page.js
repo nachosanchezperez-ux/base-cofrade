@@ -540,7 +540,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
 <MusicalRepertoiresSection items={musicalRepertoires} context="brotherhood" headingLevel={reading ? 3 : 2} />
   </>);
   const historySection = (<>
-<BrotherhoodHistoryTimeline introduction={publicText(h.historia)} items={h.cronologia || []} semanticPreview={reading} />
+<BrotherhoodHistoryTimeline items={h.cronologia || []} introduction={publicText(h.historia)} semanticPreview={reading} />
   </>);
   const viaCrucisSection = (<>
 <BrotherhoodViaCrucisSection items={h.viaCrucisCofradias} />
