@@ -3,6 +3,9 @@ import BrotherhoodReadingLayout from '@/components/BrotherhoodReadingLayout';
 import BrotherhoodQuickFacts from '@/components/BrotherhoodQuickFacts';
 import readingStyles from '@/components/BrotherhoodReadingLayout.module.css';
 import { usesBrotherhoodReading } from '@/lib/brotherhood-reading-rollout';
+import { usesFichaPrototype } from '@/lib/ficha-prototype';
+import FichaHero from '@/components/ficha/FichaHero';
+import fichaSystem from '@/components/ficha/fichaSystem.module.css';
 import Image from 'next/image';
 import { cache } from 'react';
 import BrotherhoodAgendaSection from '@/components/BrotherhoodAgendaSection';
@@ -161,7 +164,8 @@ export default async function HermandadDetailPage({ params, reading: readingOver
   const { slug } = await params;
   const h = await getHermandad(slug);
   if (!h) notFound();
-  const reading = readingOverride ?? usesBrotherhoodReading(h.id);
+  const fichaPrototype = usesFichaPrototype(h.id);
+  const reading = (readingOverride ?? usesBrotherhoodReading(h.id)) || fichaPrototype;
 
   const canonicalPath = `/hermandades/${h.slug}`;
   const municipalityHubHref = agendaMunicipalityHref(h.localidad);
@@ -691,7 +695,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
   </>);
 
   return (
-    <div className={`brotherhood-page ${reading ? readingStyles.reading : ""}`} style={{
+    <div className={`brotherhood-page ${reading ? readingStyles.reading : ""} ${fichaPrototype ? fichaSystem.system : ""}`} style={{
       '--brotherhood-primary': h.colores?.primario || '#153B69',
       '--brotherhood-secondary': h.colores?.secundario || '#A71930',
       '--brotherhood-light': h.colores?.claro || '#FFFFFF',
@@ -706,6 +710,36 @@ export default async function HermandadDetailPage({ params, reading: readingOver
       <JsonLd data={organizationJsonLd} />
       <JsonLd data={pageJsonLd} />
 
+      {fichaPrototype ? (
+      <FichaHero
+        kind={brotherhoodTypeLabel}
+        title={h.nombrePopular}
+        officialName={h.nombreOficial}
+        context={[
+          { label: publicText(h.sede) },
+          { label: publicText(h.localidad), href: municipalityHubHref || undefined },
+        ]}
+        breadcrumbItems={[
+          { label: 'Hermandades', href: '/hermandades' },
+          publicText(h.localidad) ? { label: publicText(h.localidad), href: municipalityHubHref || undefined } : null,
+          { label: h.nombrePopular },
+        ]}
+        facts={heroFacts}
+        crest={authoritativeCrestPath ? { src: authoritativeCrestPath, alt: `Escudo de ${h.nombrePopular}` } : null}
+        media={{
+          photoSrc: heroMedia?.path || '',
+          photoAlt: heroMedia?.alt || `Fotografía de ${h.nombrePopular}`,
+          credit: heroMedia?.credit || '',
+          width: heroMedia?.width,
+          height: heroMedia?.height,
+          focusX: heroMedia?.focusX,
+          focusY: heroMedia?.focusY,
+          mobileFocusX: heroMedia?.mobileFocusX,
+          mobileFocusY: heroMedia?.mobileFocusY,
+          focusPosition: heroMedia?.focusPosition,
+        }}
+      />
+      ) : (
       <BrotherhoodProgramHero
         compact={reading}
         entityType={brotherhoodTypeLabel}
@@ -736,6 +770,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
           crestAlt: `Escudo de ${h.nombrePopular}`,
         }}
       />
+      )}
 
       {reading ? (
         <BrotherhoodReadingLayout

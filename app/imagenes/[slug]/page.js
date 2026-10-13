@@ -1,4 +1,7 @@
 import Link from 'next/link';
+import { usesFichaPrototype } from '@/lib/ficha-prototype';
+import FichaHero from '@/components/ficha/FichaHero';
+import fichaSystem from '@/components/ficha/fichaSystem.module.css';
 import { cache } from 'react';
 import { notFound } from 'next/navigation';
 import EntitySectionNav from '@/components/EntitySectionNav';
@@ -105,6 +108,7 @@ export default async function ImagenPage({ params }) {
   if (!result) notFound();
 
   const { imagen, hermandad, pasos = [] } = result;
+  const fichaPrototype = usesFichaPrototype(imagen.id);
   const municipalityHubHref = hermandad?.localidad
     ? agendaMunicipalityHref(hermandad.localidad)
     : '';
@@ -173,7 +177,7 @@ export default async function ImagenPage({ params }) {
 
   return (
     <div
-      className="brotherhood-page image-detail-v2"
+      className={`brotherhood-page image-detail-v2 ${fichaPrototype ? fichaSystem.system : ''}`}
       style={{
         '--brotherhood-primary': hermandad?.colores?.primario || '#153B69',
         '--brotherhood-secondary': hermandad?.colores?.secundario || '#A71930',
@@ -222,7 +226,45 @@ export default async function ImagenPage({ params }) {
         } : {}),
 
       }} />
-      <ImageHeroV2
+      {fichaPrototype ? <FichaHero
+        kind={hermandad ? 'Imagen titular' : 'Imagen'}
+        title={imagen.nombre}
+        breadcrumbItems={[
+          { label: 'Imágenes', href: '/imagenes' },
+          { label: imagen.nombre },
+        ]}
+        context={[
+          hermandad ? { label: `Hermandad de ${hermandad.nombrePopular}`, href: `/hermandades/${hermandad.slug}` } : null,
+          hermandad?.localidad ? { label: hermandad.localidad, href: municipalityHubHref || undefined } : null,
+        ]}
+        crest={hermandad?.escudoPath ? { src: hermandad.escudoPath, alt: `Escudo de ${hermandad.nombrePopular}` } : null}
+        facts={[
+          publicText(imagen.autor) ? {
+            label: 'Autoría',
+            value: publicText(imagen.autor),
+            href: singleLinkedAuthor ? `/autores/${singleLinkedAuthor.slug}` : undefined,
+          } : null,
+          publicText(imagen.fecha) ? { label: 'Datación', value: publicText(imagen.fecha) } : null,
+          primaryStep ? {
+            label: 'Procesiona en',
+            value: primaryStep.nombre,
+            href: primaryStep.slug ? `/pasos/${primaryStep.slug}` : undefined,
+          } : null,
+          restorationCards.length ? { label: 'Restauraciones', value: String(restorationCards.length), href: '#restauraciones' } : null,
+        ]}
+        media={{
+          photoSrc: coverMedia?.path || '',
+          photoAlt: coverMedia?.alt || `Fotografía de ${imagen.nombre}`,
+          credit: coverMedia?.credit || '',
+          width: coverMedia?.width,
+          height: coverMedia?.height,
+          portrait: true,
+          focusX: coverMedia?.focusX,
+          focusY: coverMedia?.focusY,
+          mobileFocusX: coverMedia?.mobileFocusX,
+          mobileFocusY: coverMedia?.mobileFocusY,
+        }}
+      /> : <ImageHeroV2
         entityType={hermandad ? 'Imagen titular' : 'Imagen'}
         title={imagen.nombre}
         breadcrumbItems={[
@@ -261,7 +303,7 @@ export default async function ImagenPage({ params }) {
           mobileFocusY: coverMedia?.mobileFocusY,
           fitMode: coverMedia?.fitMode,
         }}
-      />
+      />}
 
       <EntitySectionNav items={[
         hasImageOverview && { href: '#resumen', label: 'Resumen' },
@@ -279,10 +321,10 @@ export default async function ImagenPage({ params }) {
             <span className="eyebrow">De un vistazo</span>
             <h2>La imagen</h2>
             <EntityLastUpdated value={imagen.updatedAt} />
-            <p>
+            {fichaPrototype ? null : <p>
               Cada imagen mantiene una ficha propia y puede conectarse con Hermandades,
               autorías, vestidores, pasos y acontecimientos sin depender de esas relaciones para existir.
-            </p>
+            </p>}
           </div>
 
           <div className="image-facts-v2">
@@ -347,14 +389,14 @@ export default async function ImagenPage({ params }) {
         </div>
       </section> : null}
 
-      <RelationalThread
+      {fichaPrototype ? null : <RelationalThread
         currentName={imagen.nombre}
         currentMeta={[imagen.tipologia || imagen.tipo, imagen.fecha].filter(Boolean).join(' · ')}
         items={relationalItems}
         priorityProfile="imagen"
         title="Desde esta imagen, sigue tirando del hilo"
         description="Salta a su Hermandad, al paso donde procesiona o a otras imágenes vinculadas. La relación permanece visible para que la navegación tenga siempre contexto."
-      />
+      />}
 
       <EntityMediaGallery items={galleryMedia} id="galeria" />
 
@@ -397,6 +439,15 @@ export default async function ImagenPage({ params }) {
           </div>
         </section>
       )}
+
+      {fichaPrototype ? <RelationalThread
+        currentName={imagen.nombre}
+        currentMeta={[imagen.tipologia || imagen.tipo, imagen.fecha].filter(Boolean).join(' · ')}
+        items={relationalItems}
+        priorityProfile="imagen"
+        title="Desde esta imagen, sigue tirando del hilo"
+        description="Salta a su Hermandad, al paso donde procesiona o a otras imágenes vinculadas. La relación permanece visible para que la navegación tenga siempre contexto."
+      /> : null}
 
       <SourcesBlock sources={imagen.fuentes} />
     </div>

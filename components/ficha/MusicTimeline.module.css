@@ -1,0 +1,113 @@
+.wrap { margin-top: 8px; }
+
+.title {
+  margin: 0 0 16px;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--ink, #191516);
+}
+
+.timeline {
+  position: relative;
+  margin: 0;
+  padding: 0 0 0 28px;
+  list-style: none;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  left: 8px;
+  width: 2px;
+  background: var(--line, #e5ddd6);
+}
+
+.item {
+  position: relative;
+  padding: 0 0 22px;
+}
+
+.item:last-child { padding-bottom: 0; }
+
+.node {
+  position: absolute;
+  top: 5px;
+  left: -26px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid var(--brotherhood-primary, #153B69);
+  background: var(--paper, #fffdf9);
+}
+
+.item[data-status="vigente"] .node {
+  background: var(--hc-red, #B01B32);
+  border-color: var(--hc-red, #B01B32);
+  box-shadow: 0 0 0 4px rgba(176, 27, 50, .16);
+}
+
+.item[data-status="futuro"] .node {
+  border-style: dashed;
+  border-color: var(--hc-red, #B01B32);
+}
+
+.when {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+}
+
+.period {
+  font-size: 18px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--brotherhood-primary, #153B69);
+}
+
+.status {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink-soft, #5f5759);
+}
+
+.item[data-status="vigente"] .status { color: var(--hc-red, #B01B32); }
+
+.band {
+  margin: 4px 0 0;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.band a {
+  display: inline-block;
+  min-height: 28px;
+  color: var(--ink, #191516);
+  text-decoration: underline;
+  text-decoration-color: rgba(25, 21, 22, .3);
+  text-underline-offset: 3px;
+}
+
+.detail {
+  margin: 2px 0 0;
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--ink-soft, #5f5759);
+}
+
+@media (min-width: 980px) {
+  .timeline { padding-left: 0; }
+  .timeline::before { left: 150px; }
+  .item {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    column-gap: 52px;
+    padding-bottom: 26px;
+  }
+  .node { left: 144px; }
+  .when { flex-direction: column; gap: 2px; grid-row: span 2; }
+  .band { margin-top: 0; }
+}

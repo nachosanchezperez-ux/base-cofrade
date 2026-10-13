@@ -1,4 +1,8 @@
 import Link from 'next/link';
+import { usesFichaPrototype } from '@/lib/ficha-prototype';
+import FichaHero from '@/components/ficha/FichaHero';
+import MusicTimeline from '@/components/ficha/MusicTimeline';
+import fichaSystem from '@/components/ficha/fichaSystem.module.css';
 import { cache } from 'react';
 import { notFound } from 'next/navigation';
 import EntitySectionNav from '@/components/EntitySectionNav';
@@ -115,6 +119,25 @@ export default async function PasoDetailPage({params}){
     heritage = { phases: [], pieces: [], sources: [] },
   } = result;
   const directoryType = heritageTypeForValue(paso.tipo, 'pasos');
+  const fichaPrototype = usesFichaPrototype(paso.id);
+  const musicTimeline = [
+    ...bandas.map((banda) => ({
+      id: banda.id,
+      status: 'vigente',
+      period: banda.periodo,
+      band: banda.nombre,
+      href: `/bandas/${banda.slug}`,
+      detail: [banda.posicion, banda.salida].filter(Boolean).join(' · '),
+    })),
+    ...historicoMusical.map((item) => ({
+      id: item.id,
+      status: 'historico',
+      period: item.period,
+      band: item.name,
+      href: item.slug ? `/bandas/${item.slug}` : '',
+      detail: item.position,
+    })),
+  ];
   const municipalityHubHref = hermandad?.localidad
     ? agendaMunicipalityHref(hermandad.localidad)
     : '';
@@ -156,7 +179,7 @@ export default async function PasoDetailPage({params}){
   ];
 
   return (
-    <div className="brotherhood-page" style={{
+    <div className={`brotherhood-page ${fichaPrototype ? fichaSystem.system : ''}`} style={{
       '--brotherhood-primary': hermandad?.colores?.primario || '#153B69',
       '--brotherhood-secondary': hermandad?.colores?.secundario || '#A71930',
       '--brotherhood-light': hermandad?.colores?.claro || '#FFFFFF',
@@ -193,7 +216,37 @@ export default async function PasoDetailPage({params}){
         ...(coverMedia?.path ? { image: absoluteUrl(coverMedia.path) } : {}),
 
       }} />
-      <RelationalEntityHero
+      {fichaPrototype ? <FichaHero
+        kind={`Paso procesional · ${publicText(paso.tipo) || 'Paso'}`}
+        title={paso.nombre}
+        breadcrumbItems={[
+          { label: 'Pasos', href: '/pasos' },
+          { label: paso.nombre },
+        ]}
+        context={[
+          hermandad ? { label: `Hermandad de ${hermandad.nombrePopular}`, href: `/hermandades/${hermandad.slug}` } : null,
+          hermandad?.localidad ? { label: hermandad.localidad, href: municipalityHubHref || undefined } : null,
+        ]}
+        crest={hermandad?.escudoPath ? { src: hermandad.escudoPath, alt: `Escudo de ${hermandad.nombrePopular}` } : null}
+        facts={[
+          publicText(paso.ejecucion) ? { label: 'Ejecución', value: publicText(paso.ejecucion) } : null,
+          publicText(paso.sistemaPortadores) ? { label: 'Portadores', value: publicText(paso.sistemaPortadores) } : null,
+          bandas[0] ? { label: 'Música actual', value: bandas[0].nombre, href: '#acompanamiento' } : null,
+          imagenes.length ? { label: 'Imágenes', value: String(imagenes.length), href: '#resumen' } : null,
+        ]}
+        media={{
+          photoSrc: coverMedia?.path || '',
+          photoAlt: coverMedia?.alt || `Fotografía de ${paso.nombre}`,
+          credit: coverMedia?.credit || '',
+          width: coverMedia?.width,
+          height: coverMedia?.height,
+          focusX: coverMedia?.focusX,
+          focusY: coverMedia?.focusY,
+          mobileFocusX: coverMedia?.mobileFocusX,
+          mobileFocusY: coverMedia?.mobileFocusY,
+          focusPosition: coverMedia?.focusPosition || getStepPhotoFraming(paso.slug).hero,
+        }}
+      /> : <RelationalEntityHero
         variant="step"
         entityType="Paso procesional"
         title={paso.nombre}
@@ -230,7 +283,7 @@ export default async function PasoDetailPage({params}){
           fitMode: coverMedia?.fitMode,
           focusPosition: coverMedia?.focusPosition || getStepPhotoFraming(paso.slug).hero,
         }}
-      />
+      />}
 
       <EntitySectionNav items={[
         { href: '#resumen', label: 'Resumen' },
@@ -270,16 +323,29 @@ export default async function PasoDetailPage({params}){
         </aside> : null}
       </div></section>
 
-      <RelationalThread
+      {fichaPrototype ? null : <RelationalThread
         currentName={paso.nombre}
         currentMeta={[paso.tipo, paso.ejecucion].filter(Boolean).join(' · ')}
         items={relationalItems}
         priorityProfile="paso"
         title="Este paso conecta patrimonio, imágenes y música"
         description="Desde aquí puedes volver a la Hermandad, abrir las fichas de las imágenes que procesionan o continuar hacia las formaciones musicales vinculadas actualmente."
-      />
+      />}
 
-      {(bandas.length > 0 || historicoMusical.length > 0) && (
+      {fichaPrototype && musicTimeline.length > 0 ? (
+        <section className="section" id="acompanamiento">
+          <div className="shell">
+            <SectionTitle
+              eyebrow="Memoria sonora"
+              title="Acompañamiento musical"
+              description="Formaciones que han acompañado a este paso, según los periodos documentados."
+            />
+            <MusicTimeline items={musicTimeline} title="Cronología del acompañamiento" />
+          </div>
+        </section>
+      ) : null}
+
+      {!fichaPrototype && (bandas.length > 0 || historicoMusical.length > 0) && (
         <section className={`section ${styles.accompanimentSection}`} id="acompanamiento">
           <div className="shell">
             <SectionTitle
@@ -386,6 +452,14 @@ export default async function PasoDetailPage({params}){
           ) : null}
         </div>
       </section> : null}
+      {fichaPrototype ? <RelationalThread
+        currentName={paso.nombre}
+        currentMeta={[paso.tipo, paso.ejecucion].filter(Boolean).join(' · ')}
+        items={relationalItems}
+        priorityProfile="paso"
+        title="Este paso conecta patrimonio, imágenes y música"
+        description="Desde aquí puedes volver a la Hermandad, abrir las fichas de las imágenes que procesionan o continuar hacia las formaciones musicales vinculadas actualmente."
+      /> : null}
     </div>
   );
 }
