@@ -57,10 +57,10 @@ test('la caché pública se renueva con el nuevo contrato de rotación', () => {
 
 
 test('el ancla Hoy pertenece a la Agenda temporal y el editorial se presenta como Descubre hoy', () => {
-  const temporal = read('components/HomeTemporalFocus.js')
+  const agenda = read('components/HomeAgendaNow.js')
   const editorial = read('components/HomeTodayV2.js')
 
-  assert.match(temporal, /id="hoy"/)
+  assert.match(agenda, /id="hoy"/)
   assert.match(editorial, /id="descubre-hoy"/)
   assert.match(editorial, /Descubre hoy en Hilo Cofrade/)
 })

@@ -13,14 +13,25 @@ test('las magnitudes de Home aíslan fallos parciales y no convierten error en c
   assert.match(loader, /result\.value\.error/)
 })
 
-test('la vista representa un dato no disponible con guion y texto accesible', async () => {
-  const view = await read('components/HomeExploreV2.js')
+test('la vista no convierte un dato no disponible en cero: muestra la sección sin cifra', async () => {
+  const { buildHomeDiscover } = await import('../lib/home-discover.js')
+  const items = buildHomeDiscover({
+    directories: [{ key: 'brotherhood', count: null }, { key: 'band', count: 0 }],
+    graph: [{ key: 'march', count: 1234 }],
+  })
+  const byKey = Object.fromEntries(items.map((item) => [item.key, item.detail]))
 
-  assert.match(view, /Number\.isFinite\(item\?\.count\)/)
-  assert.match(view, /return hasCount\(item\) \? item\.count : '—'/)
-  assert.match(view, /dato temporalmente no disponible/)
+  assert.equal(byKey.brotherhood, '')
+  assert.equal(byKey.band, '0 fichas')
+  assert.equal(byKey.march, `${new Intl.NumberFormat('es-ES').format(1234)} fichas`)
+  assert.equal(byKey.agenda, 'Hoy, mañana y fin de semana')
+  assert.equal(buildHomeDiscover(null).length, 6)
+  const march = items.find((item) => item.key === 'march')
+  assert.equal(march.total, new Intl.NumberFormat('es-ES').format(1234))
+  assert.equal(march.unit, 'fichas')
+  const brotherhood = items.find((item) => item.key === 'brotherhood')
+  assert.equal(brotherhood.total, '')
 })
-
 
 test('las magnitudes de Home reutilizan el directorio público cacheado', async () => {
   const loader = await read('lib/supabase/home-v2.js')

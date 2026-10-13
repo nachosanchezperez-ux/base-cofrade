@@ -2,22 +2,23 @@ import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
 import test from 'node:test'
 
-const [layout, css, today, explore] = await Promise.all([
+const [layout, css, today, hero] = await Promise.all([
   readFile(new URL('../app/layout.js', import.meta.url), 'utf8'),
   readFile(new URL('../app/home-mobile-contract.css', import.meta.url), 'utf8'),
   readFile(new URL('../components/HomeTodayV2.js', import.meta.url), 'utf8'),
-  readFile(new URL('../components/HomeExploreV2.js', import.meta.url), 'utf8'),
+  readFile(new URL('../components/HomeHero.module.css', import.meta.url), 'utf8'),
 ])
 
 test('carga el contrato móvil de Home desde el layout raíz', () => {
   assert.ok(layout.includes("import './home-mobile-contract.css';"))
 })
 
-test('mantiene las preguntas sugeridas en un carrusel horizontal legible', () => {
-  assert.ok(css.includes('#hc-app #tiradelhilo [aria-label="Preguntas sugeridas"]'))
-  assert.ok(css.includes('grid-auto-flow: column;'))
-  assert.ok(css.includes('scroll-snap-type: x mandatory;'))
-  assert.ok(css.includes('border-radius: 16px;'))
+test('las preguntas sugeridas se ajustan en líneas, sin carrusel horizontal', () => {
+  assert.ok(!css.includes('[aria-label="Preguntas sugeridas"]'))
+  assert.ok(hero.includes('[aria-label="Preguntas sugeridas"]'))
+  assert.ok(hero.includes('flex-wrap: wrap;'))
+  assert.ok(!hero.includes('overflow-x'))
+  assert.ok(hero.includes('min-height: 44px;'))
 })
 
 test('integra la identidad visual de los hilos sin iniciales ornamentales', () => {
@@ -27,18 +28,4 @@ test('integra la identidad visual de los hilos sin iniciales ornamentales', () =
   assert.ok(css.includes('padding-right: 68px;'))
   assert.ok(css.includes('width: 56px;'))
   assert.ok(css.includes('top: 16px;'))
-})
-
-test('compacta los contadores de Enciclopedia para impedir desbordes', () => {
-  assert.ok(explore.includes('data-home-count-label'))
-  assert.ok(css.includes('#hc-app #enciclopedia [data-home-count-label]'))
-  assert.ok(css.includes('white-space: nowrap;'))
-  assert.ok(css.includes('overflow-wrap: anywhere;'))
-})
-
-test('convierte las extraordinarias lejanas en un avance compacto', () => {
-  assert.ok(css.includes('#hc-app #extraordinarias[data-home-urgency="later"]'))
-  assert.ok(css.includes('[aria-labelledby="briefing-bandas"]'))
-  assert.ok(css.includes('[aria-labelledby="briefing-lugares"]'))
-  assert.ok(css.includes('div:nth-child(n + 3)'))
 })

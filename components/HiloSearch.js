@@ -301,6 +301,18 @@ export default function HiloSearch({
   const sequence = useRef(0);
   const initialHandled = useRef(false);
   const compact = homeCompact && !fullPage;
+  // En móvil el placeholder largo no cabe en una línea y se corta: se usa uno corto.
+  // Se parte del corto (mobile-first) para que el HTML del servidor ya quepa en
+  // 320 px; en pantallas anchas se cambia al largo tras hidratar.
+  const [narrowScreen, setNarrowScreen] = useState(true);
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.matchMedia) return undefined;
+    const query = window.matchMedia('(max-width: 620px)');
+    const update = () => setNarrowScreen(query.matches);
+    update();
+    query.addEventListener?.('change', update);
+    return () => query.removeEventListener?.('change', update);
+  }, []);
   const searchOrigin = universal ? 'global_search' : fullPage ? 'conversation_search' : 'home_search';
   const orderedResults = prioritizeHiloNavigationItems(results);
   const inputId = universal ? 'hilo-search-universal' : fullPage ? 'hilo-search-full' : 'hilo-search';
@@ -535,7 +547,9 @@ export default function HiloSearch({
   const composerLabel = universal ? 'Busca una ficha o pregunta a Hilo Cofrade' : 'Pregunta a Hilo Cofrade';
   const composerPlaceholder = activeContextLabel
     ? `Sigue preguntando sobre ${activeContextLabel}…`
-    : universal
+    : narrowScreen
+      ? 'Busca o pregunta…'
+      : universal
       ? 'Busca una ficha o pregunta sobre hermandades, imágenes, pasos, bandas, marchas…'
       : 'Pregunta sobre hermandades, imágenes, pasos, bandas, marchas, autores…';
 
