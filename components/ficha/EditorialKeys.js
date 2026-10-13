@@ -14,11 +14,11 @@ export default function EditorialKeys({ guide, name }) {
   return (
     <section className={styles.section} id="conoce-hermandad" aria-labelledby="claves-titulo">
       <div className="shell">
-        <header className={styles.head}>
+        <div className={styles.head}>
           <span className={styles.kicker}>{chapters.length} claves para entenderla</span>
           <h2 id="claves-titulo">{guide.title || `Conoce ${name}`}</h2>
           {chapters.length > 1 ? <p className={styles.hint} aria-hidden="true">Desliza para verlas todas <span>→</span></p> : null}
-        </header>
+        </div>
         <ol className={styles.cards} tabIndex={0} aria-label={`Claves de ${name}`}>
           {chapters.map((chapter, index) => {
             const { lead, rest } = splitLead(chapter.paragraphs.join(' '))
