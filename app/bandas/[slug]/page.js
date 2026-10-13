@@ -3,6 +3,7 @@ import { usesFichaPrototype, prototypeNavOrder } from '@/lib/ficha-prototype'
 import FichaHero from '@/components/ficha/FichaHero'
 import FichaFigures from '@/components/ficha/FichaFigures'
 import BandHolyWeek from '@/components/ficha/BandHolyWeek'
+import MusicTimeline from '@/components/ficha/MusicTimeline'
 import fichaSystem from '@/components/ficha/fichaSystem.module.css'
 import Link from 'next/link'
 import { cache } from 'react'
@@ -626,7 +627,33 @@ export default async function BandDetailPage({ params }) {
         </div>
       </section> : null}
 
-      {hasHistoricalAccompaniments ? <section className={`${styles.contentSection} ${styles.historicalSection}`} id="acompanamientos-historicos">
+      {fichaPrototype && hasHistoricalAccompaniments ? <section className="section" id="acompanamientos-historicos">
+        <div className="shell">
+          <div className="section-heading">
+            <span className="eyebrow">Memoria musical</span>
+            <h2>Su trayectoria</h2>
+            <p>Hermandades y pasos que ha acompañado, según los periodos documentados.</p>
+          </div>
+          <MusicTimeline
+            items={[...historicalAccompaniments]
+              .sort((a, b) => (b.yearTo || b.yearFrom || 0) - (a.yearTo || a.yearFrom || 0))
+              .map((item) => {
+                const step = presentAccompanimentStep(item)
+                return {
+                  id: item.id,
+                  status: 'historico',
+                  period: yearRange(item),
+                  band: item.brotherhoodName,
+                  href: item.brotherhoodSlug && item.brotherhoodPageReady ? `/hermandades/${item.brotherhoodSlug}` : '',
+                  detail: [presentAccompanimentMoment(item), step.name || step.type, step.position].filter(Boolean).join(' · '),
+                }
+              })}
+            statusLabels={{}}
+          />
+        </div>
+      </section> : null}
+
+      {!fichaPrototype && hasHistoricalAccompaniments ? <section className={`${styles.contentSection} ${styles.historicalSection}`} id="acompanamientos-historicos">
         <div className="shell">
           <div className={styles.sectionHeading}>
             <span className={styles.eyebrow}>Memoria musical</span>

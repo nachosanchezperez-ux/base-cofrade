@@ -8,10 +8,14 @@
 }
 
 /* Secciones: mismo fondo, separadas por una línea fina. */
-.system :global(.section),
-.system :global([class*="contentSection"]) {
+.system :global(.section) {
   padding: 40px 0;
   background: transparent;
+  border-top: 1px solid var(--line, #e5ddd6);
+}
+
+.system :global([class*="contentSection"]) {
+  padding: 40px 0;
   border-top: 1px solid var(--line, #e5ddd6);
 }
 
