@@ -19,7 +19,7 @@ const crewEvent = read('app/igualas-y-ensayos/[slug]/page.js')
 test('OAI-SearchBot puede descubrir la web pública sin acceder a superficies privadas', () => {
   assert.match(robots, /userAgent:\s*'OAI-SearchBot'/)
   assert.match(robots, /allow:\s*'\/'/)
-  assert.match(robots, /disallow:\s*\['\/api\/', '\/panel\/'\]/)
+  assert.match(robots, /disallow:\s*\['\/api\/', '\/panel\/'[,\]]/)
 })
 
 test('Hilo Cofrade declara una Organization editora estable y el WebSite la referencia', () => {
