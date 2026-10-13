@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { usesFichaPrototype } from '@/lib/ficha-prototype'
+import { usesFichaPrototype, prototypeNavOrder } from '@/lib/ficha-prototype'
 import FichaHero from '@/components/ficha/FichaHero'
 import fichaSystem from '@/components/ficha/fichaSystem.module.css'
 import Link from 'next/link'
@@ -408,7 +408,7 @@ export default async function BandDetailPage({ params }) {
         }}
       />}
 
-      <EntitySectionNav items={[
+      <EntitySectionNav items={prototypeNavOrder([
         { href: '#resumen', label: 'De un vistazo' },
         hasUpcomingAgenda && { href: '#agenda', label: 'Agenda' },
         bandThreadItems.length > 0 && { href: '#tira-del-hilo', label: 'Conexiones' },
@@ -424,7 +424,7 @@ export default async function BandDetailPage({ params }) {
         hasDirection && { href: '#direccion', label: 'Dirección' },
         band.interestLinks.length > 0 && { href: '#enlaces-de-interes', label: 'Enlaces de interés' },
         band.sources?.length > 0 && { href: '#fuentes', label: 'Fuentes' },
-      ]} />
+      ], fichaPrototype, ['#resumen','#agenda','#banderin','#acompanamientos','#proximos-acompanamientos','#glorias','#acompanamientos-historicos','#discografia','#extraordinarias','#repertorio','#crucetas-musicales','#direccion','#tira-del-hilo','#enlaces-de-interes','#fuentes'])} />
 
       <section className={`${styles.contentSection} ${styles.overviewSection}`} id="resumen">
         <div className="shell">

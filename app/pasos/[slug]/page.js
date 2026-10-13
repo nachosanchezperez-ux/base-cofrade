@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { usesFichaPrototype } from '@/lib/ficha-prototype';
+import { usesFichaPrototype, prototypeNavOrder } from '@/lib/ficha-prototype';
 import FichaHero from '@/components/ficha/FichaHero';
 import MusicTimeline from '@/components/ficha/MusicTimeline';
 import fichaSystem from '@/components/ficha/fichaSystem.module.css';
@@ -285,12 +285,12 @@ export default async function PasoDetailPage({params}){
         }}
       />}
 
-      <EntitySectionNav items={[
+      <EntitySectionNav items={prototypeNavOrder([
         { href: '#resumen', label: 'Resumen' },
         relationalItems.length > 0 && { href: '#tira-del-hilo', label: 'Tira del hilo' },
         (bandas.length > 0 || historicoMusical.length > 0) && { href: '#acompanamiento', label: 'Acompañamiento' },
         (heritage.phases.length > 0 || heritage.pieces.length > 0 || heritage.sources.length > 0) && { href: '#patrimonio', label: 'Patrimonio y evolución' },
-      ]} />
+      ], fichaPrototype, ['#resumen','#acompanamiento','#patrimonio','#tira-del-hilo'])} />
 
       <section className="section" id="resumen"><div className="shell content-grid">
         <div>

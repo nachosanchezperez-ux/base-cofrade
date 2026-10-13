@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { usesFichaPrototype } from '@/lib/ficha-prototype';
+import { usesFichaPrototype, prototypeNavOrder } from '@/lib/ficha-prototype';
 import FichaHero from '@/components/ficha/FichaHero';
 import fichaSystem from '@/components/ficha/fichaSystem.module.css';
 import { cache } from 'react';
@@ -305,7 +305,7 @@ export default async function ImagenPage({ params }) {
         }}
       />}
 
-      <EntitySectionNav items={[
+      <EntitySectionNav items={prototypeNavOrder([
         hasImageOverview && { href: '#resumen', label: 'Resumen' },
         hasRelatedEntities && { href: '#tira-del-hilo', label: 'Tira del hilo' },
         galleryMedia.length > 0 && { href: '#galeria', label: 'Galería' },
@@ -313,7 +313,7 @@ export default async function ImagenPage({ params }) {
         imagen.acontecimientos?.length > 0 && { href: '#hitos', label: 'Hitos' },
         cronologia.length > 0 && { href: '#cronologia', label: 'Cronología' },
         imagen.fuentes?.length > 0 && { href: '#fuentes', label: 'Fuentes' },
-      ]} />
+      ], fichaPrototype, ['#resumen','#galeria','#restauraciones','#hitos','#cronologia','#tira-del-hilo','#fuentes'])} />
 
       {hasImageOverview ? <section className="section image-overview-v2" id="resumen">
         <div className="shell image-overview-grid-v2">
@@ -328,14 +328,14 @@ export default async function ImagenPage({ params }) {
           </div>
 
           <div className="image-facts-v2">
-            {hermandad ? <article>
+            {hermandad && !fichaPrototype ? <article>
               <small>Hermandad</small>
               <Link href={`/hermandades/${hermandad.slug}`}>
                 {hermandad.nombrePopular}
               </Link>
             </article> : null}
 
-            {municipalityHubHref ? <article>
+            {municipalityHubHref && !fichaPrototype ? <article>
               <small>Localidad</small>
               <Link href={municipalityHubHref}>Guía cofrade de {hermandad.localidad}</Link>
             </article> : null}

@@ -90,7 +90,7 @@ export default function FichaHero({
             ) : null}
             <div className={styles.identityCopy}>
               <p className={styles.kind}>{kind}</p>
-              <h1 id={titleId}>{title}</h1>
+              <h1 id={titleId} data-long={String(title || '').length > 34 ? 'true' : undefined}>{title}</h1>
             </div>
           </div>
 

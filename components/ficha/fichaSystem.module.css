@@ -232,3 +232,98 @@
   .system :global([class*="contentSection"]) { padding: 64px 0; }
   .system :global([class*="sectionHeading"] h2) { font-size: 36px; }
 }
+
+/* Titulares: anula las capas previas (lectura y titulars-desktop-layout). */
+.system :global(#titulares .image-grid) {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 24px 14px !important;
+}
+.system :global(#titulares .image-grid > .brotherhood-image-card),
+.system :global(#titulares .image-grid > .brotherhood-image-card:only-child) {
+  display: flex !important;
+  flex-direction: column;
+  width: auto !important;
+  max-width: none !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 0;
+  box-shadow: none !important;
+  background: transparent;
+}
+.system :global(#titulares .brotherhood-portrait),
+.system :global(#titulares .brotherhood-portrait.has-image) {
+  width: 100% !important;
+  min-height: 0 !important;
+  height: auto !important;
+  aspect-ratio: 4 / 5 !important;
+}
+.system :global(#titulares .brotherhood-portrait-image) { object-fit: cover !important; }
+.system :global(#titulares .image-card-body) { padding: 10px 0 0 !important; }
+.system :global(#titulares .image-card-body .text-link) { min-height: 40px; font-size: 14px; }
+@media (min-width: 620px) {
+  .system :global(#titulares .image-grid) { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+}
+@media (min-width: 980px) {
+  .system :global(#titulares .image-grid) { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; gap: 32px 24px !important; }
+}
+
+/* Migas en una sola línea discreta */
+.system :global([data-site-breadcrumb]) { font-size: 12px; }
+.system :global([data-site-breadcrumb] ol) { flex-wrap: nowrap; overflow: hidden; white-space: nowrap; }
+
+/* Conexiones: filas planas, tipo de entidad reconocible, sin el nodo de origen. */
+.system :global([class*="RelationalThread-module"][class$="__section"]) {
+  background: transparent;
+  border-block: 0;
+  border-top: 1px solid var(--line, #e5ddd6);
+  padding: 40px 0;
+}
+.system :global([class$="__origin"]),
+.system :global([class$="__cardNode"]),
+.system :global([class$="__also"]) { display: none !important; }
+.system :global([class*="RelationalThread-module"][class$="__thread"]) { padding: 0 !important; }
+.system :global([class*="RelationalThread-module"][class$="__thread"])::before,
+.system :global([class*="RelationalThread-module"][class$="__destinations"])::before { display: none !important; }
+.system :global([class*="RelationalThread-module"][class$="__destinations"]) {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+.system :global([class*="RelationalThread-module"][class$="__card"]) {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 2px 14px;
+  min-height: 64px;
+  margin: 0 !important;
+  padding: 12px 0 !important;
+  border: 0 !important;
+  border-top: 1px solid var(--line, #e5ddd6) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+.system :global([class*="RelationalThread-module"][class$="__card"] *) { font-size: max(13px, 1em); }
+.system :global([class*="RelationalThread-module"][class$="__card"] h3) { margin: 2px 0; font-size: 17px; }
+.system :global([class*="RelationalThread-module"][class$="__arrow"]) { grid-row: 1 / span 3; grid-column: 2; }
+@media (min-width: 980px) {
+  .system :global([class*="RelationalThread-module"][class$="__destinations"]) { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; column-gap: 40px !important; }
+}
+
+/* Bandas propias y acompañamiento actual: filas, sin tarjeta */
+.system :global(.current-music-grid) { display: grid; gap: 0; }
+.system :global(.current-music-card) {
+  padding: 16px 0 !important;
+  border: 0 !important;
+  border-top: 1px solid var(--line, #e5ddd6) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.system :global(.current-music-card p),
+.system :global(.current-music-card small),
+.system :global(.current-music-position) { font-size: 14px !important; line-height: 1.5; }
