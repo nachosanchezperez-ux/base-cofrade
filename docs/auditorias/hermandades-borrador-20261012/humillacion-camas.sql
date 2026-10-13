@@ -125,3 +125,21 @@ select v.s, v.p, v.sc from (values
   ('7a5c0e05-2026-4012-8000-00000000ca29'::uuid, '8a294ba7-a11f-4525-8cef-e7fd2ef6b38d'::uuid, 'Confirmación editorial del inicio en 2024')
 ) v(s, p, sc)
 where not exists (select 1 from public.source_links x where x.source_id = v.s and x.music_accompaniment_period_id = v.p);
+
+-- 9 · Confirmación del propietario (13/10/2026): «El primer año de Mairena ha sido en 2026 aunque se firma al final de 2025».
+insert into public.sources (id, name, url, source_type, author_or_publisher, accessed_at, notes) values
+ ('7a5c0e05-2026-4012-8000-00000000ca30', 'Humillación de Camas · Mairena del Alcor en el palio desde 2026 · confirmación editorial', null, 'Aportación directa', 'Dirección de Hilo Cofrade', '2026-10-13',
+  'El propietario confirma el 13/10/2026 que el primer año de la Banda de Mairena del Alcor tras el palio fue 2026, aunque se firmó a finales de 2025.')
+on conflict (id) do nothing;
+insert into public.music_accompaniment_periods (id, brotherhood_entity_id, band_entity_id, step_entity_id, position, outing_type,
+  date_from_text, year_from, is_current, notes, status, public_step_name, public_brotherhood_name, public_brotherhood_slug) values
+ ('7a5c0e05-2026-4012-8000-0000000061a4', 'c6100000-0000-4000-8000-000000000016', 'd6852052-92bb-4b54-b551-e52b656dea6d', '7a5c0e05-2026-4012-8000-0000000005f5',
+  'Tras el paso de palio', 'Sábado de Pasión', 'Desde el Sábado de Pasión de 2026 · firmado en diciembre de 2025', 2026, true,
+  'Tras María Santísima de la Humillación. Duración del contrato no documentada.',
+  'published', 'Paso de palio de María Santísima de la Humillación', 'Hermandad de la Humillación de Camas', 'hermandad-humillacion-camas')
+on conflict (id) do nothing;
+insert into public.source_links (source_id, music_accompaniment_period_id, scope)
+select v.s, '7a5c0e05-2026-4012-8000-0000000061a4'::uuid, v.sc from (values
+  ('19b23e24-b3cf-4bea-b14b-bc061bcba2d7'::uuid, 'El Pespunte (12/12/2025): firma de Mairena del Alcor para el palio'),
+  ('7a5c0e05-2026-4012-8000-00000000ca30'::uuid, 'Confirmación editorial del primer año (2026)')) v(s, sc)
+where not exists (select 1 from public.source_links x where x.source_id = v.s and x.music_accompaniment_period_id = '7a5c0e05-2026-4012-8000-0000000061a4');

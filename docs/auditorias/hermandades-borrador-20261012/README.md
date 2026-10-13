@@ -201,13 +201,13 @@ Verificado en `/hermandades/hermandad-esperanza-arahal`.
 - **No se ha creado:** la Inmaculada Concepción ni la Virgen Gloriosa, porque ninguna fuente las describe.
 - **Música:** Santa María Magdalena de Arahal, tras el misterio desde 2024, enlazada al paso. El propietario confirmó que es la banda actual; su confirmación queda registrada como fuente del periodo.
 - **Música histórica (13/10/2026):** periodo nuevo de la A.M. Virgen de los Reyes tras el misterio hasta 2023, confirmado por el propietario y por «Camas Cofrade 2023». No hay año de inicio documentado, así que se deja como texto.
+- **Música del palio (13/10/2026):** periodo nuevo de la Banda Municipal de Mairena del Alcor tras el palio, vigente desde 2026. Se firmó en diciembre de 2025 (El Pespunte) y el propietario confirma que 2026 fue el primer año. La duración del contrato no está documentada.
 
 ### Propuesto, sin aplicar
 
 Estos acompañamientos aparecen en las fuentes pero no están en la base:
 
-- Cigarreras tras el palio, desde 2018, según «Camas Cofrade 2023» y El Pespunte. El año de fin no está confirmado.
-- Mairena del Alcor tras el palio en 2026, según El Pespunte del 12/12/2025.
+- Cigarreras tras el palio, desde 2018, según «Camas Cofrade 2023» y El Pespunte. El año de fin no está confirmado. Por la llegada de Mairena en 2026, el último año sería 2025: pendiente de confirmar.
 
 ### Hallazgo técnico, sin tocar
 

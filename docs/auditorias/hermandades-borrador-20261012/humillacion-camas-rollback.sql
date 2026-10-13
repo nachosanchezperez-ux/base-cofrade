@@ -1,5 +1,7 @@
 -- Reversión de humillacion-camas.sql. Valores anteriores consultados el 12/10/2026.
 begin;
+delete from public.source_links where music_accompaniment_period_id = '7a5c0e05-2026-4012-8000-0000000061a4';
+delete from public.music_accompaniment_periods where id = '7a5c0e05-2026-4012-8000-0000000061a4';
 delete from public.source_links where source_id = '7a5c0e05-2026-4012-8000-00000000ca29';
 delete from public.music_accompaniment_periods where id = '7a5c0e05-2026-4012-8000-0000000061a3';
 update public.music_accompaniment_periods set step_entity_id = null, public_step_name = null
@@ -16,5 +18,5 @@ update public.brotherhoods set official_name = 'Hermandad de la Humillación de 
   brotherhood_types = '{}', current_procession_day = null, notes = null
 where entity_id = 'c6100000-0000-4000-8000-000000000016';
 update public.entities set summary = null, status = 'draft' where id = 'c6100000-0000-4000-8000-000000000016';
-delete from public.sources where id in ('7a5c0e05-2026-4012-8000-00000000ca25', '7a5c0e05-2026-4012-8000-00000000ca26', '7a5c0e05-2026-4012-8000-00000000ca27', '7a5c0e05-2026-4012-8000-00000000ca28', '7a5c0e05-2026-4012-8000-00000000ca29');
+delete from public.sources where id in ('7a5c0e05-2026-4012-8000-00000000ca25', '7a5c0e05-2026-4012-8000-00000000ca26', '7a5c0e05-2026-4012-8000-00000000ca27', '7a5c0e05-2026-4012-8000-00000000ca28', '7a5c0e05-2026-4012-8000-00000000ca29', '7a5c0e05-2026-4012-8000-00000000ca30');
 commit;
