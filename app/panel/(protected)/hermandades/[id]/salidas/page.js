@@ -107,6 +107,10 @@ export default async function BrotherhoodOutingsPage({ params, searchParams }) {
         <option value="de alabanza" />
         <option value="histórica" />
         <option value="solemne" />
+        <option value="gloriosa" />
+        <option value="de penitencia" />
+        <option value="magna" />
+        <option value="coronación canónica" />
       </datalist>
 
       <header className={styles.editorHeader}>
