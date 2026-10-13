@@ -26,7 +26,7 @@ export default function HiloMovementCards({ items, compact = false, headingLevel
         <div className={styles.cardBody}>
           <header className={styles.identity}>
             {compact && item.crestPath ? <Image className={styles.crest} src={item.crestPath} alt="" width={56} height={64} unoptimized={/\.svg(?:$|\?)/i.test(item.crestPath)} /> : null}
-            <div><Link href={item.brotherhood.href} className={styles.brotherhood} prefetch={false}>{item.brotherhood.label}</Link><span className={styles.locality}>{item.municipality}</span></div>
+            <div><>{item.protagonist.href ? <Link href={item.protagonist.href} className={styles.brotherhood} prefetch={false}>{item.protagonist.label}</Link> : <strong className={styles.brotherhood}>{item.protagonist.label}</strong>}{item.protagonist.kind ? <span className={styles.locality}>{item.protagonist.kind}</span> : null}</><span className={styles.locality}>{item.municipality}</span></div>
             <span className={styles.kind}>{item.kind === 'Cambio' ? 'Relevo de sones' : item.kind === 'Renovación' ? 'Sones que siguen' : item.kind}</span>
           </header>
           <div className={styles.story}>
@@ -38,7 +38,7 @@ export default function HiloMovementCards({ items, compact = false, headingLevel
               {item.discover ? <Link className={styles.discover} href={item.discover.href} prefetch={false}>{item.discover.label} <span aria-hidden="true">↗</span></Link> : null}
               <details className={styles.storyDetails}><summary>El contexto y sus protagonistas <span aria-hidden="true">+</span></summary>
                 <p className={styles.context}>{item.context}</p>
-                {item.relations.length ? <><DetailHeading className={styles.connectionTitle}>Tira del hilo</DetailHeading><ul className={styles.connections} aria-label={`Protagonistas relacionados con ${item.brotherhood.label}`}>
+                {item.relations.length ? <><DetailHeading className={styles.connectionTitle}>Tira del hilo</DetailHeading><ul className={styles.connections} aria-label={`Protagonistas relacionados con ${item.protagonist.label}`}>
                   {item.relations.map((relation) => <li key={relation.id}><Link href={relation.href} prefetch={false}><span>{relation.role}</span><strong>{relation.label}</strong><b aria-hidden="true">↗</b></Link></li>)}
                 </ul></> : null}
               </details>

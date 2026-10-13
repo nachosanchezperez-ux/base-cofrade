@@ -8,7 +8,7 @@ export const dynamic = 'force-static'
 
 export default async function BrotherhoodDetailLayout({ children, params }) {
   const { slug } = await params
-  const root = HILO_MOVEMENTS.find((item) => item.status === 'published' && item.brotherhood.slug === slug)?.brotherhood
+  const root = HILO_MOVEMENTS.find((item) => item.status === 'published' && item.brotherhood?.slug === slug)?.brotherhood
   let historicalMusic = []
 
   try {
