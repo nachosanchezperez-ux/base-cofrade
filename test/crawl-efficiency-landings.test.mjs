@@ -35,10 +35,20 @@ test('Autores reparte el directorio en páginas rastreables e indexables, sin in
 
 test('Pasos envía al cliente solo el contrato necesario del directorio', () => {
   const source = read('app/pasos/page.js')
-  assert.match(source, /function compactStepDirectoryItem/)
-  assert.match(source, /searchText:/)
+  const contract = read('lib/directory-client-items.js')
+  assert.match(contract, /export function compactStepDirectoryItem/)
+  assert.match(contract, /searchText:/)
+  assert.match(source, /import \{ compactStepDirectoryItem \} from '@\/lib\/directory-client-items'/)
   assert.match(source, /directoryItems = steps\.map\(compactStepDirectoryItem\)/)
   assert.match(source, /items=\{directoryItems\}/)
+})
+
+test('Imágenes y las facetas de patrimonio envían al cliente solo el contrato necesario', () => {
+  const images = read('app/imagenes/page.js')
+  assert.match(images, /const directoryItems = images\.map\(compactImageDirectoryItem\)/)
+  assert.match(images, /<RelationalEntityDirectory items=\{directoryItems\} kind="image" \/>/)
+  const routePage = read('components/HeritageDirectoryRoutePage.js')
+  assert.match(routePage, /items=\{compactHeritageDirectoryItems\(items, kind\)\}/)
 })
 
 test('Agenda compacta los actos antes de hidratar sus filtros', () => {

@@ -4,6 +4,7 @@ import HeritageDirectoryFacets from '@/components/HeritageDirectoryFacets'
 import DirectoryIntroLink from '@/components/DirectoryIntroLink'
 import RelationalEntityDirectory from '@/components/RelationalEntityDirectory'
 import { getImagesDirectory } from '@/lib/supabase/directories'
+import { compactImageDirectoryItem } from '@/lib/directory-client-items'
 import { breadcrumbJsonLd, collectionPageJsonLd, socialMetadata } from '@/lib/seo'
 
 export const revalidate = 900
@@ -24,6 +25,7 @@ export const metadata = {
 export default async function ImagenesPage() {
   await connection()
   const images = await getImagesDirectory({ throwOnError: true })
+  const directoryItems = images.map(compactImageDirectoryItem)
 
   return (
     <section className="section page-top">
@@ -46,7 +48,7 @@ export default async function ImagenesPage() {
           y de <DirectoryIntroLink href="/pasos">pasos procesionales</DirectoryIntroLink>.
         </p>
         <HeritageDirectoryFacets items={images} section="imagenes" title="Imágenes" />
-        <RelationalEntityDirectory items={images} kind="image" />
+        <RelationalEntityDirectory items={directoryItems} kind="image" />
       </div>
     </section>
   )
