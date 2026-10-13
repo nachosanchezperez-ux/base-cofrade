@@ -10,7 +10,7 @@ import {
   authorKindLabel,
 } from '@/lib/authors-presentation'
 import { getPublicAgentDirectory } from '@/lib/supabase/public-agents'
-import { collectionPageJsonLd, socialMetadata } from '@/lib/seo'
+import { breadcrumbJsonLd, collectionPageJsonLd, socialMetadata } from '@/lib/seo'
 import styles from './autores.module.css'
 
 export const revalidate = 900
@@ -102,6 +102,10 @@ export default async function AuthorsDirectoryPage({ searchParams } = {}) {
 
   return (
     <div className={styles.page} data-category={selectedCategory?.key || 'all'}>
+      <JsonLd data={breadcrumbJsonLd([
+        { name: 'Inicio', path: '/' },
+        { name: 'Autores', path: '/autores' },
+      ])} />
       <JsonLd data={collectionPageJsonLd({
         path: !selectedCategory && page > 1 ? pageHref(page) : '/autores',
         name: 'Autores y oficios cofrades',

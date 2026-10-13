@@ -11,6 +11,13 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        // Legacy facet slug; bands-directory-public already folds it into
+        // «Cornetas y Tambores», whose public facet is /bandas/tipo/cornetas-y-tambores.
+        source: '/bandas/tipo/banda-de-cornetas-y-tambores',
+        destination: '/bandas/tipo/cornetas-y-tambores',
+        permanent: true,
+      },
+      {
         source: '/bandas/escolania-salesiana-capilla-musical-maria-auxiliadora',
         destination: '/bandas/escolania-salesiana-maria-auxiliadora-sevilla',
         permanent: true,
