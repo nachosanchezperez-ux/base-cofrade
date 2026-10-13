@@ -405,13 +405,10 @@ async function buildPublicSitemapSegmentEntries(segment) {
 
     entries.push(...extraordinaryEntries(extraordinaryOutings), ...gloryEntries(gloryOutings),
       ...crewEventEntries(crewEvents), ...rosaryEntries(rosaryOutings),
-      ...agendaMunicipalityEntries([
-        extraordinaryOutings,
-        gloryOutings,
-        crewEvents,
-        rosaryOutings,
-        indexableBrotherhoods,
-      ]));
+      // Only localities anchored by an indexable Hermandad: a hub that exists
+      // just because of dated events (past or upcoming) is not evergreen and
+      // answers 404 once those events are gone.
+      ...agendaMunicipalityEntries([indexableBrotherhoods]));
   } else if (segment === 'crucetas') {
     const musicalRepertoires = await getMusicalRepertoires(strict);
     entries.push(...musicalRepertoireEntries(musicalRepertoires));

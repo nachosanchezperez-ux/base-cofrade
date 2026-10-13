@@ -144,11 +144,14 @@ test('full sitemap retains canonical detail URLs and unique march metadata', asy
   for (const path of ['/hermandades/hermandad', '/bandas/banda', '/imagenes/imagen', '/pasos/paso',
     '/marchas/marcha', '/autores/autor', '/crucetas-musicales/cruceta', extraPath,
     gloryPath, '/igualas-y-ensayos/ensayo', rosaryPath,
-    '/agenda-cofrade/localidad/pilas', '/agenda-cofrade/localidad/la-rinconada',
+    '/agenda-cofrade/localidad/la-rinconada',
     '/agenda-cofrade/hoy', '/agenda-cofrade/manana',
     '/agenda-cofrade/fin-de-semana']) {
     assert.ok(urls.includes(`https://hilocofrade.es${path}`), path);
   }
+  // Pilas only appears through dated events (no indexable Hermandad): its hub
+  // is not evergreen and stays out of the sitemap.
+  assert.equal(urls.includes('https://hilocofrade.es/agenda-cofrade/localidad/pilas'), false);
   const march = entries.find((entry) => entry.url.endsWith('/marchas/marcha'));
   assert.equal(march.lastModified.toISOString(), '2026-09-24T00:00:00.000Z');
 });
