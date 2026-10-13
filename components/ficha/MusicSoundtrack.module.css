@@ -1,4 +1,7 @@
-.section {
+.section { padding: 0 0 36px; }
+
+/* Bloque oscuro a sangre; el archivo completo sigue debajo sobre papel. */
+.stage {
   padding: 44px 0;
   background: #14100f;
   color: #fff;
@@ -77,11 +80,11 @@
 .composers b { font-size: 24px; font-weight: 800; line-height: 1; white-space: nowrap; }
 .composers b small { font-size: 12px; font-weight: 700; color: rgba(255, 255, 255, .62); }
 
-.listen { margin-top: 26px; }
-.listen h3 { margin: 0 0 12px; font-size: 22px; font-weight: 800; }
-.listen ul { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.playlist { margin-top: 26px; }
+.playlist h3 { margin: 0 0 12px; font-size: 22px; font-weight: 800; }
+.playlist ul { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
 
-.listen a {
+.playlist a {
   display: grid;
   grid-template-columns: 52px minmax(0, 1fr) auto;
   align-items: center;
@@ -93,8 +96,8 @@
   color: #14100f;
   text-decoration: none;
 }
-.listen a:hover strong { text-decoration: underline; text-underline-offset: 3px; }
-.listen a:focus-visible { outline: 3px solid #f2c94c; outline-offset: 3px; }
+.playlist a:hover strong { text-decoration: underline; text-underline-offset: 3px; }
+.playlist a:focus-visible { outline: 3px solid #f2c94c; outline-offset: 3px; }
 
 .play {
   display: grid;
@@ -108,23 +111,16 @@
   padding-left: 3px;
 }
 
-.listenCopy { display: flex; flex-direction: column; min-width: 0; }
-.listenCopy strong { font-size: 16px; font-weight: 800; line-height: 1.2; }
-.listenCopy small { font-size: 13px; font-weight: 600; color: #5f5759; line-height: 1.3; }
-.provider { font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #5f5759; }
+.songText { display: flex; flex-direction: column; min-width: 0; }
+.songText strong { font-size: 16px; font-weight: 800; line-height: 1.2; }
+.songText small { font-size: 13px; font-weight: 600; color: #5f5759; line-height: 1.3; }
+.source { font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #5f5759; }
 
-/* Archivo completo y bandas: se leen sobre papel, como el resto de la ficha. */
-.archive {
-  margin-top: 28px;
-  padding: 6px 16px 10px;
-  border-radius: 18px;
-  background: var(--paper, #fffdf9);
-  color: var(--ink, #191516);
-}
+/* Archivo completo y bandas: sobre papel, como el resto de la ficha. */
+.archive { padding-top: 8px; }
 
 @media (min-width: 760px) {
-  .section { padding: 64px 0; }
+  .stage { padding: 64px 0; }
   .charts { grid-template-columns: 1.3fr 1fr; align-items: start; }
-  .listen ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .archive { padding: 8px 28px 16px; }
+  .playlist ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }

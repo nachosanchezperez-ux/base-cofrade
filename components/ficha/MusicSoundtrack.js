@@ -13,7 +13,7 @@ export default function MusicSoundtrack({ items = [], name, children = null }) {
 
   return (
     <section className={styles.section} id="musica" aria-labelledby="musica-titulo">
-      <div className="shell">
+      <div className={styles.stage}><div className="shell">
         <header className={styles.head}>
           <span className={styles.kicker}>Banda sonora</span>
           <h2 id="musica-titulo">Su música</h2>
@@ -56,18 +56,18 @@ export default function MusicSoundtrack({ items = [], name, children = null }) {
         ) : null}
 
         {picks.length ? (
-          <div className={styles.listen}>
+          <div className={styles.playlist}>
             <h3>Para escuchar</h3>
             <ul>
               {picks.map((item) => (
                 <li key={item.id}>
                   <a href={item.listening.url} target="_blank" rel="noreferrer" aria-label={`Escuchar ${item.name} en ${item.listening.provider} (se abre en otra pestaña)`}>
                     <span className={styles.play} aria-hidden="true">▶</span>
-                    <span className={styles.listenCopy}>
+                    <span className={styles.songText}>
                       <strong>{item.name}</strong>
                       <small>{[item.composers?.map((c) => c.name).join(' · '), String(item.year || '').match(/\d{4}/)?.[0]].filter(Boolean).join(' · ')}</small>
                     </span>
-                    <span className={styles.provider}>{item.listening.provider}</span>
+                    <span className={styles.source}>{item.listening.provider}</span>
                   </a>
                 </li>
               ))}
@@ -75,8 +75,8 @@ export default function MusicSoundtrack({ items = [], name, children = null }) {
           </div>
         ) : null}
 
-        {children ? <div className={styles.archive}>{children}</div> : null}
-      </div>
+      </div></div>
+      {children ? <div className={`shell ${styles.archive}`}>{children}</div> : null}
     </section>
   )
 }

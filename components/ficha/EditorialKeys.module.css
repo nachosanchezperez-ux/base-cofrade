@@ -1,6 +1,7 @@
 .section { padding: 44px 0; background: var(--paper, #fffdf9); }
 
 .head { display: grid; gap: 6px; margin-bottom: 20px; }
+.section .head { grid-template-columns: minmax(0, 1fr); }
 
 .kicker {
   font-size: 12px;
@@ -35,13 +36,13 @@
   grid-auto-flow: column;
   grid-auto-columns: min(84%, 340px);
   gap: 12px;
-  margin: 0 -16px;
-  padding: 4px 16px 14px;
+  margin: 0 calc(50% - 50vw);
+  padding: 4px calc(50vw - 50%) 14px;
   list-style: none;
   overflow-x: auto;
   overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
-  scroll-padding-inline: 16px;
+  scroll-padding-inline: calc(50vw - 50%);
   scrollbar-width: none;
 }
 .cards::-webkit-scrollbar { display: none; }
