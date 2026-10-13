@@ -62,3 +62,12 @@ test('las facetas compactan Imágenes y Pasos y dejan intactos otros tipos', () 
   const band = { id: 'b', name: 'Banda', extra: true }
   assert.deepEqual(compactHeritageDirectoryItems([band], 'band'), [band])
 })
+
+test('las facetas de Pasos conservan las listas completas para el «+N» de la tarjeta', () => {
+  const [compact] = compactHeritageDirectoryItems([{
+    id: 's1', name: 'Paso', href: '/pasos/p', imageNames: ['A', 'B', 'C'], authorNames: ['X', 'Y', 'Z'], summary: 'no',
+  }], 'step')
+  assert.deepEqual(compact.imageNames, ['A', 'B', 'C'])
+  assert.deepEqual(compact.authorNames, ['X', 'Y', 'Z'])
+  assert.equal('summary' in compact, false)
+})
