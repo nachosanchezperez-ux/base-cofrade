@@ -1,17 +1,20 @@
 import { absoluteUrl, SITE_URL } from '@/lib/seo';
 
+// `_rsc` responses are Next.js navigation prefetches, not pages. The HTML is
+// server-rendered, so crawlers do not need them; blocking them keeps the crawl
+// budget for public fichas (GSC 12/10/2026: ~60 % of requests were `?_rsc=`).
 export default function robots() {
   return {
     rules: [
       {
         userAgent: 'OAI-SearchBot',
         allow: '/',
-        disallow: ['/api/', '/panel/'],
+        disallow: ['/api/', '/panel/', '/*?_rsc=', '/*&_rsc='],
       },
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/api/', '/panel/'],
+        disallow: ['/api/', '/panel/', '/*?_rsc=', '/*&_rsc='],
       },
     ],
     sitemap: [

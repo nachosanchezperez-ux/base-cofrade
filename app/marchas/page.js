@@ -330,7 +330,7 @@ export default async function MarchesDirectoryPage({ searchParams } = {}) {
             </header>
             <div className={styles.latestGrid}>
               {newest.map((march) => (
-                <Link href={march.href} key={march.id}>
+                <Link href={march.href} key={march.id} prefetch={false}>
                   <span>{shortDate(march.createdAt)}</span>
                   <strong>{march.name}</strong>
                   <small>{authorLabel(march)}</small>
@@ -360,7 +360,7 @@ export default async function MarchesDirectoryPage({ searchParams } = {}) {
                   <header><h3 id={`titulo-${group.initial.toLowerCase()}`}>{group.initial}</h3><span>{group.items.length}</span></header>
                   <div className={styles.list}>
                     {group.items.map((march) => (
-                      <Link className={styles.card} href={march.href} key={march.id}>
+                      <Link className={styles.card} href={march.href} key={march.id} prefetch={false}>
                         <span className={styles.cardCopy}>
                           <strong>{march.name}</strong>
                           <small>{authorLabel(march)}</small>

@@ -236,6 +236,7 @@ export default function RelationalEntityDirectory({
 
     return (
       <Link
+        prefetch={false}
         className={`${styles.card} ${contractStyles.contract} ${enhancementStyles.card} ${isBand ? enhancementStyles.bandCard : ''}`}
         href={item.href}
         key={item.id}
