@@ -1,4 +1,5 @@
 import { allowAgendaSitemapUrl } from '@/lib/agenda-event-url-policy';
+import { hasCrewEventPage } from '@/lib/crew-event-url-policy';
 import {
   brotherhoodDirectoryLocalities,
   brotherhoodDirectoryRoutes,
@@ -298,7 +299,8 @@ function agendaMunicipalityEntries(groups = []) {
 
 function crewEventEntries(events) {
   return events
-    .filter((event) => Boolean(event.detailHref))
+    // New convocatorias live as cards in the calendar (#anchor), not as pages.
+    .filter((event) => hasCrewEventPage(event.detailHref))
     .map((event) => ({
       url: absoluteUrl(event.detailHref),
       ...(validLastModified(event.updatedAt) ? { lastModified: validLastModified(event.updatedAt) } : {}),
