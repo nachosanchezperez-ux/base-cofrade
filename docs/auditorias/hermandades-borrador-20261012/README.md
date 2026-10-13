@@ -239,3 +239,16 @@ La Inmaculada Concepción de Sevilla queda en borrador, por decisión del propie
 - **No se han dado de alta las bandas del Cristo y de la Canina.** ArteSacro (2016) cita Gerena, San Juan de Triana y Amor de Cristo; 21Noticias (2026) cita la Legión y Gerena, pero sin asignarlas a ningún paso.
 
 Verificado en `/hermandades/hermandad-soledad-alcala-del-rio`.
+
+### Ampliación con la web oficial (13/10/2026)
+
+`soledad-alcala-del-rio-web-oficial.sql`; reversión: `soledad-alcala-del-rio-web-oficial-rollback.sql`. El propietario aportó https://lasoledad.org/.
+
+- Se añade la web oficial a la ficha.
+- **Dolorosa:**
+  - La Hermandad la sitúa hacia 1570 y recoge la atribución tradicional a Gaspar Becerra (1566), sin prueba documental. Se conserva también la datación de ArteSacro y 21Noticias (mediados del XVI).
+  - Coronación: 15/06/1996.
+  - Detalle de la intervención de 1986.
+- **Urna del Santo Entierro:** metal plateado, de Orfebrería Andaluza, de 2016. Contradice la «urna neobarroca de 1987» de 21Noticias, así que se quita la fecha de ejecución y se recogen las dos versiones.
+- **Palio:** reforma de 1912 atribuida al taller de Miguel del Olmo; caídas interiores atribuidas a Patrocinio López.
+- Las secciones «Música» y «Señor de la Misericordia» de la web están en preparación y no aportan datos.
