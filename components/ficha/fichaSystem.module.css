@@ -1,0 +1,334 @@
+/* Tarea 09 · sistema visual compartido de fichas (prototipo).
+   Capa acotada a la clase .system: no altera ninguna ficha fuera de la cohorte.
+   Principios: secciones separadas por aire y una línea, sin tarjetas dentro de
+   tarjetas; un único estilo de título; mínimo 12 px de texto y 44 px de toque. */
+
+.system {
+  background: var(--paper, #fffdf9);
+}
+
+/* Secciones: mismo fondo, separadas por una línea fina. */
+.system :global(.section) {
+  padding: 40px 0;
+  background: transparent;
+  border-top: 1px solid var(--line, #e5ddd6);
+}
+
+.system :global([class*="contentSection"]) {
+  padding: 40px 0;
+  border-top: 1px solid var(--line, #e5ddd6);
+}
+
+.system :global(.brotherhood-soft),
+.system :global(.brotherhood-white),
+.system :global(.music-section),
+.system :global(.heritage-section) {
+  background: transparent;
+}
+
+/* Un solo estilo de título de sección */
+.system :global(.section-heading) {
+  max-width: 62ch;
+  margin-bottom: 22px;
+}
+
+.system :global(.section-heading h2),
+.system :global([class*="sectionHeading"] h2),
+.system :global(.image-section-title-v2),
+.system :global(.image-overview-copy-v2 h2) {
+  margin: 6px 0 8px;
+  font-family: inherit;
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -.02em;
+  color: var(--brotherhood-dark, var(--hc-navy, #112339));
+}
+
+.system :global(.section-heading p) {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.system :global(.eyebrow) {
+  font-size: 12px;
+  letter-spacing: .1em;
+  color: var(--brotherhood-secondary, var(--wine, #6d2433));
+}
+
+.system :global(.brotherhood-dark .eyebrow) { color: #ffd0d7; }
+
+/* Texto legible y toque cómodo */
+.system small { font-size: max(12px, .8em); }
+
+.system :global(.text-link) {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 15px;
+}
+
+/* Titulares: rejilla de retratos, sin recuadros. */
+.system :global(.image-grid) {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px 14px;
+}
+
+.system :global(.image-card) {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.system :global(.image-card:hover) { transform: none; box-shadow: none; }
+
+.system :global(.brotherhood-portrait),
+.system :global(.portrait-placeholder) {
+  min-height: 0 !important;
+  height: auto !important;
+  aspect-ratio: 4 / 5;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.system :global(.brotherhood-portrait-credit) {
+  font-size: 12px !important;
+  left: 6px !important;
+  bottom: 6px !important;
+  max-width: calc(100% - 12px);
+}
+
+.system :global(.image-card-body) { padding: 10px 0 0 !important; }
+
+.system :global(.image-card-body h3) {
+  margin: 4px 0 2px;
+  font-family: inherit;
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.22;
+}
+
+.system :global(.image-card-body p.image-card-authorship) {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.system :global(.image-card-description),
+.system :global(.image-card-details),
+.system :global(.image-iconography) {
+  display: none !important;
+}
+
+/* Pasos: fotografía amplia y datos en línea. */
+.system :global(.processional-grid) {
+  grid-template-columns: 1fr;
+  gap: 34px;
+}
+
+.system :global(.processional-card) {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.system :global(.processional-photo) {
+  min-height: 0 !important;
+  aspect-ratio: 3 / 2;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.system :global(.processional-photo-credit) { font-size: 12px !important; }
+
+.system :global(.processional-body) { padding: 14px 0 0 !important; }
+
+.system :global(.processional-body h3) {
+  margin: 6px 0 8px;
+  font-family: inherit;
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.system :global(.step-current-data),
+.system :global(.step-technical-data) {
+  display: grid;
+  gap: 0;
+  border: 0;
+  background: transparent;
+  padding: 0;
+}
+
+.system :global(.step-current-data > div),
+.system :global(.step-technical-data > div),
+.system :global(.step-facts > div),
+.system :global(.image-facts-v2 > article) {
+  padding: 10px 0;
+  border: 0;
+  border-top: 1px solid var(--line, #e5ddd6);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.system :global(.step-current-data small),
+.system :global(.step-technical-data small),
+.system :global(.step-facts small),
+.system :global(.image-facts-v2 small) {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--ink-soft, #5f5759);
+}
+
+.system :global(.step-current-data strong),
+.system :global(.step-facts strong),
+.system :global(.image-facts-v2 strong) { font-size: 16px; }
+
+.system :global(.related-row a),
+.system :global(.related-row .related-name) {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  font-size: 15px;
+}
+
+/* Sumario lateral y bloques secundarios sin sombra */
+.system :global(.brotherhood-summary-card),
+.system :global(.heritage-work),
+.system :global(.music-history-grid article) {
+  box-shadow: none;
+  border-radius: 6px;
+}
+
+@media (min-width: 620px) {
+  .system :global(.image-grid) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .system :global(.processional-grid) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (min-width: 980px) {
+  .system :global(.section) { padding: 64px 0; }
+  .system :global(.section-heading h2),
+  .system :global(.image-section-title-v2),
+  .system :global(.image-overview-copy-v2 h2) { font-size: 36px; }
+  .system :global(.image-grid) { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px 22px; }
+}
+
+/* Bloque de relaciones al final, compacto */
+.related {
+  border-top: 1px solid var(--line, #e5ddd6);
+}
+
+/* Banda: sin la foto del resumen (pasa a la cabecera), una sola columna. */
+.system :global([class*="overviewGrid"]) { grid-template-columns: 1fr !important; }
+.system :global([class*="overviewGrid"]) > :first-child { display: none; }
+.system :global([class*="softSection"]),
+.system :global([class*="historicalSection"]),
+.system :global([class*="premiereSection"]) { background: transparent; }
+
+@media (min-width: 980px) {
+  .system :global([class*="contentSection"]) { padding: 64px 0; }
+  .system :global([class*="sectionHeading"] h2) { font-size: 36px; }
+}
+
+/* Titulares: anula las capas previas (lectura y titulars-desktop-layout). */
+.system :global(#titulares .image-grid) {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 24px 14px !important;
+}
+.system :global(#titulares .image-grid > .brotherhood-image-card),
+.system :global(#titulares .image-grid > .brotherhood-image-card:only-child) {
+  display: flex !important;
+  flex-direction: column;
+  width: auto !important;
+  max-width: none !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 0;
+  box-shadow: none !important;
+  background: transparent;
+}
+.system :global(#titulares .brotherhood-portrait),
+.system :global(#titulares .brotherhood-portrait.has-image) {
+  width: 100% !important;
+  min-height: 0 !important;
+  height: auto !important;
+  aspect-ratio: 4 / 5 !important;
+}
+.system :global(#titulares .brotherhood-portrait-image) { object-fit: cover !important; }
+.system :global(#titulares .image-card-body) { padding: 10px 0 0 !important; }
+.system :global(#titulares .image-card-body .text-link) { min-height: 40px; font-size: 14px; }
+@media (min-width: 620px) {
+  .system :global(#titulares .image-grid) { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+}
+@media (min-width: 980px) {
+  .system :global(#titulares .image-grid) { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; gap: 32px 24px !important; }
+}
+
+/* Migas en una sola línea discreta */
+.system :global([data-site-breadcrumb]) { font-size: 12px; }
+.system :global([data-site-breadcrumb] ol) { flex-wrap: nowrap; overflow: hidden; white-space: nowrap; }
+
+/* Conexiones: filas planas, tipo de entidad reconocible, sin el nodo de origen. */
+.system :global([class*="RelationalThread-module"][class$="__section"]) {
+  background: transparent;
+  border-block: 0;
+  border-top: 1px solid var(--line, #e5ddd6);
+  padding: 40px 0;
+}
+.system :global([class$="__origin"]),
+.system :global([class$="__cardNode"]),
+.system :global([class$="__also"]) { display: none !important; }
+.system :global([class*="RelationalThread-module"][class$="__thread"]) { padding: 0 !important; }
+.system :global([class*="RelationalThread-module"][class$="__thread"])::before,
+.system :global([class*="RelationalThread-module"][class$="__destinations"])::before { display: none !important; }
+.system :global([class*="RelationalThread-module"][class$="__destinations"]) {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+.system :global([class*="RelationalThread-module"][class$="__card"]) {
+  display: block !important;
+  position: relative;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 14px 40px 14px 0 !important;
+  border: 0 !important;
+  border-top: 1px solid var(--line, #e5ddd6) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+.system :global([class*="RelationalThread-module"][class$="__card"])::after { display: none; }
+.system :global([class*="RelationalThread-module"][class$="__cardTopline"]) { margin-bottom: 4px !important; }
+.system :global([class*="RelationalThread-module"][class$="__cardTopline"] small),
+.system :global([class*="RelationalThread-module"][class$="__cardTopline"] span) { font-size: 12px !important; }
+.system :global([class*="RelationalThread-module"][class$="__card"] > strong) { display: block; font-size: 17px; line-height: 1.3; }
+.system :global([class*="RelationalThread-module"][class$="__cardFooter"]) { margin-top: 4px; font-size: 14px; color: var(--ink-soft, #5f5759); }
+.system :global([class*="RelationalThread-module"][class$="__arrow"]) { position: absolute !important; right: 4px; top: 50%; transform: translateY(-50%); }
+@media (min-width: 980px) {
+  .system :global([class*="RelationalThread-module"][class$="__destinations"]) { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; column-gap: 40px !important; }
+}
+
+/* Bandas propias y acompañamiento actual: filas, sin tarjeta */
+.system :global(.current-music-grid) { display: grid; gap: 0; }
+.system :global(.current-music-card) {
+  padding: 16px 0 !important;
+  border: 0 !important;
+  border-top: 1px solid var(--line, #e5ddd6) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.system :global(.current-music-card p),
+.system :global(.current-music-card small),
+.system :global(.current-music-position) { font-size: 14px !important; line-height: 1.5; }

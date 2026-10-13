@@ -1,0 +1,110 @@
+.section { padding: 44px 0; background: var(--paper, #fffdf9); }
+
+.head { display: grid; gap: 6px; margin-bottom: 20px; }
+
+.kicker {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--hc-red, #B01B32);
+}
+
+.head h2 {
+  margin: 0;
+  font-size: clamp(38px, 11vw, 68px);
+  font-weight: 800;
+  line-height: .92;
+  letter-spacing: -.03em;
+  text-transform: uppercase;
+  text-wrap: balance;
+  color: var(--brotherhood-dark, var(--hc-navy, #112339));
+}
+
+.cards { display: grid; gap: 14px; margin: 0; padding: 0; list-style: none; }
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 18px 16px;
+  border-radius: 18px;
+  background: #fff;
+  border: 1px solid var(--line, #e5ddd6);
+}
+
+.card:nth-child(3n + 2) { background: var(--hc-navy, #112339); border-color: var(--hc-navy, #112339); color: #fff; }
+.card:nth-child(3n + 3) { background: color-mix(in srgb, var(--brotherhood-primary, #153B69) 9%, #fff); }
+
+.number {
+  font-size: 56px;
+  font-weight: 800;
+  line-height: .85;
+  letter-spacing: -.04em;
+  color: var(--hc-red, #B01B32);
+}
+
+.card:nth-child(3n + 2) .number { color: #ffb3c0; }
+
+.card h3 {
+  margin: 10px 0 8px;
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -.02em;
+  text-wrap: balance;
+}
+
+.card p { margin: 0; font-size: 16px; line-height: 1.5; }
+
+.more { margin-top: 8px; }
+.more summary {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 15px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.more p { margin-top: 4px; }
+
+.foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 14px;
+  font-size: 13px;
+  font-weight: 600;
+  opacity: .9;
+}
+
+.share {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.share[data-state="copied"],
+.share[data-state="done"] { background: var(--hc-red, #B01B32); border-color: var(--hc-red, #B01B32); color: #fff; }
+
+@media (min-width: 760px) {
+  .section { padding: 64px 0; }
+  .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+  .card > p { flex: 0 0 auto; }
+}
+
+@media (min-width: 1100px) {
+  .cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}

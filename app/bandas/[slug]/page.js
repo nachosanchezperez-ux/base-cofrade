@@ -1,4 +1,10 @@
 import Image from 'next/image'
+import { usesFichaPrototype, prototypeNavOrder } from '@/lib/ficha-prototype'
+import FichaHero from '@/components/ficha/FichaHero'
+import FichaFigures from '@/components/ficha/FichaFigures'
+import BandHolyWeek from '@/components/ficha/BandHolyWeek'
+import MusicTimeline from '@/components/ficha/MusicTimeline'
+import fichaSystem from '@/components/ficha/fichaSystem.module.css'
 import Link from 'next/link'
 import { cache } from 'react'
 import { notFound } from 'next/navigation'
@@ -269,6 +275,7 @@ export default async function BandDetailPage({ params }) {
   const hasMusicalRepertoires = musicalRepertoires.length > 0
   const hasDiscography = discography.length > 0
   const hasDirection = band.direction.length > 0
+  const fichaPrototype = usesFichaPrototype(band.id)
   const banderin = band.heritage?.find((item) => item.type === 'Banderín') || null
   const primaryColor = colors.find((item) => item.role === 'primary')?.hexValue || band.primaryColor
   const secondaryColor = colors.find((item) => item.role === 'secondary')?.hexValue || band.secondaryColor
@@ -276,6 +283,13 @@ export default async function BandDetailPage({ params }) {
   const bandTheme = resolveBandPageTheme({ primaryColor, secondaryColor, accentColor })
   const currentRelations = [...orderedAccompaniments, ...gloryAccompaniments, ...upcomingAccompaniments]
   const discographyMarches = discographyMarchRelations(discography)
+  const bandFigures = fichaPrototype ? [
+    hasAccompaniments ? { value: orderedAccompaniments.length, label: `pasos en Semana Santa ${currentYear}`, href: '#semana-santa' } : null,
+    hasGloryAccompaniments ? { value: gloryAccompaniments.length, label: 'Glorias y cultos', href: '#glorias' } : null,
+    hasHistoricalAccompaniments ? { value: historicalAccompaniments.length, label: 'acompañamientos históricos', href: '#acompanamientos-historicos' } : null,
+    hasDiscography ? { value: discography.length, label: 'trabajos discográficos', href: '#discografia' } : null,
+    discographyMarches.length ? { value: discographyMarches.length, label: 'marchas grabadas con ficha', href: '#discografia' } : null,
+  ] : []
   const repertoireThreadItems = musicalRepertoires.slice(0, 4).map((item) => ({
     kind: 'Cruceta',
     relation: 'Repertorio interpretado',
@@ -327,7 +341,7 @@ export default async function BandDetailPage({ params }) {
 
   return (
     <div
-      className={`${styles.module} ${styles.bandPage}`}
+      className={`${styles.module} ${styles.bandPage} ${fichaPrototype ? fichaSystem.system : ''}`}
       style={{
         '--band-primary': bandTheme.primary,
         '--band-secondary': bandTheme.deep,
@@ -347,7 +361,25 @@ export default async function BandDetailPage({ params }) {
       ])} />
       <JsonLd data={jsonLd} />
 
-      <RelationalEntityHero
+      {fichaPrototype ? <FichaHero
+        kind={['Banda', publicText(band.type)].filter(Boolean).join(' · ')}
+        title={band.popularName}
+        officialName={band.officialName !== band.popularName ? band.officialName : ''}
+        breadcrumbItems={[
+          { label: 'Bandas', href: '/bandas' },
+          { label: band.popularName },
+        ]}
+        crest={band.logoPath ? { src: band.logoPath, alt: `Logotipo de ${band.popularName}` } : null}
+        facts={[
+          publicText(band.foundation) ? { label: 'Fundación', value: publicText(band.foundation) } : null,
+          publicText(band.headquarters) && band.headquarters !== band.municipality ? { label: 'Sede', value: publicText(band.headquarters) } : null,
+        ]}
+        media={{
+          photoSrc: band.heroImagePath || '',
+          photoAlt: band.heroImageAlt || `Fotografía de ${band.popularName}`,
+          credit: band.heroImageCredit || '',
+        }}
+      /> : <RelationalEntityHero
         variant="band"
         entityType="Banda"
         title={band.popularName}
@@ -378,14 +410,17 @@ export default async function BandDetailPage({ params }) {
           crestAlt: `Logotipo de ${band.popularName}`,
           initials: band.popularName.slice(0, 2).toUpperCase(),
         }}
-      />
+      />}
 
-      <EntitySectionNav items={[
+      {fichaPrototype ? <FichaFigures items={bandFigures} label={`${band.popularName} en cifras`} /> : null}
+
+      <EntitySectionNav items={prototypeNavOrder([
         { href: '#resumen', label: 'De un vistazo' },
+        fichaPrototype && hasAccompaniments && { href: '#semana-santa', label: 'Semana Santa' },
         hasUpcomingAgenda && { href: '#agenda', label: 'Agenda' },
         bandThreadItems.length > 0 && { href: '#tira-del-hilo', label: 'Conexiones' },
         banderin && { href: '#banderin', label: 'Banderín' },
-        hasAccompaniments && { href: '#acompanamientos', label: 'Dónde suena' },
+        hasAccompaniments && !fichaPrototype && { href: '#acompanamientos', label: 'Dónde suena' },
         hasUpcomingAccompaniments && { href: '#proximos-acompanamientos', label: 'Próximos' },
         hasGloryAccompaniments && { href: '#glorias', label: 'Glorias y eucarísticas' },
         hasHistoricalAccompaniments && { href: '#acompanamientos-historicos', label: 'Histórico' },
@@ -396,7 +431,7 @@ export default async function BandDetailPage({ params }) {
         hasDirection && { href: '#direccion', label: 'Dirección' },
         band.interestLinks.length > 0 && { href: '#enlaces-de-interes', label: 'Enlaces de interés' },
         band.sources?.length > 0 && { href: '#fuentes', label: 'Fuentes' },
-      ]} />
+      ], fichaPrototype, ['#resumen','#semana-santa','#agenda','#banderin','#acompanamientos','#proximos-acompanamientos','#glorias','#acompanamientos-historicos','#discografia','#extraordinarias','#repertorio','#crucetas-musicales','#direccion','#tira-del-hilo','#enlaces-de-interes','#fuentes'])} />
 
       <section className={`${styles.contentSection} ${styles.overviewSection}`} id="resumen">
         <div className="shell">
@@ -443,7 +478,7 @@ export default async function BandDetailPage({ params }) {
                   ) : null}
                 </article> : null}
               </div>
-              {(hasAccompaniments || hasGloryAccompaniments || currentPremieres.length || band.outings.length || hasMusicalRepertoires || hasDiscography) ? (
+              {!fichaPrototype && (hasAccompaniments || hasGloryAccompaniments || currentPremieres.length || band.outings.length || hasMusicalRepertoires || hasDiscography) ? (
                 <div className={styles.impactPanel}>
                   <div className={styles.impactHeading}>
                     <span>Actividad {currentYear} + archivo</span>
@@ -465,6 +500,8 @@ export default async function BandDetailPage({ params }) {
         </div>
       </section>
 
+      {fichaPrototype ? <BandHolyWeek items={orderedAccompaniments} year={currentYear} /> : null}
+
       <ContextAgendaSection
         id="agenda"
         eyebrow="Agenda de la Banda"
@@ -478,7 +515,7 @@ export default async function BandDetailPage({ params }) {
         ]}
       />
 
-      <RelationalThread
+      {fichaPrototype ? null : <RelationalThread
         currentLabel="Banda"
         currentName={band.popularName}
         currentMeta={[band.type, band.municipality].filter(Boolean).join(' · ')}
@@ -487,7 +524,7 @@ export default async function BandDetailPage({ params }) {
         eyebrow="Descubre el hilo"
         title="Conexiones de esta Banda"
         description="Salta a las Hermandades y pasos que acompaña, abre sus crucetas documentadas y continúa por las Marchas que forman parte de su discografía."
-      />
+      />}
 
       {banderin ? <section className={`${styles.contentSection} ${styles.heritageSection}`} id="banderin">
         <div className="shell">
@@ -527,7 +564,7 @@ export default async function BandDetailPage({ params }) {
         </div>
       </section> : null}
 
-      {hasAccompaniments ? <section className={`${styles.contentSection} ${styles.softSection}`} id="acompanamientos">
+      {hasAccompaniments && !fichaPrototype ? <section className={`${styles.contentSection} ${styles.softSection}`} id="acompanamientos">
         <div className="shell">
           <div className={styles.sectionHeading}>
             <span className={styles.eyebrow}>Dónde suena · Semana Santa · {currentYear}</span>
@@ -586,7 +623,33 @@ export default async function BandDetailPage({ params }) {
         </div>
       </section> : null}
 
-      {hasHistoricalAccompaniments ? <section className={`${styles.contentSection} ${styles.historicalSection}`} id="acompanamientos-historicos">
+      {fichaPrototype && hasHistoricalAccompaniments ? <section className="section" id="acompanamientos-historicos">
+        <div className="shell">
+          <div className="section-heading">
+            <span className="eyebrow">Memoria musical</span>
+            <h2>Su trayectoria</h2>
+            <p>Hermandades y pasos que ha acompañado, según los periodos documentados.</p>
+          </div>
+          <MusicTimeline
+            items={[...historicalAccompaniments]
+              .sort((a, b) => (b.yearTo || b.yearFrom || 0) - (a.yearTo || a.yearFrom || 0))
+              .map((item) => {
+                const step = presentAccompanimentStep(item)
+                return {
+                  id: item.id,
+                  status: 'historico',
+                  period: yearRange(item),
+                  band: item.brotherhoodName,
+                  href: item.brotherhoodSlug && item.brotherhoodPageReady ? `/hermandades/${item.brotherhoodSlug}` : '',
+                  detail: [presentAccompanimentMoment(item), step.name || step.type, step.position].filter(Boolean).join(' · '),
+                }
+              })}
+            statusLabels={{}}
+          />
+        </div>
+      </section> : null}
+
+      {!fichaPrototype && hasHistoricalAccompaniments ? <section className={`${styles.contentSection} ${styles.historicalSection}`} id="acompanamientos-historicos">
         <div className="shell">
           <div className={styles.sectionHeading}>
             <span className={styles.eyebrow}>Memoria musical</span>
@@ -639,6 +702,8 @@ export default async function BandDetailPage({ params }) {
           </div>
         </div>
       </section> : null}
+
+      {fichaPrototype ? <BandDiscographySection releases={discography} /> : null}
 
       {hasOutings ? <section className={styles.contentSection} id="extraordinarias">
         <div className="shell">
@@ -703,7 +768,7 @@ export default async function BandDetailPage({ params }) {
 
       <MusicalRepertoiresSection items={musicalRepertoires} context="band" />
 
-      <BandDiscographySection releases={discography} />
+      {fichaPrototype ? null : <BandDiscographySection releases={discography} />}
 
       {hasDirection ? <section className={`${styles.contentSection} ${styles.softSection}`} id="direccion">
         <div className="shell">
@@ -711,6 +776,17 @@ export default async function BandDetailPage({ params }) {
           <div className={styles.directionGrid}>{band.direction.map((item) => <article key={item.id}><span>{item.role}</span><h3>{item.name}</h3>{item.notes ? <p>{item.notes}</p> : null}</article>)}</div>
         </div>
       </section> : null}
+
+      {fichaPrototype ? <RelationalThread
+        currentLabel="Banda"
+        currentName={band.popularName}
+        currentMeta={[band.type, band.municipality].filter(Boolean).join(' · ')}
+        items={bandThreadItems}
+        priorityProfile="banda"
+        eyebrow="Descubre el hilo"
+        title="Conexiones de esta Banda"
+        description="Salta a las Hermandades y pasos que acompaña, abre sus crucetas documentadas y continúa por las Marchas que forman parte de su discografía."
+      /> : null}
 
       <OfficialLinks links={band.interestLinks} />
       <SourcesBlock sources={band.sources} />

@@ -1,0 +1,100 @@
+.wrap {
+  display: grid;
+  gap: 24px;
+}
+
+.label {
+  position: relative;
+  margin: 0;
+  padding: 22px 20px 20px;
+  background: #fff;
+  border: 1px solid color-mix(in srgb, var(--gold, #a47c48) 45%, #fff);
+  border-top: 4px double var(--gold, #a47c48);
+}
+
+.title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--brotherhood-dark, var(--hc-navy, #112339));
+}
+
+.subtitle {
+  margin: 4px 0 0;
+  font-size: 15px;
+  font-style: italic;
+  color: var(--ink-soft, #5f5759);
+}
+
+.rows {
+  display: grid;
+  gap: 0;
+  margin: 16px 0 0;
+}
+
+.rows div {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr);
+  gap: 12px;
+  padding: 10px 0;
+  border-top: 1px solid var(--line, #e5ddd6);
+}
+
+.rows dt {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink-soft, #5f5759);
+  padding-top: 2px;
+}
+
+.rows dd {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--ink, #191516);
+}
+
+.rows dd a { color: var(--brotherhood-primary, #153B69); }
+
+.note {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line, #e5ddd6);
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink-soft, #5f5759);
+}
+
+.whereTitle {
+  margin: 0 0 6px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--brotherhood-secondary, var(--hc-red, #B01B32));
+}
+
+.where ul { margin: 0; padding: 0; list-style: none; }
+
+.where li {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 56px;
+  padding: 8px 0;
+  border-top: 1px solid var(--line, #e5ddd6);
+}
+
+.where li span { font-size: 13px; color: var(--ink-soft, #5f5759); }
+.where li a, .where li strong { font-size: 17px; font-weight: 700; color: var(--ink, #191516); }
+
+@media (min-width: 980px) {
+  .wrap { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 48px; align-items: start; }
+  .label { padding: 30px 32px 28px; }
+  .title { font-size: 26px; }
+  .rows div { grid-template-columns: 150px minmax(0, 1fr); }
+}

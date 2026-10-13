@@ -1,4 +1,9 @@
 import Link from 'next/link';
+import { usesFichaPrototype, prototypeNavOrder } from '@/lib/ficha-prototype';
+import FichaHero from '@/components/ficha/FichaHero';
+import MusicTimeline from '@/components/ficha/MusicTimeline';
+import FichaFigures from '@/components/ficha/FichaFigures';
+import fichaSystem from '@/components/ficha/fichaSystem.module.css';
 import { cache } from 'react';
 import { notFound } from 'next/navigation';
 import EntitySectionNav from '@/components/EntitySectionNav';
@@ -115,9 +120,40 @@ export default async function PasoDetailPage({params}){
     heritage = { phases: [], pieces: [], sources: [] },
   } = result;
   const directoryType = heritageTypeForValue(paso.tipo, 'pasos');
+  const fichaPrototype = usesFichaPrototype(paso.id);
+  const musicTimeline = [
+    ...bandas.map((banda) => ({
+      id: banda.id,
+      status: 'vigente',
+      period: banda.periodo,
+      band: banda.nombre,
+      href: `/bandas/${banda.slug}`,
+      detail: [banda.posicion, banda.salida].filter(Boolean).join(' · '),
+    })),
+    ...historicoMusical.map((item) => ({
+      id: item.id,
+      status: 'historico',
+      period: item.period,
+      band: item.name,
+      href: item.slug ? `/bandas/${item.slug}` : '',
+      detail: item.position,
+    })),
+  ];
   const municipalityHubHref = hermandad?.localidad
     ? agendaMunicipalityHref(hermandad.localidad)
     : '';
+  const timelineYears = [...bandas.map((banda) => banda.periodo), ...historicoMusical.map((item) => item.period)]
+    .flatMap((label) => String(label || '').match(/\b(1[5-9]\d{2}|20\d{2})\b/g) || [])
+    .map(Number);
+  const firstMusicYear = timelineYears.length ? Math.min(...timelineYears) : null;
+  const documentedBands = new Set(musicTimeline.map((item) => item.band)).size;
+  const musicLead = documentedBands > 1 ? <><strong>{documentedBands}</strong> formaciones documentadas{firstMusicYear ? ` desde ${firstMusicYear}` : ''}</> : null;
+  const pasoFigures = fichaPrototype ? [
+    imagenes.length ? { value: imagenes.length, label: imagenes.length === 1 ? 'imagen en el paso' : 'imágenes en el paso', href: '#resumen' } : null,
+    documentedBands ? { value: documentedBands, label: documentedBands === 1 ? 'banda documentada' : 'bandas documentadas', href: '#acompanamiento' } : null,
+    firstMusicYear ? { value: firstMusicYear, label: 'primer acompañamiento documentado', href: '#acompanamiento' } : null,
+    heritage.phases.length ? { value: heritage.phases.length, label: heritage.phases.length === 1 ? 'fase patrimonial' : 'fases patrimoniales', href: '#patrimonio' } : null,
+  ] : [];
   const relationalItems = [
     ...(hermandad ? [{
       kind: 'Hermandad',
@@ -156,7 +192,7 @@ export default async function PasoDetailPage({params}){
   ];
 
   return (
-    <div className="brotherhood-page" style={{
+    <div className={`brotherhood-page ${fichaPrototype ? fichaSystem.system : ''}`} style={{
       '--brotherhood-primary': hermandad?.colores?.primario || '#153B69',
       '--brotherhood-secondary': hermandad?.colores?.secundario || '#A71930',
       '--brotherhood-light': hermandad?.colores?.claro || '#FFFFFF',
@@ -193,7 +229,36 @@ export default async function PasoDetailPage({params}){
         ...(coverMedia?.path ? { image: absoluteUrl(coverMedia.path) } : {}),
 
       }} />
-      <RelationalEntityHero
+      {fichaPrototype ? <FichaHero
+        kind={`Paso procesional · ${publicText(paso.tipo) || 'Paso'}`}
+        title={paso.nombre}
+        breadcrumbItems={[
+          { label: 'Pasos', href: '/pasos' },
+          { label: paso.nombre },
+        ]}
+        context={[
+          hermandad ? { label: `Hermandad de ${hermandad.nombrePopular}`, href: `/hermandades/${hermandad.slug}` } : null,
+          hermandad?.localidad ? { label: hermandad.localidad, href: municipalityHubHref || undefined } : null,
+        ]}
+        crest={hermandad?.escudoPath ? { src: hermandad.escudoPath, alt: `Escudo de ${hermandad.nombrePopular}` } : null}
+        facts={[
+          publicText(paso.ejecucion) ? { label: 'Ejecución', value: publicText(paso.ejecucion) } : null,
+          publicText(paso.sistemaPortadores) ? { label: 'Portadores', value: publicText(paso.sistemaPortadores) } : null,
+          bandas[0] ? { label: 'Música actual', value: bandas[0].nombre, href: '#acompanamiento' } : null,
+        ]}
+        media={{
+          photoSrc: coverMedia?.path || '',
+          photoAlt: coverMedia?.alt || `Fotografía de ${paso.nombre}`,
+          credit: coverMedia?.credit || '',
+          width: coverMedia?.width,
+          height: coverMedia?.height,
+          focusX: coverMedia?.focusX,
+          focusY: coverMedia?.focusY,
+          mobileFocusX: coverMedia?.mobileFocusX,
+          mobileFocusY: coverMedia?.mobileFocusY,
+          focusPosition: coverMedia?.focusPosition || getStepPhotoFraming(paso.slug).hero,
+        }}
+      /> : <RelationalEntityHero
         variant="step"
         entityType="Paso procesional"
         title={paso.nombre}
@@ -230,14 +295,16 @@ export default async function PasoDetailPage({params}){
           fitMode: coverMedia?.fitMode,
           focusPosition: coverMedia?.focusPosition || getStepPhotoFraming(paso.slug).hero,
         }}
-      />
+      />}
 
-      <EntitySectionNav items={[
+      {fichaPrototype ? <FichaFigures items={pasoFigures} label={`${paso.nombre} en cifras`} /> : null}
+
+      <EntitySectionNav items={prototypeNavOrder([
         { href: '#resumen', label: 'Resumen' },
         relationalItems.length > 0 && { href: '#tira-del-hilo', label: 'Tira del hilo' },
         (bandas.length > 0 || historicoMusical.length > 0) && { href: '#acompanamiento', label: 'Acompañamiento' },
         (heritage.phases.length > 0 || heritage.pieces.length > 0 || heritage.sources.length > 0) && { href: '#patrimonio', label: 'Patrimonio y evolución' },
-      ]} />
+      ], fichaPrototype, ['#resumen','#acompanamiento','#patrimonio','#tira-del-hilo'])} />
 
       <section className="section" id="resumen"><div className="shell content-grid">
         <div>
@@ -245,11 +312,11 @@ export default async function PasoDetailPage({params}){
           <EntityLastUpdated value={paso.updatedAt} />
           {publicText(paso.descripcion) ? <p className="body-large">{publicText(paso.descripcion)}</p> : null}
           <div className="step-facts">
-            {hermandad ? <div>
+            {hermandad && !fichaPrototype ? <div>
               <small>Hermandad</small>
               <strong>{hermandad.nombrePopular}</strong>
             </div> : null}
-            {municipalityHubHref ? <div>
+            {municipalityHubHref && !fichaPrototype ? <div>
               <small>Localidad</small>
               <Link href={municipalityHubHref}>Guía cofrade de {hermandad.localidad} →</Link>
             </div> : null}
@@ -270,16 +337,29 @@ export default async function PasoDetailPage({params}){
         </aside> : null}
       </div></section>
 
-      <RelationalThread
+      {fichaPrototype ? null : <RelationalThread
         currentName={paso.nombre}
         currentMeta={[paso.tipo, paso.ejecucion].filter(Boolean).join(' · ')}
         items={relationalItems}
         priorityProfile="paso"
         title="Este paso conecta patrimonio, imágenes y música"
         description="Desde aquí puedes volver a la Hermandad, abrir las fichas de las imágenes que procesionan o continuar hacia las formaciones musicales vinculadas actualmente."
-      />
+      />}
 
-      {(bandas.length > 0 || historicoMusical.length > 0) && (
+      {fichaPrototype && musicTimeline.length > 0 ? (
+        <section className="section" id="acompanamiento">
+          <div className="shell">
+            <SectionTitle
+              eyebrow="Memoria sonora"
+              title="Acompañamiento musical"
+              description="Formaciones que han acompañado a este paso, según los periodos documentados."
+            />
+            <MusicTimeline items={musicTimeline} title="Cronología del acompañamiento" lead={musicLead} />
+          </div>
+        </section>
+      ) : null}
+
+      {!fichaPrototype && (bandas.length > 0 || historicoMusical.length > 0) && (
         <section className={`section ${styles.accompanimentSection}`} id="acompanamiento">
           <div className="shell">
             <SectionTitle
@@ -386,6 +466,14 @@ export default async function PasoDetailPage({params}){
           ) : null}
         </div>
       </section> : null}
+      {fichaPrototype ? <RelationalThread
+        currentName={paso.nombre}
+        currentMeta={[paso.tipo, paso.ejecucion].filter(Boolean).join(' · ')}
+        items={relationalItems}
+        priorityProfile="paso"
+        title="Este paso conecta patrimonio, imágenes y música"
+        description="Desde aquí puedes volver a la Hermandad, abrir las fichas de las imágenes que procesionan o continuar hacia las formaciones musicales vinculadas actualmente."
+      /> : null}
     </div>
   );
 }

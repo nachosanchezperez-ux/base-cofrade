@@ -512,7 +512,7 @@ function CurrentMusicSequence({ items, nested = false }) {
   )
 }
 
-export async function BrotherhoodOwnBands({ brotherhoodId, musicOnly = false }) {
+export async function BrotherhoodOwnBands({ brotherhoodId, musicOnly = false, skipCurrent = false }) {
   try {
     const supabase = createPublicClient()
     const [bands, threadData, currentAccompaniments] = await Promise.all([
@@ -607,7 +607,7 @@ export async function BrotherhoodOwnBands({ brotherhoodId, musicOnly = false }) 
           </section>
         ) : null}
 
-        <CurrentMusicSequence items={currentAccompaniments} nested={musicOnly} />
+        {skipCurrent ? null : <CurrentMusicSequence items={currentAccompaniments} nested={musicOnly} />}
       </>
     )
   } catch (error) {
