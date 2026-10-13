@@ -225,8 +225,7 @@
 .system :global([class*="overviewGrid"]) > :first-child { display: none; }
 .system :global([class*="softSection"]),
 .system :global([class*="historicalSection"]),
-.system :global([class*="premiereSection"]),
-.system :global([class*="heritageSection"]) { background: transparent; }
+.system :global([class*="premiereSection"]) { background: transparent; }
 
 @media (min-width: 980px) {
   .system :global([class*="contentSection"]) { padding: 64px 0; }

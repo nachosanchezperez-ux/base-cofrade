@@ -7,10 +7,6 @@ import styles from './BrotherhoodProcession.module.css'
 // paso y la música que los acompaña. Solo usa pasos, titulares y
 // acompañamientos vigentes ya documentados en la ficha.
 
-function bypassOptimizer(src = '') {
-  return String(src).startsWith('/')
-}
-
 function MusicLine({ items = [] }) {
   if (!items.length) return null
   return (
@@ -61,7 +57,6 @@ export default function BrotherhoodProcession({ day = '', steps = [], head = [],
                       src={step.photo.src}
                       alt={step.photo.alt || `Fotografía de ${step.name}`}
                       fill
-                      unoptimized={bypassOptimizer(step.photo.src)}
                       sizes="(max-width: 719px) calc(100vw - 72px), 420px"
                       style={step.photo.position ? { objectPosition: step.photo.position } : undefined}
                     />
