@@ -1,6 +1,8 @@
 import Image from 'next/image'
 import { usesFichaPrototype, prototypeNavOrder } from '@/lib/ficha-prototype'
 import FichaHero from '@/components/ficha/FichaHero'
+import FichaFigures from '@/components/ficha/FichaFigures'
+import BandHolyWeek from '@/components/ficha/BandHolyWeek'
 import fichaSystem from '@/components/ficha/fichaSystem.module.css'
 import Link from 'next/link'
 import { cache } from 'react'
@@ -280,6 +282,13 @@ export default async function BandDetailPage({ params }) {
   const bandTheme = resolveBandPageTheme({ primaryColor, secondaryColor, accentColor })
   const currentRelations = [...orderedAccompaniments, ...gloryAccompaniments, ...upcomingAccompaniments]
   const discographyMarches = discographyMarchRelations(discography)
+  const bandFigures = fichaPrototype ? [
+    hasAccompaniments ? { value: orderedAccompaniments.length, label: `pasos en Semana Santa ${currentYear}`, href: '#semana-santa' } : null,
+    hasGloryAccompaniments ? { value: gloryAccompaniments.length, label: 'Glorias y cultos', href: '#glorias' } : null,
+    hasHistoricalAccompaniments ? { value: historicalAccompaniments.length, label: 'acompañamientos históricos', href: '#acompanamientos-historicos' } : null,
+    hasDiscography ? { value: discography.length, label: 'trabajos discográficos', href: '#discografia' } : null,
+    discographyMarches.length ? { value: discographyMarches.length, label: 'marchas grabadas con ficha', href: '#discografia' } : null,
+  ] : []
   const repertoireThreadItems = musicalRepertoires.slice(0, 4).map((item) => ({
     kind: 'Cruceta',
     relation: 'Repertorio interpretado',
@@ -408,8 +417,11 @@ export default async function BandDetailPage({ params }) {
         }}
       />}
 
+      {fichaPrototype ? <FichaFigures items={bandFigures} label={`${band.popularName} en cifras`} /> : null}
+
       <EntitySectionNav items={prototypeNavOrder([
         { href: '#resumen', label: 'De un vistazo' },
+        fichaPrototype && hasAccompaniments && { href: '#semana-santa', label: 'Semana Santa' },
         hasUpcomingAgenda && { href: '#agenda', label: 'Agenda' },
         bandThreadItems.length > 0 && { href: '#tira-del-hilo', label: 'Conexiones' },
         banderin && { href: '#banderin', label: 'Banderín' },
@@ -424,7 +436,7 @@ export default async function BandDetailPage({ params }) {
         hasDirection && { href: '#direccion', label: 'Dirección' },
         band.interestLinks.length > 0 && { href: '#enlaces-de-interes', label: 'Enlaces de interés' },
         band.sources?.length > 0 && { href: '#fuentes', label: 'Fuentes' },
-      ], fichaPrototype, ['#resumen','#agenda','#banderin','#acompanamientos','#proximos-acompanamientos','#glorias','#acompanamientos-historicos','#discografia','#extraordinarias','#repertorio','#crucetas-musicales','#direccion','#tira-del-hilo','#enlaces-de-interes','#fuentes'])} />
+      ], fichaPrototype, ['#resumen','#semana-santa','#agenda','#banderin','#acompanamientos','#proximos-acompanamientos','#glorias','#acompanamientos-historicos','#discografia','#extraordinarias','#repertorio','#crucetas-musicales','#direccion','#tira-del-hilo','#enlaces-de-interes','#fuentes'])} />
 
       <section className={`${styles.contentSection} ${styles.overviewSection}`} id="resumen">
         <div className="shell">
@@ -492,6 +504,8 @@ export default async function BandDetailPage({ params }) {
           </div>
         </div>
       </section>
+
+      {fichaPrototype ? <BandHolyWeek items={orderedAccompaniments} year={currentYear} /> : null}
 
       <ContextAgendaSection
         id="agenda"

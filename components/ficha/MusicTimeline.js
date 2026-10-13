@@ -6,21 +6,22 @@ import styles from './MusicTimeline.module.css'
 // items: [{ id, status: 'futuro'|'vigente'|'historico', period, band, href, detail }]
 const STATUS_LABEL = { futuro: 'Próxima temporada', vigente: 'Vigente', historico: 'Histórico' }
 
-export default function MusicTimeline({ items = [], title = 'Cronología musical', headingLevel = 3 }) {
+export default function MusicTimeline({ items = [], title = 'Cronología musical', headingLevel = 3, lead = '', statusLabels = STATUS_LABEL }) {
   const visible = items.filter((item) => item?.band)
   if (!visible.length) return null
   const Heading = `h${headingLevel}`
 
   return (
     <div className={styles.wrap}>
-      <Heading className={styles.title}>{title}</Heading>
+      {title ? <Heading className={styles.title}>{title}</Heading> : null}
+      {lead ? <p className={styles.lead}>{lead}</p> : null}
       <ol className={styles.timeline}>
         {visible.map((item) => (
           <li key={item.id} className={styles.item} data-status={item.status}>
             <span className={styles.node} aria-hidden="true" />
             <div className={styles.when}>
               <span className={styles.period}>{item.period || 'Periodo sin fechar'}</span>
-              <span className={styles.status}>{STATUS_LABEL[item.status] || ''}</span>
+              {statusLabels[item.status] ? <span className={styles.status}>{statusLabels[item.status]}</span> : null}
             </div>
             <p className={styles.band}>
               {item.href ? <Link href={item.href}>{item.band}</Link> : item.band}

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { usesFichaPrototype, prototypeNavOrder } from '@/lib/ficha-prototype';
 import FichaHero from '@/components/ficha/FichaHero';
 import MusicTimeline from '@/components/ficha/MusicTimeline';
+import FichaFigures from '@/components/ficha/FichaFigures';
 import fichaSystem from '@/components/ficha/fichaSystem.module.css';
 import { cache } from 'react';
 import { notFound } from 'next/navigation';
@@ -141,6 +142,18 @@ export default async function PasoDetailPage({params}){
   const municipalityHubHref = hermandad?.localidad
     ? agendaMunicipalityHref(hermandad.localidad)
     : '';
+  const timelineYears = [...bandas.map((banda) => banda.periodo), ...historicoMusical.map((item) => item.period)]
+    .flatMap((label) => String(label || '').match(/\b(1[5-9]\d{2}|20\d{2})\b/g) || [])
+    .map(Number);
+  const firstMusicYear = timelineYears.length ? Math.min(...timelineYears) : null;
+  const documentedBands = new Set(musicTimeline.map((item) => item.band)).size;
+  const musicLead = documentedBands > 1 ? <><strong>{documentedBands}</strong> formaciones documentadas{firstMusicYear ? ` desde ${firstMusicYear}` : ''}</> : null;
+  const pasoFigures = fichaPrototype ? [
+    imagenes.length ? { value: imagenes.length, label: imagenes.length === 1 ? 'imagen en el paso' : 'imágenes en el paso', href: '#resumen' } : null,
+    documentedBands ? { value: documentedBands, label: documentedBands === 1 ? 'banda documentada' : 'bandas documentadas', href: '#acompanamiento' } : null,
+    firstMusicYear ? { value: firstMusicYear, label: 'primer acompañamiento documentado', href: '#acompanamiento' } : null,
+    heritage.phases.length ? { value: heritage.phases.length, label: heritage.phases.length === 1 ? 'fase patrimonial' : 'fases patrimoniales', href: '#patrimonio' } : null,
+  ] : [];
   const relationalItems = [
     ...(hermandad ? [{
       kind: 'Hermandad',
@@ -285,6 +298,8 @@ export default async function PasoDetailPage({params}){
         }}
       />}
 
+      {fichaPrototype ? <FichaFigures items={pasoFigures} label={`${paso.nombre} en cifras`} /> : null}
+
       <EntitySectionNav items={prototypeNavOrder([
         { href: '#resumen', label: 'Resumen' },
         relationalItems.length > 0 && { href: '#tira-del-hilo', label: 'Tira del hilo' },
@@ -340,7 +355,7 @@ export default async function PasoDetailPage({params}){
               title="Acompañamiento musical"
               description="Formaciones que han acompañado a este paso, según los periodos documentados."
             />
-            <MusicTimeline items={musicTimeline} title="Cronología del acompañamiento" />
+            <MusicTimeline items={musicTimeline} title="Cronología del acompañamiento" lead={musicLead} />
           </div>
         </section>
       ) : null}

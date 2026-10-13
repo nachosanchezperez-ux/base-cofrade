@@ -5,6 +5,8 @@ import readingStyles from '@/components/BrotherhoodReadingLayout.module.css';
 import { usesBrotherhoodReading } from '@/lib/brotherhood-reading-rollout';
 import { usesFichaPrototype } from '@/lib/ficha-prototype';
 import FichaHero from '@/components/ficha/FichaHero';
+import FichaFigures from '@/components/ficha/FichaFigures';
+import BrotherhoodProcession from '@/components/ficha/BrotherhoodProcession';
 import fichaSystem from '@/components/ficha/fichaSystem.module.css';
 import Image from 'next/image';
 import { cache } from 'react';
@@ -302,6 +304,42 @@ export default async function HermandadDetailPage({ params, reading: readingOver
     { label: 'Titulares', value: h.imagenes?.length ? String(h.imagenes.length) : '' },
   ].filter((item) => item?.value);
   const heroFacts = isPenitencia ? penitentialFacts : gloryFacts;
+  const foundationYear = String(publicText(h.fundacion) || '').match(/(1[0-9]{3}|20[0-9]{2})/)?.[1] || '';
+  const marchCount = musicalHeritage.filter((item) => item.workType === 'Marcha procesional').length;
+  const fichaFigures = fichaPrototype ? [
+    foundationYear ? { value: foundationYear, label: 'año de fundación', href: '#historia' } : null,
+    h.datosJornada?.totalNazarenos ? { value: h.datosJornada.totalNazarenos, label: h.datosJornada?.ano ? `nazarenos en ${h.datosJornada.ano}` : 'nazarenos' } : null,
+    h.imagenes?.length ? { value: h.imagenes.length, label: h.imagenes.length === 1 ? 'titular' : 'titulares', href: '#titulares' } : null,
+    holyWeekSteps.length ? { value: holyWeekSteps.length, label: holyWeekSteps.length === 1 ? 'paso en la calle' : 'pasos en la calle', href: '#cortejo' } : null,
+    marchCount ? { value: marchCount, label: marchCount === 1 ? 'marcha en su patrimonio' : 'marchas en su patrimonio', href: '#musica' } : null,
+    h.fuentesFicha?.length ? { value: h.fuentesFicha.length, label: 'fuentes documentales', href: '#fuentes' } : null,
+  ] : [];
+  const currentMusicByStep = new Map();
+  const headMusic = [];
+  for (const item of (h.acompanamientoActual || [])) {
+    const band = publicText(item.banda);
+    if (!band) continue;
+    const entry = { id: item.id, band, href: item.bandaSlug ? `/bandas/${item.bandaSlug}` : '', position: publicText(item.posicion) };
+    if (item.pasoId && stepById.has(item.pasoId)) {
+      currentMusicByStep.set(item.pasoId, [...(currentMusicByStep.get(item.pasoId) || []), entry]);
+    } else if (/cruz|cabeza/i.test(entry.position)) {
+      headMusic.push(entry);
+    }
+  }
+  const processionSteps = (fichaPrototype && isPenitencia ? holyWeekSteps : []).map((paso) => {
+    const media = entityCoverMedia.get(paso.id);
+    const titulars = (paso.imagenesDetalle?.length ? paso.imagenesDetalle : (paso.imagenes || []).map((imageId) => imagenMap.get(imageId)).filter(Boolean))
+      .map((imagen) => ({ id: imagen.id, name: imagen.nombre, href: imagen.fichaDisponible && imagen.slug ? `/imagenes/${imagen.slug}` : '' }));
+    return {
+      id: paso.id,
+      name: paso.nombre,
+      type: publicText(paso.tipo),
+      href: paso.fichaDisponible && paso.slug ? `/pasos/${paso.slug}` : '',
+      photo: media?.path ? { src: media.path, alt: media.alt, credit: media.credit, position: getStepPhotoFraming(paso.slug).card } : null,
+      titulars,
+      music: currentMusicByStep.get(paso.id) || [],
+    };
+  });
   const heroFactLabels = new Set(heroFacts.map((fact) => fact.label));
   const hasPracticalOverview = Boolean(
     publicText(h.sedeDetalle?.nombre)
@@ -772,6 +810,8 @@ export default async function HermandadDetailPage({ params, reading: readingOver
       />
       )}
 
+      {fichaPrototype ? <FichaFigures items={fichaFigures} label={`${h.nombrePopular} en cifras`} /> : null}
+
       {reading ? (
         <BrotherhoodReadingLayout
           brotherhood={h}
@@ -779,7 +819,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
           agendaItems={upcomingAgendaItems}
           heroFactLabels={heroFacts.map((fact) => fact.label)}
           hasMusic={Boolean(documentedCurrentAccompaniments.length || musicalHeritage.length || fallbackMusicalHeritage.length || documentedHistoricalAccompaniments.length || musicalRepertoires.length)}
-          slots={{ titulars: titularsSection, steps: stepsSection, history: historySection,
+          slots={{ titulars: titularsSection, steps: processionSteps.length ? <BrotherhoodProcession day={holyWeekDay(h) || publicText(h.diaSalida)} steps={processionSteps} head={headMusic} /> : stepsSection, history: historySection,
             ownMusic: ownMusicSection, musicalHeritage: musicalHeritageSection, repertoires: repertoiresSection,
             historicalMusic: historicalMusicSection, heritage: heritageSection, simpecados: simpecadosSection,
             posters: postersSection, habit: habitSection, council: councilSection, viaCrucis: viaCrucisSection,

@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { usesFichaPrototype, prototypeNavOrder } from '@/lib/ficha-prototype';
 import FichaHero from '@/components/ficha/FichaHero';
+import ImageLabel from '@/components/ficha/ImageLabel';
+import MusicTimeline from '@/components/ficha/MusicTimeline';
 import fichaSystem from '@/components/ficha/fichaSystem.module.css';
 import { cache } from 'react';
 import { notFound } from 'next/navigation';
@@ -160,6 +162,36 @@ export default async function ImagenPage({ params }) {
       context: [otraImagen.tipo, otraImagen.fecha].filter(Boolean).join(' · '),
     })),
   ];
+  const authorNodes = imageAuthors.length ? imageAuthors.map((author, index) => (
+    <span key={author.label}>{index > 0 ? ' · ' : null}{author.slug ? <Link href={`/autores/${author.slug}`} prefetch={false}>{author.label}</Link> : author.label}</span>
+  )) : null;
+  const firstYear = (value) => Number(String(value || '').match(/\b[12]\d{3}\b/)?.[0]) || 9999;
+  const lifeTimeline = fichaPrototype ? [
+    publicText(imagen.fecha) ? {
+      id: 'ejecucion',
+      status: 'origen',
+      period: publicText(imagen.fecha),
+      band: 'Ejecución de la imagen',
+      detail: authorNodes,
+      sort: firstYear(imagen.fecha) === 9999 ? -1 : firstYear(imagen.fecha),
+    } : null,
+    ...restorationCards.map((card) => ({
+      id: card.id,
+      status: 'historico',
+      period: card.fecha || card.anio || 'Sin fecha',
+      band: [card.tipo, card.fase].filter(Boolean).join(' · '),
+      detail: <>{card.responsable ? <strong>{card.responsableSlug ? <Link href={`/autores/${card.responsableSlug}`} prefetch={false}>{card.responsable}</Link> : card.responsable}</strong> : null}{card.responsable && card.resumen ? ' · ' : null}{card.resumen}</>,
+      sort: firstYear(card.fecha || card.anio),
+    })),
+    ...(imagen.acontecimientos || []).map((item, index) => ({
+      id: `hito-${index}`,
+      status: 'hito',
+      period: item.fecha,
+      band: item.titulo,
+      detail: item.texto,
+      sort: firstYear(item.fecha),
+    })),
+  ].filter(Boolean).sort((a, b) => a.sort - b.sort) : [];
   const hasRelatedEntities = relationalItems.length > 0;
   const hasImageOverview = Boolean(
     hermandad
@@ -315,7 +347,47 @@ export default async function ImagenPage({ params }) {
         imagen.fuentes?.length > 0 && { href: '#fuentes', label: 'Fuentes' },
       ], fichaPrototype, ['#resumen','#galeria','#restauraciones','#hitos','#cronologia','#tira-del-hilo','#fuentes'])} />
 
-      {hasImageOverview ? <section className="section image-overview-v2" id="resumen">
+      {fichaPrototype && hasImageOverview ? <section className="section" id="resumen">
+        <div className="shell">
+          <div className="section-heading">
+            <span className="eyebrow">Ficha de catálogo</span>
+            <h2>La imagen</h2>
+          </div>
+          <ImageLabel
+            title={imagen.nombre}
+            subtitle={hermandad ? `Titular de la Hermandad de ${hermandad.nombrePopular}` : ''}
+            rows={[
+              { label: 'Autoría', value: authorNodes },
+              { label: 'Datación', value: publicText(imagen.fecha) },
+              { label: 'Tipología', value: publicText(imagen.tipologia || imagen.tipo), href: directoryType ? heritageDirectoryTypePath('imagenes', directoryType.slug) : undefined },
+              { label: 'Material', value: publicText(imagen.material) },
+              { label: 'Técnica', value: publicText(imagen.tecnica) },
+              { label: 'Medidas', value: publicText(imagen.dimensiones) },
+              { label: 'Vestidor', value: dresser?.name || '' },
+            ]}
+            note={publicText(imagen.descripcion)}
+            where={[
+              hermandad ? { label: 'Hermandad', value: hermandad.nombrePopular, href: `/hermandades/${hermandad.slug}` } : null,
+              primaryStep ? { label: 'Procesiona en', value: primaryStep.nombre, href: primaryStep.slug ? `/pasos/${primaryStep.slug}` : undefined } : null,
+              hermandad?.localidad ? { label: 'Localidad', value: hermandad.localidad, href: municipalityHubHref || undefined } : null,
+            ]}
+          />
+          <EntityLastUpdated value={imagen.updatedAt} />
+        </div>
+      </section> : null}
+
+      {fichaPrototype && lifeTimeline.length > 1 ? <section className="section" id="restauraciones">
+        <div className="shell">
+          <div className="section-heading">
+            <span className="eyebrow">Historia material</span>
+            <h2>Vida de la imagen</h2>
+            <p>Su hechura y cada intervención documentada, en orden.</p>
+          </div>
+          <MusicTimeline items={lifeTimeline} title="" headingLevel={3} statusLabels={{ origen: 'Hechura', historico: 'Intervención', hito: 'Hito' }} />
+        </div>
+      </section> : null}
+
+      {!fichaPrototype && hasImageOverview ? <section className="section image-overview-v2" id="resumen">
         <div className="shell image-overview-grid-v2">
           <div className="image-overview-copy-v2">
             <span className="eyebrow">De un vistazo</span>
@@ -400,9 +472,9 @@ export default async function ImagenPage({ params }) {
 
       <EntityMediaGallery items={galleryMedia} id="galeria" />
 
-      <ImageRestorationsSection items={restorationCards} />
+      {fichaPrototype && lifeTimeline.length > 1 ? null : <ImageRestorationsSection items={restorationCards} />}
 
-      {imagen.acontecimientos?.length > 0 && (
+      {!(fichaPrototype && lifeTimeline.length > 1) && imagen.acontecimientos?.length > 0 && (
         <section className="section" id="hitos">
           <div className="shell">
             <span className="eyebrow">Acontecimientos</span>
@@ -420,7 +492,7 @@ export default async function ImagenPage({ params }) {
         </section>
       )}
 
-      {cronologia.length > 0 && (
+      {!(fichaPrototype && lifeTimeline.length > 1) && cronologia.length > 0 && (
         <section className="section image-timeline-section-v2" id="cronologia">
           <div className="shell">
             <span className="eyebrow">Evolución</span>
