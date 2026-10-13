@@ -143,3 +143,22 @@ select v.s, '7a5c0e05-2026-4012-8000-0000000061a4'::uuid, v.sc from (values
   ('19b23e24-b3cf-4bea-b14b-bc061bcba2d7'::uuid, 'El Pespunte (12/12/2025): firma de Mairena del Alcor para el palio'),
   ('7a5c0e05-2026-4012-8000-00000000ca30'::uuid, 'Confirmación editorial del primer año (2026)')) v(s, sc)
 where not exists (select 1 from public.source_links x where x.source_id = v.s and x.music_accompaniment_period_id = '7a5c0e05-2026-4012-8000-0000000061a4');
+
+-- 10 · Confirmación del propietario (13/10/2026): Las Cigarreras tras el palio de 2018 a 2025.
+insert into public.sources (id, name, url, source_type, author_or_publisher, accessed_at, notes) values
+ ('7a5c0e05-2026-4012-8000-00000000ca31', 'Humillación de Camas · Cigarreras en el palio 2018-2025 · confirmación editorial', null, 'Aportación directa', 'Dirección de Hilo Cofrade', '2026-10-13',
+  'El propietario confirma el 13/10/2026 que Las Cigarreras acompañaron al palio de 2018 a 2025.')
+on conflict (id) do nothing;
+insert into public.music_accompaniment_periods (id, brotherhood_entity_id, band_entity_id, step_entity_id, position, outing_type,
+  date_from_text, year_from, date_to_text, year_to, is_current, notes, status, public_step_name, public_brotherhood_name, public_brotherhood_slug) values
+ ('7a5c0e05-2026-4012-8000-0000000061a5', 'c6100000-0000-4000-8000-000000000016', 'b1000000-0000-0000-0000-000000000001', '7a5c0e05-2026-4012-8000-0000000005f5',
+  'Tras el paso de palio', 'Sábado de Pasión', 'Desde el Sábado de Pasión de 2018', 2018, 'Hasta el Sábado de Pasión de 2025', 2025, false,
+  'Tras María Santísima de la Humillación. La vinculación terminó con la marcha de la banda a la Hermandad de La Milagrosa; en 2026 le sucede la Banda de Mairena del Alcor.',
+  'published', 'Paso de palio de María Santísima de la Humillación', 'Hermandad de la Humillación de Camas', 'hermandad-humillacion-camas')
+on conflict (id) do nothing;
+insert into public.source_links (source_id, music_accompaniment_period_id, scope)
+select v.s, '7a5c0e05-2026-4012-8000-0000000061a5'::uuid, v.sc from (values
+  ('19b23e24-b3cf-4bea-b14b-bc061bcba2d7'::uuid, 'El Pespunte (12/12/2025): vinculación con Las Cigarreras desde 2018 y su fin'),
+  ('7a5c0e05-2026-4012-8000-00000000ca27'::uuid, 'Camas Cofrade 2023: Cigarreras tras el palio'),
+  ('7a5c0e05-2026-4012-8000-00000000ca31'::uuid, 'Confirmación editorial del periodo 2018-2025')) v(s, sc)
+where not exists (select 1 from public.source_links x where x.source_id = v.s and x.music_accompaniment_period_id = '7a5c0e05-2026-4012-8000-0000000061a5');
