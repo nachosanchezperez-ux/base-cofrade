@@ -23,6 +23,7 @@ import {
 import {
   absoluteUrl,
   breadcrumbJsonLd,
+  contextualEntitySeoTitle,
   pageTitle,
   seoDescription,
 } from '@/lib/seo';
@@ -53,7 +54,10 @@ export async function generateMetadata({ params }) {
   const { imagen, hermandad } = result;
   const media = await getEntityMedia(imagen.id);
   const coverMedia = selectEditorialHero(media);
-  const title = imagen.nombre;
+  const title = contextualEntitySeoTitle(imagen.nombre, {
+    context: hermandad?.nombrePopular,
+    locality: hermandad?.localidad,
+  });
   const description = seoDescription(
     imagen.descripcion,
     hermandad

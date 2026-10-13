@@ -21,6 +21,7 @@ import styles from './step.module.css';
 import {
   absoluteUrl,
   breadcrumbJsonLd,
+  contextualEntitySeoTitle,
   pageTitle,
   seoDescription,
 } from '@/lib/seo';
@@ -50,7 +51,10 @@ export async function generateMetadata({ params }) {
     coverMedia = null,
     heritage = { phases: [], pieces: [], sources: [] },
   } = result;
-  const title = paso.nombre;
+  const title = contextualEntitySeoTitle(paso.nombre, {
+    context: hermandad?.nombrePopular,
+    locality: hermandad?.localidad,
+  });
   const description = seoDescription(
     hermandad
       ? `Ficha de ${paso.nombre}, de ${hermandad.nombrePopular}: imágenes que procesionan, configuración, patrimonio, autorías y evolución histórica.`
