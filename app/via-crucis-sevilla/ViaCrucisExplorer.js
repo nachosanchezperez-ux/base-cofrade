@@ -115,11 +115,10 @@ function DashboardSnapshot() {
   const total = councilSummary.census
   const pct = Math.round(covered / total * 100)
   const iconography = councilIconographyStats
-  const last = [...councilViaCrucisEditions].sort((a,b) => b.year - a.year).slice(0, 8)
   return (
     <div className={styles.dashboardSnapshot}>
       <div className={styles.snapshotHead}>
-        <div><span className={styles.eyebrow}>El Vía Crucis en cifras</span><h2>50 años de historia. <em>Una radiografía.</em></h2></div>
+        <div><span className={styles.eyebrow}>El Vía Crucis en cifras</span><h2>50 ediciones. <em>Una radiografía.</em></h2></div>
         <span className={styles.snapshotScope}>1976–2026 · Ediciones ordinarias</span>
       </div>
       <div className={styles.snapshotGrid}>
@@ -130,7 +129,7 @@ function DashboardSnapshot() {
       </div>
       <div className={styles.snapshotVisuals}>
         <section className={styles.coverageVisual} aria-label={`${covered} de ${total} hermandades han presidido el Vía Crucis`}>
-          <div className={styles.coverageDonut} style={{ '--coverage': `${pct}%` }}><div><strong>{pct}%</strong><small>ya han participado</small></div></div>
+          <div className={styles.coverageDonut} style={{ '--coverage': `${pct}%` }}><div><strong>{pct}%</strong><small>han presidido</small></div></div>
           <div><span className={styles.eyebrow}>¿Quién ha salido ya?</span><h3>47 de 71 hermandades</h3><p>{councilSummary.pending} aún no lo habían presidido hasta 2026. La Exaltación está designada para 2027.</p></div>
         </section>
         <section className={styles.iconOverview} aria-label="Distribución de las 50 presidencias por iconografía">
@@ -143,12 +142,7 @@ function DashboardSnapshot() {
           </div>
         </section>
       </div>
-      <section className={styles.recentRibbon} aria-labelledby="recent-ribbon">
-        <div><span className={styles.eyebrow}>La sucesión más reciente</span><h3 id="recent-ribbon">De un golpe de vista</h3></div>
-        <div className={styles.recentYears}>
-          {last.map(item => <div key={item.year} data-kind={item.iconography} title={`${item.year} · ${item.imageName}`}><strong>{item.year}</strong><span>{item.brotherhood.name}</span></div>)}
-        </div>
-      </section>
+
     </div>
   )
 }
@@ -174,11 +168,63 @@ function DayCoverageMatrix() {
   </section>
 }
 
+const DECADE_GROUPS = [
+  { label: '1976–1989', start: 1976, end: 1989 },
+  { label: '1990–1999', start: 1990, end: 1999 },
+  { label: '2000–2009', start: 2000, end: 2009 },
+  { label: '2010–2019', start: 2010, end: 2019 },
+  { label: '2020–2026', start: 2020, end: 2026 },
+]
+
+function InteractiveChronology() {
+  const [period, setPeriod] = useState(4)
+  const [year, setYear] = useState(2026)
+  const years = DECADE_GROUPS[period]
+  const byYear = new Map(councilViaCrucisEditions.map(item => [item.year, item]))
+  const selected = byYear.get(year)
+  const isExtraordinary = year === 2013
+
+  function choosePeriod(index) {
+    setPeriod(index)
+    setYear(DECADE_GROUPS[index].end)
+  }
+
+  return <section className={styles.chronology} aria-labelledby="alternancia-titulo">
+    <div className={styles.chronologyIntro}>
+      <div><span className={styles.eyebrow}>La alternancia visual</span><h3 id="alternancia-titulo">Cada año tiene su historia</h3></div>
+      <p>Elige una época y pulsa un año. Descubre la imagen, su hermandad y la iconografía que presidió el Vía Crucis.</p>
+    </div>
+    <div className={styles.periodPicker} role="group" aria-label="Seleccionar época">
+      {DECADE_GROUPS.map((group,index)=><button key={group.label} type="button" aria-pressed={period===index} onClick={()=>choosePeriod(index)}>{group.label}</button>)}
+    </div>
+    <div className={styles.chronologyYears} role="group" aria-label={`Años de ${years.start} a ${years.end}`}>
+      {Array.from({length:years.end-years.start+1},(_,i)=>years.start+i).map(value=>{
+        const edition=byYear.get(value)
+        const kind=edition?.iconography||'extraordinario'
+        return <button key={value} type="button" data-kind={kind} aria-pressed={year===value} aria-label={`${value}: ${edition ? edition.imageName : 'Vía Crucis extraordinario del Año de la Fe'}`} onClick={()=>setYear(value)}>
+          <span>{value}</span><i aria-hidden="true" />
+        </button>
+      })}
+    </div>
+    <div className={styles.chronologyDetail} aria-live="polite">
+      <div className={styles.chronologyDetailYear}><strong>{year}</strong><span>{isExtraordinary ? 'Edición extraordinaria' : 'Edición ordinaria'}</span></div>
+      <div className={styles.chronologyDetailBody}>
+        <span className={styles.eyebrow}>{isExtraordinary ? 'Año de la Fe · Sin pasos' : ICONOGRAPHY_BY_KEY[selected.iconography].label}</span>
+        <h4>{isExtraordinary ? councilExtraordinary2013.name : selected.imageName}</h4>
+        <p>{isExtraordinary ? councilExtraordinary2013.summary : selected.brotherhood.name+' · '+selected.brotherhood.day}</p>
+        {isExtraordinary ? <a href={SOURCE_2013} target="_blank" rel="noopener noreferrer">Ver documentación del Consejo ↗</a> : <Link href={selected.brotherhood.href}>Abrir ficha de la hermandad ↗</Link>}
+      </div>
+    </div>
+    <div className={styles.chronologyLegend}>
+      {Object.values(ICONOGRAPHY_BY_KEY).map(item=><span key={item.key} data-kind={item.key}><i aria-hidden="true" />{item.shortLabel}</span>)}
+      <span data-kind="extraordinario"><i aria-hidden="true" />Extraordinario 2013</span>
+    </div>
+  </section>
+}
+
 function StatisticsView() {
   const most = councilDayStats[0]?.count || 0
   const largestIconography = councilIconographyStats[0]?.count || 0
-  const yearMap = new Map(councilViaCrucisEditions.map((edition) => [edition.year, edition]))
-  const timelineYears = Array.from({ length: CUTOFF_YEAR - 1976 + 1 }, (_, index) => 1976 + index)
 
   return (
     <section className={styles.panel} aria-labelledby="estadisticas-titulo">
@@ -188,6 +234,7 @@ function StatisticsView() {
       </header>
       <DashboardSnapshot />
       <DayCoverageMatrix />
+      <InteractiveChronology />
       <div className={styles.statsColumns}>
         <section className={styles.barPanel} aria-labelledby="por-jornada">
           <h3 id="por-jornada">¿Qué jornada ha protagonizado más?</h3>
@@ -204,27 +251,6 @@ function StatisticsView() {
           </div>
         </section>
       </div>
-      <section className={styles.timelineSection} aria-labelledby="alternancia-titulo">
-        <div className={styles.timelineHeading}>
-          <div><span className={styles.eyebrow}>De 1976 a 2026</span><h3 id="alternancia-titulo">La alternancia, año a año</h3></div>
-          <p>Cada casilla representa una edición. La de 2013 se marca como extraordinaria y queda fuera de las estadísticas.</p>
-        </div>
-        <div className={styles.timelineLegend}>
-          {Object.values(ICONOGRAPHY_BY_KEY).map((item) => <span key={item.key} data-kind={item.key}><i aria-hidden="true" />{item.shortLabel}</span>)}
-          <span data-kind="extraordinario"><i aria-hidden="true" />Año de la Fe</span>
-        </div>
-        <div className={styles.timelineScroll} role="region" aria-label="Secuencia de iconografías de 1976 a 2026" tabIndex={0}>
-          <div className={styles.timeline}>
-            {timelineYears.map((year) => {
-              const edition = yearMap.get(year)
-              const label = edition ? (year + ': ' + edition.imageName + ', ' + edition.brotherhood.name) : '2013: Vía Crucis extraordinario sin pasos'
-              return <div className={styles.timelineItem} data-kind={edition?.iconography || 'extraordinario'} key={year} title={label}>
-                <span>{year}</span><i aria-hidden="true" /><small>{edition ? edition.brotherhood.name : 'Año de la Fe'}</small>
-              </div>
-            })}
-          </div>
-        </div>
-      </section>
       <section className={styles.repeated} aria-labelledby="repeticiones-titulo">
         <span className={styles.eyebrow}>Tres repiten en el archivo</span>
         <h3 id="repeticiones-titulo">Hermandades que han presidido dos veces</h3>
