@@ -13,6 +13,8 @@ test('la lectura pública de la Imagen conserva el slug de autores y responsable
   assert.match(pages, /return \{ label, name: agent\?\.name \|\| '', slug: agent\?\.slug \|\| '' \}/)
   assert.match(pages, /autor: authors\.map\(\(author\) => author\.label\)\.join\(' · '\),\s*autores: authors,/)
   assert.match(pages, /responsableSlug: item\.agent_entity_id \? agentById\.get\(item\.agent_entity_id\)\?\.slug \|\| '' : ''/)
+  // The cached shape changed (autores, responsableSlug): the key must not reuse v6 entries.
+  assert.match(pages, /'hilo-cofrade-public-image-detail-v7-autores'/)
 })
 
 test('las restauraciones conservan el enlace al responsable solo si hay responsable', () => {
