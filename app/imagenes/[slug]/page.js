@@ -159,6 +159,8 @@ export default async function ImagenPage({ params }) {
   const hasRelatedEntities = relationalItems.length > 0;
   const hasImageOverview = Boolean(
     hermandad
+    || publicText(imagen.descripcion)
+    || publicText(imagen.estadoActual)
     || publicText(imagen.autor)
     || publicText(imagen.fecha)
     || publicText(imagen.tipologia || imagen.tipo)
@@ -279,10 +281,12 @@ export default async function ImagenPage({ params }) {
             <span className="eyebrow">De un vistazo</span>
             <h2>La imagen</h2>
             <EntityLastUpdated value={imagen.updatedAt} />
-            <p>
-              Cada imagen mantiene una ficha propia y puede conectarse con Hermandades,
-              autorías, vestidores, pasos y acontecimientos sin depender de esas relaciones para existir.
-            </p>
+            {publicText(imagen.descripcion) ? <p style={{ whiteSpace: 'pre-line', overflowWrap: 'anywhere' }}>
+              {publicText(imagen.descripcion)}
+            </p> : null}
+            {publicText(imagen.estadoActual) && publicText(imagen.estadoActual) !== publicText(imagen.descripcion) ? <p style={{ whiteSpace: 'pre-line', overflowWrap: 'anywhere' }}>
+              {publicText(imagen.estadoActual)}
+            </p> : null}
           </div>
 
           <div className="image-facts-v2">
