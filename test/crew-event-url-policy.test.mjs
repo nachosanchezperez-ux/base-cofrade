@@ -41,3 +41,10 @@ test('el calendario ancla cada tarjeta y abre el histórico si el enlace apunta 
   assert.match(directory, /if \(!target\.isUpcoming\) setPhase\('archive'\)/)
   assert.match(directory, /\{hasPage \? <Link href=\{event\.detailHref\}/)
 })
+
+test('la caché del calendario de igualás no reutiliza entradas sin ancla', () => {
+  const cache = readFileSync(new URL('../lib/supabase/public-directory-cache.js', import.meta.url), 'utf8')
+  // The cached shape gained `anchor`/new `detailHref`: v1 entries must not be served.
+  assert.match(cache, /'public-directory-crew-events-strict-v2-anchor'/)
+  assert.doesNotMatch(cache, /'public-directory-crew-events-strict-v1'/)
+})
