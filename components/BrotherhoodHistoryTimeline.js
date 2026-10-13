@@ -16,8 +16,8 @@ function previewIndexes(length, count = 5) {
   return [...new Set(raw)].slice(0, count)
 }
 
-export default function BrotherhoodHistoryTimeline({ items = [], semanticPreview = false }) {
-  if (!items.length) return null
+export default function BrotherhoodHistoryTimeline({ items = [], introduction = '', semanticPreview = false }) {
+  if (!items.length && !introduction) return null
 
   const preview = semanticPreview ? representativeHistory(items) : previewIndexes(items.length).map((index) => items[index])
 
@@ -27,8 +27,10 @@ export default function BrotherhoodHistoryTimeline({ items = [], semanticPreview
         <SectionTitle
           eyebrow="Cronología"
           title="Historia"
-          description="Una línea temporal para recorrer los grandes hitos y conectarlos con titulares, pasos y acontecimientos."
+          description={items.length ? "Una línea temporal para recorrer los grandes hitos y conectarlos con titulares, pasos y acontecimientos." : undefined}
         />
+
+        {introduction ? <p className={styles.introduction}>{introduction}</p> : null}
 
         {items.length > 5 ? (
           <>

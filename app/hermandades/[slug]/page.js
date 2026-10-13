@@ -540,7 +540,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
 <MusicalRepertoiresSection items={musicalRepertoires} context="brotherhood" headingLevel={reading ? 3 : 2} />
   </>);
   const historySection = (<>
-<BrotherhoodHistoryTimeline items={h.cronologia || []} semanticPreview={reading} />
+<BrotherhoodHistoryTimeline introduction={publicText(h.historia)} items={h.cronologia || []} semanticPreview={reading} />
   </>);
   const viaCrucisSection = (<>
 <BrotherhoodViaCrucisSection items={h.viaCrucisCofradias} />
@@ -754,7 +754,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
       <EntitySectionNav items={[
         hasPracticalOverview && { href: '#resumen', label: 'Resumen' },
         h.imagenes?.length > 0 && { href: '#titulares', label: 'Titulares' },
-        h.cronologia?.length > 0 && { href: '#historia', label: 'Historia' },
+        (publicText(h.historia) || h.cronologia?.length > 0) && { href: '#historia', label: 'Historia' },
         (musicalHeritage.length > 0 || fallbackMusicalHeritage.length > 0) && { href: '#musica', label: 'Música' },
         h.patrimonio?.length > 0 && { href: '#patrimonio', label: 'Patrimonio' },
         upcomingAgendaItems.length > 0

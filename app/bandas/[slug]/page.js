@@ -414,6 +414,7 @@ export default async function BandDetailPage({ params }) {
                 <h2>{band.popularName}, de un vistazo</h2>
                 <EntityLastUpdated value={band.updatedAt} />
               </div>
+              {publicText(band.description) ? <p>{publicText(band.description)}</p> : null}
               <div className={styles.roleGrid}>
                 {publicText(band.type) ? <article>
                   <span>Formación</span>
