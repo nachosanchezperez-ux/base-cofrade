@@ -209,3 +209,33 @@ Verificado en `/hermandades/hermandad-esperanza-arahal`.
 La ficha de Hermandad muestra todas las imágenes vinculadas dentro de «Titulares», también las de tipo `secondary_image` (aquí, San Pedro). Revisar en una tarea de código aparte.
 
 Verificado en `/hermandades/hermandad-humillacion-camas`.
+
+## Hermandad de la Soledad de Alcalá del Río · 13/10/2026 · aplicado y publicado
+
+`soledad-alcala-del-rio.sql`; reversión: `soledad-alcala-del-rio-rollback.sql`.
+
+La Inmaculada Concepción de Sevilla queda en borrador, por decisión del propietario («Pasemos a otra»). Parece corresponder a la Sacramental del Corpus Christi, pero está pendiente de confirmar.
+
+### Fuentes
+
+- [ArteSacro · La devoción a la Soledad y Santo Entierro (2016)](https://www.artesacro.org/Noticia/Ver/109972/provincia-devocion-soledad-y-santo-entierro-cristo-yacente-alcala-rio8207).
+- [21Noticias · De 1556 a hoy (2026)](https://21noticias.com/2026/04/10/de-1556-a-hoy-la-imponente-procesion-de-la-soledad-que-conecta-siglos-en-alcala-del-rio/).
+- `hermandaddelasoledad.com` corresponde a la Soledad de Mairena del Alcor y no se ha usado.
+
+### Ficha
+
+- **Nombre oficial:** Real, Muy Antigua, Ilustre y Fervorosa Hermandad y Cofradía de Nazarenos del Santo Entierro en su Misericordia y Nuestra Señora de los Dolores en su Soledad Coronada.
+  - Sede: Real Ermita de San Gregorio de Osset. Se reutiliza el lugar ya existente, que también es sede de la Vera-Cruz.
+  - Sale el Viernes Santo.
+- **Titulares:**
+  - Señor de la Misericordia: Cristo yacente anónimo del siglo XVI.
+  - Dolores en su Soledad: anónima, de mediados del XVI, coronada en 1996.
+- **La Canina** (Juan de Astorga, 1844): se vincula como imagen secundaria.
+- **Pasos:**
+  - Canina: paso alegórico.
+  - Santo Entierro: urna neobarroca de 1987.
+  - Palio.
+- **Música:** Cruz Roja tras el palio, desde 1991, enlazada al paso.
+- **No se han dado de alta las bandas del Cristo y de la Canina.** ArteSacro (2016) cita Gerena, San Juan de Triana y Amor de Cristo; 21Noticias (2026) cita la Legión y Gerena, pero sin asignarlas a ningún paso.
+
+Verificado en `/hermandades/hermandad-soledad-alcala-del-rio`.
