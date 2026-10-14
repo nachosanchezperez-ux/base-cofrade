@@ -4,17 +4,17 @@ on:
   deployment_status:
   workflow_dispatch:
 
-# El grupo depende del entorno: el aviso de cada preview (que se omite) no debe
-# cancelar la verificación y el precalentamiento de producción en curso.
+# Solo ejecuciones autorizadas de producción comparten grupo. Los avisos
+# omitidos (preview, pending, etc.) nunca cancelan el calentamiento vigente.
+# El disparo manual desde main comparte grupo para evitar dos pools simultáneos.
 concurrency:
-  group: production-seo-smoke-${{ github.event.deployment.environment || 'manual' }}
+  group: production-seo-smoke-${{ ((github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') || (github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'Production' && github.event.deployment.ref == 'main')) && 'production' || github.run_id }}
   cancel-in-progress: true
 
 jobs:
   verify:
     if: >-
-      github.event_name == 'workflow_dispatch' ||
-      (github.event.deployment_status.state == 'success' && contains(github.event.deployment.environment, 'Production'))
+      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') || (github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'Production' && github.event.deployment.ref == 'main')
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -31,8 +31,7 @@ jobs:
   prewarm:
     needs: verify
     if: >-
-      github.event_name == 'workflow_dispatch' ||
-      (github.event.deployment_status.state == 'success' && contains(github.event.deployment.environment, 'Production'))
+      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') || (github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'Production' && github.event.deployment.ref == 'main')
     runs-on: ubuntu-latest
     timeout-minutes: 10
     continue-on-error: true

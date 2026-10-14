@@ -59,7 +59,20 @@ test('los hubs excluidos coinciden con las carpetas estáticas de /hermandades',
   assert.deepEqual(brotherhoodFichaPaths(folders), [])
 })
 
-test('las previews no cancelan la verificación de producción', () => {
+test('solo main manual o Production success comparten el grupo de producción', () => {
   const workflow = readFileSync(new URL('../.github/workflows/production-seo-smoke.yml', import.meta.url), 'utf8')
-  assert.match(workflow, /group: production-seo-smoke-\$\{\{ github\.event\.deployment\.environment \|\| 'manual' \}\}/)
+  const expression = workflow.match(/group: production-seo-smoke-\$\{\{ (.*) \}\}/)[1]
+  // Ejecutar la expresión con eventos representativos, incluidos los omitidos.
+  const evaluate = new Function('github', `return ${expression}`)
+  const event = (name, ref, environment, state, deploymentRef = 'main') => ({
+    event_name: name, ref, run_id: 123,
+    event: { deployment: { environment, ref: deploymentRef }, deployment_status: { state } },
+  })
+  assert.equal(evaluate(event('deployment_status', '', 'Production', 'success')), 'production')
+  assert.equal(evaluate(event('workflow_dispatch', 'refs/heads/main', '', '')), 'production')
+  assert.equal(evaluate(event('workflow_dispatch', 'refs/heads/preview', '', '')), 123)
+  assert.equal(evaluate(event('deployment_status', '', 'Preview', 'success')), 123)
+  assert.equal(evaluate(event('deployment_status', '', 'Production', 'pending')), 123)
+  assert.equal(evaluate(event('deployment_status', '', 'Production', 'failure')), 123)
+  assert.equal(evaluate(event('deployment_status', '', 'Production', 'success', 'preview')), 123)
 })

@@ -59,6 +59,7 @@ export default async function DirectorioPage() {
       { '@type': 'CollectionPage', name: `Bandas (${counts.band || 0})`, url: absoluteUrl('/bandas') },
       { '@type': 'CollectionPage', name: 'Marchas procesionales', url: absoluteUrl('/marchas') },
       { '@type': 'CollectionPage', name: 'Estadísticas musicales', url: absoluteUrl('/acompanamientos-musicales') },
+      { '@type': 'CollectionPage', name: 'Vía Crucis del Consejo de Sevilla', url: absoluteUrl('/via-crucis-sevilla') },
       { '@type': 'CollectionPage', name: 'Cambios musicales de la Semana Santa 2027', url: absoluteUrl('/semana-santa/2027/cambios-musicales') },
       { '@type': 'CollectionPage', name: 'Autores y talleres cofrades', url: absoluteUrl('/autores') },
     ],
@@ -86,6 +87,9 @@ export default async function DirectorioPage() {
           </Link>
           <Link className={styles.marchesLink} href="/acompanamientos-musicales">
             Estadísticas musicales <span aria-hidden="true">→</span>
+          </Link>
+          <Link className={styles.marchesLink} href="/via-crucis-sevilla">
+            Vía Crucis del Consejo <span aria-hidden="true">→</span>
           </Link>
           <Link className={styles.marchesLink} href="/semana-santa/2027/cambios-musicales">
             Cambios musicales 2027 <span aria-hidden="true">→</span>
