@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { unstable_cache } from 'next/cache'
 import Image from 'next/image'
 import RelationalThread from '@/components/RelationalThread'
 import { orderProcessionalItems } from '@/lib/brotherhood-processional-order'
@@ -60,7 +61,7 @@ function groupCurrentAccompaniments(items = []) {
   }))
 }
 
-async function loadConceptualTitulars(supabase, brotherhoodId) {
+async function loadConceptualTitularsRows(supabase, brotherhoodId) {
   const relations = assertRows(
     await supabase
       .from('entity_relations')
@@ -102,7 +103,7 @@ async function loadConceptualTitulars(supabase, brotherhoodId) {
   })
 }
 
-async function loadOwnBands(supabase, brotherhoodId) {
+async function loadOwnBandsRows(supabase, brotherhoodId) {
   const relations = assertRows(
     await supabase
       .from('entity_relations')
@@ -145,7 +146,7 @@ async function loadOwnBands(supabase, brotherhoodId) {
   })
 }
 
-async function loadCurrentAccompaniments(supabase, brotherhoodId) {
+async function loadCurrentAccompanimentsRows(supabase, brotherhoodId) {
   // Una sola lectura de todos los periodos publicados: los vigentes alimentan la
   // sección y los finalizados permiten indicar la formación anterior del mismo paso.
   const allPeriods = assertRows(
@@ -212,7 +213,7 @@ async function loadCurrentAccompaniments(supabase, brotherhoodId) {
     .sort((a, b) => processionRank(a.posicion) - processionRank(b.posicion) || a.posicion.localeCompare(b.posicion, 'es'))
 }
 
-async function loadBrotherhoodThreadData(supabase, brotherhoodId) {
+async function loadBrotherhoodThreadDataRows(supabase, brotherhoodId) {
   const [brotherhoodResult, imageLinksResult, stepLinksResult] = await Promise.all([
     supabase
       .from('entities')
@@ -265,7 +266,7 @@ async function loadBrotherhoodThreadData(supabase, brotherhoodId) {
   }
 }
 
-async function loadBrotherhoodDiscoveryData(supabase, brotherhoodId, threadData, currentAccompaniments) {
+async function loadBrotherhoodDiscoveryDataRows(supabase, brotherhoodId, threadData, currentAccompaniments) {
   const imageIds = threadData.images.map((item) => item.id).filter(Boolean)
   const stepIds = threadData.steps.map((item) => item.id).filter(Boolean)
   const bandIds = unique(currentAccompaniments.map((item) => item.bandId))
@@ -333,6 +334,71 @@ async function loadBrotherhoodDiscoveryData(supabase, brotherhoodId, threadData,
     currentBands: bandIds.length,
     otherBrotherhoodsViaMusic: otherBrotherhoodIds.filter((id) => typeById.get(id) === 'brotherhood').length,
   }
+}
+
+// Estas lecturas se repetían en cada regeneración de la ficha: la caché de
+// páginas (ISR) se vacía con cada despliegue y el 64 % de las visitas a fichas
+// de Hermandad llegaban sin caché (13–14/10/2026). Se guardan en la caché de
+// datos con la misma frescura y etiqueta que la ficha. Un error de Supabase
+// se lanza y nunca queda guardado.
+const RELATIONAL_EXTRAS_CACHE_KEY = 'hilo-cofrade-brotherhood-relational-extras-v1'
+const RELATIONAL_EXTRAS_CACHE = { revalidate: 900, tags: ['public-brotherhood-detail'] }
+
+const getCachedConceptualTitulars = unstable_cache(
+  (brotherhoodId) => loadConceptualTitularsRows(createPublicClient(), brotherhoodId),
+  [RELATIONAL_EXTRAS_CACHE_KEY, 'conceptual-titulars'],
+  RELATIONAL_EXTRAS_CACHE
+)
+const getCachedOwnBands = unstable_cache(
+  (brotherhoodId) => loadOwnBandsRows(createPublicClient(), brotherhoodId),
+  [RELATIONAL_EXTRAS_CACHE_KEY, 'own-bands'],
+  RELATIONAL_EXTRAS_CACHE
+)
+const getCachedCurrentAccompaniments = unstable_cache(
+  (brotherhoodId) => loadCurrentAccompanimentsRows(createPublicClient(), brotherhoodId),
+  [RELATIONAL_EXTRAS_CACHE_KEY, 'current-accompaniments'],
+  RELATIONAL_EXTRAS_CACHE
+)
+const getCachedThreadData = unstable_cache(
+  (brotherhoodId) => loadBrotherhoodThreadDataRows(createPublicClient(), brotherhoodId),
+  [RELATIONAL_EXTRAS_CACHE_KEY, 'thread'],
+  RELATIONAL_EXTRAS_CACHE
+)
+// Los datos de descubrimiento dependen solo de la Hermandad: el hilo y los
+// acompañamientos se recalculan dentro, así la clave es el identificador.
+const getCachedDiscoveryData = unstable_cache(
+  async (brotherhoodId) => {
+    const supabase = createPublicClient()
+    const [threadData, currentAccompaniments] = await Promise.all([
+      loadBrotherhoodThreadDataRows(supabase, brotherhoodId),
+      loadCurrentAccompanimentsRows(supabase, brotherhoodId),
+    ])
+    return loadBrotherhoodDiscoveryDataRows(supabase, brotherhoodId, threadData, currentAccompaniments)
+  },
+  [RELATIONAL_EXTRAS_CACHE_KEY, 'discovery'],
+  RELATIONAL_EXTRAS_CACHE
+)
+
+// Misma firma que antes para no tocar los componentes: el cliente recibido ya
+// no se usa, porque la versión en caché crea el suyo.
+function loadConceptualTitulars(_supabase, brotherhoodId) {
+  return getCachedConceptualTitulars(brotherhoodId)
+}
+
+function loadOwnBands(_supabase, brotherhoodId) {
+  return getCachedOwnBands(brotherhoodId)
+}
+
+function loadCurrentAccompaniments(_supabase, brotherhoodId) {
+  return getCachedCurrentAccompaniments(brotherhoodId)
+}
+
+function loadBrotherhoodThreadData(_supabase, brotherhoodId) {
+  return getCachedThreadData(brotherhoodId)
+}
+
+function loadBrotherhoodDiscoveryData(_supabase, brotherhoodId) {
+  return getCachedDiscoveryData(brotherhoodId)
 }
 
 export async function BrotherhoodTitularCount({ brotherhoodId, imageCount = 0 }) {
