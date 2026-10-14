@@ -381,18 +381,6 @@
 .heroMain { align-self: center; min-width: 0; }
 .heroMain h1 { font-size: clamp(43px, 5.4vw, 71px); margin-bottom: 19px; line-height: 1.01; }
 .heroMain > p { font-size: clamp(14px, 1.25vw, 16px); line-height: 1.7; }
-.sourceJump {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  margin-top: 19px;
-  padding: 8px 0;
-  color: #f2d9b8;
-  border-bottom: 1px solid rgba(240, 214, 184, .52);
-  font-size: 12px;
-  font-weight: 800;
-}
-.sourceJump:hover { color:#fff; border-color:#fff; }
 .nextEdition { justify-content: flex-start; padding: 23px; border-radius: 16px; }
 .nextYear { padding-top: 15px; font-size: clamp(64px, 7vw, 84px); }
 .nextDay { margin: 5px 0 13px; }
@@ -525,7 +513,6 @@
   .hero { padding:22px 18px; gap:17px; border-radius:17px; }
   .heroMain h1 { font-size:clamp(35px,10vw,49px); margin:0 0 14px; }
   .heroMain > p { font-size:13px; line-height:1.65; }
-  .sourceJump { font-size:11px; margin-top:12px; min-height:38px; }
   .nextEdition { grid-template-columns:75px minmax(0,1fr); gap:0 12px; padding:14px; border-radius:12px; }
   .nextYear { font-size:53px; padding-top:10px; }
   .nextDay { font-size:11px; padding-top:7px; }
@@ -588,4 +575,207 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .matrixCard { transition:none; }
+}
+
+
+/* Readability and spacing across desktop, tablet and phone.
+   Header links to sources were removed; documentation stays in the
+   shared SourcesBlock at the foot of the page. */
+.hero {
+  gap: clamp(24px, 3.6vw, 46px);
+  padding: clamp(32px, 4.5vw, 54px);
+}
+.hero .eyebrow,
+.eyebrow {
+  font-size: 12px;
+  line-height: 1.5;
+  letter-spacing: .10em;
+}
+.heroMain h1 { margin-bottom: 24px; }
+.heroMain > p { max-width: 58ch; font-size: 16px; line-height: 1.75; }
+.nextEdition { padding: clamp(24px, 2.6vw, 31px); }
+.nextTop { font-size: 12px; line-height: 1.5; }
+.nextDay, .nextEdition p { font-size: 14px; line-height: 1.6; }
+.nextEdition h2 { margin-top: 6px; margin-bottom: 12px; }
+.nextEdition a { font-size: 14px; min-height: 46px; }
+.tabs { margin-top: 28px; gap: 12px; }
+.tabs button { min-height: 57px; padding: 14px 16px; font-size: 15px; line-height: 1.45; }
+.tabs button small { font-size: 12px; }
+.panel { padding-top: 34px; padding-bottom: 40px; }
+.panelHeader { gap: 30px; margin-bottom: 31px; }
+.panelHeader p:not(.eyebrow) { font-size: 15px; line-height: 1.7; }
+.snapshotHead { margin-bottom: 23px; }
+.snapshotScope { font-size: 12px; line-height: 1.5; }
+.snapshotGrid { gap: 15px; }
+.snapshotGrid > div { min-height: 173px; padding: clamp(21px, 2.5vw, 28px); }
+.snapshotGrid span { font-size: 13px; line-height: 1.55; }
+.snapshotGrid strong { line-height: 1.13; }
+.snapshotGrid p { font-size: 13px; line-height: 1.55; }
+.snapshotVisuals { gap: 18px; margin-top: 18px; }
+.coverageVisual, .iconOverview { padding: clamp(22px, 2.55vw, 29px); }
+.coverageVisual p { font-size: 14px; line-height: 1.65; }
+.coverageDonut small { font-size: 11px; line-height: 1.3; }
+.iconOverviewLegend { gap: 11px 17px; }
+.iconOverviewLegend span {
+  font-size: 12px;
+  line-height: 1.4;
+  flex-wrap: wrap;
+}
+.iconOverviewLegend small { font-size: 12px; }
+.coverageMatrix { margin-top: 33px; margin-bottom: 33px; padding: clamp(24px, 2.7vw, 32px); }
+.matrixTop { margin-bottom: 23px; }
+.matrixTop p, .chronologyIntro p { font-size: 14px; line-height: 1.7; }
+.matrixGrid { gap: 13px; }
+.matrixCard { min-height: 151px; padding: 17px; }
+.matrixCard > span { font-size: 14px; line-height: 1.45; min-height: 41px; }
+.matrixCard > strong { font-size: 34px; }
+.matrixCard > small { font-size: 12px; line-height: 1.45; }
+.matrixDetail { margin-top: 17px; padding: 24px; }
+.matrixDetail p { font-size: 14px; line-height: 1.6; }
+.matrixDetail > .matrixDetailColumns { gap: 22px; }
+.matrixDetailColumns h4 { font-size: 13px; }
+.matrixDetailLinks { gap: 9px; }
+.matrixDetailLinks a { font-size: 14px; padding: 13px 15px; }
+.matrixDetailLinks a small { font-size: 12px; }
+.matrixDetailLinks p { font-size: 14px; }
+.chronology { margin-top: 33px; margin-bottom: 33px; padding: clamp(24px, 2.7vw, 32px); }
+.chronologyIntro { margin-bottom: 21px; }
+.periodPicker { gap: 9px; margin-bottom: 16px; }
+.periodPicker button { min-height: 45px; padding: 12px 9px; font-size: 14px; }
+.chronologyYears { gap: 8px; }
+.chronologyYears button { min-height: 69px; }
+.chronologyYears button span { font-size: 12px; }
+.chronologyDetail { margin-top: 17px; padding: 23px; gap: 24px; }
+.chronologyDetailYear span { font-size: 12px; line-height: 1.4; }
+.chronologyDetailBody p { font-size: 14px; line-height: 1.55; }
+.chronologyDetailBody a { display: inline-block; font-size: 14px; padding: 6px 0; }
+.chronologyLegend { gap: 11px 17px; padding-top: 20px; }
+.chronologyLegend span { font-size: 12px; line-height: 1.45; }
+.statsColumns { gap: 20px; }
+.barPanel { padding: clamp(24px, 2.7vw, 32px); }
+.barPanel h3 { line-height: 1.2; }
+.barPanel > p { font-size: 14px; line-height: 1.65; margin-top: 13px; margin-bottom: 27px; }
+.barList { gap: 16px; }
+.statBarTitle { font-size: 14px; line-height: 1.5; }
+.statBarTitle strong { font-size: 19px; }
+.track { height: 11px; }
+.repeated { margin-top: 36px; }
+.repeatGrid { gap: 14px; }
+.repeatGrid a { padding: 24px; }
+.repeatGrid strong { font-size: 16px; }
+.repeatGrid span { font-size: 14px; }
+.filters { gap: 13px; padding: 17px; margin-bottom: 19px; }
+.filters label > span { font-size: 12px; line-height: 1.4; margin-bottom: 9px; }
+.filters input, .filters select { min-height: 48px; font-size: 16px; }
+.resultsCount { font-size: 14px; gap: 8px; margin-bottom: 17px; }
+.resultsCount strong { font-size: 17px; }
+.editionList { gap: 16px; }
+.editionBody { padding: 20px; }
+.editionBody h3 { font-size: 21px; line-height: 1.32; }
+.editionTags span { font-size: 12px; line-height: 1.45; }
+.editionBody a { font-size: 14px; line-height: 1.4; }
+.editionBody > small { font-size: 12px; line-height: 1.5; }
+.yearBlock span { font-size: 12px; }
+.pendingLead { gap: 15px; margin-bottom: 22px; }
+.pendingLead div { padding: 24px; }
+.pendingLead span { font-size: 14px; line-height: 1.55; }
+.pendingGroups { gap: 29px; }
+.pendingCards { gap: 14px; }
+.pendingCard { min-height: 111px; padding: 19px 38px 17px 19px; }
+.pendingCard > span { font-size: 16px; line-height: 1.45; }
+.pendingCard small { font-size: 13px; line-height: 1.45; }
+.disclaimer { font-size: 13px; line-height: 1.75; padding: 19px 23px; margin-top: 30px; }
+.methodology { gap: 19px; padding: 25px; margin-top: 28px; }
+.methodology p { font-size: 13px; line-height: 1.75; }
+.methodology a { font-size: 13px; }
+
+@media (max-width: 1000px) {
+  .hero { padding: clamp(28px, 3.5vw, 38px); gap: 24px; }
+  .nextEdition { padding: 22px; }
+  .snapshotGrid > div { min-height: 159px; }
+  .matrixGrid { gap: 11px; }
+  .statsColumns { gap: 17px; }
+}
+
+@media (max-width: 760px) {
+  .hero { gap: 26px; padding: 29px; }
+  .heroMain > p { font-size: 15px; line-height: 1.75; }
+  .nextEdition { padding: 22px; }
+  .snapshotVisuals { gap: 15px; }
+  .panel { padding: 29px 0 35px; }
+  .matrixGrid { gap: 12px; }
+  .chronologyYears { gap: 7px; }
+  .methodology { padding: 22px; }
+}
+
+@media (max-width: 520px) {
+  .hero { gap: 22px; padding: 25px 21px; }
+  .heroMain h1 { margin-bottom: 18px; }
+  .heroMain > p { font-size: 15px; line-height: 1.7; }
+  .nextEdition { gap: 4px 12px; padding: 19px; }
+  .nextTop { font-size: 12px; }
+  .nextDay { font-size: 13px; }
+  .nextEdition h2 { font-size: 22px; }
+  .nextEdition p { font-size: 13px; }
+  .nextEdition a { min-height: 45px; font-size: 13px; }
+  .tabs { margin-top: 22px; gap: 8px; }
+  .tabs button { min-height: 61px; padding: 11px 7px; font-size: 13px; }
+  .tabs button small { font-size: 11px; }
+  .panel { padding: 29px 0 35px; }
+  .snapshotHead { margin-bottom: 19px; }
+  .snapshotScope { font-size: 12px; }
+  .snapshotGrid { gap: 11px; }
+  .snapshotGrid > div { min-height: 159px; padding: 17px 15px; }
+  .snapshotGrid span { font-size: 12px; line-height: 1.45; }
+  .snapshotGrid p { font-size: 12px; line-height: 1.5; }
+  .snapshotGrid strong { font-size: 36px; }
+  .snapshotGrid .snapshotPrimary strong { font-size: clamp(24px, 6vw, 29px); }
+  .snapshotVisuals { gap: 13px; margin-top: 13px; }
+  .coverageVisual, .iconOverview { padding: 19px; }
+  .coverageVisual { gap: 17px; }
+  .coverageVisual p { font-size: 13px; }
+  .coverageDonut small { font-size: 10px; }
+  .iconOverviewLegend { gap: 10px 12px; }
+  .iconOverviewLegend span, .iconOverviewLegend small { font-size: 12px; }
+  .coverageMatrix { padding: 19px; margin-top: 27px; margin-bottom: 27px; }
+  .matrixTop { margin-bottom: 20px; }
+  .matrixTop p { font-size: 13px; }
+  .matrixGrid { gap: 10px; }
+  .matrixCard { min-height: 158px; padding: 13px; }
+  .matrixCard > span { font-size: 13px; line-height: 1.4; min-height: 45px; }
+  .matrixCard > strong { font-size: 31px; }
+  .matrixCard > small { font-size: 12px; line-height: 1.35; }
+  .matrixDetail { padding: 17px; }
+  .matrixDetail p { font-size: 13px; }
+  .matrixDetailColumns h4 { font-size: 13px; }
+  .matrixDetailLinks a { font-size: 14px; padding: 12px; }
+  .matrixDetailLinks a small { font-size: 12px; }
+  .chronology { padding: 19px; margin-top: 28px; margin-bottom: 28px; }
+  .chronologyIntro p { font-size: 13px; }
+  .periodPicker button { padding: 12px 14px; min-height: 45px; font-size: 13px; }
+  .chronologyYears { gap: 8px; }
+  .chronologyYears button { min-height: 63px; }
+  .chronologyYears button span { font-size: 13px; }
+  .chronologyDetail { padding: 18px; }
+  .chronologyDetailYear span { font-size: 12px; }
+  .chronologyDetailBody p, .chronologyDetailBody a { font-size: 14px; }
+  .chronologyLegend span { font-size: 12px; }
+  .barPanel { padding: 22px; }
+  .barPanel > p { font-size: 13px; }
+  .barList { gap: 18px; }
+  .statBarTitle { font-size: 13px; }
+  .statBarTitle strong { font-size: 18px; }
+  .pendingLead { gap: 11px; }
+  .pendingLead div { padding: 18px; }
+  .pendingLead span { font-size: 12px; }
+  .pendingCards { gap: 11px; }
+  .pendingCard { min-height: 97px; padding: 18px 34px 17px 16px; }
+  .pendingCard > span { font-size: 15px; }
+  .pendingCard small { font-size: 12px; }
+  .editionBody { padding: 16px; }
+  .editionBody h3 { font-size: 19px; }
+  .editionTags span { font-size: 11px; }
+  .editionBody a { font-size: 13px; }
+  .methodology { padding: 20px; margin-top: 24px; }
+  .methodology p, .methodology a { font-size: 13px; }
 }
