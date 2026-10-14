@@ -442,6 +442,14 @@ const getCachedPublicSitemapSegmentEntries = unstable_cache(
 const pendingSegments = new Map();
 export async function getPublicSitemapSegmentEntries(segment) {
   if (!PUBLIC_SITEMAP_SEGMENTS.includes(segment)) return null;
+  // Static hubs have no database cost and must reflect new releases immediately.
+  // Do not reuse the persistent v3 cache for these URLs: a deployment can keep
+  // serving an older /sitemaps/general.xml after a new hub has gone live.
+  if (segment === 'general') {
+    return [...new Map(sitemapEntriesForSegment(staticEntries, segment)
+      .filter((entry) => allowAgendaSitemapUrl(entry.url))
+      .map((entry) => [entry.url, entry])).values()];
+  }
   if (!pendingSegments.has(segment)) {
     const pending = getCachedPublicSitemapSegmentEntries(segment)
       .finally(() => pendingSegments.delete(segment));
