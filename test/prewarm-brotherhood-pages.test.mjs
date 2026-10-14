@@ -74,5 +74,6 @@ test('solo main manual o Production success comparten el grupo de producción', 
   assert.equal(evaluate(event('deployment_status', '', 'Preview', 'success')), 123)
   assert.equal(evaluate(event('deployment_status', '', 'Production', 'pending')), 123)
   assert.equal(evaluate(event('deployment_status', '', 'Production', 'failure')), 123)
-  assert.equal(evaluate(event('deployment_status', '', 'Production', 'success', 'preview')), 123)
+  // Vercel usa el SHA como deployment.ref, no el nombre de la rama.
+  assert.equal(evaluate(event('deployment_status', '', 'Production', 'success', '78b1170e')), 'production')
 })
