@@ -12,6 +12,7 @@ const archivePhotos = {
 export default function HiloMovementCards({ items, compact = false, headingLevel = 3, featured = false }) {
   const Heading = `h${headingLevel}`
   const DetailHeading = `h${Math.min(headingLevel + 1, 6)}`
+  const Expansion = compact || featured ? 'div' : 'details'
   return <ol className={compact ? styles.compactList : featured ? styles.leadList : styles.list}>
     {items.map((item) => <li key={item.id}>
       <article className={`${styles.chapter} ${featured ? styles.featured : ''}`} id={compact ? undefined : item.id} data-hilo-movement={item.id}>
@@ -33,6 +34,8 @@ export default function HiloMovementCards({ items, compact = false, headingLevel
             <p className={styles.date}>{item.announcedOn ? <time dateTime={item.announcedOn}>{hiloDayLabel(item.announcedOn)}</time> : <>Documentado el <time dateTime={item.documentedOn}>{hiloDayLabel(item.documentedOn)}</time></>}</p>
             <Heading>{compact ? <Link href={item.href} prefetch={false}>{item.title}</Link> : item.title}</Heading>
             <p className={styles.summary}>{item.summary}</p>
+            <Expansion className={!compact && !featured ? styles.expansion : undefined}>
+            {!compact && !featured ? <summary>Seguir este hilo <span className={styles.srOnly}>: {item.title}</span><span aria-hidden="true">+</span></summary> : null}
             {item.effectiveLabel ? <p className={styles.effective}><span aria-hidden="true">↳</span> {item.effectiveLabel}</p> : null}
             {compact ? <Link className={styles.more} href={item.href} prefetch={false}>Seguir este hilo <span aria-hidden="true">→</span></Link> : <>
               {item.discover ? <Link className={styles.discover} href={item.discover.href} prefetch={false}>{item.discover.label} <span aria-hidden="true">↗</span></Link> : null}
@@ -44,6 +47,7 @@ export default function HiloMovementCards({ items, compact = false, headingLevel
               </details>
               <details className={styles.sources}><summary>Fuentes y documentación <span aria-hidden="true">+</span></summary><ul>{item.sources.map((source) => <li key={source.href}><a href={source.href} target="_blank" rel="noopener noreferrer">{source.label} <span className={styles.srOnly}>(se abre en otra pestaña)</span></a></li>)}</ul><p>Incorporado el <time dateTime={item.documentedOn}>{hiloDayLabel(item.documentedOn)}</time>. Esta fecha no sustituye a la del anuncio.</p></details>
             </>}
+            </Expansion>
           </div>
         </div>
       </article>
