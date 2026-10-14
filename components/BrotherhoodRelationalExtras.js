@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { unstable_cache } from 'next/cache'
+import { BROTHERHOOD_DETAIL_DATA_CACHE, brotherhoodDetailCacheDay } from '@/lib/brotherhood-detail-cache'
 import Image from 'next/image'
 import RelationalThread from '@/components/RelationalThread'
 import { orderProcessionalItems } from '@/lib/brotherhood-processional-order'
@@ -339,10 +340,10 @@ async function loadBrotherhoodDiscoveryDataRows(supabase, brotherhoodId, threadD
 // Estas lecturas se repetían en cada regeneración de la ficha: la caché de
 // páginas (ISR) se vacía con cada despliegue y el 64 % de las visitas a fichas
 // de Hermandad llegaban sin caché (13–14/10/2026). Se guardan en la caché de
-// datos con la misma frescura y etiqueta que la ficha. Un error de Supabase
+// datos con la misma frescura y etiqueta que la ficha (lib/brotherhood-detail-cache.js). Un error de Supabase
 // se lanza y nunca queda guardado.
 const RELATIONAL_EXTRAS_CACHE_KEY = 'hilo-cofrade-brotherhood-relational-extras-v1'
-const RELATIONAL_EXTRAS_CACHE = { revalidate: 900, tags: ['public-brotherhood-detail'] }
+const RELATIONAL_EXTRAS_CACHE = BROTHERHOOD_DETAIL_DATA_CACHE
 
 const getCachedConceptualTitulars = unstable_cache(
   (brotherhoodId) => loadConceptualTitularsRows(createPublicClient(), brotherhoodId),
@@ -389,8 +390,9 @@ function loadOwnBands(_supabase, brotherhoodId) {
   return getCachedOwnBands(brotherhoodId)
 }
 
+// Los contratos que empiezan en una fecha dependen del día: entra en la clave.
 function loadCurrentAccompaniments(_supabase, brotherhoodId) {
-  return getCachedCurrentAccompaniments(brotherhoodId)
+  return getCachedCurrentAccompaniments(brotherhoodId, brotherhoodDetailCacheDay())
 }
 
 function loadBrotherhoodThreadData(_supabase, brotherhoodId) {
@@ -398,7 +400,7 @@ function loadBrotherhoodThreadData(_supabase, brotherhoodId) {
 }
 
 function loadBrotherhoodDiscoveryData(_supabase, brotherhoodId) {
-  return getCachedDiscoveryData(brotherhoodId)
+  return getCachedDiscoveryData(brotherhoodId, brotherhoodDetailCacheDay())
 }
 
 export async function BrotherhoodTitularCount({ brotherhoodId, imageCount = 0 }) {

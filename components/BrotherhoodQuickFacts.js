@@ -3,6 +3,7 @@ import 'server-only'
 import Link from 'next/link'
 import { cache } from 'react'
 import { unstable_cache } from 'next/cache'
+import { BROTHERHOOD_DETAIL_DATA_CACHE } from '@/lib/brotherhood-detail-cache'
 import { createPublicClient as createClient } from '@/lib/supabase/public'
 import { publicText } from '@/lib/supabase/public-entity-page'
 import styles from './BrotherhoodQuickFacts.module.css'
@@ -124,7 +125,7 @@ const loadRelationalRows = unstable_cache(async function loadRelationalRows(brot
   if (agentsResult.error) throw new Error(`No se pudieron resolver las personas vinculadas: ${agentsResult.error.message}`)
 
   return { headRelations, dresserRelations, agents: agentsResult.data || [] }
-}, ['hilo-cofrade-brotherhood-quick-facts-v1'], { revalidate: 900, tags: ['public-brotherhood-detail'] })
+}, ['hilo-cofrade-brotherhood-quick-facts-v1'], BROTHERHOOD_DETAIL_DATA_CACHE)
 
 const loadRelationalFacts = cache(async function loadRelationalFacts(brotherhood) {
   if (!brotherhood?.id) return { head: null, dressers: [], membership: null, recurringSeries: [] }
