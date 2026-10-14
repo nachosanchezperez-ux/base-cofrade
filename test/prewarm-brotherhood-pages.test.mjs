@@ -58,3 +58,8 @@ test('los hubs excluidos coinciden con las carpetas estáticas de /hermandades',
     .map((entry) => `/hermandades/${entry.name}`)
   assert.deepEqual(brotherhoodFichaPaths(folders), [])
 })
+
+test('las previews no cancelan la verificación de producción', () => {
+  const workflow = readFileSync(new URL('../.github/workflows/production-seo-smoke.yml', import.meta.url), 'utf8')
+  assert.match(workflow, /group: production-seo-smoke-\$\{\{ github\.event\.deployment\.environment \|\| 'manual' \}\}/)
+})

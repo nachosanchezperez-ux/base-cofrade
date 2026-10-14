@@ -4,8 +4,10 @@ on:
   deployment_status:
   workflow_dispatch:
 
+# El grupo depende del entorno: el aviso de cada preview (que se omite) no debe
+# cancelar la verificación y el precalentamiento de producción en curso.
 concurrency:
-  group: production-seo-smoke
+  group: production-seo-smoke-${{ github.event.deployment.environment || 'manual' }}
   cancel-in-progress: true
 
 jobs:
