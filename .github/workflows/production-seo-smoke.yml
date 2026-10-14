@@ -22,3 +22,22 @@ jobs:
           node-version: 24
       - name: Verifica superficies SEO públicas
         run: node scripts/public-seo-smoke.mjs
+
+  # Cada despliegue vacía la caché de páginas: se regeneran aquí las fichas de
+  # Hermandad para que la primera visita (persona o robot) no espere 2–4 s.
+  # No bloquea nada: un fallo solo deja avisos.
+  prewarm:
+    needs: verify
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.deployment_status.state == 'success' && contains(github.event.deployment.environment, 'Production'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Precalienta las fichas de Hermandad
+        run: node scripts/prewarm-brotherhood-pages.mjs
