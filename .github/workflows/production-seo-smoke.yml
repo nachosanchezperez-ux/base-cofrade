@@ -8,13 +8,13 @@ on:
 # omitidos (preview, pending, etc.) nunca cancelan el calentamiento vigente.
 # El disparo manual desde main comparte grupo para evitar dos pools simultáneos.
 concurrency:
-  group: production-seo-smoke-${{ ((github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') || (github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'Production' && github.event.deployment.ref == 'main')) && 'production' || github.run_id }}
+  group: production-seo-smoke-${{ ((github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') || (github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'Production')) && 'production' || github.run_id }}
   cancel-in-progress: true
 
 jobs:
   verify:
     if: >-
-      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') || (github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'Production' && github.event.deployment.ref == 'main')
+      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') || (github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'Production')
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -31,7 +31,7 @@ jobs:
   prewarm:
     needs: verify
     if: >-
-      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') || (github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'Production' && github.event.deployment.ref == 'main')
+      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') || (github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'Production')
     runs-on: ubuntu-latest
     timeout-minutes: 10
     continue-on-error: true
