@@ -1,0 +1,1212 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#112339">
+<title>Prototipo · Programa de mano · San Benito</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap">
+<style>
+/* Layout: ficha tipo app, una columna de móvil (máx. 560 px, centrada en escritorio).
+   Cabecera con escudo grande → accesos de un toque → esquema del cortejo → bloques plegables con un dato resumen a la derecha.
+   Marca Hilo: Open Sans, azul Hilo, rojo Hilo, papel. El color propio de cada entidad tiñe su cabecera. */
+:root {
+  --navy: #112339; --red: #B01B32; --pink: #ffb3c0; --paper: #fffdf9; --card: #ffffff; --soft: #f1f3f7;
+  --ink: #17202c; --ink-soft: #5b6573; --line: #e3e7ed; --link: #1d4f91;
+  --tint: #3a1d52; --tint-2: #5B2C83;
+  --sans: "Open Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { scroll-padding-top: 70px; }
+body { margin: 0; background: #e9ecf1; color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.5; }
+img { display: block; max-width: 100%; }
+h1, h2, h3 { margin: 0; letter-spacing: -.03em; font-weight: 800; text-wrap: balance; }
+p { margin: 0; }
+a { color: var(--link); }
+button { font: inherit; }
+:focus-visible { outline: 3px solid var(--red); outline-offset: 2px; }
+
+.app { width: min(560px, 100%); margin: 0 auto; background: var(--paper); min-height: 100vh; }
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30; display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 16px; background: rgba(255,253,249,.96); border-bottom: 2px solid var(--red); }
+.brand { display: flex; align-items: center; gap: 9px; font-size: 18px; color: var(--navy); text-decoration: none; }
+.brand b { font-weight: 800; } .brand span { font-weight: 400; }
+.brand i { width: 22px; height: 6px; border-radius: 3px; background: var(--red); position: relative; }
+.brand i::before, .brand i::after { content: ""; position: absolute; top: -4px; width: 13px; height: 13px; border-radius: 50%; background: var(--red); }
+.brand i::before { left: -5px; } .brand i::after { right: -5px; }
+.seg { display: flex; padding: 3px; border-radius: 999px; background: var(--soft); }
+.seg button { border: 0; background: none; min-height: 34px; padding: 0 14px; border-radius: 999px; font-size: 13px; font-weight: 700; color: var(--ink-soft); cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--navy); color: #fff; }
+
+/* Cabecera con escudo */
+.hero { position: relative; color: #fff; text-align: center; padding: 26px 16px 20px; overflow: hidden; background: var(--tint); isolation: isolate; }
+.hero-bg { position: absolute; inset: 0; z-index: -2; }
+.hero-bg img, .hero-bg svg { width: 100%; height: 100%; object-fit: cover; opacity: .82; display: block; }
+.hero::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, color-mix(in srgb, var(--tint) 35%, transparent) 0%, transparent 22%, color-mix(in srgb, var(--tint) 55%, transparent) 46%, var(--tint) 78%); }
+.hero { min-height: 560px; display: flex; flex-direction: column; justify-content: flex-end; }
+.hero.illus::after { background: linear-gradient(180deg, transparent 0%, transparent 30%, color-mix(in srgb, var(--tint) 82%, transparent) 52%, var(--tint) 70%); }
+.hero.illus .hero-bg img { opacity: 1; }
+.hero-note { position: absolute; top: 10px; right: 12px; font-size: 10.5px; color: rgba(255,255,255,.75); writing-mode: vertical-rl; }
+.crest { width: 112px; height: 112px; margin: 0 auto 12px; border-radius: 50%; background: #fff; display: grid; place-items: center; padding: 12px; box-shadow: 0 8px 24px rgba(0,0,0,.35); }
+.crest img { height: 88px; width: 88px; object-fit: contain; }
+.crest.dark { background: #65121A; }
+.hero h1 { font-size: clamp(38px, 11vw, 54px); line-height: .95; letter-spacing: -.045em; }
+.chips { display: flex; justify-content: center; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.chips span { font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 999px; background: rgba(255,255,255,.16); }
+.chips span.day { background: var(--red); }
+.pulse { margin-top: 16px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 16px; background: rgba(255,255,255,.12); backdrop-filter: blur(6px); }
+.pulse div { display: grid; }
+.pulse small { font-size: 11px; font-weight: 700; opacity: .8; text-transform: uppercase; letter-spacing: .1em; }
+.pulse b { font-size: 30px; line-height: 1; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+.pulse .mid { font-size: 12px; font-weight: 700; opacity: .85; text-align: center; }
+.pulse .mid i { display: block; width: 70px; height: 4px; margin: 4px auto; border-radius: 2px; background: linear-gradient(90deg, #f2b84b, var(--red), #8aa0c8); }
+.countdown { display: inline-flex; align-items: baseline; gap: 6px; margin-top: 12px; padding: 6px 12px; border-radius: 999px; background: #fff; color: var(--ink); font-size: 13px; font-weight: 700; }
+.countdown b { color: var(--red); font-size: 18px; letter-spacing: -.03em; }
+
+/* Accesos de un toque */
+.quick { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; padding: 14px 12px; background: var(--card); border-bottom: 1px solid var(--line); }
+.quick a { display: grid; justify-items: center; gap: 6px; padding: 10px 2px 8px; border-radius: 14px; text-decoration: none; color: var(--navy); font-size: 11.5px; font-weight: 700; text-align: center; line-height: 1.15; }
+.quick a:active, .quick a:hover { background: var(--soft); }
+.quick svg { width: 26px; height: 26px; padding: 9px; box-sizing: content-box; border-radius: 14px; background: var(--soft); color: var(--navy); }
+.quick a.hot svg { background: var(--red); color: #fff; }
+
+/* Esquema del cortejo */
+.block { padding: 18px 16px; border-bottom: 8px solid var(--soft); }
+.block-h { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
+.block-h h2 { font-size: 22px; color: var(--navy); }
+.block-h small { font-size: 12px; font-weight: 700; color: var(--ink-soft); }
+.esquema { list-style: none; margin: 0; padding: 0; position: relative; }
+.esquema::before { content: ""; position: absolute; left: 27px; top: 20px; bottom: 30px; width: 3px; background: var(--line); border-radius: 2px; }
+.node { position: relative; display: grid; grid-template-columns: 56px minmax(0, 1fr) 46px; gap: 10px; align-items: center; padding: 6px 0; text-decoration: none; color: inherit; }
+.node .pic { position: relative; z-index: 1; width: 56px; height: 56px; border-radius: 14px; overflow: hidden; background: var(--navy); color: #fff; display: grid; place-items: center; font-weight: 800; border: 3px solid var(--paper); box-shadow: 0 0 0 1px var(--line); }
+.node .pic img { width: 100%; height: 100%; object-fit: cover; }
+.node .pic.cross { background: var(--paper); color: var(--navy); border-radius: 50%; box-shadow: 0 0 0 2px var(--navy); font-size: 22px; }
+.node .txt small { display: block; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--red); }
+.node .txt strong { display: block; font-size: 15px; line-height: 1.2; color: var(--ink); }
+.node .txt span { font-size: 12.5px; color: var(--ink-soft); }
+.node .band { width: 46px; height: 46px; border-radius: 50%; background: #fff; border: 1px solid var(--line); display: grid; place-items: center; overflow: hidden; padding: 4px; }
+.node .band img { max-height: 100%; object-fit: contain; }
+.tramo { position: relative; display: grid; grid-template-columns: 56px 1fr; gap: 10px; align-items: center; padding: 2px 0; }
+.tramo .naz { display: flex; gap: 2px; justify-content: center; position: relative; z-index: 1; background: var(--paper); padding: 2px 0; }
+.tramo .naz i { width: 9px; height: 14px; background: linear-gradient(180deg, var(--tint-2) 0 45%, #fff 45%); clip-path: polygon(50% 0, 100% 100%, 0 100%); box-shadow: 0 0 0 1px var(--line); }
+.tramo span { font-size: 11.5px; color: var(--ink-soft); font-weight: 600; }
+
+/* Su día: escudos */
+.day-row { display: flex; gap: 10px; overflow-x: auto; padding: 2px 2px 6px; margin: 0 -16px; padding-inline: 16px; list-style: none; scrollbar-width: none; }
+.day-row::-webkit-scrollbar { display: none; }
+.day-row li { flex: 0 0 76px; display: grid; justify-items: center; gap: 4px; text-align: center; }
+.day-row .c { width: 64px; height: 64px; border-radius: 50%; background: #fff; border: 1px solid var(--line); display: grid; place-items: center; padding: 8px; }
+.day-row .c img { max-height: 100%; object-fit: contain; }
+.day-row .c.none { background: var(--soft); color: var(--navy); font-weight: 800; font-size: 18px; }
+.day-row li.me .c { border: 3px solid var(--red); }
+.day-row strong { font-size: 11.5px; line-height: 1.2; color: var(--ink); }
+.day-row small { font-size: 11px; font-weight: 700; color: var(--red); font-variant-numeric: tabular-nums; }
+
+/* Plegables */
+details.fold { border-bottom: 1px solid var(--line); background: var(--card); }
+details.fold > summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 38px minmax(0, 1fr) auto 18px; gap: 12px; align-items: center; padding: 14px 16px; min-height: 64px; }
+details.fold > summary::-webkit-details-marker { display: none; }
+details.fold > summary svg { width: 22px; height: 22px; padding: 8px; box-sizing: content-box; border-radius: 12px; background: var(--soft); color: var(--navy); }
+details.fold > summary strong { font-size: 16px; color: var(--navy); }
+details.fold > summary em { font-style: normal; font-size: 13px; font-weight: 700; color: var(--ink-soft); text-align: right; white-space: nowrap; }
+details.fold > summary::after { content: "+"; font-size: 22px; font-weight: 400; color: var(--red); text-align: center; }
+details.fold[open] > summary::after { content: "–"; }
+details.fold[open] > summary { border-bottom: 1px dashed var(--line); }
+.fold-body { padding: 14px 16px 18px; }
+
+/* contenidos */
+.clock-bar { position: relative; height: 10px; border-radius: 5px; background: linear-gradient(90deg, #f2b84b 0%, #e8833a 25%, var(--red) 50%, #3a2a5a 75%, var(--navy) 100%); margin: 26px 0 8px; }
+.clock-bar b { position: absolute; top: -24px; font-size: 13px; font-variant-numeric: tabular-nums; }
+.clock-bar b:first-child { left: 0; } .clock-bar b:last-child { right: 0; }
+.clock-bar i { position: absolute; left: 50%; top: -5px; width: 20px; height: 20px; border-radius: 50%; background: #fff; border: 4px solid var(--red); transform: translateX(-50%); }
+.clock-cap { display: flex; justify-content: space-between; font-size: 12px; color: var(--ink-soft); }
+.clock-cap span:nth-child(2) { font-weight: 800; color: var(--red); }
+.metro { list-style: none; margin: 0; padding: 0; display: grid; position: relative; }
+.metro::before { content: ""; position: absolute; left: 9px; top: 12px; bottom: 12px; width: 4px; border-radius: 2px; background: var(--navy); }
+.metro li { position: relative; padding: 4px 0 4px 32px; font-size: 14px; }
+.metro li::before { content: ""; position: absolute; left: 3px; top: 9px; width: 16px; height: 16px; border-radius: 50%; background: #fff; border: 3px solid var(--navy); box-sizing: border-box; }
+.metro li.key { font-weight: 800; color: var(--red); }
+.metro li.key::before { background: var(--red); border-color: var(--red); }
+.metro li.home { font-weight: 800; }
+.metro li.home::before { background: var(--navy); }
+.metro-more summary { list-style: none; cursor: pointer; margin: 4px 0 0 32px; font-weight: 700; color: var(--link); min-height: 40px; display: flex; align-items: center; }
+.metro-more summary::-webkit-details-marker { display: none; }
+.strip { display: flex; gap: 10px; overflow-x: auto; margin: 0 -16px; padding: 0 16px 4px; scrollbar-width: none; list-style: none; }
+.strip::-webkit-scrollbar { display: none; }
+.strip li { flex: 0 0 132px; }
+.strip a { display: grid; gap: 6px; text-decoration: none; color: inherit; }
+.strip .ph { aspect-ratio: 4 / 5; border-radius: 12px; overflow: hidden; background: var(--soft); max-width: 100%; display: grid; place-items: center; font-size: 12px; color: var(--ink-soft); font-weight: 700; text-align: center; padding: 0; }
+.strip .ph img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%; }
+.strip strong { font-size: 13.5px; line-height: 1.2; color: var(--link); }
+.strip small { font-size: 12px; color: var(--ink-soft); }
+.months { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 3px; margin-bottom: 12px; }
+.months span { display: grid; place-items: center; height: 40px; border-radius: 7px; background: var(--soft); font-size: 10px; font-weight: 800; color: var(--ink-soft); }
+.months span.on { background: var(--navy); color: #fff; }
+.months span.key { background: var(--red); color: #fff; }
+.rows { list-style: none; margin: 0; padding: 0; }
+.rows li { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 10px; padding: 9px 0; border-top: 1px solid var(--line); font-size: 14px; }
+.rows li:first-child { border-top: 0; }
+.rows li > b { font-size: 12px; font-weight: 800; color: var(--ink-soft); text-transform: uppercase; padding-top: 2px; }
+.rows li.key > b, .rows li.key strong { color: var(--red); }
+.rows small { display: block; color: var(--ink-soft); font-size: 12.5px; }
+.bars { list-style: none; margin: 0 0 12px; padding: 12px; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 5px; align-items: end; height: 140px; background: var(--navy); border-radius: 14px; }
+.bars li { display: grid; grid-template-rows: auto 1fr auto; height: 100%; text-align: center; }
+.bars b { font-size: 11px; color: #fff; }
+.bars i { align-self: end; border-radius: 4px 4px 2px 2px; background: linear-gradient(180deg, var(--pink), var(--red)); min-height: 3px; }
+.bars span { font-size: 10px; color: rgba(255,255,255,.65); padding-top: 3px; font-weight: 700; }
+.logos { display: flex; gap: 10px; overflow-x: auto; list-style: none; margin: 0; padding: 0; scrollbar-width: none; }
+.logos li { flex: 0 0 auto; }
+.logos a { display: grid; justify-items: center; gap: 4px; width: 84px; text-align: center; text-decoration: none; font-size: 11.5px; font-weight: 700; color: var(--ink); line-height: 1.2; }
+.logos .c { width: 60px; height: 60px; border-radius: 50%; border: 1px solid var(--line); background: #fff; display: grid; place-items: center; overflow: hidden; padding: 6px; }
+.logos .c img { max-height: 100%; object-fit: contain; }
+.dates { list-style: none; margin: 0; padding: 0; position: relative; }
+.dates::before { content: ""; position: absolute; left: 61px; top: 8px; bottom: 8px; width: 2px; background: var(--line); }
+.dates li { display: grid; grid-template-columns: 52px 20px minmax(0, 1fr); gap: 0 8px; padding: 6px 0; font-size: 14px; align-items: baseline; }
+.dates b { font-size: 16px; color: var(--navy); font-variant-numeric: tabular-nums; }
+.dates i { position: relative; z-index: 1; width: 10px; height: 10px; border-radius: 50%; background: var(--navy); justify-self: center; transform: translateY(1px); }
+.dates li:first-child b { color: var(--red); } .dates li:first-child i { background: var(--red); }
+.facts { margin: 0; display: grid; }
+.facts div { display: grid; grid-template-columns: 100px minmax(0, 1fr); gap: 10px; padding: 9px 0; border-top: 1px solid var(--line); font-size: 14px; }
+.facts div:first-child { border-top: 0; }
+.facts dt { font-weight: 700; color: var(--ink-soft); }
+.facts dd { margin: 0; overflow-wrap: anywhere; }
+.facts .sw { display: inline-flex; gap: 4px; } .facts .sw i { width: 18px; height: 18px; border-radius: 50%; border: 1px solid rgba(0,0,0,.2); }
+.pills { display: flex; flex-wrap: wrap; gap: 6px; }
+.pills a { font-size: 13px; font-weight: 700; padding: 7px 12px; border-radius: 999px; background: var(--soft); text-decoration: none; color: var(--navy); }
+.pills a::after { content: " →"; color: var(--red); }
+
+/* Banda: semana */
+.week { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 4px; }
+.week div { display: grid; justify-items: center; gap: 6px; padding: 8px 0; border-radius: 12px; background: var(--soft); text-align: center; }
+.week div b { font-size: 11px; color: var(--ink-soft); }
+.week div .c { width: 34px; height: 34px; border-radius: 50%; background: #fff; display: grid; place-items: center; padding: 3px; border: 1px solid var(--line); font-size: 11px; font-weight: 800; color: var(--navy); }
+.week div .c img { max-height: 100%; object-fit: contain; }
+.week div.on { background: var(--navy); } .week div.on b { color: #fff; }
+.week div.home { background: var(--red); } .week div.home b { color: #fff; }
+.week div .e { width: 34px; height: 34px; }
+.disc { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.disc li { aspect-ratio: 1; border-radius: 10px; padding: 8px; display: flex; flex-direction: column; justify-content: space-between; color: #fff; background: #65121A; position: relative; overflow: hidden; min-width: 0; }
+.disc li:nth-child(2n) { background: #2F284A; }
+.disc li::after { content: ""; position: absolute; right: -14%; bottom: -14%; width: 64%; aspect-ratio: 1; background: var(--logo) center / contain no-repeat; opacity: .16; }
+.disc strong { font-size: 12.5px; line-height: 1.15; overflow-wrap: anywhere; position: relative; z-index: 1; }
+.disc b { font-size: 16px; position: relative; z-index: 1; }
+.note { font-size: 12.5px; color: var(--ink-soft); margin-top: 10px; }
+.foot { padding: 18px 16px 40px; font-size: 12px; color: var(--ink-soft); }
+@media (max-width: 359px) { .brand { font-size: 15px; gap: 7px; } .seg button { padding: 0 10px; font-size: 12px; } .top { padding-inline: 12px; } .quick { gap: 4px; padding-inline: 8px; } .quick svg { padding: 7px; width: 22px; height: 22px; } .pulse b { font-size: 24px; } .pulse .mid i { width: 44px; } .node { grid-template-columns: 48px minmax(0,1fr) 40px; } .node .pic { width: 48px; height: 48px; } .node .band { width: 40px; height: 40px; } .esquema::before { left: 23px; } .tramo { grid-template-columns: 48px 1fr; } }
+@media (min-width: 600px) { .app { margin-block: 20px; border-radius: 22px; overflow: hidden; box-shadow: 0 20px 60px rgba(17,35,57,.14); min-height: 0; } }
+
+/* ===== v5: piezas propias de Hilo + Tira del hilo visual ===== */
+.habit-card { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 14px; align-items: center; padding: 14px; border-radius: 18px; background: linear-gradient(160deg, #2a1640, #17101f); color: #fff; }
+.habit-card img { width: 120px; border-radius: 12px; background: #000; }
+.habit-card h3 { font-size: 18px; margin-bottom: 6px; }
+.habit-card dl { margin: 0; display: grid; }
+.habit-card dl div { display: grid; grid-template-columns: 74px minmax(0, 1fr); gap: 8px; padding: 6px 0; border-top: 1px solid rgba(255,255,255,.14); font-size: 13px; }
+.habit-card dl div:first-child { border-top: 0; }
+.habit-card dt { font-size: 10.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.6); padding-top: 2px; }
+.habit-card dd { margin: 0; font-weight: 700; line-height: 1.3; }
+
+.gantt { display: grid; gap: 10px; }
+.g-row { display: grid; grid-template-columns: 70px minmax(0, 1fr); gap: 8px; align-items: center; }
+.g-row > b { font-size: 12px; font-weight: 800; color: var(--navy); line-height: 1.15; }
+.g-track { position: relative; height: 26px; border-radius: 6px; background: repeating-linear-gradient(90deg, var(--soft) 0 calc(27.03% - 1px), #dfe3ea calc(27.03% - 1px) 27.03%); }
+.g-bar { position: absolute; top: 3px; bottom: 3px; border-radius: 5px; display: flex; align-items: center; padding-left: 4px; overflow: hidden; color: #fff; font-size: 10px; font-weight: 800; white-space: nowrap; }
+.g-bar.now { border-top-right-radius: 0; border-bottom-right-radius: 0; box-shadow: inset -3px 0 0 rgba(255,255,255,.55); }
+.g-axis { display: grid; grid-template-columns: 70px minmax(0, 1fr); gap: 8px; }
+.g-axis div { position: relative; height: 14px; font-size: 10px; font-weight: 700; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.g-legend { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 8px; }
+.g-legend li { display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; gap: 10px; align-items: center; font-size: 13px; }
+.g-legend .c { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; overflow: hidden; padding: 4px; border: 3px solid var(--k); background: #fff; }
+.g-legend .c img { max-height: 100%; object-fit: contain; }
+.g-legend .c.t { font-size: 12px; font-weight: 800; color: var(--k); }
+.g-legend strong { display: block; font-size: 13.5px; line-height: 1.2; }
+.g-legend small { color: var(--ink-soft); font-size: 12px; }
+.g-legend em { font-style: normal; font-size: 12px; font-weight: 800; color: var(--ink-soft); white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+/* Tira del hilo: el hilo rojo que sale de la ficha */
+.hilo { padding: 22px 16px 26px; background: var(--navy); color: #fff; }
+.hilo-h { text-align: center; margin-bottom: 18px; }
+.hilo-h small { font-size: 12px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--pink); }
+.hilo-h h2 { font-size: 26px; color: #fff; margin-top: 2px; }
+.hilo-center { display: grid; justify-items: center; gap: 6px; position: relative; z-index: 1; }
+.hilo-center .c { width: 84px; height: 84px; border-radius: 50%; background: #fff; display: grid; place-items: center; padding: 9px; box-shadow: 0 0 0 4px var(--red), 0 0 0 10px rgba(176,27,50,.25); }
+.hilo-center .c img { max-height: 100%; object-fit: contain; }
+.hilo-center strong { font-size: 15px; }
+.hilo-center span { font-size: 12px; color: rgba(255,255,255,.7); }
+.threads { list-style: none; margin: 0; padding: 18px 0 0 14px; position: relative; display: grid; gap: 16px; }
+.threads::before { content: ""; position: absolute; left: 14px; top: 0; bottom: 26px; width: 3px; border-radius: 2px; background: var(--red); }
+.thread { position: relative; padding-left: 22px; min-width: 0; }
+.knots { max-width: 100%; }
+.g-row > *, .gantt { min-width: 0; }
+.thread::before { content: ""; position: absolute; left: 0; top: 13px; width: 16px; height: 3px; background: var(--red); }
+.thread > b { display: inline-block; font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--pink); margin-bottom: 8px; }
+.knots { display: flex; gap: 10px; overflow-x: auto; list-style: none; margin: 0 -16px 0 0; padding: 0 16px 4px 0; scrollbar-width: none; }
+.knots::-webkit-scrollbar { display: none; }
+.knots li { flex: 0 0 auto; }
+.knots a { display: grid; justify-items: center; gap: 4px; width: 84px; text-align: center; text-decoration: none; color: #fff; }
+.knots .c { width: 62px; height: 62px; border-radius: 50%; overflow: hidden; background: #fff; display: grid; place-items: center; border: 2px solid rgba(255,255,255,.85); }
+.knots .c img { width: 100%; height: 100%; object-fit: cover; }
+.knots .c.logo { padding: 6px; } .knots .c.logo img { object-fit: contain; }
+.knots .c.t { background: var(--navy-2, #1b3354); color: #fff; font-weight: 800; font-size: 16px; }
+.knots strong { font-size: 11.5px; line-height: 1.15; }
+.knots em { font-style: normal; max-width: 84px; overflow: hidden; text-overflow: ellipsis; font-size: 10.5px; font-weight: 800; color: var(--navy); background: var(--pink); padding: 2px 7px; border-radius: 999px; white-space: nowrap; }
+.hilo-more { margin-top: 18px; display: grid; gap: 8px; }
+.hilo-more a { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 14px; background: rgba(255,255,255,.08); color: #fff; text-decoration: none; font-size: 14px; }
+.hilo-more a b { color: var(--pink); }
+.hilo-more a span:last-child { width: 30px; height: 30px; border-radius: 50%; background: var(--red); display: grid; place-items: center; font-weight: 800; }
+.g-axis span { position: absolute; transform: translateX(-50%); } .g-axis span:first-child { transform: none; } .g-axis span:last-child { transform: translateX(-100%); }
+
+/* ===== v6: patrimonio musical ===== */
+.pm-hero { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 14px; align-items: center; margin-bottom: 12px; }
+.pm-hero b { font-size: 54px; line-height: .9; letter-spacing: -.05em; color: var(--navy); font-variant-numeric: tabular-nums; }
+.pm-hero span { font-size: 14px; line-height: 1.35; color: var(--ink-soft); }
+.pm-hero span strong { color: var(--ink); }
+.stack { display: flex; height: 16px; border-radius: 8px; overflow: hidden; margin-bottom: 8px; }
+.stack i { display: block; height: 100%; }
+.stack-legend { list-style: none; margin: 0 0 16px; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 12px; font-size: 12px; color: var(--ink-soft); }
+.stack-legend li { display: inline-flex; align-items: center; gap: 5px; }
+.stack-legend li i { width: 10px; height: 10px; border-radius: 3px; }
+.stack-legend b { color: var(--ink); }
+.first { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 12px; align-items: center; padding: 12px; border-radius: 14px; background: var(--soft); margin-bottom: 14px; }
+.first b { font-size: 26px; font-weight: 800; letter-spacing: -.04em; color: var(--red); }
+.first small { display: block; font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); }
+.first strong { display: block; font-size: 15px; line-height: 1.2; }
+.first span { font-size: 12.5px; color: var(--ink-soft); }
+.listen { list-style: none; margin: 0 0 14px; padding: 0; display: grid; gap: 8px; }
+.listen a { display: grid; grid-template-columns: 42px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 8px 12px 8px 8px; border-radius: 14px; background: var(--navy); color: #fff; text-decoration: none; }
+.listen .play { width: 42px; height: 42px; border-radius: 50%; background: var(--red); display: grid; place-items: center; font-size: 14px; padding-left: 2px; }
+.listen strong { display: block; font-size: 14px; line-height: 1.2; }
+.listen small { font-size: 11.5px; color: rgba(255,255,255,.7); }
+.listen em { font-style: normal; font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--pink); }
+.sub-h { font-size: 13px; font-weight: 800; color: var(--navy); margin: 4px 0 8px; }
+.comp { list-style: none; margin: 0 0 14px; padding: 0; display: grid; gap: 6px; }
+.comp li { display: grid; grid-template-columns: minmax(0, 1fr) 90px 22px; gap: 8px; align-items: center; font-size: 13px; }
+.comp li span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
+.comp li i { display: block; height: 8px; border-radius: 4px; background: var(--red); }
+.comp li b { text-align: right; font-variant-numeric: tabular-nums; }
+.cta { display: flex; justify-content: center; align-items: center; gap: 8px; min-height: 46px; border-radius: 999px; background: var(--red); color: #fff; font-weight: 800; text-decoration: none; font-size: 14px; }
+.est { list-style: none; margin: 0 0 14px; padding: 0; position: relative; display: grid; gap: 8px; }
+.est li { display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 10px; align-items: center; padding: 10px; border-radius: 12px; background: var(--soft); }
+.est li b { display: grid; place-items: center; height: 44px; border-radius: 10px; background: #65121A; color: #fff; font-size: 14px; font-weight: 800; }
+.est strong { display: block; font-size: 14.5px; line-height: 1.2; }
+.est small { font-size: 12px; color: var(--ink-soft); }
+.chipset { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.chipset span { font-size: 12.5px; font-weight: 700; padding: 6px 10px; border-radius: 999px; background: var(--soft); color: var(--navy); }
+.chipset span b { color: var(--red); }
+.loc { display: inline-flex; align-items: center; justify-content: center; gap: 5px; margin: 10px auto 0; font-size: 14px; font-weight: 700; color: #fff; }
+.loc svg { width: 17px; height: 17px; color: var(--pink); }
+.loc a { color: #fff; text-decoration-color: rgba(255,255,255,.45); text-underline-offset: 3px; }
+
+/* v8 · nuevos espacios */
+.chip-tag { display: inline-block; font-size: 10.5px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; padding: 2px 7px; border-radius: 6px; background: #fff3cd; color: #7a5a00; vertical-align: middle; }
+.team { margin: 14px 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.team li { list-style: none; display: grid; grid-template-columns: 38px minmax(0, 1fr); gap: 8px; align-items: center; padding: 8px; border-radius: 12px; background: var(--soft); min-width: 0; }
+.team .av { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; background: var(--navy); color: #fff; font-size: 12px; font-weight: 800; }
+.team .av.v { background: var(--tint-2); }
+.team small { display: block; font-size: 10.5px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--red); line-height: 1.2; }
+.team a { font-size: 13px; font-weight: 700; color: var(--ink); text-decoration: none; line-height: 1.2; display: block; overflow-wrap: anywhere; }
+.team em { font-style: normal; font-size: 11.5px; color: var(--ink-soft); line-height: 1.2; display: block; }
+.team-wrap { margin: 0; padding: 0; }
+.bandas-hoy { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.bandas-hoy a { display: grid; justify-items: center; gap: 6px; padding: 14px 8px 12px; border-radius: 16px; background: var(--card); border: 1px solid var(--line); text-align: center; text-decoration: none; color: inherit; height: 100%; box-sizing: border-box; }
+.bandas-hoy .lg { width: 78px; height: 78px; border-radius: 50%; background: #fff; border: 1px solid var(--line); display: grid; place-items: center; padding: 8px; overflow: hidden; }
+.bandas-hoy .lg img { max-height: 100%; object-fit: contain; }
+.bandas-hoy small { font-size: 10.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--red); }
+.bandas-hoy strong { font-size: 13.5px; line-height: 1.2; color: var(--ink); }
+.bandas-hoy em { font-style: normal; font-size: 11.5px; color: var(--ink-soft); }
+.bandas-hoy .own { font-size: 10px; font-weight: 800; padding: 2px 7px; border-radius: 999px; background: var(--navy); color: #fff; }
+.puesto { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 14px; align-items: center; padding: 14px; border-radius: 16px; background: var(--navy); color: #fff; margin-bottom: 12px; }
+.puesto b { font-size: 54px; line-height: .9; letter-spacing: -.05em; color: #fff; }
+.puesto b sup { font-size: 22px; color: var(--pink); }
+.puesto strong { display: block; font-size: 16px; line-height: 1.2; }
+.puesto span { font-size: 12.5px; color: rgba(255,255,255,.75); }
+.nomina { list-style: none; margin: 0; padding: 0; counter-reset: n; }
+.nomina li { counter-increment: n; display: grid; grid-template-columns: 22px 44px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 7px 0; border-top: 1px solid var(--line); }
+.nomina li:first-child { border-top: 0; }
+.nomina li::before { content: counter(n); font-size: 15px; font-weight: 800; color: var(--ink-soft); text-align: center; font-variant-numeric: tabular-nums; }
+.nomina .c { width: 44px; height: 44px; border-radius: 50%; background: #fff; border: 1px solid var(--line); display: grid; place-items: center; padding: 5px; }
+.nomina .c img { max-height: 100%; object-fit: contain; }
+.nomina .c.none { background: var(--soft); font-weight: 800; color: var(--navy); }
+.nomina a { font-size: 14.5px; font-weight: 700; color: var(--ink); text-decoration: none; line-height: 1.2; }
+.nomina small { display: block; font-size: 12px; color: var(--ink-soft); }
+.nomina em { font-style: normal; font-size: 12.5px; font-weight: 800; color: var(--red); font-variant-numeric: tabular-nums; }
+.nomina li.me { background: #fff1f3; margin: 0 -16px; padding: 7px 16px; border-top-color: transparent; }
+.nomina li.me::before { color: var(--red); }
+.nomina li.me .c { border: 3px solid var(--red); }
+.pasos { display: flex; gap: 12px; overflow-x: auto; margin: 0 -16px; padding: 0 16px 6px; list-style: none; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.pasos::-webkit-scrollbar { display: none; }
+.pasos > li { flex: 0 0 84%; max-width: 380px; scroll-snap-align: start; border-radius: 18px; overflow: hidden; background: var(--card); border: 1px solid var(--line); display: flex; flex-direction: column; }
+.pasos .ph { position: relative; aspect-ratio: 3 / 2; background: var(--navy); }
+.pasos .ph > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.pasos .ph span { position: absolute; left: 10px; top: 10px; font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; padding: 4px 9px; border-radius: 999px; background: var(--red); color: #fff; }
+.pasos .ph .bl { position: absolute; right: 10px; bottom: -22px; width: 48px; height: 48px; border-radius: 50%; background: #fff; border: 3px solid #fff; box-shadow: 0 2px 8px rgba(0,0,0,.2); display: grid; place-items: center; overflow: hidden; padding: 3px; }
+.pasos .ph .bl img { max-height: 100%; object-fit: contain; }
+.pasos .bd { padding: 14px 14px 12px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.pasos h3 { font-size: 17px; line-height: 1.2; color: var(--navy); padding-right: 46px; }
+.pasos .img-row { display: flex; gap: 8px; align-items: center; text-decoration: none; color: inherit; }
+.pasos .img-row img { width: 44px; height: 54px; object-fit: cover; object-position: 50% 20%; border-radius: 8px; }
+.pasos .img-row strong { display: block; font-size: 13.5px; color: var(--link); line-height: 1.2; }
+.pasos .img-row small { font-size: 12px; color: var(--ink-soft); }
+.pasos dl { margin: 0; display: grid; gap: 0; }
+.pasos dl div { display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 8px; padding: 6px 0; border-top: 1px solid var(--line); font-size: 13px; }
+.pasos dt { font-size: 10.5px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); padding-top: 2px; }
+.pasos dd { margin: 0; font-weight: 700; line-height: 1.3; }
+.pasos dd a { color: var(--ink); }
+.pasos .go { display: flex; gap: 6px; flex-wrap: wrap; margin-top: auto; }
+.pasos .go a { flex: 1 1 auto; text-align: center; font-size: 12.5px; font-weight: 800; padding: 9px 10px; border-radius: 10px; background: var(--soft); color: var(--navy); text-decoration: none; }
+.pasos .go a.p { background: var(--navy); color: #fff; }
+.naz-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.naz-stats div { padding: 12px; border-radius: 14px; border: 2px dashed var(--line); background: var(--paper); }
+.naz-stats b { display: block; font-size: 26px; line-height: 1; color: #b8c0cc; letter-spacing: -.03em; }
+.naz-stats small { font-size: 12px; font-weight: 700; color: var(--ink-soft); }
+.naz-line { display: flex; gap: 3px; justify-content: center; margin: 4px 0 12px; }
+.naz-line i { width: 14px; height: 22px; background: linear-gradient(180deg, var(--tint-2) 0 45%, #fff 45%); clip-path: polygon(50% 0, 100% 100%, 0 100%); opacity: .35; }
+.patri-h { display: flex; align-items: center; gap: 8px; margin: 4px 0 8px; font-size: 13px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--navy); }
+.patri-h b { font-size: 11px; padding: 2px 8px; border-radius: 999px; background: var(--red); color: #fff; letter-spacing: 0; }
+.patri-h.r b { background: var(--navy); }
+.tl2 { list-style: none; margin: 0 0 16px; padding: 0; position: relative; }
+.tl2::before { content: ""; position: absolute; left: 25px; top: 8px; bottom: 8px; width: 3px; border-radius: 2px; background: linear-gradient(180deg, var(--red), var(--navy)); }
+.tl2 li { display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 10px; align-items: start; padding: 6px 0; }
+.tl2 li > b { position: relative; z-index: 1; justify-self: center; font-size: 12px; font-weight: 800; padding: 4px 6px; border-radius: 8px; background: var(--navy); color: #fff; font-variant-numeric: tabular-nums; }
+.tl2.hot li > b { background: var(--red); }
+.tl2 strong { display: block; font-size: 14px; line-height: 1.25; }
+.tl2 small { font-size: 12.5px; color: var(--ink-soft); }
+.tl2 a { color: var(--link); }
+.vc { position: relative; display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 0; border-radius: 18px; overflow: hidden; background: #2a0b10; color: #fff; text-decoration: none; }
+.vc img { width: 110px; height: 100%; min-height: 150px; object-fit: cover; object-position: 30% 25%; }
+.vc div { padding: 14px; display: grid; align-content: center; gap: 4px; }
+.vc b { font-size: 40px; line-height: 1; letter-spacing: -.04em; color: var(--pink); }
+.vc strong { font-size: 15px; line-height: 1.25; }
+.vc span { font-size: 12.5px; color: rgba(255,255,255,.75); }
+.resena { font-size: 15.5px; line-height: 1.55; margin-bottom: 14px; }
+.resena::first-letter { float: left; font-size: 46px; line-height: .9; padding: 4px 6px 0 0; font-weight: 800; color: var(--red); }
+.tl-hitos { list-style: none; margin: 0; padding: 0; position: relative; }
+.tl-hitos::before { content: ""; position: absolute; left: 7px; top: 10px; bottom: 10px; width: 2px; background: var(--line); }
+.tl-hitos li { position: relative; padding: 5px 0 5px 28px; font-size: 14px; line-height: 1.3; }
+.tl-hitos li::before { content: ""; position: absolute; left: 1px; top: 9px; width: 14px; height: 14px; border-radius: 50%; background: #fff; border: 3px solid var(--navy); box-sizing: border-box; }
+.tl-hitos li.big::before { background: var(--red); border-color: var(--red); width: 18px; height: 18px; left: -1px; top: 7px; }
+.tl-hitos b { display: inline-block; min-width: 42px; font-variant-numeric: tabular-nums; color: var(--navy); }
+.tl-hitos li.big b { color: var(--red); }
+.curios { display: flex; gap: 10px; overflow-x: auto; margin: 0 -16px; padding: 0 16px 6px; list-style: none; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.curios::-webkit-scrollbar { display: none; }
+.curios li { flex: 0 0 72%; max-width: 300px; scroll-snap-align: start; padding: 16px; border-radius: 18px; background: var(--tint-2); color: #fff; display: grid; gap: 6px; align-content: start; min-height: 170px; position: relative; overflow: hidden; }
+.curios li:nth-child(2n) { background: var(--navy); }
+.curios li:nth-child(3n) { background: var(--red); }
+.curios b { font-size: 34px; line-height: 1; letter-spacing: -.04em; }
+.curios strong { font-size: 15px; line-height: 1.25; }
+.curios span { font-size: 13px; line-height: 1.4; color: rgba(255,255,255,.85); }
+.curios li::after { content: "?"; position: absolute; right: -4px; top: -14px; font-size: 96px; font-weight: 800; opacity: .08; }
+.puesto .chip-tag { color: #7a5a00; font-size: 10px; margin-top: 4px; }
+.src { font-size: 11.5px; color: var(--ink-soft); margin-top: 8px; }
+@media (max-width: 359px) { .team { grid-template-columns: 1fr; } .pasos > li { flex-basis: 90%; } }
+
+/* v9 · hoja de paso tipo app + figuras secundarias */
+.figs-row { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 12px; background: var(--soft); font-size: 12.5px; font-weight: 700; color: var(--ink-soft); }
+.figs-row svg { width: 18px; height: 18px; color: var(--navy); flex: none; }
+.figs-row b { color: var(--navy); }
+.pasos .go button { flex: 1 1 auto; font: inherit; font-size: 12.5px; font-weight: 800; padding: 9px 10px; border-radius: 10px; border: 0; background: var(--navy); color: #fff; cursor: pointer; }
+.sheet { position: fixed; inset: 0; z-index: 60; display: flex; align-items: flex-end; justify-content: center; background: rgba(10,16,26,.55); }
+.sheet[hidden] { display: none; }
+.sheet-panel { width: min(560px, 100%); max-height: 92vh; overflow-y: auto; overscroll-behavior: contain; background: var(--paper); border-radius: 22px 22px 0 0; animation: up .22s ease-out; position: relative; padding-bottom: env(safe-area-inset-bottom, 0px); }
+@keyframes up { from { transform: translateY(40px); opacity: .4; } to { transform: none; opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .sheet-panel { animation: none; } }
+.sheet-grab { position: sticky; top: 0; z-index: 3; display: flex; justify-content: center; padding: 8px 0 4px; }
+.sheet-grab i { width: 42px; height: 5px; border-radius: 3px; background: rgba(255,255,255,.85); box-shadow: 0 0 0 1px rgba(0,0,0,.12); }
+.sheet-x { position: absolute; top: 12px; right: 12px; z-index: 4; width: 36px; height: 36px; border-radius: 50%; border: 0; background: rgba(0,0,0,.55); color: #fff; font-size: 20px; line-height: 1; cursor: pointer; }
+.sh-top { position: relative; margin-top: -21px; height: 210px; background: var(--navy); color: #fff; display: flex; align-items: flex-end; overflow: hidden; }
+.sh-top img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.sh-top::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 35%, rgba(10,16,26,.85)); }
+.sh-top div { position: relative; z-index: 1; padding: 14px 16px; }
+.sh-top small { font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; background: var(--red); }
+.sh-top h3 { font-size: 22px; line-height: 1.15; margin-top: 6px; }
+.sh-top span { font-size: 13px; opacity: .85; }
+.sh-tabs { position: sticky; top: 17px; z-index: 2; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; margin: 0; padding: 8px 12px; background: var(--paper); border-bottom: 1px solid var(--line); }
+.sh-tabs button { font: inherit; font-size: 13px; font-weight: 800; min-height: 38px; border-radius: 999px; border: 0; background: var(--soft); color: var(--ink-soft); cursor: pointer; }
+.sh-tabs button[aria-selected="true"] { background: var(--navy); color: #fff; }
+.sh-pane { padding: 14px 16px 18px; }
+.sh-pane[hidden] { display: none; }
+.sh-lbl { font-size: 11.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); margin: 2px 0 8px; display: flex; justify-content: space-between; align-items: center; }
+.sh-lbl b { font-size: 11px; padding: 2px 8px; border-radius: 999px; background: var(--navy); color: #fff; letter-spacing: 0; }
+.principal { display: grid; grid-template-columns: 74px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 10px; border-radius: 16px; background: var(--card); border: 2px solid var(--navy); text-decoration: none; color: inherit; margin-bottom: 16px; }
+.principal img, .principal .sil { width: 74px; height: 92px; border-radius: 10px; object-fit: cover; object-position: 50% 20%; }
+.principal small { display: block; font-size: 10.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--red); }
+.principal strong { display: block; font-size: 16px; line-height: 1.2; }
+.principal span { font-size: 12.5px; color: var(--ink-soft); }
+.principal em, .fig em { font-style: normal; font-size: 20px; color: var(--red); }
+.figs { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.fig { display: grid; grid-template-rows: auto auto; gap: 6px; padding: 10px; border-radius: 14px; background: var(--card); border: 1px solid var(--line); text-decoration: none; color: inherit; height: 100%; box-sizing: border-box; position: relative; }
+.sil { display: grid; place-items: center; aspect-ratio: 1; border-radius: 10px; background: linear-gradient(180deg, #e9edf3, #d6dce6); color: #9aa6b6; }
+.sil svg { width: 46%; height: 60%; }
+.fig strong { font-size: 13.5px; line-height: 1.2; color: var(--ink); }
+.fig small { display: block; font-size: 11.5px; color: var(--ink-soft); line-height: 1.25; }
+.fig .n { position: absolute; top: 14px; left: 14px; width: 22px; height: 22px; border-radius: 50%; background: var(--navy); color: #fff; font-size: 11px; font-weight: 800; display: grid; place-items: center; }
+.fig em { position: absolute; right: 12px; bottom: 10px; font-size: 16px; }
+.empty { padding: 16px; border-radius: 16px; border: 2px dashed var(--line); text-align: center; display: grid; gap: 8px; justify-items: center; }
+.empty svg { width: 34px; height: 34px; color: #b8c0cc; }
+.empty strong { font-size: 15px; }
+.empty p { font-size: 13px; color: var(--ink-soft); margin: 0; }
+.empty button, .sh-foot button { font: inherit; font-size: 13px; font-weight: 800; padding: 10px 14px; border-radius: 12px; border: 0; background: var(--red); color: #fff; cursor: pointer; }
+.sh-foot { display: grid; gap: 8px; padding: 0 16px 22px; }
+.sh-foot a { display: block; text-align: center; font-size: 14px; font-weight: 800; padding: 12px; border-radius: 12px; background: var(--navy); color: #fff; text-decoration: none; }
+.sh-foot button { background: var(--soft); color: var(--navy); }
+.demo-tag { margin: 0 16px 10px; padding: 8px 10px; border-radius: 10px; background: #fff3cd; color: #7a5a00; font-size: 12.5px; font-weight: 700; }
+.pnl { padding: 14px 16px 20px; }
+.pnl-h { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
+.pnl-h strong { font-size: 17px; color: var(--navy); }
+.pnl-h span { font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 999px; background: #fff3cd; color: #7a5a00; }
+.pnl ol.lst { list-style: none; margin: 0 0 10px; padding: 0; display: grid; gap: 6px; }
+.pnl ol.lst li { display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; gap: 8px; align-items: center; padding: 9px 10px; border-radius: 12px; background: var(--card); border: 1px solid var(--line); }
+.pnl ol.lst li > i { white-space: nowrap; font-style: normal; color: #9aa6b6; font-weight: 800; letter-spacing: -2px; cursor: grab; }
+.pnl ol.lst li strong { display: block; font-size: 13.5px; line-height: 1.2; }
+.pnl ol.lst li small { font-size: 11.5px; color: var(--ink-soft); }
+.pnl select { font: inherit; font-size: 12px; font-weight: 700; padding: 6px 6px; border-radius: 8px; border: 1px solid var(--line); background: var(--soft); max-width: 112px; }
+.pnl .add { display: flex; gap: 6px; }
+.pnl .add input { flex: 1; min-width: 0; font: inherit; font-size: 13px; padding: 10px; border-radius: 10px; border: 1px solid var(--line); }
+.pnl .add button, .pnl .save { font: inherit; font-size: 13px; font-weight: 800; padding: 10px 12px; border-radius: 10px; border: 0; background: var(--navy); color: #fff; }
+.pnl .save { width: 100%; margin-top: 10px; background: var(--red); }
+.pnl ul.why { margin: 12px 0 0; padding-left: 18px; font-size: 12.5px; color: var(--ink-soft); display: grid; gap: 4px; }
+
+/* v10 · aire de aplicación */
+body { padding-bottom: calc(78px + env(safe-area-inset-bottom, 0px)); }
+.top { transition: box-shadow .2s; }
+.top.compact { box-shadow: 0 6px 18px rgba(17,35,57,.08); }
+.mini { display: none; align-items: center; gap: 8px; min-width: 0; text-decoration: none; color: var(--navy); }
+.mini img { width: 30px; height: 30px; object-fit: contain; border-radius: 50%; background: #fff; border: 1px solid var(--line); padding: 2px; }
+.mini.dark img { background: #65121A; border-color: #65121A; }
+.mini span { min-width: 0; }
+.mini b { display: block; max-width: 44vw; font-size: 16px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mini small { display: block; font-size: 11px; font-weight: 700; color: var(--red); line-height: 1; }
+.top.compact .brand { display: none; }
+.top.compact .mini.on { display: flex; }
+[data-screen-el][hidden] { display: none !important; }
+.scr-in { animation: scr .22s ease-out; }
+@keyframes scr { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .scr-in { animation: none; } }
+.scr-head { padding: 18px 16px 6px; }
+.scr-head small { font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--red); }
+.scr-head h2 { font-size: 32px; line-height: 1; letter-spacing: -.035em; color: var(--navy); margin-top: 4px; }
+.scr-head p { font-size: 14px; color: var(--ink-soft); margin: 6px 0 0; }
+.actions { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; padding: 16px 12px 14px; background: var(--card); border-bottom: 8px solid var(--soft); }
+.actions button, .actions a { display: grid; justify-items: center; gap: 6px; border: 0; background: none; font: inherit; font-size: 12px; font-weight: 700; color: var(--navy); cursor: pointer; text-decoration: none; padding: 0; }
+.actions svg { width: 24px; height: 24px; padding: 14px; box-sizing: content-box; border-radius: 50%; background: var(--soft); color: var(--navy); transition: transform .12s; }
+.actions .hot svg { background: var(--red); color: #fff; }
+.actions button:active svg, .actions a:active svg { transform: scale(.9); }
+.group-h { padding: 18px 16px 8px; font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); background: var(--paper); }
+details.fold > summary::after { content: "›"; font-size: 24px; color: #b8c0cc; }
+details.fold[open] > summary::after { content: "›"; }
+details.fold > summary:active { background: var(--soft); }
+.tabbar { position: fixed; left: 50%; bottom: 0; transform: translateX(-50%); z-index: 40; width: min(560px, 100%); display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); padding: 6px 6px calc(6px + env(safe-area-inset-bottom, 0px)); background: rgba(255,253,249,.94); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-top: 1px solid var(--line); }
+.tabbar[hidden] { display: none; }
+.tabbar button { display: grid; justify-items: center; gap: 2px; padding: 6px 0 4px; border: 0; background: none; font: inherit; font-size: 11px; font-weight: 700; color: var(--ink-soft); cursor: pointer; }
+.tabbar svg { width: 24px; height: 24px; padding: 3px 14px; box-sizing: content-box; border-radius: 999px; transition: background .15s, color .15s; }
+.tabbar button[aria-current="page"] { color: var(--navy); }
+.tabbar button[aria-current="page"] svg { background: var(--navy); color: #fff; }
+.node, .bandas-hoy a, .fig, .principal, .nomina li, .knots a, .curios li, .strip a, .pasos > li { transition: transform .12s; }
+.node:active, .bandas-hoy a:active, .fig:active, .principal:active, .knots a:active, .strip a:active { transform: scale(.97); }
+.sh-plain { display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 12px; align-items: center; padding: 6px 60px 14px 16px; border-bottom: 1px solid var(--line); }
+.sh-plain svg { width: 22px; height: 22px; padding: 9px; box-sizing: content-box; border-radius: 12px; background: var(--soft); color: var(--navy); }
+.sh-plain h3 { font-size: 20px; line-height: 1.15; color: var(--navy); }
+.sh-plain span { font-size: 13px; font-weight: 700; color: var(--ink-soft); }
+.sheet-plain .sheet-grab i { background: var(--line); box-shadow: none; }
+.sheet-plain .sheet-x { background: var(--soft); color: var(--navy); }
+.sheet-panel.drag { transition: none; }
+.sheet-panel.back { transition: transform .2s ease-out; }
+details.fold.inline { border-bottom: 8px solid var(--soft); }
+details.fold.inline > summary { cursor: default; grid-template-columns: 38px minmax(0, 1fr) auto; border-bottom: 0; padding-bottom: 4px; }
+details.fold.inline > summary::after { content: none; }
+details.fold.inline > summary strong { font-size: 20px; }
+details.fold.inline > summary:active { background: none; }
+.toast { position: fixed; left: 50%; bottom: calc(90px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 70; padding: 10px 16px; border-radius: 999px; background: var(--navy); color: #fff; font-size: 13px; font-weight: 700; box-shadow: 0 8px 24px rgba(0,0,0,.25); }
+.toast[hidden] { display: none; }
+</style>
+
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="5" r="2.5" fill="currentColor"/><circle cx="18" cy="19" r="2.5" fill="currentColor"/><path d="M6 8v4a4 4 0 0 0 4 4h4a4 4 0 0 1 4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="3 3"/></symbol>
+  <symbol id="i-cortejo" viewBox="0 0 24 24"><path d="M12 2v6M9 4h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M6 22l3-9 3 9M12 22l3-9 3 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  <symbol id="i-titular" viewBox="0 0 24 24"><circle cx="12" cy="7" r="3.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5 22c0-5 3-8 7-8s7 3 7 8" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 3.5a6 6 0 0 1 8 0" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 10h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-music" viewBox="0 0 24 24"><path d="M9 18V5l11-2v13" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="6.5" cy="18" r="2.5" fill="currentColor"/><circle cx="17.5" cy="16" r="2.5" fill="currentColor"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z M4 19V5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 11v6M12 7.5v.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+  <symbol id="i-day" viewBox="0 0 24 24"><circle cx="6" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" fill="currentColor"/><circle cx="18" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+  <symbol id="i-disc" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="2.5" fill="currentColor"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.5" fill="currentColor"/></symbol>
+  <symbol id="i-cross" viewBox="0 0 24 24"><path d="M12 3v18M7 8h10" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+  <symbol id="i-people" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 20c.6-3.6 3-5.5 6-5.5s5.4 1.9 6 5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="17" cy="9" r="2.4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M17 14.5c2.2.2 3.6 1.8 4 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-fig" viewBox="0 0 24 24"><circle cx="12" cy="5.5" r="3.2" fill="currentColor"/><path d="M7 22l1.6-9.5C9 10.3 10.3 9.5 12 9.5s3 .8 3.4 3L17 22z" fill="currentColor"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><path d="M12 15V3M7.5 7.5 12 3l4.5 4.5M5 12v8h14v-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9h-5v-6H9v6H4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+</svg>
+
+<div class="app">
+  <header class="top">
+    <a class="brand" href="#" data-go="h"><i aria-hidden="true"></i><b>Hilo</b><span>Cofrade</span></a><a class="mini" id="mini-h" href="#" data-screen="inicio" data-page="h"><img src="img/crest.png" alt=""><span><small>Martes Santo</small><b>San Benito</b></span></a><a class="mini dark" id="mini-b" href="#" data-screen="inicio" data-page="b"><img src="img/band-logo-s.jpg" alt=""><span><small>CC. TT.</small><b>Sangre de San Benito</b></span></a>
+    <div class="seg" role="group" aria-label="Ficha de ejemplo"><button type="button" id="tab-h" data-go="h" aria-pressed="true">Hermandad</button><button type="button" id="tab-b" data-go="b" aria-pressed="false">Banda</button></div>
+  </header>
+
+  <!-- ============ HERMANDAD ============ -->
+  <main id="page-h">
+    <div class="scr-head" data-scr-head hidden><small>San Benito</small><h2></h2><p></p></div>
+    <section class="hero illus" style="--tint:#1a0d27">
+      <div class="hero-bg" aria-hidden="true"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3ODAgNzAwIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWlkWU1pbiBzbGljZSI+CjxkZWZzPjxyYWRpYWxHcmFkaWVudCBpZD0iZyIgY3g9IjUwJSIgY3k9IjM1JSIgcj0iNzAlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiM0YTJhNmEiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMxYTBkMjciLz48L3JhZGlhbEdyYWRpZW50PjwvZGVmcz4KPHJlY3Qgd2lkdGg9Ijc4MCIgaGVpZ2h0PSI3MDAiIGZpbGw9InVybCgjZykiLz48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLC0yMDApIj4KPGcgb3BhY2l0eT0iMC4zNSI+PHBhdGggZD0iTS05LjAsMzEyLjQgTDYuMSwzMTIuNCBMMTIuNSwzNjAuMCBMLTE1LjQsMzYwLjAgWiIgZmlsbD0iI2YzZWZlOCIvPjxwYXRoIGQ9Ik0tMS41LDMxMy42IEwxMi41LDM2MC4wIEwzLjEsMzYwLjAgWiIgZmlsbD0iI2Q5ZDJjNiIgb3BhY2l0eT0iLjciLz48cmVjdCB4PSItMTAuNiIgeT0iMzMxLjkiIHdpZHRoPSIxOC4yIiBoZWlnaHQ9IjEuOCIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik0tMS41LDI3Ny41IEw3LjIsMzE1LjQgTC0xMC4xLDMxNS40IFoiIGZpbGw9IiM1QjJDODMiLz48cGF0aCBkPSJNLTEwLjEsMzE0LjcgUS0xLjUsMzI0LjkgNy4yLDMxNC43IEw2LjEsMzA3LjkgTC05LjAsMzA3LjkgWiIgZmlsbD0iIzVCMkM4MyIvPjxyZWN0IHg9IjkuMiIgeT0iMjk4LjQiIHdpZHRoPSIxLjkiIGhlaWdodD0iNTEuMSIgcng9IjAuOCIgZmlsbD0iI2VmZTJiOCIvPjxjaXJjbGUgY3g9IjEwLjEiIGN5PSIyOTYuNSIgcj0iMi4yIiBmaWxsPSIjZmZkMjdhIiBvcGFjaXR5PSIuOSIvPjxwYXRoIGQ9Ik0yNy40LDMxMi40IEw0Mi42LDMxMi40IEw0OC45LDM2MC4wIEwyMS4wLDM2MC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNMzUuMCwzMTMuNiBMNDguOSwzNjAuMCBMMzkuNSwzNjAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjI1LjkiIHk9IjMzMS45IiB3aWR0aD0iMTguMiIgaGVpZ2h0PSIxLjgiIGZpbGw9IiM1QjJDODMiLz48cGF0aCBkPSJNMzUuMCwyNzcuNSBMNDMuNiwzMTUuNCBMMjYuNCwzMTUuNCBaIiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTI2LjQsMzE0LjcgUTM1LjAsMzI0LjkgNDMuNiwzMTQuNyBMNDIuNiwzMDcuOSBMMjcuNCwzMDcuOSBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iNDUuNiIgeT0iMjk4LjQiIHdpZHRoPSIxLjkiIGhlaWdodD0iNTEuMSIgcng9IjAuOCIgZmlsbD0iI2VmZTJiOCIvPjxjaXJjbGUgY3g9IjQ2LjUiIGN5PSIyOTYuNSIgcj0iMi4yIiBmaWxsPSIjZmZkMjdhIiBvcGFjaXR5PSIuOSIvPjxwYXRoIGQ9Ik02Ni4xLDMxMi40IEw4MS4zLDMxMi40IEw4Ny42LDM2MC4wIEw1OS44LDM2MC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNNzMuNywzMTMuNiBMODcuNiwzNjAuMCBMNzguMywzNjAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjY0LjYiIHk9IjMzMS45IiB3aWR0aD0iMTguMiIgaGVpZ2h0PSIxLjgiIGZpbGw9IiM1QjJDODMiLz48cGF0aCBkPSJNNzMuNywyNzcuNSBMODIuMywzMTUuNCBMNjUuMSwzMTUuNCBaIiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTY1LjEsMzE0LjcgUTczLjcsMzI0LjkgODIuMywzMTQuNyBMODEuMywzMDcuOSBMNjYuMSwzMDcuOSBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iODQuMyIgeT0iMjk4LjQiIHdpZHRoPSIxLjkiIGhlaWdodD0iNTEuMSIgcng9IjAuOCIgZmlsbD0iI2VmZTJiOCIvPjxjaXJjbGUgY3g9Ijg1LjMiIGN5PSIyOTYuNSIgcj0iMi4yIiBmaWxsPSIjZmZkMjdhIiBvcGFjaXR5PSIuOSIvPjxwYXRoIGQ9Ik0xMDEuOSwzMTIuNCBMMTE3LjEsMzEyLjQgTDEyMy40LDM2MC4wIEw5NS42LDM2MC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNMTA5LjUsMzEzLjYgTDEyMy40LDM2MC4wIEwxMTQuMSwzNjAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjEwMC40IiB5PSIzMzEuOSIgd2lkdGg9IjE4LjIiIGhlaWdodD0iMS44IiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTEwOS41LDI3Ny41IEwxMTguMSwzMTUuNCBMMTAwLjksMzE1LjQgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik0xMDAuOSwzMTQuNyBRMTA5LjUsMzI0LjkgMTE4LjEsMzE0LjcgTDExNy4xLDMwNy45IEwxMDEuOSwzMDcuOSBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iMTIwLjIiIHk9IjI5OC40IiB3aWR0aD0iMS45IiBoZWlnaHQ9IjUxLjEiIHJ4PSIwLjgiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSIxMjEuMSIgY3k9IjI5Ni41IiByPSIyLjIiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTEzOC42LDMxMi40IEwxNTMuOCwzMTIuNCBMMTYwLjEsMzYwLjAgTDEzMi4zLDM2MC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNMTQ2LjIsMzEzLjYgTDE2MC4xLDM2MC4wIEwxNTAuNywzNjAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjEzNy4xIiB5PSIzMzEuOSIgd2lkdGg9IjE4LjIiIGhlaWdodD0iMS44IiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTE0Ni4yLDI3Ny41IEwxNTQuOCwzMTUuNCBMMTM3LjYsMzE1LjQgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik0xMzcuNiwzMTQuNyBRMTQ2LjIsMzI0LjkgMTU0LjgsMzE0LjcgTDE1My44LDMwNy45IEwxMzguNiwzMDcuOSBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iMTU2LjgiIHk9IjI5OC40IiB3aWR0aD0iMS45IiBoZWlnaHQ9IjUxLjEiIHJ4PSIwLjgiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSIxNTcuNyIgY3k9IjI5Ni41IiByPSIyLjIiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTE3Ny42LDMxMi40IEwxOTIuOCwzMTIuNCBMMTk5LjEsMzYwLjAgTDE3MS4zLDM2MC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNMTg1LjIsMzEzLjYgTDE5OS4xLDM2MC4wIEwxODkuNywzNjAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjE3Ni4xIiB5PSIzMzEuOSIgd2lkdGg9IjE4LjIiIGhlaWdodD0iMS44IiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTE4NS4yLDI3Ny41IEwxOTMuOCwzMTUuNCBMMTc2LjYsMzE1LjQgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik0xNzYuNiwzMTQuNyBRMTg1LjIsMzI0LjkgMTkzLjgsMzE0LjcgTDE5Mi44LDMwNy45IEwxNzcuNiwzMDcuOSBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iMTk1LjgiIHk9IjI5OC40IiB3aWR0aD0iMS45IiBoZWlnaHQ9IjUxLjEiIHJ4PSIwLjgiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSIxOTYuNyIgY3k9IjI5Ni41IiByPSIyLjIiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTIxNy42LDMxMi40IEwyMzIuNywzMTIuNCBMMjM5LjEsMzYwLjAgTDIxMS4yLDM2MC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNMjI1LjIsMzEzLjYgTDIzOS4xLDM2MC4wIEwyMjkuNywzNjAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjIxNi4wIiB5PSIzMzEuOSIgd2lkdGg9IjE4LjIiIGhlaWdodD0iMS44IiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTIyNS4yLDI3Ny41IEwyMzMuOCwzMTUuNCBMMjE2LjYsMzE1LjQgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik0yMTYuNiwzMTQuNyBRMjI1LjIsMzI0LjkgMjMzLjgsMzE0LjcgTDIzMi43LDMwNy45IEwyMTcuNiwzMDcuOSBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iMjM1LjgiIHk9IjI5OC40IiB3aWR0aD0iMS45IiBoZWlnaHQ9IjUxLjEiIHJ4PSIwLjgiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSIyMzYuNyIgY3k9IjI5Ni41IiByPSIyLjIiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTI1NC4xLDMxMi40IEwyNjkuMiwzMTIuNCBMMjc1LjYsMzYwLjAgTDI0Ny43LDM2MC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNMjYxLjcsMzEzLjYgTDI3NS42LDM2MC4wIEwyNjYuMiwzNjAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjI1Mi41IiB5PSIzMzEuOSIgd2lkdGg9IjE4LjIiIGhlaWdodD0iMS44IiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTI2MS43LDI3Ny41IEwyNzAuMywzMTUuNCBMMjUzLjEsMzE1LjQgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik0yNTMuMSwzMTQuNyBRMjYxLjcsMzI0LjkgMjcwLjMsMzE0LjcgTDI2OS4yLDMwNy45IEwyNTQuMSwzMDcuOSBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iMjcyLjMiIHk9IjI5OC40IiB3aWR0aD0iMS45IiBoZWlnaHQ9IjUxLjEiIHJ4PSIwLjgiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSIyNzMuMiIgY3k9IjI5Ni41IiByPSIyLjIiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTI5MS4wLDMxMi40IEwzMDYuMiwzMTIuNCBMMzEyLjUsMzYwLjAgTDI4NC43LDM2MC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNMjk4LjYsMzEzLjYgTDMxMi41LDM2MC4wIEwzMDMuMiwzNjAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjI4OS41IiB5PSIzMzEuOSIgd2lkdGg9IjE4LjIiIGhlaWdodD0iMS44IiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTI5OC42LDI3Ny41IEwzMDcuMiwzMTUuNCBMMjkwLjAsMzE1LjQgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik0yOTAuMCwzMTQuNyBRMjk4LjYsMzI0LjkgMzA3LjIsMzE0LjcgTDMwNi4yLDMwNy45IEwyOTEuMCwzMDcuOSBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iMzA5LjIiIHk9IjI5OC40IiB3aWR0aD0iMS45IiBoZWlnaHQ9IjUxLjEiIHJ4PSIwLjgiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSIzMTAuMiIgY3k9IjI5Ni41IiByPSIyLjIiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTMyNS4yLDMxMi40IEwzNDAuMywzMTIuNCBMMzQ2LjcsMzYwLjAgTDMxOC44LDM2MC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNMzMyLjgsMzEzLjYgTDM0Ni43LDM2MC4wIEwzMzcuMywzNjAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjMyMy42IiB5PSIzMzEuOSIgd2lkdGg9IjE4LjIiIGhlaWdodD0iMS44IiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTMzMi44LDI3Ny41IEwzNDEuNCwzMTUuNCBMMzI0LjIsMzE1LjQgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik0zMjQuMiwzMTQuNyBRMzMyLjgsMzI0LjkgMzQxLjQsMzE0LjcgTDM0MC4zLDMwNy45IEwzMjUuMiwzMDcuOSBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iMzQzLjQiIHk9IjI5OC40IiB3aWR0aD0iMS45IiBoZWlnaHQ9IjUxLjEiIHJ4PSIwLjgiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSIzNDQuMyIgY3k9IjI5Ni41IiByPSIyLjIiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTM2NC4wLDMxMi40IEwzNzkuMiwzMTIuNCBMMzg1LjUsMzYwLjAgTDM1Ny43LDM2MC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNMzcxLjYsMzEzLjYgTDM4NS41LDM2MC4wIEwzNzYuMiwzNjAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjM2Mi41IiB5PSIzMzEuOSIgd2lkdGg9IjE4LjIiIGhlaWdodD0iMS44IiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTM3MS42LDI3Ny41IEwzODAuMiwzMTUuNCBMMzYzLjAsMzE1LjQgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik0zNjMuMCwzMTQuNyBRMzcxLjYsMzI0LjkgMzgwLjIsMzE0LjcgTDM3OS4yLDMwNy45IEwzNjQuMCwzMDcuOSBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iMzgyLjMiIHk9IjI5OC40IiB3aWR0aD0iMS45IiBoZWlnaHQ9IjUxLjEiIHJ4PSIwLjgiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSIzODMuMiIgY3k9IjI5Ni41IiByPSIyLjIiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTM5OS44LDMxMi40IEw0MTQuOSwzMTIuNCBMNDIxLjMsMzYwLjAgTDM5My40LDM2MC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNNDA3LjMsMzEzLjYgTDQyMS4zLDM2MC4wIEw0MTEuOSwzNjAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjM5OC4yIiB5PSIzMzEuOSIgd2lkdGg9IjE4LjIiIGhlaWdodD0iMS44IiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTQwNy4zLDI3Ny41IEw0MTUuOSwzMTUuNCBMMzk4LjcsMzE1LjQgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik0zOTguNywzMTQuNyBRNDA3LjMsMzI0LjkgNDE1LjksMzE0LjcgTDQxNC45LDMwNy45IEwzOTkuOCwzMDcuOSBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iNDE4LjAiIHk9IjI5OC40IiB3aWR0aD0iMS45IiBoZWlnaHQ9IjUxLjEiIHJ4PSIwLjgiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSI0MTguOSIgY3k9IjI5Ni41IiByPSIyLjIiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTQzNi4zLDMxMi40IEw0NTEuNSwzMTIuNCBMNDU3LjgsMzYwLjAgTDQzMC4wLDM2MC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNNDQzLjksMzEzLjYgTDQ1Ny44LDM2MC4wIEw0NDguNSwzNjAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjQzNC44IiB5PSIzMzEuOSIgd2lkdGg9IjE4LjIiIGhlaWdodD0iMS44IiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTQ0My45LDI3Ny41IEw0NTIuNSwzMTUuNCBMNDM1LjMsMzE1LjQgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik00MzUuMywzMTQuNyBRNDQzLjksMzI0LjkgNDUyLjUsMzE0LjcgTDQ1MS41LDMwNy45IEw0MzYuMywzMDcuOSBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iNDU0LjUiIHk9IjI5OC40IiB3aWR0aD0iMS45IiBoZWlnaHQ9IjUxLjEiIHJ4PSIwLjgiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSI0NTUuNSIgY3k9IjI5Ni41IiByPSIyLjIiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTQ3My4xLDMxMi40IEw0ODguMywzMTIuNCBMNDk0LjYsMzYwLjAgTDQ2Ni44LDM2MC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNNDgwLjcsMzEzLjYgTDQ5NC42LDM2MC4wIEw0ODUuMiwzNjAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjQ3MS42IiB5PSIzMzEuOSIgd2lkdGg9IjE4LjIiIGhlaWdodD0iMS44IiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTQ4MC43LDI3Ny41IEw0ODkuMywzMTUuNCBMNDcyLjEsMzE1LjQgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik00NzIuMSwzMTQuNyBRNDgwLjcsMzI0LjkgNDg5LjMsMzE0LjcgTDQ4OC4zLDMwNy45IEw0NzMuMSwzMDcuOSBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iNDkxLjMiIHk9IjI5OC40IiB3aWR0aD0iMS45IiBoZWlnaHQ9IjUxLjEiIHJ4PSIwLjgiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSI0OTIuMyIgY3k9IjI5Ni41IiByPSIyLjIiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTUxMC44LDMxMi40IEw1MjYuMCwzMTIuNCBMNTMyLjMsMzYwLjAgTDUwNC41LDM2MC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNNTE4LjQsMzEzLjYgTDUzMi4zLDM2MC4wIEw1MjMuMCwzNjAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjUwOS4zIiB5PSIzMzEuOSIgd2lkdGg9IjE4LjIiIGhlaWdodD0iMS44IiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTUxOC40LDI3Ny41IEw1MjcuMCwzMTUuNCBMNTA5LjgsMzE1LjQgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik01MDkuOCwzMTQuNyBRNTE4LjQsMzI0LjkgNTI3LjAsMzE0LjcgTDUyNi4wLDMwNy45IEw1MTAuOCwzMDcuOSBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iNTI5LjEiIHk9IjI5OC40IiB3aWR0aD0iMS45IiBoZWlnaHQ9IjUxLjEiIHJ4PSIwLjgiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSI1MzAuMCIgY3k9IjI5Ni41IiByPSIyLjIiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTU1MS45LDMxMi40IEw1NjcuMSwzMTIuNCBMNTczLjQsMzYwLjAgTDU0NS42LDM2MC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNNTU5LjUsMzEzLjYgTDU3My40LDM2MC4wIEw1NjQuMCwzNjAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjU1MC40IiB5PSIzMzEuOSIgd2lkdGg9IjE4LjIiIGhlaWdodD0iMS44IiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTU1OS41LDI3Ny41IEw1NjguMSwzMTUuNCBMNTUwLjksMzE1LjQgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik01NTAuOSwzMTQuNyBRNTU5LjUsMzI0LjkgNTY4LjEsMzE0LjcgTDU2Ny4xLDMwNy45IEw1NTEuOSwzMDcuOSBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iNTcwLjEiIHk9IjI5OC40IiB3aWR0aD0iMS45IiBoZWlnaHQ9IjUxLjEiIHJ4PSIwLjgiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSI1NzEuMSIgY3k9IjI5Ni41IiByPSIyLjIiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTU4OC41LDMxMi40IEw2MDMuNywzMTIuNCBMNjEwLjAsMzYwLjAgTDU4Mi4yLDM2MC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNNTk2LjEsMzEzLjYgTDYxMC4wLDM2MC4wIEw2MDAuNiwzNjAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjU4Ny4wIiB5PSIzMzEuOSIgd2lkdGg9IjE4LjIiIGhlaWdodD0iMS44IiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTU5Ni4xLDI3Ny41IEw2MDQuNywzMTUuNCBMNTg3LjUsMzE1LjQgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik01ODcuNSwzMTQuNyBRNTk2LjEsMzI0LjkgNjA0LjcsMzE0LjcgTDYwMy43LDMwNy45IEw1ODguNSwzMDcuOSBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iNjA2LjciIHk9IjI5OC40IiB3aWR0aD0iMS45IiBoZWlnaHQ9IjUxLjEiIHJ4PSIwLjgiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSI2MDcuNyIgY3k9IjI5Ni41IiByPSIyLjIiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTYyNS41LDMxMi40IEw2NDAuNywzMTIuNCBMNjQ3LjAsMzYwLjAgTDYxOS4yLDM2MC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNNjMzLjEsMzEzLjYgTDY0Ny4wLDM2MC4wIEw2MzcuNywzNjAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjYyNC4wIiB5PSIzMzEuOSIgd2lkdGg9IjE4LjIiIGhlaWdodD0iMS44IiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTYzMy4xLDI3Ny41IEw2NDEuNywzMTUuNCBMNjI0LjUsMzE1LjQgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik02MjQuNSwzMTQuNyBRNjMzLjEsMzI0LjkgNjQxLjcsMzE0LjcgTDY0MC43LDMwNy45IEw2MjUuNSwzMDcuOSBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iNjQzLjciIHk9IjI5OC40IiB3aWR0aD0iMS45IiBoZWlnaHQ9IjUxLjEiIHJ4PSIwLjgiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSI2NDQuNyIgY3k9IjI5Ni41IiByPSIyLjIiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTY2Mi42LDMxMi40IEw2NzcuOCwzMTIuNCBMNjg0LjEsMzYwLjAgTDY1Ni4zLDM2MC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNNjcwLjIsMzEzLjYgTDY4NC4xLDM2MC4wIEw2NzQuOCwzNjAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjY2MS4xIiB5PSIzMzEuOSIgd2lkdGg9IjE4LjIiIGhlaWdodD0iMS44IiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTY3MC4yLDI3Ny41IEw2NzguOCwzMTUuNCBMNjYxLjYsMzE1LjQgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik02NjEuNiwzMTQuNyBRNjcwLjIsMzI0LjkgNjc4LjgsMzE0LjcgTDY3Ny44LDMwNy45IEw2NjIuNiwzMDcuOSBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iNjgwLjgiIHk9IjI5OC40IiB3aWR0aD0iMS45IiBoZWlnaHQ9IjUxLjEiIHJ4PSIwLjgiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSI2ODEuOCIgY3k9IjI5Ni41IiByPSIyLjIiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTY5Ni40LDMxMi40IEw3MTEuNiwzMTIuNCBMNzE3LjksMzYwLjAgTDY5MC4xLDM2MC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNNzA0LjAsMzEzLjYgTDcxNy45LDM2MC4wIEw3MDguNiwzNjAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjY5NC45IiB5PSIzMzEuOSIgd2lkdGg9IjE4LjIiIGhlaWdodD0iMS44IiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTcwNC4wLDI3Ny41IEw3MTIuNiwzMTUuNCBMNjk1LjQsMzE1LjQgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik02OTUuNCwzMTQuNyBRNzA0LjAsMzI0LjkgNzEyLjYsMzE0LjcgTDcxMS42LDMwNy45IEw2OTYuNCwzMDcuOSBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iNzE0LjciIHk9IjI5OC40IiB3aWR0aD0iMS45IiBoZWlnaHQ9IjUxLjEiIHJ4PSIwLjgiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSI3MTUuNiIgY3k9IjI5Ni41IiByPSIyLjIiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTczNC4yLDMxMi40IEw3NDkuNCwzMTIuNCBMNzU1LjcsMzYwLjAgTDcyNy45LDM2MC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNNzQxLjgsMzEzLjYgTDc1NS43LDM2MC4wIEw3NDYuNCwzNjAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjczMi43IiB5PSIzMzEuOSIgd2lkdGg9IjE4LjIiIGhlaWdodD0iMS44IiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTc0MS44LDI3Ny41IEw3NTAuNCwzMTUuNCBMNzMzLjIsMzE1LjQgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik03MzMuMiwzMTQuNyBRNzQxLjgsMzI0LjkgNzUwLjQsMzE0LjcgTDc0OS40LDMwNy45IEw3MzQuMiwzMDcuOSBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iNzUyLjQiIHk9IjI5OC40IiB3aWR0aD0iMS45IiBoZWlnaHQ9IjUxLjEiIHJ4PSIwLjgiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSI3NTMuNCIgY3k9IjI5Ni41IiByPSIyLjIiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTc3My4xLDMxMi40IEw3ODguMywzMTIuNCBMNzk0LjYsMzYwLjAgTDc2Ni44LDM2MC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNNzgwLjcsMzEzLjYgTDc5NC42LDM2MC4wIEw3ODUuMywzNjAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9Ijc3MS42IiB5PSIzMzEuOSIgd2lkdGg9IjE4LjIiIGhlaWdodD0iMS44IiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTc4MC43LDI3Ny41IEw3ODkuMywzMTUuNCBMNzcyLjEsMzE1LjQgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik03NzIuMSwzMTQuNyBRNzgwLjcsMzI0LjkgNzg5LjMsMzE0LjcgTDc4OC4zLDMwNy45IEw3NzMuMSwzMDcuOSBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iNzkxLjMiIHk9IjI5OC40IiB3aWR0aD0iMS45IiBoZWlnaHQ9IjUxLjEiIHJ4PSIwLjgiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSI3OTIuMyIgY3k9IjI5Ni41IiByPSIyLjIiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PC9nPjxnIG9wYWNpdHk9IjAuNSI+PHBhdGggZD0iTS0yOC42LDM2NS4xIEwtNy45LDM2NS4xIEwwLjcsNDMwLjAgTC0zNy4yLDQzMC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNLTE4LjMsMzY2LjcgTDAuNyw0MzAuMCBMLTEyLjEsNDMwLjAgWiIgZmlsbD0iI2Q5ZDJjNiIgb3BhY2l0eT0iLjciLz48cmVjdCB4PSItMzAuNyIgeT0iMzkxLjgiIHdpZHRoPSIyNC44IiBoZWlnaHQ9IjIuNCIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik0tMTguMywzMTcuNSBMLTYuNSwzNjkuMiBMLTMwLjAsMzY5LjIgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik0tMzAuMCwzNjguMiBRLTE4LjMsMzgyLjIgLTYuNSwzNjguMiBMLTcuOSwzNTguOSBMLTI4LjYsMzU4LjkgWiIgZmlsbD0iIzVCMkM4MyIvPjxyZWN0IHg9Ii0zLjgiIHk9IjM0Ni4wIiB3aWR0aD0iMi41IiBoZWlnaHQ9IjY5LjgiIHJ4PSIxLjEiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSItMi41IiBjeT0iMzQzLjQiIHI9IjMuMCIgZmlsbD0iI2ZmZDI3YSIgb3BhY2l0eT0iLjkiLz48cGF0aCBkPSJNMjQuMywzNjUuMSBMNDUuMCwzNjUuMSBMNTMuNiw0MzAuMCBMMTUuNyw0MzAuMCBaIiBmaWxsPSIjZjNlZmU4Ii8+PHBhdGggZD0iTTM0LjcsMzY2LjcgTDUzLjYsNDMwLjAgTDQwLjksNDMwLjAgWiIgZmlsbD0iI2Q5ZDJjNiIgb3BhY2l0eT0iLjciLz48cmVjdCB4PSIyMi4yIiB5PSIzOTEuOCIgd2lkdGg9IjI0LjgiIGhlaWdodD0iMi40IiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTM0LjcsMzE3LjUgTDQ2LjQsMzY5LjIgTDIyLjksMzY5LjIgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik0yMi45LDM2OC4yIFEzNC43LDM4Mi4yIDQ2LjQsMzY4LjIgTDQ1LjAsMzU4LjkgTDI0LjMsMzU4LjkgWiIgZmlsbD0iIzVCMkM4MyIvPjxyZWN0IHg9IjQ5LjEiIHk9IjM0Ni4wIiB3aWR0aD0iMi41IiBoZWlnaHQ9IjY5LjgiIHJ4PSIxLjEiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSI1MC40IiBjeT0iMzQzLjQiIHI9IjMuMCIgZmlsbD0iI2ZmZDI3YSIgb3BhY2l0eT0iLjkiLz48cGF0aCBkPSJNNzYuNSwzNjUuMSBMOTcuMiwzNjUuMSBMMTA1LjgsNDMwLjAgTDY3LjksNDMwLjAgWiIgZmlsbD0iI2YzZWZlOCIvPjxwYXRoIGQ9Ik04Ni45LDM2Ni43IEwxMDUuOCw0MzAuMCBMOTMuMSw0MzAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9Ijc0LjQiIHk9IjM5MS44IiB3aWR0aD0iMjQuOCIgaGVpZ2h0PSIyLjQiIGZpbGw9IiM1QjJDODMiLz48cGF0aCBkPSJNODYuOSwzMTcuNSBMOTguNiwzNjkuMiBMNzUuMSwzNjkuMiBaIiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTc1LjEsMzY4LjIgUTg2LjksMzgyLjIgOTguNiwzNjguMiBMOTcuMiwzNTguOSBMNzYuNSwzNTguOSBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iMTAxLjMiIHk9IjM0Ni4wIiB3aWR0aD0iMi41IiBoZWlnaHQ9IjY5LjgiIHJ4PSIxLjEiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSIxMDIuNiIgY3k9IjM0My40IiByPSIzLjAiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTEyMi42LDM2NS4xIEwxNDMuMywzNjUuMSBMMTUxLjksNDMwLjAgTDExMy45LDQzMC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNMTMyLjksMzY2LjcgTDE1MS45LDQzMC4wIEwxMzkuMSw0MzAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjEyMC41IiB5PSIzOTEuOCIgd2lkdGg9IjI0LjgiIGhlaWdodD0iMi40IiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTEzMi45LDMxNy41IEwxNDQuNiwzNjkuMiBMMTIxLjIsMzY5LjIgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik0xMjEuMiwzNjguMiBRMTMyLjksMzgyLjIgMTQ0LjYsMzY4LjIgTDE0My4zLDM1OC45IEwxMjIuNiwzNTguOSBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iMTQ3LjQiIHk9IjM0Ni4wIiB3aWR0aD0iMi41IiBoZWlnaHQ9IjY5LjgiIHJ4PSIxLjEiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSIxNDguNyIgY3k9IjM0My40IiByPSIzLjAiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTE3OC40LDM2NS4xIEwxOTkuMSwzNjUuMSBMMjA3LjgsNDMwLjAgTDE2OS44LDQzMC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNMTg4LjgsMzY2LjcgTDIwNy44LDQzMC4wIEwxOTUuMCw0MzAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjE3Ni40IiB5PSIzOTEuOCIgd2lkdGg9IjI0LjgiIGhlaWdodD0iMi40IiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTE4OC44LDMxNy41IEwyMDAuNSwzNjkuMiBMMTc3LjEsMzY5LjIgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik0xNzcuMSwzNjguMiBRMTg4LjgsMzgyLjIgMjAwLjUsMzY4LjIgTDE5OS4xLDM1OC45IEwxNzguNCwzNTguOSBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iMjAzLjMiIHk9IjM0Ni4wIiB3aWR0aD0iMi41IiBoZWlnaHQ9IjY5LjgiIHJ4PSIxLjEiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSIyMDQuNiIgY3k9IjM0My40IiByPSIzLjAiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTIzMC45LDM2NS4xIEwyNTEuNiwzNjUuMSBMMjYwLjMsNDMwLjAgTDIyMi4zLDQzMC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNMjQxLjMsMzY2LjcgTDI2MC4zLDQzMC4wIEwyNDcuNSw0MzAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjIyOC45IiB5PSIzOTEuOCIgd2lkdGg9IjI0LjgiIGhlaWdodD0iMi40IiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTI0MS4zLDMxNy41IEwyNTMuMCwzNjkuMiBMMjI5LjYsMzY5LjIgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik0yMjkuNiwzNjguMiBRMjQxLjMsMzgyLjIgMjUzLjAsMzY4LjIgTDI1MS42LDM1OC45IEwyMzAuOSwzNTguOSBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iMjU1LjgiIHk9IjM0Ni4wIiB3aWR0aD0iMi41IiBoZWlnaHQ9IjY5LjgiIHJ4PSIxLjEiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSIyNTcuMSIgY3k9IjM0My40IiByPSIzLjAiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTI4MS43LDM2NS4xIEwzMDIuNCwzNjUuMSBMMzExLjAsNDMwLjAgTDI3My4xLDQzMC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNMjkyLjAsMzY2LjcgTDMxMS4wLDQzMC4wIEwyOTguMyw0MzAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjI3OS42IiB5PSIzOTEuOCIgd2lkdGg9IjI0LjgiIGhlaWdodD0iMi40IiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTI5Mi4wLDMxNy41IEwzMDMuOCwzNjkuMiBMMjgwLjMsMzY5LjIgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik0yODAuMywzNjguMiBRMjkyLjAsMzgyLjIgMzAzLjgsMzY4LjIgTDMwMi40LDM1OC45IEwyODEuNywzNTguOSBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iMzA2LjUiIHk9IjM0Ni4wIiB3aWR0aD0iMi41IiBoZWlnaHQ9IjY5LjgiIHJ4PSIxLjEiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSIzMDcuOCIgY3k9IjM0My40IiByPSIzLjAiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTMzMS4yLDM2NS4xIEwzNTEuOSwzNjUuMSBMMzYwLjYsNDMwLjAgTDMyMi42LDQzMC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNMzQxLjYsMzY2LjcgTDM2MC42LDQzMC4wIEwzNDcuOCw0MzAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjMyOS4yIiB5PSIzOTEuOCIgd2lkdGg9IjI0LjgiIGhlaWdodD0iMi40IiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTM0MS42LDMxNy41IEwzNTMuMywzNjkuMiBMMzI5LjksMzY5LjIgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik0zMjkuOSwzNjguMiBRMzQxLjYsMzgyLjIgMzUzLjMsMzY4LjIgTDM1MS45LDM1OC45IEwzMzEuMiwzNTguOSBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iMzU2LjEiIHk9IjM0Ni4wIiB3aWR0aD0iMi41IiBoZWlnaHQ9IjY5LjgiIHJ4PSIxLjEiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSIzNTcuMyIgY3k9IjM0My40IiByPSIzLjAiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTM4NS41LDM2NS4xIEw0MDYuMiwzNjUuMSBMNDE0LjgsNDMwLjAgTDM3Ni44LDQzMC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNMzk1LjgsMzY2LjcgTDQxNC44LDQzMC4wIEw0MDIuMCw0MzAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjM4My40IiB5PSIzOTEuOCIgd2lkdGg9IjI0LjgiIGhlaWdodD0iMi40IiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTM5NS44LDMxNy41IEw0MDcuNSwzNjkuMiBMMzg0LjEsMzY5LjIgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik0zODQuMSwzNjguMiBRMzk1LjgsMzgyLjIgNDA3LjUsMzY4LjIgTDQwNi4yLDM1OC45IEwzODUuNSwzNTguOSBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iNDEwLjMiIHk9IjM0Ni4wIiB3aWR0aD0iMi41IiBoZWlnaHQ9IjY5LjgiIHJ4PSIxLjEiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSI0MTEuNiIgY3k9IjM0My40IiByPSIzLjAiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTQzNC42LDM2NS4xIEw0NTUuMywzNjUuMSBMNDYzLjksNDMwLjAgTDQyNS45LDQzMC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNNDQ0LjksMzY2LjcgTDQ2My45LDQzMC4wIEw0NTEuMSw0MzAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjQzMi41IiB5PSIzOTEuOCIgd2lkdGg9IjI0LjgiIGhlaWdodD0iMi40IiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTQ0NC45LDMxNy41IEw0NTYuNywzNjkuMiBMNDMzLjIsMzY5LjIgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik00MzMuMiwzNjguMiBRNDQ0LjksMzgyLjIgNDU2LjcsMzY4LjIgTDQ1NS4zLDM1OC45IEw0MzQuNiwzNTguOSBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iNDU5LjQiIHk9IjM0Ni4wIiB3aWR0aD0iMi41IiBoZWlnaHQ9IjY5LjgiIHJ4PSIxLjEiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSI0NjAuNyIgY3k9IjM0My40IiByPSIzLjAiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTQ5Mi45LDM2NS4xIEw1MTMuNiwzNjUuMSBMNTIyLjIsNDMwLjAgTDQ4NC4zLDQzMC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNNTAzLjMsMzY2LjcgTDUyMi4yLDQzMC4wIEw1MDkuNSw0MzAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjQ5MC44IiB5PSIzOTEuOCIgd2lkdGg9IjI0LjgiIGhlaWdodD0iMi40IiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTUwMy4zLDMxNy41IEw1MTUuMCwzNjkuMiBMNDkxLjUsMzY5LjIgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik00OTEuNSwzNjguMiBRNTAzLjMsMzgyLjIgNTE1LjAsMzY4LjIgTDUxMy42LDM1OC45IEw0OTIuOSwzNTguOSBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iNTE3LjciIHk9IjM0Ni4wIiB3aWR0aD0iMi41IiBoZWlnaHQ9IjY5LjgiIHJ4PSIxLjEiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSI1MTkuMCIgY3k9IjM0My40IiByPSIzLjAiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTU0NC40LDM2NS4xIEw1NjUuMSwzNjUuMSBMNTczLjcsNDMwLjAgTDUzNS44LDQzMC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNNTU0LjcsMzY2LjcgTDU3My43LDQzMC4wIEw1NjEuMCw0MzAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjU0Mi4zIiB5PSIzOTEuOCIgd2lkdGg9IjI0LjgiIGhlaWdodD0iMi40IiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTU1NC43LDMxNy41IEw1NjYuNSwzNjkuMiBMNTQzLjAsMzY5LjIgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik01NDMuMCwzNjguMiBRNTU0LjcsMzgyLjIgNTY2LjUsMzY4LjIgTDU2NS4xLDM1OC45IEw1NDQuNCwzNTguOSBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iNTY5LjIiIHk9IjM0Ni4wIiB3aWR0aD0iMi41IiBoZWlnaHQ9IjY5LjgiIHJ4PSIxLjEiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSI1NzAuNSIgY3k9IjM0My40IiByPSIzLjAiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTU5NC4wLDM2NS4xIEw2MTQuNywzNjUuMSBMNjIzLjMsNDMwLjAgTDU4NS40LDQzMC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNNjA0LjQsMzY2LjcgTDYyMy4zLDQzMC4wIEw2MTAuNiw0MzAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjU5MS45IiB5PSIzOTEuOCIgd2lkdGg9IjI0LjgiIGhlaWdodD0iMi40IiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTYwNC40LDMxNy41IEw2MTYuMSwzNjkuMiBMNTkyLjYsMzY5LjIgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik01OTIuNiwzNjguMiBRNjA0LjQsMzgyLjIgNjE2LjEsMzY4LjIgTDYxNC43LDM1OC45IEw1OTQuMCwzNTguOSBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iNjE4LjgiIHk9IjM0Ni4wIiB3aWR0aD0iMi41IiBoZWlnaHQ9IjY5LjgiIHJ4PSIxLjEiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSI2MjAuMSIgY3k9IjM0My40IiByPSIzLjAiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTY0NC4yLDM2NS4xIEw2NjQuOSwzNjUuMSBMNjczLjUsNDMwLjAgTDYzNS41LDQzMC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNNjU0LjUsMzY2LjcgTDY3My41LDQzMC4wIEw2NjAuNyw0MzAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjY0Mi4xIiB5PSIzOTEuOCIgd2lkdGg9IjI0LjgiIGhlaWdodD0iMi40IiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTY1NC41LDMxNy41IEw2NjYuMiwzNjkuMiBMNjQyLjgsMzY5LjIgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik02NDIuOCwzNjguMiBRNjU0LjUsMzgyLjIgNjY2LjIsMzY4LjIgTDY2NC45LDM1OC45IEw2NDQuMiwzNTguOSBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iNjY5LjAiIHk9IjM0Ni4wIiB3aWR0aD0iMi41IiBoZWlnaHQ9IjY5LjgiIHJ4PSIxLjEiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSI2NzAuMyIgY3k9IjM0My40IiByPSIzLjAiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTcwMC43LDM2NS4xIEw3MjEuNCwzNjUuMSBMNzMwLjAsNDMwLjAgTDY5Mi4xLDQzMC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNNzExLjEsMzY2LjcgTDczMC4wLDQzMC4wIEw3MTcuMyw0MzAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjY5OC42IiB5PSIzOTEuOCIgd2lkdGg9IjI0LjgiIGhlaWdodD0iMi40IiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTcxMS4xLDMxNy41IEw3MjIuOCwzNjkuMiBMNjk5LjMsMzY5LjIgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik02OTkuMywzNjguMiBRNzExLjEsMzgyLjIgNzIyLjgsMzY4LjIgTDcyMS40LDM1OC45IEw3MDAuNywzNTguOSBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iNzI1LjYiIHk9IjM0Ni4wIiB3aWR0aD0iMi41IiBoZWlnaHQ9IjY5LjgiIHJ4PSIxLjEiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSI3MjYuOCIgY3k9IjM0My40IiByPSIzLjAiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTc1MC4yLDM2NS4xIEw3NzAuOSwzNjUuMSBMNzc5LjUsNDMwLjAgTDc0MS42LDQzMC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNNzYwLjUsMzY2LjcgTDc3OS41LDQzMC4wIEw3NjYuOCw0MzAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9Ijc0OC4xIiB5PSIzOTEuOCIgd2lkdGg9IjI0LjgiIGhlaWdodD0iMi40IiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTc2MC41LDMxNy41IEw3NzIuMywzNjkuMiBMNzQ4LjgsMzY5LjIgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik03NDguOCwzNjguMiBRNzYwLjUsMzgyLjIgNzcyLjMsMzY4LjIgTDc3MC45LDM1OC45IEw3NTAuMiwzNTguOSBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iNzc1LjAiIHk9IjM0Ni4wIiB3aWR0aD0iMi41IiBoZWlnaHQ9IjY5LjgiIHJ4PSIxLjEiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSI3NzYuMyIgY3k9IjM0My40IiByPSIzLjAiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PC9nPjxnIG9wYWNpdHk9IjAuNyI+PHBhdGggZD0iTS0xMC4wLDQzMy41IEwxNy42LDQzMy41IEwyOS4xLDUyMC4wIEwtMjEuNSw1MjAuMCBaIiBmaWxsPSIjZjNlZmU4Ii8+PHBhdGggZD0iTTMuOCw0MzUuNiBMMjkuMSw1MjAuMCBMMTIuMSw1MjAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9Ii0xMi43IiB5PSI0NjkuMCIgd2lkdGg9IjMzLjEiIGhlaWdodD0iMy4yIiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTMuOCwzNzAuMCBMMTkuNSw0MzkuMCBMLTExLjgsNDM5LjAgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik0tMTEuOCw0MzcuNiBRMy44LDQ1Ni4yIDE5LjUsNDM3LjYgTDE3LjYsNDI1LjIgTC0xMC4wLDQyNS4yIFoiIGZpbGw9IiM1QjJDODMiLz48cmVjdCB4PSIyMy4xIiB5PSI0MDcuOSIgd2lkdGg9IjMuNCIgaGVpZ2h0PSI5My4wIiByeD0iMS41IiBmaWxsPSIjZWZlMmI4Ii8+PGNpcmNsZSBjeD0iMjQuOCIgY3k9IjQwNC41IiByPSI0LjAiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTU0LjcsNDMzLjUgTDgyLjMsNDMzLjUgTDkzLjgsNTIwLjAgTDQzLjIsNTIwLjAgWiIgZmlsbD0iI2YzZWZlOCIvPjxwYXRoIGQ9Ik02OC41LDQzNS42IEw5My44LDUyMC4wIEw3Ni44LDUyMC4wIFoiIGZpbGw9IiNkOWQyYzYiIG9wYWNpdHk9Ii43Ii8+PHJlY3QgeD0iNTEuOSIgeT0iNDY5LjAiIHdpZHRoPSIzMy4xIiBoZWlnaHQ9IjMuMiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik02OC41LDM3MC4wIEw4NC4xLDQzOS4wIEw1Mi44LDQzOS4wIFoiIGZpbGw9IiM1QjJDODMiLz48cGF0aCBkPSJNNTIuOCw0MzcuNiBRNjguNSw0NTYuMiA4NC4xLDQzNy42IEw4Mi4zLDQyNS4yIEw1NC43LDQyNS4yIFoiIGZpbGw9IiM1QjJDODMiLz48cmVjdCB4PSI4Ny44IiB5PSI0MDcuOSIgd2lkdGg9IjMuNCIgaGVpZ2h0PSI5My4wIiByeD0iMS41IiBmaWxsPSIjZWZlMmI4Ii8+PGNpcmNsZSBjeD0iODkuNSIgY3k9IjQwNC41IiByPSI0LjAiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTExNi4zLDQzMy41IEwxNDMuOSw0MzMuNSBMMTU1LjQsNTIwLjAgTDEwNC44LDUyMC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNMTMwLjEsNDM1LjYgTDE1NS40LDUyMC4wIEwxMzguNCw1MjAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjExMy41IiB5PSI0NjkuMCIgd2lkdGg9IjMzLjEiIGhlaWdodD0iMy4yIiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTEzMC4xLDM3MC4wIEwxNDUuNyw0MzkuMCBMMTE0LjQsNDM5LjAgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik0xMTQuNCw0MzcuNiBRMTMwLjEsNDU2LjIgMTQ1LjcsNDM3LjYgTDE0My45LDQyNS4yIEwxMTYuMyw0MjUuMiBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iMTQ5LjQiIHk9IjQwNy45IiB3aWR0aD0iMy40IiBoZWlnaHQ9IjkzLjAiIHJ4PSIxLjUiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSIxNTEuMSIgY3k9IjQwNC41IiByPSI0LjAiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTE4MC4zLDQzMy41IEwyMDcuOSw0MzMuNSBMMjE5LjQsNTIwLjAgTDE2OC44LDUyMC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNMTk0LjEsNDM1LjYgTDIxOS40LDUyMC4wIEwyMDIuNCw1MjAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjE3Ny42IiB5PSI0NjkuMCIgd2lkdGg9IjMzLjEiIGhlaWdodD0iMy4yIiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTE5NC4xLDM3MC4wIEwyMDkuOCw0MzkuMCBMMTc4LjUsNDM5LjAgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik0xNzguNSw0MzcuNiBRMTk0LjEsNDU2LjIgMjA5LjgsNDM3LjYgTDIwNy45LDQyNS4yIEwxODAuMyw0MjUuMiBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iMjEzLjUiIHk9IjQwNy45IiB3aWR0aD0iMy40IiBoZWlnaHQ9IjkzLjAiIHJ4PSIxLjUiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSIyMTUuMiIgY3k9IjQwNC41IiByPSI0LjAiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTI0Ny4yLDQzMy41IEwyNzQuOCw0MzMuNSBMMjg2LjMsNTIwLjAgTDIzNS43LDUyMC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNMjYxLjAsNDM1LjYgTDI4Ni4zLDUyMC4wIEwyNjkuMyw1MjAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjI0NC40IiB5PSI0NjkuMCIgd2lkdGg9IjMzLjEiIGhlaWdodD0iMy4yIiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTI2MS4wLDM3MC4wIEwyNzYuNiw0MzkuMCBMMjQ1LjMsNDM5LjAgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik0yNDUuMyw0MzcuNiBRMjYxLjAsNDU2LjIgMjc2LjYsNDM3LjYgTDI3NC44LDQyNS4yIEwyNDcuMiw0MjUuMiBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iMjgwLjMiIHk9IjQwNy45IiB3aWR0aD0iMy40IiBoZWlnaHQ9IjkzLjAiIHJ4PSIxLjUiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSIyODIuMCIgY3k9IjQwNC41IiByPSI0LjAiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTMxMC41LDQzMy41IEwzMzguMSw0MzMuNSBMMzQ5LjYsNTIwLjAgTDI5OS4wLDUyMC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNMzI0LjMsNDM1LjYgTDM0OS42LDUyMC4wIEwzMzIuNiw1MjAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjMwNy44IiB5PSI0NjkuMCIgd2lkdGg9IjMzLjEiIGhlaWdodD0iMy4yIiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTMyNC4zLDM3MC4wIEwzNDAuMCw0MzkuMCBMMzA4LjcsNDM5LjAgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik0zMDguNyw0MzcuNiBRMzI0LjMsNDU2LjIgMzQwLjAsNDM3LjYgTDMzOC4xLDQyNS4yIEwzMTAuNSw0MjUuMiBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iMzQzLjYiIHk9IjQwNy45IiB3aWR0aD0iMy40IiBoZWlnaHQ9IjkzLjAiIHJ4PSIxLjUiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSIzNDUuMyIgY3k9IjQwNC41IiByPSI0LjAiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTM3Mi44LDQzMy41IEw0MDAuNCw0MzMuNSBMNDExLjksNTIwLjAgTDM2MS4zLDUyMC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNMzg2LjYsNDM1LjYgTDQxMS45LDUyMC4wIEwzOTQuOSw1MjAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjM3MC4xIiB5PSI0NjkuMCIgd2lkdGg9IjMzLjEiIGhlaWdodD0iMy4yIiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTM4Ni42LDM3MC4wIEw0MDIuMyw0MzkuMCBMMzcxLjAsNDM5LjAgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik0zNzEuMCw0MzcuNiBRMzg2LjYsNDU2LjIgNDAyLjMsNDM3LjYgTDQwMC40LDQyNS4yIEwzNzIuOCw0MjUuMiBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iNDA1LjkiIHk9IjQwNy45IiB3aWR0aD0iMy40IiBoZWlnaHQ9IjkzLjAiIHJ4PSIxLjUiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSI0MDcuNiIgY3k9IjQwNC41IiByPSI0LjAiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTQzOS4zLDQzMy41IEw0NjYuOSw0MzMuNSBMNDc4LjQsNTIwLjAgTDQyNy44LDUyMC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNNDUzLjEsNDM1LjYgTDQ3OC40LDUyMC4wIEw0NjEuMyw1MjAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjQzNi41IiB5PSI0NjkuMCIgd2lkdGg9IjMzLjEiIGhlaWdodD0iMy4yIiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTQ1My4xLDM3MC4wIEw0NjguNyw0MzkuMCBMNDM3LjQsNDM5LjAgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik00MzcuNCw0MzcuNiBRNDUzLjEsNDU2LjIgNDY4LjcsNDM3LjYgTDQ2Ni45LDQyNS4yIEw0MzkuMyw0MjUuMiBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iNDcyLjQiIHk9IjQwNy45IiB3aWR0aD0iMy40IiBoZWlnaHQ9IjkzLjAiIHJ4PSIxLjUiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSI0NzQuMSIgY3k9IjQwNC41IiByPSI0LjAiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTUwOS4zLDQzMy41IEw1MzYuOSw0MzMuNSBMNTQ4LjQsNTIwLjAgTDQ5Ny44LDUyMC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNNTIzLjEsNDM1LjYgTDU0OC40LDUyMC4wIEw1MzEuNCw1MjAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjUwNi42IiB5PSI0NjkuMCIgd2lkdGg9IjMzLjEiIGhlaWdodD0iMy4yIiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTUyMy4xLDM3MC4wIEw1MzguOCw0MzkuMCBMNTA3LjUsNDM5LjAgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik01MDcuNSw0MzcuNiBRNTIzLjEsNDU2LjIgNTM4LjgsNDM3LjYgTDUzNi45LDQyNS4yIEw1MDkuMyw0MjUuMiBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iNTQyLjQiIHk9IjQwNy45IiB3aWR0aD0iMy40IiBoZWlnaHQ9IjkzLjAiIHJ4PSIxLjUiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSI1NDQuMSIgY3k9IjQwNC41IiByPSI0LjAiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTU2Ni42LDQzMy41IEw1OTQuMiw0MzMuNSBMNjA1LjcsNTIwLjAgTDU1NS4xLDUyMC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNNTgwLjQsNDM1LjYgTDYwNS43LDUyMC4wIEw1ODguNyw1MjAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjU2My45IiB5PSI0NjkuMCIgd2lkdGg9IjMzLjEiIGhlaWdodD0iMy4yIiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTU4MC40LDM3MC4wIEw1OTYuMSw0MzkuMCBMNTY0LjgsNDM5LjAgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik01NjQuOCw0MzcuNiBRNTgwLjQsNDU2LjIgNTk2LjEsNDM3LjYgTDU5NC4yLDQyNS4yIEw1NjYuNiw0MjUuMiBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iNTk5LjgiIHk9IjQwNy45IiB3aWR0aD0iMy40IiBoZWlnaHQ9IjkzLjAiIHJ4PSIxLjUiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSI2MDEuNSIgY3k9IjQwNC41IiByPSI0LjAiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTYzMS43LDQzMy41IEw2NTkuMyw0MzMuNSBMNjcwLjgsNTIwLjAgTDYyMC4yLDUyMC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNNjQ1LjUsNDM1LjYgTDY3MC44LDUyMC4wIEw2NTMuNyw1MjAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjYyOC45IiB5PSI0NjkuMCIgd2lkdGg9IjMzLjEiIGhlaWdodD0iMy4yIiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTY0NS41LDM3MC4wIEw2NjEuMSw0MzkuMCBMNjI5LjgsNDM5LjAgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik02MjkuOCw0MzcuNiBRNjQ1LjUsNDU2LjIgNjYxLjEsNDM3LjYgTDY1OS4zLDQyNS4yIEw2MzEuNyw0MjUuMiBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iNjY0LjgiIHk9IjQwNy45IiB3aWR0aD0iMy40IiBoZWlnaHQ9IjkzLjAiIHJ4PSIxLjUiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSI2NjYuNSIgY3k9IjQwNC41IiByPSI0LjAiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTcwMi41LDQzMy41IEw3MzAuMSw0MzMuNSBMNzQxLjYsNTIwLjAgTDY5MS4wLDUyMC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNNzE2LjMsNDM1LjYgTDc0MS42LDUyMC4wIEw3MjQuNSw1MjAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjY5OS43IiB5PSI0NjkuMCIgd2lkdGg9IjMzLjEiIGhlaWdodD0iMy4yIiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTcxNi4zLDM3MC4wIEw3MzEuOSw0MzkuMCBMNzAwLjYsNDM5LjAgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik03MDAuNiw0MzcuNiBRNzE2LjMsNDU2LjIgNzMxLjksNDM3LjYgTDczMC4xLDQyNS4yIEw3MDIuNSw0MjUuMiBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iNzM1LjYiIHk9IjQwNy45IiB3aWR0aD0iMy40IiBoZWlnaHQ9IjkzLjAiIHJ4PSIxLjUiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSI3MzcuMyIgY3k9IjQwNC41IiByPSI0LjAiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTc2NC4wLDQzMy41IEw3OTEuNiw0MzMuNSBMODAzLjEsNTIwLjAgTDc1Mi41LDUyMC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNNzc3LjgsNDM1LjYgTDgwMy4xLDUyMC4wIEw3ODYuMSw1MjAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9Ijc2MS4yIiB5PSI0NjkuMCIgd2lkdGg9IjMzLjEiIGhlaWdodD0iMy4yIiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTc3Ny44LDM3MC4wIEw3OTMuNCw0MzkuMCBMNzYyLjIsNDM5LjAgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik03NjIuMiw0MzcuNiBRNzc3LjgsNDU2LjIgNzkzLjQsNDM3LjYgTDc5MS42LDQyNS4yIEw3NjQuMCw0MjUuMiBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iNzk3LjEiIHk9IjQwNy45IiB3aWR0aD0iMy40IiBoZWlnaHQ9IjkzLjAiIHJ4PSIxLjUiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSI3OTguOCIgY3k9IjQwNC41IiByPSI0LjAiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PC9nPjxnIG9wYWNpdHk9IjAuOSI+PHBhdGggZD0iTS0zOC4yLDUyMy4yIEwtMC45LDUyMy4yIEwxNC42LDY0MC4wIEwtNTMuNyw2NDAuMCBaIiBmaWxsPSIjZjNlZmU4Ii8+PHBhdGggZD0iTS0xOS41LDUyNi4wIEwxNC42LDY0MC4wIEwtOC40LDY0MC4wIFoiIGZpbGw9IiNkOWQyYzYiIG9wYWNpdHk9Ii43Ii8+PHJlY3QgeD0iLTQxLjkiIHk9IjU3MS4xIiB3aWR0aD0iNDQuNyIgaGVpZ2h0PSI0LjMiIGZpbGw9IiM1QjJDODMiLz48cGF0aCBkPSJNLTE5LjUsNDM3LjUgTDEuNiw1MzAuNiBMLTQwLjYsNTMwLjYgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik0tNDAuNiw1MjguOCBRLTE5LjUsNTUzLjkgMS42LDUyOC44IEwtMC45LDUxMi4wIEwtMzguMiw1MTIuMCBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iNi41IiB5PSI0ODguNyIgd2lkdGg9IjQuNiIgaGVpZ2h0PSIxMjUuNSIgcng9IjIuMCIgZmlsbD0iI2VmZTJiOCIvPjxjaXJjbGUgY3g9IjguOCIgY3k9IjQ4NC4xIiByPSI1LjQiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTQ3LjYsNTIzLjIgTDg0LjksNTIzLjIgTDEwMC40LDY0MC4wIEwzMi4xLDY0MC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNNjYuMyw1MjYuMCBMMTAwLjQsNjQwLjAgTDc3LjUsNjQwLjAgWiIgZmlsbD0iI2Q5ZDJjNiIgb3BhY2l0eT0iLjciLz48cmVjdCB4PSI0My45IiB5PSI1NzEuMSIgd2lkdGg9IjQ0LjciIGhlaWdodD0iNC4zIiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTY2LjMsNDM3LjUgTDg3LjQsNTMwLjYgTDQ1LjIsNTMwLjYgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik00NS4yLDUyOC44IFE2Ni4zLDU1My45IDg3LjQsNTI4LjggTDg0LjksNTEyLjAgTDQ3LjYsNTEyLjAgWiIgZmlsbD0iIzVCMkM4MyIvPjxyZWN0IHg9IjkyLjQiIHk9IjQ4OC43IiB3aWR0aD0iNC42IiBoZWlnaHQ9IjEyNS41IiByeD0iMi4wIiBmaWxsPSIjZWZlMmI4Ii8+PGNpcmNsZSBjeD0iOTQuNyIgY3k9IjQ4NC4xIiByPSI1LjQiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTEzMi42LDUyMy4yIEwxNjkuOCw1MjMuMiBMMTg1LjQsNjQwLjAgTDExNy4xLDY0MC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNMTUxLjIsNTI2LjAgTDE4NS40LDY0MC4wIEwxNjIuNCw2NDAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjEyOC45IiB5PSI1NzEuMSIgd2lkdGg9IjQ0LjciIGhlaWdodD0iNC4zIiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTE1MS4yLDQzNy41IEwxNzIuMyw1MzAuNiBMMTMwLjEsNTMwLjYgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik0xMzAuMSw1MjguOCBRMTUxLjIsNTUzLjkgMTcyLjMsNTI4LjggTDE2OS44LDUxMi4wIEwxMzIuNiw1MTIuMCBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iMTc3LjMiIHk9IjQ4OC43IiB3aWR0aD0iNC42IiBoZWlnaHQ9IjEyNS41IiByeD0iMi4wIiBmaWxsPSIjZWZlMmI4Ii8+PGNpcmNsZSBjeD0iMTc5LjYiIGN5PSI0ODQuMSIgcj0iNS40IiBmaWxsPSIjZmZkMjdhIiBvcGFjaXR5PSIuOSIvPjxwYXRoIGQ9Ik0yMjguMSw1MjMuMiBMMjY1LjMsNTIzLjIgTDI4MC45LDY0MC4wIEwyMTIuNiw2NDAuMCBaIiBmaWxsPSIjZjNlZmU4Ii8+PHBhdGggZD0iTTI0Ni43LDUyNi4wIEwyODAuOSw2NDAuMCBMMjU3LjksNjQwLjAgWiIgZmlsbD0iI2Q5ZDJjNiIgb3BhY2l0eT0iLjciLz48cmVjdCB4PSIyMjQuNCIgeT0iNTcxLjEiIHdpZHRoPSI0NC43IiBoZWlnaHQ9IjQuMyIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik0yNDYuNyw0MzcuNSBMMjY3LjgsNTMwLjYgTDIyNS42LDUzMC42IFoiIGZpbGw9IiM1QjJDODMiLz48cGF0aCBkPSJNMjI1LjYsNTI4LjggUTI0Ni43LDU1My45IDI2Ny44LDUyOC44IEwyNjUuMyw1MTIuMCBMMjI4LjEsNTEyLjAgWiIgZmlsbD0iIzVCMkM4MyIvPjxyZWN0IHg9IjI3Mi44IiB5PSI0ODguNyIgd2lkdGg9IjQuNiIgaGVpZ2h0PSIxMjUuNSIgcng9IjIuMCIgZmlsbD0iI2VmZTJiOCIvPjxjaXJjbGUgY3g9IjI3NS4xIiBjeT0iNDg0LjEiIHI9IjUuNCIgZmlsbD0iI2ZmZDI3YSIgb3BhY2l0eT0iLjkiLz48cGF0aCBkPSJNMzAzLjksNTIzLjIgTDM0MS4yLDUyMy4yIEwzNTYuNyw2NDAuMCBMMjg4LjQsNjQwLjAgWiIgZmlsbD0iI2YzZWZlOCIvPjxwYXRoIGQ9Ik0zMjIuNiw1MjYuMCBMMzU2LjcsNjQwLjAgTDMzMy43LDY0MC4wIFoiIGZpbGw9IiNkOWQyYzYiIG9wYWNpdHk9Ii43Ii8+PHJlY3QgeD0iMzAwLjIiIHk9IjU3MS4xIiB3aWR0aD0iNDQuNyIgaGVpZ2h0PSI0LjMiIGZpbGw9IiM1QjJDODMiLz48cGF0aCBkPSJNMzIyLjYsNDM3LjUgTDM0My43LDUzMC42IEwzMDEuNCw1MzAuNiBaIiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTMwMS40LDUyOC44IFEzMjIuNiw1NTMuOSAzNDMuNyw1MjguOCBMMzQxLjIsNTEyLjAgTDMwMy45LDUxMi4wIFoiIGZpbGw9IiM1QjJDODMiLz48cmVjdCB4PSIzNDguNiIgeT0iNDg4LjciIHdpZHRoPSI0LjYiIGhlaWdodD0iMTI1LjUiIHJ4PSIyLjAiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSIzNTAuOSIgY3k9IjQ4NC4xIiByPSI1LjQiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTM5My41LDUyMy4yIEw0MzAuOCw1MjMuMiBMNDQ2LjMsNjQwLjAgTDM3OC4wLDY0MC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNNDEyLjIsNTI2LjAgTDQ0Ni4zLDY0MC4wIEw0MjMuMyw2NDAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjM4OS44IiB5PSI1NzEuMSIgd2lkdGg9IjQ0LjciIGhlaWdodD0iNC4zIiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTQxMi4yLDQzNy41IEw0MzMuMyw1MzAuNiBMMzkxLjAsNTMwLjYgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik0zOTEuMCw1MjguOCBRNDEyLjIsNTUzLjkgNDMzLjMsNTI4LjggTDQzMC44LDUxMi4wIEwzOTMuNSw1MTIuMCBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iNDM4LjIiIHk9IjQ4OC43IiB3aWR0aD0iNC42IiBoZWlnaHQ9IjEyNS41IiByeD0iMi4wIiBmaWxsPSIjZWZlMmI4Ii8+PGNpcmNsZSBjeD0iNDQwLjUiIGN5PSI0ODQuMSIgcj0iNS40IiBmaWxsPSIjZmZkMjdhIiBvcGFjaXR5PSIuOSIvPjxwYXRoIGQ9Ik00NzcuNCw1MjMuMiBMNTE0LjYsNTIzLjIgTDUzMC4xLDY0MC4wIEw0NjEuOCw2NDAuMCBaIiBmaWxsPSIjZjNlZmU4Ii8+PHBhdGggZD0iTTQ5Ni4wLDUyNi4wIEw1MzAuMSw2NDAuMCBMNTA3LjIsNjQwLjAgWiIgZmlsbD0iI2Q5ZDJjNiIgb3BhY2l0eT0iLjciLz48cmVjdCB4PSI0NzMuNiIgeT0iNTcxLjEiIHdpZHRoPSI0NC43IiBoZWlnaHQ9IjQuMyIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik00OTYuMCw0MzcuNSBMNTE3LjEsNTMwLjYgTDQ3NC45LDUzMC42IFoiIGZpbGw9IiM1QjJDODMiLz48cGF0aCBkPSJNNDc0LjksNTI4LjggUTQ5Ni4wLDU1My45IDUxNy4xLDUyOC44IEw1MTQuNiw1MTIuMCBMNDc3LjQsNTEyLjAgWiIgZmlsbD0iIzVCMkM4MyIvPjxyZWN0IHg9IjUyMi4xIiB5PSI0ODguNyIgd2lkdGg9IjQuNiIgaGVpZ2h0PSIxMjUuNSIgcng9IjIuMCIgZmlsbD0iI2VmZTJiOCIvPjxjaXJjbGUgY3g9IjUyNC40IiBjeT0iNDg0LjEiIHI9IjUuNCIgZmlsbD0iI2ZmZDI3YSIgb3BhY2l0eT0iLjkiLz48cGF0aCBkPSJNNTY5LjgsNTIzLjIgTDYwNy4xLDUyMy4yIEw2MjIuNiw2NDAuMCBMNTU0LjMsNjQwLjAgWiIgZmlsbD0iI2YzZWZlOCIvPjxwYXRoIGQ9Ik01ODguNSw1MjYuMCBMNjIyLjYsNjQwLjAgTDU5OS42LDY0MC4wIFoiIGZpbGw9IiNkOWQyYzYiIG9wYWNpdHk9Ii43Ii8+PHJlY3QgeD0iNTY2LjEiIHk9IjU3MS4xIiB3aWR0aD0iNDQuNyIgaGVpZ2h0PSI0LjMiIGZpbGw9IiM1QjJDODMiLz48cGF0aCBkPSJNNTg4LjUsNDM3LjUgTDYwOS42LDUzMC42IEw1NjcuMyw1MzAuNiBaIiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTU2Ny4zLDUyOC44IFE1ODguNSw1NTMuOSA2MDkuNiw1MjguOCBMNjA3LjEsNTEyLjAgTDU2OS44LDUxMi4wIFoiIGZpbGw9IiM1QjJDODMiLz48cmVjdCB4PSI2MTQuNSIgeT0iNDg4LjciIHdpZHRoPSI0LjYiIGhlaWdodD0iMTI1LjUiIHJ4PSIyLjAiIGZpbGw9IiNlZmUyYjgiLz48Y2lyY2xlIGN4PSI2MTYuOCIgY3k9IjQ4NC4xIiByPSI1LjQiIGZpbGw9IiNmZmQyN2EiIG9wYWNpdHk9Ii45Ii8+PHBhdGggZD0iTTY1MS43LDUyMy4yIEw2ODguOSw1MjMuMiBMNzA0LjUsNjQwLjAgTDYzNi4yLDY0MC4wIFoiIGZpbGw9IiNmM2VmZTgiLz48cGF0aCBkPSJNNjcwLjMsNTI2LjAgTDcwNC41LDY0MC4wIEw2ODEuNSw2NDAuMCBaIiBmaWxsPSIjZDlkMmM2IiBvcGFjaXR5PSIuNyIvPjxyZWN0IHg9IjY0OC4wIiB5PSI1NzEuMSIgd2lkdGg9IjQ0LjciIGhlaWdodD0iNC4zIiBmaWxsPSIjNUIyQzgzIi8+PHBhdGggZD0iTTY3MC4zLDQzNy41IEw2OTEuNCw1MzAuNiBMNjQ5LjIsNTMwLjYgWiIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik02NDkuMiw1MjguOCBRNjcwLjMsNTUzLjkgNjkxLjQsNTI4LjggTDY4OC45LDUxMi4wIEw2NTEuNyw1MTIuMCBaIiBmaWxsPSIjNUIyQzgzIi8+PHJlY3QgeD0iNjk2LjQiIHk9IjQ4OC43IiB3aWR0aD0iNC42IiBoZWlnaHQ9IjEyNS41IiByeD0iMi4wIiBmaWxsPSIjZWZlMmI4Ii8+PGNpcmNsZSBjeD0iNjk4LjciIGN5PSI0ODQuMSIgcj0iNS40IiBmaWxsPSIjZmZkMjdhIiBvcGFjaXR5PSIuOSIvPjxwYXRoIGQ9Ik03MzkuNCw1MjMuMiBMNzc2LjcsNTIzLjIgTDc5Mi4yLDY0MC4wIEw3MjMuOSw2NDAuMCBaIiBmaWxsPSIjZjNlZmU4Ii8+PHBhdGggZD0iTTc1OC4xLDUyNi4wIEw3OTIuMiw2NDAuMCBMNzY5LjIsNjQwLjAgWiIgZmlsbD0iI2Q5ZDJjNiIgb3BhY2l0eT0iLjciLz48cmVjdCB4PSI3MzUuNyIgeT0iNTcxLjEiIHdpZHRoPSI0NC43IiBoZWlnaHQ9IjQuMyIgZmlsbD0iIzVCMkM4MyIvPjxwYXRoIGQ9Ik03NTguMSw0MzcuNSBMNzc5LjIsNTMwLjYgTDczNi45LDUzMC42IFoiIGZpbGw9IiM1QjJDODMiLz48cGF0aCBkPSJNNzM2LjksNTI4LjggUTc1OC4xLDU1My45IDc3OS4yLDUyOC44IEw3NzYuNyw1MTIuMCBMNzM5LjQsNTEyLjAgWiIgZmlsbD0iIzVCMkM4MyIvPjxyZWN0IHg9Ijc4NC4xIiB5PSI0ODguNyIgd2lkdGg9IjQuNiIgaGVpZ2h0PSIxMjUuNSIgcng9IjIuMCIgZmlsbD0iI2VmZTJiOCIvPjxjaXJjbGUgY3g9Ijc4Ni40IiBjeT0iNDg0LjEiIHI9IjUuNCIgZmlsbD0iI2ZmZDI3YSIgb3BhY2l0eT0iLjkiLz48L2c+CjwvZz48L3N2Zz4=" alt=""></div><span class="hero-note">Ilustración con su hábito · sin foto de nazarenos en la base</span>
+      <div class="crest"><img src="img/crest.png" alt="Escudo de la Hermandad de San Benito"></div>
+      <h1>San Benito</h1>
+      <div class="chips"><span class="day">Martes Santo</span><span>Penitencia</span><span>Sacramental</span></div><p class="loc"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z" fill="currentColor"/><circle cx="12" cy="10" r="2.6" fill="var(--tint)"/></svg><a href="#">La Calzada</a> · Sevilla</p>
+      <div class="pulse" aria-label="Horario de 2026">
+        <div><small>Sale</small><b>16:00</b></div>
+        <div class="mid">10 h 05<i></i>en la calle</div>
+        <div><small>Entra</small><b>02:05</b></div>
+      </div>
+      <p class="countdown"><b id="days">—</b> días para el Martes Santo</p>
+    </section>
+
+    <div class="actions">
+      <button type="button" class="hot" data-fold="#f-horario"><svg><use href="#i-clock"/></svg>Horario</button>
+      <button type="button" data-fold="#f-recorrido"><svg><use href="#i-route"/></svg>Recorrido</button>
+      <button type="button" data-fold="#f-tunica"><svg><use href="#i-titular"/></svg>Túnica</button>
+      <button type="button" data-share="San Benito · Hilo Cofrade"><svg><use href="#i-share"/></svg>Compartir</button>
+    </div>
+
+    <section class="block" id="cortejo" aria-labelledby="t-cortejo">
+      <div class="block-h"><h2 id="t-cortejo">Su cortejo</h2><small>3 pasos · 4 bandas</small></div>
+      <ol class="esquema">
+        <li><a class="node" href="#"><span class="pic cross">✝</span><span class="txt"><small>Abre</small><strong>Cruz de guía</strong><span>A. M. Juvenil Sagrada Presentación</span></span><span class="band"><img src="img/logo-amj.png" alt="Logo de la A. M. Juvenil Sagrada Presentación"></span></a></li>
+        <li class="tramo"><span class="naz" aria-hidden="true"><i></i><i></i><i></i></span><span>Nazarenos · túnica blanca, antifaz morado</span></li>
+        <li><a class="node" href="#"><span class="pic"><img src="img/t-pmist.jpg" alt=""></span><span class="txt"><small>1 · Misterio</small><strong>Sagrada Presentación</strong><span>Castillo Lastrucci, 1928 · La Encarnación</span></span><span class="band"><img src="img/logo-encarnacion.svg" alt="Escudo de la A. M. La Encarnación"></span></a></li>
+        <li class="tramo"><span class="naz" aria-hidden="true"><i></i><i></i><i></i></span><span>Nazarenos</span></li>
+        <li><a class="node" href="#" data-go="b"><span class="pic"><img src="img/t-pcristo.jpg" alt=""></span><span class="txt"><small>2 · Cristo</small><strong>Cristo de la Sangre</strong><span>Francisco Buiza, 1966 · Sangre de San Benito</span></span><span class="band" style="background:#65121A"><img src="img/band-logo-s.jpg" alt="Logo de Sangre de San Benito"></span></a></li>
+        <li class="tramo"><span class="naz" aria-hidden="true"><i></i><i></i><i></i></span><span>Nazarenos</span></li>
+        <li><a class="node" href="#"><span class="pic"><img src="img/t-ppalio.jpg" alt="" style="object-position:50% 35%"></span><span class="txt"><small>3 · Palio</small><strong>Virgen de la Encarnación</strong><span>Blas Molner, s. XVIII · La Puebla del Río</span></span><span class="band" style="background:#000"><img src="img/logo-puebla.jpg" alt="Escudo de la Banda de La Puebla del Río"></span></a></li>
+      </ol>
+      <ul class="team" aria-label="Capataces y vestidor">
+        <li><span class="av">JG</span><span><small>Capataz · misterio</small><a href="#">Juan Antonio Gil García</a></span></li>
+        <li><span class="av">MR</span><span><small>Capataz · Cristo</small><a href="#">Manuel Roldán Rojas</a></span></li>
+        <li><span class="av">JM</span><span><small>Capataz · palio</small><a href="#">Jesús Morón Hortal</a></span></li>
+        <li><span class="av v">LG</span><span><small>Vestidor · Virgen</small><a href="#">Leandro González Ruiz</a></span></li>
+      </ul>
+    </section>
+
+    <section class="block" id="bandas" aria-labelledby="t-bandas">
+      <div class="block-h"><h2 id="t-bandas">Sus bandas</h2><small>Martes Santo 2026</small></div>
+      <ul class="bandas-hoy">
+        <li><a href="#"><small>Cruz de guía</small><span class="lg"><img src="img/logo-amj.png" alt="Logo de la A. M. Juvenil Sagrada Presentación"></span><strong>A. M. Juvenil Sagrada Presentación</strong><span class="own">De la hermandad</span></a></li>
+        <li><a href="#"><small>Misterio</small><span class="lg"><img src="img/logo-encarnacion.svg" alt="Escudo de la A. M. Nuestra Señora de la Encarnación"></span><strong>A. M. La Encarnación</strong><span class="own">De la hermandad</span></a></li>
+        <li><a href="#" data-go="b"><small>Cristo</small><span class="lg" style="background:#65121A"><img src="img/band-logo-s.jpg" alt="Logo de Sangre de San Benito"></span><strong>CC. TT. Sangre de San Benito</strong><span class="own">De la hermandad</span></a></li>
+        <li><a href="#"><small>Palio</small><span class="lg" style="background:#000"><img src="img/logo-puebla.jpg" alt="Escudo de la Banda de La Puebla del Río"></span><strong>Banda Municipal de La Puebla del Río</strong><em>desde 2001</em></a></li>
+      </ul>
+      <a class="cta" href="#f-musica" data-open style="margin-top:12px">Acompañamientos históricos desde 1993 →</a>
+    </section>
+
+    <section class="block" id="pasos" aria-labelledby="t-pasos">
+      <div class="block-h"><h2 id="t-pasos">Pasos e imágenes</h2><small>desliza →</small></div>
+      <ul class="pasos">
+        <li><div class="ph"><img src="img/m-pmist.jpg" alt="Paso de misterio de la Sagrada Presentación"><span>1 · Misterio</span><i class="bl"><img src="img/logo-encarnacion.svg" alt=""></i></div>
+          <div class="bd"><h3>Sagrada Presentación de Jesús al Pueblo</h3>
+            <a class="img-row" href="#"><img src="img/m-jesus.jpg" alt=""><span><strong>Jesús Presentado al Pueblo</strong><small>Antonio Castillo Lastrucci · 1928</small></span></a>
+            <div class="figs-row"><svg><use href="#i-fig"/></svg><span><b>Figuras secundarias</b> · aún sin cargar</span></div>
+            <dl><div><dt>Capataz</dt><dd><a href="#">Juan Antonio Gil García</a></dd></div><div><dt>Paso</dt><dd>Barroco rocalla · 1967–1968</dd></div><div><dt>Música</dt><dd><a href="#">A. M. La Encarnación</a></dd></div></dl>
+            <div class="go"><button type="button" data-sheet="mist">Abrir el paso</button><a href="#">Ficha de la imagen</a></div></div></li>
+        <li><div class="ph"><img src="img/m-pcristo.jpg" alt="Paso del Cristo de la Sangre"><span>2 · Cristo</span><i class="bl" style="background:#65121A"><img src="img/band-logo-s.jpg" alt=""></i></div>
+          <div class="bd"><h3>Santísimo Cristo de la Sangre</h3>
+            <a class="img-row" href="#"><img src="img/cover-45.jpg" alt="" style="object-position:30% 25%"><span><strong>Cristo de la Sangre</strong><small>Francisco Buiza · 1966</small></span></a>
+            <dl><div><dt>Capataz</dt><dd><a href="#">Manuel Roldán Rojas</a></dd></div><div><dt>Paso</dt><dd>Barroco · 1967–1969</dd></div><div><dt>Música</dt><dd><a href="#" data-go="b">Sangre de San Benito</a></dd></div></dl>
+            <div class="go"><button type="button" data-sheet="cristo">Abrir el paso</button><a href="#">Ficha de la imagen</a></div></div></li>
+        <li><div class="ph"><img src="img/m-ppalio.jpg" alt="Paso de palio de la Virgen de la Encarnación" style="object-position:50% 30%"><span>3 · Palio</span><i class="bl" style="background:#000"><img src="img/logo-puebla.jpg" alt=""></i></div>
+          <div class="bd"><h3>Nuestra Señora de la Encarnación Coronada</h3>
+            <a class="img-row" href="#"><img src="img/m-virgen.jpg" alt=""><span><strong>Virgen de la Encarnación</strong><small>Blas Molner · 1780–1793</small></span></a>
+            <dl><div><dt>Capataz</dt><dd><a href="#">Jesús Morón Hortal</a></dd></div><div><dt>Vestidor</dt><dd><a href="#">Leandro González Ruiz</a></dd></div><div><dt>Paso</dt><dd>Barroco · palio de 1930–1931</dd></div><div><dt>Música</dt><dd><a href="#">B. M. La Puebla del Río</a></dd></div></dl>
+            <div class="go"><button type="button" data-sheet="palio">Abrir el paso</button><a href="#">Ficha de la imagen</a></div></div></li>
+      </ul>
+    </section>
+
+    <section class="block" id="dia" aria-labelledby="t-dia">
+      <div class="block-h"><h2 id="t-dia">Su Martes Santo</h2><small>8 hermandades</small></div>
+      <div class="puesto"><b>2<sup>.ª</sup></b><div><strong>de 8 en la Carrera Oficial</strong><span>Sale a las 16:00 desde San Benito</span> <span class="chip-tag">provisional</span></div></div>
+      <ol class="nomina" aria-label="Nómina de la jornada">
+        <li><span class="c"><img src="img/logo-cerro.png" alt=""></span><div><a href="#">El Cerro del Águila</a><small>Desamparo y Abandono · Dolores</small></div><em>11:40</em></li>
+        <li class="me"><span class="c"><img src="img/crest.png" alt=""></span><div><a href="#">San Benito</a><small>Presentación · Sangre · Encarnación</small></div><em>16:00</em></li>
+        <li><span class="c none">B</span><div><a href="#">Dulce Nombre · La Bofetá</a><small>Jesús ante Anás · Dulce Nombre</small></div><em></em></li>
+        <li><span class="c"><img src="img/logo-candelaria.png" alt=""></span><div><a href="#">La Candelaria</a><small>Salud · Candelaria</small></div><em></em></li>
+        <li><span class="c"><img src="img/logo-sanesteban.png" alt=""></span><div><a href="#">San Esteban</a><small>Salud y Buen Viaje · Desamparados</small></div><em></em></li>
+        <li><span class="c"><img src="img/logo-javieres.png" alt=""></span><div><a href="#">Los Javieres</a><small>Almas · Gracia y Amparo</small></div><em></em></li>
+        <li><span class="c"><img src="img/logo-estudiantes.png" alt=""></span><div><a href="#">Los Estudiantes</a><small>Buena Muerte · Angustia</small></div><em></em></li>
+        <li><span class="c"><img src="img/logo-santacruz.png" alt=""></span><div><a href="#">Santa Cruz</a><small>Misericordias · Dolores</small></div><em></em></li>
+      </ol>
+      <p class="src">Provisional: la base aún no guarda el orden de paso ni las horas de 6 de las 8 hermandades. Este orden sale de prensa (2025) y hay que confirmarlo antes de cargarlo.</p>
+    </section>
+
+    <details class="fold" id="f-horario"><summary><svg><use href="#i-clock"/></svg><strong>Horario</strong><em>16:00 – 02:05</em></summary>
+      <div class="fold-body"><div class="clock-bar"><b>16:00</b><i></i><b>02:05</b></div><div class="clock-cap"><span>Salida</span><span>Carrera Oficial</span><span>Entrada</span></div><p class="note">Horario de 2026. Se actualiza cuando se publica el de cada año.</p></div></details>
+
+    <details class="fold" id="f-recorrido"><summary><svg><use href="#i-route"/></svg><strong>Recorrido</strong><em>28 calles</em></summary>
+      <div class="fold-body"><ol class="metro"><li class="home">San Benito</li><li>Luis Montoto</li><li>Puerta de Carmona</li><li>Santiago</li><li>Imagen · Laraña</li><li>Lasso de la Vega · Duque</li><li class="key">Carrera Oficial</li><li class="key">Catedral</li><li>Placentines · Francos</li><li>Cuesta del Rosario</li><li>Alfalfa · Plaza de Pilatos</li><li>San Esteban · Puerta de Carmona</li><li class="home">San Benito</li></ol>
+      <details class="metro-more"><summary>Ver todas las calles</summary><p class="note">San Benito, Luis Montoto, Puerta de Carmona, Muro de los Navarros, Santiago, Almirante Apodaca, Imagen, Laraña, Orfila, Lasso de la Vega, Duque, Carrera Oficial, Catedral, Alemanes, Álvarez Quintero, Argote de Molina, Placentines, Francos, Cuesta del Rosario, Luchana, Cristo de las Tres Caídas, Alfalfa, Águilas, Plaza de Pilatos, San Esteban, Puerta de Carmona, Luis Montoto y San Benito.</p></details></div></details>
+
+    <details class="fold" id="f-tunica"><summary><svg><use href="#i-titular"/></svg><strong>Túnica</strong><em><span style="display:inline-flex;gap:3px;vertical-align:middle"><i style="width:12px;height:12px;border-radius:50%;background:#fff;border:1px solid #ccc;display:inline-block"></i><i style="width:12px;height:12px;border-radius:50%;background:#5B2C83;display:inline-block"></i></span> blanca y morado</em></summary>
+      <div class="fold-body"><div class="habit-card"><img src="img/m-habit.jpg" alt="Hábito de nazareno de San Benito: túnica y capa blancas, antifaz morado"><div><h3>Hábito de nazareno</h3><dl><div><dt>Túnica</dt><dd>Túnica y capa blancas</dd></div><div><dt>Antifaz</dt><dd>Terciopelo morado</dd></div><div><dt>Cíngulo</dt><dd>Morado, a la izquierda</dd></div><div><dt>Botones</dt><dd>Terciopelo morado</dd></div><div><dt>Escudo</dt><dd>En antifaz y capa</dd></div><div><dt>Calzado</dt><dd>Zapato negro con hebilla</dd></div></dl></div></div></div></details>
+    <details class="fold" id="f-nazarenos"><summary><svg><use href="#i-people"/></svg><strong>Nazarenos</strong><em>sin dato</em></summary>
+      <div class="fold-body"><div class="naz-line" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="naz-stats"><div><b>—</b><small>Nazarenos</small></div><div><b>—</b><small>Penitentes</small></div><div><b>—</b><small>Acólitos y monaguillos</small></div><div><b>—</b><small>Total del cortejo</small></div></div>
+      <p class="note">La base ya guarda estas cifras, año a año y con fuente, para 31 cortejos. Para San Benito todavía no hay ninguna.</p></div></details>
+
+    <details class="fold" id="f-titulares"><summary><svg><use href="#i-titular"/></svg><strong>Titulares</strong><em>4</em></summary>
+      <div class="fold-body"><ul class="strip">
+        <li><a href="#"><span class="ph"><img src="img/m-jesus.jpg" alt="Jesús Presentado al Pueblo"></span><strong>Jesús Presentado al Pueblo</strong><small>Castillo Lastrucci · 1928</small></a></li>
+        <li><a href="#"><span class="ph"><img src="img/cover-45.jpg" alt="Cristo de la Sangre" style="object-position:30% 30%"></span><strong>Cristo de la Sangre</strong><small>Buiza · 1966</small></a></li>
+        <li><a href="#"><span class="ph"><img src="img/m-virgen.jpg" alt="Virgen de la Encarnación"></span><strong>Virgen de la Encarnación</strong><small>Molner · 1780–1793</small></a></li>
+        <li><a href="#"><span class="ph">Sin foto</span><strong>San Benito Abad</strong><small>Titular desde 1998</small></a></li>
+      </ul></div></details>
+
+    <details class="fold" id="f-cultos"><summary><svg><use href="#i-cal"/></svg><strong>Cultos</strong><em>7 al año</em></summary>
+      <div class="fold-body"><div class="months" aria-label="Meses con cultos"><span class="on">E</span><span class="on">F</span><span class="key">M</span><span class="key">A</span><span>M</span><span>J</span><span>J</span><span>A</span><span>S</span><span class="on">O</span><span>N</span><span>D</span></div>
+      <ul class="rows"><li><b>Ene</b><div><strong>Triduo y Función a la Encarnación</strong></div></li><li><b>Cuar.</b><div><strong>Quinario y Función Principal</strong><small>Primera semana de Cuaresma</small></div></li><li><b>Mar</b><div><strong>Vía Crucis · Anunciación</strong><small>25 de marzo</small></div></li><li class="key"><b>S.S.</b><div><strong>Estación de penitencia</strong><small>Martes Santo · 16:00</small></div></li><li><b>Oct</b><div><strong>Triduo al Santísimo Sacramento</strong></div></li></ul></div></details>
+
+    <details class="fold" id="f-patri"><summary><svg><use href="#i-star"/></svg><strong>Patrimonio</strong><em>estrenos y restauraciones</em></summary>
+      <div class="fold-body">
+        <p class="patri-h">Estrenos <b>8</b></p>
+        <ol class="tl2 hot">
+          <li><b>2018</b><div><strong>Parihuela y dorado actual</strong><small><a href="#">Paso de misterio</a> · renovación</small></div></li>
+          <li><b>2003</b><div><strong>Apostolado de los respiraderos</strong><small><a href="#">Paso de misterio</a> · escultura</small></div></li>
+          <li><b>1987</b><div><strong>Llamador</strong><small><a href="#">Paso de misterio</a> · orfebrería</small></div></li>
+          <li><b>1983</b><div><strong>Faldones actuales</strong><small><a href="#">Paso de misterio</a> · bordado</small></div></li>
+          <li><b>1968</b><div><strong>Canastilla y respiraderos</strong><small><a href="#">Paso de misterio</a> · programa escultórico</small></div></li>
+          <li><b>1967</b><div><strong>Diseño, talla y dorado</strong><small><a href="#">Paso de misterio</a> · ejecución original</small></div></li>
+          <li><b>1966</b><div><strong>Cristo de la Sangre</strong><small><a href="#">Francisco Buiza</a> · bendecido ese año</small></div></li>
+          <li><b>1930</b><div><strong>Palio de la Encarnación</strong><small><a href="#">Paso de palio</a> · 1930–1931</small></div></li>
+        </ol>
+        <p class="patri-h r">Restauraciones <b>5</b></p>
+        <ol class="tl2">
+          <li><b>2000</b><div><strong><a href="#">Cristo de la Sangre</a></strong><small>Juan Manuel Miñarro</small></div></li>
+          <li><b>1988</b><div><strong><a href="#">Jesús Presentado al Pueblo</a></strong><small>José Rodríguez Rivero-Carrera</small></div></li>
+          <li><b>1949</b><div><strong><a href="#">Jesús Presentado al Pueblo</a></strong><small>Antonio Castillo Lastrucci, su autor</small></div></li>
+          <li><b>1917</b><div><strong><a href="#">Virgen de la Encarnación</a></strong><small>José Ordóñez</small></div></li>
+          <li><b>1819</b><div><strong><a href="#">Virgen de la Encarnación</a></strong><small>autor sin documentar</small></div></li>
+        </ol>
+        <p class="note">Estrenos: fases del paso de misterio, la fecha del palio y la bendición del Cristo. El resto de pasos aún no tiene sus fases cargadas.</p>
+      </div></details>
+
+    <details class="fold" id="f-patrimonio"><summary><svg><use href="#i-music"/></svg><strong>Patrimonio musical</strong><em>95 obras</em></summary>
+      <div class="fold-body">
+        <div class="pm-hero"><b>95</b><span><strong>obras dedicadas a San Benito</strong>: 86 marchas procesionales, 7 coplas y 2 obras para cultos.</span></div>
+        <div class="stack" aria-hidden="true"><i style="width:38.9%;background:#1B82B4"></i><i style="width:28.4%;background:#123A67"></i><i style="width:23.2%;background:#65121A"></i><i style="width:7.4%;background:#B08D3C"></i><i style="width:2.1%;background:#9aa5b5"></i></div>
+        <ul class="stack-legend"><li><i style="background:#1B82B4"></i>Agrupación musical <b>37</b></li><li><i style="background:#123A67"></i>Banda de música <b>27</b></li><li><i style="background:#65121A"></i>Cornetas y tambores <b>22</b></li><li><i style="background:#B08D3C"></i>Coplas <b>7</b></li><li><i style="background:#9aa5b5"></i>Cultos <b>2</b></li></ul>
+        <ol class="bars" aria-label="Obras dedicadas por década"><li><b>1</b><i style="height:3%"></i><span>50</span></li><li><b>3</b><i style="height:10%"></i><span>60</span></li><li><b>3</b><i style="height:10%"></i><span>70</span></li><li><b>5</b><i style="height:16%"></i><span>80</span></li><li><b>22</b><i style="height:71%"></i><span>90</span></li><li><b>31</b><i style="height:100%"></i><span>00</span></li><li><b>21</b><i style="height:68%"></i><span>10</span></li><li><b>9</b><i style="height:29%"></i><span>20</span></li></ol>
+        <div class="first"><b>1951</b><div><small>La primera documentada</small><strong><a href="#">Jesús ante el Pueblo</a></strong><span>Manuel Mejías Pérez · banda de música</span></div></div>
+        <p class="sub-h">Para escuchar</p>
+        <ul class="listen">
+          <li><a href="#"><span class="play">▶</span><span><strong>Nuestra Señora de la Encarnación</strong><small>Pedro Braña Martínez · 1971</small></span><em>Spotify</em></a></li>
+          <li><a href="#"><span class="play">▶</span><span><strong>Coronación</strong><small>Eliseo Capel Paricio · 1994</small></span><em>Spotify</em></a></li>
+          <li><a href="#"><span class="play">▶</span><span><strong>Sangre de mi Sangre</strong><small>C. y J. Jiménez Cabeza · 2014</small></span><em>Spotify</em></a></li>
+          <li><a href="#"><span class="play">▶</span><span><strong>En las tinieblas de mis dudas</strong><small>Cristóbal López Gándara · 2026</small></span><em>YouTube</em></a></li>
+        </ul>
+        <a class="cta" href="#">Ver las 95 obras →</a>
+      </div></details>
+    <details class="fold" id="f-musica"><summary><svg><use href="#i-music"/></svg><strong>Acompañamientos históricos</strong><em>desde 1993</em></summary>
+      <div class="fold-body"><div class="gantt" aria-label="Histórico de bandas por paso"><div class="g-row"><b>Cruz de guía</b><div class="g-track"><span class="g-bar" style="left:8.11%;width:10.81%;background:#65121A" title="Sangre · 1993–1996"></span><span class="g-bar now" style="left:91.89%;width:8.11%;background:#B08D3C" title="Juvenil · 2024–hoy"></span></div></div><div class="g-row"><b>Misterio</b><div class="g-track"><span class="g-bar now" style="left:13.51%;width:86.49%;background:#1B82B4" title="La Encarnación · 1995–hoy">La Encarnación</span></div></div><div class="g-row"><b>Cristo</b><div class="g-track"><span class="g-bar" style="left:8.11%;width:5.41%;background:#1B82B4" title="Enc. · 1993–1994"></span><span class="g-bar" style="left:13.51%;width:5.41%;background:#6b7280" title="P. · 1995–1996"></span><span class="g-bar now" style="left:18.92%;width:81.08%;background:#65121A" title="Sangre de San Benito · 1997–hoy">Sangre de San Benito</span></div></div><div class="g-row"><b>Palio</b><div class="g-track"><span class="g-bar now" style="left:29.73%;width:70.27%;background:#123A67" title="La Puebla del Río · 2001–hoy">La Puebla del Río</span></div></div><div class="g-axis" aria-hidden="true"><i></i><div><span style="left:0.00%">1990</span><span style="left:27.03%">2000</span><span style="left:54.05%">2010</span><span style="left:81.08%">2020</span><span style="left:100.00%">hoy</span></div></div></div><ul class="g-legend">
+<li><span class="c" style="--k:#65121A;background:#65121A"><img src="img/band-logo-s.jpg" alt=""></span><div><strong><a href="#" data-go="b">Sangre de San Benito</a></strong><small>Cruz de guía 1993–1996 · Cristo desde 1997</small></div><em>34 años</em></li>
+<li><span class="c" style="--k:#1B82B4"><img src="img/logo-encarnacion.svg" alt=""></span><div><strong><a href="#">La Encarnación</a></strong><small>Cristo 1993–1994 · Misterio desde 1995</small></div><em>34 años</em></li>
+<li><span class="c" style="--k:#123A67;background:#000"><img src="img/logo-puebla.jpg" alt=""></span><div><strong><a href="#">Banda Municipal de La Puebla del Río</a></strong><small>Palio desde 2001</small></div><em>26 años</em></li>
+<li><span class="c" style="--k:#B08D3C"><img src="img/logo-amj.png" alt=""></span><div><strong><a href="#">Juvenil Sagrada Presentación</a></strong><small>Cruz de guía desde 2024</small></div><em>3 años</em></li>
+<li><span class="c t" style="--k:#6b7280">PP</span><div><strong><a href="#">Presentación al Pueblo (Dos Hermanas)</a></strong><small>Cristo 1995–1996</small></div><em>2 años</em></li>
+</ul></div></details>
+
+    <details class="fold" id="f-viacrucis"><summary><svg><use href="#i-cross"/></svg><strong>Vía Crucis de las Cofradías</strong><em>1991</em></summary>
+      <div class="fold-body"><a class="vc" href="#"><img src="img/cover-45.jpg" alt="Cristo de la Sangre"><div><b>1991</b><strong>El Cristo de la Sangre presidió el Vía Crucis de las Cofradías de Sevilla</strong><span>Única participación registrada en la base →</span></div></a></div></details>
+
+    <details class="fold" id="f-historia"><summary><svg><use href="#i-book"/></svg><strong>Historia</strong><em>desde 1554</em></summary>
+      <div class="fold-body">
+        <p class="resena">Fundada en Triana en 1554, la Hermandad llegó a La Calzada tras perder su capilla trianera y, desde 1921, hace estación de penitencia cada Martes Santo. Su cofradía de tres pasos quedó completa en 1966 con el Cristo de la Sangre de Buiza. Es también sacramental desde 1958.</p>
+        <ol class="tl-hitos">
+          <li class="big"><b>1554</b> Reglas aprobadas el 18 de julio, en Triana</li>
+          <li><b>1845</b> Primera estación de penitencia a la Catedral</li>
+          <li><b>1875</b> La Virgen de la Encarnación llega a San Benito</li>
+          <li class="big"><b>1921</b> Nuevas reglas: sede en La Calzada y salida el Martes Santo</li>
+          <li><b>1928</b> Estreno del misterio, con el Señor de Castillo Lastrucci</li>
+          <li><b>1930</b> La Encarnación vuelve al cortejo</li>
+          <li><b>1958</b> Adquiere carácter sacramental</li>
+          <li class="big"><b>1966</b> Cristo de la Sangre de Buiza · títulos de Pontificia y Archicofradía</li>
+          <li><b>1991</b> El Cristo de la Sangre preside el Vía Crucis de las Cofradías</li>
+          <li class="big"><b>1994</b> Coronación canónica de la Encarnación</li>
+          <li><b>1998</b> San Benito Abad, nuevo titular</li>
+        </ol>
+        <a class="cta" href="#" style="margin-top:12px">Leer «Conoce San Benito» →</a>
+      </div></details>
+
+    <details class="fold" id="f-datos"><summary><svg><use href="#i-info"/></svg><strong>Datos</strong><em>Fundada en 1554</em></summary>
+      <div class="fold-body"><dl class="facts"><div><dt>Sede</dt><dd><a href="#">Parroquia de San Benito Abad</a></dd></div><div><dt>Carácter</dt><dd>Penitencia y sacramental</dd></div><div><dt>Títulos</dt><dd>Pontificia y Real Archicofradía</dd></div><div><dt>Colores</dt><dd class="sw"><i style="background:#5B2C83"></i><i style="background:#7A263A"></i></dd></div><div><dt>Web</dt><dd><a href="#">hermandaddesanbenito.net</a></dd></div><div><dt>Redes</dt><dd><a href="#">Instagram</a></dd></div></dl></div></details>
+
+    <section class="block" id="curiosidades" aria-labelledby="t-cur">
+      <div class="block-h"><h2 id="t-cur">Curiosidades</h2><small>desliza →</small></div>
+      <ul class="curios">
+        <li><b>291</b><strong>años hasta la Catedral</strong><span>Nació en 1554, pero su primera estación a la Catedral no llegó hasta 1845.</span></li>
+        <li><b>3 de 4</b><strong>bandas de la casa</strong><span>La Juvenil, La Encarnación y Sangre de San Benito pertenecen a la propia hermandad.</span></li>
+        <li><b>25·III</b><strong>Coronada en su día</strong><span>La coronación de la Encarnación se proclamó el 25 de marzo de 1994, fiesta de la Encarnación.</span></li>
+        <li><b>1951</b><strong>Su primera marcha</strong><span>«Jesús ante el Pueblo», de Manuel Mejías, es la más antigua de las 95 obras que tiene dedicadas.</span></li>
+      </ul>
+      <p class="src">Sacadas de datos ya publicados en Hilo. La base no tiene aún un campo propio de curiosidades.</p>
+    </section>
+
+    <section class="hilo" id="hilo-h" aria-labelledby="hilo-h-t">
+      <div class="hilo-h"><small>Tira del hilo</small><h2 id="hilo-h-t">Todo lo que sale de San Benito</h2></div>
+      <div class="hilo-center"><span class="c"><img src="img/crest.png" alt=""></span><strong>San Benito</strong><span>3 titulares · 3 pasos · 4 bandas</span></div>
+      <ol class="threads">
+        <li class="thread"><b>Titulares</b><ul class="knots">
+          <li><a href="#"><span class="c"><img src="img/m-jesus.jpg" alt=""></span><strong>Jesús Presentado</strong></a></li>
+          <li><a href="#"><span class="c"><img src="img/cover-45.jpg" alt="" style="object-position:30% 30%"></span><strong>Cristo de la Sangre</strong></a></li>
+          <li><a href="#"><span class="c"><img src="img/m-virgen.jpg" alt=""></span><strong>Encarnación</strong></a></li>
+        </ul></li>
+        <li class="thread"><b>Pasos</b><ul class="knots">
+          <li><a href="#"><span class="c"><img src="img/t-pmist.jpg" alt=""></span><strong>Misterio</strong></a></li>
+          <li><a href="#"><span class="c"><img src="img/t-pcristo.jpg" alt=""></span><strong>Cristo</strong></a></li>
+          <li><a href="#"><span class="c"><img src="img/t-ppalio.jpg" alt=""></span><strong>Palio</strong></a></li>
+        </ul></li>
+        <li class="thread"><b>Bandas</b><ul class="knots">
+          <li><a href="#" data-go="b"><span class="c logo" style="background:#65121A"><img src="img/band-logo-s.jpg" alt=""></span><strong>Sangre de San Benito</strong><em>3 cortejos</em></a></li>
+          <li><a href="#"><span class="c logo"><img src="img/logo-encarnacion.svg" alt=""></span><strong>La Encarnación</strong><em>7 cortejos</em></a></li>
+          <li><a href="#"><span class="c logo" style="background:#000"><img src="img/logo-puebla.jpg" alt=""></span><strong>La Puebla del Río</strong><em>9 cortejos</em></a></li>
+          <li><a href="#"><span class="c logo"><img src="img/logo-amj.png" alt=""></span><strong>Juvenil S. Presentación</strong></a></li>
+        </ul></li>
+        <li class="thread"><b>Autores</b><ul class="knots">
+          <li><a href="#"><span class="c t">CL</span><strong>Castillo Lastrucci</strong></a></li>
+          <li><a href="#"><span class="c t">FB</span><strong>Francisco Buiza</strong></a></li>
+          <li><a href="#"><span class="c t">BM</span><strong>Blas Molner</strong></a></li>
+        </ul></li>
+        <li class="thread"><b>Capataces y vestidor</b><ul class="knots">
+          <li><a href="#"><span class="c t">JG</span><strong>Juan A. Gil</strong></a></li>
+          <li><a href="#"><span class="c t">MR</span><strong>Manuel Roldán</strong></a></li>
+          <li><a href="#"><span class="c t">JM</span><strong>Jesús Morón</strong></a></li>
+          <li><a href="#"><span class="c t">LG</span><strong>Leandro González</strong><em>vestidor</em></a></li>
+        </ul></li>
+        <li class="thread"><b>Su Martes Santo</b><ul class="knots">
+          <li><a href="#"><span class="c logo"><img src="img/logo-cerro.png" alt=""></span><strong>El Cerro</strong></a></li>
+          <li><a href="#"><span class="c logo"><img src="img/logo-santacruz.png" alt=""></span><strong>Santa Cruz</strong></a></li>
+          <li><a href="#"><span class="c logo"><img src="img/logo-estudiantes.png" alt=""></span><strong>Estudiantes</strong></a></li>
+          <li><a href="#"><span class="c logo"><img src="img/logo-sanesteban.png" alt=""></span><strong>San Esteban</strong></a></li>
+          <li><a href="#"><span class="c t">+4</span><strong>Ver el día</strong></a></li>
+        </ul></li>
+      </ol>
+      <div class="hilo-more"><a href="#f-patrimonio" data-open><span>Su <b>patrimonio musical</b>: 95 obras</span><span>→</span></a><a href="#"><span>Leer <b>Conoce San Benito</b>, el artículo</span><span>→</span></a></div>
+    </section>
+    <p class="foot">Maqueta con datos reales de Hilo Cofrade · horario e itinerario de 2026. Lo marcado como «provisional» o «sin dato» no está aún en la base.</p>
+  </main>
+
+  <!-- ============ BANDA ============ -->
+  <main id="page-b" hidden>
+    <div class="scr-head" data-scr-head hidden><small>Sangre de San Benito</small><h2></h2><p></p></div>
+    <section class="hero" style="--tint:#4a0d14">
+      <div class="hero-bg" aria-hidden="true"><img src="img/band-cover.jpg" alt="" style="object-position:60% 30%"></div>
+      <div class="crest dark"><img src="img/band-logo-s.jpg" alt="Logo de la Banda del Santísimo Cristo de la Sangre"></div>
+      <h1>Sangre de San Benito</h1>
+      <div class="chips"><span class="day">Cornetas y tambores</span><span>Desde 1992</span></div>
+      <div class="pulse" aria-label="Resumen">
+        <div><small>Salidas</small><b>3</b></div>
+        <div class="mid">en Semana Santa<i></i>vigentes</div>
+        <div><small>Discos</small><b>13</b></div>
+      </div>
+      <p class="countdown"><b id="days-b">—</b> días para el Martes Santo</p>
+    </section>
+
+    <div class="actions">
+      <button type="button" class="hot" data-fold="#f-disco"><svg><use href="#i-disc"/></svg>Discos</button>
+      <button type="button" data-fold="#f-estrenos"><svg><use href="#i-star"/></svg>Estrenos</button>
+      <a href="#" data-go="h"><svg><use href="#i-cortejo"/></svg>Su hermandad</a>
+      <button type="button" data-share="Sangre de San Benito · Hilo Cofrade"><svg><use href="#i-share"/></svg>Compartir</button>
+    </div>
+
+    <section class="block" id="semana" aria-labelledby="t-semana">
+      <div class="block-h"><h2 id="t-semana">Su Semana Santa</h2><small>acompañamientos vigentes</small></div>
+      <div class="week" aria-label="Días con salida">
+        <div><b>D</b><span class="e"></span></div>
+        <div class="on"><b>L</b><span class="c">SP</span></div>
+        <div class="home"><b>M</b><span class="c"><img src="img/crest.png" alt="San Benito"></span></div>
+        <div><b>X</b><span class="e"></span></div>
+        <div><b>J</b><span class="e"></span></div>
+        <div class="on"><b>V</b><span class="c">SE</span></div>
+        <div><b>S</b><span class="e"></span></div>
+        <div><b>R</b><span class="e"></span></div>
+      </div>
+      <ol class="esquema" style="margin-top:14px">
+        <li><a class="node" href="#"><span class="pic">L</span><span class="txt"><small>Lunes Santo</small><strong>Soberano Poder · Pusillus Grex</strong><span>Tras el Señor del Soberano Poder</span></span><span></span></a></li>
+        <li><a class="node" href="#" data-go="h"><span class="pic"><img src="img/t-pcristo.jpg" alt=""></span><span class="txt"><small>Martes Santo · su hermandad</small><strong>San Benito</strong><span>Tras el Cristo de la Sangre, desde 1997</span></span><span class="band"><img src="img/crest.png" alt="Escudo de San Benito"></span></a></li>
+        <li><a class="node" href="#"><span class="pic">V</span><span class="txt"><small>Viernes Santo</small><strong>Santo Entierro de La Palma</strong><span>Tras el Cristo de la Buena Muerte</span></span><span></span></a></li>
+      </ol>
+    </section>
+
+    <details class="fold" id="f-tray"><summary><svg><use href="#i-book"/></svg><strong>Trayectoria</strong><em>desde 1991</em></summary>
+      <div class="fold-body"><div class="gantt" aria-label="Histórico de acompañamientos"><div class="g-row"><b>Martes · San Benito</b><div class="g-track"><span class="g-bar" style="left:8.11%;width:10.81%;background:#65121A" title="Cruz · 1993–1996"></span><span class="g-bar now" style="left:18.92%;width:81.08%;background:#65121A" title="Tras el Cristo de la Sangre · 1997–hoy">Tras el Cristo de la Sangre</span></div></div><div class="g-row"><b>Miércoles · Baratillo</b><div class="g-track"><span class="g-bar" style="left:37.84%;width:2.70%;background:#2F284A" title=" · 2004–2004"></span></div></div><div class="g-row"><b>Jueves · Confalón</b><div class="g-track"><span class="g-bar" style="left:81.08%;width:18.92%;background:#2F284A" title="Écija · 2020–2026">Écija</span></div></div><div class="g-axis" aria-hidden="true"><i></i><div><span style="left:0.00%">1990</span><span style="left:27.03%">2000</span><span style="left:54.05%">2010</span><span style="left:81.08%">2020</span><span style="left:100.00%">hoy</span></div></div></div><p class="note">Además, Lunes Santo con el Soberano Poder (Pusillus Grex) y Viernes Santo con el Santo Entierro de La Palma: vigentes, sin año de inicio en la base.</p>
+      <ol class="dates" style="margin-top:12px"><li><b>1991</b><i></i><span>Nace dentro de <a href="#">La Encarnación</a></span></li><li><b>1992</b><i></i><span>Presentación, 27 de diciembre</span></li><li><b>1995</b><i></i><span>Nombre actual</span></li><li><b>1997</b><i></i><span>Tras el Cristo de la Sangre</span></li></ol>
+      <p class="note">Director: Francisco Moisés García Picón.</p></div></details>
+
+    <details class="fold" id="f-disco"><summary><svg><use href="#i-disc"/></svg><strong>Discografía</strong><em>5 álbumes · 8 sencillos</em></summary>
+      <div class="fold-body"><ul class="disc" style="--logo:url(img/band-logo-s.jpg)"><li><strong>A Pulso</strong><b>2001</b></li><li><strong>Al Stmo. Cristo de la Sangre</strong><b>2006</b></li><li><strong>Navidad en la Calzá</strong><b>2022</b></li><li><strong>Directos de la Calzá</strong><b>2023</b></li><li><strong>Cuaresma 2025</strong><b>2025</b></li><li style="background:var(--soft);color:var(--ink)"><strong>+ 8 sencillos</strong><b>78 pistas</b></li></ul><p class="note">Todo en Spotify.</p></div></details>
+
+    <details class="fold" id="f-estrenos"><summary><svg><use href="#i-star"/></svg><strong>Patrimonio musical</strong><em>5 estrenos</em></summary>
+      <div class="fold-body">
+        <div class="pm-hero"><b>76</b><span><strong>obras distintas grabadas</strong> en 13 discos y sencillos, con 78 pistas.</span></div>
+        <p class="sub-h">Sus estrenos</p>
+        <ul class="est">
+          <li><b>2024</b><div><strong><a href="#">El Pacto de Sangre</a></strong><small>Abraham Padilla Consuegra · Parroquia de San Jacinto</small></div></li>
+          <li><b>2024</b><div><strong><a href="#">Bicentenario</a></strong><small>Jorge Martín Puerto · Vía Crucis del Cristo de la Sangre</small></div></li>
+          <li><b>2023</b><div><strong><a href="#">Camino al Calvario</a></strong><small>Francisco Javier González Ríos · Los Terceros</small></div></li>
+          <li><b>2023</b><div><strong><a href="#">Promesa y Pasión</a></strong><small>Pablo Perea Garrido · Iglesia del Señor San José</small></div></li>
+          <li><b>2004</b><div><strong><a href="#">Misericordia en el Arenal</a></strong><small>Sergio Pérez Rodríguez · estreno de 2004</small></div></li>
+        </ul>
+        <p class="sub-h">Las que más ha grabado</p>
+        <div class="chipset"><span>Macarena <b>×2</b></span><span>Soledad de San Pablo <b>×2</b></span><span>Al Stmo. Cristo de la Sangre</span><span>Ave María Encarnación</span><span>Amor de Madre</span></div>
+        <p class="sub-h">Para escuchar</p>
+        <ul class="listen">
+          <li><a href="#"><span class="play">▶</span><span><strong>El Pacto de Sangre</strong><small>Estreno 2024</small></span><em>Spotify</em></a></li>
+          <li><a href="#"><span class="play">▶</span><span><strong>Cuaresma 2025</strong><small>Álbum</small></span><em>Spotify</em></a></li>
+        </ul>
+        <a class="cta" href="#">Ver todo su repertorio grabado →</a>
+      </div></details>
+
+    <details class="fold" id="f-bdatos"><summary><svg><use href="#i-info"/></svg><strong>Datos</strong><em>Fundada en 1992</em></summary>
+      <div class="fold-body"><dl class="facts"><div><dt>Hermandad</dt><dd><a href="#" data-go="h">San Benito</a></dd></div><div><dt>Sede</dt><dd>Complejo Musical La Madrina, av. de Honduras</dd></div><div><dt>Otro nombre</dt><dd>Banda del Santísimo Cristo de la Sangre</dd></div><div><dt>Colores</dt><dd class="sw"><i style="background:#65121A"></i><i style="background:#2F284A"></i></dd></div><div><dt>Web</dt><dd><a href="#">bandacristodelasangre.org</a></dd></div><div><dt>Redes</dt><dd><a href="#">Instagram</a> · <a href="#">YouTube</a></dd></div></dl></div></details>
+
+    <section class="hilo" id="hilo-b" aria-labelledby="hilo-b-t" style="background:#3a0b11">
+      <div class="hilo-h"><small>Tira del hilo</small><h2 id="hilo-b-t">Todo lo que sale de la banda</h2></div>
+      <div class="hilo-center"><span class="c" style="background:#65121A"><img src="img/band-logo-s.jpg" alt=""></span><strong>Sangre de San Benito</strong><span>3 salidas vigentes · 13 discos · 4 estrenos</span></div>
+      <ol class="threads">
+        <li class="thread"><b>Su hermandad</b><ul class="knots">
+          <li><a href="#" data-go="h"><span class="c logo"><img src="img/crest.png" alt=""></span><strong>San Benito</strong><em>desde 1993</em></a></li>
+          <li><a href="#"><span class="c"><img src="img/cover-45.jpg" alt="" style="object-position:30% 30%"></span><strong>Cristo de la Sangre</strong></a></li>
+          <li><a href="#"><span class="c"><img src="img/t-pcristo.jpg" alt=""></span><strong>Paso del Cristo</strong></a></li>
+        </ul></li>
+        <li class="thread"><b>Dónde suena</b><ul class="knots">
+          <li><a href="#"><span class="c t">SP</span><strong>Soberano Poder</strong><em>Lunes</em></a></li>
+          <li><a href="#"><span class="c t">SE</span><strong>Santo Entierro · La Palma</strong><em>Viernes</em></a></li>
+          <li><a href="#"><span class="c t">B</span><strong>El Baratillo</strong><em>2004</em></a></li>
+          <li><a href="#"><span class="c t">C</span><strong>Confalón · Écija</strong><em>2020–2026</em></a></li>
+        </ul></li>
+        <li class="thread"><b>Su origen</b><ul class="knots">
+          <li><a href="#"><span class="c logo"><img src="img/logo-encarnacion.svg" alt=""></span><strong>La Encarnación</strong><em>1991</em></a></li>
+        </ul></li>
+        <li class="thread"><b>Compositores de sus estrenos</b><ul class="knots">
+          <li><a href="#"><span class="c t">AP</span><strong>Abraham Padilla</strong><em>2024</em></a></li>
+          <li><a href="#"><span class="c t">JM</span><strong>Jorge Martín Puerto</strong><em>2024</em></a></li>
+          <li><a href="#"><span class="c t">FG</span><strong>F. J. González Ríos</strong><em>2023</em></a></li>
+          <li><a href="#"><span class="c t">PP</span><strong>Pablo Perea</strong><em>2023</em></a></li>
+        </ul></li>
+      </ol>
+    </section>
+    <p class="foot">Maqueta con datos reales de Hilo Cofrade.</p>
+  </main>
+</div>
+
+
+  <nav class="tabbar" id="tabbar-h" aria-label="Secciones de la Hermandad">
+    <button type="button" data-screen="inicio" aria-current="page"><svg><use href="#i-home"/></svg>Inicio</button>
+    <button type="button" data-screen="cortejo"><svg><use href="#i-cortejo"/></svg>Cortejo</button>
+    <button type="button" data-screen="musica"><svg><use href="#i-music"/></svg>Música</button>
+    <button type="button" data-screen="historia"><svg><use href="#i-book"/></svg>Historia</button>
+    <button type="button" data-screen="hilo"><svg><use href="#i-link"/></svg>Hilo</button>
+  </nav>
+  <nav class="tabbar" id="tabbar-b" aria-label="Secciones de la Banda" hidden>
+    <button type="button" data-screen="inicio" aria-current="page"><svg><use href="#i-home"/></svg>Inicio</button>
+    <button type="button" data-screen="musica"><svg><use href="#i-disc"/></svg>Música</button>
+    <button type="button" data-screen="historia"><svg><use href="#i-book"/></svg>Trayectoria</button>
+    <button type="button" data-screen="hilo"><svg><use href="#i-link"/></svg>Hilo</button>
+  </nav>
+  <div class="toast" id="toast" role="status" hidden></div>
+
+<div class="sheet" id="sheet" hidden><div class="sheet-panel" role="dialog" aria-modal="true" aria-label="Paso"><div class="sheet-grab"><i></i></div><button class="sheet-x" type="button" aria-label="Cerrar">×</button><div id="sheet-body"></div></div></div>
+
+<template id="tpl-mist">
+  <div class="sh-top"><img src="img/m-pmist.jpg" alt=""><div><small>1 · Misterio</small><h3>Sagrada Presentación de Jesús al Pueblo</h3><span>San Benito · Martes Santo</span></div></div>
+  <div class="sh-tabs" role="tablist"><button role="tab" aria-selected="true" data-pane="m-e">Escena</button><button role="tab" aria-selected="false" data-pane="m-p">Paso</button><button role="tab" aria-selected="false" data-pane="m-q">Equipo</button></div>
+  <div class="sh-pane" id="m-e">
+    <p class="sh-lbl">Imagen principal</p>
+    <a class="principal" href="#"><img src="img/m-jesus.jpg" alt=""><span><small>Titular</small><strong>Jesús Presentado al Pueblo</strong><span>Antonio Castillo Lastrucci · 1928</span></span><em>›</em></a>
+    <p class="sh-lbl">Figuras secundarias <b>0</b></p>
+    <div class="empty"><svg><use href="#i-fig"/></svg><strong>Aún no están cargadas</strong><p>La base documenta el trono y el sillón de Pilato y piezas de orfebrería para el centurión y el soldado romano, pero todavía no las figuras como imágenes con su autor.</p><button type="button" data-tpl="sg">Ver cómo queda con datos reales</button></div>
+  </div>
+  <div class="sh-pane" id="m-p" hidden>
+    <dl class="facts"><div><dt>Estilo</dt><dd>Barroco rocalla</dd></div><div><dt>Talla</dt><dd><a href="#">Antonio Martín Fernández</a> · 1967–1968</dd></div><div><dt>Canastilla</dt><dd>Tondos y querubines de <a href="#">Francisco Buiza</a></dd></div><div><dt>Llamador</dt><dd>La Giralda y la torre de San Benito unidas por el puente de la Calzá</dd></div><div><dt>Luz</dt><dd>Seis candelabros de guardabrisas</dd></div></dl>
+    <p class="sh-lbl" style="margin-top:14px">Estrenos del paso</p>
+    <ol class="tl2 hot"><li><b>2018</b><div><strong>Parihuela y dorado actual</strong><small>Carpintería Melo · Manolo y Antonio Doradores</small></div></li><li><b>2003</b><div><strong>Apostolado de los respiraderos</strong><small>Juan Antonio Blanco</small></div></li><li><b>1987</b><div><strong>Llamador</strong><small>Juan Sánchez Vela y Antonio Herranz</small></div></li></ol>
+  </div>
+  <div class="sh-pane" id="m-q" hidden>
+    <ul class="team" style="margin-top:0"><li><span class="av">JG</span><span><small>Capataz</small><a href="#">Juan Antonio Gil García</a></span></li><li><span class="av" style="background:#fff;border:1px solid var(--line);padding:3px"><img src="img/logo-encarnacion.svg" alt="" style="max-height:100%"></span><span><small>Música</small><a href="#">A. M. La Encarnación</a></span></li></ul>
+  </div>
+  <div class="sh-foot"><a href="#">Ficha completa del paso →</a><button type="button" data-tpl="panel">Cómo se edita en el panel</button></div>
+</template>
+
+<template id="tpl-cristo">
+  <div class="sh-top"><img src="img/m-pcristo.jpg" alt=""><div><small>2 · Cristo</small><h3>Santísimo Cristo de la Sangre</h3><span>San Benito · Martes Santo</span></div></div>
+  <div class="sh-tabs" role="tablist"><button role="tab" aria-selected="true" data-pane="c-e">Escena</button><button role="tab" aria-selected="false" data-pane="c-p">Paso</button><button role="tab" aria-selected="false" data-pane="c-q">Equipo</button></div>
+  <div class="sh-pane" id="c-e">
+    <p class="sh-lbl">Imagen principal</p>
+    <a class="principal" href="#"><img src="img/cover-45.jpg" alt="" style="object-position:30% 25%"><span><small>Titular</small><strong>Cristo de la Sangre</strong><span>Francisco Buiza · 1966</span></span><em>›</em></a>
+    <p class="sh-lbl">Figuras secundarias <b>0</b></p>
+    <div class="empty"><svg><use href="#i-fig"/></svg><strong>Sin figuras secundarias registradas</strong><p>Si el paso no lleva más imágenes, la sección no aparece en la web.</p></div>
+  </div>
+  <div class="sh-pane" id="c-p" hidden><dl class="facts"><div><dt>Estilo</dt><dd>Barroco</dd></div><div><dt>Fecha</dt><dd>1967–1969</dd></div></dl><p class="note">Las fases de este paso aún no están cargadas.</p></div>
+  <div class="sh-pane" id="c-q" hidden>
+    <ul class="team" style="margin-top:0"><li><span class="av">MR</span><span><small>Capataz</small><a href="#">Manuel Roldán Rojas</a></span></li><li><span class="av" style="background:#65121A;padding:3px"><img src="img/band-logo-s.jpg" alt="" style="max-height:100%"></span><span><small>Música</small><a href="#" data-go="b">Sangre de San Benito</a></span></li></ul>
+  </div>
+  <div class="sh-foot"><a href="#">Ficha completa del paso →</a><button type="button" data-tpl="panel">Cómo se edita en el panel</button></div>
+</template>
+
+<template id="tpl-palio">
+  <div class="sh-top"><img src="img/m-ppalio.jpg" alt="" style="object-position:50% 30%"><div><small>3 · Palio</small><h3>Nuestra Señora de la Encarnación Coronada</h3><span>San Benito · Martes Santo</span></div></div>
+  <div class="sh-tabs" role="tablist"><button role="tab" aria-selected="true" data-pane="v-e">Escena</button><button role="tab" aria-selected="false" data-pane="v-p">Paso</button><button role="tab" aria-selected="false" data-pane="v-q">Equipo</button></div>
+  <div class="sh-pane" id="v-e">
+    <p class="sh-lbl">Imagen principal</p>
+    <a class="principal" href="#"><img src="img/m-virgen.jpg" alt=""><span><small>Titular</small><strong>Virgen de la Encarnación</strong><span>Blas Molner · 1780–1793</span></span><em>›</em></a>
+    <p class="sh-lbl">Figuras secundarias <b>0</b></p>
+    <div class="empty"><svg><use href="#i-fig"/></svg><strong>Sin figuras secundarias registradas</strong><p>Si el paso no lleva más imágenes, la sección no aparece en la web.</p></div>
+  </div>
+  <div class="sh-pane" id="v-p" hidden><dl class="facts"><div><dt>Estilo</dt><dd>Barroco</dd></div><div><dt>Palio</dt><dd>1930–1931</dd></div><div><dt>Orfebrería</dt><dd>Incorporada entre 1958 y 2001</dd></div></dl></div>
+  <div class="sh-pane" id="v-q" hidden>
+    <ul class="team" style="margin-top:0"><li><span class="av">JM</span><span><small>Capataz</small><a href="#">Jesús Morón Hortal</a></span></li><li><span class="av v">LG</span><span><small>Vestidor</small><a href="#">Leandro González Ruiz</a></span></li><li><span class="av" style="background:#000;padding:3px"><img src="img/logo-puebla.jpg" alt="" style="max-height:100%"></span><span><small>Música</small><a href="#">B. M. La Puebla del Río</a></span></li></ul>
+  </div>
+  <div class="sh-foot"><a href="#">Ficha completa del paso →</a><button type="button" data-tpl="panel">Cómo se edita en el panel</button></div>
+</template>
+
+<template id="tpl-sg">
+  <div class="sh-top" style="background:linear-gradient(160deg,#3b2a12,#120c05)"><div><small>Misterio · Lunes Santo</small><h3>Soberano Poder ante Caifás</h3><span>Hermandad de San Gonzalo</span></div></div>
+  <p class="demo-tag" style="margin-top:12px">Ejemplo con datos reales de otra hermandad: San Gonzalo sí tiene sus figuras cargadas.</p>
+  <div class="sh-tabs" role="tablist"><button role="tab" aria-selected="true" data-pane="g-e">Escena</button><button role="tab" aria-selected="false" data-pane="g-p">Paso</button><button role="tab" aria-selected="false" data-pane="g-q">Equipo</button></div>
+  <div class="sh-pane" id="g-e">
+    <p class="sh-lbl">Imagen principal</p>
+    <a class="principal" href="#"><span class="sil"><svg><use href="#i-fig"/></svg></span><span><small>Titular</small><strong>Jesús en su Soberano Poder ante Caifás</strong><span>Luis Ortega Bru · 1976</span></span><em>›</em></a>
+    <p class="sh-lbl">Figuras secundarias <b>5</b></p>
+    <ul class="figs">
+      <li><a class="fig" href="#"><span class="n">1</span><span class="sil"><svg><use href="#i-fig"/></svg></span><span><strong>Caifás</strong><small>Luis Ortega Bru · década de 1970</small></span><em>›</em></a></li>
+      <li><a class="fig" href="#"><span class="n">2</span><span class="sil"><svg><use href="#i-fig"/></svg></span><span><strong>Anás</strong><small>Castillo Lastrucci · 1961–1962</small></span><em>›</em></a></li>
+      <li><a class="fig" href="#"><span class="n">3</span><span class="sil"><svg><use href="#i-fig"/></svg></span><span><strong>José de Arimatea</strong><small>Castillo Lastrucci · 1961–1962</small></span><em>›</em></a></li>
+      <li><a class="fig" href="#"><span class="n">4</span><span class="sil"><svg><use href="#i-fig"/></svg></span><span><strong>Centurión romano</strong><small>Castillo Lastrucci · 1961–1962</small></span><em>›</em></a></li>
+      <li><a class="fig" href="#"><span class="n">5</span><span class="sil"><svg><use href="#i-fig"/></svg></span><span><strong>Esclavo etíope</strong><small>Castillo Lastrucci · 1961–1962</small></span><em>›</em></a></li>
+    </ul>
+    <p class="note">Ninguna de estas figuras tiene foto todavía. Cuando se suba una desde el panel, sustituye a la silueta.</p>
+  </div>
+  <div class="sh-pane" id="g-p" hidden><p class="note">Datos del paso de San Gonzalo (ejemplo).</p></div>
+  <div class="sh-pane" id="g-q" hidden><p class="note">Equipo del paso de San Gonzalo (ejemplo).</p></div>
+  <div class="sh-foot"><a href="#">Ficha completa del paso →</a><button type="button" data-tpl="mist">← Volver a San Benito</button><button type="button" data-tpl="panel">Cómo se edita en el panel</button></div>
+</template>
+
+<template id="tpl-panel">
+  <div class="sh-top" style="height:120px;background:var(--navy)"><div><small>Panel de control</small><h3>Paso de misterio · Figuras</h3><span>Propuesta de edición</span></div></div>
+  <div class="pnl">
+    <div class="pnl-h"><strong>Imágenes del paso</strong><span>Propuesta</span></div>
+    <ol class="lst">
+      <li><i>⋮⋮</i><span><strong>Jesús en su Soberano Poder</strong><small>Ortega Bru · 1976</small></span><select aria-label="Papel"><option selected>Principal</option><option>Secundaria</option></select></li>
+      <li><i>⋮⋮</i><span><strong>Caifás</strong><small>Ortega Bru · déc. 1970</small></span><select aria-label="Papel"><option>Principal</option><option selected>Secundaria</option></select></li>
+      <li><i>⋮⋮</i><span><strong>Anás</strong><small>Castillo Lastrucci</small></span><select aria-label="Papel"><option>Principal</option><option selected>Secundaria</option></select></li>
+      <li><i>⋮⋮</i><span><strong>José de Arimatea</strong><small>Castillo Lastrucci</small></span><select aria-label="Papel"><option>Principal</option><option selected>Secundaria</option></select></li>
+      <li><i>⋮⋮</i><span><strong>Centurión romano</strong><small>Castillo Lastrucci</small></span><select aria-label="Papel"><option>Principal</option><option selected>Secundaria</option></select></li>
+      <li><i>⋮⋮</i><span><strong>Esclavo etíope</strong><small>Castillo Lastrucci</small></span><select aria-label="Papel"><option>Principal</option><option selected>Secundaria</option></select></li>
+    </ol>
+    <div class="add"><input placeholder="Buscar imagen existente o crear figura…" aria-label="Añadir figura"><button type="button">Añadir</button></div>
+    <button class="save" type="button">Guardar orden y papeles</button>
+    <ul class="why">
+      <li>Arrastrar ⋮⋮ fija el orden en que salen en la web.</li>
+      <li>«Principal / Secundaria» decide dónde aparece cada imagen en la hoja del paso.</li>
+      <li>Cada figura es una imagen normal: su autor, su fecha y su foto se editan en su propia ficha del panel.</li>
+    </ul>
+  </div>
+  <div class="sh-foot"><button type="button" data-tpl="mist">← Volver al paso</button></div>
+</template>
+
+<script>
+(function () {
+  function show(which) {
+    document.getElementById("page-h").hidden = which !== "h";
+    document.getElementById("page-b").hidden = which !== "b";
+    document.getElementById("tab-h").setAttribute("aria-pressed", String(which === "h"));
+    document.getElementById("tab-b").setAttribute("aria-pressed", String(which === "b"));
+    window.scrollTo({ top: 0 });
+    try { localStorage.setItem("programa-tab", which); } catch (e) {}
+  }
+  document.addEventListener("click", function (e) {
+    var go = e.target.closest("[data-go]");
+    if (go) { e.preventDefault(); show(go.dataset.go); return; }
+    var open = e.target.closest("a[data-open]");
+    if (open) {
+      e.preventDefault();
+      var d = document.querySelector(open.getAttribute("href"));
+      if (d) { d.open = true; d.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" }); }
+      return;
+    }
+    var a = e.target.closest('a[href="#"]'); if (a) e.preventDefault();
+  });
+  var start = "h"; try { start = localStorage.getItem("programa-tab") || "h"; } catch (e) {}
+  show(start === "b" ? "b" : "h");
+  function easter(y) { var a=y%19,b=Math.floor(y/100),c=y%100,d=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),h=(19*a+b-d-g+15)%30,i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-h-k)%7,m=Math.floor((a+11*h+22*l)/451),mo=Math.floor((h+l-7*m+114)/31),da=((h+l-7*m+114)%31)+1; return new Date(Date.UTC(y,mo-1,da)); }
+  var now = new Date(), today = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()), t;
+  for (var k = 0; k < 2; k++) { t = easter(now.getFullYear() + k); t.setUTCDate(t.getUTCDate() - 5); if (t.getTime() >= today) break; }
+  var days = Math.round((t.getTime() - today) / 864e5);
+  document.getElementById("days").textContent = days; document.getElementById("days-b").textContent = days;
+})();
+
+(function () {
+  var sheet = document.getElementById('sheet'), body = document.getElementById('sheet-body'), last = null;
+  function show(key) {
+    var t = document.getElementById('tpl-' + key); if (!t) return;
+    body.innerHTML = ''; body.appendChild(t.content.cloneNode(true));
+    sheet.hidden = false; document.documentElement.style.overflow = 'hidden';
+    sheet.querySelector('.sheet-panel').scrollTop = 0;
+    var x = sheet.querySelector('.sheet-x'); x && x.focus();
+  }
+  function hide() { sheet.hidden = true; document.documentElement.style.overflow = ''; last && last.focus(); }
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-sheet]');
+    if (b) { last = b; show(b.getAttribute('data-sheet')); return; }
+    var t = e.target.closest('[data-tpl]');
+    if (t && sheet.contains(t)) { show(t.getAttribute('data-tpl')); return; }
+    var tab = e.target.closest('.sh-tabs button');
+    if (tab) {
+      tab.parentNode.querySelectorAll('button').forEach(function (x) {
+        var on = x === tab; x.setAttribute('aria-selected', on);
+        var p = document.getElementById(x.getAttribute('data-pane')); if (p) p.hidden = !on;
+      });
+      return;
+    }
+    if (e.target === sheet || e.target.closest('.sheet-x')) { hide(); return; }
+    if (sheet.contains(e.target) && e.target.closest('a[data-go]')) hide();
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !sheet.hidden) hide(); });
+})();
+
+(function () {
+  var SCREENS = {
+    h: {
+      inicio:   { t: 'San Benito', p: '', sel: ['.hero', '.actions', '#dia', '#curiosidades'] },
+      cortejo:  { t: 'Cortejo', p: '3 pasos, sus figuras, capataces y nazarenos', sel: ['#cortejo', '#pasos', '#f-titulares', '#f-nazarenos', '#f-tunica'] },
+      musica:   { t: 'Música', p: 'Sus bandas, su historial y las obras que le han dedicado', sel: ['#bandas', '#f-musica', '#f-patrimonio'] },
+      historia: { t: 'Historia', p: 'Desde 1554: hitos, patrimonio y cultos', inline: ['#f-historia'], sel: ['#f-historia', '#f-viacrucis', '#f-patri', '#f-cultos', '#f-horario', '#f-recorrido', '#f-datos'] },
+      hilo:     { t: 'Tira del hilo', p: 'Todo lo que está conectado con San Benito', sel: ['#hilo-h'] }
+    },
+    b: {
+      inicio:   { t: 'Sangre de San Benito', p: '', sel: ['.hero', '.actions', '#semana'] },
+      musica:   { t: 'Música', p: 'Discos, estrenos y repertorio grabado', inline: ['#f-disco', '#f-estrenos'], sel: ['#f-disco', '#f-estrenos'] },
+      historia: { t: 'Trayectoria', p: 'Desde 1991: acompañamientos y datos', inline: ['#f-tray'], sel: ['#f-tray', '#f-bdatos'] },
+      hilo:     { t: 'Tira del hilo', p: 'Todo lo que está conectado con la banda', sel: ['#hilo-b'] }
+    }
+  };
+  var page = function () { return document.getElementById('page-b').hidden ? 'h' : 'b'; };
+  var current = { h: 'inicio', b: 'inicio' };
+  var top = document.querySelector('.top');
+
+  function setScreen(pg, name, keepScroll) {
+    var main = document.getElementById('page-' + pg), cfg = SCREENS[pg][name]; if (!cfg) return;
+    current[pg] = name;
+    var keep = new Set();
+    cfg.sel.forEach(function (q) { var el = main.querySelector(q); if (el) keep.add(el); });
+    Array.prototype.forEach.call(main.children, function (el) {
+      if (el.matches('[data-scr-head], .foot')) return;
+      el.setAttribute('data-screen-el', '');
+      el.hidden = !keep.has(el);
+    });
+    // las filas plegables siguen el orden definido
+    cfg.sel.forEach(function (q) { var el = main.querySelector(q); if (el) main.insertBefore(el, main.querySelector('.foot')); });
+    main.querySelectorAll('details.fold').forEach(function (d) { var on = (cfg.inline || []).some(function (q) { return d.matches(q); }); d.classList.toggle('inline', on); d.open = on; });
+    var head = main.querySelector('[data-scr-head]');
+    head.hidden = name === 'inicio';
+    head.querySelector('h2').textContent = cfg.t; head.querySelector('p').textContent = cfg.p;
+    main.classList.remove('scr-in'); void main.offsetWidth; main.classList.add('scr-in');
+    document.querySelectorAll('#tabbar-' + pg + ' button').forEach(function (b) {
+      if (b.dataset.screen === name) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
+    });
+    if (!keepScroll) window.scrollTo({ top: 0 });
+    compact();
+  }
+  function compact() {
+    var pg = page(), onInicio = current[pg] === 'inicio';
+    var hero = document.querySelector('#page-' + pg + ' .hero');
+    var past = !onInicio || (hero && hero.getBoundingClientRect().bottom < 80);
+    top.classList.toggle('compact', past);
+    document.getElementById('mini-h').classList.toggle('on', pg === 'h');
+    document.getElementById('mini-b').classList.toggle('on', pg === 'b');
+  }
+  window.addEventListener('scroll', compact, { passive: true });
+
+  // cambiar de ficha (Hermandad/Banda) también cambia la barra inferior
+  new MutationObserver(function () {
+    var pg = page();
+    document.getElementById('tabbar-h').hidden = pg !== 'h';
+    document.getElementById('tabbar-b').hidden = pg !== 'b';
+    compact();
+  }).observe(document.getElementById('page-b'), { attributes: true, attributeFilter: ['hidden'] });
+
+  // ---- hoja inferior genérica para cada fila (antes desplegable) ----
+  var sheet = document.getElementById('sheet'), body = document.getElementById('sheet-body'), panel = sheet.querySelector('.sheet-panel');
+  function openFold(d) {
+    if (!d) return;
+    var sum = d.querySelector('summary'), fb = d.querySelector('.fold-body');
+    body.innerHTML = '';
+    var h = document.createElement('div'); h.className = 'sh-plain';
+    var icon = sum.querySelector('svg'); if (icon) h.appendChild(icon.cloneNode(true));
+    var tx = document.createElement('div');
+    var t = document.createElement('h3'); t.textContent = sum.querySelector('strong').textContent; tx.appendChild(t);
+    var em = sum.querySelector('em'); if (em) { var sp = document.createElement('span'); sp.innerHTML = em.innerHTML; tx.appendChild(sp); }
+    h.appendChild(tx); body.appendChild(h);
+    var c = fb.cloneNode(true); c.querySelectorAll('[id]').forEach(function (n) { n.removeAttribute('id'); }); body.appendChild(c);
+    sheet.classList.add('sheet-plain'); sheet.hidden = false; document.documentElement.style.overflow = 'hidden'; panel.scrollTop = 0;
+  }
+  document.addEventListener('click', function (e) {
+    var sum = e.target.closest('details.fold > summary');
+    if (sum && !sheet.contains(sum)) { if (sum.parentNode.classList.contains('inline')) { e.preventDefault(); return; } e.preventDefault(); openFold(sum.parentNode); return; }
+    var f = e.target.closest('[data-fold]');
+    if (f) { openFold(document.querySelector(f.dataset.fold)); return; }
+    var sc = e.target.closest('[data-screen]');
+    if (sc) { e.preventDefault(); setScreen(sc.dataset.page || page(), sc.dataset.screen); return; }
+    var sh = e.target.closest('[data-share]');
+    if (sh) {
+      var data = { title: sh.dataset.share, url: location.href };
+      if (navigator.share) { navigator.share(data).catch(function () {}); }
+      else { toast('Enlace listo para compartir'); }
+      return;
+    }
+    if (e.target.closest('[data-sheet], [data-tpl]')) sheet.classList.remove('sheet-plain');
+  }, true);
+  // enlaces «data-open» (Tira del hilo, botones): abren la hoja de esa fila o cambian de pantalla
+  document.addEventListener('click', function (e) {
+    var o = e.target.closest('a[data-open], a[href^="#"]:not([href="#"])');
+    if (!o || o.closest('.tabbar')) return;
+    var target = document.querySelector(o.getAttribute('href'));
+    if (!target) return;
+    e.preventDefault(); e.stopImmediatePropagation();
+    if (target.matches('details.fold')) { openFold(target); return; }
+    var pg = page();
+    Object.keys(SCREENS[pg]).some(function (k) {
+      if (SCREENS[pg][k].sel.some(function (q) { return target.matches(q); })) {
+        sheet.hidden = true; document.documentElement.style.overflow = '';
+        setScreen(pg, k); return true;
+      }
+    });
+  }, true);
+
+  // arrastrar hacia abajo para cerrar la hoja
+  var y0 = null, dy = 0;
+  sheet.addEventListener('pointerdown', function (e) {
+    if (!e.target.closest('.sheet-grab, .sh-top, .sh-plain') || panel.scrollTop > 0) return;
+    y0 = e.clientY; dy = 0; panel.classList.add('drag'); panel.setPointerCapture(e.pointerId);
+  });
+  sheet.addEventListener('pointermove', function (e) {
+    if (y0 === null) return; dy = Math.max(0, e.clientY - y0); panel.style.transform = 'translateY(' + dy + 'px)';
+  });
+  function release() {
+    if (y0 === null) return; y0 = null; panel.classList.remove('drag'); panel.classList.add('back');
+    if (dy > 110) { sheet.hidden = true; document.documentElement.style.overflow = ''; }
+    panel.style.transform = ''; setTimeout(function () { panel.classList.remove('back'); }, 220);
+  }
+  sheet.addEventListener('pointerup', release); sheet.addEventListener('pointercancel', release);
+
+  var tt; function toast(m) { var el = document.getElementById('toast'); el.textContent = m; el.hidden = false; clearTimeout(tt); tt = setTimeout(function () { el.hidden = true; }, 1800); }
+
+  setScreen('h', 'inicio', true); setScreen('b', 'inicio', true);
+  var pg0 = page(); document.getElementById('tabbar-h').hidden = pg0 !== 'h'; document.getElementById('tabbar-b').hidden = pg0 !== 'b';
+})();
+</script>
+
+</body>
+</html>
