@@ -198,3 +198,17 @@ test('los sitemaps por familia no sirven copias de hasta un día', async () => {
   assert.match(route, /'Cache-Control': 'public, s-maxage=900, stale-while-revalidate=900'/);
   assert.doesNotMatch(route, /stale-while-revalidate=86400/);
 });
+
+
+test('el Vía Crucis del Consejo se descubre desde el sitemap general sin lectores de datos', async () => {
+  const api = await harness();
+  const entries = await api.getPublicSitemapSegmentEntries('general');
+  const found = entries.filter((entry) => entry.url === 'https://hilocofrade.es/via-crucis-sevilla');
+  assert.equal(found.length, 1, 'una única URL canónica, sin páginas por año');
+  assert.equal(found[0].changeFrequency, 'yearly');
+  assert.deepEqual(api.calls, [], 'el sitemap de páginas estáticas no requiere Supabase');
+
+  const source = await readFile(new URL('../app/sitemap.js', import.meta.url), 'utf8');
+  assert.match(source, /segment === 'general'/);
+  assert.match(source, /sitemapEntriesForSegment\(staticEntries, segment\)/);
+});
