@@ -9,7 +9,7 @@ import { crewEventStatusLabel } from '@/lib/crew-events'
 import {
   absoluteUrl,
   breadcrumbJsonLd,
-  compactSeoTitle,
+  contextualEntitySeoTitle,
   pageTitle,
   organizationJsonLdRef,
   schemaEventStatus,
@@ -40,8 +40,13 @@ function madridDateTime(date, time) {
   return time ? `${date}T${time}:00${madridUtcOffset(date)}` : date
 }
 
+// Date before municipality: an igualá is searched by «cuándo». The helper drops
+// the municipality, then keeps the bare name, instead of cutting a date mid-way.
 function eventSeoTitle(event) {
-  return [event.title, event.dateParts.label, event.municipality].filter(Boolean).join(' · ')
+  return contextualEntitySeoTitle(event.title, {
+    context: event.dateParts?.label,
+    locality: event.municipality,
+  })
 }
 
 function cleanSeoSentence(value) {
@@ -91,7 +96,7 @@ export async function generateMetadata({ params }) {
   const event = await getCrewEvent(slug)
   if (!event) return { title: 'Convocatoria no encontrada', robots: { index: false, follow: false } }
   if (!hasCrewEventPage(event.detailHref)) permanentRedirect(event.detailHref)
-  const title = compactSeoTitle(eventSeoTitle(event))
+  const title = eventSeoTitle(event)
   const description = eventSeoDescription(event)
   const canonical = `/igualas-y-ensayos/${event.slug}`
 

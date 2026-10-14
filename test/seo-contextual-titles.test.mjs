@@ -61,3 +61,15 @@ test('las fichas de Imagen, Paso y Marcha usan los títulos contextuales', () =>
   assert.match(read('app/pasos/[slug]/page.js'), /const title = contextualEntitySeoTitle\(paso\.nombre, \{\s*context: hermandad\?\.nombrePopular,\s*locality: hermandad\?\.localidad,/)
   assert.match(read('app/marchas/[slug]/page.js'), /const title = marchSeoTitle\(\s*march\.name,\s*march\.authors\.filter\(\(author\) => author\.role === 'composer'\)/)
 })
+
+test('el título de una igualá no corta la fecha a medias', () => {
+  const title = contextualEntitySeoTitle('Igualá de Nuestra Señora del Prado', {
+    context: '12 de noviembre de 2026',
+    locality: 'Sevilla',
+  })
+  assert.equal(title, 'Igualá de Nuestra Señora del Prado · 12 de noviembre de 2026')
+  assert.equal(
+    contextualEntitySeoTitle('Igualá del Cristo', { context: '3 de marzo de 2027', locality: 'Lebrija' }),
+    'Igualá del Cristo · 3 de marzo de 2027 (Lebrija)'
+  )
+})
