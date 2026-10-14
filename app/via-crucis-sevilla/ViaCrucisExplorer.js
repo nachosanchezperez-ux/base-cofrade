@@ -342,7 +342,6 @@ export default function ViaCrucisExplorer() {
           <span className={styles.eyebrow}>Archivo histórico · Sevilla</span>
           <h1>El Vía Crucis <em>del Consejo</em></h1>
           <p>La historia contada con datos. Descubre qué jornada manda, cómo se alternan las iconografías y cuántas hermandades esperan su primera designación.</p>
-          <a className={styles.sourceJump} href="#fuentes">Documentación y fuentes <span aria-hidden="true">↘</span></a>
         </div>
         <aside className={styles.nextEdition}>
           <div className={styles.nextTop}><span>Próxima edición</span><span>Designada</span></div>
