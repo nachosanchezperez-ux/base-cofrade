@@ -6,7 +6,7 @@ import { absoluteUrl, breadcrumbJsonLd, socialMetadata } from '@/lib/seo'
 import {
   SOURCE_HISTORY, SOURCE_CENSUS, SOURCE_2013, SOURCE_2027,
   councilSummary, councilViaCrucisEditions, councilDayStats,
-  councilIconographyStats, councilRepeatedBrotherhoods,
+  councilIconographyStats,
   councilExtraordinary2013, councilNextEdition,
 } from '@/lib/via-crucis-consejo'
 import ViaCrucisExplorer from './ViaCrucisExplorer'
