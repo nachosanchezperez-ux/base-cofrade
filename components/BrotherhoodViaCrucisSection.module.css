@@ -187,3 +187,44 @@
     font-size: 0.63rem;
   }
 }
+
+/* Relational discovery: the contextual Vía Crucis module points back to the
+   single canonical Council archive instead of creating one page per edition. */
+.archiveAccess {
+  margin: 16px 0 22px;
+}
+.archiveAccess a {
+  display: inline-flex;
+  align-items: center;
+  gap: 13px;
+  min-height: 45px;
+  padding: 12px 17px;
+  border: 1px solid #d6dfe6;
+  border-radius: 12px;
+  background: #f7f9fa;
+  color: #173249;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.5;
+}
+.archiveAccess a:hover,
+.archiveAccess a:focus-visible {
+  background: #f1f4f6;
+  border-color: #b5c2ca;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.archiveAccess a span {
+  color: #b01b32;
+  font-size: 19px;
+  line-height: 1;
+}
+@media (max-width: 720px) {
+  .archiveAccess { margin: 12px 0 18px; }
+  .archiveAccess a {
+    width: 100%;
+    justify-content: space-between;
+    font-size: 13px;
+    padding: 14px;
+  }
+}

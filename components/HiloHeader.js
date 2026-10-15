@@ -39,6 +39,7 @@ const directoryLinks = [
   ['/marchas', 'Marchas'],
   ['/autores', 'Autores'],
   ['/crucetas-musicales', 'Crucetas musicales'],
+  ['/via-crucis-sevilla', 'Vía Crucis del Consejo'], 
   ['/juegos/el-hilo-escondido', 'El hilo escondido'],
 ];
 

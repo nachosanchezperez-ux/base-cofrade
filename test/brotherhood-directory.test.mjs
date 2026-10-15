@@ -3,6 +3,7 @@ import test from 'node:test'
 
 import {
   directoryContextLabel,
+  directorySecondaryLabel,
   directoryPath,
   gloryMonth,
 } from '../lib/brotherhood-directory.js'
@@ -77,4 +78,20 @@ test('las Agrupaciones Parroquiales se organizan por localidad sin mezclar su ca
     '/hermandades/agrupaciones-parroquiales/la-rinconada'
   )
   assert.equal(directoryContextLabel(grouping, 'agrupaciones-parroquiales'), 'Agrupación Parroquial')
+})
+
+test('el índice de Sevilla identifica las Glorias aunque no sean sacramentales', () => {
+  assert.equal(directorySecondaryLabel({ tipos: ['Gloria'] }), 'Glorias')
+  assert.equal(directorySecondaryLabel({ tipos: ['Penitencia', 'Gloria'] }), 'Glorias')
+})
+
+test('el índice combina Glorias y Sacramental en ese orden, sin duplicaciones', () => {
+  assert.equal(directorySecondaryLabel({ tipos: ['Sacramental', 'Gloria'] }), 'Glorias · Sacramental')
+  assert.equal(directorySecondaryLabel({ tipos: ['Gloria', 'Sacramental', 'Gloria'] }), 'Glorias · Sacramental')
+})
+
+test('la clasificación inferior mantiene los caracteres existentes de otras hermandades', () => {
+  assert.equal(directorySecondaryLabel({ tipos: ['Sacramental'] }), 'Sacramental')
+  assert.equal(directorySecondaryLabel({ tipos: ['Agrupación Parroquial'] }), 'Agrupación Parroquial')
+  assert.equal(directorySecondaryLabel({ tipos: ['Penitencia'] }), '')
 })

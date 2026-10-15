@@ -54,7 +54,10 @@ cambio quedó en `audit_log` (`actor_label` = «Claude · normalización de tipo
 
 Criterios: un acto compuesto se guarda como una sola fila con su tipo principal (el resto
 queda en el título). Las tres glorias sin Hermandad vinculada (Almadén de la Plata, Arahal
-y Valencina) muestran el organizador en lugar de «Hermandad por confirmar».
+y Valencina) muestran el organizador cuando está documentado; si falta, conservan
+«Hermandad por confirmar». Verificación de 15/10/2026: Almadén tiene organizador;
+Arahal y Valencina aún no tienen Hermandad vinculada ni `organizer_name`.
+Las 16 reclasificaciones siguen aplicadas: no repetir sus escrituras.
 
 Para revertirlo, con el trigger desactivado, basta leer `changed_fields` de esas filas de
 `audit_log`:

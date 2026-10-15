@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
 import BrotherhoodDirectoryCrestImage from '@/components/BrotherhoodDirectoryCrestImage'
-import { directorySlug, displayName, hasDirectoryType } from '@/lib/brotherhood-directory'
+import { directorySecondaryLabel, directorySlug, displayName } from '@/lib/brotherhood-directory'
 import { groupBrotherhoodsByLocality } from '@/lib/brotherhood-public-index'
 import { CALENDAR_VIEWS, calendarSelection, calendarSections, localityAnchor } from '@/lib/brotherhood-locality-calendar'
 import styles from './BrotherhoodPublicIndex.module.css'
@@ -15,10 +15,7 @@ const LOCALITY_FILTERS = [
 ]
 
 function BrotherhoodRow({ item, showCrest }) {
-  const secondary = [
-    hasDirectoryType(item, 'sacramentales') ? 'Sacramental' : '',
-    hasDirectoryType(item, 'agrupaciones-parroquiales') ? 'Agrupación Parroquial' : '',
-  ].filter(Boolean).join(' · ')
+  const secondary = directorySecondaryLabel(item)
   return (
     <li>
       <Link href={`/hermandades/${item.slug}`} prefetch={false} className={styles.row}>

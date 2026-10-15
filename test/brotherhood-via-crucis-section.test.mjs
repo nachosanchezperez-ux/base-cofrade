@@ -22,6 +22,8 @@ test('la ficha dispone de un módulo fijo y reutilizable para el Vía Crucis de 
   assert.match(section, /id="via-crucis-cofradias"/)
   assert.match(section, /Vía Crucis de las Cofradías/)
   assert.match(section, /Participación institucional/)
+  assert.match(section, /href="\/via-crucis-sevilla"/)
+  assert.match(section, /histórico y las estadísticas del Vía Crucis del Consejo/)
 })
 
 test('el Vía Crucis se renderiza después de Historia y antes de la Túnica y las Salidas', () => {

@@ -28,6 +28,7 @@ const description = 'Música de la Semana Santa de Sevilla 2027: cambios de band
 const BAND_TYPES = [
   { key: 'agrupacion', label: 'Agrupación Musical' },
   { key: 'cornetas', label: 'Cornetas y Tambores' },
+  { key: 'vocal', label: 'Vocal e instrumental' },
   { key: 'musica', label: 'Banda de Música' },
 ]
 
@@ -139,6 +140,7 @@ function bandFamilyKey(change) {
   )
   if (value.includes('cornetas') || value.includes('tambores')) return 'cornetas'
   if (value.includes('agrupacion musical')) return 'agrupacion'
+  if (value.includes('vocal') || value.includes('voces graves')) return 'vocal'
   return 'musica'
 }
 

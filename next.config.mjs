@@ -11,6 +11,13 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        // Duplicate brotherhood created with the October 2026 rosary.
+        // Keep the established ficha and preserve the old URL.
+        source: '/hermandades/hermandad-de-la-milagrosa-sevilla',
+        destination: '/hermandades/la-milagrosa-sevilla',
+        permanent: true,
+      },
+      {
         // Duplicate record of the same march (Pablo Ojeda), merged on 13/10/2026:
         // its only repertoire entry now points to the canonical ficha.
         source: '/marchas/tu-eres-orgullo-nuestro-pueblo-pablo-ojeda',
