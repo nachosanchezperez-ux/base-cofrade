@@ -1,16 +1,14 @@
 import Link from 'next/link'
 import { connection } from 'next/server'
-import { Suspense } from 'react'
 import AgendaCofradeDirectoryV4 from '@/components/AgendaCofradeDirectoryV4'
-import AgendaCofradeDirectoryFromUrl from '@/components/AgendaCofradeDirectoryFromUrl'
 import AgendaCofradeNav from '@/components/AgendaCofradeNav'
-import AgendaCofradeNavFromUrl from '@/components/AgendaCofradeNavFromUrl'
 import AgendaTemporalNav from '@/components/AgendaTemporalNav'
 import SiteBreadcrumb from '@/components/SiteBreadcrumb'
 import JsonLd from '@/components/JsonLd'
 import { breadcrumbJsonLd, collectionPageJsonLd, filteredViewRobots, pageTitle, seoDescription } from '@/lib/seo'
 import { agendaSeoCopy, madridYear } from '@/lib/seo-calendar'
 import { getAgendaCofrade } from '@/lib/supabase/agenda-cofrade'
+import { agendaInitialStateFromParams } from '@/lib/agenda-cofrade-url-state'
 import styles from './agenda-cofrade.module.css'
 import v4Styles from './agenda-cofrade-v4.module.css'
 
@@ -92,7 +90,7 @@ function compactAgendaItem(item) {
   }
 }
 
-export default async function AgendaCofradePage() {
+export default async function AgendaCofradePage({ searchParams } = {}) {
   // La disponibilidad de Supabase no debe bloquear la compilación de la web.
   // La caché de datos se mantiene en getAgendaCofrade, también en esta ruta dinámica.
   await connection()
@@ -102,6 +100,11 @@ export default async function AgendaCofradePage() {
   const nowIso = new Date().toISOString()
   const upcoming = items.filter((item) => item.isUpcoming && !item.isCancelled)
   const interactiveItems = upcoming.map(compactAgendaItem)
+  // La página ya se genera en cada petición (connection()): los filtros de la URL se
+  // leen aquí. Antes se leían en el navegador dentro de un Suspense cuya reserva
+  // repetía el listado completo, que viajaba dos veces en el HTML (~310 KB, 15/10/2026).
+  const params = (await searchParams) || {}
+  const { stateKey, ...initialState } = agendaInitialStateFromParams((name) => params[name])
 
   return (
     <div className={styles.page}>
@@ -123,16 +126,12 @@ export default async function AgendaCofradePage() {
       </header>
 
       <div className={v4Styles.desktopNavigation}>
-      <Suspense fallback={<AgendaCofradeNav />}>
-        <AgendaCofradeNavFromUrl />
-      </Suspense>
+      <AgendaCofradeNav />
       <AgendaTemporalNav />
       </div>
 
       <div className={`shell ${styles.content} ${v4Styles.contentV4}`}>
-        <Suspense fallback={<AgendaCofradeDirectoryV4 items={interactiveItems} today={today} initialNowIso={nowIso} />}>
-          <AgendaCofradeDirectoryFromUrl items={interactiveItems} today={today} initialNowIso={nowIso} />
-        </Suspense>
+        <AgendaCofradeDirectoryV4 key={stateKey} items={interactiveItems} today={today} initialNowIso={nowIso} {...initialState} />
         <section className={styles.relatedCalendar} aria-labelledby="calendar-cuadrillas"><div><span>Calendario especializado</span><h2 id="calendar-cuadrillas">Igualás y ensayos</h2><p>Las convocatorias de cuadrillas quedan en un espacio propio, conectado con sus Hermandades y separado de la agenda de interés general.</p></div><Link href="/igualas-y-ensayos">Ver próximas convocatorias <span>→</span></Link></section>
         <nav className={styles.relatedLinks} aria-label="Explorar contenidos relacionados"><span>Seguir explorando</span><Link href="/hermandades">Hermandades</Link><Link href="/bandas">Bandas</Link><Link href="/procesiones-de-gloria">Calendario de Glorias</Link><Link href="/extraordinarias">Calendario de extraordinarias</Link></nav>
         <section className={styles.seoCopy} aria-labelledby="agenda-sevilla"><span>Agenda actualizada</span><h2 id="agenda-sevilla">Qué ver hoy y este fin de semana en la Sevilla cofrade</h2><p>{seoDescription('Hilo Cofrade reúne únicamente los próximos actos públicos de Sevilla capital y sus municipios en una cronología común. Procesiones, romerías, traslados, rosarios, besamanos, besapiés y conciertos permanecen conectados con sus calendarios, Bandas y Hermandades.')}</p></section>
