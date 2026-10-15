@@ -1,0 +1,96 @@
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  margin: 4px 2px 8px;
+}
+
+.bar p {
+  margin: 0;
+  color: #68737d;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 0 16px;
+  border: 1px solid #d8c9c2;
+  border-radius: 999px;
+  background: #fff;
+  color: #17283a;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.toggle > span {
+  color: #b8860b;
+}
+
+.toggle b {
+  display: grid;
+  min-width: 24px;
+  height: 24px;
+  place-items: center;
+  border-radius: 999px;
+  background: #f4e8eb;
+  color: #9f1730;
+  font-size: 11px;
+}
+
+.toggle:focus-visible {
+  outline: 3px solid rgba(159, 23, 48, .25);
+  outline-offset: 2px;
+}
+
+.toggleActive {
+  border-color: #9f1730;
+  background: #9f1730;
+  color: #fff;
+}
+
+.toggleActive > span {
+  color: #ffd76a;
+}
+
+.toggleActive b {
+  background: #fff;
+}
+
+.hint {
+  margin: 4px 2px 8px;
+  padding: 12px 14px;
+  border: 1px dashed #d8c9c2;
+  border-radius: 12px;
+  background: #fffaf6;
+  color: #4f5b66;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.badge.badge {
+  display: inline-flex;
+  margin-left: 0;
+  text-transform: none;
+  width: auto;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: #fff6dd;
+  color: #7a5a06;
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: .02em;
+  white-space: nowrap;
+}
+
+.badge.badge > span {
+  color: #b8860b;
+}
