@@ -26,19 +26,19 @@ jobs:
         run: node scripts/public-seo-smoke.mjs
 
   # Cada despliegue vacía la caché de páginas: se regeneran aquí las fichas de
-  # Hermandad para que la primera visita (persona o robot) no espere 2–4 s.
-  # No bloquea nada: un fallo solo deja avisos.
+  # Hermandad, Paso, Imagen y Banda para que la primera visita (persona o robot)
+  # no espere la regeneración. No bloquea nada: un fallo solo deja avisos.
   prewarm:
     needs: verify
     if: >-
       (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') || (github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'Production')
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 25
     continue-on-error: true
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 24
-      - name: Precalienta las fichas de Hermandad
-        run: node scripts/prewarm-brotherhood-pages.mjs
+      - name: Precalienta las fichas públicas
+        run: node scripts/prewarm-public-fichas.mjs

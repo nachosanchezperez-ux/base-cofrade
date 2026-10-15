@@ -1,9 +1,13 @@
-// Utilidades puras del precalentamiento (probadas en test/prewarm-brotherhood-pages.test.mjs).
+// Utilidades puras del precalentamiento (probadas en test/prewarm-public-fichas.test.mjs).
 
-// Solo fichas de Hermandad: /hermandades/<slug>, sin hubs ni facetas
-// (/hermandades/semana-santa/..., /hermandades/localidad/..., /hermandades/gloria/...).
-// Coinciden con las carpetas estáticas de app/hermandades/.
-const BROTHERHOOD_HUBS = new Set(['semana-santa', 'gloria', 'localidad', 'agrupaciones-parroquiales', 'sacramentales'])
+// Fichas de cada familia: /<familia>/<slug>, sin hubs ni facetas. Las exclusiones
+// coinciden con las carpetas estáticas de app/<familia>/ (comprobado en el test).
+export const FICHA_FAMILY_HUBS = Object.freeze({
+  hermandades: new Set(['semana-santa', 'gloria', 'localidad', 'agrupaciones-parroquiales', 'sacramentales']),
+  pasos: new Set(['localidad', 'tipo']),
+  imagenes: new Set(['localidad', 'tipo']),
+  bandas: new Set(['localidad', 'tipo']),
+})
 
 export function sitemapPaths(xml = '', origin = 'https://hilocofrade.es') {
   return [...String(xml).matchAll(/<loc>([^<]+)<\/loc>/g)]
@@ -12,11 +16,18 @@ export function sitemapPaths(xml = '', origin = 'https://hilocofrade.es') {
     .map((url) => new URL(url).pathname)
 }
 
-export function brotherhoodFichaPaths(paths = []) {
+export function fichaPaths(paths = [], family = 'hermandades') {
+  const hubs = FICHA_FAMILY_HUBS[family]
+  if (!hubs) throw new Error(`Familia sin fichas precalentables: ${family}`)
+  const pattern = new RegExp(`^/${family}/([a-z0-9-]+)/?$`)
   return [...new Set(paths.filter((path) => {
-    const match = /^\/hermandades\/([a-z0-9-]+)\/?$/.exec(path)
-    return Boolean(match) && !BROTHERHOOD_HUBS.has(match[1])
+    const match = pattern.exec(path)
+    return Boolean(match) && !hubs.has(match[1])
   }).map((path) => path.replace(/\/$/, '')))]
+}
+
+export function brotherhoodFichaPaths(paths = []) {
+  return fichaPaths(paths, 'hermandades')
 }
 
 // Ejecuta las tareas con una concurrencia limitada y sin abortar por un fallo.
