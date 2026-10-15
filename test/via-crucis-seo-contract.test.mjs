@@ -36,3 +36,11 @@ test('el grafo del archivo y sus enlaces reconocen una sola URL por edición', (
   assert.match(module, /href="\/via-crucis-sevilla"/)
   assert.match(sitemap, /absoluteUrl\('\/via-crucis-sevilla'\)/)
 })
+
+
+test('el Vía Crucis separa sus migas de pan de la cabecera sin alterar el componente global', () => {
+  const css = readFileSync(new URL('../app/via-crucis-sevilla/via-crucis.module.css', import.meta.url), 'utf8')
+  assert.match(page, /className=\{styles\.breadcrumbSpacing\}/)
+  assert.match(css, /\.breadcrumbSpacing\s*\{[^}]*margin:\s*clamp\(/)
+  assert.match(css, /@media \(max-width: 620px\)\s*\{\s*\.breadcrumbSpacing/)
+})
