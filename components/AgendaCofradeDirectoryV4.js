@@ -107,6 +107,19 @@ function monthAnchor(key) {
   return `agenda-v4-${String(key || 'sin-fecha').replace(/[^a-z0-9-]/gi, '-')}`
 }
 
+const EVENT_VISUAL_SIZE = 128
+// Mismo estilo en línea que next/image aplica con `fill`.
+const EVENT_VISUAL_FILL_STYLE = Object.freeze({
+  position: 'absolute',
+  height: '100%',
+  width: '100%',
+  left: 0,
+  top: 0,
+  right: 0,
+  bottom: 0,
+  color: 'transparent',
+})
+
 function EventVisual({ item }) {
   const fallback = item.imageFallbackPath || ''
   const [src, setSrc] = useState(item.imagePath || fallback)
@@ -134,12 +147,16 @@ function EventVisual({ item }) {
 
   return (
     <div className={`${styles.cardVisual} ${visualStyles.visualContainer} ${mobileStyles.visual} ${kind === 'photo' ? visualStyles.photoFrame : visualStyles.crestFrame}`}>
+      {/* Tamaño fijo con el mismo estilo que aplica `fill`: la imagen se ve igual,
+          pero el srcset pasa de ~16 anchos (16–3840 px) a 1x/2x. Se muestra a 126 px
+          como máximo. */}
       <Image
         key={src}
         src={src}
         alt={item.imageAlt || ''}
-        fill
-        sizes="(max-width: 560px) 72px, (max-width: 720px) 92px, 126px"
+        width={EVENT_VISUAL_SIZE}
+        height={EVENT_VISUAL_SIZE}
+        style={EVENT_VISUAL_FILL_STYLE}
         className={kind === 'photo' ? styles.cardPhoto : styles.cardCrest}
         onError={handleError}
       />
