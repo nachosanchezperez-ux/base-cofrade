@@ -33,6 +33,7 @@ const EXECUTABLE_SCHEMA_MIGRATIONS = [
   "20261010100100_normalize_outing_type_trigger.sql",
   "20261012010000_music_canonical_completeness_and_legacy_guard.sql",
   "20261012120000_outings_home_featured_window.sql",
+  "20261016090000_editorial_news_fields.sql",
 ];
 
 test("Supabase migration versions are unique and well formed", async () => {
