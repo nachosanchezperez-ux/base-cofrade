@@ -926,3 +926,27 @@
   .archiveIndexList a { font-size: 13px; }
   .archiveIndexList small { font-size: 12px; }
 }
+
+
+/* Vía Crucis: give breadcrumbs breathing room before the editorial hero.
+   Scoped to this route: shared breadcrumbs elsewhere remain unchanged. */
+.breadcrumbSpacing {
+  margin: clamp(12px, 1.6vw, 19px) 0 clamp(30px, 3.4vw, 44px);
+  min-height: 38px;
+}
+.breadcrumbSpacing[data-site-breadcrumb] a,
+.breadcrumbSpacing[data-site-breadcrumb] span[aria-current="page"] {
+  font-size: 11px;
+  line-height: 1.4;
+  letter-spacing: .08em;
+}
+@media (max-width: 620px) {
+  .breadcrumbSpacing {
+    margin: 10px 0 27px;
+    min-height: 35px;
+  }
+  .breadcrumbSpacing[data-site-breadcrumb] a,
+  .breadcrumbSpacing[data-site-breadcrumb] span[aria-current="page"] {
+    font-size: 10px;
+  }
+}

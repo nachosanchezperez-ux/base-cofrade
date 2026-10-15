@@ -68,6 +68,7 @@ export default function ViaCrucisSevillaPage() {
         <JsonLd data={archiveJsonLd} />
         <SiteBreadcrumb
           items={[{ label: 'Inicio', href: '/' }, { label: 'Vía Crucis del Consejo' }]}
+          className={styles.breadcrumbSpacing}
           showAccent={false}
         />
         <ViaCrucisExplorer />
