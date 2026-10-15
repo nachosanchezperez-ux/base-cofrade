@@ -1,6 +1,8 @@
 'use client'
 
 import Image from 'next/image'
+import ShareActions from '@/components/ShareActions'
+import { crewEventShare } from '@/lib/share'
 import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
 import { CREW_EVENT_TYPES, crewEventStatusLabel } from '@/lib/crew-events'
@@ -103,6 +105,7 @@ function EventCard({ event }) {
           </div>
           {hasPage ? <Link className={styles.detailLink} href={event.detailHref} onClick={() => trackCrewOpen(event)}>Ver convocatoria <span>→</span></Link> : null}
         </div>
+        <ShareActions compact share={crewEventShare(event, { hasPage })} contentType="iguala" analytics={{ event_type: event.eventType || event.eventTypeLabel, municipality: event.municipality }} />
       </div>
 
       {event.crestPath ? (
@@ -214,6 +217,7 @@ export default function CrewEventDirectory({ events }) {
               <span><b>Capataz</b>{featured.agents.map((item) => item.name).join(' · ') || 'Por confirmar'}</span>
             </div>
             {hasCrewEventPage(featured.detailHref) ? <Link className={styles.primaryAction} href={featured.detailHref} onClick={() => trackCrewOpen(featured)}>Ver convocatoria <span>→</span></Link> : <a className={styles.primaryAction} href={`#${featured.anchor}`}>Ver en el calendario <span>→</span></a>}
+            <ShareActions share={crewEventShare(featured, { hasPage: hasCrewEventPage(featured.detailHref) })} contentType="iguala" analytics={{ event_type: featured.eventType || featured.eventTypeLabel, municipality: featured.municipality, placement: 'featured' }} />
           </div>
           {featured.crestPath ? (
             <Image className={styles.featuredCrest} src={featured.crestPath} alt={`Escudo de ${featured.brotherhoodName}`} width={150} height={150} sizes="150px" />

@@ -1,6 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { hiloDayLabel, HILO_TOPIC_LABELS } from '@/lib/hilo-movements'
+import { newsShare } from '@/lib/share'
+import ShareActions from '@/components/ShareActions'
 import styles from './HiloMovements.module.css'
 
 const archivePhotos = {
@@ -36,6 +38,7 @@ export default function HiloMovementCards({ items, compact = false, headingLevel
             {item.effectiveLabel ? <p className={styles.effective}><span aria-hidden="true">↳</span> {item.effectiveLabel}</p> : null}
             {compact ? <Link className={styles.more} href={item.href} prefetch={false}>Seguir este hilo <span aria-hidden="true">→</span></Link> : <>
               {item.discover ? <Link className={styles.discover} href={item.discover.href} prefetch={false}>{item.discover.label} <span aria-hidden="true">↗</span></Link> : null}
+              <ShareActions compact share={newsShare(item)} contentType="noticia" analytics={{ topic: item.topic, municipality: item.municipality }} />
               <details className={styles.storyDetails}><summary>El contexto y sus protagonistas <span aria-hidden="true">+</span></summary>
                 <p className={styles.context}>{item.context}</p>
                 {item.relations.length ? <><DetailHeading className={styles.connectionTitle}>Tira del hilo</DetailHeading><ul className={styles.connections} aria-label={`Protagonistas relacionados con ${item.protagonist.label}`}>

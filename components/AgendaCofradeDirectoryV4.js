@@ -8,6 +8,8 @@ import { getProcessionLiveState } from '@/lib/procession-live-status'
 import { routeSummarySections } from '@/lib/procession-route'
 import { agendaTemporalDateInfo, agendaTemporalRangeDate, withAgendaTemporalDay } from '@/lib/agenda-temporal-display'
 import { agendaEventAnchor, agendaDirectionsHref, isOutingEvent, schedulePrecision } from '@/lib/agenda-event-presentation'
+import { agendaItemShare } from '@/lib/share'
+import ShareActions from '@/components/ShareActions'
 import { trackEvent } from '@/lib/analytics/client'
 import styles from './AgendaCofradeDirectoryV4.module.css'
 import concertStyles from './AgendaCofradeDirectoryV4Concerts.module.css'
@@ -783,6 +785,7 @@ export default function AgendaCofradeDirectoryV4({
                           <span><b>Localidad</b>{item.municipality || 'Por confirmar'}</span>
                           {item.place ? <span><b>Lugar</b>{item.place}</span> : null}
                         </div>
+                        <ShareActions compact share={agendaItemShare(item)} contentType="agenda" analytics={{ event_type: item.category, municipality: item.municipality }} />
                         <details id={`${agendaEventAnchor(item)}-detail`} className={mobileStyles.eventDetails} onToggle={(event) => { if (event.currentTarget.open) trackAgendaEventOpen(item) }}>
                           <summary><span>{item.routeText ? 'Información y recorrido' : 'Información del evento'}</span><b aria-hidden="true">+</b></summary>
                           <div className={mobileStyles.eventDetailBody}>
