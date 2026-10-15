@@ -432,10 +432,13 @@ async function buildPublicSitemapSegmentEntries(segment) {
   return refreshSegmentHubLastModified(uniqueEntries, segment);
 }
 
+// 15 minutos, como /sitemaps/[family] (revalidate 900): con una hora, una ficha
+// recién publicada tardaba hasta 60 minutos en aparecer en su sitemap de familia
+// (Hermandad del Prado, 14/10/2026) aunque la ruta se regenerase cada 15.
 const getCachedPublicSitemapSegmentEntries = unstable_cache(
   buildPublicSitemapSegmentEntries,
   ['hilo-cofrade-public-sitemap-family-v3'],
-  { revalidate: 3600, tags: ['seo-sitemap'] }
+  { revalidate: 900, tags: ['seo-sitemap'] }
 );
 
 // Coalesce simultaneous requests in the same process; failures are never kept.
