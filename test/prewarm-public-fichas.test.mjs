@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
 import test from 'node:test'
 
-import { brotherhoodFichaPaths, runPool, sitemapPaths } from '../scripts/lib/prewarm.mjs'
+import { brotherhoodFichaPaths, fichaPaths, runPool, sitemapPaths } from '../scripts/lib/prewarm.mjs'
 
 test('el precalentamiento toma solo fichas de Hermandad del sitemap', () => {
   const xml = `<?xml version="1.0"?><urlset>
@@ -43,20 +43,40 @@ test('el flujo de producción precalienta tras la verificación sin bloquear', (
   const workflow = readFileSync(new URL('../.github/workflows/production-seo-smoke.yml', import.meta.url), 'utf8')
   assert.match(workflow, /prewarm:\n    needs: verify/)
   assert.match(workflow, /continue-on-error: true/)
-  assert.match(workflow, /node scripts\/prewarm-brotherhood-pages\.mjs/)
-  const script = readFileSync(new URL('../scripts/prewarm-brotherhood-pages.mjs', import.meta.url), 'utf8')
-  assert.match(script, /const CONCURRENCY = 3/)
-  assert.match(script, /\/sitemaps\/hermandades\.xml/)
+  assert.match(workflow, /node scripts\/prewarm-public-fichas\.mjs/)
+  assert.match(workflow, /timeout-minutes: 25/)
+  const script = readFileSync(new URL('../scripts/prewarm-public-fichas.mjs', import.meta.url), 'utf8')
+  assert.match(script, /const FAMILIES = \['hermandades', 'pasos', 'imagenes', 'bandas'\]/)
+  assert.match(script, /const CONCURRENCY = 4/)
+  assert.match(script, /\/sitemaps\/\$\{family\}\.xml/)
+  // Presupuesto propio por debajo del límite del trabajo.
+  assert.match(script, /const TOTAL_BUDGET_MS = 20 \* 60_000/)
   // No debe pedir saltarse la caché: el objetivo es dejarla llena.
   assert.doesNotMatch(script, /no-cache/)
 })
 
-test('los hubs excluidos coinciden con las carpetas estáticas de /hermandades', async () => {
+test('los hubs excluidos coinciden con las carpetas estáticas de cada familia', async () => {
   const { readdirSync } = await import('node:fs')
-  const folders = readdirSync(new URL('../app/hermandades/', import.meta.url), { withFileTypes: true })
-    .filter((entry) => entry.isDirectory() && !entry.name.startsWith('['))
-    .map((entry) => `/hermandades/${entry.name}`)
-  assert.deepEqual(brotherhoodFichaPaths(folders), [])
+  for (const family of ['hermandades', 'pasos', 'imagenes', 'bandas']) {
+    const folders = readdirSync(new URL(`../app/${family}/`, import.meta.url), { withFileTypes: true })
+      .filter((entry) => entry.isDirectory() && !entry.name.startsWith('['))
+      .map((entry) => `/${family}/${entry.name}`)
+    assert.deepEqual(fichaPaths(folders, family), [], family)
+  }
+})
+
+test('cada familia toma solo sus fichas', () => {
+  const paths = [
+    '/pasos/paso-cristo-buena-muerte-estudiantes-sevilla', '/pasos/tipo/palio', '/pasos/localidad/ecija', '/pasos',
+    '/imagenes/santisimo-cristo-expiracion-cachorro', '/imagenes/tipo/dolorosa',
+    '/bandas/las-cigarreras', '/bandas/tipo/cornetas-y-tambores',
+    '/hermandades/san-benito',
+  ]
+  assert.deepEqual(fichaPaths(paths, 'pasos'), ['/pasos/paso-cristo-buena-muerte-estudiantes-sevilla'])
+  assert.deepEqual(fichaPaths(paths, 'imagenes'), ['/imagenes/santisimo-cristo-expiracion-cachorro'])
+  assert.deepEqual(fichaPaths(paths, 'bandas'), ['/bandas/las-cigarreras'])
+  assert.deepEqual(fichaPaths(paths, 'hermandades'), ['/hermandades/san-benito'])
+  assert.throws(() => fichaPaths(paths, 'marchas'), /Familia sin fichas/)
 })
 
 test('solo main manual o Production success comparten el grupo de producción', () => {
