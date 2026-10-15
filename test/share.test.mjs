@@ -34,7 +34,7 @@ test('el mensaje de un acto lleva tipo, título, organizador, fecha, hora, lugar
     municipality: 'Sevilla',
   })
   assert.equal(share.url, 'https://hilocofrade.es/agenda-cofrade#acto-concerts-7')
-  assert.match(share.text, /^Concierto · Concierto de marchas\n/)
+  assert.match(share.text, /^Concierto de marchas\n/)
   assert.match(share.text, /Banda de Música de Las Cigarreras/)
   assert.match(share.text, /📅 Viernes, 23 de octubre · 20:30 h/)
   assert.match(share.text, /📍 Iglesia de San Pedro, Sevilla/)
@@ -48,6 +48,15 @@ test('el horario literal tiene prioridad y no se repite la localidad ya incluida
   assert.match(share.text, /📍 Parroquia de Camas\n/)
 })
 
+test('no se repite el tipo cuando el título ya empieza por él', () => {
+  const share = agendaItemShare({ key: 'd:1', categoryLabel: 'Besamanos', title: 'Besamanos a Nuestra Señora del Amparo', date: '2026-10-17' })
+  assert.match(share.text, /^Besamanos a Nuestra Señora del Amparo\n/)
+  const rosary = agendaItemShare({ key: 'r:3', categoryLabel: 'Rosario vespertino', title: 'Rosario Vespertino de la Misericordia', date: '2026-10-17' })
+  assert.match(rosary.text, /^Rosario Vespertino de la Misericordia\n/)
+  const gloria = agendaItemShare({ key: 'p:1', categoryLabel: 'Procesión de Gloria', title: 'Salida de Nuestra Señora del Rosario', date: '2026-10-17' })
+  assert.match(gloria.text, /^Procesión de Gloria · Salida de Nuestra Señora del Rosario\n/)
+})
+
 test('sin fecha válida no se inventa la fecha', () => {
   const share = agendaItemShare({ key: 'r:2', title: 'Traslado', date: '' })
   assert.doesNotMatch(share.text, /📅/)
@@ -56,7 +65,7 @@ test('sin fecha válida no se inventa la fecha', () => {
 test('una igualá sin página propia se comparte con su ancla del calendario', () => {
   const share = crewEventShare({ title: 'Igualá del paso de palio', eventTypeLabel: 'Igualá', brotherhoodName: 'La Paz', anchor: 'convocatoria-iguala-paz-2026', detailHref: '/igualas-y-ensayos/iguala-paz-2026', dateParts: { weekdayLabel: 'Jueves, 29 de octubre' }, startTime: '21:00', municipality: 'Sevilla' })
   assert.equal(share.url, 'https://hilocofrade.es/igualas-y-ensayos#convocatoria-iguala-paz-2026')
-  assert.match(share.text, /^Igualá · Igualá del paso de palio\nLa Paz\n📅 Jueves, 29 de octubre · 21:00 h\n📍 Sevilla\n/)
+  assert.match(share.text, /^Igualá del paso de palio\nLa Paz\n📅 Jueves, 29 de octubre · 21:00 h\n📍 Sevilla\n/)
   const preserved = crewEventShare({ title: 'Igualá', anchor: 'a', detailHref: '/igualas-y-ensayos/iguala-santa-lucia-sevilla-2026' }, { hasPage: true })
   assert.equal(preserved.url, 'https://hilocofrade.es/igualas-y-ensayos/iguala-santa-lucia-sevilla-2026')
 })
