@@ -5,6 +5,7 @@ import { registerHooks } from 'node:module'
 // Ejecuta las Server Actions reales con transporte de datos y sesión aislados.
 // Ninguna prueba escribe en Supabase ni necesita credenciales.
 const fakes = {
+  'server-only': 'export {};',
   'next/cache': `export const revalidatePath = (...args) => globalThis.newsTest.invalidations.push(args); export const updateTag = () => {};`,
   'next/navigation': `export const redirect = (path) => { throw new Error('REDIRECT:' + path) };`,
   '@/lib/panel/auth': `export const requirePanelEditor = async () => { if (!['admin','editor'].includes(globalThis.newsTest.role)) throw new Error('Sin permiso'); return { id:'editor', name:'Editor' } }; export const requirePanelAdmin = requirePanelEditor;`,
@@ -16,6 +17,7 @@ const hooks = registerHooks({ resolve(specifier, context, nextResolve) {
   return nextResolve(specifier, context)
 } })
 const { createNewsAction, updateNewsAction } = await import('../app/panel/(protected)/noticias/actions.js')
+const { getNewsReferenceOptions } = await import('../lib/panel/editorial-news.js')
 hooks.deregister()
 
 const newsId = '10000000-0000-4000-8000-000000000001'
@@ -97,4 +99,23 @@ test('no permite crear con fichas de otro tipo ni a usuarios de consulta', async
     await assert.rejects(createNewsAction(form()), /seleccionada no existe|Sin permiso/)
     assert.equal(writes.length, 0)
   }
+})
+
+test('el selector carga bandas y Hermandades también después de las primeras mil fichas', async () => {
+  const entities = Array.from({ length: 1000 }, (_, i) => ({ id: String(i), name: `Autor ${i}`, entity_type: 'agent', status: 'published' }))
+  entities.push({ id: bandId, name: 'Z Banda', entity_type: 'band', status: 'published', slug: 'z-banda' })
+  entities.push({ id: oldId, name: 'Z Hermandad', entity_type: 'brotherhood', status: 'published', slug: 'z-hermandad' })
+  const ranges = []
+  const client = { from(table) {
+    const query = {
+      select() { return query }, in() { return query }, neq() { return query }, order() { return query },
+      range(start, end) { ranges.push([start, end]); return Promise.resolve({ data: entities.slice(start, end + 1) }) },
+      then(resolve) { return Promise.resolve({ data: table === 'municipalities' ? [{ id: locality, name: 'Sevilla' }] : [] }).then(resolve) },
+    }
+    return query
+  } }
+  const options = await getNewsReferenceOptions(client)
+  assert.deepEqual(options.protagonistOptions.map(item => item.id), [bandId, oldId])
+  assert.equal(options.relationOptions.length, 1002)
+  assert.deepEqual(ranges, [[0, 499], [500, 999], [1000, 1499]])
 })
