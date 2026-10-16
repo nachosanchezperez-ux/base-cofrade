@@ -33,7 +33,7 @@ test('la navegación superior separa calendarios y deja las categorías al filtr
   assert.match(directory, /\['processions', 'Procesiones'\]/)
   assert.match(directory, /\['transfers', 'Traslados'\]/)
   assert.match(directory, /\['rosaries', 'Rosarios públicos'\]/)
-  assert.match(directory, /\['devotions', 'Besamanos y besapiés'\]/)
+  assert.match(directory, /\['devotions', 'Cultos y besamanos'\]/)
   assert.match(directory, /\['concerts', 'Conciertos'\]/)
 
   assert.match(css, /grid-template-columns:repeat\(4,max-content\)/)
