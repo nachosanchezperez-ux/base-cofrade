@@ -130,3 +130,10 @@ test('las tarjetas de la Agenda, la ficha de Hermandad y la guía local ofrecen 
   assert.match(read('app/hermandades/[slug]/page.js'), /<BrotherhoodAgendaSection items=\{upcomingAgendaItems\} brotherhoodSlug=\{h\.slug\}/)
   assert.match(read('components/MunicipalityAgendaHub.js'), /localityCalendarPath\(hub\.slug\)/)
 })
+
+test('la descripción conserva los horarios en texto pero no repite fechas en bruto', () => {
+  const withHours = agendaItemVEvent({ ...outing, startTime: '', timeText: '09:00–14:00 y 17:00–21:00' }, { now }).join('\n')
+  assert.match(withHours, /09:00–14:00 y 17:00–21:00/)
+  const rawDates = agendaItemVEvent({ ...outing, startTime: '', timeText: '2026-10-17 a 2026-10-18' }, { now }).join('\n')
+  assert.doesNotMatch(rawDates, /2026-10-17 a/)
+})
