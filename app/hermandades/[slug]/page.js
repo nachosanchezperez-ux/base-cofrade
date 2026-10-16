@@ -771,7 +771,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
         heroFactLabels={heroFacts.map((fact) => fact.label)}
       />
 
-      <BrotherhoodAgendaSection items={upcomingAgendaItems} />
+      <BrotherhoodAgendaSection items={upcomingAgendaItems} brotherhoodSlug={h.slug} brotherhoodName={h.nombrePopular || h.nombreOficial} />
 
 
 

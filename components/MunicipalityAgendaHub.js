@@ -1,6 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import AgendaCofradeNav from '@/components/AgendaCofradeNav'
+import CalendarSubscribeLinks from '@/components/CalendarSubscribeLinks'
+import { localityCalendarPath } from '@/lib/agenda-ics-links'
 import ContextAgendaSection from '@/components/ContextAgendaSection'
 import DirectoryBreadcrumb from '@/components/DirectoryBreadcrumb'
 import JsonLd from '@/components/JsonLd'
@@ -171,6 +173,14 @@ export default function MunicipalityAgendaHub({ hub }) {
               </Link>
             ))}
           </div>
+          {(hub.calendarCounts.agenda + hub.calendarCounts.glories + hub.calendarCounts.extraordinary) > 0 ? (
+            <CalendarSubscribeLinks
+              className={styles.subscribe}
+              path={localityCalendarPath(hub.slug)}
+              label={hub.label}
+              scope="locality"
+            />
+          ) : null}
         </div>
       </section>
 
