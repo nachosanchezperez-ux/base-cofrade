@@ -86,10 +86,11 @@ test('la ficha de Paso conserva en caché sus módulos relacionales secundarios'
   const crew = await read('components/StepCrewFacts.js')
   const presence = await read('lib/supabase/relational-presence.js')
 
+  // Desde el 15/10/2026 con la frescura común de las fichas (lib/public-detail-cache.js).
   assert.match(crew, /unstable_cache/)
-  assert.match(crew, /revalidate:\s*900/)
+  assert.match(crew, /revalidate:\s*PUBLIC_DETAIL_DATA_REVALIDATE/)
   assert.match(presence, /unstable_cache/)
-  assert.match(presence, /revalidate:\s*900/)
+  assert.match(presence, /revalidate:\s*PUBLIC_DETAIL_DATA_REVALIDATE/)
 })
 
 test('Bandas y Marchas no convierten errores temporales en fichas inexistentes', async () => {

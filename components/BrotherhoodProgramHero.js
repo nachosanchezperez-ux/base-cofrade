@@ -37,6 +37,7 @@ export default function BrotherhoodProgramHero({
   facts = [],
   media = {},
   compact = false,
+  actions = null,
 }) {
   const visibleFacts = facts.filter((fact) => fact?.label && fact?.value).slice(0, 4)
   const hasPhoto = Boolean(media.photoSrc)
@@ -128,6 +129,7 @@ export default function BrotherhoodProgramHero({
 
           {context ? <p className={styles.context}>{context}</p> : null}
           {officialName ? <p className={compact ? readingHeroStyles.official : styles.officialName}>{officialName}</p> : null}
+          {actions}
 
           {visibleFacts.length ? (
             <dl className={`${styles.facts} ${corporateStyles.corporateFacts}`} data-count={visibleFacts.length}>

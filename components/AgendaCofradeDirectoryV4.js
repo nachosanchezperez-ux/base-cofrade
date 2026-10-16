@@ -8,6 +8,11 @@ import { getProcessionLiveState } from '@/lib/procession-live-status'
 import { routeSummarySections } from '@/lib/procession-route'
 import { agendaTemporalDateInfo, agendaTemporalRangeDate, withAgendaTemporalDay } from '@/lib/agenda-temporal-display'
 import { agendaEventAnchor, agendaDirectionsHref, isOutingEvent, schedulePrecision } from '@/lib/agenda-event-presentation'
+import { agendaItemShare } from '@/lib/share'
+import ShareActions from '@/components/ShareActions'
+import useFollowedBrotherhoods from '@/components/useFollowedBrotherhoods'
+import { brotherhoodSlugFromHref } from '@/lib/followed-brotherhoods'
+import followStyles from './AgendaMyBrotherhoods.module.css'
 import { trackEvent } from '@/lib/analytics/client'
 import styles from './AgendaCofradeDirectoryV4.module.css'
 import concertStyles from './AgendaCofradeDirectoryV4Concerts.module.css'
@@ -107,6 +112,19 @@ function monthAnchor(key) {
   return `agenda-v4-${String(key || 'sin-fecha').replace(/[^a-z0-9-]/gi, '-')}`
 }
 
+const EVENT_VISUAL_SIZE = 128
+// Mismo estilo en línea que next/image aplica con `fill`.
+const EVENT_VISUAL_FILL_STYLE = Object.freeze({
+  position: 'absolute',
+  height: '100%',
+  width: '100%',
+  left: 0,
+  top: 0,
+  right: 0,
+  bottom: 0,
+  color: 'transparent',
+})
+
 function EventVisual({ item }) {
   const fallback = item.imageFallbackPath || ''
   const [src, setSrc] = useState(item.imagePath || fallback)
@@ -134,12 +152,16 @@ function EventVisual({ item }) {
 
   return (
     <div className={`${styles.cardVisual} ${visualStyles.visualContainer} ${mobileStyles.visual} ${kind === 'photo' ? visualStyles.photoFrame : visualStyles.crestFrame}`}>
+      {/* Tamaño fijo con el mismo estilo que aplica `fill`: la imagen se ve igual,
+          pero el srcset pasa de ~16 anchos (16–3840 px) a 1x/2x. Se muestra a 126 px
+          como máximo. */}
       <Image
         key={src}
         src={src}
         alt={item.imageAlt || ''}
-        fill
-        sizes="(max-width: 560px) 72px, (max-width: 720px) 92px, 126px"
+        width={EVENT_VISUAL_SIZE}
+        height={EVENT_VISUAL_SIZE}
+        style={EVENT_VISUAL_FILL_STYLE}
         className={kind === 'photo' ? styles.cardPhoto : styles.cardCrest}
         onError={handleError}
       />
@@ -407,6 +429,16 @@ export default function AgendaCofradeDirectoryV4({
   const [municipality, setMunicipality] = useState(initialMunicipality)
   const [nowIso, setNowIso] = useState(initialNowIso || '1970-01-01T00:00:00.000Z')
   const currentYear = String(today || '').slice(0, 4)
+  const { followed } = useFollowedBrotherhoods()
+  const [mineOnly, setMineOnly] = useState(false)
+  const followedSlugs = useMemo(() => new Set(followed.map((item) => item.slug)), [followed])
+  const isMine = (item) => followedSlugs.has(brotherhoodSlugFromHref(item.organizerHref))
+
+  // «Mis hermandades» llega por ?mis=1 (enlace desde la ficha). Solo en el cliente:
+  // no altera la URL canónica, la caché ni lo que ve Google.
+  useEffect(() => {
+    try { if (new URLSearchParams(window.location.search).get('mis') === '1') setMineOnly(true) } catch {}
+  }, [])
 
   function openEvent(item) {
     const detail = document.getElementById(`${agendaEventAnchor(item)}-detail`)
@@ -419,7 +451,7 @@ export default function AgendaCofradeDirectoryV4({
       if (!id.startsWith('acto-')) return
       const item = items.find((entry) => agendaEventAnchor(entry) === id)
       if (!item) return
-      setPeriod('upcoming'); setCategory('all'); setTerritory('all'); setMunicipality('')
+      setPeriod('upcoming'); setCategory('all'); setTerritory('all'); setMunicipality(''); setMineOnly(false)
       window.requestAnimationFrame(() => {
         const detail = document.getElementById(`${id}-detail`)
         if (detail) { detail.open = true; detail.querySelector('summary')?.focus(); document.getElementById(id)?.scrollIntoView({ block: 'start' }) }
@@ -486,6 +518,7 @@ export default function AgendaCofradeDirectoryV4({
       belongsToPeriod(item, period, today)
       && (category === 'all' || item.category === category)
       && agendaLocationMatches(item, territory, municipality)
+      && (!mineOnly || followedSlugs.has(brotherhoodSlugFromHref(item.organizerHref)))
     ))
     .map((item) => {
       const displayDate = periodDisplayDate(item, period, today)
@@ -494,7 +527,7 @@ export default function AgendaCofradeDirectoryV4({
       return visibleDate ? withAgendaTemporalDay(item, visibleDate) : item
     })
     .sort(compareDisplayItems),
-  [category, upcomingItems, municipality, period, territory, today])
+  [category, upcomingItems, municipality, period, territory, today, mineOnly, followedSlugs])
 
   const groups = useMemo(() => groupByMonth(filtered), [filtered])
   const selectedCategoryLabel = category === 'all'
@@ -510,7 +543,13 @@ export default function AgendaCofradeDirectoryV4({
   const [weekendStart, weekendEnd] = weekendRange(today)
   const shortDate = (value) => new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'short', timeZone: 'Europe/Madrid' }).format(new Date(`${value}T12:00:00Z`))
   const periodDates = { today: shortDate(today), tomorrow: shortDate(addDays(today, 1)), weekend: weekendStart.slice(0, 7) === weekendEnd.slice(0, 7) ? `${Number(weekendStart.slice(8))}–${shortDate(weekendEnd)}` : `${shortDate(weekendStart)} – ${shortDate(weekendEnd)}`, upcoming: 'Todas las fechas' }
-  const clearFilters = () => { setCategory('all'); setTerritory('all'); setMunicipality('') }
+  const clearFilters = () => { setCategory('all'); setTerritory('all'); setMunicipality(''); setMineOnly(false) }
+  const mineCount = upcomingItems.filter((item) => belongsToPeriod(item, period, today) && isMine(item)).length
+  const toggleMine = () => {
+    const next = !mineOnly
+    setMineOnly(next)
+    trackEvent('agenda_filter', { filter_type: 'mis_hermandades', filter_value: next ? 'si' : 'no', agenda_type: AGENDA_TYPE })
+  }
 
   const chooseCategory = (value) => {
     const next = category === value ? 'all' : value
@@ -680,12 +719,23 @@ export default function AgendaCofradeDirectoryV4({
         </section>
       ) : null}
 
+      {followed.length ? (
+        <div className={followStyles.bar}>
+          <button type="button" className={`${followStyles.toggle} ${mineOnly ? followStyles.toggleActive : ''}`} aria-pressed={mineOnly} onClick={toggleMine}>
+            <span aria-hidden="true">★</span> Mis hermandades <b>{mineCount}</b>
+          </button>
+          <p>{mineOnly ? `Solo citas de: ${followed.map((item) => item.name).join(', ')}.` : `Sigues ${followed.length} ${followed.length === 1 ? 'hermandad' : 'hermandades'}. Sus citas llevan una estrella.`}</p>
+        </div>
+      ) : mineOnly ? (
+        <p className={followStyles.hint}>Aún no sigues ninguna hermandad. Pulsa «Seguir hermandad» en su ficha y aquí verás solo sus citas.</p>
+      ) : null}
+
       <div className={`${styles.resultSummary} ${mobileStyles.resultSummary}`} aria-live="polite">
         <div>
           <strong>{filtered.length} {filtered.length === 1 ? 'acto' : 'actos'}</strong>
           <span>{selectedCategoryLabel} · {territoryLabel}</span>
         </div>
-        {category !== 'all' || territory !== 'all' ? (
+        {category !== 'all' || territory !== 'all' || mineOnly ? (
           <div className={styles.summaryActions}>
             <button type="button" onClick={clearFilters}>Limpiar filtros</button>
           </div>
@@ -758,6 +808,7 @@ export default function AgendaCofradeDirectoryV4({
                           <span data-category={item.category}>{item.categoryLabel}</span>
                           {item.isExtraordinary && item.category === 'rosaries' ? <b>Extraordinario</b> : null}
                           {cardLiveState.isLive ? <small className={styles.liveBadge}><i aria-hidden="true" /> En curso</small> : null}
+                          {isMine(item) ? <small className={followStyles.badge} title="Sigues a esta hermandad"><span aria-hidden="true">★</span> Tu hermandad</small> : null}
                         </div>
                         <h4><button type="button" className={mobileStyles.eventTitle} onClick={() => openEvent(item)} aria-controls={`${agendaEventAnchor(item)}-detail`}>{item.title}</button></h4>
                         <p className={`${styles.organizer} ${mobileStyles.organizer}`}>{item.organizer}</p>
@@ -766,6 +817,7 @@ export default function AgendaCofradeDirectoryV4({
                           <span><b>Localidad</b>{item.municipality || 'Por confirmar'}</span>
                           {item.place ? <span><b>Lugar</b>{item.place}</span> : null}
                         </div>
+                        <ShareActions compact share={agendaItemShare(item)} contentType="agenda" analytics={{ event_type: item.category, municipality: item.municipality }} />
                         <details id={`${agendaEventAnchor(item)}-detail`} className={mobileStyles.eventDetails} onToggle={(event) => { if (event.currentTarget.open) trackAgendaEventOpen(item) }}>
                           <summary><span>{item.routeText ? 'Información y recorrido' : 'Información del evento'}</span><b aria-hidden="true">+</b></summary>
                           <div className={mobileStyles.eventDetailBody}>

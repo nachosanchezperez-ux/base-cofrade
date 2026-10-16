@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import SectionTitle from '@/components/SectionTitle';
 import styles from './BrotherhoodViaCrucisSection.module.css';
 
@@ -13,6 +14,13 @@ export default function BrotherhoodViaCrucisSection({ items = [] }) {
           title="Vía Crucis de las Cofradías"
           description="Participaciones documentadas de la Hermandad en el Vía Crucis cuaresmal de las hermandades de penitencia de Sevilla."
         />
+
+        <p className={styles.archiveAccess}>
+          <Link href="/via-crucis-sevilla">
+            Consultar el histórico y las estadísticas del Vía Crucis del Consejo
+            <span aria-hidden="true">→</span>
+          </Link>
+        </p>
 
         <div className={styles.list}>
           {items.map((item) => (

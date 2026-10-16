@@ -21,7 +21,7 @@ test('las salidas generales cargan Romerías y Procesiones ordinarias publicadas
 test('Agenda clasifica Romerías separadas de Procesiones', () => {
   const agenda = read('lib/supabase/agenda-cofrade.js')
   const directory = read('components/AgendaCofradeDirectoryV4.js')
-  const fromUrl = read('components/AgendaCofradeDirectoryFromUrl.js')
+  const fromUrl = read('lib/agenda-cofrade-url-state.js')
 
   assert.match(agenda, /const category = isRomery \? 'romeries' : 'processions'/)
   assert.match(agenda, /categoryName: isRomery \? 'Romerías' : 'Procesiones'/)

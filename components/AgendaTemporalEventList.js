@@ -1,4 +1,6 @@
 import Link from 'next/link'
+import ShareActions from '@/components/ShareActions'
+import { agendaItemShare } from '@/lib/share'
 import styles from './AgendaTemporalEventList.module.css'
 
 function itemTime(item) {
@@ -97,6 +99,7 @@ export default function AgendaTemporalEventList({ landing }) {
                         {item.organizer ? <span className={styles.organizer}>{item.organizer}</span> : null}
                       </div>
                       {item.summary ? <p>{item.summary}</p> : null}
+                      <ShareActions compact share={agendaItemShare(item)} contentType="agenda" analytics={{ event_type: item.category, municipality: item.municipality, agenda_period: landing.period }} />
                     </div>
 
                     <div className={styles.actions}>

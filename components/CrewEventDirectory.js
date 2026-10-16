@@ -1,6 +1,11 @@
 'use client'
 
 import Image from 'next/image'
+import ShareActions from '@/components/ShareActions'
+import { crewEventShare } from '@/lib/share'
+import useFollowedBrotherhoods from '@/components/useFollowedBrotherhoods'
+import { brotherhoodSlugFromHref } from '@/lib/followed-brotherhoods'
+import followStyles from './AgendaMyBrotherhoods.module.css'
 import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
 import { CREW_EVENT_TYPES, crewEventStatusLabel } from '@/lib/crew-events'
@@ -68,7 +73,7 @@ function trackCrewBrotherhood(event) {
   })
 }
 
-function EventCard({ event }) {
+function EventCard({ event, isMine = false }) {
   const time = event.timeText || event.startTime || 'Hora por confirmar'
   const primaryAgent = event.agents.find((item) => item.isPrimary) || event.agents[0]
   const hasPage = hasCrewEventPage(event.detailHref)
@@ -84,6 +89,7 @@ function EventCard({ event }) {
         <div className={styles.cardTopline}>
           <span>{event.eventTypeLabel}</span>
           <EventStatus event={event} />
+          {isMine ? <small className={followStyles.badge} title="Sigues a esta hermandad"><span aria-hidden="true">★</span> Tu hermandad</small> : null}
         </div>
         <h3>{hasPage ? <Link href={event.detailHref} onClick={() => trackCrewOpen(event)}>{event.title}</Link> : event.title}</h3>
         {event.brotherhoodHref ? (
@@ -103,6 +109,7 @@ function EventCard({ event }) {
           </div>
           {hasPage ? <Link className={styles.detailLink} href={event.detailHref} onClick={() => trackCrewOpen(event)}>Ver convocatoria <span>→</span></Link> : null}
         </div>
+        <ShareActions compact share={crewEventShare(event, { hasPage })} contentType="iguala" analytics={{ event_type: event.eventType || event.eventTypeLabel, municipality: event.municipality }} />
       </div>
 
       {event.crestPath ? (
@@ -133,6 +140,10 @@ export default function CrewEventDirectory({ events }) {
   const [step, setStep] = useState('all')
   const [agent, setAgent] = useState('all')
   const [municipality, setMunicipality] = useState('all')
+  const { followed } = useFollowedBrotherhoods()
+  const [mineOnly, setMineOnly] = useState(false)
+  const followedSlugs = useMemo(() => new Set(followed.map((item) => item.slug)), [followed])
+  const isMine = (item) => followedSlugs.has(brotherhoodSlugFromHref(item.brotherhoodHref))
 
   const upcoming = useMemo(() => events.filter((item) => item.isUpcoming), [events])
   const archived = useMemo(() => events.filter((item) => !item.isUpcoming), [events])
@@ -151,9 +162,10 @@ export default function CrewEventDirectory({ events }) {
     && (step === 'all' || item.steps.some((entry) => entry.id === step))
     && (agent === 'all' || item.agents.some((entry) => entry.id === agent))
     && (municipality === 'all' || item.municipalityId === municipality)
+    && (!mineOnly || isMine(item))
   ))
   const groups = groupByMonth(filtered)
-  const hasFilters = [month, type, brotherhood, step, agent, municipality].some((value) => value !== 'all')
+  const hasFilters = mineOnly || [month, type, brotherhood, step, agent, municipality].some((value) => value !== 'all')
   const featured = upcoming[0] || null
 
   function trackFilter(filterType, filterValue) {
@@ -176,6 +188,7 @@ export default function CrewEventDirectory({ events }) {
     setStep('all')
     setAgent('all')
     setMunicipality('all')
+    setMineOnly(false)
     trackFilter('filtros', 'restablecidos')
   }
 
@@ -214,6 +227,7 @@ export default function CrewEventDirectory({ events }) {
               <span><b>Capataz</b>{featured.agents.map((item) => item.name).join(' · ') || 'Por confirmar'}</span>
             </div>
             {hasCrewEventPage(featured.detailHref) ? <Link className={styles.primaryAction} href={featured.detailHref} onClick={() => trackCrewOpen(featured)}>Ver convocatoria <span>→</span></Link> : <a className={styles.primaryAction} href={`#${featured.anchor}`}>Ver en el calendario <span>→</span></a>}
+            <ShareActions share={crewEventShare(featured, { hasPage: hasCrewEventPage(featured.detailHref) })} contentType="iguala" analytics={{ event_type: featured.eventType || featured.eventTypeLabel, municipality: featured.municipality, placement: 'featured' }} />
           </div>
           {featured.crestPath ? (
             <Image className={styles.featuredCrest} src={featured.crestPath} alt={`Escudo de ${featured.brotherhoodName}`} width={150} height={150} sizes="150px" />
@@ -236,6 +250,14 @@ export default function CrewEventDirectory({ events }) {
           </button>
         </div>
 
+        {followed.length ? (
+          <div className={followStyles.bar}>
+            <button type="button" className={`${followStyles.toggle} ${mineOnly ? followStyles.toggleActive : ''}`} aria-pressed={mineOnly} onClick={() => { setMineOnly(!mineOnly); trackFilter('mis_hermandades', mineOnly ? 'no' : 'si') }}>
+              <span aria-hidden="true">★</span> Mis hermandades <b>{source.filter(isMine).length}</b>
+            </button>
+          </div>
+        ) : null}
+
         <div className={styles.filters}>
           <SelectFilter label="Mes" value={month} onChange={(value) => setTrackedFilter(setMonth, 'mes', value)} options={months} allLabel="Todos los meses" />
           <SelectFilter label="Tipo" value={type} onChange={(value) => setTrackedFilter(setType, 'tipo_evento', value)} options={typeOptions} allLabel="Todas las citas" />
@@ -255,7 +277,7 @@ export default function CrewEventDirectory({ events }) {
             {groups.map((group) => (
               <section className={styles.monthGroup} key={group.key} aria-labelledby={`crew-events-${group.key}`}>
                 <div className={styles.monthHeading}><h3 id={`crew-events-${group.key}`}>{group.label}</h3><span>{group.items.length}</span></div>
-                <div className={styles.list}>{group.items.map((event) => <EventCard event={event} key={event.id} />)}</div>
+                <div className={styles.list}>{group.items.map((event) => <EventCard event={event} key={event.id} isMine={isMine(event)} />)}</div>
               </section>
             ))}
           </div>

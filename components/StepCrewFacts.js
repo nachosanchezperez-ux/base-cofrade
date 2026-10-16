@@ -1,6 +1,7 @@
 import 'server-only'
 
 import { unstable_cache } from 'next/cache'
+import { PUBLIC_DETAIL_DATA_REVALIDATE } from '@/lib/public-detail-cache'
 import { createPublicClient } from '@/lib/supabase/public'
 
 function isCapatazRole(value = '') {
@@ -56,7 +57,7 @@ async function loadStepCrewFacts(stepId) {
 const getCachedStepCrewFacts = unstable_cache(
   loadStepCrewFacts,
   ['hilo-cofrade-public-step-crew-v2'],
-  { revalidate: 900, tags: ['public-step-detail'] }
+  { revalidate: PUBLIC_DETAIL_DATA_REVALIDATE, tags: ['public-step-detail'] }
 )
 
 export default async function StepCrewFacts({ stepId }) {
