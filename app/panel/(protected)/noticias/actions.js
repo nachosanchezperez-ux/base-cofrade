@@ -2,7 +2,7 @@
 
 import { revalidatePath, updateTag } from 'next/cache'
 import { redirect } from 'next/navigation'
-import { NEWS_RELATION_PROTAGONIST, NEWS_RELATION_RELATED, newsPublicationIssues } from '@/lib/hilo-movements-editorial'
+import { NEWS_RELATION_PROTAGONIST, NEWS_RELATION_RELATED, NEWS_PROTAGONIST_TYPES, newsPublicationIssues } from '@/lib/hilo-movements-editorial'
 import { requirePanelAdmin, requirePanelEditor } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
 
@@ -58,29 +58,29 @@ async function ensureUniqueSlug(supabase, slug, id = null) {
   if (result.data) throw new Error(`El identificador «${slug}» ya lo usa otra noticia.`)
 }
 
-async function requireBrotherhood(supabase, id) {
-  return assertRow(await supabase.from('entities').select('id, name, slug, status, entity_type').eq('id', id).eq('entity_type', 'brotherhood').neq('status', 'archived').maybeSingle(), 'La Hermandad seleccionada no existe o está archivada.')
+async function requireProtagonist(supabase, id) {
+  return assertRow(await supabase.from('entities').select('id, name, slug, status, entity_type').eq('id', id).in('entity_type', NEWS_PROTAGONIST_TYPES).neq('status', 'archived').maybeSingle(), 'La Hermandad o banda seleccionada no existe o está archivada.')
 }
 
 async function protagonistOf(supabase, id) {
   const link = await supabase.from('editorial_content_links').select('id, entity_id').eq('editorial_content_id', id).eq('relation_type', NEWS_RELATION_PROTAGONIST).eq('is_primary', true).limit(1).maybeSingle()
-  if (link.error) throw new Error(`No se pudo leer la Hermandad protagonista: ${link.error.message}`)
+  if (link.error) throw new Error(`No se pudo leer la ficha protagonista: ${link.error.message}`)
   return link.data
 }
 
-async function setProtagonist(supabase, id, brotherhoodId) {
+async function setProtagonist(supabase, id, protagonistId) {
   const current = await protagonistOf(supabase, id)
-  if (current?.entity_id === brotherhoodId) return
+  if (current?.entity_id === protagonistId) return
   if (current) {
-    assertMutation(await supabase.from('editorial_content_links').update({ entity_id: brotherhoodId }).eq('id', current.id), 'No se pudo cambiar la Hermandad protagonista')
+    assertMutation(await supabase.from('editorial_content_links').update({ entity_id: protagonistId }).eq('id', current.id), 'No se pudo cambiar la ficha protagonista')
     return
   }
-  assertMutation(await supabase.from('editorial_content_links').insert({ editorial_content_id: id, entity_id: brotherhoodId, relation_type: NEWS_RELATION_PROTAGONIST, is_primary: true }), 'No se pudo vincular la Hermandad protagonista')
+  assertMutation(await supabase.from('editorial_content_links').insert({ editorial_content_id: id, entity_id: protagonistId, relation_type: NEWS_RELATION_PROTAGONIST, is_primary: true }), 'No se pudo vincular la ficha protagonista')
 }
 
-async function publicationIssues(supabase, content) {
+async function publicationIssues(supabase, content, selectedProtagonist = null) {
   const link = await protagonistOf(supabase, content.id)
-  const protagonist = link ? (await supabase.from('entities').select('id, status').eq('id', link.entity_id).maybeSingle()).data : null
+  const protagonist = selectedProtagonist || (link ? assertRow(await supabase.from('entities').select('id, slug, status, entity_type').eq('id', link.entity_id).maybeSingle(), 'No se pudo comprobar la ficha protagonista') : null)
   const sourceLinks = assertMutation(await supabase.from('source_links').select('source_id').eq('editorial_content_id', content.id), 'No se pudieron comprobar las fuentes') || []
   const ids = sourceLinks.map((item) => item.source_id)
   const sources = ids.length ? assertMutation(await supabase.from('sources').select('name, url').in('id', ids), 'No se pudieron comprobar las fuentes') || [] : []
@@ -94,10 +94,9 @@ async function refreshNews(supabase, id) {
   revalidatePath('/')
   revalidatePath('/panel/noticias')
   revalidatePath(`/panel/noticias/${id}`)
-  const link = await protagonistOf(supabase, id).catch(() => null)
-  if (!link) return
-  const entity = await supabase.from('entities').select('slug').eq('id', link.entity_id).maybeSingle()
-  if (entity.data?.slug) revalidatePath(`/hermandades/${entity.data.slug}`)
+  // También retira la noticia de una ficha anterior al cambiar el protagonista.
+  revalidatePath('/hermandades/[slug]', 'page')
+  revalidatePath('/bandas/[slug]', 'page')
 }
 
 function redirectEditor(id, saved) { redirect(`/panel/noticias/${id}?saved=${saved}`) }
@@ -126,11 +125,11 @@ export async function createNewsAction(formData) {
   const slug = slugify(value(formData, 'slug') || payload.title)
   if (!slug) throw new Error('No se ha podido generar un identificador válido a partir del titular.')
   await ensureUniqueSlug(supabase, slug)
-  const brotherhoodId = uuid(formData, 'brotherhood_entity_id', true)
-  if (brotherhoodId) await requireBrotherhood(supabase, brotherhoodId)
+  const protagonistId = uuid(formData, formData.has('protagonist_entity_id') ? 'protagonist_entity_id' : 'brotherhood_entity_id', true)
+  if (protagonistId) await requireProtagonist(supabase, protagonistId)
   const saved = assertRow(await supabase.from('editorial_content').insert({ ...payload, content_type: 'news', slug, status: 'draft', publish_date: payload.publish_date || madridToday(), eligible_for_daily: false, daily_priority: 0 }).select('id').single(), 'No se pudo crear la noticia')
-  if (brotherhoodId) await setProtagonist(supabase, saved.id, brotherhoodId)
-  await audit(supabase, user, { action_type: 'create', object_id: saved.id, summary: `Noticia creada: ${payload.title}`, changed_fields: { ...payload, slug } })
+  if (protagonistId) await setProtagonist(supabase, saved.id, protagonistId)
+  await audit(supabase, user, { action_type: 'create', object_id: saved.id, summary: `Noticia creada: ${payload.title}`, changed_fields: { ...payload, slug, protagonist_entity_id: protagonistId } })
   await refreshNews(supabase, saved.id)
   redirectEditor(saved.id, 'created')
 }
@@ -145,17 +144,15 @@ export async function updateNewsAction(formData) {
   const slug = slugify(required(formData, 'slug', 'El identificador'))
   if (current.status === 'published' && current.slug && slug !== current.slug) throw new Error('El identificador de una noticia publicada no puede cambiarse: rompería los enlaces compartidos. Pásala primero a borrador.')
   await ensureUniqueSlug(supabase, slug, id)
-  const brotherhoodId = uuid(formData, 'brotherhood_entity_id', true)
-  if (brotherhoodId) {
-    await requireBrotherhood(supabase, brotherhoodId)
-    await setProtagonist(supabase, id, brotherhoodId)
-  }
+  const protagonistId = uuid(formData, formData.has('protagonist_entity_id') ? 'protagonist_entity_id' : 'brotherhood_entity_id', true)
+  const selectedProtagonist = protagonistId ? await requireProtagonist(supabase, protagonistId) : null
   if (nextStatus === 'published') {
-    const issues = await publicationIssues(supabase, { ...current, ...payload, id, slug })
+    const issues = await publicationIssues(supabase, { ...current, ...payload, id, slug }, selectedProtagonist)
     if (issues.length) throw new Error(`Aún no se puede publicar: ${issues.join(' ')}`)
   }
+  if (protagonistId) await setProtagonist(supabase, id, protagonistId)
   assertMutation(await supabase.from('editorial_content').update({ ...payload, slug, status: nextStatus }).eq('id', id).eq('content_type', 'news'), 'No se pudo guardar la noticia')
-  await audit(supabase, user, { action_type: 'update', object_id: id, summary: `Noticia ${nextStatus === 'published' ? 'publicada' : 'actualizada'}: ${payload.title}`, changed_fields: { ...payload, slug, status: nextStatus } })
+  await audit(supabase, user, { action_type: 'update', object_id: id, summary: `Noticia ${nextStatus === 'published' ? 'publicada' : 'actualizada'}: ${payload.title}`, changed_fields: { ...payload, slug, status: nextStatus, protagonist_entity_id: protagonistId } })
   await refreshNews(supabase, id)
   redirectEditor(id, nextStatus === 'published' && current.status !== 'published' ? 'published' : 'updated')
 }

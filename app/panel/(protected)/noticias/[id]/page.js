@@ -43,7 +43,7 @@ export default async function PanelNewsEditorPage({ params, searchParams }) {
       <header className={styles.editorHeader}>
         <div className={styles.breadcrumb}><Link href="/panel/noticias">Noticias</Link><span>→</span><strong>{content.title}</strong></div>
         <div className={styles.editorTitleRow}>
-          <div><span className={styles.eyebrow}>Editar noticia</span><h1>{content.title}</h1><p>{data.protagonist?.name || 'Sin Hermandad protagonista'}{scheduled ? ` · programada para el ${content.publish_date}` : ''}</p></div>
+          <div><span className={styles.eyebrow}>Editar noticia</span><h1>{content.title}</h1><p>{data.protagonist?.name || 'Sin protagonista'}{scheduled ? ` · programada para el ${content.publish_date}` : ''}</p></div>
           <div className={styles.editorHeaderActions}><span className={`${styles.statusBadge} ${styles[content.status]}`}>{STATUS_LABELS[content.status]}</span>{content.status === 'published' && !scheduled && publicHref ? <Link className={styles.secondaryButton} href={publicHref} target="_blank" rel="noreferrer">Ver en El Hilo se mueve ↗</Link> : null}</div>
         </div>
       </header>
@@ -53,7 +53,7 @@ export default async function PanelNewsEditorPage({ params, searchParams }) {
       {content.status !== 'published' && data.issues.length ? <div className={styles.readOnlyNotice} role="note"><strong>Antes de publicar:</strong> {data.issues.join(' ')}</div> : null}
 
       <section className={styles.metricGrid} aria-label="Estado de la noticia">
-        <article className={styles.metricCard}><span>Protagonista</span><strong>{data.protagonist ? 1 : 0}</strong><small>{data.protagonist?.status === 'published' ? 'Hermandad publicada' : 'Hermandad'}</small></article>
+        <article className={styles.metricCard}><span>Protagonista</span><strong>{data.protagonist ? 1 : 0}</strong><small>{data.protagonist ? `${data.protagonist.entity_type === 'band' ? 'Banda' : 'Hermandad'}${data.protagonist.status === 'published' ? ' publicada' : ' sin publicar'}` : 'Sin seleccionar'}</small></article>
         <article className={styles.metricCard}><span>Fichas</span><strong>{data.relations.length}</strong><small>relacionadas</small></article>
         <article className={styles.metricCard}><span>Fuentes</span><strong>{data.sources.length}</strong><small>enlazadas</small></article>
         <article className={styles.metricCard}><span>Para publicar</span><strong>{data.issues.length}</strong><small>{data.issues.length === 1 ? 'dato pendiente' : 'datos pendientes'}</small></article>
@@ -67,7 +67,7 @@ export default async function PanelNewsEditorPage({ params, searchParams }) {
             <label className={styles.fieldWide}><span>Titular</span><input name="title" required maxLength={160} defaultValue={content.title} /></label>
             <label><span>Identificador (enlace)</span><input name="slug" required defaultValue={content.slug || ''} pattern="[a-z0-9]+(-[a-z0-9]+)*" title="Minúsculas, números y guiones" /></label>
             <label><span>Etiqueta</span><input name="news_kind" list="news-kind-suggestions" defaultValue={content.news_kind || ''} placeholder="Cambio, Nombramiento…" /><datalist id="news-kind-suggestions">{NEWS_KIND_SUGGESTIONS.map((item) => <option key={item} value={item} />)}</datalist></label>
-            <EntityPicker className={styles.fieldWide} name="brotherhood_entity_id" items={data.brotherhoodOptions} label="Hermandad protagonista" placeholder="Buscar Hermandad…" emptyLabel="Selecciona una Hermandad" required={false} defaultValue={data.protagonist?.id || ''} />
+            <EntityPicker className={styles.fieldWide} name="protagonist_entity_id" items={data.protagonistOptions} label="Hermandad o banda protagonista" placeholder="Buscar Hermandad o banda…" emptyLabel="Selecciona una Hermandad o banda" required={false} defaultValue={data.protagonist?.id || ''} />
             <label><span>Tema</span><select name="news_topic" defaultValue={content.news_topic || ''}><option value="">Elige un tema</option>{NEWS_TOPICS.map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label>
             <label><span>Localidad</span><select name="municipality_id" defaultValue={content.municipality_id || ''}><option value="">Elige una localidad</option>{data.municipalities.map((item) => <option key={item.id} value={item.id}>{item.label}</option>)}</select></label>
             <label><span>Fecha del anuncio</span><input name="announced_on" type="date" max={data.today} defaultValue={content.announced_on || ''} /></label>
@@ -85,7 +85,7 @@ export default async function PanelNewsEditorPage({ params, searchParams }) {
       </section>
 
       <section className={styles.editorSection}>
-        <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>Tira del hilo</span><h2>Fichas relacionadas</h2></div><p>Bandas, Imágenes, Pasos, Personas o Marchas que forman parte de la noticia. Solo se enlazan las que están publicadas.</p></div>
+        <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>Tira del hilo</span><h2>Fichas relacionadas</h2></div><p>Hermandades, Bandas, Imágenes, Pasos, Personas o Marchas que forman parte de la noticia. Solo se enlazan las que están publicadas.</p></div>
         <div className={styles.editorStack}>
           {data.relations.map((item) => <article className={styles.editorItem} key={item.id}>
             <div className={styles.itemHeading}><div><span className={styles.eyebrow}>{item.typeLabel}{item.entity?.status && item.entity.status !== 'published' ? ' · sin publicar' : ''}</span><h3>{item.entity?.name || 'Ficha no disponible'}</h3></div></div>
@@ -96,7 +96,7 @@ export default async function PanelNewsEditorPage({ params, searchParams }) {
             <input type="hidden" name="content_id" value={content.id} />
             <div className={styles.itemHeading}><div><span className={styles.eyebrow}>Nueva relación</span><h3>Añadir ficha</h3></div></div>
             <div className={styles.formGrid}>
-              <EntityPicker className={styles.fieldWide} name="entity_id" items={data.relationOptions} label="Ficha" placeholder="Buscar Banda, Imagen, Paso, Persona o Marcha…" emptyLabel="Selecciona una ficha" />
+              <EntityPicker className={styles.fieldWide} name="entity_id" items={data.relationOptions} label="Ficha" placeholder="Buscar Hermandad, Banda, Imagen, Paso, Persona o Marcha…" emptyLabel="Selecciona una ficha" />
               <label className={styles.fieldWide}><span>Papel en la noticia</span><input name="role" required placeholder="Desde 2027 · Paso de palio · Nuevo capataz…" /></label>
             </div>
             <div className={styles.formActions}><button className={styles.primaryButton} type="submit">Relacionar ficha</button></div>
