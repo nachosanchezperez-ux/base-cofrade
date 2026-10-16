@@ -46,6 +46,10 @@
   color: #9f1730;
 }
 
+.calendar svg {
+  color: #17283a;
+}
+
 .compact {
   gap: 6px;
   margin-top: 10px;

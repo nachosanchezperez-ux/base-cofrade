@@ -14,6 +14,14 @@ function MessageIcon() {
   )
 }
 
+function CalendarIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
+      <path fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M7 3v3M17 3v3M4 8h16M5.5 5h13A1.5 1.5 0 0 1 20 6.5v12a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 18.5v-12A1.5 1.5 0 0 1 5.5 5ZM12 11v6M9 14h6" />
+    </svg>
+  )
+}
+
 function ShareIcon() {
   return (
     <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
@@ -24,7 +32,9 @@ function ShareIcon() {
 
 // Botones de compartir: WhatsApp directo y el menú del móvil (o copiar el
 // enlace en ordenador). `share` sale de lib/share.js: { title, body, text, url }.
-export default function ShareActions({ share, contentType = 'agenda', analytics = {}, compact = false, className = '' }) {
+// `calendarHref` (opcional) añade «Calendario»: descarga el .ics del acto, que el
+// móvil abre en su aplicación de calendario.
+export default function ShareActions({ share, contentType = 'agenda', analytics = {}, compact = false, className = '', calendarHref = '' }) {
   const [copied, setCopied] = useState(false)
   const timer = useRef(null)
 
@@ -87,6 +97,18 @@ export default function ShareActions({ share, contentType = 'agenda', analytics 
         <ShareIcon />
         <span>{copied ? 'Copiado' : 'Compartir'}</span>
       </button>
+      {calendarHref ? (
+        <a
+          className={styles.calendar}
+          href={calendarHref}
+          aria-label={`Añadir al calendario: ${share.title}`}
+          onClick={() => trackEvent('calendar_add', { calendar_scope: 'event', content_type: contentType, item_name: share.title, ...analytics })}
+          data-analytics-skip-entity="true"
+        >
+          <CalendarIcon />
+          <span>Calendario</span>
+        </a>
+      ) : null}
       <span className="sr-only" aria-live="polite">{copied ? 'Texto y enlace copiados' : ''}</span>
     </div>
   )

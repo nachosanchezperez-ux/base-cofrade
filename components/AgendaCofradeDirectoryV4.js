@@ -817,7 +817,7 @@ export default function AgendaCofradeDirectoryV4({
                           <span><b>Localidad</b>{item.municipality || 'Por confirmar'}</span>
                           {item.place ? <span><b>Lugar</b>{item.place}</span> : null}
                         </div>
-                        <ShareActions compact share={agendaItemShare(item)} contentType="agenda" analytics={{ event_type: item.category, municipality: item.municipality }} />
+                        <ShareActions compact share={agendaItemShare(item)} contentType="agenda" analytics={{ event_type: item.category, municipality: item.municipality }} calendarHref={item.date ? `/calendario/acto/${agendaEventAnchor(item)}.ics` : ''} />
                         <details id={`${agendaEventAnchor(item)}-detail`} className={mobileStyles.eventDetails} onToggle={(event) => { if (event.currentTarget.open) trackAgendaEventOpen(item) }}>
                           <summary><span>{item.routeText ? 'Información y recorrido' : 'Información del evento'}</span><b aria-hidden="true">+</b></summary>
                           <div className={mobileStyles.eventDetailBody}>
