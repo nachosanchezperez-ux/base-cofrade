@@ -1,11 +1,12 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { buildHiloMovements } from '../lib/hilo-movements.js'
+import { buildHiloMovements, selectHiloMovements, filterHiloMovements } from '../lib/hilo-movements.js'
 import { editorialNewsToMovements, mergeHiloMovementRecords, newsPublicationIssues } from '../lib/hilo-movements-editorial.js'
 
 const BROTHERHOOD = { id: 'b0000000-0000-4000-8000-000000000001', name: 'El Calvario', slug: 'el-calvario', entity_type: 'brotherhood', status: 'published' }
 const AGENT = { id: 'a0000000-0000-4000-8000-000000000001', name: 'José López Escobar', slug: 'jose-lopez-escobar', entity_type: 'agent', status: 'published' }
 const DRAFT_BAND = { id: 'c0000000-0000-4000-8000-000000000001', name: 'Banda en borrador', slug: 'banda-borrador', entity_type: 'band', status: 'draft' }
+const BAND = { ...DRAFT_BAND, name: 'Las Cigarreras', slug: 'las-cigarreras', status: 'published' }
 const MUNICIPALITY = { id: 'm0000000-0000-4000-8000-000000000001', name: 'Sevilla' }
 
 function panelRow(overrides = {}) {
@@ -74,12 +75,52 @@ test('una noticia del Panel sustituye a la del archivo con el mismo identificado
 })
 
 test('el Panel explica qué falta para publicar', () => {
-  const issues = newsPublicationIssues({ content: { title: 'Titular' }, protagonist: { status: 'draft' }, sources: [], today: '2026-10-16' })
+  const issues = newsPublicationIssues({ content: { title: 'Titular' }, protagonist: { ...BROTHERHOOD, status: 'draft' }, sources: [], today: '2026-10-16' })
   assert.ok(issues.includes('Falta la entradilla.'))
-  assert.ok(issues.includes('La Hermandad protagonista no está publicada.'))
+  assert.ok(issues.includes('La ficha protagonista no está publicada.'))
   assert.ok(issues.includes('Falta al menos una fuente con enlace https.'))
   const ready = newsPublicationIssues({ content: panelRow(), protagonist: BROTHERHOOD, sources: [{ label: 'X', href: 'https://example.org' }], today: '2026-10-16' })
   assert.deepEqual(ready, [])
   const future = newsPublicationIssues({ content: panelRow({ announced_on: '2026-10-20', publish_date: '2026-10-21' }), protagonist: BROTHERHOOD, sources: [{ label: 'X', href: 'https://example.org' }], today: '2026-10-16' })
   assert.deepEqual(future, ['La fecha del anuncio no puede ser futura.'])
+})
+
+test('una banda puede protagonizar una noticia sin Hermandad, con su ficha canónica y filtro', () => {
+  const bandLinks = [
+    { ...links[0], entity_id: BAND.id },
+    { ...links[1], entity_id: BAND.id }, // No se duplica como relacionada.
+    { ...links[1], entity_id: BROTHERHOOD.id, notes: 'Organiza el concierto' },
+  ]
+  const entities = [BAND, BROTHERHOOD]
+  const records = editorialNewsToMovements({ contents: [panelRow({ news_topic: 'musica' })], links: bandLinks, entities, municipalities: [MUNICIPALITY], sources })
+  const items = buildHiloMovements(records, entities, { today: '2026-10-16' })
+  assert.equal(items.length, 1)
+  assert.equal(items[0].brotherhood, null)
+  assert.equal(items[0].protagonist.href, '/bandas/las-cigarreras')
+  assert.equal(items[0].protagonist.kind, 'Banda')
+  assert.equal(items[0].relations.length, 1)
+  assert.equal(filterHiloMovements(items, { q: 'cigarreras', tema: 'musica' }).length, 1)
+  assert.equal(selectHiloMovements(items, { entityId: BAND.id }).length, 1)
+  assert.equal(selectHiloMovements(items, { entityId: BROTHERHOOD.id }).length, 1)
+  assert.equal(selectHiloMovements(items, { entityHref: '/hermandades/el-calvario' }).length, 1)
+  assert.equal(selectHiloMovements(items, { entityHref: '/hermandades/otra' }).length, 0)
+  assert.equal(selectHiloMovements(items, { entityId: AGENT.id }).length, 0)
+  assert.equal(selectHiloMovements([items[0], { ...items[0], id: 'otra' }], { diverse: true }).length, 1)
+  assert.deepEqual(newsPublicationIssues({ content: panelRow(), protagonist: BAND, sources }), [])
+})
+
+test('una banda en borrador, archivada, sin slug o de tipo incorrecto no puede protagonizar una noticia pública', () => {
+  for (const patch of [{ status: 'draft' }, { status: 'archived' }, { slug: '' }, { entity_type: 'agent' }]) {
+    const band = { ...BAND, ...patch }
+    const records = editorialNewsToMovements({ contents: [panelRow()], links: [{ ...links[0], entity_id: band.id }], entities: [band], municipalities: [MUNICIPALITY], sources })
+    assert.deepEqual(buildHiloMovements(records, [band], { today: '2026-10-16' }), [])
+    assert.ok(newsPublicationIssues({ content: panelRow(), protagonist: band, sources }).length)
+  }
+})
+
+test('una banda relacionada recibe también la actualidad de una Hermandad', () => {
+  const entities = [BROTHERHOOD, BAND]
+  const records = editorialNewsToMovements({ contents: [panelRow()], links: [links[0], { ...links[1], entity_id: BAND.id }], entities, municipalities: [MUNICIPALITY], sources })
+  const items = buildHiloMovements(records, entities, { today: '2026-10-16' })
+  assert.equal(selectHiloMovements(items, { entityId: BAND.id })[0].protagonist.id, BROTHERHOOD.id)
 })

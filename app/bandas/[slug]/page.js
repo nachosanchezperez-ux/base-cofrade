@@ -13,6 +13,7 @@ import BandDiscographySection from '@/components/bands/BandDiscographySection'
 import BandFeaturePhoto from '@/components/BandFeaturePhoto'
 import MusicalRepertoiresSection from '@/components/MusicalRepertoiresSection'
 import ContextAgendaSection from '@/components/ContextAgendaSection'
+import HiloMovementsSection from '@/components/HiloMovementsSection'
 import HistoricalAccompanimentsRail from './HistoricalAccompanimentsRail'
 import { getBandBySlug as getBandBySlugUncached, youtubeEmbedUrl } from '@/lib/supabase/bands'
 import { getBandDiscography } from '@/lib/supabase/bandDiscography'
@@ -464,6 +465,8 @@ export default async function BandDetailPage({ params }) {
           </div>
         </div>
       </section>
+
+      <HiloMovementsSection entityId={band.id} entityName={band.popularName} />
 
       <ContextAgendaSection
         id="agenda"
