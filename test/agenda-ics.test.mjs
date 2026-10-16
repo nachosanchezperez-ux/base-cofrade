@@ -137,3 +137,10 @@ test('la descripción conserva los horarios en texto pero no repite fechas en br
   const rawDates = agendaItemVEvent({ ...outing, startTime: '', timeText: '2026-10-17 a 2026-10-18' }, { now }).join('\n')
   assert.doesNotMatch(rawDates, /2026-10-17 a/)
 })
+
+test('un resumen que solo es el rango de fechas en bruto no se repite', () => {
+  const lines = agendaItemVEvent({ ...outing, summary: '2026-10-17 a 2026-10-18' }, { now }).join('\n')
+  assert.doesNotMatch(lines, /2026-10-17 a/)
+  const real = agendaItemVEvent({ ...outing, summary: 'Besamanos del 6 al 8 de diciembre.' }, { now }).join('\n')
+  assert.match(real, /Besamanos del 6 al 8 de diciembre/)
+})
