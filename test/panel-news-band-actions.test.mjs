@@ -17,7 +17,7 @@ const hooks = registerHooks({ resolve(specifier, context, nextResolve) {
   return nextResolve(specifier, context)
 } })
 const { createNewsAction, updateNewsAction } = await import('../app/panel/(protected)/noticias/actions.js')
-const { getNewsReferenceOptions } = await import('../lib/panel/editorial-news.js')
+const { getNewsReferenceOptions, getPanelNewsList } = await import('../lib/panel/editorial-news.js')
 hooks.deregister()
 
 const newsId = '10000000-0000-4000-8000-000000000001'
@@ -118,4 +118,13 @@ test('el selector carga bandas y Hermandades también después de las primeras m
   assert.deepEqual(options.protagonistOptions.map(item => item.id), [bandId, oldId])
   assert.equal(options.relationOptions.length, 1002)
   assert.deepEqual(ranges, [[0, 499], [500, 999], [1000, 1499]])
+})
+
+
+test('el listado mantiene el protagonista de noticias anteriores con otro tipo de vínculo principal', async () => {
+  const { tables } = setup({ existing: true })
+  tables.entities.find(entity => entity.id === oldId).name = 'El Calvario'
+  tables.editorial_content_links[0].relation_type = 'related'
+  const news = await getPanelNewsList()
+  assert.equal(news[0].protagonist, 'El Calvario')
 })
