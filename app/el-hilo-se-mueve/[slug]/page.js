@@ -23,6 +23,7 @@ import styles from './hilo-article.module.css'
 export const revalidate = 900
 
 const ROLE_BY_TYPE = { brotherhood: 'Hermandad', band: 'Banda', image: 'Imagen', step: 'Paso', author: 'Autor', march: 'Marcha' }
+const ROLE_BY_FAMILY = { hermandades: 'Hermandad', bandas: 'Banda', imagenes: 'Imagen', pasos: 'Paso', autores: 'Autor', marchas: 'Marcha' }
 
 async function getMovement(slug) {
   const items = await getPublicHiloMovements()
@@ -67,6 +68,13 @@ export default async function HiloArticlePage({ params }) {
     ...(item.protagonist.href ? [{ id: item.protagonist.id || item.protagonist.href, href: item.protagonist.href, label: item.protagonist.label, role: item.protagonist.kind || 'Hermandad' }] : []),
     ...item.relations.map((relation) => ({ ...relation, role: relation.role || ROLE_BY_TYPE[relation.type] || 'Relacionado' })),
   ]
+  // El enlace «Descubre» a una ficha también es una relación de la noticia.
+  const discoverFicha = /^\/(hermandades|bandas|imagenes|pasos|autores|marchas)\/[a-z0-9-]+/.exec(item.discover?.href || '')
+  const discoverPath = discoverFicha ? discoverFicha[0] : ''
+  if (discoverPath && !connections.some((connection) => connection.href.split('#')[0] === discoverPath)) {
+    connections.push({ id: discoverPath, href: discoverPath, label: item.discover.label, role: ROLE_BY_FAMILY[discoverFicha[1]] })
+  }
+  const mentions = connections.filter((connection) => connection.href !== item.protagonist.href)
 
   // NewsArticle: titular, fechas, autoría editorial y, sobre todo, de quién habla
   // (about) y qué fichas menciona (mentions), enlazadas a sus páginas.
@@ -84,20 +92,19 @@ export default async function HiloArticlePage({ params }) {
     isAccessibleForFree: true,
     datePublished: articleDate(item),
     dateModified: item.documentedOn,
-    ...(photo ? { image: [absoluteUrl(photo.src)] } : {}),
+    // Sin foto, la imagen social por defecto: los resultados de noticias la piden.
+    image: [photo ? absoluteUrl(photo.src) : absoluteUrl('/opengraph-image')],
     author: { '@type': 'Organization', '@id': `${absoluteUrl('/')}#organization`, name: SITE_NAME, url: absoluteUrl('/') },
     publisher: { '@id': `${absoluteUrl('/')}#organization` },
     isPartOf: { '@type': 'CollectionPage', '@id': `${absoluteUrl(HILO_MOVEMENTS_PATH)}#collection`, name: 'El Hilo se mueve' },
-    ...(item.protagonist.href ? {
-      about: {
-        '@type': item.protagonist.kind === 'Banda' ? 'MusicGroup' : 'Organization',
-        '@id': `${absoluteUrl(item.protagonist.href)}#organization`,
-        name: item.protagonist.label,
-        url: absoluteUrl(item.protagonist.href),
-      },
-    } : {}),
-    ...(item.relations.length ? {
-      mentions: item.relations.map((relation) => ({ '@type': 'Thing', name: relation.label, url: absoluteUrl(relation.href) })),
+    about: item.protagonist.href ? {
+      '@type': item.protagonist.kind === 'Banda' ? 'MusicGroup' : 'Organization',
+      '@id': `${absoluteUrl(item.protagonist.href)}#organization`,
+      name: item.protagonist.label,
+      url: absoluteUrl(item.protagonist.href),
+    } : { '@type': 'Thing', name: item.protagonist.label },
+    ...(mentions.length ? {
+      mentions: mentions.map((connection) => ({ '@type': 'Thing', name: connection.label, url: absoluteUrl(connection.href) })),
     } : {}),
     ...(item.municipality ? { contentLocation: { '@type': 'Place', name: item.municipality, address: { '@type': 'PostalAddress', addressLocality: item.municipality, addressRegion: 'Sevilla', addressCountry: 'ES' } } } : {}),
     citation: item.sources.map((source) => source.href),
@@ -136,7 +143,7 @@ export default async function HiloArticlePage({ params }) {
         <div className={styles.photoFrame}>
           <Image src={photo.src} alt={photo.alt} fill priority sizes="(max-width: 860px) 100vw, 860px" style={{ objectPosition: photo.focusPosition }} />
         </div>
-        <figcaption>Imagen de archivo{photo.credit ? ` · ${photo.credit}` : ''}</figcaption>
+        <figcaption>{photo.caption}{photo.credit ? ` · ${photo.credit}` : ''}</figcaption>
       </figure> : null}
 
       <div className={styles.body}>

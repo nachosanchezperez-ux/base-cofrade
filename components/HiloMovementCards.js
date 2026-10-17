@@ -14,8 +14,11 @@ const archivePhotos = {
 // Foto de la noticia: la de archivo seleccionada a mano, si existe; si no, la de
 // cabecera de la ficha del protagonista (Hermandad o banda), con su crédito.
 export function hiloMovementPhoto(item = {}) {
-  if (archivePhotos[item.id]) return { ...archivePhotos[item.id], credit: '', focusPosition: '50% 50%', archive: true }
-  if (item.cover?.path) return { src: item.cover.path, alt: item.cover.alt || `Imagen de ${item.protagonist?.label || 'la noticia'}`, credit: item.cover.credit || '', focusPosition: item.cover.focusPosition || '50% 50%', archive: true }
+  if (archivePhotos[item.id]) return { ...archivePhotos[item.id], credit: '', focusPosition: '50% 50%', archive: true, caption: 'Imagen de archivo' }
+  if (item.cover?.path) {
+    const name = item.protagonist?.label || 'la noticia'
+    return { src: item.cover.path, alt: item.cover.alt || `Fotografía de ${name}`, credit: item.cover.credit || '', focusPosition: item.cover.focusPosition || '50% 50%', archive: true, caption: `Imagen de la ficha de ${name}` }
+  }
   return null
 }
 

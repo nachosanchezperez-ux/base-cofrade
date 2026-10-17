@@ -27,8 +27,10 @@ test('el contexto se divide en párrafos y las relacionadas priorizan al mismo p
 test('la página de noticia publica NewsArticle con protagonista, menciones y fuentes', () => {
   const page = read('app/el-hilo-se-mueve/[slug]/page.js')
   assert.match(page, /'@type': 'NewsArticle'/)
-  assert.match(page, /about: \{/)
-  assert.match(page, /mentions: item\.relations\.map/)
+  assert.match(page, /about: item\.protagonist\.href \?/)
+  assert.match(page, /mentions: mentions\.map/)
+  assert.match(page, /image: \[photo \? absoluteUrl\(photo\.src\) : absoluteUrl\('\/opengraph-image'\)\]/)
+  assert.match(page, /const discoverFicha =/)
   assert.match(page, /citation: item\.sources\.map/)
   assert.match(page, /export const revalidate = 900/)
   assert.match(page, /notFound\(\)/)
@@ -45,7 +47,8 @@ test('las noticias entran en el sitemap general y el índice declara su colecci�
 
 test('la tarjeta usa la foto de la ficha del protagonista cuando no hay foto de archivo', async () => {
   const cards = read('components/HiloMovementCards.js')
-  assert.match(cards, /if \(item\.cover\?\.path\) return/)
+  assert.match(cards, /if \(item\.cover\?\.path\) \{/)
+  assert.match(cards, /caption: `Imagen de la ficha de \$\{name\}`/)
   assert.match(read('lib/supabase/hilo-movements.js'), /getPublishedEntityCoverMediaMap\(protagonistIds/)
   assert.match(read('lib/supabase/hilo-movements.js'), /'hilo-editorial-movements-v4'/)
 })
