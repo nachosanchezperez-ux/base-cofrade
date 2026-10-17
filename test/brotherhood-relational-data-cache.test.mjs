@@ -50,7 +50,9 @@ test('la caché de datos de la ficha dura 6 horas y se renueva cada día', () =>
   assert.equal(brotherhoodDetailCacheDay(new Date('2026-10-15T00:00:00Z')), '2026-10-15')
 
   const page = read('lib/supabase/brotherhood-page.js')
-  assert.match(page, /return getCachedHermandadPageBySlug\(slug, brotherhoodDetailCacheDay\(\)\)/)
+  // Desde el 17/10/2026 la lectura pasa por el «último dato bueno» (lib/public-detail-last-good.js).
+  assert.match(page, /return readHermandadPage\(slug, brotherhoodDetailCacheDay\(\)\)/)
+  assert.match(page, /readCurrent: getCachedHermandadPageBySlug,/)
   assert.match(page, /\(slug\) => loadHermandadPageBySlug\(slug\),[\s\S]*?BROTHERHOOD_DETAIL_DATA_CACHE\n\)/)
 
   const extra = read('lib/supabase/brotherhood-page-cached.js')
