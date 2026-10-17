@@ -227,7 +227,7 @@ export default function ExtraordinaryDirectory({ outings }) {
                       <div className={styles.cardMain}>
                         <div className={styles.cardTopline}>
                           <span className={styles.territoryBadge} data-scope={outing.scope}>{territoryLabel(outing)}</span>
-                          <small data-status={outing.eventStatus} data-next={outing.id === nextId ? 'true' : undefined}>{outing.id === nextId ? 'PRÓXIMA' : statusLabel(outing)}</small>
+                          <small data-status={outing.eventStatus} data-next={outing.id === nextId ? 'true' : undefined}>{outing.id === nextId ? (outing.urgencyLabel || 'PRÓXIMA') : statusLabel(outing)}</small>
                         </div>
 
                         <h4><Link href={`/extraordinarias/${outing.slug}`} onClick={() => trackExtraordinaryOpen(outing)}>{outing.title}</Link></h4>

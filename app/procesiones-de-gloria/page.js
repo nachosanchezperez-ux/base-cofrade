@@ -46,10 +46,12 @@ export default async function ProcesionesDeGloriaPage() {
   const visibleOutings = outings.filter((item) => !item.isCancelled)
   const currentYear = currentMadridYear()
   const yearOutings = visibleOutings.filter((item) => item.year === currentYear)
-  const upcomingCount = yearOutings.filter((item) => item.isUpcoming).length
-  const archiveCount = yearOutings.filter((item) => item.isCelebrated || item.isPast).length
-  const capitalCount = yearOutings.filter((item) => item.scope === 'capital').length
-  const provinceCount = yearOutings.filter((item) => item.scope === 'province').length
+  // Mismas cifras que los botones «Próximas» y «Archivo» del directorio.
+  const upcomingOutings = visibleOutings.filter((item) => item.isUpcoming)
+  const upcomingCount = upcomingOutings.length
+  const archiveCount = visibleOutings.filter((item) => item.isCelebrated || item.isPast).length
+  const capitalCount = upcomingOutings.filter((item) => item.scope === 'capital').length
+  const provinceCount = upcomingOutings.filter((item) => item.scope === 'province').length
   const directoryJsonLd = collectionPageJsonLd({
     path: '/procesiones-de-gloria',
     name: `${baseTitle} ${currentYear}`,
@@ -91,10 +93,10 @@ export default async function ProcesionesDeGloriaPage() {
             </p>
           </div>
           <div className={styles.stats}>
-            <span><strong>{yearOutings.length}</strong> salidas</span>
             <span><strong>{upcomingCount}</strong> próximas</span>
-            <span><strong>{archiveCount}</strong> anteriores</span>
+            <span><strong>{archiveCount}</strong> en archivo</span>
             <span><strong>{capitalCount}</strong> capital · <strong>{provinceCount}</strong> provincia</span>
+            <span><strong>{yearOutings.length}</strong> en {currentYear}</span>
           </div>
         </div>
 

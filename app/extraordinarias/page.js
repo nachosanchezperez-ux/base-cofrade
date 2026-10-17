@@ -56,9 +56,10 @@ export default async function ExtraordinariasPage() {
   const { title, description } = extraordinarySeoCopy(currentYear)
   const outings = await getExtraordinaryDirectory()
   const visibleOutings = outings.filter((item) => !item.isCancelled)
-  const yearOutings = visibleOutings.filter((item) => item.year === currentYear)
   const upcomingOutings = visibleOutings.filter((item) => item.isUpcoming)
   const upcomingCount = upcomingOutings.length
+  // Mismas cifras que los botones «Próximas» y «Celebradas» del directorio.
+  const celebratedCount = visibleOutings.filter((item) => item.isCelebrated).length
   const capitalCount = upcomingOutings.filter((item) => item.scope === 'capital').length
   const provinceCount = upcomingOutings.filter((item) => item.scope === 'province').length
   const monthGroups = groupUpcomingByMonth(upcomingOutings)
@@ -91,9 +92,9 @@ export default async function ExtraordinariasPage() {
             <p>Consulta las extraordinarias de Sevilla en {currentYear}: próximas procesiones y salidas extraordinarias de la capital y la provincia, con fecha, horarios, recorrido y acompañamiento musical.</p>
             <span
               className={styles.introMeta}
-              aria-label={`${upcomingCount} próximas: ${capitalCount} en Sevilla capital y ${provinceCount} en la provincia. ${yearOutings.length} documentadas en ${currentYear}.`}
+              aria-label={`${upcomingCount} próximas: ${capitalCount} en Sevilla capital y ${provinceCount} en la provincia. ${celebratedCount} celebradas.`}
             >
-              <strong>{upcomingCount}</strong> próximas · {yearOutings.length} documentadas en {currentYear}
+              <strong>{upcomingCount}</strong> próximas · {celebratedCount} celebradas
             </span>
           </div>
         </header>

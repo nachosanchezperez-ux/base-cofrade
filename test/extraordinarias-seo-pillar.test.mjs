@@ -18,7 +18,7 @@ test('Extraordinarias conserva datos estructurados y enlazado a guías', () => {
 })
 
 test('la página pilar muestra datos calculados, no cifras editoriales hardcodeadas', () => {
-  assert.match(page, /yearOutings\.length/)
+  assert.match(page, /celebratedCount/)
   assert.match(page, /upcomingCount/)
   assert.match(page, /capitalCount/)
   assert.match(page, /provinceCount/)

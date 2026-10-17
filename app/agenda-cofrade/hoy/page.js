@@ -21,6 +21,7 @@ export default async function TemporalAgendaPage() {
     period: 'today',
     items: agendaData.items,
     today: agendaData.today,
+    now: new Date(),
   })
 
   return <AgendaTemporalLanding landing={landing} />

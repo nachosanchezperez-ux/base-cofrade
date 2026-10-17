@@ -9,6 +9,7 @@ import { breadcrumbJsonLd, collectionPageJsonLd, filteredViewRobots, pageTitle, 
 import { agendaSeoCopy, madridYear } from '@/lib/seo-calendar'
 import { getAgendaCofrade } from '@/lib/supabase/agenda-cofrade'
 import { agendaInitialStateFromParams } from '@/lib/agenda-cofrade-url-state'
+import { isAgendaItemOver } from '@/lib/agenda-clock'
 import styles from './agenda-cofrade.module.css'
 import v4Styles from './agenda-cofrade-v4.module.css'
 
@@ -97,8 +98,10 @@ export default async function AgendaCofradePage({ searchParams } = {}) {
   const { title, description } = agendaSeoCopy(madridYear())
   const agendaData = await getAgendaCofrade()
   const { items, today } = agendaData
-  const nowIso = new Date().toISOString()
-  const upcoming = items.filter((item) => item.isUpcoming && !item.isCancelled)
+  const now = new Date()
+  const nowIso = now.toISOString()
+  // «Solo lo que está por venir»: fuera también lo de hoy que ya terminó.
+  const upcoming = items.filter((item) => item.isUpcoming && !item.isCancelled && !isAgendaItemOver(item, now))
   const interactiveItems = upcoming.map(compactAgendaItem)
   // La página ya se genera en cada petición (connection()): los filtros de la URL se
   // leen aquí. Antes se leían en el navegador dentro de un Suspense cuya reserva
