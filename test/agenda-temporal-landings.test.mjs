@@ -112,14 +112,22 @@ test('cada periodo resume en una frase cuántos actos hay, de qué tipo y dónde
       item('c', { date: '2026-10-17', category: 'rosaries', categoryHref: '/agenda-cofrade', municipality: 'Dos Hermanas', scope: 'province' }),
     ],
   })
-  assert.equal(landing.summary, 'Hoy, sábado, 17 de octubre de 2026, hay 3 actos cofrades documentados en Sevilla y su provincia: 1 procesión, 1 rosario público y 1 besamanos o besapiés.')
+  assert.equal(landing.summary, 'Hoy, sábado 17 de octubre de 2026, hay 3 actos cofrades documentados en Sevilla y su provincia: 1 procesión, 1 rosario público y 1 besamanos o besapiés.')
   assert.equal(landing.summaryWithPlaces, `${landing.summary} Con actividad en Sevilla capital y Dos Hermanas.`)
   assert.equal(landing.temporalCoverage, '2026-10-17')
   assert.equal(agendaTemporalCoverage('weekend', '2026-10-15'), '2026-10-17/2026-10-18')
   assert.equal(agendaTemporalSummary({ count: 0 }), '')
   assert.equal(
-    agendaTemporalSummary({ period: 'tomorrow', count: 1, categories: [{ key: 'concerts', count: 1 }], municipalities: [{ label: 'Olivares' }], dateCaption: 'Domingo, 18 de octubre de 2026', withPlaces: false }),
-    'Mañana, domingo, 18 de octubre de 2026, hay 1 acto cofrade documentado en Sevilla y su provincia.'
+    agendaTemporalSummary({ period: 'tomorrow', count: 1, categories: [{ key: 'concerts', count: 1 }], municipalities: [{ label: 'Olivares' }], today: '2026-10-17', withPlaces: false }),
+    'Mañana, domingo 18 de octubre de 2026, hay 1 acto cofrade documentado en Sevilla y su provincia.'
+  )
+  assert.equal(
+    agendaTemporalSummary({ period: 'weekend', count: 2, categories: [{ key: 'processions', count: 2 }], today: '2026-10-17', withPlaces: false }),
+    'Este fin de semana, sábado 17 y domingo 18 de octubre de 2026, hay 2 actos cofrades documentados en Sevilla y su provincia.'
+  )
+  assert.match(
+    agendaTemporalSummary({ period: 'weekend', count: 1, today: '2026-10-30', withPlaces: false }),
+    /^Este fin de semana, sábado 31 de octubre y domingo 1 de noviembre de 2026, hay/
   )
 })
 

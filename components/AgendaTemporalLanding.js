@@ -30,6 +30,8 @@ export default function AgendaTemporalLanding({ landing }) {
           description: landing.summaryWithPlaces || landing.description,
           items: structuredItems,
         }),
+        // La frase completa, sin el recorte a 160 caracteres de las meta descriptions.
+        ...(landing.summaryWithPlaces ? { description: landing.summaryWithPlaces } : {}),
         ...(landing.temporalCoverage ? { temporalCoverage: landing.temporalCoverage } : {}),
       }} />
 
