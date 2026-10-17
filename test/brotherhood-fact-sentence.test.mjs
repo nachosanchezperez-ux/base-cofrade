@@ -62,3 +62,12 @@ test('la ficha publica sede, descripción, fundación y la miga de la localidad'
   assert.match(page, /foundingDate: brotherhoodFoundingYear\(h\.fundacion\)/)
   assert.match(page, /\{ name: publicText\(h\.localidad\), path: municipalityHubHref \}/)
 })
+
+test('la meta description se corta por frases completas, nunca en «Titulares…»', async () => {
+  const { sentenceSeoDescription } = await import('../lib/seo.js')
+  const long = 'Pino Montano es una hermandad de penitencia de Sevilla, con sede en la Parroquia de San Isidro Labrador. Sale en procesión el Viernes de Dolores. Titulares, pasos, música, patrimonio, cultos, historia y salidas.'
+  assert.equal(sentenceSeoDescription(long), 'Pino Montano es una hermandad de penitencia de Sevilla, con sede en la Parroquia de San Isidro Labrador. Sale en procesión el Viernes de Dolores.')
+  assert.equal(sentenceSeoDescription('Corta.'), 'Corta.')
+  // Si solo cabe una frase muy corta, se recorta por palabras para no quedarse pobre.
+  assert.match(sentenceSeoDescription(`Uno. ${'palabra '.repeat(40)}`), /…$/)
+})

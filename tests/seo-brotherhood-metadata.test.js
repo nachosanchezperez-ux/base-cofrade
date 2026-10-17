@@ -44,7 +44,7 @@ test('brotherhoodSeoDescription enumera solo bloques realmente documentados', ()
 
   assert.equal(
     description,
-    'San Benito es una hermandad de penitencia de Sevilla. Sale en procesión el Martes Santo. Titulares, pasos, música, patrimonio, cultos, historia, salidas…'
+    'San Benito es una hermandad de penitencia de Sevilla. Sale en procesión el Martes Santo.'
   );
 });
 

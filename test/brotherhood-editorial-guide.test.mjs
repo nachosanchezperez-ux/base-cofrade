@@ -98,7 +98,7 @@ test('la meta description puede aprovechar el resumen editorial sin romper el fa
   const seo = read('lib/seo.js')
   assert.match(seo, /brotherhood\.editorialGuide\?\.summary/)
   assert.match(seo, /if \(editorialSummary\)/)
-  assert.match(seo, /return seoDescription/)
+  assert.match(seo, /return sentenceSeoDescription/)
   assert.match(seo, /const topics = \[\]/)
 })
 
