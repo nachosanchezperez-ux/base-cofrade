@@ -109,8 +109,9 @@ function RelationshipTrail({ value }) {
     <span className={`${styles.kicker} ${mobileFixStyles.relationshipTrail}`} aria-label={`Recorrido: ${parts.join(', ')}`}>
       {parts.map((part, index) => (
         <span className={styles.kickerStep} key={`${part}-${index}`}>
-          {index ? <span className={styles.kickerArrow} aria-hidden="true">→</span> : null}
           <span>{part}</span>
+          {/* El separador va al final del paso, para que nunca abra una línea. */}
+          {index < parts.length - 1 ? <span className={styles.kickerArrow} aria-hidden="true">·</span> : null}
         </span>
       ))}
     </span>
@@ -179,11 +180,10 @@ export default function HomeTodayV2({ today, content, embedded = false }) {
         {card.visual?.kind === 'context-crest' && card.visual.contextName ? (
           <span className={styles.context}>En {card.visual.contextName}</span>
         ) : null}
-        <h3>{card.title}</h3>
+        {/* Toda la tarjeta es el enlace (el título se extiende sobre ella), sin una
+            llamada «Descubrir →» repetida en cada tarjeta. */}
+        <h3>{card.href ? <Link className={styles.cardLink} href={card.href}>{card.title}</Link> : card.title}</h3>
         {card.summary ? <p>{card.summary}</p> : null}
-        {card.href ? (
-          <Link className={`${styles.link} ${polishStyles.todayLink}`} href={card.href}>{card.linkLabel}</Link>
-        ) : null}
       </div>
       <CardVisual visual={card.visual} featured={isFeatured} />
     </article>
@@ -205,7 +205,6 @@ export default function HomeTodayV2({ today, content, embedded = false }) {
           <header className={`${styles.header} ${polishStyles.todayHeader}`}>
             <span className={styles.date}>{today}</span>
             <h2>Descubre hoy en Hilo Cofrade</h2>
-            <p>Efemérides, historias, relaciones, datos y música para seguir explorando la enciclopedia después de consultar qué ocurre hoy.</p>
           </header>
         )}
 
@@ -262,9 +261,9 @@ export default function HomeTodayV2({ today, content, embedded = false }) {
                 variant="inverse"
               />
               {content.march.releaseHref ? (
-                <Link className={styles.musicLink} href={content.march.releaseHref}>Ver la discografía →</Link>
+                <Link className={styles.musicLink} href={content.march.releaseHref}>Ver la discografía</Link>
               ) : content.march.bandHref ? (
-                <Link className={styles.musicLink} href={content.march.bandHref}>Conocer la formación →</Link>
+                <Link className={styles.musicLink} href={content.march.bandHref}>Conocer la formación</Link>
               ) : null}
             </div>
           </article>
@@ -276,7 +275,7 @@ export default function HomeTodayV2({ today, content, embedded = false }) {
             <strong>El hilo escondido: ¿adivinas la palabra de hoy?</strong>
           </div>
           <Link className={gameStyles.teaserLink} href="/juegos/el-hilo-escondido">
-            Jugar ahora <span aria-hidden="true">→</span>
+            Jugar ahora
           </Link>
         </aside>
       </div>

@@ -28,7 +28,6 @@ export default function HomeDiscover({ stats, children = null }) {
                 ) : item.detail ? (
                   <span className={styles.hint}>{item.detail}</span>
                 ) : null}
-                <i className={styles.go} aria-hidden="true">→</i>
               </Link>
             </li>
           ))}
@@ -38,11 +37,10 @@ export default function HomeDiscover({ stats, children = null }) {
 
         <nav className={styles.more} aria-labelledby="descubre-mas-title">
           <h3 id="descubre-mas-title" className={styles.moreTitle}>Más en Hilo Cofrade</h3>
-          {/* Una línea de enlaces cortos; la descripción queda como título. */}
-          <ul className={styles.chips}>
+          <ul className={styles.moreList}>
             {HOME_DISCOVER_SECONDARY.map((item) => (
               <li key={item.href}>
-                <Link className={styles.chip} href={item.href} title={item.detail}>{item.label}</Link>
+                <Link className={styles.moreLink} href={item.href}>{item.label}</Link>
               </li>
             ))}
           </ul>

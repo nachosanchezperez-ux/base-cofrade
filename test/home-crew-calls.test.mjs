@@ -73,12 +73,12 @@ test('portada de 5 bloques: igualás dentro de la Agenda y Descubre reúne hoy e
   assert.equal(sections, 5)
 })
 
-test('portada aligerada: una tarjeta del día, un hilo y accesos secundarios en línea', () => {
+test('portada aligerada: una tarjeta del día, un hilo y accesos secundarios como enlaces de texto', () => {
   const today = readFileSync(new URL('../components/HomeTodayV2.js', import.meta.url), 'utf8')
   assert.match(today, /const secondaryCards = embedded \? \[\] :/)
   const threads = readFileSync(new URL('../components/HomeKnowledgeThreads.js', import.meta.url), 'utf8')
   assert.match(threads, /secondary\.length && !embedded/)
   const discover = readFileSync(new URL('../components/HomeDiscover.js', import.meta.url), 'utf8')
-  assert.match(discover, /className=\{styles\.chips\}/)
+  assert.match(discover, /\{children\}/)
   assert.doesNotMatch(discover, /styles\.moreText/)
 })

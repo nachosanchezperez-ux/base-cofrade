@@ -34,7 +34,9 @@ test('la Home sustituye cualquier imagen editorial rota por un fallback controla
 })
 
 test('el Hilo para descubrir mantiene la concordancia en singular', () => {
-  assert.match(loader, /agree\(count, 'queda conectado', 'quedan conectados'\)/)
+  // Desde la fase 1 de la portada (17/10/2026) los resúmenes son líneas nominales
+  // con cifras («3 pasos con 2 capataces actuales»), sin verbo que concordar.
+  assert.match(loader, /plural\(secondary, 'capataz actual', 'capataces actuales'\)/)
   assert.doesNotMatch(loader, /\$\{plural\(count, 'paso', 'pasos'\)\} quedan conectados/)
 })
 

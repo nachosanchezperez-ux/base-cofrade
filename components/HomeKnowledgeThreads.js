@@ -46,22 +46,11 @@ function ThreadStatus({ thread }) {
   )
 }
 
-function ThreadPath({ thread, compact = false }) {
-  if (!thread.path?.length) return null
-
-  return (
-    <span
-      className={`${styles.path} ${compact ? styles.pathCompact : ''} ${polishStyles.threadsPath} ${compact ? polishStyles.threadsCompactPath : ''}`}
-      aria-label={`Ruta de descubrimiento: ${thread.path.join(', ')}`}
-    >
-      {thread.path.map((step, index) => (
-        <span key={`${thread.id}-${step}`}>
-          {index ? <i aria-hidden="true">→</i> : null}
-          {step}
-        </span>
-      ))}
-    </span>
-  )
+// La etiqueta de relación viene del snapshot como «Banda → hermandades»; en la
+// portada se muestra con un separador neutro para no competir con las flechas
+// de las acciones (fase 1 de la portada, 17/10/2026).
+function relationLabel(label = '') {
+  return String(label).replace(/\s*→\s*/g, ' · ')
 }
 
 function LeadThread({ thread }) {
@@ -79,20 +68,13 @@ function LeadThread({ thread }) {
       <div className={`${styles.leadIdentity} ${thread.visual?.path ? styles.leadIdentityVisual : ''}`}>
         <ThreadVisual visual={thread.visual} />
         <div className={styles.leadCopy}>
-          <span className={styles.relation}>{thread.label}</span>
+          <span className={styles.relation}>{relationLabel(thread.label)}</span>
           {visualContext ? <span className={styles.context}>En {visualContext}</span> : null}
           <h3>{thread.title}</h3>
           <strong className={styles.metric}>{thread.metric}</strong>
         </div>
       </div>
 
-      <p className={`${styles.summary} ${polishStyles.threadsSummary}`}>{thread.summary}</p>
-      <ThreadPath thread={thread} />
-
-      <span className={`${styles.leadCta} ${polishStyles.threadsLeadCta}`}>
-        <span>{thread.cta?.replace(/\s*→\s*$/, '')}</span>
-        <b aria-hidden="true">→</b>
-      </span>
     </Link>
   )
 }
@@ -105,7 +87,7 @@ function CompactThread({ thread }) {
   return (
     <Link className={`${styles.compactCard} ${polishStyles.threadsCompact}`} href={thread.href} prefetch={false} data-analytics-destination-name={thread.title} data-platform-update-id={thread.id}>
       <div className={styles.compactTopline}>
-        <span className={styles.relation}>{thread.label}</span>
+        <span className={styles.relation}>{relationLabel(thread.label)}</span>
         <ThreadStatus thread={thread} />
       </div>
 
@@ -118,8 +100,6 @@ function CompactThread({ thread }) {
         </div>
       </div>
 
-      <ThreadPath thread={thread} compact />
-      <span className={styles.compactCta} aria-hidden="true">→</span>
     </Link>
   )
 }
@@ -146,7 +126,6 @@ export default function HomeKnowledgeThreads({ threads = [], embedded = false })
             <h2>Últimos hilos incorporados</h2>
           </div>
           <div className={styles.headerActions}>
-            <p>Nuevos contenidos, cambios musicales y relaciones que ya puedes consultar en Hilo Cofrade.</p>
             <OpenUpdatesButton className={styles.allUpdates} />
           </div>
         </header>
