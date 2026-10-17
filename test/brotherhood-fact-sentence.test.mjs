@@ -18,7 +18,7 @@ test('la frase de hechos usa solo datos publicados, con artículos correctos', (
   )
   assert.equal(
     brotherhoodFactSentence({ nombrePopular: 'Los Gitanos', localidad: 'Sevilla', tipos: ['Penitencia'], barrio: 'San Román', sede: 'Santuario de los Gitanos' }),
-    'Los Gitanos es una hermandad de penitencia de Sevilla, en el barrio de San Román, con sede en el Santuario de los Gitanos.'
+    'Los Gitanos es una hermandad de penitencia de Sevilla (San Román), con sede en el Santuario de los Gitanos.'
   )
   assert.equal(
     brotherhoodFactSentence({ nombrePopular: 'Amargura de Dos Hermanas', localidad: 'Dos Hermanas', tipos: ['Penitencia'], fundacion: 'Fundada en 1931' }),
@@ -29,7 +29,7 @@ test('la frase de hechos usa solo datos publicados, con artículos correctos', (
 test('no fuerza datos ambiguos: barrios compuestos, «Centro», días sin forma segura', () => {
   const sentence = brotherhoodFactSentence({ nombrePopular: 'X', localidad: 'Sevilla', tipos: ['Gloria'], barrio: 'Triana · Barrio León', diaSalida: 'Romería del Rocío' })
   assert.equal(sentence, 'X es una hermandad de Gloria de Sevilla.')
-  assert.doesNotMatch(brotherhoodFactSentence({ nombrePopular: 'Y', localidad: 'Sevilla', barrio: 'Centro' }), /barrio/)
+  assert.equal(brotherhoodFactSentence({ nombrePopular: 'Y', localidad: 'Sevilla', barrio: 'Centro' }), 'Y es una hermandad de Sevilla.')
   assert.equal(processionDayPhrase('Pendiente de confirmar'), '')
   assert.equal(processionDayPhrase('Septiembre'), 'en septiembre')
   assert.equal(processionDayPhrase('8 de septiembre'), 'el 8 de septiembre')
@@ -50,6 +50,9 @@ test('la sede se publica como Place con la dirección desglosada', () => {
     { '@type': 'Place', name: 'Parroquia de San Isidro Labrador', address: { '@type': 'PostalAddress', streetAddress: 'Plaza María Santísima del Amor, s/n', postalCode: '41015', addressLocality: 'Sevilla', addressRegion: 'Sevilla', addressCountry: 'ES' } }
   )
   assert.equal(brotherhoodSeatJsonLd(null), null)
+  assert.equal(brotherhoodSeatJsonLd({ nombre: 'Basílica', direccion: 'Calle Bécquer, 1, Sevilla', localidad: 'Sevilla', provincia: 'Sevilla' }).address.streetAddress, 'Calle Bécquer, 1')
+  assert.equal(brotherhoodSeatJsonLd({ nombre: 'Capilla', direccion: 'Alcalá de Guadaíra, Sevilla', localidad: 'Alcalá de Guadaíra', provincia: 'Sevilla' }).address.streetAddress, undefined)
+  assert.equal(brotherhoodSeatJsonLd({ nombre: 'Capilla', direccion: 'Dos Hermanas', localidad: 'Dos Hermanas', provincia: 'Sevilla' }).address.streetAddress, undefined)
 })
 
 test('la ficha publica sede, descripción, fundación y la miga de la localidad', () => {
