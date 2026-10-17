@@ -31,6 +31,7 @@ function snapshot(parts = {}) {
     outing_music_assignments: [],
     cults: [],
     municipalities: [],
+    brotherhoods: [],
     ...parts,
   }
 }
@@ -522,6 +523,36 @@ test('URLs conservadas: cada familia resuelve con su propia regla (caso Moriles)
   assert.ok(found.every((issue) => issue.severity === 'error'))
   assert.match(found.find((issue) => issue.entityId.includes('moriles')).reason, /provincia de Sevilla \(Córdoba\)/)
   assert.match(found.find((issue) => issue.entityId.includes('rosarios')).reason, /tipo «Estación de Penitencia»/)
+})
+
+test('ámbito: Hermandad y salida de otra provincia se revisan (caso Moriles); Sevilla y sin municipio no', () => {
+  const result = run({
+    entities: [
+      entity('moriles', 'brotherhood', 'Hermandad de Jesús Preso de Moriles'), entity('preso', 'image', 'Nuestro Padre Jesús Preso'),
+      entity('estepa', 'brotherhood', 'Hermandad de Estepa'), entity('sin-muni', 'brotherhood', 'Hermandad sin municipio'),
+    ],
+    municipalities: [{ id: 'm-moriles', province: 'Córdoba' }, { id: 'm-estepa', province: 'Sevilla' }],
+    brotherhoods: [
+      { entity_id: 'moriles', municipality_id: 'm-moriles' },
+      { entity_id: 'estepa', municipality_id: 'm-estepa' },
+      { entity_id: 'sin-muni', municipality_id: null },
+    ],
+    brotherhood_images: [rel('bi', { brotherhood_entity_id: 'moriles' }, { image_entity_id: 'preso' })],
+    outings: [
+      outing('o-moriles', { brotherhood_entity_id: 'moriles', municipality_id: 'm-moriles', outing_date: '2026-09-19', title: 'Nuestro Padre Jesús Preso' }),
+      outing('o-estepa', { brotherhood_entity_id: 'estepa', municipality_id: 'm-estepa', outing_date: '2026-11-02' }),
+    ],
+  })
+  const brotherhoods = issuesOf(result, 'core.brotherhood-out-of-scope')
+  assert.deepEqual(brotherhoods.map((issue) => issue.entityId), ['moriles'])
+  assert.match(brotherhoods[0].reason, /Córdoba.*Nuestro Padre Jesús Preso/)
+  assert.deepEqual(issuesOf(result, 'agenda.outing-out-of-scope').map((issue) => issue.entityId), ['o-moriles'])
+})
+
+test('la URL de Moriles ya no figura entre las conservadas de la Agenda', async () => {
+  const { isPreservedAgendaEventPath } = await import('../lib/agenda-event-url-policy.js')
+  assert.equal(isPreservedAgendaEventPath('/extraordinarias/nuestro-padre-jesus-preso-moriles-2026'), false)
+  assert.equal(isPreservedAgendaEventPath('/extraordinarias/gerena-sangre-2026'), true)
 })
 
 test('el slug derivado de Hermandad + fecha solo vale para glorias', () => {

@@ -55,6 +55,9 @@ test('el cargador lee solo las columnas declaradas de cada tabla y propaga error
     assert.deepEqual(snapshot[table], [])
     assert.equal(calls.find((call) => call.table === table).columns, columns)
   }
+  // brotherhoods no tiene columna id: se pagina por su clave primaria.
+  assert.equal(calls.find((call) => call.table === 'brotherhoods').order, 'entity_id')
+  assert.equal(calls.find((call) => call.table === 'outings').order, 'id')
   await assert.rejects(
     loadTableRows(fakeClient({ outings: new Error('permission denied') }), 'outings', 'id'),
     /No se pudo leer outings: permission denied/,
@@ -65,6 +68,7 @@ test('las columnas de la instantánea cubren todo lo que usan las comprobaciones
   // Si una comprobación empieza a leer una columna nueva, debe añadirse aquí y en INTEGRITY_TABLES.
   const required = {
     municipalities: ['province'],
+    brotherhoods: ['entity_id', 'municipality_id'],
     outings: ['brotherhood_entity_id', 'outing_type', 'character', 'outing_date', 'return_date', 'departure_time', 'return_time', 'year', 'event_status', 'organizer_name', 'slug', 'origin_place_id', 'origin_text', 'municipality_id'],
     music_accompaniment_periods: ['brotherhood_entity_id', 'band_entity_id', 'step_entity_id', 'position', 'outing_type', 'year_from', 'year_to', 'date_from', 'date_to', 'date_to_text', 'is_current', 'public_band_name'],
     outing_music_assignments: ['music_position_id', 'band_entity_id', 'band_name_text', 'segment_start_label', 'segment_end_label', 'participation_mode'],
