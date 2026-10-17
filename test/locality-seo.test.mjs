@@ -65,3 +65,11 @@ test('el listado enlaza la guía, comparte su Place y agrupa con H2', () => {
   assert.match(route, /<h2 id=\{`grupo-\$\{group\.key\}`\}/)
   assert.match(route, /\{lead \|\| description\}/)
 })
+
+test('cada localidad con fichas indexables del directorio enlaza su guía cofrade', () => {
+  const index = read('components/BrotherhoodPublicIndex.js')
+  assert.match(index, /const hasGuide = Boolean\(group\.slug\) && group\.items\.some\(\(item\) => indexableIds\.includes\(item\.id\)\)/)
+  assert.match(index, /\{hasGuide \? <Link href=\{`\/agenda-cofrade\/localidad\/\$\{group\.slug\}`\} prefetch=\{false\}/)
+  const page = read('app/hermandades/page.js')
+  assert.match(page, /indexableIds: indexableHermandades\.map\(\(item\) => item\.id\)/)
+})
