@@ -44,6 +44,9 @@ function LocalityCalendar({ group, navigation, expand }) {
   const selected = calendarSelection(group.items, view, character)
   const sections = calendarSections(group.items, view, character)
   const localityPage = navigation.localities.find((item) => item.slug === group.slug)
+  // La guía local es permanente (indexable) solo si la localidad tiene alguna ficha indexable.
+  const indexableIds = navigation.indexableIds || []
+  const hasGuide = Boolean(group.slug) && group.items.some((item) => indexableIds.includes(item.id))
 
   useEffect(() => { if (expand) setOpen(true) }, [expand])
 
@@ -90,6 +93,9 @@ function LocalityCalendar({ group, navigation, expand }) {
           </div>
         )}
         {localityPage ? <Link href={localityPage.href} prefetch={false} className={styles.localityLink}>Ver directorio completo de {name} <span>({localityPage.count} fichas)</span> <span aria-hidden="true">→</span></Link> : null}
+        {/* Cada localidad con fichas indexables enlaza su guía cofrade (página principal
+            de la localidad), también las que no llegan al mínimo para tener listado propio. */}
+        {hasGuide ? <Link href={`/agenda-cofrade/localidad/${group.slug}`} prefetch={false} className={styles.localityLink}>Guía cofrade de {name}: agenda, bandas, imágenes y pasos <span aria-hidden="true">→</span></Link> : null}
       </div>
     </details>
   )
