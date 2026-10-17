@@ -154,7 +154,8 @@ export default function HomeTodayV2({ today, content, embedded = false }) {
   ])
   const featured = content?.ephemeris
     || (dailyCards.length ? dailyCards[serial % dailyCards.length] : null)
-  const secondaryCards = dailyCards.filter((card) => card !== featured)
+  // Incrustado en la portada de 5 bloques: una sola tarjeta del día y la marcha.
+  const secondaryCards = embedded ? [] : dailyCards.filter((card) => card !== featured)
   const featureRight = Boolean(featured && secondaryCards.length && !(serial % 2))
   const hasContent = dailyCards.length > 0 || Boolean(content?.march)
   if (!hasContent) return null

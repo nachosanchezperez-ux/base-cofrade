@@ -155,7 +155,7 @@ export default function HomeKnowledgeThreads({ threads = [], embedded = false })
         <div className={`${styles.layout} ${polishStyles.threadsLayout}`}>
           <LeadThread thread={lead} />
 
-          {secondary.length ? (
+          {secondary.length && !embedded ? (
             <aside className={`${styles.more} ${polishStyles.threadsMore}`} aria-label="Más incorporaciones recientes">
               <span className={styles.moreLabel}>También incorporado</span>
               <div className={styles.moreList}>

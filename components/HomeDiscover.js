@@ -38,16 +38,11 @@ export default function HomeDiscover({ stats, children = null }) {
 
         <nav className={styles.more} aria-labelledby="descubre-mas-title">
           <h3 id="descubre-mas-title" className={styles.moreTitle}>Más en Hilo Cofrade</h3>
-          <ul className={styles.moreList}>
+          {/* Una línea de enlaces cortos; la descripción queda como título. */}
+          <ul className={styles.chips}>
             {HOME_DISCOVER_SECONDARY.map((item) => (
               <li key={item.href}>
-                <Link className={styles.moreLink} href={item.href}>
-                  <span className={styles.moreText}>
-                    <strong>{item.label}</strong>
-                    <span>{item.detail}</span>
-                  </span>
-                  <b className={styles.moreArrow} aria-hidden="true">→</b>
-                </Link>
+                <Link className={styles.chip} href={item.href} title={item.detail}>{item.label}</Link>
               </li>
             ))}
           </ul>
