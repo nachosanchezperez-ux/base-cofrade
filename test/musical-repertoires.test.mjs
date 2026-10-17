@@ -52,7 +52,7 @@ test('la lectura pública está protegida y usa el cliente sin sesión', () => {
 })
 
 test('la sección es descubrible y enlaza las fichas de Hermandad y Banda', () => {
-  const header = source('components/HiloHeader.js')
+  const header = source('lib/site-navigation.js')
   const sitemap = source('app/sitemap.js')
   const brotherhood = source('app/hermandades/[slug]/page.js')
   const band = source('app/bandas/[slug]/page.js')

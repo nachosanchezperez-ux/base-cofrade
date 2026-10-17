@@ -4,60 +4,28 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
+import { activeMenuGroup, activeMenuHref, MENU_GROUPS } from '@/lib/site-navigation';
 import GlobalHiloSearch from './GlobalHiloSearch';
 import HiloUpdates from './HiloUpdates';
 import styles from './HiloHeader.module.css';
 
-const sections = [
-  ['inicio', 'Inicio'],
-  ['tiradelhilo', 'Tira del hilo'],
-  ['agenda', 'Agenda'],
-  ['igualas-ensayos', 'Igualás y ensayos'],
-  ['hoy', 'Hoy'],
-];
-
-const homeScrollSections = [
-  ['inicio', 'inicio'],
-  ['tiradelhilo', 'tiradelhilo'],
-  ['extraordinarias', 'extraordinarias'],
-  ['hoy', 'hoy'],
-  ['ultimos-hilos', 'ultimos-hilos'],
-  ['siguientes-extraordinarias', 'extraordinarias'],
-  ['enciclopedia', 'explorar'],
-];
-
-const directoryLinks = [
-  ['/el-hilo-se-mueve', 'El Hilo se mueve'],
-  ['/directorio', 'Directorio'],
-  ['/hermandades', 'Hermandades'],
-  ['/procesiones-de-gloria', 'Procesiones de Gloria'],
-  ['/imagenes', 'Imágenes'],
-  ['/pasos', 'Pasos'],
-  ['/bandas', 'Bandas'],
-  ['/acompanamientos-musicales', 'Estadísticas musicales'],
-  ['/semana-santa/2027/cambios-musicales', 'Cambios musicales 2027'],
-  ['/marchas', 'Marchas'],
-  ['/autores', 'Autores'],
-  ['/crucetas-musicales', 'Crucetas musicales'],
-  ['/via-crucis-sevilla', 'Vía Crucis del Consejo'], 
-  ['/juegos/el-hilo-escondido', 'El hilo escondido'],
-];
-
-function routeActive(pathname) {
-  if (pathname === '/') return 'inicio';
-  if (pathname.startsWith('/pregunta')) return 'tiradelhilo';
-  if (pathname.startsWith('/agenda-cofrade') || pathname.startsWith('/extraordinarias')) return 'agenda';
-  if (pathname.startsWith('/igualas-y-ensayos')) return 'igualas-ensayos';
-  return '';
-}
+// Menú en cinco grupos (Agenda, Hermandades, Música, Patrimonio, Actualidad),
+// definido en lib/site-navigation.js y compartido por escritorio y móvil.
+// La Tira del hilo es el botón de búsqueda; el logo lleva a la portada.
 
 export default function HiloHeader() {
   const pathname = usePathname();
-  const headerRef = useRef(null);
-  const exploreRef = useRef(null);
+  const navRef = useRef(null);
   const [open, setOpen] = useState(false);
-  const [active, setActive] = useState(routeActive(pathname));
   const [scrolled, setScrolled] = useState(false);
+  const currentGroup = activeMenuGroup(pathname);
+  const currentHref = activeMenuHref(pathname);
+
+  const closeDesktopMenus = (except = null) => {
+    navRef.current?.querySelectorAll('details[open]').forEach((menu) => {
+      if (menu !== except) menu.removeAttribute('open');
+    });
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -68,14 +36,13 @@ export default function HiloHeader() {
 
   useEffect(() => {
     setOpen(false);
-    exploreRef.current?.removeAttribute('open');
-    if (pathname !== '/') setActive(routeActive(pathname));
+    closeDesktopMenus();
   }, [pathname]);
 
   useEffect(() => {
     const closeMenus = () => {
       setOpen(false);
-      exploreRef.current?.removeAttribute('open');
+      closeDesktopMenus();
     };
     window.addEventListener('hilo:open-updates', closeMenus);
     window.addEventListener('hilo:open-search', closeMenus);
@@ -97,12 +64,19 @@ export default function HiloHeader() {
     };
   }, [open]);
 
+  // Desplegables de escritorio: uno abierto a la vez; se cierran al pulsar
+  // fuera o con Escape (el foco vuelve al título del grupo).
   useEffect(() => {
     const onPointerDown = (event) => {
-      const menu = exploreRef.current;
-      if (menu?.hasAttribute('open') && !menu.contains(event.target)) menu.removeAttribute('open');
+      if (!navRef.current?.contains(event.target)) closeDesktopMenus();
     };
-    const onKeyDown = (event) => event.key === 'Escape' && exploreRef.current?.removeAttribute('open');
+    const onKeyDown = (event) => {
+      if (event.key !== 'Escape') return;
+      const openMenu = navRef.current?.querySelector('details[open]');
+      if (!openMenu) return;
+      openMenu.removeAttribute('open');
+      openMenu.querySelector('summary')?.focus();
+    };
     document.addEventListener('pointerdown', onPointerDown);
     document.addEventListener('keydown', onKeyDown);
     return () => {
@@ -111,54 +85,11 @@ export default function HiloHeader() {
     };
   }, []);
 
-  useEffect(() => {
-    if (pathname !== '/') return undefined;
-    let frame = 0;
-    const updateActiveSection = () => {
-      frame = 0;
-      const markerY = (headerRef.current?.getBoundingClientRect().height || 0) + 18;
-      const targets = homeScrollSections
-        .map(([id, activeId]) => ({ element: document.getElementById(id), activeId }))
-        .filter(({ element }) => Boolean(element))
-        .map((target) => ({ ...target, top: target.element.getBoundingClientRect().top }))
-        .sort((a, b) => a.top - b.top);
-      if (!targets.length) return;
-      let nextActive = targets[0].activeId;
-      for (const target of targets) {
-        if (target.top > markerY) break;
-        nextActive = target.activeId;
-      }
-      setActive(nextActive);
-    };
-    const scheduleUpdate = () => {
-      if (!frame) frame = window.requestAnimationFrame(updateActiveSection);
-    };
-    scheduleUpdate();
-    window.addEventListener('scroll', scheduleUpdate, { passive: true });
-    window.addEventListener('resize', scheduleUpdate);
-    window.addEventListener('hashchange', scheduleUpdate);
-    return () => {
-      if (frame) window.cancelAnimationFrame(frame);
-      window.removeEventListener('scroll', scheduleUpdate);
-      window.removeEventListener('resize', scheduleUpdate);
-      window.removeEventListener('hashchange', scheduleUpdate);
-    };
-  }, [pathname]);
-
-  const hrefFor = (id) => {
-    if (id === 'agenda') return '/agenda-cofrade';
-    if (id === 'igualas-ensayos') return '/igualas-y-ensayos';
-    return pathname === '/' ? `#${id}` : `/#${id}`;
-  };
-  const isDirectoryActive = directoryLinks.some(([href]) => pathname.startsWith(href));
-  const isExploreActive = active === 'explorar' || isDirectoryActive;
-  const closeExplore = () => exploreRef.current?.removeAttribute('open');
-
   if (pathname.startsWith('/panel')) return null;
 
   return (
     <>
-      <header ref={headerRef} className={`${styles.header} ${scrolled ? styles.scrolled : ''}`} data-hilo-header>
+      <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`} data-hilo-header>
         <div className={`shell ${styles.inner}`}>
           <Link href="/" className={styles.brand} aria-label="Hilo Cofrade, inicio">
             <Image
@@ -171,22 +102,34 @@ export default function HiloHeader() {
             />
           </Link>
 
-          <nav className={styles.desktopNav} aria-label="Navegación principal">
-            {sections.map(([id, label]) => (
-              <a key={id} href={hrefFor(id)} className={active === id ? styles.active : ''} aria-current={active === id ? 'location' : undefined} onClick={() => { setActive(id); closeExplore(); }}>
-                {label}
-              </a>
+          <nav ref={navRef} className={styles.desktopNav} aria-label="Navegación principal">
+            {MENU_GROUPS.map((group) => (
+              <details
+                key={group.id}
+                className={styles.groupMenu}
+                onToggle={(event) => { if (event.currentTarget.open) closeDesktopMenus(event.currentTarget); }}
+              >
+                <summary className={currentGroup === group.id ? styles.active : ''}>{group.label}</summary>
+                <div className={styles.groupPopover}>
+                  {group.sections.map((section, index) => (
+                    <div className={styles.groupSection} key={section.title || index}>
+                      {section.title ? <span className={styles.groupSectionTitle}>{section.title}</span> : null}
+                      {section.links.map(([href, label]) => (
+                        <Link
+                          href={href}
+                          key={href}
+                          className={currentHref === href ? styles.currentLink : ''}
+                          aria-current={currentHref === href ? 'page' : undefined}
+                          onClick={() => closeDesktopMenus()}
+                        >
+                          {label}
+                        </Link>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              </details>
             ))}
-            <details ref={exploreRef} className={styles.exploreMenu}>
-              <summary className={isExploreActive ? styles.active : ''}>Explorar</summary>
-              <div className={styles.directoryPopover}>
-                {directoryLinks.map(([href, label]) => (
-                  <Link href={href} key={href} className={pathname.startsWith(href) ? styles.currentDirectory : ''} aria-current={pathname.startsWith(href) ? 'page' : undefined} onClick={closeExplore}>
-                    {label}<span>→</span>
-                  </Link>
-                ))}
-              </div>
-            </details>
           </nav>
 
           <div className={styles.actions}>
@@ -202,23 +145,31 @@ export default function HiloHeader() {
 
       <div id="hilo-mobile-menu" className={`${styles.mobilePanel} ${open ? styles.panelOpen : ''}`} aria-hidden={!open}>
         <div className="shell">
-          <nav className={styles.mobileLinks} aria-label="Menú móvil">
-            {sections.map(([id, label]) => (
-              <a key={id} href={hrefFor(id)} className={active === id ? styles.activeMobile : ''} aria-current={active === id ? 'location' : undefined} onClick={() => { setActive(id); setOpen(false); }}>
-                {label}<span>→</span>
-              </a>
+          <nav className={styles.mobileGroups} aria-label="Menú móvil">
+            {MENU_GROUPS.map((group) => (
+              <section className={styles.mobileGroup} key={group.id} aria-labelledby={`menu-movil-${group.id}`}>
+                <h2 id={`menu-movil-${group.id}`} className={currentGroup === group.id ? styles.mobileGroupActive : ''}>{group.label}</h2>
+                {group.sections.map((section, index) => (
+                  <div className={styles.mobileSection} key={section.title || index}>
+                    {section.title ? <span className={styles.mobileSectionTitle}>{section.title}</span> : null}
+                    <div className={styles.mobileLinks}>
+                      {section.links.map(([href, label]) => (
+                        <Link
+                          href={href}
+                          key={href}
+                          className={currentHref === href ? styles.activeMobile : ''}
+                          aria-current={currentHref === href ? 'page' : undefined}
+                          onClick={() => setOpen(false)}
+                        >
+                          {label}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </section>
             ))}
           </nav>
-          <div className={`${styles.mobileDirectories} ${active === 'explorar' ? styles.mobileDirectoriesActive : ''}`}>
-            <span>Enciclopedia</span>
-            <nav aria-label="Directorios de la enciclopedia">
-              {directoryLinks.map(([href, label]) => (
-                <Link href={href} key={href} className={pathname.startsWith(href) ? styles.activeMobile : ''} aria-current={pathname.startsWith(href) ? 'page' : undefined} onClick={() => setOpen(false)}>
-                  {label}<span>→</span>
-                </Link>
-              ))}
-            </nav>
-          </div>
         </div>
       </div>
     </>

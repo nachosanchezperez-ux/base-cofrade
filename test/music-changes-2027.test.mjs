@@ -121,7 +121,7 @@ test('la sección se alimenta del grafo musical y limita el alcance a Sevilla', 
 })
 
 test('Cambios musicales 2027 queda descubrible e indexable', async () => {
-  const header = await read('components/HiloHeader.js')
+  const header = await read('lib/site-navigation.js')
   const directory = await read('app/directorio/page.js')
   const sitemap = await read('app/sitemap.js')
   const page = await read('app/semana-santa/2027/cambios-musicales/page.js')
