@@ -72,5 +72,5 @@ test('la prioridad temporal municipal se deriva sin selección editorial', () =>
   assert.match(source, /closestItems/)
   assert.match(component, /En la calle ahora/)
   assert.match(component, /No te pierdas/)
-  assert.match(component, /No es una selección editorial manual/)
+  assert.match(component, /Ordenado por fecha y hora/)
 })

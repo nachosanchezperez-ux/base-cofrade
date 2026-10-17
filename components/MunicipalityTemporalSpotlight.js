@@ -39,7 +39,7 @@ export default function MunicipalityTemporalSpotlight({
             <span>Qué ver en {hub.label}</span>
             <h2 id="local-temporal-title">Primero, lo más cercano en el tiempo</h2>
           </div>
-          <p>La prioridad se calcula únicamente con fecha y horario documentados. No es una selección editorial manual.</p>
+          <p>Ordenado por fecha y hora: primero lo que está más cerca.</p>
         </header>
 
         {liveItems.length ? (

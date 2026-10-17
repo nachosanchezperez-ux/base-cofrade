@@ -78,7 +78,7 @@ export default function AgendaTemporalLanding({ landing }) {
         <section className={styles.overview}>
           <div className="shell">
             <header className={styles.overviewHeading}>
-              <div><span>Organiza tu visita</span><h2>Filtra antes de bajar a la cronología</h2></div>
+              <div><span>Organiza tu visita</span><h2>Encuentra tu acto</h2></div>
               <p>Elige territorio, tipo de acto o municipio. La lista completa queda justo después.</p>
             </header>
 
