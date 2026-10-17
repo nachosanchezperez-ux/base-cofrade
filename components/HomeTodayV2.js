@@ -109,8 +109,9 @@ function RelationshipTrail({ value }) {
     <span className={`${styles.kicker} ${mobileFixStyles.relationshipTrail}`} aria-label={`Recorrido: ${parts.join(', ')}`}>
       {parts.map((part, index) => (
         <span className={styles.kickerStep} key={`${part}-${index}`}>
-          {index ? <span className={styles.kickerArrow} aria-hidden="true">·</span> : null}
           <span>{part}</span>
+          {/* El separador va al final del paso, para que nunca abra una línea. */}
+          {index < parts.length - 1 ? <span className={styles.kickerArrow} aria-hidden="true">·</span> : null}
         </span>
       ))}
     </span>
