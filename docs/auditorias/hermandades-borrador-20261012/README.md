@@ -209,3 +209,46 @@ Verificado en `/hermandades/hermandad-esperanza-arahal`.
 La ficha de Hermandad muestra todas las imágenes vinculadas dentro de «Titulares», también las de tipo `secondary_image` (aquí, San Pedro). Revisar en una tarea de código aparte.
 
 Verificado en `/hermandades/hermandad-humillacion-camas`.
+
+## Hermandad de la Soledad de Alcalá del Río · 13/10/2026 · aplicado y publicado
+
+`soledad-alcala-del-rio.sql`; reversión: `soledad-alcala-del-rio-rollback.sql`.
+
+La Inmaculada Concepción de Sevilla queda en borrador, por decisión del propietario («Pasemos a otra»). Parece corresponder a la Sacramental del Corpus Christi, pero está pendiente de confirmar.
+
+### Fuentes
+
+- [ArteSacro · La devoción a la Soledad y Santo Entierro (2016)](https://www.artesacro.org/Noticia/Ver/109972/provincia-devocion-soledad-y-santo-entierro-cristo-yacente-alcala-rio8207).
+- [21Noticias · De 1556 a hoy (2026)](https://21noticias.com/2026/04/10/de-1556-a-hoy-la-imponente-procesion-de-la-soledad-que-conecta-siglos-en-alcala-del-rio/).
+- `hermandaddelasoledad.com` corresponde a la Soledad de Mairena del Alcor y no se ha usado.
+
+### Ficha
+
+- **Nombre oficial:** Real, Muy Antigua, Ilustre y Fervorosa Hermandad y Cofradía de Nazarenos del Santo Entierro en su Misericordia y Nuestra Señora de los Dolores en su Soledad Coronada.
+  - Sede: Real Ermita de San Gregorio de Osset. Se reutiliza el lugar ya existente, que también es sede de la Vera-Cruz.
+  - Sale el Viernes Santo.
+- **Titulares:**
+  - Señor de la Misericordia: Cristo yacente anónimo del siglo XVI.
+  - Dolores en su Soledad: anónima, de mediados del XVI, coronada en 1996.
+- **La Canina** (Juan de Astorga, 1844): se vincula como imagen secundaria.
+- **Pasos:**
+  - Canina: paso alegórico.
+  - Santo Entierro: urna neobarroca de 1987.
+  - Palio.
+- **Música:** Cruz Roja tras el palio, desde 1991, enlazada al paso.
+- **No se han dado de alta las bandas del Cristo y de la Canina.** ArteSacro (2016) cita Gerena, San Juan de Triana y Amor de Cristo; 21Noticias (2026) cita la Legión y Gerena, pero sin asignarlas a ningún paso.
+
+Verificado en `/hermandades/hermandad-soledad-alcala-del-rio`.
+
+### Ampliación con la web oficial (13/10/2026)
+
+`soledad-alcala-del-rio-web-oficial.sql`; reversión: `soledad-alcala-del-rio-web-oficial-rollback.sql`. El propietario aportó https://lasoledad.org/.
+
+- Se añade la web oficial a la ficha.
+- **Dolorosa:**
+  - La Hermandad la sitúa hacia 1570 y recoge la atribución tradicional a Gaspar Becerra (1566), sin prueba documental. Se conserva también la datación de ArteSacro y 21Noticias (mediados del XVI).
+  - Coronación: 15/06/1996.
+  - Detalle de la intervención de 1986.
+- **Urna del Santo Entierro:** metal plateado, de Orfebrería Andaluza, de 2016. Contradice la «urna neobarroca de 1987» de 21Noticias, así que se quita la fecha de ejecución y se recogen las dos versiones.
+- **Palio:** reforma de 1912 atribuida al taller de Miguel del Olmo; caídas interiores atribuidas a Patrocinio López.
+- Las secciones «Música» y «Señor de la Misericordia» de la web están en preparación y no aportan datos.
