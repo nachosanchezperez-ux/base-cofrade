@@ -36,7 +36,11 @@ async function main() {
   const since = new Date(Date.now() - hours * 60 * 60 * 1000)
   const urls = changedUrls(entries, { since, all })
   console.log(`Sitemap: ${entries.length} URL · ${all ? 'modo completo' : `cambiadas desde ${since.toISOString()}`}: ${urls.length}`)
-  if (!urls.length || dryRun) return
+  if (!urls.length) {
+    console.log('::notice::IndexNow: ninguna URL cambiada en este periodo; no se envía nada.')
+    return
+  }
+  if (dryRun) return
 
   for (const [index, batch] of chunk(urls).entries()) {
     const response = await fetch(INDEXNOW_ENDPOINT, {
@@ -46,7 +50,9 @@ async function main() {
     })
     // 200 y 202: aceptado. 422/403/429: aviso, sin fallar el job.
     const ok = response.status === 200 || response.status === 202
-    console.log(`${ok ? 'Enviado' : '::warning::IndexNow respondió'} lote ${index + 1}: ${batch.length} URL · HTTP ${response.status}`)
+    // ::notice:: deja el resultado visible en el resumen del run de GitHub Actions.
+    const detail = ok ? '' : ` · ${(await response.text().catch(() => '')).slice(0, 200)}`
+    console.log(`${ok ? '::notice::IndexNow aceptó' : '::warning::IndexNow respondió'} lote ${index + 1}: ${batch.length} URL · HTTP ${response.status}${detail}`)
   }
 }
 

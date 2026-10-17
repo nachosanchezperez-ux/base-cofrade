@@ -66,3 +66,10 @@ test('la clave está publicada en la raíz y el workflow corre a diario solo en 
   assert.match(workflow, /if: github\.ref == 'refs\/heads\/main'/)
   assert.match(workflow, /node scripts\/indexnow-submit\.mjs/)
 })
+
+test('el resultado queda visible en el resumen del run (aviso o nota)', () => {
+  const script = readFileSync(new URL('../scripts/indexnow-submit.mjs', import.meta.url), 'utf8')
+  assert.match(script, /::notice::IndexNow aceptó/)
+  assert.match(script, /::warning::IndexNow respondió/)
+  assert.match(script, /::notice::IndexNow: ninguna URL cambiada/)
+})
