@@ -1,3 +1,4 @@
+import { Fragment } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { externalReleaseLinkLabel, presentReleaseType } from '@/lib/bands/discography'
@@ -28,6 +29,14 @@ function catalogLabel(releases) {
   return `${count} · ${Math.min(...years)}—${Math.max(...years)}`
 }
 
+// Marcado ligero por pista (17/10/2026): una discografía puede tener cientos de
+// pistas, todas en el HTML y repetidas en los datos de hidratación de React.
+// Los estilos se aplican por estructura dentro de .trackList (sin una clase por
+// elemento) y la analítica toma la sección del contenedor.
+function joinNames(items) {
+  return items.map((item) => item.name).filter(Boolean).join(' · ')
+}
+
 function TrackList({ tracks }) {
   if (!tracks.length) return null
 
@@ -40,46 +49,39 @@ function TrackList({ tracks }) {
       <ol>
         {tracks.map((track) => (
           <li key={track.id}>
-            <span className={styles.trackNumber}>{String(track.sequenceNo).padStart(2, '0')}</span>
-            <div className={styles.trackCopy}>
+            <span>{String(track.sequenceNo).padStart(2, '0')}</span>
+            <div>
               {track.marchSlug ? (
-                <Link className={styles.trackTitle} href={`/marchas/${track.marchSlug}`}>
-                  {track.title}<span aria-hidden="true">↗</span>
-                </Link>
-              ) : <strong className={styles.trackTitle}>{track.title}</strong>}
+                <Link href={`/marchas/${track.marchSlug}`}>{track.title}<span aria-hidden="true">↗</span></Link>
+              ) : <strong>{track.title}</strong>}
               {track.composers.length ? (
-                <div className={styles.relationshipLine}>
-                  <span>Composición</span>
-                  <div>{track.composers.map((composer, index) => <span key={composer.id}>{index ? ' · ' : ''}{composer.name}</span>)}</div>
-                </div>
+                <p><span>Composición</span> {joinNames(track.composers)}</p>
               ) : null}
               {track.dedications.length ? (
-                <div className={styles.relationshipLine}>
-                  <span>Dedicada a</span>
-                  <div>{track.dedications.map((dedication, index) => {
+                <p>
+                  <span>Dedicada a</span>{' '}
+                  {track.dedications.map((dedication, index) => {
                     const href = entityHref(dedication)
+                    const label = dedication.name || dedication.text
                     return (
-                      <span key={`${dedication.id}-${index}`}>
+                      <Fragment key={`${dedication.id}-${index}`}>
                         {index ? ' · ' : ''}
-                        {href ? <Link href={href}>{dedication.name || dedication.text}</Link> : dedication.name || dedication.text}
-                      </span>
+                        {href ? <Link href={href}>{label}</Link> : label}
+                      </Fragment>
                     )
-                  })}</div>
-                </div>
+                  })}
+                </p>
               ) : null}
             </div>
-            <div className={styles.trackActions}>
-              {track.durationText ? <small className={styles.duration}>{track.durationText}</small> : null}
+            <div>
+              {track.durationText ? <small>{track.durationText}</small> : null}
               {track.spotifyUrl ? (
                 <a
                   href={track.spotifyUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={styles.trackSpotifyLink}
                   aria-label={`Escuchar ${track.title} en Spotify`}
-                  title={`Escuchar ${track.title} en Spotify`}
                   data-hilo-event="spotify_click"
-                  data-hilo-section="discography"
                   data-hilo-scope="track"
                 >
                   <span aria-hidden="true">▶</span>
