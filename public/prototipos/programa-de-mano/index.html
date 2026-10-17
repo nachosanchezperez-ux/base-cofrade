@@ -520,6 +520,86 @@ details.fold.inline > summary strong { font-size: 20px; }
 details.fold.inline > summary:active { background: none; }
 .toast { position: fixed; left: 50%; bottom: calc(90px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 70; padding: 10px 16px; border-radius: 999px; background: var(--navy); color: #fff; font-size: 13px; font-weight: 700; box-shadow: 0 8px 24px rgba(0,0,0,.25); }
 .toast[hidden] { display: none; }
+
+/* ===== v11 · jerarquía: un foco por pantalla =====
+   Nivel 1 (uno por pantalla): botón rojo relleno.
+   Nivel 2: tarjetas que se tocan y capítulos (blanco con borde fino, texto azul).
+   Nivel 3: enlaces de texto azules y filas de lista.
+   Rojo solo para: el botón principal, «hoy/ahora» y el elemento propio dentro de una lista.
+   El color de la entidad solo vive en la cabecera. */
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.hero { min-height: 470px; }
+.chips span.day { background: transparent; box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.7); }
+.eyebrow { font-size: 11.5px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 4px; }
+.lead { padding: 20px 16px 18px; background: var(--card); border-bottom: 1px solid var(--line); }
+.lead h2 { font-size: 24px; letter-spacing: -.02em; color: var(--navy); }
+.lead-time { display: grid; grid-template-columns: auto 1fr auto; align-items: end; gap: 14px; margin: 14px 0 6px; }
+.lead-time div { display: grid; }
+.lead-time small { font-size: 12px; font-weight: 700; color: var(--ink-soft); }
+.lead-time b { font-size: 40px; line-height: 1; letter-spacing: -.04em; color: var(--ink); font-variant-numeric: tabular-nums; }
+.lead-time div:last-child { text-align: right; }
+.lead-time i { height: 3px; border-radius: 2px; background: var(--line); margin-bottom: 14px; position: relative; }
+.lead-time i::after { content: ""; position: absolute; left: 0; top: 0; width: 40%; height: 3px; border-radius: 2px; background: var(--ink-soft); }
+.lead-text { font-size: 15px; line-height: 1.5; margin: 8px 0 6px; }
+.lead-note { font-size: 13px; color: var(--ink-soft); margin: 0 0 14px; }
+.lead-note b { color: var(--ink); }
+.btn-primary { display: block; width: 100%; min-height: 50px; border: 0; border-radius: 14px; background: var(--red); color: #fff; font: inherit; font-size: 16px; font-weight: 800; cursor: pointer; }
+.btn-primary:active { transform: scale(.985); }
+.lead-links { display: flex; justify-content: center; gap: 10px; margin: 10px 0 0; font-size: 14px; color: var(--ink-soft); }
+.lead-links button, .lead-links a { border: 0; background: none; padding: 8px 4px; font: inherit; font-weight: 700; color: var(--link); cursor: pointer; text-decoration: none; }
+.chapters { padding: 20px 16px 10px; background: var(--paper); }
+.chapters ol { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 8px; }
+.chapters a { display: grid; grid-template-columns: 36px minmax(0, 1fr) 16px; gap: 12px; align-items: center; padding: 12px 14px; border-radius: 14px; background: var(--card); border: 1px solid var(--line); text-decoration: none; color: inherit; }
+.chapters a:active { background: var(--soft); }
+.chapters b { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--soft); color: var(--navy); font-size: 15px; }
+.chapters strong { display: block; font-size: 16px; color: var(--navy); line-height: 1.2; }
+.chapters small { font-size: 13px; color: var(--ink-soft); }
+.chapters em, .next em { font-style: normal; font-size: 22px; color: #b8c0cc; }
+.group-h { margin: 0; border-top: 8px solid var(--soft); }
+.next { display: grid; grid-template-columns: minmax(0, 1fr) 16px; gap: 2px 10px; align-items: center; margin: 18px 16px 4px; padding: 14px 16px; border-radius: 14px; border: 1.5px solid var(--navy); text-decoration: none; color: var(--navy); }
+.next small { grid-column: 1; font-size: 11.5px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); }
+.next strong { grid-column: 1; font-size: 17px; }
+.next em { grid-column: 2; grid-row: 1 / span 2; color: var(--navy); }
+.next[hidden], .group-h[hidden] { display: none; }
+/* bloques: títulos de sección más sobrios, subsecciones con etiqueta gris */
+.block { border-bottom: 1px solid var(--line); }
+.block-h h2 { font-size: 20px; }
+/* los «botones rojos» secundarios pasan a enlaces de texto */
+a.cta { display: inline-flex; width: auto; background: none !important; color: var(--link) !important; padding: 10px 0 !important; border-radius: 0; font-size: 14.5px; font-weight: 700; text-align: left; box-shadow: none; }
+.bandas-hoy .own { background: none; color: var(--ink-soft); padding: 0; font-weight: 700; font-size: 11.5px; }
+.bandas-hoy small, .team small, .pasos dt, .principal small { color: var(--ink-soft); }
+.pasos .ph span { background: rgba(17,35,57,.85); }
+.pasos .go button { background: none; color: var(--link); padding: 8px 0; text-align: left; flex: 0 1 auto; }
+.pasos .go a { background: none; color: var(--link); padding: 8px 0; text-align: right; }
+.figs-row { background: none; padding: 0; }
+.puesto { background: var(--soft); color: var(--ink); }
+.puesto b { color: var(--navy); } .puesto b sup { color: var(--ink-soft); } .puesto span { color: var(--ink-soft); }
+.nomina em { color: var(--ink); }
+.nomina li.me { background: #fff5f6; }
+.tl2 li > b, .tl2.hot li > b { background: var(--soft); color: var(--navy); }
+.tl2::before { background: var(--line); }
+.patri-h b, .patri-h.r b { background: var(--soft); color: var(--navy); }
+.curios li, .curios li:nth-child(2n), .curios li:nth-child(3n) { background: var(--card); color: var(--ink); border: 1px solid var(--line); min-height: 0; }
+.curios b { color: var(--navy); font-size: 28px; }
+.curios span { color: var(--ink-soft); }
+.curios li::after { content: none; }
+.tl-hitos li.big::before { background: var(--navy); border-color: var(--navy); }
+.tl-hitos li.big b { color: var(--navy); }
+.dates li:first-child b { color: var(--navy); } .dates li:first-child i { background: var(--navy); }
+.empty button { background: none; color: var(--link); padding: 6px 0; }
+.sh-top small { background: rgba(255,255,255,.18); }
+.sh-foot a { background: var(--navy); }
+.vc b { color: #fff; }
+.resena::first-letter { color: var(--navy); }
+.metro li.key, .clock-cap span:nth-child(2) { color: var(--red); }
+.day-row li.me .c { border-color: var(--red); }
+.hilo { border-top: 0; }
+.countdown { display: none; }
+.node .txt small { color: var(--ink-soft); }
+.team li { background: none; padding: 6px 0; border-top: 1px solid var(--line); border-radius: 0; }
+.team { gap: 0 12px; }
+.team .av { background: var(--soft); color: var(--navy); }
+.team .av.v { background: var(--soft); color: var(--tint-2); }
 </style>
 
 </head>
@@ -559,20 +639,32 @@ details.fold.inline > summary:active { background: none; }
       <div class="crest"><img src="img/crest.png" alt="Escudo de la Hermandad de San Benito"></div>
       <h1>San Benito</h1>
       <div class="chips"><span class="day">Martes Santo</span><span>Penitencia</span><span>Sacramental</span></div><p class="loc"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z" fill="currentColor"/><circle cx="12" cy="10" r="2.6" fill="var(--tint)"/></svg><a href="#">La Calzada</a> · Sevilla</p>
-      <div class="pulse" aria-label="Horario de 2026">
-        <div><small>Sale</small><b>16:00</b></div>
-        <div class="mid">10 h 05<i></i>en la calle</div>
-        <div><small>Entra</small><b>02:05</b></div>
-      </div>
-      <p class="countdown"><b id="days">—</b> días para el Martes Santo</p>
+      
     </section>
 
-    <div class="actions">
-      <button type="button" class="hot" data-fold="#f-horario"><svg><use href="#i-clock"/></svg>Horario</button>
-      <button type="button" data-fold="#f-recorrido"><svg><use href="#i-route"/></svg>Recorrido</button>
-      <button type="button" data-fold="#f-tunica"><svg><use href="#i-titular"/></svg>Túnica</button>
-      <button type="button" data-share="San Benito · Hilo Cofrade"><svg><use href="#i-share"/></svg>Compartir</button>
-    </div>
+    <section class="lead" aria-labelledby="lead-h">
+      <p class="eyebrow">Lo esencial</p>
+      <h2 id="lead-h">Su Martes Santo</h2>
+      <div class="lead-time">
+        <div><small>Sale</small><b>16:00</b></div>
+        <i aria-hidden="true"></i>
+        <div><small>Entra</small><b>02:05</b></div>
+      </div>
+      <p class="lead-note">Horario de 2026 · faltan <b id="days">—</b> días para el próximo Martes Santo</p>
+      <button type="button" class="btn-primary" data-fold="#f-recorrido">Ver recorrido y horario</button>
+      <p class="lead-links"><button type="button" data-fold="#f-tunica">Su túnica</button><span aria-hidden="true">·</span><button type="button" data-share="San Benito · Hilo Cofrade">Compartir</button></p>
+    </section>
+
+    <section class="chapters" aria-labelledby="ch-h">
+      <p class="eyebrow">Sigue el programa</p>
+      <h2 id="ch-h" class="sr">Capítulos</h2>
+      <ol>
+        <li><a href="#" data-screen="cortejo"><b>1</b><span><strong>Su cortejo</strong><small>3 pasos, sus imágenes y quién los lleva</small></span><em>›</em></a></li>
+        <li><a href="#" data-screen="musica"><b>2</b><span><strong>Su música</strong><small>4 bandas y 95 obras dedicadas</small></span><em>›</em></a></li>
+        <li><a href="#" data-screen="historia"><b>3</b><span><strong>Su historia</strong><small>De Triana en 1554 a La Calzada</small></span><em>›</em></a></li>
+        <li><a href="#" data-screen="hilo"><b>4</b><span><strong>Tira del hilo</strong><small>Todo lo que está conectado</small></span><em>›</em></a></li>
+      </ol>
+    </section>
 
     <section class="block" id="cortejo" aria-labelledby="t-cortejo">
       <div class="block-h"><h2 id="t-cortejo">Su cortejo</h2><small>3 pasos · 4 bandas</small></div>
@@ -612,17 +704,17 @@ details.fold.inline > summary:active { background: none; }
             <a class="img-row" href="#"><img src="img/m-jesus.jpg" alt=""><span><strong>Jesús Presentado al Pueblo</strong><small>Antonio Castillo Lastrucci · 1928</small></span></a>
             <div class="figs-row"><svg><use href="#i-fig"/></svg><span><b>Figuras secundarias</b> · aún sin cargar</span></div>
             <dl><div><dt>Capataz</dt><dd><a href="#">Juan Antonio Gil García</a></dd></div><div><dt>Paso</dt><dd>Barroco rocalla · 1967–1968</dd></div><div><dt>Música</dt><dd><a href="#">A. M. La Encarnación</a></dd></div></dl>
-            <div class="go"><button type="button" data-sheet="mist">Abrir el paso</button><a href="#">Ficha de la imagen</a></div></div></li>
+            <div class="go"><button type="button" data-sheet="mist">Ver el paso y sus figuras</button><a href="#">Ficha de la imagen</a></div></div></li>
         <li><div class="ph"><img src="img/m-pcristo.jpg" alt="Paso del Cristo de la Sangre"><span>2 · Cristo</span><i class="bl" style="background:#65121A"><img src="img/band-logo-s.jpg" alt=""></i></div>
           <div class="bd"><h3>Santísimo Cristo de la Sangre</h3>
             <a class="img-row" href="#"><img src="img/cover-45.jpg" alt="" style="object-position:30% 25%"><span><strong>Cristo de la Sangre</strong><small>Francisco Buiza · 1966</small></span></a>
             <dl><div><dt>Capataz</dt><dd><a href="#">Manuel Roldán Rojas</a></dd></div><div><dt>Paso</dt><dd>Barroco · 1967–1969</dd></div><div><dt>Música</dt><dd><a href="#" data-go="b">Sangre de San Benito</a></dd></div></dl>
-            <div class="go"><button type="button" data-sheet="cristo">Abrir el paso</button><a href="#">Ficha de la imagen</a></div></div></li>
+            <div class="go"><button type="button" data-sheet="cristo">Ver el paso</button><a href="#">Ficha de la imagen</a></div></div></li>
         <li><div class="ph"><img src="img/m-ppalio.jpg" alt="Paso de palio de la Virgen de la Encarnación" style="object-position:50% 30%"><span>3 · Palio</span><i class="bl" style="background:#000"><img src="img/logo-puebla.jpg" alt=""></i></div>
           <div class="bd"><h3>Nuestra Señora de la Encarnación Coronada</h3>
             <a class="img-row" href="#"><img src="img/m-virgen.jpg" alt=""><span><strong>Virgen de la Encarnación</strong><small>Blas Molner · 1780–1793</small></span></a>
             <dl><div><dt>Capataz</dt><dd><a href="#">Jesús Morón Hortal</a></dd></div><div><dt>Vestidor</dt><dd><a href="#">Leandro González Ruiz</a></dd></div><div><dt>Paso</dt><dd>Barroco · palio de 1930–1931</dd></div><div><dt>Música</dt><dd><a href="#">B. M. La Puebla del Río</a></dd></div></dl>
-            <div class="go"><button type="button" data-sheet="palio">Abrir el paso</button><a href="#">Ficha de la imagen</a></div></div></li>
+            <div class="go"><button type="button" data-sheet="palio">Ver el paso</button><a href="#">Ficha de la imagen</a></div></div></li>
       </ul>
     </section>
 
@@ -805,20 +897,27 @@ details.fold.inline > summary:active { background: none; }
       <div class="crest dark"><img src="img/band-logo-s.jpg" alt="Logo de la Banda del Santísimo Cristo de la Sangre"></div>
       <h1>Sangre de San Benito</h1>
       <div class="chips"><span class="day">Cornetas y tambores</span><span>Desde 1992</span></div>
-      <div class="pulse" aria-label="Resumen">
-        <div><small>Salidas</small><b>3</b></div>
-        <div class="mid">en Semana Santa<i></i>vigentes</div>
-        <div><small>Discos</small><b>13</b></div>
-      </div>
-      <p class="countdown"><b id="days-b">—</b> días para el Martes Santo</p>
+      
     </section>
 
-    <div class="actions">
-      <button type="button" class="hot" data-fold="#f-disco"><svg><use href="#i-disc"/></svg>Discos</button>
-      <button type="button" data-fold="#f-estrenos"><svg><use href="#i-star"/></svg>Estrenos</button>
-      <a href="#" data-go="h"><svg><use href="#i-cortejo"/></svg>Su hermandad</a>
-      <button type="button" data-share="Sangre de San Benito · Hilo Cofrade"><svg><use href="#i-share"/></svg>Compartir</button>
-    </div>
+    <section class="lead" aria-labelledby="lead-b">
+      <p class="eyebrow">Lo esencial</p>
+      <h2 id="lead-b">Tras el Cristo de la Sangre</h2>
+      <p class="lead-text">Banda de su propia hermandad, San Benito, cada Martes Santo desde 1997. Además sale el Lunes y el Viernes Santo.</p>
+      <p class="lead-note">Faltan <b id="days-b">—</b> días para el próximo Martes Santo</p>
+      <button type="button" class="btn-primary" data-screen="musica">Escuchar su música</button>
+      <p class="lead-links"><a href="#" data-go="h">Su hermandad</a><span aria-hidden="true">·</span><button type="button" data-share="Sangre de San Benito · Hilo Cofrade">Compartir</button></p>
+    </section>
+
+    <section class="chapters" aria-labelledby="ch-b">
+      <p class="eyebrow">Sigue el programa</p>
+      <h2 id="ch-b" class="sr">Capítulos</h2>
+      <ol>
+        <li><a href="#" data-screen="musica"><b>1</b><span><strong>Su música</strong><small>13 discos y 5 estrenos</small></span><em>›</em></a></li>
+        <li><a href="#" data-screen="historia"><b>2</b><span><strong>Su trayectoria</strong><small>Desde 1991 y con quién ha salido</small></span><em>›</em></a></li>
+        <li><a href="#" data-screen="hilo"><b>3</b><span><strong>Tira del hilo</strong><small>Todo lo que está conectado</small></span><em>›</em></a></li>
+      </ol>
+    </section>
 
     <section class="block" id="semana" aria-labelledby="t-semana">
       <div class="block-h"><h2 id="t-semana">Su Semana Santa</h2><small>acompañamientos vigentes</small></div>
@@ -1079,17 +1178,17 @@ details.fold.inline > summary:active { background: none; }
 (function () {
   var SCREENS = {
     h: {
-      inicio:   { t: 'San Benito', p: '', sel: ['.hero', '.actions', '#dia', '#curiosidades'] },
-      cortejo:  { t: 'Cortejo', p: '3 pasos, sus figuras, capataces y nazarenos', sel: ['#cortejo', '#pasos', '#f-titulares', '#f-nazarenos', '#f-tunica'] },
-      musica:   { t: 'Música', p: 'Sus bandas, su historial y las obras que le han dedicado', sel: ['#bandas', '#f-musica', '#f-patrimonio'] },
-      historia: { t: 'Historia', p: 'Desde 1554: hitos, patrimonio y cultos', inline: ['#f-historia'], sel: ['#f-historia', '#f-viacrucis', '#f-patri', '#f-cultos', '#f-horario', '#f-recorrido', '#f-datos'] },
-      hilo:     { t: 'Tira del hilo', p: 'Todo lo que está conectado con San Benito', sel: ['#hilo-h'] }
+      inicio:   { t: 'San Benito', p: '', more: 'También en su día', sel: ['.hero', '.lead', '.chapters', '#dia', '#curiosidades'] },
+      cortejo:  { t: 'Su cortejo', n: 1, p: '3 pasos, sus imágenes y quién los lleva', more: 'Más sobre el cortejo', sel: ['#cortejo', '#pasos', '#f-titulares', '#f-nazarenos', '#f-tunica'] },
+      musica:   { t: 'Su música', n: 2, p: 'Quién toca hoy, quién tocó y qué se le ha escrito', more: 'Para profundizar', sel: ['#bandas', '#f-musica', '#f-patrimonio'] },
+      historia: { t: 'Su historia', n: 3, p: 'De Triana en 1554 a La Calzada', more: 'Patrimonio y vida de hermandad', inline: ['#f-historia'], sel: ['#f-historia', '#f-viacrucis', '#f-patri', '#f-cultos', '#f-horario', '#f-recorrido', '#f-datos'] },
+      hilo:     { t: 'Tira del hilo', n: 4, p: 'Todo lo que está conectado con San Benito', sel: ['#hilo-h'] }
     },
     b: {
-      inicio:   { t: 'Sangre de San Benito', p: '', sel: ['.hero', '.actions', '#semana'] },
-      musica:   { t: 'Música', p: 'Discos, estrenos y repertorio grabado', inline: ['#f-disco', '#f-estrenos'], sel: ['#f-disco', '#f-estrenos'] },
-      historia: { t: 'Trayectoria', p: 'Desde 1991: acompañamientos y datos', inline: ['#f-tray'], sel: ['#f-tray', '#f-bdatos'] },
-      hilo:     { t: 'Tira del hilo', p: 'Todo lo que está conectado con la banda', sel: ['#hilo-b'] }
+      inicio:   { t: 'Sangre de San Benito', p: '', sel: ['.hero', '.lead', '.chapters', '#semana'] },
+      musica:   { t: 'Su música', n: 1, p: 'Discos, estrenos y repertorio grabado', inline: ['#f-disco', '#f-estrenos'], sel: ['#f-disco', '#f-estrenos'] },
+      historia: { t: 'Su trayectoria', n: 2, p: 'Desde 1991: con quién ha salido', more: 'Datos', inline: ['#f-tray'], sel: ['#f-tray', '#f-bdatos'] },
+      hilo:     { t: 'Tira del hilo', n: 3, p: 'Todo lo que está conectado con la banda', sel: ['#hilo-b'] }
     }
   };
   var page = function () { return document.getElementById('page-b').hidden ? 'h' : 'b'; };
@@ -1102,15 +1201,31 @@ details.fold.inline > summary:active { background: none; }
     var keep = new Set();
     cfg.sel.forEach(function (q) { var el = main.querySelector(q); if (el) keep.add(el); });
     Array.prototype.forEach.call(main.children, function (el) {
-      if (el.matches('[data-scr-head], .foot')) return;
+      if (el.matches('[data-scr-head], .foot, .group-h, .next')) return;
       el.setAttribute('data-screen-el', '');
       el.hidden = !keep.has(el);
     });
     // las filas plegables siguen el orden definido
     cfg.sel.forEach(function (q) { var el = main.querySelector(q); if (el) main.insertBefore(el, main.querySelector('.foot')); });
     main.querySelectorAll('details.fold').forEach(function (d) { var on = (cfg.inline || []).some(function (q) { return d.matches(q); }); d.classList.toggle('inline', on); d.open = on; });
+    var foot = main.querySelector('.foot');
+    var gh = main.querySelector('.group-h') || document.createElement('p'); gh.className = 'group-h';
+    var firstRow = cfg.sel.map(function (q) { return main.querySelector(q); }).filter(function (el) { return el && el.matches('details.fold:not(.inline)'); })[0];
+    if (firstRow && cfg.more) { gh.textContent = cfg.more; gh.hidden = false; main.insertBefore(gh, firstRow); } else { gh.hidden = true; }
+    var keys = Object.keys(SCREENS[pg]), idx = keys.indexOf(name), nx = keys[idx + 1];
+    var nc = main.querySelector('.next') || document.createElement('a'); nc.className = 'next'; nc.href = '#';
+    if (name !== 'inicio' && nx) {
+      nc.dataset.screen = nx; nc.dataset.page = pg;
+      nc.innerHTML = '<small>Siguiente en el programa</small><strong>' + SCREENS[pg][nx].n + ' · ' + SCREENS[pg][nx].t + '</strong><em>›</em>';
+      nc.hidden = false; main.insertBefore(nc, foot);
+    } else if (name !== 'inicio') {
+      nc.dataset.screen = 'inicio'; nc.dataset.page = pg;
+      nc.innerHTML = '<small>Fin del programa</small><strong>Volver al inicio</strong><em>›</em>';
+      nc.hidden = false; main.insertBefore(nc, foot);
+    } else { nc.hidden = true; }
     var head = main.querySelector('[data-scr-head]');
     head.hidden = name === 'inicio';
+    head.querySelector('small').textContent = (cfg.n ? 'Capítulo ' + cfg.n + ' · ' : '') + (pg === 'h' ? 'San Benito' : 'Sangre de San Benito');
     head.querySelector('h2').textContent = cfg.t; head.querySelector('p').textContent = cfg.p;
     main.classList.remove('scr-in'); void main.offsetWidth; main.classList.add('scr-in');
     document.querySelectorAll('#tabbar-' + pg + ' button').forEach(function (b) {
