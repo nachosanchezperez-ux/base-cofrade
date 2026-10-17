@@ -21,7 +21,9 @@ test('las fichas extraordinarias incorporan la Hermandad cuando aporta intenció
 
   assert.match(page, /function shortBrotherhoodName/)
   assert.match(page, /const eventLead = brotherhood && !titleIncludesBrotherhood/)
-  assert.match(page, /compactSeoTitle\(seoTitle\(item\), 58\)/)
+  // El título SEO usa la regla común de actos (lib/agenda-event-seo.js), que
+  // añade la Hermandad como contexto cuando no está ya en el título.
+  assert.match(page, /agendaEventSeoTitle\(\{[\s\S]*brotherhoodName: item\.brotherhoodName/)
 })
 
 test('cada tarjeta de Extraordinarias enlaza a la ficha pública de su Hermandad', () => {
