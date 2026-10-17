@@ -712,3 +712,30 @@
     padding-right: 82px;
   }
 }
+
+/* Incrustado en «Descubre Hilo Cofrade» (portada de 5 bloques): sin fondo ni
+   márgenes propios; un filete separa el apartado del anterior. */
+.embedded {
+  scroll-margin-top: calc(var(--hc-app-header-height, 70px) + 18px);
+  margin-top: 26px;
+  padding-top: 22px;
+  border-top: 1px solid #dfe6ed;
+}
+
+.embeddedHeader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 12px;
+  margin-bottom: 14px;
+}
+
+.embeddedHeader h3 {
+  margin: 0;
+  color: #123a67;
+  font-size: 21px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -.02em;
+}
