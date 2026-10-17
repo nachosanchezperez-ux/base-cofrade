@@ -52,11 +52,22 @@ test('la descripción dice qué, quién, dónde y cuándo con fecha completa', (
   assert.equal(agendaEventLongDate('2026-10-25'), 'domingo, 25 de octubre de 2026')
   assert.equal(
     agendaEventSeoDescription({ title: 'Nuestra Señora de los Dolores', year: 2026, kindLabel: 'Salida extraordinaria', brotherhoodName: 'Hermandad del Cerro del Águila', municipality: 'Sevilla', date: '2026-09-06', time: '18:00', origin: 'Parroquia de los Dolores', coverage: ['recorrido', 'horarios'] }),
-    'Salida extraordinaria de Nuestra Señora de los Dolores (Cerro del Águila) en Sevilla el domingo, 6 de septiembre de 2026, con salida a las 18:00 desde la Parroquia de los Dolores. Recorrido, horarios.'
+    'Salida extraordinaria de Nuestra Señora de los Dolores (Cerro del Águila) en Sevilla el domingo, 6 de septiembre de 2026, con salida a las 18:00 desde la Parroquia de los Dolores. Incluye recorrido y horarios.'
   )
   assert.equal(
     agendaEventSeoDescription({ title: 'Rosario de la Aurora 2026', year: 2026, kindLabel: 'Rosario de la Aurora', municipality: 'Lebrija' }),
     'Rosario de la Aurora en Lebrija.'
+  )
+})
+
+test('sin año conocido se conserva el del título; la cobertura no anuncia lo pendiente', async () => {
+  const { hasPublishedRoute } = await import('../lib/agenda-event-seo.js')
+  assert.equal(cleanAgendaEventTitle('Santísimo Cristo de la Expiración · Vía Crucis del Consejo 1978', null), 'Santísimo Cristo de la Expiración · Vía Crucis del Consejo 1978')
+  assert.equal(hasPublishedRoute([], 'Itinerario detallado pendiente de publicación'), false)
+  assert.equal(hasPublishedRoute([], 'Salida, Feria, Relator'), true)
+  assert.equal(
+    agendaEventSeoDescription({ title: 'Nuestra Señora del Carmen', kindLabel: 'Procesión de Gloria', municipality: 'Estepa', date: '2026-09-12', coverage: ['', '', 'música'] }),
+    'Procesión de Gloria de Nuestra Señora del Carmen en Estepa el sábado, 12 de septiembre de 2026. Incluye música.'
   )
 })
 

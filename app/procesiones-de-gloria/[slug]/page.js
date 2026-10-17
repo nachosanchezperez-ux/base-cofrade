@@ -1,4 +1,4 @@
-import { agendaEventPerformers, agendaEventSeoDescription, agendaEventSeoTitle } from '@/lib/agenda-event-seo'
+import { agendaEventPerformers, agendaEventSeoDescription, agendaEventSeoTitle, hasPublishedRoute } from '@/lib/agenda-event-seo'
 import Link from 'next/link'
 import { cache } from 'react'
 import { notFound, permanentRedirect } from 'next/navigation'
@@ -123,7 +123,7 @@ export async function generateMetadata({ params }) {
     time: item.departureTime,
     origin: item.origin,
     coverage: [
-      item.route?.length || item.routeSummary ? 'recorrido' : '',
+      hasPublishedRoute(item.route, item.routeSummary) ? 'recorrido' : '',
       item.schedule?.length || item.departureTime ? 'horario' : '',
       item.music?.length || item.processionalMusic?.length ? 'música' : '',
     ],

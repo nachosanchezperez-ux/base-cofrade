@@ -1,4 +1,4 @@
-import { agendaEventPerformers, agendaEventSeoDescription, agendaEventSeoTitle } from '@/lib/agenda-event-seo'
+import { agendaEventPerformers, agendaEventSeoDescription, agendaEventSeoTitle, hasPublishedRoute } from '@/lib/agenda-event-seo'
 import Image from 'next/image'
 import Link from 'next/link'
 import { cache } from 'react'
@@ -117,8 +117,8 @@ function shortBrotherhoodName(value = '') {
 function seoCoverage(item) {
   const coverage = ['fecha']
   if (item.schedule.length || item.departureTime || item.returnTime) coverage.push('horarios')
-  if (item.routeSummary) coverage.push('recorrido')
-  if (item.processionalMusic.length) coverage.push('bandas')
+  if (hasPublishedRoute([], item.routeSummary)) coverage.push('recorrido')
+  if (item.processionalMusic.length) coverage.push('música')
   if (item.poster) coverage.push('cartel')
   return coverage.join(', ')
 }
@@ -186,7 +186,8 @@ export async function generateMetadata({ params }) {
     date: item.date,
     time: item.departureTime,
     origin: item.origin,
-    summary: item.reason ? `Con motivo de ${item.reason.replace(/\.$/u, '')}.` : '',
+    // El motivo va como frase propia: su redacción editorial no siempre encaja tras «con motivo de».
+    summary: item.reason ? `${item.reason.replace(/\.$/u, '')}.` : '',
     coverage: seoCoverage(item).split(', ').filter((part) => part !== 'fecha'),
   }))
   const canonical = `/extraordinarias/${item.slug}`
