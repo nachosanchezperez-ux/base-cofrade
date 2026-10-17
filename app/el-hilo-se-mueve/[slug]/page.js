@@ -10,6 +10,7 @@ import {
   HILO_TOPIC_LABELS,
   hiloDayLabel,
   hiloParagraphs,
+  hiloPassedLabel,
   relatedHiloMovements,
 } from '@/lib/hilo-movements'
 import { getPublicHiloMovements } from '@/lib/supabase/hilo-movements'
@@ -151,6 +152,7 @@ export default async function HiloArticlePage({ params }) {
       <div className={styles.body}>
         {paragraphs.map((paragraph, index) => <p key={index}>{paragraph}</p>)}
         {item.effectiveLabel ? <p className={styles.effective}><span aria-hidden="true">↳</span> {item.effectiveLabel}</p> : null}
+        {item.eventPassed ? <p className={styles.passed}>{hiloPassedLabel(item)}</p> : null}
         {item.discover ? <p><Link className={styles.discover} href={item.discover.href} prefetch={false}>{item.discover.label} <span aria-hidden="true">→</span></Link></p> : null}
         <ShareActions share={newsShare(item)} contentType="noticia" analytics={{ topic: item.topic, municipality: item.municipality }} />
       </div>

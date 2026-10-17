@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { hiloDayLabel, HILO_TOPIC_LABELS } from '@/lib/hilo-movements'
+import { hiloDayLabel, hiloPassedLabel, HILO_TOPIC_LABELS } from '@/lib/hilo-movements'
 import { newsShare } from '@/lib/share'
 import ShareActions from '@/components/ShareActions'
 import styles from './HiloMovements.module.css'
@@ -40,11 +40,11 @@ export function hiloKindLabel(kind = '') {
 
 // Tarjetas del índice y de las fichas. El texto completo, las relaciones y las
 // fuentes viven en la página de cada noticia (item.href); aquí, lo esencial.
-export default function HiloMovementCards({ items, compact = false, headingLevel = 3, featured = false }) {
+export default function HiloMovementCards({ items, compact = false, headingLevel = 3, featured = false, anchors = !compact }) {
   const Heading = `h${headingLevel}`
   return <ol className={compact ? styles.compactList : featured ? styles.leadList : styles.list}>
     {items.map((item) => <li key={item.id}>
-      <article className={`${styles.chapter} ${featured ? styles.featured : ''}`} id={compact ? undefined : item.id} data-hilo-movement={item.id}>
+      <article className={`${styles.chapter} ${featured ? styles.featured : ''}`} id={anchors ? item.id : undefined} data-hilo-movement={item.id}>
         {!compact ? <MovementVisual item={item} featured={featured} sizes={featured ? '(max-width: 760px) 100vw, 45vw' : '(max-width: 760px) 100vw, 40vw'} /> : null}
         <div className={styles.cardBody}>
           <header className={styles.identity}>
@@ -53,7 +53,7 @@ export default function HiloMovementCards({ items, compact = false, headingLevel
             <span className={styles.kind}>{hiloKindLabel(item.kind)}</span>
           </header>
           <div className={styles.story}>
-            <p className={styles.date}>{item.announcedOn ? <time dateTime={item.announcedOn}>{hiloDayLabel(item.announcedOn)}</time> : <>Documentado el <time dateTime={item.documentedOn}>{hiloDayLabel(item.documentedOn)}</time></>}</p>
+            <p className={styles.date}>{item.announcedOn ? <time dateTime={item.announcedOn}>{hiloDayLabel(item.announcedOn)}</time> : <>Documentado el <time dateTime={item.documentedOn}>{hiloDayLabel(item.documentedOn)}</time></>}{item.eventPassed ? <span className={styles.passed}>{hiloPassedLabel(item)}</span> : null}</p>
             <Heading><Link href={item.href} prefetch={false} className={styles.titleLink}>{item.title}</Link></Heading>
             <p className={styles.summary}>{item.summary}</p>
             {item.effectiveLabel && !compact ? <p className={styles.effective}><span aria-hidden="true">↳</span> {item.effectiveLabel}</p> : null}

@@ -8,6 +8,9 @@ import { breadcrumbJsonLd, collectionPageJsonLd, socialMetadata, filteredViewRob
 import styles from '@/components/HiloMovements.module.css'
 
 export const revalidate = 60
+// Tarjetas completas (con foto y botones de compartir); el resto, en filas breves
+// que conservan su ancla (#id) para los enlaces antiguos.
+const HILO_INDEX_CARDS = 12
 const TITLE = 'El Hilo se mueve · Novedades de nuestras hermandades'
 const DESCRIPTION = 'La vida de nuestras hermandades, conectada: novedades documentadas, contexto y protagonistas para seguir tirando del hilo.'
 const value = (input) => String(Array.isArray(input) ? input[0] || '' : input || '').slice(0, 120)
@@ -47,7 +50,8 @@ export default async function HiloMovementsPage({ searchParams }) {
         <p id="novedades" className={styles.results}>{selected.length} {selected.length === 1 ? 'novedad documentada' : 'novedades documentadas'} · Ordenadas por fecha del anuncio, cuando se conoce.</p>
         {selected.length ? <>
           <HiloMovementCards items={selected.slice(0, 1)} headingLevel={2} featured />
-          {selected.length > 1 ? <section aria-labelledby="el-hilo-sigue"><header className={styles.followHeader}><h2 id="el-hilo-sigue">El hilo sigue</h2><p>Más capítulos de la vida cofrade</p></header><HiloMovementCards items={selected.slice(1)} headingLevel={3} /></section> : null}
+          {selected.length > 1 ? <section aria-labelledby="el-hilo-sigue"><header className={styles.followHeader}><h2 id="el-hilo-sigue">El hilo sigue</h2><p>Más capítulos de la vida cofrade</p></header><HiloMovementCards items={selected.slice(1, HILO_INDEX_CARDS)} headingLevel={3} /></section> : null}
+          {selected.length > HILO_INDEX_CARDS ? <section className={styles.archive} aria-labelledby="el-hilo-archivo"><header className={styles.followHeader}><h2 id="el-hilo-archivo">Archivo del hilo</h2><p>Novedades anteriores, en formato breve</p></header><HiloMovementCards items={selected.slice(HILO_INDEX_CARDS)} headingLevel={3} compact anchors /></section> : null}
         </> : <p className={styles.empty}>No hay novedades publicadas con estos filtros. <Link href={HILO_MOVEMENTS_PATH} prefetch={false}>Ver todas las novedades</Link>.</p>}
       </>}
     </div>

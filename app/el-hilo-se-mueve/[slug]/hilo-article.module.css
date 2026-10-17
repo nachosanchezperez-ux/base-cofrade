@@ -21,6 +21,7 @@
 .body { padding: 26px 0 8px; font-size: 18px; line-height: 1.75; }
 .body > p { margin: 0 0 18px; max-width: 68ch; }
 .effective { color: var(--wine-dark); font-weight: 700; }
+.passed { display: inline-flex; margin: 0 0 16px; padding: 3px 10px; border-radius: 999px; background: #eef1f4; color: #3c4b5c; font-size: 13px; font-weight: 750; }
 .discover { display: inline-flex; gap: 10px; align-items: center; min-height: 44px; color: var(--wine-dark); font-size: 16px; font-weight: 750; text-decoration: underline; text-underline-offset: 4px; }
 
 .connections, .sources { padding: 26px 0; border-top: 1px solid var(--line); }

@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import EntityPicker from '@/components/panel/EntityPicker'
 import { requirePanelUser } from '@/lib/panel/auth'
 import { NEWS_KIND_SUGGESTIONS, NEWS_TOPICS, getNewsEditorData } from '@/lib/panel/editorial-news'
+import { newsNeedsTenseReview } from '@/lib/hilo-movements-editorial'
 import {
   addNewsRelationAction,
   addNewsSourceAction,
@@ -43,13 +44,14 @@ export default async function PanelNewsEditorPage({ params, searchParams }) {
       <header className={styles.editorHeader}>
         <div className={styles.breadcrumb}><Link href="/panel/noticias">Noticias</Link><span>→</span><strong>{content.title}</strong></div>
         <div className={styles.editorTitleRow}>
-          <div><span className={styles.eyebrow}>Editar noticia</span><h1>{content.title}</h1><p>{data.protagonist?.name || 'Sin protagonista'}{scheduled ? ` · programada para el ${content.publish_date}` : ''}</p></div>
+          <div><span className={styles.eyebrow}>Editar noticia</span><h1>{content.title}</h1><p>{data.protagonist?.name || content.subject_label || 'Sin protagonista'}{scheduled ? ` · programada para el ${content.publish_date}` : ''}</p></div>
           <div className={styles.editorHeaderActions}><span className={`${styles.statusBadge} ${styles[content.status]}`}>{STATUS_LABELS[content.status]}</span>{content.status === 'published' && !scheduled && publicHref ? <Link className={styles.secondaryButton} href={publicHref} target="_blank" rel="noreferrer">Ver en El Hilo se mueve ↗</Link> : null}</div>
         </div>
       </header>
 
       {SAVED_MESSAGES[query?.saved] ? <div className={styles.savedNotice} role="status">{SAVED_MESSAGES[query.saved]}</div> : null}
       {!canEdit ? <div className={styles.readOnlyNotice}>Tu perfil tiene acceso de consulta.</div> : null}
+      {newsNeedsTenseReview(content, data.today) ? <div className={styles.readOnlyNotice} role="note"><strong>Revisa el texto:</strong> la fecha del acto ({content.event_date}) ya pasó. En la web la noticia ya muestra «Ya celebrado»; conviene pasar a pasado lo que esté en futuro («se presentará», «estrenará»…).</div> : null}
       {content.status !== 'published' && data.issues.length ? <div className={styles.readOnlyNotice} role="note"><strong>Antes de publicar:</strong> {data.issues.join(' ')}</div> : null}
 
       <section className={styles.metricGrid} aria-label="Estado de la noticia">
@@ -68,10 +70,13 @@ export default async function PanelNewsEditorPage({ params, searchParams }) {
             <label><span>Identificador (enlace)</span><input name="slug" required defaultValue={content.slug || ''} pattern="[a-z0-9]+(-[a-z0-9]+)*" title="Minúsculas, números y guiones" /></label>
             <label><span>Etiqueta</span><input name="news_kind" list="news-kind-suggestions" defaultValue={content.news_kind || ''} placeholder="Cambio, Nombramiento…" /><datalist id="news-kind-suggestions">{NEWS_KIND_SUGGESTIONS.map((item) => <option key={item} value={item} />)}</datalist></label>
             <EntityPicker className={styles.fieldWide} name="protagonist_entity_id" items={data.protagonistOptions} label="Hermandad o banda protagonista" placeholder="Buscar Hermandad o banda…" emptyLabel="Selecciona una Hermandad o banda" required={false} defaultValue={data.protagonist?.id || ''} />
+            <label><span>Protagonista sin ficha <small>(si no hay Hermandad o banda)</small></span><input name="subject_label" defaultValue={content.subject_label || ''} placeholder="Consejo de Hermandades de Sevilla" /></label>
+            <label><span>Tipo del protagonista sin ficha</span><input name="subject_kind" defaultValue={content.subject_kind || ''} placeholder="Sección de Gloria" /></label>
             <label><span>Tema</span><select name="news_topic" defaultValue={content.news_topic || ''}><option value="">Elige un tema</option>{NEWS_TOPICS.map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label>
             <label><span>Localidad</span><select name="municipality_id" defaultValue={content.municipality_id || ''}><option value="">Elige una localidad</option>{data.municipalities.map((item) => <option key={item.id} value={item.id}>{item.label}</option>)}</select></label>
             <label><span>Fecha del anuncio</span><input name="announced_on" type="date" max={data.today} defaultValue={content.announced_on || ''} /></label>
             <label><span>Fecha de publicación</span><input name="publish_date" type="date" defaultValue={content.publish_date || ''} /></label>
+            <label><span>Fecha del acto <small>(opcional)</small></span><input name="event_date" type="date" defaultValue={content.event_date || ''} aria-describedby="event-date-help" /><small id="event-date-help">El día en que ocurre lo que anuncia la noticia (estreno, concierto, cierre de una exposición). Cuando pase, la web mostrará «Ya celebrado» y aquí verás un aviso para revisar el texto.</small></label>
             <label className={styles.fieldWide}><span>Entradilla</span><textarea name="summary" rows="2" maxLength={400} defaultValue={content.summary || ''} /></label>
             <label className={styles.fieldWide}><span>Contexto</span><textarea name="body" rows="6" defaultValue={content.body || ''} placeholder="Antecedentes, qué cambia y lo que todavía no se sabe." /></label>
             <label className={styles.fieldWide}><span>Con efecto desde</span><input name="effective_label" defaultValue={content.effective_label || ''} placeholder="Martes Santo de 2027" /></label>
