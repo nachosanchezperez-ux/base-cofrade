@@ -34,6 +34,10 @@ const categoryOptions = [
 ]
 
 // Sin escudo ni foto: un pictograma del tipo de acto, nunca siglas internas.
+// La agenda completa pintaba más de 100 tarjetas (~700 KB de HTML). Se muestran
+// por tandas; el resto llega con «Ver más», al elegir un mes o desde un enlace.
+const AGENDA_PAGE_SIZE = 24
+
 const visualFallbacks = {
   processions: { icon: 'step', label: 'Procesión' },
   transfers: { icon: 'step', label: 'Traslado' },
@@ -455,6 +459,7 @@ export default function AgendaCofradeDirectoryV4({
       const item = items.find((entry) => agendaEventAnchor(entry) === id)
       if (!item) return
       setPeriod('upcoming'); setCategory('all'); setTerritory('all'); setMunicipality(''); setMineOnly(false)
+      setVisibleCount(Number.POSITIVE_INFINITY)
       window.requestAnimationFrame(() => {
         const detail = document.getElementById(`${id}-detail`)
         if (detail) { detail.open = true; detail.querySelector('summary')?.focus(); document.getElementById(id)?.scrollIntoView({ block: 'start' }) }
@@ -534,6 +539,17 @@ export default function AgendaCofradeDirectoryV4({
   [category, upcomingItems, municipality, period, territory, today, mineOnly, followedSlugs])
 
   const groups = useMemo(() => groupByMonth(filtered), [filtered])
+  const [visibleCount, setVisibleCount] = useState(AGENDA_PAGE_SIZE)
+  // Al cambiar de filtro se vuelve a la primera tanda.
+  useEffect(() => { setVisibleCount((current) => (current === Number.POSITIVE_INFINITY ? current : AGENDA_PAGE_SIZE)) }, [period, category, territory, municipality, mineOnly])
+  const shownGroups = useMemo(() => groupByMonth(filtered.slice(0, visibleCount)), [filtered, visibleCount])
+  const hiddenCount = Math.max(0, filtered.length - visibleCount)
+  const showMonth = (key) => {
+    let lastIndex = -1
+    filtered.forEach((item, index) => { if ((item.temporalDateInfo?.monthKey || item.monthKey) === key) lastIndex = index })
+    if (lastIndex >= visibleCount) setVisibleCount(lastIndex + 1)
+    window.requestAnimationFrame(() => document.getElementById(monthAnchor(key))?.scrollIntoView({ block: 'start' }))
+  }
   const selectedCategoryLabel = category === 'all'
     ? 'Todos los tipos'
     : categoryOptions.find(([value]) => value === category)?.[1]
@@ -750,7 +766,7 @@ export default function AgendaCofradeDirectoryV4({
         <details className={mobileStyles.monthPicker}><summary>Ir a otro mes <span aria-hidden="true">⌄</span></summary>
         <nav className={styles.monthNavigation} aria-label="Ir directamente a un mes">
           {groups.map((group) => (
-            <a href={`#${monthAnchor(group.key)}`} key={group.key}>
+            <a href={`#${monthAnchor(group.key)}`} key={group.key} onClick={(event) => { event.preventDefault(); showMonth(group.key) }}>
               <span>{group.label}</span>
               <strong>{group.items.length}</strong>
             </a>
@@ -759,8 +775,11 @@ export default function AgendaCofradeDirectoryV4({
       ) : null}
 
       {groups.length ? (
+        <>
         <div className={styles.months}>
-          {groups.map((group) => {
+          {shownGroups.map((shownGroup) => {
+            // Cifras del mes completo aunque solo se vea una parte.
+            const group = { ...(groups.find((entry) => entry.key === shownGroup.key) || shownGroup), visibleItems: shownGroup.items }
             const breakdown = categoryBreakdown(group.items)
             const anchor = monthAnchor(group.key)
             return (
@@ -782,7 +801,7 @@ export default function AgendaCofradeDirectoryV4({
                   </div>
                 </div>
                 <div className={styles.cards}>
-                  {group.items.map((item) => {
+                  {group.visibleItems.map((item) => {
                     const displayDateInfo = item.temporalDateInfo || item.dateInfo || agendaTemporalDateInfo(item.date)
                     const cardLiveState = ['processions', 'transfers', 'rosaries'].includes(item.category)
                       ? getProcessionLiveState({
@@ -853,6 +872,12 @@ export default function AgendaCofradeDirectoryV4({
             )
           })}
         </div>
+        {hiddenCount > 0 ? (
+          <button type="button" className={`${styles.loadMore} ${mobileStyles.clearFilters}`} onClick={() => setVisibleCount((current) => current + AGENDA_PAGE_SIZE)}>
+            Ver {Math.min(AGENDA_PAGE_SIZE, hiddenCount)} actos más <span>· quedan {hiddenCount}</span>
+          </button>
+        ) : null}
+        </>
       ) : (
         <div className={styles.empty}>
           <strong>No hay próximos actos en esta selección</strong>

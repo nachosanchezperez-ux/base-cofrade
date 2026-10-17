@@ -44,7 +44,9 @@ export function CofradeIcon({ tipo, size = 22, className = '' }) {
       alt=""
       width={size}
       height={size}
-      sizes={`${size}px`}
+      // Pictograma estático de pocos KB: sin la batería de tamaños de next/image
+      // (unos 2 KB de srcset por icono; 800 KB en el listado de Semana Santa).
+      unoptimized
     />
   );
 }

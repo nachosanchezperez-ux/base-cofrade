@@ -1,8 +1,7 @@
 import { connection } from 'next/server'
-import { Suspense } from 'react'
 import Link from 'next/link'
 import EntityDirectoryExplorer from '@/components/EntityDirectoryExplorer'
-import EntityDirectoryExplorerFromUrl from '@/components/EntityDirectoryExplorerFromUrl'
+import { compactDirectoryItem, entityDirectoryInitialState } from '@/lib/entity-directory-url-state'
 import JsonLd from '@/components/JsonLd'
 import { getPublicEntityDirectory } from '@/lib/supabase/public-directory-cache'
 import { absoluteUrl, breadcrumbJsonLd, filteredViewRobots, socialMetadata } from '@/lib/seo'
@@ -30,9 +29,10 @@ export async function generateMetadata({ searchParams } = {}) {
   }
 }
 
-export default async function DirectorioPage() {
+export default async function DirectorioPage({ searchParams } = {}) {
   await connection()
   const items = await getPublicEntityDirectory()
+  const { initialState, stateKey } = entityDirectoryInitialState(items, (await searchParams) || {})
 
   const counts = items.reduce((result, item) => {
     result[item.kind] = (result[item.kind] || 0) + 1
@@ -95,9 +95,7 @@ export default async function DirectorioPage() {
             Cambios musicales 2027 <span aria-hidden="true">→</span>
           </Link>
         </nav>
-        <Suspense fallback={<EntityDirectoryExplorer items={items} />}>
-          <EntityDirectoryExplorerFromUrl items={items} />
-        </Suspense>
+        <EntityDirectoryExplorer key={stateKey} items={items.map(compactDirectoryItem)} initialState={initialState} />
       </div>
     </section>
   )
