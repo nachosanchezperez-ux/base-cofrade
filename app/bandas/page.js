@@ -1,11 +1,9 @@
 import { connection } from 'next/server'
-import { Suspense } from 'react'
 import Link from 'next/link'
 import BandDirectoryFacets from '@/components/BandDirectoryFacets'
 import DirectoryIntroLink from '@/components/DirectoryIntroLink'
 import JsonLd from '@/components/JsonLd'
 import RelationalEntityDirectory from '@/components/RelationalEntityDirectory'
-import RelationalEntityDirectoryFromUrl from '@/components/RelationalEntityDirectoryFromUrl'
 import { bandDirectoryItems } from '@/lib/band-directory'
 import { getPublicBandsDirectory } from '@/lib/supabase/public-directory-cache'
 import { breadcrumbJsonLd, collectionPageJsonLd, filteredViewRobots, socialMetadata } from '@/lib/seo'
@@ -29,8 +27,18 @@ export async function generateMetadata({ searchParams } = {}) {
   }
 }
 
-export default async function BandasPage() {
+// Filtros heredados por URL (/bandas?tipo=…&localidad=…). Se leen en el
+// servidor: antes un componente cliente con useSearchParams obligaba a un
+// Suspense cuyo fallback pintaba las 152 tarjetas otra vez (381 KB de HTML).
+function firstParam(value) {
+  return String(Array.isArray(value) ? value[0] : value || '').trim()
+}
+
+export default async function BandasPage({ searchParams } = {}) {
   await connection()
+  const params = (await searchParams) || {}
+  const initialTypeSlug = firstParam(params.tipo)
+  const initialMunicipalitySlug = firstParam(params.localidad)
   const bands = await getPublicBandsDirectory()
   const items = bandDirectoryItems(bands)
 
@@ -60,9 +68,13 @@ export default async function BandasPage() {
           </Link>
         </p>
         <BandDirectoryFacets bands={bands} />
-        <Suspense fallback={<RelationalEntityDirectory items={items} kind="band" />}>
-          <RelationalEntityDirectoryFromUrl items={items} kind="band" />
-        </Suspense>
+        <RelationalEntityDirectory
+          key={`${initialTypeSlug}:${initialMunicipalitySlug}`}
+          items={items}
+          kind="band"
+          initialTypeSlug={initialTypeSlug}
+          initialMunicipalitySlug={initialMunicipalitySlug}
+        />
       </div>
     </section>
   )
