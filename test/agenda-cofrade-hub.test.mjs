@@ -41,7 +41,7 @@ test('la Agenda pública muestra solo actos próximos y elimina el acceso histó
   assert.match(directory, /Procesiones/)
   assert.match(directory, /Traslados/)
   assert.match(directory, /Romerías/)
-  assert.match(directory, /Besamanos y besapiés/)
+  assert.match(directory, /Cultos y besamanos/)
   assert.match(directory, /Sevilla capital/)
   assert.match(directory, /Municipios/)
   assert.match(directory, /Ver Hermandad/)

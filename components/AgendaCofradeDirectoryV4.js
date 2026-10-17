@@ -27,7 +27,7 @@ const categoryOptions = [
   ['transfers', 'Traslados'],
   ['rosaries', 'Rosarios públicos'],
   ['romeries', 'Romerías'],
-  ['devotions', 'Besamanos y besapiés'],
+  ['devotions', 'Cultos y besamanos'],
   ['concerts', 'Conciertos'],
 ]
 
