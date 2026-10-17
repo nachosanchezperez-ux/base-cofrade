@@ -193,6 +193,12 @@ function explicitEventData(element) {
     const value = element?.dataset?.[datasetKey]
     if (value) data[outputKey] = sanitizeAnalyticsText(value, 80)
   }
+  // Los elementos repetidos (p. ej. cada pista de una discografía) heredan la
+  // sección de su contenedor en lugar de repetir data-hilo-section en el HTML.
+  if (!data.section) {
+    const section = element?.closest?.('[data-hilo-section]')?.dataset?.hiloSection
+    if (section) data.section = sanitizeAnalyticsText(section, 80)
+  }
   if (element?.dataset?.hiloEvent === 'relation_click') {
     data.depth_bucket = nextDepthBucket()
   }

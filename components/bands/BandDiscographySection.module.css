@@ -414,7 +414,7 @@
   border-bottom: 0;
 }
 
-.trackNumber {
+.trackList li > span {
   align-self: start;
   padding-top: 0.15rem;
   color: var(--band-primary);
@@ -423,11 +423,11 @@
   letter-spacing: 0.07em;
 }
 
-.trackCopy {
+.trackList li > div:first-of-type {
   min-width: 0;
 }
 
-.trackTitle {
+.trackList li > div:first-of-type > :is(a, strong) {
   display: block;
   color: var(--band-secondary);
   font-size: 0.94rem;
@@ -436,32 +436,30 @@
   text-decoration: none;
 }
 
-a.trackTitle:hover,
-a.trackTitle:focus-visible {
+.trackList li > div:first-of-type > a:hover,
+.trackList li > div:first-of-type > a:focus-visible {
   color: var(--band-primary);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
-.trackTitle > span {
+.trackList li > div:first-of-type > a > span {
   margin-left: 0.3rem;
   color: var(--band-primary);
   font-size: 0.72em;
 }
 
-.relationshipLine {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.3rem 0.55rem;
-  align-items: baseline;
-  margin-top: 0.38rem;
+.trackList li p {
+  margin: 0.38rem 0 0;
   color: #655f59;
   font-size: 0.76rem;
   line-height: 1.4;
 }
 
-.relationshipLine > span {
+.trackList li p > span {
   display: inline-flex;
+  margin-right: 0.45rem;
+  vertical-align: 0.08em;
   align-items: center;
   min-height: 20px;
   padding: 0.18rem 0.36rem;
@@ -474,19 +472,19 @@ a.trackTitle:focus-visible {
   text-transform: uppercase;
 }
 
-.relationshipLine a {
+.trackList li p a {
   color: inherit;
   font-weight: 700;
   text-decoration: none;
 }
 
-.relationshipLine a:hover {
+.trackList li p a:hover {
   color: var(--band-primary);
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 
-.trackActions {
+.trackList li > div:last-child {
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -494,13 +492,13 @@ a.trackTitle:focus-visible {
   min-width: 6.5rem;
 }
 
-.duration {
+.trackList li small {
   color: #817a73;
   font-size: 0.68rem;
   font-variant-numeric: tabular-nums;
 }
 
-.trackSpotifyLink {
+.trackList li > div:last-child > a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -518,16 +516,16 @@ a.trackTitle:focus-visible {
   transition: transform 0.16s ease, background 0.16s ease;
 }
 
-.trackSpotifyLink:hover {
+.trackList li > div:last-child > a:hover {
   transform: translateY(-1px);
   background: var(--band-primary);
 }
 
-.trackSpotifyLink span {
+.trackList li > div:last-child > a span {
   font-size: 0.58rem;
 }
 
-.trackSpotifyLink em {
+.trackList li > div:last-child > a em {
   font-style: normal;
 }
 
@@ -685,36 +683,36 @@ a.trackTitle:focus-visible {
     padding: 0.72rem 0;
   }
 
-  .trackTitle {
+  .trackList li > div:first-of-type > :is(a, strong) {
     font-size: 0.88rem;
   }
 
-  .relationshipLine {
-    display: grid;
-    gap: 0.18rem;
+  .trackList li p {
     font-size: 0.72rem;
   }
 
-  .relationshipLine > span {
+  .trackList li p > span {
+    display: flex;
     width: fit-content;
+    margin: 0 0 0.18rem;
   }
 
-  .trackActions {
+  .trackList li > div:last-child {
     min-width: 0;
   }
 
-  .duration {
+  .trackList li small {
     display: none;
   }
 
-  .trackSpotifyLink {
+  .trackList li > div:last-child > a {
     width: 34px;
     height: 34px;
     min-height: 34px;
     padding: 0;
   }
 
-  .trackSpotifyLink em {
+  .trackList li > div:last-child > a em {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -747,7 +745,7 @@ a.trackTitle:focus-visible {
     flex-basis: auto;
   }
 
-  .trackSpotifyLink {
+  .trackList li > div:last-child > a {
     width: 32px;
     height: 32px;
     min-height: 32px;
