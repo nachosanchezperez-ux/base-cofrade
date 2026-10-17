@@ -175,7 +175,7 @@ export default async function GloryDetailPage({ params }) {
     description: pageDescription,
     inLanguage: 'es',
     isPartOf: { '@id': `${absoluteUrl('/')}#website` },
-    mainEntity: { '@id': `${canonicalUrl}#event` },
+    ...(item.date ? { mainEntity: { '@id': `${canonicalUrl}#event` } } : {}),
     ...(item.heroImagePath ? { primaryImageOfPage: { '@type': 'ImageObject', url: absoluteUrl(item.heroImagePath) } } : {}),
   }
   const eventJsonLd = {
@@ -218,7 +218,8 @@ export default async function GloryDetailPage({ params }) {
         { name: item.title, path: canonicalPath },
       ])} />
       <JsonLd data={pageJsonLd} />
-      <JsonLd data={eventJsonLd} />
+      {/* Sin fecha (actos históricos) no se publica un Event inválido. */}
+      {item.date ? <JsonLd data={eventJsonLd} /> : null}
 
       <section className={styles.hero}>
         <div className={`shell ${styles.heroGrid}`}>

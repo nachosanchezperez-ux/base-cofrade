@@ -86,5 +86,6 @@ test('Glorias, Rosarios y Extraordinarias usan la regla común y declaran intér
     assert.match(page, /const title = agendaEventSeoTitle\(\{/, path)
     assert.match(page, /seoDescription\(agendaEventSeoDescription\(\{/, path)
     assert.match(page, /performer: agendaEventPerformers\(item\.music\)/, path)
+    assert.match(page, /\{item\.date \? <JsonLd data=\{eventJsonLd\} \/> : null\}/, path)
   }
 })

@@ -151,7 +151,8 @@ export default async function RosaryDetailPage({ params }) {
         { name: 'Rosarios', path: '/agenda-cofrade#rosarios' },
         { name: item.title, path: canonicalPath },
       ])} />
-      <JsonLd data={eventJsonLd} />
+      {/* Sin fecha (actos históricos) no se publica un Event inválido. */}
+      {item.date ? <JsonLd data={eventJsonLd} /> : null}
 
       <header className={styles.hero}>
         <div className={`shell ${styles.heroInner}`}>
