@@ -42,7 +42,7 @@ function AgendaRow({ card }) {
   )
 }
 
-export default function HomeAgendaNow({ agenda }) {
+export default function HomeAgendaNow({ agenda, children = null }) {
   const [active, setActive] = useState(agenda?.defaultTab || 'today')
   const tabRefs = useRef({})
   if (!agenda?.tabs?.length) return null
@@ -121,6 +121,8 @@ export default function HomeAgendaNow({ agenda }) {
         {more ? (
           <Link className={styles.more} href={current.href}>{more}</Link>
         ) : null}
+
+        {children}
       </div>
     </section>
   )

@@ -104,14 +104,22 @@ function CompactThread({ thread }) {
   )
 }
 
-export default function HomeKnowledgeThreads({ threads = [] }) {
+export default function HomeKnowledgeThreads({ threads = [], embedded = false }) {
   if (!threads.length) return null
 
   const [lead, ...secondary] = threads
+  // Incrustado en «Descubre Hilo Cofrade»: sin sección ni fondo propios.
+  const Wrapper = embedded ? 'div' : 'section'
 
   return (
-    <section className={`${styles.section} ${polishStyles.threadsSection}`} id="ultimos-hilos" data-analytics-related-section="ultimos_hilos">
-      <div className="shell">
+    <Wrapper className={embedded ? styles.embedded : `${styles.section} ${polishStyles.threadsSection}`} id="ultimos-hilos" data-analytics-related-section="ultimos_hilos">
+      <div className={embedded ? undefined : 'shell'}>
+        {embedded ? (
+          <header className={styles.embeddedHeader}>
+            <h3>Últimos hilos incorporados</h3>
+            <OpenUpdatesButton className={styles.allUpdates} />
+          </header>
+        ) : (
         <header className={`${styles.header} ${polishStyles.threadsHeader}`}>
           <div>
             <span className={styles.eyebrow}>Conocimiento en movimiento</span>
@@ -121,11 +129,12 @@ export default function HomeKnowledgeThreads({ threads = [] }) {
             <OpenUpdatesButton className={styles.allUpdates} />
           </div>
         </header>
+        )}
 
         <div className={`${styles.layout} ${polishStyles.threadsLayout}`}>
           <LeadThread thread={lead} />
 
-          {secondary.length ? (
+          {secondary.length && !embedded ? (
             <aside className={`${styles.more} ${polishStyles.threadsMore}`} aria-label="Más incorporaciones recientes">
               <span className={styles.moreLabel}>También incorporado</span>
               <div className={styles.moreList}>
@@ -135,6 +144,6 @@ export default function HomeKnowledgeThreads({ threads = [] }) {
           ) : null}
         </div>
       </div>
-    </section>
+    </Wrapper>
   )
 }

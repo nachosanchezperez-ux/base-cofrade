@@ -37,8 +37,8 @@ test('the homepage offers clear first-visit paths: search, agenda and section ac
 
   assert.match(home, /<HomeHero \/>/)
   assert.match(hero, /<HiloSearch homeCompact \/>/)
-  assert.match(home, /<HomeAgendaNow agenda=\{agendaNow\} \/>/)
-  assert.match(home, /<HomeDiscover stats=\{exploreStats\} \/>/)
+  assert.match(home, /<HomeAgendaNow agenda=\{agendaNow\}>/)
+  assert.match(home, /<HomeDiscover stats=\{exploreStats\}>/)
   for (const href of ['/agenda-cofrade', '/directorio', '/crucetas-musicales', '/igualas-y-ensayos']) {
     assert.ok(discover.includes(`href: '${href}'`), href)
   }

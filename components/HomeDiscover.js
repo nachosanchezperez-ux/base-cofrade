@@ -5,7 +5,7 @@ import styles from './HomeDiscover.module.css'
 
 // Accesos a las secciones principales de la enciclopedia. Conserva el id
 // «enciclopedia», que usa el enlace «Explorar» de la cabecera.
-export default function HomeDiscover({ stats }) {
+export default function HomeDiscover({ stats, children = null }) {
   const items = buildHomeDiscover(stats)
 
   return (
@@ -32,6 +32,8 @@ export default function HomeDiscover({ stats }) {
             </li>
           ))}
         </ul>
+
+        {children}
 
         <nav className={styles.more} aria-labelledby="descubre-mas-title">
           <h3 id="descubre-mas-title" className={styles.moreTitle}>Más en Hilo Cofrade</h3>

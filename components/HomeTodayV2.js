@@ -144,7 +144,7 @@ function MusicVisual({ march }) {
   )
 }
 
-export default function HomeTodayV2({ today, content }) {
+export default function HomeTodayV2({ today, content, embedded = false }) {
   const serial = dailySerial(today)
   const editorial = rotatingEditorial(content, serial)
   const dailyCards = uniqueCards([
@@ -155,10 +155,13 @@ export default function HomeTodayV2({ today, content }) {
   ])
   const featured = content?.ephemeris
     || (dailyCards.length ? dailyCards[serial % dailyCards.length] : null)
-  const secondaryCards = dailyCards.filter((card) => card !== featured)
+  // Incrustado en la portada de 5 bloques: una sola tarjeta del día y la marcha.
+  const secondaryCards = embedded ? [] : dailyCards.filter((card) => card !== featured)
   const featureRight = Boolean(featured && secondaryCards.length && !(serial % 2))
   const hasContent = dailyCards.length > 0 || Boolean(content?.march)
   if (!hasContent) return null
+  // Incrustado en «Descubre Hilo Cofrade»: sin sección ni fondo propios.
+  const Wrapper = embedded ? 'div' : 'section'
 
   const renderCard = (card, { isFeatured = false } = {}) => (
     <article
@@ -187,16 +190,23 @@ export default function HomeTodayV2({ today, content }) {
   )
 
   return (
-    <section
-      className={`${styles.section} ${polishStyles.todaySection}`}
+    <Wrapper
+      className={embedded ? `${styles.embedded}` : `${styles.section} ${polishStyles.todaySection}`}
       id="descubre-hoy"
       data-daily-layout={featureRight ? 'lead-right' : 'lead-left'}
     >
-      <div className="shell">
-        <header className={`${styles.header} ${polishStyles.todayHeader}`}>
-          <span className={styles.date}>{today}</span>
-          <h2>Descubre hoy en Hilo Cofrade</h2>
-        </header>
+      <div className={embedded ? undefined : 'shell'}>
+        {embedded ? (
+          <header className={styles.embeddedHeader}>
+            <h3>Hoy en Hilo Cofrade</h3>
+            <span className={styles.date}>{today}</span>
+          </header>
+        ) : (
+          <header className={`${styles.header} ${polishStyles.todayHeader}`}>
+            <span className={styles.date}>{today}</span>
+            <h2>Descubre hoy en Hilo Cofrade</h2>
+          </header>
+        )}
 
         {featured || secondaryCards.length ? (
           <div className={`${styles.editorialGrid} ${polishStyles.todayGrid} ${featureRight ? dynamicStyles.featureRight : ''}`}>
@@ -269,6 +279,6 @@ export default function HomeTodayV2({ today, content }) {
           </Link>
         </aside>
       </div>
-    </section>
+    </Wrapper>
   )
 }

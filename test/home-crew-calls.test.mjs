@@ -57,9 +57,28 @@ test('urgencia solo para la semana próxima', () => {
 
 test('la portada enlaza al calendario y no crea URLs nuevas', () => {
   const home = readFileSync(new URL('../components/HomePageV2.js', import.meta.url), 'utf8')
-  assert.match(home, /<HomeCrewCalls calls=\{crewCalls\} \/>/)
+  assert.match(home, /<HomeCrewCalls calls=\{crewCalls\}/)
   assert.ok(home.indexOf('HomeAgendaNow agenda') < home.indexOf('HomeCrewCalls calls'))
   const snapshot = readFileSync(new URL('../lib/supabase/home-snapshot.js', import.meta.url), 'utf8')
   assert.match(snapshot, /buildHomeCrewCalls\(snapshot\.crewEvents/)
   assert.equal(compactCrewEvent({ id: 'x' }).href, '/igualas-y-ensayos')
+})
+
+test('portada de 5 bloques: igualás dentro de la Agenda y Descubre reúne hoy e hilos', () => {
+  const home = readFileSync(new URL('../components/HomePageV2.js', import.meta.url), 'utf8')
+  assert.match(home, /<HomeAgendaNow agenda=\{agendaNow\}>\s*<HomeCrewCalls calls=\{crewCalls\} embedded \/>/)
+  assert.match(home, /<HomeDiscover stats=\{exploreStats\}>\s*<HomeTodayV2 [^>]*embedded \/>\s*<HomeKnowledgeThreads [^>]*embedded \/>/)
+  assert.ok(home.indexOf('<HomeUpdatesLink') < home.indexOf('<HomeDiscover'))
+  const sections = (home.match(/<(HomeHero|HomeAgendaNow|section|HomeUpdatesLink|HomeDiscover)\b/g) || []).length
+  assert.equal(sections, 5)
+})
+
+test('portada aligerada: una tarjeta del día, un hilo y accesos secundarios como enlaces de texto', () => {
+  const today = readFileSync(new URL('../components/HomeTodayV2.js', import.meta.url), 'utf8')
+  assert.match(today, /const secondaryCards = embedded \? \[\] :/)
+  const threads = readFileSync(new URL('../components/HomeKnowledgeThreads.js', import.meta.url), 'utf8')
+  assert.match(threads, /secondary\.length && !embedded/)
+  const discover = readFileSync(new URL('../components/HomeDiscover.js', import.meta.url), 'utf8')
+  assert.match(discover, /\{children\}/)
+  assert.doesNotMatch(discover, /styles\.moreText/)
 })

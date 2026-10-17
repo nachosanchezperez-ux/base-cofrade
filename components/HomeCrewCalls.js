@@ -37,20 +37,40 @@ function CrewRow({ card }) {
   )
 }
 
-export default function HomeCrewCalls({ calls }) {
+export default function HomeCrewCalls({ calls, embedded = false }) {
   if (!calls?.cards?.length) return null
+  const link = (
+    <Link className={agendaStyles.headLink} href={calls.href}>
+      {calls.total > calls.cards.length ? `Ver las ${calls.total}` : 'Calendario completo'}
+    </Link>
+  )
+  const list = (
+    <ul className={agendaStyles.list}>
+      {calls.cards.map((card) => <CrewRow card={card} key={card.key} />)}
+    </ul>
+  )
+
+  // Portada de 5 bloques: apartado dentro de «Agenda cofrade».
+  if (embedded) {
+    return (
+      <div className={styles.embedded} id="igualas" role="group" aria-labelledby="home-igualas-title">
+        <div className={styles.embeddedHead}>
+          <h3 id="home-igualas-title">Igualás y ensayos</h3>
+          {link}
+        </div>
+        {list}
+      </div>
+    )
+  }
+
   return (
     <section className={`${agendaStyles.section} ${styles.section}`} id="igualas" aria-labelledby="home-igualas-title">
       <div className="shell">
         <div className={agendaStyles.head}>
           <h2 id="home-igualas-title">Igualás y ensayos</h2>
-          <Link className={agendaStyles.headLink} href={calls.href}>
-            {calls.total > calls.cards.length ? `Ver las ${calls.total}` : 'Calendario completo'}
-          </Link>
+          {link}
         </div>
-        <ul className={agendaStyles.list}>
-          {calls.cards.map((card) => <CrewRow card={card} key={card.key} />)}
-        </ul>
+        {list}
       </div>
     </section>
   )
