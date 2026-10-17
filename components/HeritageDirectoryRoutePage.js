@@ -4,7 +4,7 @@ import HeritageDirectoryFacets from '@/components/HeritageDirectoryFacets'
 import JsonLd from '@/components/JsonLd'
 import RelationalEntityDirectory from '@/components/RelationalEntityDirectory'
 import { breadcrumbJsonLd, collectionPageJsonLd } from '@/lib/seo'
-import { compactHeritageDirectoryItems } from '@/lib/directory-client-items'
+import { compactHeritageDirectoryItems, DIRECTORY_PAGE_SIZE } from '@/lib/directory-client-items'
 
 export default function HeritageDirectoryRoutePage({
   allItems,
@@ -32,6 +32,7 @@ export default function HeritageDirectoryRoutePage({
         name: title,
         description,
         items: items.map((item) => ({ name: item.name, path: item.href })),
+        limit: DIRECTORY_PAGE_SIZE,
       })} />
       <div className="shell">
         <DirectoryBreadcrumb items={[

@@ -8,6 +8,7 @@ import EntityVisualFallback from './EntityVisualFallback'
 import contractStyles from './DirectoryCardContract.module.css'
 import enhancementStyles from './RelationalEntityDirectoryEnhancements.module.css'
 import styles from './RelationalEntityDirectory.module.css'
+import { DIRECTORY_PAGE_SIZE } from '@/lib/directory-client-items'
 
 function normalize(value) {
   return String(value || '')
@@ -83,6 +84,14 @@ function groupBandItems(items = []) {
   })
 
   return [...types.values()]
+}
+
+// Imágenes y Pasos pintan las primeras tarjetas y el resto bajo demanda: antes
+// salían las ~700 en el HTML (1,8 MB en /imagenes). La búsqueda y los filtros
+// siguen trabajando sobre todas. Las fichas siguen enlazadas desde su Hermandad,
+// las páginas por tipología y localidad y el sitemap.
+function itemMunicipalitySlug(item) {
+  return item.municipalitySlug || slugify(item.municipality)
 }
 
 const KIND_COPY = {
@@ -179,8 +188,8 @@ export default function RelationalEntityDirectory({
     const options = [...new Map(
       items
         .filter((item) => item.municipality)
-        .map((item) => [item.municipalitySlug || slugify(item.municipality), {
-          value: item.municipalitySlug || slugify(item.municipality),
+        .map((item) => [itemMunicipalitySlug(item), {
+          value: itemMunicipalitySlug(item),
           label: item.municipality === 'Sevilla' ? 'Sevilla capital' : item.municipality,
         }])
     ).values()]
@@ -204,7 +213,7 @@ export default function RelationalEntityDirectory({
         || (territory === 'provincia' && !isCapital)
       const matchesType = type === 'todos' || itemTypeSlug(item) === type
       const matchesMunicipality = municipality === 'todos'
-        || (item.municipalitySlug || slugify(item.municipality)) === municipality
+        || itemMunicipalitySlug(item) === municipality
       const haystack = normalize([
         item.name,
         item.officialName,
@@ -228,6 +237,13 @@ export default function RelationalEntityDirectory({
   const bandGroups = useMemo(() => isBand ? groupBandItems(filtered) : [], [filtered, isBand])
   const hasFilters = query || territory !== 'todos' || type !== 'todos' || municipality !== 'todos'
 
+  // Cada cambio de búsqueda o filtro vuelve a la primera tanda.
+  const filterKey = [query, territory, type, municipality].join('|')
+  const [paging, setPaging] = useState({ key: filterKey, limit: DIRECTORY_PAGE_SIZE })
+  const limit = paging.key === filterKey ? paging.limit : DIRECTORY_PAGE_SIZE
+  const visible = isBand ? filtered : filtered.slice(0, limit)
+  const remaining = filtered.length - visible.length
+
   function renderCard(item) {
     const mediaPath = item.coverPath || (isBand ? item.logoPath : '')
     const imageNames = compactNames(item.imageNames)
@@ -238,7 +254,7 @@ export default function RelationalEntityDirectory({
       <Link
         className={`${styles.card} ${contractStyles.contract} ${enhancementStyles.card} ${isBand ? enhancementStyles.bandCard : ''}`}
         href={item.href}
-        key={item.id}
+        key={item.href}
         aria-label={`Abrir ficha de ${item.name}`}
         style={isBand ? {
           '--entity-accent': item.primaryColor || '#63358B',
@@ -380,9 +396,21 @@ export default function RelationalEntityDirectory({
             ))}
           </div>
         ) : (
-          <div className={styles.grid}>
-            {filtered.map(renderCard)}
-          </div>
+          <>
+            <div className={styles.grid}>
+              {visible.map(renderCard)}
+            </div>
+            {remaining > 0 ? (
+              <button
+                type="button"
+                className={enhancementStyles.moreButton}
+                onClick={() => setPaging({ key: filterKey, limit: limit + DIRECTORY_PAGE_SIZE })}
+              >
+                Mostrar {Math.min(remaining, DIRECTORY_PAGE_SIZE)} más
+                <span>Quedan {remaining} de {filtered.length}</span>
+              </button>
+            ) : null}
+          </>
         )
       ) : (
         <div className={styles.empty}>

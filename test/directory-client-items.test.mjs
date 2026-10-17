@@ -32,7 +32,7 @@ const image = {
 
 test('la tarjeta de Imagen conserva lo que muestra y busca el directorio', () => {
   const compact = compactImageDirectoryItem(image)
-  for (const key of ['id', 'name', 'href', 'type', 'date', 'brotherhoodName', 'municipality', 'municipalitySlug', 'place', 'coverPath', 'coverAlt']) {
+  for (const key of ['name', 'href', 'type', 'date', 'brotherhoodName', 'municipality', 'place', 'coverPath', 'coverAlt']) {
     assert.equal(compact[key], image[key], key)
   }
   // Se conservan todos los autores: la tarjeta muestra "+N" según la longitud.
@@ -55,6 +55,24 @@ test('el contrato de Paso no cambia al moverse a un módulo compartido', () => {
   assert.deepEqual(compact.imageNames, ['A', 'B'])
   assert.deepEqual(compact.authorNames, ['X', 'Y'])
   assert.match(compact.searchText, /Neobarroco.*C.*Z.*Bordado/)
+  // Los nombres que ya viajan en imageNames/authorNames no se repiten.
+  assert.doesNotMatch(compact.searchText, /\bA\b|\bX\b/)
+})
+
+test('el directorio no envía campos que el cliente puede deducir', () => {
+  const compact = compactImageDirectoryItem({ ...image, coverPath: '', coverAlt: 'Texto sin foto' })
+  assert.equal('id' in compact, false)
+  // «sevilla» = slugify(«Sevilla»): el cliente lo calcula.
+  assert.equal('municipalitySlug' in compact, false)
+  // Sin foto no hace falta texto alternativo.
+  assert.equal('coverAlt' in compact, false)
+  assert.equal('coverPath' in compact, false)
+  // Un slug que no coincide con el nombre sí viaja, para no romper los filtros.
+  const odd = compactImageDirectoryItem({ ...image, municipality: 'Sevilla', municipalitySlug: 'sevilla-capital' })
+  assert.equal(odd.municipalitySlug, 'sevilla-capital')
+  const step = compactStepDirectoryItem({ id: 's', name: 'Paso', href: '/pasos/p', condition: 'preserved', brotherhoodName: 'H' })
+  assert.equal('coverAlt' in step, false)
+  assert.doesNotMatch(step.searchText || '', /preserved/)
 })
 
 test('las facetas compactan Imágenes y Pasos y dejan intactos otros tipos', () => {

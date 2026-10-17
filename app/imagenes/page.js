@@ -4,7 +4,7 @@ import HeritageDirectoryFacets from '@/components/HeritageDirectoryFacets'
 import DirectoryIntroLink from '@/components/DirectoryIntroLink'
 import RelationalEntityDirectory from '@/components/RelationalEntityDirectory'
 import { getImagesDirectory } from '@/lib/supabase/directories'
-import { compactImageDirectoryItem } from '@/lib/directory-client-items'
+import { compactImageDirectoryItem, DIRECTORY_PAGE_SIZE } from '@/lib/directory-client-items'
 import { breadcrumbJsonLd, collectionPageJsonLd, socialMetadata } from '@/lib/seo'
 
 export const revalidate = 900
@@ -38,6 +38,7 @@ export default async function ImagenesPage() {
         name: 'Directorio de imágenes',
         description,
         items: images.map((item) => ({ name: item.name, path: item.href })),
+        limit: DIRECTORY_PAGE_SIZE,
       })} />
       <div className="shell">
         <span className="eyebrow">Enciclopedia cofrade</span>
