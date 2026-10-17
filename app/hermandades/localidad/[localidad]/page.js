@@ -2,19 +2,24 @@ import { notFound } from 'next/navigation'
 import DirectoryRoutePage from '@/components/DirectoryRoutePage'
 import { brotherhoodsForLocality } from '@/lib/brotherhood-public-index'
 import { localityLabel } from '@/lib/brotherhood-directory'
+import { localityBrotherhoodGroups, localityDirectorySeo } from '@/lib/locality-seo'
 import { socialMetadata } from '@/lib/seo'
 import { getIndexableBrotherhoodDirectory } from '@/lib/supabase/indexable-brotherhood-directory'
 
 export const revalidate = 900
 
+// Listado de hermandades de una localidad («Hermandades de X»). La página
+// principal de la localidad es su guía cofrade (/agenda-cofrade/localidad/x,
+// «Cofradías de X»): este listado la enlaza arriba y comparte su lugar en el
+// JSON-LD, para que los buscadores entiendan que hablan del mismo municipio.
 function pageData(brotherhoods, localidad) {
   const items = brotherhoodsForLocality(brotherhoods, localidad)
   const label = items[0] ? localityLabel(items[0]) : ''
   const path = `/hermandades/localidad/${localidad}`
-  const title = `Hermandades de ${label}`
-  const description = `Directorio de hermandades de ${label}, con acceso a sus titulares, pasos, patrimonio, cultos, salidas y fuentes documentadas.`
+  const seo = localityDirectorySeo(label, items)
+  const groups = localityBrotherhoodGroups(items)
 
-  return { items, label, path, title, description }
+  return { items, label, path, groups, guidePath: `/agenda-cofrade/localidad/${localidad}`, ...seo }
 }
 
 export async function generateMetadata({ params }) {
@@ -44,13 +49,17 @@ export default async function BrotherhoodMunicipalityDirectoryPage({ params }) {
   return (
     <DirectoryRoutePage
       eyebrow="Directorio territorial"
-      title={data.title}
+      title={`Hermandades de ${data.label}`}
       description={data.description}
+      lead={data.lead}
       hermandades={data.items}
+      groups={data.groups.length > 1 ? data.groups : []}
       path={data.path}
       breadcrumbs={[{ label: data.label }]}
       contextLabel={data.label}
-      relatedAgendaHref={`/agenda-cofrade/localidad/${localidad}`}
+      relatedAgendaHref={data.guidePath}
+      relatedAgendaLabel={`Guía cofrade de ${data.label}: agenda, bandas, imágenes y pasos →`}
+      place={{ path: data.guidePath, name: data.label }}
     />
   )
 }

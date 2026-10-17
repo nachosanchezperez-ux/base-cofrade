@@ -28,34 +28,27 @@ test('extraordinary sources are loaded in the source-link query', async () => {
   assert.doesNotMatch(loader, /\.from\('sources'\)/)
 })
 
-test('the homepage offers clear first-visit paths and a complete project overview', async () => {
-  const [home, overview] = await Promise.all([
+test('the homepage offers clear first-visit paths: search, agenda and section accesses', async () => {
+  const [home, hero, discover] = await Promise.all([
     read('components/HomePageV2.js'),
-    read('components/HomeProjectOverview.js'),
+    read('components/HomeHero.js'),
+    read('lib/home-discover.js'),
   ])
 
-  assert.match(home, /aria-label="Accesos principales"/)
-  assert.match(home, /href="\/directorio"[\s\S]*Explorar la enciclopedia/)
-  assert.match(home, /href="\/agenda-cofrade"[\s\S]*Ver la agenda cofrade/)
-  assert.match(home, /<HomeProjectOverview \/>/)
-  assert.match(overview, /aria-label="Áreas principales de Hilo Cofrade"/)
-  assert.match(overview, /href="\/agenda-cofrade"/)
-  assert.match(overview, /aria-label="Categorías de la Agenda Cofrade"/)
-  assert.ok(overview.includes('href={`/agenda-cofrade?categoria=${category.key}#agenda`}'))
-  assert.match(overview, /key: 'processions'/)
-  assert.match(overview, /key: 'transfers'/)
-  assert.match(overview, /key: 'rosaries'/)
-  assert.match(overview, /key: 'devotions'/)
-  assert.match(overview, /key: 'concerts'/)
-  assert.match(overview, /href="\/directorio"/)
-  assert.match(overview, /href: '\/crucetas-musicales'/)
-  assert.match(overview, /href: '\/igualas-y-ensayos'/)
+  assert.match(home, /<HomeHero \/>/)
+  assert.match(hero, /<HiloSearch homeCompact \/>/)
+  assert.match(home, /<HomeAgendaNow agenda=\{agendaNow\}>/)
+  assert.match(home, /<HomeDiscover stats=\{exploreStats\}>/)
+  for (const href of ['/agenda-cofrade', '/directorio', '/crucetas-musicales', '/igualas-y-ensayos']) {
+    assert.ok(discover.includes(`href: '${href}'`), href)
+  }
+  assert.doesNotMatch(home, /HomeProjectOverview|HomeExploreV2/)
 })
 
 test('public collaboration fails closed until privacy and anti-bot are activated', async () => {
   const [header, explore, footer, collaboration, form, security, sitemap] = await Promise.all([
     read('components/HiloHeader.js'),
-    read('components/HomeExploreV2.js'),
+    read('components/HomeDiscover.js'),
     read('components/HiloFooter.js'),
     read('app/colabora/page.js'),
     read('app/colabora/ContributionForm.js'),

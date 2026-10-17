@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
 import BrotherhoodDirectoryCrestImage from '@/components/BrotherhoodDirectoryCrestImage'
-import { directorySlug, displayName, hasDirectoryType } from '@/lib/brotherhood-directory'
+import { directorySecondaryLabel, directorySlug, displayName } from '@/lib/brotherhood-directory'
 import { groupBrotherhoodsByLocality } from '@/lib/brotherhood-public-index'
 import { CALENDAR_VIEWS, calendarSelection, calendarSections, localityAnchor } from '@/lib/brotherhood-locality-calendar'
 import styles from './BrotherhoodPublicIndex.module.css'
@@ -15,10 +15,7 @@ const LOCALITY_FILTERS = [
 ]
 
 function BrotherhoodRow({ item, showCrest }) {
-  const secondary = [
-    hasDirectoryType(item, 'sacramentales') ? 'Sacramental' : '',
-    hasDirectoryType(item, 'agrupaciones-parroquiales') ? 'Agrupación Parroquial' : '',
-  ].filter(Boolean).join(' · ')
+  const secondary = directorySecondaryLabel(item)
   return (
     <li>
       <Link href={`/hermandades/${item.slug}`} prefetch={false} className={styles.row}>
@@ -47,6 +44,9 @@ function LocalityCalendar({ group, navigation, expand }) {
   const selected = calendarSelection(group.items, view, character)
   const sections = calendarSections(group.items, view, character)
   const localityPage = navigation.localities.find((item) => item.slug === group.slug)
+  // La guía local es permanente (indexable) solo si la localidad tiene alguna ficha indexable.
+  const indexableIds = navigation.indexableIds || []
+  const hasGuide = Boolean(group.slug) && group.items.some((item) => indexableIds.includes(item.id))
 
   useEffect(() => { if (expand) setOpen(true) }, [expand])
 
@@ -93,6 +93,9 @@ function LocalityCalendar({ group, navigation, expand }) {
           </div>
         )}
         {localityPage ? <Link href={localityPage.href} prefetch={false} className={styles.localityLink}>Ver directorio completo de {name} <span>({localityPage.count} fichas)</span> <span aria-hidden="true">→</span></Link> : null}
+        {/* Cada localidad con fichas indexables enlaza su guía cofrade (página principal
+            de la localidad), también las que no llegan al mínimo para tener listado propio. */}
+        {hasGuide ? <Link href={`/agenda-cofrade/localidad/${group.slug}`} prefetch={false} className={styles.localityLink}>Guía cofrade de {name}: agenda, bandas, imágenes y pasos <span aria-hidden="true">→</span></Link> : null}
       </div>
     </details>
   )

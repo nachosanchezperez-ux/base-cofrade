@@ -63,3 +63,9 @@
 @media(max-width:980px){.calendarGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.entityGroups,.heritageGroups{grid-template-columns:1fr}.entityGrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:800px){.sectionHeading{grid-template-columns:1fr;gap:8px}.sectionHeading>span{grid-column:auto}.sectionHeading h2,.sectionHeading p{margin:0}.quickActions{grid-template-columns:1fr}.entityGrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.hero{padding-top:25px}.hero h1{font-size:42px}.stats{gap:6px}.stats strong{padding:8px 10px}.calendarGrid{grid-template-columns:1fr}.entityGrid,.heritageGrid{grid-template-columns:1fr}.heritageCard{grid-template-columns:72px minmax(0,1fr)}.footerLinks>div{align-items:flex-start;flex-direction:column}.footerLinks nav{justify-content:flex-start}}
+
+/* Suscripción al calendario de la localidad (.ics). */
+.subscribe{display:flex;align-items:center;flex-wrap:wrap;gap:8px 14px;margin:16px 0 0;color:#667786;font-size:12px}
+.subscribe>span{font-weight:900;font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+.subscribe a{color:#a51d34;font-weight:850;text-decoration:underline;text-underline-offset:3px}
+@media(max-width:520px){.subscribe>span{width:100%}}

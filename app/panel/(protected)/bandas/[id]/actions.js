@@ -94,6 +94,7 @@ async function refreshBand(supabase, bandId) {
   revalidateTag('public-music-accompaniment-summary', 'max')
   revalidatePath('/acompanamientos-musicales')
   revalidatePath('/')
+  revalidateTag('home-public', { expire: 0 })
   if (data?.slug) revalidatePath(`/bandas/${data.slug}`)
 }
 

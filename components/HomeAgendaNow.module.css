@@ -1,0 +1,345 @@
+/*
+ * Agenda inmediata de la portada · mobile-first.
+ * Cada cita es una fila con una «hoja de calendario» (día grande) y la hora en
+ * rojo cofrade: fecha y hora son lo primero que se lee. Sin tarjetas anidadas.
+ */
+.section {
+  scroll-margin-top: calc(var(--hc-app-header-height, 70px) + 14px);
+  padding: 26px 0 30px;
+  background: #fff;
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.head h2 {
+  margin: 0;
+  color: #0f2742;
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -.03em;
+}
+
+.headLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: #b71f37;
+  font-size: 14px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+/* Pestañas: control segmentado. Con cuatro pestañas, 2 × 2 en pantallas estrechas. */
+.tabs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 4px;
+  margin-bottom: 6px;
+  padding: 4px;
+  border-radius: 14px;
+  background: #eef2f6;
+}
+
+.tabs[data-tabs="4"] {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 0;
+  min-height: 44px;
+  padding: 6px 8px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: #3d5468;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.tab span {
+  line-height: 1.15;
+  text-align: center;
+}
+
+.tab b {
+  flex: 0 0 auto;
+  min-width: 22px;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: rgba(15, 39, 66, .08);
+  color: #173650;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.tabActive {
+  background: #fff;
+  color: #0f2742;
+  box-shadow: 0 1px 3px rgba(15, 39, 66, .14);
+}
+
+.tabActive b {
+  background: #0f2742;
+  color: #fff;
+}
+
+.tabNow {
+  color: #b71f37;
+}
+
+.tabNow.tabActive b {
+  background: #b71f37;
+}
+
+.tabDot {
+  width: 8px;
+  height: 8px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: #b71f37;
+  box-shadow: 0 0 0 3px rgba(183, 31, 55, .16);
+}
+
+.tab:focus-visible,
+.rowLink:focus-visible,
+.more:focus-visible,
+.headLink:focus-visible {
+  outline: 3px solid #123a67;
+  outline-offset: 2px;
+  border-radius: 10px;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.row + .row {
+  border-top: 1px solid #e3e9ef;
+}
+
+.rowLink {
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr);
+  align-items: start;
+  gap: 14px;
+  padding: 14px 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Hoja de calendario: día de la semana, número grande y mes. */
+.leaf {
+  display: grid;
+  justify-items: center;
+  padding: 6px 0 7px;
+  border-top: 4px solid #123a67;
+  border-radius: 4px 4px 10px 10px;
+  background: #f3f6f9;
+  color: #0f2742;
+}
+
+.row[data-live] .leaf {
+  border-top-color: #b71f37;
+}
+
+.leafWeekday,
+.leafMonth {
+  color: #5f7080;
+  font-size: 12px;
+  font-weight: 750;
+  line-height: 1.2;
+}
+
+.leafDay {
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.body {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.when {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+}
+
+.time {
+  color: #b71f37;
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.timeDetail {
+  color: #5f7080;
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1.35;
+}
+
+.live {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #b71f37;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.live i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #b71f37;
+  box-shadow: 0 0 0 3px rgba(183, 31, 55, .16);
+}
+
+.title {
+  color: #0f2742;
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -.01em;
+  overflow-wrap: anywhere;
+}
+
+.rowLink:hover .title {
+  color: #123a67;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.organizer {
+  color: #34495d;
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 12px;
+  color: #5f7080;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.type {
+  color: #8a2235;
+  font-weight: 700;
+}
+
+.empty {
+  margin: 12px 0 6px;
+  color: #4d6073;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.upcomingTitle {
+  margin: 14px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid #e3e9ef;
+  color: #0f2742;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  margin-top: 8px;
+  border: 1px solid #cfdbe5;
+  border-radius: 12px;
+  color: #123a67;
+  font-size: 14px;
+  font-weight: 750;
+}
+
+.more:hover {
+  border-color: #123a67;
+}
+
+@media (min-width: 420px) {
+  .tabs[data-tabs="4"] {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding: 34px 0 38px;
+  }
+
+  .head h2 {
+    font-size: 32px;
+  }
+
+  .tabs,
+  .tabs[data-tabs="4"] {
+    display: inline-grid;
+    grid-auto-flow: column;
+    grid-template-columns: none;
+    grid-auto-columns: minmax(118px, auto);
+  }
+
+  .list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 32px;
+  }
+
+  .row + .row {
+    border-top: 0;
+  }
+
+  .row {
+    border-bottom: 1px solid #e3e9ef;
+  }
+
+  .more {
+    display: inline-flex;
+    padding: 0 18px;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .row[data-live] .live i,
+  .tabDot {
+    animation: agendaPulse 2.4s ease-in-out infinite;
+  }
+}
+
+@keyframes agendaPulse {
+  50% { box-shadow: 0 0 0 6px rgba(183, 31, 55, 0); }
+}

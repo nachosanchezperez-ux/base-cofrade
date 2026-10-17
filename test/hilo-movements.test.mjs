@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs'
 import { HILO_MOVEMENTS } from '../lib/hilo-movements-data.js'
 import { buildHiloMovements, selectHiloMovements, filterHiloMovements, validHiloDay, hiloDayLabel } from '../lib/hilo-movements.js'
 const TODAY = { today: '2026-10-07' }
-const roots = HILO_MOVEMENTS.map((item) => ({ id: item.brotherhood.id, slug: item.brotherhood.slug, entity_type: 'brotherhood', status: 'published' }))
+const roots = HILO_MOVEMENTS.filter((item) => item.brotherhood).map((item) => ({ id: item.brotherhood.id, slug: item.brotherhood.slug, entity_type: 'brotherhood', status: 'published' }))
 const entities = [...roots, ...HILO_MOVEMENTS.flatMap((item) => item.relations.map((relation, i) => ({ id: relation.id, slug: `band-${i}`, entity_type: relation.type, status: 'published' })))]
 const build = (records = HILO_MOVEMENTS, rows = entities) => buildHiloMovements(records, rows, TODAY)
 const change = (patch) => [{ ...HILO_MOVEMENTS[0], ...patch }]
@@ -25,3 +25,35 @@ test('search is accent-insensitive, including related bands', () => { assert.equ
 test('the pilot preserves musical identities, positions and documented dates', () => { const [first,second] = HILO_MOVEMENTS; assert.match(first.title,/Desamparados/); assert.equal(first.relations[0].id,'a23934c9-93e9-4bf1-886e-d98ec170b74f'); assert.equal(second.relations.length,3); assert.equal(second.announcedOn,'2026-09-24') })
 test('public reader uses published visibility and no privileged credentials', () => { const source=readFileSync(new URL('../lib/supabase/hilo-movements.js',import.meta.url),'utf8'); assert.match(source,/eq\('status', 'published'\)/); assert.doesNotMatch(source,/service_role|createAdminClient|updated_at|created_at/) })
 test('notification system is not repurposed as editorial news', () => { const source=readFileSync(new URL('../components/HiloUpdates.js',import.meta.url),'utf8'); assert.match(source,/Lo último que hemos incorporado/); assert.doesNotMatch(source,/HiloMovementsSection/) })
+test('published composer agents resolve to canonical author fiches', () => {
+  const record = HILO_MOVEMENTS.find((item) => item.id === 'cigarreras-soberana-entrega-panaderos-2026')
+  const composer = record.relations.find((relation) => relation.type === 'author')
+  const rows = [
+    { id: record.brotherhood.id, slug: record.brotherhood.slug, entity_type: 'brotherhood', status: 'published' },
+    { id: composer.id, slug: 'miguel-angel-font-morgado', entity_type: 'agent', status: 'published' },
+  ]
+  const [item] = buildHiloMovements([record], rows, { today: '2026-10-12' })
+  assert.equal(item.relations[0].href, '/autores/miguel-angel-font-morgado')
+  assert.equal(buildHiloMovements([record], rows.map((row) => row.id === composer.id ? { ...row, status: 'draft' } : row), { today: '2026-10-12' })[0].relations.length, 0)
+})
+
+
+test('approved editorial exception has an honest unlinked identity and unknown announcement date', () => {
+  const record = HILO_MOVEMENTS.find((item) => item.id === 'moron-inmaculada-cartelista-jimenez-munoz-2026')
+  const [item] = buildHiloMovements([record], [], { today: '2026-10-14' })
+  assert.equal(item.brotherhood, null)
+  assert.equal(item.protagonist.kind, 'Asociación de Fieles')
+  assert.equal(item.protagonist.href, '')
+  assert.equal(item.announcedOn, null)
+  assert.equal(filterHiloMovements([item], { q: 'Morón', tema: 'patrimonio' }).length, 1)
+  assert.deepEqual(selectHiloMovements([item], { brotherhoodId: roots[0].id }), [])
+  for (const patch of [{ editorialException: false }, { status: 'draft' }, { editorialSubject: {} }]) {
+    assert.deepEqual(buildHiloMovements([{ ...record, ...patch }], [], { today: '2026-10-14' }), [])
+  }
+})
+
+test('editorial exceptions never replace missing or unpublished canonical brotherhoods', () => {
+  const record = { ...HILO_MOVEMENTS[0], editorialException: true, editorialSubject: { label: 'Fallback', kind: 'Asociación' } }
+  assert.deepEqual(buildHiloMovements([record], [], TODAY), [])
+  assert.deepEqual(buildHiloMovements([record], [{ ...roots[0], status: 'draft' }], TODAY), [])
+})

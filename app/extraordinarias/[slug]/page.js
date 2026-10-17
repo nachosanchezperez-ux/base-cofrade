@@ -1,3 +1,4 @@
+import { agendaEventPerformers, agendaEventSeoDescription, agendaEventSeoTitle, hasPublishedRoute } from '@/lib/agenda-event-seo'
 import Image from 'next/image'
 import Link from 'next/link'
 import { cache } from 'react'
@@ -12,7 +13,6 @@ import { getExtraordinaryDetail } from '@/lib/supabase/extraordinary-detail'
 import {
   absoluteUrl,
   breadcrumbJsonLd,
-  compactSeoTitle,
   pageTitle,
   organizationJsonLdRef,
   schemaEventStatus,
@@ -117,8 +117,8 @@ function shortBrotherhoodName(value = '') {
 function seoCoverage(item) {
   const coverage = ['fecha']
   if (item.schedule.length || item.departureTime || item.returnTime) coverage.push('horarios')
-  if (item.routeSummary) coverage.push('recorrido')
-  if (item.processionalMusic.length) coverage.push('bandas')
+  if (hasPublishedRoute([], item.routeSummary)) coverage.push('recorrido')
+  if (item.processionalMusic.length) coverage.push('música')
   if (item.poster) coverage.push('cartel')
   return coverage.join(', ')
 }
@@ -169,15 +169,27 @@ export async function generateMetadata({ params }) {
     }
   }
 
-  const title = compactSeoTitle(seoTitle(item), 58)
-  const description = seoDescription(
-    [
-      `${item.title}${item.municipality ? ` en ${item.municipality}` : ''}`,
-      formatSeoDate(item.date),
-      item.reason ? `con motivo de ${item.reason}` : '',
-      `Guía con ${seoCoverage(item)} y fuentes documentadas.`,
-    ].filter(Boolean).join('. ').replace(/\.\s*\./g, '.')
-  )
+  const year = Number(String(item.date || '').slice(0, 4)) || Number(item.year) || null
+  const title = agendaEventSeoTitle({
+    title: item.title,
+    year,
+    municipality: item.municipality,
+    brotherhoodName: item.brotherhoodName,
+    prefix: `${item.outingType || 'Salida extraordinaria'} de`,
+  })
+  const description = seoDescription(agendaEventSeoDescription({
+    title: item.title,
+    year,
+    kindLabel: item.outingType || 'Salida extraordinaria',
+    brotherhoodName: item.brotherhoodName,
+    municipality: item.municipality,
+    date: item.date,
+    time: item.departureTime,
+    origin: item.origin,
+    // El motivo va como frase propia: su redacción editorial no siempre encaja tras «con motivo de».
+    summary: item.reason ? `${item.reason.replace(/\.$/u, '')}.` : '',
+    coverage: seoCoverage(item).split(', ').filter((part) => part !== 'fecha'),
+  }))
   const canonical = `/extraordinarias/${item.slug}`
 
   return {
@@ -234,7 +246,7 @@ export default async function ExtraordinaryDetailPage({ params }) {
     description: pageDescription,
     inLanguage: 'es',
     isPartOf: { '@id': `${absoluteUrl('/')}#website` },
-    mainEntity: { '@id': `${canonicalUrl}#event` },
+    ...(item.date ? { mainEntity: { '@id': `${canonicalUrl}#event` } } : {}),
     ...(item.heroImagePath ? { primaryImageOfPage: { '@type': 'ImageObject', url: absoluteUrl(item.heroImagePath) } } : {}),
   }
   const eventJsonLd = {
@@ -257,6 +269,7 @@ export default async function ExtraordinaryDetailPage({ params }) {
       path: item.brotherhoodHref ? item.brotherhoodHref : '',
     }),
     } : {}),
+    ...(agendaEventPerformers(item.music).length ? { performer: agendaEventPerformers(item.music) } : {}),
     mainEntityOfPage: { '@id': `${canonicalUrl}#webpage` },
     location: {
       '@type': 'Place',
@@ -278,7 +291,8 @@ export default async function ExtraordinaryDetailPage({ params }) {
         { name: item.title, path: canonicalPath },
       ])} />
       <JsonLd data={pageJsonLd} />
-      <JsonLd data={eventJsonLd} />
+      {/* Sin fecha (actos históricos) no se publica un Event inválido. */}
+      {item.date ? <JsonLd data={eventJsonLd} /> : null}
 
       <section className={styles.hero}>
         <div className={`shell ${styles.heroGrid}`}>
@@ -295,10 +309,13 @@ export default async function ExtraordinaryDetailPage({ params }) {
             {item.reason ? <p className={styles.reason}>{item.reason}</p> : null}
 
             <div className={styles.keyFacts}>
-              <div className={styles.dateFact}>
-                <span>Fecha</span>
-                <strong>{dateLabel}</strong>
-              </div>
+              {/* Actos históricos sin fecha exacta: se muestra el año documentado. */}
+              {dateLabel || item.year ? (
+                <div className={styles.dateFact}>
+                  <span>{dateLabel ? 'Fecha' : 'Año'}</span>
+                  <strong>{dateLabel || item.year}</strong>
+                </div>
+              ) : null}
               {item.departureTime ? <div><span>Salida</span><strong>{item.departureTime}</strong></div> : null}
               {entry ? <div><span>Entrada</span><strong>{entry}</strong></div> : null}
               <div><span>Tipo</span><strong>{item.outingType}</strong></div>
@@ -320,7 +337,7 @@ export default async function ExtraordinaryDetailPage({ params }) {
               </>
             ) : (
               <div className={styles.datePoster}>
-                <span>{formatShortDate(item.date)}</span>
+                <span>{formatShortDate(item.date) || item.year || ''}</span>
                 <strong>{item.municipality || 'Sevilla'}</strong>
                 <small>Extraordinaria</small>
               </div>

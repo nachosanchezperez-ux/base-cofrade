@@ -1,0 +1,47 @@
+/* Igualás y ensayos en la portada: hereda las filas de HomeAgendaNow.module.css. */
+.section {
+  border-top: 1px solid #e3e9ef;
+  background: #fbfaf8;
+}
+
+/* Hoja de calendario en granate para distinguirla de la Agenda general. */
+.leaf.leaf {
+  border-top-color: #8a2235;
+  background: #fff;
+}
+
+.urgency {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #f8e9ec;
+  color: #8a2235;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+/* Dentro del bloque «Agenda cofrade»: un apartado, no un bloque propio. */
+.embedded {
+  scroll-margin-top: calc(var(--hc-app-header-height, 70px) + 14px);
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid #e3e9ef;
+}
+
+.embeddedHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.embeddedHead h3 {
+  margin: 0;
+  color: #0f2742;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -.02em;
+}

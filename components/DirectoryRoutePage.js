@@ -3,8 +3,10 @@ import BrotherhoodDirectoryCard from '@/components/BrotherhoodDirectoryCard'
 import DirectoryBreadcrumb from '@/components/DirectoryBreadcrumb'
 import JsonLd from '@/components/JsonLd'
 import { sortBrotherhoods } from '@/lib/brotherhood-directory'
-import { breadcrumbJsonLd, collectionPageJsonLd } from '@/lib/seo'
+import { absoluteUrl, breadcrumbJsonLd, collectionPageJsonLd, municipalityPlaceJsonLd } from '@/lib/seo'
 import styles from './HermandadesDirectory.module.css'
+
+const GROUP_SORT_KEY = { penitencia: 'semana-santa', gloria: 'gloria' }
 
 export default function DirectoryRoutePage({
   eyebrow,
@@ -17,11 +19,19 @@ export default function DirectoryRoutePage({
   itemSingular = 'hermandad',
   itemPlural = 'hermandades',
   relatedAgendaHref = '',
+  relatedAgendaLabel = '',
+  lead = '',
+  // Grupos opcionales con encabezado H2 ({ key, heading, items }).
+  groups = [],
+  // Municipio de la página ({ path, name }): mismo nodo Place que su guía local.
+  place = null,
 }) {
   const items = sortBrotherhoods(hermandades)
   const linkedBreadcrumbs = breadcrumbs
     .filter((item) => Boolean(item.href))
     .map((item) => ({ name: item.label, path: item.href }))
+  const placeJsonLd = place?.path && place?.name ? municipalityPlaceJsonLd(place) : null
+  const placeRef = placeJsonLd ? { '@id': `${absoluteUrl(place.path)}#place` } : null
   const visualBreadcrumbs = [
     { label: 'Hermandades', href: '/hermandades' },
     ...breadcrumbs,
@@ -35,6 +45,7 @@ export default function DirectoryRoutePage({
         ...linkedBreadcrumbs,
         { name: title, path },
       ])} />
+      {placeJsonLd ? <JsonLd data={placeJsonLd} /> : null}
       <JsonLd data={collectionPageJsonLd({
         path,
         name: title,
@@ -43,6 +54,8 @@ export default function DirectoryRoutePage({
           name: hermandad.nombrePopular,
           path: `/hermandades/${hermandad.slug}`,
         })),
+        about: placeRef,
+        spatialCoverage: placeRef,
       })} />
 
       <div className="shell">
@@ -50,10 +63,10 @@ export default function DirectoryRoutePage({
 
         <span className="eyebrow">{eyebrow}</span>
         <h1 className="page-title">{title}</h1>
-        <p className="page-lead">{description}</p>
+        <p className="page-lead">{lead || description}</p>
         {relatedAgendaHref ? (
           <Link href={relatedAgendaHref} style={{ display: 'inline-flex', marginTop: 14, color: '#a71931', fontSize: 12, fontWeight: 850 }}>
-            Ver agenda cofrade de {contextLabel || breadcrumbs.at(-1)?.label || 'esta localidad'} →
+            {relatedAgendaLabel || `Ver agenda cofrade de ${contextLabel || breadcrumbs.at(-1)?.label || 'esta localidad'} →`}
           </Link>
         ) : null}
 
@@ -64,7 +77,27 @@ export default function DirectoryRoutePage({
           </div>
         </div>
 
-        {items.length ? (
+        {items.length && groups.length ? (
+          <div className={styles.kindGroups}>
+            {groups.map((group) => (
+              <section className={styles.kindGroup} key={group.key} aria-labelledby={`grupo-${group.key}`}>
+                <h2 id={`grupo-${group.key}`} className={styles.kindHeading}>
+                  {group.heading}{contextLabel ? ` de ${contextLabel}` : ''}
+                  <span>{group.items.length}</span>
+                </h2>
+                <div className={styles.list}>
+                  {sortBrotherhoods(group.items, GROUP_SORT_KEY[group.key] || '').map((hermandad) => (
+                    <BrotherhoodDirectoryCard
+                      key={hermandad.id}
+                      hermandad={hermandad}
+                      contextLabel={contextLabel}
+                    />
+                  ))}
+                </div>
+              </section>
+            ))}
+          </div>
+        ) : items.length ? (
           <div className={styles.list}>
             {items.map((hermandad) => (
               <BrotherhoodDirectoryCard

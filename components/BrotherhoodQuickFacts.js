@@ -2,6 +2,8 @@ import 'server-only'
 
 import Link from 'next/link'
 import { cache } from 'react'
+import { unstable_cache } from 'next/cache'
+import { BROTHERHOOD_DETAIL_DATA_CACHE } from '@/lib/brotherhood-detail-cache'
 import { createPublicClient as createClient } from '@/lib/supabase/public'
 import { publicText } from '@/lib/supabase/public-entity-page'
 import styles from './BrotherhoodQuickFacts.module.css'
@@ -78,18 +80,17 @@ function annualActivities(brotherhood, recurringSeries = []) {
   })
 }
 
-const loadRelationalFacts = cache(async function loadRelationalFacts(brotherhood) {
-  if (!brotherhood?.id) return { head: null, dressers: [], membership: null, recurringSeries: [] }
-
+// Las consultas se guardan en la caché de datos (como el resto de la ficha) con
+// la Hermandad y sus Imágenes como clave; el filtro por año vigente se aplica
+// fuera, para que el cambio de año no dependa de la caché.
+const loadRelationalRows = unstable_cache(async function loadRelationalRows(brotherhoodId, imageIds) {
   const supabase = createClient()
-  const imageIds = (brotherhood.imagenes || []).map((item) => item.id).filter(Boolean)
-  const currentYear = new Date().getUTCFullYear()
 
   const [headResult, dresserResult] = await Promise.all([
     supabase
       .from('entity_relations')
       .select('id, source_entity_id, relation_type, date_from, date_from_text, date_to, date_to_text')
-      .eq('target_entity_id', brotherhood.id)
+      .eq('target_entity_id', brotherhoodId)
       .in('relation_type', CURRENT_HEAD_RELATIONS)
       .eq('status', 'published'),
     imageIds.length
@@ -105,8 +106,8 @@ const loadRelationalFacts = cache(async function loadRelationalFacts(brotherhood
   if (headResult.error) throw new Error(`No se pudo consultar el gobierno actual: ${headResult.error.message}`)
   if (dresserResult.error) throw new Error(`No se pudieron consultar los vestidores: ${dresserResult.error.message}`)
 
-  const headRelations = (headResult.data || []).filter((item) => isCurrentRelation(item, currentYear))
-  const dresserRelations = (dresserResult.data || []).filter((item) => isCurrentRelation(item, currentYear))
+  const headRelations = headResult.data || []
+  const dresserRelations = dresserResult.data || []
   const agentIds = [...new Set([
     ...headRelations.map((item) => item.source_entity_id),
     ...dresserRelations.map((item) => item.source_entity_id),
@@ -123,7 +124,19 @@ const loadRelationalFacts = cache(async function loadRelationalFacts(brotherhood
 
   if (agentsResult.error) throw new Error(`No se pudieron resolver las personas vinculadas: ${agentsResult.error.message}`)
 
-  const agentById = new Map((agentsResult.data || []).map((agent) => [agent.id, agent]))
+  return { headRelations, dresserRelations, agents: agentsResult.data || [] }
+}, ['hilo-cofrade-brotherhood-quick-facts-v1'], BROTHERHOOD_DETAIL_DATA_CACHE)
+
+const loadRelationalFacts = cache(async function loadRelationalFacts(brotherhood) {
+  if (!brotherhood?.id) return { head: null, dressers: [], membership: null, recurringSeries: [] }
+
+  const imageIds = (brotherhood.imagenes || []).map((item) => item.id).filter(Boolean)
+  const currentYear = new Date().getUTCFullYear()
+  const rows = await loadRelationalRows(brotherhood.id, imageIds)
+  const headRelations = rows.headRelations.filter((item) => isCurrentRelation(item, currentYear))
+  const dresserRelations = rows.dresserRelations.filter((item) => isCurrentRelation(item, currentYear))
+
+  const agentById = new Map(rows.agents.map((agent) => [agent.id, agent]))
   const imageById = new Map((brotherhood.imagenes || []).map((image) => [image.id, image]))
   const headRelation = [...headRelations]
     .sort((first, second) => (latestYear(second.date_from_text || second.date_from) || 0) - (latestYear(first.date_from_text || first.date_from) || 0))

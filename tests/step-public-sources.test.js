@@ -5,6 +5,7 @@ import { readFileSync } from 'node:fs'
 import vm from 'node:vm'
 import { meetsPublicEditorialMinimum, publicEditorialRobots } from '../lib/supabase/public-entity-page.js'
 import { loadPublicRowsInBatches, loadPublicRowsInPages } from '../lib/supabase/public-query-batches.js'
+import { contextualEntitySeoTitle } from '../lib/seo.js'
 
 const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8')
 function load(context, path) {
@@ -40,7 +41,7 @@ function fixture(kind, options = {}) {
   } }
   const context = vm.createContext({ createPublicClient: () => client, console,
     isBrotherhoodEditorialHeritageType, meetsPublicEditorialMinimum, publicEditorialRobots, loadPublicRowsInBatches, loadPublicRowsInPages,
-    process: { env: { VERCEL_ENV: 'preview' } }, seoDescription: (v) => v, pageTitle: (v) => v })
+    process: { env: { VERCEL_ENV: 'preview' } }, seoDescription: (v) => v, pageTitle: (v) => v, contextualEntitySeoTitle })
   load(context, 'lib/supabase/step-heritage.js')
   load(context, 'lib/supabase/public-indexability.js')
   const page = read('app/pasos/[slug]/page.js')

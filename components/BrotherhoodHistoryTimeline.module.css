@@ -111,3 +111,10 @@
     min-height: 70px;
   }
 }
+
+.introduction {
+  max-width: 75ch;
+  line-height: 1.75;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}

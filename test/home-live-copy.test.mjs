@@ -8,14 +8,13 @@ function read(path) {
 
 test('el modo directo no muestra textos explicativos redundantes', () => {
   const home = read('components/HomePageV2.js')
+  const agenda = read('components/HomeAgendaNow.js')
   const complement = read('lib/home-temporal-complement.js')
-  const temporal = read('components/HomeTemporalFocus.js')
 
   assert.doesNotMatch(home, /La portada agrupa las salidas que coinciden en tiempo real/)
   assert.doesNotMatch(complement, /Además de las salidas que ya están en la calle/)
-  assert.match(temporal, /temporal\.mode === 'complement' \? null/)
+  assert.doesNotMatch(agenda, /La portada avanza automáticamente/)
 })
-
 
 test('la destacada del fin de semana no añade una entradilla editorial redundante', () => {
   const home = read('components/HomePageV2.js')
@@ -35,5 +34,5 @@ test('la Home no renderiza ni carga la retransmisión destacada del Rosario', ()
   assert.doesNotMatch(page, /featuredVideo/)
   assert.doesNotMatch(snapshot, /getHomeFeaturedVideo/)
   assert.doesNotMatch(snapshot, /featuredVideo/)
-  assert.match(snapshot, /hilo-cofrade-home-public-snapshot-v24/)
+  assert.match(snapshot, /hilo-cofrade-home-public-snapshot-v26-igualas/)
 })

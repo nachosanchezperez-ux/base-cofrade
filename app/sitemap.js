@@ -1,4 +1,5 @@
 import { allowAgendaSitemapUrl } from '@/lib/agenda-event-url-policy';
+import { hasCrewEventPage } from '@/lib/crew-event-url-policy';
 import {
   brotherhoodDirectoryLocalities,
   brotherhoodDirectoryRoutes,
@@ -29,6 +30,8 @@ export const revalidate = 3600;
 
 const staticEntries = [
   { url: absoluteUrl('/el-hilo-se-mueve'), changeFrequency: 'daily', priority: 0.85 },
+  { url: absoluteUrl('/juegos/el-hilo-escondido'), changeFrequency: 'daily', priority: 0.7 },
+  { url: absoluteUrl('/via-crucis-sevilla'), changeFrequency: 'yearly', priority: 0.85 },
   {
     url: absoluteUrl('/'),
     changeFrequency: 'daily',
@@ -297,7 +300,8 @@ function agendaMunicipalityEntries(groups = []) {
 
 function crewEventEntries(events) {
   return events
-    .filter((event) => Boolean(event.detailHref))
+    // New convocatorias live as cards in the calendar (#anchor), not as pages.
+    .filter((event) => hasCrewEventPage(event.detailHref))
     .map((event) => ({
       url: absoluteUrl(event.detailHref),
       ...(validLastModified(event.updatedAt) ? { lastModified: validLastModified(event.updatedAt) } : {}),
@@ -404,13 +408,10 @@ async function buildPublicSitemapSegmentEntries(segment) {
 
     entries.push(...extraordinaryEntries(extraordinaryOutings), ...gloryEntries(gloryOutings),
       ...crewEventEntries(crewEvents), ...rosaryEntries(rosaryOutings),
-      ...agendaMunicipalityEntries([
-        extraordinaryOutings,
-        gloryOutings,
-        crewEvents,
-        rosaryOutings,
-        indexableBrotherhoods,
-      ]));
+      // Only localities anchored by an indexable Hermandad: a hub that exists
+      // just because of dated events (past or upcoming) is not evergreen and
+      // answers 404 once those events are gone.
+      ...agendaMunicipalityEntries([indexableBrotherhoods]));
   } else if (segment === 'crucetas') {
     const musicalRepertoires = await getMusicalRepertoires(strict);
     entries.push(...musicalRepertoireEntries(musicalRepertoires));
@@ -431,16 +432,27 @@ async function buildPublicSitemapSegmentEntries(segment) {
   return refreshSegmentHubLastModified(uniqueEntries, segment);
 }
 
+// 15 minutos, como /sitemaps/[family] (revalidate 900): con una hora, una ficha
+// recién publicada tardaba hasta 60 minutos en aparecer en su sitemap de familia
+// (Hermandad del Prado, 14/10/2026) aunque la ruta se regenerase cada 15.
 const getCachedPublicSitemapSegmentEntries = unstable_cache(
   buildPublicSitemapSegmentEntries,
   ['hilo-cofrade-public-sitemap-family-v3'],
-  { revalidate: 3600, tags: ['seo-sitemap'] }
+  { revalidate: 900, tags: ['seo-sitemap'] }
 );
 
 // Coalesce simultaneous requests in the same process; failures are never kept.
 const pendingSegments = new Map();
 export async function getPublicSitemapSegmentEntries(segment) {
   if (!PUBLIC_SITEMAP_SEGMENTS.includes(segment)) return null;
+  // Static hubs have no database cost and must reflect new releases immediately.
+  // Do not reuse the persistent v3 cache for these URLs: a deployment can keep
+  // serving an older /sitemaps/general.xml after a new hub has gone live.
+  if (segment === 'general') {
+    return [...new Map(sitemapEntriesForSegment(staticEntries, segment)
+      .filter((entry) => allowAgendaSitemapUrl(entry.url))
+      .map((entry) => [entry.url, entry])).values()];
+  }
   if (!pendingSegments.has(segment)) {
     const pending = getCachedPublicSitemapSegmentEntries(segment)
       .finally(() => pendingSegments.delete(segment));

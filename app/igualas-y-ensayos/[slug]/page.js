@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { notFound } from 'next/navigation'
+import { notFound, permanentRedirect } from 'next/navigation'
 import { cache } from 'react'
 import JsonLd from '@/components/JsonLd'
 import SiteBreadcrumb from '@/components/SiteBreadcrumb'
@@ -9,7 +9,7 @@ import { crewEventStatusLabel } from '@/lib/crew-events'
 import {
   absoluteUrl,
   breadcrumbJsonLd,
-  compactSeoTitle,
+  contextualEntitySeoTitle,
   pageTitle,
   organizationJsonLdRef,
   schemaEventStatus,
@@ -17,6 +17,7 @@ import {
   socialMetadata,
 } from '@/lib/seo'
 import { getCrewEventDetail } from '@/lib/supabase/crew-events'
+import { hasCrewEventPage } from '@/lib/crew-event-url-policy'
 import styles from './crew-event-detail.module.css'
 
 export const dynamic = 'force-static'
@@ -39,8 +40,13 @@ function madridDateTime(date, time) {
   return time ? `${date}T${time}:00${madridUtcOffset(date)}` : date
 }
 
+// Date before municipality: an igualá is searched by «cuándo». The helper drops
+// the municipality, then keeps the bare name, instead of cutting a date mid-way.
 function eventSeoTitle(event) {
-  return [event.title, event.dateParts.label, event.municipality].filter(Boolean).join(' · ')
+  return contextualEntitySeoTitle(event.title, {
+    context: event.dateParts?.label,
+    locality: event.municipality,
+  })
 }
 
 function cleanSeoSentence(value) {
@@ -89,7 +95,8 @@ export async function generateMetadata({ params }) {
   const { slug } = await params
   const event = await getCrewEvent(slug)
   if (!event) return { title: 'Convocatoria no encontrada', robots: { index: false, follow: false } }
-  const title = compactSeoTitle(eventSeoTitle(event))
+  if (!hasCrewEventPage(event.detailHref)) permanentRedirect(event.detailHref)
+  const title = eventSeoTitle(event)
   const description = eventSeoDescription(event)
   const canonical = `/igualas-y-ensayos/${event.slug}`
 
@@ -104,6 +111,9 @@ export default async function CrewEventDetailPage({ params }) {
   const { slug } = await params
   const event = await getCrewEvent(slug)
   if (!event) notFound()
+  // Only the pages frozen on 13/10/2026 keep a URL; newer convocatorias live
+  // in the shared calendar card.
+  if (!hasCrewEventPage(event.detailHref)) permanentRedirect(event.detailHref)
 
   const canonicalUrl = absoluteUrl(event.detailHref)
   const description = eventSeoDescription(event)

@@ -23,12 +23,17 @@ export default function AgendaTemporalLanding({ landing }) {
         { name: 'Agenda Cofrade', path: '/agenda-cofrade' },
         { name: landing.heading, path: landing.path },
       ])} />
-      <JsonLd data={collectionPageJsonLd({
-        path: landing.path,
-        name: landing.title,
-        description: landing.description,
-        items: structuredItems,
-      })} />
+      <JsonLd data={{
+        ...collectionPageJsonLd({
+          path: landing.path,
+          name: landing.title,
+          description: landing.summaryWithPlaces || landing.description,
+          items: structuredItems,
+        }),
+        // La frase completa, sin el recorte a 160 caracteres de las meta descriptions.
+        ...(landing.summaryWithPlaces ? { description: landing.summaryWithPlaces } : {}),
+        ...(landing.temporalCoverage ? { temporalCoverage: landing.temporalCoverage } : {}),
+      }} />
 
       <header className={styles.hero}>
         <div className={`shell ${styles.heroGrid}`}>
@@ -44,7 +49,8 @@ export default function AgendaTemporalLanding({ landing }) {
             />
             <span className={styles.eyebrow}>{landing.eyebrow}</span>
             <h1>{landing.heading}</h1>
-            <p>{landing.description}</p>
+            {/* Con actos: frase de hechos del periodo; sin actos: texto general. */}
+            <p>{landing.summary || landing.description}</p>
             {landing.dateCaption ? <time>{landing.dateCaption}</time> : null}
             <nav className={styles.heroActions} aria-label="Acciones de esta agenda">
               <a href="#agenda-del-periodo">Ver todas las citas <span aria-hidden="true">↓</span></a>

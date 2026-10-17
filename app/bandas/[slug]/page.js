@@ -13,6 +13,7 @@ import BandDiscographySection from '@/components/bands/BandDiscographySection'
 import BandFeaturePhoto from '@/components/BandFeaturePhoto'
 import MusicalRepertoiresSection from '@/components/MusicalRepertoiresSection'
 import ContextAgendaSection from '@/components/ContextAgendaSection'
+import HiloMovementsSection from '@/components/HiloMovementsSection'
 import HistoricalAccompanimentsRail from './HistoricalAccompanimentsRail'
 import { getBandBySlug as getBandBySlugUncached, youtubeEmbedUrl } from '@/lib/supabase/bands'
 import { getBandDiscography } from '@/lib/supabase/bandDiscography'
@@ -414,6 +415,7 @@ export default async function BandDetailPage({ params }) {
                 <h2>{band.popularName}, de un vistazo</h2>
                 <EntityLastUpdated value={band.updatedAt} />
               </div>
+              {publicText(band.description) ? <p>{publicText(band.description)}</p> : null}
               <div className={styles.roleGrid}>
                 {publicText(band.type) ? <article>
                   <span>Formación</span>
@@ -463,6 +465,8 @@ export default async function BandDetailPage({ params }) {
           </div>
         </div>
       </section>
+
+      <HiloMovementsSection entityId={band.id} entityName={band.popularName} />
 
       <ContextAgendaSection
         id="agenda"

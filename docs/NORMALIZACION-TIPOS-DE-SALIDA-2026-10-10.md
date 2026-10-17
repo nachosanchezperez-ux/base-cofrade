@@ -22,17 +22,56 @@ Cada cambio de datos hecho en producción quedó guardado antes/después en
 | Estación de Penitencia | — |
 | Procesión de Gloria | Resurrección |
 | Procesión sacramental | Corpus Christi |
-| Procesión | gloriosa, de alabanza, histórica, solemne, de penitencia |
+| Procesión | gloriosa, de alabanza, histórica, solemne, de penitencia, magna, coronación canónica |
 | Vía Crucis | del Consejo de Hermandades y Cofradías |
 | Vía Lucis | — |
 | Rosario Matutino · Rosario de la Aurora · Rosario Vespertino | — |
 | Rosario Público · Rosario Extraordinario | — |
 | Traslado | de regreso, en Vía Crucis, colectivo, misional |
 | Romería | — |
+| Otra salida pública | — (actos que no son procesión ni rosario) |
 
-Sin cerrar a la fecha: rosarios compuestos (Aurora y subida, Rosario y traslado…), Procesión
-patronal, Corona Dolorosa, Cruz de Mayo, Santo Entierro Magno, Magna Procesión de Tercia,
-Coronación Canónica y "Extraordinaria".
+## Cierre de la lista · 13/10/2026
+
+Las 16 filas que quedaban fuera de la lista se resolvieron con estas decisiones. Cada
+cambio quedó en `audit_log` (`actor_label` = «Claude · normalización de tipos de salida
+(13/10/2026)») con el valor anterior y el nuevo.
+
+| Salidas | Antes | Después |
+|---|---|---|
+| Corona Seráfica (Sevilla), Santo Escapulario (Carmona), Lignum Crucis (Valencina), San Jerónimo (Sevilla) | Procesión | Procesión de Gloria |
+| Procesión patronal del Cristo del Crucero (Almadén de la Plata) | Procesión patronal | Procesión de Gloria |
+| Corona Dolorosa (Arahal) | Corona Dolorosa | Procesión de Gloria |
+| Cruz de Mayo (Tocina) | Cruz de Mayo | Procesión de Gloria |
+| Bando anunciador de la Divina Pastora de Santa Marina | Procesión | Otra salida pública |
+| Participación en el Congreso Mariano de Zaragoza (Sastres) | Extraordinaria | Otra salida pública |
+| Rosario de la Aurora y subida (Lebrija) | Rosario de la Aurora y subida | Rosario de la Aurora |
+| Traslado en andas del Rosario de Fátima (Utrera) | Rosario y traslado en andas | Traslado |
+| 20.º aniversario de la Merced (Marchena) | Rosario y procesión gloriosa extraordinaria | Procesión · gloriosa |
+| Nuestra Señora de los Dolores (Cerro del Águila) | Rosario de la Aurora extraordinario y traslado extraordinario | Rosario de la Aurora |
+| Santo Entierro Magno 2004 (San Gonzalo) · Magna Procesión de Tercia (Marchena) | Santo Entierro Magno · Magna Procesión de Tercia | Procesión · magna |
+| Coronación Canónica de la Salud (San Gonzalo) | Coronación Canónica | Procesión · coronación canónica |
+
+Criterios: un acto compuesto se guarda como una sola fila con su tipo principal (el resto
+queda en el título). Las tres glorias sin Hermandad vinculada (Almadén de la Plata, Arahal
+y Valencina) muestran el organizador cuando está documentado; si falta, conservan
+«Hermandad por confirmar». Verificación de 15/10/2026: Almadén tiene organizador;
+Arahal y Valencina aún no tienen Hermandad vinculada ni `organizer_name`.
+Las 16 reclasificaciones siguen aplicadas: no repetir sus escrituras.
+
+Para revertirlo, con el trigger desactivado, basta leer `changed_fields` de esas filas de
+`audit_log`:
+
+```sql
+alter table public.outings disable trigger outings_normalize_outing_type;
+update public.outings o
+   set outing_type    = a.changed_fields->'outing_type'->>'antes',
+       outing_subtype = a.changed_fields->'outing_subtype'->>'antes'
+  from public.audit_log a
+ where a.object_id = o.id
+   and a.actor_label like 'Claude · normalización de tipos de salida (13/10/2026)%';
+alter table public.outings enable trigger outings_normalize_outing_type;
+```
 
 ## Vía Crucis del Consejo
 
@@ -58,10 +97,12 @@ Consejo de Osuna, habría que ponerle el subtipo y el organizador; hasta entonce
 
 `getGeneralPublicOutings` lee los tipos `Romería` y `Procesión`. Al renombrar "Procesión
 extraordinaria" a "Procesión", 41 salidas extraordinarias entraron también por esa lectura
-y quedaron duplicadas en la Agenda y en la Home. Esta rama añade `.eq('character',
-'ordinary')` y, mientras no se desplegó, esas 41 filas se devolvieron a su tipo original.
-El mapeo previsto se conserva en `private.outing_type_reapply_20261010` para reaplicarlo
-después del despliegue.
+y quedaron duplicadas en la Agenda y en la Home. La PR #1135 añadió `.eq('character',
+'ordinary')`; hasta que se desplegó, esas 41 filas se devolvieron a su tipo original.
+Estado a 12/10/2026: el filtro está desplegado, el trigger y el cron de 15 minutos están
+activos en producción y las 41 filas ya tienen el tipo y subtipo previstos (se
+reaplicaron el 11/10/2026 a las 20:47, hora de Madrid). El mapeo sigue guardado en
+`private.outing_type_reapply_20261010`.
 
 ## Trigger de normalización
 

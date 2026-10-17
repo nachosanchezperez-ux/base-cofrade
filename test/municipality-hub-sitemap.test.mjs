@@ -27,3 +27,20 @@ test('la fuente territorial usa el mismo contrato indexable que Hermandades', ()
   assert.match(locality, /getIndexableBrotherhoodDirectory/)
   assert.match(indexable, /filterIndexableBrotherhoods/)
 })
+
+test('el sitemap solo lista hubs anclados por una Hermandad indexable', () => {
+  const sitemap = read('app/sitemap.js')
+  assert.match(sitemap, /\.\.\.agendaMunicipalityEntries\(\[indexableBrotherhoods\]\)/)
+  assert.doesNotMatch(sitemap, /agendaMunicipalityEntries\(\[\s*extraordinaryOutings/)
+})
+
+test('un hub sostenido solo por actos fechados responde sin indexarse', () => {
+  const hub = read('lib/municipality-agenda.js')
+  assert.match(hub, /const hasSevilleAnchor = Boolean\(agenda\.length \|\| crew\.length \|\| localBrotherhoods\.length\)/)
+  assert.match(hub, /exists: hasSevilleAnchor,/)
+  assert.match(hub, /evergreen: localBrotherhoods\.length > 0,/)
+
+  const page = read('app/agenda-cofrade/localidad/[localidad]/page.js')
+  assert.match(page, /\.\.\.\(hub\.evergreen \? \{\} : \{ robots: \{ index: false, follow: true \} \}\)/)
+  assert.match(page, /if \(!hub\.exists\) notFound\(\)/)
+})

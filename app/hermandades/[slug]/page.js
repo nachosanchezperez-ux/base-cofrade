@@ -16,6 +16,7 @@ import BrotherhoodOverviewV2 from '@/components/BrotherhoodOverviewV2';
 import BrotherhoodViaCrucisSection from '@/components/BrotherhoodViaCrucisSection';
 import BrotherhoodOutingsSection from '@/components/BrotherhoodOutingsSection';
 import BrotherhoodProgramHero from '@/components/BrotherhoodProgramHero';
+import FollowBrotherhoodButton from '@/components/FollowBrotherhoodButton';
 import BrotherhoodSimpecadosSection from '@/components/BrotherhoodSimpecadosSection';
 import {
   BrotherhoodConceptualTitulars,
@@ -51,6 +52,9 @@ import {
 import {
   absoluteUrl,
   breadcrumbJsonLd,
+  brotherhoodFactSentence,
+  brotherhoodFoundingYear,
+  brotherhoodSeatJsonLd,
   brotherhoodSeoDescription,
   brotherhoodSeoTitle,
   brotherhoodPublicTypeLabel,
@@ -308,6 +312,8 @@ export default async function HermandadDetailPage({ params, reading: readingOver
   );
   const description = brotherhoodSeoDescription(h);
   const organizationJsonLdId = `${absoluteUrl(canonicalPath)}#organization`;
+  // Sede con su dirección publicada: ayuda a responder «dónde está» en buscadores e IA.
+  const seatJsonLd = brotherhoodSeatJsonLd(h.sedeDetalle, { locality: h.localidad, region: h.provincia || 'Sevilla' });
   const organizationJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
@@ -315,6 +321,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
     url: absoluteUrl(canonicalPath),
     name: h.nombreOficial || h.nombrePopular,
     alternateName: h.nombrePopular,
+    description: brotherhoodFactSentence(h),
     ...(h.enlacesOficiales?.length ? {
       sameAs: h.enlacesOficiales.map((link) => link.url),
     } : {}),
@@ -324,6 +331,8 @@ export default async function HermandadDetailPage({ params, reading: readingOver
     ...(heroMedia?.path ? {
       image: absoluteUrl(heroMedia.path),
     } : {}),
+    ...(brotherhoodFoundingYear(h.fundacion) ? { foundingDate: brotherhoodFoundingYear(h.fundacion) } : {}),
+    ...(seatJsonLd ? { location: seatJsonLd } : {}),
     ...(h.localidad ? {
       address: {
         '@type': 'PostalAddress',
@@ -540,7 +549,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
 <MusicalRepertoiresSection items={musicalRepertoires} context="brotherhood" headingLevel={reading ? 3 : 2} />
   </>);
   const historySection = (<>
-<BrotherhoodHistoryTimeline items={h.cronologia || []} semanticPreview={reading} />
+<BrotherhoodHistoryTimeline items={h.cronologia || []} introduction={publicText(h.historia)} semanticPreview={reading} />
   </>);
   const viaCrucisSection = (<>
 <BrotherhoodViaCrucisSection items={h.viaCrucisCofradias} />
@@ -701,6 +710,8 @@ export default async function HermandadDetailPage({ params, reading: readingOver
       <JsonLd data={breadcrumbJsonLd([
         { name: 'Inicio', path: '/' },
         { name: 'Hermandades', path: '/hermandades' },
+        // Mismo nivel que la miga visible: la guía cofrade de la localidad.
+        ...(publicText(h.localidad) && municipalityHubHref ? [{ name: publicText(h.localidad), path: municipalityHubHref }] : []),
         { name: h.nombrePopular, path: canonicalPath },
       ])} />
       <JsonLd data={organizationJsonLd} />
@@ -720,6 +731,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
           { label: h.nombrePopular },
         ]}
         facts={heroFacts}
+        actions={<FollowBrotherhoodButton slug={slug} name={h.nombrePopular} municipality={publicText(h.localidad)} />}
         media={{
           photoSrc: heroMedia?.path || '',
           photoAlt: heroMedia?.alt || `Fotografía de ${h.nombrePopular}`,
@@ -754,7 +766,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
       <EntitySectionNav items={[
         hasPracticalOverview && { href: '#resumen', label: 'Resumen' },
         h.imagenes?.length > 0 && { href: '#titulares', label: 'Titulares' },
-        h.cronologia?.length > 0 && { href: '#historia', label: 'Historia' },
+        (publicText(h.historia) || h.cronologia?.length > 0) && { href: '#historia', label: 'Historia' },
         (musicalHeritage.length > 0 || fallbackMusicalHeritage.length > 0) && { href: '#musica', label: 'Música' },
         h.patrimonio?.length > 0 && { href: '#patrimonio', label: 'Patrimonio' },
         upcomingAgendaItems.length > 0
@@ -769,7 +781,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
         heroFactLabels={heroFacts.map((fact) => fact.label)}
       />
 
-      <BrotherhoodAgendaSection items={upcomingAgendaItems} />
+      <BrotherhoodAgendaSection items={upcomingAgendaItems} brotherhoodSlug={h.slug} brotherhoodName={h.nombrePopular || h.nombreOficial} />
 
 
 

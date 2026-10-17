@@ -37,6 +37,8 @@ export default async function HomePage() {
     editorialHighlights,
     discoveryThreads,
     exploreStats,
+    news,
+    crewCalls,
   } = await getHomeSnapshot()
 
   return (
@@ -50,6 +52,8 @@ export default async function HomePage() {
       editorialHighlights={editorialHighlights}
       discoveryThreads={discoveryThreads}
       exploreStats={exploreStats}
+      news={news}
+      crewCalls={crewCalls}
     />
   )
 }

@@ -4,6 +4,7 @@ import HeritageDirectoryFacets from '@/components/HeritageDirectoryFacets'
 import JsonLd from '@/components/JsonLd'
 import RelationalEntityDirectory from '@/components/RelationalEntityDirectory'
 import { breadcrumbJsonLd, collectionPageJsonLd } from '@/lib/seo'
+import { compactHeritageDirectoryItems } from '@/lib/directory-client-items'
 
 export default function HeritageDirectoryRoutePage({
   allItems,
@@ -47,7 +48,7 @@ export default function HeritageDirectoryRoutePage({
         ) : null}
         <HeritageDirectoryFacets items={allItems} section={section} title={directoryLabel} />
         <RelationalEntityDirectory
-          items={items}
+          items={compactHeritageDirectoryItems(items, kind)}
           kind={kind}
           initialMunicipalitySlug={initialMunicipalitySlug}
         />

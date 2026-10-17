@@ -26,7 +26,7 @@ test('un rosario extraordinario aparece una sola vez y conserva su carácter', (
 
 test('la Agenda pública muestra solo actos próximos y elimina el acceso histórico', () => {
   const directory = read('components/AgendaCofradeDirectoryV4.js')
-  const fromUrl = read('components/AgendaCofradeDirectoryFromUrl.js')
+  const fromUrl = read('lib/agenda-cofrade-url-state.js')
   const page = read('app/agenda-cofrade/page.js')
   const seoCalendar = read('lib/seo-calendar.js')
 
@@ -41,7 +41,7 @@ test('la Agenda pública muestra solo actos próximos y elimina el acceso histó
   assert.match(directory, /Procesiones/)
   assert.match(directory, /Traslados/)
   assert.match(directory, /Romerías/)
-  assert.match(directory, /Besamanos y besapiés/)
+  assert.match(directory, /Cultos y besamanos/)
   assert.match(directory, /Sevilla capital/)
   assert.match(directory, /Municipios/)
   assert.match(directory, /Ver Hermandad/)
@@ -102,4 +102,24 @@ test('la Agenda oculta el año actual y solo lo muestra al cambiar de año', () 
 
   assert.match(directory, /const currentYear = String\(today \|\| ''\)\.slice\(0, 4\)/)
   assert.match(directory, /displayDateInfo\.year && String\(displayDateInfo\.year\) !== currentYear/)
+})
+
+// 15/10/2026: el listado viajaba dos veces en el HTML (reserva de Suspense + versión
+// que leía la URL en el navegador). La página lee los filtros en el servidor.
+test('la Agenda pinta el listado una sola vez y lee los filtros en el servidor', () => {
+  const page = read('app/agenda-cofrade/page.js')
+  assert.doesNotMatch(page, /<Suspense|from 'react'/)
+  assert.doesNotMatch(page, /AgendaCofradeDirectoryFromUrl/)
+  assert.equal(page.match(/<AgendaCofradeDirectoryV4\b/g).length, 1)
+  assert.match(page, /agendaInitialStateFromParams\(\(name\) => params\[name\]\)/)
+  assert.match(page, /await connection\(\)/)
+})
+
+test('los escudos y fotos de la Agenda usan tamaño fijo (srcset 1x/2x)', () => {
+  const directory = read('components/AgendaCofradeDirectoryV4.js')
+  const visual = directory.slice(directory.indexOf('function EventVisual'), directory.indexOf('function trackAgendaEventOpen'))
+  assert.doesNotMatch(visual, /\bfill\b\s*\n/)
+  assert.match(visual, /width=\{EVENT_VISUAL_SIZE\}/)
+  assert.match(directory, /const EVENT_VISUAL_SIZE = 128/)
+  assert.match(directory, /position: 'absolute',\n  height: '100%',\n  width: '100%'/)
 })

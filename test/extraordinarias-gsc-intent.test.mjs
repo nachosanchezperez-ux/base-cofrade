@@ -21,5 +21,16 @@ test('las fichas extraordinarias incorporan la Hermandad cuando aporta intenció
 
   assert.match(page, /function shortBrotherhoodName/)
   assert.match(page, /const eventLead = brotherhood && !titleIncludesBrotherhood/)
-  assert.match(page, /compactSeoTitle\(seoTitle\(item\), 58\)/)
+  // El título SEO usa la regla común de actos (lib/agenda-event-seo.js), que
+  // añade la Hermandad como contexto cuando no está ya en el título.
+  assert.match(page, /agendaEventSeoTitle\(\{[\s\S]*brotherhoodName: item\.brotherhoodName/)
+})
+
+test('cada tarjeta de Extraordinarias enlaza a la ficha pública de su Hermandad', () => {
+  const directory = readFileSync(new URL('../components/ExtraordinaryDirectory.js', import.meta.url), 'utf8')
+  assert.match(directory, /outing\.brotherhoodHref \? \(\s*<Link className=\{styles\.organizer\} href=\{outing\.brotherhoodHref\} prefetch=\{false\} onClick=\{\(\) => trackExtraordinaryBrotherhood\(outing\)\}/)
+  assert.match(directory, /: <strong className=\{styles\.organizer\}>\{outing\.brotherhoodName\}<\/strong>/)
+  assert.match(directory, /link_context: 'agenda_extraordinarias'/)
+  const data = readFileSync(new URL('../lib/supabase/extraordinary-directory.js', import.meta.url), 'utf8')
+  assert.match(data, /brotherhoodHref: publicBrotherhoodHref\(entityById\.get\(item\.brotherhood_entity_id\)\)/)
 })

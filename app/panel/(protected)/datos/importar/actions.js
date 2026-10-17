@@ -1,6 +1,6 @@
 'use server'
 
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
 import { bulkImportPriority, findBulkImportTargetCollisions, validateBulkImportRecord } from '@/lib/panel/bulk-import-config'
@@ -363,6 +363,7 @@ export async function applyBulkImportChunkAction(importIdInput) {
   revalidatePath('/panel/datos')
   revalidatePath('/panel')
   revalidatePath('/')
+  revalidateTag('home-public', { expire: 0 })
   return { id: importId, status, done, counts, processed: queue.length }
 }
 

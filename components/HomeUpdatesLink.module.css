@@ -1,0 +1,206 @@
+/*
+ * El Hilo se mueve · titulares ágiles en la portada.
+ * Paleta de la Home (azul #0f2742 / #123a67, rojo de marca #b71f37, grises
+ * azulados). Sin resúmenes: titular, tema, fecha relativa y el enlace a las
+ * fichas de Hilo Cofrade, que es lo que el lector no encuentra en otro medio.
+ */
+.section {
+  scroll-margin-top: calc(var(--hc-app-header-height, 70px) + 14px);
+  padding: 26px 0 28px;
+  border-top: 1px solid #e3e9ef;
+  background: #fff;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+:global(#hc-app #el-hilo-se-mueve) .title {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  color: #0f2742;
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -.02em;
+}
+
+/* Punto rojo: actualidad, en el mismo lenguaje que «En curso» de la agenda. */
+.pulse {
+  width: 9px;
+  height: 9px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: #b71f37;
+  box-shadow: 0 0 0 4px rgba(183, 31, 55, .14);
+}
+
+.all {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: #b71f37;
+  font-size: 14px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.list {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: grid;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid #dce5ed;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.story {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  align-items: start;
+  gap: 12px;
+  padding: 14px 14px 12px;
+  color: inherit;
+}
+
+/* Escudo sin recuadro, con su proporción. */
+.crest {
+  width: 36px;
+  height: auto;
+  max-height: 44px;
+  object-fit: contain;
+}
+
+.crestSpace {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #eef2f6;
+}
+
+.copy {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 10px;
+  color: #5f7080;
+  font-size: 13px;
+  line-height: 1.3;
+}
+
+.meta b {
+  color: #b71f37;
+  font-weight: 750;
+}
+
+.headline {
+  display: -webkit-box;
+  overflow: hidden;
+  color: #0f2742;
+  font-size: 16px;
+  font-weight: 750;
+  line-height: 1.3;
+  letter-spacing: -.01em;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.who {
+  color: #5f7080;
+  font-size: 13px;
+  line-height: 1.3;
+}
+
+.story:hover .headline {
+  color: #123a67;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+/* Lo que aporta Hilo Cofrade: el salto a las fichas relacionadas. */
+.discover {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 44px;
+  padding: 8px 14px;
+  border-top: 1px solid #e8eef3;
+  background: #f6f8fa;
+  color: #123a67;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.discover::after {
+  content: "→";
+  flex: 0 0 auto;
+  color: #b71f37;
+  font-weight: 800;
+}
+
+.discover:hover {
+  background: #eef3f7;
+}
+
+.story:focus-visible,
+.discover:focus-visible,
+.all:focus-visible,
+.fallback a:focus-visible {
+  outline: 3px solid #123a67;
+  outline-offset: -3px;
+}
+
+.fallback {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.fallback a {
+  color: #123a67;
+  font-weight: 650;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding: 32px 0 34px;
+  }
+
+  :global(#hc-app #el-hilo-se-mueve) .title {
+    font-size: 26px;
+  }
+
+  .list {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px;
+  }
+
+  .item {
+    grid-template-rows: 1fr auto;
+  }
+}

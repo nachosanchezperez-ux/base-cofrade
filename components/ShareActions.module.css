@@ -1,0 +1,63 @@
+.share {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.share a,
+.share button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid #dedbd4;
+  border-radius: 999px;
+  background: #fff;
+  color: #17283a;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 750;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color .15s ease, background .15s ease;
+}
+
+.share a:hover,
+.share button:hover {
+  border-color: #b9b1a6;
+  background: #faf8f4;
+}
+
+.share a:focus-visible,
+.share button:focus-visible {
+  outline: 3px solid rgba(159, 23, 48, .22);
+  outline-offset: 2px;
+}
+
+.whatsapp svg {
+  color: #1f7a4d;
+}
+
+.native svg {
+  color: #9f1730;
+}
+
+.calendar svg {
+  color: #17283a;
+}
+
+.compact {
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.compact a,
+.compact button {
+  min-height: 36px;
+  padding: 0 12px;
+  font-size: 12px;
+}

@@ -144,3 +144,68 @@ Verificado en `/hermandades/hermandad-jesus-la-algaba`.
 - **Música:** Las Nieves de Olivares tras el paso, desde 2022, enlazada al paso.
 
 Verificado en `/hermandades/hermandad-divina-pastora-capuchinos-sevilla`.
+
+## Hermandad de la Esperanza de Arahal · 12/10/2026 · aplicado y publicado
+
+`esperanza-arahal.sql`; reversión: `esperanza-arahal-rollback.sql`.
+
+### Fuentes
+
+- [Web de la Hermandad · Santísimo Cristo de la Esperanza](https://hermandadesperanzaarahal.es/blog/santisimo-cristo-de-la-esperanza/).
+- [ArteSacro · Una mirada a la provincia (2009)](https://www.artesacro.org/Noticia/Ver/49049/provincia-mirada-provincia-hermandad-esperanza-arahal).
+- [Archidiócesis de Sevilla · Jubileo 2025](https://www.archisevilla.org/jubileo-2025-santisimo-cristo-de-la-esperanza-parroquia-de-santa-maria-magdalena-arahal/).
+
+### Ficha
+
+- **Nombre oficial:** Hermandad Sacramental y Cofradía de Nazarenos del Santísimo Cristo de la Esperanza, Nuestra Señora de las Angustias, San Juan Evangelista y Santa María Magdalena.
+  - Sede: parroquia de Santa María Magdalena.
+  - Sale la tarde del Viernes Santo.
+- **Titulares:** los tres son de Manuel Pineda Calderón.
+  - Cristo de la Esperanza, 1946-1947.
+  - Angustias, 1938 según ArteSacro.
+  - San Juan Evangelista.
+- **Pasos:**
+  - Cristo: neobarroco, sin autor documentado.
+  - Palio: de los años 60, de Villarreal, con bordados de Francisco Expósito y respiraderos de Seco Imberg procedentes del Buen Fin.
+- **No se ha creado:**
+  - La imagen de Santa María Magdalena: es cotitular en el nombre, pero ninguna fuente la describe.
+  - La relación de San Juan con un paso: las fuentes no dicen en cuál procesiona.
+- **Música:** se enlazan los tres periodos existentes, sin cambiar fechas ni bandas.
+  - Santa María Magdalena de Arahal, tras el Cristo, vigente.
+  - AMUECI, tras el palio, 2026.
+  - Bollullos, tras el palio, 2027-2028. No se muestra en la web porque la ficha de la banda sigue en borrador.
+
+Verificado en `/hermandades/hermandad-esperanza-arahal`.
+
+## Hermandad de la Humillación de Camas · 12/10/2026 · aplicado y publicado
+
+`humillacion-camas.sql`; reversión: `humillacion-camas-rollback.sql`.
+
+### Fuentes
+
+- [Turismo Aljarafe · Hermandad de la Humillación](https://turismo.aljarafe.com/recursos-turisticos/guias-turisticas/Hermandad-de-la-Humillacion.).
+- [ArteSacro · Estreno de San Pedro (2014)](https://www.artesacro.org/Noticia.asp?idreg=94562).
+- [Ayuntamiento de Camas · Camas Cofrade 2023](https://www.camas.es/export/sites/camas/.galleries/documentos-noticias/camas-cofrade-2023.pdf).
+
+### Ficha
+
+- **Nombre oficial:** según «Camas Cofrade 2023». Turismo Aljarafe recoge la denominación anterior de Agrupación Parroquial.
+  - Sale el Sábado de Pasión.
+  - Orígenes en 1991; Agrupación Parroquial desde 2009; primera estación de penitencia en 2013.
+  - No se indica sede: ninguna fuente la confirma.
+- **Titulares,** de Ángel Velázquez Vega:
+  - Soberano Poder (2006);
+  - Humillación (2004).
+- **San Pedro** (Velázquez Vega, 2014): se vincula como imagen secundaria del misterio.
+- **Pasos:** misterio de las Negaciones y palio, sin autor documentado.
+- **No se ha creado:** la Inmaculada Concepción ni la Virgen Gloriosa, porque ninguna fuente las describe.
+- **Música:** Santa María Magdalena de Arahal, tras el misterio desde 2024, enlazada al paso. El propietario confirmó que es la banda actual; su confirmación queda registrada como fuente del periodo.
+- **Música histórica (13/10/2026):** periodo nuevo de la A.M. Virgen de los Reyes tras el misterio hasta 2023, confirmado por el propietario y por «Camas Cofrade 2023». No hay año de inicio documentado, así que se deja como texto.
+- **Música del palio (13/10/2026):** periodo nuevo de la Banda Municipal de Mairena del Alcor tras el palio, vigente desde 2026. Se firmó en diciembre de 2025 (El Pespunte) y el propietario confirma que 2026 fue el primer año. La duración del contrato no está documentada.
+- **Música histórica del palio (13/10/2026):** periodo nuevo de Las Cigarreras tras el palio, 2018-2025, confirmado por el propietario. Fuentes: El Pespunte y «Camas Cofrade 2023».
+
+### Hallazgo técnico, sin tocar
+
+La ficha de Hermandad muestra todas las imágenes vinculadas dentro de «Titulares», también las de tipo `secondary_image` (aquí, San Pedro). Revisar en una tarea de código aparte.
+
+Verificado en `/hermandades/hermandad-humillacion-camas`.

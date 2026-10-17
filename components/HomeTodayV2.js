@@ -8,6 +8,7 @@ import styles from './HomeTodayV2.module.css'
 import polishStyles from './HomeResponsivePolish.module.css'
 import mobileFixStyles from './HomeTodayMobileFix.module.css'
 import dynamicStyles from './HomeTodayDynamic.module.css'
+import gameStyles from './HiddenThreadTeaser.module.css'
 
 const MONTH_INDEX = {
   enero: 0,
@@ -108,8 +109,9 @@ function RelationshipTrail({ value }) {
     <span className={`${styles.kicker} ${mobileFixStyles.relationshipTrail}`} aria-label={`Recorrido: ${parts.join(', ')}`}>
       {parts.map((part, index) => (
         <span className={styles.kickerStep} key={`${part}-${index}`}>
-          {index ? <span className={styles.kickerArrow} aria-hidden="true">→</span> : null}
           <span>{part}</span>
+          {/* El separador va al final del paso, para que nunca abra una línea. */}
+          {index < parts.length - 1 ? <span className={styles.kickerArrow} aria-hidden="true">·</span> : null}
         </span>
       ))}
     </span>
@@ -142,7 +144,7 @@ function MusicVisual({ march }) {
   )
 }
 
-export default function HomeTodayV2({ today, content }) {
+export default function HomeTodayV2({ today, content, embedded = false }) {
   const serial = dailySerial(today)
   const editorial = rotatingEditorial(content, serial)
   const dailyCards = uniqueCards([
@@ -153,10 +155,13 @@ export default function HomeTodayV2({ today, content }) {
   ])
   const featured = content?.ephemeris
     || (dailyCards.length ? dailyCards[serial % dailyCards.length] : null)
-  const secondaryCards = dailyCards.filter((card) => card !== featured)
+  // Incrustado en la portada de 5 bloques: una sola tarjeta del día y la marcha.
+  const secondaryCards = embedded ? [] : dailyCards.filter((card) => card !== featured)
   const featureRight = Boolean(featured && secondaryCards.length && !(serial % 2))
   const hasContent = dailyCards.length > 0 || Boolean(content?.march)
   if (!hasContent) return null
+  // Incrustado en «Descubre Hilo Cofrade»: sin sección ni fondo propios.
+  const Wrapper = embedded ? 'div' : 'section'
 
   const renderCard = (card, { isFeatured = false } = {}) => (
     <article
@@ -175,28 +180,33 @@ export default function HomeTodayV2({ today, content }) {
         {card.visual?.kind === 'context-crest' && card.visual.contextName ? (
           <span className={styles.context}>En {card.visual.contextName}</span>
         ) : null}
-        <h3>{card.title}</h3>
+        {/* Toda la tarjeta es el enlace (el título se extiende sobre ella), sin una
+            llamada «Descubrir →» repetida en cada tarjeta. */}
+        <h3>{card.href ? <Link className={styles.cardLink} href={card.href}>{card.title}</Link> : card.title}</h3>
         {card.summary ? <p>{card.summary}</p> : null}
-        {card.href ? (
-          <Link className={`${styles.link} ${polishStyles.todayLink}`} href={card.href}>{card.linkLabel}</Link>
-        ) : null}
       </div>
       <CardVisual visual={card.visual} featured={isFeatured} />
     </article>
   )
 
   return (
-    <section
-      className={`${styles.section} ${polishStyles.todaySection}`}
+    <Wrapper
+      className={embedded ? `${styles.embedded}` : `${styles.section} ${polishStyles.todaySection}`}
       id="descubre-hoy"
       data-daily-layout={featureRight ? 'lead-right' : 'lead-left'}
     >
-      <div className="shell">
-        <header className={`${styles.header} ${polishStyles.todayHeader}`}>
-          <span className={styles.date}>{today}</span>
-          <h2>Descubre hoy en Hilo Cofrade</h2>
-          <p>Efemérides, historias, relaciones, datos y música para seguir explorando la enciclopedia después de consultar qué ocurre hoy.</p>
-        </header>
+      <div className={embedded ? undefined : 'shell'}>
+        {embedded ? (
+          <header className={styles.embeddedHeader}>
+            <h3>Hoy en Hilo Cofrade</h3>
+            <span className={styles.date}>{today}</span>
+          </header>
+        ) : (
+          <header className={`${styles.header} ${polishStyles.todayHeader}`}>
+            <span className={styles.date}>{today}</span>
+            <h2>Descubre hoy en Hilo Cofrade</h2>
+          </header>
+        )}
 
         {featured || secondaryCards.length ? (
           <div className={`${styles.editorialGrid} ${polishStyles.todayGrid} ${featureRight ? dynamicStyles.featureRight : ''}`}>
@@ -251,14 +261,24 @@ export default function HomeTodayV2({ today, content }) {
                 variant="inverse"
               />
               {content.march.releaseHref ? (
-                <Link className={styles.musicLink} href={content.march.releaseHref}>Ver la discografía →</Link>
+                <Link className={styles.musicLink} href={content.march.releaseHref}>Ver la discografía</Link>
               ) : content.march.bandHref ? (
-                <Link className={styles.musicLink} href={content.march.bandHref}>Conocer la formación →</Link>
+                <Link className={styles.musicLink} href={content.march.bandHref}>Conocer la formación</Link>
               ) : null}
             </div>
           </article>
         ) : null}
+
+        <aside className={gameStyles.teaser} aria-label="El hilo escondido, juego cofrade del día">
+          <div className={gameStyles.teaserCopy}>
+            <span>Un reto cofrade cada día</span>
+            <strong>El hilo escondido: ¿adivinas la palabra de hoy?</strong>
+          </div>
+          <Link className={gameStyles.teaserLink} href="/juegos/el-hilo-escondido">
+            Jugar ahora
+          </Link>
+        </aside>
       </div>
-    </section>
+    </Wrapper>
   )
 }

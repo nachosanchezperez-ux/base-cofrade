@@ -70,12 +70,13 @@ test('robots publica el sitemap completo y los sitemaps segmentados de diagnóst
   assert.match(robots, /\/sitemap\.xml/);
 });
 
-test('cada familia del sitemap queda cacheada durante una hora', () => {
+test('cada familia del sitemap queda cacheada 15 minutos, como su ruta', () => {
   const sitemap = read('app/sitemap.js');
   const route = read('app/sitemaps/[family]/route.js');
   assert.match(sitemap, /unstable_cache/);
   assert.match(sitemap, /hilo-cofrade-public-sitemap-family-v3/);
-  assert.match(sitemap, /revalidate: 3600/);
+  assert.match(sitemap, /\['hilo-cofrade-public-sitemap-family-v3'\],\n  \{ revalidate: 900, tags: \['seo-sitemap'\] \}/);
+  assert.match(route, /export const revalidate = 900;/);
   assert.match(route, /getPublicSitemapSegmentEntries\(segment\)/);
   assert.match(route, /Content-Type.*application\/xml/s);
 });

@@ -4,15 +4,17 @@ on:
   deployment_status:
   workflow_dispatch:
 
+# Solo ejecuciones autorizadas de producción comparten grupo. Los avisos
+# omitidos (preview, pending, etc.) nunca cancelan el calentamiento vigente.
+# El disparo manual desde main comparte grupo para evitar dos pools simultáneos.
 concurrency:
-  group: production-seo-smoke
+  group: production-seo-smoke-${{ ((github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') || (github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'Production')) && 'production' || github.run_id }}
   cancel-in-progress: true
 
 jobs:
   verify:
     if: >-
-      github.event_name == 'workflow_dispatch' ||
-      (github.event.deployment_status.state == 'success' && contains(github.event.deployment.environment, 'Production'))
+      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') || (github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'Production')
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -22,3 +24,21 @@ jobs:
           node-version: 24
       - name: Verifica superficies SEO públicas
         run: node scripts/public-seo-smoke.mjs
+
+  # Cada despliegue vacía la caché de páginas: se regeneran aquí las fichas de
+  # Hermandad, Paso, Imagen y Banda para que la primera visita (persona o robot)
+  # no espere la regeneración. No bloquea nada: un fallo solo deja avisos.
+  prewarm:
+    needs: verify
+    if: >-
+      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') || (github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'Production')
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Precalienta las fichas públicas
+        run: node scripts/prewarm-public-fichas.mjs

@@ -6,7 +6,7 @@ import EntityLastUpdated from '@/components/EntityLastUpdated'
 import EntitySectionNav from '@/components/EntitySectionNav'
 import RelationalThread from '@/components/RelationalThread'
 import { getPublicMarchBySlug } from '@/lib/supabase/public-marches'
-import { absoluteUrl, breadcrumbJsonLd, compactSeoTitle, socialMetadata } from '@/lib/seo'
+import { absoluteUrl, breadcrumbJsonLd, marchSeoTitle, socialMetadata } from '@/lib/seo'
 import styles from './marcha.module.css'
 
 export const dynamic = 'force-static'
@@ -45,7 +45,10 @@ export async function generateMetadata({ params }) {
   const composers = march.authors.filter((author) => author.role === 'composer').map((author) => author.name).join(', ')
   const description = [composers ? `Obra de ${composers}.` : '', march.documentedPerformances ? `${countLabel(march.documentedPerformances)} ${metricLabel(march.documentedPerformances, 'documentada', 'documentadas')} en crucetas musicales.` : '', march.listenings.length ? 'Grabaciones disponibles.' : ''].filter(Boolean).join(' ')
 
-  const title = compactSeoTitle(`${march.name} · Marcha procesional`)
+  const title = marchSeoTitle(
+    march.name,
+    march.authors.filter((author) => author.role === 'composer').map((author) => author.name)
+  )
   return {
     title,
     description,

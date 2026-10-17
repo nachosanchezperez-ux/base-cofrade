@@ -142,6 +142,8 @@ test('el especial 2027 prioriza listado, filtros y contenido SEO útil', async (
   assert.match(page, /Música de la Semana Santa de Sevilla 2027: cambios y renovaciones/)
   assert.match(page, /change\.previousStartYear/)
   assert.match(page, /Desde \{change\.previousStartYear\}/)
+  assert.match(page, /Vocal e instrumental/)
+  assert.match(page, /value\.includes\('vocal'\)/)
   assert.match(page, /name="municipio"/)
   assert.match(page, /name="tipo"/)
   assert.match(page, /name="q"/)
