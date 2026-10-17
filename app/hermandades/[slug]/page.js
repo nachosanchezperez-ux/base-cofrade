@@ -229,6 +229,15 @@ export default async function HermandadDetailPage({ params, reading: readingOver
         href: `/imagenes/${imagen.slug}`,
         context: [imagen.tipo, imagen.autor, imagen.fecha].map(publicText).filter(Boolean).join(' · '),
       })),
+    ...(h.antiguasTitulares || [])
+      .filter((imagen) => imagen.fichaDisponible && imagen.slug)
+      .map((imagen) => ({
+        kind: 'Imagen',
+        relation: 'Antigua titular',
+        title: imagen.nombre,
+        href: `/imagenes/${imagen.slug}`,
+        context: [imagen.periodo, imagen.autor].map(publicText).filter(Boolean).join(' · '),
+      })),
     ...steps
       .filter((step) => step.fichaDisponible && step.slug)
       .map((step) => ({
@@ -549,7 +558,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
 <MusicalRepertoiresSection items={musicalRepertoires} context="brotherhood" headingLevel={reading ? 3 : 2} />
   </>);
   const historySection = (<>
-<BrotherhoodHistoryTimeline items={h.cronologia || []} introduction={publicText(h.historia)} semanticPreview={reading} />
+<BrotherhoodHistoryTimeline items={h.cronologia || []} introduction={publicText(h.historia)} semanticPreview={reading} formerTitulars={h.antiguasTitulares || []} />
   </>);
   const viaCrucisSection = (<>
 <BrotherhoodViaCrucisSection items={h.viaCrucisCofradias} />
@@ -766,7 +775,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
       <EntitySectionNav items={[
         hasPracticalOverview && { href: '#resumen', label: 'Resumen' },
         h.imagenes?.length > 0 && { href: '#titulares', label: 'Titulares' },
-        (publicText(h.historia) || h.cronologia?.length > 0) && { href: '#historia', label: 'Historia' },
+        (publicText(h.historia) || h.cronologia?.length > 0 || h.antiguasTitulares?.length > 0) && { href: '#historia', label: 'Historia' },
         (musicalHeritage.length > 0 || fallbackMusicalHeritage.length > 0) && { href: '#musica', label: 'Música' },
         h.patrimonio?.length > 0 && { href: '#patrimonio', label: 'Patrimonio' },
         upcomingAgendaItems.length > 0

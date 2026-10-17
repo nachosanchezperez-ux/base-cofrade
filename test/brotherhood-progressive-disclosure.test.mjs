@@ -36,7 +36,7 @@ test('Historia conserva todos los hitos en HTML pero pliega cronologías largas'
   const component = read('components/BrotherhoodHistoryTimeline.js')
   const css = read('components/BrotherhoodHistoryTimeline.module.css')
 
-  assert.match(page, /<BrotherhoodHistoryTimeline items=\{h\.cronologia \|\| \[\]\} introduction=\{publicText\(h\.historia\)\}(?: semanticPreview=\{reading\})? \/>/)
+  assert.match(page, /<BrotherhoodHistoryTimeline items=\{h\.cronologia \|\| \[\]\} introduction=\{publicText\(h\.historia\)\}(?: semanticPreview=\{reading\})?(?: formerTitulars=\{h\.antiguasTitulares \|\| \[\]\})? \/>/)
   assert.doesNotMatch(page, /h\.cronologia\.map/)
   assert.match(component, /items\.length > 5/)
   assert.match(component, /Ver cronología completa/)
@@ -48,6 +48,6 @@ test('Historia conserva todos los hitos en HTML pero pliega cronologías largas'
 
 test('Historia sin hitos conserva el texto documental y no desaparece', () => {
   const component = read('components/BrotherhoodHistoryTimeline.js')
-  assert.ok(component.includes('if (!items.length && !introduction) return null'))
+  assert.match(component, /if \(!items\.length && !introduction(?: && !formerTitulars\.length)?\) return null/)
   assert.ok(component.includes('<p className={styles.introduction}>{introduction}</p>'))
 })

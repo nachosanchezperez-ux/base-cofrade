@@ -37,7 +37,7 @@ test('los datos de salida, paso, música e historia permanecen en sus secciones 
   assert.match(page, /id="pasos"/)
   assert.match(page, /BrotherhoodOwnBands/)
   assert.match(page, /BrotherhoodMusicalHeritage/)
-  assert.match(page, /<BrotherhoodHistoryTimeline items=\{h\.cronologia \|\| \[\]\} introduction=\{publicText\(h\.historia\)\}(?: semanticPreview=\{reading\})? \/>/)
+  assert.match(page, /<BrotherhoodHistoryTimeline items=\{h\.cronologia \|\| \[\]\} introduction=\{publicText\(h\.historia\)\}(?: semanticPreview=\{reading\})?(?: formerTitulars=\{h\.antiguasTitulares \|\| \[\]\})? \/>/)
   assert.match(history, /id="historia"/)
   assert.match(outings, /id="salidas"/)
 })

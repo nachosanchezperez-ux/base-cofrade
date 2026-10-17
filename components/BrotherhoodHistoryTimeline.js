@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import SectionTitle from '@/components/SectionTitle'
 import styles from './BrotherhoodHistoryTimeline.module.css'
 import { representativeHistory } from '@/lib/brotherhood-reading'
@@ -16,8 +17,48 @@ function previewIndexes(length, count = 5) {
   return [...new Set(raw)].slice(0, count)
 }
 
-export default function BrotherhoodHistoryTimeline({ items = [], introduction = '', semanticPreview = false }) {
-  if (!items.length && !introduction) return null
+const CONDITION_LABELS = {
+  extant: 'Se conserva',
+  lost: 'Paradero desconocido',
+  destroyed: 'Destruida',
+}
+
+// Subsección secundaria: imágenes que fueron titulares y ya no lo son. Nunca se mezclan con la titularidad vigente.
+function FormerTitulars({ items = [] }) {
+  if (!items.length) return null
+  return (
+    <div className={styles.former} id="antiguas-titulares">
+      <h3 className={styles.formerTitle}>Antiguas imágenes titulares</h3>
+      <p className={styles.formerIntro}>Imágenes que recibieron culto como titulares de la Hermandad y fueron sustituidas. Solo se indican los datos documentados.</p>
+      <ul className={styles.formerList}>
+        {items.map((item) => {
+          const meta = [item.periodo, item.autor, item.fecha && item.fecha !== item.periodo ? item.fecha : '', CONDITION_LABELS[item.situacion]]
+            .filter(Boolean)
+            .join(' · ')
+          return (
+            <li key={item.id}>
+              <span className={styles.formerTag}>Antigua titular</span>
+              {item.fichaDisponible && item.slug
+                ? <Link href={`/imagenes/${item.slug}`} className={styles.formerName}>{item.nombre}</Link>
+                : <strong className={styles.formerName}>{item.nombre}</strong>}
+              {meta ? <small className={styles.formerMeta}>{meta}</small> : null}
+              {item.nota ? <p className={styles.formerNote}>{item.nota}</p> : null}
+              {item.sucesora?.slug ? (
+                <p className={styles.formerSuccessor}>
+                  {item.sustitucion ? `Sustituida en ${item.sustitucion} por ` : 'Sustituida por '}
+                  <Link href={`/imagenes/${item.sucesora.slug}`}>{item.sucesora.nombre}</Link>
+                </p>
+              ) : null}
+            </li>
+          )
+        })}
+      </ul>
+    </div>
+  )
+}
+
+export default function BrotherhoodHistoryTimeline({ items = [], introduction = '', semanticPreview = false, formerTitulars = [] }) {
+  if (!items.length && !introduction && !formerTitulars.length) return null
 
   const preview = semanticPreview ? representativeHistory(items) : previewIndexes(items.length).map((index) => items[index])
 
@@ -80,6 +121,8 @@ export default function BrotherhoodHistoryTimeline({ items = [], introduction = 
             ))}
           </div>
         )}
+
+        <FormerTitulars items={formerTitulars} />
       </div>
     </section>
   )

@@ -4,6 +4,12 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
+import {
+  IMAGE_SUCCESSION_RELATION,
+  cleanOptionalText,
+  isFormerTitularRelation,
+  normalizeRelationType,
+} from '@/lib/brotherhood-image-relations'
 
 const UUID_PATTERN = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i
 
@@ -27,17 +33,27 @@ function optionalDate(formData, name, label) {
 }
 
 function normalizedRelationType(formData) {
-  const candidate = value(formData, 'relation_type') || 'titular'
-  const normalized = candidate
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '_')
-    .replace(/^_+|_+$/g, '')
-
+  const normalized = normalizeRelationType(value(formData, 'relation_type') || 'titular')
   if (!normalized) throw new Error('El tipo de relación es obligatorio.')
   if (normalized.length > 80) throw new Error('El tipo de relación es demasiado largo.')
   return normalized
+}
+
+// Fechas aproximadas o textuales («1905», «h. 1926», «siglo XVI») y nota editorial de la relación.
+function textualFields(formData) {
+  const fields = {}
+  if (formData.has('date_from_text')) {
+    fields.date_from_text = cleanOptionalText(formData.get('date_from_text'), { max: 120, label: 'La referencia inicial' })
+  }
+  if (formData.has('date_to_text')) {
+    fields.date_to_text = cleanOptionalText(formData.get('date_to_text'), { max: 120, label: 'La referencia final' })
+  }
+  if (formData.has('notes')) {
+    const notes = String(formData.get('notes') || '').trim()
+    if (notes.length > 1500) throw new Error('La nota no puede superar 1500 caracteres.')
+    fields.notes = notes || null
+  }
+  return fields
 }
 
 function assertRows(result, label) {
@@ -148,6 +164,80 @@ async function refreshRelation(supabase, brotherhoodId, imageId) {
   if (imageResult.data?.slug) revalidatePath(`/imagenes/${imageResult.data.slug}`)
 }
 
+// Antigua imagen titular → imagen que la sustituyó (entity_relations · succeeded_by).
+// Solo actúa si el formulario incluye el campo; nunca borra: archiva el vínculo anterior.
+async function syncImageSuccession(supabase, { formData, brotherhoodId, imageId, relationType, replacementText }) {
+  if (!formData.has('successor_image_id')) return {}
+  const rawSuccessor = value(formData, 'successor_image_id')
+  const successorId = isFormerTitularRelation(relationType) && rawSuccessor ? rawSuccessor : ''
+  if (successorId && !UUID_PATTERN.test(successorId)) throw new Error('Identificador no válido: successor_image_id')
+  if (successorId === imageId) throw new Error('Una imagen no puede sustituirse a sí misma.')
+
+  if (successorId) {
+    const linked = assertRows(
+      await supabase
+        .from('brotherhood_images')
+        .select('id')
+        .eq('brotherhood_entity_id', brotherhoodId)
+        .eq('image_entity_id', successorId)
+        .neq('status', 'archived')
+        .limit(1),
+      'No se pudo comprobar la imagen sucesora'
+    )
+    if (!linked.length) throw new Error('La imagen que la sustituyó debe estar vinculada a esta Hermandad.')
+  }
+
+  const existing = assertRows(
+    await supabase
+      .from('entity_relations')
+      .select('id, target_entity_id, date_from_text')
+      .eq('source_entity_id', imageId)
+      .eq('relation_type', IMAGE_SUCCESSION_RELATION)
+      .neq('status', 'archived'),
+    'No se pudo consultar la sucesión de la imagen'
+  )
+  const keep = successorId ? existing.find((item) => item.target_entity_id === successorId) : null
+  const stale = existing.filter((item) => item !== keep)
+
+  if (stale.length) {
+    assertRows(
+      await supabase
+        .from('entity_relations')
+        .update({ status: 'archived' })
+        .in('id', stale.map((item) => item.id))
+        .select('id'),
+      'No se pudo retirar la sucesión anterior'
+    )
+  }
+
+  const year = replacementText ? String(replacementText).slice(0, 120) : null
+  if (successorId && !keep) {
+    assertRow(
+      await supabase
+        .from('entity_relations')
+        .insert({
+          source_entity_id: imageId,
+          relation_type: IMAGE_SUCCESSION_RELATION,
+          target_entity_id: successorId,
+          date_from_text: year,
+          notes: 'Sucesión de imagen titular registrada desde el panel de Hilo Cofrade.',
+          status: 'published',
+        })
+        .select('id')
+        .single(),
+      'No se pudo registrar la imagen que la sustituyó'
+    )
+  } else if (keep && year && keep.date_from_text !== year) {
+    assertRows(
+      await supabase.from('entity_relations').update({ date_from_text: year }).eq('id', keep.id).select('id'),
+      'No se pudo actualizar la fecha de la sucesión'
+    )
+  }
+
+  if (!successorId && !stale.length) return {}
+  return { successor_image_id: successorId || null, archived_successions: stale.length }
+}
+
 function redirectSaved(brotherhoodId, result) {
   redirect(`/panel/hermandades/${brotherhoodId}/titulares?saved=${result}`)
 }
@@ -182,12 +272,20 @@ export async function addBrotherhoodImageRelationAction(formData) {
     relation_type: relationType,
     date_from: dateFrom,
     date_to: dateTo,
+    ...textualFields(formData),
     status: relationStatus(brotherhood, image),
   }
   const saved = assertRow(
     await supabase.from('brotherhood_images').insert(payload).select('id').single(),
     'No se pudo crear la relación con la Imagen'
   )
+  const succession = await syncImageSuccession(supabase, {
+    formData,
+    brotherhoodId,
+    imageId,
+    relationType,
+    replacementText: payload.date_to_text || dateTo,
+  })
 
   await audit(supabase, user, {
     action_type: 'link',
@@ -195,7 +293,7 @@ export async function addBrotherhoodImageRelationAction(formData) {
     object_id: saved.id,
     entity_id: brotherhoodId,
     summary: `Imagen relacionada: ${image.name} · ${relationType}`,
-    changed_fields: payload,
+    changed_fields: { ...payload, ...succession },
   })
   await refreshRelation(supabase, brotherhoodId, imageId)
   redirectSaved(brotherhoodId, 'linked')
@@ -237,6 +335,7 @@ export async function updateBrotherhoodImageRelationAction(formData) {
     relation_type: relationType,
     date_from: dateFrom,
     date_to: dateTo,
+    ...textualFields(formData),
     status: relation.status === 'review'
       ? 'review'
       : relationStatus(brotherhood, image),
@@ -251,6 +350,13 @@ export async function updateBrotherhoodImageRelationAction(formData) {
       .single(),
     'No se pudo actualizar la relación'
   )
+  const succession = await syncImageSuccession(supabase, {
+    formData,
+    brotherhoodId,
+    imageId: relation.image_entity_id,
+    relationType,
+    replacementText: payload.date_to_text || dateTo,
+  })
 
   await audit(supabase, user, {
     action_type: 'update',
@@ -258,7 +364,7 @@ export async function updateBrotherhoodImageRelationAction(formData) {
     object_id: relationId,
     entity_id: brotherhoodId,
     summary: `Relación actualizada: ${image.name} · ${relationType}`,
-    changed_fields: payload,
+    changed_fields: { ...payload, ...succession },
   })
   await refreshRelation(supabase, brotherhoodId, relation.image_entity_id)
   redirectSaved(brotherhoodId, dateTo ? 'closed' : 'updated')
