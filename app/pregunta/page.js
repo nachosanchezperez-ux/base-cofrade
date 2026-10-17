@@ -19,16 +19,16 @@ export default async function PreguntaPage({ searchParams }) {
       <section className={styles.hero}>
         <div className="shell">
           <div className={styles.topline}>
-            <Link href="/#tiradelhilo">← Volver a la Home</Link>
-            <span>Conversación · datos publicados</span>
+            <Link href="/#tiradelhilo">← Volver a la portada</Link>
+            <span>Respuestas con datos de Hilo Cofrade</span>
           </div>
 
           <header className={styles.intro}>
             <span className={styles.eyebrow}>Tira del hilo</span>
             <h1>Conversa con la enciclopedia</h1>
             <p>
-              Pregunta con lenguaje natural, continúa sobre los resultados anteriores y recorre las conexiones
-              documentadas del grafo. Hilo Cofrade no completa con datos que no estén publicados.
+              Pregunta como lo harías a otro cofrade, sigue preguntando sobre la respuesta y descubre cómo se
+              relacionan hermandades, imágenes, bandas y marchas. Solo responde con lo que está publicado en Hilo Cofrade.
             </p>
           </header>
 
@@ -38,7 +38,7 @@ export default async function PreguntaPage({ searchParams }) {
 
           <footer className={styles.footnote}>
             <span aria-hidden="true" />
-            La conversación se conserva únicamente en esta sesión del navegador para poder continuar entre la Home y este modo completo.
+            La conversación se guarda solo en este navegador y se borra al cerrarlo.
           </footer>
         </div>
       </section>

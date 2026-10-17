@@ -134,7 +134,7 @@ export default async function AuthorsDirectoryPage({ searchParams } = {}) {
           </div>
 
           <dl className={styles.metrics}>
-            <div><dt>Perfiles indexables</dt><dd>{agents.length}</dd></div>
+            <div><dt>Perfiles</dt><dd>{agents.length}</dd></div>
             <div><dt>Ámbitos representados</dt><dd>{availableCategories.length}</dd></div>
             <div><dt>Talleres y entidades</dt><dd>{agents.filter((agent) => agent.kind !== 'person').length}</dd></div>
           </dl>

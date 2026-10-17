@@ -393,7 +393,7 @@ export default async function ImagenPage({ params }) {
                 <article key={`${item.fecha}-${item.titulo}-${index}`} id={item.anchor} style={item.anchor ? { scrollMarginTop: 150 } : undefined}>
                   <strong>{item.fecha}</strong>
                   <h3>{item.titulo}</h3>
-                  <p>{item.texto}</p>
+                  {item.texto ? <p>{item.texto}</p> : null}
                   {item.href ? <a className="text-link" href={item.href}>{item.enlace} <span aria-hidden="true">→</span></a> : null}
                 </article>
               ))}

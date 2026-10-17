@@ -24,3 +24,4 @@
   .visualCard{grid-template-columns:52px minmax(0,1fr) 64px!important}
   .fallbackMark{width:30px;height:30px;font-size:12px}
 }
+.fallbackMark svg{width:55%;height:55%}

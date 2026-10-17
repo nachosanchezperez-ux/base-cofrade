@@ -10,6 +10,7 @@ import { agendaTemporalDateInfo, agendaTemporalRangeDate, withAgendaTemporalDay 
 import { agendaEventAnchor, agendaDirectionsHref, isOutingEvent, schedulePrecision, scheduleTimeHint } from '@/lib/agenda-event-presentation'
 import { agendaItemShare } from '@/lib/share'
 import ShareActions from '@/components/ShareActions'
+import HomeDiscoverIcon from '@/components/HomeDiscoverIcon'
 import useFollowedBrotherhoods from '@/components/useFollowedBrotherhoods'
 import { brotherhoodSlugFromHref } from '@/lib/followed-brotherhoods'
 import followStyles from './AgendaMyBrotherhoods.module.css'
@@ -31,13 +32,14 @@ const categoryOptions = [
   ['concerts', 'Conciertos'],
 ]
 
+// Sin escudo ni foto: un pictograma del tipo de acto, nunca siglas internas.
 const visualFallbacks = {
-  processions: { mark: 'PRO', label: 'Procesión' },
-  transfers: { mark: 'TRA', label: 'Traslado' },
-  rosaries: { mark: 'ROS', label: 'Rosario' },
-  romeries: { mark: 'ROM', label: 'Romería' },
-  devotions: { mark: 'DEV', label: 'Culto' },
-  concerts: { mark: 'MÚS', label: 'Concierto' },
+  processions: { icon: 'step', label: 'Procesión' },
+  transfers: { icon: 'step', label: 'Traslado' },
+  rosaries: { icon: 'image', label: 'Rosario' },
+  romeries: { icon: 'step', label: 'Romería' },
+  devotions: { icon: 'image', label: 'Culto' },
+  concerts: { icon: 'band', label: 'Concierto' },
 }
 
 function addDays(value, amount) {
@@ -129,12 +131,12 @@ function EventVisual({ item }) {
   const fallback = item.imageFallbackPath || ''
   const [src, setSrc] = useState(item.imagePath || fallback)
   const [kind, setKind] = useState(item.imageKind || (src ? 'crest' : 'fallback'))
-  const emptyVisual = visualFallbacks[item.category] || { mark: 'HC', label: 'Acto' }
+  const emptyVisual = visualFallbacks[item.category] || { icon: 'agenda', label: 'Acto' }
 
   if (!src) {
     return (
       <div className={`${styles.cardVisual} ${visualStyles.visualContainer} ${mobileStyles.visual} ${visualStyles.fallbackFrame}`} aria-hidden="true">
-        <span className={visualStyles.fallbackMark}>{emptyVisual.mark}</span>
+        <span className={visualStyles.fallbackMark}><HomeDiscoverIcon name={emptyVisual.icon} /></span>
         <small>{emptyVisual.label}</small>
       </div>
     )
@@ -811,7 +813,7 @@ export default function AgendaCofradeDirectoryV4({
                           {isMine(item) ? <small className={followStyles.badge} title="Sigues a esta hermandad"><span aria-hidden="true">★</span> Tu hermandad</small> : null}
                         </div>
                         <h4><button type="button" className={mobileStyles.eventTitle} onClick={() => openEvent(item)} aria-controls={`${agendaEventAnchor(item)}-detail`}>{item.title}</button></h4>
-                        <p className={`${styles.organizer} ${mobileStyles.organizer}`}>{item.organizer}</p>
+                        {item.organizer ? <p className={`${styles.organizer} ${mobileStyles.organizer}`}>{item.organizer}</p> : null}
                         {item.endDate && item.endDate !== item.date ? <p className={mobileStyles.dateRange}>Del {shortDate(item.date)} al {shortDate(item.endDate)}{item.endDate.slice(0, 4) !== currentYear ? ` de ${item.endDate.slice(0, 4)}` : ''}</p> : null}
                         <div className={`${styles.cardFacts} ${mobileStyles.cardFacts}`}>
                           <span><b>Localidad</b>{item.municipality || 'Por confirmar'}</span>

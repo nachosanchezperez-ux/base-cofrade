@@ -117,7 +117,6 @@ export default function RelationalEntityHeroMedia({
         ) : (
           <div className={styles.initialsFallback}>
             <EntityVisualFallback />
-            <small>Identidad visual pendiente</small>
           </div>
         )}
 

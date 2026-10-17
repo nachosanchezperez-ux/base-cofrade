@@ -163,7 +163,7 @@ export default function MunicipalityAgendaHub({ hub }) {
           <header className={styles.sectionHeading}>
             <span>Todo conectado</span>
             <h2>La agenda de {hub.label}, por ámbitos</h2>
-            <p>Los cuatro calendarios públicos siguen separados editorialmente, pero comparten una misma puerta territorial.</p>
+            <p>Agenda, glorias, extraordinarias e igualás de {hub.label}, cada una con su calendario.</p>
           </header>
           <div className={styles.calendarGrid}>
             {calendarCards.map((item) => (

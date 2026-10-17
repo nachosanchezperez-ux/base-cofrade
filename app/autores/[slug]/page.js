@@ -21,6 +21,7 @@ import {
   socialMetadata,
 } from '@/lib/seo'
 import styles from '../autores.module.css'
+import { authorshipCertaintyLabel, authorshipRoleLabel } from '@/lib/public-labels'
 
 export const revalidate = 900
 
@@ -120,7 +121,7 @@ function WorkGroup({ categoryKey, title, eyebrow, items }) {
               <span className={styles.cardCopy}>
                 <span className={styles.cardKicker}>{eyebrow}</span>
                 <strong>{item.name}</strong>
-                <small>{[item.role || item.type, item.phase, item.certainty].filter(Boolean).join(' · ') || eyebrow}</small>
+                <small>{[authorshipRoleLabel(item.role || item.type), item.phase, authorshipCertaintyLabel(item.certainty)].filter(Boolean).join(' · ') || eyebrow}</small>
               </span>
               <span className={styles.cardMeta}>
                 {item.date || item.year ? <time>{item.date || item.year}</time> : null}
@@ -177,6 +178,8 @@ export default async function AuthorPage({ params }) {
   if (!agent) notFound()
 
   const category = authorCategoryFor(agent)
+  // Sin dato no se escribe «pendiente»: la fila no aparece.
+  const originText = [agent.municipality, [agent.birthText, agent.deathText].filter(Boolean).join(' — ')].filter(Boolean).join(' · ')
   const metrics = profileMetrics(agent, category.key)
   const canonicalPath = `/autores/${agent.slug}`
   const entityId = schemaId(agent, canonicalPath)
@@ -308,14 +311,12 @@ export default async function AuthorPage({ params }) {
               <dt>Tipo de perfil</dt>
               <dd>{authorKindLabel(agent)}</dd>
             </div>
-            <div>
-              <dt>Origen / cronología</dt>
-              <dd>
-                {[agent.municipality, [agent.birthText, agent.deathText].filter(Boolean).join(' — ')]
-                  .filter(Boolean)
-                  .join(' · ') || 'Dato pendiente de documentación'}
-              </dd>
-            </div>
+            {originText ? (
+              <div>
+                <dt>Origen / cronología</dt>
+                <dd>{originText}</dd>
+              </div>
+            ) : null}
           </dl>
         </div>
       </section>
