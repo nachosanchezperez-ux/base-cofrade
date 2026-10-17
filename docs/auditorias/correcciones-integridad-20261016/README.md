@@ -54,3 +54,37 @@ Vista de un visitante anónimo (rol `anon`, RLS real):
 - Las 10 relaciones en borrador restantes entre fichas publicadas (Divino Perdón, Desamparados del Santo Ángel, titulares de Los Rosales, Aznalcázar, Paradas…), que necesitan revisión editorial caso a caso.
 - El archivado de las fichas de Moriles, que necesita autorización aparte.
 - La tabla heredada `accompaniments`: sus 2 filas de la salida archivada se conservan como evidencia, como establece #1139.
+
+---
+
+# Lote 2 · 17/10/2026 · APLICADO Y VERIFICADO
+
+**Autorización:** propietario, 17/10/2026: publicar 9 relaciones y archivar Moriles. Ficheros `lote2-apply.sql` y `lote2-rollback.sql`.
+
+## A · 9 relaciones publicadas
+
+Las 9 se retuvieron en septiembre con la nota «hasta el cierre editorial de la Imagen». Todas las imágenes y pasos implicados ya están publicados, así que la web los mostraba sin su Hermandad.
+
+| Relación | Detalle |
+|---|---|
+| Titulares | Fátima → Los Rosales · Angustias → Aznalcázar · Dolores → El Castillo de las Guardas · Cristo de la Misericordia → Santo Entierro de Paradas · Piedad → Vera Cruz de Sanlúcar la Mayor |
+| Pasos | Divino Perdón y Desamparados del Santo Ángel. En los dos, el paso ya lleva al titular de la misma Hermandad |
+| Imagen ↔ Paso | Santa Elena y Santa Cruz de Abajo → paso de la Cruz de Abajo de Aznalcóllar, de la misma Hermandad |
+
+## B · Moriles archivado
+
+Moriles es de Córdoba y queda fuera del ámbito del proyecto, por decisión del propietario del 12/10. Se archivan:
+
+- la Hermandad de Jesús Preso (`jesus-preso-moriles`);
+- su imagen titular;
+- la salida del 19/09/2026;
+- su relación de titular, que estaba en revisión.
+
+La URL `/hermandades/jesus-preso-moriles` deja de servirse y sale del sitemap. La URL de la extraordinaria ya se retiró del manifiesto con #1158, fusionada (`9df9f39`).
+
+## Verificación
+
+- Ensayo con error forzado al final: todas las validaciones pasan y no se guarda nada.
+- Aplicación sin errores.
+- Comprobación final: 0 Hermandades y 0 salidas publicadas fuera de la provincia de Sevilla.
+- Vista anónima (RLS real): Moriles no aparece, y los 5 titulares, los 2 pasos y las 2 relaciones imagen↔paso son visibles.
