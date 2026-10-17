@@ -2,6 +2,7 @@ import Link from 'next/link'
 import EntityPicker from '@/components/panel/EntityPicker'
 import { requirePanelUser } from '@/lib/panel/auth'
 import { NEWS_TOPICS, getNewsReferenceOptions, getPanelNewsList } from '@/lib/panel/editorial-news'
+import { newsNeedsTenseReview } from '@/lib/hilo-movements-editorial'
 import { createNewsAction } from './actions'
 import styles from '@/app/panel/panel.module.css'
 
@@ -25,6 +26,7 @@ export default async function PanelNewsPage({ searchParams }) {
   ])
   const canEdit = ['admin', 'editor'].includes(user.role)
   const today = madridToday()
+  const reviewCount = items.filter((item) => newsNeedsTenseReview(item, today)).length
 
   return (
     <div className={styles.pageWrap}>
@@ -37,11 +39,11 @@ export default async function PanelNewsPage({ searchParams }) {
       </form>
 
       <section className={styles.panelCard}>
-        <div className={styles.listHeading}><strong>{items.length} noticias</strong><small>Una noticia publicada con fecha futura queda programada: se muestra ese día.</small></div>
+        <div className={styles.listHeading}><strong>{items.length} noticias{reviewCount ? ` · ${reviewCount} por revisar` : ''}</strong><small>Una noticia publicada con fecha futura queda programada: se muestra ese día.</small></div>
         {items.length ? <div className={styles.brotherhoodList}>{items.map((item) => (
           <article key={item.id}>
             <span className={styles.listMonogram}>N</span>
-            <div className={styles.listIdentity}><strong>{item.title}</strong><span>{item.protagonist || 'Sin protagonista'}{item.news_topic ? ` · ${TOPIC_LABELS[item.news_topic]}` : ''}</span><small>{item.publish_date || 'Sin fecha'}{item.status === 'published' && item.publish_date > today ? ' · programada' : ''}{item.slug ? '' : ' · sin identificador'}</small></div>
+            <div className={styles.listIdentity}><strong>{item.title}</strong><span>{item.protagonist || item.subject_label || 'Sin protagonista'}{item.news_topic ? ` · ${TOPIC_LABELS[item.news_topic]}` : ''}</span><small>{item.publish_date || 'Sin fecha'}{item.status === 'published' && item.publish_date > today ? ' · programada' : ''}{item.slug ? '' : ' · sin identificador'}{newsNeedsTenseReview(item, today) ? ' · revisar texto: el acto ya pasó' : ''}</small></div>
             <span className={`${styles.statusBadge} ${styles[item.status]}`}>{STATUS_LABELS[item.status]}</span>
             <Link className={styles.rowLink} href={`/panel/noticias/${item.id}`}>Editar <span>→</span></Link>
           </article>

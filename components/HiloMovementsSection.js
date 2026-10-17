@@ -8,7 +8,7 @@ export default async function HiloMovementsSection({ brotherhoodId = '', brother
   const scoped = Boolean(brotherhoodId || entityId || entityHref)
   let items
   try {
-    items = selectHiloMovements(await getPublicHiloMovements(), { brotherhoodId, entityId, entityHref, limit: scoped ? 2 : 3, diverse: !scoped })
+    items = selectHiloMovements(await getPublicHiloMovements(), { brotherhoodId, entityId, entityHref, limit: scoped ? 2 : 3, diverse: !scoped, fresh: true })
   } catch (error) {
     console.error('[Hilo Cofrade] El Hilo se mueve no está disponible temporalmente', error instanceof Error ? error.message : '')
     return null
