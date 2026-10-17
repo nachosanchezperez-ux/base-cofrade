@@ -25,6 +25,7 @@ import { getPublicAgentSitemapEntries } from '@/lib/supabase/public-agents';
 import { getRosaryOutings } from '@/lib/supabase/rosary-outings';
 import { getImagesDirectory, getStepsDirectory } from '@/lib/supabase/directories';
 import { getIndexableBrotherhoodDirectory } from '@/lib/supabase/indexable-brotherhood-directory';
+import { getPublicHiloMovements } from '@/lib/supabase/hilo-movements';
 
 export const revalidate = 3600;
 
@@ -441,6 +442,23 @@ const getCachedPublicSitemapSegmentEntries = unstable_cache(
   { revalidate: 900, tags: ['seo-sitemap'] }
 );
 
+// Noticias de El Hilo se mueve (una página por noticia). Si la lectura falla, el
+// sitemap general sigue saliendo con sus hubs estáticos.
+async function hiloArticleEntries() {
+  try {
+    const items = await getPublicHiloMovements();
+    return items.map((item) => ({
+      url: absoluteUrl(item.href),
+      ...(validLastModified(item.documentedOn) ? { lastModified: validLastModified(item.documentedOn) } : {}),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    }));
+  } catch (error) {
+    console.error('[Hilo Cofrade] Noticias fuera del sitemap temporalmente', error instanceof Error ? error.message : String(error));
+    return [];
+  }
+}
+
 // Coalesce simultaneous requests in the same process; failures are never kept.
 const pendingSegments = new Map();
 export async function getPublicSitemapSegmentEntries(segment) {
@@ -449,7 +467,7 @@ export async function getPublicSitemapSegmentEntries(segment) {
   // Do not reuse the persistent v3 cache for these URLs: a deployment can keep
   // serving an older /sitemaps/general.xml after a new hub has gone live.
   if (segment === 'general') {
-    return [...new Map(sitemapEntriesForSegment(staticEntries, segment)
+    return [...new Map([...sitemapEntriesForSegment(staticEntries, segment), ...await hiloArticleEntries()]
       .filter((entry) => allowAgendaSitemapUrl(entry.url))
       .map((entry) => [entry.url, entry])).values()];
   }
