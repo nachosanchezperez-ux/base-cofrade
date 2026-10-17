@@ -1,3 +1,4 @@
+import { agendaEventPerformers, agendaEventSeoDescription, agendaEventSeoTitle } from '@/lib/agenda-event-seo'
 import Image from 'next/image'
 import Link from 'next/link'
 import { cache } from 'react'
@@ -14,7 +15,6 @@ import { buildProcessionRoute } from '@/lib/procession-route'
 import {
   absoluteUrl,
   breadcrumbJsonLd,
-  compactSeoTitle,
   schemaEventStatus,
   seoDescription,
   socialMetadata,
@@ -58,13 +58,29 @@ export async function generateMetadata({ params }) {
   if (item && !isPreservedAgendaEventPath(`/agenda-cofrade/rosarios/${slug}`)) permanentRedirect(agendaEventDetailHref(item, 'agenda-cofrade/rosarios'))
   if (!item) return { title: 'Rosario no encontrado', robots: { index: false, follow: false } }
 
-  const title = compactSeoTitle(`${item.title}${item.municipality ? ` en ${item.municipality}` : ''}`)
-  const description = seoDescription([
-    item.mode,
-    formatDate(item.date),
-    item.departureTime ? `salida a las ${item.departureTime} horas` : '',
-    item.routeSummary ? 'horario y recorrido' : 'información actualizada',
-  ].filter(Boolean).join('. '))
+  const year = Number(String(item.date || '').slice(0, 4)) || null
+  const title = agendaEventSeoTitle({
+    title: item.title,
+    year,
+    municipality: item.municipality,
+    brotherhoodName: item.brotherhoodName,
+    prefix: `${item.mode || 'Rosario'} de`,
+  })
+  const description = seoDescription(agendaEventSeoDescription({
+    title: item.title,
+    year,
+    kindLabel: item.mode || 'Rosario',
+    brotherhoodName: item.brotherhoodName,
+    municipality: item.municipality,
+    date: item.date,
+    time: item.departureTime,
+    origin: item.origin,
+    coverage: [
+      item.route?.length || item.routeSummary ? 'recorrido' : '',
+      item.schedule?.length || item.departureTime ? 'horario' : '',
+      item.music?.length ? 'música' : '',
+    ],
+  }))
   const canonical = `/agenda-cofrade/rosarios/${item.slug}`
 
   return {
@@ -124,6 +140,7 @@ export default async function RosaryDetailPage({ params }) {
         addressCountry: 'ES',
       },
     },
+    ...(agendaEventPerformers(item.music).length ? { performer: agendaEventPerformers(item.music) } : {}),
   }
 
   return (

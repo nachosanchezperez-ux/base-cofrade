@@ -1,3 +1,4 @@
+import { agendaEventPerformers, agendaEventSeoDescription, agendaEventSeoTitle } from '@/lib/agenda-event-seo'
 import Image from 'next/image'
 import Link from 'next/link'
 import { cache } from 'react'
@@ -12,7 +13,6 @@ import { getExtraordinaryDetail } from '@/lib/supabase/extraordinary-detail'
 import {
   absoluteUrl,
   breadcrumbJsonLd,
-  compactSeoTitle,
   pageTitle,
   organizationJsonLdRef,
   schemaEventStatus,
@@ -169,15 +169,26 @@ export async function generateMetadata({ params }) {
     }
   }
 
-  const title = compactSeoTitle(seoTitle(item), 58)
-  const description = seoDescription(
-    [
-      `${item.title}${item.municipality ? ` en ${item.municipality}` : ''}`,
-      formatSeoDate(item.date),
-      item.reason ? `con motivo de ${item.reason}` : '',
-      `Guía con ${seoCoverage(item)} y fuentes documentadas.`,
-    ].filter(Boolean).join('. ').replace(/\.\s*\./g, '.')
-  )
+  const year = Number(String(item.date || '').slice(0, 4)) || null
+  const title = agendaEventSeoTitle({
+    title: item.title,
+    year,
+    municipality: item.municipality,
+    brotherhoodName: item.brotherhoodName,
+    prefix: `${item.outingType || 'Salida extraordinaria'} de`,
+  })
+  const description = seoDescription(agendaEventSeoDescription({
+    title: item.title,
+    year,
+    kindLabel: item.outingType || 'Salida extraordinaria',
+    brotherhoodName: item.brotherhoodName,
+    municipality: item.municipality,
+    date: item.date,
+    time: item.departureTime,
+    origin: item.origin,
+    summary: item.reason ? `Con motivo de ${item.reason.replace(/\.$/u, '')}.` : '',
+    coverage: seoCoverage(item).split(', ').filter((part) => part !== 'fecha'),
+  }))
   const canonical = `/extraordinarias/${item.slug}`
 
   return {
@@ -257,6 +268,7 @@ export default async function ExtraordinaryDetailPage({ params }) {
       path: item.brotherhoodHref ? item.brotherhoodHref : '',
     }),
     } : {}),
+    ...(agendaEventPerformers(item.music).length ? { performer: agendaEventPerformers(item.music) } : {}),
     mainEntityOfPage: { '@id': `${canonicalUrl}#webpage` },
     location: {
       '@type': 'Place',

@@ -1,3 +1,4 @@
+import { agendaEventPerformers, agendaEventSeoDescription, agendaEventSeoTitle } from '@/lib/agenda-event-seo'
 import Link from 'next/link'
 import { cache } from 'react'
 import { notFound, permanentRedirect } from 'next/navigation'
@@ -12,7 +13,6 @@ import { getGloryDetail } from '@/lib/supabase/glory-directory'
 import {
   absoluteUrl,
   breadcrumbJsonLd,
-  compactSeoTitle,
   pageTitle,
   organizationJsonLdRef,
   schemaEventStatus,
@@ -105,13 +105,29 @@ export async function generateMetadata({ params }) {
     }
   }
 
-  const title = compactSeoTitle(`${item.title} · ${formatSeoDate(item.date)} · ${item.municipality}`)
-  const description = seoDescription([
-    item.title,
-    formatSeoDate(item.date),
-    item.municipality,
-    item.description || 'Procesión de Gloria de Sevilla.',
-  ].filter(Boolean).join('. '))
+  // Título y descripción conservan qué acto es, de quién, dónde y cuándo.
+  const title = agendaEventSeoTitle({
+    title: item.title,
+    year: item.year,
+    municipality: item.municipality,
+    brotherhoodName: item.brotherhoodName,
+    prefix: 'Procesión de',
+  })
+  const description = seoDescription(agendaEventSeoDescription({
+    title: item.title,
+    year: item.year,
+    kindLabel: 'Procesión de Gloria',
+    brotherhoodName: item.brotherhoodName,
+    municipality: item.municipality,
+    date: item.date,
+    time: item.departureTime,
+    origin: item.origin,
+    coverage: [
+      item.route?.length || item.routeSummary ? 'recorrido' : '',
+      item.schedule?.length || item.departureTime ? 'horario' : '',
+      item.music?.length || item.processionalMusic?.length ? 'música' : '',
+    ],
+  }))
   const canonical = item.detailHref
 
   return {
@@ -190,6 +206,7 @@ export default async function GloryDetailPage({ params }) {
         addressCountry: 'ES',
       },
     },
+    ...(agendaEventPerformers(item.music).length ? { performer: agendaEventPerformers(item.music) } : {}),
     mainEntityOfPage: { '@id': `${canonicalUrl}#webpage` },
   }
 
