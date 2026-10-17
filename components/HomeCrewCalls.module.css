@@ -4,13 +4,6 @@
   background: #fbfaf8;
 }
 
-.lead {
-  margin: -6px 0 4px;
-  color: #5f7080;
-  font-size: 14px;
-  line-height: 1.45;
-}
-
 /* Hoja de calendario en granate para distinguirla de la Agenda general. */
 .leaf.leaf {
   border-top-color: #8a2235;

@@ -22,6 +22,7 @@ const events = [
 
 test('la portada muestra las próximas igualás por orden, sin pasadas ni anuladas', () => {
   const calls = buildHomeCrewCalls(events, { today: '2026-10-16' })
+  assert.equal(calls.cards.length, 3)
   assert.deepEqual(calls.cards.map((card) => card.key), ['salud', 'iguala', 'prado'])
   assert.equal(calls.total, 3)
   assert.equal(calls.href, '/igualas-y-ensayos')
@@ -41,7 +42,9 @@ test('la igualá y su mudá «a continuación» son una sola fila', () => {
 })
 
 test('respeta el límite y oculta el bloque si no hay convocatorias', () => {
-  assert.equal(buildHomeCrewCalls(events, { today: '2026-10-16', limit: 1 }).cards.length, 1)
+  const limited = buildHomeCrewCalls(events, { today: '2026-10-16', limit: 1 })
+  assert.equal(limited.cards.length, 1)
+  assert.equal(limited.total, 3)
   assert.equal(buildHomeCrewCalls(events, { today: '2026-12-01' }), null)
   assert.equal(buildHomeCrewCalls([], { today: '2026-10-16' }), null)
 })
