@@ -4,7 +4,7 @@ import styles from './page.module.css'
 
 export const metadata = {
   title: 'Pregunta a Hilo Cofrade | Tira del hilo',
-  description: 'Conversa con el grafo de Hilo Cofrade y sigue relaciones entre hermandades, imágenes, pasos, bandas, marchas, autores y patrimonio.',
+  description: 'Pregunta a Hilo Cofrade y descubre cómo se relacionan hermandades, imágenes, pasos, bandas, marchas, autores y patrimonio.',
   alternates: {
     canonical: '/pregunta',
   },
