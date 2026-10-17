@@ -24,12 +24,12 @@ test('la clasificación pública distingue aurora, matutino y vespertino', () =>
 })
 
 test('Agenda expone rosarios como categoría, en sitemap y en fichas SEO propias', () => {
-  const header = read('components/HiloHeader.js')
+  const header = read('lib/site-navigation.js')
   const sitemap = read('app/sitemap.js')
   const directory = read('components/AgendaCofradeDirectoryV4.js')
   const detail = read('app/agenda-cofrade/rosarios/[slug]/page.js')
 
-  assert.match(header, /\['agenda', 'Agenda'\]/)
+  assert.match(header, /label: 'Agenda'/)
   assert.match(header, /\/agenda-cofrade/)
   assert.match(sitemap, /getRosaryOutings/)
   assert.match(sitemap, /\/agenda-cofrade/)

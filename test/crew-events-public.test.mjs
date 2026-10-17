@@ -41,7 +41,7 @@ test('las fichas de convocatoria usan título SEO específico con fecha y locali
 
 test('la agenda es descubrible desde cabecera, buscador y sitemap', async () => {
   const [header, search, sitemap] = await Promise.all([
-    source('components/HiloHeader.js'),
+    source('lib/site-navigation.js'),
     source('lib/supabase/search-live.js'),
     source('app/sitemap.js'),
   ])

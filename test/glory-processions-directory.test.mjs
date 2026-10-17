@@ -17,7 +17,7 @@ test('Glory directory reuses the generic outings model without schema-specific h
 
 test('Glory public routes are discoverable from navigation and sitemap', async () => {
   const [header, sitemap] = await Promise.all([
-    read('components/HiloHeader.js'),
+    read('lib/site-navigation.js'),
     read('app/sitemap.js'),
   ])
 

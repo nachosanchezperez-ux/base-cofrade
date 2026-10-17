@@ -7,7 +7,7 @@ const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf
 const page = read('app/marchas/page.js')
 const detail = read('app/marchas/[slug]/page.js')
 const data = read('lib/supabase/public-marches.js')
-const header = read('components/HiloHeader.js')
+const header = read('lib/site-navigation.js')
 const directory = read('app/directorio/page.js')
 const sitemap = read('app/sitemap.js')
 

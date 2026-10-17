@@ -7,7 +7,7 @@ function read(path) {
 }
 
 test('Autores forma parte de la navegación global de la enciclopedia', () => {
-  const header = read('components/HiloHeader.js')
+  const header = read('lib/site-navigation.js')
   assert.match(header, /\['\/autores', 'Autores'\]/)
 })
 
