@@ -169,7 +169,7 @@ export async function generateMetadata({ params }) {
     }
   }
 
-  const year = Number(String(item.date || '').slice(0, 4)) || null
+  const year = Number(String(item.date || '').slice(0, 4)) || Number(item.year) || null
   const title = agendaEventSeoTitle({
     title: item.title,
     year,
@@ -309,10 +309,13 @@ export default async function ExtraordinaryDetailPage({ params }) {
             {item.reason ? <p className={styles.reason}>{item.reason}</p> : null}
 
             <div className={styles.keyFacts}>
-              <div className={styles.dateFact}>
-                <span>Fecha</span>
-                <strong>{dateLabel}</strong>
-              </div>
+              {/* Actos históricos sin fecha exacta: se muestra el año documentado. */}
+              {dateLabel || item.year ? (
+                <div className={styles.dateFact}>
+                  <span>{dateLabel ? 'Fecha' : 'Año'}</span>
+                  <strong>{dateLabel || item.year}</strong>
+                </div>
+              ) : null}
               {item.departureTime ? <div><span>Salida</span><strong>{item.departureTime}</strong></div> : null}
               {entry ? <div><span>Entrada</span><strong>{entry}</strong></div> : null}
               <div><span>Tipo</span><strong>{item.outingType}</strong></div>
@@ -334,7 +337,7 @@ export default async function ExtraordinaryDetailPage({ params }) {
               </>
             ) : (
               <div className={styles.datePoster}>
-                <span>{formatShortDate(item.date)}</span>
+                <span>{formatShortDate(item.date) || item.year || ''}</span>
                 <strong>{item.municipality || 'Sevilla'}</strong>
                 <small>Extraordinaria</small>
               </div>
