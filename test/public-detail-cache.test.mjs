@@ -17,12 +17,14 @@ test('las fichas públicas comparten la caché de datos de 6 horas', () => {
   assert.match(pages, /\['hilo-cofrade-public-image-detail-v7-autores'\],\n  \{ revalidate: PUBLIC_DETAIL_DATA_REVALIDATE, tags: \['public-image-detail', 'public-brotherhood-detail'\] \}/)
   assert.match(pages, /\['hilo-cofrade-public-step-detail-v7-hc09'\],\n  \{ revalidate: PUBLIC_DETAIL_DATA_REVALIDATE, tags: \['public-step-detail', 'public-brotherhood-detail'\] \}/)
   // El histórico musical del Paso usa el año en curso.
-  assert.match(pages, /return getCachedPasoPageBySlug\(slug, publicDetailCacheDay\(\)\)/)
+  assert.match(pages, /return readPasoPage\(slug, publicDetailCacheDay\(\)\)/)
+  assert.match(pages, /readCurrent: getCachedPasoPageBySlug,/)
 
   const bands = read('lib/supabase/bands.js')
   assert.match(bands, /\{ revalidate: PUBLIC_DETAIL_DATA_REVALIDATE, tags: \['public-band-detail'\] \}/)
   // Las próximas salidas se filtran por hoy.
-  assert.match(bands, /return getCachedBandBySlug\(slug, publicDetailCacheDay\(\)\)/)
+  assert.match(bands, /return readBandPage\(slug, publicDetailCacheDay\(\)\)/)
+  assert.match(bands, /readCurrent: getCachedBandBySlug,/)
 
   assert.match(read('components/StepCrewFacts.js'), /\{ revalidate: PUBLIC_DETAIL_DATA_REVALIDATE, tags: \['public-step-detail'\] \}/)
   assert.match(read('lib/supabase/relational-presence.js'), /\{ revalidate: PUBLIC_DETAIL_DATA_REVALIDATE, tags: \['public-relational-presence'\] \}/)
