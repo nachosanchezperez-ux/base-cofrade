@@ -3,7 +3,7 @@ import JsonLd from '@/components/JsonLd'
 import HeritageDirectoryFacets from '@/components/HeritageDirectoryFacets'
 import RelationalEntityDirectory from '@/components/RelationalEntityDirectory'
 import { getStepsDirectory } from '@/lib/supabase/directories'
-import { compactStepDirectoryItem } from '@/lib/directory-client-items'
+import { compactStepDirectoryItem, DIRECTORY_PAGE_SIZE } from '@/lib/directory-client-items'
 import { breadcrumbJsonLd, collectionPageJsonLd, socialMetadata } from '@/lib/seo'
 
 export const revalidate = 900
@@ -37,6 +37,7 @@ export default async function PasosPage() {
         name: 'Directorio de pasos',
         description,
         items: directoryItems.map((item) => ({ name: item.name, path: item.href })),
+        limit: DIRECTORY_PAGE_SIZE,
       })} />
       <div className="shell">
         <span className="eyebrow">Patrimonio procesional</span>
@@ -44,7 +45,7 @@ export default async function PasosPage() {
         <p className="page-lead">
           Recorre los pasos procesionales por hermandad, localidad y tipología, y sigue sus imágenes, fases de ejecución, autores y talleres.
         </p>
-        <HeritageDirectoryFacets items={directoryItems} section="pasos" title="Pasos" />
+        <HeritageDirectoryFacets items={steps} section="pasos" title="Pasos" />
         <RelationalEntityDirectory items={directoryItems} kind="step" />
       </div>
     </section>

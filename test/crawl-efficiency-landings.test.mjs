@@ -38,7 +38,7 @@ test('Pasos envía al cliente solo el contrato necesario del directorio', () => 
   const contract = read('lib/directory-client-items.js')
   assert.match(contract, /export function compactStepDirectoryItem/)
   assert.match(contract, /searchText:/)
-  assert.match(source, /import \{ compactStepDirectoryItem \} from '@\/lib\/directory-client-items'/)
+  assert.match(source, /import \{ compactStepDirectoryItem, DIRECTORY_PAGE_SIZE \} from '@\/lib\/directory-client-items'/)
   assert.match(source, /directoryItems = steps\.map\(compactStepDirectoryItem\)/)
   assert.match(source, /items=\{directoryItems\}/)
 })
@@ -62,4 +62,19 @@ test('las imágenes de tarjetas relacionales tienen alt descriptivo', () => {
   const source = read('components/RelationalEntityDirectory.js')
   assert.match(source, /const mediaAlt = item\.coverAlt/)
   assert.match(source, /alt=\{mediaAlt\}/)
+})
+
+test('los directorios de patrimonio pintan las tarjetas por tandas', () => {
+  const source = read('components/RelationalEntityDirectory.js')
+  const contract = read('lib/directory-client-items.js')
+  assert.match(contract, /export const DIRECTORY_PAGE_SIZE = 48/)
+  assert.match(source, /const visible = isBand \? filtered : filtered\.slice\(0, limit\)/)
+  assert.match(source, /\{visible\.map\(renderCard\)\}/)
+  assert.match(source, /Mostrar \{Math\.min\(remaining, DIRECTORY_PAGE_SIZE\)\} más/)
+  // El ItemList lleva solo la primera tanda; numberOfItems, el total.
+  for (const file of ['app/imagenes/page.js', 'app/pasos/page.js', 'components/HeritageDirectoryRoutePage.js']) {
+    assert.match(read(file), /limit: DIRECTORY_PAGE_SIZE/, file)
+  }
+  // Las facetas de /pasos leen el slug real de la localidad, no el compacto.
+  assert.match(read('app/pasos/page.js'), /<HeritageDirectoryFacets items=\{steps\}/)
 })
