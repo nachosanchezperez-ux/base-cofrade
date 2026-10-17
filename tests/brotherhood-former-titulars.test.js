@@ -61,8 +61,9 @@ test('la ficha pública no presenta antiguas titulares como titulares vigentes',
   assert.match(loader, /\.filter\(\(imageEntity\) => !formerImageIdSet\.has\(imageEntity\.id\)\)/)
   assert.match(loader, /antiguasTitulares,/)
   assert.match(loader, /!formerImageSlugs\.has\(imagen\.slug\)/)
-  // La ficha de la imagen antigua sigue resolviéndose y se identifica como antigua.
-  assert.match(loader, /antiguaTitular: true/)
+  // La ficha de la imagen antigua se identifica como antigua.
+  const imageLoader = read('lib/supabase/public-entity-pages.js')
+  assert.match(imageLoader, /antiguaTitular: isFormerTitularRelation\(relation\?\.relation_type\)/)
 
   const timeline = read('components/BrotherhoodHistoryTimeline.js')
   assert.match(timeline, /Antiguas imágenes titulares/)
