@@ -44,7 +44,7 @@ test('brotherhoodSeoDescription enumera solo bloques realmente documentados', ()
 
   assert.equal(
     description,
-    'San Benito en Sevilla: Hermandad de Penitencia · Martes Santo. Titulares, pasos, música, patrimonio, cultos, historia, salidas, fuentes documentales.'
+    'San Benito es una hermandad de penitencia de Sevilla. Sale en procesión el Martes Santo. Titulares, pasos, música, patrimonio, cultos, historia, salidas…'
   );
 });
 
@@ -59,7 +59,7 @@ test('brotherhoodSeoDescription ignora placeholders editoriales en el día de sa
     fuentesFicha: [{}],
   });
 
-  assert.match(description, /^Ficha de prueba en Sevilla: Agrupación Parroquial\./);
+  assert.match(description, /^Ficha de prueba es una agrupación parroquial de Sevilla\./);
   assert.doesNotMatch(description, /Pendiente/i);
   assert.match(description, /Titulares, fuentes documentales\.$/);
 });
