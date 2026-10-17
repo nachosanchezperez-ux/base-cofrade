@@ -40,7 +40,7 @@ test('la Home permite un foco editorial previo sin quitar prioridad al directo',
   assert.match(snapshot, /getHomeEditorialFocus/)
   assert.match(snapshot, /remainingCandidates.find/)
   assert.match(snapshot, /editorialFeaturedOutingId/)
-  assert.match(snapshot, /hilo-cofrade-home-public-snapshot-v25/)
+  assert.match(snapshot, /hilo-cofrade-home-public-snapshot-v26-igualas/)
 })
 
 test('la agenda de portada no usa carriles horizontales: filas a todo el ancho', async () => {

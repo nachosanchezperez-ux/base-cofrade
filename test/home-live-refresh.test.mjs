@@ -136,7 +136,7 @@ test('solo se guardan los briefings de lo que puede pasar a "En curso"', () => {
 test('la portada cachea 5 minutos, recalcula lo horario por petición y se invalida desde el Panel', () => {
   const snapshot = read('lib/supabase/home-snapshot.js')
 
-  assert.match(snapshot, /hilo-cofrade-home-public-snapshot-v25/)
+  assert.match(snapshot, /hilo-cofrade-home-public-snapshot-v26-igualas/)
   assert.match(snapshot, /revalidate: 300/)
   assert.doesNotMatch(snapshot, /revalidate: 60\b/)
   assert.match(snapshot, /tags: \['home-public'\]/)
