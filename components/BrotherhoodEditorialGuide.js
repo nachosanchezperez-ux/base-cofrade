@@ -9,7 +9,7 @@ function normalizedAnchor(value = '') {
     .replace(/^-|-$/g, '')
 }
 
-function guideChapters(value = '') {
+export function guideChapters(value = '') {
   const blocks = String(value)
     .split(/\n\s*\n/)
     .map((block) => block.trim())

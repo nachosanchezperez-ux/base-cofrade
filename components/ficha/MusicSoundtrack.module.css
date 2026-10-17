@@ -1,0 +1,126 @@
+.section { padding: 0 0 36px; }
+
+/* Bloque oscuro a sangre; el archivo completo sigue debajo sobre papel. */
+.stage {
+  padding: 44px 0;
+  background: #14100f;
+  color: #fff;
+}
+
+.head { display: grid; gap: 6px; margin-bottom: 22px; }
+
+.kicker {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #f2c94c;
+}
+
+.head h2 {
+  margin: 0;
+  font-size: clamp(38px, 11vw, 68px);
+  font-weight: 800;
+  line-height: .92;
+  letter-spacing: -.03em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.dek { margin: 6px 0 0; font-size: 17px; line-height: 1.45; color: rgba(255, 255, 255, .78); max-width: 40ch; }
+
+.charts { display: grid; gap: 14px; }
+
+.panel {
+  margin: 0;
+  padding: 18px 16px 16px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, .06);
+}
+
+.panel figcaption {
+  margin-bottom: 14px;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.decades,
+.composers { display: grid; gap: 7px; margin: 0; padding: 0; list-style: none; }
+
+.decades li {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 26px;
+  align-items: center;
+  gap: 10px;
+  font-variant-numeric: tabular-nums;
+}
+
+.decadeLabel { font-size: 13px; font-weight: 700; color: rgba(255, 255, 255, .7); }
+
+.track { display: block; height: 14px; border-radius: 7px; background: rgba(255, 255, 255, .07); overflow: hidden; }
+.track span { display: block; height: 100%; border-radius: 7px; background: linear-gradient(90deg, #f2c94c, #e8833a); }
+
+.decades b { font-size: 15px; font-weight: 800; text-align: right; }
+
+.note { display: block; margin-top: 12px; font-size: 13px; color: rgba(255, 255, 255, .62); }
+
+.composers li {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  border-top: 1px solid rgba(255, 255, 255, .1);
+}
+.composers li:first-child { border-top: 0; }
+
+.rank { font-size: 26px; font-weight: 800; line-height: 1; color: #f2c94c; }
+.composerName { font-size: 16px; font-weight: 700; line-height: 1.25; }
+.composers b { font-size: 24px; font-weight: 800; line-height: 1; white-space: nowrap; }
+.composers b small { font-size: 12px; font-weight: 700; color: rgba(255, 255, 255, .62); }
+
+.playlist { margin-top: 26px; }
+.playlist h3 { margin: 0 0 12px; font-size: 22px; font-weight: 800; }
+.playlist ul { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+
+.playlist a {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  min-height: 72px;
+  padding: 10px 14px 10px 10px;
+  border-radius: 16px;
+  background: #fff;
+  color: #14100f;
+  text-decoration: none;
+}
+.playlist a:hover strong { text-decoration: underline; text-underline-offset: 3px; }
+.playlist a:focus-visible { outline: 3px solid #f2c94c; outline-offset: 3px; }
+
+.play {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--hc-red, #B01B32);
+  color: #fff;
+  font-size: 18px;
+  padding-left: 3px;
+}
+
+.songText { display: flex; flex-direction: column; min-width: 0; }
+.songText strong { font-size: 16px; font-weight: 800; line-height: 1.2; }
+.songText small { font-size: 13px; font-weight: 600; color: #5f5759; line-height: 1.3; }
+.source { font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #5f5759; }
+
+/* Archivo completo y bandas: sobre papel, como el resto de la ficha. */
+.archive { padding-top: 8px; }
+
+@media (min-width: 760px) {
+  .stage { padding: 64px 0; }
+  .charts { grid-template-columns: 1.3fr 1fr; align-items: start; }
+  .playlist ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

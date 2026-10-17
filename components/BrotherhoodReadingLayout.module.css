@@ -44,6 +44,16 @@
 .next time { display:block; margin-top:12px; font-size:22px; font-family:Georgia,serif; font-weight:700; }
 .next h3 { font-size:19px; line-height:1.3; margin:12px 0; }
 .nextTime { font-weight:700; margin:10px 0 16px; }
+/* Próxima cita en la variante revista (Tarea 09): fecha en baldosa grande. */
+.nextBig { display:grid; grid-template-columns:auto minmax(0,1fr); column-gap:18px; align-items:start; padding:20px; border:0; border-radius:18px; background:var(--brotherhood-dark, #112339); color:#fff; }
+.nextBig > :global(.eyebrow) { grid-column:1 / -1; margin-bottom:12px; color:#fff; opacity:.85; }
+.nextBig .dateTile { grid-row:span 4; display:grid; justify-items:center; width:92px; margin:0; padding:10px 6px 12px; border-radius:14px; background:#fff; color:var(--hc-red, #B01B32); font-family:inherit; text-align:center; }
+.nextBig .dateTile span { font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--ink, #191516); }
+.nextBig .dateTile b { font-size:46px; font-weight:800; line-height:1; letter-spacing:-.03em; }
+.nextBig h3 { margin:0 0 6px; font-size:21px; line-height:1.2; color:#fff; }
+.nextBig .nextTime { margin:0 0 10px; font-size:18px; }
+.nextBig p, .nextBig summary { color:rgba(255,255,255,.85); }
+.nextBig :global(.text-link) { color:#fff; font-weight:800; }
 .reading :global(#conoce-hermandad) { border-block:1px solid #e3e6e9; padding-block:0; }
 .reading :global(#conoce-hermandad)::before { width:3px; background:var(--brotherhood-primary); }
 .reading :global(#conoce-hermandad > .shell) { padding-block:28px; }

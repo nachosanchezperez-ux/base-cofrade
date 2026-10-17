@@ -580,7 +580,7 @@ function CurrentMusicSequence({ items, nested = false }) {
   )
 }
 
-export async function BrotherhoodOwnBands({ brotherhoodId, musicOnly = false }) {
+export async function BrotherhoodOwnBands({ brotherhoodId, musicOnly = false, skipCurrent = false, compact = false }) {
   try {
     const supabase = createPublicClient()
     const [bands, threadData, currentAccompaniments] = await Promise.all([
@@ -660,14 +660,15 @@ export async function BrotherhoodOwnBands({ brotherhoodId, musicOnly = false }) 
             <div className="shell">
               <span className="eyebrow">Vínculo institucional</span>
               {musicOnly ? <h3>Bandas de la Hermandad</h3> : <h2>Bandas de la Hermandad</h2>}
-              <p className="body-large">Formaciones vinculadas institucionalmente a la Hermandad, con independencia de sus acompañamientos procesionales concretos.</p>
+              {compact ? null : <p className="body-large">Formaciones vinculadas institucionalmente a la Hermandad, con independencia de sus acompañamientos procesionales concretos.</p>}
               <div className="current-music-grid">
                 {bands.map((band) => (
                   <Link className="current-music-card" href={`/bandas/${band.slug}`} key={band.id}>
                     <span className="current-music-position">Banda propia</span>
                     <h3>{band.nombre}</h3>
                     <p>{band.tipo}</p>
-                    {band.descripcion && <small>{band.descripcion}</small>}
+                    {band.descripcion && !compact && <small>{band.descripcion}</small>}
+                    {compact ? <span className="text-link">Ver banda →</span> : null}
                   </Link>
                 ))}
               </div>
@@ -675,7 +676,7 @@ export async function BrotherhoodOwnBands({ brotherhoodId, musicOnly = false }) 
           </section>
         ) : null}
 
-        <CurrentMusicSequence items={currentAccompaniments} nested={musicOnly} />
+        {skipCurrent ? null : <CurrentMusicSequence items={currentAccompaniments} nested={musicOnly} />}
       </>
     )
   } catch (error) {
