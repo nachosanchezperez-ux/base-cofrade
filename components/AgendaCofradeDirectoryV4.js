@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
 import { agendaLocationMatches, agendaMunicipalityOptions } from '@/lib/agenda-cofrade-location'
 import { getProcessionLiveState } from '@/lib/procession-live-status'
+import { isAgendaItemOver } from '@/lib/agenda-clock'
 import { routeSummarySections } from '@/lib/procession-route'
 import { agendaTemporalDateInfo, agendaTemporalRangeDate, withAgendaTemporalDay } from '@/lib/agenda-temporal-display'
 import { agendaEventAnchor, agendaDirectionsHref, isOutingEvent, schedulePrecision, scheduleTimeHint } from '@/lib/agenda-event-presentation'
@@ -473,9 +474,10 @@ export default function AgendaCofradeDirectoryV4({
 
   const liveNow = useMemo(() => new Date(nowIso), [nowIso])
 
+  // Con la página abierta, lo que va terminando sale de la lista sin recargar.
   const upcomingItems = useMemo(
-    () => items.filter((item) => item.isUpcoming && !item.isCancelled),
-    [items]
+    () => items.filter((item) => item.isUpcoming && !item.isCancelled && !isAgendaItemOver(item, liveNow)),
+    [items, liveNow]
   )
 
   const liveItems = useMemo(() => upcomingItems
