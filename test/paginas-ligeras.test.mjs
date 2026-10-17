@@ -1,14 +1,14 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
-import { entityDirectoryInitialState } from '../lib/entity-directory-url-state.js'
+import { compactDirectoryItem, entityDirectoryInitialState } from '../lib/entity-directory-url-state.js'
 
 const read = (file) => readFileSync(new URL(`../${file}`, import.meta.url), 'utf8')
 
 test('el directorio viaja una sola vez: sin Suspense con el listado como reserva', () => {
   const page = read('app/directorio/page.js')
   assert.doesNotMatch(page, /Suspense/)
-  assert.match(page, /<EntityDirectoryExplorer key=\{stateKey\} items=\{items\} initialState=\{initialState\} \/>/)
+  assert.match(page, /<EntityDirectoryExplorer key=\{stateKey\} items=\{items\.map\(compactDirectoryItem\)\} initialState=\{initialState\} \/>/)
 })
 
 test('el estado del directorio se lee de la URL en el servidor', () => {
@@ -27,4 +27,12 @@ test('iconos y escudos sin batería de tamaños; agenda por tandas', () => {
   assert.match(agenda, /const AGENDA_PAGE_SIZE = 24/)
   assert.match(agenda, /filtered\.slice\(0, visibleCount\)/)
   assert.match(agenda, /setVisibleCount\(Number\.POSITIVE_INFINITY\)/)
+})
+
+test('el directorio envía solo los campos que usa y sin palabras clave repetidas', () => {
+  const item = compactDirectoryItem({ id: '1', kind: 'brotherhood', name: 'Las Penas', officialName: 'Agrupación de las Penas', relation: 'Sede · Iglesia del Carmen', subtype: 'Penitencia', keywords: ['Agrupación de las Penas', 'Iglesia del Carmen', 'Penitencia', 'Écija histórica'], primaryColor: '#000', mediaAlt: 'x', holyWeekDay: '' })
+  assert.deepEqual(item.keywords, ['Écija histórica'])
+  assert.equal(item.primaryColor, undefined)
+  assert.equal(item.holyWeekDay, undefined)
+  assert.equal(compactDirectoryItem({ name: 'A', officialName: 'A' }).officialName, undefined)
 })

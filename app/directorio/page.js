@@ -1,7 +1,7 @@
 import { connection } from 'next/server'
 import Link from 'next/link'
 import EntityDirectoryExplorer from '@/components/EntityDirectoryExplorer'
-import { entityDirectoryInitialState } from '@/lib/entity-directory-url-state'
+import { compactDirectoryItem, entityDirectoryInitialState } from '@/lib/entity-directory-url-state'
 import JsonLd from '@/components/JsonLd'
 import { getPublicEntityDirectory } from '@/lib/supabase/public-directory-cache'
 import { absoluteUrl, breadcrumbJsonLd, filteredViewRobots, socialMetadata } from '@/lib/seo'
@@ -95,7 +95,7 @@ export default async function DirectorioPage({ searchParams } = {}) {
             Cambios musicales 2027 <span aria-hidden="true">→</span>
           </Link>
         </nav>
-        <EntityDirectoryExplorer key={stateKey} items={items} initialState={initialState} />
+        <EntityDirectoryExplorer key={stateKey} items={items.map(compactDirectoryItem)} initialState={initialState} />
       </div>
     </section>
   )
