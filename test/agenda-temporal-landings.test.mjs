@@ -113,7 +113,7 @@ test('cada periodo resume en una frase cuántos actos hay, de qué tipo y dónde
     ],
   })
   assert.equal(landing.summary, 'Hoy, sábado 17 de octubre de 2026, hay 3 actos cofrades documentados en Sevilla y su provincia: 1 procesión, 1 rosario público y 1 besamanos o besapiés.')
-  assert.equal(landing.summaryWithPlaces, `${landing.summary} Con actividad en Sevilla capital y Dos Hermanas.`)
+  assert.equal(landing.summaryWithPlaces, `${landing.summary} Hay actividad en Sevilla capital y Dos Hermanas.`)
   assert.equal(landing.temporalCoverage, '2026-10-17')
   assert.equal(agendaTemporalCoverage('weekend', '2026-10-15'), '2026-10-17/2026-10-18')
   assert.equal(agendaTemporalSummary({ count: 0 }), '')
