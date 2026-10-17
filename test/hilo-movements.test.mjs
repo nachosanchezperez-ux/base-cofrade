@@ -1,7 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
-import { HILO_MOVEMENTS } from '../lib/hilo-movements-data.js'
+import { HILO_MOVEMENTS } from './fixtures/hilo-movements-records.mjs'
 import { buildHiloMovements, selectHiloMovements, filterHiloMovements, validHiloDay, hiloDayLabel } from '../lib/hilo-movements.js'
 const TODAY = { today: '2026-10-07' }
 const roots = HILO_MOVEMENTS.filter((item) => item.brotherhood).map((item) => ({ id: item.brotherhood.id, slug: item.brotherhood.slug, entity_type: 'brotherhood', status: 'published' }))

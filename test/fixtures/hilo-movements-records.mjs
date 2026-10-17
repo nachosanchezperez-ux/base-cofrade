@@ -1,5 +1,6 @@
-// Curated editorial pilot: announcement dates are never technical update dates.
-// One entry is reused on the hub and its brotherhood fiche.
+// Copia de las noticias que vivían en código hasta el 17/10/2026 (ahora en el
+// Panel, public.editorial_content). Solo se usa como datos de prueba: la web ya
+// no lee este archivo.
 export const HILO_MOVEMENTS = [
   {
     id: 'san-esteban-santa-ana-2027',
