@@ -1,12 +1,13 @@
 import Link from 'next/link'
 import ShareActions from '@/components/ShareActions'
 import { agendaItemShare } from '@/lib/share'
+import { scheduleTimeHint } from '@/lib/agenda-event-presentation'
 import styles from './AgendaTemporalEventList.module.css'
 
 function itemTime(item) {
   if (item.timeText) return item.timeText
   if (item.startTime && item.endTime) return `${item.startTime}–${item.endTime}`
-  return item.startTime || 'Hora por confirmar'
+  return item.startTime || scheduleTimeHint(item.schedule) || 'Hora por confirmar'
 }
 
 function dayLabel(item) {

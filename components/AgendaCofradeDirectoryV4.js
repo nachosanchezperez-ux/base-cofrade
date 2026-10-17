@@ -7,7 +7,7 @@ import { agendaLocationMatches, agendaMunicipalityOptions } from '@/lib/agenda-c
 import { getProcessionLiveState } from '@/lib/procession-live-status'
 import { routeSummarySections } from '@/lib/procession-route'
 import { agendaTemporalDateInfo, agendaTemporalRangeDate, withAgendaTemporalDay } from '@/lib/agenda-temporal-display'
-import { agendaEventAnchor, agendaDirectionsHref, isOutingEvent, schedulePrecision } from '@/lib/agenda-event-presentation'
+import { agendaEventAnchor, agendaDirectionsHref, isOutingEvent, schedulePrecision, scheduleTimeHint } from '@/lib/agenda-event-presentation'
 import { agendaItemShare } from '@/lib/share'
 import ShareActions from '@/components/ShareActions'
 import useFollowedBrotherhoods from '@/components/useFollowedBrotherhoods'
@@ -800,8 +800,8 @@ export default function AgendaCofradeDirectoryV4({
                       <div className={`${styles.cardBody} ${mobileStyles.cardBody}`}>
                         {isOutingEvent(item) && !item.timeText ? (
                           <div className={mobileStyles.outingTimes}>
-                            <div><span>Salida</span><strong>{item.startTime || 'Por confirmar'}</strong><small>{schedulePrecision(item.schedule, 'departure')}</small></div>
-                            <div><span>Entrada</span><strong>{item.endTime || 'Por confirmar'}</strong><small>{schedulePrecision(item.schedule, 'arrival')}</small></div>
+                            <div><span>Salida</span><strong>{item.startTime || scheduleTimeHint(item.schedule, 'departure') || 'Por confirmar'}</strong><small>{schedulePrecision(item.schedule, 'departure')}</small></div>
+                            <div><span>Entrada</span><strong>{item.endTime || scheduleTimeHint(item.schedule, 'arrival') || 'Por confirmar'}</strong><small>{schedulePrecision(item.schedule, 'arrival')}</small></div>
                           </div>
                         ) : <span className={mobileStyles.schedule}><b>Horario</b><strong>{item.timeText || (item.startTime ? `${item.startTime}${item.endTime ? `–${item.endTime}` : ''} h` : 'Por confirmar')}</strong></span>}
                         <div className={styles.cardTopline}>
