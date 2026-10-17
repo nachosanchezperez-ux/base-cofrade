@@ -72,7 +72,9 @@ export default async function HiloArticlePage({ params }) {
   const discoverFicha = /^\/(hermandades|bandas|imagenes|pasos|autores|marchas)\/[a-z0-9-]+/.exec(item.discover?.href || '')
   const discoverPath = discoverFicha ? discoverFicha[0] : ''
   if (discoverPath && !connections.some((connection) => connection.href.split('#')[0] === discoverPath)) {
-    connections.push({ id: discoverPath, href: discoverPath, label: item.discover.label, role: ROLE_BY_FAMILY[discoverFicha[1]] })
+    // «Conoce al Santísimo Cristo de la Exaltación» → «Santísimo Cristo de la Exaltación».
+    const label = item.discover.label.replace(/^(?:conoce|descubre|visita|lee|consulta|ver|escucha|recorre)\s+(?:a\s+la\s+|a\s+los\s+|a\s+las\s+|al\s+|a\s+|el\s+|la\s+|los\s+|las\s+)?/iu, '').trim()
+    connections.push({ id: discoverPath, href: discoverPath, label: label ? `${label.charAt(0).toLocaleUpperCase('es')}${label.slice(1)}` : item.discover.label, role: ROLE_BY_FAMILY[discoverFicha[1]] })
   }
   const mentions = connections.filter((connection) => connection.href !== item.protagonist.href)
 

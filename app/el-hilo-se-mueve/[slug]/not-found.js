@@ -1,6 +1,12 @@
 import Link from 'next/link'
 
 // Noticia retirada o dirección mal escrita: se vuelve al índice de novedades.
+// Metadatos propios para no heredar el `index, follow` del layout.
+export const metadata = {
+  title: 'Noticia no encontrada',
+  robots: { index: false, follow: true },
+}
+
 export default function HiloArticleNotFound() {
   return (
     <section className="section page-top">
