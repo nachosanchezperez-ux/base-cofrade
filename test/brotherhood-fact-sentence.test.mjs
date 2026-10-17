@@ -71,3 +71,14 @@ test('la meta description se corta por frases completas, nunca en «Titulares…
   // Si solo cabe una frase muy corta, se recorta por palabras para no quedarse pobre.
   assert.match(sentenceSeoDescription(`Uno. ${'palabra '.repeat(40)}`), /…$/)
 })
+
+test('un resumen editorial que no cabe ni en su primera frase cede a la frase de hechos', async () => {
+  const { brotherhoodSeoDescription } = await import('../lib/seo.js')
+  const description = brotherhoodSeoDescription({
+    nombrePopular: 'El Baratillo', localidad: 'Sevilla', tipos: ['Penitencia'], sede: 'Capilla de la Piedad', diaSalida: 'Miércoles Santo', fundacion: '1693',
+    editorialGuide: { summary: 'El Baratillo, Hermandad de Penitencia de Sevilla, se entiende desde la devoción a la Santa Cruz y a la Piedad, su transformación histórica y su arraigo en el barrio del Arenal, junto a la Maestranza.' },
+  })
+  assert.equal(description, 'El Baratillo es una hermandad de penitencia de Sevilla, con sede en la Capilla de la Piedad. Sale en procesión el Miércoles Santo. Fundada en 1693.')
+  const short = brotherhoodSeoDescription({ nombrePopular: 'X', localidad: 'Sevilla', editorialGuide: { summary: 'X es una corporación del barrio de San Bernardo con una larga historia documentada.' } })
+  assert.equal(short, 'X es una corporación del barrio de San Bernardo con una larga historia documentada.')
+})
