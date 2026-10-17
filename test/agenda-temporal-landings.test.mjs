@@ -100,3 +100,31 @@ test('Hoy proyecta un acto multidia sobre hoy y no sobre su fecha de inicio', ()
   assert.equal(multi.temporalDateInfo.weekdayLabel, 'Sábado, 26 de septiembre')
   assert.equal(multi.timeText, '09:00–14:00 y 17:00–21:00')
 })
+
+test('cada periodo resume en una frase cuántos actos hay, de qué tipo y dónde', async () => {
+  const { agendaTemporalSummary, agendaTemporalCoverage } = await import('../lib/agenda-temporal-landing.js')
+  const landing = buildAgendaTemporalLanding({
+    period: 'today',
+    today: '2026-10-17',
+    items: [
+      item('a', { date: '2026-10-17' }),
+      item('b', { date: '2026-10-17', category: 'devotions', categoryHref: '/agenda-cofrade' }),
+      item('c', { date: '2026-10-17', category: 'rosaries', categoryHref: '/agenda-cofrade', municipality: 'Dos Hermanas', scope: 'province' }),
+    ],
+  })
+  assert.equal(landing.summary, 'Hoy, sábado, 17 de octubre de 2026, hay 3 actos cofrades documentados en Sevilla y su provincia: 1 procesión, 1 rosario público y 1 besamanos o besapiés.')
+  assert.equal(landing.summaryWithPlaces, `${landing.summary} Con actividad en Sevilla capital y Dos Hermanas.`)
+  assert.equal(landing.temporalCoverage, '2026-10-17')
+  assert.equal(agendaTemporalCoverage('weekend', '2026-10-15'), '2026-10-17/2026-10-18')
+  assert.equal(agendaTemporalSummary({ count: 0 }), '')
+  assert.equal(
+    agendaTemporalSummary({ period: 'tomorrow', count: 1, categories: [{ key: 'concerts', count: 1 }], municipalities: [{ label: 'Olivares' }], dateCaption: 'Domingo, 18 de octubre de 2026', withPlaces: false }),
+    'Mañana, domingo, 18 de octubre de 2026, hay 1 acto cofrade documentado en Sevilla y su provincia.'
+  )
+})
+
+test('los títulos de los periodos empiezan por «Procesiones y actos cofrades»', () => {
+  assert.equal(TEMPORAL_AGENDA_PAGES.today.title, 'Procesiones y actos cofrades de hoy en Sevilla')
+  assert.equal(TEMPORAL_AGENDA_PAGES.tomorrow.title, 'Procesiones y actos cofrades de mañana en Sevilla')
+  assert.equal(TEMPORAL_AGENDA_PAGES.weekend.title, 'Procesiones y actos cofrades del fin de semana en Sevilla')
+})
