@@ -26,7 +26,7 @@ test('el equilibrado óptico admite tamaños de portada sin romper el directorio
 
   assert.match(crest, /width = 82/)
   assert.match(crest, /height = 104/)
-  assert.match(crest, /sizes = '\(max-width: 620px\) 60px, 82px'/)
+  assert.match(crest, /sizes = undefined/)
   assert.match(crest, /priority = false/)
   assert.match(crest, /maxScale = MAX_SCALE/)
   assert.match(crest, /opticalBalance\(image, maxScale\)/)

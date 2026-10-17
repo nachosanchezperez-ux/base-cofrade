@@ -188,7 +188,8 @@ export default function BrotherhoodDirectoryCrestImage({
   className = '',
   width = 82,
   height = 104,
-  sizes = '(max-width: 620px) 60px, 82px',
+  // Tamaño fijo: srcset 1x/2x en lugar de ~16 anchos por escudo.
+  sizes = undefined,
   priority = false,
   maxScale = MAX_SCALE,
   fallbackClassName = '',
