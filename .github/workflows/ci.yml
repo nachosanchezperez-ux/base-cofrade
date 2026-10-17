@@ -18,3 +18,19 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run build
+
+  # Migraciones en dos fases (supabase/migrations/README.md): al fusionar, Vercel
+  # despliega y Supabase aplica migraciones a la vez, sin orden garantizado. Esta
+  # comprobación falla si la PR crea un elemento de esquema y el código ya lo usa.
+  migration-split:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: node scripts/check-migration-code-split.mjs --base "origin/${{ github.base_ref }}" --head HEAD

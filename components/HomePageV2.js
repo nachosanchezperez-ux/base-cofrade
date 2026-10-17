@@ -1,6 +1,7 @@
 import HomeFeaturedOuting from '@/components/HomeFeaturedOuting'
 import HomeHero from '@/components/HomeHero'
 import HomeAgendaNow from '@/components/HomeAgendaNow'
+import HomeCrewCalls from '@/components/HomeCrewCalls'
 import HomeDiscover from '@/components/HomeDiscover'
 import HomeUpdatesLink from '@/components/HomeUpdatesLink'
 import HomeTodayV2 from '@/components/HomeTodayV2'
@@ -10,12 +11,12 @@ import styles from '@/app/home.module.css'
 import liveStyles from './HomeExtraordinaryLive.module.css'
 import polishStyles from './HomeResponsivePolish.module.css'
 
-// Portada · Tarea 08. Jerarquía única:
-//   A. Cabecera y buscador
-//   B. Agenda cofrade (Ahora · Hoy · Mañana · Fin de semana)
-//   C. Destacados (Panel → Portada editorial → Destacados, y la procesión en curso)
-//   D. Descubre Hilo Cofrade (accesos a las secciones)
-//   E. Actualidad y descubrimiento (El Hilo se mueve, Descubre hoy, últimos hilos)
+// Portada de 5 bloques (P2-F, auditoría del 17/10):
+//   1. Cabecera y buscador
+//   2. Agenda cofrade (Ahora · Hoy · Mañana · Fin de semana) con las igualás dentro
+//   3. Destacados (Panel y procesión en curso), solo si los hay
+//   4. Actualidad: El Hilo se mueve
+//   5. Descubre Hilo Cofrade: accesos, «Hoy en Hilo Cofrade» y últimos hilos
 export default function HomePageV2({
   today,
   todayContent,
@@ -27,6 +28,7 @@ export default function HomePageV2({
   discoveryThreads,
   exploreStats,
   news = [],
+  crewCalls = null,
 }) {
   const agendaNow = buildHomeAgendaNow(homeTemporal)
 
@@ -42,7 +44,11 @@ export default function HomePageV2({
     <div className={styles.home}>
       <HomeHero />
 
-      {agendaNow ? <HomeAgendaNow agenda={agendaNow} /> : null}
+      {agendaNow ? (
+        <HomeAgendaNow agenda={agendaNow}>
+          <HomeCrewCalls calls={crewCalls} embedded />
+        </HomeAgendaNow>
+      ) : <HomeCrewCalls calls={crewCalls} />}
 
       {highlights.length ? (
         <section
@@ -63,13 +69,12 @@ export default function HomePageV2({
         </section>
       ) : null}
 
-      <HomeDiscover stats={exploreStats} />
-
       <HomeUpdatesLink news={news} />
 
-      <HomeTodayV2 today={today} content={todayContent} />
-
-      <HomeKnowledgeThreads threads={discoveryThreads} />
+      <HomeDiscover stats={exploreStats}>
+        <HomeTodayV2 today={today} content={todayContent} embedded />
+        <HomeKnowledgeThreads threads={discoveryThreads} embedded />
+      </HomeDiscover>
     </div>
   )
 }

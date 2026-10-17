@@ -1,5 +1,7 @@
 import Link from 'next/link'
 import SectionTitle from '@/components/SectionTitle'
+import CalendarSubscribeLinks from '@/components/CalendarSubscribeLinks'
+import { brotherhoodCalendarPath } from '@/lib/agenda-ics-links'
 import styles from './BrotherhoodAgendaSection.module.css'
 
 function timeLabel(item) {
@@ -49,7 +51,7 @@ function ItemCard({ item }) {
   )
 }
 
-export default function BrotherhoodAgendaSection({ items = [] }) {
+export default function BrotherhoodAgendaSection({ items = [], brotherhoodSlug = '', brotherhoodName = '' }) {
   const upcoming = Array.isArray(items) ? items : []
   if (!upcoming.length) return null
 
@@ -78,6 +80,12 @@ export default function BrotherhoodAgendaSection({ items = [] }) {
           <Link href="/extraordinarias">Extraordinarias</Link>
           <Link href="/igualas-y-ensayos">Igualás y ensayos</Link>
         </nav>
+        <CalendarSubscribeLinks
+          className={styles.subscribe}
+          path={brotherhoodCalendarPath(brotherhoodSlug)}
+          label={brotherhoodName}
+          scope="brotherhood"
+        />
       </div>
     </section>
   )

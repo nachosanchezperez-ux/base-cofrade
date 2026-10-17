@@ -38,6 +38,7 @@ export default async function HomePage() {
     discoveryThreads,
     exploreStats,
     news,
+    crewCalls,
   } = await getHomeSnapshot()
 
   return (
@@ -52,6 +53,7 @@ export default async function HomePage() {
       discoveryThreads={discoveryThreads}
       exploreStats={exploreStats}
       news={news}
+      crewCalls={crewCalls}
     />
   )
 }

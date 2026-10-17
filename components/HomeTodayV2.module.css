@@ -712,3 +712,65 @@
     padding-right: 82px;
   }
 }
+
+/* Incrustado en «Descubre Hilo Cofrade» (portada de 5 bloques): sin fondo ni
+   márgenes propios; un filete separa el apartado del anterior. */
+.embedded {
+  scroll-margin-top: calc(var(--hc-app-header-height, 70px) + 18px);
+  margin-top: 26px;
+  padding-top: 22px;
+  border-top: 1px solid #dfe6ed;
+}
+
+.embeddedHeader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 12px;
+  margin-bottom: 14px;
+}
+
+.embeddedHeader h3 {
+  margin: 0;
+  color: #123a67;
+  font-size: 21px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -.02em;
+}
+
+/* Fase 1 de la portada (17/10/2026): la tarjeta entera es el enlace. El título
+   lleva el enlace y su ::after cubre la tarjeta (.card ya es position: relative),
+   así no hace falta repetir «Descubrir →» en cada tarjeta. */
+.cardLink {
+  color: inherit;
+  text-decoration: none;
+}
+
+.cardLink::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+}
+
+.cardLink:focus-visible {
+  outline: none;
+}
+
+.card:has(.cardLink:focus-visible) {
+  outline: 3px solid #123a67;
+  outline-offset: 2px;
+}
+
+.card:has(.cardLink):hover {
+  border-color: #9fb3c4;
+}
+
+.card:has(.cardLink):hover h3 {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}

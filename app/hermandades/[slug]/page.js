@@ -52,6 +52,9 @@ import {
 import {
   absoluteUrl,
   breadcrumbJsonLd,
+  brotherhoodFactSentence,
+  brotherhoodFoundingYear,
+  brotherhoodSeatJsonLd,
   brotherhoodSeoDescription,
   brotherhoodSeoTitle,
   brotherhoodPublicTypeLabel,
@@ -309,6 +312,8 @@ export default async function HermandadDetailPage({ params, reading: readingOver
   );
   const description = brotherhoodSeoDescription(h);
   const organizationJsonLdId = `${absoluteUrl(canonicalPath)}#organization`;
+  // Sede con su dirección publicada: ayuda a responder «dónde está» en buscadores e IA.
+  const seatJsonLd = brotherhoodSeatJsonLd(h.sedeDetalle, { locality: h.localidad, region: h.provincia || 'Sevilla' });
   const organizationJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
@@ -316,6 +321,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
     url: absoluteUrl(canonicalPath),
     name: h.nombreOficial || h.nombrePopular,
     alternateName: h.nombrePopular,
+    description: brotherhoodFactSentence(h),
     ...(h.enlacesOficiales?.length ? {
       sameAs: h.enlacesOficiales.map((link) => link.url),
     } : {}),
@@ -325,6 +331,8 @@ export default async function HermandadDetailPage({ params, reading: readingOver
     ...(heroMedia?.path ? {
       image: absoluteUrl(heroMedia.path),
     } : {}),
+    ...(brotherhoodFoundingYear(h.fundacion) ? { foundingDate: brotherhoodFoundingYear(h.fundacion) } : {}),
+    ...(seatJsonLd ? { location: seatJsonLd } : {}),
     ...(h.localidad ? {
       address: {
         '@type': 'PostalAddress',
@@ -702,6 +710,8 @@ export default async function HermandadDetailPage({ params, reading: readingOver
       <JsonLd data={breadcrumbJsonLd([
         { name: 'Inicio', path: '/' },
         { name: 'Hermandades', path: '/hermandades' },
+        // Mismo nivel que la miga visible: la guía cofrade de la localidad.
+        ...(publicText(h.localidad) && municipalityHubHref ? [{ name: publicText(h.localidad), path: municipalityHubHref }] : []),
         { name: h.nombrePopular, path: canonicalPath },
       ])} />
       <JsonLd data={organizationJsonLd} />
@@ -771,7 +781,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
         heroFactLabels={heroFacts.map((fact) => fact.label)}
       />
 
-      <BrotherhoodAgendaSection items={upcomingAgendaItems} />
+      <BrotherhoodAgendaSection items={upcomingAgendaItems} brotherhoodSlug={h.slug} brotherhoodName={h.nombrePopular || h.nombreOficial} />
 
 
 

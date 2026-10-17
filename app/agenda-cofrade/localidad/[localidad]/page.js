@@ -3,6 +3,7 @@ import { connection } from 'next/server'
 import { notFound } from 'next/navigation'
 import MunicipalityAgendaHub from '@/components/MunicipalityAgendaHub'
 import { buildMunicipalityAgendaHub } from '@/lib/municipality-agenda'
+import { localityGuideSeo } from '@/lib/locality-seo'
 import { socialMetadata } from '@/lib/seo'
 import { getAgendaCofrade } from '@/lib/supabase/agenda-cofrade'
 import { getImagesDirectory, getStepsDirectory } from '@/lib/supabase/directories'
@@ -51,7 +52,7 @@ export async function generateMetadata({ params }) {
   if (!hub.exists) return { title: 'Guía cofrade local no encontrada', robots: { index: false, follow: false } }
 
   const title = `Cofradías de ${hub.label}: hermandades y agenda cofrade`
-  const description = `Guía cofrade de ${hub.label}: hermandades, procesiones, agenda, bandas, imágenes y pasos relacionados en Hilo Cofrade.`
+  const { description } = localityGuideSeo(hub)
   const path = `/agenda-cofrade/localidad/${hub.slug}`
   return {
     title,
