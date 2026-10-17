@@ -46,7 +46,7 @@ test('la ficha pública prioriza la portada explícita y conserva el retrato com
   assert.match(page, /const coverMedia = explicitHeroMedia \|\| portraitMedia/)
   assert.match(page, /item\.relationType !== 'hero'/)
   assert.match(page, /label: 'Procesiona en'/)
-  assert.match(page, /label: 'Titular de'/)
+  assert.match(page, /label: (?:imagen\.antiguaTitular \? 'Antigua titular de' : )?'Titular de'/)
   assert.equal(page.includes("imagen.slug === 'maria-santisima-de-la-caridad-en-su-soledad'"), false)
 })
 

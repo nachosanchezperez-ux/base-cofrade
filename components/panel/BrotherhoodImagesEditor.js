@@ -9,6 +9,12 @@ import {
   updateBrotherhoodImageRelationAction,
 } from '@/app/panel/(protected)/hermandades/[id]/titulares/actions'
 import styles from '@/app/panel/panel.module.css'
+import {
+  BROTHERHOOD_IMAGE_RELATION_OPTIONS,
+  isFormerTitularRelation,
+  normalizeRelationType,
+  relationTypeLabel,
+} from '@/lib/brotherhood-image-relations'
 
 const STATUS_LABELS = {
   published: 'Publicada',
@@ -25,7 +31,7 @@ function normalized(value = '') {
 }
 
 function relationLabel(value = '') {
-  return value.replaceAll('_', ' ')
+  return relationTypeLabel(value)
 }
 
 function dateLabel(value, textValue) {
@@ -40,31 +46,57 @@ function dateLabel(value, textValue) {
   return textValue || ''
 }
 
-function RelationTypeField({ defaultValue = 'titular' }) {
-  return (
-    <label>
-      <span>Tipo de relación</span>
-      <input
-        name="relation_type"
-        list="brotherhood-image-relation-types"
-        defaultValue={defaultValue}
-        placeholder="titular"
-        required
-      />
-    </label>
-  )
-}
+// Tipo, fechas (exactas o textuales), nota y, para las antiguas imágenes titulares, la imagen que la sustituyó.
+function RelationFields({ relation = null, successorOptions = [] }) {
+  const initialType = normalizeRelationType(relation?.relation_type || 'titular') || 'titular'
+  const [relationType, setRelationType] = useState(initialType)
+  const isFormer = isFormerTitularRelation(relationType)
+  const knownType = BROTHERHOOD_IMAGE_RELATION_OPTIONS.some((option) => option.value === initialType)
+  const successors = successorOptions.filter((option) => option.id !== relation?.image_entity_id)
 
-function RelationDates({ relation = null }) {
   return (
     <>
       <label>
-        <span>Fecha inicial</span>
+        <span>Tipo de relación</span>
+        <select name="relation_type" value={relationType} onChange={(event) => setRelationType(event.target.value)} required>
+          {BROTHERHOOD_IMAGE_RELATION_OPTIONS.map((option) => (
+            <option key={option.value} value={option.value}>{option.label}</option>
+          ))}
+          {!knownType ? <option value={initialType}>{relationTypeLabel(initialType)} (valor existente)</option> : null}
+        </select>
+        {isFormer ? <small>No aparecerá entre los Sagrados Titulares ni en el cortejo: se muestra en Historia como antigua imagen titular.</small> : null}
+      </label>
+      <label>
+        <span>{isFormer ? 'Titular desde (fecha exacta)' : 'Fecha inicial'}</span>
         <input name="date_from" type="date" defaultValue={relation?.date_from || ''} />
       </label>
       <label>
-        <span>Fecha final</span>
+        <span>{isFormer ? 'Titular hasta (fecha exacta)' : 'Fecha final'}</span>
         <input name="date_to" type="date" defaultValue={relation?.date_to || ''} />
+      </label>
+      <label>
+        <span>Desde (año o referencia)</span>
+        <input name="date_from_text" defaultValue={relation?.date_from_text || ''} placeholder="1905, h. 1926, siglo XVI…" maxLength={120} />
+      </label>
+      <label>
+        <span>Hasta (año o referencia)</span>
+        <input name="date_to_text" defaultValue={relation?.date_to_text || ''} placeholder="1945, 1936…" maxLength={120} />
+      </label>
+      {isFormer ? (
+        <label>
+          <span>La sustituyó</span>
+          <select name="successor_image_id" defaultValue={relation?.successorImageId || ''}>
+            <option value="">Sin documentar</option>
+            {successors.map((option) => (
+              <option key={option.id} value={option.id}>{option.name}</option>
+            ))}
+          </select>
+          <small>Solo imágenes ya vinculadas a esta Hermandad.</small>
+        </label>
+      ) : null}
+      <label className={styles.fieldWide}>
+        <span>{isFormer ? 'Nota (destino, estado actual, fuente…)' : 'Nota'}</span>
+        <textarea name="notes" rows={3} defaultValue={relation?.notes || ''} maxLength={1500} placeholder={isFormer ? 'Solo datos contrastados. Deja vacío lo que no conste.' : ''} />
       </label>
     </>
   )
@@ -82,16 +114,16 @@ export default function BrotherhoodImagesEditor({ data, canEdit }) {
       STATUS_LABELS[image.status],
     ].join(' ')).includes(term))
   }, [data.candidates, query])
+  const successorOptions = useMemo(() => {
+    const seen = new Set()
+    return data.relations
+      .filter((relation) => relation.status !== 'archived' && relation.image && !isFormerTitularRelation(relation.relation_type))
+      .map((relation) => relation.image)
+      .filter((image) => (seen.has(image.id) ? false : seen.add(image.id)))
+  }, [data.relations])
 
   return (
     <>
-      <datalist id="brotherhood-image-relation-types">
-        <option value="titular" />
-        <option value="cotitular" />
-        <option value="imagen_venerada" />
-        <option value="vinculada" />
-      </datalist>
-
       <section className={`${styles.panelCard} ${styles.editorForm}`}>
         <div className={styles.sectionHeading}>
           <div>
@@ -127,11 +159,10 @@ export default function BrotherhoodImagesEditor({ data, canEdit }) {
                 </select>
                 {!filteredCandidates.length ? <small>No hay Imágenes que coincidan con la búsqueda.</small> : null}
               </label>
-              <RelationTypeField />
-              <RelationDates />
+              <RelationFields successorOptions={successorOptions} />
             </div>
             <div className={styles.formActions}>
-              <small>Las fechas son opcionales. Al añadirla podrás cargar su fotografía aquí mismo.</small>
+              <small>Las fechas son opcionales: usa la exacta si consta o el año/referencia textual si solo se conoce aproximadamente. Al añadirla podrás cargar su fotografía aquí mismo.</small>
               <button className={styles.primaryButton} type="submit">Añadir imagen/titular</button>
             </div>
           </form>
@@ -191,14 +222,8 @@ export default function BrotherhoodImagesEditor({ data, canEdit }) {
                         <input type="hidden" name="brotherhood_id" value={data.entity.id} />
                         <input type="hidden" name="relation_id" value={relation.id} />
                         <div className={styles.formGrid}>
-                          <RelationTypeField defaultValue={relation.relation_type} />
-                          <RelationDates relation={relation} />
+                          <RelationFields relation={relation} successorOptions={successorOptions} />
                         </div>
-                        {(relation.date_from_text || relation.date_to_text) ? (
-                          <p className={styles.emptyText}>
-                            Referencia textual conservada: {[relation.date_from_text, relation.date_to_text].filter(Boolean).join(' — ')}
-                          </p>
-                        ) : null}
                         <div className={styles.formActions}>
                           <small>Indicar una fecha final cierra el periodo sin borrar la relación.</small>
                           <button className={styles.primaryButton} type="submit">Guardar / cerrar relación</button>

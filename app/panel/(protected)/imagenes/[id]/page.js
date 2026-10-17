@@ -115,7 +115,14 @@ export default async function ImageEditorPage({ params, searchParams }) {
             title="Estado actual"
             description="Distingue la información pública de las observaciones internas de seguimiento."
           >
-            <label><span>Estado de conservación</span><input name="current_condition" defaultValue={image.current_condition || ''} placeholder="Bueno, estable…" /></label>
+            <label><span>Situación actual</span><select name="current_condition" defaultValue={image.current_condition || ''}>
+              <option value="">Sin documentar</option>
+              <option value="extant">Se conserva</option>
+              <option value="lost">Perdida / paradero desconocido</option>
+              <option value="destroyed">Destruida</option>
+              <option value="unknown">Desconocida</option>
+              {image.current_condition && !['extant', 'lost', 'destroyed', 'unknown'].includes(image.current_condition) ? <option value={image.current_condition}>{image.current_condition}</option> : null}
+            </select><small>El estado de conservación detallado va en «Notas públicas del estado actual».</small></label>
             <label className={styles.fieldWide}><span>Notas públicas del estado actual</span><textarea name="current_state_notes" defaultValue={image.current_state_notes || ''} rows="3" /></label>
             <label className={styles.fieldWide}><span>Notas internas</span><textarea name="notes" defaultValue={image.notes || ''} rows="3" /></label>
           </PanelFormGroup>

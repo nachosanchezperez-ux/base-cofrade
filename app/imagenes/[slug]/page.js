@@ -61,7 +61,7 @@ export async function generateMetadata({ params }) {
   const description = seoDescription(
     imagen.descripcion,
     hermandad
-      ? `Ficha de ${imagen.nombre}, titular de ${hermandad.nombrePopular}: autoría, datación, historia, restauraciones, cronología y fuentes documentales.`
+      ? `Ficha de ${imagen.nombre}, ${imagen.antiguaTitular ? 'antigua titular' : 'titular'} de ${hermandad.nombrePopular}: autoría, datación, historia, restauraciones, cronología y fuentes documentales.`
       : `Ficha de ${imagen.nombre}: autoría, datación, descripción material y fuentes documentales.`
   );
   const canonical = `/imagenes/${imagen.slug}`;
@@ -225,14 +225,14 @@ export default async function ImagenPage({ params }) {
 
       }} />
       <ImageHeroV2
-        entityType={hermandad ? 'Imagen titular' : 'Imagen'}
+        entityType={hermandad ? (imagen.antiguaTitular ? 'Antigua imagen titular' : 'Imagen titular') : 'Imagen'}
         title={imagen.nombre}
         breadcrumbItems={[
           { label: 'Imágenes', href: '/imagenes' },
           { label: imagen.nombre },
         ]}
         relation={hermandad ? {
-          label: 'Titular de',
+          label: imagen.antiguaTitular ? 'Antigua titular de' : 'Titular de',
           name: hermandad.nombrePopular,
           href: `/hermandades/${hermandad.slug}`,
           crestSrc: hermandad.escudoPath || '',
