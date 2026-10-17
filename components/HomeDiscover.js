@@ -28,7 +28,6 @@ export default function HomeDiscover({ stats }) {
                 ) : item.detail ? (
                   <span className={styles.hint}>{item.detail}</span>
                 ) : null}
-                <i className={styles.go} aria-hidden="true">→</i>
               </Link>
             </li>
           ))}
@@ -39,13 +38,7 @@ export default function HomeDiscover({ stats }) {
           <ul className={styles.moreList}>
             {HOME_DISCOVER_SECONDARY.map((item) => (
               <li key={item.href}>
-                <Link className={styles.moreLink} href={item.href}>
-                  <span className={styles.moreText}>
-                    <strong>{item.label}</strong>
-                    <span>{item.detail}</span>
-                  </span>
-                  <b className={styles.moreArrow} aria-hidden="true">→</b>
-                </Link>
+                <Link className={styles.moreLink} href={item.href}>{item.label}</Link>
               </li>
             ))}
           </ul>

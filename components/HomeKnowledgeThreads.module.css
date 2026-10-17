@@ -88,7 +88,6 @@
 .leadCard {
   position: relative;
   display: flex;
-  min-height: 320px;
   flex-direction: column;
   overflow: hidden;
   padding: 21px;
@@ -479,7 +478,6 @@
   }
 
   .leadCard {
-    min-height: 354px;
     padding: 25px 27px 24px;
   }
 
@@ -487,7 +485,6 @@
 
   .more {
     display: flex;
-    min-height: 354px;
     flex-direction: column;
     padding-top: 20px;
   }

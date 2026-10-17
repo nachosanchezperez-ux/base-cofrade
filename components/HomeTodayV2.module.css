@@ -712,3 +712,38 @@
     padding-right: 82px;
   }
 }
+
+/* Fase 1 de la portada (17/10/2026): la tarjeta entera es el enlace. El título
+   lleva el enlace y su ::after cubre la tarjeta (.card ya es position: relative),
+   así no hace falta repetir «Descubrir →» en cada tarjeta. */
+.cardLink {
+  color: inherit;
+  text-decoration: none;
+}
+
+.cardLink::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+}
+
+.cardLink:focus-visible {
+  outline: none;
+}
+
+.card:has(.cardLink:focus-visible) {
+  outline: 3px solid #123a67;
+  outline-offset: 2px;
+}
+
+.card:has(.cardLink):hover {
+  border-color: #9fb3c4;
+}
+
+.card:has(.cardLink):hover h3 {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
