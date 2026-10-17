@@ -50,7 +50,7 @@ test('el listado se titula «Hermandades de X» y su intro no repite la descripc
 
 test('la guía local describe sus recuentos y sus próximas citas', () => {
   const hub = { label: 'Dos Hermanas', brotherhoods: [1, 2], bands: [1], images: [], steps: [1, 2, 3], items: [1, 2, 3, 4] }
-  assert.equal(localityGuideSeo(hub).description, 'Guía cofrade de Dos Hermanas: 2 hermandades, 1 banda y 3 pasos. 4 próximas citas en la agenda.')
+  assert.equal(localityGuideSeo(hub).description, 'Guía cofrade de Dos Hermanas: 2 hermandades, 1 banda y 3 pasos, con 4 próximas citas en la agenda.')
   assert.equal(localityGuideSeo({ label: 'Gerena' }).description, 'Guía cofrade de Gerena: agenda de procesiones, cultos y besamanos.')
 })
 
