@@ -10,7 +10,8 @@ test('el title municipal combina intención cofradías y agenda', () => {
   const page = read('app/agenda-cofrade/localidad/[localidad]/page.js')
 
   assert.match(page, /Cofradías de \$\{hub\.label\}: hermandades y agenda cofrade/)
-  assert.match(page, /hermandades, procesiones, agenda, bandas, imágenes y pasos/)
+  // La descripción sale de recuentos reales (lib/locality-seo.js).
+  assert.match(page, /const \{ description \} = localityGuideSeo\(hub\)/)
   assert.match(page, /socialMetadata\(\{ title, description, path \}\)/)
 })
 
@@ -20,7 +21,7 @@ test('el H1 presenta el hub como guía cofrade evergreen', () => {
   assert.match(hub, /<h1>Guía cofrade de \{hub\.label\}<\/h1>/)
   assert.match(hub, /Cofradías, hermandades y agenda/)
   assert.match(hub, /name: `Guía cofrade de \$\{hub\.label\}`/)
-  assert.match(hub, /Guía cofrade de \$\{hub\.label\}: agenda, Hermandades, Bandas, Imágenes y Pasos/)
+  assert.match(hub, /const \{ description \} = localityGuideSeo\(hub\)/)
 })
 
 test('la intención amplia no crea una segunda URL municipal', () => {
