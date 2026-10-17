@@ -1,0 +1,33 @@
+name: IndexNow
+
+# Avisa a Bing (IndexNow) de las URL del sitemap cambiadas desde el día anterior.
+# Los cambios del Panel no despliegan, por eso va con horario y no tras el deploy.
+on:
+  schedule:
+    - cron: '17 4 * * *'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'recent = cambiadas en las últimas 26 h · all = todo el sitemap (solo para el envío inicial)'
+        default: recent
+        type: choice
+        options: [recent, all]
+
+concurrency:
+  group: indexnow
+  cancel-in-progress: false
+
+jobs:
+  submit:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Envía las URL cambiadas
+        env:
+          INDEXNOW_MODE: ${{ github.event.inputs.mode || 'recent' }}
+        run: node scripts/indexnow-submit.mjs
