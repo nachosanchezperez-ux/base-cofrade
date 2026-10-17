@@ -4,7 +4,7 @@ import JsonLd from '@/components/JsonLd'
 import HiloMovementCards from '@/components/HiloMovementCards'
 import { getPublicHiloMovements } from '@/lib/supabase/hilo-movements'
 import { HILO_MOVEMENTS_PATH, HILO_TOPIC_LABELS, filterHiloMovements } from '@/lib/hilo-movements'
-import { breadcrumbJsonLd, socialMetadata, filteredViewRobots } from '@/lib/seo'
+import { breadcrumbJsonLd, collectionPageJsonLd, socialMetadata, filteredViewRobots } from '@/lib/seo'
 import styles from '@/components/HiloMovements.module.css'
 
 export const revalidate = 60
@@ -30,6 +30,7 @@ export default async function HiloMovementsPage({ searchParams }) {
     <div className="shell">
       <SiteBreadcrumb items={[{ label: 'El Hilo se mueve' }]} />
       <JsonLd data={breadcrumbJsonLd([{ name: 'Inicio', path: '/' }, { name: 'El Hilo se mueve', path: HILO_MOVEMENTS_PATH }])} />
+      {!unavailable && items.length ? <JsonLd data={collectionPageJsonLd({ path: HILO_MOVEMENTS_PATH, name: 'El Hilo se mueve', description: DESCRIPTION, items: items.map((item) => ({ name: item.title, path: item.href })) })} /> : null}
       <header className={styles.hero}>
         <div><span className={styles.eyebrow}>La actualidad también tiene su hilo</span><h1>El Hilo <em>se mueve</em></h1><p>Lo que cambia en nuestras hermandades. Los sones que llegan, el patrimonio que vuelve y las historias que siguen.</p></div>
         <a className={styles.heroLink} href="#novedades">Tira del hilo <span aria-hidden="true">↓</span></a>
