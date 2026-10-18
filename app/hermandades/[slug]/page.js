@@ -3,9 +3,10 @@ import BrotherhoodReadingLayout from '@/components/BrotherhoodReadingLayout';
 import BrotherhoodQuickFacts from '@/components/BrotherhoodQuickFacts';
 import readingStyles from '@/components/BrotherhoodReadingLayout.module.css';
 import { usesBrotherhoodReading } from '@/lib/brotherhood-reading-rollout';
+import { nextBrotherhoodAppointment } from '@/lib/brotherhood-reading';
 import Image from 'next/image';
 import { cache } from 'react';
-import BrotherhoodAgendaSection from '@/components/BrotherhoodAgendaSection';
+import BrotherhoodNextAppointment from '@/components/BrotherhoodNextAppointment';
 import BrotherhoodCultsSection from '@/components/BrotherhoodCultsSection';
 import BrotherhoodCrewEventsSection from '@/components/BrotherhoodCrewEventsSection';
 import BrotherhoodHeritageUpdates from '@/components/BrotherhoodHeritageUpdates';
@@ -198,6 +199,9 @@ export default async function HermandadDetailPage({ params, reading: readingOver
     crewEvents,
     brotherhoodHref: canonicalPath,
   });
+  // «Próximamente»: el siguiente acto entre agenda, igualás, salidas anunciadas
+  // y cultos con fecha (misma regla que la versión lectura).
+  const nextAppointment = nextBrotherhoodAppointment(upcomingAgendaItems, h.salidas || [], agendaData.today, h.cultos || []);
   const heroMedia = entityCoverMedia.get(h.id)
     || h.imagenes.map((imagen) => entityCoverMedia.get(imagen.id)).find(Boolean)
     || null;
@@ -790,17 +794,20 @@ export default async function HermandadDetailPage({ params, reading: readingOver
             outings: outingsSection, crew: crewSection, hasCrew: crewEvents.length > 0, cults: cultsSection, news: newsSection, curiosities: curiositiesSection }}
         />
       ) : (<>
+      <BrotherhoodNextAppointment
+        next={nextAppointment}
+        others={upcomingAgendaItems}
+        brotherhoodSlug={h.slug}
+        brotherhoodName={h.nombrePopular || h.nombreOficial}
+      />
+
       <EntitySectionNav items={[
         hasPracticalOverview && { href: '#resumen', label: 'Resumen' },
         h.imagenes?.length > 0 && { href: '#titulares', label: 'Titulares' },
         (publicText(h.historia) || h.cronologia?.length > 0 || h.antiguasTitulares?.length > 0) && { href: '#historia', label: 'Historia' },
         (musicalHeritage.length > 0 || fallbackMusicalHeritage.length > 0) && { href: '#musica', label: 'Música' },
         h.patrimonio?.length > 0 && { href: '#patrimonio', label: 'Patrimonio' },
-        upcomingAgendaItems.length > 0
-          ? { href: '#agenda', label: 'Agenda' }
-          : h.cultos?.length > 0
-            ? { href: '#cultos', label: 'Cultos' }
-            : null,
+        h.cultos?.length > 0 && { href: '#cultos', label: 'Cultos' },
       ]} />
 
       <BrotherhoodOverviewV2
@@ -808,7 +815,6 @@ export default async function HermandadDetailPage({ params, reading: readingOver
         heroFactLabels={heroFacts.map((fact) => fact.label)}
       />
 
-      <BrotherhoodAgendaSection items={upcomingAgendaItems} brotherhoodSlug={h.slug} brotherhoodName={h.nombrePopular || h.nombreOficial} />
 
 
 

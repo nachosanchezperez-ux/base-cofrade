@@ -14,7 +14,8 @@ test('la ficha reduce la navegación a destinos editoriales principales', () => 
   for (const label of ['Resumen', 'Titulares', 'Historia', 'Música', 'Patrimonio']) {
     assert.match(navBlock, new RegExp(`label: '${label}'`))
   }
-  assert.match(navBlock, /label: 'Agenda'/)
+  // La próxima cita va arriba, antes de la navegación: no necesita pestaña.
+  assert.doesNotMatch(navBlock, /label: 'Agenda'/)
   assert.match(navBlock, /label: 'Cultos'/)
   assert.doesNotMatch(navBlock, /label: 'Conexiones'/)
   assert.doesNotMatch(navBlock, /label: 'Fuentes'/)

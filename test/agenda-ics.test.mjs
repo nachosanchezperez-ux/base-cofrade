@@ -126,8 +126,8 @@ test('las respuestas .ics no se indexan y /calendario/ queda fuera del rastreo',
 test('las tarjetas de la Agenda, la ficha de Hermandad y la guía local ofrecen el calendario', () => {
   assert.match(read('components/AgendaCofradeDirectoryV4.js'), /calendarHref=\{item\.date \? `\/calendario\/acto\/\$\{agendaEventAnchor\(item\)\}\.ics` : ''\}/)
   assert.match(read('components/ShareActions.js'), /trackEvent\('calendar_add'/)
-  assert.match(read('components/BrotherhoodAgendaSection.js'), /brotherhoodCalendarPath\(brotherhoodSlug\)/)
-  assert.match(read('app/hermandades/[slug]/page.js'), /<BrotherhoodAgendaSection items=\{upcomingAgendaItems\} brotherhoodSlug=\{h\.slug\}/)
+  assert.match(read('components/BrotherhoodNextAppointment.js'), /brotherhoodCalendarPath\(brotherhoodSlug\)/)
+  assert.match(read('app/hermandades/[slug]/page.js'), /<BrotherhoodNextAppointment[\s\S]*?brotherhoodSlug=\{h\.slug\}/)
   assert.match(read('components/MunicipalityAgendaHub.js'), /localityCalendarPath\(hub\.slug\)/)
 })
 
