@@ -10,7 +10,7 @@ const game = readFileSync(new URL('../components/HiddenThreadGame.js', import.me
 
 test('la página entra directamente en el juego, con la adivinanza desde el servidor', () => {
   assert.match(page, /<h1>El hilo escondido<\/h1>/)
-  assert.match(page, /<HiddenThreadGame initialDayKey=\{initialDayKey\} \/>/)
+  assert.match(page, /<HiddenThreadGame initialDayKey=\{initialDayKey\} threads=\{threads\} \/>/)
   // Render por visita: el día nunca sale de una copia en caché de otra fecha.
   assert.match(page, /export const dynamic = 'force-dynamic'/)
   assert.doesNotMatch(page, /export const revalidate/)
