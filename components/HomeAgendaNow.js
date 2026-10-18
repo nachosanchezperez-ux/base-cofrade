@@ -40,7 +40,26 @@ function AgendaRow({ card, variant }) {
           </span>
         </span>
       </Link>
+      {card.focus ? <LiveFocus focus={card.focus} /> : null}
     </li>
+  )
+}
+
+// Salida en curso: siguiente momento del horario, bandas y guía completa, dentro
+// de la propia cita (antes era el bloque aparte «Procesión en curso»).
+function LiveFocus({ focus }) {
+  return (
+    <div className={styles.focus}>
+      {focus.next ? (
+        <p className={styles.focusNext}>
+          <b>Siguiente</b>
+          {focus.next.time ? <strong className={styles.focusTime}>{focus.next.time}</strong> : null}
+          <span>{focus.next.label}{focus.next.place && !focus.next.label.includes(focus.next.place) ? ` · ${focus.next.place}` : ''}</span>
+        </p>
+      ) : null}
+      {focus.bands.length ? <p className={styles.focusBands}>Con {focus.bands.join(' y ')}</p> : null}
+      {focus.guideHref ? <Link className={styles.focusGuide} href={focus.guideHref}>Horarios y guía completa</Link> : null}
+    </div>
   )
 }
 

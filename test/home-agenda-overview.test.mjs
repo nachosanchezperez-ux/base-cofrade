@@ -21,7 +21,7 @@ test('la Home tiene una sola agenda, alimentada por la agenda temporal del snaps
   const home = await read('components/HomePageV2.js')
   const snapshot = await read('lib/supabase/home-snapshot.js')
 
-  assert.match(home, /buildHomeAgendaNow\(homeTemporal\)/)
+  assert.match(home, /buildHomeAgendaNow\(homeTemporal(, \{ liveFocus \})?\)/)
   assert.match(home, /<HomeAgendaNow agenda=\{agendaNow\}>/)
   assert.doesNotMatch(home, /HomeTemporalFocus|HomeProcessionGrid|followingSection/)
   assert.match(snapshot, /getAgendaCofrade/)

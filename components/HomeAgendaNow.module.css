@@ -381,6 +381,82 @@
   font-size: 12px;
 }
 
+/* Salida en curso dentro de la cita principal (#1253). */
+.focus {
+  display: grid;
+  gap: 6px;
+  margin: -2px 0 8px;
+  padding: 10px 12px 12px 88px;
+  border-radius: 0 0 14px 14px;
+  background: #fbf1f3;
+}
+
+.row[data-variant="lead"][data-live] .rowLink:has(+ .focus) {
+  margin-bottom: 0;
+  border-radius: 14px 14px 0 0;
+}
+
+.focusNext {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 8px;
+  margin: 0;
+  color: #34495d;
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.focusNext b {
+  color: #8a2235;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.focusTime {
+  color: #b71f37;
+  font-size: 16px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.focusBands {
+  margin: 0;
+  color: #5f7080;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.focusGuide {
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  min-height: 40px;
+  color: #123a67;
+  font-size: 14px;
+  font-weight: 750;
+}
+
+.focusGuide::after {
+  content: "→";
+  margin-left: 6px;
+  color: #b71f37;
+}
+
+.focusGuide:focus-visible {
+  outline: 3px solid #123a67;
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+@media (max-width: 419px) {
+  .focus {
+    padding-left: 12px;
+  }
+}
+
 @media (min-width: 420px) {
   .tabs[data-tabs="4"] {
     grid-template-columns: repeat(4, minmax(0, 1fr));
