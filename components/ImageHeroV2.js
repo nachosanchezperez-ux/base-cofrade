@@ -45,6 +45,7 @@ function ParentRelation({ relation }) {
 export default function ImageHeroV2({
   entityType = 'Imagen',
   title,
+  titleContext = '',
   subtitle = '',
   breadcrumbItems = [],
   relation = null,
@@ -156,7 +157,10 @@ export default function ImageHeroV2({
             <span>{entityType}</span>
           </div>
 
-          <h1 className={roomStyles.title} id="entity-hero-title">{title}</h1>
+          <h1 className={roomStyles.title} id="entity-hero-title">
+            {title}
+            {titleContext ? <span className={roomStyles.titleContext}><span className="sr-only"> · </span>{titleContext}</span> : null}
+          </h1>
           {subtitle ? <p className={styles.subtitle}>{subtitle}</p> : null}
 
           <ParentRelation relation={relation} />

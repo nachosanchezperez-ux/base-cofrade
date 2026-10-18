@@ -39,6 +39,8 @@ test('los índices de hermandades llevan un H1 completo', async () => {
   const headings = Object.fromEntries(DIRECTORY_TYPES.map((type) => [type.key, type.heading]))
   assert.equal(headings['semana-santa'], 'Hermandades de Semana Santa de Sevilla y provincia')
   assert.equal(headings.gloria, 'Hermandades de Gloria de Sevilla y provincia')
+  // Decisión del propietario (18/10): «Sacramentales» con mayúscula.
+  assert.equal(headings.sacramentales, 'Hermandades Sacramentales de Sevilla y provincia')
   assert.match(read('components/HermandadesCategoryDirectory.js'), /\{config\.heading \|\| pageName\}/)
   assert.equal(holyWeekDayPhrase('Madrugada'), 'de la Madrugada')
   assert.equal(holyWeekDayPhrase('Domingo de Ramos'), 'del Domingo de Ramos')
@@ -61,4 +63,23 @@ test('la agenda no usa H2 de interfaz', async () => {
   ]) assert.ok(!read(file).includes(text), `${file}: ${text}`)
   assert.match(read('components/MunicipalityAgendaHub.js'), /<h2>Próximas citas en \{hub\.label\}<\/h2>/)
   assert.match(read('app/agenda-cofrade/page.js'), /<h1>Agenda Cofrade de Sevilla y provincia<\/h1>/)
+})
+
+// Fase 3 (18/10/2026): el H1 de las fichas lleva el contexto que las distingue.
+test('el H1 de Imagen, Paso y Marcha lleva su contexto', async () => {
+  const { entityHeadingContext, marchHeadingByline } = await import('../lib/seo.js')
+  assert.equal(entityHeadingContext('Cristo de la Sangre', { context: 'San Benito', locality: 'Sevilla' }), 'San Benito (Sevilla)')
+  assert.equal(entityHeadingContext('Paso de misterio de San Benito', { context: 'San Benito', locality: 'Sevilla' }), 'Sevilla')
+  assert.equal(entityHeadingContext('Sin contexto'), '')
+  assert.equal(entityHeadingContext('Andas de plata de María Santísima de Setefilla', { context: 'Nuestra Señora de Setefilla', locality: 'Lora del Río' }), 'Lora del Río')
+  assert.equal(entityHeadingContext('Palio de Nuestra Señora de la Estrella', { context: 'Entrada Triunfal', locality: 'Lebrija' }), 'Entrada Triunfal (Lebrija)')
+  assert.equal(marchHeadingByline(['Manuel Marvizón Carvallo']), 'de Manuel Marvizón Carvallo')
+  assert.equal(marchHeadingByline(['A', 'B', 'C']), 'de A y otros')
+  assert.equal(marchHeadingByline([]), '')
+  for (const file of ['app/imagenes/[slug]/page.js', 'app/pasos/[slug]/page.js']) {
+    assert.match(read(file), /titleContext=\{entityHeadingContext\(/, file)
+  }
+  for (const file of ['components/ImageHeroV2.js', 'components/RelationalEntityHero.js', 'app/marchas/[slug]/page.js']) {
+    assert.match(read(file), /<h1[^>]*>\s*\{(?:title|march\.name)\}\s*\{(?:titleContext|headingByline) \? <span className=\{\w+\.titleContext\}>/, file)
+  }
 })

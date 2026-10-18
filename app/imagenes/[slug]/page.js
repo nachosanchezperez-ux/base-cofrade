@@ -25,6 +25,7 @@ import {
   absoluteUrl,
   breadcrumbJsonLd,
   contextualEntitySeoTitle,
+  entityHeadingContext,
   pageTitle,
   seoDescription,
 } from '@/lib/seo';
@@ -242,6 +243,7 @@ export default async function ImagenPage({ params }) {
       <ImageHeroV2
         entityType={hermandad ? imagePageRelationCopy(imagen.relacionHermandad).entityType : 'Imagen'}
         title={imagen.nombre}
+        titleContext={entityHeadingContext(imagen.nombre, { context: hermandad?.nombrePopular, locality: hermandad?.localidad })}
         breadcrumbItems={[
           { label: 'Imágenes', href: '/imagenes' },
           { label: imagen.nombre },

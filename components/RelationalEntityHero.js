@@ -128,6 +128,7 @@ export default async function RelationalEntityHero({
   variant = 'image',
   entityType,
   title,
+  titleContext = '',
   subtitle = '',
   breadcrumbItems = [],
   badges = [],
@@ -150,7 +151,10 @@ export default async function RelationalEntityHero({
         ))}
       </div>
 
-      <h1 id="entity-hero-title">{title}</h1>
+      <h1 id="entity-hero-title">
+        {title}
+        {titleContext ? <span className={styles.titleContext}><span className="sr-only"> · </span>{titleContext}</span> : null}
+      </h1>
       {subtitle ? <p className={`${styles.subtitle} ${polishStyles.subtitle}`}>{subtitle}</p> : null}
     </div>
   );
