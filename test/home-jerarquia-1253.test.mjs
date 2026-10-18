@@ -34,7 +34,7 @@ test('El Hilo se mueve en portada: una principal con foto y titulares secundario
   assert.equal(withoutCover.photo, null)
 })
 
-test('Descubre: accesos ligeros, marcha en azul, juego destacado y «Más en Hilo» en fichas', () => {
+test('Descubre: un solo destacado, marcha en azul sin sombra y «Más en Hilo» en etiquetas', () => {
   const discover = read('components/HomeDiscover.module.css')
   assert.match(discover, /\.ghost \{\s*display: none;/)
   assert.match(discover, /min-height: 60px;/)
@@ -43,8 +43,10 @@ test('Descubre: accesos ligeros, marcha en azul, juego destacado y «Más en Hil
   assert.match(today, /variant="inverse"/)
   assert.match(today, /embedded \? gameStyles\.teaserFeature : ''/)
   assert.match(today, /href="\/juegos\/el-hilo-escondido"/)
-  // «Más en Hilo Cofrade»: nombre y explicación de cada acceso.
-  assert.match(read('components/HomeDiscover.js'), /\{item\.detail \? <span>\{item\.detail\}<\/span> : null\}/)
+  assert.doesNotMatch(read('components/HiddenThreadTeaser.module.css').slice(read('components/HiddenThreadTeaser.module.css').indexOf('.teaserFeature.teaserFeature')), /linear-gradient|box-shadow: 0/)
+  // «Más en Hilo Cofrade»: etiquetas ligeras; no se retira ningún acceso.
+  assert.match(read('components/HomeDiscover.module.css'), /\.moreLink \{\s*display: inline-flex;[\s\S]*border-radius: 999px;/)
+  assert.match(read('lib/home-discover.js'), /'\/igualas-y-ensayos'/)
   assert.match(read('components/HomeKnowledgeThreads.module.css'), /\.embedded \.leadCard::before \{\s*display: none;/)
   // Sin bloques nuevos: los mismos cinco de la portada.
   const home = read('components/HomePageV2.js')
@@ -58,6 +60,7 @@ test('índice de noticias: principal, secundarias discretas y archivo', () => {
   assert.match(hub, /compact anchors/)
   const cards = read('components/HiloMovementCards.js')
   assert.match(cards, /secondary = false/)
+  assert.match(cards, /\{!compact && !secondary \? <ShareActions compact/)
   // Las fichas y la página de cada noticia siguen usando la tarjeta de siempre.
   assert.doesNotMatch(read('components/HiloMovementsSection.js'), /secondary/)
 })

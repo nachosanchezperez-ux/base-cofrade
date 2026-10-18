@@ -776,14 +776,14 @@
 }
 
 /*
- * Jerarquía de «Descubre» en la portada (#1253). La marcha del día es el bloque
- * azul del apartado (identidad de Hilo Cofrade), en versión compacta: titular
- * menor y sin el círculo decorativo. Conserva reproductor y enlaces.
+ * Jerarquía de «Descubre» en la portada (#1253). La ficha del día es el único
+ * destacado. La marcha conserva el azul de Hilo Cofrade, en versión compacta:
+ * sin sombra, sin círculo decorativo y con titular menor. Mismo reproductor.
  */
 .embedded .musicCard {
   margin-top: 12px;
   border-radius: 16px;
-  box-shadow: 0 10px 26px rgba(15, 39, 66, .1);
+  box-shadow: none;
 }
 
 .embedded .musicCard::after {

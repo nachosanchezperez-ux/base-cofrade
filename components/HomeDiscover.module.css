@@ -336,60 +336,33 @@
   transform: none;
 }
 
-/* «Más en Hilo Cofrade» (#1253): pequeñas fichas con nombre y una línea que
-   explica qué se encuentra, en lugar de una lista de enlaces subrayados. */
+/* «Más en Hilo Cofrade» (#1253): etiquetas ligeras, sin filete ni tarjeta,
+   para dar forma a los accesos sin competir con los bloques principales. */
 .moreList {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 8px;
   margin-top: 8px;
 }
 
-.moreList li {
-  display: flex;
-}
-
 .moreLink {
-  flex: 1;
-  display: grid;
-  align-content: start;
-  gap: 2px;
-  min-height: 64px;
-  padding: 10px 12px;
-  border: 1px solid #e3e9ef;
-  border-left: 3px solid #b71f37;
-  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid #d9e2ea;
+  border-radius: 999px;
   background: #fff;
+  color: #123a67;
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.2;
   text-decoration: none;
 }
 
-.moreLink strong {
-  color: #0f2742;
-  font-size: 14px;
-  font-weight: 750;
-  line-height: 1.25;
-}
-
-.moreLink span {
-  color: #5f7080;
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 1.3;
-}
-
 .moreLink:hover {
-  border-color: #9fb3c4;
-  border-left-color: #b71f37;
-}
-
-.moreLink:hover strong {
-  color: #123a67;
-}
-
-@media (min-width: 768px) {
-  .moreList {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
+  border-color: #123a67;
+  color: #0f2742;
 }
 
 @media (min-width: 768px) {

@@ -29,6 +29,7 @@ export function hiloKindLabel(kind = '') {
 // fuentes viven en la página de cada noticia (item.href); aquí, lo esencial.
 // `secondary` (índice, #1253): segundo nivel, más discreto que la principal y
 // más rico que el archivo: miniatura lateral, titular menor y entradilla breve.
+// Sin botones de compartir: siguen en la página de cada noticia.
 export default function HiloMovementCards({ items, compact = false, headingLevel = 3, featured = false, secondary = false, anchors = !compact }) {
   const Heading = `h${headingLevel}`
   const listClass = compact ? styles.compactList : featured ? styles.leadList : secondary ? `${styles.list} ${styles.secondaryList}` : styles.list
@@ -49,7 +50,7 @@ export default function HiloMovementCards({ items, compact = false, headingLevel
             <p className={styles.summary}>{item.summary}</p>
             {item.effectiveLabel && !compact ? <p className={styles.effective}><span aria-hidden="true">↳</span> {item.effectiveLabel}</p> : null}
             <Link className={styles.more} href={item.href} prefetch={false}>{compact ? 'Seguir este hilo' : 'Leer la noticia'} <span className={styles.srOnly}>: {item.title}</span><span aria-hidden="true">→</span></Link>
-            {!compact ? <ShareActions compact share={newsShare(item)} contentType="noticia" analytics={{ topic: item.topic, municipality: item.municipality }} /> : null}
+            {!compact && !secondary ? <ShareActions compact share={newsShare(item)} contentType="noticia" analytics={{ topic: item.topic, municipality: item.municipality }} /> : null}
           </div>
         </div>
       </article>
