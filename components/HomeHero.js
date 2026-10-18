@@ -9,7 +9,9 @@ export default function HomeHero() {
       <div className={`shell ${styles.inner}`}>
         <div className={styles.copy}>
           <p className={styles.place}>Sevilla y su provincia</p>
-          <h1 id="home-title" className={styles.title}>Hilo Cofrade, todo en las cofradías está relacionado</h1>
+          {/* La marca ya está en el logo de la cabecera y en el título de la página:
+              el H1 se queda con el lema para que el buscador suba en móvil. */}
+          <h1 id="home-title" className={styles.title}>Todo en las cofradías está relacionado</h1>
           <p className={styles.lead}>Hermandades, imágenes, pasos, bandas, marchas y su agenda, conectados entre sí.</p>
         </div>
 

@@ -99,6 +99,14 @@
   font-size: 13px;
 }
 
+/* Botón de enviar: con el buscador vacío conserva su color (antes, al 42 % de
+   opacidad, parecía un recuadro roto sobre el azul). Sigue desactivado. */
+.search :global(form > button:disabled) {
+  opacity: 1;
+  background: #b71f37;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .18);
+}
+
 @media (min-width: 768px) {
   .hero {
     padding: 34px 0 36px;
@@ -118,7 +126,8 @@
     font-size: 16px;
   }
 
-  .search :global([aria-label="Preguntas sugeridas"] button:nth-child(n + 2)) {
+  /* Dos ejemplos en escritorio (antes cuatro): el buscador es el protagonista. */
+  .search :global([aria-label="Preguntas sugeridas"] button:nth-child(-n + 2)) {
     display: inline-flex;
   }
 }
