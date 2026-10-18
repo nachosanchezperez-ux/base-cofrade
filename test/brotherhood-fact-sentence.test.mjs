@@ -60,7 +60,8 @@ test('la ficha publica sede, descripción, fundación y la miga de la localidad'
   assert.match(page, /description: brotherhoodFactSentence\(h\)/)
   assert.match(page, /\.\.\.\(seatJsonLd \? \{ location: seatJsonLd \} : \{\}\)/)
   assert.match(page, /foundingDate: brotherhoodFoundingYear\(h\.fundacion\)/)
-  assert.match(page, /\{ name: publicText\(h\.localidad\), path: municipalityHubHref \}/)
+  // La miga lleva a «Hermandades de X» y, si la localidad no tiene listado, a su guía.
+  assert.match(page, /\{ name: publicText\(h\.localidad\), path: localityBreadcrumbHref \}/)
 })
 
 test('la meta description se corta por frases completas, nunca en «Titulares…»', async () => {
