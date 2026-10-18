@@ -103,9 +103,10 @@ test('la meta description puede aprovechar el resumen editorial sin romper el fa
 })
 
 
-test('la cache de ficha renueva las instantáneas tras HC09', () => {
+test('la cache de ficha renueva las instantáneas tras HC09 y tras el cambio de figuras (v11)', () => {
   const aggregator = read('lib/supabase/brotherhood-page.js')
-  assert.match(aggregator, /hilo-cofrade-public-brotherhood-detail-v10-hc09/)
+  assert.match(aggregator, /hilo-cofrade-public-brotherhood-detail-v11-figuras/)
+  assert.doesNotMatch(aggregator, /hilo-cofrade-public-brotherhood-detail-v10-hc09/)
   assert.doesNotMatch(aggregator, /hilo-cofrade-public-brotherhood-detail-v8/)
 })
 
