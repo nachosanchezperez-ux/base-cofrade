@@ -8,10 +8,13 @@ export default function HomeHero() {
     <section className={styles.hero} id="inicio" aria-labelledby="home-title">
       <div className={`shell ${styles.inner}`}>
         <div className={styles.copy}>
-          <p className={styles.place}>Sevilla y su provincia</p>
-          {/* La marca ya está en el logo de la cabecera y en el título de la página:
-              el H1 se queda con el lema para que el buscador suba en móvil. */}
-          <h1 id="home-title" className={styles.title}>Todo en las cofradías está relacionado</h1>
+          {/* «Hilo Cofrade» forma parte del H1 (posicionamiento de marca), pero se
+              muestra en la línea pequeña que ya existía sobre el lema: el título
+              sigue ocupando dos líneas en móvil. */}
+          <h1 id="home-title" className={styles.title}>
+            <span className={styles.place}>Hilo Cofrade · Sevilla y su provincia</span>
+            {' '}Todo en las cofradías está relacionado
+          </h1>
           <p className={styles.lead}>Hermandades, imágenes, pasos, bandas, marchas y su agenda, conectados entre sí.</p>
         </div>
 

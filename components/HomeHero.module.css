@@ -30,11 +30,15 @@
   min-width: 0;
 }
 
-.place {
+.place,
+:global(#hc-app #inicio) .place {
+  display: block;
   margin: 0 0 6px;
   color: #f3c8d0;
   font-size: 13px;
   font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0;
 }
 
 .title {
