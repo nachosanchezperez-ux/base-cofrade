@@ -18,7 +18,7 @@ async function pageData(localidad, mes) {
   )
   const localityName = labelFromSlug(localidad)
   const monthName = labelFromSlug(mes)
-  const title = `Hermandades de Gloria de ${monthName} en ${localityName}`
+  const title = `Hermandades de Gloria de ${monthName.toLocaleLowerCase('es')} en ${localityName}`
   const description = `Hermandades de Gloria vinculadas al mes de ${monthName} en ${localityName}.`
 
   return { items, localityName, monthName, path, title, description }
@@ -51,7 +51,7 @@ export default async function GloryLocalityMonthPage({ params }) {
   return (
     <DirectoryRoutePage
       eyebrow="Hermandades de Gloria"
-      title={`${data.monthName} en ${data.localityName}`}
+      title={data.title}
       description={`Hermandades cuya celebración o salida principal se sitúa en el mes de ${data.monthName}.`}
       hermandades={data.items}
       path={data.path}

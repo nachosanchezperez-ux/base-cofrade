@@ -310,7 +310,7 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
           <div className={styles.explorerHeader}>
             <div>
               <span>Filtrar listado</span>
-              <h2 id="explorar-cambios-musicales">Encuentra un cambio musical</h2>
+              <h2 id="explorar-cambios-musicales">Buscar cambios musicales de 2027</h2>
             </div>
             <p>{changes.length} cambios confirmados entre Sevilla capital y la provincia.</p>
           </div>

@@ -129,7 +129,7 @@ export default function MunicipalityAgendaHub({ hub }) {
             { label: hub.label },
           ]} />
           <span>Cofradías, hermandades y agenda</span>
-          <h1>Guía cofrade de {hub.label}</h1>
+          <h1>Guía y agenda cofrade de {hub.label}</h1>
           <p>{description}</p>
 
           <nav className={styles.quickActions} aria-label={`Qué ver en ${hub.label}`}>
@@ -190,7 +190,7 @@ export default function MunicipalityAgendaHub({ hub }) {
         <ContextAgendaSection
           id="proximas-citas"
           eyebrow={hub.label}
-          title="Próximas citas"
+          title={`Próximas citas en ${hub.label}`}
           description={`Qué ver próximamente en ${hub.label}, reuniendo en una cronología común los calendarios públicos de Hilo Cofrade.`}
           items={hub.items}
           showMunicipality={false}
@@ -205,8 +205,8 @@ export default function MunicipalityAgendaHub({ hub }) {
         <section className={styles.noAgenda} id="proximas-citas">
           <div className="shell">
             <span>Agenda abierta</span>
-            <h2>Sin próximas citas publicadas por ahora</h2>
-            <p>La guía de {hub.label} sigue disponible a través de sus entidades y patrimonio. Cuando se publique una nueva cita documentada aparecerá aquí automáticamente.</p>
+            <h2>Próximas citas en {hub.label}</h2>
+            <p><strong>Sin próximas citas publicadas por ahora.</strong> La guía de {hub.label} sigue disponible a través de sus entidades y patrimonio. Cuando se publique una nueva cita documentada aparecerá aquí automáticamente.</p>
             <Link href={filteredAgendaHref}>Consultar Agenda Cofrade →</Link>
           </div>
         </section>

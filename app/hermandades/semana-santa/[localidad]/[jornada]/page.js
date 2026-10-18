@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import DirectoryRoutePage from '@/components/DirectoryRoutePage'
 import {
+  holyWeekDayPhrase,
   labelFromSlug,
 } from '@/lib/brotherhood-directory'
 import { brotherhoodsForDirectoryRoute } from '@/lib/brotherhood-public-index'
@@ -19,8 +20,9 @@ async function pageData(localidad, jornada) {
   )
   const localityName = labelFromSlug(localidad)
   const dayName = labelFromSlug(jornada)
-  const title = `${dayName} en ${localityName}`
-  const description = `Hermandades del ${dayName} en ${localityName}, con acceso a sus titulares, pasos, patrimonio, cultos y salidas.`
+  // Antes «Madrugada en Sevilla capital»: no decía que son Hermandades.
+  const title = `Hermandades ${holyWeekDayPhrase(dayName)} en ${localityName}`
+  const description = `Hermandades ${holyWeekDayPhrase(dayName)} en ${localityName}, con acceso a sus titulares, pasos, patrimonio, cultos y salidas.`
 
   return { items, localityName, dayName, path, title, description }
 }

@@ -37,7 +37,7 @@ export default function MunicipalityTemporalSpotlight({
         <header className={styles.heading}>
           <div>
             <span>Qué ver en {hub.label}</span>
-            <h2 id="local-temporal-title">Primero, lo más cercano en el tiempo</h2>
+            <h2 id="local-temporal-title">Hoy, mañana y fin de semana en {hub.label}</h2>
           </div>
           <p>Ordenado por fecha y hora: primero lo que está más cerca.</p>
         </header>

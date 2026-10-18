@@ -32,3 +32,33 @@ test('cambios musicales 2027: municipios como H3 y Hermandades como H4', () => {
   assert.equal(page.match(/<h3 id=\{`(?:renovaciones-)?municipio-/g).length, 2)
   assert.equal(page.match(/<h4>/g).length, 2)
 })
+
+// Fase 2 (18/10/2026): H1 y H2 con texto que dice qué hay en la página.
+test('los índices de hermandades llevan un H1 completo', async () => {
+  const { DIRECTORY_TYPES, holyWeekDayPhrase } = await import('../lib/brotherhood-directory.js')
+  const headings = Object.fromEntries(DIRECTORY_TYPES.map((type) => [type.key, type.heading]))
+  assert.equal(headings['semana-santa'], 'Hermandades de Semana Santa de Sevilla y provincia')
+  assert.equal(headings.gloria, 'Hermandades de Gloria de Sevilla y provincia')
+  assert.match(read('components/HermandadesCategoryDirectory.js'), /\{config\.heading \|\| pageName\}/)
+  assert.equal(holyWeekDayPhrase('Madrugada'), 'de la Madrugada')
+  assert.equal(holyWeekDayPhrase('Domingo de Ramos'), 'del Domingo de Ramos')
+  assert.match(read('app/hermandades/gloria/[localidad]/[mes]/page.js'), /monthName\.toLocaleLowerCase\('es'\)/)
+})
+
+test('la agenda no usa H2 de interfaz', async () => {
+  const { TEMPORAL_AGENDA_PAGES } = await import('../lib/agenda-temporal-landing.js')
+  for (const page of Object.values(TEMPORAL_AGENDA_PAGES)) {
+    assert.match(page.heading, /Sevilla y su provincia$/)
+    assert.match(page.listHeading, /^Todos los actos cofrades /)
+    assert.match(page.filterHeading, / por zona y tipo$/)
+  }
+  for (const [file, text] of [
+    ['components/AgendaTemporalLanding.js', 'Encuentra tu acto'],
+    ['components/AgendaTemporalEventList.js', 'Todas las citas'],
+    ['components/MunicipalityTemporalSpotlight.js', 'Primero, lo más cercano'],
+    ['app/marchas/page.js', 'Encuentra una marcha'],
+    ['app/semana-santa/2027/cambios-musicales/page.js', 'Encuentra un cambio musical'],
+  ]) assert.ok(!read(file).includes(text), `${file}: ${text}`)
+  assert.match(read('components/MunicipalityAgendaHub.js'), /<h2>Próximas citas en \{hub\.label\}<\/h2>/)
+  assert.match(read('app/agenda-cofrade/page.js'), /<h1>Agenda Cofrade de Sevilla y provincia<\/h1>/)
+})

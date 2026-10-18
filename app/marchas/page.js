@@ -264,7 +264,7 @@ export default async function MarchesDirectoryPage({ searchParams } = {}) {
 
       <section className={`shell ${styles.directory}`} aria-labelledby="archivo-marchas">
         <header className={styles.directoryHeading}>
-          <div><span>Explora el archivo</span><h2 id="archivo-marchas">Encuentra una marcha</h2></div>
+          <div><span>Explora el archivo</span><h2 id="archivo-marchas">Buscar marchas procesionales</h2></div>
           <p>Empieza escribiendo un título o compositor. También puedes entrar por letra, década o estado documental.</p>
         </header>
 
