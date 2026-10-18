@@ -35,6 +35,8 @@ import SourcesBlock from '@/components/SourcesBlock';
 import { holyWeekDay } from '@/lib/brotherhood-directory';
 import { brotherhoodUpcomingAgenda } from '@/lib/brotherhood-agenda';
 import { agendaMunicipalityHref } from '@/lib/agenda-relations';
+import { brotherhoodLocalityDirectoryHref } from '@/lib/brotherhood-public-index';
+import { getIndexableBrotherhoodDirectory } from '@/lib/supabase/indexable-brotherhood-directory';
 import { getStepPhotoFraming } from '@/lib/step-photo-framing';
 import { getAgendaCofrade } from '@/lib/supabase/agenda-cofrade';
 import { getHermandadPageBySlug } from '@/lib/supabase/brotherhood-page';
@@ -176,7 +178,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
     ...h.pasos.map((paso) => [paso.id, 'step']),
     ...(h.participacionesConsejo || []).map((participacion) => [participacion.id, 'event']),
   ]);
-  const [entityCoverMedia, musicalHeritage, authoritativeCrestPath, musicalRepertoires, crewEvents, agendaData] = await Promise.all([
+  const [entityCoverMedia, musicalHeritage, authoritativeCrestPath, musicalRepertoires, crewEvents, agendaData, indexableBrotherhoods] = await Promise.all([
     getCachedBrotherhoodCoverMedia(
       [...coverEntityTypes.keys()],
       Object.fromEntries(coverEntityTypes)
@@ -192,7 +194,15 @@ export default async function HermandadDetailPage({ params, reading: readingOver
       console.error('[Hilo Cofrade] Agenda relacionada omitida temporalmente en la ficha de Hermandad', { slug: h.slug, error });
       return { items: [], today: '' };
     }),
+    // Directorio en caché (900 s), el mismo de /hermandades: decide si la
+    // localidad tiene listado «Hermandades de X» para la miga de pan.
+    getIndexableBrotherhoodDirectory().catch((error) => {
+      console.error('[Hilo Cofrade] Directorio de localidades omitido en la miga de la ficha de Hermandad', { slug: h.slug, error });
+      return [];
+    }),
   ]);
+  // Miga: «Sevilla» lleva a las hermandades de la localidad; si no hay listado, a su guía.
+  const localityBreadcrumbHref = brotherhoodLocalityDirectoryHref(h, indexableBrotherhoods) || municipalityHubHref;
   const upcomingAgendaItems = brotherhoodUpcomingAgenda({
     agendaItems: agendaData.items,
     crewEvents,
@@ -737,8 +747,8 @@ export default async function HermandadDetailPage({ params, reading: readingOver
       <JsonLd data={breadcrumbJsonLd([
         { name: 'Inicio', path: '/' },
         { name: 'Hermandades', path: '/hermandades' },
-        // Mismo nivel que la miga visible: la guía cofrade de la localidad.
-        ...(publicText(h.localidad) && municipalityHubHref ? [{ name: publicText(h.localidad), path: municipalityHubHref }] : []),
+        // Mismo nivel que la miga visible: las hermandades de la localidad (o su guía).
+        ...(publicText(h.localidad) && localityBreadcrumbHref ? [{ name: publicText(h.localidad), path: localityBreadcrumbHref }] : []),
         { name: h.nombrePopular, path: canonicalPath },
       ])} />
       <JsonLd data={organizationJsonLd} />
@@ -754,7 +764,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
         seat={publicText(h.sede)}
         breadcrumbItems={[
           { label: 'Hermandades', href: '/hermandades' },
-          publicText(h.localidad) ? { label: publicText(h.localidad), href: municipalityHubHref || undefined } : null,
+          publicText(h.localidad) ? { label: publicText(h.localidad), href: localityBreadcrumbHref || undefined } : null,
           { label: h.nombrePopular },
         ]}
         facts={heroFacts}
