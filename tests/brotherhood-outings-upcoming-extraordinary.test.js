@@ -1,17 +1,13 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { readFileSync } from 'node:fs'
+import { classifyBrotherhoodOutings } from '../lib/brotherhood-extraordinary-events.js'
 
-const source = readFileSync(new URL('../components/BrotherhoodOutingsSection.js', import.meta.url), 'utf8')
-
-test('separa las extraordinarias anunciadas del histórico', () => {
-  assert.match(source, /const state = normalized\(outing\?\.estado\)/)
-  assert.match(source, /state === 'announced' && extraordinary\) return 'upcoming'/)
-  assert.match(source, /title: 'Próximas salidas y traslados'/)
-  assert.match(source, /\['penitence', 'glory', 'upcoming', 'external', 'historical', 'other'\]/)
-})
-
-test('mantiene las extraordinarias celebradas en el histórico', () => {
-  assert.match(source, /if \(extraordinary\) return 'historical'/)
-  assert.match(source, /title: 'Histórico'/)
+test('anunciadas y celebradas se incorporan como acontecimientos', () => {
+  const result = classifyBrotherhoodOutings([
+    { id: 'future', caracter: 'Extraordinaria', estado: 'announced', nombre: 'Próxima', fecha: '2027-01-01' },
+    { id: 'past', caracter: 'Extraordinaria', estado: 'celebrated', nombre: 'Pasada', fecha: '2000-01-01' },
+  ])
+  assert.equal(result.salidas.length, 0)
+  assert.deepEqual(result.cronologia.map(item => item.titulo), ['Pasada', 'Próxima'])
+  assert.equal(result.cronologia[1].estado, 'Acontecimiento anunciado')
 })
