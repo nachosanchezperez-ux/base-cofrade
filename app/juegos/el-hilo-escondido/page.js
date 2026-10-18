@@ -8,9 +8,10 @@ import styles from '@/components/HiddenThreadGame.module.css'
 const TITLE = 'El hilo escondido · Juego cofrade del día'
 const DESCRIPTION = 'Un juego diario de vocabulario cofrade: lee la adivinanza, toca la respuesta y comparte tu resultado en Hilo Cofrade.'
 
-// La adivinanza se sirve ya en el HTML. Se regenera cada 5 minutos y el navegador corrige
-// el día con la hora de Madrid, así que no hace falta renderizar en cada visita.
-export const revalidate = 300
+// La adivinanza se calcula en cada visita con la hora de Madrid. Con ISR (revalidate) la
+// primera visita tras horas sin tráfico recibía el HTML de otro día, porque Vercel sirve la
+// copia antigua mientras regenera. El render es barato: no consulta la base de datos.
+export const dynamic = 'force-dynamic'
 
 export const metadata = {
   title: TITLE,
