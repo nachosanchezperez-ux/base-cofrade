@@ -159,7 +159,7 @@ export default function ImageHeroV2({
 
           <h1 className={roomStyles.title} id="entity-hero-title">
             {title}
-            {titleContext ? <span className={roomStyles.titleContext}><span className="sr-only"> · </span>{titleContext}</span> : null}
+            {titleContext ? <span className={roomStyles.titleQualifier}><span className="sr-only"> · </span>{titleContext}</span> : null}
           </h1>
           {subtitle ? <p className={styles.subtitle}>{subtitle}</p> : null}
 

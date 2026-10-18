@@ -153,7 +153,7 @@ export default async function RelationalEntityHero({
 
       <h1 id="entity-hero-title">
         {title}
-        {titleContext ? <span className={styles.titleContext}><span className="sr-only"> · </span>{titleContext}</span> : null}
+        {titleContext ? <span className={styles.titleQualifier}><span className="sr-only"> · </span>{titleContext}</span> : null}
       </h1>
       {subtitle ? <p className={`${styles.subtitle} ${polishStyles.subtitle}`}>{subtitle}</p> : null}
     </div>

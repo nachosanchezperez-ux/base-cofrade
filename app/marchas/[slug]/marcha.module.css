@@ -113,8 +113,9 @@
   .playCount,.spotifyLink { justify-self: start; }
 }
 
-/* Segunda línea del H1 (contexto que distingue fichas con el mismo nombre). */
-.titleContext {
+/* Segunda línea del H1 (contexto que distingue fichas con el mismo nombre).
+   No se llama «…Context»: readability.css reduce a 13 px todo span[class*='Context']. */
+.titleQualifier {
   display: block;
   margin-top: .35em;
   font-size: max(.42em, 16px);
