@@ -1,12 +1,12 @@
 /* Igualás y ensayos en la portada: hereda las filas de HomeAgendaNow.module.css. */
 .section {
-  border-top: 1px solid #e3e9ef;
+  border-top: 1px solid var(--home-line);
   background: #fbfaf8;
 }
 
 /* Hoja de calendario en granate para distinguirla de la Agenda general. */
 .leaf.leaf {
-  border-top-color: #8a2235;
+  border-top-color: var(--home-wine);
   background: #fff;
 }
 
@@ -16,7 +16,7 @@
   padding: 2px 8px;
   border-radius: 999px;
   background: #f8e9ec;
-  color: #8a2235;
+  color: var(--home-wine);
   font-size: 12px;
   font-weight: 800;
   line-height: 1.4;
@@ -27,7 +27,7 @@
   scroll-margin-top: calc(var(--hc-app-header-height, 70px) + 14px);
   margin-top: 22px;
   padding-top: 18px;
-  border-top: 1px solid #e3e9ef;
+  border-top: 1px solid var(--home-line);
 }
 
 .embeddedHead {
@@ -39,7 +39,7 @@
 
 .embeddedHead h3 {
   margin: 0;
-  color: #0f2742;
+  color: var(--home-ink);
   font-size: 20px;
   font-weight: 800;
   line-height: 1.15;

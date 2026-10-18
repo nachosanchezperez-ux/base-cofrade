@@ -42,7 +42,7 @@ test('Descubre: la ficha del día es el único bloque azul; marcha y juego en bl
   assert.match(today, /data-home-weight=\{embedded \? 'secondary' : undefined\}/)
   assert.match(today, /variant=\{embedded \? 'default' : 'inverse'\}/)
   const todayCss = read('components/HomeTodayV2.module.css')
-  assert.match(todayCss, /\.embedded \.featureCard \{[^}]*background: linear-gradient\(140deg, #123a67/)
+  assert.match(todayCss, /\.embedded \.featureCard \{[^}]*background: linear-gradient\(140deg, var\(--home-blue\)/)
   assert.match(todayCss, /\.embedded \.musicCard \{[^}]*background: #fff;/)
   assert.match(read('components/HiddenThreadTeaser.module.css'), /border: 1\.5px solid #74273c;\s*background: transparent;/)
   assert.match(today, /embedded \? gameStyles\.teaserFeature : ''/)
@@ -71,4 +71,17 @@ test('índice de noticias: principal, secundarias discretas y archivo', () => {
   assert.match(cards, /const thumbless = secondary && !hiloMovementPhoto\(item\)/)
   // Las fichas y la página de cada noticia siguen usando la tarjeta de siempre.
   assert.doesNotMatch(read('components/HiloMovementsSection.js'), /secondary/)
+})
+
+test('estilos de la portada: «Hoy» en una sola hoja y colores con nombre', () => {
+  const today = read('components/HomeTodayV2.js')
+  assert.doesNotMatch(today, /HomeTodayMobileFix|HomeTodayDynamic|HomeResponsivePolish/)
+  const tokens = read('app/home-tokens.css')
+  for (const name of ['--home-ink', '--home-blue', '--home-red', '--home-muted', '--home-line']) assert.match(tokens, new RegExp(`${name}: #`))
+  assert.match(read('app/layout.js'), /import '\.\/home-tokens\.css'/)
+  // Los colores principales ya no se repiten como literales en las hojas de la portada.
+  for (const file of ['components/HomeTodayV2.module.css', 'components/HomeAgendaNow.module.css', 'components/HomeUpdatesLink.module.css', 'components/HomeDiscover.module.css']) {
+    const css = read(file).replace(/\/\*[\s\S]*?\*\//g, '')
+    assert.doesNotMatch(css, /#(0f2742|123a67|b71f37)\b/i, file)
+  }
 })

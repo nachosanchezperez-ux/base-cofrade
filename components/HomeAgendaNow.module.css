@@ -19,7 +19,7 @@
 
 .head h2 {
   margin: 0;
-  color: #0f2742;
+  color: var(--home-ink);
   font-size: 26px;
   font-weight: 800;
   line-height: 1.1;
@@ -30,7 +30,7 @@
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-  color: #b71f37;
+  color: var(--home-red);
   font-size: 14px;
   font-weight: 750;
   white-space: nowrap;
@@ -87,21 +87,21 @@
 
 .tabActive {
   background: #fff;
-  color: #0f2742;
+  color: var(--home-ink);
   box-shadow: 0 1px 3px rgba(15, 39, 66, .14);
 }
 
 .tabActive b {
-  background: #0f2742;
+  background: var(--home-ink);
   color: #fff;
 }
 
 .tabNow {
-  color: #b71f37;
+  color: var(--home-red);
 }
 
 .tabNow.tabActive b {
-  background: #b71f37;
+  background: var(--home-red);
 }
 
 .tabDot {
@@ -109,7 +109,7 @@
   height: 8px;
   flex: 0 0 auto;
   border-radius: 50%;
-  background: #b71f37;
+  background: var(--home-red);
   box-shadow: 0 0 0 3px rgba(183, 31, 55, .16);
 }
 
@@ -117,7 +117,7 @@
 .rowLink:focus-visible,
 .more:focus-visible,
 .headLink:focus-visible {
-  outline: 3px solid #123a67;
+  outline: 3px solid var(--home-blue);
   outline-offset: 2px;
   border-radius: 10px;
 }
@@ -129,7 +129,7 @@
 }
 
 .row + .row {
-  border-top: 1px solid #e3e9ef;
+  border-top: 1px solid var(--home-line);
 }
 
 .rowLink {
@@ -147,19 +147,19 @@
   display: grid;
   justify-items: center;
   padding: 6px 0 7px;
-  border-top: 4px solid #123a67;
+  border-top: 4px solid var(--home-blue);
   border-radius: 4px 4px 10px 10px;
   background: #f3f6f9;
-  color: #0f2742;
+  color: var(--home-ink);
 }
 
 .row[data-live] .leaf {
-  border-top-color: #b71f37;
+  border-top-color: var(--home-red);
 }
 
 .leafWeekday,
 .leafMonth {
-  color: #5f7080;
+  color: var(--home-muted);
   font-size: 12px;
   font-weight: 750;
   line-height: 1.2;
@@ -187,7 +187,7 @@
 }
 
 .time {
-  color: #b71f37;
+  color: var(--home-red);
   font-size: 22px;
   font-weight: 800;
   line-height: 1.1;
@@ -196,7 +196,7 @@
 }
 
 .timeDetail {
-  color: #5f7080;
+  color: var(--home-muted);
   font-size: 13px;
   font-weight: 650;
   line-height: 1.35;
@@ -206,7 +206,7 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: #b71f37;
+  color: var(--home-red);
   font-size: 13px;
   font-weight: 800;
 }
@@ -215,12 +215,12 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #b71f37;
+  background: var(--home-red);
   box-shadow: 0 0 0 3px rgba(183, 31, 55, .16);
 }
 
 .title {
-  color: #0f2742;
+  color: var(--home-ink);
   font-size: 17px;
   font-weight: 800;
   line-height: 1.25;
@@ -229,14 +229,14 @@
 }
 
 .rowLink:hover .title {
-  color: #123a67;
+  color: var(--home-blue);
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
 }
 
 .organizer {
-  color: #34495d;
+  color: var(--home-text);
   font-size: 14px;
   font-weight: 650;
   line-height: 1.35;
@@ -247,13 +247,13 @@
   display: flex;
   flex-wrap: wrap;
   gap: 2px 12px;
-  color: #5f7080;
+  color: var(--home-muted);
   font-size: 13px;
   line-height: 1.4;
 }
 
 .type {
-  color: #8a2235;
+  color: var(--home-wine);
   font-weight: 700;
 }
 
@@ -267,8 +267,8 @@
 .upcomingTitle {
   margin: 14px 0 0;
   padding-top: 12px;
-  border-top: 1px solid #e3e9ef;
-  color: #0f2742;
+  border-top: 1px solid var(--home-line);
+  color: var(--home-ink);
   font-size: 15px;
   font-weight: 800;
 }
@@ -281,13 +281,13 @@
   margin-top: 8px;
   border: 1px solid #cfdbe5;
   border-radius: 12px;
-  color: #123a67;
+  color: var(--home-blue);
   font-size: 14px;
   font-weight: 750;
 }
 
 .more:hover {
-  border-color: #123a67;
+  border-color: var(--home-blue);
 }
 
 /*
@@ -402,13 +402,13 @@
   align-items: baseline;
   gap: 2px 8px;
   margin: 0;
-  color: #34495d;
+  color: var(--home-text);
   font-size: 14px;
   line-height: 1.35;
 }
 
 .focusNext b {
-  color: #8a2235;
+  color: var(--home-wine);
   font-size: 12px;
   font-weight: 800;
   letter-spacing: .06em;
@@ -416,7 +416,7 @@
 }
 
 .focusTime {
-  color: #b71f37;
+  color: var(--home-red);
   font-size: 16px;
   font-weight: 800;
   font-variant-numeric: tabular-nums;
@@ -424,7 +424,7 @@
 
 .focusBands {
   margin: 0;
-  color: #5f7080;
+  color: var(--home-muted);
   font-size: 13px;
   line-height: 1.35;
 }
@@ -434,7 +434,7 @@
   align-items: center;
   justify-self: start;
   min-height: 40px;
-  color: #123a67;
+  color: var(--home-blue);
   font-size: 14px;
   font-weight: 750;
 }
@@ -442,11 +442,11 @@
 .focusGuide::after {
   content: "→";
   margin-left: 6px;
-  color: #b71f37;
+  color: var(--home-red);
 }
 
 .focusGuide:focus-visible {
-  outline: 3px solid #123a67;
+  outline: 3px solid var(--home-blue);
   outline-offset: 2px;
   border-radius: 6px;
 }
@@ -491,7 +491,7 @@
   }
 
   .row {
-    border-bottom: 1px solid #e3e9ef;
+    border-bottom: 1px solid var(--home-line);
   }
 
   /* La cita principal ocupa todo el ancho; las demás, en dos columnas debajo. */

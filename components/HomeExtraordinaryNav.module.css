@@ -23,7 +23,7 @@
 .primary {
   padding: 0 15px;
   color: #fff;
-  background: #123a67;
+  background: var(--home-blue);
   box-shadow: 0 8px 18px rgba(18, 58, 103, .14);
 }
 
@@ -36,14 +36,14 @@
 .secondary {
   padding: 0 13px;
   border: 1px solid #d7e1eb;
-  color: #123a67;
+  color: var(--home-blue);
   background: #fff;
 }
 
 .secondary:hover,
 .secondary:focus-visible {
   border-color: #b7cadc;
-  color: #b71f37;
+  color: var(--home-red);
   background: #f8fbfd;
 }
 
