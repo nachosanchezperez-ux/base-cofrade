@@ -61,3 +61,33 @@
   padding: 0 12px;
   font-size: 12px;
 }
+
+/* Tarjetas de la Agenda: «Añadir al calendario» delante y con borde azul
+   marino; WhatsApp y Compartir en iconos para que la fila no salte de línea. */
+.calendarFirst {
+  flex-wrap: nowrap;
+}
+
+.share .calendarLead {
+  min-width: 0;
+  border-color: #112339;
+  color: #112339;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.share .calendarLead:hover {
+  border-color: #112339;
+  background: #f1f4f7;
+}
+
+.share .iconOnly {
+  flex: 0 0 auto;
+  justify-content: center;
+  width: 40px;
+  padding: 0;
+}
+
+.compact .iconOnly {
+  width: 36px;
+}

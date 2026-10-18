@@ -69,3 +69,17 @@
 .loadMore:hover {
   border-color: #123a67;
 }
+
+/* Tamaño mínimo de letra: nada por debajo de 12px (11px en etiquetas en
+   mayúsculas). Antes «En curso», la hora de las salidas en curso y sus
+   enlaces se quedaban en 8–9px. */
+.livePanelHead>div>span{font-size:11px}
+.livePanelHead p{font-size:13px}
+.liveItem>div:first-child>span{font-size:11px}
+.liveItem p{font-size:13px}
+.liveTimes span{font-size:12px}
+.liveTimes strong{font-size:16px;font-variant-numeric:tabular-nums}
+.liveAction{font-size:13px}
+.liveBadge{font-size:11px!important}
+.monthNavigation strong{font-size:11px}
+.cardActions a{font-size:13px}
