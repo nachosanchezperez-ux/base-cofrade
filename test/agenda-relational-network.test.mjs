@@ -23,8 +23,9 @@ test('la ficha de Hermandad agrega próximas citas sin hacer depender la ficha d
 
   assert.match(source, /getAgendaCofrade\(\)\.catch/)
   assert.match(source, /brotherhoodUpcomingAgenda/)
-  assert.match(source, /BrotherhoodAgendaSection items=\{upcomingAgendaItems\}/)
-  assert.match(source, /href: '#agenda', label: 'Agenda'/)
+  // «Próximamente» presenta el siguiente acto y pliega el resto de citas.
+  assert.match(source, /nextBrotherhoodAppointment\(upcomingAgendaItems, h\.salidas \|\| \[\], agendaData\.today, h\.cultos \|\| \[\]\)/)
+  assert.match(source, /others=\{upcomingAgendaItems\}/)
   assert.match(helper, /item\.organizerHref === target \|\| item\.relatedBrotherhoodHref === target/)
   assert.match(helper, /crewEvents/)
   assert.match(helper, /\/igualas-y-ensayos/)
