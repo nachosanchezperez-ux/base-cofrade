@@ -241,7 +241,7 @@ export default async function RosaryDetailPage({ params }) {
           {description ? (
             <section>
               <span className={styles.eyebrow}>El rosario</span>
-              <h2>Información</h2>
+              <h2>Sobre este rosario</h2>
               <p className={styles.lead}>{description}</p>
             </section>
           ) : null}

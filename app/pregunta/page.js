@@ -25,9 +25,9 @@ export default async function PreguntaPage({ searchParams }) {
 
           <header className={styles.intro}>
             <span className={styles.eyebrow}>Tira del hilo</span>
-            <h1>Conversa con la enciclopedia</h1>
+            <h1>Pregunta a Hilo Cofrade</h1>
             <p>
-              Pregunta como lo harías a otro cofrade, sigue preguntando sobre la respuesta y descubre cómo se
+              Conversa con la enciclopedia: pregunta como lo harías a otro cofrade, sigue preguntando sobre la respuesta y descubre cómo se
               relacionan hermandades, imágenes, bandas y marchas. Solo responde con lo que está publicado en Hilo Cofrade.
             </p>
           </header>
