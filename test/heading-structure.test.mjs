@@ -80,7 +80,7 @@ test('el H1 de Imagen, Paso y Marcha lleva su contexto', async () => {
     assert.match(read(file), /titleContext=\{entityHeadingContext\(/, file)
   }
   for (const file of ['components/ImageHeroV2.js', 'components/RelationalEntityHero.js', 'app/marchas/[slug]/page.js']) {
-    assert.match(read(file), /<h1[^>]*>\s*\{(?:title|march\.name)\}\s*\{(?:titleContext|headingByline) \? <span className=\{\w+\.titleContext\}>/, file)
+    assert.match(read(file), /<h1[^>]*>\s*\{(?:title|march\.name)\}\s*\{(?:titleContext|headingByline) \? <span className=\{\w+\.titleQualifier\}>/, file)
   }
 })
 

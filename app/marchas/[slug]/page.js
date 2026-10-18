@@ -165,7 +165,7 @@ export default async function MarchDetailPage({ params }) {
             {/* Hay varias «Esperanza» o «Macarena»: el compositor forma parte del H1. */}
             <h1>
               {march.name}
-              {headingByline ? <span className={styles.titleContext}><span className="sr-only">, </span>{headingByline}</span> : null}
+              {headingByline ? <span className={styles.titleQualifier}><span className="sr-only">, </span>{headingByline}</span> : null}
             </h1>
             {march.summary ? <p>{march.summary}</p> : null}
           </div>
