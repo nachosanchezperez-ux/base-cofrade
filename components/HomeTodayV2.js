@@ -5,9 +5,6 @@ import Link from 'next/link'
 import { useState } from 'react'
 import HomeMarchPlayer from '@/components/HomeMarchPlayer'
 import styles from './HomeTodayV2.module.css'
-import polishStyles from './HomeResponsivePolish.module.css'
-import mobileFixStyles from './HomeTodayMobileFix.module.css'
-import dynamicStyles from './HomeTodayDynamic.module.css'
 import gameStyles from './HiddenThreadTeaser.module.css'
 
 const MONTH_INDEX = {
@@ -83,7 +80,7 @@ function CardVisual({ visual, featured = false }) {
 
   return (
     <div
-      className={`${styles.visual} ${photo ? styles.visualPhoto : styles.visualIdentity} ${featured ? `${styles.featureVisual} ${mobileFixStyles.featureVisual}` : polishStyles.todayVisual}`}
+      className={`${styles.visual} ${photo ? styles.visualPhoto : styles.visualIdentity} ${featured ? styles.featureVisual : styles.todayVisual}`}
       title={photo && visual.credit ? visual.credit : undefined}
       data-home-visual-kind={visual.kind || 'identity'}
     >
@@ -106,7 +103,7 @@ function RelationshipTrail({ value }) {
   if (!parts.length) return null
 
   return (
-    <span className={`${styles.kicker} ${mobileFixStyles.relationshipTrail}`} aria-label={`Recorrido: ${parts.join(', ')}`}>
+    <span className={`${styles.kicker} ${styles.relationshipTrail}`} aria-label={`Recorrido: ${parts.join(', ')}`}>
       {parts.map((part, index) => (
         <span className={styles.kickerStep} key={`${part}-${index}`}>
           <span>{part}</span>
@@ -165,14 +162,14 @@ export default function HomeTodayV2({ today, content, embedded = false }) {
 
   const renderCard = (card, { isFeatured = false } = {}) => (
     <article
-      className={`${styles.card} ${isFeatured ? `${styles.featureCard} ${mobileFixStyles.featureCard} ${dynamicStyles.featureCardSlot}` : `${styles.compactCard} ${polishStyles.todayCard}`} ${card.kind === 'discovery' ? `${styles.discoveryCard} ${mobileFixStyles.discoveryCard}` : ''} ${card.visual?.path ? `${styles.cardWithVisual} ${isFeatured ? '' : polishStyles.todayCardWithVisual}` : ''}`}
+      className={`${styles.card} ${isFeatured ? `${styles.featureCard} ${styles.featureCardSlot}` : `${styles.compactCard} ${styles.todayCard}`} ${card.kind === 'discovery' ? styles.discoveryCard : ''} ${card.visual?.path ? `${styles.cardWithVisual} ${isFeatured ? '' : styles.todayCardWithVisual}` : ''}`}
       data-home-card-kind={card.kind || 'card'}
       key={`${card.kind}-${card.id}`}
     >
       {card.kind !== 'discovery' ? (
-        <span className={`${styles.icon} ${polishStyles.todayIcon} ${isFeatured ? mobileFixStyles.featureIcon : ''}`} aria-hidden="true">{card.icon}</span>
+        <span className={`${styles.icon} ${styles.todayIcon} ${isFeatured ? styles.featureIcon : ''}`} aria-hidden="true">{card.icon}</span>
       ) : null}
-      <div className={`${styles.copy} ${isFeatured ? mobileFixStyles.featureCopy : ''}`}>
+      <div className={`${styles.copy} ${isFeatured ? styles.featureCopy : ''}`}>
         <div className={styles.topline}>
           <span className={styles.type}>{card.label}</span>
           <RelationshipTrail value={card.kicker} />
@@ -191,7 +188,7 @@ export default function HomeTodayV2({ today, content, embedded = false }) {
 
   return (
     <Wrapper
-      className={embedded ? `${styles.embedded}` : `${styles.section} ${polishStyles.todaySection}`}
+      className={embedded ? `${styles.embedded}` : `${styles.section} ${styles.todaySection}`}
       id="descubre-hoy"
       data-daily-layout={featureRight ? 'lead-right' : 'lead-left'}
     >
@@ -202,17 +199,17 @@ export default function HomeTodayV2({ today, content, embedded = false }) {
             <span className={styles.date}>{today}</span>
           </header>
         ) : (
-          <header className={`${styles.header} ${polishStyles.todayHeader}`}>
+          <header className={`${styles.header} ${styles.todayHeader}`}>
             <span className={styles.date}>{today}</span>
             <h2>Descubre hoy en Hilo Cofrade</h2>
           </header>
         )}
 
         {featured || secondaryCards.length ? (
-          <div className={`${styles.editorialGrid} ${polishStyles.todayGrid} ${featureRight ? dynamicStyles.featureRight : ''}`}>
+          <div className={`${styles.editorialGrid} ${styles.todayGrid} ${featureRight ? styles.featureRight : ''}`}>
             {featured ? renderCard(featured, { isFeatured: true }) : null}
             {secondaryCards.length ? (
-              <div className={`${styles.sideColumn} ${dynamicStyles.sideColumnSlot} ${secondaryCards.length === 1 ? dynamicStyles.sideColumnSingle : ''}`}>
+              <div className={`${styles.sideColumn} ${styles.sideColumnSlot} ${secondaryCards.length === 1 ? styles.sideColumnSingle : ''}`}>
                 {secondaryCards.map((card) => renderCard(card))}
               </div>
             ) : null}
@@ -220,9 +217,9 @@ export default function HomeTodayV2({ today, content, embedded = false }) {
         ) : null}
 
         {content?.march ? (
-          <article className={`${styles.musicCard} ${polishStyles.todayMusic}`} data-home-weight={embedded ? 'secondary' : undefined}>
+          <article className={`${styles.musicCard} ${styles.todayMusic}`} data-home-weight={embedded ? 'secondary' : undefined}>
             <MusicVisual march={content.march} />
-            <div className={`${styles.musicCopy} ${polishStyles.todayMusicCopy}`}>
+            <div className={`${styles.musicCopy} ${styles.todayMusicCopy}`}>
               <span className={styles.type}>Marcha del día</span>
               <h3>{content.march.title}</h3>
               <p className={styles.musicByline}>
@@ -247,13 +244,13 @@ export default function HomeTodayV2({ today, content, embedded = false }) {
                 </div>
               ) : null}
               {content.march.whyToday ? (
-                <div className={`${styles.whyToday} ${polishStyles.todayWhy}`}>
+                <div className={`${styles.whyToday} ${styles.todayWhy}`}>
                   <span>Por qué escucharla hoy</span>
                   <p>{content.march.whyToday}</p>
                 </div>
               ) : null}
             </div>
-            <div className={`${styles.player} ${polishStyles.todayPlayer}`}>
+            <div className={`${styles.player} ${styles.todayPlayer}`}>
               <HomeMarchPlayer
                 videoId={content.march.videoId}
                 listenUrl={content.march.listenUrl}

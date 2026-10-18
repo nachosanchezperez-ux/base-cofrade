@@ -6,13 +6,14 @@ const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf
 
 test('la tarjeta destacada de Hoy usa un contrato móvil independiente de la cascada general', () => {
   const component = read('components/HomeTodayV2.js')
-  const css = read('components/HomeTodayMobileFix.module.css')
+  // Hoja única desde la fase 2 de la unificación de estilos (antes HomeTodayMobileFix).
+  const css = read('components/HomeTodayV2.module.css')
 
-  assert.match(component, /import mobileFixStyles from '\.\/HomeTodayMobileFix\.module\.css'/)
-  assert.match(component, /styles\.featureCard\} \$\{mobileFixStyles\.featureCard/)
-  assert.match(component, /mobileFixStyles\.featureCopy/)
-  assert.match(component, /mobileFixStyles\.featureVisual/)
-  assert.match(component, /mobileFixStyles\.featureIcon/)
+  assert.doesNotMatch(component, /HomeTodayMobileFix/)
+  assert.match(component, /styles\.featureCard\} \$\{styles\.featureCardSlot/)
+  assert.match(component, /styles\.featureCopy/)
+  assert.match(component, /styles\.featureVisual/)
+  assert.match(component, /styles\.featureIcon/)
 
   assert.match(
     css,
