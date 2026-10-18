@@ -34,7 +34,7 @@
 }
 
 .liveEyebrow {
-  color: #b71f37 !important;
+  color: var(--home-red) !important;
 }
 
 .liveEyebrow::before {
@@ -45,7 +45,7 @@
   margin-right: 7px;
   border-radius: 50%;
   vertical-align: 1px;
-  background: #b71f37;
+  background: var(--home-red);
   box-shadow: 0 0 0 4px rgba(183, 31, 55, .08);
 }
 
@@ -53,7 +53,7 @@
   position: relative;
   border: 1px solid rgba(183, 31, 55, .18);
   background: linear-gradient(135deg, #fff 0%, #fff6f7 100%) !important;
-  box-shadow: inset 3px 0 0 #b71f37;
+  box-shadow: inset 3px 0 0 var(--home-red);
 }
 
 .briefingRowPast {

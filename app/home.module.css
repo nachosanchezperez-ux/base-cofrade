@@ -6,7 +6,7 @@
 
 .eyebrow {
   display: inline-block;
-  color: #b71f37;
+  color: var(--home-red);
   font-size: 10px;
   font-weight: 800;
   letter-spacing: .16em;
@@ -32,7 +32,7 @@
 
 .upcomingAgendaHead h2 {
   margin: 6px 0 0;
-  color: #123a67;
+  color: var(--home-blue);
   font-size: 31px;
   font-weight: 800;
   line-height: 1.02;
@@ -87,7 +87,7 @@
 
 .featuredAgendaTitle {
   margin: 7px 0 9px;
-  color: #0f2742;
+  color: var(--home-ink);
   font-size: 29px;
   font-weight: 800;
   line-height: 1.05;
@@ -105,7 +105,7 @@
   align-items: center;
   padding: 7px 10px;
   border-radius: 999px;
-  color: #123a67;
+  color: var(--home-blue);
   background: #eaf1f8;
   font-size: 16px;
   font-weight: 700;
@@ -135,7 +135,7 @@
 .briefingLabel {
   display: block;
   margin-bottom: 8px;
-  color: #b71f37;
+  color: var(--home-red);
   font-size: 10px;
   font-weight: 800;
   letter-spacing: .15em;
@@ -158,7 +158,7 @@
 }
 
 .briefingRow > strong {
-  color: #123a67;
+  color: var(--home-blue);
   font-size: 16px;
   font-weight: 700;
   line-height: 1.15;
@@ -171,7 +171,7 @@
 
 .briefingRow b {
   display: block;
-  color: #0f2742;
+  color: var(--home-ink);
   font-size: 13px;
   font-weight: 700;
   line-height: 1.3;
@@ -196,7 +196,7 @@
 .bandRow strong,
 .bandEntityLink {
   display: block;
-  color: #0f2742;
+  color: var(--home-ink);
   font-size: 13px;
   font-weight: 700;
   line-height: 1.35;
@@ -204,7 +204,7 @@
 }
 
 .bandEntityLink:hover {
-  color: #b71f37;
+  color: var(--home-red);
 }
 
 .briefingPlaces {
@@ -220,7 +220,7 @@
 .placePills span {
   padding: 7px 9px;
   border-radius: 999px;
-  color: #123a67;
+  color: var(--home-blue);
   background: #eaf1f8;
   font-size: 11px;
   font-weight: 700;

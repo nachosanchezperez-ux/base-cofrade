@@ -1,0 +1,20 @@
+/*
+ * Colores de la portada (fase 3 de la unificación de estilos, #1253).
+ *
+ * Los mismos valores que ya usaban las hojas de la portada, ahora con nombre:
+ * cambiar un tono se hace aquí una sola vez. No sustituyen a los colores de
+ * marca de brand.css (--hc-navy, --hc-red), que siguen siendo los del logotipo
+ * y la cabecera.
+ */
+:root {
+  --home-ink: #0f2742;      /* titulares y texto principal */
+  --home-blue: #123a67;     /* enlaces, foco y bloque destacado */
+  --home-red: #b71f37;      /* horas, «en curso», acentos */
+  --home-wine: #8a2235;     /* tipo de acto, etiquetas */
+  --home-text: #34495d;     /* texto secundario fuerte */
+  --home-muted: #5f7080;    /* metadatos */
+  --home-line: #e3e9ef;     /* separadores */
+  --home-border: #dce5ed;   /* bordes de tarjeta */
+  --home-surface: #f6f8fa;  /* fondos suaves */
+  --home-pink: #f0a5b0;     /* etiquetas sobre azul */
+}

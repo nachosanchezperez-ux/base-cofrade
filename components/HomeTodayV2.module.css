@@ -1,3 +1,122 @@
+/*
+ * Hoy en Hilo Cofrade · hoja única (fase 2 de la unificación de estilos).
+ *
+ * Reúne las capas que antes vivían en tres archivos y se corregían entre sí:
+ *   1. Ajustes móviles de HomeResponsivePolish (bloque «today*»), al principio,
+ *      porque esa hoja se cargaba antes que esta.
+ *   2. La hoja propia de la sección.
+ *   3. El contrato móvil de la tarjeta destacada (antes HomeTodayMobileFix).
+ *   4. La composición dinámica de escritorio (antes HomeTodayDynamic).
+ * Se conserva el orden original para que el resultado visual sea idéntico.
+ */
+
+/* 1 · Ajustes móviles (antes HomeResponsivePolish) */
+@media (max-width: 619px) {
+  .todaySection {
+    padding: 30px 0;
+  }
+
+  .todayHeader {
+    margin-bottom: 15px;
+  }
+
+  .todayHeader h2 {
+    font-size: 29px;
+  }
+
+  .todayHeader p {
+    margin-top: 6px;
+    font-size: 12.5px;
+    line-height: 1.5;
+  }
+
+  .todayGrid {
+    gap: 9px;
+  }
+
+  .todayCard {
+    min-height: 0;
+    grid-template-columns: 34px minmax(0, 1fr);
+    gap: 10px;
+    padding: 14px;
+    border-radius: 16px;
+  }
+
+  .todayCardWithVisual {
+    grid-template-columns: 34px minmax(0, 1fr) 58px;
+  }
+
+  .todayIcon {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    font-size: 9px;
+  }
+
+  .todayCard h3 {
+    margin: 6px 0 5px;
+    font-size: 18px;
+    line-height: 1.16;
+  }
+
+  .todayCard p {
+    display: -webkit-box;
+    overflow: hidden;
+    font-size: 12.5px;
+    line-height: 1.48;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+
+  .todayVisual {
+    width: 58px;
+    min-height: 58px;
+    max-height: 76px;
+    align-self: start;
+    border-radius: 12px;
+  }
+
+  .todayMusic {
+    margin-top: 9px;
+    border-radius: 17px;
+  }
+
+  .todayMusicCopy {
+    padding: 16px 16px 12px;
+  }
+
+  .todayMusicCopy h3 {
+    margin-top: 6px;
+    font-size: 21px;
+  }
+
+  .todayMusicCopy > p {
+    font-size: 12px;
+    line-height: 1.48;
+  }
+
+  .todayWhy {
+    margin-top: 10px;
+    padding: 9px 10px;
+  }
+
+  .todayWhy p {
+    font-size: 12px;
+  }
+
+  .todayPlayer {
+    padding: 0 16px 16px;
+  }
+}
+
+@media (min-width: 620px) and (max-width: 859px) {
+  .todaySection {
+    padding-top: 38px;
+    padding-bottom: 40px;
+  }
+}
+
+/* 2 · Sección «Hoy en Hilo Cofrade» */
 .section {
   scroll-margin-top: calc(var(--hc-app-header-height, 70px) + 18px);
   padding: 36px 0;
@@ -15,7 +134,7 @@
 .date {
   display: block;
   margin-bottom: 5px;
-  color: #b71f37;
+  color: var(--home-red);
   font-size: 11px;
   font-weight: 800;
   letter-spacing: .14em;
@@ -24,7 +143,7 @@
 
 .header h2 {
   margin: 0;
-  color: #123a67;
+  color: var(--home-blue);
   font-size: 32px;
   font-weight: 800;
   line-height: 1.05;
@@ -92,7 +211,7 @@
   height: 40px;
   place-items: center;
   border-radius: 12px;
-  color: #123a67;
+  color: var(--home-blue);
   background: #eaf1f8;
   font-size: 11px;
   font-weight: 800;
@@ -112,7 +231,7 @@
 }
 
 .type {
-  color: #b71f37;
+  color: var(--home-red);
   font-size: 10px;
   font-weight: 800;
   letter-spacing: .15em;
@@ -168,7 +287,7 @@
 
 .card h3 {
   margin: 8px 0 6px;
-  color: #0f2742;
+  color: var(--home-ink);
   font-size: 21px;
   font-weight: 700;
   line-height: 1.15;
@@ -177,7 +296,7 @@
 
 .card p {
   margin: 0;
-  color: #5f7080;
+  color: var(--home-muted);
   font-size: 14px;
   line-height: 1.58;
 }
@@ -187,7 +306,7 @@
   align-self: flex-start;
   margin-top: auto;
   padding-top: 11px;
-  color: #123a67;
+  color: var(--home-blue);
   font-size: 13px;
   font-weight: 750;
 }
@@ -241,7 +360,7 @@
   border: 1px solid #d5e0ea;
   border-radius: 20px;
   color: #fff;
-  background: linear-gradient(128deg, #0f2742 0%, #153f69 68%, #1d568d 100%);
+  background: linear-gradient(128deg, var(--home-ink) 0%, #153f69 68%, #1d568d 100%);
   box-shadow: 0 16px 38px rgba(15, 39, 66, .09);
 }
 
@@ -286,7 +405,7 @@
 }
 
 .musicCopy .type {
-  color: #f0a5b0;
+  color: var(--home-pink);
 }
 
 .musicCopy h3 {
@@ -327,7 +446,7 @@
 }
 
 .musicContext small {
-  color: #f0a5b0;
+  color: var(--home-pink);
   font-size: 8px;
   font-weight: 800;
   letter-spacing: .12em;
@@ -353,7 +472,7 @@
 .whyToday {
   margin-top: 14px;
   padding: 11px 12px;
-  border-left: 3px solid #f0a5b0;
+  border-left: 3px solid var(--home-pink);
   border-radius: 0 12px 12px 0;
   background: rgba(255, 255, 255, .075);
 }
@@ -361,7 +480,7 @@
 .whyToday span {
   display: block;
   margin-bottom: 3px;
-  color: #f0a5b0;
+  color: var(--home-pink);
   font-size: 9px;
   font-weight: 800;
   letter-spacing: .12em;
@@ -733,7 +852,7 @@
 
 .embeddedHeader h3 {
   margin: 0;
-  color: #123a67;
+  color: var(--home-blue);
   font-size: 21px;
   font-weight: 800;
   line-height: 1.15;
@@ -761,7 +880,7 @@
 }
 
 .card:has(.cardLink:focus-visible) {
-  outline: 3px solid #123a67;
+  outline: 3px solid var(--home-blue);
   outline-offset: 2px;
 }
 
@@ -781,14 +900,14 @@
  * apartado); la marcha y el juego pasan a tarjetas blancas.
  */
 .embedded .featureCard {
-  border-color: #0f2742;
-  background: linear-gradient(140deg, #123a67 0%, #0f2742 100%);
+  border-color: var(--home-ink);
+  background: linear-gradient(140deg, var(--home-blue) 0%, var(--home-ink) 100%);
   color: #fff;
   box-shadow: none;
 }
 
 .embedded .featureCard .type {
-  color: #f0a5b0;
+  color: var(--home-pink);
 }
 
 .embedded .featureCard .kicker {
@@ -825,19 +944,19 @@
 }
 
 .embedded .featureCard:has(.cardLink):hover {
-  border-color: #0f2742;
+  border-color: var(--home-ink);
 }
 
 .embedded .featureCard:has(.cardLink:focus-visible) {
-  outline-color: #f0a5b0;
+  outline-color: var(--home-pink);
 }
 
 /* Marcha del día: tarjeta blanca; mismo reproductor y enlaces. */
 .embedded .musicCard {
   margin-top: 12px;
-  border-color: #dce5ed;
+  border-color: var(--home-border);
   border-radius: 14px;
-  color: #0f2742;
+  color: var(--home-ink);
   background: #fff;
   box-shadow: none;
 }
@@ -849,29 +968,29 @@
 .embedded .musicVisual {
   width: 52px;
   height: 52px;
-  border-color: #e3e9ef;
+  border-color: var(--home-line);
   border-radius: 12px;
-  color: #123a67;
+  color: var(--home-blue);
   background: #f3f6f9;
   box-shadow: none;
 }
 
 .embedded .musicCopy .type {
-  color: #b71f37;
+  color: var(--home-red);
 }
 
 .embedded .musicCopy h3 {
   margin: 4px 0 3px;
-  color: #0f2742;
+  color: var(--home-ink);
   font-size: 19px;
 }
 
 .embedded .musicByline {
-  color: #5f7080;
+  color: var(--home-muted);
 }
 
 .embedded .musicByline strong {
-  color: #34495d;
+  color: var(--home-text);
 }
 
 .embedded .musicContext > span {
@@ -882,12 +1001,12 @@
 }
 
 .embedded .musicContext small {
-  color: #8a2235;
+  color: var(--home-wine);
 }
 
 .embedded .musicContext strong,
 .embedded .musicContext a {
-  color: #123a67;
+  color: var(--home-blue);
   font-size: 12px;
 }
 
@@ -898,12 +1017,12 @@
 .embedded .whyToday {
   margin-top: 10px;
   padding: 8px 10px;
-  border-left-color: #b71f37;
-  background: #f6f8fa;
+  border-left-color: var(--home-red);
+  background: var(--home-surface);
 }
 
 .embedded .whyToday span {
-  color: #8a2235;
+  color: var(--home-wine);
 }
 
 .embedded .whyToday p {
@@ -911,5 +1030,201 @@
 }
 
 .embedded .musicLink {
-  color: #123a67;
+  color: var(--home-blue);
+}
+
+/* 3 · Contrato móvil de la tarjeta destacada (antes HomeTodayMobileFix) */
+@media (max-width: 619px) {
+  .featureCard {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-rows: auto auto !important;
+    gap: 14px !important;
+    min-height: 0 !important;
+    padding: 14px !important;
+  }
+
+  .featureIcon {
+    display: none !important;
+  }
+
+  .featureCopy {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .featureVisual {
+    display: block !important;
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    width: 100% !important;
+    height: 158px !important;
+    min-height: 158px !important;
+    max-height: none !important;
+    margin: 0 !important;
+    align-self: stretch !important;
+    border-radius: 14px !important;
+  }
+
+  .featureCopy h3 {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 7px 0 6px !important;
+    font-size: 22px !important;
+    line-height: 1.16 !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+  }
+
+  .featureCopy p {
+    width: 100% !important;
+    max-width: none !important;
+  }
+
+  .relationshipTrail {
+    width: 100%;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    gap: 6px !important;
+    row-gap: 4px !important;
+    line-height: 1.35 !important;
+  }
+
+  .relationshipTrail > span {
+    white-space: nowrap;
+  }
+
+  .discoveryCard {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-rows: auto !important;
+    gap: 0 !important;
+    min-height: 0 !important;
+    padding: 16px !important;
+  }
+
+  .discoveryCard .featureCopy {
+    grid-column: 1 !important;
+    grid-row: auto !important;
+  }
+
+  .discoveryCard .featureVisual {
+    position: absolute !important;
+    top: 16px !important;
+    right: 16px !important;
+    display: block !important;
+    grid-column: auto !important;
+    grid-row: auto !important;
+    width: 56px !important;
+    height: 56px !important;
+    min-height: 56px !important;
+    max-height: 56px !important;
+    margin: 0 !important;
+    align-self: auto !important;
+    border-radius: 13px !important;
+  }
+}
+
+@media (max-width: 390px) {
+  .featureVisual {
+    height: 142px !important;
+    min-height: 142px !important;
+  }
+}
+
+/* 4 · Composición dinámica de escritorio (antes HomeTodayDynamic) */
+.featureCardSlot,
+.sideColumnSlot {
+  min-width: 0;
+}
+
+@media (min-width: 860px) {
+  .featureRight {
+    grid-template-columns: minmax(330px, .68fr) minmax(0, 1.32fr);
+  }
+
+  .featureRight > .featureCardSlot {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .featureRight > .sideColumnSlot {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .sideColumnSingle {
+    grid-template-rows: minmax(0, 1fr) !important;
+  }
+
+  .sideColumnSingle > * {
+    height: 100%;
+  }
+
+  .sideColumnSingle h3 {
+    font-size: 25px;
+  }
+
+  .sideColumnSingle p {
+    font-size: 14.5px;
+  }
+
+  /*
+   * Una protagonista sin fotografía real no debe conservar la geometría
+   * reservada a una portada. Además de retirar la altura mínima, anulamos
+   * la fila visual de 190 px que define la tarjeta destacada con imagen.
+   */
+  .featureCardSlot:not(:has([data-home-visual-kind="photo"])) {
+    grid-column: 1 / -1 !important;
+    grid-row: 1 !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-rows: auto !important;
+    gap: 0 !important;
+    min-height: 0 !important;
+    padding: 22px 26px !important;
+    align-self: start;
+    align-items: start !important;
+  }
+
+  .featureCardSlot:not(:has([data-home-visual-kind="photo"])) > div:not([data-home-visual-kind]) {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+  }
+
+  .featureCardSlot:not(:has([data-home-visual-kind="photo"])) > [data-home-visual-kind]:not([data-home-visual-kind="photo"]) {
+    display: none !important;
+  }
+
+  .featureCardSlot:not(:has([data-home-visual-kind="photo"])) h3 {
+    max-width: 920px;
+    margin-top: 9px;
+    font-size: 27px;
+    line-height: 1.1;
+  }
+
+  .featureCardSlot:not(:has([data-home-visual-kind="photo"])) p {
+    max-width: 980px;
+  }
+
+  .featureCardSlot:not(:has([data-home-visual-kind="photo"])) + .sideColumnSlot {
+    grid-column: 1 / -1 !important;
+    grid-row: 2 !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: minmax(0, 1fr);
+    gap: 14px;
+  }
+
+  .featureCardSlot:not(:has([data-home-visual-kind="photo"])) + .sideColumnSlot > * {
+    height: 100%;
+  }
+}
+
+@media (max-width: 859px) {
+  .featureRight,
+  .sideColumnSingle {
+    grid-template-columns: 1fr;
+  }
 }

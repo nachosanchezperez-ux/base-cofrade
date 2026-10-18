@@ -28,17 +28,17 @@ test('Hoy incorpora un hilo adicional sin duplicar los tres hilos del bloque inf
 
 test('la composición de escritorio alterna el lado protagonista y conserva móvil en una columna', () => {
   const component = read('components/HomeTodayV2.js')
-  const css = read('components/HomeTodayDynamic.module.css')
+  const css = read('components/HomeTodayV2.module.css')
 
   assert.match(component, /data-daily-layout=\{featureRight \? 'lead-right' : 'lead-left'\}/)
-  assert.match(component, /dynamicStyles\.featureRight/)
+  assert.match(component, /styles\.featureRight/)
   assert.match(css, /@media \(min-width: 860px\)/)
   assert.match(css, /\.featureRight[\s\S]*grid-template-columns: minmax\(330px, \.68fr\) minmax\(0, 1\.32fr\)/)
   assert.match(css, /@media \(max-width: 859px\)[\s\S]*\.featureRight/)
 })
 
 test('una protagonista sin fotografía se compacta y elimina también la fila visual vacía', () => {
-  const css = read('components/HomeTodayDynamic.module.css')
+  const css = read('components/HomeTodayV2.module.css')
 
   assert.match(css, /\.featureCardSlot:not\(:has\(\[data-home-visual-kind="photo"\]\)\)/)
   assert.match(css, /grid-column: 1 \/ -1 !important;/)

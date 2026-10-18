@@ -2,13 +2,13 @@
 .section {
   scroll-margin-top: calc(var(--hc-app-header-height, 70px) + 14px);
   padding: 30px 0 32px;
-  border-top: 1px solid #e3e9ef;
-  background: #f6f8fa;
+  border-top: 1px solid var(--home-line);
+  background: var(--home-surface);
 }
 
 .title {
   margin: 0;
-  color: #0f2742;
+  color: var(--home-ink);
   font-size: 26px;
   font-weight: 800;
   line-height: 1.1;
@@ -17,7 +17,7 @@
 
 .lead {
   margin: 6px 0 16px;
-  color: #5f7080;
+  color: var(--home-muted);
   font-size: 15px;
   line-height: 1.5;
 }
@@ -48,7 +48,7 @@
   min-height: 132px;
   padding: 14px;
   overflow: hidden;
-  border: 1px solid #dce5ed;
+  border: 1px solid var(--home-border);
   border-radius: 14px;
   background: #fff;
   color: inherit;
@@ -73,7 +73,7 @@
   place-items: center;
   border-radius: 12px;
   background: #eef3f8;
-  color: #123a67;
+  color: var(--home-blue);
   transition: background-color .15s ease, color .15s ease;
 }
 
@@ -88,14 +88,14 @@
   bottom: -16px;
   width: 92px;
   height: 92px;
-  color: #123a67;
+  color: var(--home-blue);
   opacity: .06;
   pointer-events: none;
 }
 
 .name {
   align-self: end;
-  color: #0f2742;
+  color: var(--home-ink);
   font-size: 18px;
   font-weight: 800;
   line-height: 1.15;
@@ -103,29 +103,29 @@
 }
 
 .figure {
-  color: #5f7080;
+  color: var(--home-muted);
   font-size: 13px;
   font-weight: 650;
   line-height: 1.3;
 }
 
 .figure b {
-  color: #b71f37;
+  color: var(--home-red);
   font-size: 15px;
   font-weight: 800;
   font-variant-numeric: tabular-nums;
 }
 
 .hint {
-  color: #5f7080;
+  color: var(--home-muted);
   font-size: 13px;
   font-weight: 650;
   line-height: 1.3;
 }
 
 .tile[data-key="agenda"] {
-  border-color: #123a67;
-  background: linear-gradient(150deg, #123a67 0%, #0f2742 100%);
+  border-color: var(--home-blue);
+  background: linear-gradient(150deg, var(--home-blue) 0%, var(--home-ink) 100%);
 }
 
 .tile[data-key="agenda"] .glyph {
@@ -150,7 +150,7 @@
 }
 
 .tile:hover .glyph {
-  background: #b71f37;
+  background: var(--home-red);
   color: #fff;
 }
 
@@ -167,7 +167,7 @@
 
 .tile:focus-visible,
 .moreLink:focus-visible {
-  outline: 3px solid #123a67;
+  outline: 3px solid var(--home-blue);
   outline-offset: 2px;
 }
 
@@ -179,7 +179,7 @@
 
 :global(#hc-app #enciclopedia) .moreTitle {
   margin: 0 0 4px;
-  color: #5f7080;
+  color: var(--home-muted);
   font-size: 15px;
   font-weight: 750;
   line-height: 1.3;
@@ -199,7 +199,7 @@
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-  color: #123a67;
+  color: var(--home-blue);
   font-size: 15px;
   font-weight: 650;
   line-height: 1.3;
@@ -314,21 +314,21 @@
 }
 
 .tile[data-key="agenda"] {
-  border-color: #dce5ed;
+  border-color: var(--home-border);
   background: #fff;
 }
 
 .tile[data-key="agenda"] .glyph {
   background: #f8e9ec;
-  color: #b71f37;
+  color: var(--home-red);
 }
 
 .tile[data-key="agenda"] .name {
-  color: #0f2742;
+  color: var(--home-ink);
 }
 
 .tile[data-key="agenda"] .hint {
-  color: #5f7080;
+  color: var(--home-muted);
 }
 
 .tile:hover {
@@ -353,7 +353,7 @@
   border: 1px solid #d9e2ea;
   border-radius: 999px;
   background: #fff;
-  color: #123a67;
+  color: var(--home-blue);
   font-size: 14px;
   font-weight: 650;
   line-height: 1.2;
@@ -361,8 +361,8 @@
 }
 
 .moreLink:hover {
-  border-color: #123a67;
-  color: #0f2742;
+  border-color: var(--home-blue);
+  color: var(--home-ink);
 }
 
 @media (min-width: 768px) {

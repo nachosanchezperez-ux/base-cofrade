@@ -10,6 +10,7 @@ import './habit-layout.css';
 import './habit-identity.css';
 import './habit-spacing.css';
 import './step-preview.css';
+import './home-tokens.css';
 import './home-mobile-contract.css';
 import './titulars-desktop-layout.css';
 import './entity-visual-fallbacks.css';

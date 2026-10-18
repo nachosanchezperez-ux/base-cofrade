@@ -1,9 +1,9 @@
 .section {
   scroll-margin-top: calc(var(--hc-app-header-height, 70px) + 18px);
   padding: 36px 0 42px;
-  border-top: 1px solid #e3e9ef;
-  border-bottom: 1px solid #e3e9ef;
-  background: radial-gradient(circle at 86% 10%, rgba(18, 58, 103, .045), transparent 30%), #f6f8fa;
+  border-top: 1px solid var(--home-line);
+  border-bottom: 1px solid var(--home-line);
+  background: radial-gradient(circle at 86% 10%, rgba(18, 58, 103, .045), transparent 30%), var(--home-surface);
 }
 
 .header {
@@ -16,7 +16,7 @@
 .moreLabel,
 .relation {
   display: inline-block;
-  color: #b71f37;
+  color: var(--home-red);
   font-size: 10px;
   font-weight: 800;
   letter-spacing: .14em;
@@ -25,7 +25,7 @@
 
 .header h2 {
   margin: 6px 0 0;
-  color: #123a67;
+  color: var(--home-blue);
   font-size: 31px;
   font-weight: 800;
   line-height: 1.05;
@@ -54,7 +54,7 @@
   gap: 10px;
   padding: 8px 0;
   border: 0;
-  color: #123a67;
+  color: var(--home-blue);
   background: transparent;
   font: inherit;
   font-size: 16px;
@@ -67,7 +67,7 @@
 
 .allUpdates:focus-visible {
   border-radius: 4px;
-  outline: 3px solid #123a67;
+  outline: 3px solid var(--home-blue);
   outline-offset: 4px;
 }
 
@@ -100,7 +100,7 @@
   position: absolute;
   inset: 0 auto 0 0;
   width: 4px;
-  background: linear-gradient(180deg, #b71f37 0%, #123a67 78%);
+  background: linear-gradient(180deg, var(--home-red) 0%, var(--home-blue) 78%);
 }
 
 .leadCard:hover,
@@ -123,7 +123,7 @@
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  color: #123a67;
+  color: var(--home-blue);
   font-size: 10px;
   font-weight: 800;
   letter-spacing: .09em;
@@ -134,7 +134,7 @@
   width: 7px;
   height: 7px;
   border-radius: 999px;
-  background: #b71f37;
+  background: var(--home-red);
   box-shadow: 0 0 0 4px rgba(183, 31, 55, .08);
 }
 
@@ -157,7 +157,7 @@
   align-items: center;
   padding: 0 8px;
   border-radius: 999px;
-  color: #123a67;
+  color: var(--home-blue);
   background: #eaf1f7;
   font-size: 9px;
   font-weight: 800;
@@ -198,7 +198,7 @@
   overflow: hidden;
   width: 78px;
   height: 78px;
-  border: 1px solid #dce5ed;
+  border: 1px solid var(--home-border);
   border-radius: 18px;
   background: #eef3f7;
   box-shadow: 0 8px 22px rgba(15, 39, 66, .07);
@@ -227,7 +227,7 @@
 .compactCopy { min-width: 0; }
 
 .relation {
-  color: #b71f37;
+  color: var(--home-red);
   line-height: 1.35;
 }
 
@@ -248,7 +248,7 @@
 .leadCard h3 {
   margin: 7px 0 6px;
   max-width: 760px;
-  color: #0f2742;
+  color: var(--home-ink);
   font-size: 27px;
   font-weight: 800;
   line-height: 1.08;
@@ -257,7 +257,7 @@
 
 .metric {
   display: block;
-  color: #123a67;
+  color: var(--home-blue);
   font-size: 16px;
   font-weight: 750;
   line-height: 1.35;
@@ -281,7 +281,7 @@
 }
 
 .path i {
-  color: #b71f37;
+  color: var(--home-red);
   font-style: normal;
 }
 
@@ -296,7 +296,7 @@
 }
 
 .moreList {
-  border-top: 1px solid #e3e9ef;
+  border-top: 1px solid var(--home-line);
 }
 
 .compactCard {
@@ -309,7 +309,7 @@
   transition: background .18s ease;
 }
 
-.compactCard + .compactCard { border-top: 1px solid #e3e9ef; }
+.compactCard + .compactCard { border-top: 1px solid var(--home-line); }
 
 .compactCard:hover,
 .compactCard:focus-visible {
@@ -345,7 +345,7 @@
   display: -webkit-box;
   margin: 0 0 4px;
   overflow: hidden;
-  color: #0f2742;
+  color: var(--home-ink);
   font-size: 18px;
   font-weight: 800;
   line-height: 1.16;
@@ -454,7 +454,7 @@
 
 .embeddedHeader h3 {
   margin: 0;
-  color: #123a67;
+  color: var(--home-blue);
   font-size: 21px;
   font-weight: 800;
   line-height: 1.15;
@@ -481,7 +481,7 @@
 }
 
 .embedded .leadCard:focus-visible {
-  outline: 3px solid #123a67;
+  outline: 3px solid var(--home-blue);
   outline-offset: 2px;
 }
 
