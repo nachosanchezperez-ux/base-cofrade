@@ -48,7 +48,7 @@ export default async function SacramentalLocalityPage({ params }) {
   return (
     <DirectoryRoutePage
       eyebrow="Hermandades Sacramentales"
-      title={`Hermandades sacramentales de ${data.localityName}`}
+      title={`Hermandades Sacramentales de ${data.localityName}`}
       description={`Corporaciones sacramentales documentadas en ${data.localityName}.`}
       hermandades={data.items}
       path={data.path}

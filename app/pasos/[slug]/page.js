@@ -22,6 +22,7 @@ import {
   absoluteUrl,
   breadcrumbJsonLd,
   contextualEntitySeoTitle,
+  entityHeadingContext,
   pageTitle,
   seoDescription,
 } from '@/lib/seo';
@@ -197,6 +198,7 @@ export default async function PasoDetailPage({params}){
         variant="step"
         entityType="Paso procesional"
         title={paso.nombre}
+        titleContext={entityHeadingContext(paso.nombre, { context: hermandad?.nombrePopular, locality: hermandad?.localidad })}
         breadcrumbItems={[
           { label: 'Pasos', href: '/pasos' },
           { label: paso.nombre },

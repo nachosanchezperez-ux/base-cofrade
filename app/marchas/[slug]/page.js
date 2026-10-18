@@ -6,7 +6,7 @@ import EntityLastUpdated from '@/components/EntityLastUpdated'
 import EntitySectionNav from '@/components/EntitySectionNav'
 import RelationalThread from '@/components/RelationalThread'
 import { getPublicMarchBySlug } from '@/lib/supabase/public-marches'
-import { absoluteUrl, breadcrumbJsonLd, marchSeoTitle, socialMetadata } from '@/lib/seo'
+import { absoluteUrl, breadcrumbJsonLd, marchHeadingByline, marchSeoTitle, socialMetadata } from '@/lib/seo'
 import styles from './marcha.module.css'
 
 export const dynamic = 'force-static'
@@ -60,6 +60,7 @@ export default async function MarchDetailPage({ params }) {
   const { slug } = await params
   const march = await getPublicMarchBySlug(slug)
   if (!march) notFound()
+  const headingByline = marchHeadingByline(march.authors.filter((author) => author.role === 'composer').map((author) => author.name))
 
   const relatedBands = [
     ...(march.premiereBand?.href ? [{ ...march.premiereBand, relation: 'Estrenada por' }] : []),
@@ -161,7 +162,11 @@ export default async function MarchDetailPage({ params }) {
           />
           <div className={styles.heroBody}>
             <span>{march.workType}</span>
-            <h1>{march.name}</h1>
+            {/* Hay varias «Esperanza» o «Macarena»: el compositor forma parte del H1. */}
+            <h1>
+              {march.name}
+              {headingByline ? <span className={styles.titleContext}><span className="sr-only">, </span>{headingByline}</span> : null}
+            </h1>
             {march.summary ? <p>{march.summary}</p> : null}
           </div>
           <div className={styles.metrics}>
