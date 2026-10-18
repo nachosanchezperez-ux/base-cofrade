@@ -142,6 +142,20 @@ export default async function ImagenPage({ params }) {
       href: `/hermandades/${hermandad.slug}`,
       context: 'Ficha matriz de la corporación',
     }] : []),
+    ...(imagen.sustituidaPor ? [{
+      kind: 'Imagen',
+      relation: 'La sustituyó',
+      title: imagen.sustituidaPor.nombre,
+      href: `/imagenes/${imagen.sustituidaPor.slug}`,
+      context: imagen.sustituidaPor.fecha ? `Desde ${imagen.sustituidaPor.fecha}` : 'Imagen titular actual',
+    }] : []),
+    ...(imagen.sustituyoA || []).map((anterior) => ({
+      kind: 'Imagen',
+      relation: 'Sustituyó a',
+      title: anterior.nombre,
+      href: `/imagenes/${anterior.slug}`,
+      context: anterior.fecha ? `Antigua imagen titular hasta ${anterior.fecha}` : 'Antigua imagen titular',
+    })),
     ...pasos.map((paso) => ({
       kind: 'Paso',
       relation: 'Procesiona en',
@@ -321,6 +335,18 @@ export default async function ImagenPage({ params }) {
             {publicText(imagen.fecha) ? <article>
               <small>Fecha</small>
               <strong>{publicText(imagen.fecha)}</strong>
+            </article> : null}
+
+            {imagen.sustituidaPor ? <article>
+              <small>Sustituida por{imagen.sustituidaPor.fecha ? ` · ${imagen.sustituidaPor.fecha}` : ''}</small>
+              <Link href={`/imagenes/${imagen.sustituidaPor.slug}`}>{imagen.sustituidaPor.nombre}</Link>
+            </article> : null}
+
+            {imagen.sustituyoA?.length ? <article>
+              <small>Sustituyó a</small>
+              {imagen.sustituyoA.map((anterior) => (
+                <Link key={anterior.slug} href={`/imagenes/${anterior.slug}`}>{anterior.nombre}</Link>
+              ))}
             </article> : null}
 
             {publicText(imagen.tipologia || imagen.tipo) ? <article>

@@ -158,3 +158,13 @@ test('en el paso, las figuras secundarias se separan de las imágenes principale
   const brotherhoodPage = read('app/hermandades/[slug]/page.js')
   assert.match(brotherhoodPage, /Figuras del misterio/)
 })
+
+test('la ficha de imagen enlaza la sucesión en ambos sentidos', () => {
+  const loader = read('lib/supabase/public-entity-pages.js')
+  assert.match(loader, /async function loadImageSuccession/)
+  assert.match(loader, /source_entity_id\.eq\.\$\{imageId\},target_entity_id\.eq\.\$\{imageId\}/)
+  const page = read('app/imagenes/[slug]/page.js')
+  assert.match(page, /<small>Sustituida por\{/)
+  assert.match(page, /<small>Sustituyó a<\/small>/)
+  assert.match(page, /relation: 'La sustituyó'/)
+})
