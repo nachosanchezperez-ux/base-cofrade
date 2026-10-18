@@ -29,7 +29,7 @@ test('la Agenda no baja de 11px en los textos que antes eran diminutos', () => {
   const css = read('components/AgendaCofradeDirectoryV4.module.css')
   const tail = css.slice(css.lastIndexOf('Tamaño mínimo de letra'))
   for (const selector of ['.liveItem>div:first-child>span', '.liveTimes span', '.liveTimes strong', '.liveItem p', '.liveAction', '.cardActions a', '.monthNavigation strong']) {
-    const size = Number(new RegExp(`${selector.replace(/[.*+?^${}()|[\]\\>]/g, '\\$&')}\\{font-size:(\\d+)px`).exec(tail)?.[1])
+    const size = Number(new RegExp(`${selector.replace(/[.*+?^${}()|[\]\\>]/g, '\\$&')}\\{[^}]*font-size:(\\d+)px`).exec(tail)?.[1])
     assert.ok(size >= 11, `${selector} tiene ${size}px`)
   }
 })
