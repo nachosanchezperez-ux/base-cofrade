@@ -1,0 +1,258 @@
+/* Ficha por capítulos: separación con espacio y tipografía, no con cajas. */
+.chapters {
+  --chapter-offset: calc(var(--hc-app-header-height, 70px) + 10px);
+  background: #fff;
+}
+
+:global(body):has(.chapters) {
+  /* La barra inferior fija no tapa el final de la página en móvil. */
+  padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px));
+}
+
+.chapter {
+  scroll-margin-top: var(--chapter-offset);
+  padding-block: 36px 8px;
+  border-top: 1px solid #e3e7eb;
+}
+
+.chapter:first-of-type {
+  border-top: 0;
+  padding-top: 24px;
+}
+
+.chapterHead {
+  margin-bottom: 4px;
+}
+
+.kicker {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 0;
+  color: #171b20;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.kickerIndex {
+  color: var(--brotherhood-secondary, #a71930);
+  font-variant-numeric: tabular-nums;
+}
+
+.chapterIntro {
+  max-width: 68ch;
+  margin: 8px 0 0;
+  color: #4b5560;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+/* Las secciones reutilizadas pierden el relleno superior: el capítulo ya separa. */
+.chapter :global(.section),
+.chapter :global(#conoce-hermandad),
+.chapter :global(#salidas),
+.chapter :global(#agenda) {
+  padding-block: 20px 24px;
+}
+
+.chapter :global(.section-heading) {
+  margin-bottom: 16px;
+}
+
+.chapter :global(.section-heading h2) {
+  font-size: clamp(24px, 6.4vw, 34px);
+}
+
+.flow > :global(*) + :global(*) {
+  border-top: 1px solid #eef1f4;
+}
+
+/* Inicio */
+.homeGrid {
+  display: grid;
+  gap: 22px;
+  padding-top: 12px;
+}
+
+.homeMain,
+.homeSide {
+  min-width: 0;
+}
+
+.lead {
+  max-width: 62ch;
+  margin: 0 0 18px;
+  color: #23272c;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.essentials :global([class*='__facts']) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 28px;
+}
+
+.essentials :global([class*='__fact']) {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 0;
+}
+
+.essentials :global([class*='__facts'] dd) {
+  font-size: 24px;
+}
+
+.homeSide :global(#agenda) {
+  padding: 0;
+  background: transparent;
+}
+
+.homeSide :global(#agenda > .shell) {
+  width: 100%;
+  padding: 0;
+}
+
+.news {
+  margin-top: 24px;
+}
+
+.newsEyebrow,
+.subhead {
+  margin: 0 0 10px;
+  color: #555d66;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.subhead small {
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* Una noticia protagonista; las demás, en segundo nivel y sin competir. */
+.newsLead :global(ol) {
+  margin: 0;
+}
+
+.newsLead :global(h3) {
+  font-size: 21px;
+  line-height: 1.25;
+}
+
+.newsMore {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid #e3e7eb;
+}
+
+.newsMore :global(h3) {
+  font-size: 16px;
+}
+
+/* Qué descubrir: accesos a los capítulos con su contenido real. */
+.discover {
+  margin-top: 26px;
+}
+
+.discover ol {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid #e3e7eb;
+}
+
+.discover li {
+  border-bottom: 1px solid #e3e7eb;
+}
+
+.discover a {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: 'label arrow' 'summary arrow';
+  align-items: center;
+  column-gap: 12px;
+  min-height: 60px;
+  padding: 10px 0;
+  color: #171b20;
+  text-decoration: none;
+}
+
+.discover strong {
+  grid-area: label;
+  font-size: 17px;
+}
+
+.discover span {
+  grid-area: summary;
+  color: #59636e;
+  font-size: 14px;
+}
+
+.discover b {
+  grid-area: arrow;
+  color: var(--brotherhood-primary, #153b69);
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.discover a:hover strong {
+  color: var(--brotherhood-primary, #153b69);
+}
+
+.discover a:focus-visible {
+  outline: 3px solid #175f99;
+  outline-offset: 2px;
+}
+
+.supplement {
+  padding-block: 8px 20px;
+}
+
+@media (min-width: 900px) {
+  :global(body):has(.chapters) {
+    padding-bottom: 0;
+  }
+
+  .chapters {
+    --chapter-offset: calc(var(--hc-app-header-height, 78px) + 62px);
+  }
+
+  .chapter {
+    padding-block: 56px 16px;
+  }
+
+  .homeGrid {
+    grid-template-columns: minmax(0, 1.35fr) minmax(320px, 1fr);
+    gap: 48px;
+    align-items: start;
+  }
+
+  .lead {
+    font-size: 19px;
+  }
+
+  .discover ol {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    column-gap: 28px;
+    border-top: 0;
+  }
+
+  .discover li {
+    border-top: 2px solid var(--brotherhood-primary, #153b69);
+    border-bottom: 0;
+  }
+
+  .discover a {
+    min-height: 84px;
+    align-content: start;
+    padding-top: 14px;
+  }
+}
