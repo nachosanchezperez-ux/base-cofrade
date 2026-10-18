@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { isFormerTitularRelation } from '@/lib/brotherhood-image-relations'
+import { classifyBrotherhoodImages, publicRelationLabel } from '@/lib/brotherhood-image-relations'
 import { unstable_cache } from 'next/cache'
 import { BROTHERHOOD_DETAIL_DATA_CACHE, brotherhoodDetailCacheDay } from '@/lib/brotherhood-detail-cache'
 import Image from 'next/image'
@@ -241,9 +241,7 @@ async function loadBrotherhoodThreadDataRows(supabase, brotherhoodId) {
   const stepLinks = assertRows(stepLinksResult, 'No se pudieron consultar los Pasos de la Hermandad')
   const imageIds = imageLinks.map((item) => item.image_entity_id).filter(Boolean)
   const stepIds = stepLinks.map((item) => item.step_entity_id).filter(Boolean)
-  const formerImageIds = new Set(imageLinks
-    .filter((item) => isFormerTitularRelation(item.relation_type))
-    .map((item) => item.image_entity_id))
+  const imageClassById = classifyBrotherhoodImages(imageLinks)
 
   const [imagesResult, stepsResult] = await Promise.all([
     imageIds.length
@@ -268,7 +266,8 @@ async function loadBrotherhoodThreadDataRows(supabase, brotherhoodId) {
     brotherhood,
     images: orderProcessionalItems(assertRows(imagesResult, 'No se pudieron consultar las Imágenes publicadas de la Hermandad')).map((image) => ({
       ...image,
-      isFormerTitular: formerImageIds.has(image.id),
+      relationKind: imageClassById.get(image.id)?.kind || 'titular',
+      relationLabel: publicRelationLabel(imageClassById.get(image.id)?.link?.relation_type),
     })),
     steps: orderProcessionalItems(assertRows(stepsResult, 'No se pudieron consultar los Pasos publicados de la Hermandad')),
   }
@@ -604,11 +603,11 @@ export async function BrotherhoodOwnBands({ brotherhoodId, musicOnly = false }) 
     const threadItems = [
       ...threadData.images.map((image) => ({
         kind: 'Imagen',
-        relation: image.isFormerTitular ? 'Antigua titular' : 'Titular',
+        relation: image.relationLabel,
         title: image.name,
         href: `/imagenes/${image.slug}`,
-        context: image.isFormerTitular ? 'Antigua imagen titular de la Hermandad' : 'Imagen vinculada a la Hermandad',
-        priority: image.isFormerTitular ? 30 : 10,
+        context: image.relationKind === 'former' ? 'Antigua imagen titular de la Hermandad' : 'Imagen vinculada a la Hermandad',
+        priority: image.relationKind === 'titular' ? 10 : 30,
       })),
       ...threadData.steps.map((step) => ({
         kind: 'Paso',
