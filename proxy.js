@@ -1,5 +1,6 @@
 import { updateSession } from '@/lib/supabase/proxy'
 import { NextResponse } from 'next/server'
+import { backslashPathResolution } from '@/lib/backslash-path'
 
 export async function proxy(request) {
   const forwardedHost = request.headers.get('x-forwarded-host')?.split(',')[0].trim()
@@ -13,6 +14,13 @@ export async function proxy(request) {
     canonicalUrl.port = ''
 
     return NextResponse.redirect(canonicalUrl, 308)
+  }
+
+  const backslash = backslashPathResolution(request.nextUrl.pathname)
+  if (backslash?.redirect) {
+    const cleanUrl = request.nextUrl.clone()
+    cleanUrl.pathname = backslash.redirect
+    return NextResponse.redirect(cleanUrl, 308)
   }
 
   const gloryBridgePrefix = '/extraordinarias/gloria/'
