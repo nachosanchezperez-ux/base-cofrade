@@ -40,7 +40,7 @@ export default function HomeDiscover({ stats, children = null }) {
           <ul className={styles.moreList}>
             {HOME_DISCOVER_SECONDARY.map((item) => (
               <li key={item.href}>
-                <Link className={styles.moreLink} href={item.href}>{item.label}</Link>
+                <Link className={styles.moreLink} href={item.href} title={item.detail || undefined}>{item.label}</Link>
               </li>
             ))}
           </ul>

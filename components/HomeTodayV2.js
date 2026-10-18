@@ -220,7 +220,7 @@ export default function HomeTodayV2({ today, content, embedded = false }) {
         ) : null}
 
         {content?.march ? (
-          <article className={`${styles.musicCard} ${polishStyles.todayMusic}`}>
+          <article className={`${styles.musicCard} ${polishStyles.todayMusic}`} data-home-weight={embedded ? 'secondary' : undefined}>
             <MusicVisual march={content.march} />
             <div className={`${styles.musicCopy} ${polishStyles.todayMusicCopy}`}>
               <span className={styles.type}>Marcha del día</span>
@@ -258,7 +258,7 @@ export default function HomeTodayV2({ today, content, embedded = false }) {
                 videoId={content.march.videoId}
                 listenUrl={content.march.listenUrl}
                 title={content.march.title}
-                variant="inverse"
+                variant={embedded ? 'default' : 'inverse'}
               />
               {content.march.releaseHref ? (
                 <Link className={styles.musicLink} href={content.march.releaseHref}>Ver la discografía</Link>
@@ -269,7 +269,8 @@ export default function HomeTodayV2({ today, content, embedded = false }) {
           </article>
         ) : null}
 
-        <aside className={gameStyles.teaser} aria-label="El hilo escondido, juego cofrade del día">
+        <aside className={`${gameStyles.teaser} ${embedded ? gameStyles.teaserFeature : ''}`} aria-label="El hilo escondido, juego cofrade del día">
+          {embedded ? <span className={gameStyles.teaserIcon} aria-hidden="true">?</span> : null}
           <div className={gameStyles.teaserCopy}>
             <span>Un reto cofrade cada día</span>
             <strong>El hilo escondido: ¿adivinas la palabra de hoy?</strong>

@@ -51,50 +51,54 @@
   white-space: nowrap;
 }
 
-.list {
+/*
+ * Jerarquía (#1253): una noticia principal y titulares secundarios.
+ * La principal lleva foto (la misma del índice), titular grande y entradilla.
+ * Las secundarias son filas de texto sin caja ni foto, con el escudo pequeño:
+ * no compiten en tamaño, borde ni imagen con la principal.
+ */
+.layout {
   display: grid;
-  gap: 10px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
+  gap: 4px;
 }
 
-.item {
+.lead {
+  position: relative;
   display: grid;
   min-width: 0;
   overflow: hidden;
   border: 1px solid #dce5ed;
-  border-radius: 12px;
+  border-radius: 14px;
   background: #fff;
 }
 
-.story {
-  display: grid;
-  grid-template-columns: 36px minmax(0, 1fr);
-  align-items: start;
-  gap: 12px;
-  padding: 14px 14px 12px;
-  color: inherit;
-}
-
-/* Escudo sin recuadro, con su proporción. */
-.crest {
-  width: 36px;
-  height: auto;
-  max-height: 44px;
-  object-fit: contain;
-}
-
-.crestSpace {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
+.leadPhoto {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  max-height: 260px;
+  overflow: hidden;
   background: #eef2f6;
+}
+
+.leadPhoto img {
+  object-fit: cover;
+}
+
+.leadBody {
+  display: grid;
+  min-width: 0;
+  padding: 14px 16px 14px;
+}
+
+.leadBodyNoPhoto {
+  grid-template-columns: 52px minmax(0, 1fr);
+  align-items: start;
+  gap: 14px;
 }
 
 .copy {
   display: grid;
-  gap: 3px;
+  gap: 4px;
   min-width: 0;
 }
 
@@ -103,6 +107,7 @@
   flex-wrap: wrap;
   align-items: baseline;
   gap: 2px 10px;
+  margin: 0;
   color: #5f7080;
   font-size: 13px;
   line-height: 1.3;
@@ -113,39 +118,126 @@
   font-weight: 750;
 }
 
-.headline {
+:global(#hc-app #el-hilo-se-mueve) .leadHeadline {
+  margin: 0;
+  color: #0f2742;
+  font-size: 21px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -.02em;
+}
+
+:global(#hc-app #el-hilo-se-mueve) .headline {
   display: -webkit-box;
+  margin: 0;
   overflow: hidden;
   color: #0f2742;
-  font-size: 16px;
-  font-weight: 750;
+  font-size: 15px;
+  font-weight: 700;
   line-height: 1.3;
-  letter-spacing: -.01em;
+  letter-spacing: -.005em;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
 }
 
+/* El titular es el enlace y su ::after cubre la noticia: toda la pieza es
+   clicable sin repetir «Leer más». */
+.storyLink {
+  color: inherit;
+  text-decoration: none;
+}
+
+.storyLink::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.storyLink:focus-visible {
+  outline: none;
+}
+
+.lead:has(.storyLink:focus-visible),
+.secondary:has(.storyLink:focus-visible) {
+  outline: 3px solid #123a67;
+  outline-offset: 2px;
+}
+
+.lead:hover .leadHeadline,
+.secondaryRow:hover .headline {
+  color: #123a67;
+}
+
+.summary {
+  display: -webkit-box;
+  margin: 2px 0 0;
+  overflow: hidden;
+  color: #3d5468;
+  font-size: 15px;
+  line-height: 1.45;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
 .who {
-  color: #5f7080;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 0 0;
+  color: #34495d;
   font-size: 13px;
+  font-weight: 650;
   line-height: 1.3;
 }
 
-.story:hover .headline {
-  color: #123a67;
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
+.whySmall {
+  margin: 0;
+  color: #5f7080;
+  font-size: 12px;
+  line-height: 1.3;
+}
+
+/* Escudo sin recuadro, con su proporción. */
+.crest {
+  flex: 0 0 auto;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.leadBodyNoPhoto > .crest {
+  width: 52px;
+  max-height: 64px;
+}
+
+.who .crest {
+  width: 22px;
+  max-height: 27px;
+}
+
+.secondaryRow > .crest {
+  width: 28px;
+  max-height: 34px;
+}
+
+/* Sin escudo (protagonista sin ficha): hueco vacío, sin círculo gris. */
+.crestSpace {
+  width: 28px;
+  height: 28px;
 }
 
 /* Lo que aporta Hilo Cofrade: el salto a las fichas relacionadas. */
 .discover {
+  position: relative;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
   min-height: 44px;
-  padding: 8px 14px;
+  padding: 8px 16px;
   border-top: 1px solid #e8eef3;
   background: #f6f8fa;
   color: #123a67;
@@ -165,8 +257,53 @@
   background: #eef3f7;
 }
 
-.story:focus-visible,
+.secondaryList {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.secondary {
+  position: relative;
+  min-width: 0;
+  padding: 12px 2px 6px;
+}
+
+.secondary + .secondary {
+  border-top: 1px solid #e3e9ef;
+}
+
+.secondaryRow {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  align-items: start;
+  gap: 12px;
+}
+
+/* En las secundarias el enlace a las fichas es una línea de texto, no una barra. */
+.discoverSmall {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  margin-left: 40px;
+  color: #123a67;
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1.3;
+}
+
+.discoverSmall::after {
+  content: "→";
+  margin-left: 6px;
+  color: #b71f37;
+  font-weight: 800;
+}
+
 .discover:focus-visible,
+.discoverSmall:focus-visible,
 .all:focus-visible,
 .fallback a:focus-visible {
   outline: 3px solid #123a67;
@@ -195,12 +332,39 @@
     font-size: 26px;
   }
 
-  .list {
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 12px;
+  /* Escritorio: la principal a la izquierda, las secundarias en columna. */
+  .layout {
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    align-items: start;
+    gap: 28px;
   }
 
-  .item {
-    grid-template-rows: 1fr auto;
+  .layoutSingle {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 760px;
+  }
+
+  .leadPhoto {
+    max-height: 300px;
+  }
+
+  .leadBody {
+    padding: 16px 20px 18px;
+  }
+
+  :global(#hc-app #el-hilo-se-mueve) .leadHeadline {
+    font-size: 25px;
+  }
+
+  .secondary {
+    padding: 14px 0 8px;
+  }
+
+  .secondary:first-child {
+    padding-top: 0;
+  }
+
+  :global(#hc-app #el-hilo-se-mueve) .headline {
+    font-size: 16px;
   }
 }

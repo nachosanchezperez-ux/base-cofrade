@@ -12,11 +12,13 @@ const EMPTY_TEXT = {
   weekend: 'No hay citas documentadas para este fin de semana.',
 }
 
-function AgendaRow({ card }) {
+// Jerarquía (#1253): la primera cita del periodo es la principal (hora y título
+// más grandes); las «Próximas citas» de reserva van en filas compactas.
+function AgendaRow({ card, variant }) {
   const { day, weekday, month } = card.dateParts || {}
   const time = card.time || {}
   return (
-    <li className={styles.row} data-live={card.isLive ? 'true' : undefined}>
+    <li className={styles.row} data-live={card.isLive ? 'true' : undefined} data-variant={variant}>
       <Link href={card.href} className={styles.rowLink}>
         <time className={styles.leaf} dateTime={card.date} aria-label={card.dateLabel}>
           <span className={styles.leafWeekday}>{weekday}</span>
@@ -102,7 +104,7 @@ export default function HomeAgendaNow({ agenda, children = null }) {
         >
           {current.cards.length ? (
             <ul className={styles.list}>
-              {current.cards.map((card) => <AgendaRow card={card} key={card.key} />)}
+              {current.cards.map((card, index) => <AgendaRow card={card} key={card.key} variant={index === 0 ? 'lead' : undefined} />)}
             </ul>
           ) : (
             <p className={styles.empty}>{EMPTY_TEXT[current.key]}</p>
@@ -112,7 +114,7 @@ export default function HomeAgendaNow({ agenda, children = null }) {
             <>
               <h3 className={styles.upcomingTitle}>Próximas citas</h3>
               <ul className={styles.list}>
-                {agenda.upcoming.map((card) => <AgendaRow card={card} key={card.key} />)}
+                {agenda.upcoming.map((card, index) => <AgendaRow card={card} key={card.key} variant={index === 0 ? 'lead' : 'compact'} />)}
               </ul>
             </>
           ) : null}

@@ -529,3 +529,33 @@
   line-height: 1.15;
   letter-spacing: -.02em;
 }
+
+/* «Últimos hilos» dentro de «Descubre» de la portada (#1253): tarjeta ligera,
+   sin sombra ni filete de color, con titular a tamaño de lectura. */
+.embedded .leadCard {
+  min-height: 0;
+  padding: 14px 16px;
+  border-radius: 14px;
+  box-shadow: none;
+}
+
+.embedded .leadCard::before {
+  display: none;
+}
+
+.embedded .leadCard:hover,
+.embedded .leadCard:focus-visible {
+  transform: none;
+  box-shadow: none;
+}
+
+.embedded .leadCard:focus-visible {
+  outline: 3px solid #123a67;
+  outline-offset: 2px;
+}
+
+.embedded .leadCard h3 {
+  margin: 4px 0 4px;
+  font-size: 18px;
+  line-height: 1.25;
+}

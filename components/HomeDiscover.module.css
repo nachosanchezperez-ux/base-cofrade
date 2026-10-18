@@ -262,3 +262,131 @@
     grid-template-columns: repeat(6, minmax(0, 1fr));
   }
 }
+
+/*
+ * Jerarquía (#1253): los directorios son accesos ligeros, no tarjetas grandes.
+ * Fila compacta con pictograma pequeño, nombre y cifra; sin pictograma de fondo,
+ * sombra ni bloque azul, para que la ficha del día sea lo destacado del bloque.
+ */
+.tile {
+  grid-template-columns: 34px minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  align-items: center;
+  align-content: center;
+  column-gap: 10px;
+  row-gap: 0;
+  min-height: 60px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  box-shadow: none;
+}
+
+.ghost {
+  display: none;
+}
+
+.glyph {
+  grid-row: 1 / span 2;
+  width: 34px;
+  height: 34px;
+  margin: 0;
+  border-radius: 10px;
+}
+
+.glyph svg {
+  width: 20px;
+  height: 20px;
+}
+
+.name {
+  align-self: end;
+  font-size: 16px;
+}
+
+.figure,
+.hint {
+  align-self: start;
+  font-size: 12px;
+}
+
+.figure b {
+  font-size: 13px;
+}
+
+.tile[data-key="agenda"] {
+  border-color: #dce5ed;
+  background: #fff;
+}
+
+.tile[data-key="agenda"] .glyph {
+  background: #f8e9ec;
+  color: #b71f37;
+}
+
+.tile[data-key="agenda"] .name {
+  color: #0f2742;
+}
+
+.tile[data-key="agenda"] .hint {
+  color: #5f7080;
+}
+
+.tile:hover {
+  box-shadow: none;
+  transform: none;
+}
+
+/* «Más en Hilo Cofrade» (#1253): etiquetas ligeras, sin filete ni tarjeta,
+   para dar forma a los accesos sin competir con los bloques principales. */
+.moreList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.moreLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 1px solid #d9e2ea;
+  border-radius: 999px;
+  background: #fff;
+  color: #123a67;
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+.moreLink:hover {
+  border-color: #123a67;
+  color: #0f2742;
+}
+
+@media (min-width: 768px) {
+  .tile {
+    min-height: 64px;
+    padding: 12px 14px;
+  }
+
+  .glyph {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+  }
+
+  .glyph svg {
+    width: 21px;
+    height: 21px;
+  }
+
+  .name {
+    font-size: 17px;
+  }
+
+  .figure b {
+    font-size: 14px;
+  }
+}

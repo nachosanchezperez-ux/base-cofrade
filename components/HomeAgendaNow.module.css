@@ -290,6 +290,97 @@
   border-color: #123a67;
 }
 
+/*
+ * Jerarquía de la agenda (#1253).
+ *   · Cita principal (data-variant="lead"): la primera del periodo. Fondo suave,
+ *     hoja y hora más grandes; es lo primero que se lee en el móvil.
+ *   · Citas normales: la fila de siempre, con la hora algo más contenida.
+ *   · Compactas (data-variant="compact"): próximas citas de reserva e igualás y
+ *     ensayos. Hoja pequeña, hora y título a tamaño de lectura, menos aire.
+ */
+.row:not([data-variant]) .time {
+  font-size: 20px;
+}
+
+.row:not([data-variant]) .title {
+  font-size: 16px;
+}
+
+.row[data-variant="lead"] .rowLink {
+  grid-template-columns: 64px minmax(0, 1fr);
+  margin: 4px 0;
+  padding: 14px 12px;
+  border-radius: 14px;
+  background: #f5f7fa;
+}
+
+.row[data-variant="lead"][data-live] .rowLink {
+  background: #fbf1f3;
+}
+
+.row[data-variant="lead"] + .row {
+  border-top: 0;
+}
+
+.row[data-variant="lead"] .leaf {
+  background: #fff;
+}
+
+.row[data-variant="lead"] .leafDay {
+  font-size: 30px;
+}
+
+.row[data-variant="lead"] .time {
+  font-size: 28px;
+}
+
+.row[data-variant="lead"] .title {
+  font-size: 19px;
+  line-height: 1.2;
+}
+
+.row[data-variant="compact"] .rowLink {
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 12px;
+  padding: 10px 0;
+}
+
+.row[data-variant="compact"] .leaf {
+  padding: 3px 0 4px;
+  border-top-width: 3px;
+  border-radius: 3px 3px 8px 8px;
+}
+
+.row[data-variant="compact"] .leafWeekday,
+.row[data-variant="compact"] .leafMonth {
+  font-size: 11px;
+}
+
+.row[data-variant="compact"] .leafDay {
+  font-size: 19px;
+}
+
+.row[data-variant="compact"] .body {
+  gap: 1px;
+}
+
+.row[data-variant="compact"] .time {
+  font-size: 16px;
+}
+
+.row[data-variant="compact"] .title {
+  font-size: 15px;
+  font-weight: 750;
+}
+
+.row[data-variant="compact"] .organizer {
+  font-size: 13px;
+}
+
+.row[data-variant="compact"] .meta {
+  font-size: 12px;
+}
+
 @media (min-width: 420px) {
   .tabs[data-tabs="4"] {
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -325,6 +416,17 @@
 
   .row {
     border-bottom: 1px solid #e3e9ef;
+  }
+
+  /* La cita principal ocupa todo el ancho; las demás, en dos columnas debajo. */
+  .row[data-variant="lead"] {
+    grid-column: 1 / -1;
+    border-bottom: 0;
+  }
+
+  .row[data-variant="lead"] .rowLink {
+    margin: 2px 0 6px;
+    padding: 16px 18px;
   }
 
   .more {
