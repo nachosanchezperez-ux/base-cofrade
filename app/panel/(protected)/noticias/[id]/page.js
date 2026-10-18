@@ -51,7 +51,7 @@ export default async function PanelNewsEditorPage({ params, searchParams }) {
 
       {SAVED_MESSAGES[query?.saved] ? <div className={styles.savedNotice} role="status">{SAVED_MESSAGES[query.saved]}</div> : null}
       {!canEdit ? <div className={styles.readOnlyNotice}>Tu perfil tiene acceso de consulta.</div> : null}
-      {newsNeedsTenseReview(content, data.today) ? <div className={styles.readOnlyNotice} role="note"><strong>Revisa el texto:</strong> la fecha del acto ({content.event_date}) ya pasó. En la web la noticia ya muestra «Ya celebrado»; conviene pasar a pasado lo que esté en futuro («se presentará», «estrenará»…).</div> : null}
+      {newsNeedsTenseReview(content, data.today) ? <div className={styles.readOnlyNotice} role="note"><strong>Revisa el texto:</strong> la fecha del acto ({content.event_date}) ya pasó. En la web la noticia ya muestra «Ya celebrado»; conviene pasar a pasado lo que esté en futuro («se presentará», «estrenará»…). Al guardar la noticia, el aviso desaparece.</div> : null}
       {content.status !== 'published' && data.issues.length ? <div className={styles.readOnlyNotice} role="note"><strong>Antes de publicar:</strong> {data.issues.join(' ')}</div> : null}
 
       <section className={styles.metricGrid} aria-label="Estado de la noticia">

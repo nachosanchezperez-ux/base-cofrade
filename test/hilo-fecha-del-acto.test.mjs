@@ -51,6 +51,10 @@ test('el Panel avisa de revisar el texto cuando el acto ya pasó', () => {
   assert.equal(newsNeedsTenseReview({ status: 'published', event_date: '2026-10-17' }, '2026-10-17'), false)
   assert.equal(newsNeedsTenseReview({ status: 'draft', event_date: '2026-10-01' }, '2026-10-17'), false)
   assert.equal(newsNeedsTenseReview({ status: 'published', event_date: null }, '2026-10-17'), false)
+  // Guardada después del acto: ya revisada.
+  assert.equal(newsNeedsTenseReview({ status: 'published', event_date: '2026-10-16', updated_at: '2026-10-17T08:00:00+00:00' }, '2026-10-18'), false)
+  // Guardada el mismo día del acto o antes: sigue pendiente.
+  assert.equal(newsNeedsTenseReview({ status: 'published', event_date: '2026-10-17', updated_at: '2026-10-17T20:00:00+00:00' }, '2026-10-18'), true)
   const list = readFileSync(new URL('../app/panel/(protected)/noticias/page.js', import.meta.url), 'utf8')
   assert.match(list, /revisar texto: el acto ya pasó/)
   const editor = readFileSync(new URL('../app/panel/(protected)/noticias/[id]/page.js', import.meta.url), 'utf8')
