@@ -22,6 +22,14 @@ function CalendarIcon() {
   )
 }
 
+function CheckIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
+      <path fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" d="m5 12.5 4.5 4.5L19 7.5" />
+    </svg>
+  )
+}
+
 function ShareIcon() {
   return (
     <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
@@ -34,7 +42,10 @@ function ShareIcon() {
 // enlace en ordenador). `share` sale de lib/share.js: { title, body, text, url }.
 // `calendarHref` (opcional) añade «Calendario»: descarga el .ics del acto, que el
 // móvil abre en su aplicación de calendario.
-export default function ShareActions({ share, contentType = 'agenda', analytics = {}, compact = false, className = '', calendarHref = '' }) {
+// `calendarFirst` (tarjetas de la Agenda): «Añadir al calendario» pasa a ser la
+// acción principal, la primera y con texto; WhatsApp y Compartir quedan como
+// iconos con nombre accesible para que la fila quepa en una línea en el móvil.
+export default function ShareActions({ share, contentType = 'agenda', analytics = {}, compact = false, className = '', calendarHref = '', calendarFirst = false }) {
   const [copied, setCopied] = useState(false)
   const timer = useRef(null)
 
@@ -80,35 +91,48 @@ export default function ShareActions({ share, contentType = 'agenda', analytics 
     await copyLink()
   }
 
+  const calendarLead = Boolean(calendarHref && calendarFirst)
+  const calendarLink = calendarHref ? (
+    <a
+      className={`${styles.calendar} ${calendarLead ? styles.calendarLead : ''}`}
+      href={calendarHref}
+      aria-label={`Añadir al calendario: ${share.title}`}
+      onClick={() => trackEvent('calendar_add', { calendar_scope: 'event', content_type: contentType, item_name: share.title, ...analytics })}
+      data-analytics-skip-entity="true"
+    >
+      <CalendarIcon />
+      <span>{calendarLead ? 'Añadir al calendario' : 'Calendario'}</span>
+    </a>
+  ) : null
+  const nativeLabel = copied ? 'Copiado' : 'Compartir'
+
   return (
-    <div className={`${styles.share} ${compact ? styles.compact : ''} ${className}`} role="group" aria-label={`Compartir: ${share.title}`}>
+    <div className={`${styles.share} ${compact ? styles.compact : ''} ${calendarLead ? styles.calendarFirst : ''} ${className}`} role="group" aria-label={`Compartir: ${share.title}`}>
+      {calendarLead ? calendarLink : null}
       <a
-        className={styles.whatsapp}
+        className={`${styles.whatsapp} ${calendarLead ? styles.iconOnly : ''}`}
         href={whatsappShareHref(share.text)}
         target="_blank"
         rel="noopener noreferrer"
         onClick={() => track('whatsapp')}
         data-analytics-skip-entity="true"
+        aria-label={calendarLead ? 'Compartir por WhatsApp' : undefined}
+        title={calendarLead ? 'WhatsApp' : undefined}
       >
         <MessageIcon />
-        <span>WhatsApp</span>
+        {calendarLead ? null : <span>WhatsApp</span>}
       </a>
-      <button type="button" className={styles.native} onClick={handleShare}>
-        <ShareIcon />
-        <span>{copied ? 'Copiado' : 'Compartir'}</span>
+      <button
+        type="button"
+        className={`${styles.native} ${calendarLead ? styles.iconOnly : ''}`}
+        onClick={handleShare}
+        aria-label={calendarLead ? nativeLabel : undefined}
+        title={calendarLead ? nativeLabel : undefined}
+      >
+        {calendarLead && copied ? <CheckIcon /> : <ShareIcon />}
+        {calendarLead ? null : <span>{nativeLabel}</span>}
       </button>
-      {calendarHref ? (
-        <a
-          className={styles.calendar}
-          href={calendarHref}
-          aria-label={`Añadir al calendario: ${share.title}`}
-          onClick={() => trackEvent('calendar_add', { calendar_scope: 'event', content_type: contentType, item_name: share.title, ...analytics })}
-          data-analytics-skip-entity="true"
-        >
-          <CalendarIcon />
-          <span>Calendario</span>
-        </a>
-      ) : null}
+      {calendarLead ? null : calendarLink}
       <span className="sr-only" aria-live="polite">{copied ? 'Texto y enlace copiados' : ''}</span>
     </div>
   )
