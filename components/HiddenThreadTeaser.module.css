@@ -106,11 +106,19 @@
   font-size: 17px;
 }
 
+/* Botón con contorno: invita a jugar sin competir con la ficha del día. */
 .teaserFeature .teaserLink.teaserLink {
   width: auto;
   min-height: 46px;
   padding: 0 20px;
+  border: 1.5px solid #74273c;
+  background: transparent;
+  color: #74273c;
   font-size: 13px;
+}
+
+.teaserFeature .teaserLink.teaserLink:hover {
+  background: #f9eee9;
 }
 
 @media (max-width: 550px) {

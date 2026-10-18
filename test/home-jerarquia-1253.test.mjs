@@ -34,13 +34,17 @@ test('El Hilo se mueve en portada: una principal con foto y titulares secundario
   assert.equal(withoutCover.photo, null)
 })
 
-test('Descubre: un solo destacado, marcha en azul sin sombra y «Más en Hilo» en etiquetas', () => {
+test('Descubre: la ficha del día es el único bloque azul; marcha y juego en blanco', () => {
   const discover = read('components/HomeDiscover.module.css')
   assert.match(discover, /\.ghost \{\s*display: none;/)
   assert.match(discover, /min-height: 60px;/)
   const today = read('components/HomeTodayV2.js')
-  assert.match(today, /data-home-weight=\{embedded \? 'feature' : undefined\}/)
-  assert.match(today, /variant="inverse"/)
+  assert.match(today, /data-home-weight=\{embedded \? 'secondary' : undefined\}/)
+  assert.match(today, /variant=\{embedded \? 'default' : 'inverse'\}/)
+  const todayCss = read('components/HomeTodayV2.module.css')
+  assert.match(todayCss, /\.embedded \.featureCard \{[^}]*background: linear-gradient\(140deg, #123a67/)
+  assert.match(todayCss, /\.embedded \.musicCard \{[^}]*background: #fff;/)
+  assert.match(read('components/HiddenThreadTeaser.module.css'), /border: 1\.5px solid #74273c;\s*background: transparent;/)
   assert.match(today, /embedded \? gameStyles\.teaserFeature : ''/)
   assert.match(today, /href="\/juegos\/el-hilo-escondido"/)
   assert.doesNotMatch(read('components/HiddenThreadTeaser.module.css').slice(read('components/HiddenThreadTeaser.module.css').indexOf('.teaserFeature.teaserFeature')), /linear-gradient|box-shadow: 0/)

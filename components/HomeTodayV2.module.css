@@ -776,13 +776,69 @@
 }
 
 /*
- * Jerarquía de «Descubre» en la portada (#1253). La ficha del día es el único
- * destacado. La marcha conserva el azul de Hilo Cofrade, en versión compacta:
- * sin sombra, sin círculo decorativo y con titular menor. Mismo reproductor.
+ * Foco de «Descubre» en la portada (#1253): un solo punto focal por bloque.
+ * La ficha del día lleva el azul de Hilo Cofrade (único bloque azul del
+ * apartado); la marcha y el juego pasan a tarjetas blancas.
  */
+.embedded .featureCard {
+  border-color: #0f2742;
+  background: linear-gradient(140deg, #123a67 0%, #0f2742 100%);
+  color: #fff;
+  box-shadow: none;
+}
+
+.embedded .featureCard .type {
+  color: #f0a5b0;
+}
+
+.embedded .featureCard .kicker {
+  color: rgba(255, 255, 255, .78);
+  background: rgba(255, 255, 255, .1);
+}
+
+.embedded .featureCard .kickerArrow {
+  color: rgba(255, 255, 255, .5);
+}
+
+.embedded .featureCard .context {
+  color: rgba(255, 255, 255, .72);
+}
+
+.embedded .featureCard h3 {
+  color: #fff;
+  font-size: 25px;
+}
+
+.embedded .featureCard p {
+  color: rgba(255, 255, 255, .8);
+}
+
+.embedded .featureCard .icon {
+  color: #fff;
+  background: rgba(255, 255, 255, .12);
+}
+
+/* El escudo, sobre blanco para que conserve sus colores. */
+.embedded .featureCard .visualIdentity {
+  border-color: transparent;
+  background: #fff;
+}
+
+.embedded .featureCard:has(.cardLink):hover {
+  border-color: #0f2742;
+}
+
+.embedded .featureCard:has(.cardLink:focus-visible) {
+  outline-color: #f0a5b0;
+}
+
+/* Marcha del día: tarjeta blanca; mismo reproductor y enlaces. */
 .embedded .musicCard {
   margin-top: 12px;
-  border-radius: 16px;
+  border-color: #dce5ed;
+  border-radius: 14px;
+  color: #0f2742;
+  background: #fff;
   box-shadow: none;
 }
 
@@ -790,12 +846,70 @@
   display: none;
 }
 
+.embedded .musicVisual {
+  width: 52px;
+  height: 52px;
+  border-color: #e3e9ef;
+  border-radius: 12px;
+  color: #123a67;
+  background: #f3f6f9;
+  box-shadow: none;
+}
+
+.embedded .musicCopy .type {
+  color: #b71f37;
+}
+
 .embedded .musicCopy h3 {
-  margin: 5px 0 4px;
-  font-size: 21px;
+  margin: 4px 0 3px;
+  color: #0f2742;
+  font-size: 19px;
+}
+
+.embedded .musicByline {
+  color: #5f7080;
+}
+
+.embedded .musicByline strong {
+  color: #34495d;
+}
+
+.embedded .musicContext > span {
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.embedded .musicContext small {
+  color: #8a2235;
+}
+
+.embedded .musicContext strong,
+.embedded .musicContext a {
+  color: #123a67;
+  font-size: 12px;
+}
+
+.embedded .musicContext a {
+  text-decoration: none;
 }
 
 .embedded .whyToday {
   margin-top: 10px;
   padding: 8px 10px;
+  border-left-color: #b71f37;
+  background: #f6f8fa;
+}
+
+.embedded .whyToday span {
+  color: #8a2235;
+}
+
+.embedded .whyToday p {
+  color: #3d5468;
+}
+
+.embedded .musicLink {
+  color: #123a67;
 }
