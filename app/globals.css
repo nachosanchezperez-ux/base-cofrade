@@ -3706,3 +3706,12 @@ button, input { font: inherit; }
 .related-row-secondary a { font-weight: 600; }
 .step-images-group-secondary{margin-top:22px}
 .step-images-group-secondary .step-images-list a{font-weight:700}
+
+/* Ficha de Hermandad: tarjetas sin fotografía (no se pintan huecos vacíos). */
+.council-participation-card.is-text-only{grid-template-columns:1fr}
+.image-grid>.brotherhood-image-card.is-text-only:only-child{display:block;width:min(100%,720px)}
+.brotherhood-image-card.is-text-only .image-card-body{padding-top:24px}
+.cross-guide-music{margin:0 0 22px;padding-top:0;border-top:0}
+.cross-guide-music em{font-style:normal;color:var(--ink-soft)}
+.step-music-links{display:flex;flex-wrap:wrap;gap:4px 12px}
+.step-music-links a{color:var(--bc-red)}

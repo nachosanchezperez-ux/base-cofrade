@@ -53,7 +53,6 @@ export default function FestivalPostersSection({ posters = [] }) {
         <SectionTitle
           eyebrow="Memoria gráfica"
           title="Carteles de la Hermandad"
-          description="Un archivo anual de las obras que anuncian sus Fiestas Mayores, romerías y celebraciones, y conservan su memoria visual."
         />
 
         <div className="festival-posters-series">

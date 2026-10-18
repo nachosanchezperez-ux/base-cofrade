@@ -20,15 +20,17 @@ test('la ficha reduce la navegación a destinos editoriales principales', () => 
   assert.doesNotMatch(navBlock, /label: 'Fuentes'/)
 })
 
-test('Conexiones se desplaza al final de la lectura principal', () => {
+test('la ficha cierra con las rutas del hilo y no repite las relaciones directas', () => {
   const page = read('app/hermandades/[slug]/page.js')
-  const thread = page.lastIndexOf('<RelationalThread')
+  const closing = page.lastIndexOf('<BrotherhoodReadingDiscovery brotherhoodId={h.id} />')
   const officialLinks = page.lastIndexOf('<OfficialLinks')
   const titulares = page.indexOf('id="titulares"')
 
-  assert.ok(thread > titulares)
-  assert.ok(thread < officialLinks)
-  assert.equal(page.indexOf('<RelationalThread'), thread)
+  assert.ok(closing > titulares)
+  assert.ok(closing < officialLinks)
+  // Imágenes, pasos, bandas y marchas ya tienen su sección: sin bloques de conexiones repetidos.
+  assert.doesNotMatch(page, /<RelationalThread/)
+  assert.match(page, /excludeAccompanimentIds=\{accompanimentIdsInSteps\}/)
 })
 
 test('Historia conserva todos los hitos en HTML pero pliega cronologías largas', () => {

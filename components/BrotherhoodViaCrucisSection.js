@@ -12,7 +12,6 @@ export default function BrotherhoodViaCrucisSection({ items = [] }) {
         <SectionTitle
           eyebrow="Participación institucional"
           title="Vía Crucis de las Cofradías"
-          description="Participaciones documentadas de la Hermandad en el Vía Crucis cuaresmal de las hermandades de penitencia de Sevilla."
         />
 
         <p className={styles.archiveAccess}>

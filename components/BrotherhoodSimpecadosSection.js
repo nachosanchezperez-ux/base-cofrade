@@ -16,7 +16,6 @@ export default function BrotherhoodSimpecadosSection({ items = [] }) {
         <SectionTitle
           eyebrow="Patrimonio devocional"
           title="Simpecados"
-          description="Piezas patrimoniales con identidad propia: denominaciones, cronología, autorías, restauraciones, uso, fotografías y Fuentes permanecen estructurados y reutilizables en el grafo de Hilo Cofrade."
         />
 
         <details className={styles.catalog} open={items.length <= 2}>
