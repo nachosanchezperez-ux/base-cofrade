@@ -247,23 +247,29 @@ export async function saveMarchRecordingAction(formData) {
   await requireMarch(supabase, marchId)
   if (bandId) await requireEntity(supabase, bandId, ['band'], 'La Banda')
   const isFeatured = formData.get('is_featured') === 'on'
-  if (isFeatured) {
-    let clear = supabase.from('march_recordings').update({ is_featured: false }).eq('march_entity_id', marchId).eq('is_featured', true)
-    if (recordingId) clear = clear.neq('id', recordingId)
-    const result = await clear
-    if (result.error) throw new Error(`No se pudo actualizar la grabación destacada: ${result.error.message}`)
+  const recordingDate = optionalDate(formData, 'recording_date')
+  if (recordingDate && (recordingDate.startsWith('0000-') || new Date(`${recordingDate}T00:00:00Z`).toISOString().slice(0, 10) !== recordingDate)) {
+    throw new Error('La fecha recording_date no es válida.')
   }
   const payload = {
     march_entity_id: marchId,
     band_entity_id: bandId,
     title: nullable(formData, 'title'),
-    recording_year: integer(formData, 'recording_year', { min: 1800, max: 2200 }),
+    recording_date: recordingDate,
+    recording_date_text: nullable(formData, 'recording_date_text'),
     youtube_video_id: nullable(formData, 'youtube_video_id'),
     external_url: httpUrl(formData, 'external_url'),
     place_id: uuid(formData, 'place_id', true),
     is_featured: isFeatured,
     notes: nullable(formData, 'notes'),
     status: status(formData),
+  }
+  // Validate the entire payload before changing another recording's featured flag.
+  if (isFeatured) {
+    let clear = supabase.from('march_recordings').update({ is_featured: false }).eq('march_entity_id', marchId).eq('is_featured', true)
+    if (recordingId) clear = clear.neq('id', recordingId)
+    const result = await clear
+    if (result.error) throw new Error(`No se pudo actualizar la grabación destacada: ${result.error.message}`)
   }
   const result = recordingId
     ? await supabase.from('march_recordings').update(payload).eq('id', recordingId).eq('march_entity_id', marchId).select('id').single()
