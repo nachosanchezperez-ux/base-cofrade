@@ -116,7 +116,7 @@ export default function MunicipalityTemporalSpotlight({
                     <p>{[timeLabel(item), item.place, item.organizer].filter(Boolean).join(' · ')}</p>
                     <div className={styles.closestActions}>
                       <Link href={targetHref(item)}>Ver cita →</Link>
-                      {item.brotherhoodHref ? <Link href={item.brotherhoodHref}>Hermandad</Link> : null}
+                      {(item.entityLinks || []).map((link) => <Link href={link.href} key={link.href}>{link.label}</Link>)}
                     </div>
                   </div>
                 </article>
