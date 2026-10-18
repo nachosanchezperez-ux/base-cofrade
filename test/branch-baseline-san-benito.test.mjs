@@ -35,6 +35,7 @@ const musicCanonicalCompletenessName = '20261012010000_music_canonical_completen
 const homeFeaturedWindowName = '20261012120000_outings_home_featured_window.sql'
 const editorialNewsFieldsName = '20261016090000_editorial_news_fields.sql'
 const editorialNewsEventDateName = '20261017220000_editorial_news_event_date_subject.sql'
+const editorialNewsFeaturedName = '20261018092323_editorial_news_featured_until.sql'
 const baseline = readFileSync(new URL(baselineName, migrationsDirectory), 'utf8')
 const membershipStats = readFileSync(new URL(membershipStatsName, migrationsDirectory), 'utf8')
 const seed = readFileSync(new URL('../supabase/seed.sql', import.meta.url), 'utf8')
@@ -73,6 +74,7 @@ test('las ramas nuevas ejecutan únicamente el baseline y las evoluciones de esq
     homeFeaturedWindowName,
     editorialNewsFieldsName,
     editorialNewsEventDateName,
+    editorialNewsFeaturedName,
   ])
 })
 

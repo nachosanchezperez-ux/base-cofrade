@@ -35,6 +35,7 @@ const EXECUTABLE_SCHEMA_MIGRATIONS = [
   "20261012120000_outings_home_featured_window.sql",
   "20261016090000_editorial_news_fields.sql",
   "20261017220000_editorial_news_event_date_subject.sql",
+  "20261018092323_editorial_news_featured_until.sql",
 ];
 
 test("Supabase migration versions are unique and well formed", async () => {
