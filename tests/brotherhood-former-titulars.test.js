@@ -95,3 +95,17 @@ test('la situación actual de la imagen solo ofrece valores admitidos por la bas
   }
   assert.doesNotMatch(page, /name="current_condition" defaultValue=\{image\.current_condition \|\| ''\} placeholder/)
 })
+
+test('al publicar una Imagen se publican sus vínculos y sucesiones pendientes', () => {
+  const helper = read('lib/panel/image-publication.js')
+  assert.match(helper, /from\('brotherhood_images'\)[\s\S]*\.eq\('status', 'draft'\)/)
+  assert.match(helper, /IMAGE_SUCCESSION_RELATION/)
+  assert.match(helper, /source_entity_id\.eq\.\$\{imageId\},target_entity_id\.eq\.\$\{imageId\}/)
+  // Solo promociona borradores: nunca toca 'review' ni 'archived', y nunca borra.
+  assert.doesNotMatch(helper, /\.delete\(/)
+  assert.doesNotMatch(helper, /'review'\)/)
+
+  const actions = read('app/panel/(protected)/imagenes/[id]/actions.js')
+  assert.match(actions, /action === 'publish'\s*\?\s*await republishImageRelations\(supabase, imageId\)\.catch/)
+  assert.match(actions, /revalidatePath\(`\/hermandades\/\$\{slug\}`\)/)
+})

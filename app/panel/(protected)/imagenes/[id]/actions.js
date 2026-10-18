@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
+import { republishImageRelations } from '@/lib/panel/image-publication'
 
 const UUID_PATTERN = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i
 const STATUSES = new Set(['draft', 'review', 'published', 'archived'])
@@ -141,8 +142,17 @@ export async function updateImageAction(formData) {
   assertMutation(await supabase.from('entities').update(entityPayload).eq('id', imageId).eq('entity_type', 'image'), 'No se pudo actualizar la entidad de imagen')
   assertMutation(await supabase.from('images').update(imagePayload).eq('entity_id', imageId), 'No se pudo actualizar la ficha de imagen')
   await updateCurrentDresser(supabase, { imageId, dresserId })
+  const action = auditAction(current.status, nextStatus)
+  // Al publicar, sus vínculos y sucesiones que esperaban en borrador pasan a publicados.
+  const republished = action === 'publish'
+    ? await republishImageRelations(supabase, imageId).catch((error) => {
+        // La Imagen ya está guardada: un fallo aquí no debe deshacer ni bloquear la publicación.
+        console.error('[Hilo Cofrade] No se pudieron publicar los vínculos pendientes de la imagen', error)
+        return null
+      })
+    : null
 
-  await audit(supabase, user, { action_type: auditAction(current.status, nextStatus), object_type: 'image', object_id: imageId, entity_id: imageId, summary: `Imagen actualizada: ${imageName}`, changed_fields: { entity: entityPayload, image: imagePayload, dresser_agent_id: dresserId } })
+  await audit(supabase, user, { action_type: action, object_type: 'image', object_id: imageId, entity_id: imageId, summary: `Imagen actualizada: ${imageName}`, changed_fields: { entity: entityPayload, image: imagePayload, dresser_agent_id: dresserId, ...(republished ? { republished_brotherhood_links: republished.brotherhoodLinks, republished_successions: republished.successions } : {}) } })
 
   revalidatePath('/panel')
   revalidatePath('/panel/imagenes')
@@ -152,5 +162,6 @@ export async function updateImageAction(formData) {
   revalidatePath('/')
   if (current.slug) revalidatePath(`/imagenes/${current.slug}`)
   if (entitySlug !== current.slug) revalidatePath(`/imagenes/${entitySlug}`)
+  for (const slug of republished?.brotherhoodSlugs || []) revalidatePath(`/hermandades/${slug}`)
   redirect(`/panel/imagenes/${imageId}?saved=general`)
 }
