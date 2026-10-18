@@ -51,7 +51,7 @@ export default function AgendaTemporalEventList({ landing }) {
         <header className={styles.header}>
           <div>
             <span>{landing.period === 'today' ? 'Hoy' : landing.period === 'tomorrow' ? 'Mañana' : 'Fin de semana'}</span>
-            <h2 id="agenda-periodo-title">Todas las citas</h2>
+            <h2 id="agenda-periodo-title">{landing.listHeading || 'Todos los actos cofrades'}</h2>
             <p>Hora, acto, localidad y lugar en una cronología pensada para consultar rápido desde el móvil o el ordenador.</p>
           </div>
           <strong>{landing.items.length} {landing.items.length === 1 ? 'cita' : 'citas'}</strong>

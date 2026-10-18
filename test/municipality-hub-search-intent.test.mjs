@@ -18,7 +18,7 @@ test('el title municipal combina intención cofradías y agenda', () => {
 test('el H1 presenta el hub como guía cofrade evergreen', () => {
   const hub = read('components/MunicipalityAgendaHub.js')
 
-  assert.match(hub, /<h1>Guía cofrade de \{hub\.label\}<\/h1>/)
+  assert.match(hub, /<h1>Guía y agenda cofrade de \{hub\.label\}<\/h1>/)
   assert.match(hub, /Cofradías, hermandades y agenda/)
   assert.match(hub, /name: `Guía cofrade de \$\{hub\.label\}`/)
   assert.match(hub, /const \{ description \} = localityGuideSeo\(hub\)/)

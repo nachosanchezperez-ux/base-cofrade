@@ -124,7 +124,7 @@ export default async function AgendaCofradePage({ searchParams } = {}) {
             tone="dark"
             showAccent={false}
           />
-          <div className={styles.heroCopy}><span className={styles.eyebrow}>Qué ver · Qué sale · Dónde ir</span><h1>Agenda Cofrade</h1><p>Elige tu día. Encuentra tu próxima cita en Sevilla y su provincia.</p></div>
+          <div className={styles.heroCopy}><span className={styles.eyebrow}>Qué ver · Qué sale · Dónde ir</span><h1>Agenda Cofrade de Sevilla y provincia</h1><p>Elige tu día. Encuentra tu próxima cita en Sevilla y su provincia.</p></div>
         </div>
       </header>
 

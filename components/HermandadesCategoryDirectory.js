@@ -97,7 +97,7 @@ export default function HermandadesCategoryDirectory({ hermandades, typeKey }) {
         <div className={styles.categoryHeading}>
           <div>
             <span className="eyebrow">Directorio de hermandades</span>
-            <h1 className="page-title">{config.label}</h1>
+            <h1 className="page-title">{config.heading || pageName}</h1>
             <p className="page-lead">{config.description}</p>
           </div>
           <span className={styles.categoryHeroIcon} aria-hidden="true">
