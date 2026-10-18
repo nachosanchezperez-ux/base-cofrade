@@ -185,3 +185,10 @@ test('las Fuentes de las relaciones del panel se consultan por lotes', () => {
   assert.match(source, /loadSourceLinksInBatches\(supabase, config, relationKind, relationIds\)/)
   assert.doesNotMatch(source, /\.in\(config\.column, relationIds\)/)
 })
+
+test('Relaciones › Imagen–Paso se muestra filtrada y por páginas', () => {
+  const page = read('app/panel/(protected)/relaciones/imagen-paso/page.js')
+  assert.match(page, /const PAGE_SIZE = 25/)
+  assert.match(page, /relations: visible/)
+  assert.match(page, /name="q"/)
+})
