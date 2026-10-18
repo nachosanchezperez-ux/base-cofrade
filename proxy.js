@@ -22,12 +22,6 @@ export async function proxy(request) {
     cleanUrl.pathname = backslash.redirect
     return NextResponse.redirect(cleanUrl, 308)
   }
-  if (backslash?.notFound) {
-    return new NextResponse('Página no encontrada', {
-      status: 404,
-      headers: { 'Content-Type': 'text/plain; charset=utf-8', 'X-Robots-Tag': 'noindex' },
-    })
-  }
 
   const gloryBridgePrefix = '/extraordinarias/gloria/'
   if (request.nextUrl.pathname.startsWith(gloryBridgePrefix)) {

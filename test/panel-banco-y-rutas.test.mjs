@@ -17,14 +17,14 @@ test('el Banco editorial comprueba el rol antes de escribir', () => {
 })
 
 // Auditoría de seguimiento P3 (18/10/2026): rutas con «\» daban error 500.
-test('las rutas con barra invertida redirigen o dan 404', () => {
+test('las rutas con barras invertidas al final redirigen a la ruta limpia', () => {
   assert.equal(backslashPathResolution('/pregunta'), null)
   assert.deepEqual(backslashPathResolution('/pregunta%5C'), { redirect: '/pregunta' })
   assert.deepEqual(backslashPathResolution('/crucetas-musicales%5C%5C%5C'), { redirect: '/crucetas-musicales' })
   assert.deepEqual(backslashPathResolution('/%5c'), { redirect: '/' })
-  assert.deepEqual(backslashPathResolution('/hermandades%5Cmacarena'), { notFound: true })
+  // En medio: Next ya responde con su página 404 (comprobado en producción).
+  assert.equal(backslashPathResolution('/hermandades%5Cmacarena'), null)
   const proxy = read('proxy.js')
   assert.match(proxy, /backslashPathResolution\(request\.nextUrl\.pathname\)/)
   assert.match(proxy, /NextResponse\.redirect\(cleanUrl, 308\)/)
-  assert.match(proxy, /status: 404/)
 })
