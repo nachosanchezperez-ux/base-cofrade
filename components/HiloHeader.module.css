@@ -42,3 +42,19 @@
 .mobileLinks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
 .mobileLinks a{display:flex;align-items:center;min-height:46px;padding:6px 13px;border-radius:12px;background:#f5f8fb;color:#112339;font-size:13px;font-weight:750;line-height:1.25}
 .mobileLinks a:hover,.activeMobile{background:#e9f0f6;color:#112339;box-shadow:inset 3px 0 0 #B01B32}
+
+/* Menú móvil plegable: cinco filas con resumen; un grupo abierto a la vez. */
+.mobileGroups{gap:8px}
+.mobileGroup{border:1px solid #e3e9ef;border-radius:14px;background:#fff;overflow:hidden}
+.mobileGroupOpen{border-color:#cfdbe5;box-shadow:0 6px 18px rgba(17,35,57,.06)}
+.mobileGroup h2{display:block;margin:0}
+.mobileGroupToggle{display:grid;grid-template-columns:minmax(0,1fr) 24px;grid-template-areas:"label chevron" "hint chevron";align-items:center;column-gap:10px;row-gap:1px;width:100%;min-height:60px;padding:10px 14px;border:0;background:transparent;color:#112339;font:inherit;text-align:left;cursor:pointer}
+.mobileGroupLabel{grid-area:label;display:inline-flex;align-items:center;gap:7px;font-size:16px;font-weight:800;line-height:1.2}
+.mobileGroupHint{grid-area:hint;color:#5f7080;font-size:12px;font-weight:600;line-height:1.3}
+.mobileGroupChevron{grid-area:chevron;justify-self:end;width:10px;height:10px;border-right:2px solid #B01B32;border-bottom:2px solid #B01B32;transform:rotate(45deg) translate(-2px,-2px);transition:transform .18s ease}
+.mobileGroupOpen .mobileGroupChevron{transform:rotate(-135deg) translate(-2px,-2px)}
+.mobileGroupToggle.mobileGroupActive .mobileGroupLabel::after{content:"";width:6px;height:6px;border-radius:50%;background:#B01B32}
+.mobileGroupToggle:focus-visible{outline:3px solid #123a67;outline-offset:-3px;border-radius:14px}
+.mobileGroupBody{padding:0 10px 12px}
+.mobileGroupBody[hidden]{display:none}
+@media (prefers-reduced-motion:reduce){.mobileGroupChevron{transition:none}}
