@@ -178,3 +178,10 @@ test('el panel no lanza consultas «in» con cientos de identificadores en una s
   assert.match(editorLoader, /loadPublicRowsInPages\(/)
   assert.doesNotMatch(editorLoader, /\.in\('entity_id', imageIds\)/)
 })
+
+test('las Fuentes de las relaciones del panel se consultan por lotes', () => {
+  const source = read('lib/panel/relation-sources.js')
+  assert.match(source, /const ID_BATCH_SIZE = 100/)
+  assert.match(source, /loadSourceLinksInBatches\(supabase, config, relationKind, relationIds\)/)
+  assert.doesNotMatch(source, /\.in\(config\.column, relationIds\)/)
+})
