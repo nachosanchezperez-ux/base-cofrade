@@ -6,7 +6,7 @@ import HomeDiscover from '@/components/HomeDiscover'
 import HomeUpdatesLink from '@/components/HomeUpdatesLink'
 import HomeTodayV2 from '@/components/HomeTodayV2'
 import HomeKnowledgeThreads from '@/components/HomeKnowledgeThreads'
-import { buildHomeAgendaNow, selectHomeFeaturedOuting } from '@/lib/home-agenda-now'
+import { buildHomeAgendaNow, homeLiveFocus, selectHomeFeaturedOuting } from '@/lib/home-agenda-now'
 import styles from '@/app/home.module.css'
 import liveStyles from './HomeExtraordinaryLive.module.css'
 import polishStyles from './HomeResponsivePolish.module.css'
@@ -30,13 +30,18 @@ export default function HomePageV2({
   news = [],
   crewCalls = null,
 }) {
-  const agendaNow = buildHomeAgendaNow(homeTemporal)
-
   // La procesión en curso con su horario y bandas, salvo que ya figure entre los
   // destacados del Panel (selectHomeFeaturedOuting evita la repetición).
   const live = selectHomeFeaturedOuting({ upcomingAgenda, editorialFeaturedOutingId, editorialHighlights })
+  // Un solo foco (#1253): la salida en curso se muestra dentro de la Agenda, como
+  // su cita principal, con el siguiente horario, las bandas y la guía. El bloque
+  // aparte solo queda si la Agenda no la encuentra (red de seguridad) o para los
+  // destacados elegidos en el Panel.
+  const liveFocus = live?.isLive ? homeLiveFocus({ outing: live.outing, briefing: featuredBriefing }) : null
+  const agendaNow = buildHomeAgendaNow(homeTemporal, { liveFocus })
+  const liveInAgenda = Boolean(liveFocus && agendaNow?.liveFocusMatched)
   const highlights = [
-    ...(live && featuredBriefing ? [{ outing: live.outing, briefing: featuredBriefing, isLive: live.isLive }] : []),
+    ...(live && featuredBriefing && !liveInAgenda ? [{ outing: live.outing, briefing: featuredBriefing, isLive: live.isLive }] : []),
     ...editorialHighlights,
   ]
 
@@ -58,7 +63,7 @@ export default function HomePageV2({
         >
           <div className="shell">
             <header className={styles.upcomingAgendaHead}>
-              <h2 id="destacados-title">{live?.isLive && !editorialHighlights.length ? 'Procesión en curso' : 'Destacados'}</h2>
+              <h2 id="destacados-title">{live?.isLive && !liveInAgenda && !editorialHighlights.length ? 'Procesión en curso' : 'Destacados'}</h2>
             </header>
             <div className={liveStyles.editorialHighlights}>
               {highlights.map(({ outing, briefing }) => (
