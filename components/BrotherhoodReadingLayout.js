@@ -35,9 +35,9 @@ function NextAppointment({ item }) {
 }
 
 export default function BrotherhoodReadingLayout({ brotherhood: h, today, agendaItems, heroFactLabels, hasMusic, slots }) {
-  const next = nextBrotherhoodAppointment(agendaItems, h.salidas, today, h.cultos)
+  const next = nextBrotherhoodAppointment(agendaItems, [...(h.salidas || []), ...(h.acontecimientosSalidas || [])], today, h.cultos)
   const hasHeritage = h.patrimonio?.length || h.estrenos?.length || h.simpecados?.length || h.cartelesFiestas?.length || h.habitos?.length
-  const hasAgenda = h.salidas?.length || h.cultos?.length || agendaItems.length || slots.hasCrew
+  const hasAgenda = h.acontecimientosSalidas?.some(item => item.estado === 'announced') || h.salidas?.length || h.cultos?.length || agendaItems.length || slots.hasCrew
   return <>
     <EntitySectionNav discover={false} revealDisclosures items={[
       {href:'#resumen',label:'Resumen'},
