@@ -16,7 +16,7 @@ test('el menú móvil es un acordeón accesible que abre el grupo de la página 
   assert.match(header, /aria-expanded=\{expanded\}/)
   assert.match(header, /aria-controls=\{`menu-movil-\$\{group\.id\}-enlaces`\}/)
   assert.match(header, /hidden=\{!expanded\}/)
-  assert.match(header, /if \(open\) setMobileGroup\(currentGroup\)/)
+  assert.match(header, /if \(open\) setMobileGroup\(currentGroup \|\| 'agenda'\)/)
   // Escritorio y móvil siguen leyendo la misma configuración.
   assert.equal((header.match(/MENU_GROUPS\.map/g) || []).length, 2)
 })

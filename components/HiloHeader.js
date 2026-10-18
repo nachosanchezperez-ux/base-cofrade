@@ -56,7 +56,8 @@ export default function HiloHeader() {
   }, []);
 
   useEffect(() => {
-    if (open) setMobileGroup(currentGroup);
+    // Fuera de un grupo (portada) se abre Agenda, la sección más consultada.
+    if (open) setMobileGroup(currentGroup || 'agenda');
   }, [open, currentGroup]);
 
   useEffect(() => {
