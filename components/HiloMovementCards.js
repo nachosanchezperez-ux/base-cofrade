@@ -35,12 +35,16 @@ export default function HiloMovementCards({ items, compact = false, headingLevel
   const listClass = compact ? styles.compactList : featured ? styles.leadList : secondary ? `${styles.list} ${styles.secondaryList}` : styles.list
   const sizes = featured ? '(max-width: 760px) 100vw, 45vw' : secondary ? '(max-width: 760px) 104px, 180px' : '(max-width: 760px) 100vw, 40vw'
   return <ol className={listClass}>
-    {items.map((item) => <li key={item.id}>
-      <article className={`${styles.chapter} ${featured ? styles.featured : ''} ${secondary ? styles.secondaryCard : ''}`} id={anchors ? item.id : undefined} data-hilo-movement={item.id}>
-        {!compact ? <MovementVisual item={item} featured={featured} sizes={sizes} /> : null}
+    {items.map((item) => {
+      // En el segundo nivel la miniatura solo aparece si hay foto real; si no,
+      // el escudo va pequeño junto al protagonista (sin ilustración repetida).
+      const thumbless = secondary && !hiloMovementPhoto(item)
+      return <li key={item.id}>
+      <article className={`${styles.chapter} ${featured ? styles.featured : ''} ${secondary ? styles.secondaryCard : ''} ${thumbless ? styles.secondaryNoPhoto : ''}`} id={anchors ? item.id : undefined} data-hilo-movement={item.id}>
+        {!compact && !thumbless ? <MovementVisual item={item} featured={featured} sizes={sizes} /> : null}
         <div className={styles.cardBody}>
           <header className={styles.identity}>
-            {compact && item.crestPath ? <Image className={styles.crest} src={item.crestPath} alt="" width={56} height={64} unoptimized={/\.svg(?:$|\?)/i.test(item.crestPath)} /> : null}
+            {(compact || thumbless) && item.crestPath ? <Image className={styles.crest} src={item.crestPath} alt="" width={56} height={64} unoptimized={/\.svg(?:$|\?)/i.test(item.crestPath)} /> : null}
             <div><>{item.protagonist.href ? <Link href={item.protagonist.href} className={styles.brotherhood} prefetch={false}>{item.protagonist.label}</Link> : <strong className={styles.brotherhood}>{item.protagonist.label}</strong>}{item.protagonist.kind ? <span className={styles.locality}>{item.protagonist.kind}</span> : null}</><span className={styles.locality}>{item.municipality}</span></div>
             <span className={styles.kind}>{hiloKindLabel(item.kind)}</span>
           </header>
@@ -54,6 +58,7 @@ export default function HiloMovementCards({ items, compact = false, headingLevel
           </div>
         </div>
       </article>
-    </li>)}
+    </li>
+    })}
   </ol>
 }

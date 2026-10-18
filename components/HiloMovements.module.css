@@ -146,3 +146,8 @@
   .list .secondaryCard .story h3 { font-size: 18px; }
   .secondaryCard .visualCrest { width: 44px; height: 52px; }
 }
+/* Segundo nivel sin foto: una columna, escudo pequeño junto al protagonista. */
+.secondaryNoPhoto.secondaryNoPhoto { grid-template-columns: minmax(0, 1fr); }
+.secondaryNoPhoto .crest { object-fit: contain; width: 30px; height: 36px; flex-shrink: 0; }
+.list .secondaryNoPhoto .identity { justify-content: start; }
+.list .secondaryNoPhoto .identity > div { flex: 1; }
