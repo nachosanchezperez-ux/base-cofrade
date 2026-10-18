@@ -20,6 +20,7 @@ import {
   finalizeBulkImportAction,
 } from './actions'
 import styles from './import.module.css'
+import { plural } from '@/lib/plural'
 
 function inferFormat(name) {
   const lower = String(name || '').toLowerCase()
@@ -261,7 +262,7 @@ export default function ImportWorkspace({ initialImports, canEdit }) {
         if (!done && result.processed === 0) throw new Error('La cola de importación no avanza. Revisa las incidencias del lote.')
       }
       setMessage(result.status === 'completed'
-        ? `Importación completada: ${result.counts.applied_items} registros aplicados.`
+        ? `Importación completada: ${plural(result.counts.applied_items, 'registro aplicado', 'registros aplicados')}.`
         : `Importación terminada con incidencias: ${result.counts.applied_items} aplicados · ${result.counts.failed_items} fallidos · ${result.counts.invalid_items} inválidos.`)
       router.refresh()
     } catch (caught) {

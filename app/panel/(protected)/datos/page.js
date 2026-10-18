@@ -5,6 +5,7 @@ import { getPanelMasterData } from '@/lib/panel/master-data'
 import { getPanelDataHealth } from '@/lib/panel/data-health'
 import { getPanelEditorialFreshnessSummary } from '@/lib/panel/editorial-freshness'
 import styles from '@/app/panel/panel.module.css'
+import { plural } from '@/lib/plural'
 
 function ModuleRow({ href, label, count, note }) {
   return <div><span><strong>{label}</strong>{note ? <small style={{ display: 'block', marginTop: 3 }}>{note}</small> : null}</span><span style={{ display: 'flex', alignItems: 'center', gap: 12 }}><b>{count}</b><Link className={styles.rowLink} href={href}>Abrir <span>→</span></Link></span></div>
@@ -28,7 +29,7 @@ export default async function PanelMasterDataPage({ searchParams }) {
       <article className={styles.metricCard}><span>Salud</span><strong>{openIssues}</strong><small>incidencias accionables</small></article>
       <article className={styles.metricCard}><span>Referencias</span><strong>{data.referenceNodes.length}</strong><small>nodos por completar</small></article>
       <article className={styles.metricCard}><span>Advocaciones</span><strong>{data.advocations.length}</strong><small>identidades devocionales</small></article>
-      <article className={styles.metricCard}><span>Geografía</span><strong>{data.municipalities.length + data.places.length}</strong><small>{data.municipalities.length} municipios · {data.places.length} lugares</small></article>
+      <article className={styles.metricCard}><span>Geografía</span><strong>{data.municipalities.length + data.places.length}</strong><small>{plural(data.municipalities.length, 'municipio', 'municipios')} · {plural(data.places.length, 'lugar', 'lugares')}</small></article>
     </section>
 
     {health.bySeverity.critical ? <div className={styles.readOnlyNotice}>Hay {health.bySeverity.critical} incidencia{health.bySeverity.critical === 1 ? '' : 's'} prioritaria{health.bySeverity.critical === 1 ? '' : 's'} en la salud del grafo. Revisa el módulo Salud antes de seguir ampliando contenido publicado.</div> : <div className={styles.savedNotice}>No hay incidencias prioritarias en las comprobaciones activas.</div>}

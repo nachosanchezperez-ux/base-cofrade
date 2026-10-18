@@ -5,6 +5,7 @@ import { requirePanelUser } from '@/lib/panel/auth'
 import { getConcertEventReferenceOptions, getPanelConcertEvents } from '@/lib/panel/concert-events'
 import { createConcertEventAction } from './actions'
 import styles from '@/app/panel/panel.module.css'
+import { plural } from '@/lib/plural'
 
 const STATUS_LABELS = { published: 'Publicado', review: 'En revisión', draft: 'Borrador', archived: 'Archivado' }
 const SAVED_MESSAGES = { archived: 'El concierto se ha archivado sin borrar sus relaciones.' }
@@ -36,7 +37,7 @@ export default async function PanelConcertEventsPage({ searchParams }) {
       </form>
 
       <section className={styles.panelCard}>
-        <div className={styles.listHeading}><strong>{events.length} conciertos</strong><small>Los publicados alimentan automáticamente la Agenda Cofrade.</small></div>
+        <div className={styles.listHeading}><strong>{plural(events.length, 'concierto', 'conciertos')}</strong><small>Los publicados alimentan automáticamente la Agenda Cofrade.</small></div>
         {events.length ? <div className={styles.brotherhoodList}>{events.map((item) => (
           <article key={item.id}>
             <span className={styles.listMonogram}>♫</span>

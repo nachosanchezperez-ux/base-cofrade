@@ -2,6 +2,7 @@ import { requirePanelAdmin } from '@/lib/panel/auth'
 import { getPanelUsers } from '@/lib/panel/data'
 import { savePanelUserAction } from './actions'
 import styles from '@/app/panel/panel.module.css'
+import { plural } from '@/lib/plural'
 
 const ROLE_LABELS = { admin: 'Administrador', editor: 'Editor', collaborator: 'Colaborador' }
 
@@ -21,7 +22,7 @@ export default async function PanelTeamPage({ searchParams }) {
       {query?.saved ? <div className={styles.savedNotice} role="status">Perfil guardado correctamente.</div> : null}
 
       <section className={styles.panelCard}>
-        <div className={styles.listHeading}><strong>{profiles.length} perfiles autorizados</strong><small>La autenticación permanece en Supabase Auth</small></div>
+        <div className={styles.listHeading}><strong>{plural(profiles.length, 'perfil autorizado', 'perfiles autorizados')}</strong><small>La autenticación permanece en Supabase Auth</small></div>
         <div className={styles.teamList}>
           {profiles.map((profile) => (
             <form action={savePanelUserAction} key={profile.user_id}>

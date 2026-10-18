@@ -13,6 +13,7 @@ import {
 } from './actions'
 import styles from '@/app/panel/panel.module.css'
 import editorStyles from '../editor.module.css'
+import { plural } from '@/lib/plural'
 
 const POSITION_OPTIONS = [
   ['processional_music', 'Música procesional'],
@@ -60,7 +61,7 @@ export default async function ExtraordinaryMusicPage({ params, searchParams }) {
       <div className={editorStyles.helpBox}><strong>Banda existente o nombre libre:</strong> si la formación ya está en Hilo Cofrade, selecciónala para crear la relación. Si aún no existe, escribe su nombre literal; la extraordinaria seguirá siendo publicable sin crear una ficha vacía.</div>
 
       <section className={styles.editorSection}>
-        <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>Programa musical</span><h2>{data.positions.length} momentos</h2></div><p>El orden determina cómo se presenta la música en la ficha.</p></div>
+        <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>Programa musical</span><h2>{plural(data.positions.length, 'momento', 'momentos')}</h2></div><p>El orden determina cómo se presenta la música en la ficha.</p></div>
         {data.positions.length ? <div className={editorStyles.itemList}>{data.positions.map((position, index) => (
           <article className={editorStyles.itemCard} key={position.id}>
             <div className={editorStyles.itemHead}>

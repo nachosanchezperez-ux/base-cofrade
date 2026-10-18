@@ -5,6 +5,7 @@ import { requirePanelUser } from '@/lib/panel/auth'
 import { getCrewEventReferenceOptions, getPanelCrewEvents } from '@/lib/panel/crew-events'
 import { createCrewEventAction } from './actions'
 import styles from '@/app/panel/panel.module.css'
+import { plural } from '@/lib/plural'
 
 const STATUS_LABELS = { published: 'Publicado', review: 'En revisión', draft: 'Borrador', archived: 'Archivado' }
 const SAVED_MESSAGES = { archived: 'La convocatoria se ha archivado sin borrar su histórico.' }
@@ -34,7 +35,7 @@ export default async function PanelCrewEventsPage({ searchParams }) {
       </form>
 
       <section className={styles.panelCard}>
-        <div className={styles.listHeading}><strong>{events.length} convocatorias</strong><small>Las publicadas alimentan el calendario y conservan su ficha en el histórico.</small></div>
+        <div className={styles.listHeading}><strong>{plural(events.length, 'convocatoria', 'convocatorias')}</strong><small>Las publicadas alimentan el calendario y conservan su ficha en el histórico.</small></div>
         {events.length ? <div className={styles.brotherhoodList}>{events.map((item) => (
           <article key={item.id}>
             <span className={styles.listMonogram}>I/E</span>

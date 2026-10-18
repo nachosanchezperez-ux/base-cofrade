@@ -4,6 +4,7 @@ import markStyles from '@/components/panel/PanelEntityMark.module.css'
 import { requirePanelUser } from '@/lib/panel/auth'
 import { getPanelBrotherhoods } from '@/lib/panel/data'
 import styles from '@/app/panel/panel.module.css'
+import { plural } from '@/lib/plural'
 
 const STATUS_LABELS = { published: 'Publicado', review: 'En revisión', draft: 'Borrador', archived: 'Archivado' }
 
@@ -45,7 +46,7 @@ export default async function PanelBrotherhoodsPage({ searchParams }) {
       </form>
 
       <section className={styles.panelCard}>
-        <div className={styles.listHeading}><strong>{brotherhoods.length} hermandades</strong><small>Los borradores se pueden editar y solo aparecen en la web cuando decides publicarlos.</small></div>
+        <div className={styles.listHeading}><strong>{plural(brotherhoods.length, 'hermandad', 'hermandades')}</strong><small>Los borradores se pueden editar y solo aparecen en la web cuando decides publicarlos.</small></div>
         {brotherhoods.length ? (
           <div className={styles.brotherhoodList}>
             {brotherhoods.map((item) => (

@@ -79,7 +79,7 @@ export default async function ImageStepRelationsPage({ searchParams }) {
           </label>
         </div>
         <div className={styles.formActions}>
-          <small>{filtered.length} relaciones{term ? ' encontradas' : ''} · página {page} de {pageCount}</small>
+          <small>{filtered.length} {filtered.length === 1 ? `relación${term ? ' encontrada' : ''}` : `relaciones${term ? ' encontradas' : ''}`} · página {page} de {pageCount}</small>
           <button className={styles.secondaryButton} type="submit">Buscar</button>
         </div>
       </form>

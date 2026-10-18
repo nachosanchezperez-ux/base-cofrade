@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { requirePanelUser } from '@/lib/panel/auth'
 import { getPanelImages } from '@/lib/panel/images'
 import styles from '@/app/panel/panel.module.css'
+import { plural } from '@/lib/plural'
 
 const STATUS_LABELS = { published: 'Publicado', review: 'En revisión', draft: 'Borrador', archived: 'Archivado' }
 
@@ -48,7 +49,7 @@ export default async function PanelImagesPage({ searchParams }) {
 
       <section className={styles.panelCard}>
         <div className={styles.listHeading}>
-          <strong>{images.length} imágenes</strong>
+          <strong>{plural(images.length, 'imagen', 'imágenes')}</strong>
           <small>Los borradores solo son visibles en el Panel</small>
         </div>
         {images.length ? (

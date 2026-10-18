@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { requirePanelUser } from '@/lib/panel/auth'
 import { getPanelAgents } from '@/lib/panel/agents'
 import styles from '@/app/panel/panel.module.css'
+import { plural } from '@/lib/plural'
 
 const STATUS_LABELS = {
   published: 'Publicado',
@@ -55,7 +56,7 @@ export default async function PanelAgentsPage({ searchParams }) {
 
       <section className={styles.panelCard}>
         <div className={styles.listHeading}>
-          <strong>{agents.length} fichas</strong>
+          <strong>{plural(agents.length, 'ficha', 'fichas')}</strong>
           <small>Los borradores solo son visibles en el Panel</small>
         </div>
         {agents.length ? (

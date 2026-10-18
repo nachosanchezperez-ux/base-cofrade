@@ -32,3 +32,10 @@ test('los contadores corregidos de la ficha de hermandad usan concordancia', () 
   assert.match(heritage, /'himno documentado', 'himnos documentados'/)
   assert.match(heritage, /'composición documentada', 'composiciones documentadas'/)
 })
+
+test('los listados del Panel usan concordancia en sus contadores', () => {
+  const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8')
+  assert.match(read('app/panel/(protected)/pasos/page.js'), /plural\(steps\.length, 'paso', 'pasos'\)/)
+  assert.match(read('app/panel/(protected)/hermandades/page.js'), /plural\(brotherhoods\.length, 'hermandad', 'hermandades'\)/)
+  assert.doesNotMatch(read('app/panel/(protected)/imagenes/page.js'), /\{images\.length\} imágenes/)
+})

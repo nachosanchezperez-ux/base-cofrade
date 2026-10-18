@@ -3,6 +3,7 @@ import { requirePanelUser } from '@/lib/panel/auth'
 import { getPanelEvents } from '@/lib/panel/events'
 import { createEventAction } from './actions'
 import styles from '@/app/panel/panel.module.css'
+import { plural } from '@/lib/plural'
 
 const STATUS_LABELS = { published: 'Publicado', review: 'En revisión', draft: 'Borrador', archived: 'Archivado' }
 const SAVED_MESSAGES = { archived: 'El Acontecimiento se ha archivado sin borrar su histórico.' }
@@ -39,7 +40,7 @@ export default async function PanelEventsPage({ searchParams }) {
       {contextEntityId ? <div className={styles.readOnlyNotice}>Mostrando Acontecimientos relacionados con la entidad desde la que has llegado. <Link href="/panel/acontecimientos">Ver todos</Link></div> : null}
 
       <section className={styles.panelCard}>
-        <div className={styles.listHeading}><strong>{events.length} acontecimientos</strong><small>Las efemérides publicadas pueden alimentar la Home automáticamente.</small></div>
+        <div className={styles.listHeading}><strong>{plural(events.length, 'acontecimiento', 'acontecimientos')}</strong><small>Las efemérides publicadas pueden alimentar la Home automáticamente.</small></div>
         {events.length ? <div className={styles.brotherhoodList}>{events.map((item) => (
           <article key={item.id}>
             <span className={styles.listMonogram}>A</span>

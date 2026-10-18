@@ -9,6 +9,7 @@ import {
 } from './actions'
 import styles from '@/app/panel/panel.module.css'
 import editorStyles from '../editor.module.css'
+import { plural } from '@/lib/plural'
 
 const SAVED = {
   linked: 'Fuente vinculada correctamente.',
@@ -40,7 +41,7 @@ export default async function ExtraordinarySourcesPage({ params, searchParams })
       <div className={editorStyles.helpBox}><strong>Fuente global, vínculo local:</strong> el documento (nombre, URL, fecha…) puede reutilizarse en todo Hilo Cofrade. Aquí editamos principalmente <strong>qué documenta en esta extraordinaria</strong>, para no cambiar otras fichas accidentalmente.</div>
 
       <section className={styles.editorSection}>
-        <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>Documentación vinculada</span><h2>{data.links.length} fuentes</h2></div><p>Las fuentes con URL se muestran también en la guía pública.</p></div>
+        <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>Documentación vinculada</span><h2>{plural(data.links.length, 'fuente', 'fuentes')}</h2></div><p>Las fuentes con URL se muestran también en la guía pública.</p></div>
         {data.links.length ? <div className={editorStyles.itemList}>{data.links.map((link) => (
           <article className={editorStyles.itemCard} key={link.id}>
             <div className={editorStyles.itemHead}>

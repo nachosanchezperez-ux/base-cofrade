@@ -10,6 +10,7 @@ import {
 } from './actions'
 import styles from '@/app/panel/panel.module.css'
 import editorStyles from '../editor.module.css'
+import { plural } from '@/lib/plural'
 
 function timeInput(value) { return value ? String(value).slice(0, 5) : '' }
 function placeLabel(item) { return [item.name, item.municipality].filter(Boolean).join(' · ') }
@@ -46,7 +47,7 @@ export default async function ExtraordinarySchedulePage({ params, searchParams }
       <div className={editorStyles.helpBox}><strong>Hora exacta vs. texto:</strong> usa “Hora” cuando esté confirmada. Si solo sabemos “Tras la misa”, “Sobre las 04:00” o “al atardecer”, déjalo en <strong>Hora textual</strong> para no inventar precisión.</div>
 
       <section className={styles.editorSection}>
-        <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>Cronología</span><h2>{data.items.length} hitos</h2></div><p>El orden de esta lista es el mismo que verá el usuario en la guía.</p></div>
+        <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>Cronología</span><h2>{plural(data.items.length, 'hito', 'hitos')}</h2></div><p>El orden de esta lista es el mismo que verá el usuario en la guía.</p></div>
         {data.items.length ? (
           <div className={editorStyles.itemList}>
             {data.items.map((item, index) => (
