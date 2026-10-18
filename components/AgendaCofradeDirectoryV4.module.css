@@ -77,7 +77,7 @@
 .livePanelHead p{font-size:13px}
 .liveItem>div:first-child>span{font-size:11px}
 .liveItem p{font-size:13px}
-.liveTimes span{font-size:12px}
+.liveTimes span{display:grid;justify-items:end;font-size:12px;line-height:1.2}
 .liveTimes strong{font-size:16px;font-variant-numeric:tabular-nums}
 .liveAction{font-size:13px}
 .liveBadge{font-size:11px!important}
