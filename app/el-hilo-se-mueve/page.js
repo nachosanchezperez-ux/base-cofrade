@@ -50,7 +50,7 @@ export default async function HiloMovementsPage({ searchParams }) {
         <p id="novedades" className={styles.results}>{selected.length} {selected.length === 1 ? 'novedad documentada' : 'novedades documentadas'} · Ordenadas por fecha del anuncio, cuando se conoce.</p>
         {selected.length ? <>
           <HiloMovementCards items={selected.slice(0, 1)} headingLevel={2} featured />
-          {selected.length > 1 ? <section aria-labelledby="el-hilo-sigue"><header className={styles.followHeader}><h2 id="el-hilo-sigue">El hilo sigue</h2><p>Más capítulos de la vida cofrade</p></header><HiloMovementCards items={selected.slice(1, HILO_INDEX_CARDS)} headingLevel={3} /></section> : null}
+          {selected.length > 1 ? <section aria-labelledby="el-hilo-sigue"><header className={styles.followHeader}><h2 id="el-hilo-sigue">El hilo sigue</h2><p>Más capítulos de la vida cofrade</p></header><HiloMovementCards items={selected.slice(1, HILO_INDEX_CARDS)} headingLevel={3} secondary /></section> : null}
           {selected.length > HILO_INDEX_CARDS ? <section className={styles.archive} aria-labelledby="el-hilo-archivo"><header className={styles.followHeader}><h2 id="el-hilo-archivo">Archivo del hilo</h2><p>Novedades anteriores, en formato breve</p></header><HiloMovementCards items={selected.slice(HILO_INDEX_CARDS)} headingLevel={3} compact anchors /></section> : null}
         </> : <p className={styles.empty}>No hay novedades publicadas con estos filtros. <Link href={HILO_MOVEMENTS_PATH} prefetch={false}>Ver todas las novedades</Link>.</p>}
       </>}

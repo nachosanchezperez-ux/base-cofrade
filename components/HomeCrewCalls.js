@@ -5,11 +5,13 @@ import styles from './HomeCrewCalls.module.css'
 // Igualás y ensayos en la portada. Mismas filas que la Agenda cofrade (hoja de
 // calendario + hora en rojo) para que se lean igual. Compacto: tres filas y un
 // único enlace al calendario, sin texto de presentación.
+// Jerarquía (#1253): convocatorias secundarias en filas compactas, por debajo
+// de las citas de la Agenda.
 function CrewRow({ card }) {
   const { day, weekday, month } = card.dateParts || {}
   const time = card.time || {}
   return (
-    <li className={agendaStyles.row}>
+    <li className={agendaStyles.row} data-variant="compact">
       <Link href={card.href} className={agendaStyles.rowLink}>
         <time className={`${agendaStyles.leaf} ${styles.leaf}`} dateTime={card.date}>
           <span className={agendaStyles.leafWeekday}>{weekday}</span>

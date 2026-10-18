@@ -72,3 +72,33 @@
     width: 100%;
   }
 }
+
+/* En «Descubre» de la portada (#1253): una línea de texto con su enlace, sin
+   fondo degradado ni botón de bloque, para dar menos peso que la ficha del día. */
+.teaserQuiet.teaserQuiet {
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+  padding: 12px 0 0;
+  border: 0;
+  border-top: 1px solid #e3e9ef;
+  border-radius: 0;
+  background: transparent;
+}
+
+.teaserQuiet .teaserCopy strong {
+  font-size: 15px;
+}
+
+.teaserQuiet .teaserLink.teaserLink {
+  width: auto;
+  padding: 0 14px;
+  border: 1px solid #d9c3c9;
+  background: transparent;
+  color: #74273c;
+}
+
+.teaserQuiet .teaserLink.teaserLink:hover {
+  background: #f9eee9;
+}

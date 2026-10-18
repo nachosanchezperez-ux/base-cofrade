@@ -2,25 +2,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { hiloDayLabel, hiloPassedLabel, HILO_TOPIC_LABELS } from '@/lib/hilo-movements'
 import { newsShare } from '@/lib/share'
+import { hiloMovementPhoto } from '@/lib/hilo-movement-photo'
 import ShareActions from '@/components/ShareActions'
 import styles from './HiloMovements.module.css'
 
-const archivePhotos = {
-  'cigarreras-soberana-entrega-panaderos-2026': { src: '/bandas/las-cigarreras/cigarreras-corneta.jpg', alt: 'Corneta y paño bordado de Las Cigarreras' },
-  'san-esteban-santa-ana-2027': { src: '/hermandades/san-esteban/cabecera-cortejo.jpg', alt: 'Cruz de guía y nazarenos de San Esteban' },
-  'baratillo-continuidad-musical-2027': { src: '/bandas/banda-del-sol/formacion-baratillo-2026.jpg', alt: 'La Banda del Sol tras el paso de la Piedad del Baratillo' },
-}
-
-// Foto de la noticia: la de archivo seleccionada a mano, si existe; si no, la de
-// cabecera de la ficha del protagonista (Hermandad o banda), con su crédito.
-export function hiloMovementPhoto(item = {}) {
-  if (archivePhotos[item.id]) return { ...archivePhotos[item.id], credit: '', focusPosition: '50% 50%', archive: true, caption: 'Imagen de archivo' }
-  if (item.cover?.path) {
-    const name = item.protagonist?.label || 'la noticia'
-    return { src: item.cover.path, alt: item.cover.alt || `Fotografía de ${name}`, credit: item.cover.credit || '', focusPosition: item.cover.focusPosition || '50% 50%', archive: true, caption: `Imagen de la ficha de ${name}` }
-  }
-  return null
-}
+// La elección de foto vive en un módulo puro, compartido con la portada.
+export { hiloMovementPhoto }
 
 function MovementVisual({ item, featured, sizes }) {
   const photo = hiloMovementPhoto(item)
@@ -40,12 +27,16 @@ export function hiloKindLabel(kind = '') {
 
 // Tarjetas del índice y de las fichas. El texto completo, las relaciones y las
 // fuentes viven en la página de cada noticia (item.href); aquí, lo esencial.
-export default function HiloMovementCards({ items, compact = false, headingLevel = 3, featured = false, anchors = !compact }) {
+// `secondary` (índice, #1253): segundo nivel, más discreto que la principal y
+// más rico que el archivo: miniatura lateral, titular menor y entradilla breve.
+export default function HiloMovementCards({ items, compact = false, headingLevel = 3, featured = false, secondary = false, anchors = !compact }) {
   const Heading = `h${headingLevel}`
-  return <ol className={compact ? styles.compactList : featured ? styles.leadList : styles.list}>
+  const listClass = compact ? styles.compactList : featured ? styles.leadList : secondary ? `${styles.list} ${styles.secondaryList}` : styles.list
+  const sizes = featured ? '(max-width: 760px) 100vw, 45vw' : secondary ? '(max-width: 760px) 104px, 180px' : '(max-width: 760px) 100vw, 40vw'
+  return <ol className={listClass}>
     {items.map((item) => <li key={item.id}>
-      <article className={`${styles.chapter} ${featured ? styles.featured : ''}`} id={anchors ? item.id : undefined} data-hilo-movement={item.id}>
-        {!compact ? <MovementVisual item={item} featured={featured} sizes={featured ? '(max-width: 760px) 100vw, 45vw' : '(max-width: 760px) 100vw, 40vw'} /> : null}
+      <article className={`${styles.chapter} ${featured ? styles.featured : ''} ${secondary ? styles.secondaryCard : ''}`} id={anchors ? item.id : undefined} data-hilo-movement={item.id}>
+        {!compact ? <MovementVisual item={item} featured={featured} sizes={sizes} /> : null}
         <div className={styles.cardBody}>
           <header className={styles.identity}>
             {compact && item.crestPath ? <Image className={styles.crest} src={item.crestPath} alt="" width={56} height={64} unoptimized={/\.svg(?:$|\?)/i.test(item.crestPath)} /> : null}

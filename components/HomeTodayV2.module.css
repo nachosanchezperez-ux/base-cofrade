@@ -774,3 +774,89 @@
   text-decoration-thickness: 1px;
   text-underline-offset: 4px;
 }
+
+/*
+ * Jerarquía de «Descubre» en la portada (#1253). La ficha del día es la pieza
+ * destacada; la marcha del día pasa a una tarjeta clara, sin el bloque azul ni
+ * su decoración, para no competir con ella. Conserva reproductor y enlaces.
+ */
+.embedded .musicCard {
+  margin-top: 12px;
+  border-color: #dce5ed;
+  border-radius: 14px;
+  color: #0f2742;
+  background: #fff;
+  box-shadow: none;
+}
+
+.embedded .musicCard::after {
+  display: none;
+}
+
+.embedded .musicVisual {
+  width: 52px;
+  height: 52px;
+  border-color: #e3e9ef;
+  border-radius: 12px;
+  color: #123a67;
+  background: #f3f6f9;
+  box-shadow: none;
+}
+
+.embedded .musicCopy .type {
+  color: #b71f37;
+}
+
+.embedded .musicCopy h3 {
+  margin: 4px 0 3px;
+  color: #0f2742;
+  font-size: 19px;
+}
+
+.embedded .musicByline {
+  color: #5f7080;
+}
+
+.embedded .musicByline strong {
+  color: #34495d;
+}
+
+.embedded .musicContext > span {
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.embedded .musicContext small {
+  color: #8a2235;
+}
+
+.embedded .musicContext strong,
+.embedded .musicContext a {
+  color: #123a67;
+  font-size: 12px;
+}
+
+.embedded .musicContext a {
+  text-decoration: none;
+}
+
+.embedded .whyToday {
+  margin-top: 10px;
+  padding: 8px 10px;
+  border-left-color: #b71f37;
+  background: #f6f8fa;
+}
+
+.embedded .whyToday span {
+  color: #8a2235;
+}
+
+.embedded .whyToday p {
+  color: #3d5468;
+}
+
+.embedded .musicLink {
+  color: #123a67;
+}

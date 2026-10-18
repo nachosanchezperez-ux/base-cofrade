@@ -116,3 +116,33 @@
   .list .cardBody { padding: 18px 20px; }
   .list .story h3 { font-size: 24px; }
 }
+/*
+ * Tres niveles en el índice (#1253): principal · secundarias · archivo.
+ * Las secundarias son claramente más discretas que la principal: miniatura
+ * lateral en lugar de foto de cabecera, titular menor, entradilla de dos líneas
+ * y sin etiquetas sobre la imagen. Conservan enlace, fecha, protagonista y compartir.
+ */
+.secondaryList.secondaryList { gap: 0; column-gap: 32px; }
+.secondaryList > li { border-bottom: 1px solid var(--line); }
+.secondaryCard { display: grid; grid-template-columns: minmax(0, 1fr) 180px; gap: 18px; align-items: start; padding: 18px 0; border: 0; border-radius: 0; background: transparent; }
+.secondaryCard .visual { order: 2; min-height: 0; aspect-ratio: 4 / 3; border-radius: 8px; }
+.secondaryCard .visual::before { inset: 10px; }
+.secondaryCard .visualLabel, .secondaryCard .archiveLabel { display: none; }
+.secondaryCard .visualCrest { width: 56px; height: 66px; }
+.secondaryCard .visualWord { font-size: 34px; }
+.list .secondaryCard .cardBody { padding: 0; }
+.list .secondaryCard .identity { margin-bottom: 6px; gap: 6px 10px; }
+.secondaryCard .brotherhood { min-height: 28px; font-size: 13px; }
+.secondaryCard .kind { font-size: 10px; padding: 3px 8px; }
+.secondaryCard .date { margin-bottom: 4px; }
+.list .secondaryCard .story h3 { font-size: 20px; line-height: 1.25; margin: 0 0 6px; }
+.list .secondaryCard .summary { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2; font-size: 14px; line-height: 1.5; margin: 0 0 4px; }
+.secondaryCard .effective { margin-bottom: 6px; }
+.secondaryCard .more { font-size: 13px; }
+@media (max-width: 760px) {
+  .secondaryCard { grid-template-columns: minmax(0, 1fr) 104px; gap: 14px; padding: 16px 0; }
+  .secondaryCard .visual { min-height: 0; aspect-ratio: 1; }
+  .list .secondaryCard .cardBody { padding: 0; }
+  .list .secondaryCard .story h3 { font-size: 18px; }
+  .secondaryCard .visualCrest { width: 44px; height: 52px; }
+}

@@ -46,9 +46,14 @@ test('las noticias entran en el sitemap general y el índice declara su colecci�
 })
 
 test('la tarjeta usa la foto de la ficha del protagonista cuando no hay foto de archivo', async () => {
-  const cards = read('components/HiloMovementCards.js')
-  assert.match(cards, /if \(item\.cover\?\.path\) \{/)
-  assert.match(cards, /caption: `Imagen de la ficha de \$\{name\}`/)
+  // La elección de foto vive en un módulo puro compartido con la portada (#1253).
+  const photo = read('lib/hilo-movement-photo.js')
+  assert.match(photo, /if \(item\.cover\?\.path\) \{/)
+  assert.match(photo, /caption: `Imagen de la ficha de \$\{name\}`/)
+  assert.match(read('components/HiloMovementCards.js'), /export \{ hiloMovementPhoto \}/)
+  const { hiloMovementPhoto } = await import('../lib/hilo-movement-photo.js')
+  assert.equal(hiloMovementPhoto({ id: 'x', cover: { path: '/a.jpg' }, protagonist: { label: 'Hermandad X' } }).caption, 'Imagen de la ficha de Hermandad X')
+  assert.equal(hiloMovementPhoto({ id: 'x' }), null)
   assert.match(read('lib/supabase/hilo-movements.js'), /getPublishedEntityCoverMediaMap\(protagonistIds/)
   assert.match(read('lib/supabase/hilo-movements.js'), /'hilo-editorial-movements-v4'/)
 })
