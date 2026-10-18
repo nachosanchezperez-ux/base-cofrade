@@ -164,7 +164,7 @@ test('la ficha de imagen enlaza la sucesión en ambos sentidos', () => {
   assert.match(loader, /async function loadImageSuccession/)
   assert.match(loader, /source_entity_id\.eq\.\$\{imageId\},target_entity_id\.eq\.\$\{imageId\}/)
   const page = read('app/imagenes/[slug]/page.js')
-  assert.match(page, /<small>Sustituida por<\/small>/)
+  assert.match(page, /<small>Sustituida por\{/)
   assert.match(page, /<small>Sustituyó a<\/small>/)
   assert.match(page, /relation: 'La sustituyó'/)
 })

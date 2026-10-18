@@ -338,9 +338,8 @@ export default async function ImagenPage({ params }) {
             </article> : null}
 
             {imagen.sustituidaPor ? <article>
-              <small>Sustituida por</small>
+              <small>Sustituida por{imagen.sustituidaPor.fecha ? ` · ${imagen.sustituidaPor.fecha}` : ''}</small>
               <Link href={`/imagenes/${imagen.sustituidaPor.slug}`}>{imagen.sustituidaPor.nombre}</Link>
-              {imagen.sustituidaPor.fecha ? <span>En {imagen.sustituidaPor.fecha}</span> : null}
             </article> : null}
 
             {imagen.sustituyoA?.length ? <article>
