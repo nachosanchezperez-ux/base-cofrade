@@ -5,6 +5,7 @@ import { NEWS_TOPICS, getNewsReferenceOptions, getPanelNewsList } from '@/lib/pa
 import { newsNeedsTenseReview } from '@/lib/hilo-movements-editorial'
 import { createNewsAction } from './actions'
 import styles from '@/app/panel/panel.module.css'
+import { plural } from '@/lib/plural'
 
 const STATUS_LABELS = { published: 'Publicada', review: 'En revisión', draft: 'Borrador', archived: 'Archivada' }
 const TOPIC_LABELS = Object.fromEntries(NEWS_TOPICS)
@@ -39,7 +40,7 @@ export default async function PanelNewsPage({ searchParams }) {
       </form>
 
       <section className={styles.panelCard}>
-        <div className={styles.listHeading}><strong>{items.length} noticias{reviewCount ? ` · ${reviewCount} por revisar` : ''}</strong><small>Una noticia publicada con fecha futura queda programada: se muestra ese día.</small></div>
+        <div className={styles.listHeading}><strong>{plural(items.length, 'noticia', 'noticias')}{reviewCount ? ` · ${reviewCount} por revisar` : ''}</strong><small>Una noticia publicada con fecha futura queda programada: se muestra ese día.</small></div>
         {items.length ? <div className={styles.brotherhoodList}>{items.map((item) => (
           <article key={item.id}>
             <span className={styles.listMonogram}>N</span>

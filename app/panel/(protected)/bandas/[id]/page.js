@@ -15,6 +15,7 @@ import {
 import { updateBandAction } from './actions'
 import styles from '@/app/panel/panel.module.css'
 import bandUx from '@/app/panel/(protected)/bandas/BandPanelUx.module.css'
+import { plural } from '@/lib/plural'
 
 export const metadata = { title: 'Editar banda · Panel' }
 
@@ -68,7 +69,7 @@ export default async function BandEditorPage({ params, searchParams }) {
 
       <section className={styles.metricGrid} aria-label="Cobertura de la ficha">
         <article className={styles.metricCard}><span>Dirección</span><strong>{data.direction.filter((item) => item.is_current).length}</strong><small>responsabilidades actuales</small></article>
-        <article className={styles.metricCard}><span>Acompañamientos</span><strong>{currentPeriods.length}</strong><small>{historicalPeriods.length} históricos</small></article>
+        <article className={styles.metricCard}><span>Acompañamientos</span><strong>{currentPeriods.length}</strong><small>{plural(historicalPeriods.length, 'histórico', 'históricos')}</small></article>
         <article className={styles.metricCard}><span>Estrenos</span><strong>{data.premieres.length}</strong><small>marchas documentadas</small></article>
         <article className={styles.metricCard}><span>Extraordinarias</span><strong>{data.outings.length}</strong><small>salidas vinculadas</small></article>
       </section>

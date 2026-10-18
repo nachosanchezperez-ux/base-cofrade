@@ -5,6 +5,7 @@ import { getPanelExtraordinaryOutings } from '@/lib/panel/extraordinary-outings'
 import { createExtraordinaryAction } from './actions'
 import styles from '@/app/panel/panel.module.css'
 import extraStyles from './extraordinarias.module.css'
+import { plural } from '@/lib/plural'
 
 const EVENT_STATUS_LABELS = {
   announced: 'Anunciada',
@@ -101,7 +102,7 @@ export default async function PanelExtraordinaryOutingsPage({ searchParams }) {
       <section className={styles.panelCard}>
         <div className={`${styles.listHeading} ${extraStyles.directoryHeading}`}>
           <div>
-            <strong>{outings.length} extraordinarias</strong>
+            <strong>{plural(outings.length, 'extraordinaria', 'extraordinarias')}</strong>
             <small>La cobertura visual se completa con fotografía principal, cartel y al menos una imagen de galería.</small>
           </div>
           <div className={extraStyles.directoryStats} aria-label="Resumen de cobertura visual">

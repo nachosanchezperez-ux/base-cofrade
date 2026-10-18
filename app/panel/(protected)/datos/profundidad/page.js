@@ -10,6 +10,7 @@ import { requirePanelUser } from '@/lib/panel/auth'
 import { getPanelEntityDepth } from '@/lib/panel/entity-depth'
 import styles from '@/app/panel/panel.module.css'
 import depthStyles from './depth.module.css'
+import { plural } from '@/lib/plural'
 
 const SORT_OPTIONS = {
   'depth-asc': 'Menor profundidad',
@@ -127,7 +128,7 @@ export default async function EntityDepthPage({ searchParams }) {
 
                 <div className={depthStyles.identity}>
                   <strong>{item.name}</strong>
-                  <span>{item.typeLabel} · {item.relationCount} conexiones · {item.sourceCount} Fuentes</span>
+                  <span>{item.typeLabel} · {plural(item.relationCount, 'conexión', 'conexiones')} · {plural(item.sourceCount, 'fuente', 'fuentes')}</span>
                   <small>Más débil: {item.weakestDimension?.label || '—'} · {item.weakestDimension?.score || 0}/{item.weakestDimension?.weight || 0}</small>
                 </div>
 
@@ -181,7 +182,7 @@ export default async function EntityDepthPage({ searchParams }) {
           <div className={styles.moduleList}>
             {data.summary.byType.map((item) => (
               <div key={item.type}>
-                <span><strong>{item.label}</strong><small style={{ display: 'block', marginTop: 3 }}>{item.count} entidades evaluadas</small></span>
+                <span><strong>{item.label}</strong><small style={{ display: 'block', marginTop: 3 }}>{plural(item.count, 'entidad evaluada', 'entidades evaluadas')}</small></span>
                 <b>{item.average}/100</b>
               </div>
             ))}

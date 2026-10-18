@@ -3,6 +3,7 @@ import { requirePanelUser } from '@/lib/panel/auth'
 import { getPanelMarches } from '@/lib/panel/marches'
 import { createMarchAction } from './actions'
 import styles from '@/app/panel/panel.module.css'
+import { plural } from '@/lib/plural'
 
 const STATUS_LABELS = { published: 'Publicado', review: 'En revisión', draft: 'Borrador', archived: 'Archivado' }
 const SAVED_MESSAGES = { archived: 'La Marcha se ha archivado sin borrar su histórico.' }
@@ -43,7 +44,7 @@ export default async function PanelMarchesPage({ searchParams }) {
       </form>
 
       <section className={styles.panelCard}>
-        <div className={styles.listHeading}><strong>{marches.length} marchas</strong><small>El catálogo publicado alimenta patrimonio musical y selección diaria.</small></div>
+        <div className={styles.listHeading}><strong>{plural(marches.length, 'marcha', 'marchas')}</strong><small>El catálogo publicado alimenta patrimonio musical y selección diaria.</small></div>
         {marches.length ? (
           <div className={styles.brotherhoodList}>
             {marches.map((item) => (

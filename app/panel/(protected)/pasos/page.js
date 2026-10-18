@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { requirePanelUser } from '@/lib/panel/auth'
 import { getPanelSteps } from '@/lib/panel/steps'
 import styles from '@/app/panel/panel.module.css'
+import { plural } from '@/lib/plural'
 
 const STATUS_LABELS = { published: 'Publicado', review: 'En revisión', draft: 'Borrador', archived: 'Archivado' }
 
@@ -48,7 +49,7 @@ export default async function PanelStepsPage({ searchParams }) {
 
       <section className={styles.panelCard}>
         <div className={styles.listHeading}>
-          <strong>{steps.length} pasos</strong>
+          <strong>{plural(steps.length, 'paso', 'pasos')}</strong>
           <small>Los borradores solo son visibles en el Panel</small>
         </div>
         {steps.length ? (

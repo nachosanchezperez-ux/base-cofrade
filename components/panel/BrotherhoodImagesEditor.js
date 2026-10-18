@@ -15,6 +15,7 @@ import {
   normalizeRelationType,
   relationTypeLabel,
 } from '@/lib/brotherhood-image-relations'
+import { plural } from '@/lib/plural'
 
 const STATUS_LABELS = {
   published: 'Publicada',
@@ -177,7 +178,7 @@ export default function BrotherhoodImagesEditor({ data, canEdit }) {
             <span className={styles.eyebrow}>Relaciones estructuradas</span>
             <h2>Imágenes vinculadas</h2>
           </div>
-          <p>{data.relations.length} relaciones conservadas, incluidas las cerradas o retiradas.</p>
+          <p>{plural(data.relations.length, 'relación conservada', 'relaciones conservadas')}, incluidas las cerradas o retiradas.</p>
         </div>
 
         {data.relations.length ? (
