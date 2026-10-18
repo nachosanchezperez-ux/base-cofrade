@@ -207,7 +207,6 @@ export default function BrotherhoodOutingsSection({ outings = [] }) {
           <span>La Hermandad en la calle</span>
           <div>
             <h2>Salidas</h2>
-            <p>Salidas habituales y cultos externos de la Hermandad. Las salidas extraordinarias se recogen en Historia y acontecimientos.</p>
           </div>
         </header>
 
@@ -222,7 +221,6 @@ export default function BrotherhoodOutingsSection({ outings = [] }) {
                   <div>
                     <span>{copy.eyebrow}</span>
                     <h3 id={`salidas-${group.key}`}>{copy.title}</h3>
-                    <p>{copy.description}</p>
                   </div>
                   <strong>{String(group.outings.length).padStart(2, '0')}</strong>
                 </div>
