@@ -5,6 +5,7 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
+import { selectAllRows } from '@/lib/panel/query-all'
 
 function value(formData, name) {
   return String(formData.get(name) || '').trim()
@@ -64,10 +65,10 @@ async function ensureUniqueIdentity(supabase, { name, slug, customSlug }) {
       .select('id, entity_type, name, slug, status')
       .eq('slug', slug)
       .limit(1),
-    supabase
+    selectAllRows(() => supabase
       .from('entities')
       .select('id, name, slug, status')
-      .eq('entity_type', 'image'),
+      .eq('entity_type', 'image')),
   ])
 
   const slugMatches = assertQuery(slugResult, 'No se pudo comprobar el slug')

@@ -5,6 +5,7 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
+import { selectAllRows } from '@/lib/panel/query-all'
 
 const AGENT_KINDS = new Set(['person', 'workshop', 'company', 'institution'])
 
@@ -53,10 +54,10 @@ async function ensureUniqueIdentity(supabase, { name, slug, customSlug }) {
       .select('id, entity_type, name, slug')
       .eq('slug', slug)
       .limit(1),
-    supabase
+    selectAllRows(() => supabase
       .from('entities')
       .select('id, name, slug, status')
-      .eq('entity_type', 'agent'),
+      .eq('entity_type', 'agent')),
   ])
 
   if (assertRows(slugResult, 'No se pudo comprobar el slug').length) {

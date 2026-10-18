@@ -5,6 +5,7 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
+import { selectAllRows } from '@/lib/panel/query-all'
 
 const BROTHERHOOD_TYPES = new Map([
   ['agrupación parroquial', 'Agrupación Parroquial'],
@@ -78,9 +79,9 @@ async function ensureUniqueIdentity(supabase, { popularName, officialName, slug 
       .select('id, entity_type, name, slug, status')
       .eq('slug', slug)
       .limit(1),
-    supabase
+    selectAllRows(() => supabase
       .from('brotherhoods')
-      .select('entity_id, popular_name, official_name'),
+      .select('entity_id, popular_name, official_name'), { tieBreaker: 'entity_id' }),
   ])
 
   const slugMatches = assertQuery(slugResult, 'No se pudo comprobar el slug')
