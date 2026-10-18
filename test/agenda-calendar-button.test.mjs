@@ -33,3 +33,14 @@ test('la Agenda no baja de 11px en los textos que antes eran diminutos', () => {
     assert.ok(size >= 11, `${selector} tiene ${size}px`)
   }
 })
+
+test('el pie de la Agenda y la etiqueta «Extraordinario» no bajan de 11px', () => {
+  const v4 = read('components/AgendaCofradeDirectoryV4.module.css')
+  assert.match(v4.slice(v4.lastIndexOf('Tamaño mínimo de letra')), /\.cardTopline>b,\.cardTopline>small\{font-size:11px\}/)
+  const page = read('app/agenda-cofrade/agenda-cofrade.module.css')
+  const tail = page.slice(page.lastIndexOf('Tamaño mínimo de letra'))
+  assert.match(tail, /\.seoCopy>span,\.relatedCalendar>div>span\{font-size:11px\}/)
+  assert.match(tail, /\.relatedCalendar>a\{font-size:13px\}/)
+  assert.match(tail, /\.relatedLinks\{font-size:13px\}/)
+  assert.match(tail, /\.relatedLinks>span\{font-size:11px\}/)
+})

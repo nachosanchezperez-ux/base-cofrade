@@ -25,3 +25,10 @@
   .page .hero{padding:17px 0}
   .page .heroCopy>p{font-size:13px;line-height:1.4}
 }
+
+/* Tamaño mínimo de letra al pie de la Agenda (antes 10px): 11px en etiquetas
+   en mayúsculas y 13px en enlaces. */
+.seoCopy>span,.relatedCalendar>div>span{font-size:11px}
+.relatedCalendar>a{font-size:13px}
+.relatedLinks{font-size:13px}
+.relatedLinks>span{font-size:11px}
