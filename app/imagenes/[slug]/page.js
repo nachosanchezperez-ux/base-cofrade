@@ -10,6 +10,7 @@ import { imageRestorationCards, buildImageChronology } from '@/lib/image-restora
 import { heritageDirectoryTypePath, heritageTypeForValue } from '@/lib/heritage-directory';
 import { agendaMunicipalityHref } from '@/lib/agenda-relations';
 import JsonLd from '@/components/JsonLd';
+import { imagePageRelationCopy } from '@/lib/brotherhood-image-relations';
 import RelationalThread from '@/components/RelationalThread';
 import SourcesBlock from '@/components/SourcesBlock';
 import { getPublishedEntityMedia } from '@/lib/supabase/entity-media';
@@ -61,7 +62,7 @@ export async function generateMetadata({ params }) {
   const description = seoDescription(
     imagen.descripcion,
     hermandad
-      ? `Ficha de ${imagen.nombre}, ${imagen.antiguaTitular ? 'antigua titular' : 'titular'} de ${hermandad.nombrePopular}: autoría, datación, historia, restauraciones, cronología y fuentes documentales.`
+      ? `Ficha de ${imagen.nombre}, ${imagePageRelationCopy(imagen.relacionHermandad).phrase} ${hermandad.nombrePopular}: autoría, datación, historia, restauraciones, cronología y fuentes documentales.`
       : `Ficha de ${imagen.nombre}: autoría, datación, descripción material y fuentes documentales.`
   );
   const canonical = `/imagenes/${imagen.slug}`;
@@ -225,14 +226,14 @@ export default async function ImagenPage({ params }) {
 
       }} />
       <ImageHeroV2
-        entityType={hermandad ? (imagen.antiguaTitular ? 'Antigua imagen titular' : 'Imagen titular') : 'Imagen'}
+        entityType={hermandad ? imagePageRelationCopy(imagen.relacionHermandad).entityType : 'Imagen'}
         title={imagen.nombre}
         breadcrumbItems={[
           { label: 'Imágenes', href: '/imagenes' },
           { label: imagen.nombre },
         ]}
         relation={hermandad ? {
-          label: imagen.antiguaTitular ? 'Antigua titular de' : 'Titular de',
+          label: imagePageRelationCopy(imagen.relacionHermandad).relationLabel,
           name: hermandad.nombrePopular,
           href: `/hermandades/${hermandad.slug}`,
           crestSrc: hermandad.escudoPath || '',

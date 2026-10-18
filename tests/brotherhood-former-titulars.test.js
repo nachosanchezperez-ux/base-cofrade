@@ -57,8 +57,8 @@ test('los textos opcionales del panel se limpian y limitan', () => {
 
 test('la ficha pública no presenta antiguas titulares como titulares vigentes', () => {
   const loader = read('lib/supabase/brotherhoods.js')
-  assert.match(loader, /splitBrotherhoodImageLinks\(imageLinks\)/)
-  assert.match(loader, /\.filter\(\(imageEntity\) => !formerImageIdSet\.has\(imageEntity\.id\)\)/)
+  assert.match(loader, /classifyBrotherhoodImages\(imageLinks\)/)
+  assert.match(loader, /\.filter\(\(imageEntity\) => titularImageIdSet\.has\(imageEntity\.id\)\)/)
   assert.match(loader, /antiguasTitulares,/)
   assert.match(loader, /!formerImageSlugs\.has\(imagen\.slug\)/)
   // La ficha de la imagen antigua se identifica como antigua.
@@ -70,7 +70,7 @@ test('la ficha pública no presenta antiguas titulares como titulares vigentes',
   const page = read('app/hermandades/[slug]/page.js')
   assert.match(page, /formerTitulars=\{h\.antiguasTitulares \|\| \[\]\}/)
   const imagePage = read('app/imagenes/[slug]/page.js')
-  assert.match(imagePage, /Antigua titular de/)
+  assert.match(imagePage, /imagePageRelationCopy\(imagen\.relacionHermandad\)/)
 })
 
 test('el panel permite registrar antiguas titulares con fechas textuales, nota y sucesora', () => {
@@ -108,4 +108,32 @@ test('al publicar una Imagen se publican sus vínculos y sucesiones pendientes',
   const actions = read('app/panel/(protected)/imagenes/[id]/actions.js')
   assert.match(actions, /action === 'publish'\s*\?\s*await republishImageRelations\(supabase, imageId\)\.catch/)
   assert.match(actions, /revalidatePath\(`\/hermandades\/\$\{slug\}`\)/)
+})
+
+test('figuras secundarias e imágenes de culto no cuentan como titulares', async () => {
+  const { classifyBrotherhoodImageRelation, classifyBrotherhoodImages, publicRelationLabel, imagePageRelationCopy } = await import('../lib/brotherhood-image-relations.js')
+  assert.equal(classifyBrotherhoodImageRelation('titular'), 'titular')
+  assert.equal(classifyBrotherhoodImageRelation('Titular'), 'titular')
+  assert.equal(classifyBrotherhoodImageRelation('cotitular'), 'titular')
+  assert.equal(classifyBrotherhoodImageRelation(null), 'titular')
+  assert.equal(classifyBrotherhoodImageRelation('secondary'), 'other')
+  assert.equal(classifyBrotherhoodImageRelation('secondary_image'), 'other')
+  assert.equal(classifyBrotherhoodImageRelation('cult_image'), 'other')
+  assert.equal(classifyBrotherhoodImageRelation('antiguo_titular'), 'former')
+  assert.equal(publicRelationLabel('secondary_image'), 'Figura secundaria')
+  assert.equal(publicRelationLabel('cult_image'), 'Imagen de culto')
+  assert.equal(publicRelationLabel('Titular'), 'Titular')
+  assert.equal(imagePageRelationCopy('Figura secundaria').relationLabel, 'Figura secundaria de')
+  assert.equal(imagePageRelationCopy(undefined).relationLabel, 'Titular de')
+  // Con varios vínculos prevalece el de titular.
+  const byImage = classifyBrotherhoodImages([
+    { image_entity_id: 'x', relation_type: 'secondary' },
+    { image_entity_id: 'x', relation_type: 'titular' },
+    { image_entity_id: 'y', relation_type: 'cult_image' },
+  ])
+  assert.equal(byImage.get('x').kind, 'titular')
+  assert.equal(byImage.get('y').kind, 'other')
+
+  const page = read('app/hermandades/[slug]/page.js')
+  assert.match(page, /<BrotherhoodOtherImages items=\{h\.otrasImagenes \|\| \[\]\} \/>/)
 })

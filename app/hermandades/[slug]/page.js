@@ -10,6 +10,7 @@ import BrotherhoodCultsSection from '@/components/BrotherhoodCultsSection';
 import BrotherhoodCrewEventsSection from '@/components/BrotherhoodCrewEventsSection';
 import BrotherhoodHeritageUpdates from '@/components/BrotherhoodHeritageUpdates';
 import BrotherhoodHistoryTimeline from '@/components/BrotherhoodHistoryTimeline';
+import BrotherhoodOtherImages from '@/components/BrotherhoodOtherImages';
 import BrotherhoodMusicalHeritage from '@/components/BrotherhoodMusicalHeritage';
 import MusicalRepertoiresSection from '@/components/MusicalRepertoiresSection';
 import BrotherhoodOverviewV2 from '@/components/BrotherhoodOverviewV2';
@@ -237,6 +238,15 @@ export default async function HermandadDetailPage({ params, reading: readingOver
         title: imagen.nombre,
         href: `/imagenes/${imagen.slug}`,
         context: [imagen.periodo, imagen.autor].map(publicText).filter(Boolean).join(' · '),
+      })),
+    ...(h.otrasImagenes || [])
+      .filter((imagen) => imagen.fichaDisponible && imagen.slug)
+      .map((imagen) => ({
+        kind: 'Imagen',
+        relation: imagen.relacion,
+        title: imagen.nombre,
+        href: `/imagenes/${imagen.slug}`,
+        context: [imagen.tipo, imagen.autor].map(publicText).filter(Boolean).join(' · '),
       })),
     ...steps
       .filter((step) => step.fichaDisponible && step.slug)
@@ -468,6 +478,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
             <article className="image-card brotherhood-image-card" key={imagen.id}>{card}</article>
           );
         })}</div>
+        <BrotherhoodOtherImages items={h.otrasImagenes || []} />
         <BrotherhoodConceptualTitulars brotherhoodId={h.id} />
         {reading ? <BrotherhoodQuickFacts brotherhood={h} peopleOnly /> : null}
       </div></section>
