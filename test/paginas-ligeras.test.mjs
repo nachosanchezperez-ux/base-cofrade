@@ -47,6 +47,9 @@ test('el directorio envía solo los campos que pinta y filtra; el texto de búsq
   const extras = directorySearchExtras([source, { href: '/x', name: 'A', officialName: 'A' }])
   assert.deepEqual(extras['/hermandades/las-penas'], { o: 'Agrupación de las Penas', k: ['Écija histórica'] })
   assert.equal('/x' in extras, false)
+  // Una nota interna dentro de una descripción pública: se quita la frase, no el texto entero.
+  const mixed = directorySearchExtras([{ href: '/pasos/p', name: 'Paso', keywords: ['La Hermandad atribuye la talla a Manuel Guzmán. No incorpora a la Concepción sin evidencia suficiente. Madera de cedro'] }])
+  assert.deepEqual(mixed['/pasos/p'].k, ['La Hermandad atribuye la talla a Manuel Guzmán. Madera de cedro'])
 })
 
 test('el buscador del directorio pide el texto extra solo al buscar', () => {
