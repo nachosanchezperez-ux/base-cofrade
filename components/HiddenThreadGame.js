@@ -71,7 +71,7 @@ function prefersReducedMotion() {
   return Boolean(window.matchMedia?.('(prefers-reduced-motion: reduce)').matches)
 }
 
-export default function HiddenThreadGame({ initialDayKey = '' }) {
+export default function HiddenThreadGame({ initialDayKey = '', threads = {} }) {
   const [dateKey, setDateKey] = useState(initialDayKey)
   const [mode, setMode] = useState('daily')
   // La adivinanza existe ya en el HTML del servidor; el progreso local se reconcilia al hidratar.
@@ -126,13 +126,16 @@ export default function HiddenThreadGame({ initialDayKey = '' }) {
   const word = challenge?.words[progress?.stage || 0] || null
   const completed = Boolean(progress?.finished)
   const canPlay = Boolean(progress && round && word && round.status === 'playing')
+  // «Sigue el hilo»: ficha real elegida en el servidor para este día. Si el día cambia sin
+  // recargar, se usa el enlace general del banco editorial.
+  const thread = word && challenge?.dateKey === initialDayKey ? threads?.[word.answer] || null : null
   const options = useMemo(
     () => (challenge?.mode === 'daily' && progress ? getHiddenChoiceOptions(challenge, progress.stage) : []),
     [challenge, progress?.stage]
   )
   const shareData = useMemo(
-    () => completed ? hiddenShareData(challenge, progress) : null,
-    [challenge, progress, completed]
+    () => completed ? hiddenShareData(challenge, progress, { streak }) : null,
+    [challenge, progress, completed, streak]
   )
   const socialLinks = useMemo(() => hiddenShareSocialLinks(shareData), [shareData])
 
@@ -395,7 +398,14 @@ export default function HiddenThreadGame({ initialDayKey = '' }) {
         <article className={styles.board} id="partida-del-hilo" aria-labelledby="hilo-reto-titulo">
           <header className={styles.boardTop}>
             <h2 id="hilo-reto-titulo" className={styles.srOnly}>{challenge.title} · {readableDay(dateKey)}</h2>
-            <span className={styles.boardDate} aria-hidden="true">{readableDay(dateKey)}</span>
+            <span className={styles.boardMeta}>
+              <span className={styles.boardDate} aria-hidden="true">{readableDay(dateKey)}</span>
+              {isDaily && streak > 0 ? (
+                <span className={styles.streak} aria-label={'Racha: ' + streak + (streak === 1 ? ' día' : ' días') + ' seguidos acertando'}>
+                  <span aria-hidden="true">🔥</span> {streak} {streak === 1 ? 'día' : 'días'}
+                </span>
+              ) : null}
+            </span>
             <button type="button" className={styles.inviteButton} onClick={shareInvitation}>
               <span aria-hidden="true">↗</span> Compartir juego
             </button>
@@ -523,6 +533,14 @@ export default function HiddenThreadGame({ initialDayKey = '' }) {
               </span>
               <h3>{word.answer}</h3>
               <p>{word.definition}</p>
+              {thread ? (
+                <Link className={styles.threadCard} href={thread.href}>
+                  <small>{thread.label}</small>
+                  <strong>{thread.name}</strong>
+                  {thread.context ? <span>{thread.context}</span> : null}
+                  <i aria-hidden="true">→</i>
+                </Link>
+              ) : null}
               <Link className={styles.resultLink} href={word.link.href}>{word.link.text} <span aria-hidden="true">→</span></Link>
               {!isFinalRound ? (
                 <button className={styles.primaryButton} type="button" onClick={nextStage}>
@@ -566,7 +584,13 @@ export default function HiddenThreadGame({ initialDayKey = '' }) {
               <p className={styles.shareNote}>Sin respuestas ni pistas. Para Instagram, usa «Historia 9:16».</p>
 
               <p className={styles.comeBack}>
-                {isDaily && streak > 1 ? <>Llevas <strong>{streak} días</strong> seguidos acertando. </> : null}
+                {isDaily ? (
+                  progress.rounds[0]?.status === 'won'
+                    ? (streak > 1
+                      ? <>Llevas <strong>{streak} días</strong> seguidos acertando. </>
+                      : <>Empieza tu racha: <strong>1 día</strong>. </>)
+                    : <>La racha vuelve a empezar. </>
+                ) : null}
                 {minutesLeft ? <>Nuevo reto en <strong>{countdownLabel(minutesLeft)}</strong>.</> : 'Nuevo reto mañana.'}
               </p>
               <button type="button" className={styles.secondaryButton} onClick={() => changeMode(isDaily ? 'expert' : 'daily')}>

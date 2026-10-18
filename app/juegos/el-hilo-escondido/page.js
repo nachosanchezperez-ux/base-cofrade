@@ -3,6 +3,7 @@ import JsonLd from '@/components/JsonLd'
 import HiddenThreadGame from '@/components/HiddenThreadGame'
 import { breadcrumbJsonLd, socialMetadata } from '@/lib/seo'
 import { HILO_GAME_PATH, madridHiddenDayKey } from '@/lib/hilo-hidden-game'
+import { getHiddenThreads } from '@/lib/supabase/hilo-hidden-threads'
 import styles from '@/components/HiddenThreadGame.module.css'
 
 const TITLE = 'El hilo escondido · Juego cofrade del día'
@@ -20,8 +21,10 @@ export const metadata = {
   ...socialMetadata({ title: TITLE, description: DESCRIPTION, path: HILO_GAME_PATH }),
 }
 
-export default function HiddenThreadPage() {
+export default async function HiddenThreadPage() {
   const initialDayKey = madridHiddenDayKey()
+  // Fichas reales del día para «Sigue el hilo» (en caché por día; nunca bloquean el juego).
+  const threads = await getHiddenThreads(initialDayKey)
 
   return (
     <div className={styles.page}>
@@ -37,7 +40,7 @@ export default function HiddenThreadPage() {
         </div>
       </header>
 
-      <HiddenThreadGame initialDayKey={initialDayKey} />
+      <HiddenThreadGame initialDayKey={initialDayKey} threads={threads} />
 
       <aside className={styles.recommendation} aria-label="Otro juego cofrade">
         <div className="shell">
