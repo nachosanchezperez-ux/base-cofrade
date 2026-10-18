@@ -43,7 +43,7 @@ export default async function PanelNewsPage({ searchParams }) {
         {items.length ? <div className={styles.brotherhoodList}>{items.map((item) => (
           <article key={item.id}>
             <span className={styles.listMonogram}>N</span>
-            <div className={styles.listIdentity}><strong>{item.title}</strong><span>{item.protagonist || item.subject_label || 'Sin protagonista'}{item.news_topic ? ` · ${TOPIC_LABELS[item.news_topic]}` : ''}</span><small>{item.publish_date || 'Sin fecha'}{item.status === 'published' && item.publish_date > today ? ' · programada' : ''}{item.slug ? '' : ' · sin identificador'}{newsNeedsTenseReview(item, today) ? ' · revisar texto: el acto ya pasó' : ''}</small></div>
+            <div className={styles.listIdentity}><strong>{item.title}</strong><span>{item.protagonist || item.subject_label || 'Sin protagonista'}{item.news_topic ? ` · ${TOPIC_LABELS[item.news_topic]}` : ''}</span><small>{item.publish_date || 'Sin fecha'}{item.status === 'published' && item.publish_date > today ? ' · programada' : ''}{item.slug ? '' : ' · sin identificador'}{newsNeedsTenseReview(item, today) ? ' · revisar texto: el acto ya pasó' : ''}{item.featured_until && item.featured_until >= today ? ` · destacada hasta el ${item.featured_until}` : ''}</small></div>
             <span className={`${styles.statusBadge} ${styles[item.status]}`}>{STATUS_LABELS[item.status]}</span>
             <Link className={styles.rowLink} href={`/panel/noticias/${item.id}`}>Editar <span>→</span></Link>
           </article>

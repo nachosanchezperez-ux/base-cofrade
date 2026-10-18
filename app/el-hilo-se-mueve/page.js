@@ -3,7 +3,7 @@ import SiteBreadcrumb from '@/components/SiteBreadcrumb'
 import JsonLd from '@/components/JsonLd'
 import HiloMovementCards from '@/components/HiloMovementCards'
 import { getPublicHiloMovements } from '@/lib/supabase/hilo-movements'
-import { HILO_MOVEMENTS_PATH, HILO_TOPIC_LABELS, filterHiloMovements } from '@/lib/hilo-movements'
+import { HILO_MOVEMENTS_PATH, HILO_TOPIC_LABELS, featuredFirstHiloMovements, filterHiloMovements } from '@/lib/hilo-movements'
 import { breadcrumbJsonLd, collectionPageJsonLd, socialMetadata, filteredViewRobots } from '@/lib/seo'
 import styles from '@/components/HiloMovements.module.css'
 
@@ -26,7 +26,8 @@ export default async function HiloMovementsPage({ searchParams }) {
   let items = []
   let unavailable = false
   try { items = await getPublicHiloMovements() } catch { unavailable = true }
-  const selected = filterHiloMovements(items, filters)
+  // La destacada del Panel abre el índice; el resto sigue por fecha.
+  const selected = featuredFirstHiloMovements(filterHiloMovements(items, filters))
   const municipalities = [...new Set(items.map((item) => item.municipality))].sort((a, b) => a.localeCompare(b, 'es'))
   const topics = [...new Set(items.map((item) => item.topic))]
   return <div className={styles.hub}>

@@ -55,5 +55,5 @@ test('la tarjeta usa la foto de la ficha del protagonista cuando no hay foto de 
   assert.equal(hiloMovementPhoto({ id: 'x', cover: { path: '/a.jpg' }, protagonist: { label: 'Hermandad X' } }).caption, 'Imagen de la ficha de Hermandad X')
   assert.equal(hiloMovementPhoto({ id: 'x' }), null)
   assert.match(read('lib/supabase/hilo-movements.js'), /getPublishedEntityCoverMediaMap\(protagonistIds/)
-  assert.match(read('lib/supabase/hilo-movements.js'), /'hilo-editorial-movements-v4'/)
+  assert.match(read('lib/supabase/hilo-movements.js'), /'hilo-editorial-movements-v5'/)
 })
