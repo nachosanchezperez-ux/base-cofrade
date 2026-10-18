@@ -49,7 +49,8 @@ export default async function MarchRecordingsPage({ params, searchParams }) {
                   <div className={styles.formGrid}>
                     <EntityPicker className={styles.fieldWide} name="band_entity_id" items={data.bandOptions} label="Banda (opcional)" emptyLabel="Sin Banda vinculada" required={false} defaultValue={recording.band_entity_id || ''} />
                     <label><span>Título</span><input name="title" defaultValue={recording.title || ''} /></label>
-                    <label><span>Año</span><input name="recording_year" type="number" min="1800" max="2200" defaultValue={recording.recording_year ?? ''} /></label>
+                    <label><span>Fecha exacta</span><input name="recording_date" type="date" defaultValue={recording.recording_date || ''} /></label>
+                    <label><span>Fecha textual</span><input name="recording_date_text" defaultValue={recording.recording_date_text || ''} placeholder="Ej.: 2026 o Cuaresma de 2026" /></label>
                     <label><span>ID YouTube</span><input name="youtube_video_id" defaultValue={recording.youtube_video_id || ''} /></label>
                     <label className={styles.fieldWide}><span>URL externa</span><input name="external_url" type="url" defaultValue={recording.external_url || ''} /></label>
                     <label><span>Lugar</span><select name="place_id" defaultValue={recording.place_id || ''}><option value="">Sin lugar</option>{data.places.map((place) => <option key={place.id} value={place.id}>{place.name}</option>)}</select></label>
@@ -72,7 +73,8 @@ export default async function MarchRecordingsPage({ params, searchParams }) {
               <div className={styles.formGrid}>
                 <EntityPicker className={styles.fieldWide} name="band_entity_id" items={data.bandOptions} label="Banda (opcional)" emptyLabel="Sin Banda vinculada" required={false} />
                 <label><span>Título</span><input name="title" /></label>
-                <label><span>Año</span><input name="recording_year" type="number" min="1800" max="2200" /></label>
+                <label><span>Fecha exacta</span><input name="recording_date" type="date" /></label>
+                <label><span>Fecha textual</span><input name="recording_date_text" placeholder="Ej.: 2026 o Cuaresma de 2026" /></label>
                 <label><span>ID YouTube</span><input name="youtube_video_id" /></label>
                 <label className={styles.fieldWide}><span>URL externa</span><input name="external_url" type="url" /></label>
                 <label><span>Lugar</span><select name="place_id" defaultValue=""><option value="">Sin lugar</option>{data.places.map((place) => <option key={place.id} value={place.id}>{place.name}</option>)}</select></label>
