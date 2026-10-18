@@ -128,7 +128,7 @@ export default async function PasoDetailPage({params}){
     }] : []),
     ...imagenes.map((imagen) => ({
       kind: 'Imagen',
-      relation: 'Procesiona aquí',
+      relation: imagen.rol === 'secundaria' ? 'Figura del misterio' : 'Procesiona aquí',
       title: imagen.nombre,
       href: `/imagenes/${imagen.slug}`,
       context: [imagen.autor, imagen.fecha].filter(Boolean).join(' · '),
@@ -261,12 +261,19 @@ export default async function PasoDetailPage({params}){
           </div>
         </div>
         {imagenes.length > 0 ? <aside className="brotherhood-summary-card">
-          <span className="eyebrow">Imágenes que procesionan</span>
-          <div className="step-images-list">
-            {imagenes.map((imagen)=>(
-              <Link key={imagen.slug} href={`/imagenes/${imagen.slug}`}>{imagen.nombre}{[publicText(imagen.autor), publicText(imagen.fecha)].filter(Boolean).length ? <span>{[publicText(imagen.autor), publicText(imagen.fecha)].filter(Boolean).join(' · ')}</span> : null}</Link>
-            ))}
-          </div>
+          {[
+            ['Imágenes que procesionan', imagenes.filter((imagen) => imagen.rol !== 'secundaria')],
+            ['Figuras del misterio', imagenes.filter((imagen) => imagen.rol === 'secundaria')],
+          ].filter(([, group]) => group.length).map(([label, group], index) => (
+            <div key={label} className={index ? 'step-images-group step-images-group-secondary' : 'step-images-group'}>
+              <span className="eyebrow">{label}</span>
+              <div className="step-images-list">
+                {group.map((imagen)=>(
+                  <Link key={imagen.slug} href={`/imagenes/${imagen.slug}`}>{imagen.nombre}{[publicText(imagen.autor), publicText(imagen.fecha)].filter(Boolean).length ? <span>{[publicText(imagen.autor), publicText(imagen.fecha)].filter(Boolean).join(' · ')}</span> : null}</Link>
+                ))}
+              </div>
+            </div>
+          ))}
         </aside> : null}
       </div></section>
 

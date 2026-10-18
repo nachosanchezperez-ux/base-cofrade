@@ -533,15 +533,22 @@ export default async function HermandadDetailPage({ params, reading: readingOver
               )}
               {paso.estadoActual && <p className="step-current-state">{paso.estadoActual}</p>}
 </>}
-              {(paso.imagenesDetalle?.length || paso.imagenes?.length) ? <div className="related-row"><small>Imágenes que procesionan</small><div>{(
-                paso.imagenesDetalle?.length
+              {(() => {
+                const stepImages = paso.imagenesDetalle?.length
                   ? paso.imagenesDetalle
-                  : paso.imagenes.map((id) => imagenMap.get(id)).filter(Boolean)
-              ).map((imagen) => (
-                imagen.fichaDisponible
-                  ? <Link key={imagen.id} href={`/imagenes/${imagen.slug}`}>{imagen.nombre}</Link>
-                  : <span className="related-name" key={imagen.id}>{imagen.nombre}</span>
-              ))}</div></div> : null}
+                  : (paso.imagenes || []).map((id) => imagenMap.get(id)).filter(Boolean)
+                const renderImage = (imagen) => (
+                  imagen.fichaDisponible
+                    ? <Link key={imagen.id} href={`/imagenes/${imagen.slug}`}>{imagen.nombre}</Link>
+                    : <span className="related-name" key={imagen.id}>{imagen.nombre}</span>
+                )
+                const principal = stepImages.filter((imagen) => imagen.rol !== 'secundaria')
+                const figures = stepImages.filter((imagen) => imagen.rol === 'secundaria')
+                return (<>
+                  {principal.length ? <div className="related-row"><small>Imágenes que procesionan</small><div>{principal.map(renderImage)}</div></div> : null}
+                  {figures.length ? <div className="related-row related-row-secondary"><small>Figuras del misterio</small><div>{figures.map(renderImage)}</div></div> : null}
+                </>)
+              })()}
               {paso.fichaDisponible && <Link href={`/pasos/${paso.slug}`} className="text-link">Ver ficha del paso →</Link>}
             </div>
           </article>

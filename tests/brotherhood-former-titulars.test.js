@@ -26,7 +26,7 @@ test('reconoce la relación de antigua imagen titular con variantes de escritura
   assert.ok(!isFormerTitularRelation(null))
   assert.equal(normalizeRelationType('Imagen Venerada'), 'imagen_venerada')
   assert.equal(relationTypeLabel('antiguo_titular'), 'Antigua imagen titular')
-  assert.equal(relationTypeLabel('cult_image'), 'cult image')
+  assert.equal(relationTypeLabel('cult_image'), 'Imagen de culto')
 })
 
 test('separa titulares vigentes de antiguas imágenes titulares', () => {
@@ -136,4 +136,25 @@ test('figuras secundarias e imágenes de culto no cuentan como titulares', async
 
   const page = read('app/hermandades/[slug]/page.js')
   assert.match(page, /<BrotherhoodOtherImages items=\{h\.otrasImagenes \|\| \[\]\} \/>/)
+})
+
+test('en el paso, las figuras secundarias se separan de las imágenes principales', async () => {
+  const { isSecondaryFigure, BROTHERHOOD_IMAGE_RELATION_OPTIONS, relationTypeLabel } = await import('../lib/brotherhood-image-relations.js')
+  // Un titular siempre es principal, aunque su tipología diga «secundaria».
+  assert.equal(isSecondaryFigure({ brotherhoodRelationType: 'titular', imageType: 'Santa · Imagen secundaria' }), false)
+  assert.equal(isSecondaryFigure({ brotherhoodRelationType: 'secondary_image' }), true)
+  assert.equal(isSecondaryFigure({ brotherhoodRelationType: 'secondary' }), true)
+  assert.equal(isSecondaryFigure({ stepRelationType: 'secondary', imageType: 'Dolorosa' }), true)
+  assert.equal(isSecondaryFigure({ stepRelationType: 'processes_on', imageType: 'Figura secundaria' }), true)
+  assert.equal(isSecondaryFigure({ stepRelationType: 'processes_on', imageType: 'Figura de misterio' }), true)
+  assert.equal(isSecondaryFigure({ stepRelationType: 'processes_on', imageType: 'Imagen secundaria de misterio' }), true)
+  assert.equal(isSecondaryFigure({ stepRelationType: 'processes_on', imageType: 'Dolorosa' }), false)
+  assert.equal(isSecondaryFigure({ stepRelationType: 'processional', imageType: 'Misterio' }), false)
+  assert.ok(BROTHERHOOD_IMAGE_RELATION_OPTIONS.some((option) => option.value === 'secondary_image'))
+  assert.equal(relationTypeLabel('secondary'), 'Figura secundaria')
+
+  const stepPage = read('app/pasos/[slug]/page.js')
+  assert.match(stepPage, /Figuras del misterio/)
+  const brotherhoodPage = read('app/hermandades/[slug]/page.js')
+  assert.match(brotherhoodPage, /Figuras del misterio/)
 })

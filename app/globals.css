@@ -3702,3 +3702,7 @@ button, input { font: inherit; }
     padding: 0 10px !important;
   }
 }
+.related-row-secondary { margin-top: 10px; padding-top: 10px; }
+.related-row-secondary a { font-weight: 600; }
+.step-images-group-secondary{margin-top:22px}
+.step-images-group-secondary .step-images-list a{font-weight:700}
