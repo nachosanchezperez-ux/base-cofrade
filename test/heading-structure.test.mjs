@@ -71,6 +71,8 @@ test('el H1 de Imagen, Paso y Marcha lleva su contexto', async () => {
   assert.equal(entityHeadingContext('Cristo de la Sangre', { context: 'San Benito', locality: 'Sevilla' }), 'San Benito (Sevilla)')
   assert.equal(entityHeadingContext('Paso de misterio de San Benito', { context: 'San Benito', locality: 'Sevilla' }), 'Sevilla')
   assert.equal(entityHeadingContext('Sin contexto'), '')
+  assert.equal(entityHeadingContext('Andas de plata de María Santísima de Setefilla', { context: 'Nuestra Señora de Setefilla', locality: 'Lora del Río' }), 'Lora del Río')
+  assert.equal(entityHeadingContext('Palio de Nuestra Señora de la Estrella', { context: 'Entrada Triunfal', locality: 'Lebrija' }), 'Entrada Triunfal (Lebrija)')
   assert.equal(marchHeadingByline(['Manuel Marvizón Carvallo']), 'de Manuel Marvizón Carvallo')
   assert.equal(marchHeadingByline(['A', 'B', 'C']), 'de A y otros')
   assert.equal(marchHeadingByline([]), '')
