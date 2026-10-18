@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import styles from './crucetas.module.css'
+import { plural } from '@/lib/plural'
 
 function normalize(value = '') {
   return value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
@@ -60,8 +61,8 @@ export default function CrucetasDirectory({ repertoires }) {
               <p className={styles.cardBand}>Por <strong>{item.band.name}</strong></p>
               <div className={styles.cardContext}>
                 <span>{item.municipality?.name || 'Provincia de Sevilla'}</span>
-                <span>{item.worksCount} obras</span>
-                <span>{item.performancesCount} interpretaciones</span>
+                <span>{plural(item.worksCount, 'obra', 'obras')}</span>
+                <span>{plural(item.performancesCount, 'interpretación', 'interpretaciones')}</span>
               </div>
               <Link className={styles.cardAction} href={item.href}>Ver cruceta <b aria-hidden="true">→</b></Link>
             </article>

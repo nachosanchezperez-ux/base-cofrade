@@ -4,12 +4,9 @@ import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import styles from './ExtraordinaryDirectory.module.css'
 import { trackEvent } from '@/lib/analytics/client'
+import { plural } from '@/lib/plural'
 
 const AGENDA_TYPE = 'extraordinarias'
-
-function plural(count, singular, pluralForm) {
-  return `${count} ${count === 1 ? singular : pluralForm}`
-}
 
 function statusLabel(item) {
   if (item.isCancelled) return 'Cancelada'

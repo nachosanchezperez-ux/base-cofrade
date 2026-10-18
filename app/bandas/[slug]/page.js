@@ -50,6 +50,7 @@ import {
   summarizeGloryTypes,
 } from '@/lib/bands/accompaniments'
 import styles from '../bandas.module.css'
+import { plural } from '@/lib/plural'
 
 export const revalidate = 900
 
@@ -282,7 +283,7 @@ export default async function BandDetailPage({ params }) {
     relation: 'Repertorio interpretado',
     title: item.displayTitle,
     href: item.href,
-    context: [item.brotherhood?.name, item.step?.name, item.year, item.worksCount ? `${item.worksCount} obras` : ''].filter(Boolean).join(' · '),
+    context: [item.brotherhood?.name, item.step?.name, item.year, item.worksCount ? plural(item.worksCount, 'obra', 'obras') : ''].filter(Boolean).join(' · '),
   }))
   const bandThreadItems = [
     ...(band.linkedBrotherhoodSlug ? [{

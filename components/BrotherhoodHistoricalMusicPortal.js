@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
 import styles from './BrotherhoodHistoricalMusicPortal.module.css'
+import { plural } from '@/lib/plural'
 
 function normalize(value = '') {
   return String(value)
@@ -150,7 +151,7 @@ export default function BrotherhoodHistoricalMusicPortal({ items = [] }) {
             </header>
 
             <div className={styles.groupMeta}>
-              <strong>{group.items.length} etapas</strong>
+              <strong>{plural(group.items.length, 'etapa', 'etapas')}</strong>
               <span>{yearRange(group.items)}</span>
             </div>
 

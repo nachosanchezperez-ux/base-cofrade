@@ -2,6 +2,7 @@ import Link from 'next/link'
 import SectionTitle from '@/components/SectionTitle'
 import styles from './BrotherhoodHistoryTimeline.module.css'
 import { representativeHistory } from '@/lib/brotherhood-reading'
+import { plural } from '@/lib/plural'
 
 function previewIndexes(length, count = 5) {
   if (length <= count) return Array.from({ length }, (_, index) => index)
@@ -87,7 +88,7 @@ export default function BrotherhoodHistoryTimeline({ items = [], introduction = 
             <details className={styles.disclosure}>
               <summary>
                 <span>Ver cronología completa</span>
-                <small>{items.length} hitos documentados</small>
+                <small>{plural(items.length, 'hito documentado', 'hitos documentados')}</small>
                 <b aria-hidden="true">+</b>
               </summary>
 

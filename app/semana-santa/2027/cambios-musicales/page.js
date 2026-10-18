@@ -18,6 +18,7 @@ import {
   socialMetadata,
 } from '@/lib/seo'
 import styles from './cambios-musicales.module.css'
+import { plural } from '@/lib/plural'
 
 export const revalidate = 300
 
@@ -312,7 +313,7 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
               <span>Filtrar listado</span>
               <h2 id="explorar-cambios-musicales">Buscar cambios musicales de 2027</h2>
             </div>
-            <p>{changes.length} cambios confirmados entre Sevilla capital y la provincia.</p>
+            <p>{plural(changes.length, 'cambio confirmado', 'cambios confirmados')} entre Sevilla capital y la provincia.</p>
           </div>
 
           <form

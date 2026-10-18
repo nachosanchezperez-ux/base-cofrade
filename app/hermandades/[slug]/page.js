@@ -487,7 +487,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
   const stepsSection = (<>
 {h.pasos?.length > 0 && (
       <section className="section" id="pasos"><div className="shell">
-        <SectionTitle eyebrow={`${h.pasos.length} pasos`} title="Pasos procesionales" description="Imágenes, diseño, talla, orfebrería, bordados, reformas y evolución histórica." />
+        <SectionTitle eyebrow={stepCountText(h.pasos.length)} title="Pasos procesionales" description="Imágenes, diseño, talla, orfebrería, bordados, reformas y evolución histórica." />
         <div className="processional-grid">{h.pasos.map((paso, index) => (
           <article className="processional-card" key={paso.id}>
             {entityCoverMedia.get(paso.id)?.path ? (
