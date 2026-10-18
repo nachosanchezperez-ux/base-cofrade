@@ -48,6 +48,13 @@
   text-wrap: balance;
 }
 
+/* La escala global de H1 en móvil (#hc-app > main … h1: 36–44 px) pisaba el
+   tamaño previsto del título (27–34 px) y lo llevaba a tres líneas; se recupera
+   con la misma especificidad que el rótulo del buscador. */
+:global(#hc-app #inicio) .title {
+  font-size: clamp(27px, 8vw, 34px);
+}
+
 .lead {
   margin: 10px 0 0;
   max-width: 46ch;
@@ -118,7 +125,8 @@
     gap: 40px;
   }
 
-  .title {
+  .title,
+  :global(#hc-app #inicio) .title {
     font-size: clamp(34px, 4.2vw, 50px);
   }
 
