@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { isExtraordinaryEvent } from '@/lib/brotherhood-extraordinary-events'
 import BrotherhoodOutingImage from './BrotherhoodOutingImage'
 import styles from './BrotherhoodOutingsSection.module.css'
 
@@ -26,15 +27,10 @@ function guideHref(outing) {
 function outingCategory(outing) {
   const type = normalized(outing?.tipo)
   const title = normalized(outing?.nombre)
-  const character = normalized(outing?.caracter)
-  const state = normalized(outing?.estado)
-  const extraordinary = character === 'extraordinaria' || type.includes('traslado') || type.includes('extraordinaria')
 
   if (type.includes('estacion de penitencia')) return 'penitence'
   if (type.includes('procesion de gloria')) return 'glory'
-  if (state === 'announced' && extraordinary) return 'upcoming'
-  if (extraordinary) return 'historical'
-  if (type.includes('via crucis') || type.includes('rosario') || title.includes('via crucis') || title.includes('rosario')) return 'external'
+  if (type.includes('traslado') || type.includes('via crucis') || type.includes('rosario') || title.includes('via crucis') || title.includes('rosario')) return 'external'
   return 'other'
 }
 
@@ -61,27 +57,11 @@ function categoryCopy(key, outings) {
     }
   }
 
-  if (key === 'upcoming') {
-    return {
-      eyebrow: 'Próximas citas',
-      title: 'Próximas salidas y traslados',
-      description: 'Salidas y traslados anunciados, con su carácter ordinario o extraordinario indicado en cada ficha.',
-    }
-  }
-
   if (key === 'external') {
     return {
       eyebrow: 'Devoción en la calle',
       title: 'Cultos externos',
-      description: 'Vía Crucis, rosarios vespertinos y otros cultos celebrados fuera de la sede.',
-    }
-  }
-
-  if (key === 'historical') {
-    return {
-      eyebrow: 'Archivo de la Hermandad',
-      title: 'Histórico',
-      description: 'Traslados y salidas extraordinarias conservados como acontecimientos de años anteriores.',
+      description: 'Vía Crucis, rosarios, traslados ordinarios y otros cultos celebrados fuera de la sede.',
     }
   }
 
@@ -93,7 +73,7 @@ function categoryCopy(key, outings) {
 }
 
 function groupedOutings(outings) {
-  const order = ['penitence', 'glory', 'upcoming', 'external', 'historical', 'other']
+  const order = ['penitence', 'glory', 'external', 'other']
   const groups = new Map(order.map((key) => [key, []]))
 
   outings.forEach((outing) => groups.get(outingCategory(outing)).push(outing))
@@ -214,7 +194,7 @@ function OutingText({ outing, categoryKey }) {
 }
 
 export default function BrotherhoodOutingsSection({ outings = [] }) {
-  const availableOutings = Array.isArray(outings) ? outings : []
+  const availableOutings = Array.isArray(outings) ? outings.filter(item => !isExtraordinaryEvent(item)) : []
   if (!availableOutings.length) return null
 
   const groups = groupedOutings(availableOutings)

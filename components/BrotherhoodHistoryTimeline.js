@@ -97,7 +97,7 @@ export default function BrotherhoodHistoryTimeline({ items = [], introduction = 
                     <div className="history-year">{item.fecha}</div>
                     <div className="history-line"><span /></div>
                     <div className="history-copy">
-                      <h3>{item.titulo}</h3>
+                      <h3>{item.href ? <Link href={item.href}>{item.titulo}</Link> : item.titulo}</h3>
                       <p>{item.texto}</p>
                       {item.estado ? <small>{item.estado}</small> : null}
                     </div>
@@ -113,7 +113,7 @@ export default function BrotherhoodHistoryTimeline({ items = [], introduction = 
                 <div className="history-year">{item.fecha}</div>
                 <div className="history-line"><span /></div>
                 <div className="history-copy">
-                  <h3>{item.titulo}</h3>
+                  <h3>{item.href ? <Link href={item.href}>{item.titulo}</Link> : item.titulo}</h3>
                   <p>{item.texto}</p>
                   {item.estado ? <small>{item.estado}</small> : null}
                 </div>
