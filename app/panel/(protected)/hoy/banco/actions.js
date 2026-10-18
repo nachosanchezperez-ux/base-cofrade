@@ -1,5 +1,6 @@
 'use server'
 
+import { requirePanelEditor } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
 import { archiveEditorialContentAction, saveEditorialContentAction } from '../actions'
 
@@ -19,7 +20,10 @@ async function archiveScheduledOverrides(id) {
   if (result.error) throw new Error(`No se pudieron retirar las programaciones activas de este contenido: ${result.error.message}`)
 }
 
+// El rol se comprueba antes de tocar daily_overrides: antes la escritura previa
+// ocurría sin comprobarlo y solo las acciones delegadas lo verificaban.
 export async function saveBankEditorialContentAction(formData) {
+  await requirePanelEditor()
   const id = contentId(formData)
   const nextStatus = value(formData, 'status') || 'draft'
   if (id && nextStatus !== 'published') await archiveScheduledOverrides(id)
@@ -27,6 +31,7 @@ export async function saveBankEditorialContentAction(formData) {
 }
 
 export async function archiveBankEditorialContentAction(formData) {
+  await requirePanelEditor()
   await archiveScheduledOverrides(contentId(formData))
   return archiveEditorialContentAction(formData)
 }
