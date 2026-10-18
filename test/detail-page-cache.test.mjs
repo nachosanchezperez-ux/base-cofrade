@@ -135,7 +135,8 @@ test('Hermandades evita consultas duplicadas de censo, actividad anual y guantes
   const loader = read('lib/supabase/brotherhoods.js')
 
   assert.doesNotMatch(page, /BrotherhoodHabitGloves/)
-  assert.match(page, /item\.guantes \? <div><dt>Guantes<\/dt>/)
+  assert.match(page, /habitFields\(item\)/)
+  assert.match(read('lib/brotherhood-ficha-content.js'), /\['guantes', 'Guantes'\]/)
   assert.match(loader, /gloves_color/)
   assert.match(loader, /members_count, members_count_kind/)
   assert.match(loader, /bandaId: period\.band_entity_id/)

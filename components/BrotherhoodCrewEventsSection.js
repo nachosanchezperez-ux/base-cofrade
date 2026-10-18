@@ -58,7 +58,6 @@ export default function BrotherhoodCrewEventsSection({ events = [], collapseHist
         <SectionTitle
           eyebrow="Calendario de cuadrilla"
           title="Igualás y ensayos"
-          description="Convocatorias documentadas de la Hermandad, conectadas con sus pasos, capataces y lugares de celebración."
         />
 
         <div className={styles.groups}>

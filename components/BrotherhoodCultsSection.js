@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import SectionTitle from '@/components/SectionTitle';
+import { visibleCultDescription } from '@/lib/brotherhood-ficha-content';
 import styles from './BrotherhoodCultsSection.module.css';
 
 const MONTH_NAMES = {
@@ -61,12 +62,12 @@ export default function BrotherhoodCultsSection({ cults = [] }) {
         <SectionTitle
           eyebrow="Vida de hermandad"
           title="Cultos principales"
-          description="El calendario devocional de la Hermandad, acompañado por su archivo fotográfico cuando existe una imagen documentada y autorizada."
         />
 
         <div className={styles.grid}>
           {cults.map((cult) => {
             const image = cult.imagen;
+            const description = visibleCultDescription(cult.descripcion);
             const imageStyle = image ? {
               '--cult-focus': image.focusPosition || '50% 50%',
               '--cult-mobile-focus': image.mobileFocusPosition || image.focusPosition || '50% 50%',
@@ -94,7 +95,7 @@ export default function BrotherhoodCultsSection({ cults = [] }) {
                     <span className={styles.type}>{cult.anunciada ? 'Próximo culto · ' : ''}{cult.tipo}</span>
                     <h3>{cult.nombre}</h3>
                     {cult.lugar ? <p className={styles.place}>{cult.lugar}</p> : null}
-                    {cult.descripcion ? <p>{cult.descripcion}</p> : null}
+                    {description ? <p>{description}</p> : null}
                   </div>
                 </div>
               </article>

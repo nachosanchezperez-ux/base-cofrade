@@ -69,7 +69,6 @@ export default function BrotherhoodHistoryTimeline({ items = [], introduction = 
         <SectionTitle
           eyebrow="Cronología"
           title="Historia"
-          description={items.length ? "Una línea temporal para recorrer los grandes hitos y conectarlos con titulares, pasos y acontecimientos." : undefined}
         />
 
         {introduction ? <p className={styles.introduction}>{introduction}</p> : null}

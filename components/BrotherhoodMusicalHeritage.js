@@ -139,7 +139,7 @@ export default function BrotherhoodMusicalHeritage({ items = [], id = 'musica', 
             level={headingLevel}
             eyebrow="Sonidos propios"
             title="Patrimonio musical"
-            description={compact ? 'Marchas y otras obras vinculadas a la Hermandad y sus Titulares.' : 'Obras relacionadas de forma independiente con la Hermandad, sus Titulares, autores, formaciones, estrenos y fuentes. Las marchas procesionales se ordenan por estilo musical; la música para cultos, himnos, coplas y adaptaciones se conserva como repertorio diferenciado.'}
+            description="Marchas y otras obras dedicadas a la Hermandad y a sus Titulares."
           />
           <div className={styles.summary} aria-label={plural(items.length, 'composición documentada', 'composiciones documentadas')}>
             <strong>{items.length}</strong>
