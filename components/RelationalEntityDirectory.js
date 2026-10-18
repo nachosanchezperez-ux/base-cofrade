@@ -358,7 +358,8 @@ export default function RelationalEntityDirectory({
 
       <div className={styles.resultHead} aria-live="polite" aria-atomic="true">
         <div>
-          <strong>{filtered.length} {filtered.length === 1 ? copy.singular : copy.plural}</strong>
+          {/* Encabezado del listado: antes las tarjetas no tenían ningún H2 propio. */}
+          <h2 className={styles.resultTitle}>{filtered.length} {filtered.length === 1 ? copy.singular : copy.plural}</h2>
           <span>
             {isBand
               ? 'Agrupadas por tipología musical; territorio y localidad disponibles como filtros'
