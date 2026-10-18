@@ -2,7 +2,7 @@
 
 **Fecha:** 19 de octubre de 2026
 **Decisión del propietario:** «prepara para borrar» (19/10, 00:17).
-**Estado:** auditado y con preflight certificado. **Apply pendiente de autorización expresa.**
+**Estado:** **APPLY EJECUTADO Y VERIFICADO** (19/10/2026, ~00:45), con autorización expresa del propietario («Hazlo», 00:43).
 
 ## Qué se borra
 Las descripciones de culto que no informan al lector, sino que son notas de procedencia cargadas en `public.cults.description`. Desde #1287 ya están ocultas en la web; este plan las vacía también en la base de datos.
@@ -63,3 +63,17 @@ Comprobado después: las 82 frases de «…por la corporación.» siguen en su s
 
 ## Recuperación
 Ejecutar `20261019010200_rollback_coletillas_cultos.sql`. Solo restaura si las 157 siguen vacías; si alguien ha escrito una descripción nueva en alguno de esos cultos, se detiene sin tocar nada para revisarlo a mano.
+
+## Certificación del Apply (19/10/2026)
+1. Preflight repetido: `PREFLIGHT_COLETILLAS_OK_ROLLED_BACK: 157 filas actualizables, huella verificada`.
+2. Apply ejecutado (`20261019010100_apply_coletillas_cultos.sql`) sin errores; las guardas se superaron.
+3. Comprobación en la base de datos:
+   - coletillas restantes: **0**;
+   - descripciones vacías: **172** (157 + 15 previas);
+   - cultos totales: 692 (687 publicados), sin cambios;
+   - títulos intactos (por ejemplo, «Solemne Quinario a Nuestro Padre Jesús Nazareno» de La O);
+   - las descripciones con contenido se conservan;
+   - no quedan tablas temporales.
+4. Comprobación en la web: La O (5 cultos), Siete Palabras (16) y Angustias de Estepa (2) sin coletilla y sin errores de consola.
+
+Reversión disponible: `20261019010200_rollback_coletillas_cultos.sql`, ensayada y válida.
