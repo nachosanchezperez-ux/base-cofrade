@@ -263,14 +263,6 @@
   line-height: 1.35;
 }
 
-.summary {
-  margin: 15px 0 0;
-  max-width: 760px;
-  color: #5f7080;
-  font-size: 14px;
-  line-height: 1.6;
-}
-
 .path {
   display: flex;
   gap: 5px 8px;
@@ -291,35 +283,6 @@
 .path i {
   color: #b71f37;
   font-style: normal;
-}
-
-.leadCta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  margin-top: auto;
-  padding-top: 20px;
-  color: #123a67;
-  font-size: 13px;
-  font-weight: 800;
-}
-
-.leadCta b {
-  display: grid;
-  width: 32px;
-  height: 32px;
-  place-items: center;
-  border-radius: 10px;
-  color: #fff;
-  background: #123a67;
-  transition: transform .18s ease, background .18s ease;
-}
-
-.leadCard:hover .leadCta b,
-.leadCard:focus-visible .leadCta b {
-  background: #b71f37;
-  transform: translateX(2px);
 }
 
 .more {
@@ -399,40 +362,9 @@
   line-height: 1.35;
 }
 
-.pathCompact {
-  margin-top: 10px;
-  overflow: hidden;
-  flex-wrap: nowrap;
-  color: #7b8997;
-  font-size: 10px;
-  white-space: nowrap;
-}
-
-.compactCta {
-  position: absolute;
-  right: 17px;
-  bottom: 17px;
-  display: grid;
-  width: 28px;
-  height: 28px;
-  place-items: center;
-  border-radius: 9px;
-  color: #123a67;
-  background: #edf3f8;
-  font-size: 13px;
-  font-weight: 900;
-  transition: transform .18s ease, background .18s ease;
-}
-
-.compactCard:hover .compactCta,
-.compactCard:focus-visible .compactCta {
-  background: #e3edf5;
-  transform: translateX(2px);
-}
-
 @media (max-width: 560px) {
   .leadTopline,
-  .compactTopline {
+.compactTopline {
     align-items: flex-start;
     flex-direction: column;
   }
@@ -455,7 +387,6 @@
   }
 
   .leadCard h3 { font-size: 23px; }
-  .pathCompact { display: none; }
 }
 
 @media (min-width: 860px) {
