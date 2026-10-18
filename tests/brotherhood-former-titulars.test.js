@@ -168,3 +168,13 @@ test('la ficha de imagen enlaza la sucesión en ambos sentidos', () => {
   assert.match(page, /<small>Sustituyó a<\/small>/)
   assert.match(page, /relation: 'La sustituyó'/)
 })
+
+test('el panel no lanza consultas «in» con cientos de identificadores en una sola petición', () => {
+  for (const path of ['lib/panel/brotherhood-images.js', 'lib/panel/images.js', 'lib/panel/image-steps.js']) {
+    const source = read(path)
+    assert.match(source, /loadPublicRowsInBatches\(/, path)
+  }
+  const editorLoader = read('lib/panel/brotherhood-images.js')
+  assert.match(editorLoader, /loadPublicRowsInPages\(/)
+  assert.doesNotMatch(editorLoader, /\.in\('entity_id', imageIds\)/)
+})
