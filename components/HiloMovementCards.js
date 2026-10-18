@@ -52,8 +52,9 @@ export default function HiloMovementCards({ items, compact = false, headingLevel
             <p className={styles.date}>{item.announcedOn ? <time dateTime={item.announcedOn}>{hiloDayLabel(item.announcedOn)}</time> : <>Documentado el <time dateTime={item.documentedOn}>{hiloDayLabel(item.documentedOn)}</time></>}{item.eventPassed ? <span className={styles.passed}>{hiloPassedLabel(item)}</span> : null}</p>
             <Heading><Link href={item.href} prefetch={false} className={styles.titleLink}>{item.title}</Link></Heading>
             <p className={styles.summary}>{item.summary}</p>
-            {item.effectiveLabel && !compact ? <p className={styles.effective}><span aria-hidden="true">↳</span> {item.effectiveLabel}</p> : null}
-            <Link className={styles.more} href={item.href} prefetch={false}>{compact ? 'Seguir este hilo' : 'Leer la noticia'} <span className={styles.srOnly}>: {item.title}</span><span aria-hidden="true">→</span></Link>
+            {item.effectiveLabel && !compact && !secondary ? <p className={styles.effective}><span aria-hidden="true">↳</span> {item.effectiveLabel}</p> : null}
+            {/* En el segundo nivel el titular ya es el enlace: sin «Leer la noticia» repetido. */}
+            {!secondary ? <Link className={styles.more} href={item.href} prefetch={false}>{compact ? 'Seguir este hilo' : 'Leer la noticia'} <span className={styles.srOnly}>: {item.title}</span><span aria-hidden="true">→</span></Link> : null}
             {!compact && !secondary ? <ShareActions compact share={newsShare(item)} contentType="noticia" analytics={{ topic: item.topic, municipality: item.municipality }} /> : null}
           </div>
         </div>

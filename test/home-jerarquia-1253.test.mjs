@@ -61,6 +61,8 @@ test('índice de noticias: principal, secundarias discretas y archivo', () => {
   const cards = read('components/HiloMovementCards.js')
   assert.match(cards, /secondary = false/)
   assert.match(cards, /\{!compact && !secondary \? <ShareActions compact/)
+  // El titular es el enlace: sin «Leer la noticia» ni «con efecto desde» en el segundo nivel.
+  assert.match(cards, /\{!secondary \? <Link className=\{styles\.more\}/)
   // Sin foto real, el segundo nivel no repite la ilustración del escudo.
   assert.match(cards, /const thumbless = secondary && !hiloMovementPhoto\(item\)/)
   // Las fichas y la página de cada noticia siguen usando la tarjeta de siempre.

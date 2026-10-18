@@ -222,11 +222,10 @@
   max-height: 34px;
 }
 
+/* Sin escudo (protagonista sin ficha): hueco vacío, sin círculo gris. */
 .crestSpace {
   width: 28px;
   height: 28px;
-  border-radius: 50%;
-  background: #eef2f6;
 }
 
 /* Lo que aporta Hilo Cofrade: el salto a las fichas relacionadas. */
