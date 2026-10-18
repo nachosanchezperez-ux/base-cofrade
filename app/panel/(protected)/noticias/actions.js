@@ -116,6 +116,7 @@ function newsPayload(formData) {
     discover_href: internalPath(formData, 'discover_href'),
     author_name: nullable(formData, 'author_name'),
     ...(formData.has('event_date') ? { event_date: dateValue(formData, 'event_date') } : {}),
+    ...(formData.has('featured_until') ? { featured_until: dateValue(formData, 'featured_until') } : {}),
     ...(formData.has('subject_label') ? { subject_label: nullable(formData, 'subject_label'), subject_kind: nullable(formData, 'subject_label') ? nullable(formData, 'subject_kind') : null } : {}),
   }
 }
