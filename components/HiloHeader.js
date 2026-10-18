@@ -10,13 +10,16 @@ import HiloUpdates from './HiloUpdates';
 import styles from './HiloHeader.module.css';
 
 // Menú en cinco grupos (Agenda, Hermandades, Música, Patrimonio, Actualidad),
-// definido en lib/site-navigation.js y compartido por escritorio y móvil.
+// definido en lib/site-navigation.js y compartido por escritorio y móvil. En
+// móvil, los grupos se pliegan: cinco filas con su resumen y uno abierto a la vez.
 // La Tira del hilo es el botón de búsqueda; el logo lleva a la portada.
 
 export default function HiloHeader() {
   const pathname = usePathname();
   const navRef = useRef(null);
   const [open, setOpen] = useState(false);
+  // Menú móvil plegable: un grupo abierto a la vez (el de la página actual al abrir).
+  const [mobileGroup, setMobileGroup] = useState('');
   const [scrolled, setScrolled] = useState(false);
   const currentGroup = activeMenuGroup(pathname);
   const currentHref = activeMenuHref(pathname);
@@ -51,6 +54,11 @@ export default function HiloHeader() {
       window.removeEventListener('hilo:open-search', closeMenus);
     };
   }, []);
+
+  useEffect(() => {
+    // Fuera de un grupo (portada) se abre Agenda, la sección más consultada.
+    if (open) setMobileGroup(currentGroup || 'agenda');
+  }, [open, currentGroup]);
 
   useEffect(() => {
     if (!open) return undefined;
@@ -146,29 +154,46 @@ export default function HiloHeader() {
       <div id="hilo-mobile-menu" className={`${styles.mobilePanel} ${open ? styles.panelOpen : ''}`} aria-hidden={!open}>
         <div className="shell">
           <nav className={styles.mobileGroups} aria-label="Menú móvil">
-            {MENU_GROUPS.map((group) => (
-              <section className={styles.mobileGroup} key={group.id} aria-labelledby={`menu-movil-${group.id}`}>
-                <h2 id={`menu-movil-${group.id}`} className={currentGroup === group.id ? styles.mobileGroupActive : ''}>{group.label}</h2>
-                {group.sections.map((section, index) => (
-                  <div className={styles.mobileSection} key={section.title || index}>
-                    {section.title ? <span className={styles.mobileSectionTitle}>{section.title}</span> : null}
-                    <div className={styles.mobileLinks}>
-                      {section.links.map(([href, label]) => (
-                        <Link
-                          href={href}
-                          key={href}
-                          className={currentHref === href ? styles.activeMobile : ''}
-                          aria-current={currentHref === href ? 'page' : undefined}
-                          onClick={() => setOpen(false)}
-                        >
-                          {label}
-                        </Link>
-                      ))}
-                    </div>
+            {MENU_GROUPS.map((group) => {
+              const expanded = mobileGroup === group.id;
+              return (
+                <section className={`${styles.mobileGroup} ${expanded ? styles.mobileGroupOpen : ''}`} key={group.id}>
+                  <h2 id={`menu-movil-${group.id}`}>
+                    <button
+                      type="button"
+                      className={`${styles.mobileGroupToggle} ${currentGroup === group.id ? styles.mobileGroupActive : ''}`}
+                      aria-expanded={expanded}
+                      aria-controls={`menu-movil-${group.id}-enlaces`}
+                      onClick={() => setMobileGroup(expanded ? '' : group.id)}
+                    >
+                      <span className={styles.mobileGroupLabel}>{group.label}</span>
+                      {group.hint ? <span className={styles.mobileGroupHint}>{group.hint}</span> : null}
+                      <span className={styles.mobileGroupChevron} aria-hidden="true" />
+                    </button>
+                  </h2>
+                  <div id={`menu-movil-${group.id}-enlaces`} className={styles.mobileGroupBody} role="region" aria-labelledby={`menu-movil-${group.id}`} hidden={!expanded}>
+                    {group.sections.map((section, index) => (
+                      <div className={styles.mobileSection} key={section.title || index}>
+                        {section.title ? <span className={styles.mobileSectionTitle}>{section.title}</span> : null}
+                        <div className={styles.mobileLinks}>
+                          {section.links.map(([href, label]) => (
+                            <Link
+                              href={href}
+                              key={href}
+                              className={currentHref === href ? styles.activeMobile : ''}
+                              aria-current={currentHref === href ? 'page' : undefined}
+                              onClick={() => setOpen(false)}
+                            >
+                              {label}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </section>
-            ))}
+                </section>
+              );
+            })}
           </nav>
         </div>
       </div>
