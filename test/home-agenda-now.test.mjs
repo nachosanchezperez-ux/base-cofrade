@@ -157,3 +157,16 @@ test('titulares ágiles: fecha relativa en días de Madrid y enlace a las fichas
   assert.deepEqual(withLink.discover, { label: 'Descubre', href: '/hermandades/h1' })
   assert.equal(withoutLink.discover, null)
 })
+
+test('en sábado y domingo no se repite la pestaña «Fin de semana»', () => {
+  const items = [item('sab', '2026-10-17', { startTime: '20:00' }), item('dom', '2026-10-18', { startTime: '20:00' })]
+  // Sábado 17/10/2026, 10:00 en Madrid: Hoy y Mañana ya cubren el fin de semana.
+  const saturday = buildHomeAgendaNow(buildHomeTemporalAgenda({ items, today: '2026-10-17', now: new Date('2026-10-17T08:00:00.000Z') }))
+  assert.deepEqual(saturday.tabs.map((tab) => tab.key), ['today', 'tomorrow'])
+  // Domingo 18/10/2026: sería idéntica a Hoy.
+  const sunday = buildHomeAgendaNow(buildHomeTemporalAgenda({ items, today: '2026-10-18', now: new Date('2026-10-18T08:00:00.000Z') }))
+  assert.deepEqual(sunday.tabs.map((tab) => tab.key), ['today', 'tomorrow'])
+  // Viernes: se mantiene.
+  const friday = buildHomeAgendaNow(buildHomeTemporalAgenda({ items, today: '2026-10-16', now: new Date('2026-10-16T08:00:00.000Z') }))
+  assert.deepEqual(friday.tabs.map((tab) => tab.key), ['today', 'tomorrow', 'weekend'])
+})
