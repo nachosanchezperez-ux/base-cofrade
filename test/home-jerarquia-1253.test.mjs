@@ -34,14 +34,17 @@ test('El Hilo se mueve en portada: una principal con foto y titulares secundario
   assert.equal(withoutCover.photo, null)
 })
 
-test('Descubre: accesos ligeros y marcha, juego y últimos hilos con menos peso', () => {
+test('Descubre: accesos ligeros, marcha en azul, juego destacado y «Más en Hilo» en fichas', () => {
   const discover = read('components/HomeDiscover.module.css')
   assert.match(discover, /\.ghost \{\s*display: none;/)
   assert.match(discover, /min-height: 60px;/)
   const today = read('components/HomeTodayV2.js')
-  assert.match(today, /data-home-weight=\{embedded \? 'secondary' : undefined\}/)
-  assert.match(today, /variant=\{embedded \? 'default' : 'inverse'\}/)
-  assert.match(today, /embedded \? gameStyles\.teaserQuiet : ''/)
+  assert.match(today, /data-home-weight=\{embedded \? 'feature' : undefined\}/)
+  assert.match(today, /variant="inverse"/)
+  assert.match(today, /embedded \? gameStyles\.teaserFeature : ''/)
+  assert.match(today, /href="\/juegos\/el-hilo-escondido"/)
+  // «Más en Hilo Cofrade»: nombre y explicación de cada acceso.
+  assert.match(read('components/HomeDiscover.js'), /\{item\.detail \? <span>\{item\.detail\}<\/span> : null\}/)
   assert.match(read('components/HomeKnowledgeThreads.module.css'), /\.embedded \.leadCard::before \{\s*display: none;/)
   // Sin bloques nuevos: los mismos cinco de la portada.
   const home = read('components/HomePageV2.js')

@@ -73,32 +73,66 @@
   }
 }
 
-/* En «Descubre» de la portada (#1253): una línea de texto con su enlace, sin
-   fondo degradado ni botón de bloque, para dar menos peso que la ficha del día. */
-.teaserQuiet.teaserQuiet {
-  flex-direction: row;
+/* En «Descubre» de la portada (#1253): tarjeta propia del juego, con icono,
+   pregunta grande y botón destacado, para que se vea como cita diaria. */
+.teaserFeature.teaserFeature {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) auto;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   margin-top: 12px;
-  padding: 12px 0 0;
-  border: 0;
-  border-top: 1px solid #e3e9ef;
-  border-radius: 0;
-  background: transparent;
+  padding: 16px;
+  border: 1px solid #e0c3ca;
+  border-radius: 16px;
+  background: linear-gradient(100deg, #f9eee9, #fff8f0);
+  box-shadow: 0 8px 22px rgba(116, 39, 60, .08);
 }
 
-.teaserQuiet .teaserCopy strong {
-  font-size: 15px;
+.teaserIcon {
+  display: grid;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  border-radius: 14px;
+  background: #74273c;
+  color: #fff;
+  font-family: Georgia, serif;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1;
 }
 
-.teaserQuiet .teaserLink.teaserLink {
+.teaserFeature .teaserCopy strong {
+  font-size: 19px;
+}
+
+.teaserFeature .teaserLink.teaserLink {
   width: auto;
-  padding: 0 14px;
-  border: 1px solid #d9c3c9;
-  background: transparent;
-  color: #74273c;
+  min-height: 46px;
+  padding: 0 20px;
+  font-size: 13px;
+  box-shadow: 0 6px 16px rgba(116, 39, 60, .22);
 }
 
-.teaserQuiet .teaserLink.teaserLink:hover {
-  background: #f9eee9;
+@media (max-width: 550px) {
+  .teaserFeature.teaserFeature {
+    grid-template-columns: 48px minmax(0, 1fr);
+    gap: 12px;
+    padding: 14px;
+  }
+
+  .teaserIcon {
+    width: 48px;
+    height: 48px;
+    font-size: 26px;
+  }
+
+  .teaserFeature .teaserCopy strong {
+    font-size: 17px;
+  }
+
+  .teaserFeature .teaserLink.teaserLink {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
 }
