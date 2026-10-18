@@ -350,7 +350,7 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
             {groups.map((group) => (
               <section className={styles.municipalityGroup} key={group.slug} aria-labelledby={`municipio-${group.slug}`}>
                 <header className={styles.municipalityHeading}>
-                  <h2 id={`municipio-${group.slug}`}>{group.label}</h2>
+                  <h3 id={`municipio-${group.slug}`}>{group.label}</h3>
                   <span>{group.items.length} {group.items.length === 1 ? 'cambio' : 'cambios'} · {group.brotherhoodCount} {group.brotherhoodCount === 1 ? 'corporación' : 'corporaciones'}</span>
                 </header>
 
@@ -359,11 +359,11 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
                     <article className={styles.brotherhoodCluster} key={brotherhood.key}>
                       <header className={styles.clusterHeader}>
                         <div>
-                          <h3>
+                          <h4>
                             {brotherhood.brotherhoodHref
                               ? <Link href={brotherhood.brotherhoodHref}>{brotherhood.brotherhoodName}</Link>
                               : brotherhood.brotherhoodName}
-                          </h3>
+                          </h4>
                           <span>
                             {brotherhood.day}
                             {brotherhood.changes.length > 1 ? ` · ${brotherhood.changes.length} cambios` : ''}
@@ -441,7 +441,7 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
               {renewalGroups.map((group) => (
                 <section className={styles.municipalityGroup} key={`renovaciones-${group.slug}`} aria-labelledby={`renovaciones-municipio-${group.slug}`}>
                   <header className={styles.municipalityHeading}>
-                    <h2 id={`renovaciones-municipio-${group.slug}`}>{group.label}</h2>
+                    <h3 id={`renovaciones-municipio-${group.slug}`}>{group.label}</h3>
                     <span>{group.items.length} {group.items.length === 1 ? 'renovación' : 'renovaciones'} · {group.brotherhoodCount} {group.brotherhoodCount === 1 ? 'corporación' : 'corporaciones'}</span>
                   </header>
 
@@ -450,11 +450,11 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
                       <article className={styles.brotherhoodCluster} key={`renovacion-${brotherhood.key}`}>
                         <header className={styles.clusterHeader}>
                           <div>
-                            <h3>
+                            <h4>
                               {brotherhood.brotherhoodHref
                                 ? <Link href={brotherhood.brotherhoodHref}>{brotherhood.brotherhoodName}</Link>
                                 : brotherhood.brotherhoodName}
-                            </h3>
+                            </h4>
                             <span>{brotherhood.day}{brotherhood.changes.length > 1 ? ` · ${brotherhood.changes.length} renovaciones` : ''}</span>
                           </div>
                         </header>

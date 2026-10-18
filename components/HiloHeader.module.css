@@ -35,8 +35,8 @@
 /* Keep every link reachable when an expanded group exceeds viewport height. */
 .groupPopover{max-height:calc(100dvh - var(--hc-app-header-height) - 12px);overflow-y:auto;overscroll-behavior:contain}
 .mobileGroups{display:grid;gap:18px}
-.mobileGroup h2{display:flex;align-items:center;gap:7px;margin:0 2px 8px;color:#112339;font-size:15px;font-weight:800;letter-spacing:0}
-.mobileGroup h2.mobileGroupActive::after{content:"";width:6px;height:6px;border-radius:50%;background:#B01B32}
+.mobileGroup .mobileGroupHeading{display:flex;align-items:center;gap:7px;margin:0 2px 8px;color:#112339;font-size:15px;font-weight:800;letter-spacing:0}
+.mobileGroup .mobileGroupHeading.mobileGroupActive::after{content:"";width:6px;height:6px;border-radius:50%;background:#B01B32}
 .mobileSection+.mobileSection{margin-top:10px}
 .mobileSectionTitle{display:block;margin:0 2px 6px;color:#B01B32;font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
 .mobileLinks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
@@ -47,7 +47,7 @@
 .mobileGroups{gap:8px}
 .mobileGroup{border:1px solid #e3e9ef;border-radius:14px;background:#fff;overflow:hidden}
 .mobileGroupOpen{border-color:#cfdbe5;box-shadow:0 6px 18px rgba(17,35,57,.06)}
-.mobileGroup h2{display:block;margin:0}
+.mobileGroup .mobileGroupHeading{display:block;margin:0}
 .mobileGroupToggle{display:grid;grid-template-columns:minmax(0,1fr) 24px;grid-template-areas:"label chevron" "hint chevron";align-items:center;column-gap:10px;row-gap:1px;width:100%;min-height:60px;padding:10px 14px;border:0;background:transparent;color:#112339;font:inherit;text-align:left;cursor:pointer}
 .mobileGroupLabel{grid-area:label;display:inline-flex;align-items:center;gap:7px;font-size:16px;font-weight:800;line-height:1.2}
 .mobileGroupHint{grid-area:hint;color:#5f7080;font-size:12px;font-weight:600;line-height:1.3}

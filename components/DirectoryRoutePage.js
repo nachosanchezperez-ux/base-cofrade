@@ -83,6 +83,8 @@ export default function DirectoryRoutePage({
               <section className={styles.kindGroup} key={group.key} aria-labelledby={`grupo-${group.key}`}>
                 <h2 id={`grupo-${group.key}`} className={styles.kindHeading}>
                   {group.heading}{contextLabel ? ` de ${contextLabel}` : ''}
+                  {/* Separador solo para lectores y buscadores: antes se leía «…de Utrera10». */}
+                  <span className="sr-only"> · </span>
                   <span>{group.items.length}</span>
                 </h2>
                 <div className={styles.list}>

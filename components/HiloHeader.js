@@ -151,14 +151,16 @@ export default function HiloHeader() {
         <div className={styles.accent} />
       </header>
 
-      <div id="hilo-mobile-menu" className={`${styles.mobilePanel} ${open ? styles.panelOpen : ''}`} aria-hidden={!open}>
+      <div id="hilo-mobile-menu" className={`${styles.mobilePanel} ${open ? styles.panelOpen : ''}`} inert={!open}>
         <div className="shell">
           <nav className={styles.mobileGroups} aria-label="Menú móvil">
             {MENU_GROUPS.map((group) => {
               const expanded = mobileGroup === group.id;
               return (
                 <section className={`${styles.mobileGroup} ${expanded ? styles.mobileGroupOpen : ''}`} key={group.id}>
-                  <h2 id={`menu-movil-${group.id}`}>
+                  {/* Rótulo del grupo, no encabezado: el menú se repite en todas las
+                      páginas y sus H2 salían antes del H1 en el HTML de cada una. */}
+                  <div id={`menu-movil-${group.id}`} className={styles.mobileGroupHeading}>
                     <button
                       type="button"
                       className={`${styles.mobileGroupToggle} ${currentGroup === group.id ? styles.mobileGroupActive : ''}`}
@@ -170,7 +172,7 @@ export default function HiloHeader() {
                       {group.hint ? <span className={styles.mobileGroupHint}>{group.hint}</span> : null}
                       <span className={styles.mobileGroupChevron} aria-hidden="true" />
                     </button>
-                  </h2>
+                  </div>
                   <div id={`menu-movil-${group.id}-enlaces`} className={styles.mobileGroupBody} role="region" aria-labelledby={`menu-movil-${group.id}`} hidden={!expanded}>
                     {group.sections.map((section, index) => (
                       <div className={styles.mobileSection} key={section.title || index}>

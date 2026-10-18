@@ -433,7 +433,7 @@
   border-bottom: 2px solid #c7d5e2;
 }
 
-:global(#hc-app) .page:not(:global(#hc-panel)) .municipalityHeading h2 {
+:global(#hc-app) .page:not(:global(#hc-panel)) .municipalityHeading h3 {
   margin: 0;
   scroll-margin-top: 100px;
   font-size: var(--music-municipality);
@@ -465,7 +465,7 @@
   min-width: 0;
 }
 
-:global(#hc-app) .page:not(:global(#hc-panel)) .clusterHeader h3 {
+:global(#hc-app) .page:not(:global(#hc-panel)) .clusterHeader h4 {
   margin: 0;
   overflow-wrap: anywhere;
   color: var(--music-ink);
@@ -476,7 +476,7 @@
   text-wrap: pretty;
 }
 
-.clusterHeader h3 a {
+.clusterHeader h4 a {
   display: inline-flex;
   min-height: 44px;
   align-items: center;
@@ -614,7 +614,7 @@
   font-weight: 700;
 }
 
-.clusterHeader h3 a:hover,
+.clusterHeader h4 a:hover,
 .movementLead strong a:hover,
 .bandCell dd > a:hover {
   text-decoration: underline;
