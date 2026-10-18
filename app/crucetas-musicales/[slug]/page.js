@@ -8,6 +8,7 @@ import { getMusicalRepertoireBySlug } from '@/lib/supabase/musical-repertoires'
 import { absoluteUrl, breadcrumbJsonLd, compactSeoTitle, socialMetadata } from '@/lib/seo'
 import styles from '../crucetas.module.css'
 import RepertoireExplorer from './RepertoireExplorer'
+import { plural } from '@/lib/plural'
 
 export const dynamic = 'force-static'
 export const revalidate = 900
@@ -33,7 +34,7 @@ export async function generateMetadata({ params }) {
   if (!repertoire) return { title: 'Cruceta musical no encontrada', robots: { index: false, follow: false } }
 
   const title = compactSeoTitle(`${repertoire.displayTitle}: cruceta de ${repertoire.band.name}`)
-  const description = `${repertoire.worksCount} obras y ${repertoire.performancesCount} interpretaciones de ${repertoire.band.name} en ${repertoire.displayTitle}.`
+  const description = `${plural(repertoire.worksCount, 'obra', 'obras')} y ${plural(repertoire.performancesCount, 'interpretación', 'interpretaciones')} de ${repertoire.band.name} en ${repertoire.displayTitle}.`
 
   return {
     title,

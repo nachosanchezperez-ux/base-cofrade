@@ -73,7 +73,7 @@ export default function BrotherhoodEditorialGuide({ guide }) {
         {chapters.length > 0 ? (
           <details className={styles.disclosure}>
             <summary>
-              <span>Leer las {chapters.length} claves</span>
+              <span>{chapters.length === 1 ? 'Leer la clave' : `Leer las ${chapters.length} claves`}</span>
               <small>Una lectura breve para entender la Hermandad</small>
               <b aria-hidden="true">＋</b>
             </summary>

@@ -9,12 +9,9 @@ import BrotherhoodDirectoryCrestImage from './BrotherhoodDirectoryCrestImage'
 import styles from './GloryDirectory.module.css'
 import crestStyles from './GloryDirectoryCrests.module.css'
 import photoStyles from './GloryDirectoryPhotos.module.css'
+import { plural } from '@/lib/plural'
 
 const AGENDA_TYPE = 'glorias'
-
-function plural(count, singular, pluralForm) {
-  return `${count} ${count === 1 ? singular : pluralForm}`
-}
 
 function groupByMonth(items) {
   const groups = []

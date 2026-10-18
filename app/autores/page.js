@@ -12,6 +12,7 @@ import {
 import { getPublicAgentDirectory } from '@/lib/supabase/public-agents'
 import { breadcrumbJsonLd, collectionPageJsonLd, socialMetadata } from '@/lib/seo'
 import styles from './autores.module.css'
+import { plural } from '@/lib/plural'
 
 export const revalidate = 900
 
@@ -197,7 +198,7 @@ export default async function AuthorsDirectoryPage({ searchParams } = {}) {
           </div>
           <p>
             {selectedCategory
-              ? `${filteredAgents.length} perfiles en este ámbito. `
+              ? `${plural(filteredAgents.length, 'perfil', 'perfiles')} en este ámbito. `
               : 'Los perfiles se agrupan por oficio y no solo por su naturaleza jurídica. '}
             Solo aparecen fichas con masa documental suficiente. Página {page} de {totalPages}.
           </p>

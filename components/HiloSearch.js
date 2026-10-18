@@ -14,6 +14,7 @@ import { trackEvent } from '@/lib/analytics/client';
 import styles from './HiloSearch.module.css';
 import responseStyles from './HiloSearchResponse.module.css';
 import upgradeStyles from './HiloSearchUpgrade.module.css';
+import { plural } from '@/lib/plural';
 
 const starterQuestions = [
   '¿Qué imágenes de La Cena son anteriores al siglo XX?',
@@ -631,7 +632,7 @@ export default function HiloSearch({
       {showComposer && query.trim().length > 1 && !looksLikeQuestion(query) && (results.length > 0 || searching || searchComplete) ? (
         <div className={styles.results} aria-label="Fichas y coincidencias del grafo" aria-live="polite">
           <div className={styles.resultsHead}>
-            <span>{searching ? 'Buscando…' : orderedResults.length ? `${orderedResults.length} resultados` : 'Sin coincidencias directas'}</span>
+            <span>{searching ? 'Buscando…' : orderedResults.length ? plural(orderedResults.length, 'resultado', 'resultados') : 'Sin coincidencias directas'}</span>
             <small>{orderedResults.length ? 'Fichas, contenidos y listados relacionados' : 'Puedes convertir la búsqueda en una pregunta'}</small>
           </div>
           <div className={styles.resultsList} id={resultsId} role="listbox">

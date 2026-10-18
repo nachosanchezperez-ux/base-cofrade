@@ -7,6 +7,7 @@ import { directorySecondaryLabel, directorySlug, displayName } from '@/lib/broth
 import { groupBrotherhoodsByLocality } from '@/lib/brotherhood-public-index'
 import { CALENDAR_VIEWS, calendarSelection, calendarSections, localityAnchor } from '@/lib/brotherhood-locality-calendar'
 import styles from './BrotherhoodPublicIndex.module.css'
+import { plural } from '@/lib/plural'
 
 const LOCALITY_FILTERS = [
   ...CALENDAR_VIEWS,
@@ -92,7 +93,7 @@ function LocalityCalendar({ group, navigation, expand }) {
             <button type="button" onClick={() => setFilter('todos')}>Ver todas las de {name}</button>
           </div>
         )}
-        {localityPage ? <Link href={localityPage.href} prefetch={false} className={styles.localityLink}>Ver directorio completo de {name} <span>({localityPage.count} fichas)</span> <span aria-hidden="true">→</span></Link> : null}
+        {localityPage ? <Link href={localityPage.href} prefetch={false} className={styles.localityLink}>Ver directorio completo de {name} <span>({plural(localityPage.count, 'ficha', 'fichas')})</span> <span aria-hidden="true">→</span></Link> : null}
         {/* Cada localidad con fichas indexables enlaza su guía cofrade (página principal
             de la localidad), también las que no llegan al mínimo para tener listado propio. */}
         {hasGuide ? <Link href={`/agenda-cofrade/localidad/${group.slug}`} prefetch={false} className={styles.localityLink}>Guía cofrade de {name}: agenda, bandas, imágenes y pasos <span aria-hidden="true">→</span></Link> : null}

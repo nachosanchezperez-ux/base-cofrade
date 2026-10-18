@@ -90,7 +90,7 @@ export default function HiloGraphPath({ response }) {
 
       <footer>
         El camino se construye únicamente con relaciones publicadas en el grafo.
-        {response.exactRelationReferenceCount ? ` ${response.exactRelationReferenceCount} fuentes están enlazadas directamente a los registros utilizados.` : ''}
+        {response.exactRelationReferenceCount ? ` ${response.exactRelationReferenceCount === 1 ? '1 fuente está enlazada' : `${response.exactRelationReferenceCount} fuentes están enlazadas`} directamente a los registros utilizados.` : ''}
       </footer>
     </section>
   );
