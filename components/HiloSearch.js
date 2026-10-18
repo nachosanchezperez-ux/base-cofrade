@@ -547,7 +547,9 @@ export default function HiloSearch({
   const composerLabel = universal ? 'Busca una ficha o pregunta a Hilo Cofrade' : 'Pregunta a Hilo Cofrade';
   const composerPlaceholder = activeContextLabel
     ? `Sigue preguntando sobre ${activeContextLabel}…`
-    : narrowScreen
+    : narrowScreen || compact
+      // En la portada el buscador comparte banda con el título: el texto largo
+      // no cabía en una línea en escritorio y se cortaba la segunda.
       ? 'Busca o pregunta…'
       : universal
       ? 'Busca una ficha o pregunta sobre hermandades, imágenes, pasos, bandas, marchas…'
@@ -683,7 +685,7 @@ export default function HiloSearch({
 
       {!fullPage ? (
         <Link className={styles.expandLink} href="/pregunta">
-          <span>{compact && hasConversation ? 'Seguir conversando y ver todas las fuentes' : 'Abrir conversación completa'}</span>
+          <span>{compact && hasConversation ? 'Seguir conversando y ver todas las fuentes' : compact ? 'Abrir Tira del hilo a pantalla completa' : 'Abrir conversación completa'}</span>
           <b aria-hidden="true">↗</b>
         </Link>
       ) : null}
