@@ -6,6 +6,7 @@ import {
   brotherhoodChapters,
   chapterAnchor,
   chapterHeroFacts,
+  foundingYearLabel,
 } from '../lib/brotherhood-chapters.js';
 import { BROTHERHOOD_CHAPTERS_PILOT, usesBrotherhoodChapters } from '../lib/brotherhood-chapters-rollout.js';
 
@@ -21,7 +22,7 @@ test('Penitencia: Inicio · Cortejo · Música · Historia · Hilo', () => {
   const chapters = brotherhoodChapters({ types: ['Penitencia', 'Sacramental'], availability: full });
   assert.deepEqual(chapters.map((item) => item.label), ['Inicio', 'Cortejo', 'Música', 'Historia', 'Hilo']);
   assert.equal(chapters[1].summary, '3 titulares · 2 pasos');
-  assert.equal(chapters[2].summary, '2 bandas actuales · 5 obras dedicadas');
+  assert.equal(chapters[2].summary, '2 bandas actuales · 5 composiciones dedicadas');
   assert.equal(chapters[3].summary, '12 acontecimientos');
 });
 
@@ -107,4 +108,12 @@ test('La actualidad sube a Inicio y el layout no la repite al final', () => {
   const routeLayout = read('../app/hermandades/[slug]/layout.js');
   assert.match(page, /selectHiloMovements\(items, \{ entityHref: canonicalPath/);
   assert.match(routeLayout, /chaptersPilot \? null : <Suspense/);
+});
+
+test('Año de fundación solo cuando el texto lo dice sin ambigüedad', () => {
+  assert.equal(foundingYearLabel('18 de julio de 1554'), '1554');
+  assert.equal(foundingYearLabel('Hermandad formada en 1735; primeras Reglas aprobadas el 22 de diciembre de 1736'), '1735');
+  assert.equal(foundingYearLabel('1693'), '1693');
+  assert.equal(foundingYearLabel('Reorganizada en 1940 sobre una corporación de 1600'), 'Reorganizada en 1940 sobre una corporación de 1600');
+  assert.equal(foundingYearLabel(''), '');
 });

@@ -4,7 +4,7 @@ import BrotherhoodQuickFacts from '@/components/BrotherhoodQuickFacts';
 import readingStyles from '@/components/BrotherhoodReadingLayout.module.css';
 import { usesBrotherhoodReading } from '@/lib/brotherhood-reading-rollout';
 import { usesBrotherhoodChapters } from '@/lib/brotherhood-chapters-rollout';
-import { brotherhoodChapterProfile, brotherhoodChapters, chapterHeroFacts } from '@/lib/brotherhood-chapters';
+import { brotherhoodChapterProfile, brotherhoodChapters, chapterHeroFacts, foundingYearLabel } from '@/lib/brotherhood-chapters';
 import BrotherhoodChaptersLayout from '@/components/BrotherhoodChaptersLayout';
 import { selectHiloMovements } from '@/lib/hilo-movements';
 import { getPublicHiloMovements } from '@/lib/supabase/hilo-movements';
@@ -307,7 +307,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
       holyWeekValue: holyWeekFact?.value,
       recurringGloryDay: publicText(h.diaSalida),
       gloryEditionDate: gloryDate,
-      foundingYear: brotherhoodFoundingYear(h.fundacion) || publicText(h.fundacion),
+      foundingYear: foundingYearLabel(publicText(h.fundacion)),
       nazarenes: penitentialFacts.find((fact) => fact.label.startsWith('Nazarenos')),
     })
     : heroFacts;

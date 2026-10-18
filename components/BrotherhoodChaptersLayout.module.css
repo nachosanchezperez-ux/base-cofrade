@@ -10,7 +10,6 @@
 }
 
 .chapter {
-  scroll-margin-top: var(--chapter-offset);
   padding-block: 36px 8px;
   border-top: 1px solid #e3e7eb;
 }
@@ -47,6 +46,12 @@
   color: #4b5560;
   font-size: 15px;
   line-height: 1.55;
+}
+
+/* Gana a `.brotherhood-page section[id]` (148/138 px, pensado para la barra
+   superior antigua): en móvil la navegación está abajo. */
+.chapters section.chapter[id] {
+  scroll-margin-top: var(--chapter-offset);
 }
 
 /* Las secciones reutilizadas pierden el relleno superior: el capítulo ya separa. */
