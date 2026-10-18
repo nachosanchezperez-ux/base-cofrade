@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
 import styles from './EntityDirectoryExplorer.module.css'
 import mobileStyles from './EntityDirectoryMobile.module.css'
+import { directoryItemDefaults } from '@/lib/entity-directory-url-state'
 import facetStyles from './EntityDirectoryFacets.module.css'
 
 const DEFAULT_LIMIT = 24
@@ -113,7 +114,7 @@ function DirectoryCard({ item, compact = false }) {
     <Link
       className={`${styles.card} ${compact ? mobileStyles.compactCard : ''}`}
       href={item.href}
-      key={`${item.kind}-${item.id}`}
+      key={`${item.kind}-${item.href}`}
       aria-label={`Abrir ficha de ${item.name}`}
     >
       <DirectoryCardMedia item={item} compact={compact} />
@@ -159,7 +160,24 @@ function FacetGroup({ label, hint, options, value, onChange }) {
   )
 }
 
-export default function EntityDirectoryExplorer({ items, initialState = {} }) {
+// Texto de búsqueda extra (nombres oficiales y palabras clave): se pide una sola
+// vez, al empezar a buscar, para no cargar ~200 KB en cada visita.
+let searchExtrasPromise = null
+function loadSearchExtras() {
+  if (!searchExtrasPromise) {
+    searchExtrasPromise = fetch('/api/directorio/busqueda')
+      .then((response) => (response.ok ? response.json() : {}))
+      .catch(() => {
+        searchExtrasPromise = null
+        return {}
+      })
+  }
+  return searchExtrasPromise
+}
+
+export default function EntityDirectoryExplorer({ items: rawItems, initialState = {} }) {
+  const items = useMemo(() => rawItems.map(directoryItemDefaults), [rawItems])
+  const [searchExtras, setSearchExtras] = useState(null)
   const [query, setQuery] = useState(initialState.query || '')
   const [kind, setKind] = useState(KINDS.some((item) => item.value === initialState.kind) ? initialState.kind : 'all')
   const [territory, setTerritory] = useState(initialState.territory || 'todos')
@@ -173,6 +191,23 @@ export default function EntityDirectoryExplorer({ items, initialState = {} }) {
       || initialState.municipality && initialState.municipality !== 'todos'
       || initialState.subtype && initialState.subtype !== 'todos'
   ))
+
+  const searching = Boolean(query.trim())
+  useEffect(() => {
+    if (!searching || searchExtras) return undefined
+    let active = true
+    loadSearchExtras().then((extras) => {
+      if (active) setSearchExtras(extras)
+    })
+    return () => { active = false }
+  }, [searching, searchExtras])
+
+  const searchableItems = useMemo(() => (searchExtras
+    ? items.map((item) => {
+      const extra = searchExtras[item.href]
+      return extra ? { ...item, officialName: extra.o, keywords: extra.k } : item
+    })
+    : items), [items, searchExtras])
 
   const counts = useMemo(() => {
     const result = { all: items.length }
@@ -274,7 +309,7 @@ export default function EntityDirectoryExplorer({ items, initialState = {} }) {
     const normalizedMunicipality = normalize(municipality)
     const normalizedSubtype = normalize(subtype)
 
-    return items
+    return searchableItems
       .filter((item) => {
         if (kind !== 'all' && item.kind !== kind) return false
 
@@ -314,7 +349,7 @@ export default function EntityDirectoryExplorer({ items, initialState = {} }) {
         if (scoreDifference) return scoreDifference
         return a.name.localeCompare(b.name, 'es', { sensitivity: 'base' })
       })
-  }, [items, query, kind, territory, municipality, subtype, holyWeekDay, gloryMonth])
+  }, [searchableItems, query, kind, territory, municipality, subtype, holyWeekDay, gloryMonth])
 
   const visibleItems = filtered.slice(0, limit)
   const activeSecondaryFilters = [
@@ -415,6 +450,10 @@ export default function EntityDirectoryExplorer({ items, initialState = {} }) {
           id="unified-directory-search"
           type="search"
           value={query}
+          onFocus={() => {
+            // Se adelanta la descarga del texto de búsqueda al tocar el buscador.
+            if (!searchExtras) loadSearchExtras().then(setSearchExtras)
+          }}
           onChange={(event) => {
             setQuery(event.target.value)
             resetResultLimit()
@@ -595,7 +634,7 @@ export default function EntityDirectoryExplorer({ items, initialState = {} }) {
               </div>
               <div className={mobileStyles.mobileSectionList}>
                 {section.items.map((item) => (
-                  <DirectoryCard item={item} compact key={`${item.kind}-${item.id}`} />
+                  <DirectoryCard item={item} compact key={`${item.kind}-${item.href}`} />
                 ))}
               </div>
             </section>
@@ -607,7 +646,7 @@ export default function EntityDirectoryExplorer({ items, initialState = {} }) {
         {visibleItems.length ? (
           <div className={styles.grid}>
             {visibleItems.map((item) => (
-              <DirectoryCard item={item} key={`${item.kind}-${item.id}`} />
+              <DirectoryCard item={item} key={`${item.kind}-${item.href}`} />
             ))}
           </div>
         ) : (

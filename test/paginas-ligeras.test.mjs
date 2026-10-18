@@ -29,10 +29,30 @@ test('iconos y escudos sin batería de tamaños; agenda por tandas', () => {
   assert.match(agenda, /setVisibleCount\(Number\.POSITIVE_INFINITY\)/)
 })
 
-test('el directorio envía solo los campos que usa y sin palabras clave repetidas', () => {
-  const item = compactDirectoryItem({ id: '1', kind: 'brotherhood', name: 'Las Penas', officialName: 'Agrupación de las Penas', relation: 'Sede · Iglesia del Carmen', subtype: 'Penitencia', keywords: ['Agrupación de las Penas', 'Iglesia del Carmen', 'Penitencia', 'Écija histórica'], primaryColor: '#000', mediaAlt: 'x', holyWeekDay: '' })
-  assert.deepEqual(item.keywords, ['Écija histórica'])
-  assert.equal(item.primaryColor, undefined)
-  assert.equal(item.holyWeekDay, undefined)
-  assert.equal(compactDirectoryItem({ name: 'A', officialName: 'A' }).officialName, undefined)
+test('el directorio envía solo los campos que pinta y filtra; el texto de búsqueda va aparte', async () => {
+  const { directorySearchExtras, directoryItemDefaults } = await import('../lib/entity-directory-url-state.js')
+  const source = { id: '1', kind: 'brotherhood', name: 'Las Penas', officialName: 'Agrupación de las Penas', label: 'Hermandad', mediaKind: 'crest', href: '/hermandades/las-penas', relation: 'Sede · Iglesia del Carmen', subtype: 'Penitencia', subtypeValues: ['Penitencia'], keywords: ['Agrupación de las Penas', 'Iglesia del Carmen', 'Penitencia', 'Écija histórica', 'Formación musical documentada en el preflight de Estepa 2026.'], primaryColor: '#000', mediaAlt: 'x', holyWeekDay: '' }
+  const item = compactDirectoryItem(source)
+  for (const key of ['id', 'label', 'mediaKind', 'subtypeValues', 'officialName', 'keywords', 'primaryColor', 'holyWeekDay']) {
+    assert.equal(key in item, false, key)
+  }
+  // El navegador recupera lo deducible.
+  const expanded = directoryItemDefaults(item)
+  assert.equal(expanded.label, 'Hermandad')
+  assert.equal(expanded.mediaKind, 'crest')
+  assert.deepEqual(expanded.subtypeValues, ['Penitencia'])
+  // Varios subtipos sí viajan.
+  assert.deepEqual(compactDirectoryItem({ ...source, subtypeValues: ['Penitencia', 'Sacramental'] }).subtypeValues, ['Penitencia', 'Sacramental'])
+  // Búsqueda: sin repetir lo que ya está en la tarjeta y sin notas internas.
+  const extras = directorySearchExtras([source, { href: '/x', name: 'A', officialName: 'A' }])
+  assert.deepEqual(extras['/hermandades/las-penas'], { o: 'Agrupación de las Penas', k: ['Écija histórica'] })
+  assert.equal('/x' in extras, false)
+})
+
+test('el buscador del directorio pide el texto extra solo al buscar', () => {
+  const explorer = read('components/EntityDirectoryExplorer.js')
+  assert.match(explorer, /fetch\('\/api\/directorio\/busqueda'\)/)
+  assert.match(explorer, /if \(!searching \|\| searchExtras\) return undefined/)
+  assert.match(explorer, /return searchableItems/)
+  assert.match(read('app/api/directorio/busqueda/route.js'), /directorySearchExtras\(await getPublicEntityDirectory\(\)\)/)
 })
