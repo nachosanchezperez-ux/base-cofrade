@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { requirePanelUser } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
+import { selectAllRows } from '@/lib/panel/query-all'
 import DiscographyReleaseEditor from './ReleaseEditor'
 import styles from '@/app/panel/panel.module.css'
 
@@ -21,8 +22,8 @@ async function getData(bandId) {
 
   const [releasesResult, sourcesResult, marchesResult] = await Promise.all([
     supabase.from('band_releases').select('*').eq('band_entity_id', bandId).neq('status', 'archived').order('release_year', { ascending: false, nullsFirst: false }).order('release_date', { ascending: false, nullsFirst: false }),
-    supabase.from('sources').select('id, name, url, author_or_publisher').order('name'),
-    supabase.from('entities').select('id, name, slug, status').eq('entity_type', 'march').neq('status', 'archived').order('name'),
+    selectAllRows(() => supabase.from('sources').select('id, name, url, author_or_publisher').order('name')),
+    selectAllRows(() => supabase.from('entities').select('id, name, slug, status').eq('entity_type', 'march').neq('status', 'archived').order('name')),
   ])
   const releases = rows(releasesResult, 'No se pudieron cargar los lanzamientos')
   const sources = rows(sourcesResult, 'No se pudieron cargar las fuentes')

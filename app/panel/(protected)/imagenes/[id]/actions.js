@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
+import { selectAllRows } from '@/lib/panel/query-all'
 import { republishImageRelations } from '@/lib/panel/image-publication'
 
 const UUID_PATTERN = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i
@@ -30,7 +31,7 @@ async function audit(supabase, user, entry) {
 async function ensureUniqueIdentity(supabase, { imageId, name, slug }) {
   const [slugResult, imagesResult] = await Promise.all([
     supabase.from('entities').select('id, entity_type, name, slug, status').eq('slug', slug).neq('id', imageId).limit(1),
-    supabase.from('entities').select('id, name, slug, status').eq('entity_type', 'image').neq('id', imageId),
+    selectAllRows(() => supabase.from('entities').select('id, name, slug, status').eq('entity_type', 'image').neq('id', imageId)),
   ])
   const slugMatch = (assertQuery(slugResult, 'No se pudo comprobar el slug') || [])[0]
   if (slugMatch) throw new Error(`El slug «${slug}» ya pertenece a otra entidad.`)

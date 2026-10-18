@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { requirePanelEditor } from '@/lib/panel/auth'
 import { createClient } from '@/lib/supabase/server'
+import { selectAllRows } from '@/lib/panel/query-all'
 
 const UUID_PATTERN = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i
 const AGENT_KINDS = new Set(['person', 'workshop', 'company', 'institution'])
@@ -94,7 +95,7 @@ function redirectSaved(agentId, section) {
 async function ensureUniqueIdentity(supabase, { agentId, name, slug }) {
   const [slugResult, agentsResult] = await Promise.all([
     supabase.from('entities').select('id, name, slug').eq('slug', slug).neq('id', agentId).limit(1),
-    supabase.from('entities').select('id, name, slug').eq('entity_type', 'agent').neq('id', agentId),
+    selectAllRows(() => supabase.from('entities').select('id, name, slug').eq('entity_type', 'agent').neq('id', agentId)),
   ])
   const slugMatch = (assertQuery(slugResult, 'No se pudo comprobar el slug') || [])[0]
   if (slugMatch) throw new Error(`El slug «${slug}» ya pertenece a otra entidad.`)

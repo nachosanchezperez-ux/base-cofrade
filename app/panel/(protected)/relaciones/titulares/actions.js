@@ -14,6 +14,7 @@ import {
   writeAudit,
 } from '@/lib/panel/relation-actions'
 import { createClient } from '@/lib/supabase/server'
+import { selectAllRows } from '@/lib/panel/query-all'
 
 function slugify(input) {
   return String(input || '')
@@ -40,7 +41,7 @@ export async function createAdvocationAction(formData) {
 
   const [slugResult, namesResult] = await Promise.all([
     supabase.from('entities').select('id').eq('slug', slug).limit(1),
-    supabase.from('entities').select('id, name').eq('entity_type', 'advocation').neq('status', 'archived'),
+    selectAllRows(() => supabase.from('entities').select('id, name').eq('entity_type', 'advocation').neq('status', 'archived')),
   ])
   if (assertRows(slugResult, 'No se pudo comprobar el slug').length) {
     throw new Error(`El slug «${slug}» ya pertenece a otra entidad.`)
