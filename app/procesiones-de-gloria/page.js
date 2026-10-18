@@ -104,7 +104,7 @@ export default async function ProcesionesDeGloriaPage() {
 
         <section className={styles.guide} aria-labelledby="guia-procesiones-gloria-sevilla">
           <span className="eyebrow">Calendario anual</span>
-          <h2 id="guia-procesiones-gloria-sevilla">Las Glorias de Sevilla, mes a mes</h2>
+          <h2 id="guia-procesiones-gloria-sevilla">Cuándo salen las Glorias de Sevilla</h2>
           <p>
             Las hermandades de Gloria de Sevilla capital y provincia celebran sus procesiones a lo largo de todo el año, con especial presencia en primavera y otoño.
           </p>

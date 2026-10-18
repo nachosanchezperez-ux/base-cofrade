@@ -74,7 +74,7 @@ export default async function DirectorioPage({ searchParams } = {}) {
       <JsonLd data={directoryJsonLd} />
       <div className="shell">
         <span className="eyebrow">Enciclopedia cofrade</span>
-        <h1 className="page-title">Directorio</h1>
+        <h1 className="page-title">Directorio cofrade de Sevilla y provincia</h1>
         <p className="page-lead">
           Hermandades, Imágenes, Pasos y Bandas comparten este buscador relacional. Marchas, Autores, cambios y estadísticas musicales completan la enciclopedia con lecturas propias para recorrer obras, personas y relaciones.
         </p>

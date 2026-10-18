@@ -83,3 +83,11 @@ test('el H1 de Imagen, Paso y Marcha lleva su contexto', async () => {
     assert.match(read(file), /<h1[^>]*>\s*\{(?:title|march\.name)\}\s*\{(?:titleContext|headingByline) \? <span className=\{\w+\.titleContext\}>/, file)
   }
 })
+
+// Fase 4 (18/10/2026): H1 y H2 genéricos o casi duplicados fuera de las fichas.
+test('directorio, pregunta, glorias y rosario usan encabezados descriptivos', () => {
+  assert.match(read('app/directorio/page.js'), /<h1 className="page-title">Directorio cofrade de Sevilla y provincia<\/h1>/)
+  assert.match(read('app/pregunta/page.js'), /<h1>Pregunta a Hilo Cofrade<\/h1>/)
+  assert.match(read('app/procesiones-de-gloria/page.js'), />Cuándo salen las Glorias de Sevilla<\/h2>/)
+  assert.match(read('app/agenda-cofrade/rosarios/[slug]/page.js'), /<h2>Sobre este rosario<\/h2>/)
+})
