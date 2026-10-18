@@ -68,7 +68,7 @@ export default function BrotherhoodHistoryTimeline({ items = [], introduction = 
       <div className="shell">
         <SectionTitle
           eyebrow="Cronología"
-          title="Historia y acontecimientos"
+          title="Historia"
         />
 
         {introduction ? <p className={styles.introduction}>{introduction}</p> : null}
