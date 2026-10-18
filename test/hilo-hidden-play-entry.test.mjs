@@ -11,9 +11,9 @@ const game = readFileSync(new URL('../components/HiddenThreadGame.js', import.me
 test('la página entra directamente en el juego, con la adivinanza desde el servidor', () => {
   assert.match(page, /<h1>El hilo escondido<\/h1>/)
   assert.match(page, /<HiddenThreadGame initialDayKey=\{initialDayKey\} \/>/)
-  // Sin render por visita: ISR y corrección del día en el navegador.
-  assert.match(page, /export const revalidate = 300/)
-  assert.doesNotMatch(page, /connection\(\)/)
+  // Render por visita: el día nunca sale de una copia en caché de otra fecha.
+  assert.match(page, /export const dynamic = 'force-dynamic'/)
+  assert.doesNotMatch(page, /export const revalidate/)
 })
 
 test('Cofradle aparece solo al final, como enlace externo y sin recursos de terceros', () => {
