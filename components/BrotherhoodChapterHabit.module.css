@@ -118,8 +118,9 @@
   display: contents;
 }
 
+/* !important: la lectura fuerza tinta oscura en #tunica (BrotherhoodReadingLayout). */
 :global(#tunica).section .pieces dt {
-  color: color-mix(in srgb, var(--brotherhood-light, #fff) 72%, transparent);
+  color: color-mix(in srgb, var(--brotherhood-light, #fff) 72%, transparent) !important;
   font-size: 10px;
   font-weight: 800;
   letter-spacing: .1em;
@@ -128,7 +129,7 @@
 
 :global(#tunica).section .pieces dd {
   margin: 0;
-  color: var(--brotherhood-light, #fff);
+  color: var(--brotherhood-light, #fff) !important;
   font-size: 15px;
   font-weight: 700;
   line-height: 1.3;
