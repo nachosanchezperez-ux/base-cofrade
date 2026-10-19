@@ -24,12 +24,12 @@
 .period + .period { margin-top: 20px; }
 .period h5 { margin: 0; padding: 4px 0 7px; border-bottom: 1px solid #dce4eb; color: #173a61; font-size: 17px; font-weight: 700; line-height: 1.4; }
 .period h5 a { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; color: inherit; }
-.period h5 a:hover { text-decoration: underline; text-underline-offset: 4px; }
+
 .period h5 a span { color: #a72035; }
 .rows { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 32px; margin: 0; padding: 0; list-style: none; }
 .rows li { min-width: 0; border-bottom: 1px solid #edf1f4; }
 .row { display: flex; align-items: center; gap: 12px; min-height: 72px; padding: 10px 2px; color: #173a61; text-decoration: none; }
-.row:hover strong { text-decoration: underline; text-underline-offset: 4px; }
+
 .crest { flex: 0 0 44px; width: 44px; height: 52px; display: grid; place-items: center; }
 .crestImage { width: 100%; height: 100%; object-fit: contain; }
 .crestFallback { width: 24px; height: 24px; opacity: .5; }
@@ -37,7 +37,7 @@
 .copy strong { font-size: 17px; line-height: 1.4; font-weight: 650; overflow-wrap: anywhere; }
 .copy > span { font-size: 14px; line-height: 1.4; color: #617180; }
 .arrow { flex-shrink: 0; color: #a72035; }
-.localityLink { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 7px; min-height: 44px; margin-top: 16px; padding: 6px 0; color: #173a61; font-size: 16px; text-decoration: underline; text-underline-offset: 4px; }
+.localityLink { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 7px; min-height: 44px; margin-top: 16px; padding: 6px 0; color: #173a61; font-size: 16px; }
 .localityLink > span:first-child { color: #617180; font-size: 14px; }
 .empty p { color: #617180; font-size: 16px; line-height: 1.5; }
 .empty button { min-height: 44px; padding: 8px 12px; border: 1px solid #cad6df; border-radius: 8px; background: #fff; color: #173a61; font: inherit; font-size: 16px; cursor: pointer; }

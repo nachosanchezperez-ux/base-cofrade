@@ -135,8 +135,6 @@
   font-size: 16px;
   font-weight: 650;
   line-height: 1.45;
-  text-decoration: underline;
-  text-underline-offset: 4px;
 }
 
 .content {
@@ -261,8 +259,6 @@
 
 .municipalityList a:hover span {
   color: var(--music-ink);
-  text-decoration: underline;
-  text-underline-offset: 3px;
 }
 
 .explorer {
@@ -368,8 +364,6 @@
   font-size: 16px;
   font-weight: 600;
   line-height: 1.4;
-  text-decoration: underline;
-  text-underline-offset: 3px;
 }
 
 :global(#hc-app) .page:not(:global(#hc-panel)) .searchPanel button:hover {
@@ -406,8 +400,6 @@
   color: var(--music-ink);
   font-size: 16px;
   font-weight: 600;
-  text-decoration: underline;
-  text-underline-offset: 3px;
 }
 
 .municipalityGroups,
@@ -614,12 +606,7 @@
   font-weight: 700;
 }
 
-.clusterHeader h4 a:hover,
-.movementLead strong a:hover,
-.bandCell dd > a:hover {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
+
 
 .empty {
   padding: 28px 0;
@@ -645,8 +632,6 @@
   align-items: center;
   font-size: 16px;
   font-weight: 700;
-  text-decoration: underline;
-  text-underline-offset: 3px;
 }
 
 
@@ -743,10 +728,7 @@
   line-height: 1.45;
 }
 
-.renewalBandLink:hover {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
+
 
 .tenure {
   display: block;
