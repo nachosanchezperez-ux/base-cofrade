@@ -144,6 +144,9 @@
 }
 
 .kind a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
   color: inherit;
   text-decoration: none;
 }

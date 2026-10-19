@@ -190,6 +190,12 @@
   border-top: 1px solid #e3e7eb;
 }
 
+.bandsToday a {
+  display: flex;
+  align-items: center;
+  min-height: 32px;
+}
+
 .bandsToday a,
 .bandsToday strong {
   color: var(--brotherhood-primary, #153b69);

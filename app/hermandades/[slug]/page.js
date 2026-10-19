@@ -538,7 +538,13 @@ export default async function HermandadDetailPage({ params, reading: readingOver
       byBand.set(key, entry);
     };
     crossGuideMusic.forEach((item) => add(item, 'Cruz de Guía'));
-    steps.forEach((paso) => stepAccompaniments(currentMusicItems, paso.id).forEach((item) => add(item, publicText(paso.tipo) || paso.nombre)));
+    // «Paso de Misterio», «Paso de Palio»; un tipo suelto («Gloria») se lee «Paso de Gloria».
+    const stepPlace = (paso) => {
+      const tipo = publicText(paso.tipo);
+      if (!tipo) return paso.nombre;
+      return /^paso\b/i.test(tipo) ? tipo : `Paso de ${tipo}`;
+    };
+    steps.forEach((paso) => stepAccompaniments(currentMusicItems, paso.id).forEach((item) => add(item, stepPlace(paso))));
     return [...byBand.values()];
   })() : [];
   // Ficha por capítulos: la túnica, a la vista (solo Penitencia).
