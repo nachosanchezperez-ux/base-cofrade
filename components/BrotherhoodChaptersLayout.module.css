@@ -393,8 +393,9 @@
 }
 
 .chapterTitle:focus-visible {
-  outline: 3px solid #175f99;
-  outline-offset: 4px;
+  /* Recibe el foco al cambiar de pantalla (lectores de pantalla); no es un
+     control, así que no se dibuja el anillo de foco. */
+  outline: none;
 }
 
 /* Modo aplicación (móvil con JavaScript): un capítulo por pantalla. */
@@ -433,6 +434,17 @@
     color: var(--brotherhood-primary, #153b69);
     font-size: 30px;
     line-height: 1.1;
+  }
+
+  /* El capítulo ya hace de título: el encabezado repetido («Patrimonio» bajo
+     «Patrimonio») queda solo para lectores de pantalla. */
+  .chapters[data-app='on'] > section[data-chapter='patrimonio'] :global(#patrimonio .section-heading) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
   }
 
   .chapters[data-app='on'] .continue {
