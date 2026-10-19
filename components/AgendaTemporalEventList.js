@@ -49,6 +49,8 @@ function categoryLabel(item) {
 
 export default function AgendaTemporalEventList({ landing }) {
   const groups = groupByDate(landing.items)
+  // Actos distintos: el de varios días se lista en cada uno de sus días.
+  const count = landing.count ?? landing.items.length
 
   return (
     <section className={styles.section} id="agenda-del-periodo" aria-labelledby="agenda-periodo-title">
@@ -57,9 +59,8 @@ export default function AgendaTemporalEventList({ landing }) {
           <div>
             <span>{landing.period === 'today' ? 'Hoy' : landing.period === 'tomorrow' ? 'Mañana' : 'Fin de semana'}</span>
             <h2 id="agenda-periodo-title">{landing.listHeading || 'Todos los actos cofrades'}</h2>
-            <p>Hora, acto, localidad y lugar en una cronología pensada para consultar rápido desde el móvil o el ordenador.</p>
           </div>
-          <strong>{landing.items.length} {landing.items.length === 1 ? 'cita' : 'citas'}</strong>
+          <strong>{count} {count === 1 ? 'acto' : 'actos'}</strong>
         </header>
 
         <div className={styles.groups}>
@@ -125,6 +126,7 @@ export default function AgendaTemporalEventList({ landing }) {
           <Link href="/agenda-cofrade">Agenda completa</Link>
           <Link href="/procesiones-de-gloria">Glorias</Link>
           <Link href="/extraordinarias">Extraordinarias</Link>
+          <Link href="/igualas-y-ensayos">Igualás y ensayos</Link>
         </nav>
       </div>
     </section>
