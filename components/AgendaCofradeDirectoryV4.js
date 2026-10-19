@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { agendaLocationMatches, agendaMunicipalityOptions } from '@/lib/agenda-cofrade-location'
 import { getProcessionLiveState } from '@/lib/procession-live-status'
 import { isAgendaItemOver } from '@/lib/agenda-clock'
@@ -10,6 +10,7 @@ import { routeSummarySections } from '@/lib/procession-route'
 import { agendaTemporalDateInfo, agendaTemporalRangeDate, withAgendaTemporalDay } from '@/lib/agenda-temporal-display'
 import { agendaEventAnchor, agendaDirectionsHref, isOutingEvent, schedulePrecision, scheduleTimeHint } from '@/lib/agenda-event-presentation'
 import { agendaItemShare } from '@/lib/share'
+import { AGENDA_VIEW_STATE_KEY, agendaFilterSearch, agendaHashAfterFilterChange, agendaRestoreScrollTop, readAgendaView, serializeAgendaView } from '@/lib/agenda-view-state'
 import ShareActions from '@/components/ShareActions'
 import HomeDiscoverIcon from '@/components/HomeDiscoverIcon'
 import useFollowedBrotherhoods from '@/components/useFollowedBrotherhoods'
@@ -447,6 +448,23 @@ export default function AgendaCofradeDirectoryV4({
     try { if (new URLSearchParams(window.location.search).get('mis') === '1') setMineOnly(true) } catch {}
   }, [])
 
+  // La URL refleja la selección pública (#1264): Atrás, Adelante, la recarga y un
+  // enlace compartido la conservan. Sin entradas nuevas en el historial.
+  const keepHashOnce = useRef(false)
+  const urlSynced = useRef(false)
+  useEffect(() => {
+    if (!urlSynced.current) { urlSynced.current = true; return }
+    try {
+      const search = agendaFilterSearch(window.location.search, { period, category, territory, municipality, mineOnly })
+      const hash = keepHashOnce.current ? window.location.hash : agendaHashAfterFilterChange(window.location.hash)
+      keepHashOnce.current = false
+      const next = `${window.location.pathname}${search}${hash}`
+      if (next !== `${window.location.pathname}${window.location.search}${window.location.hash}`) {
+        window.history.replaceState(window.history.state, '', next)
+      }
+    } catch {}
+  }, [period, category, territory, municipality, mineOnly])
+
   function openEvent(item) {
     const detail = document.getElementById(`${agendaEventAnchor(item)}-detail`)
     if (detail) { detail.open = true; detail.querySelector('summary')?.focus() }
@@ -458,6 +476,7 @@ export default function AgendaCofradeDirectoryV4({
       if (!id.startsWith('acto-')) return
       const item = items.find((entry) => agendaEventAnchor(entry) === id)
       if (!item) return
+      keepHashOnce.current = true
       setPeriod('upcoming'); setCategory('all'); setTerritory('all'); setMunicipality(''); setMineOnly(false)
       setVisibleCount(Number.POSITIVE_INFINITY)
       window.requestAnimationFrame(() => {
@@ -540,8 +559,100 @@ export default function AgendaCofradeDirectoryV4({
 
   const groups = useMemo(() => groupByMonth(filtered), [filtered])
   const [visibleCount, setVisibleCount] = useState(AGENDA_PAGE_SIZE)
-  // Al cambiar de filtro se vuelve a la primera tanda.
-  useEffect(() => { setVisibleCount((current) => (current === Number.POSITIVE_INFINITY ? current : AGENDA_PAGE_SIZE)) }, [period, category, territory, municipality, mineOnly])
+  // Al cambiar de filtro se vuelve a la primera tanda; no al montar ni cuando el
+  // cambio lo provoca la restauración de la vista al volver.
+  const filterKey = `${period}|${category}|${territory}|${municipality}|${mineOnly}`
+  const lastFilterKey = useRef(null)
+  const restoringFilterKey = useRef('')
+  useEffect(() => {
+    if (lastFilterKey.current === null || lastFilterKey.current === filterKey) { lastFilterKey.current = filterKey; return }
+    lastFilterKey.current = filterKey
+    if (restoringFilterKey.current === filterKey) { restoringFilterKey.current = ''; return }
+    setVisibleCount((current) => (current === Number.POSITIVE_INFINITY ? current : AGENDA_PAGE_SIZE))
+  }, [filterKey])
+
+  // Vuelta con contexto (#1264): «Mis hermandades», tandas, posición y detalle
+  // abierto se guardan en history.state (no en la URL) y se recuperan al volver.
+  const pendingRestore = useRef(null)
+  const [restoreTick, setRestoreTick] = useState(0)
+  const viewRef = useRef({ visibleCount, mineOnly })
+  viewRef.current = { visibleCount, mineOnly }
+
+  const saveView = useCallback((extra = {}) => {
+    if (pendingRestore.current) return
+    try {
+      const reference = extra.anchor || [...document.querySelectorAll('#agenda article[id^="acto-"]')]
+        .find((card) => card.getBoundingClientRect().bottom > 72)
+      const view = serializeAgendaView({
+        ...viewRef.current,
+        scrollY: window.scrollY,
+        anchorId: reference?.id || '',
+        anchorTop: reference ? reference.getBoundingClientRect().top : 0,
+        openDetailId: extra.openDetailId || '',
+      })
+      window.history.replaceState({ ...(window.history.state || {}), [AGENDA_VIEW_STATE_KEY]: view }, '')
+    } catch {}
+  }, [])
+
+  useEffect(() => {
+    if (window.location.hash.startsWith('#acto-')) return // el ancla de un acto manda
+    let view = null
+    try { view = readAgendaView(window.history.state, AGENDA_PAGE_SIZE) } catch {}
+    if (!view) return
+    if (view.mineOnly) {
+      restoringFilterKey.current = `${period}|${category}|${territory}|${municipality}|true`
+      setMineOnly(true)
+    }
+    setVisibleCount(view.visibleCount)
+    pendingRestore.current = view
+    setRestoreTick((tick) => tick + 1)
+    // Solo al montar: la vista guardada corresponde a esta entrada del historial.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    const view = pendingRestore.current
+    if (!view) return undefined
+    let frame = 0
+    let tries = 0
+    const apply = () => {
+      const anchor = view.anchorId ? document.getElementById(view.anchorId) : null
+      // «Mis hermandades» depende del seguimiento guardado en el dispositivo, que
+      // puede tardar un instante: se espera unos fotogramas a que aparezca el acto.
+      if (view.anchorId && !anchor && tries++ < 30) { frame = window.requestAnimationFrame(apply); return }
+      const detail = view.openDetailId ? document.getElementById(view.openDetailId) : null
+      if (detail) detail.open = true
+      const top = agendaRestoreScrollTop(view, anchor ? anchor.getBoundingClientRect().top + window.scrollY : null)
+      if (top !== null) window.scrollTo({ top, behavior: 'instant' })
+      pendingRestore.current = null
+    }
+    frame = window.requestAnimationFrame(apply)
+    return () => window.cancelAnimationFrame(frame)
+  }, [restoreTick, filtered])
+
+  useEffect(() => { saveView() }, [visibleCount, mineOnly, saveView])
+
+  useEffect(() => {
+    let timer = 0
+    const onScroll = () => {
+      window.clearTimeout(timer)
+      timer = window.setTimeout(() => saveView(), 200)
+    }
+    // Antes de salir por un enlace: el acto pulsado y su detalle abierto.
+    const onClick = (event) => {
+      const link = event.target instanceof Element ? event.target.closest('a[href]') : null
+      if (!link) return
+      saveView({ anchor: link.closest('article[id^="acto-"]'), openDetailId: link.closest('details[open]')?.id || '' })
+    }
+    const root = document.getElementById('agenda')
+    window.addEventListener('scroll', onScroll, { passive: true })
+    root?.addEventListener('click', onClick, true)
+    return () => {
+      window.clearTimeout(timer)
+      window.removeEventListener('scroll', onScroll)
+      root?.removeEventListener('click', onClick, true)
+    }
+  }, [saveView])
   const shownGroups = useMemo(() => groupByMonth(filtered.slice(0, visibleCount)), [filtered, visibleCount])
   const hiddenCount = Math.max(0, filtered.length - visibleCount)
   const showMonth = (key) => {
