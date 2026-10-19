@@ -56,3 +56,14 @@ test('Nombre corto y diferencias entre hábitos', () => {
   assert.deepEqual([escudo.prefix, escudo.values], ['Serigrafiado con borde', ['rojo', 'blanco']]);
   assert.deepEqual(common.map((field) => [field.key, field.value]), [['tunica', 'Azul de cola'], ['antifaz', 'Azul']]);
 });
+
+import { habitFieldDisplay, habitTitle } from '../lib/brotherhood-habits.js';
+
+test('Prendas sin redundancia y título del cromo', () => {
+  assert.deepEqual(habitFieldDisplay({ label: 'Antifaz', value: 'Antifaz de terciopelo morado' }), { label: 'Antifaz', value: 'Terciopelo morado' });
+  assert.deepEqual(habitFieldDisplay({ label: 'Túnica', value: 'Túnica y capa blancas' }), { label: 'Túnica y capa', value: 'Blancas' });
+  assert.deepEqual(habitFieldDisplay({ label: 'Túnica', value: 'Azul de cola' }), { label: 'Túnica', value: 'Azul de cola' });
+  assert.deepEqual(habitFieldDisplay({ label: 'Antifaz', value: 'Antifaz azul' }), { label: 'Antifaz', value: 'Azul' });
+  assert.deepEqual(habitTitle('Cortejo del paso de Cristo'), { kicker: 'Cortejo del paso de', name: 'Cristo' });
+  assert.deepEqual(habitTitle('Hábito de nazareno'), { kicker: '', name: 'Hábito de nazareno' });
+});
