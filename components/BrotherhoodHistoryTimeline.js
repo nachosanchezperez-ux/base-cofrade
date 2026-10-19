@@ -25,7 +25,7 @@ const CONDITION_LABELS = {
 }
 
 // Subsección secundaria: imágenes que fueron titulares y ya no lo son. Nunca se mezclan con la titularidad vigente.
-function FormerTitulars({ items = [] }) {
+export function FormerTitulars({ items = [] }) {
   if (!items.length) return null
   return (
     <div className={styles.former} id="antiguas-titulares">

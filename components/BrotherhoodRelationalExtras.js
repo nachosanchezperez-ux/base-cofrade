@@ -419,6 +419,16 @@ export async function BrotherhoodTitularCount({ brotherhoodId, imageCount = 0 })
   }
 }
 
+// Datos de los titulares devocionales (sin imagen física) para otras vistas.
+export async function getBrotherhoodConceptualTitulars(brotherhoodId) {
+  try {
+    return await loadConceptualTitulars(createPublicClient(), brotherhoodId)
+  } catch (error) {
+    console.error('[Hilo Cofrade] No se pudieron leer los titulares devocionales', error)
+    return []
+  }
+}
+
 export async function BrotherhoodConceptualTitulars({ brotherhoodId }) {
   try {
     const supabase = createPublicClient()

@@ -117,3 +117,15 @@ test('Año de fundación solo cuando el texto lo dice sin ambigüedad', () => {
   assert.equal(foundingYearLabel('Reorganizada en 1940 sobre una corporación de 1600'), 'Reorganizada en 1940 sobre una corporación de 1600');
   assert.equal(foundingYearLabel(''), '');
 });
+
+test('Segunda tanda: titulares sin huecos, historia con ancla #historia y hilo verificable', () => {
+  const titulars = read('../components/BrotherhoodChapterTitulars.js');
+  const history = read('../components/BrotherhoodChapterHistory.js');
+  const page = read('../app/hermandades/[slug]/page.js');
+  assert.doesNotMatch(titulars, /portrait-placeholder|✦/);
+  assert.match(titulars, /item\.media\?\.path \? <figure/);
+  assert.match(history, /id="historia"/);
+  assert.match(history, /Anunciado, aún por celebrar/);
+  assert.match(page, /collapseOfficialName=\{chapters\}/);
+  assert.match(page, /thread: <BrotherhoodThread nodes=\{brotherhoodThread\(/);
+});

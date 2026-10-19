@@ -29,7 +29,12 @@ import {
   BrotherhoodConceptualTitulars,
   BrotherhoodOwnBands,
   BrotherhoodReadingDiscovery,
+  getBrotherhoodConceptualTitulars,
 } from '@/components/BrotherhoodRelationalExtras';
+import BrotherhoodChapterTitulars from '@/components/BrotherhoodChapterTitulars';
+import BrotherhoodChapterHistory from '@/components/BrotherhoodChapterHistory';
+import BrotherhoodThread from '@/components/BrotherhoodThread';
+import { brotherhoodThread } from '@/lib/brotherhood-thread';
 import EntitySectionNav from '@/components/EntitySectionNav';
 import FestivalPostersSection from '@/components/FestivalPostersSection';
 import { notFound } from 'next/navigation';
@@ -193,7 +198,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
     ...h.pasos.map((paso) => [paso.id, 'step']),
     ...(h.participacionesConsejo || []).map((participacion) => [participacion.id, 'event']),
   ]);
-  const [entityCoverMedia, musicalHeritage, authoritativeCrestPath, musicalRepertoires, crewEvents, agendaData, indexableBrotherhoods, chapterMovements] = await Promise.all([
+  const [entityCoverMedia, musicalHeritage, authoritativeCrestPath, musicalRepertoires, crewEvents, agendaData, indexableBrotherhoods, chapterMovements, chapterConceptualTitulars] = await Promise.all([
     getCachedBrotherhoodCoverMedia(
       [...coverEntityTypes.keys()],
       Object.fromEntries(coverEntityTypes)
@@ -225,6 +230,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
           return [];
         })
       : [],
+    chapters ? getBrotherhoodConceptualTitulars(h.id) : [],
   ]);
   // Miga: «Sevilla» lleva a las hermandades de la localidad; si no hay listado, a su guía.
   const localityBreadcrumbHref = brotherhoodLocalityDirectoryHref(h, indexableBrotherhoods) || municipalityHubHref;
@@ -409,7 +415,17 @@ export default async function HermandadDetailPage({ params, reading: readingOver
         </div></section>
       )}
   </>);
-  const titularsSection = (<>
+  // Ficha por capítulos: titulares en filas compactas (misma información, plegada).
+  const chapterTitularsSection = chapters ? (
+    <BrotherhoodChapterTitulars
+      items={(h.imagenes || []).map((imagen) => ({ ...imagen, media: entityCoverMedia.get(imagen.id) || null }))}
+      conceptual={chapterConceptualTitulars}
+    >
+      <BrotherhoodOtherImages items={h.otrasImagenes || []} />
+      <BrotherhoodQuickFacts brotherhood={h} peopleOnly />
+    </BrotherhoodChapterTitulars>
+  ) : null;
+  const titularsSection = chapterTitularsSection || (<>
 {h.imagenes?.length > 0 && (
       <section className="section brotherhood-soft" id="titulares"><div className="shell">
         <SectionTitle eyebrow="Titularidad" title="Sagrados Titulares" />
@@ -576,7 +592,9 @@ export default async function HermandadDetailPage({ params, reading: readingOver
   const repertoiresSection = (<>
 <MusicalRepertoiresSection items={musicalRepertoires} context="brotherhood" headingLevel={reading ? 3 : 2} />
   </>);
-  const historySection = (<>
+  const historySection = chapters ? (
+    <BrotherhoodChapterHistory items={h.cronologia || []} introduction={publicText(h.historia)} formerTitulars={h.antiguasTitulares || []} today={agendaData.today} />
+  ) : (<>
 <BrotherhoodHistoryTimeline items={h.cronologia || []} introduction={publicText(h.historia)} semanticPreview={reading} formerTitulars={h.antiguasTitulares || []} />
   </>);
   const viaCrucisSection = (<>
@@ -742,6 +760,7 @@ export default async function HermandadDetailPage({ params, reading: readingOver
 
       <BrotherhoodProgramHero
         compact={reading}
+        collapseOfficialName={chapters}
         entityType={brotherhoodTypeLabel}
         title={h.nombrePopular}
         officialName={h.nombreOficial}
@@ -808,6 +827,13 @@ export default async function HermandadDetailPage({ params, reading: readingOver
             historicalMusic: historicalMusicSection, heritage: heritageSection, simpecados: simpecadosSection,
             posters: postersSection, habit: habitSection, council: councilSection, viaCrucis: viaCrucisSection,
             outings: outingsSection, crew: crewSection, cults: cultsSection, curiosities: curiositiesSection,
+            thread: <BrotherhoodThread nodes={brotherhoodThread({
+              brotherhood: h,
+              titulars: h.imagenes || [],
+              steps,
+              accompaniments: currentMusicItems,
+              marches: musicalHeritage,
+            })} />,
             discovery: <BrotherhoodReadingDiscovery brotherhoodId={h.id} />,
             officialLinks: <OfficialLinks links={h.enlacesOficiales} /> }}
         />

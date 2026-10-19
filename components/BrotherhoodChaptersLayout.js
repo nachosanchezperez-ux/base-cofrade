@@ -133,8 +133,8 @@ export default function BrotherhoodChaptersLayout({
     </div>)}
 
     {render('historia', <>
-      <BrotherhoodEditorialGuide guide={h.editorialGuide} />
       {slots.history}
+      <BrotherhoodEditorialGuide guide={h.editorialGuide} />
       {(h.viaCrucisCofradias?.length || h.participacionesConsejo?.length || h.curiosidades?.length) ? <Supplement>
         {(h.viaCrucisCofradias?.length || h.participacionesConsejo?.length) ? <Disclosure title="Participaciones institucionales y Vía Crucis">{slots.council}{slots.viaCrucis}</Disclosure> : null}
         {h.curiosidades?.length ? <Disclosure title="Curiosidades" count={h.curiosidades.length}>{slots.curiosities}</Disclosure> : null}
@@ -142,7 +142,8 @@ export default function BrotherhoodChaptersLayout({
     </>)}
 
     {render('hilo', <>
-      {slots.discovery}
+      {slots.thread}
+      <Supplement><Disclosure title="Más rutas para tirar del hilo">{slots.discovery}</Disclosure></Supplement>
       {slots.officialLinks}
     </>)}
   </div>
