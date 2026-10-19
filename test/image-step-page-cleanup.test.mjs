@@ -47,3 +47,7 @@ test('sin fotografía no se pinta relleno en la cabecera', () => {
   assert.match(hero, /variant !== 'step' \|\| Boolean\(media\.photoSrc\)/)
   assert.match(read('components/RelationalEntityHeroPolish.module.css'), /\.hero \.grid\.gridNoMedia/)
 })
+
+test('el índice de secciones no se muestra con una sola sección', () => {
+  assert.match(read('components/EntitySectionNav.js'), /if \(navigationItems\.length < 2\) return null;/)
+})
