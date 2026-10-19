@@ -23,7 +23,7 @@
   margin-bottom: 4px;
 }
 
-.kicker {
+.chapterTitle {
   display: flex;
   align-items: baseline;
   gap: 10px;
@@ -35,7 +35,7 @@
   text-transform: uppercase;
 }
 
-.kickerIndex {
+.chapterNumber {
   color: var(--brotherhood-secondary, #a71930);
   font-variant-numeric: tabular-nums;
 }
@@ -384,15 +384,15 @@
 
 /* En la página continua (ordenador o sin JavaScript) el nombre de la Hermandad
    no se repite en cada capítulo; en el modo aplicación hace de cabecera. */
-.kickerOwner {
+.chapterOwner {
   display: none;
 }
 
-.kicker:focus {
+.chapterTitle:focus {
   outline: none;
 }
 
-.kicker:focus-visible {
+.chapterTitle:focus-visible {
   outline: 3px solid #175f99;
   outline-offset: 4px;
 }
@@ -409,18 +409,18 @@
     min-height: calc(100svh - var(--hc-app-header-height, 70px) - 60px);
   }
 
-  .chapters[data-app='on'] > section[data-chapter]:not([data-chapter='inicio']) .kicker {
+  .chapters[data-app='on'] > section[data-chapter]:not([data-chapter='inicio']) .chapterTitle {
     display: grid;
     gap: 2px;
     letter-spacing: 0;
     text-transform: none;
   }
 
-  .chapters[data-app='on'] > section[data-chapter]:not([data-chapter='inicio']) .kickerIndex {
+  .chapters[data-app='on'] > section[data-chapter]:not([data-chapter='inicio']) .chapterNumber {
     display: none;
   }
 
-  .chapters[data-app='on'] > section[data-chapter]:not([data-chapter='inicio']) .kickerOwner {
+  .chapters[data-app='on'] > section[data-chapter]:not([data-chapter='inicio']) .chapterOwner {
     display: block;
     color: #59636e;
     font-size: 12px;
@@ -429,7 +429,7 @@
     text-transform: uppercase;
   }
 
-  .chapters[data-app='on'] > section[data-chapter]:not([data-chapter='inicio']) .kickerLabel {
+  .chapters[data-app='on'] > section[data-chapter]:not([data-chapter='inicio']) .chapterName {
     color: var(--brotherhood-primary, #153b69);
     font-size: 30px;
     line-height: 1.1;

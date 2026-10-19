@@ -1,6 +1,7 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { createChapterApp } from '@/lib/brotherhood-chapter-app';
 import styles from './BrotherhoodChapterNav.module.css';
 
 // Navegación de la ficha por capítulos. Todo el contenido llega renderizado en
@@ -27,120 +28,19 @@ export function ChapterIcon({ icon, className }) {
   return <svg className={className} viewBox="0 0 24 24" aria-hidden="true" focusable="false">{ICONS[icon]}</svg>;
 }
 
-const APP_QUERY = '(max-width: 899px)';
-
-function chapterOf(element) {
-  return element?.closest?.('[data-chapter]') || null;
-}
-
-function openAncestors(element) {
-  for (let node = element?.parentElement; node; node = node.parentElement) {
-    if (node.tagName === 'DETAILS') node.open = true;
-  }
-}
-
 export default function BrotherhoodChapterNav({ items = [], name = '', crestSrc = '' }) {
   const [active, setActive] = useState(items[0]?.anchor || '');
   const [appMode, setAppMode] = useState(false);
   const [compactHeader, setCompactHeader] = useState(false);
   const rootRef = useRef(null);
-  const scrollMemory = useRef({});
   const key = items.map((item) => item.anchor).join('|');
 
-  const root = () => rootRef.current?.closest('[data-chapters-root]') || null;
-
-  // Muestra un capítulo como pantalla (modo aplicación) o desplaza hasta él.
-  const show = useCallback((anchor, { target = null, push = false, restore = false } = {}) => {
-    const container = root();
-    const section = anchor ? document.getElementById(anchor) : null;
-    if (!container || !section) return;
-    const app = container.dataset.app === 'on';
-
-    if (app) {
-      const previous = container.querySelector('[data-chapter][data-active]');
-      if (previous && previous !== section) scrollMemory.current[previous.id] = window.scrollY;
-      container.querySelectorAll('[data-chapter]').forEach((node) => {
-        if (node === section) node.setAttribute('data-active', '');
-        else node.removeAttribute('data-active');
-      });
-    }
-    setActive(anchor);
-    if (push) window.history.pushState(null, '', `#${target?.id || anchor}`);
-
-    const destination = target || section;
-    openAncestors(destination);
-    if (app && restore && !target && scrollMemory.current[anchor] != null) {
-      window.scrollTo({ top: scrollMemory.current[anchor], behavior: 'instant' });
-    } else if (app && !target && section.id === items[0]?.anchor) {
-      window.scrollTo({ top: 0, behavior: 'instant' });
-    } else {
-      destination.scrollIntoView({ block: 'start', behavior: app ? 'instant' : 'smooth' });
-    }
-    if (app && !target) {
-      section.querySelector('[data-chapter-title]')?.focus({ preventScroll: true });
-    }
-  }, [key]);
-
-  // Activa o desactiva el modo aplicación según el ancho de pantalla.
+  // La lógica vive en lib/brotherhood-chapter-app.js (DOM puro, probado aparte).
   useEffect(() => {
-    const container = root();
-    if (!container || typeof window.matchMedia !== 'function') return undefined;
-    const query = window.matchMedia(APP_QUERY);
-    const apply = () => {
-      const on = query.matches;
-      container.dataset.app = on ? 'on' : 'off';
-      setAppMode(on);
-      const hashTarget = window.location.hash ? document.getElementById(decodeURIComponent(window.location.hash.slice(1))) : null;
-      const section = chapterOf(hashTarget);
-      if (on) {
-        const anchor = section?.id || items[0]?.anchor;
-        container.querySelectorAll('[data-chapter]').forEach((node) => {
-          if (node.id === anchor) node.setAttribute('data-active', '');
-          else node.removeAttribute('data-active');
-        });
-        setActive(anchor);
-        if (hashTarget) {
-          openAncestors(hashTarget);
-          requestAnimationFrame(() => hashTarget.scrollIntoView({ block: 'start', behavior: 'instant' }));
-        }
-      } else {
-        container.querySelectorAll('[data-chapter]').forEach((node) => node.removeAttribute('data-active'));
-      }
-    };
-    apply();
-    query.addEventListener('change', apply);
-    return () => query.removeEventListener('change', apply);
+    const container = rootRef.current?.closest('[data-chapters-root]');
+    const app = createChapterApp(container, { onChange: (id) => id && setActive(id), onMode: setAppMode });
+    return () => app.destroy();
   }, [key]);
-
-  // Cualquier enlace interno de la ficha (barra, tarjetas de Inicio, «Sigue con»,
-  // «Ver culto →»…) lleva a su capítulo y abre lo que esté plegado.
-  useEffect(() => {
-    const onClick = (event) => {
-      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-      const link = event.target.closest?.('a[href^="#"]');
-      if (!link || !link.closest('main')) return;
-      const id = decodeURIComponent(link.getAttribute('href').slice(1));
-      const target = id ? document.getElementById(id) : null;
-      const section = chapterOf(target) || (target?.matches?.('[data-chapter]') ? target : null);
-      if (!target || !section) return;
-      event.preventDefault();
-      const isChapter = target === section;
-      show(section.id, { target: isChapter ? null : target, push: true, restore: isChapter });
-    };
-    const onPop = () => {
-      const id = decodeURIComponent(window.location.hash.slice(1));
-      const target = id ? document.getElementById(id) : null;
-      const section = chapterOf(target);
-      if (section) show(section.id, { target: target === section ? null : target, restore: target === section });
-      else show(items[0]?.anchor, { restore: true });
-    };
-    document.addEventListener('click', onClick);
-    window.addEventListener('popstate', onPop);
-    return () => {
-      document.removeEventListener('click', onClick);
-      window.removeEventListener('popstate', onPop);
-    };
-  }, [key, show]);
 
   // En ordenador (página continua) el capítulo activo sigue a la lectura.
   useEffect(() => {

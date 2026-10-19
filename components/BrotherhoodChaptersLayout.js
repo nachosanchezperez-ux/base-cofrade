@@ -23,10 +23,10 @@ function Disclosure({ title, count, children, id }) {
 function Chapter({ chapter, index, children, intro, owner, next, home }) {
   return <section className={styles.chapter} id={chapter.anchor} aria-labelledby={`${chapter.anchor}-titulo`} data-chapter={chapter.id}>
     <div className={`shell ${styles.chapterHead}`}>
-      <p className={styles.kicker} id={`${chapter.anchor}-titulo`} tabIndex={-1} data-chapter-title="">
-        <span className={styles.kickerIndex} aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-        <span className={styles.kickerOwner}>{owner} · </span>
-        <span className={styles.kickerLabel}>{chapter.label}</span>
+      <p className={styles.chapterTitle} id={`${chapter.anchor}-titulo`} tabIndex={-1} data-chapter-title="">
+        <span className={styles.chapterNumber} aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+        <span className={styles.chapterOwner}>{owner}</span>
+        <span className={styles.chapterName}>{chapter.label}</span>
       </p>
       {intro ? <p className={styles.chapterIntro}>{intro}</p> : null}
     </div>

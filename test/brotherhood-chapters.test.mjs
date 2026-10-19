@@ -145,8 +145,11 @@ test('Modo aplicación: solo en móvil, solo con JavaScript y sin quitar conteni
   const hide = css.indexOf("[data-app='on'] > section[data-chapter]:not([data-active])");
   assert.ok(hide > 0);
   assert.ok(css.lastIndexOf('@media (max-width: 899px)', hide) > css.lastIndexOf('}\n\n@media (min-width', hide));
-  assert.match(nav, /matchMedia\(APP_QUERY\)/);
-  assert.match(nav, /history\.pushState\(null/);
+  const controller = read('../lib/brotherhood-chapter-app.js');
+  assert.match(nav, /createChapterApp\(/);
+  assert.match(controller, /matchMedia\(CHAPTER_APP_QUERY\)/);
+  assert.match(controller, /history\.pushState\(null/);
+  assert.match(controller, /addEventListener\('click', onClick, true\)/);
   // Los capítulos se renderizan siempre en el servidor (sin condición de cliente).
   assert.doesNotMatch(layout, /'use client'/);
   assert.match(layout, /data-chapters-root/);
