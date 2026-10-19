@@ -85,18 +85,17 @@
 
 /* La figura, entera en la zona clara: no pisa la franja de color. */
 .figure {
-  display: grid;
-  place-items: center;
-  height: min(320px, 82vw);
+  display: flex;
+  justify-content: center;
   margin: 0;
-  padding: 10px 0 14px;
+  padding: 10px 0 16px;
 }
 
 .figure img {
   display: block;
   width: auto;
   max-width: 100%;
-  height: 100%;
+  height: min(296px, 76vw);
   object-fit: contain;
   filter: drop-shadow(0 10px 14px rgba(0, 0, 0, .16));
 }
@@ -119,7 +118,7 @@
   display: contents;
 }
 
-#tunica .pieces dt {
+:global(#tunica).section .pieces dt {
   color: color-mix(in srgb, var(--brotherhood-light, #fff) 72%, transparent);
   font-size: 10px;
   font-weight: 800;
@@ -127,7 +126,7 @@
   text-transform: uppercase;
 }
 
-#tunica .pieces dd {
+:global(#tunica).section .pieces dd {
   margin: 0;
   color: var(--brotherhood-light, #fff);
   font-size: 15px;
@@ -170,7 +169,7 @@
     overflow: visible;
   }
 
-  .figure {
-    height: 340px;
+  .figure img {
+    height: 320px;
   }
 }
