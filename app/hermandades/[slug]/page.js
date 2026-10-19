@@ -34,6 +34,7 @@ import {
 import BrotherhoodChapterTitulars from '@/components/BrotherhoodChapterTitulars';
 import BrotherhoodChapterHistory from '@/components/BrotherhoodChapterHistory';
 import BrotherhoodThread from '@/components/BrotherhoodThread';
+import BrotherhoodChapterProcession from '@/components/BrotherhoodChapterProcession';
 import { brotherhoodThread } from '@/lib/brotherhood-thread';
 import EntitySectionNav from '@/components/EntitySectionNav';
 import FestivalPostersSection from '@/components/FestivalPostersSection';
@@ -508,7 +509,31 @@ export default async function HermandadDetailPage({ params, reading: readingOver
     )}
     {paso.estadoActual && <p className="step-current-state">{paso.estadoActual}</p>}
   </>);
-  const stepsSection = (<>
+  // Ficha por capítulos: el cortejo en orden, de la Cruz de Guía al último paso.
+  const chapterStepsSection = chapters ? (
+    <BrotherhoodChapterProcession
+      title={isPenitencia ? 'Orden del cortejo' : 'La procesión'}
+      crossGuide={crossGuideMusic}
+      steps={steps.map((paso) => {
+        const stepImages = paso.imagenesDetalle?.length
+          ? paso.imagenesDetalle
+          : (paso.imagenes || []).map((id) => imagenMap.get(id)).filter(Boolean);
+        const music = stepAccompaniments(currentMusicItems, paso.id);
+        return {
+          ...paso,
+          media: entityCoverMedia.get(paso.id) || null,
+          framing: getStepPhotoFraming(paso.slug).card,
+          images: stepImages.filter((imagen) => imagen.rol !== 'secundaria').map((imagen) => ({ ...imagenMap.get(imagen.id), ...imagen, autor: imagen.autor || imagenMap.get(imagen.id)?.autor || '', fecha: imagen.fecha || imagenMap.get(imagen.id)?.fecha || '' })),
+          figures: stepImages.filter((imagen) => imagen.rol === 'secundaria'),
+          capataz: publicText(paso.capatazActual),
+          music,
+          musicFallback: music.length ? '' : publicText(paso.acompanamientoActual),
+          descripcion: publicText(paso.descripcion),
+        };
+      })}
+    />
+  ) : null;
+  const stepsSection = chapterStepsSection || (<>
 {h.pasos?.length > 0 && (
       <section className="section" id="pasos"><div className="shell">
         <SectionTitle eyebrow={stepCountText(h.pasos.length)} title="Pasos procesionales" />
@@ -832,6 +857,8 @@ export default async function HermandadDetailPage({ params, reading: readingOver
           hasCrew={crewEvents.length > 0}
           agendaCount={upcomingAgendaItems.length}
           hasMusic={hasMusic}
+          crestSrc={authoritativeCrestPath || ''}
+          tileMedia={(h.imagenes || []).map((imagen) => entityCoverMedia.get(imagen.id)).find((media) => media?.path) || heroMedia || null}
           slots={{ titulars: titularsSection, steps: stepsSection, history: historySection,
             ownMusic: ownMusicSection, musicalHeritage: musicalHeritageSection, repertoires: repertoiresSection,
             historicalMusic: historicalMusicSection, heritage: heritageSection, simpecados: simpecadosSection,

@@ -97,7 +97,7 @@ test('Navegación indexable: anclas normales, contenido en el servidor y un solo
   const nav = read('../components/BrotherhoodChapterNav.js');
   const layout = read('../components/BrotherhoodChaptersLayout.js');
   assert.match(nav, /href=\{item\.href\}/);
-  assert.doesNotMatch(nav, /role="tab"|hidden=\{/);
+  assert.doesNotMatch(nav, /role="tab"|\shidden=\{/);
   assert.doesNotMatch(layout, /'use client'/);
   assert.equal((layout.match(/<BrotherhoodChapterNav/g) || []).length, 1);
   assert.doesNotMatch(layout, /EntitySectionNav/);
@@ -135,4 +135,27 @@ test('El acceso a Hilo resume el recorrido real cuando existe', () => {
   assert.equal(chapters.at(-1).summary, '5 fichas enlazadas, hasta Cristóbal López Gándara');
   const fallback = brotherhoodChapters({ types: ['Penitencia'], availability: { titulars: 1, threadLength: 2, threadEnd: 'X' } });
   assert.equal(fallback.at(-1).summary, 'Hermandades, bandas y autores relacionados');
+});
+
+test('Modo aplicación: solo en móvil, solo con JavaScript y sin quitar contenido del HTML', () => {
+  const css = read('../components/BrotherhoodChaptersLayout.module.css');
+  const nav = read('../components/BrotherhoodChapterNav.js');
+  const layout = read('../components/BrotherhoodChaptersLayout.js');
+  // La regla que oculta capítulos exige data-app="on" (lo pone el JS) y pantalla de móvil.
+  const hide = css.indexOf("[data-app='on'] > section[data-chapter]:not([data-active])");
+  assert.ok(hide > 0);
+  assert.ok(css.lastIndexOf('@media (max-width: 899px)', hide) > css.lastIndexOf('}\n\n@media (min-width', hide));
+  assert.match(nav, /matchMedia\(APP_QUERY\)/);
+  assert.match(nav, /history\.pushState\(null/);
+  // Los capítulos se renderizan siempre en el servidor (sin condición de cliente).
+  assert.doesNotMatch(layout, /'use client'/);
+  assert.match(layout, /data-chapters-root/);
+  assert.match(layout, /Sigue con/);
+});
+
+test('Cortejo en orden: Cruz de Guía y pasos con su banda, sin inventar periodos', () => {
+  const procession = read('../components/BrotherhoodChapterProcession.js');
+  assert.match(procession, /id="pasos"/);
+  assert.match(procession, /Abre el cortejo/);
+  assert.match(procession, /\^desde\\s\+\\d\{4\}\$/);
 });

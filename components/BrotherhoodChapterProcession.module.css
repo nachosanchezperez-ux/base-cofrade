@@ -1,0 +1,232 @@
+.section {
+  background: #fff;
+}
+
+.title {
+  margin: 0 0 16px;
+  color: #171b20;
+  font-size: clamp(22px, 5.6vw, 30px);
+  line-height: 1.15;
+}
+
+/* Orden de la cofradía: una línea vertical que une cada tramo. */
+.order {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.order::before {
+  content: '';
+  position: absolute;
+  top: 24px;
+  bottom: 24px;
+  left: 47px;
+  width: 2px;
+  background: color-mix(in srgb, var(--brotherhood-primary, #153b69) 22%, #e3e7eb);
+}
+
+.stop {
+  position: relative;
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+  padding-block: 12px 18px;
+}
+
+.photo {
+  position: relative;
+  z-index: 1;
+  width: 96px;
+  aspect-ratio: 3 / 4;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #eef0f2;
+  box-shadow: 0 0 0 4px #fff;
+}
+
+.photo img {
+  object-fit: cover;
+}
+
+.marker {
+  position: relative;
+  z-index: 1;
+  justify-self: center;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 2px solid var(--brotherhood-primary, #153b69);
+  border-radius: 50%;
+  background: #fff;
+  color: var(--brotherhood-primary, #153b69);
+  font-size: 18px;
+  font-weight: 800;
+  box-shadow: 0 0 0 4px #fff;
+}
+
+.cross .marker {
+  background: var(--brotherhood-primary, #153b69);
+  color: var(--brotherhood-light, #fff);
+}
+
+.body {
+  min-width: 0;
+  padding-top: 2px;
+}
+
+.kind {
+  color: var(--brotherhood-secondary, #a71930);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.body h3 {
+  margin: 2px 0 6px;
+  font-size: 19px;
+  line-height: 1.25;
+}
+
+.body h3 a,
+.images a,
+.figures a,
+.music a {
+  color: var(--brotherhood-primary, #153b69);
+  text-decoration: none;
+}
+
+.body h3 a:hover,
+.images a:hover,
+.figures a:hover,
+.music a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.images,
+.figures,
+.people {
+  margin: 0 0 4px;
+  color: #3d454e;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.images em {
+  font-style: normal;
+  color: #59636e;
+}
+
+.figures {
+  font-size: 14px;
+}
+
+.people strong {
+  font-weight: 700;
+}
+
+/* La banda, destacada: es lo que el lector busca en la calle. */
+.music {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 0 4px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--brotherhood-primary, #153b69) 7%, #fff);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.music small {
+  display: block;
+  color: #59636e;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.musicIcon {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--brotherhood-primary, #153b69);
+  color: var(--brotherhood-light, #fff);
+  font-size: 15px;
+}
+
+.credit {
+  display: block;
+  margin-top: 4px;
+  color: #6b747d;
+  font-size: 11px;
+}
+
+.more summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  cursor: pointer;
+  list-style: none;
+  color: #2a333c;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.more summary::-webkit-details-marker {
+  display: none;
+}
+
+.more[open] summary b {
+  transform: rotate(45deg);
+}
+
+.more p {
+  margin: 0 0 10px;
+  color: #3d454e;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.technical {
+  font-size: 14px !important;
+  color: #59636e !important;
+}
+
+.more summary:focus-visible,
+.body a:focus-visible {
+  outline: 3px solid #175f99;
+  outline-offset: 2px;
+}
+
+@media (min-width: 900px) {
+  .order::before {
+    left: 79px;
+  }
+
+  .stop {
+    grid-template-columns: 160px minmax(0, 1fr);
+    gap: 24px;
+  }
+
+  .photo {
+    width: 160px;
+  }
+
+  .body h3 {
+    font-size: 22px;
+  }
+
+  .music {
+    display: inline-flex;
+  }
+}

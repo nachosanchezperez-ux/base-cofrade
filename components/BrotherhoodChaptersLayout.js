@@ -1,4 +1,5 @@
-import BrotherhoodChapterNav from './BrotherhoodChapterNav'
+import Image from 'next/image'
+import BrotherhoodChapterNav, { ChapterIcon } from './BrotherhoodChapterNav'
 import BrotherhoodQuickFacts from './BrotherhoodQuickFacts'
 import BrotherhoodOverviewV2 from './BrotherhoodOverviewV2'
 import BrotherhoodEditorialGuide from './BrotherhoodEditorialGuide'
@@ -19,16 +20,26 @@ function Disclosure({ title, count, children, id }) {
   </details>
 }
 
-function Chapter({ chapter, index, children, intro }) {
+function Chapter({ chapter, index, children, intro, owner, next, home }) {
   return <section className={styles.chapter} id={chapter.anchor} aria-labelledby={`${chapter.anchor}-titulo`} data-chapter={chapter.id}>
     <div className={`shell ${styles.chapterHead}`}>
-      <p className={styles.kicker} id={`${chapter.anchor}-titulo`}>
+      <p className={styles.kicker} id={`${chapter.anchor}-titulo`} tabIndex={-1} data-chapter-title="">
         <span className={styles.kickerIndex} aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-        <span>{chapter.label}</span>
+        <span className={styles.kickerOwner}>{owner} · </span>
+        <span className={styles.kickerLabel}>{chapter.label}</span>
       </p>
       {intro ? <p className={styles.chapterIntro}>{intro}</p> : null}
     </div>
     {children}
+    {next || home ? <nav className={`shell ${styles.continue}`} aria-label={`Seguir desde ${chapter.label}`}>
+      {next ? <a href={next.href} className={styles.continueNext}>
+        <small>Sigue con</small>
+        <strong><ChapterIcon icon={next.icon} className={styles.continueIcon} />{next.label}</strong>
+        <span>{next.summary}</span>
+        <b aria-hidden="true">›</b>
+      </a> : null}
+      {home ? <a href={home.href} className={styles.continueHome}>← Volver a {home.label}</a> : null}
+    </nav> : null}
   </section>
 }
 
@@ -46,12 +57,19 @@ export default function BrotherhoodChaptersLayout({
   hasCrew = false,
   agendaCount = 0,
   hasMusic = false,
+  tileMedia = null,
+  crestSrc = '',
   slots,
 }) {
   const byId = Object.fromEntries(chapters.map((chapter, index) => [chapter.id, { chapter, index }]))
-  const render = (id, children, intro) => byId[id]
-    ? <Chapter chapter={byId[id].chapter} index={byId[id].index} intro={intro}>{children}</Chapter>
-    : null
+  const owner = h.nombrePopular || h.nombreOficial || ''
+  const render = (id, children, intro) => {
+    if (!byId[id]) return null
+    const { chapter, index } = byId[id]
+    const next = chapters[index + 1] || null
+    const home = index > 0 ? chapters[0] : null
+    return <Chapter chapter={chapter} index={index} intro={intro} owner={owner} next={index > 0 ? next : null} home={home}>{children}</Chapter>
+  }
   const [leadStory, ...otherStories] = movements
   const intro = h.resumen?.trim() || ''
   const destinations = chapters.filter((chapter) => chapter.id !== 'inicio')
@@ -75,20 +93,31 @@ export default function BrotherhoodChaptersLayout({
     hasCrew ? { title: 'Igualás y ensayos', body: slots.crew } : null,
   ].filter(Boolean)
 
-  return <div className={styles.chapters} data-profile={profile}>
-    <BrotherhoodChapterNav items={chapters} />
+  // Accesos visuales de Inicio: el primero, con la foto del titular si existe.
+  const tiles = <nav className={`shell ${styles.tiles}`} aria-label="Qué descubrir en esta ficha" data-count={destinations.length}>
+    <ol>
+      {destinations.map((chapter, index) => {
+        const photo = index === 0 && tileMedia?.path ? tileMedia : null
+        return <li key={chapter.id} className={photo ? styles.tilePhoto : ''}>
+          <a href={chapter.href}>
+            {photo ? <Image src={photo.path} alt="" fill sizes="(max-width: 899px) calc(100vw - 32px), 560px" className={styles.tileImage} /> : null}
+            <span className={styles.tileIcon}><ChapterIcon icon={chapter.icon} /></span>
+            <strong>{chapter.label}</strong>
+            <span className={styles.tileSummary}>{chapter.summary}</span>
+            <b aria-hidden="true">›</b>
+          </a>
+        </li>
+      })}
+    </ol>
+  </nav>
+
+  return <div className={styles.chapters} data-profile={profile} data-chapters-root="">
+    <BrotherhoodChapterNav items={chapters} name={owner} crestSrc={crestSrc} />
 
     {render('inicio', <>
+      {intro ? <div className="shell"><p className={styles.lead}>{intro}</p></div> : null}
+      {destinations.length ? tiles : null}
       <div className={`shell ${styles.homeGrid}`}>
-        <div className={styles.homeMain}>
-          {intro ? <p className={styles.lead}>{intro}</p> : null}
-          <div className={styles.essentials}>
-            <BrotherhoodQuickFacts brotherhood={h} compact hidePeople heroFactLabels={[...heroFactLabels, 'Pasos']} />
-          </div>
-          <Disclosure title="Sede, dirección y horarios">
-            <BrotherhoodOverviewV2 brotherhood={h} practicalOnly />
-          </Disclosure>
-        </div>
         <div className={styles.homeSide}>
           {nextAppointment}
           {leadStory ? <div className={styles.news} aria-labelledby="actualidad-titulo">
@@ -97,14 +126,15 @@ export default function BrotherhoodChaptersLayout({
             {otherStories.length ? <div className={styles.newsMore}><HiloMovementCards items={otherStories} secondary headingLevel={3} /></div> : null}
           </div> : null}
         </div>
+        <div className={styles.homeMain}>
+          <div className={styles.essentials}>
+            <BrotherhoodQuickFacts brotherhood={h} compact hidePeople heroFactLabels={[...heroFactLabels, 'Pasos']} />
+          </div>
+          <Disclosure title="Sede, dirección y horarios">
+            <BrotherhoodOverviewV2 brotherhood={h} practicalOnly />
+          </Disclosure>
+        </div>
       </div>
-      {destinations.length ? <nav className={`shell ${styles.discover}`} aria-label="Qué descubrir en esta ficha">
-        <ol>
-          {destinations.map((chapter) => <li key={chapter.id}>
-            <a href={chapter.href}><strong>{chapter.label}</strong><span>{chapter.summary}</span><b aria-hidden="true">→</b></a>
-          </li>)}
-        </ol>
-      </nav> : null}
       {lifeLinks.length ? <Supplement>
         <p className={styles.subhead}>Vida de hermandad{agendaCount > 1 ? <small> · {plural(agendaCount, 'cita próxima', 'citas próximas')}</small> : null}</p>
         {lifeLinks.map((item) => <Disclosure key={item.title} title={item.title} count={item.count} id={item.id}>{item.body}</Disclosure>)}
@@ -112,8 +142,8 @@ export default function BrotherhoodChaptersLayout({
     </>)}
 
     {render(isPenitencia ? 'cortejo' : 'procesion', <>
-      {slots.titulars}
       {slots.steps}
+      {slots.titulars}
       {!isPenitencia && h.salidas?.length ? <Supplement>
         <Disclosure title="La salida · horario y recorrido" count={plural(h.salidas.length, 'salida', 'salidas')} id="archivo-salidas">{slots.outings}</Disclosure>
       </Supplement> : null}

@@ -88,7 +88,7 @@
 
 .lead {
   max-width: 62ch;
-  margin: 0 0 18px;
+  margin: 8px 0 18px;
   color: #23272c;
   font-size: 17px;
   line-height: 1.6;
@@ -161,60 +161,287 @@
   font-size: 16px;
 }
 
-/* Qué descubrir: accesos a los capítulos con su contenido real. */
-.discover {
-  margin-top: 26px;
+/* Qué descubrir: accesos visuales a los capítulos, como en una aplicación. */
+.tiles {
+  margin-block: 4px 22px;
 }
 
-.discover ol {
+.tiles ol {
   display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
   margin: 0;
   padding: 0;
   list-style: none;
-  border-top: 1px solid #e3e7eb;
 }
 
-.discover li {
-  border-bottom: 1px solid #e3e7eb;
+/* El primero (Cortejo o Procesión) ocupa el ancho; con número impar de
+   accesos, el último también, para no dejar huecos. */
+.tiles li:first-child,
+.tiles[data-count='2'] li,
+.tiles[data-count='4'] li:last-child {
+  grid-column: 1 / -1;
 }
 
-.discover a {
+.tiles a {
+  position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  grid-template-areas: 'label arrow' 'summary arrow';
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas: 'icon label arrow' 'icon summary arrow';
   align-items: center;
   column-gap: 12px;
-  min-height: 60px;
-  padding: 10px 0;
+  min-height: 76px;
+  padding: 14px;
+  overflow: hidden;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--brotherhood-primary, #153b69) 7%, #fff);
+  color: #171b20;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform .12s ease, background-color .15s ease;
+}
+
+.tiles a:active {
+  transform: scale(.985);
+}
+
+.tiles a:hover {
+  background: color-mix(in srgb, var(--brotherhood-primary, #153b69) 12%, #fff);
+}
+
+.tiles a:focus-visible {
+  outline: 3px solid #175f99;
+  outline-offset: 2px;
+}
+
+.tileIcon {
+  grid-area: icon;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: var(--brotherhood-primary, #153b69);
+  color: var(--brotherhood-light, #fff);
+}
+
+.tileIcon svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.tiles strong {
+  grid-area: label;
+  align-self: end;
+  font-size: 17px;
+  line-height: 1.2;
+}
+
+.tileSummary {
+  grid-area: summary;
+  align-self: start;
+  color: #4b5560;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.tiles b {
+  grid-area: arrow;
+  color: var(--brotherhood-primary, #153b69);
+  font-size: 24px;
+  font-weight: 400;
+}
+
+/* En los accesos de media anchura, icono arriba y texto debajo. */
+.tiles li:not(:first-child):not(:last-child) a,
+.tiles[data-count='3'] li:last-child a,
+.tiles[data-count='5'] li:not(:first-child) a {
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: 'icon arrow' 'label label' 'summary summary';
+  row-gap: 6px;
+  align-items: start;
+  min-height: 132px;
+}
+
+/* Acceso con foto del titular: imagen a sangre con velo para leer el texto. */
+.tilePhoto a {
+  min-height: 150px;
+  align-items: end;
+  background: #171b20;
+  color: #fff;
+}
+
+.tileImage {
+  object-fit: cover;
+  object-position: center 30%;
+}
+
+.tilePhoto a::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(10, 14, 20, .82) 0%, rgba(10, 14, 20, .5) 55%, rgba(10, 14, 20, .15) 100%);
+}
+
+.tilePhoto a > :not(img) {
+  position: relative;
+  z-index: 1;
+}
+
+.tilePhoto .tileSummary,
+.tilePhoto b {
+  color: #fff;
+}
+
+.tilePhoto .tileIcon {
+  background: rgba(255, 255, 255, .18);
+  color: #fff;
+}
+
+/* Sigue con: al final de cada capítulo, el siguiente y la vuelta a Inicio. */
+.continue {
+  display: grid;
+  gap: 10px;
+  margin-block: 18px 8px;
+}
+
+.continueNext {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: 'small arrow' 'label arrow' 'summary arrow';
+  align-items: center;
+  gap: 2px 12px;
+  min-height: 72px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--brotherhood-primary, #153b69) 7%, #fff);
   color: #171b20;
   text-decoration: none;
 }
 
-.discover strong {
-  grid-area: label;
-  font-size: 17px;
-}
-
-.discover span {
-  grid-area: summary;
+.continueNext small {
+  grid-area: small;
   color: #59636e;
-  font-size: 14px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
 }
 
-.discover b {
+.continueNext strong {
+  grid-area: label;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--brotherhood-primary, #153b69);
+  font-size: 18px;
+}
+
+.continueIcon {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.continueNext span {
+  grid-area: summary;
+  color: #4b5560;
+  font-size: 13px;
+}
+
+.continueNext b {
   grid-area: arrow;
   color: var(--brotherhood-primary, #153b69);
-  font-size: 20px;
+  font-size: 26px;
   font-weight: 400;
 }
 
-.discover a:hover strong {
-  color: var(--brotherhood-primary, #153b69);
+.continueHome {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: #2a333c;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
 }
 
-.discover a:focus-visible {
+.continueNext:focus-visible,
+.continueHome:focus-visible {
   outline: 3px solid #175f99;
   outline-offset: 2px;
+}
+
+/* En la página continua (ordenador o sin JavaScript) el nombre de la Hermandad
+   no se repite en cada capítulo; en el modo aplicación hace de cabecera. */
+.kickerOwner {
+  display: none;
+}
+
+.kicker:focus {
+  outline: none;
+}
+
+.kicker:focus-visible {
+  outline: 3px solid #175f99;
+  outline-offset: 4px;
+}
+
+/* Modo aplicación (móvil con JavaScript): un capítulo por pantalla. */
+@media (max-width: 899px) {
+  .chapters[data-app='on'] > section[data-chapter]:not([data-active]) {
+    display: none;
+  }
+
+  .chapters[data-app='on'] > section[data-chapter] {
+    border-top: 0;
+    padding-top: 22px;
+    min-height: calc(100svh - var(--hc-app-header-height, 70px) - 60px);
+  }
+
+  .chapters[data-app='on'] > section[data-chapter]:not([data-chapter='inicio']) .kicker {
+    display: grid;
+    gap: 2px;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .chapters[data-app='on'] > section[data-chapter]:not([data-chapter='inicio']) .kickerIndex {
+    display: none;
+  }
+
+  .chapters[data-app='on'] > section[data-chapter]:not([data-chapter='inicio']) .kickerOwner {
+    display: block;
+    color: #59636e;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+
+  .chapters[data-app='on'] > section[data-chapter]:not([data-chapter='inicio']) .kickerLabel {
+    color: var(--brotherhood-primary, #153b69);
+    font-size: 30px;
+    line-height: 1.1;
+  }
+
+  .chapters[data-app='on'] .continue {
+    margin-bottom: 16px;
+  }
+
+  .chapters[data-app='on'] section.chapter[id] {
+    scroll-margin-top: calc(var(--hc-app-header-height, 70px) + 56px);
+  }
 }
 
 .supplement {
@@ -235,7 +462,7 @@
   }
 
   .homeGrid {
-    grid-template-columns: minmax(0, 1.35fr) minmax(320px, 1fr);
+    grid-template-columns: minmax(0, 1.2fr) minmax(300px, 1fr);
     gap: 48px;
     align-items: start;
   }
@@ -244,20 +471,33 @@
     font-size: 19px;
   }
 
-  .discover ol {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    column-gap: 28px;
-    border-top: 0;
+  .tiles ol {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
-  .discover li {
-    border-top: 2px solid var(--brotherhood-primary, #153b69);
-    border-bottom: 0;
+  .tiles li,
+  .tiles li:first-child,
+  .tiles[data-count='2'] li,
+  .tiles[data-count='4'] li:last-child {
+    grid-column: auto;
   }
 
-  .discover a {
-    min-height: 84px;
-    align-content: start;
-    padding-top: 14px;
+  .tiles a,
+  .tiles li:not(:first-child):not(:last-child) a {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: 'icon arrow' 'label label' 'summary summary';
+    row-gap: 6px;
+    align-items: start;
+    min-height: 150px;
+  }
+
+  .tilePhoto a {
+    align-content: end;
+  }
+
+  .continue {
+    grid-template-columns: minmax(0, 520px) auto;
+    align-items: center;
+    justify-content: space-between;
   }
 }
