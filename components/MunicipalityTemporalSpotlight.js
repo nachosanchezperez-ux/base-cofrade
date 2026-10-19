@@ -2,7 +2,7 @@ import Link from 'next/link'
 import styles from './MunicipalityTemporalSpotlight.module.css'
 
 function targetHref(item) {
-  return item?.href || item?.calendarHref || '/agenda-cofrade'
+  return item?.eventHref || item?.href || item?.calendarHref || '/agenda-cofrade'
 }
 
 function timeLabel(item) {
