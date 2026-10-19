@@ -579,8 +579,19 @@ export default function AgendaCofradeDirectoryV4({
   const viewRef = useRef({ visibleCount, mineOnly })
   viewRef.current = { visibleCount, mineOnly }
 
+  // Tras restaurar, el navegador puede aplicar después su propio scroll de
+  // historial (p. ej. Adelante y Atrás seguidos). Durante un instante, si la página
+  // se mueve sin intervención del lector, se vuelve a la posición restaurada.
+  const restoreGuard = useRef(null)
+
+  const keptOpenDetail = () => {
+    const previous = window.history.state?.[AGENDA_VIEW_STATE_KEY]?.openDetailId || ''
+    return previous && document.getElementById(previous)?.open ? previous : ''
+  }
+
   const saveView = useCallback((extra = {}) => {
     if (pendingRestore.current) return
+    if (restoreGuard.current && Date.now() < restoreGuard.current.until) return
     try {
       const reference = extra.anchor || [...document.querySelectorAll('#agenda article[id^="acto-"]')]
         .find((card) => card.getBoundingClientRect().bottom > 72)
@@ -589,7 +600,8 @@ export default function AgendaCofradeDirectoryV4({
         scrollY: window.scrollY,
         anchorId: reference?.id || '',
         anchorTop: reference ? reference.getBoundingClientRect().top : 0,
-        openDetailId: extra.openDetailId || '',
+        // Un guardado por scroll conserva el detalle abierto que ya estaba anotado.
+        openDetailId: extra.openDetailId ?? keptOpenDetail(),
       })
       window.history.replaceState({ ...(window.history.state || {}), [AGENDA_VIEW_STATE_KEY]: view }, '')
     } catch {}
@@ -641,7 +653,10 @@ export default function AgendaCofradeDirectoryV4({
       const detail = view.openDetailId ? document.getElementById(view.openDetailId) : null
       if (detail) detail.open = true
       const top = agendaRestoreScrollTop(view, anchor ? anchor.getBoundingClientRect().top + window.scrollY : null)
-      if (top !== null) window.scrollTo({ top, behavior: 'instant' })
+      if (top !== null) {
+        window.scrollTo({ top, behavior: 'instant' })
+        restoreGuard.current = { top, until: Date.now() + 900 }
+      }
       pendingRestore.current = null
     }
     frame = window.requestAnimationFrame(apply)
@@ -653,6 +668,11 @@ export default function AgendaCofradeDirectoryV4({
   useEffect(() => {
     let timer = 0
     const onScroll = () => {
+      const guard = restoreGuard.current
+      if (guard && Date.now() < guard.until && Math.abs(window.scrollY - guard.top) > 40) {
+        window.scrollTo({ top: guard.top, behavior: 'instant' })
+        return
+      }
       window.clearTimeout(timer)
       timer = window.setTimeout(() => saveView(), 200)
     }
@@ -662,11 +682,19 @@ export default function AgendaCofradeDirectoryV4({
       if (!link) return
       saveView({ anchor: link.closest('article[id^="acto-"]'), openDetailId: link.closest('details[open]')?.id || '' })
     }
+    // Cualquier gesto del lector anula la protección: su scroll manda.
+    const release = () => { restoreGuard.current = null }
     const root = document.getElementById('agenda')
+    window.addEventListener('wheel', release, { passive: true })
+    window.addEventListener('touchstart', release, { passive: true })
+    window.addEventListener('keydown', release)
     window.addEventListener('scroll', onScroll, { passive: true })
     root?.addEventListener('click', onClick, true)
     return () => {
       window.clearTimeout(timer)
+      window.removeEventListener('wheel', release)
+      window.removeEventListener('touchstart', release)
+      window.removeEventListener('keydown', release)
       window.removeEventListener('scroll', onScroll)
       root?.removeEventListener('click', onClick, true)
     }
