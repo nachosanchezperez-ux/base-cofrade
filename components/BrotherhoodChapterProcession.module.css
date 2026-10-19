@@ -225,34 +225,62 @@
   height: auto;
 }
 
-.nazarenes .body {
+.habitCard {
+  display: grid;
+  gap: 8px;
   align-self: center;
-  padding: 10px 14px;
-  border-radius: 12px;
-  background: color-mix(in srgb, var(--brotherhood-primary, #153b69) 6%, #fff);
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--brotherhood-primary, #153b69) 7%, #fff);
+  color: #23272c;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.habitCard:active {
+  transform: scale(.985);
+}
+
+.habitCard:focus-visible {
+  outline: 3px solid #175f99;
+  outline-offset: 2px;
+}
+
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.pill {
+  display: inline-grid;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.pill em {
+  color: #59636e;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
 }
 
 .habitLine {
-  margin: 2px 0 4px;
-  color: #23272c;
   font-size: 15px;
   font-weight: 600;
   line-height: 1.4;
 }
 
 .habitLink {
-  display: inline-flex;
-  align-items: center;
-  min-height: 36px;
   color: var(--brotherhood-primary, #153b69);
   font-size: 14px;
-  font-weight: 700;
-  text-decoration: none;
-}
-
-.habitLink:focus-visible {
-  outline: 3px solid #175f99;
-  outline-offset: 2px;
+  font-weight: 800;
 }
 
 @media (min-width: 900px) {

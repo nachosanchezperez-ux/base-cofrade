@@ -27,17 +27,21 @@ function Music({ items = [], fallback = '' }) {
   </p>
 }
 
-// Tramo de nazarenos: la túnica a la vista dentro del orden del cortejo.
+// Tramo de nazarenos: la figura sobre el hilo del cortejo y sus prendas
+// principales en pastillas (túnica, antifaz, cíngulo). Toca para ver la túnica.
 function Nazarenes({ habit }) {
+  const pills = habit.pills || []
   return <li className={`${styles.stop} ${styles.nazarenes}`}>
     {habit.imagenPath
-      ? <figure className={styles.habitFigure}><Image src={habit.imagenPath} alt="" width={1024} height={1536} sizes="96px" /></figure>
+      ? <figure className={styles.habitFigure}><Image src={habit.imagenPath} alt="" width={1024} height={1536} sizes="110px" /></figure>
       : <span className={styles.marker} aria-hidden="true">N</span>}
-    <div className={styles.body}>
+    <a href={habit.anchor || '#tunica'} className={styles.habitCard}>
       <small className={styles.kind}>Nazarenos{habit.label ? ` · ${habit.label}` : ''}</small>
-      <p className={styles.habitLine}>{habit.summary}</p>
-      <a href="#tunica" className={styles.habitLink}>Ver la túnica completa <span aria-hidden="true">→</span></a>
-    </div>
+      {pills.length ? <span className={styles.pills}>
+        {pills.map((pill) => <span key={pill.key} className={styles.pill}><em>{pill.label}</em>{pill.value}</span>)}
+      </span> : <span className={styles.habitLine}>{habit.summary}</span>}
+      <span className={styles.habitLink}>Ver la túnica <span aria-hidden="true">›</span></span>
+    </a>
   </li>
 }
 

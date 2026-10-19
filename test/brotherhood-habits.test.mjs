@@ -39,3 +39,14 @@ test('El acceso a Cortejo menciona la túnica (solo Penitencia)', () => {
   const [, procesion] = brotherhoodChapters({ types: ['Gloria'], availability: { titulars: 1, steps: 1, habit: 'X' } });
   assert.equal(procesion.summary, '1 titular · 1 paso');
 });
+
+import { habitDifferences, habitShortName } from '../lib/brotherhood-habits.js';
+
+test('Nombre corto y diferencias entre hábitos', () => {
+  assert.equal(habitShortName('Cortejo del paso de Cristo'), 'Cristo');
+  assert.equal(habitShortName('Cortejo del paso de palio'), 'Palio');
+  assert.equal(habitShortName('Hábito de nazareno'), 'Hábito de nazareno');
+  const habits = documentedHabits([baratilloCristo, baratilloPalio]);
+  assert.deepEqual([...habitDifferences(habits)], ['cordon']);
+  assert.equal(habitDifferences(documentedHabits([sanBenito])).size, 0);
+});

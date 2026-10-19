@@ -3,105 +3,280 @@
 }
 
 .title {
-  margin: 0 0 16px;
+  margin: 0 0 6px;
   color: #171b20;
   font-size: clamp(22px, 5.6vw, 30px);
   line-height: 1.15;
 }
 
-.grid {
-  display: grid;
-  gap: 16px;
+.changes {
+  margin: 0 0 12px;
+  color: #3d454e;
+  font-size: 15px;
+  line-height: 1.45;
 }
 
-/* La figura del nazareno, protagonista; las prendas, al lado. */
-.habit {
-  display: grid;
-  grid-template-columns: minmax(120px, 40%) minmax(0, 1fr);
-  gap: 16px;
+.changes strong {
+  color: var(--brotherhood-primary, #153b69);
+}
+
+/* Pestañas (con varios hábitos): saltan a cada tarjeta del carrusel. */
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.tabs a {
+  display: inline-flex;
   align-items: center;
-  padding: 16px;
-  border-radius: 16px;
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--brotherhood-primary, #153b69) 9%, #fff);
+  color: var(--brotherhood-primary, #153b69);
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.tabs a:focus-visible {
+  outline: 3px solid #175f99;
+  outline-offset: 2px;
+}
+
+/* Carrusel horizontal con imán (scroll-snap): se desliza con el dedo. */
+.rail {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: calc(100% - 32px);
+  gap: 12px;
+  padding: 0 16px 6px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 16px;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+
+.rail::-webkit-scrollbar {
+  display: none;
+}
+
+.rail[data-count='1'] {
+  grid-auto-columns: 100%;
+  overflow: visible;
+}
+
+.card {
+  scroll-snap-align: start;
+  min-width: 0;
+  padding: 14px 14px 16px;
+  border-radius: 20px;
   background: color-mix(in srgb, var(--brotherhood-primary, #153b69) 6%, #fff);
 }
 
-.habit:not(:has(.figure)) {
-  grid-template-columns: minmax(0, 1fr);
+.cardTitle {
+  margin: 0 0 4px;
+  color: var(--brotherhood-primary, #153b69);
+  font-size: 17px;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* La figura, protagonista, con sus prendas señaladas a los lados. */
+.stage {
+  position: relative;
+  height: min(420px, 105vw);
+  margin: 4px 0 14px;
+  border-radius: 16px;
+  background: radial-gradient(ellipse at 50% 55%, #fff 0%, #fff 38%, transparent 72%);
 }
 
 .figure {
+  position: absolute;
+  inset: 0 27%;
   margin: 0;
 }
 
 .figure img {
-  display: block;
   width: 100%;
-  height: auto;
-  max-height: 340px;
+  height: 100%;
   object-fit: contain;
 }
 
-.copy {
-  min-width: 0;
+.callouts {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  pointer-events: none;
 }
 
-.copy h3 {
-  margin: 0 0 8px;
-  color: var(--brotherhood-primary, #153b69);
-  font-size: 17px;
-  line-height: 1.25;
+.callout {
+  position: absolute;
+  width: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
 }
 
-.copy dl {
+.callout[data-side='right'] {
+  right: 0;
+  justify-content: flex-end;
+}
+
+.callout[data-side='left'] {
+  left: 0;
+}
+
+/* Hilo que une la etiqueta con la figura, rematado con un punto. */
+.callout::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  height: 1.5px;
+  width: 38%;
+  background: var(--brotherhood-secondary, #a71930);
+  opacity: .7;
+}
+
+.callout::after {
+  content: '';
+  position: absolute;
+  top: calc(50% - 4px);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--brotherhood-secondary, #a71930);
+  box-shadow: 0 0 0 2px #fff;
+}
+
+.callout[data-side='right']::before {
+  left: 8%;
+}
+
+.callout[data-side='right']::after {
+  left: 6%;
+}
+
+.callout[data-side='left']::before {
+  right: 8%;
+}
+
+.callout[data-side='left']::after {
+  right: 6%;
+}
+
+.chip {
+  position: relative;
+  z-index: 1;
   display: grid;
+  max-width: 54%;
+  padding: 5px 8px;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(13, 41, 73, .1);
+  line-height: 1.15;
+}
+
+.callout[data-side='right'] .chip {
+  text-align: right;
+}
+
+.chip small {
+  color: #59636e;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.chip strong {
+  color: #171b20;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* Las prendas, en fichas de dos columnas; lo que cambia, señalado. */
+.pieces {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
   margin: 0;
 }
 
-.copy dl div {
-  display: grid;
-  gap: 1px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid color-mix(in srgb, var(--brotherhood-primary, #153b69) 14%, #fff);
+.pieces div {
+  min-width: 0;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: #fff;
 }
 
-.copy dl div:last-child {
-  border-bottom: 0;
-  padding-bottom: 0;
+.pieces div.changed {
+  box-shadow: inset 0 0 0 2px var(--brotherhood-secondary, #a71930);
 }
 
-.copy dt {
+.pieces dt {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   color: #59636e;
   font-size: 11px;
   font-weight: 800;
-  letter-spacing: .1em;
+  letter-spacing: .08em;
   text-transform: uppercase;
 }
 
-.copy dd {
-  margin: 0;
-  color: #23272c;
-  font-size: 15px;
-  font-weight: 600;
-  line-height: 1.4;
+.badge {
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: var(--brotherhood-secondary, #a71930);
+  color: #fff;
+  font-size: 9px;
+  letter-spacing: .04em;
 }
 
-@media (max-width: 380px) {
-  .habit {
-    grid-template-columns: 110px minmax(0, 1fr);
-    gap: 12px;
-    padding: 12px;
-  }
+.pieces dd {
+  margin: 2px 0 0;
+  color: #23272c;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.35;
 }
 
 @media (min-width: 900px) {
-  .grid[data-count='2'],
-  .grid[data-count='3'] {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .rail {
+    width: min(100% - 40px, 1160px);
+    margin-inline: auto;
+    padding: 0;
+    grid-auto-flow: row;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    grid-auto-columns: auto;
+    overflow: visible;
   }
 
-  .habit {
-    grid-template-columns: 200px minmax(0, 1fr);
-    padding: 20px;
+  .stage {
+    height: 440px;
+  }
+
+  .tabs {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .rail {
+    scroll-behavior: smooth;
   }
 }
