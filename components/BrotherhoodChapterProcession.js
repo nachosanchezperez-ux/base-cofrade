@@ -8,6 +8,15 @@ import styles from './BrotherhoodChapterProcession.module.css'
 // banda que lo acompaña. Los datos técnicos van plegados. Conserva el ancla
 // #pasos de la ficha. Solo se muestran datos documentados.
 
+// «, de Luis Ortega Bru» pero «, atribuido a Roque de Balduque» o «, autor desconocido».
+export function authorship(autor = '') {
+  const value = String(autor || '').trim()
+  if (!value) return ''
+  return /^(atribuid|anónim|anonim|autor desconocido|desconocido|escuela|taller|círculo|circulo|seguidor)/i.test(value)
+    ? `, ${value.charAt(0).toLowerCase()}${value.slice(1)}`
+    : `, de ${value}`
+}
+
 function BandLink({ item }) {
   return item.bandaSlug
     ? <Link href={`/bandas/${item.bandaSlug}`} prefetch={false}>{item.banda}</Link>
@@ -76,7 +85,7 @@ export default function BrotherhoodChapterProcession({ title = 'Pasos', crossGui
                 {step.images.map((image, imageIndex) => <span key={image.id}>
                   {imageIndex ? ' · ' : ''}
                   {image.fichaDisponible && image.slug ? <Link href={`/imagenes/${image.slug}`} prefetch={false}>{image.nombre}</Link> : image.nombre}
-                  {image.autor ? <em>, de {image.autor}{image.fecha ? ` (${image.fecha})` : ''}</em> : null}
+                  {image.autor ? <em>{authorship(image.autor)}{image.fecha ? ` (${image.fecha})` : ''}</em> : null}
                 </span>)}
               </p> : null}
               {step.figures.length ? <p className={styles.figures}>Figuras: {step.figures.map((image, i) => <span key={image.id}>{i ? ', ' : ''}{image.fichaDisponible && image.slug ? <Link href={`/imagenes/${image.slug}`} prefetch={false}>{image.nombre}</Link> : image.nombre}</span>)}</p> : null}

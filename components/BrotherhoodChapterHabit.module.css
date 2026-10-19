@@ -13,13 +13,12 @@
 .rail {
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: calc(100% - 48px);
+  grid-auto-columns: calc(100% - 40px);
   gap: 12px;
-  margin-inline: -16px;
-  padding: 4px 16px 10px;
+  /* Dentro del margen de la página: asoma el siguiente cromo sin desbordar. */
+  padding: 4px 0 10px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  scroll-padding-inline: 16px;
   overscroll-behavior-x: contain;
   scrollbar-width: none;
 }
