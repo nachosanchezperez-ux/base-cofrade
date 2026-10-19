@@ -5,7 +5,6 @@ import EntitySectionNav from '@/components/EntitySectionNav';
 import EntityLastUpdated from '@/components/EntityLastUpdated';
 import JsonLd from '@/components/JsonLd';
 import RelationalEntityHero from '@/components/RelationalEntityHero';
-import RelationalThread from '@/components/RelationalThread';
 import SectionTitle from '@/components/SectionTitle';
 import StepCrewFacts from '@/components/StepCrewFacts';
 import { getStepPhotoFraming } from '@/lib/step-photo-framing';
@@ -119,36 +118,6 @@ export default async function PasoDetailPage({params}){
   const municipalityHubHref = hermandad?.localidad
     ? agendaMunicipalityHref(hermandad.localidad)
     : '';
-  const relationalItems = [
-    ...(hermandad ? [{
-      kind: 'Hermandad',
-      relation: 'Pertenece a',
-      title: hermandad.nombrePopular,
-      href: `/hermandades/${hermandad.slug}`,
-      context: 'Ficha matriz de la corporación',
-    }] : []),
-    ...imagenes.map((imagen) => ({
-      kind: 'Imagen',
-      relation: imagen.rol === 'secundaria' ? 'Figura del misterio' : 'Procesiona aquí',
-      title: imagen.nombre,
-      href: `/imagenes/${imagen.slug}`,
-      context: [imagen.autor, imagen.fecha].filter(Boolean).join(' · '),
-    })),
-    ...bandas.map((banda) => ({
-      kind: 'Banda',
-      relation: banda.posicion || 'Acompañamiento',
-      title: banda.nombre,
-      href: `/bandas/${banda.slug}`,
-      context: [banda.salida, banda.periodo].filter(Boolean).join(' · '),
-    })),
-    ...historicoMusical.filter((item) => item.slug).map((item) => ({
-      kind: 'Banda',
-      relation: 'Acompañó a este paso',
-      title: item.name,
-      href: `/bandas/${item.slug}`,
-      context: [item.period, item.position].filter(Boolean).join(' · '),
-    })),
-  ];
   const canonicalPath = `/pasos/${paso.slug}`;
   const breadcrumbs = [
     { name: 'Inicio', path: '/' },
@@ -203,10 +172,6 @@ export default async function PasoDetailPage({params}){
           { label: 'Pasos', href: '/pasos' },
           { label: paso.nombre },
         ]}
-        badges={[
-          paso.tipo,
-          imagenes.length ? `${imagenes.length} ${imagenes.length === 1 ? 'imagen vinculada' : 'imágenes vinculadas'}` : '',
-        ]}
         relation={hermandad ? {
           label: 'Pertenece a',
           name: hermandad.nombrePopular,
@@ -216,13 +181,11 @@ export default async function PasoDetailPage({params}){
         facts={[
           publicText(paso.ejecucion) ? { label: 'Ejecución', value: publicText(paso.ejecucion) } : null,
           publicText(paso.sistemaPortadores) ? { label: 'Sistema de portadores', value: publicText(paso.sistemaPortadores) } : null,
-          { label: imagenes.length === 1 ? 'Imagen' : 'Imágenes', value: imagenes.length || '' },
         ]}
         media={{
           photoSrc: coverMedia?.path || '',
           photoAlt: coverMedia?.alt || `Fotografía de ${paso.nombre}`,
           credit: coverMedia?.credit || '',
-          initials: paso.nombre.slice(0, 2).toUpperCase(),
           width: coverMedia?.width,
           height: coverMedia?.height,
           focusX: coverMedia?.focusX,
@@ -236,7 +199,6 @@ export default async function PasoDetailPage({params}){
 
       <EntitySectionNav items={[
         { href: '#resumen', label: 'Resumen' },
-        relationalItems.length > 0 && { href: '#tira-del-hilo', label: 'Tira del hilo' },
         (bandas.length > 0 || historicoMusical.length > 0) && { href: '#acompanamiento', label: 'Acompañamiento' },
         (heritage.phases.length > 0 || heritage.pieces.length > 0 || heritage.sources.length > 0) && { href: '#patrimonio', label: 'Patrimonio y evolución' },
       ]} />
@@ -247,18 +209,12 @@ export default async function PasoDetailPage({params}){
           <EntityLastUpdated value={paso.updatedAt} />
           {publicText(paso.descripcion) ? <p className="body-large">{publicText(paso.descripcion)}</p> : null}
           <div className="step-facts">
-            {hermandad ? <div>
-              <small>Hermandad</small>
-              <strong>{hermandad.nombrePopular}</strong>
-            </div> : null}
             {municipalityHubHref ? <div>
               <small>Localidad</small>
               <Link href={municipalityHubHref}>Guía cofrade de {hermandad.localidad} →</Link>
             </div> : null}
             {publicText(paso.tipo) ? <div><small>Tipo</small><strong>{publicText(paso.tipo)}</strong>{directoryType ? <Link href={heritageDirectoryTypePath('pasos', directoryType.slug)}>Ver {directoryType.label.toLowerCase()} →</Link> : null}</div> : null}
-            {publicText(paso.ejecucion) ? <div><small>Ejecución</small><strong>{publicText(paso.ejecucion)}</strong></div> : null}
             {publicText(paso.materiales) ? <div><small>Materiales</small><strong>{publicText(paso.materiales)}</strong></div> : null}
-            {publicText(paso.sistemaPortadores) ? <div><small>Sistema de portadores</small><strong>{publicText(paso.sistemaPortadores)}</strong></div> : null}
             <StepCrewFacts stepId={paso.id} />
           </div>
         </div>
@@ -279,24 +235,12 @@ export default async function PasoDetailPage({params}){
         </aside> : null}
       </div></section>
 
-      <RelationalThread
-        currentName={paso.nombre}
-        currentMeta={[paso.tipo, paso.ejecucion].filter(Boolean).join(' · ')}
-        items={relationalItems}
-        priorityProfile="paso"
-        title="Este paso conecta patrimonio, imágenes y música"
-        description="Desde aquí puedes volver a la Hermandad, abrir las fichas de las imágenes que procesionan o continuar hacia las formaciones musicales vinculadas actualmente."
-      />
-
       {(bandas.length > 0 || historicoMusical.length > 0) && (
         <section className={`section ${styles.accompanimentSection}`} id="acompanamiento">
           <div className="shell">
             <SectionTitle
               eyebrow={bandas.length > 0 ? 'Relación actual' : 'Histórico'}
               title="Acompañamiento musical"
-              description={bandas.length > 0
-                ? 'Formaciones vinculadas a este paso mediante acompañamientos documentados, con su histórico.'
-                : 'Formaciones que acompañaron a este paso en periodos documentados.'}
             />
             {bandas.length > 0 ? <div className={styles.accompanimentGrid}>
               {bandas.map((banda) => (
@@ -332,9 +276,6 @@ export default async function PasoDetailPage({params}){
             <SectionTitle
               eyebrow="Patrimonio documentado"
               title="Patrimonio y evolución"
-              description={(heritage.phases.length || heritage.pieces.length)
-                ? 'Las piezas del paso y su evolución material: diseño, talla, bordado, orfebrería, dorados y restauraciones.'
-                : 'Fuentes documentales vinculadas a la configuración patrimonial del paso.'}
             />
           </div>
 

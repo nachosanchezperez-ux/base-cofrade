@@ -30,9 +30,7 @@ function ParentRelation({ relation }) {
             sizes="48px"
           />
         </span>
-      ) : (
-        <span className={styles.relationNode} aria-hidden="true">HC</span>
-      )}
+      ) : null}
       <span className={styles.relationCopy}>
         <small>{relation.label || 'Titular de'}</small>
         <strong>{relation.name}</strong>
@@ -64,14 +62,6 @@ export default function ImageHeroV2({
   const autoContain = aspect === null ? true : aspect < 1.35;
   const useContainedPhoto = fitMode === 'contain' || (fitMode === 'auto' && autoContain);
   const bypassImageOptimizer = isWikimediaUpload(photoSrc);
-  const initials = media.initials || title
-    ?.split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((word) => word[0])
-    .join('')
-    .toUpperCase()
-    || 'HC';
   const desktopFocusX = Number(media.focusX ?? 50);
   const desktopFocusY = Number(media.focusY ?? 50);
   const mobileFocusX = Number(media.mobileFocusX ?? media.focusX ?? 50);
@@ -137,9 +127,7 @@ export default function ImageHeroV2({
             />
           )}
         </div>
-      ) : (
-        <span className={styles.initialsBackdrop} aria-hidden="true">{initials}</span>
-      )}
+      ) : null}
 
       <span
         className={`${styles.photoVeil} ${roomStyles.photoVeil} ${useContainedPhoto ? roomStyles.containedVeil : ''}`}
