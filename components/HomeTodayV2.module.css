@@ -463,11 +463,7 @@
   line-height: 1.3;
 }
 
-.musicContext a {
-  text-decoration: underline;
-  text-decoration-color: rgba(255, 255, 255, .28);
-  text-underline-offset: 3px;
-}
+
 
 .whyToday {
   margin-top: 14px;
@@ -888,11 +884,7 @@
   border-color: #9fb3c4;
 }
 
-.card:has(.cardLink):hover h3 {
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 4px;
-}
+
 
 /*
  * Foco de «Descubre» en la portada (#1253): un solo punto focal por bloque.

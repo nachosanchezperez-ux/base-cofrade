@@ -211,8 +211,6 @@
 .archiveAccess a:focus-visible {
   background: #f1f4f6;
   border-color: #b5c2ca;
-  text-decoration: underline;
-  text-underline-offset: 3px;
 }
 .archiveAccess a span {
   color: #b01b32;
