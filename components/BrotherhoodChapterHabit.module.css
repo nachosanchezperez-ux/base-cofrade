@@ -93,121 +93,66 @@
   white-space: nowrap;
 }
 
-/* La figura, protagonista, con sus prendas señaladas a los lados. */
+/* La figura, protagonista y grande, con puntos numerados sobre cada prenda. */
 .stage {
-  position: relative;
-  /* La figura (2:3) ocupa el 52 % del ancho y toda la altura del escenario,
-     para que las etiquetas caigan a la altura de cada prenda. */
-  aspect-ratio: 100 / 78;
-  margin: 4px 0 14px;
+  display: grid;
+  place-items: center;
+  height: min(440px, 112vw);
+  margin: 6px 0 14px;
   border-radius: 16px;
-  background: radial-gradient(ellipse at 50% 55%, #fff 0%, #fff 38%, transparent 72%);
+  background: radial-gradient(ellipse at 50% 55%, #fff 0%, #fff 42%, transparent 75%);
 }
 
 .figure {
-  position: absolute;
-  inset: 0 24%;
+  position: relative;
+  height: 100%;
+  aspect-ratio: 2 / 3;
   margin: 0;
 }
 
 .figure img {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
 
-.callouts {
+.hotspots {
   position: absolute;
-  inset: 0;
+  inset: 3% 0;
   margin: 0;
   padding: 0;
   list-style: none;
   pointer-events: none;
 }
 
-.callout {
+.hotspots li {
   position: absolute;
-  width: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  align-items: center;
-}
-
-.callout[data-side='right'] {
-  right: 0;
-  justify-content: flex-end;
-}
-
-.callout[data-side='left'] {
-  left: 0;
-}
-
-/* Hilo que une la etiqueta con la figura, rematado con un punto. */
-.callout::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  height: 1.5px;
-  width: 38%;
-  background: var(--brotherhood-secondary, #a71930);
-  opacity: .7;
-}
-
-.callout::after {
-  content: '';
-  position: absolute;
-  top: calc(50% - 4px);
-  width: 8px;
-  height: 8px;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  transform: translate(-50%, -50%);
+  border: 2px solid #fff;
   border-radius: 50%;
   background: var(--brotherhood-secondary, #a71930);
-  box-shadow: 0 0 0 2px #fff;
-}
-
-.callout[data-side='right']::before {
-  left: 8%;
-}
-
-.callout[data-side='right']::after {
-  left: 6%;
-}
-
-.callout[data-side='left']::before {
-  right: 8%;
-}
-
-.callout[data-side='left']::after {
-  right: 6%;
-}
-
-.chip {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  max-width: 54%;
-  padding: 5px 8px;
-  border-radius: 10px;
-  background: #fff;
-  box-shadow: 0 2px 10px rgba(13, 41, 73, .1);
-  line-height: 1.15;
-}
-
-.callout[data-side='right'] .chip {
-  text-align: right;
-}
-
-.chip small {
-  color: #59636e;
-  font-size: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .25);
+  color: #fff;
+  font-size: 12px;
   font-weight: 800;
-  letter-spacing: .08em;
-  text-transform: uppercase;
+  line-height: 1;
 }
 
-.chip strong {
-  color: #171b20;
-  font-size: 13px;
-  font-weight: 700;
+.number {
+  display: inline-grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--brotherhood-secondary, #a71930);
+  color: #fff;
+  font-size: 10px;
+  letter-spacing: 0;
 }
 
 /* Las prendas, en fichas de dos columnas; lo que cambia, señalado. */
@@ -269,7 +214,7 @@
   }
 
   .stage {
-    max-height: 460px;
+    height: 460px;
   }
 
   .tabs {
