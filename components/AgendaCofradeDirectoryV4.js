@@ -10,6 +10,7 @@ import { routeSummarySections } from '@/lib/procession-route'
 import { agendaTemporalDateInfo, agendaTemporalRangeDate, withAgendaTemporalDay } from '@/lib/agenda-temporal-display'
 import { agendaEventAnchor, agendaDirectionsHref, isOutingEvent, schedulePrecision, scheduleTimeHint } from '@/lib/agenda-event-presentation'
 import { agendaItemShare } from '@/lib/share'
+import { agendaInitialStateFromParams } from '@/lib/agenda-cofrade-url-state'
 import { AGENDA_VIEW_STATE_KEY, agendaFilterSearch, agendaHashAfterFilterChange, agendaRestoreScrollTop, readAgendaView, serializeAgendaView } from '@/lib/agenda-view-state'
 import ShareActions from '@/components/ShareActions'
 import HomeDiscoverIcon from '@/components/HomeDiscoverIcon'
@@ -597,12 +598,29 @@ export default function AgendaCofradeDirectoryV4({
   useEffect(() => {
     if (window.location.hash.startsWith('#acto-')) return // el ancla de un acto manda
     let view = null
-    try { view = readAgendaView(window.history.state, AGENDA_PAGE_SIZE) } catch {}
-    if (!view) return
-    if (view.mineOnly) {
-      restoringFilterKey.current = `${period}|${category}|${territory}|${municipality}|true`
-      setMineOnly(true)
+    let fromUrl = null
+    let misInUrl = false
+    try {
+      view = readAgendaView(window.history.state, AGENDA_PAGE_SIZE)
+      const params = new URLSearchParams(window.location.search)
+      fromUrl = agendaInitialStateFromParams((name) => params.get(name))
+      misInUrl = params.get('mis') === '1'
+    } catch {}
+    // Al volver, el router puede reutilizar la página tal como se pintó la primera
+    // vez (sin filtros): la selección se toma de la URL, que es la que manda.
+    if (fromUrl) {
+      const nextMine = Boolean(view?.mineOnly) || misInUrl
+      const target = `${fromUrl.initialPeriod}|${fromUrl.initialCategory}|${fromUrl.initialTerritory}|${fromUrl.initialMunicipality}|${nextMine}`
+      if (target !== filterKey) {
+        restoringFilterKey.current = target
+        setPeriod(fromUrl.initialPeriod)
+        setCategory(fromUrl.initialCategory)
+        setTerritory(fromUrl.initialTerritory)
+        setMunicipality(fromUrl.initialMunicipality)
+        if (nextMine) setMineOnly(true)
+      }
     }
+    if (!view) return
     setVisibleCount(view.visibleCount)
     pendingRestore.current = view
     setRestoreTick((tick) => tick + 1)
