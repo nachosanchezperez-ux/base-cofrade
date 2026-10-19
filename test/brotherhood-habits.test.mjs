@@ -40,7 +40,7 @@ test('El acceso a Cortejo menciona la túnica (solo Penitencia)', () => {
   assert.equal(procesion.summary, '1 titular · 1 paso');
 });
 
-import { habitDifferences, habitOtherValues, habitShortName } from '../lib/brotherhood-habits.js';
+import { habitComparison, habitDifferences, habitShortName } from '../lib/brotherhood-habits.js';
 
 test('Nombre corto y diferencias entre hábitos', () => {
   assert.equal(habitShortName('Cortejo del paso de Cristo'), 'Cristo');
@@ -49,8 +49,7 @@ test('Nombre corto y diferencias entre hábitos', () => {
   const habits = documentedHabits([baratilloCristo, baratilloPalio]);
   assert.deepEqual([...habitDifferences(habits)], ['cordon']);
   assert.equal(habitDifferences(documentedHabits([sanBenito])).size, 0);
-  const [cristo, palio] = habits;
-  assert.deepEqual(habitOtherValues(habits, cristo, 'cordon').map((o) => o.name), ['palio']);
-  assert.deepEqual(habitOtherValues(habits, palio, 'cordon').map((o) => o.name), ['Cristo']);
-  assert.deepEqual(habitOtherValues(habits, cristo, 'tunica'), []);
+  const { changed, common } = habitComparison(habits);
+  assert.deepEqual(changed, [{ key: 'cordon', label: changed[0].label, values: ['Rojo', 'Blanco'] }]);
+  assert.deepEqual(common.map((field) => [field.key, field.value]), [['tunica', 'Azul de cola'], ['antifaz', 'Azul']]);
 });

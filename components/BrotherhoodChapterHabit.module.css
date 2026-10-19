@@ -3,87 +3,10 @@
 }
 
 .title {
-  margin: 0 0 6px;
+  margin: 0 0 14px;
   color: #171b20;
   font-size: clamp(22px, 5.6vw, 30px);
   line-height: 1.15;
-}
-
-.changes {
-  margin: 0 0 12px;
-  color: #3d454e;
-  font-size: 15px;
-  line-height: 1.45;
-}
-
-.changes strong {
-  color: var(--brotherhood-primary, #153b69);
-}
-
-/* Pestañas (con varios hábitos): saltan a cada tarjeta del carrusel. */
-.tabs {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 12px;
-}
-
-.tabs a {
-  display: inline-flex;
-  align-items: center;
-  min-height: 40px;
-  padding: 0 16px;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--brotherhood-primary, #153b69) 9%, #fff);
-  color: var(--brotherhood-primary, #153b69);
-  font-size: 14px;
-  font-weight: 800;
-  text-decoration: none;
-}
-
-.tabs a:focus-visible {
-  outline: 3px solid #175f99;
-  outline-offset: 2px;
-}
-
-/* Carrusel horizontal con imán (scroll-snap): se desliza con el dedo. */
-.rail {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: calc(100% - 32px);
-  gap: 12px;
-  padding: 0 16px 6px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-padding-inline: 16px;
-  overscroll-behavior-x: contain;
-  scrollbar-width: none;
-}
-
-.rail::-webkit-scrollbar {
-  display: none;
-}
-
-.rail[data-count='1'] {
-  grid-auto-columns: 100%;
-  overflow: visible;
-}
-
-.card {
-  scroll-snap-align: start;
-  /* Al saltar desde el tramo, que el título no quede bajo la cabecera. */
-  scroll-margin-top: calc(var(--chapter-offset, 140px) + 8px);
-  min-width: 0;
-  padding: 14px 14px 16px;
-  border-radius: 20px;
-  background: color-mix(in srgb, var(--brotherhood-primary, #153b69) 6%, #fff);
-}
-
-.cardTitle {
-  margin: 0 0 4px;
-  color: var(--brotherhood-primary, #153b69);
-  font-size: 17px;
-  line-height: 1.25;
-  text-align: center;
 }
 
 .visuallyHidden {
@@ -95,53 +18,45 @@
   white-space: nowrap;
 }
 
-/* La figura, protagonista y grande. */
-.stage {
-  display: grid;
-  place-items: center;
-  height: min(370px, 94vw);
-  margin: 6px 0 14px;
-  border-radius: 16px;
-  background: radial-gradient(ellipse at 50% 55%, #fff 0%, #fff 42%, transparent 75%);
-}
-
 .figure {
-  height: 100%;
-  aspect-ratio: 2 / 3;
   margin: 0;
 }
 
 .figure img {
   display: block;
   width: 100%;
-  height: 100%;
-  object-fit: contain;
+  height: auto;
 }
 
-/* Las prendas, en fichas de dos columnas; lo que cambia, señalado. */
-.pieces {
+/* Al saltar desde el tramo del cortejo, que no quede bajo la cabecera. */
+.single,
+.name {
+  scroll-margin-top: calc(var(--chapter-offset, 140px) + 8px);
+}
+
+/* Un hábito: figura y lista de prendas, como en un programa de mano. */
+.single {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
+  grid-template-columns: minmax(0, 38%) minmax(0, 1fr);
+  gap: 16px;
+  align-items: center;
+}
+
+.list {
   margin: 0;
 }
 
-.pieces div {
-  min-width: 0;
-  padding: 10px 12px;
-  border-radius: 12px;
-  background: #fff;
+.list div {
+  padding: 8px 0;
+  border-bottom: 1px solid #e6e9ec;
 }
 
-.pieces div.changed {
-  box-shadow: inset 0 0 0 2px var(--brotherhood-secondary, #a71930);
+.list div:last-child {
+  border-bottom: 0;
 }
 
-.pieces dt {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 4px 6px;
+.list dt,
+.rowHead {
   color: #59636e;
   font-size: 11px;
   font-weight: 800;
@@ -149,54 +64,108 @@
   text-transform: uppercase;
 }
 
-.pieces dd {
+.list dd {
   margin: 2px 0 0;
   color: #23272c;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   line-height: 1.35;
 }
 
-.pieces div.changed dd {
-  color: var(--brotherhood-secondary, #a71930);
+/* Varios hábitos: columnas alineadas; cada prenda que cambia, en su fila. */
+.compare {
+  display: grid;
+  grid-template-columns: repeat(var(--cols, 2), minmax(0, 1fr));
+  column-gap: 12px;
 }
 
-.pieces div.changed dd.other {
-  margin-top: 4px;
-  color: #59636e;
-  font-size: 12px;
-  font-weight: 600;
+.name {
+  margin: 0 0 4px;
+  color: var(--brotherhood-primary, #153b69);
+  font-size: 17px;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.cell {
+  display: grid;
+  place-items: end center;
+  padding: 0 6%;
+  margin-bottom: 10px;
+}
+
+.cell .figure {
+  width: 100%;
+}
+
+.row {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
+  row-gap: 2px;
+  padding: 8px 0;
+  border-top: 1px solid #e6e9ec;
+}
+
+.rowHead {
+  grid-column: 1 / -1;
+  text-align: center;
+}
+
+.value {
+  color: var(--brotherhood-secondary, #a71930);
+  font-size: 15px;
+  font-weight: 700;
   line-height: 1.3;
+  text-align: center;
+}
+
+.common {
+  margin: 4px 0 0;
+  padding-top: 10px;
+  border-top: 1px solid #e6e9ec;
+  color: #23272c;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.common strong {
+  color: var(--brotherhood-primary, #153b69);
+}
+
+.common em {
+  color: #59636e;
+  font-style: normal;
+  font-weight: 700;
+}
+
+/* Con más de tres hábitos, las columnas se desplazan con el dedo. */
+.compare[data-cols='4'],
+.compare[data-cols='5'],
+.compare[data-cols='6'] {
+  grid-template-columns: repeat(var(--cols), minmax(130px, 1fr));
+  overflow-x: auto;
 }
 
 @media (max-width: 899px) {
-  .card {
+  .single,
+  .name {
     scroll-margin-top: calc(var(--hc-app-header-height, 70px) + 64px);
   }
 }
 
 @media (min-width: 900px) {
-  .rail {
-    width: min(100% - 40px, 1160px);
-    margin-inline: auto;
-    padding: 0;
-    grid-auto-flow: row;
-    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-    grid-auto-columns: auto;
-    overflow: visible;
+  .single {
+    grid-template-columns: 220px minmax(0, 520px);
+    gap: 32px;
   }
 
-  .stage {
-    height: 460px;
+  .compare {
+    max-width: 720px;
+    column-gap: 32px;
   }
 
-  .tabs {
-    display: none;
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .rail {
-    scroll-behavior: smooth;
+  .common {
+    max-width: 720px;
   }
 }
