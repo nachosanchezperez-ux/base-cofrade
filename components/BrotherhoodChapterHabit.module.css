@@ -96,7 +96,9 @@
 /* La figura, protagonista, con sus prendas señaladas a los lados. */
 .stage {
   position: relative;
-  height: min(420px, 105vw);
+  /* La figura (2:3) ocupa el 52 % del ancho y toda la altura del escenario,
+     para que las etiquetas caigan a la altura de cada prenda. */
+  aspect-ratio: 100 / 78;
   margin: 4px 0 14px;
   border-radius: 16px;
   background: radial-gradient(ellipse at 50% 55%, #fff 0%, #fff 38%, transparent 72%);
@@ -104,7 +106,7 @@
 
 .figure {
   position: absolute;
-  inset: 0 27%;
+  inset: 0 24%;
   margin: 0;
 }
 
@@ -267,7 +269,7 @@
   }
 
   .stage {
-    height: 440px;
+    max-height: 460px;
   }
 
   .tabs {
