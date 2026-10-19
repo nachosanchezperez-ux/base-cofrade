@@ -42,7 +42,7 @@ test('los listados del Panel usan concordancia en sus contadores', () => {
 
 test('el resto de la web pública concuerda y no muestra textos internos', () => {
   const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8')
-  assert.doesNotMatch(read('components/MusicDashboard.js'), /\{number\(data\.bandsCount\)\} bandas/)
+  assert.doesNotMatch(read('components/MusicDashboard.js'), /\{number\([a-zA-Z.]+\)\} bandas/)
   assert.match(read('app/semana-santa/2027/cambios-musicales/page.js'), /pluralWord\(changes\.length, 'cambio', 'cambios'\)/)
   assert.match(read('components/MunicipalityAgendaHub.js'), /filter\(\(\[count\]\) => count > 0\)/)
   const author = read('app/autores/[slug]/page.js')
