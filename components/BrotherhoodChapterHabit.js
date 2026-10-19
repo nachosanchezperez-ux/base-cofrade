@@ -38,7 +38,7 @@ function Compare({ habits }) {
       {habits.map((habit, index) => <h3 key={habit.id} id={`tunica-${habit.id}`} className={styles.name} title={habit.nombre}>{names[index]}</h3>)}
       {habits.map((habit) => <div key={habit.id} className={styles.cell}><Figure habit={habit} sizes={`(max-width: 899px) ${Math.round(90 / habits.length)}vw, 260px`} /></div>)}
       {changed.map((row) => <div key={row.key} className={styles.row} role="group" aria-label={row.label}>
-        <span className={styles.rowHead}>{row.label}</span>
+        <span className={styles.rowHead}>{row.label}{row.prefix ? <span className={styles.prefix}> · {row.prefix.toLowerCase()}</span> : null}</span>
         {row.values.map((value, index) => <span key={habits[index].id} className={styles.value}>
           <span className={styles.visuallyHidden}>{names[index]}: </span>{value || '—'}
         </span>)}

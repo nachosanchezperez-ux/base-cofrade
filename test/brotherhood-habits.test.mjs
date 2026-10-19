@@ -50,6 +50,9 @@ test('Nombre corto y diferencias entre hábitos', () => {
   assert.deepEqual([...habitDifferences(habits)], ['cordon']);
   assert.equal(habitDifferences(documentedHabits([sanBenito])).size, 0);
   const { changed, common } = habitComparison(habits);
-  assert.deepEqual(changed, [{ key: 'cordon', label: changed[0].label, values: ['Rojo', 'Blanco'] }]);
+  assert.deepEqual(changed, [{ key: 'cordon', label: changed[0].label, prefix: '', values: ['Rojo', 'Blanco'] }]);
+  const escudos = documentedHabits([{ ...baratilloCristo, escudo: 'Serigrafiado con borde rojo' }, { ...baratilloPalio, escudo: 'Serigrafiado con borde blanco' }]);
+  const escudo = habitComparison(escudos).changed.find((row) => row.key === 'escudo');
+  assert.deepEqual([escudo.prefix, escudo.values], ['Serigrafiado con borde', ['rojo', 'blanco']]);
   assert.deepEqual(common.map((field) => [field.key, field.value]), [['tunica', 'Azul de cola'], ['antifaz', 'Azul']]);
 });

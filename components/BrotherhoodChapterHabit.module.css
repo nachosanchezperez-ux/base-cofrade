@@ -112,6 +112,12 @@
   text-align: center;
 }
 
+.prefix {
+  letter-spacing: .02em;
+  text-transform: none;
+  font-weight: 700;
+}
+
 .value {
   color: var(--brotherhood-secondary, #a71930);
   font-size: 15px;
