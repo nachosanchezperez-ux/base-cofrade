@@ -644,12 +644,20 @@ export default function AgendaCofradeDirectoryV4({
     const view = pendingRestore.current
     if (!view) return undefined
     let frame = 0
+    let timer = 0
     let tries = 0
+    // Siguiente fotograma o, si la pestaña no pinta (en segundo plano), un instante.
+    const later = (callback) => {
+      let done = false
+      const run = () => { if (!done) { done = true; window.cancelAnimationFrame(frame); window.clearTimeout(timer); callback() } }
+      frame = window.requestAnimationFrame(run)
+      timer = window.setTimeout(run, 60)
+    }
     const apply = () => {
       const anchor = view.anchorId ? document.getElementById(view.anchorId) : null
       // «Mis hermandades» depende del seguimiento guardado en el dispositivo, que
       // puede tardar un instante: se espera unos fotogramas a que aparezca el acto.
-      if (view.anchorId && !anchor && tries++ < 30) { frame = window.requestAnimationFrame(apply); return }
+      if (view.anchorId && !anchor && tries++ < 30) { later(apply); return }
       const detail = view.openDetailId ? document.getElementById(view.openDetailId) : null
       if (detail) detail.open = true
       const top = agendaRestoreScrollTop(view, anchor ? anchor.getBoundingClientRect().top + window.scrollY : null)
@@ -659,8 +667,8 @@ export default function AgendaCofradeDirectoryV4({
       }
       pendingRestore.current = null
     }
-    frame = window.requestAnimationFrame(apply)
-    return () => window.cancelAnimationFrame(frame)
+    later(apply)
+    return () => { window.cancelAnimationFrame(frame); window.clearTimeout(timer) }
   }, [restoreTick, filtered])
 
   useEffect(() => { saveView() }, [visibleCount, mineOnly, saveView])
