@@ -9,6 +9,10 @@ import styles from './BrotherhoodProcessionFull.module.css'
 // Todo va en el HTML del servidor dentro de un <details>: indexable y sin JS.
 // La pieza patrimonial se describe una sola vez, plegada bajo su posición.
 
+function folded(value = '') {
+  return String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
+}
+
 function HeritageDetails({ heritage }) {
   if (!heritage) return null
   const facts = [
@@ -37,7 +41,8 @@ function Item({ item }) {
     </figure> : null}
     <div className={styles.copy}>
       <p className={styles.name}>{item.label}</p>
-      {item.kind !== 'insignia' ? <p className={styles.kind}>{ITEM_KINDS[item.kind]}</p> : null}
+      {/* El tipo solo si el nombre no lo dice ya («Antepresidencia» no se repite). */}
+      {item.kind !== 'insignia' && !folded(item.label).includes(folded(ITEM_KINDS[item.kind])) ? <p className={styles.kind}>{ITEM_KINDS[item.kind]}</p> : null}
       {item.note ? <p className={styles.note}>{item.note}</p> : null}
       <HeritageDetails heritage={item.heritage} />
     </div>
