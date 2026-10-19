@@ -18,7 +18,7 @@ import {
   socialMetadata,
 } from '@/lib/seo'
 import styles from './cambios-musicales.module.css'
-import { plural } from '@/lib/plural'
+import { plural, pluralWord } from '@/lib/plural'
 
 export const revalidate = 300
 
@@ -259,9 +259,9 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
               qué acompañamientos cambian y cuáles han renovado expresamente su continuidad para 2027.
             </p>
             <div className={styles.heroMeta} aria-label="Resumen del archivo musical de 2027">
-              <span><strong>{changes.length}</strong> cambios</span>
-              <span><strong>{renewals.length}</strong> renovaciones</span>
-              <span><strong>{brotherhoodCount}</strong> corporaciones con cambios</span>
+              <span><strong>{changes.length}</strong> {pluralWord(changes.length, 'cambio', 'cambios')}</span>
+              <span><strong>{renewals.length}</strong> {pluralWord(renewals.length, 'renovación', 'renovaciones')}</span>
+              <span><strong>{brotherhoodCount}</strong> {pluralWord(brotherhoodCount, 'corporación', 'corporaciones')} con cambios</span>
               {lastUpdated ? <span>Actualizado <strong>{lastUpdated}</strong></span> : null}
             </div>
             <nav className={styles.modeNav} aria-label="Lecturas de la música de 2027">
@@ -500,7 +500,7 @@ export default async function CambiosMusicales2027Page({ searchParams } = {}) {
         <section className={styles.method} aria-labelledby="criterio-cambios-musicales">
           <div><span>Criterio editorial</span><h2 id="criterio-cambios-musicales">Cambios y renovaciones no son lo mismo</h2></div>
           <div className={styles.methodCopy}>
-            <p>Los {changes.length} cambios reúnen relevos y nuevas incorporaciones. Las {renewals.length} renovaciones muestran únicamente acuerdos de continuidad expresamente documentados para 2027 y nunca incrementan el contador de cambios.</p>
+            <p>{changes.length === 1 ? 'El único cambio reúne' : `Los ${changes.length} cambios reúnen`} relevos y nuevas incorporaciones. {renewals.length === 1 ? 'La única renovación muestra' : `Las ${renewals.length} renovaciones muestran`} únicamente acuerdos de continuidad expresamente documentados para 2027 y nunca incrementan el contador de cambios.</p>
           </div>
         </section>
 

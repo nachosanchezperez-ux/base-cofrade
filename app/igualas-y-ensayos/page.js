@@ -5,6 +5,7 @@ import JsonLd from '@/components/JsonLd'
 import { breadcrumbJsonLd, collectionPageJsonLd, pageTitle } from '@/lib/seo'
 import { getCrewEventDirectory } from '@/lib/supabase/public-directory-cache'
 import styles from './crew-events-page.module.css'
+import { pluralWord } from '@/lib/plural'
 
 export const revalidate = 300
 
@@ -52,10 +53,10 @@ export default async function CrewEventsPage() {
         <div className={styles.summary} aria-label="Resumen del calendario de igualás y ensayos">
           <div><span className="eyebrow">Archivo vivo</span><p>Las citas futuras aparecen primero y, una vez celebradas, permanecen disponibles en el histórico.</p></div>
           <div className={styles.stats}>
-            <span><strong>{upcoming.length}</strong> próximas</span>
-            <span><strong>{events.length}</strong> documentadas</span>
-            <span><strong>{brotherhoodCount}</strong> Hermandades</span>
-            <span><strong>{stepCount}</strong> Pasos</span>
+            <span><strong>{upcoming.length}</strong> {pluralWord(upcoming.length, 'próxima', 'próximas')}</span>
+            <span><strong>{events.length}</strong> {pluralWord(events.length, 'documentada', 'documentadas')}</span>
+            <span><strong>{brotherhoodCount}</strong> {pluralWord(brotherhoodCount, 'Hermandad', 'Hermandades')}</span>
+            <span><strong>{stepCount}</strong> {pluralWord(stepCount, 'Paso', 'Pasos')}</span>
           </div>
         </div>
 

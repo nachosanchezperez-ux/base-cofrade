@@ -107,15 +107,7 @@
   text-decoration: none;
 }
 
-.featuredCopy h2 a:hover,
-.featuredCopy h2 a:focus-visible,
-.organizer:hover,
-.organizer:focus-visible,
-.brotherhoodLink:hover,
-.brotherhoodLink:focus-visible {
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
+
 
 .brotherhoodLink,
 .organizer {
@@ -478,11 +470,7 @@
   text-decoration: none;
 }
 
-.cardMain h4 a:hover,
-.cardMain h4 a:focus-visible {
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
+
 
 .organizer {
   display: inline-block;
