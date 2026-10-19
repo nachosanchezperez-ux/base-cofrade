@@ -35,7 +35,8 @@ test('Respeta el orden real y diferencia tramos, insignias y pasos', () => {
     'tramo:Tramo 2|Senatus,Presidencia',
     'paso:Paso de palio',
   ]);
-  assert.deepEqual(processionCounts(official), { insignias: 3, tramos: 2, steps: 2 });
+  // El Senatus aparece dos veces pero es la misma pieza: cuenta una.
+  assert.deepEqual(processionCounts(official), { insignias: 2, tramos: 2, steps: 2 });
 });
 
 test('Una pieza patrimonial se describe una sola vez', () => {
